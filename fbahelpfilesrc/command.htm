@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<Title>Command Line</Title>
+</HEAD>
+<BODY>
+
+<FONT FACE="verdana" SIZE="2">
+
+<TABLE BORDER="0" WIDTH="100%" CELLSPACING="0" CELLPADDING="6">
+<TR>
+<TD BGCOLOR="#757575" WIDTH="90"><IMG SRC="images/misc.bmp"></TD>
+<TD BGCOLOR="#757575"><FONT COLOR="#FFFFFF" FACE="verdana" SIZE="4"><B>FB Alpha</B></FONT></TD>
+</TR>
+</TABLE>
+
+<H3><FONT COLOR="#F98733">Command Line</FONT></H3>
+
+<P>FB Alpha can be invoked with command line options. When invoked this way, FB Alpha will automatically switch to fullscreen mode when a game is loaded, and the Escape key quits FB Alpha. The options are as follows;</P>
+
+<P><B><FONT FACE="verdana" SIZE="1">fba &lt;game&gt; [-listinfo|-w|-a|-r &lt;width&gt;x&lt;height&gt;x&lt;depth&gt;]</FONT></B></P>
+
+<P>&lt;game&gt; = The game's romname. You can specify the filename of a savestate or input recording instead.<BR />
+-w = Run in a window instead of fullscreen.<BR />
+-a = Use the same resolution as the original arcade game.<BR />
+-r = Specify a resolution. Depth is optional.</P>
+
+<P>If neither -a nor -r are specified, the default fullscreen resolution is used.</P>
+
+<P>Examples:</P>
+
+<FONT FACE="verdana" SIZE="1">
+<P><B>fba sfa3 -r 800x600x32</B></P>
+
+<P><B>fba awesome_sfzch_recording.fr -w</B></P>
+
+<P><B>fba vsav2 -a</B></P>
+</FONT>
+
+<P>For front-ends, you can also do fba <B>-listinfo</B>, <B>-listinfowithmd</B>, or <B>-listinfomdonly</B> which will output information about the supported games to
+stdout, and the ROM files they need in the MAME XML format.</P>
+
+<P>You can also do fba <B>-listextrainfo</B>. This will output the following data in a tab-delimited format to stdout; setname, visible size, aspect ratio, hardware code, hardware description, working status, max players, comments.</P>
+
+</FONT>
+</BODY>
+</HTML>

@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<Title>Cheat Format</Title>
+</HEAD>
+<BODY>
+
+<FONT FACE="verdana" SIZE="2">
+
+<TABLE BORDER="0" WIDTH="100%" CELLSPACING="0" CELLPADDING="6">
+<TR>
+<TD BGCOLOR="#757575" WIDTH="90"><IMG SRC="images/misc.bmp"></TD>
+<TD BGCOLOR="#757575"><FONT COLOR="#FFFFFF" FACE="verdana" SIZE="4"><B>FB Alpha</B></FONT></TD>
+</TR>
+</TABLE>
+
+<H3><FONT COLOR="#F98733">Cheat Format</FONT></H3>
+
+<P>Below is a short description of the FB Alpha cheat file format. Cheat files must be placed in the cheats support file folder, and named according to the short name/name of the zip file containing the ROMs, with the extension being either .INI (e.g. 1941.zip becomes 1941.ini). FBA will present a warning and some additional info whenever it encounters an error in a cheat file, and will stop processing the file at that point.</P>
+
+<H5><FONT COLOR="#F98733">Cheat File Format</FONT></H5>
+
+<TABLE BORDER="0" CELLPADDING="2" CELLSPACING="0">
+
+<TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1">// Text</FONT></TD>
+<TD VALIGN="Top"><FONT FACE="verdana" SIZE="1"><I>Comment</I></FONT></TD></TR>
+
+<TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1">include "filename"</FONT></TD>
+<TD VALIGN="Top"><FONT FACE="verdana" SIZE="1"><I>Include another cheat file</I></FONT></TD></TR>
+
+<TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1">cheat "cheatname" {</FONT></TD>
+<TD VALIGN="Top"><FONT FACE="verdana" SIZE="1"><I>New cheat called "cheatname" (the curly bracket is optional)</I></FONT></TD></TR>
+
+<TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type n</FONT></TD>
+<TD VALIGN="Top"><FONT FACE="verdana" SIZE="1"><I>Specify cheat type (optional, defaults to 0)
+<BR />type 0 = apply each frame, save original value and remain active<BR />type 1 = one-shot, fire and forget;<BR />type 2 = one-shot, save original value and remain active</I></FONT></TD></TR>
+
+<TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default n</FONT></TD>
+<TD VALIGN="Top"><FONT FACE="verdana" SIZE="1"><I>Set default option to n (0 &lt;= n &lt;= 95)</I></FONT></TD></TR>
+
+<TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 "name"</FONT></TD>
+<TD VALIGN="Top"><FONT FACE="verdana" SIZE="1"><I>Text displayed in the cheat dialog when the cheat is disabled</I></FONT></TD></TR>
+
+<TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n "name", o, p, q</FONT></TD>
+<TD VALIGN="Top"><FONT FACE="verdana" SIZE="1"><I>Add option n (1 &lt;= n &lt;= 95), called "name"<BR />Store byte value q at address p in the address space of CPU o<BR />You can specify upto 32 o/p/q groups per option, all must be on the same line</I></FONT></TD></TR>
+
+<TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1">}</FONT></TD>
+<TD VALIGN="Top"><FONT FACE="verdana" SIZE="1"><I>Required if you used a curly bracket above, considered an error otherwise</I></FONT></TD></TR>
+
+</TABLE>
+
+</FONT>
+</BODY>
+</HTML>

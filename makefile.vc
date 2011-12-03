@@ -1,0 +1,544 @@
+# Makefile for FBA, for use with GNU make & Microsoft Visual C++ 2010
+#
+# The first pass makes sure all intermediary targets are present. The second pass updates
+# any targets, if necessary. (Intermediary) targets which have their own unique rules
+# are generated as required.
+
+MAKEOS = cygwin
+ifeq ($(MAKEOS),)
+MAKEOS = $(OSTYPE)
+endif
+
+unexport
+
+#
+#	Declare variables
+#
+
+# Specify the name of the executable file, without ".exe"
+NAME = fba
+
+ifdef BUILD_X64_EXE
+ifdef BUILD_A68K
+undefine BUILD_A68K
+endif
+ifdef BUILD_X86_ASM
+undefine BUILD_X86_ASM
+endif
+endif
+
+ifndef	CPUTYPE
+	CPUTYPE	= i686
+endif
+
+ifdef BUILD_X86_ASM
+	MMX	= 1
+else
+	MMX = 0
+endif
+
+ifndef BUILD_X86_ASM
+	NAME := $(NAME)n
+endif
+ifdef BUILD_X64_EXE
+	NAME = fba64
+endif
+ifdef	DEBUG
+	NAME := $(NAME)d
+endif
+ifdef	SYMBOL
+	NAME := $(NAME)s
+endif
+ifndef UNICODE
+	NAME := $(NAME)a
+endif
+
+cpulevel = 6
+ifeq	($(CPUTYPE),i586)
+	cpulevel = 5
+endif
+ifeq	($(CPUTYPE),pentium)
+	cpulevel = 5
+endif
+ifeq	($(CPUTYPE),k6)
+	cpulevel = 5
+endif
+ifeq	($(CPUTYPE),i786)
+	cpulevel = 7
+endif
+ifeq	($(CPUTYPE),pentium4)
+	cpulevel = 7
+endif
+ifeq	($(CPUTYPE),athlon)
+	cpulevel = 7
+endif
+
+ifeq	($(cpulevel),6)
+	ppro = ppro
+else
+	NAME := $(NAME)$(CPUTYPE)
+endif
+
+
+
+
+#
+#	Specify paths/files
+#
+
+objdir	= obj/VC_WIN32/$(NAME)/
+srcdir	= src/
+
+include makefile.rules
+
+incdir	= $(foreach dir,$(alldir),/I$(srcdir)$(dir)) /I$(objdir)depend/generated
+
+ifdef UNICODE
+# lib	= unicows.lib
+endif
+
+lib	+=	user32.lib gdi32.lib comdlg32.lib comctl32.lib shell32.lib winmm.lib ole32.lib shlwapi.lib \
+		advapi32.lib setupapi.lib
+
+ifdef	BUILD_X86_ASM
+autobj += hq3xs.o hq_shared32.o
+endif
+		
+ifdef	BUILD_A68K
+a68k.o	= $(objdir)cpu/a68k/a68k.o
+endif
+
+license.rtf = $(srcdir)depend/generated/license.rtf
+driverlist.h = $(srcdir)depend/generated/driverlist.h
+ctv.h	= $(srcdir)depend/generated/ctv.h
+toa_gp9001_func.h = $(srcdir)depend/generated/toa_gp9001_func.h
+neo_sprite_func.h = $(srcdir)depend/generated/neo_sprite_func.h
+cave_tile_func.h = $(srcdir)depend/generated/cave_tile_func.h
+cave_sprite_func.h = $(srcdir)depend/generated/cave_sprite_func.h
+psikyo_tile_func.h = $(srcdir)depend/generated/psikyo_tile_func.h
+# psikyo_sprite_func.h = $(srcdir)depend/generated/psikyo_sprite_func.h
+build_details.h = $(srcdir)depend/generated/build_details.h
+
+allobj	= $(objdir)cpu/m68k/m68kcpu.o $(objdir)cpu/m68k/m68kopnz.o $(objdir)cpu/m68k/m68kopdm.o $(objdir)cpu/m68k/m68kopac.o $(objdir)cpu/m68k/m68kops.o $(objdir)burner/win32/resource.res \
+	  $(foreach file,$(autobj:.o=.c), \
+		$(foreach dir,$(alldir),$(subst $(srcdir),$(objdir), \
+		$(firstword $(subst .c,.o,$(wildcard $(srcdir)$(dir)/$(file))))))) \
+	  $(foreach file,$(autobj:.o=.cpp), \
+		$(foreach dir,$(alldir),$(subst $(srcdir),$(objdir), \
+		$(firstword $(subst .cpp,.o,$(wildcard $(srcdir)$(dir)/$(file))))))) \
+	  $(foreach file,$(autobj:.o=.asm), \
+		$(foreach dir,$(alldir),$(subst $(srcdir),$(objdir), \
+		$(firstword $(subst .asm,.o,$(wildcard $(srcdir)$(dir)/$(file)))))))
+		
+ifdef BUILD_A68K
+allobj += $(a68k.o)
+endif
+
+#
+#
+#	Specify compiler/linker/assembler
+#
+#
+
+CC	= cl
+CXX	= cl
+LD	= link
+AS	= nasm
+
+incdir +=  /Isrc\depend\VC\include
+
+ifndef BUILD_X64_EXE
+LDFLAGS	=  /NOLOGO /INCREMENTAL:NO /MACHINE:X86 /LIBPATH:src\VC\lib /NODEFAULTLIB:libc.lib /NODEFAULTLIB:libcd.lib # /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:libcp.lib /NODEFAULTLIB:libcpd.lib /NODEFAULTLIB:libcpmt.lib /NODEFAULTLIB:libcpmtd.lib
+else
+LDFLAGS	=  /NOLOGO /INCREMENTAL:NO /MACHINE:X64 /LIBPATH:src\VC\lib /NODEFAULTLIB:libc.lib /NODEFAULTLIB:libcd.lib # /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:libcp.lib /NODEFAULTLIB:libcpd.lib /NODEFAULTLIB:libcpmt.lib /NODEFAULTLIB:libcpmtd.lib
+endif
+
+ASFLAGS	=  -O1 -f coff -w-orphan-labels
+
+DEF		= /DBUILD_WIN32 /DUSE_SPEEDHACKS /DFILENAME=$(NAME) /DMMX=$(MMX) /DZLIB_WINAPI /DDECL_SPEC=__cdecl
+
+ifdef UNICODE
+	DEF	:= $(DEF) /D_UNICODE
+endif
+
+ifdef SPECIALBUILD
+	DEF	:= $(DEF) /DSPECIALBUILD=$(SPECIALBUILD)
+endif
+
+ifdef FASTCALL
+	DEF	:= $(DEF) /DFASTCALL
+endif
+
+ifdef DEBUG
+	DEF	:= $(DEF) /DFBA_DEBUG
+endif
+
+ifdef ROM_VERIFY
+	DEF	:= $(DEF) /DROM_VERIFY
+endif
+
+ifdef BUILD_A68K
+	DEF	:= $(DEF) -DBUILD_A68K
+endif
+
+ifdef BUILD_X86_ASM
+	DEF := $(DEF) -DBUILD_X86_ASM
+endif
+
+ifdef BUILD_X64_EXE
+	DEF := $(DEF) -DBUILD_X64_EXE
+endif
+
+ifdef	SYMBOL
+	CFLAGS	 = /nologo /Od /GF /GS /RTC1 /Zi /Zc:forScope /MTd /EHsc /Fp$(objdir)/depend/generated/ # /Wall
+	ASFLAGS += -g
+	LDFLAGS += /DEBUG
+	DEF	:= $(DEF) /D_DEBUG
+
+ifdef PROFILE
+	CFLAGS	 += /Oy
+else
+	CFLAGS	 += /Oy-
+endif
+
+else
+	CFLAGS	 = /nologo /w /O2 /Ox /Oi /Ot /Oy /Ob2 /GF /Gs /Gy /GL /Gr /Zc:forScope /MT /EHsc
+	LDFLAGS += /LTCG:STATUS
+endif
+
+# Change the priority of some warnings so they are only shown at warning level 4. They are:
+# lvl4 C4127: conditional expression is constant
+# lvl4 C4201: nonstandard extension used : nameless struct/union
+# lvl1 C4244: 'variable' : conversion from 'type' to 'type', possible loss of data
+#    3        'conversion' conversion from 'type1' to 'type2', possible loss of data
+# lvl4 C4505: 'function' : unreferenced local function has been removed
+# lvl4 C4514: 'function' : unreferenced inline function has been removed
+# lvl4 C4611: interaction between 'function' and C++ object destruction is non-portable
+# lvl4 C4710: 'function' : function not inlined
+# lvl1 C4799: No EMMS at end of function 'function'
+# lvl3 C4800: 'type' : forcing value to bool 'true' or 'false' (performance warning)
+CFLAGS +=  /w44201 /w44127 /w44244 /w44505 /w44514 /w44611 /w44710 /w44799 /w44800 $(DEF) $(incdir)
+CXXFLAGS = $(CFLAGS)
+
+#
+#
+#	Specify paths
+#
+#
+
+vpath %.asm	$(foreach dir,$(alldir),$(srcdir)$(dir)/ )
+vpath %.cpp	$(foreach dir,$(alldir),$(srcdir)$(dir)/ )
+vpath %.c	$(foreach dir,$(alldir),$(srcdir)$(dir)/ )
+vpath %.h	$(foreach dir,$(alldir),$(srcdir)$(dir)/ )
+vpath %.rc	$(foreach dir,$(alldir),$(srcdir)$(dir)/ )
+
+vpath %.o 	$(foreach dir,$(alldir),$(objdir)$(dir)/ )
+vpath %.res	$(foreach dir,$(alldir),$(srcdir)$(dir)/ )
+
+#
+#
+#	Rules
+#
+#
+
+.PHONY:	all init cleandep touch clean
+
+ifeq ($(MAKELEVEL),1)
+
+all:	init $(autobj) resource.res
+	$(MAKE) -f makefile.vc
+
+else
+
+all:	$(NAME).exe
+
+endif
+
+#
+#
+#	Rule for linking the executable
+#
+#
+
+ifeq ($(MAKELEVEL),2)
+
+$(NAME).exe:	$(allobj)
+	@echo
+	@echo Linking executable $(NAME).exe...
+	$(LD) $(LDFLAGS) /OUT:$@ $^ $(lib)
+
+ifdef	DEBUG
+
+#	Don't compress when making a debug build
+
+else
+ifdef	COMPRESS
+	@upx --best $@
+endif
+endif
+endif
+
+ifeq ($(MAKELEVEL),1)
+ifdef FORCE_UPDATE
+$(build_details.h): FORCE
+endif
+endif
+
+#
+#	Generate the gamelist
+#
+
+burn.o burn.d:	driverlist.h
+
+$(driverlist.h): $(drvobj) $(srcdir)depend/scripts/gamelist.pl
+ifdef	PERL
+	@$(srcdir)depend/scripts/gamelist.pl -o $@ -l gamelist.txt \
+		$(filter %.cpp,$(foreach file,$(drvobj:.o=.cpp),$(foreach dir,$(alldir), \
+		$(firstword $(wildcard $(srcdir)$(dir)/$(file))))))
+else
+ifeq ($(MAKELEVEL),2)
+	@echo
+	@echo Warning: Perl is not available on this system.
+	@echo $@ cannot be updated or created!
+	@echo
+endif
+endif
+
+#
+# Verify if driverlist.h needs to be updated
+#
+
+#ifeq ($(MAKELEVEL),1)
+#ifdef FORCE_UPDATE
+#$(driverlist.h): FORCE
+#endif
+#endif
+
+
+#
+#	Fix the .rc file
+#
+
+resource.res resource.d:	app.rc version.rc version.h $(build_details.h) $(license.rtf)
+
+$(license.rtf): $(srcdir)license.txt $(srcdir)depend/scripts/license2rtf.pl
+
+ifdef	PERL
+	$(srcdir)depend/scripts/license2rtf.pl $< -o $(srcdir)depend/generated/$(@F:.rc=.rtf)
+else
+ifeq ($(MAKELEVEL),2)
+	@echo
+	@echo Warning: Perl is not available on this system.
+	@echo $@ cannot be updated or created!
+	@echo
+endif
+endif
+
+resource.rc: app.rc $(license.rc) $(srcdir)burner/win32/resource/fba.ico $(srcdir)burner/win32/resource/about.bmp $(srcdir)burner/win32/resource/splash.bmp $(srcdir)burner/win32/resource/misc.bmp
+
+#
+#	Generate some info on the build details
+#
+
+about.o about.d systeminfo.o systeminfo.d: $(build_details.h)
+
+$(build_details.h):	$(srcdir)depend/scripts/build_details.cpp
+	$(CC) $(CFLAGS) $< /Fo$(objdir)depend/generated/ /Fe$(objdir)depend/generated/build_details.exe
+	$(objdir)depend/generated/build_details.exe >$@
+
+#
+#	Compile 68000 cores
+#
+
+# A68K
+
+ifdef BUILD_A68K
+$(a68k.o):	fba_make68k.c
+	echo "Compiling A68K MC68000 core... "
+	$(CC) $(CFLAGS) -DWIN32 $< /Fo$(subst $(srcdir),$(objdir),$(<D))/ /Fe$(subst $(srcdir),$(objdir),$(<D))/$(<F:.c=.exe) /link $(LDFLAGS) /SUBSYSTEM:CONSOLE
+	$(subst $(srcdir),$(objdir),$(<D))/$(<F:.c=.exe) $(@:.o=.asm) $(@D)/a68k_tab.asm 00 $(ppro)
+	@echo Assembling A68K MC68000 core...
+	$(AS) $(ASFLAGS) $(@:.o=.asm) -o $@
+endif
+
+# Musashi
+
+$(objdir)cpu/m68k/m68kcpu.o: $(srcdir)cpu/m68k/m68kcpu.c $(objdir)depend/generated/m68kops.h $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
+	@echo "Compiling Musashi MC680x0 core... "
+	$(CC) $(CFLAGS) /DINLINE="__inline static" /c $(srcdir)cpu/m68k/m68kcpu.c /Fo$(objdir)cpu/m68k/m68kcpu.o
+
+$(objdir)cpu/m68k/m68kops.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)depend/generated/m68kops.h $(objdir)depend/generated/m68kops.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
+	@echo "Compiling Musashi MC680x0 core... "
+	$(CC) $(CFLAGS) /DINLINE="__inline static" /c $(objdir)depend/generated/m68kops.c /Fo$(objdir)cpu/m68k/m68kops.o
+
+$(objdir)cpu/m68k/m68kopac.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)depend/generated/m68kops.h $(objdir)depend/generated/m68kopac.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
+	@echo "Compiling Musashi MC680x0 core... "
+	$(CC) $(CFLAGS) /DINLINE="__inline static" /c $(objdir)depend/generated/m68kopac.c /Fo$(objdir)cpu/m68k/m68kopac.o
+
+$(objdir)cpu/m68k/m68kopdm.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)depend/generated/m68kops.h $(objdir)depend/generated/m68kopdm.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
+	@echo "Compiling Musashi MC680x0 core... "
+	$(CC) $(CFLAGS) /DINLINE="__inline static" /c $(objdir)depend/generated/m68kopdm.c /Fo$(objdir)cpu/m68k/m68kopdm.o
+
+$(objdir)cpu/m68k/m68kopnz.o: $(objdir)cpu/m68k/m68kmake.exe $(objdir)depend/generated/m68kops.h $(objdir)depend/generated/m68kopnz.c $(srcdir)cpu/m68k/m68k.h $(srcdir)cpu/m68k/m68kconf.h
+	@echo "Compiling Musashi MC680x0 core... "
+	$(CC) $(CFLAGS) /DINLINE="__inline static" /c $(objdir)depend/generated/m68kopnz.c /Fo$(objdir)cpu/m68k/m68kopnz.o
+
+$(objdir)depend/generated/m68kops.h: $(objdir)cpu/m68k/m68kmake.exe $(srcdir)cpu/m68k/m68k_in.c
+	$(objdir)/cpu/m68k/m68kmake $(objdir)depend/generated/ $(srcdir)cpu/m68k/m68k_in.c
+
+$(objdir)cpu/m68k/m68kmake.exe: $(srcdir)cpu/m68k/m68kmake.c
+	@echo "Compiling Musashi MC680x0 core... "
+	$(CC) $(CFLAGS) /DINLINE="__inline static" $(srcdir)cpu/m68k/m68kmake.c /Fo$(objdir)cpu/m68k/ /Fe$(objdir)cpu/m68k/m68kmake.exe /link $(LDFLAGS) /SUBSYSTEM:CONSOLE
+
+
+#
+#	Extra rules for generated header file cvt.h, needed by ctv.cpp
+#
+
+ctv.o:	$(ctv.h)
+
+$(ctv.h):	ctv_make.cpp
+	@echo Generating... $(srcdir)depend/generated/$(@F)
+	$(CC) $(CXXFLAGS) $< /Fo$(subst $(srcdir),$(objdir),$(<D))/ /Fe$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) /link $(LDFLAGS) /SUBSYSTEM:CONSOLE
+	$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) >$@
+
+#
+#	Extra rules for generated header file toa_gp9001_func.h, needed by toa_gp9001.cpp
+#
+
+toa_bcu2.o toa_gp9001.o: $(toa_gp9001_func.h)
+
+$(toa_gp9001_func.h):	$(srcdir)depend/scripts/toa_gp9001_func.pl
+	$(srcdir)depend/scripts/toa_gp9001_func.pl -o $(toa_gp9001_func.h)
+
+#
+#	Extra rules for generated header file neo_sprite_func.h, needed by neo_sprite.cpp
+#
+
+neo_sprite.o: $(neo_sprite_func.h)
+
+$(neo_sprite_func.h):	$(srcdir)depend/scripts/neo_sprite_func.pl
+	$(srcdir)depend/scripts/neo_sprite_func.pl -o $(neo_sprite_func.h)
+
+#
+#	Extra rules for generated header file cave_tile_func.h, needed by cave_tile.cpp
+#
+
+cave_tile.o: $(cave_tile_func.h)
+
+$(cave_tile_func.h):	$(srcdir)depend/scripts/cave_tile_func.pl
+	$(srcdir)depend/scripts/cave_tile_func.pl -o $(cave_tile_func.h)
+
+#
+#	Extra rules for generated header file cave_sprite_func.h, needed by cave_sprite.cpp
+#
+
+cave_sprite.o: $(cave_sprite_func.h)
+
+$(cave_sprite_func.h):	$(srcdir)depend/scripts/cave_sprite_func.pl
+	$(srcdir)depend/scripts/cave_sprite_func.pl -o $(cave_sprite_func.h)
+
+#
+#	Extra rules for generated header file psikyo_tile_func.h / psikyo_sprite_func.h, needed by psikyo_tile.cpp / psikyo_sprite.cpp
+#
+
+psikyo_tile.o psikyo_sprite.o: $(psikyo_tile_func.h)
+
+$(psikyo_tile_func.h):	$(srcdir)depend/scripts/psikyo_tile_func.pl
+	$(srcdir)depend/scripts/psikyo_tile_func.pl -o $(psikyo_tile_func.h)
+
+#
+#	Generic rule for resource files
+#
+
+%.res:	%.rc
+	@echo Compiling resource file... $(<F)
+	rc $(DEF) /n /Fo $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(incdir) $<
+
+#
+#	Generic rules for C/C++ files
+#
+
+ifeq ($(MAKELEVEL),1)
+
+%.o:	%.cpp
+	@echo Compiling $<...
+	@$(CC) $(CXXFLAGS) /c $< /Fo$(subst $(srcdir),$(objdir),$(<D))/$(@F)
+
+%.o:	%.c
+	@echo Compiling $<...
+	@$(CC) $(CFLAGS) /c /Dinline=__inline $< /Fo$(subst $(srcdir),$(objdir),$(<D))/$(@F)
+
+%.o:	%.asm
+	@echo Assembling $<...
+	@$(AS) $(ASFLAGS) $< -o$(subst $(srcdir),$(objdir),$(<D))/$(@F)
+
+else
+
+%.o:	%.c
+	@echo Compiling $<...
+	@$(CC) $(CFLAGS) /c /Dinline=__inline $< /Fo $@
+
+%.o:	%.asm
+	@echo Assembling $<...
+	@$(AS) $(ASFLAGS) $< -o $@
+
+%.o:
+	@echo Compiling $<...
+	@$(CC) $(CXXFLAGS) /c $< /Fo $@
+
+endif
+
+#
+#	Phony targets
+#
+
+init:
+
+ifdef	DEBUG
+	@echo Making debug build...
+else
+	@echo Making normal build...
+endif
+	@echo
+ifeq ($(MAKEOS),cygwin)
+	@mkdir -p $(foreach dir, $(alldir),$(objdir)$(dir))
+	@mkdir -p $(srcdir)depend/generated
+else
+	@echo nt
+	@mkdir $(foreach dir, $(alldir),$(objdir)$(dir))
+	@mkdir $(srcdir)depend/generated
+endif
+
+touch:
+	@echo Marking all targets for $(NAME) as uptodate...
+	-@touch $(NAME).exe
+	-@touch -c -r $(NAME).exe $(srcdir)/depend/generated/*
+	-@for dir in $(alldir); do touch -c  -r $(NAME).exe $(objdir)$$dir/*; done
+
+clean:
+	@echo Removing all files from $(objdir)...
+ifeq ($(MAKEOS),cygwin)
+	-@rm -f -r $(objdir)
+	-@rm -f -r $(ctv.h)
+else
+	-@del -f -s $(objdir)
+	-@del -f -s $(ctv.h)
+endif
+
+ifdef	PERL
+	@echo Removing all files generated with perl scripts...
+ifeq ($(MAKEOS),cygwin)
+	-@rm -f -r $(driverlist)
+else
+	-@del -f -s $(driverlist)
+endif
+
+endif
+
+
+#
+#	Rule to force recompilation of any target that depends on it
+#
+
+FORCE:

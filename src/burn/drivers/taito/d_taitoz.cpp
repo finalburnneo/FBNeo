@@ -2569,8 +2569,8 @@ static struct BurnRomInfo SpacegunRomDesc[] = {
 	{ "c57-17.59",         0x020000, 0xe197edb8, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c57-22.73",         0x020000, 0x5855fde3, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	
-	{ "c57-15.27",         0x020000, 0xb36eb8f1, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
-	{ "c57-16.29",         0x020000, 0xbfb5d1e7, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "c57-15+.27",        0x020000, 0xb36eb8f1, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "c57-16+.29",        0x020000, 0xbfb5d1e7, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
 	
 	{ "c57-06.52",         0x080000, 0x4ebadd5b, BRF_GRA | TAITO_CHARS },
 	

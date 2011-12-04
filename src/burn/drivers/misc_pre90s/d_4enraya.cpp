@@ -520,7 +520,7 @@ static INT32 unkpacgInit()
 }
 
 struct BurnDriver BurnDrvUnkpacg = {
-	"pucky", NULL, NULL, NULL, "199?",
+	"unkpacg", NULL, NULL, NULL, "199?",
 	"unknown Pac-Man gambling game\0", NULL, "unknown", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,

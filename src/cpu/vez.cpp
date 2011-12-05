@@ -179,9 +179,10 @@ INT32 VezInit(INT32 cpu, INT32 type, INT32 clock)
 	nOpenedCPU = cpu;
 
 	VezCPUContext[cpu] = (VezContext*)BurnMalloc(sizeof(VezContext));
-	memset(VezCurrentCPU, 0, sizeof(struct VezContext));
 
 	VezCurrentCPU = VezCPUContext[cpu];
+
+	memset(VezCurrentCPU, 0, sizeof(struct VezContext));
 
 	switch (type)
 	{

@@ -64,6 +64,10 @@ static void InitDeltaTable(INT32 rate, INT32 clock ) {
 
 void K053260Reset(INT32 chip)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K053260Initted) bprintf(PRINT_ERROR, _T("K053260Reset called without init\n"));
+#endif
+
 	ic = &Chips[chip];
 
 	for(INT32 i = 0; i < 4; i++ ) {
@@ -95,6 +99,10 @@ K053260_INLINE INT32 limit( INT32 val, INT32 max, INT32 min ) {
 
 void K053260Update(INT32 chip, INT16 *pBuf, INT32 length)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K053260Initted) bprintf(PRINT_ERROR, _T("K053260Update called without init\n"));
+#endif
+
 	static const INT32 dpcmcnv[] = { 0,1,2,4,8,16,32,64, -128, -64, -32, -16, -8, -4, -2, -1};
 
 	INT32 i, j, lvol[4], rvol[4], play[4], loop[4], ppcm_data[4], ppcm[4];
@@ -194,6 +202,8 @@ void K053260Update(INT32 chip, INT16 *pBuf, INT32 length)
 
 void K053260Init(INT32 chip, INT32 clock, UINT8 *rom, INT32 nLen)
 {
+	DebugSnd_K053260Initted = 1;
+	
 	ic = &Chips[chip];
 	memset (ic, 0, sizeof(k053260_chip_def));
 
@@ -222,6 +232,10 @@ void K053260Init(INT32 chip, INT32 clock, UINT8 *rom, INT32 nLen)
 
 void K053260Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K053260Initted) bprintf(PRINT_ERROR, _T("K053260Exit called without init\n"));
+#endif
+
 	for (INT32 i = 0; i < 2; i++) {
 		ic = &Chips[i];
 
@@ -232,6 +246,8 @@ void K053260Exit()
 	}
 	
 	nUpdateStep = 0;
+	
+	DebugSnd_K053260Initted = 0;
 }
 
 K053260_INLINE void check_bounds(INT32 channel ) {
@@ -252,6 +268,10 @@ K053260_INLINE void check_bounds(INT32 channel ) {
 
 void K053260Write(INT32 chip, INT32 offset, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K053260Initted) bprintf(PRINT_ERROR, _T("K053260Write called without init\n"));
+#endif
+
 	INT32 i, t;
 	INT32 r = offset;
 	INT32 v = data;
@@ -366,6 +386,10 @@ void K053260Write(INT32 chip, INT32 offset, UINT8 data)
 
 UINT8 K053260Read(INT32 chip, INT32 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K053260Initted) bprintf(PRINT_ERROR, _T("K053260Read called without init\n"));
+#endif
+
 	ic = & Chips[chip];
 
 	switch ( offset ) {
@@ -401,6 +425,10 @@ UINT8 K053260Read(INT32 chip, INT32 offset)
 
 INT32 K053260Scan(INT32 nAction)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K053260Initted) bprintf(PRINT_ERROR, _T("K053260Scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 	char szName[32];
 

@@ -340,6 +340,10 @@ static INT32 YM3812StreamCallbackDummy(INT32 /* nSoundRate */)
 
 static void YM3812Render(INT32 nSegmentLength)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("YM3812Render called without init\n"));
+#endif
+
 	if (nYM3812Position >= nSegmentLength) {
 		return;
 	}
@@ -358,6 +362,10 @@ static void YM3812Render(INT32 nSegmentLength)
 
 static void YM3812UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("YM3812UpdateResample called without init\n"));
+#endif
+
 	INT32 nSegmentLength = nSegmentEnd;
 	INT32 nSamplesNeeded = nSegmentEnd * nBurnYM3812SoundRate / nBurnSoundRate + 1;
 
@@ -408,6 +416,10 @@ static void YM3812UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 static void YM3812UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("YM3812UpdateNormal called without init\n"));
+#endif
+
 	INT32 nSegmentLength = nSegmentEnd;
 
 //	bprintf(PRINT_NORMAL, _T("    YM3812 render %6i -> %6i\n"), nYM3812Position, nSegmentEnd);
@@ -455,6 +467,10 @@ static void YM3812UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 void BurnYM3812UpdateRequest(INT32, INT32)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("BurnYM3812UpdateRequest called without init\n"));
+#endif
+
 	YM3812Render(BurnYM3812StreamCallback(nBurnYM3812SoundRate));
 }
 
@@ -463,6 +479,10 @@ void BurnYM3812UpdateRequest(INT32, INT32)
 
 void BurnYM3812Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("BurnYM3812Reset called without init\n"));
+#endif
+
 	BurnTimerResetYM3812();
 
 	YM3812ResetChip(0);
@@ -470,6 +490,10 @@ void BurnYM3812Reset()
 
 void BurnYM3812Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("BurnYM3812Exit called without init\n"));
+#endif
+
 	YM3812Shutdown();
 
 	BurnTimerExitYM3812();
@@ -480,10 +504,14 @@ void BurnYM3812Exit()
 	}
 	
 	bYM3812AddSignal = 0;
+	
+	DebugSnd_YM3812Initted = 0;
 }
 
 INT32 BurnYM3812Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), INT32 bAddSignal)
 {
+	DebugSnd_YM3812Initted = 1;
+	
 	BurnTimerInitYM3812(&YM3812TimerOver, NULL);
 
 	if (nBurnSoundRate <= 0) {
@@ -534,6 +562,10 @@ INT32 BurnYM3812Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*
 
 void BurnYM3812Scan(INT32 nAction, INT32* pnMin)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("BurnYM3812Scan called without init\n"));
+#endif
+
 	BurnTimerScanYM3812(nAction, pnMin);
 	
 	if (nAction & ACB_DRIVER_DATA) {

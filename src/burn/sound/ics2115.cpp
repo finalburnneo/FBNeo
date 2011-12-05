@@ -106,6 +106,10 @@ static void recalc_timer(INT32 timer)
 
 UINT16 ics2115read_reg(UINT8 reg)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115read_reg called without init\n"));
+#endif
+
 	switch (reg) {
 	case 0x0d: // [osc] Volume Enveloppe Control
 		return 0x100;
@@ -142,6 +146,10 @@ UINT16 ics2115read_reg(UINT8 reg)
 
 void ics2115write_reg(UINT8 reg, UINT8 data, INT32 msb)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115write_reg called without init\n"));
+#endif
+
 //	bprintf(PRINT_NORMAL, _T("ics2115write_reg(%02x, %02x, %d);  %4.1f%%\n"), reg, data, msb, 6.0 * ZetTotalCycles() / 8468.0 ); 
 	
 	switch (reg) {
@@ -237,6 +245,10 @@ void ics2115write_reg(UINT8 reg, UINT8 data, INT32 msb)
 
 UINT8 ics2115read(UINT8 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115read called without init\n"));
+#endif
+
 	switch ( offset ) {
 	case 0x00: {
 		UINT8 res = 0;
@@ -262,6 +274,10 @@ UINT8 ics2115read(UINT8 offset)
 
 void ics2115write(UINT8 offset, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115write called without init\n"));
+#endif
+
 	switch (offset) {
 	case 0x01:
 		chip->reg = data;
@@ -279,6 +295,8 @@ void ics2115write(UINT8 offset, UINT8 data)
 
 INT32 ics2115_init()
 {
+	DebugSnd_ICS2115Initted = 1;
+	
 	chip = (struct ics2115 *) malloc( sizeof(struct ics2115) );	// ICS2115V
 	if (chip == NULL) return 1;
 	
@@ -290,6 +308,10 @@ INT32 ics2115_init()
 
 void ics2115_exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115_exit called without init\n"));
+#endif
+
 	if (chip) {
 		free( chip );
 		chip = NULL;
@@ -306,6 +328,8 @@ void ics2115_exit()
 		free( sndbuffer );
 		sndbuffer = NULL;
 	}
+	
+	DebugSnd_ICS2115Initted = 0;
 }
 
 static void recalculate_ulaw()
@@ -322,6 +346,10 @@ static void recalculate_ulaw()
 
 void ics2115_reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115_reset called without init\n"));
+#endif
+
 	memset(chip, 0, sizeof(struct ics2115));
 
 	chip->rom = ICSSNDROM;
@@ -346,6 +374,10 @@ void ics2115_reset()
 
 UINT16 ics2115_soundlatch_r(INT32 i)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115_soundlatch_r called without init\n"));
+#endif
+
 //	bprintf(PRINT_NORMAL, _T("soundlatch_r(%d)  %4.1f%% of frame\n"), i, 6.0 * SekTotalCycles() / 20000.0 ); 
 	bSoundlatchRead[i] = 1;
 	return nSoundlatch[i];
@@ -353,6 +385,10 @@ UINT16 ics2115_soundlatch_r(INT32 i)
 
 void ics2115_soundlatch_w(INT32 i, UINT16 d)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115_soundlatch_w called without init\n"));
+#endif
+
 //	if  ( !bSoundlatchRead[i] && nSoundlatch[i] != d )
 //		bprintf(PRINT_ERROR, _T("soundlatch_w(%d, %04x)  %4.1f%% of frame\n"), i, d, 6.0 * SekTotalCycles() / 20000.0);
 //	else
@@ -363,12 +399,20 @@ void ics2115_soundlatch_w(INT32 i, UINT16 d)
 
 void ics2115_frame()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115_frame called without init\n"));
+#endif
+
 	if (chip->timer[0].active ) timer_cb_0();
 	if (chip->timer[1].active ) timer_cb_1();	
 }
 
 void ics2115_update(INT32 /*length*/)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115_update called without init\n"));
+#endif
+
 	INT32 rec_irq = 0;
 	
 	//short* pSoundBuf = pBurnSoundOut;
@@ -430,6 +474,10 @@ void ics2115_update(INT32 /*length*/)
 
 void ics2115_scan(INT32 nAction,INT32 * /*pnMin*/)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115_scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 	
 	if ( nAction & ACB_DRIVER_DATA ) {

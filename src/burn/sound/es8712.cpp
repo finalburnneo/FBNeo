@@ -177,6 +177,10 @@ static void generate_adpcm(INT16 *buffer, INT32 samples)
 
 void es8712Update(INT32 device, INT16 *buffer, INT32 samples)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES8712Initted) bprintf(PRINT_ERROR, _T("es8712Update called without init\n"));
+#endif
+
 	if (device >= MAX_ES8712_CHIPS) return;
 
 	chip = &chips[device];
@@ -211,6 +215,8 @@ void es8712Update(INT32 device, INT16 *buffer, INT32 samples)
 
 void es8712Init(INT32 device, UINT8 *rom, INT32 sample_rate, float volume, INT32 addSignal)
 {
+	DebugSnd_ES8712Initted = 1;
+
 	if (device >= MAX_ES8712_CHIPS) return;
 
 	chip = &chips[device];
@@ -245,6 +251,10 @@ void es8712Init(INT32 device, UINT8 *rom, INT32 sample_rate, float volume, INT32
 
 void es8712Exit(INT32 device)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES8712Initted) bprintf(PRINT_ERROR, _T("es8712Exit called without init\n"));
+#endif
+
 	if (device >= MAX_ES8712_CHIPS) return;
 
 	chip = &chips[device];
@@ -255,6 +265,8 @@ void es8712Exit(INT32 device)
 		free (tbuf[device]);
 		tbuf[device] = NULL;
 	}
+	
+	DebugSnd_ES8712Initted = 0;
 }
 
 /*************************************************************************************
@@ -265,6 +277,10 @@ void es8712Exit(INT32 device)
 
 void es8712Reset(INT32 device)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES8712Initted) bprintf(PRINT_ERROR, _T("es8712Reset called without init\n"));
+#endif
+
 	if (device >= MAX_ES8712_CHIPS) return;
 
 	chip = &chips[device];
@@ -286,6 +302,10 @@ void es8712Reset(INT32 device)
 
 void es8712SetBankBase(INT32 device, INT32 base)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES8712Initted) bprintf(PRINT_ERROR, _T("es8712SetBankBase called without init\n"));
+#endif
+
 	if (device >= MAX_ES8712_CHIPS) return;
 
 	chip = &chips[device];
@@ -302,6 +322,10 @@ void es8712SetBankBase(INT32 device, INT32 base)
 
 void es8712Play(INT32 device)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES8712Initted) bprintf(PRINT_ERROR, _T("es8712Play called without init\n"));
+#endif
+
 	if (device >= MAX_ES8712_CHIPS) return;
 
 	chip = &chips[device];
@@ -358,6 +382,10 @@ void es8712Play(INT32 device)
 
 void es8712Write(INT32 device, INT32 offset, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES8712Initted) bprintf(PRINT_ERROR, _T("es8712Write called without init\n"));
+#endif
+
 	if (device >= MAX_ES8712_CHIPS) return;
 
 	chip = &chips[device];
@@ -395,6 +423,10 @@ void es8712Write(INT32 device, INT32 offset, UINT8 data)
 
 INT32 es8712Scan(INT32 device, INT32 nAction)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES8712Initted) bprintf(PRINT_ERROR, _T("es8712Scan called without init\n"));
+#endif
+
 	if (device >= MAX_ES8712_CHIPS) return 1;
 
 	if (nAction & ACB_DRIVER_DATA) {

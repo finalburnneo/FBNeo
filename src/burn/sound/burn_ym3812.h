@@ -24,5 +24,10 @@ void BurnYM3812Exit();
 extern void (*BurnYM3812Update)(INT16* pSoundBuf, INT32 nSegmentEnd);
 void BurnYM3812Scan(INT32 nAction, INT32* pnMin);
 
-#define BurnYM3812Write(a, n) YM3812Write(0, a, n)
 #define BurnYM3812Read(a) YM3812Read(0, a)
+
+#if defined FBA_DEBUG
+	#define BurnYM3812Write(a, n) if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("BurnYM3812Write called without init\n")); YM3812Write(0, a, n)
+#else
+	#define BurnYM3812Write(a, n) YM3812Write(0, a, n)
+#endif

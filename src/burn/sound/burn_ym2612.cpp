@@ -38,6 +38,10 @@ static INT32 YM2612StreamCallbackDummy(INT32 /* nSoundRate */)
 
 static void YM2612Render(INT32 nSegmentLength)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("YM2612Render called without init\n"));
+#endif
+	
 	if (nYM2612Position >= nSegmentLength) {
 		return;
 	}
@@ -66,6 +70,10 @@ static void YM2612Render(INT32 nSegmentLength)
 // Update the sound buffer
 static void YM2612UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("YM2612UpdateNormal called without init\n"));
+#endif
+
 	INT32 nSegmentLength = nSegmentEnd;
 	INT32 i;
 
@@ -152,6 +160,10 @@ static void YM2612UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 void BurnYM2612UpdateRequest()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("YM2612UpdateRequest called without init\n"));
+#endif
+
 	YM2612Render(BurnYM2612StreamCallback(nBurnYM2612SoundRate));
 }
 
@@ -160,6 +172,10 @@ void BurnYM2612UpdateRequest()
 
 void BurnYM2612Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("BurnYM2612Reset called without init\n"));
+#endif
+
 	BurnTimerReset();
 	
 	for (INT32 i = 0; i < nNumChips; i++) {
@@ -169,6 +185,10 @@ void BurnYM2612Reset()
 
 void BurnYM2612Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("BurnYM2612Exit called without init\n"));
+#endif
+
 	YM2612Shutdown();
 
 	BurnTimerExit();
@@ -180,10 +200,14 @@ void BurnYM2612Exit()
 	
 	nNumChips = 0;
 	bYM2612AddSignal = 0;
+	
+	DebugSnd_YM2612Initted = 0;
 }
 
 INT32 BurnYM2612Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), double (*GetTimeCallback)(), INT32 bAddSignal)
 {
+	DebugSnd_YM2612Initted = 1;
+	
 	if (num > MAX_YM2612) num = MAX_YM2612;
 
 	BurnTimerInit(&YM2612TimerOver, GetTimeCallback);
@@ -218,6 +242,10 @@ INT32 BurnYM2612Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 
 void BurnYM2612Scan(INT32 nAction, INT32* pnMin)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("BurnYM2612Scan called without init\n"));
+#endif
+
 	BurnTimerScan(nAction, pnMin);
 
 	if (nAction & ACB_DRIVER_DATA) {

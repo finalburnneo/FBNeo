@@ -340,6 +340,10 @@ static INT32 YM3526StreamCallbackDummy(INT32 /* nSoundRate */)
 
 static void YM3526Render(INT32 nSegmentLength)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("YM3526Render called without init\n"));
+#endif
+
 	if (nYM3526Position >= nSegmentLength) {
 		return;
 	}
@@ -358,6 +362,10 @@ static void YM3526Render(INT32 nSegmentLength)
 
 static void YM3526UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("YM3526UpdateResample called without init\n"));
+#endif
+
 	INT32 nSegmentLength = nSegmentEnd;
 	INT32 nSamplesNeeded = nSegmentEnd * nBurnYM3526SoundRate / nBurnSoundRate + 1;
 
@@ -408,6 +416,10 @@ static void YM3526UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 static void YM3526UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("YM3526UpdateNormal called without init\n"));
+#endif
+
 	INT32 nSegmentLength = nSegmentEnd;
 
 //	bprintf(PRINT_NORMAL, _T("    YM3526 render %6i -> %6i\n"), nYM3526Position, nSegmentEnd);
@@ -455,6 +467,10 @@ static void YM3526UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 void BurnYM3526UpdateRequest(int, int)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("BurnYM3526UpdateRequest called without init\n"));
+#endif
+
 	YM3526Render(BurnYM3526StreamCallback(nBurnYM3526SoundRate));
 }
 
@@ -463,6 +479,10 @@ void BurnYM3526UpdateRequest(int, int)
 
 void BurnYM3526Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("BurnYM3526Reset called without init\n"));
+#endif
+
 	BurnTimerResetYM3526();
 
 	YM3526ResetChip(0);
@@ -470,6 +490,10 @@ void BurnYM3526Reset()
 
 void BurnYM3526Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("BurnYM3526Exit called without init\n"));
+#endif
+
 	YM3526Shutdown();
 
 	BurnTimerExitYM3526();
@@ -480,10 +504,14 @@ void BurnYM3526Exit()
 	}
 	
 	bYM3526AddSignal = 0;
+	
+	DebugSnd_YM3526Initted = 0;
 }
 
 INT32 BurnYM3526Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), INT32 bAddSignal)
 {
+	DebugSnd_YM3526Initted = 1;
+	
 	BurnTimerInitYM3526(&YM3526TimerOver, NULL);
 
 	if (nBurnSoundRate <= 0) {
@@ -534,6 +562,10 @@ INT32 BurnYM3526Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*
 
 void BurnYM3526Scan(INT32 nAction, INT32* pnMin)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("BurnYM3526Scan called without init\n"));
+#endif
+
 	BurnTimerScanYM3526(nAction, pnMin);
 	
 	if (nAction & ACB_DRIVER_DATA) {

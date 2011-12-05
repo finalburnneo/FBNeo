@@ -26,6 +26,10 @@ static INT32 bAddSignal;
 
 void DACUpdate(INT16* Buffer, INT32 Length)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACUpdate called without init\n"));
+#endif
+
 	INT32 Out = Chip0->Output;
 	
 	if (NumChips >= 2) Out += Chip1->Output;
@@ -52,6 +56,11 @@ void DACUpdate(INT16* Buffer, INT32 Length)
 
 void DACWrite(INT32 Chip, UINT8 Data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACWrite called without init\n"));
+	if (Chip > NumChips) bprintf(PRINT_ERROR, _T("DACWrite called with invalid chip number %x\n"), Chip);
+#endif
+
 	if (Chip == 0) Chip0->Output = Chip0->UnsignedVolTable[Data] >> Chip0->nVolShift;
 	if (Chip == 1) Chip1->Output = Chip1->UnsignedVolTable[Data] >> Chip1->nVolShift;
 	if (Chip == 2) Chip2->Output = Chip2->UnsignedVolTable[Data] >> Chip2->nVolShift;
@@ -64,6 +73,11 @@ void DACWrite(INT32 Chip, UINT8 Data)
 
 void DACSignedWrite(INT32 Chip, UINT8 Data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACSignedWrite called without init\n"));
+	if (Chip > NumChips) bprintf(PRINT_ERROR, _T("DACSignedWrite called with invalid chip number %x\n"), Chip);
+#endif
+
 	if (Chip == 0) Chip0->Output = Chip0->SignedVolTable[Data] >> Chip0->nVolShift;
 	if (Chip == 1) Chip1->Output = Chip1->SignedVolTable[Data] >> Chip1->nVolShift;
 	if (Chip == 2) Chip2->Output = Chip2->SignedVolTable[Data] >> Chip2->nVolShift;
@@ -121,6 +135,8 @@ static void DACBuildVolTables()
 
 void DACInit(INT32 Num, UINT32 Clock, INT32 bAdd)
 {
+	DebugSnd_DACInitted = 1;
+	
 	NumChips = Num;
 	
 	if (Num == 0) {
@@ -194,6 +210,11 @@ void DACInit(INT32 Num, UINT32 Clock, INT32 bAdd)
 
 void DACSetVolShift(INT32 Chip, INT32 nShift)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACSetVolShift called without init\n"));
+	if (Chip > NumChips) bprintf(PRINT_ERROR, _T("DACSetVolShift called with invalid chip number %x\n"), Chip);
+#endif
+
 	if (Chip == 0) Chip0->nVolShift = nShift;
 	if (Chip == 1) Chip1->nVolShift = nShift;
 	if (Chip == 2) Chip2->nVolShift = nShift;
@@ -206,6 +227,10 @@ void DACSetVolShift(INT32 Chip, INT32 nShift)
 
 void DACReset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACReset called without init\n"));
+#endif
+
 	Chip0->Output = 0;
 	if (NumChips >= 2) Chip1->Output = 0;
 	if (NumChips >= 3) Chip2->Output = 0;
@@ -218,6 +243,10 @@ void DACReset()
 
 void DACExit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACExit called without init\n"));
+#endif
+
 	if (Chip0) {
 		free(Chip0);
 		Chip0 = NULL;
@@ -259,10 +288,16 @@ void DACExit()
 	}
 	
 	NumChips = 0;
+	
+	DebugSnd_DACInitted = 0;
 }
 
 INT32 DACScan(INT32 nAction,INT32 *pnMin)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACScan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 	char szName[16];
 	

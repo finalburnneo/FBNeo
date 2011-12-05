@@ -853,6 +853,10 @@ static void generate_samples(INT32 *left, INT32 *right, INT32 samples)
 //static STREAM_UPDATE( es5506_update )
 void ES5506Update(INT16 *pBuffer, INT32 samples)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506Update called without init\n"));
+#endif
+
 //	es5506_state *chip = (es5506_state *)param;
 	INT32 *lsrc = chip->scratch, *rsrc = chip->scratch;
 //	short *ldest = &pBuffer[0];
@@ -909,6 +913,8 @@ void ES5506Update(INT16 *pBuffer, INT32 samples)
 
 static void es5506_start_common(INT32 clock, UINT8* region0, UINT8* region1, UINT8* region2, UINT8* region3, irq_callback callback, INT32 sndtype)
 {
+	DebugSnd_ES5506Initted = 1;
+
 //	const es5506_interface *intf = (const es5506_interface *)config;
 //	es5506_state *chip = get_safe_token(device);
 	INT32 j;
@@ -1018,6 +1024,10 @@ void ES5506Init(INT32 clock, UINT8* region0, UINT8* region1, UINT8* region2, UIN
 
 void ES5506Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506Exit called without init\n"));
+#endif
+
 	/* debugging */
 	if (LOG_COMMANDS && eslog)
 	{
@@ -1036,11 +1046,16 @@ void ES5506Exit()
 	}
 }
 #endif
+
+	DebugSnd_ES5506Initted = 0;
 }
 
 
 void ES5506Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506Reset called without init\n"));
+#endif
 }
 
 
@@ -1316,6 +1331,10 @@ ES5506_INLINE void es5506_reg_write_test(UINT32 offset, UINT32 data)
 //WRITE8_DEVICE_HANDLER( es5506_w )
 void ES5506Write(UINT32 offset, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506Write called without init\n"));
+#endif
+
 //	es5506_state *chip = get_safe_token(device);
 	es5506_voice *voice = &chip->voice[chip->current_page & 0x1f];
 	INT32 shift = 8 * (offset & 3);
@@ -1526,6 +1545,10 @@ ES5506_INLINE UINT32 es5506_reg_read_test(UINT32 offset)
 //READ8_DEVICE_HANDLER( es5506_r )
 UINT8 ES5506Read(UINT32 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506Read called without init\n"));
+#endif
+
 //	es5506_state *chip = get_safe_token(device);
 	es5506_voice *voice = &chip->voice[chip->current_page & 0x1f];
 	INT32 shift = 8 * (offset & 3);
@@ -1559,6 +1582,10 @@ UINT8 ES5506Read(UINT32 offset)
 
 void es5506_voice_bank_w(INT32 voice, INT32 bank)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("es5506_voice_bank_w called without init\n"));
+#endif
+
 //	es5506_state *chip = get_safe_token(device);
 	chip->voice[voice].exbank=bank;
 }
@@ -1959,6 +1986,10 @@ ES5506_INLINE void es5505_reg_write_test(UINT32 offset, UINT16 data)
 //WRITE16_DEVICE_HANDLER( es5505_w )
 void ES5505Write(UINT32 offset, UINT16 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5505Write called without init\n"));
+#endif
+
 //	es5506_state *chip = get_safe_token(device);
 	es5506_voice *voice = &chip->voice[chip->current_page & 0x1f];
 
@@ -2171,6 +2202,10 @@ ES5506_INLINE UINT16 es5505_reg_read_test(UINT32 offset)
 //READ16_DEVICE_HANDLER( es5505_r )
 UINT16 ES5505Read(UINT32 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5505Read called without init\n"));
+#endif
+
 //	es5506_state *chip = get_safe_token(device);
 	es5506_voice *voice = &chip->voice[chip->current_page & 0x1f];
 	UINT16 result = 0;
@@ -2200,6 +2235,10 @@ UINT16 ES5505Read(UINT32 offset)
 
 void es5505_voice_bank_w(INT32 voice, INT32 bank)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("es5505_voice_bank_w called without init\n"));
+#endif
+
 //	es5506_state *chip = get_safe_token(device);
 #if RAINE_CHECK
 	chip->voice[voice].control = CONTROL_STOPMASK;

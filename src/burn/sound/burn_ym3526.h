@@ -23,5 +23,10 @@ void BurnYM3526Exit();
 extern void (*BurnYM3526Update)(INT16* pSoundBuf, INT32 nSegmentEnd);
 void BurnYM3526Scan(INT32 nAction, INT32* pnMin);
 
-#define BurnYM3526Write(a, n) YM3526Write(0, a, n)
 #define BurnYM3526Read(a) YM3526Read(0, a)
+
+#if defined FBA_DEBUG
+	#define BurnYM3526Write(a, n) if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("BurnYM3526Write called without init\n")); YM3526Write(0, a, n)
+#else
+	#define BurnYM3526Write(a, n) YM3526Write(0, a, n)
+#endif

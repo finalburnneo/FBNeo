@@ -62,35 +62,59 @@ static INT32 *soundbuf[2];
 
 void K054539_init_flags(INT32 chip, INT32 flags)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539_init_flags called without init\n"));
+#endif
+
 	info = &Chips[chip];
 	info->k054539_flags = flags;
 }
 
 void K054539_set_gain(INT32 chip, INT32 channel, double gain)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539_set_gain called without init\n"));
+#endif
+
 	info = &Chips[chip];
 	if (gain >= 0) info->k054539_gain[channel] = gain;
 }
 
 static INT32 k054539_regupdate()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539_regupdate called without init\n"));
+#endif
+
 	return !(info->regs[0x22f] & 0x80);
 }
 
 static void k054539_keyon(INT32 channel)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539_keyon called without init\n"));
+#endif
+
 	if(k054539_regupdate())
 		info->regs[0x22c] |= 1 << channel;
 }
 
 static void k054539_keyoff(INT32 channel)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539_keyoff called without init\n"));
+#endif
+
 	if(k054539_regupdate())
 		info->regs[0x22c] &= ~(1 << channel);
 }
 
 void K054539Write(INT32 chip, INT32 offset, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Write called without init\n"));
+#endif
+
 	info = &Chips[chip];
 
 	INT32 latch, offs, ch, pan;
@@ -178,6 +202,10 @@ void K054539Write(INT32 chip, INT32 offset, UINT8 data)
 
 UINT8 K054539Read(INT32 chip, INT32 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Read called without init\n"));
+#endif
+
 	info = &Chips[chip];
 
 	switch(offset) {
@@ -203,6 +231,10 @@ UINT8 K054539Read(INT32 chip, INT32 offset)
 
 void K054539Reset(INT32 chip)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Reset called without init\n"));
+#endif
+
 	info = &Chips[chip];
 	INT32 data = info->regs[0x22e];
 	info->cur_zone =
@@ -240,6 +272,8 @@ static void k054539_init_chip(INT32 clock, UINT8 *rom, INT32 nLen)
 
 void K054539Init(INT32 chip, INT32 clock, UINT8 *rom, INT32 nLen)
 {
+	DebugSnd_K054539Initted = 1;
+	
 	static const k054539_interface defintrf = { 0, 0 };
 	INT32 i;
 
@@ -269,6 +303,10 @@ void K054539Init(INT32 chip, INT32 clock, UINT8 *rom, INT32 nLen)
 
 void K054539Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Exit called without init\n"));
+#endif
+
 	if (soundbuf[0] != NULL) {
 		free (soundbuf[0]);
 		soundbuf[0] = NULL;
@@ -286,10 +324,16 @@ void K054539Exit()
 			info->ram = NULL;
 		}
 	}
+	
+	DebugSnd_K054539Initted = 0;
 }
 
 void K054539Update(INT32 chip, INT16 *pBuf, INT32 length)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Update called without init\n"));
+#endif
+
 	info = &Chips[chip];
 #define VOL_CAP 1.80
 
@@ -543,6 +587,10 @@ else
 
 INT32 K054539Scan(INT32 nAction)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 	char szName[32];
 

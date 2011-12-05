@@ -66,6 +66,10 @@ static UINT32 computed_steps;
 
 void iremga20_update(INT32 device, INT16 *buffer, INT32 length)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_update called without init\n"));
+#endif
+
 	chip = &chips[device];
 	UINT32 rate[4], pos[4], frac[4], end[4], vol[4], play[4];
 	UINT8 *pSamples;
@@ -138,6 +142,10 @@ void iremga20_update(INT32 device, INT16 *buffer, INT32 length)
 
 void iremga20_write(INT32 device, INT32 offset, INT32 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_write called without init\n"));
+#endif
+
 	chip = &chips[device];
 
 	INT32 channel = offset >> 3;
@@ -180,6 +188,10 @@ void iremga20_write(INT32 device, INT32 offset, INT32 data)
 
 UINT8 iremga20_read(INT32 device, INT32 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_read called without init\n"));
+#endif
+
 	chip = &chips[device];
 
 	switch (offset & 0x7)
@@ -196,6 +208,10 @@ UINT8 iremga20_read(INT32 device, INT32 offset)
 
 void iremga20_reset(INT32 device)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_reset called without init\n"));
+#endif
+
 	chip = &chips[device];
 
 	for(INT32 i = 0; i < 4; i++ ) {
@@ -217,6 +233,8 @@ void iremga20_reset(INT32 device)
 
 void iremga20_init(INT32 device, UINT8 *rom, INT32 rom_size, INT32 frequency)
 {
+	DebugSnd_IremGA20Initted = 1;
+
 	chip = &chips[device];
 
 	/* Initialize our chip structure */
@@ -231,11 +249,19 @@ void iremga20_init(INT32 device, UINT8 *rom, INT32 rom_size, INT32 frequency)
 
 void iremga20_exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_exit called without init\n"));
+#endif
 
+	DebugSnd_IremGA20Initted = 0;
 }
 
 INT32 iremga20_scan(INT32 device, INT32 nAction, INT32 *pnMin)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_scan called without init\n"));
+#endif
+
 	chip = &chips[device];
 
 	struct BurnArea ba;

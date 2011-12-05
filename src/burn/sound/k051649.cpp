@@ -85,6 +85,10 @@ static void make_mixer_table(INT32 voices)
 /* generate sound to the mix buffer */
 void K051649Update(INT16 *pBuf, INT32 samples)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649Update called without init\n"));
+#endif
+
 	info = &Chips[0];
 	k051649_sound_channel *voice=info->channel_list;
 	INT16 *mix;
@@ -143,6 +147,8 @@ void K051649Update(INT16 *pBuf, INT32 samples)
 
 void K051649Init(INT32 clock, float gain)
 {
+	DebugSnd_K051649Initted = 1;
+
 	info = &Chips[0];
 
 	/* get stream channels */
@@ -161,6 +167,10 @@ void K051649Init(INT32 clock, float gain)
 
 void K051659Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649Exit called without init\n"));
+#endif
+
 	info = &Chips[0];
 
 	if (info->mixer_buffer) {
@@ -174,10 +184,16 @@ void K051659Exit()
 	}
 	
 	nUpdateStep = 0;
+	
+	DebugSnd_K051649Initted = 0;
 }
 
 void K051649Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649Reset called without init\n"));
+#endif
+
 	info = &Chips[0];
 	k051649_sound_channel *voice = info->channel_list;
 	INT32 i;
@@ -192,6 +208,10 @@ void K051649Reset()
 
 INT32 K051649Scan(INT32 nAction, INT32 *pnMin)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649Scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 
 	if ((nAction & ACB_DRIVER_DATA) == 0) {
@@ -221,6 +241,10 @@ INT32 K051649Scan(INT32 nAction, INT32 *pnMin)
 
 void K051649WaveformWrite(INT32 offset, INT32 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649WaveformWrite called without init\n"));
+#endif
+
 	info = &Chips[0];
 	info->channel_list[offset>>5].waveform[offset&0x1f]=data;
 	/* SY 20001114: Channel 5 shares the waveform with channel 4 */
@@ -228,8 +252,12 @@ void K051649WaveformWrite(INT32 offset, INT32 data)
 		info->channel_list[4].waveform[offset&0x1f]=data;
 }
 
-unsigned char K051649WaveformRead(INT32 offset)
+UINT8 K051649WaveformRead(INT32 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649WaveformRead called without init\n"));
+#endif
+
 	info = &Chips[0];
 	return info->channel_list[offset>>5].waveform[offset&0x1f];
 }
@@ -237,6 +265,10 @@ unsigned char K051649WaveformRead(INT32 offset)
 /* SY 20001114: Channel 5 doesn't share the waveform with channel 4 on this chip */
 void K052539WaveformWrite(INT32 offset, INT32 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K052539WaveformWrite called without init\n"));
+#endif
+
 	info = &Chips[0];
 
 	info->channel_list[offset>>5].waveform[offset&0x1f]=data;
@@ -244,6 +276,10 @@ void K052539WaveformWrite(INT32 offset, INT32 data)
 
 void K051649VolumeWrite(INT32 offset, INT32 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649VolumeWrite called without init\n"));
+#endif
+
 	info = &Chips[0];
 
 	info->channel_list[offset&0x7].volume=data&0xf;
@@ -251,6 +287,10 @@ void K051649VolumeWrite(INT32 offset, INT32 data)
 
 void K051649FrequencyWrite(INT32 offset, INT32 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649FrequencyWrite called without init\n"));
+#endif
+
 	info = &Chips[0];
 	info->f[offset]=data;
 
@@ -259,6 +299,10 @@ void K051649FrequencyWrite(INT32 offset, INT32 data)
 
 void K051649KeyonoffWrite(INT32 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649KeyonoffWrite called without init\n"));
+#endif
+
 	info = &Chips[0];
 	info->channel_list[0].key=data&1;
 	info->channel_list[1].key=data&2;

@@ -6,7 +6,7 @@
 INT32 nM6502Count = 0;
 static INT32 nActiveCPU = 0;
 
-static M6502Ext m6502CPUContext[MAX_CPU];
+static M6502Ext *m6502CPUContext[MAX_CPU] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 static M6502Ext *pCurrentCPU;
 static INT32 nM6502CyclesDone[MAX_CPU];
 INT32 nM6502CyclesTotal;
@@ -66,7 +66,9 @@ INT32 M6502Init(INT32 cpu, INT32 type)
 	nActiveCPU = cpu;
 	nM6502Count++;
 
-	pCurrentCPU = &m6502CPUContext[cpu];
+	m6502CPUContext[cpu] = (M6502Ext*)BurnMalloc(sizeof(M6502Ext));
+
+	pCurrentCPU = m6502CPUContext[cpu];
 
 	memset(pCurrentCPU, 0, sizeof(M6502Ext));
 
@@ -145,6 +147,12 @@ INT32 M6502Init(INT32 cpu, INT32 type)
 
 void M6502Exit()
 {
+	for (INT32 i = 0; i < MAX_CPU; i++) {
+		if (m6502CPUContext[i]) {
+			BurnFree(m6502CPUContext[i]);
+		}
+	}
+
 	nM6502Count = 0;
 }
 
@@ -152,7 +160,7 @@ void M6502Open(INT32 num)
 {
 	nActiveCPU = num;
 
-	pCurrentCPU = &m6502CPUContext[num];
+	pCurrentCPU = m6502CPUContext[num];
 
 	m6502_set_context(&pCurrentCPU->reg);
 	
@@ -422,7 +430,7 @@ INT32 M6502Scan(INT32 nAction)
 
 	for (INT32 i = 0; i < nM6502Count; i++) {
 
-		M6502Ext *ptr = &m6502CPUContext[i];
+		M6502Ext *ptr = m6502CPUContext[i];
 
 		INT32 (*Callback)(INT32 irqline);
 
@@ -431,8 +439,8 @@ INT32 M6502Scan(INT32 nAction)
 		char szName[] = "M6502 #n";
 		szName[7] = '0' + i;
 
-		ba.Data = &m6502CPUContext[i].reg;
-		ba.nLen = sizeof(m6502CPUContext[i].reg);
+		ba.Data = &ptr->reg;
+		ba.nLen = sizeof(m6502_Regs);
 		ba.szName = szName;
 		BurnAcb(&ba);
 

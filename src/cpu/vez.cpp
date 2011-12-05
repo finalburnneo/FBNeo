@@ -6,6 +6,8 @@
 #include "burnint.h"
 #include "vez.h"
 
+#define MAX_VEZ		4
+
 //----------------------------------------------------------------------------------
 // nec.cpp
 void necInit(INT32 cpu, INT32 type);
@@ -70,7 +72,7 @@ struct VezContext {
  #endif
 };
 
-static struct VezContext VezCPUContext[4];
+static struct VezContext *VezCPUContext[MAX_VEZ] = { NULL, NULL, NULL, NULL };
 struct VezContext *VezCurrentCPU = 0;
 
 #define VEZ_MEM_SHIFT	11
@@ -170,10 +172,16 @@ void VezSetDecode(UINT8 *table)
 
 INT32 VezInit(INT32 cpu, INT32 type, INT32 clock)
 {
-	nOpenedCPU = cpu;
-	VezCurrentCPU = &VezCPUContext[cpu];
+	if (cpu >= MAX_VEZ) {
+		bprintf (0, _T("Only %d Vez available! Increase MAX_VEZ in vez.cpp.\n"), MAX_VEZ);
+	}
 
+	nOpenedCPU = cpu;
+
+	VezCPUContext[cpu] = (VezContext*)BurnMalloc(sizeof(VezContext));
 	memset(VezCurrentCPU, 0, sizeof(struct VezContext));
+
+	VezCurrentCPU = VezCPUContext[cpu];
 
 	switch (type)
 	{
@@ -239,6 +247,12 @@ INT32 VezInit(INT32 cpu, INT32 type)
 
 void VezExit()
 {
+	for (INT32 i = 0; i < MAX_VEZ; i++) {
+		if (VezCPUContext[i]) {
+			BurnFree(VezCPUContext[i]);
+		}
+	}
+
 	nCPUCount = 0;
 	nOpenedCPU = -1;
 	nVezCount = 0;
@@ -248,8 +262,10 @@ void VezExit()
 
 void VezOpen(INT32 nCPU)
 {
+	if (nCPU >= MAX_VEZ || nCPU < 0) nCPU = 0;
+
 	nOpenedCPU = nCPU;
-	VezCurrentCPU = &VezCPUContext[nCPU];
+	VezCurrentCPU = VezCPUContext[nCPU];
 	VezCurrentCPU->cpu_open(nCPU);
 }
 
@@ -344,6 +360,7 @@ INT32 VezMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem1, UINT8 *Mem2
 		VezCurrentCPU->ppMemFetch[i] = Mem1 - nStart;
 		VezCurrentCPU->ppMemFetchData[i] = Mem2 - nStart;
 	}
+
 	return 0;
 }
 
@@ -364,7 +381,8 @@ INT32 VezPc(INT32 n)
 	if (n == -1) {
 		return VezCurrentCPU->get_pc(-1);
 	} else {
-		struct VezContext *CPU = &VezCPUContext[n];
+		if (n >= MAX_VEZ) return 0;
+		struct VezContext *CPU = VezCPUContext[n];
 		return CPU->get_pc(n);
 	}
 
@@ -377,7 +395,7 @@ INT32 VezScan(INT32 nAction)
 		return 0;
 
 	for (INT32 i = 0; i < nCPUCount; i++) {
-		struct VezContext *CPU = &VezCPUContext[i];
+		struct VezContext *CPU = VezCPUContext[i];
 		if (CPU->scan) {
 			CPU->scan(i, nAction);
 		}
@@ -388,5 +406,15 @@ INT32 VezScan(INT32 nAction)
 
 void VezSetIRQLineAndVector(const INT32 line, const INT32 vector, const INT32 status)
 {
-	VezCurrentCPU->cpu_set_irq_line(line, vector, status);
+	if (status == VEZ_IRQSTATUS_AUTO)
+	{
+		VezCurrentCPU->cpu_set_irq_line(line, vector, VEZ_IRQSTATUS_ACK);
+		VezCurrentCPU->cpu_execute(100);
+		VezCurrentCPU->cpu_set_irq_line(line, vector, VEZ_IRQSTATUS_NONE);
+		VezCurrentCPU->cpu_execute(100);
+	}
+	else
+	{
+		VezCurrentCPU->cpu_set_irq_line(line, vector, status);
+	}
 }

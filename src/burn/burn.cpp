@@ -1,5 +1,4 @@
 // Burn - Drivers module
-// Burn - Drivers module
 
 #include "version.h"
 #include "burnint.h"
@@ -650,6 +649,9 @@ extern "C" INT32 BurnDrvExit()
 	INT32 nRet = pDriver[nBurnDrvActive]->Exit();			// Forward to drivers function
 	
 	BurnExitMemoryManager();
+#if defined FBA_DEBUG
+	DebugTrackerExit();
+#endif
 
 	return nRet;
 }

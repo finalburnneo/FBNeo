@@ -21,6 +21,10 @@ static INT32 nYM2413Volume;
 
 static void YM2413RenderResample(INT16* pSoundBuf, INT32 nSegmentLength)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("YM2413RenderResample called without init\n"));
+#endif
+
 	nBurnPosition += nSegmentLength;
 
 	if (nBurnPosition >= nBurnSoundRate) {
@@ -78,6 +82,10 @@ static void YM2413RenderResample(INT16* pSoundBuf, INT32 nSegmentLength)
 
 static void YM2413RenderNormal(INT16* pSoundBuf, INT32 nSegmentLength)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("YM2413RenderNormal called without init\n"));
+#endif
+
 	nBurnPosition += nSegmentLength;
 
 	pYM2413Buffer[0] = pBuffer;
@@ -102,21 +110,32 @@ static void YM2413RenderNormal(INT16* pSoundBuf, INT32 nSegmentLength)
 
 void BurnYM2413Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("BurnYM2413Reset called without init\n"));
+#endif
+
 	YM2413ResetChip(0);
 }
 
 void BurnYM2413Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("BurnYM2413Exit called without init\n"));
+#endif
 	YM2413Shutdown();
 
 	if (pBuffer) {
 		free(pBuffer);
 		pBuffer = NULL;
 	}
+	
+	DebugSnd_YM2413Initted = 0;
 }
 
 INT32 BurnYM2413Init(INT32 nClockFrequency, float nVolume)
 {
+	DebugSnd_YM2413Initted = 1;
+	
 	if (nBurnSoundRate <= 0) {
 		YM2413Init(1, nClockFrequency, 11025);
 		return 0;
@@ -155,16 +174,28 @@ INT32 BurnYM2413Init(INT32 nClockFrequency, float nVolume)
 
 void BurnYM2413IncreaseVolume(INT32 nFactor)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("BurnYM2413IncreaseVolume called without init\n"));
+#endif
+
 	nYM2413Volume *= nFactor;
 }
 
 void BurnYM2413DecreaseVolume(INT32 nFactor)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("BurnYM2413DecreaseVolume called without init\n"));
+#endif
+
 	nYM2413Volume /= nFactor;
 }
 
 void BurnYM2413Scan(INT32 nAction)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("BurnYM2413Scan called without init\n"));
+#endif
+
 	if ((nAction & ACB_DRIVER_DATA) == 0) {
 		return;
 	}

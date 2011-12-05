@@ -13,6 +13,9 @@ void BurnYM2413IncreaseVolume(INT32 nFactor);
 void BurnYM2413DecreaseVolume(INT32 nFactor);
 
 #define BurnYM2413Read(a) YM2413Read(0, a)
-#define BurnYM2413Write(a, d) YM2413Write(0, a, d)
-//#define BurnYM2413SetUpdateHandler(h) YM2413SetUpdateHandler(0, h)
 
+#if defined FBA_DEBUG
+	#define BurnYM2413Write(a, d) if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("BurnYM2413Write called without init\n")); YM2413Write(0, a, d)
+#else
+	#define BurnYM2413Write(a, d) YM2413Write(0, a, d)
+#endif

@@ -24,5 +24,10 @@ void BurnY8950Exit();
 extern void (*BurnY8950Update)(INT16* pSoundBuf, INT32 nSegmentEnd);
 void BurnY8950Scan(INT32 nAction, INT32* pnMin);
 
-#define BurnY8950Write(a, n) Y8950Write(0, a, n)
 #define BurnY8950Read(a) Y8950Read(0, a)
+
+#if defined FBA_DEBUG
+	#define BurnY8950Write(a, n) if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("BurnY8950Write called without init\n")); Y8950Write(0, a, n)
+#else
+	#define BurnY8950Write(a, n) Y8950Write(0, a, n)
+#endif

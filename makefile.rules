@@ -80,8 +80,8 @@ depobj	:= 	about.o bzip.o cona.o debugger.o drv.o dwmapi_core.o dynhuff.o fba_ka
 			\
 			$(drvobj) \
 			\
-			burn.o burn_gun.o burn_led.o burn_memory.o burn_sound.o burn_sound_c.o cheat.o hiscore.o load.o tiles_generic.o \
-			timer.o vector.o \
+			burn.o burn_gun.o burn_led.o burn_memory.o burn_sound.o burn_sound_c.o cheat.o debug_track.o hiscore.o load.o \
+			tiles_generic.o timer.o vector.o \
 			\
 			8255ppi.o eeprom.o pandora.o seibusnd.o timekpr.o \
 			\

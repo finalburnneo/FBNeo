@@ -340,6 +340,10 @@ static int Y8950StreamCallbackDummy(INT32 /* nSoundRate */)
 
 static void Y8950Render(INT32 nSegmentLength)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("Y8950Render called without init\n"));
+#endif
+
 	if (nY8950Position >= nSegmentLength) {
 		return;
 	}
@@ -358,6 +362,10 @@ static void Y8950Render(INT32 nSegmentLength)
 
 static void Y8950UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("Y8950UpdateResample called without init\n"));
+#endif
+
 	INT32 nSegmentLength = nSegmentEnd;
 	INT32 nSamplesNeeded = nSegmentEnd * nBurnY8950SoundRate / nBurnSoundRate + 1;
 
@@ -408,6 +416,10 @@ static void Y8950UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 static void Y8950UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("Y8950UpdateNormal called without init\n"));
+#endif
+
 	INT32 nSegmentLength = nSegmentEnd;
 
 //	bprintf(PRINT_NORMAL, _T("    Y8950 render %6i -> %6i\n"), nY8950Position, nSegmentEnd);
@@ -455,6 +467,10 @@ static void Y8950UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 void BurnY8950UpdateRequest(INT32, INT32)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("BurnY8950UpdateRequest called without init\n"));
+#endif
+
 	Y8950Render(BurnY8950StreamCallback(nBurnY8950SoundRate));
 }
 
@@ -463,6 +479,10 @@ void BurnY8950UpdateRequest(INT32, INT32)
 
 void BurnY8950Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("BurnY8950Reset called without init\n"));
+#endif
+
 	BurnTimerResetY8950();
 
 	Y8950ResetChip(0);
@@ -470,6 +490,10 @@ void BurnY8950Reset()
 
 void BurnY8950Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("BurnY8950Exit called without init\n"));
+#endif
+
 	Y8950Shutdown();
 
 	BurnTimerExitY8950();
@@ -480,6 +504,8 @@ void BurnY8950Exit()
 	}
 	
 	bY8950AddSignal = 0;
+	
+	DebugSnd_Y8950Initted = 0;
 }
 
 INT32 BurnY8950Init(INT32 nClockFrequency, UINT8* Y8950ADPCMROM, INT32 nY8950ADPCMSize, OPL_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), INT32 bAddSignal)
@@ -529,12 +555,18 @@ INT32 BurnY8950Init(INT32 nClockFrequency, UINT8* Y8950ADPCMROM, INT32 nY8950ADP
 	nFractionalPosition = 0;
 	
 	bY8950AddSignal = bAddSignal;
+	
+	DebugSnd_Y8950Initted = 1;
 
 	return 0;
 }
 
 void BurnY8950Scan(INT32 nAction, INT32* pnMin)
 {
+	#if defined FBA_DEBUG
+	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("BurnY8950Scan called without init\n"));
+#endif
+	
 	BurnTimerScanY8950(nAction, pnMin);
 	
 	if (nAction & ACB_DRIVER_DATA) {

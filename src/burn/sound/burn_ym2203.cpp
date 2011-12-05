@@ -42,6 +42,10 @@ static INT32 YM2203StreamCallbackDummy(INT32 /* nSoundRate */)
 
 static void AY8910Render(INT32 nSegmentLength)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203 AY8910Render called without init\n"));
+#endif
+
 	if (nAY8910Position >= nSegmentLength) {
 		return;
 	}
@@ -69,6 +73,10 @@ static void AY8910Render(INT32 nSegmentLength)
 
 static void YM2203Render(INT32 nSegmentLength)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("YM2203Render called without init\n"));
+#endif
+
 	if (nYM2203Position >= nSegmentLength) {
 		return;
 	}
@@ -95,6 +103,10 @@ static void YM2203Render(INT32 nSegmentLength)
 
 static void YM2203UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("YM2203UpdateResample called without init\n"));
+#endif
+
 	INT32 nSegmentLength = nSegmentEnd;
 	INT32 nSamplesNeeded = nSegmentEnd * nBurnYM2203SoundRate / nBurnSoundRate + 1;
 
@@ -196,6 +208,10 @@ static void YM2203UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 static void YM2203UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("YM2203UpdateNormal called without init\n"));
+#endif
+
 	INT32 nSegmentLength = nSegmentEnd;
 	INT32 i;
 
@@ -295,11 +311,19 @@ static void YM2203UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 
 void BurnYM2203UpdateRequest()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203UpdateRequest called without init\n"));
+#endif
+
 	YM2203Render(BurnYM2203StreamCallback(nBurnYM2203SoundRate));
 }
 
 static void BurnAY8910UpdateRequest()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203 BurnAY8910UpdateRequest called without init\n"));
+#endif
+
 	AY8910Render(BurnYM2203StreamCallback(nBurnYM2203SoundRate));
 }
 
@@ -308,6 +332,10 @@ static void BurnAY8910UpdateRequest()
 
 void BurnYM2203Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203Reset called without init\n"));
+#endif
+
 	BurnTimerReset();
 	
 	for (INT32 i = 0; i < nNumChips; i++) {
@@ -318,6 +346,10 @@ void BurnYM2203Reset()
 
 void BurnYM2203Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203Exit called without init\n"));
+#endif
+
 	YM2203Shutdown();
 	
 	for (INT32 i = 0; i < nNumChips; i++) {
@@ -334,10 +366,14 @@ void BurnYM2203Exit()
 	nNumChips = 0;
 	bYM2203AddSignal = 0;
 	nYM2203VolumeShift = 0;
+	
+	DebugSnd_YM2203Initted = 0;
 }
 
 INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), double (*GetTimeCallback)(), INT32 bAddSignal)
 {
+	DebugSnd_YM2203Initted = 1;
+	
 	if (num > MAX_YM2203) num = MAX_YM2203;
 	
 	BurnTimerInit(&YM2203TimerOver, GetTimeCallback);
@@ -394,11 +430,19 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 
 void BurnYM2203SetVolumeShift(INT32 Shift)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203SetVolumeShift called without init\n"));
+#endif
+
 	nYM2203VolumeShift = Shift;
 }
 
 void BurnYM2203Scan(INT32 nAction, INT32* pnMin)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203Scan called without init\n"));
+#endif
+
 	BurnTimerScan(nAction, pnMin);
 	AY8910Scan(nAction, pnMin);
 

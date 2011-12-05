@@ -21,6 +21,10 @@ static INT32 nYM2151Volume;
 
 static void YM2151RenderResample(INT16* pSoundBuf, INT32 nSegmentLength)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("YM2151RenderResample called without init\n"));
+#endif
+	
 	nBurnPosition += nSegmentLength;
 
 	if (nBurnPosition >= nBurnSoundRate) {
@@ -78,6 +82,10 @@ static void YM2151RenderResample(INT16* pSoundBuf, INT32 nSegmentLength)
 
 static void YM2151RenderNormal(INT16* pSoundBuf, INT32 nSegmentLength)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("YM2151RenderNormal called without init\n"));
+#endif
+
 	nBurnPosition += nSegmentLength;
 
 	pYM2151Buffer[0] = pBuffer;
@@ -106,21 +114,33 @@ static void YM2151RenderNormal(INT16* pSoundBuf, INT32 nSegmentLength)
 
 void BurnYM2151Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Reset called without init\n"));
+#endif
+
 	YM2151ResetChip(0);
 }
 
 void BurnYM2151Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Exit called without init\n"));
+#endif
+
 	YM2151Shutdown();
 
 	if (pBuffer) {
 		free(pBuffer);
 		pBuffer = NULL;
 	}
+	
+	DebugSnd_YM2151Initted = 0;
 }
 
 INT32 BurnYM2151Init(INT32 nClockFrequency, float nVolume)
 {
+	DebugSnd_YM2151Initted = 1;
+	
 	if (nBurnSoundRate <= 0) {
 		YM2151Init(1, nClockFrequency, 11025);
 		return 0;
@@ -159,6 +179,10 @@ INT32 BurnYM2151Init(INT32 nClockFrequency, float nVolume)
 
 void BurnYM2151Scan(INT32 nAction)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Scan called without init\n"));
+#endif
+	
 	if ((nAction & ACB_DRIVER_DATA) == 0) {
 		return;
 	}

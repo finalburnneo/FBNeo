@@ -135,11 +135,19 @@ static void counters_from_ram()
 
 UINT8 TimeKeeperRead(UINT32 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_TimeKprInitted) bprintf(PRINT_ERROR, _T("TimeKeeperRead called without init\n"));
+#endif
+
 	return Chip.data[offset];
 }
 
 void TimeKeeperWrite(INT32 offset, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_TimeKprInitted) bprintf(PRINT_ERROR, _T("TimeKeeperWrite called without init\n"));
+#endif
+
 	if( offset == Chip.offset_control )
 	{
 		if( ( Chip.control & CONTROL_W ) != 0 &&
@@ -167,6 +175,10 @@ void TimeKeeperWrite(INT32 offset, UINT8 data)
 
 void TimeKeeperTick()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_TimeKprInitted) bprintf(PRINT_ERROR, _T("TimeKeeperTick called without init\n"));
+#endif
+
 	INT32 carry;
 
 	if( ( Chip.seconds & SECONDS_ST ) != 0 ||
@@ -237,6 +249,8 @@ void TimeKeeperTick()
 
 void TimeKeeperInit(INT32 type, UINT8 *data)
 {
+	DebugDev_TimeKprInitted = 1;
+	
 	time_t rawtime;
 	struct tm *timeinfo;
 	
@@ -309,16 +323,26 @@ void TimeKeeperInit(INT32 type, UINT8 *data)
 
 void TimeKeeperExit()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_TimeKprInitted) bprintf(PRINT_ERROR, _T("TimeKeeperExit called without init\n"));
+#endif
+
 	if (AllocatedOwnDataArea) {
 		free (Chip.data);
 		Chip.data = NULL;
 	}
 	AllocatedOwnDataArea = 0;
 	memset(&Chip, 0, sizeof(Chip));
+	
+	DebugDev_TimeKprInitted = 0;
 }
 
 void TimeKeeperScan(INT32 nAction)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_TimeKprInitted) bprintf(PRINT_ERROR, _T("TimeKeeperScan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 	
 	if (nAction & ACB_NVRAM) {

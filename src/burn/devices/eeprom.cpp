@@ -61,11 +61,17 @@ static INT32 eeprom_command_match(const char *buf, const char *cmd, INT32 len)
 
 INT32 EEPROMAvailable()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMAvailable called without init\n"));
+#endif
+
 	return neeprom_available;
 }
 
 void EEPROMInit(const eeprom_interface *interface)
 {
+	DebugDev_EEPROMInitted = 1;
+	
 	intf = interface;
 
 	if ((1 << intf->address_bits) * intf->data_bits / 8 > MEMORY_SIZE)
@@ -100,6 +106,10 @@ void EEPROMInit(const eeprom_interface *interface)
 
 void EEPROMExit()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMExit called without init\n"));
+#endif
+
 	char output[128];
 	sprintf (output, "config\\games\\%s.nv", BurnDrvGetTextA(DRV_NAME));
 
@@ -110,6 +120,8 @@ void EEPROMExit()
 	FILE *fz = fopen(output, "wb");
 	fwrite (eeprom_data, len, 1, fz);
 	fclose (fz);
+	
+	DebugDev_EEPROMInitted = 0;
 }
 
 static void eeprom_write(INT32 bit)
@@ -213,6 +225,10 @@ static void eeprom_write(INT32 bit)
 
 void EEPROMReset()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMReset called without init\n"));
+#endif
+
 	serial_count = 0;
 	sending = 0;
 	reset_delay = intf->reset_delay;
@@ -220,11 +236,19 @@ void EEPROMReset()
 
 void EEPROMWriteBit(INT32 bit)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMWriteBit called without init\n"));
+#endif
+
 	latch = bit;
 }
 
 INT32 EEPROMRead()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMRead called without init\n"));
+#endif
+
 	INT32 res;
 
 	if (sending)
@@ -246,6 +270,10 @@ INT32 EEPROMRead()
 
 void EEPROMSetCSLine(INT32 state)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMSetCSLine called without init\n"));
+#endif
+
 	reset_line = state;
 
 	if (reset_line != EEPROM_CLEAR_LINE)
@@ -254,6 +282,10 @@ void EEPROMSetCSLine(INT32 state)
 
 void EEPROMSetClockLine(INT32 state)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMSetClockLine called without init\n"));
+#endif
+
 	if (state == EEPROM_PULSE_LINE || (clock_line == EEPROM_CLEAR_LINE && state != EEPROM_CLEAR_LINE))
 	{
 		if (reset_line == EEPROM_CLEAR_LINE)
@@ -282,11 +314,19 @@ void EEPROMSetClockLine(INT32 state)
 
 void EEPROMFill(const UINT8 *data, INT32 offset, INT32 length)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMFill called without init\n"));
+#endif
+
 	memcpy(eeprom_data + offset, data, length);
 }
 
 void EEPROMScan(INT32 nAction, INT32* pnMin)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMScan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 
 	if (nAction & ACB_DRIVER_DATA) {

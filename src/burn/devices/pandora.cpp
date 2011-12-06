@@ -13,11 +13,19 @@ INT32 pandora_flipscreen;
 
 void pandora_set_clear(INT32 clear)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_PandoraInitted) bprintf(PRINT_ERROR, _T("pandora_set_clear called without init\n"));
+#endif
+
 	pandora_clear = clear;
 }
 
 void pandora_update(UINT16 *dest)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_PandoraInitted) bprintf(PRINT_ERROR, _T("pandora_update called without init\n"));
+#endif
+
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 		if (pandora_temp[i]) {
 			dest[i] = pandora_temp[i] & 0x3ff;
@@ -27,6 +35,10 @@ void pandora_update(UINT16 *dest)
 
 void pandora_buffer_sprites()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_PandoraInitted) bprintf(PRINT_ERROR, _T("pandora_buffer_sprites called without init\n"));
+#endif
+
 	INT32 sx=0, sy=0, x=0, y=0;
 
 	if (pandora_clear) memset (pandora_temp, 0, nScreenWidth * nScreenHeight * sizeof(UINT16));
@@ -95,6 +107,8 @@ void pandora_buffer_sprites()
 // must be called after GenericTilesInit()
 void pandora_init(UINT8 *ram, UINT8 *gfx, INT32 color_offset, INT32 x, INT32 y)
 {
+	DebugDev_PandoraInitted = 1;
+	
 	pandora_ram	= ram;
 	pandora_xoffset	= x;
 	pandora_yoffset	= y;
@@ -113,10 +127,16 @@ void pandora_init(UINT8 *ram, UINT8 *gfx, INT32 color_offset, INT32 x, INT32 y)
 
 void pandora_exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_PandoraInitted) bprintf(PRINT_ERROR, _T("pandora_exit called without init\n"));
+#endif
+
 	if (pandora_temp) {
 		free (pandora_temp);
 		pandora_temp = NULL;
 	}
 
 	pandora_ram = pandora_gfx = NULL;
+	
+	DebugDev_PandoraInitted = 0;
 }

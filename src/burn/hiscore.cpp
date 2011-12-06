@@ -351,6 +351,8 @@ static INT32 CheckHiscoreAllowed()
 
 void HiscoreInit()
 {
+	Debug_HiscoreInitted = 1;
+	
 	if (!CheckHiscoreAllowed()) return;
 	
 	HiscoresInUse = 0;
@@ -450,6 +452,10 @@ void HiscoreInit()
 
 void HiscoreReset()
 {
+#if defined FBA_DEBUG
+	if (!Debug_HiscoreInitted) bprintf(PRINT_ERROR, _T("HiscoreReset called without init\n"));
+#endif
+
 	if (!CheckHiscoreAllowed() || !HiscoresInUse) return;
 	
 	if (nCpuType == -1) set_cpu_type();
@@ -473,6 +479,10 @@ void HiscoreReset()
 
 void HiscoreApply()
 {
+#if defined FBA_DEBUG
+	if (!Debug_HiscoreInitted) bprintf(PRINT_ERROR, _T("HiscoreApply called without init\n"));
+#endif
+
 	if (!CheckHiscoreAllowed() || !HiscoresInUse) return;
 	
 	if (nCpuType == -1) set_cpu_type();
@@ -525,7 +535,14 @@ void HiscoreApply()
 
 void HiscoreExit()
 {
-	if (!CheckHiscoreAllowed() || !HiscoresInUse) return;
+#if defined FBA_DEBUG
+	if (!Debug_HiscoreInitted) bprintf(PRINT_ERROR, _T("HiscoreExit called without init\n"));
+#endif
+
+	if (!CheckHiscoreAllowed() || !HiscoresInUse) {
+		Debug_HiscoreInitted = 0;
+		return;
+	}
 	
 	if (nCpuType == -1) set_cpu_type();
 	
@@ -569,4 +586,6 @@ void HiscoreExit()
 		free(HiscoreMemRange[i].Data);
 		HiscoreMemRange[i].Data = NULL;
 	}
+	
+	Debug_HiscoreInitted = 0;
 }

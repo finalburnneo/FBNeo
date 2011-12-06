@@ -104,6 +104,10 @@ static void set_led_draw_position()
 
 void BurnLEDSetFlipscreen(INT32 flip)
 {
+#if defined FBA_DEBUG
+	if (!Debug_BurnLedInitted) bprintf(PRINT_ERROR, _T("BurnLEDSetFlipscreen called without init\n"));
+#endif
+
 	flip = flip ? 1 : 0;
 
 	if (flipscreen != flip) {
@@ -114,6 +118,10 @@ void BurnLEDSetFlipscreen(INT32 flip)
 
 void BurnLEDReset()
 {
+#if defined FBA_DEBUG
+	if (!Debug_BurnLedInitted) bprintf(PRINT_ERROR, _T("BurnLEDReset called without init\n"));
+#endif
+
 	memset (led_status, 0, MAX_LED * sizeof(INT32));
 
 	BurnLEDSetFlipscreen(0);
@@ -121,6 +129,8 @@ void BurnLEDReset()
 
 void BurnLEDInit(INT32 num, INT32 position, INT32 size, INT32 color, INT32 transparency)
 {
+	Debug_BurnLedInitted = 1;
+	
 	if (num >= MAX_LED) num = MAX_LED - 1;
 
 	led_count = num;
@@ -138,6 +148,11 @@ void BurnLEDInit(INT32 num, INT32 position, INT32 size, INT32 color, INT32 trans
 
 void BurnLEDSetStatus(INT32 led, UINT32 status)
 {
+#if defined FBA_DEBUG
+	if (!Debug_BurnLedInitted) bprintf(PRINT_ERROR, _T("BurnLEDSetStatus called without init\n"));
+	if (led >= led_count) bprintf(PRINT_ERROR, _T("BurnLEDSetStatus called with invalid led %x\n"), led);
+#endif
+
 	if (led >= led_count) return;
 
 	if (screen_flipped ^ flipscreen) {
@@ -149,6 +164,10 @@ void BurnLEDSetStatus(INT32 led, UINT32 status)
 
 void BurnLEDExit()
 {
+#if defined FBA_DEBUG
+	if (!Debug_BurnLedInitted) bprintf(PRINT_ERROR, _T("BurnLEDExit called without init\n"));
+#endif
+
 	BurnLEDReset();
 
 	led_count = 0;
@@ -168,10 +187,16 @@ void BurnLEDExit()
 	nScreenHeight = 0;
 
 	flipscreen = -1;
+	
+	Debug_BurnLedInitted = 0;
 }
 
 void BurnLEDRender()
 {
+#if defined FBA_DEBUG
+	if (!Debug_BurnLedInitted) bprintf(PRINT_ERROR, _T("BurnLEDRender called without init\n"));
+#endif
+
 	INT32 xpos = led_xpos;
 	INT32 ypos = led_ypos;
 	int color = BurnHighCol((led_color >> 16) & 0xff, (led_color >> 8) & 0xff, (led_color >> 0) & 0xff, 0);
@@ -217,6 +242,10 @@ void BurnLEDRender()
 
 INT32 BurnLEDScan(INT32 nAction, INT32 *pnMin)
 {
+#if defined FBA_DEBUG
+	if (!Debug_BurnLedInitted) bprintf(PRINT_ERROR, _T("BurnLEDScan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 
 	if (pnMin != NULL) {

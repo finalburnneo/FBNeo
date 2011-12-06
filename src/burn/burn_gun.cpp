@@ -46,6 +46,11 @@ UINT8 BurnGunTargetData[18][18] = {
 
 UINT8 BurnGunReturnX(INT32 num)
 {
+#if defined FBA_DEBUG
+	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnGunReturnX called without init\n"));
+	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnGunReturnX called with invalid player %x\n"), num);
+#endif
+
 	if (num > MAX_GUNS - 1) return 0xff;
 
 	float temp = (float)((BurnGunX[num] >> 8) + 8) / nBurnGunMaxX * 0xff;
@@ -54,6 +59,11 @@ UINT8 BurnGunReturnX(INT32 num)
 
 UINT8 BurnGunReturnY(INT32 num)
 {
+#if defined FBA_DEBUG
+	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnGunReturnY called without init\n"));
+	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnGunReturnY called with invalid player %x\n"), num);
+#endif
+
 	if (num > MAX_GUNS - 1) return 0xff;
 	
 	float temp = (float)((BurnGunY[num] >> 8) + 8) / nBurnGunMaxY * 0xff;
@@ -62,6 +72,11 @@ UINT8 BurnGunReturnY(INT32 num)
 
 void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y)
 {
+#if defined FBA_DEBUG
+	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnGunMakeInputs called without init\n"));
+	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnGunMakeInputs called with invalid player %x\n"), num);
+#endif
+
 	if (num > MAX_GUNS - 1) return;
 	
 	const INT32 MinX = -8 * 0x100;
@@ -78,6 +93,8 @@ void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y)
 	
 void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 {
+	Debug_BurnGunInitted = 1;
+	
 	if (nNumPlayers > MAX_GUNS) nNumPlayers = MAX_GUNS;
 	nBurnGunNumPlayers = nNumPlayers;
 	bBurnGunDrawTargets = bDrawTargets;
@@ -96,6 +113,10 @@ void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 
 void BurnGunExit()
 {
+#if defined FBA_DEBUG
+	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnGunExit called without init\n"));
+#endif
+
 	nBurnGunNumPlayers = 0;
 	bBurnGunDrawTargets = true;
 	
@@ -106,16 +127,27 @@ void BurnGunExit()
 		BurnGunX[i] = 0;
 		BurnGunY[i] = 0;
 	}
+	
+	Debug_BurnGunInitted = 0;
 }
 
 void BurnGunScan()
 {
+#if defined FBA_DEBUG
+	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnGunScan called without init\n"));
+#endif
+
 	SCAN_VAR(BurnGunX);
 	SCAN_VAR(BurnGunY);
 }
 
 void BurnGunDrawTarget(INT32 num, INT32 x, INT32 y)
 {
+#if defined FBA_DEBUG
+	if (!Debug_BurnGunInitted) bprintf(PRINT_ERROR, _T("BurnGunDrawTarget called without init\n"));
+	if (num >= nBurnGunNumPlayers) bprintf(PRINT_ERROR, _T("BurnGunDrawTarget called with invalid player %x\n"), num);
+#endif
+
 	if (bBurnGunDrawTargets == false) return;
 	
 	if (num > MAX_GUNS - 1) return;

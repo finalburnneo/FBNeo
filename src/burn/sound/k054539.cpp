@@ -14,6 +14,7 @@
 #include "k054539.h"
 
 static UINT32 nUpdateStep;
+static INT32 nNumChips = 0;
 
 typedef struct _k054539_interface k054539_interface;
 struct _k054539_interface
@@ -64,6 +65,7 @@ void K054539_init_flags(INT32 chip, INT32 flags)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539_init_flags called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K054539_init_flags called with invalid chip %x\n"), chip);
 #endif
 
 	info = &Chips[chip];
@@ -74,6 +76,7 @@ void K054539_set_gain(INT32 chip, INT32 channel, double gain)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539_set_gain called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K054539_set_gain called with invalid chip %x\n"), chip);
 #endif
 
 	info = &Chips[chip];
@@ -113,6 +116,7 @@ void K054539Write(INT32 chip, INT32 offset, UINT8 data)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Write called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K054539Write called with invalid chip %x\n"), chip);
 #endif
 
 	info = &Chips[chip];
@@ -204,6 +208,7 @@ UINT8 K054539Read(INT32 chip, INT32 offset)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Read called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K054539Read called with invalid chip %x\n"), chip);
 #endif
 
 	info = &Chips[chip];
@@ -233,6 +238,7 @@ void K054539Reset(INT32 chip)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Reset called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K054539Reset called with invalid chip %x\n"), chip);
 #endif
 
 	info = &Chips[chip];
@@ -299,6 +305,8 @@ void K054539Init(INT32 chip, INT32 clock, UINT8 *rom, INT32 nLen)
 
 	if (soundbuf[0] == NULL) soundbuf[0] = (INT32*)malloc(nBurnSoundLen * sizeof(INT32));
 	if (soundbuf[1] == NULL) soundbuf[1] = (INT32*)malloc(nBurnSoundLen * sizeof(INT32));
+	
+	nNumChips = chip;
 }
 
 void K054539Exit()
@@ -326,12 +334,14 @@ void K054539Exit()
 	}
 	
 	DebugSnd_K054539Initted = 0;
+	nNumChips = 0;
 }
 
 void K054539Update(INT32 chip, INT16 *pBuf, INT32 length)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Update called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K054539Update called with invalid chip %x\n"), chip);
 #endif
 
 	info = &Chips[chip];

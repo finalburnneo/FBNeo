@@ -16,6 +16,12 @@ extern UINT8* MSM6295SampleData[MAX_MSM6295][4];
 
 inline static UINT32 MSM6295ReadStatus(const INT32 nChip)
 {
+#if defined FBA_DEBUG
+	extern INT32 nLastMSM6295Chip;
+	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295ReadStatus called without init\n"));
+	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295ReadStatus called with invalid chip %x\n"), nChip);
+#endif
+
 	extern UINT32 nMSM6295Status[MAX_MSM6295];
 
 	return nMSM6295Status[nChip];

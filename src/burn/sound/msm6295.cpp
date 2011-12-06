@@ -43,12 +43,17 @@ static INT32 MSM6295StepShift[8] = {-1, -1, -1, -1, 2, 4, 6, 8};
 static INT32* MSM6295ChannelData[MAX_MSM6295][4];
 
 static INT32* pBuffer = NULL;
-static INT32 nLastChip;
+INT32 nLastMSM6295Chip;
 
 static bool bAdd;
 
 void MSM6295Reset(INT32 nChip)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Reset called without init\n"));
+	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295Reset called with invalid chip number %x\n"), nChip);
+#endif
+
 	nMSM6295Status[nChip] = 0;
 	MSM6295[nChip].bIsCommand = false;
 
@@ -66,6 +71,11 @@ void MSM6295Reset(INT32 nChip)
 
 INT32 MSM6295Scan(INT32 nChip, INT32 /*nAction*/)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Scan called without init\n"));
+	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295Scan called with invalid chip number %x\n"), nChip);
+#endif
+
 	INT32 nSampleSize = MSM6295[nChip].nSampleSize;
 	SCAN_VAR(MSM6295[nChip]);
 	MSM6295[nChip].nSampleSize = nSampleSize;
@@ -283,6 +293,11 @@ static void MSM6295Render_Cubic(INT32 nChip, INT32* pBuf, INT32 nSegmentLength)
 
 INT32 MSM6295Render(INT32 nChip, INT16* pSoundBuf, INT32 nSegmentLength)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Render called without init\n"));
+	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295Render called with invalid chip number %x\n"), nChip);
+#endif
+
 	if (nChip == 0) {
 		memset(pBuffer, 0, nSegmentLength * sizeof(INT32));
 	}
@@ -293,7 +308,7 @@ INT32 MSM6295Render(INT32 nChip, INT16* pSoundBuf, INT32 nSegmentLength)
 		MSM6295Render_Linear(nChip, pBuffer, nSegmentLength);
 	}
 
-	if (nChip == nLastChip)	{
+	if (nChip == nLastMSM6295Chip)	{
 		if (bBurnUseMMX) {
 #if defined BUILD_X86_ASM
 			if (bAdd) {
@@ -316,6 +331,11 @@ INT32 MSM6295Render(INT32 nChip, INT16* pSoundBuf, INT32 nSegmentLength)
 
 void MSM6295Command(INT32 nChip, UINT8 nCommand)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Command called without init\n"));
+	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295Command called with invalid chip number %x\n"), nChip);
+#endif
+
 	if (MSM6295[nChip].bIsCommand) {
 		// Process second half of command
 		INT32 nChannel, nSampleStart, nSampleCount;
@@ -383,6 +403,11 @@ void MSM6295Command(INT32 nChip, UINT8 nCommand)
 
 void MSM6295Exit(INT32 nChip)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Exit called without init\n"));
+	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295Exit called with invalid chip number %x\n"), nChip);
+#endif
+
 	if (pBuffer) {
 		free(pBuffer);
 		pBuffer = NULL;
@@ -394,10 +419,14 @@ void MSM6295Exit(INT32 nChip)
 			MSM6295ChannelData[nChip][nChannel] = NULL;
 		}
 	}
+	
+	DebugSnd_MSM6295Initted = 0;
 }
 
 INT32 MSM6295Init(INT32 nChip, INT32 nSamplerate, float fMaxVolume, bool bAddSignal)
 {
+	DebugSnd_MSM6295Initted = 1;
+	
 	if (nBurnSoundRate > 0) {
 		if (pBuffer == NULL) {
 			pBuffer = (INT32*)malloc(nBurnSoundRate * sizeof(INT32));
@@ -422,10 +451,10 @@ INT32 MSM6295Init(INT32 nChip, INT32 nSamplerate, float fMaxVolume, bool bAddSig
 	MSM6295[nChip].bIsCommand = false;
 
 	if (nChip == 0) {
-		nLastChip = 0;
+		nLastMSM6295Chip = 0;
 	} else {
-		if (nLastChip < nChip) {
-			nLastChip = nChip;
+		if (nLastMSM6295Chip < nChip) {
+			nLastMSM6295Chip = nChip;
 		}
 	}
 

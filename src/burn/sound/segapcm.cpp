@@ -18,6 +18,10 @@ static INT32 *Right = NULL;
 
 void SegaPCMUpdate(INT16* pSoundBuf, INT32 nLength)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SegaPCMInitted) bprintf(PRINT_ERROR, _T("SegaPCMUpdate called without init\n"));
+#endif
+
 	INT32 Channel;
 	
 	memset(Left, 0, nLength * sizeof(INT32));
@@ -97,10 +101,16 @@ void SegaPCMInit(INT32 clock, INT32 bank, UINT8 *pPCMData, INT32 PCMDataSize)
 	
 	double Rate = (double)clock / 128 / nBurnSoundRate;
 	Chip->UpdateStep = (INT32)(Rate * 0x10000);
+	
+	DebugSnd_SegaPCMInitted = 1;
 }
 
 void SegaPCMExit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SegaPCMInitted) bprintf(PRINT_ERROR, _T("SegaPCMExit called without init\n"));
+#endif
+
 	if (Chip) {
 		free(Chip);
 		Chip = NULL;
@@ -115,10 +125,16 @@ void SegaPCMExit()
 		free(Right);
 		Right = NULL;
 	}
+	
+	DebugSnd_SegaPCMInitted = 0;
 }
 
 INT32 SegaPCMScan(INT32 nAction,INT32 *pnMin)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SegaPCMInitted) bprintf(PRINT_ERROR, _T("SegaPCMScan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 	char szName[16];
 	
@@ -142,10 +158,18 @@ INT32 SegaPCMScan(INT32 nAction,INT32 *pnMin)
 
 UINT8 SegaPCMRead(UINT32 Offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SegaPCMInitted) bprintf(PRINT_ERROR, _T("SegaPCMRead called without init\n"));
+#endif
+
 	return Chip->ram[Offset & 0x07ff];
 }
 
 void SegaPCMWrite(UINT32 Offset, UINT8 Data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SegaPCMInitted) bprintf(PRINT_ERROR, _T("SegaPCMWrite called without init\n"));
+#endif
+
 	Chip->ram[Offset & 0x07ff] = Data;
 }

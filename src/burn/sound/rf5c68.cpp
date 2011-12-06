@@ -33,12 +33,13 @@ static INT32 *right = NULL;
 
 void RF5C68PCMUpdate(INT16* pSoundBuf, INT32 length)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_RF5C68Initted) bprintf(PRINT_ERROR, _T("RF5C68PCMUpdate called without init\n"));
+#endif
+
 	if (!chip->enable) return;
 	
 	INT32 i, j;
-	
-	left = (INT32*)malloc(nBurnSoundLen * sizeof(INT32));
-	right = (INT32*)malloc(nBurnSoundLen * sizeof(INT32));
 	
 	memset(left, 0, length * sizeof(INT32));
 	memset(right, 0, length * sizeof(INT32));
@@ -85,19 +86,14 @@ void RF5C68PCMUpdate(INT16* pSoundBuf, INT32 length)
 		pSoundBuf[i + 0] = left[i];
 		pSoundBuf[i + 1] = right[i];
 	}
-	
-	if (left) {
-		free(left);
-		left = NULL;
-	}
-	if (right) {
-		free(right);
-		right = NULL;
-	}
 }
 
 void RF5C68PCMReset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_RF5C68Initted) bprintf(PRINT_ERROR, _T("RF5C68PCMReset called without init\n"));
+#endif
+
 	memset(chip, 0, sizeof(*chip));
 	memset(chip->data, 0xff, sizeof(chip->data));
 }
@@ -109,10 +105,37 @@ void RF5C68PCMInit(INT32 clock)
 	INT32 Rate = clock / 384;
 	
 	nUpdateStep = (INT32)(((float)Rate / nBurnSoundRate) * 32768);
+	
+	left = (INT32*)malloc(nBurnSoundLen * sizeof(INT32));
+	right = (INT32*)malloc(nBurnSoundLen * sizeof(INT32));
+	
+	DebugSnd_RF5C68Initted = 1;
+}
+
+void RF5C68PCMExit()
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_RF5C68Initted) bprintf(PRINT_ERROR, _T("RF5C68PCMExit called without init\n"));
+#endif
+
+	if (left) {
+		free(left);
+		left = NULL;
+	}
+	if (right) {
+		free(right);
+		right = NULL;
+	}
+
+	DebugSnd_RF5C68Initted = 0;
 }
 
 void RF5C68PCMRegWrite(UINT8 offset, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_RF5C68Initted) bprintf(PRINT_ERROR, _T("RF5C68PCMReqWrite called without init\n"));
+#endif
+
 	struct pcm_channel *chan = &chip->chan[chip->cbank];
 	INT32 i;
 	
@@ -178,11 +201,19 @@ void RF5C68PCMRegWrite(UINT8 offset, UINT8 data)
 
 UINT8 RF5C68PCMRead(UINT16 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_RF5C68Initted) bprintf(PRINT_ERROR, _T("RF5C68PCMRead called without init\n"));
+#endif
+
 	return chip->data[chip->wbank * 0x1000 + offset];
 }
 
 void RF5C68PCMWrite(UINT16 offset, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_RF5C68Initted) bprintf(PRINT_ERROR, _T("RF5C68PCMWrite called without init\n"));
+#endif
+
 	chip->data[(chip->wbank * 0x1000) + offset] = data;
 }
 

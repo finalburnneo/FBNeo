@@ -115,6 +115,7 @@ struct saa1099_state
 };
 
 static saa1099_state chips[2];
+static INT32 nNumChips = 0;
 
 static const INT32 amplitude_lookup[16] = {
 	 0*32767/16,  1*32767/16,  2*32767/16,	3*32767/16,
@@ -210,6 +211,11 @@ static void saa1099_envelope(saa1099_state *saa, INT32 ch)
 
 void saa1099Update(INT32 chip, INT16 *output, INT32 samples)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SAA1099Initted) bprintf(PRINT_ERROR, _T("saa1099Update called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("saa1099Update called with invalid chip %x\n"), chip);
+#endif
+
 	saa1099_state *saa = &chips[chip];
 	INT32 j, ch, vol;
 
@@ -309,6 +315,11 @@ void saa1099Update(INT32 chip, INT16 *output, INT32 samples)
 
 void saa1099Reset(INT32 chip)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SAA1099Initted) bprintf(PRINT_ERROR, _T("saa1099Reset called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("saa1099Reset called with invalid chip %x\n"), chip);
+#endif
+
 	saa1099_state *saa = &chips[chip];
 
 	double sample_rate = saa->sample_rate;
@@ -324,20 +335,34 @@ void saa1099Reset(INT32 chip)
 
 void saa1099Init(INT32 chip, INT32 clock, INT32 volume, INT32 bAdd)
 {
+	DebugSnd_SAA1099Initted = 1;
+	
 	saa1099_state *saa = &chips[chip];
 
 	saa->sample_rate = clock / 256;
 	saa->bAdd = bAdd;
 	saa->volume = volume;
+	
+	nNumChips = chip;
 }
 
 void saa1099Exit(INT32 )
 {
-	// nothing atm
+#if defined FBA_DEBUG
+	if (!DebugSnd_SAA1099Initted) bprintf(PRINT_ERROR, _T("saa1099Exit called without init\n"));
+#endif
+
+	DebugSnd_SAA1099Initted = 0;
+	nNumChips = 0;
 }
 
 void saa1099ControlWrite(INT32 chip, INT32 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SAA1099Initted) bprintf(PRINT_ERROR, _T("saa1099ControlWrite called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("saa1099ControlWrite called with invalid chip %x\n"), chip);
+#endif
+
 	saa1099_state *saa = &chips[chip];
 
 	saa->selected_reg = data & 0x1f;
@@ -354,6 +379,11 @@ void saa1099ControlWrite(INT32 chip, INT32 data)
 
 void saa1099DataWrite(INT32 chip, INT32 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SAA1099Initted) bprintf(PRINT_ERROR, _T("saa1099DataWrite called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("saa1099DataWrite called with invalid chip %x\n"), chip);
+#endif
+
 	saa1099_state *saa = &chips[chip];
 	INT32 reg = saa->selected_reg;
 	INT32 ch;
@@ -433,6 +463,10 @@ void saa1099DataWrite(INT32 chip, INT32 data)
 
 void saa1099Scan(INT32 chip, INT32 nAction)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SAA1099Initted) bprintf(PRINT_ERROR, _T("saa1099Scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 	saa1099_state *saa = &chips[chip];
 

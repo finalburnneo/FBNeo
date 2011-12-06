@@ -64,10 +64,13 @@ static UINT32 computed_steps;
 // 14318180/4 -> 3579545/4 -> 894886/60 -> 14915
 // 44100 / 60 -> 735
 
+static INT32 nNumChips;
+
 void iremga20_update(INT32 device, INT16 *buffer, INT32 length)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_update called without init\n"));
+	if (device > nNumChips) bprintf(PRINT_ERROR, _T("iremga20_update called with invalid chip %x\n"), device);
 #endif
 
 	chip = &chips[device];
@@ -144,6 +147,7 @@ void iremga20_write(INT32 device, INT32 offset, INT32 data)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_write called without init\n"));
+	if (device > nNumChips) bprintf(PRINT_ERROR, _T("iremga20_write called with invalid chip %x\n"), device);
 #endif
 
 	chip = &chips[device];
@@ -190,6 +194,7 @@ UINT8 iremga20_read(INT32 device, INT32 offset)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_read called without init\n"));
+	if (device > nNumChips) bprintf(PRINT_ERROR, _T("iremga20_read called with invalid chip %x\n"), device);
 #endif
 
 	chip = &chips[device];
@@ -210,6 +215,7 @@ void iremga20_reset(INT32 device)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_reset called without init\n"));
+	if (device > nNumChips) bprintf(PRINT_ERROR, _T("iremga20_reset called with invalid chip %x\n"), device);
 #endif
 
 	chip = &chips[device];
@@ -245,6 +251,8 @@ void iremga20_init(INT32 device, UINT8 *rom, INT32 rom_size, INT32 frequency)
 	iremga20_reset(device);
 	
 	computed_steps = (UINT32)((float)(chip->frequency / (1.00000 * nBurnSoundLen)));
+	
+	nNumChips = device;
 }
 
 void iremga20_exit()
@@ -254,12 +262,14 @@ void iremga20_exit()
 #endif
 
 	DebugSnd_IremGA20Initted = 0;
+	nNumChips = 0;
 }
 
 INT32 iremga20_scan(INT32 device, INT32 nAction, INT32 *pnMin)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_scan called without init\n"));
+	if (device > nNumChips) bprintf(PRINT_ERROR, _T("iremga20_scan called with invalid chip %x\n"), device);
 #endif
 
 	chip = &chips[device];

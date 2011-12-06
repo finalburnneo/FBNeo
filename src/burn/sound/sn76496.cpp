@@ -35,6 +35,11 @@ static struct SN76496 *Chip4 = NULL;
 
 void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496Update called without init\n"));
+	if (Num > NumChips) bprintf(PRINT_ERROR, _T("SN76496Update called with invalid chip %x\n"), Num);
+#endif
+
 	INT32 i;
 	INT32 Temp;
 	struct SN76496 *R = Chip0;
@@ -173,6 +178,11 @@ void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length)
 
 void SN76496Write(INT32 Num, INT32 Data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496Write called without init\n"));
+	if (Num > NumChips) bprintf(PRINT_ERROR, _T("SN76496Write called with invalid chip %x\n"), Num);
+#endif
+
 	struct SN76496 *R = Chip0;
 	INT32 n, r, c;
 	
@@ -284,6 +294,8 @@ static void SN76496Init(struct SN76496 *R, INT32 Clock)
 
 static void GenericStart(INT32 Num, INT32 Clock, INT32 FeedbackMask, INT32 NoiseTaps, INT32 NoiseInvert, INT32 SignalAdd)
 {
+	DebugSnd_SN76496Initted = 1;
+	
 	if (Num >= MAX_SN76496_CHIPS) return;
 	
 	NumChips = Num;
@@ -376,6 +388,10 @@ void SN76496Init(INT32 Num, INT32 Clock, INT32 SignalAdd)
 
 void SN76496Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496Exit called without init\n"));
+#endif
+
 	NumChips = 0;
 	
 	if (Chip0!=NULL)
@@ -403,10 +419,16 @@ void SN76496Exit()
 		free(Chip4);
 		Chip4 = NULL;
 	}
+	
+	DebugSnd_SN76496Initted = 0;
 }
 
 INT32 SN76496Scan(INT32 nAction,INT32 *pnMin)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496Scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 	char szName[16];
 	

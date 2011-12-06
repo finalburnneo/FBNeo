@@ -99,6 +99,10 @@ static inline UINT32 namco_stereo_update_one(INT16 *buffer, INT32 length, const 
 
 void NamcoSoundUpdate(INT16* buffer, INT32 length)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("NamcoSoundUpdate called without init\n"));
+#endif
+
 	sound_channel *voice;
 
 	/* zap the contents of the buffer */
@@ -178,6 +182,10 @@ void NamcoSoundUpdate(INT16* buffer, INT32 length)
 
 void NamcoSoundUpdateStereo(INT16* buffer, INT32 length)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("NamcoSoundUpdateStereo called without init\n"));
+#endif
+
 	sound_channel *voice;
 
 	/* zap the contents of the buffers */
@@ -284,6 +292,10 @@ void NamcoSoundUpdateStereo(INT16* buffer, INT32 length)
 
 void NamcoSoundWrite(UINT32 offset, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("NamcoSoundWrite called without init\n"));
+#endif
+
 	sound_channel *voice;
 	INT32 ch;
 
@@ -383,6 +395,10 @@ static void namcos1_sound_write(INT32 offset, INT32 data)
 
 void namcos1_custom30_write(INT32 offset, INT32 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("namcos1_custom30_write called without init\n"));
+#endif
+
 	if (offset < 0x100)
 	{
 		if (namco_wavedata[offset] != data)
@@ -402,6 +418,10 @@ void namcos1_custom30_write(INT32 offset, INT32 data)
 
 UINT8 namcos1_custom30_read(INT32 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("namcos1_custom30_read called without init\n"));
+#endif
+
 	return namco_wavedata[offset];
 }
 
@@ -447,6 +467,8 @@ static INT32 build_decoded_waveform()
 
 void NamcoSoundInit(INT32 clock)
 {
+	DebugSnd_NamcoSndInitted = 1;
+	
 	INT32 clock_multiple;
 	sound_channel *voice;
 	
@@ -495,6 +517,10 @@ void NamcoSoundInit(INT32 clock)
 
 void NamcoSoundExit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("NamcoSoundExit called without init\n"));
+#endif
+
 	if (chip) {
 		free(chip);
 		chip = NULL;
@@ -504,6 +530,8 @@ void NamcoSoundExit()
 		free(namco_soundregs);
 		namco_soundregs = NULL;
 	}
+	
+	DebugSnd_NamcoSndInitted = 0;
 }
 
 void NamcoSoundScan(INT32 nAction,INT32 *pnMin)
@@ -533,4 +561,3 @@ void NamcoSoundScan(INT32 nAction,INT32 *pnMin)
 	ba.szName	= szName;
 	BurnAcb(&ba);
 }
-

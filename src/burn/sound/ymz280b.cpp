@@ -67,6 +67,10 @@ static INT32* YMZ280BChannelData[8];
 
 void YMZ280BReset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("YMZ280BReset called without init\n"));
+#endif
+
 	memset(&YMZ280BChannelInfo[0], 0, sizeof(YMZ280BChannelInfo));
 
 	nYMZ280BIRQMask = 0;
@@ -93,6 +97,10 @@ inline void YMZ280BSetSampleSize(const INT32 nChannel)
 
 INT32 YMZ280BScan()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("YMZ280BScan called without init\n"));
+#endif
+
 	SCAN_VAR(nYMZ280BStatus);
 	SCAN_VAR(nYMZ280BRegister);
 
@@ -113,6 +121,8 @@ INT32 YMZ280BScan()
 
 INT32 YMZ280BInit(INT32 nClock, void (*IRQCallback)(INT32), INT32 nChannels)
 {
+	DebugSnd_YMZ280BInitted = 1;
+	
 	nYMZ280BFrequency = nClock;
 
 	if (nBurnSoundRate > 0) {
@@ -151,6 +161,10 @@ INT32 YMZ280BInit(INT32 nClock, void (*IRQCallback)(INT32), INT32 nChannels)
 
 void YMZ280BExit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("YMZ280BExit called without init\n"));
+#endif
+
 	if (pBuffer) {
 		free(pBuffer);
 		pBuffer = NULL;
@@ -159,6 +173,8 @@ void YMZ280BExit()
 	YMZ280BIRQCallback = NULL;
 	pYMZ280BRAMWrite = NULL;
 	pYMZ280BRAMRead = NULL;
+	
+	DebugSnd_YMZ280BInitted = 0;
 }
 
 inline static void UpdateIRQStatus()
@@ -441,6 +457,10 @@ inline static void RenderADPCMLoop_Cubic()
 
 INT32 YMZ280BRender(INT16* pSoundBuf, INT32 nSegmentLength)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("YMZ280BRender called without init\n"));
+#endif
+
 	memset(pBuffer, 0, nSegmentLength * 2 * sizeof(INT32));
 
 	for (nActiveChannel = 0; nActiveChannel < 8; nActiveChannel++) {
@@ -506,6 +526,10 @@ INT32 YMZ280BRender(INT16* pSoundBuf, INT32 nSegmentLength)
 
 void YMZ280BWriteRegister(UINT8 nValue)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("YMZ280BWriteRegister called without init\n"));
+#endif
+
 	if (nYMZ280BRegister < 0x80) {
 		INT32 nWriteChannel = (nYMZ280BRegister >> 2) & 0x07;
 
@@ -696,6 +720,10 @@ void YMZ280BWriteRegister(UINT8 nValue)
 
 UINT32 YMZ280BReadStatus()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("YMZ280BReadStatus called without init\n"));
+#endif
+
 	UINT32 nStatus = nYMZ280BStatus;
 	nYMZ280BStatus = 0;
 
@@ -706,10 +734,13 @@ UINT32 YMZ280BReadStatus()
 
 UINT32 YMZ280BReadRAM()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("YMZ280BReadRAM called without init\n"));
+#endif
+	
 	if (pYMZ280BRAMRead) {
 		return pYMZ280BRAMRead(nRamReadAddress++ - 1);
 	}
 
 	return 0;
 }
-

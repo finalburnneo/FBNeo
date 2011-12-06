@@ -39,6 +39,8 @@ struct k053260_chip_def {
 static k053260_chip_def Chips[2];
 static k053260_chip_def *ic;
 
+static INT32 nNumChips = 0;
+
 static void InitDeltaTable(INT32 rate, INT32 clock ) {
 	INT32		i;
 	double	base = ( double )rate;
@@ -66,6 +68,7 @@ void K053260Reset(INT32 chip)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K053260Initted) bprintf(PRINT_ERROR, _T("K053260Reset called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K053260Reset called with invalid chip %x\n"), chip);
 #endif
 
 	ic = &Chips[chip];
@@ -101,6 +104,7 @@ void K053260Update(INT32 chip, INT16 *pBuf, INT32 length)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K053260Initted) bprintf(PRINT_ERROR, _T("K053260Update called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K053260Update called with invalid chip %x\n"), chip);
 #endif
 
 	static const INT32 dpcmcnv[] = { 0,1,2,4,8,16,32,64, -128, -64, -32, -16, -8, -4, -2, -1};
@@ -224,6 +228,8 @@ void K053260Init(INT32 chip, INT32 clock, UINT8 *rom, INT32 nLen)
 	ic->delta_table = (UINT32* )malloc( 0x1000 * sizeof(UINT32) );
 
 	InitDeltaTable( rate, clock );
+	
+	nNumChips = chip;
 
 	/* setup SH1 timer if necessary */
 //	if ( ic->intf->irq )
@@ -248,6 +254,8 @@ void K053260Exit()
 	nUpdateStep = 0;
 	
 	DebugSnd_K053260Initted = 0;
+	
+	nNumChips = 0;
 }
 
 K053260_INLINE void check_bounds(INT32 channel ) {
@@ -270,6 +278,7 @@ void K053260Write(INT32 chip, INT32 offset, UINT8 data)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K053260Initted) bprintf(PRINT_ERROR, _T("K053260Write called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K053260Write called with invalid chip %x\n"), chip);
 #endif
 
 	INT32 i, t;
@@ -388,6 +397,7 @@ UINT8 K053260Read(INT32 chip, INT32 offset)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K053260Initted) bprintf(PRINT_ERROR, _T("K053260Read called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K053260Read called with invalid chip %x\n"), chip);
 #endif
 
 	ic = & Chips[chip];

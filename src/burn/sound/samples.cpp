@@ -102,6 +102,10 @@ static void make_raw(UINT8 *src, UINT32 len)
 
 void BurnSamplePlay(INT32 sample)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSamplePlay called without init\n"));
+#endif
+
 	if (sample >= nTotalSamples) return;
 
 	sample_ptr = &samples[sample];
@@ -114,6 +118,10 @@ void BurnSamplePlay(INT32 sample)
 
 void BurnSamplePause(INT32 sample)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSamplePause called without init\n"));
+#endif
+
 	if (sample >= nTotalSamples) return;
 
 	sample_ptr = &samples[sample];
@@ -122,6 +130,10 @@ void BurnSamplePause(INT32 sample)
 
 void BurnSampleResume(INT32 sample)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleResume called without init\n"));
+#endif
+
 	if (sample >= nTotalSamples) return;
 
 	sample_ptr = &samples[sample];
@@ -130,6 +142,10 @@ void BurnSampleResume(INT32 sample)
 
 void BurnSampleStop(INT32 sample)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleStop called without init\n"));
+#endif
+
 	if (sample >= nTotalSamples) return;
 
 	sample_ptr = &samples[sample];
@@ -139,6 +155,10 @@ void BurnSampleStop(INT32 sample)
 
 void BurnSampleSetLoop(INT32 sample, bool dothis)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleSetLoop called without init\n"));
+#endif
+
 	if (sample >= nTotalSamples) return;
 
 	sample_ptr = &samples[sample];
@@ -150,6 +170,10 @@ void BurnSampleSetLoop(INT32 sample, bool dothis)
 
 INT32 BurnSampleGetStatus(INT32 sample)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleGetStatus called without init\n"));
+#endif
+
 	if (sample >= nTotalSamples) return -1;
 
 	sample_ptr = &samples[sample];
@@ -158,6 +182,10 @@ INT32 BurnSampleGetStatus(INT32 sample)
 
 INT32 BurnSampleGetPosition(INT32 sample)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleGetPosition called without init\n"));
+#endif
+
 	if (sample >= nTotalSamples) return -1;
 
 	sample_ptr = &samples[sample];
@@ -166,6 +194,10 @@ INT32 BurnSampleGetPosition(INT32 sample)
 
 void BurnSampleSetPosition(INT32 sample, UINT32 position)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleSetPosition called without init\n"));
+#endif
+
 	if (sample >= nTotalSamples) return;
 
 	sample_ptr = &samples[sample];
@@ -174,6 +206,10 @@ void BurnSampleSetPosition(INT32 sample, UINT32 position)
 
 void BurnSampleReset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleReset called without init\n"));
+#endif
+
 	for (INT32 i = 0; i < nTotalSamples; i++) {
 		BurnSampleStop(i);
 
@@ -190,6 +226,8 @@ char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, INT32 nOutSize);
 
 void BurnSampleInit(INT32 nGain /*volume percentage!*/, INT32 bAdd /*add sample to stream?*/)
 {
+	DebugSnd_SamplesInitted = 1;
+	
 	if (nBurnSoundRate == 0) {
 		nTotalSamples = 0;
 		return;
@@ -254,6 +292,10 @@ void BurnSampleInit(INT32 nGain /*volume percentage!*/, INT32 bAdd /*add sample 
 
 void BurnSampleExit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleExit called without init\n"));
+#endif
+
 	for (INT32 i = 0; i < nTotalSamples; i++) {
 		sample_ptr = &samples[i];
 		if (sample_ptr->data != NULL) {
@@ -271,10 +313,16 @@ void BurnSampleExit()
 	nTotalSamples = 0;
 	bAddToStream = 0;
 	nSampleSetGain = 100;
+	
+	DebugSnd_SamplesInitted = 0;
 }
 
 void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleRender called without init\n"));
+#endif
+
 	if (pBurnSoundOut == NULL) return;
 
 	INT32 nFirstSample = 0;
@@ -357,6 +405,10 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 
 INT32 BurnSampleScan(INT32 nAction, INT32 *pnMin)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleScan called without init\n"));
+#endif
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029707;
 	}

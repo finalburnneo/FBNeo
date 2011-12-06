@@ -9,6 +9,10 @@ struct x1_010_info * x1_010_chip = NULL;
 
 void x1010_sound_bank_w(UINT32 offset, UINT16 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_X1010Initted) bprintf(PRINT_ERROR, _T("x1010_sound_bank_w called without init\n"));
+#endif
+
 	//int banks = (memory_region_length( REGION_SOUND1 ) - 0x100000) / 0x20000;
 	//if ( data >= banks ) {
 	//	bprintf(PRINT_NORMAL, _T("invalid sound bank %04x\n"), data);
@@ -22,12 +26,20 @@ void x1010_sound_bank_w(UINT32 offset, UINT16 data)
 
 UINT8 x1010_sound_read(UINT32 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_X1010Initted) bprintf(PRINT_ERROR, _T("x1010_sound_read called without init\n"));
+#endif
+
 	offset ^= x1_010_chip->address;
 	return x1_010_chip->reg[offset];
 }
 
 UINT16 x1010_sound_read_word(UINT32 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_X1010Initted) bprintf(PRINT_ERROR, _T("x1010_sound_read_word called without init\n"));
+#endif
+
 	UINT16 ret;
 	
 	ret = x1_010_chip->HI_WORD_BUF[offset] << 8;
@@ -38,6 +50,10 @@ UINT16 x1010_sound_read_word(UINT32 offset)
 
 void x1010_sound_update()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_X1010Initted) bprintf(PRINT_ERROR, _T("x1010_sound_update called without init\n"));
+#endif
+
 	INT16* pSoundBuf = pBurnSoundOut;
 	memset(pSoundBuf, 0, nBurnSoundLen * sizeof(INT16) * 2);
 
@@ -129,6 +145,8 @@ void x1010_sound_update()
 
 void x1010_sound_init(UINT32 base_clock, INT32 address)
 {
+	DebugSnd_X1010Initted = 1;
+	
 	x1_010_chip = (struct x1_010_info *) malloc( sizeof(struct x1_010_info) );
 	
 	x1_010_chip->base_clock = base_clock;
@@ -138,6 +156,10 @@ void x1010_sound_init(UINT32 base_clock, INT32 address)
 
 void x1010_scan(INT32 nAction,INT32 *pnMin)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_X1010Initted) bprintf(PRINT_ERROR, _T("x1010_scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 	
 	if (pnMin != NULL) {
@@ -155,8 +177,14 @@ void x1010_scan(INT32 nAction,INT32 *pnMin)
 
 void x1010_exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_X1010Initted) bprintf(PRINT_ERROR, _T("x1010_exit called without init\n"));
+#endif
+
 	if (x1_010_chip) {
 		free(x1_010_chip);
 		x1_010_chip = NULL;
 	}
+	
+	DebugSnd_X1010Initted = 0;
 }

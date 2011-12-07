@@ -472,6 +472,10 @@ static void arm_check_irq_state(void)
 
 void arm_set_irq_line(int irqline, int state)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("arm_set_irq_line called without init\n"));
+#endif
+
 	switch (irqline) {
 
 	case ARM_IRQ_LINE: /* IRQ */
@@ -1296,6 +1300,10 @@ static void HandleCoPro( UINT32 insn)
 // burn some cycles
 void ArmIdleCycles(int cycles)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmIdleCycles called without init\n"));
+#endif
+
 	if (arm_icount > cycles) {
 		arm_icount -= cycles;
 	} else {
@@ -1306,30 +1314,50 @@ void ArmIdleCycles(int cycles)
 // get the current position
 unsigned int ArmGetPc()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmGetPc called without init\n"));
+#endif
+
 	return arm.sArmRegister[15]&ADDRESS_MASK;
 }
 
 // get the remaining cycles left to run
 unsigned int ArmRemainingCycles()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmRemainingCycles called without init\n"));
+#endif
+
 	return (arm.ArmLeftCycles - arm_icount);
 }
 
 // get the total of cycles run
 unsigned int ArmGetTotalCycles()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmGetTotalCycles called without init\n"));
+#endif
+
 	return arm.ArmTotalCycles + (arm.ArmLeftCycles - arm_icount);
 }
 
 // stop the current cpu slice
 void ArmRunEnd()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmRunEnd called without init\n"));
+#endif
+
 	arm_icount = 0;
 }
 
 // start a new frame
 void ArmNewFrame()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmNewFrame called without init\n"));
+#endif
+
 	arm.ArmTotalCycles = 0;
 	arm_icount = 0;
 	arm.ArmLeftCycles = 0;
@@ -1337,6 +1365,10 @@ void ArmNewFrame()
 
 int ArmScan(int nAction, int *)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmScan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 
 	if (nAction & ACB_VOLATILE) {
@@ -1351,4 +1383,3 @@ int ArmScan(int nAction, int *)
 
 	return 0;
 }
-

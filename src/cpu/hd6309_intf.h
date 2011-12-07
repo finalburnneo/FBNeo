@@ -59,5 +59,9 @@ void HD6309WriteRom(UINT16 Address, UINT8 Data);
 
 inline static INT32 HD6309TotalCycles()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309TotalCycles called without init\n"));
+#endif
+
 	return nHD6309CyclesTotal;
 }

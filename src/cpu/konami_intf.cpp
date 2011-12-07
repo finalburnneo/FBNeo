@@ -22,6 +22,10 @@ static INT32 (*irqcallback)(INT32);
 
 void konamiMapMemory(UINT8 *src, UINT16 start, UINT16 finish, INT32 type)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiMapMemory called without init\n"));
+#endif
+
 	UINT16 len = (finish-start) >> PAGE_SHIFT;
 
 	for (UINT16 i = 0; i < len+1; i++)
@@ -40,21 +44,37 @@ INT32 konamiDummyIrqCallback(INT32)
 
 void konamiSetIrqCallbackHandler(INT32 (*callback)(INT32))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiSetIrqCallbackHandler called without init\n"));
+#endif
+
 	irqcallback = callback;
 }
 
 void konamiSetWriteHandler(void (*write)(UINT16, UINT8))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiSetWriteHandler called without init\n"));
+#endif
+
 	konamiWrite = write;
 }
 
 void konamiSetReadHandler(UINT8 (*read)(UINT16))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiSetReadHandler called without init\n"));
+#endif
+
 	konamiRead = read;
 }
 
 void konami_write_rom(UINT16 address, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konami_write_rom called without init\n"));
+#endif
+
 	if (mem[READ][address >> PAGE_SHIFT] != NULL) {
 		mem[READ][address >> PAGE_SHIFT][address & PAGE_MASK] = data;
 	}
@@ -115,6 +135,10 @@ UINT8 konami_fetch(UINT16 address)
 
 void konamiSetIrqLine(INT32 line, INT32 state)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiSetIrqLine called without init\n"));
+#endif
+
 	if (state == KONAMI_HOLD_LINE) {
 		konami_set_irq_line(line, KONAMI_HOLD_LINE);
 		konamiRun(0);
@@ -127,6 +151,8 @@ void konamiSetIrqLine(INT32 line, INT32 state)
 
 void konamiInit(INT32 num) // only 1 cpu (No examples exist of multi-cpu konami games)
 {
+	DebugCPU_KonamiInitted = 1;
+
 	nKonamiCpuCount = 1;
 	konami_init(konamiDummyIrqCallback);
 
@@ -141,22 +167,40 @@ void konamiInit(INT32 num) // only 1 cpu (No examples exist of multi-cpu konami 
 
 void konamiExit()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiExit called without init\n"));
+#endif
+
 	nKonamiCpuCount = 0;
 	konamiWrite = NULL;
 	konamiRead = NULL;
+	
+	DebugCPU_KonamiInitted = 0;
 }
 
 void konamiOpen(INT32 num)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiOpen called without init\n"));
+#endif
+
 	nKonamiCpuActive = num;
 }
 
 void konamiClose()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiClose called without init\n"));
+#endif
+
 	nKonamiCpuActive = -1;
 }
 
 INT32 konamiGetActive()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiGetActive called without init\n"));
+#endif
+
 	return nKonamiCpuActive;
 }

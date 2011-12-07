@@ -449,6 +449,10 @@ static void m6805_reset()
 }
 
 void m6805Reset() {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Reset called without init\n"));
+#endif
+
 	m6805_reset();
 }
 
@@ -465,6 +469,10 @@ void m6805Reset() {
 
 void m6805SetIrqLine(int , int state)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805SetIrqLine called without init\n"));
+#endif
+
 	/* Basic 6805 only has one IRQ line */
 	/* See HD63705 specific version     */
 	if (m6805.irq_state[0] == state) return;
@@ -481,6 +489,10 @@ void m6805SetIrqLine(int , int state)
 /* execute instructions on this CPU until icount expires */
 int m6805Run(int cycles)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Run called without init\n"));
+#endif
+
 	UINT8 ireg;
 	m6805_ICount = cycles;
 
@@ -772,21 +784,37 @@ int m6805Run(int cycles)
 
 void m6805RunEnd()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805RunEnd called without init\n"));
+#endif
+
 	m6805_ICount = 0;
 }
 
 void m6805NewFrame()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805NewFrame called without init\n"));
+#endif
+
 	m6805.nTotalCycles = 0;
 }
 
 int m6805TotalCycles()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805TotalCycles called without init\n"));
+#endif
+
 	return m6805.nTotalCycles;
 }
 
 int m6805Scan(int nAction, int */*pnMin*/)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 
 	int (*save_irqcallback)(int) = m6805.irq_callback;
@@ -812,6 +840,10 @@ int m6805Scan(int nAction, int */*pnMin*/)
 
 void m68705Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m68705Reset called without init\n"));
+#endif
+
 	m6805_reset();
 	/* Overide default 6805 type */
 	m6805.subtype = SUBTYPE_M68705;
@@ -820,6 +852,10 @@ void m68705Reset()
 
 void m68705SetIrqLine(int irqline, int state)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m68705SetIrqLine called without init\n"));
+#endif
+
 	if (m6805.irq_state[irqline] == state ) return;
 	m6805.irq_state[irqline] = state;
 	if (state != CLEAR_LINE) m6805.pending_interrupts |= 1<<irqline;
@@ -834,6 +870,10 @@ void m68705SetIrqLine(int irqline, int state)
 
 void hd63705Reset(void)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("hd63705Reset called without init\n"));
+#endif
+
 	m6805_reset();
 
 	/* Overide default 6805 types */
@@ -846,6 +886,10 @@ void hd63705Reset(void)
 
 void hd63705SetIrqLine(int irqline, int state)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("hd63705SetIrqLine called without init\n"));
+#endif
+
 	if (irqline == 0x20) //INPUT_LINE_NMI)
 	{
 		if (m6805.nmi_state == state) return;

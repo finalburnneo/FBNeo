@@ -212,6 +212,10 @@ static SH2EXT * Sh2Ext = NULL;
  
 int Sh2MapMemory(unsigned char* pMemory, unsigned int nStart, unsigned int nEnd, int nType)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2MapMemory called without init\n"));
+#endif
+
 	unsigned char* Ptr = pMemory - nStart;
 	unsigned char** pMemMap = pSh2Ext->MemMap + (nStart >> SH2_SHIFT);
 	int need_mirror = (nStart < 0x08000000) ? 1 : 0;
@@ -256,6 +260,10 @@ int Sh2MapMemory(unsigned char* pMemory, unsigned int nStart, unsigned int nEnd,
 
 int Sh2MapHandler(uintptr_t nHandler, unsigned int nStart, unsigned int nEnd, int nType)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2MapHandler called without init\n"));
+#endif
+
 	unsigned char** pMemMap = pSh2Ext->MemMap + (nStart >> SH2_SHIFT);
 	int need_mirror = (nStart < 0x08000000) ? 1 : 0;
 	
@@ -300,6 +308,11 @@ int Sh2MapHandler(uintptr_t nHandler, unsigned int nStart, unsigned int nEnd, in
 
 int Sh2SetReadByteHandler(int i, pSh2ReadByteHandler pHandler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2SetReadByteHandler called without init\n"));
+	if (i >= SH2_MAXHANDLER) bprintf(PRINT_ERROR, _T("Sh2SetReadByteHandler called with invalid index %x\n"), i);
+#endif
+
 	if (i >= SH2_MAXHANDLER) return 1;
 	pSh2Ext->ReadByte[i] = pHandler;
 	return 0;
@@ -307,6 +320,11 @@ int Sh2SetReadByteHandler(int i, pSh2ReadByteHandler pHandler)
 
 int Sh2SetWriteByteHandler(int i, pSh2WriteByteHandler pHandler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2SetWriteByteHandler called without init\n"));
+	if (i >= SH2_MAXHANDLER) bprintf(PRINT_ERROR, _T("Sh2SetWriteByteHandler called with invalid index %x\n"), i);
+#endif
+
 	if (i >= SH2_MAXHANDLER) return 1;
 	pSh2Ext->WriteByte[i] = pHandler;
 	return 0;
@@ -314,6 +332,11 @@ int Sh2SetWriteByteHandler(int i, pSh2WriteByteHandler pHandler)
 
 int Sh2SetReadWordHandler(int i, pSh2ReadWordHandler pHandler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2SetReadWordHandler called without init\n"));
+	if (i >= SH2_MAXHANDLER) bprintf(PRINT_ERROR, _T("Sh2SetReadWordHandler called with invalid index %x\n"), i);
+#endif
+
 	if (i >= SH2_MAXHANDLER) return 1;
 	pSh2Ext->ReadWord[i] = pHandler;
 	return 0;
@@ -321,6 +344,11 @@ int Sh2SetReadWordHandler(int i, pSh2ReadWordHandler pHandler)
 
 int Sh2SetWriteWordHandler(int i, pSh2WriteWordHandler pHandler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2SetWriteWordHandler called without init\n"));
+	if (i >= SH2_MAXHANDLER) bprintf(PRINT_ERROR, _T("Sh2SetWriteWordHandler called with invalid index %x\n"), i);
+#endif
+
 	if (i >= SH2_MAXHANDLER) return 1;
 	pSh2Ext->WriteWord[i] = pHandler;
 	return 0;
@@ -328,6 +356,11 @@ int Sh2SetWriteWordHandler(int i, pSh2WriteWordHandler pHandler)
 
 int Sh2SetReadLongHandler(int i, pSh2ReadLongHandler pHandler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2SetReadLongHandler called without init\n"));
+	if (i >= SH2_MAXHANDLER) bprintf(PRINT_ERROR, _T("Sh2SetReadLongHandler called with invalid index %x\n"), i);
+#endif
+
 	if (i >= SH2_MAXHANDLER) return 1;
 	pSh2Ext->ReadLong[i] = pHandler;
 	return 0;
@@ -335,6 +368,11 @@ int Sh2SetReadLongHandler(int i, pSh2ReadLongHandler pHandler)
 
 int Sh2SetWriteLongHandler(int i, pSh2WriteLongHandler pHandler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2SetWriteLongHandler called without init\n"));
+	if (i >= SH2_MAXHANDLER) bprintf(PRINT_ERROR, _T("Sh2SetWriteLongHandler called with invalid index %x\n"), i);
+#endif
+
 	if (i >= SH2_MAXHANDLER) return 1;
 	pSh2Ext->WriteLong[i] = pHandler;
 	return 0;
@@ -342,32 +380,56 @@ int Sh2SetWriteLongHandler(int i, pSh2WriteLongHandler pHandler)
 
 unsigned char  __fastcall Sh2InnerReadByte(unsigned int a) 
 { 
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2InnerReadByte called without init\n"));
+#endif
+
 	return sh2_internal_r((a & 0x1fc)>>2, ~(0xff << (((~a) & 3)*8))) >> (((~a) & 3)*8); 
 }
 
 unsigned short __fastcall Sh2InnerReadWord(unsigned int a) 
 { 
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2InnerReadWord called without init\n"));
+#endif
+
 	return sh2_internal_r((a & 0x1fc)>>2, ~(0xffff << (((~a) & 2)*8))) >> (((~a) & 2)*8); 
 }
 
 unsigned int   __fastcall Sh2InnerReadLong(unsigned int a) 
 { 
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2InnerReadLong called without init\n"));
+#endif
+
 	return sh2_internal_r((a & 0x1fc)>>2, 0); 
 }
 
 void __fastcall Sh2InnerWriteByte(unsigned int a, unsigned char d) 
 { 
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2InnerWriteByte called without init\n"));
+#endif
+
 	//bprintf(0, _T("Attempt to write byte value   %02x to location %8x   offset: %04x\n"), d, a, (a & 0x1fc)>>2);
 	sh2_internal_w((a & 0x1fc)>>2, d << (((~a) & 3)*8), ~(0xff << (((~a) & 3)*8)));
 }
 
 void __fastcall Sh2InnerWriteWord(unsigned int a, unsigned short d) 
 { 
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2InnerWriteWord called without init\n"));
+#endif
+
 	sh2_internal_w((a & 0x1fc)>>2, d << (((~a) & 2)*8), ~(0xffff << (((~a) & 2)*8)));
 }
 
 void __fastcall Sh2InnerWriteLong(unsigned int a, unsigned int d) 
 { 
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2InnerWriteLong called without init\n"));
+#endif
+
 	sh2_internal_w((a & 0x1fc)>>2, d, 0);
 }
 
@@ -380,6 +442,10 @@ void __fastcall Sh2EmptyWriteLong(unsigned int, unsigned int) { }
 
 int Sh2Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2Exit called without init\n"));
+#endif
+
 	has_sh2 = 0;
 
 	if (Sh2Ext) {
@@ -387,12 +453,16 @@ int Sh2Exit()
 		Sh2Ext = NULL;
 	}
 	pSh2Ext = NULL;
+	
+	DebugCPU_SH2Initted = 0;
 
 	return 0;
 }
 
 int Sh2Init(int nCount)
 {
+	DebugCPU_SH2Initted = 1;
+
 	has_sh2 = 1;
 
 	Sh2Ext = (SH2EXT *)malloc(sizeof(SH2EXT) * nCount);
@@ -435,21 +505,36 @@ int Sh2Init(int nCount)
 
 void Sh2Open(const int i)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2Open called without init\n"));
+#endif
+
 	pSh2Ext = Sh2Ext + i;
 	sh2 = & (pSh2Ext->sh2);
 }
 
 void Sh2Close()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2Close called without init\n"));
+#endif
 }
 
 int Sh2GetActive()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2GetActive called without init\n"));
+#endif
+
 	return 0;
 }
 
 void Sh2Reset(unsigned int pc, unsigned r15)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2Reset called without init\n"));
+#endif
+
 	memset(sh2, 0, sizeof(SH2) - 4);
 
 	sh2->pc = pc;
@@ -3114,6 +3199,10 @@ static UINT32 sh2_internal_r(UINT32 offset, UINT32 /*mem_mask*/)
 
 int Sh2Run(int cycles)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2Run called without init\n"));
+#endif
+
 	sh2->sh2_icount = cycles;
 	sh2->sh2_cycles_to_run = cycles;
 
@@ -3180,6 +3269,10 @@ int Sh2Run(int cycles)
 
 int Sh2Run(int cycles)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2Run called without init\n"));
+#endif
+
 	sh2->sh2_icount = cycles;
 	sh2->sh2_cycles_to_run = cycles;
 	
@@ -3269,6 +3362,10 @@ int Sh2Run(int cycles)
 
 void Sh2SetIRQLine(const int line, const int state)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2SetIRQLine called without init\n"));
+#endif
+
 	if (sh2->irq_line_state[line] == state) return;
 	sh2->irq_line_state[line] = state;
 
@@ -3290,21 +3387,37 @@ void Sh2SetIRQLine(const int line, const int state)
 
 unsigned int Sh2GetPC(int)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2GetPC called without init\n"));
+#endif
+
 	return (sh2->delay) ? (sh2->delay & AM) : (sh2->pc & AM);
 }
 
 void Sh2SetVBR(unsigned int i)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2SetVBR called without init\n"));
+#endif
+
 	sh2->vbr = i;
 }
 
 void Sh2BurnUntilInt(int)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2BurnUntilInt called without init\n"));
+#endif
+
 	pSh2Ext->suspend = 1;
 }
 
 void Sh2StopRun()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2StopRun called without init\n"));
+#endif
+
 	sh2->sh2_total_cycles += sh2->sh2_icount;
 	sh2->sh2_icount = 0;
 	sh2->sh2_cycles_to_run = 0;
@@ -3312,28 +3425,48 @@ void Sh2StopRun()
 
 int Sh2TotalCycles()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2TotalCycles called without init\n"));
+#endif
+
 	return sh2->sh2_total_cycles;
 }
 
 void Sh2NewFrame()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2NewFrame called without init\n"));
+#endif
+
 	sh2->sh2_total_cycles = 0;
 }
 
 void Sh2BurnCycles(int cycles)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2BurnCycles called without init\n"));
+#endif
+
 	sh2->sh2_icount -= cycles;
 	sh2->sh2_total_cycles += cycles;
 }
 
 void __fastcall Sh2WriteByte(unsigned int a, unsigned char d)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2WriteByte called without init\n"));
+#endif
+
 	WB(a, d);
 }
 
 
 unsigned char __fastcall Sh2ReadByte(unsigned int a)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2ReadByte called without init\n"));
+#endif
+
 	return RB(a);
 }
 
@@ -3341,6 +3474,10 @@ unsigned char __fastcall Sh2ReadByte(unsigned int a)
 
 int Sh2Scan(int nAction)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2Scan called without init\n"));
+#endif
+
 	if (nAction & ACB_DRIVER_DATA) {
 	
 		char szText[] = "SH2 #0";
@@ -3364,4 +3501,3 @@ int Sh2Scan(int nAction)
 	
 	return 0;
 }
-

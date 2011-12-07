@@ -206,6 +206,10 @@ static void h6280_init(int index, int clock, const void *config, int (*irqcallba
 
 void h6280Reset(void)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280Reset called without init\n"));
+#endif
+
 	int (*save_irqcallback)(int);
 	int i;
 
@@ -251,6 +255,10 @@ static void h6280_exit(void)
 
 int h6280Run(int cycles)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280Run called without init\n"));
+#endif
+
 	int in;
 	h6280_ICount = cycles;
 
@@ -317,16 +325,28 @@ int h6280Run(int cycles)
 
 int h6280TotalCycles()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280TotalCycles called without init\n"));
+#endif
+
 	return h6280_totalcycles;
 }
 
 void h6280NewFrame()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280NewFrame called without init\n"));
+#endif
+
 	h6280_totalcycles = 0;
 }
 
 void h6280RunEnd()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280RunEnd called without init\n"));
+#endif
+
 	h6280_ICount = 0;
 }
 
@@ -334,6 +354,10 @@ void h6280RunEnd()
 
 void h6280_set_irq_line(int irqline, int state)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280_set_irq_line called without init\n"));
+#endif
+
 	if (irqline == INPUT_LINE_NMI)
 	{
 		if ( state != ASSERT_LINE ) return;
@@ -358,6 +382,10 @@ void h6280_set_irq_line(int irqline, int state)
 
 unsigned char h6280_irq_status_r(unsigned int offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280_irq_status_r called without init\n"));
+#endif
+
 	int status;
 
 	switch (offset&3)
@@ -377,6 +405,10 @@ unsigned char h6280_irq_status_r(unsigned int offset)
 
 void h6280_irq_status_w(unsigned int offset, unsigned char data)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280_irq_status_w called without init\n"));
+#endif
+
 	h6280.io_buffer=data;
 	switch (offset&3)
 	{
@@ -394,12 +426,20 @@ void h6280_irq_status_w(unsigned int offset, unsigned char data)
 
 unsigned char h6280_timer_r(unsigned int)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280_timer_r called without init\n"));
+#endif
+
 	/* only returns countdown */
 	return ((h6280.timer_value/1024)&0x7F)|(h6280.io_buffer&0x80);
 }
 
 void h6280_timer_w(unsigned int offset, unsigned char data)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280_timer_w called without init\n"));
+#endif
+
 	h6280.io_buffer=data;
 	switch (offset) {
 		case 0: /* Counter preload */

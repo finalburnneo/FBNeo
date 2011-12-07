@@ -32,11 +32,19 @@ static UINT8 HD6309ReadOpArgDummyHandler(UINT16)
 
 void HD6309Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309Reset called without init\n"));
+#endif
+
 	hd6309_reset();
 }
 
 void HD6309NewFrame()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309NewFrame called without init\n"));
+#endif
+
 	for (INT32 i = 0; i < nHD6309Count; i++) {
 		nHD6309CyclesDone[i] = 0;
 	}
@@ -45,6 +53,8 @@ void HD6309NewFrame()
 
 INT32 HD6309Init(INT32 num)
 {
+	DebugCPU_HD6309Initted = 1;
+	
 	nActiveCPU = -1;
 	nHD6309Count = num % MAX_CPU;
 	
@@ -80,16 +90,28 @@ INT32 HD6309Init(INT32 num)
 
 void HD6309Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309Exit called without init\n"));
+#endif
+
 	nHD6309Count = 0;
 
 	if (HD6309CPUContext) {
 		free(HD6309CPUContext);
 		HD6309CPUContext = NULL;
 	}
+	
+	DebugCPU_HD6309Initted = 0;
 }
 
 void HD6309Open(INT32 num)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309Open called without init\n"));
+	if (num >= nHD6309Count) bprintf(PRINT_ERROR, _T("HD6309Open called with invalid index %x\n"), num);
+	if (nActiveCPU != -1) bprintf(PRINT_ERROR, _T("HD6309Open called when CPU already open with index %x\n"), num);
+#endif
+
 	nActiveCPU = num;
 	
 	hd6309_set_context(&HD6309CPUContext[nActiveCPU].reg);
@@ -99,6 +121,11 @@ void HD6309Open(INT32 num)
 
 void HD6309Close()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309Close called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309Close called when no CPU open\n"));
+#endif
+
 	hd6309_get_context(&HD6309CPUContext[nActiveCPU].reg);
 	
 	nHD6309CyclesDone[nActiveCPU] = nHD6309CyclesTotal;
@@ -108,11 +135,21 @@ void HD6309Close()
 
 INT32 HD6309GetActive()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309GetActive called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309GetActive called when no CPU open\n"));
+#endif
+
 	return nActiveCPU;
 }
 
 void HD6309SetIRQ(INT32 vector, INT32 status)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309SetIRQ called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309SetIRQ called when no CPU open\n"));
+#endif
+
 	if (status == HD6309_IRQSTATUS_NONE) {
 		hd6309_set_irq_line(vector, 0);
 	}
@@ -131,6 +168,11 @@ void HD6309SetIRQ(INT32 vector, INT32 status)
 
 INT32 HD6309Run(INT32 cycles)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309Run called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309Run called when no CPU open\n"));
+#endif
+
 	cycles = hd6309_execute(cycles);
 	
 	nHD6309CyclesTotal += cycles;
@@ -140,16 +182,29 @@ INT32 HD6309Run(INT32 cycles)
 
 void HD6309RunEnd()
 {
-
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309RunEnd called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309RunEnd called when no CPU open\n"));
+#endif
 }
 
 INT32 HD6309GetPC()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309GetPC called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309GetPC called when no CPU open\n"));
+#endif
+
 	return hd6309_get_pc();
 }
 
 INT32 HD6309MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309MapMemory called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309MapMemory called when no CPU open\n"));
+#endif
+
 	UINT8 cStart = (nStart >> 8);
 	UINT8 **pMemMap = HD6309CPUContext[nActiveCPU].pMemMap;
 
@@ -170,6 +225,11 @@ INT32 HD6309MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 
 INT32 HD6309MemCallback(UINT16 nStart, UINT16 nEnd, INT32 nType)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309MemCallback called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309MemCallback called when no CPU open\n"));
+#endif
+
 	UINT8 cStart = (nStart >> 8);
 	UINT8 **pMemMap = HD6309CPUContext[nActiveCPU].pMemMap;
 
@@ -190,21 +250,41 @@ INT32 HD6309MemCallback(UINT16 nStart, UINT16 nEnd, INT32 nType)
 
 void HD6309SetReadByteHandler(UINT8 (*pHandler)(UINT16))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309SetReadByteHandler called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309SetReadByteHandler called when no CPU open\n"));
+#endif
+
 	HD6309CPUContext[nActiveCPU].ReadByte = pHandler;
 }
 
 void HD6309SetWriteByteHandler(void (*pHandler)(UINT16, UINT8))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309SetWriteByteHandler called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309SetWriteByteHandler called when no CPU open\n"));
+#endif
+
 	HD6309CPUContext[nActiveCPU].WriteByte = pHandler;
 }
 
 void HD6309SetReadOpHandler(UINT8 (*pHandler)(UINT16))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309SetReadOpHandler called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309SetReadOpHandler called when no CPU open\n"));
+#endif
+
 	HD6309CPUContext[nActiveCPU].ReadOp = pHandler;
 }
 
 void HD6309SetReadOpArgHandler(UINT8 (*pHandler)(UINT16))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309SetReadOpArgHandler called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309SetReadOpArgHandler called when no CPU open\n"));
+#endif
+
 	HD6309CPUContext[nActiveCPU].ReadOpArg = pHandler;
 }
 
@@ -274,6 +354,11 @@ UINT8 HD6309ReadOpArg(UINT16 Address)
 
 void HD6309WriteRom(UINT16 Address, UINT8 Data)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309WriteRom called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309WriteRom called when no CPU open\n"));
+#endif
+
 	// check mem map
 	UINT8 * pr = HD6309CPUContext[nActiveCPU].pMemMap[0x000 | (Address >> 8)];
 	UINT8 * pw = HD6309CPUContext[nActiveCPU].pMemMap[0x100 | (Address >> 8)];
@@ -300,6 +385,10 @@ void HD6309WriteRom(UINT16 Address, UINT8 Data)
 
 INT32 HD6309Scan(INT32 nAction)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309Scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 	
 	if ((nAction & ACB_DRIVER_DATA) == 0) {

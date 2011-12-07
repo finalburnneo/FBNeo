@@ -50,11 +50,20 @@ static UINT8 M6502ReadOpArgDummyHandler(UINT16)
 
 void M6502Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Reset called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502Reset called with no CPU open\n"));
+#endif
+
 	pCurrentCPU->reset();
 }
 
 void M6502NewFrame()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502NewFrame called without init\n"));
+#endif
+
 	for (INT32 i = 0; i < nM6502Count; i++) {
 		nM6502CyclesDone[i] = 0;
 	}
@@ -63,8 +72,10 @@ void M6502NewFrame()
 
 INT32 M6502Init(INT32 cpu, INT32 type)
 {
-	nActiveCPU = cpu;
+	DebugCPU_M6502Initted = 1;
+	
 	nM6502Count++;
+	nActiveCPU = -1;
 
 	m6502CPUContext[cpu] = (M6502Ext*)BurnMalloc(sizeof(M6502Ext));
 
@@ -147,6 +158,10 @@ INT32 M6502Init(INT32 cpu, INT32 type)
 
 void M6502Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Exit called without init\n"));
+#endif
+
 	for (INT32 i = 0; i < MAX_CPU; i++) {
 		if (m6502CPUContext[i]) {
 			BurnFree(m6502CPUContext[i]);
@@ -154,10 +169,18 @@ void M6502Exit()
 	}
 
 	nM6502Count = 0;
+	
+	DebugCPU_M6502Initted = 0;
 }
 
 void M6502Open(INT32 num)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Open called without init\n"));
+	if (num >= nM6502Count) bprintf(PRINT_ERROR, _T("M6502Open called with invalid index %x\n"), num);
+	if (nActiveCPU != -1) bprintf(PRINT_ERROR, _T("M6502Open called with CPU already open with index %x\n"), num);
+#endif
+
 	nActiveCPU = num;
 
 	pCurrentCPU = m6502CPUContext[num];
@@ -169,6 +192,11 @@ void M6502Open(INT32 num)
 
 void M6502Close()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Close called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502Close called with no CPU open\n"));
+#endif
+
 	m6502_get_context(&pCurrentCPU->reg);
 	
 	nM6502CyclesDone[nActiveCPU] = nM6502CyclesTotal;
@@ -180,11 +208,21 @@ void M6502Close()
 
 INT32 M6502GetActive()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502GetActive called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502GetActive called with no CPU open\n"));
+#endif
+
 	return nActiveCPU;
 }
 
 void M6502SetIRQ(INT32 vector, INT32 status)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetIRQLine called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetIRQLine called with no CPU open\n"));
+#endif
+
 	if (status == M6502_IRQSTATUS_NONE) {
 		pCurrentCPU->set_irq_line(vector, 0);
 	}
@@ -203,6 +241,11 @@ void M6502SetIRQ(INT32 vector, INT32 status)
 
 INT32 M6502Run(INT32 cycles)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Run called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502Run called with no CPU open\n"));
+#endif
+
 	cycles = pCurrentCPU->execute(cycles);
 	
 	nM6502CyclesTotal += cycles;
@@ -212,11 +255,19 @@ INT32 M6502Run(INT32 cycles)
 
 void M6502RunEnd()
 {
-
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502RunEnd called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502RunEnd called with no CPU open\n"));
+#endif
 }
 
 INT32 M6502MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502MapMemory called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502MapMemory called with no CPU open\n"));
+#endif
+
 	UINT8 cStart = (nStart >> 8);
 	UINT8 **pMemMap = pCurrentCPU->pMemMap;
 
@@ -237,41 +288,81 @@ INT32 M6502MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 
 void M6502SetReadPortHandler(UINT8 (*pHandler)(UINT16))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetReadPortHandler called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetReadPortHandler called with no CPU open\n"));
+#endif
+
 	pCurrentCPU->ReadPort = pHandler;
 }
 
 void M6502SetWritePortHandler(void (*pHandler)(UINT16, UINT8))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetWritePortHandler called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetWritePortHandler called with no CPU open\n"));
+#endif
+
 	pCurrentCPU->WritePort = pHandler;
 }
 
 void M6502SetReadByteHandler(UINT8 (*pHandler)(UINT16))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetReadByteHandler called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetReadByteHandler called with no CPU open\n"));
+#endif
+
 	pCurrentCPU->ReadByte = pHandler;
 }
 
 void M6502SetWriteByteHandler(void (*pHandler)(UINT16, UINT8))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetWriteByteHandler called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetWriteByteHandler called with no CPU open\n"));
+#endif
+
 	pCurrentCPU->WriteByte = pHandler;
 }
 
 void M6502SetReadMemIndexHandler(UINT8 (*pHandler)(UINT16))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetReadMemIndexHandler called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetReadMemIndexHandler called with no CPU open\n"));
+#endif
+
 	pCurrentCPU->ReadMemIndex = pHandler;
 }
 
 void M6502SetWriteMemIndexHandler(void (*pHandler)(UINT16, UINT8))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetWriteMemIndexHandler called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetWriteMemIndexHandler called with no CPU open\n"));
+#endif
+
 	pCurrentCPU->WriteMemIndex = pHandler;
 }
 
 void M6502SetReadOpHandler(UINT8 (*pHandler)(UINT16))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetReadOpHandler called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetReadOpHandler called with no CPU open\n"));
+#endif
+
 	pCurrentCPU->ReadOp = pHandler;
 }
 
 void M6502SetReadOpArgHandler(UINT8 (*pHandler)(UINT16))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetReadOpArgHandler called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetReadOpArgHandler called with no CPU open\n"));
+#endif
+
 	pCurrentCPU->ReadOpArg = pHandler;
 }
 
@@ -392,6 +483,11 @@ UINT8 M6502ReadOpArg(UINT16 Address)
 
 void M6502WriteRom(UINT16 Address, UINT8 Data)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502WriteRom called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502WriteRom called with no CPU open\n"));
+#endif
+
 	UINT8 * pr = pCurrentCPU->pMemMap[0x000 | (Address >> 8)];
 	UINT8 * pw = pCurrentCPU->pMemMap[0x100 | (Address >> 8)];
 	UINT8 * pf = pCurrentCPU->pMemMap[0x200 | (Address >> 8)];
@@ -417,11 +513,21 @@ void M6502WriteRom(UINT16 Address, UINT8 Data)
 
 UINT32 M6502GetPC()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502GetPC called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502GetPC called with no CPU open\n"));
+#endif
+
 	return m6502_get_pc();
 }
 
 INT32 M6502Scan(INT32 nAction)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Scan called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502Scan called with no CPU open\n"));
+#endif
+
 	struct BurnArea ba;
 	
 	if ((nAction & ACB_DRIVER_DATA) == 0) {

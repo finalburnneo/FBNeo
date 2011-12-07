@@ -103,21 +103,37 @@ void Arm7Close()
 
 int Arm7TotalCycles()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7TotalCycles called without init\n"));
+#endif
+
 	return total_cycles;
 }
 
 void Arm7RunEnd()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7RunEnd called without init\n"));
+#endif
+
 	arm7_icount = 0;
 }
 
 void Arm7BurnCycles(int cycles)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7BurnCycles called without init\n"));
+#endif
+
 	arm7_icount -= cycles;
 }
 
 void Arm7NewFrame()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7NewFrame called without init\n"));
+#endif
+
 	total_cycles = 0;
 }
 
@@ -135,6 +151,10 @@ static void arm7_init(int )
 
 void Arm7Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7Reset called without init\n"));
+#endif
+
     // must call core reset
     arm7_core_reset();
 }
@@ -147,18 +167,30 @@ static void arm7_exit()
 
 int Arm7Run(int cycles)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7Run called without init\n"));
+#endif
+
 /* include the arm7 core execute code */
 #include "arm7exec.c"
 }
 
 void arm7_set_irq_line(int irqline, int state)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("arm7_set_irq_line called without init\n"));
+#endif
+
 	// must call core
 	arm7_core_set_irq_line(irqline,state);
 }
 
 int Arm7Scan(int nAction)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7Scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 	
 	if (nAction & ACB_DRIVER_DATA) {

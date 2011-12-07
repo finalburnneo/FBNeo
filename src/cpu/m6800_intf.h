@@ -175,5 +175,9 @@ void M6800WriteRom(UINT16 Address, UINT8 Data);
 
 inline static INT32 M6800TotalCycles()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800TotalCycles called without init\n"));
+#endif
+
 	return nM6800CyclesTotal;
 }

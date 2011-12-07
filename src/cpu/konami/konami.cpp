@@ -406,6 +406,10 @@ void konami_init(int (*irqcallback)(int))
 
 void konamiReset()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiReset called without init\n"));
+#endif
+
 	konami.nTotalCycles = 0;
 	konami.int_state = 0;
 	konami.nmi_state = KONAMI_CLEAR_LINE;
@@ -433,6 +437,10 @@ static void konami_exit(void)
  ****************************************************************************/
 void konami_set_irq_line(int irqline, int state)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konami_set_irq_line called without init\n"));
+#endif
+
 	if (irqline == KONAMI_INPUT_LINE_NMI)
 	{
 		if (konami.nmi_state == state) return;
@@ -485,6 +493,10 @@ void konami_set_irq_line(int irqline, int state)
 /* execute instructions on this CPU until icount expires */
 int konamiRun(int cycles)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiRun called without init\n"));
+#endif
+
 	konami_ICount = cycles - konami.extra_cycles;
 	nCyclesToDo = konami_ICount;
 	konami.extra_cycles = 0;
@@ -518,6 +530,10 @@ int konamiRun(int cycles)
 
 int konamiCpuScan(int nAction,int */*pnMin*/)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiCpuScan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 
 	int     (*irq_callback)(int irqline);
@@ -545,16 +561,27 @@ int konamiCpuScan(int nAction,int */*pnMin*/)
 
 void konamiSetlinesCallback(void  (*setlines_callback)(int lines))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiSetlinesCallback called without init\n"));
+#endif
+
 	konami.setlines_callback = setlines_callback;
 }
 
 int konamiTotalCycles()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiTotalCycles called without init\n"));
+#endif
+
 	return konami.nTotalCycles;
 }
 
 void konamiNewFrame()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiNewFrame called without init\n"));
+#endif
+
 	konami.nTotalCycles = 0;
 }
-

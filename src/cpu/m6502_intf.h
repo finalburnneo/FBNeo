@@ -89,5 +89,9 @@ void M6502WriteRom(UINT16 Address, UINT8 Data);
 
 inline static INT32 M6502TotalCycles()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502TotalCycles called without init\n"));
+#endif
+
 	return nM6502CyclesTotal;
 }

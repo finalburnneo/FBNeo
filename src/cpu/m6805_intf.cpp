@@ -18,6 +18,10 @@ static UINT8 *mem[3][0x100];
 
 void m6805MapMemory(UINT8 *ptr, INT32 nStart, INT32 nEnd, INT32 nType)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805MapMemory called without init\n"));
+#endif
+
 	for (INT32 i = nStart / PAGE; i < (nEnd / PAGE) + 1; i++)
 	{
 		if (nType & (1 <<  READ)) mem[ READ][i] = ptr + ((i * PAGE) - nStart);
@@ -28,11 +32,19 @@ void m6805MapMemory(UINT8 *ptr, INT32 nStart, INT32 nEnd, INT32 nType)
 
 void m6805SetWriteHandler(void (*write)(UINT16, UINT8))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805SetWriteHandler called without init\n"));
+#endif
+
 	m6805Write = write;
 }
 
 void m6805SetReadHandler(UINT8 (*read)(UINT16))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805SetReadHandler called without init\n"));
+#endif
+
 	m6805Read = read;
 }
 
@@ -81,6 +93,10 @@ UINT8 m6805_fetch(UINT16 address)
 
 void m6805_write_rom(UINT16 address, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805_write_rom called without init\n"));
+#endif
+
 	address &= ADDRESS_MASK;
 
 	if (mem[READ][address >> PAGE_SHIFT] != NULL) {
@@ -105,6 +121,8 @@ void m6805_write_rom(UINT16 address, UINT8 data)
 
 void m6805Init(INT32 num, INT32 max)
 {
+	DebugCPU_M6805Initted = 1;
+	
 	ADDRESS_MAX  = max;
 	ADDRESS_MASK = ADDRESS_MAX - 1;
 	PAGE	     = ADDRESS_MAX / 0x100;
@@ -122,20 +140,29 @@ void m6805Init(INT32 num, INT32 max)
 
 void m6805Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Exit called without init\n"));
+#endif
+
 	ADDRESS_MAX	= 0;
 	ADDRESS_MASK	= 0;
 	PAGE		= 0;
 	PAGE_MASK	= 0;
 	PAGE_SHIFT	= 0;
+	
+	DebugCPU_M6805Initted = 0;
 }
 
 void m6805Open(INT32)
 {
-
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Open called without init\n"));
+#endif
 }
 
 void m6805Close()
 {
-
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Close called without init\n"));
+#endif
 }
-

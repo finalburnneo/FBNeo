@@ -29,6 +29,8 @@ static UINT32 Arm7IdleLoop = ~0;
 
 void Arm7Init( INT32 num ) // only one cpu supported
 {
+	DebugCPU_ARM7Initted = 1;
+	
 	for (INT32 i = 0; i < 3; i++) {
 		membase[i] = (UINT8**)malloc(PAGE_COUNT * sizeof(UINT8*));
 	}
@@ -38,6 +40,10 @@ void Arm7Init( INT32 num ) // only one cpu supported
 
 void Arm7Exit() // only one cpu supported
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7Exit called without init\n"));
+#endif
+
 	for (INT32 i = 0; i < 3; i++) {
 		if (membase[i]) {
 			free (membase[i]);
@@ -46,10 +52,16 @@ void Arm7Exit() // only one cpu supported
 	}
 
 	Arm7IdleLoop = ~0;
+	
+	DebugCPU_ARM7Initted = 0;
 }
 
 void Arm7MapMemory(UINT8 *src, INT32 start, INT32 finish, INT32 type)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7MapMemory called without init\n"));
+#endif
+
 	UINT32 len = (finish-start) >> PAGE_SHIFT;
 
 	for (UINT32 i = 0; i < len+1; i++)
@@ -63,36 +75,64 @@ void Arm7MapMemory(UINT8 *src, INT32 start, INT32 finish, INT32 type)
 
 void Arm7SetWriteByteHandler(void (*write)(UINT32, UINT8))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetWriteByteHandler called without init\n"));
+#endif
+
 	pWriteByteHandler = write;
 }
 
 void Arm7SetWriteWordHandler(void (*write)(UINT32, UINT16))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetWriteWordHandler called without init\n"));
+#endif
+
 	pWriteWordHandler = write;
 }
 
 void Arm7SetWriteLongHandler(void (*write)(UINT32, UINT32))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetWriteLongHandler called without init\n"));
+#endif
+
 	pWriteLongHandler = write;
 }
 
 void Arm7SetReadByteHandler(UINT8 (*read)(UINT32))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetReadByteHandler called without init\n"));
+#endif
+
 	pReadByteHandler = read;
 }
 
 void Arm7SetReadWordHandler(UINT16 (*read)(UINT32))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetReadWordHandler called without init\n"));
+#endif
+
 	pReadWordHandler = read;
 }
 
 void Arm7SetReadLongHandler(UINT32 (*read)(UINT32))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetReadLongHandler called without init\n"));
+#endif
+
 	pReadLongHandler = read;
 }
 
 void Arm7_program_write_byte_32le(UINT32 addr, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_write_byte_32le called without init\n"));
+#endif
+
 #ifdef DEBUG_LOG
 	bprintf (PRINT_NORMAL, _T("%5.5x, %2.2x wb\n"), addr, data);
 #endif
@@ -109,6 +149,10 @@ void Arm7_program_write_byte_32le(UINT32 addr, UINT8 data)
 
 void Arm7_program_write_word_32le(UINT32 addr, UINT16 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_write_word_32le called without init\n"));
+#endif
+
 #ifdef DEBUG_LOG
 	bprintf (PRINT_NORMAL, _T("%5.5x, %8.8x wd\n"), addr, data);
 #endif
@@ -125,6 +169,10 @@ void Arm7_program_write_word_32le(UINT32 addr, UINT16 data)
 
 void Arm7_program_write_dword_32le(UINT32 addr, UINT32 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_write_dword_32le called without init\n"));
+#endif
+
 #ifdef DEBUG_LOG
 	bprintf (PRINT_NORMAL, _T("%5.5x, %8.8x wd\n"), addr, data);
 #endif
@@ -142,6 +190,10 @@ void Arm7_program_write_dword_32le(UINT32 addr, UINT32 data)
 
 UINT8 Arm7_program_read_byte_32le(UINT32 addr)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_read_byte_32le called without init\n"));
+#endif
+
 #ifdef DEBUG_LOG
 	bprintf (PRINT_NORMAL, _T("%5.5x, rb\n"), addr);
 #endif
@@ -159,6 +211,10 @@ UINT8 Arm7_program_read_byte_32le(UINT32 addr)
 
 UINT16 Arm7_program_read_word_32le(UINT32 addr)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_read_word_32le called without init\n"));
+#endif
+
 #ifdef DEBUG_LOG
 	bprintf (PRINT_NORMAL, _T("%5.5x, rl\n"), addr);
 #endif
@@ -176,6 +232,10 @@ UINT16 Arm7_program_read_word_32le(UINT32 addr)
 
 UINT32 Arm7_program_read_dword_32le(UINT32 addr)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_read_dword_32le called without init\n"));
+#endif
+
 #ifdef DEBUG_LOG
 	bprintf (PRINT_NORMAL, _T("%5.5x, rl\n"), addr);
 #endif
@@ -193,6 +253,10 @@ UINT32 Arm7_program_read_dword_32le(UINT32 addr)
 
 UINT16 Arm7_program_opcode_word_32le(UINT32 addr)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_opcode_word_32le called without init\n"));
+#endif
+
 #ifdef DEBUG_LOG
 	bprintf (PRINT_NORMAL, _T("%5.5x, rwo\n"), addr);
 #endif
@@ -216,6 +280,10 @@ UINT16 Arm7_program_opcode_word_32le(UINT32 addr)
 
 UINT32 Arm7_program_opcode_dword_32le(UINT32 addr)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_opcode_dword_32le called without init\n"));
+#endif
+
 #ifdef DEBUG_LOG
 	bprintf (PRINT_NORMAL, _T("%5.5x, rlo\n"), addr);
 #endif
@@ -239,6 +307,10 @@ UINT32 Arm7_program_opcode_dword_32le(UINT32 addr)
 
 void Arm7SetIRQLine(INT32 line, INT32 state)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetIRQLine called without init\n"));
+#endif
+
 	if (state == ARM7_CLEAR_LINE || state == ARM7_ASSERT_LINE) {
 		arm7_set_irq_line(line, state);
 	}
@@ -252,6 +324,10 @@ void Arm7SetIRQLine(INT32 line, INT32 state)
 // Set address of idle loop start - speed hack
 void Arm7SetIdleLoopAddress(UINT32 address)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetIdleLoopAddress called without init\n"));
+#endif
+
 	Arm7IdleLoop = address;
 }
 
@@ -260,6 +336,10 @@ void Arm7SetIdleLoopAddress(UINT32 address)
 
 void Arm7_write_rom_byte(UINT32 addr, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_write_rom_byte called without init\n"));
+#endif
+
 	// write to rom & ram
 	if (membase[WRITE][addr >> PAGE_SHIFT] != NULL) {
 		membase[WRITE][addr >> PAGE_SHIFT][addr & PAGE_BYTE_AND] = data;

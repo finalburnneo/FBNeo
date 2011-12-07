@@ -681,6 +681,8 @@ static int Timer_IRQ(void)
 
 void I8039Init(int (*irqcallback)(int))
 {
+	DebugCPU_I8039Initted = 1;
+	
 	R.irq_callback = irqcallback;
 
 	R.cpu_feature = 0;
@@ -705,67 +707,121 @@ void N7751Init(int (*irqcallback)(int))
 
 void I8039SetIOReadHandler(i8039ReadIoHandler handler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetIOReadHandler called without init\n"));
+#endif
+
 	I8039IORead = handler;
 }
 
 void I8039SetIOWriteHandler(i8039WriteIoHandler handler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetIOWriteHandler called without init\n"));
+#endif
+
 	I8039IOWrite = handler;
 }
 
 void I8039SetProgramReadHandler(i8039ReadProgHandler handler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetProgramReadHandler called without init\n"));
+#endif
+
 	I8039ProgramRead = handler;
 }
 
 void I8039SetProgramWriteHandler(i8039WriteProgHandler handler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetProgramWriteHandler called without init\n"));
+#endif
+
 	I8039ProgramWrite = handler;
 }
 
 void I8039SetCPUOpReadHandler(i8039ReadOpHandler handler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetCPUOpReadHandler called without init\n"));
+#endif
+
 	I8039CPUReadOp = handler;
 }
 
 void I8039SetCPUOpReadArgHandler(i8039ReadOpArgHandler handler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetCPUOpArgReadHandler called without init\n"));
+#endif
+
 	I8039CPUReadOpArg = handler;
 }
 
 void N7751SetIOReadHandler(i8039ReadIoHandler handler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("N7751SetIOReadHandler called without init\n"));
+#endif
+
 	I8039IORead = handler;
 }
 
 void N7751SetIOWriteHandler(i8039WriteIoHandler handler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("N7751SetIOWriteHandler called without init\n"));
+#endif
+
 	I8039IOWrite = handler;
 }
 
 void N7751SetProgramReadHandler(i8039ReadProgHandler handler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("N7751SetProgramReadHandler called without init\n"));
+#endif
+
 	I8039ProgramRead = handler;
 }
 
 void N7751SetProgramWriteHandler(i8039WriteProgHandler handler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("N7751SetProgramWriteHandler called without init\n"));
+#endif
+
 	I8039ProgramWrite = handler;
 }
 
 void N7751SetCPUOpReadHandler(i8039ReadOpHandler handler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("N7751SetCPUOpReadHandler called without init\n"));
+#endif
+
 	I8039CPUReadOp = handler;
 }
 
 void N7751SetCPUOpReadArgHandler(i8039ReadOpArgHandler handler)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("N7751SetCPUOpReadArgHandler called without init\n"));
+#endif
+
 	I8039CPUReadOpArg = handler;
 }
 
 void I8039Exit()
 {
-	i8039_ICount = 0;	
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039Exit called without init\n"));
+#endif
+
+	i8039_ICount = 0;
+	
+	DebugCPU_I8039Initted = 0;
 }
 
 void N7751Exit()
@@ -775,6 +831,10 @@ void N7751Exit()
 
 int I8039Run(int cycles)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039Run called without init\n"));
+#endif
+
 	unsigned opcode, T1, timerInt;
 	int count;
 
@@ -843,6 +903,10 @@ int N7751Run(int cycles)
 
 void I8039Reset (void)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039Reset called without init\n"));
+#endif
+
 	R.PC.w.l = 0;
 	R.SP  = 0;
 	R.A   = 0;
@@ -874,6 +938,10 @@ void N7751Reset()
 
 void I8039SetIrqState(int state)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039SetIrqState called without init\n"));
+#endif
+
 	if (state != 0) {
 		R.irq_state = I8039_EXTERNAL_INT;
 		R.irq_extra_cycles += Ext_IRQ();		/* Handle External IRQ */
@@ -890,6 +958,10 @@ void N7751SetIrqState(int state)
 
 int I8039Scan(int nAction, int *pnMin)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_I8039Initted) bprintf(PRINT_ERROR, _T("I8039Scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 	char szName[16];
 	

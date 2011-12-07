@@ -57,5 +57,9 @@ void M6809WriteRom(UINT16 Address, UINT8 Data);
 
 inline static INT32 M6809TotalCycles()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809TotalCycles called without init\n"));
+#endif
+
 	return nM6809CyclesTotal;
 }

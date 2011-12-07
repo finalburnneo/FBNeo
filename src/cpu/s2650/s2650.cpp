@@ -30,7 +30,7 @@
 #define S2650_INLINE		static inline
 
 static int s2650_ICount = 0;
-enum
+enum
 {
 	S2650_PC=1, S2650_PS, S2650_R0, S2650_R1, S2650_R2, S2650_R3,
 	S2650_R1A, S2650_R2A, S2650_R3A,
@@ -805,6 +805,11 @@ static void s2650_set_context(void *src)
 */
 void s2650_set_irq_line(int irqline, int state)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_S2650Initted) bprintf(PRINT_ERROR, _T("s2650_set_irq_line called without init\n"));
+	if (nActiveS2650 == -1) bprintf(PRINT_ERROR, _T("s2650_set_irq_line called when no CPU open\n"));
+#endif
+
 	if (irqline == 1)
 	{
 		if (state == CLEAR_LINE)
@@ -846,6 +851,11 @@ static int s2650_get_sense(void)
 
 int s2650Run(int cycles)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_S2650Initted) bprintf(PRINT_ERROR, _T("s2650Run called without init\n"));
+	if (nActiveS2650 == -1) bprintf(PRINT_ERROR, _T("s2650Run called when no CPU open\n"));
+#endif
+
 	s2650_ICount = cycles;
 	do
 	{
@@ -1456,6 +1466,11 @@ int s2650Run(int cycles)
 
 int s2650Scan(int nAction,int */*pnMin*/)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_S2650Initted) bprintf(PRINT_ERROR, _T("s2650Scan called without init\n"));
+	if (nActiveS2650 == -1) bprintf(PRINT_ERROR, _T("s2650Scan called when no CPU open\n"));
+#endif
+
 	struct BurnArea ba;
 
 	if (nAction & ACB_DRIVER_DATA) {

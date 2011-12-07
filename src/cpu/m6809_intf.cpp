@@ -32,11 +32,20 @@ static UINT8 M6809ReadOpArgDummyHandler(UINT16)
 
 void M6809Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809Reset called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809Reset called when no CPU open\n"));
+#endif
+
 	m6809_reset();
 }
 
 void M6809NewFrame()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809NewFrame called without init\n"));
+#endif
+
 	for (INT32 i = 0; i < nM6809Count; i++) {
 		nM6809CyclesDone[i] = 0;
 	}
@@ -45,6 +54,8 @@ void M6809NewFrame()
 
 INT32 M6809Init(INT32 num)
 {
+	DebugCPU_M6809Initted = 1;
+	
 	nActiveCPU = -1;
 	nM6809Count = num % MAX_CPU;
 	
@@ -80,16 +91,28 @@ INT32 M6809Init(INT32 num)
 
 void M6809Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809Exit called without init\n"));
+#endif
+
 	nM6809Count = 0;
 
 	if (m6809CPUContext) {
 		free(m6809CPUContext);
 		m6809CPUContext = NULL;
 	}
+	
+	DebugCPU_M6809Initted = 0;
 }
 
 void M6809Open(INT32 num)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809Open called without init\n"));
+	if (num >= nM6809Count) bprintf(PRINT_ERROR, _T("M6809Open called with invalid index %x\n"), num);
+	if (nActiveCPU != -1) bprintf(PRINT_ERROR, _T("M6809Open called when CPU already open with index %x\n"), num);
+#endif
+
 	nActiveCPU = num;
 	
 	m6809_set_context(&m6809CPUContext[nActiveCPU].reg);
@@ -99,6 +122,11 @@ void M6809Open(INT32 num)
 
 void M6809Close()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809Close called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809Close called when no CPU open\n"));
+#endif
+
 	m6809_get_context(&m6809CPUContext[nActiveCPU].reg);
 	
 	nM6809CyclesDone[nActiveCPU] = nM6809CyclesTotal;
@@ -108,11 +136,21 @@ void M6809Close()
 
 INT32 M6809GetActive()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809GetActive called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809GetActive called when no CPU open\n"));
+#endif
+
 	return nActiveCPU;
 }
 
 void M6809SetIRQ(INT32 vector, INT32 status)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809SetIRQ called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809SetIRQ called when no CPU open\n"));
+#endif
+
 	if (status == M6809_IRQSTATUS_NONE) {
 		m6809_set_irq_line(vector, 0);
 	}
@@ -131,6 +169,11 @@ void M6809SetIRQ(INT32 vector, INT32 status)
 
 INT32 M6809Run(INT32 cycles)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809Run called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809Run called when no CPU open\n"));
+#endif
+
 	cycles = m6809_execute(cycles);
 	
 	nM6809CyclesTotal += cycles;
@@ -140,11 +183,19 @@ INT32 M6809Run(INT32 cycles)
 
 void M6809RunEnd()
 {
-
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809RunEnd called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809RunEnd called when no CPU open\n"));
+#endif
 }
 
 INT32 M6809MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809MapMemory called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809MapMemory called when no CPU open\n"));
+#endif
+
 	UINT8 cStart = (nStart >> 8);
 	UINT8 **pMemMap = m6809CPUContext[nActiveCPU].pMemMap;
 
@@ -165,21 +216,41 @@ INT32 M6809MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 
 void M6809SetReadByteHandler(UINT8 (*pHandler)(UINT16))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809SetReadByteHandler called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809SetReadByteHandler called when no CPU open\n"));
+#endif
+
 	m6809CPUContext[nActiveCPU].ReadByte = pHandler;
 }
 
 void M6809SetWriteByteHandler(void (*pHandler)(UINT16, UINT8))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809SetWriteByteHandler called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809SetWriteByteHandler called when no CPU open\n"));
+#endif
+
 	m6809CPUContext[nActiveCPU].WriteByte = pHandler;
 }
 
 void M6809SetReadOpHandler(UINT8 (*pHandler)(UINT16))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809SetReadOpHandler called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809SetReadOpHandler called when no CPU open\n"));
+#endif
+
 	m6809CPUContext[nActiveCPU].ReadOp = pHandler;
 }
 
 void M6809SetReadOpArgHandler(UINT8 (*pHandler)(UINT16))
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809SetReadOpArgHandler called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809SetReadOpArgHandler called when no CPU open\n"));
+#endif
+
 	m6809CPUContext[nActiveCPU].ReadOpArg = pHandler;
 }
 
@@ -249,6 +320,11 @@ UINT8 M6809ReadOpArg(UINT16 Address)
 
 void M6809WriteRom(UINT16 Address, UINT8 Data)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809WriteRom called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809WriteRom called when no CPU open\n"));
+#endif
+
 	UINT8 * pr = m6809CPUContext[nActiveCPU].pMemMap[0x000 | (Address >> 8)];
 	UINT8 * pw = m6809CPUContext[nActiveCPU].pMemMap[0x100 | (Address >> 8)];
 	UINT8 * pf = m6809CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
@@ -274,6 +350,10 @@ void M6809WriteRom(UINT16 Address, UINT8 Data)
 
 INT32 M6809Scan(INT32 nAction)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809Scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 	
 	if ((nAction & ACB_DRIVER_DATA) == 0) {

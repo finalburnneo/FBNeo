@@ -147,9 +147,9 @@ INT32 SekRun(const INT32 nCycles);
 inline static INT32 SekIdle(INT32 nCycles)
 {
 #if defined FBA_DEBUG
-	extern INT32 DebugCPU_SekInitted;
-	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekIdle called without init\n"));
-	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekIdle called when no CPU open\n"));
+	extern UINT8 DebugCPU_SekInitted;
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, (TCHAR*)_T("SekIdle called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, (TCHAR*)_T("SekIdle called when no CPU open\n"));
 #endif
 
 	nSekCyclesTotal += nCycles;
@@ -160,9 +160,9 @@ inline static INT32 SekIdle(INT32 nCycles)
 inline static INT32 SekSegmentCycles()
 {
 #if defined FBA_DEBUG
-	extern INT32 DebugCPU_SekInitted;
-	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekSegmentCycles called without init\n"));
-	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekSegmentCycles called when no CPU open\n"));
+	extern UINT8 DebugCPU_SekInitted;
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, (TCHAR*)_T("SekSegmentCycles called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, (TCHAR*)_T("SekSegmentCycles called when no CPU open\n"));
 #endif
 
 #ifdef EMU_M68K
@@ -179,9 +179,9 @@ inline static INT32 SekTotalCycles()
 #endif
 {
 #if defined FBA_DEBUG
-	extern INT32 DebugCPU_SekInitted;
-	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekTotalCycles called without init\n"));
-	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekTotalCycles called when no CPU open\n"));
+	extern UINT8 DebugCPU_SekInitted;
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, (TCHAR*)_T("SekTotalCycles called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, (TCHAR*)_T("SekTotalCycles called when no CPU open\n"));
 #endif
 
 #ifdef EMU_M68K
@@ -194,9 +194,9 @@ inline static INT32 SekTotalCycles()
 inline static INT32 SekCurrentScanline()
 {
 #if defined FBA_DEBUG
-	extern INT32 DebugCPU_SekInitted;
-	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekCurrentScanline called without init\n"));
-	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekCurrentScanline called when no CPU open\n"));
+	extern UINT8 DebugCPU_SekInitted;
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, (TCHAR*)_T("SekCurrentScanline called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, (TCHAR*)_T("SekCurrentScanline called when no CPU open\n"));
 #endif
 
 	return SekTotalCycles() / nSekCyclesScanline;

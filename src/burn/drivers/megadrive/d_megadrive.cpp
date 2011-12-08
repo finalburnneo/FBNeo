@@ -35527,24 +35527,6 @@ struct BurnDriver BurnDrvmd_wcs2p02 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// World Championship Soccer II (Prototype, 19940523)
-static struct BurnRomInfo md_wcs2p01RomDesc[] = {
-	{ "world championship soccer ii (prototype - may 23, 1994).bin", 0x100000, 0x6065774d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
-};
-
-STD_ROM_PICK(md_wcs2p01)
-STD_ROM_FN(md_wcs2p01)
-
-struct BurnDriver BurnDrvmd_wcs2p01 = {
-	"md_wcs2p01", "md_wcs2", NULL, NULL, "1994",
-	"World Championship Soccer II (Prototype, 19940523)\0", NULL, "Sega", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_wcs2p01RomInfo, md_wcs2p01RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
 // World Championship Soccer II (Prototype G, 19940222)
 static struct BurnRomInfo md_wcs2p19RomDesc[] = {
 	{ "world championship soccer ii (prototype g - feb 22, 1994).bin", 0x100000, 0x6fbfa14e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
@@ -36229,7 +36211,7 @@ struct BurnDriver BurnDrvmd_worldillj = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// World of Illusion - Fushigi na Magic Box(Jpn, Prototype)
+// World of Illusion - Fushigi na Magic Box (Jpn, Prototype)
 static struct BurnRomInfo md_worldilljpRomDesc[] = {
 	{ "world of illusion - fushigi na magic box (jpn) (beta).bin", 0x100000, 0x577f680f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
 };
@@ -36239,7 +36221,7 @@ STD_ROM_FN(md_worldilljp)
 
 struct BurnDriver BurnDrvmd_worldilljp = {
 	"md_worldilljp", "md_worldill", NULL, NULL, "1992",
-	"World of Illusion - Fushigi na Magic Box(Jpn, Prototype)\0", NULL, "Sega", "Sega Megadrive",
+	"World of Illusion - Fushigi na Magic Box (Jpn, Prototype)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_worldilljpRomInfo, md_worldilljpRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -40235,7 +40217,7 @@ STD_ROM_FN(md_ttoon3)
 
 struct BurnDriver BurnDrvmd_ttoon3 = {
 	"md_ttoon3", NULL, NULL, NULL, "199?",
-	"Tiny Toon Adventures 3 (Tw)\0", NULL, "<unknown>", "Sega Megadrive",
+	"Tiny Toon Adventures 3 (Tw)\0", NULL, "Gamtec?", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_ttoon3RomInfo, md_ttoon3RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

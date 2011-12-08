@@ -63,10 +63,6 @@ UINT8 DebugCPU_ZetInitted;
 UINT8 DebugCPU_I8039Initted;
 UINT8 DebugCPU_SH2Initted;
 
-#define CHECK_DEVICE_EXIT(DevName)	if (DebugDev_##DevName##Initted) bprintf(PRINT_ERROR, _T("Device " #DevName " Not Exited\n"))
-#define CHECK_SOUND_EXIT(SndName)	if (DebugSnd_##SndName##Initted) bprintf(PRINT_ERROR, _T("Sound Module " #SndName " Not Exited\n"))
-#define CHECK_CPU_EXIT(CpuName)		if (DebugCPU_##CpuName##Initted) bprintf(PRINT_ERROR, _T("CPU " #CpuName " Not Exited\n"))
-
 void DebugTrackerExit()
 {
 	if (Debug_BurnTransferInitted) 		bprintf(PRINT_ERROR, _T("BurnTransfer Not Exited\n"));

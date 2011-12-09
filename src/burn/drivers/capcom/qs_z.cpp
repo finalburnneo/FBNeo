@@ -78,6 +78,7 @@ INT32 QsndZInit()
 	}
 
 	ZetInit(1);
+	ZetOpen(0);
 
 	ZetSetReadHandler(QsndZRead);
 	ZetSetWriteHandler(QsndZWrite);

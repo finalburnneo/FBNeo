@@ -7,7 +7,7 @@ static UINT8 *PsndZRam = NULL;
 
 INT32 Kodb = 0;
 
-// Map in the memory for the current 0x8000-0xc000 bank
+// Map in the memory for the current 0zx8000-0xc000 bank
 static INT32 PsndZBankMap()
 {
 	UINT8 *Bank;
@@ -140,6 +140,7 @@ INT32 PsndZInit()
 	}
 
 	ZetInit(1);
+	ZetOpen(0);
 
 	if (Kodb) {
 		ZetSetReadHandler(kodbZRead);

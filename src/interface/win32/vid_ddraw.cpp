@@ -330,7 +330,7 @@ static int vidInit()
 			ddcaps.dwSize = sizeof(ddcaps);
 
 			DtoDD->GetCaps(&ddcaps, NULL);
-			if ((ddcaps.dwFXCaps & DDFXCAPS_BLTMIRRORLEFTRIGHT) && (ddcaps.dwFXCaps & DDFXCAPS_BLTMIRRORUPDOWN)) {
+			if (((ddcaps.dwFXCaps & DDFXCAPS_BLTMIRRORLEFTRIGHT) && (ddcaps.dwFXCaps & DDFXCAPS_BLTMIRRORUPDOWN)) || bVidForceFlip) {
 
 				DtoBltFx = (DDBLTFX*)malloc(sizeof(DDBLTFX));
 				if (DtoBltFx == NULL) {

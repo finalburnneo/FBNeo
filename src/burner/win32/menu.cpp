@@ -671,6 +671,7 @@ void MenuUpdate()
 			}
 			CheckMenuRadioItem(hMenu, MENU_NORMAL, MENU_SCAN50, var, MF_BYCOMMAND);
 			CheckMenuItem(hMenu, MENU_ROTSCAN, bVidScanRotate ? MF_CHECKED : MF_UNCHECKED);
+			CheckMenuItem(hMenu, MENU_FORCE_FLIP, bVidForceFlip ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_RES_ARCADE, bVidArcaderes ? MF_CHECKED : MF_UNCHECKED);
 			break;
 		case 1:

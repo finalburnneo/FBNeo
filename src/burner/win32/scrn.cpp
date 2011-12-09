@@ -2045,6 +2045,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					bVidScanRotate = !bVidScanRotate;
 					POST_INITIALISE_MESSAGE;
 					break;
+					
+				case MENU_FORCE_FLIP:
+					bVidForceFlip = !bVidForceFlip;
+					POST_INITIALISE_MESSAGE;
+					break;
 			}
 			break;
 		}

@@ -975,6 +975,8 @@ BEGIN
                 MENUITEM SEPARATOR
                 MENUITEM "&Rotate scanlines",                           MENU_ROTSCAN
                 MENUITEM SEPARATOR
+				MENUITEM "Force &Flip",									MENU_FORCE_FLIP
+				MENUITEM SEPARATOR
                 POPUP "Buffering &method"
                 BEGIN
                         MENUITEM "&Autodetect",                         MENU_MEMAUTO

@@ -126,6 +126,7 @@ int ConfigAppLoad()
 
 		// DirectDraw blitter
 		VAR(bVidScanHalf);
+		VAR(bVidForceFlip);
 
 		// Direct3D blitter
 		VAR(bVidBilinear);
@@ -384,6 +385,8 @@ int ConfigAppSave()
 	_ftprintf(h, _T("// --- DirectDraw blitter module settings -------------------------------------\n"));
 	_ftprintf(h, _T("\n// If non-zero, draw scanlines at 50%% intensity\n"));
 	VAR(bVidScanHalf);
+	_ftprintf(h, _T("\n// If non-zero, force flipping for games that need it\n"));
+	VAR(bVidForceFlip);
 	_ftprintf(h, _T("\n"));
 	_ftprintf(h, _T("// --- Direct3D 7 blitter module settings -------------------------------------\n"));
 	_ftprintf(h, _T("\n// If non-zero, use bi-linear filtering to display the image\n"));

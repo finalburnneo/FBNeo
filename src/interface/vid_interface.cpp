@@ -69,6 +69,7 @@ INT32 bVidArcaderesVer = 0;
 
 INT32 nVidRotationAdjust = 0;						// & 1: do not rotate the graphics for vertical games,  & 2: Reverse flipping for vertical games
 INT32 bVidForce16bit = 1;							// Emulate the game in 16-bit even when the screen is 32-bit (D3D blitter)
+INT32 bVidForceFlip = 0;							// Force flipping (DDraw blitter, hardware detection seems to fail on all? graphics hardware)
 INT32 nVidTransferMethod = -1;					// How to transfer the game image to video memory and/or a texture --
 												//  0 = blit from system memory / use driver/DirectX texture management
 												//  1 = copy to a video memory surface, then use bltfast()

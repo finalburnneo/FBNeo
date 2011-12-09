@@ -6171,7 +6171,7 @@ static struct BurnRomInfo Pang3RomDesc[] = {
 	{ "pa3-01m.2c",    0x200000, 0x068a152c, BRF_GRA | CPS1_TILES },
 	{ "pa3-07m.2f",    0x200000, 0x3a4a619d, BRF_GRA | CPS1_TILES },
 
-	{ "pa3_11.11f",    0x008000, 0xcb1423a2, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "pa3_11.11f",    0x020000, 0xcb1423a2, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "pa3_05.10d",    0x020000, 0x73a10d5d, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "pa3_06.11d",    0x020000, 0xaffa4f82, BRF_SND | CPS1_OKIM6295_SAMPLES },
@@ -6243,7 +6243,7 @@ static struct BurnRomInfo Pang3jRomDesc[] = {
 	{ "pa3-01m.2c",    0x200000, 0x068a152c, BRF_GRA | CPS1_TILES },
 	{ "pa3-07m.2f",    0x200000, 0x3a4a619d, BRF_GRA | CPS1_TILES },
 
-	{ "pa3_11.11f",    0x008000, 0xcb1423a2, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "pa3_11.11f",    0x020000, 0xcb1423a2, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "pa3_05.10d",    0x020000, 0x73a10d5d, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "pa3_06.11d",    0x020000, 0xaffa4f82, BRF_SND | CPS1_OKIM6295_SAMPLES },

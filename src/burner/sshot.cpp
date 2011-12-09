@@ -128,12 +128,7 @@ INT32 MakeScreenShot()
 			}
 		}
 
-		if (pConvertedImage) {
-			free(pConvertedImage);
-			pConvertedImage = pTemp;
-		}
-
-        pSShot = pConvertedImage;
+        pSShot = pTemp;
 	}
 	else if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) { // fixed rotation by regret
 		UINT8* pTemp = (UINT8*)malloc(w * h * sizeof(INT32));
@@ -144,12 +139,7 @@ INT32 MakeScreenShot()
 			}
 		}
 
-		if (pConvertedImage) {
-			free(pConvertedImage);
-			pConvertedImage = pTemp;
-		}
-
-        pSShot = pConvertedImage;
+        pSShot = pTemp;
 	}
 
 	// Get the time

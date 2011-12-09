@@ -17,7 +17,7 @@
 
 <H3><FONT COLOR="#F98733">Video Menu</FONT></H3>
 
-<TABLE BORDER="1" CELLPADDING="2" CELLSPACING="0">
+<TABLE BORDER="1" CELLPADDING="2" CELLSPACING="0" WIDTH="100%">
 
 <TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1"><B>Select blitter</B></FONT></TD>
 <TD VALIGN="TOP"><FONT FACE="verdana" SIZE="1">Select which blitter to use.</FONT></TD></TR>
@@ -83,7 +83,7 @@
 
 <H3><FONT COLOR="#F98733">Basic (DirectDraw 7) Blitter Menu</FONT></H3>
 
-<TABLE BORDER="1" CELLPADDING="2" CELLSPACING="0">
+<TABLE BORDER="1" CELLPADDING="2" CELLSPACING="0" WIDTH="100%">
 
 <TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1"><B>No Effects</B></FONT></TD>
 <TD VALIGN="TOP"><FONT FACE="verdana" SIZE="1">Turns off all effects.</FONT></TD></TR>
@@ -97,6 +97,9 @@
 <TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1"><B>Rotate scanlines</B></FONT></TD>
 <TD VALIGN="TOP"><FONT FACE="verdana" SIZE="1">If this is enabled then scanlines will be rotated for vertical games.</FONT></TD></TR>
 
+<TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1"><B>Force Flip</B></FONT></TD>
+<TD VALIGN="TOP"><FONT FACE="verdana" SIZE="1">Forces hardware flipping for games that require it. This is usually detected as an available feature, but due to DirectDraw being old, the support doesn't usually get detected. This option will force the flipping if a game needs it. This is best used with the <I>System Memory Buffering Method</I>. This option will likely force Windows to disable Aero and revert to basic settings, and is therefore recommended for older computers still using Windows XP only. If you are using a version of Windows newer than XP then you should be using the Enhanced or DirectX 9 blitters.</FONT></TD></TR>
+
 <TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1"><B>Buffering Method</B></FONT></TD>
 <TD VALIGN="TOP"><FONT FACE="verdana" SIZE="1">Choose between <I>Autodetect</I>, <I>Video memory</I>, and <I>System memory</I>. The recommended setting is <I>Autodetect</I> unless this causes you problems.</FONT></TD></TR>
 
@@ -104,7 +107,7 @@
 
 <H3><FONT COLOR="#F98733">SoftFX (DirectDraw 7) Blitter Menu</FONT></H3>
 
-<TABLE BORDER="1" CELLPADDING="2" CELLSPACING="0">
+<TABLE BORDER="1" CELLPADDING="2" CELLSPACING="0" WIDTH="100%">
 
 <TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1"><B>Filter List</B></FONT></TD>
 <TD VALIGN="TOP"><FONT FACE="verdana" SIZE="1">Choose a graphics filter to apply. These will only work with the colour depths specified.</FONT></TD></TR>
@@ -122,7 +125,7 @@
 
 <H3><FONT COLOR="#F98733">Enhanced (Direct3D 7) Blitter Menu</FONT></H3>
 
-<TABLE BORDER="1" CELLPADDING="2" CELLSPACING="0">
+<TABLE BORDER="1" CELLPADDING="2" CELLSPACING="0" WIDTH="100%">
 
 <TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1"><B>Disable all effects</B></FONT></TD>
 <TD VALIGN="TOP"><FONT FACE="verdana" SIZE="1">Turns off all effects.</FONT></TD></TR>
@@ -179,7 +182,7 @@
 
 <H3><FONT COLOR="#F98733">Experimental (DirectX Graphics 9) Blitter Menu</FONT></H3>
 
-<TABLE BORDER="1" CELLPADDING="2" CELLSPACING="0">
+<TABLE BORDER="1" CELLPADDING="2" CELLSPACING="0" WIDTH="100%">
 
 <TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1"><B>Enable point/linear/cubic filtering</B></FONT></TD>
 <TD VALIGN="TOP"><FONT FACE="verdana" SIZE="1">Enable point, linear or cubic filtering.</FONT></TD></TR>
@@ -200,6 +203,25 @@
 <TD VALIGN="TOP"><FONT FACE="verdana" SIZE="1">See the <I>Experimental Blitter</I> section of <A HREF="sysreq.htm">System Requirements</A> for details.</FONT></TD></TR>
 
 </TABLE>
+
+<H3><FONT COLOR="#F98733">DirectX 9 Alt (DirectX Graphics 9) Blitter Menu</FONT></H3>
+
+<TABLE BORDER="1" CELLPADDING="2" CELLSPACING="0" WIDTH="100%">
+
+<TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1"><B>Enable point/linear/ filtering</B></FONT></TD>
+<TD VALIGN="TOP"><FONT FACE="verdana" SIZE="1">Enable point or linear filtering.</FONT></TD></TR>
+
+<TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1"><B>SoftFX Algorithm</B></FONT></TD>
+<TD VALIGN="TOP"><FONT FACE="verdana" SIZE="1">Choose a SoftFX filter to apply to the video.</FONT></TD></TR>
+
+<TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1"><B>Hardware vertex processing</B></FONT></TD>
+<TD VALIGN="TOP"><FONT FACE="verdana" SIZE="1">Enable hardware vertex processing.</FONT></TD></TR>
+
+<TR><TD WIDTH="200" VALIGN="TOP"><FONT FACE="verdana" SIZE="1"><B>Motion blur</B></FONT></TD>
+<TD VALIGN="TOP"><FONT FACE="verdana" SIZE="1">Enable motion blur.</FONT></TD></TR>
+
+</TABLE>
+
 
 </FONT>
 </BODY>

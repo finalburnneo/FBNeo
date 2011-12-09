@@ -64,6 +64,10 @@
 				<param name="Local" value="dialog_multislot.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="NeoGeo CDZ Game Select Dialog">
+				<param name="Local" value="dialog_neocdz.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="IPS Manager Dialog">
 				<param name="Local" value="dialog_ips_manager.htm">
 				</OBJECT>

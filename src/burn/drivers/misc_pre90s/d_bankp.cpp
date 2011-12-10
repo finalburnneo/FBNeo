@@ -13,20 +13,20 @@ static UINT8 scroll_x, priority, flipscreen, interrupt_enable;
 static struct BurnInputInfo bankpInputList[] = {
 	{"Coin 1"       , BIT_DIGITAL  , DrvJoy1 + 5,	"p1 coin"  },
 	{"Coin 2"       , BIT_DIGITAL  , DrvJoy1 + 6,	"p2 coin"  },
-	{"Coin 3"       , BIT_DIGITAL  , DrvJoy1 + 6,	"p3 coin"  },
+	{"Coin 3"       , BIT_DIGITAL  , DrvJoy3 + 2,	"p3 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy2 + 5,	"p1 start" },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy2 + 6,	"p2 start" },
 
 	{"P1 Left"      , BIT_DIGITAL  , DrvJoy1 + 3, 	"p1 left"  },
 	{"P1 Right"     , BIT_DIGITAL  , DrvJoy1 + 1, 	"p1 right" },
-	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy1 + 7,	"p1 fire 1"},
-	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy1 + 4,	"p1 fire 2"},
+	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy1 + 4,	"p1 fire 1"},
+	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy1 + 7,	"p1 fire 2"},
 	{"P1 Button 3"  , BIT_DIGITAL  , DrvJoy3 + 0,	"p1 fire 3"},
 
 	{"P2 Left"      , BIT_DIGITAL  , DrvJoy2 + 3, 	"p2 left"  },
 	{"P2 Right"     , BIT_DIGITAL  , DrvJoy2 + 1, 	"p2 right" },
-	{"P2 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 7,	"p2 fire 1"},
-	{"P2 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 4,	"p2 fire 2"},
+	{"P2 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 4,	"p2 fire 1"},
+	{"P2 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 7,	"p2 fire 2"},
 	{"P2 Button 3"  , BIT_DIGITAL  , DrvJoy3 + 1,	"p2 fire 3"},
 
 	{"Reset"        , BIT_DIGITAL  , &DrvReset  ,	"reset"    },
@@ -38,20 +38,20 @@ STDINPUTINFO(bankp)
 static struct BurnInputInfo combhInputList[] = {
 	{"Coin 1"       , BIT_DIGITAL  , DrvJoy1 + 5,	"p1 coin"  },
 	{"Coin 2"       , BIT_DIGITAL  , DrvJoy1 + 6,	"p2 coin"  },
-	{"Coin 3"       , BIT_DIGITAL  , DrvJoy1 + 6,	"p3 coin"  },
+	{"Coin 3"       , BIT_DIGITAL  , DrvJoy3 + 2,	"p3 coin"  },
 	{"P1 Start"     , BIT_DIGITAL  , DrvJoy2 + 5,	"p1 start" },
 	{"P2 Start"     , BIT_DIGITAL  , DrvJoy2 + 6,	"p2 start" },
 
 	{"P1 Up"        , BIT_DIGITAL  , DrvJoy1 + 0, 	"p1 up"    },
 	{"P1 Down"      , BIT_DIGITAL  , DrvJoy1 + 2, 	"p1 down"  },
-	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy1 + 7,	"p1 fire 1"},
-	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy1 + 4,	"p1 fire 2"},
+	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy1 + 4,	"p1 fire 1"},
+	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy1 + 7,	"p1 fire 2"},
 	{"P1 Button 3"  , BIT_DIGITAL  , DrvJoy3 + 0,	"p1 fire 3"},
 
 	{"P2 Up"        , BIT_DIGITAL  , DrvJoy2 + 0, 	"p2 up"    },
 	{"P2 Down"      , BIT_DIGITAL  , DrvJoy2 + 2, 	"p2 down"  },
-	{"P2 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 7,	"p2 fire 1"},
-	{"P2 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 4,	"p2 fire 2"},
+	{"P2 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 4,	"p2 fire 1"},
+	{"P2 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 7,	"p2 fire 2"},
 	{"P2 Button 3"  , BIT_DIGITAL  , DrvJoy3 + 1,	"p2 fire 3"},
 
 	{"Reset"        , BIT_DIGITAL  , &DrvReset  ,	"reset"    },
@@ -64,13 +64,13 @@ STDINPUTINFO(combh)
 static struct BurnDIPInfo bankpDIPList[]=
 {
 	// Default Values
-	{0x10, 0xff, 0xff, 0x41, NULL                     },
+	{0x10, 0xff, 0xff, 0xc0, NULL                     },
 
 	{0   , 0xfe, 0   , 4   , "Coin A/B"               },
 	{0x10, 0x01, 0x03, 0x03, "3C 1C"     		  },
 	{0x10, 0x01, 0x03, 0x02, "2C 1C"    		  },
-	{0x10, 0x01, 0x03, 0x01, "1C 1C"     		  },
-	{0x10, 0x01, 0x03, 0x00, "1C 2C"    		  },
+	{0x10, 0x01, 0x03, 0x00, "1C 1C"     		  },
+	{0x10, 0x01, 0x03, 0x01, "1C 2C"    		  },
 
 	{0   , 0xfe, 0   , 2   , "Coin C"                 },
 	{0x10, 0x01, 0x04, 0x04, "2C 1C"     		  },
@@ -102,7 +102,7 @@ STDDIPINFO(bankp)
 static struct BurnDIPInfo combhDIPList[]=
 {
 	// Default Values
-	{0x10, 0xff, 0xff, 0x40, NULL                     },
+	{0x10, 0xff, 0xff, 0x10, NULL                     },
 
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
 	{0x10, 0x01, 0x01, 0x00, "Off"     		  },
@@ -562,7 +562,7 @@ struct BurnDriver BurnDrvbankp = {
 	"bankp", NULL, NULL, NULL, "1984",
 	"Bank Panic\0", NULL, "[Sanritsu] Sega", "Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 3, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, bankpRomInfo, bankpRomName, NULL, NULL, bankpInputInfo, bankpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x100,
 	224, 224, 4, 3
@@ -601,7 +601,7 @@ struct BurnDriver BurnDrvcombh = {
 	"combh", NULL, NULL, NULL, "1987",
 	"Combat Hawk\0", NULL, "Sega / Sanritsu", "Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, combhRomInfo, combhRomName, NULL, NULL, combhInputInfo, combhDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x100,
 	224, 224, 3, 4

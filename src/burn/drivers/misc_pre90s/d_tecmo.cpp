@@ -535,8 +535,10 @@ void __fastcall rygar_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xc000:
-			adpcm_pos = data << 8;
-			MSM5205ResetWrite(0, 0);
+			if (DrvHasADPCM) {
+				adpcm_pos = data << 8;
+				MSM5205ResetWrite(0, 0);
+			}
 		return;
 
 		case 0xc400:
@@ -546,7 +548,7 @@ void __fastcall rygar_sound_write(UINT16 address, UINT8 data)
 
 		case 0xc800:
 		case 0xe000:
-			MSM5205SetVolume(0, (data & 0x0f) * 100 / 15);
+			if (DrvHasADPCM) MSM5205SetVolume(0, (data & 0x0f) * 100 / 15);
 		return;
 
 		case 0xf000:
@@ -930,7 +932,7 @@ static INT32 GeminiInit()
 
 static INT32 DrvExit()
 {
-	MSM5205Exit();
+	if (DrvHasADPCM) MSM5205Exit();
 	BurnYM3812Exit();
 
 	GenericTilesExit();

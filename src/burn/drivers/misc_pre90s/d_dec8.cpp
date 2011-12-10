@@ -1356,10 +1356,8 @@ static INT32 DrvInit()
 static INT32 DrvExit()
 {
 	GenericTilesExit();
-	HD6309Exit();
+	
 	M6502Exit();
-
-	BurnYM3812Exit();
 	BurnYM2203Exit();
 
 	BurnFree (AllMem);
@@ -1722,13 +1720,20 @@ static struct BurnRomInfo ghostbRomDesc[] = {
 STD_ROM_PICK(ghostb)
 STD_ROM_FN(ghostb)
 
+static INT32 GhostbExit()
+{
+	HD6309Exit();
+	BurnYM3812Exit();
+	return DrvExit();
+}
+
 struct BurnDriver BurnDrvGhostb = {
 	"ghostb", NULL, NULL, NULL, "1987",
-	"The Real Ghostbusters (US 2 Players, revision 2)\0", NULL, "Data East USA", "hardware",
+	"The Real Ghostbusters (US 2 Players, revision 2)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, ghostbRomInfo, ghostbRomName, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x400,
+	DrvInit, GhostbExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
 
@@ -1771,11 +1776,11 @@ STD_ROM_FN(ghostb3)
 
 struct BurnDriver BurnDrvGhostb3 = {
 	"ghostb3", "ghostb", NULL, NULL, "1987",
-	"The Real Ghostbusters (US 3 Players)\0", NULL, "Data East USA", "hardware",
+	"The Real Ghostbusters (US 3 Players)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, ghostb3RomInfo, ghostb3RomName, NULL, NULL, Ghostb3InputInfo, Ghostb3DIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x400,
+	DrvInit, GhostbExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
 
@@ -1817,11 +1822,11 @@ STD_ROM_FN(meikyuh)
 
 struct BurnDriver BurnDrvMeikyuh = {
 	"meikyuh", "ghostb", NULL, NULL, "1987",
-	"Meikyuu Hunter G (Japan, set 1)\0", NULL, "Data East Corporation", "hardware",
+	"Meikyuu Hunter G (Japan, set 1)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, meikyuhRomInfo, meikyuhRomName, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x400,
+	DrvInit, GhostbExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
 
@@ -1863,11 +1868,11 @@ STD_ROM_FN(meikyuha)
 
 struct BurnDriver BurnDrvMeikyuha = {
 	"meikyuha", "ghostb", NULL, NULL, "1987",
-	"Meikyuu Hunter G (Japan, set 2)\0", NULL, "Data East Corporation", "hardware",
+	"Meikyuu Hunter G (Japan, set 2)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, meikyuhaRomInfo, meikyuhaRomName, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x400,
+	DrvInit, GhostbExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
 
@@ -2289,13 +2294,20 @@ static struct BurnRomInfo cobracomRomDesc[] = {
 STD_ROM_PICK(cobracom)
 STD_ROM_FN(cobracom)
 
+static INT32 CobraExit()
+{
+	M6809Exit();
+	BurnYM3812Exit();
+	return DrvExit();
+}
+
 struct BurnDriver BurnDrvCobracom = {
 	"cobracom", NULL, NULL, NULL, "1988",
-	"Cobra-Command (World revision 5)\0", NULL, "Data East Corporation", "hardware",
+	"Cobra-Command (World revision 5)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, cobracomRomInfo, cobracomRomName, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
-	CobraInit, DrvExit, CobraFrame, CobraDraw, NULL, &DrvRecalc, 0x100,
+	CobraInit, CobraExit, CobraFrame, CobraDraw, NULL, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };
 
@@ -2330,11 +2342,11 @@ STD_ROM_FN(cobracmj)
 
 struct BurnDriver BurnDrvCobracmj = {
 	"cobracomj", "cobracom", NULL, NULL, "1988",
-	"Cobra-Command (Japan)\0", NULL, "Data East Corporation", "hardware",
+	"Cobra-Command (Japan)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, cobracmjRomInfo, cobracmjRomName, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
-	CobraInit, DrvExit, CobraFrame, CobraDraw, NULL, &DrvRecalc, 0x100,
+	CobraInit, CobraExit, CobraFrame, CobraDraw, NULL, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };
 
@@ -2369,11 +2381,11 @@ STD_ROM_FN(cobracmja)
 
 struct BurnDriver BurnDrvCobracmja = {
 	"cobracomja", "cobracom", NULL, NULL, "1988",
-	"Cobra-Command (Japan?, set 2)\0", NULL, "Data East Corporation", "hardware",
+	"Cobra-Command (Japan?, set 2)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, cobracmjaRomInfo, cobracmjaRomName, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
-	CobraInit, DrvExit, CobraFrame, CobraDraw, NULL, &DrvRecalc, 0x100,
+	CobraInit, CobraExit, CobraFrame, CobraDraw, NULL, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };
 
@@ -2856,11 +2868,11 @@ STD_ROM_FN(srdarwin)
 
 struct BurnDriver BurnDrvSrdarwin = {
 	"srdarwin", NULL, NULL, NULL, "1987",
-	"Super Real Darwin (World)\0", NULL, "Data East Corporation", "hardware",
+	"Super Real Darwin (World)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, srdarwinRomInfo, srdarwinRomName, NULL, NULL, SrdarwinInputInfo, SrdarwinDIPInfo,
-	SrdarwinInit, DrvExit, SrdarwinFrame, SrdarwinDraw, NULL, &DrvRecalc, 0x100,
+	SrdarwinInit, CobraExit, SrdarwinFrame, SrdarwinDraw, NULL, &DrvRecalc, 0x100,
 	240, 256, 3, 4
 };
 
@@ -2895,11 +2907,11 @@ STD_ROM_FN(srdarwnj)
 
 struct BurnDriver BurnDrvSrdarwnj = {
 	"srdarwinj", "srdarwin", NULL, NULL, "1987",
-	"Super Real Darwin (Japan)\0", NULL, "Data East Corporation", "hardware",
+	"Super Real Darwin (Japan)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, srdarwnjRomInfo, srdarwnjRomName, NULL, NULL, SrdarwinInputInfo, SrdarwinDIPInfo,
-	SrdarwinInit, DrvExit, SrdarwinFrame, SrdarwinDraw, NULL, &DrvRecalc, 0x100,
+	SrdarwinInit, CobraExit, SrdarwinFrame, SrdarwinDraw, NULL, &DrvRecalc, 0x100,
 	240, 256, 3, 4
 };
 
@@ -3289,16 +3301,9 @@ static INT32 GondoInit()
 
 static INT32 GondoExit()
 {
-	GenericTilesExit();
 	HD6309Exit();
-	M6502Exit();
-
 	BurnYM3526Exit();
-	BurnYM2203Exit();
-
-	BurnFree (AllMem);
-
-	return 0;
+	return DrvExit();
 }
 
 static void gondo_draw_txt_layer()
@@ -3527,7 +3532,7 @@ STD_ROM_FN(gondo)
 
 struct BurnDriverD BurnDrvGondo = {
 	"gondo", NULL, NULL, NULL, "1987",
-	"Gondomania (US)\0", "Broken inputs", "Data East USA", "hardware",
+	"Gondomania (US)\0", "Broken inputs", "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, gondoRomInfo, gondoRomName, NULL, NULL, GondoInputInfo, GondoDIPInfo,
@@ -3580,7 +3585,7 @@ STD_ROM_FN(makyosen)
 
 struct BurnDriverD BurnDrvMakyosen = {
 	"makyosen", "gondo", NULL, NULL, "1987",
-	"Makyou Senshi (Japan)\0", "Broken inputs", "Data East Corporation", "hardware",
+	"Makyou Senshi (Japan)\0", "Broken inputs", "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, makyosenRomInfo, makyosenRomName, NULL, NULL, GondoInputInfo, GondoDIPInfo,
@@ -3629,7 +3634,7 @@ STD_ROM_FN(garyoret)
 
 struct BurnDriver BurnDrvGaryoret = {
 	"garyoret", NULL, NULL, NULL, "1987",
-	"Garyo Retsuden (Japan)\0", NULL, "Data East Corporation", "hardware",
+	"Garyo Retsuden (Japan)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, garyoretRomInfo, garyoretRomName, NULL, NULL, GaryoretInputInfo, GaryoretDIPInfo,
@@ -4033,7 +4038,7 @@ STD_ROM_FN(oscar)
 
 struct BurnDriver BurnDrvOscar = {
 	"oscar", NULL, NULL, NULL, "1988",
-	"Psycho-Nics Oscar (World revision 0)\0", NULL, "Data East Corporation", "hardware",
+	"Psycho-Nics Oscar (World revision 0)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, oscarRomInfo, oscarRomName, NULL, NULL, OscarInputInfo, OscarDIPInfo,
@@ -4074,7 +4079,7 @@ STD_ROM_FN(oscaru)
 
 struct BurnDriver BurnDrvOscaru = {
 	"oscaru", "oscar", NULL, NULL, "1987",
-	"Psycho-Nics Oscar (US)\0", NULL, "Data East USA", "hardware",
+	"Psycho-Nics Oscar (US)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, oscaruRomInfo, oscaruRomName, NULL, NULL, OscarInputInfo, OscaruDIPInfo,
@@ -4115,7 +4120,7 @@ STD_ROM_FN(oscarj1)
 
 struct BurnDriver BurnDrvOscarj1 = {
 	"oscarj1", "oscar", NULL, NULL, "1987",
-	"Psycho-Nics Oscar (Japan revision 1)\0", NULL, "Data East Corporation", "hardware",
+	"Psycho-Nics Oscar (Japan revision 1)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, oscarj1RomInfo, oscarj1RomName, NULL, NULL, OscarInputInfo, OscaruDIPInfo,
@@ -4156,7 +4161,7 @@ STD_ROM_FN(oscarj2)
 
 struct BurnDriver BurnDrvOscarj2 = {
 	"oscarj2", "oscar", NULL, NULL, "1987",
-	"Psycho-Nics Oscar (Japan revision 2)\0", NULL, "Data East Corporation", "hardware",
+	"Psycho-Nics Oscar (Japan revision 2)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, oscarj2RomInfo, oscarj2RomName, NULL, NULL, OscarInputInfo, OscaruDIPInfo,
@@ -4534,18 +4539,10 @@ static INT32 LastmissInit()
 
 static INT32 LastmissExit()
 {
-	GenericTilesExit();
 	M6809Exit();
-	M6502Exit();
-
 	BurnYM3526Exit();
-	BurnYM2203Exit();
-
-	BurnFree (AllMem);
-
 	nLastMiss = 0;
-
-	return 0;
+	return DrvExit();
 }
 
 static void lastmiss_draw_bg_layer(INT32 priority, INT32 t)
@@ -4768,7 +4765,7 @@ STD_ROM_FN(lastmisn)
 
 struct BurnDriver BurnDrvLastmisn = {
 	"lastmisn", NULL, NULL, NULL, "1986",
-	"Last Mission (US revision 6)\0", NULL, "Data East USA", "hardware",
+	"Last Mission (US revision 6)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, lastmisnRomInfo, lastmisnRomName, NULL, NULL, LastmisnInputInfo, LastmisnDIPInfo,
@@ -4809,7 +4806,7 @@ STD_ROM_FN(lastmsno)
 
 struct BurnDriver BurnDrvLastmsno = {
 	"lastmisno", "lastmisn", NULL, NULL, "1986",
-	"Last Mission (US revision 5)\0", NULL, "Data East USA", "hardware",
+	"Last Mission (US revision 5)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, lastmsnoRomInfo, lastmsnoRomName, NULL, NULL, LastmisnInputInfo, LastmisnDIPInfo,
@@ -4850,7 +4847,7 @@ STD_ROM_FN(lastmsnj)
 
 struct BurnDriver BurnDrvLastmsnj = {
 	"lastmisnj", "lastmisn", NULL, NULL, "1986",
-	"Last Mission (Japan)\0", NULL, "Data East Corporation", "hardware",
+	"Last Mission (Japan)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, lastmsnjRomInfo, lastmsnjRomName, NULL, NULL, LastmisnInputInfo, LastmsnjDIPInfo,
@@ -4896,7 +4893,7 @@ STD_ROM_FN(shackled)
 
 struct BurnDriver BurnDrvShackled = {
 	"shackled", NULL, NULL, NULL, "1986",
-	"Shackled (US)\0", NULL, "Data East USA", "hardware",
+	"Shackled (US)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, shackledRomInfo, shackledRomName, NULL, NULL, ShackledInputInfo, ShackledDIPInfo,
@@ -4942,7 +4939,7 @@ STD_ROM_FN(breywood)
 
 struct BurnDriver BurnDrvBreywood = {
 	"breywood", "shackled", NULL, NULL, "1986",
-	"Breywood (Japan revision 2)\0", NULL, "Data East Corporation", "hardware",
+	"Breywood (Japan revision 2)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, breywoodRomInfo, breywoodRomName, NULL, NULL, ShackledInputInfo, ShackledDIPInfo,
@@ -5333,13 +5330,23 @@ static struct BurnRomInfo csilverRomDesc[] = {
 STD_ROM_PICK(csilver)
 STD_ROM_FN(csilver)
 
+static INT32 CsilverExit()
+{
+	MSM5205Exit();
+	
+	MSM5205Next = 0;
+	Toggle = 0;
+	
+	return LastmissExit();
+}
+
 struct BurnDriver BurnDrvCsilver = {
 	"csilver", NULL, NULL, NULL, "1987",
-	"Captain Silver (World)\0", NULL, "Data East Corporation", "hardware",
+	"Captain Silver (World)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, csilverRomInfo, csilverRomName, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,
-	CsilverInit, LastmissExit, CsilverFrame, LastmissDraw, NULL, &DrvRecalc, 0x400,
+	CsilverInit, CsilverExit, CsilverFrame, LastmissDraw, NULL, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
 
@@ -5376,10 +5383,10 @@ STD_ROM_FN(csilverj)
 
 struct BurnDriver BurnDrvCsilverj = {
 	"csilverj", "csilver", NULL, NULL, "1987",
-	"Captain Silver (Japan)\0", NULL, "Data East Corporation", "hardware",
+	"Captain Silver (Japan)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, csilverjRomInfo, csilverjRomName, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,
-	CsilverInit, LastmissExit, CsilverFrame, LastmissDraw, NULL, &DrvRecalc, 0x400,
+	CsilverInit, CsilverExit, CsilverFrame, LastmissDraw, NULL, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };

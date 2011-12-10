@@ -1953,6 +1953,8 @@ static INT32 tigerhExit()
 	TigerHeliTileExit();
 
 	ZetExit();
+	AY8910Exit(0);
+	AY8910Exit(1);
 
 	if (use_mcu) {
 		use_mcu = 0;
@@ -2201,7 +2203,7 @@ static INT32 tigerhFrame()
 	}
 
 	ZetNewFrame();
-	m6805NewFrame();
+	if (use_mcu) m6805NewFrame();
 
 	// Compile digital inputs
 	tigerhInput[0] = 0x00;

@@ -510,10 +510,12 @@ void __fastcall tigeroad_sample_out(UINT16 port, UINT8 data)
 	switch (port & 0xff)
 	{
 		case 0x01:
+			SekOpen(0);
 			MSM5205ResetWrite(0, (data >> 7) & 1);
 			MSM5205DataWrite(0, data);
 			MSM5205VCLKWrite(0, 1);
 			MSM5205VCLKWrite(0, 0);
+			SekClose();
 		return;
 	}
 }
@@ -742,7 +744,7 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 static INT32 DrvExit()
 {
 	BurnYM2203Exit();
-	MSM5205Exit();
+	if (toramich) MSM5205Exit();
 
 	GenericTilesExit();
 
@@ -1010,7 +1012,7 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 		if (i == (nInterleave - 1)) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
-		MSM5205Update();
+		if (toramich) MSM5205Update();
 		SekClose();
 		
 		ZetOpen(0);
@@ -1037,7 +1039,11 @@ static INT32 DrvFrame()
 	BurnTimerEndFrame(nCyclesTotal[1]);
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		if (toramich) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
+		if (toramich) {
+			SekOpen(0);
+			MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
+			SekClose();
+		}
 	}
 	ZetClose();	
 

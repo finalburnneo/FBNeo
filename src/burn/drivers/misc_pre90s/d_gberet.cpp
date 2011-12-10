@@ -701,6 +701,7 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	ZetExit();
+	SN76496Exit();
 
 	BurnFree (Rom);
 

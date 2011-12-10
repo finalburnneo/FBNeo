@@ -2013,15 +2013,18 @@ static INT32 DarktowrInit()
 static INT32 DrvExit()
 {
 	HD6309Exit();
-	M6800Exit();
-	m6805Exit();
-	M6809Exit();
-	ZetExit();
+	if (DrvSubCPUType == DD_CPU_TYPE_M6803 || DrvSubCPUType == DD_CPU_TYPE_HD63701) M6800Exit();
+	if (DrvGameType == DD_GAME_DARKTOWR) m6805Exit();
+	if (DrvSoundCPUType == DD_CPU_TYPE_M6809) M6809Exit();
+	if (DrvSubCPUType == DD_CPU_TYPE_Z80 || DrvSoundCPUType == DD_CPU_TYPE_Z80) ZetExit();
 	
 	BurnYM2151Exit();
-	MSM5205Exit();
-	MSM6295Exit(0);
-	
+	if (DrvSoundCPUType == DD_CPU_TYPE_Z80) {
+		MSM6295Exit(0);
+	} else {
+		MSM5205Exit();
+	}
+		
 	GenericTilesExit();
 	
 	BurnFree(Mem);
@@ -2312,7 +2315,7 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesToDo[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += HD6309Run(nCyclesSegment);
-		MSM5205Update();
+		if (DrvSoundCPUType == DD_CPU_TYPE_M6809) MSM5205Update();
 		HD6309Close();
 		
 		if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {

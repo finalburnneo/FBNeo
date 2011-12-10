@@ -1874,9 +1874,13 @@ void GauntletSoundWrite(UINT16 Address, UINT8 Data)
 		case 0x100f: {
 			DrvSoundtoCPU = Data;
 			DrvSoundtoCPUReady = 1;
-			SekOpen(0);
-			SekSetIRQLine(6, SEK_IRQSTATUS_ACK);
-			SekClose();
+			if (SekGetActive() == -1) {
+				SekOpen(0);
+				SekSetIRQLine(6, SEK_IRQSTATUS_ACK);
+				SekClose();
+			} else {
+				SekSetIRQLine(6, SEK_IRQSTATUS_ACK);
+			}
 			return;
 		}
 		
@@ -2299,6 +2303,8 @@ static INT32 DrvExit()
 {
 	SekExit();
 	M6502Exit();
+	
+	BurnYM2151Exit();
 	
 	GenericTilesExit();
 	

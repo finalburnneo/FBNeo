@@ -1097,12 +1097,16 @@ void Dec0SoundWriteByte(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0x0800: {
+			SekOpen(0);
 			BurnYM2203Write(0, 0, d);
+			SekClose();
 			return;
 		}
 		
 		case 0x0801: {
+			SekOpen(0);
 			BurnYM2203Write(0, 1, d);
+			SekClose();
 			return;
 		}
 		
@@ -1658,6 +1662,12 @@ static INT32 DrvExit()
 	BurnFree(Mem);
 
 	return 0;
+}
+
+static INT32 RobocopExit()
+{
+	h6280Exit();
+	return DrvExit();
 }
 
 static void DrvCalcPalette()
@@ -2437,7 +2447,7 @@ struct BurnDriverD BurnDrvHippodrm = {
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, HippodrmRomInfo, HippodrmRomName, NULL, NULL, Dec0InputInfo, HippodrmDIPInfo,
-	HippodrmInit, DrvExit, RobocopFrame, NULL, DrvScan,
+	HippodrmInit, RobocopExit, RobocopFrame, NULL, DrvScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -2447,7 +2457,7 @@ struct BurnDriver BurnDrvRobocop = {
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, RobocopRomInfo, RobocopRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
-	RobocopInit, DrvExit, RobocopFrame, NULL, DrvScan,
+	RobocopInit, RobocopExit, RobocopFrame, NULL, DrvScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 

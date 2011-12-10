@@ -1439,8 +1439,8 @@ static INT32 DrvExit()
 
 	ZetExit();
 
-	BurnYM2203Exit();
-	BurnYM2151Exit();
+	if (tnzs_mcu_type() != MCU_NONE_JPOPNICS) BurnYM2203Exit();
+	if (tnzs_mcu_type() == MCU_NONE_JPOPNICS) BurnYM2151Exit();
 	DACExit();
 
 	BurnFree (AllMem);
@@ -2324,7 +2324,7 @@ struct BurnDriver BurnDrvKagekih = {
 	"kagekih", "kageki", NULL, NULL, "1992",
 	"Kageki (hack)\0", "Imperfect Sound", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, kagekihRomInfo, kagekihRomName, NULL, NULL, CommonInputInfo, KagekiDIPInfo,
 	KagekiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

@@ -368,7 +368,9 @@ static INT32 DrvDoReset()
 	mcu_select = 0;
 
 	rambank[0] = 0xff;
+	ZetOpen(0);
 	bankswitch(0);
+	ZetClose();
 
 	return 0;
 }
@@ -737,7 +739,9 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	if (nAction & ACB_WRITE) {
 		INT32 bank = rambank[0];
 		rambank[0] = 0xff;
+		ZetOpen(0);
 		bankswitch(bank);
+		ZetClose();
 	}
 
 	return 0;

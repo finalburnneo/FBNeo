@@ -1692,8 +1692,12 @@ static INT32 KikcubicInit()
 static INT32 DrvExit()
 {
 	ZetExit();
-	BurnYM2151Exit();
-	BurnYM2203Exit();
+	if (DrvHasYM2203) {
+		BurnYM2203Exit();
+	} else {
+		BurnYM2151Exit();
+	}
+	DACExit();
 	
 	GenericTilesExit();
 	

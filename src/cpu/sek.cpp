@@ -1141,7 +1141,6 @@ INT32 SekGetActive()
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekGetActive called without init\n"));
-	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekGetActive called when no CPU open\n"));
 #endif
 
 	return nSekActive;

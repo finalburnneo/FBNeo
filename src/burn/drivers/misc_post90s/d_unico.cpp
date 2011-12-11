@@ -1299,15 +1299,14 @@ static INT32 Zeropnt2Init()
 	return 0;
 }
 
-static INT32 DrvExit()
+static INT32 CommonExit()
 {
 	SekExit();
 	
-	BurnYM3812Exit();
 	MSM6295Exit(0);
 	
 	GenericTilesExit();
-	BurnGunExit();
+	if (nBurnGunNumPlayers) BurnGunExit();
 	
 	DrvScrollX0 = 0;
 	DrvScrollY0 = 0;
@@ -1327,14 +1326,23 @@ static INT32 DrvExit()
 	return 0;
 }
 
+static INT32 DrvExit()
+{
+	BurnYM3812Exit();
+	
+	return CommonExit();
+}
+
 static INT32 Zeropnt2Exit()
 {
+	INT32 nRet = CommonExit();
+	
 	BurnYM2151Exit();
 	MSM6295Exit(1);
 	
 	EEPROMExit();
 	
-	return DrvExit();
+	return nRet;
 }
 
 static void DrvRenderSprites(INT32 PriorityDraw)

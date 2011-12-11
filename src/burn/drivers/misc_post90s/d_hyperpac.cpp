@@ -37,6 +37,7 @@ static INT32 Finalttr = 0;
 static INT32 Twinadv = 0;
 static INT32 Honeydol = 0;
 static INT32 Wintbob = 0;
+static INT32 Snowbro3 = 0;
 
 static INT32 HyperpacNumTiles = 0;
 static INT32 HyperpacNumTiles8bpp = 0;
@@ -108,7 +109,7 @@ static struct BurnInputInfo SnowbrosInputList[] = {
 
 STDINPUTINFO(Snowbros)
 
-inline void HyperpacClearOpposites(UINT8* nJoystickInputs)
+static inline void HyperpacClearOpposites(UINT8* nJoystickInputs)
 {
 	if ((*nJoystickInputs & 0x03) == 0x03) {
 		*nJoystickInputs &= ~0x03;
@@ -118,7 +119,7 @@ inline void HyperpacClearOpposites(UINT8* nJoystickInputs)
 	}
 }
 
-inline void HyperpacMakeInputs()
+static inline void HyperpacMakeInputs()
 {
 	// Reset Inputs
 	HyperpacInput[0] = HyperpacInput[1] = HyperpacInput[2] = 0x00;
@@ -1088,7 +1089,7 @@ static struct BurnRomInfo Snowbro3RomDesc[] = {
 STD_ROM_PICK(Snowbro3)
 STD_ROM_FN(Snowbro3)
 
-INT32 HyperpacDoReset()
+static INT32 HyperpacDoReset()
 {
 	HyperpacSoundLatch = 0;
 	
@@ -1110,7 +1111,7 @@ INT32 HyperpacDoReset()
 	return 0;
 }
 
-INT32 SnowbrosDoReset()
+static INT32 SnowbrosDoReset()
 {
 	HyperpacSoundLatch = 0;
 
@@ -1127,7 +1128,7 @@ INT32 SnowbrosDoReset()
 	return 0;
 }
 
-INT32 Snowbro3DoReset()
+static INT32 Snowbro3DoReset()
 {
 	SekOpen(0);
 	SekReset();
@@ -1141,7 +1142,7 @@ INT32 Snowbro3DoReset()
 	return 0;
 }
 
-void HyperpacYM2151IrqHandler(INT32 Irq)
+static void HyperpacYM2151IrqHandler(INT32 Irq)
 {
 	if (Irq) {
 		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
@@ -1482,7 +1483,6 @@ UINT16 __fastcall HoneydolReadWord(UINT32 a)
 		case 0x900002:
 		case 0x900004: {
 			SEK_DEF_READ_WORD(0, a);
-			return 0;
 		}
 	}
 	
@@ -1958,7 +1958,7 @@ static INT32 Snowbro3MemIndex()
 	return 0;
 }
 
-INT32 HyperpacMachineInit()
+static INT32 HyperpacMachineInit()
 {
 	BurnSetRefreshRate(57.5);
 	
@@ -2028,7 +2028,7 @@ static INT32 Snowbro38BppPlaneOffsets[8]   = { 8, 9, 10, 11, 0, 1, 2, 3 };
 static INT32 Snowbro38BppXOffsets[16]      = { 0, 4, 16, 20, 32, 36, 48, 52, 512, 516, 528, 532, 544, 548, 560, 564 };
 static INT32 Snowbro38BppYOffsets[16]      = { 0, 64, 128, 192, 256, 320, 384, 448, 1024, 1088, 1152, 1216, 1280, 1344, 1408, 1472 };
 
-INT32 HyperpacInit()
+static INT32 HyperpacInit()
 {
 	INT32 nRet = 0, nLen;
 	
@@ -2084,7 +2084,7 @@ INT32 HyperpacInit()
 	return 0;
 }
 
-INT32 Cookbib2Init()
+static INT32 Cookbib2Init()
 {
 	INT32 nRet = 0, nLen;
 	
@@ -2126,7 +2126,7 @@ INT32 Cookbib2Init()
 	return 0;
 }
 
-INT32 Cookbib3Init()
+static INT32 Cookbib3Init()
 {
 	INT32 nRet = 0, nLen;
 	
@@ -2177,7 +2177,7 @@ INT32 Cookbib3Init()
 	return 0;
 }
 
-INT32 MoremoreInit()
+static INT32 MoremoreInit()
 {
 	INT32 nRet = 0, nLen;
 	
@@ -2223,7 +2223,7 @@ INT32 MoremoreInit()
 	return 0;
 }
 
-INT32 TwinkleInit()
+static INT32 TwinkleInit()
 {
 	INT32 nRet = 0, nLen;
 	
@@ -2263,7 +2263,7 @@ INT32 TwinkleInit()
 	return 0;
 }
 
-INT32 PzlbreakInit()
+static INT32 PzlbreakInit()
 {
 	INT32 nRet = 0, nLen;
 	
@@ -2304,7 +2304,7 @@ INT32 PzlbreakInit()
 	return 0;
 }
 
-void Fourin1bootDescrambleRom()
+static void Fourin1bootDescrambleRom()
 {
 	UINT8 *buffer;
 	UINT8 *src = HyperpacRom;
@@ -2337,7 +2337,7 @@ void Fourin1bootDescrambleRom()
 	}
 }
 
-INT32 Fourin1bootInit()
+static INT32 Fourin1bootInit()
 {
 	INT32 nRet = 0, nLen;
 	
@@ -2377,7 +2377,7 @@ INT32 Fourin1bootInit()
 	return 0;
 }
 
-INT32 FinalttrInit()
+static INT32 FinalttrInit()
 {
 	INT32 nRet = 0, nLen;
 	
@@ -2422,7 +2422,7 @@ INT32 FinalttrInit()
 	return 0;
 }
 
-INT32 TwinadvInit()
+static INT32 TwinadvInit()
 {
 	INT32 nRet = 0, nLen;
 	
@@ -2475,6 +2475,7 @@ INT32 TwinadvInit()
 
 	// Setup the Z80 emulation
 	ZetInit(1);
+	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, HyperpacZ80Rom);
 	ZetMapArea(0x0000, 0x7fff, 2, HyperpacZ80Rom);
 	ZetMapArea(0x8000, 0x87ff, 0, HyperpacZ80Ram);
@@ -2496,7 +2497,7 @@ INT32 TwinadvInit()
 	return 0;
 }
 
-INT32 HoneydolInit()
+static INT32 HoneydolInit()
 {
 	INT32 nRet = 0, nLen;
 	
@@ -2582,7 +2583,7 @@ INT32 HoneydolInit()
 	return 0;
 }
 
-INT32 SnowbrosInit()
+static INT32 SnowbrosInit()
 {
 	INT32 nRet = 0, nLen;
 
@@ -2674,9 +2675,11 @@ INT32 SnowbrosInit()
 	return 0;
 }
 
-INT32 Snowbro3Init()
+static INT32 Snowbro3Init()
 {
 	INT32 nRet = 0, nLen;
+	
+	Snowbro3 = 1;
 
 	HyperpacNumTiles = 0x1000;
 	HyperpacNumTiles8bpp = 0x4000;
@@ -2745,16 +2748,17 @@ INT32 Snowbro3Init()
 	return 0;
 }
 
-INT32 HyperpacExit()
+static INT32 HyperpacExit()
 {
-	BurnYM3812Exit();
-	BurnYM2151Exit();
 	MSM6295Exit(0);
 
 	SekExit();
 	ZetExit();
-
+	
 	GenericTilesExit();
+	
+	if (!Twinadv && !Honeydol) BurnYM2151Exit();
+	if (Honeydol) BurnYM3812Exit();
 
 	BurnFree(Mem);
 	
@@ -2768,17 +2772,18 @@ INT32 HyperpacExit()
 	Finalttr = 0;
 	Twinadv = 0;
 	Honeydol = 0;
+	Snowbro3 = 0;
 	
 	return 0;
 }
 
-INT32 SnowbrosExit()
+static INT32 SnowbrosExit()
 {
-	BurnYM3812Exit();
-	MSM6295Exit(0);
+	if (!Snowbro3) BurnYM3812Exit();
+	if (Snowbro3) MSM6295Exit(0);
 
 	SekExit();
-	ZetExit();
+	if (!Snowbro3) ZetExit();
 
 	GenericTilesExit();
 
@@ -2790,11 +2795,12 @@ INT32 SnowbrosExit()
 	
 	Snowbro3Music = 0;
 	Snowbro3MusicPlaying = 0;
+	Snowbro3 = 0;
 
 	return 0;
 }
 
-void HyperpacRenderSpriteLayer()
+static void HyperpacRenderSpriteLayer()
 {
 	INT32 x = 0, y = 0, Offs;
 
@@ -2855,7 +2861,7 @@ void HyperpacRenderSpriteLayer()
 	}
 }
 
-void TwinadvRenderSpriteLayer()
+static void TwinadvRenderSpriteLayer()
 {
 	INT32 x = 0, y = 0, Offs;
 
@@ -2910,7 +2916,7 @@ void TwinadvRenderSpriteLayer()
 	}
 }
 
-void HoneydolRenderSpriteLayer()
+static void HoneydolRenderSpriteLayer()
 {
 	INT32 x = 0, y = 0, Offs;
 
@@ -3015,7 +3021,7 @@ void HoneydolRenderSpriteLayer()
 	}
 }
 
-void SnowbrosRenderSpriteLayer()
+static void SnowbrosRenderSpriteLayer()
 {
 	INT32 x = 0, y = 0, Offs;
 
@@ -3076,7 +3082,7 @@ void SnowbrosRenderSpriteLayer()
 	}
 }
 
-void WintbobRenderSpriteLayer()
+static void WintbobRenderSpriteLayer()
 {
 	INT32 x = 0, y = 0, Offs;
 	
@@ -3133,7 +3139,7 @@ void WintbobRenderSpriteLayer()
 	}
 }
 
-void Snowbro3RenderSpriteLayer()
+static void Snowbro3RenderSpriteLayer()
 {
 	INT32 x = 0, y = 0, Offs;
 	
@@ -3225,7 +3231,7 @@ inline static UINT32 CalcCol(UINT16 nColour)
 	return BurnHighCol(r, g, b, 0);
 }
 
-INT32 HyperpacCalcPalette()
+static INT32 HyperpacCalcPalette()
 {
 	INT32 i;
 	UINT16* ps;
@@ -3238,7 +3244,7 @@ INT32 HyperpacCalcPalette()
 	return 0;
 }
 
-INT32 HoneydolCalcPalette()
+static INT32 HoneydolCalcPalette()
 {
 	INT32 i;
 	UINT16* ps;
@@ -3251,7 +3257,7 @@ INT32 HoneydolCalcPalette()
 	return 0;
 }
 
-INT32 Snowbro3CalcPalette()
+static INT32 Snowbro3CalcPalette()
 {
 	INT32 i;
 	UINT16* ps;
@@ -3264,7 +3270,7 @@ INT32 Snowbro3CalcPalette()
 	return 0;
 }
 
-void HyperpacRender()
+static void HyperpacRender()
 {
 	HyperpacCalcPalette();
 	
@@ -3276,7 +3282,7 @@ void HyperpacRender()
 	BurnTransferCopy(HyperpacPalette);
 }
 
-void PzlbreakRender()
+static void PzlbreakRender()
 {
 	HyperpacCalcPalette();
 	
@@ -3288,7 +3294,7 @@ void PzlbreakRender()
 	BurnTransferCopy(HyperpacPalette);
 }
 
-void TwinadvRender()
+static void TwinadvRender()
 {
 	HyperpacCalcPalette();
 	
@@ -3300,7 +3306,7 @@ void TwinadvRender()
 	BurnTransferCopy(HyperpacPalette);
 }
 
-void HoneydolRender()
+static void HoneydolRender()
 {
 	HoneydolCalcPalette();
 	
@@ -3312,7 +3318,7 @@ void HoneydolRender()
 	BurnTransferCopy(HyperpacPalette);
 }
 
-void SnowbrosRender()
+static void SnowbrosRender()
 {
 	HyperpacCalcPalette();
 	
@@ -3328,7 +3334,7 @@ void SnowbrosRender()
 	BurnTransferCopy(HyperpacPalette);
 }
 
-void Snowbro3Render()
+static void Snowbro3Render()
 {
 	Snowbro3CalcPalette();
 	
@@ -3341,7 +3347,7 @@ void Snowbro3Render()
 	BurnTransferCopy(HyperpacPalette);
 }
 
-INT32 HyperpacFrame()
+static INT32 HyperpacFrame()
 {
 	INT32 nInterleave = 4;
 
@@ -3409,7 +3415,7 @@ INT32 HyperpacFrame()
 	return 0;
 }
 
-INT32 PzlbreakFrame()
+static INT32 PzlbreakFrame()
 {
 	INT32 nInterleave = 4;
 
@@ -3477,7 +3483,7 @@ INT32 PzlbreakFrame()
 	return 0;
 }
 
-INT32 FinalttrFrame()
+static INT32 FinalttrFrame()
 {
 	INT32 nInterleave = 4;
 
@@ -3545,7 +3551,7 @@ INT32 FinalttrFrame()
 	return 0;
 }
 
-INT32 TwinadvFrame()
+static INT32 TwinadvFrame()
 {
 	INT32 nInterleave = 4;
 
@@ -3611,7 +3617,7 @@ INT32 TwinadvFrame()
 	return 0;
 }
 
-INT32 HoneydolFrame()
+static INT32 HoneydolFrame()
 {
 	INT32 nInterleave = 4;
 
@@ -3645,8 +3651,6 @@ INT32 HoneydolFrame()
 		if (i == 3) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
 	}
 
-	SekClose();
-
 	nCycles68KSync = SekTotalCycles();
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 	if (pBurnSoundOut) {
@@ -3667,7 +3671,7 @@ INT32 HoneydolFrame()
 	return 0;
 }
 
-INT32 SnowbrosFrame()
+static INT32 SnowbrosFrame()
 {
 	INT32 nInterleave = 4;
 
@@ -3701,8 +3705,6 @@ INT32 SnowbrosFrame()
 		if (i == 3) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
 	}
 
-	SekClose();
-
 	nCycles68KSync = SekTotalCycles();
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 	if (pBurnSoundOut) BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
@@ -3720,7 +3722,7 @@ INT32 SnowbrosFrame()
 	return 0;
 }
 
-INT32 Snowbro3Frame()
+static INT32 Snowbro3Frame()
 {
 	INT32 nInterleave = 4;
 
@@ -3761,8 +3763,6 @@ INT32 Snowbro3Frame()
 			}
 		}
 	}
-
-	SekClose();
 
 	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];
 

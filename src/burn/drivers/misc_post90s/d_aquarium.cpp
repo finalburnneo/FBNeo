@@ -433,6 +433,7 @@ static INT32 DrvExit()
 {
 	GenericTilesExit();
 
+	BurnYM2151Exit();
 	MSM6295Exit(0);
 	SekExit();
 	ZetExit();

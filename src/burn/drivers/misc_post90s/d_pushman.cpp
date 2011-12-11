@@ -577,6 +577,8 @@ static INT32 DrvExit()
 	SekExit();
 	ZetExit();
 	m6805Exit();
+	
+	BurnYM2203Exit();
 
 	BurnFree (AllMem);
 

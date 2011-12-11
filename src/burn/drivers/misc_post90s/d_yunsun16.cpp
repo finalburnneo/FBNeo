@@ -682,6 +682,7 @@ static INT32 DrvExit()
 	BurnYM3812Exit();
 
 	SekExit();
+	ZetExit();
 	GenericTilesExit();
 
 	BurnFree (AllMem);

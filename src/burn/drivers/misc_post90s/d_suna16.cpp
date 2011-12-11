@@ -1684,6 +1684,7 @@ static INT32 DrvExit()
 		BurnYM2151Exit();
 	} else {
 		AY8910Exit(0);
+		BurnYM3526Exit();
 	}
 
 	DACExit();

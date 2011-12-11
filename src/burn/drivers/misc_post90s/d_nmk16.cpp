@@ -2426,15 +2426,6 @@ UINT16 __fastcall ssmissin_main_read_word(UINT32 address)
 	return 0;
 }
 
-static void macross2_sound_sync()
-{
-/*	INT32 cycles = (SekTotalCycles() * 4) / 10;
-
-	if (cycles > ZetTotalCycles() && cycles < 71429) {
-		BurnTimerUpdate(cycles);
-	}*/
-}
-
 UINT8 __fastcall macross2_main_read_byte(UINT32 address)
 {
 	switch (address)
@@ -2461,9 +2452,6 @@ UINT8 __fastcall macross2_main_read_byte(UINT32 address)
 
 		case 0x10000e:
 		case 0x10000f:
-			if (macross2_sound_enable) {
-				macross2_sound_sync();
-			}
 			return *soundlatch2;
 	}
 
@@ -2487,9 +2475,6 @@ UINT16 __fastcall macross2_main_read_word(UINT32 address)
 			return (DrvDips[1] << 8) | DrvDips[1];
 
 		case 0x10000e:
-			if (macross2_sound_enable) {
-				macross2_sound_sync();
-			}
 			return *soundlatch2;
 	}
 
@@ -2518,19 +2503,11 @@ void __fastcall macross2_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x100016:
-			bprintf (0, _T("%x, %x ww\n"), address, data);
 			if (data == 0) {
 				if (macross2_sound_enable != 0) {
-					macross2_sound_sync();
 					ZetReset();
 				}
-			} else {
-//				INT32 cycles = ((SekTotalCycles() * 4) / 10) - ZetTotalCycles();
-//				if (cycles > 0 && cycles < 71429) {
-//					ZetIdle(cycles);
-//				}
 			}
-
 			macross2_sound_enable = data;
 		return;
 
@@ -2541,10 +2518,6 @@ void __fastcall macross2_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x10001e:
-			if (macross2_sound_enable) {
-				macross2_sound_sync();
-			}
-
 			*soundlatch = data;
 		return;
 	}
@@ -3953,14 +3926,17 @@ static INT32 NMK004DoReset()
 	SekOpen(0);
 	SekReset();
 	SekClose();
-
+	
 	BurnYM2203Reset();
+
 	MSM6295Reset(0);
 	MSM6295Reset(1);
 
 	MSM6295SetInitialBanks(2);
 
+	SekOpen(0);
 	NMK004_init();
+	SekClose();
 
 	return 0;
 }
@@ -4464,9 +4440,6 @@ static INT32 CommonExit()
 {
 	GenericTilesExit();
 
-	MSM6295Exit(0);
-	MSM6295ROM = NULL;
-
 	SekExit();
 
 	BurnFree (AllMem);
@@ -4478,6 +4451,26 @@ static INT32 CommonExit()
 	screen_flip_y = 0;
 
 	return 0;
+}
+
+static INT32 DrvExit()
+{
+	ZetExit();
+	BurnYM2203Exit();
+	MSM6295Exit(0);
+	MSM6295Exit(1);
+	MSM6295ROM = NULL;
+	
+	return CommonExit();
+}
+
+static INT32 MSM6295x1Exit()
+{
+	ZetExit();
+	MSM6295Exit(0);
+	MSM6295ROM = NULL;
+
+	return CommonExit();
 }
 
 static INT32 SeibuSoundExit()
@@ -4499,34 +4492,31 @@ static INT32 SeibuSoundExit()
 
 static INT32 AfegaExit()
 {
-	BurnYM2151Exit();
-	MSM6295Exit(1);
 	ZetExit();
+	BurnYM2151Exit();
+	MSM6295Exit(0);
+	MSM6295Exit(1);
+	MSM6295ROM = NULL;
 
 	return CommonExit();
 }
 
 static INT32 BjtwinExit()
 {
-	BurnYM2151Exit();
+	MSM6295Exit(0);
 	MSM6295Exit(1);
+	MSM6295ROM = NULL;
 
 	return CommonExit();
 }
 
-static INT32 DrvExit()
-{
-	BurnYM2203Exit();
-	MSM6295Exit(1);
-	ZetExit();
-	
-	return CommonExit();
-}
 
 static INT32 NMK004Exit()
 {
 	BurnYM2203Exit();
+	MSM6295Exit(0);
 	MSM6295Exit(1);
+	MSM6295ROM = NULL;
 
 	return CommonExit();
 }
@@ -5372,8 +5362,6 @@ static INT32 BjtwinFrame()
 		BjtwinDoReset();
 	}
 
-	ZetNewFrame();
-
 	{
 		DrvInputs[0] = ~input_high[0];
 		DrvInputs[1] = ~input_high[1];
@@ -5964,7 +5952,7 @@ struct BurnDriver BurnDrvSsmissin = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, ssmissinRomInfo, ssmissinRomName, NULL, NULL, SsmissinInputInfo, SsmissinDIPInfo,
-	SsmissinInit, CommonExit, SsmissinFrame, MacrossDraw, NULL, NULL, 0x400,
+	SsmissinInit, MSM6295x1Exit, SsmissinFrame, MacrossDraw, NULL, NULL, 0x400,
 	224, 256, 3, 4
 };
 
@@ -6001,7 +5989,7 @@ struct BurnDriver BurnDrvAirattck = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, airattckRomInfo, airattckRomName, NULL, NULL, SsmissinInputInfo, SsmissinDIPInfo,
-	SsmissinInit, CommonExit, SsmissinFrame, MacrossDraw, NULL, NULL, 0x400,
+	SsmissinInit, MSM6295x1Exit, SsmissinFrame, MacrossDraw, NULL, NULL, 0x400,
 	224, 256, 3, 4
 };
 
@@ -6038,7 +6026,7 @@ struct BurnDriver BurnDrvAirattcka = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, airattckaRomInfo, airattckaRomName, NULL, NULL, SsmissinInputInfo, SsmissinDIPInfo,
-	SsmissinInit, CommonExit, SsmissinFrame, MacrossDraw, NULL, NULL, 0x400,
+	SsmissinInit, MSM6295x1Exit, SsmissinFrame, MacrossDraw, NULL, NULL, 0x400,
 	224, 256, 3, 4
 };
 
@@ -6996,7 +6984,7 @@ struct BurnDriver BurnDrvTwinactn = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, twinactnRomInfo, twinactnRomName, NULL, NULL, CommonInputInfo, TwinactnDIPInfo,
-	TwinactnInit, CommonExit, SsmissinFrame, MacrossDraw, NULL, NULL, 0x400,
+	TwinactnInit, MSM6295x1Exit, SsmissinFrame, MacrossDraw, NULL, NULL, 0x400,
 	256, 224, 4, 3
 };
 

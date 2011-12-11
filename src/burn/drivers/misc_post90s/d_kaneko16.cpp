@@ -100,12 +100,12 @@ MCURun ToyboxMCURun;
 
 typedef void (*FrameRender)();
 FrameRender Kaneko16FrameRender;
-void BerlwallFrameRender();
-void BlazeonFrameRender();
-void BloodwarFrameRender();
-void ExplbrkrFrameRender();
-void GtmrFrameRender();
-void MgcrystlFrameRender();
+static void BerlwallFrameRender();
+static void BlazeonFrameRender();
+static void BloodwarFrameRender();
+static void ExplbrkrFrameRender();
+static void GtmrFrameRender();
+static void MgcrystlFrameRender();
 
 typedef INT32 (*ParseSprite)(INT32, struct tempsprite*);
 ParseSprite Kaneko16ParseSprite;
@@ -1347,7 +1347,7 @@ static struct {
 	UINT16 mult_a, mult_b;
 } hit;
 
-INT16 calc_compute_x(void)
+static INT16 calc_compute_x(void)
 {
 	INT16 x_coll;
 
@@ -1361,7 +1361,7 @@ INT16 calc_compute_x(void)
 
 	return x_coll;
 }
-INT16 calc_compute_y(void)
+static INT16 calc_compute_y(void)
 {
 	INT16 y_coll;
 
@@ -3246,14 +3246,14 @@ static INT32 ExplbrkrInit()
 	pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
 	pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
 
+	Kaneko16Eeprom = 1;
+	EEPROMInit(&eeprom_interface_93C46);
+	
 	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910Init(1, 2000000, nBurnSoundRate, &Kaneko16EepromRead, NULL, NULL, &Kaneko16EepromReset);
 	
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (12000000 / 6) / 132, 100.0, 1);
-	
-	Kaneko16Eeprom = 1;
-	EEPROMInit(&eeprom_interface_93C46);
 	
 	Kaneko16FrameRender = ExplbrkrFrameRender;
 	
@@ -3382,7 +3382,7 @@ static INT32 GtmrevoInit()
 	return 0;
 }
 
-INT32 Gtmr2Init()
+static INT32 Gtmr2Init()
 {
 	INT32 nRet = 0, nLen;
 	
@@ -3444,7 +3444,7 @@ INT32 Gtmr2Init()
 	return 0;
 }
 
-INT32 Gtmr2uInit()
+static INT32 Gtmr2uInit()
 {
 	INT32 nRet = 0, nLen;
 	
@@ -3587,14 +3587,14 @@ static INT32 MgcrystlInit()
 	pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
 	pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
 
+	Kaneko16Eeprom = 1;
+	EEPROMInit(&eeprom_interface_93C46);
+	
 	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910Init(1, 2000000, nBurnSoundRate, &Kaneko16EepromRead, NULL, NULL, &Kaneko16EepromReset);
 	
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (12000000 / 4) / 165, 100.0, 1);
-	
-	Kaneko16Eeprom = 1;
-	EEPROMInit(&eeprom_interface_93C46);
 	
 	Kaneko16FrameRender = MgcrystlFrameRender;
 
@@ -3604,18 +3604,10 @@ static INT32 MgcrystlInit()
 	return 0;
 }
 
-INT32 Kaneko16Exit()
+static INT32 Kaneko16Exit()
 {
 	SekExit();
-	MSM6295Exit(0);
-	MSM6295Exit(1);
 	if (Kaneko16Eeprom) EEPROMExit();
-	ZetExit();
-	BurnYM2151Exit();
-	
-	for (INT32 i = 0; i < 2; i++) {
-		AY8910Exit(i);
-	}
 
 	GenericTilesExit();
 
@@ -3658,6 +3650,40 @@ INT32 Kaneko16Exit()
 	Mgcrystl = 0;
 	
 	return 0;
+}
+
+static INT32 BerlwallExit()
+{
+	AY8910Exit(0);
+	AY8910Exit(1);
+	MSM6295Exit(0);
+	
+	return Kaneko16Exit();
+}
+
+static INT32 BlazeonExit()
+{
+	ZetExit();
+	BurnYM2151Exit();
+	
+	return Kaneko16Exit();
+}
+
+static INT32 GtmrMachineExit()
+{
+	MSM6295Exit(0);
+	MSM6295Exit(1);
+		
+	return Kaneko16Exit();
+}
+
+static INT32 ExplbrkrExit()
+{
+	AY8910Exit(0);
+	AY8910Exit(1);
+	MSM6295Exit(0);
+		
+	return Kaneko16Exit();
 }
 
 /*==============================================================================================
@@ -4063,7 +4089,7 @@ static void Kaneko16RenderLayerQueue(INT32 Layer, INT32 Priority)
 	}
 }
 
-void Kaneko16RenderTileLayer(INT32 Layer, INT32 PriorityDraw, INT32 xScroll)
+static void Kaneko16RenderTileLayer(INT32 Layer, INT32 PriorityDraw, INT32 xScroll)
 {
 	INT32 mx, my, Code, Attr, Colour, Flip, Priority, x, y, TileIndex = 0;
 	
@@ -4241,7 +4267,7 @@ Graphics Rendering
 	} \
 \
 
-void BerlwallFrameRender()
+static void BerlwallFrameRender()
 {
 	INT32 i;
 	INT32 Layer0Enabled = 0;
@@ -4293,7 +4319,7 @@ void BerlwallFrameRender()
 	BurnTransferCopy(Kaneko16Palette);
 }
 
-void BlazeonFrameRender()
+static void BlazeonFrameRender()
 {
 	INT32 i;
 	INT32 Layer0Enabled = 0;
@@ -4332,7 +4358,7 @@ void BlazeonFrameRender()
 	BurnTransferCopy(Kaneko16Palette);
 }
 
-void BloodwarFrameRender()
+static void BloodwarFrameRender()
 {
 	INT32 i;
 	INT32 Layer0Enabled = 0;
@@ -4391,7 +4417,7 @@ void BloodwarFrameRender()
 	BurnTransferCopy(Kaneko16Palette);
 }
 
-void ExplbrkrFrameRender()
+static void ExplbrkrFrameRender()
 {
 	INT32 i;
 	INT32 Layer0Enabled = 0;
@@ -4448,7 +4474,7 @@ void ExplbrkrFrameRender()
 	BurnTransferCopy(Kaneko16Palette);
 }
 
-void GtmrFrameRender()
+static void GtmrFrameRender()
 {
 	INT32 i;
 	INT32 Layer0Enabled = 0;
@@ -4507,7 +4533,7 @@ void GtmrFrameRender()
 	BurnTransferCopy(Kaneko16Palette);
 }
 
-void MgcrystlFrameRender()
+static void MgcrystlFrameRender()
 {
 	INT32 i;
 	INT32 Layer0Enabled = 0;
@@ -4568,7 +4594,7 @@ void MgcrystlFrameRender()
 Frame functions
 ===============================================================================================*/
 
-INT32 ExplbrkrFrame()
+static INT32 ExplbrkrFrame()
 {
 	INT32 nInterleave = 10;
 	nSoundBufferPos = 0;
@@ -4649,7 +4675,7 @@ INT32 ExplbrkrFrame()
 	return 0;
 }
 
-INT32 BlazeonFrame()
+static INT32 BlazeonFrame()
 {
 	INT32 nInterleave = 10;
 	nSoundBufferPos = 0;
@@ -4713,7 +4739,7 @@ INT32 BlazeonFrame()
 	return 0;
 }
 
-INT32 GtmrFrame()
+static INT32 GtmrFrame()
 {
 	if (Kaneko16Reset) GtmrDoReset();
 
@@ -4864,7 +4890,7 @@ struct BurnDriver BurnDrvBerlwall = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, BerlwallRomInfo, BerlwallRomName, NULL, NULL, BerlwallInputInfo, BerlwallDIPInfo,
-	BerlwallInit, Kaneko16Exit, ExplbrkrFrame, NULL, ExplbrkrScan,
+	BerlwallInit, BerlwallExit, ExplbrkrFrame, NULL, ExplbrkrScan,
 	&Kaneko16RecalcBg15Palette, 0x9000, 256, 224, 4, 3
 };
 
@@ -4874,7 +4900,7 @@ struct BurnDriver BurnDrvBerlwallt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, BerlwalltRomInfo, BerlwalltRomName, NULL, NULL, BerlwallInputInfo, BerlwalltDIPInfo,
-	BerlwallInit, Kaneko16Exit, ExplbrkrFrame, NULL, ExplbrkrScan,
+	BerlwallInit, BerlwallExit, ExplbrkrFrame, NULL, ExplbrkrScan,
 	&Kaneko16RecalcBg15Palette, 0x9000, 256, 224, 4, 3
 };
 
@@ -4884,7 +4910,7 @@ struct BurnDriver BurnDrvBlazeon = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, BlazeonRomInfo, BlazeonRomName, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,
-	BlazeonInit, Kaneko16Exit, BlazeonFrame, NULL, BlazeonScan,
+	BlazeonInit, BlazeonExit, BlazeonFrame, NULL, BlazeonScan,
 	NULL, 0x1000, 320, 232, 4, 3
 };
 
@@ -4894,7 +4920,7 @@ struct BurnDriver BurnDrvBloodwar = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, BloodwarRomInfo, BloodwarRomName, NULL, NULL, BloodwarInputInfo, BloodwarDIPInfo,
-	BloodwarInit, Kaneko16Exit, GtmrFrame, NULL, GtmrScan,
+	BloodwarInit, GtmrMachineExit, GtmrFrame, NULL, GtmrScan,
 	NULL, 0x10000, 320, 240, 4, 3
 };
 
@@ -4904,7 +4930,7 @@ struct BurnDriver BurnDrvBonkadv = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, BonkadvRomInfo, BonkadvRomName, NULL, NULL, BonkadvInputInfo, BonkadvDIPInfo,
-	BonkadvInit, Kaneko16Exit, GtmrFrame, NULL, GtmrScan,
+	BonkadvInit, GtmrMachineExit, GtmrFrame, NULL, GtmrScan,
 	NULL, 0x10000, 320, 240, 4, 3
 };
 
@@ -4914,7 +4940,7 @@ struct BurnDriver BurnDrvExplbrkr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, ExplbrkrRomInfo, ExplbrkrRomName, NULL, NULL, ExplbrkrInputInfo, ExplbrkrDIPInfo,
-	ExplbrkrInit, Kaneko16Exit, ExplbrkrFrame, NULL, ExplbrkrScan,
+	ExplbrkrInit, ExplbrkrExit, ExplbrkrFrame, NULL, ExplbrkrScan,
 	NULL, 0x1000, 224, 256, 3, 4
 };
 
@@ -4924,7 +4950,7 @@ struct BurnDriver BurnDrvBakubrkr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, BakubrkrRomInfo, BakubrkrRomName, NULL, NULL, ExplbrkrInputInfo, ExplbrkrDIPInfo,
-	ExplbrkrInit, Kaneko16Exit, ExplbrkrFrame, NULL, ExplbrkrScan,
+	ExplbrkrInit, ExplbrkrExit, ExplbrkrFrame, NULL, ExplbrkrScan,
 	NULL, 0x1000, 224, 256, 3, 4
 };
 
@@ -4934,7 +4960,7 @@ struct BurnDriver BurnDrvGtmr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, GtmrRomInfo, GtmrRomName, NULL, NULL, GtmrInputInfo, GtmrDIPInfo,
-	GtmrInit, Kaneko16Exit, GtmrFrame, NULL, GtmrScan,
+	GtmrInit, GtmrMachineExit, GtmrFrame, NULL, GtmrScan,
 	NULL, 0x10000, 320, 240, 4, 3
 };
 
@@ -4944,7 +4970,7 @@ struct BurnDriver BurnDrvGtmra = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, GtmraRomInfo, GtmraRomName, NULL, NULL, GtmrInputInfo, GtmrDIPInfo,
-	GtmrInit, Kaneko16Exit, GtmrFrame, NULL, GtmrScan,
+	GtmrInit, GtmrMachineExit, GtmrFrame, NULL, GtmrScan,
 	NULL, 0x10000, 320, 240, 4, 3
 };
 
@@ -4954,7 +4980,7 @@ struct BurnDriver BurnDrvGtmre = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, GtmreRomInfo, GtmreRomName, NULL, NULL, GtmrInputInfo, GtmrDIPInfo,
-	GtmrevoInit, Kaneko16Exit, GtmrFrame, NULL, GtmrScan,
+	GtmrevoInit, GtmrMachineExit, GtmrFrame, NULL, GtmrScan,
 	NULL, 0x10000, 320, 240, 4, 3
 };
 
@@ -4964,7 +4990,7 @@ struct BurnDriver BurnDrvGtmrusa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, GtmrusaRomInfo, GtmrusaRomName, NULL, NULL, GtmrInputInfo, GtmrDIPInfo,
-	GtmrevoInit, Kaneko16Exit, GtmrFrame, NULL, GtmrScan,
+	GtmrevoInit, GtmrMachineExit, GtmrFrame, NULL, GtmrScan,
 	NULL, 0x10000, 320, 240, 4, 3
 };
 
@@ -4974,7 +5000,7 @@ struct BurnDriver BurnDrvGtmr2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, Gtmr2RomInfo, Gtmr2RomName, NULL, NULL, GtmrInputInfo, Gtmr2DIPInfo,
-	Gtmr2Init, Kaneko16Exit, GtmrFrame, NULL, GtmrScan,
+	Gtmr2Init, GtmrMachineExit, GtmrFrame, NULL, GtmrScan,
 	NULL, 0x10000, 320, 240, 4, 3
 };
 
@@ -4984,7 +5010,7 @@ struct BurnDriver BurnDrvGtmr2a = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, Gtmr2aRomInfo, Gtmr2aRomName, NULL, NULL, GtmrInputInfo, Gtmr2DIPInfo,
-	Gtmr2Init, Kaneko16Exit, GtmrFrame, NULL, GtmrScan,
+	Gtmr2Init, GtmrMachineExit, GtmrFrame, NULL, GtmrScan,
 	NULL, 0x10000, 320, 240, 4, 3
 };
 
@@ -4994,7 +5020,7 @@ struct BurnDriver BurnDrvGtmr2u = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, Gtmr2uRomInfo, Gtmr2uRomName, NULL, NULL, GtmrInputInfo, Gtmr2DIPInfo,
-	Gtmr2uInit, Kaneko16Exit, GtmrFrame, NULL, GtmrScan,
+	Gtmr2uInit, GtmrMachineExit, GtmrFrame, NULL, GtmrScan,
 	NULL, 0x10000, 320, 240, 4, 3
 };
 
@@ -5004,7 +5030,7 @@ struct BurnDriver BurnDrvMgcrsytl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, MgcrystlRomInfo, MgcrystlRomName, NULL, NULL, MgcrystlInputInfo, MgcrystlDIPInfo,
-	MgcrystlInit, Kaneko16Exit, ExplbrkrFrame, NULL, ExplbrkrScan,
+	MgcrystlInit, ExplbrkrExit, ExplbrkrFrame, NULL, ExplbrkrScan,
 	NULL, 0x1000, 256, 224, 4, 3
 };
 
@@ -5014,7 +5040,7 @@ struct BurnDriver BurnDrvMgcrsytlo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, MgcrystloRomInfo, MgcrystloRomName, NULL, NULL, MgcrystlInputInfo, MgcrystlDIPInfo,
-	MgcrystlInit, Kaneko16Exit, ExplbrkrFrame, NULL, ExplbrkrScan,
+	MgcrystlInit, ExplbrkrExit, ExplbrkrFrame, NULL, ExplbrkrScan,
 	NULL, 0x1000, 256, 224, 4, 3
 };
 
@@ -5024,6 +5050,6 @@ struct BurnDriver BurnDrvMgcrsytlj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, MgcrystljRomInfo, MgcrystljRomName, NULL, NULL, MgcrystlInputInfo, MgcrystlDIPInfo,
-	MgcrystlInit, Kaneko16Exit, ExplbrkrFrame, NULL, ExplbrkrScan,
+	MgcrystlInit, ExplbrkrExit, ExplbrkrFrame, NULL, ExplbrkrScan,
 	NULL, 0x1000, 256, 224, 4, 3
 };

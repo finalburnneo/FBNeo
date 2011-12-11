@@ -427,7 +427,9 @@ static INT32 DrvDoReset(INT32 full_reset)
 	}
 
 	MSM6295Reset(0);
+	ZetOpen(2);
 	BurnYM2203Reset();
+	ZetClose();
 
 	interrupt_vectors[0] = 0xff;
 	interrupt_vectors[1] = 0xfd;

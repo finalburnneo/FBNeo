@@ -200,7 +200,6 @@ void s2650Exit()
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_S2650Initted) bprintf(PRINT_ERROR, _T("s2650Exit called without init\n"));
-	if (nActiveS2650 == -1) bprintf(PRINT_ERROR, _T("s2650Exit called when no CPU open\n"));
 #endif
 
 	memset (&sHandler, 0, sizeof (sHandler));

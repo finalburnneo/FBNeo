@@ -1277,6 +1277,11 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	BurnYM3812Exit();
+	if (is_bootleg) {
+		MSM5205Exit();
+	} else {
+		MSM6295Exit(0);
+	}
 
 	SekExit();
 	ZetExit();
@@ -1285,6 +1290,7 @@ static INT32 DrvExit()
 	
 	TokibMSM5205Next = 0;
 	TokibMSM5205Toggle = 0;
+	is_bootleg = 0;
 
 	return 0;
 }

@@ -420,7 +420,7 @@ void MSM6295Exit(INT32 nChip)
 		}
 	}
 	
-	DebugSnd_MSM6295Initted = 0;
+	if (nChip == nLastMSM6295Chip) DebugSnd_MSM6295Initted = 0;
 }
 
 INT32 MSM6295Init(INT32 nChip, INT32 nSamplerate, float fMaxVolume, bool bAddSignal)

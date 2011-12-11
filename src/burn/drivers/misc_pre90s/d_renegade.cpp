@@ -1059,7 +1059,7 @@ static INT32 DrvExit()
 {
 	M6502Exit();
 	M6809Exit();
-	m6805Exit();
+	if (!nSimulateMCU && !DisableMCUEmulation) m6805Exit();
 	
 	BurnYM3526Exit();
 	

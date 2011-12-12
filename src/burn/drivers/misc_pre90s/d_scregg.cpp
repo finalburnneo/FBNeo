@@ -394,6 +394,7 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	BurnFree (Mem);
+	BurnFree (pFMBuffer);
 	
 	DrvRecalcPal = 0;
 	flipscreen = 0;

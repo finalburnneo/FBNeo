@@ -301,14 +301,14 @@ static INT32 DrvFrame()
 
 static INT32 DrvExit()
 {
+	BurnFree (Mem);
+	BurnFree (pFMBuffer);
+	
 	Mem = Rom = Prom = RomBank = VideoRam = framebuffer = NULL;
 	Palette = NULL;
 	pFMBuffer = NULL;
 	AY8910Exit(0);
 	ZetExit();
-
-	BurnFree (Mem);
-	BurnFree (pFMBuffer);
 
 	return 0;
 }

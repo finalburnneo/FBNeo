@@ -3612,6 +3612,7 @@ static INT32 Kaneko16Exit()
 	GenericTilesExit();
 
 	BurnFree(Mem);
+	BurnFree(spritelist.first_sprite);
 	
 	Kaneko16NumTiles = 0;
 	Kaneko16NumTiles2 = 0;

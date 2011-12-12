@@ -540,13 +540,15 @@ void __fastcall powerinsZ80Out(UINT16 p, UINT8 v)
 {
 	switch (p & 0x0FF) {
 		case 0x00:
-			if ( game_drv == GAME_POWERINS )
+			if ( game_drv == GAME_POWERINS ) {
 				BurnYM2203Write(0, 0, v);
+			}
 			break;
 
 		case 0x01:
-			if ( game_drv == GAME_POWERINS )
+			if ( game_drv == GAME_POWERINS ) {
 				BurnYM2203Write(0, 1, v);
+			}
 			break;
 
 		case 0x80:
@@ -1074,7 +1076,7 @@ static INT32 powerinsFrame()
 		}
 
 		SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-	}	
+	}
 
 	SekClose();
 	

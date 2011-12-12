@@ -2941,7 +2941,7 @@ static void SemicomMapZ80()
 	ZetClose();
 }
 
-void SemicomYM2151IrqHandler(INT32 Irq)
+static void SemicomYM2151IrqHandler(INT32 Irq)
 {
 	if (Irq) {
 		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
@@ -2976,7 +2976,9 @@ static INT32 DrvInit(bool bReset, INT32 SpriteRamSize, INT32 SpriteMask, INT32 S
 	if (DrvHasYM2151) {
 		if (!DrvYM2151Freq) DrvYM2151Freq = 3427190;
 		BurnYM2151Init(DrvYM2151Freq, 25.0);
-		if (DrvHasZ80) BurnYM2151SetIrqHandler(&SemicomYM2151IrqHandler);
+		if (DrvHasZ80) { 
+			BurnYM2151SetIrqHandler(&SemicomYM2151IrqHandler);
+		}
 	}
 	
 	// Setup the OKIM6295 emulation
@@ -3212,6 +3214,7 @@ static INT32 FncywldInit()
 	INT32 nRet;
 	
 	DrvHasYM2151 = 1;
+	DrvHasZ80 = 0;
 	DrvYM2151Freq = 32220000 / 9;
 	DrvLoadRoms = FncywldLoadRoms;
 	DrvMap68k = FncywldMap68k;
@@ -3500,6 +3503,12 @@ static INT32 DrvExit()
 	BurnFree(Mem);
 
 	return 0;
+}
+
+static INT32 JumppopExit()
+{
+	BurnYM3812Exit();
+	return DrvExit();
 }
 
 static inline UINT8 pal4bit(UINT8 bits)
@@ -4636,6 +4645,6 @@ struct BurnDriver BurnDrvJumppop = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, JumppopRomInfo, JumppopRomName, NULL, NULL, JumppopInputInfo, JumppopDIPInfo,
-	JumppopInit, DrvExit, JumppopFrame, NULL, DrvScan,
+	JumppopInit, JumppopExit, JumppopFrame, NULL, DrvScan,
 	NULL, 0x400, 320, 240, 4, 3
 };

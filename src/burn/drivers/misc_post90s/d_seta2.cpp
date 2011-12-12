@@ -2710,7 +2710,7 @@ static INT32 grdiansExit()
 		EEPROMExit();
 	}
 
-	BurnGunExit();
+	if (nBurnGunNumPlayers) BurnGunExit();
 	
 	HasNVRam = 0;
 
@@ -3197,6 +3197,8 @@ static INT32 grdiansScan(INT32 nAction,INT32 *pnMin)
 		BurnAcb(&ba);
 	}
 	
+#if 0
+	// This is causing crashes
 	if (nAction & ACB_NVRAM && HasNVRam) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data = RamNV;
@@ -3204,6 +3206,7 @@ static INT32 grdiansScan(INT32 nAction,INT32 *pnMin)
 		ba.szName = "Backup Ram";
 		BurnAcb(&ba);
 	}
+#endif
 
 	if (nAction & ACB_DRIVER_DATA) {
 

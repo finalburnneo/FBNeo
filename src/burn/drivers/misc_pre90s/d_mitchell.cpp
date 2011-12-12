@@ -2609,10 +2609,10 @@ static INT32 BlockblInit()
 	return 0;
 }
 
-static INT32 DrvExit()
+static INT32 CommonExit()
 {
 	ZetExit();
-	BurnYM2413Exit();
+		
 	MSM6295Exit(0);
 	if (DrvHasEEPROM) EEPROMExit();
 	
@@ -2636,8 +2636,15 @@ static INT32 DrvExit()
 	DrvNVRamAddress = 0;
 	DrvDialSelected = 0;
 	DrvSoundLatch = 0;
-
+	
 	return 0;
+}
+
+static INT32 DrvExit()
+{
+	BurnYM2413Exit();
+
+	return CommonExit();
 }
 
 static inline UINT8 pal4bit(UINT8 bits)
@@ -3175,7 +3182,7 @@ struct BurnDriver BurnDrvMstworld = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, MstworldRomInfo, MstworldRomName, NULL, NULL, MstworldInputInfo, MstworldDIPInfo,
-	MstworldInit, DrvExit, MstworldFrame, NULL, MstworldScan,
+	MstworldInit, CommonExit, MstworldFrame, NULL, MstworldScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
 

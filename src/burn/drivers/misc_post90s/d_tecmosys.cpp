@@ -1047,7 +1047,9 @@ static INT32 DrvFrame()
 	nCyclesTotal[1] = (INT32)((INT64)nCyclesTotal[1] * nBurnCPUSpeedAdjust / 0x0100);
 
 	SekOpen(0);
+#ifdef ENABLE_SOUND_HARDWARE
 	ZetOpen(0);
+#endif
 
 	vblank = 1;
 

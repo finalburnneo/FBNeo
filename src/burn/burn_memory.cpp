@@ -67,6 +67,9 @@ void BurnExitMemoryManager()
 	for (INT32 i = 0; i < MAX_MEM_PTR; i++)
 	{
 		if (memptr[i] != NULL) {
+#if defined FBA_DEBUG
+			bprintf(PRINT_ERROR, _T("BurnExitMemoryManager had to free mem pointer %i\n"), i);
+#endif
 			free (memptr[i]);
 			memptr[i] = NULL;
 		}

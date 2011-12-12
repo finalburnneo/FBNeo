@@ -1739,7 +1739,7 @@ void __fastcall pacman_write(UINT16 a, UINT8 d)
 		case BIRDIY:
 		{
 			if ((a & 0xffe0) == 0x5080) a -= 0x0040;
-			if ((a & 0xfff0) == 0x50a0) a -= 0x0020;
+			if ((a & 0xfff0) == 0x50a0) a -= 0x0040;
 			if (a == 0x5000) return;
 			if (a == 0x5001) interrupt_mask = d & 1;
 		}
@@ -2554,8 +2554,6 @@ static void DrawBackground()
 
 static void DrawSprites()
 {
-	INT32 invert = (game_select == BIRDIY) ? 1 : 0;
-
 	for (INT32 offs = 0x10 - 2;offs >= 0;offs -= 2)
 	{
 		INT32 code   = (DrvSprRAM[offs] >> 2) | (spritebank << 6);
@@ -2566,7 +2564,7 @@ static void DrawSprites()
 		INT32 flipx  = DrvSprRAM [offs] & 1;
 		INT32 flipy  = DrvSprRAM [offs] & 2;
 		
-		if (*flipscreen ^ invert) {
+		if (*flipscreen) {
 			sy = (240 - sy) - 8;
 			sx += 8;
 			flipy = !flipy;
@@ -5922,7 +5920,7 @@ static INT32 birdiyInit()
 	return DrvInit(StandardMap, NULL, BIRDIY);
 }
 
-struct BurnDriverD BurnDrvbirdiy = {
+struct BurnDriver BurnDrvbirdiy = {
 	"birdiy", NULL, NULL, NULL, "1982",
 	"Birdiy\0", NULL, "Mama Top", "Pac-man",
 	NULL, NULL, NULL, NULL,

@@ -12,6 +12,7 @@ static UINT8 *Mem = NULL, *MemEnd = NULL;
 static UINT8 *RamStart, *RamEnd;
 static UINT8 *Rom01;
 static UINT8 *Ram01, *Ram02;
+static UINT8 *DefaultEEPROM = NULL;
 
 static UINT8 DrvReset = 0;
 static UINT8 bDrawScreen;
@@ -243,11 +244,7 @@ static INT32 DrvExit()
 
 	SekExit();				// Deallocate 68000s
 
-	// Deallocate all used memory
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	return 0;
 }
@@ -267,8 +264,6 @@ static INT32 DrvDoReset()
 	nUnknownIRQ = 1;
 
 	nIRQPending = 0;
-
-	YMZ280BReset();
 
 	return 0;
 }
@@ -403,6 +398,7 @@ static INT32 MemIndex()
 	CaveTileROM[0]	= Next; Next += 0x400000;		// Tile layer 0
 	CaveTileROM[1]	= Next; Next += 0x400000;		// Tile layer 1
 	YMZ280BROM		= Next; Next += 0x400000;
+	DefaultEEPROM	= Next; Next += 0x000080;
 	RamStart		= Next;
 	Ram01			= Next; Next += 0x010000;		// CPU #0 work RAM
 	Ram02			= Next; Next += 0x001000;
@@ -459,6 +455,8 @@ static INT32 LoadRoms()
 	NibbleSwap2(CaveTileROM[1], 0x200000);
 
 	BurnLoadRom(YMZ280BROM, 6, 1);
+	
+	BurnLoadRom(DefaultEEPROM, 7, 1);
 
 	return 0;
 }
@@ -496,16 +494,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvInput);
 	}
 
-		if (nAction & ACB_WRITE) {
-
+	if (nAction & ACB_WRITE) {
 		CaveRecalcPalette = 1;
-		}
+	}
 
 	return 0;
 }
-
-static const UINT8 default_eeprom[16] =	{0x00,0x0C,0x11,0x0D,0xFF,0xFF,0xFF,0xFF,0x00,0x00,0x11,0x11,0xFF,0xFF,0xFF,0xFF};
-static const UINT8 default_eeprom_feversos[18] = {0x00,0x0C,0x16,0x27,0xFF,0xFF,0xFF,0xFF,0x00,0x00,0x11,0x11,0xFF,0xFF,0xFF,0xFF,0x05,0x19};  /* Fever SOS (code checks for the 0x0519 or it won't boot) */
 
 static INT32 DrvInit()
 {
@@ -517,25 +511,19 @@ static INT32 DrvInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory
 	MemIndex();													// Index the allocated memory
 
-	EEPROMInit(&eeprom_interface_93C46);
-	
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "dfeveron")) {
-		if (!EEPROMAvailable()) EEPROMFill(default_eeprom,0, sizeof(default_eeprom));
-	}
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "feversos")) {
-		if (!EEPROMAvailable()) EEPROMFill(default_eeprom_feversos,0, sizeof(default_eeprom_feversos));
-	}
-
 	// Load the roms into memory
 	if (LoadRoms()) {
 		return 1;
 	}
+
+	EEPROMInit(&eeprom_interface_93C46);
+	if (!EEPROMAvailable()) EEPROMFill(DefaultEEPROM,0, 0x80);	
 
 	{
 		SekInit(0, 0x68000);												// Allocate 68000
@@ -598,7 +586,7 @@ static struct BurnRomInfo feversosRomDesc[] = {
 
 	{ "cv01-u19.bin", 0x400000, 0x5F5514DA, BRF_SND },			 //  6 YMZ280B (AD)PCM data
 	
-	{ "eeprom-feversos.bin", 0x0080, 0xd80303aa, BRF_OPT },
+	{ "eeprom-feversos.bin", 0x0080, 0xd80303aa, BRF_ESS | BRF_PRG },
 };
 
 
@@ -617,7 +605,7 @@ static struct BurnRomInfo dfeveronRomDesc[] = {
 
 	{ "cv01-u19.bin", 0x400000, 0x5F5514DA, BRF_SND },			 //  6 YMZ280B (AD)PCM data
 	
-	{ "eeprom-dfeveron.bin", 0x0080, 0xc3174959, BRF_OPT },
+	{ "eeprom-dfeveron.bin", 0x0080, 0xc3174959, BRF_ESS | BRF_PRG },
 };
 
 

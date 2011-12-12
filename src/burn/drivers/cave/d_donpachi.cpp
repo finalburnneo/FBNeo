@@ -12,6 +12,7 @@ static UINT8 *Mem = NULL, *MemEnd = NULL;
 static UINT8 *RamStart, *RamEnd;
 static UINT8 *Rom01;
 static UINT8 *Ram01;
+static UINT8 *DefaultEEPROM = NULL;
 
 static UINT8 DrvReset = 0;
 static UINT8 bDrawScreen;
@@ -319,8 +320,8 @@ static INT32 DrvExit()
 {
 	EEPROMExit();
 	
-	MSM6295Exit(1);
 	MSM6295Exit(0);
+	MSM6295Exit(1);
 
 	CaveTileExit();
 	CaveSpriteExit();
@@ -328,11 +329,7 @@ static INT32 DrvExit()
 
 	SekExit();				// Deallocate 68000s
 
-	// Deallocate all used memory
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	return 0;
 }
@@ -352,6 +349,7 @@ static INT32 DrvDoReset()
 	nIRQPending = 0;
 
 	MSM6295Reset(0);
+	MSM6295Reset(1);
 
 	return 0;
 }
@@ -482,6 +480,7 @@ static INT32 MemIndex()
 	CaveTileROM[1]	= Next; Next += 0x200000;		// Tile layer 1
 	CaveTileROM[2]	= Next; Next += 0x080000;		// Tile layer 2
 	MSM6295ROM		= Next; Next += 0x300000;
+	DefaultEEPROM	= Next; Next += 0x000080;
 	RamStart		= Next;
 	Ram01			= Next; Next += 0x010000;		// CPU #0 work RAM
 	CaveTileRAM[0]	= Next; Next += 0x008000;
@@ -528,6 +527,8 @@ static INT32 LoadRoms()
 	// Load MSM6295 ADPCM data
 	BurnLoadRom(MSM6295ROM, 6, 1);
 	BurnLoadRom(MSM6295ROM + 0x100000, 7, 1);
+	
+	BurnLoadRom(DefaultEEPROM, 8, 1);
 
 	return 0;
 }
@@ -566,15 +567,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvInput);
 	}
 
-		if (nAction & ACB_WRITE) {
-
+	if (nAction & ACB_WRITE) {
 		CaveRecalcPalette = 1;
-		}
+	}
 
 	return 0;
 }
-
-static const UINT8 default_eeprom[16] =	{0x00,0x0C,0xFF,0xFB,0xFF,0xFF,0xFF,0xFF,0x00,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF};
 
 static INT32 DrvInit()
 {
@@ -586,19 +584,19 @@ static INT32 DrvInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory
 	MemIndex();													// Index the allocated memory
 
-	EEPROMInit(&eeprom_interface_93C46);
-	if (!EEPROMAvailable()) EEPROMFill(default_eeprom,0, sizeof(default_eeprom));
-
 	// Load the roms into memory
 	if (LoadRoms()) {
 		return 1;
 	}
+	
+	EEPROMInit(&eeprom_interface_93C46);
+	if (!EEPROMAvailable()) EEPROMFill(DefaultEEPROM,0, 0x80);	
 
 	{
 		SekInit(0, 0x68000);													// Allocate 68000
@@ -666,7 +664,7 @@ static struct BurnRomInfo donpachiRomDesc[] = {
 	{ "atdp.u32",     0x100000, 0x0D89FCCA, BRF_SND },			 //  6 MSM6295 #1 ADPCM data
 	{ "atdp.u33",     0x200000, 0xD749DE00, BRF_SND },			 //  7 MSM6295 #0/1 ADPCM data
 	
-	{ "eeprom-donpachi.u10", 0x0080, 0x315fb546, BRF_OPT },
+	{ "eeprom-donpachi.u10", 0x0080, 0x315fb546, BRF_ESS | BRF_PRG },
 	
 	{ "peel18cv8p-15.u18", 0x0155, 0x3f4787e9, BRF_OPT },
 };
@@ -688,7 +686,7 @@ static struct BurnRomInfo donpachijRomDesc[] = {
 	{ "atdp.u32",     0x100000, 0x0D89FCCA, BRF_SND },			 //  6 MSM6295 #1 ADPCM data
 	{ "atdp.u33",     0x200000, 0xD749DE00, BRF_SND },			 //  7 MSM6295 #0/1 ADPCM data
 	
-	{ "eeprom-donpachi.bin", 0x0080, 0x315fb546, BRF_OPT },
+	{ "eeprom-donpachi.bin", 0x0080, 0x315fb546, BRF_ESS | BRF_PRG },
 	
 	{ "peel18cv8p-15.u18", 0x0155, 0x3f4787e9, BRF_OPT },
 };
@@ -710,7 +708,7 @@ static struct BurnRomInfo donpachikrRomDesc[] = {
 	{ "atdp.u32",     0x100000, 0x0D89FCCA, BRF_SND },			 //  6 MSM6295 #1 ADPCM data
 	{ "atdp.u33",     0x200000, 0xD749DE00, BRF_SND },			 //  7 MSM6295 #0/1 ADPCM data
 	
-	{ "eeprom-donpachi.bin", 0x0080, 0x315fb546, BRF_OPT },
+	{ "eeprom-donpachi.bin", 0x0080, 0x315fb546, BRF_ESS | BRF_PRG },
 	
 	{ "peel18cv8p-15.u18", 0x0155, 0x3f4787e9, BRF_OPT },
 };
@@ -732,7 +730,7 @@ static struct BurnRomInfo donpachihkRomDesc[] = {
 	{ "atdp.u32",     0x100000, 0x0D89FCCA, BRF_SND },			 //  6 MSM6295 #1 ADPCM data
 	{ "atdp.u33",     0x200000, 0xD749DE00, BRF_SND },			 //  7 MSM6295 #0/1 ADPCM data
 	
-	{ "eeprom-donpachi.bin", 0x0080, 0x315fb546, BRF_OPT },
+	{ "eeprom-donpachi.bin", 0x0080, 0x315fb546, BRF_ESS | BRF_PRG },
 	
 	{ "peel18cv8p-15.u18", 0x0155, 0x3f4787e9, BRF_OPT },
 };

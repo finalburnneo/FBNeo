@@ -458,11 +458,7 @@ static INT32 DrvExit()
 
 	SekExit();				// Deallocate 68000s
 
-	// Deallocate all used memory
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	return 0;
 }
@@ -752,10 +748,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(DrvInput);
 
-		if (nAction & ACB_WRITE) {
-
+	if (nAction & ACB_WRITE) {
 		CaveRecalcPalette = 1;
-		}
+	}
 	}
 
 	return 0;
@@ -771,7 +766,7 @@ static INT32 DrvInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory

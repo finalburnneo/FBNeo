@@ -14,6 +14,7 @@ static UINT8 *RamStart, *RamEnd;
 static UINT8 *Rom01, *RomZ80;
 static UINT8 *Ram01, *RamZ80;
 static UINT8 *MSM6295ROMSrc;
+static UINT8 *DefaultEEPROM = NULL;
 
 static UINT8 DrvReset = 0;
 static UINT8 bDrawScreen;
@@ -314,11 +315,7 @@ static INT32 DrvExit()
 	DrvOkiBank1 = 0;
 	DrvOkiBank2 = 0;
 
-	// Deallocate all used memory
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	return 0;
 }
@@ -375,7 +372,6 @@ static INT32 DrvFrame()
 {
 	INT32 nCyclesVBlank;
 	INT32 nInterleave = 80;
-	INT32 nSoundBufferPos = 0;
 
 	INT32 nCyclesSegment;
 
@@ -442,13 +438,6 @@ static INT32 DrvFrame()
 		}
 		
 		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2203Update(pSoundBuf, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 	
 	SekClose();
@@ -456,12 +445,8 @@ static INT32 DrvFrame()
 	BurnTimerEndFrame(nCyclesTotal[1]);
 	
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			BurnYM2203Update(pSoundBuf, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-		}
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 	
 	ZetClose();
@@ -482,6 +467,7 @@ static INT32 MemIndex()
 	CaveTileROM[2]	= Next; Next += 0x100000;		// Tile layer 2
 	MSM6295ROM		= Next; Next += 0x040000;
 	MSM6295ROMSrc		= Next; Next += 0x080000;
+	DefaultEEPROM	= Next; Next += 0x000080;
 	RamStart		= Next;
 	Ram01			= Next; Next += 0x010000;		// CPU #0 work RAM
 	RamZ80			= Next; Next += 0x002000;
@@ -542,6 +528,8 @@ static INT32 LoadRoms()
 
 	// Load MSM6295 ADPCM data
 	BurnLoadRom(MSM6295ROMSrc, 8, 1);
+	
+	BurnLoadRom(DefaultEEPROM, 9, 1);
 
 	return 0;
 }
@@ -584,18 +572,17 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvOkiBank1);
 		SCAN_VAR(DrvOkiBank2);
 	}
-		if (nAction & ACB_WRITE) {
-			ZetOpen(0);
-			ZetMapArea(0x4000, 0x7FFF, 0, RomZ80 + (DrvZ80Bank * 0x4000));
-			ZetMapArea(0x4000, 0x7FFF, 2, RomZ80 + (DrvZ80Bank * 0x4000));
-			ZetClose();
+	if (nAction & ACB_WRITE) {
+		ZetOpen(0);
+		ZetMapArea(0x4000, 0x7FFF, 0, RomZ80 + (DrvZ80Bank * 0x4000));
+		ZetMapArea(0x4000, 0x7FFF, 2, RomZ80 + (DrvZ80Bank * 0x4000));
+		ZetClose();
 			
-			memcpy(MSM6295ROM + 0x00000, MSM6295ROMSrc + 0x20000 * DrvOkiBank1, 0x20000);
-			memcpy(MSM6295ROM + 0x20000, MSM6295ROMSrc + 0x20000 * DrvOkiBank2, 0x20000);
+		memcpy(MSM6295ROM + 0x00000, MSM6295ROMSrc + 0x20000 * DrvOkiBank1, 0x20000);
+		memcpy(MSM6295ROM + 0x20000, MSM6295ROMSrc + 0x20000 * DrvOkiBank2, 0x20000);
 
-			CaveRecalcPalette = 1;
-		}
-
+		CaveRecalcPalette = 1;
+	}
 
 	return 0;
 }
@@ -622,7 +609,6 @@ static double DrvGetTime()
 static INT32 drvZInit()
 {
 	ZetInit(1);
-	
 	ZetOpen(0);
 
 	ZetSetInHandler(hotdogstZIn);
@@ -640,15 +626,11 @@ static INT32 drvZInit()
 	ZetMapArea    (0xE000, 0xFFFF, 0, RamZ80);			// Direct Read from RAM
 	ZetMapArea    (0xE000, 0xFFFF, 1, RamZ80);			// Direct Write to RAM
 	ZetMapArea    (0xE000, 0xFFFF, 2, RamZ80);			//
-
 	ZetMemEnd();
-	
 	ZetClose();
 
 	return 0;
 }
-
-static const UINT8 default_eeprom[16] =	{0xF3,0xFE,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF};
 
 static INT32 DrvInit()
 {
@@ -660,19 +642,19 @@ static INT32 DrvInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory
 	MemIndex();													// Index the allocated memory
 
-	EEPROMInit(&eeprom_interface_93C46);
-	if (!EEPROMAvailable()) EEPROMFill(default_eeprom,0, sizeof(default_eeprom));
-
 	// Load the roms into memory
 	if (LoadRoms()) {
 		return 1;
 	}
+
+	EEPROMInit(&eeprom_interface_93C46);
+	if (!EEPROMAvailable()) EEPROMFill(DefaultEEPROM,0, 0x80);
 
 	{
 		SekInit(0, 0x68000);													// Allocate 68000
@@ -707,6 +689,7 @@ static INT32 DrvInit()
 	nCaveExtraYOffset = 32;
 	
 	BurnYM2203Init(1, 4000000, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203SetVolumeShift(2);
 	BurnTimerAttachZet(4000000);
 	
 	memcpy(MSM6295ROM, MSM6295ROMSrc, 0x40000);
@@ -739,7 +722,7 @@ static struct BurnRomInfo hotdogstRomDesc[] = {
 
 	{ "mp1.u65",       0x080000, 0x4868be1b, BRF_SND },			 //  8 MSM6295 #1 ADPCM data
 	
-	{ "eeprom-hotdogst.bin", 0x0080, 0x12b4f934, BRF_OPT },
+	{ "eeprom-hotdogst.bin", 0x0080, 0x12b4f934, BRF_ESS | BRF_PRG },
 };
 
 

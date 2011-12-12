@@ -12,6 +12,7 @@ static UINT8 *Mem = NULL, *MemEnd = NULL;
 static UINT8 *RamStart, *RamEnd;
 static UINT8 *Rom01;
 static UINT8 *Ram01;
+static UINT8 *DefaultEEPROM = NULL;
 
 static UINT8 DrvReset = 0;
 static UINT8 bDrawScreen;
@@ -255,10 +256,7 @@ static INT32 DrvExit()
 	SekExit();				// Deallocate 68000s
 
 	// Deallocate all used memory
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	return 0;
 }
@@ -278,8 +276,6 @@ static INT32 DrvDoReset()
 	nUnknownIRQ = 1;
 
 	nIRQPending = 0;
-
-	YMZ280BReset();
 
 	return 0;
 }
@@ -418,6 +414,7 @@ static INT32 MemIndex()
 	CaveTileROM[1]	= Next; Next += 0x400000;		// Tile layer 1
 	CaveTileROM[2]	= Next; Next += 0x200000;		// Tile layer 2
 	YMZ280BROM		= Next; Next += 0x400000;
+	DefaultEEPROM	= Next; Next += 0x000080;
 	RamStart		= Next;
 	Ram01			= Next; Next += 0x010000;		// CPU #0 work RAM
 	CaveTileRAM[0]	= Next; Next += 0x008000;
@@ -462,20 +459,19 @@ static INT32 LoadRoms()
 	BurnLoadRom(CaveTileROM[1], 7, 1);
 	NibbleSwap2(CaveTileROM[1], 0x200000);
 
-	UINT8* pTemp = (UINT8*)malloc(0x200000);
+	UINT8* pTemp = (UINT8*)BurnMalloc(0x200000);
 	BurnLoadRom(pTemp, 8, 1);
 	for (INT32 i = 0; i < 0x0100000; i++) {
 		CaveTileROM[2][(i << 1) + 1] = (pTemp[(i << 1) + 0] & 15) | ((pTemp[(i << 1) + 1] & 15) << 4);
 		CaveTileROM[2][(i << 1) + 0] = (pTemp[(i << 1) + 0] >> 4) | (pTemp[(i << 1) + 1] & 240);
 	}
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 
 	// Load YMZ280B data
 	BurnLoadRom(YMZ280BROM + 0x000000, 9, 1);
 	BurnLoadRom(YMZ280BROM + 0x200000, 10, 1);
+	
+	BurnLoadRom(DefaultEEPROM, 11, 1);
 
 	return 0;
 }
@@ -513,15 +509,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvInput);
 	}
 
-		if (nAction & ACB_WRITE) {
-
+	if (nAction & ACB_WRITE) {
 		CaveRecalcPalette = 1;
-		}
+	}
 
 	return 0;
 }
-
-static const UINT8 default_eeprom[16] =	{0x00,0x0C,0xFF,0xFB,0xFF,0xFF,0xFF,0xFF,0x00,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF};
 
 static INT32 DrvInit()
 {
@@ -533,19 +526,19 @@ static INT32 DrvInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory
 	MemIndex();													// Index the allocated memory
-
-	EEPROMInit(&eeprom_interface_93C46);
-	if (!EEPROMAvailable()) EEPROMFill(default_eeprom,0, sizeof(default_eeprom));
-
+	
 	// Load the roms into memory
 	if (LoadRoms()) {
 		return 1;
 	}
+
+	EEPROMInit(&eeprom_interface_93C46);
+	if (!EEPROMAvailable()) EEPROMFill(DefaultEEPROM,0, 0x80);	
 
 	{
 		SekInit(0, 0x68000);													// Allocate 68000
@@ -620,7 +613,7 @@ static struct BurnRomInfo ddonpachRomDesc[] = {
 	{ "u6.bin",       0x200000, 0x9DFDAFAF, BRF_SND },			 //  9 YMZ280B (AD)PCM data
 	{ "u7.bin",       0x200000, 0x795B17D5, BRF_SND },			 // 10
 	
-	{ "eeprom-ddonpach.bin", 0x0080, 0x315fb546, BRF_OPT },
+	{ "eeprom-ddonpach.bin", 0x0080, 0x315fb546, BRF_ESS | BRF_PRG },
 };
 
 
@@ -645,7 +638,7 @@ static struct BurnRomInfo ddonpachjRomDesc[] = {
 	{ "u6.bin",       0x200000, 0x9DFDAFAF, BRF_SND },			 //  9 YMZ280B (AD)PCM data
 	{ "u7.bin",       0x200000, 0x795B17D5, BRF_SND },			 // 10
 	
-	{ "eeprom-ddonpach.bin", 0x0080, 0x315fb546, BRF_OPT },
+	{ "eeprom-ddonpach.bin", 0x0080, 0x315fb546, BRF_ESS | BRF_PRG },
 };
 
 

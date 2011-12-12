@@ -12,6 +12,7 @@ static UINT8 *Mem = NULL, *MemEnd = NULL;
 static UINT8 *RamStart, *RamEnd;
 static UINT8 *Rom01;
 static UINT8 *Ram01;
+static UINT8 *DefaultEEPROM = NULL;
 
 static UINT8 DrvReset = 0;
 static UINT8 bDrawScreen;
@@ -265,11 +266,7 @@ static INT32 DrvExit()
 
 	SekExit();				// Deallocate 68000s
 
-	// Deallocate all used memory
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	return 0;
 }
@@ -289,8 +286,6 @@ static INT32 DrvDoReset()
 	nUnknownIRQ = 1;
 
 	nIRQPending = 0;
-
-	YMZ280BReset();
 
 	return 0;
 }
@@ -437,6 +432,7 @@ static INT32 MemIndex()
 	CaveTileROM[1]	= Next; Next += 0x400000;		// Tile layer 1
 	CaveTileROM[2]	= Next; Next += 0x400000;		// Tile layer 2
 	YMZ280BROM		= Next; Next += 0x400000;
+	DefaultEEPROM	= Next; Next += 0x000080;
 	RamStart		= Next;
 	Ram01			= Next; Next += 0x010000;		// CPU #0 work RAM
 	CaveTileRAM[0]	= Next; Next += 0x008000;
@@ -516,6 +512,8 @@ static INT32 LoadRoms()
 
 	// Load YMZ280B data
 	BurnLoadRom(YMZ280BROM, 9, 1);
+	
+	BurnLoadRom(DefaultEEPROM, 14, 1);
 
 	return 0;
 }
@@ -553,15 +551,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvInput);
 	}
 
-		if (nAction & ACB_WRITE) {
-
+	if (nAction & ACB_WRITE) {
 		CaveRecalcPalette = 1;
-		}
+	}
 
 	return 0;
 }
-
-static const UINT8 default_eeprom[16] =	{0x00,0x0C,0x11,0x0D,0xFF,0xFF,0xFF,0xFF,0x00,0x00,0x11,0x11,0xFF,0xFF,0xFF,0xFF};
 
 static INT32 DrvInit()
 {
@@ -573,19 +568,19 @@ static INT32 DrvInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory
 	MemIndex();													// Index the allocated memory
 
-	EEPROMInit(&eeprom_interface_93C46);
-	if (!EEPROMAvailable()) EEPROMFill(default_eeprom,0, sizeof(default_eeprom));
-
 	// Load the roms into memory
 	if (LoadRoms()) {
 		return 1;
 	}
+
+	EEPROMInit(&eeprom_interface_93C46);
+	if (!EEPROMAvailable()) EEPROMFill(DefaultEEPROM,0, 0x80);	
 
 	{
 		SekInit(0, 0x68000);													// Allocate 68000
@@ -656,7 +651,7 @@ static struct BurnRomInfo guwangeRomDesc[] = {
 	{ "u084.bin",     0x000001, 0x00000000, BRF_NODUMP },
 	{ "u108.bin",     0x000001, 0x00000000, BRF_NODUMP },
 	
-	{ "eeprom-guwange.bin", 0x0080, 0xc3174959, BRF_OPT },
+	{ "eeprom-guwange.bin", 0x0080, 0xc3174959, BRF_ESS | BRF_PRG },
 };
 
 
@@ -695,7 +690,7 @@ static struct BurnRomInfo guwangesRomDesc[] = {
 	{ "u084.bin",     0x000001, 0x00000000, BRF_NODUMP },
 	{ "u108.bin",     0x000001, 0x00000000, BRF_NODUMP },
 	
-	{ "eeprom-guwange.bin", 0x0080, 0xc3174959, BRF_OPT },
+	{ "eeprom-guwange.bin", 0x0080, 0xc3174959, BRF_ESS | BRF_PRG },
 };
 
 

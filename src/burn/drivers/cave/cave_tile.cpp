@@ -863,25 +863,10 @@ INT32 CaveTileRender(INT32 nMode)
 void CaveTileExit()
 {
 	for (INT32 nLayer = 0; nLayer < 4; nLayer++) {
-		if (CaveTileAttrib[nLayer]) {
-			free(CaveTileAttrib[nLayer]);
-			CaveTileAttrib[nLayer] = NULL;
-		}
-
-		if (CaveTileQueueMemory[nLayer]) {
-			free(CaveTileQueueMemory[nLayer]);
-			CaveTileQueueMemory[nLayer] = NULL;
-		}
-
-		if (pRowScroll[nLayer]) {
-			free(pRowScroll[nLayer]);
-			pRowScroll[nLayer] = NULL;
-		}
-		
-		if (pRowSelect[nLayer]) {
-			free(pRowSelect[nLayer]);
-			pRowSelect[nLayer] = NULL;
-		}
+		BurnFree(CaveTileAttrib[nLayer]);
+		BurnFree(CaveTileQueueMemory[nLayer]);
+		BurnFree(pRowScroll[nLayer]);
+		BurnFree(pRowSelect[nLayer]);
 	}
 
 	nCaveXOffset = nCaveYOffset = 0;
@@ -922,9 +907,9 @@ INT32 CaveTileInitLayer(INT32 nLayer, INT32 nROMSize, INT32 nBitdepth, INT32 nOf
 	nTileMask[nLayer]--;
 
 	if (CaveTileAttrib[nLayer]) {
-		free(CaveTileAttrib[nLayer]);
+		BurnFree(CaveTileAttrib[nLayer]);
 	}
-	CaveTileAttrib[nLayer] = (INT8*)malloc(nTileMask[nLayer] + 1);
+	CaveTileAttrib[nLayer] = (INT8*)BurnMalloc(nTileMask[nLayer] + 1);
 	if (CaveTileAttrib[nLayer] == NULL) {
 		return 1;
 	}
@@ -949,25 +934,25 @@ INT32 CaveTileInitLayer(INT32 nLayer, INT32 nROMSize, INT32 nBitdepth, INT32 nOf
 	}
 
 	if (CaveTileQueueMemory[nLayer]) {
-		free(CaveTileQueueMemory[nLayer]);
+		BurnFree(CaveTileQueueMemory[nLayer]);
 	}
-	CaveTileQueueMemory[nLayer] = (CaveTile*)malloc(4 * 1536 * sizeof(CaveTile));
+	CaveTileQueueMemory[nLayer] = (CaveTile*)BurnMalloc(4 * 1536 * sizeof(CaveTile));
 	if (CaveTileQueueMemory[nLayer] == NULL) {
 		return 1;
 	}
 
 	if (pRowScroll[nLayer]) {
-		free(pRowScroll[nLayer]);
+		BurnFree(pRowScroll[nLayer]);
 	}
-	pRowScroll[nLayer] = (INT32*)malloc(nCaveYSize * sizeof(INT32));
+	pRowScroll[nLayer] = (INT32*)BurnMalloc(nCaveYSize * sizeof(INT32));
 	if (pRowScroll[nLayer] == NULL) {
 		return 1;
 	}
 	
 	if (pRowSelect[nLayer]) {
-		free(pRowSelect[nLayer]);
+		BurnFree(pRowSelect[nLayer]);
 	}
-	pRowSelect[nLayer] = (INT32*)malloc(nCaveYSize * sizeof(INT32));
+	pRowSelect[nLayer] = (INT32*)BurnMalloc(nCaveYSize * sizeof(INT32));
 	if (pRowSelect[nLayer] == NULL) {
 		return 1;
 	}

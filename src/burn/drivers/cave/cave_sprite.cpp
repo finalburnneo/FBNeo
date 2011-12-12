@@ -665,15 +665,8 @@ static INT32 CaveSpriteBuffer_PowerInstinct()
 
 void CaveSpriteExit()
 {
-	if (pSpriteList) {
-		free(pSpriteList);
-		pSpriteList = NULL;
-	}
-
-	if (pZBuffer) {
-		free(pZBuffer);
-		pZBuffer = NULL;
-	}
+	BurnFree(pSpriteList);
+	BurnFree(pZBuffer);
 	
 	CaveSpriteVisibleXOffset = 0;
 
@@ -683,9 +676,9 @@ void CaveSpriteExit()
 INT32 CaveSpriteInit(INT32 nType, INT32 nROMSize)
 {
 	if (pSpriteList) {
-		free(pSpriteList);
+		BurnFree(pSpriteList);
 	}
-	pSpriteList = (CaveSprite*)malloc(0x0401 * sizeof(CaveSprite));
+	pSpriteList = (CaveSprite*)BurnMalloc(0x0401 * sizeof(CaveSprite));
 	if (pSpriteList == NULL) {
 		CaveSpriteExit();
 		return 1;
@@ -701,9 +694,9 @@ INT32 CaveSpriteInit(INT32 nType, INT32 nROMSize)
 	}
 
 	if (pZBuffer) {
-		free(pZBuffer);
+		BurnFree(pZBuffer);
 	}
-	pZBuffer = (UINT16*)malloc(nCaveXSize * nCaveYSize * sizeof(UINT16));
+	pZBuffer = (UINT16*)BurnMalloc(nCaveXSize * nCaveYSize * sizeof(UINT16));
 	if (pZBuffer == NULL) {
 		CaveSpriteExit();
 		return 1;

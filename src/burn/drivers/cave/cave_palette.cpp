@@ -8,10 +8,10 @@ static UINT16* CavePalCopy = NULL;
 
 INT32 CavePalInit(INT32 nPalSize)
 {
-	CavePalette = (UINT32*)malloc(nPalSize * sizeof(UINT32));
+	CavePalette = (UINT32*)BurnMalloc(nPalSize * sizeof(UINT32));
 	memset(CavePalette, 0, nPalSize * sizeof(UINT32));
 
-	CavePalCopy = (UINT16*)malloc(nPalSize * sizeof(UINT16));
+	CavePalCopy = (UINT16*)BurnMalloc(nPalSize * sizeof(UINT16));
 	memset(CavePalCopy, 0, nPalSize * sizeof(UINT16));
 	
 	pBurnDrvPalette = CavePalette;
@@ -21,14 +21,8 @@ INT32 CavePalInit(INT32 nPalSize)
 
 INT32 CavePalExit()
 {
-	if (CavePalette) {
-		free(CavePalette);
-		CavePalette = NULL;
-	}
-	if (CavePalCopy) {
-		free(CavePalCopy);
-		CavePalCopy = NULL;
-	}
+	BurnFree(CavePalette);
+	BurnFree(CavePalCopy);
 
 	return 0;
 }

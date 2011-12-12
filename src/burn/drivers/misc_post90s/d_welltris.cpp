@@ -599,8 +599,8 @@ static INT32 DrvExit()
 {
 	GenericTilesExit();
 
-	BurnYM2610Exit();
 	BurnYM2610SetSoundMixMode(0);
+	BurnYM2610Exit();
 	
 	ZetExit();
 	SekExit();

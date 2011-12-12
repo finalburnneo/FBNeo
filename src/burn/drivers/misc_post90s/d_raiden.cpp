@@ -1500,8 +1500,10 @@ static INT32 DrvFrame()
 	for (INT32 i=0; i<200; i++) {
 		VezOpen(0);
 		VezRun(10000000 / 60 / 200);
+		VezClose();
 		VezOpen(1);
 		VezRun(10000000 / 60 / 200);
+		VezClose();
 		ZetOpen(0);
 		BurnTimerUpdateYM3812(i * ((3579545 / 60) / 200));
 		ZetClose();
@@ -1509,9 +1511,11 @@ static INT32 DrvFrame()
 
 	VezOpen(0);
 	VezSetIRQLineAndVector(0, 0xc8/4, VEZ_IRQSTATUS_ACK);
+	VezClose();
 
 	VezOpen(1);
 	VezSetIRQLineAndVector(0, 0xc8/4, VEZ_IRQSTATUS_ACK);
+	VezClose();
 
 //	ZetOpen(0);
 //	ZetRun( 3579545 / 60 );
@@ -1564,15 +1568,19 @@ static INT32 DrvFrameAlt()
 	for (INT32 i=0; i<120; i++) {
 		VezOpen(0);
 		VezRun(10000000 / 60 / 120);
+		VezClose();
 		VezOpen(1);
 		VezRun(10000000 / 60 / 120);
+		VezClose();
 	}
 
 	VezOpen(0);
 	VezSetIRQLineAndVector(0, 0xc8/4, VEZ_IRQSTATUS_ACK);
+	VezClose();
 
 	VezOpen(1);
 	VezSetIRQLineAndVector(0, 0xc8/4, VEZ_IRQSTATUS_ACK);
+	VezClose();
 
 //	ZetOpen(0);
 //	ZetRun( 3579545 / 60 );

@@ -91,7 +91,7 @@ void __fastcall cps3SndWriteLong(UINT32 addr, UINT32 data)
 
 INT32 cps3SndInit(UINT8 * sndrom)
 {
-	chip = (cps3snd_chip *) malloc( sizeof(cps3snd_chip) );
+	chip = (cps3snd_chip *)BurnMalloc( sizeof(cps3snd_chip) );
 	if ( chip ) {
 		memset( chip, 0, sizeof(cps3snd_chip) );
 		chip->rombase = sndrom;
@@ -118,10 +118,7 @@ void cps3SndReset()
 
 void cps3SndExit()
 {
-	if (chip) {
-		free( chip );
-		chip = NULL;
-	}
+	BurnFree( chip );
 }
 
 void cps3SndUpdate()
@@ -132,7 +129,7 @@ void cps3SndUpdate()
 		return;	
 	}
 	
-	memset(pBurnSoundOut, 0, nBurnSoundLen * 2 * 2 );
+	memset(pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
 	INT8 * base = (INT8 *)chip->rombase;
 	cps3_voice *vptr = &chip->voice[0];
 

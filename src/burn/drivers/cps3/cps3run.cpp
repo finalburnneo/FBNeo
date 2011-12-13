@@ -485,19 +485,19 @@ static INT32 MemIndex()
 
 	RamMain		= Next; Next += 0x0080000;
 
-	RamPal		= (UINT16 *) Next; Next += 0x0040000;
-	RamSpr		= (UINT32 *) Next; Next += 0x0080000;
+	RamPal		= (UINT16 *) Next; Next += 0x0020000 * sizeof(UINT16);
+	RamSpr		= (UINT32 *) Next; Next += 0x0020000 * sizeof(UINT32);
 
-	RamCRam		= (UINT32 *) Next; Next += 0x0800000;
-	RamSS		= (UINT32 *) Next; Next += 0x0010000;
+	RamCRam		= (UINT32 *) Next; Next += 0x0200000 * sizeof(UINT32);
+	RamSS		= (UINT32 *) Next; Next += 0x0004000 * sizeof(UINT32);
 	
-	RamVReg		= (UINT32 *) Next; Next += 0x0000100;
+	RamVReg		= (UINT32 *) Next; Next += 0x0000040 * sizeof(UINT32);
 	
-	EEPROM		= (UINT16 *) Next; Next += 0x0000400;
+	EEPROM		= (UINT16 *) Next; Next += 0x0000100 * sizeof(UINT16);
 	
 	RamEnd		= Next;
 	
-	Cps3CurPal		= (UINT16 *) Next; Next += 0x040002; // iq_132 - layer disable
+	Cps3CurPal		= (UINT16 *) Next; Next += 0x020001 * sizeof(UINT16); // iq_132 - layer disable
 	RamScreen	= (UINT32 *) Next; Next += (512 * 2) * (224 * 2 + 32) * sizeof(UINT32);
 	
 	MemEnd		= Next;
@@ -1060,7 +1060,7 @@ INT32 cps3Init()
 	Mem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);										// blank all memory
 	MemIndex();	
 	
@@ -1203,10 +1203,7 @@ INT32 cps3Exit()
 {
 	Sh2Exit();
 	
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	cps3SndExit();	
 	

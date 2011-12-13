@@ -714,7 +714,7 @@ static INT32 drvInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8*)0;
-	if ((Mem = (UINT8*)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8*)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// Zero memory
@@ -776,18 +776,14 @@ static INT32 drvInit()
 	nTextROMStatus = -1;
 	bDrawScreen = true;
 
-#if defined FBA_DEBUG && defined USE_SPEEDHACKS
-	bprintf(PRINT_IMPORTANT, _T("  * Using speed-hacks (detecting idle loops).\n"));
-#endif
-
 	drvDoReset(); // Reset machine
 	return 0;
 }
 
 static INT32 drvExit()
 {
-	MSM6295Exit(1);
 	MSM6295Exit(0);
+	MSM6295Exit(1);
 	BurnYM2151Exit();
 
 	ToaPalExit();
@@ -796,28 +792,13 @@ static INT32 drvExit()
 	ToaZExit();				// Z80 exit
 	SekExit();				// Deallocate 68000
 
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	return 0;
 }
 
 inline static INT32 CheckSleep(INT32)
 {
-#if 1 && defined USE_SPEEDHACKS
-	INT32 nCurrentPC = SekGetPC(-1);
-
-	if (!nIRQPending &&
-		((nCurrentPC >= 0x0009F4 && nCurrentPC <= 0x0009FA) ||
-		 (nCurrentPC >= 0x001FF6 && nCurrentPC <= 0x001FFC) ||
-		 (nCurrentPC >= 0x003C7C && nCurrentPC <= 0x003C82)))
-	{
-		return 1;
-	}
-#endif
-
 	return 0;
 }
 
@@ -862,6 +843,8 @@ static INT32 drvFrame()
 	nCyclesTotal[1] = TOA_Z80_SPEED / 60;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 
+	SekOpen(0);
+	
 	SekSetCyclesScanline(nCyclesTotal[0] / 262);
 	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262);
 	nToaCyclesVBlankStart = nCyclesTotal[0] - ((nCyclesTotal[0] * TOA_VBLANK_LINES) / 262);
@@ -869,7 +852,6 @@ static INT32 drvFrame()
 
 	INT32 nSoundBufferPos = 0;
 
-	SekOpen(0);
 	ZetOpen(0);
 	for (INT32 i = 1; i <= nInterleave; i++) {
     	INT32 nCurrentCPU;

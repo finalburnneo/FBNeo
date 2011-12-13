@@ -561,7 +561,7 @@ static INT32 DrvInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory
@@ -624,17 +624,14 @@ static INT32 DrvExit()
 {
 	ToaPalExit();
 
+	BurnYM2151Exit();
 	MSM6295Exit(0);
 
 	ToaExitGP9001();
 	SekExit();				// Deallocate 68000s
 	VezExit();
 
-	// Deallocate all used memory
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	MSM6295ROM = NULL;
 
@@ -689,12 +686,13 @@ static INT32 DrvFrame()
 	nCyclesDone[0] = 0;
 	nCyclesDone[1] = 0;
 
+	SekOpen(0);
+	
 	SekSetCyclesScanline(nCyclesTotal[0] / 262);
 	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262);
 	nToaCyclesVBlankStart = nCyclesTotal[0] - ((nCyclesTotal[0] * TOA_VBLANK_LINES) / 262);
 	bVBlank = false;
 
-	SekOpen(0);
 	VezOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
@@ -732,6 +730,14 @@ static INT32 DrvFrame()
 		} else {
 			nCyclesDone[1] += VezRun(nCyclesTotal[1] / nInterleave);
 		}
+		
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			MSM6295Render(0, pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	if (pBurnSoundOut) {
@@ -740,7 +746,6 @@ static INT32 DrvFrame()
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			MSM6295Render(0, pSoundBuf, nSegmentLength);
-
 		}
 	}
 

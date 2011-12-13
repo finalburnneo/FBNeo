@@ -398,7 +398,7 @@ static INT32 DrvInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory
@@ -422,7 +422,7 @@ static INT32 DrvInit()
 		SekClose();
 	}
 
-	nToa1Cycles68KSync = SekTotalCycles();
+	nToa1Cycles68KSync = 0;
 
 	nSpriteYOffset =  0x0001;
 
@@ -449,11 +449,7 @@ static INT32 DrvExit()
 	ToaExitGP9001();
 	SekExit();				// Deallocate 68000s
 
-	// Deallocate all used memory
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	return 0;
 }

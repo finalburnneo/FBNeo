@@ -17,8 +17,6 @@ static INT32 nSoundCommand;
 // Z80 ROM bank
 static INT32 nCurrentBank;
 
-static INT32 nSpeedHackOffset;
-
 // Rom information
 static struct BurnRomInfo bgareggaRomDesc[] = {
 	{ "prg0.bin",     0x080000, 0xF80C2FC2, BRF_ESS | BRF_PRG }, //  0 CPU #0 code (even)
@@ -674,7 +672,7 @@ static INT32 battlegInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory
@@ -732,15 +730,6 @@ static INT32 battlegInit()
 	// mar 2 1996 & apr 2 1996 ver:	0x0009AC - 0x0009B8 & 0x001F5E - 0x001F64 & 0x003A1C - 0x003A22
 	// feb 2 1996 ver:				0x0009AC - 0x0009B8 & 0x001F2E - 0x001F34 & 0x0039EC - 0x0039F2
 
-	nSpeedHackOffset = 0;
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "bgaregga") == 0) {
-		nSpeedHackOffset = 0x30;
-	}
-
-#if defined FBA_DEBUG && defined USE_SPEEDHACKS
-	bprintf(PRINT_IMPORTANT, _T("  * Using speed-hacks (detecting idle loops).\n"));
-#endif
-
 	DrvDoReset();												// Reset machine
 	return 0;
 }
@@ -756,11 +745,7 @@ static INT32 DrvExit()
 	ToaZExit();				// Z80 exit
 	SekExit();				// Deallocate 68000s
 
-	// Deallocate all used memory
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	return 0;
 }
@@ -782,23 +767,6 @@ static INT32 DrvDraw()
 
 inline static INT32 CheckSleep(INT32)
 {
-#if 1 && defined USE_SPEEDHACKS
-	INT32 nCurrentPC = SekGetPC(-1);
-
-	if (!nIRQPending && nCurrentPC >= 0x0009AC && nCurrentPC <= 0x0009B8) {
-		return 1;
-	}
-
-	nCurrentPC += nSpeedHackOffset;
-
-	if (!nIRQPending &&
-		((nCurrentPC >= 0x001F5E && nCurrentPC <= 0x001F64) ||
-		 (nCurrentPC >= 0x003A1C && nCurrentPC <= 0x003A22)))
-	{
-		return 1;
-	}
-#endif
-
 	return 0;
 }
 
@@ -828,6 +796,8 @@ static INT32 DrvFrame()
 	nCyclesTotal[1] = TOA_Z80_SPEED / 60;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 
+	SekOpen(0);
+	
 	SekSetCyclesScanline(nCyclesTotal[0] / 262);
 	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262);
 	nToaCyclesVBlankStart = nCyclesTotal[0] - ((nCyclesTotal[0] * TOA_VBLANK_LINES) / 262);
@@ -835,7 +805,6 @@ static INT32 DrvFrame()
 
 	INT32 nSoundBufferPos = 0;
 
-	SekOpen(0);
 	ZetOpen(0);
 	for (INT32 i = 1; i <= nInterleave; i++) {
     	INT32 nCurrentCPU;

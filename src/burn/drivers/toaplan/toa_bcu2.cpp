@@ -329,10 +329,10 @@ INT32 ToaInitBCU2()
 	nBCU2MaxTile = (nBCU2ROMSize - 1) >> 5;
 
 	nSize = 1280 * 4 * 0x10 * sizeof(ToaTile);
-	pBCU2TileQueueData = (ToaTile*)malloc(nSize);
+	pBCU2TileQueueData = (ToaTile*)BurnMalloc(nSize);
 	memset(pBCU2TileQueueData, 0, nSize);
 
-	BCU2TileAttrib = (UINT8*)malloc(32768);
+	BCU2TileAttrib = (UINT8*)BurnMalloc(32768);
 	memset(BCU2TileAttrib, 0, 32768);
 	for (UINT32 j = 0; j < (nBCU2ROMSize >> 5); j++) {
 		bool bTransparent = true, bSolid = true;
@@ -359,12 +359,12 @@ INT32 ToaInitBCU2()
 	nFCU2MaxSprite = (nFCU2ROMSize - 1) >> 5;
 
 	nSize = 0x10 * 0x101 * sizeof(UINT16*);
-	pFCU2SpriteQueueData = (UINT16**)malloc(nSize);
+	pFCU2SpriteQueueData = (UINT16**)BurnMalloc(nSize);
 	memset(pFCU2SpriteQueueData, 0, nSize);
 
-	pFCU2SpriteBuffer = (UINT8*)malloc(0x0800);
+	pFCU2SpriteBuffer = (UINT8*)BurnMalloc(0x0800);
 
-	FCU2TileAttrib = (UINT8*)malloc(32768);
+	FCU2TileAttrib = (UINT8*)BurnMalloc(32768);
 	memset(FCU2TileAttrib, 0, 32768);
 	for (UINT32 j = 0; j < (nFCU2ROMSize >> 5); j++) {
 		bool bTransparent = true, bSolid = true;
@@ -430,30 +430,11 @@ INT32 ToaExitBCU2()
 	nLayer2YOffset = 0;
 	nLayer3YOffset = 0;
 
-	if (pBCU2TileQueueData) {
-		free(pBCU2TileQueueData);
-		pBCU2TileQueueData = NULL;
-	}
-
-	if (BCU2TileAttrib) {
-		free(BCU2TileAttrib);
-		BCU2TileAttrib = NULL;
-	}
-
-	if (pFCU2SpriteQueueData) {
-		free(pFCU2SpriteQueueData);
-		pFCU2SpriteQueueData = NULL;
-	}
-
-	if (pFCU2SpriteBuffer) {
-		free(pFCU2SpriteBuffer);
-		pFCU2SpriteBuffer = NULL;
-	}
-
-	if (FCU2TileAttrib) {
-		free(FCU2TileAttrib);
-		FCU2TileAttrib = NULL;
-	}
+	BurnFree(pBCU2TileQueueData);
+	BurnFree(BCU2TileAttrib);
+	BurnFree(pFCU2SpriteQueueData);
+	BurnFree(pFCU2SpriteBuffer);
+	BurnFree(FCU2TileAttrib);
 
 	return 0;
 }

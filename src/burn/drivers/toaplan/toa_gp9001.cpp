@@ -488,18 +488,18 @@ INT32 ToaInitGP9001(INT32 n)
 		nMaxSprite[i] = (nGP9001ROMSize[i] - 1) >> 5;
 
 		nSize = 512 * 3 * 0x10 * 2 * sizeof(INT32);
-		pTileQueueData[i] = (UINT32*)malloc(nSize);
+		pTileQueueData[i] = (UINT32*)BurnMalloc(nSize);
 		memset(pTileQueueData[i], 0, nSize);
 
 		nSize = 0x10 * 0x101 * sizeof(UINT8*);
-		pSpriteQueueData[i] = (UINT8**)malloc(nSize);
+		pSpriteQueueData[i] = (UINT8**)BurnMalloc(nSize);
 		memset(pSpriteQueueData[i], 0, nSize);
 
 		nSize = 0x0800 * 2;
-		pSpriteBufferData[i] = (UINT8*)malloc(nSize);
+		pSpriteBufferData[i] = (UINT8*)BurnMalloc(nSize);
 		memset(pSpriteBufferData[i], 0, nSize);
 
-		GP9001TileAttrib[i] = (UINT8*)malloc(nGP9001ROMSize[i] >> 5);
+		GP9001TileAttrib[i] = (UINT8*)BurnMalloc(nGP9001ROMSize[i] >> 5);
 		for (UINT32 j = 0; j < (nGP9001ROMSize[i] >> 5); j++) {
 			bool bTransparent = true, bSolid = true;
 			INT32 nTwoPixels;
@@ -583,26 +583,10 @@ INT32 ToaExitGP9001()
 	nLayer2YOffset = 0;
 
 	for (INT32 i = 0; i < nControllers; i++) {
-		if (pSpriteBufferData[i]) {
-			free(pSpriteBufferData[i]);
-			pSpriteBufferData[i] = NULL;
-		}
-
-		if (pSpriteQueueData[i]) {
-			free(pSpriteQueueData[i]);
-			pSpriteQueueData[i] = NULL;
-		}
-
-		if (pTileQueueData[i]) {
-			free(pTileQueueData[i]);
-			pTileQueueData[i] = NULL;
-		}
-
-		if (GP9001TileAttrib[i]) {
-			free(GP9001TileAttrib[i]);
-			GP9001TileAttrib[i] = NULL;
-		}
-
+		BurnFree(pSpriteBufferData[i]);
+		BurnFree(pSpriteQueueData[i]);
+		BurnFree(pTileQueueData[i]);
+		BurnFree(GP9001TileAttrib[i]);
 	}
 
 	return 0;

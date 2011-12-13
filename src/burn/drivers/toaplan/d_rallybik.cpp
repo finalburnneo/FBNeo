@@ -315,7 +315,7 @@ static INT32 MemIndex()
 
 static void DrvSpriteDecode()
 {
-	UINT8 *tmp = (UINT8*)malloc(0x40000);
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x40000);
 	if (tmp == NULL) {
 		return;
 	}
@@ -329,10 +329,7 @@ static void DrvSpriteDecode()
 		}
 	}
 
-	if (tmp) {
-		free (tmp);
-		tmp = NULL;
-	}
+	BurnFree (tmp);
 }
 
 static INT32 DrvInit()
@@ -352,7 +349,7 @@ static INT32 DrvInit()
 	AllMem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(AllMem, 0, nLen);
@@ -441,13 +438,9 @@ static INT32 DrvExit()
 
 	ToaExitBCU2();
 	ToaZExit();
-	ZetExit();
 	SekExit();
 
-	if (AllMem) {
-		free(AllMem);
-		AllMem = NULL;
-	}
+	BurnFree(AllMem);
 
 	Rallybik = 0;
 
@@ -491,11 +484,11 @@ static INT32 DrvFrame()
 	ToaClearOpposites(&DrvInputs[0]);
 	ToaClearOpposites(&DrvInputs[1]);
 
-	SekOpen(0);
-	ZetOpen(0);
-
 	SekNewFrame();
 	ZetNewFrame();
+	
+	SekOpen(0);
+	ZetOpen(0);
 
 	SekIdle(nCyclesDone[0]);
 	ZetIdle(nCyclesDone[1]);
@@ -540,11 +533,13 @@ static INT32 DrvFrame()
 		} else {
 			SekIdle(nCyclesSegment);
 		}
+		
+		BurnTimerUpdateYM3812(i * (nCyclesTotal[1] / nInterleave));
 	}
 
 	nToa1Cycles68KSync = SekTotalCycles();
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
-	BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 
 	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];
 

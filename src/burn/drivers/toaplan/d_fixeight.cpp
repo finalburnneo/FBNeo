@@ -278,11 +278,7 @@ static INT32 DrvExit()
 
 	EEPROMExit();
 
-	// Deallocate all used memory
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	return 0;
 }
@@ -333,6 +329,7 @@ inline static INT32 CheckSleep(INT32)
 static INT32 DrvFrame()
 {
 	INT32 nInterleave = 100;
+	INT32 nSoundBufferPos = 0;
 
 	if (DrvReset) {														// Reset machine
 		DrvDoReset();
@@ -360,12 +357,13 @@ static INT32 DrvFrame()
 	nCyclesDone[0] = 0;
 	nCyclesDone[1] = 0;
 
+	SekOpen(0);
+	
 	SekSetCyclesScanline(nCyclesTotal[0] / 262);
 	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262);
 	nToaCyclesVBlankStart = nCyclesTotal[0] - ((nCyclesTotal[0] * TOA_VBLANK_LINES) / 262);
 	bVBlank = false;
-
-	SekOpen(0);
+	
 	VezOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
@@ -407,12 +405,23 @@ static INT32 DrvFrame()
 		} else {
 			nCyclesDone[1] += VezRun(nCyclesTotal[1] / nInterleave);
 		}
+		
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			MSM6295Render(0, pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		if (nSegmentLength) {
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			MSM6295Render(0, pSoundBuf, nSegmentLength);
+		}
 	}
 
 	VezClose();
@@ -536,7 +545,7 @@ static INT32 DrvInit(INT32 region)
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory
@@ -598,10 +607,6 @@ static INT32 DrvInit(INT32 region)
 	MSM6295Init(0, 1000000 / 132, 50.0, 1);
 
 	bDrawScreen = true;
-
-#if defined FBA_DEBUG && defined USE_SPEEDHACKS
-	bprintf(PRINT_IMPORTANT, _T("  * Using speed-hacks (detecting idle loops).\n"));
-#endif
 
 	DrvDoReset(); // Reset machine
 

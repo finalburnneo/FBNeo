@@ -328,11 +328,8 @@ static INT32 DrvExit()
 	ToaExitGP9001();
 	SekExit();				// Deallocate 68000s
 
-	// Deallocate all used memory
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
+	
 	return 0;
 }
 
@@ -397,6 +394,8 @@ static INT32 DrvFrame()
 
 	nCyclesTotal[0] = (int)((INT64)16000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
 	nCyclesDone[0] = 0;
+	
+	SekOpen(0);
 
 	SekSetCyclesScanline(nCyclesTotal[0] / 262);
 	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262);
@@ -404,8 +403,6 @@ static INT32 DrvFrame()
 	bVBlank = false;
 
 	INT32 nSoundBufferPos = 0;
-
-	SekOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
     	INT32 nCurrentCPU;
@@ -545,7 +542,7 @@ static INT32 DrvInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory

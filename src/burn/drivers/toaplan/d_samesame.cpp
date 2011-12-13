@@ -444,7 +444,7 @@ static INT32 DrvInit()
 	AllMem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(AllMem, 0, nLen);
@@ -493,13 +493,9 @@ static INT32 DrvExit()
 	ToaPalExit();
 
 	ToaExitBCU2();
-	ToaZExit();
 	SekExit();
 
-	if (AllMem) {
-		free(AllMem);
-		AllMem = NULL;
-	}
+	BurnFree(AllMem);
 
 	return 0;
 }
@@ -541,9 +537,9 @@ static INT32 DrvFrame()
 	ToaClearOpposites(&DrvInputs[0]);
 	ToaClearOpposites(&DrvInputs[1]);
 
-	SekOpen(0);
-
 	SekNewFrame();
+	
+	SekOpen(0);
 
 	SekIdle(nCyclesDone[0]);
 

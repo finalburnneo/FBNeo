@@ -329,13 +329,15 @@ void __fastcall demonwld_sound_write_port(UINT16 p, UINT8 d)
 {
 	switch (p & 0xff)
 	{
-		case 0x00:
+		case 0x00: {
 			BurnYM3812Write(0, d);
-		return;
+			return;
+		}
 
-		case 0x01:
+		case 0x01: {
 			BurnYM3812Write(1, d);
-		return;
+			return;
+		}
 
 		case 0x40: // toaplan1_coin_w
 		return;
@@ -442,7 +444,7 @@ static INT32 DrvInit()
 	AllMem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(AllMem, 0, nLen);
@@ -513,13 +515,9 @@ static INT32 DrvExit()
 
 	ToaExitBCU2();
 	ToaZExit();
-	ZetExit();
 	SekExit();
 
-	if (AllMem) {
-		free(AllMem);
-		AllMem = NULL;
-	}
+	BurnFree(AllMem);
 
 	return 0;
 }
@@ -566,11 +564,11 @@ static INT32 DrvFrame()
 	ToaClearOpposites(&DrvInputs[0]);
 	ToaClearOpposites(&DrvInputs[1]);
 
-	SekOpen(0);
-	ZetOpen(0);
-
 	SekNewFrame();
 	ZetNewFrame();
+	
+	SekOpen(0);
+	ZetOpen(0);
 
 	SekIdle(nCyclesDone[0]);
 	ZetIdle(nCyclesDone[1]);
@@ -615,11 +613,13 @@ static INT32 DrvFrame()
 		} else {
 			SekIdle(nCyclesSegment);
 		}
+		
+		BurnTimerUpdateYM3812(i * (nCyclesTotal[1] / nInterleave));
 	}
 
 	nToa1Cycles68KSync = SekTotalCycles();
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
-	BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 
 	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];
 

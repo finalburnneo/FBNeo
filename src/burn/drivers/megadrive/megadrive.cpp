@@ -295,7 +295,7 @@ inline static void CalcCol(INT32 index, UINT16 nColour)
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = Mem;
-	RomMain 	= Next; Next += MAX_CARTRIDGE_SIZE + sizeof(long);	// 68000 ROM, Max enough 
+	RomMain 	= Next; Next += MAX_CARTRIDGE_SIZE;	// 68000 ROM, Max enough 
 	
 	RamStart	= Next;
 	
@@ -305,8 +305,8 @@ static INT32 MemIndex()
 	RamIO		= Next; Next += 0x000010;			// I/O
 	
 	RamPal		= (UINT16 *) Next; Next += 0x000040 * sizeof(UINT16);
-	RamSVid		= (UINT16 *) Next; Next += 0x000080;	// VSRam
-	RamVid		= (UINT16 *) Next; Next += 0x010000;	// Video Ram
+	RamSVid		= (UINT16 *) Next; Next += 0x000040 * sizeof(UINT16);	// VSRam
+	RamVid		= (UINT16 *) Next; Next += 0x008000 * sizeof(UINT16);	// Video Ram
 	
 	RamVReg		= (struct PicoVideo *)Next; Next += sizeof(struct PicoVideo);
 	RamMisc		= (struct PicoMisc *)Next; Next += sizeof(struct PicoMisc);
@@ -396,22 +396,30 @@ void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 
 	switch (sekAddress) {
 		case 0xa04000: {
-			if (!Z80HasBus && !MegadriveZ80Reset) BurnYM2612Write(0, 0, byteValue);
+			if (!Z80HasBus && !MegadriveZ80Reset) {
+				BurnYM2612Write(0, 0, byteValue);
+			}
 			return;
 		}
 	
 		case 0xa04001: {
-			if (!Z80HasBus && !MegadriveZ80Reset) BurnYM2612Write(0, 1, byteValue);
+			if (!Z80HasBus && !MegadriveZ80Reset) {
+				BurnYM2612Write(0, 1, byteValue);
+			}
 			return;
 		}
 	
 		case 0xa04002: {
-			if (!Z80HasBus && !MegadriveZ80Reset) BurnYM2612Write(0, 2, byteValue);
+			if (!Z80HasBus && !MegadriveZ80Reset) {
+				BurnYM2612Write(0, 2, byteValue);
+			}
 			return;
 		}
 	
 		case 0xa04003: {
-			if (!Z80HasBus && !MegadriveZ80Reset) BurnYM2612Write(0, 3, byteValue);
+			if (!Z80HasBus && !MegadriveZ80Reset) {
+				BurnYM2612Write(0, 3, byteValue);
+			}
 			return;
 		}
 		
@@ -1178,7 +1186,7 @@ UINT8 __fastcall MegadriveZ80PortRead(UINT16 a)
 	
 	switch (a) {
 		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 Port Read 02%x\n"), a);
+			bprintf(PRINT_NORMAL, _T("Z80 Port Read %02x\n"), a);
 		}
 	}	
 
@@ -1273,22 +1281,30 @@ void __fastcall MegadriveZ80ProgWrite(UINT16 a, UINT8 d)
 	
 	switch (a) {
 		case 0x4000: {
+			SekOpen(0);
 			BurnYM2612Write(0, 0, d);
+			SekClose();
 			return;
 		}
 		
 		case 0x4001: {
+			SekOpen(0);
 			BurnYM2612Write(0, 1, d);
+			SekClose();
 			return;
 		}
 		
 		case 0x4002: {
+			SekOpen(0);
 			BurnYM2612Write(0, 2, d);
+			SekClose();
 			return;
 		}
 		
 		case 0x4003: {
+			SekOpen(0);
 			BurnYM2612Write(0, 3, d);
+			SekClose();
 			return;
 		}
 		
@@ -2093,7 +2109,7 @@ static void SetupCustomCartridgeMappers()
 	}
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SSF2) {
-		OriginalRom = (UINT8*)malloc(0x500000);
+		OriginalRom = (UINT8*)BurnMalloc(0x500000);
 		memcpy(OriginalRom, RomMain, 0x500000);
 		
 		memcpy(RomMain + 0x800000, OriginalRom + 0x400000, 0x100000);
@@ -2110,7 +2126,7 @@ static void SetupCustomCartridgeMappers()
 		RamMisc->L3AltPDat = 0;
 		RamMisc->L3AltPCmd = 0;
 		
-		OriginalRom = (UINT8*)malloc(0x200000);
+		OriginalRom = (UINT8*)BurnMalloc(0x200000);
 		memcpy(OriginalRom, RomMain, 0x200000);
 		
 		memcpy(RomMain + 0x000000, OriginalRom + 0x000000, 0x200000);
@@ -2132,7 +2148,7 @@ static void SetupCustomCartridgeMappers()
 		RamMisc->L3AltPDat = 0;
 		RamMisc->L3AltPCmd = 0;
 		
-		OriginalRom = (UINT8*)malloc(0x300000);
+		OriginalRom = (UINT8*)BurnMalloc(0x300000);
 		memcpy(OriginalRom, RomMain, 0x300000);
 		
 		memcpy(RomMain + 0x000000, OriginalRom + 0x000000, 0x300000);
@@ -2151,7 +2167,7 @@ static void SetupCustomCartridgeMappers()
 	}
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_REDCL_EN) {
-		OriginalRom = (UINT8*)malloc(0x200005);
+		OriginalRom = (UINT8*)BurnMalloc(0x200005);
 		memcpy(OriginalRom, RomMain, 0x200005);
 		for (UINT32 i = 0; i < RomSize; i++) {
 			OriginalRom[i] ^= 0x40;
@@ -2170,7 +2186,7 @@ static void SetupCustomCartridgeMappers()
 	}
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_RADICA) {
-		OriginalRom = (UINT8*)malloc(RomSize);
+		OriginalRom = (UINT8*)BurnMalloc(RomSize);
 		memcpy(OriginalRom, RomMain, RomSize);
 		
 		memcpy(RomMain + 0x000000, OriginalRom + 0x000000, 0x400000);
@@ -2246,7 +2262,7 @@ static void SetupCustomCartridgeMappers()
 	}
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_KAIJU) {
-		OriginalRom = (UINT8*)malloc(RomSize);
+		OriginalRom = (UINT8*)BurnMalloc(RomSize);
 		memcpy(OriginalRom, RomMain, RomSize);
 		
 		memcpy(RomMain + 0x400000, OriginalRom, 0x200000);
@@ -2261,7 +2277,7 @@ static void SetupCustomCartridgeMappers()
 	}
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_CHINFIGHT3) {
-		OriginalRom = (UINT8*)malloc(RomSize);
+		OriginalRom = (UINT8*)BurnMalloc(RomSize);
 		memcpy(OriginalRom, RomMain, RomSize);
 		
 		memcpy(RomMain + 0x400000, OriginalRom + 0x000000, 0x200000);
@@ -2335,7 +2351,7 @@ static void SetupCustomCartridgeMappers()
 		RamMisc->RealtecBankAddr = 0;
 		RamMisc->RealtecBankSize = 0;
 		
-		OriginalRom = (UINT8*)malloc(RomSize);
+		OriginalRom = (UINT8*)BurnMalloc(RomSize);
 		memcpy(OriginalRom, RomMain, RomSize);
 		
 		memcpy(RomMain + 0x400000, OriginalRom + 0x000000, 0x080000);
@@ -2352,7 +2368,7 @@ static void SetupCustomCartridgeMappers()
 	}
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_MC_SUP19IN1) {
-		OriginalRom = (UINT8*)malloc(RomSize);
+		OriginalRom = (UINT8*)BurnMalloc(RomSize);
 		memcpy(OriginalRom, RomMain, RomSize);
 		
 		memcpy(RomMain + 0x400000, OriginalRom + 0x000000, 0x400000);
@@ -2365,7 +2381,7 @@ static void SetupCustomCartridgeMappers()
 	}
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_MC_SUP15IN1) {
-		OriginalRom = (UINT8*)malloc(RomSize);
+		OriginalRom = (UINT8*)BurnMalloc(RomSize);
 		memcpy(OriginalRom, RomMain, RomSize);
 		
 		memcpy(RomMain + 0x400000, OriginalRom + 0x000000, 0x200000);
@@ -2378,7 +2394,7 @@ static void SetupCustomCartridgeMappers()
 	}
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_12IN1) {
-		OriginalRom = (UINT8*)malloc(RomSize);
+		OriginalRom = (UINT8*)BurnMalloc(RomSize);
 		memcpy(OriginalRom, RomMain, RomSize);
 		
 		memcpy(RomMain + 0x000000, OriginalRom + 0x000000, 0x200000);
@@ -2391,7 +2407,7 @@ static void SetupCustomCartridgeMappers()
 	}
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_TOPFIGHTER) {
-		OriginalRom = (UINT8*)malloc(RomSize);
+		OriginalRom = (UINT8*)BurnMalloc(RomSize);
 		memcpy(OriginalRom, RomMain, RomSize);
 		
 		memcpy(RomMain + 0x000000, OriginalRom + 0x000000, 0x200000);
@@ -2871,7 +2887,7 @@ INT32 MegadriveInit()
 	Mem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);
 	MemIndex();	
 
@@ -2917,6 +2933,7 @@ INT32 MegadriveInit()
 		SekSetWriteWordHandler(4, MegadriveIOWriteWord);
 
 		SekSetIrqCallback( MegadriveIrqCallback );
+		SekClose();
 	}
 	
 	{
@@ -2969,15 +2986,8 @@ INT32 MegadriveExit()
 	BurnYM2612Exit();
 	SN76496Exit();
 	
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
-	
-	if (OriginalRom) {
-		free(OriginalRom);
-		OriginalRom = NULL;
-	}
+	BurnFree(Mem);
+	BurnFree(OriginalRom);
 	
 	MegadriveCallback = NULL;
 	cycles_68k = 0;
@@ -4069,8 +4079,6 @@ static void MegadriveDraw()
 
 INT32 MegadriveFrame()
 {
-	INT32 nSoundBufferPos = 0;
-	
 	if (MegadriveReset) {
 		MegadriveResetDo();
 		MegadriveReset = 0;
@@ -4177,16 +4185,6 @@ INT32 MegadriveFrame()
 			if (y == line_sample + 1) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 			ZetClose();
 		}
-		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SekOpen(0);
-			BurnYM2612Update(pSoundBuf, nSegmentLength);
-			SekClose();
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 	
 	if (pBurnDraw) MegadriveDraw();
@@ -4204,14 +4202,10 @@ INT32 MegadriveFrame()
 	}
 	
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			SekOpen(0);
-			BurnYM2612Update(pSoundBuf, nSegmentLength);
-			SekClose();
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-		}
+		SekOpen(0);
+		BurnYM2612Update(pBurnSoundOut, nBurnSoundLen);
+		SekClose();
+		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 	
 	return 0;

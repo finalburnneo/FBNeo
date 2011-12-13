@@ -370,15 +370,6 @@ static INT32 DrvDraw()
 
 inline static INT32 CheckSleep(INT32)
 {
-#if 1 && defined USE_SPEEDHACKS
-	INT32 nCurrentPC = SekGetPC(-1);
-
-	// All versions are the same
-	if (!nIRQPending && nCurrentPC >= 0x002ED6 && nCurrentPC <= 0x002EE2) {
-		return 1;
-	}
-#endif
-
 	return 0;
 }
 
@@ -640,10 +631,6 @@ static INT32 DrvInit()
 	MSM6295SampleInfo[0][3] = MSM6295ROM + 0x100000 + 0x0300;
 
 	bDrawScreen = true;
-
-#if defined FBA_DEBUG && defined USE_SPEEDHACKS
-	bprintf(PRINT_IMPORTANT, _T("  * Using speed-hacks (detecting idle loops).\n"));
-#endif
 
 	DrvDoReset(); // Reset machine
 

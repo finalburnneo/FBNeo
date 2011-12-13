@@ -929,10 +929,6 @@ static INT32 DrvInit()
 	
 	bDrawScreen = true;
 
-#if defined FBA_DEBUG && defined USE_SPEEDHACKS
-	bprintf(PRINT_IMPORTANT, _T("  * Using speed-hacks (detecting idle loops).\n"));
-#endif
-
 	DrvDoReset(); // Reset machine
 
 	return 0;
@@ -1005,10 +1001,6 @@ static INT32 PlegendsInit()
 	MSM6295Init(1, 3000000 / 165, 30.0, 1);
 	
 	bDrawScreen = true;
-
-#if defined FBA_DEBUG && defined USE_SPEEDHACKS
-	bprintf(PRINT_IMPORTANT, _T("  * Using speed-hacks (detecting idle loops).\n"));
-#endif
 
 	DrvDoReset(); // Reset machine
 

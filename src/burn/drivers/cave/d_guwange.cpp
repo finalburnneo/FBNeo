@@ -316,14 +316,6 @@ inline static void guwangeClearOpposites(UINT8* nJoystickInputs)
 
 inline static INT32 CheckSleep(INT32)
 {
-#if 1 && defined USE_SPEEDHACKS
-	INT32 nCurrentPC = SekGetPC(-1);
-
-	if (!nIRQPending && nCurrentPC >= 0x06D6DE && nCurrentPC <= 0x06D6F4) {
-		return 1;
-	}
-#endif
-
 	return 0;
 }
 
@@ -620,10 +612,6 @@ static INT32 DrvInit()
 	YMZ280BInit(16934400, &TriggerSoundIRQ, 3);
 
 	bDrawScreen = true;
-
-#if defined FBA_DEBUG && defined USE_SPEEDHACKS
-	bprintf(PRINT_IMPORTANT, _T("  * Using speed-hacks (detecting idle loops).\n"));
-#endif
 
 	DrvDoReset(); // Reset machine
 

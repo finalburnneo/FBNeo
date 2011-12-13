@@ -746,10 +746,6 @@ static INT32 DrvInit()
 	
 	bDrawScreen = true;
 
-#if defined FBA_DEBUG && defined USE_SPEEDHACKS
-	bprintf(PRINT_IMPORTANT, _T("  * Using speed-hacks (detecting idle loops).\n"));
-#endif
-
 	DrvDoReset(); // Reset machine
 
 	return 0;

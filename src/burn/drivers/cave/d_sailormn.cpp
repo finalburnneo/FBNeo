@@ -956,12 +956,6 @@ static INT32 gameInit()
 
 	bDrawScreen = true;
 
-#if 0
-#if defined FBA_DEBUG && defined USE_SPEEDHACKS
-	bprintf(PRINT_IMPORTANT, "  * Using speed-hacks (detecting idle loops).\n");
-#endif
-#endif
-
 	DrvDoReset();
 
 	return 0;

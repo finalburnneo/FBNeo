@@ -18,8 +18,6 @@ static UINT8 DrvReset = 0;
 static UINT8 bDrawScreen;
 static bool bVBlank;
 
-static INT32 nSpeedhack;
-
 static INT8 nVideoIRQ;
 static INT8 nSoundIRQ;
 static INT8 nUnknownIRQ;
@@ -305,14 +303,6 @@ static INT32 DrvDraw()
 
 inline static INT32 CheckSleep(INT32)
 {
-#if 1 && defined USE_SPEEDHACKS
-	INT32 nCurrentPC = SekGetPC(-1) - nSpeedhack;
-
-	if (!nIRQPending && nCurrentPC >= 0 && nCurrentPC <= 12) {
-		return 1;
-	}
-#endif
-
 	return 0;
 }
 
@@ -591,24 +581,6 @@ static INT32 DrvInit()
 	YMZ280BInit(16934400, &TriggerSoundIRQ, 3);
 
 	bDrawScreen = true;
-
-	// 4/22 version: 0x04F37C - 0x04F388
-	// 4/21 version: 0x04F150 - 0x04F15C
-	// 4/14 version: 0x04F152 - 0x04F15E
-
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "esprade") == 0) {
-		nSpeedhack = 0x04F37C;
-	} else {
-		if (strcmp(BurnDrvGetTextA(DRV_NAME), "espradej") == 0) {
-			nSpeedhack = 0x04F152;
-		} else {
-			nSpeedhack = 0x04F150;
-		}
-	}
-
-#if defined FBA_DEBUG && defined USE_SPEEDHACKS
-	bprintf(PRINT_IMPORTANT, _T("  * Using speed-hacks (detecting idle loops).\n"));
-#endif
 
 	DrvDoReset(); // Reset machine
 

@@ -263,9 +263,7 @@ static INT32 DrvExit()
 
 	SekExit();				// Deallocate 68000s
 
-	// Deallocate all used memory
 	BurnFree(Mem);
-	Mem = NULL;
 
 	return 0;
 }
@@ -285,8 +283,6 @@ static INT32 DrvDoReset()
 	nUnknownIRQ = 1;
 
 	nIRQPending = 0;
-
-	YMZ280BReset();
 
 	return 0;
 }
@@ -557,12 +553,12 @@ static INT32 DrvInit()
 	memset(Mem, 0, nLen);										// blank all memory
 	MemIndex();													// Index the allocated memory
 
-	EEPROMInit(&eeprom_interface_93C46_8bit);
-	
 	// Load the roms into memory
 	if (LoadRoms()) {
 		return 1;
 	}
+
+	EEPROMInit(&eeprom_interface_93C46_8bit);
 
 	{
 
@@ -635,12 +631,12 @@ static INT32 crushermInit()
 	memset(Mem, 0, nLen);										// blank all memory
 	MemIndex();													// Index the allocated memory
 
-	EEPROMInit(&eeprom_interface_93C46_8bit);
-	
 	// Load the roms into memory
 	if (crushermLoadRoms()) {
 		return 1;
 	}
+
+	EEPROMInit(&eeprom_interface_93C46_8bit);
 
 	{
 

@@ -345,11 +345,7 @@ static INT32 DrvExit()
 	DrvOkiBank2_1 = 0;
 	DrvOkiBank2_2 = 0;
 
-	// Deallocate all used memory
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	return 0;
 }
@@ -670,9 +666,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 static INT32 drvZInit()
 {
 	ZetInit(1);
-	
 	ZetOpen(0);
-
 	ZetSetInHandler(metmqstrZIn);
 	ZetSetOutHandler(metmqstrZOut);
 	ZetSetReadHandler(metmqstrZRead);
@@ -688,9 +682,7 @@ static INT32 drvZInit()
 	ZetMapArea    (0xe000, 0xFFFF, 0, RamZ80 + 0x0000);			// Direct Read from RAM
 	ZetMapArea    (0xe000, 0xFFFF, 1, RamZ80 + 0x0000);			// Direct Write to RAM
 	ZetMapArea    (0xe000, 0xFFFF, 2, RamZ80 + 0x0000);			//
-
 	ZetMemEnd();
-	
 	ZetClose();
 
 	return 0;
@@ -715,18 +707,18 @@ static INT32 DrvInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory
 	MemIndex();													// Index the allocated memory
 
-	EEPROMInit(&eeprom_interface_93C46);
-	
 	// Load the roms into memory
 	if (LoadRoms()) {
 		return 1;
 	}
+	
+	EEPROMInit(&eeprom_interface_93C46);
 
 	{
 		SekInit(0, 0x68000);													// Allocate 68000
@@ -768,8 +760,8 @@ static INT32 DrvInit()
 	
 	memcpy(MSM6295ROM, MSM6295ROMSrc1, 0x40000);
 	memcpy(MSM6295ROM + 0x100000, MSM6295ROMSrc2, 0x40000);
-	MSM6295Init(0, 2000000 / 132, 100.0, 1);
-	MSM6295Init(1, 2000000 / 132, 100.0, 1);
+	MSM6295Init(0, 2000000 / 132, 30.0, 1);
+	MSM6295Init(1, 2000000 / 132, 30.0, 1);
 	
 	bDrawScreen = true;
 

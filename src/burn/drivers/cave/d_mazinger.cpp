@@ -331,11 +331,7 @@ static INT32 DrvExit()
 	DrvOkiBank1 = 0;
 	DrvOkiBank2 = 0;
 
-	// Deallocate all used memory
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	return 0;
 }
@@ -407,7 +403,6 @@ static INT32 DrvFrame()
 	INT32 nCyclesVBlank;
 	
 	INT32 nInterleave = 80;
-	INT32 nSoundBufferPos = 0;
 
 	INT32 nCyclesSegment;
 
@@ -478,13 +473,6 @@ static INT32 DrvFrame()
 		}
 		
 		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2203Update(pSoundBuf, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 	
 	SekClose();
@@ -492,12 +480,8 @@ static INT32 DrvFrame()
 	BurnTimerEndFrame(nCyclesTotal[1]);
 	
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			BurnYM2203Update(pSoundBuf, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-		}
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 	
 	ZetClose();
@@ -564,31 +548,25 @@ static INT32 LoadRoms()
 	
 	BurnLoadRom(RomZ80, 2, 1);
 
-	UINT8 *pTemp = (UINT8*)malloc(0x400000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x400000);
 	BurnLoadRom(pTemp + 0x000000, 3, 1);
 	BurnLoadRom(pTemp + 0x200000, 4, 1);
 	for (INT32 i = 0; i < 0x400000; i++) {
 		CaveSpriteROM[i ^ 0xdf88] = pTemp[BITSWAP24(i,23,22,21,20,19,9,7,3,15,4,17,14,18,2,16,5,11,8,6,13,1,10,12,0)];
 	}
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 	NibbleSwap1(CaveSpriteROM, 0x400000);
 
 	BurnLoadRom(CaveTileROM[0], 5, 1);
 	NibbleSwap2(CaveTileROM[0], 0x200000);
 	
-	pTemp = (UINT8*)malloc(0x200000);
+	pTemp = (UINT8*)BurnMalloc(0x200000);
 	BurnLoadRom(pTemp, 6, 1);
 	for (INT32 i = 0; i < 0x0100000; i++) {
 		CaveTileROM[1][(i << 1) + 1] = (pTemp[(i << 1) + 0] & 15) | ((pTemp[(i << 1) + 1] & 15) << 4);
 		CaveTileROM[1][(i << 1) + 0] = (pTemp[(i << 1) + 0] >> 4) | (pTemp[(i << 1) + 1] & 240);
 	}
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 
 	// Load MSM6295 ADPCM data
 	BurnLoadRom(MSM6295ROMSrc, 7, 1);
@@ -673,9 +651,7 @@ static double DrvGetTime()
 static INT32 drvZInit()
 {
 	ZetInit(1);
-	
 	ZetOpen(0);
-
 	ZetSetInHandler(mazingerZIn);
 	ZetSetOutHandler(mazingerZOut);
 	ZetSetReadHandler(mazingerZRead);
@@ -695,15 +671,11 @@ static INT32 drvZInit()
 	ZetMapArea    (0xf800, 0xffFF, 0, RamZ80 + 0x0800);			// Direct Read from RAM
 	ZetMapArea    (0xf800, 0xffFF, 1, RamZ80 + 0x0800);			// Direct Write to RAM
 	ZetMapArea    (0xf800, 0xffFF, 2, RamZ80 + 0x0800);			//
-
 	ZetMemEnd();
-	
 	ZetClose();
 
 	return 0;
 }
-
-static const UINT8 default_eeprom[16] =	{0xED,0xFF,0x00,0x00,0x12,0x31,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 
 static INT32 DrvInit()
 {
@@ -715,7 +687,7 @@ static INT32 DrvInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory
@@ -763,6 +735,7 @@ static INT32 DrvInit()
 	CaveTileInitLayer(1, 0x400000, 6, 0x4400);
 	
 	BurnYM2203Init(1, 4000000, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203SetVolumeShift(2);
 	BurnTimerAttachZet(4000000);
 	
 	memcpy(MSM6295ROM, MSM6295ROMSrc, 0x40000);
@@ -797,7 +770,7 @@ static struct BurnRomInfo mazingerRomDesc[] = {
 
 	{ "bp943a-4.u64", 0x080000, 0x3fc7f29a, BRF_SND },			 //  7 MSM6295 #1 ADPCM data
 	
-	{ "mazinger_world.nv", 0x0080, 0x4f6225c6, BRF_OPT },
+	{ "mazinger_world.nv", 0x0080, 0x4f6225c6, BRF_ESS | BRF_PRG },
 };
 
 
@@ -818,7 +791,7 @@ static struct BurnRomInfo mazingerjRomDesc[] = {
 
 	{ "bp943a-4.u64", 0x080000, 0x3fc7f29a, BRF_SND },			 //  7 MSM6295 #1 ADPCM data
 	
-	{ "mazinger_japan.nv", 0x0080, 0xf84a2a45, BRF_OPT },
+	{ "mazinger_japan.nv", 0x0080, 0xf84a2a45, BRF_ESS | BRF_PRG },
 };
 
 

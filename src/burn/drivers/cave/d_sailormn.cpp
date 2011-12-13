@@ -454,8 +454,8 @@ static INT32 DrvExit()
 {
 	EEPROMExit();
 
-	MSM6295Exit(1);
 	MSM6295Exit(0);
+	MSM6295Exit(1);
 	BurnYM2151Exit();
 
 	CaveTileExit();
@@ -466,11 +466,7 @@ static INT32 DrvExit()
 
 	SekExit();				// Deallocate 68000s
 
-	// Deallocate all used memory
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	return 0;
 }
@@ -482,9 +478,9 @@ static INT32 DrvDoReset()
 	SekClose();
 
 	nCurrentBank = -1;
-	drvZ80Bankswitch(0);
-
+	
 	ZetOpen(0);
+	drvZ80Bankswitch(0);
 	ZetReset();
 	ZetClose();
 
@@ -734,16 +730,13 @@ static INT32 sailormnLoadRoms()
 	// Load Z80 ROM
 	BurnLoadRom(RomZ80, 2, 1);
 
-	pTemp = (UINT8*)malloc(0x400000);
+	pTemp = (UINT8*)BurnMalloc(0x400000);
 	BurnLoadRom(pTemp + 0x000000, 3, 1);
 	BurnLoadRom(pTemp + 0x200000, 4, 1);
 	for (INT32 i = 0; i < 0x400000; i++) {
 		CaveSpriteROM[i ^ 0x950C4] = pTemp[BITSWAP24(i, 23, 22, 21, 20, 15, 10, 12, 6, 11, 1, 13, 3, 16, 17, 2, 5, 14, 7, 18, 8, 4, 19, 9, 0)];
 	}
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 	sailormnDecodeSprites(CaveSpriteROM, 0x400000);
 
 	BurnLoadRom(CaveTileROM[0], 5, 1);
@@ -757,7 +750,7 @@ static INT32 sailormnLoadRoms()
 	BurnLoadRom(CaveTileROM[2] + 0x800000, 11, 1);
 	sailormnDecodeTiles(CaveTileROM[2], 0xA00000);
 
-	pTemp = (UINT8*)malloc(0x600000);
+	pTemp = (UINT8*)BurnMalloc(0x600000);
 	BurnLoadRom(pTemp + 0x000000, 12, 1);
 	BurnLoadRom(pTemp + 0x200000, 13, 1);
 	BurnLoadRom(pTemp + 0x400000, 14, 1);
@@ -767,10 +760,7 @@ static INT32 sailormnLoadRoms()
 		CaveTileROM[2][(i << 2) + 2] |= (pTemp[i] & 0x30);
 		CaveTileROM[2][(i << 2) + 3] |= (pTemp[i] & 0xC0) >> 2;
 	}
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 
 	// Load OKIM6295 data
 	BurnLoadRom(MSM6295ROM + 0x0000000, 15, 1);
@@ -803,7 +793,7 @@ static INT32 agalletLoadRoms()
 	BurnLoadRom(CaveTileROM[2], 6, 1);
 	sailormnDecodeTiles(CaveTileROM[2], 0x200000);
 
-	UINT8* pTemp = (UINT8*)malloc(0x200000);
+	UINT8* pTemp = (UINT8*)BurnMalloc(0x200000);
 	BurnLoadRom(pTemp, 7, 1);
 	for (INT32 i = 0; i < 0x0100000; i++) {
 		CaveTileROM[2][(i << 2) + 0] |= (pTemp[i] & 0x03) << 4;
@@ -811,10 +801,7 @@ static INT32 agalletLoadRoms()
 		CaveTileROM[2][(i << 2) + 2] |= (pTemp[i] & 0x30);
 		CaveTileROM[2][(i << 2) + 3] |= (pTemp[i] & 0xC0) >> 2;
 	}
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 
 	// Load OKIM6295 data
 	BurnLoadRom(MSM6295ROM + 0x0000000, 8, 1);
@@ -880,9 +867,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	return 0;
 }
 
-static const UINT8 agallet_default_eeprom[48] = {0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff, 0x00,0x00,0x00,0x00,0x00,0x03,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x02, 0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00,0x00,0xff,0xff,0xff,0xff,0xff,0xff};
-static const UINT8 sailormn_default_eeprom[18] = {0xa5,0x00,0xa5,0x00,0xa5,0x00,0xa5,0x00,0xa5,0x01,0xa5,0x01,0xa5,0x04,0xa5,0x01,0xa5,0x02};
-
 static INT32 gameInit()
 {
 	INT32 nLen;
@@ -893,13 +877,11 @@ static INT32 gameInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory
 	MemIndex();													// Index the allocated memory
-
-	
 
 	if (nWhichGame) {
 		// Load the roms into memory
@@ -966,8 +948,8 @@ static INT32 gameInit()
 	BurnYM2151Init(32000000 / 8, 25.0);
 	BurnYM2151SetIrqHandler(&drvYM2151IRQHandler);
 
-	MSM6295Init(0, 16000, 80.0, 1);
-	MSM6295Init(1, 16000, 80.0, 1);
+	MSM6295Init(0, 16000, 100.0, 1);
+	MSM6295Init(1, 16000, 100.0, 1);
 	
 	EEPROMInit(&eeprom_interface_93C46);
 	if (!EEPROMAvailable()) EEPROMFill(DefEEPROM,0, 0x80);
@@ -1024,7 +1006,7 @@ static struct BurnRomInfo sailormnRomDesc[] = {
 	{ "bpsm.u48",     0x200000, 0x498E4ED1, BRF_SND },			 // 15 MSM6295 #0 ADPCM data
 	{ "bpsm.u47",     0x080000, 0x0F2901B9, BRF_SND },			 // 16 MSM6295 #1 ADPCM data
 	
-	{ "sailormn_europe.nv", 0x0080, 0x59a7dc50, BRF_OPT },
+	{ "sailormn_europe.nv", 0x0080, 0x59a7dc50, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1056,7 +1038,7 @@ static struct BurnRomInfo sailormnuRomDesc[] = {
 	{ "bpsm.u48",     0x200000, 0x498E4ED1, BRF_SND },			 // 15 MSM6295 #0 ADPCM data
 	{ "bpsm.u47",     0x080000, 0x0F2901B9, BRF_SND },			 // 16 MSM6295 #1 ADPCM data
 	
-	{ "sailormn_usa.nv", 0x0080, 0x3915abe3, BRF_OPT },
+	{ "sailormn_usa.nv", 0x0080, 0x3915abe3, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1088,7 +1070,7 @@ static struct BurnRomInfo sailormnjRomDesc[] = {
 	{ "bpsm.u48",     0x200000, 0x498E4ED1, BRF_SND },			 // 15 MSM6295 #0 ADPCM data
 	{ "bpsm.u47",     0x080000, 0x0F2901B9, BRF_SND },			 // 16 MSM6295 #1 ADPCM data
 	
-	{ "sailormn_japan.nv", 0x0080, 0xea03c30a, BRF_OPT },
+	{ "sailormn_japan.nv", 0x0080, 0xea03c30a, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1120,7 +1102,7 @@ static struct BurnRomInfo sailormnkRomDesc[] = {
 	{ "bpsm.u48",     0x200000, 0x498E4ED1, BRF_SND },			 // 15 MSM6295 #0 ADPCM data
 	{ "bpsm.u47",     0x080000, 0x0F2901B9, BRF_SND },			 // 16 MSM6295 #1 ADPCM data
 	
-	{ "sailormn_korea.nv", 0x0080, 0x0e7de398, BRF_OPT },
+	{ "sailormn_korea.nv", 0x0080, 0x0e7de398, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1152,7 +1134,7 @@ static struct BurnRomInfo sailormntRomDesc[] = {
 	{ "bpsm.u48",     0x200000, 0x498E4ED1, BRF_SND },			 // 15 MSM6295 #0 ADPCM data
 	{ "bpsm.u47",     0x080000, 0x0F2901B9, BRF_SND },			 // 16 MSM6295 #1 ADPCM data
 	
-	{ "sailormn_taiwan.nv", 0x0080, 0x6c7e8c2a, BRF_OPT },
+	{ "sailormn_taiwan.nv", 0x0080, 0x6c7e8c2a, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1184,7 +1166,7 @@ static struct BurnRomInfo sailormnhRomDesc[] = {
 	{ "bpsm.u48",     0x200000, 0x498E4ED1, BRF_SND },			 // 15 MSM6295 #0 ADPCM data
 	{ "bpsm.u47",     0x080000, 0x0F2901B9, BRF_SND },			 // 16 MSM6295 #1 ADPCM data
 	
-	{ "sailormn_hongkong.nv", 0x0080, 0x4d24c874, BRF_OPT },
+	{ "sailormn_hongkong.nv", 0x0080, 0x4d24c874, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1216,7 +1198,7 @@ static struct BurnRomInfo sailormnoRomDesc[] = {
 	{ "bpsm.u48",     0x200000, 0x498E4ED1, BRF_SND },			 // 15 MSM6295 #0 ADPCM data
 	{ "bpsm.u47",     0x080000, 0x0F2901B9, BRF_SND },			 // 16 MSM6295 #1 ADPCM data
 	
-	{ "sailormn_europe.nv", 0x0080, 0x59a7dc50, BRF_OPT },
+	{ "sailormn_europe.nv", 0x0080, 0x59a7dc50, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1248,7 +1230,7 @@ static struct BurnRomInfo sailormnouRomDesc[] = {
 	{ "bpsm.u48",     0x200000, 0x498E4ED1, BRF_SND },			 // 15 MSM6295 #0 ADPCM data
 	{ "bpsm.u47",     0x080000, 0x0F2901B9, BRF_SND },			 // 16 MSM6295 #1 ADPCM data
 	
-	{ "sailormn_usa.nv", 0x0080, 0x3915abe3, BRF_OPT },
+	{ "sailormn_usa.nv", 0x0080, 0x3915abe3, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1280,7 +1262,7 @@ static struct BurnRomInfo sailormnojRomDesc[] = {
 	{ "bpsm.u48",     0x200000, 0x498E4ED1, BRF_SND },			 // 15 MSM6295 #0 ADPCM data
 	{ "bpsm.u47",     0x080000, 0x0F2901B9, BRF_SND },			 // 16 MSM6295 #1 ADPCM data
 	
-	{ "sailormn_japan.nv", 0x0080, 0xea03c30a, BRF_OPT },
+	{ "sailormn_japan.nv", 0x0080, 0xea03c30a, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1312,7 +1294,7 @@ static struct BurnRomInfo sailormnokRomDesc[] = {
 	{ "bpsm.u48",     0x200000, 0x498E4ED1, BRF_SND },			 // 15 MSM6295 #0 ADPCM data
 	{ "bpsm.u47",     0x080000, 0x0F2901B9, BRF_SND },			 // 16 MSM6295 #1 ADPCM data
 	
-	{ "sailormn_korea.nv", 0x0080, 0x0e7de398, BRF_OPT },
+	{ "sailormn_korea.nv", 0x0080, 0x0e7de398, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1344,7 +1326,7 @@ static struct BurnRomInfo sailormnotRomDesc[] = {
 	{ "bpsm.u48",     0x200000, 0x498E4ED1, BRF_SND },			 // 15 MSM6295 #0 ADPCM data
 	{ "bpsm.u47",     0x080000, 0x0F2901B9, BRF_SND },			 // 16 MSM6295 #1 ADPCM data
 	
-	{ "sailormn_taiwan.nv", 0x0080, 0x6c7e8c2a, BRF_OPT },
+	{ "sailormn_taiwan.nv", 0x0080, 0x6c7e8c2a, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1376,7 +1358,7 @@ static struct BurnRomInfo sailormnohRomDesc[] = {
 	{ "bpsm.u48",     0x200000, 0x498E4ED1, BRF_SND },			 // 15 MSM6295 #0 ADPCM data
 	{ "bpsm.u47",     0x080000, 0x0F2901B9, BRF_SND },			 // 16 MSM6295 #1 ADPCM data
 	
-	{ "sailormn_hongkong.nv", 0x0080, 0x4d24c874, BRF_OPT },
+	{ "sailormn_hongkong.nv", 0x0080, 0x4d24c874, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1398,7 +1380,7 @@ static struct BurnRomInfo agalletRomDesc[] = {
 	{ "bp962a.u48",   0x200000, 0xAE00A1CE, BRF_SND },			 //  8 MSM6295 #0 ADPCM data
 	{ "bp962a.u47",   0x200000, 0x6D4E9737, BRF_SND },			 //  9 MSM6295 #1 ADPCM data
 	
-	{ "agallet_europe.nv", 0x0080, 0xec38bf65, BRF_OPT },
+	{ "agallet_europe.nv", 0x0080, 0xec38bf65, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1420,7 +1402,7 @@ static struct BurnRomInfo agalletuRomDesc[] = {
 	{ "bp962a.u48",   0x200000, 0xAE00A1CE, BRF_SND },			 //  8 MSM6295 #0 ADPCM data
 	{ "bp962a.u47",   0x200000, 0x6D4E9737, BRF_SND },			 //  9 MSM6295 #1 ADPCM data
 	
-	{ "agallet_usa.nv", 0x0080, 0x72e65056, BRF_OPT },
+	{ "agallet_usa.nv", 0x0080, 0x72e65056, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1442,7 +1424,7 @@ static struct BurnRomInfo agalletjRomDesc[] = {
 	{ "bp962a.u48",   0x200000, 0xAE00A1CE, BRF_SND },			 //  8 MSM6295 #0 ADPCM data
 	{ "bp962a.u47",   0x200000, 0x6D4E9737, BRF_SND },			 //  9 MSM6295 #1 ADPCM data
 	
-	{ "agallet_japan.nv", 0x0080, 0x0753f547, BRF_OPT },
+	{ "agallet_japan.nv", 0x0080, 0x0753f547, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1464,7 +1446,7 @@ static struct BurnRomInfo agalletkRomDesc[] = {
 	{ "bp962a.u48",   0x200000, 0xAE00A1CE, BRF_SND },			 //  8 MSM6295 #0 ADPCM data
 	{ "bp962a.u47",   0x200000, 0x6D4E9737, BRF_SND },			 //  9 MSM6295 #1 ADPCM data
 	
-	{ "agallet_korea.nv", 0x0080, 0x7f41c253, BRF_OPT },
+	{ "agallet_korea.nv", 0x0080, 0x7f41c253, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1486,7 +1468,7 @@ static struct BurnRomInfo agallettRomDesc[] = {
 	{ "bp962a.u48",   0x200000, 0xAE00A1CE, BRF_SND },			 //  8 MSM6295 #0 ADPCM data
 	{ "bp962a.u47",   0x200000, 0x6D4E9737, BRF_SND },			 //  9 MSM6295 #1 ADPCM data
 	
-	{ "agallet_taiwan.nv", 0x0080, 0x0af46742, BRF_OPT },
+	{ "agallet_taiwan.nv", 0x0080, 0x0af46742, BRF_ESS | BRF_PRG },
 };
 
 
@@ -1508,7 +1490,7 @@ static struct BurnRomInfo agallethRomDesc[] = {
 	{ "bp962a.u48",   0x200000, 0xAE00A1CE, BRF_SND },			 //  8 MSM6295 #0 ADPCM data
 	{ "bp962a.u47",   0x200000, 0x6D4E9737, BRF_SND },			 //  9 MSM6295 #1 ADPCM data
 	
-	{ "agallet_hongkong.nv", 0x0080, 0x998d1a74, BRF_OPT },
+	{ "agallet_hongkong.nv", 0x0080, 0x998d1a74, BRF_ESS | BRF_PRG },
 };
 
 

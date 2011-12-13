@@ -423,11 +423,7 @@ static INT32 DrvExit()
 	DrvOkiBank1[0] = DrvOkiBank1[1] = DrvOkiBank1[2] = DrvOkiBank1[3] = 0;
 	DrvOkiBank2[0] = DrvOkiBank2[1] = DrvOkiBank2[2] = DrvOkiBank2[3] = 0;
 
-	// Deallocate all used memory
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	return 0;
 }
@@ -536,7 +532,6 @@ static INT32 DrvFrame()
 {
 	INT32 nCyclesVBlank;
 	INT32 nInterleave = 100;
-	INT32 nSoundBufferPos = 0;
 
 	INT32 nCyclesSegment;
 
@@ -603,14 +598,6 @@ static INT32 DrvFrame()
 		}
 		
 		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2203Update(pSoundBuf, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			MSM6295Render(1, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 	
 	SekClose();
@@ -618,13 +605,9 @@ static INT32 DrvFrame()
 	BurnTimerEndFrame(nCyclesTotal[1]);
 	
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			BurnYM2203Update(pSoundBuf, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			MSM6295Render(1, pSoundBuf, nSegmentLength);
-		}
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
 	}
 	
 	ZetClose();
@@ -695,7 +678,7 @@ static INT32 LoadRoms()
 	
 	BurnLoadRom(RomZ80, 4, 1);
 
-	UINT8 *pTemp = (UINT8*)malloc(0xe00000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0xe00000);
 	BurnLoadRom(pTemp + 0x000000, 5, 1);
 	BurnLoadRom(pTemp + 0x200000, 6, 1);
 	BurnLoadRom(pTemp + 0x400000, 7, 1);
@@ -708,10 +691,7 @@ static INT32 LoadRoms()
 		if (((j & 6) == 0) || ((j & 6) == 6)) j ^= 6;
 		CaveSpriteROM[j ^ 7] = (pTemp[i] >> 4) | (pTemp[i] << 4);
 	}
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 	NibbleSwap1(CaveSpriteROM, 0xe00000);
 
 	BurnLoadRom(CaveTileROM[0], 12, 1);
@@ -743,7 +723,7 @@ static INT32 PlegendsLoadRoms()
 	
 	BurnLoadRom(RomZ80, 6, 1);
 
-	UINT8 *pTemp = (UINT8*)malloc(0x1000000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x1000000);
 	BurnLoadRom(pTemp + 0x000000, 7, 1);
 	BurnLoadRom(pTemp + 0x200000, 8, 1);
 	BurnLoadRom(pTemp + 0x400000, 9, 1);
@@ -757,10 +737,7 @@ static INT32 PlegendsLoadRoms()
 		if (((j & 6) == 0) || ((j & 6) == 6)) j ^= 6;
 		CaveSpriteROM[j ^ 7] = (pTemp[i] >> 4) | (pTemp[i] << 4);
 	}
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 	NibbleSwap1(CaveSpriteROM, 0x1000000);
 
 	BurnLoadRom(CaveTileROM[0], 15, 1);
@@ -858,9 +835,7 @@ static double DrvGetTime()
 static INT32 drvZInit()
 {
 	ZetInit(1);
-	
 	ZetOpen(0);
-
 	ZetSetInHandler(pwrinst2ZIn);
 	ZetSetOutHandler(pwrinst2ZOut);
 	ZetSetReadHandler(pwrinst2ZRead);
@@ -876,9 +851,7 @@ static INT32 drvZInit()
 	ZetMapArea    (0xE000, 0xFFFF, 0, RamZ80);			// Direct Read from RAM
 	ZetMapArea    (0xE000, 0xFFFF, 1, RamZ80);			// Direct Write to RAM
 	ZetMapArea    (0xE000, 0xFFFF, 2, RamZ80);			//
-
 	ZetMemEnd();
-	
 	ZetClose();
 
 	return 0;
@@ -894,18 +867,18 @@ static INT32 DrvInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory
 	MemIndex();													// Index the allocated memory
 
-	EEPROMInit(&eeprom_interface_93C46);
-	
 	// Load the roms into memory
 	if (LoadRoms()) {
 		return 1;
 	}
+	
+	EEPROMInit(&eeprom_interface_93C46);
 
 	{
 		SekInit(0, 0x68000);													// Allocate 68000
@@ -943,10 +916,11 @@ static INT32 DrvInit()
 	nCaveExtraYOffset = 1;
 	
 	BurnYM2203Init(1, 4000000, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203SetVolumeShift(2);
 	BurnTimerAttachZet(8000000);
 	
-	MSM6295Init(0, 3000000 / 165, 50.0, 1);
-	MSM6295Init(1, 3000000 / 165, 50.0, 1);
+	MSM6295Init(0, 3000000 / 165, 20.0, 1);
+	MSM6295Init(1, 3000000 / 165, 30.0, 1);
 	
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "pwrinst2")) {
 		UINT16 *rom = (UINT16 *)Rom01;
@@ -974,18 +948,18 @@ static INT32 PlegendsInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory
 	MemIndex();													// Index the allocated memory
 
-	EEPROMInit(&eeprom_interface_93C46);
-	
 	// Load the roms into memory
 	if (PlegendsLoadRoms()) {
 		return 1;
 	}
+	
+	EEPROMInit(&eeprom_interface_93C46);
 
 	{
 		SekInit(0, 0x68000);													// Allocate 68000
@@ -1024,10 +998,11 @@ static INT32 PlegendsInit()
 	nCaveExtraYOffset = 1;
 	
 	BurnYM2203Init(1, 4000000, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203SetVolumeShift(2);
 	BurnTimerAttachZet(8000000);
 	
-	MSM6295Init(0, 3000000 / 165, 50.0, 1);
-	MSM6295Init(1, 3000000 / 165, 50.0, 1);
+	MSM6295Init(0, 3000000 / 165, 20.0, 1);
+	MSM6295Init(1, 3000000 / 165, 30.0, 1);
 	
 	bDrawScreen = true;
 

@@ -510,11 +510,11 @@ static INT32 DrvInit()
 	memset(Mem, 0, nLen);
 	MemIndex();
 
-	EEPROMInit(&eeprom_interface_93C46);
-
 	if (LoadRoms()) {
 		return 1;
 	}
+	
+	EEPROMInit(&eeprom_interface_93C46);
 
 	{
 		SekInit(0, 0x68000);

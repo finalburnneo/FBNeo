@@ -612,7 +612,7 @@ static INT32 DrvInit(INT32 (*LoadCallback)(), INT32 type, INT32 gfx_max, INT32 g
 	AllMem = NULL;
 	MemIndex(gfx_max - gfx_min);
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex(gfx_max - gfx_min);
 
@@ -683,10 +683,7 @@ static INT32 DrvExit()
 
 	EEPROMExit();
 
-	if (AllMem) {
-		free(AllMem);
-		AllMem = NULL;
-	}
+	BurnFree(AllMem);
 
 	speedhack_address = ~0;
 	memset (speedhack_pc, 0, 4 * sizeof(UINT32));

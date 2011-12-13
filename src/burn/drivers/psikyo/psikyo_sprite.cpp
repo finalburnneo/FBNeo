@@ -292,7 +292,7 @@ INT32 PsikyoSpriteRender(INT32 nLowPriority, INT32 nHighPriority)
 		if (nZPos >= 0) {
 			nZOffset += nTopSprite;
 			if (nZOffset > 0xFC00) {
-				memset(pZBuffer, 0, 320 * 224 * sizeof(short));
+				memset(pZBuffer, 0, 320 * 224 * sizeof(UINT16));
 				nZOffset = 0;
 			}
 		}
@@ -402,26 +402,11 @@ INT32 PsikyoSpriteBuffer()
 
 void PsikyoSpriteExit()
 {
-	if (PsikyoZoomXTable) {
-		free(PsikyoZoomXTable);
-		PsikyoZoomXTable = NULL;
-	}
-	if (PsikyoZoomYTable) {
-		free(PsikyoZoomYTable);
-		PsikyoZoomYTable = NULL;
-	}
-	if (PsikyoSpriteAttrib) {
-		free(PsikyoSpriteAttrib);
-		PsikyoSpriteAttrib = NULL;
-	}
-	if (pSpriteLists) {
-		free(pSpriteLists);
-		pSpriteLists = NULL;
-	}
-	if (pZBuffer) {
-		free(pZBuffer);
-		pZBuffer = NULL;
-	}
+	BurnFree(PsikyoZoomXTable);
+	BurnFree(PsikyoZoomYTable);
+	BurnFree(PsikyoSpriteAttrib);
+	BurnFree(pSpriteLists);
+	BurnFree(pZBuffer);
 
 	return;
 }
@@ -432,10 +417,9 @@ INT32 PsikyoSpriteInit(INT32 nROMSize)
 	INT32 nNumTiles = nROMSize / nTileSize;
 
 	if (pSpriteLists) {
-		free(pSpriteLists);
-		pSpriteLists = NULL;
+		BurnFree(pSpriteLists);
 	}
-	pSpriteLists = (PsikyoSprite*)malloc(0x0800 * sizeof(PsikyoSprite));
+	pSpriteLists = (PsikyoSprite*)BurnMalloc(0x0800 * sizeof(PsikyoSprite));
 	if (pSpriteLists == NULL) {
 		PsikyoSpriteExit();
 		return 1;
@@ -447,10 +431,9 @@ INT32 PsikyoSpriteInit(INT32 nROMSize)
 	}
 
 	if (pZBuffer) {
-		free(pZBuffer);
-		pZBuffer = NULL;
+		BurnFree(pZBuffer);
 	}
-	pZBuffer = (UINT16*)malloc(320 * 224 * sizeof(UINT16));
+	pZBuffer = (UINT16*)BurnMalloc(320 * 224 * sizeof(UINT16));
 	if (pZBuffer == NULL) {
 		PsikyoSpriteExit();
 		return 1;
@@ -463,10 +446,9 @@ INT32 PsikyoSpriteInit(INT32 nROMSize)
 	nSpriteAddressMask--;
 
 	if (PsikyoSpriteAttrib) {
-		free(PsikyoSpriteAttrib);
-		PsikyoSpriteAttrib = NULL;
+		BurnFree(PsikyoSpriteAttrib);
 	}
-	PsikyoSpriteAttrib = (INT8*)malloc(nSpriteAddressMask + 1);
+	PsikyoSpriteAttrib = (INT8*)BurnMalloc(nSpriteAddressMask + 1);
 	if (PsikyoSpriteAttrib == NULL) {
 		return 1;
 	}
@@ -501,8 +483,8 @@ INT32 PsikyoSpriteInit(INT32 nROMSize)
 		PsikyoSpriteAttrib[i] = (INT8)0xFF;
 	}
 
-	PsikyoZoomXTable = (INT32*)malloc(272 * sizeof(INT32));
-	PsikyoZoomYTable = (INT32*)malloc(272 * sizeof(INT32));
+	PsikyoZoomXTable = (INT32*)BurnMalloc(272 * sizeof(INT32));
+	PsikyoZoomYTable = (INT32*)BurnMalloc(272 * sizeof(INT32));
 	if (PsikyoZoomXTable == NULL || PsikyoZoomYTable == NULL) {
 		PsikyoSpriteExit();
 		return 1;

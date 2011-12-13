@@ -3,8 +3,6 @@
 #include "burn_ym2610.h"
 #include "burn_ymf278b.h"
 
-// #undef USE_SPEEDHACKS
-
 INT32 PsikyoHardwareVersion;
 
 static UINT8 DrvJoy1[8] = {0, };
@@ -656,12 +654,6 @@ void __fastcall samuraiaZ80Out(UINT16 nAddress, UINT8 nValue)
 		case 0x0C:									// Write reply to sound commands
 //			bprintf(PRINT_NORMAL, _T("  - Sound reply sent (0x%02X).\n"), nValue);
 
-#if 1 && defined USE_SPEEDHACKS
-			if (!nSoundlatchAck && ZetTotalCycles() > nCycles68KSync) {
-				BurnTimerUpdateEnd();
-			}
-#endif
-
 			nSoundlatchAck = 1;
 
 			break;
@@ -708,12 +700,6 @@ void __fastcall gunbirdZ80Out(UINT16 nAddress, UINT8 nValue)
 		}
 		case 0x0C:									// Write reply to sound commands
 //			bprintf(PRINT_NORMAL, _T("  - Sound reply sent (0x%02X).\n"), nValue);
-
-#if 1 && defined USE_SPEEDHACKS
-			if (!nSoundlatchAck && ZetTotalCycles() > nCycles68KSync) {
-				BurnTimerUpdateEnd();
-			}
-#endif
 
 			nSoundlatchAck = 1;
 
@@ -764,12 +750,6 @@ void __fastcall tengaiZ80Out(UINT16 nAddress, UINT8 nValue)
 		case 0x18:									// Write reply to sound commands
 //			bprintf(PRINT_NORMAL, _T("  - Sound reply sent (0x%02X).\n"), nValue);
 
-#if 1 && defined USE_SPEEDHACKS
-			if (!nSoundlatchAck && ZetTotalCycles() > nCycles68KSync) {
-				BurnTimerUpdateEnd();
-			}
-#endif
-
 			nSoundlatchAck = 1;
 
 			break;
@@ -815,21 +795,11 @@ UINT8 __fastcall samuraiaReadByte(UINT32 sekAddress)
 		case 0xC00008: {						// Inputs / Sound CPU status
 			return ~DrvInput[1] >> 8;
 		case 0xC80009:
-#if 1 && defined USE_SPEEDHACKS
-//			bprintf(PRINT_NORMAL, _T("  - Sound reply read.\n"));
-			if (!nSoundlatchAck) {
-				PsikyoSynchroniseZ80(0x0100);
-				if (!nSoundlatchAck) {
-					return ~DrvInput[1] & 0xFF;
-				}
-			}
-#else
 //			bprintf(PRINT_NORMAL, _T("  - Sound reply read.\n"));
 			PsikyoSynchroniseZ80(0);
 			if (!nSoundlatchAck) {
 				return ~DrvInput[1] & 0xFF;
 			}
-#endif
 			return ~(DrvInput[1] | 0x80) & 0xFF;
 		}
 		case 0xC0000B:							// VBlank
@@ -852,21 +822,11 @@ UINT16 __fastcall samuraiaReadWord(UINT32 sekAddress)
 		case 0xC00006:							//
 			return ~DrvInput[3];
 		case 0xC00008: {						// Inputs / Sound CPU status
-#if 1 && defined USE_SPEEDHACKS
-//			bprintf(PRINT_NORMAL, _T("  - Sound reply read.\n"));
-			if (!nSoundlatchAck) {
-				PsikyoSynchroniseZ80(0x0100);
-				if (!nSoundlatchAck) {
-					return ~DrvInput[1];
-				}
-			}
-#else
 //			bprintf(PRINT_NORMAL, _T("  - Sound reply read.\n"));
 			PsikyoSynchroniseZ80(0);
 			if (!nSoundlatchAck) {
 				return ~DrvInput[1];
 			}
-#endif
 			return ~(DrvInput[1] | 0x80);
 		}
 		case 0xC0000A:							// VBlank
@@ -892,21 +852,11 @@ UINT8 __fastcall gunbirdReadByte(UINT32 sekAddress)
 		case 0xC00002:							// Inputs / Sound CPU status
 			return ~DrvInput[1] >> 8;
 		case 0xC00003:
-#if 1 && defined USE_SPEEDHACKS
-//			bprintf(PRINT_NORMAL, _T("  - Sound reply read.\n"));
-			if (!nSoundlatchAck) {
-				PsikyoSynchroniseZ80(0x0100);
-				if (!nSoundlatchAck) {
-					return ~DrvInput[1] & 0xFF;
-				}
-			}
-#else
 //			bprintf(PRINT_NORMAL, _T("  - Sound reply read.\n"));
 			PsikyoSynchroniseZ80(0);
 			if (!nSoundlatchAck) {
 				return ~DrvInput[1] & 0xFF;
 			}
-#endif
 			return ~(DrvInput[1] | 0x80) & 0xFF;
 		case 0xC00004:							// DIPs
 			return ~DrvInput[2] >> 8;
@@ -930,21 +880,11 @@ UINT16 __fastcall gunbirdReadWord(UINT32 sekAddress)
 		case 0xC00000:							// Joysticks
 			return ~DrvInput[0];
 		case 0xC00002: {						// Inputs / Sound CPU status
-#if 1 && defined USE_SPEEDHACKS
-//			bprintf(PRINT_NORMAL, _T("  - Sound reply read.\n"));
-			if (!nSoundlatchAck) {
-				PsikyoSynchroniseZ80(0x0100);
-				if (!nSoundlatchAck) {
-					return ~DrvInput[1];
-				}
-			}
-#else
 			bprintf(PRINT_NORMAL, _T("  - Sound reply read.\n"));
 			PsikyoSynchroniseZ80(0);
 			if (!nSoundlatchAck) {
 				return ~DrvInput[1];
 			}
-#endif
 			return ~(DrvInput[1] | 0x80);
 		}
 		case 0xC00004:							// DIPs
@@ -1134,21 +1074,11 @@ UINT8 __fastcall tengaiReadByte(UINT32 sekAddress)
 		case 0xC00002:							// Inputs / Sound CPU status
 			return ~DrvInput[1] >> 8;
 		case 0xC00003:
-#if 1 && defined USE_SPEEDHACKS
-//			bprintf(PRINT_NORMAL, _T("  - Sound reply read.\n"));
-			if (!nSoundlatchAck) {
-				PsikyoSynchroniseZ80(0x0200);
-				if (!nSoundlatchAck) {
-					return ~(DrvInput[1] | 0x04) & 0xFF;
-				}
-			}
-#else
 //			bprintf(PRINT_NORMAL, _T("  - Sound reply read.\n"));
 			PsikyoSynchroniseZ80(0);
 			if (!nSoundlatchAck) {
 				return ~(DrvInput[1] | 0x04) & 0xFF;
 			}
-#endif
 			return ~(DrvInput[1] | 0x84) & 0xFF;
 		case 0xC00004:							// DIPs
 			return ~DrvInput[2] >> 8;
@@ -1176,21 +1106,11 @@ UINT16 __fastcall tengaiReadWord(UINT32 sekAddress)
 		case 0xC00000:							// Joysticks
 			return ~DrvInput[0];
 		case 0xC00002: {						// Inputs / Sound CPU status
-#if 1 && defined USE_SPEEDHACKS
-//			bprintf(PRINT_NORMAL, _T("  - Sound reply read.\n"));
-			if (!nSoundlatchAck) {
-				PsikyoSynchroniseZ80(0x0200);
-				if (!nSoundlatchAck) {
-					return ~(DrvInput[1] | 0x04);
-				}
-			}
-#else
 //			bprintf(PRINT_NORMAL, _T("  - Sound reply read.\n"));
 			PsikyoSynchroniseZ80(0);
 			if (!nSoundlatchAck) {
 				return ~(DrvInput[1] | 0x04);
 			}
-#endif
 			return ~(DrvInput[1] | 0x84);
 		}
 		case 0xC00004:							// DIPs
@@ -1289,13 +1209,10 @@ static INT32 DrvExit()
 	PsikyoTileExit();
 	PsikyoPalExit();
 
-	SekExit();				// Deallocate 68000s
+	SekExit();
+	ZetExit();
 
-	// Deallocate all used memory
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	return 0;
 }
@@ -1361,86 +1278,26 @@ static INT32 DrvDraw()
 
 static INT32 samuraiaCheckSleep(INT32)
 {
-#if 1 && defined USE_SPEEDHACKS
-	INT32 nCurrentPC = SekGetPC(-1);
-
-	if (bVBlank && nCurrentPC >= 0x000462 && nCurrentPC <= 0x00046E) {
-
-		// S1945's idle loop increases this location as it loops; ensure it's increased enough
-		*((UINT32*)(Psikyo68KRAM + 0x0218)) += 1000;
-
-		return 1;
-	}
-#endif
-
 	return 0;
 }
 
 static INT32 gunbirdCheckSleep(INT32)
 {
-#if 1 && defined USE_SPEEDHACKS
-	INT32 nCurrentPC = SekGetPC(-1);
-
-	if (bVBlank && nCurrentPC >= 0x015E68 && nCurrentPC <= 0x015E76) {
-
-		// Gunbird's idle loop increases this location as it loops; ensure it's increased enough
-		*((UINT32*)(Psikyo68KRAM + 0x0214)) += 1000;
-
-		return 1;
-	}
-#endif
-
 	return 0;
 }
 
 static INT32 gunbirdjCheckSleep(INT32)
 {
-#if 1 && defined USE_SPEEDHACKS
-	INT32 nCurrentPC = SekGetPC(-1);
-
-	if (bVBlank && nCurrentPC >= 0x015EA6 && nCurrentPC <= 0x015EB4) {
-
-		// Gunbird's idle loop increases this location as it loops; ensure it's increased enough
-		*((UINT32*)(Psikyo68KRAM + 0x0214)) += 1000;
-
-		return 1;
-	}
-#endif
-
 	return 0;
 }
 
 static INT32 gunbirdkCheckSleep(INT32)
 {
-#if 1 && defined USE_SPEEDHACKS
-	INT32 nCurrentPC = SekGetPC(-1);
-
-	if (bVBlank && nCurrentPC >= 0x015E70 && nCurrentPC <= 0x015E7E) {
-
-		// Gunbird's idle loop increases this location as it loops; ensure it's increased enough
-		*((UINT32*)(Psikyo68KRAM + 0x0214)) += 1000;
-
-		return 1;
-	}
-#endif
-
 	return 0;
 }
 
 static INT32 s1945jnCheckSleep(INT32)
 {
-#if 1 && defined USE_SPEEDHACKS
-	INT32 nCurrentPC = SekGetPC(-1);
-
-	if (bVBlank && nCurrentPC >= 0x019646 && nCurrentPC <= 0x019654) {
-
-		// S1945's idle loop increases this location as it loops; ensure it's increased enough
-		*((UINT32*)(Psikyo68KRAM + 0x71F8)) += 1000;
-
-		return 1;
-	}
-#endif
-
 	return 0;
 }
 
@@ -1473,6 +1330,8 @@ static INT32 DrvFrame()
 
 	SekNewFrame();
 	ZetNewFrame();
+	
+	SekOpen(0);
 
 	if (nPrevBurnCPUSpeedAdjust != nBurnCPUSpeedAdjust) {
 		// 68K CPU clock is 16MHz, modified by nBurnCPUSpeedAdjust
@@ -1489,7 +1348,6 @@ static INT32 DrvFrame()
 	nCyclesVBlank = nCyclesTotal[0] * (INT32)(224.0 * 2.0) / (INT32)(263.5 * 2.0);
 	bVBlank = 0x01;
 
-	SekOpen(0);
 	ZetOpen(0);
 
 	SekIdle(nCyclesDone[0]);
@@ -1533,14 +1391,14 @@ static INT32 DrvFrame()
 		case PSIKYO_HW_GUNBIRD: {
 			nCycles68KSync = SekTotalCycles();
 			BurnTimerEndFrame(nCyclesTotal[1]);
-			BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
+			if (pBurnSoundOut) BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
 			break;
 		}
 		case PSIKYO_HW_S1945:
 		case PSIKYO_HW_TENGAI: {
 			nCycles68KSync = SekTotalCycles();
 			BurnTimerEndFrame(nCyclesTotal[1]);
-			BurnYMF278BUpdate(nBurnSoundLen);
+			if (pBurnSoundOut) BurnYMF278BUpdate(nBurnSoundLen);
 			break;
 		}
 		default: {
@@ -1574,7 +1432,7 @@ static void Nibbleswap(UINT8* pData, INT32 nLen)
 static INT32 samuraiaLoadRoms()
 {
 	// Load 68000 ROM
-	UINT8* pTemp = (UINT8*)malloc(0x080000);
+	UINT8* pTemp = (UINT8*)BurnMalloc(0x080000);
 	if (pTemp == NULL) {
 		return 1;
 	}
@@ -1587,10 +1445,7 @@ static INT32 samuraiaLoadRoms()
 		((UINT16*)Psikyo68KROM)[2 * i + 1] = ((UINT16*)pTemp)[0x020000 + i];
 	}
 
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 
 	BurnLoadRom(PsikyoSpriteROM + 0x000000, 2, 1);
 	Nibbleswap(PsikyoSpriteROM, 0x200000);
@@ -1615,7 +1470,7 @@ static INT32 samuraiaLoadRoms()
 static INT32 gunbirdLoadRoms()
 {
 	// Load 68000 ROM
-	UINT8* pTemp = (UINT8*)malloc(0x100000);
+	UINT8* pTemp = (UINT8*)BurnMalloc(0x100000);
 	if (pTemp == NULL) {
 		return 1;
 	}
@@ -1628,10 +1483,7 @@ static INT32 gunbirdLoadRoms()
 		((UINT16*)Psikyo68KROM)[2 * i + 1] = ((UINT16*)pTemp)[0x040000 + i];
 	}
 
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 
 	BurnLoadRom(PsikyoSpriteROM + 0x000000, 2, 1);
 	BurnLoadRom(PsikyoSpriteROM + 0x200000, 3, 1);
@@ -1657,7 +1509,7 @@ static INT32 gunbirdLoadRoms()
 static INT32 s1945LoadRoms()
 {
 	// Load 68000 ROM
-	UINT8* pTemp = (UINT8*)malloc(0x100000);
+	UINT8* pTemp = (UINT8*)BurnMalloc(0x100000);
 	if (pTemp == NULL) {
 		return 1;
 	}
@@ -1670,10 +1522,7 @@ static INT32 s1945LoadRoms()
 		((UINT16*)Psikyo68KROM)[2 * i + 1] = ((UINT16*)pTemp)[0x040000 + i];
 	}
 
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 
 	BurnLoadRom(PsikyoSpriteROM + 0x000000, 2, 1);
 	BurnLoadRom(PsikyoSpriteROM + 0x200000, 3, 1);
@@ -1705,7 +1554,7 @@ static void tengaiNibbleswap(UINT8* pData, INT32 nLen)
 static INT32 tengaiLoadRoms()
 {
 	// Load 68000 ROM
-	UINT8* pTemp = (UINT8*)malloc(0x100000);
+	UINT8* pTemp = (UINT8*)BurnMalloc(0x100000);
 	if (pTemp == NULL) {
 		return 1;
 	}
@@ -1718,10 +1567,7 @@ static INT32 tengaiLoadRoms()
 		((UINT16*)Psikyo68KROM)[2 * i + 1] = ((UINT16*)pTemp)[0x040000 + i];
 	}
 	
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 
 	BurnLoadRom(PsikyoSpriteROM + 0x000000, 2, 1);
 	BurnLoadRom(PsikyoSpriteROM + 0x200000, 3, 1);
@@ -1865,7 +1711,7 @@ static INT32 DrvInit()
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) {
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 	memset(Mem, 0, nLen);										// blank all memory
@@ -2024,10 +1870,6 @@ static INT32 DrvInit()
 
 	nPrevBurnCPUSpeedAdjust = -1;
 
-#if defined FBA_DEBUG && defined USE_SPEEDHACKS
-	bprintf(PRINT_IMPORTANT, _T("  * Using speed-hacks (detecting idle loops).\n"));
-#endif
-
 	DrvDoReset(); // Reset machine
 
 	return 0;
@@ -2110,9 +1952,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SekScan(nAction);										// Scan 68000 state
 
-		ZetOpen(0);
 		ZetScan(nAction);										// Scan Z80 state
-		ZetClose();
 
 		SCAN_VAR(nCyclesDone);
 
@@ -2132,13 +1972,17 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 			switch (PsikyoHardwareVersion) {
 				case PSIKYO_HW_SAMURAIA: {
+					ZetOpen(0);
 					samuraiaZ80SetBank(nBank);
+					ZetClose();
 					break;
 				}
 				case PSIKYO_HW_GUNBIRD:
 				case PSIKYO_HW_S1945:
 				case PSIKYO_HW_TENGAI: {
+					ZetOpen(0);
 					gunbirdZ80SetBank(nBank);
+					ZetClose();
 					break;
 				}
 			}

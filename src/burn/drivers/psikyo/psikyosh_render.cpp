@@ -659,7 +659,7 @@ static void fill_alphatable()
 
 static void calculate_transtab()
 {
-	DrvTransTab = (UINT8*)malloc(0x18000);
+	DrvTransTab = (UINT8*)BurnMalloc(0x18000);
 
 	memset (DrvTransTab, 0xff, 0x18000);
 
@@ -686,9 +686,9 @@ static void calculate_transtab()
 
 void PsikyoshVideoInit(INT32 gfx_max, INT32 gfx_min)
 {
-	DrvZoomBmp	= (UINT8 *)malloc(16 * 16 * 16 * 16);
-	DrvPriBmp	= (UINT16*)malloc(320 * 240 * sizeof(INT16));
-	DrvTmpDraw_ptr	= (UINT32  *)malloc(320 * 240 * sizeof(UINT32));
+	DrvZoomBmp	= (UINT8 *)BurnMalloc(16 * 16 * 16 * 16);
+	DrvPriBmp	= (UINT16*)BurnMalloc(320 * 240 * sizeof(INT16));
+	DrvTmpDraw_ptr	= (UINT32  *)BurnMalloc(320 * 240 * sizeof(UINT32));
 
 	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
 		BurnDrvGetVisibleSize(&nScreenHeight, &nScreenWidth);
@@ -708,27 +708,11 @@ void PsikyoshVideoInit(INT32 gfx_max, INT32 gfx_min)
 
 void PsikyoshVideoExit()
 {
-	if (DrvZoomBmp) {
-		free (DrvZoomBmp);
-		DrvZoomBmp = NULL;
-	}	
-
-	if (DrvPriBmp) {
-		free (DrvPriBmp);
-		DrvPriBmp = NULL;
-	}	
-
-	if (DrvTmpDraw_ptr) {
-		free (DrvTmpDraw_ptr);
-		DrvTmpDraw_ptr = NULL;
-	}
-	
+	BurnFree (DrvZoomBmp);
+	BurnFree (DrvPriBmp);
+	BurnFree (DrvTmpDraw_ptr);
 	DrvTmpDraw = NULL;
-
-	if (DrvTransTab) {
-		free (DrvTransTab);
-		DrvTransTab = NULL;
-	}
+	BurnFree (DrvTransTab);
 	
 	nDrvZoomPrev		= -1;
 	pPsikyoshTiles		= NULL;

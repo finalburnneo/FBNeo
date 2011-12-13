@@ -225,10 +225,7 @@ INT32 PsikyoTileRender()
 
 void PsikyoTileExit()
 {
-	if (PsikyoTileAttrib) {
-		free(PsikyoTileAttrib);
-		PsikyoTileAttrib = NULL;
-	}
+	BurnFree(PsikyoTileAttrib);
 
 	return;
 }
@@ -242,10 +239,9 @@ INT32 PsikyoTileInit(UINT32 nROMSize)
 	PsikyoTileMask--;
 
 	if (PsikyoTileAttrib) {
-		free(PsikyoTileAttrib);
-		PsikyoTileAttrib = NULL;
+		BurnFree(PsikyoTileAttrib);
 	}
-	PsikyoTileAttrib = (INT8*)malloc(PsikyoTileMask + 1);
+	PsikyoTileAttrib = (INT8*)BurnMalloc(PsikyoTileMask + 1);
 	if (PsikyoTileAttrib == NULL) {
 		return 1;
 	}

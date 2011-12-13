@@ -8,10 +8,10 @@ static UINT16* PsikyoPalCopy;
 
 INT32 PsikyoPalInit()
 {
-	PsikyoPalette = (UINT32*)malloc(0x1000 * sizeof(UINT32));
+	PsikyoPalette = (UINT32*)BurnMalloc(0x1000 * sizeof(UINT32));
 	memset(PsikyoPalette, 0, 0x1000 * sizeof(UINT32));
 
-	PsikyoPalCopy = (UINT16*)malloc(0x1000 * sizeof(UINT16));
+	PsikyoPalCopy = (UINT16*)BurnMalloc(0x1000 * sizeof(UINT16));
 	memset(PsikyoPalCopy, 0, 0x1000 * sizeof(UINT16));
 	
 	pBurnDrvPalette = PsikyoPalette;
@@ -21,14 +21,8 @@ INT32 PsikyoPalInit()
 
 INT32 PsikyoPalExit()
 {
-	if (PsikyoPalette) {
-		free(PsikyoPalette);
-		PsikyoPalette = NULL;
-	}
-	if (PsikyoPalCopy) {
-		free(PsikyoPalCopy);
-		PsikyoPalCopy = NULL;
-	}
+	BurnFree(PsikyoPalette);
+	BurnFree(PsikyoPalCopy);
 
 	return 0;
 }

@@ -764,16 +764,16 @@ void pgmInitDraw() // preprocess some things...
 {
 	GenericTilesInit();
 
-	pTempDraw = (UINT16*)malloc(0x400 * 0x200 * 2);
-	SpritePrio = (UINT8*)malloc(nScreenWidth * nScreenHeight);
-	pTempScreen = (UINT16*)malloc(nScreenWidth * nScreenHeight * sizeof(INT16));
+	pTempDraw = (UINT16*)BurnMalloc(0x400 * 0x200 * 2);
+	SpritePrio = (UINT8*)BurnMalloc(nScreenWidth * nScreenHeight);
+	pTempScreen = (UINT16*)BurnMalloc(nScreenWidth * nScreenHeight * sizeof(UINT16));
 
 	// Find transparent tiles so we can skip them
 	{
 		nTileMask = ((nPGMTileROMLen / 5) * 8) / 0x400; // also used to set max. tile
 
 		// background tiles
-		tiletrans = (UINT8*)malloc(nTileMask);
+		tiletrans = (UINT8*)BurnMalloc(nTileMask);
 		memset (tiletrans, 0, nTileMask);
 	
 		for (INT32 i = 0; i < nTileMask << 10; i += 0x400)
@@ -790,7 +790,7 @@ void pgmInitDraw() // preprocess some things...
 		}
 
 		// character tiles
-		texttrans = (UINT8*)malloc(0x10000);
+		texttrans = (UINT8*)BurnMalloc(0x10000);
 		memset (texttrans, 0, 0x10000);
 
 		for (INT32 i = 0; i < 0x400000; i += 0x40)
@@ -825,30 +825,11 @@ void pgmExitDraw()
 {
 	nTileMask = 0;
 	
-	if (pTempDraw) {
-		free (pTempDraw);
-		pTempDraw = NULL;
-	}
-	
-	if (tiletrans) {
-		free (tiletrans);
-		tiletrans = NULL;
-	}
-	
-	if (texttrans) {
-		free (texttrans);
-		texttrans = NULL;
-	}
-	
-	if (pTempScreen) {
-		free (pTempScreen);
-		pTempScreen = NULL;
-	}
-	
-	if (SpritePrio) {
-		free (SpritePrio);
-		SpritePrio = NULL;
-	}
+	BurnFree (pTempDraw);
+	BurnFree (tiletrans);
+	BurnFree (texttrans);
+	BurnFree (pTempScreen);
+	BurnFree (SpritePrio);
 
 	GenericTilesExit();
 }

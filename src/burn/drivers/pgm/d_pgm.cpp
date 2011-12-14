@@ -1430,10 +1430,12 @@ static INT32 kovshInit()
 {
 	pPgmInitCallback = pgm_decrypt_kovsh;
 	pPgmProtCallback = install_protection_asic27a_kovsh;
+	
+	INT32 nRet = pgmInit();
 
 	Arm7SetIdleLoopAddress(0x00000260);
 
-	return pgmInit();
+	return nRet;
 }
 
 struct BurnDriver BurnDrvKovsh = {
@@ -1513,9 +1515,11 @@ static INT32 photoy2kInit()
 	pPgmInitCallback = pgm_decrypt_photoy2k;
 	pPgmProtCallback = install_protection_asic27a_kovsh;
 
+	INT32 nRet = pgmInit();
+	
 	Arm7SetIdleLoopAddress(0x000001f4);
 
-	return pgmInit();
+	return nRet;
 }
 
 struct BurnDriver BurnDrvPhotoy2k = {
@@ -1731,12 +1735,14 @@ STD_ROM_FN(martmast)
 
 static INT32 martmastInit()
 {
-	Arm7SetIdleLoopAddress(0x800039e);
-
 	pPgmInitCallback = pgm_decrypt_martmast;
 	pPgmProtCallback = install_protection_asic27a_martmast;
+	
+	INT32 nRet = pgmInit();
+	
+	Arm7SetIdleLoopAddress(0x800039e);
 
-	return pgmInit();
+	return nRet;
 }
 
 struct BurnDriver BurnDrvMartmast = {
@@ -1895,12 +1901,14 @@ STD_ROM_FN(kov2)
 
 static INT32 kov2Init()
 {
-	Arm7SetIdleLoopAddress(0x80000ae);
-
 	pPgmInitCallback = pgm_decrypt_kov2;
 	pPgmProtCallback = install_protection_asic27a_martmast;
+	
+	INT32 nRet = pgmInit();
+	
+	Arm7SetIdleLoopAddress(0x80000ae);
 
-	return pgmInit();
+	return nRet;
 }
 
 struct BurnDriver BurnDrvKov2 = {
@@ -2106,12 +2114,14 @@ static void kov2pCallback()
 
 static INT32 kov2pInit()
 {
-	Arm7SetIdleLoopAddress(0x80000a6);
-
 	pPgmInitCallback = kov2pCallback;
 	pPgmProtCallback = install_protection_asic27a_martmast;
+	
+	INT32 nRet = pgmInit();
+	
+	Arm7SetIdleLoopAddress(0x80000a6);
 
-	return pgmInit();
+	return nRet;
 }
 
 struct BurnDriver BurnDrvKov2p = {
@@ -2626,13 +2636,15 @@ STD_ROM_FN(killbldp)
 
 INT32 killbldpInit()
 {
-	Arm7SetIdleLoopAddress(0x00007c4);
-
 	nPGMEnableIRQ4 = 1;
 	pPgmInitCallback = pgm_decrypt_killbldp;
 	pPgmProtCallback = install_protection_asic27a_svg;
+	
+	INT32 nRet = pgmInit();
+	
+	Arm7SetIdleLoopAddress(0x00007c4);
 
-	return pgmInit();
+	return nRet;
 }
 
 struct BurnDriverD BurnDrvKillbldp = {
@@ -3182,12 +3194,14 @@ STD_ROM_FN(kovqhsgs)
 
 static INT32 kovqhsgsInit()
 {
-	Arm7SetIdleLoopAddress(0x00000260);
-
 	pPgmInitCallback = pgm_decrypt_kovqhsgs;
 	pPgmProtCallback = install_protection_asic27a_kovsh;
+	
+	INT32 nRet = pgmInit();
+	
+	Arm7SetIdleLoopAddress(0x00000260);
 
-	return pgmInit();
+	return nRet;
 }
 
 struct BurnDriver BurnDrvkovqhsgs = {
@@ -3419,7 +3433,7 @@ struct BurnDriverD BurnDrvkovshxas = {
 	"kovshxas", "kovshp", "pgm", NULL, "2004",
 	"Knights of Valour: Aoshi Sanguo / Sangoku Senki: Aoshi Sanguo (ver. 202CN)\0", "Incomplete dump", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
+	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovshxasRomInfo, kovshxasRomName, NULL, NULL, pgmInputInfo, sangoDIPInfo,
 	kovshxasInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x600,
 	448, 224, 4, 3

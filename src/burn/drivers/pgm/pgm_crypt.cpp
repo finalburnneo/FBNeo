@@ -829,7 +829,7 @@ void pgm_decrypt_happy6in1()
 void pgm_decode_kovqhsgs_gfx_block(UINT8 *src)
 {
 	INT32 i, j;
-	UINT8 *dec = (UINT8*)malloc(0x800000);
+	UINT8 *dec = (UINT8*)BurnMalloc(0x800000);
 
 	for (i = 0; i < 0x800000; i++)
 	{
@@ -840,17 +840,14 @@ void pgm_decode_kovqhsgs_gfx_block(UINT8 *src)
 
 	memcpy (src, dec, 0x800000);
 
-	if (dec) {
-		free (dec);
-		dec = NULL;
-	}
+	BurnFree (dec);
 }
 
 void pgm_decode_kovqhsgs_tile_data(UINT8 *source)
 {
 	INT32 i, j;
 	UINT16 *src = (UINT16*)source;
-	UINT16 *dst = (UINT16*)malloc(0x800000);
+	UINT16 *dst = (UINT16*)BurnMalloc(0x800000);
 
 	for (i = 0; i < 0x800000 / 2; i++)
 	{
@@ -861,10 +858,7 @@ void pgm_decode_kovqhsgs_tile_data(UINT8 *source)
 
 	memcpy (src, dst, 0x800000);
 
-	if (dst) {
-		free (dst);
-		dst = NULL;
-	}
+	BurnFree (dst);
 }
 
 static void pgm_decode_kovqhsgs_samples()
@@ -879,7 +873,7 @@ static void pgm_decode_kovqhsgs_program()
 {
 	INT32 i, j;
 	UINT16 *src = (UINT16*)PGM68KROM;
-	UINT16 *dst = (UINT16*)malloc(0x400000);
+	UINT16 *dst = (UINT16*)BurnMalloc(0x400000);
 
 	for (i = 0; i < 0x400000 / 2; i++)
 	{
@@ -890,10 +884,7 @@ static void pgm_decode_kovqhsgs_program()
 
 	memcpy (src, dst, 0x400000);
 
-	if (dst) {
-		free (dst);
-		dst = NULL;
-	}
+	BurnFree (dst);
 }
 
 void pgm_decrypt_kovqhsgs()
@@ -912,7 +903,7 @@ static void pgm_decode_kovlsqh2_program()
 {
 	INT32 i, j;
 	UINT16 *src = (UINT16*)PGM68KROM;
-	UINT16 *dst = (UINT16*)malloc(0x400000);
+	UINT16 *dst = (UINT16*)BurnMalloc(0x400000);
 
 	for (i = 0; i < 0x400000 / 2; i++)
 	{
@@ -923,10 +914,7 @@ static void pgm_decode_kovlsqh2_program()
 
 	memcpy (src, dst, 0x400000);
 
-	if (dst) {
-		free (dst);
-		dst = NULL;
-	}
+	BurnFree (dst);
 }
 
 void pgm_decrypt_kovlsqh2()
@@ -945,7 +933,7 @@ static void pgm_decode_kovassg_program()
 {
 	INT32 i, j;
 	UINT16 *src = (UINT16 *)PGM68KROM;
-	UINT16 *dst = (UINT16 *)malloc(0x400000);
+	UINT16 *dst = (UINT16 *)BurnMalloc(0x400000);
 
 	for (i = 0; i < 0x400000/2; i++)
 	{
@@ -956,10 +944,7 @@ static void pgm_decode_kovassg_program()
 
 	memcpy (src, dst, 0x400000);
 
-	if (src) {
-		free (src);
-		src = NULL;
-	}
+	BurnFree (dst);
 }
 
 void pgm_decrypt_kovassg()

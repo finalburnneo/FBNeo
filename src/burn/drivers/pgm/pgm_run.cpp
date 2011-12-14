@@ -599,11 +599,11 @@ static void expand_colourdata()
 			nPGMSPRMaskMaskLen <<= 1;
 		nPGMSPRMaskMaskLen-=1;
 
-		PGMSPRColROM = (UINT8*)malloc(nPGMSPRColMaskLen);
+		PGMSPRColROM = (UINT8*)BurnMalloc(nPGMSPRColMaskLen);
 		nPGMSPRColMaskLen -= 1;
 	}
 
-	UINT8 *tmp = (UINT8*)malloc(nPGMSPRColROMLen);
+	UINT8 *tmp = (UINT8*)BurnMalloc(nPGMSPRColROMLen);
 	if (tmp == NULL) return;
 
 	// load sprite color roms
@@ -657,10 +657,7 @@ static void expand_colourdata()
 		PGMSPRColROM[cnt*3+2] = (colpack >> 10) & 0x1f;
 	}
 
-	if (tmp) {
-		free (tmp);
-		tmp = NULL;
-	}
+	BurnFree (tmp);
 }
 
 INT32 pgmInit()
@@ -673,14 +670,14 @@ INT32 pgmInit()
 
 	expand_colourdata();
 
-	PGMTileROM      = (UINT8*)malloc(nPGMTileROMLen);		// 8x8 Text Tiles + 32x32 BG Tiles
-	PGMTileROMExp   = (UINT8*)malloc((nPGMTileROMLen / 5) * 8);	// Expanded 8x8 Text Tiles and 32x32 BG Tiles
-	PGMSPRMaskROM	= (UINT8*)malloc(nPGMSPRMaskROMLen);
-	ICSSNDROM	= (UINT8*)malloc(nPGMSNDROMLen);
+	PGMTileROM      = (UINT8*)BurnMalloc(nPGMTileROMLen);		// 8x8 Text Tiles + 32x32 BG Tiles
+	PGMTileROMExp   = (UINT8*)BurnMalloc((nPGMTileROMLen / 5) * 8);	// Expanded 8x8 Text Tiles and 32x32 BG Tiles
+	PGMSPRMaskROM	= (UINT8*)BurnMalloc(nPGMSPRMaskROMLen);
+	ICSSNDROM	= (UINT8*)BurnMalloc(nPGMSNDROMLen);
 
 	pgmMemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);
 	pgmMemIndex();
 
@@ -790,32 +787,14 @@ INT32 pgmExit()
 		Arm7Exit();
 	}
 
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 
 	ics2115_exit(); // frees ICSSNDROM
 
-	if (PGMTileROM) {
-		free (PGMTileROM);
-		PGMTileROM = NULL;
-	}
-	
-	if (PGMTileROMExp) {
-		free (PGMTileROMExp);
-		PGMTileROMExp = NULL;
-	}
-	
-	if (PGMSPRColROM) {
-		free (PGMSPRColROM);
-		PGMSPRColROM = NULL;
-	}
-	
-	if (PGMSPRMaskROM) {
-		free (PGMSPRMaskROM);	
-		PGMSPRMaskROM = NULL;
-	}
+	BurnFree (PGMTileROM);
+	BurnFree (PGMTileROMExp);
+	BurnFree (PGMSPRColROM);
+	BurnFree (PGMSPRMaskROM);
 
 	nPGM68KROMLen = 0;
 	nPGMTileROMLen = 0;
@@ -874,7 +853,7 @@ INT32 pgmFrame()
 
 	SekNewFrame();
 	ZetNewFrame();
-	Arm7NewFrame();
+	if (nEnableArm7) Arm7NewFrame();
 
 	if (nEnableArm7) // region hacks
 	{
@@ -896,7 +875,7 @@ INT32 pgmFrame()
 
 	SekOpen(0);
 	ZetOpen(0);
-	Arm7Open(0);
+	if (nEnableArm7) Arm7Open(0);
 
 	for (INT32 i = 0; i < PGM_INTER_LEAVE; i++)
 	{
@@ -910,10 +889,12 @@ INT32 pgmFrame()
 			nCyclesDone[0] += SekRun(cycles);
 		}
 
-		cycles = nCyclesNext[2] - Arm7TotalCycles();
+		if (nEnableArm7) {
+			cycles = nCyclesNext[2] - Arm7TotalCycles();
 
-		if (cycles > 0 && nEnableArm7) {
-			nCyclesDone[2] += Arm7Run(cycles);
+			if (cycles > 0) {
+				nCyclesDone[2] += Arm7Run(cycles);
+			}
 		}
 
 		if (nPgmZ80Work) {
@@ -930,7 +911,7 @@ INT32 pgmFrame()
 
 	ics2115_frame();
 
-	Arm7Close();
+	if (nEnableArm7) Arm7Close();
 	ZetClose();
 	SekClose();
 

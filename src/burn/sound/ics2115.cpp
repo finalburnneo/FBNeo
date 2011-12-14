@@ -297,10 +297,10 @@ INT32 ics2115_init()
 {
 	DebugSnd_ICS2115Initted = 1;
 	
-	chip = (struct ics2115 *) malloc( sizeof(struct ics2115) );	// ICS2115V
+	chip = (struct ics2115 *)BurnMalloc(sizeof(struct ics2115));	// ICS2115V
 	if (chip == NULL) return 1;
 	
-	sndbuffer = (INT16*) malloc ( ICS2115_FRAME_BUFFER_SIZE * sizeof(INT16*));
+	sndbuffer = (INT16*)BurnMalloc(ICS2115_FRAME_BUFFER_SIZE * sizeof(INT16*));
 	if (sndbuffer == NULL) return 1;
 
 	return 0;
@@ -312,22 +312,12 @@ void ics2115_exit()
 	if (!DebugSnd_ICS2115Initted) bprintf(PRINT_ERROR, _T("ics2115_exit called without init\n"));
 #endif
 
-	if (chip) {
-		free( chip );
-		chip = NULL;
-	}
+	BurnFree(chip);
 
 	nICSSNDROMLen = 0;
 
-	if (ICSSNDROM) {
-		free(ICSSNDROM);
-		ICSSNDROM = NULL;
-	}
-
-	if (sndbuffer) {
-		free( sndbuffer );
-		sndbuffer = NULL;
-	}
+	BurnFree(ICSSNDROM);
+	BurnFree(sndbuffer);
 	
 	DebugSnd_ICS2115Initted = 0;
 }

@@ -3450,12 +3450,10 @@ static struct BurnRomInfo kovsgqyzRomDesc[] = {
 	{ "a0600.rom",     0x800000, 0xd8167834, 3 | BRF_GRA },		  //  2 Sprite Color Data
 	{ "a0601.rom",     0x800000, 0xff7a4373, 3 | BRF_GRA },		  //  3
 	{ "a0602.rom",     0x800000, 0xe7a32959, 3 | BRF_GRA },		  //  4
-	{ "a0603.rom",     0x400000, 0xec31abda, 3 | BRF_GRA },		  //  5
-//	{ "qyza0603.rom",  0x800000, 0xc8b92220, 3 | BRF_GRA },		  //  5
+	{ "qyza0603.rom",  0x800000, 0xc8b92220, 3 | BRF_GRA },		  //  5
 
 	{ "b0600.rom",     0x800000, 0x7d3cd059, 4 | BRF_GRA },		  // 10 Sprite Masks & Color Indexes
-	{ "b0601.rom",     0x400000, 0xa0bb1c2f, 4 | BRF_GRA },		  // 11
-//	{ "qyzb0601.rom",  0x800000, 0x64f55882, 4 | BRF_GRA },		  // 11
+	{ "qyzb0601.rom",  0x800000, 0x64f55882, 4 | BRF_GRA },		  // 11
 	
 	{ "m0600.rom",     0x400000, 0x3ada4fd6, 5 | BRF_SND },		  // 12 Samples	
 	
@@ -3494,12 +3492,10 @@ static struct BurnRomInfo kovsgqyzaRomDesc[] = {
 	{ "a0600.rom",     0x800000, 0xd8167834, 3 | BRF_GRA },		  //  2 Sprite Color Data
 	{ "a0601.rom",     0x800000, 0xff7a4373, 3 | BRF_GRA },		  //  3
 	{ "a0602.rom",     0x800000, 0xe7a32959, 3 | BRF_GRA },		  //  4
-	{ "a0603.rom",     0x400000, 0xec31abda, 3 | BRF_GRA },		  //  5
-//	{ "qyza0603.rom",  0x800000, 0xc8b92220, 3 | BRF_GRA },		  //  5
+	{ "qyza0603.rom",  0x800000, 0xc8b92220, 3 | BRF_GRA },		  //  5
 
 	{ "b0600.rom",     0x800000, 0x7d3cd059, 4 | BRF_GRA },		  // 10 Sprite Masks & Color Indexes
-	{ "b0601.rom",     0x400000, 0xa0bb1c2f, 4 | BRF_GRA },		  // 11
-//	{ "qyzb0601.rom",  0x800000, 0x64f55882, 4 | BRF_GRA },		  // 11
+	{ "qyzb0601.rom",  0x800000, 0x64f55882, 4 | BRF_GRA },		  // 11
 	
 	{ "m0600.rom",     0x400000, 0x3ada4fd6, 5 | BRF_SND },		  // 12 Samples	
 	
@@ -3518,3 +3514,38 @@ struct BurnDriver BurnDrvKovsgqyza = {
 	kovsgqyzInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x600,
 	448, 224, 4, 3
 };
+
+
+// Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (set 3)
+
+static struct BurnRomInfo kovsgqyzbRomDesc[] = {
+	{ "p0600qyz.119",  0x400000, 0x18b8b9c0, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
+	{ "t0600.rom",     0x800000, 0x4acc1ad6, 2 | BRF_GRA },		  //  1 Tile data
+	
+	{ "a0600.rom",     0x800000, 0xd8167834, 3 | BRF_GRA },		  //  2 Sprite Color Data
+	{ "a0601.rom",     0x800000, 0xff7a4373, 3 | BRF_GRA },		  //  3
+	{ "a0602.rom",     0x800000, 0xe7a32959, 3 | BRF_GRA },		  //  4
+	{ "qyza0603.rom",  0x800000, 0xc8b92220, 3 | BRF_GRA },		  //  5
+
+	{ "b0600.rom",     0x800000, 0x7d3cd059, 4 | BRF_GRA },		  // 10 Sprite Masks & Color Indexes
+	{ "qyzb0601.rom",  0x800000, 0x64f55882, 4 | BRF_GRA },		  // 11
+	
+	{ "m0600.rom",     0x400000, 0x3ada4fd6, 5 | BRF_SND },		  // 12 Samples	
+	
+	{ "kov_igs027a.bin", 0x004000, 0x00000000, 7 | BRF_PRG | BRF_NODUMP }, // 13 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovsgqyzb, kovsgqyzb, pgm)
+STD_ROM_FN(kovsgqyzb)
+
+struct BurnDriver BurnDrvKovsgqyzb = {
+	"kovsgqyzb", "kovplus", "pgm", NULL, "1999",
+	"Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (set 3)\0", NULL, "IGS", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
+	NULL, kovsgqyzbRomInfo, kovsgqyzbRomName, NULL, NULL, pgmInputInfo, sangoDIPInfo,
+	kovsgqyzInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x600,
+	448, 224, 4, 3
+};
+

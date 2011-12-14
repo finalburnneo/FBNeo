@@ -226,7 +226,6 @@ static INT32 pgmGetRoms(bool bLoad)
 		nICSSNDROMLen = (nPGMSNDROMLen-1) & 0xf00000;
 
 		if (nPGMExternalARMLen == 0) nPGMExternalARMLen = 0x200000;
-		bprintf (0, _T("%5.5x, %d\n"), nPGMExternalARMLen, nBurnFPS);
 	}
 
 	return 0;

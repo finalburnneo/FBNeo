@@ -213,9 +213,16 @@ static UINT16 pgm_kov_asic27_r(UINT16 offset)
 		case 0x9d:	// spr palette
 			val=0xa00000+((ASIC27REGS[0]&0x1f)<<6);
 			break;
+
+		case 0x33: // kovsgqyz
+		case 0xa3:
+			val=0x880000;
+			break;
 		case 0xb0:
 			val=B0TABLE[ASIC27REGS[0]&0xf];
 			break;
+
+		case 0xb7: // kovsgqyz
 		case 0xb4:
 			{
 				INT32 v2=ASIC27REGS[0]&0x0f;
@@ -250,6 +257,7 @@ static UINT16 pgm_kov_asic27_r(UINT16 offset)
 	    		val=0x900000+(((ASICPARAMS[0xcb]+(y)*64)*4)/*&0x1fff*/);
    			}
    			break;
+		case 0xcd: // kovsgqyz
 		case 0xd0:	//txt palette
 			val=0xa01000+(ASIC27REGS[0]<<5);
 			break;
@@ -261,9 +269,11 @@ static UINT16 pgm_kov_asic27_r(UINT16 offset)
 				val=0x880000;
 			}
 			break;
+		case 0x11: // kovsgqyz
 		case 0xdc:	//bg palette
 			val=0xa00800+(ASIC27REGS[0]<<6);
 			break;
+		case 0x9e: // kovsgqyz
 		case 0xe0:	//spr palette
 			val=0xa00000+((ASIC27REGS[0]&0x1f)<<6);
 			break;
@@ -276,7 +286,7 @@ static UINT16 pgm_kov_asic27_r(UINT16 offset)
 		case 0xf0:
 			val=0x00C000;
 			break;
-		case 0xab:
+		case 0xab: // kovsgqyz
 		case 0xf8:
 			val=E0REGS[ASIC27REGS[0]&0xf]&0xffffff;
 			break;

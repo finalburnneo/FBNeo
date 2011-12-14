@@ -1,4 +1,5 @@
 #include "pgm.h"
+#include "pgm_sprite.h"
 
 static INT32 nTileMask = 0;
 static UINT8 sprmsktab[0x100];
@@ -7,16 +8,6 @@ static UINT16 *pTempScreen;	// sprites
 static UINT16 *pTempDraw;	// pre-zoomed sprites
 static UINT8  *tiletrans;	// tile transparency table
 static UINT8  *texttrans;	// text transparency table
-
-#define draw_pixel_nomask(n)				\
-	dest[xoff + n] = adata[aoffset] | palt;		\
-	pdest[xoff + n] = prio;				\
-	aoffset++					\
-
-#define draw_pixel(n, mskno)				\
-	if (msk & mskno) {				\
-		draw_pixel_nomask(n);			\
-	}						\
 
 inline static UINT32 CalcCol(UINT16 nColour)
 {
@@ -32,13 +23,11 @@ inline static UINT32 CalcCol(UINT16 nColour)
 	return BurnHighCol(r, g, b, 0);
 }
 
-static void pgm_prepare_sprite(INT32 wide, INT32 high,INT32 palt, INT32 boffset)
+static void pgm_prepare_sprite(INT32 wide, INT32 high, INT32 palt, INT32 boffset)
 {
-	UINT8 * bdata = PGMSPRMaskROM;
-	UINT8 * adata = PGMSPRColROM;
 	UINT16* dest = pTempDraw;
+	UINT8 * bdata = PGMSPRMaskROM;
 	INT32 bdatasize = nPGMSPRMaskMaskLen;
-	INT32 adatasize = nPGMSPRColMaskLen;
 
 	wide *= 16;
 	palt *= 32;
@@ -48,70 +37,16 @@ static void pgm_prepare_sprite(INT32 wide, INT32 high,INT32 palt, INT32 boffset)
 
 	boffset += 4;
 
-	for (INT32 ycnt = 0 ; ycnt < high; ycnt++) {
-		dest = pTempDraw + (ycnt * wide);
+	for (INT32 ycnt = 0; ycnt < high; ycnt++)
+	{
+		for (INT32 xcnt = 0; xcnt < wide; xcnt+=8)
+		{
+			aoffset+=zoom_draw_table[bdata[boffset & bdatasize]](dest + xcnt, PGMSPRColROM + (aoffset & nPGMSPRColMaskLen), palt);
 
-		for (INT32 xcnt = 0 ; xcnt < wide; xcnt+=16) {
-			UINT16 msk = (bdata[(boffset+1) & bdatasize] << 8) | bdata[boffset & bdatasize];
-
-			if (msk == 0xffff) {
-				*dest++ = 0x8000;
-				*dest++ = 0x8000;
-				*dest++ = 0x8000;
-				*dest++ = 0x8000;
-				*dest++ = 0x8000;
-				*dest++ = 0x8000;
-				*dest++ = 0x8000;
-				*dest++ = 0x8000;
-				*dest++ = 0x8000;
-				*dest++ = 0x8000;
-				*dest++ = 0x8000;
-				*dest++ = 0x8000;
-				*dest++ = 0x8000;
-				*dest++ = 0x8000;
-				*dest++ = 0x8000;
-				*dest++ = 0x8000;
-			}
-			else if (msk == 0)
-			{
-				*dest++ = adata[aoffset++ & adatasize] | palt;
-				*dest++ = adata[aoffset++ & adatasize] | palt;
-				*dest++ = adata[aoffset++ & adatasize] | palt;
-				*dest++ = adata[aoffset++ & adatasize] | palt;
-				*dest++ = adata[aoffset++ & adatasize] | palt;
-				*dest++ = adata[aoffset++ & adatasize] | palt;
-				*dest++ = adata[aoffset++ & adatasize] | palt;
-				*dest++ = adata[aoffset++ & adatasize] | palt;
-				*dest++ = adata[aoffset++ & adatasize] | palt;
-				*dest++ = adata[aoffset++ & adatasize] | palt;
-				*dest++ = adata[aoffset++ & adatasize] | palt;
-				*dest++ = adata[aoffset++ & adatasize] | palt;
-				*dest++ = adata[aoffset++ & adatasize] | palt;
-				*dest++ = adata[aoffset++ & adatasize] | palt;
-				*dest++ = adata[aoffset++ & adatasize] | palt;
-				*dest++ = adata[aoffset++ & adatasize] | palt;
-			}
-			else
-			{
-				for (INT32 x = 0; x < 16; x++)
-				{
-					if (msk & 1)
-					{
-						dest[x] = 0x8000;
-					}
-					else
-					{
-						dest[x] = adata[aoffset++ & adatasize] | palt;
-					}
-	
-					msk >>= 1;
-				}
-
-				dest += 16;
-			}
-
-			boffset+=2;
+			boffset++;
 		}
+
+		dest += wide;
 	}
 }
 
@@ -200,6 +135,8 @@ static void pgm_draw_sprite_nozoom(INT32 wide, INT32 high, INT32 palt, INT32 bof
 
 	palt <<= 5;
 
+	sprite_draw_nozoom_function *drawsprite = nozoom_draw_table[flipx ? 1 : 0];
+
 	for (INT32 ycnt = 0; ycnt < high; ycnt++) {
 		if (flipy) {
 			yoff = ypos + ((high-1) - ycnt);
@@ -221,58 +158,15 @@ static void pgm_draw_sprite_nozoom(INT32 wide, INT32 high, INT32 palt, INT32 bof
 		{
 			for (INT32 xcnt = 0; xcnt < wide; xcnt+=8)
 			{
-				msk = bdata[boffset & bdatasize] ^ 0xff;	
-				boffset++;
-				aoffset &= adatasize; // not 100% safe, but faster...
-
-				if (msk == 0) { // transparent
-					aoffset += sprmsktab[msk];
-					continue;
-				}
-
 				if (flipx) {
 					xoff = xpos + (wide - xcnt);
-					if (msk == 0xff) { // opaque
-						draw_pixel_nomask( 0);
-						draw_pixel_nomask(-1);
-						draw_pixel_nomask(-2);
-						draw_pixel_nomask(-3);
-						draw_pixel_nomask(-4);
-						draw_pixel_nomask(-5);
-						draw_pixel_nomask(-6);
-						draw_pixel_nomask(-7);
-					} else {
-						draw_pixel( 0, 0x01);
-						draw_pixel(-1, 0x02);
-						draw_pixel(-2, 0x04);
-						draw_pixel(-3, 0x08);
-						draw_pixel(-4, 0x10);
-						draw_pixel(-5, 0x20);
-						draw_pixel(-6, 0x40);
-						draw_pixel(-7, 0x80);
-					}
 				} else {
 					xoff = xpos + xcnt;
-					if (msk == 0xff) { // opaque
-						draw_pixel_nomask( 0);
-						draw_pixel_nomask( 1);
-						draw_pixel_nomask( 2);
-						draw_pixel_nomask( 3);
-						draw_pixel_nomask( 4);
-						draw_pixel_nomask( 5);
-						draw_pixel_nomask( 6);
-						draw_pixel_nomask( 7);
-					} else {
-						draw_pixel( 0, 0x01);
-						draw_pixel( 1, 0x02);
-						draw_pixel( 2, 0x04);
-						draw_pixel( 3, 0x08);
-						draw_pixel( 4, 0x10);
-						draw_pixel( 5, 0x20);
-						draw_pixel( 6, 0x40);
-						draw_pixel( 7, 0x80);
-					}
 				}
+
+				aoffset += drawsprite[bdata[boffset & bdatasize]](dest + xoff, pdest + xoff, PGMSPRColROM + (aoffset & nPGMSPRColMaskLen), palt, prio);
+	
+				boffset++;
 			}
 		} else {
 			for (INT32 xcnt = 0; xcnt < wide; xcnt+=8)
@@ -764,9 +658,9 @@ void pgmInitDraw() // preprocess some things...
 {
 	GenericTilesInit();
 
-	pTempDraw = (UINT16*)BurnMalloc(0x400 * 0x200 * 2);
+	pTempDraw = (UINT16*)BurnMalloc(0x400 * 0x200 * sizeof(INT16));
 	SpritePrio = (UINT8*)BurnMalloc(nScreenWidth * nScreenHeight);
-	pTempScreen = (UINT16*)BurnMalloc(nScreenWidth * nScreenHeight * sizeof(UINT16));
+	pTempScreen = (UINT16*)BurnMalloc(nScreenWidth * nScreenHeight * sizeof(INT16));
 
 	// Find transparent tiles so we can skip them
 	{

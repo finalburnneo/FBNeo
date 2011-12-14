@@ -484,7 +484,7 @@ void CreateArcaderesItem()
 	MENUITEMINFO menuItem = {sizeof(MENUITEMINFO), MIIM_TYPE, MFT_STRING, 0, 0, NULL, NULL, NULL, 0, szItemText, 0, 0, };
 
 	// horizontal oriented
-	FBALoadString(hAppInst, IDS_MENU + 0, szItemText, 256);
+	FBALoadString(hAppInst, IDS_MENU_0, szItemText, 256);
 	if ((bDrvOkay) && !(BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL)) {
 		BurnDrvGetVisibleSize(&nGameWidth, &nGameHeight);
 		_stprintf(szItemText + _tcslen(szItemText), _T("\t(%i x %i)"), nGameWidth, nGameHeight);
@@ -496,7 +496,7 @@ void CreateArcaderesItem()
 	TCHAR szItemText2[256];
 	MENUITEMINFO menuItem2 = {sizeof(MENUITEMINFO), MIIM_TYPE, MFT_STRING, 0, 0, NULL, NULL, NULL, 0, szItemText2, 0, 0, };
 	
-	FBALoadString(hAppInst, IDS_MENU + 0, szItemText2, 256);
+	FBALoadString(hAppInst, IDS_MENU_0, szItemText2, 256);
 	if (bDrvOkay && BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
 		BurnDrvGetVisibleSize(&nGameWidth, &nGameHeight);
 		_stprintf(szItemText + _tcslen(szItemText2), _T("\t(%i x %i)"), nGameWidth, nGameHeight);
@@ -511,7 +511,7 @@ static void CreateOtherresItem(bool bOther)
 	TCHAR szItemText[256];
 	MENUITEMINFO menuItem = {sizeof(MENUITEMINFO), MIIM_TYPE, MFT_STRING, 0, 0, NULL, NULL, NULL, 0, szItemText, 0, 0 };
 
-	FBALoadString(hAppInst, IDS_MENU + 1, szItemText, 256);
+	FBALoadString(hAppInst, IDS_MENU_1, szItemText, 256);
 	if (bOther) {
 		_stprintf(szItemText + _tcslen(szItemText), _T("\t(%i x %i)"), nVidHorWidth, nVidHorHeight);
 	}
@@ -525,7 +525,7 @@ static void CreateOtherresItemVer(bool bOther)
 	TCHAR szItemText[256];
 	MENUITEMINFO menuItem = {sizeof(MENUITEMINFO), MIIM_TYPE, MFT_STRING, 0, 0, NULL, NULL, NULL, 0, szItemText, 0, 0 };
 
-	FBALoadString(hAppInst, IDS_MENU + 1, szItemText, 256);
+	FBALoadString(hAppInst, IDS_MENU_1, szItemText, 256);
 	if (bOther) {
 		_stprintf(szItemText + _tcslen(szItemText), _T("\t(%i x %i)"), nVidVerWidth, nVidVerHeight);
 	}
@@ -560,7 +560,7 @@ static void CreateOtherGammaItem(bool bOther)
 	TCHAR szItemText[256];
 	MENUITEMINFO menuItem = {sizeof(MENUITEMINFO), MIIM_TYPE, MFT_STRING, 0, 0, NULL, NULL, NULL, 0, szItemText, 0, 0 };
 
-	FBALoadString(hAppInst, IDS_MENU + 2, szItemText, 256);
+	FBALoadString(hAppInst, IDS_MENU_2, szItemText, 256);
 	if (bOther) {
 		_stprintf(szItemText + _tcslen(szItemText), _T("\t(%1.2f)"), nGamma);
 	}
@@ -574,7 +574,7 @@ static void CreateCPUSpeedItem(bool bOther)
 	TCHAR szItemText[256];
 	MENUITEMINFO menuItem = {sizeof(MENUITEMINFO), MIIM_TYPE, MFT_STRING, 0, 0, NULL, NULL, NULL, 0, szItemText, 0, 0 };
 
-	FBALoadString(hAppInst, IDS_MENU + 3, szItemText, 256);
+	FBALoadString(hAppInst, IDS_MENU_3, szItemText, 256);
 	if (bOther) {
 		_stprintf(szItemText + _tcslen(szItemText), _T("\t(%d%%)"), nBurnCPUSpeedAdjust * 100 / 256);
 	}
@@ -588,11 +588,11 @@ static void CreateStateslotItems()
 	TCHAR szItemText[256];
 	MENUITEMINFO menuItem = {sizeof(MENUITEMINFO), MIIM_TYPE, MFT_STRING, 0, 0, NULL, NULL, NULL, 0, szItemText, 0, 0 };
 
-	_sntprintf(szItemText, 256, FBALoadStringEx(hAppInst, IDS_MENU + 4, true), nSavestateSlot);
+	_sntprintf(szItemText, 256, FBALoadStringEx(hAppInst, IDS_MENU_4, true), nSavestateSlot);
 	menuItem.cch = _tcslen(szItemText);
 	SetMenuItemInfo(hMenu, MENU_STATE_LOAD_SLOT, 0, &menuItem);
 
-	_sntprintf(szItemText, 256, FBALoadStringEx(hAppInst, IDS_MENU + 5, true), nSavestateSlot);
+	_sntprintf(szItemText, 256, FBALoadStringEx(hAppInst, IDS_MENU_5, true), nSavestateSlot);
 	menuItem.cch = _tcslen(szItemText);
 	SetMenuItemInfo(hMenu, MENU_STATE_SAVE_SLOT, 0, &menuItem);
 }

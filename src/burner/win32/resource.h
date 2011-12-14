@@ -3,7 +3,7 @@
 // Used by app.rc
 //
 
-#define IDS_STRING                      	5000
+#define IDS_STRING                      	200
 
 #define BMP_SPLASH							1
 #define BMP_ABOUT							2

@@ -54,7 +54,7 @@ BEGIN
 	IDS_NETPLAY_START			"*** Starting netplay: "
 	IDS_NETPLAY_START_YOU		"*** You are player %i. "
 	IDS_NETPLAY_START_TOTAL		"There are %i total players."
-	IDS_NETPLAY_DROP			"*** Player %1i «%.32hs» dropped from the game."
+	IDS_NETPLAY_DROP			"*** Player %1i <%.32hs> dropped from the game."
 	IDS_NETPLAY_TOOMUCH			"too much text"
 
 	IDS_SSHOT_SAVED				"PNG saved"
@@ -110,13 +110,6 @@ BEGIN
 	IDS_PRESET_SAVED			"The preset file was saved to %s."
 	
 	IDS_CD_SELECT_IMAGE			"Select CD-ROM image..."
-	
-	IDS_MENU +  0 				"&Arcade"
-    IDS_MENU +  1 				"&Other..."
-    IDS_MENU +  2 				"&Other Gamma value..."
-    IDS_MENU +  3 				"Adjust &CPU speed..."
-    IDS_MENU +  4 				"Load state from active slot (no %d)\tF9"
-    IDS_MENU +  5 				"Save state to active slot (no %d)\tF10"
 	
 	IDS_SEL_FILTERS				"Filters"
 	IDS_SEL_HARDWARE			"Hardware"
@@ -180,6 +173,13 @@ BEGIN
 	IDS_FAMILY_OTHER			"Other"
 	
 	IDS_IPSMANAGER_TITLE		"IPS Patch Manager"
+	
+	IDS_MENU_0 					"&Arcade"
+    IDS_MENU_1 					"&Other..."
+    IDS_MENU_2 					"&Other Gamma value..."
+    IDS_MENU_3 					"Adjust &CPU speed..."
+    IDS_MENU_4 					"Load state from active slot (no %d)\tF9"
+    IDS_MENU_5 					"Save state to active slot (no %d)\tF10"
 	
     IDS_ERR_ERROR				"Error"
     IDS_ERR_WARNING				"Warning"

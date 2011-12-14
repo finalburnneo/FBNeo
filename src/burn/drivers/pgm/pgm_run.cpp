@@ -1,6 +1,7 @@
  
 #include "pgm.h" 
 #include "arm7_intf.h"
+#include "v3021.h"
 
 UINT8 PgmJoy1[8] = {0,0,0,0,0,0,0,0};
 UINT8 PgmJoy2[8] = {0,0,0,0,0,0,0,0};
@@ -231,88 +232,12 @@ static INT32 pgmGetRoms(bool bLoad)
 	return 0;
 }
 
-/* Calendar Emulation */
-
-static UINT8 CalVal, CalMask, CalCom=0, CalCnt=0;
-
-static UINT8 bcd(UINT8 data)
-{
-	return ((data / 10) << 4) | (data % 10);
-}
-
-static UINT8 pgm_calendar_r()
-{
-	UINT8 calr;
-	calr = (CalVal & CalMask) ? 1 : 0;
-	CalMask <<= 1;
-	return calr;
-}
-
-static void pgm_calendar_w(UINT16 data)
-{
-	time_t nLocalTime = time(NULL);
-	tm* tmLocalTime = localtime(&nLocalTime);
-
-	CalCom <<= 1;
-	CalCom |= data & 1;
-	++CalCnt;
-	if(CalCnt==4)
-	{
-		CalMask = 1;
-		CalVal = 1;
-		CalCnt = 0;
-		
-		switch(CalCom & 0xf)
-		{
-			case 0x1: case 0x3: case 0x5: case 0x7: case 0x9: case 0xb: case 0xd:
-				CalVal++;
-				break;
-
-			case 0x0: // Day
-				CalVal=bcd(tmLocalTime->tm_wday);
-				break;
-
-			case 0x2:  // Hours
-				CalVal=bcd(tmLocalTime->tm_hour);
-				break;
-
-			case 0x4:  // Seconds
-				CalVal=bcd(tmLocalTime->tm_sec);
-				break;
-
-			case 0x6:  // Month
-				CalVal=bcd(tmLocalTime->tm_mon + 1); // not bcd in MVS
-				break;
-
-			case 0x8: // Milliseconds?
-				CalVal=0; 
-				break;
-
-			case 0xa: // Day
-				CalVal=bcd(tmLocalTime->tm_mday);
-				break;
-
-			case 0xc: // Minute
-				CalVal=bcd(tmLocalTime->tm_min);
-				break;
-
-			case 0xe: // Year
-				CalVal=bcd(tmLocalTime->tm_year % 100);
-				break;
-
-			case 0xf: // Load Date
-				tmLocalTime = localtime(&nLocalTime);
-				break;
-		}
-	}
-}
-
 UINT8 __fastcall PgmReadByte(UINT32 sekAddress)
 {
 	switch (sekAddress)
 	{
 		case 0xC00007:
-			return pgm_calendar_r();
+			return v3021Read();
 
 		case 0xC08007: // dipswitches - (ddp2)
 			return ~(PgmInput[6]) | 0xe0;
@@ -332,7 +257,7 @@ UINT16 __fastcall PgmReadWord(UINT32 sekAddress)
 			return ics2115_soundlatch_r(1);
 
 		case 0xC00006:	// ketsui wants this
-			return pgm_calendar_r();
+			return v3021Read();
 
 		case 0xC08000:	// p1+p2 controls
 			return ~(PgmInput[0] | (PgmInput[1] << 8));
@@ -383,7 +308,7 @@ void __fastcall PgmWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			break;
 
 		case 0xC00006:
-			pgm_calendar_w(wordValue);
+			v3021Write(wordValue);
 			break;
 
 		case 0xC00008:
@@ -1008,6 +933,8 @@ INT32 pgmScan(INT32 nAction,INT32 *pnMin)
 		SekScan(nAction);
 		ZetScan(nAction);
 
+		v3021Scan();
+
 		SCAN_VAR(PgmInput);
 
 		SCAN_VAR(nPgmZ80Work);
@@ -1015,11 +942,6 @@ INT32 pgmScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(nPgmCurrentBios);
 
 		ics2115_scan(nAction, pnMin);
-
-		SCAN_VAR(CalVal);
-		SCAN_VAR(CalMask);
-		SCAN_VAR(CalCom);
-		SCAN_VAR(CalCnt);
 	}
 
 	if (pPgmScanCallback) {

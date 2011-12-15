@@ -225,9 +225,7 @@ BEGIN
 	IDS_ERR_DISK_TOONEW			" does not work with this version of %s."
 	IDS_ERR_DISK_TOOOLD			" requires a more recent version of %s, please upgrade."
 	
-	IDS_ERR_NO_NETPLAYDLL		"Error finding 'kailleraclient.dll'."
-	
-	IDS_ERR_NO_DRIVER_SELECTED	"No driver has been selected from the list."
-	
+	IDS_ERR_NO_NETPLAYDLL		"Error finding 'kailleraclient.dll'."	
+	IDS_ERR_NO_DRIVER_SELECTED	"No driver has been selected from the list."	
 	IDS_ERR_NO_DRIVER_SEL_SLOT1	"No driver has been selected for slot 1."
 END

@@ -177,210 +177,192 @@ void install_protection_asic3_orlegend()
 //-----------------------------------------------------------------------------------------------------
 // ASIC27 - Knights of Valour
 
-//Not sure if BATABLE is complete
-static const UINT32 BATABLE[0x40]= {
-		0x00,0x29,0x2c,0x35,0x3a,0x41,0x4a,0x4e,	//0x00
-		0x57,0x5e,0x77,0x79,0x7a,0x7b,0x7c,0x7d,	//0x08
-		0x7e,0x7f,0x80,0x81,0x82,0x85,0x86,0x87,	//0x10
-		0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x90,	//0x18
-		0x95,0x96,0x97,0x98,0x99,0x9a,0x9b,0x9c,
-		0x9e,0xa3,0xd4,0xa9,0xaf,0xb5,0xbb,0xc1 };
+static const UINT8 BATABLE[0x40] = {
+	0x00,0x29,0x2c,0x35,0x3a,0x41,0x4a,0x4e,0x57,0x5e,0x77,0x79,0x7a,0x7b,0x7c,0x7d,
+	0x7e,0x7f,0x80,0x81,0x82,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x90,
+	0x95,0x96,0x97,0x98,0x99,0x9a,0x9b,0x9c,0x9e,0xa3,0xd4,0xa9,0xaf,0xb5,0xbb,0xc1
+};
 
-static const UINT32 B0TABLE[16]={2,0,1,4,3}; //maps char portraits to tables
+static const UINT8 B0TABLE[16] = { 2, 0, 1, 4, 3 }; // Maps char portraits to tables
 
-static UINT16 ASIC27KEY;
-static UINT16 ASIC27REGS[10];
-static UINT16 ASICPARAMS[256];
-static UINT16 ASIC27RCNT=0;
-static UINT32 E0REGS[16];
+static UINT32 kov_slots[16];
+static UINT16 kov_internal_slot;
+static UINT16 kov_key;
+static UINT32 kov_response;
+static UINT16 kov_value;
 
-static UINT16 pgm_kov_asic27_r(UINT16 offset)
+static UINT16 kov_c0_value;
+static UINT16 kov_cb_value;
+static UINT16 kov_fe_value;
+
+void __fastcall kov_asic27_write(UINT32 offset, UINT16 data)
 {
-	UINT32 val=(ASIC27REGS[1]<<16)|(ASIC27REGS[0]);
+	switch (offset & 0x06)
+	{
+		case 0: kov_value = data; return;
 
-	switch(ASIC27REGS[1]&0xff) {
-		case 0x67:
-			val=0x880000;
-			break;
+		case 2:
+		{
+			if ((data >> 8) == 0xff) kov_key = 0xffff;
 
-		case 0x8e:
-			val=0x880000;
-			break;
+			kov_value ^= kov_key;
 
-		case 0x99:
-			val=0x880000;
-			break;
-		case 0x9d:	// spr palette
-			val=0xa00000+((ASIC27REGS[0]&0x1f)<<6);
-			break;
+		//	bprintf (PRINT_NORMAL, _T("ASIC27 command: %2.2x data: %4.4x\n"), (data ^ kov_key) & 0xff, kov_value);
 
-		case 0x33: // kovsgqyz
-		case 0xa3:
-			val=0x880000;
-			break;
-		case 0xb0:
-			val=B0TABLE[ASIC27REGS[0]&0xf];
-			break;
-
-		case 0xb7: // kovsgqyz
-		case 0xb4:
+			switch ((data ^ kov_key) & 0xff)
 			{
-				INT32 v2=ASIC27REGS[0]&0x0f;
-				INT32 v1=(ASIC27REGS[0]&0x0f00)>>8;
-				if(ASIC27REGS[0]==0x102)
-					E0REGS[1]=E0REGS[0];
-				else
-					E0REGS[v1]=E0REGS[v2];
-				val=0x880000;
-			}
-			break;
-		case 0xba:
-			val=BATABLE[ASIC27REGS[0]&0x3f];
-			if(ASIC27REGS[0]>0x2f) {
+				case 0x67: // unknown or status check?
+				case 0x8e:
+				case 0xa3:
+				case 0x33: // kovsgqyz (a3)
+				case 0x3a: // kovplus
+				case 0xc5: // kovplus
+					kov_response = 0x880000;
+				break;
 
-			}
-			break;
-		case 0xc0:
-			val=0x880000;
-			break;
-		case 0xc3:	//TXT tile position Uses C0 to select column
-			val=0x904000+(ASICPARAMS[0xc0]+ASICPARAMS[0xc3]*64)*4;
-			break;
-		case 0xcb:
-			val=0x880000;
-			break;
-		case 0xcc:	//BG
-			{
-	   	 		INT32 y=ASICPARAMS[0xcc];
-	    		if(y&0x400)    //y is signed (probably x too and it also applies to TXT, but I've never seen it used)
-	     			y=-(0x400-(y&0x3ff));
-	    		val=0x900000+(((ASICPARAMS[0xcb]+(y)*64)*4)/*&0x1fff*/);
-   			}
-   			break;
-		case 0xcd: // kovsgqyz
-		case 0xd0:	//txt palette
-			val=0xa01000+(ASIC27REGS[0]<<5);
-			break;
-		case 0xd6:	//???? check it
-			{
-				INT32 v2=ASIC27REGS[0]&0xf;
-				E0REGS[0]=E0REGS[v2];
-				//E0REGS[v2]=0;
-				val=0x880000;
-			}
-			break;
-		case 0x11: // kovsgqyz
-		case 0xdc:	//bg palette
-			val=0xa00800+(ASIC27REGS[0]<<6);
-			break;
-		case 0x9e: // kovsgqyz
-		case 0xe0:	//spr palette
-			val=0xa00000+((ASIC27REGS[0]&0x1f)<<6);
-			break;
-		case 0xe5:
-			val=0x880000;
-			break;
-		case 0xe7:
-			val=0x880000;
-			break;
-		case 0xf0:
-			val=0x00C000;
-			break;
-		case 0xab: // kovsgqyz
-		case 0xf8:
-			val=E0REGS[ASIC27REGS[0]&0xf]&0xffffff;
-			break;
-		case 0xfc:	//Adjust damage level to char experience level
-			val=(ASICPARAMS[0xfc]*ASICPARAMS[0xfe])>>6;
-			break;
-		case 0xfe:	//todo
-			val=0x880000;
-			break;
-		default:
-			val=0x880000;
-	}
+				case 0x99: // Reset
+					kov_response = 0x880000;
+					kov_key = 0;
+				break;
 
-	if(offset==0) {
-		UINT16 d=val&0xffff;
-		UINT16 realkey;
-		realkey=ASIC27KEY>>8;
-		realkey|=ASIC27KEY;
-		d^=realkey;
-		return d;
-	}
-	else if(offset==2) {
-		UINT16 d=val>>16;
-		UINT16 realkey;
-		realkey=ASIC27KEY>>8;
-		realkey|=ASIC27KEY;
-		d^=realkey;
-		ASIC27RCNT++;
-		if(!(ASIC27RCNT&0x3)) {
-			ASIC27KEY+=0x100;
-			ASIC27KEY&=0xFF00;
+				case 0x9d: // Sprite palette offset
+					kov_response = 0xa00000 + ((kov_value & 0x1f) * 0x40);
+				break;
+
+				case 0xb0: // Read from data table
+					kov_response = B0TABLE[kov_value & 0x0f];
+				break;
+
+				case 0xb4: // Copy slot 'a' to slot 'b'
+				case 0xb7: // kovsgqyz (b4)
+				{
+					kov_response = 0x880000;
+
+					if (kov_value == 0x0102) kov_value = 0x0100; // why?
+
+					kov_slots[(kov_value >> 8) & 0x0f] = kov_slots[(kov_value >> 0) & 0x0f];
+				}
+				break;
+
+				case 0xba: // Read from data table
+					kov_response = BATABLE[kov_value & 0x3f];
+				break;
+
+				case 0xc0: // Text layer 'x' select
+					kov_response = 0x880000;
+					kov_c0_value = kov_value;
+				break;
+
+				case 0xc3: // Text layer offset
+					kov_response = 0x904000 + ((kov_c0_value + (kov_value * 0x40)) * 4);
+				break;
+
+				case 0xcb: // Background layer 'x' select
+					kov_response = 0x880000;
+					kov_cb_value = kov_value;
+				break;
+
+				case 0xcc: // Background layer offset
+					if (kov_value & 0x400) kov_value = -(0x400 - (kov_value & 0x3ff));
+					kov_response = 0x900000 + ((kov_cb_value + (kov_value * 0x40)) * 4);
+				break;
+
+				case 0xd0: // Text palette offset
+				case 0xcd: // kovsgqyz (d0)
+					kov_response = 0xa01000 + (kov_value * 0x20);
+				break;
+
+				case 0xd6: // Copy slot to slot 0
+					kov_response = 0x880000;
+					kov_slots[0] = kov_slots[kov_value & 0x0f];
+				break;
+
+				case 0xdc: // Background palette offset
+				case 0x11: // kovsgqyz (dc)
+					kov_response = 0xa00800 + (kov_value * 0x40);
+				break;
+
+				case 0xe0: // Sprite palette offset
+				case 0x9e: // kovsgqyz (e0)
+					kov_response = 0xa00000 + ((kov_value & 0x1f) * 0x40);
+				break;
+
+				case 0xe5: // Write slot (low)
+				{
+					kov_response = 0x880000;
+
+					INT32 sel = (kov_internal_slot >> 12) & 0x0f;
+					kov_slots[sel] = (kov_slots[sel] & 0x00ff0000) | ((kov_value & 0xffff) <<  0);
+				}
+				break;
+
+				case 0xe7: // Write slot (and slot select) (high)
+				{
+					kov_response = 0x880000;
+					kov_internal_slot = kov_value;
+
+					INT32 sel = (kov_internal_slot >> 12) & 0x0f;
+					kov_slots[sel] = (kov_slots[sel] & 0x0000ffff) | ((kov_value & 0x00ff) << 16);
+				}
+				break;
+
+				case 0xf0: // Some sort of status read?
+					kov_response = 0x00c000;
+				break;
+
+				case 0xf8: // Read slot
+				case 0xab: // kovsgqyz (f8)
+					kov_response = kov_slots[kov_value & 0x0f] & 0x00ffffff;
+				break;
+
+				case 0xfc: // Adjust damage level to char experience level
+					kov_response = (kov_value * kov_fe_value) >> 6;
+				break;
+
+				case 0xfe: // Damage level adjust
+					kov_response = 0x880000;
+					kov_fe_value = kov_value;
+				break;
+
+				default:
+					kov_response = 0x880000;
+		//			bprintf (PRINT_NORMAL, _T("Unknown ASIC27 command: %2.2x data: %4.4x\n"), (data ^ kov_key) & 0xff, kov_value);
+				break;
+			}
+
+			kov_key = (kov_key + 0x0100) & 0xff00;
+			if (kov_key == 0xff00) kov_key = 0x0100;
+			kov_key |= kov_key >> 8;
 		}
-		return d;
-	}
-	return 0xff;
-}
-
-static void pgm_kov_asic27_w(UINT16 offset, UINT16 data)
-{
-	if(offset==0) {
-		UINT16 realkey;
-		realkey=ASIC27KEY>>8;
-		realkey|=ASIC27KEY;
-		data^=realkey;
-		ASIC27REGS[0]=data;
 		return;
-	}
 
-	if(offset==2) {
-
-		ASIC27KEY = data & 0xff00;
-
-		UINT16 realkey = (ASIC27KEY >> 8) | ASIC27KEY;
-
-		ASIC27REGS[1] = data ^ realkey;
-
-		ASICPARAMS[ASIC27REGS[1]&0xff]=ASIC27REGS[0];
-		if (ASIC27REGS[1]==0xE7) {
-			UINT32 E0R=(ASICPARAMS[0xE7]>>12)&0xf;
-			E0REGS[E0R]&=0xffff;
-			E0REGS[E0R]|=ASIC27REGS[0]<<16;
-		}
-		if (ASIC27REGS[1]==0xE5) {
-			UINT32 E0R=(ASICPARAMS[0xE7]>>12)&0xf;
-			E0REGS[E0R]&=0xff0000;
-			E0REGS[E0R]|=ASIC27REGS[0];
-		}
-		ASIC27RCNT=0;
+		case 4: return;
 	}
 }
 
-static void __fastcall kov_asic27_write_word(UINT32 address, UINT16 data)
+static UINT16 __fastcall kov_asic27_read(UINT32 offset)
 {
-	if ((address & 0xfffffc) == 0x500000) {
-		pgm_kov_asic27_w(address & 3, data);
-	}
-}
-
-static UINT16 __fastcall kov_asic27_read_word(UINT32 address)
-{
-	if ((address & 0xfffffc) == 0x500000) {
-		return pgm_kov_asic27_r(address & 3);
+	switch (offset & 0x02)
+	{
+		case 0: return (kov_response >>  0) ^ kov_key;
+		case 2: return (kov_response >> 16) ^ kov_key;
 	}
 
 	return 0;
 }
 
-static void reset_kov_asic27()
+static void kov_asic27_reset()
 {
-	ASIC27KEY=0;
-	ASIC27RCNT=0;
-	memset(ASIC27REGS, 0, 10);
-	memset(ASICPARAMS, 0, 256);
-	memset(E0REGS, 0, 16);
+	memset(kov_slots, 0, 16 * sizeof(INT32));
+
+	kov_internal_slot = 0;
+	kov_key = 0;
+	kov_response = 0;
+	kov_value = 0;
+
+	kov_c0_value = 0;
+	kov_cb_value = 0;
+	kov_fe_value = 0;
 
 	memset (PGMUSER0, 0, 0x400);
 
@@ -390,15 +372,14 @@ static void reset_kov_asic27()
 void install_protection_asic27_kov()
 {
 	pPgmScanCallback = kov_asic27Scan;
-	pPgmResetCallback = reset_kov_asic27;
+	pPgmResetCallback = kov_asic27_reset;
 
 	SekOpen(0);
 	SekMapMemory(PGMUSER0,	0x4f0000, 0x4f003f | 0x3ff, SM_READ);
 
 	SekMapHandler(4,	0x500000, 0x500003, SM_READ | SM_WRITE);
-
-	SekSetReadWordHandler(4, kov_asic27_read_word);
-	SekSetWriteWordHandler(4, kov_asic27_write_word);
+	SekSetReadWordHandler(4, kov_asic27_read);
+	SekSetWriteWordHandler(4, kov_asic27_write);
 	SekClose();
 }
 
@@ -2200,28 +2181,22 @@ INT32 kov_asic27Scan(INT32 nAction, INT32 */*pnMin*/)
 	struct BurnArea ba;
 
 	if (nAction & ACB_MEMORY_RAM) {
-		ba.Data		= (UINT8*)ASIC27REGS;
-		ba.nLen		= 0x000000a * sizeof(INT16);
-		ba.nAddress	= 0xff0000;
-		ba.szName	= "Asic Registers";
-		BurnAcb(&ba);
-
-		ba.Data		= (UINT8*)ASICPARAMS;
-		ba.nLen		= 0x0000100 * sizeof(INT16);
-		ba.nAddress	= 0xff1000;
-		ba.szName	= "Asic Parameters";
-		BurnAcb(&ba);
-
-		ba.Data		= (UINT8*)E0REGS;
+		ba.Data		= (UINT8*)kov_slots;
 		ba.nLen		= 0x0000010 * sizeof(INT16);
-		ba.nAddress	= 0xff2000;
-		ba.szName	= "Asic E0 Registers";
+		ba.nAddress	= 0xff0000;
+		ba.szName	= "Asic Slot Registers";
 		BurnAcb(&ba);
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-		SCAN_VAR(ASIC27KEY);
-		SCAN_VAR(ASIC27RCNT);
+		SCAN_VAR(kov_internal_slot);
+		SCAN_VAR(kov_key);
+		SCAN_VAR(kov_response);
+		SCAN_VAR(kov_value);
+
+		SCAN_VAR(kov_c0_value);
+		SCAN_VAR(kov_cb_value);
+		SCAN_VAR(kov_fe_value);
 	}
 
 	return 0;

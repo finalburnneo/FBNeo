@@ -106,19 +106,31 @@
 
 <h3>v0.2.97.16</h3>
 <ul>
-<li>Added a debug device tracking module and updated all device, sound and CPU modules to support it [Barry]</li>
-<li>Added Bygone to the Legend of Kage driver [iq_132][</li>
+<li>Added driver for Super Locomotive [iq_132]</li>
+<li>Added clone of Warriors of Fate to the CPS-1 driver [Barry]</li>
+<li>Added Bygone to the Legend of Kage driver [iq_132]</li>
 <li>Added colour PROMs to Birdiy in Pacman driver [iq_132]</li>
 <li>Fixed spriteram2 mapping and sprite rendering in Birdiy in Pacman driver [Barry]</li>
+<li>Added correct dumps to kovsgqyz and kovsgqyza in the PGM driver [iq_132]</li>
+<li>Added clone of kovsgqyz to the PGM driver [iq_132]</li>
+<li>Fixed character selection screen in kovsgqyz and clones in the PGM driver [iq_132]</li>
+<li>Improved PGM sprite rendering [iq_132]</li>
+<li>Added PGM sprite generator to makefiles [Barry]</li>
+<li>Made V3021 RTC an external device, seperate from the PGM driver [iq_132]</li>
 <li>Removed Street Fighter II' - champion edition (street fighter 2' 920803 USA, alt) as it is a bad dump [Barry]</li>
 <li>Fixed some input and dip switch issues in the Bank Panic driver [Barry]</li>
+<li>Added a debug device tracking module and updated all device, sound and CPU modules to support it [Barry]</li>
+<li>Tidied all drivers in the cave, cps-3, megadrive, pgm, psikyo and toaplan folders, and updated to use Burn Memory module, as well as correcting any issues reported by debug tracker [Barry]</li>
 <li>Updated M6502 CPU core interface to allocate memory rather than use an array [iq_132]</li>
 <li>Updated Vez CPU core interface to allocate memory rather than use an array, and added support for auto-acknowledging IRQs [iq_132]</li>
 <li>Fixed crash when taking screenshots of vertical or flipped games using blitters other than the D3D enhanced blitter [Barry]</li>
 <li>Added option to DirectDraw blitter to force flipping as it isn't usually detected as available, see help file for more information [Barry]</li>
-<li>Fixed issue with strings in localisation templates [Barry, doomking]</li>
+<li>Fixed issue with string translation in localisation templates [Barry, doomking]</li>
+<li>Fixed issue with exporting localisation templates in GCC builds [Barry, doomking]</li>
+<li>Converted all the outstanding hard-coded strings I could see to translatable strings, let me know if you see any untranslatable strings [Barry]</li>
+<li>Tidied the string resource ids to minimise future impact on translators [Barry]</li>
 <li>Updated help file [Barry]</li>
-<li>Matched all sets to MAME 0.144u2 [Barry]</li>
+<li>Matched all sets to MAME 0.144u3 [Barry]</li>
 <li>Matched the Megadrive sets to MESS 0.144u2 [Barry]</li>
 <li>Updated the libpng library to v1.5.6 [Barry]</li>
 </ul>

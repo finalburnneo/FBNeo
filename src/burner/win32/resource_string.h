@@ -196,8 +196,8 @@
 #define IDS_MENU_2						(IDS_STRING +  844)
 #define IDS_MENU_3						(IDS_STRING +  846)
 #define IDS_MENU_4						(IDS_STRING +  848)
-#define IDS_MENU_5						(IDS_STRING +  840)
-#define IDS_MENU_6						(IDS_STRING +  842)
+#define IDS_MENU_5						(IDS_STRING +  850)
+#define IDS_MENU_6						(IDS_STRING +  852)
 
 #define IDS_LANG_ENGLISH_US				(IDS_STRING +  900)
 #define IDS_LANG_SIMP_CHINESE			(IDS_STRING +  902)

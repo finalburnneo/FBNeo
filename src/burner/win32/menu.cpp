@@ -1037,7 +1037,7 @@ void MenuUpdate()
 			SetMenuItemInfo(hMenu, MENU_PREVIOUSGAMES1 + i, FALSE, &menuItemInfo);
 			EnableMenuItem(hMenu, MENU_PREVIOUSGAMES1 + i, MF_ENABLED | MF_BYCOMMAND);
 		} else {
-			_tcscpy(szText, _T("no game selected"));
+			_tcscpy(szText, FBALoadStringEx(hAppInst, IDS_MENU_6, true));
 			
 			menuItemInfo.dwTypeData = szText;
 			menuItemInfo.cch = _tcslen(szText);

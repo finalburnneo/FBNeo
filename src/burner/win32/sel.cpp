@@ -471,7 +471,7 @@ static int SelListMake()
 	// Update the status info
 	TCHAR szRomsAvailableInfo[128] = _T("");
 	
-	_stprintf(szRomsAvailableInfo, _T("Showing %i of %i sets [%i Unavailable sets]"), nTmpDrvCount, nBurnDrvCount - 3, nMissingDrvCount);
+	_stprintf(szRomsAvailableInfo, FBALoadStringEx(hAppInst, IDS_SEL_SETSTATUS, true), nTmpDrvCount, nBurnDrvCount - 3, nMissingDrvCount);
 	SendDlgItemMessage(hSelDlg, IDC_DRVCOUNT, WM_SETTEXT, 0, (LPARAM)(LPCTSTR)szRomsAvailableInfo);
 
 	return 0;
@@ -556,7 +556,9 @@ static void SelOkay()
 
 #if NON_WORKING_PROMPT_ON_LOAD
 	if (!CheckWorkingStatus(nSelect)) {
-		if (MessageBox(hSelDlg, _T("This game isn't working. Load it anyway?"), _T("Warning!"), MB_YESNO | MB_DEFBUTTON2 | MB_ICONWARNING) == IDNO) {
+		TCHAR szWarningText[1024];
+		_stprintf(szWarningText, _T("%s"), FBALoadStringEx(hAppInst, IDS_ERR_WARNING, true));
+		if (MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NON_WORKING, true), szWarningText, MB_YESNO | MB_DEFBUTTON2 | MB_ICONWARNING) == IDNO) {
 			return;
 		}
 	}
@@ -1580,7 +1582,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 							int nOldDrvSelect = nBurnDrvActive;
 							TCHAR* pszName = BurnDrvGetText(DRV_PARENT);
 
-							_stprintf(szItemText + _tcslen(szItemText), _T(" (clone of %s"), BurnDrvGetText(DRV_PARENT));
+							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_CLONE_OF, true), BurnDrvGetText(DRV_PARENT));
 
 							for (nBurnDrvActive = 0; nBurnDrvActive < nBurnDrvCount; nBurnDrvActive++) {
 								if (!_tcsicmp(pszName, BurnDrvGetText(DRV_NAME))) {
@@ -1589,19 +1591,19 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 							}
 							if (nBurnDrvActive < nBurnDrvCount) {
 								if (BurnDrvGetText(DRV_PARENT)) {
-									_stprintf(szItemText + _tcslen(szItemText), _T(", uses ROMs from %s"), BurnDrvGetText(DRV_PARENT));
+									_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_ROMS_FROM_1, true), BurnDrvGetText(DRV_PARENT));
 								}
 							}
 							nBurnDrvActive = nOldDrvSelect;
 							bBracket = true;
 						} else {
 							if (BurnDrvGetTextA(DRV_PARENT)) {
-								_stprintf(szItemText + _tcslen(szItemText), _T("%suses ROMs from %s"), bBracket ? _T(", ") : _T(" ("), BurnDrvGetText(DRV_PARENT));
+								_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_ROMS_FROM_2, true), bBracket ? _T(", ") : _T(" ("), BurnDrvGetText(DRV_PARENT));
 								bBracket = true;
 							}
 						}
 						if (BurnDrvGetTextA(DRV_SAMPLENAME)) {
-							_stprintf(szItemText + _tcslen(szItemText), _T("%suses samples from %s"), bBracket ? _T(", ") : _T(" ("), BurnDrvGetText(DRV_SAMPLENAME));
+							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SAMPLES_FROM, true), bBracket ? _T(", ") : _T(" ("), BurnDrvGetText(DRV_SAMPLENAME));
 							bBracket = true;
 						}
 						if (bBracket) {
@@ -1615,29 +1617,31 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 						bool bUseInfo = false;
 
 						if (BurnDrvGetFlags() & BDF_PROTOTYPE) {
-							_stprintf(szItemText + _tcslen(szItemText), _T("prototype"));
+							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_PROTOTYPE, true));
 							bUseInfo = true;
 						}
 						if (BurnDrvGetFlags() & BDF_BOOTLEG) {
-							_stprintf(szItemText + _tcslen(szItemText), _T("%sbootleg"), bUseInfo ? _T(", ") : _T(""));
+							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_BOOTLEG, true), bUseInfo ? _T(", ") : _T(""));
 							bUseInfo = true;
 						}
 						if (BurnDrvGetFlags() & BDF_HACK) {
-							_stprintf(szItemText + _tcslen(szItemText), _T("%shack"), bUseInfo ? _T(", ") : _T(""));
+							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_HACK, true), bUseInfo ? _T(", ") : _T(""));
 							bUseInfo = true;
 						}
 						if (BurnDrvGetFlags() & BDF_HOMEBREW) {
-							_stprintf(szItemText + _tcslen(szItemText), _T("%shomebrew"), bUseInfo ? _T(", ") : _T(""));
+							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_HOMEBREW, true), bUseInfo ? _T(", ") : _T(""));
 							bUseInfo = true;
 						}						
 						if (BurnDrvGetFlags() & BDF_DEMO) {
-							_stprintf(szItemText + _tcslen(szItemText), _T("%sdemo"), bUseInfo ? _T(", ") : _T(""));
+							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_DEMO, true), bUseInfo ? _T(", ") : _T(""));
 							bUseInfo = true;
 						}
-						_stprintf(szItemText + _tcslen(szItemText), _T("%s%i player%s"), bUseInfo ? _T(", ") : _T(""), BurnDrvGetMaxPlayers(), (BurnDrvGetMaxPlayers() != 1) ? _T("s max") : _T(""));
+						TCHAR szPlayersMax[100];
+						_stprintf(szPlayersMax, FBALoadStringEx(hAppInst, IDS_NUM_PLAYERS_MAX, true));
+						_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_NUM_PLAYERS, true), bUseInfo ? _T(", ") : _T(""), BurnDrvGetMaxPlayers(), (BurnDrvGetMaxPlayers() != 1) ? szPlayersMax : _T(""));
 						bUseInfo = true;
 						if (BurnDrvGetText(DRV_BOARDROM)) {
-							_stprintf(szItemText + _tcslen(szItemText), _T("%suses board-ROMs from %s"), bUseInfo ? _T(", ") : _T(""), BurnDrvGetText(DRV_BOARDROM));
+							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_BOARD_ROMS_FROM, true), bUseInfo ? _T(", ") : _T(""), BurnDrvGetText(DRV_BOARDROM));
 							SendMessage(hInfoText[i], WM_SETTEXT, (WPARAM)0, (LPARAM)szItemText);
 							EnableWindow(hInfoLabel[i], TRUE);
 							bUseInfo = true;
@@ -1647,7 +1651,11 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 						break;
 					}
 					case 2: {
-						_stprintf(szItemText, _T("%s (%s, %s hardware)"), BurnDrvGetTextA(DRV_MANUFACTURER) ? BurnDrvGetText(nGetTextFlags | DRV_MANUFACTURER) : _T("unknown"), BurnDrvGetText(DRV_DATE), ((BurnDrvGetHardwareCode() & HARDWARE_SNK_MVS) == HARDWARE_SNK_MVS) ? _T("Neo Geo MVS Cartidge") : BurnDrvGetText(nGetTextFlags | DRV_SYSTEM));
+						TCHAR szUnknown[100];
+						TCHAR szCartridge[100];
+						_stprintf(szUnknown, FBALoadStringEx(hAppInst, IDS_ERR_UNKNOWN, true));
+						_stprintf(szCartridge, FBALoadStringEx(hAppInst, IDS_MVS_CARTRIDGE, true));
+						_stprintf(szItemText, FBALoadStringEx(hAppInst, IDS_HARDWARE_DESC, true), BurnDrvGetTextA(DRV_MANUFACTURER) ? BurnDrvGetText(nGetTextFlags | DRV_MANUFACTURER) : szUnknown, BurnDrvGetText(DRV_DATE), ((BurnDrvGetHardwareCode() & HARDWARE_SNK_MVS) == HARDWARE_SNK_MVS) ? szCartridge : BurnDrvGetText(nGetTextFlags | DRV_SYSTEM));
 						SendMessage(hInfoText[i], WM_SETTEXT, (WPARAM)0, (LPARAM)szItemText);
 						EnableWindow(hInfoLabel[i], TRUE);
 						break;
@@ -1677,7 +1685,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					case 4: {
 						_stprintf(szItemText, _T("%s"), BurnDrvGetTextA(DRV_COMMENT) ? BurnDrvGetText(nGetTextFlags | DRV_COMMENT) : _T(""));
 						if (BurnDrvGetFlags() & BDF_HISCORE_SUPPORTED) {
-							_stprintf(szItemText + _tcslen(szItemText), _T("%shigh scores supported"), _tcslen(szItemText) ? _T(", ") : _T(""));
+							_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_HISCORES_SUPPORTED, true), _tcslen(szItemText) ? _T(", ") : _T(""));
 						}
 						SendMessage(hInfoText[i], WM_SETTEXT, (WPARAM)0, (LPARAM)szItemText);
 						EnableWindow(hInfoLabel[i], TRUE);
@@ -1775,19 +1783,19 @@ static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 			memset(&LvCol, 0, sizeof(LvCol));
 			LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 			LvCol.cx = 200;
-			LvCol.pszText = _T("Name");	
+			LvCol.pszText = FBALoadStringEx(hAppInst, IDS_ROMINFO_NAME, true);
 			SendMessage(hList, LVM_INSERTCOLUMN , 0, (LPARAM)&LvCol);
 			LvCol.cx = 100;
-			LvCol.pszText = _T("Size (bytes)");	
+			LvCol.pszText = FBALoadStringEx(hAppInst, IDS_ROMINFO_SIZE, true);
 			SendMessage(hList, LVM_INSERTCOLUMN , 1, (LPARAM)&LvCol);
 			LvCol.cx = 100;
-			LvCol.pszText = _T("CRC32");	
+			LvCol.pszText = FBALoadStringEx(hAppInst, IDS_ROMINFO_CRC32, true);
 			SendMessage(hList, LVM_INSERTCOLUMN , 2, (LPARAM)&LvCol);
 			LvCol.cx = 200;
-			LvCol.pszText = _T("Type");	
+			LvCol.pszText = FBALoadStringEx(hAppInst, IDS_ROMINFO_TYPE, true);
 			SendMessage(hList, LVM_INSERTCOLUMN , 3, (LPARAM)&LvCol);
 			LvCol.cx = 100;
-			LvCol.pszText = _T("Flags");	
+			LvCol.pszText = FBALoadStringEx(hAppInst, IDS_ROMINFO_FLAGS, true);
 			SendMessage(hList, LVM_INSERTCOLUMN , 4, (LPARAM)&LvCol);
 			LvCol.cx = 100;
 	
@@ -1801,8 +1809,8 @@ static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				char nLen[10] = "";
 				char nCrc[8] = "";
 				char *szRomName = NULL;
-				char Type[100] = "";
-				char FormatType[100] = "";
+				TCHAR Type[100] = _T("");
+				TCHAR FormatType[100] = _T("");
 
 				memset(&ri, 0, sizeof(ri));
 	
@@ -1829,24 +1837,24 @@ static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
 				}
 		
-				if (ri.nType & BRF_ESS) sprintf(Type, "%s, Essential", Type);
-				if (ri.nType & BRF_OPT) sprintf(Type, "%s, Optional", Type);
-				if (ri.nType & BRF_PRG)	sprintf(Type, "%s, Program", Type);
-				if (ri.nType & BRF_GRA) sprintf(Type, "%s, Graphics", Type);
-				if (ri.nType & BRF_SND) sprintf(Type, "%s, Sound", Type);
-				if (ri.nType & BRF_BIOS) sprintf(Type, "%s, BIOS", Type);
+				if (ri.nType & BRF_ESS) _stprintf(Type, FBALoadStringEx(hAppInst, IDS_ROMINFO_ESSENTIAL, true), Type);
+				if (ri.nType & BRF_OPT) _stprintf(Type, FBALoadStringEx(hAppInst, IDS_ROMINFO_OPTIONAL, true), Type);
+				if (ri.nType & BRF_PRG)	_stprintf(Type, FBALoadStringEx(hAppInst, IDS_ROMINFO_PROGRAM, true), Type);
+				if (ri.nType & BRF_GRA) _stprintf(Type, FBALoadStringEx(hAppInst, IDS_ROMINFO_GRAPHICS, true), Type);
+				if (ri.nType & BRF_SND) _stprintf(Type, FBALoadStringEx(hAppInst, IDS_ROMINFO_SOUND, true), Type);
+				if (ri.nType & BRF_BIOS) _stprintf(Type, FBALoadStringEx(hAppInst, IDS_ROMINFO_BIOS, true), Type);
 		
 				for (int j = 0; j < 98; j++) {
 					FormatType[j] = Type[j + 2];
 				}
 		
 				LvItem.iSubItem = 3;
-				LvItem.pszText = ANSIToTCHAR(FormatType, NULL, 0);
+				LvItem.pszText = FormatType;
 				SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
 		
 				LvItem.iSubItem = 4;
 				LvItem.pszText = _T("");
-				if (ri.nType & BRF_NODUMP) LvItem.pszText = _T("No Dump");
+				if (ri.nType & BRF_NODUMP) LvItem.pszText = FBALoadStringEx(hAppInst, IDS_ROMINFO_NODUMP, true);
 				SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
 		
 				RomPos++;
@@ -1869,8 +1877,8 @@ static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					char nLenBoard[10] = "";
 					char nCrcBoard[8] = "";
 					char *szBoardRomName = NULL;
-					char BoardType[100] = "";
-					char BoardFormatType[100] = "";
+					TCHAR BoardType[100] = _T("");
+					TCHAR BoardFormatType[100] = _T("");
 
 					memset(&riBoard, 0, sizeof(riBoard));
 
@@ -1896,24 +1904,24 @@ static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 						SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
 					}
 			
-					if (riBoard.nType & BRF_ESS) sprintf(BoardType, "%s, Essential", BoardType);
-					if (riBoard.nType & BRF_OPT) sprintf(BoardType, "%s, Optional", BoardType);
-					if (riBoard.nType & BRF_PRG) sprintf(BoardType, "%s, Program", BoardType);
-					if (riBoard.nType & BRF_GRA) sprintf(BoardType, "%s, Graphics", BoardType);
-					if (riBoard.nType & BRF_SND) sprintf(BoardType, "%s, Sound", BoardType);
-					if (riBoard.nType & BRF_BIOS) sprintf(BoardType, "%s, BIOS", BoardType);
+					if (riBoard.nType & BRF_ESS) _stprintf(BoardType, FBALoadStringEx(hAppInst, IDS_ROMINFO_ESSENTIAL, true), BoardType);
+					if (riBoard.nType & BRF_OPT) _stprintf(BoardType, FBALoadStringEx(hAppInst, IDS_ROMINFO_OPTIONAL, true), BoardType);
+					if (riBoard.nType & BRF_PRG) _stprintf(BoardType, FBALoadStringEx(hAppInst, IDS_ROMINFO_PROGRAM, true), BoardType);
+					if (riBoard.nType & BRF_GRA) _stprintf(BoardType, FBALoadStringEx(hAppInst, IDS_ROMINFO_GRAPHICS, true), BoardType);
+					if (riBoard.nType & BRF_SND) _stprintf(BoardType, FBALoadStringEx(hAppInst, IDS_ROMINFO_SOUND, true), BoardType);
+					if (riBoard.nType & BRF_BIOS) _stprintf(BoardType, FBALoadStringEx(hAppInst, IDS_ROMINFO_BIOS, true), BoardType);
 		
 					for (int k = 0; k < 98; k++) {
 						BoardFormatType[k] = BoardType[k + 2];
 					}
 		
 					LvItem.iSubItem = 3;
-					LvItem.pszText = ANSIToTCHAR(BoardFormatType, NULL, 0);
+					LvItem.pszText = BoardFormatType;
 					SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
 			
 					LvItem.iSubItem = 4;
 					LvItem.pszText = _T("");
-					if (riBoard.nType & BRF_NODUMP) LvItem.pszText = _T("No Dump");
+					if (riBoard.nType & BRF_NODUMP) LvItem.pszText = FBALoadStringEx(hAppInst, IDS_ROMINFO_NODUMP, true);
 					SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
 			
 					RomPos++;
@@ -1930,7 +1938,7 @@ static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 			memset(&LvCol, 0, sizeof(LvCol));
 			LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 			LvCol.cx = 200;
-			LvCol.pszText = _T("Name");	
+			LvCol.pszText = FBALoadStringEx(hAppInst, IDS_ROMINFO_NAME, true);
 			SendMessage(hList, LVM_INSERTCOLUMN , 0, (LPARAM)&LvCol);
 		
 			memset(&LvItem, 0, sizeof(LvItem));
@@ -2030,7 +2038,7 @@ static void UpdateInfoROMInfo()
 		int nOldDrvSelect = nBurnDrvActive;
 		TCHAR* pszName = BurnDrvGetText(DRV_PARENT);
 
-		_stprintf(szItemText + _tcslen(szItemText), _T(" (clone of %s"), BurnDrvGetText(DRV_PARENT));
+		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_CLONE_OF, true), BurnDrvGetText(DRV_PARENT));
 
 		for (nBurnDrvActive = 0; nBurnDrvActive < nBurnDrvCount; nBurnDrvActive++) {
 			if (!_tcsicmp(pszName, BurnDrvGetText(DRV_NAME))) {
@@ -2039,19 +2047,19 @@ static void UpdateInfoROMInfo()
 		}
 		if (nBurnDrvActive < nBurnDrvCount) {
 			if (BurnDrvGetText(DRV_PARENT)) {
-				_stprintf(szItemText + _tcslen(szItemText), _T(", uses ROMs from %s"), BurnDrvGetText(DRV_PARENT));
+				_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_ROMS_FROM_1, true), BurnDrvGetText(DRV_PARENT));
 			}
 		}
 		nBurnDrvActive = nOldDrvSelect;
 		bBracket = true;
 	} else {
 		if (BurnDrvGetTextA(DRV_PARENT)) {
-			_stprintf(szItemText + _tcslen(szItemText), _T("%suses ROMs from %s"), bBracket ? _T(", ") : _T(" ("), BurnDrvGetText(DRV_PARENT));
+			_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_ROMS_FROM_2, true), bBracket ? _T(", ") : _T(" ("), BurnDrvGetText(DRV_PARENT));
 			bBracket = true;
 		}
 	}
 	if (BurnDrvGetText(DRV_BOARDROM)) {
-		_stprintf(szItemText + _tcslen(szItemText), _T("%suses board-ROMs from %s"), bBracket ? _T(", ") : _T(" ("), BurnDrvGetText(DRV_BOARDROM));
+		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_BOARD_ROMS_FROM, true), bBracket ? _T(", ") : _T(" ("), BurnDrvGetText(DRV_BOARDROM));
 		bBracket = true;
 	}
 	if (bBracket) {
@@ -2073,8 +2081,14 @@ static void UpdateInfoRelease()
 	int nGetTextFlags = nLoadMenuShowX & ASCIIONLY ? DRV_ASCIIONLY : 0;
 	TCHAR szItemText[256] = _T("");
 
-	_stprintf(szItemText, _T("%s (%s, %s %s)"), BurnDrvGetTextA(DRV_MANUFACTURER) ? BurnDrvGetText(nGetTextFlags | DRV_MANUFACTURER) : _T("unknown"), BurnDrvGetText(DRV_DATE),
-		BurnDrvGetText(nGetTextFlags | DRV_SYSTEM), (BurnDrvGetHardwareCode() & HARDWARE_PREFIX_CARTRIDGE) ? _T("cartridge") : _T("hardware"));
+	TCHAR szUnknown[100];
+	TCHAR szCartridge[100];
+	TCHAR szHardware[100];
+	_stprintf(szUnknown, FBALoadStringEx(hAppInst, IDS_ERR_UNKNOWN, true));
+	_stprintf(szCartridge, FBALoadStringEx(hAppInst, IDS_CARTRIDGE, true));
+	_stprintf(szHardware, FBALoadStringEx(hAppInst, IDS_HARDWARE, true));
+	_stprintf(szItemText, _T("%s (%s, %s %s)"), BurnDrvGetTextA(DRV_MANUFACTURER) ? BurnDrvGetText(nGetTextFlags | DRV_MANUFACTURER) : szUnknown, BurnDrvGetText(DRV_DATE),
+		BurnDrvGetText(nGetTextFlags | DRV_SYSTEM), (BurnDrvGetHardwareCode() & HARDWARE_PREFIX_CARTRIDGE) ? szCartridge : szHardware);
 
 	if (hInfoText[2]) {
 		SendMessage(hInfoText[2], WM_SETTEXT, (WPARAM)0, (LPARAM)szItemText);
@@ -2158,7 +2172,7 @@ static int MVSpreviewUpdateSlot(int nSlot, HWND hDlg)
 
 		} else {
 			hMVSpreview[nSlot] = PNGLoadBitmap(hDlg, NULL, 72, 54, 4);
-			SendMessage(hInfoText[0], WM_SETTEXT, (WPARAM)0, (LPARAM)_T("Empty"));
+			SendMessage(hInfoText[0], WM_SETTEXT, (WPARAM)0, (LPARAM)FBALoadStringEx(hAppInst, IDS_EMPTY, true));
 		}
 
 		SendDlgItemMessage(hDlg, IDC_MVS_CART1 + nSlot, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hMVSpreview[nSlot]);

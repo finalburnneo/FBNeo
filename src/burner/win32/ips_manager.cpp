@@ -377,18 +377,18 @@ static int IpsManagerInit()
 	SetWindowText(hIpsDlg, szText);
 	
 	// Fill the combo box
-	_stprintf(szLanguages[0], _T("English (US)"));
-	_stprintf(szLanguages[1], _T("Simplified Chinese"));
-	_stprintf(szLanguages[2], _T("Traditional Chinese"));
-	_stprintf(szLanguages[3], _T("Japanese"));
-	_stprintf(szLanguages[4], _T("Korean"));
-	_stprintf(szLanguages[5], _T("French"));
-	_stprintf(szLanguages[6], _T("Spanish"));
-	_stprintf(szLanguages[7], _T("Italian"));
-	_stprintf(szLanguages[8], _T("German"));
-	_stprintf(szLanguages[9], _T("Portuguese"));
-	_stprintf(szLanguages[10], _T("Polish"));
-	_stprintf(szLanguages[11], _T("Hungarian"));
+	_stprintf(szLanguages[0], FBALoadStringEx(hAppInst, IDS_LANG_ENGLISH_US, true));
+	_stprintf(szLanguages[1], FBALoadStringEx(hAppInst, IDS_LANG_SIMP_CHINESE, true));
+	_stprintf(szLanguages[2], FBALoadStringEx(hAppInst, IDS_LANG_TRAD_CHINESE, true));
+	_stprintf(szLanguages[3], FBALoadStringEx(hAppInst, IDS_LANG_JAPANESE, true));
+	_stprintf(szLanguages[4], FBALoadStringEx(hAppInst, IDS_LANG_KOREAN, true));
+	_stprintf(szLanguages[5], FBALoadStringEx(hAppInst, IDS_LANG_FRENCH, true));
+	_stprintf(szLanguages[6], FBALoadStringEx(hAppInst, IDS_LANG_SPANISH, true));
+	_stprintf(szLanguages[7], FBALoadStringEx(hAppInst, IDS_LANG_ITALIAN, true));
+	_stprintf(szLanguages[8], FBALoadStringEx(hAppInst, IDS_LANG_GERMAN, true));
+	_stprintf(szLanguages[9], FBALoadStringEx(hAppInst, IDS_LANG_PORTUGUESE, true));
+	_stprintf(szLanguages[10], FBALoadStringEx(hAppInst, IDS_LANG_POLISH, true));
+	_stprintf(szLanguages[11], FBALoadStringEx(hAppInst, IDS_LANG_HUNGARIAN, true));
 	
 	_stprintf(szLanguageCodes[0], _T("en_US"));
 	_stprintf(szLanguageCodes[1], _T("zh_CN"));

@@ -58,12 +58,12 @@
 #define IDR_MENU_AUD_PLUGIN_2				131
 #define IDR_ACCELERATOR                 	150
 
-#define MENU_MENU_0							1000
-#define MENU_MENU_1							1001
-#define MENU_MENU_2							1002
-#define MENU_MENU_3							1003
-#define MENU_MENU_4							1004
-#define MENU_MENU_5							1005
+#define MENU_MENU_0							2000
+#define MENU_MENU_1							2001
+#define MENU_MENU_2							2002
+#define MENU_MENU_3							2003
+#define MENU_MENU_4							2004
+#define MENU_MENU_5							2005
 
 #define IDC_INPD_LIST        	           	20000
 #define IDC_INPD_NEWMACRO					20001
@@ -184,12 +184,13 @@
 #define IDC_ROMSAVAILABLEINFO				20126
 #define IDC_INPD_SAVE_AS_PRESET				20127
 #define IDC_LIST2							20128
-#define IDC_IPSMAN_DESELECTALL				20129
-#define IDC_SEL_IPSMANAGER					20130
-#define IDC_SEL_APPLYIPS					20131
-#define IDC_SEL_IPSGROUP					20132
-#define IDC_SEL_SEARCH						20133
-#define IDC_SEL_SEARCHGROUP					20134
+#define IDC_IPSMAN_LANGUAGE					20129
+#define IDC_IPSMAN_DESELECTALL				20130
+#define IDC_SEL_IPSMANAGER					20131
+#define IDC_SEL_APPLYIPS					20132
+#define IDC_SEL_IPSGROUP					20133
+#define IDC_SEL_SEARCH						20134
+#define IDC_SEL_SEARCHGROUP					20135
 
 #define IDC_SUPPORTDIR_EDIT1				20150
 #define IDC_SUPPORTDIR_EDIT2				20151
@@ -307,6 +308,12 @@
 #define IDC_MVS_CLEAR4						20733
 #define IDC_MVS_CLEAR5						20734
 #define IDC_MVS_CLEAR6						20735
+#define IDC_MVS_SLOT1						20736
+#define IDC_MVS_SLOT2						20737
+#define IDC_MVS_SLOT3						20738
+#define IDC_MVS_SLOT4						20739
+#define IDC_MVS_SLOT5						20740
+#define IDC_MVS_SLOT6						20741
 
 #define IDC_NCD_LIST						20800
 #define IDC_NCD_FRONT_PIC					20801

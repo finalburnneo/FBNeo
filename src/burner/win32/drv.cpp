@@ -136,7 +136,7 @@ int DrvInit(int nDrvNum, bool bRestore)
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOCD) {
 		if (CDEmuInit()) {
-			FBAPopupAddText(PUF_TEXT_NO_TRANSLATE, _T("Couldn't initialise CD emulation.\n"));
+			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_CDEMU_INI_FAIL));
 			FBAPopupDisplay(PUF_TYPE_ERROR);
 
 			POST_INITIALISE_MESSAGE;

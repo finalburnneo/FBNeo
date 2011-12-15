@@ -119,11 +119,11 @@ static void NeoCDList_InitListView()
 	LvCol.mask		= LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 
 	LvCol.cx		= 445;
-	LvCol.pszText	= _T("Title");
+	LvCol.pszText	= FBALoadStringEx(hAppInst, IDS_NGCD_TITLE, true);
 	SendMessage(hListView, LVM_INSERTCOLUMN , 0, (LPARAM)&LvCol);
 
 	LvCol.cx		= 70;
-	LvCol.pszText	= _T("NGCD-ID");
+	LvCol.pszText	= FBALoadStringEx(hAppInst, IDS_NGCD_NGCDID, true);
 	SendMessage(hListView, LVM_INSERTCOLUMN , 1, (LPARAM)&LvCol);
 
 	// Setup ListView Icons
@@ -1008,7 +1008,9 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 		
 		TreeView_SetItemHeight(hListView, 40);
 		
-		SetWindowText(hDlg, _T(APP_TITLE) _T(SEPERATOR_1) _T("Neo Geo CDZ") _T(SEPERATOR_1) _T("Select Game"));
+		TCHAR szDialogTitle[200];
+		_stprintf(szDialogTitle, FBALoadStringEx(hAppInst, IDS_NGCD_DIAG_TITLE, true), _T(APP_TITLE), _T(SEPERATOR_1), _T(SEPERATOR_1));
+		SetWindowText(hDlg, szDialogTitle);
 
 		hProcessThread = (HANDLE)_beginthreadex(NULL, 0, NeoCDList_DoProc, NULL, 0, &ProcessThreadID);
 		

@@ -6,7 +6,7 @@
 bool bLocalisationActive = false;
 TCHAR szLocalisationTemplate[MAX_PATH] = _T("");
 
-static const unsigned int nMaxResources = 1000;
+static const unsigned int nMaxResources = 2000;
 
 static int nFBACodepage;
 
@@ -1561,7 +1561,7 @@ void FBALocaliseExit()
 	bLocalisationActive = false;
 
 	if (FBAResourceInfo) {
-		for (int i = 0; i < 1000; i++) {
+		for (unsigned int i = 0; i < nMaxResources; i++) {
 			if (FBAResourceInfo[i].nResourceFlags & RES_DEALLOCATE) {
 				if (FBAResourceInfo[i].pResourceTranslation) {
 					free(FBAResourceInfo[i].pResourceTranslation);
@@ -1597,12 +1597,12 @@ int FBALocaliseInit(TCHAR* pszTemplate)
 		return 0;
 	}
 
-	FBAResourceInfo = (FBAResourceInfo_t*)malloc(1000 * sizeof(FBAResourceInfo_t));
+	FBAResourceInfo = (FBAResourceInfo_t*)malloc(nMaxResources * sizeof(FBAResourceInfo_t));
 	if (FBAResourceInfo == NULL) {
 		return 1;
 	}
 
-	memset(FBAResourceInfo, 0, 1000 * sizeof(FBAResourceInfo_t));
+	memset(FBAResourceInfo, 0, nMaxResources * sizeof(FBAResourceInfo_t));
 
 	nRet = FBALocaliseParseFile(pszTemplate);
 	if (nRet > 0) {

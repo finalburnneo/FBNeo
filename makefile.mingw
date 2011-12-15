@@ -119,6 +119,7 @@ neo_sprite_func.h = $(srcdir)depend/generated/neo_sprite_func.h
 cave_tile_func.h = $(srcdir)depend/generated/cave_tile_func.h
 cave_sprite_func.h = $(srcdir)depend/generated/cave_sprite_func.h
 psikyo_tile_func.h = $(srcdir)depend/generated/psikyo_tile_func.h
+pgm_sprite.h = $(srcdir)depend/generated/pgm_sprite.h
 build_details.h = $(srcdir)depend/generated/build_details.h
 
 allobj	= $(objdir)cpu/m68k/m68kcpu.o $(objdir)cpu/m68k/m68kopnz.o $(objdir)cpu/m68k/m68kopdm.o $(objdir)cpu/m68k/m68kopac.o $(objdir)cpu/m68k/m68kops.o \
@@ -570,6 +571,19 @@ psikyo_tile.d psikyo_tile.o psikyosprite.d psikyo_sprite.o: $(psikyo_tile_func.h
 $(psikyo_tile_func.h):	$(srcdir)depend/scripts/psikyo_tile_func.pl
 	$(srcdir)depend/scripts/psikyo_tile_func.pl -o $(psikyo_tile_func.h)
 
+#
+#	Extra rules for generated header file pgm_sprite.h, needed by pgm_draw.cpp
+#
+
+pgm_draw.d pgm_draw.o:	$(pgm_sprite.h)
+
+$(pgm_sprite.h):	pgm_sprite_create.cpp
+	@echo Generating $(srcdir)depend/generated/$(@F)...
+	@$(CC) -mconsole $(CXXFLAGS) $(LDFLAGS) $< \
+		-o $(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe)
+	@$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) >$@
+
+	
 ifeq ($(MAKELEVEL),2)
 ifdef DEPEND
 

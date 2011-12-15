@@ -648,21 +648,21 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 static struct BurnRomInfo suprlocoRomDesc[] = {
 	{ "ic37.bin",		0x4000, 0x57f514dd, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "ic15.bin",		0x4000, 0x5a1d2fb0, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ic28.bin",		0x4000, 0xa597828a, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "epr-5228.28",	0x4000, 0xa597828a, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "ic64.bin",		0x2000, 0x0aa57207, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "epr-5222.64",	0x2000, 0x0aa57207, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "ic63.bin",		0x2000, 0xe571fe81, 3 | BRF_GRA },           //  4 Background data
-	{ "ic62.bin",		0x2000, 0x6130f93c, 3 | BRF_GRA },           //  5
-	{ "ic61.bin",		0x2000, 0x3b03004e, 3 | BRF_GRA },           //  6
+	{ "epr-5225.63",	0x2000, 0xe571fe81, 3 | BRF_GRA },           //  4 Background data
+	{ "epr-5224.62",	0x2000, 0x6130f93c, 3 | BRF_GRA },           //  5
+	{ "epr-5223.61",	0x2000, 0x3b03004e, 3 | BRF_GRA },           //  6
 
-	{ "ic55.bin",		0x4000, 0xee2d3ed3, 4 | BRF_GRA },           //  7 Sprite data
-	{ "ic56.bin",		0x2000, 0xf04a4b50, 4 | BRF_GRA },           //  8
+	{ "epr-5229.55",	0x4000, 0xee2d3ed3, 4 | BRF_GRA },           //  7 Sprite data
+	{ "epr-5230.56",	0x2000, 0xf04a4b50, 4 | BRF_GRA },           //  8
 
-	{ "ic100.bin",		0x0200, 0x7b0c8ce5, 5 | BRF_GRA },           //  9 Color Proms
-	{ "ic89.bin",		0x0400, 0x1d4b02cb, 5 | BRF_GRA },           // 10
+	{ "pr-5220.100",	0x0200, 0x7b0c8ce5, 5 | BRF_GRA },           //  9 Color Proms
+	{ "pr-5219.89",		0x0400, 0x1d4b02cb, 5 | BRF_GRA },           // 10
 
-	{ "ic7.bin",		0x0020, 0x89ba674f, 0 | BRF_OPT },           // 11 Unknown
+	{ "pr-5221.7",		0x0020, 0x89ba674f, 0 | BRF_OPT },           // 11 Unknown
 };
 
 STD_ROM_PICK(suprloco)
@@ -684,21 +684,21 @@ struct BurnDriver BurnDrvSuprloco = {
 static struct BurnRomInfo suprlocoaRomDesc[] = {
 	{ "epr-5226a.37",	0x4000, 0x33b02368, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "epr-5227a.15",	0x4000, 0xa5e67f50, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ic28.bin",		0x4000, 0xa597828a, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "epr-5228.28",	0x4000, 0xa597828a, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "ic64.bin",		0x2000, 0x0aa57207, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "epr-5222.64",	0x2000, 0x0aa57207, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "ic63.bin",		0x2000, 0xe571fe81, 3 | BRF_GRA },           //  4 Background data
-	{ "ic62.bin",		0x2000, 0x6130f93c, 3 | BRF_GRA },           //  5
-	{ "ic61.bin",		0x2000, 0x3b03004e, 3 | BRF_GRA },           //  6
+	{ "epr-5225.63",	0x2000, 0xe571fe81, 3 | BRF_GRA },           //  4 Background data
+	{ "epr-5224.62",	0x2000, 0x6130f93c, 3 | BRF_GRA },           //  5
+	{ "epr-5223.61",	0x2000, 0x3b03004e, 3 | BRF_GRA },           //  6
 
-	{ "ic55.bin",		0x4000, 0xee2d3ed3, 4 | BRF_GRA },           //  7 Sprite data
-	{ "ic56.bin",		0x2000, 0xf04a4b50, 4 | BRF_GRA },           //  8
+	{ "epr-5229.55",	0x4000, 0xee2d3ed3, 4 | BRF_GRA },           //  7 Sprite data
+	{ "epr-5230.56",	0x2000, 0xf04a4b50, 4 | BRF_GRA },           //  8
 
-	{ "ic100.bin",		0x0200, 0x7b0c8ce5, 5 | BRF_GRA },           //  9 Color Proms
-	{ "ic89.bin",		0x0400, 0x1d4b02cb, 5 | BRF_GRA },           // 10
+	{ "pr-5220.100",	0x0200, 0x7b0c8ce5, 5 | BRF_GRA },           //  9 Color Proms
+	{ "pr-5219.89",		0x0400, 0x1d4b02cb, 5 | BRF_GRA },           // 10
 
-	{ "ic7.bin",		0x0020, 0x89ba674f, 0 | BRF_OPT },           // 11 Unknown
+	{ "pr-5221.7",		0x0020, 0x89ba674f, 0 | BRF_OPT },           // 11 Unknown
 };
 
 STD_ROM_PICK(suprlocoa)

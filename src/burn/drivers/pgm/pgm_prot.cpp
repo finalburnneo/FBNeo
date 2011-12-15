@@ -353,7 +353,7 @@ static UINT16 __fastcall kov_asic27_read(UINT32 offset)
 
 static void kov_asic27_reset()
 {
-	memset(kov_slots, 0, 16 * sizeof(INT32));
+//	memset(kov_slots, 0, 16 * sizeof(INT32));
 
 	kov_internal_slot = 0;
 	kov_key = 0;
@@ -2182,7 +2182,7 @@ INT32 kov_asic27Scan(INT32 nAction, INT32 */*pnMin*/)
 
 	if (nAction & ACB_MEMORY_RAM) {
 		ba.Data		= (UINT8*)kov_slots;
-		ba.nLen		= 0x0000010 * sizeof(INT16);
+		ba.nLen		= 0x0000010 * sizeof(INT32);
 		ba.nAddress	= 0xff0000;
 		ba.szName	= "Asic Slot Registers";
 		BurnAcb(&ba);

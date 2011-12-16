@@ -9953,7 +9953,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "willow"      , CPS_B_03    , mapper_WL24B , 0, NULL                },
 	{ "willowj"     , CPS_B_03    , mapper_WL24B , 0, NULL                },
 	{ "willowo"     , CPS_B_03    , mapper_WL24B , 0, NULL                },
-	{ "wof"         , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
+	{ "wof"         , CPS_B_21_QS1, mapper_TK263B, 0, wof_decode          },
 	{ "wofr1"       , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "wofa"        , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "wofu"        , CPS_B_21_QS1, mapper_TK263B, 0, wof_decode          },

@@ -664,58 +664,58 @@ void MenuUpdate()
 				if (bVidScanHalf) {
 					var = MENU_SCAN50;
 				} else {
-					var = MENU_SCAN;
+					var = MENU_BASIC_SCAN;
 				}
 			} else {
-				var = MENU_NORMAL;
+				var = MENU_BASIC_NORMAL;
 			}
-			CheckMenuRadioItem(hMenu, MENU_NORMAL, MENU_SCAN50, var, MF_BYCOMMAND);
-			CheckMenuItem(hMenu, MENU_ROTSCAN, bVidScanRotate ? MF_CHECKED : MF_UNCHECKED);
+			CheckMenuRadioItem(hMenu, MENU_BASIC_NORMAL, MENU_SCAN50, var, MF_BYCOMMAND);
+			CheckMenuItem(hMenu, MENU_BASIC_ROTSCAN, bVidScanRotate ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_FORCE_FLIP, bVidForceFlip ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_RES_ARCADE, bVidArcaderes ? MF_CHECKED : MF_UNCHECKED);
 			break;
 		case 1:
 			CheckMenuItem(hMenu, MENU_BILINEAR, bVidBilinear ? MF_CHECKED : MF_UNCHECKED);
-			CheckMenuItem(hMenu, MENU_SCAN, bVidScanlines ? MF_CHECKED : MF_UNCHECKED);
+			CheckMenuItem(hMenu, MENU_ENHANCED_SCAN, bVidScanlines ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_PHOSPHOR, bVidScanDelay ? MF_CHECKED : MF_UNCHECKED);
 
 			CheckMenuItem(hMenu, MENU_PRESCALE, nVidBlitterOpt[nVidSelect] & 0x01000000 ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_SOFTFX, nVidBlitterOpt[nVidSelect] & 0x02000000 ? MF_CHECKED : MF_UNCHECKED);
 
-			var = ((unsigned long long)nVidBlitterOpt[nVidSelect] >> 32) + MENU_SOFT_STRETCH;
-			CheckMenuRadioItem(hMenu, MENU_SOFT_STRETCH, MENU_SOFT_STRETCH + 25, var, MF_BYCOMMAND);
-			CheckMenuItem(hMenu, MENU_SOFT_AUTOSIZE, (nVidBlitterOpt[nVidSelect] & 0x04000000) ? MF_CHECKED : MF_UNCHECKED);
+			var = ((unsigned long long)nVidBlitterOpt[nVidSelect] >> 32) + MENU_ENHANCED_SOFT_STRETCH;
+			CheckMenuRadioItem(hMenu, MENU_ENHANCED_SOFT_STRETCH, MENU_ENHANCED_SOFT_STRETCH + 25, var, MF_BYCOMMAND);
+			CheckMenuItem(hMenu, MENU_ENHANCED_SOFT_AUTOSIZE, (nVidBlitterOpt[nVidSelect] & 0x04000000) ? MF_CHECKED : MF_UNCHECKED);
 			if (nVidBlitterOpt[nVidSelect] & 0x00100000) {
 				var = MENU_3DPROJECTION;
 			} else {
 				if (nVidBlitterOpt[nVidSelect] & 0x00010000) {
 					var = MENU_RGBEFFECTS;
 				} else {
-   					var = MENU_NORMAL;
+   					var = MENU_ENHANCED_NORMAL;
 				}
 			}
-			CheckMenuRadioItem(hMenu, MENU_NORMAL, MENU_NORMAL, var, MF_BYCOMMAND);
+			CheckMenuRadioItem(hMenu, MENU_ENHANCED_NORMAL, MENU_ENHANCED_NORMAL, var, MF_BYCOMMAND);
 			CheckMenuRadioItem(hMenu, MENU_RGBEFFECTS, MENU_3DPROJECTION, var, MF_BYCOMMAND);
 
 			CheckMenuItem(hMenu, MENU_EFFECT_AUTO, (nVidBlitterOpt[nVidSelect] & 0x00020000) ? MF_CHECKED : MF_UNCHECKED);
 			var = MENU_EFFECT_01 + (nVidBlitterOpt[nVidSelect] & 0x000000FF) - 8;
 			CheckMenuRadioItem(hMenu, MENU_EFFECT_01, MENU_EFFECT_08, var, MF_BYCOMMAND);
 			CheckMenuItem(hMenu, MENU_3DUSELIGHTING, nVidBlitterOpt[nVidSelect] & 0x00200000 ? MF_CHECKED : MF_UNCHECKED);
-			CheckMenuItem(hMenu, MENU_ROTSCAN, bVidScanRotate ? MF_CHECKED : MF_UNCHECKED);
+			CheckMenuItem(hMenu, MENU_ENHANCED_ROTSCAN, bVidScanRotate ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_FORCE_16BIT, bVidForce16bit ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_TEXTUREMANAGE, (nVidTransferMethod & 1) ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_RES_ARCADE, bVidArcaderes ? MF_CHECKED : MF_UNCHECKED);
 			break;
 		case 2:
-			var = (nVidBlitterOpt[nVidSelect] & 0xFF) + MENU_SOFT_STRETCH;
-			CheckMenuRadioItem(hMenu, MENU_SOFT_STRETCH, MENU_SOFT_STRETCH + 25, var, MF_BYCOMMAND);
-			CheckMenuItem(hMenu, MENU_SOFT_AUTOSIZE, (nVidBlitterOpt[nVidSelect] & 0x0100) ? MF_CHECKED : MF_UNCHECKED);
+			var = (nVidBlitterOpt[nVidSelect] & 0xFF) + MENU_SOFTFX_SOFT_STRETCH;
+			CheckMenuRadioItem(hMenu, MENU_SOFTFX_SOFT_STRETCH, MENU_SOFTFX_SOFT_STRETCH + 25, var, MF_BYCOMMAND);
+			CheckMenuItem(hMenu, MENU_SOFTFX_SOFT_AUTOSIZE, (nVidBlitterOpt[nVidSelect] & 0x0100) ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_SOFT_DIRECTACCESS, !(nVidBlitterOpt[nVidSelect] & 0x0200) ? MF_CHECKED : MF_UNCHECKED);
 			break;
 		case 3:
 			var = ((nVidBlitterOpt[nVidSelect] >> 24) & 0x03) + MENU_DX9_POINT;
 			CheckMenuRadioItem(hMenu, MENU_DX9_POINT, MENU_DX9_POINT + 2, var, MF_BYCOMMAND);
-			CheckMenuItem(hMenu, MENU_SCAN, bVidScanlines ? MF_CHECKED : MF_UNCHECKED);
+			CheckMenuItem(hMenu, MENU_EXP_SCAN, bVidScanlines ? MF_CHECKED : MF_UNCHECKED);
 
 			var = MENU_DX9_CUBIC_CUSTOM;
 			if (dVidCubicB > -0.001 && dVidCubicB <  0.001 && dVidCubicC > -0.001 && dVidCubicC <  0.001) {
@@ -748,9 +748,9 @@ void MenuUpdate()
 			CheckMenuRadioItem(hMenu, MENU_DX9_CUBIC0, MENU_DX9_CUBIC0 + 8, var, MF_BYCOMMAND);
 			break;
 		case 4:
-			var = (nVidBlitterOpt[nVidSelect] & 0xFF) + MENU_SOFT_STRETCH;
-			CheckMenuRadioItem(hMenu, MENU_SOFT_STRETCH, MENU_SOFT_STRETCH + 25, var, MF_BYCOMMAND);
-			CheckMenuItem(hMenu, MENU_SOFT_AUTOSIZE, (nVidBlitterOpt[nVidSelect] & 0x0100) ? MF_CHECKED : MF_UNCHECKED);
+			var = (nVidBlitterOpt[nVidSelect] & 0xFF) + MENU_DX9_ALT_SOFT_STRETCH;
+			CheckMenuRadioItem(hMenu, MENU_DX9_ALT_SOFT_STRETCH, MENU_DX9_ALT_SOFT_STRETCH + 25, var, MF_BYCOMMAND);
+			CheckMenuItem(hMenu, MENU_DX9_ALT_SOFT_AUTOSIZE, (nVidBlitterOpt[nVidSelect] & 0x0100) ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuRadioItem(hMenu, MENU_DX9_ALT_POINT, MENU_DX9_ALT_POINT + 1, MENU_DX9_ALT_POINT + bVidDX9Bilinear, MF_BYCOMMAND);
 			CheckMenuItem(hMenu, MENU_DX9_ALT_HARDWAREVERTEX, (bVidHardwareVertex) ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_DX9_ALT_MOTIONBLUR, (bVidMotionBlur) ? MF_CHECKED : MF_UNCHECKED);
@@ -847,15 +847,27 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_AUTOSWITCHFULL, bVidAutoSwitchFull ? MF_CHECKED : MF_UNCHECKED);
 
 	if (nVidTransferMethod == 0) {
-		var = MENU_VIDEOMEM;
+		var = MENU_BASIC_VIDEOMEM;
 	} else {
 		if (nVidTransferMethod == -1) {
-			var = MENU_MEMAUTO;
+			var = MENU_BASIC_MEMAUTO;
 		} else {
-			var = MENU_SYSMEM;
+			var = MENU_BASIC_SYSMEM;
 		}
 	}
-	CheckMenuRadioItem(hMenu, MENU_MEMAUTO, MENU_SYSMEM, var, MF_BYCOMMAND);
+	CheckMenuRadioItem(hMenu, MENU_BASIC_MEMAUTO, MENU_BASIC_SYSMEM, var, MF_BYCOMMAND);
+	
+	if (nVidTransferMethod == 0) {
+		var = MENU_SOFTFX_VIDEOMEM;
+	} else {
+		if (nVidTransferMethod == -1) {
+			var = MENU_SOFTFX_MEMAUTO;
+		} else {
+			var = MENU_SOFTFX_SYSMEM;
+		}
+	}
+	CheckMenuRadioItem(hMenu, MENU_SOFTFX_MEMAUTO, MENU_SOFTFX_SYSMEM, var, MF_BYCOMMAND);
+	
 	if (nWindowSize <= 4) {
 		var = MENU_AUTOSIZE + nWindowSize;
 	} else {

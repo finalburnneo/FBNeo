@@ -840,7 +840,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				ofn.hwndOwner = hScrnWnd;
 				ofn.lpstrFile = CDEmuImage;
 				ofn.nMaxFile = sizeof(CDEmuImage);
-				ofn.lpstrTitle = _T("Select CD Image");
+				TCHAR szTitle[100];
+				_stprintf(szTitle, FBALoadStringEx(hAppInst, IDS_CD_SELECT_IMAGE_TITLE, true));
+				ofn.lpstrTitle = szTitle;
 				ofn.lpstrFilter = _T("CD images (*.iso,*.cue)\0*.iso;*.cue\0\0)");
 				ofn.lpstrInitialDir = _T(".");
 				ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
@@ -1484,17 +1486,20 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			bVidAutoSwitchFull = !bVidAutoSwitchFull;
 			break;
 
-		case MENU_MEMAUTO:
+		case MENU_BASIC_MEMAUTO:
+		case MENU_SOFTFX_MEMAUTO:
 			nVidTransferMethod = -1;
 			POST_INITIALISE_MESSAGE;
 			break;
 
-		case MENU_VIDEOMEM:
+		case MENU_BASIC_VIDEOMEM:
+		case MENU_SOFTFX_VIDEOMEM:
 			nVidTransferMethod = 0;
 			POST_INITIALISE_MESSAGE;
 			break;
 
-		case MENU_SYSMEM:
+		case MENU_BASIC_SYSMEM:
+		case MENU_SOFTFX_SYSMEM:
 			nVidTransferMethod = 1;
 			POST_INITIALISE_MESSAGE;
 			break;
@@ -1844,7 +1849,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			
 		case MENU_CHEATSEARCH_START: {
 			CheatSearchStart();
-			VidSAddChatMsg(NULL, 0xFFFFFF, _T("New cheat search started"), 0xFFBFBF);
+			
+			TCHAR szText[100];
+			_stprintf(szText, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_NEW, true));
+			VidSAddChatMsg(NULL, 0xFFFFFF, szText, 0xFFBFBF);
+			
 			EnableMenuItem(hMenu, MENU_CHEATSEARCH_NOCHANGE, MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_CHEATSEARCH_CHANGE, MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_CHEATSEARCH_DECREASE, MF_ENABLED | MF_BYCOMMAND);
@@ -1858,12 +1867,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			TCHAR tmpmsg[256];
 			unsigned int nValues = CheatSearchValueNoChange();
 
-			_sntprintf(tmpmsg, 256, _T("%i Addresses Matched"), nValues);
+			_stprintf(tmpmsg, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_ADD_MATCH, true), nValues);
 			VidSAddChatMsg(NULL, 0xFFFFFF, tmpmsg, 0xFFBFBF);
 			
 			if (nValues <= CHEATSEARCH_SHOWRESULTS) {
 				for (unsigned int i = 0; i < nValues; i++) {
-					_sntprintf(tmpmsg, 256, _T("Address %08X Value %02X"), CheatSearchShowResultAddresses[i], CheatSearchShowResultValues[i]);
+					_stprintf(tmpmsg, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_RESULTS, true), CheatSearchShowResultAddresses[i], CheatSearchShowResultValues[i]);
 					VidSAddChatMsg(NULL, 0xFFFFFF, tmpmsg, 0xFFBFBF);
 				}
 			}
@@ -1874,12 +1883,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			TCHAR tmpmsg[256];
 			unsigned int nValues = CheatSearchValueChange();
 
-			_sntprintf(tmpmsg, 256, _T("%i Addresses Matched"), nValues);
+			_stprintf(tmpmsg, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_ADD_MATCH, true), nValues);
 			VidSAddChatMsg(NULL, 0xFFFFFF, tmpmsg, 0xFFBFBF);
 			
 			if (nValues <= CHEATSEARCH_SHOWRESULTS) {
 				for (unsigned int i = 0; i < nValues; i++) {
-					_sntprintf(tmpmsg, 256, _T("Address %08X Value %02X"), CheatSearchShowResultAddresses[i], CheatSearchShowResultValues[i]);
+					_stprintf(tmpmsg, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_RESULTS, true), CheatSearchShowResultAddresses[i], CheatSearchShowResultValues[i]);
 					VidSAddChatMsg(NULL, 0xFFFFFF, tmpmsg, 0xFFBFBF);
 				}
 			}
@@ -1890,12 +1899,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			TCHAR tmpmsg[256];
 			unsigned int nValues = CheatSearchValueDecreased();
 
-			_sntprintf(tmpmsg, 256, _T("%i Addresses Matched"), nValues);
+			_stprintf(tmpmsg, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_ADD_MATCH, true), nValues);
 			VidSAddChatMsg(NULL, 0xFFFFFF, tmpmsg, 0xFFBFBF);
 			
 			if (nValues <= CHEATSEARCH_SHOWRESULTS) {
 				for (unsigned int i = 0; i < nValues; i++) {
-					_sntprintf(tmpmsg, 256, _T("Address %08X Value %02X"), CheatSearchShowResultAddresses[i], CheatSearchShowResultValues[i]);
+					_stprintf(tmpmsg, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_RESULTS, true), CheatSearchShowResultAddresses[i], CheatSearchShowResultValues[i]);
 					VidSAddChatMsg(NULL, 0xFFFFFF, tmpmsg, 0xFFBFBF);
 				}
 			}
@@ -1907,12 +1916,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 			unsigned int nValues = CheatSearchValueIncreased();
 
-			_sntprintf(tmpmsg, 256, _T("%i Addresses Matched"), nValues);
+			_stprintf(tmpmsg, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_ADD_MATCH, true), nValues);
 			VidSAddChatMsg(NULL, 0xFFFFFF, tmpmsg, 0xFFBFBF);
 			
 			if (nValues <= CHEATSEARCH_SHOWRESULTS) {
 				for (unsigned int i = 0; i < nValues; i++) {
-					_sntprintf(tmpmsg, 256, _T("Address %08X Value %02X"), CheatSearchShowResultAddresses[i], CheatSearchShowResultValues[i]);
+					_stprintf(tmpmsg, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_RESULTS, true), CheatSearchShowResultAddresses[i], CheatSearchShowResultValues[i]);
 					VidSAddChatMsg(NULL, 0xFFFFFF, tmpmsg, 0xFFBFBF);
 				}
 			}
@@ -1926,7 +1935,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		
 		case MENU_CHEATSEARCH_EXIT: {
 			CheatSearchExit();
-			VidSAddChatMsg(NULL, 0xFFFFFF, _T("Cheat search exited"), 0xFFBFBF);
+			
+			TCHAR szText[100];
+			_stprintf(szText, FBALoadStringEx(hAppInst, IDS_CHEAT_SEARCH_EXIT, true));
+			VidSAddChatMsg(NULL, 0xFFFFFF, szText, 0xFFBFBF);
+			
 			EnableMenuItem(hMenu, MENU_CHEATSEARCH_NOCHANGE, MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_CHEATSEARCH_CHANGE, MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_CHEATSEARCH_DECREASE, MF_GRAYED | MF_BYCOMMAND);
@@ -2005,12 +2018,6 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 
-		case MENU_WWW_FORUM:
-			if (!nVidFullscreen) {
-				ShellExecute(NULL, _T("open"), _T("http://www.ojko.com/phpbb/viewforum.php?f=27"), NULL, NULL, SW_SHOWNORMAL);
-			}
-			break;
-			
 		case MENU_WWW_NSFORUM:
 			if (!nVidFullscreen) {
 				ShellExecute(NULL, _T("open"), _T("http://neosource.1emu.net/forums/"), NULL, NULL, SW_SHOWNORMAL);
@@ -2026,11 +2033,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case 0: {
 			switch (id) {
 				// Options for the Default DirectDraw blitter
-				case MENU_NORMAL:
+				case MENU_BASIC_NORMAL:
 					bVidScanlines = 0;
 					POST_INITIALISE_MESSAGE;
 					break;
-				case MENU_SCAN:
+				case MENU_BASIC_SCAN:
 					bVidScanlines = 1;
 					bVidScanHalf = 0;
 					POST_INITIALISE_MESSAGE;
@@ -2041,7 +2048,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					POST_INITIALISE_MESSAGE;
 					break;
 
-				case MENU_ROTSCAN:
+				case MENU_BASIC_ROTSCAN:
 					bVidScanRotate = !bVidScanRotate;
 					POST_INITIALISE_MESSAGE;
 					break;
@@ -2074,11 +2081,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					bVidScanDelay = !bVidScanDelay;
 					break;
 
-				case MENU_NORMAL:
+				case MENU_ENHANCED_NORMAL:
 					nVidBlitterOpt[nVidSelect] &= ~0x00110000;
 					POST_INITIALISE_MESSAGE;
 					break;
-				case MENU_SCAN:
+				case MENU_ENHANCED_SCAN:
 					bVidScanlines = !bVidScanlines;
 					nVidBlitterOpt[nVidSelect] &= ~0x00010000;
 					POST_INITIALISE_MESSAGE;
@@ -2135,7 +2142,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					}
 					break;
 
-				case MENU_ROTSCAN:
+				case MENU_ENHANCED_ROTSCAN:
 					bVidScanRotate = !bVidScanRotate;
 					POST_INITIALISE_MESSAGE;
 					break;
@@ -2150,42 +2157,42 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					POST_INITIALISE_MESSAGE;
 					break;
 
-				case MENU_SOFT_STRETCH:
-				case MENU_SOFT_SCALE2X:
-				case MENU_SOFT_SCALE3X:
-				case MENU_SOFT_2XPM_LQ:
-				case MENU_SOFT_2XPM_HQ:
-				case MENU_SOFT_EAGLE:
-				case MENU_SOFT_SUPEREAGLE:
-				case MENU_SOFT_2XSAI:
-				case MENU_SOFT_SUPER2XSAI:
-				case MENU_SOFT_SUPEREAGLE_VBA:
-				case MENU_SOFT_2XSAI_VBA:
-				case MENU_SOFT_SUPER2XSAI_VBA:
-				case MENU_SOFT_SUPERSCALE:
-				case MENU_SOFT_SUPERSCALE75:
-				case MENU_SOFT_HQ2X:
-				case MENU_SOFT_HQ3X:
-				case MENU_SOFT_HQ4X:
-				case MENU_SOFT_HQ2XS_VBA:
-				case MENU_SOFT_HQ3XS_VBA:
-				case MENU_SOFT_HQ2XS_SNES9X:
-				case MENU_SOFT_HQ3XS_SNES9X:
-				case MENU_SOFT_HQ2XBOLD:
-				case MENU_SOFT_HQ3XBOLD:
-				case MENU_SOFT_EPXB:
-				case MENU_SOFT_EPXC: {
+				case MENU_ENHANCED_SOFT_STRETCH:
+				case MENU_ENHANCED_SOFT_SCALE2X:
+				case MENU_ENHANCED_SOFT_SCALE3X:
+				case MENU_ENHANCED_SOFT_2XPM_LQ:
+				case MENU_ENHANCED_SOFT_2XPM_HQ:
+				case MENU_ENHANCED_SOFT_EAGLE:
+				case MENU_ENHANCED_SOFT_SUPEREAGLE:
+				case MENU_ENHANCED_SOFT_2XSAI:
+				case MENU_ENHANCED_SOFT_SUPER2XSAI:
+				case MENU_ENHANCED_SOFT_SUPEREAGLE_VBA:
+				case MENU_ENHANCED_SOFT_2XSAI_VBA:
+				case MENU_ENHANCED_SOFT_SUPER2XSAI_VBA:
+				case MENU_ENHANCED_SOFT_SUPERSCALE:
+				case MENU_ENHANCED_SOFT_SUPERSCALE75:
+				case MENU_ENHANCED_SOFT_HQ2X:
+				case MENU_ENHANCED_SOFT_HQ3X:
+				case MENU_ENHANCED_SOFT_HQ4X:
+				case MENU_ENHANCED_SOFT_HQ2XS_VBA:
+				case MENU_ENHANCED_SOFT_HQ3XS_VBA:
+				case MENU_ENHANCED_SOFT_HQ2XS_SNES9X:
+				case MENU_ENHANCED_SOFT_HQ3XS_SNES9X:
+				case MENU_ENHANCED_SOFT_HQ2XBOLD:
+				case MENU_ENHANCED_SOFT_HQ3XBOLD:
+				case MENU_ENHANCED_SOFT_EPXB:
+				case MENU_ENHANCED_SOFT_EPXC: {
 					nVidBlitterOpt[nVidSelect] &= 0x0FFFFFFF;
-					nVidBlitterOpt[nVidSelect] |= 0x03000000 + ((long long)(id - MENU_SOFT_STRETCH) << 32);
+					nVidBlitterOpt[nVidSelect] |= 0x03000000 + ((long long)(id - MENU_ENHANCED_SOFT_STRETCH) << 32);
 					POST_INITIALISE_MESSAGE;
 					break;
 				}
-				case MENU_SOFT_AUTOSIZE:
+				case MENU_ENHANCED_SOFT_AUTOSIZE:
 					nVidBlitterOpt[nVidSelect] ^= 0x04000000;
 					POST_INITIALISE_MESSAGE;
 					break;
 
-				case MENU_SCANINTENSITY:
+				case MENU_ENHANCED_SCANINTENSITY:
 					if (UseDialogs()) {
 						InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
 						AudBlankSound();
@@ -2257,37 +2264,37 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case 2: {
 			switch (id) {
 				// Options for the DirectDraw Software Effects blitter
-				case MENU_SOFT_STRETCH:
-				case MENU_SOFT_SCALE2X:
-				case MENU_SOFT_SCALE3X:
-				case MENU_SOFT_2XPM_LQ:
-				case MENU_SOFT_2XPM_HQ:
-				case MENU_SOFT_EAGLE:
-				case MENU_SOFT_SUPEREAGLE:
-				case MENU_SOFT_2XSAI:
-				case MENU_SOFT_SUPER2XSAI:
-				case MENU_SOFT_SUPEREAGLE_VBA:
-				case MENU_SOFT_2XSAI_VBA:
-				case MENU_SOFT_SUPER2XSAI_VBA:
-				case MENU_SOFT_SUPERSCALE:
-				case MENU_SOFT_SUPERSCALE75:
-				case MENU_SOFT_HQ2X:
-				case MENU_SOFT_HQ3X:
-				case MENU_SOFT_HQ4X:
-				case MENU_SOFT_HQ2XS_VBA:
-				case MENU_SOFT_HQ3XS_VBA:
-				case MENU_SOFT_HQ2XS_SNES9X:
-				case MENU_SOFT_HQ3XS_SNES9X:
-				case MENU_SOFT_HQ2XBOLD:
-				case MENU_SOFT_HQ3XBOLD:
-				case MENU_SOFT_EPXB:
-				case MENU_SOFT_EPXC:
+				case MENU_SOFTFX_SOFT_STRETCH:
+				case MENU_SOFTFX_SOFT_SCALE2X:
+				case MENU_SOFTFX_SOFT_SCALE3X:
+				case MENU_SOFTFX_SOFT_2XPM_LQ:
+				case MENU_SOFTFX_SOFT_2XPM_HQ:
+				case MENU_SOFTFX_SOFT_EAGLE:
+				case MENU_SOFTFX_SOFT_SUPEREAGLE:
+				case MENU_SOFTFX_SOFT_2XSAI:
+				case MENU_SOFTFX_SOFT_SUPER2XSAI:
+				case MENU_SOFTFX_SOFT_SUPEREAGLE_VBA:
+				case MENU_SOFTFX_SOFT_2XSAI_VBA:
+				case MENU_SOFTFX_SOFT_SUPER2XSAI_VBA:
+				case MENU_SOFTFX_SOFT_SUPERSCALE:
+				case MENU_SOFTFX_SOFT_SUPERSCALE75:
+				case MENU_SOFTFX_SOFT_HQ2X:
+				case MENU_SOFTFX_SOFT_HQ3X:
+				case MENU_SOFTFX_SOFT_HQ4X:
+				case MENU_SOFTFX_SOFT_HQ2XS_VBA:
+				case MENU_SOFTFX_SOFT_HQ3XS_VBA:
+				case MENU_SOFTFX_SOFT_HQ2XS_SNES9X:
+				case MENU_SOFTFX_SOFT_HQ3XS_SNES9X:
+				case MENU_SOFTFX_SOFT_HQ2XBOLD:
+				case MENU_SOFTFX_SOFT_HQ3XBOLD:
+				case MENU_SOFTFX_SOFT_EPXB:
+				case MENU_SOFTFX_SOFT_EPXC:
 					nVidBlitterOpt[nVidSelect] &= ~0xFF;
-					nVidBlitterOpt[nVidSelect] |= id - MENU_SOFT_STRETCH;
+					nVidBlitterOpt[nVidSelect] |= id - MENU_SOFTFX_SOFT_STRETCH;
 					POST_INITIALISE_MESSAGE;
 					break;
 
-				case MENU_SOFT_AUTOSIZE:
+				case MENU_SOFTFX_SOFT_AUTOSIZE:
 					nVidBlitterOpt[nVidSelect] ^= 0x0100;
 					POST_INITIALISE_MESSAGE;
 					break;
@@ -2365,11 +2372,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					break;
 */
 
-				case MENU_SCAN:
+				case MENU_EXP_SCAN:
 					bVidScanlines = !bVidScanlines;
 					POST_INITIALISE_MESSAGE;
 					break;
-				case MENU_SCANINTENSITY:
+				case MENU_EXP_SCANINTENSITY:
 					if (UseDialogs()) {
 						InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
 						AudBlankSound();
@@ -2449,37 +2456,37 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					POST_INITIALISE_MESSAGE;
 					break;
 					
-				case MENU_SOFT_STRETCH:
-				case MENU_SOFT_SCALE2X:
-				case MENU_SOFT_SCALE3X:
-				case MENU_SOFT_2XPM_LQ:
-				case MENU_SOFT_2XPM_HQ:
-				case MENU_SOFT_EAGLE:
-				case MENU_SOFT_SUPEREAGLE:
-				case MENU_SOFT_2XSAI:
-				case MENU_SOFT_SUPER2XSAI:
-				case MENU_SOFT_SUPEREAGLE_VBA:
-				case MENU_SOFT_2XSAI_VBA:
-				case MENU_SOFT_SUPER2XSAI_VBA:
-				case MENU_SOFT_SUPERSCALE:
-				case MENU_SOFT_SUPERSCALE75:
-				case MENU_SOFT_HQ2X:
-				case MENU_SOFT_HQ3X:
-				case MENU_SOFT_HQ4X:
-				case MENU_SOFT_HQ2XS_VBA:
-				case MENU_SOFT_HQ3XS_VBA:
-				case MENU_SOFT_HQ2XS_SNES9X:
-				case MENU_SOFT_HQ3XS_SNES9X:
-				case MENU_SOFT_HQ2XBOLD:
-				case MENU_SOFT_HQ3XBOLD:
-				case MENU_SOFT_EPXB:
-				case MENU_SOFT_EPXC:
+				case MENU_DX9_ALT_SOFT_STRETCH:
+				case MENU_DX9_ALT_SOFT_SCALE2X:
+				case MENU_DX9_ALT_SOFT_SCALE3X:
+				case MENU_DX9_ALT_SOFT_2XPM_LQ:
+				case MENU_DX9_ALT_SOFT_2XPM_HQ:
+				case MENU_DX9_ALT_SOFT_EAGLE:
+				case MENU_DX9_ALT_SOFT_SUPEREAGLE:
+				case MENU_DX9_ALT_SOFT_2XSAI:
+				case MENU_DX9_ALT_SOFT_SUPER2XSAI:
+				case MENU_DX9_ALT_SOFT_SUPEREAGLE_VBA:
+				case MENU_DX9_ALT_SOFT_2XSAI_VBA:
+				case MENU_DX9_ALT_SOFT_SUPER2XSAI_VBA:
+				case MENU_DX9_ALT_SOFT_SUPERSCALE:
+				case MENU_DX9_ALT_SOFT_SUPERSCALE75:
+				case MENU_DX9_ALT_SOFT_HQ2X:
+				case MENU_DX9_ALT_SOFT_HQ3X:
+				case MENU_DX9_ALT_SOFT_HQ4X:
+				case MENU_DX9_ALT_SOFT_HQ2XS_VBA:
+				case MENU_DX9_ALT_SOFT_HQ3XS_VBA:
+				case MENU_DX9_ALT_SOFT_HQ2XS_SNES9X:
+				case MENU_DX9_ALT_SOFT_HQ3XS_SNES9X:
+				case MENU_DX9_ALT_SOFT_HQ2XBOLD:
+				case MENU_DX9_ALT_SOFT_HQ3XBOLD:
+				case MENU_DX9_ALT_SOFT_EPXB:
+				case MENU_DX9_ALT_SOFT_EPXC:
 					nVidBlitterOpt[nVidSelect] &= ~0xFF;
-					nVidBlitterOpt[nVidSelect] |= id - MENU_SOFT_STRETCH;
+					nVidBlitterOpt[nVidSelect] |= id - MENU_DX9_ALT_SOFT_STRETCH;
 					POST_INITIALISE_MESSAGE;
 					break;
 
-				case MENU_SOFT_AUTOSIZE:
+				case MENU_DX9_ALT_SOFT_AUTOSIZE:
 					nVidBlitterOpt[nVidSelect] ^= 0x0100;
 					POST_INITIALISE_MESSAGE;
 					break;

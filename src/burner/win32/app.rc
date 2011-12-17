@@ -353,7 +353,7 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
         DEFPUSHBUTTON "OK", IDOK, 79, 35, 50, 14
 	GROUPBOX "", IDC_STATIC, 3, 0, 128, 30
-	RTEXT "Resolution:", IDC_STATIC, 8, 11, 48, 10, SS_CENTERIMAGE
+	RTEXT "Resolution:", IDC_RESOLUTION, 8, 11, 48, 10, SS_CENTERIMAGE
 	COMBOBOX IDC_CHOOSE_LIST, 60, 10, 64, 128, CBS_DROPDOWNLIST | WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_VSCROLL
         PUSHBUTTON "Cancel", IDCANCEL, 25, 35, 50, 14
 END
@@ -569,63 +569,63 @@ BEGIN
     CONTROL         "OK",IDOK,"Button",WS_TABSTOP,413,300,58,14
 END
 
-IDD_MVS_SELECT_CARTS DIALOGEX 0, 0, 319, 271
+IDD_MVS_SELECT_CARTS DIALOGEX 0, 0, 369, 271
 STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Select cartridges to load..."
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "", IDC_STATIC, 3, 0, 312, 247
+    GROUPBOX        "", IDC_STATIC, 3, 0, 362, 247
 
-    DEFPUSHBUTTON   "OK",IDOK,263,252,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,208,252,50,14
+    DEFPUSHBUTTON   "OK",IDOK,313,252,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,258,252,50,14
 
     CONTROL         "",IDC_MVS_CART1,"Static",SS_BITMAP | SS_REALSIZEIMAGE | SS_SUNKEN,8,8,48,36
-	LTEXT			"Slot 1", IDC_MVS_SLOT1,61,9,20,8,SS_CENTERIMAGE
- 	CONTROL			"", IDC_MVS_TEXTROMNAME1,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,85,9,172,8
- 	CONTROL			"", IDC_MVS_TEXTCOMMENT1,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,21,196,8
- 	CONTROL			"", IDC_MVS_TEXTSYSTEM1,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,33,196,8
-    PUSHBUTTON      "Clear",IDC_MVS_CLEAR1,262,14,50,14
-	PUSHBUTTON      "Select...",IDC_MVS_SELECT1,262,30,50,14
+	LTEXT			"Slot 1", IDC_MVS_SLOT1,61,9,50,8,SS_CENTERIMAGE
+ 	CONTROL			"", IDC_MVS_TEXTROMNAME1,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,115,9,172,8
+ 	CONTROL			"", IDC_MVS_TEXTCOMMENT1,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,21,226,8
+ 	CONTROL			"", IDC_MVS_TEXTSYSTEM1,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,33,226,8
+    PUSHBUTTON      "Clear",IDC_MVS_CLEAR1,292,14,70,14
+	PUSHBUTTON      "Select...",IDC_MVS_SELECT1,292,30,70,14
 
     CONTROL         "",IDC_MVS_CART2,"Static",SS_BITMAP | SS_REALSIZEIMAGE | SS_SUNKEN,8,48,48,36
- 	LTEXT			"Slot 2", IDC_MVS_SLOT2,61,49,20,8,SS_CENTERIMAGE
- 	CONTROL			"", IDC_MVS_TEXTROMNAME2,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,85,49,172,8
- 	CONTROL			"", IDC_MVS_TEXTCOMMENT2,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,61,196,8
- 	CONTROL			"", IDC_MVS_TEXTSYSTEM2,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,73,196,8
-	PUSHBUTTON      "Clear",IDC_MVS_CLEAR2,262,54,50,14
-    PUSHBUTTON      "Select...",IDC_MVS_SELECT2,262,70,50,14
+ 	LTEXT			"Slot 2", IDC_MVS_SLOT2,61,49,50,8,SS_CENTERIMAGE
+ 	CONTROL			"", IDC_MVS_TEXTROMNAME2,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,115,49,172,8
+ 	CONTROL			"", IDC_MVS_TEXTCOMMENT2,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,61,226,8
+ 	CONTROL			"", IDC_MVS_TEXTSYSTEM2,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,73,226,8
+	PUSHBUTTON      "Clear",IDC_MVS_CLEAR2,292,54,70,14
+    PUSHBUTTON      "Select...",IDC_MVS_SELECT2,292,70,70,14
 
     CONTROL         "",IDC_MVS_CART3,"Static",SS_BITMAP | SS_REALSIZEIMAGE | SS_SUNKEN,8,88,48,36
- 	LTEXT			"Slot 3", IDC_MVS_SLOT3,61,89,20,8,SS_CENTERIMAGE
- 	CONTROL			"", IDC_MVS_TEXTROMNAME3,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,85,89,172,8
- 	CONTROL			"", IDC_MVS_TEXTCOMMENT3,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,101,196,8
- 	CONTROL			"", IDC_MVS_TEXTSYSTEM3,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,113,196,8
-	PUSHBUTTON      "Clear",IDC_MVS_CLEAR3,262,94,50,14
-    PUSHBUTTON      "Select...",IDC_MVS_SELECT3,262,110,50,14
+ 	LTEXT			"Slot 3", IDC_MVS_SLOT3,61,89,50,8,SS_CENTERIMAGE
+ 	CONTROL			"", IDC_MVS_TEXTROMNAME3,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,115,89,172,8
+ 	CONTROL			"", IDC_MVS_TEXTCOMMENT3,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,101,226,8
+ 	CONTROL			"", IDC_MVS_TEXTSYSTEM3,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,113,226,8
+	PUSHBUTTON      "Clear",IDC_MVS_CLEAR3,292,94,70,14
+    PUSHBUTTON      "Select...",IDC_MVS_SELECT3,292,110,70,14
 
     CONTROL         "",IDC_MVS_CART4,"Static",SS_BITMAP | SS_REALSIZEIMAGE | SS_SUNKEN,8,128,48,36
- 	LTEXT			"Slot 4", IDC_MVS_SLOT4,61,129,20,8,SS_CENTERIMAGE
- 	CONTROL			"", IDC_MVS_TEXTROMNAME4,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,85,129,172,8
- 	CONTROL			"", IDC_MVS_TEXTCOMMENT4,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,141,196,8
- 	CONTROL			"", IDC_MVS_TEXTSYSTEM4,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,153,196,8
-	PUSHBUTTON      "Clear",IDC_MVS_CLEAR4,262,134,50,14
-    PUSHBUTTON      "Select...",IDC_MVS_SELECT4,262,150,50,14
+ 	LTEXT			"Slot 4", IDC_MVS_SLOT4,61,129,50,8,SS_CENTERIMAGE
+ 	CONTROL			"", IDC_MVS_TEXTROMNAME4,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,115,129,172,8
+ 	CONTROL			"", IDC_MVS_TEXTCOMMENT4,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,141,226,8
+ 	CONTROL			"", IDC_MVS_TEXTSYSTEM4,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,153,226,8
+	PUSHBUTTON      "Clear",IDC_MVS_CLEAR4,292,134,70,14
+    PUSHBUTTON      "Select...",IDC_MVS_SELECT4,292,150,70,14
 
     CONTROL         "",IDC_MVS_CART5,"Static",SS_BITMAP | SS_REALSIZEIMAGE | SS_SUNKEN,8,168,48,36
- 	LTEXT			"Slot 5", IDC_MVS_SLOT5,61,169,20,8,SS_CENTERIMAGE
- 	CONTROL			"", IDC_MVS_TEXTROMNAME5,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,85,169,172,8
- 	CONTROL			"", IDC_MVS_TEXTCOMMENT5,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,181,196,8
- 	CONTROL			"", IDC_MVS_TEXTSYSTEM5,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,193,196,8
-	PUSHBUTTON      "Clear",IDC_MVS_CLEAR5,262,174,50,14
-    PUSHBUTTON      "Select...",IDC_MVS_SELECT5,262,190,50,14
+ 	LTEXT			"Slot 5", IDC_MVS_SLOT5,61,169,50,8,SS_CENTERIMAGE
+ 	CONTROL			"", IDC_MVS_TEXTROMNAME5,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,115,169,172,8
+ 	CONTROL			"", IDC_MVS_TEXTCOMMENT5,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,181,226,8
+ 	CONTROL			"", IDC_MVS_TEXTSYSTEM5,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,193,226,8
+	PUSHBUTTON      "Clear",IDC_MVS_CLEAR5,292,174,70,14
+    PUSHBUTTON      "Select...",IDC_MVS_SELECT5,292,190,70,14
 
     CONTROL         "",IDC_MVS_CART6,"Static",SS_BITMAP | SS_REALSIZEIMAGE | SS_SUNKEN,8,208,48,36
- 	LTEXT			"Slot 6", IDC_MVS_SLOT6,61,209,20,8,SS_CENTERIMAGE
- 	CONTROL			"", IDC_MVS_TEXTROMNAME6,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,85,209,172,8
- 	CONTROL			"", IDC_MVS_TEXTCOMMENT6,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,221,196,8
- 	CONTROL			"", IDC_MVS_TEXTSYSTEM6,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,233,196,8
-    PUSHBUTTON      "Clear",IDC_MVS_CLEAR6,262,214,50,14
-	PUSHBUTTON      "Select...",IDC_MVS_SELECT6,262,230,50,14
+ 	LTEXT			"Slot 6", IDC_MVS_SLOT6,61,209,50,8,SS_CENTERIMAGE
+ 	CONTROL			"", IDC_MVS_TEXTROMNAME6,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,115,209,172,8
+ 	CONTROL			"", IDC_MVS_TEXTCOMMENT6,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,221,226,8
+ 	CONTROL			"", IDC_MVS_TEXTSYSTEM6,"Edit",ES_LEFT | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE,61,233,226,8
+    PUSHBUTTON      "Clear",IDC_MVS_CLEAR6,292,214,70,14
+	PUSHBUTTON      "Select...",IDC_MVS_SELECT6,292,230,70,14
 END
 
 IDD_NCD_DLG DIALOGEX 0, 0, 520, 291
@@ -958,7 +958,6 @@ BEGIN
         MENUITEM "&What's New",					MENU_WHATSNEW
         MENUITEM SEPARATOR
         MENUITEM "&FB Alpha homepage",					MENU_WWW_HOME
-        MENUITEM "FB Alpha &forums",					MENU_WWW_FORUM
         MENUITEM "&Neo-Source forums",					MENU_WWW_NSFORUM
         MENUITEM SEPARATOR
         MENUITEM "&System information",				MENU_SYSINFO
@@ -970,19 +969,19 @@ IDR_MENU_BLITTER_1 MENU
 BEGIN
         POPUP "Basic\t(DirectDraw 7)"
         BEGIN
-                MENUITEM "&No effects",                                 MENU_NORMAL
-                MENUITEM "&Scanlines",                                  MENU_SCAN
+                MENUITEM "&No effects",                                 MENU_BASIC_NORMAL
+                MENUITEM "&Scanlines",                                  MENU_BASIC_SCAN
                 MENUITEM "Scanlines &50%",                              MENU_SCAN50
                 MENUITEM SEPARATOR
-                MENUITEM "&Rotate scanlines",                           MENU_ROTSCAN
+                MENUITEM "&Rotate scanlines",                           MENU_BASIC_ROTSCAN
                 MENUITEM SEPARATOR
 				MENUITEM "Force &Flip",									MENU_FORCE_FLIP
 				MENUITEM SEPARATOR
                 POPUP "Buffering &method"
                 BEGIN
-                        MENUITEM "&Autodetect",                         MENU_MEMAUTO
-                        MENUITEM "&Video memory",                       MENU_VIDEOMEM
-                        MENUITEM "&System memory",                      MENU_SYSMEM
+                        MENUITEM "&Autodetect",                         MENU_BASIC_MEMAUTO
+                        MENUITEM "&Video memory",                       MENU_BASIC_VIDEOMEM
+                        MENUITEM "&System memory",                      MENU_BASIC_SYSMEM
                 END
         END
 END
@@ -994,48 +993,48 @@ BEGIN
                 MENUITEM "Disable all effects",				MENU_DISABLEFX
                 MENUITEM SEPARATOR
                 MENUITEM "Enable &bi-linear filtering",                 MENU_BILINEAR
-                MENUITEM "&Rotate scanlines and RGB effects",           MENU_ROTSCAN
+                MENUITEM "&Rotate scanlines and RGB effects",           MENU_ENHANCED_ROTSCAN
                 MENUITEM SEPARATOR
                 MENUITEM "Enable &Pre-scale",                           MENU_PRESCALE
                 MENUITEM "Pre-scale using Soft&FX",                     MENU_SOFTFX
                 POPUP "SoftFX algorithm"
                 BEGIN
-                        MENUITEM "Double pixels (3D hardware)",         MENU_SOFT_STRETCH
-						MENUITEM "AdvanceMAME Scale2x",			MENU_SOFT_SCALE2X
-						MENUITEM "AdvanceMAME Scale3x",			MENU_SOFT_SCALE3X
-						MENUITEM "2xPM LQ",				MENU_SOFT_2XPM_LQ
-						MENUITEM "2xPM HQ",				MENU_SOFT_2XPM_HQ
-						MENUITEM "Eagle Graphics",			MENU_SOFT_EAGLE
-						MENUITEM "Super Eagle",				MENU_SOFT_SUPEREAGLE
-						MENUITEM "2xSaI",				MENU_SOFT_2XSAI
-						MENUITEM "Super 2xSaI",				MENU_SOFT_SUPER2XSAI
-						MENUITEM "Super Eagle (VBA)",			MENU_SOFT_SUPEREAGLE_VBA
-						MENUITEM "2xSaI (VBA)",				MENU_SOFT_2XSAI_VBA
-						MENUITEM "Super 2xSaI (VBA)",			MENU_SOFT_SUPER2XSAI_VBA
-						MENUITEM "SuperScale",				MENU_SOFT_SUPERSCALE
-						MENUITEM "SuperScale (75% Scanlines)",		MENU_SOFT_SUPERSCALE75
-						MENUITEM "hq2x Filter",				MENU_SOFT_HQ2X
-						MENUITEM "hq3x Filter",				MENU_SOFT_HQ3X
-						MENUITEM "hq4x Filter",				MENU_SOFT_HQ4X
-						MENUITEM "hq2xS (VBA) Filter",			MENU_SOFT_HQ2XS_VBA
-						MENUITEM "hq3xS (VBA) Filter",			MENU_SOFT_HQ3XS_VBA, GRAYED
-						MENUITEM "hq2xS (SNES9X) Filter",		MENU_SOFT_HQ2XS_SNES9X
-						MENUITEM "hq3xS (SNEX9X) Filter",		MENU_SOFT_HQ3XS_SNES9X
-						MENUITEM "hq2xBold Filter",			MENU_SOFT_HQ2XBOLD
-						MENUITEM "hq3xBold Filter",			MENU_SOFT_HQ3XBOLD
-						MENUITEM "EPXB Filter",				MENU_SOFT_EPXB
-						MENUITEM "EPXC Filter",				MENU_SOFT_EPXC
+                        MENUITEM "Double pixels (3D hardware)",         MENU_ENHANCED_SOFT_STRETCH
+						MENUITEM "AdvanceMAME Scale2x",			MENU_ENHANCED_SOFT_SCALE2X
+						MENUITEM "AdvanceMAME Scale3x",			MENU_ENHANCED_SOFT_SCALE3X
+						MENUITEM "2xPM LQ",				MENU_ENHANCED_SOFT_2XPM_LQ
+						MENUITEM "2xPM HQ",				MENU_ENHANCED_SOFT_2XPM_HQ
+						MENUITEM "Eagle Graphics",			MENU_ENHANCED_SOFT_EAGLE
+						MENUITEM "Super Eagle",				MENU_ENHANCED_SOFT_SUPEREAGLE
+						MENUITEM "2xSaI",				MENU_ENHANCED_SOFT_2XSAI
+						MENUITEM "Super 2xSaI",				MENU_ENHANCED_SOFT_SUPER2XSAI
+						MENUITEM "Super Eagle (VBA)",			MENU_ENHANCED_SOFT_SUPEREAGLE_VBA
+						MENUITEM "2xSaI (VBA)",				MENU_ENHANCED_SOFT_2XSAI_VBA
+						MENUITEM "Super 2xSaI (VBA)",			MENU_ENHANCED_SOFT_SUPER2XSAI_VBA
+						MENUITEM "SuperScale",				MENU_ENHANCED_SOFT_SUPERSCALE
+						MENUITEM "SuperScale (75% Scanlines)",		MENU_ENHANCED_SOFT_SUPERSCALE75
+						MENUITEM "hq2x Filter",				MENU_ENHANCED_SOFT_HQ2X
+						MENUITEM "hq3x Filter",				MENU_ENHANCED_SOFT_HQ3X
+						MENUITEM "hq4x Filter",				MENU_ENHANCED_SOFT_HQ4X
+						MENUITEM "hq2xS (VBA) Filter",			MENU_ENHANCED_SOFT_HQ2XS_VBA
+						MENUITEM "hq3xS (VBA) Filter",			MENU_ENHANCED_SOFT_HQ3XS_VBA, GRAYED
+						MENUITEM "hq2xS (SNES9X) Filter",		MENU_ENHANCED_SOFT_HQ2XS_SNES9X
+						MENUITEM "hq3xS (SNEX9X) Filter",		MENU_ENHANCED_SOFT_HQ3XS_SNES9X
+						MENUITEM "hq2xBold Filter",			MENU_ENHANCED_SOFT_HQ2XBOLD
+						MENUITEM "hq3xBold Filter",			MENU_ENHANCED_SOFT_HQ3XBOLD
+						MENUITEM "EPXB Filter",				MENU_ENHANCED_SOFT_EPXB
+						MENUITEM "EPXC Filter",				MENU_ENHANCED_SOFT_EPXC
                         MENUITEM SEPARATOR
-                        MENUITEM "Force image to SoftFX size",          MENU_SOFT_AUTOSIZE
+                        MENUITEM "Force image to SoftFX size",          MENU_ENHANCED_SOFT_AUTOSIZE
                 END
                 MENUITEM SEPARATOR
-                MENUITEM "Enable &Scanlines",                           MENU_SCAN
-                MENUITEM "Set scanline &intensity...",                  MENU_SCANINTENSITY
+                MENUITEM "Enable &Scanlines",                           MENU_ENHANCED_SCAN
+                MENUITEM "Set scanline &intensity...",                  MENU_ENHANCED_SCANINTENSITY
                 MENUITEM SEPARATOR
                 MENUITEM "Enable phosphor &feedback",                   MENU_PHOSPHOR
                 MENUITEM "Set &phosphor feedback intensity...",         MENU_PHOSPHORINTENSITY
                 MENUITEM SEPARATOR
-                MENUITEM "&No effects",                                 MENU_NORMAL
+                MENUITEM "&No effects",                                 MENU_ENHANCED_NORMAL
                 MENUITEM "RGB &effects",                                MENU_RGBEFFECTS
                 MENUITEM "&3D projection",                              MENU_3DPROJECTION
                 MENUITEM SEPARATOR
@@ -1069,38 +1068,38 @@ IDR_MENU_BLITTER_3 MENU
 BEGIN
         POPUP "SoftFX\t(DirectDraw 7)"
         BEGIN
-                MENUITEM "&Double pixels (Software)",                   MENU_SOFT_STRETCH
-                MENUITEM "AdvanceMAME Scale2x\t(16/32-bit only)",       MENU_SOFT_SCALE2X
-                MENUITEM "AdvanceMAME Scale3x\t(16/32-bit only)",       MENU_SOFT_SCALE3X
-		MENUITEM "2xPM LQ\t(15/16-bit only)",			MENU_SOFT_2XPM_LQ
-		MENUITEM "2xPM HQ\t(15/16-bit only)",			MENU_SOFT_2XPM_HQ
-                MENUITEM "Eagle Graphics\t(16-bit only)",               MENU_SOFT_EAGLE
-                MENUITEM "Super Eagle\t(15/16-bit only)",               MENU_SOFT_SUPEREAGLE
-                MENUITEM "2xSaI\t(15/16-bit only)",                     MENU_SOFT_2XSAI
-                MENUITEM "Super 2xSaI\t(15/16-bit only)",	        MENU_SOFT_SUPER2XSAI
-                MENUITEM "Super Eagle (VBA)\t(15/16/32-bit only)",      MENU_SOFT_SUPEREAGLE_VBA
-                MENUITEM "2xSaI (VBA)\t(15/16/32-bit only)",            MENU_SOFT_2XSAI_VBA
-                MENUITEM "Super 2xSaI (VBA)\t(15/16/32-bit only)",      MENU_SOFT_SUPER2XSAI_VBA
-                MENUITEM "SuperScale\t(15/16-bit only)",		MENU_SOFT_SUPERSCALE
-                MENUITEM "SuperScale (75% Scanlines)\t(15/16-bit only)",MENU_SOFT_SUPERSCALE75
-                MENUITEM "hq2x filter\t(32-bit only)",                  MENU_SOFT_HQ2X
-                MENUITEM "hq3x filter\t(32-bit only)",                  MENU_SOFT_HQ3X
-                MENUITEM "hq4x filter\t(32-bit only)",                  MENU_SOFT_HQ4X
-                MENUITEM "hq2xS (VBA) filter\t(16/32-bit only)",        MENU_SOFT_HQ2XS_VBA
-                MENUITEM "hq3xS (VBA) filter\t(16/32-bit only)",        MENU_SOFT_HQ3XS_VBA, GRAYED
-                MENUITEM "hq2xS (SNES9X) Filter\t(16-bit only)",	MENU_SOFT_HQ2XS_SNES9X
-		MENUITEM "hq3xS (SNEX9X) Filter\t(16-bit only)",	MENU_SOFT_HQ3XS_SNES9X
-		MENUITEM "hq2xBold Filter\t(16-bit only)",		MENU_SOFT_HQ2XBOLD
-		MENUITEM "hq3xBold Filter\t(16-bit only)",		MENU_SOFT_HQ3XBOLD
-		MENUITEM "EPXB Filter\t(16-bit only)",			MENU_SOFT_EPXB
-		MENUITEM "EPXC Filter\t(16-bit only)",			MENU_SOFT_EPXC
+                MENUITEM "&Double pixels (Software)",                   MENU_SOFTFX_SOFT_STRETCH
+                MENUITEM "AdvanceMAME Scale2x\t(16/32-bit only)",       MENU_SOFTFX_SOFT_SCALE2X
+                MENUITEM "AdvanceMAME Scale3x\t(16/32-bit only)",       MENU_SOFTFX_SOFT_SCALE3X
+		MENUITEM "2xPM LQ\t(15/16-bit only)",			MENU_SOFTFX_SOFT_2XPM_LQ
+		MENUITEM "2xPM HQ\t(15/16-bit only)",			MENU_SOFTFX_SOFT_2XPM_HQ
+                MENUITEM "Eagle Graphics\t(16-bit only)",               MENU_SOFTFX_SOFT_EAGLE
+                MENUITEM "Super Eagle\t(15/16-bit only)",               MENU_SOFTFX_SOFT_SUPEREAGLE
+                MENUITEM "2xSaI\t(15/16-bit only)",                     MENU_SOFTFX_SOFT_2XSAI
+                MENUITEM "Super 2xSaI\t(15/16-bit only)",	        MENU_SOFTFX_SOFT_SUPER2XSAI
+                MENUITEM "Super Eagle (VBA)\t(15/16/32-bit only)",      MENU_SOFTFX_SOFT_SUPEREAGLE_VBA
+                MENUITEM "2xSaI (VBA)\t(15/16/32-bit only)",            MENU_SOFTFX_SOFT_2XSAI_VBA
+                MENUITEM "Super 2xSaI (VBA)\t(15/16/32-bit only)",      MENU_SOFTFX_SOFT_SUPER2XSAI_VBA
+                MENUITEM "SuperScale\t(15/16-bit only)",		MENU_SOFTFX_SOFT_SUPERSCALE
+                MENUITEM "SuperScale (75% Scanlines)\t(15/16-bit only)",MENU_SOFTFX_SOFT_SUPERSCALE75
+                MENUITEM "hq2x filter\t(32-bit only)",                  MENU_SOFTFX_SOFT_HQ2X
+                MENUITEM "hq3x filter\t(32-bit only)",                  MENU_SOFTFX_SOFT_HQ3X
+                MENUITEM "hq4x filter\t(32-bit only)",                  MENU_SOFTFX_SOFT_HQ4X
+                MENUITEM "hq2xS (VBA) filter\t(16/32-bit only)",        MENU_SOFTFX_SOFT_HQ2XS_VBA
+                MENUITEM "hq3xS (VBA) filter\t(16/32-bit only)",        MENU_SOFTFX_SOFT_HQ3XS_VBA, GRAYED
+                MENUITEM "hq2xS (SNES9X) Filter\t(16-bit only)",	MENU_SOFTFX_SOFT_HQ2XS_SNES9X
+		MENUITEM "hq3xS (SNEX9X) Filter\t(16-bit only)",	MENU_SOFTFX_SOFT_HQ3XS_SNES9X
+		MENUITEM "hq2xBold Filter\t(16-bit only)",		MENU_SOFTFX_SOFT_HQ2XBOLD
+		MENUITEM "hq3xBold Filter\t(16-bit only)",		MENU_SOFTFX_SOFT_HQ3XBOLD
+		MENUITEM "EPXB Filter\t(16-bit only)",			MENU_SOFTFX_SOFT_EPXB
+		MENUITEM "EPXC Filter\t(16-bit only)",			MENU_SOFTFX_SOFT_EPXC
                 MENUITEM SEPARATOR
-                MENUITEM "&Force image to SoftFX size",                 MENU_SOFT_AUTOSIZE
+                MENUITEM "&Force image to SoftFX size",                 MENU_SOFTFX_SOFT_AUTOSIZE
                 POPUP "Buffering &method"
                 BEGIN
-                        MENUITEM "&Autodetect",                         MENU_MEMAUTO
-                        MENUITEM "&Video memory",                       MENU_VIDEOMEM
-                        MENUITEM "&System memory",                      MENU_SYSMEM
+                        MENUITEM "&Autodetect",                         MENU_SOFTFX_MEMAUTO
+                        MENUITEM "&Video memory",                       MENU_SOFTFX_VIDEOMEM
+                        MENUITEM "&System memory",                      MENU_SOFTFX_SYSMEM
                         MENUITEM SEPARATOR
                         MENUITEM "Directly access video memory",        MENU_SOFT_DIRECTACCESS
                 END
@@ -1129,8 +1128,8 @@ BEGIN
 		            MENUITEM "Mitchell-Netravali free...",				MENU_DX9_CUBIC_CUSTOM, GRAYED
                 END
                 MENUITEM SEPARATOR
-                MENUITEM "Enable &Scanlines",                           MENU_SCAN
-                MENUITEM "Set scanline &intensity...",                  MENU_SCANINTENSITY
+                MENUITEM "Enable &Scanlines",                           MENU_EXP_SCAN
+                MENUITEM "Set scanline &intensity...",                  MENU_EXP_SCANINTENSITY
                 MENUITEM SEPARATOR
                 POPUP "Advanced settings"
                 BEGIN
@@ -1158,33 +1157,33 @@ BEGIN
 		MENUITEM SEPARATOR
 		POPUP "SoftFX algorithm"
 		BEGIN
-			MENUITEM "Double pixels (3D hardware)",				MENU_SOFT_STRETCH
-			MENUITEM "AdvanceMAME Scale2x",						MENU_SOFT_SCALE2X
-			MENUITEM "AdvanceMAME Scale3x",						MENU_SOFT_SCALE3X
-			MENUITEM "2xPM LQ",									MENU_SOFT_2XPM_LQ
-			MENUITEM "2xPM HQ",									MENU_SOFT_2XPM_HQ
-			MENUITEM "Eagle Graphics",							MENU_SOFT_EAGLE
-			MENUITEM "Super Eagle",								MENU_SOFT_SUPEREAGLE
-			MENUITEM "2xSaI",									MENU_SOFT_2XSAI
-			MENUITEM "Super 2xSaI",								MENU_SOFT_SUPER2XSAI
-			MENUITEM "Super Eagle (VBA)",						MENU_SOFT_SUPEREAGLE_VBA
-			MENUITEM "2xSaI (VBA)",								MENU_SOFT_2XSAI_VBA
-			MENUITEM "Super 2xSaI (VBA)",						MENU_SOFT_SUPER2XSAI_VBA
-			MENUITEM "SuperScale",								MENU_SOFT_SUPERSCALE
-			MENUITEM "SuperScale (75% Scanlines)",				MENU_SOFT_SUPERSCALE75
-			MENUITEM "hq2x Filter",								MENU_SOFT_HQ2X
-			MENUITEM "hq3x Filter",								MENU_SOFT_HQ3X
-			MENUITEM "hq4x Filter",								MENU_SOFT_HQ4X
-			MENUITEM "hq2xS (VBA) Filter",						MENU_SOFT_HQ2XS_VBA
-			MENUITEM "hq3xS (VBA) Filter",						MENU_SOFT_HQ3XS_VBA, GRAYED
-			MENUITEM "hq2xS (SNES9X) Filter",					MENU_SOFT_HQ2XS_SNES9X
-			MENUITEM "hq3xS (SNEX9X) Filter",					MENU_SOFT_HQ3XS_SNES9X
-			MENUITEM "hq2xBold Filter",							MENU_SOFT_HQ2XBOLD
-			MENUITEM "hq3xBold Filter",							MENU_SOFT_HQ3XBOLD
-			MENUITEM "EPXB Filter",								MENU_SOFT_EPXB
-			MENUITEM "EPXC Filter",								MENU_SOFT_EPXC
+			MENUITEM "Double pixels (3D hardware)",				MENU_DX9_ALT_SOFT_STRETCH
+			MENUITEM "AdvanceMAME Scale2x",						MENU_DX9_ALT_SOFT_SCALE2X
+			MENUITEM "AdvanceMAME Scale3x",						MENU_DX9_ALT_SOFT_SCALE3X
+			MENUITEM "2xPM LQ",									MENU_DX9_ALT_SOFT_2XPM_LQ
+			MENUITEM "2xPM HQ",									MENU_DX9_ALT_SOFT_2XPM_HQ
+			MENUITEM "Eagle Graphics",							MENU_DX9_ALT_SOFT_EAGLE
+			MENUITEM "Super Eagle",								MENU_DX9_ALT_SOFT_SUPEREAGLE
+			MENUITEM "2xSaI",									MENU_DX9_ALT_SOFT_2XSAI
+			MENUITEM "Super 2xSaI",								MENU_DX9_ALT_SOFT_SUPER2XSAI
+			MENUITEM "Super Eagle (VBA)",						MENU_DX9_ALT_SOFT_SUPEREAGLE_VBA
+			MENUITEM "2xSaI (VBA)",								MENU_DX9_ALT_SOFT_2XSAI_VBA
+			MENUITEM "Super 2xSaI (VBA)",						MENU_DX9_ALT_SOFT_SUPER2XSAI_VBA
+			MENUITEM "SuperScale",								MENU_DX9_ALT_SOFT_SUPERSCALE
+			MENUITEM "SuperScale (75% Scanlines)",				MENU_DX9_ALT_SOFT_SUPERSCALE75
+			MENUITEM "hq2x Filter",								MENU_DX9_ALT_SOFT_HQ2X
+			MENUITEM "hq3x Filter",								MENU_DX9_ALT_SOFT_HQ3X
+			MENUITEM "hq4x Filter",								MENU_DX9_ALT_SOFT_HQ4X
+			MENUITEM "hq2xS (VBA) Filter",						MENU_DX9_ALT_SOFT_HQ2XS_VBA
+			MENUITEM "hq3xS (VBA) Filter",						MENU_DX9_ALT_SOFT_HQ3XS_VBA, GRAYED
+			MENUITEM "hq2xS (SNES9X) Filter",					MENU_DX9_ALT_SOFT_HQ2XS_SNES9X
+			MENUITEM "hq3xS (SNEX9X) Filter",					MENU_DX9_ALT_SOFT_HQ3XS_SNES9X
+			MENUITEM "hq2xBold Filter",							MENU_DX9_ALT_SOFT_HQ2XBOLD
+			MENUITEM "hq3xBold Filter",							MENU_DX9_ALT_SOFT_HQ3XBOLD
+			MENUITEM "EPXB Filter",								MENU_DX9_ALT_SOFT_EPXB
+			MENUITEM "EPXC Filter",								MENU_DX9_ALT_SOFT_EPXC
 			MENUITEM SEPARATOR
-			MENUITEM "Force image to SoftFX size",          	MENU_SOFT_AUTOSIZE
+			MENUITEM "Force image to SoftFX size",          	MENU_DX9_ALT_SOFT_AUTOSIZE
         END
 		MENUITEM SEPARATOR
 		POPUP "Advanced settings"

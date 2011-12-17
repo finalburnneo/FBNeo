@@ -5,8 +5,6 @@ const double PI = 3.14159265358979323846f;			// Pi
 const double DEGTORAD = 0.01745329251994329547f;	// Degrees to Radians
 const double RADTODEG = 57.29577951308232286465f;	// Radians to Degrees
 
-static TCHAR* frDial = _T("Number of Frames");
-
 static int nExitStatus;
 
 // -----------------------------------------------------------------------------
@@ -19,7 +17,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 	switch (Msg) {
 		case WM_INITDIALOG:
 			nRet = nAudSegCount;
-			SetWindowText(hDlg, frDial);
+			SetWindowText(hDlg, FBALoadStringEx(hAppInst, IDS_NUMDIAL_NUM_FRAMES, true));
 			SetDlgItemInt(hDlg, IDC_VALUE_EDIT, nRet, TRUE);
 			return TRUE;
 
@@ -891,7 +889,7 @@ static INT_PTR CALLBACK CubicProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)	//
 			_stprintf(szText, _T("%.3lf"), 1.0 - dVidCubicB);
 			SendDlgItemMessage(hDlg, IDC_SCANLINE_EDIT, WM_SETTEXT, (WPARAM)0, (LPARAM)szText);
 
-			SetWindowText(hDlg, _T("Select desired filter sharpness"));
+			SetWindowText(hDlg, FBALoadStringEx(hAppInst, IDS_NUMDIAL_FILTER_SHARP, true));
 
 			// Update the screen
 			if (bDrvOkay) {

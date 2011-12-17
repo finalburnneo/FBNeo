@@ -126,7 +126,7 @@ static struct BurnDIPInfo BoogwingDIPList[]=
 	{0x15, 0x01, 0x10, 0x00, "Individual"		},
 
 	{0   , 0xfe, 0   ,    2, "Stage Reset"		},
-	{0x15, 0x01, 0x20, 0x20, "PoINT32 of Termination"	},
+	{0x15, 0x01, 0x20, 0x20, "Point of Termination"	},
 	{0x15, 0x01, 0x20, 0x00, "Beginning of Stage"	},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},

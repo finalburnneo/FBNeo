@@ -94,7 +94,7 @@ struct NeoMediaInfo {
  *
  * Note that the offset is *always* relative; when setting the offset from the
  * vblank (scanline 248), to trigger an interrupt at scanline 24, you would
- * poINT32 the offset to 24 scanlines past the screen end at line 264, and set it
+ * point the offset to 24 scanlines past the screen end at line 264, and set it
  * to 15360 (40 scanlines * 384 pixels per scanline).
  *
  */

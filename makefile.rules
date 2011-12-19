@@ -71,7 +71,7 @@ depobj	:= 	about.o bzip.o cona.o debugger.o drv.o dwmapi_core.o dynhuff.o fba_ka
 			numdial.o numpluscommas.o paletteviewer.o popup_win32.o progress.o replay.o res.o roms.o run.o scrn.o sel.o sfactd.o \
 			splash.o stated.o support_paths.o systeminfo.o wave.o \
 			\
-			conc.o cong.o dat.o gamc.o gami.o image.o misc.o sshot.o state.o statec.o unzip.o zipfn.o \
+			conc.o cong.o dat.o gamc.o gami.o image.o misc.o sshot.o state.o statec.o unzip.o zipfn.o ioapi.o \
 			\
 			adler32.o compress.o crc32.o deflate.o gzclose.o gzlib.o gzread.o gzwrite.o infback.o inffast.o inflate.o inftrees.o \
 			trees.o uncompr.o zutil.o \

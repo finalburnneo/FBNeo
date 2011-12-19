@@ -770,10 +770,10 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			nSegment = nBurnSoundLen / nInterleave;
 
-			BurnYM2151Render(pBurnSoundOut + nSoundBufferPos, nSegment);
-			UPD7759Update(0, pBurnSoundOut + nSoundBufferPos, nSegment);
+			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
+			UPD7759Update(0, pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
 
-			nSoundBufferPos += nSegment << 1;
+			nSoundBufferPos += nSegment;
 		}
 	}
 
@@ -782,8 +782,8 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		nSegment = nBurnSoundLen - nSoundBufferPos;
 		if (nSegment > 0) {
-			BurnYM2151Render(pBurnSoundOut + nSoundBufferPos, nSegment);
-			UPD7759Update(0, pBurnSoundOut + nSoundBufferPos, nSegment);
+			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
+			UPD7759Update(0, pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
 		}
 
 		// UPD7759 does not have volume controls, so do all sounds at 100% and reduce levels

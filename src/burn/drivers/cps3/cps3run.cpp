@@ -1082,11 +1082,15 @@ INT32 cps3Init()
 	ii = 0;	offset = 0;
 	while (BurnDrvGetRomInfo(&pri, ii) == 0) {
 		if (pri.nType & BRF_PRG) {
-			nRet = BurnLoadRom(RomGame + offset, ii, 1); 
-			if (nRet != 0) return 1;
-			offset += pri.nLen;
+			nRet = BurnLoadRom(RomGame + offset + 0, ii + 0, 4); if (nRet != 0) return 1;
+			nRet = BurnLoadRom(RomGame + offset + 1, ii + 1, 4); if (nRet != 0) return 1;
+			nRet = BurnLoadRom(RomGame + offset + 2, ii + 2, 4); if (nRet != 0) return 1;
+			nRet = BurnLoadRom(RomGame + offset + 3, ii + 3, 4); if (nRet != 0) return 1;
+			offset += pri.nLen * 4;
+			ii += 4;
+		} else {
+			ii++;
 		}
-		ii++;
 	}
 	be_to_le( RomGame, 0x1000000 );
 	cps3_decrypt_game();
@@ -1095,10 +1099,13 @@ INT32 cps3Init()
 	ii = 0;	offset = 0;
 	while (BurnDrvGetRomInfo(&pri, ii) == 0) {
 		if (pri.nType & (BRF_GRA | BRF_SND)) {
-			BurnLoadRom(RomUser + offset, ii, 1); 
-			offset += pri.nLen;
+			BurnLoadRom(RomUser + offset + 0, ii + 0, 2);
+			BurnLoadRom(RomUser + offset + 1, ii + 1, 2);
+			offset += pri.nLen * 2;
+			ii += 2;
+		} else {
+			ii++;
 		}
-		ii++;
 	}
 
 	{

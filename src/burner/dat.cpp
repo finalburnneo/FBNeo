@@ -92,12 +92,6 @@ INT32 write_datfile(INT32 bIncMegadrive, FILE* fDat)
 			continue;
 		}
 		
-#if defined (ROM_VERIFY)
-		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS3) {
-			continue;
-		}
-#endif
-
 		strcpy(sgName, BurnDrvGetTextA(DRV_NAME));
 		strcpy(spName, "");											// make sure this string is empty before we start
 		strcpy(sbName, "");											// make sure this string is empty before we start

@@ -10,7 +10,7 @@ PPU emulation*/
 #include "snes.h"
 
 
-
+#define SNES_INLINE
 
 #define uint unsigned int
 #define uint16 unsigned short
@@ -225,7 +225,7 @@ enum
 * between the main and sub screens.
 *****************************************/
 
-INLINE void snes_draw_blend( UINT16 offset, UINT16 *colour, UINT8 prevent_color_math, UINT8 black_pen_clip, int switch_screens )
+SNES_INLINE void snes_draw_blend( UINT16 offset, UINT16 *colour, UINT8 prevent_color_math, UINT8 black_pen_clip, int switch_screens )
 {
 	/* when color math is applied to subscreen pixels, the blending depends on the blending used by the previous mainscreen
 	pixel, except for subscreen pixel 0 which has no previous mainscreen pixel, see comments in snes_refresh_scanline */
@@ -343,7 +343,7 @@ INLINE void snes_draw_blend( UINT16 offset, UINT16 *colour, UINT8 prevent_color_
 * Draw tiles with variable bit planes
 *****************************************/
 
-INLINE void snes_draw_tile( UINT8 planes, UINT8 layer, UINT16 tileaddr, INT16 x, UINT8 priority, UINT8 flip, UINT8 direct_colors, UINT16 pal, UINT8 hires )
+SNES_INLINE void snes_draw_tile( UINT8 planes, UINT8 layer, UINT16 tileaddr, INT16 x, UINT8 priority, UINT8 flip, UINT8 direct_colors, UINT16 pal, UINT8 hires )
 {
 	UINT8 mask, plane[8];
 	UINT16 c;
@@ -586,7 +586,7 @@ INLINE void snes_draw_tile( UINT8 planes, UINT8 layer, UINT16 tileaddr, INT16 x,
 * Draw 2 tiles with variable bit planes
 *****************************************/
 
-INLINE void snes_draw_tile_x2( UINT8 planes, UINT8 layer, UINT16 tileaddr, INT16 x, UINT8 priority, UINT8 flip, UINT8 direct_colors, UINT16 pal, UINT8 hires )
+SNES_INLINE void snes_draw_tile_x2( UINT8 planes, UINT8 layer, UINT16 tileaddr, INT16 x, UINT8 priority, UINT8 flip, UINT8 direct_colors, UINT16 pal, UINT8 hires )
 {
 	if (flip)
 	{
@@ -608,7 +608,7 @@ INLINE void snes_draw_tile_x2( UINT8 planes, UINT8 layer, UINT16 tileaddr, INT16
 * that it takes a blend parameter.
 *****************************************/
 
-INLINE void snes_draw_tile_object( UINT16 tileaddr, INT16 x, UINT8 priority, UINT8 flip, UINT16 pal, UINT8 blend )
+SNES_INLINE void snes_draw_tile_object( UINT16 tileaddr, INT16 x, UINT8 priority, UINT8 flip, UINT16 pal, UINT8 blend )
 {
 	UINT8 mask, plane[4];
 	UINT16 c;
@@ -705,7 +705,7 @@ INLINE void snes_draw_tile_object( UINT16 tileaddr, INT16 x, UINT8 priority, UIN
 * Find the address in VRAM of the tile (x,y)
 *********************************************/
 
-INLINE UINT32 snes_get_tmap_addr( UINT8 layer, UINT8 tile_size, UINT32 base, UINT32 x, UINT32 y )
+SNES_INLINE UINT32 snes_get_tmap_addr( UINT8 layer, UINT8 tile_size, UINT32 base, UINT32 x, UINT32 y )
 {
 	UINT32 res = base;
 	x  >>= (3 + tile_size);
@@ -729,7 +729,7 @@ INLINE UINT32 snes_get_tmap_addr( UINT8 layer, UINT8 tile_size, UINT32 base, UIN
 * Update an entire line of tiles.
 *********************************************/
 
-INLINE void snes_update_line( UINT8 color_depth, UINT8 hires, UINT8 priority_a, UINT8 priority_b, UINT8 layer, UINT16 curline, UINT8 offset_per_tile, UINT8 direct_colors )
+SNES_INLINE void snes_update_line( UINT8 color_depth, UINT8 hires, UINT8 priority_a, UINT8 priority_b, UINT8 layer, UINT16 curline, UINT8 offset_per_tile, UINT8 direct_colors )
 {
 	UINT32 tmap, tile, xoff, yoff;
 	UINT32 charaddr;
@@ -1581,7 +1581,7 @@ static void snes_update_offsets( void )
 	snes_ppu.update_offsets = 0;
 }
 
-static inline unsigned char pal5bit(unsigned char bits)
+static SNES_INLINE unsigned char pal5bit(unsigned char bits)
 {
 	bits &= 0x1f;
 	return (bits << 3);
@@ -1595,7 +1595,7 @@ static inline unsigned char pal5bit(unsigned char bits)
 
 
 
-inline static unsigned int CalcCol(unsigned short nColour)
+SNES_INLINE static unsigned int CalcCol(unsigned short nColour)
 {
 	int r, g, b;
 

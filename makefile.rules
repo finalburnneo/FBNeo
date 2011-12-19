@@ -29,7 +29,7 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			\
 			d_pgm.o \
 			\
-			d_psikyo.o d_psikyosh.o \
+			d_psikyo.o d_psikyo4.o d_psikyosh.o \
 			\
 			d_hangon.o d_outrun.o d_sys1.o d_sys16a.o d_sys16b.o d_sys18.o d_xbrd.o d_ybrd.o \
 			\

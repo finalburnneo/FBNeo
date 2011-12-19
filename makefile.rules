@@ -1,10 +1,11 @@
 alldir	= 	burn burn/devices burn/sound burn/drivers burn/drivers/capcom burn/drivers/cave burn/drivers/cps3 \
 			burn/drivers/galaxian burn/drivers/irem burn/drivers/konami burn/drivers/megadrive burn/drivers/misc_post90s \
-			burn/drivers/misc_pre90s burn/drivers/neogeo burn/drivers/pgm burn/drivers/psikyo burn/drivers/sega burn/drivers/snes \
-			burn/drivers/taito burn/drivers/toaplan burner burner/win32 cpu \
-			cpu/a68k cpu/arm cpu/arm7 cpu/h6280 cpu/hd6309 cpu/i8039 cpu/konami cpu/m68k cpu/m6502 cpu/m6800 cpu/m6805 \
-			cpu/m6809 cpu/nec cpu/s2650 cpu/sh2 cpu/z80 depend/kaillera/client depend/libs/libpng depend/libs/zlib \
-			interface interface/video interface/video/scalers interface/video/win32 interface/audio interface/audio/win32 interface/input interface/input/win32 interface/cd interface/cd/win32 interface/perfcount interface/perfcount/win32 \
+			burn/drivers/misc_pre90s burn/drivers/neogeo burn/drivers/pgm burn/drivers/psikyo burn/drivers/sega \
+			burn/drivers/snes burn/drivers/taito burn/drivers/toaplan burner burner/win32 cpu cpu/a68k cpu/arm cpu/arm7 \
+			cpu/h6280 cpu/hd6309 cpu/i8039 cpu/konami cpu/m68k cpu/m6502 cpu/m6800 cpu/m6805 cpu/m6809 cpu/nec cpu/s2650 \
+			cpu/sh2 cpu/z80 depend/kaillera/client depend/libs/libpng depend/libs/zlib interface interface/video \
+			interface/video/scalers interface/video/win32 interface/audio interface/audio/win32 interface/input \
+			interface/input/win32 interface/cd interface/cd/win32 interface/perfcount interface/perfcount/win32 \
 			depend/generated
 
 drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwange.o d_hotdogst.o d_korokoro.o d_mazinger.o \
@@ -47,9 +48,9 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_gberet.o d_ginganin.o d_gng.o d_gunsmoke.o d_gyruss.o d_higemaru.o d_ikki.o d_jack.o d_kangaroo.o d_karnov.o \
 			d_kyugo.o d_ladybug.o d_lkage.o d_lwings.o d_madgear.o d_markham.o d_marineb.o d_meijinsn.o d_minivdr.o d_mitchell.o \
 			d_mole.o d_mrdo.o d_mrflea.o d_mystston.o d_pkunwar.o d_pooyan.o d_prehisle.o d_quizo.o d_rallyx.o d_renegade.o \
-			d_retofinv.o d_rpunch.o d_route16.o d_scotrsht.o d_scregg.o d_sf.o d_skyfox.o d_skykid.o d_snk68.o d_solomon.o d_sonson.o \
-			d_srumbler.o d_suprloco.o d_tecmo.o d_tigerheli.o d_tigeroad.o d_toki.o d_tnzs.o d_vaportra.o d_vigilant.o d_vulgus.o \
-			d_wallc.o d_wc90.o d_wc90b.o d_wwfsstar.o \
+			d_retofinv.o d_rpunch.o d_route16.o d_scotrsht.o d_scregg.o d_sf.o d_skyfox.o d_skykid.o d_snk68.o d_solomon.o 
+			d_sonson.o d_srumbler.o d_suprloco.o d_tecmo.o d_tigerheli.o d_tigeroad.o d_toki.o d_tnzs.o d_vaportra.o d_vigilant.o \
+			d_vulgus.o d_wallc.o d_wc90.o d_wc90b.o d_wwfsstar.o \
 			\
 			d_1945kiii.o d_aerofgt.o d_airbustr.o d_aquarium.o d_ashnojoe.o d_backfire.o d_bloodbro.o d_boogwing.o d_cbuster.o \
 			d_cninja.o d_crospang.o d_crshrace.o d_darkseal.o d_dassault.o d_dcon.o d_deniam.o d_ddragon3.o d_dietgogo.o \
@@ -139,7 +140,7 @@ depobj	:= 	about.o bzip.o cona.o debugger.o drv.o dwmapi_core.o dynhuff.o fba_ka
 			\
 			megadrive.o \
 			\
-			snes_65816.o snes_spc700.o snes_mem.o snes_ppu.o snes_main.o snes_io.o
+			snes_65816.o snes_io.o snes_main.o snes_mem.o snes_ppu.o snes_spc700.o
 			
 			
 ifdef	DEBUG

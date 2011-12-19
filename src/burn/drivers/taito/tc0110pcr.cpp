@@ -140,11 +140,11 @@ void TC0110PCRReset()
 void TC0110PCRInit(INT32 Num, INT32 nNumColours)
 {
 	for (INT32 i = 0; i < Num; i++) {
-		TC0110PCRRam[i] = (UINT8*)malloc(0x4000);
+		TC0110PCRRam[i] = (UINT8*)BurnMalloc(0x4000);
 		memset(TC0110PCRRam[i], 0, 0x4000);
 	}
 	
-	TC0110PCRPalette = (UINT32*)malloc(nNumColours * sizeof(UINT32));
+	TC0110PCRPalette = (UINT32*)BurnMalloc(nNumColours * sizeof(UINT32));
 	memset(TC0110PCRPalette, 0, nNumColours);
 	
 	TC0110PCRTotalColours = nNumColours;
@@ -155,17 +155,11 @@ void TC0110PCRInit(INT32 Num, INT32 nNumColours)
 void TC0110PCRExit()
 {
 	for (INT32 i = 0; i < MAX_TC0110PCR; i++) {
-		if (TC0110PCRRam[i]) {
-			free(TC0110PCRRam[i]);
-			TC0110PCRRam[i] = NULL;
-		}
+		BurnFree(TC0110PCRRam[i]);
 		TC0110PCRAddr[i] = 0;
 	}
 	
-	if (TC0110PCRPalette) {
-		free(TC0110PCRPalette);
-		TC0110PCRPalette = NULL;
-	}
+	BurnFree(TC0110PCRPalette);
 	
 	TC0110PCRTotalColours = 0;
 }

@@ -4901,14 +4901,14 @@ static INT32 SpacegunInit()
 
 static INT32 TaitoZExit()
 {
+	BurnYM2610SetSoundMixMode(0);
+	
 	TaitoExit();
 
 	SciSpriteFrame = 0;
 	OldSteer = 0;
 	Dblaxle = 0;
 	Sci = 0;
-	
-	BurnYM2610SetSoundMixMode(0);
 	
 	// Switch back CPU core if needed
 	if (bUseAsm68KCoreOldValue) {
@@ -5722,17 +5722,23 @@ static INT32 TaitoZFrame()
 			if (i == (TaitoFrameInterleave - 1)) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
 			SekClose();
 		}
+		
+		if (TaitoNumZ80s) {
+			ZetOpen(0);
+			BurnTimerUpdate(i * (nTaitoCyclesTotal[2] / nInterleave));
+			ZetClose();
+		}
 	}
 	
 	if (TaitoNumZ80s) {
 		ZetOpen(0);
 		BurnTimerEndFrame(nTaitoCyclesTotal[2]);
-		BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
+		if (pBurnSoundOut) BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
 		ZetClose();
 	} else {
 		SekOpen(1);
 		if (TaitoCpuACtrl & 0x01) BurnTimerEndFrame(nTaitoCyclesTotal[1]);
-		BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
+		if (pBurnSoundOut) BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
 		if (TaitoCpuACtrl & 0x01) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
 		SekClose();
 	}

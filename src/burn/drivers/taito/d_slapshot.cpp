@@ -55,8 +55,8 @@ static struct BurnInputInfo Opwolf3InputList[] =
 
 	A("P1 Gun X"         , BIT_ANALOG_REL, &TaitoAnalogPort0      , "mouse x-axis"   ),
 	A("P1 Gun Y"         , BIT_ANALOG_REL, &TaitoAnalogPort1      , "mouse y-axis"   ),
-	{"P1 Fire 1"         , BIT_DIGITAL   , TC0640FIOInputPort2 + 0, "p1 fire 1"      },
-	{"P1 Fire 2"         , BIT_DIGITAL   , TC0640FIOInputPort2 + 1, "p1 fire 2"      },
+	{"P1 Fire 1"         , BIT_DIGITAL   , TC0640FIOInputPort2 + 0, "mouse button 1" },
+	{"P1 Fire 2"         , BIT_DIGITAL   , TC0640FIOInputPort2 + 1, "mouse button 2" },
 	
 	A("P2 Gun X"         , BIT_ANALOG_REL, &TaitoAnalogPort2      , "p2 x-axis"      ),
 	A("P2 Gun Y"         , BIT_ANALOG_REL, &TaitoAnalogPort3      , "p2 y-axis"      ),	
@@ -501,7 +501,7 @@ static INT32 MachineInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -594,7 +594,7 @@ static INT32 SlapshotInit()
 	if (MachineInit()) return 1;
 	
 	INT32 nRet;
-	UINT8 *TempRom = (UINT8*)malloc(0x400000);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(0x400000);
 	memset(TempRom, 0, 0x400000);
 	nRet = BurnLoadRom(TempRom + 0x000000, 6, 2); if (nRet) return 1;
 	nRet = BurnLoadRom(TempRom + 0x000001, 7, 2); if (nRet) return 1;
@@ -617,10 +617,7 @@ static INT32 SlapshotInit()
 		Offset++;
 	}
 	GfxDecode(TaitoNumSpriteA, TaitoSpriteANumPlanes, TaitoSpriteAWidth, TaitoSpriteAHeight, TaitoSpriteAPlaneOffsets, TaitoSpriteAXOffsets, TaitoSpriteAYOffsets, TaitoSpriteAModulo, TempRom, TaitoSpritesA);
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
+	BurnFree(TempRom);
 	
 	SlapshotDoReset();
 
@@ -650,7 +647,7 @@ static INT32 Opwolf3Init()
 	if (MachineInit()) return 1;
 	
 	INT32 nRet;
-	UINT8 *TempRom = (UINT8*)malloc(0x800000);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(0x800000);
 	memset(TempRom, 0, 0x400000);
 	nRet = BurnLoadRom(TempRom + 0x000000,  8, 2); if (nRet) return 1;
 	nRet = BurnLoadRom(TempRom + 0x000001,  9, 2); if (nRet) return 1;
@@ -673,10 +670,7 @@ static INT32 Opwolf3Init()
 		Offset++;
 	}
 	GfxDecode(TaitoNumSpriteA, TaitoSpriteANumPlanes, TaitoSpriteAWidth, TaitoSpriteAHeight, TaitoSpriteAPlaneOffsets, TaitoSpriteAXOffsets, TaitoSpriteAYOffsets, TaitoSpriteAModulo, TempRom, TaitoSpritesA);
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
+	BurnFree(TempRom);
 	
 	SekOpen(0);
 	SekMapHandler(1, 0xe00000, 0xe00007, SM_RAM);
@@ -712,15 +706,6 @@ static INT32 SlapshotExit()
 	TimeKeeperExit();
 	
 	return 0;
-}
-
-static INT32 Opwolf3Exit()
-{
-	INT32 nRet = SlapshotExit();
-	
-	BurnGunExit();
-	
-	return nRet;
 }
 
 inline static INT32 CalcCol(INT32 nColour)
@@ -915,7 +900,7 @@ struct BurnDriver BurnDrvOpwolf3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, Opwolf3RomInfo, Opwolf3RomName, NULL, NULL, Opwolf3InputInfo, Opwolf3DIPInfo,
-	Opwolf3Init, Opwolf3Exit, SlapshotFrame, NULL, Opwolf3Scan,
+	Opwolf3Init, SlapshotExit, SlapshotFrame, NULL, Opwolf3Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };
 
@@ -925,6 +910,6 @@ struct BurnDriver BurnDrvOpwolf3u = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, Opwolf3uRomInfo, Opwolf3uRomName, NULL, NULL, Opwolf3InputInfo, Opwolf3DIPInfo,
-	Opwolf3Init, Opwolf3Exit, SlapshotFrame, NULL, Opwolf3Scan,
+	Opwolf3Init, SlapshotExit, SlapshotFrame, NULL, Opwolf3Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };

@@ -2130,9 +2130,47 @@ static INT32 DariusDoReset()
 	return 0;
 }
 
+static INT32 RainbowDoReset()
+{
+#if 0
+	// This resets the YM2151 which calls DrvSoundBankSwitch via the port callback
+	TaitoDoReset();
+#else
+	SekOpen(0);
+	SekReset();
+	SekClose();
+	
+	ZetOpen(0);
+	ZetReset();
+	ZetClose();
+	
+	ZetOpen(0);
+	BurnYM2151Reset();
+	ZetClose();
+#endif
+	
+	return 0;
+}
+
 static INT32 OpwolfDoReset()
 {
+#if 0
+	// This resets the YM2151 which calls DrvSoundBankSwitch via the port callback
 	TaitoDoReset();
+#else
+	SekOpen(0);
+	SekReset();
+	SekClose();
+	
+	ZetOpen(0);
+	ZetReset();
+	ZetClose();
+	
+	ZetOpen(0);
+	BurnYM2151Reset();
+	ZetClose();
+	MSM5205Reset();
+#endif
 	
 	memset(OpwolfADPCM_B, 0, 8);
 	memset(OpwolfADPCM_C, 0, 8);
@@ -3972,7 +4010,7 @@ static INT32 DariusInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -4044,9 +4082,10 @@ static INT32 DariusInit()
 	ZetClose();
 	
 	BurnYM2203Init(2, 4000000, TaitoYM2203IRQHandler, TaitoSynchroniseStream, TaitoGetTime, 0);
+	BurnYM2203SetVolumeShift(2);
 	BurnTimerAttachZet(8000000 / 2);
 	
-	MSM5205Init(0, TaitoSynchroniseStream, 384000, DariusAdpcmInt, MSM5205_S48_4B, 100, 1);
+	MSM5205Init(0, TaitoSynchroniseStream, 384000, DariusAdpcmInt, MSM5205_S48_4B, 50, 1);
 	
 	GenericTilesInit();
 	
@@ -4099,7 +4138,7 @@ static INT32 OpwolfInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -4203,7 +4242,7 @@ static INT32 OpwolfbInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -4315,7 +4354,7 @@ static INT32 RainbowInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -4373,7 +4412,7 @@ static INT32 RainbowInit()
 	RainbowCChipInit(CChipVer);
 		
 	// Reset the driver
-	TaitoResetFunction = TaitoDoReset;
+	TaitoResetFunction = RainbowDoReset;
 	TaitoResetFunction();
 
 	return 0;
@@ -4412,7 +4451,7 @@ static INT32 JumpingInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -4504,7 +4543,7 @@ static INT32 RastanInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -4597,7 +4636,7 @@ static INT32 TopspeedInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -4665,7 +4704,7 @@ static INT32 TopspeedInit()
 	nTaitoCyclesTotal[1] = 12000000 / 60;
 	nTaitoCyclesTotal[2] = 4000000 / 60;
 	
-	pTopspeedTempDraw = (UINT16*)malloc(512 * 512 * sizeof(UINT16));
+	pTopspeedTempDraw = (UINT16*)BurnMalloc(512 * 512 * sizeof(UINT16));
 
 	// Reset the driver
 	TaitoResetFunction = TopspeedDoReset;
@@ -4698,7 +4737,7 @@ static INT32 VolfiedInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -4778,10 +4817,7 @@ static INT32 TaitoMiscExit()
 	VolfiedVidCtrl = 0;
 	VolfiedVidMask = 0;
 	
-	if (pTopspeedTempDraw) {
-		free(pTopspeedTempDraw);
-		pTopspeedTempDraw = NULL;
-	}
+	BurnFree(pTopspeedTempDraw);
 	
 	return TaitoExit();
 }
@@ -5359,10 +5395,12 @@ static INT32 TaitoMiscFrame()
 		}
 	}
 	
-	if (TaitoNumZ80s >= 1) ZetOpen(0);
-	if (TaitoNumMSM5205) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
-	if (TaitoNumMSM5205 >= 2) MSM5205Render(1, pBurnSoundOut, nBurnSoundLen);
-	if (TaitoNumZ80s >= 1) ZetClose();
+	if (pBurnSoundOut) {
+		if (TaitoNumZ80s >= 1) ZetOpen(0);
+		if (TaitoNumMSM5205) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
+		if (TaitoNumMSM5205 >= 2) MSM5205Render(1, pBurnSoundOut, nBurnSoundLen);
+		if (TaitoNumZ80s >= 1) ZetClose();
+	}
 	
 	if (pBurnDraw) TaitoDrawFunction();
 	
@@ -5421,18 +5459,12 @@ static INT32 DariusFrame()
 	
 	ZetOpen(0);
 	BurnTimerEndFrame(nTaitoCyclesTotal[2]);
-	BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	ZetClose();
-	
-	// Reduce the YM2203 volume
-	for (INT32 j = 0; j < nBurnSoundLen * 2; j += 2) {
-		pBurnSoundOut[j + 0] /= 10;
-		pBurnSoundOut[j + 1] /= 10;
-	}
 	
 	ZetOpen(1);
 	ZetRun(nTaitoCyclesTotal[3] - nTaitoCyclesDone[3]);
-	MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	ZetClose();
 	
 	if (pBurnDraw) TaitoDrawFunction();
@@ -5473,7 +5505,7 @@ static INT32 JumpingFrame()
 	
 	ZetOpen(0);
 	BurnTimerEndFrame(nTaitoCyclesTotal[1]);
-	BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	ZetClose();
 	
 	if (pBurnDraw) TaitoDrawFunction();
@@ -5555,9 +5587,11 @@ static INT32 TopspeedFrame()
 		}
 	}
 	
-	if (TaitoNumZ80s >= 1) ZetOpen(0);
-	if (TaitoNumMSM5205) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
-	if (TaitoNumZ80s >= 1) ZetClose();
+	if (pBurnSoundOut) {
+		if (TaitoNumZ80s >= 1) ZetOpen(0);
+		if (TaitoNumMSM5205) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
+		if (TaitoNumZ80s >= 1) ZetClose();
+	}
 	
 	if (pBurnDraw) TaitoDrawFunction();
 	

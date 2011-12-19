@@ -91,7 +91,7 @@ void PC090OJReset()
 
 void PC090OJInit(INT32 nNumTiles, INT32 xOffset, INT32 yOffset, INT32 UseBuffer)
 {
-	PC090OJRam = (UINT8*)malloc(0x4000);
+	PC090OJRam = (UINT8*)BurnMalloc(0x4000);
 	memset(PC090OJRam, 0, 0x4000);
 	
 	PC090OJNumTiles = nNumTiles;
@@ -111,10 +111,7 @@ void PC090OJSetPaletteOffset(INT32 Offset)
 
 void PC090OJExit()
 {
-	if (PC090OJRam) {
-		free(PC090OJRam);
-		PC090OJRam = NULL;
-	}
+	BurnFree(PC090OJRam);
 	
 	PC090OJNumTiles = 0;
 	PC090OJXOffset = 0;

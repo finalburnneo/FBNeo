@@ -490,16 +490,16 @@ void TC0100SCNReset()
 
 void TC0100SCNInit(INT32 Chip, INT32 nNumTiles, INT32 xOffset, INT32 yOffset, INT32 xFlip, UINT8 *PriorityMap)
 {
-	TC0100SCNRam[Chip] = (UINT8*)malloc(0x14000);
+	TC0100SCNRam[Chip] = (UINT8*)BurnMalloc(0x14000);
 	memset(TC0100SCNRam[Chip], 0, 0x14000);
 		
-	TC0100SCNChars[Chip] = (UINT8*)malloc(256 * 8 * 8);
+	TC0100SCNChars[Chip] = (UINT8*)BurnMalloc(256 * 8 * 8);
 	memset(TC0100SCNChars[Chip], 0, 256 * 8 * 8);
 	
-	pTC0100SCNBgTempDraw[Chip] = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
+	pTC0100SCNBgTempDraw[Chip] = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
 	memset(pTC0100SCNBgTempDraw[Chip], 0, 1024 * 512 * sizeof(UINT16));
 	
-	pTC0100SCNFgTempDraw[Chip] = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
+	pTC0100SCNFgTempDraw[Chip] = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
 	memset(pTC0100SCNFgTempDraw[Chip], 0, 1024 * 512 * sizeof(UINT16));
 	
 	TC0100SCNXOffset[Chip] = xOffset;
@@ -552,25 +552,10 @@ void TC0100SCNSetPaletteOffset(INT32 Chip, INT32 PaletteOffset)
 void TC0100SCNExit()
 {
 	for (INT32 i = 0; i < TC0100SCNNum; i++) {
-		if (TC0100SCNRam[i]) {
-			free(TC0100SCNRam[i]);
-			TC0100SCNRam[i] = NULL;
-		}
-		
-		if (TC0100SCNChars[i]) {
-			free(TC0100SCNChars[i]);
-			TC0100SCNChars[i] = NULL;
-		}
-		
-		if (pTC0100SCNBgTempDraw[i]) {
-			free(pTC0100SCNBgTempDraw[i]);
-			pTC0100SCNBgTempDraw[i] = NULL;
-		}
-		
-		if (pTC0100SCNFgTempDraw[i]) {
-			free(pTC0100SCNFgTempDraw[i]);
-			pTC0100SCNFgTempDraw[i] = NULL;
-		}
+		BurnFree(TC0100SCNRam[i]);
+		BurnFree(TC0100SCNChars[i]);
+		BurnFree(pTC0100SCNBgTempDraw[i]);
+		BurnFree(pTC0100SCNFgTempDraw[i]);
 		
 		memset(TC0100SCNCtrl[i], 0, 8);
 		

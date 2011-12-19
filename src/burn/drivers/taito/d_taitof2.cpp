@@ -3527,7 +3527,7 @@ static struct BurnDIPInfo YesnojDIPList[]=
 {
 	// Default Values
 	{0x09, 0xff, 0xff, 0xff, NULL                             },
-	{0x0a, 0xff, 0xfe, 0xff, NULL                             },
+	{0x0a, 0xff, 0xff, 0xfe, NULL                             },
 
 	// Dip 1
 	
@@ -7504,7 +7504,7 @@ static INT32 CameltryInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -7571,7 +7571,7 @@ static INT32 CamltryaInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -7659,7 +7659,7 @@ static INT32 DeadconxInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -7716,7 +7716,7 @@ static INT32 DinorexInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -7779,7 +7779,7 @@ static INT32 DondokodInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -7842,7 +7842,7 @@ static INT32 DriftoutInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -7909,13 +7909,13 @@ static INT32 DriveoutInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
 	if (TaitoLoadRoms(1)) return 1;
 	
-	UINT8 *TempRom = (UINT8*)malloc(0x100000);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(0x100000);
 	memcpy(TempRom, TaitoMSM6295Rom, 0x100000);
 	memset(TaitoMSM6295Rom, 0, 0x100000);
 	memcpy(TaitoMSM6295Rom + 0x00000, TempRom + 0x00000, 0x20000);
@@ -7926,10 +7926,7 @@ static INT32 DriveoutInit()
 	memcpy(TaitoMSM6295Rom + 0xa0000, TempRom + 0x80000, 0x20000);
 	memcpy(TaitoMSM6295Rom + 0xc0000, TempRom + 0x60000, 0x20000);
 	memcpy(TaitoMSM6295Rom + 0xe0000, TempRom + 0x80000, 0x20000);
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
+	BurnFree(TempRom);
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, NULL);
 	TC0360PRIInit();
@@ -8000,7 +7997,7 @@ static INT32 FinalbInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8016,7 +8013,7 @@ static INT32 FinalbInit()
 	// Load and decode Sprites
 	INT32 nRet;
 	TaitoNumSpriteA = 0x2000;
-	UINT8 *TempRom = (UINT8*)malloc(0x200000);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(0x200000);
 	memset(TempRom, 0, 0x200000);
 	nRet = BurnLoadRom(TempRom + 0x000000 ,  5, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(TempRom + 0x000001 ,  6, 2); if (nRet != 0) return 1;
@@ -8038,10 +8035,7 @@ static INT32 FinalbInit()
 		Offset++;
 	}
 	GfxDecode(TaitoNumSpriteA, TaitoSpriteANumPlanes, TaitoSpriteAWidth, TaitoSpriteAHeight, FinalbSpritePlaneOffsets, FinalbSpriteXOffsets, FinalbSpriteYOffsets, TaitoSpriteAModulo, TempRom, TaitoSpritesA);
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
+	BurnFree(TempRom);
 	
 	SwitchToMusashi();
 
@@ -8102,7 +8096,7 @@ static INT32 FootchmpInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8159,7 +8153,7 @@ static INT32 GrowlInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8210,7 +8204,7 @@ static INT32 GunfrontInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8262,7 +8256,7 @@ static INT32 KoshienInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8315,7 +8309,7 @@ static INT32 LiquidkInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8367,7 +8361,7 @@ static INT32 MegablstInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8429,7 +8423,7 @@ static INT32 MetalbInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8483,7 +8477,7 @@ static INT32 MjnquestInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8491,7 +8485,7 @@ static INT32 MjnquestInit()
 	
 	// Load and decode Sprites
 	INT32 nRet;
-	UINT8 *TempRom = (UINT8*)malloc(TaitoSpriteARomSize);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(TaitoSpriteARomSize);
 	memset(TempRom, 0, TaitoSpriteARomSize);
 	nRet = BurnLoadRom(TempRom + 0x000000 ,  6, 1); if (nRet != 0) return 1;
 	for (UINT32 i = 0; i < TaitoSpriteARomSize; i += 2) {
@@ -8500,10 +8494,7 @@ static INT32 MjnquestInit()
 		TempRom[i + 1] = (Temp >> 4) | (Temp << 4);
 	}
 	GfxDecode(TaitoNumSpriteA, TaitoSpriteANumPlanes, TaitoSpriteAWidth, TaitoSpriteAHeight, TaitoSpriteAPlaneOffsets, TaitoSpriteAXOffsets, TaitoSpriteAYOffsets, TaitoSpriteAModulo, TempRom, TaitoSpritesA);
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
+	BurnFree(TempRom);
 	
 	TC0110PCRInit(1, 0x1000);
 	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, NULL);
@@ -8551,7 +8542,7 @@ static INT32 NinjakInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8608,7 +8599,7 @@ static INT32 PulirulaInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8665,7 +8656,7 @@ static INT32 QcrayonInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8720,7 +8711,7 @@ static INT32 Qcrayon2Init()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8775,7 +8766,7 @@ static INT32 QjinseiInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8829,7 +8820,7 @@ static INT32 QtorimonInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8882,7 +8873,7 @@ static INT32 QuizhqInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8936,7 +8927,7 @@ static INT32 QzchikyuInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -8989,7 +8980,7 @@ static INT32 QzquestInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -9042,7 +9033,7 @@ static INT32 SolfigtrInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -9092,7 +9083,7 @@ static INT32 SsiInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -9155,7 +9146,7 @@ static INT32 ThundfoxInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -9221,7 +9212,7 @@ static INT32 YesnojInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -9280,7 +9271,7 @@ static INT32 YuyugogoInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -10496,7 +10487,6 @@ static void YuyugogoDraw()
 static INT32 TaitoF2Frame()
 {
 	INT32 nInterleave = 10;
-	INT32 nSoundBufferPos = 0;
 
 	if (TaitoReset) TaitoF2DoReset();
 
@@ -10535,27 +10525,15 @@ static INT32 TaitoF2Frame()
 		nCurrentCPU = 1;
 		ZetOpen(0);
 		BurnTimerUpdate(i * (nTaitoCyclesTotal[1] / nInterleave));
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			if (TaitoNumYM2610) BurnYM2610Update(pSoundBuf, nSegmentLength);
-			if (TaitoNumYM2203) BurnYM2203Update(pSoundBuf, nSegmentLength);
-			if (TaitoNumMSM6295) MSM6295Render(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 		ZetClose();
 	}
 	
 	ZetOpen(0);
 	BurnTimerEndFrame(nTaitoCyclesTotal[1]);
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			if (TaitoNumYM2610) BurnYM2610Update(pSoundBuf, nSegmentLength);
-			if (TaitoNumYM2203) BurnYM2203Update(pSoundBuf, nSegmentLength);
-			if (TaitoNumMSM6295) MSM6295Render(0, pSoundBuf, nSegmentLength);
-		}
+		if (TaitoNumYM2610) BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
+		if (TaitoNumYM2203) BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		if (TaitoNumMSM6295) MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 	ZetClose();
 	
@@ -10571,7 +10549,6 @@ static INT32 TaitoF2Frame()
 static INT32 DriveoutFrame()
 {
 	INT32 nInterleave = 10;
-	INT32 nSoundBufferPos = 0;
 
 	if (TaitoReset) TaitoF2DoReset();
 
@@ -10615,23 +10592,11 @@ static INT32 DriveoutFrame()
 		nTaitoCyclesSegment = ZetRun(nTaitoCyclesSegment);
 		nTaitoCyclesDone[nCurrentCPU] += nTaitoCyclesSegment;
 		ZetClose();
-		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 	
 	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-		}
+		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 	
 	TaitoF2HandleSpriteBuffering();

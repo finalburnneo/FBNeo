@@ -128,7 +128,7 @@ void MegabCChipReset()
 
 void MegabCChipInit()
 {
-	MegabCChipRam = (UINT8*)malloc(0x800);
+	MegabCChipRam = (UINT8*)BurnMalloc(0x800);
 	memset(MegabCChipRam, 0, 0x800);
 	
 	TaitoIC_MegabCChipInUse = 1;
@@ -136,10 +136,7 @@ void MegabCChipInit()
 
 void MegabCChipExit()
 {
-	if (MegabCChipRam) {
-		free(MegabCChipRam);
-		MegabCChipRam = NULL;
-	}
+	BurnFree(MegabCChipRam);
 }
 
 void MegabCChipScan(INT32 nAction)
@@ -891,7 +888,7 @@ void RainbowCChipInit(INT32 Version)
 	ExtraVersion = Version;
 	
 	for (INT32 i = 0; i < 8; i++) {
-		CRAM[i] = (UINT8*)malloc(0x400);
+		CRAM[i] = (UINT8*)BurnMalloc(0x400);
 		memset(CRAM[i], 0, 0x400);
 	}
 	
@@ -901,10 +898,7 @@ void RainbowCChipInit(INT32 Version)
 void RainbowCChipExit()
 {
 	for (INT32 i = 0; i < 8; i++) {
-		if (CRAM[i]) {
-			free(CRAM[i]);
-			CRAM[i] = NULL;
-		}
+		BurnFree(CRAM[i]);
 	}
 	
 	ExtraVersion = 0;
@@ -1540,7 +1534,7 @@ void OpwolfCChipInit(INT32 Region)
 {
 	CChipRegion = Region;
 	
-	CChipRam = (UINT8*)malloc(0x400 * 8);
+	CChipRam = (UINT8*)BurnMalloc(0x400 * 8);
 	memset(CChipRam, 0, 0x400 * 8);
 	
 	CChipLast_7a = 0;
@@ -1558,10 +1552,7 @@ void OpwolfCChipInit(INT32 Region)
 
 void OpwolfCChipExit()
 {
-	if (CChipRam) {
-		free(CChipRam);
-		CChipRam = NULL;
-	}
+	BurnFree(CChipRam);
 	
 	CChipRegion = 0;
 	
@@ -2564,7 +2555,7 @@ UINT8 VolfiedCChipRamRead(INT32 offset)
 
 void VolfiedCChipInit()
 {
-	volfied_cchip_ram = (UINT8*)malloc(0x400 * 8);
+	volfied_cchip_ram = (UINT8*)BurnMalloc(0x400 * 8);
 	
 	TaitoIC_VolfiedCChipInUse = 1;
 
@@ -2585,10 +2576,7 @@ void VolfiedCChipReset()
 
 void VolfiedCChipExit()
 {
-	if (volfied_cchip_ram) {
-		free(volfied_cchip_ram);
-		volfied_cchip_ram = NULL;
-	}
+	BurnFree(volfied_cchip_ram);
 }
 
 void VolfiedCChipScan(INT32 nAction)

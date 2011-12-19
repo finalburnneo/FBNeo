@@ -415,7 +415,7 @@ void PC080SNReset()
 
 void PC080SNInit(INT32 Chip, INT32 nNumTiles, INT32 xOffset, INT32 yOffset, INT32 yInvert, INT32 DblWidth)
 {
-	PC080SNRam[Chip] = (UINT8*)malloc(0x10000);
+	PC080SNRam[Chip] = (UINT8*)BurnMalloc(0x10000);
 	memset(PC080SNRam[Chip], 0, 0x10000);
 	
 	PC080SNNumTiles[Chip] = nNumTiles;
@@ -443,10 +443,7 @@ void PC080SNSetFgTransparentPen(INT32 Chip, INT32 Pen)
 void PC080SNExit()
 {
 	for (INT32 i = 0; i < PC080SNNum; i++) {
-		if (PC080SNRam[i]) {
-			free(PC080SNRam[i]);
-			PC080SNRam[i] = NULL;
-		}
+		BurnFree(PC080SNRam[i]);
 
 		memset(PC080SNCtrl[i], 0, 8 * sizeof(UINT16));
 		BgScrollX[i] = 0;

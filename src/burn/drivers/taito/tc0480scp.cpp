@@ -802,9 +802,9 @@ INT32 TC0480SCPGetBgPriority()
 
 void TC0480SCPInit(INT32 nNumTiles, INT32 Pixels, INT32 xOffset, INT32 yOffset, INT32 xTextOffset, INT32 yTextOffset, INT32 VisYOffset)
 {
-	TC0480SCPRam = (UINT8*)malloc(0x10000);
+	TC0480SCPRam = (UINT8*)BurnMalloc(0x10000);
 	memset(TC0480SCPRam, 0, 0x10000);
-	TC0480SCPChars = (UINT8*)malloc(256 * 8 * 8);
+	TC0480SCPChars = (UINT8*)BurnMalloc(256 * 8 * 8);
 	memset(TC0480SCPChars, 0, 256 * 8 * 8);
 	
 	TC0480SCPTilesNum = nNumTiles;
@@ -814,7 +814,7 @@ void TC0480SCPInit(INT32 nNumTiles, INT32 Pixels, INT32 xOffset, INT32 yOffset, 
 	TC0480SCPTextXOffset = xTextOffset - TC0480SCPXOffset + 3;
 	TC0480SCPTextYOffset = yTextOffset + TC0480SCPYOffset;
 	
-	pTC0480SCPTempDraw = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
+	pTC0480SCPTempDraw = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
 	memset(pTC0480SCPTempDraw, 0, 1024 * 512 * sizeof(UINT16));
 	
 	TC0480SCPColBase = 0;
@@ -830,20 +830,9 @@ void TC0480SCPSetColourBase(INT32 Base)
 
 void TC0480SCPExit()
 {
-	if (TC0480SCPRam) {
-		free(TC0480SCPRam);
-		TC0480SCPRam = NULL;
-	}
-	
-	if (TC0480SCPChars) {
-		free(TC0480SCPChars);
-		TC0480SCPChars = NULL;
-	}
-	
-	if (pTC0480SCPTempDraw) {
-		free(pTC0480SCPTempDraw);
-		pTC0480SCPTempDraw = NULL;
-	}
+	BurnFree(TC0480SCPRam);
+	BurnFree(TC0480SCPChars);
+	BurnFree(pTC0480SCPTempDraw);
 	
 	memset(TC0480SCPCtrl, 0, 0x18);
 	BgScrollX[0] = BgScrollX[1] = BgScrollX[2] = BgScrollX[3] = 0;

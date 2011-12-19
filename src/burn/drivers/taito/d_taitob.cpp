@@ -1661,8 +1661,8 @@ static void DrvMakeInputs()
 	}
 
 	// for rambo3a's trackball
-	BurnGunMakeInputs(0, (INT16)TaitoAnalogPort0, (INT16)TaitoAnalogPort1);
-	BurnGunMakeInputs(1, (INT16)TaitoAnalogPort2, (INT16)TaitoAnalogPort3);
+	if (nBurnGunNumPlayers) BurnGunMakeInputs(0, (INT16)TaitoAnalogPort0, (INT16)TaitoAnalogPort1);
+	if (nBurnGunNumPlayers) BurnGunMakeInputs(1, (INT16)TaitoAnalogPort2, (INT16)TaitoAnalogPort3);
 }
 
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
@@ -1705,7 +1705,9 @@ static INT32 DrvDoReset(INT32 reset_ram)
 	if (sound_config == 0) {
 		BurnYM2610Reset();
 	} else {
+		ZetOpen(0);
 		BurnYM2203Reset();
+		ZetClose();
 		MSM6295Reset(0);
 	}
 
@@ -1767,7 +1769,7 @@ static void DrvGfxDecode(INT32 len, INT32 *tilemask0, INT32 *tilemask1)
 	INT32 XOffs[16] = { 0x000, 0x001, 0x002, 0x003, 0x004, 0x005, 0x006, 0x007, 0x080, 0x081, 0x082, 0x083, 0x084, 0x085, 0x086, 0x087 };
 	INT32 YOffs[16] = { 0x000, 0x010, 0x020, 0x030, 0x040, 0x050, 0x060, 0x070, 0x100, 0x110, 0x120, 0x130, 0x140, 0x150, 0x160, 0x170 };
 
-	UINT8 *tmp = (UINT8*)malloc(len);
+	UINT8 *tmp = (UINT8*)BurnMalloc(len);
 	if (tmp == NULL) {
 		return;
 	}
@@ -1780,10 +1782,7 @@ static void DrvGfxDecode(INT32 len, INT32 *tilemask0, INT32 *tilemask1)
 	*tilemask0 = (((len * 8) / 4) / ( 8 *  8)) - 1;
 	*tilemask1 = (((len * 8) / 4) / (16 * 16)) - 1;
 
-	if (tmp) {
-		free (tmp);
-		tmp = NULL;
-	}
+	BurnFree (tmp);
 }
 
 static void common_ym2610_init()
@@ -1832,11 +1831,12 @@ static void common_ym2203_init()
 
 	BurnYM2203Init(1, 3000000, DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnYM2203SetPorts(0, NULL, NULL, &bankswitch, NULL);
+	BurnYM2203SetVolumeShift(2);
 	BurnTimerAttachZet(cpu_speed[1]);
 
 	MSM6295ROM = TaitoMSM6295Rom;
 
-	MSM6295Init(0, 1056000 / 132, 80, 1);
+	MSM6295Init(0, 1056000 / 132, 40, 1);
 }
 
 static INT32 CommonInit(void (*pInitCallback)(), INT32 sound_type, INT32 color_select, INT32 input_type, INT32 irq0, INT32 irq1)
@@ -1852,7 +1852,7 @@ static INT32 CommonInit(void (*pInitCallback)(), INT32 sound_type, INT32 color_s
 	TaitoMem = NULL;
 	MemIndex();
 	INT32 nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 
@@ -1899,15 +1899,11 @@ static INT32 DrvExit()
 {
 	EEPROMExit();
 
-	TaitoICExit();
-	GenericTilesExit();
-
 	SekExit();
 	ZetExit();
 	
-	BurnYM2610SetSoundMixMode(0);
-
 	if (sound_config == 0) {
+		BurnYM2610SetSoundMixMode(0);
 		BurnYM2610Exit();
 	} else {
 		BurnYM2203Exit();
@@ -1915,15 +1911,7 @@ static INT32 DrvExit()
 		MSM6295ROM = NULL;
 	}
 
-	if (TaitoMem) {
-		free (TaitoMem);
-		TaitoMem = NULL;
-	}
-
-	if (DrvFramebuffer) {
-		free (DrvFramebuffer);
-		DrvFramebuffer = NULL;
-	}
+	BurnFree (DrvFramebuffer);
 
 	memset (nTaitoInputConfig, 0, 5);
 
@@ -2790,7 +2778,7 @@ static void HiticeInitCallback()
 //	SekSetReadWordHandler(0,		hitice_read_word);
 	SekClose();
 
-	DrvFramebuffer	= (UINT8*)malloc(1024 * 512);
+	DrvFramebuffer	= (UINT8*)BurnMalloc(1024 * 512);
 }
 
 //----------------------------------------------------------------------------------------------------------
@@ -3195,13 +3183,10 @@ STD_ROM_FN(rambo3)
 
 static INT32 Rambo3Init()
 {
-	INT32 nRet = CommonInit(TetristInitCallback, 0, 0, 0, 1, 6);
+	nTaitoInputConfig[1] = 0x30;
+	BurnGunInit(2, false);
 
-	if (nRet == 0) {
-		memmove (Taito68KRom1 + 0x40000, Taito68KRom1 + 0x20000, 0x40000);
-	}
-
-	return nRet;
+	return CommonInit(TetristInitCallback, 0, 2, 0, 1, 6);
 }
 
 struct BurnDriver BurnDrvRambo3 = {
@@ -3209,7 +3194,7 @@ struct BurnDriver BurnDrvRambo3 = {
 	"Rambo III (Europe)\0", NULL, "Taito Europe Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOB, GBF_MISC, 0,
-	NULL, rambo3RomInfo, rambo3RomName, NULL, NULL, CommonInputInfo, Rambo3DIPInfo,
+	NULL, rambo3RomInfo, rambo3RomName, NULL, NULL, Rambo3uInputInfo, Rambo3uDIPInfo,
 	Rambo3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 224, 4, 3
 };
@@ -3236,20 +3221,13 @@ static struct BurnRomInfo rambo3uRomDesc[] = {
 STD_ROM_PICK(rambo3u)
 STD_ROM_FN(rambo3u)
 
-static INT32 Rambo3uInit()
-{
-	nTaitoInputConfig[1] = 0x30;
-
-	return CommonInit(TetristInitCallback, 0, 2, 0, 1, 6);
-}
-
 struct BurnDriver BurnDrvRambo3u = {
 	"rambo3u", "rambo3", NULL, NULL, "1989",
 	"Rambo III (US)\0", NULL, "Taito Europe Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOB, GBF_MISC, 0,
 	NULL, rambo3uRomInfo, rambo3uRomName, NULL, NULL, Rambo3uInputInfo, Rambo3uDIPInfo,
-	Rambo3uInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	Rambo3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 224, 4, 3
 };
 
@@ -3291,13 +3269,24 @@ static struct BurnRomInfo rambo3pRomDesc[] = {
 STD_ROM_PICK(rambo3p)
 STD_ROM_FN(rambo3p)
 
+static INT32 Rambo3pInit()
+{
+	INT32 nRet = CommonInit(TetristInitCallback, 0, 0, 0, 1, 6);
+
+	if (nRet == 0) {
+		memmove (Taito68KRom1 + 0x40000, Taito68KRom1 + 0x20000, 0x40000);
+	}
+
+	return nRet;
+}
+
 struct BurnDriver BurnDrvRambo3p = {
 	"rambo3p", "rambo3", NULL, NULL, "1989",
 	"Rambo III (Europe, Proti?)\0", NULL, "Taito Europe Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOB, GBF_SHOOT, 0,
-	NULL, rambo3pRomInfo, rambo3pRomName, NULL, NULL, Rambo3uInputInfo, Rambo3uDIPInfo,
-	Rambo3uInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	NULL, rambo3pRomInfo, rambo3pRomName, NULL, NULL, CommonInputInfo, Rambo3DIPInfo,
+	Rambo3pInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 224, 4, 3
 };
 

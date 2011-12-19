@@ -43,7 +43,7 @@ UINT8 *TaitoSpriteRamBuffered  = NULL;
 UINT8 *TaitoSpriteRamDelayed   = NULL;
 UINT8 *TaitoSpriteExtension    = NULL;
 UINT8 *TaitoVideoRam           = NULL;
-UINT32  *TaitoPalette            = NULL;
+UINT32 *TaitoPalette           = NULL;
 UINT8 *TaitoPriorityMap        = NULL;
 
 UINT8 TaitoZ80Bank = 0;
@@ -463,7 +463,7 @@ INT32 TaitoLoadRoms(INT32 bLoad)
 		}
 		
 		if (TaitoCharRomSize) {
-			UINT8 *TempRom = (UINT8*)malloc(TaitoCharRomSize);
+			UINT8 *TempRom = (UINT8*)BurnMalloc(TaitoCharRomSize);
 			memset(TempRom, 0, TaitoCharRomSize);
 			
 			Offset = 0;
@@ -500,14 +500,11 @@ INT32 TaitoLoadRoms(INT32 bLoad)
 				memcpy (TaitoChars, TempRom, Offset);
 			}
 
-			if (TempRom) {
-				free(TempRom);
-				TempRom = NULL;
-			}
+			BurnFree(TempRom);
 		}
 		
 		if (TaitoCharBRomSize) {
-			UINT8 *TempRom = (UINT8*)malloc(TaitoCharBRomSize);
+			UINT8 *TempRom = (UINT8*)BurnMalloc(TaitoCharBRomSize);
 			memset(TempRom, 0, TaitoCharBRomSize);
 			
 			Offset = 0;
@@ -540,14 +537,11 @@ INT32 TaitoLoadRoms(INT32 bLoad)
 			
 			GfxDecode(TaitoNumCharB, TaitoCharBNumPlanes, TaitoCharBWidth, TaitoCharBHeight, TaitoCharBPlaneOffsets, TaitoCharBXOffsets, TaitoCharBYOffsets, TaitoCharBModulo, TempRom, TaitoCharsB);
 			
-			if (TempRom) {
-				free(TempRom);
-				TempRom = NULL;
-			}
+			BurnFree(TempRom);
 		}
 		
 		if (TaitoSpriteARomSize) {
-			UINT8 *TempRom = (UINT8*)malloc(TaitoSpriteARomSize);
+			UINT8 *TempRom = (UINT8*)BurnMalloc(TaitoSpriteARomSize);
 			memset(TempRom, 0, TaitoSpriteARomSize);
 			
 			Offset = 0;
@@ -629,14 +623,11 @@ INT32 TaitoLoadRoms(INT32 bLoad)
 				memcpy (TaitoSpritesA, TempRom, Offset);
 			}
 
-			if (TempRom) {
-				free(TempRom);
-				TempRom = NULL;
-			}
+			BurnFree(TempRom);
 		}
 		
 		if (TaitoSpriteBRomSize) {
-			UINT8 *TempRom = (UINT8*)malloc(TaitoSpriteBRomSize);
+			UINT8 *TempRom = (UINT8*)BurnMalloc(TaitoSpriteBRomSize);
 			memset(TempRom, 0, TaitoSpriteBRomSize);
 			
 			Offset = 0;
@@ -687,10 +678,7 @@ INT32 TaitoLoadRoms(INT32 bLoad)
 			
 			GfxDecode(TaitoNumSpriteB, TaitoSpriteBNumPlanes, TaitoSpriteBWidth, TaitoSpriteBHeight, TaitoSpriteBPlaneOffsets, TaitoSpriteBXOffsets, TaitoSpriteBYOffsets, TaitoSpriteBModulo, TempRom, TaitoSpritesB);
 			
-			if (TempRom) {
-				free(TempRom);
-				TempRom = NULL;
-			}
+			BurnFree(TempRom);
 		}
 		
 		if (TaitoRoadRomSize) {
@@ -764,7 +752,7 @@ INT32 TaitoLoadRoms(INT32 bLoad)
 		}
 		
 		if (TaitoCharPivotRomSize) {
-			UINT8 *TempRom = (UINT8*)malloc(TaitoCharPivotRomSize);
+			UINT8 *TempRom = (UINT8*)BurnMalloc(TaitoCharPivotRomSize);
 			memset(TempRom, 0, TaitoCharPivotRomSize);
 			
 			Offset = 0;
@@ -785,10 +773,7 @@ INT32 TaitoLoadRoms(INT32 bLoad)
 			
 			GfxDecode(TaitoNumCharPivot, TaitoCharPivotNumPlanes, TaitoCharPivotWidth, TaitoCharPivotHeight, TaitoCharPivotPlaneOffsets, TaitoCharPivotXOffsets, TaitoCharPivotYOffsets, TaitoCharPivotModulo, TempRom, TaitoCharsPivot);
 			
-			if (TempRom) {
-				free(TempRom);
-				TempRom = NULL;
-			}
+			BurnFree(TempRom);
 		}
 		
 		if (TaitoMSM6295RomSize) {
@@ -876,12 +861,9 @@ INT32 TaitoExit()
 	TaitoICExit();
 	
 	GenericTilesExit();
-	BurnGunExit();
+	if (nBurnGunNumPlayers) BurnGunExit();
 	
-	if (TaitoMem) {
-		free(TaitoMem);
-		TaitoMem = NULL;
-	}
+	BurnFree(TaitoMem);
 
 	Taito68KRom1Num = 0;
 	Taito68KRom2Num = 0;

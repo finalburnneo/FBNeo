@@ -1143,7 +1143,24 @@ static INT32 DrvDoReset()
 {
 	memset (TaitoRamStart, 0, TaitoRamEnd - TaitoRamStart);
 
+#if 0
+	// This resets the YM2151 which calls DrvSoundBankSwitch via the port callback
 	TaitoDoReset();
+#else
+	SekOpen(0);
+	SekReset();
+	SekClose();
+	
+	ZetOpen(0);
+	ZetReset();
+	ZetClose();
+	
+	if (TaitoNumYM2610) BurnYM2610Reset();
+	if (TaitoNumMSM5205) MSM5205Reset();
+	ZetOpen(0);
+	if (TaitoNumYM2151) BurnYM2151Reset();
+	ZetClose();	
+#endif
 
 	ZetOpen(0);
 	DrvSoundBankSwitch(0, 1);
@@ -1333,7 +1350,7 @@ static INT32 CommonInit(void (*Cpu68KSetup)(), void (*CpuZ80Setup)(), void (*Sou
 	TaitoMem = NULL;
 	MemIndex();
 	INT32 nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 
@@ -1393,11 +1410,11 @@ static INT32 CadashFrame()
 
 	TaitoMakeInputsFunction();
 
-	SekOpen(0);
-	ZetOpen(0);
-
 	SekNewFrame();
 	ZetNewFrame();
+	
+	SekOpen(0);
+	ZetOpen(0);
 
 	INT32 nInterleave = 100;
 	INT32 nSoundBufferPos = 0;
@@ -1453,11 +1470,11 @@ static INT32 EtoFrame() // Using for asuka too, but needs msm5205
 
 	TaitoMakeInputsFunction();
 
-	SekOpen(0);
-	ZetOpen(0);
-
 	SekNewFrame();
 	ZetNewFrame();
+	
+	SekOpen(0);
+	ZetOpen(0);
 
 	INT32 nInterleave = 100;
 	if (TaitoNumMSM5205) nInterleave = MSM5205CalcInterleave(0, 4000000);
@@ -1525,11 +1542,11 @@ static INT32 BonzeFrame()
 		}
 	}
 
-	SekOpen(0);
-	ZetOpen(0);
-
 	SekNewFrame();
 	ZetNewFrame();
+	
+	SekOpen(0);
+	ZetOpen(0);
 
 	SekRun(8000000 / 60);
 	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);

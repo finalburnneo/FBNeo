@@ -1073,7 +1073,7 @@ static INT32 TaitoXInit(INT32 nSoundType)
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -1411,7 +1411,6 @@ static void TaitoXDraw()
 static INT32 TaitoXFrame()
 {
 	INT32 nInterleave = 10;
-	INT32 nSoundBufferPos = 0;
 	
 	if (TaitoReset) TaitoDoReset();
 
@@ -1436,23 +1435,13 @@ static INT32 TaitoXFrame()
 		nCurrentCPU = 1;
 		ZetOpen(0);
 		BurnTimerUpdate(i * (nTaitoCyclesTotal[1] / nInterleave));
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2610Update(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 		ZetClose();
 	}
 	
 	ZetOpen(0);
 	BurnTimerEndFrame(nTaitoCyclesTotal[1]);
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			BurnYM2610Update(pSoundBuf, nSegmentLength);
-		}
+		BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
 	}
 	ZetClose();
 	

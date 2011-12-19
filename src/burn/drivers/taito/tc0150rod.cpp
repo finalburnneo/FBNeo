@@ -422,9 +422,9 @@ void TC0150RODReset()
 
 void TC0150RODInit(INT32 nRomSize, INT32 xFlip)
 {
-	TC0150RODRom = (UINT8*)malloc(nRomSize);
+	TC0150RODRom = (UINT8*)BurnMalloc(nRomSize);
 	memset(TC0150RODRom, 0, nRomSize);
-	TC0150RODRam = (UINT8*)malloc(0x2000);
+	TC0150RODRam = (UINT8*)BurnMalloc(0x2000);
 	memset(TC0150RODRam, 0, 0x2000);
 	
 	TC0150RODFlipScreenX = xFlip;
@@ -434,15 +434,8 @@ void TC0150RODInit(INT32 nRomSize, INT32 xFlip)
 
 void TC0150RODExit()
 {
-	if (TC0150RODRom) {
-		free(TC0150RODRom);
-		TC0150RODRom = NULL;
-	}
-	
-	if (TC0150RODRam) {
-		free(TC0150RODRam);
-		TC0150RODRam = NULL;
-	}
+	BurnFree(TC0150RODRom);
+	BurnFree(TC0150RODRam);
 	
 	TC0150RODFlipScreenX = 0;
 }

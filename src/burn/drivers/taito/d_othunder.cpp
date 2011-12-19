@@ -769,7 +769,7 @@ static INT32 OthunderInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -837,11 +837,9 @@ static INT32 OthunderInit()
 
 static INT32 OthunderExit()
 {
-	TaitoExit();
-	
-	BurnGunExit();
-	
 	BurnYM2610SetSoundMixMode(0);
+	
+	TaitoExit();
 	
 	// Switch back CPU core if needed
 	if (bUseAsm68KCoreOldValue) {
@@ -1063,6 +1061,10 @@ static INT32 OthunderFrame()
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
 		if (i == (TaitoFrameInterleave - 1)) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
 		SekClose();
+		
+		ZetOpen(0);
+		BurnTimerUpdate(i * (nTaitoCyclesTotal[1] / nInterleave));
+		ZetClose();
 	}
 	
 	ZetOpen(0);

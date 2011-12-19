@@ -711,7 +711,7 @@ static INT32 SuperchsInit()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -720,13 +720,14 @@ static INT32 SuperchsInit()
 	TC0480SCPInit(TaitoNumChar, 0, 0x20, 8, -1, 0, 0);
 	
 	UINT8 *pTemp;
-	pTemp = (UINT8*)malloc(0xc00000);
+	pTemp = (UINT8*)BurnMalloc(0xc00000);
 	memcpy(pTemp, TaitoES5505Rom, 0xc00000);
 	memset(TaitoES5505Rom, 0, TaitoES5505RomSize);
 	memcpy(TaitoES5505Rom + 0xc00000, pTemp + 0x000000, 0x400000);
 	memcpy(TaitoES5505Rom + 0x000000, pTemp + 0x400000, 0x400000);
 	memcpy(TaitoES5505Rom + 0x400000, pTemp + 0x400000, 0x400000);
 	memcpy(TaitoES5505Rom + 0x800000, pTemp + 0x800000, 0x400000);
+	BurnFree(pTemp);
 	
 	SekInit(0, 0x68EC020);
 	SekOpen(0);
@@ -785,6 +786,7 @@ static INT32 SuperchsInit()
 static int SuperchsExit()
 {
 	TaitoExit();
+	ES5506Exit();
 	
 	SuperchsCoinWord = 0;
 	SuperchsCpuACtrl = 0;

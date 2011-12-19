@@ -154,10 +154,10 @@ void TC0280GRDReset()
 
 void TC0280GRDInit(INT32 xOffs, INT32 yOffs, UINT8 *pSrc)
 {
-	TC0280GRDRam = (UINT8*)malloc(0x2000);
+	TC0280GRDRam = (UINT8*)BurnMalloc(0x2000);
 	memset(TC0280GRDRam, 0, 0x2000);
 	
-	pRozTileMapData = (UINT16*)malloc(512 * 512 * sizeof(UINT16));
+	pRozTileMapData = (UINT16*)BurnMalloc(512 * 512 * sizeof(UINT16));
 	memset(pRozTileMapData, 0, 512 * 512 * sizeof(UINT16));
 	
 	TC0280GRDXOffset = xOffs;
@@ -182,15 +182,8 @@ void TC0430GRWInit(INT32 xOffs, INT32 yOffs, UINT8 *pSrc)
 
 void TC0280GRDExit()
 {
-	if (TC0280GRDRam) {
-		free(TC0280GRDRam);
-		TC0280GRDRam = NULL;
-	}
-	
-	if (pRozTileMapData) {
-		free(pRozTileMapData);
-		pRozTileMapData = NULL;
-	}
+	BurnFree(TC0280GRDRam);
+	BurnFree(pRozTileMapData);
 	
 	memset(TC0280GRDCtrl, 0, 8);
 	

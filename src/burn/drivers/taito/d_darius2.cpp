@@ -1346,7 +1346,7 @@ static INT32 Darius2Init()
 	TaitoMem = NULL;
 	MemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
@@ -1458,7 +1458,7 @@ static INT32 Darius2dInit()
 	TaitoMem = NULL;
 	Darius2dMemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	Darius2dMemIndex();
 	
@@ -1566,7 +1566,7 @@ static INT32 WarriorbInit()
 	TaitoMem = NULL;
 	WarriorbMemIndex();
 	nLen = TaitoMemEnd - (UINT8 *)0;
-	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	WarriorbMemIndex();
 	
@@ -1889,10 +1889,14 @@ static INT32 Darius2Frame()
 			if (i == nInterleave - 1) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
 			SekClose();
 		}
+		
+		ZetOpen(0);
+		BurnTimerUpdate(i * (nTaitoCyclesTotal[2] / nInterleave));
+		ZetClose();
 	}
 	
 	ZetOpen(0);
-	BurnTimerEndFrame(nTaitoCyclesTotal[2] - nTaitoCyclesDone[2]);
+	BurnTimerEndFrame(nTaitoCyclesTotal[2]);
 	BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
 	ZetClose();
 	
@@ -1925,10 +1929,14 @@ static INT32 Darius2dFrame()
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
 		if (i == nInterleave - 1) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
 		SekClose();
+		
+		ZetOpen(0);
+		BurnTimerUpdate(i * (nTaitoCyclesTotal[1] / nInterleave));
+		ZetClose();
 	}
 	
 	ZetOpen(0);
-	BurnTimerEndFrame(nTaitoCyclesTotal[1] - nTaitoCyclesDone[1]);
+	BurnTimerEndFrame(nTaitoCyclesTotal[1]);
 	BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
 	ZetClose();
 	

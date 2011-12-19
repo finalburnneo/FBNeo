@@ -101,7 +101,7 @@ static void create_transtile_table(INT32 tile)
 	if (tilemask[tile]) {
 		INT32 len = (tilemask[tile] + 1);
 
-		transtiletab[tile] = (UINT8*)malloc(len);
+		transtiletab[tile] = (UINT8*)BurnMalloc(len);
 
 		memset (transtiletab[tile], 1, len);
 
@@ -121,14 +121,14 @@ void TC0180VCUInit(UINT8 *gfx0, INT32 mask0, UINT8 *gfx1, INT32 mask1, INT32 glo
 
 	for (INT32 i = 0; i < 2; i++)
 	{
-		TC0180VCUFramebuffer[i] = (UINT16*)malloc(512 * 256 * sizeof(UINT16));
-		TC0180VCU_scrollx[i] = (INT32*)malloc(257 * sizeof(INT32));
-		TC0180VCU_scrolly[i] = (INT32*)malloc(257 * sizeof(INT32));
+		TC0180VCUFramebuffer[i] = (UINT16*)BurnMalloc(512 * 256 * sizeof(UINT16));
+		TC0180VCU_scrollx[i] = (INT32*)BurnMalloc(257 * sizeof(INT32));
+		TC0180VCU_scrolly[i] = (INT32*)BurnMalloc(257 * sizeof(INT32));
 	}
 
-	TC0180VCURAM		= (UINT8*)malloc(0x010000);
-	TC0180VCUScrollRAM	= (UINT8*)malloc(0x000800);
-	TC0180VCUFbRAM		= (UINT8*)malloc(0x040000);
+	TC0180VCURAM		= (UINT8*)BurnMalloc(0x010000);
+	TC0180VCUScrollRAM	= (UINT8*)BurnMalloc(0x000800);
+	TC0180VCUFbRAM		= (UINT8*)BurnMalloc(0x040000);
 
 	tilemask[0] = mask0;
 	tilemask[1] = mask1;
@@ -139,8 +139,8 @@ void TC0180VCUInit(UINT8 *gfx0, INT32 mask0, UINT8 *gfx1, INT32 mask1, INT32 glo
 	if (mask1) create_transtile_table(1);
 
 	if (mask0 == 0) {
-		dummy_tile = (UINT8*)malloc(0x100);
-		transtiletab[1] = (UINT8*)malloc(1);
+		dummy_tile = (UINT8*)BurnMalloc(0x100);
+		transtiletab[1] = (UINT8*)BurnMalloc(1);
 		tiledata[1] = dummy_tile;
 	}
 
@@ -154,49 +154,20 @@ void TC0180VCUExit()
 {
 	for (INT32 i = 0; i < 2; i++)
 	{
-		if (TC0180VCU_scrollx[i]) {
-			free (TC0180VCU_scrollx[i]);
-			TC0180VCU_scrollx[i] = NULL;
-		}
-
-		if (TC0180VCU_scrolly[i]) {
-			free (TC0180VCU_scrolly[i]);
-			TC0180VCU_scrolly[i] = NULL;
-		}
+		BurnFree (TC0180VCU_scrollx[i]);
+		BurnFree (TC0180VCU_scrolly[i]);
 
 		tilemask[i] = ~0;
 		tiledata[i] = NULL;
 
-		if (TC0180VCUFramebuffer[i]) {
-			free (TC0180VCUFramebuffer[i]);
-			TC0180VCUFramebuffer[i] = NULL;
-		}
-
-		if (transtiletab[i]) {
-			free (transtiletab[i]);
-			transtiletab[i] = NULL;
-		}
+		BurnFree (TC0180VCUFramebuffer[i]);
+		BurnFree (transtiletab[i]);
 	}
 
-	if (dummy_tile) {
-		free (dummy_tile);
-		dummy_tile = NULL;
-	}
-
-	if (TC0180VCURAM) {
-		free (TC0180VCURAM);
-		TC0180VCURAM = NULL;
-	}
-
-	if (TC0180VCUScrollRAM) {
-		free (TC0180VCUScrollRAM);
-		TC0180VCUScrollRAM = NULL;
-	}
-
-	if (TC0180VCUFbRAM) {
-		free (TC0180VCUFbRAM);
-		TC0180VCUFbRAM = NULL;
-	}
+	BurnFree (dummy_tile);
+	BurnFree (TC0180VCURAM);
+	BurnFree (TC0180VCUScrollRAM);
+	BurnFree (TC0180VCUFbRAM);
 
 	TC0180VCU_y_offset = 0;
 	TC0180VCU_x_offset = 0;

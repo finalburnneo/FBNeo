@@ -31,14 +31,14 @@ static struct BurnDIPInfo SnesDIPList[]=
 STDDIPINFO(Snes)
 
 static struct BurnRomInfo rSuperMarioWorldEuropeRev1RomDesc[] = {
-	{ "Super Mario World (Europe) (Rev 1).sfc",          524288, 0xb47f5f20, BRF_ESS | BRF_PRG },
+	{ "smw.sfc",          524288, 0xb47f5f20, BRF_ESS | BRF_PRG },
 };
 
 
 STD_ROM_PICK(rSuperMarioWorldEuropeRev1)
 STD_ROM_FN(rSuperMarioWorldEuropeRev1)
 
-struct BurnDriverD BurnDrvrSuperMarioWorldEuropeRev1 = {
+struct BurnDriverD BurnDrvrSMW = {
 	"Super Mario World (Europe) (Rev 1)", NULL, NULL, NULL, "1986",
 	"Super Mario World (Europe) (Rev 1)\0", NULL, "Nintendo", "Miscellaneous",
 	L"Super Mario World (Europe) (Rev 1)", NULL, NULL, NULL,
@@ -49,7 +49,7 @@ struct BurnDriverD BurnDrvrSuperMarioWorldEuropeRev1 = {
 };
 
 static struct BurnRomInfo rSuperMarioWorldEuropeRomDesc[] = {
-	{ "Super Mario World (Europe).sfc",          524288, 0x3c41070f, BRF_ESS | BRF_PRG },
+	{ "smwa.sfc",          524288, 0x3c41070f, BRF_ESS | BRF_PRG },
 };
 
 
@@ -67,7 +67,7 @@ struct BurnDriverD BurnDrvrSuperMarioWorldEurope = {
 };
 
 static struct BurnRomInfo rSuperMarioWorldJapanRomDesc[] = {
-	{ "Super Mario World (Japan).sfc",          524288, 0xec0ddac, BRF_ESS | BRF_PRG },
+	{ "smwj.sfc",          524288, 0xec0ddac, BRF_ESS | BRF_PRG },
 };
 
 
@@ -85,7 +85,7 @@ struct BurnDriverD BurnDrvrSuperMarioWorldJapan = {
 };
 
 static struct BurnRomInfo rSuperMarioWorldUSARomDesc[] = {
-	{ "Super Mario World (USA).sfc",          524288, 0xb19ed489, BRF_ESS | BRF_PRG },
+	{ "smwa.sfc",          524288, 0xb19ed489, BRF_ESS | BRF_PRG },
 };
 
 

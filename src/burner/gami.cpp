@@ -1529,9 +1529,9 @@ INT32 GameInputAutoIni(INT32 nPlayer, TCHAR* lpszFile, bool bOverWrite)
 
 INT32 ConfigGameLoadHardwareDefaults()
 {
-	TCHAR *szDefaultCpsFile = _T("config\\presets\\cps.ini");
-	TCHAR *szDefaultNeogeoFile = _T("config\\presets\\neogeo.ini");
-	TCHAR *szDefaultPgmFile = _T("config\\presets\\pgm.ini");
+	TCHAR *szDefaultCpsFile = _T("config\presets\cps.ini");
+	TCHAR *szDefaultNeogeoFile = _T("config\presets\neogeo.ini");
+	TCHAR *szDefaultPgmFile = _T("config\presets\pgm.ini");
 	TCHAR *szFileName = _T("");
 	INT32 nApplyHardwareDefaults = 0;
 	

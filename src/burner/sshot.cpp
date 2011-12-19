@@ -5,7 +5,7 @@
 #define SSHOT_LIBPNG_ERROR 2
 #define SSHOT_OTHER_ERROR 3
 
-#define SSHOT_DIRECTORY "screenshots\\"
+#define SSHOT_DIRECTORY "screenshots/"
 
 static UINT8* pSShot = NULL;
 static UINT8* pConvertedImage = NULL;

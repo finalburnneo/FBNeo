@@ -90,7 +90,7 @@ void EEPROMInit(const eeprom_interface *interface)
 	else locked = 0;
 
 	char output[128];
-	sprintf (output, "config\\games\\%s.nv", BurnDrvGetTextA(DRV_NAME));
+	sprintf (output, "config/games/%s.nv", BurnDrvGetTextA(DRV_NAME));
 
 	neeprom_available = 0;
 
@@ -111,7 +111,7 @@ void EEPROMExit()
 #endif
 
 	char output[128];
-	sprintf (output, "config\\games\\%s.nv", BurnDrvGetTextA(DRV_NAME));
+	sprintf (output, "config/games/%s.nv", BurnDrvGetTextA(DRV_NAME));
 
 	neeprom_available = 0;
 

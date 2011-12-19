@@ -774,7 +774,7 @@ static int InitEffectsSurfaces()
 		}
 
 		// Get the filename and size of a pattern
-		_tcscpy(pFilename, _T("pattern\\"));
+		_tcscpy(pFilename, _T("pattern/"));
 		_tcscat(pFilename, pRGBEffectPatternName);
 		_stscanf(pRGBEffectPatternName, _T("%i x %i"), &nPatternXSize, &nPatternYSize);
 		nPatternSize = nPatternXSize * nPatternYSize * 4;

@@ -5,12 +5,12 @@ static HWND hTabControl 	= NULL;
 static int nInitTabSelect 	= 0;
 static HWND hParent			= NULL;
 
-TCHAR szAppPreviewsPath[MAX_PATH]	= _T("support\\previews\\");
-TCHAR szAppTitlesPath[MAX_PATH]		= _T("support\\titles\\");
-TCHAR szAppCheatsPath[MAX_PATH]		= _T("support\\cheats\\");
-TCHAR szAppHiscorePath[MAX_PATH]	= _T("support\\hiscores\\");
-TCHAR szAppSamplesPath[MAX_PATH]	= _T("support\\samples\\");
-TCHAR szAppIpsPath[MAX_PATH]		= _T("support\\ips\\");
+TCHAR szAppPreviewsPath[MAX_PATH]	= _T("support/previews/");
+TCHAR szAppTitlesPath[MAX_PATH]		= _T("support/titles/");
+TCHAR szAppCheatsPath[MAX_PATH]		= _T("support/cheats/");
+TCHAR szAppHiscorePath[MAX_PATH]	= _T("support/hiscores/");
+TCHAR szAppSamplesPath[MAX_PATH]	= _T("support/samples/");
+TCHAR szAppIpsPath[MAX_PATH]		= _T("support/ips/");
 
 static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {

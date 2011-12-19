@@ -14,7 +14,7 @@ static void MakeOfn(TCHAR* pszFilter)
 	ofn.lpstrFilter = pszFilter;
 	ofn.lpstrFile = szChoice;
 	ofn.nMaxFile = sizeof(szChoice) / sizeof(TCHAR);
-	ofn.lpstrInitialDir = _T(".\\savestates");
+	ofn.lpstrInitialDir = _T("./savestates");
 	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.lpstrDefExt = _T("fs");
 	return;
@@ -26,7 +26,7 @@ int StatedAuto(int bSave)
 	static TCHAR szName[32] = _T("");
 	int nRet;
 
-	_stprintf(szName, _T("config\\games\\%s.fs"), BurnDrvGetText(DRV_NAME));
+	_stprintf(szName, _T("config/games/%s.fs"), BurnDrvGetText(DRV_NAME));
 
 	if (bSave == 0) {
 		nRet = BurnStateLoad(szName, bDrvSaveAll, NULL);		// Load ram
@@ -42,7 +42,7 @@ int StatedAuto(int bSave)
 
 static void CreateStateName(int nSlot)
 {
-	_stprintf(szChoice, _T(".\\savestates\\%s slot %02x.fs"), BurnDrvGetText(DRV_NAME), nSlot);
+	_stprintf(szChoice, _T("./savestates/%s slot %02x.fs"), BurnDrvGetText(DRV_NAME), nSlot);
 }
 
 int StatedLoad(int nSlot)

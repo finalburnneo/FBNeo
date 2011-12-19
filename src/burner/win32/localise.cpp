@@ -1652,7 +1652,7 @@ static void MakeOfn()
 	ofn.lpstrFilter = _T("FB Alpha localisation templates (*.flt)\0*.flt\0\0");
 	ofn.lpstrFile = szChoice;
 	ofn.nMaxFile = sizeof(szChoice) / sizeof(TCHAR);
-	ofn.lpstrInitialDir = _T(".\\config\\localisation");
+	ofn.lpstrInitialDir = _T("./config/localisation");
 	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.lpstrDefExt = _T("flt");
 

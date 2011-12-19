@@ -1284,7 +1284,7 @@ static INT_PTR CALLBACK SysInfoProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM l
 
 					if (pExceptionPointers) {
 						TCHAR szLogName[MAX_PATH];
-						_stprintf(szLogName, _T("config\\%s.error.log"), szAppExeName);
+						_stprintf(szLogName, _T("config/%s.error.log"), szAppExeName);
 						fp = _tfopen(szLogName, _T("ab"));
 
 						EnableWindow(GetDlgItem(hDlg, IDC_SYSINFO_LOG), FALSE);

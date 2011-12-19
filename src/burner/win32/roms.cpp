@@ -18,7 +18,7 @@ static HANDLE hEvent = NULL;
 
 static void CreateRomDatName(TCHAR* szRomDat)
 {
-	_stprintf(szRomDat, _T("config\\%s.roms.dat"), szAppExeName);
+	_stprintf(szRomDat, _T("config/%s.roms.dat"), szAppExeName);
 
 	return;
 }

@@ -23,7 +23,7 @@ struct VidPresetDataVer VidPresetVer[4] = {
 
 static void CreateConfigName(TCHAR* szConfig)
 {
-	_stprintf(szConfig, _T("config\\%s.ini"), szAppExeName);
+	_stprintf(szConfig, _T("config/%s.ini"), szAppExeName);
 	return;
 }
 

@@ -31,8 +31,8 @@ static HBRUSH hWhiteBGBrush;
 
 bool bNeoCDListScanSub			= false;
 bool bNeoCDListScanOnlyISO		= false;
-TCHAR szNeoCDCoverDir[MAX_PATH] = _T("support\\neocdz\\");
-TCHAR szNeoCDGamesDir[MAX_PATH] = _T("\\neocdiso\\");
+TCHAR szNeoCDCoverDir[MAX_PATH] = _T("support/neocdz/");
+TCHAR szNeoCDGamesDir[MAX_PATH] = _T("/neocdiso/");
 
 static int nSelectedItem = -1;
 
@@ -505,7 +505,7 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 				{
 
 					// Scan sub-directory for CUE									
-					_stprintf(szSubSearch, _T("%s%s\\*.cue"), pszDirectory, ffdDirectory.cFileName);
+					_stprintf(szSubSearch, _T("%s%s/*.cue"), pszDirectory, ffdDirectory.cFileName);
 
 					hSubDirectory = FindFirstFile(szSubSearch, &ffdSubDirectory);
 				
@@ -523,14 +523,14 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 								{
 									// Parse CUE
 									TCHAR szParse[512] = _T("\0");				
-									_stprintf(szParse, _T("%s%s\\%s"), pszDirectory, ffdDirectory.cFileName, ffdSubDirectory.cFileName);
+									_stprintf(szParse, _T("%s%s/%s"), pszDirectory, ffdDirectory.cFileName, ffdSubDirectory.cFileName);
 
 									//MessageBox(NULL, szParse, _T(""), MB_OK);
 
 									pszISO = NeoCDList_ParseCUE( szParse );
 
 									TCHAR szISO[512] =_T("\0");
-									_stprintf(szISO, _T("%s%s\\%s"), pszDirectory, ffdDirectory.cFileName,  pszISO);
+									_stprintf(szISO, _T("%s%s/%s"), pszDirectory, ffdDirectory.cFileName,  pszISO);
 
 									NeoCDList_CheckISO(hList, szISO);
 									bDone = true;
@@ -560,7 +560,7 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 				memset(&ffdSubDirectory, 0, sizeof(WIN32_FIND_DATA));
 
 				// Scan sub-directory for ISO
-				_stprintf(szSubSearch, _T("%s%s\\*.iso"), pszDirectory, ffdDirectory.cFileName);
+				_stprintf(szSubSearch, _T("%s%s/*.iso"), pszDirectory, ffdDirectory.cFileName);
 
 				hSubDirectory = FindFirstFile(szSubSearch, &ffdSubDirectory);
 
@@ -577,7 +577,7 @@ static void NeoCDList_ScanDir(HWND hList, TCHAR* pszDirectory)
 							if(_tcsstr(ffdSubDirectory.cFileName, _T(".iso")) || _tcsstr(ffdSubDirectory.cFileName, _T(".ISO")))
 							{
 								TCHAR szISO[512] = _T("\0");				
-								_stprintf(szISO, _T("%s%s\\%s"), pszDirectory, ffdDirectory.cFileName, ffdSubDirectory.cFileName);
+								_stprintf(szISO, _T("%s%s/%s"), pszDirectory, ffdDirectory.cFileName, ffdSubDirectory.cFileName);
 
 								NeoCDList_CheckISO(hList, szISO);
 

@@ -286,7 +286,7 @@ static void InitComboboxes()
 	SendMessage(hInpdPci, CB_ADDSTRING, 0, (LPARAM)FBALoadStringEx(hAppInst, IDS_INPUT_INP_HOTRODR, true));
 
 	// Scan presets directory for .ini files and add them to the list
-	if ((search = FindFirstFile(_T("config\\presets\\*.ini"), &findData)) != INVALID_HANDLE_VALUE) {
+	if ((search = FindFirstFile(_T("config/presets/*.ini"), &findData)) != INVALID_HANDLE_VALUE) {
 		do {
 			findData.cFileName[_tcslen(findData.cFileName) - 4] = 0;
 			SendMessage(hInpdPci, CB_ADDSTRING, 0, (LPARAM)findData.cFileName);

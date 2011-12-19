@@ -40,7 +40,7 @@ TCHAR szAppExeName[EXE_NAME_SIZE + 1];
 bool bCmdOptUsed = 0;
 bool bAlwaysProcessKeyboardInput = false;
 
-bool bNoChangeNumLock = 0;
+bool bNoChangeNumLock = 1;
 static bool bNumlockStatus;
 
 bool bMonitorAutoCheck = true;

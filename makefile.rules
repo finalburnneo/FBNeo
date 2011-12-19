@@ -46,7 +46,7 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_gberet.o d_ginganin.o d_gng.o d_gunsmoke.o d_gyruss.o d_higemaru.o d_ikki.o d_jack.o d_kangaroo.o d_karnov.o \
 			d_kyugo.o d_ladybug.o d_lkage.o d_lwings.o d_madgear.o d_markham.o d_marineb.o d_meijinsn.o d_minivdr.o d_mitchell.o \
 			d_mole.o d_mrdo.o d_mrflea.o d_mystston.o d_pkunwar.o d_pooyan.o d_prehisle.o d_quizo.o d_rallyx.o d_renegade.o \
-			d_retofinv.o d_route16.o d_scotrsht.o d_scregg.o d_sf.o d_skyfox.o d_skykid.o d_snk68.o d_solomon.o d_sonson.o \
+			d_retofinv.o d_rpunch.o d_route16.o d_scotrsht.o d_scregg.o d_sf.o d_skyfox.o d_skykid.o d_snk68.o d_solomon.o d_sonson.o \
 			d_srumbler.o d_suprloco.o d_tecmo.o d_tigerheli.o d_tigeroad.o d_toki.o d_tnzs.o d_vaportra.o d_vigilant.o d_vulgus.o \
 			d_wallc.o d_wc90.o d_wc90b.o d_wwfsstar.o \
 			\

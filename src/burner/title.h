@@ -5,5 +5,5 @@
  #define APP_TITLE "FB Alpha"
 #endif
 
-#define APP_DESCRIPTION "Emulator for MC68000/Z80 based arcade games"
+#define APP_DESCRIPTION "Emulator for arcade games"
 

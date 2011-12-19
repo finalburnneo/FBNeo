@@ -1,6 +1,6 @@
 alldir	= 	burn burn/devices burn/sound burn/drivers burn/drivers/capcom burn/drivers/cave burn/drivers/cps3 \
 			burn/drivers/galaxian burn/drivers/irem burn/drivers/konami burn/drivers/megadrive burn/drivers/misc_post90s \
-			burn/drivers/misc_pre90s burn/drivers/neogeo burn/drivers/pgm burn/drivers/psikyo burn/drivers/sega \
+			burn/drivers/misc_pre90s burn/drivers/neogeo burn/drivers/pgm burn/drivers/psikyo burn/drivers/sega burn/drivers/snes \
 			burn/drivers/taito burn/drivers/toaplan burner burner/win32 cpu \
 			cpu/a68k cpu/arm cpu/arm7 cpu/h6280 cpu/hd6309 cpu/i8039 cpu/konami cpu/m68k cpu/m6502 cpu/m6800 cpu/m6805 \
 			cpu/m6809 cpu/nec cpu/s2650 cpu/sh2 cpu/z80 depend/kaillera/client depend/libs/libpng depend/libs/zlib \
@@ -62,7 +62,9 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			\
 			d_parent.o \
 			\
-			d_megadrive.o
+			d_megadrive.o \
+			\
+			d_snes.o
 
 depobj	:= 	about.o bzip.o cona.o debugger.o drv.o dwmapi_core.o dynhuff.o fba_kaillera.o image_win32.o inpc.o inpcheat.o inpd.o \
 			inpdipsw.o inps.o ips_manager.o localise.o main.o mdi.o media.o memcard.o menu.o misc_win32.o neocdlist.o neocdsel.o \
@@ -137,6 +139,8 @@ depobj	:= 	about.o bzip.o cona.o debugger.o drv.o dwmapi_core.o dynhuff.o fba_ka
 			\
 			megadrive.o \
 			\
+			snes_65816.o snes_spc700.o snes_mem.o snes_ppu.o snes_main.o snes_io.o
+			
 			
 ifdef	DEBUG
 depobj += m68kdasm.o

@@ -244,7 +244,7 @@ STDDIPINFO(Hotgmck)
 static void set_pcm_bank()
 {
 	if (mahjong) {
-		if (pcmbank_previous != (ioselect[0] & 0x77)) {
+		if (pcmbank_previous != ((UINT32)ioselect[0] & 0x77)) {
 			INT32 bank0 = ((ioselect[0] >> 0) & 7) << 20;
 			INT32 bank1 = ((ioselect[0] >> 4) & 7) << 20;
 	
@@ -722,7 +722,7 @@ static void draw_sprites(UINT16 *dest, UINT32 scr)
 		UINT16 sprnum = (listdat & 0x03ff) << 1;
 
 		UINT16 thisscreen = 0;
-		if ((listdat & 0x2000) == scr) thisscreen = 1;
+		if ((listdat & 0x2000) == (UINT16)scr) thisscreen = 1;
 
 		if (!(listdat & 0x8000) && thisscreen)
 		{

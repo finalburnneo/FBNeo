@@ -39,7 +39,7 @@ STD_ROM_PICK(rSuperMarioWorldEuropeRev1)
 STD_ROM_FN(rSuperMarioWorldEuropeRev1)
 
 struct BurnDriverD BurnDrvrSMW = {
-	"Super Mario World (Europe) (Rev 1)", NULL, NULL, NULL, "1986",
+	"smw", NULL, NULL, NULL, "1986",
 	"Super Mario World (Europe) (Rev 1)\0", NULL, "Nintendo", "Miscellaneous",
 	L"Super Mario World (Europe) (Rev 1)", NULL, NULL, NULL,
 	BDF_GAME_WORKING|BDF_16BIT_ONLY , 2, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT,0 ,
@@ -57,7 +57,7 @@ STD_ROM_PICK(rSuperMarioWorldEurope)
 STD_ROM_FN(rSuperMarioWorldEurope)
 
 struct BurnDriverD BurnDrvrSuperMarioWorldEurope = {
-	"Super Mario World (Europe)", NULL, NULL, NULL, "1986",
+	"smwa", NULL, NULL, NULL, "1986",
 	"Super Mario World (Europe)\0", NULL, "Nintendo", "Miscellaneous",
 	L"Super Mario World (Europe)", NULL, NULL, NULL,
 	BDF_GAME_WORKING|BDF_16BIT_ONLY , 2, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT,0 ,
@@ -75,7 +75,7 @@ STD_ROM_PICK(rSuperMarioWorldJapan)
 STD_ROM_FN(rSuperMarioWorldJapan)
 
 struct BurnDriverD BurnDrvrSuperMarioWorldJapan = {
-	"Super Mario World (Japan)", NULL, NULL, NULL, "1986",
+	"smwj", NULL, NULL, NULL, "1986",
 	"Super Mario World (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	L"Super Mario World (Japan)", NULL, NULL, NULL,
 	BDF_GAME_WORKING|BDF_16BIT_ONLY , 2, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT,0 ,
@@ -93,7 +93,7 @@ STD_ROM_PICK(rSuperMarioWorldUSA)
 STD_ROM_FN(rSuperMarioWorldUSA)
 
 struct BurnDriverD BurnDrvrSuperMarioWorldUSA = {
-	"Super Mario World (USA)", NULL, NULL, NULL, "1986",
+	"smwu", NULL, NULL, NULL, "1986",
 	"Super Mario World (USA)\0", NULL, "Nintendo", "Miscellaneous",
 	L"Super Mario World (USA)", NULL, NULL, NULL,
 	BDF_GAME_WORKING|BDF_16BIT_ONLY , 2, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT,0 ,

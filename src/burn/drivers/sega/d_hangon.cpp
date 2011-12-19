@@ -1224,15 +1224,12 @@ static INT32 EndurorInit()
 	
 	INT32 nRet = System16Init();
 	
-	UINT8 *pTemp = (UINT8*)malloc(0x10000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x10000);
 	memcpy(pTemp, System16PCMData, 0x10000);
 	memset(System16PCMData, 0, 0x18000);
 	memcpy(System16PCMData + 0x00000, pTemp + 0x00000, 0x8000);
 	memcpy(System16PCMData + 0x10000, pTemp + 0x08000, 0x8000);
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 	
 	return nRet;
 }
@@ -1251,7 +1248,7 @@ static INT32 Enduror1Init()
 INT32 EnduroblLoadRom()
 {
 	INT32 nRet = 1;
-	UINT8 *pTemp = (UINT8*)malloc(0x40000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x40000);
 	
 	if (pTemp) {
 		memcpy(pTemp, System16Rom, 0x40000);
@@ -1259,13 +1256,10 @@ INT32 EnduroblLoadRom()
 		memcpy(System16Rom + 0x00000, pTemp + 0x10000, 0x10000);
 		memcpy(System16Rom + 0x10000, pTemp + 0x20000, 0x20000);
 		memcpy(System16Rom + 0x30000, pTemp + 0x00000, 0x10000);
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 		nRet = 0;
 	}
-		
+
 	return nRet;
 }
 

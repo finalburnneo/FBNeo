@@ -1093,7 +1093,7 @@ static INT32 System16LoadRoms(bool bLoad)
 
 		// Tile Roms
 		Offset = 0;
-		System16TempGfx = (UINT8*)malloc(System16TileRomSize);
+		System16TempGfx = (UINT8*)BurnMalloc(System16TileRomSize);
 		for (i = System16RomNum + System16Rom2Num + System16Rom3Num; i < System16RomNum + System16Rom2Num + System16Rom3Num + System16TileRomNum; i++) {
 			nRet = BurnLoadRom(System16TempGfx + Offset, i, 1); if (nRet) return 1;
 			
@@ -1106,10 +1106,7 @@ static INT32 System16LoadRoms(bool bLoad)
 			}	
 		}
 		System16Decode8x8Tiles(System16Tiles, System16NumTiles, System16TileRomSize * 2 / 3, System16TileRomSize * 1 / 3, 0);
-		if (System16TempGfx) {
-			free(System16TempGfx);
-			System16TempGfx = NULL;
-		}
+		BurnFree(System16TempGfx);
 		
 		// Sprite Roms
 		Offset = 0;
@@ -1177,7 +1174,7 @@ static INT32 System16LoadRoms(bool bLoad)
 		// Road Roms
 		if (System16RoadRomSize) {
 			Offset = 0;
-			System16TempGfx = (UINT8*)malloc(System16RoadRomSize);
+			System16TempGfx = (UINT8*)BurnMalloc(System16RoadRomSize);
 			for (i = System16RomNum + System16Rom2Num + System16Rom3Num + System16TileRomNum + System16SpriteRomNum + System16Sprite2RomNum; i < System16RomNum + System16Rom2Num + System16Rom3Num + System16TileRomNum + System16SpriteRomNum + System16Sprite2RomNum + System16RoadRomNum; i++) {
 				nRet = BurnLoadRom(System16TempGfx + Offset, i, 1); if (nRet) return 1;
 			
@@ -1186,10 +1183,7 @@ static INT32 System16LoadRoms(bool bLoad)
 			}
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN || (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEMX) OutrunDecodeRoad();
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_HANGON) HangonDecodeRoad();
-			if (System16TempGfx) {
-				free(System16TempGfx);
-				System16TempGfx = NULL;
-			}
+			BurnFree(System16TempGfx);
 		}
 		
 		// Z80 Program Roms
@@ -1338,15 +1332,14 @@ static INT32 System16LoadRoms(bool bLoad)
 INT32 CustomLoadRom20000()
 {
 	INT32 nRet = 1;
-	UINT8 *pTemp = (UINT8*)malloc(0xc0000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0xc0000);
 	
 	if (pTemp) {
 		memcpy(pTemp, System16Rom, 0xc0000);
 		memset(System16Rom, 0, 0xc0000);
 		memcpy(System16Rom + 0x00000, pTemp + 0x00000, 0x20000);
 		memcpy(System16Rom + 0x80000, pTemp + 0x20000, 0x40000);
-		free(pTemp);
-		pTemp = NULL;
+		BurnFree(pTemp);
 		nRet = 0;
 	}
 		
@@ -1356,15 +1349,14 @@ INT32 CustomLoadRom20000()
 INT32 CustomLoadRom40000()
 {
 	INT32 nRet = 1;
-	UINT8 *pTemp = (UINT8*)malloc(0xc0000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0xc0000);
 	
 	if (pTemp) {
 		memcpy(pTemp, System16Rom, 0xc0000);
 		memset(System16Rom, 0, 0xc0000);
 		memcpy(System16Rom + 0x00000, pTemp + 0x00000, 0x40000);
 		memcpy(System16Rom + 0x80000, pTemp + 0x40000, 0x40000);
-		free(pTemp);
-		pTemp = NULL;
+		BurnFree(pTemp);
 		nRet = 0;
 	}
 		
@@ -1732,7 +1724,7 @@ INT32 System16Init()
 	System16LoadRoms(0); // Get required rom sizes
 	System16MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);
 	System16MemIndex();
 	
@@ -2056,6 +2048,7 @@ INT32 System16Init()
 		
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2203) {
 			BurnYM2203Init(1, 4000000, &System16YM2203IRQHandler, System16SynchroniseStream, System16GetTime, 0);
+			BurnYM2203SetVolumeShift(2);
 			BurnTimerAttachZet(4000000);
 		} else {
 			BurnYM2151Init(4000000, 25.0);
@@ -2327,29 +2320,40 @@ INT32 System16Exit()
 	INT32 i;
 	
 	SekExit();
-	ZetExit();
-	N7751Exit();
+	if (System16Z80RomNum) ZetExit();
+	if (System167751ProgSize) {
+		N7751Exit();
+		DACExit();
+	}
 	
-	BurnYM3438Exit();
-	BurnYM2203Exit();
-	BurnYM2413Exit();
-	BurnYM2151Exit();
-		
-	SegaPCMExit();
-	DACExit();
-	UPD7759Exit();
+	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) {
+		BurnYM3438Exit();
+		RF5C68PCMExit();
+	} else {
+		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2203) {
+			BurnYM2203Exit();
+		} else {
+			if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2413) {
+				BurnYM2413Exit();
+			} else {
+				BurnYM2151Exit();
+			}
+		}
+	}
+			
+	if (System16PCMDataSize) SegaPCMExit();
+	if (System16UPD7759DataSize) UPD7759Exit();
 	
-	ppi8255_exit();
+	if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16A) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_HANGON) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN)) {
+		ppi8255_exit();
+	}
 	
-	BurnGunExit();
+	if (nBurnGunNumPlayers) BurnGunExit();
 	
 	GenericTilesExit();
 	System16TileMapsExit();
 
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 	
 	// Reset Variables
 	for (i = 0; i < 4; i++) {
@@ -2732,7 +2736,7 @@ INT32 System18Frame()
 	}
 	
 	ZetOpen(0);
-	BurnYM3438Update(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) BurnYM3438Update(pBurnSoundOut, nBurnSoundLen);
 	ZetClose();
 
 	if (pBurnDraw) {
@@ -2840,8 +2844,6 @@ INT32 HangonYM2203Frame()
 	nCyclesTotal[2] = 4000000 / 60;
 	nSystem16CyclesDone[0] = nSystem16CyclesDone[1] = nSystem16CyclesDone[2] = 0;
 	
-	INT32 nSoundBufferPos = 0;
-
 	SekNewFrame();
 	ZetNewFrame();
 
@@ -2868,16 +2870,6 @@ INT32 HangonYM2203Frame()
 		ZetOpen(0);
 		BurnTimerUpdate(i * (nCyclesTotal[2] / nInterleave));
 		ZetClose();
-		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			ZetOpen(0);
-			BurnYM2203Update(pSoundBuf, nSegmentLength);
-			SegaPCMUpdate(pSoundBuf, nSegmentLength);
-			ZetClose();
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 	
 	SekOpen(0);
@@ -2889,14 +2881,10 @@ INT32 HangonYM2203Frame()
 	ZetClose();
 	
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			ZetOpen(0);
-			BurnYM2203Update(pSoundBuf, nSegmentLength);
-			SegaPCMUpdate(pSoundBuf, nSegmentLength);
-			ZetClose();
-		}
+		ZetOpen(0);
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		SegaPCMUpdate(pBurnSoundOut, nBurnSoundLen);
+		ZetClose();
 	}
 	
 	if (Simulate8751) Simulate8751();	

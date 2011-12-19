@@ -162,75 +162,45 @@ static void RenderTile_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, 
 void System16ATileMapsInit(INT32 bOpaque)
 {
 	if (bOpaque) {
-		pSys16BgTileMapOpaque = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
+		pSys16BgTileMapOpaque = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
 	}
 	
-	pSys16BgTileMapPri0 = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
-	pSys16BgTileMapPri1 = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
-	pSys16FgTileMapPri0 = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
-	pSys16FgTileMapPri1 = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
+	pSys16BgTileMapPri0 = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
+	pSys16BgTileMapPri1 = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
+	pSys16FgTileMapPri0 = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
+	pSys16FgTileMapPri1 = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
 }
 
 void System16BTileMapsInit(INT32 bOpaque)
 {
 	if (bOpaque) {
-		pSys16BgTileMapOpaque = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
-		pSys16BgAltTileMapOpaque = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
+		pSys16BgTileMapOpaque = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
+		pSys16BgAltTileMapOpaque = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
 	}
 	
-	pSys16BgTileMapPri0 = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
-	pSys16BgTileMapPri1 = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
-	pSys16FgTileMapPri0 = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
-	pSys16FgTileMapPri1 = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
+	pSys16BgTileMapPri0 = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
+	pSys16BgTileMapPri1 = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
+	pSys16FgTileMapPri0 = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
+	pSys16FgTileMapPri1 = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
 	
-	pSys16BgAltTileMapPri0 = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
-	pSys16BgAltTileMapPri1 = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
-	pSys16FgAltTileMapPri0 = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
-	pSys16FgAltTileMapPri1 = (UINT16*)malloc(1024 * 512 * sizeof(UINT16));
+	pSys16BgAltTileMapPri0 = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
+	pSys16BgAltTileMapPri1 = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
+	pSys16FgAltTileMapPri0 = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
+	pSys16FgAltTileMapPri1 = (UINT16*)BurnMalloc(1024 * 512 * sizeof(UINT16));
 }
 
 void System16TileMapsExit()
 {
-	if (pSys16BgTileMapOpaque) {
-		free(pSys16BgTileMapOpaque);
-		pSys16BgTileMapOpaque = NULL;
-	}
-	if (pSys16BgAltTileMapOpaque) {
-		free(pSys16BgAltTileMapOpaque);
-		pSys16BgAltTileMapOpaque = NULL;
-	}
-	if (pSys16BgTileMapPri0) {
-		free(pSys16BgTileMapPri0);
-		pSys16BgTileMapPri0 = NULL;
-	}
-	if (pSys16BgTileMapPri1) {
-		free(pSys16BgTileMapPri1);
-		pSys16BgTileMapPri1 = NULL;
-	}
-	if (pSys16FgTileMapPri0) {
-		free(pSys16FgTileMapPri0);
-		pSys16FgTileMapPri0 = NULL;
-	}
-	if (pSys16FgTileMapPri1) {
-		free(pSys16FgTileMapPri1);
-		pSys16FgTileMapPri1 = NULL;
-	}
-	if (pSys16BgAltTileMapPri0) {
-		free(pSys16BgAltTileMapPri0);
-		pSys16BgAltTileMapPri0 = NULL;
-	}
-	if (pSys16BgAltTileMapPri1) {
-		free(pSys16BgAltTileMapPri1);
-		pSys16BgAltTileMapPri1 = NULL;
-	}
-	if (pSys16FgAltTileMapPri0) {
-		free(pSys16FgAltTileMapPri0);
-		pSys16FgAltTileMapPri0 = NULL;
-	}
-	if (pSys16FgAltTileMapPri1) {
-		free(pSys16FgAltTileMapPri1);
-		pSys16FgAltTileMapPri1 = NULL;
-	}
+	BurnFree(pSys16BgTileMapOpaque);
+	BurnFree(pSys16BgAltTileMapOpaque);
+	BurnFree(pSys16BgTileMapPri0);
+	BurnFree(pSys16BgTileMapPri1);
+	BurnFree(pSys16FgTileMapPri0);
+	BurnFree(pSys16FgTileMapPri1);
+	BurnFree(pSys16BgAltTileMapPri0);
+	BurnFree(pSys16BgAltTileMapPri1);
+	BurnFree(pSys16FgAltTileMapPri0);
+	BurnFree(pSys16FgAltTileMapPri1);
 }
 
 static void System16ACreateBgTileMaps()
@@ -1855,7 +1825,7 @@ static void OutrunRenderSpriteLayer(INT32 Priority)
 			/* skip drawing if not within the cliprect */
 			if (y >= 0 && y <= 223) {
 				UINT16* pPixel = pTransDraw + (y * 320);
-				int xacc = 0;
+				INT32 xacc = 0;
 
 				/* non-flipped case */
 				if (!flip)
@@ -2353,7 +2323,7 @@ static void YBoardSystem16BRenderSpriteLayer()
 			/* skip drawing if not within the cliprect */
 			if (y >= 0 && y <= 223) {
 				UINT16* pPixel = pTransDraw + (y * 320);
-				int xacc;
+				INT32 xacc;
 
 				/* compute the initial X zoom accumulator; this is verified on the real PCB */
 				xacc = 4 * hzoom;

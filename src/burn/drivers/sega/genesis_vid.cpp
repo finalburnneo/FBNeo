@@ -255,7 +255,7 @@ static void VDPDataWrite(UINT16 data)
 		}
 		
 		case 0x03: {
-			int offset = (VdpAddress >> 1) % CRAM_SIZE;
+			INT32 offset = (VdpAddress >> 1) % CRAM_SIZE;
 			//palette_set_color(Machine, offset + genesis_palette_base, pal3bit(data >> 1), pal3bit(data >> 5), pal3bit(data >> 9));
 			//System16Palette[offset + 0x1800 /*GenesisPaletteBase*/] = BurnHighCol(pal3bit(data >> 1), pal3bit(data >> 5), pal3bit(data >> 9), 0);
 			GenesisPalette[offset + GenesisPaletteBase] = BurnHighCol(pal3bit(data >> 1), pal3bit(data >> 5), pal3bit(data >> 9), 0);
@@ -310,9 +310,9 @@ INT32 StartGenesisVDP(INT32 ScreenNum, UINT32* pal)
 	
 	GenesisPalette = pal;
 	
-	VdpVRAM = (UINT8*)malloc(VRAM_SIZE);
-	VdpVSRAM = (UINT8*)malloc(VSRAM_SIZE);
-	VdpTransLookup = (UINT16*)malloc(0x1000 * sizeof(UINT16));
+	VdpVRAM = (UINT8*)BurnMalloc(VRAM_SIZE);
+	VdpVSRAM = (UINT8*)BurnMalloc(VSRAM_SIZE);
+	VdpTransLookup = (UINT16*)BurnMalloc(0x1000 * sizeof(UINT16));
 	
 	memset(VdpVRAM, 0, VRAM_SIZE);
 	memset(VdpVSRAM, 0, VSRAM_SIZE);
@@ -350,18 +350,9 @@ INT32 StartGenesisVDP(INT32 ScreenNum, UINT32* pal)
 
 void GenesisVDPExit()
 {
-	if (VdpVRAM) {
-		free(VdpVRAM);
-		VdpVRAM = NULL;
-	}
-	if (VdpVSRAM) {
-		free(VdpVSRAM);
-		VdpVSRAM = NULL;
-	}
-	if (VdpTransLookup) {
-		free(VdpTransLookup);
-		VdpTransLookup = NULL;
-	}
+	BurnFree(VdpVRAM);
+	BurnFree(VdpVSRAM);
+	BurnFree(VdpTransLookup);
 	
 	memset(GenesisVdpRegs, 0, sizeof(GenesisVdpRegs));
 	memset(GenesisBgPalLookup, 0, sizeof(GenesisBgPalLookup));

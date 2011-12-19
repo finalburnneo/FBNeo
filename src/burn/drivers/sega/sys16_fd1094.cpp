@@ -164,7 +164,7 @@ void fd1094_driver_init(INT32 nCPU)
 		
 	for (i=0;i<S16_NUMCACHE;i++)
 	{
-		fd1094_cacheregion[i]=(UINT16*)malloc(fd1094_cpuregionsize);
+		fd1094_cacheregion[i]=(UINT16*)BurnMalloc(fd1094_cpuregionsize);
 	}
 
 	/* flush the cached state array */
@@ -181,10 +181,7 @@ void fd1094_exit()
 	nFD1094CPU = 0;
 	
 	for (INT32 i = 0; i < S16_NUMCACHE; i++) {
-		if (fd1094_cacheregion[i]) {
-			free(fd1094_cacheregion[i]);
-			fd1094_cacheregion[i] = NULL;
-		}
+		BurnFree(fd1094_cacheregion[i]);
 	}
 	
 	fd1094_current_cacheposition = 0;

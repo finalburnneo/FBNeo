@@ -1404,7 +1404,7 @@ static INT32 OutrunInit()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		UINT8 *pTemp = (UINT8*)malloc(0x30000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x30000);
 		memcpy(pTemp, System16PCMData, 0x30000);
 		memset(System16PCMData, 0, 0x60000);
 		memcpy(System16PCMData + 0x00000, pTemp + 0x00000, 0x8000);
@@ -1419,10 +1419,7 @@ static INT32 OutrunInit()
 		memcpy(System16PCMData + 0x48000, pTemp + 0x20000, 0x8000);
 		memcpy(System16PCMData + 0x50000, pTemp + 0x28000, 0x8000);
 		memcpy(System16PCMData + 0x58000, pTemp + 0x28000, 0x8000);
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -1475,7 +1472,7 @@ static INT32 OutrunbInit()
 			byte[i] = BITSWAP08(byte[i], 7,5,6,4,3,2,1,0);
 		}
 			
-		UINT8 *pTemp = (UINT8*)malloc(0x30000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x30000);
 		memcpy(pTemp, System16PCMData, 0x30000);
 		memset(System16PCMData, 0, 0x60000);
 		memcpy(System16PCMData + 0x00000, pTemp + 0x00000, 0x8000);
@@ -1484,10 +1481,7 @@ static INT32 OutrunbInit()
 		memcpy(System16PCMData + 0x30000, pTemp + 0x18000, 0x8000);
 		memcpy(System16PCMData + 0x40000, pTemp + 0x20000, 0x8000);
 		memcpy(System16PCMData + 0x50000, pTemp + 0x28000, 0x8000);
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -1515,7 +1509,7 @@ static INT32 ShangonInit()
 		System16RoadColorOffset2 = 0x7c0;
 		System16RoadColorOffset3 = 0x7c0;
 		
-		UINT8 *pTemp = (UINT8*)malloc(0x20000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x20000);
 		memcpy(pTemp, System16PCMData, 0x20000);
 		memset(System16PCMData, 0, 0x40000);
 		memcpy(System16PCMData + 0x00000, pTemp + 0x00000, 0x8000);
@@ -1526,6 +1520,7 @@ static INT32 ShangonInit()
 		memcpy(System16PCMData + 0x28000, pTemp + 0x10000, 0x8000);
 		memcpy(System16PCMData + 0x30000, pTemp + 0x18000, 0x8000);
 		memcpy(System16PCMData + 0x38000, pTemp + 0x18000, 0x8000);
+		BurnFree(pTemp);
 	}
 	
 	return nRet;

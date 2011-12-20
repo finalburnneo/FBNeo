@@ -2427,7 +2427,7 @@ static INT32 AceattacaInit()
 		SekClose();
 		
 		// Handle different sprite rom layout
-		UINT8 *pTemp = (UINT8*)malloc(System16SpriteRomSize);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(System16SpriteRomSize);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, System16SpriteRomSize);
 			memcpy(System16Sprites + 0x00000, pTemp + 0x00000, 0x10000);
@@ -2441,10 +2441,7 @@ static INT32 AceattacaInit()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -2486,7 +2483,7 @@ static INT32 AliensynjoInit()
 	
 	if (!nRet) {
 		// Handle different sprite rom layout
-		UINT8 *pTemp = (UINT8*)malloc(System16SpriteRomSize);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(System16SpriteRomSize);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, System16SpriteRomSize);
 			memcpy(System16Sprites + 0x00000, pTemp + 0x00000, 0x10000);
@@ -2500,10 +2497,7 @@ static INT32 AliensynjoInit()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -2515,7 +2509,7 @@ static INT32 Aliensyn5Init()
 	
 	if (!nRet) {
 		// Handle different sprite rom layout
-		UINT8 *pTemp = (UINT8*)malloc(System16SpriteRomSize);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(System16SpriteRomSize);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, System16SpriteRomSize);
 			memcpy(System16Sprites + 0x00000, pTemp + 0x00000, 0x10000);
@@ -2529,10 +2523,7 @@ static INT32 Aliensyn5Init()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -2660,7 +2651,7 @@ static INT32 Passsht16aInit()
 		SekClose();
 
 		// Handle different sprite rom layout
-		UINT8 *pTemp = (UINT8*)malloc(System16SpriteRomSize);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(System16SpriteRomSize);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, System16SpriteRomSize);
 			memcpy(System16Sprites + 0x00000, pTemp + 0x00000, 0x10000);
@@ -2672,10 +2663,7 @@ static INT32 Passsht16aInit()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -2711,7 +2699,7 @@ static INT32 SdiInit()
 		SekClose();
 		
 		// Handle different sprite rom layout
-		UINT8 *pTemp = (UINT8*)malloc(System16SpriteRomSize);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(System16SpriteRomSize);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, System16SpriteRomSize);
 			memcpy(System16Sprites + 0x00000, pTemp + 0x00000, 0x10000);
@@ -2723,10 +2711,7 @@ static INT32 SdiInit()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -2764,7 +2749,7 @@ static INT32 ShinobiInit()
 	
 	if (!nRet) {
 		// Handle different sprite rom layout
-		UINT8 *pTemp = (UINT8*)malloc(System16SpriteRomSize);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(System16SpriteRomSize);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, System16SpriteRomSize);
 			memcpy(System16Sprites + 0x00000, pTemp + 0x00000, 0x10000);
@@ -2778,10 +2763,7 @@ static INT32 ShinobiInit()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -2799,7 +2781,7 @@ static INT32 Sjryuko1Init()
 		SekClose();
 		
 		// Handle different sprite rom layout
-		UINT8 *pTemp = (UINT8*)malloc(System16SpriteRomSize);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(System16SpriteRomSize);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, System16SpriteRomSize);
 			memcpy(System16Sprites + 0x00000, pTemp + 0x00000, 0x10000);
@@ -2813,10 +2795,7 @@ static INT32 Sjryuko1Init()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -2848,7 +2827,7 @@ static INT32 Wb31Init()
 	
 	if (!nRet) {
 		// Handle different sprite rom layout
-		UINT8 *pTemp = (UINT8*)malloc(System16SpriteRomSize);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(System16SpriteRomSize);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, System16SpriteRomSize);
 			memcpy(System16Sprites + 0x00000, pTemp + 0x00000, 0x10000);
@@ -2862,10 +2841,7 @@ static INT32 Wb31Init()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;

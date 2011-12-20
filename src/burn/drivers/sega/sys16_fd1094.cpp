@@ -45,10 +45,25 @@ static void fd1094_setstate_and_decrypt(INT32 state)
 		{
 			/* copy cached state */
 			fd1094_userregion=fd1094_cacheregion[i];
-			SekOpen(nFD1094CPU);
-			SekMapMemory((UINT8*)fd1094_userregion, 0x000000, 0x0fffff, SM_FETCH);
-			if (System18Banking) SekMapMemory((UINT8*)fd1094_userregion + 0x200000, 0x200000, 0x27ffff, SM_FETCH);
-			SekClose();
+			INT32 nActiveCPU = SekGetActive();
+			if (nActiveCPU == -1) {
+				SekOpen(nFD1094CPU);
+				SekMapMemory((UINT8*)fd1094_userregion, 0x000000, 0x0fffff, SM_FETCH);
+				if (System18Banking) SekMapMemory((UINT8*)fd1094_userregion + 0x200000, 0x200000, 0x27ffff, SM_FETCH);
+				SekClose();
+			} else {
+				if (nActiveCPU == nFD1094CPU) {
+					SekMapMemory((UINT8*)fd1094_userregion, 0x000000, 0x0fffff, SM_FETCH);
+					if (System18Banking) SekMapMemory((UINT8*)fd1094_userregion + 0x200000, 0x200000, 0x27ffff, SM_FETCH);
+				} else {
+					SekClose();
+					SekOpen(nFD1094CPU);
+					SekMapMemory((UINT8*)fd1094_userregion, 0x000000, 0x0fffff, SM_FETCH);
+					if (System18Banking) SekMapMemory((UINT8*)fd1094_userregion + 0x200000, 0x200000, 0x27ffff, SM_FETCH);
+					SekClose();
+					SekOpen(nActiveCPU);
+				}
+			}
 
 			return;
 		}
@@ -66,11 +81,26 @@ static void fd1094_setstate_and_decrypt(INT32 state)
 
 	/* copy newly decrypted data to user region */
 	fd1094_userregion=fd1094_cacheregion[fd1094_current_cacheposition];
-	SekOpen(nFD1094CPU);
-	SekMapMemory((UINT8*)fd1094_userregion, 0x000000, 0x0fffff, SM_FETCH);
-	if (System18Banking) SekMapMemory((UINT8*)fd1094_userregion + 0x200000, 0x200000, 0x27ffff, SM_FETCH);
-	SekClose();
-
+	INT32 nActiveCPU = SekGetActive();
+	if (nActiveCPU == -1) {
+		SekOpen(nFD1094CPU);
+		SekMapMemory((UINT8*)fd1094_userregion, 0x000000, 0x0fffff, SM_FETCH);
+		if (System18Banking) SekMapMemory((UINT8*)fd1094_userregion + 0x200000, 0x200000, 0x27ffff, SM_FETCH);
+		SekClose();
+	} else {
+		if (nActiveCPU == nFD1094CPU) {
+			SekMapMemory((UINT8*)fd1094_userregion, 0x000000, 0x0fffff, SM_FETCH);
+			if (System18Banking) SekMapMemory((UINT8*)fd1094_userregion + 0x200000, 0x200000, 0x27ffff, SM_FETCH);
+		} else {
+			SekClose();
+			SekOpen(nFD1094CPU);
+			SekMapMemory((UINT8*)fd1094_userregion, 0x000000, 0x0fffff, SM_FETCH);
+			if (System18Banking) SekMapMemory((UINT8*)fd1094_userregion + 0x200000, 0x200000, 0x27ffff, SM_FETCH);
+			SekClose();
+			SekOpen(nActiveCPU);
+		}
+	}
+	
 	fd1094_current_cacheposition++;
 
 	if (fd1094_current_cacheposition>=S16_NUMCACHE)

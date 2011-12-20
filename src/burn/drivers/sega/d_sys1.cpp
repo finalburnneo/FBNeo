@@ -3922,11 +3922,11 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);
 	MemIndex();
 
-	System1TempRom = (UINT8*)malloc(0x18000);
+	System1TempRom = (UINT8*)BurnMalloc(0x18000);
 		
 	// Load Z80 #1 Program roms
 	RomOffset = 0;
@@ -3964,10 +3964,7 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 		GfxDecode(System1NumTiles, 3, 8, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x40, System1TempRom, System1Tiles);
 	}
 	CalcPenUsage();
-	if (System1TempRom) {
-		free(System1TempRom);
-		System1TempRom = NULL;
-	}
+	BurnFree(System1TempRom);
 	
 	// Load Sprite roms
 	RomOffset += nTileRomNum;
@@ -4077,16 +4074,13 @@ static INT32 BlockgalInit()
 {
 	INT32 nRet;
 	
-	System1MC8123Key = (UINT8*)malloc(0x2000);
+	System1MC8123Key = (UINT8*)BurnMalloc(0x2000);
 	BurnLoadRom(System1MC8123Key, 14, 1);
 
 	DecodeFunction = blockgal_decode;
 	
 	nRet = System1Init(2, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
-	if (System1MC8123Key) {
-		free(System1MC8123Key);
-		System1MC8123Key = NULL;
-	}
+	BurnFree(System1MC8123Key);
 	
 	ZetOpen(0);
 	ZetSetInHandler(BlockgalZ801PortRead);
@@ -4449,10 +4443,7 @@ static INT32 System1Exit()
 
 	GenericTilesExit();
 	
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 	
 	System1SoundLatch = 0;
 	System1ScrollX[0] = System1ScrollX[1] = System1ScrollY = 0;

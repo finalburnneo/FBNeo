@@ -4215,7 +4215,7 @@ UINT8 __fastcall AtomicpReadByte(UINT32 a)
 		}
 	}
 	
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
 #endif
 
@@ -4268,7 +4268,7 @@ void __fastcall AtomicpWriteByte(UINT32 a, UINT8 d)
 		}
 	}
 
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }
@@ -4964,7 +4964,7 @@ void __fastcall Fantzn2xWriteByte(UINT32 a, UINT8 d)
 		}
 	}
 
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }
@@ -6054,7 +6054,7 @@ static INT32 AltbeastjInit()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		UINT8 *pTemp = (UINT8*)malloc(0xe0000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0xe0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0xe0000);
 			memset(System16Sprites, 0, 0x1a0000);
@@ -6068,10 +6068,7 @@ static INT32 AltbeastjInit()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -6087,7 +6084,7 @@ static INT32 Altbeast5Init()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		UINT8 *pTemp = (UINT8*)malloc(0xe0000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0xe0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0xe0000);
 			memset(System16Sprites, 0, 0x1a0000);
@@ -6101,10 +6098,7 @@ static INT32 Altbeast5Init()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -6118,7 +6112,7 @@ static INT32 Altbeastj3Init()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		UINT8 *pTemp = (UINT8*)malloc(0xe0000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0xe0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0xe0000);
 			memset(System16Sprites, 0, 0x1a0000);
@@ -6132,10 +6126,7 @@ static INT32 Altbeastj3Init()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -6149,7 +6140,7 @@ static INT32 Altbeast4Init()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		UINT8 *pTemp = (UINT8*)malloc(0xe0000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0xe0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0xe0000);
 			memset(System16Sprites, 0, 0x1a0000);
@@ -6163,10 +6154,7 @@ static INT32 Altbeast4Init()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -6307,14 +6295,11 @@ static INT32 Blox16bLoadRom()
 {
 	if (BurnLoadRom(System16Rom + 0x00000, 0, 1)) return 1;
 	
-	System16TempGfx = (UINT8*)malloc(System16TileRomSize);
+	System16TempGfx = (UINT8*)BurnMalloc(System16TileRomSize);
 	BurnLoadRom(System16TempGfx, 1, 1);
 	GfxDecode(0x2000, 3, 8, 8, Fantzn2xPlaneOffsets, Fantzn2xXOffsets, Fantzn2xYOffsets, 0x100, System16TempGfx, System16Tiles);
 	System16NumTiles = 0x2000;
-	if (System16TempGfx) {
-		free(System16TempGfx);
-		System16TempGfx = NULL;
-	}
+	BurnFree(System16TempGfx);
 	
 	BurnLoadRom(System16Sprites, 2, 1);
 	BurnByteswap(System16Sprites, System16SpriteRomSize);
@@ -6467,7 +6452,7 @@ static INT32 DunkshotInit()
 		SekSetReadByteHandler(1, DunkshotReadByte);
 		SekClose();
 		
-		UINT8 *pTemp = (UINT8*)malloc(0x80000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x80000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x80000);
 			memset(System16Sprites, 0, 0x80000);
@@ -6482,10 +6467,7 @@ static INT32 DunkshotInit()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -6568,7 +6550,7 @@ static INT32 EswatInit()
 		SekSetWriteByteHandler(4, EswatWriteByte);
 		SekClose();
 		
-		UINT8 *pTemp = (UINT8*)malloc(0x1c0000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x1c0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x1c0000);
 			memset(System16Sprites, 0, 0x1c0000);
@@ -6581,10 +6563,7 @@ static INT32 EswatInit()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -6615,7 +6594,7 @@ static INT32 EswatblInit()
 
 		SekClose();
 		
-		UINT8 *pTemp = (UINT8*)malloc(0x1c0000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x1c0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x1c0000);
 			memset(System16Sprites, 0, 0x1c0000);
@@ -6628,10 +6607,7 @@ static INT32 EswatblInit()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 		
 		bSystem16BootlegRender = true;
 	}
@@ -6704,14 +6680,11 @@ static INT32 Fantzn2xLoadRom()
 	if (BurnLoadRom(System16Rom + 0x00000, 0, 1)) return 1;
 	if (BurnLoadRom(System16Rom + 0x40000, 1, 1)) return 1;
 	
-	System16TempGfx = (UINT8*)malloc(System16TileRomSize);
+	System16TempGfx = (UINT8*)BurnMalloc(System16TileRomSize);
 	BurnLoadRom(System16TempGfx, 2, 1);
 	GfxDecode(0x4000, 3, 8, 8, Fantzn2xPlaneOffsets, Fantzn2xXOffsets, Fantzn2xYOffsets, 0x100, System16TempGfx, System16Tiles);
 	System16NumTiles = 0x4000;
-	if (System16TempGfx) {
-		free(System16TempGfx);
-		System16TempGfx = NULL;
-	}
+	BurnFree(System16TempGfx);
 	
 	BurnLoadRom(System16Sprites, 3, 1);
 	
@@ -6754,14 +6727,11 @@ static INT32 FantzntaLoadRom()
 {
 	if (BurnLoadRom(System16Rom + 0x00000, 0, 1)) return 1;
 	
-	System16TempGfx = (UINT8*)malloc(System16TileRomSize);
+	System16TempGfx = (UINT8*)BurnMalloc(System16TileRomSize);
 	BurnLoadRom(System16TempGfx, 1, 1);
 	GfxDecode(0x2000, 3, 8, 8, Fantzn2xPlaneOffsets, Fantzn2xXOffsets, Fantzn2xYOffsets, 0x100, System16TempGfx, System16Tiles);
 	System16NumTiles = 0x2000;
-	if (System16TempGfx) {
-		free(System16TempGfx);
-		System16TempGfx = NULL;
-	}
+	BurnFree(System16TempGfx);
 	
 	BurnLoadRom(System16Sprites, 2, 1);
 	BurnByteswap(System16Sprites, System16SpriteRomSize);
@@ -6891,7 +6861,7 @@ static INT32 GoldnaxeInit()
 		SekSetWriteByteHandler(5, Goldnaxe1WriteByte);
 		SekClose();
 		
-		UINT8 *pTemp = (UINT8*)malloc(0x1c0000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x1c0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x1c0000);
 			memset(System16Sprites, 0, 0x1c0000);
@@ -6904,10 +6874,7 @@ static INT32 GoldnaxeInit()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -6940,7 +6907,7 @@ static INT32 Goldnaxe1Init()
 		SekSetWriteByteHandler(5, Goldnaxe1WriteByte);
 		SekClose();
 		
-		UINT8 *pTemp = (UINT8*)malloc(0x1c0000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x1c0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x1c0000);
 			memset(System16Sprites, 0, 0x1c0000);
@@ -6953,10 +6920,7 @@ static INT32 Goldnaxe1Init()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -6979,7 +6943,7 @@ static INT32 Goldnaxe2Init()
 		SekSetWriteByteHandler(2, Goldnaxe3WriteByte);
 		SekClose();
 	
-		UINT8 *pTemp = (UINT8*)malloc(0x1c0000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x1c0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x1c0000);
 			memset(System16Sprites, 0, 0x1c0000);
@@ -6992,10 +6956,7 @@ static INT32 Goldnaxe2Init()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -7017,7 +6978,7 @@ static INT32 Goldnaxe3Init()
 		SekSetWriteByteHandler(2, Goldnaxe3WriteByte);
 		SekClose();
 		
-		UINT8 *pTemp = (UINT8*)malloc(0x1c0000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x1c0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x1c0000);
 			memset(System16Sprites, 0, 0x1c0000);
@@ -7030,10 +6991,7 @@ static INT32 Goldnaxe3Init()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -7087,7 +7045,7 @@ static INT32 MvpInit()
 		SekSetWriteByteHandler(1, MvpWriteByte);
 		SekClose();
 	
-		UINT8 *pTemp = (UINT8*)malloc(0x200000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x200000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x200000);
 			memset(System16Sprites, 0, 0x200000);
@@ -7102,10 +7060,7 @@ static INT32 MvpInit()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 
 	return nRet;
@@ -7126,7 +7081,7 @@ static INT32 MvpjInit()
 		SekSetWriteByteHandler(1, MvpjWriteByte);
 		SekClose();
 	
-		UINT8 *pTemp = (UINT8*)malloc(0x200000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x200000);
 		if (pTemp) {
 			memset(pTemp, 0, 0x200000);
 			memcpy(pTemp, System16Sprites, 0x200000);
@@ -7136,10 +7091,7 @@ static INT32 MvpjInit()
 		} else {
 			nRet = 1;
 		}		
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 
 	return nRet;
@@ -7227,7 +7179,7 @@ static INT32 RiotcityInit()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		UINT8 *pTemp = (UINT8*)malloc(0x1c0000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x1c0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x1c0000);
 			memset(System16Sprites, 0, 0x1c0000);
@@ -7240,10 +7192,7 @@ static INT32 RiotcityInit()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 	
 	return nRet;
@@ -7433,7 +7382,7 @@ static INT32 TimescanInit()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		UINT8 *pTemp = (UINT8*)malloc(0x80000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x80000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x40000);
 			memset(System16Sprites, 0, 0x80000);
@@ -7444,10 +7393,7 @@ static INT32 TimescanInit()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 
 	return nRet;
@@ -7517,7 +7463,7 @@ static INT32 TturfInit()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		UINT8 *pTemp = (UINT8*)malloc(0xe0000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0xe0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x80000);
 			memset(System16Sprites, 0, 0xe0000);
@@ -7528,10 +7474,7 @@ static INT32 TturfInit()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 
 	return nRet;
@@ -7571,7 +7514,7 @@ static INT32 Wb3Init()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		UINT8 *pTemp = (UINT8*)malloc(0xe0000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0xe0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x80000);
 			memset(System16Sprites, 0, 0xe0000);
@@ -7582,10 +7525,7 @@ static INT32 Wb3Init()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 
 	return nRet;
@@ -7618,7 +7558,7 @@ static INT32 Wb33Init()
 		SekSetWriteByteHandler(1, Wb3WriteByte);
 		SekClose();
 	
-		UINT8 *pTemp = (UINT8*)malloc(0xe0000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0xe0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x80000);
 			memset(System16Sprites, 0, 0xe0000);
@@ -7629,10 +7569,7 @@ static INT32 Wb33Init()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 	}
 
 	return nRet;
@@ -7651,7 +7588,7 @@ static INT32 Wb3bblInit()
 		SekSetWriteWordHandler(1, Wb3bblGfxWriteWord);
 		SekClose();
 		
-		UINT8 *pTemp = (UINT8*)malloc(0xe0000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0xe0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x80000);
 			memset(System16Sprites, 0, 0xe0000);
@@ -7662,10 +7599,7 @@ static INT32 Wb3bblInit()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 		
 		bSystem16BootlegRender = true;
 	}
@@ -8681,7 +8615,7 @@ UINT8 __fastcall IsgsmReadByte(UINT32 a)
 		}
 	}
 	
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
 #endif
 
@@ -8903,7 +8837,7 @@ void __fastcall IsgsmWriteByte(UINT32 a, UINT8 d)
 		}
 	}
 
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }
@@ -8920,7 +8854,7 @@ UINT16 __fastcall IsgsmReadWord(UINT32 a)
 		}
 	}
 	
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Read Word -> 0x%06X\n"), a);
 #endif
 
@@ -8972,7 +8906,7 @@ void __fastcall IsgsmWriteWord(UINT32 a, UINT16 d)
 		}
 	}
 	
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X\n"), a, d);
 #endif
 }
@@ -9011,7 +8945,7 @@ static INT32 IsgsmInit()
 		memset(System16Rom, 0, 0x400000);
 		
 		// Load and Decrypt BIOS
-		UINT16 *pTemp = (UINT16*)malloc(0x20000);
+		UINT16 *pTemp = (UINT16*)BurnMalloc(0x20000);
 		memset(pTemp, 0, 0x20000);
 		UINT16 *Rom = (UINT16*)System16Rom;
 		
@@ -9022,15 +8956,12 @@ static INT32 IsgsmInit()
 		}
 		
 		memcpy(Rom, pTemp, 0x20000);
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 		
 		// Load program ROM
 		nRet = BurnLoadRom(System16Rom + 0x100000, 0, 1); if (nRet) return 1;
 		
-		System16TempGfx = (UINT8*)malloc(System16TileRomSize);
+		System16TempGfx = (UINT8*)BurnMalloc(System16TileRomSize);
 		memset(System16TempGfx, 0, System16TileRomSize);
 		memset(System16Tiles, 0, System16NumTiles * 8 * 8);
 		memset(System16Sprites, 0, System16TileRomSize);
@@ -9049,7 +8980,7 @@ static INT32 ShinfzInit()
 	
 	if (!nRet) {
 		nCartSize = 0x200000;
-		UINT16 *pTemp = (UINT16*)malloc(0x200000);
+		UINT16 *pTemp = (UINT16*)BurnMalloc(0x200000);
 		memset(pTemp, 0, 0x200000);
 		UINT16 *Rom = (UINT16*)(System16Rom + 0x100000);
 		
@@ -9058,10 +8989,7 @@ static INT32 ShinfzInit()
 		}
 		
 		memcpy(Rom, pTemp, 0x200000);
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 		
 		IsgsmReadXor = 0x66;
 		IsgsmSecurityCallback = ShinfzSecurity;
@@ -9076,7 +9004,7 @@ static INT32 TetrbxInit()
 	
 	if (!nRet) {
 		nCartSize = 0x80000;
-		UINT16 *pTemp = (UINT16*)malloc(nCartSize);
+		UINT16 *pTemp = (UINT16*)BurnMalloc(nCartSize);
 		memset(pTemp, 0, nCartSize);
 		UINT16 *Rom = (UINT16*)(System16Rom + 0x100000);
 		
@@ -9085,10 +9013,7 @@ static INT32 TetrbxInit()
 		}
 		
 		memcpy(Rom, pTemp, nCartSize);
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 		
 		IsgsmReadXor = 0x73;
 		IsgsmSecurityCallback = TetrbxSecurity;
@@ -9101,10 +9026,7 @@ static INT32 IsgsmExit()
 {
 	INT32 nRet = System16Exit();
 	
-	if (System16TempGfx) {
-		free(System16TempGfx);
-		System16TempGfx = NULL;
-	}
+	BurnFree(System16TempGfx);
 	
 	IsgsmCartAddrLatch = 0;
 	IsgsmCartAddr = 0;

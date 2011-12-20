@@ -2189,15 +2189,14 @@ void WwallyMakeAnalogInputs()
 static INT32 System18BankRom40000()
 {
 	INT32 nRet = 1;
-	UINT8 *pTemp = (UINT8*)malloc(0x280000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x280000);
 	
 	if (pTemp) {
 		memcpy(pTemp, System16Rom, 0x280000);
 		memset(System16Rom, 0, 0x280000);
 		memcpy(System16Rom + 0x000000, pTemp + 0x00000, 0x80000);
 		memcpy(System16Rom + 0x200000, pTemp + 0x80000, 0x80000);
-		free(pTemp);
-		pTemp = NULL;
+		BurnFree(pTemp);
 		nRet = 0;
 	}
 		
@@ -2207,15 +2206,14 @@ static INT32 System18BankRom40000()
 static INT32 System18BankRom80000()
 {
 	INT32 nRet = 1;
-	UINT8 *pTemp = (UINT8*)malloc(0x300000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x300000);
 	
 	if (pTemp) {
 		memcpy(pTemp, System16Rom, 0x300000);
 		memset(System16Rom, 0, 0x300000);
 		memcpy(System16Rom + 0x000000, pTemp + 0x000000, 0x100000);
 		memcpy(System16Rom + 0x200000, pTemp + 0x100000, 0x100000);
-		free(pTemp);
-		pTemp = NULL;
+		BurnFree(pTemp);
 		nRet = 0;
 	}
 		
@@ -2237,7 +2235,7 @@ static INT32 System18Bank40000Init()
 		SekMapMemory(System16Rom + 0x200000, 0x200000, 0x27ffff, SM_READ);
 		SekClose();
 		
-		UINT8 *pTemp = (UINT8*)malloc(0x400000);
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x400000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x400000);
 			memset(System16Sprites, 0, System16SpriteRomSize);
@@ -2248,10 +2246,7 @@ static INT32 System18Bank40000Init()
 		} else {
 			nRet = 1;
 		}
-		if (pTemp) {
-			free(pTemp);
-			pTemp = NULL;
-		}
+		BurnFree(pTemp);
 		
 	}
 	

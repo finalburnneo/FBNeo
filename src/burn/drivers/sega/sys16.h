@@ -52,6 +52,7 @@ extern UINT8 *System16Rom;
 extern UINT8 *System16Code;
 extern UINT8 *System16Rom2;
 extern UINT8 *System16Z80Rom;
+extern UINT8 *System16Z80Code;
 extern UINT8  *System16UPD7759Data;
 extern UINT8 *System16PCMData;
 extern UINT8 *System16RF5C68Data;
@@ -128,6 +129,9 @@ extern System16ProcessAnalogControls System16ProcessAnalogControlsDo;
 
 typedef void (*System16MakeAnalogInputs)();
 extern System16MakeAnalogInputs System16MakeAnalogInputsDo;
+
+UINT8 __fastcall System16PPIZ80PortRead(UINT16 a);
+void __fastcall System16Z80PortWrite(UINT16 a, UINT8 d);
 
 INT32 CustomLoadRom20000();
 INT32 CustomLoadRom40000();

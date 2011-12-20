@@ -217,8 +217,8 @@ inline static void PdriftMakeInputs()
 static void System16GunMakeInputs()
 {
 	if (nBurnGunNumPlayers) BurnGunMakeInputs(0, (INT16)System16AnalogPort0, (INT16)System16AnalogPort1);
-	if (nBurnGunNumPlayers >= 1) BurnGunMakeInputs(1, (INT16)System16AnalogPort2, (INT16)System16AnalogPort3);
-	if (nBurnGunNumPlayers >= 2) BurnGunMakeInputs(2, (INT16)System16AnalogPort4, (INT16)System16AnalogPort5);
+	if (nBurnGunNumPlayers >= 2) BurnGunMakeInputs(1, (INT16)System16AnalogPort2, (INT16)System16AnalogPort3);
+	if (nBurnGunNumPlayers >= 3) BurnGunMakeInputs(2, (INT16)System16AnalogPort4, (INT16)System16AnalogPort5);
 }
 
 /*====================================================
@@ -267,7 +267,7 @@ static INT32 System16DoReset()
 		if (System16HasGears) System16InputPort0[5] = 1;
 	}
 	
-	if (System16Z80RomNum) {
+	if (System16Z80RomNum || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_ISGSM)) {
 		ZetOpen(0);
 		ZetReset();
 		ZetClose();
@@ -392,7 +392,7 @@ UINT8 __fastcall System16Z80PortRead(UINT16 a)
 		}
 	}
 
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Read Port -> %02X\n"), a);
 #endif
 
@@ -411,6 +411,28 @@ UINT8 __fastcall System16PPIZ80PortRead(UINT16 a)
 		case 0x40:
 		case 0xc0: {
 			ppi8255_set_portC(0, 0x00);
+			return System16SoundLatch;
+		}
+	}
+
+#if 0 && defined FBA_DEBUG
+	bprintf(PRINT_NORMAL, _T("Z80 Read Port -> %02X\n"), a);
+#endif
+
+	return 0;
+}
+
+UINT8 __fastcall SystemXZ80PortRead(UINT16 a)
+{
+	a &= 0xff;
+	
+	switch (a) {
+		case 0x01: {
+			return BurnYM2151ReadStatus();
+		}
+		
+		case 0x40:
+		case 0xc0: {
 			return System16SoundLatch;
 		}
 	}
@@ -490,12 +512,12 @@ void __fastcall System16Z80PortWrite(UINT16 a, UINT8 d)
 		}
 	}
 
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Write Port -> %02X, %02X\n"), a, d);
 #endif
 }
 
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 UINT8 __fastcall System16Z80Read(UINT16 a)
 {
 	bprintf(PRINT_NORMAL, _T("Z80 Read -> %04X\n"), a);
@@ -504,7 +526,7 @@ UINT8 __fastcall System16Z80Read(UINT16 a)
 }
 #endif
 
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 void __fastcall System16Z80Write(UINT16 a, UINT8 d)
 {
 	bprintf(PRINT_NORMAL, _T("Z80 Write -> %04X, %02X\n"), a, d);
@@ -611,7 +633,7 @@ UINT8 __fastcall System18Z80PortRead(UINT16 a)
 		}
 	}
 
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Read Port -> %02X\n"), a);
 #endif
 
@@ -671,7 +693,7 @@ void __fastcall System18Z80PortWrite(UINT16 a, UINT8 d)
 		}
 	}
 
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Write Port -> %02X, %02X\n"), a, d);
 #endif
 }
@@ -682,7 +704,7 @@ UINT8 __fastcall System18Z80Read(UINT16 a)
 		return RF5C68PCMRead(a - 0xd000);
 	}
 
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Read -> %04X\n"), a);
 #endif
 
@@ -701,7 +723,7 @@ void __fastcall System18Z80Write(UINT16 a, UINT8 d)
 		return;
 	}
 
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Write -> %04X, %02X\n"), a, d);
 #endif
 }
@@ -1799,7 +1821,7 @@ INT32 System16Init()
 			ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram);
 			ZetMemEnd();
 		
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 			ZetSetReadHandler(System16Z80Read);
 			ZetSetWriteHandler(System16Z80Write);
 #endif	
@@ -1853,7 +1875,7 @@ INT32 System16Init()
 			SekClose();
 		}
 		
-		if (System16Z80RomNum || ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_ISGSM) && System16Z80Enable)) {
+		if (System16Z80RomNum || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_ISGSM)) {
 			if (System16MapZ80Do) {
 				ZetInit(1);
 				ZetOpen(0);
@@ -1875,7 +1897,7 @@ INT32 System16Init()
 				ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram);
 				ZetMemEnd();
 		
-#if 1 && defined FBA_DEBUG
+#if 0 && defined FBA_DEBUG
 				ZetSetReadHandler(System16Z80Read);
 				ZetSetWriteHandler(System16Z80Write);
 #endif	
@@ -2208,7 +2230,7 @@ INT32 System16Init()
 		
 			ZetSetReadHandler(System16Z80PCMRead);
 			ZetSetWriteHandler(System16Z80PCMWrite);
-			ZetSetInHandler(System16PPIZ80PortRead);
+			ZetSetInHandler(SystemXZ80PortRead);
 			ZetSetOutHandler(System16Z80PortWrite);
 			ZetClose();
 		}
@@ -2287,7 +2309,7 @@ INT32 System16Init()
 		
 			ZetSetReadHandler(System16Z80PCMRead);
 			ZetSetWriteHandler(System16Z80PCMWrite);
-			ZetSetInHandler(System16PPIZ80PortRead);
+			ZetSetInHandler(SystemXZ80PortRead);
 			ZetSetOutHandler(System16Z80PortWrite);
 			ZetClose();
 		}
@@ -2320,7 +2342,7 @@ INT32 System16Exit()
 	INT32 i;
 	
 	SekExit();
-	if (System16Z80RomNum) ZetExit();
+	if (System16Z80RomNum || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_ISGSM)) ZetExit();
 	if (System167751ProgSize) {
 		N7751Exit();
 		DACExit();
@@ -2597,7 +2619,7 @@ INT32 System16BFrame()
 	INT32 nSoundBufferPos = 0;
 	
 	SekNewFrame();
-	ZetNewFrame();
+	if (System16Z80RomNum || ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_ISGSM) && System16Z80Enable)) ZetNewFrame();
 	
 	SekOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {

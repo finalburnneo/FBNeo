@@ -1805,7 +1805,7 @@ static INT32 Gforce2Init()
 	
 	INT32 nRet = System16Init();
 	
-	UINT8 *pTemp = (UINT8*)malloc(0x0c0000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x0c0000);
 	memcpy(pTemp, System16PCMData, 0x0c0000);
 	memset(System16PCMData, 0, 0x180000);
 	memcpy(System16PCMData + 0x000000, pTemp + 0x000000, 0x80000);
@@ -1817,10 +1817,7 @@ static INT32 Gforce2Init()
 	memcpy(System16PCMData + 0x120000, pTemp + 0x0a0000, 0x20000);
 	memcpy(System16PCMData + 0x140000, pTemp + 0x0a0000, 0x20000);
 	memcpy(System16PCMData + 0x160000, pTemp + 0x0a0000, 0x20000);
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 	
 	return nRet;
 }
@@ -1851,7 +1848,7 @@ static INT32 PdriftInit()
 	
 	if (!nRet) YBoardIrq2Scanline = 0;
 	
-	UINT8 *pTemp = (UINT8*)malloc(0x0c0000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x0c0000);
 	memcpy(pTemp, System16PCMData, 0x0c0000);
 	memset(System16PCMData, 0, 0x180000);
 	memcpy(System16PCMData + 0x000000, pTemp + 0x000000, 0x80000);
@@ -1863,10 +1860,7 @@ static INT32 PdriftInit()
 	memcpy(System16PCMData + 0x120000, pTemp + 0x0a0000, 0x20000);
 	memcpy(System16PCMData + 0x140000, pTemp + 0x0a0000, 0x20000);
 	memcpy(System16PCMData + 0x160000, pTemp + 0x0a0000, 0x20000);
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 
 	return nRet;
 }

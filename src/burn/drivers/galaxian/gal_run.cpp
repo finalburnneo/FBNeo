@@ -292,7 +292,7 @@ static INT32 GalLoadRoms(bool bLoad)
 		// Shared Tile Roms
 		if (GalTilesSharedRomSize) {
 			Offset = 0;
-			GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+			GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 			for (i = GAL_ROM_OFFSET_TILES_SHARED; i < GAL_ROM_OFFSET_TILES_SHARED + GalTilesSharedRomNum; i++) {
 				nRet = BurnLoadRom(GalTempRom + Offset, i, 1); if (nRet) return 1;
 			
@@ -301,16 +301,13 @@ static INT32 GalLoadRoms(bool bLoad)
 			}
 			GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 			GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);		
-			if (GalTempRom) {
-				free(GalTempRom);
-				GalTempRom = NULL;
-			}
+			BurnFree(GalTempRom);
 		}
 		
 		// Char Tile Roms
 		if (GalTilesCharRomSize) {
 			Offset = 0;
-			GalTempRom = (UINT8*)malloc(GalTilesCharRomSize);
+			GalTempRom = (UINT8*)BurnMalloc(GalTilesCharRomSize);
 			for (i = GAL_ROM_OFFSET_TILES_CHARS; i < GAL_ROM_OFFSET_TILES_CHARS + GalTilesCharRomNum; i++) {
 				nRet = BurnLoadRom(GalTempRom + Offset, i, 1); if (nRet) return 1;
 			
@@ -318,16 +315,13 @@ static INT32 GalLoadRoms(bool bLoad)
 				Offset += ri.nLen;
 			}
 			GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
-			if (GalTempRom) {
-				free(GalTempRom);
-				GalTempRom = NULL;
-			}
+			BurnFree(GalTempRom);
 		}
 		
 		// Sprite Tile Roms
 		if (GalTilesSpriteRomSize) {
 			Offset = 0;
-			GalTempRom = (UINT8*)malloc(GalTilesSpriteRomSize);
+			GalTempRom = (UINT8*)BurnMalloc(GalTilesSpriteRomSize);
 			for (i = GAL_ROM_OFFSET_TILES_SPRITES; i < GAL_ROM_OFFSET_TILES_SPRITES + GalTilesSpriteRomNum; i++) {
 				nRet = BurnLoadRom(GalTempRom + Offset, i, 1); if (nRet) return 1;
 			
@@ -335,10 +329,7 @@ static INT32 GalLoadRoms(bool bLoad)
 				Offset += ri.nLen;
 			}
 			GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);		
-			if (GalTempRom) {
-				free(GalTempRom);
-				GalTempRom = NULL;
-			}
+			BurnFree(GalTempRom);
 		}
 		
 		// Prom
@@ -549,7 +540,7 @@ INT32 GalInit()
 	GalMem = NULL;
 	GalMemIndex();
 	nLen = GalMemEnd - (UINT8 *)0;
-	if ((GalMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((GalMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(GalMem, 0, nLen);
 	GalMemIndex();
 
@@ -1505,29 +1496,15 @@ void MapScobra()
 
 INT32 GalExit()
 {
-	ZetExit();
+	if (GalZ80Rom1Size) ZetExit();
+	if (GalS2650Rom1Size) s2650Exit();
 	
 	GenericTilesExit();
 	
-	if (GalMem) {
-		free(GalMem);
-		GalMem = NULL;
-	}
-	
-	if (GalZ80Rom1Op) {
-		free(GalZ80Rom1Op);
-		GalZ80Rom1Op = NULL;
-	}
-	
-	if (GalVideoRam2) {
-		free(GalVideoRam2);
-		GalVideoRam2 = NULL;
-	}
-	
-	if (RockclimTiles) {
-		free(RockclimTiles);
-		RockclimTiles = NULL;
-	}
+	BurnFree(GalMem);
+	BurnFree(GalZ80Rom1Op);
+	BurnFree(GalVideoRam2);
+	BurnFree(RockclimTiles);
 	
 	GalSoundExit();
 	
@@ -1770,17 +1747,11 @@ INT32 GalFrame()
 						nSample += pAY8910Buffer[8][n] >> GalSoundVolumeShift;
 					}
 
-					if (nSample < -32768) {
-						nSample = -32768;
-					} else {
-						if (nSample > 32767) {
-							nSample = 32767;
-						}
-					}
+					nSample = BURN_SND_CLIP(nSample);
 
 					pSoundBuf[(n << 1) + 0] = nSample;
 					pSoundBuf[(n << 1) + 1] = nSample;
-    				}
+    			}
 				nSoundBufferPos += nSegmentLength;
 			}
 		}
@@ -1848,13 +1819,7 @@ INT32 GalFrame()
 						nSample += pAY8910Buffer[8][n] >> GalSoundVolumeShift;
 					}
 
-					if (nSample < -32768) {
-						nSample = -32768;
-					} else {
-						if (nSample > 32767) {
-							nSample = 32767;
-						}
-					}
+					nSample = BURN_SND_CLIP(nSample);
 
 					pSoundBuf[(n << 1) + 0] = nSample;
 					pSoundBuf[(n << 1) + 1] = nSample;

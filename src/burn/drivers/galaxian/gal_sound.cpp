@@ -112,15 +112,15 @@ void GalSoundReset()
 void GalSoundInit()
 {
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_ZIGZAGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_MSHUTTLEAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_BONGOAY8910) {
-		pFMBuffer      = (INT16*)malloc(nBurnSoundLen * 3 * sizeof(INT16));
+		pFMBuffer      = (INT16*)BurnMalloc(nBurnSoundLen * 3 * sizeof(INT16));
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_EXPLORERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC || GalSoundType == GAL_SOUND_HARDWARE_TYPE_AD2083AY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910) {
-		pFMBuffer      = (INT16*)malloc(nBurnSoundLen * 6 * sizeof(INT16));
+		pFMBuffer      = (INT16*)BurnMalloc(nBurnSoundLen * 6 * sizeof(INT16));
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910) {
-		pFMBuffer      = (INT16*)malloc(nBurnSoundLen * 9 * sizeof(INT16));
+		pFMBuffer      = (INT16*)BurnMalloc(nBurnSoundLen * 9 * sizeof(INT16));
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_ZIGZAGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_EXPLORERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC || GalSoundType == GAL_SOUND_HARDWARE_TYPE_MSHUTTLEAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_BONGOAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_AD2083AY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910) {
@@ -215,11 +215,11 @@ void GalSoundInit()
 		GalShootWavePos = 0;		
 		INT32 CountDown, Generator, Bit1, Bit2;
 
-		GalNoiseWave = (INT16*)malloc(NOISE_LENGTH * sizeof(INT16));
+		GalNoiseWave = (INT16*)BurnMalloc(NOISE_LENGTH * sizeof(INT16));
 
 		GalShootRate = 22050;
 		GalShootLength = SHOOT_SEC * GalShootRate;
-		GalShootWave = (INT16*)malloc(GalShootLength * sizeof(INT16));
+		GalShootWave = (INT16*)BurnMalloc(GalShootLength * sizeof(INT16));
 	
 		Generator = 0;
 		CountDown = NOISE_RATE / 2;
@@ -325,7 +325,7 @@ void GalSoundInit()
 
 void GalSoundExit()
 {
-	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_ZIGZAGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_BONGOAY8910) {
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_ZIGZAGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_BONGOAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_MSHUTTLEAY8910) {
 		AY8910Exit(0);
 	}
 	
@@ -348,21 +348,11 @@ void GalSoundExit()
 		SN76496Exit();
 	}
 	
-	if (pFMBuffer) {
-		free(pFMBuffer);
-		pFMBuffer = NULL;
-		for (INT32 i = 0; i < 9; i++) pAY8910Buffer[i] = NULL;
-	}
+	BurnFree(pFMBuffer);
+	for (INT32 i = 0; i < 9; i++) pAY8910Buffer[i] = NULL;
 	
-	if (GalNoiseWave) {
-		free(GalNoiseWave);
-		GalNoiseWave = NULL;
-	}
-	
-	if (GalShootWave) {
-		free(GalShootWave);
-		GalShootWave = NULL;
-	}
+	BurnFree(GalNoiseWave);
+	BurnFree(GalShootWave);
 
 	HunchbksSoundIrqFire = 0;
 	GalShootLength = 0;

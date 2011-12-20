@@ -6110,17 +6110,14 @@ static INT32 SupergxInit()
 	
 	nRet = GalInit();
 	
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	nRet = BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
 	nRet = BurnLoadRom(GalTempRom + 0x0800, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
 	nRet = BurnLoadRom(GalTempRom + 0x1000, GAL_ROM_OFFSET_TILES_SHARED + 1, 1); if (nRet) return 1;
 	nRet = BurnLoadRom(GalTempRom + 0x1800, GAL_ROM_OFFSET_TILES_SHARED + 1, 1); if (nRet) return 1;
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	HardCodeGalaxianPROM();
 	
@@ -6908,7 +6905,7 @@ void __fastcall Scramb2Z80Write(UINT16 a, UINT8 d)
 
 static void OrbitronRearrangeRom()
 {
-	GalTempRom = (UINT8*)malloc(0x2000);
+	GalTempRom = (UINT8*)BurnMalloc(0x2000);
 	
 	memcpy(GalTempRom, GalZ80Rom1, 0x2000);
 	memcpy(GalZ80Rom1 + 0x0600, GalTempRom + 0x0000, 0x200);
@@ -6927,10 +6924,7 @@ static void OrbitronRearrangeRom()
 	memcpy(GalZ80Rom1 + 0x1c00, GalTempRom + 0x1a00, 0x200);
 	memcpy(GalZ80Rom1 + 0x1a00, GalTempRom + 0x1c00, 0x200);
 	memcpy(GalZ80Rom1 + 0x1800, GalTempRom + 0x1e00, 0x200);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 }
 
 static INT32 OrbitronInit()
@@ -7766,8 +7760,8 @@ static INT32 LadybuggInit()
 	
 	nRet = GalInit();
 	
-	UINT8 *TempRom = (UINT8*)malloc(0x1000);
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(0x1000);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	BurnLoadRom(TempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
 	memcpy(GalTempRom + 0x0800, TempRom + 0x0000, 0x800);
 	memcpy(GalTempRom + 0x0000, TempRom + 0x0800, 0x800);
@@ -7776,14 +7770,8 @@ static INT32 LadybuggInit()
 	memcpy(GalTempRom + 0x1000, TempRom + 0x0800, 0x800);
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
+	BurnFree(GalTempRom);
+	BurnFree(TempRom);
 	
 	return nRet;
 }
@@ -7934,7 +7922,7 @@ static INT32 PacmanblInit()
 
 static void PacmanblaRearrangeRom()
 {
-	GalTempRom = (UINT8*)malloc(GalZ80Rom1Size);
+	GalTempRom = (UINT8*)BurnMalloc(GalZ80Rom1Size);
 	memcpy(GalTempRom, GalZ80Rom1, GalZ80Rom1Size);
 	memcpy(GalZ80Rom1 + 0x0000, GalTempRom + 0x0000, 0x800);
 	memcpy(GalZ80Rom1 + 0x2000, GalTempRom + 0x0800, 0x800);
@@ -7944,10 +7932,7 @@ static void PacmanblaRearrangeRom()
 	memcpy(GalZ80Rom1 + 0x3000, GalTempRom + 0x2800, 0x800);
 	memcpy(GalZ80Rom1 + 0x1800, GalTempRom + 0x3000, 0x800);
 	memcpy(GalZ80Rom1 + 0x3800, GalTempRom + 0x3800, 0x800);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 }
 
 static INT32 PacmanblaInit()
@@ -7963,8 +7948,8 @@ static INT32 PacmanblaInit()
 	CharPlaneOffsets[1] = 0x4000;
 	SpritePlaneOffsets[1] = 0x4000;
 	
-	UINT8 *TempRom = (UINT8*)malloc(0x2000);
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(0x2000);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	BurnLoadRom(TempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
 	BurnLoadRom(TempRom + 0x1000, GAL_ROM_OFFSET_TILES_SHARED + 1, 1);
 	memcpy(GalTempRom + 0x0000, TempRom + 0x0800, 0x800);
@@ -7973,29 +7958,20 @@ static INT32 PacmanblaInit()
 	memcpy(GalTempRom + 0x1800, TempRom + 0x1000, 0x800);	
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom + 0x1000, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
+	BurnFree(GalTempRom);
+	BurnFree(TempRom);
 	
 	return nRet;
 }
 
 static void AtlantisbRearrangeRom()
 {
-	GalTempRom = (UINT8*)malloc(0x3000);
+	GalTempRom = (UINT8*)BurnMalloc(0x3000);
 	
 	memcpy(GalTempRom, GalZ80Rom1, 0x3000);
 	memcpy(GalZ80Rom1 + 0x0000, GalTempRom + 0x0000, 0x1000);
 	memcpy(GalZ80Rom1 + 0x1800, GalTempRom + 0x1000, 0x2000);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 }
 
 static INT32 AtlantisbInit()
@@ -8085,7 +8061,7 @@ STD_ROM_FN(Devilfsg)
 
 static void DevilfsgRearrangeRom()
 {
-	GalTempRom = (UINT8*)malloc(GalZ80Rom1Size);
+	GalTempRom = (UINT8*)BurnMalloc(GalZ80Rom1Size);
 	memcpy(GalTempRom, GalZ80Rom1, GalZ80Rom1Size);
 	memcpy(GalZ80Rom1 + 0x2000, GalTempRom + 0x0000, 0x800);
 	memcpy(GalZ80Rom1 + 0x0000, GalTempRom + 0x0800, 0x800);
@@ -8095,10 +8071,7 @@ static void DevilfsgRearrangeRom()
 	memcpy(GalZ80Rom1 + 0x1000, GalTempRom + 0x2800, 0x800);
 	memcpy(GalZ80Rom1 + 0x3800, GalTempRom + 0x3000, 0x800);
 	memcpy(GalZ80Rom1 + 0x1800, GalTempRom + 0x3800, 0x800);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 }
 
 static INT32 DevilfsgInit()
@@ -8114,8 +8087,8 @@ static INT32 DevilfsgInit()
 	CharPlaneOffsets[1] = 0x4000;
 	SpritePlaneOffsets[1] = 0x4000;
 	
-	UINT8 *TempRom = (UINT8*)malloc(0x2000);
-	GalTempRom = (UINT8*)malloc(0x1000);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(0x2000);
+	GalTempRom = (UINT8*)BurnMalloc(0x1000);
 	nRet = BurnLoadRom(TempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
 	nRet = BurnLoadRom(TempRom + 0x1000, GAL_ROM_OFFSET_TILES_SHARED + 1, 1); if (nRet) return 1;
 	memcpy(GalTempRom + 0x0000, TempRom + 0x0800, 0x800);
@@ -8124,14 +8097,8 @@ static INT32 DevilfsgInit()
 	memcpy(GalTempRom + 0x0000, TempRom + 0x0000, 0x800);
 	memcpy(GalTempRom + 0x0800, TempRom + 0x1000, 0x800);	
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
+	BurnFree(GalTempRom);
+	BurnFree(TempRom);
 	
 	GalIrqType = GAL_IRQ_TYPE_IRQ0;
 	
@@ -8388,8 +8355,8 @@ static INT32 ZigzagInit()
 	CharPlaneOffsets[1] = 0x4000;
 	SpritePlaneOffsets[1] = 0x4000;
 	
-	UINT8 *TempRom = (UINT8*)malloc(0x2000);
-	GalTempRom = (UINT8*)malloc(0x1000);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(0x2000);
+	GalTempRom = (UINT8*)BurnMalloc(0x1000);
 	nRet = BurnLoadRom(TempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
 	nRet = BurnLoadRom(TempRom + 0x1000, GAL_ROM_OFFSET_TILES_SHARED + 1, 1); if (nRet) return 1;
 	memcpy(GalTempRom + 0x0000, TempRom + 0x0000, 0x800);
@@ -8398,14 +8365,8 @@ static INT32 ZigzagInit()
 	memcpy(GalTempRom + 0x0000, TempRom + 0x0800, 0x800);
 	memcpy(GalTempRom + 0x0800, TempRom + 0x1800, 0x800);	
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
+	BurnFree(GalTempRom);
+	BurnFree(TempRom);
 	
 	GalDrawBulletsFunction = NULL;
 	
@@ -8551,8 +8512,8 @@ static INT32 GmgalaxInit()
 	
 	nRet = GalInit();
 	
-	UINT8 *TempRom = (UINT8*)malloc(0x1000);
-	GalTempRom = (UINT8*)malloc(0x4000);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(0x1000);
+	GalTempRom = (UINT8*)BurnMalloc(0x4000);
 	nRet = BurnLoadRom(TempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
 	memcpy(GalTempRom + 0x0000, TempRom + 0x0000, 0x800);
 	memcpy(GalTempRom + 0x1000, TempRom + 0x0800, 0x800);
@@ -8567,14 +8528,8 @@ static INT32 GmgalaxInit()
 	memcpy(GalTempRom + 0x3800, TempRom + 0x0800, 0x800);	
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
+	BurnFree(GalTempRom);
+	BurnFree(TempRom);
 	
 	GalExtendTileInfoFunction = GmgalaxExtendTileInfo;
 	GalExtendSpriteInfoFunction = GmgalaxExtendSpriteInfo;
@@ -8587,11 +8542,11 @@ static INT32 GmgalaxInit()
 	return nRet;
 }
 
-struct BurnDriver BurnDrvGmgalax = {
+struct BurnDriverD BurnDrvGmgalax = {
 	"gmgalax", NULL, NULL, NULL, "1981",
 	"Ghostmuncher Galaxian (bootleg)\0", NULL, "LAX", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, GmgalaxRomInfo, GmgalaxRomName, NULL, NULL, GmgalaxInputInfo, GmgalaxDIPInfo,
 	GmgalaxInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
@@ -8661,6 +8616,8 @@ UINT8 __fastcall Fourin1Z80Read(UINT16 a)
 
 void __fastcall Fourin1Z80Write(UINT16 a, UINT8 d)
 {
+	if (a < 0x4000) return;
+	
 	if (a >= 0x5800 && a <= 0x58ff) {
 		INT32 Offset = a - 0x5800;
 		
@@ -8753,15 +8710,12 @@ void __fastcall Fourin1Z80Write(UINT16 a, UINT8 d)
 
 static void Fourin1PostLoad()
 {
-	GalTempRom = (UINT8*)malloc(0x3000);
+	GalTempRom = (UINT8*)BurnMalloc(0x3000);
 	memcpy(GalTempRom, GalZ80Rom1 + 0xd000, 0x3000);
 	memset(GalZ80Rom1 + 0xd000, 0xff, 0x1000);
 	memcpy(GalZ80Rom1 + 0xe000, GalTempRom, 0x3000);
 	memset(GalZ80Rom1 + 0x11000, 0xff, 0x1000);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	for (UINT32 i = 0; i < GalZ80Rom1Size; i++) {
 		GalZ80Rom1[i] = GalZ80Rom1[i] ^ (i & 0xff);
@@ -8781,6 +8735,7 @@ static INT32 Fourin1Init()
 {
 	INT32 nRet;
 	
+	Fourin1Bank = 0;
 	GalPostLoadCallbackFunction = Fourin1PostLoad;
 	GalZ80Rom1Size = 0x2000;
 	GalTilesSharedRomSize = 0x1000;
@@ -8792,8 +8747,8 @@ static INT32 Fourin1Init()
 	CharPlaneOffsets[1] = GalNumChars * 8 * 8;
 	SpritePlaneOffsets[1] = GalNumSprites * 16 * 16;
 	
-	UINT8 *TempRom = (UINT8*)malloc(0x1000);
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(0x1000);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	nRet = BurnLoadRom(TempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
 	memcpy(GalTempRom + 0x4000, TempRom + 0x0000, 0x800);
 	memcpy(GalTempRom + 0x0000, TempRom + 0x0800, 0x800);
@@ -8820,14 +8775,8 @@ static INT32 Fourin1Init()
 	memcpy(GalTempRom + 0x3800, TempRom + 0x0800, 0x800);	
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom + 0x4000, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
+	BurnFree(GalTempRom);
+	BurnFree(TempRom);
 	
 	GalExtendTileInfoFunction = Fourin1ExtendTileInfo;
 	GalExtendSpriteInfoFunction = Fourin1ExtendSpriteInfo;
@@ -8838,11 +8787,11 @@ static INT32 Fourin1Init()
 	return nRet;
 }
 
-struct BurnDriver BurnDrvFourin1 = {
+struct BurnDriverD BurnDrvFourin1 = {
 	"4in1", NULL, NULL, NULL, "1981",
 	"4 Fun in 1\0", NULL, "Armenia / Food and Fun", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, Fourin1RomInfo, Fourin1RomName, NULL, NULL, Fourin1InputInfo, Fourin1DIPInfo,
 	Fourin1Init, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
@@ -9681,8 +9630,8 @@ void __fastcall ThepitmZ80Write(UINT16 a, UINT8 d)
 
 static void Mooncrs2RearrangeGfx()
 {
-	UINT8* TempRom = (UINT8*)malloc(0x800);
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	UINT8* TempRom = (UINT8*)BurnMalloc(0x800);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
 	BurnLoadRom(GalTempRom + 0x1000, GAL_ROM_OFFSET_TILES_SHARED + 2, 1);
 	BurnLoadRom(TempRom, GAL_ROM_OFFSET_TILES_SHARED + 1, 1);
@@ -9695,16 +9644,10 @@ static void Mooncrs2RearrangeGfx()
 	memcpy(GalTempRom + 0x1c00, TempRom + 0x0200, 0x200);
 	memcpy(GalTempRom + 0x1a00, TempRom + 0x0400, 0x200);
 	memcpy(GalTempRom + 0x1e00, TempRom + 0x0600, 0x200);	
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
+	BurnFree(TempRom);
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);	
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 }
 
 static INT32 Mooncrs2Init()
@@ -9723,7 +9666,7 @@ static INT32 Mooncrs2Init()
 
 static void Mooncrs3PostLoad()
 {
-	GalTempRom = (UINT8*)malloc(GalZ80Rom1Size);
+	GalTempRom = (UINT8*)BurnMalloc(GalZ80Rom1Size);
 	memcpy(GalTempRom, GalZ80Rom1, GalZ80Rom1Size);
 	memcpy(GalZ80Rom1 + 0x0000, GalTempRom + 0x0000, 0x800);
 	memcpy(GalZ80Rom1 + 0x2000, GalTempRom + 0x0800, 0x800);
@@ -9733,10 +9676,7 @@ static void Mooncrs3PostLoad()
 	memcpy(GalZ80Rom1 + 0x3000, GalTempRom + 0x2800, 0x800);
 	memcpy(GalZ80Rom1 + 0x1800, GalTempRom + 0x3000, 0x800);
 	memcpy(GalZ80Rom1 + 0x3800, GalTempRom + 0x3800, 0x800);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	MapMooncrst();
 }
@@ -9801,7 +9741,7 @@ static INT32 MoonqsrInit()
 {
 	INT32 nRet;
 	
-	GalZ80Rom1Op = (UINT8*)malloc(0x4000);
+	GalZ80Rom1Op = (UINT8*)BurnMalloc(0x4000);
 		
 	GalPostLoadCallbackFunction = MoonqsrDecrypt;
 	
@@ -10602,8 +10542,8 @@ static INT32 BagmanmcInit()
 	CharPlaneOffsets[1] = GalNumChars * 8 * 8;
 	SpritePlaneOffsets[1] = GalNumSprites * 16 * 16;
 	
-	UINT8 *TempRom = (UINT8*)malloc(0x1000);
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(0x1000);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	nRet = BurnLoadRom(TempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
 	memcpy(GalTempRom + 0x0000, TempRom + 0x0000, 0x800);
 	memcpy(GalTempRom + 0x2000, TempRom + 0x0800, 0x800);
@@ -10614,14 +10554,8 @@ static INT32 BagmanmcInit()
 	nRet = BurnLoadRom(GalTempRom + 0x1800, GAL_ROM_OFFSET_TILES_SHARED + 3, 1); if (nRet) return 1;
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom + 0x2000, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
+	BurnFree(GalTempRom);
+	BurnFree(TempRom);
 	
 	HardCodeMooncrstPROM();
 		
@@ -10676,7 +10610,7 @@ static void VpoolPostLoad()
 {
 	MapMooncrst();
 	
-	GalTempRom = (UINT8*)malloc(GalZ80Rom1Size);
+	GalTempRom = (UINT8*)BurnMalloc(GalZ80Rom1Size);
 	memcpy(GalTempRom, GalZ80Rom1, GalZ80Rom1Size);
 	memcpy(GalZ80Rom1 + 0x0000, GalTempRom + 0x0000, 0x800);
 	memcpy(GalZ80Rom1 + 0x2000, GalTempRom + 0x0800, 0x800);
@@ -10686,10 +10620,7 @@ static void VpoolPostLoad()
 	memcpy(GalZ80Rom1 + 0x3000, GalTempRom + 0x2800, 0x800);
 	memcpy(GalZ80Rom1 + 0x1800, GalTempRom + 0x3000, 0x800);
 	memcpy(GalZ80Rom1 + 0x3800, GalTempRom + 0x3800, 0x800);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	ZetOpen(0);
 	ZetMapArea(0x8000, 0x87ff, 0, GalZ80Ram1);
@@ -10735,7 +10666,7 @@ static void CkonggMapZ80()
 
 static void CkonggPostLoad()
 {
-	GalTempRom = (UINT8*)malloc(GalZ80Rom1Size);
+	GalTempRom = (UINT8*)BurnMalloc(GalZ80Rom1Size);
 	memcpy(GalTempRom, GalZ80Rom1, GalZ80Rom1Size);
 	memcpy(GalZ80Rom1 + 0x2400, GalTempRom + 0x0000, 0x400);
 	memcpy(GalZ80Rom1 + 0x1c00, GalTempRom + 0x0400, 0x400);
@@ -10759,10 +10690,7 @@ static void CkonggPostLoad()
 	memcpy(GalZ80Rom1 + 0x1400, GalTempRom + 0x4c00, 0x400);
 	memcpy(GalZ80Rom1 + 0x3000, GalTempRom + 0x5000, 0x400);
 	memcpy(GalZ80Rom1 + 0x3c00, GalTempRom + 0x5400, 0x400);	
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 
 	CkonggMapZ80();
 }
@@ -10785,7 +10713,7 @@ static INT32 CkonggInit()
 
 static void CkongmcPostLoad()
 {
-	GalTempRom = (UINT8*)malloc(0x4000);
+	GalTempRom = (UINT8*)BurnMalloc(0x4000);
 	memcpy(GalTempRom, GalZ80Rom1, 0x4000);
 	memcpy(GalZ80Rom1 + 0x0000, GalTempRom + 0x0000, 0x800);
 	memcpy(GalZ80Rom1 + 0x2000, GalTempRom + 0x0800, 0x800);
@@ -10795,10 +10723,7 @@ static void CkongmcPostLoad()
 	memcpy(GalZ80Rom1 + 0x3000, GalTempRom + 0x2800, 0x800);
 	memcpy(GalZ80Rom1 + 0x1800, GalTempRom + 0x3000, 0x800);
 	memcpy(GalZ80Rom1 + 0x3800, GalTempRom + 0x3800, 0x800);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	CkonggMapZ80();
 	
@@ -10826,7 +10751,7 @@ static INT32 CkongmcInit()
 
 static void PorterPostLoad()
 {
-	GalTempRom = (UINT8*)malloc(0x4000);
+	GalTempRom = (UINT8*)BurnMalloc(0x4000);
 	memcpy(GalTempRom, GalZ80Rom1, 0x4000);
 	memcpy(GalZ80Rom1 + 0x0000, GalTempRom + 0x0000, 0x800);
 	memcpy(GalZ80Rom1 + 0x2000, GalTempRom + 0x0800, 0x800);
@@ -10836,10 +10761,7 @@ static void PorterPostLoad()
 	memcpy(GalZ80Rom1 + 0x3000, GalTempRom + 0x2800, 0x800);
 	memcpy(GalZ80Rom1 + 0x1800, GalTempRom + 0x3000, 0x800);
 	memcpy(GalZ80Rom1 + 0x3800, GalTempRom + 0x3800, 0x800);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	MapMooncrst();
 	
@@ -10876,11 +10798,11 @@ struct BurnDriver BurnDrvSkybase = {
 	NULL, 392, 224, 256, 3, 4
 };
 
-struct BurnDriver BurnDrvBagmanmc = {
+struct BurnDriverD BurnDrvBagmanmc = {
 	"bagmanmc", "bagman", NULL, NULL, "1982",
 	"Bagman (Moon Cresta hardware)\0", "Bad Colours", "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, BagmanmcRomInfo, BagmanmcRomName, NULL, NULL, BagmanmcInputInfo, BagmanmcDIPInfo,
 	BagmanmcInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
@@ -11097,7 +11019,7 @@ static void RockclimPostLoad()
 {
 	MapMooncrst();
 	
-	GalVideoRam2 = (UINT8*)malloc(0x800);
+	GalVideoRam2 = (UINT8*)BurnMalloc(0x800);
 	
 	ZetOpen(0);
 	ZetSetReadHandler(RockclimZ80Read);
@@ -11118,7 +11040,7 @@ static INT32 RockclimInit()
 	INT32 nRet;
 	
 	GalPostLoadCallbackFunction = RockclimPostLoad;
-	RockclimTiles = (UINT8*)malloc(0x100 * 8 * 8);
+	RockclimTiles = (UINT8*)BurnMalloc(0x100 * 8 * 8);
 	
 	nRet = GalInit();
 	
@@ -11126,14 +11048,11 @@ static INT32 RockclimInit()
 	INT32 RockclimCharXOffsets[8] = {3, 2, 1, 0, 11, 10, 9, 8};
 	INT32 RockclimCharYOffsets[8] = {0, 16, 32, 48, 64, 80, 96, 112};
 	
-	GalTempRom = (UINT8*)malloc(0x2000);
+	GalTempRom = (UINT8*)BurnMalloc(0x2000);
 	nRet = BurnLoadRom(GalTempRom + 0x0000, 12, 1); if (nRet) return 1;
 	nRet = BurnLoadRom(GalTempRom + 0x1000, 13, 1); if (nRet) return 1;
 	GfxDecode(256, 4, 8, 8, RockclimPlaneOffsets, RockclimCharXOffsets, RockclimCharYOffsets, 0x80, GalTempRom, RockclimTiles);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	GalCalcPaletteFunction = RockclimCalcPalette;
 	GalRenderBackgroundFunction = RockclimDrawBackground;
@@ -11342,15 +11261,12 @@ static INT32 JumpbugInit()
 
 static void LeversPostLoad()
 {
-	GalTempRom = (UINT8*)malloc(GalZ80Rom1Size);
+	GalTempRom = (UINT8*)BurnMalloc(GalZ80Rom1Size);
 	memcpy(GalTempRom, GalZ80Rom1, GalZ80Rom1Size);
 	memset(GalZ80Rom1, 0, GalZ80Rom1Size);
 	memcpy(GalZ80Rom1 + 0x0000, GalTempRom + 0x0000, 0x1000);
 	memcpy(GalZ80Rom1 + 0x2000, GalTempRom + 0x1000, GalZ80Rom1Size - 0x2000);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	MapJumpbug();
 }
@@ -11367,17 +11283,14 @@ static INT32 LeversInit()
 	
 	nRet = GalInit();
 	
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	nRet = BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
 	nRet = BurnLoadRom(GalTempRom + 0x1000, GAL_ROM_OFFSET_TILES_SHARED + 1, 1); if (nRet) return 1;
 	nRet = BurnLoadRom(GalTempRom + 0x1800, GAL_ROM_OFFSET_TILES_SHARED + 2, 1); if (nRet) return 1;
 	nRet = BurnLoadRom(GalTempRom + 0x2800, GAL_ROM_OFFSET_TILES_SHARED + 3, 1); if (nRet) return 1;
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	GalRenderBackgroundFunction = JumpbugDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
@@ -11866,17 +11779,14 @@ static INT32 CheckmanInit()
 	
 	nRet = GalInit();
 	
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
 	BurnLoadRom(GalTempRom + 0x1000, GAL_ROM_OFFSET_TILES_SHARED + 1, 1);
 	memcpy(GalTempRom + 0x0800, GalTempRom + 0x0000, 0x800);
 	memcpy(GalTempRom + 0x1800, GalTempRom + 0x1000, 0x800);
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);	
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	GalExtendTileInfoFunction = MooncrstExtendTileInfo;
 	GalExtendSpriteInfoFunction = MooncrstExtendSpriteInfo;
@@ -12213,7 +12123,7 @@ static void MapMshuttle()
 
 static void MshuttleDecrypt()
 {
-	GalZ80Rom1Op = (UINT8*)malloc(GalZ80Rom1Size);
+	GalZ80Rom1Op = (UINT8*)BurnMalloc(GalZ80Rom1Size);
 	
 	static const UINT8 ConvTable[8][16] = {
 		{ 0x40, 0x41, 0x44, 0x15, 0x05, 0x51, 0x54, 0x55, 0x50, 0x00, 0x01, 0x04, (UINT8)-1, 0x10, 0x11, 0x14 },
@@ -12242,17 +12152,14 @@ static void MshuttleDecrypt()
 
 static void MShuttleCommonInit()
 {
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
 	BurnLoadRom(GalTempRom + 0x1000, GAL_ROM_OFFSET_TILES_SHARED + 1, 1);
 	BurnLoadRom(GalTempRom + 0x2000, GAL_ROM_OFFSET_TILES_SHARED + 2, 1);
 	BurnLoadRom(GalTempRom + 0x3000, GAL_ROM_OFFSET_TILES_SHARED + 3, 1);
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	GalDrawBulletsFunction = MshuttleDrawBullets;
 	GalExtendTileInfoFunction = MshuttleExtendTileInfo;
@@ -12278,7 +12185,7 @@ static INT32 MshuttleInit()
 
 static void MshuttlejDecrypt()
 {
-	GalZ80Rom1Op = (UINT8*)malloc(GalZ80Rom1Size);
+	GalZ80Rom1Op = (UINT8*)BurnMalloc(GalZ80Rom1Size);
 	
 	static const UINT8 ConvTable[8][16] = {
 		{ 0x41, 0x54, 0x51, 0x14, 0x05, 0x10, 0x01, 0x55, 0x44, 0x11, 0x00, 0x50, 0x15, 0x40, 0x04, 0x45 },
@@ -12613,17 +12520,14 @@ static INT32 KingballInit()
 	
 	nRet = GalInit();
 	
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
 	BurnLoadRom(GalTempRom + 0x1000, GAL_ROM_OFFSET_TILES_SHARED + 1, 1);
 	memcpy(GalTempRom + 0x0800, GalTempRom + 0x0000, 0x800);
 	memcpy(GalTempRom + 0x1800, GalTempRom + 0x1000, 0x800);
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);	
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	return nRet;
 }
@@ -12932,16 +12836,13 @@ void __fastcall FrogfZ80Write(UINT16 a, UINT8 d)
 
 static void FroggerEncGfxPostLoad()
 {
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
 	BurnLoadRom(GalTempRom + 0x0800, GAL_ROM_OFFSET_TILES_SHARED + 1, 1);
 	for (UINT32 Offset = 0x0800; Offset < 0x1000; Offset++) GalTempRom[Offset] = BITSWAP08(GalTempRom[Offset], 7, 6, 5, 4, 3, 2, 0, 1);
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	MapFrogger();
 }
@@ -15123,15 +15024,12 @@ static INT32 DevilfshInit()
 	CharPlaneOffsets[1] = 0x8000;
 	SpritePlaneOffsets[1] = 0x8000;
 	
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	nRet = BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
 	nRet = BurnLoadRom(GalTempRom + 0x1000, GAL_ROM_OFFSET_TILES_SHARED + 1, 1); if (nRet) return 1;
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom + 0x800, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
@@ -15183,16 +15081,13 @@ static INT32 Newsin7Init()
 	
 	INT32 Newsin7PlaneOffsets[3] = {0x10000, 0, 0x8000};
 	
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	nRet = BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
 	nRet = BurnLoadRom(GalTempRom + 0x1000, GAL_ROM_OFFSET_TILES_SHARED + 1, 1); if (nRet) return 1;
 	nRet = BurnLoadRom(GalTempRom + 0x2000, GAL_ROM_OFFSET_TILES_SHARED + 2, 1); if (nRet) return 1;
 	GfxDecode(GalNumChars, 3, 8, 8, Newsin7PlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 3, 16, 16, Newsin7PlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom + 0x800, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
@@ -15254,14 +15149,11 @@ static INT32 MrkougarInit()
 	INT32 MrkougarSpriteXOffsets[16] = {64, 65, 66, 67, 0, 1, 2, 3, 192, 193, 194, 195, 128, 129, 130, 131};
 	INT32 MrkougarSpriteYOffsets[16] = {0, 8, 16, 24, 32, 40, 48, 56, 256, 264, 272, 280, 288, 296, 304, 312};
 	
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	nRet = BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
 	GfxDecode(GalNumChars, 2, 8, 8, MrkougarPlaneOffsets, MrkougarCharXOffsets, MrkougarCharYOffsets, 0x80, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, MrkougarPlaneOffsets, MrkougarSpriteXOffsets, MrkougarSpriteYOffsets, 0x200, GalTempRom, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
@@ -15844,14 +15736,11 @@ static INT32 TriplepInit()
 
 static void MarinerPostLoad()
 {
-	GalTempRom = (UINT8*)malloc(0x1000);
+	GalTempRom = (UINT8*)BurnMalloc(0x1000);
 	memcpy(GalTempRom, GalZ80Rom1 + 0x4000, 0x1000);
 	memcpy(GalZ80Rom1 + 0x4800, GalTempRom + 0x0000, 0x800);
 	memcpy(GalZ80Rom1 + 0x4000, GalTempRom + 0x0800, 0x800);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	MapTheend();
 	
@@ -16205,14 +16094,11 @@ static void ScorpionProtectionWrite(UINT8 d)
 
 static void ScorpionPostLoad()
 {	
-	GalTempRom = (UINT8*)malloc(0x1000);
+	GalTempRom = (UINT8*)BurnMalloc(0x1000);
 	memcpy(GalTempRom, GalZ80Rom1 + 0x4000, 0x1000);
 	memcpy(GalZ80Rom1 + 0x4800, GalTempRom + 0x0000, 0x800);
 	memcpy(GalZ80Rom1 + 0x4000, GalTempRom + 0x0800, 0x800);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	MapTheend();
 	
@@ -16318,7 +16204,7 @@ struct BurnDriver BurnDrvScorpionmc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, ScorpionmcRomInfo, ScorpionmcRomName, NULL, NULL, ScorpionmcInputInfo, ScorpionmcDIPInfo,
-	ScorpionmcInit, KonamiExit, GalFrame, NULL, GalScan,
+	ScorpionmcInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
@@ -16328,7 +16214,7 @@ struct BurnDriver BurnDrvAracnis = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, AracnisRomInfo, AracnisRomName, NULL, NULL, AracnisInputInfo, AracnisDIPInfo,
-	ScorpionmcInit, KonamiExit, GalFrame, NULL, GalScan,
+	ScorpionmcInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
@@ -16519,7 +16405,7 @@ struct BurnDriver BurnDrvAd2083 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, Ad2083RomInfo, Ad2083RomName, NULL, NULL, Ad2083InputInfo, Ad2083DIPInfo,
-	Ad2083Init, KonamiExit, GalFrame, NULL, GalScan,
+	Ad2083Init, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
@@ -16741,15 +16627,12 @@ static void SfxPostLoad()
 	ZetMapArea(0xc000, 0xefff, 2, GalZ80Rom1 + 0x5000);
 	ZetClose();
 	
-	GalTempRom = (UINT8*)malloc(GalZ80Rom1Size);
+	GalTempRom = (UINT8*)BurnMalloc(GalZ80Rom1Size);
 	memcpy(GalTempRom, GalZ80Rom1, GalZ80Rom1Size);
 	memcpy(GalZ80Rom1 + 0x0000, GalTempRom + 0x0000, 0x1000);
 	memcpy(GalZ80Rom1 + 0x7000, GalTempRom + 0x1000, 0x1000);
 	memcpy(GalZ80Rom1 + 0x1000, GalTempRom + 0x2000, 0x6000);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	ZetOpen(2);
 	ZetSetReadHandler(SfxSampleZ80Read);
@@ -16804,14 +16687,11 @@ static void SkelagonPostLoad()
 	ZetMapArea(0xc000, 0xefff, 2, GalZ80Rom1 + 0x5000);
 	ZetClose();
 	
-	GalTempRom = (UINT8*)malloc(GalZ80Rom1Size);
+	GalTempRom = (UINT8*)BurnMalloc(GalZ80Rom1Size);
 	memcpy(GalTempRom, GalZ80Rom1, GalZ80Rom1Size);
 	memset(GalZ80Rom1, 0xff, 0x1000);
 	memcpy(GalZ80Rom1 + 0x1000, GalTempRom + 0x0000, 0x7000);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	ZetOpen(2);
 	ZetSetReadHandler(SfxSampleZ80Read);
@@ -16872,11 +16752,12 @@ static void MonsterzPostLoad()
 	ZetMapArea(0x0000, GalZ80Rom3Size - 1, 2, GalZ80Rom3);
 	ZetClose();
 	
-	GalTempRom = (UINT8*)malloc(GalZ80Rom3Size);
+	GalTempRom = (UINT8*)BurnMalloc(GalZ80Rom3Size);
 	memcpy(GalTempRom, GalZ80Rom3, GalZ80Rom3Size);
 	memcpy(GalZ80Rom3 + 0x0000, GalTempRom + 0x0000, 0x3000);
 	memset(GalZ80Rom3 + 0x3000, 0xff, 0x1000);
 	memcpy(GalZ80Rom3 + 0x4000, GalTempRom + 0x3000, 0x2000);
+	BurnFree(GalTempRom);
 }
 
 static INT32 MonsterzInit()
@@ -18295,8 +18176,8 @@ static INT32 LosttombInit()
 	nRet = GalInit();
 	KonamiSoundInit();
 	
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
-	UINT8 *TempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	BurnLoadRom(TempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
 	BurnLoadRom(TempRom + 0x0800, GAL_ROM_OFFSET_TILES_SHARED + 1, 1);
 	for (UINT32 Offset = 0; Offset < GalTilesSharedRomSize; Offset++) {
@@ -18306,16 +18187,10 @@ static INT32 LosttombInit()
 		SrcOffset |= ((BIT(Offset, 1) & BIT(Offset, 7)) | ((1 ^ BIT(Offset, 1)) & (BIT(Offset, 8)))) << 10;
 		GalTempRom[Offset] = TempRom[SrcOffset];
 	}
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
+	BurnFree(TempRom);
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
@@ -18375,8 +18250,8 @@ static INT32 AnteaterInit()
 	nRet = GalInit();
 	KonamiSoundInit();
 	
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
-	UINT8 *TempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	BurnLoadRom(TempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
 	BurnLoadRom(TempRom + 0x0800, GAL_ROM_OFFSET_TILES_SHARED + 1, 1);
 	for (UINT32 Offset = 0; Offset < GalTilesSharedRomSize; Offset++) {
@@ -18386,16 +18261,10 @@ static INT32 AnteaterInit()
 		SrcOffset |= (BIT(Offset, 0) ^ BIT(Offset, 6) ^ 1) << 10;
 		GalTempRom[Offset] = TempRom[SrcOffset];
 	}
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
+	BurnFree(TempRom);
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	GalRenderBackgroundFunction = AnteaterDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
@@ -18704,8 +18573,8 @@ static INT32 RescueInit()
 	nRet = GalInit();
 	KonamiSoundInit();
 	
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
-	UINT8* TempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
+	UINT8* TempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	nRet = BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
 	nRet = BurnLoadRom(GalTempRom + 0x0800, GAL_ROM_OFFSET_TILES_SHARED + 1, 1); if (nRet) return 1;
 	memcpy(TempRom, GalTempRom, GalTilesSharedRomSize);
@@ -18718,14 +18587,8 @@ static INT32 RescueInit()
 	}
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(TempRom);
+	BurnFree(GalTempRom);
 	
 	GalCalcPaletteFunction = RescueCalcPalette;
 	GalRenderBackgroundFunction = RescueDrawBackground;
@@ -18748,8 +18611,8 @@ static INT32 MinefldInit()
 	nRet = GalInit();
 	KonamiSoundInit();
 	
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
-	UINT8* TempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
+	UINT8* TempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	nRet = BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
 	nRet = BurnLoadRom(GalTempRom + 0x0800, GAL_ROM_OFFSET_TILES_SHARED + 1, 1); if (nRet) return 1;
 	memcpy(TempRom, GalTempRom, GalTilesSharedRomSize);
@@ -18762,14 +18625,8 @@ static INT32 MinefldInit()
 	}
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
-	if (TempRom) {
-		free(TempRom);
-		TempRom = NULL;
-	}
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(TempRom);
+	BurnFree(GalTempRom);
 	
 	GalCalcPaletteFunction = MinefldCalcPalette;
 	GalRenderBackgroundFunction = MinefldDrawBackground;
@@ -19542,15 +19399,12 @@ static void DambustrPostLoad()
 {
 	UINT8 Temp;
 	
-	GalTempRom = (UINT8*)malloc(0x4000);
+	GalTempRom = (UINT8*)BurnMalloc(0x4000);
 	memcpy(GalTempRom, GalZ80Rom1, 0x4000);
 	for (INT32 i = 0; i < 0x4000; i++) {
 		GalZ80Rom1[i] = GalTempRom[BITSWAP16(i, 15, 14, 13, 12, 4, 10, 9, 8, 7, 6, 5, 3, 11, 2, 1, 0)];
 	}
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	for (INT32 i = 0; i < 0x1000; i++) {
 		Temp = GalZ80Rom1[0x5000 + i];
@@ -19598,7 +19452,7 @@ static INT32 DambustrInit()
 	
 	nRet = GalInit();
 	
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	UINT8 Temp[16];
 	nRet = BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
 	nRet = BurnLoadRom(GalTempRom + 0x1000, GAL_ROM_OFFSET_TILES_SHARED + 1, 1); if (nRet) return 1;
@@ -19618,10 +19472,7 @@ static INT32 DambustrInit()
 	}
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 
 	GalCalcPaletteFunction = DambustrCalcPalette;
 	GalRenderBackgroundFunction = DambustrDrawBackground;
@@ -19633,7 +19484,7 @@ static INT32 DambustrInit()
 	GalSpriteClipStart = 0;
 	GalSpriteClipEnd = 255;
 	
-	GalVideoRam2 = (UINT8*)malloc(0x400);
+	GalVideoRam2 = (UINT8*)BurnMalloc(0x400);
 
 	return nRet;
 }
@@ -20677,7 +20528,7 @@ static INT32 HunchbkgInit()
 
 static void DrivfrcgPostLoad()
 {
-	GalTempRom = (UINT8*)malloc(GalS2650Rom1Size);
+	GalTempRom = (UINT8*)BurnMalloc(GalS2650Rom1Size);
 	memcpy(GalTempRom, GalS2650Rom1, GalS2650Rom1Size);
 	memcpy(GalS2650Rom1 + 0x1800, GalTempRom + 0x0000, 0x400);
 	memcpy(GalS2650Rom1 + 0x1c00, GalTempRom + 0x0400, 0x400);
@@ -20695,10 +20546,7 @@ static void DrivfrcgPostLoad()
 	memcpy(GalS2650Rom1 + 0x2c00, GalTempRom + 0x3400, 0x400);
 	memcpy(GalS2650Rom1 + 0x3000, GalTempRom + 0x3800, 0x400);
 	memcpy(GalS2650Rom1 + 0x3400, GalTempRom + 0x3c00, 0x400);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
 	
 	S2650PostLoad();
 	s2650Open(0);
@@ -20732,8 +20580,8 @@ static INT32 DrivfrcbInit()
 	
 	nRet = GalInit();
 	
-	GalTempRom = (UINT8*)malloc(GalTilesSharedRomSize);
-	UINT8 *TempRom = (UINT8*)malloc(0x2000);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(0x2000);
 	nRet = BurnLoadRom(TempRom, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
 	memcpy(GalTempRom + 0x1000, TempRom + 0x0000, 0x1000);
 	memcpy(GalTempRom + 0x0000, TempRom + 0x1000, 0x1000);
@@ -20742,10 +20590,8 @@ static INT32 DrivfrcbInit()
 	memcpy(GalTempRom + 0x2000, TempRom + 0x1000, 0x1000);
 	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
-	if (GalTempRom) {
-		free(GalTempRom);
-		GalTempRom = NULL;
-	}
+	BurnFree(GalTempRom);
+	BurnFree(TempRom);
 	
 	GalCalcPaletteFunction = RockclimCalcPalette;
 	GalExtendTileInfoFunction = Ad2083ExtendTileInfo;
@@ -20958,7 +20804,7 @@ struct BurnDriver BurnDrvHunchbks = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_PLATFORM, 0,
 	NULL, HunchbksRomInfo, HunchbksRomName, NULL, NULL, HunchbksInputInfo, HunchbksDIPInfo,
-	HunchbksInit, GalExit, GalFrame, NULL, GalScan,
+	HunchbksInit, KonamiExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
@@ -20968,6 +20814,6 @@ struct BurnDriver BurnDrvHncholms = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_SPORTSMISC, 0,
 	NULL, HncholmsRomInfo, HncholmsRomName, NULL, NULL, HunchbksInputInfo, HunchbksDIPInfo,
-	HncholmsInit, GalExit, GalFrame, NULL, GalScan,
+	HncholmsInit, KonamiExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

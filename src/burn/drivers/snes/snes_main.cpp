@@ -80,11 +80,11 @@ INT32 SnesInit()
 
 	if (readmem(0xFFD9)>1) 
 	{
-		pal=1;
+		global_pal=1;
 	}
 	else
 	{
-		pal=0;
+		global_pal=0;
 	}
 
 	if (srammask)
@@ -123,7 +123,7 @@ INT32 SnesFrame()
 		spctotal2=0.0f;
 		spctotal3=0.0f;
 	}
-	for (lines=0;lines<((pal)?312:262);lines++)
+	for (lines=0;lines<((global_pal)?312:262);lines++)
 	{
 		//                snemlog("%i %02X:%04X %i %i %i\n",lines,pbr>>16,pc,irqenable,xirq,yirq);
 		if ((irqenable==2/* || irqenable==1*/) && (lines==yirq))
@@ -139,9 +139,9 @@ INT32 SnesFrame()
 		intthisline=0;
 		while (cycles>0)
 		{
-			opcode=readmem(pbr|pc); 
+			global_opcode=readmem(pbr|pc); 
 			pc++;
-			opcodes[opcode][cpumode]();
+			opcodes[global_opcode ][cpumode]();
 			if ((((irqenable==3) && (lines==yirq)) || (irqenable==1)) && !intthisline)
 			{
 				if (((1364-cycles)>>2)>=xirq)
@@ -179,7 +179,7 @@ INT32 SnesFrame()
 	return 0;
 }
 
-INT32 SnesScan(INT32 nAction,INT32 *pnMin)
+INT32 SnesScan(INT32,INT32 *)
 {
 	return 0;
 }

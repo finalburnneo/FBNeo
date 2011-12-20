@@ -73,13 +73,15 @@ void writeio(unsigned short addr, unsigned char val)
 {
 	int c,d=0,offset=0,speed;
 	unsigned char temp;
-	int delay=0;
 	switch (addr&0x1FF)
 	{
 	case 0x00:
 		nmienable=val&0x80;
 		irqenable=(val>>4)&3;
-		if (!irqenable) irq=0;
+		if (!irqenable) 
+		{
+			irq=0;
+		}
 		break;
 	case 0x02: /*Multiplicand A*/
 		mula=val;
@@ -167,13 +169,11 @@ void writeio(unsigned short addr, unsigned char val)
 						snemlog(L"Bad DMA mode %i\n",dmactrl[d]&7);
 					}
 					dmalen[d]--;
-					//                                        delay+=16;
+
 				} while (dmalen[d]!=0);
 			}
 			d++;
 		}
-		//                cycles-=delay;
-		//                clockspc(delay);
 		break;
 	case 0x0C: /*HDMA enable*/
 		hdmaena=val;

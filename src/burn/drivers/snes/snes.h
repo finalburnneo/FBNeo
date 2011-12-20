@@ -127,7 +127,7 @@ typedef union
 	} b;
 } reg;
 
-extern reg a,x,y,s;
+
 extern unsigned long pbr,dbr;
 extern UINT16 pc,dp;
 
@@ -147,7 +147,7 @@ extern void (*opcodes[256][5])();
 extern INT32 cpumode;
 
 /*Current opcode*/
-extern UINT8 opcode;
+extern UINT8 global_opcode;
 /*Global cycles count*/
 extern INT32 cycles;
 
@@ -199,7 +199,7 @@ extern INT32 lines;
 
 
 
-extern int pal;
+extern int global_pal;
 
 /*DMA registers*/
 extern unsigned short dmadest[8],dmasrc[8],dmalen[8];

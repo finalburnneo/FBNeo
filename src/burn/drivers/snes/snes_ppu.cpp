@@ -1,11 +1,7 @@
-/*Writes to VRAM at FC80 from 7E0000,x (x=3000ish)
-Writes to 7E0000,x at FA8A - reads from 7F0D50,x
-8Da9?*/
-/*Writes to VRAM at FCFC from 7E0000,x (x=5000ish)
-Writes to 7E0000,x at FB55
-8DA9?*/
-/*Snem 0.1 by Tom Walker
-PPU emulation*/
+/*
+Snem 0.1 by Tom Walker
+PPU emulation
+*/
 #include <stdio.h>
 #include "snes.h"
 
@@ -24,7 +20,7 @@ int yirq,xirq,irqenable,irq;
 int lines;
 
 
-int pal;
+int global_pal;
 
 /*DMA registers*/
 unsigned short dmadest[8],dmasrc[8],dmalen[8];
@@ -164,7 +160,7 @@ struct SNES_PPU_STRUCT	/* once all the regs are saved in this structure, it woul
 
 static UINT16 cgram_address =0;	/* CGRAM address */
 static UINT8  vram_read_offset=2;	/* VRAM read offset */
-static UINT16 OAM_DATA_O =0;
+
 
 static UINT16 vram_fgr_high, vram_fgr_increment, vram_fgr_count, vram_fgr_mask, vram_fgr_shift, vram_read_buffer;
 static const UINT16 vram_fgr_inctab[4] = { 1, 32, 128, 128 };
@@ -343,7 +339,7 @@ SNES_INLINE void snes_draw_blend( UINT16 offset, UINT16 *colour, UINT8 prevent_c
 * Draw tiles with variable bit planes
 *****************************************/
 
-SNES_INLINE void snes_draw_tile( UINT8 planes, UINT8 layer, UINT16 tileaddr, INT16 x, UINT8 priority, UINT8 flip, UINT8 direct_colors, UINT16 pal, UINT8 hires )
+SNES_INLINE void snes_draw_tile( UINT8 planes, UINT8 layer, UINT16 tileaddr, INT16 xpos, UINT8 priority, UINT8 flip, UINT8 direct_colors, UINT16 palNo, UINT8 hires )
 {
 	UINT8 mask, plane[8];
 	UINT16 c;
@@ -360,7 +356,7 @@ SNES_INLINE void snes_draw_tile( UINT8 planes, UINT8 layer, UINT16 tileaddr, INT
 	else
 		mask = 0x80;
 
-	for (ii = x; ii < (x + 8); ii++)
+	for (ii = xpos; ii < (xpos + 8); ii++)
 	{
 		UINT8 colour = 0;
 		if (flip)
@@ -401,10 +397,10 @@ SNES_INLINE void snes_draw_tile( UINT8 planes, UINT8 layer, UINT16 tileaddr, INT
 						{
 							/* format is  0 | BBb00 | GGGg0 | RRRr0, HW confirms that the data is zero padded. */
 							c = ((clr & 0x07) << 2) | ((clr & 0x38) << 4) | ((clr & 0xc0) << 7);
-							c |= ((pal & 0x04) >> 1) | ((pal & 0x08) << 3) | ((pal & 0x10) << 8);
+							c |= ((palNo & 0x04) >> 1) | ((palNo & 0x08) << 3) | ((palNo & 0x10) << 8);
 						}
 						else
-							c = snes_cgram[(pal + clr) % FIXED_COLOUR];
+							c = snes_cgram[(palNo + clr) % FIXED_COLOUR];
 
 						if (snes_ppu.layer[SNES_MAINSCREEN].mosaic_enabled) // handle horizontal mosaic
 						{
@@ -450,10 +446,10 @@ SNES_INLINE void snes_draw_tile( UINT8 planes, UINT8 layer, UINT16 tileaddr, INT
 						{
 							/* format is  0 | BBb00 | GGGg0 | RRRr0, HW confirms that the data is zero padded. */
 							c = ((clr & 0x07) << 2) | ((clr & 0x38) << 4) | ((clr & 0xc0) << 7);
-							c |= ((pal & 0x04) >> 1) | ((pal & 0x08) << 3) | ((pal & 0x10) << 8);
+							c |= ((palNo & 0x04) >> 1) | ((palNo & 0x08) << 3) | ((palNo & 0x10) << 8);
 						}
 						else
-							c = snes_cgram[(pal + clr) % FIXED_COLOUR];
+							c = snes_cgram[(palNo + clr) % FIXED_COLOUR];
 
 						if (snes_ppu.layer[SNES_SUBSCREEN].mosaic_enabled) // handle horizontal mosaic
 						{
@@ -501,10 +497,10 @@ SNES_INLINE void snes_draw_tile( UINT8 planes, UINT8 layer, UINT16 tileaddr, INT
 						{
 							/* format is  0 | BBb00 | GGGg0 | RRRr0, HW confirms that the data is zero padded. */
 							c = ((clr & 0x07) << 2) | ((clr & 0x38) << 4) | ((clr & 0xc0) << 7);
-							c |= ((pal & 0x04) >> 1) | ((pal & 0x08) << 3) | ((pal & 0x10) << 8);
+							c |= ((palNo & 0x04) >> 1) | ((palNo & 0x08) << 3) | ((palNo & 0x10) << 8);
 						}
 						else
-							c = snes_cgram[(pal + clr) % FIXED_COLOUR];
+							c = snes_cgram[(palNo + clr) % FIXED_COLOUR];
 
 						if (snes_ppu.layer[layer].mosaic_enabled) // handle horizontal mosaic
 						{
@@ -549,10 +545,10 @@ SNES_INLINE void snes_draw_tile( UINT8 planes, UINT8 layer, UINT16 tileaddr, INT
 						{
 							/* format is  0 | BBb00 | GGGg0 | RRRr0, HW confirms that the data is zero padded. */
 							c = ((clr & 0x07) << 2) | ((clr & 0x38) << 4) | ((clr & 0xc0) << 7);
-							c |= ((pal & 0x04) >> 1) | ((pal & 0x08) << 3) | ((pal & 0x10) << 8);
+							c |= ((palNo & 0x04) >> 1) | ((palNo & 0x08) << 3) | ((palNo & 0x10) << 8);
 						}
 						else
-							c = snes_cgram[(pal + clr) % FIXED_COLOUR];
+							c = snes_cgram[(palNo + clr) % FIXED_COLOUR];
 
 						if (snes_ppu.layer[layer].mosaic_enabled) // handle horizontal mosaic
 						{
@@ -586,17 +582,17 @@ SNES_INLINE void snes_draw_tile( UINT8 planes, UINT8 layer, UINT16 tileaddr, INT
 * Draw 2 tiles with variable bit planes
 *****************************************/
 
-SNES_INLINE void snes_draw_tile_x2( UINT8 planes, UINT8 layer, UINT16 tileaddr, INT16 x, UINT8 priority, UINT8 flip, UINT8 direct_colors, UINT16 pal, UINT8 hires )
+SNES_INLINE void snes_draw_tile_x2( UINT8 planes, UINT8 layer, UINT16 tileaddr, INT16 xpos, UINT8 priority, UINT8 flip, UINT8 direct_colors, UINT16 palNo, UINT8 hires )
 {
 	if (flip)
 	{
-		snes_draw_tile(planes, layer, tileaddr + (8 * planes), x, priority, flip, direct_colors, pal, hires);
-		snes_draw_tile(planes, layer, tileaddr, x + 8, priority, flip, direct_colors, pal, hires);
+		snes_draw_tile(planes, layer, tileaddr + (8 * planes), xpos, priority, flip, direct_colors, palNo, hires);
+		snes_draw_tile(planes, layer, tileaddr, xpos + 8, priority, flip, direct_colors, palNo, hires);
 	}
 	else
 	{
-		snes_draw_tile(planes, layer, tileaddr, x, priority, flip, direct_colors, pal, hires);
-		snes_draw_tile(planes, layer, tileaddr + (8 * planes), x + 8, priority, flip, direct_colors, pal, hires);
+		snes_draw_tile(planes, layer, tileaddr, xpos, priority, flip, direct_colors, palNo, hires);
+		snes_draw_tile(planes, layer, tileaddr + (8 * planes), xpos + 8, priority, flip, direct_colors, palNo, hires);
 	}
 }
 
@@ -608,7 +604,7 @@ SNES_INLINE void snes_draw_tile_x2( UINT8 planes, UINT8 layer, UINT16 tileaddr, 
 * that it takes a blend parameter.
 *****************************************/
 
-SNES_INLINE void snes_draw_tile_object( UINT16 tileaddr, INT16 x, UINT8 priority, UINT8 flip, UINT16 pal, UINT8 blend )
+SNES_INLINE void snes_draw_tile_object( UINT16 tileaddr, INT16 xpos, UINT8 priority, UINT8 flip, UINT16 palNo, UINT8 blend )
 {
 	UINT8 mask, plane[4];
 	UINT16 c;
@@ -624,7 +620,7 @@ SNES_INLINE void snes_draw_tile_object( UINT16 tileaddr, INT16 x, UINT8 priority
 	else
 		mask = 0x80;
 
-	for (ii = x; ii < (x + 8); ii++)
+	for (ii = xpos; ii < (xpos + 8); ii++)
 	{
 		UINT8 colour = 0;
 		if (flip)
@@ -658,7 +654,7 @@ SNES_INLINE void snes_draw_tile_object( UINT16 tileaddr, INT16 x, UINT8 priority
 				/* Only draw if we have a colour (0 == transparent) */
 				if (clr)
 				{
-					c = snes_cgram[(pal + clr) % FIXED_COLOUR];
+					c = snes_cgram[(palNo + clr) % FIXED_COLOUR];
 
 					scanlines[SNES_MAINSCREEN].buffer[ii] = c;
 					scanlines[SNES_MAINSCREEN].priority[ii] = priority;
@@ -684,7 +680,7 @@ SNES_INLINE void snes_draw_tile_object( UINT16 tileaddr, INT16 x, UINT8 priority
 				/* Only draw if we have a colour (0 == transparent) */
 				if (clr)
 				{
-					c = snes_cgram[(pal + clr) % FIXED_COLOUR];
+					c = snes_cgram[(palNo + clr) % FIXED_COLOUR];
 
 					scanlines[SNES_SUBSCREEN].buffer[ii] = c;
 					scanlines[SNES_SUBSCREEN].priority[ii] = priority;
@@ -705,19 +701,19 @@ SNES_INLINE void snes_draw_tile_object( UINT16 tileaddr, INT16 x, UINT8 priority
 * Find the address in VRAM of the tile (x,y)
 *********************************************/
 
-SNES_INLINE UINT32 snes_get_tmap_addr( UINT8 layer, UINT8 tile_size, UINT32 base, UINT32 x, UINT32 y )
+SNES_INLINE UINT32 snes_get_tmap_addr( UINT8 layer, UINT8 tile_size, UINT32 base, UINT32 xpos, UINT32 ypos )
 {
 	UINT32 res = base;
-	x  >>= (3 + tile_size);
-	y  >>= (3 + tile_size);
+	xpos  >>= (3 + tile_size);
+	ypos  >>= (3 + tile_size);
 
-	res += (snes_ppu.layer[layer].tilemap_size & 2) ? ((y & 0x20) << ((snes_ppu.layer[layer].tilemap_size & 1) ? 7 : 6)) : 0;
+	res += (snes_ppu.layer[layer].tilemap_size & 2) ? ((ypos & 0x20) << ((snes_ppu.layer[layer].tilemap_size & 1) ? 7 : 6)) : 0;
 	/* Scroll vertically */
-	res += (y & 0x1f) << 6;
+	res += (ypos & 0x1f) << 6;
 	/* Offset horizontally */
-	res += (snes_ppu.layer[layer].tilemap_size & 1) ? ((x & 0x20) << 6) : 0;
+	res += (snes_ppu.layer[layer].tilemap_size & 1) ? ((xpos & 0x20) << 6) : 0;
 	/* Scroll horizontally */
-	res += (x & 0x1f) << 1;
+	res += (xpos & 0x1f) << 1;
 
 	return res;
 }
@@ -733,7 +729,7 @@ SNES_INLINE void snes_update_line( UINT8 color_depth, UINT8 hires, UINT8 priorit
 {
 	UINT32 tmap, tile, xoff, yoff;
 	UINT32 charaddr;
-	UINT16 ii = 0, vflip, hflip, pal, pal_direct;
+	UINT16 ii = 0, vflip, hflip, pal_col, pal_direct;
 	INT8 yscroll;
 	UINT8 xscroll;
 	UINT8 priority;
@@ -841,12 +837,12 @@ SNES_INLINE void snes_update_line( UINT8 color_depth, UINT8 hires, UINT8 priorit
 		pal_direct = ((tilemap & 0x1c00) >> 8);
 		tile = tilemap & 0x03ff;
 
-		pal = ((pal_direct >> 2) << color_shift);
+		pal_col = ((pal_direct >> 2) << color_shift);
 
 		/* Mode 0 palettes are layer specific */
 		if (snes_ppu.mode == 0)
 		{
-			pal += (layer << 5);
+			pal_col += (layer << 5);
 		}
 
 		/* figure out which line to draw */
@@ -883,19 +879,19 @@ SNES_INLINE void snes_update_line( UINT8 color_depth, UINT8 hires, UINT8 priorit
 		/* below, only color_planes depends on color_depth */
 		if (hires)	/* Hi-Res: 2bpp & 4bpp */
 		{
-			snes_draw_tile_x2(color_planes, layer, charaddr + (tile  * 8 * color_planes) + yscroll, (ii - xscroll) * 2, priority, hflip, direct_colors, direct_colors ? pal_direct : pal, hires);
+			snes_draw_tile_x2(color_planes, layer, charaddr + (tile  * 8 * color_planes) + yscroll, (ii - xscroll) * 2, priority, hflip, direct_colors, direct_colors ? pal_direct : pal_col, hires);
 			ii += 8;
 		}
 		else	/* tile_size = 0 */
 		{
 			if (tile_size)
 			{
-				snes_draw_tile_x2(color_planes, layer, charaddr + (tile  * 8 * color_planes) + yscroll, ii - xscroll, priority, hflip, direct_colors, direct_colors ? pal_direct : pal, hires);
+				snes_draw_tile_x2(color_planes, layer, charaddr + (tile  * 8 * color_planes) + yscroll, ii - xscroll, priority, hflip, direct_colors, direct_colors ? pal_direct : pal_col, hires);
 				ii += 16;
 			}
 			else	/* No Hi-Res: 2bpp, 4bpp & 8bpp */
 			{
-				snes_draw_tile(color_planes, layer, charaddr + (tile  * 8 * color_planes) + yscroll, ii - xscroll, priority, hflip, direct_colors, direct_colors ? pal_direct : pal, hires);
+				snes_draw_tile(color_planes, layer, charaddr + (tile  * 8 * color_planes) + yscroll, ii - xscroll, priority, hflip, direct_colors, direct_colors ? pal_direct : pal_col, hires);
 				ii += 8;
 			}
 		}
@@ -1207,9 +1203,9 @@ static void snes_update_objects( UINT8 priority_tbl, UINT16 curline )
 	INT8 xs, ys;
 	UINT8 line;
 	UINT8 range_over = 0, time_over = 0;
-	UINT8 height, width, vflip, hflip, priority, pal, blend;
+	UINT8 height, width, vflip, hflip, priority, palNo, blend;
 	UINT16 tile;
-	INT16 i, x, y;
+	INT16 i, xpos, ypos;
 	UINT32 name_sel = 0, charaddr;
 	static const UINT8 table_obj_priority[10][4] = {
 		{2, 5, 8, 11},	// mode 0
@@ -1271,26 +1267,26 @@ static void snes_update_objects( UINT8 priority_tbl, UINT16 curline )
 		if (oam_list[i].x > 255)
 			oam_list[i].x -= 512;
 		tile = oam_list[i].tile;
-		x = oam_list[i].x;
-		y = oam_list[i].y;
+		xpos = oam_list[i].x;
+		ypos = oam_list[i].y;
 		height = oam_list[i].height;
 		width = oam_list[i].width;
 		vflip = oam_list[i].vflip;
 		hflip = oam_list[i].hflip;
 		priority = table_obj_priority[priority_tbl][oam_list[i].priority_bits];
-		pal = oam_list[i].pal;
+		palNo = oam_list[i].pal;
 
 		/* Draw sprite if it intersects the current line */
-		if (curline >= y && curline < (y + (snes_ppu.oam.size[oam_list[i].size] << 3)))
+		if (curline >= ypos && curline < (ypos + (snes_ppu.oam.size[oam_list[i].size] << 3)))
 		{
 			/* Only objects using palettes 4-7 can be transparent */
-			blend = (pal < 192) ? 1 : 0;
+			blend = (palNo < 192) ? 1 : 0;
 
 			/* Only objects using tiles over 255 use name select */
 			name_sel = (tile < 256) ? 0 : snes_ppu.oam.next_name_select;
 
-			ys = (curline - y) >> 3;
-			line = (curline - y) % 8;
+			ys = (curline - ypos) >> 3;
+			line = (curline - ypos) % 8;
 			if (vflip)
 			{
 				ys = snes_ppu.oam.size[oam_list[i].size] - ys - 1;
@@ -1303,9 +1299,9 @@ static void snes_update_objects( UINT8 priority_tbl, UINT16 curline )
 				UINT8 count = 0;
 				for (xs = (snes_ppu.oam.size[oam_list[i].size] - 1); xs >= 0; xs--)
 				{
-					if ((x + (count << 3) < SNES_SCR_WIDTH))
+					if ((xpos + (count << 3) < SNES_SCR_WIDTH))
 					{
-						snes_draw_tile_object(charaddr + name_sel + tile + table_obj_offset[ys][xs] + line, x + (count++ << 3), priority, hflip, pal, blend);
+						snes_draw_tile_object(charaddr + name_sel + tile + table_obj_offset[ys][xs] + line, xpos + (count++ << 3), priority, hflip, palNo, blend);
 					}
 					time_over++;	/* Increase time_over. Should we stop drawing if exceeded 34 tiles? */
 				}
@@ -1314,9 +1310,9 @@ static void snes_update_objects( UINT8 priority_tbl, UINT16 curline )
 			{
 				for (xs = 0; xs < snes_ppu.oam.size[oam_list[i].size]; xs++)
 				{
-					if ((x + (xs << 3) < SNES_SCR_WIDTH))
+					if ((xpos + (xs << 3) < SNES_SCR_WIDTH))
 					{
-						snes_draw_tile_object(charaddr + name_sel + tile + table_obj_offset[ys][xs] + line, x + (xs << 3), priority, hflip, pal, blend);
+						snes_draw_tile_object(charaddr + name_sel + tile + table_obj_offset[ys][xs] + line, xpos + (xs << 3), priority, hflip, palNo, blend);
 					}
 					time_over++;	/* Increase time_over. Should we stop drawing if exceeded 34 tiles? */
 				}
@@ -1619,18 +1615,18 @@ SNES_INLINE static unsigned int CalcCol(unsigned short nColour)
 static void snes_refresh_scanline(UINT16 curline )
 {
 	UINT16 ii;
-	int x;
+	int xpos;
 	int fade;
 	struct SCANLINE *scanline1, *scanline2;
 	UINT16 c;
 	unsigned short * dstbitmap = (unsigned short * )pBurnDraw;
 
 	if (snes_ppu.screen_disabled) /* screen is forced blank */
-		for (x = 0; x < SNES_SCR_WIDTH * 2; x++)
+		for (xpos = 0; xpos < SNES_SCR_WIDTH * 2; xpos++)
 		{
 			if (pBurnDraw)
 			{
-				dstbitmap[(curline*(nBurnPitch>>1))+x]= RGB_BLACK;
+				dstbitmap[(curline*(nBurnPitch>>1))+xpos]= RGB_BLACK;
 			}
 		}
 	else
@@ -1691,15 +1687,15 @@ static void snes_refresh_scanline(UINT16 curline )
 		/* Phew! Draw the line to screen */
 		fade = snes_ppu.screen_brightness;
 
-		for (x = 0; x < SNES_SCR_WIDTH; x++)
+		for (xpos = 0; xpos < SNES_SCR_WIDTH; xpos++)
 		{
 			int r, g, b, hires;
 			hires = (snes_ppu.mode != 5 && snes_ppu.mode != 6) ? 0 : 1;
-			c = scanline1->buffer[x];
+			c = scanline1->buffer[xpos];
 
 			/* perform color math if the layer wants it (except if it's an object > 192) */
-			if (!scanline1->blend_exception[x] && snes_ppu.layer[scanline1->layer[x]].color_math)
-				snes_draw_blend(x, &c, snes_ppu.prevent_color_math, snes_ppu.clip_to_black, 0);
+			if (!scanline1->blend_exception[xpos] && snes_ppu.layer[scanline1->layer[xpos]].color_math)
+				snes_draw_blend(xpos, &c, snes_ppu.prevent_color_math, snes_ppu.clip_to_black, 0);
 
 			r = ((c & 0x1f) * fade) >> 4;
 			g = (((c & 0x3e0) >> 5) * fade) >> 4;
@@ -1707,7 +1703,7 @@ static void snes_refresh_scanline(UINT16 curline )
 
 			if (pBurnDraw)
 			{
-				dstbitmap[(curline * (nBurnPitch>>1))+ (x<<1) + 1] =BurnHighCol(pal5bit(r),pal5bit(g),pal5bit(b),0); //BurnHighCol(pal5bit(r),pal5bit(g),pal5bit(b),0);
+				dstbitmap[(curline * (nBurnPitch>>1))+ (xpos<<1) + 1] =BurnHighCol(pal5bit(r),pal5bit(g),pal5bit(b),0); //BurnHighCol(pal5bit(r),pal5bit(g),pal5bit(b),0);
 			}
 
 			/* in hires, the first pixel (of 512) is subscreen pixel, then the first mainscreen pixel follows, and so on... */
@@ -1715,22 +1711,22 @@ static void snes_refresh_scanline(UINT16 curline )
 			{
 				if (pBurnDraw)
 				{
-					dstbitmap[(curline * (nBurnPitch>>1))+(x<<1) + 0] =BurnHighCol(pal5bit(r),pal5bit(g),pal5bit(b),0); //BurnHighCol(pal5bit(r), pal5bit(g), pal5bit(b),0);
+					dstbitmap[(curline * (nBurnPitch>>1))+(xpos<<1) + 0] =BurnHighCol(pal5bit(r),pal5bit(g),pal5bit(b),0); //BurnHighCol(pal5bit(r), pal5bit(g), pal5bit(b),0);
 				}
 			}
 			else
 			{
-				c = scanline2->buffer[x];
+				c = scanline2->buffer[xpos];
 
 				/* in hires, subscreen pixels are blended as well: for each subscreen pixel, color math is applied if
 				it had been applied to the previous mainscreen pixel. What happens at subscreen pixel 0 (which has no
 				previous mainscreen pixel) is undocumented. Until more info are discovered, we (arbitrarily) apply to it
 				the same color math as the *next* mainscreen pixel (i.e. mainscreen pixel 0) */
 
-				if (x == 0 && !scanline1->blend_exception[0] && snes_ppu.layer[scanline1->layer[0]].color_math)
+				if (xpos == 0 && !scanline1->blend_exception[0] && snes_ppu.layer[scanline1->layer[0]].color_math)
 					snes_draw_blend(0, &c, snes_ppu.prevent_color_math, snes_ppu.clip_to_black, 1);
-				else if (x > 0  && !scanline1->blend_exception[x - 1] && snes_ppu.layer[scanline1->layer[x - 1]].color_math)
-					snes_draw_blend(x, &c, snes_ppu.prevent_color_math, snes_ppu.clip_to_black, 1);
+				else if (xpos > 0  && !scanline1->blend_exception[xpos - 1] && snes_ppu.layer[scanline1->layer[xpos - 1]].color_math)
+					snes_draw_blend(xpos, &c, snes_ppu.prevent_color_math, snes_ppu.clip_to_black, 1);
 
 
 				r = ((c & 0x1f) * fade) >> 4;
@@ -1738,7 +1734,7 @@ static void snes_refresh_scanline(UINT16 curline )
 				b = (((c & 0x7c00) >> 10) * fade) >> 4;
 				if (pBurnDraw)
 				{
-					dstbitmap[(curline * (nBurnPitch>>1))+ (x<<1) + 0] = BurnHighCol(pal5bit(r),pal5bit(g),pal5bit(b),0);//BurnHighCol(pal5bit(r), pal5bit(g), pal5bit(b),0);
+					dstbitmap[(curline * (nBurnPitch>>1))+ (xpos<<1) + 0] = BurnHighCol(pal5bit(r),pal5bit(g),pal5bit(b),0);//BurnHighCol(pal5bit(r), pal5bit(g), pal5bit(b),0);
 				}
 			}
 		}

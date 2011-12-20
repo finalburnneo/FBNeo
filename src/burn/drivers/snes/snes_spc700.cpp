@@ -9,7 +9,7 @@ double spccycles;
 double spctotal2;
 double spctotal3;
 
-struct
+struct SPC_Struct
 {
 	union
 	{
@@ -27,6 +27,7 @@ struct
 		int n,v,p,b,h,i,z,c;
 	} p;
 } spc;
+
 
 unsigned char *spcram;
 unsigned char spcrom[64]=
@@ -1862,7 +1863,7 @@ void execspc()
 			//snemlog(L"Bad SPC opcode %02X at %04X\n",opcode,spc.pc);
 
 		}
-		if (pal) spccycles-=(spccount*20.7796875f);//20.36383f);
+		if (global_pal) spccycles-=(spccount*20.7796875f);//20.36383f);
 		else     spccycles-=(spccount*20.9395313f);
 		//                spctotal2+=(spccount*20.78f);//20.36383f);
 		//                spctotal3+=spccount;

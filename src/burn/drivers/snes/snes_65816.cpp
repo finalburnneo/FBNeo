@@ -18,7 +18,7 @@ void (*opcodes[256][5])();
 int cpumode;
 
 /*Current opcode*/
-unsigned char opcode;
+unsigned char global_opcode;
 /*Global cycles count*/
 int cycles;
 

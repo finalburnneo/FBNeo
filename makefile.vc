@@ -334,7 +334,7 @@ ifeq ($(MAKELEVEL),2)
 endif
 endif
 
-resource.rc: app.rc $(license.rc) $(srcdir)burner/win32/resource/fba.ico $(srcdir)burner/win32/resource/about.bmp $(srcdir)burner/win32/resource/splash.bmp $(srcdir)burner/win32/resource/misc.bmp
+resource.rc: app.rc $(license.rc) $(srcdir)burner/resource/fba.ico $(srcdir)burner/resource/about.bmp $(srcdir)burner/resource/splash.bmp $(srcdir)burner/resource/misc.bmp
 
 #
 #	Generate some info on the build details

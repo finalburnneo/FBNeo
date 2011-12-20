@@ -85,7 +85,7 @@ struct BurnDriverD BurnDrvrSuperMarioWorldJapan = {
 };
 
 static struct BurnRomInfo rSuperMarioWorldUSARomDesc[] = {
-	{ "smwa.sfc",          524288, 0xb19ed489, BRF_ESS | BRF_PRG },
+	{ "smwu.sfc",          524288, 0xb19ed489, BRF_ESS | BRF_PRG },
 };
 
 

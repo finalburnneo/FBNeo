@@ -2578,6 +2578,133 @@ static INT32 BodyslamInit()
 	return System16Init();
 }
 
+static void SegaDecode2(const UINT8 xor_table[128],const int swap_table[128])
+{
+	INT32 A;
+	static const UINT8 swaptable[24][4] =
+	{
+		{ 6,4,2,0 }, { 4,6,2,0 }, { 2,4,6,0 }, { 0,4,2,6 },
+		{ 6,2,4,0 }, { 6,0,2,4 }, { 6,4,0,2 }, { 2,6,4,0 },
+		{ 4,2,6,0 }, { 4,6,0,2 }, { 6,0,4,2 }, { 0,6,4,2 },
+		{ 4,0,6,2 }, { 0,4,6,2 }, { 6,2,0,4 }, { 2,6,0,4 },
+		{ 0,6,2,4 }, { 2,0,6,4 }, { 0,2,6,4 }, { 4,2,0,6 },
+		{ 2,4,0,6 }, { 4,0,2,6 }, { 2,0,4,6 }, { 0,2,4,6 },
+	};
+
+	UINT8 *rom = System16Z80Rom;
+	UINT8 *decrypted = System16Z80Code;
+
+	for (A = 0x0000;A < 0x8000;A++)
+	{
+		INT32 row;
+		UINT8 src;
+		const UINT8 *tbl;
+
+
+		src = rom[A];
+
+		/* pick the translation table from bits 0, 3, 6, 9, 12 and 14 of the address */
+		row = (A & 1) + (((A >> 3) & 1) << 1) + (((A >> 6) & 1) << 2)
+				+ (((A >> 9) & 1) << 3) + (((A >> 12) & 1) << 4) + (((A >> 14) & 1) << 5);
+
+		/* decode the opcodes */
+		tbl = swaptable[swap_table[2*row]];
+		decrypted[A] = BITSWAP08(src,7,tbl[0],5,tbl[1],3,tbl[2],1,tbl[3]) ^ xor_table[2*row];
+
+		/* decode the data */
+		tbl = swaptable[swap_table[2*row+1]];
+		rom[A] = BITSWAP08(src,7,tbl[0],5,tbl[1],3,tbl[2],1,tbl[3]) ^ xor_table[2*row+1];
+	}
+}
+
+static INT32 FantzonepDecryptZ80()
+{
+	System16Z80Code = (UINT8*)BurnMalloc(0x8000);
+	
+	static const UINT8 xor_table[128] =
+	{
+		0x04,0x54,0x51,0x15,0x40,0x44,0x01,0x51,0x55,0x10,0x44,0x41,
+		0x05,0x55,0x50,0x14,0x41,0x45,0x00,0x50,0x54,0x11,0x45,0x40,
+		0x04,0x54,0x51,0x15,0x40,0x44,0x01,0x51,0x55,0x10,0x44,0x41,
+		0x05,0x55,0x50,0x14,0x41,0x45,0x00,0x50,0x54,0x11,0x45,0x40,
+		0x04,0x54,0x51,0x15,0x40,0x44,0x01,0x51,0x55,0x10,0x44,0x41,
+		0x05,0x55,0x50,0x14,
+
+		0x04,0x54,0x51,0x15,0x40,0x44,0x01,0x51,0x55,0x10,0x44,0x41,
+		0x05,0x55,0x50,0x14,0x41,0x45,0x00,0x50,0x54,0x11,0x45,0x40,
+		0x04,0x54,0x51,0x15,0x40,0x44,0x01,0x51,0x55,0x10,0x44,0x41,
+		0x05,0x55,0x50,0x14,0x41,0x45,0x00,0x50,0x54,0x11,0x45,0x40,
+		0x04,0x54,0x51,0x15,0x40,0x44,0x01,0x51,0x55,0x10,0x44,0x41,
+		0x05,0x55,0x50,0x14,
+	};
+
+	static const INT32 swap_table[128] =
+	{
+		0,0,0,0,
+		1,1,1,1,1,
+		2,2,2,2,2,
+		3,3,3,3,
+		4,4,4,4,4,
+		5,5,5,5,5,
+		6,6,6,6,6,
+		7,7,7,7,7,
+		8,8,8,8,
+		9,9,9,9,9,
+		10,10,10,10,10,
+		11,11,11,11,11,
+		12,12,12,12,12,
+		13,13,
+
+		8,8,8,8,
+		9,9,9,9,9,
+		10,10,10,10,10,
+		11,11,11,11,
+		12,12,12,12,12,
+		13,13,13,13,13,
+		14,14,14,14,14,
+		15,15,15,15,15,
+		16,16,16,16,
+		17,17,17,17,17,
+		18,18,18,18,18,
+		19,19,19,19,19,
+		20,20,20,20,20,
+		21,21,
+	};
+
+	SegaDecode2(xor_table, swap_table);
+	
+	return 0;
+}
+
+static void FantzonepMapZ80()
+{
+	ZetMapArea(0x0000, 0x7fff, 0, System16Z80Rom);
+	ZetMapArea(0x0000, 0x7fff, 2, System16Z80Code, System16Z80Rom);
+	
+	ZetMapArea(0xf800, 0xffff, 0, System16Z80Ram);
+	ZetMapArea(0xf800, 0xffff, 1, System16Z80Ram);
+	ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram);
+	ZetMemEnd();
+	
+	ZetSetInHandler(System16PPIZ80PortRead);
+	ZetSetOutHandler(System16Z80PortWrite);
+}
+
+static INT32 FantzonepInit()
+{
+	System16CustomLoadRomDo = FantzonepDecryptZ80;
+	System16MapZ80Do = FantzonepMapZ80;
+	
+	return System16Init();
+}
+
+static INT32 FantzonepExit()
+{
+	BurnFree(System16Z80Code);
+	
+	return System16Exit();
+}
+
 static INT32 MjleagueInit()
 {
 	System16MakeAnalogInputsDo = MjleagueMakeAnalogInputs;
@@ -2963,11 +3090,11 @@ struct BurnDriver BurnDrvFantzone1 = {
 
 struct BurnDriver BurnDrvFantzonep = {
 	"fantzonep", "fantzone", NULL, NULL, "1986",
-	"Fantasy Zone (317-5000)\0", "No sound - encrypted Z80", "Sega", "System 16A",
+	"Fantasy Zone (317-5000)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16A, GBF_HORSHOOT, 0,
 	NULL, FantzonepRomInfo, FantzonepRomName, NULL, NULL, System16aInputInfo, FantzoneDIPInfo,
-	System16Init, System16Exit, System16AFrame, NULL, System16Scan,
+	FantzonepInit, FantzonepExit, System16AFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

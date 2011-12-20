@@ -173,7 +173,7 @@ CFLAGS	 = -pipe \
 	   $(DEF) $(incdir) # `sdl-config --cflags`
 
 CXXFLAGS = -pipe \
-	   -march=$(CPUTYPE) -O3 \
+	   -march=$(CPUTYPE) -O1 \
 	   -mno-cygwin -mwindows \
 	   -fforce-mem -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -freduce-all-givs -fmove-all-movables -fexpensive-optimizations \

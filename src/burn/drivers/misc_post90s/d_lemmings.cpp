@@ -42,20 +42,26 @@ static UINT8 DrvDips[3];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[2];
 
+static UINT8 FakeAnInp[8];
+static UINT8 FakeTrackBallX[2];
+static UINT8 FakeTrackBallY[2];
+
 static struct BurnInputInfo LemmingsInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	FakeAnInp + 0,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	FakeAnInp + 1,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	FakeAnInp + 2,	"p1 left"},
+	{"P1 Right",	BIT_DIGITAL,	FakeAnInp + 3,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
 
-	// fake (space for analog inputs)
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 3"	},
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 4"	},
-	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 5"	},
-	{"P1 Button 6",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 6"	},
-
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	FakeAnInp + 4,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	FakeAnInp + 5,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	FakeAnInp + 6,	"p2 left"},
+	{"P2 Right",	BIT_DIGITAL,	FakeAnInp + 7,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 fire 2"	},
 
@@ -69,55 +75,55 @@ STDINPUTINFO(Lemmings)
 
 static struct BurnDIPInfo LemmingsDIPList[]=
 {
-	{0x0d, 0xff, 0xff, 0x04, NULL			},
-	{0x0e, 0xff, 0xff, 0xff, NULL			},
-	{0x0f, 0xff, 0xff, 0xff, NULL			},
+	{0x11, 0xff, 0xff, 0x04, NULL			},
+	{0x12, 0xff, 0xff, 0xff, NULL			},
+	{0x13, 0xff, 0xff, 0xff, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x0d, 0x01, 0x04, 0x04, "Off"			},
-	{0x0d, 0x01, 0x04, 0x00, "On"			},
+	{0x11, 0x01, 0x04, 0x04, "Off"			},
+	{0x11, 0x01, 0x04, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    4, "Credits for 1 Player"	},
-	{0x0e, 0x01, 0x03, 0x03, "1"			},
-	{0x0e, 0x01, 0x03, 0x02, "2"			},
-	{0x0e, 0x01, 0x03, 0x01, "3"			},
-	{0x0e, 0x01, 0x03, 0x00, "4"			},
+	{0x12, 0x01, 0x03, 0x03, "1"			},
+	{0x12, 0x01, 0x03, 0x02, "2"			},
+	{0x12, 0x01, 0x03, 0x01, "3"			},
+	{0x12, 0x01, 0x03, 0x00, "4"			},
 
 	{0   , 0xfe, 0   ,    4, "Credits for 2 Player"	},
-	{0x0e, 0x01, 0x0c, 0x0c, "1"			},
-	{0x0e, 0x01, 0x0c, 0x08, "2"			},
-	{0x0e, 0x01, 0x0c, 0x04, "3"			},
-	{0x0e, 0x01, 0x0c, 0x00, "4"			},
+	{0x12, 0x01, 0x0c, 0x0c, "1"			},
+	{0x12, 0x01, 0x0c, 0x08, "2"			},
+	{0x12, 0x01, 0x0c, 0x04, "3"			},
+	{0x12, 0x01, 0x0c, 0x00, "4"			},
 
 	{0   , 0xfe, 0   ,    4, "Credits for Continue"	},
-	{0x0e, 0x01, 0x30, 0x30, "1"			},
-	{0x0e, 0x01, 0x30, 0x20, "2"			},
-	{0x0e, 0x01, 0x30, 0x10, "3"			},
-	{0x0e, 0x01, 0x30, 0x00, "4"			},
-
+	{0x12, 0x01, 0x30, 0x30, "1"			},
+	{0x12, 0x01, 0x30, 0x20, "2"			},
+	{0x12, 0x01, 0x30, 0x10, "3"			},
+	{0x12, 0x01, 0x30, 0x00, "4"			},
+	
 	{0   , 0xfe, 0   ,    2, "Free Play"		},
-	{0x0e, 0x01, 0x80, 0x80, "Off"			},
-	{0x0e, 0x01, 0x80, 0x00, "On"			},
+	{0x12, 0x01, 0x80, 0x80, "Off"			},
+	{0x12, 0x01, 0x80, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    8, "Coin A"		},
-	{0x0f, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
-	{0x0f, 0x01, 0x07, 0x06, "1 Coin  2 Credits"	},
-	{0x0f, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
-	{0x0f, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
-	{0x0f, 0x01, 0x07, 0x03, "1 Coin  5 Credits"	},
-	{0x0f, 0x01, 0x07, 0x02, "1 Coin  6 Credits"	},
-	{0x0f, 0x01, 0x07, 0x01, "1 Coin  7 Credits"	},
-	{0x0f, 0x01, 0x07, 0x00, "1 Coin  8 Credits"	},
+	{0x13, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
+	{0x13, 0x01, 0x07, 0x06, "1 Coin  2 Credits"	},
+	{0x13, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
+	{0x13, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
+	{0x13, 0x01, 0x07, 0x03, "1 Coin  5 Credits"	},
+	{0x13, 0x01, 0x07, 0x02, "1 Coin  6 Credits"	},
+	{0x13, 0x01, 0x07, 0x01, "1 Coin  7 Credits"	},
+	{0x13, 0x01, 0x07, 0x00, "1 Coin  8 Credits"	},
 
 	{0   , 0xfe, 0   ,    8, "Coin B"		},
-	{0x0f, 0x01, 0x38, 0x38, "1 Coin  1 Credits"	},
-	{0x0f, 0x01, 0x38, 0x30, "1 Coin  2 Credits"	},
-	{0x0f, 0x01, 0x38, 0x28, "1 Coin  3 Credits"	},
-	{0x0f, 0x01, 0x38, 0x20, "1 Coin  4 Credits"	},
-	{0x0f, 0x01, 0x38, 0x18, "1 Coin  5 Credits"	},
-	{0x0f, 0x01, 0x38, 0x10, "1 Coin  6 Credits"	},
-	{0x0f, 0x01, 0x38, 0x08, "1 Coin  7 Credits"	},
-	{0x0f, 0x01, 0x38, 0x00, "1 Coin  8 Credits"	},
+	{0x13, 0x01, 0x38, 0x38, "1 Coin  1 Credits"	},
+	{0x13, 0x01, 0x38, 0x30, "1 Coin  2 Credits"	},
+	{0x13, 0x01, 0x38, 0x28, "1 Coin  3 Credits"	},
+	{0x13, 0x01, 0x38, 0x20, "1 Coin  4 Credits"	},
+	{0x13, 0x01, 0x38, 0x18, "1 Coin  5 Credits"	},
+	{0x13, 0x01, 0x38, 0x10, "1 Coin  6 Credits"	},
+	{0x13, 0x01, 0x38, 0x08, "1 Coin  7 Credits"	},
+	{0x13, 0x01, 0x38, 0x00, "1 Coin  8 Credits"	},
 };
 
 STDDIPINFO(Lemmings)
@@ -214,16 +220,16 @@ static UINT16 __fastcall lemmings_main_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0x190000:
-			return 0; // analog 0 (p1 x)
+			return FakeTrackBallX[0];
 
 		case 0x190002:
-			return 0; // analog 1 (p1 y)
+			return FakeTrackBallY[0];
 
 		case 0x190008:
-			return 0; // analog 2 (p2 x)
+			return FakeTrackBallX[1];
 
 		case 0x19000a:
-			return 0; // analog 3 (p2 y)
+			return FakeTrackBallY[1];
 
 		case 0x1a0320:
 			return (DrvInputs[1] & 0xfffb) | (DrvDips[0] & 0x04);
@@ -240,7 +246,7 @@ static UINT8 __fastcall lemmings_main_read_byte(UINT32 address)
 	switch (address)
 	{
 		case 0x1a0321: // Flipper seems to work better than proper vblank status
-			static int vblank;
+			static INT32 vblank;
 			vblank ^= 8;
 			return (DrvInputs[1] & 0xf3) | (DrvDips[0] & 0x04) | vblank;
 
@@ -314,6 +320,9 @@ static INT32 DrvDoReset()
 
 	MSM6295Reset(0);
 	BurnYM2151Reset();
+	
+	FakeTrackBallX[0] = FakeTrackBallX[1] = 0xff;
+	FakeTrackBallY[0] = FakeTrackBallY[1] = 0x00;
 
 	return 0;
 }
@@ -635,6 +644,15 @@ static INT32 DrvFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
+		
+		if (FakeAnInp[0]) FakeTrackBallY[0] -= 0x04;
+		if (FakeAnInp[1]) FakeTrackBallY[0] += 0x04;
+		if (FakeAnInp[2]) FakeTrackBallX[0] += 0x04;
+		if (FakeAnInp[3]) FakeTrackBallX[0] -= 0x04;
+		if (FakeAnInp[4]) FakeTrackBallY[1] -= 0x04;
+		if (FakeAnInp[5]) FakeTrackBallY[1] += 0x04;
+		if (FakeAnInp[6]) FakeTrackBallX[1] += 0x04;
+		if (FakeAnInp[7]) FakeTrackBallX[1] -= 0x04;
 	}
 
 	INT32 nSegment;

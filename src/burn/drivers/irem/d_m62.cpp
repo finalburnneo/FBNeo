@@ -2477,7 +2477,7 @@ static INT32 M62MemInit()
 	Mem = NULL;
 	M62MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);
 	M62MemIndex();
 	
@@ -2488,7 +2488,7 @@ static INT32 KungfumLoadRoms()
 {
 	INT32 nRet = 0;
 	
-	M62TempRom = (UINT8 *)malloc(0x18000);
+	M62TempRom = (UINT8 *)BurnMalloc(0x18000);
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(M62Z80Rom   + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -2532,10 +2532,7 @@ static INT32 KungfumLoadRoms()
 	nRet = BurnLoadRom(M62PromData + 0x00600, 26, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(M62PromData + 0x00620, 27, 1); if (nRet != 0) return 1;
 	
-	if (M62TempRom) {
-		free(M62TempRom);
-		M62TempRom = NULL;
-	}
+	BurnFree(M62TempRom);
 	
 	return 0;
 }
@@ -2544,7 +2541,7 @@ static INT32 KungfumdLoadRoms()
 {
 	INT32 nRet = 0;
 	
-	M62TempRom = (UINT8 *)malloc(0x18000);
+	M62TempRom = (UINT8 *)BurnMalloc(0x18000);
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(M62Z80Rom   + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -2581,10 +2578,7 @@ static INT32 KungfumdLoadRoms()
 	nRet = BurnLoadRom(M62PromData + 0x00600, 19, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(M62PromData + 0x00620, 20, 1); if (nRet != 0) return 1;
 
-	if (M62TempRom) {
-		free(M62TempRom);
-		M62TempRom = NULL;
-	}
+	BurnFree(M62TempRom);
 	
 	return 0;
 }
@@ -2593,7 +2587,7 @@ static INT32 BattroadLoadRoms()
 {
 	INT32 nRet = 0;
 	
-	M62TempRom = (UINT8 *)malloc(0x0c000);
+	M62TempRom = (UINT8 *)BurnMalloc(0x0c000);
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(M62Z80Rom   + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -2646,10 +2640,7 @@ static INT32 BattroadLoadRoms()
 	nRet = BurnLoadRom(M62PromData + 0x00620, 31, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(M62PromData + 0x00720, 32, 1); if (nRet != 0) return 1;
 	
-	if (M62TempRom) {
-		free(M62TempRom);
-		M62TempRom = NULL;
-	}
+	BurnFree(M62TempRom);
 	
 	return 0;
 }
@@ -2658,7 +2649,7 @@ static INT32 LdrunLoadRoms()
 {
 	INT32 nRet = 0;
 	
-	M62TempRom = (UINT8 *)malloc(0x06000);
+	M62TempRom = (UINT8 *)BurnMalloc(0x06000);
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(M62Z80Rom   + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -2694,10 +2685,7 @@ static INT32 LdrunLoadRoms()
 	nRet = BurnLoadRom(M62PromData + 0x00600, 18, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(M62PromData + 0x00620, 19, 1); if (nRet != 0) return 1;
 	
-	if (M62TempRom) {
-		free(M62TempRom);
-		M62TempRom = NULL;
-	}
+	BurnFree(M62TempRom);
 	
 	return 0;
 }
@@ -2706,7 +2694,7 @@ static INT32 Ldrun2LoadRoms()
 {
 	INT32 nRet = 0;
 	
-	M62TempRom = (UINT8 *)malloc(0x0c000);
+	M62TempRom = (UINT8 *)BurnMalloc(0x0c000);
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(M62Z80Rom   + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -2748,10 +2736,7 @@ static INT32 Ldrun2LoadRoms()
 	nRet = BurnLoadRom(M62PromData + 0x00600, 24, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(M62PromData + 0x00620, 25, 1); if (nRet != 0) return 1;
 	
-	if (M62TempRom) {
-		free(M62TempRom);
-		M62TempRom = NULL;
-	}
+	BurnFree(M62TempRom);
 	
 	return 0;
 }
@@ -2760,7 +2745,7 @@ static INT32 Ldrun3LoadRoms()
 {
 	INT32 nRet = 0;
 	
-	M62TempRom = (UINT8 *)malloc(0x18000);
+	M62TempRom = (UINT8 *)BurnMalloc(0x18000);
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(M62Z80Rom   + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -2798,10 +2783,7 @@ static INT32 Ldrun3LoadRoms()
 	nRet = BurnLoadRom(M62PromData + 0x00600, 20, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(M62PromData + 0x00620, 21, 1); if (nRet != 0) return 1;
 	
-	if (M62TempRom) {
-		free(M62TempRom);
-		M62TempRom = NULL;
-	}
+	BurnFree(M62TempRom);
 	
 	return 0;
 }
@@ -2810,7 +2792,7 @@ static INT32 Ldrun3jLoadRoms()
 {
 	INT32 nRet = 0;
 	
-	M62TempRom = (UINT8 *)malloc(0x0c000);
+	M62TempRom = (UINT8 *)BurnMalloc(0x0c000);
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(M62Z80Rom   + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -2845,10 +2827,7 @@ static INT32 Ldrun3jLoadRoms()
 	nRet = BurnLoadRom(M62PromData + 0x00600, 17, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(M62PromData + 0x00620, 18, 1); if (nRet != 0) return 1;
 	
-	if (M62TempRom) {
-		free(M62TempRom);
-		M62TempRom = NULL;
-	}
+	BurnFree(M62TempRom);
 	
 	return 0;
 }
@@ -2857,7 +2836,7 @@ static INT32 LotlotLoadRoms()
 {
 	INT32 nRet = 0;
 	
-	M62TempRom = (UINT8 *)malloc(0x06000);
+	M62TempRom = (UINT8 *)BurnMalloc(0x06000);
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(M62Z80Rom   + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -2900,10 +2879,7 @@ static INT32 LotlotLoadRoms()
 	nRet = BurnLoadRom(M62PromData + 0x00900, 21, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(M62PromData + 0x00920, 22, 1); if (nRet != 0) return 1;
 	
-	if (M62TempRom) {
-		free(M62TempRom);
-		M62TempRom = NULL;
-	}
+	BurnFree(M62TempRom);
 	
 	return 0;
 }
@@ -2912,7 +2888,7 @@ static INT32 KidnikiLoadRoms()
 {
 	INT32 nRet = 0;
 	
-	M62TempRom = (UINT8 *)malloc(0x30000);
+	M62TempRom = (UINT8 *)BurnMalloc(0x30000);
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(M62Z80Rom   + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -2966,10 +2942,7 @@ static INT32 KidnikiLoadRoms()
 	nRet = BurnLoadRom(M62PromData + 0x00600, 31, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(M62PromData + 0x00620, 32, 1); if (nRet != 0) return 1;
 	
-	if (M62TempRom) {
-		free(M62TempRom);
-		M62TempRom = NULL;
-	}
+	BurnFree(M62TempRom);
 	
 	return 0;
 }
@@ -2978,7 +2951,7 @@ static INT32 LitheroLoadRoms()
 {
 	INT32 nRet = 0;
 	
-	M62TempRom = (UINT8 *)malloc(0x30000);
+	M62TempRom = (UINT8 *)BurnMalloc(0x30000);
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(M62Z80Rom   + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -3024,10 +2997,7 @@ static INT32 LitheroLoadRoms()
 	nRet = BurnLoadRom(M62PromData + 0x00600, 24, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(M62PromData + 0x00620, 25, 1); if (nRet != 0) return 1;
 	
-	if (M62TempRom) {
-		free(M62TempRom);
-		M62TempRom = NULL;
-	}
+	BurnFree(M62TempRom);
 	
 	return 0;
 }
@@ -3036,7 +3006,7 @@ static INT32 SpelunkrLoadRoms()
 {
 	INT32 nRet = 0;
 	
-	M62TempRom = (UINT8 *)malloc(0x18000);
+	M62TempRom = (UINT8 *)BurnMalloc(0x18000);
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(M62Z80Rom   + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -3070,7 +3040,7 @@ static INT32 SpelunkrLoadRoms()
 	
 	// Load and decode the chars
 	memset(M62TempRom, 0, 0x18000);
-	UINT8 *pTemp = (UINT8*)malloc(0x18000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x18000);
 	nRet = BurnLoadRom(pTemp  + 0x00000, 18, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(pTemp  + 0x04000, 19, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(pTemp  + 0x08000, 20, 1); if (nRet != 0) return 1;
@@ -3098,10 +3068,7 @@ static INT32 SpelunkrLoadRoms()
 	memcpy(M62TempRom + 0xb000, pTemp + 0xa800, 0x800);
 	memcpy(M62TempRom + 0x9800, pTemp + 0xb000, 0x800);
 	memcpy(M62TempRom + 0xb800, pTemp + 0xb800, 0x800);
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 	GfxDecode(M62NumChars, 3, M62CharxTileDim, M62CharyTileDim, Spelunk2PlaneOffsets, Spelunk2XOffsets, Spelunk2YOffsets, 0x40, M62TempRom, M62Chars);
 	
 	// Load the Proms
@@ -3114,10 +3081,7 @@ static INT32 SpelunkrLoadRoms()
 	nRet = BurnLoadRom(M62PromData + 0x00600, 27, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(M62PromData + 0x00620, 28, 1); if (nRet != 0) return 1;
 	
-	if (M62TempRom) {
-		free(M62TempRom);
-		M62TempRom = NULL;
-	}
+	BurnFree(M62TempRom);
 	
 	return 0;
 }
@@ -3126,7 +3090,7 @@ static INT32 Spelunk2LoadRoms()
 {
 	INT32 nRet = 0;
 	
-	M62TempRom = (UINT8 *)malloc(0x18000);
+	M62TempRom = (UINT8 *)BurnMalloc(0x18000);
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(M62Z80Rom   + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -3158,7 +3122,7 @@ static INT32 Spelunk2LoadRoms()
 	
 	// Load and decode the chars
 	memset(M62TempRom, 0, 0x18000);
-	UINT8 *pTemp = (UINT8*)malloc(0x18000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x18000);
 	nRet = BurnLoadRom(pTemp  + 0x00000, 16, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(pTemp  + 0x04000, 17, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(pTemp  + 0x08000, 18, 1); if (nRet != 0) return 1;
@@ -3186,10 +3150,7 @@ static INT32 Spelunk2LoadRoms()
 	memcpy(M62TempRom + 0xb000, pTemp + 0xa800, 0x800);
 	memcpy(M62TempRom + 0x9800, pTemp + 0xb000, 0x800);
 	memcpy(M62TempRom + 0xb800, pTemp + 0xb800, 0x800);
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 	GfxDecode(M62NumChars, 3, M62CharxTileDim, M62CharyTileDim, Spelunk2PlaneOffsets, Spelunk2XOffsets, Spelunk2YOffsets, 0x40, M62TempRom, M62Chars);
 	
 	// Load the Proms
@@ -3202,10 +3163,7 @@ static INT32 Spelunk2LoadRoms()
 	nRet = BurnLoadRom(M62PromData + 0x00700, 25, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(M62PromData + 0x00720, 26, 1); if (nRet != 0) return 1;
 	
-	if (M62TempRom) {
-		free(M62TempRom);
-		M62TempRom = NULL;
-	}
+	BurnFree(M62TempRom);
 	
 	return 0;
 }
@@ -3214,7 +3172,7 @@ static INT32 YoujyudnLoadRoms()
 {
 	INT32 nRet = 0;
 	
-	M62TempRom = (UINT8 *)malloc(0x18000);
+	M62TempRom = (UINT8 *)BurnMalloc(0x18000);
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(M62Z80Rom   + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -3227,17 +3185,14 @@ static INT32 YoujyudnLoadRoms()
 		
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x18000);
-	UINT8 *pTemp = (UINT8*)malloc(0x18000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x18000);
 	nRet = BurnLoadRom(pTemp  + 0x00000,  5, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(pTemp  + 0x08000,  6, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(pTemp  + 0x10000,  7, 1); if (nRet != 0) return 1;
 	memcpy(M62TempRom + 0x0000, pTemp + 0x04000, 0x4000);
 	memcpy(M62TempRom + 0x4000, pTemp + 0x0c000, 0x4000);
 	memcpy(M62TempRom + 0x8000, pTemp + 0x14000, 0x4000);
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 	GfxDecode(M62NumTiles, 3, M62BgxTileDim, M62BgyTileDim, YoujyudnTilePlaneOffsets, YoujyudnTileXOffsets, YoujyudnTileYOffsets, 0x80, M62TempRom, M62Tiles);
 	
 	// Load and decode the sprites
@@ -3267,10 +3222,7 @@ static INT32 YoujyudnLoadRoms()
 	nRet = BurnLoadRom(M62PromData + 0x00600, 23, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(M62PromData + 0x00620, 24, 1); if (nRet != 0) return 1;
 	
-	if (M62TempRom) {
-		free(M62TempRom);
-		M62TempRom = NULL;
-	}
+	BurnFree(M62TempRom);
 	
 	return 0;
 }
@@ -3279,7 +3231,7 @@ static INT32 HorizonLoadRoms()
 {
 	INT32 nRet = 0;
 	
-	M62TempRom = (UINT8 *)malloc(0x18000);
+	M62TempRom = (UINT8 *)BurnMalloc(0x18000);
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(M62Z80Rom   + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -3316,16 +3268,15 @@ static INT32 HorizonLoadRoms()
 	nRet = BurnLoadRom(M62PromData + 0x00600, 19, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(M62PromData + 0x00620, 20, 1); if (nRet != 0) return 1;
 	
-	if (M62TempRom) {
-		free(M62TempRom);
-		M62TempRom = NULL;
-	}
+	BurnFree(M62TempRom);
 	
 	return 0;
 }
 
 static void M62MachineInit()
 {
+//	BurnSetRefreshRate(55.0);
+	
 	ZetInit(1);
 	ZetOpen(0);
 	ZetSetReadHandler(M62Z80Read);
@@ -3360,11 +3311,11 @@ static void M62MachineInit()
 	pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
 	pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
 
-	AY8910Init(0, 894886, nBurnSoundRate, &M62SoundLatchRead, NULL, NULL, &AY8910_0PortBWrite);
-	AY8910Init(1, 894886, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	
 	MSM5205Init(0, M62SynchroniseStream, 384000, M62MSM5205Vck0, MSM5205_S96_4B, 50, 1);
 	MSM5205Init(1, M62SynchroniseStream, 384000, NULL, MSM5205_SEX_4B, 50, 1);
+	
+	AY8910Init(0, 894886, nBurnSoundRate, &M62SoundLatchRead, NULL, NULL, &AY8910_0PortBWrite);
+	AY8910Init(1, 894886, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	
 	GenericTilesInit();
 	
@@ -3372,8 +3323,6 @@ static void M62MachineInit()
 	M62M6803Clock = 894886;
 	
 	M62SpriteHeightPromOffset = (M62PaletteEntries & 0xf00) * 3;
-	
-//	BurnSetRefreshRate(55.0);
 }
 
 static INT32 KungfumMachineInit()
@@ -3912,10 +3861,7 @@ static INT32 M62Exit()
 
 	GenericTilesExit();
 	
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 	
 	M62Z80RomSize = 0;
 	M62PromSize = 0;
@@ -4717,26 +4663,22 @@ static INT32 M62Frame()
 				nSample += pAY8910Buffer[4][n] >> 2;
 				nSample += pAY8910Buffer[5][n] >> 2;
 
-				if (nSample < -32768) {
-					nSample = -32768;
-				} else {
-					if (nSample > 32767) {
-						nSample = 32767;
-					}
-				}
+				nSample = BURN_SND_CLIP(nSample);
 
 				pSoundBuf[(n << 1) + 0] = nSample;
 				pSoundBuf[(n << 1) + 1] = nSample;
-    			}
-				nSoundBufferPos += nSegmentLength;
+    		}
+			nSoundBufferPos += nSegmentLength;
 		}
 		
+		ZetOpen(0);
 		MSM5205Update();
 		if (M62SlaveMSM5205VClckReset) {
 			MSM5205VCLKWrite(1, 1);
 			MSM5205VCLKWrite(1, 0);
 			M62SlaveMSM5205VClckReset = 0;
 		}
+		ZetClose();
 	}
 	
 	if (pBurnSoundOut) {
@@ -4754,21 +4696,17 @@ static INT32 M62Frame()
 				nSample += pAY8910Buffer[4][n] >> 2;
 				nSample += pAY8910Buffer[5][n] >> 2;
 
-				if (nSample < -32768) {
-					nSample = -32768;
-				} else {
-					if (nSample > 32767) {
-						nSample = 32767;
-					}
-				}
+				nSample = BURN_SND_CLIP(nSample);
 
 				pSoundBuf[(n << 1) + 0] = nSample;
 				pSoundBuf[(n << 1) + 1] = nSample;
  			}
 		}
 		
+		ZetOpen(0);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(1, pBurnSoundOut, nBurnSoundLen);
+		ZetClose();
 	}
 	
 	if (pBurnDraw) {

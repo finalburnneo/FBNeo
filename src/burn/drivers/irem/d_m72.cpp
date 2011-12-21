@@ -1523,7 +1523,7 @@ static INT32 DrvGfxDecode(UINT8 *gfx, INT32 len, INT32 type)
 	INT32 XOffs[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87 };
 	INT32 YOffs[16] = { 0x00, 0x08, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38, 0x40, 0x48, 0x50, 0x58, 0x60, 0x68, 0x70, 0x78 };
 
-	UINT8 *tmp = (UINT8*)malloc(len);
+	UINT8 *tmp = (UINT8*)BurnMalloc(len);
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -1536,10 +1536,7 @@ static INT32 DrvGfxDecode(UINT8 *gfx, INT32 len, INT32 type)
 		GfxDecode((len * 2) / (16 * 16), 4, 16, 16, Planes, XOffs, YOffs, 0x100, tmp, gfx);
 	}
 
-	if (tmp) {
-		free (tmp);
-		tmp = NULL;
-	}
+	BurnFree (tmp);
 
 	return 0;
 }
@@ -1714,7 +1711,7 @@ static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -1779,10 +1776,7 @@ static INT32 DrvExit()
 	ZetExit();
 	VezExit();
 
-	if (AllMem) {
-		free(AllMem);
-		AllMem = NULL;
-	}
+	BurnFree(AllMem);
 
 	m72_video_type = 0;
 	enable_z80_reset = 0;
@@ -2136,7 +2130,7 @@ static INT32 DrvFrame()
 	VezOpen(0);
 	ZetOpen(0);
 
-memset (pBurnSoundOut, 0, nBurnSoundLen * sizeof(INT16));
+	memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -3340,11 +3334,11 @@ static INT32 kengoInit()
 	return nRet;
 }
 
-struct BurnDriver BurnDrvKengo = {
+struct BurnDriverD BurnDrvKengo = {
 	"kengo", NULL, NULL, NULL, "1991",
 	"Ken-Go\0", NULL, "Irem", "M84?",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
+	0, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, kengoRomInfo, kengoRomName, NULL, NULL, CommonInputInfo, KengoDIPInfo,
 	kengoInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
 	384, 256, 4, 3
@@ -3754,11 +3748,11 @@ static INT32 poundforInit()
 	return DrvInit(rtype2_main_cpu_map, sound_rom_map, NULL, 0x80, Z80_FAKE_NMI, 4);
 }
 
-struct BurnDriver BurnDrvPoundfor = {
+struct BurnDriverD BurnDrvPoundfor = {
 	"poundfor", NULL, NULL, NULL, "1990",
 	"Pound for Pound (World)\0", NULL, "Irem", "M85",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
+	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, poundforRomInfo, poundforRomName, NULL, NULL, PoundforInputInfo, PoundforDIPInfo,
 	poundforInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
 	256, 384, 3, 4
@@ -3791,11 +3785,11 @@ static struct BurnRomInfo poundforjRomDesc[] = {
 STD_ROM_PICK(poundforj)
 STD_ROM_FN(poundforj)
 
-struct BurnDriver BurnDrvPoundforj = {
+struct BurnDriverD BurnDrvPoundforj = {
 	"poundforj", "poundfor", NULL, NULL, "1990",
 	"Pound for Pound (Japan)\0", NULL, "Irem", "M85",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, poundforjRomInfo, poundforjRomName, NULL, NULL, PoundforInputInfo, PoundforDIPInfo,
 	poundforInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
 	256, 384, 3, 4
@@ -3828,11 +3822,11 @@ static struct BurnRomInfo poundforuRomDesc[] = {
 STD_ROM_PICK(poundforu)
 STD_ROM_FN(poundforu)
 
-struct BurnDriver BurnDrvPoundforu = {
+struct BurnDriverD BurnDrvPoundforu = {
 	"poundforu", "poundfor", NULL, NULL, "1990",
 	"Pound for Pound (US)\0", NULL, "Irem America", "M85",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, poundforuRomInfo, poundforuRomName, NULL, NULL, PoundforInputInfo, PoundforDIPInfo,
 	poundforInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
 	256, 384, 3, 4

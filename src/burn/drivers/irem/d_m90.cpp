@@ -838,8 +838,6 @@ UINT8 __fastcall m90_main_read(UINT32 /*address*/)
 
 void __fastcall m90_main_write_port(UINT32 port, UINT8 data)
 {
-bprintf (0, _T("Writing %2.2x to port %2.2x wp\n"), data, port);
-
 	if ((port & ~0x0f) == 0x80) {
 		m90_video_control[port & 0x0f] = data;
 		return;
@@ -879,8 +877,6 @@ bprintf (0, _T("Writing %2.2x to port %2.2x wp\n"), data, port);
 
 UINT8 __fastcall m90_main_read_port(UINT32 port)
 {
-bprintf (0, _T("Reading port: %2.2x\n"), port);
-
 	switch (port)
 	{
 		case 0x00: return DrvInputs[0];
@@ -1097,7 +1093,7 @@ static void DrvGfxDecode()
 	INT32 XOffs[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 16*8+0, 16*8+1, 16*8+2, 16*8+3, 16*8+4, 16*8+5, 16*8+6, 16*8+7 };
 	INT32 YOffs[16] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 };
 
-	UINT8 *tmp = (UINT8*)malloc(0x200000);
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x200000);
 	if (tmp == NULL) {
 		return;
 	}
@@ -1107,10 +1103,7 @@ static void DrvGfxDecode()
 	GfxDecode(0x10000, 4,  8,  8, Plane, XOffs, YOffs, 0x040, tmp, DrvGfxROM0);
 	GfxDecode(0x04000, 4, 16, 16, Plane, XOffs, YOffs, 0x100, tmp, DrvGfxROM1);
 
-	if (tmp) {
-		free (tmp);
-		tmp = NULL;
-	}
+	BurnFree (tmp);
 }
 
 static INT32 DrvInit(INT32 codesize, INT32 gfxlen, INT32 samples, INT32 bank, INT32 spriteram, const UINT8 *decrypt_table)
@@ -1120,7 +1113,7 @@ static INT32 DrvInit(INT32 codesize, INT32 gfxlen, INT32 samples, INT32 bank, IN
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -1166,10 +1159,7 @@ static INT32 DrvExit()
 	ZetExit();
 	VezExit();
 
-	if (AllMem) {
-		free(AllMem);
-		AllMem = NULL;
-	}
+	BurnFree(AllMem);
 
 	video_offsets[0] = video_offsets[1] = 0;
 

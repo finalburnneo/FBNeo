@@ -1643,7 +1643,7 @@ static INT32 RomLoad(INT32 v33off, INT32 gfxlen0, INT32 gfxlen1, INT32 gfxtype1,
 	if (BurnLoadRom(DrvV30ROM + 0x000001, 4, 2)) return 1;
 	if (BurnLoadRom(DrvV30ROM + 0x000000, 5, 2)) return 1;
 
-	UINT8 *tmp = (UINT8 *)malloc(0x200000);
+	UINT8 *tmp = (UINT8 *)BurnMalloc(0x200000);
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -1673,10 +1673,7 @@ static INT32 RomLoad(INT32 v33off, INT32 gfxlen0, INT32 gfxlen1, INT32 gfxtype1,
 		if (BurnLoadRom(DrvEEPROM + 0x000000, eep, 1)) return 1;
 	}
 
-	if (tmp) {
-		free (tmp);
-		tmp = NULL;
-	}
+	BurnFree (tmp);
 
 	return 0;
 }
@@ -1686,7 +1683,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), const UINT8 *sound_decrypt_tab
 	Mem = NULL;
 	MemIndex(gfxlen1, gfxlen2);
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);
 	MemIndex(gfxlen1, gfxlen2);
 
@@ -1774,10 +1771,7 @@ static INT32 DrvExit()
 
 	VezExit();
 
-	if (Mem) {
-		free(Mem);
-		Mem = NULL;
-	}
+	BurnFree(Mem);
 	
 	nPrevScreenPos = 0;
 	m92_kludge = 0;
@@ -2056,7 +2050,7 @@ static INT32 DrvFrame()
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 
 	if (pBurnSoundOut) {
-		memset (pBurnSoundOut, 0, nBurnSoundLen * sizeof(INT16));
+		memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
 	}
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -2127,6 +2121,8 @@ static INT32 PpanFrame()
 	if (pBurnSoundOut) {
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
+	
+	VezClose();
 
 	return 0;
 }
@@ -2350,7 +2346,7 @@ static INT32 ppanRomLoad()
 	if (BurnLoadRom(DrvV33ROM + 0x000001, 0, 2)) return 1;
 	if (BurnLoadRom(DrvV33ROM + 0x000000, 1, 2)) return 1;
 
-	UINT8 *tmp = (UINT8 *)malloc(0x080000);
+	UINT8 *tmp = (UINT8 *)BurnMalloc(0x080000);
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -2377,10 +2373,7 @@ static INT32 ppanRomLoad()
 	if (BurnLoadRom(DrvSndROM + 0x100000, 14, 1)) return 1;
 	memcpy (DrvSndROM, DrvSndROM + 0x100000, 0x40000);
 
-	if (tmp) {
-		free (tmp);
-		tmp = NULL;
-	}
+	BurnFree (tmp);
 
 	DrvSprBuf = DrvSprRAM; // no sprite buffer!!
 
@@ -3240,11 +3233,11 @@ static INT32 nbbatmanInit()
 	return nRet;
 }
 
-struct BurnDriver BurnDrvNbbatman = {
+struct BurnDriverD BurnDrvNbbatman = {
 	"nbbatman", NULL, NULL, NULL, "1993",
 	"Ninja Baseball Batman (US)\0", "Imperfect sound and graphics", "Irem America", "M92",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	0, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
 	NULL, nbbatmanRomInfo, nbbatmanRomName, NULL, NULL, p4CommonInputInfo, NbbatmanDIPInfo,
 	nbbatmanInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3
@@ -3278,11 +3271,11 @@ static struct BurnRomInfo leaguemnRomDesc[] = {
 STD_ROM_PICK(leaguemn)
 STD_ROM_FN(leaguemn)
 
-struct BurnDriver BurnDrvLeaguemn = {
+struct BurnDriverD BurnDrvLeaguemn = {
 	"leaguemn", "nbbatman", NULL, NULL, "1993",
 	"Yakyuu Kakutou League-Man (Japan)\0", "Imperfect sound and graphics", "Irem", "M92",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	BDF_CLONE, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
 	NULL, leaguemnRomInfo, leaguemnRomName, NULL, NULL, p4CommonInputInfo, NbbatmanDIPInfo,
 	nbbatmanInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3

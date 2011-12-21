@@ -282,7 +282,7 @@ static INT32 DrvInit()
 
 	if (LoadRoms()) return 1;
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetOutHandler(pkunwar_out);
 	ZetSetReadHandler(pkunwar_read);

@@ -477,7 +477,7 @@ static INT32 DrvInit()
 		SekSetWriteWordHandler(1, 		toaplan1WriteWordZ80RAM);
 		SekClose();
 
-		ZetInit(1);
+		ZetInit(0);
 		ZetOpen(0);
 		ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM);
 		ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);

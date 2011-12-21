@@ -1,8 +1,6 @@
 // FB Alpha Aztarac driver module
 // Based on MAME driver by Mathis Rosenhauer
 
-// To do: Joystick and dial!!
-
 #include "burnint.h"
 #include "vector.h"
 #include "driver.h"
@@ -390,7 +388,7 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(0,	aztarac_read_byte);
 	SekClose();
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x1fff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0x1fff, 2, DrvZ80ROM);

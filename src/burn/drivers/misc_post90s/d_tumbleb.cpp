@@ -2912,7 +2912,7 @@ static void FncywldMap68k()
 static void JumpkidsMapZ80()
 {
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(JumpkidsZ80Read);
 	ZetSetWriteHandler(JumpkidsZ80Write);
@@ -2928,7 +2928,7 @@ static void JumpkidsMapZ80()
 static void SemicomMapZ80()
 {
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(SemicomZ80Read);
 	ZetSetWriteHandler(SemicomZ80Write);
@@ -3408,7 +3408,7 @@ static INT32 JumppopInit()
 	SekClose();	
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetInHandler(JumppopZ80PortRead);
 	ZetSetOutHandler(JumppopZ80PortWrite);

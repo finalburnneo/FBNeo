@@ -695,7 +695,7 @@ static INT32 shadfrceInit()
 	}
 
 	{
-		ZetInit(1);
+		ZetInit(0);
 		ZetOpen(0);
 	
 		ZetSetReadHandler(shadfrceZRead);

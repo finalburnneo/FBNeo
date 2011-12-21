@@ -666,7 +666,7 @@ INT32 pgmInit()
 	}
 
 	{
-		ZetInit(1);
+		ZetInit(0);
 		ZetOpen(0);
 		ZetMapArea(0x0000, 0xffff, 0, RamZ80);
 		ZetMapArea(0x0000, 0xffff, 1, RamZ80);

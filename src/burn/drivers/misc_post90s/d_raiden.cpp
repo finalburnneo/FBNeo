@@ -919,7 +919,7 @@ static INT32 DrvInit()
 	}
 	
 	{
-		ZetInit(1);
+		ZetInit(0);
 		ZetOpen(0);
 		
 		ZetMapArea(0x0000, 0x1FFF, 0, RomZ80);

@@ -665,7 +665,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 static INT32 drvZInit()
 {
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetInHandler(metmqstrZIn);
 	ZetSetOutHandler(metmqstrZOut);

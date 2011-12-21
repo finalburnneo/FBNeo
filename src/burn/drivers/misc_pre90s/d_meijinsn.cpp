@@ -334,7 +334,7 @@ static INT32 DrvInit()
 	SekSetWriteByteHandler(0, meijinsn_write_byte);
 	SekClose();
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xffff, 0, Z80Rom);
 	ZetMapArea(0x0000, 0x7fff, 2, Z80Rom);

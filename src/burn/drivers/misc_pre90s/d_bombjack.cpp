@@ -330,7 +330,7 @@ void __fastcall SndPortWrite(UINT16 a, UINT8 d)
 INT32 BjZInit()
 {
 	// Init the z80
-	ZetInit(2);
+	ZetInit(0);
 	// Main CPU setup
 	ZetOpen(0);
 
@@ -368,6 +368,7 @@ INT32 BjZInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea    (0x0000,0x1fff,0,SndRom); // Direct Read from ROM
 	ZetMapArea    (0x0000,0x1fff,2,SndRom); // Direct Fetch from ROM

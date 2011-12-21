@@ -409,7 +409,7 @@ INT32 SolomonInit()
 	GfxDecode(512, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, SolomonTempRom, SolomonSprites);
 
 	// Setup the Z80 emulation
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(SolomonRead1);
 	ZetSetWriteHandler(SolomonWrite1);
@@ -441,6 +441,7 @@ INT32 SolomonInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetReadHandler(SolomonRead2);
 	ZetSetOutHandler(SolomonPortWrite2);

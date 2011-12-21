@@ -1425,7 +1425,7 @@ static INT32 BestbestInit()
 	SekSetReadWordHandler(0,	   bestbest_read_word);
 	SekClose();
 
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xbfff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM0);
@@ -1437,6 +1437,7 @@ static INT32 BestbestInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0xffff, 0, DrvZ80ROM1);
 	ZetMapArea(0x0000, 0xffff, 2, DrvZ80ROM1);
@@ -1492,7 +1493,7 @@ static INT32 SunaqInit()
 	SekSetReadWordHandler(0,	   sunaq_read_word);
 	SekClose();
 
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xefff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0xefff, 2, DrvZ80ROM0);
@@ -1504,6 +1505,7 @@ static INT32 SunaqInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0x0fff, 0, DrvZ80ROM1);
 	ZetMapArea(0x0000, 0x0fff, 2, DrvZ80ROM1);
@@ -1555,7 +1557,7 @@ static INT32 UballoonInit()
 	SekSetReadWordHandler(0,	   uballoon_read_word);
 	SekClose();
 
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xefff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0xefff, 2, DrvZ80ROM0);
@@ -1567,6 +1569,7 @@ static INT32 UballoonInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0x03ff, 0, DrvZ80ROM1);
 	ZetMapArea(0x0000, 0x03ff, 2, DrvZ80ROM1);
@@ -1626,7 +1629,7 @@ static INT32 BssoccerInit()
 	SekSetReadWordHandler(0,	   bssoccer_read_word);
 	SekClose();
 
-	ZetInit(3);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM0);
@@ -1638,6 +1641,7 @@ static INT32 BssoccerInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0x0fff, 0, DrvZ80ROM1);
 	ZetMapArea(0x0000, 0x0fff, 2, DrvZ80ROM1);
@@ -1648,6 +1652,7 @@ static INT32 BssoccerInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(2);
 	ZetOpen(2);
 	ZetMapArea(0x0000, 0x0fff, 0, DrvZ80ROM2);
 	ZetMapArea(0x0000, 0x0fff, 2, DrvZ80ROM2);

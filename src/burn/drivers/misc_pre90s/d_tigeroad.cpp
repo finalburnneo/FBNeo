@@ -701,11 +701,7 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 	SekSetReadWordHandler(0,	tigeroad_read_word);
 	SekClose();
 
-	if (toramich) {
-		ZetInit(2);
-	} else {
-		ZetInit(1);
-	}
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);
@@ -719,6 +715,8 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 	ZetClose();
 
 	if (toramich) {
+		ZetInit(1);
+
 		ZetOpen(1);
 		ZetMapArea(0x0000, 0xffff, 0, DrvSndROM);
 		ZetMapArea(0x0000, 0xffff, 2, DrvSndROM);

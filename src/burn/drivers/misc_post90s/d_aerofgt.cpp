@@ -616,7 +616,7 @@ static INT32 aerofgtInit()
 	}
 	
 	{
-		ZetInit(1);
+		ZetInit(0);
 		ZetOpen(0);
 		
 		ZetMapArea(0x0000, 0x77FF, 0, RomZ80);
@@ -1650,7 +1650,7 @@ static INT32 turbofrcInit()
 	}
 	
 	{
-		ZetInit(1);
+		ZetInit(0);
 		ZetOpen(0);
 		
 		ZetMapArea(0x0000, 0x77FF, 0, RomZ80);
@@ -2611,7 +2611,7 @@ static INT32 karatblzInit()
 	}
 	
 	{
-		ZetInit(1);
+		ZetInit(0);
 		ZetOpen(0);
 		
 		ZetMapArea(0x0000, 0x77FF, 0, RomZ80);
@@ -3340,7 +3340,7 @@ static INT32 spinlbrkInit()
 	}
 	
 	{
-		ZetInit(1);
+		ZetInit(0);
 		ZetOpen(0);
 		
 		ZetMapArea(0x0000, 0x77FF, 0, RomZ80);
@@ -3848,7 +3848,7 @@ static INT32 aerofgtbInit()
 	}
 	
 	{
-		ZetInit(1);
+		ZetInit(0);
 		ZetOpen(0);
 		
 		ZetMapArea(0x0000, 0x77FF, 0, RomZ80);

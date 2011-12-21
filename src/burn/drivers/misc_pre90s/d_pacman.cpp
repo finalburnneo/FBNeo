@@ -2484,7 +2484,7 @@ static INT32 DrvInit(void (*mapCallback)(), void (*pInitCallback)(), INT32 selec
 	pacman_palette_init();
 	DrvTransTableInit();
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	mapCallback();	
 	ZetMemEnd();

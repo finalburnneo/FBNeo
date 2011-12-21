@@ -688,7 +688,7 @@ static INT32 DrvInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(WwfwfestZ80Read);
 	ZetSetWriteHandler(WwfwfestZ80Write);

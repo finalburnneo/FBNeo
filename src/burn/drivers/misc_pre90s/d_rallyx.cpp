@@ -682,7 +682,7 @@ static INT32 DotYOffsets[4]               = { 0, 32, 64, 96 };
 
 static void MachineInit()
 {
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(RallyxZ80ProgRead);
 	ZetSetWriteHandler(RallyxZ80ProgWrite);
@@ -710,7 +710,7 @@ static void MachineInit()
 
 static void JunglerMachineInit()
 {
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(JunglerZ80ProgRead1);
 	ZetSetWriteHandler(JunglerZ80ProgWrite1);
@@ -728,6 +728,9 @@ static void JunglerMachineInit()
 	ZetMapArea(0xa030, 0xa03f, 1, DrvRadarAttrRam);	
 	ZetMemEnd();
 	ZetClose();
+
+	ZetInit(1);
+	// not used?
 	
 	GenericTilesInit();
 

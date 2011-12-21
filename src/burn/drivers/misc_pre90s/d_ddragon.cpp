@@ -1892,7 +1892,7 @@ static INT32 Drv2MachineInit()
 	HD6309SetWriteByteHandler(DrvDdragonHD6309WriteByte);
 	HD6309Close();
 	
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetWriteHandler(Ddragon2SubZ80Write);
 	ZetMapArea(0x0000, 0xbfff, 0, DrvSubCPURom);
@@ -1901,7 +1901,8 @@ static INT32 Drv2MachineInit()
 	ZetMapArea(0xc000, 0xc3ff, 2, DrvSpriteRam);
 	ZetMemEnd();
 	ZetClose();
-	
+
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetReadHandler(Ddragon2SoundZ80Read);
 	ZetSetWriteHandler(Ddragon2SoundZ80Write);

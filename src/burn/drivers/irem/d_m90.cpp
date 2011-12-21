@@ -1123,7 +1123,7 @@ static INT32 DrvInit(INT32 codesize, INT32 gfxlen, INT32 samples, INT32 bank, IN
 
 	map_main_cpu((UINT8*)decrypt_table, codesize, spriteram);
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xefff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0xefff, 2, DrvZ80ROM);

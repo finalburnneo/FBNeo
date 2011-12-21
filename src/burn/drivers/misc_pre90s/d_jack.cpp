@@ -973,7 +973,7 @@ static INT32 DrvInit()
 	
 	gfx_decode();
 
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(jack_cpu0_read);
 	ZetSetWriteHandler(jack_cpu0_write);
@@ -1016,6 +1016,7 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetInHandler(jack_in_port);
 	ZetSetOutHandler(jack_out_port);

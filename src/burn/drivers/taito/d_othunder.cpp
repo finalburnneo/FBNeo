@@ -797,7 +797,7 @@ static INT32 OthunderInit()
 	SekSetWriteByteHandler(0, Othunder68KWriteByte);
 	SekClose();	
 	
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(OthunderZ80Read);
 	ZetSetWriteHandler(OthunderZ80Write);

@@ -893,7 +893,7 @@ static INT32 DrvInit()
 	M6809Close();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(DrvGngZ80Read);
 	ZetSetWriteHandler(DrvGngZ80Write);
@@ -980,7 +980,7 @@ static INT32 DiamondInit()
 	M6809Close();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(DrvGngZ80Read);
 	ZetSetWriteHandler(DrvGngZ80Write);

@@ -1672,7 +1672,7 @@ static INT32 MachineInit()
 	MemIndex();
 
 	// Setup the Z80 emulation
-	ZetInit(3);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(BublboblRead1);
 	ZetSetWriteHandler(BublboblWrite1);
@@ -1698,6 +1698,7 @@ static INT32 MachineInit()
 	ZetMemEnd();
 	ZetClose();
 	
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom2             );
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom2             );
@@ -1706,7 +1707,8 @@ static INT32 MachineInit()
 	ZetMapArea(0xe000, 0xf7ff, 2, DrvSharedRam           );
 	ZetMemEnd();
 	ZetClose();
-	
+
+	ZetInit(2);
 	ZetOpen(2);
 	ZetSetReadHandler(DrvSoundRead3);
 	ZetSetWriteHandler(DrvSoundWrite3);
@@ -2024,7 +2026,7 @@ static INT32 TokioInit()
 	}
 
 	// Setup the Z80 emulation
-	ZetInit(3);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(TokioRead1);
 	ZetSetWriteHandler(TokioWrite1);
@@ -2046,7 +2048,8 @@ static INT32 TokioInit()
 	ZetMapArea(0xf800, 0xf9ff, 2, DrvPaletteRam          );
 	ZetMemEnd();
 	ZetClose();
-	
+
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom2             );
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom2             );
@@ -2055,7 +2058,8 @@ static INT32 TokioInit()
 	ZetMapArea(0x8000, 0x97ff, 2, DrvSharedRam           );
 	ZetMemEnd();
 	ZetClose();
-	
+
+	ZetInit(2);
 	ZetOpen(2);
 	ZetSetReadHandler(TokioSoundRead3);
 	ZetSetWriteHandler(TokioSoundWrite3);

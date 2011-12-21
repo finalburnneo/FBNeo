@@ -2990,7 +2990,7 @@ static INT32 BlazeonInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, Kaneko16Z80Rom         );
 	ZetMapArea(0x0000, 0x7fff, 2, Kaneko16Z80Rom         );

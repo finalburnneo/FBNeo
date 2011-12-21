@@ -2009,7 +2009,7 @@ static INT32 tigerhInit()
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "gtstarb1")) Rom01[0x6d56] = 0xc3;
 
 	{
-		ZetInit(2);
+		ZetInit(0);
 
 		// Main CPU setup
 		ZetOpen(0);
@@ -2075,6 +2075,8 @@ static INT32 tigerhInit()
 		ZetSetOutHandler(tigerhOutCPU0);
 
 		ZetClose();
+
+		ZetInit(1);
 
 		// Sound CPU setup
 		ZetOpen(1);

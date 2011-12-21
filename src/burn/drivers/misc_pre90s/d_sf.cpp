@@ -832,7 +832,7 @@ static INT32 DrvInit(INT32 initver)
 	SekSetReadWordHandler(0, sf_read_word);
 	SekClose();
 
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom0);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom0);
@@ -844,6 +844,7 @@ static INT32 DrvInit(INT32 initver)
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom1);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom1);

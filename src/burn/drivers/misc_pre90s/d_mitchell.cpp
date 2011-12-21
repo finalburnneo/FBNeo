@@ -1573,7 +1573,7 @@ static INT32 MstworldSpriteYOffsets[16]    = { 0, 16, 32, 48, 64, 80, 96, 112, 1
 
 static void MitchellMachineInit()
 {
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(MitchellZ80Read);
 	ZetSetWriteHandler(MitchellZ80Write);
@@ -1608,7 +1608,7 @@ static void MitchellMachineInit()
 
 static void MahjongMachineInit()
 {
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(MitchellZ80Read);
 	ZetSetWriteHandler(MitchellZ80Write);
@@ -1673,7 +1673,7 @@ static INT32 MgakuenInit()
 	
 	nRet = BurnLoadRom(DrvSoundRom + 0x000000, 8, 1); if (nRet != 0) return 1;
 	
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetInHandler(MitchellZ80PortRead);
 	ZetSetOutHandler(MitchellZ80PortWrite);
@@ -2289,7 +2289,7 @@ static INT32 MstworldInit()
 	
 	BurnFree(DrvTempRom);
 	
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(MitchellZ80Read);
 	ZetSetWriteHandler(MitchellZ80Write);

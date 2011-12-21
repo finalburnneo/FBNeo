@@ -4022,7 +4022,7 @@ static double TaitoZ68KGetTime()
 static void TaitoZZ80Init()
 {
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(TaitoZZ80Read);
 	ZetSetWriteHandler(TaitoZZ80Write);

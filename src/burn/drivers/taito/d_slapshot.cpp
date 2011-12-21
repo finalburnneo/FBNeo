@@ -531,7 +531,7 @@ static INT32 MachineInit()
 	SekSetWriteByteHandler(0, Slapshot68KWriteByte);
 	SekClose();	
 	
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(SlapshotZ80Read);
 	ZetSetWriteHandler(SlapshotZ80Write);

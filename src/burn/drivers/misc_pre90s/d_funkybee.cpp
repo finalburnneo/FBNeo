@@ -418,7 +418,7 @@ static INT32 DrvInit()
 	funkybee_gfx_decode();
 	funkybee_palette_init();
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(funkybee_read);
 	ZetSetWriteHandler(funkybee_write);

@@ -545,7 +545,7 @@ static INT32 SpriteYOffsets[16]    = { 0, 16, 32, 48, 64, 80, 96, 112, 128, 144,
 static void MachineInit()
 {
 	// Setup the Z80 emulation
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(Drv1942Read1);
 	ZetSetWriteHandler(Drv1942Write1);
@@ -568,6 +568,7 @@ static void MachineInit()
 	ZetMemEnd();
 	ZetClose();
 	
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetReadHandler(Drv1942Read2);
 	ZetSetWriteHandler(Drv1942Write2);

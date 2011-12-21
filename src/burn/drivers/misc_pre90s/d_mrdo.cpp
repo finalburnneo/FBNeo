@@ -285,7 +285,7 @@ static INT32 DrvInit()
 		mrdo_gfx_decode();
 	}
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(mrdo_read);
 	ZetSetWriteHandler(mrdo_write);

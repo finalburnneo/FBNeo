@@ -962,7 +962,7 @@ static INT32 DrvInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(MadgearZ80Read);
 	ZetSetWriteHandler(MadgearZ80Write);
@@ -1056,7 +1056,7 @@ static INT32 Ledstrm2Init()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(MadgearZ80Read);
 	ZetSetWriteHandler(MadgearZ80Write);
@@ -1150,7 +1150,7 @@ static INT32 LastduelInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(LastduelZ80Read);
 	ZetSetWriteHandler(LastduelZ80Write);
@@ -1255,7 +1255,7 @@ static INT32 LastduelbInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(LastduelZ80Read);
 	ZetSetWriteHandler(LastduelZ80Write);

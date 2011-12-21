@@ -1794,7 +1794,7 @@ static INT32 DrvInit()
 
 	{
 		// Z80 setup
-		ZetInit(1);
+		ZetInit(0);
 		ZetOpen(0);
 
 		switch (PsikyoHardwareVersion) {

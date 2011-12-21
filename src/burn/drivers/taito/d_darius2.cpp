@@ -1394,7 +1394,7 @@ static INT32 Darius2Init()
 	SekSetWriteWordHandler(0, Darius268K2WriteWord);
 	SekClose();
 	
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(Darius2Z80Read);
 	ZetSetWriteHandler(Darius2Z80Write);
@@ -1488,7 +1488,7 @@ static INT32 Darius2dInit()
 	SekSetWriteWordHandler(0, Darius2d68KWriteWord);
 	SekClose();
 	
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(Darius2Z80Read);
 	ZetSetWriteHandler(Darius2Z80Write);
@@ -1596,7 +1596,7 @@ static INT32 WarriorbInit()
 	SekSetWriteWordHandler(0, Warriorb68KWriteWord);
 	SekClose();
 	
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(Darius2Z80Read);
 	ZetSetWriteHandler(Darius2Z80Write);

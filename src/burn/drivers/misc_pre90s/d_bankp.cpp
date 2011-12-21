@@ -330,7 +330,7 @@ static INT32 DrvInit()
 		bankp_palette_init();
 	}
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetInHandler(bankp_in);
 	ZetSetOutHandler(bankp_out);

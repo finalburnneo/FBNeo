@@ -436,7 +436,7 @@ static INT32 DrvInit()
 		gunsmoke_palette_init();
 	}
 
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, Rom0 + 0x00000);
 	ZetMapArea(0x0000, 0x7fff, 2, Rom0 + 0x00000);
@@ -454,6 +454,7 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0x7fff, 0, Rom1 + 0x00000);
 	ZetMapArea(0x0000, 0x7fff, 2, Rom1 + 0x00000);

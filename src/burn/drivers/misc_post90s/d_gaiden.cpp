@@ -1027,7 +1027,7 @@ static INT32 DrvInit()
 	SekSetReadWordHandler(0,	gaiden_read_word);
 	SekClose();
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	if (game == 1) {
 		ZetMapArea(0x0000, 0xf7ff, 0, DrvZ80ROM);

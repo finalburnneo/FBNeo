@@ -417,7 +417,7 @@ static INT32 DrvInit()
 		DrvPaletteInit();
 	}
 
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, Rom0 + 0x0000);
 	ZetMapArea(0x0000, 0x7fff, 2, Rom0 + 0x0000);
@@ -435,6 +435,7 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMemEnd();
 	ZetMapArea(0x0000, 0x1fff, 0, Rom1 + 0x0000);

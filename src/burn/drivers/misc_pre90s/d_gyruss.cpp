@@ -618,7 +618,7 @@ static INT32 DrvInit()
 		DrvPaletteInit();
 	}
 
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM0);
@@ -649,6 +649,7 @@ static INT32 DrvInit()
 	M6809SetWriteByteHandler(gyruss_sub_write);
 	M6809Close();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0x5fff, 0, DrvZ80ROM1);
 	ZetMapArea(0x0000, 0x5fff, 2, DrvZ80ROM1);

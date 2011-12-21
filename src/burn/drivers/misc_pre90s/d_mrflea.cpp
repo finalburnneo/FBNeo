@@ -335,7 +335,7 @@ static INT32 DrvInit()
 		if (convert_gfx()) return 1;
 	}
 
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetInHandler(mrflea_in_port);
 	ZetSetOutHandler(mrflea_out_port);
@@ -348,6 +348,7 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetInHandler(mrflea_cpu1_in_port);
 	ZetSetOutHandler(mrflea_cpu1_out_port);

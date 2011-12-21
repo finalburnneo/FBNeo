@@ -4112,7 +4112,7 @@ static INT32 DrvInit(INT32 (*pLoadCallback)())
 		if (pLoadCallback()) return 1;
 	}
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xbfff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM);
@@ -4231,7 +4231,7 @@ static INT32 Macross2Init()
 	SekSetReadByteHandler(0,	macross2_main_read_byte);
 	SekClose();
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);
@@ -4281,7 +4281,7 @@ static INT32 MSM6295x1Init(INT32  (*pLoadCallback)())
 		if (pLoadCallback()) return 1;
 	}
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);
@@ -6196,7 +6196,7 @@ STD_ROM_FN(stagger1)
 
 static void pAfegaZ80Callback()
 {
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xefff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0xefff, 2, DrvZ80ROM);
@@ -6782,7 +6782,7 @@ STD_ROM_FN(firehawk)
 
 static void pFirehawkZ80Callback()
 {
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xefff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0xefff, 2, DrvZ80ROM);

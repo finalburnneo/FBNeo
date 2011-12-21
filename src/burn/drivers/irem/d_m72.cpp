@@ -1487,7 +1487,7 @@ static void majtitle_main_cpu_map()
 
 static void sound_ram_map()
 {
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xffff, 0, DrvZ80RAM);
 	ZetMapArea(0x0000, 0xffff, 1, DrvZ80RAM);
@@ -1502,7 +1502,7 @@ static void sound_ram_map()
 
 static void sound_rom_map()
 {
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xefff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0xefff, 2, DrvZ80ROM);

@@ -530,7 +530,7 @@ INT32 PrehisleInit()
 	SekClose();
 
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xefff, 0, PrehisleZ80Rom);
 	ZetMapArea(0x0000, 0xefff, 2, PrehisleZ80Rom);

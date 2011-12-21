@@ -425,7 +425,7 @@ static void m63PaletteRecalc()
 
 static void m63_main_map()
 {
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xbfff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM);
@@ -458,7 +458,7 @@ static void m63_main_map()
 
 static void fghtbskt_main_map()
 {
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xbfff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM);

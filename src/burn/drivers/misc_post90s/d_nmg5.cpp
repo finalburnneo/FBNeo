@@ -1067,7 +1067,7 @@ static INT32 DrvInit(INT32 loadtype, INT32 sektype, INT32 zettype) // 0 nmg, 1 p
 	}
 	SekClose();
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	if (zettype) {
 		ZetMapArea(0x0000, 0xf7ff, 0, DrvZ80ROM);

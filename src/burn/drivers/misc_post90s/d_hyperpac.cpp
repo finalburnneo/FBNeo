@@ -1985,7 +1985,7 @@ static INT32 HyperpacMachineInit()
 	SekClose();
 
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xcfff, 0, HyperpacZ80Rom);
 	ZetMapArea(0x0000, 0xcfff, 2, HyperpacZ80Rom);
@@ -2474,7 +2474,7 @@ static INT32 TwinadvInit()
 	SekClose();
 
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, HyperpacZ80Rom);
 	ZetMapArea(0x0000, 0x7fff, 2, HyperpacZ80Rom);
@@ -2555,7 +2555,7 @@ static INT32 HoneydolInit()
 	SekClose();
 
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, HyperpacZ80Rom);
 	ZetMapArea(0x0000, 0x7fff, 2, HyperpacZ80Rom);
@@ -2652,7 +2652,7 @@ static INT32 SnowbrosInit()
 	SekClose();
 
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, HyperpacZ80Rom);
 	ZetMapArea(0x0000, 0x7fff, 2, HyperpacZ80Rom);

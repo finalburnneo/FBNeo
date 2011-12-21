@@ -345,7 +345,7 @@ void __fastcall zerowingZ80Out(UINT16 nAddress, UINT8 nValue)
 static INT32 DrvZ80Init()
 {
 	// Init the Z80
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 
 	ZetSetInHandler(zerowingZ80In);

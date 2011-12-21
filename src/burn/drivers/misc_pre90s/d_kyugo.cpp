@@ -1730,7 +1730,7 @@ static INT32 KyugoInit()
 	BurnFree(KyugoTempRom);
 	
 	// Setup the Z80 emulation
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(KyugoRead1);
 	ZetSetWriteHandler(KyugoWrite1);
@@ -1756,6 +1756,7 @@ static INT32 KyugoInit()
 	ZetMemEnd();
 	ZetClose();
 	
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetWriteHandler(KyugoWrite2);
 	ZetSetInHandler(KyugoPortRead2);
@@ -1956,7 +1957,7 @@ static INT32 Skywolf3Init()
 	BurnFree(pTemp);
 	
 	// Setup the Z80 emulation
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(KyugoRead1);
 	ZetSetWriteHandler(KyugoWrite1);
@@ -1981,7 +1982,8 @@ static INT32 Skywolf3Init()
 	ZetMapArea(0xf000, 0xf7ff, 2, KyugoSharedZ80Ram        );
 	ZetMemEnd();
 	ZetClose();
-	
+
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetWriteHandler(KyugoWrite2);
 	ZetSetInHandler(KyugoPortRead2);

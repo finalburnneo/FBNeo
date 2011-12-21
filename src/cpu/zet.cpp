@@ -2,7 +2,7 @@
 #include "burnint.h"
 
 #define MAX_Z80		8
-static struct ZetExt * ZetCPUContext = NULL;
+static struct ZetExt * ZetCPUContext[MAX_Z80] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
  
 typedef UINT8 (__fastcall *pZetInHandler)(UINT16 a);
 typedef void (__fastcall *pZetOutHandler)(UINT16 a, UINT8 d);
@@ -38,25 +38,25 @@ void __fastcall ZetDummyOutHandler(UINT16, UINT8) { }
 
 UINT8 __fastcall ZetReadIO(UINT32 a)
 {
-	return ZetCPUContext[nOpenedCPU].ZetIn(a);
+	return ZetCPUContext[nOpenedCPU]->ZetIn(a);
 }
 
 void __fastcall ZetWriteIO(UINT32 a, UINT8 d)
 {
-	ZetCPUContext[nOpenedCPU].ZetOut(a, d);
+	ZetCPUContext[nOpenedCPU]->ZetOut(a, d);
 }
 
 UINT8 __fastcall ZetReadProg(UINT32 a)
 {
 	// check mem map
-	UINT8 * pr = ZetCPUContext[nOpenedCPU].pZetMemMap[0x000 | (a >> 8)];
+	UINT8 * pr = ZetCPUContext[nOpenedCPU]->pZetMemMap[0x000 | (a >> 8)];
 	if (pr != NULL) {
 		return pr[a & 0xff];
 	}
 	
 	// check handler
-	if (ZetCPUContext[nOpenedCPU].ZetRead != NULL) {
-		return ZetCPUContext[nOpenedCPU].ZetRead(a);
+	if (ZetCPUContext[nOpenedCPU]->ZetRead != NULL) {
+		return ZetCPUContext[nOpenedCPU]->ZetRead(a);
 	}
 	
 	return 0;
@@ -65,15 +65,15 @@ UINT8 __fastcall ZetReadProg(UINT32 a)
 void __fastcall ZetWriteProg(UINT32 a, UINT8 d)
 {
 	// check mem map
-	UINT8 * pr = ZetCPUContext[nOpenedCPU].pZetMemMap[0x100 | (a >> 8)];
+	UINT8 * pr = ZetCPUContext[nOpenedCPU]->pZetMemMap[0x100 | (a >> 8)];
 	if (pr != NULL) {
 		pr[a & 0xff] = d;
 		return;
 	}
 	
 	// check handler
-	if (ZetCPUContext[nOpenedCPU].ZetWrite != NULL) {
-		ZetCPUContext[nOpenedCPU].ZetWrite(a, d);
+	if (ZetCPUContext[nOpenedCPU]->ZetWrite != NULL) {
+		ZetCPUContext[nOpenedCPU]->ZetWrite(a, d);
 		return;
 	}
 }
@@ -81,14 +81,14 @@ void __fastcall ZetWriteProg(UINT32 a, UINT8 d)
 UINT8 __fastcall ZetReadOp(UINT32 a)
 {
 	// check mem map
-	UINT8 * pr = ZetCPUContext[nOpenedCPU].pZetMemMap[0x200 | (a >> 8)];
+	UINT8 * pr = ZetCPUContext[nOpenedCPU]->pZetMemMap[0x200 | (a >> 8)];
 	if (pr != NULL) {
 		return pr[a & 0xff];
 	}
 	
 	// check read handler
-	if (ZetCPUContext[nOpenedCPU].ZetRead != NULL) {
-		return ZetCPUContext[nOpenedCPU].ZetRead(a);
+	if (ZetCPUContext[nOpenedCPU]->ZetRead != NULL) {
+		return ZetCPUContext[nOpenedCPU]->ZetRead(a);
 	}
 	
 	return 0;
@@ -97,14 +97,14 @@ UINT8 __fastcall ZetReadOp(UINT32 a)
 UINT8 __fastcall ZetReadOpArg(UINT32 a)
 {
 	// check mem map
-	UINT8 * pr = ZetCPUContext[nOpenedCPU].pZetMemMap[0x300 | (a >> 8)];
+	UINT8 * pr = ZetCPUContext[nOpenedCPU]->pZetMemMap[0x300 | (a >> 8)];
 	if (pr != NULL) {
 		return pr[a & 0xff];
 	}
 	
 	// check read handler
-	if (ZetCPUContext[nOpenedCPU].ZetRead != NULL) {
-		return ZetCPUContext[nOpenedCPU].ZetRead(a);
+	if (ZetCPUContext[nOpenedCPU]->ZetRead != NULL) {
+		return ZetCPUContext[nOpenedCPU]->ZetRead(a);
 	}
 	
 	return 0;
@@ -117,7 +117,7 @@ void ZetSetReadHandler(UINT8 (__fastcall *pHandler)(UINT16))
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSetReadHandler called when no CPU open\n"));
 #endif
 
-	ZetCPUContext[nOpenedCPU].ZetRead = pHandler;
+	ZetCPUContext[nOpenedCPU]->ZetRead = pHandler;
 }
 
 void ZetSetWriteHandler(void (__fastcall *pHandler)(UINT16, UINT8))
@@ -127,7 +127,7 @@ void ZetSetWriteHandler(void (__fastcall *pHandler)(UINT16, UINT8))
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSetWriteHandler called when no CPU open\n"));
 #endif
 
-	ZetCPUContext[nOpenedCPU].ZetWrite = pHandler;
+	ZetCPUContext[nOpenedCPU]->ZetWrite = pHandler;
 }
 
 void ZetSetInHandler(UINT8 (__fastcall *pHandler)(UINT16))
@@ -137,7 +137,7 @@ void ZetSetInHandler(UINT8 (__fastcall *pHandler)(UINT16))
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSetInHandler called when no CPU open\n"));
 #endif
 
-	ZetCPUContext[nOpenedCPU].ZetIn = pHandler;
+	ZetCPUContext[nOpenedCPU]->ZetIn = pHandler;
 }
 
 void ZetSetOutHandler(void (__fastcall *pHandler)(UINT16, UINT8))
@@ -147,7 +147,7 @@ void ZetSetOutHandler(void (__fastcall *pHandler)(UINT16, UINT8))
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSetOutHandler called when no CPU open\n"));
 #endif
 
-	ZetCPUContext[nOpenedCPU].ZetOut = pHandler;
+	ZetCPUContext[nOpenedCPU]->ZetOut = pHandler;
 }
 
 void ZetNewFrame()
@@ -162,6 +162,55 @@ void ZetNewFrame()
 	nZetCyclesTotal = 0;
 }
 
+INT32 ZetInit(INT32 nCPU)
+{
+	DebugCPU_ZetInitted = 1;
+
+	nOpenedCPU = -1;
+
+	ZetCPUContext[nCPU] = (struct ZetExt*)BurnMalloc(sizeof(ZetExt));
+	memset (ZetCPUContext[nCPU], 0, sizeof(ZetExt));
+
+	if (nCPU == 0) { // not safe!
+		Z80Init();
+	}
+
+	{
+		ZetCPUContext[nCPU]->ZetIn = ZetDummyInHandler;
+		ZetCPUContext[nCPU]->ZetOut = ZetDummyOutHandler;
+		ZetCPUContext[nCPU]->ZetRead = ZetDummyReadHandler;
+		ZetCPUContext[nCPU]->ZetWrite = ZetDummyWriteHandler;
+		ZetCPUContext[nCPU]->BusReq = 0;
+		// TODO: Z80Init() will set IX IY F regs with default value, so get them ...
+		Z80GetContext(&ZetCPUContext[nCPU]->reg);
+		
+		nZetCyclesDone[nCPU] = 0;
+		nZ80ICount[nCPU] = 0;
+		
+		for (INT32 j = 0; j < (0x0100 * 4); j++) {
+			ZetCPUContext[nCPU]->pZetMemMap[j] = NULL;
+		}
+	}
+
+	nZetCyclesTotal = 0;
+
+	Z80SetIOReadHandler(ZetReadIO);
+	Z80SetIOWriteHandler(ZetWriteIO);
+	Z80SetProgramReadHandler(ZetReadProg);
+	Z80SetProgramWriteHandler(ZetWriteProg);
+	Z80SetCPUOpReadHandler(ZetReadOp);
+	Z80SetCPUOpArgReadHandler(ZetReadOpArg);
+	
+	nCPUCount = (nCPU+1) % MAX_Z80;
+
+	nHasZet = nCPU+1;
+
+	CpuCheatRegister(0x0004, nCPU);
+
+	return 0;
+}
+
+#if 0
 INT32 ZetInit(INT32 nCount)
 {
 	DebugCPU_ZetInitted = 1;
@@ -209,6 +258,7 @@ INT32 ZetInit(INT32 nCount)
 
 	return 0;
 }
+#endif
 
 UINT8 ZetReadByte(UINT16 address)
 {
@@ -233,12 +283,12 @@ void ZetWriteRom(UINT16 address, UINT8 data)
 
 	if (nOpenedCPU < 0) return;
 
-	if (ZetCPUContext[nOpenedCPU].pZetMemMap[0x200 | (address >> 8)] != NULL) {
-		ZetCPUContext[nOpenedCPU].pZetMemMap[0x200 | (address >> 8)][address] = data;
+	if (ZetCPUContext[nOpenedCPU]->pZetMemMap[0x200 | (address >> 8)] != NULL) {
+		ZetCPUContext[nOpenedCPU]->pZetMemMap[0x200 | (address >> 8)][address] = data;
 	}
 	
-	if (ZetCPUContext[nOpenedCPU].pZetMemMap[0x300 | (address >> 8)] != NULL) {
-		ZetCPUContext[nOpenedCPU].pZetMemMap[0x300 | (address >> 8)][address] = data;
+	if (ZetCPUContext[nOpenedCPU]->pZetMemMap[0x300 | (address >> 8)] != NULL) {
+		ZetCPUContext[nOpenedCPU]->pZetMemMap[0x300 | (address >> 8)][address] = data;
 	}
 	
 	ZetWriteProg(address, data);
@@ -251,7 +301,7 @@ void ZetClose()
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetClose called when no CPU open\n"));
 #endif
 
-	Z80GetContext(&ZetCPUContext[nOpenedCPU].reg);
+	Z80GetContext(&ZetCPUContext[nOpenedCPU]->reg);
 	nZetCyclesDone[nOpenedCPU] = nZetCyclesTotal;
 	nZ80ICount[nOpenedCPU] = z80_ICount;
 	Z80EA[nOpenedCPU] = EA;
@@ -265,9 +315,10 @@ void ZetOpen(INT32 nCPU)
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetOpen called without init\n"));
 	if (nCPU >= nCPUCount) bprintf(PRINT_ERROR, _T("ZetOpen called with invalid index %x\n"), nCPU);
 	if (nOpenedCPU != -1) bprintf(PRINT_ERROR, _T("ZetOpen called when CPU already open with index %x\n"), nCPU);
+	if (ZetCPUContext[nCPU] == NULL) bprintf (PRINT_ERROR, _T("ZetOpen called for uninitialized cpu %x\n"), nCPU);
 #endif
 
-	Z80SetContext(&ZetCPUContext[nCPU].reg);
+	Z80SetContext(&ZetCPUContext[nCPU]->reg);
 	nZetCyclesTotal = nZetCyclesDone[nCPU];
 	z80_ICount = nZ80ICount[nCPU];
 	EA = Z80EA[nCPU];
@@ -294,7 +345,7 @@ INT32 ZetRun(INT32 nCycles)
 
 	if (nCycles <= 0) return 0;
 	
-	if (ZetCPUContext[nOpenedCPU].BusReq) {
+	if (ZetCPUContext[nOpenedCPU]->BusReq) {
 		nZetCyclesTotal += nCycles;
 		return nCycles;
 	}
@@ -331,7 +382,7 @@ INT32 ZetMemCallback(INT32 nStart, INT32 nEnd, INT32 nMode)
 #endif
 
 	UINT8 cStart = (nStart >> 8);
-	UINT8 **pMemMap = ZetCPUContext[nOpenedCPU].pZetMemMap;
+	UINT8 **pMemMap = ZetCPUContext[nOpenedCPU]->pZetMemMap;
 
 	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
 		switch (nMode) {
@@ -368,9 +419,11 @@ void ZetExit()
 #endif
 
 	Z80Exit();
-	if (ZetCPUContext) {
-		free(ZetCPUContext);
-		ZetCPUContext = NULL;
+
+	for (INT32 i = 0; i < MAX_Z80; i++) {
+		if (ZetCPUContext[i]) {
+			BurnFree (ZetCPUContext[i]);
+		}
 	}
 
 	nCPUCount = 0;
@@ -388,7 +441,7 @@ INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem)
 #endif
 
 	UINT8 cStart = (nStart >> 8);
-	UINT8 **pMemMap = ZetCPUContext[nOpenedCPU].pZetMemMap;
+	UINT8 **pMemMap = ZetCPUContext[nOpenedCPU]->pZetMemMap;
 
 	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
 		switch (nMode) {
@@ -421,7 +474,7 @@ INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem01, UINT8 *Mem
 #endif
 
 	UINT8 cStart = (nStart >> 8);
-	UINT8 **pMemMap = ZetCPUContext[nOpenedCPU].pZetMemMap;
+	UINT8 **pMemMap = ZetCPUContext[nOpenedCPU]->pZetMemMap;
 	
 	if (nMode != 2) {
 		return 1;
@@ -457,7 +510,7 @@ INT32 ZetPc(INT32 n)
 	if (n < 0) {
 		return ActiveZ80GetPC();
 	} else {
-		return ZetCPUContext[n].reg.pc.w.l;
+		return ZetCPUContext[n]->reg.pc.w.l;
 	}
 }
 
@@ -471,7 +524,7 @@ INT32 ZetBc(INT32 n)
 	if (n < 0) {
 		return ActiveZ80GetBC();
 	} else {
-		return ZetCPUContext[n].reg.bc.w.l;
+		return ZetCPUContext[n]->reg.bc.w.l;
 	}
 }
 
@@ -485,7 +538,7 @@ INT32 ZetDe(INT32 n)
 	if (n < 0) {
 		return ActiveZ80GetDE();
 	} else {
-		return ZetCPUContext[n].reg.de.w.l;
+		return ZetCPUContext[n]->reg.de.w.l;
 	}
 }
 
@@ -499,7 +552,7 @@ INT32 ZetHL(INT32 n)
 	if (n < 0) {
 		return ActiveZ80GetHL();
 	} else {
-		return ZetCPUContext[n].reg.hl.w.l;
+		return ZetCPUContext[n]->reg.hl.w.l;
 	}
 }
 
@@ -518,7 +571,7 @@ INT32 ZetScan(INT32 nAction)
 	for (INT32 i = 0; i < nCPUCount; i++) {
 		szText[5] = '1' + i;
 
-		ScanVar(&ZetCPUContext[i].reg, sizeof(Z80_Regs), szText);
+		ScanVar(&ZetCPUContext[i]->reg, sizeof(Z80_Regs), szText);
 		SCAN_VAR(Z80EA[i]);
 		SCAN_VAR(nZ80ICount[i]);
 		SCAN_VAR(nZetCyclesDone[i]);
@@ -620,7 +673,7 @@ void ZetSetBUSREQLine(INT32 nStatus)
 
 	if (nOpenedCPU < 0) return;
 	
-	ZetCPUContext[nOpenedCPU].BusReq = nStatus;
+	ZetCPUContext[nOpenedCPU]->BusReq = nStatus;
 }
 
 #undef MAX_Z80

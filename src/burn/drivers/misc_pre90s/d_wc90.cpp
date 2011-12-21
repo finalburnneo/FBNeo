@@ -1109,7 +1109,7 @@ static INT32 Wc90Init()
 	nRet = BurnLoadRom(Wc90YM2608Rom, 14, 1); if (nRet !=0) return 1;
 
 	// Setup the Z80 emulation
-	ZetInit(3);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(Wc90Read1);
 	ZetSetWriteHandler(Wc90Write1);
@@ -1141,6 +1141,7 @@ static INT32 Wc90Init()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetWriteHandler(Wc90Write2);
 	ZetMapArea(0x0000, 0xbfff, 0, Wc90Z80Rom2          );
@@ -1165,6 +1166,7 @@ static INT32 Wc90Init()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(2);
 	ZetOpen(2);
 	ZetSetReadHandler(Wc90Read3);
 	ZetSetWriteHandler(Wc90Write3);

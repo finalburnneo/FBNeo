@@ -1806,12 +1806,12 @@ INT32 System16Init()
 		}
 		
 		if (System16MapZ80Do) {
-			ZetInit(1);
+			ZetInit(0);
 			ZetOpen(0);
 			System16MapZ80Do();
 			ZetClose();
 		} else {
-			ZetInit(1);
+			ZetInit(0);
 			ZetOpen(0);
 			ZetMapArea(0x0000, 0xdfff, 0, System16Z80Rom);
 			ZetMapArea(0x0000, 0xdfff, 2, System16Z80Rom);
@@ -1877,12 +1877,12 @@ INT32 System16Init()
 		
 		if (System16Z80RomNum || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_ISGSM)) {
 			if (System16MapZ80Do) {
-				ZetInit(1);
+				ZetInit(0);
 				ZetOpen(0);
 				System16MapZ80Do();
 				ZetClose();
 			} else {
-				ZetInit(1);
+				ZetInit(0);
 				ZetOpen(0);
 				if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MC8123_ENC) {
 					ZetMapArea(0x0000, 0xdfff, 0, System16Z80Rom);
@@ -1947,12 +1947,12 @@ INT32 System16Init()
 		}
 		
 		if (System16MapZ80Do) {
-			ZetInit(1);
+			ZetInit(0);
 			ZetOpen(0);
 			System16MapZ80Do();
 			ZetClose();
 		} else {
-			ZetInit(1);
+			ZetInit(0);
 			ZetOpen(0);
 			ZetMapArea(0x0000, 0x9fff, 0, System16Z80Rom);
 			ZetMapArea(0x0000, 0x9fff, 2, System16Z80Rom);
@@ -2022,13 +2022,13 @@ INT32 System16Init()
 		SekClose();
 		
 		if (System16MapZ80Do) {
-			ZetInit(1);
+			ZetInit(0);
 			ZetOpen(0);
 			System16MapZ80Do();
 			ZetClose();
 		} else {
 			if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2203) {
-				ZetInit(1);
+				ZetInit(0);
 				ZetOpen(0);
 				ZetMapArea(0x0000, 0x7fff, 0, System16Z80Rom);
 				ZetMapArea(0x0000, 0x7fff, 2, System16Z80Rom);
@@ -2043,7 +2043,7 @@ INT32 System16Init()
 				ZetSetInHandler(System16Z802203PortRead);
 				ZetClose();
 			} else {
-				ZetInit(1);
+				ZetInit(0);
 				ZetOpen(0);
 				ZetMapArea(0x0000, 0xdfff, 0, System16Z80Rom);
 				ZetMapArea(0x0000, 0xdfff, 2, System16Z80Rom);
@@ -2121,12 +2121,12 @@ INT32 System16Init()
 		SekClose();
 		
 		if (System16MapZ80Do) {
-			ZetInit(1);
+			ZetInit(0);
 			ZetOpen(0);
 			System16MapZ80Do();
 			ZetClose();
 		} else {
-			ZetInit(1);
+			ZetInit(0);
 			ZetOpen(0);
 			ZetMapArea(0x0000, 0xdfff, 0, System16Z80Rom);
 			ZetMapArea(0x0000, 0xdfff, 2, System16Z80Rom);
@@ -2213,12 +2213,12 @@ INT32 System16Init()
 		SekClose();
 		
 		if (System16MapZ80Do) {
-			ZetInit(1);
+			ZetInit(0);
 			ZetOpen(0);
 			System16MapZ80Do();
 			ZetClose();
 		} else {
-			ZetInit(1);
+			ZetInit(0);
 			ZetOpen(0);
 			ZetMapArea(0x0000, 0xdfff, 0, System16Z80Rom);
 			ZetMapArea(0x0000, 0xdfff, 2, System16Z80Rom);
@@ -2292,12 +2292,12 @@ INT32 System16Init()
 		SekClose();
 		
 		if (System16MapZ80Do) {
-			ZetInit(1);
+			ZetInit(0);
 			ZetOpen(0);
 			System16MapZ80Do();
 			ZetClose();
 		} else {
-			ZetInit(1);
+			ZetInit(0);
 			ZetOpen(0);
 			ZetMapArea(0x0000, 0xdfff, 0, System16Z80Rom);
 			ZetMapArea(0x0000, 0xdfff, 2, System16Z80Rom);

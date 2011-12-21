@@ -781,7 +781,7 @@ static INT32 SpriteYOffsets[16]    = { 0, 8, 16, 24, 32, 40, 48, 56, 256, 264, 2
 
 static void MachineInit()
 {
-	ZetInit(3);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(GalagaZ80ProgRead);
 	ZetSetWriteHandler(GalagaZ80ProgWrite);
@@ -802,6 +802,7 @@ static void MachineInit()
 	ZetMemEnd();
 	ZetClose();
 	
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetReadHandler(GalagaZ80ProgRead);
 	ZetSetWriteHandler(GalagaZ80ProgWrite);
@@ -822,6 +823,7 @@ static void MachineInit()
 	ZetMemEnd();
 	ZetClose();
 	
+	ZetInit(2);
 	ZetOpen(2);
 	ZetSetReadHandler(GalagaZ80ProgRead);
 	ZetSetWriteHandler(GalagaZ80ProgWrite);

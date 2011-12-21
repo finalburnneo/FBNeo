@@ -1260,7 +1260,7 @@ static INT32 Type1Init(INT32 mcutype)
 		break;
 	}
 
-	ZetInit(3);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM0);
@@ -1286,6 +1286,7 @@ static INT32 Type1Init(INT32 mcutype)
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0x9fff, 0, DrvZ80ROM1);
 	ZetMapArea(0x0000, 0x9fff, 2, DrvZ80ROM1);
@@ -1299,6 +1300,8 @@ static INT32 Type1Init(INT32 mcutype)
 	ZetSetReadHandler(tnzs_cpu1_read);
 	ZetMemEnd();
 	ZetClose();
+
+	ZetInit(2); // For common reset routine
 
 	tnzs_mcu_init(mcutype);
 
@@ -1364,7 +1367,7 @@ static INT32 Type2Init()
 		if (tnzs_gfx_decode()) return 1;
 	}
 
-	ZetInit(3);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM0);
@@ -1390,6 +1393,7 @@ static INT32 Type2Init()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0x9fff, 0, DrvZ80ROM1);
 	ZetMapArea(0x0000, 0x9fff, 2, DrvZ80ROM1);
@@ -1406,6 +1410,7 @@ static INT32 Type2Init()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(2);
 	ZetOpen(2);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM2 + 0x0000);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM2 + 0x0000);

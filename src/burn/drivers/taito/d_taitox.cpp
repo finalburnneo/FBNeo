@@ -1095,7 +1095,7 @@ static INT32 TaitoXInit(INT32 nSoundType)
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	if (nSoundType == 1) {
 		ZetSetReadHandler(TwinhawkZ80Read);

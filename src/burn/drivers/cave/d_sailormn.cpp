@@ -199,7 +199,7 @@ void __fastcall sailormnZOut(UINT16 nAddress, UINT8 nValue)
 
 static INT32 drvZInit()
 {
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 
 	ZetSetInHandler(sailormnZIn);

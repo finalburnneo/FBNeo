@@ -3277,7 +3277,7 @@ static void M62MachineInit()
 {
 //	BurnSetRefreshRate(55.0);
 	
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(M62Z80Read);
 	ZetSetWriteHandler(M62Z80Write);

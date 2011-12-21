@@ -549,13 +549,16 @@ INT32 GalInit()
 	// Setup the Z80 emulation
 	if (GalSoundType != GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910) {
 		if (GalZ80Rom3Size) {
-			ZetInit(3);
+			ZetInit(0);
+			ZetInit(1);
+			ZetInit(2);
 		} else {
 			if (GalZ80Rom2Size) {
-				ZetInit(2);
+				ZetInit(0);
+				ZetInit(1);
 			} else {
 				if (GalZ80Rom1Size) {
-					ZetInit(1);
+					ZetInit(0);
 				}
 			}
 		}

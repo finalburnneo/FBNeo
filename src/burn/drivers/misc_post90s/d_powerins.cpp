@@ -825,7 +825,7 @@ static INT32 powerinsInit()
 
 	if ( game_drv != GAME_POWERINA ) {
 
-		ZetInit(1);
+		ZetInit(0);
 		ZetOpen(0);
 
 		ZetSetReadHandler(powerinsZ80Read);

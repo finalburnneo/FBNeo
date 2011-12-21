@@ -4061,7 +4061,7 @@ static INT32 DariusInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(DariusZ80Read);
 	ZetSetWriteHandler(DariusZ80Write);
@@ -4072,7 +4072,8 @@ static INT32 DariusInit()
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1               );
 	ZetMemEnd();
 	ZetClose();
-	
+
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetInHandler(DariusZ802ReadPort);
 	ZetSetOutHandler(DariusZ802WritePort);
@@ -4164,7 +4165,7 @@ static INT32 OpwolfInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(OpwolfZ80Read);
 	ZetSetWriteHandler(OpwolfZ80Write);
@@ -4268,7 +4269,7 @@ static INT32 OpwolfbInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(OpwolfZ80Read);
 	ZetSetWriteHandler(OpwolfZ80Write);
@@ -4281,7 +4282,8 @@ static INT32 OpwolfbInit()
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1               );
 	ZetMemEnd();
 	ZetClose();
-	
+
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetReadHandler(OpwolfbCChipSubZ80Read);
 	ZetSetWriteHandler(OpwolfbCChipSubZ80Write);
@@ -4380,7 +4382,7 @@ static INT32 RainbowInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(RainbowZ80Read);
 	ZetSetWriteHandler(RainbowZ80Write);
@@ -4476,7 +4478,7 @@ static INT32 JumpingInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(JumpingZ80Read);
 	ZetSetWriteHandler(JumpingZ80Write);
@@ -4567,7 +4569,7 @@ static INT32 RastanInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(RastanZ80Read);
 	ZetSetWriteHandler(RastanZ80Write);
@@ -4676,7 +4678,7 @@ static INT32 TopspeedInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(TopspeedZ80Read);
 	ZetSetWriteHandler(TopspeedZ80Write);
@@ -4763,7 +4765,7 @@ static INT32 VolfiedInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(VolfiedZ80Read);
 	ZetSetWriteHandler(VolfiedZ80Write);

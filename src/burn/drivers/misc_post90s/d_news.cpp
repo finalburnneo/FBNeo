@@ -279,7 +279,7 @@ INT32 NewsInit()
 	nRet = BurnLoadRom(MSM6295ROM, 3, 1); if (nRet != 0) return 1;
 
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, NewsRom        );
 	ZetMapArea(0x0000, 0x7fff, 2, NewsRom        );

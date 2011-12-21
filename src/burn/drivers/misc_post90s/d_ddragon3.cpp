@@ -1239,7 +1239,7 @@ static INT32 DrvInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(Ddragon3Z80Read);
 	ZetSetWriteHandler(Ddragon3Z80Write);
@@ -1349,7 +1349,7 @@ static INT32 DrvpInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(Ddragon3Z80Read);
 	ZetSetWriteHandler(Ddragon3Z80Write);
@@ -1456,7 +1456,7 @@ static INT32 DrvbInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(Ddragon3Z80Read);
 	ZetSetWriteHandler(Ddragon3Z80Write);
@@ -1593,7 +1593,7 @@ static INT32 CtribeInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(CtribeZ80Read);
 	ZetSetWriteHandler(CtribeZ80Write);

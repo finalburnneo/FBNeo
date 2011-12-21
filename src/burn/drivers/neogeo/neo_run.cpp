@@ -3736,7 +3736,7 @@ static INT32 NeoInitCommon()
 	SekInit(0, 0x68000);											// Allocate 68000
     SekOpen(0);
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 
 	{

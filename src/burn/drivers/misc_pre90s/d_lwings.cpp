@@ -964,8 +964,10 @@ static INT32 DrvInit()
 		DrvGfxDecode();
 	}
 
-	ZetInit(2);
+	ZetInit(0);
 	lwings_main_cpu_init();
+
+	ZetInit(1);
 	lwings_sound_init();
 
 	GenericTilesInit();
@@ -1018,10 +1020,13 @@ static INT32 TrojanInit()
 		}
 	}
 
-	ZetInit(3);
+	ZetInit(0);
 	lwings_main_cpu_init();
+
+	ZetInit(1);
 	lwings_sound_init();
 
+	ZetInit(2);
 	ZetOpen(2);
 	ZetMapArea(0x0000, 0xffff, 0, DrvZ80ROM2);
 	ZetMapArea(0x0000, 0xffff, 2, DrvZ80ROM2);

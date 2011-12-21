@@ -77,7 +77,7 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvZ80ROM, 0, 1)) return 1;
 	}
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea (0x0000, 0x1fff, 0, DrvZ80ROM);
 	ZetMapArea (0x0000, 0x1fff, 2, DrvZ80ROM);

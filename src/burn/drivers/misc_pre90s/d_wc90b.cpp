@@ -571,7 +571,7 @@ static INT32 Wc90b1Init()
 	BurnFree(Wc90b1TempGfx);
 
 	// Setup the Z80 emulation
-	ZetInit(3);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(Wc90b1Read1);
 	ZetSetWriteHandler(Wc90b1Write1);
@@ -600,6 +600,7 @@ static INT32 Wc90b1Init()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetReadHandler(Wc90b1Read2);
 	ZetSetWriteHandler(Wc90b1Write2);
@@ -627,6 +628,7 @@ static INT32 Wc90b1Init()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(2);
 	ZetOpen(2);
 	ZetSetReadHandler(Wc90b1Read3);
 	ZetSetWriteHandler(Wc90b1Write3);

@@ -632,7 +632,7 @@ static INT32 DrvInit()
 	BurnFree(DrvTempRom);
 	
 	// Setup the Z80 emulation
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(CommandoRead1);
 	ZetSetWriteHandler(CommandoWrite1);
@@ -659,6 +659,7 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 	
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetReadHandler(CommandoRead2);
 	ZetSetWriteHandler(CommandoWrite2);

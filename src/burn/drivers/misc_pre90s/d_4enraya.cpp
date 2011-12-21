@@ -307,7 +307,7 @@ static INT32 DrvInit(INT32 game, INT32 sbit)
 		DrvGfxDecode();
 	}
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 
 	if (game == 0)	// 4enraya

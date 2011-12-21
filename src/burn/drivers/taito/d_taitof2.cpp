@@ -7409,7 +7409,7 @@ static double CamltryaGetTime()
 static void TaitoF2SoundInit()
 {
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(TaitoF2Z80Read);
 	ZetSetWriteHandler(TaitoF2Z80Write);
@@ -7601,7 +7601,7 @@ static INT32 CamltryaInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(CamltryaZ80Read);
 	ZetSetWriteHandler(CamltryaZ80Write);
@@ -7951,7 +7951,7 @@ static INT32 DriveoutInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(DriveoutZ80Read);
 	ZetSetWriteHandler(DriveoutZ80Write);

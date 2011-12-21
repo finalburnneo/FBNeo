@@ -1415,7 +1415,7 @@ static INT32 DrvInit()
 	nRet = BurnLoadRom(DrvSamples + 0x00000, 16, 1); if (nRet != 0) return 1;
 	
 	// Setup the Z80 emulation
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(VigilanteZ80Read1);
 	ZetSetWriteHandler(VigilanteZ80Write1);
@@ -1436,6 +1436,7 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 	
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetReadHandler(VigilanteZ80Read2);
 	ZetSetWriteHandler(VigilanteZ80Write2);
@@ -1512,7 +1513,7 @@ static INT32 BuccanrsInit()
 	nRet = BurnLoadRom(DrvSamples + 0x00000, 11, 1); if (nRet != 0) return 1;
 	
 	// Setup the Z80 emulation
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(VigilanteZ80Read1);
 	ZetSetWriteHandler(VigilanteZ80Write1);
@@ -1533,7 +1534,8 @@ static INT32 BuccanrsInit()
 	ZetMapArea(0xe000, 0xefff, 2, DrvZ80Ram1             );
 	ZetMemEnd();
 	ZetClose();
-	
+
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetReadHandler(VigilanteZ80Read2);
 	ZetSetWriteHandler(VigilanteZ80Write2);
@@ -1635,7 +1637,7 @@ static INT32 KikcubicInit()
 	BurnFree(DrvTempRom);
 	
 	// Setup the Z80 emulation
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(KikcubicZ80Read1);
 	ZetSetWriteHandler(KikcubicZ80Write1);
@@ -1658,7 +1660,8 @@ static INT32 KikcubicInit()
 	ZetMapArea(0xe000, 0xffff, 2, DrvZ80Ram1             );
 	ZetMemEnd();
 	ZetClose();
-	
+
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetReadHandler(VigilanteZ80Read2);
 	ZetSetWriteHandler(VigilanteZ80Write2);

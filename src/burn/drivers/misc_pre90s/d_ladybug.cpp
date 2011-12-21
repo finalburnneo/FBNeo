@@ -751,7 +751,7 @@ static INT32 DrvInit(INT32 game_select)
 		DrvGfxDecode();
 	}
 
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x5fff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0x5fff, 2, DrvZ80Ops0, DrvZ80ROM0);
@@ -771,6 +771,8 @@ static INT32 DrvInit(INT32 game_select)
 	ZetSetReadHandler(ladybug_read);
 	ZetMemEnd();
 	ZetClose();
+
+	ZetInit(1); // So reset function can be shared
 
 	SN76489Init(0, 4000000, 0);
 	SN76489Init(1, 4000000, 1);
@@ -815,7 +817,7 @@ static INT32 SraiderInit()
 		DrvGfxDecode();
 	}
 
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x5fff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0x5fff, 2, DrvZ80ROM0);
@@ -836,6 +838,7 @@ static INT32 SraiderInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0x5fff, 0, DrvZ80ROM1);
 	ZetMapArea(0x0000, 0x5fff, 2, DrvZ80ROM1);

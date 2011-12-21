@@ -719,7 +719,7 @@ static INT32 DrvInit(INT32 nGame)
 	SekMapMemory(DrvShareRAM,		0xffc000, 0xffcfff, SM_RAM);
 	SekClose();
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x77ff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0x77ff, 2, DrvZ80ROM);

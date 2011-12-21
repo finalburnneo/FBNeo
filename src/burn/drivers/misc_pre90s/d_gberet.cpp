@@ -660,7 +660,7 @@ static INT32 DrvInit()
 	}
 	DrvCreatePalette();
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(gberet_read);
 	ZetSetWriteHandler(gberet_write);

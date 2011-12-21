@@ -567,7 +567,7 @@ static INT32 DrvInit()
 		DrvGfxDecode();
 	}
 
-	ZetInit(3);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM0);
@@ -589,6 +589,7 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM1);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM1);
@@ -612,6 +613,7 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(2);
 	ZetOpen(2);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM2);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM2);

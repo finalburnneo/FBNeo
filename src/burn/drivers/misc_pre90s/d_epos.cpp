@@ -472,7 +472,7 @@ static INT32 DrvInit()
 		DrvPaletteInit(8);
 	}
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x77ff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0x77ff, 2, DrvZ80ROM);
@@ -515,7 +515,7 @@ static INT32 DealerInit()
 		DealerDecode();
 	}
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x6fff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0x6fff, 2, DrvZ80ROM);

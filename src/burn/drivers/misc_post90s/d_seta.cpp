@@ -6720,7 +6720,7 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 	if (DrvLoadRoms(1)) return 1;
 
 	// make sure these are initialized so that we can use common routines
-	ZetInit(1);
+	ZetInit(0);
 	MSM6295Init(0, 1000000 / 132, 100.0, 0);
 
 	if (p68kInit) {

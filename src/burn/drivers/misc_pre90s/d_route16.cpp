@@ -428,7 +428,7 @@ static INT32 DrvInit()
 	// Load Roms
 	if (GetRoms()) return 1;
 
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetOutHandler(route16_cpu0_out);
 	ZetSetReadHandler(route16_cpu0_read);
@@ -441,6 +441,7 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetWriteHandler(route16_cpu0_write);
 	ZetMapArea (0x0000, 0x1fff, 0, Rom1 + 0x0000); // ROM

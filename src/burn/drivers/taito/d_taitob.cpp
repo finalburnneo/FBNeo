@@ -1789,7 +1789,7 @@ static void common_ym2610_init()
 {
 	sound_config = 0;
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x3fff, 0, TaitoZ80Rom1);
 	ZetMapArea(0x0000, 0x3fff, 2, TaitoZ80Rom1);
@@ -1815,7 +1815,7 @@ static void common_ym2203_init()
 {
 	sound_config = 1;
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x3fff, 0, TaitoZ80Rom1);
 	ZetMapArea(0x0000, 0x3fff, 2, TaitoZ80Rom1);

@@ -3981,7 +3981,7 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	}
 	
 	// Setup the Z80 emulation
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetWriteHandler(System1Z801ProgWrite);
 	ZetSetInHandler(System1Z801PortRead);
@@ -4030,7 +4030,8 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	ZetMapArea(0xfc00, 0xffff, 2, System1fcRam);	
 	ZetMemEnd();
 	ZetClose();
-	
+
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetReadHandler(System1Z802ProgRead);
 	ZetSetWriteHandler(System1Z802ProgWrite);

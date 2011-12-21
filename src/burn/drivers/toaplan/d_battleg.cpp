@@ -504,7 +504,7 @@ void __fastcall battlegZ80Write(UINT16 nAddress, UINT8 nValue)
 
 static INT32 DrvZ80Init()
 {
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 
 	ZetSetReadHandler(battlegZ80Read);

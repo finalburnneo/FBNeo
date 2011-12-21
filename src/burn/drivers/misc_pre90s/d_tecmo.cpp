@@ -710,7 +710,7 @@ static INT32 RygarInit()
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xbfff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM0);
@@ -731,6 +731,7 @@ static INT32 RygarInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0x3fff, 0, DrvZ80ROM1);
 	ZetMapArea(0x0000, 0x3fff, 2, DrvZ80ROM1);
@@ -788,7 +789,7 @@ static INT32 SilkwormInit()
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xbfff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM0);
@@ -809,6 +810,7 @@ static INT32 SilkwormInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM1);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM1);
@@ -866,7 +868,7 @@ static INT32 GeminiInit()
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xbfff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM0);
@@ -887,6 +889,7 @@ static INT32 GeminiInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM1);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM1);

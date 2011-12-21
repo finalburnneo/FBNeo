@@ -237,7 +237,7 @@ static INT32 DrvInit()
 
 	quizo_palette_init();
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetWriteHandler(quizo_write);
 	ZetSetInHandler(quizo_in_port);

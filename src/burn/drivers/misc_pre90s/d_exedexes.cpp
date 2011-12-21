@@ -405,7 +405,7 @@ static INT32 DrvInit()
 		if (PaletteInit()) return 1;
 	}
 
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xbfff, 0, Rom0 + 0x0000);
 	ZetMapArea(0x0000, 0xbfff, 2, Rom0 + 0x0000);
@@ -421,6 +421,7 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 
+	ZetInit(1);
 	ZetOpen(1);
 	ZetMapArea(0x0000, 0x3fff, 0, Rom1 + 0x0000);
 	ZetMapArea(0x0000, 0x3fff, 2, Rom1 + 0x0000);

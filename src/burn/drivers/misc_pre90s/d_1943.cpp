@@ -875,7 +875,7 @@ static INT32 DrvInit()
 	BurnFree(DrvTempRom);
 	
 	// Setup the Z80 emulation
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(Drv1943Read1);
 	ZetSetWriteHandler(Drv1943Write1);
@@ -899,7 +899,8 @@ static INT32 DrvInit()
 	ZetMapArea(0xf000, 0xffff, 2, DrvSpriteRam           );
 	ZetMemEnd();
 	ZetClose();
-	
+
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetReadHandler(Drv1943Read2);
 	ZetSetWriteHandler(Drv1943Write2);
@@ -996,7 +997,7 @@ static INT32 DrvbInit()
 	BurnFree(DrvTempRom);
 	
 	// Setup the Z80 emulation
-	ZetInit(2);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(Drvb1943Read1);
 	ZetSetWriteHandler(Drv1943Write1);
@@ -1021,6 +1022,7 @@ static INT32 DrvbInit()
 	ZetMemEnd();
 	ZetClose();
 	
+	ZetInit(1);
 	ZetOpen(1);
 	ZetSetReadHandler(Drv1943Read2);
 	ZetSetWriteHandler(Drv1943Write2);

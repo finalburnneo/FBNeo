@@ -438,7 +438,7 @@ static INT32 DrvInit()
 	konamiSetlinesCallback(parodius_set_lines);
 	konamiClose();
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0xefff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0xefff, 2, DrvZ80ROM);

@@ -4389,7 +4389,7 @@ static INT32 TmntInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(TmntZ80Read);
 	ZetSetWriteHandler(TmntZ80Write);
@@ -4488,7 +4488,7 @@ static INT32 MiaInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(MiaZ80Read);
 	ZetSetWriteHandler(MiaZ80Write);
@@ -4644,7 +4644,7 @@ static INT32 BlswhstlInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(BlswhstlZ80Read);
 	ZetSetWriteHandler(BlswhstlZ80Write);
@@ -4728,7 +4728,7 @@ static INT32 SsridersInit()
 	SekClose();
 	
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(BlswhstlZ80Read);
 	ZetSetWriteHandler(BlswhstlZ80Write);
@@ -4809,7 +4809,7 @@ static INT32 Thndrx2Init()
 	SekClose();
 
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(Thndrx2Z80Read);
 	ZetSetWriteHandler(Thndrx2Z80Write);
@@ -4891,7 +4891,7 @@ static INT32 LgtnfghtInit()
 	SekClose();
 
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(LgtnfghtZ80Read);
 	ZetSetWriteHandler(LgtnfghtZ80Write);
@@ -4981,7 +4981,7 @@ static INT32 Tmnt2Init()
 	SekClose();
 
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(BlswhstlZ80Read);
 	ZetSetWriteHandler(BlswhstlZ80Write);
@@ -5069,7 +5069,7 @@ static INT32 QgakumonInit()
 	SekClose();
 
 	// Setup the Z80 emulation
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(BlswhstlZ80Read);
 	ZetSetWriteHandler(BlswhstlZ80Write);
@@ -5150,7 +5150,7 @@ static INT32 PunkshotInit()
 	SekSetWriteByteHandler(0, 	Punkshot68KWriteByte);
 	SekClose();
 
-	ZetInit(1);
+	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(Thndrx2Z80Read);
 	ZetSetWriteHandler(Thndrx2Z80Write);

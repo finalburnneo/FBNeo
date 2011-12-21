@@ -834,11 +834,7 @@ static INT32 DrvInit(INT32 (*pLoadRoms)(), void (*p68KInit)(), INT32 zLen)
 
 	SekClose();
 
-	if (Terrafjb) {
-		ZetInit(2);
-	} else {
-		ZetInit(1);
-	}
+	ZetInit(0);
 	ZetOpen(0);
 	ZetMapArea(0x0000, zLen-1, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, zLen-1, 2, DrvZ80ROM);
@@ -851,6 +847,7 @@ static INT32 DrvInit(INT32 (*pLoadRoms)(), void (*p68KInit)(), INT32 zLen)
 	ZetClose();
 	
 	if (Terrafjb) {
+		ZetInit(1);
 		ZetOpen(1);
 		ZetMapArea(0x0000, 0x3fff, 0, DrvZ80ROM2);
 		ZetMapArea(0x0000, 0x3fff, 2, DrvZ80ROM2);

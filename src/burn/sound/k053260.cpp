@@ -22,7 +22,7 @@ struct k053260_channel_def {
 	UINT32		volume;
 	INT32					play;
 	UINT32		pan;
-	INT32		pos;
+	UINT32		pos;
 	INT32					loop;
 	INT32					ppcm; /* packed PCM ( 4 bit signed ) */
 	INT32					ppcm_data;

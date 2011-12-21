@@ -276,3 +276,23 @@ void writememl(unsigned long addr, unsigned char val)
 
 }
 
+unsigned char snes_readmem(unsigned long adress)
+{
+	cycles-=accessspeed[(adress>>13)&0x7FF];
+	clockspc(accessspeed[(adress>>13)&0x7FF]);
+	if (memread[(adress>>13)&0x7FF])
+	{
+		return memlookup[(adress>>13)&0x7FF][adress&0x1FFF];
+	}
+	return readmeml(adress);
+}
+
+void snes_writemem(unsigned long ad, unsigned char v)
+{
+	cycles-=accessspeed[(ad>>13)&0x7FF];
+	clockspc(accessspeed[(ad>>13)&0x7FF]);
+	if (memwrite[(ad>>13)&0x7FF])
+		memlookup[(ad>>13)&0x7FF][(ad)&0x1FFF]=v;
+	else
+		writememl(ad,v);
+}

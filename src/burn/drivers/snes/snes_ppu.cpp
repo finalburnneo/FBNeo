@@ -1590,7 +1590,7 @@ static SNES_INLINE unsigned char pal5bit(unsigned char bits)
 #define RGB_BLACK 0x00
 
 
-
+#if 0
 SNES_INLINE static unsigned int CalcCol(unsigned short nColour)
 {
 	int r, g, b;
@@ -1608,7 +1608,7 @@ SNES_INLINE static unsigned int CalcCol(unsigned short nColour)
 
 	return BurnHighCol(r, g, b, 0);
 }
-
+#endif
 
 
 
@@ -1812,7 +1812,7 @@ void dohdma(int line)
 		{
 			if (hdmacount[c]<=0)
 			{
-				hdmacount[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+				hdmacount[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 				//                                        printf("HDMA %i count now %04X at %02X%04X %02X %04X\n",c,hdmacount[c],dmabank[c],hdmaaddr[c],dmactrl[c],hdmadat[c]);
 				if (!hdmacount[c])
 				{
@@ -1839,49 +1839,49 @@ void dohdma(int line)
 				switch (dmactrl[c]&7)
 				{
 				case 1: /*Two registers*/
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c],hdmadat[c]);
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c]+1,hdmadat[c]);
 					break;
 				case 2: /*One register write twice*/
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c],hdmadat[c]);
 				case 0: /*One register write once*/
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c],hdmadat[c]);
 					//                                                if (c==2) printf("Channel 2 now %02X%04X\n",dmabank[c],hdmaaddr[c]);
 					break;
 				case 3: /*Two registers write twice*/
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c],hdmadat[c]);
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c],hdmadat[c]);
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c]+1,hdmadat[c]);
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c]+1,hdmadat[c]);
 					break;
 				case 4: /*Four registers*/
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c],hdmadat[c]);
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c]+1,hdmadat[c]);
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c]+2,hdmadat[c]);
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c]+3,hdmadat[c]);
 					break;
 				default:
@@ -1894,48 +1894,48 @@ void dohdma(int line)
 				switch (dmactrl[c]&7)
 				{
 				case 1: /*Two registers*/
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c],hdmadat[c]);
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c]+1,hdmadat[c]);
 					break;
 				case 2: /*One register write twice*/
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c],hdmadat[c]);
 				case 0: /*One register write once*/
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c],hdmadat[c]);
 					break;
 				case 3: /*Two registers write twice*/
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c],hdmadat[c]);
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c],hdmadat[c]);
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c]+1,hdmadat[c]);
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c]+1,hdmadat[c]);
 					break;
 				case 4: /*Four registers*/
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c],hdmadat[c]);
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c]+1,hdmadat[c]);
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c]+2,hdmadat[c]);
-					if (hdmastat[c]&INDIRECT) hdmadat[c]=readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
-					else                      hdmadat[c]=readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
+					if (hdmastat[c]&INDIRECT) hdmadat[c]=snes_readmem((dmaibank[c]<<16)|(hdmaaddr2[c]++));
+					else                      hdmadat[c]=snes_readmem((dmabank[c]<<16)|(hdmaaddr[c]++));
 					writeppu(dmadest[c]+3,hdmadat[c]);
 					break;
 				default:

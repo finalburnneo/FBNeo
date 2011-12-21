@@ -469,9 +469,9 @@ static int ListItemActivate()
 	return 0;
 }
 
+#if 0
 static int NewMacroButton()
 {
-#if 0
 	LVITEM LvItem;
 	int nSel;
 
@@ -499,10 +499,10 @@ static int NewMacroButton()
 	}
 
 	InpMacroCreate(nSel);
-#endif
 
 	return 0;
 }
+#endif
 
 static int DeleteInput(unsigned int i)
 {
@@ -722,7 +722,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 		if (Id == IDC_INPD_NEWMACRO && Notify == BN_CLICKED) {
 
-			NewMacroButton();
+//			NewMacroButton();
 
 			return 0;
 		}

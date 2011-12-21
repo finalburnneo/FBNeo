@@ -14,7 +14,7 @@ int cntInit()
 {
 	LARGE_INTEGER f;
 
-	cntExit();
+//	cntExit();
 
 	QueryPerformanceFrequency(&f);
 

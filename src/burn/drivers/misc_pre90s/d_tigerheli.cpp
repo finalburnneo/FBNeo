@@ -454,16 +454,6 @@ static void TigerHeliTextRender()
 // ---------------------------------------------------------------------------
 // Tile layer
 
-static void TigerHeliTileExit()
-{
-	return;
-}
-
-static INT32 TigerHeliTileInit()
-{
-	return 0;
-}
-
 #define PLOTPIXEL(x) pPixel[x] = nPalette + pTileData[x];
 #define CLIPPIXEL(a,b) if ((nTileXPos + a) >= 0 && (nTileXPos + a) < 280) { b; }
 
@@ -581,16 +571,6 @@ static void TigerHeliTileRender()
 static INT32 nSpriteXPos, nSpriteYPos, nSpriteNumber, nSpritePalette;
 
 static INT32 nTigerHeliSpriteMask;
-
-static void TigerHeliSpriteExit()
-{
-	return;
-}
-
-static INT32 TigerHeliSpriteInit()
-{
-	return 0;
-}
 
 #define PLOTPIXEL(a) if (pSpriteData[a]) { pPixel[a] = nPalette + pSpriteData[a]; }
 #define CLIPPIXEL(a,b) if ((nSpriteXPos + a) >= 0 && (nSpriteXPos + a) < 280) { b; }
@@ -1948,9 +1928,7 @@ static INT32 tigerhExit()
 {
 	BurnTransferExit();
 
-	TigerHeliSpriteExit();
 	TigerHeliTextExit();
-	TigerHeliTileExit();
 
 	ZetExit();
 	AY8910Exit(0);
@@ -2135,9 +2113,7 @@ static INT32 tigerhInit()
 	AY8910Init(0, 1500000, nBurnSoundRate, &tigerhReadPort0, &tigerhReadPort1, NULL, NULL);
 	AY8910Init(1, 1500000, nBurnSoundRate, &tigerhReadPort2, &tigerhReadPort3, NULL, NULL);
 
-	TigerHeliTileInit();
 	TigerHeliTextInit();
-	TigerHeliSpriteInit();
 	TigerHeliPaletteInit();
 
 	BurnTransferInit();

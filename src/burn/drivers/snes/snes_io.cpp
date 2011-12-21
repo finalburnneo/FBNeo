@@ -142,11 +142,11 @@ void writeio(unsigned short addr, unsigned char val)
 					{
 						//                                                printf("Dest %04X+%04X SRC %06X %04X\n",dmadest[d],offset,dmabank[d],dmasrc[d]);
 						temp=readppu(dmadest[d]+offset);
-						writemem((dmabank[d]<<16)|dmasrc[d],temp);
+						snes_writemem((dmabank[d]<<16)|dmasrc[d],temp);
 					}
 					else
 					{
-						temp=readmem((dmabank[d]<<16)|dmasrc[d]);
+						temp=snes_readmem((dmabank[d]<<16)|dmasrc[d]);
 						//                                                if (dmabank[d]==0 && dmasrc[d]<0x2000) printf("%02X %06X %04X\n",temp,dmabank[d]|dmasrc[d],dmalen[d]);
 						writeppu(dmadest[d]+offset,temp);
 					}

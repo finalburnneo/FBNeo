@@ -58,7 +58,7 @@ INT32 SnesInit()
 	
 	initmem();
 	
-	if (((readmem(0xFFFD)<<8)|readmem(0xFFFC))==0xFFFF) 
+	if (((snes_readmem(0xFFFD)<<8)|snes_readmem(0xFFFC))==0xFFFF) 
 	{ 
 		lorom^=1; 
 		initmem(); 
@@ -67,18 +67,18 @@ INT32 SnesInit()
 	len=counter;//-0x10000;
 	for (counter=0;counter<21;counter++)
 	{
-		name[counter]=readmem(0xFFC0+counter);
+		name[counter]=snes_readmem(0xFFC0+counter);
 	}
 	
 	name[21]=0;
-	srammask=(1<<(readmem(0xFFD8)+10))-1;
+	srammask=(1<<(snes_readmem(0xFFD8)+10))-1;
 	
-	if (!readmem(0xFFD8)) 
+	if (!snes_readmem(0xFFD8)) 
 	{
 		srammask=0;
 	}
 
-	if (readmem(0xFFD9)>1) 
+	if (snes_readmem(0xFFD9)>1) 
 	{
 		global_pal=1;
 	}
@@ -139,7 +139,7 @@ INT32 SnesFrame()
 		intthisline=0;
 		while (cycles>0)
 		{
-			global_opcode=readmem(pbr|pc); 
+			global_opcode=snes_readmem(pbr|pc); 
 			pc++;
 			opcodes[global_opcode ][cpumode]();
 			if ((((irqenable==3) && (lines==yirq)) || (irqenable==1)) && !intthisline)

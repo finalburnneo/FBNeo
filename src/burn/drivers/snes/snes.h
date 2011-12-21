@@ -162,31 +162,12 @@ extern INT32 lorom;
 UINT8 readmeml(unsigned long adress);
 void writememl(unsigned long adress, unsigned char v);
 
-static inline unsigned char readmem(unsigned long adress)
-{
-	cycles-=accessspeed[(adress>>13)&0x7FF];
-	clockspc(accessspeed[(adress>>13)&0x7FF]);
-	if (memread[(adress>>13)&0x7FF])
-	{
-		return memlookup[(adress>>13)&0x7FF][adress&0x1FFF];
-	}
-	return readmeml(adress);
-}
+unsigned char snes_readmem(unsigned long adress);
+void snes_writemem(unsigned long ad, unsigned char v);
 
-static inline void writemem(unsigned long ad, unsigned char v)
-{
-	cycles-=accessspeed[(ad>>13)&0x7FF];
-	clockspc(accessspeed[(ad>>13)&0x7FF]);
-	if (memwrite[(ad>>13)&0x7FF])
-		memlookup[(ad>>13)&0x7FF][(ad)&0x1FFF]=v;
-	else
-		writememl(ad,v);
-}
-
-
-#define readmemw(a) (readmem(a))|((readmem((a)+1))<<8)
-#define writememw(a,v)  writemem(a,(v)&0xFF); writemem((a)+1,(v)>>8)
-#define writememw2(a,v) writemem((a)+1,(v)>>8); writemem(a,(v)&0xFF)
+#define readmemw(a) (snes_readmem(a))|((snes_readmem((a)+1))<<8)
+#define writememw(a,v)  snes_writemem(a,(v)&0xFF); snes_writemem((a)+1,(v)>>8)
+#define writememw2(a,v) snes_writemem((a)+1,(v)>>8); snes_writemem(a,(v)&0xFF)
 
 /*Video*/
 extern INT32 nmi,vbl,joyscan;

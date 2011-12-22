@@ -102,7 +102,7 @@ INT32 CpsPalInit()
 	INT32 nLen = 0;
 
 	nLen = 0x1000 * sizeof(UINT16);
-	CpsPalSrc = (UINT8*)malloc(nLen);
+	CpsPalSrc = (UINT8*)BurnMalloc(nLen);
 	if (CpsPalSrc == NULL) {
 		return 1;
 	}
@@ -110,7 +110,7 @@ INT32 CpsPalInit()
 
 	// The star layer palettes are at the end of the normal palette, so double the size
 	nLen = 0x1000 * sizeof(UINT32);
-	CpsPal = (UINT32*)malloc(nLen);
+	CpsPal = (UINT32*)BurnMalloc(nLen);
 	if (CpsPal == NULL) {
 		return 1;
 	}
@@ -133,14 +133,8 @@ INT32 CpsPalInit()
 
 INT32 CpsPalExit()
 {
-	if (CpsPal) {
-		free(CpsPal);
-		CpsPal = NULL;
-	}
-	if (CpsPalSrc) {
-		free(CpsPalSrc);
-		CpsPalSrc = NULL;
-	}
+	BurnFree(CpsPal);
+	BurnFree(CpsPalSrc);
 	return 0;
 }
 

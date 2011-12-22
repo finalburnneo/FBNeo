@@ -134,7 +134,7 @@ INT32 PsndZInit()
 		return 1;
 	}
 
-	PsndZRam = (UINT8 *)malloc(0x800);
+	PsndZRam = (UINT8 *)BurnMalloc(0x800);
 	if (PsndZRam == NULL) {
 		return 1;
 	}
@@ -178,10 +178,7 @@ INT32 PsndZInit()
 
 INT32 PsndZExit()
 {
-	if (PsndZRam) {
-		free(PsndZRam);
-		PsndZRam = NULL;
-	}
+	BurnFree(PsndZRam);
 
 	ZetExit();
 	return 0;

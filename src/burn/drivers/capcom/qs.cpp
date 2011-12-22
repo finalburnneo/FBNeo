@@ -39,28 +39,40 @@ INT32 QsndInit()
 	nVolumeShift = 0;
 
 	// These games are too soft at normal volumes
-	if (strncmp(BurnDrvGetTextA(DRV_NAME), "csclub", 6) == 0) {
+	if (strncmp(BurnDrvGetTextA(DRV_NAME), "csclub",   6) == 0) {
 		nVolumeShift = -1;
 	}
-#if 0
+
 	// These games are loud at normal volumes (no clipping)
-	if (strncmp(BurnDrvGetTextA(DRV_NAME), "1944",	  4) == 0 ||
-		strcmp( BurnDrvGetTextA(DRV_NAME), "dimahoo"  ) == 0 ||
-		strcmp( BurnDrvGetTextA(DRV_NAME), "gmahoo"   ) == 0)
+	if (strncmp(BurnDrvGetTextA(DRV_NAME), "1944",	   4) == 0 ||
+		strncmp(BurnDrvGetTextA(DRV_NAME), "dimaho",   6) == 0 ||
+		strcmp( BurnDrvGetTextA(DRV_NAME), "gmahou"     ) == 0)
 	{
 		nVolumeShift = 1;
 	}
-#endif
+
 	// These games are too loud at normal volumes (no clipping)
-	if (strncmp(BurnDrvGetTextA(DRV_NAME), "sgemf",  5) == 0 ||
-		strncmp(BurnDrvGetTextA(DRV_NAME), "pfght",  5) == 0 ||
-		strncmp(BurnDrvGetTextA(DRV_NAME), "mpang",  5) == 0 ||
-		strncmp(BurnDrvGetTextA(DRV_NAME), "spf2",   4) == 0 ||
-		strncmp(BurnDrvGetTextA(DRV_NAME), "sfa2",   4) == 0 ||
-		strncmp(BurnDrvGetTextA(DRV_NAME), "sfa2",   4) == 0)
+	if (strncmp(BurnDrvGetTextA(DRV_NAME), "sgemf",    5) == 0 ||
+		strncmp(BurnDrvGetTextA(DRV_NAME), "progear",  7) == 0 ||
+		strncmp(BurnDrvGetTextA(DRV_NAME), "pzloop2",  7) == 0 ||
+		strncmp(BurnDrvGetTextA(DRV_NAME), "ringdest", 8) == 0 ||
+		strcmp( BurnDrvGetTextA(DRV_NAME), "ringdstd"   ) == 0 ||
+		strncmp(BurnDrvGetTextA(DRV_NAME), "smbomb",   6) == 0 ||
+		strncmp(BurnDrvGetTextA(DRV_NAME), "pfght",    5) == 0 ||
+		strncmp(BurnDrvGetTextA(DRV_NAME), "mpang",    5) == 0 ||
+		strncmp(BurnDrvGetTextA(DRV_NAME), "sfa2",     4) == 0 ||
+		strncmp(BurnDrvGetTextA(DRV_NAME), "sfz2",     4) == 0)
 	{
 		nVolumeShift = 1;
 	}
+	
+	// These games are too loud at normal volumes (no clipping)
+	if (strncmp(BurnDrvGetTextA(DRV_NAME), "gigawing", 8) == 0 ||
+		strncmp(BurnDrvGetTextA(DRV_NAME), "spf2",     4) == 0)
+	{
+		nVolumeShift = 2;
+	}
+	
 	// These games are too loud at normal volumes (clipping)
 	if (strncmp(BurnDrvGetTextA(DRV_NAME), "19xx",   4) == 0 ||
 		strncmp(BurnDrvGetTextA(DRV_NAME), "ddtod",  5) == 0)
@@ -75,8 +87,10 @@ INT32 QsndInit()
 
 void QsndReset()
 {
+	ZetOpen(0);
 	BurnTimerReset();
 	BurnTimerSetRetrig(0, 1.0 / 252.0);
+	ZetClose();
 
 	nQsndCyclesExtra = 0;
 }

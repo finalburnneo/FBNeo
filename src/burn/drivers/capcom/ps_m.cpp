@@ -25,7 +25,7 @@ INT32 PsmInit()
 
 	// Allocate a buffer for the intermediate sound (between YM2151 and pBurnSoundOut)
 	nMemLen = nBurnSoundLen * 2 * sizeof(INT16);
-	WaveBuf = (INT16*)malloc(nMemLen);
+	WaveBuf = (INT16*)BurnMalloc(nMemLen);
 	if (WaveBuf == NULL) {
 		PsmExit();
 		return 1;
@@ -55,10 +55,7 @@ INT32 PsmExit()
 
 	MSM6295Exit(0);
 
-	if (WaveBuf) {
-		free(WaveBuf);
-		WaveBuf = NULL;
-	}
+	BurnFree(WaveBuf);
 
 	BurnYM2151Exit();									// Exit FM sound chip
 	return 0;

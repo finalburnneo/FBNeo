@@ -188,7 +188,11 @@ static UINT8 CpsReadPort(const UINT32 ia)
 		
 		// CPS1 EEPROM read
 		if (ia == 0xC007) {
-			return EEPROMRead();
+			if (Cps1Qs) {
+				return EEPROMRead();
+			} else {
+				return 0;
+			}
 		}
 		
 		// Pang3 EEPROM

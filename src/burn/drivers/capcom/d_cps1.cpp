@@ -1450,7 +1450,7 @@ static struct BurnDIPInfo NTFODIPList[]=
 {
 	// Defaults
 	{0x12, 0xff, 0xff, 0x00, NULL                     },
-	{0x13, 0xff, 0xff, 0x03, NULL                     },
+	{0x13, 0xff, 0xff, 0x00, NULL                     },
 	{0x14, 0xff, 0xff, 0x60, NULL                     },
 
 	// Dip A
@@ -10285,6 +10285,7 @@ static INT32 CaptcommbInit()
 	CpsLayer1XOffs = -8;
 	CpsLayer2XOffs = -11;
 	CpsLayer3XOffs = -12;
+	CpsDrawSpritesInReverse = 1;
 	
 	nRet = DrvInit();
 	
@@ -10411,7 +10412,7 @@ static INT32 DinopicInit()
 	CpsLoadTilesBootleg(CpsGfx + 0x000000, 4);
 	CpsLoadTilesBootleg(CpsGfx + 0x200000, 8);
 	
-	BootlegSpriteRam = (UINT8*)malloc(0x2000);
+	BootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
 	
 	SekOpen(0);
 	SekMapMemory(BootlegSpriteRam, 0x990000, 0x991FFF, SM_RAM);
@@ -10438,7 +10439,7 @@ static INT32 DinohInit()
 
 static void DinohaCallback()
 {
-	UINT8 *TempRom = (UINT8*)malloc(0x200000);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(0x200000);
 	if (TempRom) {
 		memcpy(TempRom, CpsRom, 0x200000);
 		memset(CpsRom, 0, 0x200000);
@@ -10446,8 +10447,7 @@ static void DinohaCallback()
 		memcpy(CpsRom + 0x000000, TempRom + 0x080000, 0x80000);
 		memcpy(CpsRom + 0x180000, TempRom + 0x100000, 0x80000);
 		memcpy(CpsRom + 0x100000, TempRom + 0x180000, 0x80000);
-		free(TempRom);
-		TempRom = NULL;
+		BurnFree(TempRom);
 	}
 	
 	// Patch Q-Sound Test ???
@@ -10482,7 +10482,7 @@ static INT32 DinohbInit()
 	memset(CpsGfx, 0, nCpsGfxLen);
 	CpsLoadTilesHack160(CpsGfx, 2);
 	
-	BootlegSpriteRam = (UINT8*)malloc(0x2000);
+	BootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
 	
 	SekOpen(0);
 	SekMapMemory(BootlegSpriteRam, 0x990000, 0x991FFF, SM_RAM);
@@ -10720,7 +10720,7 @@ static INT32 Sf2jcInit()
 
 static void Sf2qp1Callback()
 {
-	UINT8 *TempRom = (UINT8*)malloc(0x100000);
+	UINT8 *TempRom = (UINT8*)BurnMalloc(0x100000);
 	if (TempRom) {
 		memcpy(TempRom, CpsRom, 0x100000);
 		memset(CpsRom, 0, 0x100000);
@@ -10728,8 +10728,7 @@ static void Sf2qp1Callback()
 		memcpy(CpsRom + 0x0c0000, TempRom + 0x040000, 0x40000);
 		memcpy(CpsRom + 0x080000, TempRom + 0x080000, 0x40000);
 		memcpy(CpsRom + 0x040000, TempRom + 0x0c0000, 0x40000);
-		free(TempRom);
-		TempRom = NULL;
+		BurnFree(TempRom);
 	}
 }
 
@@ -11425,10 +11424,7 @@ static INT32 DrvExit()
 	
 	Cps1CallbackFunction = NULL;
 	
-	if (BootlegSpriteRam) {
-		free(BootlegSpriteRam);
-		BootlegSpriteRam = NULL;
-	}
+	BurnFree(BootlegSpriteRam);
 	
 	return 0;
 }

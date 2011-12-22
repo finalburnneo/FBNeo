@@ -40,7 +40,9 @@ static INT32 DrvReset()
 		*((UINT16*)(CpsReg + 0x52)) = 0x0106;
 	}
 
+	SekOpen(0);
 	CpsMapObjectBanks(0);
+	SekClose();
 
 	nCpsCyclesExtra = 0;
 
@@ -137,7 +139,7 @@ INT32 CpsRunExit()
 
 	// Sound exit
 	if (Cps == 2 || Cps1Qs == 1) QsndExit();
-	if (Cps != 2 && Cps1Qs == 0) PsndExit();
+	if (Cps != 2 && Cps1Qs == 0 && !Cps1Pic) PsndExit();
 
 	// Graphics exit
 	CpsObjExit();
@@ -356,6 +358,7 @@ INT32 Cps2Frame()
 	QsndNewFrame();
 
 	nCpsCycles = (INT32)(((INT64)nCPS68KClockspeed * nBurnCPUSpeedAdjust) / 0x0100);
+	SekOpen(0);
 	SekSetCyclesScanline(nCpsCycles / 262);
 
 	CpsRwGetInp();											// Update the input port values
@@ -384,7 +387,6 @@ INT32 Cps2Frame()
 	}
 	ScheduleIRQ();
 
-	SekOpen(0);
 	SekIdle(nCpsCyclesExtra);
 
 	if (nIrqCycles < nCpsCycles * nFirstLine / 0x0106) {

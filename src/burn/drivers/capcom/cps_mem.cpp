@@ -68,7 +68,7 @@ static INT32 AllocateMemory()
 	CpsMemIndex();
 	nLen = CpsMemEnd - (UINT8*)0;
 
-	if ((CpsMem = (UINT8*)malloc(nLen)) == NULL) {
+	if ((CpsMem = (UINT8*)BurnMalloc(nLen)) == NULL) {
 		return 1;
 	}
 
@@ -333,10 +333,7 @@ INT32 CpsMemExit()
 #endif
 
 	// Deallocate all used memory
-	if (CpsMem) {
-		free(CpsMem);
-		CpsMem = NULL;
-	}
+	BurnFree(CpsMem);
 
 	return 0;
 }

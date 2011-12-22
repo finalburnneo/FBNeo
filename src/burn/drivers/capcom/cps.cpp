@@ -61,16 +61,13 @@ static INT32 LoadUp(UINT8** pRom, INT32* pnRomLen, INT32 nNum)
 	}
 
 	// Load the rom
-	Rom = (UINT8*)malloc(ri.nLen);
+	Rom = (UINT8*)BurnMalloc(ri.nLen);
 	if (Rom == NULL) {
 		return 1;
 	}
 
 	if (BurnLoadRom(Rom,nNum,1)) {
-		if (Rom) {
-			free(Rom);
-			Rom = NULL;
-		}
+		BurnFree(Rom);
 		return 1;
 	}
 
@@ -95,17 +92,14 @@ static INT32 LoadUpSplit(UINT8** pRom, INT32* pnRomLen, INT32 nNum)
 	nTotalRomSize = nRomSize[0] + nRomSize[1] + nRomSize[2] + nRomSize[3];
 	if (!nTotalRomSize) return 1;
 
-	Rom = (UINT8*)malloc(nTotalRomSize);
+	Rom = (UINT8*)BurnMalloc(nTotalRomSize);
 	if (Rom == NULL) return 1;
 	
 	INT32 Offset = 0;
 	for (i = 0; i < 4; i++) {
 		if (i > 0) Offset += nRomSize[i - 1];
 		if (BurnLoadRom(Rom + Offset, nNum + i, 1)) {
-			if (Rom) {
-				free(Rom);
-				Rom = NULL;
-			}
+			BurnFree(Rom);
 			return 1;
 		}
 	}
@@ -147,10 +141,7 @@ static INT32 CpsLoadOne(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift)
 		*((UINT32 *)pt) |= Pix;
 	}
 
-	if (Rom) {
-		free(Rom);
-		Rom = NULL;
-	}
+	BurnFree(Rom);
 	return 0;
 }
 
@@ -179,10 +170,7 @@ static INT32 CpsLoadOnePang(UINT8 *Tile,INT32 nNum,INT32 nWord,INT32 nShift)
 		*((UINT32 *)pt) |= Pix;
 	}
 
-	if (Rom) {
-		free(Rom);
-		Rom = NULL;
-	}
+	BurnFree(Rom);
 	return 0;
 }
 
@@ -226,14 +214,8 @@ static INT32 CpsLoadOneHack160(UINT8 *Tile, INT32 nNum, INT32 nWord, INT32 nOffs
 		*((UINT32 *)pt) |= Pix;
 	}
 
-	if (Rom2) {
-		free(Rom2);
-		Rom2 = NULL;
-	}
-	if (Rom1) {
-		free(Rom1);
-		Rom1 = NULL;
-	}
+	BurnFree(Rom2);
+	BurnFree(Rom1);
 	return 0;
 }
 
@@ -273,10 +255,7 @@ static INT32 CpsLoadOneBootleg(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShif
 		*((UINT32 *)pt) |= Pix;
 	}
 
-	if (Rom) {
-		free(Rom);
-		Rom = NULL;
-	}
+	BurnFree(Rom);
 	return 0;
 }
 
@@ -340,10 +319,7 @@ static INT32 CpsLoadOneBootlegType2(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 
 		*((UINT32 *)pt) |= Pix;
 	}
 
-	if (Rom) {
-		free(Rom);
-		Rom = NULL;
-	}
+	BurnFree(Rom);
 	return 0;
 }
 
@@ -383,10 +359,7 @@ static INT32 CpsLoadOneSf2ebbl(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShif
 		*((UINT32 *)pt) |= Pix;
 	}
 
-	if (Rom) {
-		free(Rom);
-		Rom = NULL;
-	}
+	BurnFree(Rom);
 	return 0;
 }
 
@@ -530,14 +503,8 @@ INT32 CpsLoadStars(UINT8* pStar, INT32 nStart)
 
 	for (INT32 i = 0; i < 2; i++) {
 		if (LoadUp(&pTemp[i], &nLen, nStart + (i << 1))) {
-			if (pTemp[0]) {
-				free(pTemp[0]);
-				pTemp[0] = NULL;
-			}
-			if (pTemp[1]) {
-				free(pTemp[1]);
-				pTemp[1] = NULL;
-			}
+			BurnFree(pTemp[0]);
+			BurnFree(pTemp[1]);
 		}
 	}
 
@@ -546,14 +513,8 @@ INT32 CpsLoadStars(UINT8* pStar, INT32 nStart)
 		pStar[0x01000 + i] = pTemp[1][i << 1];
 	}
 
-	if (pTemp[0]) {
-		free(pTemp[0]);
-		pTemp[0] = NULL;
-	}
-	if (pTemp[1]) {
-		free(pTemp[1]);
-		pTemp[1] = NULL;
-	}
+	BurnFree(pTemp[0]);
+	BurnFree(pTemp[1]);
 	
 	return 0;
 }
@@ -565,14 +526,8 @@ INT32 CpsLoadStarsByte(UINT8* pStar, INT32 nStart)
 
 	for (INT32 i = 0; i < 2; i++) {
 		if (LoadUp(&pTemp[i], &nLen, nStart + (i * 4))) {
-			if (pTemp[0]) {
-				free(pTemp[0]);
-				pTemp[0] = NULL;
-			}
-			if (pTemp[1]) {
-				free(pTemp[1]);
-				pTemp[1] = NULL;
-			}
+			BurnFree(pTemp[0]);
+			BurnFree(pTemp[1]);
 		}
 	}
 
@@ -581,14 +536,8 @@ INT32 CpsLoadStarsByte(UINT8* pStar, INT32 nStart)
 		pStar[0x01000 + i] = pTemp[1][i];
 	}
 
-	if (pTemp[0]) {
-		free(pTemp[0]);
-		pTemp[0] = NULL;
-	}
-	if (pTemp[1]) {
-		free(pTemp[1]);	
-		pTemp[1] = NULL;
-	}
+	BurnFree(pTemp[0]);
+	BurnFree(pTemp[1]);	
 
 	return 0;
 }
@@ -600,14 +549,8 @@ INT32 CpsLoadStarsForgottnAlt(UINT8* pStar, INT32 nStart)
 
 	for (INT32 i = 0; i < 2; i++) {
 		if (LoadUp(&pTemp[i], &nLen, nStart + (i * 3))) {
-			if (pTemp[0]) {
-				free(pTemp[0]);
-				pTemp[0] = NULL;
-			}
-			if (pTemp[1]) {
-				free(pTemp[1]);
-				pTemp[1] = NULL;
-			}
+			BurnFree(pTemp[0]);
+			BurnFree(pTemp[1]);
 		}
 	}
 
@@ -616,14 +559,8 @@ INT32 CpsLoadStarsForgottnAlt(UINT8* pStar, INT32 nStart)
 		pStar[0x01000 + i] = pTemp[1][i << 1];
 	}
 
-	if (pTemp[0]) {
-		free(pTemp[0]);
-		pTemp[0] = NULL;
-	}
-	if (pTemp[1]) {
-		free(pTemp[1]);
-		pTemp[1] = NULL;
-	}
+	BurnFree(pTemp[0]);
+	BurnFree(pTemp[1]);
 	
 	return 0;
 }
@@ -676,16 +613,10 @@ static INT32 Cps2LoadOne(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift)
 		}
 
 		nRomLen <<= 1;
-		Rom = (UINT8*)malloc(nRomLen);
+		Rom = (UINT8*)BurnMalloc(nRomLen);
 		if (Rom == NULL) {
-			if (Rom2) {
-				free(Rom2);
-				Rom2 = NULL;
-			}
-			if (Rom3) {
-				free(Rom3);
-				Rom3 = NULL;
-			}
+			BurnFree(Rom2);
+			BurnFree(Rom3);
 			return 1;
 		}
 
@@ -694,14 +625,8 @@ static INT32 Cps2LoadOne(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift)
 			Rom[(i << 1) + 1] = Rom2[i];
 		}
 
-		if (Rom2) {
-			free(Rom2);
-			Rom2 = NULL;
-		}
-		if (Rom3) {
-			free(Rom3);
-			Rom3 = NULL;
-		}
+		BurnFree(Rom2);
+		BurnFree(Rom3);
 	}
 
 	// Go through each section
@@ -712,10 +637,7 @@ static INT32 Cps2LoadOne(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift)
 		pr += 0x80000;
 	}
 
-	if (Rom) {
-		free(Rom);
-		Rom = NULL;
-	}
+	BurnFree(Rom);
 
 	return 0;
 }
@@ -738,10 +660,7 @@ static INT32 Cps2LoadSplit(UINT8* Tile, INT32 nNum, INT32 nShift)
 		pr += 0x80000;
 	}
 
-	if (Rom) {
-		free(Rom);
-		Rom = NULL;
-	}
+	BurnFree(Rom);
 
 	return 0;
 }
@@ -994,7 +913,7 @@ INT32 CpsInit()
 	}
 
 	// Allocate Gfx, Rom and Z80 Roms
-	CpsGfx = (UINT8*)malloc(nMemLen);
+	CpsGfx = (UINT8*)BurnMalloc(nMemLen);
 	if (CpsGfx == NULL) {
 		return 1;
 	}
@@ -1078,14 +997,13 @@ INT32 CpsExit()
 	Scroll3TileMask = 0;
 
 	nCpsCodeLen = nCpsRomLen = nCpsGfxLen = nCpsZRomLen = nCpsQSamLen = nCpsAdLen = 0;
-	CpsCode = CpsRom = CpsZRom = CpsAd = CpsStar = NULL;
+	CpsRom = CpsZRom = CpsAd = CpsStar = NULL;
 	CpsQSam = NULL;
 
 	// All Memory is allocated to this (this is the only one we can free)
-	if (CpsGfx) {
-		free(CpsGfx);
-		CpsGfx  = NULL;
-	}
+	BurnFree(CpsGfx);
+	
+	BurnFree(CpsCode);
 
 	nCPS68KClockspeed = 0;
 	Cps = 0;

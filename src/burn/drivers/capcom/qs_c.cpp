@@ -100,10 +100,7 @@ void QscExit()
 {
 	nQscRate = 0;
 
-	if (Qs_s) {
-		free(Qs_s);
-		Qs_s = NULL;
-	}
+	BurnFree(Qs_s);
 	Tams = -1;
 }
 
@@ -264,12 +261,9 @@ INT32 QscUpdate(INT32 nEnd)
 	}
 
 	if (Tams < nLen) {
-		if (Qs_s) {
-			free(Qs_s);
-			Qs_s = NULL;
-		}
+		BurnFree(Qs_s);
 		Tams = nLen;
-		Qs_s = (INT32*)malloc(sizeof(INT32) * 2 * Tams);
+		Qs_s = (INT32*)BurnMalloc(sizeof(INT32) * 2 * Tams);
 	}
 
 	memset(Qs_s, 0, nLen * 2 * sizeof(INT32));

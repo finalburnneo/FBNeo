@@ -423,8 +423,16 @@ INT32 Cps2Frame()
 //	nCpsCyclesSegment[0] = (nCpsCycles * nVBlank) / 0x0106;
 //	nDone += SekRun(nCpsCyclesSegment[0] - nDone);
 
+#if 0
+	// This triggers the VBlank IRQ straight away at display end,
+	// it causes glitches in the D&D games text (Press Start, Insert Coin, etc)
 	SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);				// VBlank
 	SekRun(nCpsCycles - SekTotalCycles());
+#else
+	// Here we delay the VBlank IRQ until frame-end, or part-way through VBlank
+	SekRun(nCpsCycles - SekTotalCycles());
+	SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);				// VBlank
+#endif
 	
 	if (pBurnDraw) {
 		CpsDraw();

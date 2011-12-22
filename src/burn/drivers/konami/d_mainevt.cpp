@@ -695,7 +695,7 @@ static INT32 DrvInit(INT32 type)
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -781,10 +781,7 @@ static INT32 DrvExit()
 	UPD7759Exit();
 	BurnYM2151Exit();
 
-	if (AllMem) {
-		free (AllMem);
-		AllMem = NULL;
-	}
+	BurnFree (AllMem);
 
 	return 0;
 }
@@ -885,7 +882,7 @@ static INT32 DrvFrame()
 		}
 
 		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			UPD7759Update(0, pSoundBuf, nSegmentLength);

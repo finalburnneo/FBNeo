@@ -578,7 +578,7 @@ static INT32 DrvInit()
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -716,10 +716,7 @@ static INT32 DrvExit()
 	K007232Exit();
 	BurnYM2151Exit();
 
-	if (AllMem) {
-		free (AllMem);
-		AllMem = NULL;
-	}
+	BurnFree (AllMem);
 
 	return 0;
 }
@@ -783,7 +780,7 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	INT32 nSoundBufferPos = 0;
-	INT32 nInterleave = 1000;
+	INT32 nInterleave = 100;
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -801,7 +798,7 @@ static INT32 DrvFrame()
 		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);
 
 		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			K007232Update(0, pSoundBuf, nSegmentLength);

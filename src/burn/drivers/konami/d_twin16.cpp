@@ -926,12 +926,13 @@ static void expand4bpp(UINT8 *src, UINT8 *dst, INT32 len)
 static void gfxdecode()
 {
 	UINT16 *src = (UINT16*)DrvGfxROM1;
-	UINT16 *dst = (UINT16*)malloc(0x200000);
+	UINT16 *dst = (UINT16*)BurnMalloc(0x200000);
 	for (INT32 i = 0; i < 0x80000; i++)
 	{
 		dst[i * 2 + 0] = src[i + 0x80000];
 		dst[i * 2 + 1] = src[i + 0x00000];
 	}
+	BurnFree(dst);
 
 	memcpy (src, dst, 0x200000);
 }
@@ -951,7 +952,7 @@ static INT32 DrvInit(INT32 (pLoadCallback)())
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -1041,10 +1042,7 @@ static INT32 DrvExit()
 	UPD7759Exit();
 	BurnYM2151Exit();
 
-	if (AllMem) {
-		free (AllMem);
-		AllMem = NULL;
-	}
+	BurnFree (AllMem);
 
 	is_vulcan = 0;
 	twin16_custom_video = 0;
@@ -1384,7 +1382,7 @@ static INT32 DrvFrame()
 	}
 
 	{
-		memset (DrvInputs, 0xff, 5 * sizeof(short));
+		memset (DrvInputs, 0xff, 5);
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;

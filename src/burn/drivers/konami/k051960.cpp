@@ -202,7 +202,7 @@ void K051960Init(UINT8* pRomSrc, UINT32 RomMask)
 {
 	nSpriteXOffset = nSpriteYOffset = 0;
 
-	K051960Ram = (UINT8*)malloc(0x400);
+	K051960Ram = (UINT8*)BurnMalloc(0x400);
 	
 	K051960RomMask = RomMask;
 	
@@ -217,10 +217,7 @@ void K051960Init(UINT8* pRomSrc, UINT32 RomMask)
 
 void K051960Exit()
 {
-	if (K051960Ram) {
-		free(K051960Ram);
-		K051960Ram = NULL;
-	}
+	BurnFree(K051960Ram);
 	
 	K051960Callback = NULL;
 	K051960RomMask = 0;

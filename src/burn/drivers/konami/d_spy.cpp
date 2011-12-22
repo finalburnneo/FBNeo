@@ -524,7 +524,7 @@ static INT32 DrvInit()
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -606,10 +606,7 @@ static INT32 DrvExit()
 
 	K007232Exit();
 
-	if (AllMem) {
-		free (AllMem);
-		AllMem = NULL;
-	}
+	BurnFree (AllMem);
 
 	return 0;
 }
@@ -681,9 +678,10 @@ static INT32 DrvFrame()
 	}
 
 	if (K052109_irq_enabled) M6809SetIRQ(0, M6809_IRQSTATUS_AUTO);
+	
+	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 
-	if (pBurnSoundOut) {
-		BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	if (pBurnSoundOut) {		
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		K007232Update(0, pBurnSoundOut, nBurnSoundLen);
 		K007232Update(1, pBurnSoundOut, nBurnSoundLen);

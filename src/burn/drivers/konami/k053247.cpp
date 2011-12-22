@@ -59,7 +59,7 @@ void K053247Scan(INT32 nAction)
 
 void K053247Init(UINT8 *gfxrom, INT32 gfxlen, void (*Callback)(INT32 *code, INT32 *color, INT32 *priority), INT32 flags)
 {
-	K053247Ram = (UINT8*)malloc(0x1000);
+	K053247Ram = (UINT8*)BurnMalloc(0x1000);
 
 	K053246Gfx = gfxrom;
 	K053246Mask = gfxlen;
@@ -73,7 +73,7 @@ void K053247Init(UINT8 *gfxrom, INT32 gfxlen, void (*Callback)(INT32 *code, INT3
 	if (konami_temp_screen == NULL) {
 		INT32 width, height;
 		BurnDrvGetVisibleSize(&width, &height);
-		konami_temp_screen = (UINT16*)malloc(width * height * 2);
+		konami_temp_screen = (UINT16*)BurnMalloc(width * height * 2);
 	}
 
 	K053247Temp = konami_temp_screen;
@@ -87,10 +87,7 @@ void K053247Exit()
 {
 	K053247Temp = NULL;
 
-	if (K053247Ram) {
-		free (K053247Ram);
-		K053247Ram = NULL;
-	}
+	BurnFree (K053247Ram);
 
 	K053247Flags = 0;
 

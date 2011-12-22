@@ -477,7 +477,7 @@ void K052109Reset()
 
 void K052109Init(UINT8 *pRomSrc, UINT32 RomMask)
 {
-	K052109Ram = (UINT8*)malloc(0x6000);
+	K052109Ram = (UINT8*)BurnMalloc(0x6000);
 	
 	K052109RomMask = RomMask;
 	
@@ -495,10 +495,7 @@ void K052109Init(UINT8 *pRomSrc, UINT32 RomMask)
 
 void K052109Exit()
 {
-	if (K052109Ram) {
-		free(K052109Ram);
-		K052109Ram = NULL;
-	}
+	BurnFree(K052109Ram);
 	
 	K052109Callback = NULL;
 	K052109RomMask = 0;

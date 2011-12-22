@@ -341,7 +341,7 @@ static INT32 DrvInit()
 	AllMem = NULL;
 	MemIndex();
 	int nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -397,10 +397,7 @@ static INT32 DrvExit()
 
 	BurnYM2151Exit();
 
-	if (AllMem) {
-		free (AllMem);
-		AllMem = NULL;
-	}
+	BurnFree (AllMem);
 
 	return 0;
 }
@@ -504,14 +501,35 @@ static INT32 DrvFrame()
 		if ((DrvInputs[1] & 0x18) == 0) DrvInputs[1] |= 0x18;
 		if ((DrvInputs[1] & 0x06) == 0) DrvInputs[1] |= 0x06;
 	}
+	
+	INT32 nSoundBufferPos = 0;
+	INT32 nInterleave = 10;
+	INT32 nCyclesTotal = (((3000000 / 60) * 133) / 100); // 33% overclock
+	INT32 nCyclesDone = 0;
 
 	konamiOpen(0);
-	konamiRun((((3000000 / 60) * 133) / 100) /* 33% overclock */);
+	
+	for (INT32 i = 0; i < nInterleave; i++)	{
+		INT32 nSegment = (nCyclesTotal / nInterleave) * (i + 1);
+
+		nCyclesDone += konamiRun(nSegment - nCyclesDone);
+		
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}	
+	}
 
 	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_HOLD_LINE);
 
 	if (pBurnSoundOut) {
-		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		if (nSegmentLength) {
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+		}
 	}
 
 	konamiClose();

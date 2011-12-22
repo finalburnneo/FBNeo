@@ -43,8 +43,8 @@ void K053245GfxDecode(UINT8 *src, UINT8 *dst, INT32 len)
 
 void K053245Init(INT32 chip, UINT8 *gfx, INT32 mask, void (*callback)(INT32 *code,INT32 *color,INT32 *priority))
 {
-	K053245Ram[chip] = (UINT8*)malloc(0x800); // enough
-	K053245Buf[chip] = (UINT8*)malloc(0x800); // enough
+	K053245Ram[chip] = (UINT8*)BurnMalloc(0x800); // enough
+	K053245Buf[chip] = (UINT8*)BurnMalloc(0x800); // enough
 
 	K053245Mask[chip] = mask;
 
@@ -59,7 +59,7 @@ void K053245Init(INT32 chip, UINT8 *gfx, INT32 mask, void (*callback)(INT32 *cod
 	if (konami_temp_screen == NULL) {
 		INT32 width, height;
 		BurnDrvGetVisibleSize(&width, &height);
-		konami_temp_screen = (UINT16*)malloc(width * height * 2);
+		konami_temp_screen = (UINT16*)BurnMalloc(width * height * 2);
 	}
 
 	K053245Temp = konami_temp_screen;
@@ -72,14 +72,8 @@ void K053245Exit()
 	K053245Temp = NULL;
 
 	for (INT32 i = 0; i < K053245Active; i++) {
-		if (K053245Ram[i]) {
-			free (K053245Ram[i]);
-			K053245Ram[i] = NULL;
-		}
-		if (K053245Buf[i]) {
-			free (K053245Buf[i]);
-			K053245Buf[i] = NULL;
-		}
+		BurnFree (K053245Ram[i]);
+		BurnFree (K053245Buf[i]);
 
 		K053245_dx[i] = 0;
 		K053245_dy[i] = 0;

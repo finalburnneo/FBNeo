@@ -32,14 +32,14 @@ void K053936Init(INT32 chip, UINT8 *ram, INT32 len, INT32 w, INT32 h, void (*pCa
 	nRamLen[chip] = len;
 
 	if (rambuf[chip] == NULL) {
-		rambuf[chip] = (UINT8*)malloc(len);
+		rambuf[chip] = (UINT8*)BurnMalloc(len);
 	}
 
 	nWidth[chip] = w;
 	nHeight[chip] = h;
 
 	if (tscreen[chip] == NULL) {
-		tscreen[chip] = (UINT16*)malloc(w * h * 2);
+		tscreen[chip] = (UINT16*)BurnMalloc(w * h * 2);
 	}
 
 	if (chip == 0) {
@@ -58,15 +58,9 @@ void K053936Exit()
 		nRamLen[i] = 0;
 		nWidth[i] = 0;
 		nHeight[i] = 0;
-		if (tscreen[i] != NULL) {
-			free (tscreen[i]);
-			tscreen[i] = NULL;
-		}
+		BurnFree (tscreen[i]);
 		ramptr[i] = NULL;
-		if (rambuf[i] != NULL) {
-			free (rambuf[i]);
-			rambuf[i] = NULL;
-		}
+		BurnFree (rambuf[i]);
 		K053936Wrap[i] = 0;
 		K053936Offset[i][0] = K053936Offset[i][1] = 0;
 	}

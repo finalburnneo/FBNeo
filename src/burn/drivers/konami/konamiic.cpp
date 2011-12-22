@@ -105,10 +105,7 @@ void KonamiICReset()
 
 void KonamiICExit()
 {
-	if (konami_temp_screen) {
-		free (konami_temp_screen);
-		konami_temp_screen = NULL;
-	}
+	BurnFree (konami_temp_screen);
 
 	if (KonamiIC_K051960InUse) K051960Exit();
 	if (KonamiIC_K052109InUse) K052109Exit();

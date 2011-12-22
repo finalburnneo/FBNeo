@@ -453,10 +453,7 @@ static INT32 DrvExit()
 	K007232Exit();
 	BurnYM2151Exit();
 
-	if (AllMem) {
-		free (AllMem);
-		AllMem = NULL;
-	}
+	BurnFree (AllMem);
 
 	return 0;
 }
@@ -534,7 +531,7 @@ static INT32 DrvFrame()
 		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);
 
 		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			K007232Update(0, pSoundBuf, nSegmentLength);

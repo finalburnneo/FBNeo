@@ -26,8 +26,8 @@ static void K051316GfxExpand(UINT8 *src, UINT8 *dst, INT32 len)
 
 void K051316Init(INT32 chip, UINT8 *gfx, UINT8 *gfxexp, INT32 mask, void (*callback)(INT32 *code,INT32 *color,INT32 *flags), INT32 bpp, INT32 transp)
 {
-	K051316Ram[chip] = (UINT8*)malloc(0x800);
-	K051316TileMap[chip] = (UINT16*)malloc(((32 * 16) * (32 * 16)) * sizeof(UINT16));
+	K051316Ram[chip] = (UINT8*)BurnMalloc(0x800);
+	K051316TileMap[chip] = (UINT16*)BurnMalloc(((32 * 16) * (32 * 16)) * sizeof(UINT16));
 
 	K051316Callback[chip] = callback;	
 
@@ -61,7 +61,7 @@ void K051316Reset()
 		K051316Wrap[i] = 0;
 
 		if (K051316TileMap[i]) {
-			memset (K051316TileMap[i], 0, (32 * 16) * (32 * 16) * sizeof(short));
+			memset (K051316TileMap[i], 0, (32 * 16) * (32 * 16) * sizeof(INT16));
 		}
 	}
 }
@@ -70,16 +70,8 @@ void K051316Exit()
 {
 	for (INT32 i = 0; i < 3; i++)
 	{
-		if (K051316Ram[i]) {
-			free (K051316Ram[i]);
-		}
-		K051316Ram[i] = NULL;
-
-		if (K051316TileMap[i]) {
-			free (K051316TileMap[i]);
-		}
-		K051316TileMap[i] = NULL;
-
+		BurnFree (K051316Ram[i]);
+		BurnFree (K051316TileMap[i]);
 		K051316Callback[i] = NULL;
 	}
 }

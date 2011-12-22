@@ -4,7 +4,7 @@
 #include "tiles_generic.h"
 #include "konami_intf.h"
 #include "burn_ym3812.h"
-#include "K051649.h"
+#include "k051649.h"
 #include "k007232.h"
 
 static UINT8 *AllMem;
@@ -410,7 +410,7 @@ static INT32 DrvGfxDecode()
 	INT32 XOffs[8] = { 0x008, 0x00c, 0x000, 0x004, 0x018, 0x01c, 0x010, 0x014 };
 	INT32 YOffs[8] = { 0x000, 0x020, 0x040, 0x060, 0x080, 0x0a0, 0x0c0, 0x0e0 };
 
-	UINT8 *tmp = (UINT8*)malloc(0x100000);
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x100000);
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -423,10 +423,7 @@ static INT32 DrvGfxDecode()
 
 	GfxDecode(0x8000, 4, 8, 8, Plane, XOffs, YOffs, 0x100, tmp, DrvGfxROM1);
 
-	if (tmp) {
-		free (tmp);
-		tmp = NULL;
-	}
+	BurnFree (tmp);
 
 	return 0;
 }
@@ -459,7 +456,7 @@ static INT32 DrvInit()
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -535,12 +532,10 @@ static INT32 DrvExit()
 	ZetExit();
 
 	K007232Exit();
+	K051649Exit();
 	BurnYM3812Exit();
 
-	if (AllMem) {
-		free (AllMem);
-		AllMem = NULL;
-	}
+	BurnFree (AllMem);
 
 	return 0;
 }
@@ -769,7 +764,7 @@ static INT32 DrvFrame()
 	konamiRun(nCyclesTotal[0]);
 	konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_HOLD_LINE);
 
-	BurnTimerEndFrameYM3812(nCyclesTotal[1] - ZetTotalCycles());
+	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);

@@ -1,7 +1,7 @@
 void K051649Update(INT16 *pBuf, INT32 samples);
 void K051649Init(INT32 clock, float gain);
 void K051649Reset();
-void K051659Exit();
+void K051649Exit();
 
 INT32 K051649Scan(INT32 nAction, INT32 *pnMin);
 

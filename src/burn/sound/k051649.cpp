@@ -165,7 +165,7 @@ void K051649Init(INT32 clock, float gain)
 	make_mixer_table(5);
 }
 
-void K051659Exit()
+void K051649Exit()
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649Exit called without init\n"));

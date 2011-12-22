@@ -38,7 +38,7 @@ extern INT32 nM6809CyclesTotal;
 
 void M6809Reset();
 void M6809NewFrame();
-INT32 M6809Init(INT32 num);
+INT32 M6809Init(INT32 nCPU);
 void M6809Exit();
 void M6809Open(INT32 num);
 void M6809Close();

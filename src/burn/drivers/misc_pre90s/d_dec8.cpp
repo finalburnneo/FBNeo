@@ -2042,7 +2042,7 @@ static INT32 CobraInit()
 		CobraGfxDecode();
 	}
 
-	M6809Init(1);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvMainRAM,		0x0000, 0x07ff, M6809_RAM);
 	M6809MapMemory(DrvPf0RAM,		0x0800, 0x0fff, M6809_RAM);
@@ -2577,7 +2577,7 @@ static INT32 SrdarwinInit()
 		SrdarwinGfxDecode();
 	}
 
-	M6809Init(1);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvMainRAM,		0x0000, 0x05ff, M6809_RAM);
 	M6809MapMemory(DrvSprRAM,		0x0600, 0x07ff, M6809_RAM);
@@ -4487,7 +4487,7 @@ static INT32 LastmissInit()
 		LastmissGfxDecode();
 	}
 
-	M6809Init(2);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvMainRAM,		 0x0000, 0x0fff, M6809_RAM);
 	M6809MapMemory(DrvPalRAM,		 0x1000, 0x17ff, M6809_RAM);
@@ -4501,6 +4501,7 @@ static INT32 LastmissInit()
 	M6809SetReadByteHandler(lastmiss_main_read);
 	M6809Close();
 
+	M6809Init(1);
 	M6809Open(1);
 	M6809MapMemory(DrvMainRAM,		 0x0000, 0x0fff, M6809_RAM);
 	M6809MapMemory(DrvPalRAM,		 0x1000, 0x17ff, M6809_RAM);
@@ -5171,7 +5172,7 @@ static INT32 CsilverInit()
 		LastmissGfxDecode();
 	}
 
-	M6809Init(2);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvMainRAM + 0x00000,		0x0000, 0x0fff, M6809_RAM);
 	M6809MapMemory(DrvPalRAM,			0x1000, 0x17ff, M6809_RAM); // xxxxbbbbggggrrrr
@@ -5185,6 +5186,7 @@ static INT32 CsilverInit()
 	M6809SetReadByteHandler(csilver_main_read);
 	M6809Close();
 
+	M6809Init(1);
 	M6809Open(1);
 	M6809MapMemory(DrvMainRAM + 0x00000,		0x0000, 0x0fff, M6809_RAM);
 	M6809MapMemory(DrvPalRAM,			0x1000, 0x17ff, M6809_RAM); // xxxxbbbbggggrrrr

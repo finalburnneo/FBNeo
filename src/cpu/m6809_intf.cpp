@@ -6,7 +6,7 @@
 INT32 nM6809Count = 0;
 static INT32 nActiveCPU = 0;
 
-static M6809Ext *m6809CPUContext;
+static M6809Ext *m6809CPUContext[MAX_CPU];
 
 static INT32 nM6809CyclesDone[MAX_CPU];
 INT32 nM6809CyclesTotal;
@@ -18,6 +18,7 @@ static UINT8 M6809ReadByteDummyHandler(UINT16)
 
 static void M6809WriteByteDummyHandler(UINT16, UINT8)
 {
+
 }
 
 static UINT8 M6809ReadOpDummyHandler(UINT16)
@@ -52,39 +53,48 @@ void M6809NewFrame()
 	nM6809CyclesTotal = 0;
 }
 
-INT32 M6809Init(INT32 num)
+INT32 M6809Init(INT32 nCPU)
 {
-	DebugCPU_M6809Initted = 1;
-	
+#if defined FBA_DEBUG
+	if (nCPU >= MAX_CPU) bprintf (PRINT_ERROR, _T("Too many CPUs initialized (%d)! Please change MAX_CPU = %d\n"), nCPU, MAX_CPU);
+#endif
+
+	if (DebugCPU_M6809Initted == 0) {
+		for (INT32 i = 0; i < MAX_CPU; i++) {
+			m6809CPUContext[i] = NULL;
+		}
+	}
+
 	nActiveCPU = -1;
-	nM6809Count = num % MAX_CPU;
+	nM6809Count = nM6809Count++ % MAX_CPU;
 	
-	m6809CPUContext = (M6809Ext*)malloc(num * sizeof(M6809Ext));
-	if (m6809CPUContext == NULL) {
+	m6809CPUContext[nCPU] = (M6809Ext*)BurnMalloc(sizeof(M6809Ext));
+	if (m6809CPUContext[nCPU] == NULL) {
 		return 1;
 	}
 
-	memset(m6809CPUContext, 0, num * sizeof(M6809Ext));
+	memset(m6809CPUContext[nCPU], 0, sizeof(M6809Ext));
 	
-	for (INT32 i = 0; i < num; i++) {
-		m6809CPUContext[i].ReadByte = M6809ReadByteDummyHandler;
-		m6809CPUContext[i].WriteByte = M6809WriteByteDummyHandler;
-		m6809CPUContext[i].ReadOp = M6809ReadOpDummyHandler;
-		m6809CPUContext[i].ReadOpArg = M6809ReadOpArgDummyHandler;
+	m6809CPUContext[nCPU]->ReadByte = M6809ReadByteDummyHandler;
+	m6809CPUContext[nCPU]->WriteByte = M6809WriteByteDummyHandler;
+	m6809CPUContext[nCPU]->ReadOp = M6809ReadOpDummyHandler;
+	m6809CPUContext[nCPU]->ReadOpArg = M6809ReadOpArgDummyHandler;
 		
-		nM6809CyclesDone[i] = 0;
+	nM6809CyclesDone[nCPU] = 0;
 	
-		for (INT32 j = 0; j < (0x0100 * 3); j++) {
-			m6809CPUContext[i].pMemMap[j] = NULL;
-		}
+	for (INT32 j = 0; j < (0x0100 * 3); j++) {
+		m6809CPUContext[nCPU]->pMemMap[j] = NULL;
 	}
 	
 	nM6809CyclesTotal = 0;
-	
-	m6809_init(NULL);
 
-	for (INT32 i = 0; i < num; i++)
-		CpuCheatRegister(0x0005, i);
+	if (DebugCPU_M6809Initted == 0) {
+		m6809_init(NULL);
+	}
+
+	DebugCPU_M6809Initted = 1;
+
+	CpuCheatRegister(0x0005, nCPU);
 
 	return 0;
 }
@@ -97,11 +107,12 @@ void M6809Exit()
 
 	nM6809Count = 0;
 
-	if (m6809CPUContext) {
-		free(m6809CPUContext);
-		m6809CPUContext = NULL;
+	for (INT32 i = 0; i < MAX_CPU; i++) {
+		if (m6809CPUContext[i]) {
+			BurnFree(m6809CPUContext[i]);
+		}
 	}
-	
+
 	DebugCPU_M6809Initted = 0;
 }
 
@@ -111,11 +122,12 @@ void M6809Open(INT32 num)
 	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809Open called without init\n"));
 	if (num >= nM6809Count) bprintf(PRINT_ERROR, _T("M6809Open called with invalid index %x\n"), num);
 	if (nActiveCPU != -1) bprintf(PRINT_ERROR, _T("M6809Open called when CPU already open with index %x\n"), num);
+	if (m6809CPUContext[num] == NULL) bprintf (PRINT_ERROR, _T("M6809Open called for uninitialized CPU %x\n"), num);
 #endif
 
 	nActiveCPU = num;
 	
-	m6809_set_context(&m6809CPUContext[nActiveCPU].reg);
+	m6809_set_context(&m6809CPUContext[nActiveCPU]->reg);
 	
 	nM6809CyclesTotal = nM6809CyclesDone[nActiveCPU];
 }
@@ -127,7 +139,7 @@ void M6809Close()
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809Close called when no CPU open\n"));
 #endif
 
-	m6809_get_context(&m6809CPUContext[nActiveCPU].reg);
+	m6809_get_context(&m6809CPUContext[nActiveCPU]->reg);
 	
 	nM6809CyclesDone[nActiveCPU] = nM6809CyclesTotal;
 	
@@ -197,7 +209,7 @@ INT32 M6809MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 #endif
 
 	UINT8 cStart = (nStart >> 8);
-	UINT8 **pMemMap = m6809CPUContext[nActiveCPU].pMemMap;
+	UINT8 **pMemMap = m6809CPUContext[nActiveCPU]->pMemMap;
 
 	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
 		if (nType & M6809_READ)	{
@@ -210,8 +222,8 @@ INT32 M6809MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 			pMemMap[0x200 + i] = pMemory + ((i - cStart) << 8);
 		}
 	}
-	return 0;
 
+	return 0;
 }
 
 void M6809SetReadByteHandler(UINT8 (*pHandler)(UINT16))
@@ -221,7 +233,7 @@ void M6809SetReadByteHandler(UINT8 (*pHandler)(UINT16))
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809SetReadByteHandler called when no CPU open\n"));
 #endif
 
-	m6809CPUContext[nActiveCPU].ReadByte = pHandler;
+	m6809CPUContext[nActiveCPU]->ReadByte = pHandler;
 }
 
 void M6809SetWriteByteHandler(void (*pHandler)(UINT16, UINT8))
@@ -231,7 +243,7 @@ void M6809SetWriteByteHandler(void (*pHandler)(UINT16, UINT8))
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809SetWriteByteHandler called when no CPU open\n"));
 #endif
 
-	m6809CPUContext[nActiveCPU].WriteByte = pHandler;
+	m6809CPUContext[nActiveCPU]->WriteByte = pHandler;
 }
 
 void M6809SetReadOpHandler(UINT8 (*pHandler)(UINT16))
@@ -241,7 +253,7 @@ void M6809SetReadOpHandler(UINT8 (*pHandler)(UINT16))
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809SetReadOpHandler called when no CPU open\n"));
 #endif
 
-	m6809CPUContext[nActiveCPU].ReadOp = pHandler;
+	m6809CPUContext[nActiveCPU]->ReadOp = pHandler;
 }
 
 void M6809SetReadOpArgHandler(UINT8 (*pHandler)(UINT16))
@@ -251,20 +263,20 @@ void M6809SetReadOpArgHandler(UINT8 (*pHandler)(UINT16))
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809SetReadOpArgHandler called when no CPU open\n"));
 #endif
 
-	m6809CPUContext[nActiveCPU].ReadOpArg = pHandler;
+	m6809CPUContext[nActiveCPU]->ReadOpArg = pHandler;
 }
 
 UINT8 M6809ReadByte(UINT16 Address)
 {
 	// check mem map
-	UINT8 * pr = m6809CPUContext[nActiveCPU].pMemMap[0x000 | (Address >> 8)];
+	UINT8 * pr = m6809CPUContext[nActiveCPU]->pMemMap[0x000 | (Address >> 8)];
 	if (pr != NULL) {
 		return pr[Address & 0xff];
 	}
 	
 	// check handler
-	if (m6809CPUContext[nActiveCPU].ReadByte != NULL) {
-		return m6809CPUContext[nActiveCPU].ReadByte(Address);
+	if (m6809CPUContext[nActiveCPU]->ReadByte != NULL) {
+		return m6809CPUContext[nActiveCPU]->ReadByte(Address);
 	}
 	
 	return 0;
@@ -273,15 +285,15 @@ UINT8 M6809ReadByte(UINT16 Address)
 void M6809WriteByte(UINT16 Address, UINT8 Data)
 {
 	// check mem map
-	UINT8 * pr = m6809CPUContext[nActiveCPU].pMemMap[0x100 | (Address >> 8)];
+	UINT8 * pr = m6809CPUContext[nActiveCPU]->pMemMap[0x100 | (Address >> 8)];
 	if (pr != NULL) {
 		pr[Address & 0xff] = Data;
 		return;
 	}
 	
 	// check handler
-	if (m6809CPUContext[nActiveCPU].WriteByte != NULL) {
-		m6809CPUContext[nActiveCPU].WriteByte(Address, Data);
+	if (m6809CPUContext[nActiveCPU]->WriteByte != NULL) {
+		m6809CPUContext[nActiveCPU]->WriteByte(Address, Data);
 		return;
 	}
 }
@@ -289,14 +301,14 @@ void M6809WriteByte(UINT16 Address, UINT8 Data)
 UINT8 M6809ReadOp(UINT16 Address)
 {
 	// check mem map
-	UINT8 * pr = m6809CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
+	UINT8 * pr = m6809CPUContext[nActiveCPU]->pMemMap[0x200 | (Address >> 8)];
 	if (pr != NULL) {
 		return pr[Address & 0xff];
 	}
 	
 	// check handler
-	if (m6809CPUContext[nActiveCPU].ReadOp != NULL) {
-		return m6809CPUContext[nActiveCPU].ReadOp(Address);
+	if (m6809CPUContext[nActiveCPU]->ReadOp != NULL) {
+		return m6809CPUContext[nActiveCPU]->ReadOp(Address);
 	}
 	
 	return 0;
@@ -305,14 +317,14 @@ UINT8 M6809ReadOp(UINT16 Address)
 UINT8 M6809ReadOpArg(UINT16 Address)
 {
 	// check mem map
-	UINT8 * pr = m6809CPUContext[nActiveCPU].pMemMap[0x000 | (Address >> 8)];
+	UINT8 * pr = m6809CPUContext[nActiveCPU]->pMemMap[0x000 | (Address >> 8)];
 	if (pr != NULL) {
 		return pr[Address & 0xff];
 	}
 	
 	// check handler
-	if (m6809CPUContext[nActiveCPU].ReadOpArg != NULL) {
-		return m6809CPUContext[nActiveCPU].ReadOpArg(Address);
+	if (m6809CPUContext[nActiveCPU]->ReadOpArg != NULL) {
+		return m6809CPUContext[nActiveCPU]->ReadOpArg(Address);
 	}
 	
 	return 0;
@@ -325,9 +337,9 @@ void M6809WriteRom(UINT16 Address, UINT8 Data)
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809WriteRom called when no CPU open\n"));
 #endif
 
-	UINT8 * pr = m6809CPUContext[nActiveCPU].pMemMap[0x000 | (Address >> 8)];
-	UINT8 * pw = m6809CPUContext[nActiveCPU].pMemMap[0x100 | (Address >> 8)];
-	UINT8 * pf = m6809CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
+	UINT8 * pr = m6809CPUContext[nActiveCPU]->pMemMap[0x000 | (Address >> 8)];
+	UINT8 * pw = m6809CPUContext[nActiveCPU]->pMemMap[0x100 | (Address >> 8)];
+	UINT8 * pf = m6809CPUContext[nActiveCPU]->pMemMap[0x200 | (Address >> 8)];
 
 	if (pr != NULL) {
 		pr[Address & 0xff] = Data;
@@ -342,8 +354,8 @@ void M6809WriteRom(UINT16 Address, UINT8 Data)
 	}
 
 	// check handler
-	if (m6809CPUContext[nActiveCPU].WriteByte != NULL) {
-		m6809CPUContext[nActiveCPU].WriteByte(Address, Data);
+	if (m6809CPUContext[nActiveCPU]->WriteByte != NULL) {
+		m6809CPUContext[nActiveCPU]->WriteByte(Address, Data);
 		return;
 	}
 }
@@ -362,7 +374,7 @@ INT32 M6809Scan(INT32 nAction)
 
 	for (INT32 i = 0; i < nM6809Count; i++) {
 
-		M6809Ext *ptr = &m6809CPUContext[i];
+		M6809Ext *ptr = m6809CPUContext[i];
 
 		INT32 (*Callback)(INT32 irqline);
 
@@ -371,8 +383,8 @@ INT32 M6809Scan(INT32 nAction)
 		char szName[] = "M6809 #n";
 		szName[7] = '0' + i;
 
-		ba.Data = &m6809CPUContext[i].reg;
-		ba.nLen = sizeof(m6809CPUContext[i].reg);
+		ba.Data = &m6809CPUContext[i]->reg;
+		ba.nLen = sizeof(m6809CPUContext[i]->reg);
 		ba.szName = szName;
 		BurnAcb(&ba);
 

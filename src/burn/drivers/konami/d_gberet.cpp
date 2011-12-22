@@ -991,7 +991,7 @@ struct BurnDriver BurnDrvGberet = {
 	"gberet", NULL, NULL, NULL, "1985",
 	"Green Beret\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, gberetRomInfo, gberetRomName, NULL, NULL, DrvInputInfo, gberetDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalcPal, 0x200,
 	240, 224, 4, 3
@@ -1024,7 +1024,7 @@ struct BurnDriver BurnDrvRushatck = {
 	"rushatck", "gberet", NULL, NULL, "1985",
 	"Rush'n Attack (US)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, rushatckRomInfo, rushatckRomName, NULL, NULL, DrvInputInfo, gberetDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalcPal, 0x200,
 	240, 224, 4, 3
@@ -1065,7 +1065,7 @@ struct BurnDriver BurnDrvGberetb = {
 	"gberetb", "gberet", NULL, NULL, "1985",
 	"Green Beret (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, gberetbRomInfo, gberetbRomName, NULL, NULL, gberetbInputInfo, gberetbDIPInfo,
 	gberetbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalcPal, 0x200,
 	240, 224, 4, 3
@@ -1102,7 +1102,7 @@ struct BurnDriver BurnDrvMrgoemon = {
 	"mrgoemon", NULL, NULL, NULL, "1986",
 	"Mr. Goemon (Japan)\0", NULL, "Konami", "Miscellaneous",
 	L"Mr. Goemon \u4E94\u53F3\u885B\u9580 (Japan)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, mrgoemonRomInfo, mrgoemonRomName, NULL, NULL, DrvInputInfo, mrgoemonDIPInfo,
 	mrgoemonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalcPal, 0x200,
 	240, 224, 4, 3

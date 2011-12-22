@@ -627,7 +627,7 @@ static INT32 LoadRoms()
 	if (!strcmp("svcplus", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x400000;
 	if (!strcmp("svcplusa", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x400000;
 	if (!strcmp("svcsplus", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x400000;
-	if (!strcmp("pbobblenb", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x180000;
+	if (!strcmp("pbobblenb", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x380000;
 	if (!strcmp("alpham2p", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x200000;
 	if (!strcmp("burningfp", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x180000;
 	if (!strcmp("kotm2p", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x300000;
@@ -639,7 +639,7 @@ static INT32 LoadRoms()
 //		nSpriteSize[nNeoActiveSlot] = 0x5000000;
 //	}
 
-	NeoSpriteROM[nNeoActiveSlot] = (UINT8*)malloc(nSpriteSize[nNeoActiveSlot] < (nNeoTileMask[nNeoActiveSlot] << 7) ? ((nNeoTileMask[nNeoActiveSlot] + 1) << 7) : nSpriteSize[nNeoActiveSlot]);
+	NeoSpriteROM[nNeoActiveSlot] = (UINT8*)BurnMalloc(nSpriteSize[nNeoActiveSlot] < (nNeoTileMask[nNeoActiveSlot] << 7) ? ((nNeoTileMask[nNeoActiveSlot] + 1) << 7) : nSpriteSize[nNeoActiveSlot]);
 	if (NeoSpriteROM[nNeoActiveSlot] == NULL) {
 		return 1;
 	}
@@ -665,7 +665,7 @@ static INT32 LoadRoms()
 	// Load sprite data
 	NeoLoadSprites(pInfo->nSpriteOffset, pInfo->nSpriteNum, NeoSpriteROM[nNeoActiveSlot], nSpriteSize[nNeoActiveSlot]);
 
-	NeoTextROM[nNeoActiveSlot] = (UINT8*)malloc(nNeoTextROMSize[nNeoActiveSlot]);
+	NeoTextROM[nNeoActiveSlot] = (UINT8*)BurnMalloc(nNeoTextROMSize[nNeoActiveSlot]);
 	if (NeoTextROM[nNeoActiveSlot] == NULL) {
 		return 1;
 	}
@@ -688,7 +688,7 @@ static INT32 LoadRoms()
 		}
 	}
 
-	Neo68KROM[nNeoActiveSlot] = (UINT8*)malloc(nCodeSize[nNeoActiveSlot]);	// 68K cartridge ROM
+	Neo68KROM[nNeoActiveSlot] = (UINT8*)BurnMalloc(nCodeSize[nNeoActiveSlot]);	// 68K cartridge ROM
 	if (Neo68KROM[nNeoActiveSlot] == NULL) {
 		return 1;
 	}
@@ -703,7 +703,7 @@ static INT32 LoadRoms()
 		NeoLoadCode(pInfo->nCodeOffset, pInfo->nCodeNum, Neo68KROMActive);
 	}
 
-	NeoZ80ROM[nNeoActiveSlot] = (UINT8*)malloc(0x080000);	// Z80 cartridge ROM
+	NeoZ80ROM[nNeoActiveSlot] = (UINT8*)BurnMalloc(0x080000);	// Z80 cartridge ROM
 	if (NeoZ80ROM[nNeoActiveSlot] == NULL) {
 		return 1;
 	}
@@ -730,7 +730,7 @@ static INT32 LoadRoms()
 		struct BurnRomInfo ri;
 		UINT8* pADPCMData;
 
-		YM2610ADPCMAROM[nNeoActiveSlot]	= (UINT8*)malloc(nYM2610ADPCMASize[nNeoActiveSlot]);
+		YM2610ADPCMAROM[nNeoActiveSlot]	= (UINT8*)BurnMalloc(nYM2610ADPCMASize[nNeoActiveSlot]);
 		if (YM2610ADPCMAROM[nNeoActiveSlot] == NULL) {
 			return 1;
 		}
@@ -747,8 +747,6 @@ static INT32 LoadRoms()
 			pADPCMData += ri.nLen * 2;
 		}
 		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "pbobblenb")) {
-			YM2610ADPCMAROM[nNeoActiveSlot] = (UINT8*)realloc(YM2610ADPCMAROM[nNeoActiveSlot], 0x380000);
-			nYM2610ADPCMASize[nNeoActiveSlot] += 0x200000;
 			pADPCMData = YM2610ADPCMAROM[nNeoActiveSlot] + 0x200000;
  		}
 
@@ -764,7 +762,7 @@ static INT32 LoadRoms()
 	}
 
 	if (pInfo->nADPCMBNum) {
-		YM2610ADPCMBROM[nNeoActiveSlot]	= (UINT8*)malloc(nYM2610ADPCMBSize[nNeoActiveSlot]);
+		YM2610ADPCMBROM[nNeoActiveSlot]	= (UINT8*)BurnMalloc(nYM2610ADPCMBSize[nNeoActiveSlot]);
 		if (YM2610ADPCMBROM[nNeoActiveSlot] == NULL) {
 			return 1;
 		}
@@ -3676,7 +3674,9 @@ static INT32 neogeoReset()
 		SekClose();
 	}
 
+	ZetOpen(0);
 	BurnYM2610Reset();
+	ZetClose();
 
 #if defined EMULATE_WATCHDOG
 	nNeoWatchdog = 0;
@@ -3722,7 +3722,7 @@ static INT32 NeoInitCommon()
 
 		RAMIndex();													// Get amount of memory needed
 		nLen = RAMEnd - (UINT8*)0;
-		if ((AllRAM = (UINT8*)malloc(nLen)) == NULL) {		// Allocate memory
+		if ((AllRAM = (UINT8*)BurnMalloc(nLen)) == NULL) {		// Allocate memory
 			return 1;
 		}
 		memset(AllRAM, 0, nLen);									// Initialise memory
@@ -4050,7 +4050,7 @@ INT32 NeoInit()
 	recursing = false;
 	
 	for (nNeoActiveSlot = 0; nNeoActiveSlot < nNeoNumSlots; nNeoActiveSlot++) {
-		NeoVector[nNeoActiveSlot] = (UINT8*)malloc(0x0400);
+		NeoVector[nNeoActiveSlot] = (UINT8*)BurnMalloc(0x0400);
 		if (NeoVector[nNeoActiveSlot] == NULL) {
 			return 1;
 		}
@@ -4063,7 +4063,7 @@ INT32 NeoInit()
 
 		ROMIndex();													// Get amount of memory needed
 		nLen = ROMEnd - (UINT8*)0;
-		if ((AllROM = (UINT8*)malloc(nLen)) == NULL) {		// Allocate memory
+		if ((AllROM = (UINT8*)BurnMalloc(nLen)) == NULL) {		// Allocate memory
 			return 1;
 		}
 		memset(AllROM, 0, nLen);									// Initialise memory
@@ -4121,7 +4121,7 @@ INT32 NeoCDInit()
 
 		ROMIndex();													// Get amount of memory needed
 		nLen = ROMEnd - (UINT8*)0;
-		if ((AllROM = (UINT8*)malloc(nLen)) == NULL) {		// Allocate memory
+		if ((AllROM = (UINT8*)BurnMalloc(nLen)) == NULL) {		// Allocate memory
 			return 1;
 		}
 		memset(AllROM, 0, nLen);									// Initialise memory
@@ -4198,51 +4198,25 @@ INT32 NeoExit()
 			NeoExitSprites(nNeoActiveSlot);
 			NeoExitText(nNeoActiveSlot);
 
-			if (NeoTextROM[nNeoActiveSlot]) {
-				free(NeoTextROM[nNeoActiveSlot]);						// Text ROM
-				NeoTextROM[nNeoActiveSlot] = NULL;
-			}
+			BurnFree(NeoTextROM[nNeoActiveSlot]);						// Text ROM
 			nNeoTextROMSize[nNeoActiveSlot] = 0;
 
-			if (NeoSpriteROM[nNeoActiveSlot]) {
-				free(NeoSpriteROM[nNeoActiveSlot]);						// Sprite ROM
-				NeoSpriteROM[nNeoActiveSlot] = NULL;
-			}
-
-			if (Neo68KROM[nNeoActiveSlot]) {
-				free(Neo68KROM[nNeoActiveSlot]);						// 68K ROM
-				Neo68KROM[nNeoActiveSlot] = NULL;
-			}
-			if (NeoVector[nNeoActiveSlot]) {
-				free(NeoVector[nNeoActiveSlot]);						// 68K vectors
-				NeoVector[nNeoActiveSlot] = NULL;
-			}
-
-			if (NeoZ80ROM[nNeoActiveSlot]) {
-				free(NeoZ80ROM[nNeoActiveSlot]);						// Z80 ROM
-				NeoZ80ROM[nNeoActiveSlot] = NULL;
-			}
-
-			if (YM2610ADPCMAROM[nNeoActiveSlot]) {				// ADPCM data
-				free(YM2610ADPCMAROM[nNeoActiveSlot]);
-				YM2610ADPCMAROM[nNeoActiveSlot] = NULL;
-			}
-			if (YM2610ADPCMAROM[nNeoActiveSlot]) {
-				free(YM2610ADPCMBROM[nNeoActiveSlot]);
-				YM2610ADPCMBROM[nNeoActiveSlot] = NULL;
-			}
+			BurnFree(NeoSpriteROM[nNeoActiveSlot]);						// Sprite ROM
+			BurnFree(Neo68KROM[nNeoActiveSlot]);						// 68K ROM
+			BurnFree(NeoVector[nNeoActiveSlot]);						// 68K vectors
+			BurnFree(NeoZ80ROM[nNeoActiveSlot]);						// Z80 ROM
+			BurnFree(YM2610ADPCMAROM[nNeoActiveSlot]);
+			BurnFree(YM2610ADPCMBROM[nNeoActiveSlot]);
 		}
 	}
-
-	if (AllROM) {
-		free(AllROM);								// Misc ROM
-		AllROM = NULL;
+	
+	if (nNeoSystemType & NEO_SYS_CD) {
+		NeoExitSprites(0);
+		NeoExitText(0);
 	}
 
-	if (AllRAM) {
-		free(AllRAM);								// Misc RAM
-		AllRAM = NULL;
-	}
+	BurnFree(AllROM);								// Misc ROM
+	BurnFree(AllRAM);								// Misc RAM
 
 	memset(NeoCallback, 0, sizeof(NeoCallback));
 	NeoCallbackActive = &NeoCallback[0];
@@ -4556,7 +4530,9 @@ INT32 NeoFrame()
 		nCyclesTotal[1] = 4000000.0 / NEO_VREFRESH;
 #endif
 		// 68K cycles executed each scanline
+		SekOpen(0);
 		SekSetCyclesScanline((INT32)(12000000.0 * nBurnCPUSpeedAdjust / (256.0 * NEO_HREFRESH)));
+		SekClose();
 
 		// uPD499A ticks per second (same as 68K clock)
 		uPD499ASetTicks((INT64)12000000 * nBurnCPUSpeedAdjust / 256);
@@ -4568,7 +4544,11 @@ INT32 NeoFrame()
 	// If the watchdog isn't reset every 8 frames, reset the system
 	// This can't be 100% accurate, as the 68000 instruction timings are not 100%
 	if ((nNeoSystemType & NEO_SYS_CART) && nNeoWatchdog > nCyclesTotal[0] * 8) {
+#if 1 && defined FBA_DEBUG
+		SekOpen(0);
 		bprintf(PRINT_IMPORTANT, _T(" ** Watchdog triggered system reset (PC: 0x%06X)\n"), SekGetPC(-1));
+		SekClose();
+#endif
 		neogeoReset();
 	}
 #endif

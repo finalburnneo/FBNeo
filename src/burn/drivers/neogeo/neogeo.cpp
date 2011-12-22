@@ -91,7 +91,7 @@ INT32 NeoLoadSprites(INT32 nOffset, INT32 nNum, UINT8* pDest, UINT32 nSpriteSize
 			}
 		}
 
-		pBuf1 = (UINT8*)malloc(nRomSize * 2);
+		pBuf1 = (UINT8*)BurnMalloc(nRomSize * 2);
 		if (pBuf1 == NULL) {
 			return 1;
 		}
@@ -99,7 +99,7 @@ INT32 NeoLoadSprites(INT32 nOffset, INT32 nNum, UINT8* pDest, UINT32 nSpriteSize
 		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_DEDICATED_PCB) {
 //			dProgress *= 0.75;
 
-			pBuf2 = (UINT8*)malloc(nRomSize * 2);
+			pBuf2 = (UINT8*)BurnMalloc(nRomSize * 2);
 			if (pBuf2 == NULL) {
 				return 1;
 			}
@@ -157,15 +157,8 @@ INT32 NeoLoadSprites(INT32 nOffset, INT32 nNum, UINT8* pDest, UINT32 nSpriteSize
 			}
 		}
 
-		if (pBuf2) {
-			free(pBuf2);
-			pBuf2 = NULL;
-		}
-		if (pBuf1) {
-			free(pBuf1);
-			pBuf1 = NULL;
-		}
-
+		BurnFree(pBuf2);
+		BurnFree(pBuf1);
 	} else {
 		nSpriteSize = 0;
 
@@ -210,7 +203,7 @@ INT32 NeoLoadSprites(INT32 nOffset, INT32 nNum, UINT8* pDest, UINT32 nSpriteSize
 
 	// Swap data for viewpoin, aof, ssideki, kotm2, more
 	if (BurnDrvGetHardwareCode() & HARDWARE_SNK_SWAPC) {
-		UINT8* pBuf = (UINT8*)malloc(0x600000);
+		UINT8* pBuf = (UINT8*)BurnMalloc(0x600000);
 
 		if (pBuf) {
 			for (INT32 i = 0x200000; i < 0x600000; i++) {
@@ -221,8 +214,7 @@ INT32 NeoLoadSprites(INT32 nOffset, INT32 nNum, UINT8* pDest, UINT32 nSpriteSize
 				((INT16*)(pDest + 0x400000))[i] = ((INT16*)(pBuf + 0x200000))[i];
 			}
 
-			free(pBuf);
-			pBuf = NULL;
+			BurnFree(pBuf);
 		} else {
 			return 1;
 		}

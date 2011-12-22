@@ -14,15 +14,13 @@ INT32 NeoInitPalette()
 {
 	for (INT32 i = 0; i < 2; i++) {
 		if (NeoPaletteData[i]) {
-			free(NeoPaletteData[i]);
-			NeoPaletteData[i] = NULL;
+			BurnFree(NeoPaletteData[i]);
 		}
 		if (NeoPaletteCopy[i]) {
-			free(NeoPaletteCopy[i]);
-			NeoPaletteCopy[i] = NULL;
+			BurnFree(NeoPaletteCopy[i]);
 		}
-		NeoPaletteData[i] = (UINT32*)malloc(4096 * sizeof(UINT32));
-		NeoPaletteCopy[i] = (UINT16*)malloc(4096 * sizeof(UINT16));
+		NeoPaletteData[i] = (UINT32*)BurnMalloc(4096 * sizeof(UINT32));
+		NeoPaletteCopy[i] = (UINT16*)BurnMalloc(4096 * sizeof(UINT16));
 	}
 
 	NeoRecalcPalette = 1;
@@ -33,14 +31,8 @@ INT32 NeoInitPalette()
 void NeoExitPalette()
 {
 	for (INT32 i = 0; i < 2; i++) {
-		if (NeoPaletteData[i]) {
-			free(NeoPaletteData[i]);
-			NeoPaletteData[i] = NULL;
-		}
-		if (NeoPaletteCopy[i]) {
-			free(NeoPaletteCopy[i]);
-			NeoPaletteCopy[i] = NULL;
-		}
+		BurnFree(NeoPaletteData[i]);
+		BurnFree(NeoPaletteCopy[i]);
 	}
 }
 

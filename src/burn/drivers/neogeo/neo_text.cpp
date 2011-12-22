@@ -163,15 +163,8 @@ INT32 NeoRenderText()
 
 void NeoExitText(INT32 nSlot)
 {
-	if (NeoTextTileAttribBIOS) {
-		free(NeoTextTileAttribBIOS);
-		NeoTextTileAttribBIOS    = NULL;
-	}
-
-	if (NeoTextTileAttrib[nSlot]) {
-		free(NeoTextTileAttrib[nSlot]);
-		NeoTextTileAttrib[nSlot] = NULL;
-	}
+	BurnFree(NeoTextTileAttribBIOS);
+	BurnFree(NeoTextTileAttrib[nSlot]);
 	NeoTextTileAttribActive = NULL;
 }
 
@@ -279,7 +272,7 @@ void NeoSetTextSlot(INT32 nSlot)
 INT32 NeoInitText(INT32 nSlot)
 {
 	if (nSlot < 0) {
-		NeoTextTileAttribBIOS    = (INT8*)malloc(0x1000);
+		NeoTextTileAttribBIOS    = (INT8*)BurnMalloc(0x1000);
 		for (INT32 i = 0; i < 0x1000; i++) {
 			NeoTextTileAttribBIOS[i] = 1;
 		}
@@ -292,7 +285,7 @@ INT32 NeoInitText(INT32 nSlot)
 
 //	NeoExitText(nSlot);
 
-	NeoTextTileAttrib[nSlot] = (INT8*)malloc((nTileNum < 0x1000) ? 0x1000 : nTileNum);
+	NeoTextTileAttrib[nSlot] = (INT8*)BurnMalloc((nTileNum < 0x1000) ? 0x1000 : nTileNum);
 
 	if (nNeoScreenWidth == 304) {
 		nMinX = 1;

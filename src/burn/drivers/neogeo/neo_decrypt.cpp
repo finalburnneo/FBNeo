@@ -659,7 +659,7 @@ static INT32 m1_address_scramble(INT32 address, UINT16 key)
 void neogeo_cmc50_m1_decrypt()
 {
 	UINT8 *rom = NeoZ80ROMActive;
-	UINT8 *buffer = (UINT8*)malloc(0x80000);
+	UINT8 *buffer = (UINT8*)BurnMalloc(0x80000);
 	
 	UINT16 key = generate_cs16(rom, 0x10000);
 
@@ -668,8 +668,5 @@ void neogeo_cmc50_m1_decrypt()
 	}
 
 	memcpy(rom, buffer, 0x80000);
-	if (buffer) {
-		free(buffer);
-		buffer = NULL;
-	}
+	BurnFree(buffer);
 }

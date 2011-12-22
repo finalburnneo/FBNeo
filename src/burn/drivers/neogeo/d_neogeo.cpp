@@ -1334,7 +1334,7 @@ static void PCM2DecryptP()
 {
 	// Descamble P-ROMs
 
-	UINT8* pTemp = (UINT8*)malloc(0x400000);
+	UINT8* pTemp = (UINT8*)BurnMalloc(0x400000);
 
 	if (pTemp) {
 		memcpy(pTemp, Neo68KROMActive + 0x100000, 0x400000);
@@ -1344,8 +1344,7 @@ static void PCM2DecryptP()
 			memcpy(Neo68KROMActive + 0x180000 + i * 0x100000, pTemp + 0x080000 + (((((i + 1) & 1) << 2) | ((i + 1) & 2)) << 19), 0x80000);
 		}
 
-		free(pTemp);
-		pTemp = NULL;
+		BurnFree(pTemp);
 	}
 }
 
@@ -1364,7 +1363,7 @@ static void PCM2DecryptV2(const PCM2DecryptV2Info* const pInfo)
 {
 	// Decrypt V-ROMs
 
-	UINT8* pTemp = (UINT8*)malloc(0x01000000);
+	UINT8* pTemp = (UINT8*)BurnMalloc(0x01000000);
 
 	if (pTemp) {
 		memcpy(pTemp, YM2610ADPCMAROM[nNeoActiveSlot], 0x01000000);
@@ -1375,8 +1374,7 @@ static void PCM2DecryptV2(const PCM2DecryptV2Info* const pInfo)
 			YM2610ADPCMAROM[nNeoActiveSlot][nAddress] = pTemp[(i + pInfo->nAddressXor) & 0xffffff] ^ pInfo->nDataXor[nAddress & 0x07];
 		}
 
-		free(pTemp);
-		pTemp = NULL;
+		BurnFree(pTemp);
 	}
 }
 
@@ -1384,7 +1382,7 @@ static void PCM2DecryptP2(const PCM2DecryptP2Info* const pInfo)
 {
 	// Descamble P-ROMs
 
-	UINT8* pTemp = (UINT8*)malloc(0x800000);
+	UINT8* pTemp = (UINT8*)BurnMalloc(0x800000);
 
 	if (pTemp) {
 		memcpy(pTemp, Neo68KROMActive, 0x800000);
@@ -1393,8 +1391,7 @@ static void PCM2DecryptP2(const PCM2DecryptP2Info* const pInfo)
 			memcpy(Neo68KROMActive + i * 0x80000, pTemp + pInfo->nAddressOffset[i], 0x80000);
 		}
 
-		free(pTemp);
-		pTemp = NULL;
+		BurnFree(pTemp);
 	}
 }
 
@@ -1491,7 +1488,7 @@ static void NeoPVCInstallHandlers()
 
 static INT32 NeoPVCInit()
 {
-	PVCRAM = (UINT8*)malloc(0x2000);
+	PVCRAM = (UINT8*)BurnMalloc(0x2000);
 	if (!PVCRAM) return 1;
 	
 	memset(PVCRAM, 0, 0x2000);
@@ -1505,10 +1502,7 @@ static INT32 NeoPVCInit()
 
 static INT32 NeoPVCExit()
 {
-	if (PVCRAM) {
-		free(PVCRAM);
-		PVCRAM = NULL;
-	}
+	BurnFree(PVCRAM);
 	
 	return NeoExit();
 }
@@ -4638,7 +4632,7 @@ UINT16 __fastcall KogReadWord(UINT32)
 static void kogCallback()
 {
 	INT32 i;
-	UINT8 *dst = (UINT8 *)malloc( 0x100000 );
+	UINT8 *dst = (UINT8 *)BurnMalloc( 0x100000 );
 
 	if (dst)
 	{
@@ -4649,8 +4643,7 @@ static void kogCallback()
 
 		memcpy (dst + 0x090000, Neo68KROMActive + 0x040000, 0x004000);
 		memcpy (Neo68KROMActive, dst, 0x100000);
-		free (dst);
-		dst = NULL;
+		BurnFree (dst);
 	}
 
 	for (i = 0x90000; i < 0x94000; i+=2) {
@@ -5015,7 +5008,7 @@ static void kof98Decrypt()
 	INT32 sec[] = {0x000000, 0x100000, 0x000004, 0x100004, 0x10000a, 0x00000a, 0x10000e, 0x00000e};
 	INT32 pos[] = {0x000, 0x004, 0x00a, 0x00e};
 
-	UINT8* pTemp = (UINT8*)malloc(0x200000);
+	UINT8* pTemp = (UINT8*)BurnMalloc(0x200000);
 
 	if (pTemp == NULL) {
 		return;
@@ -5051,10 +5044,7 @@ static void kof98Decrypt()
 
 	memcpy(&Neo68KROMActive[0x100000], &Neo68KROMActive[0x200000], 0x400000);
 
-	if (pTemp) {
-		free(pTemp);
-		pTemp = NULL;
-	}
+	BurnFree(pTemp);
 }
 
 static UINT16 nkof98Protection;
@@ -6570,7 +6560,7 @@ STD_ROM_FN(ct2k3sp)
 static void ct2k3spCallback()
 {
 	INT32 i, j;
-	UINT8 *dst = (UINT8 *)malloc( 0x040000 );
+	UINT8 *dst = (UINT8 *)BurnMalloc( 0x040000 );
 	if (dst)
 	{
 		for (i = 0; i < 0x040000; i++)
@@ -6581,8 +6571,7 @@ static void ct2k3spCallback()
 		
 		memcpy (NeoTextROM[nNeoActiveSlot], dst, 0x040000 );
 
-		free (dst);
-		dst = NULL;
+		BurnFree (dst);
 	}
 	
 	cthd2003_decode();
@@ -7087,7 +7076,7 @@ void __fastcall kof10thWriteWordBankswitch(UINT32 sekAddress, UINT16 wordValue)
 static void kof10thCallback()
 {
 	INT32 i, j, k;
-	UINT8 *dst = (UINT8*)malloc(0x100000);
+	UINT8 *dst = (UINT8*)BurnMalloc(0x100000);
 	if (dst)
 	{
 		for (i = 0; i < 0x800000; i+=0x100000)
@@ -7102,8 +7091,7 @@ static void kof10thCallback()
 
 		memcpy (Neo68KROMActive + 0x100000, Neo68KROMActive, 0x700000);
 		memcpy (Neo68KROMActive, dst, 0x100000);
-		free (dst);
-		dst = NULL;
+		BurnFree (dst);
 	}
 
 	// Altera protection chip patches these over P ROM
@@ -7234,7 +7222,7 @@ STD_ROM_FN(kf10thep)
 static void kf10thepCallback()
 {
 	INT32 i;
-	UINT8 *dst = (UINT8*)malloc(0x100000);
+	UINT8 *dst = (UINT8*)BurnMalloc(0x100000);
 	if (dst)
 	{
 		UINT32 sec[8] = { 0x3, 0x8, 0x7, 0xC, 0x1, 0xA, 0x6, 0xD };
@@ -7245,8 +7233,7 @@ static void kf10thepCallback()
 		memcpy (dst + 0x0002e0, Neo68KROMActive + 0x0402e0, 0x06a);
 		memcpy (dst + 0x0f92bc, Neo68KROMActive + 0x0492bc, 0xb9e);
 		memcpy (Neo68KROMActive, dst, 0x100000);
-		free (dst);
-		dst = NULL;
+		BurnFree (dst);
 	}
 
 	memcpy (Neo68KROMActive + 0x100000, Neo68KROMActive + 0x200000, 0x600000);
@@ -7385,7 +7372,7 @@ STD_ROM_FN(kof2k4se)
 
 static void kof2k4seCallback()
 {
-	UINT8 *dst = (UINT8*)malloc(0x100000);
+	UINT8 *dst = (UINT8*)BurnMalloc(0x100000);
 
 	if (dst)
 	{
@@ -7396,8 +7383,7 @@ static void kof2k4seCallback()
 		memcpy (Neo68KROMActive + 0x100000, Neo68KROMActive + 0x300000, 0x100000);
 		memcpy (Neo68KROMActive + 0x300000, dst,                        0x100000);
 
-		free (dst);
-		dst = NULL;
+		BurnFree (dst);
 	}
 }
 
@@ -7922,7 +7908,7 @@ STD_ROM_FN(svcplus)
 static void svcplusCallback()
 {
 	INT32 i, j, k;
-	UINT8 *dst = (UINT8*)malloc(0x100000);
+	UINT8 *dst = (UINT8*)BurnMalloc(0x100000);
 
 	if (dst)
 	{
@@ -7942,8 +7928,7 @@ static void svcplusCallback()
 		memcpy (Neo68KROMActive + 0x100000, Neo68KROMActive, 0x500000);
 		memcpy (Neo68KROMActive, dst, 0x100000);
 
-		free (dst);
-		dst = NULL;
+		BurnFree (dst);
 	}
 
 	*((UINT16*)(Neo68KROMActive + 0xf8016)) = 0x33c1; // Patch protected address
@@ -8007,13 +7992,13 @@ STD_ROM_FN(svcplusa)
 
 static void svcplusaCallback()
 {
-	UINT8 *dst = (UINT8*)malloc(0x100000);
+	UINT8 *dst = (UINT8*)BurnMalloc(0x100000);
 	if (dst)
 	{
 		memcpy (dst, Neo68KROMActive + 0x500000, 0x100000);
 		memcpy (Neo68KROMActive + 0x100000, Neo68KROMActive, 0x500000);
 		memcpy (Neo68KROMActive, dst, 0x100000);
-		free (dst);
+		BurnFree (dst);
 		dst = NULL;
 	}
 
@@ -8251,7 +8236,7 @@ STD_ROM_FN(samsho5b)
 
 static void samsho5b_sx_decode()
 {
-	UINT8 *Buf = (UINT8*)malloc(0x20000);
+	UINT8 *Buf = (UINT8*)BurnMalloc(0x20000);
 	if (Buf) {
 		memcpy(Buf, NeoTextROM[nNeoActiveSlot], 0x20000);
 		
@@ -8260,8 +8245,7 @@ static void samsho5b_sx_decode()
 			memcpy(&NeoTextROM[nNeoActiveSlot][i + 8], &Buf[i + 0], 8);
 		}
 		
-		free(Buf);
-		Buf = NULL;
+		BurnFree(Buf);
 	}
 }
 
@@ -8274,7 +8258,7 @@ static void samsho5b_vx_decode()
 static void samsho5bCallback()
 {
 	INT32 i, j, k;
-	UINT8 *dst = (UINT8 *)malloc(0x100000);
+	UINT8 *dst = (UINT8 *)BurnMalloc(0x100000);
 
 	if (dst)
 	{
@@ -8295,8 +8279,7 @@ static void samsho5bCallback()
 		memcpy (Neo68KROMActive + 0x100000, Neo68KROMActive, 0x700000);
 		memcpy (Neo68KROMActive, dst, 0x100000);
 	
-		free (dst);
-		dst = NULL;
+		BurnFree (dst);
 	}
 	
 	samsho5b_sx_decode();
@@ -8367,7 +8350,7 @@ void kf2k3pcb_bios_decode()
 
 	extern UINT8 *Neo68KBIOS;
 	UINT16 *src = (UINT16*)Neo68KBIOS;
-	UINT16 *dst = (UINT16*)malloc( 0x80000 );
+	UINT16 *dst = (UINT16*)BurnMalloc( 0x80000 );
 
 	for (i = 0; i < 0x80000 / 2; i++) {
 				  j  = i;
@@ -8389,10 +8372,7 @@ void kf2k3pcb_bios_decode()
 
 	memcpy (src, dst, 0x80000);
 
-	if (dst) {
-		free (dst);
-		dst = NULL;
-	}
+	BurnFree (dst);
 }
 
 static void kf2k3pcbCallback()
@@ -8768,7 +8748,7 @@ STD_ROM_FN(kf2k3bla)
 static void kf2k3blaCallback()
 {
 	INT32 i, j, k;
-	UINT8 *dst = (UINT8 *)malloc(0x100000);
+	UINT8 *dst = (UINT8 *)BurnMalloc(0x100000);
 	if (dst)
 	{
 		for (i = 0; i < 0x700000; i += 0x100000)
@@ -8782,8 +8762,7 @@ static void kf2k3blaCallback()
 			}
 		}
 	
-		free (dst);
-		dst = NULL;
+		BurnFree (dst);
 	}
 
 	// patched by Altera protection chip
@@ -10868,7 +10847,7 @@ STD_ROM_FN(lans2004)
 static void lans2004Callback()
 {
 	INT32 i;
-	UINT8 *dst = (UINT8*)malloc(0x100000);
+	UINT8 *dst = (UINT8*)BurnMalloc(0x100000);
 	if (dst)
 	{
 		static const INT32 sec[] = { 0x3, 0x8, 0x7, 0xc, 0x1, 0xa, 0x6, 0xd };
@@ -10879,8 +10858,7 @@ static void lans2004Callback()
 		memcpy (dst + 0x0bbb00, Neo68KROMActive + 0x045b00, 0x001710);
 		memcpy (dst + 0x02fff0, Neo68KROMActive + 0x1a92be, 0x000010);
 		memcpy (Neo68KROMActive, dst, 0x100000);
-		free (dst);
-		dst = NULL;
+		BurnFree (dst);
 	}
 
 	memcpy (Neo68KROMActive + 0x100000, Neo68KROMActive + 0x200000, 0x400000);
@@ -12107,7 +12085,7 @@ STD_ROM_FN(matrimbl)
 static void matrimblCallback()
 {
 	INT32 i, j;
-	UINT8 *dst = (UINT8 *)malloc( 0x020000 );
+	UINT8 *dst = (UINT8 *)BurnMalloc( 0x020000 );
 
 	if (dst) 
 	{
@@ -12121,8 +12099,7 @@ static void matrimblCallback()
 			if (i & 0x10000) j ^= 0x00800;
 			NeoZ80ROMActive[j] = dst[i];
 		}
-		free (dst);
-		dst = NULL;
+		BurnFree (dst);
 	}
 
 	PCM2DecryptP();
@@ -12365,14 +12342,13 @@ static void cthd2k3aCallback()
 	// P-ROM Encryption
 	UINT8 nBank[] = { 0x06, 0x02, 0x04, 0x05, 0x01, 0x03, 0x00, 0x07, 0x27, 0x0E, 0x1C, 0x15, 0x1B, 0x17, 0x0A, 0x0F, 0x16, 0x14, 0x23, 0x0B, 0x22, 0x26, 0x08, 0x24, 0x21, 0x13, 0x1A, 0x0C, 0x19, 0x1D, 0x25, 0x10, 0x09, 0x20, 0x18, 0x1F, 0x1E, 0x12, 0x0D, 0x11 };
 	
-	UINT8 *pTemp = (UINT8*)malloc(0x500000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x500000);
 	if (pTemp) {
 		for (i = 0; i < 0x500000 / 0x20000; i++) {
 			memcpy(pTemp + (i * 0x20000), Neo68KROMActive + (nBank[i] * 0x20000), 0x20000);
 		}
 		memcpy(Neo68KROMActive, pTemp, 0x500000);
-		free(pTemp);
-		pTemp = NULL;
+		BurnFree(pTemp);
 	}
 	
 	UINT16 *Rom = (UINT16*)Neo68KROMActive;
@@ -12835,7 +12811,7 @@ STD_ROM_FN(kf2k4pls)
 
 static void kf2k4plsCallback()
 {
-	UINT8 *pTemp = (UINT8*)malloc(0x600000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x600000);
 	
 	if (pTemp) {
 		memcpy(pTemp, Neo68KROMActive, 0x600000);
@@ -12858,8 +12834,7 @@ static void kf2k4plsCallback()
 		memcpy(Neo68KROMActive + 0x0c0000, pTemp + 0x100000, 0x020000);
 		memcpy(Neo68KROMActive + 0x0e0000, pTemp + 0x040000, 0x020000);
 		
-		free(pTemp);
-		pTemp = NULL;
+		BurnFree(pTemp);
 	}
 	
 	lans2004_sx_decode();
@@ -12992,7 +12967,7 @@ STD_ROM_FN(kof96ep)
 
 static void kof96epCallback()
 {
-	UINT8 *pTemp = (UINT8*)malloc(0x80000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x80000);
 	
 	if (pTemp) {
 		BurnLoadRom(pTemp, 15, 1);
@@ -13003,8 +12978,7 @@ static void kof96epCallback()
 		
 		memcpy(Neo68KROMActive, pTemp, 0x80000);
 		
-		free(pTemp);
-		pTemp = NULL;
+		BurnFree(pTemp);
 	}
 }
 
@@ -13242,7 +13216,7 @@ STD_ROM_FN(mslug5b)
 
 static void mslug5bCallback()
 {
-	UINT8 *pTemp = (UINT8*)malloc(0x500000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x500000);
 	
 	if (pTemp) {
 		memcpy(pTemp, Neo68KROMActive, 0x500000);
@@ -13253,8 +13227,7 @@ static void mslug5bCallback()
 		memcpy(Neo68KROMActive + 0x200000, pTemp + 0x300000, 0x100000);
 		memcpy(Neo68KROMActive + 0x400000, pTemp + 0x400000, 0x100000);
 			
-		free(pTemp);
-		pTemp = NULL;
+		BurnFree(pTemp);
 	}
 }
 

@@ -143,7 +143,7 @@ void NeoSetSpriteSlot(INT32 nSlot)
 INT32 NeoInitSprites(INT32 nSlot)
 {
 	// Create a table that indicates if a tile is transparent
-	NeoTileAttrib[nSlot] = (UINT8*)malloc(nNeoTileMask[nSlot] + 1);
+	NeoTileAttrib[nSlot] = (UINT8*)BurnMalloc(nNeoTileMask[nSlot] + 1);
 
 	for (INT32 i = 0; i < nNeoMaxTile[nSlot]; i++) {
 		bool bTransparent = true;
@@ -173,9 +173,6 @@ INT32 NeoInitSprites(INT32 nSlot)
 
 void NeoExitSprites(INT32 nSlot)
 {
-	if (NeoTileAttrib[nSlot]) {
-		free(NeoTileAttrib[nSlot]);
-		NeoTileAttrib[nSlot] = NULL;
-	}
+	BurnFree(NeoTileAttrib[nSlot]);
 	NeoTileAttribActive = NULL;
 }

@@ -4,12 +4,6 @@
 
 #define HARDWARE_IGS_JAMMAPCB		0x0002
 
-#ifdef LSB_FIRST
-#define SWAP_WORD_LSB(x)	(((x&0xff)<<8)|((x>>8)&0xff))
-#else
-#define SWAP_WORD_LSB(x)	(x)
-#endif
-
 // pgm_run
 extern INT32 nPGM68KROMLen;
 extern INT32 nPGMSPRColMaskLen;

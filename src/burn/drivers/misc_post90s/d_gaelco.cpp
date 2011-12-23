@@ -844,7 +844,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 encrypted_ram, INT32 sou
 
 	// big karnak
 	{
-		M6809Init(0);
+		M6809Init(1);
 		M6809Open(0);
 		M6809MapMemory(Drv6809RAM,		0x0000, 0x07ff, M6809_RAM);
 		M6809MapMemory(Drv6809ROM + 0x0c00,	0x0c00, 0xffff, M6809_ROM);

@@ -495,7 +495,7 @@ static INT32 DrvInit()
 		DrvColorTableInit();
 	}
 
-	M6809Init(0);
+	M6809Init(2);
 	M6809Open(0);
 	M6809MapMemory(DrvPalRAM,		0x0c00, 0x0cff, M6809_ROM);
 	M6809MapMemory(DrvM6809RAM0,		0x1000, 0x1fff, M6809_RAM);
@@ -513,7 +513,6 @@ static INT32 DrvInit()
 	M6809SetWriteByteHandler(DrvContraM6809WriteByte);
 	M6809Close();
 
-	M6809Init(1);
 	M6809Open(1);
 	M6809MapMemory(DrvM6809RAM2, 		0x6000, 0x67ff, M6809_RAM);
 	M6809MapMemory(DrvM6809ROM1 + 0x08000,	0x8000, 0xffff, M6809_ROM);

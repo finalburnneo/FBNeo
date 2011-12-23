@@ -570,7 +570,7 @@ static INT32 DrvInit()
 	konamiSetReadHandler(ajax_main_read);
 	konamiClose();
 
-	M6809Init(0);
+	M6809Init(1);
 	M6809Open(0);
 	M6809MapMemory(DrvShareRAM,		0x2000, 0x3fff, M6809_RAM);
 	M6809MapMemory(DrvM6809ROM  + 0x10000,	0x8000, 0x9fff, M6809_ROM);

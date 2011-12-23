@@ -725,7 +725,7 @@ static INT32 DrvInit(INT32 type)
 		DrvGfxDecode(gfx0_offset * 2);
 	}
 
-	HD6309Init(0);
+	HD6309Init(1);
 	HD6309Open(0);
 	HD6309MapMemory(DrvHD6309RAM,		0x4000, 0x5fff, HD6309_RAM);
 	HD6309MapMemory(DrvHD6309ROM + 0x10000, 0x6000, 0x7fff, HD6309_ROM);

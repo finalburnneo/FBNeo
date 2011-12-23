@@ -369,7 +369,7 @@ static INT32 DrvInit()
 		DrvGfxDecode();
 	}
 
-	M6809Init(0);
+	M6809Init(1);
 	M6809Open(0);
 	M6809MapMemory(DrvM6809RAM,		0x0000, 0x1dff, M6809_RAM);
 	M6809MapMemory(DrvSprRAM,		0x1e00, 0x1fff, M6809_RAM);

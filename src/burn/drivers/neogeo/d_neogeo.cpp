@@ -5326,22 +5326,22 @@ STD_ROM_FN(mslugx)
 static void mslugxPatch()
 {
 	for (INT32 i = 0; i < 0x100000 - 8; i += 2) {
-		if (*((UINT16*)(Neo68KROMActive + i + 0)) == 0x0243 && *((UINT16*)(Neo68KROMActive + i + 2)) == 0x0001 && *((UINT16*)(Neo68KROMActive + i + 4)) == 0x6600) {
-			*((UINT16*)(Neo68KROMActive + i + 4)) = 0x4e71;
-			*((UINT16*)(Neo68KROMActive + i + 6)) = 0x4e71;
+		if (*((UINT16*)(Neo68KROMActive + i + 0)) == BURN_ENDIAN_SWAP_INT16(0x0243) && *((UINT16*)(Neo68KROMActive + i + 2)) == BURN_ENDIAN_SWAP_INT16(0x0001) && *((UINT16*)(Neo68KROMActive + i + 4)) == BURN_ENDIAN_SWAP_INT16(0x6600)) {
+			*((UINT16*)(Neo68KROMActive + i + 4)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+			*((UINT16*)(Neo68KROMActive + i + 6)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
 		}
 	}
 
-	*((UINT16*)(Neo68KROMActive + 0x3bdc)) = 0x4e71;
-	*((UINT16*)(Neo68KROMActive + 0x3bde)) = 0x4e71;
-	*((UINT16*)(Neo68KROMActive + 0x3be0)) = 0x4e71;
+	*((UINT16*)(Neo68KROMActive + 0x3bdc)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	*((UINT16*)(Neo68KROMActive + 0x3bde)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	*((UINT16*)(Neo68KROMActive + 0x3be0)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
 
-	*((UINT16*)(Neo68KROMActive + 0x3c0c)) = 0x4e71;
-	*((UINT16*)(Neo68KROMActive + 0x3c0e)) = 0x4e71;
-	*((UINT16*)(Neo68KROMActive + 0x3c10)) = 0x4e71;
+	*((UINT16*)(Neo68KROMActive + 0x3c0c)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	*((UINT16*)(Neo68KROMActive + 0x3c0e)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	*((UINT16*)(Neo68KROMActive + 0x3c10)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
 
-	*((UINT16*)(Neo68KROMActive + 0x3c36)) = 0x4e71;
-	*((UINT16*)(Neo68KROMActive + 0x3c38)) = 0x4e71;
+	*((UINT16*)(Neo68KROMActive + 0x3c36)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	*((UINT16*)(Neo68KROMActive + 0x3c38)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
 }
 
 static INT32 mslugxInit()
@@ -6450,31 +6450,31 @@ static void cthd2003_decode()
 	INT32 i, n;
 
 	// fix garbage on s1 layer over everything
-	*((UINT16*)(Neo68KROMActive + 0xf415a)) = 0x4ef9;
-	*((UINT16*)(Neo68KROMActive + 0xf415c)) = 0x000f;
-	*((UINT16*)(Neo68KROMActive + 0xf415e)) = 0x4cf2;
+	*((UINT16*)(Neo68KROMActive + 0xf415a)) = BURN_ENDIAN_SWAP_INT16(0x4ef9);
+	*((UINT16*)(Neo68KROMActive + 0xf415c)) = BURN_ENDIAN_SWAP_INT16(0x000f);
+	*((UINT16*)(Neo68KROMActive + 0xf415e)) = BURN_ENDIAN_SWAP_INT16(0x4cf2);
 
 	// Fix corruption in attract mode before title screen
 	for (i = 0x1ae290; i < 0x1ae8d0; i+=2) {
-		*((UINT16*)(Neo68KROMActive + i)) = 0x0000;
+		*((UINT16*)(Neo68KROMActive + i)) = BURN_ENDIAN_SWAP_INT16(0x0000);
 	}
 
 	// Fix for title page
 	for (i = 0x1f8ef0; i < 0x1fa1f0; i += 4) {
-		*((UINT16*)(Neo68KROMActive + i + 0)) -= 0x7000;
-		*((UINT16*)(Neo68KROMActive + i + 2)) -= 0x0010;
+		*((UINT16*)(Neo68KROMActive + i + 0)) -= BURN_ENDIAN_SWAP_INT16(0x7000);
+		*((UINT16*)(Neo68KROMActive + i + 2)) -= BURN_ENDIAN_SWAP_INT16(0x0010);
 	}
 
 	// Fix for green dots on title page
 	for (i = 0xac500; i < 0xac520; i+=2) {
-		*((UINT16*)(Neo68KROMActive + i)) = 0xffff;
+		*((UINT16*)(Neo68KROMActive + i)) = BURN_ENDIAN_SWAP_INT16(0xffff);
 	}
 
 	// Fix for blanks as screen change level end clear
-	*((UINT16*)(Neo68KROMActive + 0x991d0)) = 0xdd03;
-	*((UINT16*)(Neo68KROMActive + 0x99306)) = 0xdd03;
-	*((UINT16*)(Neo68KROMActive + 0x99354)) = 0xdd03;
-	*((UINT16*)(Neo68KROMActive + 0x9943e)) = 0xdd03;
+	*((UINT16*)(Neo68KROMActive + 0x991d0)) = BURN_ENDIAN_SWAP_INT16(0xdd03);
+	*((UINT16*)(Neo68KROMActive + 0x99306)) = BURN_ENDIAN_SWAP_INT16(0xdd03);
+	*((UINT16*)(Neo68KROMActive + 0x99354)) = BURN_ENDIAN_SWAP_INT16(0xdd03);
+	*((UINT16*)(Neo68KROMActive + 0x9943e)) = BURN_ENDIAN_SWAP_INT16(0xdd03);
 
 	// Swap bits 15 & 16 in the address of the Z80 ROM
 	for (i = 0; i < 0x10000 / 2; i++) {
@@ -7095,12 +7095,12 @@ static void kof10thCallback()
 	}
 
 	// Altera protection chip patches these over P ROM
-	*((UINT16 *)(Neo68KROMActive + 0x0124)) = 0x000d; // Enables XOR for RAM moves, forces SoftDIPs, and USA region
-	*((UINT16 *)(Neo68KROMActive + 0x0126)) = 0xf7a8;
+	*((UINT16 *)(Neo68KROMActive + 0x0124)) = BURN_ENDIAN_SWAP_INT16(0x000d); // Enables XOR for RAM moves, forces SoftDIPs, and USA region
+	*((UINT16 *)(Neo68KROMActive + 0x0126)) = BURN_ENDIAN_SWAP_INT16(0xf7a8);
 
-	*((UINT16 *)(Neo68KROMActive + 0x8bf4)) = 0x4ef9; // Run code to change "S" data
-	*((UINT16 *)(Neo68KROMActive + 0x8bf6)) = 0x000d;
-	*((UINT16 *)(Neo68KROMActive + 0x8bf8)) = 0xf980;
+	*((UINT16 *)(Neo68KROMActive + 0x8bf4)) = BURN_ENDIAN_SWAP_INT16(0x4ef9); // Run code to change "S" data
+	*((UINT16 *)(Neo68KROMActive + 0x8bf6)) = BURN_ENDIAN_SWAP_INT16(0x000d);
+	*((UINT16 *)(Neo68KROMActive + 0x8bf8)) = BURN_ENDIAN_SWAP_INT16(0xf980);
 }
 
 static void kof10thMapBank()
@@ -7240,13 +7240,13 @@ static void kf10thepCallback()
 
 	for (i = 0xf92bc; i < 0xf9e58; i += 2)
 	{
-		if ((*((UINT16*)(Neo68KROMActive + i + 0)) & 0xffbf) == 0x4eb9 && *((UINT16*)(Neo68KROMActive + i + 2)) == 0x0000)
+		if ((*((UINT16*)(Neo68KROMActive + i + 0)) & 0xffbf) == BURN_ENDIAN_SWAP_INT16(0x4eb9) && *((UINT16*)(Neo68KROMActive + i + 2)) == BURN_ENDIAN_SWAP_INT16(0x0000))
 		{
-			*((UINT16*)(Neo68KROMActive + i + 2)) = 0x000f;
+			*((UINT16*)(Neo68KROMActive + i + 2)) = BURN_ENDIAN_SWAP_INT16(0x000f);
  		}
 	}
 
-	*((UINT16 *)(Neo68KROMActive + 0x00342)) = 0x000f;
+	*((UINT16 *)(Neo68KROMActive + 0x00342)) = BURN_ENDIAN_SWAP_INT16(0x000f);
 
 	lans2004_sx_decode();
 }
@@ -7931,7 +7931,7 @@ static void svcplusCallback()
 		BurnFree (dst);
 	}
 
-	*((UINT16*)(Neo68KROMActive + 0xf8016)) = 0x33c1; // Patch protected address
+	*((UINT16*)(Neo68KROMActive + 0xf8016)) = BURN_ENDIAN_SWAP_INT16(0x33c1); // Patch protected address
 
 	lans2004_sx_decode();
 	svcboot_decode();
@@ -8002,7 +8002,7 @@ static void svcplusaCallback()
 		dst = NULL;
 	}
 
-	*((UINT16*)(Neo68KROMActive + 0xf8016)) = 0x33c1; // Patch protected address
+	*((UINT16*)(Neo68KROMActive + 0xf8016)) = BURN_ENDIAN_SWAP_INT16(0x33c1); // Patch protected address
 
 	svcboot_sx_decode();
 	svcboot_decode();
@@ -8083,11 +8083,11 @@ static void svcsplusCallback()
 
 	memcpy (Neo68KROMActive, Neo68KROMActive + 0x600000, 0x100000);
 
-	*((UINT16*)(Neo68KROMActive + 0x9e90)) = 0x000f; // Enable S. Plus
-	*((UINT16*)(Neo68KROMActive + 0x9e92)) = 0xc9c0;
-	*((UINT16*)(Neo68KROMActive + 0xa10c)) = 0x4eb9; // Enable boss icons
-	*((UINT16*)(Neo68KROMActive + 0xa10e)) = 0x000e;
-	*((UINT16*)(Neo68KROMActive + 0xa110)) = 0x9750;
+	*((UINT16*)(Neo68KROMActive + 0x9e90)) = BURN_ENDIAN_SWAP_INT16(0x000f); // Enable S. Plus
+	*((UINT16*)(Neo68KROMActive + 0x9e92)) = BURN_ENDIAN_SWAP_INT16(0xc9c0);
+	*((UINT16*)(Neo68KROMActive + 0xa10c)) = BURN_ENDIAN_SWAP_INT16(0x4eb9); // Enable boss icons
+	*((UINT16*)(Neo68KROMActive + 0xa10e)) = BURN_ENDIAN_SWAP_INT16(0x000e);
+	*((UINT16*)(Neo68KROMActive + 0xa110)) = BURN_ENDIAN_SWAP_INT16(0x9750);
 
 	svcsplus_sx_decode();
 	svcboot_decode();
@@ -8365,9 +8365,9 @@ void kf2k3pcb_bios_decode()
 				  j ^= address[((i >> 1) & 0x38) | (i & 7)];
 
 				     dst[i]  = src[j];
-		if (dst[i] & 0x0004) dst[i] ^= 0x0001;
-		if (dst[i] & 0x0010) dst[i] ^= 0x0002;
-		if (dst[i] & 0x0020) dst[i] ^= 0x0008;
+		if (BURN_ENDIAN_SWAP_INT16(dst[i]) & 0x0004) dst[i] ^= BURN_ENDIAN_SWAP_INT16(0x0001);
+		if (BURN_ENDIAN_SWAP_INT16(dst[i]) & 0x0010) dst[i] ^= BURN_ENDIAN_SWAP_INT16(0x0002);
+		if (BURN_ENDIAN_SWAP_INT16(dst[i]) & 0x0020) dst[i] ^= BURN_ENDIAN_SWAP_INT16(0x0008);
 	}
 
 	memcpy (src, dst, 0x80000);
@@ -8766,7 +8766,7 @@ static void kf2k3blaCallback()
 	}
 
 	// patched by Altera protection chip
-	*((UINT16*)(Neo68KROMActive + 0x0f38ac)) = 0x4e75;
+	*((UINT16*)(Neo68KROMActive + 0x0f38ac)) = BURN_ENDIAN_SWAP_INT16(0x4e75);
 
 	lans2004_sx_decode();
 }
@@ -12352,9 +12352,9 @@ static void cthd2k3aCallback()
 	}
 	
 	UINT16 *Rom = (UINT16*)Neo68KROMActive;
-	Rom[0xed00e / 2] = 0x4e71;
-	Rom[0xed394 / 2] = 0x4e71;
-	Rom[0xa2b7e / 2] = 0x4e71;
+	Rom[0xed00e / 2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	Rom[0xed394 / 2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	Rom[0xa2b7e / 2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
 	
 	// Text ROM
 	for (i = 0; i < 0x8000; i++) {

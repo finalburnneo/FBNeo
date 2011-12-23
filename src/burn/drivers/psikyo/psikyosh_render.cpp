@@ -408,7 +408,11 @@ static void draw_sprites(UINT8 req_pri)
 		UINT32 xpos, ypos, high, wide, flpx, flpy, zoomx, zoomy, tnum, colr, dpth, pri;
 		INT32 alpha;
 
+#ifdef LSB_FIRST
 		UINT32 listdat = list[listcntr ^ 1];
+#else
+		UINT32 listdat = list[listcntr];
+#endif
 		UINT32 sprnum = (listdat & 0x03ff) << 2;
 
 		pri = (src[sprnum+1] & 0x00003000) >> 12;
@@ -432,7 +436,11 @@ static void draw_sprites(UINT8 req_pri)
 			if (ypos & 0x200) ypos -= 0x400;
 			if (xpos & 0x200) xpos -= 0x400;
 
+#ifdef LSB_FIRST
 			alpha = alpha_table[alpha ^ 3];
+#else
+			alpha = alpha_table[alpha];
+#endif
 
 			if (alpha & 0x80) {
 				alpha = -1;
@@ -440,10 +448,19 @@ static void draw_sprites(UINT8 req_pri)
 				alpha = alphatable[alpha | 0xc0];
 			}
 
+#ifdef LSB_FIRST
 			if (zoom_table[zoomy ^ 1] && zoom_table[zoomx ^ 1])
+#else
+			if (zoom_table[zoomy] && zoom_table[zoomx])
+#endif
 			{
+#ifdef LSB_FIRST
 				psikyosh_drawgfxzoom(dpth, tnum, colr, flpx, flpy, xpos, ypos, alpha, 
 					(UINT32)zoom_table[zoomx ^ 1],(UINT32)zoom_table[zoomy ^ 1], wide, high, listcntr);
+#else
+				psikyosh_drawgfxzoom(dpth, tnum, colr, flpx, flpy, xpos, ypos, alpha, 
+					(UINT32)zoom_table[zoomx],(UINT32)zoom_table[zoomy], wide, high, listcntr);
+#endif
 			}
 		}
 

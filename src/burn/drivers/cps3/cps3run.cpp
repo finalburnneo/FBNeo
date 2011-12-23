@@ -564,7 +564,11 @@ UINT16 __fastcall cps3ReadWord(UINT32 addr)
 			// EEPROM
 			addr -= 0x05001000;
 			if (addr >= 0x100 && addr < 0x180) {
-				cps3_current_eeprom_read = EEPROM[((addr-0x100) >> 1) ^ 1];
+#ifdef LSB_FIRST
+			cps3_current_eeprom_read = EEPROM[((addr-0x100) >> 1) ^ 1];
+#else
+			cps3_current_eeprom_read = EEPROM[((addr-0x100) >> 1)];
+#endif
 			} else
 			if (addr == 0x202)
 				return cps3_current_eeprom_read;
@@ -663,7 +667,9 @@ void __fastcall cps3WriteWord(UINT32 addr, UINT16 data)
 				UINT16 * src = (UINT16 *)RomUser;
 				UINT16 coldata = src[(paldma_source - 0x200000 + i)];
 				
+#ifdef LSB_FIRST
 				coldata = (coldata << 8) | (coldata >> 8);
+#endif
 
 				UINT32 r = (coldata & 0x001F) >>  0;
 				UINT32 g = (coldata & 0x03E0) >>  5;
@@ -725,7 +731,11 @@ void __fastcall cps3WriteWord(UINT32 addr, UINT16 data)
 			// 0x040C0060 ~ 0x040C007f : cps3_fullscreenzoom
 
 			addr &= 0xff;
+#ifdef LSB_FIRST
 			((UINT16 *)RamVReg)[ (addr >> 1) ^ 1 ] = data;
+#else
+			((UINT16 *)RamVReg)[ (addr >> 1) ] = data;
+#endif
 			
 		} else
 		if ((addr >= 0x05000000) && (addr < 0x05001000)) {
@@ -736,7 +746,11 @@ void __fastcall cps3WriteWord(UINT32 addr, UINT16 data)
 			// EEPROM
 			addr -= 0x05001000;
 			if ((addr>=0x080) && (addr<0x100))
-				EEPROM[((addr-0x080) >> 1) ^ 1] = data;
+#ifdef LSB_FIRST
+			EEPROM[((addr-0x080) >> 1) ^ 1] = data;
+#else
+			EEPROM[((addr-0x080) >> 1)] = data;
+#endif
 		} else
 		if ((addr >= 0x05050000) && (addr < 0x05060000)) {
 			// unknow i/o
@@ -788,7 +802,9 @@ UINT8 __fastcall cps3RomReadByte(UINT32 addr)
 {
 //	bprintf(PRINT_NORMAL, _T("Rom Attempt to read byte value of location %8x\n"), addr);
 	addr &= 0xc7ffffff;
+#ifdef LSB_FIRST
 	addr ^= 0x03;
+#endif
 /*	UINT32 pc = Sh2GetPC(0);
 	if (pc == cps3_bios_test_hack || pc == cps3_game_test_hack){
 		bprintf(PRINT_NORMAL, _T("CPS3 Hack : read byte from %08x\n"), addr);
@@ -801,7 +817,9 @@ UINT16 __fastcall cps3RomReadWord(UINT32 addr)
 {
 //	bprintf(PRINT_NORMAL, _T("Rom Attempt to read word value of location %8x\n"), addr);
 	addr &= 0xc7ffffff;
+#ifdef LSB_FIRST
 	addr ^= 0x02;
+#endif
 /*	UINT32 pc = Sh2GetPC(0);
 	if (pc == cps3_bios_test_hack || pc == cps3_game_test_hack){
 		bprintf(PRINT_NORMAL, _T("CPS3 Hack : read word from %08x\n"), addr);
@@ -855,7 +873,9 @@ UINT8 __fastcall cps3RomReadByteSpe(UINT32 addr)
 {
 //	bprintf(PRINT_NORMAL, _T("Rom Attempt to read byte value of location %8x\n"), addr);
 	addr &= 0xc7ffffff;
+#ifdef LSB_FIRST
 	addr ^= 0x03;
+#endif
 	return *(RomGame + (addr & 0x00ffffff));
 }
 
@@ -863,7 +883,9 @@ UINT16 __fastcall cps3RomReadWordSpe(UINT32 addr)
 {
 //	bprintf(PRINT_NORMAL, _T("Rom Attempt to read word value of location %8x\n"), addr);
 	addr &= 0xc7ffffff;
+#ifdef LSB_FIRST
 	addr ^= 0x02;
+#endif
 	return *(UINT16 *)(RomGame + (addr & 0x00ffffff));
 }
 
@@ -913,7 +935,11 @@ void __fastcall cps3VidWriteWord(UINT32 addr, UINT16 data)
 	if ((addr >= 0x04080000) && (addr < 0x040c0000)) {
 		// Palette
 		UINT32 palindex = (addr - 0x04080000) >> 1;
+#ifdef LSB_FIRST
 		RamPal[palindex ^ 1] = data;
+#else
+		RamPal[palindex] = data;
+#endif
 
 		INT32 r = (data & 0x001F) << 3;	// Red
 		INT32 g = (data & 0x03E0) >> 2;	// Green
@@ -950,7 +976,11 @@ UINT8 __fastcall cps3RamReadByte(UINT32 addr)
 			Sh2BurnUntilInt(0);
 
 	addr &= 0x7ffff;
+#ifdef LSB_FIRST
 	return *(RamMain + (addr ^ 0x03));
+#else
+	return *(RamMain + addr);
+#endif
 }
 
 UINT16 __fastcall cps3RamReadWord(UINT32 addr)
@@ -964,7 +994,11 @@ UINT16 __fastcall cps3RamReadWord(UINT32 addr)
 			Sh2BurnUntilInt(0);
 		}
 	
+#ifdef LSB_FIRST
 	return *(UINT16 *)(RamMain + (addr ^ 0x02));
+#else
+	return *(UINT16 *)(RamMain + addr);
+#endif
 }
 
 
@@ -1075,7 +1109,9 @@ INT32 cps3Init()
 		ii++;
 	}
 
+#ifdef LSB_FIRST
 	be_to_le( RomBios, 0x080000 );
+#endif
 	cps3_decrypt_bios();
 
 	// load and decode sh-2 program roms
@@ -1092,7 +1128,9 @@ INT32 cps3Init()
 			ii++;
 		}
 	}
+#ifdef LSB_FIRST
 	be_to_le( RomGame, 0x1000000 );
+#endif
 	cps3_decrypt_game();
 	
 	// load graphic and sound roms
@@ -2031,7 +2069,11 @@ INT32 cps3Frame()
 		
 	if (cps3_palette_change) {
 		for(INT32 i=0;i<0x0020000;i++) {
+#ifdef LSB_FIRST
 			INT32 data = RamPal[i ^ 1];
+#else
+			INT32 data = RamPal[i];
+#endif
 			INT32 r = (data & 0x001F) << 3;	// Red
 			INT32 g = (data & 0x03E0) >> 2;	// Green
 			INT32 b = (data & 0x7C00) >> 7;	// Blue

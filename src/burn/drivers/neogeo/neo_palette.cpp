@@ -99,10 +99,10 @@ void __fastcall NeoPalWriteWord(UINT32 nAddress, UINT16 wordValue)
 	nAddress &= 0x1FFF;
 	nAddress >>= 1;
 
-	((UINT16*)NeoPalSrc[nNeoPaletteBank])[nAddress] = wordValue;		// write word
+	((UINT16*)NeoPalSrc[nNeoPaletteBank])[nAddress] = BURN_ENDIAN_SWAP_INT16(wordValue);		// write word
 
-	if (NeoPaletteCopy[nNeoPaletteBank][nAddress] != wordValue) {
-		NeoPaletteCopy[nNeoPaletteBank][nAddress] = wordValue;
+	if (NeoPaletteCopy[nNeoPaletteBank][nAddress] != BURN_ENDIAN_SWAP_INT16(wordValue)) {
+		NeoPaletteCopy[nNeoPaletteBank][nAddress] = BURN_ENDIAN_SWAP_INT16(wordValue);
 		NeoPaletteData[nNeoPaletteBank][nAddress] = CalcCol(wordValue);
 	}
 }

@@ -2275,7 +2275,7 @@ void __fastcall neogeoWriteWordSRAM(UINT32 sekAddress, UINT16 wordValue)
 	sekAddress &= 0xFFFF;
 
 	if (bSRAMWritable) {
-		*((UINT16*)(NeoNVRAM + sekAddress)) = wordValue;
+		*((UINT16*)(NeoNVRAM + sekAddress)) = BURN_ENDIAN_SWAP_INT16(wordValue);
 	}
 }
 
@@ -3489,9 +3489,9 @@ void __fastcall neogeoWriteWord68KProgram(UINT32 sekAddress, UINT16 wordValue)
 //	if (sekAddress < 16)
 //	bprintf(PRINT_NORMAL, _T("  - 68K: 0x%06X -> 0x%04X (PC: 0x%06X)\n"), sekAddress, wordValue, SekGetPC(-1));
 
-	*((UINT16*)(Neo68KROMActive + sekAddress)) = wordValue;
+	*((UINT16*)(Neo68KROMActive + sekAddress)) = BURN_ENDIAN_SWAP_INT16(wordValue);
 	if (sekAddress >= 0x0100) {
-		*((UINT16*)(NeoVectorActive + sekAddress)) = wordValue;
+		*((UINT16*)(NeoVectorActive + sekAddress)) = BURN_ENDIAN_SWAP_INT16(wordValue);
 	}
 }
 
@@ -3518,7 +3518,7 @@ static INT32 neogeoReset()
 	
 		if (nBIOS == -1 || nBIOS == 23) {
 			// Write system type & region code into BIOS ROM
-			*((UINT16*)(Neo68KBIOS + 0x000400)) = ((NeoSystem & 4) << 13) | (NeoSystem & 0x03);
+			*((UINT16*)(Neo68KBIOS + 0x000400)) = BURN_ENDIAN_SWAP_INT16(((NeoSystem & 4) << 13) | (NeoSystem & 0x03));
 		}
 
 #if 1 && defined FBA_DEBUG

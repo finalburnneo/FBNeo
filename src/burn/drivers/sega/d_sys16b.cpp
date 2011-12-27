@@ -5980,7 +5980,7 @@ static INT32 Aliensyn3Init()
 void Altbeast_Sim8751()
 {
 	// System Inputs
-	*((UINT16*)(System16Ram + 0x30c2)) = (UINT16)(System16Input[0] << 8);
+	*((UINT16*)(System16Ram + 0x30c2)) = BURN_ENDIAN_SWAP_INT16((UINT16)(System16Input[0] << 8));
 	
 	// Tile Banking
 	System16TileBanks[1] = ((System16Ram[0x3094 + 1] << 8) | System16Ram[0x3094 + 0]) & 7;
@@ -5993,14 +5993,14 @@ void Altbeast_Sim8751()
 //		ZetRaiseIrq(0);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		ZetClose();
-		*((UINT16*)(System16Ram + 0x30c4)) = (UINT16)(temp & 0xff);
+		*((UINT16*)(System16Ram + 0x30c4)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
 }
 
 void Altbeastj_Sim8751()
 {
 	// System Inputs
-	*((UINT16*)(System16Ram + 0x30d0)) = (UINT16)(System16Input[0] << 8);
+	*((UINT16*)(System16Ram + 0x30d0)) = BURN_ENDIAN_SWAP_INT16((UINT16)(System16Input[0] << 8));
 	
 	// Tile Banking
 	System16TileBanks[1] = ((System16Ram[0x3094 + 1] << 8) | System16Ram[0x3094 + 0]) & 7;
@@ -6013,14 +6013,14 @@ void Altbeastj_Sim8751()
 //		ZetRaiseIrq(0);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		ZetClose();
-		*((UINT16*)(System16Ram + 0x30d4)) = (UINT16)(temp & 0xff);
+		*((UINT16*)(System16Ram + 0x30d4)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
 }
 
 void Altbeast5_Sim8751()
 {
 	// System Inputs
-	*((UINT16*)(System16Ram + 0x3096)) = (UINT16)(System16Input[0] << 8);
+	*((UINT16*)(System16Ram + 0x3096)) = BURN_ENDIAN_SWAP_INT16((UINT16)(System16Input[0] << 8));
 	
 	// Tile Banking
 	System16TileBanks[1] = ((System16Ram[0x3094 + 1] << 8) | System16Ram[0x3094 + 0]) & 7;
@@ -6033,7 +6033,7 @@ void Altbeast5_Sim8751()
 //		ZetRaiseIrq(0);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		ZetClose();
-		*((UINT16*)(System16Ram + 0x3098)) = (UINT16)(temp & 0xff);
+		*((UINT16*)(System16Ram + 0x3098)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
 }
 
@@ -6372,7 +6372,7 @@ void Ddux_Sim8751()
 //		ZetRaiseIrq(0);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		ZetClose();
-		*((UINT16*)(System16Ram + 0x0bd0)) = (UINT16)(temp & 0xff);
+		*((UINT16*)(System16Ram + 0x0bd0)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
 }
 
@@ -6811,10 +6811,10 @@ void Goldnaxe_Sim8751()
 	UINT16 temp3 = (System16Ram[0x2cdc + 1] << 8) | System16Ram[0x2cdc + 0];
 	UINT16 temp4 = (System16Ram[0x2cde + 1] << 8) | System16Ram[0x2cde + 0];
 	if (temp1 == 0 && temp2 == 0 && temp3 == 0 && temp4 == 0) {
-		*((UINT16*)(System16Ram + 0x2cd8)) = 0x048c;
-		*((UINT16*)(System16Ram + 0x2cda)) = 0x159d;
-		*((UINT16*)(System16Ram + 0x2cdc)) = 0x26ae;
-		*((UINT16*)(System16Ram + 0x2cde)) = 0x37bf;
+		*((UINT16*)(System16Ram + 0x2cd8)) = BURN_ENDIAN_SWAP_INT16(0x048c);
+		*((UINT16*)(System16Ram + 0x2cda)) = BURN_ENDIAN_SWAP_INT16(0x159d);
+		*((UINT16*)(System16Ram + 0x2cdc)) = BURN_ENDIAN_SWAP_INT16(0x26ae);
+		*((UINT16*)(System16Ram + 0x2cde)) = BURN_ENDIAN_SWAP_INT16(0x37bf);
 	}
 	
 	// Sound command
@@ -6825,12 +6825,12 @@ void Goldnaxe_Sim8751()
 //		ZetRaiseIrq(0);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		ZetClose();
-		*((UINT16*)(System16Ram + 0x2cfc)) = (UINT16)(temp & 0xff);
+		*((UINT16*)(System16Ram + 0x2cfc)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
 	
 	// Inputs
-	*((UINT16*)(System16Ram + 0x2cd0)) = (UINT16)(~((System16Input[1] << 8) | System16Input[2]));
-	*((UINT16*)(System16Ram + 0x2c96)) = (UINT16)(~System16Input[0] << 8);
+	*((UINT16*)(System16Ram + 0x2cd0)) = BURN_ENDIAN_SWAP_INT16((UINT16)(~((System16Input[1] << 8) | System16Input[2])));
+	*((UINT16*)(System16Ram + 0x2c96)) = BURN_ENDIAN_SWAP_INT16((UINT16)(~System16Input[0] << 8));
 }
 
 static INT32 GoldnaxeInit()
@@ -7436,9 +7436,9 @@ void TturfMap68K()
 void Tturf_Sim8751()
 {
 	// Inputs
-	*((UINT16*)(System16Ram + 0x01e6)) = (UINT16)(~System16Input[0] << 8);
-	*((UINT16*)(System16Ram + 0x01e8)) = (UINT16)(~System16Input[1] << 8);
-	*((UINT16*)(System16Ram + 0x01ea)) = (UINT16)(~System16Input[2] << 8);
+	*((UINT16*)(System16Ram + 0x01e6)) = BURN_ENDIAN_SWAP_INT16((UINT16)(~System16Input[0] << 8));
+	*((UINT16*)(System16Ram + 0x01e8)) = BURN_ENDIAN_SWAP_INT16((UINT16)(~System16Input[1] << 8));
+	*((UINT16*)(System16Ram + 0x01ea)) = BURN_ENDIAN_SWAP_INT16((UINT16)(~System16Input[2] << 8));
 	
 	// Sound command
 	UINT16 temp = (System16Ram[0x01d0 + 1] << 8) | System16Ram[0x01d0 + 0];
@@ -7448,7 +7448,7 @@ void Tturf_Sim8751()
 //		ZetRaiseIrq(0);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		ZetClose();
-		*((UINT16*)(System16Ram + 0x01d0)) = (UINT16)(temp & 0xff);
+		*((UINT16*)(System16Ram + 0x01d0)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
 }
 
@@ -7500,7 +7500,7 @@ void Wb3_Sim8751()
 //		ZetRaiseIrq(0);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		ZetClose();
-		*((UINT16*)(System16Ram + 0x0008)) = (UINT16)(temp & 0xff);
+		*((UINT16*)(System16Ram + 0x0008)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
 }
 
@@ -7631,7 +7631,7 @@ void WrestwarMap68K()
 void Wrestwar_Sim8751()
 {
 	// System Inputs
-	*((UINT16*)(System16Ram + 0x2082)) = (UINT16)~System16Input[0];
+	*((UINT16*)(System16Ram + 0x2082)) = BURN_ENDIAN_SWAP_INT16((UINT16)~System16Input[0]);
 	
 	// Sound command
 	UINT16 temp = (System16Ram[0x208e + 1] << 8) | System16Ram[0x208e + 0];
@@ -7641,7 +7641,7 @@ void Wrestwar_Sim8751()
 //		ZetRaiseIrq(0);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		ZetClose();
-		*((UINT16*)(System16Ram + 0x208e)) = (UINT16)(temp & 0xff);
+		*((UINT16*)(System16Ram + 0x208e)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
 }
 

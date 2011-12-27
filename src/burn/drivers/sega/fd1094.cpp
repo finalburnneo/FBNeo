@@ -178,7 +178,7 @@ bad       11100000 10101011 10111001 (flaky 317-0049)
 
 *****************************************************************************/
 
-#include "driver.h"
+#include "burnint.h"
 #include "fd1094.h"
 #include "bitswap.h"
 
@@ -312,7 +312,7 @@ static INT32 final_decrypt(INT32 i,INT32 moreffff)
 	if ((masked_opcodes_lookup[moreffff][dec >> 4] >> ((dec >> 1) & 7)) & 1)
 		dec = 0xffff;
 
-	return dec;
+	return BURN_ENDIAN_SWAP_INT16(dec);
 }
 
 
@@ -441,7 +441,7 @@ INT32 fd1094_decode(INT32 address,INT32 val,UINT8 *key,INT32 vector_fetch)
 {
 	if (!key) return 0;
 
-	return decode(address,val,key,global_key1,global_key2,global_key3,vector_fetch);
+	return decode(address,BURN_ENDIAN_SWAP_INT16(val),key,global_key1,global_key2,global_key3,vector_fetch);
 }
 
 INT32 fd1094_set_state(UINT8 *key,INT32 state)

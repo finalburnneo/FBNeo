@@ -267,10 +267,10 @@ static void sys16_decrypt(const UINT8 *key)
 		UINT16 src = rom[A / 2];
 
 		/* decode the opcodes */
-		decrypted[A/2] = fd1089_decrypt(A,src,key,1);
+		decrypted[A/2] = BURN_ENDIAN_SWAP_INT16(fd1089_decrypt(A,src,key,1));
 		
 		/* decode the data */
-		rom[A/2] = fd1089_decrypt(A,src,key,0);
+		rom[A/2] = BURN_ENDIAN_SWAP_INT16(fd1089_decrypt(A,src,key,0));
 	}
 }
 

@@ -2567,8 +2567,8 @@ void Bodyslam_Sim8751()
 		}
 	}
 	
-	*((UINT16*)(System16Ram + 0x200)) = (flag << 8) + tick;
-	*((UINT16*)(System16Ram + 0x202)) = (sec << 8) + min;
+	*((UINT16*)(System16Ram + 0x200)) = BURN_ENDIAN_SWAP_INT16((flag << 8) + tick);
+	*((UINT16*)(System16Ram + 0x202)) = BURN_ENDIAN_SWAP_INT16((sec << 8) + min);
 }
 
 static INT32 BodyslamInit()
@@ -2757,12 +2757,12 @@ static INT32 MjleagueScan(INT32 nAction,INT32 *pnMin)
 void Quartet_Sim8751()
 {
 	// X-Scroll Values
-	*((UINT16*)(System16TextRam + 0xff8)) = ((System16Ram[0x0d14 + 1] << 8) | System16Ram[0x0d14 + 0]);
-	*((UINT16*)(System16TextRam + 0xffa)) = ((System16Ram[0x0d18 + 1] << 8) | System16Ram[0x0d18 + 0]);
+	*((UINT16*)(System16TextRam + 0xff8)) = BURN_ENDIAN_SWAP_INT16(((System16Ram[0x0d14 + 1] << 8) | System16Ram[0x0d14 + 0]));
+	*((UINT16*)(System16TextRam + 0xffa)) = BURN_ENDIAN_SWAP_INT16(((System16Ram[0x0d18 + 1] << 8) | System16Ram[0x0d18 + 0]));
 	
 	// Page Values
-	*((UINT16*)(System16TextRam + 0xe9e)) = ((System16Ram[0x0d1c + 1] << 8) | System16Ram[0x0d1c + 0]);
-	*((UINT16*)(System16TextRam + 0xe9c)) = ((System16Ram[0x0d1e + 1] << 8) | System16Ram[0x0d1e + 0]);
+	*((UINT16*)(System16TextRam + 0xe9e)) = BURN_ENDIAN_SWAP_INT16(((System16Ram[0x0d1c + 1] << 8) | System16Ram[0x0d1c + 0]));
+	*((UINT16*)(System16TextRam + 0xe9c)) = BURN_ENDIAN_SWAP_INT16(((System16Ram[0x0d1e + 1] << 8) | System16Ram[0x0d1e + 0]));
 }
 
 static INT32 Passsht16aInit()

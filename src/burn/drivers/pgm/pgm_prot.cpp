@@ -384,6 +384,121 @@ void install_protection_asic27_kov()
 }
 
 
+// preliminary
+
+static INT32 puzzli_54_trigger = 0;
+
+static void __fastcall puzzli2_asic_write(UINT32 offset, UINT16 data)
+{
+	switch (offset & 0x06)
+	{
+		case 0: kov_value = data; return;
+
+		case 2:
+		{
+			if ((data >> 8) == 0xff) kov_key = 0xffff;
+
+			kov_value ^= kov_key;
+
+		//	bprintf (0, _T("ASIC Command: %2.2x, Value: %4.4x,\n"), (data ^ kov_key) & 0xff, kov_value);
+
+			switch ((data ^ kov_key) & 0xff)
+			{
+				case 0x13: // ASIC status?
+					kov_response = 0x74<<16; // 2d or 74! (based on?)
+				break;
+
+				case 0x31:
+				{
+					// how is this selected? command 54?
+
+					// just a wild guess
+					if (puzzli_54_trigger) {
+						// pc == 1387de
+						kov_response = 0x63<<16; // ?
+					} else {
+						// pc == 14cf58
+						kov_response = 0xd2<<16;
+					}
+
+					puzzli_54_trigger = 0;
+				}
+				break;
+
+				case 0x38: // Reset
+					kov_response = 0x78<<16;
+					kov_key = 0;
+					puzzli_54_trigger = 0;
+				break;
+
+				case 0x41: // ASIC status?
+					kov_response = 0x74<<16;
+				break;
+
+				case 0x47: // ASIC status?
+					kov_response = 0x74<<16;
+				break;
+
+				case 0x52: // ASIC status?
+				{
+					// how is this selected?
+
+					//if (kov_value == 6) {
+						kov_response = (0x74<<16)|1; // |1?
+					//} else {
+					//	kov_response = 0x74<<16;
+					//}
+				}
+				break;
+
+				case 0x54: // ??
+					puzzli_54_trigger = 1;
+					kov_response = 0x36<<16;
+				break;
+
+				case 0x61: // ??
+					kov_response = 0x36<<16;
+				break;
+
+				case 0x63: // probably read from a data table?
+					kov_response = 0; // wrong...
+				break;
+
+				case 0x67: // probably read from a data table?
+					kov_response = 0;
+				break;
+
+				default:
+		//			bprintf (0, _T("ASIC Command %2.2x unknown!\n"), (data ^ kov_key) & 0xff);
+					kov_response = 0x74<<16;
+				break;
+			}
+
+			kov_key = (kov_key + 0x0100) & 0xff00;
+			if (kov_key == 0xff00) kov_key = 0x0100;
+			kov_key |= kov_key >> 8;
+		}
+		return;
+
+		case 4: return;
+	}
+}
+
+void install_protection_asic27a_puzzli2()
+{
+	pPgmScanCallback = kov_asic27Scan;
+	pPgmResetCallback = kov_asic27_reset;
+
+	SekOpen(0);
+	SekMapMemory(PGMUSER0,	0x4f0000, 0x4f003f | 0x3ff, SM_READ);
+
+	SekMapHandler(4,	0x500000, 0x500003, SM_READ | SM_WRITE);
+	SekSetReadWordHandler(4, kov_asic27_read);
+	SekSetWriteWordHandler(4, puzzli2_asic_write);
+	SekClose();
+}
+
+
 //-----------------------------------------------------------------------------------------------------
 // Dragon World 2
 
@@ -2169,119 +2284,6 @@ void install_protection_asic27a_ddp3()
 	SekMapHandler(4,		0x500000, 0x500005, SM_READ | SM_WRITE);
 	SekSetReadWordHandler(4, 	ddp3_asic_read);
 	SekSetWriteWordHandler(4, 	ddp3_asic_write);
-	SekClose();
-}
-
-
-// preliminary
-
-static INT32 puzzli_54_trigger = 0;
-
-static void __fastcall puzzli2_asic_write(UINT32 offset, UINT16 data)
-{
-	switch (offset & 0x06)
-	{
-		case 0: ddp3value = data; return;
-
-		case 2:
-		{
-			if ((data >> 8) == 0xff) ddp3key = 0xffff;
-
-			ddp3value ^= ddp3key;
-
-		//	bprintf (0, _T("ASIC Command: %2.2x, Value: %4.4x,\n"), (data ^ ddp3key) & 0xff, ddp3value);
-
-			switch ((data ^ ddp3key) & 0xff)
-			{
-				case 0x13: // ASIC status?
-					ddp3response = 0x74<<16; // 2d or 74! (based on?)
-				break;
-
-				case 0x31:
-				{
-					// how is this selected? command 54?
-
-					// just a wild guess
-					if (puzzli_54_trigger) {
-						// pc == 1387de
-						ddp3response = 0x63<<16; // ?
-					} else {
-						// pc == 14cf58
-						ddp3response = 0xd2<<16;
-					}
-
-					puzzli_54_trigger = 0;
-				}
-				break;
-
-				case 0x38: // Reset
-					ddp3response = 0x78<<16;
-					ddp3key = 0;
-					puzzli_54_trigger = 0;
-				break;
-
-				case 0x41: // ASIC status?
-					ddp3response = 0x74<<16;
-				break;
-
-				case 0x47: // ASIC status?
-					ddp3response = 0x74<<16;
-				break;
-
-				case 0x52: // ASIC status?
-				{
-					// how is this selected?
-
-					//if (ddp3value == 6) {
-						ddp3response = (0x74<<16)|1; // |1?
-					//} else {
-					//	ddp3response = 0x74<<16;
-					//}
-				}
-				break;
-
-				case 0x54: // ??
-					puzzli_54_trigger = 1;
-					ddp3response = 0x36<<16;
-				break;
-
-				case 0x61: // ??
-					ddp3response = 0x36<<16;
-				break;
-
-				case 0x63: // probably read from a data table?
-					ddp3response = 0; // wrong...
-				break;
-
-				case 0x67: // probably read from a data table?
-					ddp3response = 0; // wrong...
-				break;
-
-				default:
-			//		bprintf (0, _T("ASIC Command %2.2x unknown!\n"), (data ^ ddp3key) & 0xff);
-					ddp3response = 0x74<<16;
-				break;
-			}
-
-			ddp3key = (ddp3key + 0x0100) & 0xff00;
-			if (ddp3key == 0xff00) ddp3key = 0x0100;
-			ddp3key |= ddp3key >> 8;
-		}
-		return;
-
-		case 4: return;
-	}
-}
-
-void install_protection_asic27a_puzzli2()
-{
-	pPgmResetCallback = reset_ddp3;
-	pPgmScanCallback = ddp3Scan;
-
-	SekOpen(0);
-	SekMapHandler(4,		0x500000, 0x500005, SM_READ | SM_WRITE);
-	SekSetReadWordHandler(4, 	ddp3_asic_read);
-	SekSetWriteWordHandler(4, 	puzzli2_asic_write);
 	SekClose();
 }
 

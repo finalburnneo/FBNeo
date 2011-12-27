@@ -237,11 +237,11 @@ INT32 ToaExtraTextLayer()
 #if 1
 	y = 0;
 	do {
-		nLine = ((UINT16*)ExtraTSelect)[y];
-		nOffset = ((UINT16*)ExtraTScroll)[y];
+		nLine = BURN_ENDIAN_SWAP_INT16(((UINT16*)ExtraTSelect)[y]);
+		nOffset = BURN_ENDIAN_SWAP_INT16(((UINT16*)ExtraTScroll)[y]);
 
 		if (y < 233) {
-			for (i = 1; i < 8 && ((UINT16*)ExtraTSelect)[y + i] == (nLine + i) && ((UINT16*)ExtraTScroll)[y + i] == nOffset; i++) { }
+			for (i = 1; i < 8 && BURN_ENDIAN_SWAP_INT16(((UINT16*)ExtraTSelect)[y + i]) == (nLine + i) && BURN_ENDIAN_SWAP_INT16(((UINT16*)ExtraTScroll)[y + i]) == nOffset; i++) { }
 
 			// draw whole tiles in one go
 			if (i == 8) {
@@ -252,7 +252,7 @@ INT32 ToaExtraTextLayer()
 				nOffset &= 7;
 
 				for (x = 0, pTile = pCurrentRow - nOffset * nBurnColumn; x < 41; x++, pTile += nTileLeft) {
-					UINT32 nTile = pTileRow[(x + nStartX) & 0x3F];
+					UINT32 nTile = BURN_ENDIAN_SWAP_INT16(pTileRow[(x + nStartX) & 0x3F]);
 					if (nTile && nTile != 0x20) {
 						pTileData = ExtraTROM + ((nTile & 0x3FF) << 5);
 						pTilePalette = &pTextPalette[((nTile >> 6) & 0x03F0)];
@@ -279,7 +279,7 @@ INT32 ToaExtraTextLayer()
 		nOffset &= 7;
 
 		for (x = 0, pTile = pCurrentRow - nOffset * nBurnColumn; x < 41; x++, pTile += nTileLeft) {
-			UINT32 nTile = pTileRow[(x + nStartX) & 0x3F];
+			UINT32 nTile = BURN_ENDIAN_SWAP_INT16(pTileRow[(x + nStartX) & 0x3F]);
 			if (nTile && nTile != 0x20) {
 				pTileData = ExtraTROM + ((nTile & 0x3FF) << 5) + ((nLine & 7) << 2);
 				pTilePalette = &pTextPalette[((nTile >> 6) & 0x03F0)];

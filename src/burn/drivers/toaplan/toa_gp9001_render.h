@@ -140,7 +140,7 @@ static void FUNCTIONNAME(BPP,ROT,FLIP,CLIP,OPACITY)()
   #endif
  #endif
 
-		nColour = *pTileData++;
+		nColour = BURN_ENDIAN_SWAP_INT32(*pTileData++);
 		PLOTPIXEL(OFFSET(0), nColour & 0x0F);
 		ADVANCECOLUMN;
 		nColour >>= 4;

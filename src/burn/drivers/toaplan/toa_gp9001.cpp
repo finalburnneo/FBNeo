@@ -176,10 +176,10 @@ static void QueueLayer(INT32 i, UINT16* pTilemap, INT32 nXPos, INT32 nYPos)
 
 		for (x = 0; x < 21; x++) {
 			nTileColumn = (((nXPos >> 4) + x) << 1) & 0x3E;
-			nTileNumber = pTilemap[nTileRow + nTileColumn + 1];
+			nTileNumber = BURN_ENDIAN_SWAP_INT16(pTilemap[nTileRow + nTileColumn + 1]);
 
 			if (nTileNumber > 0 && nTileNumber <= nMaxTile[i]) {
-				nTileAttrib = pTilemap[nTileRow + nTileColumn];
+				nTileAttrib = BURN_ENDIAN_SWAP_INT16(pTilemap[nTileRow + nTileColumn]);
 				*pMyTileQueue[(nTileAttrib >> 8) & 0x0F]++ = (nTileAttrib << 16) | nTileNumber;
 				nTileXPos = (x << 4) - (nXPos & 15);
 				nTileYPos = (y << 4) - (nYPos & 15);
@@ -206,10 +206,10 @@ static void QueueLayer2(INT32 i, UINT16* pTilemap, INT32 nXPos, INT32 nYPos)
 
 		for (x = 0; x < 21; x++) {
 			nTileColumn = (((nXPos >> 4) + x) << 1) & 0x3E;
-			nTileNumber = pTilemap[nTileRow + nTileColumn + 1];
+			nTileNumber = BURN_ENDIAN_SWAP_INT16(pTilemap[nTileRow + nTileColumn + 1]);
 
 			if (nTileNumber > 0 && nTileNumber <= nMaxTile[i]) {
-				nTileAttrib = pTilemap[nTileRow + nTileColumn];
+				nTileAttrib = BURN_ENDIAN_SWAP_INT16(pTilemap[nTileRow + nTileColumn]);
 				if ((nTileAttrib & 0x0F00) == 0) {
 					nTileAttrib |= 0x0100;
 				}

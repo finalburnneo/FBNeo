@@ -23,11 +23,11 @@ inline static UINT32 CalcCol(UINT16 nColour)
 {
 	INT32 r, g, b;
 
-	r = (nColour & 0x001F) << 3;	// Red
+	r = (BURN_ENDIAN_SWAP_INT16(nColour) & 0x001F) << 3;	// Red
 	r |= r >> 5;
-	g = (nColour & 0x03E0) >> 2;  	// Green
+	g = (BURN_ENDIAN_SWAP_INT16(nColour) & 0x03E0) >> 2;  	// Green
 	g |= g >> 5;
-	b = (nColour & 0x7C00) >> 7;	// Blue
+	b = (BURN_ENDIAN_SWAP_INT16(nColour) & 0x7C00) >> 7;	// Blue
 	b |= b >> 5;
 
 	return BurnHighCol(r, g, b, 0);

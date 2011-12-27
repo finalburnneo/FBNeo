@@ -111,7 +111,7 @@ inline static void ToaGP9001WriteRAM(const UINT16 wordValue, const INT32 nContro
 {
 	extern UINT8* GP9001Pointer[2];
 
-	*((UINT16*)(GP9001Pointer[nController])) = wordValue;
+	*((UINT16*)(GP9001Pointer[nController])) = BURN_ENDIAN_SWAP_INT16(wordValue);
 	GP9001Pointer[nController] += 2;
 }
 
@@ -119,14 +119,14 @@ inline static UINT16 ToaGP9001ReadRAM_Hi(const INT32 nController)
 {
 	extern UINT8* GP9001Pointer[2];
 
-	return *((UINT16*)(GP9001Pointer[nController]));
+	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(GP9001Pointer[nController])));
 }
 
 inline static UINT16 ToaGP9001ReadRAM_Lo(const INT32 nController)
 {
 	extern UINT8* GP9001Pointer[2];
 
-	return *((UINT16*)(GP9001Pointer[nController] + 2));
+	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(GP9001Pointer[nController] + 2)));
 }
 
 inline static void ToaGP9001SelectRegister(const UINT16 wordValue, const INT32 nController = 0)

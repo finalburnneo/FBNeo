@@ -133,8 +133,6 @@ static INT32 nCyclesTotal[4];
 static INT32 nCyclesSegment;
 UINT32 System16ClockSpeed = 0;
 
-INT32 YBoardIrq2Scanline = 0;
-
 INT32 System16YM2413IRQInterval;
 
 static bool bUseAsm68KCoreOldValue = false;
@@ -2320,8 +2318,6 @@ INT32 System16Init()
 		if (System16PCMDataSize) {
 			SegaPCMInit(32215900 / 8, BANK_12M | BANK_MASKF8, System16PCMData, System16PCMDataSize);
 		}
-		
-		YBoardIrq2Scanline = 170;
 	}
 	
 	GenericTilesInit();
@@ -2441,8 +2437,6 @@ INT32 System16Exit()
 	Shangon = false;
 	Hangon = false;
 	bSystem16BootlegRender = false;
- 	
- 	YBoardIrq2Scanline = 0;
  	
  	System16YM2413IRQInterval = 0;
  	
@@ -3102,7 +3096,7 @@ INT32 XBoardFrame()
 
 INT32 YBoardFrame()
 {
-	INT32 nInterleave = 224, i;
+	INT32 nInterleave = 262, i;
 
 	if (System16Reset) System16DoReset();
 	
@@ -3134,7 +3128,10 @@ INT32 YBoardFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == YBoardIrq2Scanline) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == 170) SekSetIRQLine(2, SEK_IRQSTATUS_ACK);
+		if (i == 171) SekSetIRQLine(2, SEK_IRQSTATUS_NONE);
+		if (i == 223) SekSetIRQLine(4, SEK_IRQSTATUS_ACK);
+		if (i == 224) SekSetIRQLine(4, SEK_IRQSTATUS_NONE);
 		SekClose();
 		
 		// Run 68000 #2
@@ -3144,7 +3141,10 @@ INT32 YBoardFrame()
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nCyclesSegment = SekRun(nCyclesSegment);
 		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == YBoardIrq2Scanline) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == 170) SekSetIRQLine(2, SEK_IRQSTATUS_ACK);
+		if (i == 171) SekSetIRQLine(2, SEK_IRQSTATUS_NONE);
+		if (i == 223) SekSetIRQLine(4, SEK_IRQSTATUS_ACK);
+		if (i == 224) SekSetIRQLine(4, SEK_IRQSTATUS_NONE);
 		SekClose();
 		
 		// Run 68000 #3
@@ -3154,7 +3154,10 @@ INT32 YBoardFrame()
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nCyclesSegment = SekRun(nCyclesSegment);
 		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == YBoardIrq2Scanline) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == 170) SekSetIRQLine(2, SEK_IRQSTATUS_ACK);
+		if (i == 171) SekSetIRQLine(2, SEK_IRQSTATUS_NONE);
+		if (i == 223) SekSetIRQLine(4, SEK_IRQSTATUS_ACK);
+		if (i == 224) SekSetIRQLine(4, SEK_IRQSTATUS_NONE);
 		SekClose();
 
 		// Run Z80
@@ -3189,12 +3192,6 @@ INT32 YBoardFrame()
 			ZetClose();
 			SegaPCMUpdate(pSoundBuf, nSegmentLength);
 		}
-	}
-	
-	for (i = 0; i < 3; i++) {
-		SekOpen(i);
-		SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-		SekClose();
 	}
 
 	if (pBurnDraw) {

@@ -101,7 +101,6 @@ extern bool Shangon;
 extern bool Hangon;
 extern bool System16Z80Enable;
 
-extern INT32 YBoardIrq2Scanline;
 extern INT32 System16YM2413IRQInterval;
 
 extern bool System16HasGears;

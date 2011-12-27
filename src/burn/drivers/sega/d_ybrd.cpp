@@ -1846,8 +1846,6 @@ static INT32 PdriftInit()
 	
 	INT32 nRet = System16Init();
 	
-	if (!nRet) YBoardIrq2Scanline = 0;
-	
 	UINT8 *pTemp = (UINT8*)BurnMalloc(0x0c0000);
 	memcpy(pTemp, System16PCMData, 0x0c0000);
 	memset(System16PCMData, 0, 0x180000);

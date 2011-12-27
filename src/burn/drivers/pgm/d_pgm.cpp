@@ -4,38 +4,6 @@
 
 #include "pgm.h"
 
-/*
-	IGS PolyGame Master game IDs
-
-	ID#	Year	Game
-	01	1997	Oriental Legend
-	02	1997	Dragon World 2
-	03	1998	The Killing Blade
-	04	1998	Dragon World 3
-	05	1999	Oriental Legend Super
-	06	1999	Knights of Valour / Knights of Valour Plus / Knights of Valour Superheroes
-	07	1999	Photo Y2k
-	08	1999	Puzzle Star
-	09	2001	Puzzli 2 Super
-	10	2001	Martial Masters
-	11	2001	Photo Y2k2
-	12	2000	Knights of Valour 2 / Knights of Valour 2 Plus
-	13	2001	DoDonPachi 2 - Bee Storm
-	14?	2001	Dragon World 2001
-
-	44	2002	DoDonPachi Dai-Ou-Jou / DoDonPachi Dai-Ou-Jou Black Label
-	45	2002	Demon Front
-	46	2003	The Gladiator
-	47	2002	Ketsui Kizuna Jigoku Tachi
-	48	2003	Espgaluda
-
-	52?	2004	Happy 6in1
-	53	2004	Oriental Legend Special Plus
-	54	2004	Knights of Valour Super Heroes Plus
-	56	2005	S.V.G. - Spectral vs Generation
-	57	2005	The Killing Blade Plus	
-*/
-
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },
 };
@@ -1669,27 +1637,10 @@ static struct BurnRomInfo puzzli2RomDesc[] = {
 STDROMPICKEXT(puzzli2, puzzli2, pgm)
 STD_ROM_FN(puzzli2)
 
-static void puzzli2_decrypt()
-{
- 	pgm_decrypt_puzzli2();
-
-	*((UINT16*)(PGM68KROM + 0x0268c0)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(PGM68KROM + 0x0268c2)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(PGM68KROM + 0x0268c4)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(PGM68KROM + 0x03877a)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(PGM68KROM + 0x04cee0)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(PGM68KROM + 0x0548ec)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(PGM68KROM + 0x0548fc)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(PGM68KROM + 0x054948)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(PGM68KROM + 0x05496A)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(PGM68KROM + 0x0549FA)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(PGM68KROM + 0x054A0A)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-}
-
 static INT32 puzzli2Init()
 {
-	pPgmInitCallback = puzzli2_decrypt;
-	pPgmProtCallback = install_protection_asic27_kov; // simulation
+	pPgmInitCallback = pgm_decrypt_puzzli2;
+	pPgmProtCallback = install_protection_asic27a_puzzli2; // simulation
 //	pPgmProtCallback = install_protection_asic27a_kovsh;
 
 	return pgmInit();
@@ -3254,6 +3205,7 @@ struct BurnDriverD BurnDrvkovlsqh2 = {
 	448, 224, 4, 3
 };
 
+
 // Knights of Valour: Luan Shi Quan Huang 2 / Sangoku Senki: Luan Shi Quan Huang (ver. 200CN)
 
 static struct BurnRomInfo kovlsqhRomDesc[] = {
@@ -3548,4 +3500,3 @@ struct BurnDriver BurnDrvKovsgqyzb = {
 	kovsgqyzInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x600,
 	448, 224, 4, 3
 };
-

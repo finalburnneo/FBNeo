@@ -3,23 +3,6 @@
 #include "pgm.h"
 #include "bitswap.h"
 
-/*
-	Some xor tables used to decrypt the program roms contain asci text
-	IGS #### RD ? YR MO DAY	- GAME
-	IGS 0004 RD 1 02 10 15	- ketsui
-	IGS 0005 RD 1 02 12 03	- theglad
-	IGS 0007 RD 1 03 09 09	- espgaluda
-	IGS 0008 RD 1 03 12 15	- happy6in1
-	IGS 0009 rd 1 04 02 19	- kovshp
-	IGS 0013 RD 1 04 07 27	- oldsplus
-	IGS 0024 RD 1 05 09 08	- killbldp
-
-	IGS 0055 RD 4 02 06 21  - Sheng Dan Wu Xian (non-PGM, but uses asic27A)
-
-	The later games (ones that use ASIC27/ASIC27A) have ram-based xor tables. The
-	internal ASIC program uploads the xor to the 0x50000000 - 0x500003ff region.
-*/
-
 void pgm_decrypt_dw2()
 {
 	UINT16 *src = (UINT16 *)PGM68KROM;

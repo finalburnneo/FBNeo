@@ -152,6 +152,8 @@ BEGIN
 	IDS_SEL_DEMO				"Demo"
 	IDS_SEL_GENUINE				"Genuine"
 	IDS_SEL_SETSTATUS			"Showing %i of %i sets [%i Unavailable sets]"
+	IDS_SEL_KANEKO16			"Kaneko16"
+	IDS_SEL_SNES				"SNES"
 	
 	IDS_GENRE					"Genre"
 	IDS_GENRE_HORSHOOT			"Shooter - Horizontal"

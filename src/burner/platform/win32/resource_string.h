@@ -152,6 +152,8 @@
 #define IDS_SEL_DEMO					(IDS_STRING +  608)
 #define IDS_SEL_GENUINE					(IDS_STRING +  610)
 #define IDS_SEL_SETSTATUS				(IDS_STRING +  612)
+#define IDS_SEL_KANEKO16				(IDS_STRING +  614)
+#define IDS_SEL_SNES					(IDS_STRING +  616)
 
 #define IDS_GENRE						(IDS_STRING +  650)
 #define IDS_GENRE_HORSHOOT				(IDS_STRING +  652)

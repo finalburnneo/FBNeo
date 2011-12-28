@@ -42,6 +42,7 @@ HTREEITEM hFilterCps2			= NULL;
 HTREEITEM hFilterCps3			= NULL;
 HTREEITEM hFilterGalaxian		= NULL;
 HTREEITEM hFilterIrem			= NULL;
+HTREEITEM hFilterKaneko16		= NULL;
 HTREEITEM hFilterKonami			= NULL;
 HTREEITEM hFilterNeogeo			= NULL;
 HTREEITEM hFilterPacman			= NULL;
@@ -51,6 +52,7 @@ HTREEITEM hFilterSega			= NULL;
 HTREEITEM hFilterTaito			= NULL;
 HTREEITEM hFilterToaplan		= NULL;
 HTREEITEM hFilterMegadrive		= NULL;
+HTREEITEM hFilterSnes			= NULL;
 HTREEITEM hFilterMiscPre90s		= NULL;
 HTREEITEM hFilterMiscPost90s		= NULL;
 HTREEITEM hFilterBootleg		= NULL;
@@ -144,11 +146,15 @@ static int GalaxianValue	= HARDWARE_PREFIX_GALAXIAN >> 24;
 static int MASKGALAXIAN		= 1 << GalaxianValue;
 static int IremValue		= HARDWARE_PREFIX_IREM >> 24;
 static int MASKIREM			= 1 << IremValue;
+static int Kaneko16Value	= HARDWARE_PREFIX_KANEKO16 >> 24;
+static int MASKKANEKO16		= 1 << Kaneko16Value;
+static int SnesValue		= HARDWARE_PREFIX_NINTENDO_SNES >> 24;
+static int MASKSNES			= 1 << SnesValue;
 static int MiscPre90sValue	= HARDWARE_PREFIX_MISC_PRE90S >> 24;
 static int MASKMISCPRE90S	= 1 << MiscPre90sValue;
 static int MiscPost90sValue	= HARDWARE_PREFIX_MISC_POST90S >> 24;
 static int MASKMISCPOST90S	= 1 << MiscPost90sValue;
-static int MASKALL			= MASKCPS | MASKCPS2 | MASKCPS3 | MASKNEOGEO | MASKSEGA | MASKTOAPLAN | MASKCAVE | MASKPGM | MASKTAITO | MASKPSIKYO | MASKKONAMI | MASKPACMAN | MASKGALAXIAN | MASKIREM | MASKMEGADRIVE | MASKMISCPRE90S | MASKMISCPOST90S;
+static int MASKALL			= MASKCPS | MASKCPS2 | MASKCPS3 | MASKNEOGEO | MASKSEGA | MASKTOAPLAN | MASKCAVE | MASKPGM | MASKTAITO | MASKPSIKYO | MASKKONAMI | MASKPACMAN | MASKGALAXIAN | MASKIREM | MASKKANEKO16 | MASKMEGADRIVE | MASKSNES | MASKMISCPRE90S | MASKMISCPOST90S;
 
 #define AVAILONLY		(1 << 24)
 #define AUTOEXPAND		(1 << 25)
@@ -889,6 +895,7 @@ static void CreateFilters()
 	_TVCreateFiltersA(hHardware		, IDS_SEL_CPS3			, hFilterCps3			, nLoadMenuShowX & MASKCPS3							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_GALAXIAN		, hFilterGalaxian		, nLoadMenuShowX & MASKGALAXIAN						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_IREM			, hFilterIrem			, nLoadMenuShowX & MASKIREM							);
+	_TVCreateFiltersA(hHardware		, IDS_SEL_KANEKO16		, hFilterKaneko16		, nLoadMenuShowX & MASKKANEKO16						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_KONAMI		, hFilterKonami			, nLoadMenuShowX & MASKKONAMI						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_NEOGEO		, hFilterNeogeo			, nLoadMenuShowX & MASKNEOGEO						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PACMAN		, hFilterPacman			, nLoadMenuShowX & MASKPACMAN						);
@@ -900,6 +907,7 @@ static void CreateFilters()
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MISCPRE90S	, hFilterMiscPre90s		, nLoadMenuShowX & MASKMISCPRE90S					);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MISCPOST90S	, hFilterMiscPost90s	, nLoadMenuShowX & MASKMISCPOST90S					);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MEGADRIVE		, hFilterMegadrive		, nLoadMenuShowX & MASKMEGADRIVE					);
+	_TVCreateFiltersA(hHardware		, IDS_SEL_SNES			, hFilterSnes			, nLoadMenuShowX & MASKSNES							);
 	
 	SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hRoot);
 	SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hHardware);
@@ -1028,6 +1036,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterCps3, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterGalaxian, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterIrem, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterKaneko16, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterKonami, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterNeogeo, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterPacman, FALSE);
@@ -1039,6 +1048,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterMiscPre90s, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterMiscPost90s, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterMegadrive, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterSnes, FALSE);
 				
 				nLoadMenuShowX |= MASKALL;
 			} else {
@@ -1050,6 +1060,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterCps3, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterGalaxian, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterIrem, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterKaneko16, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterKonami, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterNeogeo, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterPacman, TRUE);
@@ -1061,6 +1072,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterMiscPre90s, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterMiscPost90s, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterMegadrive, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterSnes, TRUE);
 				
 				nLoadMenuShowX &= 0xff000000;
 			}
@@ -1186,6 +1198,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterCps3)			_ToggleGameListing(nLoadMenuShowX, MASKCPS3);
 		if (hItemChanged == hFilterGalaxian)			_ToggleGameListing(nLoadMenuShowX, MASKGALAXIAN);
 		if (hItemChanged == hFilterIrem)			_ToggleGameListing(nLoadMenuShowX, MASKIREM);
+		if (hItemChanged == hFilterKaneko16)		_ToggleGameListing(nLoadMenuShowX, MASKKANEKO16);
 		if (hItemChanged == hFilterKonami)			_ToggleGameListing(nLoadMenuShowX, MASKKONAMI);
 		if (hItemChanged == hFilterNeogeo)			_ToggleGameListing(nLoadMenuShowX, MASKNEOGEO);
 		if (hItemChanged == hFilterPacman)			_ToggleGameListing(nLoadMenuShowX, MASKPACMAN);
@@ -1197,6 +1210,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterMiscPre90s)			_ToggleGameListing(nLoadMenuShowX, MASKMISCPRE90S);
 		if (hItemChanged == hFilterMiscPost90s)			_ToggleGameListing(nLoadMenuShowX, MASKMISCPOST90S);
 		if (hItemChanged == hFilterMegadrive)			_ToggleGameListing(nLoadMenuShowX, MASKMEGADRIVE);
+		if (hItemChanged == hFilterSnes)			_ToggleGameListing(nLoadMenuShowX, MASKSNES);
 		
 		if (hItemChanged == hFilterBootleg)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_BOOTLEG);
 		if (hItemChanged == hFilterDemo)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_DEMO);

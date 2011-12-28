@@ -114,29 +114,46 @@ HTREEITEM hHardware			= NULL;
 #define DISABLE_NON_AVAILABLE_SELECT	0						// Disable selecting non-available sets
 #define NON_WORKING_PROMPT_ON_LOAD		1						// Prompt user on loading non-working sets
 
-#define MASKCPS			(1 << (HARDWARE_PREFIX_CAPCOM			>> 24))
-#define MASKCPS2		(1 << (HARDWARE_PREFIX_CPS2				>> 24))
-#define MASKCPS3		(1 << (HARDWARE_PREFIX_CPS3				>> 24))
-#define MASKNEOGEO		(1 << (HARDWARE_PREFIX_SNK				>> 24))
-#define MASKSEGA		(1 << (HARDWARE_PREFIX_SEGA				>> 24))
-#define MASKTOAPLAN 	(1 << (HARDWARE_PREFIX_TOAPLAN			>> 24))
-#define MASKCAVE		(1 << (HARDWARE_PREFIX_CAVE				>> 24))
-#define MASKPGM			(1 << (HARDWARE_PREFIX_IGS_PGM			>> 24))
-#define MASKMEGADRIVE	(1 << (HARDWARE_PREFIX_SEGA_MEGADRIVE   >> 24))
-#define MASKTAITO		(1 << (HARDWARE_PREFIX_TAITO			>> 24))
-#define MASKPSIKYO		(1 << (HARDWARE_PREFIX_PSIKYO			>> 24))
-#define MASKKONAMI		(1 << (HARDWARE_PREFIX_KONAMI			>> 24))
-#define MASKPACMAN		(1 << (HARDWARE_PREFIX_PACMAN			>> 24))
-#define MASKGALAXIAN		(1 << (HARDWARE_PREFIX_GALAXIAN			>> 24))
-#define MASKIREM		(0x1000 * (HARDWARE_PREFIX_IREM			>> 24))
-#define MASKMISCPRE90S	(1 << (HARDWARE_PREFIX_MISC_PRE90S		>> 24))
-#define MASKMISCPOST90S	(1 << (HARDWARE_PREFIX_MISC_POST90S		>> 24))
-#define MASKALL			(MASKCPS | MASKCPS2 | MASKCPS3 | MASKNEOGEO | MASKSEGA | MASKTOAPLAN | MASKCAVE | MASKPGM | MASKTAITO | MASKPSIKYO | MASKKONAMI | MASKPACMAN | MASKGALAXIAN | MASKIREM | MASKMEGADRIVE | MASKMISCPRE90S | MASKMISCPOST90S)
+static int CpsValue			= HARDWARE_PREFIX_CAPCOM >> 24;
+static int MASKCPS			= 1 << CpsValue;
+static int Cps2Value		= HARDWARE_PREFIX_CPS2 >> 24;
+static int MASKCPS2			= 1 << Cps2Value;
+static int Cps3Value		= HARDWARE_PREFIX_CPS3 >> 24;
+static int MASKCPS3			= 1 << Cps3Value;
+static int NeogeoValue		= HARDWARE_PREFIX_SNK >> 24;
+static int MASKNEOGEO		= 1 << NeogeoValue;
+static int SegaValue		= HARDWARE_PREFIX_SEGA >> 24;
+static int MASKSEGA			= 1 << SegaValue;
+static int ToaplanValue		= HARDWARE_PREFIX_TOAPLAN >> 24;
+static int MASKTOAPLAN		= 1 << ToaplanValue;
+static int CaveValue		= HARDWARE_PREFIX_CAVE >> 24;
+static int MASKCAVE			= 1 << CaveValue;
+static int PgmValue			= HARDWARE_PREFIX_IGS_PGM >> 24;
+static int MASKPGM			= 1 << PgmValue;
+static int MegadriveValue	= HARDWARE_PREFIX_SEGA_MEGADRIVE >> 24;
+static int MASKMEGADRIVE	= 1 << MegadriveValue;
+static int TaitoValue		= HARDWARE_PREFIX_TAITO >> 24;
+static int MASKTAITO		= 1 << TaitoValue;
+static int PsikyoValue		= HARDWARE_PREFIX_PSIKYO >> 24;
+static int MASKPSIKYO		= 1 << PsikyoValue;
+static int KonamiValue		= HARDWARE_PREFIX_KONAMI >> 24;
+static int MASKKONAMI		= 1 << KonamiValue;
+static int PacmanValue		= HARDWARE_PREFIX_PACMAN >> 24;
+static int MASKPACMAN		= 1 << PacmanValue;
+static int GalaxianValue	= HARDWARE_PREFIX_GALAXIAN >> 24;
+static int MASKGALAXIAN		= 1 << GalaxianValue;
+static int IremValue		= HARDWARE_PREFIX_IREM >> 24;
+static int MASKIREM			= 1 << IremValue;
+static int MiscPre90sValue	= HARDWARE_PREFIX_MISC_PRE90S >> 24;
+static int MASKMISCPRE90S	= 1 << MiscPre90sValue;
+static int MiscPost90sValue	= HARDWARE_PREFIX_MISC_POST90S >> 24;
+static int MASKMISCPOST90S	= 1 << MiscPost90sValue;
+static int MASKALL			= MASKCPS | MASKCPS2 | MASKCPS3 | MASKNEOGEO | MASKSEGA | MASKTOAPLAN | MASKCAVE | MASKPGM | MASKTAITO | MASKPSIKYO | MASKKONAMI | MASKPACMAN | MASKGALAXIAN | MASKIREM | MASKMEGADRIVE | MASKMISCPRE90S | MASKMISCPOST90S;
 
-#define AVAILONLY		(1 << 18)
-#define AUTOEXPAND		(1 << 19)
-#define SHOWSHORT		(1 << 20)
-#define ASCIIONLY		(1 << 21)
+#define AVAILONLY		(1 << 24)
+#define AUTOEXPAND		(1 << 25)
+#define SHOWSHORT		(1 << 26)
+#define ASCIIONLY		(1 << 27)
 
 #define MASKBOARDTYPEGENUINE	(1)
 #define MASKFAMILYOTHER		0x10000000
@@ -278,7 +295,7 @@ static int SelListMake()
 {
 	unsigned int i, j;
 	unsigned int nMissingDrvCount = 0;
-
+	
 	if (nBurnDrv) {
 		free(nBurnDrv);
 		nBurnDrv = NULL;
@@ -306,12 +323,8 @@ static int SelListMake()
 		if (BurnDrvGetText(DRV_PARENT) != NULL && (BurnDrvGetFlags() & BDF_CLONE)) {	// Skip clones
 			continue;
 		}
-		//if (avOk && (nLoadMenuShowX & AVAILONLY) && !gameAv[i])	{						// Skip non-available games if needed
-		//	continue;
-		//}
 
 		int nHardware = 1 << (BurnDrvGetHardwareCode() >> 24);
-		if ((BurnDrvGetHardwareCode() >> 24) == (HARDWARE_PREFIX_IREM >> 24)) nHardware = MASKIREM;
 		if ((nHardware & MASKALL) && ((nHardware & nLoadMenuShowX) || (nHardware & MASKALL) == 0)) {
 			continue;
 		}
@@ -365,12 +378,8 @@ static int SelListMake()
 		if (BurnDrvGetTextA(DRV_PARENT) == NULL || !(BurnDrvGetFlags() & BDF_CLONE)) {	// Skip parents
 			continue;
 		}
-		//if (avOk && (nLoadMenuShowX & AVAILONLY) && !gameAv[i])	{						// Skip non-available games if needed
-		//	continue;
-		//}
 
 		int nHardware = 1 << (BurnDrvGetHardwareCode() >> 24);
-		if ((BurnDrvGetHardwareCode() >> 24) == (HARDWARE_PREFIX_IREM >> 24)) nHardware = MASKIREM;
 		if ((nHardware & MASKALL) && ((nHardware & nLoadMenuShowX) || ((nHardware & MASKALL) == 0))) {
 			continue;
 		}
@@ -1053,7 +1062,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterMiscPost90s, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterMegadrive, TRUE);
 				
-				nLoadMenuShowX &= 0xfffc0000;
+				nLoadMenuShowX &= 0xff000000;
 			}
 		}
 		

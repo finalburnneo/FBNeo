@@ -1422,8 +1422,8 @@ static void Nibbleswap(UINT8* pData, INT32 nLen)
 {
 	for (INT32 i = nLen -2 ; i >= 0; i -= 2) {
 		UINT16 c = ((pData[i + 0] >> 4) | (pData[i + 0] << 8)) & 0x0F0F;
-		((UINT16*)pData)[i + 0] = ((pData[i + 1] >> 4) | (pData[i + 1] << 8)) & 0x0F0F;
-		((UINT16*)pData)[i + 1] = c;
+		((UINT16*)pData)[i + 0] = BURN_ENDIAN_SWAP_INT16(((pData[i + 1] >> 4) | (pData[i + 1] << 8))) & 0x0F0F;
+		((UINT16*)pData)[i + 1] = BURN_ENDIAN_SWAP_INT16(c);
 	}
 
 	return;
@@ -1545,7 +1545,7 @@ static INT32 s1945LoadRoms()
 static void tengaiNibbleswap(UINT8* pData, INT32 nLen)
 {
 	for (INT32 i = nLen - 1; i >= 0; i--) {
-		((UINT16*)pData)[i] = ((pData[i] >> 4) | (pData[i] << 8)) & 0x0F0F;
+		((UINT16*)pData)[i] = BURN_ENDIAN_SWAP_INT16(((pData[i] >> 4) | (pData[i] << 8))) & 0x0F0F;
 	}
 
 	return;

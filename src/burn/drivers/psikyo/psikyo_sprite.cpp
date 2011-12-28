@@ -94,7 +94,7 @@ INT32 PsikyoSpriteRender(INT32 nLowPriority, INT32 nHighPriority)
 		}
 	}
 
-	nRenderFunction = (((UINT16*)PsikyoSpriteRAM)[0x0FFF] & 4) << 4;
+	nRenderFunction = (BURN_ENDIAN_SWAP_INT16(((UINT16*)PsikyoSpriteRAM)[0x0FFF]) & 4) << 4;
 	nTransColour = (nRenderFunction & 64) ? 0 : 15;
 
 	for (INT32 i = nLowPriority; i <= nHighPriority; i++) {
@@ -196,11 +196,11 @@ INT32 PsikyoSpriteRender(INT32 nLowPriority, INT32 nHighPriority)
 
 				for (INT32 x = 0; x < nXSize; x++, nTileXPos += 16, nAddress += nNextTileX, pTile += nBurnBpp << 4, pZTile += 16) {
 
-					if (PsikyoSpriteAttrib[((UINT16*)PsikyoSpriteLUT)[nAddress]] == nTransColour) {
+					if (PsikyoSpriteAttrib[BURN_ENDIAN_SWAP_INT16(((UINT16*)PsikyoSpriteLUT)[nAddress])] == nTransColour) {
 						continue;
 					}
 
-					pTileData = PsikyoSpriteROM + ((((UINT16*)PsikyoSpriteLUT)[nAddress] << 8) & nSpriteAddressMask);
+					pTileData = PsikyoSpriteROM + ((BURN_ENDIAN_SWAP_INT16(((UINT16*)PsikyoSpriteLUT)[nAddress]) << 8) & nSpriteAddressMask);
 					if (nTileYPos < 0 || nTileYPos > 208 || nTileXPos < 0 || nTileXPos > 304) {
 						if (nTileYPos > -16 && nTileYPos < 224 && nTileXPos > -16 && nTileXPos < 320) {
 							RenderSprite[nRenderFunction + 1]();
@@ -266,12 +266,12 @@ INT32 PsikyoSpriteRender(INT32 nLowPriority, INT32 nHighPriority)
 
 					nTileXSize = (x + 1) * nXZoom / 2 - (x * nXZoom / 2);
 
-					if (PsikyoSpriteAttrib[((UINT16*)PsikyoSpriteLUT)[nAddress]] == nTransColour) {
+					if (PsikyoSpriteAttrib[BURN_ENDIAN_SWAP_INT16(((UINT16*)PsikyoSpriteLUT)[nAddress])] == nTransColour) {
 						continue;
 					}
 
 					pXZoomInfo = PsikyoZoomXTable + (nTileXSize << 4);
-					pTileData = PsikyoSpriteROM + ((((UINT16*)PsikyoSpriteLUT)[nAddress] << 8) & nSpriteAddressMask);
+					pTileData = PsikyoSpriteROM + ((BURN_ENDIAN_SWAP_INT16(((UINT16*)PsikyoSpriteLUT)[nAddress]) << 8) & nSpriteAddressMask);
 					if (nTileYPos < 0 || nTileYPos > (224 - nTileYSize) || nTileXPos < 0 || nTileXPos > (320 - nTileXSize)) {
 						if (nTileYPos > -nTileYSize && nTileYPos < 224 && nTileXPos > -nTileXSize && nTileXPos < 320) {
 							RenderSprite[nRenderFunction + 33]();
@@ -327,13 +327,13 @@ INT32 PsikyoSpriteBuffer()
 	nLastSprite[3] = -1;
 
 	// Check if sprites are disabled
-	if (((UINT16*)PsikyoSpriteRAM)[0x0FFF] & 1) {
+	if (BURN_ENDIAN_SWAP_INT16(((UINT16*)PsikyoSpriteRAM)[0x0FFF]) & 1) {
 		return 0;
 	}
 
 	for (INT32 i = 0x0C00, z = 0; i < 0x0FFF; i++) {
 
-		word = ((UINT16*)PsikyoSpriteRAM)[i];
+		word = BURN_ENDIAN_SWAP_INT16(((UINT16*)PsikyoSpriteRAM)[i]);
 
 		// Check for end-marker
 		if (word == 0xFFFF) {
@@ -347,11 +347,11 @@ INT32 PsikyoSpriteBuffer()
 		// Point to sprite
 		pSprite = &(((UINT16*)PsikyoSpriteRAM)[word * 4]);
 
-		x = pSprite[1] & 0x01FF;
-		y = pSprite[0] & 0x01FF;
+		x = BURN_ENDIAN_SWAP_INT16(pSprite[1]) & 0x01FF;
+		y = BURN_ENDIAN_SWAP_INT16(pSprite[0]) & 0x01FF;
 
-		xs = ((pSprite[1] >> 9) & 0x0007) + 1;
-		ys = ((pSprite[0] >> 9) & 0x0007) + 1;
+		xs = ((BURN_ENDIAN_SWAP_INT16(pSprite[1]) >> 9) & 0x0007) + 1;
+		ys = ((BURN_ENDIAN_SWAP_INT16(pSprite[0]) >> 9) & 0x0007) + 1;
 
 		if (x >= 320) {
 			x -= 512;
@@ -368,7 +368,7 @@ INT32 PsikyoSpriteBuffer()
 
 		// Sprite is active and most likely on screen, so add it to the buffer
 
-		word = pSprite[2];
+		word = BURN_ENDIAN_SWAP_INT16(pSprite[2]);
 
 		nPriority = 3 - ((word >> 6) & 0x03);
 
@@ -379,8 +379,8 @@ INT32 PsikyoSpriteBuffer()
 
 		pBuffer->priority = 1 << nPriority;
 
-		pBuffer->xzoom = pSprite[1] >> 12;
-		pBuffer->yzoom = pSprite[0] >> 12;
+		pBuffer->xzoom = BURN_ENDIAN_SWAP_INT16(pSprite[1]) >> 12;
+		pBuffer->yzoom = BURN_ENDIAN_SWAP_INT16(pSprite[0]) >> 12;
 
 		pBuffer->xsize = xs;
 		pBuffer->ysize = ys;
@@ -391,7 +391,7 @@ INT32 PsikyoSpriteBuffer()
 		pBuffer->flip = (word >> 14) & 0x03;
 		pBuffer->palette = (word >> 4) & 0x01F0;
 
-		pBuffer->address = pSprite[3] | ((word & 1) << 16);
+		pBuffer->address = BURN_ENDIAN_SWAP_INT16(pSprite[3]) | ((word & 1) << 16);
 
 		pBuffer++;
 		z++;

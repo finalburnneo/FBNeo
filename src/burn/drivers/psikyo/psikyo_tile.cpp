@@ -88,7 +88,7 @@ static void PsikyoRenderLayer(INT32 nLayer)
 
 				// per-tile rowscroll; each tilerow has it's own offset to the tilemap x offset
 
-				minx = pTileRowInfo[(nTileYPos >> 4) & 0x0F];
+				minx = (INT16)BURN_ENDIAN_SWAP_INT16(pTileRowInfo[(nTileYPos >> 4) & 0x0F]);
 			} else {
 
 				// Rowscroll enabled
@@ -96,12 +96,12 @@ static void PsikyoRenderLayer(INT32 nLayer)
 				minx = 32767; maxx = -32768;
 
 				// Compute the min/max row offsets
-				for (int i = 0; i < 16; i++) {
-					if (pTileRowInfo[(nTileYPos + i) & 0xFF] > maxx) {
-						maxx = pTileRowInfo[(nTileYPos + i) & 0xFF];
+				for (INT32 i = 0; i < 16; i++) {
+					if ((INT16)BURN_ENDIAN_SWAP_INT16(pTileRowInfo[(nTileYPos + i) & 0xFF]) > maxx) {
+						maxx = (INT16)BURN_ENDIAN_SWAP_INT16(pTileRowInfo[(nTileYPos + i) & 0xFF]);
 					}
-					if (pTileRowInfo[(nTileYPos + i) & 0xFF] < minx) {
-						minx = pTileRowInfo[(nTileYPos + i) & 0xFF];
+					if ((INT16)BURN_ENDIAN_SWAP_INT16(pTileRowInfo[(nTileYPos + i) & 0xFF]) < minx) {
+						minx = (INT16)BURN_ENDIAN_SWAP_INT16(pTileRowInfo[(nTileYPos + i) & 0xFF]);
 					}
 				}
 
@@ -121,7 +121,7 @@ static void PsikyoRenderLayer(INT32 nLayer)
 					for (x = minx, nTileXPos = (minx << 4) + bx; x < maxx; x++, nTileXPos += 16) {
 
 						nTileColumn = (cx + x) & (mx - 1);
-						nTileNumber = pTileRAM[nTileRow + nTileColumn];
+						nTileNumber = BURN_ENDIAN_SWAP_INT16(pTileRAM[nTileRow + nTileColumn]);
 						nTilePalette = nTileNumber >> 13;
 						nTileNumber = (nTileNumber & 0x1FFF) + nTileBank;
 
@@ -157,7 +157,7 @@ static void PsikyoRenderLayer(INT32 nLayer)
 			}
 
 			nTileColumn = (cx + x) & (mx - 1);
-			nTileNumber = pTileRAM[nTileRow + nTileColumn];
+			nTileNumber = BURN_ENDIAN_SWAP_INT16(pTileRAM[nTileRow + nTileColumn]);
 			nTilePalette = nTileNumber >> 13;
 			nTileNumber = (nTileNumber & 0x1FFF) + nTileBank;
 
@@ -189,13 +189,13 @@ INT32 PsikyoTileRender()
 {
 	INT32 nPriority, nLowPriority = 0;
 
-	PsikyoLayerAttrib[0]  = *((INT16*)(PsikyoTileRAM[2] + 0x0412));
-	PsikyoLayerXOffset[0] = *((INT16*)(PsikyoTileRAM[2] + 0x0406));
-	PsikyoLayerYOffset[0] = *((INT16*)(PsikyoTileRAM[2] + 0x0402));
+	PsikyoLayerAttrib[0]  = BURN_ENDIAN_SWAP_INT16(*((INT16*)(PsikyoTileRAM[2] + 0x0412)));
+	PsikyoLayerXOffset[0] = BURN_ENDIAN_SWAP_INT16(*((INT16*)(PsikyoTileRAM[2] + 0x0406)));
+	PsikyoLayerYOffset[0] = BURN_ENDIAN_SWAP_INT16(*((INT16*)(PsikyoTileRAM[2] + 0x0402)));
 
-	PsikyoLayerAttrib[1]  = *((INT16*)(PsikyoTileRAM[2] + 0x0416));
-	PsikyoLayerXOffset[1] = *((INT16*)(PsikyoTileRAM[2] + 0x040E));
-	PsikyoLayerYOffset[1] = *((INT16*)(PsikyoTileRAM[2] + 0x040A));
+	PsikyoLayerAttrib[1]  = BURN_ENDIAN_SWAP_INT16(*((INT16*)(PsikyoTileRAM[2] + 0x0416)));
+	PsikyoLayerXOffset[1] = BURN_ENDIAN_SWAP_INT16(*((INT16*)(PsikyoTileRAM[2] + 0x040E)));
+	PsikyoLayerYOffset[1] = BURN_ENDIAN_SWAP_INT16(*((INT16*)(PsikyoTileRAM[2] + 0x040A)));
 
 	if (PsikyoHardwareVersion == PSIKYO_HW_GUNBIRD) {
 		PsikyoTileBank[0] = (PsikyoLayerAttrib[0] & 0x0400) << 3;

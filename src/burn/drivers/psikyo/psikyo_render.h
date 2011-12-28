@@ -200,7 +200,7 @@ static void FUNCTIONNAME(BPP,TRANSMODE,DOFLIP,ROT,SCROLL,ZOOMMODE,ZBUF,CLIP)()
  #endif
 
   #if ROWSCROLL == 1
-		nRowOffset = (nTileXPos - pTileRowInfo[(nTileYPos + y) & 0xFF]) & nTilemapWith;
+		nRowOffset = (nTileXPos - BURN_ENDIAN_SWAP_INT16(pTileRowInfo[(nTileYPos + y) & 0xFF])) & nTilemapWith;
 		if (nRowOffset >= 320) {
 			nRowOffset -= nTilemapWith + 1;
 		}

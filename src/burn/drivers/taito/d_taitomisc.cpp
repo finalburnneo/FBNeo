@@ -4840,9 +4840,9 @@ inline static UINT32 CalcCol(UINT16 nColour)
 {
 	INT32 r, g, b;
 
-	r = pal5bit(nColour >>  0);
-	g = pal5bit(nColour >>  5);
-	b = pal5bit(nColour >> 10);
+	r = pal5bit(BURN_ENDIAN_SWAP_INT16(nColour) >>  0);
+	g = pal5bit(BURN_ENDIAN_SWAP_INT16(nColour) >>  5);
+	b = pal5bit(BURN_ENDIAN_SWAP_INT16(nColour) >> 10);
 
 	return BurnHighCol(r, g, b, 0);
 }
@@ -4851,9 +4851,9 @@ inline static UINT32 OpwolfCalcCol(UINT16 nColour)
 {
 	INT32 r, g, b;
 
-	r = pal4bit(nColour >> 8);
-	g = pal4bit(nColour >> 4);
-	b = pal4bit(nColour >> 0);
+	r = pal4bit(BURN_ENDIAN_SWAP_INT16(nColour) >> 8);
+	g = pal4bit(BURN_ENDIAN_SWAP_INT16(nColour) >> 4);
+	b = pal4bit(BURN_ENDIAN_SWAP_INT16(nColour) >> 0);
 
 	return BurnHighCol(r, g, b, 0);
 }
@@ -4862,9 +4862,9 @@ inline static UINT32 JumpingCalcCol(UINT16 nColour)
 {
 	INT32 r, g, b;
 
-	r = pal4bit(nColour >> 0);
-	g = pal4bit(nColour >> 4);
-	b = pal4bit(nColour >> 8);
+	r = pal4bit(BURN_ENDIAN_SWAP_INT16(nColour) >> 0);
+	g = pal4bit(BURN_ENDIAN_SWAP_INT16(nColour) >> 4);
+	b = pal4bit(BURN_ENDIAN_SWAP_INT16(nColour) >> 8);
 
 	return BurnHighCol(r, g, b, 0);
 }
@@ -4912,20 +4912,20 @@ static void DariusDrawSprites(INT32 PriorityDraw)
 
 	for (Offset = 0xf000 / 2 - 4; Offset >= 0; Offset -= 4)
 	{
-		Code = SpriteRam[Offset+ 2 ] &0x1fff;
+		Code = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]) & 0x1fff;
 
 		if (Code) {
-			Data = SpriteRam[Offset + 0];
+			Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 0]);
 			sy = (256 - Data) & 0x1ff;
 
-			Data = SpriteRam[Offset + 1];
+			Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
 			sx = Data & 0x3ff;
 
-			Data = SpriteRam[Offset + 2];
+			Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
 			xFlip = ((Data & 0x4000) >> 14);
 			yFlip = ((Data & 0x8000) >> 15);
 
-			Data = SpriteRam[Offset + 3];
+			Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]);
 			Priority = (Data & 0x80) >> 7;
 			if (Priority != PriorityDraw) continue;
 			
@@ -4977,8 +4977,8 @@ static void DariusDrawCharLayer()
 
 	for (my = 0; my < 64; my++) {
 		for (mx = 0; mx < 128; mx++) {
-			Code = VideoRam[TileIndex + 0x2000] & (TaitoNumCharB - 1);
-			Attr = VideoRam[TileIndex + 0x0000];
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex + 0x2000]) & (TaitoNumCharB - 1);
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex + 0x0000]);
 			
 			Colour = (Attr & 0xff) << 2;
 			Flip = (Attr & 0xc000) >> 14;
@@ -5029,17 +5029,17 @@ static void JumpingDrawSprites()
 	
 	for (INT32 Offs = 0x400 - 8; Offs >= 0; Offs -= 8) {
 		UINT16 *SpriteRam = (UINT16*)TaitoSpriteRam;
-		INT32 Tile = SpriteRam[Offs];
+		INT32 Tile = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offs]);
 		if (Tile < 5120) {
 			INT32 sx, sy, Colour, Data1, xFlip, yFlip;
 
-			sy = ((SpriteRam[Offs + 1] - 0xfff1) ^ 0xffff) & 0x1ff;
+			sy = ((BURN_ENDIAN_SWAP_INT16(SpriteRam[Offs + 1]) - 0xfff1) ^ 0xffff) & 0x1ff;
   			if (sy > 400) sy = sy - 512;
-			sx = (SpriteRam[Offs + 2] - 0x38) & 0x1ff;
+			sx = (BURN_ENDIAN_SWAP_INT16(SpriteRam[Offs + 2]) - 0x38) & 0x1ff;
 			if (sx > 400) sx = sx - 512;
 
-			Data1 = SpriteRam[Offs + 3];
-			Colour = (SpriteRam[Offs + 4] & 0x0f) | SpriteColBank;
+			Data1 = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offs + 3]);
+			Colour = (BURN_ENDIAN_SWAP_INT16(SpriteRam[Offs + 4]) & 0x0f) | SpriteColBank;
 			xFlip = Data1 & 0x40;
 			yFlip = Data1 & 0x80;
 			
@@ -5171,16 +5171,16 @@ static void TopspeedDrawSprites(INT32 PriorityDraw)
 	UINT8 j, k, px, py, zx, zy, xZoom, yZoom;
 
 	for (Offset = (0x2c0 / 2) - 4; Offset >= 0; Offset -= 4) {
-		Data = SpriteRam[Offset + 2];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
 
-		TileNum = SpriteRam[Offset + 3] & 0xff;
-		Colour = (SpriteRam[Offset + 3] & 0xff00) >> 8;
+		TileNum = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]) & 0xff;
+		Colour = (BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]) & 0xff00) >> 8;
 		xFlip = (Data & 0x4000) >> 14;
-		yFlip = (SpriteRam[Offset + 1] & 0x8000) >> 15;
+		yFlip = (BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]) & 0x8000) >> 15;
 		x = Data & 0x1ff;
-		y = SpriteRam[Offset] & 0x1ff;
-		xZoom = (SpriteRam[Offset + 1] & 0x7f);
-		yZoom = (SpriteRam[Offset] & 0xfe00) >> 9;
+		y = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset]) & 0x1ff;
+		xZoom = (BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]) & 0x7f);
+		yZoom = (BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset]) & 0xfe00) >> 9;
 		Priority = (Data & 0x8000) >> 15;
 		
 		if (Priority != PriorityDraw) continue;

@@ -30,7 +30,7 @@ void PC080SNDrawBgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc, UINT16 *pDest)
 	INT32 BgScrollActive = 0;
 	if (BgScrollRam) {
 		for (INT32 i = 0; i < 512; i++) {
-			if (BgScrollRam[i]) {
+			if (BURN_ENDIAN_SWAP_INT16(BgScrollRam[i])) {
 				BgScrollActive = 1;
 				break;
 			}
@@ -41,11 +41,11 @@ void PC080SNDrawBgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc, UINT16 *pDest)
 		for (mx = 0; mx < PC080SNCols[Chip]; mx++) {
 			Offset = 2 * TileIndex;
 			if (!PC080SNDblWidth[Chip]) {
-				Attr = VideoRam[Offset + 0];
-				Code = VideoRam[Offset + 1] & (PC080SNNumTiles[Chip] - 1);
+				Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 0]);
+				Code = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 1]) & (PC080SNNumTiles[Chip] - 1);
 			} else {
-				Attr = VideoRam[TileIndex + 0x0000];
-				Code = VideoRam[TileIndex + 0x2000] & 0x3fff;
+				Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex + 0x0000]);
+				Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex + 0x2000]) & 0x3fff;
 			}
 			Colour = Attr & 0x1ff;
 			Flip = (Attr & 0xc000) >> 14;
@@ -82,7 +82,7 @@ void PC080SNDrawBgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc, UINT16 *pDest)
 					
 							if (yPos >= 0 && yPos < nScreenHeight) {
 								if (!PC080SNDblWidth[Chip]) {					
-									xPos -= ((BgScrollX[Chip] - BgScrollRam[yPos + PC080SNYOffset[Chip]]) & 0x1ff);
+									xPos -= ((BgScrollX[Chip] - BURN_ENDIAN_SWAP_INT16(BgScrollRam[yPos + PC080SNYOffset[Chip]])) & 0x1ff);
 									if (xPos < -8) xPos += 512;
 									if (xPos >= 512) xPos -= 512;
 								} else {
@@ -195,7 +195,7 @@ void PC080SNDrawFgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc, UINT16 *pDest)
 	INT32 FgScrollActive = 0;
 	if (FgScrollRam) {
 		for (INT32 i = 0; i < 512; i++) {
-			if (FgScrollRam[i]) {
+			if (BURN_ENDIAN_SWAP_INT16(FgScrollRam[i])) {
 				FgScrollActive = 1;
 				break;
 			}
@@ -206,11 +206,11 @@ void PC080SNDrawFgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc, UINT16 *pDest)
 		for (mx = 0; mx < PC080SNCols[Chip]; mx++) {
 			Offset = 2 * TileIndex;
 			if (!PC080SNDblWidth[Chip]) {
-				Attr = VideoRam[Offset + 0];
-				Code = VideoRam[Offset + 1] & (PC080SNNumTiles[Chip] - 1);
+				Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 0]);
+				Code = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 1]) & (PC080SNNumTiles[Chip] - 1);
 			} else {
-				Attr = VideoRam[TileIndex + 0x0000];
-				Code = VideoRam[TileIndex + 0x2000] & 0x3fff;
+				Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex + 0x0000]);
+				Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex + 0x2000]) & 0x3fff;
 			}
 			Colour = Attr & 0x1ff;
 			Flip = (Attr & 0xc000) >> 14;
@@ -247,7 +247,7 @@ void PC080SNDrawFgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc, UINT16 *pDest)
 					
 							if (yPos >= 0 && yPos < nScreenHeight) {					
 								if (!PC080SNDblWidth[Chip]) {
-									xPos -= ((FgScrollX[Chip] - FgScrollRam[yPos + PC080SNYOffset[Chip]]) & 0x1ff);
+									xPos -= ((FgScrollX[Chip] - BURN_ENDIAN_SWAP_INT16(FgScrollRam[yPos + PC080SNYOffset[Chip]])) & 0x1ff);
 									if (xPos < -8) xPos += 512;
 									if (xPos >= 512) xPos -= 512;
 								} else {
@@ -582,11 +582,11 @@ void TopspeedPC080SNDrawBgLayer(INT32 Chip, UINT8 *pSrc, UINT16 *pDest)
 		for (mx = 0; mx < PC080SNCols[Chip]; mx++) {
 			Offset = 2 * TileIndex;
 			if (!PC080SNDblWidth[Chip]) {
-				Attr = VideoRam[Offset + 0];
-				Code = VideoRam[Offset + 1] & (PC080SNNumTiles[Chip] - 1);
+				Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 0]);
+				Code = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 1]) & (PC080SNNumTiles[Chip] - 1);
 			} else {
-				Attr = VideoRam[TileIndex + 0x0000];
-				Code = VideoRam[TileIndex + 0x2000] & 0x3fff;
+				Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex + 0x0000]);
+				Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex + 0x2000]) & 0x3fff;
 			}
 			Colour = Attr & 0x1ff;
 			Flip = (Attr & 0xc000) >> 14;
@@ -625,11 +625,11 @@ void TopspeedPC080SNDrawFgLayer(INT32 Chip, UINT8 *pSrc, UINT16 *pDest)
 		for (mx = 0; mx < PC080SNCols[Chip]; mx++) {
 			Offset = 2 * TileIndex;
 			if (!PC080SNDblWidth[Chip]) {
-				Attr = VideoRam[Offset + 0];
-				Code = VideoRam[Offset + 1] & (PC080SNNumTiles[Chip] - 1);
+				Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 0]);
+				Code = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 1]) & (PC080SNNumTiles[Chip] - 1);
 			} else {
-				Attr = VideoRam[TileIndex + 0x0000];
-				Code = VideoRam[TileIndex + 0x2000] & 0x3fff;
+				Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex + 0x0000]);
+				Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex + 0x2000]) & 0x3fff;
 			}
 			Colour = Attr & 0x1ff;
 			Flip = (Attr & 0xc000) >> 14;
@@ -762,7 +762,7 @@ void TopspeedDrawBgLayer(INT32 Chip, UINT8 *pSrc, UINT16 *pDest, UINT16 *ColourC
 		RowIndex = (ySrcIndex - (BgScrollY[Chip] & 0x1ff)) & 0x1ff;
 		Colour = ColourCtrlRam[(RowIndex + PC080SNYOffset[Chip] - 2) & 0xff];
 
-		xIndex = sx - ((BgScrollRam[RowIndex] & 0x1ff));
+		xIndex = sx - (BURN_ENDIAN_SWAP_INT16(BgScrollRam[RowIndex]) & 0x1ff);
 		
 		Src16 = pDest + (ySrcIndex * 512);
 		Dst16 = ScanLine;
@@ -821,7 +821,7 @@ void TopspeedDrawFgLayer(INT32 Chip, UINT8 *pSrc, UINT16 *pDest, UINT16 *ColourC
 		RowIndex = (ySrcIndex - (FgScrollY[Chip] & 0x1ff)) & 0x1ff;
 		Colour = ColourCtrlRam[(RowIndex + PC080SNYOffset[Chip] - 2) & 0xff];
 
-		xIndex = sx - ((FgScrollRam[RowIndex] & 0x1ff));
+		xIndex = sx - (BURN_ENDIAN_SWAP_INT16(FgScrollRam[RowIndex]) & 0x1ff);
 
 		Src16 = pDest + (ySrcIndex * 512);
 		Dst16 = ScanLine;

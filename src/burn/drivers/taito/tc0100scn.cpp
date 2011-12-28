@@ -192,8 +192,8 @@ void TC0100SCNRenderBgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc)
 		for (my = 0; my < 64; my++) {
 			for (mx = 0; mx < Columns; mx++) {
 				Offset = 2 * TileIndex;
-				Attr = VideoRam[Offset];
-				Code = (VideoRam[Offset + 1] & TC0100SCNGfxMask[Chip]) + (TC0100SCNGfxBank[Chip] << 15);
+				Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset]);
+				Code = (BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 1]) & TC0100SCNGfxMask[Chip]) + (TC0100SCNGfxBank[Chip] << 15);
 				Colour = Attr & 0xff;
 				Flip = (Attr & 0xc000) >> 14;
 				xFlip = (Flip >> 0) & 0x01;
@@ -242,7 +242,7 @@ void TC0100SCNRenderBgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc)
 	if (TC0100SCNFlip[Chip]) ySrc = (256 + 16 - ySrc) & HeightMask;
 	
 	for (y = 0; y < TC0100SCNClipHeight[Chip]; y++) {
-		xSrc = (BgScrollX[Chip] - ScrollRam[(y + dyScroll) & 0x1ff] + dxScroll + TC0100SCNClipStartX[Chip]) & WidthMask;
+		xSrc = (BgScrollX[Chip] - BURN_ENDIAN_SWAP_INT16(ScrollRam[(y + dyScroll) & 0x1ff]) + dxScroll + TC0100SCNClipStartX[Chip]) & WidthMask;
 		if(TC0100SCNFlip[Chip]) xSrc = (256 - 58 - xSrc) & WidthMask;
 		if (TC0100SCNFlipScreenX[Chip]) xSrc = (256 - 64 - xSrc) & WidthMask;
 		
@@ -287,8 +287,8 @@ void TC0100SCNRenderFgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc)
 		for (my = 0; my < 64; my++) {
 			for (mx = 0; mx < Columns; mx++) {
 				Offset = 2 * TileIndex;
-				Attr = VideoRam[Offset];
-				Code = (VideoRam[Offset + 1] & TC0100SCNGfxMask[Chip]) + (TC0100SCNGfxBank[Chip] << 15);
+				Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset]);
+				Code = (BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 1]) & TC0100SCNGfxMask[Chip]) + (TC0100SCNGfxBank[Chip] << 15);
 				Colour = Attr & 0xff;
 				Flip = (Attr & 0xc000) >> 14;
 				xFlip = (Flip >> 0) & 0x01;
@@ -337,12 +337,12 @@ void TC0100SCNRenderFgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc)
 	if (TC0100SCNFlip[Chip]) ySrc = (256 + 16 - ySrc) & HeightMask;
 	
 	for (y = 0; y < TC0100SCNClipHeight[Chip]; y++) {
-		xSrc = (FgScrollX[Chip] - ScrollRam[(y + dyScroll) & 0x1ff] + dxScroll + TC0100SCNClipStartX[Chip]) & WidthMask;
+		xSrc = (FgScrollX[Chip] - BURN_ENDIAN_SWAP_INT16(ScrollRam[(y + dyScroll) & 0x1ff]) + dxScroll + TC0100SCNClipStartX[Chip]) & WidthMask;
 		if (TC0100SCNFlip[Chip]) xSrc = (256 - 58 - xSrc) & WidthMask;
 		if (TC0100SCNFlipScreenX[Chip]) xSrc = (256 - 64 - xSrc) & WidthMask;
 		
 		for (x = TC0100SCNClipStartX[Chip]; x < TC0100SCNClipStartX[Chip] + TC0100SCNClipWidth[Chip]; x++) {
-			ColumnOffset = ColumnRam[(xSrc & 0x3ff) / 8];
+			ColumnOffset = BURN_ENDIAN_SWAP_INT16(ColumnRam[(xSrc & 0x3ff) / 8]);
 			p = pTC0100SCNFgTempDraw[Chip][(((ySrc - ColumnOffset) & HeightMask) * Columns * 8) + xSrc];
 
 			if ((p & 0x0f) != 0 || Opaque) {
@@ -382,7 +382,7 @@ void TC0100SCNRenderCharLayer(INT32 Chip)
 	
 	for (my = 0; my < Rows; my++) {
 		for (mx = 0; mx < Columns; mx++) {
-			Attr = VideoRam[TileIndex];
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 			Code = Attr & 0xff;
 			Colour = (Attr >> 6) & 0xfc;
 			Flip = (Attr & 0xc000) >> 14;

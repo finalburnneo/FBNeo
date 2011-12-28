@@ -15,7 +15,7 @@ void PC090OJDrawSprites(UINT8 *pSrc)
 {
 	UINT16 *VideoRam = (UINT16*)PC090OJRam;
 	
-	INT32 PC090OJCtrl = VideoRam[0xdff];
+	INT32 PC090OJCtrl = BURN_ENDIAN_SWAP_INT16(VideoRam[0xdff]);
 	
 	INT32 Offset;
 	INT32 SpriteColBank = (PC090OJSpriteCtrl & 0x0f) << 4;
@@ -26,18 +26,18 @@ void PC090OJDrawSprites(UINT8 *pSrc)
 		INT32 x, y;
 		INT32 Data, Code, Colour;
 
-		Data = VideoRam[Offset + 0];
+		Data = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 0]);
 		yFlip = (Data & 0x8000) >> 15;
 		xFlip = (Data & 0x4000) >> 14;
 		Colour = (Data & 0x000f) | SpriteColBank | PC090OJPaletteOffset;
 
-		Code = VideoRam[Offset + 2] & 0x1fff;
+		Code = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 2]) & 0x1fff;
 		if (Code >= PC090OJNumTiles) {
 			Code %= PC090OJNumTiles; // ok? Mod seems to work fine for bonze.
 		}
 
-		x = VideoRam[Offset + 3] & 0x1ff;
-		y = VideoRam[Offset + 1] & 0x1ff;
+		x = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 3]) & 0x1ff;
+		y = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 1]) & 0x1ff;
 
 		if (x > 0x140) x -= 0x200;
 		if (y > 0x140) y -= 0x200;

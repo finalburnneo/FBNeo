@@ -74,7 +74,7 @@ void TC0150RODDraw(INT32 yOffs, INT32 pOffs, INT32 Type, INT32 RoadTrans, INT32 
 	INT32 xIndex, RoadRamIndex, RoadRam2Index, i;
 	INT32 xOffset, PalOffs, PalLOffs, PalROffs;
 	INT32 RoadGfxTileNum, ColBank, RoadCentre;
-	INT32 RoadCtrl = RoadRam[0xfff];
+	INT32 RoadCtrl = BURN_ENDIAN_SWAP_INT16(RoadRam[0xfff]);
 	INT32 LeftEdge, RightEdge, Begin, End, RightOver, LeftOver;
 	INT32 LineNeedsDrawing, DrawTopRoadLine, BackgroundOnly;
 
@@ -105,12 +105,12 @@ void TC0150RODDraw(INT32 yOffs, INT32 pOffs, INT32 Type, INT32 RoadTrans, INT32 
 		Priorities[4] = 3;
 		Priorities[5] = 1;
 		
-		RoadAClipR = RoadRam[RoadRamIndex + 0];
-		RoadAClipL = RoadRam[RoadRamIndex + 1];
-		RoadABodyCtrl = RoadRam[RoadRamIndex + 2];
-		RoadBClipR = RoadRam[RoadRam2Index + 0];
-		RoadBClipL = RoadRam[RoadRam2Index + 1];
-		RoadBBodyCtrl = RoadRam[RoadRam2Index + 2];
+		RoadAClipR = BURN_ENDIAN_SWAP_INT16(RoadRam[RoadRamIndex + 0]);
+		RoadAClipL = BURN_ENDIAN_SWAP_INT16(RoadRam[RoadRamIndex + 1]);
+		RoadABodyCtrl = BURN_ENDIAN_SWAP_INT16(RoadRam[RoadRamIndex + 2]);
+		RoadBClipR = BURN_ENDIAN_SWAP_INT16(RoadRam[RoadRam2Index + 0]);
+		RoadBClipL = BURN_ENDIAN_SWAP_INT16(RoadRam[RoadRam2Index + 1]);
+		RoadBBodyCtrl = BURN_ENDIAN_SWAP_INT16(RoadRam[RoadRam2Index + 2]);
 		
 		if (RoadABodyCtrl & 0x2000) Priorities[2] += 2;
 		if (RoadBBodyCtrl & 0x2000) Priorities[2] += 1;
@@ -127,8 +127,8 @@ void TC0150RODDraw(INT32 yOffs, INT32 pOffs, INT32 Type, INT32 RoadTrans, INT32 
 		
 		xOffset  = RoadABodyCtrl & 0x7ff;
 		PalOffs  = (RoadABodyCtrl & 0x1800) >> 11;
-		ColBank  = (RoadRam[RoadRamIndex + 3] & 0xf000) >> 10;
-		RoadGfxTileNum = RoadRam[RoadRamIndex + 3] & 0x3ff;
+		ColBank  = (BURN_ENDIAN_SWAP_INT16(RoadRam[RoadRamIndex + 3]) & 0xf000) >> 10;
+		RoadGfxTileNum = BURN_ENDIAN_SWAP_INT16(RoadRam[RoadRamIndex + 3]) & 0x3ff;
 		RightOver = 0;
 		LeftOver = 0;
 
@@ -166,7 +166,7 @@ void TC0150RODDraw(INT32 yOffs, INT32 pOffs, INT32 Type, INT32 RoadTrans, INT32 
 		if ((LineNeedsDrawing) && (Begin < End)) {
 			for (i = Begin; i < End; i++) {
 				if (RoadGfxTileNum) {
-					GfxWord = RoadGfx[(RoadGfxTileNum << 8) + (xIndex >> 3)];
+					GfxWord = BURN_ENDIAN_SWAP_INT16(RoadGfx[(RoadGfxTileNum << 8) + (xIndex >> 3)]);
 					Pixel = ((GfxWord >> (7 - (xIndex % 8) + 8)) & 1) * 2 + ((GfxWord >> (7 - (xIndex % 8))) & 1);
 
 					if ((Pixel) || !(RoadTrans)) {
@@ -201,7 +201,7 @@ void TC0150RODDraw(INT32 yOffs, INT32 pOffs, INT32 Type, INT32 RoadTrans, INT32 
 
 				if (LineNeedsDrawing) {
 					for (i = LeftEdge; i >= 0; i--)	{
-						GfxWord = RoadGfx[(RoadGfxTileNum << 8) + (xIndex >> 3)];
+						GfxWord = BURN_ENDIAN_SWAP_INT16(RoadGfx[(RoadGfxTileNum << 8) + (xIndex >> 3)]);
 						Pixel = ((GfxWord >> (7 - (xIndex % 8) + 8)) & 1) * 2 + ((GfxWord >> (7 - (xIndex % 8))) & 1);
 
 						PixPri = (Pixel == 0) ? (0) : (Pri);
@@ -231,7 +231,7 @@ void TC0150RODDraw(INT32 yOffs, INT32 pOffs, INT32 Type, INT32 RoadTrans, INT32 
 
 			if (LineNeedsDrawing) {
 				for (i = RightEdge; i < nScreenWidth; i++) {
-					GfxWord = RoadGfx[(RoadGfxTileNum << 8) + (xIndex >> 3)];
+					GfxWord = BURN_ENDIAN_SWAP_INT16(RoadGfx[(RoadGfxTileNum << 8) + (xIndex >> 3)]);
 					Pixel = ((GfxWord >> (7 - (xIndex % 8) + 8)) & 1) * 2 + ((GfxWord >> (7 - (xIndex % 8))) & 1);
 
 					PixPri = (Pixel == 0) ? (0) : (Pri);
@@ -254,8 +254,8 @@ void TC0150RODDraw(INT32 yOffs, INT32 pOffs, INT32 Type, INT32 RoadTrans, INT32 
 		PalLOffs = (RoadBClipL & 0x1000) >> 11;
 		xOffset  =  RoadBBodyCtrl & 0x7ff;
 		PalOffs  = (RoadBBodyCtrl & 0x1800) >> 11;
-		ColBank  = (RoadRam[RoadRam2Index + 3] & 0xf000) >> 10;
-		RoadGfxTileNum = RoadRam[RoadRam2Index + 3] & 0x3ff;
+		ColBank  = (BURN_ENDIAN_SWAP_INT16(RoadRam[RoadRam2Index + 3]) & 0xf000) >> 10;
+		RoadGfxTileNum = BURN_ENDIAN_SWAP_INT16(RoadRam[RoadRam2Index + 3]) & 0x3ff;
 		RightOver = 0;
 		LeftOver = 0;
 
@@ -303,7 +303,7 @@ void TC0150RODDraw(INT32 yOffs, INT32 pOffs, INT32 Type, INT32 RoadTrans, INT32 
 
 			if (DrawTopRoadLine && RoadGfxTileNum && (Begin < End)) {
 				for (i = Begin; i < End; i++) {
-					GfxWord = RoadGfx[(RoadGfxTileNum << 8) + (xIndex >> 3)];
+					GfxWord = BURN_ENDIAN_SWAP_INT16(RoadGfx[(RoadGfxTileNum << 8) + (xIndex >> 3)]);
 					Pixel = ((GfxWord >> (7 - (xIndex % 8) + 8)) & 1) * 2 + ((GfxWord >> (7 - (xIndex % 8))) & 1);
 
 					if ((Pixel) || !(RoadTrans)) {
@@ -337,7 +337,7 @@ void TC0150RODDraw(INT32 yOffs, INT32 pOffs, INT32 Type, INT32 RoadTrans, INT32 
 
 				if (LineNeedsDrawing) {
 					for (i = LeftEdge; i >= 0; i--)	{
-						GfxWord = RoadGfx[(RoadGfxTileNum << 8) + (xIndex >> 3)];
+						GfxWord = BURN_ENDIAN_SWAP_INT16(RoadGfx[(RoadGfxTileNum << 8) + (xIndex >> 3)]);
 						Pixel = ((GfxWord >> (7 - (xIndex % 8) + 8)) & 1) * 2 + ((GfxWord >> (7 - (xIndex % 8))) & 1);
 
 						PixPri = (Pixel == 0) ? (0) : (Pri);
@@ -367,7 +367,7 @@ void TC0150RODDraw(INT32 yOffs, INT32 pOffs, INT32 Type, INT32 RoadTrans, INT32 
 
 			if (DrawTopRoadLine) {
 				for (i = RightEdge; i < nScreenWidth; i++) {
-					GfxWord = RoadGfx[(RoadGfxTileNum << 8) + (xIndex >> 3)];
+					GfxWord = BURN_ENDIAN_SWAP_INT16(RoadGfx[(RoadGfxTileNum << 8) + (xIndex >> 3)]);
 					Pixel = ((GfxWord >> (7 - (xIndex % 8) + 8)) & 1) * 2 + ((GfxWord >> (7 - (xIndex % 8))) & 1);
 
 					PixPri = (Pixel == 0) ? (0) : (Pri);

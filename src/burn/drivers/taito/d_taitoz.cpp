@@ -4932,9 +4932,9 @@ inline static UINT32 CalcCol(UINT16 nColour)
 {
 	INT32 r, g, b;
 
-	r = pal5bit(nColour >>  0);
-	g = pal5bit(nColour >>  5);
-	b = pal5bit(nColour >> 10);
+	r = pal5bit(BURN_ENDIAN_SWAP_INT16(nColour) >>  0);
+	g = pal5bit(BURN_ENDIAN_SWAP_INT16(nColour) >>  5);
+	b = pal5bit(BURN_ENDIAN_SWAP_INT16(nColour) >> 10);
 
 	return BurnHighCol(r, g, b, 0);
 }
@@ -5044,7 +5044,7 @@ static void AquajackRenderSprites(INT32 PriorityDraw)
 	INT32 SpriteChunk, MapOffset, Code, j, k, px, py;
 	
 	for (Offset = 0x200 - 4; Offset >= 0; Offset -= 4) {
-		Data = SpriteRam[Offset + 1];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
 		Priority = (Data & 0x8000) >> 15;
 		
 		if (Priority != 0 && Priority != 1) bprintf(PRINT_NORMAL, _T("Unused Priority %x\n"), Priority);
@@ -5053,16 +5053,16 @@ static void AquajackRenderSprites(INT32 PriorityDraw)
 		xFlip = (Data & 0x4000) >> 14;
 		x = Data & 0x1ff;
 
-		Data = SpriteRam[Offset + 3];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]);
 		yFlip = (Data & 0x8000) >> 15;
 		Tile = Data & 0x1fff;
 		if (!Tile) continue;
 		
-		Data = SpriteRam[Offset + 0];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 0]);
 		yZoom = (Data & 0x7e00) >> 9;
 		y = Data & 0x1ff;
 		
-		Data = SpriteRam[Offset + 2];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
 		Colour = (Data & 0xff00) >> 8;
 		xZoom = (Data & 0x3f);
 
@@ -5083,7 +5083,7 @@ static void AquajackRenderSprites(INT32 PriorityDraw)
 			px = xFlip ? (3 - k) : k;
 			py = yFlip ? (7 - j) : j;
 
-			Code = SpriteMap[MapOffset + px + (py << 2)];
+			Code = BURN_ENDIAN_SWAP_INT16(SpriteMap[MapOffset + px + (py << 2)]);
 			Code &= (TaitoNumSpriteA - 1);
 
 			xCur = x + ((k * xZoom) / 4);
@@ -5111,7 +5111,7 @@ static void BsharkRenderSprites(INT32 PriorityDraw, INT32 yOffset, INT32 SpriteR
 	INT32 SpriteChunk, MapOffset, Code, j, k, px, py;
 	
 	for (Offset = 0; Offset < SpriteRamSize - 4; Offset += 4) {
-		Data = SpriteRam[Offset + 1];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
 		Priority = (Data & 0x8000) >> 15;
 		
 		if (Priority != 0 && Priority != 1) bprintf(PRINT_NORMAL, _T("Unused Priority %x\n"), Priority);
@@ -5120,15 +5120,15 @@ static void BsharkRenderSprites(INT32 PriorityDraw, INT32 yOffset, INT32 SpriteR
 		Colour = (Data & 0x7f80) >> 7;
 		xZoom = (Data & 0x3f);
 		
-		Data = SpriteRam[Offset + 3];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]);
 		Tile = Data & 0x1fff;
 		if (!Tile) continue;
 				
-		Data = SpriteRam[Offset + 0];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 0]);
 		yZoom = (Data & 0x7e00) >> 9;
 		y = Data & 0x1ff;
 
-		Data = SpriteRam[Offset + 2];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
 		yFlip = (Data & 0x8000) >> 15;
 		xFlip = (Data & 0x4000) >> 14;
 		x = Data & 0x1ff;
@@ -5151,7 +5151,7 @@ static void BsharkRenderSprites(INT32 PriorityDraw, INT32 yOffset, INT32 SpriteR
 			px = xFlip ? (3 - k) : k;
 			py = yFlip ? (7 - j) : j;
 
-			Code = SpriteMap[MapOffset + px + (py << 2)];
+			Code = BURN_ENDIAN_SWAP_INT16(SpriteMap[MapOffset + px + (py << 2)]);
 			Code &= (TaitoNumSpriteA - 1);
 			
 			xCur = x + ((k * xZoom) / 4);
@@ -5178,7 +5178,7 @@ static void ChasehqRenderSprites(INT32 PriorityDraw)
 	INT32 SpriteChunk, MapOffset, Code, j, k, px, py;
 	
 	for (Offset = 0; Offset < 0x400; Offset += 4) {
-		Data = SpriteRam[Offset + 1];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
 		Priority = (Data & 0x8000) >> 15;
 		
 		if (Priority != 0 && Priority != 1) bprintf(PRINT_NORMAL, _T("Unused Priority %x\n"), Priority);
@@ -5187,15 +5187,15 @@ static void ChasehqRenderSprites(INT32 PriorityDraw)
 		Colour = (Data & 0x7f80) >> 7;
 		xZoom = (Data & 0x7f);
 		
-		Data = SpriteRam[Offset + 3];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]);
 		Tile = Data & 0x7ff;
 		if (!Tile) continue;
 		
-		Data = SpriteRam[Offset + 0];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 0]);
 		yZoom = (Data & 0xfe00) >> 9;
 		y = Data & 0x1ff;
 				
-		Data = SpriteRam[Offset + 2];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
 		yFlip = (Data & 0x8000) >> 15;
 		xFlip = (Data & 0x4000) >> 14;
 		x = Data & 0x1ff;
@@ -5219,7 +5219,7 @@ static void ChasehqRenderSprites(INT32 PriorityDraw)
 				px = xFlip ? (7 - k) : k;
 				py = yFlip ? (7 - j) : j;
 				
-				Code = SpriteMap[MapOffset + px + (py << 3)];
+				Code = BURN_ENDIAN_SWAP_INT16(SpriteMap[MapOffset + px + (py << 3)]);
 				Code &= (TaitoNumSpriteA - 1);
 				
 				xCur = x + ((k * xZoom) / 8);
@@ -5242,7 +5242,7 @@ static void ChasehqRenderSprites(INT32 PriorityDraw)
 				px = xFlip ? (3 - k) : k;
 				py = yFlip ? (7 - j) : j;
 				
-				Code = SpriteMap[MapOffset + px + (py << 2)];
+				Code = BURN_ENDIAN_SWAP_INT16(SpriteMap[MapOffset + px + (py << 2)]);
 				Code &= (TaitoNumSpriteB - 1);
 				
 				xCur = x + ((k * xZoom) / 4);
@@ -5265,7 +5265,7 @@ static void ChasehqRenderSprites(INT32 PriorityDraw)
 				px = xFlip ? (1 - k) : k;
 				py = yFlip ? (7 - j) : j;
 				
-				Code = SpriteMap[MapOffset + px + (py << 1)];
+				Code = BURN_ENDIAN_SWAP_INT16(SpriteMap[MapOffset + px + (py << 1)]);
 				Code &= (TaitoNumSpriteB - 1);
 				
 				xCur = x + ((k * xZoom) / 2);
@@ -5292,7 +5292,7 @@ static void ContcircRenderSprites(INT32 PriorityDraw, INT32 VisibleYOffset)
 	INT32 SpriteChunk, MapOffset, Code, j, k, px, py;
 	
 	for (Offset = 0x380 - 4; Offset >= 0; Offset -= 4) {
-		Data = SpriteRam[Offset + 2];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
 		Priority = (Data & 0x8000) >> 15;
 			
 		if (Priority != 0 && Priority != 1) bprintf(PRINT_NORMAL, _T("Unused Priority %x\n"), Priority);
@@ -5302,15 +5302,15 @@ static void ContcircRenderSprites(INT32 PriorityDraw, INT32 VisibleYOffset)
 		yFlip = (Data & 0x2000) >> 13;
 		x = Data & 0x1ff;
 		
-		Data = SpriteRam[Offset + 1];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
 		Tile = Data & 0x7ff;
 		if (!Tile) continue;
 		
-		Data = SpriteRam[Offset + 0];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 0]);
 		yZoom = (Data & 0xfe00) >> 9;
 		y = Data & 0x1ff;
 		
-		Data = SpriteRam[Offset + 3];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]);
 		Colour = (Data & 0xff00) >> 8;
 		xZoom = (Data & 0x7f);		
 
@@ -5332,7 +5332,7 @@ static void ContcircRenderSprites(INT32 PriorityDraw, INT32 VisibleYOffset)
 			px = xFlip ? (7 - k) : k;
 			py = yFlip ? (15 - j) : j;
 
-			Code = SpriteMap[MapOffset + px + (py << 3)];
+			Code = BURN_ENDIAN_SWAP_INT16(SpriteMap[MapOffset + px + (py << 3)]);
 			Code &= (TaitoNumSpriteA - 1);
 
 			xCur = x + ((k * xZoom) / 8);
@@ -5360,7 +5360,7 @@ static void SciRenderSprites(INT32 PriorityDraw, INT32 yOffs)
 	StartOffs = (SciSpriteFrame & 1) ? 0x800 : 0;
 	
 	for (Offset = StartOffs; Offset < StartOffs + 0x800; Offset += 4) {
-		Data = SpriteRam[Offset + 1];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
 		Priority = (Data & 0x8000) >> 15;
 		
 		if (Priority != 0 && Priority != 1) bprintf(PRINT_NORMAL, _T("Unused Priority %x\n"), Priority);
@@ -5369,15 +5369,15 @@ static void SciRenderSprites(INT32 PriorityDraw, INT32 yOffs)
 		Colour = (Data & 0x7f80) >> 7;
 		xZoom = (Data & 0x3f);
 		
-		Data = SpriteRam[Offset + 3];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]);
 		Tile = Data & 0x1fff;
 		if (!Tile) continue;
 		
-		Data = SpriteRam[Offset + 0];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 0]);
 		yZoom = (Data & 0x7e00) >> 9;
 		y = Data & 0x1ff;
 
-		Data = SpriteRam[Offset + 2];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
 		yFlip = (Data & 0x8000) >> 15;
 		xFlip = (Data & 0x4000) >> 14;
 		x = Data & 0x1ff;
@@ -5400,7 +5400,7 @@ static void SciRenderSprites(INT32 PriorityDraw, INT32 yOffs)
 			px = xFlip ? (3-k) : k;
 			py = yFlip ? (7-j) : j;
 
-			Code = SpriteMap[MapOffset + px + (py << 2)];
+			Code = BURN_ENDIAN_SWAP_INT16(SpriteMap[MapOffset + px + (py << 2)]);
 			Code &= (TaitoNumSpriteA - 1);
 
 			xCur = x + ((k * xZoom) / 4);
@@ -5426,7 +5426,7 @@ static void SpacegunRenderSprites(INT32 PriorityDraw)
 	INT32 SpriteChunk, MapOffset, Code, j, k, px, py;
 	
 	for (Offset = 0x300 - 4; Offset >= 0; Offset -= 4) {
-		Data = SpriteRam[Offset + 1];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
 		Priority = (Data & 0x8000) >> 15;
 		
 		if (Priority != 0 && Priority != 1) bprintf(PRINT_NORMAL, _T("Unused Priority %x\n"), Priority);
@@ -5435,16 +5435,16 @@ static void SpacegunRenderSprites(INT32 PriorityDraw)
 		xFlip = (Data & 0x4000) >> 14;
 		x = Data & 0x1ff;
 
-		Data = SpriteRam[Offset + 3];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]);
 		yFlip = (Data & 0x8000) >> 15;
 		Tile = Data & 0x1fff;
 		if (!Tile) continue;
 		
-		Data = SpriteRam[Offset + 0];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 0]);
 		yZoom = (Data & 0xfe00) >> 9;
 		y = Data & 0x1ff;
 		
-		Data = SpriteRam[Offset + 2];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
 		Colour = (Data & 0xff00) >> 8;
 		xZoom = (Data & 0x7f);
 
@@ -5465,7 +5465,7 @@ static void SpacegunRenderSprites(INT32 PriorityDraw)
 			px = xFlip ? (3 - k) : k;
 			py = yFlip ? (7 - j) : j;
 
-			Code = SpriteMap[MapOffset + px + (py << 2)];
+			Code = BURN_ENDIAN_SWAP_INT16(SpriteMap[MapOffset + px + (py << 2)]);
 			Code &= (TaitoNumSpriteA - 1);			
 
 			xCur = x + ((k * xZoom) / 4);

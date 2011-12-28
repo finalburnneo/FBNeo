@@ -600,8 +600,8 @@ void __fastcall Superchs68K1WriteLong(UINT32 a, UINT32 d)
 		UINT16 *Ram = (UINT16*)TaitoSpriteRam;
 		INT32 Offset = (a - 0x140000) >> 1;
 		
-		Ram[Offset + 0] = d & 0xffff;
-		Ram[Offset + 1] = d >> 16;
+		Ram[Offset + 0] = BURN_ENDIAN_SWAP_INT32(d) & 0xffff;
+		Ram[Offset + 1] = BURN_ENDIAN_SWAP_INT32(d) >> 16;
 		return;
 	}
 	
@@ -799,9 +799,9 @@ inline static UINT32 CalcCol(UINT32 nColour)
 {
 	INT32 r, g, b;
 
-	r = (nColour & 0x000000ff) >> 0;
-	b = (nColour & 0x00ff0000) >> 16;
-	g = (nColour & 0xff000000) >> 24;
+	r = (BURN_ENDIAN_SWAP_INT32(nColour) & 0x000000ff) >> 0;
+	b = (BURN_ENDIAN_SWAP_INT32(nColour) & 0x00ff0000) >> 16;
+	g = (BURN_ENDIAN_SWAP_INT32(nColour) & 0xff000000) >> 24;
 
 	return BurnHighCol(r, g, b, 0);
 }
@@ -915,17 +915,17 @@ static void SuperchsMakeSpriteList(INT32 xOffset, INT32 yOffset)
 	memset(SpriteList, 0, 0x4000 * sizeof(SpriteEntry));
 
 	for (Offset = ((0x2000 / 4) - 4); Offset >= 0; Offset -= 4) {
-		Data     = SpriteRam[Offset + 0];
+		Data     = BURN_ENDIAN_SWAP_INT32(SpriteRam[Offset + 0]);
 		xFlip    = (Data & 0x00800000) >> 23;
 		xZoom    = (Data & 0x007f0000) >> 16;
 		TileNum  = (Data & 0x00007fff);
 		
-		Data     = SpriteRam[Offset + 2];
+		Data     = BURN_ENDIAN_SWAP_INT32(SpriteRam[Offset + 2]);
 		Priority = (Data & 0x000c0000) >> 18;
 		Colour   = (Data & 0x0003fc00) >> 10;
 		x        = (Data & 0x000003ff);
 
-		Data     = SpriteRam[Offset + 3];
+		Data     = BURN_ENDIAN_SWAP_INT32(SpriteRam[Offset + 3]);
 		DblSize  = (Data & 0x00040000) >> 18;
 		yFlip    = (Data & 0x00020000) >> 17;
 		yZoom    = (Data & 0x0001fc00) >> 10;
@@ -961,7 +961,7 @@ static void SuperchsMakeSpriteList(INT32 xOffset, INT32 yOffset)
 			if (xFlip)  px = Dimension - 1 - k;
 			if (yFlip)  py = Dimension - 1 - j;
 
-			Code = SpriteMap[MapOffset + px + (py << (DblSize + 1))];
+			Code = BURN_ENDIAN_SWAP_INT16(SpriteMap[MapOffset + px + (py << (DblSize + 1))]);
 
 			if (Code == 0xffff) {
 				BadChunks += 1;

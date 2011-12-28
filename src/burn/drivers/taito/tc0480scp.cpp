@@ -438,8 +438,8 @@ static void TC0480SCPRenderLayer01(INT32 Layer, INT32 Opaque, UINT8 *pSrc)
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < Columns; mx++) {
 			Offset = 2 * TileIndex;
-			Attr = VideoRam[Offset];
-			Code = VideoRam[Offset + 1] & (TC0480SCPTilesNum - 1);
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset]);
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 1]) & (TC0480SCPTilesNum - 1);
 			Colour = Attr & 0xff;
 			Flip = (Attr & 0xc000) >> 14;
 			xFlip = (Flip >> 0) & 0x01;
@@ -497,7 +497,7 @@ static void TC0480SCPRenderLayer01(INT32 Layer, INT32 Opaque, UINT8 *pSrc)
 
 		RowIndex = ySrcIndex;
 
-		xIndex = sx - ((ScrollRam[RowIndex] << 16)) - ((ScrollRam[RowIndex + 0x800] << 8) & 0xffff);
+		xIndex = sx - ((BURN_ENDIAN_SWAP_INT16(ScrollRam[RowIndex]) << 16)) - ((BURN_ENDIAN_SWAP_INT16(ScrollRam[RowIndex + 0x800]) << 8) & 0xffff);
 
 		Src16 = pSrcTileMap + (ySrcIndex * Columns * 16);
 		Dst16 = ScanLine;
@@ -582,8 +582,8 @@ static void TC0480SCPRenderLayer23(INT32 Layer, INT32 Opaque, UINT8 *pSrc)
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < Columns; mx++) {
 			Offset = 2 * TileIndex;
-			Attr = VideoRam[Offset];
-			Code = VideoRam[Offset + 1] & (TC0480SCPTilesNum - 1);
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset]);
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 1]) & (TC0480SCPTilesNum - 1);
 			Colour = Attr & 0xff;
 			Flip = (Attr & 0xc000) >> 14;
 			xFlip = (Flip >> 0) & 0x01;
@@ -637,17 +637,17 @@ static void TC0480SCPRenderLayer23(INT32 Layer, INT32 Opaque, UINT8 *pSrc)
 	y = 0;
 	
 	do {
-		ySrcIndex = ((yIndex >> 16) + ColumnRam[(y + TC0480SCPYOffset + TC0480SCPYVisOffset) & 0x1ff]) & 0x1ff;
+		ySrcIndex = ((yIndex >> 16) + BURN_ENDIAN_SWAP_INT16(ColumnRam[(y + TC0480SCPYOffset + TC0480SCPYVisOffset) & 0x1ff])) & 0x1ff;
 
 		RowIndex = ySrcIndex;
 
 		if (TC0480SCPPriReg & (Layer - 1)) {
-			RowZoom = RowZoomRam[RowIndex];
+			RowZoom = BURN_ENDIAN_SWAP_INT16(RowZoomRam[RowIndex]);
 		} else {
 			RowZoom = 0;
 		}
 
-		xIndex = sx - ((ScrollRam[RowIndex] << 16)) - ((ScrollRam[RowIndex + 0x800] << 8) & 0xffff);
+		xIndex = sx - ((BURN_ENDIAN_SWAP_INT16(ScrollRam[RowIndex]) << 16)) - ((BURN_ENDIAN_SWAP_INT16(ScrollRam[RowIndex + 0x800]) << 8) & 0xffff);
 		xIndex -= (-TC0480SCPXOffset - 0x1f + Layer * 4) * ((RowZoom & 0xff) << 8);
 		
 		xStep = xZoom;
@@ -731,7 +731,7 @@ void TC0480SCPRenderCharLayer()
 	
 	for (my = 0; my < 64; my++) {
 		for (mx = 0; mx < 64; mx++) {
-			Attr = VideoRam[TileIndex];
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 			Code = Attr & 0xff;
 			Colour = (Attr & 0x3f00) >> 8;
 			Flip = (Attr & 0xc000) >> 14;

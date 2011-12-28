@@ -712,9 +712,9 @@ inline static INT32 CalcCol(INT32 nColour)
 {
 	INT32 r, g, b;
 
-	r = (nColour & 0x000000ff) >> 0;
-	g = (nColour & 0xff000000) >> 24;
-	b = (nColour & 0x00ff0000) >> 16;
+	r = (BURN_ENDIAN_SWAP_INT32(nColour) & 0x000000ff) >> 0;
+	g = (BURN_ENDIAN_SWAP_INT32(nColour) & 0xff000000) >> 24;
+	b = (BURN_ENDIAN_SWAP_INT32(nColour) & 0x00ff0000) >> 16;
 
 	return BurnHighCol(r, g, b, 0);
 }

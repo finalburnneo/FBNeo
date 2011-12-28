@@ -1219,9 +1219,9 @@ inline static UINT32 CalcCol(UINT16 nColour)
 {
 	INT32 r, g, b;
 
-	r = pal5bit(nColour >> 10);
-	g = pal5bit(nColour >>  5);
-	b = pal5bit(nColour >>  0);
+	r = pal5bit(BURN_ENDIAN_SWAP_INT16(nColour) >> 10);
+	g = pal5bit(BURN_ENDIAN_SWAP_INT16(nColour) >>  5);
+	b = pal5bit(BURN_ENDIAN_SWAP_INT16(nColour) >>  0);
 
 	return BurnHighCol(r, g, b, 0);
 }
@@ -1244,15 +1244,15 @@ static void TaitoXDrawBgSprites()
 	
 	INT32 Offs, Col, x, y, Code, Colour, xFlip, yFlip, sx, sy, yOffs;
 
-	INT32 Ctrl = SpriteRam[0x300];
-	INT32 Ctrl2 = SpriteRam[0x301];
+	INT32 Ctrl = BURN_ENDIAN_SWAP_INT16(SpriteRam[0x300]);
+	INT32 Ctrl2 = BURN_ENDIAN_SWAP_INT16(SpriteRam[0x301]);
 
 	INT32 Flip = Ctrl & 0x40;
 	INT32 NumCol = Ctrl2 & 0x000f;
 
 	UINT16 *src = SpriteRam2 + (((Ctrl2 ^ (~Ctrl2 << 1)) & 0x40) ? 0x1000 : 0 );
 
-	INT32 Upper = (SpriteRam[0x302] & 0xff) +	(SpriteRam[0x303] & 0xff) * 256;
+	INT32 Upper = (BURN_ENDIAN_SWAP_INT16(SpriteRam[0x302]) & 0xff) + (BURN_ENDIAN_SWAP_INT16(SpriteRam[0x303]) & 0xff) * 256;
 	INT32 Col0;
 	switch (Ctrl & 0x0f) {
 		case 0x01: Col0	= 0x4; break;
@@ -1266,12 +1266,12 @@ static void TaitoXDrawBgSprites()
 	if (NumCol == 1) NumCol = 16;
 	
 	for (Col = 0; Col < NumCol; Col++) {
-		x = SpriteRam[(Col * 0x20 + 0x08 + 0x400) / 2] & 0xff;
-		y = SpriteRam[(Col * 0x20 + 0x00 + 0x400) / 2] & 0xff;
+		x = BURN_ENDIAN_SWAP_INT16(SpriteRam[(Col * 0x20 + 0x08 + 0x400) / 2]) & 0xff;
+		y = BURN_ENDIAN_SWAP_INT16(SpriteRam[(Col * 0x20 + 0x00 + 0x400) / 2]) & 0xff;
 		
 		for (Offs = 0; Offs < 0x20; Offs++) {
-			Code = src[((Col + Col0) & 0x0f) * 0x20 + Offs + 0x400];
-			Colour = src[((Col + Col0) & 0x0f) * 0x20 + Offs + 0x600];
+			Code = BURN_ENDIAN_SWAP_INT16(src[((Col + Col0) & 0x0f) * 0x20 + Offs + 0x400]);
+			Colour = BURN_ENDIAN_SWAP_INT16(src[((Col + Col0) & 0x0f) * 0x20 + Offs + 0x600]);
 
 			xFlip = Code & 0x8000;
 			yFlip = Code & 0x4000;
@@ -1334,15 +1334,15 @@ static void TaitoXDrawSprites()
 	UINT16 *SpriteRam2 = (UINT16*)TaitoSpriteRam2;
 
 	INT32 Offset, Code, x, y, xFlip, yFlip, Colour;
-	INT32 Ctrl = SpriteRam[0x300];
-	INT32 Ctrl2 = SpriteRam[0x301];
+	INT32 Ctrl = BURN_ENDIAN_SWAP_INT16(SpriteRam[0x300]);
+	INT32 Ctrl2 = BURN_ENDIAN_SWAP_INT16(SpriteRam[0x301]);
 	INT32 Flip = Ctrl & 0x40;
 	UINT16 *src = SpriteRam2 + (((Ctrl2 ^ (~Ctrl2 << 1)) & 0x40) ? 0x1000 : 0);
 	
 	for (Offset = (0x400 - 2) / 2; Offset >= 0; Offset-- ) {
-		Code = src[Offset];
-		x = src[Offset + 0x200];
-		y = SpriteRam[Offset] & 0xff;
+		Code = BURN_ENDIAN_SWAP_INT16(src[Offset]);
+		x = BURN_ENDIAN_SWAP_INT16(src[Offset + 0x200]);
+		y = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset]) & 0xff;
 		xFlip = Code & 0x8000;
 		yFlip = Code & 0x4000;
 

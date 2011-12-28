@@ -326,11 +326,11 @@ void TC0640FIOScan(INT32 nAction);
 	if (a >= start && a <= end) {					\
 		UINT16 *Ram = (UINT16*)TC0100SCNRam[0];			\
 		INT32 Offset = (a - start) >> 1;				\
-		if (Ram[Offset] != d) {					\
+		if (Ram[Offset] != BURN_ENDIAN_SWAP_INT16(d)) {					\
 			TC0100SCNBgLayerUpdate[0] = 1;			\
 			TC0100SCNFgLayerUpdate[0] = 1;			\
 		}							\
-		Ram[Offset] = d;					\
+		Ram[Offset] = BURN_ENDIAN_SWAP_INT16(d);					\
 		return;							\
 	}
 	
@@ -349,11 +349,11 @@ void TC0640FIOScan(INT32 nAction);
 	if (a >= start && a <= end) {					\
 		UINT16 *Ram = (UINT16*)TC0100SCNRam[1];			\
 		INT32 Offset = (a - start) >> 1;				\
-		if (Ram[Offset] != d) {					\
+		if (Ram[Offset] != BURN_ENDIAN_SWAP_INT16(d)) {					\
 			TC0100SCNBgLayerUpdate[1] = 1;			\
 			TC0100SCNFgLayerUpdate[1] = 1;			\
 		}							\
-		Ram[Offset] = d;					\
+		Ram[Offset] = BURN_ENDIAN_SWAP_INT16(d);					\
 		return;							\
 	}
 	
@@ -372,11 +372,11 @@ void TC0640FIOScan(INT32 nAction);
 	if (a >= start && a <= end) {					\
 		UINT16 *Ram = (UINT16*)TC0100SCNRam[2];			\
 		INT32 Offset = (a - start) >> 1;				\
-		if (Ram[Offset] != d) {					\
+		if (Ram[Offset] != BURN_ENDIAN_SWAP_INT16(d)) {					\
 			TC0100SCNBgLayerUpdate[2] = 1;			\
 			TC0100SCNFgLayerUpdate[2] = 1;			\
 		}							\
-		Ram[Offset] = d;					\
+		Ram[Offset] = BURN_ENDIAN_SWAP_INT16(d);					\
 		return;							\
 	}
 	
@@ -391,8 +391,8 @@ void TC0640FIOScan(INT32 nAction);
 			TC0100SCNBgLayerUpdate[1] = 1;			\
 			TC0100SCNFgLayerUpdate[1] = 1;			\
 		}							\
-		TC0100SCNRam[0][Offset] = d;				\
-		TC0100SCNRam[1][Offset] = d;				\
+		TC0100SCNRam[0][Offset] = BURN_ENDIAN_SWAP_INT16(d);				\
+		TC0100SCNRam[1][Offset] = BURN_ENDIAN_SWAP_INT16(d);				\
 		return;							\
 	}
 	
@@ -401,16 +401,16 @@ void TC0640FIOScan(INT32 nAction);
 		UINT16 *Ram0 = (UINT16*)TC0100SCNRam[0];		\
 		UINT16 *Ram1 = (UINT16*)TC0100SCNRam[1];		\
 		INT32 Offset = (a - start) >> 1;				\
-		if (Ram0[Offset] != d) {				\
+		if (Ram0[Offset] != BURN_ENDIAN_SWAP_INT16(d)) {				\
 			TC0100SCNBgLayerUpdate[0] = 1;			\
 			TC0100SCNFgLayerUpdate[0] = 1;			\
 		}							\
-		if (Ram1[Offset] != d) {				\
+		if (Ram1[Offset] != BURN_ENDIAN_SWAP_INT16(d)) {				\
 			TC0100SCNBgLayerUpdate[1] = 1;			\
 			TC0100SCNFgLayerUpdate[1] = 1;			\
 		}							\
-		Ram0[Offset] = d;					\
-		Ram1[Offset] = d;					\
+		Ram0[Offset] = BURN_ENDIAN_SWAP_INT16(d);					\
+		Ram1[Offset] = BURN_ENDIAN_SWAP_INT16(d);					\
 		return;							\
 	}
 
@@ -441,21 +441,21 @@ void TC0640FIOScan(INT32 nAction);
 		UINT16 *Ram1 = (UINT16*)TC0100SCNRam[1];		\
 		UINT16 *Ram2 = (UINT16*)TC0100SCNRam[2];		\
 		INT32 Offset = (a - start) >> 1;				\
-		if (Ram0[Offset] != d) {				\
+		if (Ram0[Offset] != BURN_ENDIAN_SWAP_INT16(d)) {				\
 			TC0100SCNBgLayerUpdate[0] = 1;			\
 			TC0100SCNFgLayerUpdate[0] = 1;			\
 		}							\
-		if (Ram1[Offset] != d) {				\
+		if (Ram1[Offset] != BURN_ENDIAN_SWAP_INT16(d)) {				\
 			TC0100SCNBgLayerUpdate[1] = 1;			\
 			TC0100SCNFgLayerUpdate[1] = 1;			\
 		}							\
-		if (Ram2[Offset] != d) {				\
+		if (Ram2[Offset] != BURN_ENDIAN_SWAP_INT16(d)) {				\
 			TC0100SCNBgLayerUpdate[2] = 1;			\
 			TC0100SCNFgLayerUpdate[2] = 1;			\
 		}							\
-		Ram0[Offset] = d;					\
-		Ram1[Offset] = d;					\
-		Ram2[Offset] = d;					\
+		Ram0[Offset] = BURN_ENDIAN_SWAP_INT16(d);					\
+		Ram1[Offset] = BURN_ENDIAN_SWAP_INT16(d);					\
+		Ram2[Offset] = BURN_ENDIAN_SWAP_INT16(d);					\
 		return;							\
 	}
 

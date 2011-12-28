@@ -9359,9 +9359,9 @@ inline static INT32 CalcCol(UINT16 nColour)
 {
 	INT32 r, g, b;
 
-	r = pal4bit(nColour >> 12);
-	g = pal4bit(nColour >>  8);
-	b = pal4bit(nColour >>  4);
+	r = pal4bit(BURN_ENDIAN_SWAP_INT16(nColour) >> 12);
+	g = pal4bit(BURN_ENDIAN_SWAP_INT16(nColour) >>  8);
+	b = pal4bit(BURN_ENDIAN_SWAP_INT16(nColour) >>  4);
 
 	return BurnHighCol(r, g, b, 0);
 }
@@ -9370,9 +9370,9 @@ inline static INT32 QzquestCalcCol(UINT16 nColour)
 {
 	INT32 r, g, b;
 
-	r = pal5bit(nColour >> 10);
-	g = pal5bit(nColour >>  5);
-	b = pal5bit(nColour >>  0);
+	r = pal5bit(BURN_ENDIAN_SWAP_INT16(nColour) >> 10);
+	g = pal5bit(BURN_ENDIAN_SWAP_INT16(nColour) >>  5);
+	b = pal5bit(BURN_ENDIAN_SWAP_INT16(nColour) >>  0);
 
 	return BurnHighCol(r, g, b, 0);
 }
@@ -9615,49 +9615,49 @@ void TaitoF2MakeSpriteList()
 		INT32 Offs = Off + Area;
 
 		if (SpriteRamBuffered[(Offs + 6) / 2] & 0x8000) {
-			Disabled = SpriteRamBuffered[(Offs + 10) / 2] & 0x1000;
-			TaitoF2SpritesFlipScreen = SpriteRamBuffered[(Offs + 10) / 2] & 0x2000;
+			Disabled = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 10) / 2]) & 0x1000;
+			TaitoF2SpritesFlipScreen = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 10) / 2]) & 0x2000;
 
 			xOffset = TaitoXOffset;
 			if (TaitoF2SpritesFlipScreen) xOffset = -TaitoXOffset;
 
 			if (Footchmp) {
-				Area = 0x8000 * (SpriteRamBuffered[(Offs + 6) / 2] & 0x0001);
+				Area = 0x8000 * (BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 6) / 2]) & 0x0001);
 			} else {
-				Area = 0x8000 * (SpriteRamBuffered[(Offs + 10) / 2] & 0x0001);
+				Area = 0x8000 * (BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 10) / 2]) & 0x0001);
 			}
 		}
 
-		if ((SpriteRamBuffered[(Offs + 4) / 2] & 0xf000) == 0xa000) {
-			MasterScrollX = SpriteRamBuffered[(Offs + 4) / 2] & 0xfff;
+		if ((BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 4) / 2]) & 0xf000) == 0xa000) {
+			MasterScrollX = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 4) / 2]) & 0xfff;
 			if (MasterScrollX >= 0x800) MasterScrollX -= 0x1000;
 			
-			MasterScrollY = SpriteRamBuffered[(Offs + 6) / 2] & 0xfff;
+			MasterScrollY = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 6) / 2]) & 0xfff;
 			if (MasterScrollY >= 0x800) MasterScrollY -= 0x1000;
 		}
 
-		if ((SpriteRamBuffered[(Offs + 4) / 2] & 0xf000) == 0x5000) {
-			xScroll1 = SpriteRamBuffered[(Offs + 4) / 2] & 0xfff;
+		if ((BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 4) / 2]) & 0xf000) == 0x5000) {
+			xScroll1 = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 4) / 2]) & 0xfff;
 			if (xScroll1 >= 0x800) xScroll1 -= 0x1000;
 
-			yScroll1 = SpriteRamBuffered[(Offs + 6) / 2] & 0xfff;
+			yScroll1 = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 6) / 2]) & 0xfff;
 			if (yScroll1 >= 0x800) yScroll1 -= 0x1000;
 		}
 
 		if (Disabled)
 			continue;
 
-		SpriteData = SpriteRamBuffered[(Offs + 8) / 2];
+		SpriteData = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 8) / 2]);
 
 		SpriteCont = (SpriteData & 0xff00) >> 8;
 
 		if ((SpriteCont & 0x08) != 0) {
 			if (BigSprite == 0) {
-				xLatch = SpriteRamBuffered[(Offs + 4) / 2] & 0xfff;
-				yLatch = SpriteRamBuffered[(Offs + 6) / 2] & 0xfff;
+				xLatch = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 4) / 2]) & 0xfff;
+				yLatch = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 6) / 2]) & 0xfff;
 				xNum = 0;
 				yNum = 0;
-				ZoomWord = SpriteRamBuffered[(Offs + 2) / 2];
+				ZoomWord = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 2) / 2]);
 				yZoomLatch = (ZoomWord >> 8) & 0xff;
 				xZoomLatch = (ZoomWord) & 0xff;
 				BigSprite = 1;
@@ -9669,7 +9669,7 @@ void TaitoF2MakeSpriteList()
 		if ((SpriteCont & 0x04) == 0) Colour = SpriteData & 0xff;
 
 		if (BigSprite == 0 || (SpriteCont & 0xf0) == 0) {
-			x = SpriteRamBuffered[(Offs + 4) / 2];
+			x = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 4) / 2]);
 
 			if (x & 0x8000) {
 				xScroll = -xOffset - 0x60;
@@ -9683,7 +9683,7 @@ void TaitoF2MakeSpriteList()
 			}
 			
 			x &= 0xfff;
-			y = SpriteRamBuffered[(Offs + 6) / 2] & 0xfff;
+			y = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[(Offs + 6) / 2]) & 0xfff;
 
 			xCurrent = x;
 			yCurrent = y;
@@ -9734,26 +9734,26 @@ void TaitoF2MakeSpriteList()
 		if (ExtOffs >= 0x8000) ExtOffs -= 0x4000;
 
 		if (TaitoF2SpriteType == 0) {
-			Code = SpriteRamBuffered[Offs / 2] & 0x1fff;
+			Code = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[Offs / 2]) & 0x1fff;
 			i = (Code & 0x1c00) >> 10;
 			Code = TaitoF2SpriteBank[i] + (Code & 0x3ff);
 		}
 
 		if (TaitoF2SpriteType == 1) {
-			Code = SpriteRamBuffered[Offs / 2] & 0x3ff;
-			i = (SpriteExtension[(ExtOffs >> 4)] & 0x3f) << 10;
+			Code = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[Offs / 2]) & 0x3ff;
+			i = (BURN_ENDIAN_SWAP_INT16(SpriteExtension[(ExtOffs >> 4)]) & 0x3f) << 10;
 			Code = (i | Code);
 		}
 
 		if (TaitoF2SpriteType == 2) {
-			Code = SpriteRamBuffered[Offs / 2] & 0xff;
-			i = (SpriteExtension[(ExtOffs >> 4)] & 0xff00);
+			Code = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[Offs / 2]) & 0xff;
+			i = (BURN_ENDIAN_SWAP_INT16(SpriteExtension[(ExtOffs >> 4)]) & 0xff00);
 			Code = (i | Code);
 		}
 
 		if (TaitoF2SpriteType == 3) {
-			Code = SpriteRamBuffered[Offs / 2] & 0xff;
-			i = (SpriteExtension[ExtOffs >> 4] & 0xff) << 8;
+			Code = BURN_ENDIAN_SWAP_INT16(SpriteRamBuffered[Offs / 2]) & 0xff;
+			i = (BURN_ENDIAN_SWAP_INT16(SpriteExtension[ExtOffs >> 4]) & 0xff) << 8;
 			Code = (i | Code);
 		}
 	

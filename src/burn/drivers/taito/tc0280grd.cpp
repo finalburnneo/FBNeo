@@ -47,7 +47,7 @@ static void RozRender(UINT32 xStart, UINT32 yStart, INT32 xxInc, INT32 xyInc, IN
 	if (xxInc == (1 << 16) && xyInc == 0 && yxInc == 0 && yyInc == (1 << 16)) {
 		for (my = 0; my < 64; my++) {
 			for (mx = 0; mx < 64; mx++) {
-				Attr = VideoRam[TileIndex];
+				Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 				Code = (Attr & 0x3fff);
 				Colour = ((Attr & 0xc000) >> 14) + TC0280GRDBaseColour;
 			
@@ -77,7 +77,7 @@ static void RozRender(UINT32 xStart, UINT32 yStart, INT32 xxInc, INT32 xyInc, IN
 	
 	for (my = 0; my < 64; my++) {
 		for (mx = 0; mx < 64; mx++) {
-			Attr = VideoRam[TileIndex];
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 			Code = (Attr & 0x3fff);
 			Colour = ((Attr & 0xc000) >> 14) + TC0280GRDBaseColour;
 			

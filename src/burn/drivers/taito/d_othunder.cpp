@@ -948,7 +948,7 @@ static void OthunderRenderSprites(INT32 PriorityDraw)
 	INT32 BadChunks;
 	
 	for (Offset = 0x300 - 4; Offset >= 0; Offset -= 4) {
-		Data = SpriteRam[Offset + 1];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
 		Priority = (Data & 0x8000) >> 15;
 		
 		if (Priority != 0 && Priority != 1) bprintf(PRINT_NORMAL, _T("Unused Priority %x\n"), Priority);
@@ -957,16 +957,16 @@ static void OthunderRenderSprites(INT32 PriorityDraw)
 		xFlip = (Data & 0x4000) >> 14;
 		x = Data & 0x1ff;
 
-		Data = SpriteRam[Offset + 3];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]);
 		yFlip = (Data & 0x8000) >> 15;
 		Tile = Data & 0x1fff;
 		if (!Tile) continue;
 		
-		Data = SpriteRam[Offset + 0];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 0]);
 		yZoom = (Data & 0xfe00) >> 9;
 		y = Data & 0x1ff;
 		
-		Data = SpriteRam[Offset + 2];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
 		Colour = (Data & 0xff00) >> 8;
 		xZoom = (Data & 0x7f);
 
@@ -989,7 +989,7 @@ static void OthunderRenderSprites(INT32 PriorityDraw)
 			px = xFlip ? (3 - k) : k;
 			py = yFlip ? (7 - j) : j;
 
-			Code = SpriteMap[MapOffset + px + (py << 2)];
+			Code = BURN_ENDIAN_SWAP_INT16(SpriteMap[MapOffset + px + (py << 2)]);
 			Code &= (TaitoNumSpriteA - 1);	
 			
 			if (Code == 0xffff) {

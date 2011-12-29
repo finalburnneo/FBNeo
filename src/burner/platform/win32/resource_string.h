@@ -155,6 +155,9 @@
 #define IDS_SEL_KANEKO					(IDS_STRING +  614)
 #define IDS_SEL_SNES					(IDS_STRING +  616)
 #define IDS_SEL_DATAEAST				(IDS_STRING +  618)
+#define IDS_SEL_CAPCOM_MISC				(IDS_STRING +  620)
+#define IDS_SEL_SETA					(IDS_STRING +  622)
+#define IDS_SEL_TECHNOS					(IDS_STRING +  624)
 
 #define IDS_GENRE						(IDS_STRING +  650)
 #define IDS_GENRE_HORSHOOT				(IDS_STRING +  652)

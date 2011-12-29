@@ -630,7 +630,7 @@ struct BurnDriver BurnDrvBlockout = {
 	"blockout", NULL, NULL, NULL, "1989",
 	"Block Out (set 1)\0", NULL, "Technos + California Dreams", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_PUZZLE, 0,
 	NULL, blockoutRomInfo, blockoutRomName, NULL, NULL, BlockoutInputInfo, BlockoutDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x201,
 	320, 240, 4, 3
@@ -657,7 +657,7 @@ struct BurnDriver BurnDrvBlckout2 = {
 	"blockout2", "blockout", NULL, NULL, "1989",
 	"Block Out (set 2)\0", NULL, "Technos + California Dreams", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_PUZZLE, 0,
 	NULL, blckout2RomInfo, blckout2RomName, NULL, NULL, BlockoutInputInfo, BlockoutDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x201,
 	320, 240, 4, 3
@@ -684,7 +684,7 @@ struct BurnDriver BurnDrvBlckoutj = {
 	"blockoutj", "blockout", NULL, NULL, "1989",
 	"Block Out (Japan)\0", NULL, "Technos + California Dreams", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_PUZZLE, 0,
 	NULL, blckoutjRomInfo, blckoutjRomName, NULL, NULL, BlckoutjInputInfo, BlockoutDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x201,
 	320, 240, 4, 3
@@ -711,7 +711,7 @@ struct BurnDriver BurnDrvAgress = {
 	"agress", NULL, NULL, NULL, "1991",
 	"Agress\0", NULL, "Palco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_PUZZLE, 0,
 	NULL, agressRomInfo, agressRomName, NULL, NULL, BlockoutInputInfo, AgressDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x201,
 	320, 240, 4, 3
@@ -738,7 +738,7 @@ struct BurnDriver BurnDrvAgressb = {
 	"agressb", "agress", NULL, NULL, "2003",
 	"Agress (English bootleg)\0", NULL, "Palco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_PUZZLE, 0,
 	NULL, agressbRomInfo, agressbRomName, NULL, NULL, BlockoutInputInfo, AgressDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x201,
 	320, 240, 4, 3

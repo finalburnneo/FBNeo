@@ -35,69 +35,72 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCrtl);
 static int RomInfoDialog();
 
 // Filter TreeView
-HWND hFilterList			= NULL;
-HTREEITEM hFilterCave			= NULL;
-HTREEITEM hFilterCps1			= NULL;
-HTREEITEM hFilterCps2			= NULL;
-HTREEITEM hFilterCps3			= NULL;
-HTREEITEM hFilterDataeast		= NULL;
-HTREEITEM hFilterGalaxian		= NULL;
-HTREEITEM hFilterIrem			= NULL;
-HTREEITEM hFilterKaneko			= NULL;
-HTREEITEM hFilterKonami			= NULL;
-HTREEITEM hFilterNeogeo			= NULL;
-HTREEITEM hFilterPacman			= NULL;
-HTREEITEM hFilterPgm			= NULL;
-HTREEITEM hFilterPsikyo			= NULL;
-HTREEITEM hFilterSega			= NULL;
-HTREEITEM hFilterTaito			= NULL;
-HTREEITEM hFilterToaplan		= NULL;
-HTREEITEM hFilterMegadrive		= NULL;
-HTREEITEM hFilterSnes			= NULL;
-HTREEITEM hFilterMiscPre90s		= NULL;
+HWND hFilterList					= NULL;
+HTREEITEM hFilterCapcomMisc			= NULL;
+HTREEITEM hFilterCave				= NULL;
+HTREEITEM hFilterCps1				= NULL;
+HTREEITEM hFilterCps2				= NULL;
+HTREEITEM hFilterCps3				= NULL;
+HTREEITEM hFilterDataeast			= NULL;
+HTREEITEM hFilterGalaxian			= NULL;
+HTREEITEM hFilterIrem				= NULL;
+HTREEITEM hFilterKaneko				= NULL;
+HTREEITEM hFilterKonami				= NULL;
+HTREEITEM hFilterNeogeo				= NULL;
+HTREEITEM hFilterPacman				= NULL;
+HTREEITEM hFilterPgm				= NULL;
+HTREEITEM hFilterPsikyo				= NULL;
+HTREEITEM hFilterSega				= NULL;
+HTREEITEM hFilterSeta				= NULL;
+HTREEITEM hFilterTaito				= NULL;
+HTREEITEM hFilterTechnos			= NULL;
+HTREEITEM hFilterToaplan			= NULL;
+HTREEITEM hFilterMiscPre90s			= NULL;
 HTREEITEM hFilterMiscPost90s		= NULL;
-HTREEITEM hFilterBootleg		= NULL;
-HTREEITEM hFilterDemo			= NULL;
-HTREEITEM hFilterHack			= NULL;
-HTREEITEM hFilterHomebrew		= NULL;
-HTREEITEM hFilterPrototype		= NULL;
-HTREEITEM hFilterGenuine		= NULL;
-HTREEITEM hFilterHorshoot		= NULL;
-HTREEITEM hFilterVershoot		= NULL;
-HTREEITEM hFilterScrfight		= NULL;
-HTREEITEM hFilterVsfight		= NULL;
-HTREEITEM hFilterBios			= NULL;
-HTREEITEM hFilterBreakout		= NULL;
-HTREEITEM hFilterCasino			= NULL;
-HTREEITEM hFilterBallpaddle		= NULL;
-HTREEITEM hFilterMaze			= NULL;
-HTREEITEM hFilterMinigames		= NULL;
-HTREEITEM hFilterPinball		= NULL;
-HTREEITEM hFilterPlatform		= NULL;
-HTREEITEM hFilterPuzzle			= NULL;
-HTREEITEM hFilterQuiz			= NULL;
-HTREEITEM hFilterSportsmisc		= NULL;
+HTREEITEM hFilterMegadrive			= NULL;
+HTREEITEM hFilterSnes				= NULL;
+HTREEITEM hFilterBootleg			= NULL;
+HTREEITEM hFilterDemo				= NULL;
+HTREEITEM hFilterHack				= NULL;
+HTREEITEM hFilterHomebrew			= NULL;
+HTREEITEM hFilterPrototype			= NULL;
+HTREEITEM hFilterGenuine			= NULL;
+HTREEITEM hFilterHorshoot			= NULL;
+HTREEITEM hFilterVershoot			= NULL;
+HTREEITEM hFilterScrfight			= NULL;
+HTREEITEM hFilterVsfight			= NULL;
+HTREEITEM hFilterBios				= NULL;
+HTREEITEM hFilterBreakout			= NULL;
+HTREEITEM hFilterCasino				= NULL;
+HTREEITEM hFilterBallpaddle			= NULL;
+HTREEITEM hFilterMaze				= NULL;
+HTREEITEM hFilterMinigames			= NULL;
+HTREEITEM hFilterPinball			= NULL;
+HTREEITEM hFilterPlatform			= NULL;
+HTREEITEM hFilterPuzzle				= NULL;
+HTREEITEM hFilterQuiz				= NULL;
+HTREEITEM hFilterSportsmisc			= NULL;
 HTREEITEM hFilterSportsfootball 	= NULL;
-HTREEITEM hFilterMisc			= NULL;
-HTREEITEM hFilterMahjong		= NULL;
-HTREEITEM hFilterRacing			= NULL;
-HTREEITEM hFilterShoot			= NULL;
+HTREEITEM hFilterMisc				= NULL;
+HTREEITEM hFilterMahjong			= NULL;
+HTREEITEM hFilterRacing				= NULL;
+HTREEITEM hFilterShoot				= NULL;
 HTREEITEM hFilterOtherFamily		= NULL;
-HTREEITEM hFilterMslug			= NULL;
-HTREEITEM hFilterSf			= NULL;
-HTREEITEM hFilterKof			= NULL;
-HTREEITEM hFilterDstlk			= NULL;
-HTREEITEM hFilterFatfury		= NULL;
-HTREEITEM hFilterSamsho			= NULL;
-HTREEITEM hFilter19xx			= NULL;
-HTREEITEM hFilterSonicwi		= NULL;
-HTREEITEM hFilterPwrinst		= NULL;
+HTREEITEM hFilterMslug				= NULL;
+HTREEITEM hFilterSf					= NULL;
+HTREEITEM hFilterKof				= NULL;
+HTREEITEM hFilterDstlk				= NULL;
+HTREEITEM hFilterFatfury			= NULL;
+HTREEITEM hFilterSamsho				= NULL;
+HTREEITEM hFilter19xx				= NULL;
+HTREEITEM hFilterSonicwi			= NULL;
+HTREEITEM hFilterPwrinst			= NULL;
 
-HTREEITEM hRoot				= NULL;
-HTREEITEM hBoardType			= NULL;
-HTREEITEM hFamily			= NULL;
-HTREEITEM hGenre			= NULL;
-HTREEITEM hHardware			= NULL;
+HTREEITEM hRoot						= NULL;
+HTREEITEM hBoardType				= NULL;
+HTREEITEM hFamily					= NULL;
+HTREEITEM hGenre					= NULL;
+HTREEITEM hHardware					= NULL;
 
 // GCC doesn't seem to define these correctly.....
 #define _TreeView_SetItemState(hwndTV, hti, data, _mask) \
@@ -117,59 +120,65 @@ HTREEITEM hHardware			= NULL;
 #define DISABLE_NON_AVAILABLE_SELECT	0						// Disable selecting non-available sets
 #define NON_WORKING_PROMPT_ON_LOAD		1						// Prompt user on loading non-working sets
 
-static int CpsValue			= HARDWARE_PREFIX_CAPCOM >> 24;
-static int MASKCPS			= 1 << CpsValue;
-static int Cps2Value		= HARDWARE_PREFIX_CPS2 >> 24;
-static int MASKCPS2			= 1 << Cps2Value;
-static int Cps3Value		= HARDWARE_PREFIX_CPS3 >> 24;
-static int MASKCPS3			= 1 << Cps3Value;
-static int NeogeoValue		= HARDWARE_PREFIX_SNK >> 24;
-static int MASKNEOGEO		= 1 << NeogeoValue;
-static int SegaValue		= HARDWARE_PREFIX_SEGA >> 24;
-static int MASKSEGA			= 1 << SegaValue;
-static int ToaplanValue		= HARDWARE_PREFIX_TOAPLAN >> 24;
-static int MASKTOAPLAN		= 1 << ToaplanValue;
-static int CaveValue		= HARDWARE_PREFIX_CAVE >> 24;
-static int MASKCAVE			= 1 << CaveValue;
-static int PgmValue			= HARDWARE_PREFIX_IGS_PGM >> 24;
-static int MASKPGM			= 1 << PgmValue;
-static int MegadriveValue	= HARDWARE_PREFIX_SEGA_MEGADRIVE >> 24;
-static int MASKMEGADRIVE	= 1 << MegadriveValue;
-static int TaitoValue		= HARDWARE_PREFIX_TAITO >> 24;
-static int MASKTAITO		= 1 << TaitoValue;
-static int PsikyoValue		= HARDWARE_PREFIX_PSIKYO >> 24;
-static int MASKPSIKYO		= 1 << PsikyoValue;
-static int KonamiValue		= HARDWARE_PREFIX_KONAMI >> 24;
-static int MASKKONAMI		= 1 << KonamiValue;
-static int PacmanValue		= HARDWARE_PREFIX_PACMAN >> 24;
-static int MASKPACMAN		= 1 << PacmanValue;
-static int GalaxianValue	= HARDWARE_PREFIX_GALAXIAN >> 24;
-static int MASKGALAXIAN		= 1 << GalaxianValue;
-static int IremValue		= HARDWARE_PREFIX_IREM >> 24;
-static int MASKIREM			= 1 << IremValue;
-static int KanekoValue		= HARDWARE_PREFIX_KANEKO >> 24;
-static int MASKKANEKO		= 1 << KanekoValue;
-static int DataeastValue	= HARDWARE_PREFIX_DATAEAST >> 24;
-static int MASKDATAEAST		= 1 << DataeastValue;
-static int SnesValue		= HARDWARE_PREFIX_NINTENDO_SNES >> 24;
-static int MASKSNES			= 1 << SnesValue;
-static int MiscPre90sValue	= HARDWARE_PREFIX_MISC_PRE90S >> 24;
-static int MASKMISCPRE90S	= 1 << MiscPre90sValue;
-static int MiscPost90sValue	= HARDWARE_PREFIX_MISC_POST90S >> 24;
-static int MASKMISCPOST90S	= 1 << MiscPost90sValue;
-static int MASKALL			= MASKCPS | MASKCPS2 | MASKCPS3 | MASKNEOGEO | MASKSEGA | MASKTOAPLAN | MASKCAVE | MASKPGM | MASKTAITO | MASKPSIKYO | MASKKONAMI | MASKPACMAN | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKDATAEAST | MASKMEGADRIVE | MASKSNES | MASKMISCPRE90S | MASKMISCPOST90S;
+static int CapcomMiscValue		= HARDWARE_PREFIX_CAPCOM_MISC >> 24;
+static int MASKCAPMISC			= 1 << CapcomMiscValue;
+static int CaveValue			= HARDWARE_PREFIX_CAVE >> 24;
+static int MASKCAVE				= 1 << CaveValue;
+static int CpsValue				= HARDWARE_PREFIX_CAPCOM >> 24;
+static int MASKCPS				= 1 << CpsValue;
+static int Cps2Value			= HARDWARE_PREFIX_CPS2 >> 24;
+static int MASKCPS2				= 1 << Cps2Value;
+static int Cps3Value			= HARDWARE_PREFIX_CPS3 >> 24;
+static int MASKCPS3				= 1 << Cps3Value;
+static int DataeastValue		= HARDWARE_PREFIX_DATAEAST >> 24;
+static int MASKDATAEAST			= 1 << DataeastValue;
+static int GalaxianValue		= HARDWARE_PREFIX_GALAXIAN >> 24;
+static int MASKGALAXIAN			= 1 << GalaxianValue;
+static int IremValue			= HARDWARE_PREFIX_IREM >> 24;
+static int MASKIREM				= 1 << IremValue;
+static int KanekoValue			= HARDWARE_PREFIX_KANEKO >> 24;
+static int MASKKANEKO			= 1 << KanekoValue;
+static int KonamiValue			= HARDWARE_PREFIX_KONAMI >> 24;
+static int MASKKONAMI			= 1 << KonamiValue;
+static int NeogeoValue			= HARDWARE_PREFIX_SNK >> 24;
+static int MASKNEOGEO			= 1 << NeogeoValue;
+static int PacmanValue			= HARDWARE_PREFIX_PACMAN >> 24;
+static int MASKPACMAN			= 1 << PacmanValue;
+static int PgmValue				= HARDWARE_PREFIX_IGS_PGM >> 24;
+static int MASKPGM				= 1 << PgmValue;
+static int PsikyoValue			= HARDWARE_PREFIX_PSIKYO >> 24;
+static int MASKPSIKYO			= 1 << PsikyoValue;
+static int SegaValue			= HARDWARE_PREFIX_SEGA >> 24;
+static int MASKSEGA				= 1 << SegaValue;
+static int SetaValue			= HARDWARE_PREFIX_SETA >> 24;
+static int MASKSETA				= 1 << SetaValue;
+static int TaitoValue			= HARDWARE_PREFIX_TAITO >> 24;
+static int MASKTAITO			= 1 << TaitoValue;
+static int TechnosValue			= HARDWARE_PREFIX_TECHNOS >> 24;
+static int MASKTECHNOS			= 1 << TechnosValue;
+static int ToaplanValue			= HARDWARE_PREFIX_TOAPLAN >> 24;
+static int MASKTOAPLAN			= 1 << ToaplanValue;
+static int MiscPre90sValue		= HARDWARE_PREFIX_MISC_PRE90S >> 24;
+static int MASKMISCPRE90S		= 1 << MiscPre90sValue;
+static int MiscPost90sValue		= HARDWARE_PREFIX_MISC_POST90S >> 24;
+static int MASKMISCPOST90S		= 1 << MiscPost90sValue;
+static int MegadriveValue		= HARDWARE_PREFIX_SEGA_MEGADRIVE >> 24;
+static int MASKMEGADRIVE		= 1 << MegadriveValue;
+static int SnesValue			= HARDWARE_PREFIX_NINTENDO_SNES >> 24;
+static int MASKSNES				= 1 << SnesValue;
+static int MASKALL				= MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKSNES;
 
-#define AVAILONLY		(1 << 24)
-#define AUTOEXPAND		(1 << 25)
-#define SHOWSHORT		(1 << 26)
-#define ASCIIONLY		(1 << 27)
+#define AVAILONLY				(1 << 28)
+#define AUTOEXPAND				(1 << 29)
+#define SHOWSHORT				(1 << 30)
+#define ASCIIONLY				(1 << 31)
 
 #define MASKBOARDTYPEGENUINE	(1)
-#define MASKFAMILYOTHER		0x10000000
+#define MASKFAMILYOTHER			0x10000000
 
-#define MASKALLGENRE		(GBF_HORSHOOT | GBF_VERSHOOT | GBF_SCRFIGHT | GBF_VSFIGHT | GBF_BIOS | GBF_BREAKOUT | GBF_CASINO | GBF_BALLPADDLE | GBF_MAZE | GBF_MINIGAMES | GBF_PINBALL | GBF_PLATFORM | GBF_PUZZLE | GBF_QUIZ | GBF_SPORTSMISC | GBF_SPORTSFOOTBALL | GBF_MISC | GBF_MAHJONG | GBF_RACING | GBF_SHOOT)
-#define MASKALLFAMILY		(MASKFAMILYOTHER | FBF_MSLUG | FBF_SF | FBF_KOF | FBF_DSTLK | FBF_FATFURY | FBF_SAMSHO | FBF_19XX | FBF_SONICWI | FBF_PWRINST)
-#define MASKALLBOARD		(MASKBOARDTYPEGENUINE | BDF_BOOTLEG | BDF_DEMO | BDF_HACK | BDF_HOMEBREW | BDF_PROTOTYPE)
+#define MASKALLGENRE			(GBF_HORSHOOT | GBF_VERSHOOT | GBF_SCRFIGHT | GBF_VSFIGHT | GBF_BIOS | GBF_BREAKOUT | GBF_CASINO | GBF_BALLPADDLE | GBF_MAZE | GBF_MINIGAMES | GBF_PINBALL | GBF_PLATFORM | GBF_PUZZLE | GBF_QUIZ | GBF_SPORTSMISC | GBF_SPORTSFOOTBALL | GBF_MISC | GBF_MAHJONG | GBF_RACING | GBF_SHOOT)
+#define MASKALLFAMILY			(MASKFAMILYOTHER | FBF_MSLUG | FBF_SF | FBF_KOF | FBF_DSTLK | FBF_FATFURY | FBF_SAMSHO | FBF_19XX | FBF_SONICWI | FBF_PWRINST)
+#define MASKALLBOARD			(MASKBOARDTYPEGENUINE | BDF_BOOTLEG | BDF_DEMO | BDF_HACK | BDF_HOMEBREW | BDF_PROTOTYPE)
 
 int nLoadMenuShowX				= 0;
 int nLoadMenuBoardTypeFilter	= 0;
@@ -243,11 +252,11 @@ static int DoExtraFilters()
 {
 	if (nShowMVSCartsOnly && ((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_CARTRIDGE) != HARDWARE_PREFIX_CARTRIDGE)) return 1;
 	
-	if ((nLoadMenuBoardTypeFilter & BDF_BOOTLEG)	&& (BurnDrvGetFlags() & BDF_BOOTLEG))				return 1;
-	if ((nLoadMenuBoardTypeFilter & BDF_DEMO)		&& (BurnDrvGetFlags() & BDF_DEMO))					return 1;
-	if ((nLoadMenuBoardTypeFilter & BDF_HACK)		&& (BurnDrvGetFlags() & BDF_HACK))					return 1;
-	if ((nLoadMenuBoardTypeFilter & BDF_HOMEBREW)	&& (BurnDrvGetFlags() & BDF_HOMEBREW))				return 1;
-	if ((nLoadMenuBoardTypeFilter & BDF_PROTOTYPE)	&& (BurnDrvGetFlags() & BDF_PROTOTYPE))				return 1;
+	if ((nLoadMenuBoardTypeFilter & BDF_BOOTLEG)			&& (BurnDrvGetFlags() & BDF_BOOTLEG))				return 1;
+	if ((nLoadMenuBoardTypeFilter & BDF_DEMO)				&& (BurnDrvGetFlags() & BDF_DEMO))					return 1;
+	if ((nLoadMenuBoardTypeFilter & BDF_HACK)				&& (BurnDrvGetFlags() & BDF_HACK))					return 1;
+	if ((nLoadMenuBoardTypeFilter & BDF_HOMEBREW)			&& (BurnDrvGetFlags() & BDF_HOMEBREW))				return 1;
+	if ((nLoadMenuBoardTypeFilter & BDF_PROTOTYPE)			&& (BurnDrvGetFlags() & BDF_PROTOTYPE))				return 1;
 	
 	if ((nLoadMenuBoardTypeFilter & MASKBOARDTYPEGENUINE)	&& (!(BurnDrvGetFlags() & BDF_BOOTLEG)) 
 															&& (!(BurnDrvGetFlags() & BDF_DEMO)) 
@@ -255,46 +264,46 @@ static int DoExtraFilters()
 															&& (!(BurnDrvGetFlags() & BDF_HOMEBREW)) 
 															&& (!(BurnDrvGetFlags() & BDF_PROTOTYPE)))	return 1;
 	
-	if ((nLoadMenuFamilyFilter & FBF_MSLUG)			&& (BurnDrvGetFamilyFlags() & FBF_MSLUG))			return 1;
-	if ((nLoadMenuFamilyFilter & FBF_SF)			&& (BurnDrvGetFamilyFlags() & FBF_SF))				return 1;
-	if ((nLoadMenuFamilyFilter & FBF_KOF)			&& (BurnDrvGetFamilyFlags() & FBF_KOF))				return 1;
-	if ((nLoadMenuFamilyFilter & FBF_DSTLK)			&& (BurnDrvGetFamilyFlags() & FBF_DSTLK))			return 1;
-	if ((nLoadMenuFamilyFilter & FBF_FATFURY)		&& (BurnDrvGetFamilyFlags() & FBF_FATFURY))			return 1;
-	if ((nLoadMenuFamilyFilter & FBF_SAMSHO)		&& (BurnDrvGetFamilyFlags() & FBF_SAMSHO))			return 1;
-	if ((nLoadMenuFamilyFilter & FBF_19XX)			&& (BurnDrvGetFamilyFlags() & FBF_19XX))			return 1;
-	if ((nLoadMenuFamilyFilter & FBF_SONICWI)		&& (BurnDrvGetFamilyFlags() & FBF_SONICWI))			return 1;
-	if ((nLoadMenuFamilyFilter & FBF_PWRINST)		&& (BurnDrvGetFamilyFlags() & FBF_PWRINST))			return 1;
+	if ((nLoadMenuFamilyFilter & FBF_MSLUG)					&& (BurnDrvGetFamilyFlags() & FBF_MSLUG))			return 1;
+	if ((nLoadMenuFamilyFilter & FBF_SF)					&& (BurnDrvGetFamilyFlags() & FBF_SF))				return 1;
+	if ((nLoadMenuFamilyFilter & FBF_KOF)					&& (BurnDrvGetFamilyFlags() & FBF_KOF))				return 1;
+	if ((nLoadMenuFamilyFilter & FBF_DSTLK)					&& (BurnDrvGetFamilyFlags() & FBF_DSTLK))			return 1;
+	if ((nLoadMenuFamilyFilter & FBF_FATFURY)				&& (BurnDrvGetFamilyFlags() & FBF_FATFURY))			return 1;
+	if ((nLoadMenuFamilyFilter & FBF_SAMSHO)				&& (BurnDrvGetFamilyFlags() & FBF_SAMSHO))			return 1;
+	if ((nLoadMenuFamilyFilter & FBF_19XX)					&& (BurnDrvGetFamilyFlags() & FBF_19XX))			return 1;
+	if ((nLoadMenuFamilyFilter & FBF_SONICWI)				&& (BurnDrvGetFamilyFlags() & FBF_SONICWI))			return 1;
+	if ((nLoadMenuFamilyFilter & FBF_PWRINST)				&& (BurnDrvGetFamilyFlags() & FBF_PWRINST))			return 1;
 	
-	if ((nLoadMenuFamilyFilter & MASKFAMILYOTHER)	&& (!(BurnDrvGetFamilyFlags() & FBF_MSLUG)) 
-													&& (!(BurnDrvGetFamilyFlags() & FBF_SF)) 
-													&& (!(BurnDrvGetFamilyFlags() & FBF_KOF)) 
-													&& (!(BurnDrvGetFamilyFlags() & FBF_DSTLK)) 
-													&& (!(BurnDrvGetFamilyFlags() & FBF_FATFURY)) 
-													&& (!(BurnDrvGetFamilyFlags() & FBF_SAMSHO)) 
-													&& (!(BurnDrvGetFamilyFlags() & FBF_19XX)) 
-													&& (!(BurnDrvGetFamilyFlags() & FBF_SONICWI)) 
-													&& (!(BurnDrvGetFamilyFlags() & FBF_PWRINST)))		return 1;
+	if ((nLoadMenuFamilyFilter & MASKFAMILYOTHER)			&& (!(BurnDrvGetFamilyFlags() & FBF_MSLUG)) 
+															&& (!(BurnDrvGetFamilyFlags() & FBF_SF)) 
+															&& (!(BurnDrvGetFamilyFlags() & FBF_KOF)) 
+															&& (!(BurnDrvGetFamilyFlags() & FBF_DSTLK)) 
+															&& (!(BurnDrvGetFamilyFlags() & FBF_FATFURY)) 
+															&& (!(BurnDrvGetFamilyFlags() & FBF_SAMSHO)) 
+															&& (!(BurnDrvGetFamilyFlags() & FBF_19XX)) 
+															&& (!(BurnDrvGetFamilyFlags() & FBF_SONICWI)) 
+															&& (!(BurnDrvGetFamilyFlags() & FBF_PWRINST)))		return 1;
 	
-	if ((nLoadMenuGenreFilter & GBF_HORSHOOT)		&& (BurnDrvGetGenreFlags() & GBF_HORSHOOT))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_VERSHOOT)		&& (BurnDrvGetGenreFlags() & GBF_VERSHOOT))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_SCRFIGHT)		&& (BurnDrvGetGenreFlags() & GBF_SCRFIGHT))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_VSFIGHT)		&& (BurnDrvGetGenreFlags() & GBF_VSFIGHT))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_BIOS)			&& (BurnDrvGetGenreFlags() & GBF_BIOS))				return 1;
-	if ((nLoadMenuGenreFilter & GBF_BREAKOUT)		&& (BurnDrvGetGenreFlags() & GBF_BREAKOUT))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_CASINO)			&& (BurnDrvGetGenreFlags() & GBF_CASINO))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_BALLPADDLE)		&& (BurnDrvGetGenreFlags() & GBF_BALLPADDLE))		return 1;
-	if ((nLoadMenuGenreFilter & GBF_MAZE)			&& (BurnDrvGetGenreFlags() & GBF_MAZE))				return 1;
-	if ((nLoadMenuGenreFilter & GBF_MINIGAMES)		&& (BurnDrvGetGenreFlags() & GBF_MINIGAMES))		return 1;
-	if ((nLoadMenuGenreFilter & GBF_PINBALL)		&& (BurnDrvGetGenreFlags() & GBF_PINBALL))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_PLATFORM)		&& (BurnDrvGetGenreFlags() & GBF_PLATFORM))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_PUZZLE)			&& (BurnDrvGetGenreFlags() & GBF_PUZZLE))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_QUIZ)			&& (BurnDrvGetGenreFlags() & GBF_QUIZ))				return 1;
-	if ((nLoadMenuGenreFilter & GBF_SPORTSMISC)		&& (BurnDrvGetGenreFlags() & GBF_SPORTSMISC))		return 1;
-	if ((nLoadMenuGenreFilter & GBF_SPORTSFOOTBALL) && (BurnDrvGetGenreFlags() & GBF_SPORTSFOOTBALL))	return 1;
-	if ((nLoadMenuGenreFilter & GBF_MISC)			&& (BurnDrvGetGenreFlags() & GBF_MISC))				return 1;
-	if ((nLoadMenuGenreFilter & GBF_MAHJONG)		&& (BurnDrvGetGenreFlags() & GBF_MAHJONG))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_RACING)			&& (BurnDrvGetGenreFlags() & GBF_RACING))			return 1;
-	if ((nLoadMenuGenreFilter & GBF_SHOOT)			&& (BurnDrvGetGenreFlags() & GBF_SHOOT))			return 1;
+	if ((nLoadMenuGenreFilter & GBF_HORSHOOT)				&& (BurnDrvGetGenreFlags() & GBF_HORSHOOT))			return 1;
+	if ((nLoadMenuGenreFilter & GBF_VERSHOOT)				&& (BurnDrvGetGenreFlags() & GBF_VERSHOOT))			return 1;
+	if ((nLoadMenuGenreFilter & GBF_SCRFIGHT)				&& (BurnDrvGetGenreFlags() & GBF_SCRFIGHT))			return 1;
+	if ((nLoadMenuGenreFilter & GBF_VSFIGHT)				&& (BurnDrvGetGenreFlags() & GBF_VSFIGHT))			return 1;
+	if ((nLoadMenuGenreFilter & GBF_BIOS)					&& (BurnDrvGetGenreFlags() & GBF_BIOS))				return 1;
+	if ((nLoadMenuGenreFilter & GBF_BREAKOUT)				&& (BurnDrvGetGenreFlags() & GBF_BREAKOUT))			return 1;
+	if ((nLoadMenuGenreFilter & GBF_CASINO)					&& (BurnDrvGetGenreFlags() & GBF_CASINO))			return 1;
+	if ((nLoadMenuGenreFilter & GBF_BALLPADDLE)				&& (BurnDrvGetGenreFlags() & GBF_BALLPADDLE))		return 1;
+	if ((nLoadMenuGenreFilter & GBF_MAZE)					&& (BurnDrvGetGenreFlags() & GBF_MAZE))				return 1;
+	if ((nLoadMenuGenreFilter & GBF_MINIGAMES)				&& (BurnDrvGetGenreFlags() & GBF_MINIGAMES))		return 1;
+	if ((nLoadMenuGenreFilter & GBF_PINBALL)				&& (BurnDrvGetGenreFlags() & GBF_PINBALL))			return 1;
+	if ((nLoadMenuGenreFilter & GBF_PLATFORM)				&& (BurnDrvGetGenreFlags() & GBF_PLATFORM))			return 1;
+	if ((nLoadMenuGenreFilter & GBF_PUZZLE)					&& (BurnDrvGetGenreFlags() & GBF_PUZZLE))			return 1;
+	if ((nLoadMenuGenreFilter & GBF_QUIZ)					&& (BurnDrvGetGenreFlags() & GBF_QUIZ))				return 1;
+	if ((nLoadMenuGenreFilter & GBF_SPORTSMISC)				&& (BurnDrvGetGenreFlags() & GBF_SPORTSMISC))		return 1;
+	if ((nLoadMenuGenreFilter & GBF_SPORTSFOOTBALL) 		&& (BurnDrvGetGenreFlags() & GBF_SPORTSFOOTBALL))	return 1;
+	if ((nLoadMenuGenreFilter & GBF_MISC)					&& (BurnDrvGetGenreFlags() & GBF_MISC))				return 1;
+	if ((nLoadMenuGenreFilter & GBF_MAHJONG)				&& (BurnDrvGetGenreFlags() & GBF_MAHJONG))			return 1;
+	if ((nLoadMenuGenreFilter & GBF_RACING)					&& (BurnDrvGetGenreFlags() & GBF_RACING))			return 1;
+	if ((nLoadMenuGenreFilter & GBF_SHOOT)					&& (BurnDrvGetGenreFlags() & GBF_SHOOT))			return 1;
 	
 	return 0;
 }
@@ -892,6 +901,7 @@ static void CreateFilters()
 
 	_TVCreateFiltersB(hRoot			, IDS_SEL_HARDWARE, hHardware			);
 	
+	_TVCreateFiltersA(hHardware		, IDS_SEL_CAPCOM_MISC	, hFilterCapcomMisc		, nLoadMenuShowX & MASKCAPMISC						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_CAVE			, hFilterCave			, nLoadMenuShowX & MASKCAVE							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_CPS1			, hFilterCps1			, nLoadMenuShowX & MASKCPS							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_CPS2			, hFilterCps2			, nLoadMenuShowX & MASKCPS2							);
@@ -906,7 +916,9 @@ static void CreateFilters()
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PGM			, hFilterPgm			, nLoadMenuShowX & MASKPGM							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PSIKYO		, hFilterPsikyo			, nLoadMenuShowX & MASKPSIKYO						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_SEGA			, hFilterSega			, nLoadMenuShowX & MASKSEGA							);
+	_TVCreateFiltersA(hHardware		, IDS_SEL_SETA			, hFilterSeta			, nLoadMenuShowX & MASKSETA							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_TAITO			, hFilterTaito			, nLoadMenuShowX & MASKTAITO						);
+	_TVCreateFiltersA(hHardware		, IDS_SEL_TECHNOS		, hFilterTechnos		, nLoadMenuShowX & MASKTECHNOS						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_TOAPLAN		, hFilterToaplan		, nLoadMenuShowX & MASKTOAPLAN						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MISCPRE90S	, hFilterMiscPre90s		, nLoadMenuShowX & MASKMISCPRE90S					);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MISCPOST90S	, hFilterMiscPost90s	, nLoadMenuShowX & MASKMISCPOST90S					);
@@ -1034,6 +1046,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			if ((nLoadMenuShowX & MASKALL) == 0) {
 				_TreeView_SetCheckState(hFilterList, hItemChanged, FALSE);
 			
+				_TreeView_SetCheckState(hFilterList, hFilterCapcomMisc, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterCave, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterCps1, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterCps2, FALSE);
@@ -1048,8 +1061,10 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterPgm, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterPsikyo, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterSega, FALSE);
-				_TreeView_SetCheckState(hFilterList, hFilterToaplan, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterSeta, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterTaito, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterTechnos, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterToaplan, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterMiscPre90s, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterMiscPost90s, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterMegadrive, FALSE);
@@ -1059,6 +1074,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			} else {
 				_TreeView_SetCheckState(hFilterList, hItemChanged, TRUE);
 			
+				_TreeView_SetCheckState(hFilterList, hFilterCapcomMisc, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterCave, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterCps1, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterCps2, TRUE);
@@ -1073,8 +1089,10 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterPgm, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterPsikyo, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterSega, TRUE);
-				_TreeView_SetCheckState(hFilterList, hFilterToaplan, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterSeta, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterTaito, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterTechnos, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterToaplan, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterMiscPre90s, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterMiscPost90s, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterMegadrive, TRUE);
@@ -1198,6 +1216,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			}
 		}
 
+		if (hItemChanged == hFilterCapcomMisc)		_ToggleGameListing(nLoadMenuShowX, MASKCAPMISC);
 		if (hItemChanged == hFilterCave)			_ToggleGameListing(nLoadMenuShowX, MASKCAVE);
 		if (hItemChanged == hFilterCps1)			_ToggleGameListing(nLoadMenuShowX, MASKCPS);
 		if (hItemChanged == hFilterCps2)			_ToggleGameListing(nLoadMenuShowX, MASKCPS2);
@@ -1212,21 +1231,23 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterPgm)				_ToggleGameListing(nLoadMenuShowX, MASKPGM);
 		if (hItemChanged == hFilterPsikyo)			_ToggleGameListing(nLoadMenuShowX, MASKPSIKYO);
 		if (hItemChanged == hFilterSega)			_ToggleGameListing(nLoadMenuShowX, MASKSEGA);
-		if (hItemChanged == hFilterToaplan)			_ToggleGameListing(nLoadMenuShowX, MASKTOAPLAN);
+		if (hItemChanged == hFilterSeta)			_ToggleGameListing(nLoadMenuShowX, MASKSETA);
 		if (hItemChanged == hFilterTaito)			_ToggleGameListing(nLoadMenuShowX, MASKTAITO);
-		if (hItemChanged == hFilterMiscPre90s)			_ToggleGameListing(nLoadMenuShowX, MASKMISCPRE90S);
-		if (hItemChanged == hFilterMiscPost90s)			_ToggleGameListing(nLoadMenuShowX, MASKMISCPOST90S);
-		if (hItemChanged == hFilterMegadrive)			_ToggleGameListing(nLoadMenuShowX, MASKMEGADRIVE);
+		if (hItemChanged == hFilterTechnos)			_ToggleGameListing(nLoadMenuShowX, MASKTECHNOS);
+		if (hItemChanged == hFilterToaplan)			_ToggleGameListing(nLoadMenuShowX, MASKTOAPLAN);
+		if (hItemChanged == hFilterMiscPre90s)		_ToggleGameListing(nLoadMenuShowX, MASKMISCPRE90S);
+		if (hItemChanged == hFilterMiscPost90s)		_ToggleGameListing(nLoadMenuShowX, MASKMISCPOST90S);
+		if (hItemChanged == hFilterMegadrive)		_ToggleGameListing(nLoadMenuShowX, MASKMEGADRIVE);
 		if (hItemChanged == hFilterSnes)			_ToggleGameListing(nLoadMenuShowX, MASKSNES);
 		
 		if (hItemChanged == hFilterBootleg)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_BOOTLEG);
 		if (hItemChanged == hFilterDemo)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_DEMO);
 		if (hItemChanged == hFilterHack)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_HACK);
-		if (hItemChanged == hFilterHomebrew)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_HOMEBREW);
-		if (hItemChanged == hFilterPrototype)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_PROTOTYPE);
+		if (hItemChanged == hFilterHomebrew)		_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_HOMEBREW);
+		if (hItemChanged == hFilterPrototype)		_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_PROTOTYPE);
 		if (hItemChanged == hFilterGenuine)			_ToggleGameListing(nLoadMenuBoardTypeFilter, MASKBOARDTYPEGENUINE);
 		
-		if (hItemChanged == hFilterOtherFamily)			_ToggleGameListing(nLoadMenuFamilyFilter, MASKFAMILYOTHER);
+		if (hItemChanged == hFilterOtherFamily)		_ToggleGameListing(nLoadMenuFamilyFilter, MASKFAMILYOTHER);
 		if (hItemChanged == hFilterMslug)			_ToggleGameListing(nLoadMenuFamilyFilter, FBF_MSLUG);
 		if (hItemChanged == hFilterSf)				_ToggleGameListing(nLoadMenuFamilyFilter, FBF_SF);
 		if (hItemChanged == hFilterKof)				_ToggleGameListing(nLoadMenuFamilyFilter, FBF_KOF);
@@ -1237,22 +1258,22 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterSonicwi)			_ToggleGameListing(nLoadMenuFamilyFilter, FBF_SONICWI);
 		if (hItemChanged == hFilterPwrinst)			_ToggleGameListing(nLoadMenuFamilyFilter, FBF_PWRINST);
 		
-		if (hItemChanged == hFilterHorshoot)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_HORSHOOT);
-		if (hItemChanged == hFilterVershoot)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_VERSHOOT);
-		if (hItemChanged == hFilterScrfight)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_SCRFIGHT);
+		if (hItemChanged == hFilterHorshoot)		_ToggleGameListing(nLoadMenuGenreFilter, GBF_HORSHOOT);
+		if (hItemChanged == hFilterVershoot)		_ToggleGameListing(nLoadMenuGenreFilter, GBF_VERSHOOT);
+		if (hItemChanged == hFilterScrfight)		_ToggleGameListing(nLoadMenuGenreFilter, GBF_SCRFIGHT);
 		if (hItemChanged == hFilterVsfight)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_VSFIGHT);
 		if (hItemChanged == hFilterBios)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_BIOS);
-		if (hItemChanged == hFilterBreakout)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_BREAKOUT);
+		if (hItemChanged == hFilterBreakout)		_ToggleGameListing(nLoadMenuGenreFilter, GBF_BREAKOUT);
 		if (hItemChanged == hFilterCasino)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_CASINO);
-		if (hItemChanged == hFilterBallpaddle)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_BALLPADDLE);
+		if (hItemChanged == hFilterBallpaddle)		_ToggleGameListing(nLoadMenuGenreFilter, GBF_BALLPADDLE);
 		if (hItemChanged == hFilterMaze)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_MAZE);
-		if (hItemChanged == hFilterMinigames)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_MINIGAMES);
+		if (hItemChanged == hFilterMinigames)		_ToggleGameListing(nLoadMenuGenreFilter, GBF_MINIGAMES);
 		if (hItemChanged == hFilterPinball)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_PINBALL);
-		if (hItemChanged == hFilterPlatform)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_PLATFORM);
+		if (hItemChanged == hFilterPlatform)		_ToggleGameListing(nLoadMenuGenreFilter, GBF_PLATFORM);
 		if (hItemChanged == hFilterPuzzle)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_PUZZLE);
 		if (hItemChanged == hFilterQuiz)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_QUIZ);
-		if (hItemChanged == hFilterSportsmisc)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_SPORTSMISC);
-		if (hItemChanged == hFilterSportsfootball)		_ToggleGameListing(nLoadMenuGenreFilter, GBF_SPORTSFOOTBALL);
+		if (hItemChanged == hFilterSportsmisc)		_ToggleGameListing(nLoadMenuGenreFilter, GBF_SPORTSMISC);
+		if (hItemChanged == hFilterSportsfootball)	_ToggleGameListing(nLoadMenuGenreFilter, GBF_SPORTSFOOTBALL);
 		if (hItemChanged == hFilterMisc)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_MISC);
 		if (hItemChanged == hFilterMahjong)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_MAHJONG);
 		if (hItemChanged == hFilterRacing)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_RACING);

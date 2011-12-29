@@ -604,7 +604,7 @@ struct BurnDriver BurnDrvdommy = {
 	"dommy", NULL, NULL, NULL, "198?",
 	"Dommy\0", NULL, "Technos", "misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, dommyRomInfo, dommyRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalcPal, 0x08,
 	240, 248, 3, 4
@@ -646,7 +646,7 @@ struct BurnDriver BurnDrvscregg = {
 	"scregg", NULL, NULL, NULL, "1983",
 	"Scrambled Egg\0", NULL, "Technos", "misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, screggRomInfo, screggRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	screggInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalcPal, 0x08,
 	240, 240, 3, 4
@@ -681,7 +681,7 @@ struct BurnDriver BurnDrveggs = {
 	"eggs", "scregg", NULL, NULL, "1983",
 	"Eggs\0", NULL, "[Technos] Universal USA", "misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, eggsRomInfo, eggsRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	screggInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalcPal, 0x08,
 	240, 240, 3, 4
@@ -718,7 +718,7 @@ struct BurnDriver BurnDrvrockduck = {
 	"rockduck", NULL, NULL, NULL, "1983",
 	"Rock Duck (prototype?)\0", "incorrect colors", "Datel SAS", "misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, rockduckRomInfo, rockduckRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	rockduckInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalcPal, 0x08,
 	240, 240, 3, 4

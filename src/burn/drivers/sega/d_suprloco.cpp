@@ -673,7 +673,7 @@ struct BurnDriver BurnDrvSuprloco = {
 	"suprloco", NULL, NULL, NULL, "1982",
 	"Super Locomotive\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, suprlocoRomInfo, suprlocoRomName, NULL, NULL, SuprlocoInputInfo, SuprlocoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	240, 224, 4, 3
@@ -709,7 +709,7 @@ struct BurnDriver BurnDrvSuprlocoa = {
 	"suprlocoa", "suprloco", NULL, NULL, "1982",
 	"Super Locomotive (Rev.A)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, suprlocoaRomInfo, suprlocoaRomName, NULL, NULL, SuprlocoInputInfo, SuprlocoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	240, 224, 4, 3

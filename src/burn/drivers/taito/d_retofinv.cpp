@@ -900,7 +900,7 @@ struct BurnDriver BurnDrvRetofinv = {
 	"retofinv", NULL, NULL, NULL, "1985",
 	"Return of the Invaders\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, retofinvRomInfo, retofinvRomName, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xa00,
 	224, 288, 3, 4
@@ -941,7 +941,7 @@ struct BurnDriver BurnDrvRetofin1 = {
 	"retofinv1", "retofinv", NULL, NULL, "1985",
 	"Return of the Invaders (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, retofin1RomInfo, retofin1RomName, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xa00,
 	224, 288, 3, 4
@@ -982,7 +982,7 @@ struct BurnDriver BurnDrvRetofin2 = {
 	"retofinv2", "retofinv", NULL, NULL, "1985",
 	"Return of the Invaders (bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, retofin2RomInfo, retofin2RomName, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xa00,
 	224, 288, 3, 4

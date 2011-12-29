@@ -1259,7 +1259,7 @@ struct BurnDriver BurnDrvFlstory = {
 	"flstory", NULL, NULL, NULL, "1985",
 	"The FairyLand Story\0", NULL, "Taito", "hardware",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, flstoryRomInfo, flstoryRomName, NULL, NULL, FlstoryInputInfo, FlstoryDIPInfo,
 	flstoryInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1295,7 +1295,7 @@ struct BurnDriver BurnDrvFlstoryj = {
 	"flstoryj", "flstory", NULL, NULL, "1985",
 	"The FairyLand Story (Japan)\0", NULL, "Taito", "hardware",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, flstoryjRomInfo, flstoryjRomName, NULL, NULL, FlstoryInputInfo, FlstoryDIPInfo,
 	flstoryInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1341,7 +1341,7 @@ struct BurnDriver BurnDrvOnna34ro = {
 	"onna34ro", NULL, NULL, NULL, "1985",
 	"Onna Sansirou - Typhoon Gal (set 1)\0", NULL, "Taito", "hardware",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, onna34roRomInfo, onna34roRomName, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,
 	onna34roInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1380,7 +1380,7 @@ struct BurnDriver BurnDrvOnna34ra = {
 	"onna34roa", "onna34ro", NULL, NULL, "1985",
 	"Onna Sansirou - Typhoon Gal (set 2)\0", NULL, "Taito", "hardware",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, onna34raRomInfo, onna34raRomName, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,
 	onna34roInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1430,7 +1430,7 @@ struct BurnDriverD BurnDrvVictnine = {
 	"victnine", NULL, NULL, NULL, "1984",
 	"Victorious Nine\0", NULL, "Taito", "hardware",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	0, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, victnineRomInfo, victnineRomName, NULL, NULL, VictnineInputInfo, VictnineDIPInfo,
 	victnineInit, DrvExit, DrvFrame, victnineDraw, NULL, &DrvRecalc, 0x200,
 	256, 224, 4, 3

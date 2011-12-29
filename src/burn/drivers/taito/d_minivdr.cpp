@@ -190,7 +190,7 @@ struct BurnDriver BurnDrvminivadr = {
 	"minivadr", NULL, NULL, NULL, "1990",
 	"Minivader\0", NULL, "Taito Corporation", "Minivader",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, minivadrRomInfo, minivadrRomName, NULL, NULL, DrvInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0,
 	256, 224, 4, 3

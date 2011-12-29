@@ -1901,7 +1901,7 @@ struct BurnDriver BurnDrvPlumppop = {
 	"plumppop", NULL, NULL, NULL, "1987",
 	"Plump Pop (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, plumppopRomInfo, plumppopRomName, NULL, NULL, PlumppopInputInfo, PlumppopDIPInfo,
 	PlumppopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1939,7 +1939,7 @@ struct BurnDriver BurnDrvExtrmatn = {
 	"extrmatn", NULL, NULL, NULL, "1987",
 	"Extermination (World)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, extrmatnRomInfo, extrmatnRomName, NULL, NULL, CommonInputInfo, ExtrmatnDIPInfo,
 	ExtrmatnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1972,7 +1972,7 @@ struct BurnDriver BurnDrvExtrmatu = {
 	"extrmatnu", "extrmatn", NULL, NULL, "1987",
 	"Extermination (US)\0", NULL, "[Taito] World Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, extrmatuRomInfo, extrmatuRomName, NULL, NULL, CommonInputInfo, ExtrmatnDIPInfo,
 	ExtrmatnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2005,7 +2005,7 @@ struct BurnDriver BurnDrvExtrmatj = {
 	"extrmatnj", "extrmatn", NULL, NULL, "1987",
 	"Extermination (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, extrmatjRomInfo, extrmatjRomName, NULL, NULL, CommonInputInfo, ExtrmatnDIPInfo,
 	ExtrmatnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2042,7 +2042,7 @@ struct BurnDriver BurnDrvArknoid2 = {
 	"arknoid2", NULL, NULL, NULL, "1987",
 	"Arkanoid - Revenge of DOH (World)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, arknoid2RomInfo, arknoid2RomName, NULL, NULL, Arknoid2InputInfo, Arknoid2DIPInfo,
 	Arknoid2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2074,7 +2074,7 @@ struct BurnDriver BurnDrvArknid2u = {
 	"arknoid2u", "arknoid2", NULL, NULL, "1987",
 	"Arkanoid - Revenge of DOH (US)\0", NULL, "Taito America Corporation (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, arknid2uRomInfo, arknid2uRomName, NULL, NULL, Arknoid2InputInfo, Arknid2uDIPInfo,
 	Arknoid2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2106,7 +2106,7 @@ struct BurnDriver BurnDrvArknid2j = {
 	"arknoid2j", "arknoid2", NULL, NULL, "1987",
 	"Arkanoid - Revenge of DOH (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, arknid2jRomInfo, arknid2jRomName, NULL, NULL, Arknoid2InputInfo, Arknid2uDIPInfo,
 	Arknoid2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2148,7 +2148,7 @@ struct BurnDriver BurnDrvDrtoppel = {
 	"drtoppel", NULL, NULL, NULL, "1987",
 	"Dr. Toppel's Adventure (World)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, drtoppelRomInfo, drtoppelRomName, NULL, NULL, CommonInputInfo, DrtoppelDIPInfo,
 	DrtoppelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2185,7 +2185,7 @@ struct BurnDriver BurnDrvDrtopplu = {
 	"drtoppelu", "drtoppel", NULL, NULL, "1987",
 	"Dr. Toppel's Adventure (US)\0", NULL, "Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, drtoppluRomInfo, drtoppluRomName, NULL, NULL, CommonInputInfo, DrtoppluDIPInfo,
 	DrtoppelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2222,7 +2222,7 @@ struct BurnDriver BurnDrvDrtopplj = {
 	"drtoppelj", "drtoppel", NULL, NULL, "1987",
 	"Dr. Toppel's Tankentai (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, drtoppljRomInfo, drtoppljRomName, NULL, NULL, CommonInputInfo, DrtoppluDIPInfo,
 	DrtoppelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2261,7 +2261,7 @@ struct BurnDriver BurnDrvKageki = {
 	"kageki", NULL, NULL, NULL, "1988",
 	"Kageki (US)\0", "Imperfect Sound", "Taito America Corporation (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, kagekiRomInfo, kagekiRomName, NULL, NULL, CommonInputInfo, KagekiDIPInfo,
 	KagekiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2295,7 +2295,7 @@ struct BurnDriver BurnDrvKagekij = {
 	"kagekij", "kageki", NULL, NULL, "1988",
 	"Kageki (Japan)\0", "Imperfect Sound", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, kagekijRomInfo, kagekijRomName, NULL, NULL, CommonInputInfo, KagekiDIPInfo,
 	KagekiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2329,7 +2329,7 @@ struct BurnDriver BurnDrvKagekih = {
 	"kagekih", "kageki", NULL, NULL, "1992",
 	"Kageki (hack)\0", "Imperfect Sound", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, kagekihRomInfo, kagekihRomName, NULL, NULL, CommonInputInfo, KagekiDIPInfo,
 	KagekiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2368,7 +2368,7 @@ struct BurnDriver BurnDrvChukatai = {
 	"chukatai", NULL, NULL, NULL, "1988",
 	"Chuka Taisen (World)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, chukataiRomInfo, chukataiRomName, NULL, NULL, CommonInputInfo, ChukataiDIPInfo,
 	ChukataiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -2402,7 +2402,7 @@ struct BurnDriver BurnDrvChukatau = {
 	"chukataiu", "chukatai", NULL, NULL, "1988",
 	"Chuka Taisen (US)\0", NULL, "Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, chukatauRomInfo, chukatauRomName, NULL, NULL, CommonInputInfo, ChukatauDIPInfo,
 	ChukataiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -2436,7 +2436,7 @@ struct BurnDriver BurnDrvChukataj = {
 	"chukataij", "chukatai", NULL, NULL, "1988",
 	"Chuka Taisen (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, chukatajRomInfo, chukatajRomName, NULL, NULL, CommonInputInfo, ChukatauDIPInfo,
 	ChukataiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -2469,7 +2469,7 @@ struct BurnDriver BurnDrvtnzs = {
 	"tnzs", NULL, NULL, NULL, "1988",
 	"The NewZealand Story (World, newer)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, tnzsRomInfo, tnzsRomName, NULL, NULL, CommonInputInfo, TnzsDIPInfo,
 	Type2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -2502,7 +2502,7 @@ struct BurnDriver BurnDrvtnzsj = {
 	"tnzsj", "tnzs", NULL, NULL, "1988",
 	"The NewZealand Story (Japan, new version, newer PCB)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, tnzsjRomInfo, tnzsjRomName, NULL, NULL, CommonInputInfo, TnzsjDIPInfo,
 	Type2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -2540,7 +2540,7 @@ struct BurnDriver BurnDrvTnzsjo = {
 	"tnzsjo", "tnzs", NULL, NULL, "1988",
 	"The NewZealand Story (Japan, old version) (older PCB)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, tnzsjoRomInfo, tnzsjoRomName, NULL, NULL, CommonInputInfo, TnzsjoDIPInfo,
 	TnzsoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -2573,7 +2573,7 @@ struct BurnDriver BurnDrvTnzso = {
 	"tnzso", "tnzs", NULL, NULL, "1988",
 	"The NewZealand Story (World, old version) (older PCB)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, tnzsoRomInfo, tnzsoRomName, NULL, NULL, CommonInputInfo, TnzsopDIPInfo,
 	TnzsoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -2606,7 +2606,7 @@ struct BurnDriver BurnDrvTnzsop = {
 	"tnzsop", "tnzs", NULL, NULL, "1988",
 	"The NewZealand Story (World, prototype?) (older PCB)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, tnzsopRomInfo, tnzsopRomName, NULL, NULL, CommonInputInfo, TnzsopDIPInfo,
 	TnzsoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -2635,7 +2635,7 @@ struct BurnDriverD BurnDrvKabukiz = {
 	"kabukiz", NULL, NULL, NULL, "1988",
 	"Kabuki-Z (World)\0", "Imperfect graphics", "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, kabukizRomInfo, kabukizRomName, NULL, NULL, CommonInputInfo, KabukizDIPInfo,
 	Type2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -2664,7 +2664,7 @@ struct BurnDriverD BurnDrvKabukizj = {
 	"kabukizj", "kabukiz", NULL, NULL, "1988",
 	"Kabuki-Z (Japan)\0", "Imperfect graphics", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, kabukizjRomInfo, kabukizjRomName, NULL, NULL, CommonInputInfo, KabukizjDIPInfo,
 	Type2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -2694,7 +2694,7 @@ struct BurnDriver BurnDrvInsectx = {
 	"insectx", NULL, NULL, NULL, "1989",
 	"Insector X (World)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, insectxRomInfo, insectxRomName, NULL, NULL, InsectxInputInfo, InsectxDIPInfo,
 	InsectxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -2726,7 +2726,7 @@ struct BurnDriver BurnDrvJpopnics = {
 	"jpopnics", NULL, NULL, NULL, "1992",
 	"Jumping Pop (Nics, Korean bootleg of Plump Pop)\0", "Imperfect graphics", "Nics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, jpopnicsRomInfo, jpopnicsRomName, NULL, NULL, JpopnicsInputInfo, JpopnicsDIPInfo,
 	JpopnicsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3

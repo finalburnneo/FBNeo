@@ -2110,7 +2110,7 @@ struct BurnDriver BurnDrvVigilant = {
 	"vigilant", NULL, NULL, NULL, "1988",
 	"Vigilante (World, set 1)\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 544, 256, 256, 4, 3
@@ -2120,7 +2120,7 @@ struct BurnDriver BurnDrvVigilant1 = {
 	"vigilant1", "vigilant", NULL, NULL, "1988",
 	"Vigilante (World, set 2)\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, Drv1RomInfo, Drv1RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 544, 256, 256, 4, 3
@@ -2130,7 +2130,7 @@ struct BurnDriver BurnDrvVigilantu = {
 	"vigilantu", "vigilant", NULL, NULL, "1988",
 	"Vigilante (US)\0", NULL, "Irem (Data East USA License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 544, 256, 256, 4, 3
@@ -2140,7 +2140,7 @@ struct BurnDriver BurnDrvVigilantu2 = {
 	"vigilantu2", "vigilant", NULL, NULL, "1988",
 	"Vigilante (US, rev G)\0", NULL, "Irem (Data East USA License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, Drvu2RomInfo, Drvu2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 544, 256, 256, 4, 3
@@ -2150,7 +2150,7 @@ struct BurnDriver BurnDrvVigilantj = {
 	"vigilantj", "vigilant", NULL, NULL, "1988",
 	"Vigilante (Japan)\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 544, 256, 256, 4, 3
@@ -2160,7 +2160,7 @@ struct BurnDriver BurnDrvKikcubic = {
 	"kikcubic", NULL, NULL, NULL, "1988",
 	"Meikyu Jima (Japan)\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_IREM_MISC, GBF_MAZE, 0,
 	NULL, KikcubicRomInfo, KikcubicRomName, NULL, NULL, KikcubicInputInfo, KikcubicDIPInfo,
 	KikcubicInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 544, 384, 256, 4, 3
@@ -2170,7 +2170,7 @@ struct BurnDriver BurnDrvKikcubicb = {
 	"kikcubicb", "kikcubic", NULL, NULL, "1988",
 	"Kickle Cubele\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_IREM_MISC, GBF_MAZE, 0,
 	NULL, KikcubicbRomInfo, KikcubicbRomName, NULL, NULL, KikcubicInputInfo, KikcubicDIPInfo,
 	KikcubicInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 544, 384, 256, 4, 3
@@ -2180,7 +2180,7 @@ struct BurnDriver BurnDrvBuccanrs = {
 	"buccanrs", NULL, NULL, NULL, "1989",
 	"Buccaneers (set 1)\0", NULL, "Duintronic", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, BuccanrsRomInfo, BuccanrsRomName, NULL, NULL, BuccanrsInputInfo, BuccanrsDIPInfo,
 	BuccanrsInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 544, 256, 256, 4, 3
@@ -2190,7 +2190,7 @@ struct BurnDriver BurnDrvBuccanrsa = {
 	"buccanrsa", "buccanrs", NULL, NULL, "1989",
 	"Buccaneers (set 2)\0", NULL, "Duintronic", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, BuccanrsaRomInfo, BuccanrsaRomName, NULL, NULL, BuccanrsaInputInfo, BuccanrsaDIPInfo,
 	BuccanrsInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 544, 256, 256, 4, 3

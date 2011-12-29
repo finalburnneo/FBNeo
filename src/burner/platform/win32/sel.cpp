@@ -43,7 +43,7 @@ HTREEITEM hFilterCps3			= NULL;
 HTREEITEM hFilterDataeast		= NULL;
 HTREEITEM hFilterGalaxian		= NULL;
 HTREEITEM hFilterIrem			= NULL;
-HTREEITEM hFilterKaneko16		= NULL;
+HTREEITEM hFilterKaneko			= NULL;
 HTREEITEM hFilterKonami			= NULL;
 HTREEITEM hFilterNeogeo			= NULL;
 HTREEITEM hFilterPacman			= NULL;
@@ -147,8 +147,8 @@ static int GalaxianValue	= HARDWARE_PREFIX_GALAXIAN >> 24;
 static int MASKGALAXIAN		= 1 << GalaxianValue;
 static int IremValue		= HARDWARE_PREFIX_IREM >> 24;
 static int MASKIREM			= 1 << IremValue;
-static int Kaneko16Value	= HARDWARE_PREFIX_KANEKO16 >> 24;
-static int MASKKANEKO16		= 1 << Kaneko16Value;
+static int KanekoValue		= HARDWARE_PREFIX_KANEKO >> 24;
+static int MASKKANEKO		= 1 << KanekoValue;
 static int DataeastValue	= HARDWARE_PREFIX_DATAEAST >> 24;
 static int MASKDATAEAST		= 1 << DataeastValue;
 static int SnesValue		= HARDWARE_PREFIX_NINTENDO_SNES >> 24;
@@ -157,7 +157,7 @@ static int MiscPre90sValue	= HARDWARE_PREFIX_MISC_PRE90S >> 24;
 static int MASKMISCPRE90S	= 1 << MiscPre90sValue;
 static int MiscPost90sValue	= HARDWARE_PREFIX_MISC_POST90S >> 24;
 static int MASKMISCPOST90S	= 1 << MiscPost90sValue;
-static int MASKALL			= MASKCPS | MASKCPS2 | MASKCPS3 | MASKNEOGEO | MASKSEGA | MASKTOAPLAN | MASKCAVE | MASKPGM | MASKTAITO | MASKPSIKYO | MASKKONAMI | MASKPACMAN | MASKGALAXIAN | MASKIREM | MASKKANEKO16 | MASKDATAEAST | MASKMEGADRIVE | MASKSNES | MASKMISCPRE90S | MASKMISCPOST90S;
+static int MASKALL			= MASKCPS | MASKCPS2 | MASKCPS3 | MASKNEOGEO | MASKSEGA | MASKTOAPLAN | MASKCAVE | MASKPGM | MASKTAITO | MASKPSIKYO | MASKKONAMI | MASKPACMAN | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKDATAEAST | MASKMEGADRIVE | MASKSNES | MASKMISCPRE90S | MASKMISCPOST90S;
 
 #define AVAILONLY		(1 << 24)
 #define AUTOEXPAND		(1 << 25)
@@ -899,7 +899,7 @@ static void CreateFilters()
 	_TVCreateFiltersA(hHardware		, IDS_SEL_DATAEAST		, hFilterDataeast		, nLoadMenuShowX & MASKDATAEAST						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_GALAXIAN		, hFilterGalaxian		, nLoadMenuShowX & MASKGALAXIAN						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_IREM			, hFilterIrem			, nLoadMenuShowX & MASKIREM							);
-	_TVCreateFiltersA(hHardware		, IDS_SEL_KANEKO16		, hFilterKaneko16		, nLoadMenuShowX & MASKKANEKO16						);
+	_TVCreateFiltersA(hHardware		, IDS_SEL_KANEKO		, hFilterKaneko			, nLoadMenuShowX & MASKKANEKO						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_KONAMI		, hFilterKonami			, nLoadMenuShowX & MASKKONAMI						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_NEOGEO		, hFilterNeogeo			, nLoadMenuShowX & MASKNEOGEO						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_PACMAN		, hFilterPacman			, nLoadMenuShowX & MASKPACMAN						);
@@ -1041,7 +1041,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterDataeast, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterGalaxian, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterIrem, FALSE);
-				_TreeView_SetCheckState(hFilterList, hFilterKaneko16, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterKaneko, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterKonami, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterNeogeo, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterPacman, FALSE);
@@ -1066,7 +1066,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterDataeast, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterGalaxian, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterIrem, TRUE);
-				_TreeView_SetCheckState(hFilterList, hFilterKaneko16, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterKaneko, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterKonami, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterNeogeo, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterPacman, TRUE);
@@ -1205,7 +1205,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterDataeast)		_ToggleGameListing(nLoadMenuShowX, MASKDATAEAST);
 		if (hItemChanged == hFilterGalaxian)		_ToggleGameListing(nLoadMenuShowX, MASKGALAXIAN);
 		if (hItemChanged == hFilterIrem)			_ToggleGameListing(nLoadMenuShowX, MASKIREM);
-		if (hItemChanged == hFilterKaneko16)		_ToggleGameListing(nLoadMenuShowX, MASKKANEKO16);
+		if (hItemChanged == hFilterKaneko)			_ToggleGameListing(nLoadMenuShowX, MASKKANEKO);
 		if (hItemChanged == hFilterKonami)			_ToggleGameListing(nLoadMenuShowX, MASKKONAMI);
 		if (hItemChanged == hFilterNeogeo)			_ToggleGameListing(nLoadMenuShowX, MASKNEOGEO);
 		if (hItemChanged == hFilterPacman)			_ToggleGameListing(nLoadMenuShowX, MASKPACMAN);

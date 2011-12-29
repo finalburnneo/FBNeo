@@ -1,9 +1,9 @@
 alldir	= 	burn burn/devices burn/sound burn/drivers burn/drivers/capcom burn/drivers/cave burn/drivers/cps3 \
-			burn/drivers/galaxian burn/drivers/irem burn/drivers/konami burn/drivers/megadrive burn/drivers/misc_post90s \
-			burn/drivers/misc_pre90s burn/drivers/neogeo burn/drivers/pgm burn/drivers/psikyo burn/drivers/sega \
-			burn/drivers/snes burn/drivers/taito burn/drivers/toaplan burner burner/platform/win32 cpu cpu/a68k cpu/arm cpu/arm7 \
-			cpu/h6280 cpu/hd6309 cpu/i8039 cpu/konami cpu/m68k cpu/m6502 cpu/m6800 cpu/m6805 cpu/m6809 cpu/nec cpu/s2650 \
-			cpu/sh2 cpu/z80 depend/kaillera/client depend/libs/libpng depend/libs/zlib interface interface/video \
+			burn/drivers/dataeast burn/drivers/galaxian burn/drivers/irem burn/drivers/konami burn/drivers/megadrive \
+			burn/drivers/misc_post90s burn/drivers/misc_pre90s burn/drivers/neogeo burn/drivers/pgm burn/drivers/psikyo \
+			burn/drivers/sega burn/drivers/snes burn/drivers/taito burn/drivers/toaplan burner burner/platform/win32 cpu cpu/a68k \
+			cpu/arm cpu/arm7 cpu/h6280 cpu/hd6309 cpu/i8039 cpu/konami cpu/m68k cpu/m6502 cpu/m6800 cpu/m6805 cpu/m6809 cpu/nec \
+			cpu/s2650 cpu/sh2 cpu/z80 depend/kaillera/client depend/libs/libpng depend/libs/zlib interface interface/video \
 			interface/video/scalers interface/video/win32 interface/audio interface/audio/win32 interface/input \
 			interface/input/win32 interface/cd interface/cd/win32 interface/perfcount interface/perfcount/win32 \
 			depend/generated
@@ -16,6 +16,9 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_cps2.o \
 			\
 			d_cps3.o \
+			\
+			d_backfire.o d_boogwing.o d_cbuster.o d_cninja.o d_darkseal.o d_dassault.o d_dec0.o d_dec8.o d_dietgogo.o \
+			d_funkyjet.o d_karnov.o d_lemmings.o d_rohga.o d_simpl156.o d_supbtime.o d_tumblep.o d_vaportra.o \
 			\
 			d_galaxian.o \
 			\
@@ -41,23 +44,20 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_tekipaki.o d_truxton.o d_truxton2.o d_vfive.o d_vimana.o d_zerowing.o \
 			\
 			d_4enraya.o d_1942.o d_1943.o d_ambush.o d_angelkds.o d_arabian.o d_arkanoid.o d_armedf.o d_aztarac.o d_bankp.o \
-			d_baraduke.o d_bionicc.o d_blktiger.o d_blockout.o d_blueprnt.o d_bombjack.o d_chaknpop.o d_commando.o d_dec0.o \
-			d_dec8.o d_ddragon.o d_dotrikun.o d_dynduke.o d_epos.o d_exedexes.o d_flstory.o d_funkybee.o d_galaga.o d_gauntlet.o \
-			d_ginganin.o d_gng.o d_gunsmoke.o  d_higemaru.o d_ikki.o d_jack.o d_kangaroo.o d_karnov.o d_kyugo.o d_ladybug.o \
-			d_lkage.o d_lwings.o d_madgear.o d_markham.o d_marineb.o d_meijinsn.o d_minivdr.o d_mitchell.o d_mole.o d_mrdo.o \
-			d_mrflea.o d_mystston.o d_pacman.o d_pac2650.o d_pkunwar.o  d_prehisle.o d_quizo.o d_rallyx.o d_renegade.o \
-			d_retofinv.o d_rpunch.o d_route16.o  d_scregg.o d_sf.o d_skyfox.o d_skykid.o d_snk68.o d_solomon.o d_sonson.o \
-			d_srumbler.o d_suprloco.o d_tecmo.o d_tigerheli.o d_tigeroad.o d_toki.o d_tnzs.o d_vaportra.o d_vigilant.o d_vulgus.o \
-			d_wallc.o d_wc90.o d_wc90b.o d_wwfsstar.o \
+			d_baraduke.o d_bionicc.o d_blktiger.o d_blockout.o d_blueprnt.o d_bombjack.o d_chaknpop.o d_commando.o d_ddragon.o \
+			d_dotrikun.o d_dynduke.o d_epos.o d_exedexes.o d_flstory.o d_funkybee.o d_galaga.o d_gauntlet.o d_ginganin.o d_gng.o \
+			d_gunsmoke.o d_higemaru.o d_ikki.o d_jack.o d_kangaroo.o d_kyugo.o d_ladybug.o d_lkage.o d_lwings.o d_madgear.o \
+			d_markham.o d_marineb.o d_meijinsn.o d_minivdr.o d_mitchell.o d_mole.o d_mrdo.o d_mrflea.o d_mystston.o d_pacman.o \
+			d_pac2650.o d_pkunwar.o d_prehisle.o d_quizo.o d_rallyx.o d_renegade.o d_retofinv.o d_rpunch.o d_route16.o d_scregg.o \
+			d_sf.o d_skyfox.o d_skykid.o d_snk68.o d_solomon.o d_sonson.o d_srumbler.o d_suprloco.o d_tecmo.o d_tigerheli.o \
+			d_tigeroad.o d_toki.o d_tnzs.o d_vigilant.o d_vulgus.o d_wallc.o d_wc90.o d_wc90b.o d_wwfsstar.o \
 			\
-			d_1945kiii.o d_aerofgt.o d_airbustr.o d_aquarium.o d_ashnojoe.o d_backfire.o d_bloodbro.o d_boogwing.o d_cbuster.o \
-			d_cninja.o d_crospang.o d_crshrace.o d_darkseal.o d_dassault.o d_dcon.o d_deniam.o d_ddragon3.o d_dietgogo.o \
-			d_diverboy.o d_drtomy.o d_egghunt.o d_esd16.o d_f1gp.o d_fstarfrc.o d_funkyjet.o d_funybubl.o d_fuukifg3.o d_gaelco.o \
-			d_gaiden.o d_galpanic.o d_gotcha.o d_gumbo.o d_hyperpac.o d_kaneko16.o  d_lemmings.o d_lordgun.o d_mcatadv.o d_midas.o \
+			d_1945kiii.o d_aerofgt.o d_airbustr.o d_aquarium.o d_ashnojoe.o d_bloodbro.o d_crospang.o d_crshrace.o d_dcon.o \
+			d_deniam.o d_ddragon3.o d_diverboy.o d_drtomy.o d_egghunt.o d_esd16.o d_f1gp.o d_fstarfrc.o d_funybubl.o d_fuukifg3.o \
+			d_gaelco.o d_gaiden.o d_galpanic.o d_gotcha.o d_gumbo.o d_hyperpac.o d_kaneko16.o d_lordgun.o d_mcatadv.o d_midas.o \
 			d_mugsmash.o d_news.o d_nmg5.o d_nmk16.o d_ohmygod.o d_pass.o d_pirates.o d_pktgaldx.o d_powerins.o d_pushman.o \
-			d_raiden.o d_rohga.o d_seta.o d_seta2.o d_shadfrce.o d_silkroad.o d_simpl156.o d_speedspn.o d_suna16.o d_supbtime.o \
-			d_taotaido.o d_tecmosys.o d_tumbleb.o d_tumblep.o d_unico.o d_vmetal.o d_welltris.o d_wwfwfest.o d_xorworld.o \
-			d_yunsun16.o d_zerozone.o \
+			d_raiden.o d_seta.o d_seta2.o d_shadfrce.o d_silkroad.o d_speedspn.o d_suna16.o d_taotaido.o d_tecmosys.o d_tumbleb.o \
+			d_unico.o d_vmetal.o d_welltris.o d_wwfwfest.o d_xorworld.o d_yunsun16.o d_zerozone.o \
 			\
 			d_parent.o \
 			\
@@ -113,6 +113,8 @@ depobj	:= 	about.o bzip.o cona.o debugger.o drv.o dwmapi_core.o dynhuff.o fba_ka
 			\
 			cps3run.o cps3snd.o \
 			\
+			deco16ic.o \
+			\
 			gal_gfx.o gal_run.o gal_sound.o gal_stars.o \
 			\
 			irem_cpu.o \
@@ -132,9 +134,7 @@ depobj	:= 	about.o bzip.o cona.o debugger.o drv.o dwmapi_core.o dynhuff.o fba_ka
 			\
 			toa_bcu2.o toa_extratext.o toa_gp9001.o toa_palette.o toaplan1.o toaplan.o \
 			\
-			tnzs_prot.o \
-			\
-			deco16ic.o nmk004.o \
+			nmk004.o tnzs_prot.o \
 			\
 			megadrive.o \
 			\

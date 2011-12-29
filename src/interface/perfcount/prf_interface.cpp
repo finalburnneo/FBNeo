@@ -10,6 +10,8 @@ static InterfaceInfo ProfileInfo = { NULL, NULL, NULL };
 	extern struct ProfileDo cntDoPerfCount;
 #elif defined (BUILD_SDL)
 	extern struct ProfileDo cntDoPerfCount;
+#elif defined (_XBOX)
+	extern struct ProfileDo cntDoPerfCount;
 #endif
 
 static struct ProfileDo* pProfileDo[] =
@@ -17,6 +19,8 @@ static struct ProfileDo* pProfileDo[] =
 #if defined (BUILD_WIN32)
 	&cntDoPerfCount,
 #elif defined (BUILD_SDL)
+	&cntDoPerfCount,
+#elif defined (_XBOX)
 	&cntDoPerfCount,
 #endif
 };

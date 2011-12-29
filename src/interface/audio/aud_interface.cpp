@@ -21,6 +21,8 @@ static UINT32 nAudActive = 0;
 	extern struct AudOut AudOutXAudio2;
 #elif defined (BUILD_SDL)
 	extern struct AudOut AudOutSDL;
+#elif defined (_XBOX)
+	extern struct AudOut AudOutXAudio2;
 #endif
 
 static struct AudOut *pAudOut[]=
@@ -30,6 +32,8 @@ static struct AudOut *pAudOut[]=
 	&AudOutXAudio2,
 #elif defined (BUILD_SDL)
 	&AudOutSDL,
+#elif defined (_XBOX)
+	&AudOutXAudio2,
 #endif
 };
 

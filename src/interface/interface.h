@@ -166,6 +166,10 @@ InterfaceInfo* VidGetInfo();
  extern HWND hVidWnd;
 #endif
 
+#if defined (_XBOX)
+ extern HWND hVidWnd;
+#endif
+
 extern bool bVidOkay;
 extern UINT32 nVidSelect;
 extern INT32 nVidWidth, nVidHeight, nVidDepth, nVidRefresh;

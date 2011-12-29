@@ -15,6 +15,8 @@
 #elif defined (BUILD_SDL)
 	extern struct VidOut VidOutSDLOpenGL;
 	extern struct VidOut VidOutSDLFX;
+#elif defined (_XBOX)
+	extern struct VidOut VidOutD3D;
 #endif
 
 static struct VidOut *pVidOut[] = {
@@ -27,6 +29,8 @@ static struct VidOut *pVidOut[] = {
 #elif defined (BUILD_SDL)
 	&VidOutSDLOpenGL,
 	&VidOutSDLFX,
+#elif defined (_XBOX)
+	&VidOutD3D,
 #endif
 };
 
@@ -85,6 +89,10 @@ INT32 bVidMotionBlur = 0;				// 1 = motion blur
 
 #ifdef BUILD_WIN32
  HWND hVidWnd = NULL;							// Actual window used for video
+#endif
+
+#if defined (_XBOX)
+  HWND hVidWnd = NULL;							// Actual window used for video
 #endif
 
 INT32 nVidScrnWidth = 0, nVidScrnHeight = 0;		// Actual Screen dimensions (0 if in windowed mode)

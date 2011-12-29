@@ -11,9 +11,9 @@ static InterfaceInfo CDEmuInfo = { NULL, NULL, NULL };
 #if defined BUILD_WIN32
 	extern struct CDEmuDo isowavDo;
 #elif defined BUILD_SDL
-
 	// CD emulation module
-
+#elif defined (_XBOX)
+	extern struct CDEmuDo isowavDo;
 #endif
 
 static struct CDEmuDo* pCDEmuDo[] =
@@ -21,9 +21,9 @@ static struct CDEmuDo* pCDEmuDo[] =
 #if defined BUILD_WIN32
 	&isowavDo,
 #elif defined BUILD_SDL
-
 	// CD emulation module
-
+#elif defined (_XBOX)
+	&isowavDo,
 #endif
 };
 

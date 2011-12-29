@@ -10,6 +10,8 @@ static bool bCinpOkay;
 	extern struct InputInOut InputInOutDInput;
 #elif defined (BUILD_SDL)
 	extern struct InputInOut InputInOutSDL;
+#elif defined (_XBOX)
+	extern struct InputInOut InputInOutXInput2;
 #endif
 
 static struct InputInOut *pInputInOut[]=
@@ -18,6 +20,8 @@ static struct InputInOut *pInputInOut[]=
 	&InputInOutDInput,
 #elif defined (BUILD_SDL)
 	&InputInOutSDL,
+#elif defined (_XBOX)
+	&InputInOutXInput2,
 #endif
 };
 

@@ -29,6 +29,8 @@
  #include "burner_win32.h"
 #elif defined (BUILD_SDL)
  #include "burner_sdl.h"
+#elif defined (_XBOX)
+ #include "burner_xbox.h"
 #endif
 
 #include "net.h"

@@ -6,6 +6,16 @@ extern INT32 nScreenWidth, nScreenHeight;
 INT32 GenericTilesInit();
 INT32 GenericTilesExit();
 
+// Tile decoding macros
+#define RGN_FRAC(length, numerator, denominator) ((((length) * 8) * (numerator)) / (denominator))
+
+#define STEP2(start, step)	((start) + ((step)*0)), ((start) + ((step)*1))
+#define STEP4(start, step)	STEP2(start, step),  STEP2((start)+((step)*2), step)
+#define STEP8(start, step)	STEP4(start, step),  STEP4((start)+((step)*4), step)
+#define STEP16(start, step)	STEP8(start, step),  STEP8((start)+((step)*8), step)
+#define STEP32(start, step)	STEP16(start, step), STEP16((start)+((step)*16), step)
+#define STEP64(start, step)	STEP32(start, step), STEP32((start)+((step)*32), step)
+
 void GfxDecode(INT32 num, INT32 numPlanes, INT32 xSize, INT32 ySize, INT32 planeoffsets[], INT32 xoffsets[], INT32 yoffsets[], INT32 modulo, UINT8 *pSrc, UINT8 *pDest);
 void GfxDecodeSingle(INT32 which, INT32 numPlanes, INT32 xSize, INT32 ySize, INT32 planeoffsets[], INT32 xoffsets[], INT32 yoffsets[], INT32 modulo, UINT8 *pSrc, UINT8 *pDest);
 

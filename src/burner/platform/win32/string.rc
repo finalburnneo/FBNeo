@@ -154,6 +154,7 @@ BEGIN
 	IDS_SEL_SETSTATUS			"Showing %i of %i sets [%i Unavailable sets]"
 	IDS_SEL_KANEKO16			"Kaneko16"
 	IDS_SEL_SNES				"SNES"
+	IDS_SEL_DATAEAST			"Data East"
 	
 	IDS_GENRE					"Genre"
 	IDS_GENRE_HORSHOOT			"Shooter - Horizontal"

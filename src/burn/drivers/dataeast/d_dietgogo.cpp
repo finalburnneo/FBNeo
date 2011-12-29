@@ -513,7 +513,7 @@ struct BurnDriver BurnDrvDietgou = {
 	"dietgou", "dietgo", NULL, NULL, "1992",
 	"Diet Go Go (USA v1.1 1992.09.26)\0", "No sound", "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, dietgouRomInfo, dietgouRomName, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
@@ -547,7 +547,7 @@ struct BurnDriver BurnDrvDietgoe = {
 	"dietgoe", "dietgo", NULL, NULL, "1992",
 	"Diet Go Go (Euro v1.1 1992.08.04)\0", "No sound", "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, dietgoeRomInfo, dietgoeRomName, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
@@ -581,7 +581,7 @@ struct BurnDriver BurnDrvDietgo = {
 	"dietgo", NULL, NULL, NULL, "1992",
 	"Diet Go Go (Euro v1.1 1992.09.26)\0", "No sound", "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, dietgoRomInfo, dietgoRomName, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
@@ -611,7 +611,7 @@ struct BurnDriver BurnDrvDietgoj = {
 	"dietgoj", "dietgo", NULL, NULL, "1992",
 	"Diet Go Go (Japan v1.1 1992.09.26)\0", "No sound", "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, dietgojRomInfo, dietgojRomName, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3

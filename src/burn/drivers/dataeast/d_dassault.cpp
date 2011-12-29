@@ -1027,7 +1027,7 @@ struct BurnDriver BurnDrvThndzone = {
 	"thndzone", NULL, NULL, NULL, "1991",
 	"Thunder Zone (World)\0", "No sound", "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, thndzoneRomInfo, thndzoneRomName, NULL, NULL, ThndzoneInputInfo, ThndzoneDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 240, 4, 3
@@ -1095,7 +1095,7 @@ struct BurnDriver BurnDrvDassault = {
 	"dassault", "thndzone", NULL, NULL, "1991",
 	"Desert Assault (US)\0", "No sound", "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, dassaultRomInfo, dassaultRomName, NULL, NULL, ThndzoneInputInfo, DassaultDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 240, 4, 3
@@ -1163,7 +1163,7 @@ struct BurnDriver BurnDrvDassault4 = {
 	"dassault4", "thndzone", NULL, NULL, "1991",
 	"Desert Assault (US 4 Players)\0", "No sound", "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, dassault4RomInfo, dassault4RomName, NULL, NULL, ThndzoneInputInfo, Dassault4DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 240, 4, 3

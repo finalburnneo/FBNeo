@@ -525,7 +525,7 @@ struct BurnDriver BurnDrvTumblep = {
 	"tumblep", NULL, NULL, NULL, "1991",
 	"Tumble Pop (World)\0", "No Sound", "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, tumblepRomInfo, tumblepRomName, NULL, NULL, TumblepInputInfo, TumblepDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -555,7 +555,7 @@ struct BurnDriver BurnDrvTumblepj = {
 	"tumblepj", "tumblep", NULL, NULL, "1991",
 	"Tumble Pop (Japan)\0", "No Sound", "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, tumblepjRomInfo, tumblepjRomName, NULL, NULL, TumblepInputInfo, TumblepDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3

@@ -2405,7 +2405,7 @@ struct BurnDriver BurnDrvBaddudes = {
 	"baddudes", NULL, NULL, NULL, "1988",
 	"Bad Dudes vs. Dragonninja (US)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, BaddudesRomInfo, BaddudesRomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
 	BaddudesInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 256, 240, 4, 3
@@ -2415,7 +2415,7 @@ struct BurnDriver BurnDrvDrgninja = {
 	"drgninja", "baddudes", NULL, NULL, "1988",
 	"Dragonninja (Japan)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, DrgninjaRomInfo, DrgninjaRomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
 	BaddudesInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 256, 240, 4, 3
@@ -2425,7 +2425,7 @@ struct BurnDriver BurnDrvHbarrel = {
 	"hbarrel", NULL, NULL, NULL, "1987",
 	"Heavy Barrel (US)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, HbarrelRomInfo, HbarrelRomName, NULL, NULL, Dec0InputInfo, HbarrelDIPInfo,
 	HbarrelInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 240, 256, 3, 4
@@ -2435,7 +2435,7 @@ struct BurnDriver BurnDrvHbarrelw = {
 	"hbarrelw", "hbarrel", NULL, NULL, "1987",
 	"Heavy Barrel (World)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, HbarrelwRomInfo, HbarrelwRomName, NULL, NULL, Dec0InputInfo, HbarrelDIPInfo,
 	HbarrelInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 240, 256, 3, 4
@@ -2445,7 +2445,7 @@ struct BurnDriverD BurnDrvHippodrm = {
 	"hippodrm", NULL, NULL, NULL, "1989",
 	"Hippodrome (US)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
+	0, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, HippodrmRomInfo, HippodrmRomName, NULL, NULL, Dec0InputInfo, HippodrmDIPInfo,
 	HippodrmInit, RobocopExit, RobocopFrame, NULL, DrvScan,
 	NULL, 0x400, 256, 240, 4, 3
@@ -2455,7 +2455,7 @@ struct BurnDriver BurnDrvRobocop = {
 	"robocop", NULL, NULL, NULL, "1988",
 	"Robocop (World revision 4)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	0, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, RobocopRomInfo, RobocopRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
 	RobocopInit, RobocopExit, RobocopFrame, NULL, DrvScan,
 	NULL, 0x400, 256, 240, 4, 3
@@ -2465,7 +2465,7 @@ struct BurnDriver BurnDrvRobocopb = {
 	"robocopb", "robocop", NULL, NULL, "1988",
 	"Robocop (World bootleg)\0", NULL, "bootleg", "DEC0",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, RobocopbRomInfo, RobocopbRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
 	RobocopbInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 256, 240, 4, 3

@@ -660,7 +660,7 @@ struct BurnDriver BurnDrvFunkyjet = {
 	"funkyjet", NULL, NULL, NULL, "1992",
 	"Funky Jet (World)\0", "No sound", "[Data East] (Mitchell license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, funkyjetRomInfo, funkyjetRomName, NULL, NULL, FunkyjetInputInfo, FunkyjetDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -690,7 +690,7 @@ struct BurnDriver BurnDrvFunkyjetj = {
 	"funkyjetj", "funkyjet", NULL, NULL, "1992",
 	"Funky Jet (Japan)\0", "No sound", "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, funkyjetjRomInfo, funkyjetjRomName, NULL, NULL, FunkyjetInputInfo, FunkyjetjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -720,7 +720,7 @@ struct BurnDriver BurnDrvSotsugyo = {
 	"sotsugyo", NULL, NULL, NULL, "1995",
 	"Sotsugyo Shousho\0", "No sound", "Mitchell (Atlus license)", "Miscellaneous",
 	L"\u5352\u696D\u8A3C\u66F8\0Sotsugyo Shousho\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MINIGAMES, 0,
 	NULL, sotsugyoRomInfo, sotsugyoRomName, NULL, NULL, FunkyjetInputInfo, SotsugyoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3

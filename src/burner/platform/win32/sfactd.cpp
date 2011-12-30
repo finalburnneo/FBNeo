@@ -27,10 +27,10 @@ void ToggleSprite(unsigned char PriNum)
 static int SFactdUpdate()
 {
 
-	CheckDlgButton(hSFactdlg,IDC_CHECK1,(nBurnLayer & 1)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_CHECK2,(nBurnLayer & 2)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_CHECK3,(nBurnLayer & 4)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_CHECK4,(nBurnLayer & 8)?BST_CHECKED:BST_UNCHECKED);
+	CheckDlgButton(hSFactdlg,IDC_LAYER1,(nBurnLayer & 1)?BST_CHECKED:BST_UNCHECKED);
+	CheckDlgButton(hSFactdlg,IDC_LAYER2,(nBurnLayer & 2)?BST_CHECKED:BST_UNCHECKED);
+	CheckDlgButton(hSFactdlg,IDC_LAYER3,(nBurnLayer & 4)?BST_CHECKED:BST_UNCHECKED);
+	CheckDlgButton(hSFactdlg,IDC_LAYER4,(nBurnLayer & 8)?BST_CHECKED:BST_UNCHECKED);
 	CheckDlgButton(hSFactdlg,IDC_SPRITE1,(nSpriteEnable & 0x01)?BST_CHECKED:BST_UNCHECKED);
 	CheckDlgButton(hSFactdlg,IDC_SPRITE2,(nSpriteEnable & 0x02)?BST_CHECKED:BST_UNCHECKED);
 	CheckDlgButton(hSFactdlg,IDC_SPRITE3,(nSpriteEnable & 0x04)?BST_CHECKED:BST_UNCHECKED);
@@ -46,10 +46,10 @@ static int SFactdInit()
 {
 	layerBackup=nBurnLayer;
 	bRunPause=1;
-	CheckDlgButton(hSFactdlg,IDC_CHECK1,(nBurnLayer & 1)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_CHECK2,(nBurnLayer & 2)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_CHECK3,(nBurnLayer & 4)?BST_CHECKED:BST_UNCHECKED);
-	CheckDlgButton(hSFactdlg,IDC_CHECK4,(nBurnLayer & 8)?BST_CHECKED:BST_UNCHECKED);
+	CheckDlgButton(hSFactdlg,IDC_LAYER1,(nBurnLayer & 1)?BST_CHECKED:BST_UNCHECKED);
+	CheckDlgButton(hSFactdlg,IDC_LAYER2,(nBurnLayer & 2)?BST_CHECKED:BST_UNCHECKED);
+	CheckDlgButton(hSFactdlg,IDC_LAYER3,(nBurnLayer & 4)?BST_CHECKED:BST_UNCHECKED);
+	CheckDlgButton(hSFactdlg,IDC_LAYER4,(nBurnLayer & 8)?BST_CHECKED:BST_UNCHECKED);
 	CheckDlgButton(hSFactdlg,IDC_SPRITE1,(nSpriteEnable & 0x01)?BST_CHECKED:BST_UNCHECKED);
 	CheckDlgButton(hSFactdlg,IDC_SPRITE2,(nSpriteEnable & 0x02)?BST_CHECKED:BST_UNCHECKED);
 	CheckDlgButton(hSFactdlg,IDC_SPRITE3,(nSpriteEnable & 0x04)?BST_CHECKED:BST_UNCHECKED);
@@ -107,22 +107,22 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg,UINT Msg,WPARAM wParam,LPARAM lPara
 			SFactdUpdate();
 			}
 		}
-    if (Id==IDC_CHECK1 && Notify==BN_CLICKED)
+    if (Id==IDC_LAYER1 && Notify==BN_CLICKED)
 		{
 		ToggleLayer(1);
 		SFactdUpdate();
 		}
-    if (Id==IDC_CHECK2 && Notify==BN_CLICKED)
+    if (Id==IDC_LAYER2 && Notify==BN_CLICKED)
 		{
 		ToggleLayer(2);
 		SFactdUpdate();
 		}
-    if (Id==IDC_CHECK3 && Notify==BN_CLICKED)
+    if (Id==IDC_LAYER3 && Notify==BN_CLICKED)
 		{
 		ToggleLayer(4);
 		SFactdUpdate();
 		}
-    if (Id==IDC_CHECK4 && Notify==BN_CLICKED)
+    if (Id==IDC_LAYER4 && Notify==BN_CLICKED)
 		{
 		ToggleLayer(8);
 		SFactdUpdate();

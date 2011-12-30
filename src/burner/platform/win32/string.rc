@@ -34,6 +34,7 @@ BEGIN
 	IDS_MEMCARD_SELECT			"Select new memory card"
 
 	IDS_PROGRESS_LOADING		"Loading and initialising %s..."
+	IDS_PROGRESS_LOADING_ONLY	"Loading"
 
 	IDS_REPLAY_RECORD			"Record Input to File"
 	IDS_REPLAY_REPLAY			"Replay Input from File"
@@ -209,6 +210,8 @@ BEGIN
 	
 	IDS_NUMDIAL_NUM_FRAMES		"Number of Frames"
 	IDS_NUMDIAL_FILTER_SHARP	"Select desired filter sharpness"
+	
+	IDS_SCANNING_ROMS			"Scanning ROMs..."
 	
 	IDS_CHEAT_SEARCH_NEW		"New cheat search started"
 	IDS_CHEAT_SEARCH_ADD_MATCH	"%i Addresses Matched"

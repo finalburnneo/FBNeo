@@ -175,15 +175,15 @@ static int InpdListBegin()
 	memset(&LvCol, 0, sizeof(LvCol));
 	LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 
-	LvCol.cx = 0x90;
+	LvCol.cx = 0xa0;
 	LvCol.pszText = FBALoadStringEx(hAppInst, IDS_INPUT_INPUT, true);
 	SendMessage(hInpdList, LVM_INSERTCOLUMN, 0, (LPARAM)&LvCol);
 
-	LvCol.cx = 0x90;
+	LvCol.cx = 0xa0;
 	LvCol.pszText = FBALoadStringEx(hAppInst, IDS_INPUT_MAPPING, true);
 	SendMessage(hInpdList, LVM_INSERTCOLUMN, 1, (LPARAM)&LvCol);
 
-	LvCol.cx = 0x28;
+	LvCol.cx = 0x38;
 	LvCol.pszText = FBALoadStringEx(hAppInst, IDS_INPUT_STATE, true);
 	SendMessage(hInpdList, LVM_INSERTCOLUMN, 2, (LPARAM)&LvCol);
 

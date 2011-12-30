@@ -372,7 +372,7 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)		//
 			SendDlgItemMessage(hDlg, IDC_WAIT_PROG, PBM_SETSTEP, (WPARAM)1, 0);
 
 			ShowWindow(GetDlgItem(hDlg, IDC_WAIT_LABEL_A), TRUE);
-			SendMessage(GetDlgItem(hDlg, IDC_WAIT_LABEL_A), WM_SETTEXT, (WPARAM)0, (LPARAM)_T("Scanning ROMs..."));
+			SendMessage(GetDlgItem(hDlg, IDC_WAIT_LABEL_A), WM_SETTEXT, (WPARAM)0, (LPARAM)FBALoadStringEx(hAppInst, IDS_SCANNING_ROMS, true));
 			ShowWindow(GetDlgItem(hDlg, IDCANCEL), TRUE);
 
 			avOk = false;

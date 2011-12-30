@@ -213,10 +213,11 @@
 
 #define IDC_DRVCOUNT						20200
 #define IDC_TREE2							20201
-#define IDC_CHECK1							20202
-#define IDC_CHECK2							20203
-#define IDC_CHECK3							20204
-#define IDC_CHECK4							20205
+#define IDC_LAYER1							20202
+#define IDC_LAYER2							20203
+#define IDC_LAYER3							20204
+#define IDC_LAYER4							20205
+#define IDC_SHOW							20206
 
 #define IDC_STATIC_SYS                  	20300
 #define IDC_STATIC_OPT                  	20301

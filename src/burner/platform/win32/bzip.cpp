@@ -264,21 +264,35 @@ static int __cdecl BzipBurnLoadRom(unsigned char* Dest, int* pnWrote, int i)
 	// show what we're doing
 	BurnDrvGetRomName(&pszRomName, i, 0);
 	if (pszRomName == NULL) {
-		pszRomName = "unknown";
+		TCHAR szTempName[100];
+		_stprintf(szTempName, _T("%s"), FBALoadStringEx(hAppInst, IDS_ERR_UNKNOWN, true));
+		sprintf(pszRomName, "%s", TCHARToANSI(szTempName, NULL, 0));
 	}
-	_stprintf(szText, _T("Loading"));
+	
+	TCHAR szTempLoading[100];
+	_stprintf(szTempLoading, _T("%s"), FBALoadStringEx(hAppInst, IDS_PROGRESS_LOADING_ONLY, true));
+	_stprintf(szText, _T("%s"), szTempLoading);
+	
 	if (ri.nType & (BRF_PRG | BRF_GRA | BRF_SND | BRF_BIOS)) {
 		if (ri.nType & BRF_BIOS) {
-			_stprintf (szText + _tcslen(szText), _T(" %s"), _T("BIOS "));
+			TCHAR szTempBios[100];
+			_stprintf(szTempBios, _T("%s"), FBALoadStringEx(hAppInst, IDS_ERR_LOAD_DET_BIOS, true));
+			_stprintf(szText + _tcslen(szText), _T(" %s"), szTempBios);
 		}
 		if (ri.nType & BRF_PRG) {
-			_stprintf (szText + _tcslen(szText), _T(" %s"), _T("program "));
+			TCHAR szTempPrg[100];
+			_stprintf(szTempPrg, _T("%s"), FBALoadStringEx(hAppInst, IDS_ERR_LOAD_DET_PRG, true));
+			_stprintf(szText + _tcslen(szText), _T(" %s"), szTempPrg);
 		}
 		if (ri.nType & BRF_GRA) {
-			_stprintf (szText + _tcslen(szText), _T(" %s"), _T("graphics "));
+			TCHAR szTempGra[100];
+			_stprintf(szTempGra, _T("%s"), FBALoadStringEx(hAppInst, IDS_ERR_LOAD_DET_GRA, true));
+			_stprintf (szText + _tcslen(szText), _T(" %s"), szTempGra);
 		}
 		if (ri.nType & BRF_SND) {
-			_stprintf (szText + _tcslen(szText), _T(" %s"), _T("sound "));
+			TCHAR szTempSnd[100];
+			_stprintf(szTempSnd, _T("%s"), FBALoadStringEx(hAppInst, IDS_ERR_LOAD_DET_SND, true));
+			_stprintf (szText + _tcslen(szText), _T(" %s"), szTempSnd);
 		}
 		_stprintf(szText + _tcslen(szText), _T("(%hs)..."), pszRomName);
 	} else {

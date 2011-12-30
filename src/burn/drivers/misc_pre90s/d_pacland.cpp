@@ -881,14 +881,14 @@ static struct BurnRomInfo paclandjRomDesc[] = {
 	{ "pl1_7.3e",		0x2000, 0x8c5becae, 2 | BRF_PRG | BRF_ESS }, //  6 HD63701 Code
 	{ "cus60-60a1.mcu",	0x1000, 0x076ea82a, 2 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "pl2_12.6n",		0x2000, 0xa63c8726, 3 | BRF_GRA },           //  8 Foreground Tiles
+	{ "pl6_12.6n",		0x2000, 0xc8cb61ab, 3 | BRF_GRA },           //  8 Foreground Tiles
 
-	{ "pl4_13.6t",		0x2000, 0x3ae582fd, 4 | BRF_GRA },           //  9 Background Tiles
+	{ "pl1_13.6t",		0x2000, 0x6c5ed9ae, 4 | BRF_GRA },           //  9 Background Tiles
 
-	{ "pl1-9.6f",		0x4000, 0xf5d5962b, 5 | BRF_GRA },           // 10 Sprites
-	{ "pl1-8.6e",		0x4000, 0xa2ebfa4a, 5 | BRF_GRA },           // 11
-	{ "pl1-10.7e",		0x4000, 0xc7cf1904, 5 | BRF_GRA },           // 12
-	{ "pl1-11.7f",		0x4000, 0x6621361a, 5 | BRF_GRA },           // 13
+	{ "pl1_9b.6f",		0x4000, 0x80768a87, 5 | BRF_GRA },           // 10 Sprites
+	{ "pl1_8.6e",		0x4000, 0x2b20e46d, 5 | BRF_GRA },           // 11
+	{ "pl1_10b.7e",		0x4000, 0xffd9d66e, 5 | BRF_GRA },           // 12
+	{ "pl1_11.7f",		0x4000, 0xc59775d8, 5 | BRF_GRA },           // 13
 
 	{ "pl1-2.1t",		0x0400, 0x472885de, 6 | BRF_GRA },           // 14 Color PROMs
 	{ "pl1-1.1r",		0x0400, 0xa78ebdaf, 6 | BRF_GRA },           // 15
@@ -924,14 +924,14 @@ static struct BurnRomInfo paclandjoRomDesc[] = {
 	{ "pl1_7.3e",		0x2000, 0x8c5becae, 2 | BRF_PRG | BRF_ESS }, //  6 HD63701 Code
 	{ "cus60-60a1.mcu",	0x1000, 0x076ea82a, 2 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "pl2_12.6n",		0x2000, 0xa63c8726, 3 | BRF_GRA },           //  8 Foreground Tiles
+	{ "pl1_12.6n",		0x2000, 0xc159fbce, 3 | BRF_GRA },           //  8 Foreground Tiles
 
-	{ "pl4_13.6t",		0x2000, 0x3ae582fd, 4 | BRF_GRA },           //  9 Background Tiles
+	{ "pl1_13.6t",		0x2000, 0x6c5ed9ae, 4 | BRF_GRA },           //  9 Background Tiles
 
-	{ "pl1-9.6f",		0x4000, 0xf5d5962b, 5 | BRF_GRA },           // 10 Sprites
-	{ "pl1-8.6e",		0x4000, 0xa2ebfa4a, 5 | BRF_GRA },           // 11
-	{ "pl1-10.7e",		0x4000, 0xc7cf1904, 5 | BRF_GRA },           // 12
-	{ "pl1-11.7f",		0x4000, 0x6621361a, 5 | BRF_GRA },           // 13
+	{ "pl1_9b.6f",		0x4000, 0x80768a87, 5 | BRF_GRA },           // 10 Sprites
+	{ "pl1_8.6e",		0x4000, 0x2b20e46d, 5 | BRF_GRA },           // 11
+	{ "pl1_10b.7e",		0x4000, 0xffd9d66e, 5 | BRF_GRA },           // 12
+	{ "pl1_11.7f",		0x4000, 0xc59775d8, 5 | BRF_GRA },           // 13
 
 	{ "pl1-2.1t",		0x0400, 0x472885de, 6 | BRF_GRA },           // 14 Color PROMs
 	{ "pl1-1.1r",		0x0400, 0xa78ebdaf, 6 | BRF_GRA },           // 15
@@ -967,15 +967,15 @@ static struct BurnRomInfo paclandjo2RomDesc[] = {
 	{ "pl1_7.3e",		0x2000, 0x8c5becae, 2 | BRF_PRG | BRF_ESS }, //  6 HD63701 Code
 	{ "cus60-60a1.mcu",	0x1000, 0x076ea82a, 2 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "pl2_12.6n",		0x2000, 0xa63c8726, 3 | BRF_GRA },           //  8 Foreground Tiles
+	{ "pl1_12.6n",		0x2000, 0xc159fbce, 3 | BRF_GRA },           //  8 Foreground Tiles
 
-	{ "pl4_13.6t",		0x2000, 0x3ae582fd, 4 | BRF_GRA },           //  9 Background Tiles
+	{ "pl1_13.6t",		0x2000, 0x6c5ed9ae, 4 | BRF_GRA },           //  9 Background Tiles
 
-	{ "pl1-9.6f",		0x4000, 0xf5d5962b, 5 | BRF_GRA },           // 10 Sprites
-	{ "pl1-8.6e",		0x4000, 0xa2ebfa4a, 5 | BRF_GRA },           // 11
-	{ "pl1-10.7e",		0x4000, 0xc7cf1904, 5 | BRF_GRA },           // 12
-	{ "pl1-11.7f",		0x4000, 0x6621361a, 5 | BRF_GRA },           // 13
-
+	{ "pl1_9.6f",		0x4000, 0x80768a87, 5 | BRF_GRA },           // 10 Sprites
+	{ "pl1_8.6e",		0x4000, 0x2b20e46d, 5 | BRF_GRA },           // 11
+	{ "pl1_10.7e",		0x4000, 0xc62660e8, 5 | BRF_GRA },           // 12
+	{ "pl1_11.7f",		0x4000, 0xc59775d8, 5 | BRF_GRA },           // 13
+	
 	{ "pl1-2.1t",		0x0400, 0x472885de, 6 | BRF_GRA },           // 14 Color PROMs
 	{ "pl1-1.1r",		0x0400, 0xa78ebdaf, 6 | BRF_GRA },           // 15
 	{ "pl1-5.5t",		0x0400, 0x4b7ee712, 6 | BRF_GRA },           // 16
@@ -1010,9 +1010,9 @@ static struct BurnRomInfo paclandmRomDesc[] = {
 	{ "pl1_7.3e",		0x2000, 0x8c5becae, 2 | BRF_PRG | BRF_ESS }, //  6 HD63701 Code
 	{ "cus60-60a1.mcu",	0x1000, 0x076ea82a, 2 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "pl2_12.6n",		0x2000, 0xa63c8726, 3 | BRF_GRA },           //  8 Foreground Tiles
+	{ "pl1_12.6n",		0x2000, 0xc159fbce, 3 | BRF_GRA },           //  8 Foreground Tiles
 
-	{ "pl4_13.6t",		0x2000, 0x3ae582fd, 4 | BRF_GRA },           //  9 Background Tiles
+	{ "pl1_13.6t",		0x2000, 0x6c5ed9ae, 4 | BRF_GRA },           //  9 Background Tiles
 
 	{ "pl1-9.6f",		0x4000, 0xf5d5962b, 5 | BRF_GRA },           // 10 Sprites
 	{ "pl1-8.6e",		0x4000, 0xa2ebfa4a, 5 | BRF_GRA },           // 11

@@ -124,7 +124,11 @@ BEGIN
 	
 	IDS_CD_SELECT_IMAGE			"Select CD-ROM image..."
 	IDS_CD_SELECT_IMAGE_TITLE	"Select CD-ROM image"
-	IDS_CD_SELECT_FILTER		"CD images%s"
+	IDS_CD_SELECT_FILTER		"CD images"
+	
+	IDS_LOCAL_CREATE			"Create localisation template"
+	IDS_LOCAL_SELECT			"Select localisation template"
+	IDS_LOCAL_FILTER			"FB Alpha localisation templates"
 	
 	IDS_SEL_FILTERS				"Filters"
 	IDS_SEL_HARDWARE			"Hardware"

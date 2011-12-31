@@ -832,25 +832,29 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			break;
 		}
 		
-		case MENU_CDIMAGE:
+		case MENU_CDIMAGE: {
 			nCDEmuSelect = 0;
+			TCHAR szFilter[100];
+			_stprintf(szFilter, _T("%s"), FBALoadStringEx(hAppInst, IDS_CD_SELECT_FILTER, true));
+			memcpy(szFilter + _tcslen(szFilter), _T(" (*.iso,*.cue)\0*.iso;*.cue\0\0"), 28 * sizeof(TCHAR));
+			TCHAR szTitle[100];
+			_stprintf(szTitle, _T("%s"), FBALoadStringEx(hAppInst, IDS_CD_SELECT_IMAGE_TITLE, true));
 			if (UseDialogs() && !bDrvOkay) {
 				memset(&ofn, 0, sizeof(ofn));
 				ofn.lStructSize = sizeof(ofn);
 				ofn.hwndOwner = hScrnWnd;
 				ofn.lpstrFile = CDEmuImage;
-				ofn.nMaxFile = sizeof(CDEmuImage);
-				TCHAR szTitle[100];
-				_stprintf(szTitle, FBALoadStringEx(hAppInst, IDS_CD_SELECT_IMAGE_TITLE, true));
+				ofn.nMaxFile = MAX_PATH;
 				ofn.lpstrTitle = szTitle;
-				ofn.lpstrFilter = _T("CD images (*.iso,*.cue)\0*.iso;*.cue\0\0)");
+				ofn.lpstrFilter = szFilter;
 				ofn.lpstrInitialDir = _T(".");
 				ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
-				ofn.lpstrDefExt = _T("iso");
+				ofn.lpstrDefExt = _T("cue");
 
 				GetOpenFileName(&ofn);
 			}
 			break;
+		}
 
 		case MENU_STARTNET:
 			if (Init_Network()) {

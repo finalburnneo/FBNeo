@@ -1644,12 +1644,17 @@ int FBALocaliseInit(TCHAR* pszTemplate)
 // ----------------------------------------------------------------------------
 // Dialog box to load/save a template
 
+static TCHAR szFilter[100];
+
 static void MakeOfn()
 {
+	_stprintf(szFilter, _T("%s"), FBALoadStringEx(hAppInst, IDS_LOCAL_FILTER, true));
+	memcpy(szFilter + _tcslen(szFilter), _T(" (*.flt)\0*.flt\0\0"), 16 * sizeof(TCHAR));
+			
 	memset(&ofn, 0, sizeof(ofn));
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = hScrnWnd;
-	ofn.lpstrFilter = _T("FB Alpha localisation templates (*.flt)\0*.flt\0\0");
+	ofn.lpstrFilter = szFilter;
 	ofn.lpstrFile = szChoice;
 	ofn.nMaxFile = sizeof(szChoice) / sizeof(TCHAR);
 	ofn.lpstrInitialDir = _T("./config/localisation");
@@ -1663,7 +1668,9 @@ int FBALocaliseLoadTemplate()
 {
 	_stprintf(szChoice, _T("template"));
 	MakeOfn();
-	ofn.lpstrTitle = _T("Select localisation template");
+	TCHAR szTitle[100];
+	_stprintf(szTitle, _T("%s"), FBALoadStringEx(hAppInst, IDS_LOCAL_SELECT, true));
+	ofn.lpstrTitle = szTitle;
 	ofn.Flags |= OFN_OVERWRITEPROMPT;
 
 	int bOldPause = bRunPause;
@@ -1682,7 +1689,9 @@ int FBALocaliseCreateTemplate()
 {
 	_stprintf(szChoice, _T("template"));
 	MakeOfn();
-	ofn.lpstrTitle = _T("Create localisation template");
+	TCHAR szTitle[100];
+	_stprintf(szTitle, _T("%s"), FBALoadStringEx(hAppInst, IDS_LOCAL_CREATE, true));
+	ofn.lpstrTitle = szTitle;
 	ofn.Flags |= OFN_OVERWRITEPROMPT;
 
 	int bOldPause = bRunPause;

@@ -41,7 +41,7 @@ INT32 Dx9Core_Init();
 
 #include "resource.h"
 #include "resource_string.h"
-
+#include "net.h"
 // ---------------------------------------------------------------------------
 
 // Macro for releasing a COM object

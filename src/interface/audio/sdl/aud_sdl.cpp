@@ -1,261 +1,231 @@
 // SDL_Sound module
 
-#ifdef BUILD_SDL
-
-//#include "burner.h"
+#include "SDL.h"
+#include "burner.h"
 #include "aud_dsp.h"
+#include <math.h>
 
-class AudioSDL : public Audio {
-public:
-	SDL_AudioSpec SDLAudioSpec;
+static unsigned int nSoundFps;	
 
-	short* SDLAudBuffer;
-	int nSDLPlayPos;
-	int nSDLFillSeg;
+int (*GetNextSound)(int);				// Callback used to request more sound
 
-	int (*SDLGetNextSound)(int);
+static SDL_AudioSpec audiospec;
 
-	int set(int (*callback)(int))
-	{
-		if (callback == NULL) {
-			SDLGetNextSound = AudWriteSlience;
-		} else {
-			SDLGetNextSound = callback;
-			dprintf(_T("SDL callback set\n"));
+static short* SDLAudBuffer;
+static int nSDLPlayPos;
+static int nSDLFillSeg;
+static int nAudLoopLen;
+
+void audiospec_callback(void* /* data */, Uint8* stream, int len)
+{
+//	dprintf(_T("audiospec_callback %i"), len);
+
+	int end = nSDLPlayPos + len;
+	if (end > nAudLoopLen) {
+	
+//		dprintf(_T(" %i - %i"), nSDLPlayPos, nSDLPlayPos + nAudLoopLen - nSDLPlayPos);
+	
+		SDL_MixAudio(stream, (Uint8*)SDLAudBuffer + nSDLPlayPos, nAudLoopLen - nSDLPlayPos, SDL_MIX_MAXVOLUME);
+		end -= nAudLoopLen;
+
+//		dprintf(_T(", %i - %i (%i)"), 0, end, nAudLoopLen - nSDLPlayPos + end);
+
+		SDL_MixAudio(stream + nAudLoopLen - nSDLPlayPos, (Uint8*)SDLAudBuffer, end, SDL_MIX_MAXVOLUME);
+		nSDLPlayPos = end;
+	} else {
+		SDL_MixAudio(stream, (Uint8*)SDLAudBuffer + nSDLPlayPos, len, SDL_MIX_MAXVOLUME);
+		nSDLPlayPos = end;
+		
+		if (nSDLPlayPos == nAudLoopLen) {
+			nSDLPlayPos = 0;
 		}
+	}
+
+//	dprintf(_T("\n"));
+}
+
+static int SDLSoundGetNextSoundFiller(int)							// int bDraw
+{
+	if (nAudNextSound == NULL) {
+		return 1;
+	}
+	memset(nAudNextSound, 0, nAudSegLen << 2);						// Write silence into the buffer
+
+	return 0;
+}
+
+static int SDLSoundBlankSound()
+{
+	dprintf (_T("SDLBlankSound\n"));
+	if (nAudNextSound) {
+		dprintf (_T("blanking nAudNextSound\n"));
+		memset(nAudNextSound, 0, nAudSegLen << 2);
+	}
+	return 0;
+}
+
+#define WRAP_INC(x) { x++; if (x >= nAudSegCount) x = 0; }
+
+static int SDLSoundCheck()
+{
+	int nPlaySeg, nFollowingSeg;
+
+	if (!bAudPlaying) {
+		dprintf(_T("SDLSoundCheck (not playing)\n"));
 		return 0;
 	}
 
-	int blank()
-	{
-		dprintf (_T("SDLBlankSound\n"));
+	// Since the SDL buffer is smaller than a segment, only fill the buffer up to the start of the currently playing segment
+	nPlaySeg = nSDLPlayPos / (nAudSegLen << 2) - 1;
 
-		if (SDLAudBuffer) {
-			memset(SDLAudBuffer, 0, loopLen);
-		}
+//	dprintf(_T("SDLSoundCheck (seg %i)\n"), nPlaySeg);
 
-		if (pAudNextSound) {
-			dprintf (_T("blanking pAudNextSound\n"));
-			AudWriteSlience();
-		}
+	if (nPlaySeg >= nAudSegCount) {
+		nPlaySeg -= nAudSegCount;
+	}
+	if (nPlaySeg < 0) {
+		nPlaySeg = nAudSegCount - 1;
+	}
+
+	if (nSDLFillSeg == nPlaySeg) {
+		SDL_Delay(1);
 		return 0;
 	}
 
-	int check()
-	{
-		#define WRAP_INC(x) { x++; if (x >= nAudSegCount) x = 0; }
+	// work out which seg we will fill next
+	nFollowingSeg = nSDLFillSeg;
+	WRAP_INC(nFollowingSeg);
 
-		// Since the SDL buffer is smaller than a segment,
-		// only fill the buffer up to the start of the currently playing segment
-		int nPlaySeg = nSDLPlayPos / nAudAllocSegLen - 1;
+	while (nSDLFillSeg != nPlaySeg) {
+		int bDraw;
 
-		if (nPlaySeg >= nAudSegCount) {
-			nPlaySeg -= nAudSegCount;
-		}
-		if (nPlaySeg < 0) {
-			nPlaySeg = nAudSegCount - 1;
-		}
+		// fill nSDLFillSeg
+//		dprintf(_T("Filling seg %i at %i\n"), nSDLFillSeg, nSDLFillSeg * (nAudSegLen << 2));
 
-	//	dprintf(_T("SDLSoundCheck (seg %i)\n"), nPlaySeg);
+		bDraw = (nFollowingSeg == nPlaySeg);//	|| bAlwaysDrawFrames;	// If this is the last seg of sound, flag bDraw (to draw the graphics)
 
-		if (nSDLFillSeg == nPlaySeg) {
-			SDL_Delay(1);
-			return 0;
-		}
+//		nAudNextSound = SDLAudBuffer + nSDLFillSeg * (nAudSegLen << 1);
+		GetNextSound(bDraw);										// get more sound into nAudNextSound
 
-		// work out which seg we will fill next
-		int nFollowingSeg = nSDLFillSeg;
+//		if (nAudDSPModule)	{
+//			DspDo(nAudNextSound, nAudSegLen);
+//		}
+
+		memcpy((char*)SDLAudBuffer + nSDLFillSeg * (nAudSegLen << 2), nAudNextSound, nAudSegLen << 2);
+
+		nSDLFillSeg = nFollowingSeg;
 		WRAP_INC(nFollowingSeg);
+	}
+	
+	return 0;
+}
 
-		while (nSDLFillSeg != nPlaySeg) {
-			// fill nSDLFillSeg
-	//		dprintf(_T("Filling seg %i at %i\n"), nSDLFillSeg, nSDLFillSeg * (nAudAllocSegLen));
+static int SDLSoundExit()
+{
+	dprintf(_T("SDLSoundExit\n"));
 
-			memcpy((char*)SDLAudBuffer + nSDLFillSeg * nAudAllocSegLen, pAudNextSound, nAudAllocSegLen);
+	SDL_CloseAudio();
 
-			// If this is the last seg of sound, flag bDraw (to draw the graphics)
-			int bDraw = (nFollowingSeg == nPlaySeg);// || !autoFrameSkip;
+	free(SDLAudBuffer);
+	SDLAudBuffer = NULL;
 
-	//		pAudNextSound = SDLAudBuffer + nSDLFillSeg * (nAudSegLen << 1);
-			SDLGetNextSound(bDraw);					// get more sound into pAudNextSound
+	free(nAudNextSound);
+	nAudNextSound = NULL;
 
-			if (nAudDSPModule & 1) {
-				if (bRunPause)
-					AudWriteSlience();
-				else
-					DspDo(pAudNextSound, nAudSegLen);
-			}
+	return 0;
+}
 
-			nSDLFillSeg = nFollowingSeg;
-			WRAP_INC(nFollowingSeg);
-		}
+static int SDLSetCallback(int (*pCallback)(int))
+{
+	if (pCallback == NULL) {
+		GetNextSound = SDLSoundGetNextSoundFiller;
+	} else {
+		GetNextSound = pCallback;
+		dprintf(_T("SDL callback set\n"));
+	}
+	return 0;
+}
 
-		return 0;
+static int SDLSoundInit()
+{
+	SDL_AudioSpec audiospec_req;
+	int nSDLBufferSize;
+
+	dprintf(_T("SDLSoundInit (%dHz)"), nAudSampleRate);
+
+	if (nAudSampleRate <= 0) {
+		return 1;
 	}
 
-	int exit()
-	{
-		dprintf(_T("SDLSoundExit\n"));
+	nSoundFps = nAppVirtualFps;
+	nAudSegLen = (nAudSampleRate * 100 + (nSoundFps >> 1)) / nSoundFps;
+	nAudLoopLen = (nAudSegLen * nAudSegCount) << 2;
+	for (nSDLBufferSize = 64; nSDLBufferSize < (nAudSegLen >> 1); nSDLBufferSize <<= 1) { }
 
-		DspExit();
+	audiospec_req.freq = nAudSampleRate;
+	audiospec_req.format = AUDIO_S16;
+	audiospec_req.channels = 2;
+	audiospec_req.samples = nSDLBufferSize;
+	audiospec_req.callback = audiospec_callback;
 
-		SDL_CloseAudio();
+	SDLAudBuffer = (short*)malloc(nAudLoopLen);
+	if (SDLAudBuffer == NULL) {
+		dprintf(_T("Couldn't malloc SDLAudBuffer\n"));
+		SDLSoundExit();
+		return 1;
+	}
+	memset(SDLAudBuffer, 0, nAudLoopLen);
 
-		free(SDLAudBuffer);
-		SDLAudBuffer = NULL;
-
-		free(pAudNextSound);
-		pAudNextSound = NULL;
-
-		return 0;
+	nAudNextSound = (short*)malloc(nAudSegLen << 2);
+	if (nAudNextSound == NULL) {
+		SDLSoundExit();
+		return 1;
 	}
 
-	void audiospec_callback(void* /* data */, Uint8* stream, int len)
-	{
-	//	dprintf(_T("audiospec_callback %i"), len);
+	nAudNextSound = SDLAudBuffer;
+	nSDLPlayPos = 0;
+	nSDLFillSeg = nAudSegCount - 1;
 
-		int end = nSDLPlayPos + len;
-		if (end > loopLen) {
-	//		dprintf(_T(" %i - %i"), nSDLPlayPos, nSDLPlayPos + loopLen - nSDLPlayPos);
+	if(SDL_OpenAudio(&audiospec_req, &audiospec)) {
+		fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
+		dprintf(_T("Couldn't open audio: %s\n"), SDL_GetError());
+		return 1;
+	}		
 
-			SDL_MixAudio(stream, (Uint8*)SDLAudBuffer + nSDLPlayPos, loopLen - nSDLPlayPos, volume);
-			end -= loopLen;
+	SDLSetCallback(NULL);
 
-	//		dprintf(_T(", %i - %i (%i)"), 0, end, loopLen - nSDLPlayPos + end);
+	return 0;
+}
 
-			SDL_MixAudio(stream + loopLen - nSDLPlayPos, (Uint8*)SDLAudBuffer, end, volume);
-			nSDLPlayPos = end;
-		} else {
-			SDL_MixAudio(stream, (Uint8*)SDLAudBuffer + nSDLPlayPos, len, volume);
-			nSDLPlayPos = end;
+static int SDLSoundPlay()
+{
+	dprintf(_T("SDLSoundPlay\n"));
 
-			if (nSDLPlayPos == loopLen) {
-				nSDLPlayPos = 0;
-			}
-		}
+	SDL_PauseAudio(0);
+	bAudPlaying = 1;
 
-	//	dprintf(_T("\n"));
-	}
+	return 0;
+}
 
-	int init()
-	{
-		dprintf(_T("SDLSoundInit (%dHz)"), nAudSampleRate);
+static int SDLSoundStop()
+{
+	dprintf(_T("SDLSoundStop\n"));
 
-		if (nAudSampleRate <= 0) {
-			return 1;
-		}
+	SDL_PauseAudio(1);
+	bAudPlaying = 0;
 
-		fps = nAppVirtualFps;
-		nAudSegLen = (nAudSampleRate * 100 + (fps >> 1)) / fps;
-		nAudAllocSegLen = nAudSegLen << 2;
-		loopLen = (nAudSegLen * nAudSegCount) << 2;
+	return 0;
+}
 
-		int nSDLBufferSize;
-		for (nSDLBufferSize = 64; nSDLBufferSize < (nAudSegLen >> 1); nSDLBufferSize <<= 1) { }
+static int SDLSoundSetVolume()
+{
+	dprintf(_T("SDLSoundSetVolume\n"));
+	return 1;
+}
 
-		SDL_AudioSpec audiospec_req;
-		audiospec_req.freq = nAudSampleRate;
-		audiospec_req.format = AUDIO_S16;
-		audiospec_req.channels = 2;
-		audiospec_req.samples = nSDLBufferSize;
-		audiospec_req.callback = audiospec_callback;
+static int SDLGetSettings(InterfaceInfo* /* pInfo */)
+{
+	return 0;
+}
 
-		SDLAudBuffer = (short*)malloc(loopLen);
-		if (SDLAudBuffer == NULL) {
-			dprintf(_T("Couldn't malloc SDLAudBuffer\n"));
-			exit();
-			return 1;
-		}
-		memset(SDLAudBuffer, 0, loopLen);
-
-		pAudNextSound = (short*)malloc(nAudAllocSegLen);
-		if (pAudNextSound == NULL) {
-			exit();
-			return 1;
-		}
-
-		nSDLPlayPos = 0;
-		nSDLFillSeg = nAudSegCount - 1;
-
-		if (SDL_OpenAudio(&audiospec_req, &SDLAudioSpec)) {
-			fprintf(stderr, "Couldn't open audio: %s\n", SDL_GetError());
-			dprintf(_T("Couldn't open audio: %s\n"), SDL_GetError());
-			return 1;
-		}
-
-		set(NULL);
-
-		DspInit();
-
-		return 0;
-	}
-
-	int play()
-	{
-		dprintf(_T("SDLSoundPlay\n"));
-
-		SDL_PauseAudio(0);
-
-		return 0;
-	}
-
-	int stop()
-	{
-		dprintf(_T("SDLSoundStop\n"));
-
-		SDL_PauseAudio(1);
-
-		return 0;
-	}
-
-	int setvolume(int vol)
-	{
-		dprintf(_T("SDLSoundSetVolume\n"));
-
-		if (vol == 10000) {
-			volume = SDL_MIX_MAXVOLUME;
-		} else {
-			if (vol == 0) {
-				volume = 0;
-			} else {
-				volume = SDL_MIX_MAXVOLUME * vol / 10000;
-			}
-		}
-
-		if (volume < 0) {
-			volume = 0;
-		}
-
-		return 0;
-	}
-
-	int get(void* info)
-	{
-		return 0;
-	}
-
-	int setfps()
-	{
-		if (nAudSampleRate <= 0) {
-			return 0;
-		}
-
-		return 0;
-	}
-
-	AudioSDL() {
-		SDLAudBuffer = NULL;
-		nSDLPlayPos = 0;
-		nSDLFillSeg = 0;
-
-		loopLen = 0;
-		fps = 0;
-		volume = SDL_MIX_MAXVOLUME;
-	}
-
-	~AudioSDL() {
-		exit();
-	}
-};
-
-#endif
+struct AudOut AudOutSDL = { SDLSoundBlankSound, SDLSoundCheck, SDLSoundInit, SDLSetCallback, SDLSoundPlay, SDLSoundStop, SDLSoundExit, SDLSoundSetVolume, SDLGetSettings, _T("SDL audio output") };

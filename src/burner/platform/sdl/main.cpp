@@ -3,11 +3,10 @@ Stuff to finish:
 
 It wouldn't be a stretch of the imagination to think the whole of the sdl 'port' needs a redo but here are the main things wrong with this version:
 
-The burner directory has a few common files with the windows version, so they should be updated at some point.
+
 There is OSD of any kind which makes it hard to display info to the users.
 There are lots of problems with the audio output code.
 There are lots of problems with the opengl renderer
-I need to merge in the stuff from the only non intel version of fba so we have a C z80 core
 probably many other things.
 ------------------*/
 #include "burner.h"
@@ -19,13 +18,10 @@ bool bAlwaysProcessKeyboardInput=0;
 
 void init_emu(int gamenum)
 {
-	// by default use C 68000, and soon C Z80
 	bBurnUseASMCPUEmulation=0;
  	bCheatsAllowed=false;
 	ConfigAppLoad();
 	ConfigAppSave();
-	//CreateDirectory(".:\\cfg", NULL);
-	//CreateDirectory(".:\\state", NULL);
 	DrvInit(gamenum,0);
 }
 

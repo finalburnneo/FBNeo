@@ -1,26 +1,20 @@
 // Software blitter effects via SDL
-
-#ifdef BUILD_SDL
-
 #include "burner.h"
 #include "vid_support.h"
-#include "vid_filter.h"
-
-#ifdef _MSC_VER
-#pragma comment(lib, "SDL")
-#pragma comment(lib, "SDLmain")
-#endif
+#include "vid_softfx.h"
 
 static int nInitedSubsytems = 0;
 
+static int nGameWidth = 0, nGameHeight = 0;			// screen size
 SDL_Surface* sdlsBlitFX[2] = {NULL, };				// The image surfaces
 SDL_Surface* sdlsFramebuf = NULL;
 
 static int nSize;
 static int nUseBlitter;
 
-static int nUseSys = 0;
+static int nUseSys;
 static int nDirectAccess = 1;
+static int nRotateGame = 0;
 
 static int PrimClear()
 {
@@ -85,10 +79,9 @@ static int BlitFXInit()
 		nVidImageHeight = nGameHeight;
 	}
 
-//	if (nUseBlitter == FILTER_HQ2X || nUseBlitter == FILTER_HQ3X) {
-//		nVidImageDepth = 16;								// Use 565 format
-//	} else
-	{
+	if (nUseBlitter >= 7 && nUseBlitter <= 9) {
+		nVidImageDepth = 16;								// Use 565 format
+	} else {
 		nVidImageDepth = sdlsFramebuf->format->BitsPerPixel;// Use color depth of primary surface
 	}
 	nVidImageBPP = sdlsFramebuf->format->BytesPerPixel;
@@ -131,11 +124,33 @@ static int Init()
 		SDL_InitSubSystem(SDL_INIT_VIDEO);
 	}
 
-	nUseBlitter = nVidFilter;//nVidBlitterOpt[nVidSelect] & 0xFF;
+	nUseBlitter = nVidBlitterOpt[nVidSelect] & 0xFF;
 
-	VidInitInfo();
+	nGameWidth = nVidImageWidth; nGameHeight = nVidImageHeight;
 
-	nSize = VidFilterGetZoom(nUseBlitter);
+	nRotateGame = 0;
+	if (bDrvOkay) {
+		// Get the game screen size
+		BurnDrvGetVisibleSize(&nGameWidth, &nGameHeight);
+
+	    if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+			if (nVidRotationAdjust & 1) {
+				int n = nGameWidth;
+				nGameWidth = nGameHeight;
+				nGameHeight = n;
+				nRotateGame |= (nVidRotationAdjust & 2);
+			} else {
+				nRotateGame |= 1;
+			}
+		}
+
+		if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) {
+			nRotateGame ^= 2;
+		}
+	}
+
+	nSize = VidSoftFXGetZoom(nUseBlitter);
+	bVidScanlines = 0;								// !!!
 
 	if (nVidFullscreen) {
 
@@ -156,8 +171,8 @@ static int Init()
 	// Initialize the buffer surfaces
 	BlitFXInit();
 
-	if (VidFilterInit(nUseBlitter, nRotateGame)) {
-		if (VidFilterInit(0, nRotateGame)) {
+	if (VidSoftFXInit(nUseBlitter, nRotateGame)) {
+		if (VidSoftFXInit(0, nRotateGame)) {
 			Exit();
 			return 1;
 		}
@@ -166,32 +181,14 @@ static int Init()
 	return 0;
 }
 
-static int vidScale(RECT* pRect, int nWidth, int nHeight)
+static int vidScale(RECT* , int, int)
 {
-	if (vidUseFilter && vidForceFilterSize) {
-		return VidFilterScale(pRect, nWidth, nHeight);
-	}
-
-	return VidSScaleImage(pRect, nWidth, nHeight);
-}
-
-static int vidFilterApplyEffect(SDL_Surface* pSurf)
-{
-	// Lock the surface so we can write to it
-	if (SDL_LockSurface(pSurf)) {
-		return 1;
-	}
-
-	VidFilterApplyEffect((unsigned char*)pSurf->pixels, pSurf->pitch);
-
-	SDL_UnlockSurface(pSurf);
-
 	return 0;
 }
 
 static int MemToSurf()
 {
-	vidFilterApplyEffect(sdlsBlitFX[1 ^ nDirectAccess]);
+	VidSoftFXApplyEffectSDL(sdlsBlitFX[1 ^ nDirectAccess]);
 
 	if (nUseSys == 0 && nDirectAccess == 0) {
 
@@ -282,6 +279,9 @@ static int GetSettings(InterfaceInfo* pInfo)
 {
 	TCHAR szString[MAX_PATH] = _T("");
 
+	_sntprintf(szString, MAX_PATH, _T("Prescaling using %s (%i× zoom)"), VidSoftFXGetEffect(nUseBlitter), nSize);
+	IntInfoAddStringModule(pInfo, szString);
+
 	if (nRotateGame) {
 		IntInfoAddStringModule(pInfo, _T("Using software rotation"));
 	}
@@ -290,6 +290,5 @@ static int GetSettings(InterfaceInfo* pInfo)
 }
 
 // The Video Output plugin:
-struct VidOut VidOutSDLFX = { Init, Exit, Frame, Paint, vidScale, GetSettings };
+struct VidOut VidOutSDLFX = { Init, Exit, Frame, Paint, vidScale, GetSettings, _T("SDL Software Effects video output") };
 
-#endif

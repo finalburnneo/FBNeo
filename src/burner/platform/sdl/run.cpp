@@ -1,15 +1,12 @@
 // Run module
 #include "burner.h"
-//#include "app.h"
-//#include "kailleraclient.h"
+
 
 bool bAltPause = 0;
 
 int bAlwaysDrawFrames = 0;
 
 static bool bShowFPS = false;
-
-//int kNetGame = 0;							// Non-zero if Kaillera is being used
 
 int counter;								// General purpose variable used when debugging
 
@@ -91,26 +88,9 @@ static int RunFrame(int bDraw, int bPause)
 	{
 		nFramesEmulated++;
 		nCurrentFrame++;
-
-	/*	{
-		if (nReplayStatus == 2) {
-			GetInput(false);				// Update burner inputs, but not game inputs
-			if (ReplayInput()) {			// Read input from file
-				bAltPause = 1;
-				bRunPause = 1;
-				MenuEnableItems();
-				InputSetCooperativeLevel(false, false);
-			}
-		} 
-		else 
-	*/	{
-			GetInput(true);					// Update inputs
-		}
+		GetInput(true);					// Update inputs
 	}
-/*	if (nReplayStatus == 1) {
-		RecordInput();						// Write input to file
-	}
-*/	if (bDraw) {
+	if (bDraw) {
 		nFramesRendered++;
 		if (VidFrame()) {					// Do one frame
 			AudBlankSound();
@@ -120,14 +100,6 @@ static int RunFrame(int bDraw, int bPause)
 		pBurnDraw = NULL;					// Make sure no image is drawn
 		BurnDrvFrame();
 	}
-/*
-	if (bShowFPS) {
-		if (nDoFPS < nFramesRendered) {
-			DisplayFPS();
-			nDoFPS = nFramesRendered + 30;
-		}
-	}
-*/
 	bPrevPause = bPause;
 	bPrevDraw = bDraw;
 
@@ -163,12 +135,6 @@ static int RunGetNextSound(int bDraw)
 	// Render frame with sound
 	pBurnSoundOut = nAudNextSound;
 	RunFrame(bDraw, 0);
-/*
-	if (WaveLog != NULL && pBurnSoundOut != NULL) {		// log to the file
-		fwrite(pBurnSoundOut, 1, nBurnSoundLen << 2, WaveLog);
-		pBurnSoundOut = NULL;
-	}
-*/
 	if (bAppDoStep) {
 		memset(nAudNextSound, 0, nAudSegLen << 2);		// Write silence into the buffer
 	}
@@ -272,35 +238,13 @@ int RunMessageLoop()
 			if (!bVidOkay && nVidFullscreen) {
 
 				nVidFullscreen = 0;
-
-		//		MediaExit(bRestartVideo);
-		//		MediaInit();
 				VidInit();
 			}
-			if (!nVidFullscreen) {
-				//ScrnSize();
-			}
 
-		/*	if (!bVidOkay && (bDrvOkay || bVidUsePlaceholder)) {
-				// Maske sure the error will be visible
-				SplashDestroy(1);
-
-				AppError("VidInit Failed", 0);
-			}
-*/
-/*			if (bVidOkay && (bRunPause || !bDrvOkay)) {
-				VidRedraw();
-			}
-*/		}
+	}
 
 		RunInit();
 
-	//	ShowWindow(hScrnWnd, nAppShowCmd);												// Show the screen window
-	//	nAppShowCmd = SW_NORMAL;
-
-	//	SetForegroundWindow(hScrnWnd);
-
-		//GameInpCheckLeftAlt();
 		GameInpCheckMouse();															// Hide the cursor
 		while (!finished) {
 			SDL_Event event;
@@ -313,8 +257,6 @@ int RunMessageLoop()
 			}
 			else 
 			{
-				// No messages are waiting
-				//SplashDestroy(0);
 				RunIdle();
 			}
 		}

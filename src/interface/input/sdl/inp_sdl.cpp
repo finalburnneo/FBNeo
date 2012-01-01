@@ -1,15 +1,8 @@
 // Module for input using SDL
-
-#ifdef BUILD_SDL
+#include <SDL.h>
 
 #include "burner.h"
 #include "inp_sdl_keys.h"
-#include "../../lib/SDL/SDL.h"
-
-#ifdef _MSC_VER
-#pragma comment(lib, "SDL")
-#pragma comment(lib, "SDLmain")
-#endif
 
 #define MAX_JOYSTICKS (8)
 
@@ -81,11 +74,13 @@ int SDLinpExit()
 
 int SDLinpInit()
 {
+	int nSize;
+
 	SDLinpExit();
 
 	memset(&JoyList, 0, sizeof(JoyList));
 
-	int nSize = MAX_JOYSTICKS * 8 * sizeof(int);
+	nSize = MAX_JOYSTICKS * 8 * sizeof(int);
 	if ((JoyPrevAxes = (int*)malloc(nSize)) == NULL) {
 		SDLinpExit();
 		return 1;
@@ -185,11 +180,12 @@ int SDLinpJoyAxis(int i, int nAxis)
 // Read the keyboard
 static int ReadKeyboard()
 {
+	int numkeys;
+
 	if (bKeyboardRead) {							// already read this frame - ready to go
 		return 0;
 	}
 
-	int numkeys;
 	SDLinpKeyboardState = SDL_GetKeyState(&numkeys);
 	if (SDLinpKeyboardState == NULL) {
 		return 1;
@@ -217,7 +213,7 @@ static int ReadMouse()
 // Read one mouse axis
 int SDLinpMouseAxis(int i, int nAxis)
 {
-	if (i < 0 || i >= 1) {							// Only the system mouse is supported by SDL
+	if (i < 0 || i >= 1) {									// Only the system mouse is supported by SDL
 		return 0;
 	}
 
@@ -234,15 +230,15 @@ int SDLinpMouseAxis(int i, int nAxis)
 // Check a subcode (the 40xx bit in 4001, 4102 etc) for a joystick input code
 static int JoystickState(int i, int nSubCode)
 {
-	if (i < 0 || i >= nJoystickCount) {				// This joystick isn't connected
+	if (i < 0 || i >= nJoystickCount) {							// This joystick isn't connected
 		return 0;
 	}
 
-	if (ReadJoystick() != 0) {						// Error polling the joystick
+	if (ReadJoystick() != 0) {									// Error polling the joystick
 		return 0;
 	}
 
-	if (nSubCode < 0x10) {							// Joystick directions
+	if (nSubCode < 0x10) {										// Joystick directions
 		const int DEADZONE = 0x4000;
 
 		if (SDL_JoystickNumAxes(JoyList[i]) <= nSubCode) {
@@ -319,10 +315,10 @@ int SDLinpState(int nCode)
 	}
 
 	if (nCode < 0x100) {
-		if (ReadKeyboard() != 0) {					// Check keyboard has been read - return not pressed on error
+		if (ReadKeyboard() != 0) {							// Check keyboard has been read - return not pressed on error
 			return 0;
 		}
-		return SDL_KEY_DOWN(nCode);					// Return key state
+		return SDL_KEY_DOWN(nCode);							// Return key state
 	}
 
 	if (nCode < 0x4000) {
@@ -339,10 +335,10 @@ int SDLinpState(int nCode)
 
 	if (nCode < 0xC000) {
 		// Codes 8000-C000 = Mouse
-		if ((nCode - 0x8000) >> 8) {				// Only the system mouse is supported by SDL
+		if ((nCode - 0x8000) >> 8) {						// Only the system mouse is supported by SDL
 			return 0;
 		}
-		if (ReadMouse() != 0) {						// Error polling the mouse
+		if (ReadMouse() != 0) {								// Error polling the mouse
 			return 0;
 		}
 		return CheckMouseState(nCode & 0xFF);
@@ -354,7 +350,7 @@ int SDLinpState(int nCode)
 // This function finds which key is pressed, and returns its code
 int SDLinpFind(bool CreateBaseline)
 {
-	int nRetVal = -1;								// assume nothing pressed
+	int nRetVal = -1;										// assume nothing pressed
 
 	// check if any keyboard keys are pressed
 	if (ReadKeyboard() == 0) {
@@ -369,11 +365,11 @@ int SDLinpFind(bool CreateBaseline)
 	// Now check all the connected joysticks
 	for (int i = 0; i < nJoystickCount; i++) {
 		int j;
-		if (ReadJoystick() != 0) {					// There was an error polling the joystick
+		if (ReadJoystick() != 0) {							// There was an error polling the joystick
 			continue;
 		}
 
-		for (j = 0; j < 0x10; j++) {				// Axes
+		for (j = 0; j < 0x10; j++) {						// Axes
 			int nDelta = JoyPrevAxes[(i << 3) + (j >> 1)] - SDLinpJoyAxis(i, (j >> 1));
 			if (nDelta < -0x4000 || nDelta > 0x4000) {
 				if (JoystickState(i, j)) {
@@ -383,7 +379,7 @@ int SDLinpFind(bool CreateBaseline)
 			}
 		}
 
-		for (j = 0x10; j < 0x20; j++) {				// POV hats
+		for (j = 0x10; j < 0x20; j++) {						// POV hats
 			if (JoystickState(i, j)) {
 				nRetVal = 0x4000 | (i << 8) | j;
 				goto End;
@@ -456,7 +452,7 @@ int SDLinpGetControlName(int nCode, TCHAR* pszDeviceName, TCHAR* pszControlName)
 			if (i >= nJoystickCount) {				// This joystick isn't connected
 				return 0;
 			}
-			_stprintf(pszDeviceName, _T("%hs"), SDL_JoystickName(i));
+			_tsprintf(pszDeviceName, "%hs", SDL_JoystickName(i));
 
 			break;
 		}
@@ -475,6 +471,4 @@ int SDLinpGetControlName(int nCode, TCHAR* pszDeviceName, TCHAR* pszControlName)
 	return 0;
 }
 
-struct InputInOut InputInOutSDL = { SDLinpInit, SDLinpExit, SDLinpSetCooperativeLevel, SDLinpStart, SDLinpState, SDLinpJoyAxis, SDLinpMouseAxis, SDLinpFind, SDLinpGetControlName, NULL };
-
-#endif
+struct InputInOut InputInOutSDL = { SDLinpInit, SDLinpExit, SDLinpSetCooperativeLevel, SDLinpStart, SDLinpState, SDLinpJoyAxis, SDLinpMouseAxis, SDLinpFind, SDLinpGetControlName, NULL, _T("SDL input") };

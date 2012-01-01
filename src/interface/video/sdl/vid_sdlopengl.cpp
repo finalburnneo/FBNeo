@@ -311,32 +311,21 @@ void SurfToTex()
 	{
 		memcpy(pd, ps, nPitch);
 	}
-/*	if (nVidImageBPP==3)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, nVidImageBPP, nTextureWidth, nTextureHeight, 0, color_type,texture_type, texture);
-	}
-	else
-*/	{
-		glTexImage2D(GL_TEXTURE_2D, 0,3, nTextureWidth, nTextureHeight, 0, GL_RGB, texture_type, texture);
-	}
+	glTexImage2D(GL_TEXTURE_2D, 0,3, nTextureWidth, nTextureHeight, 0, GL_RGB, texture_type, texture);
 }
 
 void TexToQuad()
 {
-//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear The Screen And The Depth Buffer
-    //   	glColor3f(1,1,1);
- 
 	glBegin(GL_QUADS);
-    	glTexCoord2f(0,0);
+   	glTexCoord2f(0,0);
 	glVertex2i(0,0);
-    	glTexCoord2f(0,1);
+    glTexCoord2f(0,1);
 	glVertex2i(0,nTextureHeight);
 	glTexCoord2f(1,1);
 	glVertex2i(nTextureWidth,nTextureHeight);
 	glTexCoord2f(1,0);
 	glVertex2i(nTextureWidth,0);
 	glEnd();
-	//glFlush();
 	glFinish();
  }
 

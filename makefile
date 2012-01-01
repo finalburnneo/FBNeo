@@ -40,7 +40,7 @@ ROM_VERIFY = 1
 FORCE_UPDATE = 1
 
 # Use the __fastcall calling convention when interfacing with A68K/Musashi/Doze
-FASTCALL = 1
+#FASTCALL = 1
 
 # Compress executable with upx (the DEBUG option ignores this)
 # COMPRESS = 1
@@ -62,10 +62,7 @@ mingw452: FORCE
 mingw461: FORCE
 	@$(MAKE) -s -f makefile.mingw GCC461=1
 
-sdl: FASTCALL = 0
-BUILD_A68K = 0
-BUILD_X86_ASM = 0
-FORCE
+sdl:	FORCE
 	@$(MAKE) -s -f makefile.sdl
 
 vc: FORCE

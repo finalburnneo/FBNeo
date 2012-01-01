@@ -29,16 +29,16 @@ INT32 VezMemCallback(INT32 nStart,INT32 nEnd,INT32 nMode);
 INT32 VezMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem);
 INT32 VezMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem1, UINT8 *Mem2);
 
-void VezSetReadHandler(UINT8 (__fastcall *)(UINT32));
-void VezSetWriteHandler(void (__fastcall *)(UINT32, UINT8));
+void VezSetReadHandler(UINT8 (*)(UINT32));
+void VezSetWriteHandler(void (*)(UINT32, UINT8));
 
 #define V25_PORT_P0 0x10000
 #define V25_PORT_P1 0x10002
 #define V25_PORT_P2 0x10004
 #define V25_PORT_PT 0x10006
 
-void VezSetReadPort(UINT8 (__fastcall *)(UINT32));
-void VezSetWritePort(void (__fastcall *)(UINT32, UINT8));
+void VezSetReadPort(UINT8 (*)(UINT32));
+void VezSetWritePort(void (*)(UINT32, UINT8));
 void VezSetIrqCallBack(INT32 (*cb)(INT32));
 
 INT32 VezReset();

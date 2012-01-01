@@ -372,10 +372,6 @@ int CreateROMInfo(HWND hParentWND);
 void FreeROMInfo();
 
 // support_paths.cpp
-extern TCHAR szAppPreviewsPath[MAX_PATH];
-extern TCHAR szAppTitlesPath[MAX_PATH];
-extern TCHAR szAppCheatsPath[MAX_PATH];
-extern TCHAR szAppIpsPath[MAX_PATH];
 int SupportDirCreate(HWND hParentWND);
 int SupportDirCreateTab(int nTab, HWND hParentWND);
 

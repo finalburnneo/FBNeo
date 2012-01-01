@@ -132,7 +132,7 @@ static void pgm_asic3_reg_w(UINT16 data)
 	asic3_reg = data & 0xff;
 }
 
-static void __fastcall asic3_write_word(UINT32 address, UINT16 data)
+static void asic3_write_word(UINT32 address, UINT16 data)
 {
 	if (address == 0xc04000) {
 		pgm_asic3_reg_w(data);
@@ -145,7 +145,7 @@ static void __fastcall asic3_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-static UINT16 __fastcall asic3_read_word(UINT32 address)
+static UINT16 asic3_read_word(UINT32 address)
 {
 	if (address == 0xc0400e) {
 		return pgm_asic3_r();
@@ -195,7 +195,7 @@ static UINT16 kov_c0_value;
 static UINT16 kov_cb_value;
 static UINT16 kov_fe_value;
 
-void __fastcall kov_asic27_write(UINT32 offset, UINT16 data)
+void  kov_asic27_write(UINT32 offset, UINT16 data)
 {
 	switch (offset & 0x06)
 	{
@@ -340,7 +340,7 @@ void __fastcall kov_asic27_write(UINT32 offset, UINT16 data)
 	}
 }
 
-static UINT16 __fastcall kov_asic27_read(UINT32 offset)
+static UINT16  kov_asic27_read(UINT32 offset)
 {
 	switch (offset & 0x02)
 	{
@@ -388,7 +388,7 @@ void install_protection_asic27_kov()
 
 static INT32 puzzli_54_trigger = 0;
 
-static void __fastcall puzzli2_asic_write(UINT32 offset, UINT16 data)
+static void  puzzli2_asic_write(UINT32 offset, UINT16 data)
 {
 	switch (offset & 0x06)
 	{
@@ -504,7 +504,7 @@ void install_protection_asic27a_puzzli2()
 
 #define DW2BITSWAP(s,d,bs,bd)  d=((d&(~(1<<bd)))|(((s>>bs)&1)<<bd))
 
-static UINT16 __fastcall dw2_read_word(UINT32)
+static UINT16  dw2_read_word(UINT32)
 {
 	// The value at 0x80EECE is computed in the routine at 0x107c18
 
@@ -709,12 +709,12 @@ static UINT16 killbld_igs025_prot_read(UINT32 offset)
 	return 0;
 }
 
-static void __fastcall killbld_write_word(UINT32 address, UINT16 data)
+static void  killbld_write_word(UINT32 address, UINT16 data)
 {
 	killbld_igs025_prot_write(address / 2, data);
 }
 
-static UINT16 __fastcall killbld_read_word(UINT32 address)
+static UINT16  killbld_read_word(UINT32 address)
 {
 	return killbld_igs025_prot_read(address / 2);
 }
@@ -1070,14 +1070,14 @@ static void PSTARS_w16(UINT32 offset, UINT16 data)
 	}
 }
 
-void __fastcall pstars_write_word(UINT32 address, UINT16 data)
+void  pstars_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffffc) == 0x500000) {
 		PSTARS_w16(address & 3, data);
 	}
 }
 
-UINT8 __fastcall pstars_read_byte(UINT32 address)
+UINT8  pstars_read_byte(UINT32 address)
 {
 	if ((address & 0xff0000) == 0x4f0000) {
 		return PSTARS_protram_r(address & 0xffff);
@@ -1090,7 +1090,7 @@ UINT8 __fastcall pstars_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall pstars_read_word(UINT32 address)
+UINT16  pstars_read_word(UINT32 address)
 {
 	if ((address & 0xff0000) == 0x4f0000) {
 		return PSTARS_protram_r(address & 0xffff);
@@ -1143,12 +1143,12 @@ static inline void pgm_cpu_sync()
 	}
 }
 
-static void __fastcall asic27a_write_byte(UINT32 /*address*/, UINT8 /*data*/)
+static void  asic27a_write_byte(UINT32 /*address*/, UINT8 /*data*/)
 {
 
 }
 
-static void __fastcall asic27a_write_word(UINT32 address, UINT16 data)
+static void  asic27a_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffffe) == 0xd10000) {
 	//	pgm_cpu_sync();
@@ -1158,7 +1158,7 @@ static void __fastcall asic27a_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-static UINT8 __fastcall asic27a_read_byte(UINT32 address)
+static UINT8  asic27a_read_byte(UINT32 address)
 {
 	if ((address & 0xff0000) == 0xd00000) {
 		pgm_cpu_sync();
@@ -1173,7 +1173,7 @@ static UINT8 __fastcall asic27a_read_byte(UINT32 address)
 	return 0;
 }
 
-static UINT16 __fastcall asic27a_read_word(UINT32 address)
+static UINT16  asic27a_read_word(UINT32 address)
 {
 	if ((address & 0xff0000) == 0xd00000) {
 		pgm_cpu_sync();
@@ -1250,7 +1250,7 @@ static UINT16 kovsh_highlatch_68k_w = 0;
 static UINT16 kovsh_lowlatch_68k_w = 0;
 static UINT32 kovsh_counter = 1;
 
-static void __fastcall kovsh_asic27a_write_word(UINT32 address, UINT16 data)
+static void  kovsh_asic27a_write_word(UINT32 address, UINT16 data)
 {
 	switch (address)
 	{
@@ -1266,7 +1266,7 @@ static void __fastcall kovsh_asic27a_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-static UINT16 __fastcall kovsh_asic27a_read_word(UINT32 address)
+static UINT16  kovsh_asic27a_read_word(UINT32 address)
 {
 	if ((address & 0xffffc0) == 0x4f0000) {
 		return *((UINT16*)(PGMARMShareRAM + (address & 0x3e)));
@@ -1419,7 +1419,7 @@ static void olds_write_reg(UINT16 addr, UINT32 val)
 	sharedprotram[(olds_prot_addr(addr) - 0x400000) / 2 + 1] = val & 0xffff;
 }
 
-UINT16 __fastcall olds_protection_read(UINT32 address)
+UINT16  olds_protection_read(UINT32 address)
 {
 	UINT16 res = 0;
 
@@ -1442,7 +1442,7 @@ UINT16 __fastcall olds_protection_read(UINT32 address)
 	return res;
 }
 
-void __fastcall olds_protection_write(UINT32 address, UINT16 data)
+void  olds_protection_write(UINT32 address, UINT16 data)
 {
 	if ((address & 2) == 0)
 		kb_cmd = data;
@@ -1491,14 +1491,14 @@ void __fastcall olds_protection_write(UINT32 address, UINT16 data)
 	}
 }
 
-static UINT16 __fastcall olds_mainram_read_word(UINT32 address)
+static UINT16  olds_mainram_read_word(UINT32 address)
 {
 	if (SekGetPC(-1) >= 0x100000 && address != 0x8178d8) SekWriteWord(0x8178f4, SekReadWord(0x8178D8));
 
 	return *((UINT16*)(PGM68KRAM + (address & 0x1fffe)));
 }
 
-static UINT8 __fastcall olds_mainram_read_byte(UINT32 address)
+static UINT8  olds_mainram_read_byte(UINT32 address)
 {
 	return PGM68KRAM[(address & 0x1ffff)^1];
 }
@@ -1712,7 +1712,7 @@ static const UINT16 oldsplus_8c[0x20]={
 	0x0096,0x00c8,0x00fa,0x012c,0x012c,0x0190,0x01c2,0x01f4
 };
 
-UINT16 _fastcall oldsplus_prot_read(UINT32 address)
+UINT16 oldsplus_prot_read(UINT32 address)
 {
 	if (address == 0x500000)
 	{
@@ -1734,7 +1734,7 @@ UINT16 _fastcall oldsplus_prot_read(UINT32 address)
 	return 0xff;
 }
 
-void __fastcall oldsplus_prot_write(UINT32 address, UINT16 data)
+void  oldsplus_prot_write(UINT32 address, UINT16 data)
 {
 	if (address == 0x500000)
 	{
@@ -1999,7 +1999,7 @@ static void svg_set_ram_bank(INT32 data)
 	SekMapMemory(svg_ram[svg_ram_sel^1],	0x500000, 0x51ffff, SM_FETCH);
 }
 
-static void __fastcall svg_write_byte(UINT32 address, UINT8 data)
+static void  svg_write_byte(UINT32 address, UINT8 data)
 {
 	pgm_cpu_sync();
 
@@ -2017,7 +2017,7 @@ static void __fastcall svg_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-static void __fastcall svg_write_word(UINT32 address, UINT16 data)
+static void  svg_write_word(UINT32 address, UINT16 data)
 {
 	pgm_cpu_sync();
 
@@ -2039,7 +2039,7 @@ static void __fastcall svg_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-static UINT8 __fastcall svg_read_byte(UINT32 address)
+static UINT8  svg_read_byte(UINT32 address)
 {
 	if ((address & 0xffe0000) == 0x0500000) {
 		pgm_cpu_sync();
@@ -2058,7 +2058,7 @@ static UINT8 __fastcall svg_read_byte(UINT32 address)
 	return 0;
 }
 
-static UINT16 __fastcall svg_read_word(UINT32 address)
+static UINT16  svg_read_word(UINT32 address)
 {
 	if ((address & 0xffe0000) == 0x0500000) {
 		pgm_cpu_sync();
@@ -2195,7 +2195,7 @@ static UINT32   ddp3response;
 static UINT8  ddp3internal_slot;
 static UINT32   ddp3slots[0x100];
 
-void __fastcall ddp3_asic_write(UINT32 offset, UINT16 data)
+void  ddp3_asic_write(UINT32 offset, UINT16 data)
 {
 	switch (offset & 0x06)
 	{
@@ -2242,7 +2242,7 @@ void __fastcall ddp3_asic_write(UINT32 offset, UINT16 data)
 	}
 }
 
-static UINT16 __fastcall ddp3_asic_read(UINT32 offset)
+static UINT16  ddp3_asic_read(UINT32 offset)
 {
 	switch (offset & 0x02)
 	{
@@ -2568,7 +2568,7 @@ INT32 ddp3Scan(INT32 nAction, INT32 */*pnMin*/)
 
 static INT32 ddp2_asic27_0xd10000 = 0;
 
-static void __fastcall Ddp2WriteByte(UINT32 address, UINT8 data)
+static void  Ddp2WriteByte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xffe000) == 0xd00000) {
 		PGMUSER0[(address & 0x1fff)^1] = data;
@@ -2583,7 +2583,7 @@ static void __fastcall Ddp2WriteByte(UINT32 address, UINT8 data)
 	}
 }
 
-static void __fastcall Ddp2WriteWord(UINT32 address, UINT16 data)
+static void  Ddp2WriteWord(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffe000) == 0xd00000) {
 		*((UINT16*)(PGMUSER0 + (address & 0x1ffe))) = data;
@@ -2598,7 +2598,7 @@ static void __fastcall Ddp2WriteWord(UINT32 address, UINT16 data)
 	}
 }
 
-static UINT8 __fastcall Ddp2ReadByte(UINT32 address)
+static UINT8  Ddp2ReadByte(UINT32 address)
 {
 	if ((address & 0xfffffe) == 0xd10000) {
 		ddp2_asic27_0xd10000++;
@@ -2615,7 +2615,7 @@ static UINT8 __fastcall Ddp2ReadByte(UINT32 address)
 	return 0;
 }
 
-static UINT16 __fastcall Ddp2ReadWord(UINT32 address)
+static UINT16  Ddp2ReadWord(UINT32 address)
 {
 	if ((address & 0xfffffe) == 0xd10000) {
 		ddp2_asic27_0xd10000++;

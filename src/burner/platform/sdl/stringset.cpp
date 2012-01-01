@@ -1,5 +1,5 @@
 // StringSet C++ class
-#include "burner_sdl.h"
+#include "burner.h"
 
 int __cdecl StringSet::Add(TCHAR* szFormat,...)
 {

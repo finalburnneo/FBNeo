@@ -19,10 +19,10 @@ export
 UNICODE = 1
 
 # Build A68K ASM 68000 core
-#BUILD_A68K = 1
+BUILD_A68K = 1
 
 # Include x86 Assembly routines
-#BUILD_X86_ASM = 1
+BUILD_X86_ASM = 1
 
 # Build for x64 targets (MinGW64 and MSVC only, this will undefine BUILD_A68K and BUILD_X86_ASM)
 #BUILD_X64_EXE = 1
@@ -63,6 +63,9 @@ mingw461: FORCE
 	@$(MAKE) -s -f makefile.mingw GCC461=1
 
 sdl: FORCE
+FASTCALL = 0
+BUILD_A68K = 0
+BUILD_X86_ASM =0
 	@$(MAKE) -s -f makefile.sdl
 
 vc: FORCE

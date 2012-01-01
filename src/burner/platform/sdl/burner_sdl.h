@@ -28,6 +28,7 @@ char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, int nOutSize);
 bool AppProcessKeyboardInput();
 
 
+
 //config.cpp
 int ConfigAppLoad();	
 int ConfigAppSave();
@@ -48,6 +49,7 @@ extern int RunReset();
 //inpdipsw.cpp
 void InpDIPSWResetDIPs();
 
+
 //interface/inp_interface.cpp
 int InputInit();
 int InputExit();
@@ -56,4 +58,14 @@ int InputMake(bool bCopy);
 //TODO:
 #define szAppBurnVer 1
 
+class StringSet {
+public:
+	TCHAR* szText;
+	int nLen;
+	// printf function to add text to the Bzip string
+	int __cdecl Add(TCHAR* szFormat, ...);
+	int Reset();
+	StringSet();
+	~StringSet();
+};
 

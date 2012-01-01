@@ -24,6 +24,15 @@
 
 // ---------------------------------------------------------------------------
 // OS dependent functionality
+typedef struct tagIMAGE {
+	unsigned int	width;
+	unsigned int	height;
+	unsigned int	rowbytes;
+	unsigned int	imgbytes;
+	unsigned char**	rowptr;
+	unsigned char*	bmpbits;
+	unsigned int	flags;
+} IMAGE;
 
 #if defined (BUILD_WIN32)
  #include "burner_win32.h"
@@ -40,15 +49,6 @@
 
 #include "interface.h"
 
-typedef struct tagIMAGE {
-	unsigned int	width;
-	unsigned int	height;
-	unsigned int	rowbytes;
-	unsigned int	imgbytes;
-	unsigned char**	rowptr;
-	unsigned char*	bmpbits;
-	unsigned int	flags;
-} IMAGE;
 
 
 #define IMG_FREE		(1 << 0)

@@ -13,10 +13,6 @@ static int DoLibInit()					// Do Init of Burn library driver
 
 	BzipOpen(false);
 
-	// If there is an error with the romset, report it
-	if (nBzipError) {
-	}
-
 	//ProgressCreate();
 
 	nRet = BurnDrvInit();
@@ -62,10 +58,11 @@ int DrvInit(int nDrvNum, bool bRestore)
 
 	nBurnSoundRate = 0;					// Assume no sound
 	pBurnSoundOut = NULL;
-	if (bAudOkay) {
-		nBurnSoundRate = nAudSampleRate;
-		nBurnSoundLen = nAudSegLen;
-	}	nBurnDrvSelect = nDrvNum;		// Set the driver number
+//	if (bAudOkay) {
+//		nBurnSoundRate = nAudSampleRate;
+//		nBurnSoundLen = nAudSegLen;
+//	}
+	nBurnDrvSelect[0] = nDrvNum;		// Set the driver number
 
 	// Define nMaxPlayers early; GameInpInit() needs it (normally defined in DoLibInit()).
 	nMaxPlayers = BurnDrvGetMaxPlayers();
@@ -99,7 +96,7 @@ int DrvInit(int nDrvNum, bool bRestore)
 
 int DrvInitCallback()
 {
-	return DrvInit(nBurnDrvSelect, false);
+	return DrvInit(nBurnDrvSelect[0], false);
 }
 
 int DrvExit()
@@ -107,7 +104,7 @@ int DrvExit()
 	if (bDrvOkay) {
 		VidExit();
 
-		if (nBurnDrvSelect < nBurnDrvCount) {
+		if (nBurnDrvSelect[0] < nBurnDrvCount) {
 			if (bSaveRAM) {
 				
 				bSaveRAM = false;
@@ -129,7 +126,7 @@ int DrvExit()
 		memset(nAudNextSound, 0, nAudSegLen << 2);
 	}
 
-	nBurnDrvSelect = ~0U;			// no driver selected
+	nBurnDrvSelect[0] = ~0U;			// no driver selected
 
 	return 0;
 }

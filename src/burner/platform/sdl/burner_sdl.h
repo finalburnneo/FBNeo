@@ -52,49 +52,8 @@ void InpDIPSWResetDIPs();
 int InputInit();
 int InputExit();
 int InputMake(bool bCopy);
-extern int nAppVirtualFps;							// virtual fps
 
-extern TCHAR szAppExeName[EXE_NAME_SIZE + 1];
-extern TCHAR szAppBurnVer[16];
-
-extern bool bCmdOptUsed;
-extern bool bAlwaysProcessKeyboardInput;
-
-extern bool bNoChangeNumLock;
-extern bool bMonitorAutoCheck;
-
-// Used for the load/save dialog in commdlg.h
-extern TCHAR szChoice[MAX_PATH];					// File chosen by the user
-
-// Used to convert strings when possibly needed
-/* const */ char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, int nOutSize);
-/* const */ TCHAR* ANSIToTCHAR(const char* pszString, TCHAR* pszOutString, int nOutSize);
-
-CHAR *astring_from_utf8(const char *s);
-char *utf8_from_astring(const CHAR *s);
-
-WCHAR *wstring_from_utf8(const char *s);
-char *utf8_from_wstring(const WCHAR *s);
-
-#ifdef _UNICODE
-#define tstring_from_utf8 wstring_from_utf8
-#define utf8_from_tstring utf8_from_wstring
-#else // !_UNICODE
-#define tstring_from_utf8 astring_from_utf8
-#define utf8_from_tstring utf8_from_astring
-#endif // _UNICODE
-
-int dprintf(TCHAR* pszFormat, ...);					// Use instead of printf() in the UI
-
-void MonitorAutoCheck();
+//TODO:
+#define szAppBurnVer 1
 
 
-// Misc
-#define _TtoA(a)	TCHARToANSI(a, NULL, 0)
-#define _AtoT(a)	ANSIToTCHAR(a, NULL, 0)
-int __cdecl ZipLoadOneFile(const char* arcName, const char* fileName, void** Dest, int* pnWrote);
-
-// numpluscommas.cpp
-TCHAR* FormatCommasNumber(__int64);
-#define _uInt64ToCommaFormattedTCHAR(szOUT, nIN)	\
-	_stprintf(szOUT, _T("%s"), FormatCommasNumber(nIN));

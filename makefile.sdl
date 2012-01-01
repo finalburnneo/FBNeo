@@ -76,8 +76,6 @@ incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)depend/generated
 
 lib	+=	`sdl-config --libs`
 		
-depobj	+=	resource.o \
-		
 autdep	= $(depobj:.o=.d)
 
 ifdef	BUILD_A68K
@@ -163,7 +161,7 @@ ASFLAGS	=  -O1 -f coff -w-orphan-labels
 #       D3DUtils & D3DMath need these
 #       DEF     = -Dsinf=\(float\)sin -Dcosf=\(float\)cos -Dasinf=\(float\)asin -Dacosf=\(float\)acos -Dsqrtf=\(float\)sqrt
 
-	DEF	:= -DUSE_SPEEDHACKS -DFILENAME=$(NAME) -DMMX=0
+	DEF	:= -DBUILD_SDL -DUSE_SPEEDHACKS -DFILENAME=$(NAME) -DMMX=0
 
 ifdef UNICODE
 	DEF	:= $(DEF) -D_UNICODE
@@ -328,7 +326,7 @@ endif
 ifdef	BUILD_A68K
 $(a68k.o):	fba_make68k.c
 	@echo Compiling A68K MC68000 core...
-	@$(CC) -mconsole $(CFLAGS) $(LDFLAGS) -DWIN32 -Wno-unused -Wno-conversion -Wno-missing-prototypes \
+	@$(CC) $(CFLAGS) $(LDFLAGS) -DWIN32 -Wno-unused -Wno-conversion -Wno-missing-prototypes \
 		-s $< -o $(subst $(srcdir),$(objdir),$(<D))/$(<F:.c=.exe)
 	@$(subst $(srcdir),$(objdir),$(<D))/$(<F:.c=.exe) $(@:.o=.asm) \
 		$(@D)/a68k_tab.asm 00 $(ppro)
@@ -374,7 +372,7 @@ ctv.d ctv.o:	$(ctv.h)
 
 $(ctv.h):	ctv_make.cpp
 	@echo Generating $(srcdir)depend/generated/$(@F)...
-	@$(CC) -mconsole $(CXXFLAGS) $(LDFLAGS) $< \
+	@$(CC)  $(CXXFLAGS) $(LDFLAGS) $< \
 		-o $(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe)
 	@$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) >$@
 
@@ -431,7 +429,7 @@ pgm_draw.d pgm_draw.o:	$(pgm_sprite.h)
 
 $(pgm_sprite.h):	pgm_sprite_create.cpp
 	@echo Generating $(srcdir)depend/generated/$(@F)...
-	@$(CC) -mconsole $(CXXFLAGS) $(LDFLAGS) $< \
+	@$(CC)  $(CXXFLAGS) $(LDFLAGS) $< \
 		-o $(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe)
 	@$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) >$@
 

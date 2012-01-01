@@ -40,6 +40,17 @@
 
 #include "interface.h"
 
+typedef struct tagIMAGE {
+	unsigned int	width;
+	unsigned int	height;
+	unsigned int	rowbytes;
+	unsigned int	imgbytes;
+	unsigned char**	rowptr;
+	unsigned char*	bmpbits;
+	unsigned int	flags;
+} IMAGE;
+
+
 #define IMG_FREE		(1 << 0)
 
 // Macros for parsing text

@@ -37,7 +37,7 @@ void ProcessCommandLine(int argc, char *argv[])
 
 int main(int argc, char *argv[]) 
 {
-	unsigned int i=0;
+	UINT32 i=0;
 	
 	ConfigAppLoad(); 
 	
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 	if (argc == 2)
 	{
 		for (i = 0; i < nBurnDrvCount; i++) {
-			nBurnDrvSelect = i;
+			nBurnDrvSelect[0] = i;
 			if (strcmp(BurnDrvGetTextA(0), argv[1]) == 0) {
 				break;
 			}

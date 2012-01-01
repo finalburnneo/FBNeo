@@ -408,8 +408,11 @@ const TCHAR* VidGetModuleName()
 	if (pszName) {
 		return pszName;
 	}
-
+#if defined (BUILD_WIN32)
 	return FBALoadStringEx(hAppInst, IDS_ERR_UNKNOWN, true);
+#else
+	return "There was an error with the video";
+#endif
 }
 
 InterfaceInfo* VidGetInfo()

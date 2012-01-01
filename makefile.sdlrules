@@ -5,7 +5,7 @@ alldir	= 	burn burn/devices burn/sound burn/drivers burn/drivers/capcom burn/dri
 			cpu/arm cpu/arm7 cpu/h6280 cpu/hd6309 cpu/i8039 cpu/konami cpu/m68k cpu/m6502 cpu/m6800 cpu/m6805 cpu/m6809 cpu/nec \
 			cpu/s2650 cpu/sh2 cpu/z80 depend/kaillera/client depend/libs/libpng depend/libs/zlib interface interface/video \
 			interface/video/scalers interface/video/sdl interface/audio interface/audio/sdl interface/input \
-			interface/input/sdl interface/cd interface/cd/sdl  \
+			interface/input/sdl interface/cd interface/cd/sdl interface/perfcount  \
 			depend/generated
 
 drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwange.o d_hotdogst.o d_korokoro.o d_mazinger.o \
@@ -66,7 +66,7 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			\
 			d_snes.o
 
-depobj	:= 	main.o stringset.o drv.o load.o misc.o \
+depobj	:= 	main.o drv.o load.o misc.o \
 		    vid_sdlfx.o vid_softfx.o vid_interface.o vid_support.o config.o \
 		    state.o stated.o statec.o run.o inpdipsw.o gami.o gamc.o \
 		    cheat.o vid_sdlopengl.o \
@@ -93,13 +93,7 @@ depobj	:= 	main.o stringset.o drv.o load.o misc.o \
 			arm.o arm7.o h6280.o hd6309.o i8039.o konami.o m6502.o m6800.o m6805.o m6809.o nec.o s2650.o sh2.o v25.o z80.o \
 			z80daisy.o \
 			\
-			aud_dsp.o aud_interface.o cd_interface.o inp_interface.o interface.o lowpass2.o prf_interface.o vid_interface.o \
-			vid_softfx.o vid_support.o \
-			\
 			2xpm.o 2xsai.o epx.o hq2xs.o hq2xs_16.o \
-			\
-			aud_dsound3.o aud_xaudio2.o cd_isowav.o cdsound.o ddraw_core.o dinput_core.o directx9_core.o dsound_core.o \
-			inp_dinput.o prf_performance_counter.o vid_d3d.o vid_ddraw.o vid_ddrawfx.o vid_directx9.o vid_directx_support.o \
 			\
 			cave.o cave_palette.o cave_sprite.o cave_tile.o \
 			\

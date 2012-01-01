@@ -62,10 +62,11 @@ mingw452: FORCE
 mingw461: FORCE
 	@$(MAKE) -s -f makefile.mingw GCC461=1
 
-sdl: FORCE
+sdl: 
 FASTCALL = 0
 BUILD_A68K = 0
-BUILD_X86_ASM =0
+BUILD_X86_ASM = 0
+FORCE
 	@$(MAKE) -s -f makefile.sdl
 
 vc: FORCE

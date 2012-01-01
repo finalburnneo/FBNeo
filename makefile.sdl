@@ -133,14 +133,14 @@ LDFLAGS	= -static
 
 CFLAGS	 = -pipe \
 	   -std=gnu99 -march=$(CPUTYPE) -O1 \
-	   -fforce-mem -fforce-addr -finline-limit=1200 -fthread-jumps \
+	   -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -fexpensive-optimizations \
 	   -Wall -Wno-long-long -Wno-sign-compare -Wno-uninitialized -Wno-unused \
 	   $(DEF) $(incdir) `sdl-config --cflags`
 
 CXXFLAGS = -pipe \
 	   -march=$(CPUTYPE) -O1 \
-	   -fforce-mem -fforce-addr -finline-limit=1200 -fthread-jumps \
+	    -fforce-addr -finline-limit=1200 -fthread-jumps \
 	    -fexpensive-optimizations \
 	   -fcheck-new \
 	   -Wall -W -pedantic -Wno-long-long \

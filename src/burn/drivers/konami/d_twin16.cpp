@@ -3,7 +3,7 @@
 
 #include "tiles_generic.h"
 #include "burn_ym2151.h"
-#include "UPD7759.h"
+#include "upd7759.h"
 #include "k007232.h"
 
 static UINT8 *AllMem;

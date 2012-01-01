@@ -2,7 +2,7 @@
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"
-#include "K051649.h"
+#include "k051649.h"
 #include "msm6295.h"
 
 static UINT8 *AllMem;

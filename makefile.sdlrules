@@ -73,7 +73,7 @@ depobj	:= 	main.o stringset.o drv.o load.o misc.o \
 		    inp_interface.o inp_sdl.o\
 		    bzip.o unzip.o zipfn.o cong.o conc.o\
 		    interface.o sshot.o dat.o aud_sdl.o aud_interface.o aud_dsp.o \
-		    lowpass2.o \ 
+		    lowpass2.o \
 			\
 			$(drvobj) \
 			\
@@ -136,12 +136,6 @@ depobj	:= 	main.o stringset.o drv.o load.o misc.o \
 			snes_65816.o snes_io.o snes_main.o snes_mem.o snes_ppu.o snes_spc700.o
 			
 			
-ifdef	DEBUG
-depobj += m68kdasm.o
-endif
 
 autobj += $(depobj)
 
-ifdef	BUILD_X86_ASM
-autobj += burn_sound_a.o eagle_fm.o 2xsaimmx.o hq2x32.o hq3x32.o hq4x32.o superscale.o
-endif

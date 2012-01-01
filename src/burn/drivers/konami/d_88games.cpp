@@ -5,7 +5,7 @@
 #include "konami_intf.h"
 #include "konamiic.h"
 #include "burn_ym2151.h"
-#include "UPD7759.h"
+#include "upd7759.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

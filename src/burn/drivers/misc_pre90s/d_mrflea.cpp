@@ -73,7 +73,7 @@ static struct BurnDIPInfo DrvDIPList[]=
 
 STDDIPINFO(Drv)
 
-void __fastcall mrflea_write(UINT16 a, UINT8 d)
+void mrflea_write(UINT16 a, UINT8 d)
 {
 	if (a >= 0xe000 && a <= 0xe7ff) // video ram
 	{
@@ -107,7 +107,7 @@ void __fastcall mrflea_write(UINT16 a, UINT8 d)
 }
 
 
-void _fastcall mrflea_out_port(UINT16 a, UINT8 data)
+void mrflea_out_port(UINT16 a, UINT8 data)
 {
 	switch (a & 0xff)
 	{
@@ -134,7 +134,7 @@ void _fastcall mrflea_out_port(UINT16 a, UINT8 data)
 	}
 }
 
-UINT8 _fastcall mrflea_in_port(UINT16 a)
+UINT8 mrflea_in_port(UINT16 a)
 {
 	switch (a & 0xff)
 	{
@@ -152,7 +152,7 @@ UINT8 _fastcall mrflea_in_port(UINT16 a)
 	return 0;
 }
 
-void _fastcall mrflea_cpu1_out_port(UINT16 a, UINT8 data)
+void mrflea_cpu1_out_port(UINT16 a, UINT8 data)
 {
 	switch (a & 0xff)
 	{
@@ -194,7 +194,7 @@ void _fastcall mrflea_cpu1_out_port(UINT16 a, UINT8 data)
 	}
 }
 
-UINT8 __fastcall mrflea_cpu1_in_port(UINT16 a)
+UINT8 mrflea_cpu1_in_port(UINT16 a)
 {
 	UINT8 ret = 0;
 

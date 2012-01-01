@@ -70,7 +70,7 @@ objdir	= obj/SDL/$(NAME)/
 
 srcdir	= src/
 
-include makefile.rules
+include makefile.sdlrules
 
 incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)depend/generated 
 
@@ -94,7 +94,6 @@ cave_tile_func.h = $(srcdir)depend/generated/cave_tile_func.h
 cave_sprite_func.h = $(srcdir)depend/generated/cave_sprite_func.h
 psikyo_tile_func.h = $(srcdir)depend/generated/psikyo_tile_func.h
 pgm_sprite.h = $(srcdir)depend/generated/pgm_sprite.h
-build_details.h = $(srcdir)depend/generated/build_details.h
 
 allobj	= $(objdir)cpu/m68k/m68kcpu.o $(objdir)cpu/m68k/m68kopnz.o $(objdir)cpu/m68k/m68kopdm.o $(objdir)cpu/m68k/m68kopac.o $(objdir)cpu/m68k/m68kops.o \
 	  $(foreach file,$(autobj:.o=.c), \
@@ -135,20 +134,19 @@ LDFLAGS	= -static
 CFLAGS	 = -pipe \
 	   -std=gnu99 -march=$(CPUTYPE) -O1 \
 	   -fforce-mem -fforce-addr -finline-limit=1200 -fthread-jumps \
-	   -freduce-all-givs -fmove-all-movables -fexpensive-optimizations \
+	   -fexpensive-optimizations \
 	   -Wall -Wno-long-long -Wno-sign-compare -Wno-uninitialized -Wno-unused \
 	   $(DEF) $(incdir) `sdl-config --cflags`
 
 CXXFLAGS = -pipe \
 	   -march=$(CPUTYPE) -O1 \
 	   -fforce-mem -fforce-addr -finline-limit=1200 -fthread-jumps \
-	   -freduce-all-givs -fmove-all-movables -fexpensive-optimizations \
+	    -fexpensive-optimizations \
 	   -fcheck-new \
 	   -Wall -W -pedantic -Wno-long-long \
 	   -Wunknown-pragmas -Wundef -Wconversion -Wno-missing-braces \
 	   -Wuninitialized -Wpointer-arith -Winline -Wno-multichar \
 	   $(DEF) $(incdir) `sdl-config --cflags`
-endif
 
 ifdef BUILD_X64_EXE
 	CFLAGS += -m64
@@ -158,7 +156,6 @@ else
 	CFLAGS += -m32
 	CXXFLAGS += -m32
 	LDFLAGS += -m32
-endif
 endif
 
 ASFLAGS	=  -O1 -f coff -w-orphan-labels
@@ -247,19 +244,14 @@ vpath %.d 	$(foreach dir,$(alldir),$(objdir)$(dir)/ )
 ifeq ($(MAKELEVEL),1)
 ifdef DEPEND
 
-all:	init $(autdep) $(autobj)
-@$(MAKE) -f makefile.sdl 
-
+all:	init $(autdep) $(autobj) \
+$(MAKE) -f makefile.sdl 
 else
-
 all:	init $(autobj)
 @$(MAKE) -f makefile.sdl
-
 endif
 else
-
 all:	$(NAME).exe
-
 endif
 
 #
@@ -288,7 +280,6 @@ endif
 
 ifeq ($(MAKELEVEL),1)
 ifdef FORCE_UPDATE
-$(build_details.h): FORCE
 endif
 endif
 
@@ -327,11 +318,6 @@ endif
 #	Generate some info on the build details
 #
 
-about.o about.d: $(build_details.h)
-
-$(build_details.h):	$(srcdir)depend/scripts/build_details.cpp
-	@$(CXX) -mconsole $(CXXFLAGS) $(LDFLAGS) $< -o $(objdir)depend/generated/build_details.exe
-	@$(objdir)depend/generated/build_details.exe >$@
 
 #
 #	Compile 68000 cores

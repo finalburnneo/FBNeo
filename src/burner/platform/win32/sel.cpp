@@ -1060,7 +1060,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		
 		RebuildEverything();
 		
-//		TreeView_SetItemHeight(hSelList, 20);
+		TreeView_SetItemHeight(hSelList, cyItem);
 		
 		if (nDialogSelect > -1) {
 			for (unsigned int i = 0; i < nTmpDrvCount; i++) {

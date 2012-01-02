@@ -500,11 +500,12 @@ static int AppInit()
 	
 	// Init the Burn library
 	BurnLibInit();
-
+	
 	// Load config for the application
 	ConfigAppLoad();
 
 	FBALocaliseInit(szLocalisationTemplate);
+	BurnerDoGameListLocalisation();
 
 	if (bMonitorAutoCheck) MonitorAutoCheck();
 
@@ -564,6 +565,7 @@ static int AppExit()
 #endif
 
 	FBALocaliseExit();
+	BurnerExitGameListLocalisation();
 
 	if (hAccel) {
 		DestroyAcceleratorTable(hAccel);

@@ -122,6 +122,10 @@ BEGIN
 	
 	IDS_PRESET_SAVED			"The preset file was saved to %s."
 	
+	IDS_LOCAL_GL_CREATE			"Create gamelist localisation template"
+	IDS_LOCAL_GL_SELECT			"Select gamelist localisation template"
+	IDS_LOCAL_GL_FILTER			"FB Alpha gamelist localisation templates"
+	
 	IDS_CD_SELECT_IMAGE			"Select CD-ROM image..."
 	IDS_CD_SELECT_IMAGE_TITLE	"Select CD-ROM image"
 	IDS_CD_SELECT_FILTER		"CD images"

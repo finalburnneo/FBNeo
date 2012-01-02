@@ -907,6 +907,12 @@ BEGIN
        		MENUITEM "Export UI translation template...",			MENU_LANGUAGE_EXPORT
        		MENUITEM "Reset UI default language",				MENU_LANGUAGE_RESET
         END
+		POPUP    "Gamelist language"
+       	BEGIN
+       		MENUITEM "Select gamelist language...",				MENU_LANGUAGE_GL_SELECT
+       		MENUITEM "Export gamelist translation template...",			MENU_LANGUAGE_GL_EXPORT
+       		MENUITEM "Reset gamelist default language",				MENU_LANGUAGE_GL_RESET
+        END
        	MENUITEM SEPARATOR
         MENUITEM "Save snapshot\tF12",					MENU_SAVESNAP
         MENUITEM "Shot factory..\tCtrl+F12",				MENU_SNAPFACT

@@ -410,6 +410,16 @@ extern "C" char* BurnDrvGetTextA(UINT32 i)
 	}
 }
 
+void BurnLocalisationSetName(char *szName, TCHAR *szLongName)
+{
+	for (UINT32 i = 0; i < nBurnDrvCount; i++) {
+		nBurnDrvActive = i;
+		if (!strcmp(szName, pDriver[i]->szShortName)) {
+			pDriver[i]->szFullNameW = szLongName;
+		}
+	}
+}
+
 // Get the zip names for the driver
 extern "C" INT32 BurnDrvGetZipName(char** pszName, UINT32 i)
 {
@@ -900,6 +910,8 @@ INT32 BurnTransferInit()
 
 	return 0;
 }
+
+
 
 // ----------------------------------------------------------------------------
 // Savestate support

@@ -1767,6 +1767,21 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			POST_INITIALISE_MESSAGE;
 			break;
 			
+		case MENU_LANGUAGE_GL_SELECT:
+			if (UseDialogs()) {
+				FBALocaliseGamelistLoadTemplate();
+			}
+			break;
+		case MENU_LANGUAGE_GL_EXPORT:
+			if (UseDialogs()) {
+				FBALocaliseGamelistCreateTemplate();
+			}
+			break;
+		case MENU_LANGUAGE_GL_RESET:
+			szGamelistLocalisationTemplate[0] = _T('\0');
+			nGamelistLocalisationActive = false;
+			break;
+			
 		case MENU_PRIORITY_REALTIME:
 			nAppThreadPriority = THREAD_PRIORITY_TIME_CRITICAL;
 			SetThreadPriority(GetCurrentThread(), nAppThreadPriority);

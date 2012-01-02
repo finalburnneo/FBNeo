@@ -147,6 +147,15 @@ HWND FBACreateDialog(HINSTANCE hInstance, LPCTSTR lpTemplate, HWND hWndParent, D
 int FBALoadString(HINSTANCE hInstance, UINT uID, LPTSTR lpBuffer, int nBufferMax);
 TCHAR* FBALoadStringEx(HINSTANCE hInstance, UINT uID, bool bTranslate);
 
+// localise_gamelist.cpp
+extern TCHAR szGamelistLocalisationTemplate[MAX_PATH];
+extern bool nGamelistLocalisationActive;
+
+void BurnerDoGameListLocalisation();
+void BurnerExitGameListLocalisation();
+int FBALocaliseGamelistLoadTemplate();
+int FBALocaliseGamelistCreateTemplate();
+
 // popup_win32.cpp
 enum FBAPopupType { MT_NONE = 0, MT_ERROR, MT_WARNING, MT_INFO };
 

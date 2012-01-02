@@ -227,6 +227,8 @@ INT32 BurnDrvGetPaletteEntries();
 INT32 BurnSetProgressRange(double dProgressRange);
 INT32 BurnUpdateProgress(double dProgressStep, const TCHAR* pszText, bool bAbs);
 
+void BurnLocalisationSetName(char *szName, TCHAR *szLongName);
+
 // ---------------------------------------------------------------------------
 // Retrieve driver information
 

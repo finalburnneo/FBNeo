@@ -161,6 +161,8 @@ int ConfigAppLoad()
 
 		// Other
 		STR(szLocalisationTemplate);
+		STR(szGamelistLocalisationTemplate);
+		VAR(nGamelistLocalisationActive);
 
 		VAR(nVidSDisplayStatus);
 		VAR(nMinChatFontSize);
@@ -447,6 +449,12 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// Filename of the active UI translation template\n"));
 	STR(szLocalisationTemplate);
+	
+	_ftprintf(h, _T("\n// Filename of the active gamelist translation template\n"));
+	STR(szGamelistLocalisationTemplate);
+	
+	_ftprintf(h, _T("\n// If non-zero, enable gamelist localisation\n"));
+	VAR(nGamelistLocalisationActive);
 	
 	_ftprintf(h, _T("\n// 1 = display pause/record/replay/kaillera icons in the upper right corner of the display\n"));
 	VAR(nVidSDisplayStatus);

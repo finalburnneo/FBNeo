@@ -266,7 +266,7 @@ static void update_irq_lines()
 		}
 }
 
-static UINT8 seibu_main_v30_r(UINT32 offset)
+static UINT8 __fastcall seibu_main_v30_r(UINT32 offset)
 {
 	switch (offset) {
 		case 0x4: return sub2main[0];
@@ -281,7 +281,7 @@ static UINT8 seibu_main_v30_r(UINT32 offset)
 	}
 }
 
-static void seibu_main_v30_w(UINT32 offset, UINT8 data)
+static void __fastcall seibu_main_v30_w(UINT32 offset, UINT8 data)
 {
 	switch (offset) {
 		case 0x0: main2sub[0] = data; break;
@@ -320,7 +320,7 @@ INT32 raidenSynchroniseStream(INT32 nSoundRate)
 	return (INT64)ZetTotalCycles() * nSoundRate / 3579545;
 }
 
-UINT8 raidenReadByte(UINT32 vezAddress)
+UINT8 __fastcall raidenReadByte(UINT32 vezAddress)
 {
 	switch (vezAddress) {
 		case 0x0b000: return ~DrvInput[1];
@@ -349,7 +349,7 @@ UINT8 raidenReadByte(UINT32 vezAddress)
 	return 0;
 }
 
-void raidenWriteByte(UINT32 vezAddress, UINT8 byteValue)
+void __fastcall raidenWriteByte(UINT32 vezAddress, UINT8 byteValue)
 {
 	
 	switch (vezAddress) {
@@ -398,7 +398,7 @@ void raidenWriteByte(UINT32 vezAddress, UINT8 byteValue)
 	}
 }
 
-UINT8 raidenAltReadByte(UINT32 vezAddress)
+UINT8 __fastcall raidenAltReadByte(UINT32 vezAddress)
 {
 	switch (vezAddress) {
 		case 0x0a000:
@@ -427,7 +427,7 @@ UINT8 raidenAltReadByte(UINT32 vezAddress)
 	return 0;
 }
 
-void raidenAltWriteByte(UINT32 vezAddress, UINT8 byteValue)
+void __fastcall raidenAltWriteByte(UINT32 vezAddress, UINT8 byteValue)
 {
 	
 	switch (vezAddress) {
@@ -474,7 +474,7 @@ void raidenAltWriteByte(UINT32 vezAddress, UINT8 byteValue)
 	}
 }
 
-UINT8 raidenSubReadByte(UINT32 vezAddress)
+UINT8 __fastcall raidenSubReadByte(UINT32 vezAddress)
 {
 	switch (vezAddress) {
 		case 0x04008: {
@@ -493,7 +493,7 @@ UINT8 raidenSubReadByte(UINT32 vezAddress)
 	return 0;
 }
 
-void raidenSubWriteByte(UINT32 vezAddress, UINT8 byteValue)
+void __fastcall raidenSubWriteByte(UINT32 vezAddress, UINT8 byteValue)
 {
 	if ((vezAddress & 0xFF000) == 0x03000 ) {
 		vezAddress -= 0x03000;

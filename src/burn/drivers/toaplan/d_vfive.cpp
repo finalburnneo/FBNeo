@@ -366,7 +366,7 @@ void __fastcall vfiveWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	}
 }
 
-void vfive_v25_write(UINT32 address, UINT8 data)
+void __fastcall vfive_v25_write(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -380,7 +380,7 @@ void vfive_v25_write(UINT32 address, UINT8 data)
 	}
 }
 
-UINT8 vfive_v25_read(UINT32 address)
+UINT8 __fastcall vfive_v25_read(UINT32 address)
 {
 	switch (address)
 	{
@@ -391,7 +391,7 @@ UINT8 vfive_v25_read(UINT32 address)
 	return 0;
 }
 
-UINT8 vfive_v25_read_port(UINT32 port)
+UINT8 __fastcall vfive_v25_read_port(UINT32 port)
 {
 	switch (port)
 	{

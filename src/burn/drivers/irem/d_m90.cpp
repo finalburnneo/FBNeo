@@ -822,7 +822,7 @@ static inline void update_palette_entry(INT32 entry)
 	DrvPalette[entry / 2] = BurnHighCol(r, g, b, 0);
 }
 
-void m90_main_write(UINT32 address, UINT8 data)
+void __fastcall m90_main_write(UINT32 address, UINT8 data)
 {
 	if ((address & 0xffc00) == 0xe0000) {
 		DrvPalRAM[address & 0x3ff] = data;
@@ -831,12 +831,12 @@ void m90_main_write(UINT32 address, UINT8 data)
 	}
 }
 
-UINT8 m90_main_read(UINT32 /*address*/)
+UINT8 __fastcall m90_main_read(UINT32 /*address*/)
 {
 	return 0;
 }
 
-void m90_main_write_port(UINT32 port, UINT8 data)
+void __fastcall m90_main_write_port(UINT32 port, UINT8 data)
 {
 	if ((port & ~0x0f) == 0x80) {
 		m90_video_control[port & 0x0f] = data;
@@ -875,7 +875,7 @@ void m90_main_write_port(UINT32 port, UINT8 data)
 	}
 }
 
-UINT8 m90_main_read_port(UINT32 port)
+UINT8 __fastcall m90_main_read_port(UINT32 port)
 {
 	switch (port)
 	{

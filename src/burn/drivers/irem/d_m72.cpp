@@ -1006,7 +1006,7 @@ static void palette_write(INT32 offset, INT32 offset2)
 	DrvPalette[offset3] = BurnHighCol((r << 3) | (r >> 2), (g << 3) | (g >> 2), (b << 3) | (b >> 2), 0);
 }
 
-UINT8 m72_main_read(UINT32 address)
+UINT8 __fastcall m72_main_read(UINT32 address)
 {
 	if ((address & 0xff000) == 0xb0000) {
 		return protection_read(address);
@@ -1015,7 +1015,7 @@ UINT8 m72_main_read(UINT32 address)
 	return 0;
 }
 
-void m72_main_write(UINT32 address, UINT8 data)
+void __fastcall m72_main_write(UINT32 address, UINT8 data)
 {
 	if ((address & 0xff000) == 0xb0000) {
 		protection_write(address, data);
@@ -1037,7 +1037,7 @@ void m72_main_write(UINT32 address, UINT8 data)
 	}
 }
 
-void rtype2_main_write(UINT32 address, UINT8 data)
+void __fastcall rtype2_main_write(UINT32 address, UINT8 data)
 {
 	if ((address & 0xff000) == 0xc8000 || (address & 0xff000) == 0xa0000 || (address & 0xff000) == 0xcc000) {
 		if (address & 1) data = 0xff;
@@ -1074,7 +1074,7 @@ void rtype2_main_write(UINT32 address, UINT8 data)
 	}
 }
 
-void m72_main_write_port(UINT32 port, UINT8 data)
+void __fastcall m72_main_write_port(UINT32 port, UINT8 data)
 {
 //	bprintf (0, _T("%2.2x, %2.2x wp\n"), port, data);
 
@@ -1155,7 +1155,7 @@ void m72_main_write_port(UINT32 port, UINT8 data)
 	}
 }
 
-static UINT16 poundfor_trackball_r(INT32 offset)
+static __fastcall UINT16 poundfor_trackball_r(INT32 offset)
 {
 	static INT32 prev[4],diff[4];
 //	static const char *const axisnames[] = { "TRACK0_X", "TRACK0_Y", "TRACK1_X", "TRACK1_Y" };
@@ -1193,7 +1193,7 @@ static UINT16 poundfor_trackball_r(INT32 offset)
 	return 0;
 }
 
-UINT8 m72_main_read_port(UINT32 port)
+UINT8 __fastcall m72_main_read_port(UINT32 port)
 {
 	switch (port)
 	{

@@ -1239,7 +1239,7 @@ static void m92YM2151IRQHandler(INT32 nStatus)
 	VezRun(100);
 }
 
-UINT8 __fastcall m92ReadByte(UINT32 address)
+UINT8 m92ReadByte(UINT32 address)
 {
 	if ((address & 0xff800) == 0xf8800 )
 		return DrvPalRAM[ address - 0xf8800 + PalBank ];
@@ -1255,7 +1255,7 @@ UINT8 __fastcall m92ReadByte(UINT32 address)
 	return 0;
 }
 
-void __fastcall m92WriteByte(UINT32 address, UINT8 data)
+void m92WriteByte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xff800) == 0xf8800 ) {
 		DrvPalRAM[ address - 0xf8800 + PalBank ] = data;
@@ -1300,7 +1300,7 @@ void __fastcall m92WriteByte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall m92ReadPort(UINT32 port)
+UINT8 m92ReadPort(UINT32 port)
 {
 	switch (port)
 	{
@@ -1348,7 +1348,7 @@ static void set_pf_scroll(INT32 layer)
 	ptr->scrolly = (pf_control[layer][0] << 0) | (pf_control[layer][1] << 8);
 }
 
-void __fastcall m92WritePort(UINT32 port, UINT8 data)
+void m92WritePort(UINT32 port, UINT8 data)
 {
 	switch (port)
 	{
@@ -1444,7 +1444,7 @@ void __fastcall m92WritePort(UINT32 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall m92SndReadByte(UINT32 address)
+UINT8 m92SndReadByte(UINT32 address)
 {
 	if ((address & 0xfffc0) == 0xa8000) {
 		return iremga20_read( 0, (address & 0x0003f) / 2 );
@@ -1468,7 +1468,7 @@ UINT8 __fastcall m92SndReadByte(UINT32 address)
 	return 0;
 }
 
-void __fastcall m92SndWriteByte(UINT32 address, UINT8 data)
+void m92SndWriteByte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xfffc0) == 0xa8000) {
 		iremga20_write( 0, (address & 0x0003f) / 2, data );

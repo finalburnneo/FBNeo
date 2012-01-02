@@ -151,7 +151,7 @@ static void sync_sound_cpu()
 	}
 }
 
-void __fastcall master_write(UINT32 address, UINT8 data)
+void master_write(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -180,7 +180,7 @@ void __fastcall master_write(UINT32 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall master_read(UINT32 address)
+UINT8 master_read(UINT32 address)
 {
 	switch (address)
 	{
@@ -220,7 +220,7 @@ static inline void palette_update_entry(INT32 entry)
 	DrvPalette[entry] = BurnHighCol((r<<4)|r, (g<<4)|g, (b<<4)|b, 0);
 }
 
-void __fastcall slave_write(UINT32 address, UINT8 data)
+void slave_write(UINT32 address, UINT8 data)
 {
 	if ((address & 0xff000) == 0x07000) {
 		DrvPalRAM[(address & 0xfff)] = data;

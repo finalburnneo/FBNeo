@@ -208,7 +208,7 @@ void __fastcall fixeightWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	}
 }
 
-void __fastcall fixeight_v25_write(UINT32 address, UINT8 data)
+void fixeight_v25_write(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -226,7 +226,7 @@ void __fastcall fixeight_v25_write(UINT32 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall fixeight_v25_read(UINT32 address)
+UINT8 fixeight_v25_read(UINT32 address)
 {
 	switch (address)
 	{
@@ -243,7 +243,7 @@ UINT8 __fastcall fixeight_v25_read(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall fixeight_v25_read_port(UINT32 port)
+UINT8 fixeight_v25_read_port(UINT32 port)
 {
 	switch (port)
 	{
@@ -254,7 +254,7 @@ UINT8 __fastcall fixeight_v25_read_port(UINT32 port)
 	return 0;
 }
 
-void __fastcall fixeight_v25_write_port(UINT32 port, UINT8 data)
+void fixeight_v25_write_port(UINT32 port, UINT8 data)
 {
 	switch (port)
 	{

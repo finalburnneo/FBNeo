@@ -174,3 +174,4 @@ extern TCHAR szAppPreviewsPath[MAX_PATH];
 extern TCHAR szAppTitlesPath[MAX_PATH];
 extern TCHAR szAppCheatsPath[MAX_PATH];
 extern TCHAR szAppIpsPath[MAX_PATH];
+extern TCHAR szAppIconsPath[MAX_PATH];

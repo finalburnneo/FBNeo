@@ -495,6 +495,8 @@ BEGIN
     PUSHBUTTON      "Browse...",IDC_SUPPORTDIR_BR7,177,30,50,14
 	EDITTEXT        IDC_SUPPORTDIR_EDIT8,14,31,154,12,ES_AUTOHSCROLL
     PUSHBUTTON      "Browse...",IDC_SUPPORTDIR_BR8,177,30,50,14
+	EDITTEXT        IDC_SUPPORTDIR_EDIT9,14,31,154,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse...",IDC_SUPPORTDIR_BR9,177,30,50,14
 END
 
 IDD_PALETTEVIEWER DIALOGEX 0, 0, 320, 240
@@ -912,6 +914,17 @@ BEGIN
        		MENUITEM "Select gamelist language...",				MENU_LANGUAGE_GL_SELECT
        		MENUITEM "Export gamelist translation template...",			MENU_LANGUAGE_GL_EXPORT
        		MENUITEM "Reset gamelist default language",				MENU_LANGUAGE_GL_RESET
+        END
+		MENUITEM SEPARATOR
+        POPUP    "Icons"
+        BEGIN
+			MENUITEM "Enable driver icons display",					MENU_ENABLEICONS
+			POPUP	"Icon size"
+			BEGIN
+				MENUITEM "16 x 16 pixels",							MENU_ICONS_SIZE_16
+				MENUITEM "24 x 24 pixels",							MENU_ICONS_SIZE_24
+				MENUITEM "32 x 32 pixels",							MENU_ICONS_SIZE_32
+			END
         END
        	MENUITEM SEPARATOR
         MENUITEM "Save snapshot\tF12",					MENU_SAVESNAP

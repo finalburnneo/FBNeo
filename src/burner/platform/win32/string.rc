@@ -104,6 +104,7 @@ BEGIN
 	
 	IDS_SPATH_PREVIEW			"Previews"
 	IDS_SPATH_TITLES			"Titles"
+	IDS_SPATH_ICONS				"Icons"
 	IDS_SPATH_CHEATS			"Cheats"
 	IDS_SPATH_HISCORE			"High Scores"
 	IDS_SPATH_SAMPLES			"Samples"

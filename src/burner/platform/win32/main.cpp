@@ -547,12 +547,24 @@ static int AppInit()
 #endif
 
 	bNumlockStatus = SetNumLock(false);
+	
+	if(bEnableIcons && !bIconsLoaded) {
+		// load driver icons
+		LoadDrvIcons();
+		bIconsLoaded = 1;
+	}
 
 	return 0;
 }
 
 static int AppExit()
 {
+	if(bIconsLoaded) {
+		// unload driver icons
+		UnloadDrvIcons();
+		bIconsLoaded = 0;
+	}
+	
 	SetNumLock(bNumlockStatus);
 
 	DrvExit();						// Make sure any game driver is exitted

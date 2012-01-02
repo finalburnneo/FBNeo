@@ -32,6 +32,14 @@ static char TreeBuilding		= 0;										// if 1, ignore TVN_SELCHANGED messages
 static int bImageOrientation;
 static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCrtl);
 
+int	nIconsSize					= ICON_16x16;
+int	nIconsSizeXY				= 16;
+bool bEnableIcons				= 0;
+bool bIconsLoaded				= 0;
+int nIconsXDiff;
+int nIconsYDiff;
+static HICON hDrvIcon[9999];
+
 static int RomInfoDialog();
 
 // Filter TreeView
@@ -929,6 +937,52 @@ static void CreateFilters()
 	SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hHardware);
 }
 
+void LoadDrvIcons() 
+{
+	if(nIconsSize == ICON_16x16) {
+		nIconsSizeXY	= 16;
+		nIconsYDiff		= 4;
+	}
+	if(nIconsSize == ICON_24x24) {
+		nIconsSizeXY	= 24;
+		nIconsYDiff		= 8;
+	}
+	if(nIconsSize == ICON_32x32) {
+		nIconsSizeXY	= 32;
+		nIconsYDiff		= 12;
+	}
+
+	unsigned int nOldDrvSel = nBurnDrvActive;
+
+	for(unsigned int nDrvIndex = 0; nDrvIndex < nBurnDrvCount; nDrvIndex++) 
+	{		
+		nBurnDrvActive = nDrvIndex;	
+		TCHAR szIcon[MAX_PATH];
+
+		_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, BurnDrvGetText(DRV_NAME));
+		hDrvIcon[nDrvIndex] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+		
+		if(!hDrvIcon[nDrvIndex] && BurnDrvGetText(DRV_PARENT)) {
+			_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, BurnDrvGetText(DRV_PARENT));
+			hDrvIcon[nDrvIndex] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+		}
+	}
+
+	nBurnDrvActive = nOldDrvSel;
+}
+
+void UnloadDrvIcons() {
+	
+	nIconsSizeXY	= 16;
+	nIconsYDiff		= 4;
+
+	for(unsigned int nDrvIndex = 0; nDrvIndex < nBurnDrvCount; nDrvIndex++) 
+	{		
+		DestroyIcon(hDrvIcon[nDrvIndex]);
+		hDrvIcon[nDrvIndex] = NULL;
+	}
+}
+
 #define UM_CHECKSTATECHANGE (WM_USER + 100)
 #define UM_CLOSE			(WM_USER + 101)
 
@@ -957,11 +1011,11 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		hExpand			= (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_TV_PLUS),			IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
 		hCollapse		= (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_TV_MINUS),			IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
 
-		hNotWorking		= (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_TV_NOTWORKING),	IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
-		hNotFoundEss	= (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_TV_NOTFOUND_ESS),	IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
-		hNotFoundNonEss = (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_TV_NOTFOUND_NON),	IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
+		hNotWorking		= (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_TV_NOTWORKING),	IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_DEFAULTCOLOR);
+		hNotFoundEss	= (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_TV_NOTFOUND_ESS),	IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_DEFAULTCOLOR);
+		hNotFoundNonEss = (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_TV_NOTFOUND_NON),	IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_DEFAULTCOLOR);
 		
-		hDrvIconMiss	= (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_APP),	IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
+		hDrvIconMiss	= (HICON)LoadImage(hAppInst, MAKEINTRESOURCE(IDI_APP),	IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_DEFAULTCOLOR);
 
 		TCHAR szOldTitle[1024] = _T(""), szNewTitle[1024] = _T("");
 		GetWindowText(hSelDlg, szOldTitle, 1024);		
@@ -998,11 +1052,15 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			RomsDirCreate(hSelDlg);
 		}
 		
+		// Icons size related -----------------------------------------
+		SHORT cyItem = nIconsSizeXY + 4;								// height (in pixels) of each item on the TreeView list
+		TreeView_SetItemHeight(hSelList, cyItem);
+		
 		SetFocus(hSelList);
 		
 		RebuildEverything();
 		
-		TreeView_SetItemHeight(hSelList, 20);
+//		TreeView_SetItemHeight(hSelList, 20);
 		
 		if (nDialogSelect > -1) {
 			for (unsigned int i = 0; i < nTmpDrvCount; i++) {
@@ -1494,10 +1552,10 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 						// Draw plus and minus buttons
 						if (((NODEINFO*)TvItem.lParam)->bIsParent) {
 							if (TvItem.state & TVIS_EXPANDED) {
-								DrawIconEx(lplvcd->nmcd.hdc, rect.left + 4, rect.top + 0, hCollapse, 16, 16, 0, NULL, DI_NORMAL);
+								DrawIconEx(lplvcd->nmcd.hdc, rect.left + 4, rect.top + nIconsYDiff, hCollapse, 16, 16, 0, NULL, DI_NORMAL);
 							} else {
 								if (TvItem.cChildren) {
-									DrawIconEx(lplvcd->nmcd.hdc, rect.left + 4, rect.top + 0, hExpand, 16, 16, 0, NULL, DI_NORMAL);
+									DrawIconEx(lplvcd->nmcd.hdc, rect.left + 4, rect.top + nIconsYDiff, hExpand, 16, 16, 0, NULL, DI_NORMAL);
 								}
 							}
 						}
@@ -1526,19 +1584,31 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 						{
 							// Draw icons if needed
 							if (!CheckWorkingStatus(((NODEINFO*)TvItem.lParam)->nBurnDrvNo)) {
-								DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hNotWorking, 16, 16, 0, NULL, DI_NORMAL);
-								rect.left += 16 + 4;
+								DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hNotWorking, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
+								rect.left += nIconsSizeXY + 4;
 							} else {
 								if (!(gameAv[((NODEINFO*)TvItem.lParam)->nBurnDrvNo])) {
-									DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hNotFoundEss, 16, 16, 0, NULL, DI_NORMAL);
-									rect.left += 16 + 4;
+									DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hNotFoundEss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
+									rect.left += nIconsSizeXY + 4;
 								} else {
 									if (!(nLoadMenuShowX & AVAILONLY) && !(gameAv[((NODEINFO*)TvItem.lParam)->nBurnDrvNo] & 2)) {
-										DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hNotFoundNonEss, 16, 16, 0, NULL, DI_NORMAL);
-										rect.left += 16 + 4;
+										DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hNotFoundNonEss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
+										rect.left += nIconsSizeXY + 4;
 									}
 								}
 							}
+						}
+						
+						// Driver Icon drawing code...
+						if(bEnableIcons && bIconsLoaded) {
+							if(hDrvIcon[nBurnDrvActive]) {
+								DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hDrvIcon[nBurnDrvActive], nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
+							}
+
+							if(!hDrvIcon[nBurnDrvActive]) {								
+								DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hDrvIconMiss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
+							}
+							rect.left += nIconsSizeXY + 4;
 						}
 
 						_tcsncpy(szText, MangleGamename(BurnDrvGetText(nGetTextFlags | DRV_FULLNAME), false), 1024);

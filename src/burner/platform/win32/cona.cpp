@@ -203,6 +203,7 @@ int ConfigAppLoad()
 		STR(szAppHiscorePath);
 		STR(szAppSamplesPath);
 		STR(szAppIpsPath);
+		STR(szAppIconsPath);
 		STR(szNeoCDCoverDir);
 
 		VAR(bNoChangeNumLock);
@@ -210,6 +211,9 @@ int ConfigAppLoad()
 		VAR(EnableHiscores);
 		
 		VAR(nIpsSelectedLanguage);
+		
+		VAR(bEnableIcons);
+		VAR(nIconsSize);
 		
 		STR(szPrevGames[0]);
 		STR(szPrevGames[1]);
@@ -521,6 +525,7 @@ int ConfigAppSave()
 	STR(szAppHiscorePath);
 	STR(szAppSamplesPath);
 	STR(szAppIpsPath);
+	STR(szAppIconsPath);
 	STR(szNeoCDCoverDir);
 	
 	_ftprintf(h, _T("\n// The cartridges to use for emulation of an MVS system\n"));
@@ -546,6 +551,12 @@ int ConfigAppSave()
 	
 	_ftprintf(h, _T("\n// The language index to use for the IPS Patch Manager dialog.\n"));
 	VAR(nIpsSelectedLanguage);
+	
+	_ftprintf(h, _T("\n// If non-zero, display drivers icons.\n"));
+	VAR(bEnableIcons);
+
+	_ftprintf(h, _T("\n// Specify icons display size, 0 = 16x16 , 1 = 24x24, 2 = 32x32.\n"));
+	VAR(nIconsSize);
 	
 	_ftprintf(h, _T("\n// Previous games list.\n"));
 	STR(szPrevGames[0]);

@@ -1781,6 +1781,75 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			szGamelistLocalisationTemplate[0] = _T('\0');
 			nGamelistLocalisationActive = false;
 			break;
+		
+		case MENU_ENABLEICONS: {
+			bEnableIcons = !bEnableIcons;
+			if(!bEnableIcons && bIconsLoaded) {
+				// unload icons
+				UnloadDrvIcons();
+				bIconsLoaded = 0;
+			} 
+			if(bEnableIcons && !bIconsLoaded) {
+				// load icons
+				LoadDrvIcons();
+				bIconsLoaded = 1;
+			}
+			break;
+		}
+
+		case MENU_ICONS_SIZE_16: {
+			nIconsSize = ICON_16x16;
+			if(bEnableIcons && bIconsLoaded) {
+				// unload icons
+				UnloadDrvIcons();
+				bIconsLoaded = 0;
+				// load icons
+				LoadDrvIcons();
+				bIconsLoaded = 1;
+			}
+			if(bEnableIcons && !bIconsLoaded) {
+				// load icons
+				LoadDrvIcons();
+				bIconsLoaded = 1;
+			}
+			break;
+		}
+
+		case MENU_ICONS_SIZE_24: {
+			nIconsSize = ICON_24x24;
+			if(bEnableIcons && bIconsLoaded) {
+				// unload icons
+				UnloadDrvIcons();
+				bIconsLoaded = 0;
+				// load icons
+				LoadDrvIcons();
+				bIconsLoaded = 1;
+			}
+			if(bEnableIcons && !bIconsLoaded) {
+				// load icons
+				LoadDrvIcons();
+				bIconsLoaded = 1;
+			}
+			break;
+		}
+
+		case MENU_ICONS_SIZE_32: {
+			nIconsSize = ICON_32x32;
+			if(bEnableIcons && bIconsLoaded) {
+				// unload icons
+				UnloadDrvIcons();
+				bIconsLoaded = 0;
+				// load icons
+				LoadDrvIcons();
+				bIconsLoaded = 1;
+			}
+			if(bEnableIcons && !bIconsLoaded) {
+				// load icons
+				LoadDrvIcons();
+				bIconsLoaded = 1;
+			}
+			break;
+		}
 			
 		case MENU_PRIORITY_REALTIME:
 			nAppThreadPriority = THREAD_PRIORITY_TIME_CRITICAL;

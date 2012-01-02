@@ -11,6 +11,25 @@ TCHAR szAppCheatsPath[MAX_PATH]		= _T("support/cheats/");
 TCHAR szAppHiscorePath[MAX_PATH]	= _T("support/hiscores/");
 TCHAR szAppSamplesPath[MAX_PATH]	= _T("support/samples/");
 TCHAR szAppIpsPath[MAX_PATH]		= _T("support/ips/");
+TCHAR szAppIconsPath[MAX_PATH]		= _T("support/icons/");
+
+static TCHAR szCheckIconsPath[MAX_PATH];
+
+static void IconsDirPathChanged() {
+	if(bEnableIcons && bIconsLoaded) {
+		// unload icons
+		UnloadDrvIcons();
+		bIconsLoaded = 0;
+		// load icons
+		LoadDrvIcons();
+		bIconsLoaded = 1;
+	}
+	if(bEnableIcons && !bIconsLoaded) {
+		// load icons
+		LoadDrvIcons();
+		bIconsLoaded = 1;
+	}	
+}
 
 static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
@@ -20,12 +39,13 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		case WM_INITDIALOG: {
 			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT1, szAppPreviewsPath);
 			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT2, szAppTitlesPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT3, szAppCheatsPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT4, szAppHiscorePath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT5, szAppSamplesPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT6, szAppIpsPath);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT7, szNeoCDGamesDir);
-			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT8, szNeoCDCoverDir);
+			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT3, szAppIconsPath);
+			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT4, szAppCheatsPath);
+			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT5, szAppHiscorePath);
+			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT6, szAppSamplesPath);
+			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT7, szAppIpsPath);
+			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT8, szNeoCDGamesDir);
+			SetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT9, szNeoCDCoverDir);
 
 			// Setup the tabs
 			hTabControl = GetDlgItem(hDlg, IDC_SPATH_TAB);
@@ -33,9 +53,9 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			TC_ITEM tcItem; 
 			tcItem.mask = TCIF_TEXT;
 
-			UINT idsString[8] = { IDS_SPATH_PREVIEW, IDS_SPATH_TITLES, IDS_SPATH_CHEATS, IDS_SPATH_HISCORE, IDS_SPATH_SAMPLES, IDS_SPATH_IPS, IDS_SPATH_NGCD_ISOS, IDS_SPATH_NGCD_COVERS };
+			UINT idsString[9] = { IDS_SPATH_PREVIEW, IDS_SPATH_TITLES, IDS_SPATH_ICONS, IDS_SPATH_CHEATS, IDS_SPATH_HISCORE, IDS_SPATH_SAMPLES, IDS_SPATH_IPS, IDS_SPATH_NGCD_ISOS, IDS_SPATH_NGCD_COVERS };
 			
-			for(int nIndex = 0; nIndex < 8; nIndex++) {
+			for(int nIndex = 0; nIndex < 9; nIndex++) {
 				tcItem.pszText = FBALoadStringEx(hAppInst, idsString[nIndex], true);
 				TabCtrl_InsertItem(hTabControl, nIndex, &tcItem);
 			}
@@ -43,7 +63,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			int TabPage = TabCtrl_GetCurSel(hTabControl);
 			
 			// hide all controls excluding the selected controls
-			for(int x = 0; x < 8; x++) {
+			for(int x = 0; x < 9; x++) {
 				if(x != TabPage) {
 					ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_BR1 + x), SW_HIDE);		// browse buttons
 					ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_EDIT1 + x), SW_HIDE);	// edit controls
@@ -60,7 +80,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			if (nInitTabSelect) {
 				SendMessage(hTabControl, TCM_SETCURSEL, nInitTabSelect, 0);
 				// hide all controls excluding the selected controls
-				for(int x = 0; x < 8; x++) {
+				for(int x = 0; x < 9; x++) {
 					if(x != nInitTabSelect) {
 						ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_BR1 + x), SW_HIDE);		// browse buttons
 						ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_EDIT1 + x), SW_HIDE);	// edit controls
@@ -83,7 +103,7 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				int TabPage = TabCtrl_GetCurSel(hTabControl);
 				
 				// hide all controls excluding the selected controls
-				for(int x = 0; x < 8; x++) {
+				for(int x = 0; x < 9; x++) {
 					if(x != TabPage) {
 						ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_BR1 + x), SW_HIDE);		// browse buttons
 						ShowWindow(GetDlgItem(hDlg, IDC_SUPPORTDIR_EDIT1 + x), SW_HIDE);	// edit controls
@@ -110,17 +130,18 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			if (LOWORD(wParam) == IDOK) {
 				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT1, szAppPreviewsPath,	sizeof(szAppPreviewsPath));
 				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT2, szAppTitlesPath,		sizeof(szAppTitlesPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT3, szAppCheatsPath,	sizeof(szAppCheatsPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT4, szAppHiscorePath,	sizeof(szAppHiscorePath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT5, szAppSamplesPath,	sizeof(szAppSamplesPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT6, szAppIpsPath,	sizeof(szAppIpsPath));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT7, szNeoCDGamesDir,	sizeof(szNeoCDGamesDir));
-				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT8, szNeoCDCoverDir,	sizeof(szNeoCDCoverDir));
+				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT3, szAppIconsPath,		sizeof(szAppIconsPath));
+				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT4, szAppCheatsPath,	sizeof(szAppCheatsPath));
+				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT5, szAppHiscorePath,	sizeof(szAppHiscorePath));
+				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT6, szAppSamplesPath,	sizeof(szAppSamplesPath));
+				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT7, szAppIpsPath,	sizeof(szAppIpsPath));
+				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT8, szNeoCDGamesDir,	sizeof(szNeoCDGamesDir));
+				GetDlgItemText(hDlg, IDC_SUPPORTDIR_EDIT9, szNeoCDCoverDir,	sizeof(szNeoCDCoverDir));
 
 				SendMessage(hDlg, WM_CLOSE, 0, 0);
 				break;
 			} else {
-				if (LOWORD(wParam) >= IDC_SUPPORTDIR_BR1 && LOWORD(wParam) <= IDC_SUPPORTDIR_BR8) {
+				if (LOWORD(wParam) >= IDC_SUPPORTDIR_BR1 && LOWORD(wParam) <= IDC_SUPPORTDIR_BR9) {
 					var = IDC_SUPPORTDIR_EDIT1 + LOWORD(wParam) - IDC_SUPPORTDIR_BR1;
 				} else {
 					if (HIWORD(wParam) == BN_CLICKED && LOWORD(wParam) == IDCANCEL) {
@@ -160,6 +181,10 @@ static INT_PTR CALLBACK DefInpProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		
 		case WM_CLOSE: {
 			EndDialog(hDlg, 0);
+			// If Icons directory path has been changed do the proper action
+			if(_tcscmp(szCheckIconsPath, szAppIconsPath)) {
+				IconsDirPathChanged();
+			}
 			break;
 		}
 	}
@@ -171,6 +196,8 @@ int SupportDirCreate(HWND hParentWND)
 {
 	hParent = hParentWND;
 	
+	_stprintf(szCheckIconsPath, szAppIconsPath);
+	
 	return FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_SUPPORTDIR), hParentWND, (DLGPROC)DefInpProc);
 }
 
@@ -179,6 +206,8 @@ int SupportDirCreateTab(int nTab, HWND hParentWND)
 	nInitTabSelect = nTab - IDC_SUPPORTDIR_EDIT1;
 	
 	hParent = hParentWND;
+	
+	_stprintf(szCheckIconsPath, szAppIconsPath);
 	
 	return FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_SUPPORTDIR), hParentWND, (DLGPROC)DefInpProc);
 }

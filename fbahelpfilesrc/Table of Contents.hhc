@@ -118,6 +118,10 @@
 		<param name="Local" value="localise_app.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Localising the Gamelist">
+		<param name="Local" value="localise_gamelist.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Acknowledgments">
 		<param name="Local" value="acknowledgments.htm">
 		</OBJECT>

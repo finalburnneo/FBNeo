@@ -788,7 +788,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 	AppDirectory();								// Set current directory to be the applications directory
 
 	// Make sure there are roms and cfg subdirectories
-	TCHAR szDirs[18][MAX_PATH] = {
+	TCHAR szDirs[19][MAX_PATH] = {
 		{_T("config")},
 		{_T("config/games")},
 		{_T("config/ips")},
@@ -801,6 +801,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 		{_T("support/")},
 		{_T("support/previews/")},
 		{_T("support/titles/")},
+		{_T("support/icons/")},
 		{_T("support/cheats/")},
 		{_T("support/hiscores/")},
 		{_T("support/samples/")},
@@ -809,7 +810,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 		{_T("neocdiso/")},
 	};
 
-	for(int x = 0; x < 18; x++) {
+	for(int x = 0; x < 19; x++) {
 		CreateDirectory(szDirs[x], NULL);
 	}
 

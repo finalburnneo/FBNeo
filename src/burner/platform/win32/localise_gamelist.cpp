@@ -144,7 +144,7 @@ static void MakeOfn()
 	ofn.lpstrFilter = szFilter;
 	ofn.lpstrFile = szGamelistLocalisationTemplate;
 	ofn.nMaxFile = sizeof(szGamelistLocalisationTemplate) / sizeof(TCHAR);
-	ofn.lpstrInitialDir = _T("./config/localisation");
+	ofn.lpstrInitialDir = _T(".\\config\\localisation");
 	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.lpstrDefExt = _T("glt");
 

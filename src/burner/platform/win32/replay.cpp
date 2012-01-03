@@ -93,7 +93,7 @@ static void MakeOfn(TCHAR* pszFilter)
 	ofn.lpstrFilter = pszFilter;
 	ofn.lpstrFile = szChoice;
 	ofn.nMaxFile = sizeof(szChoice) / sizeof(TCHAR);
-	ofn.lpstrInitialDir = _T("./recordings");
+	ofn.lpstrInitialDir = _T(".\\recordings");
 	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.lpstrDefExt = _T("fr");
 

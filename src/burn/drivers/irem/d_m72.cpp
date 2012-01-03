@@ -1155,7 +1155,7 @@ void __fastcall m72_main_write_port(UINT32 port, UINT8 data)
 	}
 }
 
-static __fastcall UINT16 poundfor_trackball_r(INT32 offset)
+static UINT16 __fastcall poundfor_trackball_r(INT32 offset)
 {
 	static INT32 prev[4],diff[4];
 //	static const char *const axisnames[] = { "TRACK0_X", "TRACK0_Y", "TRACK1_X", "TRACK1_Y" };

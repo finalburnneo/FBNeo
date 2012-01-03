@@ -81,7 +81,8 @@ endif
 
 srcdir	= src/
 
-include makefile.rules
+include makefile.burn_rules
+include makefile.burner_win32_rules
 
 ifdef GCC345
 incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)depend/generated -I$(srcdir)depend/mingw/include -I- -I$(srcdir)depend/mingw/include/directx9 -I$(srcdir)depend/mingw/include/xaudio2 
@@ -97,7 +98,6 @@ ifdef UNICODE
 # lib	= -lunicows
 endif
 
-# lib	+=	`sdl-config --libs`
 lib	+=	-luser32 -lgdi32 -lcomdlg32 -lcomctl32 -lshell32 -lwinmm -lshlwapi \
 		-ladvapi32 -lsetupapi -lole32 -luuid
 		
@@ -170,7 +170,7 @@ CFLAGS	 = -pipe \
 	   -fforce-mem -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -freduce-all-givs -fmove-all-movables -fexpensive-optimizations \
 	   -Wall -Wno-long-long -Wno-sign-compare -Wno-uninitialized -Wno-unused \
-	   $(DEF) $(incdir) # `sdl-config --cflags`
+	   $(DEF) $(incdir)
 
 CXXFLAGS = -pipe \
 	   -march=$(CPUTYPE) -O1 \
@@ -181,7 +181,7 @@ CXXFLAGS = -pipe \
 	   -Wall -W -pedantic -Wno-long-long \
 	   -Wunknown-pragmas -Wundef -Wconversion -Wno-missing-braces \
 	   -Wuninitialized -Wpointer-arith -Winline -Wno-multichar \
-	   $(DEF) $(incdir) # `sdl-config --cflags`
+	   $(DEF) $(incdir)
 endif
 ifdef GCC452
 CFLAGS	 = -pipe \
@@ -191,7 +191,7 @@ CFLAGS	 = -pipe \
 	   -fexpensive-optimizations \
 	   -Wall -Wno-long-long -Wno-sign-compare -Wno-uninitialized -Wno-unused \
 	   -Wno-sequence-point \
-	   $(DEF) $(incdir) # `sdl-config --cflags`
+	   $(DEF) $(incdir)
 
 CXXFLAGS = -pipe \
 	   -march=$(CPUTYPE) -O1 \
@@ -202,7 +202,7 @@ CXXFLAGS = -pipe \
 	   -Wunknown-pragmas -Wundef -Wno-conversion -Wno-missing-braces -Wno-multichar \
 	   -Wuninitialized -Wpointer-arith -Wno-inline -Wno-address  -Wno-unused-value \
 	   -Wno-sequence-point \
-	   $(DEF) $(incdir) # `sdl-config --cflags`
+	   $(DEF) $(incdir)
 endif
 ifdef GCC461
 CFLAGS	 = -pipe \
@@ -212,7 +212,7 @@ CFLAGS	 = -pipe \
 	   -fexpensive-optimizations \
 	   -Wall -Wno-long-long -Wno-sign-compare -Wno-uninitialized -Wno-unused \
 	   -Wno-sequence-point \
-	   $(DEF) $(incdir) # `sdl-config --cflags`
+	   $(DEF) $(incdir)
 
 CXXFLAGS = -pipe \
 	   -O1 \
@@ -223,7 +223,7 @@ CXXFLAGS = -pipe \
 	   -Wunknown-pragmas -Wundef -Wno-conversion -Wno-missing-braces -Wno-multichar \
 	   -Wuninitialized -Wpointer-arith -Wno-inline -Wno-address  -Wno-unused-value \
 	   -Wno-unused-but-set-variable -Wno-sequence-point \
-	   $(DEF) $(incdir) # `sdl-config --cflags`
+	   $(DEF) $(incdir)
 
 ifdef BUILD_X64_EXE
 	CFLAGS += -m64

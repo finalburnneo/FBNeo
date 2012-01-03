@@ -932,9 +932,8 @@ static void gfxdecode()
 		dst[i * 2 + 0] = src[i + 0x80000];
 		dst[i * 2 + 1] = src[i + 0x00000];
 	}
-	BurnFree(dst);
-
 	memcpy (src, dst, 0x200000);
+	BurnFree(dst);
 }
 
 static INT32 load68k(UINT8 *rom, INT32 offs)
@@ -1731,8 +1730,8 @@ static INT32 vulcanCallback()
 
 	BurnByteswap(DrvGfxROM1, 0x200000);
 
-	if (BurnLoadRom(DrvSndROM0 + 0x000000, 16, 1)) return 1;
-	if (BurnLoadRom(DrvSndROM1 + 0x000000, 17, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM0 + 0x000000, 14, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM1 + 0x000000, 15, 1)) return 1;
 
 	return 0;
 }
@@ -1882,8 +1881,8 @@ static INT32 gradius2Callback()
 	if (BurnLoadRom(DrvGfxROM1 + 0x100000, 12, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x180000, 13, 1)) return 1;
 
-	if (BurnLoadRom(DrvSndROM0 + 0x000000, 16, 1)) return 1;
-	if (BurnLoadRom(DrvSndROM1 + 0x000000, 17, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM0 + 0x000000, 14, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM1 + 0x000000, 14, 1)) return 1;
 
 	return 0;
 }

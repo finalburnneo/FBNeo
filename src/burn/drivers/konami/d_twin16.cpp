@@ -1882,7 +1882,7 @@ static INT32 gradius2Callback()
 	if (BurnLoadRom(DrvGfxROM1 + 0x180000, 13, 1)) return 1;
 
 	if (BurnLoadRom(DrvSndROM0 + 0x000000, 14, 1)) return 1;
-	if (BurnLoadRom(DrvSndROM1 + 0x000000, 14, 1)) return 1;
+	if (BurnLoadRom(DrvSndROM1 + 0x000000, 15, 1)) return 1;
 
 	return 0;
 }

@@ -455,10 +455,9 @@ $(psikyo_tile_func.h):	$(srcdir)depend/scripts/psikyo_tile_func.pl
 pgm_draw.d pgm_draw.o:	$(pgm_sprite.h)
 
 $(pgm_sprite.h):	pgm_sprite_create.cpp
-	@echo Generating $(srcdir)depend/generated/$(@F)...
-	@$(CC) -mconsole $(CXXFLAGS) $(LDFLAGS) $< \
-		-o $(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe)
-	@$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) >$@
+	@echo Generating... $(srcdir)depend/generated/$(@F)
+	$(CC) $(CXXFLAGS) $< /Fo$(subst $(srcdir),$(objdir),$(<D))/ /Fe$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) /link $(LDFLAGS) /SUBSYSTEM:CONSOLE
+	$(subst $(srcdir),$(objdir),$(<D))/$(<F:.cpp=.exe) >$@
 
 #
 #	Generic rule for resource files

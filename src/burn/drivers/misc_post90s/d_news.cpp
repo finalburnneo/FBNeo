@@ -412,6 +412,12 @@ static INT32 NewsScan(INT32 nAction,INT32 *pnMin)
 		ba.nLen	  = RamEnd-RamStart;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
+		
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = NewsPalette;
+		ba.nLen	  = 0x100 * sizeof(UINT32);
+		ba.szName = "Palette";
+		BurnAcb(&ba);
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {

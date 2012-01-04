@@ -132,7 +132,9 @@ INT32 QsndZScan(INT32 nAction)
 	SCAN_VAR(nQsndZBank);
 
 	if (nAction & ACB_WRITE) {			// If write, bank could have changed
+		ZetOpen(0);
 		QsndZBankMap();
+		ZetClose();
 	}
 
 	return 0;

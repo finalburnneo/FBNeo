@@ -301,7 +301,7 @@ static INT32 drvScan(INT32 nAction, INT32* pnMin)
 	if (nAction & ACB_VOLATILE) {		// Scan volatile ram
 
 		memset(&ba, 0, sizeof(ba));
-    ba.Data		= RamStart;
+		ba.Data		= RamStart;
 		ba.nLen		= RamEnd - RamStart;
 		ba.szName	= "RAM";
 		BurnAcb(&ba);
@@ -324,11 +324,15 @@ static INT32 drvScan(INT32 nAction, INT32* pnMin)
 		if (nAction & ACB_WRITE) {
 			INT32 n = nTextROMStatus;
 			nTextROMStatus = -1;
+			SekOpen(0);
 			Map68KTextROM(n);
+			SekClose();
 
 			n = nCurrentBank;
 			nCurrentBank = -1;
+			ZetOpen(0);
 			drvZ80Bankswitch(n);
+			ZetClose();
 		}
 	}
 

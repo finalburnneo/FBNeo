@@ -48,6 +48,31 @@ static UINT16 *pSys16FgAltTileMapPri0 = NULL;
 static UINT16 *pSys16FgAltTileMapPri1 = NULL;
 
 /*====================================================
+Scan Function
+====================================================*/
+
+void System16GfxScan(INT32 nAction)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		if (nAction & ACB_WRITE) {		
+			if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16A) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_HANGON))  {
+				System16RecalcBgTileMap = 1;
+				System16RecalcFgTileMap = 1;
+			}
+		
+			if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEMX)) {
+				System16RecalcFgAltTileMap = 1;
+				System16RecalcBgAltTileMap = 1;
+				System16RecalcBgTileMap = 1;
+				System16RecalcBgAltTileMap = 1;
+				System16RecalcFgTileMap = 1;
+				System16RecalcFgAltTileMap = 1;
+			}
+		}
+	}
+}
+
+/*====================================================
 Decode Functions
 ====================================================*/
 

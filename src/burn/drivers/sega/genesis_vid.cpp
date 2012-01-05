@@ -385,11 +385,22 @@ void GenesisVDPExit()
 
 void GenesisVDPScan()
 {
-	SCAN_VAR(VdpVRAM);
-	SCAN_VAR(VdpVSRAM);
-	SCAN_VAR(GenesisVdpRegs);
-	SCAN_VAR(GenesisBgPalLookup);
-	SCAN_VAR(GenesisSpPalLookup);
+	struct BurnArea ba;
+	
+	memset(&ba, 0, sizeof(ba));
+	ba.Data = VdpVRAM;
+	ba.nLen = VRAM_SIZE;
+	ba.szName = "GenVDP VRAM";
+	BurnAcb(&ba);
+	
+	memset(&ba, 0, sizeof(ba));
+	ba.Data = VdpVSRAM;
+	ba.nLen = VSRAM_SIZE;
+	ba.szName = "GenVDP VSRAM";
+	BurnAcb(&ba);
+
+	ScanVar(GenesisVdpRegs, 32, "GenVDP Regs");
+	
 	SCAN_VAR(VdpBgColour);
 	SCAN_VAR(VdpScrollABase);
 	SCAN_VAR(VdpScrollBBase);

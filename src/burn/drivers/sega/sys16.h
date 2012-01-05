@@ -254,6 +254,7 @@ extern bool bSystem16BootlegRender;
 
 extern UINT16 *pTempDraw;
 
+void System16GfxScan(INT32 nAction);
 void System16Decode8x8Tiles(UINT8 *pTile, INT32 Num, INT32 offs1, INT32 offs2, INT32 offs3);
 void OutrunDecodeRoad();
 void HangonDecodeRoad();
@@ -283,5 +284,6 @@ void FD1089Decrypt();
 void fd1094_driver_init(INT32 nCPU);
 void fd1094_machine_init();
 void fd1094_exit();
+void fd1094_scan(INT32 nAction);
 
 // genesis_vid.cpp

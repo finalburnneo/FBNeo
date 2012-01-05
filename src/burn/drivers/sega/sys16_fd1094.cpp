@@ -12,6 +12,9 @@ static UINT16* fd1094_cacheregion[S16_NUMCACHE]; // a cache region where S16_NUM
 static INT32 fd1094_cached_states[S16_NUMCACHE]; // array of cached state numbers
 static INT32 fd1094_current_cacheposition; // current position in cache array
 
+static INT32 fd1094_state;
+static INT32 fd1094_selected_state;
+
 static INT32 nFD1094CPU = 0;
 
 bool System18Banking;
@@ -31,6 +34,15 @@ static void fd1094_setstate_and_decrypt(INT32 state)
 {
 	INT32 i;
 	UINT32 addr;
+	
+	switch (state & 0x300) {
+		case 0x000:
+		case FD1094_STATE_RESET:
+			fd1094_selected_state = state & 0xff;
+		break;
+	}
+
+	fd1094_state = state;
 
 	// force a flush of the prefetch cache
 	m68k_set_reg(M68K_REG_PREF_ADDR, 0x1000);
@@ -201,6 +213,7 @@ void fd1094_driver_init(INT32 nCPU)
 	for (i=0;i<S16_NUMCACHE;i++) fd1094_cached_states[i] = -1;
 	
 	fd1094_current_cacheposition = 0;
+	fd1094_state = -1;
 	
 	if (System16RomSize > 0x0fffff) System18Banking = true;
 }
@@ -215,4 +228,24 @@ void fd1094_exit()
 	}
 	
 	fd1094_current_cacheposition = 0;
+}
+
+void fd1094_scan(INT32 nAction)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(fd1094_selected_state);
+		SCAN_VAR(fd1094_state);
+		
+		if (nAction & ACB_WRITE) {
+			if (fd1094_state != -1)	{
+				INT32 selected_state = fd1094_selected_state;
+				INT32 state = fd1094_state;
+
+				fd1094_machine_init();
+
+				fd1094_setstate_and_decrypt(selected_state);
+				fd1094_setstate_and_decrypt(state);
+			}
+		}
+	}
 }

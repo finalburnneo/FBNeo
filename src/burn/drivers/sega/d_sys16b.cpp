@@ -8472,6 +8472,7 @@ static INT32 IsgsmRleLatched;
 static UINT8 IsgsmRleByte;
 static UINT8 IsgsmReadXor;
 static UINT32 nCartSize;
+static INT32 GameRomMapped = 0;
 
 typedef UINT32 (*isgsm_security_callback)(UINT32 input);
 isgsm_security_callback IsgsmSecurityCallback;
@@ -8833,6 +8834,7 @@ void __fastcall IsgsmWriteByte(UINT32 a, UINT8 d)
 		
 		case 0xfe000b: {
 			SekMapMemory(System16Rom + 0x300000, 0x000000, 0x0fffff, SM_ROM);
+			GameRomMapped = 1;
 			return;
 		}
 	}
@@ -8911,7 +8913,7 @@ void __fastcall IsgsmWriteWord(UINT32 a, UINT16 d)
 #endif
 }
 
-void IsgsmMap68K()
+static void IsgsmMap68K()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -9043,8 +9045,72 @@ static INT32 IsgsmExit()
 	IsgsmReadXor = 0;
 	nCartSize = 0;
 	IsgsmSecurityCallback = NULL;
+	GameRomMapped = 0;
 	
 	return nRet;
+}
+
+static INT32 IsgsmScan(INT32 nAction,INT32 *pnMin)
+{
+	if (pnMin != NULL) {
+		*pnMin =  0x029719;
+	}
+	
+	struct BurnArea ba;
+	
+	if (nAction & ACB_DRIVER_DATA) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data		= System16Sprites;
+		ba.nLen		= 0x1fffff;
+		ba.nAddress = 0;
+		ba.szName	= "SpriteROM";
+		BurnAcb(&ba);
+		
+		memset(&ba, 0, sizeof(ba));
+		ba.Data		= System16TempGfx;
+		ba.nLen		= 0x5ffff;
+		ba.nAddress = 0;
+		ba.szName	= "TileROM";
+		BurnAcb(&ba);
+		
+		memset(&ba, 0, sizeof(ba));
+		ba.Data		= System16Z80Rom;
+		ba.nLen		= 0x3ffff;
+		ba.nAddress = 0;
+		ba.szName	= "Z80ROM";
+		BurnAcb(&ba);
+		
+		memset(&ba, 0, sizeof(ba));
+		ba.Data		= System16Rom + 0x300000;
+		ba.nLen		= 0xfffff;
+		ba.nAddress = 0;
+		ba.szName	= "GameROM";
+		BurnAcb(&ba);
+		
+		SCAN_VAR(IsgsmCartAddrLatch);
+		SCAN_VAR(IsgsmCartAddr);
+		SCAN_VAR(IsgsmType);
+		SCAN_VAR(IsgsmAddr);
+		SCAN_VAR(IsgsmMode);
+		SCAN_VAR(IsgsmAddrLatch);
+		SCAN_VAR(IsgsmSecurity);
+		SCAN_VAR(IsgsmSecurityLatch);
+		SCAN_VAR(IsgsmRleControlPosition);
+		SCAN_VAR(IsgsmRleControlByte);
+		SCAN_VAR(IsgsmRleLatched);
+		SCAN_VAR(IsgsmRleByte);
+		SCAN_VAR(GameRomMapped);
+		
+		if (nAction & ACB_WRITE) {
+			if (GameRomMapped) {
+				SekOpen(0);
+				SekMapMemory(System16Rom + 0x300000, 0x000000, 0x0fffff, SM_ROM);
+				SekClose();
+			}
+		}
+	}
+
+	return System16Scan(nAction, pnMin);
 }
 
 struct BurnDriver BurnDrvIsgsm = {
@@ -9053,7 +9119,7 @@ struct BurnDriver BurnDrvIsgsm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_BOARDROM, 0, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_ISGSM | HARDWARE_SEGA_5521, GBF_BIOS, 0,
 	NULL, IsgsmRomInfo, IsgsmRomName, NULL, NULL, System16bDip3InputInfo, NULL,
-	IsgsmInit, IsgsmExit, System16BFrame, NULL, System16Scan,
+	IsgsmInit, IsgsmExit, System16BFrame, NULL, IsgsmScan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9063,7 +9129,7 @@ struct BurnDriver BurnDrvShinfz = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_ISGSM | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, ShinfzRomInfo, ShinfzRomName, NULL, NULL, System16bDip3InputInfo, ShinfzDIPInfo,
-	ShinfzInit, IsgsmExit, System16BFrame, NULL, System16Scan,
+	ShinfzInit, IsgsmExit, System16BFrame, NULL, IsgsmScan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9073,6 +9139,6 @@ struct BurnDriver BurnDrvTetrbx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_ISGSM | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, TetrbxRomInfo, TetrbxRomName, NULL, NULL, System16bDip3InputInfo, TetrbxDIPInfo,
-	TetrbxInit, IsgsmExit, System16BFrame, NULL, System16Scan,
+	TetrbxInit, IsgsmExit, System16BFrame, NULL, IsgsmScan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

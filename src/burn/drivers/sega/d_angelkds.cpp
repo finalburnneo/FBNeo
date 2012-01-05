@@ -915,12 +915,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(layer_ctrl);
 
 		SCAN_VAR(DrvZ80Bank0);
-	}
-
-	if (nAction & ACB_WRITE) {
-		ZetOpen(0);
-		bankswitch(DrvZ80Bank0);
-		ZetClose();
+		
+		if (nAction & ACB_WRITE) {
+			ZetOpen(0);
+			bankswitch(DrvZ80Bank0);
+			ZetClose();
+		}
 	}
 
 	return 0;

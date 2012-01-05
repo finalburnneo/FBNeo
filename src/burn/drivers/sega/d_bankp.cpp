@@ -519,6 +519,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ZetScan(nAction);
+		SN76496Scan(nAction, pnMin);
 
 		SCAN_VAR(scroll_x);
 		SCAN_VAR(priority);

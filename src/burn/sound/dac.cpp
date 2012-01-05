@@ -297,86 +297,20 @@ INT32 DACScan(INT32 nAction,INT32 *pnMin)
 #if defined FBA_DEBUG
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACScan called without init\n"));
 #endif
-
-	struct BurnArea ba;
-	char szName[16];
-	
-	if ((nAction & ACB_DRIVER_DATA) == 0) {
-		return 1;
-	}
 	
 	if (pnMin != NULL) {
-		*pnMin = 0x029678;
+		*pnMin = 0x029719;
 	}
 	
-	sprintf(szName, "DAC #0");
-	ba.Data		= &Chip0;
-	ba.nLen		= sizeof(struct dac_info);
-	ba.nAddress = 0;
-	ba.szName	= szName;
-	BurnAcb(&ba);
-	
-	if (NumChips >= 2) {
-		sprintf(szName, "DAC #1");
-		ba.Data		= &Chip1;
-		ba.nLen		= sizeof(struct dac_info);
-		ba.nAddress = 0;
-		ba.szName	= szName;
-		BurnAcb(&ba);
-	}
-	
-	if (NumChips >= 3) {
-		sprintf(szName, "DAC #2");
-		ba.Data		= &Chip1;
-		ba.nLen		= sizeof(struct dac_info);
-		ba.nAddress = 0;
-		ba.szName	= szName;
-		BurnAcb(&ba);
-	}
-	
-	if (NumChips >= 4) {
-		sprintf(szName, "DAC #3");
-		ba.Data		= &Chip1;
-		ba.nLen		= sizeof(struct dac_info);
-		ba.nAddress = 0;
-		ba.szName	= szName;
-		BurnAcb(&ba);
-	}
-	
-	if (NumChips >= 5) {
-		sprintf(szName, "DAC #4");
-		ba.Data		= &Chip1;
-		ba.nLen		= sizeof(struct dac_info);
-		ba.nAddress = 0;
-		ba.szName	= szName;
-		BurnAcb(&ba);
-	}
-	
-	if (NumChips >= 6) {
-		sprintf(szName, "DAC #5");
-		ba.Data		= &Chip1;
-		ba.nLen		= sizeof(struct dac_info);
-		ba.nAddress = 0;
-		ba.szName	= szName;
-		BurnAcb(&ba);
-	}
-	
-	if (NumChips >= 7) {
-		sprintf(szName, "DAC #6");
-		ba.Data		= &Chip1;
-		ba.nLen		= sizeof(struct dac_info);
-		ba.nAddress = 0;
-		ba.szName	= szName;
-		BurnAcb(&ba);
-	}
-	
-	if (NumChips >= 8) {
-		sprintf(szName, "DAC #7");
-		ba.Data		= &Chip1;
-		ba.nLen		= sizeof(struct dac_info);
-		ba.nAddress = 0;
-		ba.szName	= szName;
-		BurnAcb(&ba);
+	if (nAction & ACB_DRIVER_DATA) {	
+		ScanVar(&Chip0->Output, sizeof(INT16), "DAC0Output");
+		if (NumChips >= 2) ScanVar(&Chip1->Output, sizeof(INT16), "DAC1Output");
+		if (NumChips >= 3) ScanVar(&Chip2->Output, sizeof(INT16), "DAC2Output");
+		if (NumChips >= 4) ScanVar(&Chip3->Output, sizeof(INT16), "DAC3Output");
+		if (NumChips >= 5) ScanVar(&Chip4->Output, sizeof(INT16), "DAC4Output");
+		if (NumChips >= 6) ScanVar(&Chip5->Output, sizeof(INT16), "DAC5Output");
+		if (NumChips >= 7) ScanVar(&Chip6->Output, sizeof(INT16), "DAC6Output");
+		if (NumChips >= 8) ScanVar(&Chip7->Output, sizeof(INT16), "DAC7Output");		
 	}
 	
 	return 0;

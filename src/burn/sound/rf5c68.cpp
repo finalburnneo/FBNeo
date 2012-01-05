@@ -130,6 +130,62 @@ void RF5C68PCMExit()
 	DebugSnd_RF5C68Initted = 0;
 }
 
+void RF5C68PCMScan(INT32 nAction)
+{
+	struct BurnArea ba;
+	
+	if (nAction & ACB_DRIVER_DATA) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data = chip->data;
+		ba.nLen = 0x10000;
+		ba.szName = "RF5C68PCMData";
+		BurnAcb(&ba);
+
+		SCAN_VAR(chip->cbank);
+		SCAN_VAR(chip->wbank);
+		SCAN_VAR(chip->enable);
+		
+		for (INT32 i = 0; i < NUM_CHANNELS; i++) {
+			pcm_channel *Chan = &chip->chan[i];
+			
+			SCAN_VAR(Chan->enable);
+			SCAN_VAR(Chan->env);
+			SCAN_VAR(Chan->pan);
+			SCAN_VAR(Chan->start);
+			SCAN_VAR(Chan->addr);
+			SCAN_VAR(Chan->step);
+			SCAN_VAR(Chan->loopst);
+		}		
+	}
+
+	
+/*
+#define NUM_CHANNELS	(8)
+
+static UINT32 nUpdateStep;
+
+struct pcm_channel
+{
+	UINT8	enable;
+	UINT8	env;
+	UINT8	pan;
+	UINT8	start;
+	UINT32	addr;
+	UINT16	step;
+	UINT16	loopst;
+};
+
+struct rf5c68pcm
+{
+	struct pcm_channel	chan[NUM_CHANNELS];
+	UINT8		cbank;
+	UINT8		wbank;
+	UINT8		enable;
+	UINT8		data[0x10000];
+};
+*/
+}
+
 void RF5C68PCMRegWrite(UINT8 offset, UINT8 data)
 {
 #if defined FBA_DEBUG

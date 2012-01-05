@@ -4840,15 +4840,15 @@ static INT32 System1Scan(INT32 nAction,INT32 *pnMin)
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-		ZetScan(nAction);			// Scan Z80
+		ZetScan(nAction);
 		SN76496Scan(nAction, pnMin);
 
-		// Scan critical driver variables
+		ScanVar(System1ScrollX, 2, "ScrollX");
+		
 		SCAN_VAR(nCyclesDone);
 		SCAN_VAR(nCyclesSegment);
 		SCAN_VAR(System1Dip);
 		SCAN_VAR(System1Input);
-		SCAN_VAR(System1ScrollX);
 		SCAN_VAR(System1ScrollY);
 		SCAN_VAR(System1BgScrollX);
 		SCAN_VAR(System1BgScrollY);
@@ -4859,13 +4859,15 @@ static INT32 System1Scan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(NoboranbInp16Step);
 		SCAN_VAR(NoboranbInp17Step);
 		SCAN_VAR(NoboranbInp23Step);
-	}
-	
-	if (nAction & ACB_WRITE) {
-		if (System1BankedRom) {
-			ZetOpen(0);
-			System1BankRom();
-			ZetClose();
+		SCAN_VAR(BlockgalDial1);
+		SCAN_VAR(BlockgalDial2);
+		
+		if (nAction & ACB_WRITE) {
+			if (System1BankedRom) {
+				ZetOpen(0);
+				System1BankRom();
+				ZetClose();
+			}
 		}
 	}
 	

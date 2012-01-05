@@ -4,8 +4,8 @@
 
 void (*BurnYM2413Render)(INT16* pSoundBuf, INT32 nSegmentLength);
 
-//unsigned char BurnYM2151Registers[0x0100];
-//unsigned int nBurnCurrentYM2151Register;
+UINT8 BurnYM2413Registers[0x0100];
+UINT32 nBurnCurrentYM2413Register;
 
 static INT32 nBurnYM2413SoundRate;
 
@@ -199,12 +199,12 @@ void BurnYM2413Scan(INT32 nAction)
 	if ((nAction & ACB_DRIVER_DATA) == 0) {
 		return;
 	}
-//	SCAN_VAR(nBurnCurrentYM2151Register);
-//	SCAN_VAR(BurnYM2151Registers);
+	SCAN_VAR(nBurnCurrentYM2413Register);
+	SCAN_VAR(BurnYM2413Registers);
 
 	if (nAction & ACB_WRITE) {
-//		for (int i = 0; i < 0x0100; i++) {
-//			YM2151WriteReg(0, i, BurnYM2151Registers[i]);
-//		}
+		for (int i = 0; i < 0x0100; i++) {
+			YM2413WriteReg(0, i, BurnYM2413Registers[i]);
+		}
 	}
 }

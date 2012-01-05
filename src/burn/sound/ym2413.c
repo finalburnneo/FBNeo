@@ -27,6 +27,7 @@ to do:
 */
 
 #include "driver.h"
+#include "state.h"
 #include "ym2413.h"
 
 #define MAME_INLINE static inline
@@ -1248,11 +1249,97 @@ static void OPLCloseTable( void )
 #endif
 }
 
+static void OPLL_init_save(YM2413 *chip)
+{
+	char buf1[20];
+	
+	int chnum;
+	
+	sprintf(buf1,"YM2413.registers");
 
+	state_save_register_UINT8 		(buf1, 0, "instvol_r",			&chip->instvol_r[0],		9);
+	state_save_register_UINT32		(buf1, 0, "eg_cnt",				&chip->eg_cnt,				1);
+	state_save_register_UINT32		(buf1, 0, "eg_timer",			&chip->eg_timer,			1);
+	state_save_register_UINT32		(buf1, 0, "eg_timer_add",		&chip->eg_timer_add,		1);
+	state_save_register_UINT32		(buf1, 0, "eg_timer_overflow",	&chip->eg_timer_overflow,	1);
+	state_save_register_UINT8		(buf1, 0, "rhythm",				&chip->rhythm,				1);
+	state_save_register_UINT32		(buf1, 0, "lfo_am_cnt",			&chip->lfo_am_cnt,			1);
+	state_save_register_UINT32		(buf1, 0, "lfo_am_inc",			&chip->lfo_am_inc,			1);
+	state_save_register_UINT32		(buf1, 0, "lfo_pm_cnt",			&chip->lfo_pm_cnt,			1);
+	state_save_register_UINT32		(buf1, 0, "lfo_pm_inc",			&chip->lfo_pm_inc,			1);
+	state_save_register_UINT32		(buf1, 0, "noise_rng",			&chip->noise_rng,			1);
+	state_save_register_UINT32		(buf1, 0, "noise_p",			&chip->noise_p,				1);
+	state_save_register_UINT32		(buf1, 0, "noise_f",			&chip->noise_f,				1);
+	
+	for (INT32 i = 0; i < 19; i++) {
+		UINT8 *inst_tab = (UINT8*)&chip->inst_tab[i];
+		state_save_register_UINT8 	(buf1, i, "inst_tab",			inst_tab,					8);
+	}
+//	state_save_register_UINT8 		(buf1, 0, "inst_tab",			&chip->inst_tab[0],			19 * 8);
+	
+	state_save_register_UINT8 		(buf1, 0, "address",			&chip->address,				1);
+	state_save_register_UINT8 		(buf1, 0, "status",				&chip->status,				1);
+	
+	
+	for (chnum = 0; chnum < 9; chnum++)
+	{
+		YM2413_OPLL_CH *ch = &chip->P_CH[chnum];
+		int slotnum;
+		
+		sprintf(buf1,"YM2413.channel%i", chnum);
+		
+		state_save_register_UINT32		(buf1, 0, "block_fnum",		&ch->block_fnum,			1);
+		state_save_register_UINT32		(buf1, 0, "fc",				&ch->fc,					1);
+		state_save_register_UINT32		(buf1, 0, "ksl_base",		&ch->ksl_base,				1);
+		state_save_register_UINT8		(buf1, 0, "kcode",			&ch->kcode,					1);
+		state_save_register_UINT8		(buf1, 0, "sus",			&ch->sus,					1);
+
+		for (slotnum = 0; slotnum < 2; slotnum++)
+		{
+			YM2413_OPLL_SLOT *sl = &ch->SLOT[slotnum];
+			
+			sprintf(buf1,"YM2413.slot%i", slotnum);
+			
+			state_save_register_UINT32	(buf1, 0, "ar",			&sl->ar,						1);
+			state_save_register_UINT32	(buf1, 0, "dr",			&sl->dr,						1);
+			state_save_register_UINT32	(buf1, 0, "rr",			&sl->rr,						1);
+			state_save_register_UINT8	(buf1, 0, "KSR",		&sl->KSR,						1);
+			state_save_register_UINT8	(buf1, 0, "ksl",		&sl->ksl,						1);
+			state_save_register_UINT8	(buf1, 0, "ksr",		&sl->ksr,						1);
+			state_save_register_UINT8	(buf1, 0, "mul",		&sl->mul,						1);
+			state_save_register_UINT32	(buf1, 0, "phase",		&sl->phase,						1);
+			state_save_register_UINT32	(buf1, 0, "freq",		&sl->freq,						1);
+			state_save_register_UINT8	(buf1, 0, "fb_shift",	&sl->fb_shift,					1);
+			state_save_register_INT32	(buf1, 0, "op1_out",	&sl->op1_out[0],				2);
+			state_save_register_UINT8	(buf1, 0, "eg_type",	&sl->eg_type,					1);
+			state_save_register_UINT8	(buf1, 0, "state",		&sl->state,						1);
+			state_save_register_UINT32	(buf1, 0, "TL",			&sl->TL,						1);
+			state_save_register_INT32	(buf1, 0, "TLL",		&sl->TLL,						1);
+			state_save_register_INT32	(buf1, 0, "volume",		&sl->volume,					1);
+			state_save_register_UINT32	(buf1, 0, "sl",			&sl->sl,						1);
+			state_save_register_UINT8	(buf1, 0, "eg_sh_dp",	&sl->eg_sh_dp,					1);
+			state_save_register_UINT8	(buf1, 0, "eg_sel_dp",	&sl->eg_sel_dp,					1);
+			state_save_register_UINT8	(buf1, 0, "eg_sh_ar",	&sl->eg_sh_ar,					1);
+			state_save_register_UINT8	(buf1, 0, "eg_sel_ar",	&sl->eg_sel_ar,					1);
+			state_save_register_UINT8	(buf1, 0, "eg_sh_dr",	&sl->eg_sh_dr,					1);
+			state_save_register_UINT8	(buf1, 0, "eg_sel_dr",	&sl->eg_sel_dr,					1);
+			state_save_register_UINT8	(buf1, 0, "eg_sh_rr",	&sl->eg_sh_rr,					1);
+			state_save_register_UINT8	(buf1, 0, "eg_sel_rr",	&sl->eg_sel_rr,					1);
+			state_save_register_UINT8	(buf1, 0, "eg_sh_rs",	&sl->eg_sh_rs,					1);
+			state_save_register_UINT8	(buf1, 0, "eg_sel_rs",	&sl->eg_sel_rs,					1);
+			state_save_register_UINT32	(buf1, 0, "key",		&sl->key,						1);
+			state_save_register_UINT32	(buf1, 0, "AMmask",		&sl->AMmask,					1);
+			state_save_register_UINT8	(buf1, 0, "vib",		&sl->vib,						1);
+			state_save_register_UINT32	(buf1, 0, "wavetable",	&sl->wavetable,					1);
+		}
+	}
+}
 
 static void OPLL_initalize(YM2413 *chip)
 {
 	int i;
+	
+	OPLL_init_save(chip);
 
 	/* frequency base */
 	chip->freqbase  = (chip->rate) ? ((double)chip->clock / 72.0) / chip->rate  : 0;
@@ -1261,8 +1348,6 @@ static void OPLL_initalize(YM2413 *chip)
 	chip->freqbase  = 1.0;
 	logerror("freqbase=%f\n", chip->freqbase);
 #endif
-
-
 
 	/* make fnumber -> increment counter table */
 	for( i = 0 ; i < 1024; i++ )
@@ -2065,6 +2150,11 @@ void YM2413ResetChip(int which)
 void YM2413Write(int which, int a, int v)
 {
 	OPLLWrite(OPLL_YM2413[which], a, v);
+}
+
+void YM2413WriteReg(int which, int r, int v)
+{
+	OPLLWriteReg(OPLL_YM2413[which], r, v);
 }
 
 unsigned char YM2413Read(int which, int a)

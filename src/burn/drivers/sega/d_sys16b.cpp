@@ -9061,14 +9061,14 @@ static INT32 IsgsmScan(INT32 nAction,INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data		= System16Sprites;
-		ba.nLen		= 0x1fffff;
+		ba.nLen		= System16SpriteRomSize - 1;
 		ba.nAddress = 0;
 		ba.szName	= "SpriteROM";
 		BurnAcb(&ba);
 		
 		memset(&ba, 0, sizeof(ba));
 		ba.Data		= System16TempGfx;
-		ba.nLen		= 0x5ffff;
+		ba.nLen		= System16TileRomSize - 1;
 		ba.nAddress = 0;
 		ba.szName	= "TileROM";
 		BurnAcb(&ba);
@@ -9106,6 +9106,10 @@ static INT32 IsgsmScan(INT32 nAction,INT32 *pnMin)
 				SekOpen(0);
 				SekMapMemory(System16Rom + 0x300000, 0x000000, 0x0fffff, SM_ROM);
 				SekClose();
+			}
+			
+			for (INT32 i = 0; i < System16TileRomSize; i++) {
+				GfxDecodeSingle((i & 0x1ffff) / 8, 3, 8, 8, IsgsmTilePlaneOffsets, IsgsmTileXOffsets, IsgsmTileYOffsets, 0x40, System16TempGfx, System16Tiles);
 			}
 		}
 	}

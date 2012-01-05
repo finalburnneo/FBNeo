@@ -429,58 +429,46 @@ INT32 SN76496Scan(INT32 nAction,INT32 *pnMin)
 	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496Scan called without init\n"));
 #endif
 
-	struct BurnArea ba;
 	char szName[16];
 	
-	if ((nAction & ACB_DRIVER_DATA) == 0) {
-		return 1;
-	}
-	
 	if (pnMin != NULL) {
-		*pnMin = 0x029675;
+		*pnMin = 0x029719;
 	}
 	
-	sprintf(szName, "SN76496 #0");
-	ba.Data		= &Chip0;
-	ba.nLen		= sizeof(struct SN76496);
-	ba.nAddress = 0;
-	ba.szName	= szName;
-	BurnAcb(&ba);
-	
-	if (NumChips >= 1) {
-		sprintf(szName, "SN76496 #1");
-		ba.Data		= &Chip1;
-		ba.nLen		= sizeof(struct SN76496);
-		ba.nAddress = 0;
-		ba.szName	= szName;
-		BurnAcb(&ba);
-	}
-	
-	if (NumChips >= 2) {
-		sprintf(szName, "SN76496 #2");
-		ba.Data		= &Chip2;
-		ba.nLen		= sizeof(struct SN76496);
-		ba.nAddress = 0;
-		ba.szName	= szName;
-		BurnAcb(&ba);
-	}
-	
-	if (NumChips >= 3) {
-		sprintf(szName, "SN76496 #3");
-		ba.Data		= &Chip3;
-		ba.nLen		= sizeof(struct SN76496);
-		ba.nAddress = 0;
-		ba.szName	= szName;
-		BurnAcb(&ba);
-	}
-	
-	if (NumChips >= 4) {
-		sprintf(szName, "SN76496 #4");
-		ba.Data		= &Chip4;
-		ba.nLen		= sizeof(struct SN76496);
-		ba.nAddress = 0;
-		ba.szName	= szName;
-		BurnAcb(&ba);
+	if (nAction & ACB_DRIVER_DATA) {
+		for (INT32 i = 0; i < NumChips; i++) {
+			SN76496 *Chip = Chip0;
+			if (i == 1) Chip = Chip1;
+			if (i == 2) Chip = Chip2;
+			if (i == 3) Chip = Chip3;
+			if (i == 4) Chip = Chip4;
+			
+			memset(szName, 0, 16);
+			sprintf(szName, "Chip%iVolTable", i);
+			ScanVar(Chip->VolTable, 16 * sizeof(INT32), szName);
+			memset(szName, 0, 16);
+			sprintf(szName, "Chip%iRegisters", i);
+			ScanVar(Chip->Register, 8 * sizeof(INT32), szName);
+			memset(szName, 0, 16);
+			sprintf(szName, "Chip%iVolume", i);
+			ScanVar(Chip->Volume, 4 * sizeof(INT32), szName);
+			memset(szName, 0, 16);
+			sprintf(szName, "Chip%iPeriod", i);
+			ScanVar(Chip->Period, 4 * sizeof(INT32), szName);
+			memset(szName, 0, 16);
+			sprintf(szName, "Chip%iCount", i);
+			ScanVar(Chip->Count, 4 * sizeof(INT32), szName);
+			memset(szName, 0, 16);
+			sprintf(szName, "Chip%iOutput", i);
+			ScanVar(Chip->Output, 4 * sizeof(INT32), szName);
+			
+			SCAN_VAR(Chip->LastRegister);
+			SCAN_VAR(Chip->RNG);
+			SCAN_VAR(Chip->NoiseMode);
+			SCAN_VAR(Chip->FeedbackMask);
+			SCAN_VAR(Chip->WhitenoiseTaps);
+			SCAN_VAR(Chip->WhitenoiseInvert);
+		}
 	}
 	
 	return 0;

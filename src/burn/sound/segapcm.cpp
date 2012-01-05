@@ -136,22 +136,20 @@ INT32 SegaPCMScan(INT32 nAction,INT32 *pnMin)
 #endif
 
 	struct BurnArea ba;
-	char szName[16];
-	
-	if ((nAction & ACB_DRIVER_DATA) == 0) {
-		return 1;
-	}
 	
 	if (pnMin != NULL) {
-		*pnMin = 0x029680;
+		*pnMin = 0x029719;
 	}
 	
-	sprintf(szName, "SegaPCM");
-	ba.Data		= &Chip;
-	ba.nLen		= sizeof(struct segapcm);
-	ba.nAddress = 0;
-	ba.szName	= szName;
-	BurnAcb(&ba);
+	if (nAction & ACB_DRIVER_DATA) {
+		ScanVar(Chip->low, 16 * sizeof(UINT8), "SegaPCMlow");
+		
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = Chip->ram;
+		ba.nLen	  = 0x800;
+		ba.szName = "SegaPCMRAM";	
+		BurnAcb(&ba);
+	}
 	
 	return 0;
 }

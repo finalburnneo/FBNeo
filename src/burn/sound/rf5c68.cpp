@@ -157,33 +157,6 @@ void RF5C68PCMScan(INT32 nAction)
 			SCAN_VAR(Chan->loopst);
 		}		
 	}
-
-	
-/*
-#define NUM_CHANNELS	(8)
-
-static UINT32 nUpdateStep;
-
-struct pcm_channel
-{
-	UINT8	enable;
-	UINT8	env;
-	UINT8	pan;
-	UINT8	start;
-	UINT32	addr;
-	UINT16	step;
-	UINT16	loopst;
-};
-
-struct rf5c68pcm
-{
-	struct pcm_channel	chan[NUM_CHANNELS];
-	UINT8		cbank;
-	UINT8		wbank;
-	UINT8		enable;
-	UINT8		data[0x10000];
-};
-*/
 }
 
 void RF5C68PCMRegWrite(UINT8 offset, UINT8 data)

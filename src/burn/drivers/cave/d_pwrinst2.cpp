@@ -764,7 +764,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 
 	if (pnMin) {						// Return minimum compatible version
-		*pnMin = 0x020902;
+		*pnMin = 0x029719;
 	}
 
 	EEPROMScan(nAction, pnMin);			// Scan EEPROM
@@ -803,8 +803,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			ZetMapArea(0x8000, 0xbFFF, 2, RomZ80 + (DrvZ80Bank * 0x4000));
 			ZetClose();
 			
-//			memcpy(MSM6295ROM + 0x00000, MSM6295ROMSrc + 0x20000 * DrvOkiBank1, 0x20000);
-//			memcpy(MSM6295ROM + 0x20000, MSM6295ROMSrc + 0x20000 * DrvOkiBank2, 0x20000);
+			for (INT32 i = 0; i < 4; i++) {
+				INT32 Address = DrvOkiBank1[i] * 0x10000;
+				MSM6295SampleData[0][i] = MSM6295ROM + Address;
+				MSM6295SampleInfo[0][i] = MSM6295ROM + Address + (i << 8);
+				
+				Address = DrvOkiBank2[i] * 0x10000;
+				MSM6295SampleData[1][i] = MSM6295ROM + 0x400000 + Address;
+				MSM6295SampleInfo[1][i] = MSM6295ROM + 0x400000 + Address + (i << 8);
+			}
 
 			CaveRecalcPalette = 1;
 		}

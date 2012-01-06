@@ -540,7 +540,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 
 	if (pnMin) {						// Return minimum compatible version
-		*pnMin = 0x020902;
+		*pnMin = 0x029719;
 	}
 
 	EEPROMScan(nAction, pnMin);			// Scan EEPROM
@@ -571,19 +571,20 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvZ80Bank);
 		SCAN_VAR(DrvOkiBank1);
 		SCAN_VAR(DrvOkiBank2);
-	}
-	if (nAction & ACB_WRITE) {
-		ZetOpen(0);
-		ZetMapArea(0x4000, 0x7FFF, 0, RomZ80 + (DrvZ80Bank * 0x4000));
-		ZetMapArea(0x4000, 0x7FFF, 2, RomZ80 + (DrvZ80Bank * 0x4000));
-		ZetClose();
+		
+		if (nAction & ACB_WRITE) {
+			ZetOpen(0);
+			ZetMapArea(0x4000, 0x7FFF, 0, RomZ80 + (DrvZ80Bank * 0x4000));
+			ZetMapArea(0x4000, 0x7FFF, 2, RomZ80 + (DrvZ80Bank * 0x4000));
+			ZetClose();
 			
-		memcpy(MSM6295ROM + 0x00000, MSM6295ROMSrc + 0x20000 * DrvOkiBank1, 0x20000);
-		memcpy(MSM6295ROM + 0x20000, MSM6295ROMSrc + 0x20000 * DrvOkiBank2, 0x20000);
+			memcpy(MSM6295ROM + 0x00000, MSM6295ROMSrc + 0x20000 * DrvOkiBank1, 0x20000);
+			memcpy(MSM6295ROM + 0x20000, MSM6295ROMSrc + 0x20000 * DrvOkiBank2, 0x20000);
 
-		CaveRecalcPalette = 1;
+			CaveRecalcPalette = 1;
+		}
 	}
-
+	
 	return 0;
 }
 

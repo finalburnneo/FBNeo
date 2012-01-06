@@ -818,7 +818,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 
 	if (pnMin) {						// Return minimum compatible version
-		*pnMin = 0x020902;
+		*pnMin = 0x029719;
 	}
 
 	EEPROMScan(nAction, pnMin);			// Scan EEPROM
@@ -858,7 +858,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (nAction & ACB_WRITE) {
 			INT32 nBank = nCurrentBank;
 			nCurrentBank = -1;
+			ZetOpen(0);
 			drvZ80Bankswitch(nBank);
+			ZetClose();
 
 		  CaveRecalcPalette = 1;
 		}

@@ -1253,7 +1253,7 @@ static void OPLL_init_save(YM2413 *chip)
 {
 	char buf1[20];
 	
-	int chnum;
+	int chnum, i;
 	
 	sprintf(buf1,"YM2413.registers");
 
@@ -1271,7 +1271,7 @@ static void OPLL_init_save(YM2413 *chip)
 	state_save_register_UINT32		(buf1, 0, "noise_p",			&chip->noise_p,				1);
 	state_save_register_UINT32		(buf1, 0, "noise_f",			&chip->noise_f,				1);
 	
-	for (INT32 i = 0; i < 19; i++) {
+	for (i = 0; i < 19; i++) {
 		UINT8 *inst_tab = (UINT8*)&chip->inst_tab[i];
 		state_save_register_UINT8 	(buf1, i, "inst_tab",			inst_tab,					8);
 	}

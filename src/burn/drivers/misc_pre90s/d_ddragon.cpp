@@ -2456,7 +2456,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 	
 	if (pnMin != NULL) {			// Return minimum compatible version
-		*pnMin = 0x029672;
+		*pnMin = 0x029719;
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {
@@ -2465,6 +2465,51 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.nLen	  = RamEnd-RamStart;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
+	}
+	
+	if (nAction & ACB_DRIVER_DATA) {
+		HD6309Scan(nAction);
+		
+		if (DrvSubCPUType == DD_CPU_TYPE_HD63701) HD63701Scan(nAction);
+		if (DrvSubCPUType == DD_CPU_TYPE_M6803) M6803Scan(nAction);
+		if (DrvSubCPUType == DD_CPU_TYPE_Z80 || DrvSoundCPUType == DD_CPU_TYPE_Z80) ZetScan(nAction);
+		if (DrvSoundCPUType == DD_CPU_TYPE_M6809) M6809Scan(nAction);
+		if (DrvGameType == DD_GAME_DARKTOWR) m68705Scan(nAction, pnMin);
+		
+		BurnYM2151Scan(nAction);
+		if (DrvSoundCPUType == DD_CPU_TYPE_Z80) MSM6295Scan(0, nAction);
+		if (DrvSoundCPUType == DD_CPU_TYPE_M6809) MSM5205Scan(nAction, pnMin);
+		
+		SCAN_VAR(DrvRomBank);
+		SCAN_VAR(DrvVBlank);
+		SCAN_VAR(DrvSubCPUBusy);
+		SCAN_VAR(DrvSoundLatch);
+		SCAN_VAR(DrvScrollXHi);
+		SCAN_VAR(DrvScrollYHi);
+		SCAN_VAR(DrvScrollXLo);
+		SCAN_VAR(DrvScrollYLo);
+		SCAN_VAR(DrvADPCMIdle);
+		SCAN_VAR(DrvADPCMPos);
+		SCAN_VAR(DrvADPCMEnd);
+		SCAN_VAR(DrvADPCMData);
+		SCAN_VAR(nCyclesDone);
+		SCAN_VAR(nCyclesSegment);
+		
+		if (nAction & ACB_WRITE) {
+			HD6309Open(0);
+			HD6309MapMemory(DrvHD6309Rom + 0x8000 + (DrvRomBank * 0x4000), 0x4000, 0x7fff, M6809_ROM);
+			HD6309Close();
+			
+			if (DrvSubCPUBusy == 0) {
+				if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {
+					HD63701SetIRQ(HD63701_INPUT_LINE_NMI, HD63701_IRQSTATUS_ACK);
+				}
+				
+				if (DrvSubCPUType == DD_CPU_TYPE_M6803) {
+					M6803SetIRQ(M6803_INPUT_LINE_NMI, M6803_IRQSTATUS_ACK);
+				}
+			}
+		}
 	}
 
 	return 0;

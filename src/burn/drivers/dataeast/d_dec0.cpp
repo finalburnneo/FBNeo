@@ -2387,7 +2387,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 	
 	if (pnMin != NULL) {			// Return minimum compatible version
-		*pnMin = 0x029708;
+		*pnMin = 0x029719;
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {
@@ -2397,8 +2397,31 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}
+	
+	if (nAction & ACB_DRIVER_DATA) {	
+		SekScan(nAction);
+		M6502Scan(nAction);
+		BurnYM2203Scan(nAction, pnMin);
+		BurnYM3812Scan(nAction, pnMin);
+		MSM6295Scan(0, nAction);	
+	
+		SCAN_VAR(i8751RetVal);
+		SCAN_VAR(DrvVBlank);
+		SCAN_VAR(DrvSoundLatch);
+		SCAN_VAR(DrvFlipScreen);
+		SCAN_VAR(DrvPriority);
+	}
 
 	return 0;
+}
+
+static INT32 RobocopScan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+//		h6280Scan(nAction);
+	}
+
+	return DrvScan(nAction, pnMin);
 }
 
 struct BurnDriver BurnDrvBaddudes = {
@@ -2447,7 +2470,7 @@ struct BurnDriverD BurnDrvHippodrm = {
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, HippodrmRomInfo, HippodrmRomName, NULL, NULL, Dec0InputInfo, HippodrmDIPInfo,
-	HippodrmInit, RobocopExit, RobocopFrame, NULL, DrvScan,
+	HippodrmInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -2457,7 +2480,7 @@ struct BurnDriver BurnDrvRobocop = {
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, RobocopRomInfo, RobocopRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
-	RobocopInit, RobocopExit, RobocopFrame, NULL, DrvScan,
+	RobocopInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 

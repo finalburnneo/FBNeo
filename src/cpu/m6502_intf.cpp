@@ -525,7 +525,6 @@ INT32 M6502Scan(INT32 nAction)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Scan called without init\n"));
-	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502Scan called with no CPU open\n"));
 #endif
 
 	struct BurnArea ba;

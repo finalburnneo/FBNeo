@@ -399,11 +399,19 @@ INT32 HD6309Scan(INT32 nAction)
 		char szName[] = "HD6309 #n";
 		szName[7] = '0' + i;
 
-		ba.Data = &HD6309CPUContext[i];
-		ba.nLen = sizeof(HD6309CPUContext[i]);
+		memset(&ba, 0, sizeof(ba));
+		ba.Data = &HD6309CPUContext[i].reg;
+		ba.nLen = sizeof(HD6309CPUContext[i].reg);
 		ba.szName = szName;
 		BurnAcb(&ba);
+		
+		SCAN_VAR(HD6309CPUContext[i].nCyclesTotal);
+		SCAN_VAR(HD6309CPUContext[i].nCyclesSegment);
+		SCAN_VAR(HD6309CPUContext[i].nCyclesLeft);
+		SCAN_VAR(nHD6309CyclesDone[i]);
 	}
+	
+	SCAN_VAR(nHD6309CyclesTotal);
 	
 	return 0;
 }

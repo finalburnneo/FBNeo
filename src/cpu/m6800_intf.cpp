@@ -487,31 +487,47 @@ INT32 M6800Scan(INT32 nAction)
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800Scan called without init\n"));
 #endif
 
-	struct BurnArea ba;
-
 	if (nAction & ACB_DRIVER_DATA) {
-		m6800_Regs *tmp;
-		void (* const * insn)(void);
-		const UINT8 *cycles;
-
-		for (INT32 i = 0; i < nM6800Count; i++) {
-			tmp = &M6800CPUContext[i].reg;
-	
-			char szName[] = "M6800 #n";
-			szName[7] = '0' + i;
-	
-			cycles = tmp->cycles;
-			insn = tmp->insn;
-	
-			ba.Data = &M6800CPUContext[i].reg;
-			ba.nLen = sizeof(M6800CPUContext[i].reg);
-			ba.szName = szName;
-			BurnAcb(&ba);
-	
-			tmp->cycles = cycles;
-			tmp->insn = insn;
+		for (INT32 i = 0; i <= nM6800Count; i++) {
+			m6800_Regs *R = &M6800CPUContext[i].reg;
+			
+			SCAN_VAR(R->ppc);
+			SCAN_VAR(R->pc);
+			SCAN_VAR(R->s);
+			SCAN_VAR(R->x);
+			SCAN_VAR(R->d);
+			SCAN_VAR(R->cc);
+			SCAN_VAR(R->wai_state);
+			SCAN_VAR(R->nmi_state);
+			SCAN_VAR(R->irq_state);
+			SCAN_VAR(R->ic_eddge);
+			SCAN_VAR(R->extra_cycles);
+			SCAN_VAR(R->port1_ddr);
+			SCAN_VAR(R->port2_ddr);
+			SCAN_VAR(R->port3_ddr);
+			SCAN_VAR(R->port4_ddr);
+			SCAN_VAR(R->port1_data);
+			SCAN_VAR(R->port2_data);
+			SCAN_VAR(R->port3_data);
+			SCAN_VAR(R->port4_data);
+			SCAN_VAR(R->tcsr);
+			SCAN_VAR(R->rmcr);
+			SCAN_VAR(R->pending_tcsr);
+			SCAN_VAR(R->irq2);
+			SCAN_VAR(R->ram_ctrl);
+			SCAN_VAR(R->counter);
+			SCAN_VAR(R->output_compare);
+			SCAN_VAR(R->input_capture);
+			SCAN_VAR(R->timer_over);
+			
+			SCAN_VAR(M6800CPUContext[i].nCyclesTotal);
+			SCAN_VAR(M6800CPUContext[i].nCyclesSegment);
+			SCAN_VAR(M6800CPUContext[i].nCyclesLeft);
+			SCAN_VAR(nM6800CyclesDone[i]);
 		}
+		
+		SCAN_VAR(nM6800CyclesTotal);
 	}
-
+	
 	return 0;
 }

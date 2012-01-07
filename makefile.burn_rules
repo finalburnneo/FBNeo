@@ -50,12 +50,12 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_route16.o d_scregg.o d_sf.o d_skyfox.o d_skykid.o d_snk68.o d_solomon.o d_sonson.o d_srumbler.o d_tecmo.o \
 			d_tigeroad.o d_toki.o d_vulgus.o d_wallc.o d_wc90.o d_wc90b.o d_wwfsstar.o \
 			\
-			d_1945kiii.o d_aerofgt.o d_airbustr.o d_aquarium.o d_bloodbro.o d_crospang.o d_crshrace.o d_dcon.o d_deniam.o \
-			d_ddragon3.o d_diverboy.o d_drtomy.o d_egghunt.o d_esd16.o d_f1gp.o d_fstarfrc.o d_funybubl.o d_fuukifg3.o d_gaelco.o \
-			d_gaiden.o d_galpanic.o d_gotcha.o d_gumbo.o d_hyperpac.o d_jchan.o d_kaneko16.o d_lordgun.o d_mcatadv.o d_midas.o \
-			d_mugsmash.o d_news.o d_nmg5.o d_nmk16.o d_ohmygod.o d_pass.o d_pirates.o d_pktgaldx.o d_powerins.o d_pushman.o \
-			d_raiden.o d_seta.o d_seta2.o d_shadfrce.o d_silkroad.o d_speedspn.o d_suna16.o d_taotaido.o d_tecmosys.o d_tumbleb.o \
-			d_unico.o d_vmetal.o d_welltris.o d_wwfwfest.o d_xorworld.o d_yunsun16.o d_zerozone.o \
+			d_1945kiii.o d_aerofgt.o d_airbustr.o d_aquarium.o d_blmbycar.o d_bloodbro.o d_crospang.o d_crshrace.o d_dcon.o \
+			d_deniam.o d_ddragon3.o d_diverboy.o d_drtomy.o d_egghunt.o d_esd16.o d_f1gp.o d_fstarfrc.o d_funybubl.o d_fuukifg3.o \
+			d_gaelco.o d_gaiden.o d_galpanic.o d_gotcha.o d_gumbo.o d_hyperpac.o d_jchan.o d_kaneko16.o d_lordgun.o d_mcatadv.o \
+			d_midas.o d_mugsmash.o d_news.o d_nmg5.o d_nmk16.o d_ohmygod.o d_pass.o d_pirates.o d_pktgaldx.o d_powerins.o \
+			d_pushman.o d_raiden.o d_seta.o d_seta2.o d_shadfrce.o d_silkroad.o d_speedspn.o d_suna16.o d_taotaido.o d_tecmosys.o \
+			d_tumbleb.o d_unico.o d_vmetal.o d_welltris.o d_wwfwfest.o d_xorworld.o d_yunsun16.o d_zerozone.o \
 			\
 			d_parent.o \
 			\

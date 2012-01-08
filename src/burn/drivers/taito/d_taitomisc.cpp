@@ -29,7 +29,7 @@ static UINT16 *pTopspeedTempDraw = NULL;
 
 static void DariusDraw();
 static void OpwolfDraw();
-static void RainbowDraw();
+static void RbislandDraw();
 static void JumpingDraw();
 static void RastanDraw();
 static void TopspeedDraw();
@@ -87,7 +87,7 @@ static struct BurnInputInfo OpwolfInputList[] =
 
 STDINPUTINFO(Opwolf)
 
-static struct BurnInputInfo RainbowInputList[] =
+static struct BurnInputInfo RbislandInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL   , TaitoInputPort1 + 0, "p1 coin"   },
 	{"Start 1"           , BIT_DIGITAL   , TaitoInputPort0 + 6, "p1 start"  },
@@ -111,7 +111,7 @@ static struct BurnInputInfo RainbowInputList[] =
 	{"Dip 2"             , BIT_DIPSWITCH , TaitoDip + 1       , "dip"       },
 };
 
-STDINPUTINFO(Rainbow)
+STDINPUTINFO(Rbisland)
 
 static struct BurnInputInfo JumpingInputList[] =
 {
@@ -313,7 +313,7 @@ static void OpwolfbMakeInputs()
 	BurnGunMakeInputs(0, (INT16)TaitoAnalogPort0, (INT16)TaitoAnalogPort1);
 }
 
-static void RainbowMakeInputs()
+static void RbislandMakeInputs()
 {
 	// Reset Inputs
 	TaitoInput[0] = 0xff;
@@ -819,7 +819,7 @@ static struct BurnDIPInfo OpwolfbDIPList[]=
 
 STDDIPINFO(Opwolfb)
 
-static struct BurnDIPInfo RainbowDIPList[]=
+static struct BurnDIPInfo RbislandDIPList[]=
 {
 	// Default Values
 	{0x0f, 0xff, 0xff, 0xfe, NULL                             },
@@ -880,7 +880,7 @@ static struct BurnDIPInfo RainbowDIPList[]=
 	{0x10, 0x01, 0x40, 0x40, "Japanese"                       },
 };
 
-STDDIPINFO(Rainbow)
+STDDIPINFO(Rbisland)
 
 static struct BurnDIPInfo JumpingDIPList[]=
 {
@@ -1645,7 +1645,7 @@ static struct BurnRomInfo OpwolfbRomDesc[] = {
 STD_ROM_PICK(Opwolfb)
 STD_ROM_FN(Opwolfb)
 
-static struct BurnRomInfo RainbowRomDesc[] = {
+static struct BurnRomInfo RbislandRomDesc[] = {
 	{ "b22-10-1.19",   0x10000, 0xe34a50ca, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "b22-11-1.20",   0x10000, 0x6a31a093, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "b22-08-1.21",   0x10000, 0x15d6e17a, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -1660,12 +1660,14 @@ static struct BurnRomInfo RainbowRomDesc[] = {
 	{ "b22-02.5",      0x80000, 0x1b87ecf0, BRF_GRA | TAITO_SPRITESA },
 	{ "b22-12.7",      0x10000, 0x67a76dc6, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
 	{ "b22-13.6",      0x10000, 0x2fda099f, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	
+	{ "cchip_b22-15.53", 0x10000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
-STD_ROM_PICK(Rainbow)
-STD_ROM_FN(Rainbow)
+STD_ROM_PICK(Rbisland)
+STD_ROM_FN(Rbisland)
 
-static struct BurnRomInfo RainbowoRomDesc[] = {
+static struct BurnRomInfo RbislandoRomDesc[] = {
 	{ "b22-10.19",     0x10000, 0x3b013495, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "b22-11.20",     0x10000, 0x80041a3d, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "b22-08.21",     0x10000, 0x962fb845, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -1680,12 +1682,14 @@ static struct BurnRomInfo RainbowoRomDesc[] = {
 	{ "b22-02.5",      0x80000, 0x1b87ecf0, BRF_GRA | TAITO_SPRITESA },
 	{ "b22-12.7",      0x10000, 0x67a76dc6, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
 	{ "b22-13.6",      0x10000, 0x2fda099f, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	
+	{ "cchip_b22-15.53", 0x10000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
-STD_ROM_PICK(Rainbowo)
-STD_ROM_FN(Rainbowo)
+STD_ROM_PICK(Rbislando)
+STD_ROM_FN(Rbislando)
 
-static struct BurnRomInfo RainboweRomDesc[] = {
+static struct BurnRomInfo RbislandeRomDesc[] = {
 	{ "b39-01.19",     0x10000, 0x50690880, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "b39-02.20",     0x10000, 0x4dead71f, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "b39-03.21",     0x10000, 0x4a4cb785, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -1700,10 +1704,12 @@ static struct BurnRomInfo RainboweRomDesc[] = {
 	{ "b22-02.5",      0x80000, 0x1b87ecf0, BRF_GRA | TAITO_SPRITESA },
 	{ "b22-12.7",      0x10000, 0x67a76dc6, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
 	{ "b22-13.6",      0x10000, 0x2fda099f, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+	
+	{ "cchip_b39-05.53", 0x10000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
-STD_ROM_PICK(Rainbowe)
-STD_ROM_FN(Rainbowe)
+STD_ROM_PICK(Rbislande)
+STD_ROM_FN(Rbislande)
 
 static struct BurnRomInfo JumpingRomDesc[] = {
 	{ "jb1_h4",        0x10000, 0x3fab6b31, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -2130,7 +2136,7 @@ static INT32 DariusDoReset()
 	return 0;
 }
 
-static INT32 RainbowDoReset()
+static INT32 RbislandDoReset()
 {
 #if 0
 	// This resets the YM2151 which calls DrvSoundBankSwitch via the port callback
@@ -2627,7 +2633,7 @@ void __fastcall Opwolfb68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Rainbow68KReadByte(UINT32 a)
+UINT8 __fastcall Rbisland68KReadByte(UINT32 a)
 {
 	if (a >= 0x800000 && a <= 0x8007ff) {
 		return RainbowCChipRamRead((a - 0x800000) >> 1);
@@ -2642,7 +2648,7 @@ UINT8 __fastcall Rainbow68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Rainbow68KWriteByte(UINT32 a, UINT8 d)
+void __fastcall Rbisland68KWriteByte(UINT32 a, UINT8 d)
 {
 	if (a >= 0x800000 && a <= 0x8007ff) {
 		RainbowCChipRamWrite((a - 0x800000) >> 1, d);
@@ -2677,7 +2683,7 @@ void __fastcall Rainbow68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Rainbow68KReadWord(UINT32 a)
+UINT16 __fastcall Rbisland68KReadWord(UINT32 a)
 {
 	if (a >= 0x800000 && a <= 0x8007ff) {
 		return RainbowCChipRamRead((a - 0x800000) >> 1);
@@ -2696,7 +2702,7 @@ UINT16 __fastcall Rainbow68KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Rainbow68KWriteWord(UINT32 a, UINT16 d)
+void __fastcall Rbisland68KWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x3c0000: {
@@ -3498,7 +3504,7 @@ void __fastcall OpwolfZ80Write(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall RainbowZ80Read(UINT16 a)
+UINT8 __fastcall RbislandZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0x9001: {
@@ -3513,7 +3519,7 @@ UINT8 __fastcall RainbowZ80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall RainbowZ80Write(UINT16 a, UINT8 d)
+void __fastcall RbislandZ80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0x9000: {
@@ -3827,7 +3833,7 @@ inline static double TaitoGetTime()
 	return (double)ZetTotalCycles() / 4000000;
 }
 
-static void RainbowBankSwitch(UINT32, UINT32 Data)
+static void RbislandBankSwitch(UINT32, UINT32 Data)
 {
 	TaitoZ80Bank = (Data - 1) & 3;
 	
@@ -3937,12 +3943,12 @@ static INT32 OpwolfbCharYOffsets[8]        = { 0, 32, 64, 96, 128, 160, 192, 224
 static INT32 OpwolfbSpritePlaneOffsets[4]  = { 0, 1, 2, 3 };
 static INT32 OpwolfbSpriteXOffsets[16]     = { 0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60 };
 static INT32 OpwolfbSpriteYOffsets[16]     = { 0, 64, 128, 192, 256, 320, 384, 448, 512, 576, 640, 704, 768, 832, 896, 960 };
-static INT32 RainbowCharPlaneOffsets[4]    = { 0, 1, 2, 3 };
-static INT32 RainbowCharXOffsets[8]        = { 8, 12, 0, 4, 24, 28, 16, 20 };
-static INT32 RainbowCharYOffsets[8]        = { 0, 32, 64, 96, 128, 160, 192, 224 };
-static INT32 RainbowSpritePlaneOffsets[4]  = { 0, 1, 2, 3 };
-static INT32 RainbowSpriteXOffsets[16]     = { 8, 12, 0, 4, 24, 28, 16, 20, 40, 44, 32, 36, 56, 60, 48, 52 };
-static INT32 RainbowSpriteYOffsets[16]     = { 0, 64, 128, 192, 256, 320, 384, 448, 512, 576, 640, 704, 768, 832, 896, 960 };
+static INT32 RbislandCharPlaneOffsets[4]   = { 0, 1, 2, 3 };
+static INT32 RbislandCharXOffsets[8]       = { 8, 12, 0, 4, 24, 28, 16, 20 };
+static INT32 RbislandCharYOffsets[8]       = { 0, 32, 64, 96, 128, 160, 192, 224 };
+static INT32 RbislandSpritePlaneOffsets[4] = { 0, 1, 2, 3 };
+static INT32 RbislandSpriteXOffsets[16]    = { 8, 12, 0, 4, 24, 28, 16, 20, 40, 44, 32, 36, 56, 60, 48, 52 };
+static INT32 RbislandSpriteYOffsets[16]    = { 0, 64, 128, 192, 256, 320, 384, 448, 512, 576, 640, 704, 768, 832, 896, 960 };
 static INT32 JumpingCharPlaneOffsets[4]    = { 0, 0x20000*8, 0x40000*8, 0x60000*8 };
 static INT32 JumpingCharXOffsets[8]        = { 0, 1, 2, 3, 4, 5, 6, 7 };
 static INT32 JumpingCharYOffsets[8]        = { 0, 8, 16, 24, 32, 40, 48, 56 };
@@ -4114,18 +4120,18 @@ static INT32 OpwolfInit()
 	TaitoCharNumPlanes = 4;
 	TaitoCharWidth = 8;
 	TaitoCharHeight = 8;
-	TaitoCharPlaneOffsets = RainbowCharPlaneOffsets;
-	TaitoCharXOffsets = RainbowCharXOffsets;
-	TaitoCharYOffsets = RainbowCharYOffsets;
+	TaitoCharPlaneOffsets = RbislandCharPlaneOffsets;
+	TaitoCharXOffsets = RbislandCharXOffsets;
+	TaitoCharYOffsets = RbislandCharYOffsets;
 	TaitoNumChar = 0x4000;
 	
 	TaitoSpriteAModulo = 0x400;
 	TaitoSpriteANumPlanes = 4;
 	TaitoSpriteAWidth = 16;
 	TaitoSpriteAHeight = 16;
-	TaitoSpriteAPlaneOffsets = RainbowSpritePlaneOffsets;
-	TaitoSpriteAXOffsets = RainbowSpriteXOffsets;
-	TaitoSpriteAYOffsets = RainbowSpriteYOffsets;
+	TaitoSpriteAPlaneOffsets = RbislandSpritePlaneOffsets;
+	TaitoSpriteAXOffsets = RbislandSpriteXOffsets;
+	TaitoSpriteAYOffsets = RbislandSpriteYOffsets;
 	TaitoNumSpriteA = 0x1000;
 	
 	TaitoNum68Ks = 1;
@@ -4181,7 +4187,7 @@ static INT32 OpwolfInit()
 	
 	BurnYM2151Init(4000000, 50.0);
 	BurnYM2151SetIrqHandler(&TaitoYM2151IRQHandler);
-	BurnYM2151SetPortHandler(&RainbowBankSwitch);
+	BurnYM2151SetPortHandler(&RbislandBankSwitch);
 	
 	MSM5205Init(0, TaitoSynchroniseStream, 384000, OpwolfMSM5205Vck0, MSM5205_S48_4B, 60, 1);
 	MSM5205Init(1, TaitoSynchroniseStream, 384000, OpwolfMSM5205Vck1, MSM5205_S48_4B, 60, 1);
@@ -4297,7 +4303,7 @@ static INT32 OpwolfbInit()
 	
 	BurnYM2151Init(4000000, 50.0);
 	BurnYM2151SetIrqHandler(&TaitoYM2151IRQHandler);
-	BurnYM2151SetPortHandler(&RainbowBankSwitch);
+	BurnYM2151SetPortHandler(&RbislandBankSwitch);
 	
 	MSM5205Init(0, TaitoSynchroniseStream, 384000, OpwolfMSM5205Vck0, MSM5205_S48_4B, 60, 1);
 	MSM5205Init(1, TaitoSynchroniseStream, 384000, OpwolfMSM5205Vck1, MSM5205_S48_4B, 60, 1);
@@ -4324,7 +4330,7 @@ static INT32 OpwolfbInit()
 	return 0;
 }
 
-static INT32 RainbowInit()
+static INT32 RbislandInit()
 {
 	INT32 nLen;
 	
@@ -4332,18 +4338,18 @@ static INT32 RainbowInit()
 	TaitoCharNumPlanes = 4;
 	TaitoCharWidth = 8;
 	TaitoCharHeight = 8;
-	TaitoCharPlaneOffsets = RainbowCharPlaneOffsets;
-	TaitoCharXOffsets = RainbowCharXOffsets;
-	TaitoCharYOffsets = RainbowCharYOffsets;
+	TaitoCharPlaneOffsets = RbislandCharPlaneOffsets;
+	TaitoCharXOffsets = RbislandCharXOffsets;
+	TaitoCharYOffsets = RbislandCharYOffsets;
 	TaitoNumChar = 0x4000;
 	
 	TaitoSpriteAModulo = 0x400;
 	TaitoSpriteANumPlanes = 4;
 	TaitoSpriteAWidth = 16;
 	TaitoSpriteAHeight = 16;
-	TaitoSpriteAPlaneOffsets = RainbowSpritePlaneOffsets;
-	TaitoSpriteAXOffsets = RainbowSpriteXOffsets;
-	TaitoSpriteAYOffsets = RainbowSpriteYOffsets;
+	TaitoSpriteAPlaneOffsets = RbislandSpritePlaneOffsets;
+	TaitoSpriteAXOffsets = RbislandSpriteXOffsets;
+	TaitoSpriteAYOffsets = RbislandSpriteYOffsets;
 	TaitoNumSpriteA = 0x1400;
 	
 	TaitoNum68Ks = 1;
@@ -4375,17 +4381,17 @@ static INT32 RainbowInit()
 	SekMapMemory(Taito68KRam1 + 0x4000  , 0x201000, 0x203fff, SM_RAM);
 	SekMapMemory(PC080SNRam[0]          , 0xc00000, 0xc0ffff, SM_RAM);
 	SekMapMemory(PC090OJRam             , 0xd00000, 0xd03fff, SM_RAM);
-	SekSetReadByteHandler(0, Rainbow68KReadByte);
-	SekSetWriteByteHandler(0, Rainbow68KWriteByte);
-	SekSetReadWordHandler(0, Rainbow68KReadWord);	
-	SekSetWriteWordHandler(0, Rainbow68KWriteWord);
+	SekSetReadByteHandler(0, Rbisland68KReadByte);
+	SekSetWriteByteHandler(0, Rbisland68KWriteByte);
+	SekSetReadWordHandler(0, Rbisland68KReadWord);	
+	SekSetWriteWordHandler(0, Rbisland68KWriteWord);
 	SekClose();
 	
 	// Setup the Z80 emulation
 	ZetInit(0);
 	ZetOpen(0);
-	ZetSetReadHandler(RainbowZ80Read);
-	ZetSetWriteHandler(RainbowZ80Write);
+	ZetSetReadHandler(RbislandZ80Read);
+	ZetSetWriteHandler(RbislandZ80Write);
 	ZetMapArea(0x0000, 0x3fff, 0, TaitoZ80Rom1               );
 	ZetMapArea(0x0000, 0x3fff, 2, TaitoZ80Rom1               );
 	ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + 0x4000      );
@@ -4398,23 +4404,23 @@ static INT32 RainbowInit()
 	
 	BurnYM2151Init(16000000 / 4, 50.0);
 	BurnYM2151SetIrqHandler(&TaitoYM2151IRQHandler);
-	BurnYM2151SetPortHandler(&RainbowBankSwitch);
+	BurnYM2151SetPortHandler(&RbislandBankSwitch);
 	
 	GenericTilesInit();
 	
-	TaitoDrawFunction = RainbowDraw;
-	TaitoMakeInputsFunction = RainbowMakeInputs;
+	TaitoDrawFunction = RbislandDraw;
+	TaitoMakeInputsFunction = RbislandMakeInputs;
 	TaitoIrqLine = 4;
 	
 	nTaitoCyclesTotal[0] = (16000000 / 2) / 60;
 	nTaitoCyclesTotal[1] = (16000000 / 4) / 60;
 	
 	INT32 CChipVer = 0;
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "rainbowe")) CChipVer = 1;
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "rbislande")) CChipVer = 1;
 	RainbowCChipInit(CChipVer);
 		
 	// Reset the driver
-	TaitoResetFunction = RainbowDoReset;
+	TaitoResetFunction = RbislandDoReset;
 	TaitoResetFunction();
 
 	return 0;
@@ -5250,7 +5256,7 @@ static void OpwolfDraw()
 	}
 }
 
-static void RainbowDraw()
+static void RbislandDraw()
 {
 	BurnTransferClear();
 	TaitoMiscCalcPalette();
@@ -5748,38 +5754,38 @@ struct BurnDriver BurnDrvOpwolfb = {
 	NULL, 0x2000, 320, 240, 4, 3
 };
 
-struct BurnDriver BurnDrvRainbow = {
-	"rainbow", NULL, NULL, NULL, "1987",
+struct BurnDriver BurnDrvRbisland = {
+	"rbisland", NULL, NULL, NULL, "1987",
 	"Rainbow Islands (new version)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, RainbowRomInfo, RainbowRomName, NULL, NULL, RainbowInputInfo, RainbowDIPInfo,
-	RainbowInit, TaitoMiscExit, TaitoMiscFrame, NULL, TaitoMiscScan,
+	NULL, RbislandRomInfo, RbislandRomName, NULL, NULL, RbislandInputInfo, RbislandDIPInfo,
+	RbislandInit, TaitoMiscExit, TaitoMiscFrame, NULL, TaitoMiscScan,
 	NULL, 0x2000, 320, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvRainbowo = {
-	"rainbowo", "rainbow", NULL, NULL, "1987",
+struct BurnDriver BurnDrvRbislando = {
+	"rbislando", "rbisland", NULL, NULL, "1987",
 	"Rainbow Islands (old version)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, RainbowoRomInfo, RainbowoRomName, NULL, NULL, RainbowInputInfo, RainbowDIPInfo,
-	RainbowInit, TaitoMiscExit, TaitoMiscFrame, NULL, TaitoMiscScan,
+	NULL, RbislandoRomInfo, RbislandoRomName, NULL, NULL, RbislandInputInfo, RbislandDIPInfo,
+	RbislandInit, TaitoMiscExit, TaitoMiscFrame, NULL, TaitoMiscScan,
 	NULL, 0x2000, 320, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvRainbowe = {
-	"rainbowe", "rainbow", NULL, NULL, "1988",
+struct BurnDriver BurnDrvRbislande = {
+	"rbislande", "rbisland", NULL, NULL, "1988",
 	"Rainbow Islands (Extra)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, RainboweRomInfo, RainboweRomName, NULL, NULL, RainbowInputInfo, RainbowDIPInfo,
-	RainbowInit, TaitoMiscExit, TaitoMiscFrame, NULL, TaitoMiscScan,
+	NULL, RbislandeRomInfo, RbislandeRomName, NULL, NULL, RbislandInputInfo, RbislandDIPInfo,
+	RbislandInit, TaitoMiscExit, TaitoMiscFrame, NULL, TaitoMiscScan,
 	NULL, 0x2000, 320, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvJumping = {
-	"jumping", "rainbow", NULL, NULL, "1989",
+	"jumping", "rbisland", NULL, NULL, "1989",
 	"Jumping\0", NULL, "bootleg", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,

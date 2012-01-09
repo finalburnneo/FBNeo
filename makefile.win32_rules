@@ -3,7 +3,10 @@ alldir	= 	burn burn/devices burn/sound burn/drivers burn/drivers/capcom burn/dri
 			burn/drivers/misc_post90s burn/drivers/misc_pre90s burn/drivers/neogeo burn/drivers/pgm burn/drivers/psikyo \
 			burn/drivers/sega burn/drivers/snes burn/drivers/taito burn/drivers/toaplan \
 			cpu cpu/a68k cpu/arm cpu/arm7 cpu/h6280 cpu/hd6309 cpu/i8039 cpu/konami cpu/m68k cpu/m6502 cpu/m6800 cpu/m6805 \
-			cpu/m6809 cpu/nec cpu/s2650 cpu/sh2 cpu/z80 
+			cpu/m6809 cpu/nec cpu/s2650 cpu/sh2 cpu/z80 \
+			burner burner/platform/win32 depend/kaillera/client depend/libs/libpng depend/libs/zlib interface interface/video \
+			interface/video/scalers interface/video/win32 interface/audio interface/audio/win32 interface/input \
+			interface/input/win32 interface/cd interface/cd/win32 interface/perfcount interface/perfcount/win32 depend/generated
 
 drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwange.o d_hotdogst.o d_korokoro.o d_mazinger.o \
 			d_metmqstr.o d_pwrinst2.o d_sailormn.o d_tjumpman.o d_uopoko.o \
@@ -63,7 +66,30 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			\
 			d_snes.o
 
-depobj	:= 	$(drvobj) \
+depobj	:= 	about.o bzip.o cona.o debugger.o drv.o dwmapi_core.o dynhuff.o fba_kaillera.o image_win32.o inpc.o inpcheat.o inpd.o \
+			inpdipsw.o inps.o ips_manager.o localise.o localise_gamelist.o main.o mdi.o media.o memcard.o menu.o misc_win32.o \
+			neocdlist.o neocdsel.o numdial.o numpluscommas.o paletteviewer.o popup_win32.o progress.o replay.o res.o roms.o run.o \
+			scrn.o sel.o sfactd.o splash.o stated.o support_paths.o systeminfo.o wave.o \
+			\
+			conc.o cong.o dat.o gamc.o gami.o image.o ioapi.o misc.o sshot.o state.o statec.o unzip.o zipfn.o \
+			\
+			adler32.o compress.o crc32.o deflate.o gzclose.o gzlib.o gzread.o gzwrite.o infback.o inffast.o inflate.o inftrees.o \
+			trees.o uncompr.o zutil.o \
+			\
+			png.o pngerror.o pngget.o pngmem.o pngpread.o pngread.o pngrio.o pngrtran.o pngrutil.o pngset.o pngtrans.o pngwio.o \
+			pngwrite.o pngwtran.o pngwutil.o \
+			\
+			net.o \
+			\
+			aud_dsp.o aud_interface.o cd_interface.o inp_interface.o interface.o lowpass2.o prf_interface.o vid_interface.o \
+			vid_softfx.o vid_support.o \
+			\
+			2xpm.o 2xsai.o epx.o hq2xs.o hq2xs_16.o \
+			\
+			aud_dsound3.o aud_xaudio2.o cd_isowav.o cdsound.o ddraw_core.o dinput_core.o directx9_core.o dsound_core.o \
+			inp_dinput.o prf_performance_counter.o vid_d3d.o vid_ddraw.o vid_ddrawfx.o vid_directx9.o vid_directx_support.o \
+			\
+			$(drvobj) \
 			\
 			burn.o burn_gun.o burn_led.o burn_memory.o burn_sound.o burn_sound_c.o cheat.o debug_track.o hiscore.o load.o \
 			tiles_generic.o timer.o vector.o \
@@ -120,5 +146,7 @@ depobj += m68kdasm.o
 endif
 
 ifdef	BUILD_X86_ASM
-autobj += burn_sound_a.o
+autobj += burn_sound_a.o eagle_fm.o 2xsaimmx.o hq2x32.o hq3x32.o hq4x32.o superscale.o
 endif
+
+autobj += $(depobj)

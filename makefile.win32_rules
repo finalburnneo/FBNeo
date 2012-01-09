@@ -18,7 +18,7 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_cps3.o \
 			\
 			d_backfire.o d_boogwing.o d_cbuster.o d_cninja.o d_darkseal.o d_dassault.o d_dec0.o d_dec8.o d_dietgogo.o \
-			d_funkyjet.o d_karnov.o d_lemmings.o d_rohga.o d_simpl156.o d_supbtime.o d_tumblep.o d_vaportra.o \
+			d_funkyjet.o d_karnov.o d_lemmings.o d_rohga.o d_sidepckt.o d_simpl156.o d_supbtime.o d_tumblep.o d_vaportra.o \
 			\
 			d_galaxian.o \
 			\

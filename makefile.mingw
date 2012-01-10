@@ -11,7 +11,7 @@ unexport
 #
 
 # Check for changes in header files
-DEPEND = 1
+# DEPEND = 1
 
 
 
@@ -81,7 +81,8 @@ endif
 
 srcdir	= src/
 
-include makefile.win32_rules
+include makefile.burn_rules
+include makefile.burner_win32_rules
 
 ifdef GCC345
 incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)depend/generated -I$(srcdir)depend/mingw/include -I- -I$(srcdir)depend/mingw/include/directx9 -I$(srcdir)depend/mingw/include/xaudio2 

@@ -9108,7 +9108,7 @@ static INT32 IsgsmScan(INT32 nAction,INT32 *pnMin)
 				SekClose();
 			}
 			
-			for (INT32 i = 0; i < System16TileRomSize; i++) {
+			for (UINT32 i = 0; i < System16TileRomSize; i++) {
 				GfxDecodeSingle((i & 0x1ffff) / 8, 3, 8, 8, IsgsmTilePlaneOffsets, IsgsmTileXOffsets, IsgsmTileYOffsets, 0x40, System16TempGfx, System16Tiles);
 			}
 		}

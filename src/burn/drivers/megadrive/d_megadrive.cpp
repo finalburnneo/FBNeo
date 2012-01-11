@@ -1561,7 +1561,7 @@ struct BurnDriver BurnDrvmd_688atsub = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// A Ressha de Ikou MD - Take the ''A'' Train (Jpn)
+// A Ressha de Ikou MD - Take the "A" Train (Jpn)
 static struct BurnRomInfo md_aresshikRomDesc[] = {
 	{ "a ressha de ikou md (jpn).bin", 0x080000, 0x3d45de4f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
 };
@@ -1571,7 +1571,7 @@ STD_ROM_FN(md_aresshik)
 
 struct BurnDriver BurnDrvmd_aresshik = {
 	"md_aresshik", NULL, NULL, NULL, "1992",
-	"A Ressha de Ikou MD - Take the ''A'' Train (Jpn)\0", NULL, "Sega", "Sega Megadrive",
+	"A Ressha de Ikou MD - Take the 'A' Train (Jpn)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
 	MegadriveGetZipName, md_aresshikRomInfo, md_aresshikRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -34753,7 +34753,7 @@ struct BurnDriver BurnDrvmd_warsong = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Waterworld (Euro, Prototype)
+// WaterWorld (Euro, Prototype)
 static struct BurnRomInfo md_waterwldRomDesc[] = {
 	{ "waterworld (euro) (prototype).bin", 0x200000, 0x51c80498, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
 };
@@ -34763,7 +34763,7 @@ STD_ROM_FN(md_waterwld)
 
 struct BurnDriver BurnDrvmd_waterwld = {
 	"md_waterwld", NULL, NULL, NULL, "1995?",
-	"Waterworld (Euro, Prototype)\0", NULL, "Ocean", "Sega Megadrive",
+	"WaterWorld (Euro, Prototype)\0", NULL, "Ocean", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_waterwldRomInfo, md_waterwldRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -39087,6 +39087,24 @@ struct BurnDriver BurnDrvmd_sonicjam2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_sonicjam2RomInfo, md_sonicjam2RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Soul Edge vs Samurai Spirits (Pirate, Cracked)
+static struct BurnRomInfo md_souledgeRomDesc[] = {
+	{ "soul edge vs samurai spirits (unl)[f1].bin", 0x200000, 0x74a6d7a7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
+};
+
+STD_ROM_PICK(md_souledge)
+STD_ROM_FN(md_souledge)
+
+struct BurnDriver BurnDrvmd_souledge = {
+	"md_souledge", NULL, NULL, NULL, "199?",
+	"Soul Edge vs Samurai Spirits (Pirate, Cracked)\0", NULL, "<unlicensed>", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_souledgeRomInfo, md_souledgeRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

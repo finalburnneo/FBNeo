@@ -24,6 +24,7 @@ struct SN76496
 	INT32 Count[4];
 	INT32 Output[4];
 	INT32 bSignalAdd;
+	INT32 nVolShift;
 };
 
 static INT32 NumChips;
@@ -154,6 +155,8 @@ void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length)
 		if (Out > MAX_OUTPUT * STEP) Out = MAX_OUTPUT * STEP;
 
 		Out /= STEP;
+		
+		Out >>= R->nVolShift;
 		
 		if (R->bSignalAdd) {
 			Temp = pSoundBuf[0] + Out;
@@ -311,6 +314,7 @@ static void GenericStart(INT32 Num, INT32 Clock, INT32 FeedbackMask, INT32 Noise
 		Chip0->WhitenoiseTaps = NoiseTaps;
 		Chip0->WhitenoiseInvert = NoiseInvert;
 		Chip0->bSignalAdd = SignalAdd;
+		Chip0->nVolShift = 0;
 	}
 	
 	if (Num == 1) {
@@ -324,6 +328,7 @@ static void GenericStart(INT32 Num, INT32 Clock, INT32 FeedbackMask, INT32 Noise
 		Chip1->WhitenoiseTaps = NoiseTaps;
 		Chip1->WhitenoiseInvert = NoiseInvert;
 		Chip1->bSignalAdd = SignalAdd;
+		Chip1->nVolShift = 0;
 	}
 	
 	if (Num == 2) {
@@ -337,6 +342,7 @@ static void GenericStart(INT32 Num, INT32 Clock, INT32 FeedbackMask, INT32 Noise
 		Chip2->WhitenoiseTaps = NoiseTaps;
 		Chip2->WhitenoiseInvert = NoiseInvert;
 		Chip2->bSignalAdd = SignalAdd;
+		Chip2->nVolShift = 0;
 	}
 	
 	if (Num == 3) {
@@ -350,6 +356,7 @@ static void GenericStart(INT32 Num, INT32 Clock, INT32 FeedbackMask, INT32 Noise
 		Chip3->WhitenoiseTaps = NoiseTaps;
 		Chip3->WhitenoiseInvert = NoiseInvert;
 		Chip3->bSignalAdd = SignalAdd;
+		Chip3->nVolShift = 0;
 	}
 	
 	if (Num == 4) {
@@ -363,6 +370,7 @@ static void GenericStart(INT32 Num, INT32 Clock, INT32 FeedbackMask, INT32 Noise
 		Chip4->WhitenoiseTaps = NoiseTaps;
 		Chip4->WhitenoiseInvert = NoiseInvert;
 		Chip4->bSignalAdd = SignalAdd;
+		Chip4->nVolShift = 0;
 	}
 }
 
@@ -421,6 +429,20 @@ void SN76496Exit()
 	}
 	
 	DebugSnd_SN76496Initted = 0;
+}
+
+void SN76496SetVolShift(INT32 Num, INT32 nVolShift)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496SetVolShift called without init\n"));
+	if (Num > NumChips) bprintf(PRINT_ERROR, _T("SN76496SetVolShift called with invalid chip %x\n"), Num);
+#endif
+	
+	if (Num == 0) Chip0->nVolShift = nVolShift;
+	if (Num == 1) Chip1->nVolShift = nVolShift;
+	if (Num == 2) Chip2->nVolShift = nVolShift;
+	if (Num == 3) Chip3->nVolShift = nVolShift;
+	if (Num == 4) Chip4->nVolShift = nVolShift;
 }
 
 INT32 SN76496Scan(INT32 nAction,INT32 *pnMin)

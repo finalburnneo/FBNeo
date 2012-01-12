@@ -146,7 +146,7 @@ void seibu_sound_mustb_write_word(INT32 /*offset*/, UINT8 data)
 #endif
 
 	main2sub[0] = data & 0xff;
-	main2sub[1] = data >> 8;
+	main2sub[1] = 0; // originally data >> 8 which is effectively 0
 	
 	update_irq_lines(RST18_ASSERT);
 }

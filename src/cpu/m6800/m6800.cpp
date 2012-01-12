@@ -449,7 +449,7 @@ M6800_INLINE void WM16( UINT32 Addr, PAIR *p )
 }
 
 /* IRQ enter */
-static void ENTER_INTERRUPT(const char */*message*/,UINT16 irq_vector)
+static void ENTER_INTERRUPT(const char *,UINT16 irq_vector)
 {
 //	LOG((message, cpu_getactivecpu()));
 	if( m6800.wai_state & (M6800_WAI|M6800_SLP) )

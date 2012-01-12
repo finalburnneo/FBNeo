@@ -809,7 +809,7 @@ int m6805TotalCycles()
 	return m6805.nTotalCycles;
 }
 
-int m6805Scan(int nAction, int */*pnMin*/)
+int m6805Scan(int nAction, int *)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Scan called without init\n"));

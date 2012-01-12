@@ -1464,7 +1464,7 @@ int s2650Run(int cycles)
 	return cycles - s2650_ICount;
 }
 
-int s2650Scan(int nAction,int */*pnMin*/)
+int s2650Scan(int nAction,int *)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_S2650Initted) bprintf(PRINT_ERROR, _T("s2650Scan called without init\n"));

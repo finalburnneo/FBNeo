@@ -36,7 +36,7 @@ struct StreamingVoiceContext : public IXAudio2VoiceCallback
 		hBufferEndEvent = NULL;
 	}
 
-	STDMETHOD_(void, OnBufferEnd) (void */*pBufferContext*/) {
+	STDMETHOD_(void, OnBufferEnd) (void * /*pBufferContext*/) {
 		SetEvent(hBufferEndEvent);
 	}
 
@@ -44,9 +44,9 @@ struct StreamingVoiceContext : public IXAudio2VoiceCallback
 	STDMETHOD_(void, OnVoiceProcessingPassStart) (UINT32 /*BytesRequired*/) {}
 	STDMETHOD_(void, OnVoiceProcessingPassEnd) () {}
 	STDMETHOD_(void, OnStreamEnd) () {}
-	STDMETHOD_(void, OnBufferStart) (void */*pBufferContext*/) {}
-	STDMETHOD_(void, OnLoopEnd) (void */*pBufferContext*/) {}
-	STDMETHOD_(void, OnVoiceError) (void */*pBufferContext*/, HRESULT /*Error*/) {};
+	STDMETHOD_(void, OnBufferStart) (void * /*pBufferContext*/) {}
+	STDMETHOD_(void, OnLoopEnd) (void * /*pBufferContext*/) {}
+	STDMETHOD_(void, OnVoiceError) (void * /*pBufferContext*/, HRESULT /*Error*/) {};
 };
 StreamingVoiceContext voiceContext;
 

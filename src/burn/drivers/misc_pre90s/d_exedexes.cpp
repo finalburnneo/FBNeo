@@ -456,7 +456,7 @@ static INT32 DrvExit()
 
 	Mem = MemEnd = Rom0 = Rom1 = NULL;
 	Gfx0 = Gfx1 = Gfx2 = Gfx3 = Gfx4 = Prom = NULL;
-	for (INT32 i = 0; i < 3; i++) pAY8910Buffer[3] = NULL;
+	for (INT32 i = 0; i < 3; i++) pAY8910Buffer[i] = NULL;
 	Palette = DrvPalette = NULL;
 	fg_tile_transp = NULL;
 	pFMBuffer = NULL;

@@ -301,7 +301,7 @@ static void K052109Callback(INT32 layer, INT32 bank, INT32 *code, INT32 *color, 
 	*color = layer_colorbase[layer] + ((*color & 0xf0) >> 4);
 }
 
-static void K051960Callback(INT32 */*code*/, INT32 *color, INT32 *priority, INT32 *)
+static void K051960Callback(INT32 *, INT32 *color, INT32 *priority, INT32 *)
 {
 	*priority = (*color & 0x20) >> 5;
 	*color = 32 + (*color & 0x0f);

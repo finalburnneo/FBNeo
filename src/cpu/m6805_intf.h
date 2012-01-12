@@ -22,7 +22,7 @@ void m6805Exit();
 void m6805Open(INT32 );
 void m6805Close();
 
-INT32 m6805Scan(INT32 nAction, INT32 */*pnMin*/);
+INT32 m6805Scan(INT32 nAction, INT32 *);
 #define m68705Scan(x, y) m6805Scan(x, y)
 
 void m6805Reset();

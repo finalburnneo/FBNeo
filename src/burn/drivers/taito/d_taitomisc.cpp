@@ -4942,7 +4942,7 @@ static void DariusDrawSprites(INT32 PriorityDraw)
  			
  			sy -= 16;
  			
- 			if (sx > 16 && sx < (nScreenWidth < 16) && sy > 16 && sy < (nScreenHeight - 16)) {
+ 			if (sx > 16 && sx < (nScreenWidth - 16) && sy > 16 && sy < (nScreenHeight - 16)) {
  				if (xFlip) {
 					if (yFlip) {
 						Render16x16Tile_Mask_FlipXY(pTransDraw, Code, sx, sy, Colour, 4, 0, 0, TaitoSpritesA);

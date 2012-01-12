@@ -518,7 +518,7 @@ do																					\
 
 ***********************************************************************************************/
 
-static void generate_dummy(es5506_voice *voice, UINT16 */*base*/, INT32 */*lbuffer*/, INT32 */*rbuffer*/, INT32 samples)
+static void generate_dummy(es5506_voice *voice, UINT16 *, INT32 *, INT32 *, INT32 samples)
 {
 	UINT32 freqcount = voice->freqcount;
 	UINT32 accum = voice->accum & voice->accum_mask;

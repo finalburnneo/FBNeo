@@ -88,7 +88,7 @@ static UINT8 DrvJoy5[16];
 static UINT8 DrvJoy6[16];
 static UINT8 DrvJoy7[16];
 static UINT8 DrvDips[7];
-static UINT16 DrvInputs[6];
+static UINT16 DrvInputs[7];
 static UINT8 DrvReset;
 
 #define A(a, b, c, d) { a, b, (UINT8*)(c), d }

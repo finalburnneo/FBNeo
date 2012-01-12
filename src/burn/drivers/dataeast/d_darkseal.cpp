@@ -562,7 +562,7 @@ static void draw_pf23_layer_rowscroll(INT32 scroll_x, INT32 scroll_y)
 			INT32 color = ((vram[ofst] >> 12) << 4) | 0x400;
 			
 			UINT8 *src = DrvGfxROM2 + (code << 8) + (((scroll_y + y) & 0x0f) << 4);
-			for (INT32 xx = sx; xx < ((sx+16) < nScreenWidth) ? (sx+16) : nScreenWidth; xx++) {
+			for (INT32 xx = sx; xx < (((sx+16) < nScreenWidth) ? (sx+16) : nScreenWidth); xx++) {
 				if (xx >= nScreenWidth) break;
 				dest[xx] = src[xx-sx] | color;
 			}

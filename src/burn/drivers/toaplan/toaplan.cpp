@@ -108,10 +108,10 @@ void ToaClearScreen(INT32 PalOffset)
 
 			case 3: {
 				UINT8* pClear = pBurnDraw;
-				UINT16 nColour = ToaPalette[PalOffset];
-				UINT8 r = nColour;
-				UINT8 g = (r >> 8) & 0xFF;
-				UINT8 b = (r >> 16) & 0xFF;
+				UINT32 nColour = ToaPalette[PalOffset];
+				UINT8 r = nColour & 0xFF;
+				UINT8 g = (nColour >> 8) & 0xFF;
+				UINT8 b = (nColour >> 16) & 0xFF;
 				r &= 0xFF;
 				for (INT32 i = 0; i < 320 * 240; i++) {
 					*pClear++ = r;

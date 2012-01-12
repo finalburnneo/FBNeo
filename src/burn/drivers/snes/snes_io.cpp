@@ -339,7 +339,7 @@ unsigned char readio(unsigned short addr)
 		break;
 	case 0x107: case 0x117: case 0x127: case 0x137: /*HDMA indirect bank*/
 	case 0x147: case 0x157: case 0x167: case 0x177:
-		return dmaibank[(addr>>4)&7]>>8;
+		return dmaibank[(addr>>4)&7];//>>8;
 		break;
 
 	default:

@@ -7,16 +7,16 @@ static UINT16 *sharedprotram;
 
 static INT32 ptr;
 
-INT32 pstarsScan(INT32 nAction,INT32 */*pnMin*/);
-INT32 killbldScan(INT32 nAction,INT32 */*pnMin*/);
-INT32 kov_asic27Scan(INT32 nAction,INT32 */*pnMin*/);
-INT32 asic3Scan(INT32 nAction,INT32 */*pnMin*/);
+INT32 pstarsScan(INT32 nAction,INT32 *);
+INT32 killbldScan(INT32 nAction,INT32 *);
+INT32 kov_asic27Scan(INT32 nAction,INT32 *);
+INT32 asic3Scan(INT32 nAction,INT32 *);
 INT32 asic27aScan(INT32 nAction,INT32 *);
-INT32 oldsScan(INT32 nAction, INT32 */*pnMin*/);
-INT32 oldsplus_asic27aScan(INT32 nAction, INT32 */*pnMin*/);
+INT32 oldsScan(INT32 nAction, INT32 *);
+INT32 oldsplus_asic27aScan(INT32 nAction, INT32 *);
 INT32 kovsh_asic27aScan(INT32 nAction,INT32 *);
 INT32 svg_asic27aScan(INT32 nAction,INT32 *);
-INT32 ddp3Scan(INT32 nAction, INT32 */*pnMin*/);
+INT32 ddp3Scan(INT32 nAction, INT32 *);
 
 //-----------------------------------------------------------------------------------------------------
 // ASIC3 - Oriental Legends
@@ -1958,7 +1958,7 @@ void install_protection_asic27a_oldsplus()
 // add this to the bottom of pgm_prot.cpp (i added it after the oldsScan function)
 
 
-INT32 oldsplus_asic27aScan(INT32 nAction, INT32 */*pnMin*/)
+INT32 oldsplus_asic27aScan(INT32 nAction, INT32 *)
 {
 	struct BurnArea ba;
 
@@ -2291,7 +2291,7 @@ void install_protection_asic27a_ddp3()
 //-----------------------------------------------------------------------------------------------------
 // Save states
 
-INT32 kov_asic27Scan(INT32 nAction, INT32 */*pnMin*/)
+INT32 kov_asic27Scan(INT32 nAction, INT32 *)
 {
 	struct BurnArea ba;
 
@@ -2317,7 +2317,7 @@ INT32 kov_asic27Scan(INT32 nAction, INT32 */*pnMin*/)
 	return 0;
 }
 
-INT32 asic3Scan(INT32 nAction, INT32 */*pnMin*/)
+INT32 asic3Scan(INT32 nAction, INT32 *)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(asic3_reg);
@@ -2335,7 +2335,7 @@ INT32 asic3Scan(INT32 nAction, INT32 */*pnMin*/)
 	return 0;
 }
 
-INT32 killbldScan(INT32 nAction, INT32 */*pnMin*/)
+INT32 killbldScan(INT32 nAction, INT32 *)
 {
 	struct BurnArea ba;
 
@@ -2362,7 +2362,7 @@ INT32 killbldScan(INT32 nAction, INT32 */*pnMin*/)
 	return 0;
 }
 
-INT32 pstarsScan(INT32 nAction, INT32 */*pnMin*/)
+INT32 pstarsScan(INT32 nAction, INT32 *)
 {
 	struct BurnArea ba;
 
@@ -2433,7 +2433,7 @@ INT32 asic27aScan(INT32 nAction,INT32 *)
  	return 0;
 }
 
-INT32 oldsScan(INT32 nAction, INT32 */*pnMin*/)
+INT32 oldsScan(INT32 nAction, INT32 *)
 {
 	struct BurnArea ba;
 
@@ -2541,7 +2541,7 @@ INT32 svg_asic27aScan(INT32 nAction,INT32 *)
  	return 0;
 }
 
-INT32 ddp3Scan(INT32 nAction, INT32 */*pnMin*/)
+INT32 ddp3Scan(INT32 nAction, INT32 *)
 {
 	struct BurnArea ba;
 

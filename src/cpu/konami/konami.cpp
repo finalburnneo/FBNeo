@@ -528,7 +528,7 @@ int konamiRun(int cycles)
 	return cycles - konami_ICount;
 }
 
-int konamiCpuScan(int nAction,int */*pnMin*/)
+int konamiCpuScan(int nAction,int *)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiCpuScan called without init\n"));

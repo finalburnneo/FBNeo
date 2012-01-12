@@ -3268,7 +3268,7 @@ void __fastcall Ssriders68KWriteByte(UINT32 a, UINT8 d)
 		Offset &= ~1;
 		
 		K053244Write(0, Offset + 1, d & 0xff);
-		K053244Write(0, Offset + 0, d >> 8);
+		K053244Write(0, Offset + 0, 0); // originally d >> 8, but that is effectively 0
 		return;
 	}
 	
@@ -3637,7 +3637,7 @@ void __fastcall Lgtnfght68KWriteByte(UINT32 a, UINT8 d)
 		Offset &= ~1;
 		
 		K053244Write(0, Offset + 1, d & 0xff);
-		K053244Write(0, Offset + 0, d >> 8);
+		K053244Write(0, Offset + 0, 0); // originally d >> 8, but that is effectively 0
 		return;
 	}
 
@@ -4190,7 +4190,7 @@ static INT32 SpritePlaneOffsets2[4]  = { 0, 8, 16, 24 };
 static INT32 SpriteXOffsets[16]      = { 0, 1, 2, 3, 4, 5, 6, 7, 256, 257, 258, 259, 260, 261, 262, 263 };
 static INT32 SpriteYOffsets[16]      = { 0, 32, 64, 96, 128, 160, 192, 224, 512, 544, 576, 608, 640, 672, 704, 736 };
 
-static void K052109TmntCallback(INT32 Layer, INT32 Bank, INT32 *Code, INT32 *Colour, INT32* /*xFlip*/, INT32 *)
+static void K052109TmntCallback(INT32 Layer, INT32 Bank, INT32 *Code, INT32 *Colour, INT32*, INT32 *)
 {
 	*Code |= ((*Colour & 0x03) << 8) | ((*Colour & 0x10) << 6) | ((*Colour & 0x0c) << 9) | (Bank << 13);
 	*Colour = LayerColourBase[Layer] + ((*Colour & 0xe0) >> 5);
@@ -4209,7 +4209,7 @@ static void K052109MiaCallback(INT32 Layer, INT32 Bank, INT32 *Code, INT32 *Colo
 	}
 }
 
-static void K052109CuebrickCallback(INT32 Layer, INT32 /*Bank*/, INT32 *Code, INT32 *Colour, INT32 */*xFlip*/, INT32 *)
+static void K052109CuebrickCallback(INT32 Layer, INT32, INT32 *Code, INT32 *Colour, INT32 *, INT32 *)
 {
 	if (K052109RMRDLine == 0 && Layer == 0) {
 		*Code |= ((*Colour & 0x01) << 8);
@@ -4220,30 +4220,30 @@ static void K052109CuebrickCallback(INT32 Layer, INT32 /*Bank*/, INT32 *Code, IN
 	}
 }
 
-static void K052109BlswhstlCallback(INT32 Layer, INT32 Bank, INT32 *Code, INT32 *Colour, INT32 */*Flags*/, INT32 */*Priority*/)
+static void K052109BlswhstlCallback(INT32 Layer, INT32 Bank, INT32 *Code, INT32 *Colour, INT32 *, INT32 *)
 {
 	*Code |= ((*Colour & 0x01) << 8) | ((*Colour & 0x10) << 5) | ((*Colour & 0x0c) << 8) | (Bank << 12) | (BlswhstlTileRomBank << 14);
 	*Colour = LayerColourBase[Layer] + ((*Colour & 0xe0) >> 5);
 }
 
-static void K051960TmntCallback(INT32 *Code, INT32 *Colour, INT32* /*Priority*/, INT32* /*Shadow*/)
+static void K051960TmntCallback(INT32 *Code, INT32 *Colour, INT32*, INT32*)
 {
 	*Code |= (*Colour & 0x10) << 9;
 	*Colour = SpriteColourBase + (*Colour & 0x0f);
 }
 
-static void K051960MiaCallback(INT32* /*Code*/, INT32 *Colour, INT32* /*Priority*/, INT32* /*Shadow*/)
+static void K051960MiaCallback(INT32* /*Code*/, INT32 *Colour, INT32*, INT32*)
 {
 	*Colour = SpriteColourBase + (*Colour & 0x0f);
 }
 
-static void K051960CuebrickCallback(INT32* Code, INT32 *Colour, INT32* /*Priority*/, INT32* /*Shadow*/)
+static void K051960CuebrickCallback(INT32* Code, INT32 *Colour, INT32*, INT32*)
 {
 	*Colour = SpriteColourBase + (*Colour & 0x0f);
 	*Code &= 0xfff;
 }
 
-static void K051960Thndrx2Callback(INT32* code, INT32 *color, INT32* priority, INT32* /*shadow*/)
+static void K051960Thndrx2Callback(INT32* code, INT32 *color, INT32* priority, INT32*)
 {
 	INT32 pri = 0x20 | ((*color & 0x60) >> 2);
 	if (pri <= LayerPri[2])					*priority = 0;
@@ -4280,7 +4280,7 @@ static void K053245BlswhstlCallback(INT32 *Code, INT32 *Colour, INT32 *Priority)
 	*Colour = SpriteColourBase + (*Colour & 0x1f);
 }
 
-static void K053245SsridersCallback(INT32 */*Code*/, INT32 *Colour, INT32 *Priority)
+static void K053245SsridersCallback(INT32 *, INT32 *Colour, INT32 *Priority)
 {
 	INT32 Pri = 0x20 | ((*Colour & 0x60) >> 2);
 	if (Pri <= LayerPri[2])                           	*Priority = 0;

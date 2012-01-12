@@ -1969,7 +1969,7 @@ void __fastcall RealtecWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	switch (sekAddress) {
 		case 0x400000: {
-			INT32 BankData = (byteValue >> 9) & 0x7;
+			INT32 BankData = (byteValue >> 1) & 0x7;
 
 			RamMisc->RealtecBankAddr = (RamMisc->RealtecBankAddr & 0x7) | BankData << 3;
 
@@ -1980,12 +1980,12 @@ void __fastcall RealtecWriteByte(UINT32 sekAddress, UINT8 byteValue)
 		
 		case 0x402000:{
 			RamMisc->RealtecBankAddr = 0;
-			RamMisc->RealtecBankSize = (byteValue >> 8) & 0x1f;
+			RamMisc->RealtecBankSize = byteValue & 0x1f;
 			return;
 		}
 		
 		case 0x404000: {
-			INT32 BankData = (byteValue >> 8) & 0x3;
+			INT32 BankData = byteValue & 0x3;
 
 			RamMisc->RealtecBankAddr = (RamMisc->RealtecBankAddr & 0xf8) | BankData;
 

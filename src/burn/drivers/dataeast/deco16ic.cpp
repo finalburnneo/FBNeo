@@ -852,7 +852,9 @@ void deco16SoundInit(UINT8 *rom, UINT8 *ram, INT32 huc_clock, INT32 ym2203, void
 
 	BurnYM2151Init(3580000, ym2151vol);
 	BurnYM2151SetIrqHandler(&deco16YM2151IrqHandler);
-	if (ym2151_port) BurnYM2151SetPortHandler(ym2151_port);
+	if (ym2151_port != NULL) {
+		BurnYM2151SetPortHandler(ym2151_port);
+	}
 
 	if (ym2203) {
 		BurnYM2203Init(1, 4027500, NULL, deco16SynchroniseStream, deco16GetTime, 1);

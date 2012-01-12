@@ -11,11 +11,11 @@
  #define __cdecl
 #endif
 
-#include <time.h>
-
 #ifndef MAX_PATH
-#define MAX_PATH (260)
+ #define MAX_PATH 	260
 #endif
+
+#include <time.h>
 
 extern TCHAR szAppHiscorePath[MAX_PATH];
 extern TCHAR szAppSamplesPath[MAX_PATH];

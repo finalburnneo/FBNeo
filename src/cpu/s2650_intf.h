@@ -45,7 +45,7 @@ INT32 s2650GetPc();
 
 INT32 s2650GetActive();
 
-INT32 s2650Scan(INT32 nAction,INT32 */*pnMin*/);
+INT32 s2650Scan(INT32 nAction,INT32 *);
 
 /* fake control port   M/~IO=0 D/~C=0 E/~NE=0 */
 #define S2650_CTRL_PORT 0x100

@@ -956,7 +956,7 @@ static INT32 DrvInit(INT32 (pLoadCallback)())
 	MemIndex();
 
 	{
-		if (pLoadCallback) {
+		if (pLoadCallback != NULL) {
 			if (pLoadCallback()) return 1;
 		}
 	

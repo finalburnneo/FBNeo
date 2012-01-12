@@ -31,14 +31,14 @@ static UINT8 *System1deRam           = NULL;
 static UINT8 *System1efRam           = NULL;
 static UINT8 *System1f4Ram           = NULL;
 static UINT8 *System1fcRam           = NULL;
-static UINT32 *System1Palette         = NULL;
+static UINT32 *System1Palette        = NULL;
 static UINT8 *System1Tiles           = NULL;
 static UINT8 *System1Sprites         = NULL;
 static UINT8 *System1TempRom         = NULL;
 static UINT8 *SpriteOnScreenMap      = NULL;
 static UINT8 *System1Fetch1          = NULL;
 static UINT8 *System1MC8123Key       = NULL;
-static UINT32 *System1TilesPenUsage   = NULL;
+static UINT32 *System1TilesPenUsage  = NULL;
 
 static UINT8  System1ScrollX[2];
 static UINT8  System1ScrollY;
@@ -553,6 +553,43 @@ static struct BurnDIPInfo GardiaDIPList[]=
 };
 
 STDDIPINFO(Gardia)
+
+static struct BurnDIPInfo HvymetalDIPList[]=
+{
+	// Default Values
+	{0x13, 0xff, 0xff, 0xff, NULL                     },
+	{0x14, 0xff, 0xff, 0xfd, NULL                     },
+
+	// Dip 1
+	SYSTEM1_COINAGE(0x13)
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
+	{0x14, 0x01, 0x02, 0x02, "Off"                    },
+	{0x14, 0x01, 0x02, 0x00, "On"                     },
+	
+	{0   , 0xfe, 0   , 4   , "Lives"                  },
+	{0x14, 0x01, 0x0c, 0x0c, "3"                      },
+	{0x14, 0x01, 0x0c, 0x08, "4"                      },
+	{0x14, 0x01, 0x0c, 0x04, "5"                      },
+	{0x14, 0x01, 0x0c, 0x00, "Infinite"               },
+	
+	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
+	{0x14, 0x01, 0x30, 0x30, "50k, 100k"              },
+	{0x14, 0x01, 0x30, 0x20, "60k, 120k"              },
+	{0x14, 0x01, 0x30, 0x10, "70k, 150k"              },
+	{0x14, 0x01, 0x30, 0x00, "100k"                   },
+	
+	{0   , 0xfe, 0   , 2   , "Difficulty"             },
+	{0x14, 0x01, 0x40, 0x40, "Easy"                   },
+	{0x14, 0x01, 0x40, 0x00, "Hard"                   },
+	
+	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
+	{0x14, 0x01, 0x80, 0x80, "Off"                    },
+	{0x14, 0x01, 0x80, 0x00, "On"                     },
+};
+
+STDDIPINFO(Hvymetal)
 
 static struct BurnDIPInfo ImsorryDIPList[]=
 {
@@ -1454,9 +1491,9 @@ static struct BurnRomInfo BrainRomDesc[] = {
 	{ "brain.110",         0x008000, 0xa1b847ec, BRF_GRA },		  //  8 Sprites
 	{ "brain.4",           0x008000, 0xfd2ea53b, BRF_GRA },		  //  9 Sprites
 
-	{ "bprom.3",           0x000100, 0x8eee0f72, BRF_OPT },		  //  10 Red PROM
-	{ "bprom.2",           0x000100, 0x3e7babd7, BRF_OPT },		  //  11 Green PROM
-	{ "bprom.1",           0x000100, 0x371c44a6, BRF_OPT },		  //  12 Blue PROM
+	{ "bprom.3",           0x000100, 0x8eee0f72, BRF_GRA },		  //  10 Red PROM
+	{ "bprom.2",           0x000100, 0x3e7babd7, BRF_GRA },		  //  11 Green PROM
+	{ "bprom.1",           0x000100, 0x371c44a6, BRF_GRA },		  //  12 Blue PROM
 	{ "pr5317.76",         0x000100, 0x648350b8, BRF_OPT },		  //  13 Timing PROM
 };
 
@@ -1620,9 +1657,9 @@ static struct BurnRomInfo GardiaRomDesc[] = {
 	{ "epr10236.04",       0x008000, 0xb35ab227, BRF_GRA },		  //  9 Sprites
 	{ "epr10235.5",        0x008000, 0x006a3151, BRF_GRA },		  //  10 Sprites
 
-	{ "bprom.3",           0x000100, 0x8eee0f72, BRF_OPT },		  //  11 Red PROM
-	{ "bprom.2",           0x000100, 0x3e7babd7, BRF_OPT },		  //  12 Green PROM
-	{ "bprom.1",           0x000100, 0x371c44a6, BRF_OPT },		  //  13 Blue PROM
+	{ "bprom.3",           0x000100, 0x8eee0f72, BRF_GRA },		  //  11 Red PROM
+	{ "bprom.2",           0x000100, 0x3e7babd7, BRF_GRA },		  //  12 Green PROM
+	{ "bprom.1",           0x000100, 0x371c44a6, BRF_GRA },		  //  13 Blue PROM
 	{ "pr5317.4",          0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
 };
 
@@ -1645,14 +1682,43 @@ static struct BurnRomInfo GardiabRomDesc[] = {
 	{ "epr10236.04",       0x008000, 0xb35ab227, BRF_GRA },		  //  9 Sprites
 	{ "epr10235.5",        0x008000, 0x006a3151, BRF_GRA },		  //  10 Sprites
 
-	{ "bprom.3",           0x000100, 0x8eee0f72, BRF_OPT },		  //  11 Red PROM
-	{ "bprom.2",           0x000100, 0x3e7babd7, BRF_OPT },		  //  12 Green PROM
-	{ "bprom.1",           0x000100, 0x371c44a6, BRF_OPT },		  //  13 Blue PROM
+	{ "bprom.3",           0x000100, 0x8eee0f72, BRF_GRA },		  //  11 Red PROM
+	{ "bprom.2",           0x000100, 0x3e7babd7, BRF_GRA },		  //  12 Green PROM
+	{ "bprom.1",           0x000100, 0x371c44a6, BRF_GRA },		  //  13 Blue PROM
 	{ "pr5317.4",          0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
 };
 
 STD_ROM_PICK(Gardiab)
 STD_ROM_FN(Gardiab)
+
+static struct BurnRomInfo HvymetalRomDesc[] = {
+	{ "epra6790.1",        0x008000, 0x59195bb9, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "epra6789.2",        0x008000, 0x83e1d18a, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "epra6788.3",        0x008000, 0x6ecefd57, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+	
+	{ "epr6787.120",       0x008000, 0xb64ac7f0, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
+	
+	{ "epr6795.62",        0x004000, 0x58a3d038, BRF_GRA },		  //  4 Tiles
+	{ "epr6796.61",        0x004000, 0xd8b08a55, BRF_GRA },		  //  5 Tiles
+	{ "epr6793.64",        0x004000, 0x487407c2, BRF_GRA },		  //  6 Tiles
+	{ "epr6794.63",        0x004000, 0x89eb3793, BRF_GRA },		  //  7 Tiles
+	{ "epr6791.66",        0x004000, 0xa7dcd042, BRF_GRA },		  //  8 Tiles
+	{ "epr6792.65",        0x004000, 0xd0be5e33, BRF_GRA },		  //  9 Tiles
+	
+	{ "epr6778.117",       0x008000, 0x0af61aee, BRF_GRA },		  //  10 Sprites
+	{ "epr6777.110",       0x008000, 0x91d7a197, BRF_GRA },		  //  11 Sprites
+	{ "epr6780.4",         0x008000, 0x55b31df5, BRF_GRA },		  //  12 Sprites
+	{ "epr6779.5",         0x008000, 0xe03a2b28, BRF_GRA },		  //  13 Sprites
+	
+	{ "pr7036.3",          0x000100, 0x146f16fb, BRF_GRA },		  //  14 Red PROM
+	{ "pr7035.2",          0x000100, 0x50b201ed, BRF_GRA },		  //  15 Green PROM
+	{ "pr7034.1",          0x000100, 0xdfb5f139, BRF_GRA },		  //  16 Blue PROM
+
+	{ "pr5317p.4",         0x000100, 0x648350b8, BRF_OPT },		  //  17 Timing PROM
+};
+
+STD_ROM_PICK(Hvymetal)
+STD_ROM_FN(Hvymetal)
 
 static struct BurnRomInfo ImsorryRomDesc[] = {
 	{ "epr-6676.116",      0x004000, 0xeb087d7f, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
@@ -1840,9 +1906,9 @@ static struct BurnRomInfo NobRomDesc[] = {
 	{ "dm05.5h",           0x008000, 0x7fbba01d, BRF_GRA },		  //  9 Sprites
 	{ "dm07.5l",           0x008000, 0x85e7a29f, BRF_GRA },		  //  10 Sprites
 
-	{ "nobo_pr.16d",       0x000100, 0x95010ac2, BRF_OPT },		  //  11 Red PROM
-	{ "nobo_pr.15d",       0x000100, 0xc55aac0c, BRF_OPT },		  //  12 Green PROM
-	{ "dm-12.ic3",         0x000100, 0xde394cee, BRF_OPT },		  //  13 Blue PROM
+	{ "nobo_pr.16d",       0x000100, 0x95010ac2, BRF_GRA },		  //  11 Red PROM
+	{ "nobo_pr.15d",       0x000100, 0xc55aac0c, BRF_GRA },		  //  12 Green PROM
+	{ "dm-12.ic3",         0x000100, 0xde394cee, BRF_GRA },		  //  13 Blue PROM
 	{ "dc-11.6a",          0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
 	
 	{ "dm.bin",            0x001000, 0x6fde9dcb, BRF_PRG | BRF_OPT },		  //  15 MCU
@@ -1867,9 +1933,9 @@ static struct BurnRomInfo NobbRomDesc[] = {
 	{ "nobo-p.bin",        0x008000, 0x7fbba01d, BRF_GRA },		  //  9 Sprites
 	{ "nobo-n.bin",        0x008000, 0x85e7a29f, BRF_GRA },		  //  10 Sprites
 
-	{ "nobo_pr.16d",       0x000100, 0x95010ac2, BRF_OPT },		  //  11 Red PROM
-	{ "nobo_pr.15d",       0x000100, 0xc55aac0c, BRF_OPT },		  //  12 Green PROM
-	{ "nobo_pr.14d",       0x000100, 0xde394cee, BRF_OPT },		  //  13 Blue PROM
+	{ "nobo_pr.16d",       0x000100, 0x95010ac2, BRF_GRA },		  //  11 Red PROM
+	{ "nobo_pr.15d",       0x000100, 0xc55aac0c, BRF_GRA },		  //  12 Green PROM
+	{ "nobo_pr.14d",       0x000100, 0xde394cee, BRF_GRA },		  //  13 Blue PROM
 	{ "nobo_pr.13a",       0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
 };
 
@@ -2224,8 +2290,8 @@ static struct BurnRomInfo NprincesbRomDesc[] = {
 	{ "epr-6549.05",       0x004000, 0xd2057668, BRF_GRA },		  //  13 Sprites
 
 	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
-	{ "nprinces.129",      0x000100, 0xae765f62, BRF_OPT },		  //  15 Decryption Table
-	{ "nprinces.123",      0x000020, 0xed5146e9, BRF_OPT },		  //  15 Decryption Table
+	{ "nprinces.129",      0x000100, 0xae765f62, BRF_PRG },		  //  15 Decryption Table
+	{ "nprinces.123",      0x000020, 0xed5146e9, BRF_PRG },		  //  15 Decryption Table
 };
 
 STD_ROM_PICK(Nprincesb)
@@ -3529,11 +3595,7 @@ static void System1BankRom()
 {
 	INT32 BankAddress = (System1RomBank * 0x4000) + 0x10000;
 	ZetMapArea(0x8000, 0xbfff, 0, System1Rom1 + BankAddress);
-	if (DecodeFunction) {
-		ZetMapArea(0x8000, 0xbfff, 2, System1Fetch1 + BankAddress, System1Rom1 + BankAddress);
-	} else {
-		ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + BankAddress);
-	}
+	ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + BankAddress);
 }
 
 UINT8 __fastcall System1Z801PortRead(UINT16 a)
@@ -4172,6 +4234,26 @@ static INT32 GardiabInit()
 	DecodeFunction = gardiab_decode;
 	
 	nRet = System1Init(3, 0x8000, 1, 0x4000, 3, 0x4000, 4, 0x8000, 0);
+	
+	ZetOpen(0);
+	ZetSetOutHandler(BrainZ801PortWrite);
+	ZetClose();
+		
+	System1DoReset();
+	
+	return nRet;
+}
+
+static INT32 HvymetalInit()
+{
+	INT32 nRet;
+	
+	System1ColourProms = 1;
+	System1BankedRom = 1;
+	
+	DecodeFunction = hvymetal_decode;
+	
+	nRet = System1Init(3, 0x8000, 1, 0x8000, 6, 0x4000, 4, 0x8000, 0);
 	
 	ZetOpen(0);
 	ZetSetOutHandler(BrainZ801PortWrite);
@@ -4986,6 +5068,16 @@ struct BurnDriverD BurnDrvGardiab = {
 	NULL, GardiabRomInfo, GardiabRomName, NULL, NULL, MyheroInputInfo, GardiaDIPInfo,
 	GardiabInit, System1Exit, System1Frame, NULL, System1Scan,
 	NULL, 0x600, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvHvymetal = {
+	"hvymetal", NULL, NULL, NULL, "1985",
+	"Heavy Metal (315-5135)\0", NULL, "Sega", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	NULL, HvymetalRomInfo, HvymetalRomName, NULL, NULL, MyheroInputInfo, HvymetalDIPInfo,
+	HvymetalInit, System1Exit, System1Frame, NULL, System1Scan,
+	NULL, 0x600, 256, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvImsorry = {

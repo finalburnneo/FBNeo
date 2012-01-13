@@ -31,7 +31,7 @@ int main()
 			{
               printf ("#define CU_FLIPX (%d)\n",nCuFlipX);
 
-			  if ((nCuRows && (nCuSize != 16) || (nCuRows && nCuMask))) {
+			  if (((nCuRows && (nCuSize != 16)) || (nCuRows && nCuMask))) {
 				  printf("// Invalid combination of capabilities.\n");
 			  }	else {
 				printf ("static INT32 ");

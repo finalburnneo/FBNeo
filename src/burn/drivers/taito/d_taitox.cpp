@@ -614,7 +614,7 @@ static struct BurnRomInfo SupermanRomDesc[] = {
 	{ "j01_16.bin",    0x80000, 0x3622ed2f, BRF_GRA | TAITO_SPRITESA },	
 	{ "k01_17.bin",    0x80000, 0xc34f27e0, BRF_GRA | TAITO_SPRITESA },
 
-	{ "e18_01.bin",    0x80000, 0x3cf99786, BRF_SND | TAITO_YM2610A },
+	{ "e18_01.bin",    0x80000, 0x3cf99786, BRF_SND | TAITO_YM2610B },
 };
 
 STD_ROM_PICK(Superman)
@@ -633,7 +633,7 @@ static struct BurnRomInfo SupermanjRomDesc[] = {
 	{ "j01_16.bin",    0x80000, 0x3622ed2f, BRF_GRA | TAITO_SPRITESA },	
 	{ "k01_17.bin",    0x80000, 0xc34f27e0, BRF_GRA | TAITO_SPRITESA },
 
-	{ "e18_01.bin",    0x80000, 0x3cf99786, BRF_SND | TAITO_YM2610A },
+	{ "e18_01.bin",    0x80000, 0x3cf99786, BRF_SND | TAITO_YM2610B },
 };
 
 STD_ROM_PICK(Supermanj)

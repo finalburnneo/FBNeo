@@ -587,6 +587,8 @@ static INT32 DrvInit()
 
 	SN76489Init(0, 18432000 / 6, 0);
 	SN76489Init(1, 18432000 / 6, 1);
+	SN76496SetVolShift(0, 2);
+	SN76496SetVolShift(1, 2);
 
 	GenericTilesInit();
 

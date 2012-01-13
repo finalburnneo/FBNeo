@@ -304,6 +304,8 @@ static INT32 DrvInit()
 
 	SN76489Init(0, 4000000, 0);
 	SN76489Init(1, 4000000, 1);
+	SN76496SetVolShift(0, 1);
+	SN76496SetVolShift(1, 1);
  
 	DrvDoReset();
 

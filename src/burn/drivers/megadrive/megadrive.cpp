@@ -1137,6 +1137,7 @@ static INT32 MegadriveResetDo()
 		
 		SN76496Exit();
 		SN76496Init(0, OSC_PAL / 15, 1);
+		SN76496SetVolShift(0, 1);
 	} else {
 		BurnSetRefreshRate(60.0);
 		Reinitialise();
@@ -1149,6 +1150,7 @@ static INT32 MegadriveResetDo()
 		
 		SN76496Exit();
 		SN76496Init(0, OSC_NTSC / 15, 1);
+		SN76496SetVolShift(0, 1);
 	}
 
 	// other reset
@@ -2965,6 +2967,7 @@ INT32 MegadriveInit()
 	BurnTimerAttachSek(OSC_NTSC / 7);
 	
 	SN76496Init(0, OSC_NTSC / 15, 1);
+	SN76496SetVolShift(0, 1);
 	
 	MegadriveSetupSRAM();
 	SetupCustomCartridgeMappers();

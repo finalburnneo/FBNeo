@@ -437,6 +437,8 @@ static INT32 DrvInit()
 
 	SN76489Init(0, 3000000, 0);
 	SN76489Init(1, 3000000, 1);
+	SN76496SetVolShift(0, 2);
+	SN76496SetVolShift(1, 2);
 
 	GenericTilesInit();
 
@@ -664,7 +666,7 @@ static INT32 DrvFrame()
 		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
 		SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
 
-		INT32 nSample, nSample0, nSample1;
+		INT32 nSample;
 		if (nBurnSoundLen) {
 			AY8910Update(0, &pAY8910Buffer[0], nBurnSoundLen);
 			for (INT32 n = 0; n < nBurnSoundLen; n++) {
@@ -672,18 +674,12 @@ static INT32 DrvFrame()
 				nSample += pAY8910Buffer[1][n];
 				nSample += pAY8910Buffer[2][n];
 
-				nSample >>= 2;
+				nSample >>= 4;
 
 				nSample = BURN_SND_CLIP(nSample);
 				
-				nSample0 = pBurnSoundOut[(n << 1) + 0] >> 2;
-				nSample1 = pBurnSoundOut[(n << 1) + 1] >> 2;
-				
-				nSample0 = BURN_SND_CLIP(nSample0 + nSample);
-				nSample1 = BURN_SND_CLIP(nSample1 + nSample);
-
-				pBurnSoundOut[(n << 1) + 0] = nSample0;
-				pBurnSoundOut[(n << 1) + 1] = nSample1;
+				pBurnSoundOut[(n << 1) + 0] += nSample;
+				pBurnSoundOut[(n << 1) + 1] += nSample;
  			}
 		}
 	}

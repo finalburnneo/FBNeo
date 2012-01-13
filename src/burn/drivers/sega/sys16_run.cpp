@@ -685,7 +685,7 @@ void __fastcall System18Z80PortWrite(UINT16 a, UINT8 d)
 		}
 		
 		case 0xa0: {
-			UINT32 RF5C68PCMBankAddress = d * 0x2000;
+			RF5C68PCMBankAddress = d * 0x2000;
 			ZetMapArea(0xa000, 0xbfff, 0, System16Z80Rom + 0x10000 + RF5C68PCMBankAddress);
 			ZetMapArea(0xa000, 0xbfff, 2, System16Z80Rom + 0x10000 + RF5C68PCMBankAddress);
 			return;

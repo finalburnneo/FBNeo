@@ -47,7 +47,7 @@ static UINT8 *DrvTiles1             = NULL;
 static UINT8 *DrvTiles2             = NULL;
 static UINT8 *DrvSprites            = NULL;
 static UINT8 *DrvTempRom            = NULL;
-static UINT32 *DrvPalette            = NULL;
+static UINT32 *DrvPalette           = NULL;
 static UINT16 *pCharLayerDraw       = NULL;
 static UINT16 *pTile1LayerDraw      = NULL;
 static UINT16 *pTile2LayerDraw      = NULL;
@@ -63,6 +63,7 @@ static INT32 DrvTile1TilemapWidth;
 static INT32 DrvTile1TilemapHeight;
 static INT32 DrvTile2TilemapWidth;
 static INT32 DrvTile2TilemapHeight;
+static UINT8 DrvTileRamBank;
 
 typedef void (*Dec0Render)();
 static Dec0Render Dec0DrawFunction;
@@ -703,6 +704,7 @@ static INT32 DrvDoReset()
 	DrvSoundLatch = 0;
 	DrvFlipScreen = 0;
 	DrvPriority = 0;
+	DrvTileRamBank = 0;
 	
 	return 0;
 }
@@ -821,6 +823,24 @@ static void HbarrelI8751Write(UINT16 Data)
 				}
 			}
 		}
+	}
+}
+
+static void deco_bac06_pf_control_0_w(INT32 Offset, UINT16 Data)
+{
+	Offset &= 3;
+	
+	UINT16 *Control0 = (UINT16*)DrvVideo2Ctrl0Ram;
+	if (Data & 0xff) {
+		Control0[Offset] &= 0xff00;
+		Control0[Offset] |= Data;
+	} else {
+		Control0[Offset] &= 0x00ff;
+		Control0[Offset] |= Data;
+	}
+
+	if (Offset == 2) {
+		DrvTileRamBank = Control0[Offset] & 0x01;
 	}
 }
 
@@ -1138,6 +1158,12 @@ void HippodrmH6280WriteIo(UINT8 Port, UINT8 Data)
 
 UINT8 HippodrmH6280ReadProg(UINT32 Address)
 {
+	switch (Address) {
+		case 0x1ff403: {
+			return DrvVBlank;
+		}
+	}
+	
 	bprintf(PRINT_NORMAL, _T("H6280 Read Prog %x\n"), Address);
 	
 	return 0;
@@ -1145,7 +1171,20 @@ UINT8 HippodrmH6280ReadProg(UINT32 Address)
 
 void HippodrmH6280WriteProg(UINT32 Address, UINT8 Data)
 {
-	if (Address <= 0x00ffff) return;
+	if (Address >= 0x1a0000 && Address <= 0x1a0007) {
+		INT32 Offset = Address & 0x07;
+		if (Offset & 0x01) {
+			deco_bac06_pf_control_0_w(Offset >> 1, Data << 8);
+		} else {
+			deco_bac06_pf_control_0_w(Offset >> 1, Data);
+		}
+		return;
+	}	
+	
+	if (Address >= 0x1ff400 && Address <= 0x1ff403) {
+		h6280_irq_status_w(Address - 0x1ff400, Data);
+		return;
+	}
 	
 	bprintf(PRINT_NORMAL, _T("H6280 Write Prog %x, %x\n"), Address, Data);
 }
@@ -1164,8 +1203,6 @@ UINT8 RobocopH6280ReadProg(UINT32 Address)
 
 void RobocopH6280WriteProg(UINT32 Address, UINT8 Data)
 {
-	if (Address <= 0x00ffff) return;
-	
 	if (Address >= 0x1ff400 && Address <= 0x1ff403) {
 		h6280_irq_status_w(Address - 0x1ff400, Data);
 		return;
@@ -1460,10 +1497,17 @@ static INT32 HippodrmInit()
 
 	BurnFree(DrvTempRom);
 	
+	for (INT32 i = 0x00000; i < 0x10000; i++) {
+		DrvH6280Rom[i] = (DrvH6280Rom[i] & 0x7e) | ((DrvH6280Rom[i] & 0x1) << 7) | ((DrvH6280Rom[i] & 0x80) >> 7);
+	}
+	DrvH6280Rom[0x189] = 0x60;
+	DrvH6280Rom[0x1af] = 0x60;
+	DrvH6280Rom[0x1db] = 0x60;
+	DrvH6280Rom[0x21a] = 0x60;
+	
 	Dec0DrawFunction = RobocopDraw;
 	
 	SekOpen(0);
-//	SekMapMemory(DrvSharedRam, 0x180000, 0x180fff, SM_RAM);
 	SekMapHandler(1, 0x180000, 0x180fff, SM_RAM);
 	SekSetReadByteHandler(1, HippodrmShared68KReadByte);
 	SekSetWriteByteHandler(1, HippodrmShared68KWriteByte);
@@ -1474,9 +1518,8 @@ static INT32 HippodrmInit()
 	h6280Init(1);
 	h6280Open(0);
 	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, H6280_ROM);
-//	h6280MapMemory(DrvH6280Ram , 0x1f0000, 0x1f1fff, H6280_RAM);
-//	h6280MapMemory(DrvSharedRam, 0x1f2000, 0x1f3fff, H6280_RAM);
-//	h6280MapMemory(DrvH6280Rom , 0x1fe000, 0x1fffff, H6280_ROM);
+	h6280MapMemory(DrvSharedRam, 0x180000, 0x1800ff, H6280_RAM);
+	h6280MapMemory(DrvH6280Ram , 0x1f0000, 0x1f1fff, H6280_RAM);
 	h6280SetWritePortHandler(HippodrmH6280WriteIo);
 	h6280SetReadHandler(HippodrmH6280ReadProg);
 	h6280SetWriteHandler(HippodrmH6280WriteProg);
@@ -1654,6 +1697,7 @@ static INT32 DrvExit()
 	DrvTile1TilemapHeight = 0;
 	DrvTile2TilemapWidth = 0;
 	DrvTile2TilemapHeight = 0;
+	DrvTileRamBank = 0;
 	
 	Dec0DrawFunction = NULL;
 	
@@ -1999,6 +2043,7 @@ static void DrvRenderTile2Layer(INT32 Opaque, INT32 DrawLayer)
 			if (RenderType == 1) TileIndex = (mx & 0x0f) + ((my & 0x0f) << 4) + ((my & 0x10) << 4) + ((mx & 0x10) << 5);
 			if (RenderType == 2) TileIndex = (mx & 0x0f) + ((my & 0x3f) << 4);
 			
+			if (DrvTileRamBank & 0x01) TileIndex += 0x1000;
 			Attr = VideoRam[TileIndex];
 			Code = Attr & 0xfff;
 			Colour = Attr >> 12;

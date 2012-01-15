@@ -2,8 +2,8 @@
 // Based on MAME driver by Bryan McPhail and David Haywood
 
 #include "tiles_generic.h"
+#include "h6280_intf.h"
 #include "deco16ic.h"
-#include "burn_ym2151.h"
 #include "msm6295.h"
 
 static UINT8 *AllMem;
@@ -22,6 +22,7 @@ static UINT8 *DrvGfxROM5;
 static UINT8 *DrvSndROM0;
 static UINT8 *DrvSndROM1;
 static UINT8 *Drv68KRAM;
+static UINT8 *DrvHucRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvSprRAM1;
@@ -34,7 +35,6 @@ static UINT8 *DrvUnkRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static UINT8 *soundlatch;
 static UINT8 *flipscreen;
 
 static UINT8 DrvJoy1[16];
@@ -155,10 +155,9 @@ void __fastcall boogwing_main_write_byte(UINT32 address, UINT8 data)
 			memcpy (DrvSprBuf1, DrvSprRAM1, 0x800);
 		return;
 
-		case 0x24e150:
 		case 0x24e151:
-			*soundlatch = data;
-			// cputag_set_input_line(space->machine, "audiocpu", 0, HOLD_LINE);
+			deco16_soundlatch = data;
+			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 		break;
 
 		case 0x282008:
@@ -193,8 +192,8 @@ void __fastcall boogwing_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x24e150:
-			*soundlatch = data;
-			// cputag_set_input_line(space->machine, "audiocpu", 0, HOLD_LINE);
+			deco16_soundlatch = data & 0xff;
+			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 		break;
 
 		case 0x282008:
@@ -262,12 +261,6 @@ static INT32 boogwing_bank_callback2( const INT32 bank )
 	return offset;
 }
 
-static void DrvYM2151IrqHandler(INT32 state)
-{
-	state = state; // kill warnings...
-//	HucSetIRQLine(1, state ? HUC_IRQSTATUS_ACK : HUC_IRQSTATUS_NONE);
-}
-
 static void DrvYM2151WritePort(UINT32, UINT32 data)
 {
 	if ((data & 0x02) != (UINT32)(DrvOkiBank & 0x02))
@@ -276,7 +269,7 @@ static void DrvYM2151WritePort(UINT32, UINT32 data)
 	if ((data & 0x01) != (UINT32)(DrvOkiBank & 0x01))
 		memcpy (DrvSndROM0, DrvSndROM0 + 0x40000 + ((data & 0x01) >> 0) * 0x40000, 0x40000);
 
-	DrvOkiBank = data;
+	DrvOkiBank = data;	
 }
 
 static INT32 DrvDoReset()
@@ -287,16 +280,10 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-	// Huc6280
-
-	BurnYM2151Reset();
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	deco16SoundReset();
+	DrvYM2151WritePort(0, 1);
 
 	deco16Reset();
-
-	DrvOkiBank = -1;
-	DrvYM2151WritePort(0, 0);
 
 	return 0;
 }
@@ -328,6 +315,7 @@ static INT32 MemIndex()
 	AllRam		= Next;
 
 	Drv68KRAM	= Next; Next += 0x010000;
+	DrvHucRAM	= Next; Next += 0x002000;
 	DrvSprRAM	= Next; Next += 0x000800;
 	DrvSprRAM1	= Next; Next += 0x000800;
 	DrvSprBuf	= Next; Next += 0x000800;
@@ -338,7 +326,6 @@ static INT32 MemIndex()
 	DrvProtRAM	= Next; Next += 0x000800;
 	DrvUnkRAM	= Next; Next += 0x000400;
 
-	soundlatch	= Next; Next += 0x000001;
 	flipscreen	= Next; Next += 0x000001;
 
 	RamEnd		= Next;
@@ -463,14 +450,7 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(0,		boogwing_main_read_byte);
 	SekClose();
 
-	// Huc6280...
-
-	BurnYM2151Init(3580000, 80.0);
-	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
-	BurnYM2151SetPortHandler(&DrvYM2151WritePort);
-
-	MSM6295Init(0, 1006875 / 132, 140.0, 1);
-	MSM6295Init(1, 2013750 / 132,  30.0, 1);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 0, DrvYM2151WritePort, 40.0, 1006875, 140.0, 2013750, 30.0);
 
 	GenericTilesInit();
 
@@ -484,15 +464,11 @@ static INT32 DrvExit()
 	GenericTilesExit();
 	deco16Exit();
 
-	MSM6295Exit(0);
-	MSM6295Exit(1);
-	BurnYM2151Exit();
+	deco16SoundExit();
 
 	SekExit();
 
 	BurnFree (AllMem);
-
-	MSM6295ROM = NULL;
 
 	return 0;
 }
@@ -729,31 +705,44 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
+	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 14000000 / 58, 8055000 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
+	h6280Open(0);
 
 	deco16_vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-	//	nCyclesDone[1] += HucRun(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
 		if (i == 248) deco16_vblank = 0x08;
+		
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
-
-	SekClose();
-
+	
 	if (pBurnSoundOut) {
-		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+
+		if (nSegmentLength) {
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		}
 	}
 
+	h6280Close();
+	SekClose();
+	
 	if (pBurnDraw) {
 		DrvDraw();
 	}
@@ -782,11 +771,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	//	huc6280
 
 		deco16Scan();
-
-		BurnYM2151Scan(nAction);
-		MSM6295Scan(0, nAction);
-		MSM6295Scan(1, nAction);
-
+		
 		SCAN_VAR(DrvOkiBank);
 
 		INT32 bank = DrvOkiBank;
@@ -836,7 +821,7 @@ STD_ROM_FN(boogwing)
 
 struct BurnDriver BurnDrvBoogwing = {
 	"boogwing", NULL, NULL, NULL, "1992",
-	"Boogie Wings (Euro v1.5, 92.12.07)\0", "No Sound", "Data East Corporation", "Miscellaneous",
+	"Boogie Wings (Euro v1.5, 92.12.07)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, boogwingRomInfo, boogwingRomName, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
@@ -883,7 +868,7 @@ STD_ROM_FN(boogwinga)
 
 struct BurnDriver BurnDrvBoogwinga = {
 	"boogwinga", "boogwing", NULL, NULL, "1992",
-	"Boogie Wings (Asia v1.5, 92.12.07)\0", "No Sound", "Data East Corporation", "Miscellaneous",
+	"Boogie Wings (Asia v1.5, 92.12.07)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, boogwingaRomInfo, boogwingaRomName, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
@@ -930,7 +915,7 @@ STD_ROM_FN(ragtime)
 
 struct BurnDriver BurnDrvRagtime = {
 	"ragtime", "boogwing", NULL, NULL, "1992",
-	"The Great Ragtime Show (Japan v1.5, 92.12.07)\0", "No Sound", "Data East Corporation", "Miscellaneous",
+	"The Great Ragtime Show (Japan v1.5, 92.12.07)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, ragtimeRomInfo, ragtimeRomName, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
@@ -977,7 +962,7 @@ STD_ROM_FN(ragtimea)
 
 struct BurnDriver BurnDrvRagtimea = {
 	"ragtimea", "boogwing", NULL, NULL, "1992",
-	"The Great Ragtime Show (Japan v1.3, 92.11.26)\0", "No Sound", "Data East Corporation", "Miscellaneous",
+	"The Great Ragtime Show (Japan v1.3, 92.11.26)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, ragtimeaRomInfo, ragtimeaRomName, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,

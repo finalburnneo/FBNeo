@@ -2,8 +2,8 @@
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"
+#include "h6280_intf.h"
 #include "deco16ic.h"
-#include "burn_ym2151.h"
 #include "msm6295.h"
 
 static UINT8 *AllMem;
@@ -20,6 +20,7 @@ static UINT8 *DrvGfxROM4;
 static UINT8 *DrvSndROM0;
 static UINT8 *DrvSndROM1;
 static UINT8 *Drv68KRAM;
+static UINT8 *DrvHucRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvPalBuf;
 static UINT8 *DrvSprRAM;
@@ -31,7 +32,6 @@ static UINT8 *DrvPrtRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static UINT8 *soundlatch;
 static UINT8 *flipscreen;
 
 static UINT8 DrvJoy1[16];
@@ -385,8 +385,8 @@ void __fastcall rohga_main_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x2800a8:
-			*soundlatch = data;
-		//	cputag_set_input_line(space->machine, "audiocpu", 0, HOLD_LINE);
+			deco16_soundlatch = data & 0xff;
+			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 		return;
 
 		case 0x300000:
@@ -418,10 +418,9 @@ void __fastcall rohga_main_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
-		case 0x2800a8:
 		case 0x2800a9:
-			*soundlatch = data;
-		//	cputag_set_input_line(space->machine, "audiocpu", 0, HOLD_LINE);
+			deco16_soundlatch = data;
+			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 		return;
 
 		case 0x300000:
@@ -532,8 +531,8 @@ void __fastcall wizdfire_main_write_word(UINT32 address, UINT16 data)
 		case 0xfe4150:
 		case 0xff4260: // nitrobal
 		case 0xff4a60:
-			*soundlatch = data;
-		//	cputag_set_input_line(space->machine, "audiocpu", 0, HOLD_LINE);
+			deco16_soundlatch = data & 0xff;
+			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 		return;
 	}
 
@@ -578,14 +577,11 @@ void __fastcall wizdfire_main_write_byte(UINT32 address, UINT8 data)
 			SekSetIRQLine(6, SEK_IRQSTATUS_NONE);
 		return;
 
-		case 0xfe4150:
 		case 0xfe4151:
-		case 0xff4260: // nitrobal
-		case 0xff4261:
+		case 0xff4261: // nitrobal
 		case 0xff4a61:
-		case 0xff4a60:
-			*soundlatch = data;
-		//	cputag_set_input_line(space->machine, "audiocpu", 0, HOLD_LINE);
+			deco16_soundlatch = data;
+			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 		return;
 	}
 
@@ -630,19 +626,15 @@ UINT8 __fastcall wizdfire_main_read_byte(UINT32 address)
 	return 0;
 }
 
-static void DrvYM2151IrqHandler(INT32 state)
-{
-	state = state; // kill warnings...
-//	HucSetIRQLine(1, state ? HUC_IRQSTATUS_ACK : HUC_IRQSTATUS_NONE);
-}
-
 static void DrvYM2151WritePort(UINT32, UINT32 data)
 {
-	if ((data & 0x01) != (UINT32)(DrvOkiBank & 0x01))
-		memcpy (DrvSndROM0, DrvSndROM0 + ((data & 0x01) >> 0) * 0x40000, 0x40000);
-
-	if ((data & 0x02) != (UINT32)(DrvOkiBank & 0x02))
-		memcpy (DrvSndROM1, DrvSndROM1 + ((data & 0x02) >> 1) * 0x40000, 0x40000);
+	if ((data & 0x01) != (UINT32)(DrvOkiBank & 0x01)) {
+		memcpy (DrvSndROM0, DrvSndROM0 + 0x40000 + ((data & 0x01) >> 0) * 0x40000, 0x40000);
+	}
+	
+	if ((data & 0x02) != (UINT32)(DrvOkiBank & 0x02)) {
+		memcpy (DrvSndROM1, DrvSndROM1 + 0x40000 + ((data & 0x02) >> 1) * 0x40000, 0x40000);
+	}
 
 	DrvOkiBank = data;
 }
@@ -660,16 +652,12 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-	// Huc6280
-
-	BurnYM2151Reset();
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	deco16SoundReset();
 
 	deco16Reset();
 
 	DrvOkiBank = -1;
-	DrvYM2151WritePort(0, 0);
+	DrvYM2151WritePort(0, 3);
 
 	return 0;
 }
@@ -699,6 +687,7 @@ static INT32 MemIndex()
 	AllRam		= Next;
 
 	Drv68KRAM	= Next; Next += 0x024000;
+	DrvHucRAM	= Next; Next += 0x002000;
 	DrvSprRAM2	= Next; Next += 0x000800;
 	DrvSprRAM	= Next; Next += 0x000800;
 	DrvSprBuf2	= Next; Next += 0x000800;
@@ -711,7 +700,6 @@ static INT32 MemIndex()
 	DrvPalRAM	= Next; Next += 0x002000;
 	DrvPalBuf	= Next; Next += 0x002000;
 
-	soundlatch	= Next; Next += 0x000001;
 	flipscreen	= Next; Next += 0x000001;
 
 	RamEnd		= Next;
@@ -823,14 +811,7 @@ static INT32 RohgaInit()
 	SekSetReadByteHandler(0,		rohga_main_read_byte);
 	SekClose();
 
-	// Huc6280...
-
-	BurnYM2151Init(3580000, 80.0);
-	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
-	BurnYM2151SetPortHandler(&DrvYM2151WritePort);
-
-	MSM6295Init(0, 1006875 / 132, 100.0, 1);
-	MSM6295Init(1, 2013750 / 132,  40.0, 1);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 40.0, 1006875, 100.0, 2013750, 75.0);
 
 	GenericTilesInit();
 
@@ -877,9 +858,9 @@ static INT32 WizdfireInit()
 		if (BurnLoadRom(DrvGfxROM4 + 0x000000, 17, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM4 + 0x000001, 18, 2)) return 1;
 
-		if (BurnLoadRom(DrvSndROM0 + 0x000000, 19, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM0 + 0x040000, 19, 1)) return 1;
 
-		if (BurnLoadRom(DrvSndROM1 + 0x000000, 20, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM1 + 0x040000, 20, 1)) return 1;
 
 		deco74_decrypt_gfx(DrvGfxROM0, 0x020000);
 		deco74_decrypt_gfx(DrvGfxROM1, 0x200000);
@@ -922,14 +903,7 @@ static INT32 WizdfireInit()
 	SekSetReadByteHandler(0,		wizdfire_main_read_byte);
 	SekClose();
 
-	// Huc6280...
-
-	BurnYM2151Init(3580000, 80.0);
-	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
-	BurnYM2151SetPortHandler(&DrvYM2151WritePort);
-
-	MSM6295Init(0, 1006875 / 132, 100.0, 1);
-	MSM6295Init(1, 2013750 / 132,  40.0, 1);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 40.0, 1006875, 100.0, 2013750, 40.0);
 
 	GenericTilesInit();
 
@@ -966,9 +940,9 @@ static INT32 SchmeisrInit()
 		if (BurnLoadRom(DrvGfxROM3 + 0x200000,  9, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM3 + 0x300000, 10, 1)) return 1;
 
-		if (BurnLoadRom(DrvSndROM0 + 0x000000, 11, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM0 + 0x040000, 11, 1)) return 1;
 
-		if (BurnLoadRom(DrvSndROM1 + 0x000000, 12, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM1 + 0x040000, 12, 1)) return 1;
 
 		deco74_decrypt_gfx(DrvGfxROM1, 0x100000);
 
@@ -1016,14 +990,7 @@ static INT32 SchmeisrInit()
 	SekSetReadByteHandler(0,		rohga_main_read_byte);
 	SekClose();
 
-	// Huc6280...
-
-	BurnYM2151Init(3580000, 80.0);
-	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
-	BurnYM2151SetPortHandler(&DrvYM2151WritePort);
-
-	MSM6295Init(0, 1006875 / 132, 100.0, 1);
-	MSM6295Init(1, 2013750 / 132,  40.0, 1);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 40.0, 1006875, 100.0, 2013750, 40.0);
 
 	GenericTilesInit();
 
@@ -1072,9 +1039,9 @@ static INT32 NitrobalInit()
 		if (BurnLoadRom(DrvGfxROM4 + 0x000001, 18, 2)) return 1;
 		BurnByteswap(DrvGfxROM4, 0x080000);
 
-		if (BurnLoadRom(DrvSndROM0 + 0x000000, 19, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM0 + 0x040000, 19, 1)) return 1;
 
-		if (BurnLoadRom(DrvSndROM1 + 0x000000, 20, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM1 + 0x040000, 20, 1)) return 1;
 
 		deco56_decrypt_gfx(DrvGfxROM0, 0x020000);
 		deco56_decrypt_gfx(DrvGfxROM1, 0x100000);
@@ -1125,14 +1092,7 @@ static INT32 NitrobalInit()
 	SekSetReadByteHandler(0,		wizdfire_main_read_byte);
 	SekClose();
 
-	// Huc6280...
-
-	BurnYM2151Init(3580000, 80.0);
-	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
-	BurnYM2151SetPortHandler(&DrvYM2151WritePort);
-
-	MSM6295Init(0, 1006875 / 132, 100.0, 1);
-	MSM6295Init(1, 2013750 / 132,  40.0, 1);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 40.0, 1006875, 100.0, 2013750, 40.0);
 
 	GenericTilesInit();
 
@@ -1146,15 +1106,11 @@ static INT32 DrvExit()
 	GenericTilesExit();
 	deco16Exit();
 
-	BurnYM2151Exit();
-	MSM6295Exit(0);
-	MSM6295Exit(1);
-
 	SekExit();
+	
+	deco16SoundExit();
 
 	BurnFree (AllMem);
-
-	MSM6295ROM = NULL;
 
 	return 0;
 }
@@ -1645,30 +1601,45 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
+	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 14000000 / 58, 2685000 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
+	h6280NewFrame();
+	
 	SekOpen(0);
+	h6280Open(0);
 
 	deco16_vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-	//	nCyclesDone[1] += HucRun(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
 		if (i == 240) deco16_vblank = 0x08;
+		
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	SekSetIRQLine(6, SEK_IRQSTATUS_ACK);
+	
+	if (pBurnSoundOut) {
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
-	SekClose();
-
-	if (pBurnSoundOut && 0) {
-		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		if (nSegmentLength) {
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		}
 	}
+	
+	h6280Close();
+	SekClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -1698,10 +1669,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	//	huc6280
 
 		deco16Scan();
-
-		BurnYM2151Scan(nAction);
-		MSM6295Scan(0, nAction);
-		MSM6295Scan(1, nAction);
 
 		SCAN_VAR(DrvOkiBank);
 
@@ -1752,7 +1719,7 @@ STD_ROM_FN(rohga)
 
 struct BurnDriver BurnDrvRohga = {
 	"rohga", NULL, NULL, NULL, "1991",
-	"Rohga Armor Force (Asia/Europe v5.0)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Rohga Armor Force (Asia/Europe v5.0)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, rohgaRomInfo, rohgaRomName, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,
@@ -1799,7 +1766,7 @@ STD_ROM_FN(rohga1)
 
 struct BurnDriver BurnDrvRohga1 = {
 	"rohga1", "rohga", NULL, NULL, "1991",
-	"Rohga Armor Force (Asia/Europe v3.0 Set 1)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Rohga Armor Force (Asia/Europe v3.0 Set 1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, rohga1RomInfo, rohga1RomName, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,
@@ -1846,7 +1813,7 @@ STD_ROM_FN(rohga2)
 
 struct BurnDriver BurnDrvRohga2 = {
 	"rohga2", "rohga", NULL, NULL, "1991",
-	"Rohga Armor Force (Asia/Europe v3.0 Set 2)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Rohga Armor Force (Asia/Europe v3.0 Set 2)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, rohga2RomInfo, rohga2RomName, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,
@@ -1893,7 +1860,7 @@ STD_ROM_FN(rohgah)
 
 struct BurnDriver BurnDrvRohgah = {
 	"rohgah", "rohga", NULL, NULL, "1991",
-	"Rohga Armor Force (Hong Kong v3.0)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Rohga Armor Force (Hong Kong v3.0)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, rohgahRomInfo, rohgahRomName, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,
@@ -1940,7 +1907,7 @@ STD_ROM_FN(rohgau)
 
 struct BurnDriver BurnDrvRohgau = {
 	"rohgau", "rohga", NULL, NULL, "1991",
-	"Rohga Armor Force (US v1.0)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Rohga Armor Force (US v1.0)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, rohgauRomInfo, rohgauRomName, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,
@@ -1987,7 +1954,7 @@ STD_ROM_FN(wolffang)
 
 struct BurnDriver BurnDrvWolffang = {
 	"wolffang", "rohga", NULL, NULL, "1991",
-	"Wolf Fang -Kuhga 2001- (Japan)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Wolf Fang -Kuhga 2001- (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, wolffangRomInfo, wolffangRomName, NULL, NULL, RohgaInputInfo, RohgaDIPInfo,
@@ -2037,7 +2004,7 @@ STD_ROM_FN(wizdfire)
 
 struct BurnDriver BurnDrvWizdfire = {
 	"wizdfire", NULL, NULL, NULL, "1992",
-	"Wizard Fire (Over Sea v2.1)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Wizard Fire (Over Sea v2.1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, wizdfireRomInfo, wizdfireRomName, NULL, NULL, WizdfireInputInfo, WizdfireDIPInfo,
@@ -2087,7 +2054,7 @@ STD_ROM_FN(wizdfireu)
 
 struct BurnDriver BurnDrvWizdfireu = {
 	"wizdfireu", "wizdfire", NULL, NULL, "1992",
-	"Wizard Fire (US v1.1)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Wizard Fire (US v1.1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, wizdfireuRomInfo, wizdfireuRomName, NULL, NULL, WizdfireInputInfo, WizdfireDIPInfo,
@@ -2137,7 +2104,7 @@ STD_ROM_FN(darkseal2)
 
 struct BurnDriver BurnDrvDarkseal2 = {
 	"darkseal2", "wizdfire", NULL, NULL, "1992",
-	"Dark Seal 2 (Japan v2.1)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Dark Seal 2 (Japan v2.1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, darkseal2RomInfo, darkseal2RomName, NULL, NULL, WizdfireInputInfo, WizdfireDIPInfo,
@@ -2177,7 +2144,7 @@ STD_ROM_FN(schmeisr)
 
 struct BurnDriver BurnDrvSchmeisr = {
 	"schmeisr", NULL, NULL, NULL, "1993",
-	"Schmeiser Robo (Japan)\0","No sound", "Hot B", "Miscellaneous",
+	"Schmeiser Robo (Japan)\0",NULL, "Hot B", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, schmeisrRomInfo, schmeisrRomName, NULL, NULL, RohgaInputInfo, SchmeisrDIPInfo,
@@ -2227,7 +2194,7 @@ STD_ROM_FN(nitrobal)
 
 struct BurnDriver BurnDrvNitrobal = {
 	"nitrobal", NULL, NULL, NULL, "1992",
-	"Nitro Ball (US)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Nitro Ball (US)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, nitrobalRomInfo, nitrobalRomName, NULL, NULL, NitrobalInputInfo, NitrobalDIPInfo,
@@ -2277,7 +2244,7 @@ STD_ROM_FN(gunball)
 
 struct BurnDriver BurnDrvGunball = {
 	"gunball", "nitrobal", NULL, NULL, "1992",
-	"Gun Ball (Japan)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Gun Ball (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, gunballRomInfo, gunballRomName, NULL, NULL, NitrobalInputInfo, NitrobalDIPInfo,

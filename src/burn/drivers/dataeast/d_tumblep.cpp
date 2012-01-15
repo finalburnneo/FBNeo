@@ -440,6 +440,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
+	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 14000000 / 58, 4027500 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -454,12 +455,24 @@ static INT32 DrvFrame()
 		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
 		if (i == 240) deco16_vblank = 0x08;
+		
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
-		deco16SoundUpdate(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+
+		if (nSegmentLength) {
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		}
 	}
 
 	h6280Close();
@@ -523,7 +536,7 @@ STD_ROM_FN(tumblep)
 
 struct BurnDriver BurnDrvTumblep = {
 	"tumblep", NULL, NULL, NULL, "1991",
-	"Tumble Pop (World)\0", "No Sound", "Data East Corporation", "Miscellaneous",
+	"Tumble Pop (World)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, tumblepRomInfo, tumblepRomName, NULL, NULL, TumblepInputInfo, TumblepDIPInfo,
@@ -553,7 +566,7 @@ STD_ROM_FN(tumblepj)
 
 struct BurnDriver BurnDrvTumblepj = {
 	"tumblepj", "tumblep", NULL, NULL, "1991",
-	"Tumble Pop (Japan)\0", "No Sound", "Data East Corporation", "Miscellaneous",
+	"Tumble Pop (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, tumblepjRomInfo, tumblepjRomName, NULL, NULL, TumblepInputInfo, TumblepDIPInfo,

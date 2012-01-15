@@ -2,8 +2,8 @@
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"
+#include "h6280_intf.h"
 #include "deco16ic.h"
-#include "burn_ym2151.h"
 #include "msm6295.h"
 
 static UINT8 *AllMem;
@@ -17,6 +17,7 @@ static UINT8 *DrvGfxROM1;
 static UINT8 *DrvGfxROM2;
 static UINT8 *DrvSndROM;
 static UINT8 *Drv68KRAM;
+static UINT8 *DrvHucRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvPrtRAM;
@@ -24,7 +25,6 @@ static UINT8 *DrvPrtRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static UINT8 *soundlatch;
 static UINT8 *flipscreen;
 
 static UINT8 DrvJoy1[16];
@@ -257,8 +257,8 @@ void __fastcall funkyjet_main_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x18010a:
-			*soundlatch = data;
-		//	cputag_set_input_line(space->machine, "audiocpu", 0, HOLD_LINE);
+			deco16_soundlatch = data & 0xff;
+			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 		break;
 	}
 
@@ -272,10 +272,9 @@ void __fastcall funkyjet_main_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
-		case 0x18010a:
 		case 0x18010b:
-			*soundlatch = data;
-		//	cputag_set_input_line(space->machine, "audiocpu", 0, HOLD_LINE);
+			deco16_soundlatch = data;
+			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 		break;
 	}
 
@@ -303,12 +302,6 @@ UINT8 __fastcall funkyjet_main_read_byte(UINT32 address)
 	return 0;
 }
 
-static void DrvYM2151IrqHandler(INT32 state)
-{
-	state = state; // kill warnings...
-//	HucSetIRQLine(1, state ? HUC_IRQSTATUS_ACK : HUC_IRQSTATUS_NONE);
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -317,10 +310,7 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-	// Huc6280
-
-	MSM6295Reset(0);
-	BurnYM2151Reset();
+	deco16SoundReset();
 
 	deco16Reset();
 
@@ -346,12 +336,12 @@ static INT32 MemIndex()
 	AllRam		= Next;
 
 	Drv68KRAM	= Next; Next += 0x004000;
+	DrvHucRAM	= Next; Next += 0x002000;
 	DrvSprRAM	= Next; Next += 0x000800;
 	deco16_prot_ram	= (UINT16*)Next;
 	DrvPrtRAM	= Next; Next += 0x000800;
 	DrvPalRAM	= Next; Next += 0x000800;
 
-	soundlatch	= Next; Next += 0x000001;
 	flipscreen	= Next; Next += 0x000001;
 
 	RamEnd		= Next;
@@ -414,12 +404,7 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(0,		funkyjet_main_read_byte);
 	SekClose();
 
-	// Huc6280...
-
-	MSM6295Init(0, 1000000 / 132, 50.0, 1);
-
-	BurnYM2151Init(3580000, 40.0);
-	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 0, NULL, 40.0, 1000000, 100.0, 0, 0);
 
 	GenericTilesInit();
 
@@ -433,15 +418,10 @@ static INT32 DrvExit()
 	GenericTilesExit();
 	deco16Exit();
 
-	MSM6295Exit(0);
-	BurnYM2151Exit();
-
 	SekExit();
-	// huc6280
+	deco16SoundExit();
 
 	BurnFree (AllMem);
-
-	MSM6295ROM = NULL;
 
 	return 0;
 }
@@ -576,29 +556,45 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
+	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 14000000 / 58, 8055000 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
+	h6280NewFrame();
+	
 	SekOpen(0);
+	h6280Open(0);
 
 	deco16_vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-	//	nCyclesDone[1] += HucRun(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
 		if (i == 248) deco16_vblank = 0x08;
+		
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
-
-	SekClose();
-
+	
 	if (pBurnSoundOut) {
-		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+
+		if (nSegmentLength) {
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		}
 	}
+	
+	h6280Close();
+	SekClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -628,9 +624,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	//	huc6280
 
 		deco16Scan();
-
-		BurnYM2151Scan(nAction);
-		MSM6295Scan(0, nAction);
 	}
 
 	return 0;
@@ -658,7 +651,7 @@ STD_ROM_FN(funkyjet)
 
 struct BurnDriver BurnDrvFunkyjet = {
 	"funkyjet", NULL, NULL, NULL, "1992",
-	"Funky Jet (World)\0", "No sound", "[Data East] (Mitchell license)", "Miscellaneous",
+	"Funky Jet (World)\0", NULL, "[Data East] (Mitchell license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, funkyjetRomInfo, funkyjetRomName, NULL, NULL, FunkyjetInputInfo, FunkyjetDIPInfo,
@@ -688,7 +681,7 @@ STD_ROM_FN(funkyjetj)
 
 struct BurnDriver BurnDrvFunkyjetj = {
 	"funkyjetj", "funkyjet", NULL, NULL, "1992",
-	"Funky Jet (Japan)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Funky Jet (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, funkyjetjRomInfo, funkyjetjRomName, NULL, NULL, FunkyjetInputInfo, FunkyjetjDIPInfo,
@@ -718,7 +711,7 @@ STD_ROM_FN(sotsugyo)
 
 struct BurnDriver BurnDrvSotsugyo = {
 	"sotsugyo", NULL, NULL, NULL, "1995",
-	"Sotsugyo Shousho\0", "No sound", "Mitchell (Atlus license)", "Miscellaneous",
+	"Sotsugyo Shousho\0", NULL, "Mitchell (Atlus license)", "Miscellaneous",
 	L"\u5352\u696D\u8A3C\u66F8\0Sotsugyo Shousho\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MINIGAMES, 0,
 	NULL, sotsugyoRomInfo, sotsugyoRomName, NULL, NULL, FunkyjetInputInfo, SotsugyoDIPInfo,

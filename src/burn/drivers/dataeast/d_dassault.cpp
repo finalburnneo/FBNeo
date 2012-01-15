@@ -2,10 +2,13 @@
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"
+#include "h6280_intf.h"
+#include "bitswap.h"
 #include "deco16ic.h"
-#include "burn_ym2151.h"
 #include "burn_ym2203.h"
+#include "burn_ym2151.h"
 #include "msm6295.h"
+#include "timer.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -34,7 +37,8 @@ static UINT8 *DrvShareRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static UINT8 *soundlatch;
+static INT16 *SoundBuffer;
+
 static UINT8 *flipscreen;
 
 static UINT8 DrvJoy1[16];
@@ -234,9 +238,8 @@ void __fastcall dassault_main_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x180000:
-		case 0x180001:
-			*soundlatch = data;
-		//	cpu_set_input_line(state->audiocpu, 0, HOLD_LINE);
+			deco16_soundlatch = data & 0xff;
+			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 		return;
 
 		case 0x1c000c:
@@ -255,10 +258,9 @@ void __fastcall dassault_main_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
-		case 0x180000:
 		case 0x180001:
-			*soundlatch = data;
-		//	cpu_set_input_line(state->audiocpu, 0, HOLD_LINE);
+			deco16_soundlatch = data;
+			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 		return;
 
 		case 0x1c000b:
@@ -471,27 +473,11 @@ UINT8 __fastcall dassault_irq_read_byte(UINT32 address)
 	return DrvShareRAM[(address & 0xfff)^1];
 }
 
-static void DrvYM2151IrqHandler(INT32 state)
-{
-	state = state; // kill warnings...
-//	HucSetIRQLine(1, state ? HUC_IRQSTATUS_ACK : HUC_IRQSTATUS_NONE);
-}
-
 static void DrvYM2151WritePort(UINT32, UINT32 data)
 {
 	DrvOkiBank = data & 1;
 
 	memcpy (DrvSndROM1, DrvSndROM1 + 0x40000 + (data & 1) * 0x40000, 0x40000);
-}
-
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return 0 * nSoundRate; //(INT64)HucTotalCycles() * nSoundRate / 4027500;
-}
-
-static double DrvGetTime()
-{
-	return 0; //(double)HucTotalCycles() / 4027500.0;
 }
 
 static INT32 dassault_bank_callback( const INT32 bank )
@@ -511,12 +497,7 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-	// huc6280
-
-	BurnYM2151Reset();
-	BurnYM2203Reset();
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	deco16SoundReset();
 
 	DrvYM2151WritePort(0, 0); // Set OKI1 Bank
 
@@ -562,10 +543,11 @@ static INT32 MemIndex()
 
 	DrvPalRAM	= Next; Next += 0x004000;
 
-	soundlatch	= Next; Next += 0x000001;
 	flipscreen	= Next; Next += 0x000001;
 
 	RamEnd		= Next;
+	
+	SoundBuffer = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
 
 	MemEnd		= Next;
 
@@ -689,17 +671,7 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(1,			dassault_irq_read_byte);
 	SekClose();
 
-	// h6280
-
-	BurnYM2151Init(3580000, 40.0);
-	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
-	BurnYM2151SetPortHandler(&DrvYM2151WritePort);
-
-	BurnYM2203Init(1, 4027500, NULL, DrvSynchroniseStream, DrvGetTime, 1);
-//	BurnTimerAttachHuc(4027500);
-
-	MSM6295Init(0, 1023924 / 132, 50.0, 1);
-	MSM6295Init(1, 2047848 / 132, 25.0, 1);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, DrvYM2151WritePort, 40.0, 1006875, 75.0, 2013750, 60.0);
 
 	GenericTilesInit();
 
@@ -713,17 +685,10 @@ static INT32 DrvExit()
 	GenericTilesExit();
 	deco16Exit();
 
-	BurnYM2203Exit();
-	BurnYM2151Exit();
-	MSM6295Exit(0);
-	MSM6295Exit(1);
-
 	SekExit();
-//	huc6280
+	deco16SoundExit();
 
 	BurnFree (AllMem);
-
-	MSM6295ROM = NULL;
 
 	return 0;
 }
@@ -895,8 +860,12 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
+	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[3] = { 14000000 / 60, 14000000 / 60, 4027500 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	
+	h6280NewFrame();
+	h6280Open(0);
 
 	deco16_vblank = 0;
 
@@ -912,17 +881,35 @@ static INT32 DrvFrame()
 		if (i == (nInterleave - 1)) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
 		SekClose();
 
-	//	nCyclesDone[2] += HucRun(nCyclesTotal[2] / nInterleave);
+		nCyclesDone[1] += h6280Run(nCyclesTotal[2] / nInterleave);
 
 		if (i == 248) deco16_vblank = 0x08;
+		
+		INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+		deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		nSoundBufferPos += nSegmentLength;
 	}
 
+	BurnTimerEndFrame(nCyclesTotal[2]);
+
 	if (pBurnSoundOut) {
-		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+
+		if (nSegmentLength) {
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		}
+		
+		for (INT32 i = 0; i < nBurnSoundLen; i++) {
+			pBurnSoundOut[(i << 1) + 0] += SoundBuffer[(i << 1) + 0];
+			pBurnSoundOut[(i << 1) + 1] += SoundBuffer[(i << 1) + 1];
+		}
 	}
+
+	h6280Close();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -1025,7 +1012,7 @@ STD_ROM_FN(thndzone)
 
 struct BurnDriver BurnDrvThndzone = {
 	"thndzone", NULL, NULL, NULL, "1991",
-	"Thunder Zone (World)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Thunder Zone (World)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, thndzoneRomInfo, thndzoneRomName, NULL, NULL, ThndzoneInputInfo, ThndzoneDIPInfo,
@@ -1093,7 +1080,7 @@ STD_ROM_FN(dassault)
 
 struct BurnDriver BurnDrvDassault = {
 	"dassault", "thndzone", NULL, NULL, "1991",
-	"Desert Assault (US)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Desert Assault (US)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, dassaultRomInfo, dassaultRomName, NULL, NULL, ThndzoneInputInfo, DassaultDIPInfo,
@@ -1161,7 +1148,7 @@ STD_ROM_FN(dassault4)
 
 struct BurnDriver BurnDrvDassault4 = {
 	"dassault4", "thndzone", NULL, NULL, "1991",
-	"Desert Assault (US 4 Players)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Desert Assault (US 4 Players)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, dassault4RomInfo, dassault4RomName, NULL, NULL, ThndzoneInputInfo, Dassault4DIPInfo,

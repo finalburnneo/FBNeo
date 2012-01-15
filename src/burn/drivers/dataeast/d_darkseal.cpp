@@ -1,24 +1,27 @@
 // FB Alpha Dark Seal driver module
 // Based on MAME driver by Bryan McPhail
 
-// To do:
-// Add support for the Huc6280 & set up the sound hardware
-
 #include "tiles_generic.h"
+#include "h6280_intf.h"
 #include "bitswap.h"
+#include "deco16ic.h"
+#include "burn_ym2203.h"
+#include "burn_ym2151.h"
+#include "msm6295.h"
+#include "timer.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *Drv68KROM;
-static UINT8 *DrvH6280ROM;
-static UINT8 *DrvSndROM;
+static UINT8 *DrvHucROM;
 static UINT8 *DrvGfxROM0;
 static UINT8 *DrvGfxROM1;
 static UINT8 *DrvGfxROM2;
 static UINT8 *DrvGfxROM3;
 static UINT8 *Drv68KRAM;
+static UINT8 *DrvHucRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvSprBuf;
 static UINT8 *DrvPalRAM;
@@ -31,7 +34,7 @@ static UINT8 *DrvPfCtrlRAM0;
 static UINT8 *DrvPfCtrlRAM1;
 static UINT32 *DrvPalette;
 
-static UINT8 *soundlatch;
+static INT16 *SoundBuffer;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -149,7 +152,8 @@ void __fastcall darkseal_write_byte(UINT32 address, UINT8 data)
 			return;
 
 			case 0x08:
-				*soundlatch = data;
+				deco16_soundlatch = data;
+				h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 			return;
 		}
 
@@ -167,7 +171,8 @@ void __fastcall darkseal_write_word(UINT32 address, UINT16 data)
 			return;
 
 			case 0x08:
-				*soundlatch = data & 0xff;
+				deco16_soundlatch = data & 0xff;
+				h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 			return;
 		}
 
@@ -245,6 +250,8 @@ static INT32 DrvDoReset()
 	SekOpen(0);
 	SekReset();
 	SekClose();
+	
+	deco16SoundReset();
 
 	return 0;
 }
@@ -255,20 +262,21 @@ static INT32 MemIndex()
 
 	Drv68KROM	= Next; Next += 0x080000;
 
-	DrvH6280ROM	= Next; Next += 0x010000;
+	DrvHucROM	= Next; Next += 0x010000;
 
 	DrvGfxROM0	= Next; Next += 0x040000;
 	DrvGfxROM1	= Next; Next += 0x100000;
 	DrvGfxROM2	= Next; Next += 0x100000;
 	DrvGfxROM3	= Next; Next += 0x200000;
 
-	DrvSndROM	= Next; Next += 0x040000;
+	MSM6295ROM	= Next; Next += 0x140000;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x00800 * sizeof(UINT32);
 
 	AllRam		= Next;
 
 	Drv68KRAM	= Next; Next += 0x004000;
+	DrvHucRAM	= Next; Next += 0x002000;
 	DrvSprRAM	= Next; Next += 0x000800;
 	DrvSprBuf	= Next; Next += 0x000800;
 	DrvPalRAM	= Next; Next += 0x002000;
@@ -280,9 +288,9 @@ static INT32 MemIndex()
 	DrvPfCtrlRAM0	= Next; Next += 0x000010;
 	DrvPfCtrlRAM1	= Next; Next += 0x000010;
 
-	soundlatch	= Next; Next += 0x000001;
-
 	RamEnd		= Next;
+	
+	SoundBuffer = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
 
 	MemEnd		= Next;
 
@@ -333,6 +341,8 @@ static void DrvPrgDecode()
 
 static INT32 DrvInit()
 {
+	BurnSetRefreshRate(58.00);
+	
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -346,7 +356,7 @@ static INT32 DrvInit()
 		if (BurnLoadRom(Drv68KROM + 0x40001,	2, 2)) return 1;
 		if (BurnLoadRom(Drv68KROM + 0x40000,	3, 2)) return 1;
 
-		if (BurnLoadRom(DrvH6280ROM,		4, 1)) return 1;
+		if (BurnLoadRom(DrvHucROM,		4, 1)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM0 + 0x00000,	5, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x10000,	6, 1)) return 1;
@@ -358,8 +368,8 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvGfxROM3 + 0x00000,	9, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM3 + 0x80000,  10, 1)) return 1;
 
-		if (BurnLoadRom(DrvSndROM + 0x00000,   11, 1)) return 1;
-		if (BurnLoadRom(DrvSndROM + 0x20000,   12, 1)) return 1;
+		if (BurnLoadRom(MSM6295ROM + 0x000000,   11, 1)) return 1;
+		if (BurnLoadRom(MSM6295ROM + 0x100000,   12, 1)) return 1;
 
 		DrvPrgDecode();
 		DrvGfxDecode();
@@ -383,9 +393,7 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(0,		darkseal_read_byte);
 	SekClose();
 
-	// sound hardware...
-
-	BurnSetRefreshRate(58.00);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, NULL, 40.0, 1006875, 100.0, 2013750, 60.0);
 
 	GenericTilesInit();
 
@@ -399,6 +407,8 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	SekExit();
+	
+	deco16SoundExit();
 
 	BurnFree (AllMem);
 
@@ -624,26 +634,52 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nSegment;
 	INT32 nInterleave = 256;
-	INT32 nTotalCycles[2] = { 12000000 / 58, 8055000 / 58 };
+	INT32 nSoundBufferPos = 0;
+	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
+	h6280NewFrame();
+	
 	SekOpen(0);
+	h6280Open(0);
 
 	vblank = 8;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nSegment = (nTotalCycles[0] - nCyclesDone[0]) / (nInterleave - i);
-
-		nCyclesDone[0] += SekRun(nSegment);
+		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
 		if (i ==   7) vblank = 0;
 		if (i == 247) vblank = 8;
+		
+		INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+		deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		nSoundBufferPos += nSegmentLength;
 	}
 
 	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+	BurnTimerEndFrame(nCyclesTotal[1]);
+
+	if (pBurnSoundOut) {
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+
+		if (nSegmentLength) {
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		}
+		
+		for (INT32 i = 0; i < nBurnSoundLen; i++) {
+			pBurnSoundOut[(i << 1) + 0] += SoundBuffer[(i << 1) + 0];
+			pBurnSoundOut[(i << 1) + 1] += SoundBuffer[(i << 1) + 1];
+		}
+	}
+
+	h6280Close();	
 	SekClose();
 
 	if (pBurnDraw) {
@@ -707,7 +743,7 @@ STD_ROM_FN(darkseal)
 
 struct BurnDriver BurnDrvDarkseal = {
 	"darkseal", NULL, NULL, NULL, "1990",
-	"Dark Seal (World revision 3)\0", "No Sound", "Data East Corporation", "Miscellaneous",
+	"Dark Seal (World revision 3)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE | GBF_SCRFIGHT, 0,
 	NULL, darksealRomInfo, darksealRomName, NULL, NULL, DarksealInputInfo, DarksealDIPInfo,
@@ -746,7 +782,7 @@ STD_ROM_FN(darksea1)
 
 struct BurnDriver BurnDrvDarksea1 = {
 	"darkseal1", "darkseal", NULL, NULL, "1990",
-	"Dark Seal (World revision 1)\0", "No Sound", "Data East Corporation", "Miscellaneous",
+	"Dark Seal (World revision 1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE | GBF_SCRFIGHT, 0,
 	NULL, darksea1RomInfo, darksea1RomName, NULL, NULL, DarksealInputInfo, DarksealDIPInfo,
@@ -785,7 +821,7 @@ STD_ROM_FN(darkseaj)
 
 struct BurnDriver BurnDrvDarkseaj = {
 	"darksealj", "darkseal", NULL, NULL, "1990",
-	"Dark Seal (Japan)\0", "No Sound", "Data East Corporation", "Miscellaneous",
+	"Dark Seal (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE | GBF_SCRFIGHT, 0,
 	NULL, darkseajRomInfo, darkseajRomName, NULL, NULL, DarksealInputInfo, DarksealDIPInfo,
@@ -824,7 +860,7 @@ STD_ROM_FN(gatedoom)
 
 struct BurnDriver BurnDrvGatedoom = {
 	"gatedoom", "darkseal", NULL, NULL, "1990",
-	"Gate of Doom (US revision 4)\0", "No Sound", "Data East Corporation", "Miscellaneous",
+	"Gate of Doom (US revision 4)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE | GBF_SCRFIGHT, 0,
 	NULL, gatedoomRomInfo, gatedoomRomName, NULL, NULL, DarksealInputInfo, DarksealDIPInfo,
@@ -863,7 +899,7 @@ STD_ROM_FN(gatedom1)
 
 struct BurnDriver BurnDrvGatedom1 = {
 	"gatedoom1", "darkseal", NULL, NULL, "1990",
-	"Gate of Doom (US revision 1)\0", "No Sound", "Data East Corporation", "Miscellaneous",
+	"Gate of Doom (US revision 1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE | GBF_SCRFIGHT, 0,
 	NULL, gatedom1RomInfo, gatedom1RomName, NULL, NULL, DarksealInputInfo, DarksealDIPInfo,

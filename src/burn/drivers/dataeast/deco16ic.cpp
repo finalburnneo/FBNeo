@@ -741,7 +741,10 @@ static void deco16_sound_write(UINT32 address, UINT8 data)
 	switch (address)
 	{
 		case 0x100000:
-		case 0x100001: // ym2203 (not for these games...)
+		case 0x100001:
+			if (deco16_sound_enable[1]) {
+				BurnYM2203Write(0, address & 1, data);
+			}
 		return;
 
 		case 0x110000:
@@ -759,7 +762,9 @@ static void deco16_sound_write(UINT32 address, UINT8 data)
 
 		case 0x130000:
 		case 0x130001:
-			MSM6295Command(1, data);
+			if (deco16_sound_enable[3]) {
+				MSM6295Command(1, data);
+			}
 		return;
 
 		case 0x1fec00:
@@ -787,6 +792,13 @@ static UINT8 deco16_sound_read(UINT32 address)
 
 	switch (address)
 	{
+		case 0x100000:
+		case 0x100001:
+			if (deco16_sound_enable[1]) {
+				return BurnYM2203Read(0, address & 1);
+			}
+			return 0xff;
+		
 		case 0x110000:
 			return 0xff; 
 
@@ -799,7 +811,10 @@ static UINT8 deco16_sound_read(UINT32 address)
 
 		case 0x130000:
 		case 0x130001:
-			return MSM6295ReadStatus(1);
+			if (deco16_sound_enable[3]) {
+				return MSM6295ReadStatus(1);
+			}
+			return 0;
 
 		case 0x140000:
 		case 0x140001:
@@ -857,7 +872,7 @@ void deco16SoundInit(UINT8 *rom, UINT8 *ram, INT32 huc_clock, INT32 ym2203, void
 	}
 
 	if (ym2203) {
-		BurnYM2203Init(1, 4027500, NULL, deco16SynchroniseStream, deco16GetTime, 1);
+		BurnYM2203Init(1, 4027500, NULL, deco16SynchroniseStream, deco16GetTime, 0);
 #ifdef ENABLE_HUC6280
 		BurnTimerAttachH6280(deco16_sound_cpuclock);
 #endif
@@ -894,7 +909,7 @@ void deco16SoundExit()
 void deco16SoundUpdate(INT16 *buf, INT32 len)
 {
 	if (deco16_sound_enable[0]) BurnYM2151Render(buf, len);
-	if (deco16_sound_enable[1]) BurnYM2203Update(buf, len);
+//	if (deco16_sound_enable[1]) BurnYM2203Update(buf, len);
 	if (deco16_sound_enable[2]) MSM6295Render(0, buf, len);
 	if (deco16_sound_enable[3]) MSM6295Render(1, buf, len);
 }

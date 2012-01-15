@@ -3,7 +3,7 @@
 
 #include "tiles_generic.h"
 #include "deco16ic.h"
-#include "burn_ym2151.h"
+#include "h6280_intf.h"
 #include "msm6295.h"
 
 static UINT8 *AllMem;
@@ -17,13 +17,13 @@ static UINT8 *DrvGfxROM1;
 static UINT8 *DrvGfxROM2;
 static UINT8 *DrvSndROM;
 static UINT8 *Drv68KRAM;
+static UINT8 *DrvHucRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvSprRAM;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static UINT8 *soundlatch;
 static UINT8 *flipscreen;
 
 static UINT8 DrvJoy1[16];
@@ -165,8 +165,8 @@ void __fastcall supbtime_main_write_word(UINT32 address, UINT16 data)
 	{
 		case 0x100000:
 		case 0x1a0000:
-			*soundlatch = data;
-		//	cputag_set_input_line(space->machine, "audiocpu", 0, HOLD_LINE);
+			deco16_soundlatch = data & 0xff;
+			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 		return;
 	}
 }
@@ -175,12 +175,10 @@ void __fastcall supbtime_main_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
-		case 0x100000:
 		case 0x100001:
-		case 0x1a0000:
 		case 0x1a0001:
-			*soundlatch = data;
-		//	cputag_set_input_line(space->machine, "audiocpu", 0, HOLD_LINE);
+			deco16_soundlatch = data;
+			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 		return;
 	}
 }
@@ -230,12 +228,6 @@ UINT8 __fastcall supbtime_main_read_byte(UINT32 address)
 	return 0;
 }
 
-static void DrvYM2151IrqHandler(INT32 state)
-{
-	state = state; // kill warnings...
-//	HucSetIRQLine(1, state ? HUC_IRQSTATUS_ACK : HUC_IRQSTATUS_NONE);
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -244,10 +236,7 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-	// Huc6280
-
-	MSM6295Reset(0);
-	BurnYM2151Reset();
+	deco16SoundReset();
 
 	deco16Reset();
 
@@ -273,10 +262,10 @@ static INT32 MemIndex()
 	AllRam		= Next;
 
 	Drv68KRAM	= Next; Next += 0x004000;
+	DrvHucRAM	= Next; Next += 0x002000;
 	DrvSprRAM	= Next; Next += 0x000800;
 	DrvPalRAM	= Next; Next += 0x000800;
 
-	soundlatch	= Next; Next += 0x000001;
 	flipscreen	= Next; Next += 0x000001;
 
 	RamEnd		= Next;
@@ -341,12 +330,7 @@ static INT32 DrvInit(INT32 game)
 	SekSetReadByteHandler(0,		supbtime_main_read_byte);
 	SekClose();
 
-	// Huc6280...
-
-	BurnYM2151Init(3580000, 40.0);
-	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
-
-	MSM6295Init(0, 1023924 / 132, 50.0, 1);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 4027500, 0, NULL, 40.0, 1023924, 75.0, 0, 0);
 
 	GenericTilesInit();
 
@@ -360,14 +344,11 @@ static INT32 DrvExit()
 	GenericTilesExit();
 	deco16Exit();
 
-	MSM6295Exit(0);
-	BurnYM2151Exit();
-
 	SekExit();
+	
+	deco16SoundExit();
 
 	BurnFree (AllMem);
-
-	MSM6295ROM = NULL;
 
 	return 0;
 }
@@ -501,29 +482,45 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 14000000 / 58, 8055000 / 58 };
+	INT32 nSoundBufferPos = 0;
+	INT32 nCyclesTotal[2] = { 14000000 / 58, 4027500 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
+	h6280NewFrame();
+	
 	SekOpen(0);
+	h6280Open(0);
 
 	deco16_vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-	//	nCyclesDone[1] += HucRun(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
 		if (i == 240) deco16_vblank = 0x08;
+		
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
-
-	SekClose();
-
+	
 	if (pBurnSoundOut) {
-		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+
+		if (nSegmentLength) {
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		}
 	}
+	
+	h6280Close();
+	SekClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -553,9 +550,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	//	huc6280
 
 		deco16Scan();
-
-		BurnYM2151Scan(nAction);
-		MSM6295Scan(0, nAction);
 	}
 
 	return 0;
@@ -589,7 +583,7 @@ static INT32 supbtimeInit()
 
 struct BurnDriver BurnDrvSupbtime = {
 	"supbtime", NULL, NULL, NULL, "1990",
-	"Super Burger Time (World, set 1)\0", "No Sound", "Data East Corporation", "Miscellaneous",
+	"Super Burger Time (World, set 1)\0", "No sound", "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, supbtimeRomInfo, supbtimeRomName, NULL, NULL, SupbtimeInputInfo, SupbtimeDIPInfo,
@@ -619,7 +613,7 @@ STD_ROM_FN(supbtimea)
 
 struct BurnDriver BurnDrvSupbtimea = {
 	"supbtimea", "supbtime", NULL, NULL, "1990",
-	"Super Burger Time (World, set 2)\0", "No Sound", "Data East Corporation", "Miscellaneous",
+	"Super Burger Time (World, set 2)\0", "No sound", "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, supbtimeaRomInfo, supbtimeaRomName, NULL, NULL, SupbtimeInputInfo, SupbtimeDIPInfo,
@@ -649,7 +643,7 @@ STD_ROM_FN(supbtimej)
 
 struct BurnDriver BurnDrvSupbtimej = {
 	"supbtimej", "supbtime", NULL, NULL, "1990",
-	"Super Burger Time (Japan)\0", "No Sound", "Data East Corporation", "Miscellaneous",
+	"Super Burger Time (Japan)\0", "No sound", "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, supbtimejRomInfo, supbtimejRomName, NULL, NULL, SupbtimeInputInfo, SupbtimeDIPInfo,
@@ -684,7 +678,7 @@ static INT32 chinatwnInit()
 
 struct BurnDriver BurnDrvChinatwn = {
 	"chinatwn", NULL, NULL, NULL, "1991",
-	"China Town (Japan)\0", "No Sound", "Data East Corporation", "Miscellaneous",
+	"China Town (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, chinatwnRomInfo, chinatwnRomName, NULL, NULL, SupbtimeInputInfo, ChinatwnDIPInfo,

@@ -28,7 +28,7 @@
 #define S	h6280.sp.b.l
 
 #define TRANSLATED(addr)	((h6280.mmr[(addr)>>13] << 13) | ((addr)&0x1fff))
-#define CHANGE_PC			do { offs_t temp = TRANSLATED(PCW); change_pc(temp); } while (0)
+#define CHANGE_PC			change_pc(PCW)
 #define H6280_CYCLES(cyc)											\
 	{																\
 		h6280_ICount -= ((cyc) * h6280.clocks_per_cycle);			\
@@ -98,13 +98,13 @@
 			 !(h6280.irq_mask & 0x2) )							\
 		{														\
 			DO_INTERRUPT(H6280_IRQ1_VEC);						\
-			(*h6280.irq_callback)(0);							\
+			if (h6280.irq_callback) (*h6280.irq_callback)(0);	\
 		} else													\
 		if ( h6280.irq_state[1] != CLEAR_LINE &&				\
 			 !(h6280.irq_mask & 0x1) )							\
 		{														\
 			DO_INTERRUPT(H6280_IRQ2_VEC);						\
-			(*h6280.irq_callback)(1);							\
+			if (h6280.irq_callback) (*h6280.irq_callback)(1);	\
         }                                                       \
     }
 

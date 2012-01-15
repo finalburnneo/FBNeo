@@ -6,7 +6,7 @@
 #include "m6800_intf.h"
 #include "m6502_intf.h"
 #include "sh2.h"
-//#include "h6280_intf.h"
+#include "h6280_intf.h"
 
 #define MAX_TIMER_VALUE ((1 << 30) - 65536)
 
@@ -418,9 +418,9 @@ INT32 BurnTimerAttachSh2(INT32 nClockspeed)
 INT32 BurnTimerAttachH6280(INT32 nClockspeed)
 {
 	nCPUClockspeed = nClockspeed;
-//	pCPUTotalCycles = h6280TotalCycles;
-//	pCPURun = h6280Run;
-//	pCPURunEnd = h6280RunEnd;
+	pCPUTotalCycles = h6280TotalCycles;
+	pCPURun = h6280Run;
+	pCPURunEnd = h6280RunEnd;
 
 	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
 

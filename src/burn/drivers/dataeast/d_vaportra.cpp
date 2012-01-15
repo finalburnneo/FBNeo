@@ -2,9 +2,9 @@
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"
+#include "h6280_intf.h"
 #include "deco16ic.h"
 #include "burn_ym2203.h"
-#include "burn_ym2151.h"
 #include "msm6295.h"
 
 static UINT8 *AllMem;
@@ -20,6 +20,7 @@ static UINT8 *DrvGfxROM3;
 static UINT8 *DrvSndROM0;
 static UINT8 *DrvSndROM1;
 static UINT8 *Drv68KRAM;
+static UINT8 *DrvHucRAM;
 static UINT8 *DrvPalRAM0;
 static UINT8 *DrvPalRAM1;
 static UINT8 *DrvSprRAM;
@@ -28,7 +29,8 @@ static UINT8 *DrvSprBuf;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static UINT8 *soundlatch;
+static INT16 *SoundBuffer;
+
 static UINT8 *flipscreen;
 static UINT16 *priority;
 
@@ -139,8 +141,8 @@ void __fastcall vaportra_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x100006:
-			*soundlatch = data;
-			// cpu_set_input_line(state->Huc6280 Code, 0, ASSERT_LINE);
+			deco16_soundlatch = data & 0xff;
+			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 		return;
 
 		case 0x30c000:
@@ -160,10 +162,9 @@ void __fastcall vaportra_main_write_byte(UINT32 address, UINT8 data)
 			priority[(address & 2)/2] = data;
 		return;
 
-		case 0x100006:
 		case 0x100007:
-			*soundlatch = data;
-			// cpu_set_input_line(state->Huc6280 Code, 0, ASSERT_LINE);
+			deco16_soundlatch = data;
+			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 		return;
 
 		case 0x30c000:
@@ -233,22 +234,6 @@ UINT8 __fastcall vaportra_main_read_byte(UINT32 address)
 	return 0;
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return 0 * nSoundRate; //(INT64)HucTotalCycles() * nSoundRate / 8055000;
-}
-
-static double DrvGetTime()
-{
-	return 0; //(double)HucTotalCycles() / 8055000.0;
-}
-
-static void DrvYM2151IrqHandler(INT32 state)
-{
-	state = state; // kill warnings...
-//	HucSetIRQLine(1, state ? HUC_IRQSTATUS_ACK : HUC_IRQSTATUS_NONE);
-}
-
 static INT32 vaportra_bank_callback( const INT32 bank )
 {
 	return ((bank >> 4) & 0x7) * 0x1000;
@@ -262,12 +247,7 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-	// Huc6280
-
-	BurnYM2203Reset();
-	BurnYM2151Reset();
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	deco16SoundReset();
 
 	deco16Reset();
 
@@ -287,7 +267,7 @@ static INT32 MemIndex()
 	DrvGfxROM3	= Next; Next += 0x200000;
 
 	MSM6295ROM	= Next;
-	DrvSndROM0	= Next; Next += 0x040000;
+	DrvSndROM0	= Next; Next += 0x100000;
 	DrvSndROM1	= Next; Next += 0x040000;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0500 * sizeof(UINT32);
@@ -295,16 +275,18 @@ static INT32 MemIndex()
 	AllRam		= Next;
 
 	Drv68KRAM	= Next; Next += 0x004000;
+	DrvHucRAM	= Next; Next += 0x002000;
 	DrvSprRAM	= Next; Next += 0x000800;
 	DrvSprBuf	= Next; Next += 0x000800;
 	DrvPalRAM0	= Next; Next += 0x000a00;
 	DrvPalRAM1	= Next; Next += 0x000a00;
 
-	soundlatch	= Next; Next += 0x000001;
 	flipscreen	= Next; Next += 0x000001;
 	priority	= (UINT16*)Next; Next += 0x000002 * sizeof(UINT16);
 
 	RamEnd		= Next;
+	
+	SoundBuffer = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
 
 	MemEnd		= Next;
 
@@ -404,16 +386,7 @@ static INT32 DrvInit(INT32 type)
 	SekSetReadByteHandler(0,		vaportra_main_read_byte);
 	SekClose();
 
-	// Huc6280...
-
-	BurnYM2151Init(3580000, 40.0);
-	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
-
-	BurnYM2203Init(1, 4027500, NULL, DrvSynchroniseStream, DrvGetTime, 1);
-//	BurnTimerAttachHuc(8055000);
-
-	MSM6295Init(0, 1006875 / 132, 75.0, 1);
-	MSM6295Init(1, 2013750 / 132, 60.0, 1);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, NULL, 40.0, 1006875, 75.0, 2013750, 60.0);
 
 	GenericTilesInit();
 
@@ -427,16 +400,11 @@ static INT32 DrvExit()
 	GenericTilesExit();
 	deco16Exit();
 
-	BurnYM2203Exit();
-	BurnYM2151Exit();
-	MSM6295Exit(0);
-	MSM6295Exit(1);
-
 	SekExit();
+	
+	deco16SoundExit();
 
 	BurnFree (AllMem);
-
-	MSM6295ROM = NULL;
 
 	return 0;
 }
@@ -568,31 +536,52 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
+	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
+	h6280NewFrame();
+	
 	SekOpen(0);
+	h6280Open(0);
 
 	deco16_vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-	//	nCyclesDone[1] += HucRun(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
 		if (i == 248) deco16_vblank = 0x08;
+		
+		INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+		deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		nSoundBufferPos += nSegmentLength;
 	}
 
 	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
-
-	SekClose();
+	
+	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
-		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+
+		if (nSegmentLength) {
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		}
+		
+		for (INT32 i = 0; i < nBurnSoundLen; i++) {
+			pBurnSoundOut[(i << 1) + 0] += SoundBuffer[(i << 1) + 0];
+			pBurnSoundOut[(i << 1) + 1] += SoundBuffer[(i << 1) + 1];
+		}
 	}
+
+	h6280Close();
+	SekClose();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -622,11 +611,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	//	huc6280
 
 		deco16Scan();
-
-		BurnYM2203Scan(nAction, pnMin);
-		BurnYM2151Scan(nAction);
-		MSM6295Scan(0, nAction);
-		MSM6295Scan(1, nAction);
 	}
 
 	return 0;
@@ -674,7 +658,7 @@ static INT32 VaportraInit()
 
 struct BurnDriver BurnDrvVaportra = {
 	"vaportra", NULL, NULL, NULL, "1989",
-	"Vapor Trail - Hyper Offence Formation (World revision 1)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Vapor Trail - Hyper Offence Formation (World revision 1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, vaportraRomInfo, vaportraRomName, NULL, NULL, VaportraInputInfo, VaportraDIPInfo,
@@ -727,7 +711,7 @@ static INT32 Vaportraw3Init()
 
 struct BurnDriver BurnDrvVaportraw3 = {
 	"vaportra3", "vaportra", NULL, NULL, "1989",
-	"Vapor Trail - Hyper Offence Formation (World revision 3)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Vapor Trail - Hyper Offence Formation (World revision 3)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, vaportraw3RomInfo, vaportraw3RomName, NULL, NULL, VaportraInputInfo, VaportraDIPInfo,
@@ -772,7 +756,7 @@ STD_ROM_FN(vaportrau)
 
 struct BurnDriver BurnDrvVaportrau = {
 	"vaportrau", "vaportra", NULL, NULL, "1989",
-	"Vapor Trail - Hyper Offence Formation (US)\0", "No sound", "Data East USA", "Miscellaneous",
+	"Vapor Trail - Hyper Offence Formation (US)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, vaportrauRomInfo, vaportrauRomName, NULL, NULL, VaportraInputInfo, VaportraDIPInfo,
@@ -811,7 +795,7 @@ STD_ROM_FN(kuhga)
 
 struct BurnDriver BurnDrvKuhga = {
 	"kuhga", "vaportra", NULL, NULL, "1989",
-	"Kuhga - Operation Code 'Vapor Trail' (Japan revision 3)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Kuhga - Operation Code 'Vapor Trail' (Japan revision 3)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, kuhgaRomInfo, kuhgaRomName, NULL, NULL, VaportraInputInfo, VaportraDIPInfo,

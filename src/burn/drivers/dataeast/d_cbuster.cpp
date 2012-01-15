@@ -2,11 +2,12 @@
 // Based on MAME driver by by Bryan McPhail
 
 #include "tiles_generic.h"
+#include "h6280_intf.h"
 #include "bitswap.h"
 #include "deco16ic.h"
-#include "burn_ym2203.h"
-#include "burn_ym2151.h"
 #include "msm6295.h"
+#include "timer.h"
+#include "burn_ym2203.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -18,9 +19,8 @@ static UINT8 *DrvGfxROM0;
 static UINT8 *DrvGfxROM1;
 static UINT8 *DrvGfxROM2;
 static UINT8 *DrvGfxROM3;
-static UINT8 *DrvSndROM0;
-static UINT8 *DrvSndROM1;
 static UINT8 *Drv68KRAM;
+static UINT8 *DrvHucRAM;
 static UINT8 *DrvPalRAM0;
 static UINT8 *DrvPalRAM1;
 static UINT8 *DrvSprRAM;
@@ -29,7 +29,8 @@ static UINT8 *DrvSprBuf;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static UINT8 *soundlatch;
+static INT16 *SoundBuffer;
+
 static UINT8 *flipscreen;
 
 static UINT8 DrvJoy1[16];
@@ -133,9 +134,8 @@ void __fastcall cbuster_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0xbc002:
-		case 0xbc003:
-			*soundlatch = data;
-			//cpu_set_input_line(state->audiocpu, 0, HOLD_LINE);
+			deco16_soundlatch = data & 0xff;
+			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 		return;
 	}
 }
@@ -149,10 +149,9 @@ void __fastcall cbuster_main_write_byte(UINT32 address, UINT8 data)
 			memcpy (DrvSprBuf, DrvSprRAM, 0x800);
 		return;
 
-		case 0xbc002:
 		case 0xbc003:
-			*soundlatch = data;
-			//cpu_set_input_line(state->audiocpu, 0, HOLD_LINE);
+			deco16_soundlatch = data;
+			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
 		return;
 
 		case 0xbc004:
@@ -236,22 +235,6 @@ static INT32 cbuster_bank_callback(const INT32 bank)
 	return ((bank >> 4) & 0x7) * 0x1000;
 }
 
-static void DrvYM2151IrqHandler(INT32 state)
-{
-	state = state; // kill warnings...
-//	HucSetIRQLine(1, state ? HUC_IRQSTATUS_ACK : HUC_IRQSTATUS_NONE);
-}
-
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return 0 * nSoundRate; //(INT64)HucTotalCycles() * nSoundRate / 8055000;
-}
-
-static double DrvGetTime()
-{
-	return 0; //(double)HucTotalCycles() / 8055000.0;
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -260,12 +243,7 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-	// Huc6280
-
-	BurnYM2151Reset();
-	BurnYM2203Reset();
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	deco16SoundReset();
 
 	deco16Reset();
 
@@ -308,24 +286,24 @@ static INT32 MemIndex()
 	DrvGfxROM2	= Next; Next += 0x100000;
 	DrvGfxROM3	= Next; Next += 0x400000;
 
-	MSM6295ROM	= Next;
-	DrvSndROM0	= Next; Next += 0x040000;
-	DrvSndROM1	= Next; Next += 0x040000;
+	MSM6295ROM	= Next; Next += 0x140000;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
 
 	AllRam		= Next;
 
 	Drv68KRAM	= Next; Next += 0x004000;
+	DrvHucRAM	= Next; Next += 0x002000;
 	DrvSprRAM	= Next; Next += 0x000800;
 	DrvSprBuf	= Next; Next += 0x000800;
 	DrvPalRAM0	= Next; Next += 0x001000;
 	DrvPalRAM1	= Next; Next += 0x001000;
 
-	soundlatch	= Next; Next += 0x000001;
 	flipscreen	= Next; Next += 0x000001;
 
 	RamEnd		= Next;
+	
+	SoundBuffer = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
 
 	MemEnd		= Next;
 
@@ -402,9 +380,9 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvGfxROM3 + 0x160000, 13, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM3 + 0x170000, 14, 1)) return 1;
 
-		if (BurnLoadRom(DrvSndROM0 + 0x000000, 15, 1)) return 1;
+		if (BurnLoadRom(MSM6295ROM + 0x000000, 15, 1)) return 1;
 
-		if (BurnLoadRom(DrvSndROM1 + 0x000000, 16, 1)) return 1;
+		if (BurnLoadRom(MSM6295ROM + 0x100000, 16, 1)) return 1;
 
 		DrvROMRearrange();
 
@@ -450,16 +428,7 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(0,		cbuster_main_read_byte);
 	SekClose();
 
-	// Huc6280...
-
-	BurnYM2203Init(1, 4027500, NULL, DrvSynchroniseStream, DrvGetTime, 1);
-//	BurnTimerAttachHuc(8055000);
-
-	BurnYM2151Init(3580000, 45.0);
-	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
-
-	MSM6295Init(0, 1023924 / 132, 75.0, 1);
-	MSM6295Init(1, 2047848 / 132, 60.0, 1);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, NULL, 40.0, 1006875, 75.0, 2013750, 100.0);
 
 	GenericTilesInit();
 
@@ -473,17 +442,10 @@ static INT32 DrvExit()
 	GenericTilesExit();
 	deco16Exit();
 
-	BurnYM2151Exit();
-	BurnYM2203Exit();
-	MSM6295Exit(0);
-	MSM6295Exit(1);
-
 	SekExit();
-//	huc6280
+	deco16SoundExit();
 
 	BurnFree (AllMem);
-
-	MSM6295ROM = NULL;
 
 	return 0;
 }
@@ -637,34 +599,52 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
+	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
+	h6280NewFrame();
+	
 	SekOpen(0);
-//	HucOpen(0);
+	h6280Open(0);
 
 	deco16_vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-//		nCyclesDone[1] += HucRun(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
 		if (i == 240) deco16_vblank = 0x08;
+		
+		INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+		deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		nSoundBufferPos += nSegmentLength;
 	}
 
 	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-
-//	HucClose();
-	SekClose();
+	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
-		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+
+		if (nSegmentLength) {
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		}
+		
+		for (INT32 i = 0; i < nBurnSoundLen; i++) {
+			pBurnSoundOut[(i << 1) + 0] += SoundBuffer[(i << 1) + 0];
+			pBurnSoundOut[(i << 1) + 1] += SoundBuffer[(i << 1) + 1];
+		}
 	}
 
+	h6280Close();
+	SekClose();
+	
 	if (pBurnDraw) {
 		DrvDraw();
 	}
@@ -690,14 +670,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
-	//	huc6280
 
 		deco16Scan();
-
-		BurnYM2151Scan(nAction);
-		BurnYM2203Scan(nAction, pnMin);
-		MSM6295Scan(0, nAction);
-		MSM6295Scan(1, nAction);
 	}
 
 	return 0;
@@ -739,7 +713,7 @@ STD_ROM_FN(cbuster)
 
 struct BurnDriver BurnDrvCbuster = {
 	"cbuster", NULL, NULL, NULL, "1990",
-	"Crude Buster (World FX version)\0","No sound", "Data East Corporation", "Miscellaneous",
+	"Crude Buster (World FX version)\0",NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, cbusterRomInfo, cbusterRomName, NULL, NULL, CbusterInputInfo, CbusterDIPInfo,
@@ -783,7 +757,7 @@ STD_ROM_FN(cbusterw)
 
 struct BurnDriver BurnDrvCbusterw = {
 	"cbusterw", "cbuster", NULL, NULL, "1990",
-	"Crude Buster (World FU version)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Crude Buster (World FU version)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, cbusterwRomInfo, cbusterwRomName, NULL, NULL, CbusterInputInfo, CbusterDIPInfo,
@@ -827,7 +801,7 @@ STD_ROM_FN(cbusterj)
 
 struct BurnDriver BurnDrvCbusterj = {
 	"cbusterj", "cbuster", NULL, NULL, "1990",
-	"Crude Buster (Japan)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Crude Buster (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, cbusterjRomInfo, cbusterjRomName, NULL, NULL, CbusterInputInfo, CbusterDIPInfo,
@@ -871,7 +845,7 @@ STD_ROM_FN(twocrude)
 
 struct BurnDriver BurnDrvTwocrude = {
 	"twocrude", "cbuster", NULL, NULL, "1990",
-	"Two Crude (US)\0", "No sound", "Data East USA", "Miscellaneous",
+	"Two Crude (US)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, twocrudeRomInfo, twocrudeRomName, NULL, NULL, CbusterInputInfo, CbusterDIPInfo,

@@ -3,7 +3,6 @@
 
 #include "tiles_generic.h"
 #include "deco16ic.h"
-#include "timer.h"
 #include "msm6295.h"
 #include "h6280_intf.h"
 
@@ -290,7 +289,7 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(0,		dietgogo_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, NULL, 0.45, 1006875, 0.60, 0, 0);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, NULL, 45.0, 1006875, 100.0, 0, 0);
 
 	GenericTilesInit();
 
@@ -426,6 +425,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
+	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 14000000 / 58, 2685000 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -438,15 +438,26 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
-	//	BurnTimerUpdate(nCyclesTotal[1] / nInterleave);
 
 		if (i == 240) deco16_vblank = 0x08;
+		
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
-		deco16SoundUpdate(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+
+		if (nSegmentLength) {
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		}
 	}
 
 	h6280Close();
@@ -511,7 +522,7 @@ STD_ROM_FN(dietgou)
 
 struct BurnDriver BurnDrvDietgou = {
 	"dietgou", "dietgo", NULL, NULL, "1992",
-	"Diet Go Go (USA v1.1 1992.09.26)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Diet Go Go (USA v1.1 1992.09.26)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, dietgouRomInfo, dietgouRomName, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
@@ -545,7 +556,7 @@ STD_ROM_FN(dietgoe)
 
 struct BurnDriver BurnDrvDietgoe = {
 	"dietgoe", "dietgo", NULL, NULL, "1992",
-	"Diet Go Go (Euro v1.1 1992.08.04)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Diet Go Go (Euro v1.1 1992.08.04)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, dietgoeRomInfo, dietgoeRomName, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
@@ -579,7 +590,7 @@ STD_ROM_FN(dietgo)
 
 struct BurnDriver BurnDrvDietgo = {
 	"dietgo", NULL, NULL, NULL, "1992",
-	"Diet Go Go (Euro v1.1 1992.09.26)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Diet Go Go (Euro v1.1 1992.09.26)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, dietgoRomInfo, dietgoRomName, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,
@@ -609,7 +620,7 @@ STD_ROM_FN(dietgoj)
 
 struct BurnDriver BurnDrvDietgoj = {
 	"dietgoj", "dietgo", NULL, NULL, "1992",
-	"Diet Go Go (Japan v1.1 1992.09.26)\0", "No sound", "Data East Corporation", "Miscellaneous",
+	"Diet Go Go (Japan v1.1 1992.09.26)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, dietgojRomInfo, dietgojRomName, NULL, NULL, DietgoInputInfo, DietgoDIPInfo,

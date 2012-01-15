@@ -1055,7 +1055,7 @@ void __fastcall RobocopShared68KWriteByte(UINT32 a, UINT8 d)
 	INT32 Offset = (a - 0x180000) >> 1;
 	DrvSharedRam[Offset] = d;
 	if (Offset == 0x7ff) {
-		bprintf(PRINT_NORMAL, _T("IRQ Raised\n"));
+		h6280SetIRQLine(0, H6280_IRQSTATUS_AUTO);
 	}
 }
 
@@ -1070,7 +1070,7 @@ void __fastcall RobocopShared68KWriteWord(UINT32 a, UINT16 d)
 	INT32 Offset = (a - 0x180000) >> 1;
 	DrvSharedRam[Offset] = d & 0xff;
 	if (Offset == 0x7ff) {
-		bprintf(PRINT_NORMAL, _T("IRQ Raised\n"));
+		h6280SetIRQLine(0, H6280_IRQSTATUS_AUTO);
 	}
 }
 
@@ -2478,7 +2478,7 @@ struct BurnDriver BurnDrvRobocop = {
 	"robocop", NULL, NULL, NULL, "1988",
 	"Robocop (World revision 4)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, RobocopRomInfo, RobocopRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
 	RobocopInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3

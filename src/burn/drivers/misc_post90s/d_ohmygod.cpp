@@ -306,7 +306,7 @@ UINT16 __fastcall OhmygodReadWord(UINT32 a)
 		}
 
 		case 0xb00000: {
-			return 0xff00 | MSM6295ReadStatus(0);
+			return 0xfff0 | MSM6295ReadStatus(0);
 		}
 
 		case 0xc00000: {
@@ -680,7 +680,7 @@ struct BurnDriver BurnDrvOhmygod = {
 	NULL, 0x800, 320, 240, 4, 3
 };
 
-struct BurnDriverD BurnDrvNaname = {
+struct BurnDriver BurnDrvNaname = {
 	"naname", NULL, NULL, NULL, "1994",
 	"Naname de Magic!\0", NULL, "Atlus", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

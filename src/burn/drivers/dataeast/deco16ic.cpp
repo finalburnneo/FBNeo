@@ -797,7 +797,7 @@ static UINT8 deco16_sound_read(UINT32 address)
 			if (deco16_sound_enable[1]) {
 				return BurnYM2203Read(0, address & 1);
 			}
-			return 0xff;
+			return 0x00;
 		
 		case 0x110000:
 			return 0xff; 

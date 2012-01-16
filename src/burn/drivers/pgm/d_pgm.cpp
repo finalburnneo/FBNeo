@@ -2039,11 +2039,7 @@ static struct BurnRomInfo kov2pRomDesc[] = {
 
 	{ "m1200.rom",	   0x800000, 0xb0d88720, 5 | BRF_SND },		  //  9 Samples
 
-#if !defined (ROM_VERIFY)
 	{ "kov2p_igs027a.bin",	   0x004000, 0xe0d7679f, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
-#else
-	{ "kov2p_igs027a.bin",	   0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  // 10 Internal ARM7 Rom
-#endif
 
 	{ "v200-16.rom",   0x200000, 0x16a0c11f, 8 | BRF_PRG | BRF_ESS }, // 11 External ARM7 Rom
 };
@@ -2104,11 +2100,7 @@ static struct BurnRomInfo kov2p205RomDesc[] = {
 
 	{ "m1200.rom",	   0x800000, 0xb0d88720, 5 | BRF_SND },		  //  9 Samples
 
-#if !defined (ROM_VERIFY)
 	{ "kov2p_igs027a.bin",	   0x004000, 0xe0d7679f, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
-#else
-	{ "kov2p_igs027a.bin",	   0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  // 10 Internal ARM7 Rom
-#endif
 
 	{ "v200-16.rom",   0x200000, 0x16a0c11f, 8 | BRF_PRG | BRF_ESS }, // 11 External ARM7 Rom
 };
@@ -3409,7 +3401,7 @@ static struct BurnRomInfo kovsgqyzRomDesc[] = {
 	
 	{ "m0600.rom",     0x400000, 0x3ada4fd6, 5 | BRF_SND },		  // 12 Samples	
 	
-	{ "kov_igs027a.bin", 0x004000, 0x00000000, 7 | BRF_PRG | BRF_NODUMP }, // 13 Internal ARM7 Rom
+	{ "kovsgqyz_igs027a.bin", 0x004000, 0x00000000, 7 | BRF_PRG | BRF_NODUMP }, // 13 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovsgqyz, kovsgqyz, pgm)
@@ -3451,7 +3443,7 @@ static struct BurnRomInfo kovsgqyzaRomDesc[] = {
 	
 	{ "m0600.rom",     0x400000, 0x3ada4fd6, 5 | BRF_SND },		  // 12 Samples	
 	
-	{ "kov_igs027a.bin", 0x004000, 0x00000000, 7 | BRF_PRG | BRF_NODUMP }, // 13 Internal ARM7 Rom
+	{ "kovsgqyza_igs027a.bin", 0x004000, 0x00000000, 7 | BRF_PRG | BRF_NODUMP }, // 13 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovsgqyza, kovsgqyza, pgm)
@@ -3471,7 +3463,7 @@ struct BurnDriver BurnDrvKovsgqyza = {
 // Knights of Valour: SanGuo QunYingZhuan / Sangoku Senki: SanGuo QunYingZhuan (set 3)
 
 static struct BurnRomInfo kovsgqyzbRomDesc[] = {
-	{ "p0600qyz.119",  0x400000, 0x18b8b9c0, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "pgm_sgqyzb.rom",0x400000, 0x18b8b9c0, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "t0600.rom",     0x800000, 0x4acc1ad6, 2 | BRF_GRA },		  //  1 Tile data
 	
@@ -3485,7 +3477,7 @@ static struct BurnRomInfo kovsgqyzbRomDesc[] = {
 	
 	{ "m0600.rom",     0x400000, 0x3ada4fd6, 5 | BRF_SND },		  // 12 Samples	
 	
-	{ "kov_igs027a.bin", 0x004000, 0x00000000, 7 | BRF_PRG | BRF_NODUMP }, // 13 Internal ARM7 Rom
+	{ "kovsgqyzb_igs027a.bin", 0x004000, 0x00000000, 7 | BRF_PRG | BRF_NODUMP }, // 13 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovsgqyzb, kovsgqyzb, pgm)

@@ -4541,7 +4541,7 @@ static struct BurnRomInfo eyes2RomDesc[] = {
 	{ "g38204.7h",    0x1000, 0xcf038276, 1 | BRF_ESS | BRF_PRG },	//  3
 
 	{ "g38205.5d",    0x1000, 0x03b1b4c7, 2 | BRF_GRA },		//  4 Graphics
-	{ "e5",           0x1000, 0xa42b5201, 2 | BRF_GRA },		//  5
+	{ "g38206.5e",    0x1000, 0xa42b5201, 2 | BRF_GRA },		//  5
 
 	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Proms
 	{ "82s129.4a",    0x0100, 0xd8d78829, 3 | BRF_GRA },		//  7
@@ -4566,7 +4566,7 @@ struct BurnDriver BurnDrveyes2 = {
 
 // Eyes (Zaccaria)
 
-static struct BurnRomInfo eyeszacRomDesc[] = {
+static struct BurnRomInfo eyeszacbRomDesc[] = {
 	{ "1.bin",        0x0800, 0xa4a9d7a0, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 	{ "5.bin",        0x0800, 0xc32b3f73, 1 | BRF_ESS | BRF_PRG },	//  1
 	{ "2.bin",        0x0800, 0x195b9473, 1 | BRF_ESS | BRF_PRG },	//  2
@@ -4590,15 +4590,15 @@ static struct BurnRomInfo eyeszacRomDesc[] = {
 	{ "11.bin",       0x0800, 0x69c1602a, 0 | BRF_PRG },	//  16 (Not used)
 };
 
-STD_ROM_PICK(eyeszac)
-STD_ROM_FN(eyeszac)
+STD_ROM_PICK(eyeszacb)
+STD_ROM_FN(eyeszacb)
 
 struct BurnDriver BurnDrveyeszac = {
-	"eyeszac", "eyes", NULL, NULL, "1982",
-	"Eyes (Zaccaria)\0", NULL, "Zaccaria / bootleg", "Pac-man",
+	"eyeszacb", "eyes", NULL, NULL, "1982",
+	"Eyes (bootleg)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
-	NULL, eyeszacRomInfo, eyeszacRomName, NULL, NULL, eyesInputInfo, eyesDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	NULL, eyeszacbRomInfo, eyeszacbRomName, NULL, NULL, eyesInputInfo, eyesDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

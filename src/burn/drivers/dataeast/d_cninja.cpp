@@ -488,12 +488,12 @@ void __fastcall cninja_main_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x190000:
-		//case 0x1a4000:
+		case 0x1a4000:
 			irq_mask = data & 0xff;
 		return;
 
 		case 0x190002:
-		//case 0x1a4002:
+		case 0x1a4002:
 		{
 			scanline = data & 0xff;
 
@@ -505,13 +505,14 @@ void __fastcall cninja_main_write_word(UINT32 address, UINT16 data)
 		}
 		return;
 
-	//	case 0x1ac000:
+		case 0x1ac000:
 		case 0x1b4000:
 			memcpy (DrvSprBuf, DrvSprRAM, 0x800);
 		return;
 
 		case 0x17ff2a:
-	//	case 0x1bc0a8:
+		case 0x198064:
+		case 0x1bc0a8:
 			if (has_z80) {
 				*soundlatch = data & 0xff;
 				ZetNmi();
@@ -522,16 +523,16 @@ void __fastcall cninja_main_write_word(UINT32 address, UINT16 data)
 		break;
 	}
 
-	////if ((address & 0xfffff800) == 0x198000) {
-	//	deco16_66_prot_w(address, data, 0xffff);
-	//	return;
-	//}
+	if ((address & 0xfffff800) == 0x198000) {
+		deco16_66_prot_w(address, data, 0xffff);
+		return;
+	}
 
-	//if ((address & 0xffffff00) == 0x1bc000) {
-	//	deco16_prot_ram[(address & 0xff) / 2] = data;
-
-	//	return;
-	//}
+	if ((address & 0xffffff00) == 0x1bc000) {
+		UINT16 *ProtRam = (UINT16*)deco16_prot_ram;
+		ProtRam[(address - 0x1bc000) >> 1] = data;
+		return;
+	}
 }
 
 void __fastcall cninja_main_write_byte(UINT32 address, UINT8 data)
@@ -541,14 +542,14 @@ void __fastcall cninja_main_write_byte(UINT32 address, UINT8 data)
 	//	case 0x190000:
 		case 0x190001:
 	//	case 0x1a4000:
-	//	case 0x1a4001:
+		case 0x1a4001:
 			irq_mask = data & 0xff;
 		return;
 
 	//	case 0x190002:
 		case 0x190003:
 	//	case 0x1a4002:
-	//	case 0x1a4003:
+		case 0x1a4003:
 		{
 			scanline = data & 0xff;
 			if ((~irq_mask & 0x02) && (scanline > 0) && (scanline < 240)) {
@@ -560,13 +561,13 @@ void __fastcall cninja_main_write_byte(UINT32 address, UINT8 data)
 		return;
 
 	//	case 0x1ac000:
-	//	case 0x1ac001:
+		case 0x1ac001:
 	//	case 0x1b4000:
 		case 0x1b4001:
 			memcpy (DrvSprBuf, DrvSprRAM, 0x800);
 		return;
 
-		case 0x1bc0a8:
+		case 0x198065:
 		case 0x1bc0a9:
 			if (has_z80) {
 				*soundlatch = data;
@@ -578,16 +579,18 @@ void __fastcall cninja_main_write_byte(UINT32 address, UINT8 data)
 		break;
 	}
 
-	//if ((address & 0xfffff800) == 0x198000) { 
-	//	deco16_66_prot_w(address, data, 0x00ff << ((address & 1) << 3));
-	//	return;
-	//}
+	if ((address & 0xfffff800) == 0x198000) { 
+		deco16_66_prot_w(address, data, 0x00ff << ((address & 1) << 3));
+		return;
+	}
 
-	//if ((address & 0xffffff00) == 0x1bc000) {
-	//	DrvPrtRAM[(address & 0xff)^1] = data;
-//
-	//	return;
-	//}
+	if ((address & 0xffffff00) == 0x1bc000) {
+		DrvPrtRAM[(address & 0xff)^1] = data;
+
+		return;
+	}
+	
+	bprintf(PRINT_NORMAL, _T("Write Byte %x, %x\n"), address, data);
 }
 
 UINT16 __fastcall cninja_main_read_word(UINT32 address)
@@ -603,24 +606,26 @@ UINT16 __fastcall cninja_main_read_word(UINT32 address)
 		case 0x17ff2c:
 			return DrvInputs[0];
 
-	//	case 0x1a4002:
+		case 0x1a4002:
 		case 0x190002:
 			return scanline;
 
-	//	case 0x1a4004:
+		case 0x1a4004:
 		case 0x190004:
 			SekSetIRQLine(3, SEK_IRQSTATUS_NONE);
 			SekSetIRQLine(4, SEK_IRQSTATUS_NONE);
 			return 0;
 	}
 
-	//if ((address & 0xfffffc00) == 0x1bc000) {
-	//	return deco16_104_cninja_prot_r(address);
-	//}
+	if ((address & 0xfffffc00) == 0x1bc000) {
+		return deco16_104_cninja_prot_r(address);
+	}
 
-	//if ((address & 0xfffff800) == 0x198000) {
-	//	return deco16_60_prot_r(address);
-	//}
+	if ((address & 0xfffff800) == 0x198000) {
+		return deco16_60_prot_r(address);
+	}
+	
+	bprintf(PRINT_NORMAL, _T("Read Word %x, %x\n"), address);
 
 	return 0;
 }
@@ -646,7 +651,7 @@ UINT8 __fastcall cninja_main_read_byte(UINT32 address)
 			return DrvInputs[0];
 
 	//	case 0x1a4002:
-	//	case 0x1a4003:
+		case 0x1a4003:
 	//	case 0x190002:
 		case 0x190003:
 			return scanline;
@@ -660,13 +665,15 @@ UINT8 __fastcall cninja_main_read_byte(UINT32 address)
 			return 0;
 	}
 
-	//if ((address & 0xfffff800) == 0x198000) {
-	//	return deco16_60_prot_r(address) >> ((~address & 1) << 3);
-	//}
+	if ((address & 0xfffff800) == 0x198000) {
+		return deco16_60_prot_r(address) >> ((~address & 1) << 3);
+	}
 
-	//if ((address & 0xfffffc00) == 0x1bc000) {
-	//	return deco16_104_cninja_prot_r(address) >> ((~address & 1) << 3);
-	//}
+	if ((address & 0xfffffc00) == 0x1bc000) {
+		return deco16_104_cninja_prot_r(address) >> ((~address & 1) << 3);
+	}
+	
+	bprintf(PRINT_NORMAL, _T("Read Byte %x, %x\n"), address);
 
 	return 0;
 }
@@ -1724,7 +1731,6 @@ static INT32 DrvExit()
 		MSM6295Exit(0);
 		MSM6295Exit(1);
 		BurnYM2151Exit();
-		BurnYM2203Exit();
 	} else {
 		deco16SoundExit();
 	}
@@ -2450,7 +2456,7 @@ struct BurnDriver BurnDrvCninja = {
 	"cninja", NULL, NULL, NULL, "1991",
 	"Caveman Ninja (World ver 4)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, cninjaRomInfo, cninjaRomName, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
 	CninjaInit, DrvExit, CninjaFrame, CninjaDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
@@ -2492,11 +2498,11 @@ static struct BurnRomInfo cninja1RomDesc[] = {
 STD_ROM_PICK(cninja1)
 STD_ROM_FN(cninja1)
 
-struct BurnDriverD BurnDrvCninja1 = {
+struct BurnDriver BurnDrvCninja1 = {
 	"cninja1", "cninja", NULL, NULL, "1991",
 	"Caveman Ninja (World ver 1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, cninja1RomInfo, cninja1RomName, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
 	CninjaInit, DrvExit, CninjaFrame, CninjaDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
@@ -2538,11 +2544,11 @@ static struct BurnRomInfo cninjauRomDesc[] = {
 STD_ROM_PICK(cninjau)
 STD_ROM_FN(cninjau)
 
-struct BurnDriverD BurnDrvCninjau = {
+struct BurnDriver BurnDrvCninjau = {
 	"cninjau", "cninja", NULL, NULL, "1991",
 	"Caveman Ninja (US ver 4)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, cninjauRomInfo, cninjauRomName, NULL, NULL, DrvInputInfo, CninjauDIPInfo,
 	CninjaInit, DrvExit, CninjaFrame, CninjaDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
@@ -2584,11 +2590,11 @@ static struct BurnRomInfo joemacRomDesc[] = {
 STD_ROM_PICK(joemac)
 STD_ROM_FN(joemac)
 
-struct BurnDriverD BurnDrvJoemac = {
+struct BurnDriver BurnDrvJoemac = {
 	"joemac", "cninja", NULL, NULL, "1991",
 	"Tatakae Genshizin Joe & Mac (Japan ver 1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, joemacRomInfo, joemacRomName, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
 	CninjaInit, DrvExit, CninjaFrame, CninjaDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
@@ -2626,11 +2632,11 @@ static struct BurnRomInfo stoneageRomDesc[] = {
 STD_ROM_PICK(stoneage)
 STD_ROM_FN(stoneage)
 
-struct BurnDriverD BurnDrvStoneage = {
+struct BurnDriver BurnDrvStoneage = {
 	"stoneage", "cninja", NULL, NULL, "1991",
 	"Stoneage (bootleg of Caveman Ninja)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, stoneageRomInfo, stoneageRomName, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
 	StoneageInit, DrvExit, StoneageFrame, CninjaDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
@@ -2904,11 +2910,11 @@ static struct BurnRomInfo edrandyRomDesc[] = {
 STD_ROM_PICK(edrandy)
 STD_ROM_FN(edrandy)
 
-struct BurnDriverD BurnDrvEdrandy = {
+struct BurnDriver BurnDrvEdrandy = {
 	"edrandy", NULL, NULL, NULL, "1990",
 	"The Cliffhanger - Edward Randy (World ver 3)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, edrandyRomInfo, edrandyRomName, NULL, NULL, DrvInputInfo, EdrandyDIPInfo,
 	EdrandyInit, DrvExit, CninjaFrame, EdrandyDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
@@ -2958,11 +2964,11 @@ static struct BurnRomInfo edrandy2RomDesc[] = {
 STD_ROM_PICK(edrandy2)
 STD_ROM_FN(edrandy2)
 
-struct BurnDriverD BurnDrvEdrandy2 = {
+struct BurnDriver BurnDrvEdrandy2 = {
 	"edrandy2", "edrandy", NULL, NULL, "1990",
 	"The Cliffhanger - Edward Randy (World ver 2)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, edrandy2RomInfo, edrandy2RomName, NULL, NULL, DrvInputInfo, EdrandcDIPInfo,
 	EdrandyInit, DrvExit, CninjaFrame, EdrandyDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
@@ -3012,11 +3018,11 @@ static struct BurnRomInfo edrandy1RomDesc[] = {
 STD_ROM_PICK(edrandy1)
 STD_ROM_FN(edrandy1)
 
-struct BurnDriverD BurnDrvEdrandy1 = {
+struct BurnDriver BurnDrvEdrandy1 = {
 	"edrandy1", "edrandy", NULL, NULL, "1990",
 	"The Cliffhanger - Edward Randy (World ver 1)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, edrandy1RomInfo, edrandy1RomName, NULL, NULL, DrvInputInfo, EdrandcDIPInfo,
 	EdrandyInit, DrvExit, CninjaFrame, EdrandyDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
@@ -3066,11 +3072,11 @@ static struct BurnRomInfo edrandyjRomDesc[] = {
 STD_ROM_PICK(edrandyj)
 STD_ROM_FN(edrandyj)
 
-struct BurnDriverD BurnDrvEdrandyj = {
+struct BurnDriver BurnDrvEdrandyj = {
 	"edrandyj", "edrandy", NULL, NULL, "1990",
 	"The Cliffhanger - Edward Randy (Japan ver 3)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, edrandyjRomInfo, edrandyjRomName, NULL, NULL, DrvInputInfo, EdrandcDIPInfo,
 	EdrandyInit, DrvExit, CninjaFrame, EdrandyDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3

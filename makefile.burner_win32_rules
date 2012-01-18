@@ -1,6 +1,6 @@
-alldir	+= 	burner burner/platform/win32 depend/kaillera/client depend/libs/libpng depend/libs/zlib interface interface/video \
-			interface/video/scalers interface/video/win32 interface/audio interface/audio/win32 interface/input \
-			interface/input/win32 interface/cd interface/cd/win32 interface/perfcount interface/perfcount/win32 depend/generated
+alldir	+= 	burner burner/win32 dep/kaillera/client dep/libs/libpng dep/libs/zlib intf intf/video intf/video/scalers \
+			intf/video/win32 intf/audio intf/audio/win32 intf/input intf/input/win32 intf/cd intf/cd/win32 intf/perfcount \
+			intf/perfcount/win32 dep/generated
 
 depobj	+= 	about.o bzip.o cona.o debugger.o drv.o dwmapi_core.o dynhuff.o fba_kaillera.o image_win32.o inpc.o inpcheat.o inpd.o \
 			inpdipsw.o inps.o ips_manager.o localise.o localise_gamelist.o main.o mdi.o media.o memcard.o menu.o misc_win32.o \

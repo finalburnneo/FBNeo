@@ -74,6 +74,9 @@ static void HippodrmDraw();
 static void RobocopDraw();
 static void SlyspyDraw();
 
+typedef INT32 (*Dec0LoadRoms)();
+static Dec0LoadRoms LoadRomsFunction;
+
 static void SlyspySetProtectionMap(UINT8 Type);
 
 static INT32 nCyclesDone[3], nCyclesTotal[3];
@@ -224,6 +227,69 @@ static struct BurnDIPInfo BaddudesDIPList[]=
 };
 
 STDDIPINFO(Baddudes)
+
+static struct BurnDIPInfo BouldashDIPList[]=
+{
+	// Default Values
+	{0x14, 0xff, 0xff, 0x7f, NULL                     },
+	{0x15, 0xff, 0xff, 0x7f, NULL                     },
+
+	// Dip 1
+	{0   , 0xfe, 0   , 8   , "Coin A"                 },
+	{0x14, 0x01, 0x07, 0x00, "3 Coins 1 Play"         },
+	{0x14, 0x01, 0x07, 0x01, "2 Coins 1 Play"         },
+	{0x14, 0x01, 0x07, 0x07, "1 Coin  1 Play"         },
+	{0x14, 0x01, 0x07, 0x06, "1 Coin  2 Plays"        },
+	{0x14, 0x01, 0x07, 0x05, "1 Coin  3 Plays"        },
+	{0x14, 0x01, 0x07, 0x04, "1 Coin  4 Plays"        },
+	{0x14, 0x01, 0x07, 0x03, "1 Coin  5 Plays"        },
+	{0x14, 0x01, 0x07, 0x02, "1 Coin  6 Plays"        },
+	
+	{0   , 0xfe, 0   , 8   , "Coin B"                 },
+	{0x14, 0x01, 0x38, 0x00, "3 Coins 1 Play"         },
+	{0x14, 0x01, 0x38, 0x08, "2 Coins 1 Play"         },
+	{0x14, 0x01, 0x38, 0x38, "1 Coin  1 Play"         },
+	{0x14, 0x01, 0x38, 0x30, "1 Coin  2 Plays"        },
+	{0x14, 0x01, 0x38, 0x28, "1 Coin  3 Plays"        },
+	{0x14, 0x01, 0x38, 0x20, "1 Coin  4 Plays"        },
+	{0x14, 0x01, 0x38, 0x18, "1 Coin  5 Plays"        },
+	{0x14, 0x01, 0x38, 0x10, "1 Coin  6 Plays"        },
+	
+	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
+	{0x14, 0x01, 0x40, 0x40, "Off"                    },
+	{0x14, 0x01, 0x40, 0x00, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Cabinet"                },
+	{0x14, 0x01, 0x80, 0x00, "Upright"                },
+	{0x14, 0x01, 0x80, 0x80, "Cocktail"               },
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 4   , "Lives"                  },
+	{0x15, 0x01, 0x03, 0x00, "2"                      },
+	{0x15, 0x01, 0x03, 0x03, "3"                      },
+	{0x15, 0x01, 0x03, 0x02, "4"                      },
+	{0x15, 0x01, 0x03, 0x01, "5"                      },
+	
+	{0   , 0xfe, 0   , 4   , "Difficulty"             },
+	{0x15, 0x01, 0x0c, 0x08, "Easy"                   },
+	{0x15, 0x01, 0x0c, 0x0c, "Normal"                 },
+	{0x15, 0x01, 0x0c, 0x04, "Hard"                   },
+	{0x15, 0x01, 0x0c, 0x00, "Hardest"                },
+	
+	{0   , 0xfe, 0   , 2   , "Game Change Mode"       },
+	{0x15, 0x01, 0x20, 0x20, "Part 1"                 },
+	{0x15, 0x01, 0x20, 0x00, "Part 2"                 },
+	
+	{0   , 0xfe, 0   , 2   , "Allow continue"         },
+	{0x15, 0x01, 0x40, 0x00, "No"                     },
+	{0x15, 0x01, 0x40, 0x40, "Yes"                    },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
+	{0x15, 0x01, 0x20, 0x80, "Off"                    },
+	{0x15, 0x01, 0x20, 0x00, "On"                     },
+};
+
+STDDIPINFO(Bouldash)
 
 static struct BurnDIPInfo HbarrelDIPList[]=
 {
@@ -537,6 +603,70 @@ static struct BurnRomInfo BaddudesRomDesc[] = {
 
 STD_ROM_PICK(Baddudes)
 STD_ROM_FN(Baddudes)
+
+static struct BurnRomInfo BouldashRomDesc[] = {
+	{ "fw-15-2.17l",        0x10000, 0xca19a967, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "fw-12-2.9l",         0x10000, 0x242bdc2a, BRF_ESS | BRF_PRG },	//  1
+	{ "fw-16-2.19l",        0x10000, 0xb7217265, BRF_ESS | BRF_PRG },	//  2
+	{ "fw-13-2.11l",        0x10000, 0x19209ef4, BRF_ESS | BRF_PRG },	//  3
+	{ "fw-17-2.20l",        0x10000, 0x78a632a1, BRF_ESS | BRF_PRG },	//  4
+	{ "fw-14-2.13l",        0x10000, 0x69b6112d, BRF_ESS | BRF_PRG },	//  5
+	
+	{ "fn-10",              0x10000, 0xc74106e7, BRF_ESS | BRF_PRG },	//  6	HuC6280 Program
+	
+	{ "fn-04",              0x10000, 0x40f5a760, BRF_GRA },			//  7	Characters
+	{ "fn-05",              0x10000, 0x824f2168, BRF_GRA },			//  8
+
+	{ "fn-07",              0x10000, 0xeac6a3b3, BRF_GRA },			//  9	Tiles 1
+	{ "fn-06",              0x10000, 0x3feee292, BRF_GRA },			// 10
+	
+	{ "fn-09",              0x20000, 0xc2b27bd2, BRF_GRA },			// 11	Tiles 2
+	{ "fn-08",              0x20000, 0x5ac97178, BRF_GRA },			// 12
+	
+	{ "fn-01",              0x10000, 0x9333121b, BRF_GRA },			// 13	Sprites
+	{ "fn-03",              0x10000, 0x254ba60f, BRF_GRA },			// 14
+	{ "fn-00",              0x10000, 0xec18d098, BRF_GRA },			// 15
+	{ "fn-02",              0x10000, 0x4f060cba, BRF_GRA },			// 16
+	
+	{ "fn-11",              0x10000, 0x990fd8d9, BRF_SND },			// 17	Samples
+	
+	{ "ta-16.21k",          0x00100, 0xad26e8d4, BRF_OPT},			// 18	PROMs
+};
+
+STD_ROM_PICK(Bouldash)
+STD_ROM_FN(Bouldash)
+
+static struct BurnRomInfo BouldashjRomDesc[] = {
+	{ "fn-15-1.17l",        0x10000, 0xd3ef20f8, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "fn-12-1.9l",         0x10000, 0xf4a10b45, BRF_ESS | BRF_PRG },	//  1
+	{ "fn-16-.19l",         0x10000, 0xfd1806a5, BRF_ESS | BRF_PRG },	//  2
+	{ "fn-13-.11l",         0x10000, 0xd24d3681, BRF_ESS | BRF_PRG },	//  3
+	{ "fn-17-.20l",         0x10000, 0x28d48a37, BRF_ESS | BRF_PRG },	//  4
+	{ "fn-14-.13l",         0x10000, 0x8c61c682, BRF_ESS | BRF_PRG },	//  5
+	
+	{ "fn-10",              0x10000, 0xc74106e7, BRF_ESS | BRF_PRG },	//  6	HuC6280 Program
+	
+	{ "fn-04",              0x10000, 0x40f5a760, BRF_GRA },			//  7	Characters
+	{ "fn-05",              0x10000, 0x824f2168, BRF_GRA },			//  8
+
+	{ "fn-07",              0x10000, 0xeac6a3b3, BRF_GRA },			//  9	Tiles 1
+	{ "fn-06",              0x10000, 0x3feee292, BRF_GRA },			// 10
+	
+	{ "fn-09",              0x20000, 0xc2b27bd2, BRF_GRA },			// 11	Tiles 2
+	{ "fn-08",              0x20000, 0x5ac97178, BRF_GRA },			// 12
+	
+	{ "fn-01",              0x10000, 0x9333121b, BRF_GRA },			// 13	Sprites
+	{ "fn-03",              0x10000, 0x254ba60f, BRF_GRA },			// 14
+	{ "fn-00",              0x10000, 0xec18d098, BRF_GRA },			// 15
+	{ "fn-02",              0x10000, 0x4f060cba, BRF_GRA },			// 16
+	
+	{ "fn-11",              0x10000, 0x990fd8d9, BRF_SND },			// 17	Samples
+	
+	{ "ta-16.21k",          0x00100, 0xad26e8d4, BRF_OPT},			// 18	PROMs
+};
+
+STD_ROM_PICK(Bouldashj)
+STD_ROM_FN(Bouldashj)
 
 static struct BurnRomInfo DrgninjaRomDesc[] = {
 	{ "eg04.3c",            0x10000, 0x41b8b3f8, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -1580,8 +1710,20 @@ UINT8 __fastcall Slyspy68KReadByte(UINT32 a)
 	}
 	
 	switch (a) {
+		case 0x314008: {
+			return DrvDip[1];
+		}
+		
 		case 0x314009: {
 			return DrvDip[0];
+		}
+		
+		case 0x31400a: {
+			return 0xff - DrvInput[1];
+		}
+		
+		case 0x31400b: {
+			return 0xff - DrvInput[0];
 		}
 		
 		case 0x31400d: {
@@ -1599,9 +1741,44 @@ UINT8 __fastcall Slyspy68KReadByte(UINT32 a)
 void __fastcall Slyspy68KWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
+		case 0x300000:
+		case 0x300001:
+		case 0x300002:
+		case 0x300003:
+		case 0x300004:
+		case 0x300005:
+		case 0x300006:
+		case 0x300007: {
+			UINT16 *Control0 = (UINT16*)DrvVideo2Ctrl0Ram;
+			Control0[(a - 0x300000) >> 1] = d;
+			if (a == 0x300005) {
+				DrvTileRamBank[2] = d & 0x01;
+				if (DrvTileRamBank[2]) bprintf(PRINT_IMPORTANT, _T("68K Set Tile RAM Bank 2\n"));
+			}
+			return;
+		}
+		
+		case 0x300010:
+		case 0x300011:
+		case 0x300012:
+		case 0x300013:
+		case 0x300014:
+		case 0x300015:
+		case 0x300016:
+		case 0x300017: {
+			UINT16 *Control1 = (UINT16*)DrvVideo2Ctrl1Ram;
+			Control1[(a - 0x300010) >> 1] = d;
+			return;
+		}
+		
 		case 0x314001: {
 			DrvSoundLatch = d;
 			h6280SetIRQLine(H6280_INPUT_LINE_NMI, H6280_IRQSTATUS_AUTO);
+			return;
+		}
+		
+		case 0x314003: {
+			DrvPriority = d;
 			return;
 		}
 		
@@ -1613,6 +1790,19 @@ void __fastcall Slyspy68KWriteByte(UINT32 a, UINT8 d)
 
 UINT16 __fastcall Slyspy68KReadWord(UINT32 a)
 {
+	if (a >= 0x31c000 && a <= 0x31c00f) {
+		INT32 Offset = (a - 0x31c000) >> 1;
+		
+		switch (Offset << 1) {
+			case 0x00: return 0x00;
+			case 0x02: return 0x13;
+			case 0x04: return 0x00;
+			case 0x06: return 0x02;
+		}
+		
+		return 0;
+	}
+	
 	switch (a) {
 		case 0x244000: {
 			DrvSlyspyProtValue++;
@@ -1697,6 +1887,66 @@ void __fastcall Slyspy68KWriteWord(UINT32 a, UINT16 d)
 void __fastcall SlyspyProt68KWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
+		case 0x240000:
+		case 0x240001:
+		case 0x240002:
+		case 0x240003:
+		case 0x240004:
+		case 0x240005:
+		case 0x240006:
+		case 0x240007: {
+			UINT16 *Control0 = (UINT16*)DrvVideo1Ctrl0Ram;
+			Control0[(a - 0x240000) >> 1] = d;
+			if (a == 0x240005) {
+				DrvTileRamBank[1] = d & 0x01;
+				if (DrvTileRamBank[1]) bprintf(PRINT_IMPORTANT, _T("68K Set Tile RAM Bank 1\n"));
+			}
+			return;
+		}
+		
+		case 0x240010:
+		case 0x240011:
+		case 0x240012:
+		case 0x240013:
+		case 0x240014:
+		case 0x240015:
+		case 0x240016:
+		case 0x240017: {
+			UINT16 *Control1 = (UINT16*)DrvVideo1Ctrl1Ram;
+			Control1[(a - 0x240010) >> 1] = d;
+			return;
+		}
+		
+		case 0x248000:
+		case 0x248001:
+		case 0x248002:
+		case 0x248003:
+		case 0x248004:
+		case 0x248005:
+		case 0x248006:
+		case 0x248007: {		
+			UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
+			Control0[(a - 0x248000) >> 1] = d;
+			if (a == 0x248005) {
+				DrvTileRamBank[0] = d & 0x01;
+				if (DrvTileRamBank[0]) bprintf(PRINT_IMPORTANT, _T("68K Set Tile RAM Bank 0\n"));
+			}
+			return;
+		}
+		
+		case 0x248010:
+		case 0x248011:
+		case 0x248012:
+		case 0x248013:
+		case 0x248014:
+		case 0x248015:
+		case 0x248016:
+		case 0x248017: {		
+			UINT16 *Control1 = (UINT16*)DrvCharCtrl1Ram;
+			Control1[(a - 0x248010) >> 1] = d;
+			return;
+		}
+		
 		default: {
 			bprintf(PRINT_NORMAL, _T("68K Write byte => %06X, %02X\n"), a, d);
 		}
@@ -2070,9 +2320,7 @@ static INT32 RobocopCharPlaneOffsets[4]  = { 0x000000, 0x080000, 0x040000, 0x0c0
 static INT32 CharXOffsets[8]             = { 0, 1, 2, 3, 4, 5, 6, 7 };
 static INT32 CharYOffsets[8]             = { 0, 8, 16, 24, 32, 40, 48, 56 };
 static INT32 Tile1PlaneOffsets[4]        = { 0x080000, 0x180000, 0x000000, 0x100000 };
-static INT32 HbarrelTile1PlaneOffsets[4] = { 0x100000, 0x300000, 0x000000, 0x200000 };
 static INT32 Tile2PlaneOffsets[4]        = { 0x040000, 0x0c0000, 0x000000, 0x080000 };
-static INT32 HbarrelTile2PlaneOffsets[4] = { 0x080000, 0x180000, 0x000000, 0x100000 };
 static INT32 SpritePlaneOffsets[4]       = { 0x100000, 0x300000, 0x000000, 0x200000 };
 static INT32 TileXOffsets[16]            = { 128, 129, 130, 131, 132, 133, 134, 135, 0, 1, 2, 3, 4, 5, 6, 7 };
 static INT32 TileYOffsets[16]            = { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120 };
@@ -2273,7 +2521,7 @@ static INT32 HbarrelInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x50000, 14, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x60000, 15, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x70000, 16, 1); if (nRet != 0) return 1;
-	GfxDecode(0x1000, 4, 16, 16, HbarrelTile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
+	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
 	
 	// Load and decode tiles2
 	memset(DrvTempRom, 0, 0x80000);
@@ -2281,7 +2529,7 @@ static INT32 HbarrelInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x10000, 18, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x20000, 19, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x30000, 20, 1); if (nRet != 0) return 1;
-	GfxDecode(0x800, 4, 16, 16, HbarrelTile2PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
+	GfxDecode(0x800, 4, 16, 16, Tile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
 	
 	// Load and decode sprites
 	memset(DrvTempRom, 0, 0x80000);
@@ -2541,9 +2789,9 @@ static INT32 RobocopbInit()
 	return 0;
 }
 
-static INT32 SlyspyInit()
+static INT32 SlyspyDrvInit()
 {
-	INT32 nRet = 0, nLen;
+	INT32 nLen;
 	
 	BurnSetRefreshRate(57.392103);
 
@@ -2554,6 +2802,61 @@ static INT32 SlyspyInit()
 	memset(Mem, 0, nLen);
 	MemIndex();
 
+	if (LoadRomsFunction()) return 1;
+	
+	for (INT32 i = 0x00000; i < 0x10000; i++) {
+		DrvH6280Rom[i] = (DrvH6280Rom[i] & 0x7e) | ((DrvH6280Rom[i] & 0x1) << 7) | ((DrvH6280Rom[i] & 0x80) >> 7);
+	}
+	DrvH6280Rom[0xf2d] = 0xea;
+	DrvH6280Rom[0xf2e] = 0xea;
+	
+	// Setup the 68000 emulation
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KRom               , 0x000000, 0x05ffff, SM_ROM);
+	SekMapMemory(DrvVideo2ColScrollRam   , 0x300800, 0x30087f, SM_RAM);
+	SekMapMemory(DrvVideo2RowScrollRam   , 0x300c00, 0x300fff, SM_RAM);
+	SekMapMemory(DrvVideo2Ram            , 0x301000, 0x3017ff, SM_RAM);
+	SekMapMemory(Drv68KRam               , 0x304000, 0x307fff, SM_RAM);
+	SekMapMemory(DrvSpriteRam            , 0x308000, 0x3087ff, SM_RAM);
+	SekMapMemory(DrvPaletteRam           , 0x310000, 0x3107ff, SM_RAM);
+	SekSetReadByteHandler(0, Slyspy68KReadByte);
+	SekSetWriteByteHandler(0, Slyspy68KWriteByte);
+	SekSetReadWordHandler(0, Slyspy68KReadWord);
+	SekSetWriteWordHandler(0, Slyspy68KWriteWord);	
+	SekClose();
+	
+	h6280Init(1);
+	h6280Open(0);
+	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, H6280_ROM);
+	h6280MapMemory(DrvH6280Ram , 0x1f0000, 0x1f1fff, H6280_RAM);
+	h6280SetReadHandler(SlyspyH6280ReadProg);
+	h6280SetWriteHandler(SlyspyH6280WriteProg);
+	h6280Close();
+	
+	GenericTilesInit();
+	
+	BurnYM3812Init(3000000, &Dec1YM3812IRQHandler, &Dec1YM3812SynchroniseStream, 1);
+	BurnTimerAttachH6280YM3812(2000000);
+	
+	BurnYM2203Init(1, 1500000, NULL, Dec0YM2203SynchroniseStream, Dec0YM2203GetTime, 0);
+	BurnTimerAttachSek(10000000);
+	
+	MSM6295Init(0, 1000000 / 132, 80, 1);
+	
+	Dec0DrawFunction = SlyspyDraw;
+	DrvSpriteDMABufferRam = DrvSpriteRam;
+	
+	// Reset the driver
+	SlyspyDoReset();
+
+	return 0;
+}
+
+static INT32 SlyspyLoadRoms()
+{
+	INT32 nRet;
+	
 	DrvTempRom = (UINT8 *)BurnMalloc(0x80000);
 	
 	// Load 68000 Program Roms
@@ -2598,52 +2901,74 @@ static INT32 SlyspyInit()
 	
 	BurnFree(DrvTempRom);
 	
-	for (INT32 i = 0x00000; i < 0x10000; i++) {
-		DrvH6280Rom[i] = (DrvH6280Rom[i] & 0x7e) | ((DrvH6280Rom[i] & 0x1) << 7) | ((DrvH6280Rom[i] & 0x80) >> 7);
-	}
-	DrvH6280Rom[0xf2d] = 0xea;
-	DrvH6280Rom[0xf2e] = 0xea;
-	
-	// Setup the 68000 emulation
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(Drv68KRom               , 0x000000, 0x05ffff, SM_ROM);
-	SekMapMemory(DrvVideo2ColScrollRam   , 0x300800, 0x30087f, SM_RAM);
-	SekMapMemory(DrvVideo2Ram            , 0x301000, 0x3017ff, SM_RAM);
-	SekMapMemory(Drv68KRam               , 0x304000, 0x307fff, SM_RAM);
-	SekMapMemory(DrvSpriteRam            , 0x308000, 0x3087ff, SM_RAM);
-	SekMapMemory(DrvPaletteRam           , 0x310000, 0x3107ff, SM_RAM);
-	SekSetReadByteHandler(0, Slyspy68KReadByte);
-	SekSetWriteByteHandler(0, Slyspy68KWriteByte);
-	SekSetReadWordHandler(0, Slyspy68KReadWord);
-	SekSetWriteWordHandler(0, Slyspy68KWriteWord);	
-	SekClose();
-	
-	h6280Init(1);
-	h6280Open(0);
-	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, H6280_ROM);
-	h6280MapMemory(DrvH6280Ram , 0x1f0000, 0x1f1fff, H6280_RAM);
-	h6280SetReadHandler(SlyspyH6280ReadProg);
-	h6280SetWriteHandler(SlyspyH6280WriteProg);
-	h6280Close();
-	
-	GenericTilesInit();
-	
-	BurnYM3812Init(3000000, &Dec1YM3812IRQHandler, &Dec1YM3812SynchroniseStream, 1);
-	BurnTimerAttachH6280YM3812(2000000);
-	
-	BurnYM2203Init(1, 1500000, NULL, Dec0YM2203SynchroniseStream, Dec0YM2203GetTime, 0);
-	BurnTimerAttachSek(10000000);
-	
-	MSM6295Init(0, 1000000 / 132, 80, 1);
-	
-	Dec0DrawFunction = SlyspyDraw;
-	DrvSpriteDMABufferRam = DrvSpriteRam;
-	
-	// Reset the driver
-	SlyspyDoReset();
-
 	return 0;
+}
+
+static INT32 SlyspyInit()
+{
+	LoadRomsFunction = SlyspyLoadRoms;
+	
+	return SlyspyDrvInit();
+}
+
+static INT32 BouldashLoadRoms()
+{
+	INT32 nRet;
+	
+	DrvTempRom = (UINT8 *)BurnMalloc(0x40000);
+	
+	// Load 68000 Program Roms
+	nRet = BurnLoadRom(Drv68KRom + 0x00001, 0, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x00000, 1, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x20001, 2, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x20000, 3, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x40001, 4, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x40000, 5, 2); if (nRet != 0) return 1;
+	
+	nRet = BurnLoadRom(DrvH6280Rom, 6, 1); if (nRet != 0) return 1;
+	
+	// Load and decode chars
+	nRet = BurnLoadRom(DrvTempRom + 0x20000,  7, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x30000,  8, 1); if (nRet != 0) return 1;
+	memcpy(DrvTempRom + 0x08000, DrvTempRom + 0x20000, 0x8000);
+	memcpy(DrvTempRom + 0x00000, DrvTempRom + 0x28000, 0x8000);
+	memcpy(DrvTempRom + 0x18000, DrvTempRom + 0x30000, 0x8000);
+	memcpy(DrvTempRom + 0x10000, DrvTempRom + 0x38000, 0x8000);
+	GfxDecode(0x1000, 4, 8, 8, RobocopCharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvChars);
+	
+	// Load and decode tiles1
+	memset(DrvTempRom, 0, 0x40000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000,  9, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x10000, 10, 1); if (nRet != 0) return 1;
+	GfxDecode(0x400, 4, 16, 16, Tile2PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
+	
+	// Load and decode tiles2
+	memset(DrvTempRom, 0, 0x40000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000, 11, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x20000, 12, 1); if (nRet != 0) return 1;
+	GfxDecode(0x800, 4, 16, 16, Tile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
+	
+	// Load and decode sprites
+	memset(DrvTempRom, 0, 0x40000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000, 13, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x10000, 14, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x20000, 15, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x30000, 16, 1); if (nRet != 0) return 1;
+	GfxDecode(0x0800, 4, 16, 16, Tile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvSprites);
+	
+	// Load the samples
+	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 17, 1); if (nRet != 0) return 1;
+	
+	BurnFree(DrvTempRom);
+	
+	return 0;
+}
+
+static INT32 BouldashInit()
+{
+	LoadRomsFunction = BouldashLoadRoms;
+	
+	return SlyspyDrvInit();
 }
 
 static INT32 DrvExit()
@@ -2672,6 +2997,7 @@ static INT32 DrvExit()
 	DrvSlyspyProtValue = 0;
 	
 	Dec0DrawFunction = NULL;
+	LoadRomsFunction = NULL;
 	
 	Dec0Game = 0;
 	
@@ -3567,6 +3893,26 @@ struct BurnDriver BurnDrvDrgninja = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, DrgninjaRomInfo, DrgninjaRomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
 	BaddudesInit, BaddudesExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x400, 256, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvBouldash = {
+	"bouldash", NULL, NULL, NULL, "1990",
+	"Boulder Dash / Boulder Dash Part 2 (World)\0", NULL, "Data East Corporation (licensed from First Star)", "DEC0",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
+	NULL, BouldashRomInfo, BouldashRomName, NULL, NULL, Dec1InputInfo, BouldashDIPInfo,
+	BouldashInit, SlyspyExit, Dec1Frame, NULL, DrvScan,
+	NULL, 0x400, 256, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvBouldashj = {
+	"bouldashj", "bouldash", NULL, NULL, "1990",
+	"Boulder Dash / Boulder Dash Part 2 (Japan)\0", NULL, "Data East Corporation (licensed from First Star)", "DEC0",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
+	NULL, BouldashjRomInfo, BouldashjRomName, NULL, NULL, Dec1InputInfo, BouldashDIPInfo,
+	BouldashInit, SlyspyExit, Dec1Frame, NULL, DrvScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 

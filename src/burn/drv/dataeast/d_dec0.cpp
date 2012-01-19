@@ -3961,6 +3961,8 @@ static void DrvRenderCustomTilemap(UINT16 *pSrc, UINT16 *pControl0, UINT16 *pCon
 	
 	ySrc = yScroll;
 	
+	ySrc += 8;
+	
 	for (y = 0; y < nScreenHeight; y++) {
 		if (RowScrollEnabled) {
 			xSrc = xScroll + RowScrollRam[(ySrc >> (pControl1[3] & 0x0f)) & (0x1ff >> (pControl1[3] & 0x0f))];
@@ -3975,7 +3977,7 @@ static void DrvRenderCustomTilemap(UINT16 *pSrc, UINT16 *pControl0, UINT16 *pCon
 		for (x = 0; x < nScreenWidth; x++) {
 			if (ColScrollEnabled) ColOffset = ColScrollRam[((xSrc >> 3) >> (pControl1[2] & 0x0f)) & (0x3f >> (pControl1[2] & 0x0f))];
 			
-			pPixel = pSrc[(((ySrc + ColOffset + 8) & HeightMask) * TilemapWidth) + (xSrc & WidthMask)];
+			pPixel = pSrc[(((ySrc + ColOffset) & HeightMask) * TilemapWidth) + (xSrc & WidthMask)];
 			
 			xSrc++;
 			

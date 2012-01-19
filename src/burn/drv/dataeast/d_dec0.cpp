@@ -71,6 +71,7 @@ static Dec0Render Dec0DrawFunction;
 static void BaddudesDraw();
 static void HbarrelDraw();
 static void HippodrmDraw();
+static void MidresDraw();
 static void RobocopDraw();
 static void SlyspyDraw();
 
@@ -78,6 +79,12 @@ typedef INT32 (*Dec0LoadRoms)();
 static Dec0LoadRoms LoadRomsFunction;
 
 static void SlyspySetProtectionMap(UINT8 Type);
+
+static INT32 DrvCharPalOffset = 0;
+static INT32 DrvSpritePalOffset = 256;
+
+static UINT8 DrvMidresFakeInput[4]  = {0, 0, 0, 0};
+static UINT8 DrvMidresAnalogInput[2];
 
 static INT32 nCyclesDone[3], nCyclesTotal[3];
 
@@ -152,6 +159,41 @@ static struct BurnInputInfo Dec1InputList[] =
 };
 
 STDINPUTINFO(Dec1)
+
+static struct BurnInputInfo MidresInputList[] =
+{
+	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 coin"   },
+	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 start"  },
+	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 coin"   },
+	{"Start 2"           , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 start"  },
+
+	{"Up"                , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 up"     },
+	{"Down"              , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 down"   },
+	{"Left"              , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 left"   },
+	{"Right"             , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 right"  },
+	{"Fire 1"            , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
+	{"Fire 2"            , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
+	{"Fire 3"            , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 fire 3" },
+	{"Analog Left"       , BIT_DIGITAL  , DrvMidresFakeInput + 0, "p1 fire 4" },
+	{"Analog Right"      , BIT_DIGITAL  , DrvMidresFakeInput + 1, "p1 fire 5" },	
+	
+	{"Up (Cocktail)"     , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 up"     },
+	{"Down (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 down"   },
+	{"Left (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 left"   },
+	{"Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 right"  },
+	{"Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
+	{"Fire 2 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
+	{"Fire 3 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 fire 3" },
+	{"Analog Left (Cocktail)"  , BIT_DIGITAL  , DrvMidresFakeInput + 2, "p2 fire 4" },
+	{"Analog Right (Cocktail)" , BIT_DIGITAL  , DrvMidresFakeInput + 3, "p2 fire 5" },
+
+	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
+	{"Service"           , BIT_DIGITAL  , DrvInputPort2 + 2, "service"   },
+	{"Dip 1"             , BIT_DIPSWITCH, DrvDip + 0       , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH, DrvDip + 1       , "dip"       },
+};
+
+STDINPUTINFO(Midres)
 
 static inline void DrvClearOpposites(UINT8* nJoystickInputs)
 {
@@ -453,6 +495,108 @@ static struct BurnDIPInfo FfantasyDIPList[]=
 };
 
 STDDIPINFO(Ffantasy)
+
+static struct BurnDIPInfo MidresDIPList[]=
+{
+	// Default Values
+	{0x18, 0xff, 0xff, 0xff, NULL                     },
+	{0x19, 0xff, 0xff, 0xbf, NULL                     },
+
+	// Dip 1
+	{0   , 0xfe, 0   , 4   , "Coin A"                 },
+	{0x18, 0x01, 0x03, 0x00, "3 Coins 1 Play"         },
+	{0x18, 0x01, 0x03, 0x01, "2 Coins 1 Play"         },
+	{0x18, 0x01, 0x03, 0x03, "1 Coin  1 Play"         },
+	{0x18, 0x01, 0x03, 0x02, "1 Coin  2 Plays"        },
+	
+	{0   , 0xfe, 0   , 4   , "Coin B"                 },
+	{0x18, 0x01, 0x0c, 0x00, "3 Coins 1 Play"         },
+	{0x18, 0x01, 0x0c, 0x04, "2 Coins 1 Play"         },
+	{0x18, 0x01, 0x0c, 0x0c, "1 Coin  1 Play"         },
+	{0x18, 0x01, 0x0c, 0x08, "1 Coin  2 Plays"        },
+	
+	{0   , 0xfe, 0   , 2   , "Service Mode"           },
+	{0x18, 0x01, 0x10, 0x10, "Off"                    },
+	{0x18, 0x01, 0x10, 0x00, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
+	{0x18, 0x01, 0x20, 0x00, "Off"                    },
+	{0x18, 0x01, 0x20, 0x20, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
+	{0x18, 0x01, 0x40, 0x40, "Off"                    },
+	{0x18, 0x01, 0x40, 0x00, "On"                     },
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 4   , "Lives"                  },
+	{0x19, 0x01, 0x03, 0x03, "3"                      },
+	{0x19, 0x01, 0x03, 0x02, "4"                      },
+	{0x19, 0x01, 0x03, 0x01, "5"                      },
+	{0x19, 0x01, 0x03, 0x00, "Infinite"               },
+	
+	{0   , 0xfe, 0   , 4   , "Difficulty"             },
+	{0x19, 0x01, 0x0c, 0x08, "Easy"                   },
+	{0x19, 0x01, 0x0c, 0x0c, "Normal"                 },
+	{0x19, 0x01, 0x0c, 0x04, "Hard"                   },
+	{0x19, 0x01, 0x0c, 0x00, "Hardest"                },
+	
+	{0   , 0xfe, 0   , 2   , "Allow continue"         },
+	{0x19, 0x01, 0x40, 0x40, "No"                     },
+	{0x19, 0x01, 0x40, 0x00, "Yes"                    },
+};
+
+STDDIPINFO(Midres)
+
+static struct BurnDIPInfo MidresuDIPList[]=
+{
+	// Default Values
+	{0x18, 0xff, 0xff, 0xff, NULL                     },
+	{0x19, 0xff, 0xff, 0xbf, NULL                     },
+
+	// Dip 1
+	{0   , 0xfe, 0   , 4   , "Coin A"                 },
+	{0x18, 0x01, 0x03, 0x00, "3 Coins 1 Play"         },
+	{0x18, 0x01, 0x03, 0x01, "2 Coins 1 Play"         },
+	{0x18, 0x01, 0x03, 0x03, "1 Coin  1 Play"         },
+	{0x18, 0x01, 0x03, 0x02, "1 Coin  2 Plays"        },
+	
+	{0   , 0xfe, 0   , 4   , "Coin B"                 },
+	{0x18, 0x01, 0x0c, 0x00, "3 Coins 1 Play"         },
+	{0x18, 0x01, 0x0c, 0x04, "2 Coins 1 Play"         },
+	{0x18, 0x01, 0x0c, 0x0c, "1 Coin  1 Play"         },
+	{0x18, 0x01, 0x0c, 0x08, "1 Coin  2 Plays"        },
+	
+	{0   , 0xfe, 0   , 2   , "Service Mode"           },
+	{0x18, 0x01, 0x10, 0x10, "Off"                    },
+	{0x18, 0x01, 0x10, 0x00, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
+	{0x18, 0x01, 0x20, 0x00, "Off"                    },
+	{0x18, 0x01, 0x20, 0x20, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
+	{0x18, 0x01, 0x40, 0x40, "Off"                    },
+	{0x18, 0x01, 0x40, 0x00, "On"                     },
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 4   , "Lives"                  },
+	{0x19, 0x01, 0x03, 0x01, "1"                      },
+	{0x19, 0x01, 0x03, 0x03, "3"                      },
+	{0x19, 0x01, 0x03, 0x02, "5"                      },
+	{0x19, 0x01, 0x03, 0x00, "Infinite"               },
+	
+	{0   , 0xfe, 0   , 4   , "Difficulty"             },
+	{0x19, 0x01, 0x0c, 0x08, "Easy"                   },
+	{0x19, 0x01, 0x0c, 0x0c, "Normal"                 },
+	{0x19, 0x01, 0x0c, 0x04, "Hard"                   },
+	{0x19, 0x01, 0x0c, 0x00, "Hardest"                },
+	
+	{0   , 0xfe, 0   , 2   , "Allow continue"         },
+	{0x19, 0x01, 0x40, 0x40, "No"                     },
+	{0x19, 0x01, 0x40, 0x00, "Yes"                    },
+};
+
+STDDIPINFO(Midresu)
 
 static struct BurnDIPInfo RobocopDIPList[]=
 {
@@ -906,6 +1050,123 @@ static struct BurnRomInfo FfantasyaRomDesc[] = {
 STD_ROM_PICK(Ffantasya)
 STD_ROM_FN(Ffantasya)
 
+static struct BurnRomInfo MidresRomDesc[] = {
+	{ "fk_14.rom",          0x20000, 0xde7522df, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "fk_12.rom",          0x20000, 0x3494b8c9, BRF_ESS | BRF_PRG },	//  1
+	{ "fl15",               0x20000, 0x1328354e, BRF_ESS | BRF_PRG },	//  2
+	{ "fl13",               0x20000, 0xe3b3955e, BRF_ESS | BRF_PRG },	//  3
+	
+	{ "fl16",               0x10000, 0x66360bdf, BRF_ESS | BRF_PRG },	//  4	HuC6280 Program
+	
+	{ "fk_05.rom",          0x10000, 0x3cdb7453, BRF_GRA },			//  5	Characters
+	{ "fk_04.rom",          0x10000, 0x325ba20c, BRF_GRA },			//  6
+
+	{ "fl09",               0x20000, 0x907d5910, BRF_GRA },			//  7	Tiles 1
+	{ "fl08",               0x20000, 0xa936c03c, BRF_GRA },			//  8
+	{ "fl07",               0x20000, 0x2068c45c, BRF_GRA },			//  9
+	{ "fl06",               0x20000, 0xb7241ab9, BRF_GRA },			// 10
+	
+	{ "fl11",               0x20000, 0xb86b73b4, BRF_GRA },			// 11	Tiles 2
+	{ "fl10",               0x20000, 0x92245b29, BRF_GRA },			// 12
+	
+	{ "fl01",               0x20000, 0x2c8b35a7, BRF_GRA },			// 13	Sprites
+	{ "fl03",               0x20000, 0x1eefed3c, BRF_GRA },			// 14
+	{ "fl00",               0x20000, 0x756fb801, BRF_GRA },			// 15
+	{ "fl02",               0x20000, 0x54d2c120, BRF_GRA },			// 16
+	
+	{ "fl17",               0x20000, 0x9029965d, BRF_SND },			// 17	Samples
+	
+	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT},			// 18	PROMs
+	
+	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT},			// 19	PLDs
+	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT},			// 20
+	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT},			// 21
+	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT},			// 22
+	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT},			// 23
+	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT},			// 24
+};
+
+STD_ROM_PICK(Midres)
+STD_ROM_FN(Midres)
+
+static struct BurnRomInfo MidresuRomDesc[] = {
+	{ "fl14",               0x20000, 0x2f9507a2, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "fl12",               0x20000, 0x3815ad9f, BRF_ESS | BRF_PRG },	//  1
+	{ "fl15",               0x20000, 0x1328354e, BRF_ESS | BRF_PRG },	//  2
+	{ "fl13",               0x20000, 0xe3b3955e, BRF_ESS | BRF_PRG },	//  3
+	
+	{ "fl16",               0x10000, 0x66360bdf, BRF_ESS | BRF_PRG },	//  4	HuC6280 Program
+	
+	{ "fl05",               0x10000, 0xd75aba06, BRF_GRA },			//  5	Characters
+	{ "fl04",               0x10000, 0x8f5bbb79, BRF_GRA },			//  6
+
+	{ "fl09",               0x20000, 0x907d5910, BRF_GRA },			//  7	Tiles 1
+	{ "fl08",               0x20000, 0xa936c03c, BRF_GRA },			//  8
+	{ "fl07",               0x20000, 0x2068c45c, BRF_GRA },			//  9
+	{ "fl06",               0x20000, 0xb7241ab9, BRF_GRA },			// 10
+	
+	{ "fl11",               0x20000, 0xb86b73b4, BRF_GRA },			// 11	Tiles 2
+	{ "fl10",               0x20000, 0x92245b29, BRF_GRA },			// 12
+	
+	{ "fl01",               0x20000, 0x2c8b35a7, BRF_GRA },			// 13	Sprites
+	{ "fl03",               0x20000, 0x1eefed3c, BRF_GRA },			// 14
+	{ "fl00",               0x20000, 0x756fb801, BRF_GRA },			// 15
+	{ "fl02",               0x20000, 0x54d2c120, BRF_GRA },			// 16
+	
+	{ "fl17",               0x20000, 0x9029965d, BRF_SND },			// 17	Samples
+	
+	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT},			// 18	PROMs
+	
+	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT},			// 19	PLDs
+	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT},			// 20
+	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT},			// 21
+	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT},			// 22
+	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT},			// 23
+	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT},			// 24
+};
+
+STD_ROM_PICK(Midresu)
+STD_ROM_FN(Midresu)
+
+static struct BurnRomInfo MidresjRomDesc[] = {
+	{ "fh14",               0x20000, 0x6d632a51, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "fh12",               0x20000, 0x45143384, BRF_ESS | BRF_PRG },	//  1
+	{ "fl15",               0x20000, 0x1328354e, BRF_ESS | BRF_PRG },	//  2
+	{ "fl13",               0x20000, 0xe3b3955e, BRF_ESS | BRF_PRG },	//  3
+	
+	{ "fh16",               0x10000, 0x00736f32, BRF_ESS | BRF_PRG },	//  4	HuC6280 Program
+	
+	{ "fk_05.rom",          0x10000, 0x3cdb7453, BRF_GRA },			//  5	Characters
+	{ "fk_04.rom",          0x10000, 0x325ba20c, BRF_GRA },			//  6
+
+	{ "fl09",               0x20000, 0x907d5910, BRF_GRA },			//  7	Tiles 1
+	{ "fl08",               0x20000, 0xa936c03c, BRF_GRA },			//  8
+	{ "fl07",               0x20000, 0x2068c45c, BRF_GRA },			//  9
+	{ "fl06",               0x20000, 0xb7241ab9, BRF_GRA },			// 10
+	
+	{ "fl11",               0x20000, 0xb86b73b4, BRF_GRA },			// 11	Tiles 2
+	{ "fl10",               0x20000, 0x92245b29, BRF_GRA },			// 12
+	
+	{ "fl01",               0x20000, 0x2c8b35a7, BRF_GRA },			// 13	Sprites
+	{ "fl03",               0x20000, 0x1eefed3c, BRF_GRA },			// 14
+	{ "fl00",               0x20000, 0x756fb801, BRF_GRA },			// 15
+	{ "fl02",               0x20000, 0x54d2c120, BRF_GRA },			// 16
+	
+	{ "fh17",               0x20000, 0xc7b0a24e, BRF_SND },			// 17	Samples
+	
+	{ "7114.prm",           0x00100, 0xeb539ffb, BRF_OPT},			// 18	PROMs
+	
+	{ "pal16r4a-1.bin",     0x00104, 0xd28fb8e0, BRF_OPT},			// 19	PLDs
+	{ "pal16l8b-2.bin",     0x00104, 0xbcb591e3, BRF_OPT},			// 20
+	{ "pal16l8a-3.bin",     0x00104, 0xe12972ac, BRF_OPT},			// 21
+	{ "pal16l8a-4.bin",     0x00104, 0xc6437e49, BRF_OPT},			// 22
+	{ "pal16l8b-5.bin",     0x00104, 0xe9ee3a67, BRF_OPT},			// 23
+	{ "pal16l8a-6.bin",     0x00104, 0x23b17abe, BRF_OPT},			// 24
+};
+
+STD_ROM_PICK(Midresj)
+STD_ROM_FN(Midresj)
+
 static struct BurnRomInfo RobocopRomDesc[] = {
 	{ "ep05-4.11c",         0x10000, 0x29c35379, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "ep01-4.11b",         0x10000, 0x77507c69, BRF_ESS | BRF_PRG },	//  1
@@ -1303,6 +1564,7 @@ static INT32 DrvDoReset()
 	DrvFlipScreen = 0;
 	DrvPriority = 0;
 	memset(DrvTileRamBank, 0, 3);
+	DrvMidresAnalogInput[0] = DrvMidresAnalogInput[1] = 0x0b;
 	
 	return 0;
 }
@@ -1339,6 +1601,8 @@ static INT32 SlyspyDoReset()
 	
 	return nRet;
 }
+
+// I8751 Simulations
 
 static void BaddudesI8751Write(UINT16 Data)
 {
@@ -1446,6 +1710,8 @@ static void HbarrelI8751Write(UINT16 Data)
 	}
 }
 
+// Video write functions
+
 static void deco_bac06_pf_control_0_w(INT32 Layer, UINT16 *Control0, INT32 Offset, UINT16 Data, UINT16 Mask)
 {
 	Offset &= 0x03;
@@ -1480,6 +1746,8 @@ static void deco_bac06_pf_data_w(INT32 Layer, UINT16 *RAM, INT32 Offset, UINT16 
 	RAM[Offset] &= Mask;
 	RAM[Offset] += Data;
 }
+
+// Normal hardware cpu memory handlers
 
 UINT8 __fastcall Dec068KReadByte(UINT32 a)
 {
@@ -1694,6 +1962,207 @@ void __fastcall Dec068KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
+UINT8 Dec0SoundReadByte(UINT16 a)
+{
+	switch (a) {
+		case 0x3000: {
+			return DrvSoundLatch;
+		}
+		
+		case 0x3800: {
+			return MSM6295ReadStatus(0);
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("M6502 Read Byte %04X\n"), a);
+		}
+	}
+
+	return 0;
+}
+
+void Dec0SoundWriteByte(UINT16 a, UINT8 d)
+{
+	switch (a) {
+		case 0x0800: {
+			BurnYM2203Write(0, 0, d);
+			return;
+		}
+		
+		case 0x0801: {
+			BurnYM2203Write(0, 1, d);
+			return;
+		}
+		
+		case 0x1000: {
+			BurnYM3812Write(0, d);
+			return;
+		}
+		
+		case 0x1001: {
+			BurnYM3812Write(1, d);
+			return;
+		}
+		
+		case 0x3800: {
+			MSM6295Command(0, d);
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("M6502 Write Byte %04X, %02X\n"), a, d);
+		}
+	}
+}
+
+// Hippodrome hardware cpu memory handlers
+
+UINT8 __fastcall HippodrmShared68KReadByte(UINT32 a)
+{
+	INT32 Offset = (a - 0x180000) >> 1;
+	return DrvSharedRam[Offset];
+}
+
+void __fastcall HippodrmShared68KWriteByte(UINT32 a, UINT8 d)
+{
+	INT32 Offset = (a - 0x180000) >> 1;
+	DrvSharedRam[Offset] = d;
+}
+
+UINT16 __fastcall HippodrmShared68KReadWord(UINT32 a)
+{
+	INT32 Offset = (a - 0x180000) >> 1;
+	return DrvSharedRam[Offset];
+}
+
+void __fastcall HippodrmShared68KWriteWord(UINT32 a, UINT16 d)
+{
+	INT32 Offset = (a - 0x180000) >> 1;
+	DrvSharedRam[Offset] = d & 0xff;
+}
+
+UINT8 HippodrmH6280ReadProg(UINT32 Address)
+{
+	if (Address >= 0x1a1000 && Address <= 0x1a17ff) {
+		INT32 Offset = (Address - 0x1a1000) ^ 1;
+		if (Offset & 0x01) {
+			return deco_bac06_pf_data_r(2, (UINT16*)DrvVideo2Ram, Offset >> 1, 0x00ff);
+		} else {
+			return deco_bac06_pf_data_r(2, (UINT16*)DrvVideo2Ram, Offset >> 1, 0xff00) >> 8;
+		}
+	}
+	
+	switch (Address) {
+		case 0x1ff403: {
+			return DrvVBlank;
+		}
+	}
+	
+	bprintf(PRINT_NORMAL, _T("H6280 Read Prog %x\n"), Address);
+	
+	return 0;
+}
+
+void HippodrmH6280WriteProg(UINT32 Address, UINT8 Data)
+{
+	if (Address >= 0x1a0000 && Address <= 0x1a0007) {
+		INT32 Offset = Address - 0x1a0000;
+		if (Offset & 0x01) {
+			deco_bac06_pf_control_0_w(2, (UINT16*)DrvVideo2Ctrl0Ram, Offset >> 1, Data << 8, 0x00ff);
+		} else {
+			deco_bac06_pf_control_0_w(2, (UINT16*)DrvVideo2Ctrl0Ram, Offset >> 1, Data, 0xff00);
+		}
+		return;
+	}
+	
+	if (Address >= 0x1a0010 && Address <= 0x1a001f) {
+		INT32 Offset = (Address - 0x1a0010) ^ 1;
+		if (Offset < 0x04) {
+			if (Offset & 0x01) {
+				deco_bac06_pf_control_1_w((UINT16*)DrvVideo2Ctrl1Ram, Offset >> 1, Data, 0xff00);
+			} else {
+				deco_bac06_pf_control_1_w((UINT16*)DrvVideo2Ctrl1Ram, Offset >> 1, Data << 8, 0x00ff);
+			}
+		} else {
+			if (Offset & 0x01) {
+				deco_bac06_pf_control_1_w((UINT16*)DrvVideo2Ctrl1Ram, Offset >> 1, Data, 0xff00);
+			} else {
+				deco_bac06_pf_control_1_w((UINT16*)DrvVideo2Ctrl1Ram, Offset >> 1, Data, 0xff00);
+			}
+		}
+		return;
+	}
+	
+	if (Address >= 0x1a1000 && Address <= 0x1a17ff) {
+		INT32 Offset = (Address - 0x1a1000) ^ 1;
+		if (Offset & 0x01) {
+			deco_bac06_pf_data_w(2, (UINT16*)DrvVideo2Ram, Offset >> 1, Data, 0xff00);
+		} else {
+			deco_bac06_pf_data_w(2, (UINT16*)DrvVideo2Ram, Offset >> 1, Data << 8, 0x00ff);
+		}
+		return;
+		
+	}
+	
+	if (Address >= 0x1ff400 && Address <= 0x1ff403) {
+		h6280_irq_status_w(Address - 0x1ff400, Data);
+		return;
+	}
+	
+	bprintf(PRINT_NORMAL, _T("H6280 Write Prog %x, %x\n"), Address, Data);
+}
+
+// Robocop hardware cpu memory handlers
+
+UINT8 __fastcall RobocopShared68KReadByte(UINT32 a)
+{
+	INT32 Offset = (a - 0x180000) >> 1;
+	return DrvSharedRam[Offset];
+}
+
+void __fastcall RobocopShared68KWriteByte(UINT32 a, UINT8 d)
+{
+	INT32 Offset = (a - 0x180000) >> 1;
+	DrvSharedRam[Offset] = d;
+	if (Offset == 0x7ff) {
+		h6280SetIRQLine(0, H6280_IRQSTATUS_AUTO);
+	}
+}
+
+UINT16 __fastcall RobocopShared68KReadWord(UINT32 a)
+{
+	INT32 Offset = (a - 0x180000) >> 1;
+	return DrvSharedRam[Offset];
+}
+
+void __fastcall RobocopShared68KWriteWord(UINT32 a, UINT16 d)
+{
+	INT32 Offset = (a - 0x180000) >> 1;
+	DrvSharedRam[Offset] = d & 0xff;
+	if (Offset == 0x7ff) {
+		h6280SetIRQLine(0, H6280_IRQSTATUS_AUTO);
+	}
+}
+
+UINT8 RobocopH6280ReadProg(UINT32 Address)
+{
+	bprintf(PRINT_NORMAL, _T("H6280 Read Prog %x\n"), Address);
+	
+	return 0;
+}
+
+void RobocopH6280WriteProg(UINT32 Address, UINT8 Data)
+{
+	if (Address >= 0x1ff400 && Address <= 0x1ff403) {
+		h6280_irq_status_w(Address - 0x1ff400, Data);
+		return;
+	}
+	
+	bprintf(PRINT_NORMAL, _T("H6280 Write Prog %x, %x\n"), Address, Data);
+}
+
+// Sly Spy hardware cpu memory handlers
+
 UINT8 __fastcall Slyspy68KReadByte(UINT32 a)
 {
 	if (a >= 0x31c000 && a <= 0x31c00f) {
@@ -1749,8 +2218,7 @@ void __fastcall Slyspy68KWriteByte(UINT32 a, UINT8 d)
 		case 0x300005:
 		case 0x300006:
 		case 0x300007: {
-			UINT16 *Control0 = (UINT16*)DrvVideo2Ctrl0Ram;
-			Control0[(a - 0x300000) >> 1] = d;
+			DrvVideo2Ctrl0Ram[(a - 0x300000) ^ 1] = d;
 			if (a == 0x300005) {
 				DrvTileRamBank[2] = d & 0x01;
 				if (DrvTileRamBank[2]) bprintf(PRINT_IMPORTANT, _T("68K Set Tile RAM Bank 2\n"));
@@ -1766,8 +2234,7 @@ void __fastcall Slyspy68KWriteByte(UINT32 a, UINT8 d)
 		case 0x300015:
 		case 0x300016:
 		case 0x300017: {
-			UINT16 *Control1 = (UINT16*)DrvVideo2Ctrl1Ram;
-			Control1[(a - 0x300010) >> 1] = d;
+			DrvVideo2Ctrl1Ram[(a - 0x300010) ^ 1] = d;
 			return;
 		}
 		
@@ -1895,8 +2362,7 @@ void __fastcall SlyspyProt68KWriteByte(UINT32 a, UINT8 d)
 		case 0x240005:
 		case 0x240006:
 		case 0x240007: {
-			UINT16 *Control0 = (UINT16*)DrvVideo1Ctrl0Ram;
-			Control0[(a - 0x240000) >> 1] = d;
+			DrvVideo1Ctrl0Ram[(a - 0x240000) ^ 1] = d;
 			if (a == 0x240005) {
 				DrvTileRamBank[1] = d & 0x01;
 				if (DrvTileRamBank[1]) bprintf(PRINT_IMPORTANT, _T("68K Set Tile RAM Bank 1\n"));
@@ -1912,8 +2378,7 @@ void __fastcall SlyspyProt68KWriteByte(UINT32 a, UINT8 d)
 		case 0x240015:
 		case 0x240016:
 		case 0x240017: {
-			UINT16 *Control1 = (UINT16*)DrvVideo1Ctrl1Ram;
-			Control1[(a - 0x240010) >> 1] = d;
+			DrvVideo1Ctrl1Ram[(a - 0x240010) ^ 1] = d;
 			return;
 		}
 		
@@ -1925,8 +2390,7 @@ void __fastcall SlyspyProt68KWriteByte(UINT32 a, UINT8 d)
 		case 0x248005:
 		case 0x248006:
 		case 0x248007: {		
-			UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-			Control0[(a - 0x248000) >> 1] = d;
+			DrvCharCtrl0Ram[(a - 0x248000) ^ 1] = d;
 			if (a == 0x248005) {
 				DrvTileRamBank[0] = d & 0x01;
 				if (DrvTileRamBank[0]) bprintf(PRINT_IMPORTANT, _T("68K Set Tile RAM Bank 0\n"));
@@ -1942,8 +2406,7 @@ void __fastcall SlyspyProt68KWriteByte(UINT32 a, UINT8 d)
 		case 0x248015:
 		case 0x248016:
 		case 0x248017: {		
-			UINT16 *Control1 = (UINT16*)DrvCharCtrl1Ram;
-			Control1[(a - 0x248010) >> 1] = d;
+			DrvCharCtrl1Ram[(a - 0x248010) ^ 1] = d;
 			return;
 		}
 		
@@ -2061,201 +2524,6 @@ static void SlyspySetProtectionMap(UINT8 Type)
 
 }
 
-UINT8 __fastcall HippodrmShared68KReadByte(UINT32 a)
-{
-	INT32 Offset = (a - 0x180000) >> 1;
-	return DrvSharedRam[Offset];
-}
-
-void __fastcall HippodrmShared68KWriteByte(UINT32 a, UINT8 d)
-{
-	INT32 Offset = (a - 0x180000) >> 1;
-	DrvSharedRam[Offset] = d;
-}
-
-UINT16 __fastcall HippodrmShared68KReadWord(UINT32 a)
-{
-	INT32 Offset = (a - 0x180000) >> 1;
-	return DrvSharedRam[Offset];
-}
-
-void __fastcall HippodrmShared68KWriteWord(UINT32 a, UINT16 d)
-{
-	INT32 Offset = (a - 0x180000) >> 1;
-	DrvSharedRam[Offset] = d & 0xff;
-}
-
-UINT8 __fastcall RobocopShared68KReadByte(UINT32 a)
-{
-	INT32 Offset = (a - 0x180000) >> 1;
-	return DrvSharedRam[Offset];
-}
-
-void __fastcall RobocopShared68KWriteByte(UINT32 a, UINT8 d)
-{
-	INT32 Offset = (a - 0x180000) >> 1;
-	DrvSharedRam[Offset] = d;
-	if (Offset == 0x7ff) {
-		h6280SetIRQLine(0, H6280_IRQSTATUS_AUTO);
-	}
-}
-
-UINT16 __fastcall RobocopShared68KReadWord(UINT32 a)
-{
-	INT32 Offset = (a - 0x180000) >> 1;
-	return DrvSharedRam[Offset];
-}
-
-void __fastcall RobocopShared68KWriteWord(UINT32 a, UINT16 d)
-{
-	INT32 Offset = (a - 0x180000) >> 1;
-	DrvSharedRam[Offset] = d & 0xff;
-	if (Offset == 0x7ff) {
-		h6280SetIRQLine(0, H6280_IRQSTATUS_AUTO);
-	}
-}
-
-UINT8 Dec0SoundReadByte(UINT16 a)
-{
-	switch (a) {
-		case 0x3000: {
-			return DrvSoundLatch;
-		}
-		
-		case 0x3800: {
-			return MSM6295ReadStatus(0);
-		}
-		
-		default: {
-			bprintf(PRINT_NORMAL, _T("M6502 Read Byte %04X\n"), a);
-		}
-	}
-
-	return 0;
-}
-
-void Dec0SoundWriteByte(UINT16 a, UINT8 d)
-{
-	switch (a) {
-		case 0x0800: {
-			BurnYM2203Write(0, 0, d);
-			return;
-		}
-		
-		case 0x0801: {
-			BurnYM2203Write(0, 1, d);
-			return;
-		}
-		
-		case 0x1000: {
-			BurnYM3812Write(0, d);
-			return;
-		}
-		
-		case 0x1001: {
-			BurnYM3812Write(1, d);
-			return;
-		}
-		
-		case 0x3800: {
-			MSM6295Command(0, d);
-			return;
-		}
-		
-		default: {
-			bprintf(PRINT_NORMAL, _T("M6502 Write Byte %04X, %02X\n"), a, d);
-		}
-	}
-}
-
-UINT8 HippodrmH6280ReadProg(UINT32 Address)
-{
-	if (Address >= 0x1a1000 && Address <= 0x1a17ff) {
-		INT32 Offset = (Address - 0x1a1000) ^ 1;
-		if (Offset & 0x01) {
-			return deco_bac06_pf_data_r(2, (UINT16*)DrvVideo2Ram, Offset >> 1, 0x00ff);
-		} else {
-			return deco_bac06_pf_data_r(2, (UINT16*)DrvVideo2Ram, Offset >> 1, 0xff00) >> 8;
-		}
-	}
-	
-	switch (Address) {
-		case 0x1ff403: {
-			return DrvVBlank;
-		}
-	}
-	
-	bprintf(PRINT_NORMAL, _T("H6280 Read Prog %x\n"), Address);
-	
-	return 0;
-}
-
-void HippodrmH6280WriteProg(UINT32 Address, UINT8 Data)
-{
-	if (Address >= 0x1a0000 && Address <= 0x1a0007) {
-		INT32 Offset = Address - 0x1a0000;
-		if (Offset & 0x01) {
-			deco_bac06_pf_control_0_w(2, (UINT16*)DrvVideo2Ctrl0Ram, Offset >> 1, Data << 8, 0x00ff);
-		} else {
-			deco_bac06_pf_control_0_w(2, (UINT16*)DrvVideo2Ctrl0Ram, Offset >> 1, Data, 0xff00);
-		}
-		return;
-	}
-	
-	if (Address >= 0x1a0010 && Address <= 0x1a001f) {
-		INT32 Offset = (Address - 0x1a0010) ^ 1;
-		if (Offset < 0x04) {
-			if (Offset & 0x01) {
-				deco_bac06_pf_control_1_w((UINT16*)DrvVideo2Ctrl1Ram, Offset >> 1, Data, 0xff00);
-			} else {
-				deco_bac06_pf_control_1_w((UINT16*)DrvVideo2Ctrl1Ram, Offset >> 1, Data << 8, 0x00ff);
-			}
-		} else {
-			if (Offset & 0x01) {
-				deco_bac06_pf_control_1_w((UINT16*)DrvVideo2Ctrl1Ram, Offset >> 1, Data, 0xff00);
-			} else {
-				deco_bac06_pf_control_1_w((UINT16*)DrvVideo2Ctrl1Ram, Offset >> 1, Data, 0xff00);
-			}
-		}
-		return;
-	}
-	
-	if (Address >= 0x1a1000 && Address <= 0x1a17ff) {
-		INT32 Offset = (Address - 0x1a1000) ^ 1;
-		if (Offset & 0x01) {
-			deco_bac06_pf_data_w(2, (UINT16*)DrvVideo2Ram, Offset >> 1, Data, 0xff00);
-		} else {
-			deco_bac06_pf_data_w(2, (UINT16*)DrvVideo2Ram, Offset >> 1, Data << 8, 0x00ff);
-		}
-		return;
-		
-	}
-	
-	if (Address >= 0x1ff400 && Address <= 0x1ff403) {
-		h6280_irq_status_w(Address - 0x1ff400, Data);
-		return;
-	}
-	
-	bprintf(PRINT_NORMAL, _T("H6280 Write Prog %x, %x\n"), Address, Data);
-}
-
-UINT8 RobocopH6280ReadProg(UINT32 Address)
-{
-	bprintf(PRINT_NORMAL, _T("H6280 Read Prog %x\n"), Address);
-	
-	return 0;
-}
-
-void RobocopH6280WriteProg(UINT32 Address, UINT8 Data)
-{
-	if (Address >= 0x1ff400 && Address <= 0x1ff403) {
-		h6280_irq_status_w(Address - 0x1ff400, Data);
-		return;
-	}
-	
-	bprintf(PRINT_NORMAL, _T("H6280 Write Prog %x, %x\n"), Address, Data);
-}
-
 UINT8 SlyspyH6280ReadProg(UINT32 Address)
 {
 	switch (Address) {
@@ -2302,6 +2570,216 @@ void SlyspyH6280WriteProg(UINT32 Address, UINT8 Data)
 		}
 		
 		case 0x0e0000: {
+			MSM6295Command(0, Data);
+			return;
+		}
+	}
+	
+	if (Address >= 0x1ff400 && Address <= 0x1ff403) {
+		h6280_irq_status_w(Address - 0x1ff400, Data);
+		return;
+	}
+	
+	bprintf(PRINT_NORMAL, _T("H6280 Write Prog %x, %x\n"), Address, Data);
+}
+
+// Midnight Resistance hardware cpu memory handlers
+
+UINT8 __fastcall Midres68KReadByte(UINT32 a)
+{
+	switch (a) {
+		case 0x180009: {
+			return (0xf7 - DrvInput[2]) | ((DrvVBlank) ? 0x08 : 0x00);
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("68K Read byte => %06X\n"), a);
+		}
+	}
+	
+	return 0;
+}
+
+void __fastcall Midres68KWriteByte(UINT32 a, UINT8 d)
+{
+	switch (a) {
+		case 0x1a0001: {
+			DrvSoundLatch = d;
+			h6280SetIRQLine(H6280_INPUT_LINE_NMI, H6280_IRQSTATUS_AUTO);
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("68K Write byte => %06X, %02X\n"), a, d);
+		}
+	}
+}
+
+UINT16 __fastcall Midres68KReadWord(UINT32 a)
+{
+	switch (a) {
+		case 0x180000: {
+			return ((0xff - DrvInput[1]) << 8) | (0xff - DrvInput[0]);
+		}
+		
+		case 0x180002: {
+			return (DrvDip[1] << 8) | DrvDip[0];
+		}
+		
+		case 0x180004: {
+			UINT8 Temp = DrvMidresAnalogInput[0] >> 4;
+			return ~(1 << Temp);
+		}
+		
+		case 0x180006: {
+			UINT8 Temp = DrvMidresAnalogInput[1] >> 4;
+			return ~(1 << Temp);
+		}
+		
+		case 0x180008: {
+			return 0xff00 | ((0xf7 - DrvInput[2]) | ((DrvVBlank) ? 0x08 : 0x00));
+		}
+		
+		case 0x18000c: {
+			// watchdog?
+			return 0;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("68K Read word => %06X\n"), a);
+		}
+	}
+	
+	return 0;
+}
+
+void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x160000: {
+			DrvPriority = d;
+			return;
+		}
+		
+		case 0x18000a:
+		case 0x18000c: {
+			// nop?
+			return;
+		}
+		
+		case 0x200000:
+		case 0x200002:
+		case 0x200004:
+		case 0x200006: {		
+			UINT16 *Control0 = (UINT16*)DrvVideo1Ctrl0Ram;
+			Control0[(a - 0x200000) >> 1] = d;
+			if (a == 0x200004) {
+				DrvTileRamBank[1] = d & 0x01;
+				if (DrvTileRamBank[1]) bprintf(PRINT_IMPORTANT, _T("68K Set Tile RAM Bank 1\n"));
+			}
+			return;
+		}
+		
+		case 0x200010:
+		case 0x200012:
+		case 0x200014:
+		case 0x200016: {		
+			UINT16 *Control1 = (UINT16*)DrvVideo1Ctrl1Ram;
+			Control1[(a - 0x200010) >> 1] = d;
+			return;
+		}
+		
+		case 0x280000:
+		case 0x280002:
+		case 0x280004:
+		case 0x280006: {		
+			UINT16 *Control0 = (UINT16*)DrvVideo2Ctrl0Ram;
+			Control0[(a - 0x280000) >> 1] = d;
+			if (a == 0x280004) {
+				DrvTileRamBank[2] = d & 0x01;
+				if (DrvTileRamBank[2]) bprintf(PRINT_IMPORTANT, _T("68K Set Tile RAM Bank 2\n"));
+			}
+			return;
+		}
+		
+		case 0x280010:
+		case 0x280012:
+		case 0x280014:
+		case 0x280016: {		
+			UINT16 *Control1 = (UINT16*)DrvVideo2Ctrl1Ram;
+			Control1[(a - 0x280010) >> 1] = d;
+			return;
+		}
+		
+		case 0x300000:
+		case 0x300002:
+		case 0x300004:
+		case 0x300006: {		
+			UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
+			Control0[(a - 0x300000) >> 1] = d;
+			if (a == 0x300004) {
+				DrvTileRamBank[0] = d & 0x01;
+				if (DrvTileRamBank[0]) bprintf(PRINT_IMPORTANT, _T("68K Set Tile RAM Bank 0\n"));
+			}
+			return;
+		}
+		
+		case 0x300010:
+		case 0x300012:
+		case 0x300014:
+		case 0x300016: {		
+			UINT16 *Control1 = (UINT16*)DrvCharCtrl1Ram;
+			Control1[(a - 0x300010) >> 1] = d;
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("68K Write word => %06X, %04X\n"), a, d);
+		}
+	}
+}
+
+UINT8 MidresH6280ReadProg(UINT32 Address)
+{
+	switch (Address) {
+		case 0x130000: {
+			return MSM6295ReadStatus(0);
+		}
+		
+		case 0x138000: {
+			return DrvSoundLatch;
+		}
+	}
+	
+	bprintf(PRINT_NORMAL, _T("H6280 Read Prog %x\n"), Address);
+	
+	return 0;
+}
+
+void MidresH6280WriteProg(UINT32 Address, UINT8 Data)
+{
+	switch (Address) {
+		case 0x0108000: {
+			BurnYM3812Write(0, Data);
+			return;
+		}
+		
+		case 0x108001: {
+			BurnYM3812Write(1, Data);
+			return;
+		}
+		
+		case 0x118000: {
+			BurnYM2203Write(0, 0, Data);
+			return;
+		}
+		
+		case 0x118001: {
+			BurnYM2203Write(0, 1, Data);
+			return;
+		}
+		
+		case 0x130000: {
 			MSM6295Command(0, Data);
 			return;
 		}
@@ -2971,6 +3449,117 @@ static INT32 BouldashInit()
 	return SlyspyDrvInit();
 }
 
+static INT32 MidresInit()
+{
+	INT32 nRet = 0, nLen;
+	
+	BurnSetRefreshRate(57.392103);
+
+	Mem = NULL;
+	MemIndex();
+	nLen = MemEnd - (UINT8 *)0;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(Mem, 0, nLen);
+	MemIndex();
+
+	DrvTempRom = (UINT8 *)BurnMalloc(0x80000);
+	
+	// Load 68000 Program Roms
+	nRet = BurnLoadRom(Drv68KRom + 0x00001, 0, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x00000, 1, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x40001, 2, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x40000, 3, 2); if (nRet != 0) return 1;
+	
+	nRet = BurnLoadRom(DrvH6280Rom, 4, 1); if (nRet != 0) return 1;
+	
+	// Load and decode chars
+	nRet = BurnLoadRom(DrvTempRom + 0x20000,  5, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x30000,  6, 1); if (nRet != 0) return 1;
+	memcpy(DrvTempRom + 0x08000, DrvTempRom + 0x20000, 0x8000);
+	memcpy(DrvTempRom + 0x00000, DrvTempRom + 0x28000, 0x8000);
+	memcpy(DrvTempRom + 0x18000, DrvTempRom + 0x30000, 0x8000);
+	memcpy(DrvTempRom + 0x10000, DrvTempRom + 0x38000, 0x8000);
+	GfxDecode(0x1000, 4, 8, 8, RobocopCharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvChars);
+	
+	// Load and decode tiles1
+	memset(DrvTempRom, 0, 0x80000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000,  7, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x20000,  8, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x40000,  9, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x60000, 10, 1); if (nRet != 0) return 1;
+	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
+	
+	// Load and decode tiles2
+	memset(DrvTempRom, 0, 0x80000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000, 11, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x20000, 12, 1); if (nRet != 0) return 1;
+	GfxDecode(0x800, 4, 16, 16, Tile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
+	
+	// Load and decode sprites
+	memset(DrvTempRom, 0, 0x80000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000, 13, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x20000, 14, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x40000, 15, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x60000, 16, 1); if (nRet != 0) return 1;
+	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvSprites);
+	
+	// Load the samples
+	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 17, 1); if (nRet != 0) return 1;
+	
+	BurnFree(DrvTempRom);
+	
+	// Setup the 68000 emulation
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KRom               , 0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(Drv68KRam               , 0x100000, 0x103fff, SM_RAM);
+	SekMapMemory(DrvSpriteRam            , 0x120000, 0x1207ff, SM_RAM);
+	SekMapMemory(DrvPaletteRam           , 0x140000, 0x1407ff, SM_RAM);
+	SekMapMemory(DrvVideo1Ram            , 0x220000, 0x2207ff, SM_RAM);
+	SekMapMemory(DrvVideo1ColScrollRam   , 0x240000, 0x24007f, SM_RAM);
+	SekMapMemory(DrvVideo1RowScrollRam   , 0x240400, 0x2407ff, SM_RAM);	
+	SekMapMemory(DrvVideo2Ram            , 0x2a0000, 0x2a07ff, SM_RAM);
+	SekMapMemory(DrvVideo2ColScrollRam   , 0x2c0000, 0x2c007f, SM_RAM);
+	SekMapMemory(DrvVideo2RowScrollRam   , 0x2c0400, 0x2c07ff, SM_RAM);	
+	SekMapMemory(DrvCharRam              , 0x320000, 0x321fff, SM_RAM);
+	SekMapMemory(DrvCharColScrollRam     , 0x340000, 0x34007f, SM_RAM);
+	SekMapMemory(DrvCharRowScrollRam     , 0x340400, 0x3407ff, SM_RAM);	
+	SekSetReadByteHandler(0, Midres68KReadByte);
+	SekSetWriteByteHandler(0, Midres68KWriteByte);
+	SekSetReadWordHandler(0, Midres68KReadWord);
+	SekSetWriteWordHandler(0, Midres68KWriteWord);	
+	SekClose();
+	
+	h6280Init(1);
+	h6280Open(0);
+	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, H6280_ROM);
+	h6280MapMemory(DrvH6280Ram , 0x1f0000, 0x1f1fff, H6280_RAM);
+	h6280SetReadHandler(MidresH6280ReadProg);
+	h6280SetWriteHandler(MidresH6280WriteProg);
+	h6280Close();
+	
+	GenericTilesInit();
+	
+	BurnYM3812Init(3000000, &Dec1YM3812IRQHandler, &Dec1YM3812SynchroniseStream, 1);
+	BurnTimerAttachH6280YM3812(2000000);
+	
+	BurnYM2203Init(1, 1500000, NULL, Dec0YM2203SynchroniseStream, Dec0YM2203GetTime, 0);
+	BurnTimerAttachSek(10000000);
+	
+	MSM6295Init(0, 1000000 / 132, 80, 1);
+	
+	Dec0DrawFunction = MidresDraw;
+	DrvSpriteDMABufferRam = DrvSpriteRam;
+	
+	DrvCharPalOffset = 256;
+	DrvSpritePalOffset = 0;
+	
+	// Reset the driver
+	SlyspyDoReset();
+
+	return 0;
+}
+
 static INT32 DrvExit()
 {
 	SekExit();
@@ -3000,6 +3589,11 @@ static INT32 DrvExit()
 	LoadRomsFunction = NULL;
 	
 	Dec0Game = 0;
+	
+	DrvCharPalOffset = 0;
+	DrvSpritePalOffset = 256;
+	
+	DrvMidresAnalogInput[0] = DrvMidresAnalogInput[1] = 0;
 	
 	BurnFree(Mem);
 
@@ -3460,9 +4054,9 @@ static void DrvRenderCharLayer()
 				y = 248 - y;
 				x &= (DrvCharTilemapWidth - 1);
 				y &= (DrvCharTilemapHeight - 1);
-				Dec0Render8x8Tile_Mask_FlipXY(pCharLayerDraw, Code, x, y, Colour, 4, 0, 0, DrvChars, DrvCharTilemapWidth);
+				Dec0Render8x8Tile_Mask_FlipXY(pCharLayerDraw, Code, x, y, Colour, 4, 0, DrvCharPalOffset, DrvChars, DrvCharTilemapWidth);
 			} else {
-				Dec0Render8x8Tile_Mask(pCharLayerDraw, Code, x, y, Colour, 4, 0, 0, DrvChars, DrvCharTilemapWidth);
+				Dec0Render8x8Tile_Mask(pCharLayerDraw, Code, x, y, Colour, 4, 0, DrvCharPalOffset, DrvChars, DrvCharTilemapWidth);
 			}
 		}
 	}
@@ -3524,29 +4118,29 @@ static void DrvRenderSprites(INT32 PriorityMask, INT32 PriorityVal)
 			if (x > 16 && x < (nScreenWidth - 16) && yPlot > 16 && yPlot < (nScreenHeight - 16)) {
 				if (xFlip) {
 					if (yFlip) {
-						Render16x16Tile_Mask_FlipXY(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, 256, DrvSprites);
+						Render16x16Tile_Mask_FlipXY(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, DrvSpritePalOffset, DrvSprites);
 					} else {
-						Render16x16Tile_Mask_FlipX(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, 256, DrvSprites);
+						Render16x16Tile_Mask_FlipX(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, DrvSpritePalOffset, DrvSprites);
 					}
 				} else {
 					if (yFlip) {
-						Render16x16Tile_Mask_FlipY(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, 256, DrvSprites);
+						Render16x16Tile_Mask_FlipY(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, DrvSpritePalOffset, DrvSprites);
 					} else {
-						Render16x16Tile_Mask(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, 256, DrvSprites);
+						Render16x16Tile_Mask(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, DrvSpritePalOffset, DrvSprites);
 					}
 				}
 			} else {
 				if (xFlip) {
 					if (yFlip) {
-						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, 256, DrvSprites);
+						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, DrvSpritePalOffset, DrvSprites);
 					} else {
-						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, 256, DrvSprites);
+						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, DrvSpritePalOffset, DrvSprites);
 					}
 				} else {
 					if (yFlip) {
-						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, 256, DrvSprites);
+						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, DrvSpritePalOffset, DrvSprites);
 					} else {
-						Render16x16Tile_Mask_Clip(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, 256, DrvSprites);
+						Render16x16Tile_Mask_Clip(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, DrvSpritePalOffset, DrvSprites);
 					}
 				}
 			}
@@ -3616,6 +4210,41 @@ static void HippodrmDraw()
 	}
 	
 	DrvRenderSprites(0x00, 0x00);
+	DrvRenderCharLayer();
+	BurnTransferCopy(DrvPalette);
+}
+
+static void MidresDraw()
+{
+	INT32 Trans;
+	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
+	DrvFlipScreen = Control0[0] & 0x80;
+	
+	if (DrvPriority & 0x04) {
+		Trans = 0x00;
+	} else {
+		Trans = 0x08;
+	}
+	
+	BurnTransferClear();
+	Dec1CalcPalette();
+	
+	if (DrvPriority & 0x01) {
+		DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+		if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
+		DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);		
+	} else {
+		DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+		if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
+		DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+	}
+	
+	if (DrvPriority & 0x02) {
+		DrvRenderSprites(0x08, Trans ^ 0x08);
+	} else {
+		DrvRenderSprites(0x00, 0x00);
+	}
+	
 	DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 }
@@ -3791,6 +4420,15 @@ static INT32 Dec1Frame()
 	if (DrvReset) SlyspyDoReset();
 
 	DrvMakeInputs();
+	
+	for (INT32 i = 0; i < 2; i++) {
+		if (DrvMidresFakeInput[(i * 2) + 0]) {
+			DrvMidresAnalogInput[i] += 0x02;
+		}
+		if (DrvMidresFakeInput[(i * 2) + 1]) {
+			DrvMidresAnalogInput[i] -= 0x02;
+		}
+	}
 
 	nCyclesTotal[0] = (INT32)((double)10000000 / 57.392103);
 	nCyclesTotal[1] = (INT32)((double)2000000 / 57.392103);
@@ -3963,6 +4601,36 @@ struct BurnDriver BurnDrvFfantasya = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, FfantasyaRomInfo, FfantasyaRomName, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
 	HippodrmInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
+	NULL, 0x400, 256, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvMidres = {
+	"midres", NULL, NULL, NULL, "1989",
+	"Midnight Resistance (World)\0", NULL, "Data East Corporation", "DEC0",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	NULL, MidresRomInfo, MidresRomName, NULL, NULL, MidresInputInfo, MidresDIPInfo,
+	MidresInit, SlyspyExit, Dec1Frame, NULL, DrvScan,
+	NULL, 0x400, 256, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvMidresu = {
+	"midresu", "midres", NULL, NULL, "1989",
+	"Midnight Resistance (US)\0", NULL, "Data East USA", "DEC0",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	NULL, MidresuRomInfo, MidresuRomName, NULL, NULL, MidresInputInfo, MidresuDIPInfo,
+	MidresInit, SlyspyExit, Dec1Frame, NULL, DrvScan,
+	NULL, 0x400, 256, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvMidresj = {
+	"midresj", "midres", NULL, NULL, "1989",
+	"Midnight Resistance (Japan)\0", NULL, "Data East Corporation", "DEC0",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	NULL, MidresjRomInfo, MidresjRomName, NULL, NULL, MidresInputInfo, MidresuDIPInfo,
+	MidresInit, SlyspyExit, Dec1Frame, NULL, DrvScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 

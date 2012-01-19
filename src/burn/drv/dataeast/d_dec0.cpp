@@ -1751,6 +1751,24 @@ static void deco_bac06_pf_data_w(INT32 Layer, UINT16 *RAM, INT32 Offset, UINT16 
 
 UINT8 __fastcall Dec068KReadByte(UINT32 a)
 {
+	if (a >= 0x244000 && a <= 0x245fff) {
+		INT32 Offset = a - 0x244000;
+		if (DrvTileRamBank[0] & 0x01) Offset += 0x2000;
+		return DrvCharRam[Offset ^ 1];
+	}
+	
+	if (a >= 0x24a000 && a <= 0x24a7ff) {
+		INT32 Offset = a - 0x24a000;
+		if (DrvTileRamBank[1] & 0x01) Offset += 0x2000;
+		return DrvVideo1Ram[Offset];
+	}	
+	
+	if (a >= 0x24d000 && a <= 0x24d7ff) {
+		INT32 Offset = a - 0x24d000;
+		if (DrvTileRamBank[2] & 0x01) Offset += 0x2000;
+		return DrvVideo2Ram[Offset];
+	}
+	
 	if (a >= 0x300000 && a <= 0x30001f) {
 		// rotary_r
 		return 0;
@@ -1787,6 +1805,27 @@ UINT8 __fastcall Dec068KReadByte(UINT32 a)
 
 void __fastcall Dec068KWriteByte(UINT32 a, UINT8 d)
 {
+	if (a >= 0x244000 && a <= 0x245fff) {
+		INT32 Offset = a - 0x244000;
+		if (DrvTileRamBank[0] & 0x01) Offset += 0x2000;
+		DrvCharRam[Offset ^ 1] = d;
+		return;
+	}
+	
+	if (a >= 0x24a000 && a <= 0x24a7ff) {
+		INT32 Offset = a - 0x24a000;
+		if (DrvTileRamBank[1] & 0x01) Offset += 0x2000;
+		DrvVideo1Ram[Offset] = d;
+		return;
+	}	
+	
+	if (a >= 0x24d000 && a <= 0x24d7ff) {
+		INT32 Offset = a - 0x24d000;
+		if (DrvTileRamBank[2] & 0x01) Offset += 0x2000;
+		DrvVideo2Ram[Offset] = d;
+		return;
+	}
+	
 	switch (a) {
 		case 0x30c011: {
 			DrvPriority = d;
@@ -1812,6 +1851,27 @@ void __fastcall Dec068KWriteByte(UINT32 a, UINT8 d)
 
 UINT16 __fastcall Dec068KReadWord(UINT32 a)
 {
+	if (a >= 0x244000 && a <= 0x245fff) {
+		UINT16 *RAM = (UINT16*)DrvCharRam;
+		INT32 Offset = (a - 0x244000) >> 1;
+		if (DrvTileRamBank[0] & 0x01) Offset += 0x1000;
+		return RAM[Offset];
+	}
+	
+	if (a >= 0x24a000 && a <= 0x24a7ff) {
+		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
+		INT32 Offset = (a - 0x24a000) >> 1;
+		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
+		return RAM[Offset];
+	}	
+	
+	if (a >= 0x24d000 && a <= 0x24d7ff) {
+		UINT16 *RAM = (UINT16*)DrvVideo2Ram;
+		INT32 Offset = (a - 0x24d000) >> 1;
+		if (DrvTileRamBank[2] & 0x01) Offset += 0x1000;
+		return RAM[Offset];
+	}
+	
 	if (a >= 0x300000 && a <= 0x30001f) {
 		// rotary_r
 		return 0;
@@ -1844,6 +1904,30 @@ UINT16 __fastcall Dec068KReadWord(UINT32 a)
 
 void __fastcall Dec068KWriteWord(UINT32 a, UINT16 d)
 {
+	if (a >= 0x244000 && a <= 0x245fff) {
+		UINT16 *RAM = (UINT16*)DrvCharRam;
+		INT32 Offset = (a - 0x244000) >> 1;
+		if (DrvTileRamBank[0] & 0x01) Offset += 0x1000;
+		RAM[Offset] = d;
+		return;
+	}
+	
+	if (a >= 0x24a000 && a <= 0x24a7ff) {
+		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
+		INT32 Offset = (a - 0x24a000) >> 1;
+		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
+		RAM[Offset] = d;
+		return;
+	}	
+	
+	if (a >= 0x24d000 && a <= 0x24d7ff) {
+		UINT16 *RAM = (UINT16*)DrvVideo2Ram;
+		INT32 Offset = (a - 0x24d000) >> 1;
+		if (DrvTileRamBank[2] & 0x01) Offset += 0x1000;
+		RAM[Offset] = d;
+		return;
+	}
+	
 	if (a >= 0x31c000 && a <= 0x31c7ff) {
 		// ???
 		return;
@@ -2487,6 +2571,10 @@ void __fastcall SlyspyProt68KWriteWord(UINT32 a, UINT16 d)
 
 static void SlyspySetProtectionMap(UINT8 Type)
 {
+	// I should really set this up to go through handlers, in case a layer's alt RAM bank gets activated,
+	// so far I've not seen evidence that the game activates the alt RAM banks and this implementation is much
+	// cleaner and quicker
+	
 	SekMapHandler(8, 0x240000, 0x24ffff, SM_WRITE);
 	SekSetWriteByteHandler(8, SlyspyProt68KWriteByte);
 	SekSetWriteWordHandler(8, SlyspyProt68KWriteWord);
@@ -2587,6 +2675,31 @@ void SlyspyH6280WriteProg(UINT32 Address, UINT8 Data)
 
 UINT8 __fastcall Midres68KReadByte(UINT32 a)
 {
+	if (a >= 0x220000 && a <= 0x2207ff) {
+		INT32 Offset = a - 0x220000;
+		if (DrvTileRamBank[1] & 0x01) Offset += 0x2000;
+		return DrvVideo1Ram[Offset ^ 1];
+	}
+	
+	if (a >= 0x220800 && a <= 0x220fff) {
+		// mirror
+		INT32 Offset = a - 0x220800;
+		if (DrvTileRamBank[1] & 0x01) Offset += 0x2000;
+		return DrvVideo1Ram[Offset ^ 1];
+	}
+	
+	if (a >= 0x2a0000 && a <= 0x2a07ff) {
+		INT32 Offset = a - 0x2a0000;
+		if (DrvTileRamBank[2] & 0x01) Offset += 0x2000;
+		return DrvVideo2Ram[Offset ^ 1];
+	}
+	
+	if (a >= 0x320000 && a <= 0x321fff) {
+		INT32 Offset = a - 0x320000;
+		if (DrvTileRamBank[0] & 0x01) Offset += 0x2000;
+		return DrvCharRam[Offset ^ 1];
+	}
+	
 	switch (a) {
 		case 0x180009: {
 			return (0xf7 - DrvInput[2]) | ((DrvVBlank) ? 0x08 : 0x00);
@@ -2602,6 +2715,35 @@ UINT8 __fastcall Midres68KReadByte(UINT32 a)
 
 void __fastcall Midres68KWriteByte(UINT32 a, UINT8 d)
 {
+	if (a >= 0x220000 && a <= 0x2207ff) {
+		INT32 Offset = a - 0x220000;
+		if (DrvTileRamBank[1] & 0x01) Offset += 0x2000;
+		DrvVideo1Ram[Offset ^ 1] = d;
+		return;
+	}
+	
+	if (a >= 0x220800 && a <= 0x220fff) {
+		// mirror
+		INT32 Offset = a - 0x220800;
+		if (DrvTileRamBank[1] & 0x01) Offset += 0x2000;
+		DrvVideo1Ram[Offset ^ 1] = d;
+		return;
+	}
+	
+	if (a >= 0x2a0000 && a <= 0x2a07ff) {
+		INT32 Offset = a - 0x2a0000;
+		if (DrvTileRamBank[2] & 0x01) Offset += 0x2000;
+		DrvVideo2Ram[Offset ^ 1] = d;
+		return;
+	}
+	
+	if (a >= 0x320000 && a <= 0x321fff) {
+		INT32 Offset = a - 0x320000;
+		if (DrvTileRamBank[0] & 0x01) Offset += 0x2000;
+		DrvCharRam[Offset ^ 1] = d;
+		return;
+	}
+	
 	switch (a) {
 		case 0x1a0001: {
 			DrvSoundLatch = d;
@@ -2617,6 +2759,35 @@ void __fastcall Midres68KWriteByte(UINT32 a, UINT8 d)
 
 UINT16 __fastcall Midres68KReadWord(UINT32 a)
 {
+	if (a >= 0x220000 && a <= 0x2207ff) {
+		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
+		INT32 Offset = (a - 0x220000) >> 1;
+		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
+		return RAM[Offset];
+	}
+	
+	if (a >= 0x220800 && a <= 0x220fff) {
+		// mirror
+		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
+		INT32 Offset = (a - 0x220800) >> 1;
+		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
+		return RAM[Offset];
+	}
+	
+	if (a >= 0x2a0000 && a <= 0x2a07ff) {
+		UINT16 *RAM = (UINT16*)DrvVideo2Ram;
+		INT32 Offset = (a - 0x2a0000) >> 1;
+		if (DrvTileRamBank[2] & 0x01) Offset += 0x1000;
+		return RAM[Offset];
+	}
+	
+	if (a >= 0x320000 && a <= 0x321fff) {
+		UINT16 *RAM = (UINT16*)DrvCharRam;
+		INT32 Offset = (a - 0x320000) >> 1;
+		if (DrvTileRamBank[0] & 0x01) Offset += 0x1000;
+		return RAM[Offset];
+	}
+	
 	switch (a) {
 		case 0x180000: {
 			return ((0xff - DrvInput[1]) << 8) | (0xff - DrvInput[0]);
@@ -2655,6 +2826,39 @@ UINT16 __fastcall Midres68KReadWord(UINT32 a)
 
 void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 {
+	if (a >= 0x220000 && a <= 0x2207ff) {
+		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
+		INT32 Offset = (a - 0x220000) >> 1;
+		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
+		RAM[Offset] = d;
+		return;
+	}
+	
+	if (a >= 0x220800 && a <= 0x220fff) {
+		// mirror
+		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
+		INT32 Offset = (a - 0x220800) >> 1;
+		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
+		RAM[Offset] = d;
+		return;
+	}
+	
+	if (a >= 0x2a0000 && a <= 0x2a07ff) {
+		UINT16 *RAM = (UINT16*)DrvVideo2Ram;
+		INT32 Offset = (a - 0x2a0000) >> 1;
+		if (DrvTileRamBank[2] & 0x01) Offset += 0x1000;
+		RAM[Offset] = d;
+		return;
+	}
+	
+	if (a >= 0x320000 && a <= 0x321fff) {
+		UINT16 *RAM = (UINT16*)DrvCharRam;
+		INT32 Offset = (a - 0x320000) >> 1;
+		if (DrvTileRamBank[0] & 0x01) Offset += 0x1000;
+		RAM[Offset] = d;
+		return;
+	}
+	
 	switch (a) {
 		case 0x160000: {
 			DrvPriority = d;
@@ -2847,7 +3051,6 @@ static INT32 Dec0MachineInit()
 	
 	BurnSetRefreshRate(57.392103);
 	
-	// Allocate and Blank all required memory
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
@@ -2857,20 +3060,16 @@ static INT32 Dec0MachineInit()
 
 	DrvTempRom = (UINT8 *)BurnMalloc(0x80000);
 	
-	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(Drv68KRom               , 0x000000, 0x05ffff, SM_ROM);
 	SekMapMemory(DrvCharColScrollRam     , 0x242000, 0x24207f, SM_RAM);
 	SekMapMemory(DrvCharRowScrollRam     , 0x242400, 0x2427ff, SM_RAM);
 	SekMapMemory(Drv68KRam + 0x4000      , 0x242800, 0x243fff, SM_RAM);
-	SekMapMemory(DrvCharRam              , 0x244000, 0x245fff, SM_RAM);	
 	SekMapMemory(DrvVideo1ColScrollRam   , 0x248000, 0x24807f, SM_RAM);
 	SekMapMemory(DrvVideo1RowScrollRam   , 0x248400, 0x2487ff, SM_RAM);
-	SekMapMemory(DrvVideo1Ram            , 0x24a000, 0x24a7ff, SM_RAM);	
 	SekMapMemory(DrvVideo2ColScrollRam   , 0x24c800, 0x24c87f, SM_RAM);
 	SekMapMemory(DrvVideo2RowScrollRam   , 0x24cc00, 0x24cfff, SM_RAM);
-	SekMapMemory(DrvVideo2Ram            , 0x24d000, 0x24d7ff, SM_RAM);
 	SekMapMemory(DrvPaletteRam           , 0x310000, 0x3107ff, SM_RAM);
 	SekMapMemory(DrvPalette2Ram          , 0x314000, 0x3147ff, SM_RAM);
 	SekMapMemory(Drv68KRam               , 0xff8000, 0xffbfff, SM_RAM);
@@ -2881,7 +3080,6 @@ static INT32 Dec0MachineInit()
 	SekSetWriteWordHandler(0, Dec068KWriteWord);	
 	SekClose();
 	
-	// Setup the M6502 emulation
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
 	M6502MapMemory(DrvM6502Ram            , 0x0000, 0x05ff, M6502_RAM);
@@ -2909,21 +3107,17 @@ static INT32 BaddudesInit()
 
 	Dec0MachineInit();
 
-	// Load 68000 Program Roms
 	nRet = BurnLoadRom(Drv68KRom + 0x00001, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x00000, 1, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x40001, 2, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x40000, 3, 2); if (nRet != 0) return 1;
 	
-	// Load M6502 Program Rom
 	nRet = BurnLoadRom(DrvM6502Rom, 4, 1); if (nRet != 0) return 1;
 	
-	// Load and decode chars
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  5, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x08000,  6, 1); if (nRet != 0) return 1;
 	GfxDecode(0x800, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvChars);
 	
-	// Load and decode tiles1
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  7, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000,  8, 1); if (nRet != 0) return 1;
@@ -2931,7 +3125,6 @@ static INT32 BaddudesInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x30000, 10, 1); if (nRet != 0) return 1;
 	GfxDecode(0x800, 4, 16, 16, Tile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
 	
-	// Load and decode tiles2
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x20000, 11, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x30000, 12, 1); if (nRet != 0) return 1;
@@ -2941,7 +3134,6 @@ static INT32 BaddudesInit()
 	memcpy(DrvTempRom + 0x10000, DrvTempRom + 0x38000, 0x8000);	
 	GfxDecode(0x400, 4, 16, 16, Tile2PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
 	
-	// Load and decode sprites
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000, 13, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000, 14, 1); if (nRet != 0) return 1;
@@ -2953,7 +3145,6 @@ static INT32 BaddudesInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x70000, 20, 1); if (nRet != 0) return 1;
 	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvSprites);
 	
-	// Load the samples
 	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 21, 1); if (nRet != 0) return 1;
 	
 	BurnFree(DrvTempRom);
@@ -2961,7 +3152,6 @@ static INT32 BaddudesInit()
 	Dec0DrawFunction = BaddudesDraw;
 	Dec0Game = DEC0_GAME_BADDUDES;
 
-	// Reset the driver
 	BaddudesDoReset();
 
 	return 0;
@@ -2973,7 +3163,6 @@ static INT32 HbarrelInit()
 
 	Dec0MachineInit();
 
-	// Load 68000 Program Roms
 	nRet = BurnLoadRom(Drv68KRom + 0x00001, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x00000, 1, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x20001, 2, 2); if (nRet != 0) return 1;
@@ -2981,15 +3170,12 @@ static INT32 HbarrelInit()
 	nRet = BurnLoadRom(Drv68KRom + 0x40001, 4, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x40000, 5, 2); if (nRet != 0) return 1;
 	
-	// Load M6502 Program Rom
 	nRet = BurnLoadRom(DrvM6502Rom, 6, 1); if (nRet != 0) return 1;
 	
-	// Load and decode chars
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  7, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000,  8, 1); if (nRet != 0) return 1;
 	GfxDecode(0x1000, 4, 8, 8, RobocopCharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvChars);
 	
-	// Load and decode tiles1
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  9, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000, 10, 1); if (nRet != 0) return 1;
@@ -3001,7 +3187,6 @@ static INT32 HbarrelInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x70000, 16, 1); if (nRet != 0) return 1;
 	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
 	
-	// Load and decode tiles2
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000, 17, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000, 18, 1); if (nRet != 0) return 1;
@@ -3009,7 +3194,6 @@ static INT32 HbarrelInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x30000, 20, 1); if (nRet != 0) return 1;
 	GfxDecode(0x800, 4, 16, 16, Tile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
 	
-	// Load and decode sprites
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000, 21, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000, 22, 1); if (nRet != 0) return 1;
@@ -3021,7 +3205,6 @@ static INT32 HbarrelInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x70000, 28, 1); if (nRet != 0) return 1;
 	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvSprites);
 	
-	// Load the samples
 	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 29, 1); if (nRet != 0) return 1;
 	
 	BurnFree(DrvTempRom);
@@ -3032,7 +3215,6 @@ static INT32 HbarrelInit()
 	UINT16 *Rom = (UINT16 *)Drv68KRom;
 	Rom[0xb68 >> 1] = 0x8008;
 
-	// Reset the driver
 	BaddudesDoReset();
 
 	return 0;
@@ -3044,23 +3226,19 @@ static INT32 HippodrmInit()
 
 	Dec0MachineInit();
 	
-	// Load 68000 Program Roms
 	nRet = BurnLoadRom(Drv68KRom + 0x00001, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x00000, 1, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x20001, 2, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x20000, 3, 2); if (nRet != 0) return 1;
 	
-	// Load M6502 Program Rom
 	nRet = BurnLoadRom(DrvM6502Rom, 4, 1); if (nRet != 0) return 1;
 	
 	nRet = BurnLoadRom(DrvH6280Rom, 5, 1); if (nRet != 0) return 1;
 	
-	// Load and decode chars
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  6, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000,  7, 1); if (nRet != 0) return 1;
 	GfxDecode(0x1000, 4, 8, 8, RobocopCharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvChars);
 	
-	// Load and decode tiles1
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  8, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x08000,  9, 1); if (nRet != 0) return 1;
@@ -3068,7 +3246,6 @@ static INT32 HippodrmInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x18000, 11, 1); if (nRet != 0) return 1;
 	GfxDecode(0x400, 4, 16, 16, Tile2PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
 	
-	// Load and decode tiles2
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000, 12, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x08000, 13, 1); if (nRet != 0) return 1;
@@ -3076,7 +3253,6 @@ static INT32 HippodrmInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x18000, 15, 1); if (nRet != 0) return 1;
 	GfxDecode(0x400, 4, 16, 16, Tile2PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
 	
-	// Load and decode sprites
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000, 16, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000, 17, 1); if (nRet != 0) return 1;
@@ -3088,7 +3264,6 @@ static INT32 HippodrmInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x70000, 23, 1); if (nRet != 0) return 1;
 	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvSprites);
 	
-	// Load the samples
 	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 24, 1); if (nRet != 0) return 1;
 
 	BurnFree(DrvTempRom);
@@ -3120,7 +3295,6 @@ static INT32 HippodrmInit()
 	h6280SetWriteHandler(HippodrmH6280WriteProg);
 	h6280Close();
 
-	// Reset the driver
 	RobocopDoReset();
 
 	return 0;
@@ -3132,23 +3306,19 @@ static INT32 RobocopInit()
 
 	Dec0MachineInit();
 	
-	// Load 68000 Program Roms
 	nRet = BurnLoadRom(Drv68KRom + 0x00001, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x00000, 1, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x20001, 2, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x20000, 3, 2); if (nRet != 0) return 1;
 	
-	// Load M6502 Program Rom
 	nRet = BurnLoadRom(DrvM6502Rom, 4, 1); if (nRet != 0) return 1;
 	
 	nRet = BurnLoadRom(DrvH6280Rom + 0x01e00, 5, 1); if (nRet != 0) return 1;
 	
-	// Load and decode chars
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  6, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000,  7, 1); if (nRet != 0) return 1;
 	GfxDecode(0x1000, 4, 8, 8, RobocopCharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvChars);
 	
-	// Load and decode tiles1
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  8, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000,  9, 1); if (nRet != 0) return 1;
@@ -3156,7 +3326,6 @@ static INT32 RobocopInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x30000, 11, 1); if (nRet != 0) return 1;
 	GfxDecode(0x800, 4, 16, 16, Tile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
 	
-	// Load and decode tiles2
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000, 12, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x08000, 13, 1); if (nRet != 0) return 1;
@@ -3164,7 +3333,6 @@ static INT32 RobocopInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x18000, 15, 1); if (nRet != 0) return 1;
 	GfxDecode(0x400, 4, 16, 16, Tile2PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
 	
-	// Load and decode sprites
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000, 16, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000, 17, 1); if (nRet != 0) return 1;
@@ -3176,7 +3344,6 @@ static INT32 RobocopInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x70000, 23, 1); if (nRet != 0) return 1;
 	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvSprites);
 	
-	// Load the samples
 	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 24, 1); if (nRet != 0) return 1;
 
 	BurnFree(DrvTempRom);
@@ -3200,7 +3367,6 @@ static INT32 RobocopInit()
 	h6280SetWriteHandler(RobocopH6280WriteProg);
 	h6280Close();
 
-	// Reset the driver
 	RobocopDoReset();
 
 	return 0;
@@ -3212,21 +3378,17 @@ static INT32 RobocopbInit()
 
 	Dec0MachineInit();
 
-	// Load 68000 Program Roms
 	nRet = BurnLoadRom(Drv68KRom + 0x00001, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x00000, 1, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x20001, 2, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x20000, 3, 2); if (nRet != 0) return 1;
 	
-	// Load M6502 Program Rom
 	nRet = BurnLoadRom(DrvM6502Rom, 4, 1); if (nRet != 0) return 1;
 	
-	// Load and decode chars
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  5, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000,  6, 1); if (nRet != 0) return 1;
 	GfxDecode(0x1000, 4, 8, 8, RobocopCharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvChars);
 	
-	// Load and decode tiles1
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  7, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000,  8, 1); if (nRet != 0) return 1;
@@ -3234,7 +3396,6 @@ static INT32 RobocopbInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x30000, 10, 1); if (nRet != 0) return 1;
 	GfxDecode(0x800, 4, 16, 16, Tile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
 	
-	// Load and decode tiles2
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000, 11, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x08000, 12, 1); if (nRet != 0) return 1;
@@ -3242,7 +3403,6 @@ static INT32 RobocopbInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x18000, 14, 1); if (nRet != 0) return 1;
 	GfxDecode(0x400, 4, 16, 16, Tile2PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
 	
-	// Load and decode sprites
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000, 15, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000, 16, 1); if (nRet != 0) return 1;
@@ -3254,14 +3414,12 @@ static INT32 RobocopbInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x70000, 22, 1); if (nRet != 0) return 1;
 	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvSprites);
 	
-	// Load the samples
 	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 23, 1); if (nRet != 0) return 1;
 	
 	BurnFree(DrvTempRom);
 	
 	Dec0DrawFunction = RobocopDraw;
 
-	// Reset the driver
 	BaddudesDoReset();
 
 	return 0;
@@ -3288,7 +3446,6 @@ static INT32 SlyspyDrvInit()
 	DrvH6280Rom[0xf2d] = 0xea;
 	DrvH6280Rom[0xf2e] = 0xea;
 	
-	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(Drv68KRom               , 0x000000, 0x05ffff, SM_ROM);
@@ -3325,7 +3482,6 @@ static INT32 SlyspyDrvInit()
 	Dec0DrawFunction = SlyspyDraw;
 	DrvSpriteDMABufferRam = DrvSpriteRam;
 	
-	// Reset the driver
 	SlyspyDoReset();
 
 	return 0;
@@ -3337,7 +3493,6 @@ static INT32 SlyspyLoadRoms()
 	
 	DrvTempRom = (UINT8 *)BurnMalloc(0x80000);
 	
-	// Load 68000 Program Roms
 	nRet = BurnLoadRom(Drv68KRom + 0x00001, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x00000, 1, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x20001, 2, 2); if (nRet != 0) return 1;
@@ -3345,7 +3500,6 @@ static INT32 SlyspyLoadRoms()
 	
 	nRet = BurnLoadRom(DrvH6280Rom, 4, 1); if (nRet != 0) return 1;
 	
-	// Load and decode chars
 	nRet = BurnLoadRom(DrvTempRom + 0x10000,  5, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x18000,  6, 1); if (nRet != 0) return 1;
 	memcpy(DrvTempRom + 0x4000, DrvTempRom + 0x10000, 0x4000);
@@ -3354,19 +3508,16 @@ static INT32 SlyspyLoadRoms()
 	memcpy(DrvTempRom + 0x8000, DrvTempRom + 0x1c000, 0x4000);
 	GfxDecode(0x800, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvChars);
 	
-	// Load and decode tiles1
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  7, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000,  8, 1); if (nRet != 0) return 1;
 	GfxDecode(0x400, 4, 16, 16, Tile2PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
 	
-	// Load and decode tiles2
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  9, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x20000, 10, 1); if (nRet != 0) return 1;
 	GfxDecode(0x800, 4, 16, 16, Tile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
 	
-	// Load and decode sprites
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000, 11, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x20000, 12, 1); if (nRet != 0) return 1;
@@ -3374,7 +3525,6 @@ static INT32 SlyspyLoadRoms()
 	nRet = BurnLoadRom(DrvTempRom + 0x60000, 14, 1); if (nRet != 0) return 1;
 	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvSprites);
 	
-	// Load the samples
 	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 15, 1); if (nRet != 0) return 1;
 	
 	BurnFree(DrvTempRom);
@@ -3395,7 +3545,6 @@ static INT32 BouldashLoadRoms()
 	
 	DrvTempRom = (UINT8 *)BurnMalloc(0x40000);
 	
-	// Load 68000 Program Roms
 	nRet = BurnLoadRom(Drv68KRom + 0x00001, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x00000, 1, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x20001, 2, 2); if (nRet != 0) return 1;
@@ -3405,7 +3554,6 @@ static INT32 BouldashLoadRoms()
 	
 	nRet = BurnLoadRom(DrvH6280Rom, 6, 1); if (nRet != 0) return 1;
 	
-	// Load and decode chars
 	nRet = BurnLoadRom(DrvTempRom + 0x20000,  7, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x30000,  8, 1); if (nRet != 0) return 1;
 	memcpy(DrvTempRom + 0x08000, DrvTempRom + 0x20000, 0x8000);
@@ -3414,19 +3562,16 @@ static INT32 BouldashLoadRoms()
 	memcpy(DrvTempRom + 0x10000, DrvTempRom + 0x38000, 0x8000);
 	GfxDecode(0x1000, 4, 8, 8, RobocopCharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvChars);
 	
-	// Load and decode tiles1
 	memset(DrvTempRom, 0, 0x40000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  9, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000, 10, 1); if (nRet != 0) return 1;
 	GfxDecode(0x400, 4, 16, 16, Tile2PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
 	
-	// Load and decode tiles2
 	memset(DrvTempRom, 0, 0x40000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000, 11, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x20000, 12, 1); if (nRet != 0) return 1;
 	GfxDecode(0x800, 4, 16, 16, Tile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
 	
-	// Load and decode sprites
 	memset(DrvTempRom, 0, 0x40000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000, 13, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x10000, 14, 1); if (nRet != 0) return 1;
@@ -3434,7 +3579,6 @@ static INT32 BouldashLoadRoms()
 	nRet = BurnLoadRom(DrvTempRom + 0x30000, 16, 1); if (nRet != 0) return 1;
 	GfxDecode(0x0800, 4, 16, 16, Tile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvSprites);
 	
-	// Load the samples
 	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 17, 1); if (nRet != 0) return 1;
 	
 	BurnFree(DrvTempRom);
@@ -3464,7 +3608,6 @@ static INT32 MidresInit()
 
 	DrvTempRom = (UINT8 *)BurnMalloc(0x80000);
 	
-	// Load 68000 Program Roms
 	nRet = BurnLoadRom(Drv68KRom + 0x00001, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x00000, 1, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68KRom + 0x40001, 2, 2); if (nRet != 0) return 1;
@@ -3472,7 +3615,6 @@ static INT32 MidresInit()
 	
 	nRet = BurnLoadRom(DrvH6280Rom, 4, 1); if (nRet != 0) return 1;
 	
-	// Load and decode chars
 	nRet = BurnLoadRom(DrvTempRom + 0x20000,  5, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x30000,  6, 1); if (nRet != 0) return 1;
 	memcpy(DrvTempRom + 0x08000, DrvTempRom + 0x20000, 0x8000);
@@ -3481,7 +3623,6 @@ static INT32 MidresInit()
 	memcpy(DrvTempRom + 0x10000, DrvTempRom + 0x38000, 0x8000);
 	GfxDecode(0x1000, 4, 8, 8, RobocopCharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvChars);
 	
-	// Load and decode tiles1
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  7, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x20000,  8, 1); if (nRet != 0) return 1;
@@ -3489,13 +3630,11 @@ static INT32 MidresInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x60000, 10, 1); if (nRet != 0) return 1;
 	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
 	
-	// Load and decode tiles2
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000, 11, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x20000, 12, 1); if (nRet != 0) return 1;
 	GfxDecode(0x800, 4, 16, 16, Tile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
 	
-	// Load and decode sprites
 	memset(DrvTempRom, 0, 0x80000);
 	nRet = BurnLoadRom(DrvTempRom + 0x00000, 13, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x20000, 14, 1); if (nRet != 0) return 1;
@@ -3503,25 +3642,20 @@ static INT32 MidresInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x60000, 16, 1); if (nRet != 0) return 1;
 	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvSprites);
 	
-	// Load the samples
 	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 17, 1); if (nRet != 0) return 1;
 	
 	BurnFree(DrvTempRom);
 	
-	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(Drv68KRom               , 0x000000, 0x07ffff, SM_ROM);
 	SekMapMemory(Drv68KRam               , 0x100000, 0x103fff, SM_RAM);
 	SekMapMemory(DrvSpriteRam            , 0x120000, 0x1207ff, SM_RAM);
 	SekMapMemory(DrvPaletteRam           , 0x140000, 0x1407ff, SM_RAM);
-	SekMapMemory(DrvVideo1Ram            , 0x220000, 0x2207ff, SM_RAM);
 	SekMapMemory(DrvVideo1ColScrollRam   , 0x240000, 0x24007f, SM_RAM);
 	SekMapMemory(DrvVideo1RowScrollRam   , 0x240400, 0x2407ff, SM_RAM);	
-	SekMapMemory(DrvVideo2Ram            , 0x2a0000, 0x2a07ff, SM_RAM);
 	SekMapMemory(DrvVideo2ColScrollRam   , 0x2c0000, 0x2c007f, SM_RAM);
 	SekMapMemory(DrvVideo2RowScrollRam   , 0x2c0400, 0x2c07ff, SM_RAM);	
-	SekMapMemory(DrvCharRam              , 0x320000, 0x321fff, SM_RAM);
 	SekMapMemory(DrvCharColScrollRam     , 0x340000, 0x34007f, SM_RAM);
 	SekMapMemory(DrvCharRowScrollRam     , 0x340400, 0x3407ff, SM_RAM);	
 	SekSetReadByteHandler(0, Midres68KReadByte);
@@ -3554,7 +3688,6 @@ static INT32 MidresInit()
 	DrvCharPalOffset = 256;
 	DrvSpritePalOffset = 0;
 	
-	// Reset the driver
 	SlyspyDoReset();
 
 	return 0;
@@ -3894,6 +4027,7 @@ static void DrvRenderTile1Layer(INT32 Opaque, INT32 DrawLayer)
 			TileIndex = (mx & 0x0f) + ((my & 0x0f) << 4) + ((mx & 0x30) << 4);
 			if (RenderType == 1) TileIndex = (mx & 0x0f) + ((my & 0x0f) << 4) + ((my & 0x10) << 4) + ((mx & 0x10) << 5);
 			if (RenderType == 2) TileIndex = (mx & 0x0f) + ((my & 0x3f) << 4);
+			if (DrvTileRamBank[1] & 0x01) TileIndex += 0x1000;			
 			
 			Attr = VideoRam[TileIndex];
 			Code = Attr & 0xfff;
@@ -3967,8 +4101,8 @@ static void DrvRenderTile2Layer(INT32 Opaque, INT32 DrawLayer)
 			TileIndex = (mx & 0x0f) + ((my & 0x0f) << 4) + ((mx & 0x30) << 4);
 			if (RenderType == 1) TileIndex = (mx & 0x0f) + ((my & 0x0f) << 4) + ((my & 0x10) << 4) + ((mx & 0x10) << 5);
 			if (RenderType == 2) TileIndex = (mx & 0x0f) + ((my & 0x3f) << 4);
-			
 			if (DrvTileRamBank[2] & 0x01) TileIndex += 0x1000;
+			
 			Attr = VideoRam[TileIndex];
 			Code = Attr & 0xfff;
 			Colour = Attr >> 12;
@@ -4041,6 +4175,7 @@ static void DrvRenderCharLayer()
 			TileIndex = (mx & 0x1f) + ((my & 0x1f) << 5) + ((mx & 0x60) << 5);
 			if (RenderType == 1) TileIndex = (mx & 0x1f) + ((my & 0x1f) << 5) + ((my & 0x20) << 5) + ((mx & 0x20) << 6);
 			if (RenderType == 2) TileIndex = (mx & 0x1f) + ((my & 0x7f) << 5);
+			if (DrvTileRamBank[0] & 0x01) TileIndex += 0x1000;
 			
 			Attr = CharRam[TileIndex];
 			Code = Attr & 0xfff;
@@ -4476,7 +4611,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 	
-	if (pnMin != NULL) {			// Return minimum compatible version
+	if (pnMin != NULL) {
 		*pnMin = 0x029719;
 	}
 

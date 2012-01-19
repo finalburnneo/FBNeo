@@ -14,7 +14,7 @@ static INT16* pYM2151Buffer[2];
 
 static INT32 nBurnPosition;
 static UINT32 nSampleSize;
-static INT32 nFractionalPosition;
+static UINT32 nFractionalPosition;
 static UINT32 nSamplesRendered;
 
 static INT32 nYM2151Volume;

@@ -440,11 +440,6 @@ static void sgx_write_port(UINT8 port, UINT8 data)
 	}
 }
 
-static INT32 pce_cpu_sound_sync()
-{
-	return (INT32)((INT64)7159090 * nBurnCPUSpeedAdjust / (0x0100 * 60));
-}
-
 static INT32 MemIndex(UINT32 cart_size, INT32 type)
 {
 	UINT8 *Next; Next = AllMem;

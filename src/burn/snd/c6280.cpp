@@ -153,12 +153,12 @@ void c6280_init(double clk, INT32 bAdd)
 
 	p->bAdd = bAdd;
 
-	bprintf (0, _T("%d\n"), nBurnSoundLen);
-
 	stream_buffer = (INT16*)BurnMalloc(nBurnSoundLen * 2 * sizeof(INT16));
 
 	if (stream_buffer == NULL) {
+#if defined FBA_DEBUG
 		bprintf (0, _T("Stream buffer allocation failed!\n"));
+#endif
 		return;
 	}
 }
@@ -179,6 +179,8 @@ static void c6280_stream_update()
 	INT32 start = c6280_previous_offset;
 
 	INT32 samples = end - start;
+	if (!samples) return; // don't update if length is 0
+
 	INT16 *pBuffer = stream_buffer + start * 2;
 
 	c6280_previous_offset = end;

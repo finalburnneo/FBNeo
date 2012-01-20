@@ -15,8 +15,7 @@ Notes:
 
 	Known emulation issues - also present in MESS unless noted.
 	SOUND PROBLEMS
-		Champions Forever Boxing
-		Bouken Danshaku Don - The Lost Sunheart
+		Bouken Danshaku Don - The Lost Sunheart (not present in mess)
 
 	GRAPHICS PROBLEMS
 		Cadash - graphics shaking
@@ -675,7 +674,7 @@ static INT32 PCEFrame()
 		PCEDoReset();
 	}
 
-	h6280NewFrame();
+	h6280NewFrame(); // needed for c6280
 
 	PCECompileInputs();
 

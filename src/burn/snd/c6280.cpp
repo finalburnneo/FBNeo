@@ -369,10 +369,8 @@ void c6280_update(INT16 *pBuffer, INT32 samples)
 	}
 
 	for (INT32 i = 0; i < samples*2; i++) {
-		pBuffer[i] = stream_buffer[i];
+		pBuffer[i] += stream_buffer[i];
 	}
-
-//	c6280_previous_offset = 0;
 }
 
 UINT8 c6280_read()

@@ -60,6 +60,8 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			\
 			d_megadrive.o \
 			\
+			d_pce.o \
+			\
 			d_snes.o
 
 depobj	:= 	$(drvobj) \
@@ -67,7 +69,7 @@ depobj	:= 	$(drvobj) \
 			burn.o burn_gun.o burn_led.o burn_memory.o burn_sound.o burn_sound_c.o cheat.o debug_track.o hiscore.o load.o \
 			tiles_generic.o timer.o vector.o \
 			\
-			8255ppi.o eeprom.o pandora.o seibusnd.o sknsspr.o timekpr.o v3021.o \
+			8255ppi.o eeprom.o pandora.o seibusnd.o sknsspr.o timekpr.o v3021.o vdc.o \
 			\
 			ay8910.o burn_y8950.o burn_ym2151.o burn_ym2203.o burn_ym2413.o burn_ym2608.o burn_ym2610.o burn_ym2612.o \
 			burn_ym3526.o burn_ym3812.o burn_ymf278b.o c6280.o dac.o es5506.o es8712.o fm.o fmopl.o ics2115.o iremga20.o k007232.o \

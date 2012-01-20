@@ -27,7 +27,7 @@
 #define P	h6280.p
 #define S	h6280.sp.b.l
 
-#define TRANSLATED(addr)	((h6280.mmr[(addr)>>13] << 13) | ((addr)&0x1fff))
+#define TRANSLATED(addr)	((h6280.mmr[((addr)>>13)&7] << 13) | ((addr)&0x1fff))
 #define CHANGE_PC			change_pc(PCW)
 #define H6280_CYCLES(cyc)											\
 	{																\

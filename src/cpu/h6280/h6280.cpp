@@ -431,7 +431,7 @@ unsigned char h6280_timer_r(unsigned int)
 #endif
 
 	/* only returns countdown */
-	return ((h6280.timer_value/1024)&0x7F)|(h6280.io_buffer&0x80);
+	return ((h6280.timer_value>>10)&0x7F)|(h6280.io_buffer&0x80);
 }
 
 void h6280_timer_w(unsigned int offset, unsigned char data)
@@ -441,7 +441,7 @@ void h6280_timer_w(unsigned int offset, unsigned char data)
 #endif
 
 	h6280.io_buffer=data;
-	switch (offset) {
+	switch (offset&1) {
 		case 0: /* Counter preload */
 			h6280.timer_load=h6280.timer_value=((data&127)+1)*1024;
 			return;
@@ -478,6 +478,31 @@ UINT8 h6280io_get_buffer()
 void h6280io_set_buffer(UINT8 data)
 {
 	h6280.io_buffer=data;
+}
+
+INT32 h6280CpuScan(INT32 nAction)
+{
+	struct BurnArea ba;
+	
+	if (nAction & ACB_DRIVER_DATA) {
+		h6280_Regs *p = &h6280;
+		int (*irq_callback)(int);
+
+		irq_callback = h6280.irq_callback;
+
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = p;
+		ba.nLen	  = sizeof(h6280_Regs);
+		ba.szName = "h6280 Registers";
+		BurnAcb(&ba);
+
+		h6280.irq_callback = irq_callback;
+
+		SCAN_VAR(h6280_ICount);
+		SCAN_VAR(h6280_totalcycles);
+	}
+
+	return 0;
 }
 
 #if 0

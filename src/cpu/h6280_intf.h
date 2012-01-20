@@ -41,7 +41,7 @@ extern INT32 nh6280CpuCount;
 
 void h6280SetIRQLine(INT32 line, INT32 state);
 
-//INT32 h6280CpuScan(INT32 nAction, INT32 *);
+INT32 h6280CpuScan(INT32 nAction);
 
 INT32 h6280TotalCycles();
 void h6280NewFrame();
@@ -56,3 +56,8 @@ UINT8 h6280_irq_status_r(UINT32 offset);
 void h6280_irq_status_w(UINT32 offset, UINT8 data);
 UINT8 h6280_timer_r(UINT32);
 void h6280_timer_w(UINT32 offset, UINT8 data);
+
+// functions for use by the PSG and joypad port only!
+UINT8 h6280io_get_buffer(void);
+void h6280io_set_buffer(UINT8);
+

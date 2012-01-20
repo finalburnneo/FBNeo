@@ -120,6 +120,18 @@
 #define IDS_ROMPATH_6					(IDS_STRING +  490)
 #define IDS_ROMPATH_7					(IDS_STRING +  492)
 #define IDS_ROMPATH_8					(IDS_STRING +  494)
+#define IDS_ROMPATH_9					(IDS_STRING +  496)
+#define IDS_ROMPATH_10					(IDS_STRING +  498)
+#define IDS_ROMPATH_11					(IDS_STRING +  500)
+#define IDS_ROMPATH_12					(IDS_STRING +  502)
+#define IDS_ROMPATH_13					(IDS_STRING +  504)
+#define IDS_ROMPATH_14					(IDS_STRING +  506)
+#define IDS_ROMPATH_15					(IDS_STRING +  508)
+#define IDS_ROMPATH_16					(IDS_STRING +  510)
+#define IDS_ROMPATH_17					(IDS_STRING +  512)
+#define IDS_ROMPATH_18					(IDS_STRING +  514)
+#define IDS_ROMPATH_19					(IDS_STRING +  516)
+#define IDS_ROMPATH_20					(IDS_STRING +  518)
 
 #define IDS_PRESET_SAVED				(IDS_STRING +  520)
 

@@ -120,6 +120,18 @@ BEGIN
 	IDS_ROMPATH_6				"Path #6"
 	IDS_ROMPATH_7				"Path #7"
 	IDS_ROMPATH_8				"Path #8"
+	IDS_ROMPATH_9				"Path #9"
+	IDS_ROMPATH_10				"Path #10"
+	IDS_ROMPATH_11				"Path #11"
+	IDS_ROMPATH_12				"Path #12"
+	IDS_ROMPATH_13				"Path #13"
+	IDS_ROMPATH_14				"Path #14"
+	IDS_ROMPATH_15				"Path #15"
+	IDS_ROMPATH_16				"Path #16"
+	IDS_ROMPATH_17				"Path #17"
+	IDS_ROMPATH_18				"Path #18"
+	IDS_ROMPATH_19				"Path #19"
+	IDS_ROMPATH_20				"Path #20"
 	
 	IDS_PRESET_SAVED			"The preset file was saved to %s."
 	

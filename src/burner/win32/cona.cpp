@@ -194,6 +194,18 @@ int ConfigAppLoad()
 		STR(szAppRomPaths[5]);
 		STR(szAppRomPaths[6]);
 		STR(szAppRomPaths[7]);
+		STR(szAppRomPaths[8]);
+		STR(szAppRomPaths[9]);
+		STR(szAppRomPaths[10]);
+		STR(szAppRomPaths[11]);
+		STR(szAppRomPaths[12]);
+		STR(szAppRomPaths[13]);
+		STR(szAppRomPaths[14]);
+		STR(szAppRomPaths[15]);
+		STR(szAppRomPaths[16]);
+		STR(szAppRomPaths[17]);
+		STR(szAppRomPaths[18]);
+		STR(szAppRomPaths[19]);
 		
 		STR(szNeoCDGamesDir);
 		
@@ -514,6 +526,18 @@ int ConfigAppSave()
 	STR(szAppRomPaths[5]);
 	STR(szAppRomPaths[6]);
 	STR(szAppRomPaths[7]);
+	STR(szAppRomPaths[8]);
+	STR(szAppRomPaths[9]);
+	STR(szAppRomPaths[10]);
+	STR(szAppRomPaths[11]);
+	STR(szAppRomPaths[12]);
+	STR(szAppRomPaths[13]);
+	STR(szAppRomPaths[14]);
+	STR(szAppRomPaths[15]);
+	STR(szAppRomPaths[16]);
+	STR(szAppRomPaths[17]);
+	STR(szAppRomPaths[18]);
+	STR(szAppRomPaths[19]);
 	
 	_ftprintf(h, _T("\n// The path to search for Neo Geo CDZ isos\n"));
 	STR(szNeoCDGamesDir);

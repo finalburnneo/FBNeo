@@ -87,24 +87,6 @@
 #define ID_VALUE_CLOSE                  	20019
 #define IDC_VALUE_EDIT                  	20020
 
-#define IDC_ROMSDIR_EDIT1               	20030
-#define IDC_ROMSDIR_EDIT2               	20031
-#define IDC_ROMSDIR_EDIT3               	20032
-#define IDC_ROMSDIR_EDIT4               	20033
-#define IDC_ROMSDIR_EDIT5               	20034
-#define IDC_ROMSDIR_EDIT6               	20035
-#define IDC_ROMSDIR_EDIT7               	20036
-#define IDC_ROMSDIR_EDIT8               	20037
-
-#define IDC_ROMSDIR_BR1                 	20040
-#define IDC_ROMSDIR_BR2                 	20041
-#define IDC_ROMSDIR_BR3                 	20042
-#define IDC_ROMSDIR_BR4                 	20043
-#define IDC_ROMSDIR_BR5                 	20044
-#define IDC_ROMSDIR_BR6                 	20045
-#define IDC_ROMSDIR_BR7                 	20046
-#define IDC_ROMSDIR_BR8                 	20047
-
 #define IDC_FBA_VER                     	20050
 #define IDC_SPECIALSTRING               	20051
 #define IDC_SHOWLICENSE						20052
@@ -342,6 +324,48 @@
 
 #define ID_LICENSE                      	21000
 #define ID_DX9EFFECT                    	21001
+
+#define IDC_ROMSDIR_EDIT1               	21100
+#define IDC_ROMSDIR_EDIT2               	21101
+#define IDC_ROMSDIR_EDIT3               	21102
+#define IDC_ROMSDIR_EDIT4               	21103
+#define IDC_ROMSDIR_EDIT5               	21104
+#define IDC_ROMSDIR_EDIT6               	21105
+#define IDC_ROMSDIR_EDIT7               	21106
+#define IDC_ROMSDIR_EDIT8               	21107
+#define IDC_ROMSDIR_EDIT9               	21108
+#define IDC_ROMSDIR_EDIT10               	21109
+#define IDC_ROMSDIR_EDIT11               	21110
+#define IDC_ROMSDIR_EDIT12               	21111
+#define IDC_ROMSDIR_EDIT13               	21112
+#define IDC_ROMSDIR_EDIT14               	21113
+#define IDC_ROMSDIR_EDIT15               	21114
+#define IDC_ROMSDIR_EDIT16               	21115
+#define IDC_ROMSDIR_EDIT17               	21116
+#define IDC_ROMSDIR_EDIT18               	21117
+#define IDC_ROMSDIR_EDIT19               	21118
+#define IDC_ROMSDIR_EDIT20               	21119
+
+#define IDC_ROMSDIR_BR1                 	21140
+#define IDC_ROMSDIR_BR2                 	21141
+#define IDC_ROMSDIR_BR3                 	21142
+#define IDC_ROMSDIR_BR4                 	21143
+#define IDC_ROMSDIR_BR5                 	21144
+#define IDC_ROMSDIR_BR6                 	21145
+#define IDC_ROMSDIR_BR7                 	21146
+#define IDC_ROMSDIR_BR8                 	21147
+#define IDC_ROMSDIR_BR9                 	21148
+#define IDC_ROMSDIR_BR10                 	21149
+#define IDC_ROMSDIR_BR11                 	21150
+#define IDC_ROMSDIR_BR12                 	21151
+#define IDC_ROMSDIR_BR13                 	21152
+#define IDC_ROMSDIR_BR14                 	21153
+#define IDC_ROMSDIR_BR15                 	21154
+#define IDC_ROMSDIR_BR16                 	21155
+#define IDC_ROMSDIR_BR17                 	21156
+#define IDC_ROMSDIR_BR18                 	21157
+#define IDC_ROMSDIR_BR19                 	21158
+#define IDC_ROMSDIR_BR20                 	21159
 
 #define MENU_LOAD                       	10001
 #define MENU_STARTNET			 			10002

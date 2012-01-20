@@ -441,6 +441,11 @@ static void sgx_write_port(UINT8 port, UINT8 data)
 	}
 }
 
+static INT32 pce_cpu_sound_sync()
+{
+	return (INT32)((INT64)7159090 * nBurnCPUSpeedAdjust / (0x0100 * 60));
+}
+
 static INT32 MemIndex(UINT32 cart_size, INT32 type)
 {
 	UINT8 *Next; Next = AllMem;
@@ -614,7 +619,7 @@ static INT32 PCEExit()
 {
 	GenericTilesExit();
 
-	// sound exit
+	c6280_exit();
 	// video exit
 
 	h6280Exit();
@@ -670,41 +675,22 @@ static INT32 PCEFrame()
 		PCEDoReset();
 	}
 
+	h6280NewFrame();
+
 	PCECompileInputs();
 
 	INT32 nCyclesTotal = (INT32)((INT64)7159090 * nBurnCPUSpeedAdjust / (0x0100 * 60));
-	INT32 nSoundBufferPos = 0;
-	INT32 nInterleave = nBurnSoundLen;
-	
-	INT32 IRQSlice[262];
-	for (INT32 i = 0; i < 262; i++) {
-		IRQSlice[i] = (INT32)((double)((nInterleave * (i + 1)) / 263));
-	}
 	
 	h6280Open(0);
 	
-	for (INT32 i = 0; i < nInterleave; i++)
+	for (INT32 i = 0; i < 262; i++)
 	{
-		h6280Run(nCyclesTotal / nInterleave);
-		for (INT32 j = 0; j < 262; j++) {
-			if (i == IRQSlice[j]) interrupt();
-		}
-		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			c6280_update(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		h6280Run(nCyclesTotal / 262);
+		interrupt();
 	}
 	
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			c6280_update(pSoundBuf, nSegmentLength);
-		}
+		c6280_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	h6280Close();

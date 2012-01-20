@@ -83,7 +83,24 @@ typedef struct {
 	INT32 bAdd;
 } c6280_t;
 
+static INT16 *stream_buffer = NULL;
+static INT32 c6280_previous_offset = 0;
+
 static c6280_t chip[1];
+
+INT32 c6280_sync_get_offset_end()
+{
+	// should we get these externally? The c6280 *should* only ever be used with
+	// the h6280 and should use the same clocks.
+	INT32 cycles = (INT32)((INT64)7159090 * nBurnCPUSpeedAdjust / (0x0100 * 60));
+	INT64 ret = (nBurnSoundLen * h6280TotalCycles()) / cycles;
+
+	if (ret >= nBurnSoundLen) {
+		ret = nBurnSoundLen;
+	}
+
+	return (INT32)ret;
+}
 
 void c6280_reset()
 {
@@ -94,6 +111,8 @@ void c6280_reset()
 	p->lfo_frequency = 0;
 	p->lfo_control = 0;
 	memset (p->channel, 0, 8 * sizeof(t_channel));
+
+	c6280_previous_offset = 0;
 }
 
 void c6280_init(double clk, INT32 bAdd)
@@ -133,12 +152,136 @@ void c6280_init(double clk, INT32 bAdd)
 	p->volume_table[31] = 0;
 
 	p->bAdd = bAdd;
+
+	bprintf (0, _T("%d\n"), nBurnSoundLen);
+
+	stream_buffer = (INT16*)BurnMalloc(nBurnSoundLen * 2 * sizeof(INT16));
+
+	if (stream_buffer == NULL) {
+		bprintf (0, _T("Stream buffer allocation failed!\n"));
+		return;
+	}
+}
+
+void c6280_exit()
+{
+	if (stream_buffer) {
+		BurnFree(stream_buffer);
+	}
+}
+
+static void c6280_stream_update()
+{
+	c6280_t *p = &chip[0];
+
+#if 1
+	INT32 end = c6280_sync_get_offset_end();
+	INT32 start = c6280_previous_offset;
+
+	INT32 samples = end - start;
+	INT16 *pBuffer = stream_buffer + start * 2;
+
+	c6280_previous_offset = end;
+	if (end >= nBurnSoundLen) {
+		c6280_previous_offset = 0;
+	} else {
+		c6280_previous_offset = end;
+	}
+#endif
+
+	static const int scale_tab[] = {
+		0x00, 0x03, 0x05, 0x07, 0x09, 0x0B, 0x0D, 0x0F,
+		0x10, 0x13, 0x15, 0x17, 0x19, 0x1B, 0x1D, 0x1F
+	};
+	int ch;
+	int i;
+
+	int lmal = (p->balance >> 4) & 0x0F;
+	int rmal = (p->balance >> 0) & 0x0F;
+	int vll, vlr;
+
+	lmal = scale_tab[lmal];
+	rmal = scale_tab[rmal];
+
+	/* Clear buffer */
+	memset (pBuffer, 0, samples * sizeof(short) * 2); // 16-bit * 2 channels
+
+	for(ch = 0; ch < 6; ch++)
+	{
+		/* Only look at enabled channels */
+		if(p->channel[ch].control & 0x80)
+		{
+			int lal = (p->channel[ch].balance >> 4) & 0x0F;
+			int ral = (p->channel[ch].balance >> 0) & 0x0F;
+			int al  = p->channel[ch].control & 0x1F;
+
+			lal = scale_tab[lal];
+			ral = scale_tab[ral];
+
+			/* Calculate volume just as the patent says */
+			vll = (0x1F - lal) + (0x1F - al) + (0x1F - lmal);
+			if(vll > 0x1F) vll = 0x1F;
+
+			vlr = (0x1F - ral) + (0x1F - al) + (0x1F - rmal);
+			if(vlr > 0x1F) vlr = 0x1F;
+
+			vll = p->volume_table[vll];
+			vlr = p->volume_table[vlr];
+
+			INT16 *pBuf = pBuffer;
+
+			/* Check channel mode */
+			if((ch >= 4) && (p->channel[ch].noise_control & 0x80))
+			{
+				/* Noise mode */
+				UINT32 step = p->noise_freq_tab[(p->channel[ch].noise_control & 0x1F) ^ 0x1F];
+				for(i = 0; i < samples; i++, pBuf+=2)
+				{
+					static int data = 0;
+					p->channel[ch].noise_counter += step;
+					if(p->channel[ch].noise_counter >= 0x800)
+					{
+						data = (rand() & 1) ? 0x1F : 0;
+					}
+					p->channel[ch].noise_counter &= 0x7FF;
+					pBuf[0] += (INT16)(vll * (data - 16));
+					pBuf[1] += (INT16)(vlr * (data - 16));
+				}
+			}
+			else
+			if(p->channel[ch].control & 0x40)
+			{
+				/* DDA mode */
+				for(i = 0; i < samples; i++, pBuf+=2)
+				{
+					pBuf[0] += (INT16)(vll * (p->channel[ch].dda - 16));
+					pBuf[1] += (INT16)(vlr * (p->channel[ch].dda - 16));
+				}
+			}
+			else
+			{
+				/* Waveform mode */
+				UINT32 step = p->wave_freq_tab[p->channel[ch].frequency];
+				for(i = 0; i < samples; i++, pBuf+=2)
+				{
+					int offset = (p->channel[ch].counter >> 12) & 0x1F;
+					p->channel[ch].counter += step;
+					p->channel[ch].counter &= 0x1FFFF;
+					INT16 data = p->channel[ch].waveform[offset];
+					pBuf[0] += (INT16)(vll * (data - 16));
+					pBuf[1] += (INT16)(vlr * (data - 16));
+				}
+			}
+		}
+	}
 }
 
 static void c6280_write_internal(int offset, int data)
 {
 	c6280_t *p = &chip[0];
 	t_channel *q = &p->channel[p->select];
+
+	c6280_stream_update();
 
 	switch(offset & 0x0F)
 	{
@@ -219,93 +362,17 @@ void c6280_update(INT16 *pBuffer, INT32 samples)
 {
 	c6280_t *p = &chip[0];
 
-	static const int scale_tab[] = {
-		0x00, 0x03, 0x05, 0x07, 0x09, 0x0B, 0x0D, 0x0F,
-		0x10, 0x13, 0x15, 0x17, 0x19, 0x1B, 0x1D, 0x1F
-	};
-	int ch;
-	int i;
+	c6280_stream_update();
 
-	int lmal = (p->balance >> 4) & 0x0F;
-	int rmal = (p->balance >> 0) & 0x0F;
-	int vll, vlr;
-
-	lmal = scale_tab[lmal];
-	rmal = scale_tab[rmal];
-
-	/* Clear buffer */
 	if (!p->bAdd) {
 		memset (pBuffer, 0, samples * sizeof(short) * 2); // 16-bit * 2 channels
 	}
 
-	for(ch = 0; ch < 6; ch++)
-	{
-		/* Only look at enabled channels */
-		if(p->channel[ch].control & 0x80)
-		{
-			int lal = (p->channel[ch].balance >> 4) & 0x0F;
-			int ral = (p->channel[ch].balance >> 0) & 0x0F;
-			int al  = p->channel[ch].control & 0x1F;
-
-			lal = scale_tab[lal];
-			ral = scale_tab[ral];
-
-			/* Calculate volume just as the patent says */
-			vll = (0x1F - lal) + (0x1F - al) + (0x1F - lmal);
-			if(vll > 0x1F) vll = 0x1F;
-
-			vlr = (0x1F - ral) + (0x1F - al) + (0x1F - rmal);
-			if(vlr > 0x1F) vlr = 0x1F;
-
-			vll = p->volume_table[vll];
-			vlr = p->volume_table[vlr];
-
-			INT16 *pBuf = pBuffer;
-
-			/* Check channel mode */
-			if((ch >= 4) && (p->channel[ch].noise_control & 0x80))
-			{
-				/* Noise mode */
-				UINT32 step = p->noise_freq_tab[(p->channel[ch].noise_control & 0x1F) ^ 0x1F];
-				for(i = 0; i < samples; i++, pBuf+=2)
-				{
-					static int data = 0;
-					p->channel[ch].noise_counter += step;
-					if(p->channel[ch].noise_counter >= 0x800)
-					{
-						data = (rand() & 1) ? 0x1F : 0;
-					}
-					p->channel[ch].noise_counter &= 0x7FF;
-					pBuf[0] += (INT16)(vll * (data - 16));
-					pBuf[1] += (INT16)(vlr * (data - 16));
-				}
-			}
-			else
-			if(p->channel[ch].control & 0x40)
-			{
-				/* DDA mode */
-				for(i = 0; i < samples; i++, pBuf+=2)
-				{
-					pBuf[0] += (INT16)(vll * (p->channel[ch].dda - 16));
-					pBuf[1] += (INT16)(vlr * (p->channel[ch].dda - 16));
-				}
-			}
-			else
-			{
-				/* Waveform mode */
-				UINT32 step = p->wave_freq_tab[p->channel[ch].frequency];
-				for(i = 0; i < samples; i++, pBuf+=2)
-				{
-					int offset = (p->channel[ch].counter >> 12) & 0x1F;
-					p->channel[ch].counter += step;
-					p->channel[ch].counter &= 0x1FFFF;
-					INT16 data = p->channel[ch].waveform[offset];
-					pBuf[0] += (INT16)(vll * (data - 16));
-					pBuf[1] += (INT16)(vlr * (data - 16));
-				}
-			}
-		}
+	for (INT32 i = 0; i < samples*2; i++) {
+		pBuffer[i] = stream_buffer[i];
 	}
+
+//	c6280_previous_offset = 0;
 }
 
 UINT8 c6280_read()

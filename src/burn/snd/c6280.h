@@ -1,5 +1,6 @@
 
 void c6280_init(double clk, INT32 bAdd);
+void c6280_exit();
 
 void c6280_reset();
 

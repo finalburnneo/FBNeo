@@ -1143,11 +1143,11 @@ static struct BurnRomInfo pbenkei1RomDesc[] = {
 STD_ROM_PICK(pbenkei1)
 STD_ROM_FN(pbenkei1)
 
-struct BurnDriver BurnDrvPCE_pbenkei1 = {
+struct BurnDriverD BurnDrvPCE_pbenkei1 = {
 	"pce_benkei1", "pce_benkei", NULL, NULL, "1989",
 	"Benkei Gaiden (Alt)\0", NULL, "Sunsoft", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_CLONE, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pbenkei1RomInfo, pbenkei1RomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan, &PCEPaletteRecalc, 0x400,
 	512, 240, 4, 3

@@ -180,6 +180,7 @@ BEGIN
 	IDS_SEL_CAPCOM_MISC			"Capcom (Other)"
 	IDS_SEL_SETA				"Seta"
 	IDS_SEL_TECHNOS				"Technos"
+	IDS_SEL_PCE					"PC-Engine"
 	
 	IDS_GENRE					"Genre"
 	IDS_GENRE_HORSHOOT			"Shooter - Horizontal"

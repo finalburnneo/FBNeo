@@ -105,6 +105,64 @@
 <a href="http://neosource.1emu.net/forums">http://neosource.1emu.net/forums</a></p>
 
 
+<h3>v0.2.97.19</h3>
+<ul>
+<li>Fixed the issue in the H6280 core [Barry]</li>
+<li>Updated H6280 core with some fixes from MAME versions newer than the original core port [iq_132]</li>
+<li>Added H6280 support to the YM3812 core [Barry]</li>
+<li>Ported C6280 sound core from MAME for PC-Engine driver [iq_132]</li>
+<li>Added a driver for PC-Engine/TurboGrafx 16/SuprGrafx console hardware [iq_132]</li>
+<li>Added driver for Blomby Car [Barry]</li>
+<li>Added driver for Jackie Chan [iq_132]</li>
+<li>Added driver for Side Pocket [Barry]</li>
+<li>Added driver for games on Terra Cresta hardware [Barry]</li>
+<li>Added clone of Street Fighter III 3rd Strike to the CPS-3 driver [Barry]</li>
+<li>Added Boulder Dash, Hippodrome Midnight Resistance and Sly Spy to the DEC0 driver [Barry]</li>
+<li>Added Heavy Metal to the Sega System 1 driver [Barry]</li>
+<li>Fixed non-bootleg version of Robocop, and added all clones to the DEC0 driver [Barry]</li>
+<li>Fixed Caveman Ninja and Edward Randy in the DECO 16 drivers and enabled in release builds [Barry]</li>
+<li>Added full sound to all the DECO16 drivers now that the H6280 core works [Barry]</li>
+<li>Fixed crash when loading in the Konami Twin16 driver [Barry]</li>
+<li>Fixed loading of UPD7759 samples in Gradius2 in the Konami Twin16 driver [Barry]</li>
+<li>Fixed Naname de Magic! in the Oh My God! driver and enabled in release builds [Barry]</li>
+<li>Fixed missing ADPCM sounds in Superman in the Taito X driver [Barry]</li>
+<li>Updated PC-Engine driver to use the same zip names as the MESS software lists, similar to the Megadrive support (see help file for more info) [Barry]</li>
+<li>Fixed row and column scroll in the DEC-0 driver, and added support for Tile Ram Banking [Barry]</li>
+<li>Reverted the CPS-2 VBlank IRQ timing change from the last version, it broke raster effects [Barry]</li>
+<li>Fixed savestates in the Batrider driver [Barry]</li>
+<li>Fixed savestates in the Cave drivers where necessary [Barry]</li>
+<li>Added savestate support to the Double Dragon driver [Barry]</li>
+<li>Fixed savestates in the News driver [Barry]</li>
+<li>Fixed savestates in the Sega System 1 driver where necessary [Barry]</li>
+<li>Fixed savestates in the Sega System 16 and similar drivers where necessary [Barry]</li>
+<li>Added savestate support to the HD6309 interface [Barry]</li>
+<li>Fixed savestates in the I8039 core [Barry]</li>
+<li>Fixed savestates in the DAC sound core [Barry]</li>
+<li>Fixed savestates in the Q-Sound sound core [Barry]</li>
+<li>Added savestate support to the RF5C68PCM sound core [Barry]</li>
+<li>Fixed savestates in the SegaPCM sound core [Barry]</li>
+<li>Fixed savestates in the SN76496 sound core [Barry]</li>
+<li>Fixed bug in the YM2151 interface when enabling FM interpolation [Barry]</li>
+<li>Added volume control to the SN76496 core and normalised sound in drivers which were too loud [Barry]</li>
+<li>Added support for up to 20 rom paths, with the last ten being supplementary [Barry]</li>
+<li>Added filter for PC-Engine to game selection dialog [Barry]</li>
+<li>Added support to disable __fastcall in the vez interface via the FASTCALL makefile flag [Barry]</li>
+<li>Added support for localising the gamelist (see the help file for more information) [Barry]</li>
+<li>Readded Captain CPS's game selection dialog icon support [Barry, CaptainCPS]</li>
+<li>Fixed various localisation issues [Barry, reported by Benjamin Siskoo]</li>
+<li>Updated the help file [Barry]</li>
+<li>Split makefile.rules into makefile.burn_rules and makefile.burner_win32_rules [Barry]</li>
+<li>Reorganised the tree to work around the Windows CreateProcess 32Kb limit [Barry]</li>
+<li>Tidied the tree enough for FB Alpha to compile on Ubuntu 11.10 (linking fails) [kev]</li>
+<li>Added old code from an unreleased PSP port, including the MIP A68K module [kev]</li>
+<li>Added the required D3D headers from previous SDKs to the dec/vc/include folder [Barry]</li>
+<li>Fixed some warnings thrown up by symbol builds in different compilers [Barry]</li>
+<li>Fixed some dialog initial path issues [Barry]</li>
+<li>Matched all sets to MAME 0.144u6 [Barry]</li>
+<li>Matched the Megadrive sets to MESS 0.144u5 [Barry]</li>
+</ul>
+
+
 <h3>v0.2.97.18</h3>
 <ul>
 <li>Added driver for Lemmings [iq_132]</li>

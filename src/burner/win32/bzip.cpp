@@ -413,6 +413,7 @@ int BzipOpen(bool bootApp)
 				}
 
 				z++;
+				if (z >= BZIP_MAX) break;
 
 				// Look further in the last ten paths specified, so you can put files with ROMs
 				// used only by FB Alpha there without causing problems with dat files

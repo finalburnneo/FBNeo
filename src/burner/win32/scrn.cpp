@@ -282,20 +282,22 @@ static void DoNetGame()
 	POST_INITIALISE_MESSAGE;
 }
 
-int CreateDatfileWindows(int bIncMegadrive)
+int CreateDatfileWindows(int bType)
 {
 	TCHAR szTitle[1024];
 	TCHAR szFilter[1024];
 	
-	TCHAR szMegadriveString[25];
-	_sntprintf(szMegadriveString, 25, _T(""));
-	if (bIncMegadrive == 1) _sntprintf(szMegadriveString, 25, _T(", including Megadrive"));
-	if (bIncMegadrive == 2) _sntprintf(szMegadriveString, 25, _T(", Megadrive only"));
+	TCHAR szConsoleString[64];
+	_sntprintf(szConsoleString, 64, _T(""));
+	if (bType == DAT_MEGADRIVE_ONLY) _sntprintf(szConsoleString, 64, _T(", Megadrive only"));
+	if (bType == DAT_PCENGINE_ONLY) _sntprintf(szConsoleString, 64, _T(", PC-Engine only"));
+	if (bType == DAT_TG16_ONLY) _sntprintf(szConsoleString, 64, _T(", TurboGrafx16 only"));
+	if (bType == DAT_SGX_ONLY) _sntprintf(szConsoleString, 64, _T(", SuprGfrax only"));
 	
 	TCHAR szProgramString[25];	
 	_sntprintf(szProgramString, 25, _T("ClrMame Pro XML"));
 	
-	_sntprintf(szChoice, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, szMegadriveString);
+	_sntprintf(szChoice, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, szConsoleString);
 	_sntprintf(szTitle, 256, FBALoadStringEx(hAppInst, IDS_DAT_GENERATE, true), szProgramString);
 
 	_stprintf(szFilter, FBALoadStringEx(hAppInst, IDS_DISK_ALL_DAT, true), _T(APP_TITLE));
@@ -316,7 +318,7 @@ int CreateDatfileWindows(int bIncMegadrive)
 	if (GetSaveFileName(&ofn) == 0)
 		return -1;
 
-	return create_datfile(szChoice, bIncMegadrive);
+	return create_datfile(szChoice, bType);
 }
 
 // Returns true if a VidInit is needed when the window is resized
@@ -1878,13 +1880,31 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			
 		case MENU_CLRMAME_PRO_XML:
 			if (UseDialogs()) {
-				CreateDatfileWindows(0);
+				CreateDatfileWindows(DAT_ARCADE_ONLY);
 			}
 			break;
 		
 		case MENU_CLRMAME_PRO_XML_MD_ONLY:
 			if (UseDialogs()) {
-				CreateDatfileWindows(2);
+				CreateDatfileWindows(DAT_MEGADRIVE_ONLY);
+			}
+			break;
+			
+		case MENU_CLRMAME_PRO_XML_PCE_ONLY:
+			if (UseDialogs()) {
+				CreateDatfileWindows(DAT_PCENGINE_ONLY);
+			}
+			break;
+		
+		case MENU_CLRMAME_PRO_XML_TG16_ONLY:
+			if (UseDialogs()) {
+				CreateDatfileWindows(DAT_TG16_ONLY);
+			}
+			break;
+		
+		case MENU_CLRMAME_PRO_XML_SGX_ONLY:
+			if (UseDialogs()) {
+				CreateDatfileWindows(DAT_SGX_ONLY);
 			}
 			break;
 

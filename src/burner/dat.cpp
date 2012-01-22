@@ -59,7 +59,7 @@ static void ReplaceGreaterThan(char *szBuffer, char *szGameName)
 	}
 }
 
-INT32 write_datfile(INT32 bIncMegadrive, FILE* fDat)
+INT32 write_datfile(INT32 bType, FILE* fDat)
 {
 	INT32 nRet=0;
 	UINT32 nOldSelect=0;
@@ -84,11 +84,27 @@ INT32 write_datfile(INT32 bIncMegadrive, FILE* fDat)
 			continue;
 		}
 		
-		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE) && (bIncMegadrive == 0)) {
+		if ((((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE)
+			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCENGINE)
+			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_TG16)
+			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_SGX)
+			) && (bType == DAT_ARCADE_ONLY)) {
 			continue;
 		}
 		
-		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SEGA_MEGADRIVE) && (bIncMegadrive == 2)) {
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SEGA_MEGADRIVE) && (bType == DAT_MEGADRIVE_ONLY)) {
+			continue;
+		}
+		
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_PCENGINE_PCENGINE) && (bType == DAT_PCENGINE_ONLY)) {
+			continue;
+		}
+		
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_PCENGINE_TG16) && (bType == DAT_TG16_ONLY)) {
+			continue;
+		}
+		
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_PCENGINE_SGX) && (bType == DAT_SGX_ONLY)) {
 			continue;
 		}
 		
@@ -144,8 +160,10 @@ INT32 write_datfile(INT32 bIncMegadrive, FILE* fDat)
 			strcpy(ssName, BurnDrvGetTextA(DRV_SAMPLENAME));
 		}
 		
-		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE) {
-			// remove the md_
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE)
+			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_TG16)
+			) {
+			// remove the md_ or tg_
 			char Temp[35];
 			INT32 Length;
 			if (sgName[0]) {
@@ -164,6 +182,32 @@ INT32 write_datfile(INT32 bIncMegadrive, FILE* fDat)
 				memset(spName, 0, 32);
 				for (INT32 pos = 0; pos < Length; pos++) {
 					spName[pos] = Temp[pos + 3];
+				}
+			}
+		}
+		
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCENGINE)
+			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_SGX)
+			) {
+			// remove the pce__ or sgx__
+			char Temp[36];
+			INT32 Length;
+			if (sgName[0]) {
+				Length = strlen(sgName);
+				memset(Temp, 0, 36);
+				strcpy(Temp, sgName);
+				memset(sgName, 0, 32);
+				for (INT32 pos = 0; pos < Length; pos++) {
+					sgName[pos] = Temp[pos + 4];
+				}
+			}
+			if (spName[0]) {
+				Length = strlen(spName);
+				memset(Temp, 0, 36);
+				strcpy(Temp, spName);
+				memset(spName, 0, 32);
+				for (INT32 pos = 0; pos < Length; pos++) {
+					spName[pos] = Temp[pos + 4];
 				}
 			}
 		}
@@ -403,7 +447,19 @@ INT32 write_datfile(INT32 bIncMegadrive, FILE* fDat)
 			continue;
 		}
 		
-		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SEGA_MEGADRIVE) && (bIncMegadrive == 2)) {
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SEGA_MEGADRIVE) && (bType == DAT_MEGADRIVE_ONLY)) {
+			continue;
+		}
+		
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_PCENGINE_PCENGINE) && (bType == DAT_PCENGINE_ONLY)) {
+			continue;
+		}
+		
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_PCENGINE_TG16) && (bType == DAT_TG16_ONLY)) {
+			continue;
+		}
+		
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_PCENGINE_SGX) && (bType == DAT_SGX_ONLY)) {
 			continue;
 		}
 
@@ -462,7 +518,7 @@ INT32 write_datfile(INT32 bIncMegadrive, FILE* fDat)
 	return 0;
 }
 
-INT32 create_datfile(TCHAR* szFilename, INT32 bIncMegadrive)
+INT32 create_datfile(TCHAR* szFilename, INT32 bType)
 {
 	FILE *fDat=0;
 	INT32 nRet=0;
@@ -475,11 +531,11 @@ INT32 create_datfile(TCHAR* szFilename, INT32 bIncMegadrive)
 	fprintf(fDat, "<datafile>\n");
 	fprintf(fDat, "\t<header>\n");
 	fprintf(fDat, "\t\t<name>" APP_TITLE "</name>\n");
-	if (bIncMegadrive) {
-		_ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Megadrive Games</description>\n"), szAppBurnVer);
-	} else {
-		_ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Arcade Games</description>\n"), szAppBurnVer);
-	}
+	if (bType == DAT_ARCADE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Arcade Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_MEGADRIVE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Megadrive Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_PCENGINE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" PC-Engine Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_TG16_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" TurboGrafx 16 Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_SGX_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" SuprGrafx Games</description>\n"), szAppBurnVer);
 	fprintf(fDat, "\t\t<category>Standard DatFile</category>\n");
 	_ftprintf(fDat, _T("\t\t<version>%s</version>\n"), szAppBurnVer);
 	fprintf(fDat, "\t\t<author>" APP_TITLE "</author>\n");
@@ -488,7 +544,7 @@ INT32 create_datfile(TCHAR* szFilename, INT32 bIncMegadrive)
 	fprintf(fDat, "\t\t<clrmamepro forcenodump=\"ignore\"/>\n");		
 	fprintf(fDat, "\t</header>\n");
 
-	nRet =  write_datfile(bIncMegadrive, fDat);
+	nRet =  write_datfile(bType, fDat);
 
 	fclose(fDat);
 

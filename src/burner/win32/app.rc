@@ -915,8 +915,11 @@ BEGIN
         MENUITEM SEPARATOR
         POPUP    "Generate dat file"
         BEGIN
-	        MENUITEM "Generate dat (Arcade only)...",		MENU_CLRMAME_PRO_XML
+	        MENUITEM "Generate dat (Arcade only)...",			MENU_CLRMAME_PRO_XML
 	        MENUITEM "Generate dat (Megadrive only)...",		MENU_CLRMAME_PRO_XML_MD_ONLY
+			MENUITEM "Generate dat (PC-Engine only)...",		MENU_CLRMAME_PRO_XML_PCE_ONLY
+			MENUITEM "Generate dat (TurboGrafx16 only)...",		MENU_CLRMAME_PRO_XML_TG16_ONLY
+			MENUITEM "Generate dat (SuprGrafx only)...",		MENU_CLRMAME_PRO_XML_SGX_ONLY
 	END
         MENUITEM SEPARATOR
         MENUITEM "Configure ROM paths...",				MENU_ROMDIRS

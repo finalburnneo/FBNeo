@@ -133,8 +133,13 @@ TCHAR* DecorateGenreInfo();
 void ComputeGammaLUT();
 
 // dat.cpp
-INT32 write_datfile(INT32 bIncMegadrive, FILE* fDat);
-INT32 create_datfile(TCHAR* szFilename, INT32 bIncMegadrive);
+#define DAT_ARCADE_ONLY		0
+#define DAT_MEGADRIVE_ONLY	1
+#define DAT_PCENGINE_ONLY	2
+#define DAT_TG16_ONLY		3
+#define DAT_SGX_ONLY		4
+INT32 write_datfile(INT32 bType, FILE* fDat);
+INT32 create_datfile(TCHAR* szFilename, INT32 bType);
 
 // sshot.cpp
 INT32 MakeScreenShot();

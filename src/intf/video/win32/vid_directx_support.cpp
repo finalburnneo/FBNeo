@@ -800,7 +800,7 @@ static int VidSInitShortMsg(int nFlags)
 
 	nShortMsgFlags = nFlags;
 
-	ShortMsgFont = CreateFont(30, 0, 0, 0, FW_DEMIBOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida"));
+	ShortMsgFont = CreateFont(24, 0, 0, 0, FW_DEMIBOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Lucida"));
 	VidSShortMsg.nTimer = 0;
 
 	// create surface to display the text

@@ -12393,76 +12393,20 @@ struct BurnDriver BurnDrvcthd2k3a = {
 // Idol Mahjong - final romance 2 (CD to MVS Conversion)
 
 static struct BurnRomInfo fr2chRomDesc[] = {
-	{ "098-p1ch.bin", 0x080000, 0x9aa8cee0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "098-p1ch.bin", 0x080000, 0x09675541, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "098-s1ch.bin", 0x020000, 0x764ac7aa, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "098-s1ch.bin", 0x020000, 0x0e6a7c73, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "098-c1ch.bin", 0x100000, 0x6158cf4a, 3 | BRF_GRA },           //  2 Sprite data
-	{ "098-c2ch.bin", 0x100000, 0x93a809a3, 3 | BRF_GRA },           //  3 
-	{ "098-c3ch.bin", 0x100000, 0xfafa3381, 3 | BRF_GRA },           //  4
-	{ "098-c4ch.bin", 0x100000, 0x9895e23f, 3 | BRF_GRA },           //  5 
-	{ "098-c5ch.bin", 0x100000, 0xeeaaa818, 3 | BRF_GRA },           //  6 
-	{ "098-c6ch.bin", 0x100000, 0xf3d9a190, 3 | BRF_GRA },           //  7 
+	{ "098-c1ch.bin", 0x400000, 0x29148bf7, 3 | BRF_GRA },           //  2 Sprite data
+	{ "098-c2ch.bin", 0x400000, 0x226b1263, 3 | BRF_GRA },           //  3 
 
-	{ "098-m1ch.bin", 0x010000, 0xa455fa31, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+	{ "098-m1ch.bin", 0x020000, 0xda4878cf, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
 
-	{ "098-v1ch.bin", 0x100000, 0x92e175f0, 5 | BRF_SND },           //  9 Sound data
+	{ "098-v1ch.bin", 0x100000, 0x6f8ccddc, 5 | BRF_SND },           //  9 Sound data
 };
 
 STDROMPICKEXT(fr2ch, fr2ch, neogeo)
 STD_ROM_FN(fr2ch)
-
-static void fr2chCallback()
-{
-	UINT16 *src = (UINT16*)Neo68KROMActive;
-	UINT8 *rom = Neo68KROMActive;
-
-	INT32 i;
-	UINT8 data[16] = {
-		0x49, 0x46, 0x41, 0x4E, 0x20, 0x4C, 0x4F, 0x52,
-		0x41, 0x4D, 0x43, 0x4E, 0x20, 0x45, 0x20, 0x32
-	};
-
-	// change jsr to C004DA
-	src[0x01AF8 >> 1] = 0x04DA; // C00552 (Not used?)
-	src[0x01BF6 >> 1] = 0x04DA; // C0056A (fixes crash)
-	src[0x01ED8 >> 1] = 0x04DA; // C00570 (Not used?)
-	src[0x1C384 >> 1] = 0x04DA; // C00552 (fixes crash) 
-
-	// 0x001C06 - this routine can cause a loop/freeze
-	src[0x01C06 >> 1] = 0x4E75;
-
-	// can cause bugs
-	// Move text for credit + coin info (Thanks to Kanyero)
-	memcpy (NeoTextROM + 0x20000, NeoTextROM + 0x20600, 0x140);
-
-	// optional
-	// Hack in the proper identification (see setup menu [F2])
-	for (i = 0; i < 0x10; i++)
-	{
-		rom[0x3A6 + i] = rom[0x61E + i] = rom[0x896 + i] = data[i];
-	}
-	for (i = 0; i < 0x20; i += 4)
-	{
-		src[(0x40 + i + 2) >> 1] = 0x0426;
-	}
-
-	// Album Fix
-	src[0x1C382 >> 1] = 0x0008; // C00552
-	src[0x1C384 >> 1] = 0x0000;
-	src[0x80000 >> 1] = 0x33FC;
-	src[0x80002 >> 1] = 0x0001;
-	src[0x80004 >> 1] = 0x0020;
-	src[0x80006 >> 1] = 0x0002;
-	src[0x80008 >> 1] = 0x4E75;
-}
-
-static INT32 fr2chInit()
-{
-	NeoCallbackActive->pInitialise = fr2chCallback;
-
-	return NeoInit();
-}
 
 struct BurnDriver BurnDrvfr2ch = {
 	"fr2ch", NULL, "neogeo", NULL, "1995",
@@ -12470,7 +12414,7 @@ struct BurnDriver BurnDrvfr2ch = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNK_NEOGEO, GBF_MAHJONG, 0,
 	NULL, fr2chRomInfo, fr2chRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	fr2chInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 

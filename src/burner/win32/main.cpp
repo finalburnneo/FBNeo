@@ -656,17 +656,27 @@ int ProcessCmdLine()
 
 	if (_tcslen(szName)) {
 		if (_tcscmp(szName, _T("-listinfo")) == 0) {
-			write_datfile(0, stdout);
-			return 1;
-		}
-		
-		if (_tcscmp(szName, _T("-listinfowithmd")) == 0) {
-			write_datfile(1, stdout);
+			write_datfile(DAT_ARCADE_ONLY, stdout);
 			return 1;
 		}
 		
 		if (_tcscmp(szName, _T("-listinfomdonly")) == 0) {
-			write_datfile(2, stdout);
+			write_datfile(DAT_MEGADRIVE_ONLY, stdout);
+			return 1;
+		}
+		
+		if (_tcscmp(szName, _T("-listinfopceonly")) == 0) {
+			write_datfile(DAT_PCENGINE_ONLY, stdout);
+			return 1;
+		}
+		
+		if (_tcscmp(szName, _T("-listinfotg16only")) == 0) {
+			write_datfile(DAT_TG16_ONLY, stdout);
+			return 1;
+		}
+		
+		if (_tcscmp(szName, _T("-listinfosgxonly")) == 0) {
+			write_datfile(DAT_SGX_ONLY, stdout);
 			return 1;
 		}
 		

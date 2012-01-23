@@ -65,6 +65,24 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 	UINT32 nOldSelect=0;
 	UINT32 nGameSelect=0;
 	UINT32 nParentSelect,nBoardROMSelect;
+	
+	fprintf(fDat, "<?xml version=\"1.0\"?>\n");
+	fprintf(fDat, "<!DOCTYPE datafile PUBLIC \"-//FB Alpha//DTD ROM Management Datafile//EN\" \"http://www.logiqx.com/Dats/datafile.dtd\">\n\n");
+	fprintf(fDat, "<datafile>\n");
+	fprintf(fDat, "\t<header>\n");
+	fprintf(fDat, "\t\t<name>" APP_TITLE "</name>\n");
+	if (bType == DAT_ARCADE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Arcade Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_MEGADRIVE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Megadrive Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_PCENGINE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" PC-Engine Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_TG16_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" TurboGrafx 16 Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_SGX_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" SuprGrafx Games</description>\n"), szAppBurnVer);
+	fprintf(fDat, "\t\t<category>Standard DatFile</category>\n");
+	_ftprintf(fDat, _T("\t\t<version>%s</version>\n"), szAppBurnVer);
+	fprintf(fDat, "\t\t<author>" APP_TITLE "</author>\n");
+	fprintf(fDat, "\t\t<homepage>http://www.barryharris.me.uk/</homepage>\n");
+	fprintf(fDat, "\t\t<url>http://www.barryharris.me.uk/</url>\n");
+	fprintf(fDat, "\t\t<clrmamepro forcenodump=\"ignore\"/>\n");		
+	fprintf(fDat, "\t</header>\n");
 
 	nOldSelect=nBurnDrvActive;										// preserve the currently selected driver
 
@@ -525,24 +543,6 @@ INT32 create_datfile(TCHAR* szFilename, INT32 bType)
 	
 	if ((fDat = _tfopen(szFilename, _T("wt")))==0)
 		return -1;
-
-	fprintf(fDat, "<?xml version=\"1.0\"?>\n");
-	fprintf(fDat, "<!DOCTYPE datafile PUBLIC \"-//FB Alpha//DTD ROM Management Datafile//EN\" \"http://www.logiqx.com/Dats/datafile.dtd\">\n\n");
-	fprintf(fDat, "<datafile>\n");
-	fprintf(fDat, "\t<header>\n");
-	fprintf(fDat, "\t\t<name>" APP_TITLE "</name>\n");
-	if (bType == DAT_ARCADE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Arcade Games</description>\n"), szAppBurnVer);
-	if (bType == DAT_MEGADRIVE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Megadrive Games</description>\n"), szAppBurnVer);
-	if (bType == DAT_PCENGINE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" PC-Engine Games</description>\n"), szAppBurnVer);
-	if (bType == DAT_TG16_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" TurboGrafx 16 Games</description>\n"), szAppBurnVer);
-	if (bType == DAT_SGX_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" SuprGrafx Games</description>\n"), szAppBurnVer);
-	fprintf(fDat, "\t\t<category>Standard DatFile</category>\n");
-	_ftprintf(fDat, _T("\t\t<version>%s</version>\n"), szAppBurnVer);
-	fprintf(fDat, "\t\t<author>" APP_TITLE "</author>\n");
-	fprintf(fDat, "\t\t<homepage>http://www.barryharris.me.uk/</homepage>\n");
-	fprintf(fDat, "\t\t<url>http://www.barryharris.me.uk/</url>\n");
-	fprintf(fDat, "\t\t<clrmamepro forcenodump=\"ignore\"/>\n");		
-	fprintf(fDat, "\t</header>\n");
 
 	nRet =  write_datfile(bType, fDat);
 

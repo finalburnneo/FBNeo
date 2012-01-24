@@ -94,7 +94,7 @@ static int DxSoundCheck()
 	}
 
 	if (nDSoundNextSeg == nPlaySeg) {
-		//Sleep(2);													// Don't need to do anything for a bit
+		Sleep(2);													// Don't need to do anything for a bit
 		//bRunFrame = true;
 		return 0;
 	}

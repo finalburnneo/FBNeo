@@ -109,7 +109,7 @@ static int XAudio2Check()
 				WaitForSingleObject(voiceContext.hBufferEndEvent, INFINITE);
 			} else {
 				// drop current audio frame
-				//Sleep(2);
+				Sleep(2);
 				return 0;
 			}
 		}

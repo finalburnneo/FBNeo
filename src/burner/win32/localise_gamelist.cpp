@@ -109,7 +109,7 @@ static void BurnerGameListCreateTemplate()
 		
 		for (unsigned int i = 0; i < nBurnDrvCount; i++) {
 			nBurnDrvActive = i;
-			_ftprintf(fp, _T("%s\t%s\n"), BurnDrvGetText(DRV_NAME), BurnDrvGetText(DRV_FULLNAME));
+			_ftprintf(fp, _T("%s\t%s\n"), BurnDrvGetText(DRV_NAME), BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
 		}
 		
 		fclose(fp);

@@ -161,7 +161,7 @@ INT32 CpsRunExit()
 inline static void GetPalette(INT32 nStart, INT32 nCount)
 {
 	// Update Palette (Ghouls points to the wrong place on boot up I think)
-	INT32 nPal = BURN_ENDIAN_SWAP_INT16((*((UINT16*)(CpsReg + 0x0A)) << 8)) & 0xFFF800;
+	INT32 nPal = (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x0A))) << 8) & 0xFFF800;
 
 	UINT8* Find = CpsFindGfxRam(nPal, 0x1000);
 	if (Find) {
@@ -171,7 +171,7 @@ inline static void GetPalette(INT32 nStart, INT32 nCount)
 
 static void GetStarPalette()
 {
-	INT32 nPal = (*((UINT16*)(CpsReg + 0x0A)) << 8) & 0xFFF800;
+	INT32 nPal = (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x0A))) << 8) & 0xFFF800;
 
 	UINT8* Find = CpsFindGfxRam(nPal, 256);
 	if (Find) {

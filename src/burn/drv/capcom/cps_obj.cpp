@@ -99,7 +99,7 @@ INT32 CpsObjGet()
 		pof->nShiftX = -CpsSaveFrg[0][0x9];
 		pof->nShiftY = -CpsSaveFrg[0][0xB];
 	} else {
-		INT32 nOff = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x00)) << 8);
+		INT32 nOff = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x00))) << 8;
 		nOff &= 0xfff800;
 		Get = CpsFindGfxRam(nOff, 0x800);		
 		

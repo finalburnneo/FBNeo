@@ -16,7 +16,7 @@ void BurnerDoGameListLocalisation()
 	FILE* fp = _tfopen(szGamelistLocalisationTemplate, _T("rt"));
 	if (fp) {
 		TCHAR *szShortNamesArray[MAX_LST_GAMES];
-		TCHAR szLine[MAX_LST_GAMES];
+		TCHAR szLine[MAX_LST_LINE_LEN * sizeof(TCHAR)];
 		int nTokenPos = 0;
 		int nArrayPos = 0;
 		int nNumGames = 0;
@@ -25,6 +25,8 @@ void BurnerDoGameListLocalisation()
 		for (int i = 0; i < MAX_LST_GAMES; i++) {
 			szLongNamesArray[i] = (TCHAR*)malloc(MAX_LST_LINE_LEN * sizeof(TCHAR));
 			szShortNamesArray[i] = (TCHAR*)malloc(33 * sizeof(TCHAR));
+			memset(szLongNamesArray[i], _T('\0'), MAX_LST_LINE_LEN * sizeof(TCHAR));
+			memset(szShortNamesArray[i], _T('\0'), 33 * sizeof(TCHAR));
 		}
 		
 		char szTemp[MAX_LST_LINE_LEN];
@@ -49,28 +51,28 @@ void BurnerDoGameListLocalisation()
 				continue;
 			}
 			
-			MultiByteToWideChar(nCodePage, 0, szTemp, -1, szLine, sizeof(szLine) / sizeof(TCHAR));			
-			
-			int nLen = _tcslen(szLine);
-			TCHAR *Tokens;
-			
 			// Get rid of the linefeed at the end
-			if (szLine[nLen - 1] == 10) {
-				szLine[nLen - 1] = 0;
+			int nLen = strlen(szTemp);
+			if (szTemp[nLen - 1] == 10) {
+				szTemp[nLen - 1] = 0;
 				nLen--;
 			}
+			
+			MultiByteToWideChar(nCodePage, 0, szTemp, -1, szLine, sizeof(szLine) / sizeof(TCHAR));			
+			
+			TCHAR *Tokens;
 			
 			// Read the file into arrays
 			Tokens = _tcstok(szLine, _T("\t"));
 			while (Tokens != NULL) {
 				if (nTokenPos == 0) {
 					wcscpy(szShortNamesArray[nArrayPos], Tokens);
-					szShortNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
+//					szShortNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
 				}
 				
 				if (nTokenPos == 1) {
 					wcscpy(szLongNamesArray[nArrayPos], Tokens);
-					szLongNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
+//					szLongNamesArray[nArrayPos][_tcslen(Tokens)] = _T('\0');
 				}
 				
 				Tokens = _tcstok(NULL, _T("\t"));

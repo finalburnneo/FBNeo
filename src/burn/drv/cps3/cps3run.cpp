@@ -1019,7 +1019,11 @@ static void Cps3PatchRegion()
 
 		bprintf(0, _T("Region: %02x -> %02x\n"), RomBios[cps3_region_address], (RomBios[cps3_region_address] & 0xf0) | (cps3_dip & 0x0f));				
 
+#ifdef LSB_FIRST
 		RomBios[cps3_region_address] = (RomBios[cps3_region_address] & 0xf0) | (cps3_dip & 0x7f);
+#else
+		RomBios[cps3_region_address ^ 0x03] = (RomBios[cps3_region_address ^ 0x03] & 0xf0) | (cps3_dip & 0x7f);
+#endif
 		if ( cps3_ncd_address ) {
 			if (cps3_dip & 0x10)
 				RomBios[cps3_ncd_address] |= 0x01;
@@ -1265,9 +1269,10 @@ static void cps3_drawgfxzoom_0(UINT32 code, UINT32 pal, INT32 flipx, INT32 flipy
 	dst += (y * cps3_gfx_width + x);
 	src += code * 64;
 	
-	if ( flipy ) {
 
+	if ( flipy ) {
 		dst += cps3_gfx_width * 7;
+#ifdef LSB_FIRST
 		if ( flipx )
 			for(INT32 i=0; i<8; i++, dst-= cps3_gfx_width, src += 8) {
 				if ( src[ 2] & 0xf ) dst[7] = color [ src[ 2] & 0xf ];
@@ -1315,6 +1320,56 @@ static void cps3_drawgfxzoom_0(UINT32 code, UINT32 pal, INT32 flipx, INT32 flipy
 				if ( src[ 4] >>  4 ) dst[7] = color [ src[ 4] >>  4 ];
 			}
 	}
+#else
+		if ( flipx )
+			for(int i=0; i<8; i++, dst-= cps3_gfx_width, src += 8) {
+				if ( src[ 1] & 0xf ) dst[7] = color [ src[ 1] & 0xf ];
+				if ( src[ 1] >>  4 ) dst[6] = color [ src[ 1] >>  4 ];
+				if ( src[ 3] & 0xf ) dst[5] = color [ src[ 3] & 0xf ];
+				if ( src[ 3] >>  4 ) dst[4] = color [ src[ 3] >>  4 ];
+				if ( src[ 5] & 0xf ) dst[3] = color [ src[ 5] & 0xf ];
+				if ( src[ 5] >>  4 ) dst[2] = color [ src[ 5] >>  4 ];
+				if ( src[ 7] & 0xf ) dst[1] = color [ src[ 7] & 0xf ];
+				if ( src[ 7] >>  4 ) dst[0] = color [ src[ 7] >>  4 ];
+			}
+		else
+			for(int i=0; i<8; i++, dst-= cps3_gfx_width, src += 8) {
+				if ( src[ 1] & 0xf ) dst[0] = color [ src[ 1] & 0xf ];
+				if ( src[ 1] >>  4 ) dst[1] = color [ src[ 1] >>  4 ];
+				if ( src[ 3] & 0xf ) dst[2] = color [ src[ 3] & 0xf ];
+				if ( src[ 3] >>  4 ) dst[3] = color [ src[ 3] >>  4 ];
+				if ( src[ 5] & 0xf ) dst[4] = color [ src[ 5] & 0xf ];
+				if ( src[ 5] >>  4 ) dst[5] = color [ src[ 5] >>  4 ];
+				if ( src[ 7] & 0xf ) dst[6] = color [ src[ 7] & 0xf ];
+				if ( src[ 7] >>  4 ) dst[7] = color [ src[ 7] >>  4 ];
+			}
+
+	} else {
+		if ( flipx )
+			for(int i=0; i<8; i++, dst+= cps3_gfx_width, src += 8) {
+				if ( src[ 1] & 0xf ) dst[7] = color [ src[ 1] & 0xf ];
+				if ( src[ 1] >>  4 ) dst[6] = color [ src[ 1] >>  4 ];
+				if ( src[ 3] & 0xf ) dst[5] = color [ src[ 3] & 0xf ];
+				if ( src[ 3] >>  4 ) dst[4] = color [ src[ 3] >>  4 ];
+				if ( src[ 5] & 0xf ) dst[3] = color [ src[ 5] & 0xf ];
+				if ( src[ 5] >>  4 ) dst[2] = color [ src[ 5] >>  4 ];
+				if ( src[ 7] & 0xf ) dst[1] = color [ src[ 7] & 0xf ];
+				if ( src[ 7] >>  4 ) dst[0] = color [ src[ 7] >>  4 ];
+			}
+		else
+			for(int i=0; i<8; i++, dst+= cps3_gfx_width, src += 8) {
+				if ( src[ 1 ] & 0xf ) dst[0] = color [ src[ 1 ] & 0xf ];
+				if ( src[ 1 ] >>  4 ) dst[1] = color [ src[ 1 ] >>  4 ];
+				if ( src[ 3 ] & 0xf ) dst[2] = color [ src[ 3 ] & 0xf ];
+				if ( src[ 3 ] >>  4 ) dst[3] = color [ src[ 3 ] >>  4 ];
+				if ( src[ 5 ] & 0xf ) dst[4] = color [ src[ 5 ] & 0xf ];
+				if ( src[ 5 ] >>  4 ) dst[5] = color [ src[ 5 ] >>  4 ];
+				if ( src[ 7 ] & 0xf ) dst[6] = color [ src[ 7 ] & 0xf ];
+				if ( src[ 7 ] >>  4 ) dst[7] = color [ src[ 7 ] >>  4 ];
+			}
+	}
+
+#endif
 	
 }
 

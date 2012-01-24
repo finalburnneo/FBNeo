@@ -99,7 +99,7 @@ INT32 CpsObjGet()
 		pof->nShiftX = -CpsSaveFrg[0][0x9];
 		pof->nShiftY = -CpsSaveFrg[0][0xB];
 	} else {
-		INT32 nOff = *((UINT16*)(CpsReg + 0x00)) << 8;
+		INT32 nOff = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x00)) << 8);
 		nOff &= 0xfff800;
 		Get = CpsFindGfxRam(nOff, 0x800);		
 		
@@ -119,30 +119,30 @@ INT32 CpsObjGet()
 		UINT16* ps = (UINT16*)pg;
 
 		if (Cps == 2) {
-			if (ps[1] & 0x8000)	{													// end of sprite list?
+			if (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0x8000)	{													// end of sprite list?
 				break;
 			}
-			if (ps[0] == 0 && ps[1] == 0x0100 && ps[2] == 0 && ps[3] == 0xff00) {	// Slammasters end of sprite list?
+			if (BURN_ENDIAN_SWAP_INT16(ps[0]) == 0 && BURN_ENDIAN_SWAP_INT16(ps[1]) == 0x0100 && BURN_ENDIAN_SWAP_INT16(ps[2]) == 0 && BURN_ENDIAN_SWAP_INT16(ps[3]) == 0xff00) {	// Slammasters end of sprite list?
 				break;
 			}
 		} else {
 			if (Dinopic) {
-				if (ps[1] == 0x8000) {													// end of sprite list
+				if (BURN_ENDIAN_SWAP_INT16(ps[1]) == 0x8000) {													// end of sprite list
 					break;
 				}
 			} else {
-				if (ps[3] == 0xff00) {													// end of sprite list
+				if (BURN_ENDIAN_SWAP_INT16(ps[3]) == 0xff00) {													// end of sprite list
 					break;
 				}
 			}
 		}
 		
 		if (Dinopic) {
-			if (((ps[2] - 461) | ps[1]) == 0) {													// sprite blank
+			if (((BURN_ENDIAN_SWAP_INT16(ps[2]) - 461) | BURN_ENDIAN_SWAP_INT16(ps[1])) == 0) {													// sprite blank
 				continue;
 			}
 		} else {
-			if ((ps[0] | ps[3]) == 0) {													// sprite blank
+			if ((BURN_ENDIAN_SWAP_INT16(ps[0]) | BURN_ENDIAN_SWAP_INT16(ps[3])) == 0) {													// sprite blank
 				continue;
 			}
 		}
@@ -201,11 +201,11 @@ INT32 Cps1ObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 		INT32 x,y,n,a,bx,by,dx,dy; INT32 nFlip;
 
 		if (Dinopic) {
-			n = ps[0]; a = ps[1]; x = ps[2] - 461; y = 0x2f0 - ps[3];
+			n = BURN_ENDIAN_SWAP_INT16(ps[0]); a = BURN_ENDIAN_SWAP_INT16(ps[1]); x = BURN_ENDIAN_SWAP_INT16(ps[2]) - 461; y = 0x2f0 - BURN_ENDIAN_SWAP_INT16(ps[3]);
 			bx = 1;
 			by = 1;
 		} else {
-			x = ps[0]; y = ps[1]; n = ps[2]; a = ps[3];
+			x = BURN_ENDIAN_SWAP_INT16(ps[0]); y = BURN_ENDIAN_SWAP_INT16(ps[1]); n = BURN_ENDIAN_SWAP_INT16(ps[2]); a = BURN_ENDIAN_SWAP_INT16(ps[3]);
 			
 			// Find out sprite size
 			bx=((a>> 8)&15)+1;
@@ -280,7 +280,7 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 	for (ZValue = (UINT16)nMaxZValue; ZValue <= nCount; ZValue++, ps += nPsAdd) {
 		INT32 x, y, n, a, bx, by, dx, dy;
 		INT32 nFlip;
-		INT32 v = ps[0] >> 13;
+		INT32 v = BURN_ENDIAN_SWAP_INT16(ps[0]) >> 13;
 
 		if ((nSpriteEnable & (1 << v)) == 0) {
 			continue;
@@ -308,10 +308,10 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 			pCpstOne = CpstOneObjDoX[0];
 		}
 
-		x = ps[0];
-		y = ps[1];
-		n = ps[2];
-		a = ps[3];
+		x = BURN_ENDIAN_SWAP_INT16(ps[0]);
+		y = BURN_ENDIAN_SWAP_INT16(ps[1]);
+		n = BURN_ENDIAN_SWAP_INT16(ps[2]);
+		a = BURN_ENDIAN_SWAP_INT16(ps[3]);
 
 		if (a & 0x80) {														// marvel vs capcom ending sprite off-set
 			x += CpsSaveFrg[0][0x9];
@@ -344,7 +344,7 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 //		y -= CpsSaveFrg[0][0xB];
 
 #endif
-		n |= (ps[1] & 0x6000) << 3;	// high bits of address
+		n |= (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0x6000) << 3;	// high bits of address
 		
 		// Find the palette for the tiles on this sprite
 		CpstPal = CpsObjPal + ((a & 0x1F) << 4);

@@ -741,9 +741,9 @@ static void cps2_decrypt(const UINT32 *master_key, UINT32 upper_limit)
 		// decrypt the opcodes
 		for (a = i; a < length/2 && a < upper_limit/2; a += 0x10000)
 		{
-			dec[a] = feistel(rom[a], fn2_groupA, fn2_groupB,
+			dec[a] = BURN_ENDIAN_SWAP_INT16(feistel(BURN_ENDIAN_SWAP_INT16(rom[a]), fn2_groupA, fn2_groupB,
 				&sboxes2[0*4], &sboxes2[1*4], &sboxes2[2*4], &sboxes2[3*4],
-				key2[0], key2[1], key2[2], key2[3]);
+				key2[0], key2[1], key2[2], key2[3]));
 		}
 		// copy the unencrypted part (not really needed)
 		while (a < length/2)

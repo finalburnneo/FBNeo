@@ -12,6 +12,10 @@ inline static UINT32 CalcColCPS1(UINT16 a)
 {
 	INT32 r, g, b, f;
 	const INT32 F_OFFSET = 0x0F;
+	
+#ifndef LSB_FIRST
+	a = BURN_ENDIAN_SWAP_INT16(a);
+#endif
 
 	// Format is FFFF RRRR GGGG BBBB
 	f = (a & 0xF000) >> 12;
@@ -35,6 +39,10 @@ static UINT32 CalcColCPS2(UINT16 a)
 {
 	INT32 r, g, b, f;
 	const INT32 F_OFFSET = 0x0F;
+	
+#ifndef LSB_FIRST
+	a = BURN_ENDIAN_SWAP_INT16(a);
+#endif
 
 	// Format is FFFF RRRR GGGG BBBB
 	f = (a & 0xF000) >> 12;

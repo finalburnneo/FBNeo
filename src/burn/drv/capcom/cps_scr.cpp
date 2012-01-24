@@ -38,7 +38,7 @@ INT32 Cps1Scr1Draw(UINT8 *Base,INT32 sx,INT32 sy)
       p&=0x3fff;
       pst=(UINT16 *)(Base + p);
 
-      t=pst[0];
+      t = BURN_ENDIAN_SWAP_INT16(pst[0]);
       
       if (Scroll1TileMask) t &= Scroll1TileMask;
       
@@ -50,7 +50,7 @@ INT32 Cps1Scr1Draw(UINT8 *Base,INT32 sx,INT32 sy)
       t+=nCpsGfxScroll[1]; // add on offset to scroll tiles
       if (t==nKnowBlank) continue; // Don't draw: we know it's blank
 
-      a=pst[1];
+      a = BURN_ENDIAN_SWAP_INT16(pst[1]);
 
       CpstSetPal(0x20 | (a&0x1f));
 
@@ -64,7 +64,7 @@ INT32 Cps1Scr1Draw(UINT8 *Base,INT32 sx,INT32 sy)
       nCpstTile=t; nCpstFlip=(a>>5)&3;
 
 	  if (nBgHi) {
-		  CpstPmsk = *(UINT16*)(CpsSaveReg[0] + MaskAddr[(a & 0x180) >> 7]);
+		  CpstPmsk = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(CpsSaveReg[0] + MaskAddr[(a & 0x180) >> 7]));
 	  }
 
 	  if(CpstOneDoX[nBgHi]()) nKnowBlank=t;
@@ -108,13 +108,13 @@ INT32 Cps2Scr1Draw(UINT8 *Base, INT32 sx, INT32 sy)
 			p &= 0x3FFF;
 			pst = (UINT16 *)(Base + p);
 
-			t = pst[0];
+			t = BURN_ENDIAN_SWAP_INT16(pst[0]);
 			t <<= 6;										// Get real tile address
 
 			t += nCpsGfxScroll[1];							// add on offset to scroll tiles
 
 			if (t != nKnowBlank) {							// Draw tile
-				a = pst[1];
+				a = BURN_ENDIAN_SWAP_INT16(pst[1]);
 
 				CpstSetPal(0x20 | (a & 0x1F));
 
@@ -161,7 +161,7 @@ INT32 Cps1Scr3Draw(UINT8 *Base,INT32 sx,INT32 sy)
       p&=0x3fff;
       pst=(UINT16 *)(Base + p);
 
-      t=pst[0];
+      t = BURN_ENDIAN_SWAP_INT16(pst[0]);
       
       if (Scroll3TileMask) t &= Scroll3TileMask;
       
@@ -173,7 +173,7 @@ INT32 Cps1Scr3Draw(UINT8 *Base,INT32 sx,INT32 sy)
       
       if (t==nKnowBlank) continue; // Don't draw: we know it's blank
 
-      a=pst[1];
+      a = BURN_ENDIAN_SWAP_INT16(pst[1]);
 
       CpstSetPal(0x60 | (a&0x1f));
 
@@ -187,7 +187,7 @@ INT32 Cps1Scr3Draw(UINT8 *Base,INT32 sx,INT32 sy)
       nCpstTile=t; nCpstFlip=(a>>5)&3;
 
 	  if (nBgHi) {
-		  CpstPmsk = *(UINT16*)(CpsSaveReg[0] + MaskAddr[(a & 0x180) >> 7]);
+		  CpstPmsk = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(CpsSaveReg[0] + MaskAddr[(a & 0x180) >> 7]));
 	  }
 
       if(CpstOneDoX[nBgHi]()) nKnowBlank=t;
@@ -230,7 +230,7 @@ INT32 Cps2Scr3Draw(UINT8 *Base, INT32 sx, INT32 sy)
 			p &= 0x3FFF;
 			pst = (UINT16 *)(Base + p);
 
-			t = pst[0];
+			t = BURN_ENDIAN_SWAP_INT16(pst[0]);
 
 			if(Xmcota && t>=0x5800)      t-=0x4000;
 	        else if(Ssf2t && t<0x5600)   t+=0x4000;
@@ -238,7 +238,7 @@ INT32 Cps2Scr3Draw(UINT8 *Base, INT32 sx, INT32 sy)
  			t += nCpsGfxScroll[3];							// add on offset to scroll tiles
 
 			if (t != nKnowBlank) {							// Draw tile
-				a = pst[1];
+				a = BURN_ENDIAN_SWAP_INT16(pst[1]);
 
 				CpstSetPal(0x60 | (a & 0x1F));
 

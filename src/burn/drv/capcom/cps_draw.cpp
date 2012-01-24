@@ -59,11 +59,11 @@ static INT32 DrawScroll1(INT32 i)
 	INT32 nOff, nScrX, nScrY;
 	UINT8 *Find;
 
-	nOff = *((UINT16 *)(CpsSaveReg[i] + 0x02));
+	nOff = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x02)));
 
 	// Get scroll coordinates
-	nScrX = *((UINT16 *)(CpsSaveReg[i] + 0x0c)); // Scroll 1 X
-	nScrY = *((UINT16 *)(CpsSaveReg[i] + 0x0e)); // Scroll 1 Y
+	nScrX = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x0c))); // Scroll 1 X
+	nScrY = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x0e))); // Scroll 1 Y
 
 	nScrX += 0x40;
 
@@ -87,14 +87,14 @@ static INT32 DrawScroll2Init(INT32 i)
 	// Draw Scroll 2
 	INT32 nScr2Off; INT32 n;
 
-	nScr2Off = *((UINT16 *)(CpsSaveReg[i] + 0x04));
+	nScr2Off = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x04)));
 
 	// Get scroll coordinates
-	nCpsrScrX= *((UINT16 *)(CpsSaveReg[i] + 0x10)); // Scroll 2 X
-	nCpsrScrY= *((UINT16 *)(CpsSaveReg[i] + 0x12)); // Scroll 2 Ytess
+	nCpsrScrX= BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x10))); // Scroll 2 X
+	nCpsrScrY= BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x12))); // Scroll 2 Ytess
 
 	// Get row scroll information
-	n = *((UINT16 *)(CpsSaveReg[i] + 0x22));
+	n = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x22)));
 
 	nScr2Off <<= 8;
 
@@ -121,8 +121,8 @@ static INT32 DrawScroll2Init(INT32 i)
 		INT32 nTab, nStart;
 		// Find row scroll table:
 
-		nTab = *((UINT16 *)(CpsSaveReg[i] + 0x08));
-		nStart = *((UINT16 *)(CpsSaveReg[i] + 0x20));
+		nTab = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x08)));
+		nStart = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x20)));
 
 		nTab <<= 8;
 		nTab &= 0xFFF800; // Vampire - Row scroll effect in VS screen background
@@ -161,11 +161,11 @@ static INT32 DrawScroll3(INT32 i)
 	INT32 nOff, nScrX, nScrY;
 	UINT8 *Find;
 
-	nOff = *((UINT16 *)(CpsSaveReg[i] + 0x06));
+	nOff = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x06)));
 
 	// Get scroll coordinates
-	nScrX = *((UINT16 *)(CpsSaveReg[i] + 0x14)); // Scroll 3 X
-	nScrY = *((UINT16 *)(CpsSaveReg[i] + 0x16)); // Scroll 3 Y
+	nScrX = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x14))); // Scroll 3 X
+	nScrY = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x16))); // Scroll 3 Y
 
 	nScrX += 0x40;
 
@@ -214,7 +214,7 @@ static void Cps1Layers()
   INT32 i=0;
 
   nDrawMask=1; // Sprites always on
-  LayerCont = *((UINT16 *)(CpsSaveReg[0] + nCpsLcReg));
+  LayerCont = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[0] + nCpsLcReg)));
   // Get correct bits from Layer Controller
   if (LayerCont & CpsLayEn[1]) nDrawMask|=2;
   if (LayerCont & CpsLayEn[2]) nDrawMask|=4;
@@ -294,7 +294,7 @@ static void Cps2Layers()
 
 	INT32 nSlice = 0;
 	do {
-		LayerCont = *((UINT16 *)(CpsSaveReg[nSlice] + nCpsLcReg));
+		LayerCont = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[nSlice] + nCpsLcReg)));
 
 		// Determine which layers are enabled
 		nDrawMask[nSlice] = 1;								// Sprites always on

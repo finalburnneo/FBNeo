@@ -34,7 +34,7 @@ static void Cps1TileLine(INT32 y,INT32 sx)
     else nCpstType=CTT_16X16;
 
     pst=FindTile(ix+x,iy+y);
-    t=pst[0];
+    t = BURN_ENDIAN_SWAP_INT16(pst[0]);
     
     if (Scroll2TileMask) t &= Scroll2TileMask;
 
@@ -45,12 +45,12 @@ static void Cps1TileLine(INT32 y,INT32 sx)
     t+=nCpsGfxScroll[2]; // add on offset to scroll tile
     if (t==nKnowBlank) continue; // Don't draw: we know it's blank
     
-    a=pst[1];
+    a = BURN_ENDIAN_SWAP_INT16(pst[1]);
 
     CpstSetPal(0x40 | (a&0x1f));
     nCpstX=sx+(x<<4); nCpstTile=t; nCpstFlip=(a>>5)&3;
 
-	if(nBgHi) CpstPmsk=*(UINT16 *)(CpsSaveReg[0] + MaskAddr[(a&0x180)>>7]);
+	if(nBgHi) CpstPmsk = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(CpsSaveReg[0] + MaskAddr[(a&0x180)>>7]));
     if(CpstOneDoX[nBgHi]()) nKnowBlank=t;
   }
 }
@@ -71,11 +71,11 @@ static void Cps2TileLine(INT32 y,INT32 sx)
     else nCpstType=CTT_16X16;
 
     pst=FindTile(ix+x,iy+y);
-    t=pst[0];
+    t = BURN_ENDIAN_SWAP_INT16(pst[0]);
     t<<=7; // Get real tile address
     t+=nCpsGfxScroll[2]; // add on offset to scroll tiles
 	if (t==nKnowBlank) continue; // Don't draw: we know it's blank
-    a=pst[1];
+    a = BURN_ENDIAN_SWAP_INT16(pst[1]);
 
     CpstSetPal(0x40 | (a&0x1f));
     nCpstX=sx+(x<<4); nCpstTile=t; nCpstFlip=(a>>5)&3;
@@ -121,7 +121,7 @@ static void Cps1TileLineRows(INT32 y,struct CpsrLineInfo *pli)
     else       nCpstType=CTT_16X16 | CTT_ROWS;
 
     pst=FindTile(tx,iy+y);
-    t=pst[0];
+    t = BURN_ENDIAN_SWAP_INT16(pst[0]);
     
     if (Scroll2TileMask) t &= Scroll2TileMask;
 
@@ -132,14 +132,14 @@ static void Cps1TileLineRows(INT32 y,struct CpsrLineInfo *pli)
     t+=nCpsGfxScroll[2]; // add on offset to scroll tiles
     if (t==nKnowBlank) continue; // Don't draw: we know it's blank
 
-    a=pst[1];
+    a = BURN_ENDIAN_SWAP_INT16(pst[1]);
 
     CpstSetPal(0x40 | (a&0x1f));
 
     nCpstX=x<<4; nCpstTile=t; nCpstFlip=(a>>5)&3;
 
 	if (nBgHi) {
-		CpstPmsk = *(UINT16*)(CpsSaveReg[0] + MaskAddr[(a & 0x180) >> 7]);
+		CpstPmsk = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(CpsSaveReg[0] + MaskAddr[(a & 0x180) >> 7]));
 	}
 
 	if(CpstOneDoX[nBgHi]()) nKnowBlank=t;
@@ -180,12 +180,12 @@ static void Cps2TileLineRows(INT32 y,struct CpsrLineInfo *pli)
     else       nCpstType=CTT_16X16 | CTT_ROWS;
 
     pst=FindTile(tx,iy+y);
-    t=pst[0];
+    t = BURN_ENDIAN_SWAP_INT16(pst[0]);
     t<<=7; // Get real tile address
     t+=nCpsGfxScroll[2]; // add on offset to scroll tiles
 
     if (t==nKnowBlank) continue; // Don't draw: we know it's blank
-    a=pst[1];
+    a = BURN_ENDIAN_SWAP_INT16(pst[1]);
 
     CpstSetPal(0x40 | (a&0x1f));
 

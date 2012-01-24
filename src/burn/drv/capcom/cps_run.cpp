@@ -161,7 +161,7 @@ INT32 CpsRunExit()
 inline static void GetPalette(INT32 nStart, INT32 nCount)
 {
 	// Update Palette (Ghouls points to the wrong place on boot up I think)
-	INT32 nPal = (*((UINT16*)(CpsReg + 0x0A)) << 8) & 0xFFF800;
+	INT32 nPal = BURN_ENDIAN_SWAP_INT16((*((UINT16*)(CpsReg + 0x0A)) << 8)) & 0xFFF800;
 
 	UINT8* Find = CpsFindGfxRam(nPal, 0x1000);
 	if (Find) {
@@ -373,17 +373,17 @@ INT32 Cps2Frame()
 	// Determine which (if any) of the line counters generates the first IRQ
 	bEnableAutoIrq50 = bEnableAutoIrq52 = false;
 	nIrqLine50 = nIrqLine52 = 0x0106;
-	if (*((UINT16*)(CpsReg + 0x50)) & 0x8000) {
+	if (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x50))) & 0x8000) {
 		bEnableAutoIrq50 = true;
 	}
-	if (bEnableAutoIrq50 || (*((UINT16*)(CpsReg + 0x4E)) & 0x0200) == 0) {
-		nIrqLine50 = (*((UINT16*)(CpsReg + 0x50)) & 0x01FF);
+	if (bEnableAutoIrq50 || (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x4E))) & 0x0200) == 0) {
+		nIrqLine50 = (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x50))) & 0x01FF);
 	}
-	if (*((UINT16*)(CpsReg + 0x52)) & 0x8000) {
+	if (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x52))) & 0x8000) {
 		bEnableAutoIrq52 = true;
 	}
-	if (bEnableAutoIrq52 || (*((UINT16*)(CpsReg + 0x4E)) & 0x0200) == 0) {
-		nIrqLine52 = (*((UINT16*)(CpsReg + 0x52)) & 0x01FF);
+	if (bEnableAutoIrq52 || (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x4E))) & 0x0200) == 0) {
+		nIrqLine52 = (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x52))) & 0x01FF);
 	}
 	ScheduleIRQ();
 

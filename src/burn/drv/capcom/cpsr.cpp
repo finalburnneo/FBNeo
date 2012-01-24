@@ -17,11 +17,11 @@ static void GetRowsRange(INT32 *pnStart,INT32 *pnWidth,INT32 nRowFrom,INT32 nRow
 
   // Get the range of scroll values within nRowCount rows
   // Start with zero range
-  nStart=CpsrRows[nRowFrom&0x3ff]; nStart&=0x3ff; nWidth=0;
+  nStart = BURN_ENDIAN_SWAP_INT16(CpsrRows[nRowFrom&0x3ff]); nStart&=0x3ff; nWidth=0;
   for (i=nRowFrom;i<nRowTo;i++)
   {
     INT32 nViz; INT32 nDiff;
-    nViz=CpsrRows[i&0x3ff]; nViz&=0x3ff;
+    nViz = BURN_ENDIAN_SWAP_INT16(CpsrRows[i&0x3ff]); nViz&=0x3ff;
     // Work out if this is on the left or the right of our
     // start point.
     nDiff=nViz-nStart;
@@ -82,7 +82,7 @@ static INT32 PrepareRows()
         {
           INT32 v;
           v =(pli->nTileStart<<4)-nCpsrScrX;
-          v-=CpsrRows[(nCpsrRowStart+r)&0x3ff];
+          v -= BURN_ENDIAN_SWAP_INT16(CpsrRows[(nCpsrRowStart+r)&0x3ff]);
           // clip to 10-bit signed
           v+=0x200; v&=0x3ff; v-=0x200;
           *pr=(INT16)v;

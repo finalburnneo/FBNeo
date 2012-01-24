@@ -49,6 +49,9 @@ static INT32 Wc90Scroll2XHi;
 
 static INT32 Wc90SoundLatch = 0;
 
+static INT32 Wc90Z80BankAddress1;
+static INT32 Wc90Z80BankAddress2;
+
 static INT32 nCyclesDone[3], nCyclesTotal[3];
 static INT32 nCyclesSegment;
 
@@ -305,20 +308,14 @@ static void wc90FMIRQHandler(INT32, INT32 nStatus)
 
 static inline void wc90SendSoundCommand(INT32 nCommand)
 {
-	INT32 nCycles = ZetTotalCycles() * 2 / 3;
-
 	Wc90SoundLatch = nCommand;
 
 	ZetClose();
+
 	ZetOpen(2);
-
-	if (nCycles > ZetTotalCycles()) {
-		BurnTimerUpdate(nCycles);
-	}
-
 	ZetNmi();
-
 	ZetClose();
+
 	ZetOpen(0);
 }
 
@@ -428,11 +425,9 @@ void __fastcall Wc90Write1(UINT16 a, UINT8 d)
 		}
 
 		case 0xfce0: {
-			INT32 BankAddress;
-
-			BankAddress = 0x10000 + ((d & 0xf8) << 8);
-			ZetMapArea(0xf000, 0xf7ff, 0, Wc90Z80Rom1 + BankAddress);
-			ZetMapArea(0xf000, 0xf7ff, 2, Wc90Z80Rom1 + BankAddress);
+			Wc90Z80BankAddress1 = 0x10000 + ((d & 0xf8) << 8);
+			ZetMapArea(0xf000, 0xf7ff, 0, Wc90Z80Rom1 + Wc90Z80BankAddress1);
+			ZetMapArea(0xf000, 0xf7ff, 2, Wc90Z80Rom1 + Wc90Z80BankAddress1);
 			return;
 		}
 	}
@@ -442,11 +437,9 @@ void __fastcall Wc90Write2(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xfc00: {
-			INT32 BankAddress;
-
-			BankAddress = 0x10000 + ((d & 0xf8) << 8);
-			ZetMapArea(0xf000, 0xf7ff, 0, Wc90Z80Rom2 + BankAddress);
-			ZetMapArea(0xf000, 0xf7ff, 2, Wc90Z80Rom2 + BankAddress);
+			Wc90Z80BankAddress2 = 0x10000 + ((d & 0xf8) << 8);
+			ZetMapArea(0xf000, 0xf7ff, 0, Wc90Z80Rom2 + Wc90Z80BankAddress2);
+			ZetMapArea(0xf000, 0xf7ff, 2, Wc90Z80Rom2 + Wc90Z80BankAddress2);
 			return;
 		}
 	}
@@ -984,8 +977,7 @@ static drawscreen_procdef drawscreen_proc[2] = {
 
 static INT32 Wc90Frame()
 {
-	INT32 nInterleave = 16;
-	INT32 nCurrentCPU;
+	INT32 nInterleave = 262;
 
 	if (Wc90Reset) Wc90DoReset();
 
@@ -995,46 +987,40 @@ static INT32 Wc90Frame()
 	nCyclesTotal[1] = (INT32)((INT64)8000000 * nBurnCPUSpeedAdjust / (0x0100 * 59.17));
 	nCyclesTotal[2] = (INT32)(double)(4000000 / 59.17);
 	
+	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = 0;
+	
 	ZetNewFrame();
-
-	// Compensate for extra cycles executed
-	for (INT32 i = 0; i < 3; i++) {
-		ZetOpen(i);
-		ZetIdle(nCyclesDone[i]);
-		ZetClose();
-	}
 	
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nNext;
+		INT32 nNext, nCurrentCPU;
 
-		// Run Z80 #1
 		nCurrentCPU = 0;
 		ZetOpen(nCurrentCPU);
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - ZetTotalCycles();
-		ZetRun(nCyclesSegment);
+		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
+		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
+		if (i == 261) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
 		ZetClose();
 
-		// Run Z80 #2
 		nCurrentCPU = 1;
 		ZetOpen(nCurrentCPU);
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - ZetTotalCycles();
-		ZetRun(nCyclesSegment);
+		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
+		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
+		if (i == 261) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
 		ZetClose();
-	}
-
-	for (INT32 i = 0; i < 2; i++) {
-		ZetOpen(i);
-		ZetRaiseIrq(0);
-		nCyclesDone[i] = ZetTotalCycles() - nCyclesTotal[i];
+		
+		nCurrentCPU = 2;
+		ZetOpen(nCurrentCPU);
+		BurnTimerUpdate(i * (nCyclesTotal[2] / nInterleave));
 		ZetClose();
 	}
 
 	ZetOpen(2);
 	BurnTimerEndFrame(nCyclesTotal[2]);
-	BurnYM2608Update(pBurnSoundOut, nBurnSoundLen);
-	nCyclesDone[2] = ZetTotalCycles() - nCyclesTotal[2];
+	if (pBurnSoundOut) {
+		BurnYM2608Update(pBurnSoundOut, nBurnSoundLen);
+	}
 	ZetClose();
 
 	if (pBurnDraw) (*(drawscreen_proc[nTileType]))();
@@ -1056,7 +1042,6 @@ static INT32 Wc90Init()
 {
 	INT32 nRet = 0, nLen;
 
-	// Allocate and Blank all required memory
 	Mem = NULL;
 	MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
@@ -1067,35 +1052,28 @@ static INT32 Wc90Init()
 	Wc90TempGfx = (UINT8*)BurnMalloc(0x80000);
 	if (Wc90TempGfx == NULL) return 1;
 
-	// Load Z80 #1 Program Roms
 	nRet = BurnLoadRom(Wc90Z80Rom1 + 0x00000,  0, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Wc90Z80Rom1 + 0x10000,  1, 1); if (nRet != 0) return 1;
 
-	// Load Z80 #2 Program Roms
 	nRet = BurnLoadRom(Wc90Z80Rom2 + 0x00000,  2, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Wc90Z80Rom2 + 0x10000,  3, 1); if (nRet != 0) return 1;
 
-	// Load Z80 #3 Program Rom
 	nRet = BurnLoadRom(Wc90Z80Rom3 + 0x00000,  4, 1); if (nRet != 0) return 1;
 
-	// Load and Decode Char Tile Rom
 	memset(Wc90TempGfx, 0, 0x80000);
 	nRet = BurnLoadRom(Wc90TempGfx + 0x00000,  5, 1); if (nRet != 0) return 1;
 	GfxDecode(2048, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x100, Wc90TempGfx, Wc90CharTiles);
 
-	// Load and Decode Fg Tile Roms
 	memset(Wc90TempGfx, 0, 0x80000);
 	nRet = BurnLoadRom(Wc90TempGfx + 0x00000,  6, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Wc90TempGfx + 0x20000,  7, 1); if (nRet != 0) return 1;
 	GfxDecode(2048, 4, 16, 16, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x400, Wc90TempGfx, Wc90FgTiles);
 
-	// Load and Decode Bg Tile Roms
 	memset(Wc90TempGfx, 0, 0x80000);
 	nRet = BurnLoadRom(Wc90TempGfx + 0x00000,  8, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Wc90TempGfx + 0x20000,  9, 1); if (nRet != 0) return 1;
 	GfxDecode(2048, 4, 16, 16, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x400, Wc90TempGfx, Wc90BgTiles);
 
-	// Load and Decode Sprite Roms
 	memset(Wc90TempGfx, 0, 0x80000);
 	nRet = BurnLoadRom(Wc90TempGfx + 0x00000, 10, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Wc90TempGfx + 0x20000, 11, 1); if (nRet != 0) return 1;
@@ -1105,10 +1083,8 @@ static INT32 Wc90Init()
 
 	BurnFree(Wc90TempGfx);
 
-	// Load ADPCM Rom
 	nRet = BurnLoadRom(Wc90YM2608Rom, 14, 1); if (nRet !=0) return 1;
 
-	// Setup the Z80 emulation
 	ZetInit(0);
 	ZetOpen(0);
 	ZetSetReadHandler(Wc90Read1);
@@ -1180,22 +1156,22 @@ static INT32 Wc90Init()
 
 	GenericTilesInit();
 
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "wc90t")) {
-		nTileType = 1;
-	} else {
-		nTileType = 0;
-	}
-	
 	BurnSetRefreshRate(59.17);
 
 	INT32 Wc90YM2608RomSize = 0x20000;
 	BurnYM2608Init(8000000, Wc90YM2608Rom, &Wc90YM2608RomSize, &wc90FMIRQHandler, wc90SynchroniseStream, wc90GetTime, 0);
 	BurnTimerAttachZet(4000000);
 	
-	// Reset the driver
 	Wc90DoReset();
 
 	return 0;
+}
+
+static INT32 Wc90tInit()
+{
+	nTileType = 1;
+	
+	return Wc90Init();
 }
 
 static INT32 Wc90Exit()
@@ -1229,8 +1205,8 @@ static INT32 Wc90Scan(INT32 nAction,INT32 *pnMin)
 {
 	struct BurnArea ba;
 
-	if (pnMin != NULL) {			// Return minimum compatible version
-		*pnMin = 0x029521;
+	if (pnMin != NULL) {
+		*pnMin = 0x029721;
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {
@@ -1242,11 +1218,10 @@ static INT32 Wc90Scan(INT32 nAction,INT32 *pnMin)
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-		ZetScan(nAction);			// Scan Z80
+		ZetScan(nAction);
 
-		BurnYM2608Scan(nAction, pnMin);	// Scan YM2608
+		BurnYM2608Scan(nAction, pnMin);
 
-		// Scan critical driver variables
 		SCAN_VAR(Wc90SoundLatch);
 		SCAN_VAR(Wc90Input);
 		SCAN_VAR(Wc90Dip);
@@ -1262,6 +1237,20 @@ static INT32 Wc90Scan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(Wc90Scroll2YHi);
 		SCAN_VAR(Wc90Scroll2XLo);
 		SCAN_VAR(Wc90Scroll2XHi);
+		SCAN_VAR(Wc90Z80BankAddress1);
+		SCAN_VAR(Wc90Z80BankAddress2);
+		
+		if (nAction & ACB_WRITE) {
+			ZetOpen(0);
+			ZetMapArea(0xf000, 0xf7ff, 0, Wc90Z80Rom1 + Wc90Z80BankAddress1);
+			ZetMapArea(0xf000, 0xf7ff, 2, Wc90Z80Rom1 + Wc90Z80BankAddress1);
+			ZetClose();
+			
+			ZetOpen(1);
+			ZetMapArea(0xf000, 0xf7ff, 0, Wc90Z80Rom2 + Wc90Z80BankAddress2);
+			ZetMapArea(0xf000, 0xf7ff, 2, Wc90Z80Rom2 + Wc90Z80BankAddress2);
+			ZetClose();
+		}
 	}
 
 	return 0;
@@ -1303,6 +1292,6 @@ struct BurnDriver BurnDrvWc90t = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90tRomInfo, Wc90tRomName, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
-	Wc90Init, Wc90Exit, Wc90Frame, NULL, Wc90Scan,
+	Wc90tInit, Wc90Exit, Wc90Frame, NULL, Wc90Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };

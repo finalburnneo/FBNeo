@@ -81,8 +81,8 @@ static void CaveQueue8x8Layer_Normal(INT32 nLayer)
 
 		for (x = mx; x >= 0; x -= (1 << 2)) {
 			nTileColumn = (cx + x) & (0x3F << 2);
-			nTileNumber = *((UINT16*)(pTileRAM + 0x4000 + nTileRow + nTileColumn)) << 16;
-			nTileNumber |= *((UINT16*)(pTileRAM + 0x4002 + nTileRow + nTileColumn));
+			nTileNumber = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x4000 + nTileRow + nTileColumn))) << 16;
+			nTileNumber |= BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x4002 + nTileRow + nTileColumn)));
 
 			nTileNumber |= nTileOffset;
 
@@ -177,7 +177,7 @@ static void Cave8x8Layer_RowScroll(INT32 nLayer, UINT32 nPriority)
 		INT32 dy = CaveTileReg[nLayer][1] + 0x12 - nCaveRowModeOffset;
 
 		for (y = 0; y < nCaveYSize; y++) {
-			rowscroll[y] = *((UINT16*)(pTileRAM + 0x1000 + (((dy + y) & 0x01FF) << 2))) + bx;
+			rowscroll[y] = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x1000 + (((dy + y) & 0x01FF) << 2)))) + bx;
 		}
 	}
 
@@ -189,11 +189,11 @@ static void Cave8x8Layer_RowScroll(INT32 nLayer, UINT32 nPriority)
 
 		for (x = 0; x < (64 << 2); x += (1 << 2)) {
 			nTileColumn = x & (0x3F << 2);
-			nTileNumber = *((UINT16*)(pTileRAM + 0x4000 + nTileRow + nTileColumn)) << 16;
+			nTileNumber = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x4000 + nTileRow + nTileColumn))) << 16;
 			if ((nTileNumber >> 30) != nPriority) {
 				continue;
 			}
-			nTileNumber |= *((UINT16*)(pTileRAM + 0x4002 + nTileRow + nTileColumn));
+			nTileNumber |= BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x4002 + nTileRow + nTileColumn)));
 			pTilePalette = pPalette + ((nTileNumber & 0x3F000000) >> nPaletteShift);
 
 			nTileNumber |= nTileOffset;
@@ -265,8 +265,8 @@ static void CaveQueue16x16Layer_Normal(INT32 nLayer)
 
 		for (x = mx; x >= 0; x -= (1 << 2)) {
 			nTileColumn = (cx + x) & (0x1F << 2);
-			nTileNumber = *((UINT16*)(pTileRAM + 0x0000 + nTileRow + nTileColumn)) << 16;
-			nTileNumber |= *((UINT16*)(pTileRAM + 0x0002 + nTileRow + nTileColumn));
+			nTileNumber = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x0000 + nTileRow + nTileColumn))) << 16;
+			nTileNumber |= BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x0002 + nTileRow + nTileColumn)));
 
 			if (*((UINT32*)(CaveTileAttrib[nLayer] + ((nTileNumber << 2) & nTileMask[nLayer]))) == 0x01010101) {
 				continue;
@@ -309,7 +309,7 @@ static void Cave16x16Layer_Normal(INT32 nLayer, UINT32 nPriority)
 		nTileNumber <<= 2;
 		nTileNumber &= nTileMask[nLayer];
 
-		nAttrib = *((UINT32*)(CaveTileAttrib[nLayer] + nTileNumber));
+		nAttrib = BURN_ENDIAN_SWAP_INT32(*((UINT32*)(CaveTileAttrib[nLayer] + nTileNumber)));
 
 		pTile = pBurnDraw + (nTileYPos * nBurnPitch) + (nTileXPos * nBurnBpp);
 
@@ -436,7 +436,7 @@ static void Cave16x16Layer_RowScroll(INT32 nLayer, UINT32 nPriority)
 		INT32 dy = CaveTileReg[nLayer][1] + 0x12 - nCaveRowModeOffset;
 
 		for (y = 0; y < nCaveYSize; y++) {
-			rowscroll[y] = *((UINT16*)(pTileRAM + 0x1000 + (((dy + y) & 0x01FF) << 2))) + bx;
+			rowscroll[y] = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x1000 + (((dy + y) & 0x01FF) << 2)))) + bx;
 		}
 	}
 
@@ -448,18 +448,18 @@ static void Cave16x16Layer_RowScroll(INT32 nLayer, UINT32 nPriority)
 
 		for (x = 0; x < (32 << 2); x += (1 << 2)) {
 			nTileColumn = x & (0x1F << 2);
-			nTileNumber = *((UINT16*)(pTileRAM + 0x0000 + nTileRow + nTileColumn)) << 16;
+			nTileNumber = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x0000 + nTileRow + nTileColumn))) << 16;
 			if ((nTileNumber >> 30) != nPriority) {
 				continue;
 			}
-			nTileNumber |= *((UINT16*)(pTileRAM + 0x0002 + nTileRow + nTileColumn));
+			nTileNumber |= BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x0002 + nTileRow + nTileColumn)));
 			pTilePalette = pPalette + ((nTileNumber & nPaletteMask) >> nPaletteShift);
 			nTileNumber <<= 2;
 			nTileNumber &= nTileMask[nLayer];
 
 			count++;
 
-			nAttrib = *((UINT32*)(CaveTileAttrib[nLayer] + nTileNumber));
+			nAttrib = BURN_ENDIAN_SWAP_INT32(*((UINT32*)(CaveTileAttrib[nLayer] + nTileNumber)));
 			if (nAttrib == 0x01010101) {
 				continue;
 			}
@@ -600,12 +600,12 @@ static void Cave16x16Layer_RowSelect(INT32 nLayer, UINT32 nPriority)
 
 		if (CaveTileReg[nLayer][0] & 0x4000) {	// Row-scroll mode
 			for (y = 0; y < nCaveYSize; y++) {
-				rowselect[y] = *((UINT16*)(pTileRAM + 0x1002 + (((cy + y) & 0x01FF) << 2)));
-				rowscroll[y] = *((UINT16*)(pTileRAM + 0x1000 + (((cy + y) & 0x01FF) << 2))) + bx;
+				rowselect[y] = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x1002 + (((cy + y) & 0x01FF) << 2))));
+				rowscroll[y] = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x1000 + (((cy + y) & 0x01FF) << 2)))) + bx;
 			}
 		} else {
 			for (y = 0; y < nCaveYSize; y++) {
-				rowselect[y] = *((UINT16*)(pTileRAM + 0x1002 + (((cy + y) & 0x01FF) << 2)));
+				rowselect[y] = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x1002 + (((cy + y) & 0x01FF) << 2))));
 			}
 		}
 	}
@@ -622,11 +622,11 @@ static void Cave16x16Layer_RowSelect(INT32 nLayer, UINT32 nPriority)
 			for (x = 0; x <= mx; x++) {
 
 				nTileColumn = (((rx >> 4) + x) & 0x1F) << 2;
-				nTileNumber = *((UINT16*)(pTileRAM + 0x0000 + nTileRow + nTileColumn)) << 16;
+				nTileNumber = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x0000 + nTileRow + nTileColumn))) << 16;
 				if ((nTileNumber >> 30) != nPriority) {
 					continue;
 				}
-				nTileNumber |= *((UINT16*)(pTileRAM + 0x0002 + nTileRow + nTileColumn));
+				nTileNumber |= BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x0002 + nTileRow + nTileColumn)));
 				pTilePalette = pPalette + ((nTileNumber & nPaletteMask) >> nPaletteShift);
 				nTileNumber &= nTileMask[nLayer];
 
@@ -670,13 +670,13 @@ static void Cave16x16Layer_RowSelect(INT32 nLayer, UINT32 nPriority)
 
 			for (x = 0; x <= mx; x++) {
 				nTileColumn = (((bx >> 4) + x) & 0x1F) << 2;
-				nTileNumber = *((UINT16*)(pTileRAM + 0x0000 + nTileRow + nTileColumn)) << 16;
+				nTileNumber = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x0000 + nTileRow + nTileColumn))) << 16;
 				if ((nTileNumber >> 30) != nPriority) {
 					nTileXPos += 16;
 					pTile += (nBurnBpp << 4);
 					continue;
 				}
-				nTileNumber |= *((UINT16*)(pTileRAM + 0x0002 + nTileRow + nTileColumn));
+				nTileNumber |= BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x0002 + nTileRow + nTileColumn)));
 				pTilePalette = pPalette + ((nTileNumber & nPaletteMask) >> nPaletteShift);
 				nTileNumber &= nTileMask[nLayer];
 

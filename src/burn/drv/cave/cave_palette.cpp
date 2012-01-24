@@ -62,7 +62,7 @@ INT32 CavePalUpdate4Bit(INT32 nOffset, INT32 nNumPalettes)
 
 				c = *ps;
 				*pc = c;
-				*pd = CalcCol(c);
+				*pd = CalcCol(BURN_ENDIAN_SWAP_INT16(c));
 
 			}
 		}
@@ -82,7 +82,7 @@ INT32 CavePalUpdate4Bit(INT32 nOffset, INT32 nNumPalettes)
 			c = *ps;
 			if (*pc != c) {
 				*pc = c;
-				*pd = CalcCol(c);
+				*pd = CalcCol(BURN_ENDIAN_SWAP_INT16(c));
 			}
 
 		}
@@ -111,7 +111,7 @@ INT32 CavePalUpdate8Bit(INT32 nOffset, INT32 nNumPalettes)
 
 				c = *ps;
 				*pc = c;
-				*pd = CalcCol(c);
+				*pd = CalcCol(BURN_ENDIAN_SWAP_INT16(c));
 
 			}
 		}
@@ -138,7 +138,7 @@ void CavePalWriteWord(UINT32 nAddress, UINT16 wordValue)
 {
 	nAddress >>= 1;
 
-	((UINT16*)CavePalSrc)[nAddress] = wordValue;		// write word
+	((UINT16*)CavePalSrc)[nAddress] = BURN_ENDIAN_SWAP_INT16(wordValue);		// write word
 
 	if (CavePalCopy[nAddress] != wordValue) {
 		CavePalCopy[nAddress] = wordValue;

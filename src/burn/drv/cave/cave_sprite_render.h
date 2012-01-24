@@ -188,67 +188,67 @@ static void FUNCTIONNAME(BPP,XSIZE,ROT,FLIP,ZOOMMODE,ZBUF,DEPTH)()
  #if EIGHTBIT == 0
 			if (nColumn >= 0 && nColumn < (XSIZE - 16)) {
   #if XFLIP == 0
-				nColour = pSpriteData[x];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x]);
 				PLOT8_NOCLIP(0);
-				nColour = pSpriteData[x + 1];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x + 1]);
 				PLOT8_NOCLIP(8);
   #else
-				nColour = pSpriteData[x + 1];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x + 1]);
 				PLOT8_NOCLIP(8);
-				nColour = pSpriteData[x];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x]);
 				PLOT8_NOCLIP(0);
   #endif
 			} else {
   #if XFLIP == 0
-				nColour = pSpriteData[x];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x]);
 				PLOT8_CLIP(0);
-				nColour = pSpriteData[x + 1];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x + 1]);
 				PLOT8_CLIP(8);
   #else
-				nColour = pSpriteData[x + 1];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x + 1]);
 				PLOT8_CLIP(8);
-				nColour = pSpriteData[x];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x]);
 				PLOT8_CLIP(0);
   #endif
  #else
 			if (nColumn >= 0 && nColumn < (XSIZE - 16)) {
   #if XFLIP == 0
-				nColour = pSpriteData[x];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x]);
 				PLOT4_NOCLIP(0);
-				nColour = pSpriteData[x + 1];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x + 1]);
 				PLOT4_NOCLIP(4);
-				nColour = pSpriteData[x + 2];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x + 2]);
 				PLOT4_NOCLIP(8);
-				nColour = pSpriteData[x + 3];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x + 3]);
 				PLOT4_NOCLIP(12);
   #else
-				nColour = pSpriteData[x + 3];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x + 3]);
 				PLOT4_NOCLIP(12);
-				nColour = pSpriteData[x + 2];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x + 2]);
 				PLOT4_NOCLIP(8);
-				nColour = pSpriteData[x + 1];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x + 1]);
 				PLOT4_NOCLIP(4);
-				nColour = pSpriteData[x];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x]);
 				PLOT4_NOCLIP(0);
   #endif
 			} else {
   #if XFLIP == 0
-				nColour = pSpriteData[x];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x]);
 				PLOT4_CLIP(0);
-				nColour = pSpriteData[x + 1];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x + 1]);
 				PLOT4_CLIP(4);
-				nColour = pSpriteData[x + 2];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x + 2]);
 				PLOT4_CLIP(8);
-				nColour = pSpriteData[x + 3];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x + 3]);
 				PLOT4_CLIP(12);
   #else
-				nColour = pSpriteData[x + 3];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x + 3]);
 				PLOT4_CLIP(12);
-				nColour = pSpriteData[x + 2];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x + 2]);
 				PLOT4_CLIP(8);
-				nColour = pSpriteData[x + 1];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x + 1]);
 				PLOT4_CLIP(4);
-				nColour = pSpriteData[x];
+				nColour = BURN_ENDIAN_SWAP_INT32(pSpriteData[x]);
 				PLOT4_CLIP(0);
   #endif
  #endif

@@ -503,7 +503,7 @@ static void DrvCalcPalette()
 	UINT32* pd;
 
 	for (i = 0, ps = (UINT16*)CavePalSrc, pd = CavePalette; i < 0x2800; i++, ps++, pd++) {
-		*pd = CalcCol(*ps);
+		*pd = CalcCol(BURN_ENDIAN_SWAP_INT16(*ps));
 	}
 }
 

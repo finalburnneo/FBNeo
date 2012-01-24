@@ -150,7 +150,7 @@ static void FUNCTIONNAME(BPP,XSIZE,ROT,FLIP,SCROLL,SELECT,CLIP,DEPTH)()
 
  #if EIGHTBIT == 0
   #if DOCLIP == 1 || ROWSCROLL == 1
-		nColour = *pTileData++;
+		nColour = BURN_ENDIAN_SWAP_INT32(*pTileData++);
 
 		if (XPOS <= (XSIZE - 8)) {
 			if (XPOS < 0) {
@@ -216,7 +216,7 @@ static void FUNCTIONNAME(BPP,XSIZE,ROT,FLIP,SCROLL,SELECT,CLIP,DEPTH)()
 
 		}
   #else
-		nColour = *pTileData++;
+		nColour = BURN_ENDIAN_SWAP_INT32(*pTileData++);
 		PLOTPIXEL(nColour & 0x0F);
 		ADVANCECOLUMN;
 		nColour >>= 4;
@@ -245,12 +245,12 @@ static void FUNCTIONNAME(BPP,XSIZE,ROT,FLIP,SCROLL,SELECT,CLIP,DEPTH)()
   #endif
  #else
   #if DOCLIP == 1 || ROWSCROLL == 1
-		nColour = pTileData[0];
+		nColour = BURN_ENDIAN_SWAP_INT32(pTileData[0]);
 
 		if (XPOS <= (XSIZE - 8)) {
 			if (XPOS < 0) {
 				if (XPOS < -3) {
-					nColour = pTileData[1];
+					nColour = BURN_ENDIAN_SWAP_INT32(pTileData[1]);
 				}
 				nColour >>= (-XPOS & 3) * 8;
 				pPixel += -XPOS * (BPP >> 3);
@@ -272,7 +272,7 @@ static void FUNCTIONNAME(BPP,XSIZE,ROT,FLIP,SCROLL,SELECT,CLIP,DEPTH)()
 				case 3:
 					PLOTPIXEL(nColour & 0xFF);
 					ADVANCECOLUMN;
-					nColour = pTileData[1];
+					nColour = BURN_ENDIAN_SWAP_INT32(pTileData[1]);
 				case 4:
 					PLOTPIXEL(nColour & 0xFF);
 					ADVANCECOLUMN;
@@ -302,7 +302,7 @@ static void FUNCTIONNAME(BPP,XSIZE,ROT,FLIP,SCROLL,SELECT,CLIP,DEPTH)()
 			nColour >>= 8;
 			CLIPPIXEL(3, PLOTPIXEL(nColour & 0xFF));
 			ADVANCECOLUMN;
-			nColour = pTileData[1];
+			nColour = BURN_ENDIAN_SWAP_INT32(pTileData[1]);
 			CLIPPIXEL(4, PLOTPIXEL(nColour & 0xFF));
 			ADVANCECOLUMN;
 			nColour >>= 8;
@@ -317,7 +317,7 @@ static void FUNCTIONNAME(BPP,XSIZE,ROT,FLIP,SCROLL,SELECT,CLIP,DEPTH)()
 		pTileData += 2;
 
   #else
-		nColour = *pTileData++;
+		nColour = BURN_ENDIAN_SWAP_INT32(*pTileData++);
 		PLOTPIXEL(nColour & 0xFF);
 		ADVANCECOLUMN;
 		nColour >>= 8;
@@ -331,7 +331,7 @@ static void FUNCTIONNAME(BPP,XSIZE,ROT,FLIP,SCROLL,SELECT,CLIP,DEPTH)()
 		PLOTPIXEL(nColour & 0xFF);
 		ADVANCECOLUMN;
 
-		nColour = *pTileData++;
+		nColour = BURN_ENDIAN_SWAP_INT32(*pTileData++);
 		PLOTPIXEL(nColour & 0xFF);
 		ADVANCECOLUMN;
 		nColour >>= 8;

@@ -357,7 +357,7 @@ static INT32 CaveSpriteBuffer_NoZoom()
 
 	for (INT32 i = 0, z = 0; i < 0x0400; i++, pSprite += 8) {
 
-		word = pSprite[4];
+		word = BURN_ENDIAN_SWAP_INT16(pSprite[4]);
 
 		xs = (word >> 4) & 0x01F0;
 		ys = (word << 4) & 0x01F0;
@@ -366,9 +366,9 @@ static INT32 CaveSpriteBuffer_NoZoom()
 		}
 
 #if 0
-		x = (pSprite[2] + nCaveExtraXOffset) & 0x03FF;
+		x = (BURN_ENDIAN_SWAP_INT16(pSprite[2]) + nCaveExtraXOffset) & 0x03FF;
 #else
-		x = (pSprite[2] + CaveSpriteVisibleXOffset) & 0x03FF;
+		x = (BURN_ENDIAN_SWAP_INT16(pSprite[2]) + CaveSpriteVisibleXOffset) & 0x03FF;
 #endif
 		if (x >= 320) {
 			if (x + xs <= 0x0400) {
@@ -377,9 +377,9 @@ static INT32 CaveSpriteBuffer_NoZoom()
 		}
 
 #if 0
-		y = (pSprite[3] + nCaveExtraYOffset) & 0x03FF;
+		y = (BURN_ENDIAN_SWAP_INT16(pSprite[3]) + nCaveExtraYOffset) & 0x03FF;
 #else
-		y = pSprite[3] & 0x03FF;
+		y = BURN_ENDIAN_SWAP_INT16(pSprite[3]) & 0x03FF;
 #endif
 		if (y >= 240) {
 			if (y + ys <= 0x0400) {
@@ -389,7 +389,7 @@ static INT32 CaveSpriteBuffer_NoZoom()
 
 		// Sprite is both active and onscreen, so add it to the buffer
 
-		word = pSprite[0];
+		word = BURN_ENDIAN_SWAP_INT16(pSprite[0]);
 
 		nPriority = (word >> 4) & 0x03;
 		if (nLastSprite[nPriority] == -1) {
@@ -402,7 +402,7 @@ static INT32 CaveSpriteBuffer_NoZoom()
 		pBuffer->flip = (word >> 2) & 0x03;
 		pBuffer->palette = word & 0x3F00;
 
-		pBuffer->address = pSprite[1] | ((word & 3) << 16);
+		pBuffer->address = BURN_ENDIAN_SWAP_INT16(pSprite[1]) | ((word & 3) << 16);
 
 		pBuffer->x = x;
 		pBuffer->y = y;
@@ -439,7 +439,7 @@ static INT32 CaveSpriteBuffer_ZoomA()
 
 	for (INT32 i = 0, z = 0; i < 0x0400; i++, pSprite += 8) {
 
-		word = pSprite[6];
+		word = BURN_ENDIAN_SWAP_INT16(pSprite[6]);
 
 		xs = (word >> 4) & 0x01F0;
 		ys = (word << 4) & 0x01F0;
@@ -447,18 +447,18 @@ static INT32 CaveSpriteBuffer_ZoomA()
 			continue;
 		}
 
-		word = pSprite[2];
+		word = BURN_ENDIAN_SWAP_INT16(pSprite[2]);
 
 		nPriority = (word >> 4) & 0x03;
 
-		x = ((pSprite[0] >> 6) + CaveSpriteVisibleXOffset) & 0x03FF;
+		x = ((BURN_ENDIAN_SWAP_INT16(pSprite[0]) >> 6) + CaveSpriteVisibleXOffset) & 0x03FF;
 #if 0
-		y = ((pSprite[1] >> 6) + nCaveExtraYOffset) & 0x03FF;
+		y = ((BURN_ENDIAN_SWAP_INT16(pSprite[1]) >> 6) + nCaveExtraYOffset) & 0x03FF;
 #else
-		y = (pSprite[1] >> 6) & 0x03FF;
+		y = (BURN_ENDIAN_SWAP_INT16(pSprite[1]) >> 6) & 0x03FF;
 #endif
 
-		if (pSprite[4] <= 0x0100 && pSprite[5] <= 0x0100) {
+		if (BURN_ENDIAN_SWAP_INT16(pSprite[4]) <= 0x0100 && BURN_ENDIAN_SWAP_INT16(pSprite[5]) <= 0x0100) {
 			if (x >= 320) {
 				if (x + xs <= 0x0400) {
 					continue;
@@ -480,8 +480,8 @@ static INT32 CaveSpriteBuffer_ZoomA()
 
 		pBuffer->priority = 8 >> nPriority;
 
-		pBuffer->xzoom = pSprite[4];
-		pBuffer->yzoom = pSprite[5];
+		pBuffer->xzoom = BURN_ENDIAN_SWAP_INT16(pSprite[4]);
+		pBuffer->yzoom = BURN_ENDIAN_SWAP_INT16(pSprite[5]);
 
 		pBuffer->xsize = xs;
 		pBuffer->ysize = ys;
@@ -492,7 +492,7 @@ static INT32 CaveSpriteBuffer_ZoomA()
 		pBuffer->flip = (word >> 2) & 0x03;
 		pBuffer->palette = word & 0x3F00;
 
-		pBuffer->address = pSprite[3] | ((word & 3) << 16);
+		pBuffer->address = BURN_ENDIAN_SWAP_INT16(pSprite[3]) | ((word & 3) << 16);
 
 		pBuffer++;
 		z++;
@@ -523,7 +523,7 @@ static INT32 CaveSpriteBuffer_ZoomB()
 	
 	for (INT32 i = 0, z = 0; i < 0x0400; i++, pSprite += 8) {
 
-		word = pSprite[6];
+		word = BURN_ENDIAN_SWAP_INT16(pSprite[6]);
 
 		xs = (word >> 4) & 0x01F0;
 		ys = (word << 4) & 0x01F0;
@@ -531,22 +531,22 @@ static INT32 CaveSpriteBuffer_ZoomB()
 			continue;
 		}
 
-		word = pSprite[2];
+		word = BURN_ENDIAN_SWAP_INT16(pSprite[2]);
 
 		nPriority = (word >> 4) & 0x03;
 
 #if 0
-		x = (pSprite[0] + nCaveExtraXOffset) & 0x03FF;
+		x = (BURN_ENDIAN_SWAP_INT16(pSprite[0]) + nCaveExtraXOffset) & 0x03FF;
 # else
-		x = (pSprite[0] + CaveSpriteVisibleXOffset) & 0x03FF;
+		x = (BURN_ENDIAN_SWAP_INT16(pSprite[0]) + CaveSpriteVisibleXOffset) & 0x03FF;
 #endif
 #if 0
-		y = (pSprite[1] + nCaveExtraYOffset) & 0x03FF;
+		y = (BURN_ENDIAN_SWAP_INT16(pSprite[1]) + nCaveExtraYOffset) & 0x03FF;
 #else
-		y = pSprite[1] & 0x03FF;
+		y = BURN_ENDIAN_SWAP_INT16(pSprite[1]) & 0x03FF;
 #endif
 
-		if (pSprite[4] <= 0x0100 && pSprite[5] <= 0x0100) {
+		if (BURN_ENDIAN_SWAP_INT16(pSprite[4]) <= 0x0100 && BURN_ENDIAN_SWAP_INT16(pSprite[5]) <= 0x0100) {
 			if (x >= nCaveXSize) {
 				if (x + xs <= 0x0400) {
 					continue;
@@ -568,8 +568,8 @@ static INT32 CaveSpriteBuffer_ZoomB()
 
 		pBuffer->priority = 8 >> nPriority;
 
-		pBuffer->xzoom = pSprite[4];
-		pBuffer->yzoom = pSprite[5];
+		pBuffer->xzoom = BURN_ENDIAN_SWAP_INT16(pSprite[4]);
+		pBuffer->yzoom = BURN_ENDIAN_SWAP_INT16(pSprite[5]);
 
 		pBuffer->xsize = xs;
 		pBuffer->ysize = ys;
@@ -580,7 +580,7 @@ static INT32 CaveSpriteBuffer_ZoomB()
 		pBuffer->flip = (word >> 2) & 0x03;
 		pBuffer->palette = word & 0x3F00;
 
-		pBuffer->address = pSprite[3] | ((word & 3) << 16);
+		pBuffer->address = BURN_ENDIAN_SWAP_INT16(pSprite[3]) | ((word & 3) << 16);
 
 		pBuffer++;
 		z++;
@@ -611,7 +611,7 @@ static INT32 CaveSpriteBuffer_PowerInstinct()
 
 	for (INT32 i = 0, z = 0; i < 0x0400; i++, pSprite += 8) {
 
-		word = pSprite[4];
+		word = BURN_ENDIAN_SWAP_INT16(pSprite[4]);
 
 		xs = (word >> 4) & 0x01F0;
 		ys = (word << 4) & 0x01F0;
@@ -619,14 +619,14 @@ static INT32 CaveSpriteBuffer_PowerInstinct()
 			continue;
 		}
 
-		x = (pSprite[2] + nCaveExtraXOffset) & 0x03FF;
+		x = (BURN_ENDIAN_SWAP_INT16(pSprite[2]) + nCaveExtraXOffset) & 0x03FF;
 		if (x >= 320) {
 			if (x + xs <= 0x0400) {
 				continue;
 			}
 		}
 
-		y = (pSprite[3] + nCaveExtraYOffset) & 0x03FF;
+		y = (BURN_ENDIAN_SWAP_INT16(pSprite[3]) + nCaveExtraYOffset) & 0x03FF;
 		if (y >= 240) {
 			if (y + ys <= 0x0400) {
 				continue;
@@ -635,7 +635,7 @@ static INT32 CaveSpriteBuffer_PowerInstinct()
 
 		// Sprite is both active and onscreen, so add it to the buffer
 
-		word = pSprite[0];
+		word = BURN_ENDIAN_SWAP_INT16(pSprite[0]);
 
 		nPriority = ((word >> 4) & 0x01) | 2;
 		if (nLastSprite[nPriority] == -1) {
@@ -648,7 +648,7 @@ static INT32 CaveSpriteBuffer_PowerInstinct()
 		pBuffer->flip = (word >> 2) & 0x03;
 		pBuffer->palette = ((word >> 4) & 0x03F0) + ((word << 5) & 0xC00);
 
-		pBuffer->address = pSprite[1] | ((word & 3) << 16);
+		pBuffer->address = BURN_ENDIAN_SWAP_INT16(pSprite[1]) | ((word & 3) << 16);
 
 		pBuffer->x = x;
 		pBuffer->y = y;

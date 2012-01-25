@@ -179,7 +179,7 @@ static void c6280_stream_update()
 	INT32 start = c6280_previous_offset;
 
 	INT32 samples = end - start;
-	if (!samples) return; // don't update if length is 0
+	if (samples<=0) return; // don't update if length is 0
 
 	INT16 *pBuffer = stream_buffer + start * 2;
 

@@ -274,6 +274,10 @@ ifdef ROM_VERIFY
 	DEF	:= $(DEF) -DROM_VERIFY
 endif
 
+ifdef ROM_VERIFY
+	DEF	:= $(DEF) -DLSB_FIRST
+endif
+
 ifdef BUILD_A68K
 	DEF	:= $(DEF) -DBUILD_A68K
 endif

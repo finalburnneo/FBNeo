@@ -153,6 +153,7 @@ typedef enum {
 	IY = 0x10/2
 } WREGS;
 
+#ifdef LSB_FIRST
 typedef enum {
    AL = 0x1e, //NATIVE_ENDIAN_VALUE_LE_BE(0x1E, 0x1F),
    AH = 0x1f, //NATIVE_ENDIAN_VALUE_LE_BE(0x1F, 0x1E),
@@ -163,6 +164,18 @@ typedef enum {
    BL = 0x18, //NATIVE_ENDIAN_VALUE_LE_BE(0x18, 0x19),
    BH = 0x19  //NATIVE_ENDIAN_VALUE_LE_BE(0x19, 0x18)
 } BREGS;
+#else
+typedef enum {
+   AL = 0x1f, //NATIVE_ENDIAN_VALUE_LE_BE(0x1E, 0x1F),
+   AH = 0x1e, //NATIVE_ENDIAN_VALUE_LE_BE(0x1F, 0x1E),
+   CL = 0x1d, //NATIVE_ENDIAN_VALUE_LE_BE(0x1C, 0x1D),
+   CH = 0x1c, //NATIVE_ENDIAN_VALUE_LE_BE(0x1D, 0x1C),
+   DL = 0x1b, //NATIVE_ENDIAN_VALUE_LE_BE(0x1A, 0x1B),
+   DH = 0x1a, //NATIVE_ENDIAN_VALUE_LE_BE(0x1B, 0x1A),
+   BL = 0x19, //NATIVE_ENDIAN_VALUE_LE_BE(0x18, 0x19),
+   BH = 0x18  //NATIVE_ENDIAN_VALUE_LE_BE(0x19, 0x18)
+} BREGS;
+#endif
 
 #define SetRB(x)		do { nec_state->RBW = (x) << 4; nec_state->RBB = (x) << 5; } while (0)
 

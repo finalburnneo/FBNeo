@@ -76,6 +76,8 @@ struct _nec_state_t
 
 typedef enum { DS1, PS, SS, DS0 } SREGS;
 typedef enum { AW, CW, DW, BW, SP, BP, IX, IY } WREGS;
+
+#ifdef LSB_FIRST
 typedef enum {
    AL = 0, //NATIVE_ENDIAN_VALUE_LE_BE(0x0, 0x1),
    AH = 1, //NATIVE_ENDIAN_VALUE_LE_BE(0x1, 0x0),
@@ -86,6 +88,18 @@ typedef enum {
    BL = 6, //NATIVE_ENDIAN_VALUE_LE_BE(0x6, 0x7),
    BH = 7  //NATIVE_ENDIAN_VALUE_LE_BE(0x7, 0x6),
 } BREGS;
+#else
+typedef enum {
+   AL = 1, //NATIVE_ENDIAN_VALUE_LE_BE(0x0, 0x1),
+   AH = 0, //NATIVE_ENDIAN_VALUE_LE_BE(0x1, 0x0),
+   CL = 3, //NATIVE_ENDIAN_VALUE_LE_BE(0x2, 0x3),
+   CH = 2, //NATIVE_ENDIAN_VALUE_LE_BE(0x3, 0x2),
+   DL = 5, //NATIVE_ENDIAN_VALUE_LE_BE(0x4, 0x5),
+   DH = 4, //NATIVE_ENDIAN_VALUE_LE_BE(0x5, 0x4),
+   BL = 7, //NATIVE_ENDIAN_VALUE_LE_BE(0x6, 0x7),
+   BH = 6  //NATIVE_ENDIAN_VALUE_LE_BE(0x7, 0x6),
+} BREGS;
+#endif
 
 #define Sreg(x)			nec_state->sregs[x]
 #define Wreg(x)			nec_state->regs.w[x]

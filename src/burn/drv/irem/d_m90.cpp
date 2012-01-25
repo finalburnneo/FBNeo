@@ -811,6 +811,11 @@ static void setvector_callback(INT32 param)
 static inline void update_palette_entry(INT32 entry)
 {
 	UINT16 d = *((UINT16*)(DrvPalRAM + entry));
+
+#ifndef LSB_FIRST
+	d = BURN_ENDIAN_SWAP_INT16(d);
+#endif
+
 	UINT8 r = (d >>  0) & 0x1f;
 	UINT8 g = (d >>  5) & 0x1f;
 	UINT8 b = (d >> 10) & 0x1f;
@@ -1203,9 +1208,9 @@ static void draw_sprites()
 
 	for (INT32 offs = 0x1f2/2; offs >= 0; offs -= 3)
 	{
-		INT32 sy    = sram[offs + 0];
-		INT32 code  = sram[offs + 1];
-		INT32 sx    = sram[offs + 2];
+		INT32 sy    = BURN_ENDIAN_SWAP_INT16(sram[offs + 0]);
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(sram[offs + 1]);
+		INT32 sx    = BURN_ENDIAN_SWAP_INT16(sram[offs + 2]);
 
 		INT32 flipy = sy & 0x8000;
 		INT32 flipx = sx & 0x0200;
@@ -1260,10 +1265,10 @@ static void draw_layer(INT32 layer)
 		UINT16 *dest = pTransDraw + (sy * nScreenWidth);
 		UINT8 *pri = RamPrioBitmap + (sy * nScreenWidth);
 
-		if (enable_rowscroll) scrollx_1 += xscroll[sy];
+		if (enable_rowscroll) scrollx_1 += BURN_ENDIAN_SWAP_INT16(xscroll[sy]);
 
 		if (enable_colscroll) {
-			scrolly_1 += (scrolly + sy + yscroll[sy] + 128) & 0x1ff;
+			scrolly_1 += (scrolly + sy + BURN_ENDIAN_SWAP_INT16(yscroll[sy]) + 128) & 0x1ff;
 		} else {
 			scrolly_1 += (scrolly + sy) & 0x1ff;
 		}
@@ -1276,8 +1281,8 @@ static void draw_layer(INT32 layer)
 
 			INT32 offs = ((scrolly_1 / 8) * wide) | (scrollx_2 / 8);
 
-			INT32 code  = vram[offs * 2 + 0] & code_mask[0];
-			INT32 color = vram[offs * 2 + 1];
+			INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 0]) & code_mask[0];
+			INT32 color = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 1]);
 
 			INT32 flipy = color & 0x80;
 			INT32 flipx = color & 0x40;

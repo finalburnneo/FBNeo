@@ -999,9 +999,9 @@ static void palette_write(INT32 offset, INT32 offset2)
 		pal += 0x1000 / 2;
 	}
 
-	INT32 r = pal[offset + 0x000] & 0x1f;
-	INT32 g = pal[offset + 0x200] & 0x1f;
-	INT32 b = pal[offset + 0x400] & 0x1f;
+	INT32 r = BURN_ENDIAN_SWAP_INT16(pal[offset + 0x000]) & 0x1f;
+	INT32 g = BURN_ENDIAN_SWAP_INT16(pal[offset + 0x200]) & 0x1f;
+	INT32 b = BURN_ENDIAN_SWAP_INT16(pal[offset + 0x400]) & 0x1f;
 
 	DrvPalette[offset3] = BurnHighCol((r << 3) | (r >> 2), (g << 3) | (g >> 2), (b << 3) | (b >> 2), 0);
 }
@@ -1822,7 +1822,7 @@ static void draw_layer(INT32 layer, INT32 forcelayer, INT32 type, INT32 start, I
 			INT32 flipy, flipx, prio, scrollx1, offs;
 
 			if (majtitle_rowscroll_enable && type == 3 && layer == 1) {
-				scrollx1 = 256 + xscroll[scrolly1] + sx + 64 + video_offsets[1];
+				scrollx1 = 256 + BURN_ENDIAN_SWAP_INT16(xscroll[scrolly1]) + sx + 64 + video_offsets[1];
 			} else {
 				scrollx1 = scrollx + sx;
 				if (type == 3 && layer == 1) scrollx1 += 256;
@@ -1836,8 +1836,8 @@ static void draw_layer(INT32 layer, INT32 forcelayer, INT32 type, INT32 start, I
 				offs = ((scrolly1 >> 3) << 6) | (scrollx1 >> 3);
 			}
 
-			INT32 code  = vram[offs * 2 + 0];
-			INT32 color = vram[offs * 2 + 1];
+			INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 0]);
+			INT32 color = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 1]);
 
 			if (type == 1||type==3) {
 				flipy = color & 0x0040;
@@ -1888,10 +1888,10 @@ static void draw_sprites()
 
 	for (INT32 offs = 0; offs < 0x400/2;)
 	{
-		INT32 sx    = -256+(sprram[offs+3] & 0x3ff);
-		INT32 attr  = sprram[offs+2];
-		INT32 code  = sprram[offs+1];
-		INT32 sy    =  384-(sprram[offs+0] & 0x1ff);
+		INT32 sx    = -256+(BURN_ENDIAN_SWAP_INT16(sprram[offs+3]) & 0x3ff);
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(sprram[offs+2]);
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(sprram[offs+1]);
+		INT32 sy    =  384-(BURN_ENDIAN_SWAP_INT16(sprram[offs+0]) & 0x1ff);
 
 		INT32 color = attr & 0x0f;
 		INT32 flipx = attr & 0x0800;
@@ -1959,15 +1959,15 @@ static void majtitle_draw_sprites()
 	{
 		INT32 code,color,sx,sy,flipx,flipy,w,h,x,y;
 
-		code = spriteram16_2[offs+1];
-		color = spriteram16_2[offs+2] & 0x0f;
-		sx = -256+(spriteram16_2[offs+3] & 0x3ff);
-		sy = 384-(spriteram16_2[offs+0] & 0x1ff);
-		flipx = spriteram16_2[offs+2] & 0x0800;
-		flipy = spriteram16_2[offs+2] & 0x0400;
+		code = BURN_ENDIAN_SWAP_INT16(spriteram16_2[offs+1]);
+		color = BURN_ENDIAN_SWAP_INT16(spriteram16_2[offs+2]) & 0x0f;
+		sx = -256+(BURN_ENDIAN_SWAP_INT16(spriteram16_2[offs+3]) & 0x3ff);
+		sy = 384-(BURN_ENDIAN_SWAP_INT16(spriteram16_2[offs+0]) & 0x1ff);
+		flipx = BURN_ENDIAN_SWAP_INT16(spriteram16_2[offs+2]) & 0x0800;
+		flipy = BURN_ENDIAN_SWAP_INT16(spriteram16_2[offs+2]) & 0x0400;
 
 		w = 1;// << ((spriteram16_2[offs+2] & 0xc000) >> 14);
-		h = 1 << ((spriteram16_2[offs+2] & 0x3000) >> 12);
+		h = 1 << ((BURN_ENDIAN_SWAP_INT16(spriteram16_2[offs+2]) & 0x3000) >> 12);
 		sy -= 16 * h;
 
 		sy -= start_screen;

@@ -48,6 +48,9 @@ FASTCALL = 1
 # Perl is available
 PERL = 1
 
+# Endianness
+LSB_FIRST = 1
+
 
 #
 #	execute an appropriate system-specific makefile

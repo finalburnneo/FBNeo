@@ -1818,18 +1818,18 @@ static void draw_sprites()
 	{
 		for (INT32 offs = 0; offs < m92_sprite_list; )
 		{
-			INT32 y = (((384 - 16 - (ram[offs+0] & 0x1ff)) - nScreenOffsets[1]) & 0x1ff) - 8;
-			INT32 x = (ram[offs+3] & 0x1ff) - 96;
+			INT32 y = (((384 - 16 - (BURN_ENDIAN_SWAP_INT16(ram[offs+0]) & 0x1ff)) - nScreenOffsets[1]) & 0x1ff) - 8;
+			INT32 x = (BURN_ENDIAN_SWAP_INT16(ram[offs+3]) & 0x1ff) - 96;
 
-			INT32 pri_s  = (ram[offs+0] & 0xe000) >> 13;
-			INT32 pri_b  = (ram[offs+2] & 0x0080) ? 0x80 : 0x82;
-			INT32 code   =  ram[offs+1];
-			INT32 color  =  ram[offs+2] & 0x007f;
+			INT32 pri_s  = (BURN_ENDIAN_SWAP_INT16(ram[offs+0]) & 0xe000) >> 13;
+			INT32 pri_b  = (BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x0080) ? 0x80 : 0x82;
+			INT32 code   =  BURN_ENDIAN_SWAP_INT16(ram[offs+1]);
+			INT32 color  =  BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x007f;
 
-			INT32 flipx  =  ram[offs+2] & 0x0100;
-			INT32 flipy  =  ram[offs+2] & 0x0200;
-			INT32 y_multi= 1 << ((ram[offs+0] >>  9) & 3);
-			INT32 x_multi= 1 << ((ram[offs+0] >> 11) & 3);
+			INT32 flipx  =  BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x0100;
+			INT32 flipy  =  BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x0200;
+			INT32 y_multi= 1 << ((BURN_ENDIAN_SWAP_INT16(ram[offs+0]) >>  9) & 3);
+			INT32 x_multi= 1 << ((BURN_ENDIAN_SWAP_INT16(ram[offs+0]) >> 11) & 3);
 
 			offs += 4 * x_multi;
 			if (pri_s != k) continue;
@@ -1881,15 +1881,15 @@ static void draw_layer_byline(INT32 start, INT32 finish, INT32 layer, INT32 forc
 		UINT8  *pri  = RamPrioBitmap + (sy * nScreenWidth);
 
 		INT32 scrollx_1 = scrollx;
-		if (ptr->enable_rowscroll) scrollx_1 += ptr->scroll[(sy+scrolly)&0x1ff];
+		if (ptr->enable_rowscroll) scrollx_1 += BURN_ENDIAN_SWAP_INT16(ptr->scroll[(sy+scrolly)&0x1ff]);
 		INT32 scrolly_1 = (scrolly + sy) & 0x1ff;
 		INT32 romoff_1 = (scrolly_1 & 0x07) << 3;
 
 		for (INT32 sx = 0; sx < nScreenWidth + 8; sx+=8)
 		{
 			INT32 offs  = ((scrolly_1 / 8) * wide) + (((scrollx_1 + sx) / 8) & (wide - 1));
-			INT32 attr  = ptr->vram[(offs * 2) + 1];
-			INT32 code  = ptr->vram[(offs * 2) + 0] | ((attr & 0x8000) << 1);
+			INT32 attr  = BURN_ENDIAN_SWAP_INT16(ptr->vram[(offs * 2) + 1]);
+			INT32 code  = BURN_ENDIAN_SWAP_INT16(ptr->vram[(offs * 2) + 0]) | ((attr & 0x8000) << 1);
 			INT32 color =(attr & 0x007f) << 4;
 			INT32 flipy = attr & 0x0400;
 			INT32 flipx = attr & 0x0200;

@@ -183,16 +183,20 @@ ifdef ROM_VERIFY
 	DEF	:= $(DEF) /DROM_VERIFY
 endif
 
+ifdef LSB_FIRST
+	DEF	:= $(DEF) /DLSB_FIRST
+endif
+
 ifdef BUILD_A68K
-	DEF	:= $(DEF) -DBUILD_A68K
+	DEF	:= $(DEF) /DBUILD_A68K
 endif
 
 ifdef BUILD_X86_ASM
-	DEF := $(DEF) -DBUILD_X86_ASM
+	DEF := $(DEF) /DBUILD_X86_ASM
 endif
 
 ifdef BUILD_X64_EXE
-	DEF := $(DEF) -DBUILD_X64_EXE
+	DEF := $(DEF) /DBUILD_X64_EXE
 endif
 
 ifdef	SYMBOL

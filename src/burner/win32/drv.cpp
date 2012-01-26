@@ -3,7 +3,10 @@
 
 int bDrvOkay = 0;						// 1 if the Driver has been initted okay, and it's okay to use the BurnDrv functions
 
-TCHAR szAppRomPaths[DIRS_MAX][MAX_PATH] = { { _T("") }, { _T("") }, { _T("") }, { _T("") }, { _T("") }, { _T("") }, { _T("") }, { _T("roms/") } };
+TCHAR szAppRomPaths[DIRS_MAX][MAX_PATH] = { { _T("") }, { _T("") }, { _T("") }, { _T("") }, { _T("") }, 
+											{ _T("") }, { _T("") }, { _T("") }, { _T("") }, { _T("") }, 
+											{ _T("") }, { _T("") }, { _T("") }, { _T("") }, { _T("") }, 
+											{ _T("") }, { _T("") }, { _T("") }, { _T("") }, { _T("roms/") } };
 
 static bool bSaveRAM = false;
 

@@ -581,7 +581,7 @@ static void DmaSlow(INT32 len)
 		//dprintf("DmaSlow[%i] %06x->%04x len %i inc=%i blank %i [%i|%i]", Pico.video.type, source, a, len, inc,
 		//         (Pico.video.status&8)||!(Pico.video.reg[1]&0x40), Pico.m.scanline, SekCyclesDone());
 		for(a2 = a&0x7f; len; len--) {
-			CalcCol( a2>>1, *pd );
+			CalcCol( a2>>1, BURN_ENDIAN_SWAP_INT16(*pd) );
 			pd++;
 			// AutoIncrement
 			a2+=inc;
@@ -790,9 +790,9 @@ UINT16 __fastcall MegadriveVideoReadWord(UINT32 sekAddress)
 	switch (sekAddress & 0x1c) {
 	case 0x00:	// data
 		switch (RamVReg->type) {
-			case 0: res = RamVid [(RamVReg->addr >> 1) & 0x7fff]; break;
-			case 4: res = RamSVid[(RamVReg->addr >> 1) & 0x003f]; break;
-			case 8: res = RamPal [(RamVReg->addr >> 1) & 0x003f]; break;
+			case 0: res = BURN_ENDIAN_SWAP_INT16(RamVid [(RamVReg->addr >> 1) & 0x7fff]); break;
+			case 4: res = BURN_ENDIAN_SWAP_INT16(RamSVid[(RamVReg->addr >> 1) & 0x003f]); break;
+			case 8: res = BURN_ENDIAN_SWAP_INT16(RamPal [(RamVReg->addr >> 1) & 0x003f]); break;
 		}
 		RamVReg->addr += RamVReg->reg[0xf];
 		break;
@@ -877,7 +877,7 @@ void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordValue)
 					bprintf(PRINT_NORMAL, _T("Video address is odd, bytes are swapped!!!\n"));
 					wordValue = (wordValue<<8)|(wordValue>>8);
 				}
-				RamVid[(RamVReg->addr >> 1) & 0x7fff] = wordValue;
+				RamVid[(RamVReg->addr >> 1) & 0x7fff] = BURN_ENDIAN_SWAP_INT16(wordValue);
             	rendstatus |= 0x10; 
             	break;
 			case 3: 
@@ -886,7 +886,7 @@ void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordValue)
 				CalcCol((RamVReg->addr >> 1) & 0x003f, wordValue);
 				break;
 			case 5:
-				RamSVid[(RamVReg->addr >> 1) & 0x003f] = wordValue; 
+				RamSVid[(RamVReg->addr >> 1) & 0x003f] = BURN_ENDIAN_SWAP_INT16(wordValue); 
 				break;
 			}
 			//dprintf("w[%i] @ %04x, inc=%i [%i|%i]", Pico.video.type, a, Pico.video.reg[0xf], Pico.m.scanline, SekCyclesDone());
@@ -3020,7 +3020,7 @@ static INT32 TileNorm(INT32 sx,INT32 addr,INT32 pal)
 	UINT32 pack=0; 
 	UINT32 t=0;
 
-	pack = *(UINT32 *)(RamVid + addr); // Get 8 pixels
+	pack = BURN_ENDIAN_SWAP_INT32(*(UINT32 *)(RamVid + addr)); // Get 8 pixels
 	if (pack) {
 		t=pack&0x0000f000; if (t) pd[0]=(UINT8)(pal|(t>>12));
 		t=pack&0x00000f00; if (t) pd[1]=(UINT8)(pal|(t>> 8));
@@ -3041,7 +3041,7 @@ static INT32 TileFlip(INT32 sx,INT32 addr,INT32 pal)
 	UINT32 pack=0; 
 	UINT32 t=0;
 
-	pack = *(UINT32 *)(RamVid + addr); // Get 8 pixels
+	pack = BURN_ENDIAN_SWAP_INT32(*(UINT32 *)(RamVid + addr)); // Get 8 pixels
 	if (pack) {
 		t=pack&0x000f0000; if (t) pd[0]=(UINT8)(pal|(t>>16));
 		t=pack&0x00f00000; if (t) pd[1]=(UINT8)(pal|(t>>20));
@@ -3068,7 +3068,7 @@ static INT32 TileNormSH(INT32 sx,INT32 addr,INT32 pal)
 	UINT32 pack=0; UINT32 t=0;
 	UINT8 *pd = HighCol+sx;
 
-	pack=*(UINT32 *)(RamVid+addr); // Get 8 pixels
+	pack=BURN_ENDIAN_SWAP_INT32(*(UINT32 *)(RamVid+addr)); // Get 8 pixels
 	if (pack) {
 		t=(pack&0x0000f000)>>12; sh_pix(0);
 		t=(pack&0x00000f00)>> 8; sh_pix(1);
@@ -3088,7 +3088,7 @@ static INT32 TileFlipSH(INT32 sx,INT32 addr,INT32 pal)
 	UINT32 pack=0; UINT32 t=0;
 	UINT8 *pd = HighCol+sx;
 
-	pack=*(UINT32 *)(RamVid+addr); // Get 8 pixels
+	pack=BURN_ENDIAN_SWAP_INT32(*(UINT32 *)(RamVid+addr)); // Get 8 pixels
 	if (pack) {
 		t=(pack&0x000f0000)>>16; sh_pix(0);
 		t=(pack&0x00f00000)>>20; sh_pix(1);
@@ -3111,7 +3111,7 @@ static INT32 TileNormZ(INT32 sx,INT32 addr,INT32 pal,INT32 zval)
 	INT8 *zb = HighSprZ+sx;
 	INT32 collision = 0, zb_s;
 
-	pack=*(UINT32 *)(RamVid+addr); // Get 8 pixels
+	pack=BURN_ENDIAN_SWAP_INT32(*(UINT32 *)(RamVid+addr)); // Get 8 pixels
 	if (pack) {
 		t=pack&0x0000f000; if(t) { zb_s=zb[0]; if(zb_s) collision=1; if(zval>zb_s) { pd[0]=(UINT8)(pal|(t>>12)); zb[0]=(INT8)zval; } }
 		t=pack&0x00000f00; if(t) { zb_s=zb[1]; if(zb_s) collision=1; if(zval>zb_s) { pd[1]=(UINT8)(pal|(t>> 8)); zb[1]=(INT8)zval; } }
@@ -3135,7 +3135,7 @@ static INT32 TileFlipZ(INT32 sx,INT32 addr,INT32 pal,INT32 zval)
 	INT8 *zb = HighSprZ+sx;
 	INT32 collision = 0, zb_s;
 	
-	pack=*(UINT32 *)(RamVid+addr); // Get 8 pixels
+	pack=BURN_ENDIAN_SWAP_INT32(*(UINT32 *)(RamVid+addr)); // Get 8 pixels
 	if (pack) {
 		t=pack&0x000f0000; if(t) { zb_s=zb[0]&0x1f; if(zb_s) collision=1; if(zval>zb_s) { pd[0]=(UINT8)(pal|(t>>16)); zb[0]=(INT8)zval; } }
 		t=pack&0x00f00000; if(t) { zb_s=zb[1]&0x1f; if(zb_s) collision=1; if(zval>zb_s) { pd[1]=(UINT8)(pal|(t>>20)); zb[1]=(INT8)zval; } }
@@ -3170,7 +3170,7 @@ static INT32 TileNormZSH(INT32 sx,INT32 addr,INT32 pal,INT32 zval)
 	INT8 *zb = HighSprZ+sx;
 	INT32 collision = 0;
 
-	pack=*(UINT32 *)(RamVid+addr); // Get 8 pixels
+	pack=BURN_ENDIAN_SWAP_INT32(*(UINT32 *)(RamVid+addr)); // Get 8 pixels
 	if (pack) {
 		t=(pack&0x0000f000)>>12; sh_pixZ(0);
 		t=(pack&0x00000f00)>> 8; sh_pixZ(1);
@@ -3194,7 +3194,7 @@ static INT32 TileFlipZSH(INT32 sx,INT32 addr,INT32 pal,INT32 zval)
 	INT8 *zb = HighSprZ+sx;
 	INT32 collision = 0;
 	
-	pack=*(UINT32 *)(RamVid+addr); // Get 8 pixels
+	pack=BURN_ENDIAN_SWAP_INT32(*(UINT32 *)(RamVid+addr)); // Get 8 pixels
 	if (pack) {
 		t=(pack&0x000f0000)>>16; sh_pixZ(0);
 		t=(pack&0x00f00000)>>20; sh_pixZ(1);
@@ -3226,7 +3226,7 @@ static void DrawStrip(struct TileStrip *ts, INT32 sh)
 	for (; cells; dx+=8,tilex++,cells--) {
 		INT32 zero=0;
 
-		code=RamVid[ts->nametab + (tilex&ts->xmask)];
+		code=BURN_ENDIAN_SWAP_INT16(RamVid[ts->nametab + (tilex&ts->xmask)]);
 		if (code==blank) continue;
 		if (code>>15) { // high priority tile
 			INT32 cval = code | (dx<<16) | (ty<<25);
@@ -3267,7 +3267,7 @@ static void DrawStripVSRam(struct TileStrip *ts, INT32 plane)
 		INT32 vscroll, line;
 		cell--; // have hscroll, start with negative cell
 		// also calculate intial VS stuff
-		vscroll = RamSVid[plane];
+		vscroll = BURN_ENDIAN_SWAP_INT16(RamSVid[plane]);
 
 		// Find the line in the name table
 		line = (vscroll+scan)&ts->line&0xffff;		// ts->line is really ymask ..
@@ -3280,7 +3280,7 @@ static void DrawStripVSRam(struct TileStrip *ts, INT32 plane)
 
 		if((cell&1)==0) {
 			INT32 line,vscroll;
-			vscroll = RamSVid[plane+(cell&~1)];
+			vscroll = BURN_ENDIAN_SWAP_INT16(RamSVid[plane+(cell&~1)]);
 
 			// Find the line in the name table
 			line = (vscroll+scan)&ts->line&0xffff;	// ts->line is really ymask ..
@@ -3288,7 +3288,7 @@ static void DrawStripVSRam(struct TileStrip *ts, INT32 plane)
 			ty = (line&7)<<1; 						// Y-Offset into tile
 		}
 
-		code = RamVid[ts->nametab + nametabadd + (tilex&ts->xmask)];
+		code = BURN_ENDIAN_SWAP_INT16(RamVid[ts->nametab + nametabadd + (tilex&ts->xmask)]);
 		if (code==blank) continue;
 		if (code>>15) { // high priority tile
 			INT32 cval = code | (dx<<16) | (ty<<25);
@@ -3331,7 +3331,7 @@ static void DrawStripInterlace(struct TileStrip *ts)
 	for (; cells; dx+=8,tilex++,cells--) {
 		INT32 zero=0;
 
-		code=RamVid[ts->nametab+(tilex&ts->xmask)];
+		code=BURN_ENDIAN_SWAP_INT16(RamVid[ts->nametab+(tilex&ts->xmask)]);
 		if (code==blank) continue;
 		if (code>>15) { // high priority tile
 			INT32 cval = (code&0xfc00) | (dx<<16) | (ty<<25);
@@ -3391,11 +3391,11 @@ static void DrawLayer(INT32 plane, INT32 *hcache, INT32 maxcells, INT32 sh)
 	htab += plane; // A or B
 
 	// Get horizontal scroll value, will be masked later
-	ts.hscroll = RamVid[htab & 0x7fff];
+	ts.hscroll = BURN_ENDIAN_SWAP_INT16(RamVid[htab & 0x7fff]);
 
 	if((RamVReg->reg[12]&6) == 6) {
 		// interlace mode 2
-		vscroll = RamSVid[plane]; // Get vertical scroll value
+		vscroll = BURN_ENDIAN_SWAP_INT16(RamSVid[plane]); // Get vertical scroll value
 
 		// Find the line in the name table
 		ts.line=(vscroll+(Scanline<<1))&((ymask<<1)|1);
@@ -3408,7 +3408,7 @@ static void DrawLayer(INT32 plane, INT32 *hcache, INT32 maxcells, INT32 sh)
 		ts.line = ymask | (shift[width]<<24); // save some stuff instead of line
 		DrawStripVSRam(&ts, plane);
 	} else {
-		vscroll = RamSVid[plane]; // Get vertical scroll value
+		vscroll = BURN_ENDIAN_SWAP_INT16(RamSVid[plane]); // Get vertical scroll value
 
 		// Find the line in the name table
 		ts.line = (vscroll+Scanline)&ymask;
@@ -3435,7 +3435,7 @@ static void DrawWindow(INT32 tstart, INT32 tend, INT32 prio, INT32 sh)
 
 	if(!(rendstatus & 2)) {
 		// check the first tile code
-		code = RamVid[nametab + tilex];
+		code = BURN_ENDIAN_SWAP_INT16(RamVid[nametab + tilex]);
 		// if the whole window uses same priority (what is often the case), we may be able to skip this field
 		if((code>>15) != prio) return;
 	}
@@ -3444,7 +3444,7 @@ static void DrawWindow(INT32 tstart, INT32 tend, INT32 prio, INT32 sh)
 	for (; tilex < tend; tilex++) {
 		INT32 addr=0, zero=0, pal;
 
-		code = RamVid[nametab + tilex];
+		code = BURN_ENDIAN_SWAP_INT16(RamVid[nametab + tilex]);
 		if(code==blank) continue;
 		if((code>>15) != prio) {
 			rendstatus |= 2;
@@ -3684,8 +3684,8 @@ static void DrawAllSpritesInterlace(INT32 pri, INT32 maxwidth)
 		sprite=(UINT32 *)(RamVid+((table+(link<<2))&0x7ffc)); // Find sprite
 
 		// get sprite info
-		code = sprite[0];
-		sx = sprite[1];
+		code = BURN_ENDIAN_SWAP_INT32(sprite[0]);
+		sx = BURN_ENDIAN_SWAP_INT32(sprite[1]);
 		if(((sx>>15)&1) != pri) goto nextsprite; // wrong priority sprite
 		
 		// check if it is on this line
@@ -3774,8 +3774,8 @@ static void PrepareSprites(INT32 full)
 			sprite=(UINT32 *)(RamVid+((table+(link<<2))&0x7ffc)); // Find sprite
 			
 			// parse sprite info
-			code  = sprite[0];
-			code2 = sprite[1];
+			code  = BURN_ENDIAN_SWAP_INT32(sprite[0]);
+			code2 = BURN_ENDIAN_SWAP_INT32(sprite[1]);
 			code2 &= ~0xfe000000;
 			code2 -=  0x00780000; // Get X coordinate + 8 in upper 16 bits
 			sx = code2>>16;
@@ -3802,7 +3802,7 @@ static void PrepareSprites(INT32 full)
 			sprite=(UINT32 *)(RamVid+((table+(link<<2))&0x7ffc)); // Find sprite
 			
 			// parse sprite info
-			code = sprite[0];
+			code = BURN_ENDIAN_SWAP_INT32(sprite[0]);
 			sy = (code&0x1ff)-0x80;
 			hv = (code>>24)&0xf;
 			height = (hv&3)+1;
@@ -3810,7 +3810,7 @@ static void PrepareSprites(INT32 full)
 			if(sy > 240 || sy + (height<<3) <= 0) skip|=1<<22;
 			
 			width  = (hv>>2)+1;
-			code2 = sprite[1];
+			code2 = BURN_ENDIAN_SWAP_INT32(sprite[1]);
 			sx = (code2>>16)&0x1ff;
 			sx -= 0x78; // Get X coordinate + 8
 			sx_min = 8-(width<<3);
@@ -4089,7 +4089,7 @@ INT32 MegadriveFrame()
 
 	if (bMegadriveRecalcPalette) {
 		for (INT32 i=0;i<0x40;i++)
-			CalcCol(i, RamPal[i]);
+			CalcCol(i, BURN_ENDIAN_SWAP_INT16(RamPal[i]));
 		bMegadriveRecalcPalette = 0;	
 	}
 	

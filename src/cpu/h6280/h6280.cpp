@@ -124,39 +124,7 @@
 #define H6280_INLINE static
 
 static int 	h6280_ICount = 0;
-static unsigned int h6280_totalcycles = 0;
-
-/****************************************************************************
- * The 6280 registers.
- ****************************************************************************/
-typedef struct
-{
-	PAIR  ppc;			/* previous program counter */
-    PAIR  pc;           /* program counter */
-    PAIR  sp;           /* stack pointer (always 100 - 1FF) */
-    PAIR  zp;           /* zero page address */
-    PAIR  ea;           /* effective address */
-    UINT8 a;            /* Accumulator */
-    UINT8 x;            /* X index register */
-    UINT8 y;            /* Y index register */
-    UINT8 p;            /* Processor status */
-    UINT8 mmr[8];       /* Hu6280 memory mapper registers */
-    UINT8 irq_mask;     /* interrupt enable/disable */
-    UINT8 timer_status; /* timer status */
-	UINT8 timer_ack;	/* timer acknowledge */
-    UINT8 clocks_per_cycle; /* 4 = low speed mode, 1 = high speed mode */
-    INT32 timer_value;    /* timer interrupt */
-    INT32 timer_load;		/* reload value */
-    UINT8 nmi_state;
-    UINT8 irq_state[3];
-	UINT8 irq_pending;
-    int (*irq_callback)(int irqline);
-
-#if LAZY_FLAGS
-    INT32 NZ;             /* last value (lazy N and Z flag) */
-#endif
-	UINT8 io_buffer;	/* last value written to the PSG, timer, and interrupt pages */
-}   h6280_Regs;
+//static unsigned int h6280_totalcycles = 0;
 
 static h6280_Regs  h6280;
 
@@ -243,7 +211,7 @@ void h6280Reset(void)
 
 	h6280.irq_pending = 0;
 
-	h6280_totalcycles = 0;
+	h6280.h6280_totalcycles = 0;
 }
 
 #if 0
@@ -261,6 +229,7 @@ int h6280Run(int cycles)
 
 	int in;
 	h6280_ICount = cycles;
+	h6280.h6280_iCycles = cycles;
 
 	if ( h6280.irq_pending == 2 ) {
 		h6280.irq_pending--;
@@ -305,23 +274,25 @@ int h6280Run(int cycles)
 		}
 	} while (h6280_ICount > 0);
 
-	h6280_totalcycles += cycles - h6280_ICount;
+	h6280.h6280_totalcycles += cycles - h6280_ICount;
+	h6280_ICount = 0;
+	h6280.h6280_iCycles = 0;
 
 	return cycles - h6280_ICount;
 }
 
-//static void h6280_get_context (void *dst)
-//{
-//	if( dst )
-//		*(h6280_Regs*)dst = h6280;
-//}
+void h6280_get_context(void *dst)
+{
+	if( dst )
+		*(h6280_Regs*)dst = h6280;
+}
 
-//static void h6280_set_context (void *src)
-//{
-//	if( src )
-//		h6280 = *(h6280_Regs*)src;
-//	CHANGE_PC;
-//}
+void h6280_set_context(void *src)
+{
+	if( src )
+		h6280 = *(h6280_Regs*)src;
+	CHANGE_PC;
+}
 
 int h6280TotalCycles()
 {
@@ -329,16 +300,7 @@ int h6280TotalCycles()
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280TotalCycles called without init\n"));
 #endif
 
-	return h6280_totalcycles;
-}
-
-void h6280NewFrame()
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280NewFrame called without init\n"));
-#endif
-
-	h6280_totalcycles = 0;
+	return h6280.h6280_totalcycles;
 }
 
 void h6280RunEnd()
@@ -478,31 +440,6 @@ UINT8 h6280io_get_buffer()
 void h6280io_set_buffer(UINT8 data)
 {
 	h6280.io_buffer=data;
-}
-
-INT32 h6280CpuScan(INT32 nAction)
-{
-	struct BurnArea ba;
-	
-	if (nAction & ACB_DRIVER_DATA) {
-		h6280_Regs *p = &h6280;
-		int (*irq_callback)(int);
-
-		irq_callback = h6280.irq_callback;
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = p;
-		ba.nLen	  = sizeof(h6280_Regs);
-		ba.szName = "h6280 Registers";
-		BurnAcb(&ba);
-
-		h6280.irq_callback = irq_callback;
-
-		SCAN_VAR(h6280_ICount);
-		SCAN_VAR(h6280_totalcycles);
-	}
-
-	return 0;
 }
 
 #if 0

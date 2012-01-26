@@ -545,7 +545,7 @@ static INT32 CommonInit(int type)
 
 	if (type == 0 || type == 1) // pce / tg-16
 	{
-		h6280Init(1);
+		h6280Init(0);
 		h6280Open(0);
 		h6280MapMemory(PCECartROM + 0x000000, 0x000000, 0x0fffff, H6280_ROM);
 		h6280MapMemory(PCEUserRAM + 0x000000, 0x1f0000, 0x1f1fff, H6280_RAM); // mirrored
@@ -567,7 +567,7 @@ static INT32 CommonInit(int type)
 	}
 	else if (type == 2) // sgx
 	{
-		h6280Init(1);
+		h6280Init(0);
 		h6280Open(0);
 		h6280MapMemory(PCECartROM, 0x000000, 0x0fffff, H6280_ROM);
 		h6280MapMemory(PCEUserRAM, 0x1f0000, 0x1f7fff, H6280_RAM);

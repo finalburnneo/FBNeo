@@ -846,7 +846,7 @@ void deco16SoundReset()
 void deco16SoundInit(UINT8 *rom, UINT8 *ram, INT32 huc_clock, INT32 ym2203, void (ym2151_port)(UINT32,UINT32), double ym2151vol, INT32 msmclk0, double msmvol0, INT32 msmclk1, double msmvol1)
 {
 #ifdef ENABLE_HUC6280
-	h6280Init(1);
+	h6280Init(0);
 	h6280Open(0);
 	h6280MapMemory(rom, 	0x000000, 0x00ffff, H6280_ROM);
 	h6280MapMemory(ram,	0x1f0000, 0x1f1fff, H6280_RAM);

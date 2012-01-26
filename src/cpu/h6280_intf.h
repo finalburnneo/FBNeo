@@ -61,3 +61,7 @@ void h6280_timer_w(UINT32 offset, UINT8 data);
 UINT8 h6280io_get_buffer(void);
 void h6280io_set_buffer(UINT8);
 
+
+// internal
+
+

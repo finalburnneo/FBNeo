@@ -3286,7 +3286,7 @@ static INT32 HippodrmInit()
 	SekSetWriteWordHandler(1, HippodrmShared68KWriteWord);	
 	SekClose();
 	
-	h6280Init(1);
+	h6280Init(0);
 	h6280Open(0);
 	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, H6280_ROM);
 	h6280MapMemory(DrvSharedRam, 0x180000, 0x1800ff, H6280_RAM);
@@ -3358,7 +3358,7 @@ static INT32 RobocopInit()
 	SekSetWriteWordHandler(1, RobocopShared68KWriteWord);	
 	SekClose();
 	
-	h6280Init(1);
+	h6280Init(0);
 	h6280Open(0);
 	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, H6280_ROM);
 	h6280MapMemory(DrvH6280Ram , 0x1f0000, 0x1f1fff, H6280_RAM);
@@ -3461,7 +3461,7 @@ static INT32 SlyspyDrvInit()
 	SekSetWriteWordHandler(0, Slyspy68KWriteWord);	
 	SekClose();
 	
-	h6280Init(1);
+	h6280Init(0);
 	h6280Open(0);
 	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, H6280_ROM);
 	h6280MapMemory(DrvH6280Ram , 0x1f0000, 0x1f1fff, H6280_RAM);
@@ -3664,7 +3664,7 @@ static INT32 MidresInit()
 	SekSetWriteWordHandler(0, Midres68KWriteWord);	
 	SekClose();
 	
-	h6280Init(1);
+	h6280Init(0);
 	h6280Open(0);
 	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, H6280_ROM);
 	h6280MapMemory(DrvH6280Ram , 0x1f0000, 0x1f1fff, H6280_RAM);

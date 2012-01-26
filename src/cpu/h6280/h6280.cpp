@@ -123,6 +123,8 @@
 
 #define H6280_INLINE static
 
+extern INT32 nh6280CpuActive;
+
 static int 	h6280_ICount = 0;
 //static unsigned int h6280_totalcycles = 0;
 
@@ -176,6 +178,7 @@ void h6280Reset(void)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280Reset called without init\n"));
+	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280Reset called with no CPU open\n"));
 #endif
 
 	int (*save_irqcallback)(int);
@@ -225,6 +228,7 @@ int h6280Run(int cycles)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280Run called without init\n"));
+	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280Run called with no CPU open\n"));
 #endif
 
 	int in;
@@ -298,6 +302,7 @@ int h6280TotalCycles()
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280TotalCycles called without init\n"));
+	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280TotalCycles called with no CPU open\n"));
 #endif
 
 	return h6280.h6280_totalcycles;
@@ -307,6 +312,7 @@ void h6280RunEnd()
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280RunEnd called without init\n"));
+	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280RunEnd called with no CPU open\n"));
 #endif
 
 	h6280_ICount = 0;
@@ -318,6 +324,7 @@ void h6280_set_irq_line(int irqline, int state)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280_set_irq_line called without init\n"));
+	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280_set_irq_line called with no CPU open\n"));
 #endif
 
 	if (irqline == INPUT_LINE_NMI)
@@ -346,6 +353,7 @@ unsigned char h6280_irq_status_r(unsigned int offset)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280_irq_status_r called without init\n"));
+	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280_irq_status_r called with no CPU open\n"));
 #endif
 
 	int status;
@@ -369,6 +377,7 @@ void h6280_irq_status_w(unsigned int offset, unsigned char data)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280_irq_status_w called without init\n"));
+	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280_irq_status_w called with no CPU open\n"));
 #endif
 
 	h6280.io_buffer=data;
@@ -390,6 +399,7 @@ unsigned char h6280_timer_r(unsigned int)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280_timer_r called without init\n"));
+	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280_timer_r called with no CPU open\n"));
 #endif
 
 	/* only returns countdown */
@@ -400,6 +410,7 @@ void h6280_timer_w(unsigned int offset, unsigned char data)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280_timer_w called without init\n"));
+	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280_timer_w called with no CPU open\n"));
 #endif
 
 	h6280.io_buffer=data;

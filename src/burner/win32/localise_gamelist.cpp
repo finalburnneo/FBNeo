@@ -6,7 +6,7 @@
 
 TCHAR szGamelistLocalisationTemplate[MAX_PATH] = _T("");
 bool nGamelistLocalisationActive = false;
-static int nCodePage = 1252;
+static int nCodePage = CP_ACP;
 static TCHAR *szLongNamesArray[MAX_LST_GAMES];
 
 void BurnerDoGameListLocalisation()
@@ -128,6 +128,8 @@ void BurnerExitGameListLocalisation()
 			szLongNamesArray[i] = NULL;
 		}
 	}
+	
+	nCodePage = CP_ACP;
 }
 
 // ----------------------------------------------------------------------------

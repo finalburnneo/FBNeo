@@ -454,7 +454,7 @@ static int SelListMake()
 
 		// Find the parent and add a branch to the tree
 		if (!TvItem.hParent) {
-			char szTempName[9];
+			char szTempName[32];
 			strcpy(szTempName, BurnDrvGetTextA(DRV_PARENT));
 			int nTempBurnDrvSelect = nBurnDrvActive;
 			for (j = 0; j < nBurnDrvCount; j++) {

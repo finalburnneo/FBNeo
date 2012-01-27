@@ -104,6 +104,28 @@
 <p><a href="http://www.barryharris.me.uk">http://www.barryharris.me.uk</a><br />
 <a href="http://neosource.1emu.net/forums">http://neosource.1emu.net/forums</a></p>
 
+<h3>v0.2.97.21</h3>
+<ul>
+<li>Updated the H6280 core and interface to support multiple CPUs [iq_132]</li>
+<li>Added multiple-CPU support to debug tracking in the H6280 core and interface [Barry]</li>
+<li>Updated Final Romance 2 in the Neo Geo driver to use Razoola's updated version [Barry]</li>
+<li>Tidied World Cup '90 driver and fixed video timing and save states [Barry]</li>
+<li>Fixed negative sound samples causing an app crash in some PC-Engine games [lantus]</li>
+<li>Big-endian fixes for Capcom CPS-1/2/3, Cave, Irem, Psikyo and Megadrive drivers [lantus]</li>
+<li>Big-endian fixes for the NEC CPU core [lantus]</li>
+<li>Fixed excessive CPU usage when FB Alpha isn't doing anything [Barry]</li>
+<li>Fixed non-Ascii output in the gamelist translation template export [doomking]</li>
+<li>Hopefully fixed gamelist translation on Chinese systems [Barry]</li>
+<li>Changed gamelist localisation to use the system codepage by default [Barry]</li>
+<li>Some small localisation fixes [Barry, reported by Benjamin Siskoo]</li>
+<li>Reduced the OSD text size to fit in the cliparea [Barry]</li>
+<li>Fixed dat file writing from the command-line and added command-line options for PC-Engine dats, as found by MSVC SYMBOL build [Barry]</li>
+<li>Fixed bug in game selection dialog with not allocating enough memory for gamenames when scanning sets [Barry]</li>
+<li>Updated the default rom path to be the last path again (ie, 20 instead of 8) [Barry]</li>
+<li>Updated helpfile with command-line changes [Barry]</li>
+</ul>
+
+
 <h3>v0.2.97.20</h3>
 <ul>
 <li>Fixed a possible crash when scanning roms (seemed to affect x64 builds) [Barry]</li>

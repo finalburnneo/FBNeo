@@ -27,8 +27,6 @@ typedef unsigned long long uint64;
 	(((((((c1) & Mask_2) *  3) + ((c2) & Mask_2)) >> 2) & Mask_2) + \
 	 ((((((c1) & Mask13) *  3) + ((c2) & Mask13)) >> 2) & Mask13))))
 
-#define LSB_FIRST
-
 #ifdef LSB_FIRST
 	#define TWO_PIX(left,right) ((left) | ((right) << 16))
 	#define THREE_PIX(left,middle,right) uint48((left) | ((middle) << 16), (right))

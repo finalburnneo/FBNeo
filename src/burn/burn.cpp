@@ -173,15 +173,15 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 
 #else
 
-	static INT8 szShortNameA[32];
-	static INT8 szDateA[32];
-	static INT8 szFullNameA[256];
-	static INT8 szCommentA[256];
-	static INT8 szManufacturerA[256];
-	static INT8 szSystemA[256];
-	static INT8 szParentA[32];
-	static INT8 szBoardROMA[32];
-	static INT8 szSampleNameA[32];
+	static char szShortNameA[32];
+	static char szDateA[32];
+	static char szFullNameA[256];
+	static char szCommentA[256];
+	static char szManufacturerA[256];
+	static char szSystemA[256];
+	static char szParentA[32];
+	static char szBoardROMA[32];
+	static char szSampleNameA[32];
 
 #endif
 
@@ -410,6 +410,7 @@ extern "C" char* BurnDrvGetTextA(UINT32 i)
 	}
 }
 
+#if defined (_UNICODE)
 void BurnLocalisationSetName(char *szName, TCHAR *szLongName)
 {
 	for (UINT32 i = 0; i < nBurnDrvCount; i++) {
@@ -419,6 +420,7 @@ void BurnLocalisationSetName(char *szName, TCHAR *szLongName)
 		}
 	}
 }
+#endif
 
 // Get the zip names for the driver
 extern "C" INT32 BurnDrvGetZipName(char** pszName, UINT32 i)

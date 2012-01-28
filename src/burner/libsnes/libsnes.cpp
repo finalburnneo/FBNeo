@@ -1,5 +1,4 @@
 #include "libsnes.hpp"
-#include "archive.h"
 #include "burner.h"
 #include "inp_keys.h"
 #include "state.h"
@@ -10,13 +9,13 @@
 #include <string>
 #include <ctype.h>
 
-// FBA cruft.
+static unsigned int BurnDrvGetIndexByName(const char* name);
 
-unsigned ArcadeJoystick;
-
-int bDrvOkay;
-int bRunPause;
-bool bAlwaysProcessKeyboardInput;
+#define STAT_NOFIND	0
+#define STAT_OK		1
+#define STAT_CRC	   2
+#define STAT_SMALL	3
+#define STAT_LARGE	4
 
 struct ROMFIND
 {
@@ -24,15 +23,6 @@ struct ROMFIND
 	int nArchive;
 	int nPos;
 };
-
-unsigned int BurnDrvGetIndexByName(const char* name);
-int BurnDrvGetArchiveName(char** pszName, unsigned int i, bool ext, unsigned int type);
-
-#define STAT_NOFIND	0
-#define STAT_OK		1
-#define STAT_CRC	   2
-#define STAT_SMALL	3
-#define STAT_LARGE	4
 
 static std::vector<std::string> g_find_list_path;
 static ROMFIND g_find_list[1024];
@@ -69,6 +59,15 @@ static void poll_input();
 static bool init_input();
 
 // FBA stubs
+unsigned ArcadeJoystick;
+
+int bDrvOkay;
+int bRunPause;
+bool bAlwaysProcessKeyboardInput;
+
+bool bDoIpsPatch;
+void IpsApplyPatches(UINT8 *, char *) {}
+
 TCHAR szAppHiscorePath[MAX_PATH];
 TCHAR szAppSamplesPath[MAX_PATH];
 TCHAR szAppBurnVer[16];
@@ -108,7 +107,7 @@ char *LabelCheck(char *, char *) { return 0; }
 const int nConfigMinVersion = 0x020921;
 //////////////
 
-static int find_rom_by_crc(unsigned crc, const ArcEntry *list, unsigned elems)
+static int find_rom_by_crc(unsigned crc, const ZipEntry *list, unsigned elems)
 {
    for (unsigned i = 0; i < elems; i++)
    {
@@ -119,7 +118,7 @@ static int find_rom_by_crc(unsigned crc, const ArcEntry *list, unsigned elems)
    return -1;
 }
 
-static void free_archive_list(ArcEntry *list, unsigned count)
+static void free_archive_list(ZipEntry *list, unsigned count)
 {
    if (list)
    {
@@ -136,19 +135,19 @@ static int archive_load_rom(uint8_t *dest, int *wrote, int i)
 
    int archive = g_find_list[i].nArchive;
 
-   if (archiveOpen(g_find_list_path[archive].c_str()))
+   if (ZipOpen(g_find_list_path[archive].c_str()) != 0)
       return 1;
 
    BurnRomInfo ri = {0};
    BurnDrvGetRomInfo(&ri, i);
 
-   if (archiveLoadFile(dest, ri.nLen, g_find_list[i].nPos, wrote))
+   if (ZipLoadFile(dest, ri.nLen, wrote, g_find_list[i].nPos) != 0)
    {
-      archiveClose();
+      ZipClose();
       return 1;
    }
 
-   archiveClose();
+   ZipClose();
    return 0;
 }
 
@@ -167,15 +166,17 @@ static bool open_archive()
    char *rom_name;
    for (unsigned index = 0; index < 32; index++)
    {
-      if (BurnDrvGetArchiveName(&rom_name, index, false, 0))
+      //if (BurnDrvGetArchiveName(&rom_name, index, false, 0))
+      //   continue;
+      if (BurnDrvGetZipName(&rom_name, index))
          continue;
 
       char path[1024];
       snprintf(path, sizeof(path), "%s/%s", g_rom_dir, rom_name);
 
-      int ret = archiveCheck(path, 0);
-      if (ret == ARC_NONE)
-         continue;
+      if (ZipOpen(path) != 0)
+         return false;
+      ZipClose();
 
       g_find_list_path.push_back(path);
    }
@@ -184,12 +185,12 @@ static bool open_archive()
 
    for (unsigned z = 0; z < g_find_list_path.size(); z++)
    {
-      if (archiveOpen(g_find_list_path[z].c_str()))
+      if (ZipOpen(g_find_list_path[z].c_str()) != 0)
          continue;
 
-      ArcEntry *list;
+      ZipEntry *list = NULL;
       int count;
-      archiveGetList(&list, &count);
+      ZipGetList(&list, &count);
 
       // Try to map the ROMs FBA wants to ROMs we find inside our pretty archives ...
       for (unsigned i = 0; i < g_rom_count; i++)
@@ -203,7 +204,7 @@ static bool open_archive()
          int index = find_rom_by_crc(ri.nCrc, list, count);
          if (index < 0)
          {
-            archiveClose();
+            ZipClose();
             return false;
          }
 
@@ -211,10 +212,6 @@ static bool open_archive()
          g_find_list[i].nArchive = z;
          g_find_list[i].nPos = index;
          g_find_list[i].nState = STAT_OK;
-
-         // Sanity checking ...
-         //if (!(ri.nType & BRF_OPT) && ri.nCrc)
-         //   nTotalSize += ri.nLen;
 
          if (list[index].nLen == ri.nLen)
          {
@@ -229,8 +226,7 @@ static bool open_archive()
 
 
       free_archive_list(list, count);
-
-      archiveClose();
+      ZipClose();
    }
 
    BurnExtLoadRom = archive_load_rom;
@@ -539,7 +535,7 @@ unsigned snes_get_memory_size(unsigned) { return 0; }
 unsigned snes_library_revision_major() { return 1; }
 unsigned snes_library_revision_minor() { return 3; }
 
-const char *snes_library_id() { return "FBANext/libsnes"; }
+const char *snes_library_id() { return "FBAlpha/libsnes"; }
 void snes_set_controller_port_device(bool, unsigned) {}
 
 // Input stuff.
@@ -928,5 +924,18 @@ static void poll_input()
          }
       }
    }
+}
+
+static unsigned int BurnDrvGetIndexByName(const char* name)
+{
+   unsigned int ret = ~0U;
+   for (unsigned int i = 0; i < nBurnDrvCount; i++) {
+      nBurnDrvActive = i;
+      if (strcmp(BurnDrvGetText(DRV_NAME), name) == 0) {
+         ret = i;
+         break;
+      }
+   }
+   return ret;
 }
 

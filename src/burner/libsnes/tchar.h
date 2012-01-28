@@ -10,6 +10,8 @@
 #undef __cdecl
 #define __cdecl
 
+typedef struct { int x, y, width, height; } RECT;
+
 #define bprintf(...) {}
 #define _strnicmp(s1, s2, n) strncasecmp(s1, s2, n)
 #define _stricmp(x, y) strcasecmp(x,y)

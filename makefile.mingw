@@ -274,7 +274,7 @@ ifdef ROM_VERIFY
 	DEF	:= $(DEF) -DROM_VERIFY
 endif
 
-ifdef ROM_VERIFY
+ifdef LSB_FIRST
 	DEF	:= $(DEF) -DLSB_FIRST
 endif
 

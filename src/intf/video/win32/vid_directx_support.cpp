@@ -810,7 +810,7 @@ static int VidSInitShortMsg(int nFlags)
 
 	ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_VIDEOMEMORY;
 
-	ddsd.dwWidth = 192;
+	ddsd.dwWidth = 256;
 	ddsd.dwHeight = 32;
 
 	ddsd.ddckCKSrcBlt.dwColorSpaceLowValue = nKeyColour;
@@ -1095,7 +1095,7 @@ static void VidSDisplayTinyMsg(IDirectDrawSurface7* pSurf, RECT* pRect)
 static void VidSDisplayShortMsg(IDirectDrawSurface7* pSurf, RECT* pRect)
 {
 	if (VidSShortMsg.nTimer) {
-		RECT src = { 0, 0, 192, 32 };
+		RECT src = { 0, 0, 256, 32 };
 		RECT dest = { 0, pRect->top + 4, pRect->right - 8, pRect->top + 36 };
 
 		// Switch off message display when the message has been displayed long enough
@@ -1114,7 +1114,7 @@ static void VidSDisplayShortMsg(IDirectDrawSurface7* pSurf, RECT* pRect)
 			dest.bottom += 10;
 		}
 
-		dest.left = dest.right - 192;
+		dest.left = dest.right - 256;
 		if (dest.left < pRect->left) {
 			src.left = pRect->left - dest.left;
 			dest.left = pRect->left;
@@ -1602,7 +1602,7 @@ int VidSNewShortMsg(const TCHAR* pText, int nRGB, int nDuration, int nPriority)	
 		hFont = (HFONT)SelectObject(hDC, ShortMsgFont);
 		SetTextAlign(hDC, TA_TOP | TA_RIGHT);
 
-		MyTextOut(hDC, 192 - 2, 0, VidSShortMsg.pMsgText, _tcslen(VidSShortMsg.pMsgText), 2, VidSShortMsg.nColour);
+		MyTextOut(hDC, 256 - 2, 0, VidSShortMsg.pMsgText, _tcslen(VidSShortMsg.pMsgText), 2, VidSShortMsg.nColour);
 
 		// Clean up
 		SelectObject(hDC, hFont);

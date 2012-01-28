@@ -576,15 +576,7 @@ static void IGS022_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
 				sharedprotram[dst + x] = BURN_ENDIAN_SWAP_INT16(dat2);
 			}
 
-			if ((mode==3) && (param==0x54) && (src*2==0x2120) && (dst*2==0x2600)) 
-			{
-				#ifdef LSB_FIRST
-					sharedprotram[0x2600 / 2] = 0x4e75; // hack
-				#else
-                    sharedprotram[0x2600 / 2] = 0x754e;
-				#endif
-			}
-				
+			if ((mode==3) && (param==0x54) && (src*2==0x2120) && (dst*2==0x2600)) sharedprotram[0x2600 / 2] = BURN_ENDIAN_SWAP_INT16(0x4e75); // hack
 		}
 		break;
 
@@ -1540,15 +1532,7 @@ void install_protection_asic25_asic28_olds()
 		UINT16 *gptr = (UINT16*)(PGMUSER0 + 0x10000);
 
 		for(INT32 i = 0; i < 0x4000 / 2; i++) {
-			if (gptr[i] == (0xffff - i)) 
-			{
-#ifdef LSB_FIRST
-                            gptr[i] = 0x4e75;
-#else
-                            gptr[i] = 0x754e;
-#endif		
-			}
-				 
+			if (gptr[i] == (0xffff - i)) gptr[i] = BURN_ENDIAN_SWAP_INT16(0x4e75);
 		}
 	}
 

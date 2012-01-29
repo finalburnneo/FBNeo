@@ -91,7 +91,7 @@ UINT8 m6805_fetch(UINT16 address)
 	return m6805_read(address);
 }
 
-void m6805_write_rom(UINT16 address, UINT8 data)
+void m6805_write_rom(UINT32 address, UINT8 data)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805_write_rom called without init\n"));
@@ -119,6 +119,32 @@ void m6805_write_rom(UINT16 address, UINT8 data)
 	return;
 }
 
+INT32 m6805GetActive()
+{
+	return 0;
+}
+
+static UINT8 m6805CheatRead(UINT32 a)
+{
+	return m6805_read(a);
+}
+
+static cpu_core_config M6805CheatCpuConfig =
+{
+	m6805Open,
+	m6805Close,
+	m6805CheatRead,
+	m6805_write_rom,
+	m6805GetActive,
+	m6805TotalCycles,
+	m6805NewFrame,
+	m6805Run,
+	m6805RunEnd,
+	m6805Reset,	// different for differen types...
+	1<<16,
+	0
+};
+
 void m6805Init(INT32 num, INT32 max)
 {
 	DebugCPU_M6805Initted = 1;
@@ -135,7 +161,7 @@ void m6805Init(INT32 num, INT32 max)
 	memset (mem[2], 0, PAGE * sizeof(UINT8 *));
 
 	for (INT32 i = 0; i < num; i++)
-		CpuCheatRegister(0x0b, i);
+		CpuCheatRegister(i, &M6805CheatCpuConfig);
 }
 
 void m6805Exit()

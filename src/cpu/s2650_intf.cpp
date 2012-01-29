@@ -145,7 +145,7 @@ UINT8 s2650_read_port(UINT16 port)
 	return 0;
 }
 
-void s2650_write_rom(UINT16 address, UINT8 data)
+void s2650_write_rom(UINT32 address, UINT8 data)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_S2650Initted) bprintf(PRINT_ERROR, _T("s2650_write_rom called without init\n"));
@@ -184,6 +184,42 @@ void s2650SetIrqCallback(INT32 (*irqcallback)(INT32))
 	s2650_irqcallback[nActiveS2650] = irqcallback;
 }
 
+static UINT8 s2650CheatRead(UINT32 a)
+{
+	return s2650_read(a);
+}
+
+INT32 s2650TotalCycles()
+{
+	return 0;		// unimplemented
+}
+
+void s2650NewFrame()
+{
+	// unimplemented
+}
+
+void s2650RunEnd()
+{
+	// unimplemented
+}
+
+static cpu_core_config s2650CheatCpuConfig =
+{
+	s2650Open,
+	s2650Close,
+	s2650CheatRead,
+	s2650_write_rom,
+	s2650GetActive,
+	s2650TotalCycles,
+	s2650NewFrame,
+	s2650Run,
+	s2650RunEnd,
+	s2650_reset,
+	1<<16,
+	0
+};
+
 void s2650Init(INT32 num)
 {
 	DebugCPU_S2650Initted = 1;
@@ -193,7 +229,7 @@ void s2650Init(INT32 num)
 	s2650_init(num);
 
 	for (INT32 i = 0; i < num; i++)
-		CpuCheatRegister(0x0008, i);
+		CpuCheatRegister(i, &s2650CheatCpuConfig);
 }
 
 void s2650Exit()

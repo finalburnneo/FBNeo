@@ -162,6 +162,32 @@ void ZetNewFrame()
 	nZetCyclesTotal = 0;
 }
 
+static void ZetCheatWriteROM(UINT32 a, UINT8 d)
+{
+	ZetWriteRom(a, d);
+}
+
+static UINT8 ZetCheatRead(UINT32 a)
+{
+	return ZetReadByte(a);
+}
+
+static cpu_core_config ZetCheatCpuConfig =
+{
+	ZetOpen,
+	ZetClose,
+	ZetCheatRead,
+	ZetCheatWriteROM,
+	ZetGetActive,
+	ZetTotalCycles,
+	ZetNewFrame,
+	ZetRun,
+	ZetRunEnd,
+	ZetReset,
+	(1<<16),	// 0x10000
+	0
+};
+
 INT32 ZetInit(INT32 nCPU)
 {
 	DebugCPU_ZetInitted = 1;
@@ -205,7 +231,7 @@ INT32 ZetInit(INT32 nCPU)
 
 	nHasZet = nCPU+1;
 
-	CpuCheatRegister(0x0004, nCPU);
+	CpuCheatRegister(nCPU, &ZetCheatCpuConfig);
 
 	return 0;
 }
@@ -488,7 +514,7 @@ INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem01, UINT8 *Mem
 	return 0;
 }
 
-INT32 ZetReset()
+void ZetReset()
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetReset called without init\n"));
@@ -496,8 +522,6 @@ INT32 ZetReset()
 #endif
 
 	Z80Reset();
-
-	return 0;
 }
 
 INT32 ZetPc(INT32 n)

@@ -21,7 +21,7 @@ INT32 ZetMemCallback(INT32 nStart,INT32 nEnd,INT32 nMode);
 INT32 ZetMemEnd();
 INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem);
 INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem01, UINT8 *Mem02);
-INT32 ZetReset();
+void ZetReset();
 INT32 ZetPc(INT32 n);
 INT32 ZetBc(INT32 n);
 INT32 ZetDe(INT32 n);

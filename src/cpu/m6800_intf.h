@@ -171,7 +171,7 @@ INT32 M6800Scan(INT32 nAction);
 #define M6803Scan		M6800Scan
 #define M6801Scan		M6800Scan
 
-void M6800WriteRom(UINT16 Address, UINT8 Data);
+void M6800WriteRom(UINT32 Address, UINT8 Data);
 
 inline static INT32 M6800TotalCycles()
 {

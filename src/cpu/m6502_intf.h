@@ -85,7 +85,7 @@ INT32 M6502Scan(INT32 nAction);
 
 UINT32 M6502GetPC();
 
-void M6502WriteRom(UINT16 Address, UINT8 Data);
+void M6502WriteRom(UINT32 Address, UINT8 Data);
 
 inline static INT32 M6502TotalCycles()
 {

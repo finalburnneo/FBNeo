@@ -69,11 +69,13 @@ void konamiSetReadHandler(UINT8 (*read)(UINT16))
 	konamiRead = read;
 }
 
-void konami_write_rom(UINT16 address, UINT8 data)
+void konami_write_rom(UINT32 address, UINT8 data)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konami_write_rom called without init\n"));
 #endif
+
+	address &= 0xffff;
 
 	if (mem[READ][address >> PAGE_SHIFT] != NULL) {
 		mem[READ][address >> PAGE_SHIFT][address & PAGE_MASK] = data;
@@ -149,7 +151,33 @@ void konamiSetIrqLine(INT32 line, INT32 state)
 	}
 }
 
-void konamiInit(INT32 num) // only 1 cpu (No examples exist of multi-cpu konami games)
+void konamiRunEnd()
+{
+	// nothing atm
+}
+
+static UINT8 konami_cheat_read(UINT32 a)
+{
+	return konami_read(a);
+}
+
+static cpu_core_config konamiCheatCpuConfig =
+{
+	konamiOpen,
+	konamiClose,
+	konami_cheat_read,
+	konami_write_rom,
+	konamiGetActive,
+	konamiTotalCycles,
+	konamiNewFrame,
+	konamiRun,
+	konamiRunEnd,
+	konamiReset,
+	1<<16,
+	0
+};
+
+void konamiInit(INT32 /*num*/) // only 1 cpu (No examples exist of multi-cpu konami games)
 {
 	DebugCPU_KonamiInitted = 1;
 
@@ -162,7 +190,7 @@ void konamiInit(INT32 num) // only 1 cpu (No examples exist of multi-cpu konami 
 		}
 	}
 
-	CpuCheatRegister(0x0009, num);
+	CpuCheatRegister(0, &konamiCheatCpuConfig);
 }
 
 void konamiExit()

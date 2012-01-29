@@ -143,6 +143,27 @@ void cpu_writemem20(UINT32 a, UINT8 d)
 		VezCurrentCPU->WriteHandler(a, d);
 }
 
+static void VezCheatWrite(UINT32 a, UINT8 d)
+{
+	a &= 0xfffff;
+
+	UINT8 * p;
+
+	p = VezCurrentCPU->ppMemWrite[ a >> VEZ_MEM_SHIFT ];
+	if ( p ) *(p + a) = d;
+
+	p = VezCurrentCPU->ppMemRead[ a >> VEZ_MEM_SHIFT ];
+	if ( p ) *(p + a) = d;
+
+	p = VezCurrentCPU->ppMemFetch[ a >> VEZ_MEM_SHIFT ];
+	if ( p ) *(p + a) = d;
+
+	p = VezCurrentCPU->ppMemFetchData[ a >> VEZ_MEM_SHIFT ];
+	if ( p ) *(p + a) = d;
+
+	VezCurrentCPU->WriteHandler(a, d);
+}
+
 void VezSetReadHandler(UINT8 (__fastcall *pHandler)(UINT32))
 {
 #if defined FBA_DEBUG
@@ -194,6 +215,22 @@ void VezSetDecode(UINT8 *table)
 		VezCurrentCPU->decode(table);
 	}
 }
+
+static cpu_core_config VezCheatCpuConfig =
+{
+	VezOpen,
+	VezClose,
+	cpu_readmem20,
+	VezCheatWrite,
+	VezGetActive,
+	VezTotalCycles,
+	VezNewFrame,
+	VezRun,
+	VezRunEnd,
+	VezReset,
+	1<<20,
+	0
+};
 
 INT32 VezInit(INT32 cpu, INT32 type, INT32 clock)
 {
@@ -261,7 +298,7 @@ INT32 VezInit(INT32 cpu, INT32 type, INT32 clock)
 
 	nVezCount = nCPUCount = nCount;
 
-	CpuCheatRegister(0x0001, cpu);
+	CpuCheatRegister(cpu, &VezCheatCpuConfig);
 
 	return 0;
 }
@@ -350,7 +387,7 @@ void VezIdle(INT32 cycles)
 	VezCurrentCPU->idle(cycles);
 }
 
-UINT32 VezTotalCycles()
+INT32 VezTotalCycles()
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezTotalCycles called without init\n"));
@@ -446,14 +483,14 @@ INT32 VezMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem1, UINT8 *Mem2
 	return 0;
 }
 
-INT32 VezReset()
+void VezReset()
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezReset called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezReset called when no CPU open\n"));
 #endif
 
-	return VezCurrentCPU->cpu_reset();
+	VezCurrentCPU->cpu_reset();
 }
 
 INT32 VezRun(INT32 nCycles)

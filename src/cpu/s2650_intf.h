@@ -8,7 +8,7 @@ UINT8 s2650_fetch(UINT16 address);
 void s2650_write_port(UINT16 port, UINT8 data);
 UINT8 s2650_read_port(UINT16 port);
 
-void s2650_write_rom(UINT16 address, UINT8 data);
+void s2650_write_rom(UINT32 address, UINT8 data);
 
 typedef INT32 (*s2650irqcallback)(INT32);
 extern s2650irqcallback s2650_irqcallback[MAX_S2650];

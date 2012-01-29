@@ -1332,7 +1332,7 @@ unsigned int ArmRemainingCycles()
 }
 
 // get the total of cycles run
-unsigned int ArmGetTotalCycles()
+int ArmGetTotalCycles()
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmGetTotalCycles called without init\n"));

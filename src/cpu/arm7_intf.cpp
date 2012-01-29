@@ -27,6 +27,27 @@ static UINT8  (*pReadByteHandler)(UINT32) = NULL;
 
 static UINT32 Arm7IdleLoop = ~0;
 
+INT32 Arm7GetActive()
+{
+	return 0;
+}
+
+static cpu_core_config Arm7CheatCpuConfig =
+{
+	Arm7Open,
+	Arm7Close,
+	Arm7_program_read_byte_32le,
+	Arm7_write_rom_byte,
+	Arm7GetActive,
+	Arm7TotalCycles,
+	Arm7NewFrame,
+	Arm7Run,
+	Arm7RunEnd,
+	Arm7Reset,
+	MAX_MEMORY,
+	0
+};
+
 void Arm7Init( INT32 num ) // only one cpu supported
 {
 	DebugCPU_ARM7Initted = 1;
@@ -35,7 +56,7 @@ void Arm7Init( INT32 num ) // only one cpu supported
 		membase[i] = (UINT8**)malloc(PAGE_COUNT * sizeof(UINT8*));
 	}
 
-	CpuCheatRegister(0x000a, num);
+	CpuCheatRegister(num, &Arm7CheatCpuConfig);
 }
 
 void Arm7Exit() // only one cpu supported

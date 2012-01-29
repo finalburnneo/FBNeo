@@ -15,7 +15,7 @@ void m6805SetReadHandler(UINT8 (*read)(UINT16));
 void m6805_write(UINT16 address, UINT8 data);
 UINT8 m6805_read(UINT16 address);
 UINT8 m6805_fetch(UINT16 address);
-void m6805_write_rom(UINT16 address, UINT8 data);
+void m6805_write_rom(UINT32 address, UINT8 data);
 
 void m6805Init(INT32 num, INT32 address_range);
 void m6805Exit();

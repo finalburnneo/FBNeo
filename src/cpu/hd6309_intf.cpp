@@ -51,6 +51,33 @@ void HD6309NewFrame()
 	nHD6309CyclesTotal = 0;
 }
 
+
+static UINT8 HD6309CheatRead(UINT32 a)
+{
+	return HD6309ReadByte(a);
+}
+
+static void HD6309CheatWriteRom(UINT32 a, UINT8 d)
+{
+	HD6309WriteRom(a, d);
+}
+
+static cpu_core_config HD6309CheatCpuConfig =
+{
+	HD6309Open,
+	HD6309Close,
+	HD6309CheatRead,
+	HD6309CheatWriteRom,
+	HD6309GetActive,
+	HD6309TotalCycles,
+	HD6309NewFrame,
+	HD6309Run,
+	HD6309RunEnd,
+	HD6309Reset,
+	1<<16,
+	0
+};
+
 INT32 HD6309Init(INT32 num)
 {
 	DebugCPU_HD6309Initted = 1;
@@ -83,7 +110,7 @@ INT32 HD6309Init(INT32 num)
 	hd6309_init();
 
 	for (INT32 i = 0; i < num; i++)
-		CpuCheatRegister(0x0006, i);
+		CpuCheatRegister(i, &HD6309CheatCpuConfig);
 
 	return 0;
 }

@@ -53,7 +53,7 @@ void M6809SetReadOpHandler(UINT8 (*pHandler)(UINT16));
 void M6809SetReadOpArgHandler(UINT8 (*pHandler)(UINT16));
 INT32 M6809Scan(INT32 nAction);
 
-void M6809WriteRom(UINT16 Address, UINT8 Data);
+void M6809WriteRom(UINT32 Address, UINT8 Data);
 
 inline static INT32 M6809TotalCycles()
 {

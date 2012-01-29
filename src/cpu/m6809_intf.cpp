@@ -52,6 +52,27 @@ void M6809NewFrame()
 	nM6809CyclesTotal = 0;
 }
 
+static UINT8 M6809CheatRead(UINT32 a)
+{
+	return M6809ReadByte(a);
+}
+
+static cpu_core_config M6809CheatCpuConfig =
+{
+	M6809Open,
+	M6809Close,
+	M6809CheatRead,
+	M6809WriteRom,
+	M6809GetActive,
+	M6809TotalCycles,
+	M6809NewFrame,
+	M6809Run,
+	M6809RunEnd,
+	M6809Reset,
+	1<<16,
+	0
+};
+
 INT32 M6809Init(INT32 num)
 {
 	DebugCPU_M6809Initted = 1;
@@ -84,7 +105,7 @@ INT32 M6809Init(INT32 num)
 	m6809_init(NULL);
 
 	for (INT32 i = 0; i < num; i++)
-		CpuCheatRegister(0x0005, i);
+		CpuCheatRegister(i, &M6809CheatCpuConfig);
 
 	return 0;
 }
@@ -318,12 +339,13 @@ UINT8 M6809ReadOpArg(UINT16 Address)
 	return 0;
 }
 
-void M6809WriteRom(UINT16 Address, UINT8 Data)
+void M6809WriteRom(UINT32 Address, UINT8 Data)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809WriteRom called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809WriteRom called when no CPU open\n"));
 #endif
+	Address &= 0xffff;
 
 	UINT8 * pr = m6809CPUContext[nActiveCPU].pMemMap[0x000 | (Address >> 8)];
 	UINT8 * pw = m6809CPUContext[nActiveCPU].pMemMap[0x100 | (Address >> 8)];

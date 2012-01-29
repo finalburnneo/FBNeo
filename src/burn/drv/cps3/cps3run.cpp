@@ -1044,7 +1044,7 @@ static INT32 Cps3Reset()
 	// [CD-ROM not emulated] All CHD drivers cause a Guru Meditation with the normal bios boot.
 	if(!BurnDrvGetHardwareCode() & HARDWARE_CAPCOM_CPS3_NO_CD){
 		// normal boot
-		Sh2Reset( *(UINT32 *)(RomBios + 0), *(UINT32 *)(RomBios + 4) );
+		Sh2Reset();
 	} else {
 		// fast boot
 		if (cps3_isSpecial) {

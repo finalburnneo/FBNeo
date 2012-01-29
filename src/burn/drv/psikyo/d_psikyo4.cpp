@@ -241,17 +241,6 @@ static struct BurnDIPInfo HotgmckDIPList[]=
 
 STDDIPINFO(Hotgmck)
 
-#ifndef LSB_FIRST
-static void le_to_be(unsigned char * p, int size)
-{
-        unsigned char c;
-        for(int i=0; i<size; i+=4, p+=4) {
-                c = *(p+0);     *(p+0) = *(p+3);        *(p+3) = c;
-                c = *(p+1);     *(p+1) = *(p+2);        *(p+2) = c;
-        }
-}
-#endif
-
 static void set_pcm_bank()
 {
 	if (mahjong) {
@@ -331,9 +320,7 @@ void __fastcall ps4_write_long(UINT32 address, UINT32 data)
 UINT16 __fastcall ps4_read_word(UINT32 address)
 {
 	address &= 0xc7fffffe;
-#ifdef LSB_FIRST
 	address ^= 2;
-#endif
 
 	if (address >= 0x03000000 && address <= 0x030037ff) {
 		return *((UINT16 *)(DrvSprRAM + (address & 0x3ffe)));
@@ -370,16 +357,12 @@ UINT8 __fastcall ps4_read_byte(UINT32 address)
 
 
 	if (address >= 0x03000000 && address <= 0x030037ff) {
-#ifdef LSB_FIRST
 		address ^= 3;
-#endif
 		return DrvSprRAM[address & 0x3fff];
 	}
 
 	if ((address & 0xffffe000) == 0x03004000) {
-#ifdef LSB_FIRST
 		address ^= 3;
-#endif
 		return DrvPalRAM[address & 0x1fff];
 	}
 
@@ -413,9 +396,7 @@ UINT8 __fastcall ps4_read_byte(UINT32 address)
 void __fastcall ps4_write_word(UINT32 address, UINT16 data)
 {
 	address &= 0xc7fffffe;
-#ifdef LSB_FIRST
 	address ^= 2;
-#endif
 
 	if (address >= 0x03000000 && address <= 0x030037ff) {
 		*((UINT16 *)(DrvSprRAM + (address & 0x3ffe))) = data;
@@ -446,29 +427,17 @@ void __fastcall ps4_write_byte(UINT32 address, UINT8 data)
 //	bprintf (0, _T("%8.8x, wb\n"), address);
 
 	if (address >= 0x03000000 && address <= 0x030037ff) {
-#ifdef LSB_FIRST
 		DrvSprRAM[(address ^ 3) & 0x3fff] = data;
-#else
-		DrvSprRAM[(address) & 0x3fff] = data;
-#endif
 		return;
 	}
 
 	if ((address & 0xffffe000) == 0x03004000) {
-#ifdef LSB_FIRST
 		DrvPalRAM[(address ^ 3) & 0x1fff] = data;
-#else
-		DrvPalRAM[(address) & 0x1fff] = data;
-#endif
 		return;
 	}
 
 	if (address >= 0x03003fe4 && address <= 0x03003fef) {
-#ifdef LSB_FIRST
 		DrvVidRegs[(address ^ 3) - 0x03003fe4] = data;
-#else
-		DrvVidRegs[(address) - 0x03003fe4] = data;
-#endif
 		return;
 	}
 
@@ -547,20 +516,12 @@ UINT32 __fastcall ps4hack_read_long(UINT32 a)
 
 UINT16 __fastcall ps4hack_read_word(UINT32 a)
 {
-#ifdef LSB_FIRST
 	return *((UINT16 *)(DrvSh2RAM + ((a & 0xffffe) ^ 2)));
-#else
-	return *((UINT16 *)(DrvSh2RAM + ((a & 0xffffe))));
-#endif
 }
 
 UINT8 __fastcall ps4hack_read_byte(UINT32 a)
 {
-#ifdef LSB_FIRST
 	return DrvSh2RAM[(a & 0xfffff) ^ 3];
-#else
-	return DrvSh2RAM[(a & 0xfffff)];
-#endif
 }
 
 static INT32 MemIndex(INT32 gfx_len)
@@ -602,7 +563,7 @@ static INT32 MemIndex(INT32 gfx_len)
 
 static INT32 DrvDoReset()
 {
-	Sh2Reset( *(UINT32 *)(DrvSh2ROM + 0), *(UINT32 *)(DrvSh2ROM + 4) );
+	Sh2Reset();
 
 	memset (AllRam, 0, RamEnd - AllRam);
 
@@ -691,9 +652,6 @@ static INT32 DrvInit(INT32 (*LoadCallback)(), INT32 gfx_len)
 		}
 
 		BurnSwapEndian();
-#ifndef LSB_FIRST
-		le_to_be(DrvSh2ROM,0x0300000);
-#endif
 		BurnSwap32(DrvGfxROM, gfx_len);
 
 		if (mahjong) {

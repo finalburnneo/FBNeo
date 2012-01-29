@@ -232,6 +232,22 @@ void h6280SetIRQLine(INT32 line, INT32 state)
 	}
 }
 
+static cpu_core_config H6280CheatCpuConfig =
+{
+	h6280Open,
+	h6280Close,
+	h6280_read,
+	h6280_write_rom,
+	h6280GetActive,
+	h6280TotalCycles,
+	h6280NewFrame,
+	h6280Run,
+	h6280RunEnd,
+	h6280Reset,
+	MEMORY_SPACE,
+	0
+};
+
 void h6280Init(INT32 nCpu)
 {
 	DebugCPU_H6280Initted = 1;
@@ -252,7 +268,7 @@ void h6280Init(INT32 nCpu)
 	sPointer->h6280Read = NULL;
 	sPointer->h6280WriteIO = NULL;
 
-	CpuCheatRegister(0x0009, nCpu);
+	CpuCheatRegister(nCpu, &H6280CheatCpuConfig);
 }
 
 void h6280Exit()

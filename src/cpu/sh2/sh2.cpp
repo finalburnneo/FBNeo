@@ -459,6 +459,32 @@ int Sh2Exit()
 	return 0;
 }
 
+static void Sh2CheatWriteByte(UINT32 a, UINT8 d)
+{
+	Sh2WriteByte(a,d);
+}
+
+static UINT8 Sh2CheatReadByte(UINT32 a)
+{
+	return Sh2ReadByte(a);
+}
+
+static cpu_core_config Sh2CheatCpuConfig =
+{
+	Sh2Open,
+	Sh2Close,
+	Sh2CheatReadByte,
+	Sh2CheatWriteByte,
+	Sh2GetActive,
+	Sh2TotalCycles,
+	Sh2NewFrame,
+	Sh2Run,
+	Sh2StopRun,
+	Sh2Reset,
+	0xffffffff,
+	0
+};
+
 int Sh2Init(int nCount)
 {
 	DebugCPU_SH2Initted = 1;
@@ -471,8 +497,6 @@ int Sh2Init(int nCount)
 		return 1;
 	}
 	memset(Sh2Ext, 0, sizeof(SH2EXT) * nCount);
-	
-	extern void CpuCheatRegister(int,int);
 
 	// init default memory handler
 	for (int i=0; i<nCount; i++) {
@@ -497,7 +521,7 @@ int Sh2Init(int nCount)
 		Sh2SetWriteWordHandler(SH2_MAXHANDLER - 2, Sh2EmptyWriteWord);
 		Sh2SetWriteLongHandler(SH2_MAXHANDLER - 2, Sh2EmptyWriteLong);
 
-		CpuCheatRegister(0x0002, i);
+		CpuCheatRegister(i, &Sh2CheatCpuConfig);
 	}
 
 	return 0;
@@ -3484,6 +3508,11 @@ unsigned char __fastcall Sh2ReadByte(unsigned int a)
 #endif
 
 	return RB(a);
+}
+
+void Sh2Reset()
+{
+	Sh2Reset(RL(0), RL(4));
 }
 
 #include "state.h"

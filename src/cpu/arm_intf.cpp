@@ -47,7 +47,28 @@ void ArmClose()
 
 }
 
-void ArmInit(INT32 num ) // only one cpu supported
+INT32 ArmGetActive()
+{
+	return 0; // only one cpu supported
+}
+
+static cpu_core_config ArmCheatCpuConfig =
+{
+	ArmOpen,
+	ArmClose,
+	Arm_program_read_byte_32le,
+	Arm_write_rom_byte,
+	ArmGetActive,
+	ArmGetTotalCycles,
+	ArmNewFrame,
+	ArmRun,
+	ArmRunEnd,
+	ArmReset,
+	MAX_MEMORY,
+	0
+};
+
+void ArmInit(INT32 /*num*/) // only one cpu supported
 {
 	DebugCPU_ARMInitted = 1;
 	
@@ -61,7 +82,7 @@ void ArmInit(INT32 num ) // only one cpu supported
 	pReadLongHandler = NULL;
 	pReadByteHandler = NULL;
 
-	CpuCheatRegister(0x0b, num);
+	CpuCheatRegister(0, &ArmCheatCpuConfig);
 
 	pArmSpeedHackCallback = NULL;
 	ArmSpeedHackAddress = ~0;

@@ -2056,7 +2056,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		VezOpen(0);
-		UINT32 segment = nCyclesTotal[0] / nInterleave;
+		INT32 segment = nCyclesTotal[0] / nInterleave;
 		INT32 prev = VezTotalCycles();
 
 		nCyclesDone[0] += VezRun(segment);

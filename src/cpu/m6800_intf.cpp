@@ -60,6 +60,67 @@ void M6800NewFrame()
 	nM6800CyclesTotal = 0;
 }
 
+static UINT8 M6800CheatRead(UINT32 a)
+{
+	return M6800ReadByte(a);
+}
+
+void M6800Open(INT32 ) {} // does nothing
+void M6800Close() {}	 // ""
+
+INT32 M6800GetActive()
+{
+	return 0;
+}
+
+static cpu_core_config M6800CheatCpuConfig =
+{
+	M6800Open,
+	M6800Close,
+	M6800CheatRead,
+	M6800WriteRom,
+	M6800GetActive,
+	M6800TotalCycles,
+	M6800NewFrame,
+	M6800Run,		// different
+	M6800RunEnd,
+	M6800Reset,
+	1<<16,
+	0
+};
+
+static cpu_core_config HD63701CheatCpuConfig =
+{
+	M6800Open,
+	M6800Close,
+	M6800CheatRead,
+	M6800WriteRom,
+	M6800GetActive,
+	M6800TotalCycles,
+	M6800NewFrame,
+	HD63701Run,		// different
+	M6800RunEnd,
+	M6800Reset,
+	1<<16,
+	0
+};
+
+static cpu_core_config M6803CheatCpuConfig =
+{
+	M6800Open,
+	M6800Close,
+	M6800CheatRead,
+	M6800WriteRom,
+	M6800GetActive,
+	M6800TotalCycles,
+	M6800NewFrame,
+	M6803Run,		// different
+	M6800RunEnd,
+	M6800Reset,
+	1<<16,
+	0
+};
+
 INT32 M6800CoreInit(INT32 num, INT32 type)
 {
 	DebugCPU_M6800Initted = 1;
@@ -89,16 +150,35 @@ INT32 M6800CoreInit(INT32 num, INT32 type)
 	}
 	
 	nM6800CyclesTotal = 0;
-	
-	if (type == CPU_TYPE_M6800) m6800_init();
-	if (type == CPU_TYPE_HD63701) hd63701_init();
-	if (type == CPU_TYPE_M6803) m6803_init();
-	if (type == CPU_TYPE_M6801) m6801_init();
-	
 	nCpuType = type;
+	
+	if (type == CPU_TYPE_M6800) {
+		m6800_init();
 
-	for (INT32 i = 0; i < num; i++)
-		CpuCheatRegister(0x0007, i);
+		for (INT32 i = 0; i < num; i++)
+			CpuCheatRegister(i, &M6800CheatCpuConfig);
+	}
+
+	if (type == CPU_TYPE_HD63701) {
+		hd63701_init();
+
+		for (INT32 i = 0; i < num; i++)
+			CpuCheatRegister(i, &HD63701CheatCpuConfig);
+	}
+
+	if (type == CPU_TYPE_M6803) {
+		m6803_init();
+
+		for (INT32 i = 0; i < num; i++)
+			CpuCheatRegister(i, &M6803CheatCpuConfig);
+	}
+
+	if (type == CPU_TYPE_M6801) {
+		m6801_init();
+
+		for (INT32 i = 0; i < num; i++)
+			CpuCheatRegister(i, &M6803CheatCpuConfig);
+	}
 
 	return 0;
 }
@@ -451,11 +531,13 @@ void M6800WritePort(UINT16 Address, UINT8 Data)
 	}
 }
 
-void M6800WriteRom(UINT16 Address, UINT8 Data)
+void M6800WriteRom(UINT32 Address, UINT8 Data)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800WriteRom called without init\n"));
 #endif
+
+	Address &= 0xffff;
 
 	// check mem map
 	UINT8 * pr = M6800CPUContext[0].pMemMap[0x000 | (Address >> 8)];

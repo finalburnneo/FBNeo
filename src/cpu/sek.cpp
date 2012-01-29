@@ -845,6 +845,27 @@ void SekSetCyclesScanline(INT32 nCycles)
 	nSekCyclesScanline = nCycles;
 }
 
+static UINT8 SekCheatRead(UINT32 a)
+{
+	return SekReadByte(a);
+}
+
+static cpu_core_config SekCheatCpuConfig =
+{
+	SekOpen,
+	SekClose,
+	SekCheatRead,
+	SekWriteByteROM,
+	SekGetActive,
+	SekTotalCycles,
+	SekNewFrame,
+	SekRun,
+	SekRunEnd,
+	SekReset,
+	(1<<24),	// 0x1000000
+	0
+};
+
 INT32 SekInit(INT32 nCount, INT32 nCPUType)
 {
 	DebugCPU_SekInitted = 1;
@@ -987,7 +1008,7 @@ INT32 SekInit(INT32 nCount, INT32 nCPUType)
 	nSekCyclesTotal = 0;
 	nSekCyclesScanline = 0;
 
-	CpuCheatRegister(0x0000, nCount);
+	CpuCheatRegister(nCount, &SekCheatCpuConfig);
 
 	return 0;
 }

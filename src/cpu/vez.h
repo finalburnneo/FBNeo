@@ -16,7 +16,7 @@ void cpu_writemem20(UINT32 a, UINT8 d);
 
 extern INT32 nVezCount;
 
-UINT32 VezTotalCycles();
+INT32 VezTotalCycles();
 void VezNewFrame();
 void VezRunEnd();
 void VezIdle(INT32 cycles);
@@ -46,7 +46,7 @@ void VezSetReadPort(UINT8 (__fastcall*)(UINT32));
 void VezSetWritePort(void (__fastcall*)(UINT32, UINT8));
 void VezSetIrqCallBack(INT32 (*cb)(INT32));
 
-INT32 VezReset();
+void VezReset();
 INT32 VezPc(INT32 n);
 INT32 VezScan(INT32 nAction);
 

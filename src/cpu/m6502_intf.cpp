@@ -70,6 +70,27 @@ void M6502NewFrame()
 	nM6502CyclesTotal = 0;
 }
 
+static UINT8 M6502CheatRead(UINT32 a)
+{
+	return M6502ReadByte(a);
+}
+
+static cpu_core_config M6502CheatCpuConfig =
+{
+	M6502Open,
+	M6502Close,
+	M6502CheatRead,
+	M6502WriteRom,
+	M6502GetActive,
+	M6502TotalCycles,
+	M6502NewFrame,
+	M6502Run,
+	M6502RunEnd,
+	M6502Reset,
+	1<<16,
+	0
+};
+
 INT32 M6502Init(INT32 cpu, INT32 type)
 {
 	DebugCPU_M6502Initted = 1;
@@ -151,7 +172,7 @@ INT32 M6502Init(INT32 cpu, INT32 type)
 	
 	pCurrentCPU->init();
 
-	CpuCheatRegister(0x0003, cpu);
+	CpuCheatRegister(cpu, &M6502CheatCpuConfig);
 
 	return 0;
 }
@@ -481,12 +502,14 @@ UINT8 M6502ReadOpArg(UINT16 Address)
 	return 0;
 }
 
-void M6502WriteRom(UINT16 Address, UINT8 Data)
+void M6502WriteRom(UINT32 Address, UINT8 Data)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502WriteRom called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502WriteRom called with no CPU open\n"));
 #endif
+
+	Address &= 0xffff;
 
 	UINT8 * pr = pCurrentCPU->pMemMap[0x000 | (Address >> 8)];
 	UINT8 * pw = pCurrentCPU->pMemMap[0x100 | (Address >> 8)];

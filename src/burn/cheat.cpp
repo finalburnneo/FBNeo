@@ -247,6 +247,8 @@ void CheatExit()
 	cheat_core_init_pointer = 0;
 
 	pCheatInfo = NULL;
+	
+	CheatSearchInitCallbackFunction = NULL;
 }
 
 // Cheat search
@@ -254,6 +256,7 @@ void CheatExit()
 static UINT8 *MemoryValues = NULL;
 static UINT8 *MemoryStatus = NULL;
 static UINT32 nMemorySize = 0;
+CheatSearchInitCallback CheatSearchInitCallbackFunction = NULL;
 
 #define NOT_IN_RESULTS	0
 #define IN_RESULTS	1
@@ -299,15 +302,18 @@ void CheatSearchStart()
 
 	MemoryValues = (UINT8*)malloc(nMemorySize);
 	MemoryStatus = (UINT8*)malloc(nMemorySize);
+	
+	memset(MemoryStatus, IN_RESULTS, nMemorySize);
+	
+	if (CheatSearchInitCallbackFunction) CheatSearchInitCallbackFunction();
 
 	for (nAddress = 0; nAddress < nMemorySize; nAddress++) {
+		if (MemoryStatus[nAddress] == NOT_IN_RESULTS) continue;
 		MemoryValues[nAddress] = cheat_subptr->read(nAddress);
 	}
 	
 	cheat_subptr->close();
 	if (nActiveCPU >= 0) cheat_subptr->open(nActiveCPU);
-			
-	memset(MemoryStatus, IN_RESULTS, nMemorySize);
 }
 
 static void CheatSearchGetResults()
@@ -459,6 +465,13 @@ void CheatSearchDumptoFile()
 		}
 		
 		fclose(fp);
+	}
+}
+
+void CheatSearchExcludeAddressRange(UINT32 nStart, UINT32 nEnd)
+{
+	for (UINT32 nAddress = nStart; nAddress <= nEnd; nAddress++) {
+		MemoryStatus[nAddress] = NOT_IN_RESULTS;
 	}
 }
 

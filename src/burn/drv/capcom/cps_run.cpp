@@ -18,6 +18,20 @@ INT32 CpsDrawSpritesInReverse = 0;
 
 INT32 nIrqLine50, nIrqLine52;
 
+static void CpsQSoundCheatSearchCallback()
+{
+	// Q-Sound Shared RAM ranges - not useful for cheat searching, and runs the Z80
+	// in the handler, exclude it from cheat searching
+	if (Cps == 2) {
+		CheatSearchExcludeAddressRange(0x618000, 0x619FFF);
+	}
+	
+	if (Cps1Qs == 1) {	
+		CheatSearchExcludeAddressRange(0xF18000, 0xF19FFF);
+		CheatSearchExcludeAddressRange(0xF1E000, 0xF1FFFF);
+	}
+}
+
 static INT32 DrvReset()
 {
 	// Reset machine
@@ -129,6 +143,10 @@ INT32 CpsRunInit()
 	DrawFnInit();
 	
 	pBurnDrvPalette = CpsPal;
+	
+	if (Cps == 2 || Cps1Qs == 1) {
+		CheatSearchInitCallbackFunction = CpsQSoundCheatSearchCallback;
+	}
 
 	return 0;
 }

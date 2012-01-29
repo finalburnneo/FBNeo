@@ -47,3 +47,7 @@ UINT32 CheatSearchValueChange();
 UINT32 CheatSearchValueDecreased();
 UINT32 CheatSearchValueIncreased();
 void CheatSearchDumptoFile();
+
+typedef void (*CheatSearchInitCallback)();
+extern CheatSearchInitCallback CheatSearchInitCallbackFunction;
+void CheatSearchExcludeAddressRange(UINT32 nStart, UINT32 nEnd);

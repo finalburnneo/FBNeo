@@ -916,7 +916,7 @@ static struct BurnRomInfo Toutrun2RomDesc[] = {
 	{ "opr-12305.70",     0x10000, 0xba9ce677, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "opr-12306.71",     0x10000, 0xe49249fd, SYS16_ROM_PCMDATA | BRF_SND },
 	
-	{ "317-unknown-toutrun1.key", 0x02000, 0x00000000, SYS16_ROM_KEY | BRF_ESS | BRF_PRG | BRF_NODUMP },
+	{ "317-unknown-toutrun2.key", 0x02000, 0x00000000, SYS16_ROM_KEY | BRF_ESS | BRF_PRG | BRF_NODUMP },
 };
 
 
@@ -969,7 +969,7 @@ static struct BurnRomInfo Toutrun3RomDesc[] = {
 	{ "opr-12305.70",     0x10000, 0xba9ce677, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "opr-12306.71",     0x10000, 0xe49249fd, SYS16_ROM_PCMDATA | BRF_SND },
 	
-	{ "317-unknown.key",  0x02000, 0x33e632ae, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0107.key",     0x02000, 0x33e632ae, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
@@ -1672,7 +1672,7 @@ struct BurnDriverD BurnDrvToutrun2 = {
 
 struct BurnDriver BurnDrvToutrun3 = {
 	"toutrun3", "toutrun", NULL, NULL, "1989",
-	"Turbo Out Run (upright, FD1094 317-unknown)\0", NULL, "Sega", "Out Run",
+	"Turbo Out Run (upright, FD1094 317-0107)\0", NULL, "Sega", "Out Run",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, Toutrun3RomInfo, Toutrun3RomName, NULL, NULL, ToutrunInputInfo, ToutruncDIPInfo,

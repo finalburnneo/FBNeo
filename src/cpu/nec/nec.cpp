@@ -108,6 +108,7 @@
 #include "driver.h"
 #include "state.h"
 #include "vez.h"
+#include "bitswap.h"
 //#include "emu.h"
 //#include "debugger.h"
 
@@ -471,7 +472,7 @@ void necInit(int cpu, int type)
 
 		case V30_TYPE:
 		{
-			nec_state->fetch_xor = 0;//BYTE_XOR_LE(0);
+			nec_state->fetch_xor = BYTE_XOR_LE(0);
 			nec_state->chip_type=V30_TYPE;
 			nec_state->prefetch_size = 6;		/* 3 words */
 			nec_state->prefetch_cycles = 2;		/* two cycles per byte / four per word */

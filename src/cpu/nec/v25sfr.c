@@ -319,7 +319,7 @@ UINT8 v25_read_byte(v25_state_t *nec_state, unsigned a)
 		unsigned o = a & 0x1FF;
 
 		if(nec_state->RAMEN && o < 0x100)
-			return nec_state->ram.b[o]; //BYTE_XOR_LE(o)];
+			return nec_state->ram.b[BYTE_XOR_LE(o)];
 
 		if(o >= 0x100)
 			return read_sfr(nec_state, o-0x100);
@@ -359,7 +359,7 @@ void v25_write_byte(v25_state_t *nec_state, unsigned a, UINT8 d)
 
 		if(nec_state->RAMEN && o < 0x100)
 		{
-			nec_state->ram.b[o] = d; //BYTE_XOR_LE(o)] = d;
+			nec_state->ram.b[BYTE_XOR_LE(o)] = d;
 			return;
 		}
 

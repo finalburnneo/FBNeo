@@ -39,6 +39,7 @@
 #include "driver.h"
 #include "state.h"
 #include "vez.h"
+#include "bitswap.h"
 
 unsigned char cpu_readmem20_op(unsigned int);
 unsigned char cpu_readmem20_arg(unsigned int);

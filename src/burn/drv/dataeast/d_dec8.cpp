@@ -48,6 +48,7 @@ static UINT8 *flipscreen;
 static INT32 i8751_return;
 static INT32 i8751_value;
 static INT32 vblank;
+static INT32 RomBank;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -953,9 +954,9 @@ static void ghostb_i8751_write(INT32 offset, INT32 data)
 
 static void bankswitch(INT32 data)
 {
-	INT32 bank = (data & 0x0f) * 0x4000;
+	RomBank = (data & 0x0f) * 0x4000;
 
-	HD6309MapMemory(DrvMainROM + 0x10000 + bank, 0x4000, 0x7fff, HD6309_ROM); // bank
+	HD6309MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, HD6309_ROM); // bank
 }
 
 void ghostb_main_write(UINT16 address, UINT8 data)
@@ -1679,10 +1680,34 @@ static INT32 DrvFrame()
 	return 0;
 }
 
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+{
+	struct BurnArea ba;
+	
+	if (pnMin != NULL) {
+		*pnMin = 0x029722;
+	}
 
+	if (nAction & ACB_MEMORY_RAM) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd-AllRam;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+	}
+	
+	if (nAction & ACB_DRIVER_DATA) {	
+		M6502Scan(nAction);
+		BurnYM2203Scan(nAction, pnMin);
+		
+		SCAN_VAR(i8751_return);
+		SCAN_VAR(i8751_value);
+		SCAN_VAR(vblank);
+		SCAN_VAR(RomBank);
+	}
 
-
-
+	return 0;
+}
 
 // The Real Ghostbusters (US 2 Players)
 
@@ -1727,13 +1752,29 @@ static INT32 GhostbExit()
 	return DrvExit();
 }
 
+static INT32 GhostbScan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		HD6309Scan(nAction);
+		BurnYM3812Scan(nAction, pnMin);
+		
+		if (nAction & ACB_WRITE) {
+			HD6309Open(0);
+			HD6309MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, HD6309_ROM);
+			HD6309Close();
+		}
+	}
+	
+	return DrvScan(nAction, pnMin);
+}
+
 struct BurnDriver BurnDrvGhostb = {
 	"ghostb", NULL, NULL, NULL, "1987",
 	"The Real Ghostbusters (US 2 Players, revision 2)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, ghostbRomInfo, ghostbRomName, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
-	DrvInit, GhostbExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x400,
+	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
 
@@ -1780,7 +1821,7 @@ struct BurnDriver BurnDrvGhostb3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, ghostb3RomInfo, ghostb3RomName, NULL, NULL, Ghostb3InputInfo, Ghostb3DIPInfo,
-	DrvInit, GhostbExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x400,
+	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
 
@@ -1826,7 +1867,7 @@ struct BurnDriver BurnDrvMeikyuh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, meikyuhRomInfo, meikyuhRomName, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
-	DrvInit, GhostbExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x400,
+	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
 
@@ -1872,7 +1913,7 @@ struct BurnDriver BurnDrvMeikyuha = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, meikyuhaRomInfo, meikyuhaRomName, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
-	DrvInit, GhostbExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x400,
+	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
 
@@ -1884,9 +1925,9 @@ struct BurnDriver BurnDrvMeikyuha = {
 
 static void m6809_bankswitch(INT32 data)
 {
-	INT32 bank = (data & 0x0f) * 0x4000;
+	RomBank = (data & 0x0f) * 0x4000;
 	
-	M6809MapMemory(DrvMainROM + 0x10000 + bank, 0x4000, 0x7fff, M6809_ROM); // bank
+	M6809MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, M6809_ROM); // bank
 }
 
 
@@ -2301,13 +2342,29 @@ static INT32 CobraExit()
 	return DrvExit();
 }
 
+static INT32 CobraScan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		M6809Scan(nAction);
+		BurnYM3812Scan(nAction, pnMin);
+		
+		if (nAction & ACB_WRITE) {
+			M6809Open(0);
+			M6809MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, M6809_ROM);
+			M6809Close();
+		}
+	}
+	
+	return DrvScan(nAction, pnMin);
+}
+
 struct BurnDriver BurnDrvCobracom = {
 	"cobracom", NULL, NULL, NULL, "1988",
 	"Cobra-Command (World revision 5)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, cobracomRomInfo, cobracomRomName, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
-	CobraInit, CobraExit, CobraFrame, CobraDraw, NULL, &DrvRecalc, 0x100,
+	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };
 
@@ -2346,7 +2403,7 @@ struct BurnDriver BurnDrvCobracmj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, cobracmjRomInfo, cobracmjRomName, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
-	CobraInit, CobraExit, CobraFrame, CobraDraw, NULL, &DrvRecalc, 0x100,
+	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };
 
@@ -2385,7 +2442,7 @@ struct BurnDriver BurnDrvCobracmja = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, cobracmjaRomInfo, cobracmjaRomName, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
-	CobraInit, CobraExit, CobraFrame, CobraDraw, NULL, &DrvRecalc, 0x100,
+	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };
 
@@ -2872,7 +2929,7 @@ struct BurnDriver BurnDrvSrdarwin = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, srdarwinRomInfo, srdarwinRomName, NULL, NULL, SrdarwinInputInfo, SrdarwinDIPInfo,
-	SrdarwinInit, CobraExit, SrdarwinFrame, SrdarwinDraw, NULL, &DrvRecalc, 0x100,
+	SrdarwinInit, CobraExit, SrdarwinFrame, SrdarwinDraw, CobraScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
 };
 
@@ -2911,7 +2968,7 @@ struct BurnDriver BurnDrvSrdarwnj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, srdarwnjRomInfo, srdarwnjRomName, NULL, NULL, SrdarwinInputInfo, SrdarwinDIPInfo,
-	SrdarwinInit, CobraExit, SrdarwinFrame, SrdarwinDraw, NULL, &DrvRecalc, 0x100,
+	SrdarwinInit, CobraExit, SrdarwinFrame, SrdarwinDraw, CobraScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
 };
 
@@ -3491,6 +3548,22 @@ static INT32 GondoFrame()
 	return 0;
 }
 
+static INT32 GondoScan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		HD6309Scan(nAction);
+		BurnYM3526Scan(nAction, pnMin);
+		
+		if (nAction & ACB_WRITE) {
+			HD6309Open(0);
+			HD6309MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, HD6309_ROM);
+			HD6309Close();
+		}
+	}
+	
+	return DrvScan(nAction, pnMin);
+}
+
 
 // Gondomania (US)
 
@@ -3536,7 +3609,7 @@ struct BurnDriverD BurnDrvGondo = {
 	NULL, NULL, NULL, NULL,
 	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, gondoRomInfo, gondoRomName, NULL, NULL, GondoInputInfo, GondoDIPInfo,
-	GondoInit, GondoExit, GondoFrame, GondoDraw, NULL, &DrvRecalc, 0x400,
+	GondoInit, GondoExit, GondoFrame, GondoDraw, GondoScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
 
@@ -3589,7 +3662,7 @@ struct BurnDriverD BurnDrvMakyosen = {
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, makyosenRomInfo, makyosenRomName, NULL, NULL, GondoInputInfo, GondoDIPInfo,
-	GondoInit, GondoExit, GondoFrame, GondoDraw, NULL, &DrvRecalc, 0x400,
+	GondoInit, GondoExit, GondoFrame, GondoDraw, GondoScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
 
@@ -3638,7 +3711,7 @@ struct BurnDriver BurnDrvGaryoret = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, garyoretRomInfo, garyoretRomName, NULL, NULL, GaryoretInputInfo, GaryoretDIPInfo,
-	GondoInit, GondoExit, GondoFrame, GaryoretDraw, NULL, &DrvRecalc, 0x400,
+	GondoInit, GondoExit, GondoFrame, GaryoretDraw, GondoScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
 
@@ -4042,7 +4115,7 @@ struct BurnDriver BurnDrvOscar = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, oscarRomInfo, oscarRomName, NULL, NULL, OscarInputInfo, OscarDIPInfo,
-	OscarInit, GondoExit, OscarFrame, OscarDraw, NULL, &DrvRecalc, 0x200,
+	OscarInit, GondoExit, OscarFrame, OscarDraw, GondoScan, &DrvRecalc, 0x200,
 	256, 240, 4, 3
 };
 
@@ -4083,7 +4156,7 @@ struct BurnDriver BurnDrvOscaru = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, oscaruRomInfo, oscaruRomName, NULL, NULL, OscarInputInfo, OscaruDIPInfo,
-	OscarInit, GondoExit, OscarFrame, OscarDraw, NULL, &DrvRecalc, 0x200,
+	OscarInit, GondoExit, OscarFrame, OscarDraw, GondoScan, &DrvRecalc, 0x200,
 	256, 240, 4, 3
 };
 
@@ -4124,7 +4197,7 @@ struct BurnDriver BurnDrvOscarj1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, oscarj1RomInfo, oscarj1RomName, NULL, NULL, OscarInputInfo, OscaruDIPInfo,
-	OscarInit, GondoExit, OscarFrame, OscarDraw, NULL, &DrvRecalc, 0x200,
+	OscarInit, GondoExit, OscarFrame, OscarDraw, GondoScan, &DrvRecalc, 0x200,
 	256, 240, 4, 3
 };
 
@@ -4165,7 +4238,7 @@ struct BurnDriver BurnDrvOscarj2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, oscarj2RomInfo, oscarj2RomName, NULL, NULL, OscarInputInfo, OscaruDIPInfo,
-	OscarInit, GondoExit, OscarFrame, OscarDraw, NULL, &DrvRecalc, 0x200,
+	OscarInit, GondoExit, OscarFrame, OscarDraw, GondoScan, &DrvRecalc, 0x200,
 	256, 240, 4, 3
 };
 
@@ -4732,6 +4805,24 @@ static INT32 LastmissFrame()
 	return 0;
 }
 
+static INT32 LastmissScan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		M6809Scan(nAction);
+		BurnYM3526Scan(nAction, pnMin);
+		
+		SCAN_VAR(stopsubcpu);
+		
+		if (nAction & ACB_WRITE) {
+			M6809Open(0);
+			M6809MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, M6809_ROM);
+			M6809Close();
+		}
+	}
+	
+	return DrvScan(nAction, pnMin);
+}
+
 
 // Last Mission (US revision 6)
 
@@ -4769,7 +4860,7 @@ struct BurnDriver BurnDrvLastmisn = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, lastmisnRomInfo, lastmisnRomName, NULL, NULL, LastmisnInputInfo, LastmisnDIPInfo,
-	LastmissInit, LastmissExit, LastmissFrame, LastmissDraw, NULL, &DrvRecalc, 0x400,
+	LastmissInit, LastmissExit, LastmissFrame, LastmissDraw, LastmissScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
 
@@ -4810,7 +4901,7 @@ struct BurnDriver BurnDrvLastmsno = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, lastmsnoRomInfo, lastmsnoRomName, NULL, NULL, LastmisnInputInfo, LastmisnDIPInfo,
-	LastmissInit, LastmissExit, LastmissFrame, LastmissDraw, NULL, &DrvRecalc, 0x400,
+	LastmissInit, LastmissExit, LastmissFrame, LastmissDraw, LastmissScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
 
@@ -4851,7 +4942,7 @@ struct BurnDriver BurnDrvLastmsnj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, lastmsnjRomInfo, lastmsnjRomName, NULL, NULL, LastmisnInputInfo, LastmsnjDIPInfo,
-	LastmissInit, LastmissExit, LastmissFrame, LastmissDraw, NULL, &DrvRecalc, 0x400,
+	LastmissInit, LastmissExit, LastmissFrame, LastmissDraw, LastmissScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
 
@@ -4897,7 +4988,7 @@ struct BurnDriver BurnDrvShackled = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, shackledRomInfo, shackledRomName, NULL, NULL, ShackledInputInfo, ShackledDIPInfo,
-	LastmissInit, LastmissExit, LastmissFrame, ShackledDraw, NULL, &DrvRecalc, 0x400,
+	LastmissInit, LastmissExit, LastmissFrame, ShackledDraw, LastmissScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
 
@@ -4943,7 +5034,7 @@ struct BurnDriver BurnDrvBreywood = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, breywoodRomInfo, breywoodRomName, NULL, NULL, ShackledInputInfo, ShackledDIPInfo,
-	LastmissInit, LastmissExit, LastmissFrame, ShackledDraw, NULL, &DrvRecalc, 0x400,
+	LastmissInit, LastmissExit, LastmissFrame, ShackledDraw, LastmissScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
 
@@ -4952,6 +5043,7 @@ struct BurnDriver BurnDrvBreywood = {
 
 static INT32 MSM5205Next = 0;
 static INT32 Toggle = 0;
+static INT32 SndRomBank = 0;
 
 static void csilver_i8751_write(INT32 offset, UINT8 data)
 {
@@ -5076,7 +5168,9 @@ UINT8 csilver_main_read(UINT16 address)
 
 static void csilver_sound_bank(INT32 data)
 {
-	M6502MapMemory(DrvM6502ROM + 0x10000 + ((data & 8) >> 3) * 0x4000, 0x4000, 0x7fff, M6502_ROM);
+	SndRomBank = (data & 8) >> 3;
+	
+	M6502MapMemory(DrvM6502ROM + 0x10000 + SndRomBank * 0x4000, 0x4000, 0x7fff, M6502_ROM);
 }
 
 void csilver_sound_write(UINT16 address, UINT8 data)
@@ -5300,6 +5394,31 @@ static INT32 CsilverFrame()
 	return 0;
 }
 
+static INT32 CsilverScan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		M6809Scan(nAction);
+		BurnYM3526Scan(nAction, pnMin);
+		MSM5205Scan(nAction, pnMin);
+		
+		SCAN_VAR(MSM5205Next);
+		SCAN_VAR(Toggle);
+		SCAN_VAR(SndRomBank);
+		
+		if (nAction & ACB_WRITE) {
+			M6809Open(0);
+			M6809MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, M6809_ROM);
+			M6809Close();
+			
+			M6502Open(0);
+			M6502MapMemory(DrvM6502ROM + 0x10000 + SndRomBank * 0x4000, 0x4000, 0x7fff, M6502_ROM);
+			M6502Close();
+		}
+	}
+	
+	return DrvScan(nAction, pnMin);
+}
+
 // Captain Silver (World)
 
 static struct BurnRomInfo csilverRomDesc[] = {
@@ -5346,7 +5465,7 @@ struct BurnDriver BurnDrvCsilver = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, csilverRomInfo, csilverRomName, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,
-	CsilverInit, CsilverExit, CsilverFrame, LastmissDraw, NULL, &DrvRecalc, 0x400,
+	CsilverInit, CsilverExit, CsilverFrame, LastmissDraw, CsilverScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };
 
@@ -5387,6 +5506,6 @@ struct BurnDriver BurnDrvCsilverj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, csilverjRomInfo, csilverjRomName, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,
-	CsilverInit, CsilverExit, CsilverFrame, LastmissDraw, NULL, &DrvRecalc, 0x400,
+	CsilverInit, CsilverExit, CsilverFrame, LastmissDraw, CsilverScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };

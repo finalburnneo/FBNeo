@@ -2383,7 +2383,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 	
 	if (pnMin != NULL) {
-		*pnMin = 0x029682;
+		*pnMin = 0x029722;
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {
@@ -2396,14 +2396,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
-	//	huc6280
+	
+		deco16SoundScan(nAction, pnMin);
 
 		deco16Scan();
-
-		BurnYM2203Scan(nAction, pnMin);
-		BurnYM2151Scan(nAction);
-		MSM6295Scan(0, nAction);
-		MSM6295Scan(1, nAction);
 
 		SCAN_VAR(scanline);
 		SCAN_VAR(irq_mask);
@@ -2411,6 +2407,41 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(DrvOkiBank);
 		DrvYM2151WritePort(0, DrvOkiBank);
+	}
+
+	return 0;
+}
+
+static INT32 StoneageScan(INT32 nAction, INT32 *pnMin)
+{
+	struct BurnArea ba;
+	
+	if (pnMin != NULL) {
+		*pnMin = 0x029722;
+	}
+
+	if (nAction & ACB_MEMORY_RAM) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd-AllRam;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+	}
+
+	if (nAction & ACB_DRIVER_DATA) {
+		SekScan(nAction);
+		ZetScan(nAction);
+		BurnYM2151Scan(nAction);
+		MSM6295Scan(0, nAction);
+		MSM6295Scan(1, nAction);
+	
+		deco16Scan();
+
+		SCAN_VAR(scanline);
+		SCAN_VAR(irq_mask);
+		SCAN_VAR(irq_timer);
+
+		SCAN_VAR(DrvOkiBank);
 	}
 
 	return 0;
@@ -2638,7 +2669,7 @@ struct BurnDriver BurnDrvStoneage = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, stoneageRomInfo, stoneageRomName, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
-	StoneageInit, DrvExit, StoneageFrame, CninjaDraw, DrvScan, &DrvRecalc, 0x800,
+	StoneageInit, DrvExit, StoneageFrame, CninjaDraw, StoneageScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
 };
 
@@ -2666,7 +2697,7 @@ struct BurnDriver BurnDrvCninjabl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, cninjablRomInfo, cninjablRomName, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
-	CninjablInit, DrvExit, StoneageFrame, CninjablDraw, DrvScan, &DrvRecalc, 0x800,
+	CninjablInit, DrvExit, StoneageFrame, CninjablDraw, StoneageScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
 };
 

@@ -914,7 +914,19 @@ void deco16SoundUpdate(INT16 *buf, INT32 len)
 	if (deco16_sound_enable[3]) MSM6295Render(1, buf, len);
 }
 
-
+void deco16SoundScan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		h6280CpuScan(nAction);
+	
+		SCAN_VAR(deco16_soundlatch);
+		
+		if (deco16_sound_enable[0]) BurnYM2151Scan(nAction);
+		if (deco16_sound_enable[1]) BurnYM2203Scan(nAction, pnMin);
+		if (deco16_sound_enable[2]) MSM6295Scan(0, nAction);
+		if (deco16_sound_enable[3]) MSM6295Scan(1, nAction);
+	}
+}
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------

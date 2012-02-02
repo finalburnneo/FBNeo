@@ -74,6 +74,7 @@ void deco16SoundReset();
 void deco16SoundInit(UINT8 *rom, UINT8 *ram, INT32 huc_clock, INT32 ym2203, void (ym2151_port)(UINT32,UINT32), double ym2151vol, INT32 msmclk0, double msmvol0, INT32 msmclk1, double msmvol1);
 void deco16SoundExit();
 void deco16SoundUpdate(INT16 *buf, INT32 len);
+void deco16SoundScan(INT32 nAction, INT32 *pnMin);
 
 
 // decrypt routines

@@ -694,7 +694,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 	
 	if (pnMin != NULL) {
-		*pnMin = 0x029698;
+		*pnMin = 0x029722;
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {
@@ -707,6 +707,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
+		
+		deco16SoundScan(nAction, pnMin);
+		
+		deco16Scan();
+		
+		SCAN_VAR(vblank);
 	}
 
 	return 0;

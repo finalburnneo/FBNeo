@@ -490,7 +490,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 	
 	if (pnMin != NULL) {
-		*pnMin = 0x029682;
+		*pnMin = 0x029722;
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {
@@ -503,12 +503,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
-	//	huc6280
+	
+		deco16SoundScan(nAction, pnMin);
 
 		deco16Scan();
-
-	//	BurnYM2151Scan(nAction);
-	//	MSM6295Scan(0, nAction);
 	}
 
 	return 0;

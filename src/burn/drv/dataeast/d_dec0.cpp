@@ -2358,7 +2358,7 @@ UINT16 __fastcall Slyspy68KReadWord(UINT32 a)
 		case 0x244000: {
 			DrvSlyspyProtValue++;
 			DrvSlyspyProtValue = DrvSlyspyProtValue % 4;
-			SlyspySetProtectionMap(DrvSlyspyProtValue);			
+			SlyspySetProtectionMap(DrvSlyspyProtValue);
 			return 0;
 		}
 		
@@ -4614,7 +4614,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 	
 	if (pnMin != NULL) {
-		*pnMin = 0x029719;
+		*pnMin = 0x029722;
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {
@@ -4627,7 +4627,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	
 	if (nAction & ACB_DRIVER_DATA) {	
 		SekScan(nAction);
-		M6502Scan(nAction);
 		BurnYM2203Scan(nAction, pnMin);
 		BurnYM3812Scan(nAction, pnMin);
 		MSM6295Scan(0, nAction);	
@@ -4637,15 +4636,36 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvSoundLatch);
 		SCAN_VAR(DrvFlipScreen);
 		SCAN_VAR(DrvPriority);
+		SCAN_VAR(DrvTileRamBank);
+		SCAN_VAR(DrvSlyspyProtValue);
+		SCAN_VAR(DrvMidresAnalogInput);
 	}
 
 	return 0;
 }
 
+static INT32 BaddudesScan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		M6502Scan(nAction);
+	}
+	
+	return DrvScan(nAction, pnMin);
+}
+
 static INT32 RobocopScan(INT32 nAction, INT32 *pnMin)
 {
 	if (nAction & ACB_DRIVER_DATA) {
-//		h6280Scan(nAction);
+		h6280CpuScan(nAction);
+	}
+
+	return BaddudesScan(nAction, pnMin);
+}
+
+static INT32 SlyspyScan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		h6280CpuScan(nAction);
 	}
 
 	return DrvScan(nAction, pnMin);
@@ -4657,7 +4677,7 @@ struct BurnDriver BurnDrvBaddudes = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, BaddudesRomInfo, BaddudesRomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
-	BaddudesInit, BaddudesExit, DrvFrame, NULL, DrvScan,
+	BaddudesInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -4667,7 +4687,7 @@ struct BurnDriver BurnDrvDrgninja = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, DrgninjaRomInfo, DrgninjaRomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
-	BaddudesInit, BaddudesExit, DrvFrame, NULL, DrvScan,
+	BaddudesInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -4677,7 +4697,7 @@ struct BurnDriver BurnDrvBouldash = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, BouldashRomInfo, BouldashRomName, NULL, NULL, Dec1InputInfo, BouldashDIPInfo,
-	BouldashInit, SlyspyExit, Dec1Frame, NULL, DrvScan,
+	BouldashInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -4687,7 +4707,7 @@ struct BurnDriver BurnDrvBouldashj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, BouldashjRomInfo, BouldashjRomName, NULL, NULL, Dec1InputInfo, BouldashDIPInfo,
-	BouldashInit, SlyspyExit, Dec1Frame, NULL, DrvScan,
+	BouldashInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -4697,7 +4717,7 @@ struct BurnDriver BurnDrvHbarrel = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, HbarrelRomInfo, HbarrelRomName, NULL, NULL, Dec0InputInfo, HbarrelDIPInfo,
-	HbarrelInit, BaddudesExit, DrvFrame, NULL, DrvScan,
+	HbarrelInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
 	NULL, 0x400, 240, 256, 3, 4
 };
 
@@ -4707,7 +4727,7 @@ struct BurnDriver BurnDrvHbarrelw = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, HbarrelwRomInfo, HbarrelwRomName, NULL, NULL, Dec0InputInfo, HbarrelDIPInfo,
-	HbarrelInit, BaddudesExit, DrvFrame, NULL, DrvScan,
+	HbarrelInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
 	NULL, 0x400, 240, 256, 3, 4
 };
 
@@ -4747,7 +4767,7 @@ struct BurnDriver BurnDrvMidres = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, MidresRomInfo, MidresRomName, NULL, NULL, MidresInputInfo, MidresDIPInfo,
-	MidresInit, SlyspyExit, Dec1Frame, NULL, DrvScan,
+	MidresInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -4757,7 +4777,7 @@ struct BurnDriver BurnDrvMidresu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, MidresuRomInfo, MidresuRomName, NULL, NULL, MidresInputInfo, MidresuDIPInfo,
-	MidresInit, SlyspyExit, Dec1Frame, NULL, DrvScan,
+	MidresInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -4767,7 +4787,7 @@ struct BurnDriver BurnDrvMidresj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, MidresjRomInfo, MidresjRomName, NULL, NULL, MidresInputInfo, MidresuDIPInfo,
-	MidresInit, SlyspyExit, Dec1Frame, NULL, DrvScan,
+	MidresInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -4827,7 +4847,7 @@ struct BurnDriver BurnDrvRobocopb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, RobocopbRomInfo, RobocopbRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
-	RobocopbInit, BaddudesExit, DrvFrame, NULL, DrvScan,
+	RobocopbInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -4837,7 +4857,7 @@ struct BurnDriver BurnDrvSlyspy = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, SlyspyRomInfo, SlyspyRomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
-	SlyspyInit, SlyspyExit, Dec1Frame, NULL, DrvScan,
+	SlyspyInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -4847,7 +4867,7 @@ struct BurnDriver BurnDrvSlyspy2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, Slyspy2RomInfo, Slyspy2RomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
-	SlyspyInit, SlyspyExit, Dec1Frame, NULL, DrvScan,
+	SlyspyInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -4857,6 +4877,6 @@ struct BurnDriver BurnDrvSecretag = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, SecretagRomInfo, SecretagRomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
-	SlyspyInit, SlyspyExit, Dec1Frame, NULL, DrvScan,
+	SlyspyInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };

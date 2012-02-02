@@ -568,7 +568,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 	
 	if (pnMin != NULL) {
-		*pnMin = 0x029707;
+		*pnMin = 0x029722;
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {
@@ -588,12 +588,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		deco16Scan();
 
 		SCAN_VAR(DrvOkiBank);
-	}
-
-	if (nAction & ACB_WRITE) {
-		INT32 bank = DrvOkiBank;
-		DrvOkiBank = -1;
-		oki_set_bank(bank);
+		
+		if (nAction & ACB_WRITE) {
+			INT32 bank = DrvOkiBank;
+			DrvOkiBank = -1;
+			oki_set_bank(bank);
+		}
 	}
 
 	return 0;

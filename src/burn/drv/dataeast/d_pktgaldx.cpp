@@ -556,7 +556,7 @@ struct BurnDriver BurnDrvPktgaldx = {
 	"pktgaldx", NULL, NULL, NULL, "1992",
 	"Pocket Gal Deluxe (Euro v3.00)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, pktgaldxRomInfo, pktgaldxRomName, NULL, NULL, PktgaldxInputInfo, PktgaldxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -585,7 +585,7 @@ struct BurnDriver BurnDrvPktgaldxj = {
 	"pktgaldxj", "pktgaldx", NULL, NULL, "1993",
 	"Pocket Gal Deluxe (Japan v3.00)\0", NULL, "Nihon System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, pktgaldxjRomInfo, pktgaldxjRomName, NULL, NULL, PktgaldxInputInfo, PktgaldxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -623,7 +623,7 @@ struct BurnDriverD BurnDrvPktgaldxb = {
 	"pktgaldxb", "pktgaldx", NULL, NULL, "1992",
 	"Pocket Gal Deluxe (Euro v3.00, bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, pktgaldxbRomInfo, pktgaldxbRomName, NULL, NULL, PktgaldxInputInfo, PktgaldxDIPInfo,
 	pkgaldxbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3

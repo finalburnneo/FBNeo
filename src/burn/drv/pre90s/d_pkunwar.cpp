@@ -585,7 +585,7 @@ STD_ROM_FN(pkunwar)
 
 struct BurnDriver BurnDrvpkunwar = {
 	"pkunwar", NULL, NULL, NULL, "1985",
-	"Penguin-Kun Wars (US)\0", NULL, "UPL", "misc",
+	"Penguin-Kun Wars (US)\0", NULL, "UPL", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, pkunwarRomInfo, pkunwarRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -614,7 +614,7 @@ STD_ROM_FN(pkunwarj)
 
 struct BurnDriver BurnDrvpkunwarj = {
 	"pkunwarj", "pkunwar", NULL, NULL, "1985",
-	"Penguin-Kun Wars (Japan)\0", NULL, "UPL", "misc",
+	"Penguin-Kun Wars (Japan)\0", NULL, "UPL", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, pkunwarjRomInfo, pkunwarjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,

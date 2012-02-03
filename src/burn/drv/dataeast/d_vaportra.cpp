@@ -659,7 +659,7 @@ static INT32 VaportraInit()
 
 struct BurnDriver BurnDrvVaportra = {
 	"vaportra", NULL, NULL, NULL, "1989",
-	"Vapor Trail - Hyper Offence Formation (World revision 1)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Vapor Trail - Hyper Offence Formation (World revision 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, vaportraRomInfo, vaportraRomName, NULL, NULL, VaportraInputInfo, VaportraDIPInfo,
@@ -712,7 +712,7 @@ static INT32 Vaportraw3Init()
 
 struct BurnDriver BurnDrvVaportraw3 = {
 	"vaportra3", "vaportra", NULL, NULL, "1989",
-	"Vapor Trail - Hyper Offence Formation (World revision 3)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Vapor Trail - Hyper Offence Formation (World revision 3)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, vaportraw3RomInfo, vaportraw3RomName, NULL, NULL, VaportraInputInfo, VaportraDIPInfo,
@@ -757,7 +757,7 @@ STD_ROM_FN(vaportrau)
 
 struct BurnDriver BurnDrvVaportrau = {
 	"vaportrau", "vaportra", NULL, NULL, "1989",
-	"Vapor Trail - Hyper Offence Formation (US)\0", NULL, "Data East USA", "Miscellaneous",
+	"Vapor Trail - Hyper Offence Formation (US)\0", NULL, "Data East USA", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, vaportrauRomInfo, vaportrauRomName, NULL, NULL, VaportraInputInfo, VaportraDIPInfo,
@@ -796,7 +796,7 @@ STD_ROM_FN(kuhga)
 
 struct BurnDriver BurnDrvKuhga = {
 	"kuhga", "vaportra", NULL, NULL, "1989",
-	"Kuhga - Operation Code 'Vapor Trail' (Japan revision 3)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Kuhga - Operation Code 'Vapor Trail' (Japan revision 3)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, kuhgaRomInfo, kuhgaRomName, NULL, NULL, VaportraInputInfo, VaportraDIPInfo,

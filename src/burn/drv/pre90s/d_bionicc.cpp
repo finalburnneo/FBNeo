@@ -780,7 +780,7 @@ STD_ROM_FN(bionicc)
 
 struct BurnDriver BurnDrvbionicc = {
 	"bionicc", NULL, NULL, NULL, "1987",
-	"Bionic Commando (Euro)\0", NULL, "Capcom", "Misc",
+	"Bionic Commando (Euro)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
 	NULL, bioniccRomInfo, bioniccRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -832,7 +832,7 @@ STD_ROM_FN(bionicc1)
 
 struct BurnDriver BurnDrvbionicc1 = {
 	"bionicc1", "bionicc", NULL, NULL, "1987",
-	"Bionic Commando (US set 1)\0", NULL, "Capcom", "Misc",
+	"Bionic Commando (US set 1)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
 	NULL, bionicc1RomInfo, bionicc1RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -884,7 +884,7 @@ STD_ROM_FN(bionicc2)
 
 struct BurnDriver BurnDrvbionicc2 = {
 	"bionicc2", "bionicc", NULL, NULL, "1987",
-	"Bionic Commando (US set 2)\0", NULL, "Capcom", "Misc",
+	"Bionic Commando (US set 2)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
 	NULL, bionicc2RomInfo, bionicc2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -936,7 +936,7 @@ STD_ROM_FN(topsecrt)
 
 struct BurnDriver BurnDrvtopsecrt = {
 	"topsecrt", "bionicc", NULL, NULL, "1987",
-	"Top Secret (Japan)\0", NULL, "Capcom", "Misc",
+	"Top Secret (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
 	NULL, topsecrtRomInfo, topsecrtRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,

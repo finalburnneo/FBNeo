@@ -807,7 +807,7 @@ STD_ROM_FN(Marineb)
 
 struct BurnDriver BurnDrvMarineb = {
 	"marineb", NULL, NULL, NULL, "1982",
-	"Marine Boy\0", NULL, "Orca", "misc",
+	"Marine Boy\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, 0, 0,
 	NULL, MarinebRomInfo, MarinebRomName, NULL, NULL, MarinebInputInfo, MarinebDIPInfo,
@@ -840,7 +840,7 @@ STD_ROM_FN(Springer)
 
 struct BurnDriver BurnDrvSpringer = {
 	"springer", NULL, NULL, NULL, "1982",
-	"Springer\0", NULL, "Orca", "misc",
+	"Springer\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, 0, 0,
 	NULL, SpringerRomInfo, SpringerRomName, NULL, NULL, MarinebInputInfo, MarinebDIPInfo,

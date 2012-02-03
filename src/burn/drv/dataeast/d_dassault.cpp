@@ -1008,7 +1008,7 @@ STD_ROM_FN(thndzone)
 
 struct BurnDriver BurnDrvThndzone = {
 	"thndzone", NULL, NULL, NULL, "1991",
-	"Thunder Zone (World)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Thunder Zone (World)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, thndzoneRomInfo, thndzoneRomName, NULL, NULL, ThndzoneInputInfo, ThndzoneDIPInfo,
@@ -1076,7 +1076,7 @@ STD_ROM_FN(dassault)
 
 struct BurnDriver BurnDrvDassault = {
 	"dassault", "thndzone", NULL, NULL, "1991",
-	"Desert Assault (US)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Desert Assault (US)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, dassaultRomInfo, dassaultRomName, NULL, NULL, ThndzoneInputInfo, DassaultDIPInfo,
@@ -1144,7 +1144,7 @@ STD_ROM_FN(dassault4)
 
 struct BurnDriver BurnDrvDassault4 = {
 	"dassault4", "thndzone", NULL, NULL, "1991",
-	"Desert Assault (US 4 Players)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Desert Assault (US 4 Players)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, dassault4RomInfo, dassault4RomName, NULL, NULL, ThndzoneInputInfo, Dassault4DIPInfo,

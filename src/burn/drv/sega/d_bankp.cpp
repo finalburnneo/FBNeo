@@ -561,7 +561,7 @@ STD_ROM_FN(bankp)
 
 struct BurnDriver BurnDrvbankp = {
 	"bankp", NULL, NULL, NULL, "1984",
-	"Bank Panic\0", NULL, "[Sanritsu] Sega", "Misc",
+	"Bank Panic\0", NULL, "[Sanritsu] Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 3, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, bankpRomInfo, bankpRomName, NULL, NULL, bankpInputInfo, bankpDIPInfo,
@@ -600,7 +600,7 @@ STD_ROM_FN(combh)
 
 struct BurnDriver BurnDrvcombh = {
 	"combh", NULL, NULL, NULL, "1987",
-	"Combat Hawk\0", NULL, "Sega / Sanritsu", "Misc",
+	"Combat Hawk\0", NULL, "Sega / Sanritsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, combhRomInfo, combhRomName, NULL, NULL, combhInputInfo, combhDIPInfo,

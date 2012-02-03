@@ -534,7 +534,7 @@ STD_ROM_FN(tumblep)
 
 struct BurnDriver BurnDrvTumblep = {
 	"tumblep", NULL, NULL, NULL, "1991",
-	"Tumble Pop (World)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Tumble Pop (World)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, tumblepRomInfo, tumblepRomName, NULL, NULL, TumblepInputInfo, TumblepDIPInfo,
@@ -564,7 +564,7 @@ STD_ROM_FN(tumblepj)
 
 struct BurnDriver BurnDrvTumblepj = {
 	"tumblepj", "tumblep", NULL, NULL, "1991",
-	"Tumble Pop (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Tumble Pop (Japan)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, tumblepjRomInfo, tumblepjRomName, NULL, NULL, TumblepInputInfo, TumblepDIPInfo,

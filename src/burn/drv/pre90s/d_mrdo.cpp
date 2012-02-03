@@ -532,7 +532,7 @@ STD_ROM_FN(mrdo)
 
 struct BurnDriver BurnDrvmrdo = {
 	"mrdo", NULL, NULL, NULL, "1982",
-	"Mr. Do!\0", NULL, "Universal", "misc",
+	"Mr. Do!\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mrdoRomInfo, mrdoRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -569,7 +569,7 @@ STD_ROM_FN(mrdot)
 
 struct BurnDriver BurnDrvmrdot = {
 	"mrdot", "mrdo", NULL, NULL, "1982",
-	"Mr. Do! (Taito license)\0", NULL, "Universal (Taito license)", "misc",
+	"Mr. Do! (Taito license)\0", NULL, "Universal (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mrdotRomInfo, mrdotRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -605,7 +605,7 @@ STD_ROM_FN(mrdofix)
 
 struct BurnDriver BurnDrvmrdofix = {
 	"mrdofix", "mrdo", NULL, NULL, "1982",
-	"Mr. Do! (bugfixed)\0", NULL, "Universal (Taito license)", "misc",
+	"Mr. Do! (bugfixed)\0", NULL, "Universal (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mrdofixRomInfo, mrdofixRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -642,7 +642,7 @@ STD_ROM_FN(mrlo)
 
 struct BurnDriver BurnDrvmrlo = {
 	"mrlo", "mrdo", NULL, NULL, "1982",
-	"Mr. Lo!\0", NULL, "Bootleg", "misc",
+	"Mr. Lo!\0", NULL, "Bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mrloRomInfo, mrloRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -679,7 +679,7 @@ STD_ROM_FN(mrdu)
 
 struct BurnDriver BurnDrvmrdu = {
 	"mrdu", "mrdo", NULL, NULL, "1982",
-	"Mr. Du!\0", NULL, "Bootleg", "misc",
+	"Mr. Du!\0", NULL, "Bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mrduRomInfo, mrduRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -716,7 +716,7 @@ STD_ROM_FN(mrdoy)
 
 struct BurnDriver BurnDrvmrdoy = {
 	"mrdoy", "mrdo", NULL, NULL, "1982",
-	"Mr. Do! (prototype)\0", NULL, "Universal", "misc",
+	"Mr. Do! (prototype)\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mrdoyRomInfo, mrdoyRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -753,7 +753,7 @@ STD_ROM_FN(yankeedo)
 
 struct BurnDriver BurnDrvyankeedo = {
 	"yankeedo", "mrdo", NULL, NULL, "1982",
-	"Yankee DO!\0", NULL, "hack", "misc",
+	"Yankee DO!\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, yankeedoRomInfo, yankeedoRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,

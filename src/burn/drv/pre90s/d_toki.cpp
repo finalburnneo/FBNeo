@@ -1735,7 +1735,7 @@ STD_ROM_FN(toki)
 
 struct BurnDriver BurnDrvToki = {
 	"toki", NULL, NULL, NULL, "1989",
-	"Toki (World set 1)\0", NULL, "Tad", "hardware",
+	"Toki (World set 1)\0", NULL, "Tad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, tokiRomInfo, tokiRomName, NULL, NULL, TokiInputInfo, TokiDIPInfo,
@@ -1773,7 +1773,7 @@ STD_ROM_FN(tokia)
 
 struct BurnDriver BurnDrvTokia = {
 	"tokia", "toki", NULL, NULL, "1989",
-	"Toki (World set 2)\0", NULL, "Tad", "hardware",
+	"Toki (World set 2)\0", NULL, "Tad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, tokiaRomInfo, tokiaRomName, NULL, NULL, TokiInputInfo, TokiDIPInfo,
@@ -1811,7 +1811,7 @@ STD_ROM_FN(tokiu)
 
 struct BurnDriver BurnDrvTokiu = {
 	"tokiu", "toki", NULL, NULL, "1989",
-	"Toki (US)\0", NULL, "Tad (Fabtek license)", "hardware",
+	"Toki (US)\0", NULL, "Tad (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, tokiuRomInfo, tokiuRomName, NULL, NULL, TokiInputInfo, TokiDIPInfo,
@@ -1849,7 +1849,7 @@ STD_ROM_FN(juju)
 
 struct BurnDriver BurnDrvJuju = {
 	"juju", "toki", NULL, NULL, "1989",
-	"JuJu Densetsu (Japan)\0", NULL, "Tad", "hardware",
+	"JuJu Densetsu (Japan)\0", NULL, "Tad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, jujuRomInfo, jujuRomName, NULL, NULL, TokiInputInfo, TokiDIPInfo,
@@ -1910,7 +1910,7 @@ STD_ROM_FN(jujub)
 
 struct BurnDriver BurnDrvJujub = {
 	"jujub", "toki", NULL, NULL, "1989",
-	"JuJu Densetsu (Japan, bootleg)\0", NULL, "bootleg", "hardware",
+	"JuJu Densetsu (Japan, bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, jujubRomInfo, jujubRomName, NULL, NULL, TokiInputInfo, TokiDIPInfo,
@@ -1967,7 +1967,7 @@ STD_ROM_FN(tokib)
 
 struct BurnDriver BurnDrvTokib = {
 	"tokib", "toki", NULL, NULL, "1989",
-	"Toki (bootleg)\0", NULL, "bootleg", "hardware",
+	"Toki (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, tokibRomInfo, tokibRomName, NULL, NULL, TokibInputInfo, TokibDIPInfo,

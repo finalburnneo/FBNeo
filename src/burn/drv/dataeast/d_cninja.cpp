@@ -2485,7 +2485,7 @@ STD_ROM_FN(cninja)
 
 struct BurnDriver BurnDrvCninja = {
 	"cninja", NULL, NULL, NULL, "1991",
-	"Caveman Ninja (World ver 4)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Caveman Ninja (World ver 4)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, cninjaRomInfo, cninjaRomName, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
@@ -2531,7 +2531,7 @@ STD_ROM_FN(cninja1)
 
 struct BurnDriver BurnDrvCninja1 = {
 	"cninja1", "cninja", NULL, NULL, "1991",
-	"Caveman Ninja (World ver 1)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Caveman Ninja (World ver 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, cninja1RomInfo, cninja1RomName, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
@@ -2577,7 +2577,7 @@ STD_ROM_FN(cninjau)
 
 struct BurnDriver BurnDrvCninjau = {
 	"cninjau", "cninja", NULL, NULL, "1991",
-	"Caveman Ninja (US ver 4)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Caveman Ninja (US ver 4)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, cninjauRomInfo, cninjauRomName, NULL, NULL, DrvInputInfo, CninjauDIPInfo,
@@ -2623,7 +2623,7 @@ STD_ROM_FN(joemac)
 
 struct BurnDriver BurnDrvJoemac = {
 	"joemac", "cninja", NULL, NULL, "1991",
-	"Tatakae Genshizin Joe & Mac (Japan ver 1)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Tatakae Genshizin Joe & Mac (Japan ver 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, joemacRomInfo, joemacRomName, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
@@ -2665,7 +2665,7 @@ STD_ROM_FN(stoneage)
 
 struct BurnDriver BurnDrvStoneage = {
 	"stoneage", "cninja", NULL, NULL, "1991",
-	"Stoneage (bootleg of Caveman Ninja)\0", NULL, "bootleg", "Miscellaneous",
+	"Stoneage (bootleg of Caveman Ninja)\0", NULL, "bootleg", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, stoneageRomInfo, stoneageRomName, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
@@ -2693,7 +2693,7 @@ STD_ROM_FN(cninjabl)
 
 struct BurnDriver BurnDrvCninjabl = {
 	"cninjabl", "cninja", NULL, NULL, "1991",
-	"Caveman Ninja (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Caveman Ninja (bootleg)\0", NULL, "bootleg", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, cninjablRomInfo, cninjablRomName, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
@@ -2742,7 +2742,7 @@ STD_ROM_FN(mutantf)
 
 struct BurnDriver BurnDrvMutantf = {
 	"mutantf", NULL, NULL, NULL, "1992",
-	"Mutant Fighter (World ver EM-5)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Mutant Fighter (World ver EM-5)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, mutantfRomInfo, mutantfRomName, NULL, NULL, DrvInputInfo, MutantfDIPInfo,
@@ -2791,7 +2791,7 @@ STD_ROM_FN(mutantf4)
 
 struct BurnDriver BurnDrvMutantf4 = {
 	"mutantf4", "mutantf", NULL, NULL, "1992",
-	"Mutant Fighter (World ver EM-4)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Mutant Fighter (World ver EM-4)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, mutantf4RomInfo, mutantf4RomName, NULL, NULL, DrvInputInfo, MutantfDIPInfo,
@@ -2840,7 +2840,7 @@ STD_ROM_FN(mutantf3)
 
 struct BurnDriver BurnDrvMutantf3 = {
 	"mutantf3", "mutantf", NULL, NULL, "1992",
-	"Mutant Fighter (World ver EM-3)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Mutant Fighter (World ver EM-3)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, mutantf3RomInfo, mutantf3RomName, NULL, NULL, DrvInputInfo, MutantfDIPInfo,
@@ -2889,7 +2889,7 @@ STD_ROM_FN(deathbrd)
 
 struct BurnDriver BurnDrvDeathbrd = {
 	"deathbrd", "mutantf", NULL, NULL, "1992",
-	"Death Brade (Japan ver JM-3)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Death Brade (Japan ver JM-3)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, deathbrdRomInfo, deathbrdRomName, NULL, NULL, DrvInputInfo, MutantfDIPInfo,
@@ -2943,7 +2943,7 @@ STD_ROM_FN(edrandy)
 
 struct BurnDriver BurnDrvEdrandy = {
 	"edrandy", NULL, NULL, NULL, "1990",
-	"The Cliffhanger - Edward Randy (World ver 3)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"The Cliffhanger - Edward Randy (World ver 3)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, edrandyRomInfo, edrandyRomName, NULL, NULL, DrvInputInfo, EdrandyDIPInfo,
@@ -2997,7 +2997,7 @@ STD_ROM_FN(edrandy2)
 
 struct BurnDriver BurnDrvEdrandy2 = {
 	"edrandy2", "edrandy", NULL, NULL, "1990",
-	"The Cliffhanger - Edward Randy (World ver 2)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"The Cliffhanger - Edward Randy (World ver 2)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, edrandy2RomInfo, edrandy2RomName, NULL, NULL, DrvInputInfo, EdrandcDIPInfo,
@@ -3051,7 +3051,7 @@ STD_ROM_FN(edrandy1)
 
 struct BurnDriver BurnDrvEdrandy1 = {
 	"edrandy1", "edrandy", NULL, NULL, "1990",
-	"The Cliffhanger - Edward Randy (World ver 1)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"The Cliffhanger - Edward Randy (World ver 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, edrandy1RomInfo, edrandy1RomName, NULL, NULL, DrvInputInfo, EdrandcDIPInfo,
@@ -3105,7 +3105,7 @@ STD_ROM_FN(edrandyj)
 
 struct BurnDriver BurnDrvEdrandyj = {
 	"edrandyj", "edrandy", NULL, NULL, "1990",
-	"The Cliffhanger - Edward Randy (Japan ver 3)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"The Cliffhanger - Edward Randy (Japan ver 3)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, edrandyjRomInfo, edrandyjRomName, NULL, NULL, DrvInputInfo, EdrandcDIPInfo,
@@ -3157,7 +3157,7 @@ STD_ROM_FN(robocop2)
 
 struct BurnDriver BurnDrvRobocop2 = {
 	"robocop2", NULL, NULL, NULL, "1991",
-	"Robocop 2 (Euro/Asia v0.10)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Robocop 2 (Euro/Asia v0.10)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, robocop2RomInfo, robocop2RomName, NULL, NULL, Robocop2InputInfo, Robocop2DIPInfo,
@@ -3209,7 +3209,7 @@ STD_ROM_FN(robocop2u)
 
 struct BurnDriver BurnDrvRobocop2u = {
 	"robocop2u", "robocop2", NULL, NULL, "1991",
-	"Robocop 2 (US v0.05)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Robocop 2 (US v0.05)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, robocop2uRomInfo, robocop2uRomName, NULL, NULL, Robocop2InputInfo, Robocop2DIPInfo,
@@ -3261,7 +3261,7 @@ STD_ROM_FN(robocop2j)
 
 struct BurnDriver BurnDrvRobocop2j = {
 	"robocop2j", "robocop2", NULL, NULL, "1991",
-	"Robocop 2 (Japan v0.11)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Robocop 2 (Japan v0.11)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, robocop2jRomInfo, robocop2jRomName, NULL, NULL, Robocop2InputInfo, Robocop2DIPInfo,

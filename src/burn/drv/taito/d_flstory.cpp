@@ -1257,7 +1257,7 @@ static INT32 flstoryInit()
 
 struct BurnDriver BurnDrvFlstory = {
 	"flstory", NULL, NULL, NULL, "1985",
-	"The FairyLand Story\0", NULL, "Taito", "hardware",
+	"The FairyLand Story\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, flstoryRomInfo, flstoryRomName, NULL, NULL, FlstoryInputInfo, FlstoryDIPInfo,
@@ -1293,7 +1293,7 @@ STD_ROM_FN(flstoryj)
 
 struct BurnDriver BurnDrvFlstoryj = {
 	"flstoryj", "flstory", NULL, NULL, "1985",
-	"The FairyLand Story (Japan)\0", NULL, "Taito", "hardware",
+	"The FairyLand Story (Japan)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, flstoryjRomInfo, flstoryjRomName, NULL, NULL, FlstoryInputInfo, FlstoryDIPInfo,
@@ -1339,7 +1339,7 @@ static INT32 onna34roInit()
 
 struct BurnDriver BurnDrvOnna34ro = {
 	"onna34ro", NULL, NULL, NULL, "1985",
-	"Onna Sansirou - Typhoon Gal (set 1)\0", NULL, "Taito", "hardware",
+	"Onna Sansirou - Typhoon Gal (set 1)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, onna34roRomInfo, onna34roRomName, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,
@@ -1378,7 +1378,7 @@ STD_ROM_FN(onna34ra)
 
 struct BurnDriver BurnDrvOnna34ra = {
 	"onna34roa", "onna34ro", NULL, NULL, "1985",
-	"Onna Sansirou - Typhoon Gal (set 2)\0", NULL, "Taito", "hardware",
+	"Onna Sansirou - Typhoon Gal (set 2)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, onna34raRomInfo, onna34raRomName, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,
@@ -1428,7 +1428,7 @@ static INT32 victnineInit()
 
 struct BurnDriverD BurnDrvVictnine = {
 	"victnine", NULL, NULL, NULL, "1984",
-	"Victorious Nine\0", NULL, "Taito", "hardware",
+	"Victorious Nine\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, victnineRomInfo, victnineRomName, NULL, NULL, VictnineInputInfo, VictnineDIPInfo,

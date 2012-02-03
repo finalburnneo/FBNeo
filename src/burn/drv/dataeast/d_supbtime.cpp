@@ -584,7 +584,7 @@ static INT32 supbtimeInit()
 
 struct BurnDriver BurnDrvSupbtime = {
 	"supbtime", NULL, NULL, NULL, "1990",
-	"Super Burger Time (World, set 1)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Super Burger Time (World, set 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, supbtimeRomInfo, supbtimeRomName, NULL, NULL, SupbtimeInputInfo, SupbtimeDIPInfo,
@@ -614,7 +614,7 @@ STD_ROM_FN(supbtimea)
 
 struct BurnDriver BurnDrvSupbtimea = {
 	"supbtimea", "supbtime", NULL, NULL, "1990",
-	"Super Burger Time (World, set 2)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Super Burger Time (World, set 2)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, supbtimeaRomInfo, supbtimeaRomName, NULL, NULL, SupbtimeInputInfo, SupbtimeDIPInfo,
@@ -644,7 +644,7 @@ STD_ROM_FN(supbtimej)
 
 struct BurnDriver BurnDrvSupbtimej = {
 	"supbtimej", "supbtime", NULL, NULL, "1990",
-	"Super Burger Time (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Super Burger Time (Japan)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, supbtimejRomInfo, supbtimejRomName, NULL, NULL, SupbtimeInputInfo, SupbtimeDIPInfo,
@@ -679,7 +679,7 @@ static INT32 chinatwnInit()
 
 struct BurnDriver BurnDrvChinatwn = {
 	"chinatwn", NULL, NULL, NULL, "1991",
-	"China Town (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"China Town (Japan)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, chinatwnRomInfo, chinatwnRomName, NULL, NULL, SupbtimeInputInfo, ChinatwnDIPInfo,

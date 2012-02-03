@@ -527,7 +527,7 @@ STD_ROM_FN(higemaru)
 
 struct BurnDriver BurnDrvhigemaru = {
 	"higemaru", NULL, NULL, NULL, "1984",
-	"Pirate Ship Higemaru\0", NULL, "Capcom", "Misc",
+	"Pirate Ship Higemaru\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARWARE_CAPCOM_MISC, GBF_MAZE, 0,
 	NULL, higemaruRomInfo, higemaruRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,

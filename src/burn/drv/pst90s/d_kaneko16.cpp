@@ -4887,7 +4887,7 @@ Driver defs
 
 struct BurnDriver BurnDrvBerlwall = {
 	"berlwall", NULL, NULL, NULL, "1991",
-	"The Berlin Wall\0", NULL, "Kaneko", "Kaneko 16-bit",
+	"The Berlin Wall\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO16, GBF_PLATFORM, 0,
 	NULL, BerlwallRomInfo, BerlwallRomName, NULL, NULL, BerlwallInputInfo, BerlwallDIPInfo,
@@ -4897,7 +4897,7 @@ struct BurnDriver BurnDrvBerlwall = {
 
 struct BurnDriver BurnDrvBerlwallt = {
 	"berlwallt", "berlwall", NULL, NULL, "1991",
-	"The Berlin Wall (bootleg ?)\0", NULL, "Kaneko", "Kaneko 16-bit",
+	"The Berlin Wall (bootleg ?)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_KANEKO16, GBF_PLATFORM, 0,
 	NULL, BerlwalltRomInfo, BerlwalltRomName, NULL, NULL, BerlwallInputInfo, BerlwalltDIPInfo,
@@ -4907,7 +4907,7 @@ struct BurnDriver BurnDrvBerlwallt = {
 
 struct BurnDriver BurnDrvBlazeon = {
 	"blazeon", NULL, NULL, NULL, "1991",
-	"Blaze On (Japan)\0", NULL, "Atlus", "Kaneko 16-bit",
+	"Blaze On (Japan)\0", NULL, "Atlus", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
 	NULL, BlazeonRomInfo, BlazeonRomName, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,
@@ -4917,7 +4917,7 @@ struct BurnDriver BurnDrvBlazeon = {
 
 struct BurnDriver BurnDrvBloodwar = {
 	"bloodwar", NULL, NULL, NULL, "1994",
-	"Blood Warrior\0", NULL, "Kaneko", "Kaneko 16-bit",
+	"Blood Warrior\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO16, GBF_VSFIGHT, 0,
 	NULL, BloodwarRomInfo, BloodwarRomName, NULL, NULL, BloodwarInputInfo, BloodwarDIPInfo,
@@ -4927,7 +4927,7 @@ struct BurnDriver BurnDrvBloodwar = {
 
 struct BurnDriver BurnDrvBonkadv = {
 	"bonkadv", NULL, NULL, NULL, "1994",
-	"B.C. Kid / Bonk's Adventure / Kyukyoku!! PC Genjin\0", NULL, "Kaneko", "Kaneko 16-bit",
+	"B.C. Kid / Bonk's Adventure / Kyukyoku!! PC Genjin\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO16, GBF_PLATFORM, 0,
 	NULL, BonkadvRomInfo, BonkadvRomName, NULL, NULL, BonkadvInputInfo, BonkadvDIPInfo,
@@ -4937,7 +4937,7 @@ struct BurnDriver BurnDrvBonkadv = {
 
 struct BurnDriver BurnDrvExplbrkr = {
 	"explbrkr", NULL, NULL, NULL, "1992",
-	"Explosive Breaker\0", NULL, "Kaneko", "Kaneko 16-bit",
+	"Explosive Breaker\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO16, GBF_VERSHOOT, 0,
 	NULL, ExplbrkrRomInfo, ExplbrkrRomName, NULL, NULL, ExplbrkrInputInfo, ExplbrkrDIPInfo,
@@ -4947,7 +4947,7 @@ struct BurnDriver BurnDrvExplbrkr = {
 
 struct BurnDriver BurnDrvBakubrkr = {
 	"bakubrkr", "explbrkr", NULL, NULL, "1992",
-	"Bakuretsu Breaker\0", NULL, "Kaneko", "Kaneko 16-bit",
+	"Bakuretsu Breaker\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO16, GBF_VERSHOOT, 0,
 	NULL, BakubrkrRomInfo, BakubrkrRomName, NULL, NULL, ExplbrkrInputInfo, ExplbrkrDIPInfo,
@@ -4957,7 +4957,7 @@ struct BurnDriver BurnDrvBakubrkr = {
 
 struct BurnDriver BurnDrvGtmr = {
 	"gtmr", NULL, NULL, NULL, "1994",
-	"1000 Miglia: Great 1000 Miles Rally (94/07/18)\0", NULL, "Kaneko", "Kaneko 16-bit",
+	"1000 Miglia: Great 1000 Miles Rally (94/07/18)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO16, GBF_RACING, 0,
 	NULL, GtmrRomInfo, GtmrRomName, NULL, NULL, GtmrInputInfo, GtmrDIPInfo,
@@ -4967,7 +4967,7 @@ struct BurnDriver BurnDrvGtmr = {
 
 struct BurnDriver BurnDrvGtmra = {
 	"gtmra", "gtmr", NULL, NULL, "1994",
-	"1000 Miglia: Great 1000 Miles Rally (94/06/13)\0", NULL, "Kaneko", "Kaneko 16-bit",
+	"1000 Miglia: Great 1000 Miles Rally (94/06/13)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO16, GBF_RACING, 0,
 	NULL, GtmraRomInfo, GtmraRomName, NULL, NULL, GtmrInputInfo, GtmrDIPInfo,
@@ -4977,7 +4977,7 @@ struct BurnDriver BurnDrvGtmra = {
 
 struct BurnDriver BurnDrvGtmre = {
 	"gtmre", "gtmr", NULL, NULL, "1994",
-	"Great 1000 Miles Rally: Evolution Model!!! (94/09/06)\0", NULL, "Kaneko", "Kaneko 16-bit",
+	"Great 1000 Miles Rally: Evolution Model!!! (94/09/06)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO16, GBF_RACING, 0,
 	NULL, GtmreRomInfo, GtmreRomName, NULL, NULL, GtmrInputInfo, GtmrDIPInfo,
@@ -4987,7 +4987,7 @@ struct BurnDriver BurnDrvGtmre = {
 
 struct BurnDriver BurnDrvGtmrusa = {
 	"gtmrusa", "gtmr", NULL, NULL, "1994",
-	"Great 1000 Miles Rally: U.S.A Version! (94/09/06)\0", NULL, "Kaneko", "Kaneko 16-bit",
+	"Great 1000 Miles Rally: U.S.A Version! (94/09/06)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO16, GBF_RACING, 0,
 	NULL, GtmrusaRomInfo, GtmrusaRomName, NULL, NULL, GtmrInputInfo, GtmrDIPInfo,
@@ -4997,7 +4997,7 @@ struct BurnDriver BurnDrvGtmrusa = {
 
 struct BurnDriver BurnDrvGtmr2 = {
 	"gtmr2", NULL, NULL, NULL, "1995",
-	"Mille Miglia 2: Great 1000 Miles Rally (95/05/24)\0", NULL, "Kaneko", "Kaneko 16-bit",
+	"Mille Miglia 2: Great 1000 Miles Rally (95/05/24)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO16, GBF_RACING, 0,
 	NULL, Gtmr2RomInfo, Gtmr2RomName, NULL, NULL, GtmrInputInfo, Gtmr2DIPInfo,
@@ -5007,7 +5007,7 @@ struct BurnDriver BurnDrvGtmr2 = {
 
 struct BurnDriver BurnDrvGtmr2a = {
 	"gtmr2a", "gtmr2", NULL, NULL, "1995",
-	"Mille Miglia 2: Great 1000 Miles Rally (95/04/04)\0", NULL, "Kaneko", "Kaneko 16-bit",
+	"Mille Miglia 2: Great 1000 Miles Rally (95/04/04)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO16, GBF_RACING, 0,
 	NULL, Gtmr2aRomInfo, Gtmr2aRomName, NULL, NULL, GtmrInputInfo, Gtmr2DIPInfo,
@@ -5017,7 +5017,7 @@ struct BurnDriver BurnDrvGtmr2a = {
 
 struct BurnDriver BurnDrvGtmr2u = {
 	"gtmr2u", "gtmr2", NULL, NULL, "1995",
-	"Great 1000 Miles Rally 2 USA (95/05/18)\0", NULL, "Kaneko", "Kaneko 16-bit",
+	"Great 1000 Miles Rally 2 USA (95/05/18)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO16, GBF_RACING, 0,
 	NULL, Gtmr2uRomInfo, Gtmr2uRomName, NULL, NULL, GtmrInputInfo, Gtmr2DIPInfo,
@@ -5027,7 +5027,7 @@ struct BurnDriver BurnDrvGtmr2u = {
 
 struct BurnDriver BurnDrvMgcrsytl = {
 	"mgcrystl", NULL, NULL, NULL, "1991",
-	"Magical Crystals (World, 92/01/10)\0", NULL, "Kaneko", "Kaneko 16-bit",
+	"Magical Crystals (World, 92/01/10)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO16, GBF_PLATFORM, 0,
 	NULL, MgcrystlRomInfo, MgcrystlRomName, NULL, NULL, MgcrystlInputInfo, MgcrystlDIPInfo,
@@ -5037,7 +5037,7 @@ struct BurnDriver BurnDrvMgcrsytl = {
 
 struct BurnDriver BurnDrvMgcrsytlo = {
 	"mgcrystlo", "mgcrystl", NULL, NULL, "1991",
-	"Magical Crystals (World, 91/12/10)\0", NULL, "Kaneko", "Kaneko 16-bit",
+	"Magical Crystals (World, 91/12/10)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO16, GBF_PLATFORM, 0,
 	NULL, MgcrystloRomInfo, MgcrystloRomName, NULL, NULL, MgcrystlInputInfo, MgcrystlDIPInfo,
@@ -5047,7 +5047,7 @@ struct BurnDriver BurnDrvMgcrsytlo = {
 
 struct BurnDriver BurnDrvMgcrsytlj = {
 	"mgcrystlj", "mgcrystl", NULL, NULL, "1991",
-	"Magical Crystals (Japan, 92/01/13)\0", NULL, "Kaneko (Atlus license)", "Kaneko 16-bit",
+	"Magical Crystals (Japan, 92/01/13)\0", NULL, "Kaneko (Atlus license)", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO16, GBF_PLATFORM, 0,
 	NULL, MgcrystljRomInfo, MgcrystljRomName, NULL, NULL, MgcrystlInputInfo, MgcrystlDIPInfo,

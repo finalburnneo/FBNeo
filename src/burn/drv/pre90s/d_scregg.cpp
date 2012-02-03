@@ -602,7 +602,7 @@ STD_ROM_FN(dommy)
 
 struct BurnDriver BurnDrvdommy = {
 	"dommy", NULL, NULL, NULL, "198?",
-	"Dommy\0", NULL, "Technos", "misc",
+	"Dommy\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, dommyRomInfo, dommyRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -644,7 +644,7 @@ static INT32 screggInit()
 
 struct BurnDriver BurnDrvscregg = {
 	"scregg", NULL, NULL, NULL, "1983",
-	"Scrambled Egg\0", NULL, "Technos", "misc",
+	"Scrambled Egg\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, screggRomInfo, screggRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -679,7 +679,7 @@ STD_ROM_FN(eggs)
 
 struct BurnDriver BurnDrveggs = {
 	"eggs", "scregg", NULL, NULL, "1983",
-	"Eggs\0", NULL, "[Technos] Universal USA", "misc",
+	"Eggs\0", NULL, "[Technos] Universal USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, eggsRomInfo, eggsRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -716,7 +716,7 @@ static INT32 rockduckInit()
 
 struct BurnDriver BurnDrvrockduck = {
 	"rockduck", NULL, NULL, NULL, "1983",
-	"Rock Duck (prototype?)\0", "incorrect colors", "Datel SAS", "misc",
+	"Rock Duck (prototype?)\0", "incorrect colors", "Datel SAS", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, rockduckRomInfo, rockduckRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,

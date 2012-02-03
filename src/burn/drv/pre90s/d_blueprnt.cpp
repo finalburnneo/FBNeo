@@ -673,7 +673,7 @@ STD_ROM_FN(blueprnt)
 
 struct BurnDriver BurnDrvBlueprnt = {
 	"blueprnt", NULL, NULL, NULL, "1982",
-	"Blue Print (Midway)\0", NULL, "[Zilec Electronics] Bally Midway", "hardware",
+	"Blue Print (Midway)\0", NULL, "[Zilec Electronics] Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, blueprntRomInfo, blueprntRomName, NULL, NULL, BlueprntInputInfo, BlueprntDIPInfo,
@@ -707,7 +707,7 @@ STD_ROM_FN(blueprnj)
 
 struct BurnDriver BurnDrvBlueprnj = {
 	"blueprntj", "blueprnt", NULL, NULL, "1982",
-	"Blue Print (Jaleco)\0", NULL, "[Zilec Electronics] Jaleco", "hardware",
+	"Blue Print (Jaleco)\0", NULL, "[Zilec Electronics] Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, blueprnjRomInfo, blueprnjRomName, NULL, NULL, BlueprntInputInfo, BlueprntDIPInfo,
@@ -742,7 +742,7 @@ STD_ROM_FN(saturnzi)
 
 struct BurnDriver BurnDrvSaturnzi = {
 	"saturnzi", NULL, NULL, NULL, "1983",
-	"Saturn\0", NULL, "[Zilec Electronics] Jaleco", "hardware",
+	"Saturn\0", NULL, "[Zilec Electronics] Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, saturnziRomInfo, saturnziRomName, NULL, NULL, SaturnInputInfo, SaturnDIPInfo,

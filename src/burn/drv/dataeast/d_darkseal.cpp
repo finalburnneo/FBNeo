@@ -749,7 +749,7 @@ STD_ROM_FN(darkseal)
 
 struct BurnDriver BurnDrvDarkseal = {
 	"darkseal", NULL, NULL, NULL, "1990",
-	"Dark Seal (World revision 3)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Dark Seal (World revision 3)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE | GBF_SCRFIGHT, 0,
 	NULL, darksealRomInfo, darksealRomName, NULL, NULL, DarksealInputInfo, DarksealDIPInfo,
@@ -788,7 +788,7 @@ STD_ROM_FN(darksea1)
 
 struct BurnDriver BurnDrvDarksea1 = {
 	"darkseal1", "darkseal", NULL, NULL, "1990",
-	"Dark Seal (World revision 1)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Dark Seal (World revision 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE | GBF_SCRFIGHT, 0,
 	NULL, darksea1RomInfo, darksea1RomName, NULL, NULL, DarksealInputInfo, DarksealDIPInfo,
@@ -827,7 +827,7 @@ STD_ROM_FN(darkseaj)
 
 struct BurnDriver BurnDrvDarkseaj = {
 	"darksealj", "darkseal", NULL, NULL, "1990",
-	"Dark Seal (Japan)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Dark Seal (Japan)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE | GBF_SCRFIGHT, 0,
 	NULL, darkseajRomInfo, darkseajRomName, NULL, NULL, DarksealInputInfo, DarksealDIPInfo,
@@ -866,7 +866,7 @@ STD_ROM_FN(gatedoom)
 
 struct BurnDriver BurnDrvGatedoom = {
 	"gatedoom", "darkseal", NULL, NULL, "1990",
-	"Gate of Doom (US revision 4)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Gate of Doom (US revision 4)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE | GBF_SCRFIGHT, 0,
 	NULL, gatedoomRomInfo, gatedoomRomName, NULL, NULL, DarksealInputInfo, DarksealDIPInfo,
@@ -905,7 +905,7 @@ STD_ROM_FN(gatedom1)
 
 struct BurnDriver BurnDrvGatedom1 = {
 	"gatedoom1", "darkseal", NULL, NULL, "1990",
-	"Gate of Doom (US revision 1)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Gate of Doom (US revision 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE | GBF_SCRFIGHT, 0,
 	NULL, gatedom1RomInfo, gatedom1RomName, NULL, NULL, DarksealInputInfo, DarksealDIPInfo,

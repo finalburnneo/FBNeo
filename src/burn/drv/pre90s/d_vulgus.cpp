@@ -718,7 +718,7 @@ STD_ROM_FN(vulgus)
 
 struct BurnDriver BurnDrvvulgus = {
 	"vulgus", NULL, NULL, NULL, "1984",
-	"Vulgus (set 1)\0", NULL, "Capcom", "Misc",
+	"Vulgus (set 1)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, vulgusRomInfo, vulgusRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -768,7 +768,7 @@ STD_ROM_FN(vulgusa)
 
 struct BurnDriver BurnDrvvulgusa = {
 	"vulgusa", "vulgus", NULL, NULL, "1984",
-	"Vulgus (set 2)\0", NULL, "Capcom", "Misc",
+	"Vulgus (set 2)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, vulgusaRomInfo, vulgusaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -818,7 +818,7 @@ STD_ROM_FN(vulgusj)
 
 struct BurnDriver BurnDrvvulgusj = {
 	"vulgusj", "vulgus", NULL, NULL, "1984",
-	"Vulgus (Japan?)\0", NULL, "Capcom", "Misc",
+	"Vulgus (Japan?)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, vulgusjRomInfo, vulgusjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,

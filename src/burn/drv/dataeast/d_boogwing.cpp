@@ -822,7 +822,7 @@ STD_ROM_FN(boogwing)
 
 struct BurnDriver BurnDrvBoogwing = {
 	"boogwing", NULL, NULL, NULL, "1992",
-	"Boogie Wings (Euro v1.5, 92.12.07)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Boogie Wings (Euro v1.5, 92.12.07)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, boogwingRomInfo, boogwingRomName, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
@@ -869,7 +869,7 @@ STD_ROM_FN(boogwinga)
 
 struct BurnDriver BurnDrvBoogwinga = {
 	"boogwinga", "boogwing", NULL, NULL, "1992",
-	"Boogie Wings (Asia v1.5, 92.12.07)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Boogie Wings (Asia v1.5, 92.12.07)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, boogwingaRomInfo, boogwingaRomName, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
@@ -916,7 +916,7 @@ STD_ROM_FN(ragtime)
 
 struct BurnDriver BurnDrvRagtime = {
 	"ragtime", "boogwing", NULL, NULL, "1992",
-	"The Great Ragtime Show (Japan v1.5, 92.12.07)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"The Great Ragtime Show (Japan v1.5, 92.12.07)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, ragtimeRomInfo, ragtimeRomName, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
@@ -963,7 +963,7 @@ STD_ROM_FN(ragtimea)
 
 struct BurnDriver BurnDrvRagtimea = {
 	"ragtimea", "boogwing", NULL, NULL, "1992",
-	"The Great Ragtime Show (Japan v1.3, 92.11.26)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"The Great Ragtime Show (Japan v1.3, 92.11.26)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, ragtimeaRomInfo, ragtimeaRomName, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,

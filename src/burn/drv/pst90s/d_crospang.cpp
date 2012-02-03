@@ -502,7 +502,7 @@ static void draw_layer(UINT8 *src, INT32 coloffs, INT32 scrollx, INT32 scrolly, 
 
 		if (sy >= nScreenHeight || sx >= nScreenWidth) continue;
 
-		INT32 data  = vram[offs];
+		INT32 data  = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		INT32 code  = (data & 0xfff) + (*tile_bank << 12);
 		INT32 color = (data >> 12) + coloffs;
 
@@ -522,13 +522,13 @@ static void draw_sprites()
 
 	for (INT32 offs = 0;offs < 0x400;offs += 4)
 	{
-		INT32 sprite = ram[offs + 1] & 0x7fff;
+		INT32 sprite = BURN_ENDIAN_SWAP_INT16(ram[offs + 1]) & 0x7fff;
 		if (!sprite) continue;
 
-		INT32 y = ram[offs];
+		INT32 y = BURN_ENDIAN_SWAP_INT16(ram[offs]);
 		if ((y & 0x1000) && (GetCurrentFrame() & 1)) continue; // flash
 
-		INT32 x = ram[offs + 2];
+		INT32 x = BURN_ENDIAN_SWAP_INT16(ram[offs + 2]);
 		INT32 color = (x >>9) & 0xf;
 
 		INT32 fx = y & 0x2000;
@@ -577,9 +577,9 @@ static INT32 DrvDraw()
 		UINT8 r,g,b;
 		UINT16 *pal = (UINT16*)DrvPalRAM;
 		for (INT32 i = 0; i < 0x300; i++) {
-			r = (pal[i] >> 10) & 0x1f;
-			g = (pal[i] >>  5) & 0x1f;
-			b = (pal[i] >>  0) & 0x1f;
+			r = (BURN_ENDIAN_SWAP_INT16(pal[i]) >> 10) & 0x1f;
+			g = (BURN_ENDIAN_SWAP_INT16(pal[i]) >>  5) & 0x1f;
+			b = (BURN_ENDIAN_SWAP_INT16(pal[i]) >>  0) & 0x1f;
 
 			r = (r << 3) | (r >> 2);
 			g = (g << 3) | (g >> 2);

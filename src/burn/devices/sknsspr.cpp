@@ -274,33 +274,33 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 
 	if ((!disabled)){
 
-		group_enable    = (sprite_regs[0x00/4] & 0x0040) >> 6; // RWR0
+		group_enable    = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x00/4]) & 0x0040) >> 6; // RWR0
 
 		/* Sengekis uses global flip */
-		sprite_flip = (sprite_regs[0x04/4] & 0x03); // RWR1
+		sprite_flip = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x04/4]) & 0x03); // RWR1
 
-		sprite_y_scroll = ((sprite_regs[0x08/4] & 0x7fc0) >> 6); // RWR2
-		sprite_x_scroll = ((sprite_regs[0x10/4] & 0x7fc0) >> 6); // RWR4
+		sprite_y_scroll = ((BURN_ENDIAN_SWAP_INT32(sprite_regs[0x08/4]) & 0x7fc0) >> 6); // RWR2
+		sprite_x_scroll = ((BURN_ENDIAN_SWAP_INT32(sprite_regs[0x10/4]) & 0x7fc0) >> 6); // RWR4
 		if (sprite_y_scroll&0x100) sprite_y_scroll -= 0x200; // Signed
 		if (sprite_x_scroll&0x100) sprite_x_scroll -= 0x200; // Signed
 
-		group_x_offset[0] = (sprite_regs[0x18/4] & 0xffc0) >> 6; // RWR6
-		group_y_offset[0] = (sprite_regs[0x1c/4] & 0xffc0) >> 6; // RWR7
+		group_x_offset[0] = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x18/4]) & 0xffc0) >> 6; // RWR6
+		group_y_offset[0] = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x1c/4]) & 0xffc0) >> 6; // RWR7
 		if (group_x_offset[0]&0x200) group_x_offset[0] -= 0x400; // Signed
 		if (group_y_offset[0]&0x200) group_y_offset[0] -= 0x400; // Signed
 
-		group_x_offset[1] = (sprite_regs[0x20/4] & 0xffc0) >> 6; // RWR8
-		group_y_offset[1] = (sprite_regs[0x24/4] & 0xffc0) >> 6; // RWR9
+		group_x_offset[1] = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x20/4]) & 0xffc0) >> 6; // RWR8
+		group_y_offset[1] = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x24/4]) & 0xffc0) >> 6; // RWR9
 		if (group_x_offset[1]&0x200) group_x_offset[1] -= 0x400; // Signed
 		if (group_y_offset[1]&0x200) group_y_offset[1] -= 0x400; // Signed
 
-		group_x_offset[2] = (sprite_regs[0x28/4] & 0xffc0) >> 6; // RWR10
-		group_y_offset[2] = (sprite_regs[0x2c/4] & 0xffc0) >> 6; // RWR11
+		group_x_offset[2] = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x28/4]) & 0xffc0) >> 6; // RWR10
+		group_y_offset[2] = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x2c/4]) & 0xffc0) >> 6; // RWR11
 		if (group_x_offset[2]&0x200) group_x_offset[2] -= 0x400; // Signed
 		if (group_y_offset[2]&0x200) group_y_offset[2] -= 0x400; // Signed
 
-		group_x_offset[3] = (sprite_regs[0x30/4] & 0xffc0) >> 6; // RWR12
-		group_y_offset[3] = (sprite_regs[0x34/4] & 0xffc0) >> 6; // RWR13
+		group_x_offset[3] = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x30/4]) & 0xffc0) >> 6; // RWR12
+		group_y_offset[3] = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x34/4]) & 0xffc0) >> 6; // RWR13
 		if (group_x_offset[3]&0x200) group_x_offset[3] -= 0x400; // Signed
 		if (group_y_offset[3]&0x200) group_y_offset[3] -= 0x400; // Signed
 
@@ -313,11 +313,11 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 		gfxlen = gfx_length;
 		while( source<finish )
 		{
-			xflip = (source[0] & 0x00000200) >> 9;
-			yflip = (source[0] & 0x00000100) >> 8;
+			xflip = (BURN_ENDIAN_SWAP_INT32(source[0]) & 0x00000200) >> 9;
+			yflip = (BURN_ENDIAN_SWAP_INT32(source[0]) & 0x00000100) >> 8;
 
-			ysize = (source[0] & 0x30000000) >> 28;
-			xsize = (source[0] & 0x03000000) >> 24;
+			ysize = (BURN_ENDIAN_SWAP_INT32(source[0]) & 0x30000000) >> 28;
+			xsize = (BURN_ENDIAN_SWAP_INT32(source[0]) & 0x03000000) >> 24;
 			xsize ++;
 			ysize ++;
 
@@ -326,19 +326,19 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 
 			size = xsize * ysize;
 
-			joint = (source[0] & 0x0000e000) >> 13;
+			joint = (BURN_ENDIAN_SWAP_INT32(source[0]) & 0x0000e000) >> 13;
 
 			if (!(joint & 1))
 			{
-				xpos =  (source[2] & 0x0000ffc0) >> 6;
-				ypos =  (source[3] & 0x0000ffc0) >> 6;
+				xpos =  (BURN_ENDIAN_SWAP_INT32(source[2]) & 0x0000ffc0) >> 6;
+				ypos =  (BURN_ENDIAN_SWAP_INT32(source[3]) & 0x0000ffc0) >> 6;
 
 				xpos += sprite_x_scroll; // Global offset
 				ypos += sprite_y_scroll;
 
 				if (group_enable)
 				{
-					group_number = (source[0] & 0x00001800) >> 11;
+					group_number = (BURN_ENDIAN_SWAP_INT32(source[0]) & 0x00001800) >> 11;
 
 					/* the group positioning doesn't seem to be working as i'd expect,
 					if I apply the x position the cursor on galpani4 ends up moving
@@ -357,8 +357,8 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 			}
 			else
 			{
-				xpos +=  (source[2] & 0x0000ffc0) >> 6;
-				ypos +=  (source[3] & 0x0000ffc0) >> 6;
+				xpos +=  (BURN_ENDIAN_SWAP_INT32(source[2]) & 0x0000ffc0) >> 6;
+				ypos +=  (BURN_ENDIAN_SWAP_INT32(source[3]) & 0x0000ffc0) >> 6;
 			}
 
 			if (xpos > 0x1ff) xpos -= 0x400;
@@ -383,26 +383,26 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 			/* Palette linking */
 			if (!(joint & 2))
 			{
-				colour = (source[0] & 0x0000003f) >> 0;
+				colour = (BURN_ENDIAN_SWAP_INT32(source[0]) & 0x0000003f) >> 0;
 			}
 
 			/* Priority and Tile linking */
 			if (!(joint & 4))
 			{
-				romoffset = (source[1] & 0x07ffffff) >> 0;
-				pri = (source[0] & 0x000000c0) >> 6;
+				romoffset = (BURN_ENDIAN_SWAP_INT32(source[1]) & 0x07ffffff) >> 0;
+				pri = (BURN_ENDIAN_SWAP_INT32(source[0]) & 0x000000c0) >> 6;
 			} else {
 				romoffset = endromoffs;
 			}
 
-			grow = (source[0]>>23) & 1;
+			grow = (BURN_ENDIAN_SWAP_INT32(source[0])>>23) & 1;
 
 			if (!grow)
 			{
-				zoomx_m = (source[2] >> 24)&0x00fc;
-				zoomx_s = (source[2] >> 16)&0x00fc;
-				zoomy_m = (source[3] >> 24)&0x00fc;
-				zoomy_s = (source[3] >> 16)&0x00fc;
+				zoomx_m = (BURN_ENDIAN_SWAP_INT32(source[2]) >> 24)&0x00fc;
+				zoomx_s = (BURN_ENDIAN_SWAP_INT32(source[2]) >> 16)&0x00fc;
+				zoomy_m = (BURN_ENDIAN_SWAP_INT32(source[3]) >> 24)&0x00fc;
+				zoomy_s = (BURN_ENDIAN_SWAP_INT32(source[3]) >> 16)&0x00fc;
 			}
 			else
 			{
@@ -413,9 +413,9 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 				//  convinced this implementation is correct because we simply end up ignoring
 				//  part of the data)
 				zoomx_m = 0;
-				zoomx_s = (source[2] >> 24)&0x00fc;
+				zoomx_s = (BURN_ENDIAN_SWAP_INT32(source[2]) >> 24)&0x00fc;
 				zoomy_m = 0;
-				zoomy_s = (source[3] >> 24)&0x00fc;
+				zoomy_s = (BURN_ENDIAN_SWAP_INT32(source[3]) >> 24)&0x00fc;
 
 
 			}

@@ -401,7 +401,7 @@ static void draw_txt_layer(INT32 scrollx, INT32 scrolly)
 
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		INT32 code = vram[offs];
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		INT32 color = code >> 12;
 		code &= 0xfff;
 
@@ -426,7 +426,7 @@ static void draw_layer(UINT8 *ram, UINT8 *gfx, INT32 col, INT32 scrollx, INT32 s
 		sy -= scrolly;
 		if (sy < -15) sy += 512;
 
-		INT32 code = vram[offs];
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		INT32 color = (code >> 12) & 0x0f;
 		code &= 0xfff;
 		code |= bank;
@@ -466,18 +466,18 @@ static void draw_sprites(INT32 priority, INT32 yoffset)
 
 	for (INT32 offs = 0x400; offs >= 0; offs -= 4)
 	{
-		INT32 attr = ram[offs];
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(ram[offs]);
 		if (~attr & 0x8000) continue;
 
-		INT32 sprite = ram[offs+1];
+		INT32 sprite = BURN_ENDIAN_SWAP_INT16(ram[offs+1]);
 
 		INT32 prio = (sprite >> 14) & 3;
 		if (prio != priority) continue;
 
 		sprite &= 0x3fff;
 
-		INT32 y = ram[offs+3];
-		INT32 x = ram[offs+2];
+		INT32 y = BURN_ENDIAN_SWAP_INT16(ram[offs+3]);
+		INT32 x = BURN_ENDIAN_SWAP_INT16(ram[offs+2]);
 
 		if (x & 0x8000) x = 0 - (0x200 - (x & 0x1ff));
 		else x &= 0x1ff;
@@ -533,7 +533,7 @@ static inline void DrvRecalcPalette()
 	UINT8 r,g,b;
 	UINT16 *p = (UINT16*)DrvPalRAM;
 	for (INT32 i = 0; i < 0x1000/2; i++) {
-		INT32 d = p[i];
+		INT32 d = BURN_ENDIAN_SWAP_INT16(p[i]);
 
 		b = (d >> 10) & 0x1f;
 		g = (d >>  5) & 0x1f;

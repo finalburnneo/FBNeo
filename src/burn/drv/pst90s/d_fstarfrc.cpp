@@ -993,31 +993,31 @@ static void draw_sprites(INT32 layerpriority)
 
 	for (offs = 0; offs < 0x1000 / 2; offs += 8)
 	{
-		if (pFstarfrcSpriteRam[offs] & 0x04)	/* enable */
+		if (BURN_ENDIAN_SWAP_INT16(pFstarfrcSpriteRam[offs]) & 0x04)	/* enable */
 		{
 			INT32 code,color,sizex,sizey,flipx,flipy,xpos,ypos;
 			INT32 x,y,priority;
 
-			code = pFstarfrcSpriteRam[offs+1];
-			color = (pFstarfrcSpriteRam[offs+2] & 0xf0) >> 4;
-			sizex = 1 << ((pFstarfrcSpriteRam[offs+2] & 0x03) >> 0);
+			code = BURN_ENDIAN_SWAP_INT16(pFstarfrcSpriteRam[offs+1]);
+			color = (BURN_ENDIAN_SWAP_INT16(pFstarfrcSpriteRam[offs+2]) & 0xf0) >> 4;
+			sizex = 1 << ((BURN_ENDIAN_SWAP_INT16(pFstarfrcSpriteRam[offs+2]) & 0x03) >> 0);
 			if(Riot)
 				sizey = sizex;
 			else
-			sizey = 1 << ((pFstarfrcSpriteRam[offs+2] & 0x0c) >> 2);
+			sizey = 1 << ((BURN_ENDIAN_SWAP_INT16(pFstarfrcSpriteRam[offs+2]) & 0x0c) >> 2);
 			if (sizex >= 2) code &= ~0x01;
 			if (sizey >= 2) code &= ~0x02;
 			if (sizex >= 4) code &= ~0x04;
 			if (sizey >= 4) code &= ~0x08;
 			if (sizex >= 8) code &= ~0x10;
 			if (sizey >= 8) code &= ~0x20;
-			flipx = pFstarfrcSpriteRam[offs] & 0x01;
-			flipy = pFstarfrcSpriteRam[offs] & 0x02;
-			xpos = pFstarfrcSpriteRam[offs+4];
+			flipx = BURN_ENDIAN_SWAP_INT16(pFstarfrcSpriteRam[offs]) & 0x01;
+			flipy = BURN_ENDIAN_SWAP_INT16(pFstarfrcSpriteRam[offs]) & 0x02;
+			xpos = BURN_ENDIAN_SWAP_INT16(pFstarfrcSpriteRam[offs+4]);
 			if (xpos >= 0x8000) xpos -= 0x10000;
-			ypos = pFstarfrcSpriteRam[offs+3];
+			ypos = BURN_ENDIAN_SWAP_INT16(pFstarfrcSpriteRam[offs+3]);
 			if (ypos >= 0x8000) ypos -= 0x10000;
-			priority = (pFstarfrcSpriteRam[offs] & 0xc0) >> 6;
+			priority = (BURN_ENDIAN_SWAP_INT16(pFstarfrcSpriteRam[offs]) & 0xc0) >> 6;
 
 			if (priority != layerpriority) continue;
 
@@ -1089,7 +1089,7 @@ INT32 FstarfrcCalcPalette()
 	UINT32* pd;
 
 	for (i = 0, ps = (UINT16*)FstarfrcPaletteRam, pd = FstarfrcPalette; i < 0x2000; i++, ps++, pd++) {
-		*pd = CalcCol(*ps);
+		*pd = CalcCol(BURN_ENDIAN_SWAP_INT16(*ps));
 	}
 
 	return 0;

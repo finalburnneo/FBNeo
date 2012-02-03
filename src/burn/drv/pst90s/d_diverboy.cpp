@@ -339,10 +339,10 @@ static void draw_sprites()
 
 	for (INT32 offs = 0; offs < 0x4000 / 2; offs+=8)
 	{
-		INT32 sy   = ( 256 - vram[offs + 4]) - 16;
-		INT32 sx   = ((480 - vram[offs + 0]) & 0x1ff) - 173;
-		INT32 attr = vram[offs + 1];
-		INT32 code = vram[offs + 3];
+		INT32 sy   = ( 256 - BURN_ENDIAN_SWAP_INT16(vram[offs + 4])) - 16;
+		INT32 sx   = ((480 - BURN_ENDIAN_SWAP_INT16(vram[offs + 0])) & 0x1ff) - 173;
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(vram[offs + 1]);
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs + 3]);
 		INT32 color = ((attr & 0x00f0) >> 4) | ((attr & 0x000c) << 2);
 		INT32 flash =  (attr & 0x1000);
 		INT32 bank  =  (attr & 0x0002) >> 1;
@@ -364,9 +364,9 @@ static INT32 DrvDraw()
 		UINT8 r,g,b;
 		UINT16 *pal = (UINT16*)DrvPalRAM;
 		for (INT32 i = 0; i < 0x800 / 2; i++, pal++) {
-			r = ((*pal << 4) & 0xf0) | ((*pal << 0) & 0x0f);
-			g = ((*pal >> 0) & 0xf0) | ((*pal >> 4) & 0x0f);
-			b = ((*pal >> 4) & 0xf0) | ((*pal >> 8) & 0x0f);
+			r = ((BURN_ENDIAN_SWAP_INT16(*pal) << 4) & 0xf0) | ((BURN_ENDIAN_SWAP_INT16(*pal) << 0) & 0x0f);
+			g = ((BURN_ENDIAN_SWAP_INT16(*pal) >> 0) & 0xf0) | ((BURN_ENDIAN_SWAP_INT16(*pal) >> 4) & 0x0f);
+			b = ((BURN_ENDIAN_SWAP_INT16(*pal) >> 4) & 0xf0) | ((BURN_ENDIAN_SWAP_INT16(*pal) >> 8) & 0x0f);
 
 			DrvPalette[i] = BurnHighCol(r, g, b, 0);
 		}

@@ -200,7 +200,7 @@ static void crshrace_drawtile(INT32 offset)
 	INT32 sx = (offset & 0x3f) << 4;
 	INT32 sy = (offset >> 6) << 4;
 
-	INT32 code  = *((UINT16*)(DrvVidRAM1 + (offset << 1)));
+	INT32 code  = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM1 + (offset << 1))));
 	INT32 color = code >> 12;
 	    code  = (code & 0xfff) | (*roz_bank << 12);
 	    color = (color << 4) | 0x100;
@@ -213,7 +213,7 @@ static void crshrace_drawtile(INT32 offset)
 			INT32 pxl = *src++;
 			if (pxl == 0x0f) pxl = ~0;
 
-			dst[x] = pxl | color;
+			dst[x] = BURN_ENDIAN_SWAP_INT16(pxl | color);
 		}
 		dst += 1024;
 	}
@@ -222,12 +222,12 @@ static void crshrace_drawtile(INT32 offset)
 void __fastcall crshrace_write_word(UINT32 address, UINT16 data)
 {
 	if (address >= 0xfff020 && address <= 0xfff03f) { // K053936_0_ctrl
-		DrvGfxCtrl[(address & 0x1f)/2] = data;
+		DrvGfxCtrl[(address & 0x1f)/2] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
 	if ((address & 0xfffe000) == 0xd00000) {
-		*((UINT16*)(DrvVidRAM1 + (address & 0x1ffe))) = data;
+		*((UINT16*)(DrvVidRAM1 + (address & 0x1ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		crshrace_drawtile((address & 0x1ffe)/2);
 		return;
 	}
@@ -559,25 +559,25 @@ static void draw_sprites()
 
 	static const INT32 zoomtable[16] = { 0,7,14,20,25,30,34,38,42,46,49,52,54,57,59,61 };
 
-	while (offs < 0x0400 && (sprbuf1[offs] & 0x4000) == 0)
+	while (offs < 0x0400 && (BURN_ENDIAN_SWAP_INT16(sprbuf1[offs]) & 0x4000) == 0)
 	{
-		INT32 attr_start = 4 * (sprbuf1[offs++] & 0x03ff);
+		INT32 attr_start = 4 * (BURN_ENDIAN_SWAP_INT16(sprbuf1[offs++]) & 0x03ff);
 
-		INT32 ox        =  sprbuf1[attr_start + 1] & 0x01ff;
-		INT32 xsize     = (sprbuf1[attr_start + 1] & 0x0e00) >> 9;
-		INT32 zoomx     = (sprbuf1[attr_start + 1] & 0xf000) >> 12;
-		INT32 oy        =  sprbuf1[attr_start + 0] & 0x01ff;
-		INT32 ysize     = (sprbuf1[attr_start + 0] & 0x0e00) >> 9;
-		INT32 zoomy     = (sprbuf1[attr_start + 0] & 0xf000) >> 12;
-		INT32 flipx     =  sprbuf1[attr_start + 2] & 0x4000;
-		INT32 flipy     =  sprbuf1[attr_start + 2] & 0x8000;
-		INT32 color     = (sprbuf1[attr_start + 2] & 0x1f00) >> 8;
-		INT32 map_start =  sprbuf1[attr_start + 3] & 0x7fff;
+		INT32 ox        =  BURN_ENDIAN_SWAP_INT16(sprbuf1[attr_start + 1]) & 0x01ff;
+		INT32 xsize     = (BURN_ENDIAN_SWAP_INT16(sprbuf1[attr_start + 1]) & 0x0e00) >> 9;
+		INT32 zoomx     = (BURN_ENDIAN_SWAP_INT16(sprbuf1[attr_start + 1]) & 0xf000) >> 12;
+		INT32 oy        =  BURN_ENDIAN_SWAP_INT16(sprbuf1[attr_start + 0]) & 0x01ff;
+		INT32 ysize     = (BURN_ENDIAN_SWAP_INT16(sprbuf1[attr_start + 0]) & 0x0e00) >> 9;
+		INT32 zoomy     = (BURN_ENDIAN_SWAP_INT16(sprbuf1[attr_start + 0]) & 0xf000) >> 12;
+		INT32 flipx     =  BURN_ENDIAN_SWAP_INT16(sprbuf1[attr_start + 2]) & 0x4000;
+		INT32 flipy     =  BURN_ENDIAN_SWAP_INT16(sprbuf1[attr_start + 2]) & 0x8000;
+		INT32 color     = (BURN_ENDIAN_SWAP_INT16(sprbuf1[attr_start + 2]) & 0x1f00) >> 8;
+		INT32 map_start =  BURN_ENDIAN_SWAP_INT16(sprbuf1[attr_start + 3]) & 0x7fff;
 
 		zoomx = 16 - zoomtable[zoomx]/8;
 		zoomy = 16 - zoomtable[zoomy]/8;
 
-		if (sprbuf1[attr_start + 2] & 0x20ff) color = 1; // what?? mame_rand? why?
+		if (BURN_ENDIAN_SWAP_INT16(sprbuf1[attr_start + 2]) & 0x20ff) color = 1; // what?? mame_rand? why?
 
 		for (INT32 y = 0;y <= ysize;y++)
 		{
@@ -593,7 +593,7 @@ static void draw_sprites()
 				else
 					sx = ((ox + zoomx * x + 16) & 0x1ff) - 16;
 
-				INT32 code = sprbuf2[map_start & 0x7fff] & 0x7fff;
+				INT32 code = BURN_ENDIAN_SWAP_INT16(sprbuf2[map_start & 0x7fff]) & 0x7fff;
 				map_start++;
 
 				RenderZoomedTile(pTransDraw, DrvGfxROM2, code, (color << 4) | 0x200, 0x0f, sx, sy, flipx, flipy, 16, 16, zoomx << 12, zoomy << 12);
@@ -613,7 +613,7 @@ static void draw_background()
 
 		INT32 sy = (offs >> 6) << 3;
 
-		INT32 code = vram[offs] & 0x3fff;
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]) & 0x3fff;
 		if (code == 0) continue;
 
 		Render8x8Tile_Mask(pTransDraw, code, sx, sy, 0, 4, 0xff, 0, DrvGfxROM0);
@@ -632,7 +632,7 @@ static inline void copy_roz(UINT32 startx, UINT32 starty, INT32 incxx, INT32 inc
 
 		for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, cy+=incxy, dst++)
 		{
-			INT32 p = src[(((cy >> 16) & 0x3ff) * 1024) + ((cx >> 16) & 0x3ff)];
+			INT32 p = BURN_ENDIAN_SWAP_INT16(src[(((cy >> 16) & 0x3ff) * 1024) + ((cx >> 16) & 0x3ff)]);
 
 			if (p != 0xffff) {
 				*dst = p;
@@ -648,15 +648,15 @@ static void draw_foreground()
 	UINT32 startx,starty;
 	INT32 incxx,incxy,incyx,incyy;
 
-	startx = 256 * (INT16)(ctrl[0x00]);
-	starty = 256 * (INT16)(ctrl[0x01]);
-	incyx  =       (INT16)(ctrl[0x02]);
-	incyy  =       (INT16)(ctrl[0x03]);
-	incxx  =       (INT16)(ctrl[0x04]);
-	incxy  =       (INT16)(ctrl[0x05]);
+	startx = 256 * (INT16)(BURN_ENDIAN_SWAP_INT16(ctrl[0x00]));
+	starty = 256 * (INT16)(BURN_ENDIAN_SWAP_INT16(ctrl[0x01]));
+	incyx  =       (INT16)(BURN_ENDIAN_SWAP_INT16(ctrl[0x02]));
+	incyy  =       (INT16)(BURN_ENDIAN_SWAP_INT16(ctrl[0x03]));
+	incxx  =       (INT16)(BURN_ENDIAN_SWAP_INT16(ctrl[0x04]));
+	incxy  =       (INT16)(BURN_ENDIAN_SWAP_INT16(ctrl[0x05]));
 
-	if (ctrl[0x06] & 0x4000) { incyx *= 256; incyy *= 256; }
-	if (ctrl[0x06] & 0x0040) { incxx *= 256; incxy *= 256; }
+	if (BURN_ENDIAN_SWAP_INT16(ctrl[0x06]) & 0x4000) { incyx *= 256; incyy *= 256; }
+	if (BURN_ENDIAN_SWAP_INT16(ctrl[0x06]) & 0x0040) { incxx *= 256; incxy *= 256; }
 
 	startx -= -21 * incyx;
 	starty -= -21 * incyy;
@@ -673,9 +673,9 @@ static INT32 DrvDraw()
 		UINT8 r,g,b;
 		UINT16 *p = (UINT16*)DrvPalRAM;
 		for (INT32 i = 0; i < 0x400; i++) {
-			r = (p[i] >>  0) & 0x1f;
-			g = (p[i] >> 10) & 0x1f;
-			b = (p[i] >>  5) & 0x1f;
+			r = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  0) & 0x1f;
+			g = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 10) & 0x1f;
+			b = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  5) & 0x1f;
 
 			r = (r << 3) | (r >> 2);
 			g = (g << 3) | (g >> 2);

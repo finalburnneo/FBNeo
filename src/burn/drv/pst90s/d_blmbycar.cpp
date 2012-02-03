@@ -346,12 +346,12 @@ UINT16 __fastcall Blmbycar68KReadWord(UINT32 a)
 {
 	if (a >= 0x204000 && a <= 0x2045ff) {
 		UINT16 *RAM = (UINT16*)DrvPaletteRam;
-		return RAM[(a - 0x204000) >> 1];
+		return BURN_ENDIAN_SWAP_INT16(RAM[(a - 0x204000) >> 1]);
 	}
 	
 	if (a >= 0x204600 && a <= 0x207fff) {
 		UINT16 *RAM = (UINT16*)Drv68KRam + (0x8000 / 2);
-		return RAM[(a - 0x204600) >> 1];
+		return BURN_ENDIAN_SWAP_INT16(RAM[(a - 0x204600) >> 1]);
 	}
 	
 	switch (a) {
@@ -380,19 +380,19 @@ void __fastcall Blmbycar68KWriteWord(UINT32 a, UINT16 d)
 	
 	if (a >= 0x200000 && a <= 0x2005ff) {
 		UINT16 *RAM = (UINT16*)DrvPaletteRam;
-		RAM[(a - 0x200000) >> 1] = d;
+		RAM[(a - 0x200000) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 	
 	if (a >= 0x204000 && a <= 0x2045ff) {
 		UINT16 *RAM = (UINT16*)DrvPaletteRam;
-		RAM[(a - 0x204000) >> 1] = d;
+		RAM[(a - 0x204000) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 	
 	if (a >= 0x204600 && a <= 0x207fff) {
 		UINT16 *RAM = (UINT16*)Drv68KRam + (0x8000 / 2);
-		RAM[(a - 0x204600) >> 1] = d;
+		RAM[(a - 0x204600) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 	
@@ -400,14 +400,14 @@ void __fastcall Blmbycar68KWriteWord(UINT32 a, UINT16 d)
 		case 0x10c000:
 		case 0x10c002: {
 			UINT16 *RAM = (UINT16*)DrvScroll1;
-			RAM[(a - 0x10c000) >> 1] = d;
+			RAM[(a - 0x10c000) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x10c004:
 		case 0x10c006: {
 			UINT16 *RAM = (UINT16*)DrvScroll0;
-			RAM[(a - 0x10c004) >> 1] = d;
+			RAM[(a - 0x10c004) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
@@ -458,9 +458,9 @@ static INT32 DrvInit()
 	if (DrvEncrypted) {
 		UINT16 *RAM = (UINT16*)Drv68KRom;
 		for (INT32 i = 0; i < 0x80000; i++) {
-			UINT16 x = RAM[i];
+			UINT16 x = BURN_ENDIAN_SWAP_INT16(RAM[i]);
 			x = (x & ~0x0606) | ((x & 0x0202) << 1) | ((x & 0x0404) >> 1);
-			RAM[i] = x;
+			RAM[i] = BURN_ENDIAN_SWAP_INT16(x);
 		}
 	}
 	
@@ -544,7 +544,7 @@ static void DrvCalcPalette()
 	UINT32* pd;
 
 	for (i = 0, ps = (UINT16*)DrvPaletteRam, pd = DrvPalette; i < 0x300; i++, ps++, pd++) {
-		*pd = CalcCol(*ps);
+		*pd = CalcCol(BURN_ENDIAN_SWAP_INT16(*ps));
 	}
 }
 
@@ -557,8 +557,8 @@ static void DrvRenderBgLayer(INT32 RenderCategory)
 	
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 64; mx++) {
-			Code = RAM[(TileIndex << 1) + 0];
-			Attr = RAM[(TileIndex << 1) + 1];
+			Code = BURN_ENDIAN_SWAP_INT16(RAM[(TileIndex << 1) + 0]);
+			Attr = BURN_ENDIAN_SWAP_INT16(RAM[(TileIndex << 1) + 1]);
 			Colour = Attr & 0x1f;
 			xFlip = (Attr >> 6) & 0x01;
 			yFlip = (Attr >> 6) & 0x02;
@@ -568,8 +568,8 @@ static void DrvRenderBgLayer(INT32 RenderCategory)
 				x = 16 * mx;
 				y = 16 * my;
 			
-				x -= ScrollRAM[1] & 0x3ff;
-				y -= ScrollRAM[0] & 0x1ff;
+				x -= BURN_ENDIAN_SWAP_INT16(ScrollRAM[1]) & 0x3ff;
+				y -= BURN_ENDIAN_SWAP_INT16(ScrollRAM[0]) & 0x1ff;
 				if (x < -16) x += 1024;
 				if (y < -16) y += 512;
 				
@@ -620,8 +620,8 @@ static void DrvRenderFgLayer(INT32 RenderCategory)
 	
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 64; mx++) {
-			Code = RAM[(TileIndex << 1) + 0];
-			Attr = RAM[(TileIndex << 1) + 1];
+			Code = BURN_ENDIAN_SWAP_INT16(RAM[(TileIndex << 1) + 0]);
+			Attr = BURN_ENDIAN_SWAP_INT16(RAM[(TileIndex << 1) + 1]);
 			Colour = Attr & 0x1f;
 			xFlip = (Attr >> 6) & 0x01;
 			yFlip = (Attr >> 6) & 0x02;
@@ -631,8 +631,8 @@ static void DrvRenderFgLayer(INT32 RenderCategory)
 				x = 16 * mx;
 				y = 16 * my;
 			
-				x -= (ScrollRAM[1] + 5) & 0x3ff;
-				y -= (ScrollRAM[0] + 1) & 0x1ff;
+				x -= (BURN_ENDIAN_SWAP_INT16(ScrollRAM[1]) + 5) & 0x3ff;
+				y -= (BURN_ENDIAN_SWAP_INT16(ScrollRAM[0]) + 1) & 0x1ff;
 				if (x < -16) x += 1024;
 				if (y < -16) y += 512;
 				
@@ -683,17 +683,17 @@ static void DrawSprites(INT32 RenderPriority)
 	Finish = RAM + (0x2000 / 2) - (8 / 2);
 
 	for (; Source < Finish; Source += 8 / 2) {
-		if (Source[0] & 0x8000)	break;
+		if (BURN_ENDIAN_SWAP_INT16(Source[0]) & 0x8000)	break;
 	}
 
 	Source -= 8 / 2;
 	Finish = RAM;
 
 	for (; Source >= Finish; Source -= 8 / 2) {
-		INT32 y = Source[0];
-		INT32 Code = Source[1];
-		INT32 Attr = Source[2];
-		INT32 x = Source[3];
+		INT32 y = BURN_ENDIAN_SWAP_INT16(Source[0]);
+		INT32 Code = BURN_ENDIAN_SWAP_INT16(Source[1]);
+		INT32 Attr = BURN_ENDIAN_SWAP_INT16(Source[2]);
+		INT32 x = BURN_ENDIAN_SWAP_INT16(Source[3]);
 
 		INT32 xFlip = Attr & 0x4000;
 		INT32 yFlip = Attr & 0x8000;

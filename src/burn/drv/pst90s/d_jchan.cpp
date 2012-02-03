@@ -138,7 +138,7 @@ static void toxboy_handle_04_subcommand(UINT8 mcu_subcmd, UINT16 *mcu_ram)
 
 	UINT16 romstart  = mcu_rom[offs+2] | (mcu_rom[offs+3]<<8);
 	UINT16 romlength = mcu_rom[offs+4] | (mcu_rom[offs+5]<<8);
-	UINT16 ramdest   = mcu_ram[0x0012/2];
+	UINT16 ramdest   = BURN_ENDIAN_SWAP_INT16(mcu_ram[0x0012/2]);
 
 	for (INT32 x = 0; x < romlength; x++) {
 		DrvMCURAM[(ramdest+x)] = mcu_rom[(romstart+x)];
@@ -148,9 +148,9 @@ static void toxboy_handle_04_subcommand(UINT8 mcu_subcmd, UINT16 *mcu_ram)
 static void jchan_mcu_run()
 {
 	UINT16 *mcu_ram = (UINT16*)DrvMCURAM;
-	UINT16 mcu_command = mcu_ram[0x0010/2];		// command nb
-	UINT16 mcu_offset  = mcu_ram[0x0012/2] / 2;	// offset in shared RAM where MCU will write
-	UINT16 mcu_subcmd  = mcu_ram[0x0014/2];		// sub-command parameter, happens only for command #4
+	UINT16 mcu_command = BURN_ENDIAN_SWAP_INT16(mcu_ram[0x0010/2]);		// command nb
+	UINT16 mcu_offset  = BURN_ENDIAN_SWAP_INT16(mcu_ram[0x0012/2]) / 2;	// offset in shared RAM where MCU will write
+	UINT16 mcu_subcmd  = BURN_ENDIAN_SWAP_INT16(mcu_ram[0x0014/2]);		// sub-command parameter, happens only for command #4
 
 	switch (mcu_command >> 8)
 	{
@@ -159,7 +159,7 @@ static void jchan_mcu_run()
 		break;
 
 		case 0x03:
-			mcu_ram[mcu_offset] = (DrvDips[1] << 8) | (DrvDips[0] << 0);
+			mcu_ram[mcu_offset] = BURN_ENDIAN_SWAP_INT16((DrvDips[1] << 8) | (DrvDips[0] << 0));
 		break;
 
 		case 0x02:
@@ -180,7 +180,7 @@ void __fastcall jchan_main_write_word(UINT32 address, UINT16 data)
 		case 0x340000:
 		case 0x350000:
 		case 0x360000:
-			mcu_com[(address - 0x330000) >> 16] = data;
+			mcu_com[(address - 0x330000) >> 16] = BURN_ENDIAN_SWAP_INT16(data);
 			if (mcu_com[0] == 0xffff && mcu_com[1] == 0xffff && mcu_com[2] == 0xffff && mcu_com[3] == 0xffff) {
 				memset (mcu_com, 0, 4 * sizeof(UINT16));
 				jchan_mcu_run();
@@ -277,7 +277,7 @@ UINT8 __fastcall jchan_sub_read_byte(UINT32 /*address*/)
 
 void __fastcall jchan_main_command_write_word(UINT32 address, UINT16 data)
 {
-	*((UINT16*)(DrvShareRAM + (address & 0x3ffe))) = data;
+	*((UINT16*)(DrvShareRAM + (address & 0x3ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 
 	if (address == 0x403ffe) {
 		SekClose();
@@ -295,7 +295,7 @@ void __fastcall jchan_main_command_write_byte(UINT32 address, UINT8 data)
 
 void __fastcall jchan_sub_command_write_word(UINT32 address, UINT16 data)
 {
-	*((UINT16*)(DrvShareRAM + (address & 0x3ffe))) = data;
+	*((UINT16*)(DrvShareRAM + (address & 0x3ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 
 	if (address == 0x400000) { // not used?
 		SekClose();
@@ -313,7 +313,7 @@ void __fastcall jchan_sub_command_write_byte(UINT32 address, UINT8 data)
 
 static inline void palette_update(UINT16 offset)
 {
-	INT32 p = *((UINT16*)(DrvPalRAM + offset));
+	INT32 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	INT32 r = (p >>  5) & 0x1f;
 	INT32 g = (p >> 10) & 0x1f;
@@ -328,7 +328,7 @@ static inline void palette_update(UINT16 offset)
 
 void __fastcall jchan_palette_write_word(UINT32 address, UINT16 data)
 {
-	*((UINT16*)(DrvPalRAM + (address & 0xfffe))) = data;
+	*((UINT16*)(DrvPalRAM + (address & 0xfffe))) = BURN_ENDIAN_SWAP_INT16(data);
 
 	palette_update(address);
 }
@@ -592,7 +592,7 @@ static void draw_layer(UINT8 *ram, UINT8 *scr, INT32 layer, INT32 priority)
 	UINT16 *sram = (UINT16*)scr;
 	UINT16 *regs = (UINT16*)DrvVidRegs;
 
-	INT32 tmflip = regs[4];
+	INT32 tmflip = BURN_ENDIAN_SWAP_INT16(regs[4]);
 
 	INT32 enable = ~tmflip & (layer ? 0x0010 : 0x1000);
 	if (enable == 0) return; // disable!
@@ -602,8 +602,8 @@ static void draw_layer(UINT8 *ram, UINT8 *scr, INT32 layer, INT32 priority)
 
 	INT32 lsenable = tmflip & (layer ? 0x0008 : 0x0800); // linescroll
 
-	INT32 xscroll = regs[2 - (layer * 2)];
-	INT32 yscroll = regs[3 - (layer * 2)] >> 6;
+	INT32 xscroll = BURN_ENDIAN_SWAP_INT16(regs[2 - (layer * 2)]);
+	INT32 yscroll = BURN_ENDIAN_SWAP_INT16(regs[3 - (layer * 2)]) >> 6;
 
 	xscroll += (tmflipx) ? -((344 + (layer * 2)) * 64) : ((25 + (layer * 2)) * 64);
 	yscroll += (tmflipy) ? -260 : 11;
@@ -616,7 +616,7 @@ static void draw_layer(UINT8 *ram, UINT8 *scr, INT32 layer, INT32 priority)
 		for (INT32 y = 0; y < nScreenHeight; y++, dest += nScreenWidth) // line by line
 		{
 			INT32 scrollyy = (yscroll + y) & 0x1ff;
-			INT32 scrollxx = ((xscroll + sram[scrollyy]) >> 16) & 0x1ff;
+			INT32 scrollxx = ((xscroll + BURN_ENDIAN_SWAP_INT16(sram[scrollyy])) >> 16) & 0x1ff;
 	
 			INT32 srcy = (scrollyy & 0x1ff) >> 4;
 			INT32 srcx = (scrollxx & 0x1ff) >> 4;
@@ -625,8 +625,8 @@ static void draw_layer(UINT8 *ram, UINT8 *scr, INT32 layer, INT32 priority)
 			{
 				INT32 offs = ((srcy << 5) | ((srcx + (x >> 4)) & 0x1f));
 
-				INT32 attr  = vram[offs * 2 + 0];
-				INT32 code  = vram[offs * 2 + 1] & 0x1fff;
+				INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 0]);
+				INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 1]) & 0x1fff;
 				INT32 color = (attr & 0x00fc) << 2;
 				INT32 flipx = (attr & 0x0002) ? 0x0f : 0;
 				INT32 flipy = (attr & 0x0001) ? 0xf0 : 0;
@@ -666,8 +666,8 @@ static void draw_layer(UINT8 *ram, UINT8 *scr, INT32 layer, INT32 priority)
 
 			if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-			INT32 attr  = vram[offs * 2 + 0];
-			INT32 code  = vram[offs * 2 + 1] & 0x1fff;
+			INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 0]);
+			INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 1]) & 0x1fff;
 			INT32 color = (attr & 0x00fc) >> 2;
 			INT32 flipx = (attr & 0x0002);
 			INT32 flipy = (attr & 0x0001);

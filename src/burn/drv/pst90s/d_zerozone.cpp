@@ -397,10 +397,10 @@ static INT32 DrvDraw()
 		sx -=  8;
 		if (sy < 0 || sx < 0 || sy >= nScreenHeight || sx >= nScreenWidth) continue;
 
-		INT32 code  = vram[offs] & 0x7ff;
-		INT32 color = vram[offs] >> 12;
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs]) & 0x7ff;
+		INT32 color = BURN_ENDIAN_SWAP_INT16(vram[offs]) >> 12;
 
-		code += tilebank * (vram[offs] & 0x800);
+		code += tilebank * (BURN_ENDIAN_SWAP_INT16(vram[offs]) & 0x800);
 
 		Render8x8Tile(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM);
 	}

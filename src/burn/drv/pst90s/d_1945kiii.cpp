@@ -189,7 +189,7 @@ void __fastcall k1945iiiWriteWord(UINT32 sekAddress, UINT16 wordValue)
 void __fastcall k1945iiiWriteWordPalette(UINT32 sekAddress, UINT16 wordValue)
 {
 	sekAddress = (sekAddress & 0xffe) / 2;
-	RamPal[sekAddress] = wordValue;
+	RamPal[sekAddress] = BURN_ENDIAN_SWAP_INT16(wordValue);
 	if (sekAddress < 0x200) RamCurPal[sekAddress] = CalcCol(wordValue);
 }
 
@@ -333,7 +333,7 @@ static void DrawBackground()
 		if (sx <= -16 || sx >= 320 || sy <= -16 || sy >= 224)
 			continue;
 
-		INT32 code = RamBg[offs] & 0x1fff;
+		INT32 code = BURN_ENDIAN_SWAP_INT16(RamBg[offs]) & 0x1fff;
 		
 		if (sx >= 0 && sx <= 304 && sy >= 0 && sy <= 208) {
 			Render16x16Tile(pTransDraw, code, sx, sy, 0, 8, 0, RomBg);
@@ -347,10 +347,10 @@ static void DrawSprites()
 {
 	for (INT32 i = 0; i < 0x1000/2; i++)
 	{
-		INT32 sx		 =  RamSpr0[i] >> 8;
-		INT32 sy		 =  RamSpr0[i] & 0xff;
-		INT32 code	 = (RamSpr1[i] & 0x7ffe) >> 1;
-		sx 		|= (RamSpr1[i] & 0x0001) << 8;
+		INT32 sx		 =  BURN_ENDIAN_SWAP_INT16(RamSpr0[i]) >> 8;
+		INT32 sy		 =  BURN_ENDIAN_SWAP_INT16(RamSpr0[i]) & 0xff;
+		INT32 code	 = (BURN_ENDIAN_SWAP_INT16(RamSpr1[i]) & 0x7ffe) >> 1;
+		sx 		|= (BURN_ENDIAN_SWAP_INT16(RamSpr1[i]) & 0x0001) << 8;
 
 		if (sx >= 336) sx -= 512;
 		if (sy >= 240) sy -= 256;

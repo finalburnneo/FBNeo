@@ -1690,7 +1690,7 @@ static void DrvCalcPalette()
 	UINT32* pd;
 
 	for (i = 0, ps = (UINT16*)DrvPaletteRam, pd = DrvPalette; i < 0x600; i++, ps++, pd++) {
-		*pd = CalcCol(*ps);
+		*pd = CalcCol(BURN_ENDIAN_SWAP_INT16(*ps));
 	}
 }
 
@@ -1701,7 +1701,7 @@ static void CtribeCalcPalette()
 	UINT32* pd;
 
 	for (i = 0, ps = (UINT16*)DrvPaletteRam, pd = DrvPalette; i < 0x600; i++, ps++, pd++) {
-		*pd = CtribeCalcCol(*ps);
+		*pd = CtribeCalcCol(BURN_ENDIAN_SWAP_INT16(*ps));
 	}
 }
 
@@ -1713,7 +1713,7 @@ static void DrvRenderBgLayer(INT32 Opaque)
 	
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 32; mx++) {
-			Attr = VideoRam[TileIndex];
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 			Code = (Attr & 0xfff) | ((DrvBgTileBase & 0x01) << 12);
 			Colour = ((Attr & 0xf000) >> 12);
 			
@@ -1755,8 +1755,8 @@ static void DrvRenderFgLayer(INT32 Opaque)
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 32; mx++) {
 			Offset = TileIndex * 2;
-			Attr = VideoRam[Offset];
-			Code = VideoRam[Offset + 1] & 0x1fff;
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset]);
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[Offset + 1]) & 0x1fff;
 			Colour = Attr & 0x0f;
 			xFlip = Attr & 0x40;
 			
@@ -1811,17 +1811,17 @@ static void DrvRenderSprites()
 	UINT16 *Finish = Source + 0x800;
 	
 	while (Source < Finish) {
-		UINT16 Attr = Source[1];
+		UINT16 Attr = BURN_ENDIAN_SWAP_INT16(Source[1]);
 		
 		if (Attr & 0x01) {
 			INT32 i;
-			INT32 Bank = Source[3] & 0xff;
-			INT32 Code = (Source[2] & 0xff) + (Bank * 256);
-			INT32 Colour = Source[4] & 0xf;
+			INT32 Bank = BURN_ENDIAN_SWAP_INT16(Source[3]) & 0xff;
+			INT32 Code = (BURN_ENDIAN_SWAP_INT16(Source[2]) & 0xff) + (Bank * 256);
+			INT32 Colour = BURN_ENDIAN_SWAP_INT16(Source[4]) & 0xf;
 			INT32 xFlip = Attr & 0x10;
 			INT32 yFlip = Attr & 0x08;
-			INT32 sx = Source[5] & 0xff;
-			INT32 sy = Source[0] & 0xff;
+			INT32 sx = BURN_ENDIAN_SWAP_INT16(Source[5]) & 0xff;
+			INT32 sy = BURN_ENDIAN_SWAP_INT16(Source[0]) & 0xff;
 			INT32 Height = (Attr >> 5) & 0x07;
 			
 			if (Attr & 0x04) sx |= 0x100;

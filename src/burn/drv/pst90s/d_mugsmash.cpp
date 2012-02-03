@@ -235,23 +235,23 @@ void __fastcall mugsmash_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x0c0000:
-			*((UINT16*)(DrvVidRegs + (address & 7))) = data;
-			DrvScrollX[1] = *((UINT16*)(DrvVidRegs + 4)) + 7;
+			*((UINT16*)(DrvVidRegs + (address & 7))) = BURN_ENDIAN_SWAP_INT16(data);
+			DrvScrollX[1] = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRegs + 4))) + 7;
 		return;
 
 		case 0x0c0002:
-			*((UINT16*)(DrvVidRegs + (address & 7))) = data;
-			DrvScrollY[1] = *((UINT16*)(DrvVidRegs + 6)) + 12;
+			*((UINT16*)(DrvVidRegs + (address & 7))) = BURN_ENDIAN_SWAP_INT16(data);
+			DrvScrollY[1] = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRegs + 6))) + 12;
 		return;
 
 		case 0x0c0004:
-			*((UINT16*)(DrvVidRegs + (address & 7))) = data;
-			DrvScrollX[0] = *((UINT16*)(DrvVidRegs + 0)) + 3;
+			*((UINT16*)(DrvVidRegs + (address & 7))) = BURN_ENDIAN_SWAP_INT16(data);
+			DrvScrollX[0] = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRegs + 0))) + 3;
 		return;
 
 		case 0x0c0006:
-			*((UINT16*)(DrvVidRegs + (address & 7))) = data;
-			DrvScrollY[0] = *((UINT16*)(DrvVidRegs + 2)) + 12;
+			*((UINT16*)(DrvVidRegs + (address & 7))) = BURN_ENDIAN_SWAP_INT16(data);
+			DrvScrollY[0] = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRegs + 2))) + 12;
 		return;
 
 		case 0x140002:
@@ -259,7 +259,7 @@ void __fastcall mugsmash_write_word(UINT32 address, UINT16 data)
 		case 0x140000:
 		case 0x140004:
 		case 0x140006:
-			*((UINT16*)(DrvSndRegs + (address & 7))) = data;
+			*((UINT16*)(DrvSndRegs + (address & 7))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 }
@@ -487,10 +487,10 @@ static void draw_sprites()
 
 	while (source < finish)
 	{
-		INT32 xpos  = source[0] & 0x00ff;
-		INT32 ypos  = source[4] & 0x00ff;
-		INT32 num   = (source[3] & 0x00ff) | ((source[2] & 0x00ff) << 8);
-		INT32 attr  = source[1];
+		INT32 xpos  = BURN_ENDIAN_SWAP_INT16(source[0]) & 0x00ff;
+		INT32 ypos  = BURN_ENDIAN_SWAP_INT16(source[4]) & 0x00ff;
+		INT32 num   = (BURN_ENDIAN_SWAP_INT16(source[3]) & 0x00ff) | ((BURN_ENDIAN_SWAP_INT16(source[2]) & 0x00ff) << 8);
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(source[1]);
 		INT32 flipx = (attr & 0x0080)>>7;
 		INT32 color = attr & 0x000f;
 
@@ -519,8 +519,8 @@ static void draw_layer(UINT8 *source, INT32 colofst, INT32 scroll)
 		INT32 sx = (offs & 0x1f) << 4;
 		INT32 sy = (offs >> 5) << 4;
 
-		INT32 code  = vram[(offs << 1) | 1];
-		INT32 color = vram[(offs << 1)];
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[(offs << 1) | 1]);
+		INT32 color = BURN_ENDIAN_SWAP_INT16(vram[(offs << 1)]);
 		INT32 flipx = color & 0x40;
 		INT32 flipy = color & 0x80;
 		color &= 0x000f;

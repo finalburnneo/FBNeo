@@ -498,7 +498,7 @@ static INT32 DrvExit()
 static void palette_write(INT32 offset)
 {
 	UINT8 r,g,b;
-	UINT16 data = *((UINT16*)(DrvPalRAM + offset));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	r = ((data << 1) & 0x1e) | ((data >> 12) & 1);
 	g = ((data >> 3) & 0x1e) | ((data >> 13) & 1);
@@ -517,23 +517,23 @@ static void draw_sprites(INT32 priority)
 
 	for (INT32 offs = 0;offs < 0x800/2;offs += 8)
 	{
-		if (priority != ((source[offs+4]&0xc0) >> 6)) continue;
+		if (priority != ((BURN_ENDIAN_SWAP_INT16(source[offs+4])&0xc0) >> 6)) continue;
 
-		INT32 sx = (source[offs+1] & 0x01ff) + 16*8 - 1;
+		INT32 sx = (BURN_ENDIAN_SWAP_INT16(source[offs+1]) & 0x01ff) + 16*8 - 1;
 		if (sx >= 512) sx -= 512;
 		sx -= 192;
-		INT32 starty = source[offs+0] & 0xff;
+		INT32 starty = BURN_ENDIAN_SWAP_INT16(source[offs+0]) & 0xff;
 		if (starty >= nScreenHeight) continue;
-		INT32 endy = source[offs+0] >> 8;
+		INT32 endy = BURN_ENDIAN_SWAP_INT16(source[offs+0]) >> 8;
 		if (endy >= nScreenHeight) endy = nScreenHeight-1;
 
-		INT32 width = source[offs+2] & 0x007f;
-		INT32 flipx = source[offs+2] & 0x0100;
+		INT32 width = BURN_ENDIAN_SWAP_INT16(source[offs+2]) & 0x007f;
+		INT32 flipx = BURN_ENDIAN_SWAP_INT16(source[offs+2]) & 0x0100;
 		if (flipx) sx++;
 
-		INT32 color = (0x40 + (source[offs+4] & 0x3f)) << 4;
+		INT32 color = (0x40 + (BURN_ENDIAN_SWAP_INT16(source[offs+4]) & 0x3f)) << 4;
 
-		INT32 start = source[offs+3] + ((source[offs+4] & 0x1f00) << 8);
+		INT32 start = BURN_ENDIAN_SWAP_INT16(source[offs+3]) + ((BURN_ENDIAN_SWAP_INT16(source[offs+4]) & 0x1f00) << 8);
 		UINT8 *rom = DrvGfxROM1 + start * 2;
 
 		for (INT32 y = starty+1;y <= endy;y++)
@@ -636,7 +636,7 @@ static void draw_layer(INT32 *in_page, INT32 scrollx, INT32 scrolly, INT32 trans
 
 		INT32 ofst = DrvLayerTable[offs];
 
-		INT32 attr = vram[in_page[ofst>>11] * 0x0800 + (ofst & 0x7ff)];
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(vram[in_page[ofst>>11] * 0x0800 + (ofst & 0x7ff)]);
 		INT32 code = attr;
 		if (transp && !code) continue;
 		INT32 color = (attr & 0x1fc0) >> 6;
@@ -668,7 +668,7 @@ static void draw_text()
 		INT32 sx = ((offs & 0x3f) << 3) - 192;
 		INT32 sy = (offs >> 6) << 3;
 
-		INT32 attr = vram[DrvTxtTable[offs]];
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(vram[DrvTxtTable[offs]]);
 		INT32 code = attr & 0xf1ff;
 		INT32 color = (attr & 0x0e00) >> 9;
 
@@ -698,9 +698,9 @@ static INT32 DrvDraw()
 
 	//	draw_sprites(0);
 
-		INT32 bg_scrollx = (txtram[bg_scrollx_reg] - bg_scrollx_offs) & 0x1ff;
-		INT32 bg_scrolly = ((txtram[bg_scrolly_reg] & 0xff) - bg_scrolly_offs) & 0xff;
-		INT32 page = txtram[bg_page_reg];
+		INT32 bg_scrollx = (BURN_ENDIAN_SWAP_INT16(txtram[bg_scrollx_reg]) - bg_scrollx_offs) & 0x1ff;
+		INT32 bg_scrolly = ((BURN_ENDIAN_SWAP_INT16(txtram[bg_scrolly_reg]) & 0xff) - bg_scrolly_offs) & 0xff;
+		INT32 page = BURN_ENDIAN_SWAP_INT16(txtram[bg_page_reg]);
 	
 		pages[3] = (page >> 12) & 0x0f;
 		pages[2] = (page >>  8) & 0x0f;
@@ -711,9 +711,9 @@ static INT32 DrvDraw()
 
 		draw_sprites(1);
 
-		INT32 fg_scrollx = (txtram[fg_scrollx_reg] - fg_scrollx_offs) & 0x1ff;
-		INT32 fg_scrolly = ((txtram[fg_scrolly_reg] & 0xff) - fg_scrolly_offs) & 0xff;
-		page = txtram[fg_page_reg];
+		INT32 fg_scrollx = (BURN_ENDIAN_SWAP_INT16(txtram[fg_scrollx_reg]) - fg_scrollx_offs) & 0x1ff;
+		INT32 fg_scrolly = ((BURN_ENDIAN_SWAP_INT16(txtram[fg_scrolly_reg]) & 0xff) - fg_scrolly_offs) & 0xff;
+		page = BURN_ENDIAN_SWAP_INT16(txtram[fg_page_reg]);
 	
 		pages[3] = (page >> 12) & 0x0f;
 		pages[2] = (page >>  8) & 0x0f;

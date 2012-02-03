@@ -104,7 +104,7 @@ void __fastcall midas_write_byte(UINT32 address, UINT8 data)
 void __fastcall midas_write_word(UINT32 address, UINT16 data)
 {
 	if (address >= 0xa00000 && address <= 0xa3ffff) {
-		*((UINT16*)(DrvPalRAM + (address & 0x3fffe))) = data;
+		*((UINT16*)(DrvPalRAM + (address & 0x3fffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_write(address & 0x3fffc);
 		return;
 	}
@@ -118,7 +118,7 @@ void __fastcall midas_write_word(UINT32 address, UINT16 data)
 		case 0x9c0002:
 		{
 			DrvGfxRegs[1] = data;
-			*((UINT16*)(DrvGfxRAM + (DrvGfxRegs[0] << 1))) = data;
+			*((UINT16*)(DrvGfxRAM + (DrvGfxRegs[0] << 1))) = BURN_ENDIAN_SWAP_INT16(data);
 			DrvGfxRegs[0] += DrvGfxRegs[2];
 		}
 		return;
@@ -318,7 +318,7 @@ static INT32 DrvInit()
 		DrvGfxDecode();
 	}
 
-	*((UINT16*)(Drv68KROM + 0x13345a)) = 0x4e75; // patch out protection
+	*((UINT16*)(Drv68KROM + 0x13345a)) = BURN_ENDIAN_SWAP_INT16(0x4e75); // patch out protection
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -411,9 +411,9 @@ static void draw_sprites()
 
 	for (INT32 i = 0; i < 0x180; i++, s++, codes+=0x40)
 	{
-		INT32 zoom	= s[0x000];
-		INT32 sy		= s[0x200];
-		INT32 sx		= s[0x400];
+		INT32 zoom	= BURN_ENDIAN_SWAP_INT16(s[0x000]);
+		INT32 sy		= BURN_ENDIAN_SWAP_INT16(s[0x200]);
+		INT32 sx		= BURN_ENDIAN_SWAP_INT16(s[0x400]);
 
 		INT32 xzoom	= ((zoom >> 8) & 0x0f) + 1;
 		INT32 yzoom	= (zoom & 0x7f) + 1;
@@ -447,10 +447,10 @@ static void draw_sprites()
 
 		for (INT32 y = 0; y < ynum; y++)
 		{
-			INT32 code = codes[y * 2];
+			INT32 code = BURN_ENDIAN_SWAP_INT16(codes[y * 2]);
 			if (code & 0x8000) continue; // only 8mb of sprites...
 
-			INT32 attr = codes[y * 2 + 1];
+			INT32 attr = BURN_ENDIAN_SWAP_INT16(codes[y * 2 + 1]);
 
 			INT32 yy = (((sy + y * ydim) >> 16) & 0x1ff) - 16;
 
@@ -535,8 +535,8 @@ static void draw_layer()
 		INT32 sx = (offs >> 5) << 3;
 		INT32 sy = ((offs & 0x1f) << 3) - 16;
 
-		INT32 code = vram[offs] & 0xfff;
-		INT32 color = vram[offs] >> 12;
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]) & 0xfff;
+		INT32 color = BURN_ENDIAN_SWAP_INT16(vram[offs]) >> 12;
 
 		if (sy < 0 || sy >= nScreenHeight || !DrvTxtTransTab[code]) continue;
 

@@ -175,7 +175,7 @@ void __fastcall fuuki32_write_word(UINT32 address, UINT16 data)
 			DrvRasterPos[0] = data & 0xff;
 		}
 
-		*((UINT16*)(DrvVidRegs + (address & 0x1e))) = data;
+		*((UINT16*)(DrvVidRegs + (address & 0x1e))) = BURN_ENDIAN_SWAP_INT16(data);
 
 		return;
 	}
@@ -231,7 +231,7 @@ UINT16 __fastcall fuuki32_read_word(UINT32 address)
 			return DrvInputs[3];
 
 		case 0x8c001e:
-			return *((UINT16*)(DrvVidRegs + 0x1e));
+			return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRegs + 0x1e)));
 	}
 
 	return 0;
@@ -575,10 +575,10 @@ static void draw_sprites(INT32 prio)
 
 	for (INT32 offs = 0; offs < 0x2000 / 2; offs += 4)
 	{
-		INT32 sx		= src[offs + 0];
-		INT32 sy		= src[offs + 1];
-		INT32 attr	= src[offs + 2];
-		INT32 code	= src[offs + 3];
+		INT32 sx		= BURN_ENDIAN_SWAP_INT16(src[offs + 0]);
+		INT32 sy		= BURN_ENDIAN_SWAP_INT16(src[offs + 1]);
+		INT32 attr	= BURN_ENDIAN_SWAP_INT16(src[offs + 2]);
+		INT32 code	= BURN_ENDIAN_SWAP_INT16(src[offs + 3]);
 
 		if (prio != ((attr >> 6) & 0x0003) || sx & 0x0400) continue;
 
@@ -664,9 +664,9 @@ static void draw_background_layer(UINT8 *ram, UINT8 *gfx, UINT8 *tab, INT32 colo
 		sy -= scrolly;
 		if (sy < -15) sy +=  512;
 
-		INT32 code = vram[offs*2] & 0x7fff;
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs*2]) & 0x7fff;
 		if (tab[code] == 2) continue;
-		INT32 attr = vram[offs*2 + 1];
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(vram[offs*2 + 1]);
 	
 		INT32 color = (attr & 0x30) >> 4;
 		INT32 flipx = (attr >> 6) & 1;
@@ -760,9 +760,9 @@ static void draw_background_layer_byline(UINT8 *ram, UINT8 *gfx, UINT8 *tab, INT
 
 			INT32 ofst = (yy << 3) | xx;
 
-			INT32 code = vram[ofst] & 0x7fff;
+			INT32 code = BURN_ENDIAN_SWAP_INT16(vram[ofst]) & 0x7fff;
 			if (tab[code] == 2) continue;
-			INT32 attr = vram[ofst + 1];
+			INT32 attr = BURN_ENDIAN_SWAP_INT16(vram[ofst + 1]);
 	
 			INT32 color = (attr & 0x30) << 4;
 			INT32 flipx = ((attr >> 6) & 1) * 0x0f;
@@ -844,9 +844,9 @@ static void draw_foreground_layer(UINT8 *ram)
 
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		INT32 code = vram[offs*2];
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs*2]);
 		if (DrvTransTab3[code] == 2) continue;
-		INT32 attr = vram[offs*2+1];
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(vram[offs*2+1]);
 
 		INT32 color = attr & 0x3f;
 		INT32 flipx = (attr >> 6) & 1;
@@ -936,9 +936,9 @@ static void draw_foreground_layer_byline(UINT8 *ram)
 
 			INT32 ofst = (yy << 4) | xx;
 
-			INT32 code = vram[ofst];
+			INT32 code = BURN_ENDIAN_SWAP_INT16(vram[ofst]);
 			if (DrvTransTab3[code] == 2) continue;
-			INT32 attr = vram[ofst + 1];
+			INT32 attr = BURN_ENDIAN_SWAP_INT16(vram[ofst + 1]);
 	
 			INT32 color = attr & 0x3f;
 			INT32 flipx = ((attr >> 6) & 1) * 0x07;
@@ -1060,9 +1060,9 @@ static INT32 DrvDraw()
 		UINT8 r,g,b;
 		UINT16 *p = (UINT16*)DrvPalRAM;
 		for (INT32 i = 0; i < 0x2000 / 2; i++) {
-			r = (p[i] >> 10) & 0x1f;
-			g = (p[i] >>  5) & 0x1f;
-			b = (p[i] >>  0) & 0x1f;
+			r = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 10) & 0x1f;
+			g = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  5) & 0x1f;
+			b = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  0) & 0x1f;
 
 			r = (r << 3) | (r >> 2);
 			g = (g << 3) | (g >> 2);
@@ -1086,7 +1086,7 @@ static INT32 DrvDraw()
 	INT32 tm_front  = pri_table[ priority[0] ][0];
 	INT32 tm_middle = pri_table[ priority[0] ][1];
 	INT32 tm_back   = pri_table[ priority[0] ][2];
-	INT32 buffer = vregs[0x1e/4] & 0x40;
+	INT32 buffer = BURN_ENDIAN_SWAP_INT32(vregs[0x1e/4]) & 0x40;
 
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 		pTransDraw[i] = 0x1fff;
@@ -1159,10 +1159,10 @@ static INT32 DrvFrame()
 		// hack -- save scroll/offset registers so the
 		// lines can be drawn in one pass -- should save
 		// quite a few cycles...
-		DrvScrollBuf[i + 0x000] = vregs[0];
-		DrvScrollBuf[i + 0x100] = vregs[1];
-		DrvScrollBuf[i + 0x200] = vregs[2];
-		DrvScrollBuf[i + 0x300] = vregs[3];
+		DrvScrollBuf[i + 0x000] = BURN_ENDIAN_SWAP_INT32(vregs[0]);
+		DrvScrollBuf[i + 0x100] = BURN_ENDIAN_SWAP_INT32(vregs[1]);
+		DrvScrollBuf[i + 0x200] = BURN_ENDIAN_SWAP_INT32(vregs[2]);
+		DrvScrollBuf[i + 0x300] = BURN_ENDIAN_SWAP_INT32(vregs[3]);
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[1]);

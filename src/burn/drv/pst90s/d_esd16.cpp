@@ -333,7 +333,7 @@ void __fastcall hedpanic_write_word(UINT32 address, UINT16 data)
 		case 0xd00008:
 			INT32 ofst = (headpanic_platform_x + 0x40 * headpanic_platform_y) << 1;
 
-			*((UINT16*)(DrvVidRAM1 + ofst)) = data;
+			*((UINT16*)(DrvVidRAM1 + ofst)) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 	return;
@@ -418,7 +418,7 @@ void __fastcall mchampdx_write_word(UINT32 address, UINT16 data)
 		case 0xd00008:
 			INT32 ofst = (headpanic_platform_x + 0x40 * headpanic_platform_y) << 1;
 
-			*((UINT16*)(DrvVidRAM1 + ofst)) = data;
+			*((UINT16*)(DrvVidRAM1 + ofst)) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 	return;
@@ -510,7 +510,7 @@ void __fastcall tangtang_write_word(UINT32 address, UINT16 data)
 		case 0x600008:
 			INT32 ofst = (headpanic_platform_x + 0x40 * headpanic_platform_y) << 1;
 
-			*((UINT16*)(DrvVidRAM1 + ofst)) = data;
+			*((UINT16*)(DrvVidRAM1 + ofst)) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 	return;
@@ -914,12 +914,12 @@ static void esd16_draw_sprites(INT32 priority)
 	{
 		INT32 y, starty, endy;
 
-		INT32 sx = spriteram16[ offs + 2 ];
+		INT32 sx = BURN_ENDIAN_SWAP_INT16(spriteram16[ offs + 2 ]);
 
 		if ((sx >> 15) != priority) continue;
 
-		int	sy	=	spriteram16[ offs ];
-		int	code	=	spriteram16[ offs + 1 ];
+		int	sy	=	BURN_ENDIAN_SWAP_INT16(spriteram16[ offs ]);
+		int	code	=	BURN_ENDIAN_SWAP_INT16(spriteram16[ offs + 1 ]);
 
 		INT32 dimy	=	0x10 << ((sy >> 9) & 3);
 
@@ -979,7 +979,7 @@ static void draw_background_8x8(UINT8 *vidram, INT32 color, INT32 transp, INT32 
 	scrolly &= 0x1ff;
 
 	for (offs = 0; offs < 0x4000 / 2; offs++) {
-		INT32 code = vram[offs];
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 
 		if (DrvGfx1Trans[code] && transp) continue;
 
@@ -1022,7 +1022,7 @@ static void draw_background_16x16(UINT8 *vidram, INT32 color, INT32 transp, INT3
 	scrolly &= 0x3ff;
 
 	for (offs = 0; offs < 0x1000 / 2; offs++) {
-		INT32 code = vram[offs] & 0x3fff;
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]) & 0x3fff;
 
 		if (DrvGfx2Trans[code] && transp) continue;
 

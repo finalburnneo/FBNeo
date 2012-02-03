@@ -448,7 +448,7 @@ static INT32 DrvExit()
 static inline void palette_write(INT32 offset)
 {
 	UINT8 r,g,b;
-	UINT16 data = *((UINT16*)(DrvPalRAM + offset));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	r = ((data >> 11) & 0x1e) | ((data >> 3) & 0x01);
 	g = ((data >>  7) & 0x1e) | ((data >> 2) & 0x01);
@@ -467,7 +467,7 @@ static void draw_bg_layer(UINT8 *src, UINT8 *gfx_base, INT32 scrollx, INT32 scro
 
 	for (INT32 offs = 0; offs < 32 * 32; offs++)
 	{
-		INT32 color = vram[(offs * 2) + 1];
+		INT32 color = BURN_ENDIAN_SWAP_INT16(vram[(offs * 2) + 1]);
 		INT32 prior = (color & 0x0020) >> 5;
 		if (prior != priority) continue;
 
@@ -483,7 +483,7 @@ static void draw_bg_layer(UINT8 *src, UINT8 *gfx_base, INT32 scrollx, INT32 scro
 
 		INT32 flipx = color & 0x0100;
 		INT32 flipy = color & 0x0200;
-		INT32 code  = vram[offs * 2] & 0x0fff;
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2]) & 0x0fff;
 
 		if (transp) {
 			if (flipy) {
@@ -531,8 +531,8 @@ static void draw_tx_layer(INT32 scrollx, INT32 scrolly)
 		sy -= scrolly + 16;
 		if (sy < -7) sy += 0x200;
 
-		INT32 code = vram[offs] & 0xfff;
-		INT32 color = vram[offs] >> 12;
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]) & 0xfff;
+		INT32 color = BURN_ENDIAN_SWAP_INT16(vram[offs]) >> 12;
 
 		if (sx >= nScreenWidth || sy >= nScreenHeight || code == 0) continue;
 
@@ -546,19 +546,19 @@ static void draw_sprites()
 
 	for (INT32 offs = 0; offs < 0x0800; offs += 8)
 	{
-		INT32 code = (sram[offs+5] & 0xff) | ((sram[offs+6] & 0x3f) << 8);
+		INT32 code = (BURN_ENDIAN_SWAP_INT16(sram[offs+5]) & 0xff) | ((BURN_ENDIAN_SWAP_INT16(sram[offs+6]) & 0x3f) << 8);
 
-		if (~sram[offs+4] & 0x80)
+		if (~BURN_ENDIAN_SWAP_INT16(sram[offs+4]) & 0x80)
 		{
-			INT32 x = (((sram[offs+0] & 0xff) | ((sram[offs+1] & 0x7f) << 8)) - ((sram[offs+1] & 0x80) << 9)) - 16;
-			INT32 y = (((sram[offs+2] & 0xff) | ((sram[offs+3] & 0x7f) << 8)) - ((sram[offs+3] & 0x80) << 9)) - 16;
+			INT32 x = (((BURN_ENDIAN_SWAP_INT16(sram[offs+0]) & 0xff) | ((BURN_ENDIAN_SWAP_INT16(sram[offs+1]) & 0x7f) << 8)) - ((BURN_ENDIAN_SWAP_INT16(sram[offs+1]) & 0x80) << 9)) - 16;
+			INT32 y = (((BURN_ENDIAN_SWAP_INT16(sram[offs+2]) & 0xff) | ((BURN_ENDIAN_SWAP_INT16(sram[offs+3]) & 0x7f) << 8)) - ((BURN_ENDIAN_SWAP_INT16(sram[offs+3]) & 0x80) << 9)) - 16;
 
-			INT32 col  =  sram[offs+7] & 0x0f;
-			INT32 chain = sram[offs+4] & 0x07;
-			INT32 flipy = sram[offs+4] & 0x10;
-			INT32 flipx = sram[offs+4] & 0x20;
+			INT32 col  =  BURN_ENDIAN_SWAP_INT16(sram[offs+7]) & 0x0f;
+			INT32 chain = BURN_ENDIAN_SWAP_INT16(sram[offs+4]) & 0x07;
+			INT32 flipy = BURN_ENDIAN_SWAP_INT16(sram[offs+4]) & 0x10;
+			INT32 flipx = BURN_ENDIAN_SWAP_INT16(sram[offs+4]) & 0x20;
 
-			if (~sram[offs+4] & 0x08) {
+			if (~BURN_ENDIAN_SWAP_INT16(sram[offs+4]) & 0x08) {
 				if (flipy) y += chain << 4;
 				if (flipx) x += chain << 4;
 			}
@@ -585,7 +585,7 @@ static void draw_sprites()
 
 				code++;
 
-				if (sram[offs+4] & 0x08)
+				if (BURN_ENDIAN_SWAP_INT16(sram[offs+4]) & 0x08)
 				{
 					if (flipy) y -= 16;
 					else y += 16;

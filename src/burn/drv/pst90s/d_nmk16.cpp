@@ -1879,24 +1879,24 @@ void NMK112_init(UINT8 disable_page_mask, UINT8 *rgn0, UINT8 *rgn1, INT32 len0, 
 
 #define STRANGE_RAM_WRITE_WORD(value)						\
 	if ((address & 0xffff0000) == value) {					\
-		*((UINT16*)(Drv68KRAM + (address & 0xfffe))) = data;	\
+		*((UINT16*)(Drv68KRAM + (address & 0xfffe))) = BURN_ENDIAN_SWAP_INT16(data);	\
 		return;								\
 	}									\
 
 #define PROT_JSR(_offs_,_protvalue_,_pc_) \
-	if(nmk16_mainram[(_offs_)/2] == _protvalue_) \
+	if(nmk16_mainram[(_offs_)/2] == BURN_ENDIAN_SWAP_INT16(_protvalue_)) \
 	{ \
 		nmk16_mainram[(_offs_)/2] = 0xffff;  /*(MCU job done)*/ \
-		nmk16_mainram[(_offs_+2-0x10)/2] = 0x4ef9;/*JMP*/\
+		nmk16_mainram[(_offs_+2-0x10)/2] = BURN_ENDIAN_SWAP_INT16(0x4ef9);/*JMP*/\
 		nmk16_mainram[(_offs_+4-0x10)/2] = 0x0000;/*HI-DWORD*/\
-		nmk16_mainram[(_offs_+6-0x10)/2] = _pc_;  /*LO-DWORD*/\
+		nmk16_mainram[(_offs_+6-0x10)/2] = BURN_ENDIAN_SWAP_INT16(_pc_);  /*LO-DWORD*/\
 	} \
 
 #define PROT_INPUT(_offs_,_protvalue_,_protinput_,_input_) \
-	if(nmk16_mainram[_offs_] == _protvalue_) \
+	if(nmk16_mainram[_offs_] == BURN_ENDIAN_SWAP_INT16(_protvalue_)) \
 	{\
-		nmk16_mainram[_protinput_] = ((_input_ & 0xffff0000)>>16);\
-		nmk16_mainram[_protinput_+1] = (_input_ & 0x0000ffff);\
+		nmk16_mainram[_protinput_] = BURN_ENDIAN_SWAP_INT16((_input_ & 0xffff0000)>>16);\
+		nmk16_mainram[_protinput_+1] = BURN_ENDIAN_SWAP_INT16(_input_ & 0x0000ffff);\
 	}
 
 //------------------------------------------------------------------------------------------------------------
@@ -1915,10 +1915,10 @@ static UINT8 tharrier_mcu_r()
 
 	INT32 res;
 
-	     if (SekGetPC(-1)==0x08aa) res = (nmk16_mainram[0x9064/2])|0x20;
-	else if (SekGetPC(-1)==0x08ce) res = (nmk16_mainram[0x9064/2])|0x60;
-	else if (SekGetPC(-1)==0x0332) res = (nmk16_mainram[0x90f6/2])|0x00;
-	else if (SekGetPC(-1)==0x64f4) res = (nmk16_mainram[0x90f6/2])|0x00;
+	     if (SekGetPC(-1)==0x08aa) res = (BURN_ENDIAN_SWAP_INT16(nmk16_mainram[0x9064/2]))|0x20;
+	else if (SekGetPC(-1)==0x08ce) res = (BURN_ENDIAN_SWAP_INT16(nmk16_mainram[0x9064/2]))|0x60;
+	else if (SekGetPC(-1)==0x0332) res = (BURN_ENDIAN_SWAP_INT16(nmk16_mainram[0x90f6/2]))|0x00;
+	else if (SekGetPC(-1)==0x64f4) res = (BURN_ENDIAN_SWAP_INT16(nmk16_mainram[0x90f6/2]))|0x00;
 	else
 	{
 		res = to_main[prot_count++];
@@ -1971,13 +1971,13 @@ static void HachaRAMProt(INT32 offset)
 		case 0xe1fe/2: PROT_JSR(0xe1fe,0x8026,0x8c36); // 8c36
 					  PROT_JSR(0xe1fe,0x8016,0xd620); break;  // unused
 		case 0xef00/2:
-			if(nmk16_mainram[0xef00/2] == 0x60fe)
+			if(nmk16_mainram[0xef00/2] == BURN_ENDIAN_SWAP_INT16(0x60fe))
 			{
 				nmk16_mainram[0xef00/2] = 0x0000; // this is the coin counter
 				nmk16_mainram[0xef02/2] = 0x0000;
-				nmk16_mainram[0xef04/2] = 0x4ef9;
+				nmk16_mainram[0xef04/2] = BURN_ENDIAN_SWAP_INT16(0x4ef9);
 				nmk16_mainram[0xef06/2] = 0x0000;
-				nmk16_mainram[0xef08/2] = 0x7dc2;
+				nmk16_mainram[0xef08/2] = BURN_ENDIAN_SWAP_INT16(0x7dc2);
 			}
 		break;
 	}
@@ -2026,13 +2026,13 @@ static void tdragon_mainram_w(INT32 offset)
 		case 0xe7fe/2: PROT_JSR(0xe7fe,0x8026,0xa57a);
 					  PROT_JSR(0xe7fe,0x8016,0xa57a); break;
 		case 0xef00/2:
-			if(nmk16_mainram[0xef00/2] == 0x60fe)
+			if(nmk16_mainram[0xef00/2] == BURN_ENDIAN_SWAP_INT16(0x60fe))
 			{
 				nmk16_mainram[0xef00/2] = 0x0000; // this is the coin counter
 				nmk16_mainram[0xef02/2] = 0x0000;
-				nmk16_mainram[0xef04/2] = 0x4ef9;
+				nmk16_mainram[0xef04/2] = BURN_ENDIAN_SWAP_INT16(0x4ef9);
 				nmk16_mainram[0xef06/2] = 0x0000;
-				nmk16_mainram[0xef08/2] = 0x92f4;
+				nmk16_mainram[0xef08/2] = BURN_ENDIAN_SWAP_INT16(0x92f4);
 			}
 		break;
 	}
@@ -2049,12 +2049,12 @@ static void mcu_run(UINT8 dsw_setting)
 
 	UINT16 *nmk16_mainram = (UINT16*)Drv68KRAM;
 
-	if(start_helper & 1 && nmk16_mainram[0x9000/2] & 0x0200) // start 1
+	if(start_helper & 1 && BURN_ENDIAN_SWAP_INT16(nmk16_mainram[0x9000/2]) & 0x0200) // start 1
 	{
 		nmk16_mainram[0xef00/2]--;
 		start_helper = start_helper & 2;
 	}
-	if(start_helper & 2 && nmk16_mainram[0x9000/2] & 0x0100) // start 2
+	if(start_helper & 2 && BURN_ENDIAN_SWAP_INT16(nmk16_mainram[0x9000/2]) & 0x0100) // start 2
 	{
 		nmk16_mainram[0xef00/2]--;
 		start_helper = start_helper & 1;
@@ -2068,7 +2068,7 @@ static void mcu_run(UINT8 dsw_setting)
 		{
 			switch(dsw[i] & 7)
 			{
-				case 0: nmk16_mainram[0x9000/2]|=0x4000; break; // free play
+				case 0: nmk16_mainram[0x9000/2]|=BURN_ENDIAN_SWAP_INT16(0x4000); break; // free play
 				case 1: coin_count_frac[i] = 1; coin_count[i] = 4; break;
 				case 2: coin_count_frac[i] = 1; coin_count[i] = 3; break;
 				case 3: coin_count_frac[i] = 1; coin_count[i] = 2; break;
@@ -2087,7 +2087,7 @@ static void mcu_run(UINT8 dsw_setting)
 		{
 			switch(dsw[i] & 7)
 			{
-				case 0: nmk16_mainram[0x9000/2]|=0x4000; break; // free play
+				case 0: nmk16_mainram[0x9000/2]|=BURN_ENDIAN_SWAP_INT16(0x4000); break; // free play
 				case 1: coin_count_frac[i] = 4; coin_count[i] = 1; break;
 				case 2: coin_count_frac[i] = 3; coin_count[i] = 1; break;
 				case 3: coin_count_frac[i] = 2; coin_count[i] = 1; break;
@@ -3054,7 +3054,7 @@ UINT16 __fastcall tdragon_main_read_word(UINT32 address)
 void __fastcall tdragon_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffff0000) == 0x0b0000) {
-		*((UINT16*)(Drv68KRAM + (address & 0xfffe))) = data;
+		*((UINT16*)(Drv68KRAM + (address & 0xfffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		tdragon_mainram_w((address >> 1) & 0x7fff);
 		return;
 	}
@@ -4528,7 +4528,7 @@ static void DrvPaletteRecalc()
 	UINT8 r,g,b;
 	UINT16 *pal = (UINT16*)DrvPalRAM;
 	for (INT32 i = 0; i < 0x400; i++) {
-		INT32 data = pal[i];
+		INT32 data = BURN_ENDIAN_SWAP_INT16(pal[i]);
 
 		r = ((data >> 11) & 0x1e) | ((data >> 3) & 0x01);
 		g = ((data >>  7) & 0x1e) | ((data >> 2) & 0x01);
@@ -4548,17 +4548,17 @@ static void draw_sprites(INT32 flip, INT32 coloff, INT32 coland, INT32 priority)
 
 	for (INT32 offs = 0; offs < 0x1000/2; offs += 8)
 	{
-		if (sprram[offs] & 0x0001)
+		if (BURN_ENDIAN_SWAP_INT16(sprram[offs]) & 0x0001)
 		{
-			INT32 sx    =  (sprram[offs+4] & 0x01ff) + videoshift;
-			INT32 sy    =  (sprram[offs+6] & 0x01ff);
-			INT32 code  =   sprram[offs+3] & nGraphicsMask[2];
-			INT32 color =   sprram[offs+7] & coland;
-			INT32 w     =  (sprram[offs+1] & 0x000f);
-			INT32 h     = ((sprram[offs+1] & 0x00f0) >> 4);
-			INT32 pri   = ((sprram[offs+0] & 0x00c0) >> 6);
-			INT32 flipy = ((sprram[offs+1] & 0x0200) >> 9);
-			INT32 flipx = ((sprram[offs+1] & 0x0100) >> 8);
+			INT32 sx    =  (BURN_ENDIAN_SWAP_INT16(sprram[offs+4]) & 0x01ff) + videoshift;
+			INT32 sy    =  (BURN_ENDIAN_SWAP_INT16(sprram[offs+6]) & 0x01ff);
+			INT32 code  =   BURN_ENDIAN_SWAP_INT16(sprram[offs+3]) & nGraphicsMask[2];
+			INT32 color =   BURN_ENDIAN_SWAP_INT16(sprram[offs+7]) & coland;
+			INT32 w     =  (BURN_ENDIAN_SWAP_INT16(sprram[offs+1]) & 0x000f);
+			INT32 h     = ((BURN_ENDIAN_SWAP_INT16(sprram[offs+1]) & 0x00f0) >> 4);
+			INT32 pri   = ((BURN_ENDIAN_SWAP_INT16(sprram[offs+0]) & 0x00c0) >> 6);
+			INT32 flipy = ((BURN_ENDIAN_SWAP_INT16(sprram[offs+1]) & 0x0200) >> 9);
+			INT32 flipx = ((BURN_ENDIAN_SWAP_INT16(sprram[offs+1]) & 0x0100) >> 8);
 
 			if (!flip) flipy = flipx = 0;
 
@@ -4636,12 +4636,12 @@ static void draw_macross_background(UINT8 *ram, INT32 scrollx, INT32 scrolly, IN
 		INT32 ofst = ((row >> 4) << 12) | (row & 0x0f) | (col << 4);
 
 		if (is_8bpp) {
-			INT32 code = vram[ofst] & nGraphicsMask[1];
+			INT32 code = BURN_ENDIAN_SWAP_INT16(vram[ofst]) & nGraphicsMask[1];
 
 			Render16x16Tile_Clip(pTransDraw, code, sx, sy, 0, 8, coloff, DrvGfxROM1);
 		} else {
-			INT32 code  = ((vram[ofst] & 0xfff) | (*tilebank << 12)) & nGraphicsMask[1];
-			INT32 color =  vram[ofst] >> 12;
+			INT32 code  = ((BURN_ENDIAN_SWAP_INT16(vram[ofst]) & 0xfff) | (*tilebank << 12)) & nGraphicsMask[1];
+			INT32 color =  BURN_ENDIAN_SWAP_INT16(vram[ofst]) >> 12;
 
 			if (t) {
 				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, coloff, DrvGfxROM1);
@@ -4660,13 +4660,13 @@ static void draw_gunnail_background(UINT8 *ram)
 
 	for (INT32 y = 16; y < nScreenHeight + 16; y++)
 	{
-		INT32 yscroll = (scroll[0x100] + scroll[0x100 | y] + y) & 0x1ff;
+		INT32 yscroll = (BURN_ENDIAN_SWAP_INT16(scroll[0x100]) + BURN_ENDIAN_SWAP_INT16(scroll[0x100 | y]) + y) & 0x1ff;
 
 		INT32 row = yscroll >> 4;
 		INT32 yl = (yscroll & 0x0f) << 4;
 
 		INT32 ofst0 = ((row >> 4) << 12) | (row & 0x0f);
-		INT32 xscroll0 = scroll[0] + scroll[y] - videoshift;
+		INT32 xscroll0 = BURN_ENDIAN_SWAP_INT16(scroll[0]) + BURN_ENDIAN_SWAP_INT16(scroll[y]) - videoshift;
 
 		UINT16 *dest = pTransDraw + (y - 16) * nScreenWidth;
 
@@ -4677,8 +4677,8 @@ static void draw_gunnail_background(UINT8 *ram)
 
 			INT32 ofst  = ofst0 | (xscroll & 0xff0);
 
-			INT32 code  = (vram[ofst] & 0xfff) | bank;
-			INT32 color =  (vram[ofst] >> 12) << 4;
+			INT32 code  = (BURN_ENDIAN_SWAP_INT16(vram[ofst]) & 0xfff) | bank;
+			INT32 color =  (BURN_ENDIAN_SWAP_INT16(vram[ofst]) >> 12) << 4;
 
 			UINT8 *src = DrvGfxROM1 + (code << 8) + yl;
 
@@ -4704,7 +4704,7 @@ static void draw_bjtwin_background(INT32 scrollx)
 		sx = (((sx - scrollx) + 8) & 0x1ff) - 8;
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		INT32 code  = vram[offs];
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		INT32 color = code >> 12;
 		INT32 bank  = code & 0x800;
 		code &= 0x7ff;
@@ -4730,14 +4730,14 @@ static void bioship_draw_background(INT32 scrollx, INT32 scrolly)
 
 		if (sx >= nScreenWidth) continue;
 
-		INT32 code = tilerom[offs | bank];
+		INT32 code = BURN_ENDIAN_SWAP_INT16(tilerom[offs | bank]);
 		sy = (((sy + 16) - scrolly) & 0x1ff) - 16;
 
 		if (sy < nScreenHeight) {
 			Render16x16Tile_Clip(pTransDraw, code & 0xfff, sx, sy, code >> 12, 4, 0, DrvGfxROM1 + 0x100000);
 		}
 
-		code = tilerom[offs | bank | 0x1000];
+		code = BURN_ENDIAN_SWAP_INT16(tilerom[offs | bank | 0x1000]);
 		sy = (((sy + 16) + 256) & 0x1ff) - 16;
 
 		if (sy < nScreenHeight) {
@@ -4764,7 +4764,7 @@ static void draw_macross_text_layer(INT32 scrollx, INT32 scrolly, INT32 wide, IN
 
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		INT32 code = vram[offs];
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 
 		Render8x8Tile_Mask_Clip(pTransDraw, code & 0xfff, sx, sy, code >> 12, 4, 15, coloff, DrvGfxROM0);
 	}
@@ -4806,7 +4806,7 @@ static inline void common_draw(INT32 spriteflip, INT32 bgscrollx, INT32 bgscroll
 
 static INT32 TharrierDraw()
 {
-	INT32 scrollx = *((UINT16*)(Drv68KRAM + 0x9f00)) & 0xfff;
+	INT32 scrollx = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(Drv68KRAM + 0x9f00))) & 0xfff;
 
 	common_draw(1, scrollx, 0, 0, 0, 0);
 
@@ -4816,8 +4816,8 @@ static INT32 TharrierDraw()
 static INT32 ManyblocDraw()
 {
 	UINT16 *scroll = (UINT16*)DrvScrollRAM;
-	INT32 scrollx = scroll[0x82 / 2] & 0xfff;
-	INT32 scrolly = scroll[0xc2 / 2] & 0x1ff;
+	INT32 scrollx = BURN_ENDIAN_SWAP_INT16(scroll[0x82 / 2]) & 0xfff;
+	INT32 scrolly = BURN_ENDIAN_SWAP_INT16(scroll[0xc2 / 2]) & 0x1ff;
 
 	common_draw(1, scrollx, scrolly, 0, 0, 0);
 
@@ -4827,8 +4827,8 @@ static INT32 ManyblocDraw()
 static INT32 MacrossDraw()
 {
 	UINT16 *scroll = (UINT16*)DrvScrollRAM;
-	INT32 scrollx = ((scroll[0] & 0x0f) << 8) | (scroll[1] & 0xff);
-	INT32 scrolly = ((scroll[2] & 0x01) << 8) | (scroll[3] & 0xff);
+	INT32 scrollx = ((BURN_ENDIAN_SWAP_INT16(scroll[0]) & 0x0f) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[1]) & 0xff);
+	INT32 scrolly = ((BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x01) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0xff);
 
 	common_draw(0, scrollx, scrolly, 0, 0, 0x200);
 
@@ -4838,8 +4838,8 @@ static INT32 MacrossDraw()
 static INT32 VandykeDraw()
 {
 	UINT16 *scroll = (UINT16*)DrvScrollRAM;
-	INT32 scrollx = ((scroll[0] & 0x0f) << 8) | (scroll[1] >> 8);
-	INT32 scrolly = ((scroll[2] & 0x01) << 8) | (scroll[3] >> 8);
+	INT32 scrollx = ((BURN_ENDIAN_SWAP_INT16(scroll[0]) & 0x0f) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[1]) >> 8);
+	INT32 scrolly = ((BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x01) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[3]) >> 8);
 
 	common_draw(0, scrollx, scrolly, 0, 0, 0x200);
 
@@ -4849,8 +4849,8 @@ static INT32 VandykeDraw()
 static INT32 RedhawkiDraw()
 {
 	UINT16 *scroll = (UINT16*)DrvScrollRAM;
-	INT32 scrollx = scroll[2] & 0xff;
-	INT32 scrolly = scroll[3] & 0xff;
+	INT32 scrollx = BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0xff;
+	INT32 scrolly = BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0xff;
 
 	common_draw(0, scrollx, scrolly, 0, 0, 0x300);
 
@@ -4860,8 +4860,8 @@ static INT32 RedhawkiDraw()
 static INT32 FirehawkDraw()
 {
 	UINT16 *scroll = (UINT16*)DrvScrollRAM;
-	INT32 scrolly = (scroll[3] + 0x100) & 0x1ff;
-	INT32 scrollx = (scroll[2] + 0x000) & 0xfff;
+	INT32 scrolly = (BURN_ENDIAN_SWAP_INT16(scroll[3]) + 0x100) & 0x1ff;
+	INT32 scrollx = (BURN_ENDIAN_SWAP_INT16(scroll[2]) + 0x000) & 0xfff;
 
 	common_draw(1, scrollx, scrolly, 0, 0, 0x200);
 
@@ -4877,8 +4877,8 @@ static INT32 HachamfDraw()
 	}
 
 	UINT16 *scroll = (UINT16*)DrvScrollRAM;
-	INT32 scrollx = ((scroll[0] & 0x0f) << 8) | (scroll[1] & 0xff);
-	INT32 scrolly = ((scroll[2] & 0x01) << 8) | (scroll[3] & 0xff);
+	INT32 scrollx = ((BURN_ENDIAN_SWAP_INT16(scroll[0]) & 0x0f) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[1]) & 0xff);
+	INT32 scrolly = ((BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x01) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0xff);
 
 	common_draw(0, scrollx, scrolly, 0, 0, 0x200);
 
@@ -4891,10 +4891,10 @@ static INT32 StrahlDraw()
 
 	UINT16 *scroll = (UINT16*)DrvScrollRAM;
 
-	INT32 bgscrollx = ((scroll[0x000] & 0x0f) << 8) | (scroll[0x001] & 0xff);
-	INT32 bgscrolly = ((scroll[0x002] & 0x01) << 8) | (scroll[0x003] & 0xff);
-	INT32 fgscrollx = ((scroll[0x200] & 0x0f) << 8) | (scroll[0x201] & 0xff);
-	INT32 fgscrolly = ((scroll[0x202] & 0x01) << 8) | (scroll[0x203] & 0xff);
+	INT32 bgscrollx = ((BURN_ENDIAN_SWAP_INT16(scroll[0x000]) & 0x0f) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[0x001]) & 0xff);
+	INT32 bgscrolly = ((BURN_ENDIAN_SWAP_INT16(scroll[0x002]) & 0x01) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[0x003]) & 0xff);
+	INT32 fgscrollx = ((BURN_ENDIAN_SWAP_INT16(scroll[0x200]) & 0x0f) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[0x201]) & 0xff);
+	INT32 fgscrolly = ((BURN_ENDIAN_SWAP_INT16(scroll[0x202]) & 0x01) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[0x203]) & 0xff);
 
 	draw_macross_background(DrvBgRAM0, bgscrollx, bgscrolly, 0x300, 0);
 
@@ -4922,8 +4922,8 @@ static INT32 Macross2Draw()
 
 	UINT16 *scroll = (UINT16*)DrvScrollRAM;
 
-	INT32 scrollx = ((scroll[0] & 0x0f) << 8) | (scroll[1] & 0xff);
-	INT32 scrolly = ((scroll[2] & 0x01) << 8) | (scroll[3] & 0xff);
+	INT32 scrollx = ((BURN_ENDIAN_SWAP_INT16(scroll[0]) & 0x0f) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[1]) & 0xff);
+	INT32 scrolly = ((BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x01) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0xff);
 
 	switch (scroll[0] & 0x30)
 	{
@@ -4953,7 +4953,7 @@ static INT32 GunnailDraw()
 	videoshift = 64;
 	UINT16 *scroll = (UINT16*)DrvScrollRAM;
 
-	switch ((scroll[0] >> 8) & 0x30)
+	switch ((BURN_ENDIAN_SWAP_INT16(scroll[0]) >> 8) & 0x30)
 	{
 		case 0x00: draw_gunnail_background(DrvBgRAM0); break;
 		//case 0x10: draw_gunnail_background(DrvBgRAM1); break;
@@ -4990,7 +4990,7 @@ static INT32 RapheroDraw()
 	videoshift = 64;
 	UINT16 *scroll = (UINT16*)DrvScrollRAM;
 
-	switch ((scroll[0] >> 8) & 0x30)
+	switch ((BURN_ENDIAN_SWAP_INT16(scroll[0]) >> 8) & 0x30)
 	{
 		case 0x00: draw_gunnail_background(DrvBgRAM0); break;
 		case 0x10: draw_gunnail_background(DrvBgRAM1); break;
@@ -5016,10 +5016,10 @@ static INT32 BioshipDraw()
 	DrvPaletteRecalc();
 
 	UINT16 *scroll = (UINT16*)DrvScrollRAM;
-	INT32 bgscrolly = (scroll[0x02] & 0x100) | (scroll[0x03] >> 8);
-	INT32 bgscrollx = (scroll[0x00] & 0xf00) | (scroll[0x01] >> 8);
-	INT32 fgscrolly = (scroll[0x02] & 0x100) | (scroll[0x03] >> 8);
-	INT32 fgscrollx = (scroll[0x00] & 0xf00) | (scroll[0x01] >> 8);
+	INT32 bgscrolly = (BURN_ENDIAN_SWAP_INT16(scroll[0x02]) & 0x100) | (BURN_ENDIAN_SWAP_INT16(scroll[0x03]) >> 8);
+	INT32 bgscrollx = (BURN_ENDIAN_SWAP_INT16(scroll[0x00]) & 0xf00) | (BURN_ENDIAN_SWAP_INT16(scroll[0x01]) >> 8);
+	INT32 fgscrolly = (BURN_ENDIAN_SWAP_INT16(scroll[0x02]) & 0x100) | (BURN_ENDIAN_SWAP_INT16(scroll[0x03]) >> 8);
+	INT32 fgscrollx = (BURN_ENDIAN_SWAP_INT16(scroll[0x00]) & 0xf00) | (BURN_ENDIAN_SWAP_INT16(scroll[0x01]) >> 8);
 
 	bioship_draw_background(bgscrollx, bgscrolly);
 
@@ -5062,10 +5062,10 @@ static INT32 BjtwinDraw()
 static void AfegaCommonDraw(INT32 , INT32 xoffset, INT32 yoffset)
 {
 	UINT16 *scroll = (UINT16*)DrvScrollRAM;
-	INT32 bgscrollx = (scroll[1] + xoffset) & 0xfff;
-	INT32 bgscrolly = (scroll[0] + yoffset) & 0x1ff;
-	INT32 txscrollx = (scroll[3] & 0xff);
-	INT32 txscrolly = (scroll[2] & 0xff);
+	INT32 bgscrollx = (BURN_ENDIAN_SWAP_INT16(scroll[1]) + xoffset) & 0xfff;
+	INT32 bgscrolly = (BURN_ENDIAN_SWAP_INT16(scroll[0]) + yoffset) & 0x1ff;
+	INT32 txscrollx = (BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0xff);
+	INT32 txscrolly = (BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0xff);
 
 	common_draw(1, bgscrollx, bgscrolly, txscrollx, txscrolly, 0x200);
 }
@@ -7604,8 +7604,8 @@ static INT32 TdragonLoadCallback()
 	}
 
 	{
-		*((UINT16*)(Drv68KROM + 0x048a)) = 0x4e71;
-		*((UINT16*)(Drv68KROM + 0x04aa)) = 0x4e71;
+		*((UINT16*)(Drv68KROM + 0x048a)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+		*((UINT16*)(Drv68KROM + 0x04aa)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
 	}
 
 	SekInit(0, 0x68000);	
@@ -7721,7 +7721,7 @@ static INT32 TdragonbLoadCallback()
 	decode_tdragonb();
 	DrvGfxDecode(0x20000, 0x100000, 0x100000);
 
-	*((UINT16 *)(Drv68KROM + 0x00308)) = 0x4e71; // fix intro sprites
+	*((UINT16 *)(Drv68KROM + 0x00308)) = BURN_ENDIAN_SWAP_INT16(0x4e71); // fix intro sprites
 
 	return 0;
 }

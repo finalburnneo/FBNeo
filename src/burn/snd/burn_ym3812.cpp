@@ -582,6 +582,7 @@ void BurnYM3812Scan(INT32 nAction, INT32* pnMin)
 #endif
 
 	BurnTimerScanYM3812(nAction, pnMin);
+	FMOPLScan(FM_OPL_SAVESTATE_YM3812, 0, nAction, pnMin);
 	
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(nYM3812Position);

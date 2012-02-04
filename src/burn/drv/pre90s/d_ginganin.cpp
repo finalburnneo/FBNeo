@@ -654,7 +654,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	struct BurnArea ba;
 
 	if (pnMin) {
-		*pnMin = 0x029707;
+		*pnMin = 0x029722;
 	}
 
 	if (nAction & ACB_VOLATILE) {		
@@ -666,9 +666,10 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		BurnAcb(&ba);
 
 		SekScan(nAction);
-		ZetScan(nAction);
+		M6809Scan(nAction);
 
 		AY8910Scan(nAction, pnMin);
+		BurnY8950Scan(nAction, pnMin);
 
 		SCAN_VAR(MC6840_idx0);
 		SCAN_VAR(MC6840_idx1);

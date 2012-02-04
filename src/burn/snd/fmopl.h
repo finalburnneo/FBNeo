@@ -105,5 +105,10 @@ void Y8950SetUpdateHandler (int which, OPL_UPDATEHANDLER UpdateHandler, int para
 
 #endif
 
+#define FM_OPL_SAVESTATE_YM3812		1
+#define FM_OPL_SAVESTATE_YM3526		2
+#define FM_OPL_SAVESTATE_Y8950		3
+
+void FMOPLScan(INT32 nType, INT32 which, INT32 nAction, INT32 *pnMin);
 
 #endif /* __FMOPL_H_ */

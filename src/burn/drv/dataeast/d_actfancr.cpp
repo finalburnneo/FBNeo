@@ -679,8 +679,8 @@ static void draw_pf1_layer()
 	INT32 width  = config[type][wide][0];
 	INT32 height = config[type][wide][1];
 
-	INT32 scrollx = (DrvPfCtrl[0][0x10] + (DrvPfCtrl[0][0x11] << 8)) & ((width * tsize) - 1);
-	INT32 scrolly = (DrvPfCtrl[0][0x12] + (DrvPfCtrl[0][0x13] << 8)) & ((height * tsize) - 1);
+	INT32 scrollx = (DrvPfCtrl[0][0x10] + (DrvPfCtrl[0][0x11] << 8)) & ((width * 16) - 1);
+	INT32 scrolly = (DrvPfCtrl[0][0x12] + (DrvPfCtrl[0][0x13] << 8)) & ((height * 16) - 1);
 
 	INT32 enable_rowscroll = DrvPfCtrl[0][0] & 0x04;
 

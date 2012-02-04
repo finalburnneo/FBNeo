@@ -12272,6 +12272,117 @@ struct BurnDriver BurnDrvdiggerma = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Super Bubble Pop
+
+static struct BurnRomInfo sbpRomDesc[] = {
+	{ "2a.bin",       0x080000, 0xd054d264, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "2b.bin",       0x080000, 0x2fd04b2a, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "3b.bin",       0x200000, 0x44791317, 3 | BRF_GRA },           //  2 Sprite data
+	{ "4b.bin",       0x200000, 0xa3a1c0df, 3 | BRF_GRA },           //  3 
+
+	{ "1b.bin",       0x080000, 0x7b1f86f7, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "sbp.snd",      0x080000, 0x00000000, 5 | BRF_SND | BRF_NODUMP }, //  5 Sound data
+};
+
+STDROMPICKEXT(sbp, sbp, neogeo)
+STD_ROM_FN(sbp)
+
+UINT8 __fastcall sbpLowerRomReadByte(UINT32 sekAddress)
+{
+	switch (sekAddress) {
+		default:
+			bprintf(PRINT_NORMAL, _T("  - sbpLowerRomReadByte 0x%06X (PC: 0x%06X)\n"), sekAddress, SekGetPC(-1));
+	}
+
+	return 0;
+}
+
+UINT16 __fastcall sbpLowerRomReadWord(UINT32 sekAddress)
+{
+	INT32 Offset = sekAddress >> 1;
+	UINT16* ROM = (UINT16*)Neo68KROMActive;
+	
+	if (sekAddress >= 0x000200 && sekAddress <= 0x001fff) {
+		UINT16 OrigData = ROM[Offset];
+		UINT16 Data =  BITSWAP16(OrigData, 11, 10, 9, 8, 15, 14, 13, 12, 3, 2, 1, 0, 7, 6, 5, 4);
+
+		// there is actually data in the rom here already, maybe we should just return it 'as is'
+		if (sekAddress == 0xf5e) return OrigData;
+
+		return Data;
+	}
+	
+	switch (sekAddress) {
+		default:
+			bprintf(PRINT_NORMAL, _T("  - sbpLowerRomReadWord 0x%06X (PC: 0x%06X)\n"), sekAddress, SekGetPC(-1));
+	}
+
+	return 0;
+}
+
+void __fastcall sbpLowerRomWriteByte(UINT32 sekAddress, UINT8 byteValue)
+{
+	switch (sekAddress) {
+		default:
+			bprintf(PRINT_NORMAL, _T("  - sbpLowerRomWriteByte 0x%06X -> 0x%02X\n"), sekAddress, byteValue);
+	}
+}
+
+void __fastcall sbpLowerRomWriteWord(UINT32 sekAddress, UINT16 wordValue)
+{
+	if (sekAddress == 0x1080) {
+		if (wordValue == 0x4e75) return;
+		if (wordValue == 0xffff) return;
+	}
+	
+	switch (sekAddress) {
+		default:
+			bprintf(PRINT_NORMAL, _T("  - sbpLowerRomWriteWord 0x%06X -> 0x%04X\n"), sekAddress, wordValue);
+	}
+}
+
+static void sbpInstallHandlers()
+{
+	// Install protection handler
+	SekMapHandler(6,	0x000000, 0x001fff, SM_WRITE);
+	SekMapHandler(6,	0x000000, 0x001fff, SM_READ);
+	SekSetWriteWordHandler(6, sbpLowerRomWriteWord);
+	SekSetWriteByteHandler(6, sbpLowerRomWriteByte);
+	SekSetReadWordHandler(6, sbpLowerRomReadWord);
+	SekSetReadByteHandler(6, sbpLowerRomReadByte);
+}
+
+static void sbpCallback()
+{
+	UINT16* Rom = (UINT16*)Neo68KROMActive;
+	Rom[0x2a6f8 / 2] = 0x4e71;
+	Rom[0x2a6fa / 2] = 0x4e71;
+	Rom[0x2a6fc / 2] = 0x4e71;
+	
+	nNeoTextROMSize[nNeoActiveSlot] = 0x20000;
+}
+
+static INT32 sbpInit()
+{
+	NeoCallbackActive->pInstallHandlers = sbpInstallHandlers;
+	NeoCallbackActive->pInitialise = sbpCallback;
+
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvsbp = {
+	"sbp", NULL, "neogeo", NULL, "2004",
+	"Super Bubble Pop\0", NULL, "Vektorlogic", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
+	NULL, sbpRomInfo, sbpRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	sbpInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // -----------------------------------------------------------------------------
 // Games not in MAME
 

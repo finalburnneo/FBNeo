@@ -967,7 +967,7 @@ BEGIN
            MENUITEM "Exit Cheat Search",				MENU_CHEATSEARCH_EXIT, GRAYED
         END
         MENUITEM SEPARATOR
-        MENUITEM "Invoke debugger...\tCtrl+Shift+F1",			MENU_DEBUG
+        MENUITEM "Invoke 68K debugger...\tCtrl+Shift+F1",	MENU_DEBUG
 	MENUITEM SEPARATOR
 	MENUITEM "Palette Viewer...\tCtrl+Shift+F5",			MENU_PALETTEVIEWER, GRAYED
 	MENUITEM SEPARATOR

@@ -1292,7 +1292,12 @@ void MenuEnableItems()
 			}
 
 #if defined (FBA_DEBUG)
-			EnableMenuItem(hMenu, MENU_DEBUG,			MF_ENABLED | MF_BYCOMMAND);
+			extern UINT8 DebugCPU_SekInitted;
+			if (DebugCPU_SekInitted) {
+				EnableMenuItem(hMenu, MENU_DEBUG,		MF_ENABLED | MF_BYCOMMAND);
+			} else {
+				EnableMenuItem(hMenu, MENU_DEBUG,		MF_GRAYED | MF_BYCOMMAND);
+			}
 #else
 			EnableMenuItem(hMenu, MENU_DEBUG,			MF_GRAYED  | MF_BYCOMMAND);
 #endif

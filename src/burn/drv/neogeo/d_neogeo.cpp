@@ -12290,84 +12290,31 @@ static struct BurnRomInfo sbpRomDesc[] = {
 STDROMPICKEXT(sbp, sbp, neogeo)
 STD_ROM_FN(sbp)
 
-UINT8 __fastcall sbpLowerRomReadByte(UINT32 sekAddress)
-{
-	switch (sekAddress) {
-		default:
-			bprintf(PRINT_NORMAL, _T("  - sbpLowerRomReadByte 0x%06X (PC: 0x%06X)\n"), sekAddress, SekGetPC(-1));
-	}
-
-	return 0;
-}
-
-UINT16 __fastcall sbpLowerRomReadWord(UINT32 sekAddress)
-{
-	INT32 Offset = sekAddress >> 1;
-	UINT16* ROM = (UINT16*)Neo68KROMActive;
-	
-	if (sekAddress >= 0x000200 && sekAddress <= 0x001fff) {
-		UINT16 OrigData = ROM[Offset];
-		UINT16 Data =  BITSWAP16(OrigData, 11, 10, 9, 8, 15, 14, 13, 12, 3, 2, 1, 0, 7, 6, 5, 4);
-
-		// there is actually data in the rom here already, maybe we should just return it 'as is'
-		if (sekAddress == 0xf5e) return OrigData;
-
-		return Data;
-	}
-	
-	switch (sekAddress) {
-		default:
-			bprintf(PRINT_NORMAL, _T("  - sbpLowerRomReadWord 0x%06X (PC: 0x%06X)\n"), sekAddress, SekGetPC(-1));
-	}
-
-	return 0;
-}
-
-void __fastcall sbpLowerRomWriteByte(UINT32 sekAddress, UINT8 byteValue)
-{
-	switch (sekAddress) {
-		default:
-			bprintf(PRINT_NORMAL, _T("  - sbpLowerRomWriteByte 0x%06X -> 0x%02X\n"), sekAddress, byteValue);
-	}
-}
-
-void __fastcall sbpLowerRomWriteWord(UINT32 sekAddress, UINT16 wordValue)
-{
-	if (sekAddress == 0x1080) {
-		if (wordValue == 0x4e75) return;
-		if (wordValue == 0xffff) return;
-	}
-	
-	switch (sekAddress) {
-		default:
-			bprintf(PRINT_NORMAL, _T("  - sbpLowerRomWriteWord 0x%06X -> 0x%04X\n"), sekAddress, wordValue);
-	}
-}
-
-static void sbpInstallHandlers()
-{
-	// Install protection handler
-	SekMapHandler(6,	0x000000, 0x001fff, SM_WRITE);
-	SekMapHandler(6,	0x000000, 0x001fff, SM_READ);
-	SekSetWriteWordHandler(6, sbpLowerRomWriteWord);
-	SekSetWriteByteHandler(6, sbpLowerRomWriteByte);
-	SekSetReadWordHandler(6, sbpLowerRomReadWord);
-	SekSetReadByteHandler(6, sbpLowerRomReadByte);
-}
-
 static void sbpCallback()
 {
-	UINT16* Rom = (UINT16*)Neo68KROMActive;
-	Rom[0x2a6f8 / 2] = 0x4e71;
-	Rom[0x2a6fa / 2] = 0x4e71;
-	Rom[0x2a6fc / 2] = 0x4e71;
+	UINT16* ROM = (UINT16*)Neo68KROMActive;
+	
+	for (INT32 i = 0x200 / 2; i < 0x2000 / 2; i++) {
+		UINT16 OrigData = ROM[i];
+		UINT16 Data =  BITSWAP16(OrigData, 11, 10, 9, 8, 15, 14, 13, 12, 3, 2, 1, 0, 7, 6, 5, 4);
+		
+		if (i == 0xf5e) {
+			ROM[i] = OrigData;
+		} else {
+			ROM[i] = Data;
+		}
+	}
+	
+	// stop the game overwriting the text layer data
+	ROM[0x2a6f8 / 2] = 0x4e71;
+	ROM[0x2a6fa / 2] = 0x4e71;
+	ROM[0x2a6fc / 2] = 0x4e71;
 	
 	nNeoTextROMSize[nNeoActiveSlot] = 0x20000;
 }
 
 static INT32 sbpInit()
 {
-	NeoCallbackActive->pInstallHandlers = sbpInstallHandlers;
 	NeoCallbackActive->pInitialise = sbpCallback;
 
 	return NeoInit();

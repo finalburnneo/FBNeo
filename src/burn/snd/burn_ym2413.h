@@ -20,14 +20,5 @@ static inline void BurnYM2413Write(INT32 Address, const UINT8 nValue)
 	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("BurnYM2413Write called without init\n"));
 #endif
 
-	extern UINT32 nBurnCurrentYM2413Register;
-	extern UINT8 BurnYM2413Registers[0x0100];
-
-	if (!(Address & 1)) {
-		nBurnCurrentYM2413Register = nValue;
-	} else {
-		BurnYM2413Registers[nBurnCurrentYM2413Register] = nValue;
-	}
-
 	YM2413Write(0, Address, nValue);
 }

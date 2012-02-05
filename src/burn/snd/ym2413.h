@@ -26,5 +26,6 @@ typedef void (*OPLL_UPDATEHANDLER)(int param,int min_interval_us);
 
 void YM2413SetUpdateHandler(int which, OPLL_UPDATEHANDLER UpdateHandler, int param);
 
+void YM2413Scan(INT32 which, INT32 nAction);
 
 #endif /*_H_YM2413_*/

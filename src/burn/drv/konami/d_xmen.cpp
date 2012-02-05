@@ -749,8 +749,8 @@ struct BurnDriver BurnDrvXmen = {
 // X-Men (4 Players ver ADA)
 
 static struct BurnRomInfo xmenaRomDesc[] = {
-	{ "065-ada04.10d",	0x020000, 0xb8276624, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "065-ada05.10f",	0x020000, 0xc68582ad, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "065-ada.10d",	0x020000, 0xb8276624, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "065-ada.10f",	0x020000, 0xc68582ad, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "065-a02.9d",		0x040000, 0xb31dc44c, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "065-a03.9f",		0x040000, 0x13842fe6, 1 | BRF_PRG | BRF_ESS }, //  3
 

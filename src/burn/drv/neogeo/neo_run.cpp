@@ -603,11 +603,13 @@ static INT32 LoadRoms()
 
 			if (pInfo->nADPCMANum > 1) {
 				BurnDrvGetRomInfo(&ri, pInfo->nADPCMOffset + pInfo->nADPCMANum - 1);
-				BurnDrvGetRomName(&pName, pInfo->nADPCMOffset + pInfo->nADPCMANum - 1, 0);
-				if (pInfo->nADPCMBNum == 0) {
-					nYM2610ADPCMASize[nNeoActiveSlot] *= pName[FindType(pName) + 1] - '1';
-				} else {
-					nYM2610ADPCMASize[nNeoActiveSlot] *= pName[FindType(pName) + 2] - '1';
+				if (strcmp(BurnDrvGetTextA(DRV_NAME), "sbp") != 0) { // not for sbp!
+					BurnDrvGetRomName(&pName, pInfo->nADPCMOffset + pInfo->nADPCMANum - 1, 0);
+					if (pInfo->nADPCMBNum == 0) {
+						nYM2610ADPCMASize[nNeoActiveSlot] *= pName[FindType(pName) + 1] - '1';
+					} else {
+						nYM2610ADPCMASize[nNeoActiveSlot] *= pName[FindType(pName) + 2] - '1';
+					}
 				}
 				nYM2610ADPCMASize[nNeoActiveSlot] += ri.nLen;
 			}
@@ -742,9 +744,11 @@ static INT32 LoadRoms()
 
 		pADPCMData = YM2610ADPCMAROM[nNeoActiveSlot];
 
-		// pbobblen needs this (V ROMs are v3 & v4), note aof/wh1/wh1h/kotm2 (V ROMs are v2 & v4)
-		if (pInfo->nADPCMANum == 2 && pName[FindType(pName) + 1] == '3') {
-			pADPCMData += ri.nLen * 2;
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "sbp") != 0) { // not for sbp!
+			// pbobblen needs this (V ROMs are v3 & v4), note aof/wh1/wh1h/kotm2 (V ROMs are v2 & v4)
+			if (pInfo->nADPCMANum == 2 && pName[FindType(pName) + 1] == '3') {
+				pADPCMData += ri.nLen * 2;
+			}
 		}
 		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "pbobblenb")) {
 			pADPCMData = YM2610ADPCMAROM[nNeoActiveSlot] + 0x200000;

@@ -12284,7 +12284,8 @@ static struct BurnRomInfo sbpRomDesc[] = {
 
 	{ "1b.bin",       0x080000, 0x7b1f86f7, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
-	{ "sbp.snd",      0x080000, 0x00000000, 5 | BRF_SND | BRF_NODUMP }, //  5 Sound data
+	{ "12a.bin",      0x400000, 0xc96723b9, 5 | BRF_SND }, 		 //  5 Sound data
+	{ "13a.bin",      0x400000, 0x08c339a5, 5 | BRF_SND },		 //  6
 };
 
 STDROMPICKEXT(sbp, sbp, neogeo)

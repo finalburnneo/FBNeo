@@ -6305,7 +6305,7 @@ static INT32 sengoku3Init()
 struct BurnDriver BurnDrvSengoku3 = {
 	"sengoku3", NULL, "neogeo", NULL, "2001",
 	"Sengoku 3 / Sengoku Densho 2001\0", NULL, "SNK / Noise Factory", "Neo Geo MVS",
-	L"Sengoku 3\0\u6226\u56FD\u4F1D\u627F\uFF12\uFF10\uFF10\uFF11", NULL, NULL, NULL,
+	L"Sengoku 3\0\u6226\u56FD\u4F1D\u627F\uFF12\uFF10\uFF10\uFF11\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SWAPP, GBF_SCRFIGHT, 0,
 	NULL, sengoku3RomInfo, sengoku3RomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	sengoku3Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,

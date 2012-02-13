@@ -220,7 +220,7 @@ void BurnSampleReset()
 	}
 }
 
-extern INT32 __cdecl ZipLoadOneFile(const char* arcName, const char* fileName, void** Dest, INT32* pnWrote);
+INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, INT32* pnWrote);
 char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, INT32 nOutSize);
 #define _TtoA(a)	TCHARToANSI(a, NULL, 0)
 
@@ -269,11 +269,11 @@ void BurnSampleInit(INT32 nGain /*volume percentage!*/, INT32 bAdd /*add sample 
 
 		if (si.nFlags == 0) break;
 
-		sprintf (path, "%s%s.zip", szTempPath, setname);
+		sprintf (path, "%s%s", szTempPath, setname);
 
 		destination = NULL;
 		length = 0;
-		ZipLoadOneFile((const char*)path, (const char*)szSampleName, &destination, &length);
+		ZipLoadOneFile((char*)path, (const char*)szSampleName, &destination, &length);
 		
 		if (length) {
 			make_raw((UINT8*)destination, length);

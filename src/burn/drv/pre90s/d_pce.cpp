@@ -190,7 +190,6 @@ static INT32 PceGetZipName(char** pszName, UINT32 i)
 	for (UINT32 j = 0; j < strlen(pszGameName); j++) {
 		szFilename[j] = pszGameName[j + 4];
 	}
-	strcat(szFilename, ".zip");
 
 	*pszName = szFilename;
 

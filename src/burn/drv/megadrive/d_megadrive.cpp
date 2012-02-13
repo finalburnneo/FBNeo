@@ -172,7 +172,6 @@ INT32 MegadriveGetZipName(char** pszName, UINT32 i)
 	for (UINT32 j = 0; j < strlen(pszGameName); j++) {
 		szFilename[j] = pszGameName[j + 3];
 	}
-	strcat(szFilename, ".zip");
 
 	*pszName = szFilename;
 

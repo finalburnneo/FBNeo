@@ -137,7 +137,6 @@ INT32 BurnGetZipName(char** pszName, UINT32 i)
 	}
 
 	strcpy(szFilename, pszGameName);
-	strcat(szFilename, ".zip");
 
 	*pszName = szFilename;
 

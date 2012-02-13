@@ -5,9 +5,11 @@
 static unzFile Zip=NULL;
 static INT32 nCurrFile=0; // The current file we are pointing to
 
-INT32 ZipOpen(const char* szZip)
+INT32 ZipOpen(char* szZip)
 {
 	if (szZip == NULL) return 1;
+	
+	strcat(szZip, ".zip");
 
 	Zip = unzOpen(szZip);
 	if (Zip == NULL) return 1;
@@ -114,7 +116,7 @@ INT32 ZipLoadFile(UINT8* Dest, INT32 nLen, INT32* pnWrote, INT32 nEntry)
 }
 
 // Load one file directly, added by regret
-INT32 __cdecl ZipLoadOneFile(const char* arcName, const char* fileName, void** Dest, INT32* pnWrote)
+INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, INT32* pnWrote)
 {
 	if (ZipOpen(arcName)) {
 		return 1;

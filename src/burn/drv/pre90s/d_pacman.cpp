@@ -4564,7 +4564,45 @@ struct BurnDriver BurnDrveyes2 = {
 };
 
 
-// Eyes (Zaccaria)
+// Eyes (bootleg set 1)
+
+static struct BurnRomInfo eyesbRomDesc[] = {
+	{ "1.bin",	  0x0800, 0x339d279a, 1 | BRF_ESS | BRF_PRG },  //  0 Z80 Code
+	{ "5.bin",	  0x0800, 0x1b68a61d, 1 | BRF_ESS | BRF_PRG },  //  1
+	{ "2.bin",	  0x0800, 0xd4f9aaf8, 1 | BRF_ESS | BRF_PRG },  //  2
+	{ "6.bin",	  0x0800, 0x6b41bb80, 1 | BRF_ESS | BRF_PRG },  //  3
+	{ "3.bin",	  0x0800, 0x748e0e48, 1 | BRF_ESS | BRF_PRG },  //  4
+	{ "7.bin",	  0x0800, 0x7b7f4a74, 1 | BRF_ESS | BRF_PRG },  //  5
+	{ "4.bin",	  0x0800, 0x367a3884, 1 | BRF_ESS | BRF_PRG },  //  6
+	{ "8.bin",	  0x0800, 0x2baaadae, 1 | BRF_ESS | BRF_PRG },  //  7
+
+	{ "9.bin",	  0x0800, 0x342c0653, 2 | BRF_GRA },		//  8 Graphics
+	{ "11.bin",	  0x0800, 0xaaa7a537, 2 | BRF_GRA },		//  9
+	{ "10.bin",	  0x0800, 0xb247b82c, 2 | BRF_GRA },		// 10
+	{ "12.bin",	  0x0800, 0x99af4b30, 2 | BRF_GRA },		// 11
+
+	{ "7051.bin",	  0x0020, 0x0dad2ccb, 3 | BRF_GRA },		// 12 Color Proms
+	{ "7051-3.bin",	  0x0100, 0xd8d78829, 3 | BRF_GRA },		// 13
+
+	{ "82s126.1m",	  0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "7051-2.bin",	  0x0100, 0x77245b66, 4 | BRF_OPT },     	// 15 Timing Prom (not used)
+};
+
+STD_ROM_PICK(eyesb)
+STD_ROM_FN(eyesb)
+
+struct BurnDriver BurnDrveyesb = {
+	"eyesb", "eyes", NULL, NULL, "1982",
+	"Eyes (bootleg set 1)\0", NULL, "bootleg", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	NULL, eyesbRomInfo, eyesbRomName, NULL, NULL, eyesInputInfo, eyesDIPInfo,
+	eyesInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Eyes (bootleg set 2, decrypted)
 
 static struct BurnRomInfo eyeszacbRomDesc[] = {
 	{ "1.bin",        0x0800, 0xa4a9d7a0, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -4595,7 +4633,7 @@ STD_ROM_FN(eyeszacb)
 
 struct BurnDriver BurnDrveyeszac = {
 	"eyeszacb", "eyes", NULL, NULL, "1982",
-	"Eyes (bootleg)\0", NULL, "bootleg", "Pac-man",
+	"Eyes (bootleg set 2, decrypted)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, eyeszacbRomInfo, eyeszacbRomName, NULL, NULL, eyesInputInfo, eyesDIPInfo,

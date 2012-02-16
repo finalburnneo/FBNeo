@@ -2533,13 +2533,15 @@ void FMOPLScan(INT32 nType, INT32 which, INT32 nAction, INT32 *pnMin)
 	}
 	
 	if (nAction & ACB_DRIVER_DATA) {
-		for (INT32 ch = 0; ch < 9; ch++) {
+		INT32 ch;
+		INT32 slot;
+		for (ch = 0; ch < 9; ch++) {
 			OPL_CH *CH = &OPL->P_CH[ch];
 			
 			SCAN_VAR(CH->block_fnum);
 			SCAN_VAR(CH->kcode);
 		
-			for (INT32 slot = 0; slot < 2; slot++) {
+			for (slot = 0; slot < 2; slot++) {
 				OPL_SLOT *SLOT = &CH->SLOT[slot];
 				
 				SCAN_VAR(SLOT->ar);
@@ -2611,14 +2613,16 @@ void FMOPLScan(INT32 nType, INT32 which, INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(OPL->mode);
 		
 		if (nAction & ACB_WRITE) {
-			for (INT32 ch = 0; ch < 9; ch++) {
+			INT32 ch;
+			INT32 slot;
+			for (ch = 0; ch < 9; ch++) {
 				OPL_CH *CH = &OPL->P_CH[ch];
 
 				UINT32 block_fnum = CH->block_fnum;
 				CH->ksl_base = ksl_tab[block_fnum >> 6];
 				CH->fc = OPL->fn_tab[block_fnum & 0x03ff] >> (7 - (block_fnum >> 10));
 
-				for (INT32 slot = 0; slot < 2; slot++) {
+				for (slot = 0; slot < 2; slot++) {
 					OPL_SLOT *SLOT = &CH->SLOT[slot];
 
 					SLOT->ksr = CH->kcode >> SLOT->KSR;

@@ -2166,6 +2166,9 @@ void YM2413Scan(INT32 which, INT32 nAction)
 	YM2413 *chip  = OPLL_YM2413[which];
 	
 	if (nAction & ACB_DRIVER_DATA) {
+		INT32 chnum;
+		INT32 slotnum;
+		
 		SCAN_VAR(chip->instvol_r);
 		SCAN_VAR(chip->eg_cnt);
 		SCAN_VAR(chip->eg_timer);
@@ -2183,7 +2186,7 @@ void YM2413Scan(INT32 which, INT32 nAction)
 		SCAN_VAR(chip->address);
 		SCAN_VAR(chip->status);
 		
-		for (INT32 chnum = 0; chnum < 9; chnum++) {
+		for (chnum = 0; chnum < 9; chnum++) {
 			YM2413_OPLL_CH *ch = &chip->P_CH[chnum];
 		
 			SCAN_VAR(ch->block_fnum);
@@ -2192,7 +2195,7 @@ void YM2413Scan(INT32 which, INT32 nAction)
 			SCAN_VAR(ch->kcode);
 			SCAN_VAR(ch->sus);
 			
-			for (INT32 slotnum = 0; slotnum < 2; slotnum++) {
+			for (slotnum = 0; slotnum < 2; slotnum++) {
 				YM2413_OPLL_SLOT *sl = &ch->SLOT[slotnum];
 				
 				SCAN_VAR(sl->ar);

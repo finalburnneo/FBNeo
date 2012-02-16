@@ -8,21 +8,40 @@ extern "C" {
 #include "ay8910.h"
 }
 
+static UINT8 *AllMem;
+static UINT8 *MemEnd;
+static UINT8 *AllRam;
+static UINT8 *RamEnd;
+static UINT8 *Drv6502ROM;
+static UINT8 *DrvGfxROM0;
+static UINT8 *DrvGfxROM1;
+static UINT8 *DrvGfxROM2;
+static UINT8 *DrvColPROM;
+static UINT8 *Drv6502RAM;
+static UINT8 *DrvFgRAM;
+static UINT8 *DrvBgRAM;
+static UINT8 *DrvPalRAM;
+static UINT8 *DrvSprRAM;
 
-static UINT8 *Mem, *Rom, *Gfx0, *Gfx1, *Gfx2, *Prom;
-static UINT8 DrvJoy1[8], DrvJoy2[8], DrvReset, DrvDips[2];
-static INT16 *pAY8910Buffer[6], *pFMBuffer = NULL;
-static INT32 *Palette;
+static UINT8 *flipscreen;
+static UINT8 *soundlatch;
+static UINT8 *scrolly;
+static UINT8 *video_control;
 
-static INT32 VBLK = 0x80;
-static INT32 soundlatch;
-static UINT8 mystston_scroll_x = 0;
-static INT32 mystston_fgcolor, mystston_flipscreen;
+static INT16 *pAY8910Buf = NULL;
+static INT16 *pAY8910Buffer[6];
 
+static UINT32 *DrvPalette;
+static UINT8 DrvRecalc;
 
-//----------------------------------------------------------------------------------------------
-// Input Handlers
+static UINT8 ay8910_select;
+static INT32 vblank;
 
+static UINT8 DrvJoy1[8];
+static UINT8 DrvJoy2[8];
+static UINT8 DrvDips[2];
+static UINT8 DrvInputs[2];
+static UINT8 DrvReset;
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy1 + 6,	"p1 coin"  },
@@ -52,8 +71,8 @@ STDINPUTINFO(Drv)
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
-	// Default Values
 	{0x11, 0xff, 0xff, 0xfb, NULL                     },
+	{0x12, 0xff, 0xff, 0x1f, NULL                     },
 
 	{0   , 0xfe, 0   , 2   , "Lives"	          },
 	{0x11, 0x01, 0x01, 0x01, "3"     		  },
@@ -66,9 +85,6 @@ static struct BurnDIPInfo DrvDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
 	{0x11, 0x01, 0x04, 0x04, "Off"     		  },
 	{0x11, 0x01, 0x04, 0x00, "On"    		  },
-
-	// Default Values
-	{0x12, 0xff, 0xff, 0x1f, NULL                     },
 
 	{0   , 0xfe, 0   , 4   , "Coin A"                 },
 	{0x12, 0x01, 0x03, 0x00, "2C 1C"     		  },
@@ -93,377 +109,377 @@ static struct BurnDIPInfo DrvDIPList[]=
 
 STDDIPINFO(Drv)
 
-
-//----------------------------------------------------------------------------------------------
-// Memory Read/Write Handlers
-
-
-static void mystston_soundcontrol_w(UINT16, UINT8 data)
+static void mystston_soundcontrol(UINT8 data)
 {
-	static INT32 last;
-
-	if ((last & 0x20) == 0x20 && (data & 0x20) == 0x00)
+	if (((ay8910_select & 0x20) == 0x20) && ((data & 0x20) == 0x00))
 	{
-		if (last & 0x10)
-			AY8910Write(0, 0, soundlatch);
-		else
-			AY8910Write(0, 1, soundlatch);
+		AY8910Write(0, (ay8910_select & 0x10) ? 0 : 1, *soundlatch);
 	}
 
-	if ((last & 0x80) == 0x80 && (data & 0x80) == 0x00)
+	if (((ay8910_select & 0x80) == 0x80) && ((data & 0x80) == 0x00))
 	{
-		if (last & 0x40)
-			AY8910Write(1, 0, soundlatch);
-		else
-			AY8910Write(1, 1, soundlatch);
+		AY8910Write(0, (ay8910_select & 0x40) ? 0 : 1, *soundlatch);
 	}
 
-	last = data;
+	ay8910_select = data;
 }
 
-UINT8 mystston_read_byte(UINT16 address)
+UINT8 mystston_read(UINT16 address)
 {
-	UINT8 ret = 0;
-
-	switch (address)
+	switch (address & ~0x1f8f)
 	{
 		case 0x2000:
-		{
-			for (INT32 i = 0; i < 8; i++) 
-				ret |= DrvJoy1[i] << i;
-
-			return ~ret;
-		}
+			return DrvInputs[0];
 
 		case 0x2010:
-		{
-			for (INT32 i = 0; i < 8; i++) 
-				ret |= DrvJoy2[i] << i;
-
-			return ~ret;
-		}
+			return DrvInputs[1];
 
 		case 0x2020:
 			return DrvDips[0];
 
 		case 0x2030:
-			return DrvDips[1] | VBLK;
+			return DrvDips[1] | vblank;
 	}
 
 	return 0;
 }
 
-void mystston_write_byte(UINT16 address, UINT8 data)
+void mystston_write(UINT16 address, UINT8 data)
 {
-#define pal2bit(bits) (((bits & 3) << 6) | ((bits & 3) << 4) | ((bits & 3) << 2) | (bits & 3))
-#define pal3bit(bits) (((bits & 7) << 5) | ((bits & 7) << 2) | ((bits & 7) >> 1))
+	if ((address & 0xe060) == 0x2060) {
+		DrvPalRAM[address & 0x1f] = data;
+		return;
+	}
 
-	switch (address)
+	switch (address & ~0x1f8f)
 	{
 		case 0x2000:
-		{
-			mystston_fgcolor = ((data & 0x01) << 1) + ((data & 0x02) >> 1);
-			mystston_flipscreen = (data & 0x80) ^ ((DrvDips[1] & 0x20) ? 0x80 : 0);
-		}
-		break;
+			*video_control = data;
+		return;
 
 		case 0x2010:
 			M6502SetIRQ(M6502_IRQ_LINE, M6502_IRQSTATUS_NONE);
 		break;
 
 		case 0x2020:
-			mystston_scroll_x = data;
+			*scrolly = data;
 		break;
 
 		case 0x2030:
-			soundlatch = data;
+			*soundlatch = data;
 		break;
 
 		case 0x2040:
-			mystston_soundcontrol_w(0, data);
+			mystston_soundcontrol(data);
 		break;
 	}
-
-	if (address >= 0x2060 && address <= 0x2077)
-	{
-		Palette[address & 0x1f] = (pal3bit(data) << 16) | (pal3bit(data >> 3) << 8) | pal2bit(data >> 6);
-	}
-
-#undef pal2bit
-#undef pal3bit
 }
-
-
-//----------------------------------------------------------------------------------------------
-// Initilization Routines
-
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
-	memset (Rom, 0, 0x2000);
-
-	VBLK = 0x80;
-	soundlatch = 0;
-	mystston_flipscreen = 0;
-	mystston_scroll_x = 0;
-	mystston_fgcolor = 0;
-
-	AY8910Reset(0);
-	AY8910Reset(1);
+	memset (AllRam, 0, RamEnd - AllRam);
 
 	M6502Open(0);
 	M6502Reset();
 	M6502Close();
 
+	AY8910Reset(0);
+	AY8910Reset(1);
+
+	ay8910_select = 0;
+
 	return 0;
 }
 
-static void mystston_palette_init()
+static void DrvPaletteUpdate(UINT8 *p, INT32 offs)
 {
-	for (INT32 i = 0; i < 32; i++)
+	for (INT32 i = 0; i < 0x20; i++)
 	{
-		INT32 bit0, bit1, bit2, r, g, b;
+		INT32 bit0 = (p[i] >> 0) & 0x01;
+		INT32 bit1 = (p[i] >> 1) & 0x01;
+		INT32 bit2 = (p[i] >> 2) & 0x01;
+		INT32 r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 
-		bit0 = (Prom[i] >> 0) & 0x01;
-		bit1 = (Prom[i] >> 1) & 0x01;
-		bit2 = (Prom[i] >> 2) & 0x01;
-		r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+		bit0 = (p[i] >> 3) & 0x01;
+		bit1 = (p[i] >> 4) & 0x01;
+		bit2 = (p[i] >> 5) & 0x01;
+		INT32 g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 
-		bit0 = (Prom[i] >> 3) & 0x01;
-		bit1 = (Prom[i] >> 4) & 0x01;
-		bit2 = (Prom[i] >> 5) & 0x01;
-		g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+		bit1 = (p[i] >> 6) & 0x01;
+		bit2 = (p[i] >> 7) & 0x01;
+		INT32 b = 0x21 * 0 + 0x47 * bit1 + 0x97 * bit2;
 
-		bit1 = (Prom[i] >> 6) & 0x01;
-		bit2 = (Prom[i] >> 7) & 0x01;
-		b = 0x21 * 0 + 0x47 * bit1 + 0x97 * bit2;
-
-		Palette[i + 24] = (r << 16) | (g << 8) | b;
+		DrvPalette[offs + i] = BurnHighCol(r, g, b, 0);
 	}
 }
 
-static INT32 mystston_gfx_convert()
+static INT32 DrvGfxDecode()
 {
-	static INT32 PlaneOffsets[3]   = { 0x40000, 0x20000, 0 };
-	static INT32 XOffsets[16]      = { 128, 129, 130, 131, 132, 133, 134, 135, 0, 1, 2, 3, 4, 5, 6, 7 };
-	static INT32 YOffsets[16]      = { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120 };
+	static INT32 Planes[3] = { RGN_FRAC(0xc000,2,3), RGN_FRAC(0xc000,1,3), RGN_FRAC(0xc000,0,3) };
+	static INT32 XOffs[16] = { STEP8(128, 1), STEP8(0, 1) };
+	static INT32 YOffs[16] = { STEP16(0, 8) };
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(0x10000);
 	if (tmp == NULL) {
 		return 1;
 	}
 
-	memcpy (tmp, Gfx0, 0x10000);
+	memcpy (tmp, DrvGfxROM0, 0x10000);
 
-	GfxDecode(0x800, 3,  8,  8, PlaneOffsets, XOffsets + 8, YOffsets, 0x040, tmp, Gfx0);
-	GfxDecode(0x200, 3, 16, 16, PlaneOffsets, XOffsets + 0, YOffsets, 0x100, tmp, Gfx2);
+	GfxDecode(0x800, 3,  8,  8, Planes, XOffs + 8, YOffs, 0x040, tmp, DrvGfxROM0);
+	GfxDecode(0x200, 3, 16, 16, Planes, XOffs + 0, YOffs, 0x100, tmp, DrvGfxROM2);
 
-	memcpy (tmp, Gfx1, 0x10000);
+	memcpy (tmp, DrvGfxROM1, 0x10000);
 
-	GfxDecode(0x200, 3, 16, 16, PlaneOffsets, XOffsets + 0, YOffsets, 0x100, tmp, Gfx1);
+	GfxDecode(0x200, 3, 16, 16, Planes, XOffs + 0, YOffs, 0x100, tmp, DrvGfxROM1);
 
 	BurnFree (tmp);
 
 	return 0;
 }
 
+static INT32 MemIndex()
+{
+	UINT8 *Next; Next = AllMem;
+
+	Drv6502ROM		= Next; Next += 0x010000;
+
+	DrvGfxROM0		= Next; Next += 0x020000;
+	DrvGfxROM1		= Next; Next += 0x020000;
+	DrvGfxROM2		= Next; Next += 0x020000;
+
+	DrvColPROM		= Next; Next += 0x000020;
+
+	DrvPalette		= (UINT32*)Next; Next += 0x0040 * sizeof(UINT32);
+
+	AllRam			= Next;
+
+	Drv6502RAM		= Next; Next += 0x001000;
+	DrvFgRAM		= Next; Next += 0x000800;
+	DrvBgRAM		= Next; Next += 0x000800;
+	DrvPalRAM		= Next; Next += 0x000020;
+
+	flipscreen		= Next; Next += 0x000001;
+	soundlatch		= Next; Next += 0x000001;
+	scrolly			= Next; Next += 0x000001;
+	video_control		= Next; Next += 0x000001;
+
+	RamEnd			= Next;
+
+	DrvSprRAM		= Drv6502RAM + 0x0780;
+
+	MemEnd			= Next;
+
+	return 0;
+}
+
+// nBurnSoundLen changes if the refresh rate is changed, but this only 
+// occurs AFTER the init is called, so we can't allocate this there, so
+// we call it during the frame function.
+static void SoundBufferAlloc()
+{
+	pAY8910Buf = (INT16*)malloc(nBurnSoundLen * 6 * sizeof(INT16));
+
+	for (INT32 i = 0; i < 6; i++) {
+		pAY8910Buffer[i] = pAY8910Buf + i * nBurnSoundLen;
+	}
+}
+
 static INT32 DrvInit()
 {
-	Mem = (UINT8*)BurnMalloc(0x10000 + 0x20000 + 0x20000 + 0x20000 + 0x20 + (0x38 * sizeof(INT32)));
-	if (Mem == NULL) {
-		return 1;
-	}
-	memset (Mem, 0, 0x70000 + 0x20);
+	BurnSetRefreshRate(57.445);
 
-	pFMBuffer = (INT16 *)BurnMalloc (nBurnSoundLen * 6 * sizeof(INT16));
-	if (pFMBuffer == NULL) {
-		return 1;
-	}
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
 
-	Rom  = Mem + 0x00000;
-	Gfx0 = Mem + 0x10000;
-	Gfx1 = Mem + 0x30000;
-	Gfx2 = Mem + 0x50000;
-	Prom = Mem + 0x70000;
-	Palette = (INT32*)(Mem + 0x70020);
-
-	// Load Roms
 	{
-		for (INT32 i = 0; i < 6; i++) {
-			if (BurnLoadRom(Rom  + i * 0x2000 + 0x4000, i +  0, 1)) return 1;
-			if (BurnLoadRom(Gfx0 + i * 0x2000 + 0x0000, i +  6, 1)) return 1;
-			if (BurnLoadRom(Gfx1 + i * 0x2000 + 0x0000, i + 12, 1)) return 1;
-		}
+		if (BurnLoadRom(Drv6502ROM + 0x4000,  0, 1)) return 1;
+		if (BurnLoadRom(Drv6502ROM + 0x6000,  1, 1)) return 1;
+		if (BurnLoadRom(Drv6502ROM + 0x8000,  2, 1)) return 1;
+		if (BurnLoadRom(Drv6502ROM + 0xa000,  3, 1)) return 1;
+		if (BurnLoadRom(Drv6502ROM + 0xc000,  4, 1)) return 1;
+		if (BurnLoadRom(Drv6502ROM + 0xe000,  5, 1)) return 1;
 
-		if (BurnLoadRom(Prom, 18, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x0000,  6, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x2000,  7, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x4000,  8, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x6000,  9, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x8000, 10, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0xa000, 11, 1)) return 1;
 
-		if(mystston_gfx_convert()) return 1;
-		mystston_palette_init();
+		if (BurnLoadRom(DrvGfxROM1 + 0x0000, 12, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x2000, 13, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x4000, 14, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x6000, 15, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x8000, 16, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0xa000, 17, 1)) return 1;
+
+		if (BurnLoadRom(DrvColPROM + 0x0000, 18, 1)) return 1;
+
+		if (DrvGfxDecode()) return 1;
+
+		DrvPaletteUpdate(DrvColPROM, 0x20);
 	}
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(Rom + 0x0000, 0x0000, 0x1fff, M6502_RAM);
-	M6502MapMemory(Rom + 0x4000, 0x4000, 0xffff, M6502_ROM);
-	M6502SetReadByteHandler(mystston_read_byte);
-	M6502SetWriteByteHandler(mystston_write_byte);
+	M6502MapMemory(Drv6502RAM,		0x0000, 0x0fff, M6502_RAM);
+	M6502MapMemory(DrvFgRAM,		0x1000, 0x17ff, M6502_RAM);
+	M6502MapMemory(DrvBgRAM,		0x1800, 0x1fff, M6502_RAM);
+	M6502MapMemory(Drv6502ROM + 0x4000,	0x4000, 0xffff, M6502_ROM);
+	M6502SetWriteByteHandler(mystston_write);
+	M6502SetReadByteHandler(mystston_read);
 	M6502Close();
-
-	pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;
-	pAY8910Buffer[1] = pFMBuffer + nBurnSoundLen * 1;
-	pAY8910Buffer[2] = pFMBuffer + nBurnSoundLen * 2;
-	pAY8910Buffer[3] = pFMBuffer + nBurnSoundLen * 3;
-	pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
-	pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
 
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910Init(1, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 
-	DrvDoReset();
+	GenericTilesInit();
 
-//	BurnSetRefreshRate(57.445);
+	DrvDoReset();
 
 	return 0;
 }
 
 static INT32 DrvExit()
 {
+	GenericTilesExit();
+
 	M6502Exit();
 	AY8910Exit(0);
 	AY8910Exit(1);
 
-	BurnFree (Mem);
-	BurnFree (pFMBuffer);
-
-	pFMBuffer = NULL;
-	Palette = NULL;
-	Rom = Gfx0 = Gfx1 = Gfx2 = Prom = NULL;
-
-	VBLK = 0x00;
-	soundlatch = 0;
-	mystston_scroll_x = 0;
-	mystston_fgcolor = mystston_flipscreen = 0;
+	BurnFree(AllMem);
+	BurnFree(pAY8910Buf);
 
 	return 0;
 }
 
-
-//----------------------------------------------------------------------------------------------
-// Drawing Routines
-
-
-static inline void mystston_putpix(INT32 x, INT32 y, UINT8 src, INT32 color, INT32 transp)
+static void draw_bg_layer()
 {
-	INT32 pos, pxl;
+	INT32 page = (*video_control & 0x04) * 256;
 
-	if (y > 255 || x > 239 || x < 0 || (!src && transp)) return;
+	for (INT32 offs = 0; offs < 16 * 32; offs++)
+	{
+		INT32 sy = ((offs & 0x1f) * 16);
+		INT32 sx = ((offs / 0x20) ^ 0x0f) * 16;
 
-	if (mystston_flipscreen)
-		pos = ((255 - y) * 240) + (239 - x);
-	else
-		pos = (y * 240) + x;
+		sy -= *scrolly;
+		if (sy < -15) sy += 256;
 
-	pxl = Palette[color | src];
+		INT32 code  = (DrvBgRAM[page + offs]) + ((DrvBgRAM[page + 0x200 + offs] & 0x01) * 256);
+		INT32 flipy = offs & 0x10;
+		INT32 flipx = 0;
 
-	PutPix(pBurnDraw + pos * nBurnBpp, BurnHighCol(pxl >> 16, pxl >> 8, pxl, 0));
+		if (*flipscreen) {
+			sx = 240 - sx;
+			sy = 240 - sy;
+			flipx = !flipx;
+			flipy = !flipy;
+		}
+
+		if (flipy) {
+			if (flipx) {
+				Render16x16Tile_FlipXY_Clip(pTransDraw, code, sx, sy - 8, 0, 3, 0x10, DrvGfxROM1);
+			} else {
+				Render16x16Tile_FlipY_Clip(pTransDraw, code, sx, sy - 8, 0, 3, 0x10, DrvGfxROM1);
+			}
+		} else {
+			if (flipx) {
+				Render16x16Tile_FlipX_Clip(pTransDraw, code, sx, sy - 8, 0, 3, 0x10, DrvGfxROM1);
+			} else {
+				Render16x16Tile_Clip(pTransDraw, code, sx, sy - 8, 0, 3, 0x10, DrvGfxROM1);
+			}
+		}
+	}
 }
 
-static void draw_16x16(INT32 sx, INT32 sy, UINT8 *gfx_base, INT32 code, INT32 color, INT32 flipx, INT32 flipy, INT32 transp)
+static void draw_sprites()
 {
-	UINT8 *src = gfx_base + code;
-
-	if (flipx)
+	for (INT32 offs = 0; offs < 0x60; offs += 4)
 	{
-		for (INT32 x = sx + 15; x >= sx; x--)
+		INT32 attr = DrvSprRAM[offs];
+
+		if (attr & 0x01)
 		{
-			if (flipy)
+			INT32 code = ((attr & 0x10) << 4) | DrvSprRAM[offs + 1];
+			INT32 color = (attr & 0x08) >> 3;
+			INT32 flipx = attr & 0x04;
+			INT32 flipy = attr & 0x02;
+			INT32 sx = 240 - DrvSprRAM[offs + 3];
+			INT32 sy = (240 - DrvSprRAM[offs + 2]) & 0xff;
+
+			if (*flipscreen)
 			{
-				for (INT32 y = sy; y < sy + 16; y++, src++) {
-					mystston_putpix(x, y, *src, color, transp);
+				sx = 240 - sx;
+				sy = 240 - sy;
+				flipx = !flipx;
+				flipy = !flipy;
+			}
+
+			if (flipy) {
+				if (flipx) {
+					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 8, color, 3, 0, 0, DrvGfxROM2);
+				} else {
+					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 8, color, 3, 0, 0, DrvGfxROM2);
 				}
 			} else {
-				for (INT32 y = sy + 15; y >= sy; y--, src++) {
-					mystston_putpix(x, y, *src, color, transp);
+				if (flipx) {
+					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 8, color, 3, 0, 0, DrvGfxROM2);
+				} else {
+					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 8, color, 3, 0, 0, DrvGfxROM2);
 				}
 			}
 		}
-	} else {
-		for (INT32 x = sx; x < sx + 16; x++)
-		{
-			if (flipy)
-			{
-				for (INT32 y = sy; y < sy + 16; y++, src++) {
-					mystston_putpix(x, y, *src, color, transp);
-				}
-			} else {
-				for (INT32 y = sy + 15; y >= sy; y--, src++) {
-					mystston_putpix(x, y, *src, color, transp);
-				}
-			}
+	}
+}
+
+static void draw_fg_layer()
+{
+	INT32 color = ((*video_control & 1) << 1) + ((*video_control & 0x02) >> 1);
+
+	for (INT32 offs = 0; offs < 32 * 32; offs++)
+	{
+		INT32 sy = ((offs & 0x1f) * 8);
+		INT32 sx = ((offs / 0x20) ^ 0x1f) * 8;
+
+		INT32 code = DrvFgRAM[offs] + ((DrvFgRAM[0x400 + offs] & 0x07) * 256);
+		INT32 flipxy = 0;
+
+		if (*flipscreen) {
+			sx = 248 - sx;
+			sy = 248 - sy;
+			flipxy = !flipxy;
+		}
+
+		if (flipxy) {
+			Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 8, color, 3, 0, 0x20, DrvGfxROM0);
+		} else {
+			Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy - 8, color, 3, 0, 0x20, DrvGfxROM0);
 		}
 	}
 }
 
 static INT32 DrvDraw()
 {
-	for (INT32 offs = 0; offs < 0x200; offs++)
-	{
-		INT32 code = (Rom[0x1800 + offs] + ((Rom[0x1a00 + offs] & 0x01) << 8)) << 8;
-		INT32 flipx = offs & 0x10;
-		INT32 sx = ((offs & 0x1f) << 4) - (mystston_scroll_x + 8);
-		INT32 sy = ((offs >> 5) << 4);
+	*flipscreen = (*video_control & 0x80) ^ ((DrvDips[0] & 0x20) << 2);
 
-		draw_16x16(sx, sy, Gfx1, code, 0x10, flipx, 0, 0);
+	if (DrvRecalc) {
+		DrvPaletteUpdate(DrvColPROM, 0x20);
+		DrvRecalc = 0;
 	}
 
-	for (INT32 offs = 0; offs < 0x60; offs += 4)
-	{
-		INT32 attr = Rom[0x0780 + offs];
+	DrvPaletteUpdate(DrvPalRAM, 0);
 
-		if (attr & 0x01)
-		{
-			INT32 code = (Rom[0x0781 + offs] + ((attr & 0x10) << 4)) << 8;
-			INT32 color = attr & 0x08;
-			INT32 flipy = attr & 0x04;
-			INT32 flipx = attr & 0x02;
-			INT32 sy = Rom[0x0783 + offs];
-			INT32 sx = (240 - Rom[0x0782 + offs]) - 9;
+	draw_bg_layer();
+	draw_sprites();
+	draw_fg_layer();
 
-			draw_16x16(sx, sy, Gfx2, code, color, flipx, flipy, 1);
-		}
-	}
-
-	for (INT32 offs = 0; offs < 0x400; offs++)
-	{
-		INT32 code = (Rom[0x1000 | offs] + ((Rom[0x1400 + offs] & 0x07) << 8)) << 6;
-		INT32 color = (mystston_fgcolor << 3) + 0x18;
-		INT32 sx = (offs & 0x1f) << 3;
-		INT32 sy = (offs >> 2) & 0xf8;
-		if (sx >= 248 || sx < 8) continue;
-		sx -= 8;
-
-		UINT8 *src = Gfx0 + code;
-
-		for (INT32 x = sx; x < sx + 8; x++)
-		{
-			for (INT32 y = sy + 7; y >= sy; y--, src++)
-			{
-				if (!*src) continue;
-
-				INT32 pos;
-				if (mystston_flipscreen)
-					pos = ((255 - y) * 240) + (239 - x);
-				else
-					pos = (y * 240) + x;
-
-				INT32 pxl = Palette[color | *src];
-
-				PutPix(pBurnDraw + pos * nBurnBpp, BurnHighCol(pxl >> 16, pxl >> 8, pxl, 0));
-			}
-		}
-	}
+	BurnTransferCopy(DrvPalette);
 
 	return 0;
 }
@@ -484,14 +500,9 @@ static void mystston_interrupt_handler(INT32 scanline)
 	}
 	else coin = 0;
 
-	if (scanline == 8)
-		VBLK = 0;
-
-	if (scanline == 248)
-		VBLK = 0x80;
-
-	if ((scanline & 0x0f) == 0)
-		M6502SetIRQ(M6502_IRQ_LINE, M6502_IRQSTATUS_ACK);
+	if (scanline == 8) vblank = 0;
+	if (scanline == 248) vblank = 0x80;
+	if ((scanline & 0x0f) == 0) M6502SetIRQ(M6502_IRQ_LINE, M6502_IRQSTATUS_ACK);
 }
 
 static INT32 DrvFrame()
@@ -500,12 +511,27 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	if (pAY8910Buf == NULL) { // Refresh rate != 60
+		SoundBufferAlloc();
+	}
+
+	{
+		memset (DrvInputs, 0xff, 2);
+		for (INT32 i = 0; i < 8; i++) {
+			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+		}
+	}
+
 	INT32 nTotalCycles = (INT32)((double)(1500000 / 57.45));
 	INT32 nCyclesRun = 0;
 
+	vblank = 0x80;
+
 	M6502Open(0);
 
-	for (INT32 i = 0; i < 272; i++) {
+	for (INT32 i = 0; i < 272; i++)
+	{
 		nCyclesRun += M6502Run(nTotalCycles / 272);
 		mystston_interrupt_handler(i);
 	}
@@ -542,49 +568,29 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-
-//----------------------------------------------------------------------------------------------
-// Save State
-
-
 static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 {
 	struct BurnArea ba;
 
 	if (pnMin) {
-		*pnMin = 0x029521;
+		*pnMin = 0x029722;
 	}
 
 	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = Rom + 0x0000;
-		ba.nLen	  = 0x2000;
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = Mem + 0x70020;
-		ba.nLen	  = 24 * sizeof(INT32);
-		ba.szName = "Palette";
 		BurnAcb(&ba);
 
 		M6502Scan(nAction);
 		AY8910Scan(nAction, pnMin);
 
-		// Scan critical driver variables
-		SCAN_VAR(mystston_flipscreen);
-		SCAN_VAR(mystston_scroll_x);
-		SCAN_VAR(mystston_fgcolor);
-		SCAN_VAR(soundlatch);
-		SCAN_VAR(VBLK);
+		SCAN_VAR(ay8910_select);
 	}
 
 	return 0;
 }
-
-
-//----------------------------------------------------------------------------------------------
-// Game Drivers
 
 
 // Mysterious Stones - Dr. John's Adventure
@@ -604,7 +610,7 @@ static struct BurnRomInfo myststonRomDesc[] = {
 	{ "ms8",          0x2000, 0x53765d89, 2 | BRF_GRA },  	       // 10
 	{ "ms11",         0x2000, 0x919ee527, 2 | BRF_GRA },  	       // 11
 
-	{ "ms12",         0x2000, 0x72d8331d, 3 | BRF_GRA },  	       // 12 Sprite Tiles
+	{ "ms12",         0x2000, 0x72d8331d, 3 | BRF_GRA },  	       // 12 Background Tiles
 	{ "ms13",         0x2000, 0x845a1f9b, 3 | BRF_GRA },  	       // 13
 	{ "ms14",         0x2000, 0x822874b0, 3 | BRF_GRA },  	       // 14 
 	{ "ms15",         0x2000, 0x4594e53c, 3 | BRF_GRA },  	       // 15 
@@ -621,9 +627,9 @@ struct BurnDriver BurnDrvmystston = {
 	"mystston", NULL, NULL, NULL, "1984",
 	"Mysterious Stones - Dr. John's Adventure\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, myststonRomInfo, myststonRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 24,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	240, 256, 3, 4
 };
 
@@ -645,7 +651,7 @@ static struct BurnRomInfo myststnoRomDesc[] = {
 	{ "ms8",          0x2000, 0x53765d89, 2 | BRF_GRA },  	       // 10
 	{ "ms11",         0x2000, 0x919ee527, 2 | BRF_GRA },  	       // 11
 
-	{ "ms12",         0x2000, 0x72d8331d, 3 | BRF_GRA },  	       // 12 Sprite Tiles
+	{ "ms12",         0x2000, 0x72d8331d, 3 | BRF_GRA },  	       // 12 Background Tiles
 	{ "ms13",         0x2000, 0x845a1f9b, 3 | BRF_GRA },  	       // 13
 	{ "ms14",         0x2000, 0x822874b0, 3 | BRF_GRA },  	       // 14 
 	{ "ms15",         0x2000, 0x4594e53c, 3 | BRF_GRA },  	       // 15 
@@ -662,9 +668,8 @@ struct BurnDriver BurnDrvmyststno = {
 	"myststono", "mystston", NULL, NULL, "1984",
 	"Mysterious Stones - Dr. Kick in Adventure\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, myststnoRomInfo, myststnoRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 24,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	240, 256, 3, 4
 };
-

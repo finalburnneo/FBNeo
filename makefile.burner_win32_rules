@@ -1,6 +1,6 @@
-alldir	+= 	burner burner/win32 dep/kaillera/client dep/libs/libpng dep/libs/zlib intf intf/video intf/video/scalers \
-			intf/video/win32 intf/audio intf/audio/win32 intf/input intf/input/win32 intf/cd intf/cd/win32 intf/perfcount \
-			intf/perfcount/win32 dep/generated
+alldir	+= 	burner burner/win32 dep/kaillera/client dep/libs/libpng dep/libs/lib7z dep/libs/zlib intf intf/video \
+			intf/video/scalers 	intf/video/win32 intf/audio intf/audio/win32 intf/input intf/input/win32 intf/cd intf/cd/win32 \
+			intf/perfcount intf/perfcount/win32 dep/generated
 
 depobj	+= 	about.o bzip.o cona.o debugger.o drv.o dwmapi_core.o dynhuff.o fba_kaillera.o image_win32.o inpc.o inpcheat.o inpd.o \
 			inpdipsw.o inps.o ips_manager.o localise.o localise_gamelist.o main.o mdi.o media.o memcard.o menu.o misc_win32.o \
@@ -24,6 +24,13 @@ depobj	+= 	about.o bzip.o cona.o debugger.o drv.o dwmapi_core.o dynhuff.o fba_ka
 			\
 			aud_dsound3.o aud_xaudio2.o cd_isowav.o cdsound.o ddraw_core.o dinput_core.o directx9_core.o dsound_core.o \
 			inp_dinput.o prf_performance_counter.o vid_d3d.o vid_ddraw.o vid_ddrawfx.o vid_directx9.o vid_directx_support.o
+			
+ifdef INCLUDE_7Z_SUPPORT
+depobj	+=	un7z.o \
+			\
+			7zBuf.o 7zBuf2.o 7zCrc.o 7zCrcOpt.o 7zDec.o 7zIn.o Bcj2.o Bra.o Bra86.o CpuArch.o LzmaDec.o Lzma2Dec.o Ppmd7.o \
+			Ppmd7Dec.o 7zStream.o
+endif
 			
 autobj += $(depobj)
 

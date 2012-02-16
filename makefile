@@ -15,7 +15,7 @@ export
 #	Flags. Uncomment any of these declarations to enable their function.
 #
 
-# Inluclude Unicode support
+# Include Unicode support
 UNICODE = 1
 
 # Build A68K ASM 68000 core
@@ -26,6 +26,9 @@ BUILD_X86_ASM = 1
 
 # Build for x64 targets (MinGW64 and MSVC only, this will undefine BUILD_A68K and BUILD_X86_ASM)
 #BUILD_X64_EXE = 1
+
+# Include 7-zip support
+INCLUDE_7Z_SUPPORT = 1
 
 # Include symbols and other debug information in the executable
 #SYMBOL = 1

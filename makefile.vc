@@ -163,6 +163,11 @@ ASFLAGS	=  -O1 -f coff -w-orphan-labels
 
 DEF		= /DBUILD_WIN32 /DUSE_SPEEDHACKS /DFILENAME=$(NAME) /DMMX=$(MMX) /DZLIB_WINAPI /DDECL_SPEC=__cdecl
 
+# For lib7z
+ifdef INCLUDE_7Z_SUPPORT
+DEF := $(DEF) /D_7ZIP_PPMD_SUPPPORT
+endif
+
 ifdef UNICODE
 	DEF	:= $(DEF) /D_UNICODE
 endif
@@ -181,6 +186,10 @@ endif
 
 ifdef ROM_VERIFY
 	DEF	:= $(DEF) /DROM_VERIFY
+endif
+
+ifdef INCLUDE_7Z_SUPPORT
+	DEF := $(DEF) /DINCLUDE_7Z_SUPPORT
 endif
 
 ifdef LSB_FIRST

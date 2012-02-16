@@ -274,6 +274,10 @@ ifdef ROM_VERIFY
 	DEF	:= $(DEF) -DROM_VERIFY
 endif
 
+ifdef INCLUDE_7Z_SUPPORT
+	DEF := $(DEF) -DINCLUDE_7Z_SUPPORT
+endif
+
 ifdef LSB_FIRST
 	DEF	:= $(DEF) -DLSB_FIRST
 endif
@@ -315,6 +319,11 @@ endif
 
 # For zlib
 DEF := $(DEF) -DNO_VIZ -D_LARGEFILE64_SOURCE=0 -D_FILE_OFFSET_BITS=32
+
+# For lib7z
+ifdef INCLUDE_7Z_SUPPORT
+DEF := $(DEF) -D_7ZIP_PPMD_SUPPPORT
+endif
 
 #
 #

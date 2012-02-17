@@ -1,5 +1,5 @@
 alldir	= 	burn burn/devices burn/snd burn/drv burn/drv/capcom burn/drv/cave burn/drv/cps3 burn/drv/dataeast \
-			burn/drv/galaxian burn/drv/irem burn/drv/konami burn/drv/megadrive burn/drv/pst90s burn/drv/pre90s \
+			burn/drv/galaxian burn/drv/irem burn/drv/konami burn/drv/megadrive burn/drv/pce burn/drv/pst90s burn/drv/pre90s \
 			burn/drv/neogeo burn/drv/pgm burn/drv/psikyo burn/drv/sega burn/drv/snes burn/drv/taito burn/drv/toaplan \
 			cpu cpu/a68k cpu/arm cpu/arm7 cpu/h6280 cpu/hd6309 cpu/i8039 cpu/konami cpu/m68k cpu/m6502 cpu/m6800 cpu/m6805 \
 			cpu/m6809 cpu/nec cpu/s2650 cpu/sh2 cpu/z80
@@ -114,6 +114,8 @@ depobj	:= 	$(drvobj) \
 			nmk004.o \
 			\
 			megadrive.o \
+			\
+			pce.o \
 			\
 			snes_65816.o snes_io.o snes_main.o snes_mem.o snes_ppu.o snes_spc700.o
 			

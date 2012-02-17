@@ -348,6 +348,52 @@ INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, I
 			return 1;
 		}
 	}
+	
+#ifdef INCLUDE_7Z_SUPPORT
+	if (nFileType == ZIPFN_FILETYPE_7ZIP) {
+		UINT32 nWrote = 0;
+		
+		nCurrFile = _7z_search_crc_match(_7ZipFile, 0, fileName, strlen(fileName), 0, 1);
+		if (nCurrFile == -1) {
+			ZipClose();
+			return 1;
+		}
+		
+		const CSzFileItem *f = _7ZipFile->db.db.Files + nCurrFile;
+		
+		_7ZipFile->curr_file_idx = nCurrFile;
+		
+		if (*Dest == NULL) {
+			*Dest = (UINT8*)malloc(f->Size);
+			if (!*Dest) {
+				ZipClose();
+				return 1;
+			}
+		}
+		
+		_7z_error _7zerr = _7z_file_decompress(_7ZipFile, *Dest, f->Size, &nWrote);
+		if (_7zerr != _7ZERR_NONE) {
+			ZipClose();
+			if (*Dest) free(*Dest);
+			return 1;
+		}
+		
+		// Return how many bytes were copied
+		if (_7zerr == _7ZERR_NONE && pnWrote != NULL) *pnWrote = (INT32)nWrote;
+		
+		// use zlib crc32 module to calc crc of decompressed data, and check against 7z header
+		UINT32 nCalcCrc = crc32(0, (const Bytef*)*Dest, nWrote);
+		if (nCalcCrc != f->Crc) {
+			ZipClose();
+			if (*Dest) free(*Dest);
+			return 2;
+		}
+		
+		ZipClose();
+		
+		nCurrFile = 0;		
+	}	
+#endif
 
 	return 0;
 }

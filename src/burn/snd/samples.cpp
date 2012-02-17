@@ -240,12 +240,24 @@ void BurnSampleInit(INT32 nGain /*volume percentage!*/, INT32 bAdd /*add sample 
 	char szTempPath[MAX_PATH];
 	sprintf(szTempPath, _TtoA(SAMPLE_DIRECTORY));
 
+	// test to see if file exists
+	INT32 nEnableSamples = 0;
 	strcpy(setname, BurnDrvGetTextA(DRV_SAMPLENAME));
 	sprintf(path, "%s%s.zip", szTempPath, setname);
 	
 	FILE *test = fopen(path, "rb");
-	if (!test) return;
+	if (test) nEnableSamples = 1;
 	fclose(test);
+	
+#ifdef INCLUDE_7Z_SUPPORT
+	sprintf(path, "%s%s.7z", szTempPath, setname);
+	
+	test = fopen(path, "rb");
+	if (test) nEnableSamples = 1;
+	fclose(test);
+#endif
+	
+	if (!nEnableSamples) return;
 
 	bAddToStream = bAdd;
 	nSampleSetGain = nGain;

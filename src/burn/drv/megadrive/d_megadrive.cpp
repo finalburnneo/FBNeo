@@ -39090,9 +39090,9 @@ struct BurnDriver BurnDrvmd_sonicjam2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Soul Edge vs Samurai Spirits (Pirate, Cracked)
+// Soul Edge vs Samurai Spirits (Pirate)
 static struct BurnRomInfo md_souledgeRomDesc[] = {
-	{ "soul edge vs samurai spirits (unl)[f1].bin", 0x200000, 0x74a6d7a7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
+	{ "soul edge vs samurai spirits (unl).bin", 0x200000, 0xb11bd611, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
 };
 
 STD_ROM_PICK(md_souledge)
@@ -39100,10 +39100,28 @@ STD_ROM_FN(md_souledge)
 
 struct BurnDriver BurnDrvmd_souledge = {
 	"md_souledge", NULL, NULL, NULL, "199?",
-	"Soul Edge vs Samurai Spirits (Pirate, Cracked)\0", NULL, "<unlicensed>", "Sega Megadrive",
+	"Soul Edge vs Samurai Spirits (Pirate)\0", NULL, "<unlicensed>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_souledgeRomInfo, md_souledgeRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Soul Edge vs Samurai Spirits (Pirate, Cracked)
+static struct BurnRomInfo md_souledgeaRomDesc[] = {
+	{ "soul edge vs samurai spirits (unl)[f1].bin", 0x200000, 0x74a6d7a7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
+};
+
+STD_ROM_PICK(md_souledgea)
+STD_ROM_FN(md_souledgea)
+
+struct BurnDriver BurnDrvmd_souledgea = {
+	"md_souledgea", "md_souledge", NULL, NULL, "199?",
+	"Soul Edge vs Samurai Spirits (Pirate, Cracked)\0", NULL, "<unlicensed>", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_souledgeaRomInfo, md_souledgeaRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -40224,7 +40242,7 @@ struct BurnDriver BurnDrvmd_tank2011 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Tiny Toon Adventures 3 (Tw)
+// Tiny Toon Adventures 3 (Tw, Cracked)
 static struct BurnRomInfo md_ttoon3RomDesc[] = {
 	{ "tiny toon adventures 3 (unl).bin", 0x100000, 0xd65d83d4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
 };
@@ -40234,7 +40252,7 @@ STD_ROM_FN(md_ttoon3)
 
 struct BurnDriver BurnDrvmd_ttoon3 = {
 	"md_ttoon3", NULL, NULL, NULL, "199?",
-	"Tiny Toon Adventures 3 (Tw)\0", NULL, "Gamtec?", "Sega Megadrive",
+	"Tiny Toon Adventures 3 (Tw, Cracked)\0", NULL, "Gamtec?", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_ttoon3RomInfo, md_ttoon3RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

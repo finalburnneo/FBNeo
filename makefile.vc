@@ -221,7 +221,7 @@ else
 endif
 
 else
-	CFLAGS	 = /nologo /w /O2 /Ox /Oi /Ot /Oy /Ob2 /GF /Gs /Gy /GL /Gr /Zc:forScope /MT /EHsc
+	CFLAGS	 = /nologo /w /O2 /Ox /Oi /Ot /Oy /Ob2 /GF /Gs /Gy /GL /Zc:forScope /MT /EHsc
 	LDFLAGS += /LTCG:STATUS
 endif
 

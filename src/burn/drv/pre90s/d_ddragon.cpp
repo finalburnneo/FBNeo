@@ -555,16 +555,16 @@ STD_ROM_PICK(Drvub)
 STD_ROM_FN(Drvub)
 
 static struct BurnRomInfo Drvb2RomDesc[] = {
-	{ "4.bin",         0x08000, 0x668dfa19, BRF_ESS | BRF_PRG }, //  0	HD6309 Program Code
-	{ "5.bin",         0x08000, 0x5779705e, BRF_ESS | BRF_PRG }, //  1
-	{ "6.bin",         0x08000, 0x3bdea613, BRF_ESS | BRF_PRG }, //  2
-	{ "7.bin",         0x08000, 0x728f87b9, BRF_ESS | BRF_PRG }, //  3
+	{ "b2_4.bin",      0x08000, 0x668dfa19, BRF_ESS | BRF_PRG }, //  0	HD6309 Program Code
+	{ "b2_5.bin",      0x08000, 0x5779705e, BRF_ESS | BRF_PRG }, //  1
+	{ "b2_6.bin",      0x08000, 0x3bdea613, BRF_ESS | BRF_PRG }, //  2
+	{ "b2_7.bin",      0x08000, 0x728f87b9, BRF_ESS | BRF_PRG }, //  3
 	
 	{ "63701.bin",     0x04000, 0xf5232d03, BRF_ESS | BRF_PRG }, //  4	HD63701 Program Code
 	
 	{ "b2_3.bin",      0x08000, 0x9efa95bb, BRF_ESS | BRF_PRG }, //  5	M6809 Program Code
 	
-	{ "8.bin",         0x08000, 0x7a8b8db4, BRF_GRA },	     //  6	Characters
+	{ "b2_8.bin",      0x08000, 0x7a8b8db4, BRF_GRA },	     //  6	Characters
 	
 	{ "11.bin",        0x10000, 0x574face3, BRF_GRA },	     //  7	Sprites
 	{ "12.bin",        0x10000, 0x40507a76, BRF_GRA },	     //  8

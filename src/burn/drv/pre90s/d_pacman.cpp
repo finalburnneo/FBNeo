@@ -3104,19 +3104,19 @@ struct BurnDriver BurnDrvhangly3 = {
 // Popeye Man
 
 static struct BurnRomInfo popeyemanRomDesc[] = {
-	{ "1.6e",         0x0800, 0x9d027c4a, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "5.6k",	  0x0800, 0x194c7189, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "2.6f",         0x0800, 0x5ba228bb, 1 | BRF_ESS | BRF_PRG },	//  2
-	{ "6.6m",         0x0800, 0xbaf5461e, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "3.6h",         0x0800, 0x08419c4a, 1 | BRF_ESS | BRF_PRG },	//  4
-	{ "7.6n",         0x0800, 0xab74b51f, 1 | BRF_ESS | BRF_PRG },	//  5
-	{ "4.6j",         0x0800, 0x5039b082, 1 | BRF_ESS | BRF_PRG },	//  6
-	{ "8.6p",         0x0800, 0x931770d7, 1 | BRF_ESS | BRF_PRG },	//  7
+	{ "pop1.6e",      0x0800, 0x9d027c4a, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pop5.6k",	  0x0800, 0x194c7189, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "pop2.6f",      0x0800, 0x5ba228bb, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "pop6.6m",      0x0800, 0xbaf5461e, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "pop3.6h",      0x0800, 0x08419c4a, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "pop7.6n",      0x0800, 0xab74b51f, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "pop4.6j",      0x0800, 0x5039b082, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "pop8.6p",      0x0800, 0x931770d7, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "9.5e", 	  0x0800, 0xb569c4c1, 2 | BRF_GRA },		//  8 Graphics
-	{ "11.5h",        0x0800, 0x3591b89d, 2 | BRF_GRA },		//  9
-	{ "10.5f", 	  0x0800, 0x014fb5a4, 2 | BRF_GRA },		// 10
-	{ "12.5j", 	  0x0800, 0x21b91c64, 2 | BRF_GRA },		// 11
+	{ "pop9.5e", 	  0x0800, 0xb569c4c1, 2 | BRF_GRA },		//  8 Graphics
+	{ "pop11.5h",     0x0800, 0x3591b89d, 2 | BRF_GRA },		//  9
+	{ "pop10.5f", 	  0x0800, 0x014fb5a4, 2 | BRF_GRA },		// 10
+	{ "pop12.5j", 	  0x0800, 0x21b91c64, 2 | BRF_GRA },		// 11
 
 	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
 	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 13
@@ -3278,12 +3278,12 @@ struct BurnDriver BurnDrvnewpuckx = {
 // Pac-Man (Hearts)
 
 static struct BurnRomInfo pacheartRomDesc[] = {
-	{ "1.6e",         0x0800, 0xd844b679, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pacheart1.6e", 0x0800, 0xd844b679, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 	{ "pacheart.pg2", 0x0800, 0xb9152a38, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "2.6f",         0x0800, 0x7d177853, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "pacheart2.6f", 0x0800, 0x7d177853, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "pacheart.pg4", 0x0800, 0x842d6574, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "3.6h",         0x0800, 0x9045a44c, 1 | BRF_ESS | BRF_PRG },	//  4
-	{ "7.6n",         0x0800, 0x888f3c3e, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "pacheart3.6h", 0x0800, 0x9045a44c, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "pacheart7.6n", 0x0800, 0x888f3c3e, 1 | BRF_ESS | BRF_PRG },	//  5
 	{ "pacheart.pg7", 0x0800, 0xf5265c10, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "pacheart.pg8", 0x0800, 0x1a21a381, 1 | BRF_ESS | BRF_PRG },	//  7
 
@@ -3316,19 +3316,19 @@ struct BurnDriver BurnDrvpacheart = {
 // Joyman
 
 static struct BurnRomInfo joymanRomDesc[] = {
-	{ "1.6e",         0x0800, 0xd844b679, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "5.6k",         0x0800, 0xab9c8f29, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "2.6f",         0x0800, 0x7d177853, 1 | BRF_ESS | BRF_PRG },	//  2
-	{ "6.6m",         0x0800, 0xb3c8d32e, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "3.6h",         0x0800, 0x9045a44c, 1 | BRF_ESS | BRF_PRG },	//  4
-	{ "7.6n",         0x0800, 0x888f3c3e, 1 | BRF_ESS | BRF_PRG },	//  5
-	{ "4.6j",         0x0800, 0x00b553f8, 1 | BRF_ESS | BRF_PRG },	//  6
-	{ "8.6p",         0x0800, 0x5d5ce992, 1 | BRF_ESS | BRF_PRG },	//  7
+	{ "joy1.6e",      0x0800, 0xd844b679, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "joy5.6k",      0x0800, 0xab9c8f29, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "joy2.6f",      0x0800, 0x7d177853, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "joy6.6m",      0x0800, 0xb3c8d32e, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "joy3.6h",      0x0800, 0x9045a44c, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "joy7.6n",      0x0800, 0x888f3c3e, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "joy4.6j",      0x0800, 0x00b553f8, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "joy8.6p",      0x0800, 0x5d5ce992, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "9.5e",  	  0x0800, 0x39b557bc, 2 | BRF_GRA },		//  8 Graphics
-	{ "11.5h", 	  0x0800, 0x33e0289e, 2 | BRF_GRA },		//  9
-	{ "10.5f", 	  0x0800, 0x338771a6, 2 | BRF_GRA },		// 10
-	{ "12.5j", 	  0x0800, 0xf4f0add5, 2 | BRF_GRA },		// 11
+	{ "joy9.5e",  	  0x0800, 0x39b557bc, 2 | BRF_GRA },		//  8 Graphics
+	{ "joy11.5h", 	  0x0800, 0x33e0289e, 2 | BRF_GRA },		//  9
+	{ "joy10.5f", 	  0x0800, 0x338771a6, 2 | BRF_GRA },		// 10
+	{ "joy12.5j", 	  0x0800, 0xf4f0add5, 2 | BRF_GRA },		// 11
 
 	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
 	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 13
@@ -3354,19 +3354,19 @@ struct BurnDriver BurnDrvjoyman = {
 // Buccaneer
 
 static struct BurnRomInfo bucanerRomDesc[] = {
-	{ "1.6e",         0x0800, 0x2c0fa0ab, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "5.6k",         0x0800, 0xafeca2f1, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "2.6f",         0x0800, 0x6b53ada9, 1 | BRF_ESS | BRF_PRG },	//  2
-	{ "6.6m",         0x0800, 0x35f3ca84, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "3.6h",         0x0800, 0x9045a44c, 1 | BRF_ESS | BRF_PRG },	//  4
-	{ "7.6n",         0x0800, 0x888f3c3e, 1 | BRF_ESS | BRF_PRG },	//  5
-	{ "4.6j",         0x0800, 0x292de161, 1 | BRF_ESS | BRF_PRG },	//  6
-	{ "8.6p",         0x0800, 0x884af858, 1 | BRF_ESS | BRF_PRG },	//  7
+	{ "buc1.6e",      0x0800, 0x2c0fa0ab, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "buc5.6k",      0x0800, 0xafeca2f1, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "buc2.6f",      0x0800, 0x6b53ada9, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "buc6.6m",      0x0800, 0x35f3ca84, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "buc3.6h",      0x0800, 0x9045a44c, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "buc7.6n",      0x0800, 0x888f3c3e, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "buc4.6j",      0x0800, 0x292de161, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "buc8.6p",      0x0800, 0x884af858, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "9.5e",  	  0x0800, 0x4060c077, 2 | BRF_GRA },		//  8 Graphics
-	{ "11.5h", 	  0x0800, 0xe3861283, 2 | BRF_GRA },		//  9
-	{ "10.5f", 	  0x0800, 0x09f66dec, 2 | BRF_GRA },		// 10
-	{ "12.5j", 	  0x0800, 0x653314e7, 2 | BRF_GRA },		// 11
+	{ "buc9.5e",  	  0x0800, 0x4060c077, 2 | BRF_GRA },		//  8 Graphics
+	{ "buc11.5h", 	  0x0800, 0xe3861283, 2 | BRF_GRA },		//  9
+	{ "buc10.5f", 	  0x0800, 0x09f66dec, 2 | BRF_GRA },		// 10
+	{ "buc12.5j", 	  0x0800, 0x653314e7, 2 | BRF_GRA },		// 11
 
 	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
 	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 13
@@ -4605,14 +4605,14 @@ struct BurnDriver BurnDrveyesb = {
 // Eyes (bootleg set 2, decrypted)
 
 static struct BurnRomInfo eyeszacbRomDesc[] = {
-	{ "1.bin",        0x0800, 0xa4a9d7a0, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "5.bin",        0x0800, 0xc32b3f73, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "2.bin",        0x0800, 0x195b9473, 1 | BRF_ESS | BRF_PRG },	//  2
-	{ "6.bin",        0x0800, 0x292886cb, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "3.bin",        0x0800, 0xff94b015, 1 | BRF_ESS | BRF_PRG },	//  4
-	{ "7.bin",        0x0800, 0x9271c58c, 1 | BRF_ESS | BRF_PRG },	//  5
-	{ "4.bin",        0x0800, 0x965cf32b, 1 | BRF_ESS | BRF_PRG },	//  6
-	{ "8.bin",        0x0800, 0xc254e92e, 1 | BRF_ESS | BRF_PRG },	//  7
+	{ "zacb_1.bin",   0x0800, 0xa4a9d7a0, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "zacb_5.bin",   0x0800, 0xc32b3f73, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "zacb_2.bin",   0x0800, 0x195b9473, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "zacb_6.bin",   0x0800, 0x292886cb, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "zacb_3.bin",   0x0800, 0xff94b015, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "zacb_7.bin",   0x0800, 0x9271c58c, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "zacb_4.bin",   0x0800, 0x965cf32b, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "zacb_8.bin",   0x0800, 0xc254e92e, 1 | BRF_ESS | BRF_PRG },	//  7
 
 	{ "x.bin",        0x0800, 0x59dce22e, 2 | BRF_GRA },		//  8 Graphics
 	{ "c.bin",        0x0800, 0xaaa7a537, 2 | BRF_GRA },		//  9
@@ -4625,7 +4625,7 @@ static struct BurnRomInfo eyeszacbRomDesc[] = {
 	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 	
-	{ "11.bin",       0x0800, 0x69c1602a, 0 | BRF_PRG },	//  16 (Not used)
+	{ "zacb_11.bin",  0x0800, 0x69c1602a, 0 | BRF_PRG },	//  16 (Not used)
 };
 
 STD_ROM_PICK(eyeszacb)

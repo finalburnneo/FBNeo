@@ -1594,7 +1594,7 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[2] = 0x4e;
 			MaskAddr[3] = 0x4c;
 			
-			nCpsPalCtrlReg = 0x4a;	// s2m3 & sf2m8 (untested none of them write this)
+			nCpsPalCtrlReg = 0x4a;
   			
 			CpsLayEn[1] = 0x02;
 			CpsLayEn[2] = 0x02;

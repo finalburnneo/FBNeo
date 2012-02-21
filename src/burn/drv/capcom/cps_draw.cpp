@@ -234,7 +234,6 @@ static void Cps1Layers()
 
   for (i = 0; i < 2; i++) {
 	  if (LayerCont & CpsLayEn[4 + i]) {
-		  CpsStarPalUpdate(CpsSavePal, i, CpsRecalcPal);
 		  DrawStar(i);
 	  }
   }
@@ -464,8 +463,8 @@ static void DoDraw(INT32 Recalc)
 {
 	CtvReady();								// Point to correct tile drawing functions
 
-	// Update Palette
-	CpsPalUpdate(CpsSavePal, Recalc);		// recalc whole palette if needed
+	if (bCpsUpdatePalEveryFrame) GetPalette(0, 6);
+	if (Recalc || bCpsUpdatePalEveryFrame) CpsPalUpdate(CpsSavePal);		// recalc whole palette if needed
 	
 	CpsClearScreen();
 

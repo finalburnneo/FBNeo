@@ -10381,6 +10381,13 @@ static INT32 CawingbInit()
 	return 0;
 }
 
+static INT32 Cps1demoInit()
+{
+	bCpsUpdatePalEveryFrame = 1;
+
+	return DrvInit();
+}
+
 void __fastcall DinopicScrollWrite(UINT32 a, UINT16 d)
 {
 	if (a == 0x980000) {
@@ -11086,6 +11093,9 @@ void __fastcall Sf2m3WriteWord(UINT32 a, UINT16 d)
 		case 0x80010a: {
 			CpsReg[0x0a] = d & 0xff;
 			CpsReg[0x0b] = d >> 8;
+			
+			GetPalette(0, 6);
+			CpsPalUpdate(CpsSavePal);
 			return;
 		}
 		
@@ -11632,7 +11642,7 @@ struct BurnDriver BurnDrvCpsCps1demo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_DEMO, 2, HARDWARE_CAPCOM_CPS1, GBF_MISC, 0,
 	NULL, Cps1demoRomInfo, Cps1demoRomName, NULL, NULL, FfightInputInfo, FfightDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1demoInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -13412,7 +13422,7 @@ struct BurnDriver BurnDrvCpsCps1frog = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_CAPCOM_CPS1, GBF_MISC, 0,
 	NULL, Cps1frogRomInfo, Cps1frogRomName, NULL, NULL, FfightInputInfo, FfightDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Cps1demoInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

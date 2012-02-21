@@ -835,6 +835,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x6a;
 			MaskAddr[2] = 0x6c;
 			MaskAddr[3] = 0x6e;
+			
+			nCpsPalCtrlReg = 0x70;
   			
 			CpsLayEn[1] = 0x02;
 			CpsLayEn[2] = 0x04;
@@ -861,6 +863,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x68;
 			MaskAddr[2] = 0x66;
 			MaskAddr[3] = 0x64;
+			
+			nCpsPalCtrlReg = 0x62;
   			
 			CpsLayEn[1] = 0x02;
 			CpsLayEn[2] = 0x04;
@@ -887,6 +891,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x6c;
 			MaskAddr[2] = 0x6a;
 			MaskAddr[3] = 0x68;
+			
+			nCpsPalCtrlReg = 0x66;
   			
 			CpsLayEn[1] = 0x20;
 			CpsLayEn[2] = 0x10;
@@ -913,6 +919,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x70;
 			MaskAddr[2] = 0x68;
 			MaskAddr[3] = 0x72;
+			
+			nCpsPalCtrlReg = 0x6a;
   			
 			CpsLayEn[1] = 0x02;
 			//CpsLayEn[2] = 0x0c;
@@ -941,6 +949,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x6c;
 			MaskAddr[2] = 0x6e;
 			MaskAddr[3] = 0x70;
+			
+			nCpsPalCtrlReg = 0x72;
   			
 			CpsLayEn[1] = 0x02;
 			CpsLayEn[2] = 0x08;
@@ -967,6 +977,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x6a;
 			MaskAddr[2] = 0x6c;
 			MaskAddr[3] = 0x6e;
+			
+			nCpsPalCtrlReg = 0x70;
   			
 			CpsLayEn[1] = 0x08;
 			CpsLayEn[2] = 0x10;
@@ -993,6 +1005,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x68;
 			MaskAddr[2] = 0x66;
 			MaskAddr[3] = 0x64;
+			
+			nCpsPalCtrlReg = 0x62;
   			
 			CpsLayEn[1] = 0x02;
 			CpsLayEn[2] = 0x04;
@@ -1019,6 +1033,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x66;
 			MaskAddr[2] = 0x68;
 			MaskAddr[3] = 0x6a;
+			
+			nCpsPalCtrlReg = 0x6c;
   			
 			CpsLayEn[1] = 0x20;
 			CpsLayEn[2] = 0x02;
@@ -1045,6 +1061,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x56;
 			MaskAddr[2] = 0x58;
 			MaskAddr[3] = 0x5a;
+			
+			nCpsPalCtrlReg = 0x5c;
   			
 			CpsLayEn[1] = 0x08;
 			CpsLayEn[2] = 0x20;
@@ -1071,6 +1089,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x46;
 			MaskAddr[2] = 0x48;
 			MaskAddr[3] = 0x4a;
+			
+			nCpsPalCtrlReg = 0x4c;
   			
 			CpsLayEn[1] = 0x04;
 			CpsLayEn[2] = 0x02;
@@ -1097,6 +1117,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x48;
 			MaskAddr[2] = 0x46;
 			MaskAddr[3] = 0x44;
+			
+			nCpsPalCtrlReg = 0x42;
   			
 			CpsLayEn[1] = 0x10;
 			CpsLayEn[2] = 0x0a;
@@ -1123,6 +1145,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x50;
 			MaskAddr[2] = 0x4e;
 			MaskAddr[3] = 0x4c;
+			
+			nCpsPalCtrlReg = 0x4a;
   			
 			CpsLayEn[1] = 0x08;
 			CpsLayEn[2] = 0x10;
@@ -1149,6 +1173,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0xd8;
 			MaskAddr[2] = 0xd6;
 			MaskAddr[3] = 0xd4;
+			
+			nCpsPalCtrlReg = 0xd2;
   			
 			CpsLayEn[1] = 0x10;
 			CpsLayEn[2] = 0x08;
@@ -1175,6 +1201,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x64;
 			MaskAddr[2] = 0x62;
 			MaskAddr[3] = 0x60;
+			
+			nCpsPalCtrlReg = 0x70;
   			
 			CpsLayEn[1] = 0x20;
 			CpsLayEn[2] = 0x04;
@@ -1201,6 +1229,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x6c;
 			MaskAddr[2] = 0x6a;
 			MaskAddr[3] = 0x68;
+			
+			nCpsPalCtrlReg = 0x70;
   			
 			CpsLayEn[1] = 0x30;
 			CpsLayEn[2] = 0x08;
@@ -1227,6 +1257,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x6c;
 			MaskAddr[2] = 0x6a;
 			MaskAddr[3] = 0x68;
+			
+			nCpsPalCtrlReg = 0x70;
   			
 			CpsLayEn[1] = 0x20;
 			CpsLayEn[2] = 0x12;
@@ -1253,6 +1285,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x64;
 			MaskAddr[2] = 0x62;
 			MaskAddr[3] = 0x60;
+			
+			nCpsPalCtrlReg = 0x70;
   			
 			CpsLayEn[1] = 0x20;
 			CpsLayEn[2] = 0x10;
@@ -1279,6 +1313,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x6c;
 			MaskAddr[2] = 0x6a;
 			MaskAddr[3] = 0x68;
+			
+			nCpsPalCtrlReg = 0x70;
   			
 			CpsLayEn[1] = 0x20;
 			CpsLayEn[2] = 0x04;
@@ -1305,6 +1341,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x6c;
 			MaskAddr[2] = 0x6a;
 			MaskAddr[3] = 0x68;
+			
+			nCpsPalCtrlReg = 0x70;
   			
 			CpsLayEn[1] = 0x20;
 			CpsLayEn[2] = 0x14;
@@ -1331,6 +1369,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x00;
 			MaskAddr[2] = 0x00;
 			MaskAddr[3] = 0x00;
+			
+			nCpsPalCtrlReg = 0x52;
   			
 			CpsLayEn[1] = 0x14;
 			CpsLayEn[2] = 0x02;
@@ -1357,6 +1397,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x6a;
 			MaskAddr[2] = 0x6c;
 			MaskAddr[3] = 0x6e;
+			
+			nCpsPalCtrlReg = 0x70;
   			
 			CpsLayEn[1] = 0x02;
 			CpsLayEn[2] = 0x04;
@@ -1383,6 +1425,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x66;
 			MaskAddr[2] = 0x68;
 			MaskAddr[3] = 0x6a;
+			
+			nCpsPalCtrlReg = 0x6c;
   			
 			CpsLayEn[1] = 0x10;
 			CpsLayEn[2] = 0x08;
@@ -1409,6 +1453,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x4e;
 			MaskAddr[2] = 0x40;
 			MaskAddr[3] = 0x42;
+			
+			nCpsPalCtrlReg = 0x44;
   			
 			CpsLayEn[1] = 0x16;
 			CpsLayEn[2] = 0x16;
@@ -1435,6 +1481,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x56;
 			MaskAddr[2] = 0x48;
 			MaskAddr[3] = 0x4a;
+			
+			nCpsPalCtrlReg = 0x4c;
   			
 			CpsLayEn[1] = 0x04;
 			CpsLayEn[2] = 0x02;
@@ -1461,6 +1509,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x42;
 			MaskAddr[2] = 0x68;
 			MaskAddr[3] = 0x6a;
+			
+			nCpsPalCtrlReg = 0x6c;
   			
 			CpsLayEn[1] = 0x04;
 			CpsLayEn[2] = 0x08;
@@ -1487,6 +1537,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x6e;
 			MaskAddr[2] = 0x70;
 			MaskAddr[3] = 0x72;
+			
+			nCpsPalCtrlReg = 0x5c;
   			
 			CpsLayEn[1] = 0x04;
 			CpsLayEn[2] = 0x08;
@@ -1513,6 +1565,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x50;
 			MaskAddr[2] = 0x4e;
 			MaskAddr[3] = 0x4c;
+			
+			nCpsPalCtrlReg = 0x4a;
   			
 			CpsLayEn[1] = 0xff;
 			CpsLayEn[2] = 0xff;
@@ -1539,6 +1593,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x50;
 			MaskAddr[2] = 0x4e;
 			MaskAddr[3] = 0x4c;
+			
+			nCpsPalCtrlReg = 0x4a;	// s2m3 & sf2m8 (untested none of them write this)
   			
 			CpsLayEn[1] = 0x02;
 			CpsLayEn[2] = 0x02;
@@ -1565,6 +1621,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x6a;
 			MaskAddr[2] = 0x6c;
 			MaskAddr[3] = 0x6e;
+			
+			nCpsPalCtrlReg = 0x6a;
   			
 			CpsLayEn[1] = 0x02;
 			CpsLayEn[2] = 0x04;
@@ -1591,6 +1649,8 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			MaskAddr[1] = 0x6c;
 			MaskAddr[2] = 0x6a;
 			MaskAddr[3] = 0x68;
+			
+			nCpsPalCtrlReg = 0x66;
   			
 			CpsLayEn[1] = 0x02;
 			CpsLayEn[2] = 0x04;

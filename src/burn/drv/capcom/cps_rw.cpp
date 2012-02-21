@@ -319,6 +319,11 @@ static void CpsWritePort(const UINT32 ia, UINT8 d)
 			return;
 		}
 		CpsReg[(ia ^ 1) & 0xFF] = d;
+		
+		if (ia == 0x10b) {
+			GetPalette(0, 6);
+			CpsPalUpdate(CpsSavePal);
+		}
 		return;
 	}
 

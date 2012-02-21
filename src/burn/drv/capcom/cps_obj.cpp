@@ -225,7 +225,7 @@ INT32 Cps1ObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 		y+=pof->nShiftY;
 
 		// Find the palette for the tiles on this sprite
-		CpstPal = CpsObjPal + ((a & 0x1F) << 4);
+		CpstPal = CpsPal + ((a & 0x1F) << 4);
 
 		nFlip=(a>>5)&3;		
 
@@ -347,7 +347,7 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 		n |= (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0x6000) << 3;	// high bits of address
 		
 		// Find the palette for the tiles on this sprite
-		CpstPal = CpsObjPal + ((a & 0x1F) << 4);
+		CpstPal = CpsPal + ((a & 0x1F) << 4);
 
 		nFlip = (a >> 5) & 3;
 		// Find out sprite size

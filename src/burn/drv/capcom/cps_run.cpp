@@ -97,10 +97,6 @@ static const eeprom_interface cps2_eeprom_interface =
 
 INT32 CpsRunInit()
 {
-	nLagObjectPalettes = 0;
-
-	if (Cps == 2) nLagObjectPalettes = 1;
-
 	SekInit(0, 0x68000);					// Allocate 68000
 	
 	if (CpsMemInit()) {						// Memory init
@@ -173,29 +169,6 @@ INT32 CpsRunExit()
 	SekExit();
 
 	return 0;
-}
-
-// nStart = 0-3, nCount=1-4
-inline static void GetPalette(INT32 nStart, INT32 nCount)
-{
-	// Update Palette (Ghouls points to the wrong place on boot up I think)
-	INT32 nPal = (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x0A))) << 8) & 0xFFF800;
-
-	UINT8* Find = CpsFindGfxRam(nPal, 0x1000);
-	if (Find) {
-		memcpy(CpsSavePal + (nStart << 10), Find + (nStart << 10), nCount << 10);
-	}
-}
-
-static void GetStarPalette()
-{
-	INT32 nPal = (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x0A))) << 8) & 0xFFF800;
-
-	UINT8* Find = CpsFindGfxRam(nPal, 256);
-	if (Find) {
-		memcpy(CpsSavePal + 4096, Find + 4096, 256);
-		memcpy(CpsSavePal + 5120, Find + 5120, 256);
-	}
 }
 
 inline static void CopyCpsReg(INT32 i)
@@ -320,11 +293,6 @@ INT32 Cps1Frame()
 
 			memcpy(CpsSaveReg[0], CpsReg, 0x100);				// Registers correct now
 
-			GetPalette(0, 6);									// Get palette
-			if (CpsStar) {
-				GetStarPalette();
-			}
-
 			if (CpsDrawSpritesInReverse) {
 				if (i == 3) CpsObjGet();   									// Get objects
 			}
@@ -425,7 +393,6 @@ INT32 Cps2Frame()
 		ScheduleIRQ();
 	}
 
-	GetPalette(0, 4);									// Get palettes
 	CpsObjGet();										// Get objects
 
 	for (i = 0; i < 3; i++) {

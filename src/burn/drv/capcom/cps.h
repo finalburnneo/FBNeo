@@ -132,12 +132,11 @@ extern void SetCpsBId(INT32 CpsBId, INT32 bStars);
 
 // cps_pal.cpp
 extern UINT32* CpsPal;										// Hicolor version of palette
-extern UINT32* CpsObjPal;										// Pointer to lagged obj palette
-extern INT32 nLagObjectPalettes;										// Lag object palettes by one frame if non-zero
+extern INT32 nCpsPalCtrlReg;
+extern INT32 bCpsUpdatePalEveryFrame;
 INT32 CpsPalInit();
 INT32 CpsPalExit();
-INT32 CpsPalUpdate(UINT8 *pNewPal,INT32 bRecalcAll);
-INT32 CpsStarPalUpdate(UINT8* pNewPal, INT32 nLayer, INT32 bRecalcAll);
+INT32 CpsPalUpdate(UINT8 *pNewPal);
 
 // cps_mem.cpp
 extern UINT8 *CpsRam90;
@@ -167,6 +166,17 @@ inline static UINT8* CpsFindGfxRam(INT32 nAddr,INT32 nLen)
   nAddr&=0xffffff; // 24-bit bus
   if (nAddr>=0x900000 && nAddr+nLen<=0x930000) return CpsRam90+nAddr-0x900000;
   return NULL;
+}
+
+inline static void GetPalette(INT32 nStart, INT32 nCount)
+{
+	// Update Palette (Ghouls points to the wrong place on boot up I think)
+	INT32 nPal = (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x0A))) << 8) & 0xFFFC00;
+	
+	UINT8* Find = CpsFindGfxRam(nPal, 0xc00 << 1);
+	if (Find) {
+		memcpy(CpsSavePal + (nStart << 10), Find + (nStart << 10), nCount << 10);
+	}
 }
 
 // cps_rw.cpp

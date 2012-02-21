@@ -1004,6 +1004,8 @@ INT32 CpsExit()
 	BurnFree(CpsGfx);
 	
 	BurnFree(CpsCode);
+	
+	bCpsUpdatePalEveryFrame = 0;
 
 	nCPS68KClockspeed = 0;
 	Cps = 0;

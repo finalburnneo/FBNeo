@@ -331,19 +331,19 @@ struct BurnDriver BurnDrvpce_arttool = {
 
 // Atomic Robo-kid Special
 
-static struct BurnRomInfo pce_robokidsRomDesc[] = {
+static struct BurnRomInfo pce_atomroboRomDesc[] = {
 	{ "atomic robo-kid special (japan).pce", 0x080000, 0xdd175efd, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_robokids)
-STD_ROM_FN(pce_robokids)
+STD_ROM_PICK(pce_atomrobo)
+STD_ROM_FN(pce_atomrobo)
 
-struct BurnDriver BurnDrvpce_robokids = {
-	"pce_robokids", NULL, NULL, NULL, "1990",
+struct BurnDriver BurnDrvpce_atomrobo = {
+	"pce_atomrobo", NULL, NULL, NULL, "1990",
 	"Atomic Robo-kid Special\0", NULL, "UPL", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_robokidsRomInfo, pce_robokidsRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_atomroboRomInfo, pce_atomroboRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -871,19 +871,19 @@ struct BurnDriver BurnDrvpce_champwrs = {
 
 // Chibi Maruko Chan - Quiz de Piihyara
 
-static struct BurnRomInfo pce_chibiRomDesc[] = {
+static struct BurnRomInfo pce_chibimRomDesc[] = {
 	{ "chibi maruko chan - quiz de piihyara (japan).pce", 0x080000, 0x951ed380, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_chibi)
-STD_ROM_FN(pce_chibi)
+STD_ROM_PICK(pce_chibim)
+STD_ROM_FN(pce_chibim)
 
-struct BurnDriver BurnDrvpce_chibi = {
-	"pce_chibi", NULL, NULL, NULL, "1992",
+struct BurnDriver BurnDrvpce_chibim = {
+	"pce_chibim", NULL, NULL, NULL, "1992",
 	"Chibi Maruko Chan - Quiz de Piihyara\0", NULL, "Namcot", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_chibiRomInfo, pce_chibiRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_chibimRomInfo, pce_chibimRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -1111,19 +1111,19 @@ struct BurnDriver BurnDrvpce_cyberdod = {
 
 // Cyber Knight
 
-static struct BurnRomInfo pce_cybrkngtRomDesc[] = {
+static struct BurnRomInfo pce_cyknightRomDesc[] = {
 	{ "cyber knight (japan).pce", 0x080000, 0xa594fac0, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_cybrkngt)
-STD_ROM_FN(pce_cybrkngt)
+STD_ROM_PICK(pce_cyknight)
+STD_ROM_FN(pce_cyknight)
 
-struct BurnDriver BurnDrvpce_cybrkngt = {
-	"pce_cybrkngt", NULL, NULL, NULL, "1990",
+struct BurnDriver BurnDrvpce_cyknight = {
+	"pce_cyknight", NULL, NULL, NULL, "1990",
 	"Cyber Knight\0", NULL, "Tonkin House", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_cybrkngtRomInfo, pce_cybrkngtRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_cyknightRomInfo, pce_cyknightRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -1891,19 +1891,19 @@ struct BurnDriver BurnDrvpce_finalsols = {
 
 // Fire Pro Wrestling - Combination Tag
 
-static struct BurnRomInfo pce_fpwrestRomDesc[] = {
+static struct BurnRomInfo pce_fireprowRomDesc[] = {
 	{ "fire pro wrestling - combination tag (japan).pce", 0x060000, 0x90ed6575, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_fpwrest)
-STD_ROM_FN(pce_fpwrest)
+STD_ROM_PICK(pce_fireprow)
+STD_ROM_FN(pce_fireprow)
 
-struct BurnDriver BurnDrvpce_fpwrest = {
-	"pce_fpwrest", NULL, NULL, NULL, "1989",
+struct BurnDriver BurnDrvpce_fireprow = {
+	"pce_fireprow", NULL, NULL, NULL, "1989",
 	"Fire Pro Wrestling - Combination Tag\0", NULL, "Human", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_fpwrestRomInfo, pce_fpwrestRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_fireprowRomInfo, pce_fireprowRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -1911,19 +1911,19 @@ struct BurnDriver BurnDrvpce_fpwrest = {
 
 // Fire Pro Wrestling 2 - 2nd Bout
 
-static struct BurnRomInfo pce_fpwrest2RomDesc[] = {
+static struct BurnRomInfo pce_fireprw2RomDesc[] = {
 	{ "fire pro wrestling 2 - 2nd bout (japan).pce", 0x080000, 0xe88987bb, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_fpwrest2)
-STD_ROM_FN(pce_fpwrest2)
+STD_ROM_PICK(pce_fireprw2)
+STD_ROM_FN(pce_fireprw2)
 
-struct BurnDriver BurnDrvpce_fpwrest2 = {
-	"pce_fpwrest2", NULL, NULL, NULL, "1991",
+struct BurnDriver BurnDrvpce_fireprw2 = {
+	"pce_fireprw2", NULL, NULL, NULL, "1991",
 	"Fire Pro Wrestling 2 - 2nd Bout\0", NULL, "Human", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_fpwrest2RomInfo, pce_fpwrest2RomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_fireprw2RomInfo, pce_fireprw2RomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -1931,19 +1931,19 @@ struct BurnDriver BurnDrvpce_fpwrest2 = {
 
 // Fire Pro Wrestling 3 - Legend Bout
 
-static struct BurnRomInfo pce_fpwrest3RomDesc[] = {
+static struct BurnRomInfo pce_fireprw3RomDesc[] = {
 	{ "fire pro wrestling 3 - legend bout (japan).pce", 0x100000, 0x534e8808, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_fpwrest3)
-STD_ROM_FN(pce_fpwrest3)
+STD_ROM_PICK(pce_fireprw3)
+STD_ROM_FN(pce_fireprw3)
 
-struct BurnDriver BurnDrvpce_fpwrest3 = {
-	"pce_fpwrest3", NULL, NULL, NULL, "1992",
+struct BurnDriver BurnDrvpce_fireprw3 = {
+	"pce_fireprw3", NULL, NULL, NULL, "1992",
 	"Fire Pro Wrestling 3 - Legend Bout\0", NULL, "Human", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_fpwrest3RomInfo, pce_fpwrest3RomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_fireprw3RomInfo, pce_fireprw3RomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -2031,19 +2031,19 @@ struct BurnDriver BurnDrvpce_gaiflame = {
 
 // Gaia no Monshou
 
-static struct BurnRomInfo pce_gaiamonRomDesc[] = {
+static struct BurnRomInfo pce_gaiamonsRomDesc[] = {
 	{ "gaia no monshou (japan).pce", 0x040000, 0x6fd6827c, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_gaiamon)
-STD_ROM_FN(pce_gaiamon)
+STD_ROM_PICK(pce_gaiamons)
+STD_ROM_FN(pce_gaiamons)
 
-struct BurnDriver BurnDrvpce_gaiamon = {
-	"pce_gaiamon", NULL, NULL, NULL, "1988",
+struct BurnDriver BurnDrvpce_gaiamons = {
+	"pce_gaiamons", NULL, NULL, NULL, "1988",
 	"Gaia no Monshou\0", NULL, "NCS", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_gaiamonRomInfo, pce_gaiamonRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_gaiamonsRomInfo, pce_gaiamonsRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -2131,19 +2131,19 @@ struct BurnDriver BurnDrvpce_genjitsu = {
 
 // Genpei Toumaden
 
-static struct BurnRomInfo pce_genpeitoRomDesc[] = {
+static struct BurnRomInfo pce_genpeiRomDesc[] = {
 	{ "genpei toumaden (japan).pce", 0x080000, 0xb926c682, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_genpeito)
-STD_ROM_FN(pce_genpeito)
+STD_ROM_PICK(pce_genpei)
+STD_ROM_FN(pce_genpei)
 
-struct BurnDriver BurnDrvpce_genpeito = {
-	"pce_genpeito", NULL, NULL, NULL, "1990",
+struct BurnDriver BurnDrvpce_genpei = {
+	"pce_genpei", NULL, NULL, NULL, "1990",
 	"Genpei Toumaden\0", NULL, "Namcot", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_genpeitoRomInfo, pce_genpeitoRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_genpeiRomInfo, pce_genpeiRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -2151,25 +2151,25 @@ struct BurnDriver BurnDrvpce_genpeito = {
 
 // Genpei Toumaden ni no Maki
 
-static struct BurnRomInfo pce_gentomakRomDesc[] = {
+static struct BurnRomInfo pce_genpemakRomDesc[] = {
 	{ "genpei toumaden ni no maki (japan).pce", 0x080000, 0x8793758c, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_gentomak)
-STD_ROM_FN(pce_gentomak)
+STD_ROM_PICK(pce_genpemak)
+STD_ROM_FN(pce_genpemak)
 
-struct BurnDriver BurnDrvpce_gentomak = {
-	"pce_gentomak", NULL, NULL, NULL, "1992",
+struct BurnDriver BurnDrvpce_genpemak = {
+	"pce_genpemak", NULL, NULL, NULL, "1992",
 	"Genpei Toumaden ni no Maki\0", NULL, "Namcot", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_gentomakRomInfo, pce_gentomakRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_genpemakRomInfo, pce_genpemakRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
 
 
-// Gokuraku! Chuuka Taisen
+// Gokuraku! Chuka Taisen
 
 static struct BurnRomInfo pce_chukataiRomDesc[] = {
 	{ "gokuraku! chuuka taisen (japan).pce", 0x060000, 0xe749a22c, BRF_PRG | BRF_ESS },
@@ -2180,7 +2180,7 @@ STD_ROM_FN(pce_chukatai)
 
 struct BurnDriver BurnDrvpce_chukatai = {
 	"pce_chukatai", NULL, NULL, NULL, "1992",
-	"Gokuraku! Chuuka Taisen\0", NULL, "Taito", "PC Engine",
+	"Gokuraku! Chuka Taisen\0", NULL, "Taito", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_chukataiRomInfo, pce_chukataiRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -2229,7 +2229,7 @@ struct BurnDriver BurnDrvpce_gradius = {
 };
 
 
-// Gunhed
+// GunHed
 
 static struct BurnRomInfo pce_gunhedRomDesc[] = {
 	{ "gunhed (japan).pce", 0x060000, 0xa17d4d7e, BRF_PRG | BRF_ESS },
@@ -2240,7 +2240,7 @@ STD_ROM_FN(pce_gunhed)
 
 struct BurnDriver BurnDrvpce_gunhed = {
 	"pce_gunhed", NULL, NULL, NULL, "1989",
-	"Gunhed\0", NULL, "Hudson", "PC Engine",
+	"GunHed\0", NULL, "Hudson", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_gunhedRomInfo, pce_gunhedRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -2249,7 +2249,7 @@ struct BurnDriver BurnDrvpce_gunhed = {
 };
 
 
-// Gunhed - Hudson Gunhed Taikai
+// GunHed - Hudson GunHed Taikai
 
 static struct BurnRomInfo pce_gunhedhtRomDesc[] = {
 	{ "gunhed - hudson gunhed taikai (japan).pce", 0x040000, 0x57f183ae, BRF_PRG | BRF_ESS },
@@ -2260,7 +2260,7 @@ STD_ROM_FN(pce_gunhedht)
 
 struct BurnDriver BurnDrvpce_gunhedht = {
 	"pce_gunhedht", NULL, NULL, NULL, "1989",
-	"Gunhed - Hudson Gunhed Taikai\0", NULL, "Hudson", "PC Engine",
+	"GunHed - Hudson GunHed Taikai\0", NULL, "Hudson", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_gunhedhtRomInfo, pce_gunhedhtRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -2409,21 +2409,21 @@ struct BurnDriver BurnDrvpce_hitice = {
 };
 
 
-// Honoo no Toukyuuji Dodge Danpei
+// Honoo no Toukyuuji - Dodge Danpei
 
-static struct BurnRomInfo pce_dodgedanRomDesc[] = {
+static struct BurnRomInfo pce_ddanpeiRomDesc[] = {
 	{ "honoo no toukyuuji dodge danpei (japan).pce", 0x080000, 0xb01ee703, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_dodgedan)
-STD_ROM_FN(pce_dodgedan)
+STD_ROM_PICK(pce_ddanpei)
+STD_ROM_FN(pce_ddanpei)
 
-struct BurnDriver BurnDrvpce_dodgedan = {
-	"pce_dodgedan", NULL, NULL, NULL, "1992",
-	"Honoo no Toukyuuji Dodge Danpei\0", NULL, "Hudson", "PC Engine",
+struct BurnDriver BurnDrvpce_ddanpei = {
+	"pce_ddanpei", NULL, NULL, NULL, "1992",
+	"Honoo no Toukyuuji - Dodge Danpei\0", NULL, "Hudson", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_dodgedanRomInfo, pce_dodgedanRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_ddanpeiRomInfo, pce_ddanpeiRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -2491,19 +2491,19 @@ struct BurnDriver BurnDrvpce_jleag11 = {
 
 // Jack Nicklaus' Greatest 18 Holes of Major Championship Golf
 
-static struct BurnRomInfo pce_jn18holeRomDesc[] = {
+static struct BurnRomInfo pce_nicklausRomDesc[] = {
 	{ "jack nicklaus' greatest 18 holes of major championship golf (japan).pce", 0x040000, 0xea751e82, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_jn18hole)
-STD_ROM_FN(pce_jn18hole)
+STD_ROM_PICK(pce_nicklaus)
+STD_ROM_FN(pce_nicklaus)
 
-struct BurnDriver BurnDrvpce_jn18hole = {
-	"pce_jn18hole", NULL, NULL, NULL, "1989",
+struct BurnDriver BurnDrvpce_nicklaus = {
+	"pce_nicklaus", NULL, NULL, NULL, "1989",
 	"Jack Nicklaus' Greatest 18 Holes of Major Championship Golf\0", NULL, "Victor Interactive Software", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_jn18holeRomInfo, pce_jn18holeRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_nicklausRomInfo, pce_nicklausRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -2591,19 +2591,19 @@ struct BurnDriver BurnDrvpce_jinmu1 = {
 
 // Juuouki
 
-static struct BurnRomInfo pce_juoukiRomDesc[] = {
+static struct BurnRomInfo pce_juuoukiRomDesc[] = {
 	{ "juuouki (japan).pce", 0x080000, 0xc8c7d63e, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_juouki)
-STD_ROM_FN(pce_juouki)
+STD_ROM_PICK(pce_juuouki)
+STD_ROM_FN(pce_juuouki)
 
-struct BurnDriver BurnDrvpce_juouki = {
-	"pce_juouki", NULL, NULL, NULL, "1989",
+struct BurnDriver BurnDrvpce_juuouki = {
+	"pce_juuouki", NULL, NULL, NULL, "1989",
 	"Juuouki\0", NULL, "NEC", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_juoukiRomInfo, pce_juoukiRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_juuoukiRomInfo, pce_juuoukiRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -2611,19 +2611,19 @@ struct BurnDriver BurnDrvpce_juouki = {
 
 // Juuouki (Alt)
 
-static struct BurnRomInfo pce_juouki1RomDesc[] = {
+static struct BurnRomInfo pce_juuouki1RomDesc[] = {
 	{ "juuouki (japan) [a].pce", 0x080000, 0x6a628982, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_juouki1)
-STD_ROM_FN(pce_juouki1)
+STD_ROM_PICK(pce_juuouki1)
+STD_ROM_FN(pce_juuouki1)
 
-struct BurnDriver BurnDrvpce_juouki1 = {
-	"pce_juouki1", "pce_juouki", NULL, NULL, "1989",
+struct BurnDriver BurnDrvpce_juuouki1 = {
+	"pce_juuouki1", "pce_juuouki", NULL, NULL, "1989",
 	"Juuouki (Alt)\0", NULL, "NEC", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_juouki1RomInfo, pce_juouki1RomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_juuouki1RomInfo, pce_juuouki1RomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -2911,19 +2911,19 @@ struct BurnDriver BurnDrvpce_kyukyom2 = {
 
 // Kyuukyoku Tiger
 
-static struct BurnRomInfo pce_kyutigerRomDesc[] = {
+static struct BurnRomInfo pce_ktigerRomDesc[] = {
 	{ "kyuukyoku tiger (japan).pce", 0x040000, 0x09509315, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_kyutiger)
-STD_ROM_FN(pce_kyutiger)
+STD_ROM_PICK(pce_ktiger)
+STD_ROM_FN(pce_ktiger)
 
-struct BurnDriver BurnDrvpce_kyutiger = {
-	"pce_kyutiger", NULL, NULL, NULL, "1989",
+struct BurnDriver BurnDrvpce_ktiger = {
+	"pce_ktiger", NULL, NULL, NULL, "1989",
 	"Kyuukyoku Tiger\0", NULL, "Taito", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_kyutigerRomInfo, pce_kyutigerRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_ktigerRomInfo, pce_ktigerRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -2991,19 +2991,19 @@ struct BurnDriver BurnDrvpce_loht = {
 
 // Lode Runner - Lost Labyrinth
 
-static struct BurnRomInfo pce_loderunRomDesc[] = {
+static struct BurnRomInfo pce_ldrunRomDesc[] = {
 	{ "lode runner - lost labyrinth (japan).pce", 0x040000, 0xe6ee1468, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_loderun)
-STD_ROM_FN(pce_loderun)
+STD_ROM_PICK(pce_ldrun)
+STD_ROM_FN(pce_ldrun)
 
-struct BurnDriver BurnDrvpce_loderun = {
-	"pce_loderun", NULL, NULL, NULL, "1990",
+struct BurnDriver BurnDrvpce_ldrun = {
+	"pce_ldrun", NULL, NULL, NULL, "1990",
 	"Lode Runner - Lost Labyrinth\0", NULL, "Pack-In-Video", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_loderunRomInfo, pce_loderunRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_ldrunRomInfo, pce_ldrunRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -3191,19 +3191,19 @@ struct BurnDriver BurnDrvpce_mikkoku = {
 
 // Majin Eiyuu Den Wataru
 
-static struct BurnRomInfo pce_majinewRomDesc[] = {
+static struct BurnRomInfo pce_wataruRomDesc[] = {
 	{ "majin eiyuu den wataru (japan).pce", 0x040000, 0x2f8935aa, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_majinew)
-STD_ROM_FN(pce_majinew)
+STD_ROM_PICK(pce_wataru)
+STD_ROM_FN(pce_wataru)
 
-struct BurnDriver BurnDrvpce_majinew = {
-	"pce_majinew", NULL, NULL, NULL, "1988",
+struct BurnDriver BurnDrvpce_wataru = {
+	"pce_wataru", NULL, NULL, NULL, "1988",
 	"Majin Eiyuu Den Wataru\0", NULL, "Hudson", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_majinewRomInfo, pce_majinewRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_wataruRomInfo, pce_wataruRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -3271,19 +3271,19 @@ struct BurnDriver BurnDrvpce_makyoden = {
 
 // Maniac Pro Wres - Asu Heno Tatakai
 
-static struct BurnRomInfo pce_maniacRomDesc[] = {
+static struct BurnRomInfo pce_maniacpwRomDesc[] = {
 	{ "maniac puroresu - asu heno tatakai (japan).pce", 0x080000, 0x99f2865c, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_maniac)
-STD_ROM_FN(pce_maniac)
+STD_ROM_PICK(pce_maniacpw)
+STD_ROM_FN(pce_maniacpw)
 
-struct BurnDriver BurnDrvpce_maniac = {
-	"pce_maniac", NULL, NULL, NULL, "1990",
+struct BurnDriver BurnDrvpce_maniacpw = {
+	"pce_maniacpw", NULL, NULL, NULL, "1990",
 	"Maniac Pro Wres - Asu Heno Tatakai\0", NULL, "Hudson", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_maniacRomInfo, pce_maniacRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_maniacpwRomInfo, pce_maniacpwRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -3631,19 +3631,19 @@ struct BurnDriver BurnDrvpce_naxstad = {
 
 // Nazo no Masquerade
 
-static struct BurnRomInfo pce_nazomascRomDesc[] = {
+static struct BurnRomInfo pce_nazomasqRomDesc[] = {
 	{ "nazo no mascarade (japan).pce", 0x060000, 0x0441d85a, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_nazomasc)
-STD_ROM_FN(pce_nazomasc)
+STD_ROM_PICK(pce_nazomasq)
+STD_ROM_FN(pce_nazomasq)
 
-struct BurnDriver BurnDrvpce_nazomasc = {
-	"pce_nazomasc", NULL, NULL, NULL, "1990",
+struct BurnDriver BurnDrvpce_nazomasq = {
+	"pce_nazomasq", NULL, NULL, NULL, "1990",
 	"Nazo no Masquerade\0", NULL, "Masiya", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_nazomascRomInfo, pce_nazomascRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_nazomasqRomInfo, pce_nazomasqRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -3711,19 +3711,19 @@ struct BurnDriver BurnDrvpce_nectaris = {
 
 // Nekketsu Koukou Dodgeball Bu - PC Bangai Hen
 
-static struct BurnRomInfo pce_dodgebanRomDesc[] = {
+static struct BurnRomInfo pce_nekdodgeRomDesc[] = {
 	{ "nekketsu koukou dodgeball bu - pc bangai hen (japan).pce", 0x040000, 0x65fdb863, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_dodgeban)
-STD_ROM_FN(pce_dodgeban)
+STD_ROM_PICK(pce_nekdodge)
+STD_ROM_FN(pce_nekdodge)
 
-struct BurnDriver BurnDrvpce_dodgeban = {
-	"pce_dodgeban", NULL, NULL, NULL, "1990",
+struct BurnDriver BurnDrvpce_nekdodge = {
+	"pce_nekdodge", NULL, NULL, NULL, "1990",
 	"Nekketsu Koukou Dodgeball Bu - PC Bangai Hen\0", NULL, "Naxat", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_dodgebanRomInfo, pce_dodgebanRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_nekdodgeRomInfo, pce_nekdodgeRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -3731,19 +3731,19 @@ struct BurnDriver BurnDrvpce_dodgeban = {
 
 // Nekketsu Koukou Dodgeball Bu - Soccer PC Hen
 
-static struct BurnRomInfo pce_dodgesocRomDesc[] = {
+static struct BurnRomInfo pce_neksoccrRomDesc[] = {
 	{ "nekketsu koukou dodgeball bu - soccer pc hen (japan).pce", 0x080000, 0xf2285c6d, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_dodgesoc)
-STD_ROM_FN(pce_dodgesoc)
+STD_ROM_PICK(pce_neksoccr)
+STD_ROM_FN(pce_neksoccr)
 
-struct BurnDriver BurnDrvpce_dodgesoc = {
-	"pce_dodgesoc", NULL, NULL, NULL, "1992",
+struct BurnDriver BurnDrvpce_neksoccr = {
+	"pce_neksoccr", NULL, NULL, NULL, "1992",
 	"Nekketsu Koukou Dodgeball Bu - Soccer PC Hen\0", NULL, "Naxat", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_dodgesocRomInfo, pce_dodgesocRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_neksoccrRomInfo, pce_neksoccrRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -3851,19 +3851,19 @@ struct BurnDriverD BurnDrvpce_nikopun = {
 
 // Ninja Ryukenden
 
-static struct BurnRomInfo pce_ninjaryuRomDesc[] = {
+static struct BurnRomInfo pce_nryukendRomDesc[] = {
 	{ "ninja ryuuken den (japan).pce", 0x080000, 0x67573bac, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_ninjaryu)
-STD_ROM_FN(pce_ninjaryu)
+STD_ROM_PICK(pce_nryukend)
+STD_ROM_FN(pce_nryukend)
 
-struct BurnDriver BurnDrvpce_ninjaryu = {
-	"pce_ninjaryu", NULL, NULL, NULL, "1992",
+struct BurnDriver BurnDrvpce_nryukend = {
+	"pce_nryukend", NULL, NULL, NULL, "1992",
 	"Ninja Ryukenden\0", NULL, "Hudson", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_ninjaryuRomInfo, pce_ninjaryuRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_nryukendRomInfo, pce_nryukendRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -3889,7 +3889,7 @@ struct BurnDriver BurnDrvpce_ninjawar = {
 };
 
 
-// Obocchama Kun
+// Obocchama-kun
 
 static struct BurnRomInfo pce_obocchaRomDesc[] = {
 	{ "obocchama kun (japan).pce", 0x080000, 0x4d3b0bc9, BRF_PRG | BRF_ESS },
@@ -3900,7 +3900,7 @@ STD_ROM_FN(pce_oboccha)
 
 struct BurnDriver BurnDrvpce_oboccha = {
 	"pce_oboccha", NULL, NULL, NULL, "1991",
-	"Obocchama Kun\0", NULL, "Namcot", "PC Engine",
+	"Obocchama-kun\0", NULL, "Namcot", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_obocchaRomInfo, pce_obocchaRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -4411,19 +4411,19 @@ struct BurnDriver BurnDrvpce_powergat = {
 
 // Power Golf
 
-static struct BurnRomInfo pce_powerglfRomDesc[] = {
+static struct BurnRomInfo pce_pgolfRomDesc[] = {
 	{ "power golf (japan).pce", 0x060000, 0xea324f07, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_powerglf)
-STD_ROM_FN(pce_powerglf)
+STD_ROM_PICK(pce_pgolf)
+STD_ROM_FN(pce_pgolf)
 
-struct BurnDriver BurnDrvpce_powerglf = {
-	"pce_powerglf", NULL, NULL, NULL, "1989",
+struct BurnDriver BurnDrvpce_pgolf = {
+	"pce_pgolf", NULL, NULL, NULL, "1989",
 	"Power Golf\0", NULL, "Hudson", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_powerglfRomInfo, pce_powerglfRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_pgolfRomInfo, pce_pgolfRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -4691,19 +4691,19 @@ struct BurnDriver BurnDrvpce_psychas = {
 
 // Puzzle Boy
 
-static struct BurnRomInfo pce_puzzlebRomDesc[] = {
+static struct BurnRomInfo pce_puzzlboyRomDesc[] = {
 	{ "puzzle boy (japan).pce", 0x040000, 0xfaa6e187, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_puzzleb)
-STD_ROM_FN(pce_puzzleb)
+STD_ROM_PICK(pce_puzzlboy)
+STD_ROM_FN(pce_puzzlboy)
 
-struct BurnDriver BurnDrvpce_puzzleb = {
-	"pce_puzzleb", NULL, NULL, NULL, "1991",
+struct BurnDriver BurnDrvpce_puzzlboy = {
+	"pce_puzzlboy", NULL, NULL, NULL, "1991",
 	"Puzzle Boy\0", NULL, "Nippon Telenet", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_puzzlebRomInfo, pce_puzzlebRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_puzzlboyRomInfo, pce_puzzlboyRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -4811,19 +4811,19 @@ struct BurnDriver BurnDrvpce_rabiolep = {
 
 // Racing Damashii
 
-static struct BurnRomInfo pce_racingdRomDesc[] = {
+static struct BurnRomInfo pce_racindamRomDesc[] = {
 	{ "racing damashii (japan).pce", 0x080000, 0x3e79734c, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_racingd)
-STD_ROM_FN(pce_racingd)
+STD_ROM_PICK(pce_racindam)
+STD_ROM_FN(pce_racindam)
 
-struct BurnDriver BurnDrvpce_racingd = {
-	"pce_racingd", NULL, NULL, NULL, "1991",
+struct BurnDriver BurnDrvpce_racindam = {
+	"pce_racindam", NULL, NULL, NULL, "1991",
 	"Racing Damashii\0", NULL, "Irem", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_racingdRomInfo, pce_racingdRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_racindamRomInfo, pce_racindamRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -4889,7 +4889,7 @@ struct BurnDriver BurnDrvpce_rockon = {
 };
 
 
-// Ryukyu
+// Ryuukyuu
 
 static struct BurnRomInfo pce_ryukyuRomDesc[] = {
 	{ "ryukyu (japan).pce", 0x040000, 0x91e6896f, BRF_PRG | BRF_ESS },
@@ -4900,7 +4900,7 @@ STD_ROM_FN(pce_ryukyu)
 
 struct BurnDriver BurnDrvpce_ryukyu = {
 	"pce_ryukyu", NULL, NULL, NULL, "1990",
-	"Ryukyu\0", NULL, "Face", "PC Engine",
+	"Ryuukyuu\0", NULL, "Face", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_ryukyuRomInfo, pce_ryukyuRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -4931,19 +4931,19 @@ struct BurnDriver BurnDrvpce_sadaki7 = {
 
 // Saigo no Nindou - Ninja Spirit
 
-static struct BurnRomInfo pce_nspiritRomDesc[] = {
+static struct BurnRomInfo pce_saigoninRomDesc[] = {
 	{ "saigo no nindou - ninja spirit (japan).pce", 0x080000, 0x0590a156, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_nspirit)
-STD_ROM_FN(pce_nspirit)
+STD_ROM_PICK(pce_saigonin)
+STD_ROM_FN(pce_saigonin)
 
-struct BurnDriver BurnDrvpce_nspirit = {
-	"pce_nspirit", NULL, NULL, NULL, "1990",
+struct BurnDriver BurnDrvpce_saigonin = {
+	"pce_saigonin", NULL, NULL, NULL, "1990",
 	"Saigo no Nindou - Ninja Spirit\0", NULL, "Irem", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_nspiritRomInfo, pce_nspiritRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_saigoninRomInfo, pce_saigoninRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -5291,19 +5291,19 @@ struct BurnDriver BurnDrvpce_sharrier = {
 
 // Space Invaders - Fukkatsu no Hi
 
-static struct BurnRomInfo pce_sinvRomDesc[] = {
+static struct BurnRomInfo pce_spaceinvRomDesc[] = {
 	{ "space invaders - fukkatsu no hi (japan).pce", 0x040000, 0x99496db3, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_sinv)
-STD_ROM_FN(pce_sinv)
+STD_ROM_PICK(pce_spaceinv)
+STD_ROM_FN(pce_spaceinv)
 
-struct BurnDriver BurnDrvpce_sinv = {
-	"pce_sinv", NULL, NULL, NULL, "1990",
+struct BurnDriver BurnDrvpce_spaceinv = {
+	"pce_spaceinv", NULL, NULL, NULL, "1990",
 	"Space Invaders - Fukkatsu no Hi\0", NULL, "Taito", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_sinvRomInfo, pce_sinvRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_spaceinvRomInfo, pce_spaceinvRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -5469,7 +5469,7 @@ struct BurnDriver BurnDrvpce_smcrush = {
 };
 
 
-// Super Momotaro Dentetsu
+// Super Momotarou Dentetsu
 
 static struct BurnRomInfo pce_smomoRomDesc[] = {
 	{ "super momotarou dentetsu (japan).pce", 0x060000, 0x3eb5304a, BRF_PRG | BRF_ESS },
@@ -5480,7 +5480,7 @@ STD_ROM_FN(pce_smomo)
 
 struct BurnDriver BurnDrvpce_smomo = {
 	"pce_smomo", NULL, NULL, NULL, "1989",
-	"Super Momotaro Dentetsu\0", NULL, "Hudson", "PC Engine",
+	"Super Momotarou Dentetsu\0", NULL, "Hudson", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_smomoRomInfo, pce_smomoRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -5489,7 +5489,7 @@ struct BurnDriver BurnDrvpce_smomo = {
 };
 
 
-// Super Momotaro Dentetsu II
+// Super Momotarou Dentetsu II
 
 static struct BurnRomInfo pce_smomo2RomDesc[] = {
 	{ "super momotarou dentetsu ii (japan).pce", 0x0c0000, 0x2bc023fc, BRF_PRG | BRF_ESS },
@@ -5500,7 +5500,7 @@ STD_ROM_FN(pce_smomo2)
 
 struct BurnDriver BurnDrvpce_smomo2 = {
 	"pce_smomo2", NULL, NULL, NULL, "1991",
-	"Super Momotaro Dentetsu II\0", NULL, "Hudson", "PC Engine",
+	"Super Momotarou Dentetsu II\0", NULL, "Hudson", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_smomo2RomInfo, pce_smomo2RomName, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -5611,19 +5611,19 @@ struct BurnDriver BurnDrvpce_takameib = {
 
 // Takeda Shingen
 
-static struct BurnRomInfo pce_takedaRomDesc[] = {
+static struct BurnRomInfo pce_shingenRomDesc[] = {
 	{ "takeda shingen (japan).pce", 0x040000, 0xf022be13, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_takeda)
-STD_ROM_FN(pce_takeda)
+STD_ROM_PICK(pce_shingen)
+STD_ROM_FN(pce_shingen)
 
-struct BurnDriver BurnDrvpce_takeda = {
-	"pce_takeda", NULL, NULL, NULL, "1989",
+struct BurnDriver BurnDrvpce_shingen = {
+	"pce_shingen", NULL, NULL, NULL, "1989",
 	"Takeda Shingen\0", NULL, "Aicom", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_takedaRomInfo, pce_takedaRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_shingenRomInfo, pce_shingenRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -5631,19 +5631,19 @@ struct BurnDriver BurnDrvpce_takeda = {
 
 // Takeda Shingen (Alt)
 
-static struct BurnRomInfo pce_takeda1RomDesc[] = {
+static struct BurnRomInfo pce_shingen1RomDesc[] = {
 	{ "takeda shingen (japan) [a].pce", 0x040000, 0xdf7af71c, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_takeda1)
-STD_ROM_FN(pce_takeda1)
+STD_ROM_PICK(pce_shingen1)
+STD_ROM_FN(pce_shingen1)
 
-struct BurnDriver BurnDrvpce_takeda1 = {
-	"pce_takeda1", "pce_takeda", NULL, NULL, "1989",
+struct BurnDriver BurnDrvpce_shingen1 = {
+	"pce_shingen1", "pce_shingen", NULL, NULL, "1989",
 	"Takeda Shingen (Alt)\0", NULL, "Aicom", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_takeda1RomInfo, pce_takeda1RomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_shingen1RomInfo, pce_shingen1RomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -5751,19 +5751,19 @@ struct BurnDriver BurnDrvpce_sdragon = {
 
 // Terra Cresta II - Mandoraa no Gyakushuu
 
-static struct BurnRomInfo pce_tcresta2RomDesc[] = {
+static struct BurnRomInfo pce_terracr2RomDesc[] = {
 	{ "terra cresta ii - mandoraa no gyakushuu (japan).pce", 0x080000, 0x1b2d0077, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_tcresta2)
-STD_ROM_FN(pce_tcresta2)
+STD_ROM_PICK(pce_terracr2)
+STD_ROM_FN(pce_terracr2)
 
-struct BurnDriver BurnDrvpce_tcresta2 = {
-	"pce_tcresta2", NULL, NULL, NULL, "1992",
+struct BurnDriver BurnDrvpce_terracr2 = {
+	"pce_terracr2", NULL, NULL, NULL, "1992",
 	"Terra Cresta II - Mandoraa no Gyakushuu\0", NULL, "Nihon Bussan", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_tcresta2RomInfo, pce_tcresta2RomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_terracr2RomInfo, pce_terracr2RomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -5951,19 +5951,19 @@ struct BurnDriver BurnDrvpce_tricky = {
 
 // Tsuppari Oozumou - Heisei Ban
 
-static struct BurnRomInfo pce_tsupozumRomDesc[] = {
+static struct BurnRomInfo pce_tsuppariRomDesc[] = {
 	{ "tsuppari oozumou - heisei ban (japan).pce", 0x040000, 0x61a6e210, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_tsupozum)
-STD_ROM_FN(pce_tsupozum)
+STD_ROM_PICK(pce_tsuppari)
+STD_ROM_FN(pce_tsuppari)
 
-struct BurnDriver BurnDrvpce_tsupozum = {
-	"pce_tsupozum", NULL, NULL, NULL, "1993",
+struct BurnDriver BurnDrvpce_tsuppari = {
+	"pce_tsuppari", NULL, NULL, NULL, "1993",
 	"Tsuppari Oozumou - Heisei Ban\0", NULL, "Naxat", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_tsupozumRomInfo, pce_tsupozumRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_tsuppariRomInfo, pce_tsuppariRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -6371,19 +6371,19 @@ struct BurnDriver BurnDrvpce_xevious = {
 
 // Youkai Douchuuki
 
-static struct BurnRomInfo pce_yukaidoRomDesc[] = {
+static struct BurnRomInfo pce_youkaidRomDesc[] = {
 	{ "youkai douchuuki (japan).pce", 0x040000, 0xf131b706, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_yukaido)
-STD_ROM_FN(pce_yukaido)
+STD_ROM_PICK(pce_youkaid)
+STD_ROM_FN(pce_youkaid)
 
-struct BurnDriver BurnDrvpce_yukaido = {
-	"pce_yukaido", NULL, NULL, NULL, "1988",
+struct BurnDriver BurnDrvpce_youkaid = {
+	"pce_youkaid", NULL, NULL, NULL, "1988",
 	"Youkai Douchuuki\0", NULL, "Namcot", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_yukaidoRomInfo, pce_yukaidoRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_youkaidRomInfo, pce_youkaidRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -7351,19 +7351,19 @@ struct BurnDriver BurnDrvtg_jjnjeff = {
 
 // Jack Nicklaus' Turbo Golf
 
-static struct BurnRomInfo tg_turboglfRomDesc[] = {
+static struct BurnRomInfo tg_nicklausRomDesc[] = {
 	{ "jack nicklaus' turbo golf (usa).pce", 0x040000, 0x83384572, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(tg_turboglf)
-STD_ROM_FN(tg_turboglf)
+STD_ROM_PICK(tg_nicklaus)
+STD_ROM_FN(tg_nicklaus)
 
-struct BurnDriver BurnDrvtg_turboglf = {
-	"tg_turboglf", NULL, NULL, NULL, "1990",
+struct BurnDriver BurnDrvtg_nicklaus = {
+	"tg_nicklaus", NULL, NULL, NULL, "1990",
 	"Jack Nicklaus' Turbo Golf\0", NULL, "Accolade", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
-	TgGetZipName, tg_turboglfRomInfo, tg_turboglfRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	TgGetZipName, tg_nicklausRomInfo, tg_nicklausRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
@@ -8549,7 +8549,7 @@ struct BurnDriver BurnDrvsgx_battlace = {
 };
 
 
-// Daimakai Mura
+// Dai Makaimura
 
 static struct BurnRomInfo sgx_daimakaiRomDesc[] = {
 	{ "daimakai mura (japan).pce", 0x100000, 0xb486a8ed, BRF_PRG | BRF_ESS },
@@ -8560,7 +8560,7 @@ STD_ROM_FN(sgx_daimakai)
 
 struct BurnDriver BurnDrvsgx_daimakai = {
 	"sgx_daimakai", NULL, NULL, NULL, "1990",
-	"Daimakai Mura\0", NULL, "NEC Avenue", "SuperGrafx",
+	"Dai Makaimura\0", NULL, "NEC Avenue", "SuperGrafx",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_SGX, GBF_MISC, 0,
 	SgxGetZipName, sgx_daimakaiRomInfo, sgx_daimakaiRomName, NULL, NULL, pceInputInfo, pceDIPInfo,

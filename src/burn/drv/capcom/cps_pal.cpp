@@ -51,7 +51,7 @@ INT32 CpsPalUpdate(UINT8* pNewPal)
 	for (INT32 nPage = 0; nPage < 6; nPage++) {
 		if (BIT(nCtrl, nPage)) {
 			for (INT32 Offset = 0; Offset < 0x200; ++Offset) {
-				INT32 Palette = *(PaletteRAM++);
+				INT32 Palette = BURN_ENDIAN_SWAP_INT16(*(PaletteRAM++));
 				INT32 r, g, b, Bright;
 				
 				Bright = 0x0f + ((Palette >> 12) << 1);

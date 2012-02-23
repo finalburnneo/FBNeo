@@ -119,10 +119,10 @@ INT32 CpsObjGet()
 		UINT16* ps = (UINT16*)pg;
 
 		if (Cps == 2) {
-			if (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0x8000)	{													// end of sprite list?
+			if (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0x8000)	{														// end of sprite list
 				break;
 			}
-			if (BURN_ENDIAN_SWAP_INT16(ps[0]) == 0 && BURN_ENDIAN_SWAP_INT16(ps[1]) == 0x0100 && BURN_ENDIAN_SWAP_INT16(ps[2]) == 0 && BURN_ENDIAN_SWAP_INT16(ps[3]) == 0xff00) {	// Slammasters end of sprite list?
+			if (BURN_ENDIAN_SWAP_INT16(ps[3]) >= 0xff00) {														// end of sprite list (ringdest)
 				break;
 			}
 		} else {

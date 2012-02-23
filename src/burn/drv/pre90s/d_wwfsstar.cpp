@@ -770,7 +770,7 @@ static struct BurnRomInfo wwfsstarRomDesc[] = {
 	{ "wwfs03.bin",		0x10000, 0x8a35a20e, 3 | BRF_SND },           //  4
 	{ "wwfs05.bin",		0x10000, 0x6df08962, 3 | BRF_SND },           //  5
 
-	{ "24a4-0.58",		0x20000, 0xcb12ba40, 4 | BRF_GRA | BRF_NODUMP }, //  6 Characters
+	{ "24a4-0.58",		0x20000, 0xcb12ba40, 4 | BRF_GRA },           //  6 Characters
 
 	{ "wwfs39.bin",		0x10000, 0xd807b09a, 5 | BRF_GRA },           //  7 Sprites
 	{ "wwfs38.bin",		0x10000, 0xd8ea94d3, 5 | BRF_GRA },           //  8

@@ -179,7 +179,8 @@ static int SnesValue			= HARDWARE_PREFIX_NINTENDO_SNES >> 24;
 static int MASKSNES				= 1 << SnesValue;
 static int MASKALL				= MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKPCENGINE | MASKSNES;
 
-#define AVAILONLY				(1 << 28)
+#define UNAVAILABLE				(1 << 27)
+#define AVAILABLE				(1 << 28)
 #define AUTOEXPAND				(1 << 29)
 #define SHOWSHORT				(1 << 30)
 #define ASCIIONLY				(1 << 31)
@@ -349,9 +350,12 @@ static int SelListMake()
 		if (BurnDrvGetFlags() & BDF_BOARDROM) {
 			continue;
 		}
+		
 		if (BurnDrvGetText(DRV_PARENT) != NULL && (BurnDrvGetFlags() & BDF_CLONE)) {	// Skip clones
 			continue;
 		}
+		
+		if(!gameAv[i]) nMissingDrvCount++;
 
 		int nHardware = 1 << (BurnDrvGetHardwareCode() >> 24);
 		if ((nHardware & MASKALL) && ((nHardware & nLoadMenuShowX) || (nHardware & MASKALL) == 0)) {
@@ -376,9 +380,11 @@ static int SelListMake()
 			if (!StringFound && !StringFound2) continue;
 		}
 
-		if(!gameAv[i]) nMissingDrvCount++;
-
-		if (avOk && (nLoadMenuShowX & AVAILONLY) && !gameAv[i])	{						// Skip non-available games if needed
+		if (avOk && (!(nLoadMenuShowX & UNAVAILABLE)) && !gameAv[i])	{						// Skip non-available games if needed
+			continue;
+		}
+		
+		if (avOk && (!(nLoadMenuShowX & AVAILABLE)) && gameAv[i])	{						// Skip available games if needed
 			continue;
 		}
 
@@ -403,10 +409,12 @@ static int SelListMake()
 		if (BurnDrvGetFlags() & BDF_BOARDROM) {
 			continue;
 		}
-
+		
 		if (BurnDrvGetTextA(DRV_PARENT) == NULL || !(BurnDrvGetFlags() & BDF_CLONE)) {	// Skip parents
 			continue;
 		}
+		
+		if(!gameAv[i]) nMissingDrvCount++;
 
 		int nHardware = 1 << (BurnDrvGetHardwareCode() >> 24);
 		if ((nHardware & MASKALL) && ((nHardware & nLoadMenuShowX) || ((nHardware & MASKALL) == 0))) {
@@ -431,9 +439,11 @@ static int SelListMake()
 			if (!StringFound && !StringFound2) continue;
 		}
 
-		if(!gameAv[i]) nMissingDrvCount++;
-
-		if (avOk && (nLoadMenuShowX & AVAILONLY) && !gameAv[i])	{						// Skip non-available games if needed
+		if (avOk && (!(nLoadMenuShowX & UNAVAILABLE)) && !gameAv[i])	{						// Skip non-available games if needed
+			continue;
+		}
+		
+		if (avOk && (!(nLoadMenuShowX & AVAILABLE)) && gameAv[i])	{						// Skip available games if needed
 			continue;
 		}
 
@@ -635,7 +645,8 @@ static void RefreshPanel()
 	}
 
 	CheckDlgButton(hSelDlg, IDC_CHECKAUTOEXPAND, (nLoadMenuShowX & AUTOEXPAND) ? BST_CHECKED : BST_UNCHECKED);
-	CheckDlgButton(hSelDlg, IDC_CHECKAVAILABLEONLY, (nLoadMenuShowX & AVAILONLY) ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_CHECKAVAILABLE, (nLoadMenuShowX & AVAILABLE) ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_CHECKUNAVAILABLE, (nLoadMenuShowX & UNAVAILABLE) ? BST_CHECKED : BST_UNCHECKED);
 
 	CheckDlgButton(hSelDlg, IDC_SEL_SHORTNAME, nLoadMenuShowX & SHOWSHORT ? BST_CHECKED : BST_UNCHECKED);
 	CheckDlgButton(hSelDlg, IDC_SEL_ASCIIONLY, nLoadMenuShowX & ASCIIONLY ? BST_CHECKED : BST_UNCHECKED);
@@ -1003,7 +1014,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		InitCommonControls();
 
 		hSelDlg = hDlg;
-
+		
 		SendDlgItemMessage(hDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 		SendDlgItemMessage(hDlg, IDC_SCREENSHOT_V, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 		
@@ -1371,8 +1382,12 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					bDialogCancel = true;
 					SendMessage(hDlg, WM_CLOSE, 0, 0);
 					return 0;
-				case IDC_CHECKAVAILABLEONLY:
-					nLoadMenuShowX ^= AVAILONLY;
+				case IDC_CHECKAVAILABLE:
+					nLoadMenuShowX ^= AVAILABLE;
+					RebuildEverything();
+					break;
+				case IDC_CHECKUNAVAILABLE:
+					nLoadMenuShowX ^= UNAVAILABLE;
 					RebuildEverything();
 					break;
 				case IDC_CHECKAUTOEXPAND:
@@ -1598,7 +1613,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 									DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hNotFoundEss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
 									rect.left += nIconsSizeXY + 4;
 								} else {
-									if (!(nLoadMenuShowX & AVAILONLY) && !(gameAv[((NODEINFO*)TvItem.lParam)->nBurnDrvNo] & 2)) {
+									if (!(nLoadMenuShowX & AVAILABLE) && !(gameAv[((NODEINFO*)TvItem.lParam)->nBurnDrvNo] & 2)) {
 										DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hNotFoundNonEss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
 										rect.left += nIconsSizeXY + 4;
 									}

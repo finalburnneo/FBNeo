@@ -97,7 +97,7 @@
 #define IDC_SCREENSHOT_V                	20057
 #define IDC_SCREENSHOT2_H               	20058
 #define IDC_SCREENSHOT2_V               	20059
-#define IDC_CHECKAVAILABLEONLY          	20060
+#define IDC_CHECKAVAILABLE              	20060
 #define IDCAPTURE                       	20061
 #define IDC_ADVANCE                     	20062
 #define IDC_LABELROMNAME                	20063
@@ -174,6 +174,7 @@
 #define IDC_SEL_SEARCH						20134
 #define IDC_SEL_SEARCHGROUP					20135
 #define IDC_RESOLUTION						20136
+#define IDC_CHECKUNAVAILABLE              	20137
 
 #define IDC_SUPPORTDIR_EDIT1				20150
 #define IDC_SUPPORTDIR_EDIT2				20151

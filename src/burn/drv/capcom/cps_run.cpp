@@ -9,8 +9,7 @@ static INT32 nInterrupt;
 static INT32 nIrqLine, nIrqCycles;
 static bool bEnableAutoIrq50, bEnableAutoIrq52;				// Trigger an interrupt every 32 scanlines
 
-static const INT32 nFirstLine = 0x0C;							// The first scanline of the display
-static const INT32 nVBlank = 0x0106 - 0x0C;					// The scanline at which the vblank interrupt is triggered
+static const INT32 nFirstLine = 0x10;							// The first scanline of the display
 
 static INT32 nCpsCyclesExtra;
 
@@ -50,8 +49,8 @@ static INT32 DrvReset()
 	if (Cps == 2) {
 		// Disable beam-synchronized interrupts
 		*((UINT16*)(CpsReg + 0x4E)) = 0x0200;
-		*((UINT16*)(CpsReg + 0x50)) = 0x0106;
-		*((UINT16*)(CpsReg + 0x52)) = 0x0106;
+		*((UINT16*)(CpsReg + 0x50)) = 259;
+		*((UINT16*)(CpsReg + 0x52)) = 259;
 	}
 
 	SekOpen(0);
@@ -184,7 +183,7 @@ inline static void CopyCpsFrg(INT32 i)
 // Schedule a beam-synchronized interrupt
 static void ScheduleIRQ()
 {
-	INT32 nLine = 0x0106;
+	INT32 nLine = 259;
 
 	if (nIrqLine50 <= nLine) {
 		nLine = nIrqLine50;
@@ -193,9 +192,9 @@ static void ScheduleIRQ()
 		nLine = nIrqLine52;
 	}
 
-	if (nLine < 0x0106) {
+	if (nLine < 259) {
 		nIrqLine = nLine;
-		nIrqCycles = (nLine * nCpsCycles / 0x0106) + 1;
+		nIrqCycles = (nLine * nCpsCycles / 259) + 1;
 	} else {
 		nIrqCycles = nCpsCycles + 1;
 	}
@@ -218,7 +217,7 @@ static void DoIRQ()
 	}
 
 	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-	SekRun(nCpsCycles * 0x01 / 0x0106);
+	SekRun(nCpsCycles * 0x01 / 259);
 	if (nRasterline[nInterrupt] < 224) {
 		CopyCpsReg(nInterrupt);
 		CopyCpsFrg(nInterrupt);
@@ -229,7 +228,7 @@ static void DoIRQ()
 	// Schedule next interrupt
 	if (!bEnableAutoIrq50) {
 		if (nIrqLine >= nIrqLine50) {
-			nIrqLine50 = 0x0106;
+			nIrqLine50 = 259;
 		}
 	} else {
 		if (bEnableAutoIrq50 && nIrqLine == nIrqLine50) {
@@ -237,7 +236,7 @@ static void DoIRQ()
 		}
 	}
 	if (!bEnableAutoIrq52 && nIrqLine >= nIrqLine52) {
-		nIrqLine52 = 0x0106;
+		nIrqLine52 = 259;
 	} else {
 		if (bEnableAutoIrq52 && nIrqLine == nIrqLine52) {
 			nIrqLine52 += 32;
@@ -273,12 +272,12 @@ INT32 Cps1Frame()
 
 	CpsRwGetInp();												// Update the input port values
 
-	nDisplayEnd = (nCpsCycles * (nFirstLine + 224)) / 0x0106;	// Account for VBlank
+	nDisplayEnd = (nCpsCycles * (nFirstLine + 224)) / 259;	// Account for VBlank
 
 	SekOpen(0);
 	SekIdle(nCpsCyclesExtra);
 
-	SekRun(nCpsCycles * nFirstLine / 0x0106);					// run 68K for the first few lines
+	SekRun(nCpsCycles * nFirstLine / 259);					// run 68K for the first few lines
 
 	if (!CpsDrawSpritesInReverse) {
 		CpsObjGet();											// Get objects
@@ -345,11 +344,11 @@ INT32 Cps2Frame()
 
 	nCpsCycles = (INT32)(((INT64)nCPS68KClockspeed * nBurnCPUSpeedAdjust) / 0x0100);
 	SekOpen(0);
-	SekSetCyclesScanline(nCpsCycles / 262);
+	SekSetCyclesScanline(nCpsCycles / 259);
 
 	CpsRwGetInp();											// Update the input port values
 
-	nDisplayEnd = nCpsCycles * (nFirstLine + 224) / 0x0106;	// Account for VBlank
+	nDisplayEnd = nCpsCycles * (nFirstLine + 224) / 259;	// Account for VBlank
 
 	nInterrupt = 0;
 	for (i = 0; i < MAX_RASTER + 2; i++) {
@@ -358,7 +357,7 @@ INT32 Cps2Frame()
 
 	// Determine which (if any) of the line counters generates the first IRQ
 	bEnableAutoIrq50 = bEnableAutoIrq52 = false;
-	nIrqLine50 = nIrqLine52 = 0x0106;
+	nIrqLine50 = nIrqLine52 = 259;
 	if (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x50))) & 0x8000) {
 		bEnableAutoIrq50 = true;
 	}
@@ -375,11 +374,11 @@ INT32 Cps2Frame()
 
 	SekIdle(nCpsCyclesExtra);
 
-	if (nIrqCycles < nCpsCycles * nFirstLine / 0x0106) {
+	if (nIrqCycles < nCpsCycles * nFirstLine / 259) {
 		SekRun(nIrqCycles);
 		DoIRQ();
 	}
-	nNext = nCpsCycles * nFirstLine / 0x0106;
+	nNext = nCpsCycles * nFirstLine / 259;
 	if (SekTotalCycles() < nNext) {
 		SekRun(nNext - SekTotalCycles());
 	}
@@ -387,7 +386,7 @@ INT32 Cps2Frame()
 	CopyCpsReg(0);										// Get inititial copy of registers
 	CopyCpsFrg(0);										//
 
-	if (nIrqLine >= 0x0106 && (*((UINT16*)(CpsReg + 0x4E)) & 0x0200) == 0) {
+	if (nIrqLine >= 259 && (*((UINT16*)(CpsReg + 0x4E)) & 0x0200) == 0) {
 		nIrqLine50 = *((UINT16*)(CpsReg + 0x50)) & 0x01FF;
 		nIrqLine52 = *((UINT16*)(CpsReg + 0x52)) & 0x01FF;
 		ScheduleIRQ();
@@ -405,24 +404,14 @@ INT32 Cps2Frame()
 	
 	CpsObjGet();										// Get objects
 
-//	nCpsCyclesSegment[0] = (nCpsCycles * nVBlank) / 0x0106;
+//	nCpsCyclesSegment[0] = (nCpsCycles * nVBlank) / 259;
 //	nDone += SekRun(nCpsCyclesSegment[0] - nDone);
 
-#if 1
-	// This triggers the VBlank IRQ straight away at display end,
-	// it causes glitches in the D&D games text (Press Start, Insert Coin, etc)
 	SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);				// VBlank
-	SekRun(nCpsCycles - SekTotalCycles());
-#else
-	// Here we delay the VBlank IRQ until frame-end, or part-way through VBlank
-	// fixes D&D glitching credit text but breaks lower Manhattan stage rasters in xmvsf
-	SekRun(nCpsCycles - SekTotalCycles());
-	SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);				// VBlank
-#endif
-	
 	if (pBurnDraw) {
 		CpsDraw();
 	}
+	SekRun(nCpsCycles - SekTotalCycles());	
 
 	nCpsCyclesExtra = SekTotalCycles() - nCpsCycles;
 

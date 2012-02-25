@@ -393,8 +393,6 @@ INT32 Cps2Frame()
 		ScheduleIRQ();
 	}
 
-	CpsObjGet();										// Get objects
-
 	for (i = 0; i < 3; i++) {
 		nNext = ((i + 1) * nDisplayEnd) / 3;			// find out next cycle count to run to
 
@@ -404,6 +402,8 @@ INT32 Cps2Frame()
 		}
 		SekRun(nNext - SekTotalCycles());				// run cpu
 	}
+	
+	CpsObjGet();										// Get objects
 
 //	nCpsCyclesSegment[0] = (nCpsCycles * nVBlank) / 0x0106;
 //	nDone += SekRun(nCpsCyclesSegment[0] - nDone);

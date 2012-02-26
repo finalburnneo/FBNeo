@@ -3939,7 +3939,7 @@ static void set_pcm_bank(INT32 data)
 
 #define SetaVidRAMCtrlWriteWord(num, base)						\
 	if ((address >= (base + 0)) && address <= (base + 5)) {				\
-		*((UINT16*)(DrvVIDCTRLRAM##num + (address & 0x06))) = data;	\
+		*((UINT16*)(DrvVIDCTRLRAM##num + (address & 0x06))) = BURN_ENDIAN_SWAP_INT16(data);	\
 		return;									\
 	}
 
@@ -3951,7 +3951,7 @@ static void set_pcm_bank(INT32 data)
 
 #define SetVidRAMRegsWriteWord(base)	\
 	if ((address >= (base + 0)) && (address <= (base + 5))) {		\
-		*((UINT16*)(DrvVideoRegs + (address & 0x06))) = data;	\
+		*((UINT16*)(DrvVideoRegs + (address & 0x06))) = BURN_ENDIAN_SWAP_INT16(data);	\
 		if ((address - base) == 0) x1010Enable(data & 0x20);		\
 		if ((address - base) == 2) set_pcm_bank(data);			\
 		return;								\
@@ -6827,7 +6827,7 @@ static void DrvPaletteRecalc()
 	}
 
 	for (INT32 i = 0; i < BurnDrvGetPaletteEntries(); i++) {
-		DrvColors(i, p[Palette[i]]);
+		DrvColors(i, BURN_ENDIAN_SWAP_INT16(p[Palette[i]]));
 	}
 }
 
@@ -6835,15 +6835,15 @@ static void draw_sprites_map()
 {
 	UINT16 *spriteram16 = (UINT16*)DrvSprRAM0;
 
-	INT32 ctrl	=	spriteram16[0x600/2];
-	INT32 ctrl2	=	spriteram16[0x602/2];
+	INT32 ctrl	=	BURN_ENDIAN_SWAP_INT16(spriteram16[0x600/2]);
+	INT32 ctrl2	=	BURN_ENDIAN_SWAP_INT16(spriteram16[0x602/2]);
 
 	INT32 flip	=	ctrl  & 0x40;
 	INT32 numcol	=	ctrl2 & 0x0f;
 
 	UINT16 *src = ((UINT16*)DrvSprRAM1) + ( ((ctrl2 ^ (~ctrl2<<1)) & 0x40) ? 0x2000/2 : 0 );
 
-	INT32 upper	= ( spriteram16[ 0x604/2 ] & 0xFF ) +( spriteram16[ 0x606/2 ] & 0xFF ) * 256;
+	INT32 upper	= ( BURN_ENDIAN_SWAP_INT16(spriteram16[ 0x604/2 ]) & 0xFF ) +( BURN_ENDIAN_SWAP_INT16(spriteram16[ 0x606/2 ]) & 0xFF ) * 256;
 
 	INT32 col0 = 0;
 	switch (ctrl & 0x0f)
@@ -6859,13 +6859,13 @@ static void draw_sprites_map()
 
 	for (INT32 col = 0 ; col < numcol; col++)
 	{
-		INT32 x = spriteram16[(col * 0x20 + 0x408)/2] & 0xff;
-		INT32 y = spriteram16[(col * 0x20 + 0x400)/2] & 0xff;
+		INT32 x = BURN_ENDIAN_SWAP_INT16(spriteram16[(col * 0x20 + 0x408)/2]) & 0xff;
+		INT32 y = BURN_ENDIAN_SWAP_INT16(spriteram16[(col * 0x20 + 0x400)/2]) & 0xff;
 
 		for (INT32 offs = 0; offs < 0x20; offs++)
 		{
-			INT32 code	= src[((col+col0)&0xf) * 0x40/2 + offs + 0x800/2];
-			INT32 color	= src[((col+col0)&0xf) * 0x40/2 + offs + 0xc00/2];
+			INT32 code	= BURN_ENDIAN_SWAP_INT16(src[((col+col0)&0xf) * 0x40/2 + offs + 0x800/2]);
+			INT32 color	= BURN_ENDIAN_SWAP_INT16(src[((col+col0)&0xf) * 0x40/2 + offs + 0xc00/2]);
 
 			INT32 flipx	= code & 0x8000;
 			INT32 flipy	= code & 0x4000;
@@ -6915,8 +6915,8 @@ static void draw_sprites()
 
 	UINT16 *spriteram16 = (UINT16*)DrvSprRAM0;
 
-	INT32 ctrl	= spriteram16[ 0x600/2 ];
-	INT32 ctrl2	= spriteram16[ 0x602/2 ];
+	INT32 ctrl	= BURN_ENDIAN_SWAP_INT16(spriteram16[ 0x600/2 ]);
+	INT32 ctrl2	= BURN_ENDIAN_SWAP_INT16(spriteram16[ 0x602/2 ]);
 
 	INT32 flip	= ctrl & 0x40;
 
@@ -6929,10 +6929,10 @@ static void draw_sprites()
 
 	for (INT32 offs = (0x400-2)/2 ; offs >= 0; offs -= 1)
 	{
-		int	code	= src[offs + 0x000/2];
-		int	sx	= src[offs + 0x400/2];
+		int	code	= BURN_ENDIAN_SWAP_INT16(src[offs + 0x000/2]);
+		int	sx	= BURN_ENDIAN_SWAP_INT16(src[offs + 0x400/2]);
 
-		int	sy	= spriteram16[offs + 0x000/2] & 0xff;
+		int	sy	= BURN_ENDIAN_SWAP_INT16(spriteram16[offs + 0x000/2]) & 0xff;
 
 		int	flipx	= code & 0x8000;
 		int	flipy	= code & 0x4000;
@@ -7020,8 +7020,8 @@ static void draw_layer(UINT8 *ram, UINT8 *gfx, INT32 num, INT32 opaque, INT32 sc
 
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		INT32 attr  = vram[offs + 0x000];
-		INT32 color = vram[offs + 0x800] & 0x001f;
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[offs + 0x000]);
+		INT32 color = BURN_ENDIAN_SWAP_INT16(vram[offs + 0x800]) & 0x001f;
 
 		INT32 code  = (attr & 0x3fff) + tile_offset[0];
 
@@ -7097,13 +7097,13 @@ static void seta_update(INT32 enable_tilemap2, INT32 tmap_flip)
 	UINT16 *vctrl0 = (UINT16*)DrvVIDCTRLRAM0;
 	UINT16 *vctrl1 = (UINT16*)DrvVIDCTRLRAM1;
 
-	INT32 x_0 = vctrl0[0];
-	INT32 y_0 = vctrl0[1];
-	INT32 en0 = vctrl0[2];
+	INT32 x_0 = BURN_ENDIAN_SWAP_INT16(vctrl0[0]);
+	INT32 y_0 = BURN_ENDIAN_SWAP_INT16(vctrl0[1]);
+	INT32 en0 = BURN_ENDIAN_SWAP_INT16(vctrl0[2]);
 
-	INT32 x_1 = vctrl1[0];
-	INT32 y_1 = vctrl1[1];
-	INT32 en1 = vctrl1[2];
+	INT32 x_1 = BURN_ENDIAN_SWAP_INT16(vctrl1[0]);
+	INT32 y_1 = BURN_ENDIAN_SWAP_INT16(vctrl1[1]);
+	INT32 en1 = BURN_ENDIAN_SWAP_INT16(vctrl1[2]);
 
 	x_0 += 0x10 - VideoOffsets[1][flipscreen ? 1 : 0];
 	y_0 -= (256 - visible)/2;
@@ -7123,7 +7123,7 @@ static void seta_update(INT32 enable_tilemap2, INT32 tmap_flip)
 			y_1 = y_1 - visible;
 		}
 
-		order = *((UINT16*)(DrvVideoRegs + 2));
+		order = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVideoRegs + 2)));
 	}
 
 	if ( en0 & 0x08) layer_enable &= ~0x01;

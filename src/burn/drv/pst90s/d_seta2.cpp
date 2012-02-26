@@ -1202,9 +1202,9 @@ static INT32 tmp68301_irq_vector[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 static void tmp68301_update_timer( INT32 i )
 {
-	UINT16 TCR	=	RamTMP68301[(0x200 + i * 0x20)/2];
-	UINT16 MAX1	=	RamTMP68301[(0x204 + i * 0x20)/2];
-	UINT16 MAX2	=	RamTMP68301[(0x206 + i * 0x20)/2];
+	UINT16 TCR	=	BURN_ENDIAN_SWAP_INT16(RamTMP68301[(0x200 + i * 0x20)/2]);
+	UINT16 MAX1	=	BURN_ENDIAN_SWAP_INT16(RamTMP68301[(0x204 + i * 0x20)/2]);
+	UINT16 MAX2	=	BURN_ENDIAN_SWAP_INT16(RamTMP68301[(0x206 + i * 0x20)/2]);
 
 	INT32 max = 0;
 	double duration = 0;
@@ -1251,10 +1251,10 @@ static void tmp68301_update_timer( INT32 i )
 
 static void tmp68301_timer_callback(INT32 i)
 {
-	UINT16 TCR	= RamTMP68301[(0x200 + i * 0x20)/2];
-	UINT16 IMR	= RamTMP68301[0x94/2];		// Interrupt Mask Register (IMR)
-	UINT16 ICR	= RamTMP68301[0x8e/2+i];	// Interrupt Controller Register (ICR7..9)
-	UINT16 IVNR	= RamTMP68301[0x9a/2];		// Interrupt Vector Number Register (IVNR)
+	UINT16 TCR	= BURN_ENDIAN_SWAP_INT16(RamTMP68301[(0x200 + i * 0x20)/2]);
+	UINT16 IMR	= BURN_ENDIAN_SWAP_INT16(RamTMP68301[0x94/2]);		// Interrupt Mask Register (IMR)
+	UINT16 ICR	= BURN_ENDIAN_SWAP_INT16(RamTMP68301[0x8e/2+i]);	// Interrupt Controller Register (ICR7..9)
+	UINT16 IVNR	= BURN_ENDIAN_SWAP_INT16(RamTMP68301[0x9a/2]);		// Interrupt Vector Number Register (IVNR)
 
 //  logerror("CPU #0 PC %06X: callback timer %04X, j = %d\n",activecpu_get_pc(),i,tcount);
 //	bprintf(PRINT_NORMAL, _T("Tmp68301: timer[%d] TCR: %04x IMR: %04x\n"), i, TCR, IMR);
@@ -1284,11 +1284,11 @@ static void tmp68301_timer_callback(INT32 i)
 static void tmp68301_update_irq_state(INT32 i)
 {
 	/* Take care of external interrupts */
-	UINT16 IMR	= RamTMP68301[0x94/2];		// Interrupt Mask Register (IMR)
-	UINT16 IVNR	= RamTMP68301[0x9a/2];		// Interrupt Vector Number Register (IVNR)
+	UINT16 IMR	= BURN_ENDIAN_SWAP_INT16(RamTMP68301[0x94/2]);		// Interrupt Mask Register (IMR)
+	UINT16 IVNR	= BURN_ENDIAN_SWAP_INT16(RamTMP68301[0x9a/2]);		// Interrupt Vector Number Register (IVNR)
 
 	if	( !(IMR & (1<<i)) )	{
-		UINT16 ICR = RamTMP68301[0x80/2+i];	// Interrupt Controller Register (ICR0..2)
+		UINT16 ICR = BURN_ENDIAN_SWAP_INT16(RamTMP68301[0x80/2+i]);	// Interrupt Controller Register (ICR0..2)
 
 		// Interrupt Controller Register (ICR0..2)
 		INT32 level = ICR & 0x0007;
@@ -1328,7 +1328,7 @@ void __fastcall Tmp68301WriteByte(UINT32 sekAddress, UINT8 byteValue)
 void __fastcall Tmp68301WriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	sekAddress &= 0x0003ff;
-	RamTMP68301[ sekAddress >> 1 ] = wordValue;
+	RamTMP68301[ sekAddress >> 1 ] = BURN_ENDIAN_SWAP_INT16(wordValue);
 	tmp68301_regs_w( sekAddress, wordValue );
 //	bprintf(PRINT_NORMAL, _T("TMP68301 Reg %04X <- %04X & %04X   %04x\n"),sekAddress,wordValue,0xffff, RamTMP68301[sekAddress>>1]);
 }
@@ -2467,7 +2467,7 @@ UINT16 __fastcall gundamexReadWord(UINT32 address)
 	}
 
 	if ((address & 0xfffc00) == 0xfffc00) {
-		return RamTMP68301[(address & 0x3ff) / 2];
+		return BURN_ENDIAN_SWAP_INT16(RamTMP68301[(address & 0x3ff) / 2]);
 	}
 
 	return 0;
@@ -2869,7 +2869,7 @@ static void DrvDraw()
 //	memset(pBurnDraw, 0, nScreenWidth * nScreenHeight * 2);
 	BurnTransferClear();
 
-	if (RamVReg[0x30/2] & 1) { // Blank Screen
+	if (BURN_ENDIAN_SWAP_INT16(RamVReg[0x30/2]) & 1) { // Blank Screen
 		memcpy(RamSprBak, RamSpr, 0x040000);
 		return;
 	}
@@ -2878,10 +2878,10 @@ static void DrvDraw()
 	UINT16 *end = RamSprBak + 0x040000 / 2;
 
 	for ( ; s1 < end; s1+=4 ) {
-		INT32 num		= s1[0];
-		INT32 xoffs	= s1[1];
-		INT32 yoffs	= s1[2];
-		INT32 sprite	= s1[3];
+		INT32 num		= BURN_ENDIAN_SWAP_INT16(s1[0]);
+		INT32 xoffs	= BURN_ENDIAN_SWAP_INT16(s1[1]);
+		INT32 yoffs	= BURN_ENDIAN_SWAP_INT16(s1[2]);
+		INT32 sprite	= BURN_ENDIAN_SWAP_INT16(s1[3]);
 		pDrawgfx drawgfx = drawgfxN;
 
 		// Single-sprite address
@@ -2934,10 +2934,10 @@ static void DrvDraw()
 				INT32 dx,x,y;
 				INT32 flipx;
 				INT32 flipy;
-				INT32 sx       = s2[0];
-				INT32 sy       = s2[1];
-				INT32 scrollx  = s2[2];
-				INT32 scrolly  = s2[3];
+				INT32 sx       = BURN_ENDIAN_SWAP_INT16(s2[0]);
+				INT32 sy       = BURN_ENDIAN_SWAP_INT16(s2[1]);
+				INT32 scrollx  = BURN_ENDIAN_SWAP_INT16(s2[2]);
+				INT32 scrolly  = BURN_ENDIAN_SWAP_INT16(s2[3]);
 				INT32 tilesize = (scrollx & 0x8000) >> 15;
 				INT32 page     = (scrollx & 0x7c00) >> 10;
 				INT32 height   = ((sy & 0xfc00) >> 10) + 1;
@@ -2983,8 +2983,8 @@ static void DrvDraw()
 
 						s3 = RamSprBak + 2 * ((page * 0x2000/4) + ((y & 0x1f) << 6) + (x & 0x03f));
 
-						attr  = s3[0];
-						code  = s3[1] + ((attr & 0x0007) << 16);
+						attr  = BURN_ENDIAN_SWAP_INT16(s3[0]);
+						code  = BURN_ENDIAN_SWAP_INT16(s3[1]) + ((attr & 0x0007) << 16);
 						flipx = (attr & 0x0010);
 						flipy = (attr & 0x0008);
 						color = (attr & 0xffe0) >> 5;
@@ -2999,10 +2999,10 @@ static void DrvDraw()
 
 			} else {
 				// "normal" sprite	
-				INT32 sx    = s2[0];
-				INT32 sy    = s2[1];
-				INT32 attr  = s2[2];
-				INT32 code  = s2[3] + ((attr & 0x0007) << 16);
+				INT32 sx    = BURN_ENDIAN_SWAP_INT16(s2[0]);
+				INT32 sy    = BURN_ENDIAN_SWAP_INT16(s2[1]);
+				INT32 attr  = BURN_ENDIAN_SWAP_INT16(s2[2]);
+				INT32 code  = BURN_ENDIAN_SWAP_INT16(s2[3]) + ((attr & 0x0007) << 16);
 				INT32 flipx = (attr & 0x0010);
 				INT32 flipy = (attr & 0x0008);
 				INT32 color = (attr & 0xffe0) >> 5;
@@ -3030,7 +3030,7 @@ static void DrvDraw()
 			}
 
 		}
-		if (s1[0] & 0x8000) break;	// end of list marker
+		if (BURN_ENDIAN_SWAP_INT16(s1[0]) & 0x8000) break;	// end of list marker
 	}
 
 	BurnTransferCopy(CurPal);

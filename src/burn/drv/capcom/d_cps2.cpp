@@ -4278,6 +4278,30 @@ static struct BurnRomInfo Pzloop2RomDesc[] = {
 STD_ROM_PICK(Pzloop2)
 STD_ROM_FN(Pzloop2)
 
+static struct BurnRomInfo Pzloop2jRomDesc[] = {
+	{ "pl2j.03c",      0x080000, 0x3b76b806,  1 | BRF_ESS | BRF_PRG },
+	{ "pl2j.04c",      0x080000, 0x8878a42a,  1 | BRF_ESS | BRF_PRG },
+	{ "pl2j.05c",      0x080000, 0x51081ea4,  1 | BRF_ESS | BRF_PRG },
+	{ "pl2j.06c",      0x080000, 0x51c68494,  1 | BRF_ESS | BRF_PRG },
+
+	{ "pl2-simm.01c",  0x200000, 0x137b13a7, 11 | BRF_GRA },
+	{ "pl2-simm.01d",  0x200000, 0xa2db1507, 11 | BRF_GRA },
+	{ "pl2-simm.01a",  0x200000, 0x7e80ff8e, 11 | BRF_GRA },
+	{ "pl2-simm.01b",  0x200000, 0xcd93e6ed, 11 | BRF_GRA },
+	{ "pl2-simm.03c",  0x200000, 0x0f52bbca, 11 | BRF_GRA },
+	{ "pl2-simm.03d",  0x200000, 0xa62712c3, 11 | BRF_GRA },
+	{ "pl2-simm.03a",  0x200000, 0xb60c9f8e, 11 | BRF_GRA },
+	{ "pl2-simm.03b",  0x200000, 0x83fef284, 11 | BRF_GRA },
+
+	{ "pl2.01",        0x020000, 0x35697569,  4 | BRF_ESS | BRF_PRG },
+
+	{ "pl2-simm.05a",  0x200000, 0x85d8fbe8, 13 | BRF_SND },
+	{ "pl2-simm.05b",  0x200000, 0x1ed62584, 13 | BRF_SND },
+};
+
+STD_ROM_PICK(Pzloop2j)
+STD_ROM_FN(Pzloop2j)
+
 static struct BurnRomInfo Pzloop2jr1RomDesc[] = {
 	{ "pl2j.03a",      0x080000, 0x0a751bd0,  1 | BRF_ESS | BRF_PRG },
 	{ "pl2j.04a",      0x080000, 0xc3f72afe,  1 | BRF_ESS | BRF_PRG },
@@ -8339,6 +8363,16 @@ struct BurnDriver BurnDrvCpsPzloop2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS2 | HARDWARE_CAPCOM_CPS2_SIMM, GBF_PUZZLE, 0,
 	NULL, Pzloop2RomInfo, Pzloop2RomName, NULL, NULL, Pzloop2InputInfo, NULL,
+	Pzloop2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsPzloop2j = {
+	"pzloop2j", "pzloop2", NULL, NULL, "2001",
+	"Puzz Loop 2 (010226 Japan)\0", NULL, "Mitchell, distritued by Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2 | HARDWARE_CAPCOM_CPS2_SIMM, GBF_PUZZLE, 0,
+	NULL, Pzloop2jRomInfo, Pzloop2jRomName, NULL, NULL, Pzloop2InputInfo, NULL,
 	Pzloop2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

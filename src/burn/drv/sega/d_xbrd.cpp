@@ -1299,49 +1299,6 @@ static struct BurnRomInfo Smgpu2RomDesc[] = {
 STD_ROM_PICK(Smgpu2)
 STD_ROM_FN(Smgpu2)
 
-static struct BurnRomInfo Smgpu3RomDesc[] = {
-	{ "epr-12561.58",     0x20000, 0x80a32655, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-12562.63",     0x20000, 0xd525f2a8, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-		
-	{ "epr-12574a.20",    0x20000, 0xf8b5c38b, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
-	{ "epr-12575a.29",    0x20000, 0x248b1d17, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
-
-	{ "epr-12429.154",    0x10000, 0x5851e614, SYS16_ROM_TILES | BRF_GRA },
-	{ "epr-12430.153",    0x10000, 0x05e00134, SYS16_ROM_TILES | BRF_GRA },
-	{ "epr-12431.152",    0x10000, 0x35572f4a, SYS16_ROM_TILES | BRF_GRA },
-	
-	{ "mpr-12425.90",     0x20000, 0x14bf2a15, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-12426.94",     0x20000, 0x28b60dc0, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-12427.98",     0x20000, 0x0a367928, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-12428.102",    0x20000, 0xefa80ad5, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-12421.91",     0x20000, 0x25f46140, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-12422.95",     0x20000, 0xcb51c8f6, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-12423.99",     0x20000, 0x0be9818e, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-12424.103",    0x20000, 0x0ce00dfc, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-12417.92",     0x20000, 0xa806eabf, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-12418.96",     0x20000, 0xed1a0f2b, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-12419.100",    0x20000, 0xce4568cb, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-12420.104",    0x20000, 0x679442eb, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-12609.93",     0x20000, 0xa867812f, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-12610.97",     0x20000, 0x53b99417, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-12611.101",    0x20000, 0xbd5c6ab0, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-12612.105",    0x20000, 0xac86e890, SYS16_ROM_SPRITES | BRF_GRA },
-	
-	{ "epr-12436.17",     0x10000, 0x16ec5f0a, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
-	
-	{ "epr-12587.14",     0x08000, 0x2afe648b, SYS16_ROM_Z80PROG2 | BRF_ESS | BRF_PRG },
-	
-	{ "mpr-12437.11",     0x20000, 0xa1c7e712, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "mpr-12438.12",     0x20000, 0x6573d46b, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCMDATA | BRF_SND },
-	
-	{ "317-0125a.key",    0x02000, 0x3ecdb120, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
-};
-
-
-STD_ROM_PICK(Smgpu3)
-STD_ROM_FN(Smgpu3)
-
 static struct BurnRomInfo ThndrbldRomDesc[] = {
 	{ "epr-11405.ic58",   0x20000, 0xe057dd5a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-11406.ic63",   0x20000, 0xc6b994b8, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -2495,16 +2452,6 @@ struct BurnDriver BurnDrvSmgpu2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, Smgpu2RomInfo, Smgpu2RomName, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
-	SmgpInit, XBoardExit, XBoardFrame, NULL, XBoardScan,
-	NULL, 0x6000, 320, 224, 4, 3
-};
-
-struct BurnDriver BurnDrvSmgpu3 = {
-	"smgpu3", "smgp", NULL, NULL, "1989",
-	"Super Monaco GP (set 3, US, FD1094 317-0125a)\0", NULL, "Sega", "X-Board",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
-	NULL, Smgpu3RomInfo, Smgpu3RomName, NULL, NULL, SmgpInputInfo, SmgpDIPInfo,
 	SmgpInit, XBoardExit, XBoardFrame, NULL, XBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };

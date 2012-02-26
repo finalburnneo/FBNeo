@@ -2048,7 +2048,7 @@ static struct BurnRomInfo Altbeast4RomDesc[] = {
 STD_ROM_PICK(Altbeast4)
 STD_ROM_FN(Altbeast4)
 
-static struct BurnRomInfo Altbeast5RomDesc[] = {
+static struct BurnRomInfo Altbeast6RomDesc[] = {
 	{ "epr-11883.a7",   0x20000, 0xc5b3e8f7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-11882.a5",   0x20000, 0x9c01170b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
@@ -2083,8 +2083,8 @@ static struct BurnRomInfo Altbeast5RomDesc[] = {
 };
 
 
-STD_ROM_PICK(Altbeast5)
-STD_ROM_FN(Altbeast5)
+STD_ROM_PICK(Altbeast6)
+STD_ROM_FN(Altbeast6)
 
 static struct BurnRomInfo AtomicpRomDesc[] = {
 	{ "ap-t2.bin",      0x10000, 0x97421047, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -6017,7 +6017,7 @@ void Altbeastj_Sim8751()
 	}
 }
 
-void Altbeast5_Sim8751()
+void Altbeast6_Sim8751()
 {
 	// System Inputs
 	*((UINT16*)(System16Ram + 0x3096)) = BURN_ENDIAN_SWAP_INT16((UINT16)(System16Input[0] << 8));
@@ -6074,9 +6074,9 @@ static INT32 AltbeastjInit()
 	return nRet;
 }
 
-static INT32 Altbeast5Init()
+static INT32 Altbeast6Init()
 {
-	Simulate8751 = Altbeast5_Sim8751;
+	Simulate8751 = Altbeast6_Sim8751;
 	
 	// Start off with some sprite rom and let the load routine add on the rest
 	System16SpriteRomSize = 0x1a0000 - 0xe0000;
@@ -7756,13 +7756,13 @@ struct BurnDriver BurnDrvAltbeast4 = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvAltbeast5 = {
-	"altbeast5", "altbeast", NULL, NULL, "1988",
-	"Altered Beast (set 5, 8751 317-0076)\0", NULL, "Sega", "System 16B",
+struct BurnDriver BurnDrvAltbeast6 = {
+	"altbeast6", "altbeast", NULL, NULL, "1988",
+	"Altered Beast (set 6, 8751 317-0076)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
-	NULL, Altbeast5RomInfo, Altbeast5RomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
-	Altbeast5Init, System16Exit, System16BFrame, NULL, System16Scan,
+	NULL, Altbeast6RomInfo, Altbeast6RomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
+	Altbeast6Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

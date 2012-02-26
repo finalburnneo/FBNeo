@@ -4278,7 +4278,7 @@ static struct BurnRomInfo Pzloop2RomDesc[] = {
 STD_ROM_PICK(Pzloop2)
 STD_ROM_FN(Pzloop2)
 
-static struct BurnRomInfo Pzloop2jRomDesc[] = {
+static struct BurnRomInfo Pzloop2jr1RomDesc[] = {
 	{ "pl2j.03a",      0x080000, 0x0a751bd0,  1 | BRF_ESS | BRF_PRG },
 	{ "pl2j.04a",      0x080000, 0xc3f72afe,  1 | BRF_ESS | BRF_PRG },
 	{ "pl2j.05a",      0x080000, 0x6ea9dbfc,  1 | BRF_ESS | BRF_PRG },
@@ -4299,8 +4299,8 @@ static struct BurnRomInfo Pzloop2jRomDesc[] = {
 	{ "pl2-simm.05b",  0x200000, 0x1ed62584, 13 | BRF_SND },
 };
 
-STD_ROM_PICK(Pzloop2j)
-STD_ROM_FN(Pzloop2j)
+STD_ROM_PICK(Pzloop2jr1)
+STD_ROM_FN(Pzloop2jr1)
 
 static struct BurnRomInfo QndreamRomDesc[] = {
 	{ "tqzj.03a",      0x080000, 0x7acf3e30, 1 | BRF_ESS | BRF_PRG },
@@ -8343,12 +8343,12 @@ struct BurnDriver BurnDrvCpsPzloop2 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsPzloop2j = {
-	"pzloop2j", "pzloop2", NULL, NULL, "2001",
+struct BurnDriver BurnDrvCpsPzloop2jr1 = {
+	"pzloop2jr1", "pzloop2", NULL, NULL, "2001",
 	"Puzz Loop 2 (010205 Japan)\0", NULL, "Mitchell, distritued by Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2 | HARDWARE_CAPCOM_CPS2_SIMM, GBF_PUZZLE, 0,
-	NULL, Pzloop2jRomInfo, Pzloop2jRomName, NULL, NULL, Pzloop2InputInfo, NULL,
+	NULL, Pzloop2jr1RomInfo, Pzloop2jr1RomName, NULL, NULL, Pzloop2InputInfo, NULL,
 	Pzloop2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

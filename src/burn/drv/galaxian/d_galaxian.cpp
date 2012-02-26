@@ -11949,7 +11949,7 @@ static struct BurnRomInfo MshuttleRomDesc[] = {
 	{ "mscprom1.bin",  0x00020, 0xea0d1af0, BRF_GRA | GAL_ROM_PROM },
 	
 	{ "my07",          0x01000, 0x522a2920, BRF_SND | BRF_OPT },	// Samples
-	{ "my06e",         0x01000, 0x466415f2, BRF_SND | BRF_OPT },
+	{ "my06(__eng)",   0x01000, 0x466415f2, BRF_SND | BRF_OPT },
 };
 
 STD_ROM_PICK(Mshuttle)
@@ -11959,11 +11959,11 @@ static struct BurnRomInfo Mshuttle2RomDesc[] = {
 	{ "my05",          0x01000, 0x83574af1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "my04",          0x01000, 0x1cfae2c8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "my03",          0x01000, 0xc8b8a368, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "my02-2",        0x01000, 0x9804061c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "my01-2",        0x01000, 0xca746a61, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "my02(__mshuttle2)", 0x01000, 0x9804061c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "my01(__mshuttle2)", 0x01000, 0xca746a61, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	
 	{ "my09",          0x01000, 0x3601b380, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "my11-2",        0x00800, 0xd860e6ce, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "my11(__mshuttle2)", 0x00800, 0xd860e6ce, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "my08",          0x01000, 0x992b06cd, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "my10",          0x00800, 0xd860e6ce, BRF_GRA | GAL_ROM_TILES_SHARED },
 	

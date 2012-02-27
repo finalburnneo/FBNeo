@@ -421,9 +421,9 @@ static void draw_fg_layer()
 	for (INT32 offs = 0; offs < 0x1000 / 2; offs++)
 	{
 		INT32 sx    = (offs & 0x3f) * 16;
-		INT32 sy    = (offs / 0x40) * 8;
+		INT32 sy    = (offs / 0x40) * 8 - 16;
 
-		if (sx >= nScreenWidth) continue;
+		if (sx >= nScreenWidth || sy < 0) continue;
 		if (sy >= nScreenHeight) break;
 
 		INT32 code  = vid[offs] & 0x1fff;
@@ -432,8 +432,8 @@ static void draw_fg_layer()
 
 		if (attr & 0x0008) continue;
 
-		Render8x8Tile_Mask_Clip(pTransDraw, code*2+0, sx + 0, sy - 16, color, 4, 0, 0x8200, DrvGfxROM0);
-		Render8x8Tile_Mask_Clip(pTransDraw, code*2+1, sx + 8, sy - 16, color, 4, 0, 0x8200, DrvGfxROM0);
+		Render8x8Tile_Mask_Clip(pTransDraw, code*2+0, sx + 0, sy, color, 4, 0, 0x8200, DrvGfxROM0);
+		Render8x8Tile_Mask_Clip(pTransDraw, code*2+1, sx + 8, sy, color, 4, 0, 0x8200, DrvGfxROM0);
 	}
 }
 
@@ -624,10 +624,10 @@ struct BurnDriver BurnDrvGalspnbl = {
 	"galspnbl", NULL, NULL, NULL, "1996",
 	"Gals Pinball\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PINBALL, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_POST90S, GBF_PINBALL, 0,
 	NULL, galspnblRomInfo, galspnblRomName, NULL, NULL, GalspnblInputInfo, GalspnblDIPInfo,
 	galspnblInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8400,
-	512, 224, 4, 3
+	224, 512, 3, 4
 };
 
 
@@ -666,8 +666,8 @@ struct BurnDriver BurnDrvHotpinbl = {
 	"hotpinbl", NULL, NULL, NULL, "1995",
 	"Hot Pinball\0", NULL, "Comad & New Japan System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PINBALL, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_POST90S, GBF_PINBALL, 0,
 	NULL, hotpinblRomInfo, hotpinblRomName, NULL, NULL, GalspnblInputInfo, GalspnblDIPInfo,
 	hotpinblInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8400,
-	512, 224, 4, 3
+	224, 512, 3, 4
 };

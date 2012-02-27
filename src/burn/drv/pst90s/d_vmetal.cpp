@@ -197,7 +197,7 @@ UINT16 __fastcall vmetal_read_word(UINT32 address)
 	if ((address & 0xffff0000) == 0x160000) {
 		UINT16 *vreg = (UINT16*)DrvVidRegs;
 
-		INT32 offset = ((address & 0xfffe) | ((vreg[0x0ab/2] & 0x7f) << 16)) * 2;
+		INT32 offset = ((address & 0xfffe) | ((BURN_ENDIAN_SWAP_INT16(vreg[0x0ab/2]) & 0x7f) << 16)) * 2;
 
 		return (DrvGfxROM[offset + 0] << 12) | (DrvGfxROM[offset + 1] << 8) | (DrvGfxROM[offset + 2] << 4) | (DrvGfxROM[offset + 3] << 0);
 	}
@@ -208,7 +208,7 @@ UINT16 __fastcall vmetal_read_word(UINT32 address)
 static inline void palette_write(INT32 offset)
 {
 	if (offset & 0x2000) {
-		INT32 rgb = *((UINT16*)(DrvPalRAM + offset));
+		INT32 rgb = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 		if (rgb == 0) blackpen = offset/2;
 
@@ -229,7 +229,7 @@ void __fastcall vmetal_palette_write_byte(UINT32 address, UINT8 data)
 
 void __fastcall vmetal_palette_write_word(UINT32 address, UINT16 data)
 {
-	*((UINT16*)(DrvPalRAM + (address & 0x3ffe))) = data;
+	*((UINT16*)(DrvPalRAM + (address & 0x3ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 
 	palette_write(address & 0x3ffe);
 }
@@ -385,11 +385,11 @@ static void draw_layer_8x8()
 			INT32 sy = y << 3;
 			if (sy >= nScreenHeight || sx >= nScreenWidth) continue;
 
-			INT32 data  = vram[offs];
+			INT32 data  = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 			if (data & 0x8000) continue;
 	
 			INT32 index = (data & 0x7ff0) >> 3;
-			UINT32 lut = (vlut[index] << 16) | (vlut[index + 1]);
+			UINT32 lut = (BURN_ENDIAN_SWAP_INT16(vlut[index]) << 16) | (BURN_ENDIAN_SWAP_INT16(vlut[index + 1]));
 
 			INT32 code  = (data & 0x0f) | (lut & 0x3fff0);
 			INT32 color = (lut >> 20) & 0x1f;
@@ -410,17 +410,17 @@ static void draw_layer_16x16(UINT8 *ram, INT32 scrolloff)
 		INT32 sx = (offs & 0xff) << 4;
 		INT32 sy = (offs >> 8) << 4;
 
-		sx -= scrl[0] & 0xfff;
+		sx -= BURN_ENDIAN_SWAP_INT16(scrl[0]) & 0xfff;
 		if (sx < -15) sx += 0x1000;
 
 		if (sy >= nScreenHeight || sx >= nScreenWidth) continue;
 
-		INT32 data  = vram[offs];
+		INT32 data  = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		if (data & 0x8000) continue;
 
 		INT32 index = (data & 0x7ff0) >> 3;
 
-		UINT32 lu = (vlut[index] << 16) | (vlut[index + 1] << 0);
+		UINT32 lu = (BURN_ENDIAN_SWAP_INT16(vlut[index]) << 16) | (BURN_ENDIAN_SWAP_INT16(vlut[index + 1]) << 0);
 
 		INT32 code  = (data & 0x0f) | ((lu >> 2) & 0xfff0);
 		INT32 color = (lu >> 20) & 0xff;
@@ -479,10 +479,10 @@ static void draw_sprites() // metro_draw_sprites
 	UINT16 *spriteram = (UINT16*)DrvSprRAM;
 	UINT8 *gfx_max  = DrvGfxROM + 0x1000000;
 
-	INT32 sprites     = videoregs[0x00] & 0x1ff;
+	INT32 sprites     = BURN_ENDIAN_SWAP_INT16(videoregs[0x00]) & 0x1ff;
 	if (sprites == 0) return;
 
-	INT32 color_start = (videoregs[0x04] & 0x0f) << 4;
+	INT32 color_start = (BURN_ENDIAN_SWAP_INT16(videoregs[0x04]) & 0x0f) << 4;
 
 	static const INT32 primask[4] = { 0x0000, 0xff00, 0xfff0, 0xfffc };
 
@@ -502,7 +502,7 @@ static void draw_sprites() // metro_draw_sprites
 
 	for (INT32 i = 0; i < 0x20; i++)
 	{
-		if (videoregs[0x02/2] & 0x8000)
+		if (BURN_ENDIAN_SWAP_INT16(videoregs[0x02/2]) & 0x8000)
 		{
 			src = spriteram;
 			inc = (8 / 2);
@@ -513,7 +513,7 @@ static void draw_sprites() // metro_draw_sprites
 
 		for (INT32 j = 0; j < sprites; j++)
 		{
-			INT32 x = src[0];
+			INT32 x = BURN_ENDIAN_SWAP_INT16(src[0]);
 			INT32 curr_pri = (x & 0xf800) >> 11;
 
 			if ((curr_pri == 0x1f) || (curr_pri != i))
@@ -522,17 +522,17 @@ static void draw_sprites() // metro_draw_sprites
 				continue;
 			}
 
-			INT32 pri = (videoregs[0x01] & 0x0300) >> 8;
+			INT32 pri = (BURN_ENDIAN_SWAP_INT16(videoregs[0x01]) & 0x0300) >> 8;
 
-			if (!(videoregs[0x01] & 0x8000))
+			if (!(BURN_ENDIAN_SWAP_INT16(videoregs[0x01]) & 0x8000))
 			{
-				if (curr_pri > (videoregs[0x01] & 0x001f))
-					pri = (videoregs[0x01] & 0x0c00) >> 10;
+				if (curr_pri > (BURN_ENDIAN_SWAP_INT16(videoregs[0x01]) & 0x001f))
+					pri = (BURN_ENDIAN_SWAP_INT16(videoregs[0x01]) & 0x0c00) >> 10;
 			}
 
-			INT32 y      = src[1];
-			INT32 attr   = src[2];
-			INT32 code   = src[3];
+			INT32 y      = BURN_ENDIAN_SWAP_INT16(src[1]);
+			INT32 attr   = BURN_ENDIAN_SWAP_INT16(src[2]);
+			INT32 code   = BURN_ENDIAN_SWAP_INT16(src[3]);
 
 			INT32 flipx  =   attr & 0x8000;
 			INT32 flipy  =   attr & 0x4000;

@@ -600,7 +600,7 @@ static void atarigen_render_display_list (/*struct osd_bitmap *bitmap, atarigen_
 
 	INT32 xscroll = DrvScrollX;
 	UINT16 *AlphaRam = (UINT16*)DrvAlphaRam;
-	INT32 yscroll = AlphaRam[0xf6e >> 1] >> 7;
+	INT32 yscroll = BURN_ENDIAN_SWAP_INT16(AlphaRam[0xf6e >> 1]) >> 7;
 	yscroll &= 0x1ff;
 
 	/* create a clipping rectangle so that only partial sections are updated at a time */
@@ -2326,10 +2326,10 @@ inline static UINT32 CalcCol(UINT16 nColour)
 	static const UINT8 ztable[16] = { 0x0, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xa, 0xb, 0xc, 0xd, 0xe, 0xf, 0x10, 0x11 };
 	INT32 i, r, g, b;
 
-	i = ztable[(nColour >> 12) & 15];
-	r = ((nColour >> 8) & 15) * i;
-	g = ((nColour >> 4) & 15) * i;
-	b = ((nColour >> 0) & 15) * i;
+	i = ztable[(BURN_ENDIAN_SWAP_INT16(nColour) >> 12) & 15];
+	r = ((BURN_ENDIAN_SWAP_INT16(nColour) >> 8) & 15) * i;
+	g = ((BURN_ENDIAN_SWAP_INT16(nColour) >> 4) & 15) * i;
+	b = ((BURN_ENDIAN_SWAP_INT16(nColour) >> 0) & 15) * i;
 	
 	return BurnHighCol(r, g, b, 0);
 }
@@ -2364,7 +2364,7 @@ static void DrvRenderPlayfield(INT32 PriorityDraw)
 	for (mx = 0; mx < 64; mx++) {
 		for (my = 0; my < 64; my++) {
 			TileIndex = (my * 64) + mx;
-			Data = VideoRam[TileIndex];
+			Data = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 			Code = ((DrvTileBank * 0x1000) + (Data & 0xfff)) ^ 0x800;
 			
 			if (Code < 0x3000) {
@@ -2407,7 +2407,7 @@ static void DrvRenderCharLayer()
 
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 64; mx++) {
-			UINT16 Data = VideoRam[TileIndex];
+			UINT16 Data = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 			Code = Data & 0x3ff;
 			Colour = ((Data >> 10) & 0x0f) | ((Data >> 9) & 0x20);
 			Opaque = Data & 0x8000;
@@ -2445,7 +2445,7 @@ static INT32 DrvFrame()
 	INT32 nSoundBufferPos = 0;
 
 	if (DrvReset) DrvDoReset();
-
+	
 	DrvMakeInputs();
 
 	nCyclesTotal[0] = (14318180 / 2) / 60;
@@ -2457,7 +2457,7 @@ static INT32 DrvFrame()
 	INT32 NextScanline = 0;
 	
 	UINT16 *AlphaRam = (UINT16*)DrvAlphaRam;	
-	DrvScrollY = AlphaRam[0xf6e >> 1];
+	DrvScrollY = BURN_ENDIAN_SWAP_INT16(AlphaRam[0xf6e >> 1]);
 	DrvTileBank = DrvScrollY & 0x03;
 	DrvScrollY >>= 7;
 	DrvScrollY &= 0x1ff;

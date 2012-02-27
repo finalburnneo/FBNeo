@@ -997,9 +997,9 @@ static void drawBackground()
 		
 		if (x<=-16 || x>=256 || y<=-16 || y>=224) continue;
 		else {
-			UINT32 tileno = RamBg[offs] & 0x0FFF;
+			UINT32 tileno = BURN_ENDIAN_SWAP_INT16(RamBg[offs]) & 0x0FFF;
 			//if (tileno == 0) continue;
- 			UINT32 c = (RamBg[offs] & 0xF000) >> 8;
+ 			UINT32 c = (BURN_ENDIAN_SWAP_INT16(RamBg[offs]) & 0xF000) >> 8;
  			UINT16 * p = (UINT16 *) pBurnDraw + y * 256 + x;
 			UINT8 *d = RomGfx2 + (tileno << 8);
 			
@@ -1083,9 +1083,9 @@ static void drawForeground()
 		
 		if (x<=-16 || x>=256 || y<=-16 || y>=224) continue;
 		else {
-			UINT32 tileno = RamFg[offs] & 0x0FFF;
+			UINT32 tileno = BURN_ENDIAN_SWAP_INT16(RamFg[offs]) & 0x0FFF;
 			if (tileno == 0) continue;
- 			UINT32 c = (RamFg[offs] & 0xF000) >> 8;
+ 			UINT32 c = (BURN_ENDIAN_SWAP_INT16(RamFg[offs]) & 0xF000) >> 8;
  			UINT16 * p = (UINT16 *) pBurnDraw + y * 256 + x;
 			UINT8 *d = RomGfx3 + (tileno << 8);
 			
@@ -1403,9 +1403,9 @@ static void drawText()
 		
 		if ( y<0 || y>=224) continue;
 		else {
-			UINT32 tileno = (RamTxt[offs] & 0x00FF) | ((RamTxt[offs] & 0xC000) >> 6);
+			UINT32 tileno = (BURN_ENDIAN_SWAP_INT16(RamTxt[offs]) & 0x00FF) | ((BURN_ENDIAN_SWAP_INT16(RamTxt[offs]) & 0xC000) >> 6);
 			if (tileno == 0) continue;
- 			UINT32 c = (RamTxt[offs] & 0x0F00) >> 4;
+ 			UINT32 c = (BURN_ENDIAN_SWAP_INT16(RamTxt[offs]) & 0x0F00) >> 4;
  			UINT16 * p = (UINT16 *) pBurnDraw + y * 256 + x;
 			UINT8 *d = RomGfx1 + (tileno << 6);
 			
@@ -1444,9 +1444,9 @@ static void drawTextAlt()
 		
 		if ( y<0 || y>=224) continue;
 		else {
-			UINT32 tileno = (RamTxt[offs] & 0x00FF) | ((RamTxt[offs] & 0xC000) >> 6);
+			UINT32 tileno = (BURN_ENDIAN_SWAP_INT16(RamTxt[offs]) & 0x00FF) | ((BURN_ENDIAN_SWAP_INT16(RamTxt[offs]) & 0xC000) >> 6);
 			if (tileno == 0) continue;
- 			UINT32 c = (RamTxt[offs] & 0x0F00) >> 4;
+ 			UINT32 c = (BURN_ENDIAN_SWAP_INT16(RamTxt[offs]) & 0x0F00) >> 4;
  			UINT16 * p = (UINT16 *) pBurnDraw + y * 256 + x;
 			UINT8 *d = RomGfx1 + (tileno << 6);
 			

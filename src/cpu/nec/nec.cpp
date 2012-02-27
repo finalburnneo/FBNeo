@@ -472,7 +472,7 @@ void necInit(int cpu, int type)
 
 		case V30_TYPE:
 		{
-			nec_state->fetch_xor = BYTE_XOR_LE(0);
+			nec_state->fetch_xor = 0;
 			nec_state->chip_type=V30_TYPE;
 			nec_state->prefetch_size = 6;		/* 3 words */
 			nec_state->prefetch_cycles = 2;		/* two cycles per byte / four per word */
@@ -481,7 +481,7 @@ void necInit(int cpu, int type)
 
 		case V33_TYPE:
 		{
-			nec_state->fetch_xor = 0;//BYTE_XOR_LE(0);
+			nec_state->fetch_xor = 0;
 			nec_state->chip_type=V33_TYPE;
 			nec_state->prefetch_size = 6;
 			/* FIXME: Need information about prefetch size and cycles for V33.

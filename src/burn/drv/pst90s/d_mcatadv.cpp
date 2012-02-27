@@ -232,7 +232,7 @@ static inline void mcatadv_z80_sync()
 static inline void palette_write(INT32 offset)
 {
 	UINT8 r,g,b;
-	UINT16 data = *((UINT16*)(DrvPalRAM + offset));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	r = (data >>  5) & 0x1f;
 	r = (r << 3) | (r >> 2);
@@ -640,7 +640,7 @@ static void draw_sprites()
 	INT32 xstart, xend, xinc;
 	INT32 ystart, yend, yinc;
 
-	if (vidregbuf[2] == 0x0001)
+	if (BURN_ENDIAN_SWAP_INT16(vidregbuf[2]) == 0x0001)
 	{
 		source += 0x2000;
 		finish += 0x2000;
@@ -648,17 +648,17 @@ static void draw_sprites()
 
 	while (source < finish)
 	{
-		INT32 attr   = source[0];
+		INT32 attr   = BURN_ENDIAN_SWAP_INT16(source[0]);
 		INT32 pri    = attr >> 14;
 		INT32 pen    = (attr & 0x3f00) >> 4;
-		INT32 tileno =  source[1];
-		INT32 x      =  source[2] & 0x03ff;
-		INT32 y      =  source[3] & 0x03ff;
+		INT32 tileno =  BURN_ENDIAN_SWAP_INT16(source[1]);
+		INT32 x      =  BURN_ENDIAN_SWAP_INT16(source[2]) & 0x03ff;
+		INT32 y      =  BURN_ENDIAN_SWAP_INT16(source[3]) & 0x03ff;
 		INT32 flipy  =  attr & 0x0040;
 		INT32 flipx  =  attr & 0x0080;
 
-		INT32 height = (source[3] & 0xf000) >> 8;
-		INT32 width  = (source[2] & 0xf000) >> 8;
+		INT32 height = (BURN_ENDIAN_SWAP_INT16(source[3]) & 0xf000) >> 8;
+		INT32 width  = (BURN_ENDIAN_SWAP_INT16(source[2]) & 0xf000) >> 8;
 		INT32 offset = tileno << 8;
 
 		UINT8 *sprdata = DrvGfxROM0;
@@ -670,7 +670,7 @@ static void draw_sprites()
 		if (x & 0x200) x-=0x400;
 		if (y & 0x200) y-=0x400;
 
-		if (source[3] != source[0])
+		if (BURN_ENDIAN_SWAP_INT16(source[3]) != BURN_ENDIAN_SWAP_INT16(source[0]))
 		{
 			if(!flipx) { xstart = 0;        xend = width;  xinc =  1; }
 			else       { xstart = width-1;  xend = -1;     xinc = -1; }
@@ -735,11 +735,11 @@ static void draw_background(UINT8 *vidramsrc, UINT8 *gfxbase, UINT16 *scroll, IN
 
 				INT32 offs = (((yscroll+y)&0x1f0) << 2) | (((xscroll+x)&0x1f0)>>3);
 
-				if ((vidram[offs] >> 14) != priority) continue;
+				if ((BURN_ENDIAN_SWAP_INT16(vidram[offs]) >> 14) != priority) continue;
 
-				INT32 code  = vidram[offs | 1];
+				INT32 code  = BURN_ENDIAN_SWAP_INT16(vidram[offs | 1]);
 				if (!code || code >= max_tile) continue;
-				INT32 color = ((vidram[offs] >> 8) & 0x3f) | ((scroll[2] & 3) << 6); 
+				INT32 color = ((BURN_ENDIAN_SWAP_INT16(vidram[offs]) >> 8) & 0x3f) | ((scroll[2] & 3) << 6); 
 
 				{
 					color <<= 4;
@@ -780,8 +780,8 @@ static void draw_background(UINT8 *vidramsrc, UINT8 *gfxbase, UINT16 *scroll, IN
 		INT32 scrollx = xscroll;
 		INT32 scrolly = (yscroll + y) & 0x1ff;
 
-		if (scroll[1] & 0x4000) scrolly  = vidram[0x0800 + (scrolly * 2) + 1] & 0x1ff;
-		if (scroll[0] & 0x4000)	scrollx += vidram[0x0800 + (scrolly * 2) + 0];
+		if (scroll[1] & 0x4000) scrolly  = BURN_ENDIAN_SWAP_INT16(vidram[0x0800 + (scrolly * 2) + 1]) & 0x1ff;
+		if (scroll[0] & 0x4000)	scrollx += BURN_ENDIAN_SWAP_INT16(vidram[0x0800 + (scrolly * 2) + 0]);
 
 		INT32 srcy = (scrolly & 0x1ff) >> 4;
 		INT32 srcx = (scrollx & 0x1ff) >> 4;	
@@ -790,12 +790,12 @@ static void draw_background(UINT8 *vidramsrc, UINT8 *gfxbase, UINT16 *scroll, IN
 		{
 			INT32 offs = ((srcy << 5) | ((srcx + (x >> 4)) & 0x1f)) << 1;
 
-			if ((vidram[offs] >> 14) != priority) continue;
+			if ((BURN_ENDIAN_SWAP_INT16(vidram[offs]) >> 14) != priority) continue;
 
-			INT32 code  = vidram[offs | 1];
+			INT32 code  = BURN_ENDIAN_SWAP_INT16(vidram[offs | 1]);
 			if (!code || code >= max_tile) continue;
 
-			INT32 color = ((vidram[offs] >> 4) & 0x3f0) | ((scroll[2] & 3) << 10);
+			INT32 color = ((BURN_ENDIAN_SWAP_INT16(vidram[offs]) >> 4) & 0x3f0) | ((scroll[2] & 3) << 10);
 
 			UINT8 *gfxsrc = gfxbase + (code << 8) + ((scrolly & 0x0f) << 4);
 
@@ -1080,7 +1080,7 @@ static void NostPatch()
 {
 	// Can also be fixed overclocking the z80 to 4250000 and enabling
 	// z80 sync, but is slow and breaks sound in Mcatadv.
-	*((UINT16*)(Drv68KROM + 0x000122)) = 0x0146; // Skip ROM Check
+	*((UINT16*)(Drv68KROM + 0x000122)) = BURN_ENDIAN_SWAP_INT16(0x0146); // Skip ROM Check
 }
 
 static INT32 NostInit()

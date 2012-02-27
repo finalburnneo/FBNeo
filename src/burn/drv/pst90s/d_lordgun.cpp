@@ -582,9 +582,9 @@ static INT32 DrvDoReset()
 
 	// rom hacks
 	if (!strncmp(BurnDrvGetTextA(DRV_NAME), "aliencha", 8)) {
-		*((UINT16*)(Drv68KROM + 0x00a34)) = 0x7000 | ((DrvDips[3] >> 0) & 1); // text language
-		*((UINT16*)(Drv68KROM + 0x00a38)) = 0x7000 | ((DrvDips[3] >> 1) & 1); // character name language
-		*((UINT16*)(Drv68KROM + 0x00a3c)) = 0x7000 | ((DrvDips[3] >> 2) & 1); // title
+		*((UINT16*)(Drv68KROM + 0x00a34)) = BURN_ENDIAN_SWAP_INT16(0x7000) | ((DrvDips[3] >> 0) & 1); // text language
+		*((UINT16*)(Drv68KROM + 0x00a38)) = BURN_ENDIAN_SWAP_INT16(0x7000) | ((DrvDips[3] >> 1) & 1); // character name language
+		*((UINT16*)(Drv68KROM + 0x00a3c)) = BURN_ENDIAN_SWAP_INT16(0x7000) | ((DrvDips[3] >> 2) & 1); // title
 	} else {
 
 		UINT8 lordgun_eepromdata[48] = {
@@ -851,11 +851,11 @@ static INT32 lordgunLoadRoms()
 
 	for (INT32 i = 0; i < 0x100000/2; i++) {
 		if ((i & 0x0120) == 0x0100 || (i & 0x0a00) == 0x0800)
-			rom[i] ^= 0x0010;
+			rom[i] ^= BURN_ENDIAN_SWAP_INT16(0x0010);
 	}
 
-	rom[0x14832/2]	=	0x6000;		// 014832: 6700 0006  beq     $1483a (protection)
-	rom[0x1587e/2]	=	0x6010;		// 01587E: 6710       beq     $15890 (rom check)
+	rom[0x14832/2]	=	BURN_ENDIAN_SWAP_INT16(0x6000);		// 014832: 6700 0006  beq     $1483a (protection)
+	rom[0x1587e/2]	=	BURN_ENDIAN_SWAP_INT16(0x6010);		// 01587E: 6710       beq     $15890 (rom check)
 
 	return 0;
 }
@@ -887,21 +887,21 @@ static INT32 alienchaLoadRoms()
 
 	UINT16 *rom = (UINT16*)Drv68KROM;
 
-	rom[0x0A558/2]	=	0x6012;		// 0A558  beq.s   $A56C
-	rom[0x0A8DC/2]	=	0x6012;		// 0A8DC  beq.s   $A8F0
-	rom[0x0AC92/2]	=	0x6012;		// 0AC92  beq.s   $ACA6
-	rom[0x124CC/2]	=	0x6012;		// 124CC  beq.s   $124E0
-	rom[0x12850/2]	=	0x6012;		// 12850  beq.s   $12864
-	rom[0x12C06/2]	=	0x6012;		// 12C06  beq.s   $12C1A
-	rom[0x1862A/2]	=	0x6012;		// 1862A  beq.s   $1863E
-	rom[0x189AE/2]	=	0x6012;		// 189AE  beq.s   $189C2
-	rom[0x18D64/2]	=	0x6012;		// 18D64  beq.s   $18D78
-	rom[0x230FC/2]	=	0x6012;		// 230FC  beq.s   $23110
-	rom[0x23480/2]	=	0x6012;		// 23480  beq.s   $23494
-	rom[0x23836/2]	=	0x6012;		// 23836  beq.s   $2384A
-	rom[0x2BD0E/2]	=	0x6012;		// 2BD0E  beq.s   $2BD22
-	rom[0x2C092/2]	=	0x6012;		// 2C092  beq.s   $2C0A6
-	rom[0x2C448/2]	=	0x6012;		// 2C448  beq.s   $2C45C
+	rom[0x0A558/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 0A558  beq.s   $A56C
+	rom[0x0A8DC/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 0A8DC  beq.s   $A8F0
+	rom[0x0AC92/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 0AC92  beq.s   $ACA6
+	rom[0x124CC/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 124CC  beq.s   $124E0
+	rom[0x12850/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 12850  beq.s   $12864
+	rom[0x12C06/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 12C06  beq.s   $12C1A
+	rom[0x1862A/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 1862A  beq.s   $1863E
+	rom[0x189AE/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 189AE  beq.s   $189C2
+	rom[0x18D64/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 18D64  beq.s   $18D78
+	rom[0x230FC/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 230FC  beq.s   $23110
+	rom[0x23480/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 23480  beq.s   $23494
+	rom[0x23836/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 23836  beq.s   $2384A
+	rom[0x2BD0E/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 2BD0E  beq.s   $2BD22
+	rom[0x2C092/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 2C092  beq.s   $2C0A6
+	rom[0x2C448/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 2C448  beq.s   $2C45C
 
 	return 0;
 }
@@ -935,21 +935,21 @@ static INT32 alienchacLoadRoms()
 
 	UINT16 *rom = (UINT16*)Drv68KROM;
 
-	rom[0x0A550/2]	=	0x6012;		// 0A558  beq.s   $A564
-	rom[0x0A8D4/2]	=	0x6012;		// 0A8D4  beq.s   $A8E8
-	rom[0x0AC8A/2]	=	0x6012;		// 0AC8A  beq.s   $AC9E
-	rom[0x124B8/2]	=	0x6012;		// 124B8  beq.s   $124CC
-	rom[0x1283C/2]	=	0x6012;		// 1283C  beq.s   $12850
-	rom[0x12BF2/2]	=	0x6012;		// 12BF2  beq.s   $12C06
-	rom[0x18616/2]	=	0x6012;		// 18616  beq.s   $1862A
-	rom[0x1899A/2]	=	0x6012;		// 1899A  beq.s   $189AE
-	rom[0x18D50/2]	=	0x6012;		// 18D50  beq.s   $18D64
-	rom[0x230E8/2]	=	0x6012;		// 230E8  beq.s   $230FC
-	rom[0x2346C/2]	=	0x6012;		// 2346C  beq.s   $23480
-	rom[0x23822/2]	=	0x6012;		// 23822  beq.s   $23822
-	rom[0x2BCFA/2]	=	0x6012;		// 2BCFA  beq.s   $2BD0E
-	rom[0x2C07E/2]	=	0x6012;		// 2C07E  beq.s   $2C092
-	rom[0x2C434/2]	=	0x6012;		// 2C434  beq.s   $2C448
+	rom[0x0A550/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 0A558  beq.s   $A564
+	rom[0x0A8D4/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 0A8D4  beq.s   $A8E8
+	rom[0x0AC8A/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 0AC8A  beq.s   $AC9E
+	rom[0x124B8/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 124B8  beq.s   $124CC
+	rom[0x1283C/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 1283C  beq.s   $12850
+	rom[0x12BF2/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 12BF2  beq.s   $12C06
+	rom[0x18616/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 18616  beq.s   $1862A
+	rom[0x1899A/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 1899A  beq.s   $189AE
+	rom[0x18D50/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 18D50  beq.s   $18D64
+	rom[0x230E8/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 230E8  beq.s   $230FC
+	rom[0x2346C/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 2346C  beq.s   $23480
+	rom[0x23822/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 23822  beq.s   $23822
+	rom[0x2BCFA/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 2BCFA  beq.s   $2BD0E
+	rom[0x2C07E/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 2C07E  beq.s   $2C092
+	rom[0x2C434/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 2C434  beq.s   $2C448
 
 	return 0;
 }
@@ -970,8 +970,8 @@ static void draw_layer_linescroll()
 
 			INT32 ofst = (((yscroll >> 4) << 7) | (xscroll >> 4)) << 1;
 
-			INT32 attr = vram[ofst];
-			INT32 code = vram[ofst + 1] & 0x7fff;
+			INT32 attr = BURN_ENDIAN_SWAP_INT16(vram[ofst]);
+			INT32 code = BURN_ENDIAN_SWAP_INT16(vram[ofst + 1]) & 0x7fff;
 			INT32 pri  = (attr & 0x0e00) >> 9;
 
 			INT32 flipx = attr & 0x8000;
@@ -1016,10 +1016,10 @@ static void draw_layer(UINT8 *ram, UINT8 *gfx, INT32 size, INT32 wide, INT32 hig
 	{
 		for (INT32 sx = 0; sx < wide * size; sx+=size, offs++)
 		{
-			INT32 code = vram[offs * 2 + 1] & code_and;
+			INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 1]) & code_and;
 			if (DrvTransTable[layer][code]) continue; // transparent
 
-			INT32 attr = vram[offs * 2 + 0];
+			INT32 attr = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 0]);
 
 			INT32 prio =  (attr >> 9) & 0x07;
 			INT32 color= ((attr >> 4) & color_and) + color_offset / 0x40 + prio * 0x800 / 0x40;
@@ -1060,12 +1060,12 @@ static void draw_sprites()
 	{
 		INT32 x0, x1, dx, y0, y1, dy;
 
-		INT32 attr = sprite[offs + 1];
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(sprite[offs + 1]);
 		if (attr & 0x0100) break;
 
-		INT32 sy    = sprite[offs + 0];
-		INT32 code  = sprite[offs + 2];
-		INT32 sx    = sprite[offs + 3];
+		INT32 sy    = BURN_ENDIAN_SWAP_INT16(sprite[offs + 0]);
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(sprite[offs + 2]);
+		INT32 sx    = BURN_ENDIAN_SWAP_INT16(sprite[offs + 3]);
 		INT32 flipx = (attr & 0x8000);
 		INT32 flipy = (attr & 0x4000);
 		INT32 pri   = (attr & 0x0e00) >> 9;
@@ -1132,7 +1132,7 @@ static void copy_layers()
 			pri_addr |= (pens[0] >> 11) << 11;
 			pri_addr |= (pens[3] >> 11) << 14;
 
-			*dest++ = pens[pri2layer[pri_ram[pri_addr & 0x7fff] & 7]] & 0x7ff;
+			*dest++ = pens[pri2layer[BURN_ENDIAN_SWAP_INT16(pri_ram[pri_addr & 0x7fff]) & 7]] & 0x7ff;
 		}
 	}
 }
@@ -1142,9 +1142,9 @@ static void DrvPaletteRecalc()
 	UINT16 *p = (UINT16*)DrvPalRAM;
 
 	for (INT32 i = 0; i < 0x1000 / 2; i++) {
-		INT32 r = (p[i] >> 0) & 0x0f;
-		INT32 g = (p[i] >> 4) & 0x0f;
-		INT32 b = (p[i] >> 8) & 0x0f;
+		INT32 r = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 0) & 0x0f;
+		INT32 g = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 4) & 0x0f;
+		INT32 b = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 8) & 0x0f;
 
 		r |= r << 4;
 		g |= g << 4;
@@ -1177,7 +1177,7 @@ static INT32 DrvDraw()
 	{
 		UINT16 *rs = (UINT16*)DrvScrRAM;
 		for (INT32 i = 0; i < nScreenHeight * 2; i+=2) {
-			if ((rs[i + 1] & 0x7ff) != (rs[1] & 0x7ff)) {
+			if ((BURN_ENDIAN_SWAP_INT16(rs[i + 1]) & 0x7ff) != (BURN_ENDIAN_SWAP_INT16(rs[1]) & 0x7ff)) {
 				line_enable = 1;
 				break;
 			}

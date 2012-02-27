@@ -4550,7 +4550,7 @@ static struct BurnRomInfo FfightaRomDesc[] = {
 	{ "ff-1m.3a",      0x080000, 0x0b605e44, BRF_GRA | CPS1_TILES },
 	{ "ff-3m.5a",      0x080000, 0x52291cd2, BRF_GRA | CPS1_TILES },
 
-	{ "ff_09.12b",     0x010000, 0xb8367eb5, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "ffe_23.12b",    0x010000, 0xb8367eb5, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "ff_18.11c",     0x020000, 0x375c66e7, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "ff_19.12c",     0x020000, 0x1ef137f9, BRF_SND | CPS1_OKIM6295_SAMPLES },
@@ -4558,7 +4558,7 @@ static struct BurnRomInfo FfightaRomDesc[] = {
 	A_BOARD_PLDS
 	
 	{ "s224b.1a",      0x000117, 0x4e85b158, BRF_OPT },	// b-board PLDs
-	{ "lwio.11e",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP},
+	{ "lwio.11e",      0x000117, 0xad52b90c, BRF_OPT },
 };
 
 STD_ROM_PICK(Ffighta)
@@ -6562,16 +6562,16 @@ static struct BurnRomInfo QadRomDesc[] = {
 	{ "qdu_37a.13f",   0x020000, 0x10d22320, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "qdu_43a.13h",   0x020000, 0x15e6beb9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
-	{ "qdu_09.4b",     0x020000, 0x8c3f9f44, BRF_GRA | CPS1_TILES },
-	{ "qdu_01.4a",     0x020000, 0xf688cf8f, BRF_GRA | CPS1_TILES },
-	{ "qdu_13.9b",     0x020000, 0xafbd551b, BRF_GRA | CPS1_TILES },
-	{ "qdu_05.9a",     0x020000, 0xc3db0910, BRF_GRA | CPS1_TILES },
-	{ "qdu_24.5e",     0x020000, 0x2f1bd0ec, BRF_GRA | CPS1_TILES },
-	{ "qdu_17.5c",     0x020000, 0xa812f9e2, BRF_GRA | CPS1_TILES },
-	{ "qdu_38.8h",     0x020000, 0xccdddd1f, BRF_GRA | CPS1_TILES },
-	{ "qdu_32.8f",     0x020000, 0xa8d295d3, BRF_GRA | CPS1_TILES },
+	{ "qd_09.4b",      0x020000, 0x8c3f9f44, BRF_GRA | CPS1_TILES },
+	{ "qd_01.4a",      0x020000, 0xf688cf8f, BRF_GRA | CPS1_TILES },
+	{ "qd_13.9b",      0x020000, 0xafbd551b, BRF_GRA | CPS1_TILES },
+	{ "qd_05.9a",      0x020000, 0xc3db0910, BRF_GRA | CPS1_TILES },
+	{ "qd_24.5e",      0x020000, 0x2f1bd0ec, BRF_GRA | CPS1_TILES },
+	{ "qd_17.5c",      0x020000, 0xa812f9e2, BRF_GRA | CPS1_TILES },
+	{ "qd_38.8h",      0x020000, 0xccdddd1f, BRF_GRA | CPS1_TILES },
+	{ "qd_32.8f",      0x020000, 0xa8d295d3, BRF_GRA | CPS1_TILES },
 
-	{ "qdu_23.13b",    0x010000, 0xcfb5264b, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "qd_23.13b",     0x010000, 0xcfb5264b, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "qdu_30.12c",    0x020000, 0xf190da84, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "qdu_31.13c",    0x020000, 0xb7583f73, BRF_SND | CPS1_OKIM6295_SAMPLES },
@@ -7430,7 +7430,7 @@ STD_ROM_FN(Sf2ceea)
 static struct BurnRomInfo Sf2cejRomDesc[] = {
 	{ "s92j_23b.8f",   0x080000, 0x140876c5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP  },
 	{ "s92j_22b.7f",   0x080000, 0x2fbb3bfe, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP  },
-	{ "s92_21a.6f",    0x080000, 0x925a7877, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP  },
+	{ "s92j_21a.6f",   0x080000, 0x925a7877, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP  },
 
 	{ "s92_01.3a",     0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
 	{ "s92_02.4a",     0x080000, 0x840289ec, BRF_GRA | CPS1_TILES },
@@ -7465,7 +7465,7 @@ STD_ROM_FN(Sf2cej)
 static struct BurnRomInfo Sf2cejaRomDesc[] = {
 	{ "s92j_23a.8f",   0x080000, 0x4f42bb5a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP  },
 	{ "s92j_22a.7f",   0x080000, 0xc4f64bcd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP  },
-	{ "s92_21a.6f",    0x080000, 0x925a7877, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP  },
+	{ "s92j_21a.6f",   0x080000, 0x925a7877, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP  },
 
 	{ "s92_01.3a",     0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
 	{ "s92_02.4a",     0x080000, 0x840289ec, BRF_GRA | CPS1_TILES },
@@ -9061,7 +9061,7 @@ static struct BurnRomInfo UnsquadRomDesc[] = {
 
 	{ "ar_09.12b",     0x010000, 0xf3dd1367, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "ar_18.11c",     0x020000, 0x584b43a9, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "aru_18.11c",    0x020000, 0x584b43a9, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
 	A_BOARD_PLDS
 	
@@ -9266,7 +9266,7 @@ static struct BurnRomInfo WillowRomDesc[] = {
 	{ "wlu_30.11f",    0x020000, 0xd604dbb1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "35.11h",        0x020000, 0x7a791e77, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "wlu_31.12f",    0x020000, 0x0eb48a83, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "wl_36.12h",     0x020000, 0x36100209, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "wlu_36.12h",    0x020000, 0x36100209, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "wlm-32.8h",     0x080000, 0xdfd9f643, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "wlm-7.7a",      0x080000, 0xafa74b73, BRF_GRA | CPS1_TILES },

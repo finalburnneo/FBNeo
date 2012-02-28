@@ -152,6 +152,7 @@ bool WavClass::LoadWaveFile(TCHAR* filename, IDirectSoundBuffer** secondaryBuffe
 	count = fread(&waveFileHeader, sizeof(waveFileHeader), 1, filePtr);
 	if(count != 1)
 	{
+		fclose(filePtr);
 		return false;
 	}
 
@@ -159,6 +160,7 @@ bool WavClass::LoadWaveFile(TCHAR* filename, IDirectSoundBuffer** secondaryBuffe
 	if((waveFileHeader.chunkId[0] != 'R') || (waveFileHeader.chunkId[1] != 'I') || 
 	   (waveFileHeader.chunkId[2] != 'F') || (waveFileHeader.chunkId[3] != 'F'))
 	{
+		fclose(filePtr);
 		return false;
 	}
 
@@ -166,6 +168,7 @@ bool WavClass::LoadWaveFile(TCHAR* filename, IDirectSoundBuffer** secondaryBuffe
 	if((waveFileHeader.format[0] != 'W') || (waveFileHeader.format[1] != 'A') ||
 	   (waveFileHeader.format[2] != 'V') || (waveFileHeader.format[3] != 'E'))
 	{
+		fclose(filePtr);
 		return false;
 	}
 
@@ -173,30 +176,35 @@ bool WavClass::LoadWaveFile(TCHAR* filename, IDirectSoundBuffer** secondaryBuffe
 	if((waveFileHeader.subChunkId[0] != 'f') || (waveFileHeader.subChunkId[1] != 'm') ||
 	   (waveFileHeader.subChunkId[2] != 't') || (waveFileHeader.subChunkId[3] != ' '))
 	{
+		fclose(filePtr);
 		return false;
 	}
 
 	// Check that the audio format is WAVE_FORMAT_PCM.
 	if(waveFileHeader.audioFormat != WAVE_FORMAT_PCM)
 	{
+		fclose(filePtr);
 		return false;
 	}
 
 	// Check that the wave file was recorded in stereo format.
 	if(waveFileHeader.numChannels != 2)
 	{
+		fclose(filePtr);
 		return false;
 	}
 
 	// Check that the wave file was recorded at a sample rate of 44.1 KHz.
 	if(waveFileHeader.sampleRate != 44100)
 	{
+		fclose(filePtr);
 		return false;
 	}
 
 	// Ensure that the wave file was recorded in 16 bit format.
 	if(waveFileHeader.bitsPerSample != 16)
 	{
+		fclose(filePtr);
 		return false;
 	}
 
@@ -204,6 +212,7 @@ bool WavClass::LoadWaveFile(TCHAR* filename, IDirectSoundBuffer** secondaryBuffe
 	if((waveFileHeader.dataChunkId[0] != 'd') || (waveFileHeader.dataChunkId[1] != 'a') ||
 	   (waveFileHeader.dataChunkId[2] != 't') || (waveFileHeader.dataChunkId[3] != 'a'))
 	{
+		fclose(filePtr);
 		return false;
 	}
 
@@ -231,6 +240,7 @@ bool WavClass::LoadWaveFile(TCHAR* filename, IDirectSoundBuffer** secondaryBuffe
 	result = m_DirectSound->CreateSoundBuffer(&bufferDesc, &tempBuffer, NULL);
 	if(FAILED(result))
 	{
+		fclose(filePtr);
 		return false;
 	}
 
@@ -238,6 +248,7 @@ bool WavClass::LoadWaveFile(TCHAR* filename, IDirectSoundBuffer** secondaryBuffe
 	result = tempBuffer->QueryInterface(IID_IDirectSoundBuffer, (void**)&*secondaryBuffer);
 	if(FAILED(result))
 	{
+		fclose(filePtr);
 		return false;
 	}
 
@@ -252,6 +263,7 @@ bool WavClass::LoadWaveFile(TCHAR* filename, IDirectSoundBuffer** secondaryBuffe
 	waveData = new unsigned char[waveFileHeader.dataSize];
 	if(!waveData)
 	{
+		fclose(filePtr);
 		return false;
 	}
 
@@ -259,6 +271,7 @@ bool WavClass::LoadWaveFile(TCHAR* filename, IDirectSoundBuffer** secondaryBuffe
 	count = fread(waveData, 1, waveFileHeader.dataSize, filePtr);
 	if(count != waveFileHeader.dataSize)
 	{
+		fclose(filePtr);
 		return false;
 	}
 
@@ -266,6 +279,7 @@ bool WavClass::LoadWaveFile(TCHAR* filename, IDirectSoundBuffer** secondaryBuffe
 	int error = fclose(filePtr);
 	if(error != 0)
 	{
+
 		return false;
 	}
 

@@ -704,6 +704,10 @@ static void PatchFile(const char* ips_path, UINT8* base)
 	memset(buf, 0, sizeof buf);
 	fread(buf, 1, 5, f);
 	if (strcmp(buf, IPS_SIGNATURE)) {
+		if (buf)
+		{
+			fclose(buf);
+		}
 		return;
 	} else {
 		UINT8 ch = 0;

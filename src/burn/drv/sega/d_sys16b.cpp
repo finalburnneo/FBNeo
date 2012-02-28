@@ -2048,6 +2048,44 @@ static struct BurnRomInfo Altbeast4RomDesc[] = {
 STD_ROM_PICK(Altbeast4)
 STD_ROM_FN(Altbeast4)
 
+static struct BurnRomInfo Altbeast5RomDesc[] = {
+	{ "epr-11742.a7",   0x20000, 0x61839534, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11741.a5",   0x20000, 0x9b2159cb, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-11722.a14",  0x10000, 0xadaa8db5, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-11736.b14",  0x10000, 0xe9ad5e89, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-11723.a15",  0x10000, 0x131a3f9a, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-11737.b15",  0x10000, 0x2e420023, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-11724.a16",  0x10000, 0x6f2ed50a, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-11738.b16",  0x10000, 0xde3d6d02, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr-11725.b1",   0x10000, 0xf8b3684e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11729.b5",   0x10000, 0xae3c2793, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11726.b2",   0x10000, 0x3cce5419, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11730.b6",   0x10000, 0x3af62b55, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11727.b3",   0x10000, 0xb0390078, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11731.b7",   0x10000, 0x2a87744a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11728.b4",   0x10000, 0xf3a43fd8, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11732.b8",   0x10000, 0x2fb3e355, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11717.a1",   0x10000, 0x676be0cb, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11733.b10",  0x10000, 0x802cac94, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11718.a2",   0x10000, 0x882864c2, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11734.b11",  0x10000, 0x76c704d2, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11719.a3",   0x10000, 0x339987f7, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11735.b12",  0x10000, 0x4fe406aa, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-11671.a10",  0x08000, 0x2b71343b, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "opr-11672.a11",  0x20000, 0xbbd7f460, SYS16_ROM_UPD7759DATA | BRF_SND },
+	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "317-0069.key",   0x02000, 0x959e256a, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Altbeast5)
+STD_ROM_FN(Altbeast5)
+
 static struct BurnRomInfo Altbeast6RomDesc[] = {
 	{ "epr-11883.a7",   0x20000, 0xc5b3e8f7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-11882.a5",   0x20000, 0x9c01170b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -7708,7 +7746,7 @@ struct BurnDriver BurnDrvAliensynj = {
 
 struct BurnDriver BurnDrvAltbeast = {
 	"altbeast", NULL, NULL, NULL, "1988",
-	"Altered Beast (set 7, 8751 317-0078)\0", NULL, "Sega", "System 16B",
+	"Altered Beast (set 8, 8751 317-0078)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, AltbeastRomInfo, AltbeastRomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
@@ -7718,8 +7756,8 @@ struct BurnDriver BurnDrvAltbeast = {
 
 struct BurnDriver BurnDrvAltbeastj = {
 	"altbeastj", "altbeast", NULL, NULL, "1988",
-	"Juuouki (set 6, Japan, 8751 317-0077)\0", NULL, "Sega", "System 16B",
-	L"Juuoki (set 6, Japan, 8751 317-0077)\0\u7363\u738B\u8A18\0", NULL, NULL, NULL,
+	"Juuouki (set 7, Japan, 8751 317-0077)\0", NULL, "Sega", "System 16B",
+	L"Juuoki (set 7, Japan, 8751 317-0077)\0\u7363\u738B\u8A18\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, AltbeastjRomInfo, AltbeastjRomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	AltbeastjInit, System16Exit, System16BFrame, NULL, System16Scan,
@@ -7752,6 +7790,16 @@ struct BurnDriver BurnDrvAltbeast4 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_MC8123_ENC, GBF_SCRFIGHT, 0,
 	NULL, Altbeast4RomInfo, Altbeast4RomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
+	Altbeast4Init, System16Exit, System16BFrame, NULL, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvAltbeast5 = {
+	"altbeast5", "altbeast", NULL, NULL, "1988",
+	"Altered Beast (set 5, FD1094 317-0069)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
+	NULL, Altbeast5RomInfo, Altbeast5RomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	Altbeast4Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

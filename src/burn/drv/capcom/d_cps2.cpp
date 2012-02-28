@@ -4124,6 +4124,35 @@ static struct BurnRomInfo VhuntjRomDesc[] = {
 STD_ROM_PICK(Vhuntj)
 STD_ROM_FN(Vhuntj)
 
+static struct BurnRomInfo Vhuntjr1sRomDesc[] = {
+	{ "vphjstop.03b",  0x080000, 0x9c4e6191, 1 | BRF_ESS | BRF_PRG },
+	{ "vphj.04c",      0x080000, 0xc95cf304, 1 | BRF_ESS | BRF_PRG },
+	{ "vphj.05d",      0x080000, 0x50de5ddd, 1 | BRF_ESS | BRF_PRG },
+	{ "vphj.06c",      0x080000, 0xac3bd3d5, 1 | BRF_ESS | BRF_PRG },
+	{ "vphj.07b",      0x080000, 0x0761309f, 1 | BRF_ESS | BRF_PRG },
+	{ "vphj.08b",      0x080000, 0x5a5c2bf5, 1 | BRF_ESS | BRF_PRG },
+	{ "vphj.09b",      0x080000, 0x823d6d99, 1 | BRF_ESS | BRF_PRG },
+	{ "vphj.10b",      0x080000, 0x32c7d8f0, 1 | BRF_ESS | BRF_PRG },
+
+	{ "vph.13m",       0x400000, 0xc51baf99, 3 | BRF_GRA },
+	{ "vph.15m",       0x400000, 0x3ce83c77, 3 | BRF_GRA },
+	{ "vph.17m",       0x400000, 0x4f2408e0, 3 | BRF_GRA },
+	{ "vph.19m",       0x400000, 0x9ff60250, 3 | BRF_GRA },
+	{ "vph.14m",       0x400000, 0x7a0e1add, 3 | BRF_GRA },
+	{ "vph.16m",       0x400000, 0x2f41ca75, 3 | BRF_GRA },
+	{ "vph.18m",       0x400000, 0x64498eed, 3 | BRF_GRA },
+	{ "vph.20m",       0x400000, 0x17f2433f, 3 | BRF_GRA },
+
+	{ "vph.01",        0x020000, 0x5045dcac, 4 | BRF_ESS | BRF_PRG },
+	{ "vph.02",        0x020000, 0x86b60e59, 4 | BRF_ESS | BRF_PRG },
+
+	{ "vph.11m",       0x200000, 0xe1837d33, 5 | BRF_SND },
+	{ "vph.12m",       0x200000, 0xfbd3cd90, 5 | BRF_SND },
+};
+
+STD_ROM_PICK(Vhuntjr1s)
+STD_ROM_FN(Vhuntjr1s)
+
 static struct BurnRomInfo Vhuntjr1RomDesc[] = {
 	{ "vphj.03c",      0x080000, 0x606b682a, 1 | BRF_ESS | BRF_PRG },
 	{ "vphj.04b",      0x080000, 0xa3b40393, 1 | BRF_ESS | BRF_PRG },
@@ -6093,6 +6122,99 @@ static struct BurnRomInfo Ssf2xjRomDesc[] = {
 
 STD_ROM_PICK(Ssf2xj)
 STD_ROM_FN(Ssf2xj)
+
+static struct BurnRomInfo Ssf2xjrRomDesc[] = {
+	{ "sfxo.03c",      0x080000, 0x2ba33dc6, 1 | BRF_ESS | BRF_PRG },
+	{ "sfxo.04a",      0x080000, 0xba663dd7, 1 | BRF_ESS | BRF_PRG },
+	{ "sfxo.05",       0x080000, 0x1321625c, 1 | BRF_ESS | BRF_PRG },
+	{ "sfxo.06a",      0x080000, 0x0cc490ed, 1 | BRF_ESS | BRF_PRG },
+	{ "sfxo.07",       0x080000, 0x64b9015e, 1 | BRF_ESS | BRF_PRG },
+	{ "sfxo.08",       0x080000, 0xb60f4b58, 1 | BRF_ESS | BRF_PRG },
+	{ "sfxo.09",       0x080000, 0x642fae3f, 1 | BRF_ESS | BRF_PRG },
+
+	{ "ssf.69",        0x080000, 0xe9123f9f, 7 | BRF_GRA },
+	{ "ssf.70",        0x080000, 0x2f8201f3, 7 | BRF_GRA },
+	{ "ssf.71",        0x080000, 0x0fa334b4, 7 | BRF_GRA },
+	{ "ssf.72",        0x080000, 0xb76740d3, 7 | BRF_GRA },
+	{ "ssf.73",        0x080000, 0x14f058ec, 7 | BRF_GRA },
+	{ "ssf.74",        0x080000, 0x800c3ae9, 7 | BRF_GRA },
+	{ "sfx.75",        0x080000, 0x06cf540b, 7 | BRF_GRA },
+	{ "sfx.76",        0x080000, 0x71084e42, 7 | BRF_GRA },
+	{ "ssf.59",        0x080000, 0x6eb3ee4d, 7 | BRF_GRA },
+	{ "ssf.60",        0x080000, 0x2bcf1eda, 7 | BRF_GRA },
+	{ "ssf.61",        0x080000, 0x3330cc11, 7 | BRF_GRA },
+	{ "ssf.62",        0x080000, 0x96e2ead3, 7 | BRF_GRA },
+	{ "ssf.63",        0x080000, 0xe356a275, 7 | BRF_GRA },
+	{ "ssf.64",        0x080000, 0xfec5698b, 7 | BRF_GRA },
+	{ "sfx.65",        0x080000, 0x69da0751, 7 | BRF_GRA },
+	{ "sfx.66",        0x080000, 0xcc53ec15, 7 | BRF_GRA },
+	{ "ssf.79",        0x080000, 0xcf0d44a8, 7 | BRF_GRA },
+	{ "ssf.80",        0x080000, 0x56a153a4, 7 | BRF_GRA },
+	{ "ssf.81",        0x080000, 0x5484e5f6, 7 | BRF_GRA },
+	{ "ssf.82",        0x080000, 0xfce6b7f5, 7 | BRF_GRA },
+	{ "ssf.83",        0x080000, 0x042d7970, 7 | BRF_GRA },
+	{ "ssf.84",        0x080000, 0x88c472e6, 7 | BRF_GRA },
+	{ "sfx.85",        0x080000, 0xa7d66348, 7 | BRF_GRA },
+	{ "sfx.86",        0x080000, 0xcf9119c8, 7 | BRF_GRA },
+	{ "ssf.89",        0x080000, 0x6d374ad9, 7 | BRF_GRA },
+	{ "ssf.90",        0x080000, 0x34cf8bcf, 7 | BRF_GRA },
+	{ "ssf.91",        0x080000, 0xd796ea3f, 7 | BRF_GRA },
+	{ "ssf.92",        0x080000, 0xc85fb7e3, 7 | BRF_GRA },
+	{ "ssf.93",        0x080000, 0x6c50c2b5, 7 | BRF_GRA },
+	{ "ssf.94",        0x080000, 0x59549f63, 7 | BRF_GRA },
+	{ "sfx.95",        0x080000, 0x86c97869, 7 | BRF_GRA },
+	{ "sfx.96",        0x080000, 0x1c0e1989, 7 | BRF_GRA },
+	
+	
+/*	{ "ssf.69",        0x080000, 0xe9123f9f, 6 | BRF_GRA },
+	{ "ssf.59",        0x080000, 0x6eb3ee4d, 6 | BRF_GRA },
+	{ "ssf.79",        0x080000, 0xcf0d44a8, 6 | BRF_GRA },
+	{ "ssf.89",        0x080000, 0x6d374ad9, 6 | BRF_GRA },
+	{ "ssf.70",        0x080000, 0x2f8201f3, 6 | BRF_GRA },
+	{ "ssf.60",        0x080000, 0x2bcf1eda, 6 | BRF_GRA },
+	{ "ssf.80",        0x080000, 0x56a153a4, 6 | BRF_GRA },
+	{ "ssf.90",        0x080000, 0x34cf8bcf, 6 | BRF_GRA },
+	{ "ssf.71",        0x080000, 0x0fa334b4, 6 | BRF_GRA },
+	{ "ssf.61",        0x080000, 0x3330cc11, 6 | BRF_GRA },
+	{ "ssf.81",        0x080000, 0x5484e5f6, 6 | BRF_GRA },
+	{ "ssf.91",        0x080000, 0xd796ea3f, 6 | BRF_GRA },
+	{ "ssf.72",        0x080000, 0xb76740d3, 6 | BRF_GRA },
+	{ "ssf.62",        0x080000, 0x96e2ead3, 6 | BRF_GRA },
+	{ "ssf.82",        0x080000, 0xfce6b7f5, 6 | BRF_GRA },
+	{ "ssf.92",        0x080000, 0xc85fb7e3, 6 | BRF_GRA },
+	{ "ssf.73",        0x080000, 0x14f058ec, 6 | BRF_GRA },
+	{ "ssf.63",        0x080000, 0xe356a275, 6 | BRF_GRA },
+	{ "ssf.83",        0x080000, 0x042d7970, 6 | BRF_GRA },
+	{ "ssf.93",        0x080000, 0x6c50c2b5, 6 | BRF_GRA },
+	{ "ssf.74",        0x080000, 0x800c3ae9, 6 | BRF_GRA },
+	{ "ssf.64",        0x080000, 0xfec5698b, 6 | BRF_GRA },
+	{ "ssf.84",        0x080000, 0x88c472e6, 6 | BRF_GRA },
+	{ "ssf.94",        0x080000, 0x59549f63, 6 | BRF_GRA },
+	{ "sfx.75",        0x080000, 0x06cf540b, 6 | BRF_GRA },
+	{ "sfx.65",        0x080000, 0x69da0751, 6 | BRF_GRA },
+	{ "sfx.85",        0x080000, 0xa7d66348, 6 | BRF_GRA },
+	{ "sfx.95",        0x080000, 0x86c97869, 6 | BRF_GRA },
+	{ "sfx.76",        0x080000, 0x71084e42, 6 | BRF_GRA },	
+	{ "sfx.66",        0x080000, 0xcc53ec15, 6 | BRF_GRA },	
+	{ "sfx.86",        0x080000, 0xcf9119c8, 6 | BRF_GRA },	
+	{ "sfx.96",        0x080000, 0x1c0e1989, 6 | BRF_GRA },*/
+	
+
+	{ "sfx.01",        0x020000, 0xb47b8835, 4 | BRF_ESS | BRF_PRG },
+	{ "sfx.02",        0x020000, 0x0022633f, 4 | BRF_ESS | BRF_PRG },
+
+	{ "ssf.51a",       0x080000, 0x9eda6954, 5 | BRF_SND },
+	{ "ssf.52a",       0x080000, 0x355f6589, 5 | BRF_SND },
+	{ "ssf.53a",       0x080000, 0xd5d08a05, 5 | BRF_SND },
+	{ "ssf.54a",       0x080000, 0x930725eb, 5 | BRF_SND },
+	{ "ssf.55a",       0x080000, 0x827abf3c, 5 | BRF_SND },
+	{ "ssf.56a",       0x080000, 0x3919c0e5, 5 | BRF_SND },
+	{ "ssf.57a",       0x080000, 0x1ba9bfa6, 5 | BRF_SND },
+	{ "ssf.58a",       0x080000, 0x0c89a272, 5 | BRF_SND },
+};
+
+STD_ROM_PICK(Ssf2xjr)
+STD_ROM_FN(Ssf2xjr)
 
 static struct BurnRomInfo Vhunt2RomDesc[] = {
 	{ "vh2j.03a",      0x080000, 0x9ae8f186, 1 | BRF_ESS | BRF_PRG },
@@ -8307,6 +8429,16 @@ struct BurnDriver BurnDrvCpsVhuntj = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCpsVhuntjr1s = {
+	"vhuntjr1s", "nwarr", NULL, NULL, "1995",
+	"Vampire Hunter - darkstalkers' revenge (950307 Japan stop version)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
+	NULL, Vhuntjr1sRomInfo, Vhuntjr1sRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsVhuntjr1 = {
 	"vhuntjr1", "nwarr", NULL, NULL, "1995",
 	"Vampire Hunter - darkstalkers' revenge (950307 Japan)\0", NULL, "Capcom", "CPS2",
@@ -9043,6 +9175,16 @@ struct BurnDriver BurnDrvCpsSsf2xj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Ssf2xjRomInfo, Ssf2xjRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSsf2xjr = {
+	"ssf2xjr", "ssf2t", NULL, NULL, "1994",
+	"Super Street Fighter II X - grand master challenge (super street fighter 2 X 940223 Japan rent version)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Ssf2xjrRomInfo, Ssf2xjrRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

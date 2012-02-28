@@ -76,27 +76,29 @@ static INT32 LoadUp(UINT8** pRom, INT32* pnRomLen, INT32 nNum)
 	return 0;
 }
 
-static INT32 LoadUpSplit(UINT8** pRom, INT32* pnRomLen, INT32 nNum)
+static INT32 LoadUpSplit(UINT8** pRom, INT32* pnRomLen, INT32 nNum, INT32 nNumRomsGroup)
 {
 	UINT8 *Rom;
 	struct BurnRomInfo ri;
-	UINT32 nRomSize[4], nTotalRomSize;
+	UINT32 nRomSize[8], nTotalRomSize = 0;
 	INT32 i;
 
 	ri.nLen = 0;
-	for (i = 0; i < 4; i++) {
+	for (i = 0; i < nNumRomsGroup; i++) {
 		BurnDrvGetRomInfo(&ri, nNum + i);
 		nRomSize[i] = ri.nLen;
 	}
 	
-	nTotalRomSize = nRomSize[0] + nRomSize[1] + nRomSize[2] + nRomSize[3];
+	for (i = 0; i < nNumRomsGroup; i++) {
+		nTotalRomSize += nRomSize[i];
+	}
 	if (!nTotalRomSize) return 1;
 
 	Rom = (UINT8*)BurnMalloc(nTotalRomSize);
 	if (Rom == NULL) return 1;
 	
 	INT32 Offset = 0;
-	for (i = 0; i < 4; i++) {
+	for (i = 0; i < nNumRomsGroup; i++) {
 		if (i > 0) Offset += nRomSize[i - 1];
 		if (BurnLoadRom(Rom + Offset, nNum + i, 1)) {
 			BurnFree(Rom);
@@ -642,12 +644,12 @@ static INT32 Cps2LoadOne(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift)
 	return 0;
 }
 
-static INT32 Cps2LoadSplit(UINT8* Tile, INT32 nNum, INT32 nShift)
+static INT32 Cps2LoadSplit(UINT8* Tile, INT32 nNum, INT32 nShift, INT32 nNumRomsGroup)
 {
 	UINT8 *Rom = NULL; INT32 nRomLen = 0;
 	UINT8 *pt, *pr;
 
-	LoadUpSplit(&Rom, &nRomLen, nNum);
+	LoadUpSplit(&Rom, &nRomLen, nNum, nNumRomsGroup);
 	if (Rom == NULL) {
 		return 1;
 	}
@@ -677,14 +679,26 @@ INT32 Cps2LoadTiles(UINT8* Tile, INT32 nStart)
 	return 0;
 }
 
-INT32 Cps2LoadTilesSplit(UINT8* Tile, INT32 nStart)
+INT32 Cps2LoadTilesSplit4(UINT8* Tile, INT32 nStart)
 {
 	// left  side of 16x16 tiles
-	Cps2LoadSplit(Tile,     nStart +  0, 0);
-	Cps2LoadSplit(Tile,     nStart +  4, 2);
+	Cps2LoadSplit(Tile,     nStart +  0, 0, 4);
+	Cps2LoadSplit(Tile,     nStart +  4, 2, 4);
 	// right side of 16x16 tiles
-	Cps2LoadSplit(Tile + 4, nStart +  8, 0);
-	Cps2LoadSplit(Tile + 4, nStart + 12, 2);
+	Cps2LoadSplit(Tile + 4, nStart +  8, 0, 4);
+	Cps2LoadSplit(Tile + 4, nStart + 12, 2, 4);
+
+	return 0;
+}
+
+INT32 Cps2LoadTilesSplit8(UINT8* Tile, INT32 nStart)
+{
+	// left  side of 16x16 tiles
+	Cps2LoadSplit(Tile,     nStart +  0, 0, 8);
+	Cps2LoadSplit(Tile,     nStart +  8, 2, 8);
+	// right side of 16x16 tiles
+	Cps2LoadSplit(Tile + 4, nStart + 16, 0, 8);
+	Cps2LoadSplit(Tile + 4, nStart + 24, 2, 8);
 
 	return 0;
 }
@@ -815,13 +829,19 @@ static INT32 CpsGetROMs(bool bLoad)
 		if (ri.nType & BRF_GRA) {
 			if (bLoad) {
 				if ((ri.nType & 15) == 6) {
-					Cps2LoadTilesSplit(CpsGfxLoad, i);
-					CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 4;
+					Cps2LoadTilesSplit4(CpsGfxLoad, i);
+					CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 16;
 					i += 15;
 				} else {
-					Cps2LoadTiles(CpsGfxLoad, i);
-					CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 4;
-					i += 3;
+					if ((ri.nType & 15) == 7) {
+						Cps2LoadTilesSplit8(CpsGfxLoad, i);
+						CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 32;
+						i += 31;
+					} else {
+						Cps2LoadTiles(CpsGfxLoad, i);
+						CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 4;
+						i += 3;
+					}
 				}
 			} else {
 				if (ri.nLen > nGfxMaxSize) {

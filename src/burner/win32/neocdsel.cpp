@@ -54,12 +54,12 @@ int nListItems = 0;
 // Add game to List
 static int NeoCDList_AddGame(TCHAR* pszFile, unsigned int nGameID) 
 {
-	NGCDGAME* game;
-	game = (NGCDGAME*)malloc(sizeof(NGCDGAME));
-	memset(game, 0, sizeof(NGCDGAME));
-	
 	if(GetNeoGeoCDInfo(nGameID))
-	{		
+	{	
+		NGCDGAME* game;
+		game = (NGCDGAME*)malloc(sizeof(NGCDGAME));
+		memset(game, 0, sizeof(NGCDGAME));
+		
 		memcpy(game, GetNeoGeoCDInfo(nGameID), sizeof(NGCDGAME));
 		
 		TCHAR szNGCDID[12];
@@ -100,6 +100,7 @@ static int NeoCDList_AddGame(TCHAR* pszFile, unsigned int nGameID)
 
 	} else {
 		// error
+		
 		return 0;
 	}
 
@@ -711,7 +712,11 @@ static TCHAR* NeoCDList_ParseCUE(TCHAR* pszFile)
 	fp = _tfopen(pszFile, _T("r"));
 
 	if(!fp) {
-		return NULL;
+		if (szISO)
+		{
+			free(szISO)
+			return NULL;
+		}
 	}
 
 	while(!feof(fp))

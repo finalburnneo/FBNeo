@@ -246,15 +246,21 @@ void BurnSampleInit(INT32 nGain /*volume percentage!*/, INT32 bAdd /*add sample 
 	sprintf(path, "%s%s.zip", szTempPath, setname);
 	
 	FILE *test = fopen(path, "rb");
-	if (test) nEnableSamples = 1;
-	fclose(test);
+	if (test) 
+	{
+		nEnableSamples = 1;
+		fclose(test);
+	}
 	
 #ifdef INCLUDE_7Z_SUPPORT
 	sprintf(path, "%s%s.7z", szTempPath, setname);
 	
 	test = fopen(path, "rb");
-	if (test) nEnableSamples = 1;
-	fclose(test);
+	if (test)
+	{	
+		nEnableSamples = 1;
+		fclose(test);
+	}
 #endif
 	
 	if (!nEnableSamples) return;

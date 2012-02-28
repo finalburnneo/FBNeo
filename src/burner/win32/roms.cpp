@@ -274,6 +274,11 @@ int CheckGameAvb()
 	CreateRomDatName(szRomDat);
 
 	if ((h = _tfopen(szRomDat, _T("r"))) == NULL) {
+		if (buffer) 
+		{
+			free(buffer);
+			buffer = NULL;
+		}
 		return 1;
 	}
 

@@ -1029,6 +1029,7 @@ INT32 CpsExit()
 
 	nCPS68KClockspeed = 0;
 	Cps = 0;
+	nCpsNumScanlines = 259;
 
 	return 0;
 }

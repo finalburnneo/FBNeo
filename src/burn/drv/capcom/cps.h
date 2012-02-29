@@ -155,6 +155,7 @@ INT32 CpsAreaScan(INT32 nAction,INT32 *pnMin);
 extern UINT8 CpsReset;
 extern UINT8 Cpi01A, Cpi01C, Cpi01E;
 extern INT32 nIrqLine50, nIrqLine52;								// The scanlines at which the interrupts are triggered
+extern INT32 nCpsNumScanlines;
 extern INT32 CpsDrawSpritesInReverse;
 INT32 CpsRunInit();
 INT32 CpsRunExit();

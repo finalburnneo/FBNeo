@@ -17,6 +17,8 @@ INT32 CpsDrawSpritesInReverse = 0;
 
 INT32 nIrqLine50, nIrqLine52;
 
+INT32 nCpsNumScanlines = 259;
+
 static void CpsQSoundCheatSearchCallback()
 {
 	// Q-Sound Shared RAM ranges - not useful for cheat searching, and runs the Z80
@@ -49,8 +51,8 @@ static INT32 DrvReset()
 	if (Cps == 2) {
 		// Disable beam-synchronized interrupts
 		*((UINT16*)(CpsReg + 0x4E)) = 0x0200;
-		*((UINT16*)(CpsReg + 0x50)) = 259;
-		*((UINT16*)(CpsReg + 0x52)) = 259;
+		*((UINT16*)(CpsReg + 0x50)) = nCpsNumScanlines;
+		*((UINT16*)(CpsReg + 0x52)) = nCpsNumScanlines;
 	}
 
 	SekOpen(0);
@@ -183,7 +185,7 @@ inline static void CopyCpsFrg(INT32 i)
 // Schedule a beam-synchronized interrupt
 static void ScheduleIRQ()
 {
-	INT32 nLine = 259;
+	INT32 nLine = nCpsNumScanlines;
 
 	if (nIrqLine50 <= nLine) {
 		nLine = nIrqLine50;
@@ -192,9 +194,9 @@ static void ScheduleIRQ()
 		nLine = nIrqLine52;
 	}
 
-	if (nLine < 259) {
+	if (nLine < nCpsNumScanlines) {
 		nIrqLine = nLine;
-		nIrqCycles = (nLine * nCpsCycles / 259) + 1;
+		nIrqCycles = (nLine * nCpsCycles / nCpsNumScanlines) + 1;
 	} else {
 		nIrqCycles = nCpsCycles + 1;
 	}
@@ -217,7 +219,7 @@ static void DoIRQ()
 	}
 
 	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-	SekRun(nCpsCycles * 0x01 / 259);
+	SekRun(nCpsCycles * 0x01 / nCpsNumScanlines);
 	if (nRasterline[nInterrupt] < 224) {
 		CopyCpsReg(nInterrupt);
 		CopyCpsFrg(nInterrupt);
@@ -228,7 +230,7 @@ static void DoIRQ()
 	// Schedule next interrupt
 	if (!bEnableAutoIrq50) {
 		if (nIrqLine >= nIrqLine50) {
-			nIrqLine50 = 259;
+			nIrqLine50 = nCpsNumScanlines;
 		}
 	} else {
 		if (bEnableAutoIrq50 && nIrqLine == nIrqLine50) {
@@ -236,7 +238,7 @@ static void DoIRQ()
 		}
 	}
 	if (!bEnableAutoIrq52 && nIrqLine >= nIrqLine52) {
-		nIrqLine52 = 259;
+		nIrqLine52 = nCpsNumScanlines;
 	} else {
 		if (bEnableAutoIrq52 && nIrqLine == nIrqLine52) {
 			nIrqLine52 += 32;
@@ -272,12 +274,12 @@ INT32 Cps1Frame()
 
 	CpsRwGetInp();												// Update the input port values
 
-	nDisplayEnd = (nCpsCycles * (nFirstLine + 224)) / 259;	// Account for VBlank
+	nDisplayEnd = (nCpsCycles * (nFirstLine + 224)) / nCpsNumScanlines;	// Account for VBlank
 
 	SekOpen(0);
 	SekIdle(nCpsCyclesExtra);
 
-	SekRun(nCpsCycles * nFirstLine / 259);					// run 68K for the first few lines
+	SekRun(nCpsCycles * nFirstLine / nCpsNumScanlines);					// run 68K for the first few lines
 
 	if (!CpsDrawSpritesInReverse) {
 		CpsObjGet();											// Get objects
@@ -344,11 +346,11 @@ INT32 Cps2Frame()
 
 	nCpsCycles = (INT32)(((INT64)nCPS68KClockspeed * nBurnCPUSpeedAdjust) / 0x0100);
 	SekOpen(0);
-	SekSetCyclesScanline(nCpsCycles / 259);
+	SekSetCyclesScanline(nCpsCycles / nCpsNumScanlines);
 
 	CpsRwGetInp();											// Update the input port values
 
-	nDisplayEnd = nCpsCycles * (nFirstLine + 224) / 259;	// Account for VBlank
+	nDisplayEnd = nCpsCycles * (nFirstLine + 224) / nCpsNumScanlines;	// Account for VBlank
 
 	nInterrupt = 0;
 	for (i = 0; i < MAX_RASTER + 2; i++) {
@@ -357,7 +359,7 @@ INT32 Cps2Frame()
 
 	// Determine which (if any) of the line counters generates the first IRQ
 	bEnableAutoIrq50 = bEnableAutoIrq52 = false;
-	nIrqLine50 = nIrqLine52 = 259;
+	nIrqLine50 = nIrqLine52 = nCpsNumScanlines;
 	if (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x50))) & 0x8000) {
 		bEnableAutoIrq50 = true;
 	}
@@ -374,11 +376,11 @@ INT32 Cps2Frame()
 
 	SekIdle(nCpsCyclesExtra);
 
-	if (nIrqCycles < nCpsCycles * nFirstLine / 259) {
+	if (nIrqCycles < nCpsCycles * nFirstLine / nCpsNumScanlines) {
 		SekRun(nIrqCycles);
 		DoIRQ();
 	}
-	nNext = nCpsCycles * nFirstLine / 259;
+	nNext = nCpsCycles * nFirstLine / nCpsNumScanlines;
 	if (SekTotalCycles() < nNext) {
 		SekRun(nNext - SekTotalCycles());
 	}
@@ -386,7 +388,7 @@ INT32 Cps2Frame()
 	CopyCpsReg(0);										// Get inititial copy of registers
 	CopyCpsFrg(0);										//
 
-	if (nIrqLine >= 259 && (*((UINT16*)(CpsReg + 0x4E)) & 0x0200) == 0) {
+	if (nIrqLine >= nCpsNumScanlines && (*((UINT16*)(CpsReg + 0x4E)) & 0x0200) == 0) {
 		nIrqLine50 = *((UINT16*)(CpsReg + 0x50)) & 0x01FF;
 		nIrqLine52 = *((UINT16*)(CpsReg + 0x52)) & 0x01FF;
 		ScheduleIRQ();
@@ -404,7 +406,7 @@ INT32 Cps2Frame()
 	
 	CpsObjGet();										// Get objects
 
-//	nCpsCyclesSegment[0] = (nCpsCycles * nVBlank) / 259;
+//	nCpsCyclesSegment[0] = (nCpsCycles * nVBlank) / nCpsNumScanlines;
 //	nDone += SekRun(nCpsCyclesSegment[0] - nDone);
 
 	SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);				// VBlank

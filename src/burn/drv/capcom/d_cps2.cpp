@@ -10577,7 +10577,6 @@ void __fastcall PhoenixOutputWriteByte(UINT32 a,UINT8 d)
 {
 	if (a >= 0xfffff0 && a <= 0xfffffb) {
 		CpsFrg[a & 0x0f] = d;
-		return;
 	}
 	
 	if (a >= 0xff0000 && a <= 0xffffff) {
@@ -10603,6 +10602,8 @@ void __fastcall PhoenixSpriteWriteWord(UINT32 a,UINT16 d)
 static INT32 PhoenixInit()
 {
 	INT32 nRet = Cps2Init();
+	
+	nCpsNumScanlines = 262;	// phoenix sets seem to be sensitive to timing??
 	
 	SekOpen(0);
 	SekMapHandler(3, 0xFF0000, 0xFFFFFF, SM_WRITE);

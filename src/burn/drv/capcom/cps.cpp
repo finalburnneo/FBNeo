@@ -913,7 +913,7 @@ INT32 CpsInit()
 		BurnSetRefreshRate(59.61);
 	} else {
 		if (Cps == 2) {
-			BurnSetRefreshRate(59.633333);
+			BurnSetRefreshRate(59.629403);
 		}
 	}
 

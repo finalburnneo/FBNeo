@@ -24,7 +24,7 @@ static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[1];
-static UINT8 DrvDips[1];
+static UINT8 DrvDips[3];
 static UINT8 DrvInputs[1];
 static UINT8 DrvReset;
 

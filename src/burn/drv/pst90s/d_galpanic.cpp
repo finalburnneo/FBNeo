@@ -27,9 +27,9 @@ static UINT16 *RamBgM;
 static UINT32 *RamCurPal;
 static UINT32 *RamCTB64k;
 
-static UINT8 DrvButton[7] = {0, 0, 0, 0, 0, 0, 0};
-static UINT8 DrvJoy1[7] = {0, 0, 0, 0, 0, 0, 0};
-static UINT8 DrvJoy2[7] = {0, 0, 0, 0, 0, 0, 0};
+static UINT8 DrvButton[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+static UINT8 DrvJoy1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+static UINT8 DrvJoy2[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInput[6] = {0, 0, 0, 0, 0, 0};
 static UINT8 DrvReset = 0;
 //static UINT16 GalPanicCoin = 0;

@@ -189,7 +189,7 @@ void __fastcall silkroad_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
-	if (address >= 0xc0010c || address <= 0xc00123) {
+	if (address >= 0xc0010c && address <= 0xc00123) {
 		DrvSysRegs[(address - 0xc0010c) >> 1] = data;
 
 		return;

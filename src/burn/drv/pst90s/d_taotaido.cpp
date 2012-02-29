@@ -73,7 +73,7 @@ static struct BurnInputInfo TaotaidoInputList[] = {
 	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"		},
 	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 2,	"dip"		},
-	{"Region",	BIT_DIPSWITCH,	DrvDip + 3,	"dip"		},
+	{"Region",		BIT_DIPSWITCH,	DrvDip + 3,	"dip"		},
 };
 
 STDINPUTINFO(Taotaido)
@@ -85,10 +85,10 @@ static struct BurnInputInfo TaotaidoaInputList[] = {
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
-	{"P1 Weak Punch",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Weak Punch",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Medium Punch",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Strong Punch",	BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
-	{"P1 Weak Kick",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 fire 4"	},
+	{"P1 Weak Kick",	BIT_DIGITAL,	DrvJoy4 + 0,	"p1 fire 4"	},
 	{"P1 Medium Kick",	BIT_DIGITAL,	DrvJoy4 + 1,	"p1 fire 5"	},
 	{"P1 Strong Kick",	BIT_DIGITAL,	DrvJoy4 + 2,	"p1 fire 6"	},
 
@@ -98,10 +98,10 @@ static struct BurnInputInfo TaotaidoaInputList[] = {
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
-	{"P2 Weak Punch",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Weak Punch",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Medium Punch",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Strong Punch",	BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
-	{"P2 Weak Kick",		BIT_DIGITAL,	DrvJoy5 + 0,	"p2 fire 4"	},
+	{"P2 Weak Kick",	BIT_DIGITAL,	DrvJoy5 + 0,	"p2 fire 4"	},
 	{"P2 Medium Kick",	BIT_DIGITAL,	DrvJoy5 + 1,	"p2 fire 5"	},
 	{"P2 Strong Kick",	BIT_DIGITAL,	DrvJoy5 + 2,	"p2 fire 6"	},
 
@@ -111,7 +111,7 @@ static struct BurnInputInfo TaotaidoaInputList[] = {
 	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"		},
 	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 2,	"dip"		},
-	{"Region",	BIT_DIPSWITCH,	DrvDip + 3,	"dip"		},
+	{"Region",		BIT_DIPSWITCH,	DrvDip + 3,	"dip"		},
 };
 
 STDINPUTINFO(Taotaidoa)
@@ -895,7 +895,7 @@ static INT32 DrvFrame()
 
 	{
 		memset (DrvInps, 0xff, 5 * sizeof(UINT16));
-		for (INT32 i = 0; i < 16; i++) {
+		for (INT32 i = 0; i < 8; i++) {
 			DrvInps[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInps[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInps[2] ^= (DrvJoy3[i] & 1) << i;

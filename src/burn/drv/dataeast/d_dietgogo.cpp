@@ -173,7 +173,7 @@ UINT8 __fastcall dietgogo_main_read_byte(UINT32 address)
 			return DrvDips[1];
 
 		case 0x340507:
-			return DrvDips[9];
+			return DrvDips[0];
 	}
 
 	return 0;

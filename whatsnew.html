@@ -104,6 +104,65 @@
 <p><a href="http://www.barryharris.me.uk">http://www.barryharris.me.uk</a><br />
 <a href="http://neosource.1emu.net/forums">http://neosource.1emu.net/forums</a></p>
 
+<h3>v0.2.97.22</h3>
+<ul>
+<li>Added support for 7z files for roms and samples [Barry]</li>
+<li>Added driver for Act Fancer [iq_132]</li>
+<li>Added driver for Gals Pinball [iq_132]</li>
+<li>Added driver for Momoko 120% [iq_132]</li>
+<li>Added clone of Final Fight to the CPS-1 driver JacKc, Bonky0013</li>
+<li>Added clone of Forgotton Worlds to the CPS-1 driver [JacKc, Bonky0013]</li>
+<li>Added clone of Street Fighter II to the CPS-1 driver [JacKc, Bonky0013]</li>
+<li>Added clone of Street Fighter II: Champion Edition to the CPS-1 driver [Barry]</li>
+<li>Added clone of Puzz Loop 2 to the CPS-2 driver [Barry]</li>
+<li>Added clone of Super Street Fighter 2 X to the CPS-2 driver, and added support for the graphic rom format it uses [Barry]</li>
+<li>Added clone of Vampire Hunter to the CPS-2 driver [Barry, JacKc]</li>
+<li>Added Super Bubble Pop to the Neo Geo driver (player 1 inputs don't work, hence debug only builds) [Barry, iq_132, JacKc]</li>
+<li>Added clone of Jojo's Venture to the CPS-3 driver [Barry]</li>
+<li>Added clone of Jojo's Bizarre Adventure to the CPS-3 driver [JacKc]</li>
+<li>Added bootleg of Eyes [iq_132]</li>
+<li>Added clone of X-Men to the Konami drivers [JacKc, Bonky0013]</li>
+<li>Added PCB version of Demon Front to the PGM driver (non-working, debug builds only) [JacKc]</li>
+<li>Added clone of Altered Beast to the Sega System 16B driver [Barry]</li>
+<li>Changed CPS-1/2 palette handling to be more accurate, should fix some glitches [Barry]</li>
+<li>Changed CPS-2 video timing to use the values in MAME that have come from hardware measurements [Barry]</li>
+<li>Improved CPS-2 sprite list end detection [Barry]</li>
+<li>Moved the CpsGetObj() call, fixing sprite lag in Super Street Fighter II and clones [manliodp.]</li>
+<li>Fixed IRQ generation in the Irem M72 drivers, fixing video timing in Dragon Breed [Barry]</li>
+<li>Fixed sound in the Irem M72 drivers [Barry]</li>
+<li>Minor CPS-3 update with a small speedup [iq_132]</li>
+<li>Update the Mysterious Stones driver [iq_132]</li>
+<li>Removed duplicate set of Super Monaco Grand Prix [Barry]</li>
+<li>Added savestate support to the the OPL based sound cores (YM3812, YM3526 and Y8950) and interfaces [Barry]</li>
+<li>Removed previous attempt and added savestate support to the YM2413 core and interface [Barry]</li>
+<li>Added savestate support to the DEC-8 driver [Barry]</li>
+<li>Tidied and fixed Data East savestates where necessary [Barry]</li>
+<li>Fixed Sengoku 3 Unicode title (string wasn't terminated) [Barry]</li>
+<li>Moved the Pocket Gal Deluxe driver to the Data East filter [iq_132]</li>
+<li>Big-endian fixes for the new CPS-1/2 palette code, PGM driver, some Misc drivers, Seta drivers, and Toaplan games that use the V25 CPU for sound [lantus]</li>
+<li>Fixed some invalid BRF_NODUMP definitions [Barry]</li>
+<li>Overhauled the cheat system [iq_132]</li>
+<li>Added overrides to allow drivers to exclude addresses from cheat searching, and used it to prevent a crash when searching for cheats in CPS Q-Sound games [Barry]</li>
+<li>Tidied the game selection dialog a bit, and changed the behaviour of "show available" to allow showing available and/or unavailable sets [Barry]</li>
+<li>Fixed TurboGrafx 16 games displaying as MVS cartridge hardware in the game selection dialog [iq_132]</li>
+<li>Added a Ctrl+W shortcut to close the current game [Barry]</li>
+<li>Made the cliprect for the OSD shortmsg wider, allowing more text to be displayed [Barry]</li>
+<li>Prevented the 68K debugger opening if the 68k interface is not in use [iq_132]</li>
+<li>Disabled menu item for 68k debugger if the 68k interface is not in use, and renamed the menu item to "Invoke 68k debugger" [Barry]</li>
+<li>Removed definition of LSB_FIRST in epx.cpp since it is now defined (or not) in the makefile [Barry]</li>
+<li>Fixed issue with definition of LSB_FIRST in makefile.mingw [Barry]</li>
+<li>Added libsnes target files [Themaister, twinaphex]</li>
+<li>Fixed some memory leaks and possible memory leaks [kev]</li>
+<li>Identified and fixed some out of bounds array issues [kev, iq_132]</li>
+<li>Updated the zlib library to v1.2.6 [Barry]</li>
+<li>Updated the libpng library to v1.5.8 [Barry]</li>
+<li>Matched all sets to MAME 0.145u3 [Barry]</li>
+<li>Matched the Megadrive sets to MESS 0.145u1 [Barry]</li>
+<li>Changed PC-Engine driver to be auto-generated from the MESS software list [Barry]</li>
+<li>Matched the PC-Engine sets to MESS 0.145u1 [Barry]</li>
+</ul>
+
+
 <h3>v0.2.97.21</h3>
 <ul>
 <li>Updated the H6280 core and interface to support multiple CPUs [iq_132]</li>

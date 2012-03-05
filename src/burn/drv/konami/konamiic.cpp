@@ -74,7 +74,7 @@ void KonamiRecalcPal(UINT8 *src, UINT32 *dst, INT32 len)
 	UINT8 r,g,b;
 	UINT16 *p = (UINT16*)src;
 	for (INT32 i = 0; i < len / 2; i++) {
-		UINT16 d = (p[i] << 8) | (p[i] >> 8);
+		UINT16 d = BURN_ENDIAN_SWAP_INT16((p[i] << 8) | (p[i] >> 8));
 
 		b = (d >> 10) & 0x1f;
 		g = (d >>  5) & 0x1f;

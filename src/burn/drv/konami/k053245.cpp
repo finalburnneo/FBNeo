@@ -129,7 +129,7 @@ UINT16 K053245ReadWord(INT32 chip, INT32 offset)
 
 	return (r << 8) | (r >> 8);
 #else
-	return ret[offset];
+	return BURN_ENDIAN_SWAP_INT16(ret[offset]);
 #endif
 }
 
@@ -140,7 +140,7 @@ void K053245WriteWord(INT32 chip, INT32 offset, INT32 data)
 #if 0
 	ret[offset] = (data << 8) | (data >> 8);
 #else
-	ret[offset] = data;
+	ret[offset] = BURN_ENDIAN_SWAP_INT16(data);
 #endif
 }
 
@@ -241,7 +241,7 @@ void K053245SpritesRender(INT32 chip, UINT8 *gfxdata, INT32 priority)
 	/* prebuild a sorted table */
 	for (i=0x800/2, offs=0; offs<i; offs+=8)
 	{
-		pri_code = sprbuf[offs];
+		pri_code = BURN_ENDIAN_SWAP_INT16(sprbuf[offs]);
 		if (pri_code & 0x8000)
 		{
 			pri_code &= 0x007f;
@@ -259,17 +259,17 @@ void K053245SpritesRender(INT32 chip, UINT8 *gfxdata, INT32 priority)
 		offs = sortedlist[pri_code];
 		if (offs == -1) continue;
 
-		code = sprbuf[offs+1];
+		code = BURN_ENDIAN_SWAP_INT16(sprbuf[offs+1]);
 		code = ((code & 0xffe1) + ((code & 0x0010) >> 2) + ((code & 0x0008) << 1)
 				 + ((code & 0x0004) >> 1) + ((code & 0x0002) << 2));
-		color = sprbuf[offs+6] & 0x00ff;
+		color = BURN_ENDIAN_SWAP_INT16(sprbuf[offs+6]) & 0x00ff;
 		pri = 0;
 
 		(*K053245Callback[chip])(&code,&color,&pri);
 
 		if (pri != priority) continue;//------------------------------------------------------- OK??
 
-		size = (sprbuf[offs] & 0x0f00) >> 8;
+		size = (BURN_ENDIAN_SWAP_INT16(sprbuf[offs]) & 0x0f00) >> 8;
 
 		w = 1 << (size & 0x03);
 		h = 1 << ((size >> 2) & 0x03);
@@ -279,13 +279,13 @@ void K053245SpritesRender(INT32 chip, UINT8 *gfxdata, INT32 priority)
           <0x40 enlarge (0x20 = double size)
           >0x40 reduce (0x80 = half size)
         */
-		zoomy = sprbuf[offs+4];
+		zoomy = BURN_ENDIAN_SWAP_INT16(sprbuf[offs+4]);
 		if (zoomy > 0x2000) continue;
 		if (zoomy) zoomy = (0x400000+zoomy/2) / zoomy;
 		else zoomy = 2 * 0x400000;
-		if ((sprbuf[offs] & 0x4000) == 0)
+		if ((BURN_ENDIAN_SWAP_INT16(sprbuf[offs]) & 0x4000) == 0)
 		{
-			zoomx = sprbuf[offs+5];
+			zoomx = BURN_ENDIAN_SWAP_INT16(sprbuf[offs+5]);
 			if (zoomx > 0x2000) continue;
 			if (zoomx) zoomx = (0x400000+zoomx/2) / zoomx;
 			else zoomx = 2 * 0x400000;
@@ -293,18 +293,18 @@ void K053245SpritesRender(INT32 chip, UINT8 *gfxdata, INT32 priority)
 		}
 		else zoomx = zoomy;
 
-		ox = sprbuf[offs+3] + spriteoffsX;
-		oy = sprbuf[offs+2];
+		ox = BURN_ENDIAN_SWAP_INT16(sprbuf[offs+3]) + spriteoffsX;
+		oy = BURN_ENDIAN_SWAP_INT16(sprbuf[offs+2]);
 
 		ox += K053245_dx[chip];
 		oy += K053245_dy[chip];
 
-		flipx = sprbuf[offs] & 0x1000;
-		flipy = sprbuf[offs] & 0x2000;
-		mirrorx = sprbuf[offs+6] & 0x0100;
+		flipx = BURN_ENDIAN_SWAP_INT16(sprbuf[offs]) & 0x1000;
+		flipy = BURN_ENDIAN_SWAP_INT16(sprbuf[offs]) & 0x2000;
+		mirrorx = BURN_ENDIAN_SWAP_INT16(sprbuf[offs+6]) & 0x0100;
 		if (mirrorx) flipx = 0; // documented and confirmed
-		mirrory = sprbuf[offs+6] & 0x0200;
-		shadow = sprbuf[offs+6] & 0x0080;
+		mirrory = BURN_ENDIAN_SWAP_INT16(sprbuf[offs+6]) & 0x0200;
+		shadow = BURN_ENDIAN_SWAP_INT16(sprbuf[offs+6]) & 0x0080;
 
 		if (flipscreenX)
 		{

@@ -517,8 +517,8 @@ STDDIPINFO(Cuebrckj)
 
 static void twin16_spriteram_process()
 {
-	INT32 dx = scrollx[0];
-	INT32 dy = scrolly[0];
+	INT32 dx = BURN_ENDIAN_SWAP_INT16(scrollx[0]);
+	INT32 dy = BURN_ENDIAN_SWAP_INT16(scrolly[0]);
 
 	UINT16 *spriteram16 = (UINT16*)DrvSprRAM;
 	UINT16 *source = spriteram16;
@@ -528,23 +528,23 @@ static void twin16_spriteram_process()
 
 	while (source < finish)
 	{
-		INT32 priority = source[0];
+		INT32 priority = BURN_ENDIAN_SWAP_INT16(source[0]);
 		if (priority & 0x8000 )
 		{
 			UINT16 *dest = &spriteram16[0x1800 + ((priority & 0xff) << 2)];
 
-			INT32 xpos = (source[4] << 16) | source[5];
-			INT32 ypos = (source[6] << 16) | source[7];
+			INT32 xpos = (BURN_ENDIAN_SWAP_INT16(source[4]) << 16) | BURN_ENDIAN_SWAP_INT16(source[5]);
+			INT32 ypos = (BURN_ENDIAN_SWAP_INT16(source[6]) << 16) | BURN_ENDIAN_SWAP_INT16(source[7]);
 
-			INT32 attributes = source[2]&0x03ff;
+			INT32 attributes = BURN_ENDIAN_SWAP_INT16(source[2])&0x03ff;
 			if (priority & 0x0200) attributes |= 0x4000;
 
 			attributes |= 0x8000;
 
 			dest[0] = source[3];
-			dest[1] = ((xpos >> 8) - dx) & 0xffff;
-			dest[2] = ((ypos >> 8) - dy) & 0xffff;
-			dest[3] = attributes;
+			dest[1] = BURN_ENDIAN_SWAP_INT16(((xpos >> 8) - dx) & 0xffff);
+			dest[2] = BURN_ENDIAN_SWAP_INT16(((ypos >> 8) - dy) & 0xffff);
+			dest[3] = BURN_ENDIAN_SWAP_INT16(attributes);
 		}
 
 		source += 0x50/2;
@@ -617,17 +617,17 @@ void __fastcall twin16_main_write_word(UINT32 address, UINT16 data)
 		case 0xc0002:
 		case 0xc0006:
 		case 0xc000a:
-			scrollx[((address - 2) & 0x0c) >> 2] = data;
+			scrollx[((address - 2) & 0x0c) >> 2] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 
 		case 0xc0004:
 		case 0xc0008:
 		case 0xc000c:
-			scrolly[((address - 4) & 0x0c) >> 2] = data;
+			scrolly[((address - 4) & 0x0c) >> 2] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 
 		case 0xe0000:
-			gfx_bank = data;
+			gfx_bank = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 }
@@ -746,7 +746,7 @@ void __fastcall twin16_sub_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfc0000) == 0x500000) {
 		INT32 offset = address & 0x3ffff;
-		*((UINT16*)(DrvTileRAM + offset)) = data;	
+		*((UINT16*)(DrvTileRAM + offset)) = BURN_ENDIAN_SWAP_INT16(data);	
 		twin16_tile_write(offset);
 		return;
 	}
@@ -1055,7 +1055,7 @@ static inline void DrvRecalcPal()
 	UINT16 *p = (UINT16*)DrvPalRAM;
 	for (INT32 i = 0; i < 0x1000 / 2; i+=2)
 	{
-		INT32 d = ((p[i+0] & 0xff) << 8) | (p[i+1] & 0xff);
+		INT32 d = ((BURN_ENDIAN_SWAP_INT16(p[i+0]) & 0xff) << 8) | (BURN_ENDIAN_SWAP_INT16(p[i+1]) & 0xff);
 
 		r = (d >>  0) & 0x1f;
 		g = (d >>  5) & 0x1f;
@@ -1089,7 +1089,7 @@ static void draw_fg_layer()
 
 		if (sx >= nScreenWidth) continue;
 
-		INT32 attr  = vram[offs];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		INT32 code  = attr & 0x1ff;
 		INT32 color = (attr >> 9) & 0x0f;
 
@@ -1123,8 +1123,8 @@ static void draw_layer(INT32 opaque)
 	banks[1] = (gfx_bank >>  4) & 0x0f;
 	banks[0] =  gfx_bank & 0xf;
 
-	INT32 dx = scrollx[1+o];
-	INT32 dy = scrolly[1+o];
+	INT32 dx = BURN_ENDIAN_SWAP_INT16(scrollx[1+o]);
+	INT32 dy = BURN_ENDIAN_SWAP_INT16(scrolly[1+o]);
 
 	INT32 flipx = 0;
 	INT32 flipy = 0;
@@ -1156,7 +1156,7 @@ static void draw_layer(INT32 opaque)
 
 		sy -= 16;
 
-		INT32 code  = vram[offs];
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		INT32 color = (0x20 + (code >> 13) + 8 * palette);
 		    code = (code & 0x7ff) | (banks[(code >> 11) & 3] << 11);
 
@@ -1249,7 +1249,7 @@ static void draw_sprite(UINT16 *pen_data, INT32 pal_base, INT32 xpos, INT32 ypos
 
 				if (sx >= 0 && sx < 320)
 				{
-					INT32 pen = pen_data[x/4];
+					INT32 pen = BURN_ENDIAN_SWAP_INT16(pen_data[x/4]);
 
 					pen = (pen >> ((~x & 3) << 2)) & 0x0f;
 
@@ -1273,16 +1273,16 @@ static void draw_sprites(INT32 priority)
 
 	for (; source < finish; source += 4)
 	{
-		INT32 attributes = source[3];
+		INT32 attributes = BURN_ENDIAN_SWAP_INT16(source[3]);
 		INT32 prio = (attributes&0x4000) >> 14;
 		if (prio != priority) continue;
 
-		INT32 code = source[0];
+		INT32 code = BURN_ENDIAN_SWAP_INT16(source[0]);
 
 		if (code != 0xffff && attributes & 0x8000)
 		{
-			INT32 xpos 	= source[1];
-			INT32 ypos 	= source[2];
+			INT32 xpos 	= BURN_ENDIAN_SWAP_INT16(source[1]);
+			INT32 ypos 	= BURN_ENDIAN_SWAP_INT16(source[2]);
 
 			INT32 pal_base	= ((attributes&0xf)+0x10)*16;
 			INT32 height	= 16<<((attributes>>6)&0x3);

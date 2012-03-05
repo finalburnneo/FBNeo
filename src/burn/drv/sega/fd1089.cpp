@@ -264,7 +264,7 @@ static void sys16_decrypt(const UINT8 *key)
 
 	for (A = 0;A < size;A+=2)
 	{
-		UINT16 src = rom[A / 2];
+		UINT16 src = BURN_ENDIAN_SWAP_INT16(rom[A / 2]);
 
 		/* decode the opcodes */
 		decrypted[A/2] = BURN_ENDIAN_SWAP_INT16(fd1089_decrypt(A,src,key,1));

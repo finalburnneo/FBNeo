@@ -2903,7 +2903,7 @@ UINT16 __fastcall Blswhstl68KReadWord(UINT32 a)
 		INT32 Offset = (a - 0x300000) >> 1;
 		
 		if (Offset & 0x31) {
-			return SpriteRam[Offset];
+			return BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset]);
 		} else {
 			Offset = ((Offset & 0x000e) >> 1) | ((Offset & 0x1fc0) >> 3);
 			return K053245ReadWord(0, Offset);
@@ -2932,7 +2932,7 @@ void __fastcall Blswhstl68KWriteWord(UINT32 a, UINT16 d)
 	if (a >= 0x300000 && a <= 0x303fff) {
 		UINT16 *SpriteRam = (UINT16*)DrvSpriteRam;
 		INT32 Offset = (a - 0x300000) >> 1;
-		SpriteRam[Offset] = d;
+		SpriteRam[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		
 		if (!(Offset & 0x0031)) {
 			Offset = ((Offset & 0x000e) >> 1) | ((Offset & 0x1fc0) >> 3);
@@ -2972,12 +2972,12 @@ static void tmnt2_protection_write()
 	UINT8 keepaspect, xlock, ylock, zlock;
 
 	mcu = (UINT16*)(Drv68KRam + 0x4800);
-	if ((mcu[8] & 0xff00) != 0x8200) return;
+	if ((BURN_ENDIAN_SWAP_INT16(mcu[8]) & 0xff00) != 0x8200) return;
 
-	src_addr = (mcu[0] | (mcu[1]&0xff)<<16) >> 1;
-	dst_addr = (mcu[2] | (mcu[3]&0xff)<<16) >> 1;
-	mod_addr = (mcu[4] | (mcu[5]&0xff)<<16) >> 1;
-	zlock    = (mcu[8] & 0xff) == 0x0001;
+	src_addr = (BURN_ENDIAN_SWAP_INT16(mcu[0]) | (BURN_ENDIAN_SWAP_INT16(mcu[1])&0xff)<<16) >> 1;
+	dst_addr = (BURN_ENDIAN_SWAP_INT16(mcu[2]) | (BURN_ENDIAN_SWAP_INT16(mcu[3])&0xff)<<16) >> 1;
+	mod_addr = (BURN_ENDIAN_SWAP_INT16(mcu[4]) | (BURN_ENDIAN_SWAP_INT16(mcu[5])&0xff)<<16) >> 1;
+	zlock    = (BURN_ENDIAN_SWAP_INT16(mcu[8]) & 0xff) == 0x0001;
 
 	for (i=0; i< 4; i++) src[i] = SekReadWord((src_addr + i) * 2);
 	for (i=0; i<24; i++) mod[i] = SekReadWord((mod_addr + i) * 2);
@@ -3051,7 +3051,7 @@ static void tmnt2_protection_write()
 
 void __fastcall Tmnt268KProtWord(UINT32 a, UINT16 d)
 {
-	*((UINT16*)(Drv68KRam + 0x4800 + (a & 0x1e))) = d;
+	*((UINT16*)(Drv68KRam + 0x4800 + (a & 0x1e))) = BURN_ENDIAN_SWAP_INT16(d);
 }
 
 void __fastcall Tmnt268KProtByte(UINT32 a, UINT8 d)
@@ -3333,7 +3333,7 @@ UINT16 __fastcall Ssriders68KReadWord(UINT32 a)
 		INT32 Offset = (a - 0x180000) >> 1;
 		
 		if (Offset & 0x31) {
-			return SpriteRam[Offset];
+			return BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset]);
 		} else {
 			Offset = ((Offset & 0x000e) >> 1) | ((Offset & 0x1fc0) >> 3);
 			return K053245ReadWord(0, Offset);
@@ -3341,7 +3341,7 @@ UINT16 __fastcall Ssriders68KReadWord(UINT32 a)
 	}
 
 	if ((a & 0xffff80) == 0x1c0500) {
-		return *((UINT16*)(Drv68KRam + 0x4000 + (a & 0x7e)));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(Drv68KRam + 0x4000 + (a & 0x7e))));
 	}
 
 	if (a == 0x1c0800) return ssriders_protection_r();
@@ -3360,7 +3360,7 @@ void __fastcall Ssriders68KWriteWord(UINT32 a, UINT16 d)
 	if (a >= 0x180000 && a <= 0x183fff) {
 		UINT16 *SpriteRam = (UINT16*)DrvSpriteRam;
 		INT32 Offset = (a - 0x180000) >> 1;
-		SpriteRam[Offset] = d;
+		SpriteRam[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		
 		if (!(Offset & 0x0031)) {
 			Offset = ((Offset & 0x000e) >> 1) | ((Offset & 0x1fc0) >> 3);
@@ -3379,7 +3379,7 @@ void __fastcall Ssriders68KWriteWord(UINT32 a, UINT16 d)
 	}
 
 	if ((a & 0xffff80) == 0x1c0500) {
-		*((UINT16*)(Drv68KRam + 0x4000 + (a & 0x7e))) = d;
+		*((UINT16*)(Drv68KRam + 0x4000 + (a & 0x7e))) = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 
@@ -3521,7 +3521,7 @@ UINT16 __fastcall Lgtnfght68KReadWord(UINT32 a)
 		INT32 Offset = (a - 0xb0000) >> 1;
 		
 		if (Offset & 0x31) {
-			return SpriteRam[Offset];
+			return BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset]);
 		} else {
 			Offset = ((Offset & 0x000e) >> 1) | ((Offset & 0x1fc0) >> 3);
 			return K053245ReadWord(0, Offset);
@@ -3590,7 +3590,7 @@ void __fastcall Lgtnfght68KWriteWord(UINT32 a, UINT16 d)
 	if (a >= 0xb0000 && a <= 0xb3fff) {
 		UINT16 *SpriteRam = (UINT16*)DrvSpriteRam;
 		INT32 Offset = (a - 0xb0000) >> 1;
-		SpriteRam[Offset] = d;
+		SpriteRam[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		
 		if (!(Offset & 0x0031)) {
 			Offset = ((Offset & 0x000e) >> 1) | ((Offset & 0x1fc0) >> 3);
@@ -5251,7 +5251,7 @@ static void DrvCalcPalette()
 	
 	for (INT32 i = 0; i < 0x800; i += 2) {
 		INT32 Offset = i & ~1;
-		UINT32 Data = (PaletteRam[Offset] << 8) | PaletteRam[Offset + 1];
+		UINT32 Data = (BURN_ENDIAN_SWAP_INT16(PaletteRam[Offset]) << 8) | BURN_ENDIAN_SWAP_INT16(PaletteRam[Offset + 1]);
 
 		Palette[Offset >> 1] = (pal5bit(Data >> 0) << 16) | (pal5bit(Data >> 5) << 8) | pal5bit(Data >> 10);
 		DrvPalette[Offset >> 1] = BurnHighCol(pal5bit(Data >> 0), pal5bit(Data >> 5), pal5bit(Data >> 10), 0);
@@ -5263,7 +5263,7 @@ static void BlswhstlCalcPalette()
 	UINT16 *PaletteRam = (UINT16*)DrvPaletteRam;
 	
 	for (INT32 i = 0; i < 0x800; i++) {
-		UINT32 Data = PaletteRam[i];
+		UINT32 Data = BURN_ENDIAN_SWAP_INT16(PaletteRam[i]);
 
 		Palette[i] = (pal5bit(Data >> 0) << 16) | (pal5bit(Data >> 5) << 8) | pal5bit(Data >> 10);
 		DrvPalette[i] = BurnHighCol(pal5bit(Data >> 0), pal5bit(Data >> 5), pal5bit(Data >> 10), 0);
@@ -5304,7 +5304,7 @@ static inline void BlswhstlCalcPaletteWithContrast(INT32 i, INT32 brt)
 	INT32 r,g,b;
 	UINT16 *PaletteRam = (UINT16*)DrvPaletteRam;
 	
-	UINT32 Data = PaletteRam[i];
+	UINT32 Data = BURN_ENDIAN_SWAP_INT16(PaletteRam[i]);
 
 	r = pal5bit(Data >> 0);
 	g = pal5bit(Data >> 5);

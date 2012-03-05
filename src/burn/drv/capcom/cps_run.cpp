@@ -50,9 +50,9 @@ static INT32 DrvReset()
 
 	if (Cps == 2) {
 		// Disable beam-synchronized interrupts
-		*((UINT16*)(CpsReg + 0x4E)) = 0x0200;
-		*((UINT16*)(CpsReg + 0x50)) = nCpsNumScanlines;
-		*((UINT16*)(CpsReg + 0x52)) = nCpsNumScanlines;
+		*((UINT16*)(CpsReg + 0x4E)) = BURN_ENDIAN_SWAP_INT16(0x0200);
+		*((UINT16*)(CpsReg + 0x50)) = BURN_ENDIAN_SWAP_INT16(nCpsNumScanlines);
+		*((UINT16*)(CpsReg + 0x52)) = BURN_ENDIAN_SWAP_INT16(nCpsNumScanlines);
 	}
 
 	SekOpen(0);
@@ -388,9 +388,9 @@ INT32 Cps2Frame()
 	CopyCpsReg(0);										// Get inititial copy of registers
 	CopyCpsFrg(0);										//
 
-	if (nIrqLine >= nCpsNumScanlines && (*((UINT16*)(CpsReg + 0x4E)) & 0x0200) == 0) {
-		nIrqLine50 = *((UINT16*)(CpsReg + 0x50)) & 0x01FF;
-		nIrqLine52 = *((UINT16*)(CpsReg + 0x52)) & 0x01FF;
+	if (nIrqLine >= nCpsNumScanlines && (BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x4E))) & 0x0200) == 0) {
+		nIrqLine50 = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x50))) & 0x01FF;
+		nIrqLine52 = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsReg + 0x52))) & 0x01FF;
 		ScheduleIRQ();
 	}
 

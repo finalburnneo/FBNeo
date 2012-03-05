@@ -134,7 +134,7 @@ UINT8 K053247Read(INT32 offset)
 void K053247Write(INT32 offset, INT32 data)
 {
 	if (data & 0x10000) { // use word
-		*((UINT16*)(K053247Ram + (offset & 0xffe))) = data;
+		*((UINT16*)(K053247Ram + (offset & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data);
 	} else {
 		K053247Ram[offset & 0xfff] = data;
 	}
@@ -160,7 +160,7 @@ UINT8 K053246Read(INT32 offset)
 void K053246Write(INT32 offset, INT32 data)
 {
 	if (data & 0x10000) { // handle it as a word
-		*((UINT16*)(K053246Regs + (offset & 6))) = data;
+		*((UINT16*)(K053246Regs + (offset & 6))) = BURN_ENDIAN_SWAP_INT16(data);
 	} else {
 		K053246Regs[offset & 7] = data;
 	}
@@ -271,12 +271,12 @@ void K053247SpritesRender(UINT8 *gfxbase, INT32 priority)
 	if (zcode == -1)
 	{
 		for (; offs<0x800; offs+=8)
-			if (SprRam[offs] & 0x8000) sortedlist[count++] = offs;
+			if (BURN_ENDIAN_SWAP_INT16(SprRam[offs]) & 0x8000) sortedlist[count++] = offs;
 	}
 	else
 	{
 		for (; offs<0x800; offs+=8)
-			if ((SprRam[offs] & 0x8000) && ((SprRam[offs] & 0xff) != zcode)) sortedlist[count++] = offs;
+			if ((BURN_ENDIAN_SWAP_INT16(SprRam[offs]) & 0x8000) && ((BURN_ENDIAN_SWAP_INT16(SprRam[offs]) & 0xff) != zcode)) sortedlist[count++] = offs;
 	}
 
 	w = count;
@@ -289,11 +289,11 @@ void K053247SpritesRender(UINT8 *gfxbase, INT32 priority)
 		for (y=0; y<h; y++)
 		{
 			offs = sortedlist[y];
-			zcode = SprRam[offs] & 0xff;
+			zcode = BURN_ENDIAN_SWAP_INT16(SprRam[offs]) & 0xff;
 			for (x=y+1; x<w; x++)
 			{
 				temp = sortedlist[x];
-				code = SprRam[temp] & 0xff;
+				code = BURN_ENDIAN_SWAP_INT16(SprRam[temp]) & 0xff;
 				if (zcode <= code) { zcode = code; sortedlist[x] = offs; sortedlist[y] = offs = temp; }
 			}
 		}
@@ -304,11 +304,11 @@ void K053247SpritesRender(UINT8 *gfxbase, INT32 priority)
 		for (y=0; y<h; y++)
 		{
 			offs = sortedlist[y];
-			zcode = SprRam[offs] & 0xff;
+			zcode = BURN_ENDIAN_SWAP_INT16(SprRam[offs]) & 0xff;
 			for (x=y+1; x<w; x++)
 			{
 				temp = sortedlist[x];
-				code = SprRam[temp] & 0xff;
+				code = BURN_ENDIAN_SWAP_INT16(SprRam[temp]) & 0xff;
 				if (zcode >= code) { zcode = code; sortedlist[x] = offs; sortedlist[y] = offs = temp; }
 			}
 		}
@@ -318,15 +318,15 @@ void K053247SpritesRender(UINT8 *gfxbase, INT32 priority)
 	{
 		offs = sortedlist[i];
 
-		code = SprRam[offs+1];
-		shadow = color = SprRam[offs+6];
+		code = BURN_ENDIAN_SWAP_INT16(SprRam[offs+1]);
+		shadow = color = BURN_ENDIAN_SWAP_INT16(SprRam[offs+6]);
 		primask = 0;
 
 		(*K053247Callback)(&code,&color,&primask);
 
 		if (primask != priority) continue;	//--------------------------------------- fix me!
 
-		temp = SprRam[offs];
+		temp = BURN_ENDIAN_SWAP_INT16(SprRam[offs]);
 
 		size = (temp & 0x0f00) >> 8;
 		w = 1 << (size & 0x03);
@@ -344,8 +344,8 @@ void K053247SpritesRender(UINT8 *gfxbase, INT32 priority)
 		if (code & 0x20) ya += 4;
 		code &= ~0x3f;
 
-		oy = (INT16)SprRam[offs+2];
-		ox = (INT16)SprRam[offs+3];
+		oy = (INT16)BURN_ENDIAN_SWAP_INT16(SprRam[offs+2]);
+		ox = (INT16)BURN_ENDIAN_SWAP_INT16(SprRam[offs+3]);
 
 		if (K053247_wraparound)
 		{
@@ -355,11 +355,11 @@ void K053247SpritesRender(UINT8 *gfxbase, INT32 priority)
 			ox &= 0x3ff;
 		}
 
-		y = zoomy = SprRam[offs+4] & 0x3ff;
+		y = zoomy = BURN_ENDIAN_SWAP_INT16(SprRam[offs+4]) & 0x3ff;
 		if (zoomy) zoomy = (0x400000+(zoomy>>1)) / zoomy; else zoomy = 0x800000;
 		if (!(temp & 0x4000))
 		{
-			x = zoomx = SprRam[offs+5] & 0x3ff;
+			x = zoomx = BURN_ENDIAN_SWAP_INT16(SprRam[offs+5]) & 0x3ff;
 			if (zoomx) zoomx = (0x400000+(zoomx>>1)) / zoomx;
 			else zoomx = 0x800000;
 		}

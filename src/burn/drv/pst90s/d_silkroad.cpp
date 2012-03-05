@@ -182,7 +182,7 @@ void __fastcall silkroad_write_byte(UINT32 address, UINT8 data)
 void __fastcall silkroad_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffffc000) == 0x600000) {
-		*((UINT16 *)(DrvPalRAM + (address & 0x3ffe))) = data;
+		*((UINT16 *)(DrvPalRAM + (address & 0x3ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 
 		palette_write((address >> 2) & 0x0fff, data);
 
@@ -199,7 +199,7 @@ void __fastcall silkroad_write_word(UINT32 address, UINT16 data)
 void __fastcall silkroad_write_long(UINT32 address, UINT32 data)
 {
 	if ((address & 0xffffc000) == 0x600000) {
-		*((UINT32 *)(DrvPalRAM + (address & 0x3ffc))) = data;
+		*((UINT32 *)(DrvPalRAM + (address & 0x3ffc))) = BURN_ENDIAN_SWAP_INT32(data);
 
 		palette_write((address >> 2) & 0x0fff, data >> 16);
 
@@ -434,7 +434,7 @@ static void draw_sprites(INT32 pri)
 
 	while (maxspr < finish)
 	{
-		if ((maxspr[1] & 0xff000000) == 0xff000000) break;
+		if ((BURN_ENDIAN_SWAP_INT32(maxspr[1]) & 0xff000000) == 0xff000000) break;
 		maxspr += 2;
 	}
 
@@ -442,10 +442,10 @@ static void draw_sprites(INT32 pri)
 
 	while (finish >= source)
 	{
-		INT32 xpos   = (finish[0] & 0x01ff) - 50;
-		INT32 ypos   = (finish[0] >> 16)    - 16;
-		INT32 attr   =  finish[1] >> 16;
-		INT32 tileno = (finish[1] & 0xffff) | ((attr & 0x8000) << 1);
+		INT32 xpos   = (BURN_ENDIAN_SWAP_INT32(finish[0]) & 0x01ff) - 50;
+		INT32 ypos   = (BURN_ENDIAN_SWAP_INT32(finish[0]) >> 16)    - 16;
+		INT32 attr   =  BURN_ENDIAN_SWAP_INT32(finish[1]) >> 16;
+		INT32 tileno = (BURN_ENDIAN_SWAP_INT32(finish[1]) & 0xffff) | ((attr & 0x8000) << 1);
 		finish -= 2;
 
 		INT32 priority = attr & 0x1000;
@@ -490,9 +490,9 @@ static void draw_layer(INT32 offset, INT32 scrollx, INT32 scrolly)
 
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		INT32 code  =  vidram[offs] & 0xffff;
-		INT32 color = (vidram[offs] >> 16) & 0x1f;
-		INT32 flipx = (vidram[offs] >> 16) & 0x80;
+		INT32 code  =  BURN_ENDIAN_SWAP_INT32(vidram[offs]) & 0xffff;
+		INT32 color = (BURN_ENDIAN_SWAP_INT32(vidram[offs]) >> 16) & 0x1f;
+		INT32 flipx = (BURN_ENDIAN_SWAP_INT32(vidram[offs]) >> 16) & 0x80;
 
 		silkroad_draw_tile(code + 0x18000, sx, sy, color, flipx);
 	}

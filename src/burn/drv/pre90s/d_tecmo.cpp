@@ -1480,6 +1480,45 @@ struct BurnDriver BurnDrvSilkwrmj = {
 	256, 224, 4, 3
 };
 
+// Silk Worm (bootleg)
+
+static struct BurnRomInfo silkwormbRomDesc[] = {
+	{ "e3.4",		    0x10000, 0x3d86fd58, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "e4.5",		    0x10000, 0xa6c7bb51, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "e2.3",		    0x08000, 0xb7a3fb80, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
+
+	{ "e1.2",		    0x08000, 0xe80a1cd9, 3 | BRF_GRA },	      //  3 - Characters
+
+	{ "e5.6",		    0x10000, 0x1138d159, 4 | BRF_GRA },	      //  4 - Sprites
+	{ "e6.7",		    0x10000, 0xd96214f7, 4 | BRF_GRA },	      //  5
+	{ "e7.8",		    0x10000, 0x0494b38e, 4 | BRF_GRA },	      //  6
+	{ "e8.9",		    0x10000, 0x8ce3cdf5, 4 | BRF_GRA },	      //  7
+
+	{ "e9.10",	        0x10000, 0x8c7138bb, 5 | BRF_GRA },	      //  8 - Foreground Tiles
+	{ "e10.11",	        0x08000, 0xc0c4687d, 5 | BRF_GRA },	      //  9
+	{ "e11.12",	        0x10000, 0xbb0f568f, 5 | BRF_GRA },	      // 10
+	{ "e12.13",	        0x08000, 0xfc472811, 5 | BRF_GRA },	      // 11
+
+	{ "e13.14",	        0x10000, 0x409df64b, 6 | BRF_GRA },	      // 12 - Background Tiles
+	{ "e14.15",	        0x08000, 0xb02acdb6, 6 | BRF_GRA },	      // 13
+	{ "e15.16",	        0x08000, 0xcaf7b25e, 6 | BRF_GRA },	      // 14
+	{ "e16.17",	        0x08000, 0x7ec93873, 6 | BRF_GRA },	      // 15
+
+};
+
+STD_ROM_PICK(silkwormb)
+STD_ROM_FN(silkwormb)
+
+struct BurnDriver BurnDrvSilkwormb = {
+	"silkwormb", "silkworm", NULL, NULL, "1988",
+	"Silk Worm (bootleg)\0", NULL, "Tecmo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, silkwormbRomInfo, silkwormbRomName, NULL, NULL, SilkwormInputInfo, SilkwormDIPInfo,
+	SilkwormInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
 
 // Back Fire (Tecmo) (Japan, Bootleg, Prototype?)
 

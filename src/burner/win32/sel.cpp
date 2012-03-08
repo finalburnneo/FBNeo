@@ -42,6 +42,52 @@ static HICON hDrvIcon[9999];
 
 static int RomInfoDialog();
 
+// Dialog Sizing
+int nSelDlgWidth = 750;
+int nSelDlgHeight = 588;
+static int nDlgInitialWidth;
+static int nDlgInitialHeight;
+static int nDlgOptionsGrpInitialPos[4];
+static int nDlgAvailableChbInitialPos[4];
+static int nDlgUnavailableChbInitialPos[4];
+static int nDlgAlwaysClonesChbInitialPos[4];
+static int nDlgZipnamesChbInitialPos[4];
+static int nDlgLatinTextChbInitialPos[4];
+static int nDlgRomDirsBtnInitialPos[4];
+static int nDlgScanRomsBtnInitialPos[4];
+static int nDlgFilterGrpInitialPos[4];
+static int nDlgFilterTreeInitialPos[4];
+static int nDlgIpsGrpInitialPos[4];
+static int nDlgApplyIpsChbInitialPos[4];
+static int nDlgIpsManBtnInitialPos[4];
+static int nDlgSearchGrpInitialPos[4];
+static int nDlgSearchTxtInitialPos[4];
+static int nDlgCancelBtnInitialPos[4];
+static int nDlgPlayBtnInitialPos[4];
+static int nDlgPreviewGrpInitialPos[4];
+static int nDlgPreviewImgHInitialPos[4];
+static int nDlgPreviewImgVInitialPos[4];
+static int nDlgTitleGrpInitialPos[4];
+static int nDlgTitleImgHInitialPos[4];
+static int nDlgTitleImgVInitialPos[4];
+static int nDlgWhiteBoxInitialPos[4];
+static int nDlgGameInfoLblInitialPos[4];
+static int nDlgRomNameLblInitialPos[4];
+static int nDlgRomInfoLblInitialPos[4];
+static int nDlgReleasedByLblInitialPos[4];
+static int nDlgGenreLblInitialPos[4];
+static int nDlgNotesLblInitialPos[4];
+static int nDlgGameInfoTxtInitialPos[4];
+static int nDlgRomNameTxtInitialPos[4];
+static int nDlgRomInfoTxtInitialPos[4];
+static int nDlgReleasedByTxtInitialPos[4];
+static int nDlgGenreTxtInitialPos[4];
+static int nDlgNotesTxtInitialPos[4];
+static int nDlgDrvCountTxtInitialPos[4];
+static int nDlgDrvRomInfoBtnInitialPos[4];
+static int nDlgSelectGameGrpInitialPos[4];
+static int nDlgSelectGameLstInitialPos[4];
+
 // Filter TreeView
 HWND hFilterList					= NULL;
 HTREEITEM hFilterCapcomMisc			= NULL;
@@ -210,6 +256,90 @@ static unsigned int nTmpDrvCount;
 // prototype  -----------------------
 static void RebuildEverything();
 // ----------------------------------
+
+// Dialog sizing support functions and macros (everything working in client co-ords)
+#define GetInititalControlPos(a, b)								\
+	GetWindowRect(GetDlgItem(hSelDlg, a), &rect);				\
+	memset(&point, 0, sizeof(POINT));							\
+	point.x = rect.left;										\
+	point.y = rect.top;											\
+	ScreenToClient(hSelDlg, &point);							\
+	b[0] = point.x;												\
+	b[1] = point.y;												\
+	GetClientRect(GetDlgItem(hSelDlg, a), &rect);				\
+	b[2] = rect.right;											\
+	b[3] = rect.bottom;
+	
+#define SetControlPosAlignTopRight(a, b)						\
+	SetWindowPos(GetDlgItem(hSelDlg, a), hSelDlg, b[0] - xDelta, b[1], 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOSENDCHANGING);
+	
+#define SetControlPosAlignTopLeft(a, b)							\
+	SetWindowPos(GetDlgItem(hSelDlg, a), hSelDlg, b[0], b[1], 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOSENDCHANGING);
+	
+#define SetControlPosAlignBottomRight(a, b)						\
+	SetWindowPos(GetDlgItem(hSelDlg, a), hSelDlg, b[0] - xDelta, b[1] - yDelta, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOSENDCHANGING);
+	
+#define SetControlPosAlignBottomLeftResizeHor(a, b)				\
+	SetWindowPos(GetDlgItem(hSelDlg, a), hSelDlg, b[0], b[1] - yDelta, b[2] - xDelta, b[3], SWP_NOZORDER | SWP_NOSENDCHANGING);
+	
+#define SetControlPosAlignTopRightResizeVert(a, b)				\
+	xScrollBarDelta = (a == IDC_TREE2) ? -18 : 0;				\
+	SetWindowPos(GetDlgItem(hSelDlg, a), hSelDlg, b[0] - xDelta, b[1], b[2] - xScrollBarDelta, b[3] - yDelta, SWP_NOZORDER | SWP_NOSENDCHANGING);
+	
+#define SetControlPosAlignTopLeftResizeHorVert(a, b)			\
+	xScrollBarDelta = (a == IDC_TREE1) ? -18 : 0;				\
+	SetWindowPos(GetDlgItem(hSelDlg, a), hSelDlg, b[0], b[1], b[2] - xDelta - xScrollBarDelta, b[3] - yDelta, SWP_NOZORDER | SWP_NOSENDCHANGING);
+
+static void GetInitialPositions()
+{
+	RECT rect;
+	POINT point;
+
+	GetClientRect(hSelDlg, &rect);
+	nDlgInitialWidth = rect.right;
+	nDlgInitialHeight = rect.bottom;
+	
+	GetInititalControlPos(IDC_STATIC_OPT, nDlgOptionsGrpInitialPos);
+	GetInititalControlPos(IDC_CHECKAVAILABLE, nDlgAvailableChbInitialPos);
+	GetInititalControlPos(IDC_CHECKUNAVAILABLE, nDlgUnavailableChbInitialPos);
+	GetInititalControlPos(IDC_CHECKAUTOEXPAND, nDlgAlwaysClonesChbInitialPos);
+	GetInititalControlPos(IDC_SEL_SHORTNAME, nDlgZipnamesChbInitialPos);
+	GetInititalControlPos(IDC_SEL_ASCIIONLY, nDlgLatinTextChbInitialPos);
+	GetInititalControlPos(IDROM, nDlgRomDirsBtnInitialPos);
+	GetInititalControlPos(IDRESCAN, nDlgScanRomsBtnInitialPos);
+	GetInititalControlPos(IDC_STATIC_SYS, nDlgFilterGrpInitialPos);
+	GetInititalControlPos(IDC_TREE2, nDlgFilterTreeInitialPos);
+	GetInititalControlPos(IDC_SEL_IPSGROUP, nDlgIpsGrpInitialPos);
+	GetInititalControlPos(IDC_SEL_APPLYIPS, nDlgApplyIpsChbInitialPos);
+	GetInititalControlPos(IDC_SEL_IPSMANAGER, nDlgIpsManBtnInitialPos);
+	GetInititalControlPos(IDC_SEL_SEARCHGROUP, nDlgSearchGrpInitialPos);
+	GetInititalControlPos(IDC_SEL_SEARCH, nDlgSearchTxtInitialPos);	
+	GetInititalControlPos(IDCANCEL, nDlgCancelBtnInitialPos);
+	GetInititalControlPos(IDOK, nDlgPlayBtnInitialPos);
+	GetInititalControlPos(IDC_STATIC2, nDlgPreviewGrpInitialPos);
+	GetInititalControlPos(IDC_SCREENSHOT_H, nDlgPreviewImgHInitialPos);
+	GetInititalControlPos(IDC_SCREENSHOT_V, nDlgPreviewImgVInitialPos);
+	GetInititalControlPos(IDC_STATIC3, nDlgTitleGrpInitialPos);
+	GetInititalControlPos(IDC_SCREENSHOT2_H, nDlgTitleImgHInitialPos);
+	GetInititalControlPos(IDC_SCREENSHOT2_V, nDlgTitleImgVInitialPos);
+	GetInititalControlPos(IDC_STATIC_INFOBOX, nDlgWhiteBoxInitialPos);
+	GetInititalControlPos(IDC_LABELCOMMENT, nDlgGameInfoLblInitialPos);
+	GetInititalControlPos(IDC_LABELROMNAME, nDlgRomNameLblInitialPos);
+	GetInititalControlPos(IDC_LABELROMINFO, nDlgRomInfoLblInitialPos);
+	GetInititalControlPos(IDC_LABELSYSTEM, nDlgReleasedByLblInitialPos);
+	GetInititalControlPos(IDC_LABELGENRE, nDlgGenreLblInitialPos);
+	GetInititalControlPos(IDC_LABELNOTES, nDlgNotesLblInitialPos);
+	GetInititalControlPos(IDC_TEXTCOMMENT, nDlgGameInfoTxtInitialPos);
+	GetInititalControlPos(IDC_TEXTROMNAME, nDlgRomNameTxtInitialPos);
+	GetInititalControlPos(IDC_TEXTROMINFO, nDlgRomInfoTxtInitialPos);
+	GetInititalControlPos(IDC_TEXTSYSTEM, nDlgReleasedByTxtInitialPos);
+	GetInititalControlPos(IDC_TEXTGENRE, nDlgGenreTxtInitialPos);
+	GetInititalControlPos(IDC_TEXTNOTES, nDlgNotesTxtInitialPos);
+	GetInititalControlPos(IDC_DRVCOUNT, nDlgDrvCountTxtInitialPos);
+	GetInititalControlPos(IDROMINFO, nDlgDrvRomInfoBtnInitialPos);
+	GetInititalControlPos(IDC_STATIC1, nDlgSelectGameGrpInitialPos);
+	GetInititalControlPos(IDC_TREE1, nDlgSelectGameLstInitialPos);
+}
 
 // Check if a specified driver is working
 static bool CheckWorkingStatus(int nDriver)
@@ -577,6 +707,12 @@ static void MyEndDialog()
 		hDrvIconMiss = NULL;
 	}
 	
+	RECT rect;
+
+	GetClientRect(hSelDlg, &rect);
+	nSelDlgWidth = rect.right;
+	nSelDlgHeight = rect.bottom;
+	
 	EndDialog(hSelDlg, 0);
 }
 
@@ -807,9 +943,9 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 		hNewImage = PNGLoadBitmap(hSelDlg, NULL, 213, 160, 2);
 	}
 
-	if (hPrevBmp) {
-		DeleteObject((HGDIOBJ)hPrevBmp);
-	}
+//	if (hPrevBmp) {
+//		DeleteObject((HGDIOBJ)hPrevBmp);
+//	}
 	hPrevBmp = hNewImage;
 
 	if (bImageOrientation == 0) {
@@ -1107,6 +1243,12 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 		HICON hIcon = LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));
 		SendMessage(hSelDlg, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);		// Set the Game Selection dialog icon.
+		
+		GetInitialPositions();
+		
+		SetWindowPos(hDlg, NULL, 0, 0, nSelDlgWidth, nSelDlgHeight, SWP_NOZORDER);
+		
+		WndInMid(hDlg, hParent);
 		
 		return TRUE;
 	}
@@ -1442,6 +1584,82 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		nDialogSelect = nOldDlgSelected;
 		MyEndDialog();
 		DeleteObject(hWhiteBGBrush);
+		return 0;
+	}
+	
+	if (Msg == WM_GETMINMAXINFO) {
+		MINMAXINFO *info = (MINMAXINFO*)lParam;
+		
+		info->ptMinTrackSize.x = nDlgInitialWidth;
+		info->ptMinTrackSize.y = nDlgInitialHeight;
+		
+		return 0;
+	}
+	
+	if (Msg == WM_WINDOWPOSCHANGED) {
+		RECT rc;
+		int xDelta;
+		int yDelta;
+		int xScrollBarDelta;
+		
+		if (nDlgInitialWidth == 0 || nDlgInitialHeight == 0) return 0;
+
+		GetClientRect(hDlg, &rc);
+		
+		xDelta = nDlgInitialWidth - rc.right;
+		yDelta = nDlgInitialHeight - rc.bottom;
+		
+		if (xDelta == 0 && yDelta == 0) return 0;
+				
+		SetControlPosAlignTopRight(IDC_STATIC_OPT, nDlgOptionsGrpInitialPos);
+		SetControlPosAlignTopRight(IDC_CHECKAVAILABLE, nDlgAvailableChbInitialPos);	
+		SetControlPosAlignTopRight(IDC_CHECKUNAVAILABLE, nDlgUnavailableChbInitialPos);
+		SetControlPosAlignTopRight(IDC_CHECKAUTOEXPAND, nDlgAlwaysClonesChbInitialPos);
+		SetControlPosAlignTopRight(IDC_SEL_SHORTNAME, nDlgZipnamesChbInitialPos);
+		SetControlPosAlignTopRight(IDC_SEL_ASCIIONLY, nDlgLatinTextChbInitialPos);
+		SetControlPosAlignTopRight(IDROM, nDlgRomDirsBtnInitialPos);
+		SetControlPosAlignTopRight(IDRESCAN, nDlgScanRomsBtnInitialPos);
+		
+		SetControlPosAlignTopRightResizeVert(IDC_STATIC_SYS, nDlgFilterGrpInitialPos);
+		SetControlPosAlignTopRightResizeVert(IDC_TREE2, nDlgFilterTreeInitialPos);
+		
+		SetControlPosAlignBottomRight(IDC_SEL_IPSGROUP, nDlgIpsGrpInitialPos);
+		SetControlPosAlignBottomRight(IDC_SEL_APPLYIPS, nDlgApplyIpsChbInitialPos);
+		SetControlPosAlignBottomRight(IDC_SEL_IPSMANAGER, nDlgIpsManBtnInitialPos);
+		SetControlPosAlignBottomRight(IDC_SEL_SEARCHGROUP, nDlgSearchGrpInitialPos);
+		SetControlPosAlignBottomRight(IDC_SEL_SEARCH, nDlgSearchTxtInitialPos);	
+		SetControlPosAlignBottomRight(IDCANCEL, nDlgCancelBtnInitialPos);
+		SetControlPosAlignBottomRight(IDOK, nDlgPlayBtnInitialPos);
+		
+		SetControlPosAlignTopLeft(IDC_STATIC2, nDlgPreviewGrpInitialPos);
+		SetControlPosAlignTopLeft(IDC_SCREENSHOT_H, nDlgPreviewImgHInitialPos);
+		SetControlPosAlignTopLeft(IDC_SCREENSHOT_V, nDlgPreviewImgVInitialPos);
+		SetControlPosAlignTopLeft(IDC_STATIC3, nDlgTitleGrpInitialPos);
+		SetControlPosAlignTopLeft(IDC_SCREENSHOT2_H, nDlgTitleImgHInitialPos);
+		SetControlPosAlignTopLeft(IDC_SCREENSHOT2_V, nDlgTitleImgVInitialPos);
+		
+		SetControlPosAlignBottomLeftResizeHor(IDC_STATIC_INFOBOX, nDlgWhiteBoxInitialPos);
+		SetControlPosAlignBottomLeftResizeHor(IDC_LABELCOMMENT, nDlgGameInfoLblInitialPos);
+		SetControlPosAlignBottomLeftResizeHor(IDC_LABELROMNAME, nDlgRomNameLblInitialPos);
+		SetControlPosAlignBottomLeftResizeHor(IDC_LABELROMINFO, nDlgRomInfoLblInitialPos);
+		SetControlPosAlignBottomLeftResizeHor(IDC_LABELSYSTEM, nDlgReleasedByLblInitialPos);
+		SetControlPosAlignBottomLeftResizeHor(IDC_LABELGENRE, nDlgGenreLblInitialPos);
+		SetControlPosAlignBottomLeftResizeHor(IDC_LABELNOTES, nDlgNotesLblInitialPos);
+		SetControlPosAlignBottomLeftResizeHor(IDC_TEXTCOMMENT, nDlgGameInfoTxtInitialPos);
+		SetControlPosAlignBottomLeftResizeHor(IDC_TEXTROMNAME, nDlgRomNameTxtInitialPos);
+		SetControlPosAlignBottomLeftResizeHor(IDC_TEXTROMINFO, nDlgRomInfoTxtInitialPos);
+		SetControlPosAlignBottomLeftResizeHor(IDC_TEXTSYSTEM, nDlgReleasedByTxtInitialPos);
+		SetControlPosAlignBottomLeftResizeHor(IDC_TEXTGENRE, nDlgGenreTxtInitialPos);
+		SetControlPosAlignBottomLeftResizeHor(IDC_TEXTNOTES, nDlgNotesTxtInitialPos);
+		SetControlPosAlignBottomLeftResizeHor(IDC_DRVCOUNT, nDlgDrvCountTxtInitialPos);
+		SetControlPosAlignBottomRight(IDROMINFO, nDlgDrvRomInfoBtnInitialPos);
+		
+		SetControlPosAlignTopLeftResizeHorVert(IDC_STATIC1, nDlgSelectGameGrpInitialPos);
+		SetControlPosAlignTopLeftResizeHorVert(IDC_TREE1, nDlgSelectGameLstInitialPos);
+
+		InvalidateRect(hSelDlg, NULL, true);
+		UpdateWindow(hSelDlg);
+
 		return 0;
 	}
 

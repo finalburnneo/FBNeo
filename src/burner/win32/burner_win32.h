@@ -286,6 +286,8 @@ extern int nLoadMenuShowX;
 extern int nLoadMenuBoardTypeFilter;
 extern int nLoadMenuGenreFilter;
 extern int nLoadMenuFamilyFilter;
+extern int nSelDlgWidth;
+extern int nSelDlgHeight;
 int SelDialog(int nMVSCartsOnly, HWND hParentWND);
 extern UINT_PTR nTimer;
 extern HBITMAP hPrevBmp;

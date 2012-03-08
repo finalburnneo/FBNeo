@@ -181,6 +181,8 @@ int ConfigAppLoad()
 		VAR(nCDEmuSelect);
 		PAT(CDEmuImage);
 
+		VAR(nSelDlgWidth);
+		VAR(nSelDlgHeight);
 		VAR(nLoadMenuShowX);
 		VAR(nLoadMenuBoardTypeFilter);
 		VAR(nLoadMenuGenreFilter);
@@ -505,6 +507,10 @@ int ConfigAppSave()
 	
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- Load Game Dialogs ------------------------------------------------------\n"));
+	_ftprintf(h, _T("\n// Load game dialog dimensions (in win32 client co-ordinates)\n"));
+	VAR(nSelDlgWidth);
+	VAR(nSelDlgHeight);
+	
 	_ftprintf(h, _T("\n// Load game dialog options\n"));
 	VAR(nLoadMenuShowX);
 	

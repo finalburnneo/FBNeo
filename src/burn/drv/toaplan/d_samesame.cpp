@@ -770,7 +770,7 @@ STD_ROM_FN(samesame)
 struct BurnDriver BurnDrvSamesame = {
 	"samesame", "fireshrk", NULL, NULL, "1989",
 	"Same! Same! Same! (2 player alternating ver.)\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
-	L"\u9BAB!\u9BAB!\u9BAB! (2 player alternating ver.)\0Same! Same! Same! (2 player alternating ver.)\0", NULL, NULL, NULL,
+	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same! (2 player alternating ver.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, samesameRomInfo, samesameRomName, NULL, NULL, SamesameInputInfo, SamesameDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,

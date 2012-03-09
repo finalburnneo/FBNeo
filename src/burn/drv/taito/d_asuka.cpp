@@ -1833,7 +1833,7 @@ static INT32 EtoInit()
 struct BurnDriver BurnDrvEto = {
 	"eto", NULL, NULL, NULL, "1994",
 	"Kokontouzai Eto Monogatari (Japan)\0", NULL, "Visco", "Taito Misc",
-	L"\u53E4\u4ECA\u6771\u897F\u5E72\u652F\u7269\u8A9E (Japan)\0Kokontouzai Eto Monogatari (Japan)\0", NULL, NULL, NULL,
+	L"\u53E4\u4ECA\u6771\u897F\u5E72\u652F\u7269\u8A9E\0Kokontouzai Eto Monogatari (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, etoRomInfo, etoRomName, NULL, NULL, AsukaInputInfo, EtoDIPInfo,
 	EtoInit, TaitoExit, EtoFrame, DrvDraw, DrvScan, NULL, 0x1000,
@@ -2144,7 +2144,7 @@ STD_ROM_FN(jigkmgri)
 struct BurnDriver BurnDrvJigkmgri = {
 	"jigkmgri", "bonzeadv", NULL, NULL, "1988",
 	"Jigoku Meguri (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
-	L"\u5730\u7344\u3081\u3050\u308A (Japan)\0Jigoku Meguri (Japan)\0", NULL, NULL, NULL,
+	L"\u5730\u7344\u3081\u3050\u308A\0Jigoku Meguri (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, jigkmgriRomInfo, jigkmgriRomName, NULL, NULL, BonzeadvInputInfo, JigkmgriDIPInfo,
 	BonzeInit, TaitoExit, BonzeFrame, DrvDraw, DrvScan, NULL, 0x1000,

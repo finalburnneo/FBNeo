@@ -718,7 +718,7 @@ STD_ROM_FN(ginganin)
 struct BurnDriver BurnDrvGinganin = {
 	"ginganin", NULL, NULL, NULL, "1987",
 	"Ginga NinkyouDen (set 1)\0", NULL, "Jaleco", "Miscellaneous",
-	L"\u9280\u6CB3\u4EFB\u4FA0\u4F1D (set 1)\0Ginga NinkyouDen (set 1)\0", NULL, NULL, NULL,
+	L"\u9280\u6CB3\u4EFB\u4FA0\u4F1D\0Ginga NinkyouDen (set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, ginganinRomInfo, ginganinRomName, NULL, NULL, GinganinInputInfo, GinganinDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
@@ -759,7 +759,7 @@ STD_ROM_FN(ginganina)
 struct BurnDriver BurnDrvGinganina = {
 	"ginganina", "ginganin", NULL, NULL, "1987",
 	"Ginga NinkyouDen (set 2)\0", NULL, "Jaleco", "Miscellaneous",
-	L"\u9280\u6CB3\u4EFB\u4FA0\u4F1D (set 2)\0Ginga NinkyouDen (set 2)\0", NULL, NULL, NULL,
+	L"\u9280\u6CB3\u4EFB\u4FA0\u4F1D\0Ginga NinkyouDen (set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, ginganinaRomInfo, ginganinaRomName, NULL, NULL, GinganinInputInfo, GinganinDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,

@@ -54,6 +54,9 @@ PERL = 1
 # Endianness
 LSB_FIRST = 1
 
+# Include png.h from burner.h
+INCLUDE_LIB_PNGH = 1
+
 
 #
 #	execute an appropriate system-specific makefile

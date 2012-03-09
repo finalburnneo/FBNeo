@@ -196,6 +196,10 @@ ifdef LSB_FIRST
 	DEF	:= $(DEF) /DLSB_FIRST
 endif
 
+ifdef INCLUDE_LIB_PNGH
+	DEF := $(DEF) /DINCLUDE_LIB_PNGH
+endif
+
 ifdef BUILD_A68K
 	DEF	:= $(DEF) /DBUILD_A68K
 endif

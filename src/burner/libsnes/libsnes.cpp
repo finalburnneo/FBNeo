@@ -135,7 +135,7 @@ static int archive_load_rom(uint8_t *dest, int *wrote, int i)
 
    int archive = g_find_list[i].nArchive;
 
-   if (ZipOpen(g_find_list_path[archive].c_str()) != 0)
+   if (ZipOpen((char*)g_find_list_path[archive].c_str()) != 0)
       return 1;
 
    BurnRomInfo ri = {0};
@@ -185,7 +185,7 @@ static bool open_archive()
 
    for (unsigned z = 0; z < g_find_list_path.size(); z++)
    {
-      if (ZipOpen(g_find_list_path[z].c_str()) != 0)
+      if (ZipOpen((char*)g_find_list_path[z].c_str()) != 0)
          continue;
 
       ZipEntry *list = NULL;

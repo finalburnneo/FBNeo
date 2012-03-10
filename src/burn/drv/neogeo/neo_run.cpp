@@ -240,6 +240,8 @@ static INT32 nIRQCycles;
 static INT32 nNeoWatchdog;
 #endif
 
+bool bDisableNeoWatchdog = false;
+
 static INT32 nNeoCDIRQVector;
 static INT32 nNeoCDIRQVectorAck;
 
@@ -4249,6 +4251,8 @@ INT32 NeoExit()
 	}
 
 	recursing = false;
+	
+	bDisableNeoWatchdog = false;
 
 	// release the NeoGeo CD information object if needed
 	NeoCDInfo_Exit();
@@ -4547,12 +4551,14 @@ INT32 NeoFrame()
 	// If the watchdog isn't reset every 8 frames, reset the system
 	// This can't be 100% accurate, as the 68000 instruction timings are not 100%
 	if ((nNeoSystemType & NEO_SYS_CART) && nNeoWatchdog > nCyclesTotal[0] * 8) {
+		if (bDisableNeoWatchdog == false) {
 #if 1 && defined FBA_DEBUG
-		SekOpen(0);
-		bprintf(PRINT_IMPORTANT, _T(" ** Watchdog triggered system reset (PC: 0x%06X)\n"), SekGetPC(-1));
-		SekClose();
+			SekOpen(0);
+			bprintf(PRINT_IMPORTANT, _T(" ** Watchdog triggered system reset (PC: 0x%06X)\n"), SekGetPC(-1));
+			SekClose();
 #endif
-		neogeoReset();
+			neogeoReset();
+		}
 	}
 #endif
 //bprintf(PRINT_NORMAL, _T("***\n"));

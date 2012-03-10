@@ -13565,13 +13565,20 @@ static struct BurnRomInfo neopongaRomDesc[] = {
 STDROMPICKEXT(neoponga, neoponga, neogeo)
 STD_ROM_FN(neoponga)
 
-struct BurnDriverD BurnDrvneoponga = {
+static INT32 neopongaInit()
+{
+	bDisableNeoWatchdog = true;
+	
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvneoponga = {
 	"neoponga", "neopong", "neogeo", NULL, "2002",
 	"Neo Pong (ver 1.0)\0", NULL, "Neo Dev Corporation", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_BALLPADDLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_BALLPADDLE, 0,
 	NULL, neopongaRomInfo, neopongaRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	neopongaInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 

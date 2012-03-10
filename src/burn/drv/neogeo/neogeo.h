@@ -79,6 +79,8 @@ extern UINT8 *NeoSpriteRAM, *NeoTextRAM;
 
 extern bool bNeoEnableGraphics;
 
+extern bool bDisableNeoWatchdog;
+
 INT32 NeoInit();
 INT32 NeoCDInit();
 INT32 NeoExit();

@@ -2493,6 +2493,51 @@ struct BurnDriver BurnDrvCninja = {
 	256, 240, 4, 3
 };
 
+// Caveman Ninja (World, alt ver.)
+
+static struct BurnRomInfo cninja2RomDesc[] = {
+	{ "gn-01.1k",		0x020000, 0xa6c40959, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "gn-04.3k",		0x020000, 0x2e01d1fd, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gn-02.2j",		0x020000, 0x18f0527c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "gn-05.3j",		0x020000, 0xea4b6d53, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "gn-00.rom",		0x020000, 0x0b110b16, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "gn-03.rom",		0x020000, 0x1e28e697, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "gl-07.rom",		0x010000, 0xca8bef96, 2 | BRF_PRG | BRF_ESS }, //  6 Huc6280 Code
+
+	{ "gl-08.rom",		0x010000, 0x33a2b400, 3 | BRF_GRA }, 	       //  7 Characters
+	{ "gl-09.rom",		0x010000, 0x5a2d4752, 3 | BRF_GRA }, 	       //  8
+
+	{ "mag-02.rom",		0x080000, 0xde89c69a, 4 | BRF_GRA }, 	       //  9 Foreground Tiles
+ 
+	{ "mag-00.rom",		0x080000, 0xa8f05d33, 5 | BRF_GRA }, 	       // 10 Background Tiles
+	{ "mag-01.rom",		0x080000, 0x5b399eed, 5 | BRF_GRA }, 	       // 11
+
+	{ "mag-03.rom",		0x080000, 0x2220eb9f, 6 | BRF_GRA }, 	       // 12 Sprites
+	{ "mag-05.rom",		0x080000, 0x56a53254, 6 | BRF_GRA }, 	       // 13
+	{ "mag-04.rom",		0x080000, 0x144b94cc, 6 | BRF_GRA }, 	       // 14
+	{ "mag-06.rom",		0x080000, 0x82d44749, 6 | BRF_GRA }, 	       // 15
+
+	{ "gl-06.rom",		0x020000, 0xd92e519d, 7 | BRF_SND }, 	       // 16 OKI M6295 Samples 0
+
+	{ "mag-07.rom",		0x080000, 0x08eb5264, 8 | BRF_SND }, 	       // 17 OKI M6295 Samples 1
+
+	{ "mb7122h.7v",		0x000400, 0xa1267336, 0 | BRF_OPT }, 	       // 18 Unused PROMs
+};
+
+STD_ROM_PICK(cninja2)
+STD_ROM_FN(cninja2)
+
+struct BurnDriver BurnDrvCninja2 = {
+	"cninja2", "cninja", NULL, NULL, "1991",
+	"Caveman Ninja (World, alt ver.)\0", NULL, "Data East Corporation", "DECO IC16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	NULL, cninja2RomInfo, cninja2RomName, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
+	CninjaInit, DrvExit, CninjaFrame, CninjaDraw, DrvScan, &DrvRecalc, 0x800,
+	256, 240, 4, 3
+};
+
 
 // Caveman Ninja (World ver 1)
 

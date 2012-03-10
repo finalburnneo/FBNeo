@@ -14,6 +14,12 @@
         #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#if defined(__APPLE__)
+	#define fopen64 fopen
+	#define ftello64 ftell
+	#define fseeko64 fseek
+#endif
+
 #include "ioapi.h"
 
 voidpf call_zopen64 (const zlib_filefunc64_32_def* pfilefunc,const void*filename,int mode)

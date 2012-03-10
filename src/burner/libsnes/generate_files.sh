@@ -5,7 +5,7 @@ if [ -f ../../generated/driverlist.h ]; then
    exit 0
 fi
 
-cd ../../src
+cd ../..
 mkdir -p generated
 
 #generate gamelist.txt and generated/driverlist.h

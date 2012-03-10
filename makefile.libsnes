@@ -1,4 +1,4 @@
-DEBUG=0
+DEBUG = 0
 
 ifeq ($(platform),)
 platform = unix
@@ -11,10 +11,19 @@ else ifneq ($(findstring MINGW,$(shell uname -a)),)
 endif
 endif
 
+MAIN_FBA_DIR := src
+FBA_BURN_DIR := $(MAIN_FBA_DIR)/burn
+FBA_BURN_DRIVERS_DIR := $(MAIN_FBA_DIR)/burn/drv
+FBA_BURNER_DIR := $(MAIN_FBA_DIR)/burner
+LIBSNES_DIR := $(FBA_BURNER_DIR)/libsnes
+FBA_CPU_DIR := $(MAIN_FBA_DIR)/cpu
+FBA_LIB_DIR := $(MAIN_FBA_DIR)/dep/libs
+FBA_INTERFACE_DIR := $(MAIN_FBA_DIR)/intf
+
 ifeq ($(platform), unix)
    TARGET := libsnes.so
    fpic := -fPIC
-   SHARED := -shared -Wl,-no-undefined
+   SHARED := -shared -Wl,-no-undefined -Wl,--version-script=$(LIBSNES_DIR)/link.T
    ENDIANNESS_DEFINES := -DLSB_FIRST
 else ifeq ($(platform), osx)
    TARGET := libsnes.dylib
@@ -23,7 +32,6 @@ else ifeq ($(platform), osx)
    ENDIANNESS_DEFINES := -DLSB_FIRST
 else ifeq ($(platform), ps3)
    TARGET := libsnes.a
-   SHARED := -shared, -Wl, --version-script=libsnes/link.T
    CC = ppu-lv2-gcc
    CXX = ppu-lv2-g++
    AR = ppu-lv2-ar
@@ -47,21 +55,12 @@ else
    TARGET := snes.dll
    CC = gcc
    CXX = g++
-   SHARED := -shared -Wl,-no-undefined
+   SHARED := -shared -Wl,-no-undefined -Wl,--version-script=$(LIBSNES_DIR)/link.T
    LDFLAGS += -static-libgcc -static-libstdc++
    ENDIANNESS_DEFINES := -DLSB_FIRST
 endif
 
 all: $(TARGET)
-
-MAIN_FBA_DIR := src
-FBA_BURN_DIR := $(MAIN_FBA_DIR)/burn
-FBA_BURN_DRIVERS_DIR := $(MAIN_FBA_DIR)/burn/drv
-FBA_BURNER_DIR := $(MAIN_FBA_DIR)/burner
-LIBSNES_DIR := $(FBA_BURNER_DIR)/libsnes
-FBA_CPU_DIR := $(MAIN_FBA_DIR)/cpu
-FBA_LIB_DIR := $(MAIN_FBA_DIR)/dep/libs
-FBA_INTERFACE_DIR := $(MAIN_FBA_DIR)/intf
 
 BURN_BLACKLIST := $(FBA_BURN_DIR)/zet_c68k.cpp \
 	$(FBA_BURN_DIR)/sek_c68k.cpp \
@@ -174,7 +173,7 @@ endif
 
 CFLAGS += -std=gnu99 $(fpic) -Wno-write-strings $(FBA_DEFINES)
 CXXFLAGS += $(fpic) -Wno-write-strings $(FBA_DEFINES)
-LDFLAGS += -Wl,-no-undefined $(fpic) -Wl,--version-script=$(LIBSNES_DIR)/link.T
+LDFLAGS += $(fpic)
 
 INCDIRS := -I$(FBA_BURNER_DIR)/win32 \
 	-I$(LIBSNES_DIR) \

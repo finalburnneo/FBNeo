@@ -188,6 +188,27 @@ static struct BurnRomInfo DrvbRomDesc[] = {
 STD_ROM_PICK(Drvb)
 STD_ROM_FN(Drvb)
 
+static struct BurnRomInfo Drvb2RomDesc[] = {
+	{ "b-9.2a",        0x04000, 0x40fd0d85, BRF_ESS | BRF_PRG }, 	//  0	M6809 Program Code
+	{ "b-8.3a",        0x08000, 0x26e0116a, BRF_ESS | BRF_PRG }, 	//  1
+	
+	{ "b-4.7a",        0x08000, 0xd076e62e, BRF_ESS | BRF_PRG }, 	//  2	M6502 Program Code
+
+	{ "b-7.9m",        0x08000, 0x9d6f7969, BRF_GRA },	    		//  3	Chars
+	{ "b-6.8m",        0x08000, 0x580e4e43, BRF_GRA },	     		//  4
+	{ "b-5.7m",        0x08000, 0x05ab71d2, BRF_GRA },	     		//  5
+	
+	{ "b-1.1p",        0x08000, 0xa2cdfbea, BRF_GRA },	     		//  6	Sprites
+	{ "b-2.1r",        0x08000, 0xeeb5c3e7, BRF_GRA },	     		//  7
+	{ "b-3.1t",        0x08000, 0x8e18d21d, BRF_GRA },	     		//  8
+	
+	{ "dh-09.bpr",     0x00100, 0xce049b4f, BRF_GRA },	     		//  9	PROMS
+	{ "dh-08.bpr",     0x00100, 0xcdf2180f, BRF_GRA },	     		// 10
+};
+
+STD_ROM_PICK(Drvb2)
+STD_ROM_FN(Drvb2)
+
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = Mem;
@@ -846,10 +867,20 @@ struct BurnDriver BurnDrvSidepcktj = {
 
 struct BurnDriver BurnDrvSidepcktb = {
 	"sidepcktb", "sidepckt", NULL, NULL, "1986",
-	"Side Pocket (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Side Pocket (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	SidepcktbInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x100, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvSidepcktb2 = {
+	"sidepcktb2", "sidepckt", NULL, NULL, "1986",
+	"Side Pocket (bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
+	NULL, Drvb2RomInfo, Drvb2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	SidepcktbInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };

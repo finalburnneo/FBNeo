@@ -2493,13 +2493,13 @@ struct BurnDriver BurnDrvCninja = {
 	256, 240, 4, 3
 };
 
-// Caveman Ninja (World, alt ver.)
+// Caveman Ninja (alternate)
 
-static struct BurnRomInfo cninja2RomDesc[] = {
-	{ "gn-01.1k",		0x020000, 0xa6c40959, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "gn-04.3k",		0x020000, 0x2e01d1fd, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "gn-02.2j",		0x020000, 0x18f0527c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "gn-05.3j",		0x020000, 0xea4b6d53, 1 | BRF_PRG | BRF_ESS }, //  3
+static struct BurnRomInfo cninjaaRomDesc[] = {
+	{ "1.1k",			0x020000, 0xa6c40959, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "4.3k",			0x020000, 0x2e01d1fd, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.2j",			0x020000, 0x18f0527c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "5.3j",			0x020000, 0xea4b6d53, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "gn-00.rom",		0x020000, 0x0b110b16, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "gn-03.rom",		0x020000, 0x1e28e697, 1 | BRF_PRG | BRF_ESS }, //  5
 
@@ -2525,15 +2525,15 @@ static struct BurnRomInfo cninja2RomDesc[] = {
 	{ "mb7122h.7v",		0x000400, 0xa1267336, 0 | BRF_OPT }, 	       // 18 Unused PROMs
 };
 
-STD_ROM_PICK(cninja2)
-STD_ROM_FN(cninja2)
+STD_ROM_PICK(cninjaa)
+STD_ROM_FN(cninjaa)
 
-struct BurnDriver BurnDrvCninja2 = {
-	"cninja2", "cninja", NULL, NULL, "1991",
-	"Caveman Ninja (World, alt ver.)\0", NULL, "Data East Corporation", "DECO IC16",
+struct BurnDriver BurnDrvCninjaa = {
+	"cninjaa", "cninja", NULL, NULL, "1991",
+	"Caveman Ninja (alternate)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
-	NULL, cninja2RomInfo, cninja2RomName, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
+	NULL, cninjaaRomInfo, cninjaaRomName, NULL, NULL, DrvInputInfo, CninjaDIPInfo,
 	CninjaInit, DrvExit, CninjaFrame, CninjaDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
 };

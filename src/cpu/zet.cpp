@@ -685,7 +685,7 @@ INT32 ZetTotalCycles()
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetTotalCycles called when no CPU open\n"));
 #endif
 
-	return nZetCyclesTotal;
+	return nZetCyclesTotal + z80TotalCycles();
 }
 
 void ZetSetBUSREQLine(INT32 nStatus)

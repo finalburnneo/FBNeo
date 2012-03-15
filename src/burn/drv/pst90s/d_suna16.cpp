@@ -1388,6 +1388,16 @@ static INT32 bestbestSynchroniseStream(INT32 nSoundRate)
 	return (INT64)ZetTotalCycles() * nSoundRate / 6000000;
 }
 
+static INT32 bestbestSyncDAC()
+{
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (6000000.0000 / (nBurnFPS / 100.0000))));
+}
+
+static INT32 bssoccerSyncDAC()
+{
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (5000000.0000 / (nBurnFPS / 100.0000))));
+}
+
 static INT32 BestbestInit()
 {
 	INT32 nLen;
@@ -1450,10 +1460,10 @@ static INT32 BestbestInit()
 	
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, bestbest_ay8910_write_a, NULL);
 
-	DACInit(0, 0, 1);
-	DACInit(1, 0, 1);
-	DACInit(2, 0, 1);
-	DACInit(3, 0, 1);
+	DACInit(0, 0, 1, bestbestSyncDAC);
+	DACInit(1, 0, 1, bestbestSyncDAC);
+	DACInit(2, 0, 1, bestbestSyncDAC);
+	DACInit(3, 0, 1, bestbestSyncDAC);
 	DACSetVolShift(0, 2);
 	DACSetVolShift(1, 2);
 	DACSetVolShift(2, 2);
@@ -1518,8 +1528,10 @@ static INT32 SunaqInit()
 
 	BurnYM2151Init(3579545, 25.0);
 
-	DACInit(0, 0, 2);
-	DACInit(1, 0, 2);
+	DACInit(0, 0, 2, bestbestSyncDAC);
+	DACInit(1, 0, 2, bestbestSyncDAC);
+	DACSetVolShift(0, 2);
+	DACSetVolShift(1, 2);
 
 	DrvDoReset();
 
@@ -1590,8 +1602,8 @@ static INT32 UballoonInit()
 
 	BurnYM2151Init(3579545, 25.0);
 
-	DACInit(0, 0, 1);
-	DACInit(1, 0, 1);
+	DACInit(0, 0, 1, bssoccerSyncDAC);
+	DACInit(1, 0, 1, bssoccerSyncDAC);
 	DACSetVolShift(0, 2);
 	DACSetVolShift(1, 2);
 
@@ -1665,10 +1677,10 @@ static INT32 BssoccerInit()
 
 	BurnYM2151Init(3579545, 25.0);
 
-	DACInit(0, 0, 1);
-	DACInit(1, 0, 1);
-	DACInit(2, 0, 1);
-	DACInit(3, 0, 1);
+	DACInit(0, 0, 1, bssoccerSyncDAC);
+	DACInit(1, 0, 1, bssoccerSyncDAC);
+	DACInit(2, 0, 1, bssoccerSyncDAC);
+	DACInit(3, 0, 1, bssoccerSyncDAC);
 	DACSetVolShift(0, 2);
 	DACSetVolShift(1, 2);
 	DACSetVolShift(2, 2);
@@ -1889,7 +1901,7 @@ static INT32 BestbestFrame()
 {
 	INT32 nCyclesTotal[3];
 
-	INT32 nInterleave = nBurnSoundLen ? nBurnSoundLen : 10;
+	INT32 nInterleave = 50;
 	INT32 nSoundBufferPos = 0;
 
 	if (DrvReset) {
@@ -1938,7 +1950,6 @@ static INT32 BestbestFrame()
 				pSoundBuf[(n << 1) + 0] = nSample;
 				pSoundBuf[(n << 1) + 1] = nSample;
 			}
-			DACUpdate(pSoundBuf, nSegmentLength);
 			
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -1964,7 +1975,6 @@ static INT32 BestbestFrame()
 				pSoundBuf[(n << 1) + 0] = nSample;
 				pSoundBuf[(n << 1) + 1] = nSample;
 			}
-			DACUpdate(pSoundBuf, nSegmentLength);
 		}
 	}
 	
@@ -1976,6 +1986,7 @@ static INT32 BestbestFrame()
 			pBurnSoundOut[(i << 1) + 0] += pSoundBuffer[(i << 1) + 0];
 			pBurnSoundOut[(i << 1) + 1] += pSoundBuffer[(i << 1) + 1];
 		}
+		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 	ZetClose();
 
@@ -1988,7 +1999,7 @@ static INT32 BestbestFrame()
 
 static INT32 SunaqFrame()
 {
-	INT32 nInterleave = nBurnSoundLen ? nBurnSoundLen : 10;
+	INT32 nInterleave = 50;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[3];
 
@@ -2001,6 +2012,9 @@ static INT32 SunaqFrame()
 	nCyclesTotal[0] = 6000000 / 60;
 	nCyclesTotal[1] = 3579500 / 60;
 	nCyclesTotal[2] = 6000000 / 60;
+	
+	SekNewFrame();
+	ZetNewFrame();
 	
 	SekOpen(0);
 
@@ -2019,7 +2033,6 @@ static INT32 SunaqFrame()
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			DACUpdate(pSoundBuf, nSegmentLength);
 
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -2031,8 +2044,9 @@ static INT32 SunaqFrame()
 
 		if (nSegmentLength) {
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			DACUpdate(pSoundBuf, nSegmentLength);
 		}
+		
+		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	SekClose();
@@ -2046,7 +2060,7 @@ static INT32 SunaqFrame()
 
 static INT32 UballoonFrame()
 {
-	INT32 nInterleave = nBurnSoundLen ? nBurnSoundLen : 10;
+	INT32 nInterleave = 50;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[3];
 
@@ -2059,6 +2073,9 @@ static INT32 UballoonFrame()
 	nCyclesTotal[0] = 8000000 / 60;
 	nCyclesTotal[1] = 3579500 / 60;
 	nCyclesTotal[2] = 5000000 / 60;
+	
+	SekNewFrame();
+	ZetNewFrame();
 
 	SekOpen(0);
 
@@ -2077,7 +2094,6 @@ static INT32 UballoonFrame()
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			DACUpdate(pSoundBuf, nSegmentLength);
 
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -2090,8 +2106,9 @@ static INT32 UballoonFrame()
 
 		if (nSegmentLength) {
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			DACUpdate(pSoundBuf, nSegmentLength);
 		}
+		
+		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	SekClose();
@@ -2106,7 +2123,7 @@ static INT32 UballoonFrame()
 
 static INT32 BssoccerFrame()
 {
-	INT32 nInterleave = nBurnSoundLen ? nBurnSoundLen : 10;
+	INT32 nInterleave = 50;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[4];
 
@@ -2120,6 +2137,9 @@ static INT32 BssoccerFrame()
 	nCyclesTotal[1] = 3579500 / 60;
 	nCyclesTotal[2] = 5000000 / 60;
 	nCyclesTotal[3] = 5000000 / 60;
+	
+	SekNewFrame();
+	ZetNewFrame();
 
 	SekOpen(0);
 
@@ -2139,7 +2159,6 @@ static INT32 BssoccerFrame()
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			DACUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -2151,8 +2170,9 @@ static INT32 BssoccerFrame()
 
 		if (nSegmentLength) {
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			DACUpdate(pSoundBuf, nSegmentLength);
 		}
+		
+		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	SekClose();

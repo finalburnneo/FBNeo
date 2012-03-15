@@ -1596,7 +1596,7 @@ INT32 GalFrame()
 	INT32 nInterleave = 8;
 	INT32 nSoundBufferPos = 0;
 	
-	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_GALAXIAN) {
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_GALAXIAN || GalSoundType == GAL_SOUND_HARDWARE_TYPE_KINGBALLDAC) {
 		nInterleave = nBurnSoundLen;
 		GalaxianSoundUpdateTimers();
 	}

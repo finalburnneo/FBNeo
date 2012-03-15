@@ -16573,7 +16573,7 @@ UINT8 __fastcall SfxSampleZ80Read(UINT16 a)
 		}
 	}
 
-	return 0xff;
+	return 0;
 }
 
 void __fastcall SfxSampleZ80Write(UINT16 a, UINT8 d)
@@ -16589,29 +16589,21 @@ UINT8 __fastcall SfxSampleZ80PortRead(UINT16 a)
 {
 	a &= 0xff;
 	
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #3 Port Read => %02X\n"), a);
-		}
-	}
-	
-	return 0xff;
+	UINT8 Result = 0xff;
+	if (a & 0x04) Result &= ppi8255_r(2, a & 3);
+	return Result;
 }
 
 void __fastcall SfxSampleZ80PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #3 Port Write => %02X, %02X\n"), a, d);
-		}
-	}
+	if (a & 0x04) ppi8255_w(2, a & 3, d);
+	if (a & 0x10) DACSignedWrite(0, d);
 }
 
 static UINT8 SfxSoundLatch2Read()
 {
-	bprintf(PRINT_NORMAL, _T("Sound Latch2 Read\n"));
 	return GalSoundLatch2;
 }
 
@@ -16641,7 +16633,12 @@ static void SfxPostLoad()
 	ZetSetOutHandler(SfxSampleZ80PortWrite);
 	ZetMapArea(0x0000, GalZ80Rom3Size - 1, 0, GalZ80Rom3);
 	ZetMapArea(0x0000, GalZ80Rom3Size - 1, 2, GalZ80Rom3);
-	ZetClose();	
+	ZetMapArea(0x8000, 0x83ff, 0, GalZ80Ram3);
+	ZetMapArea(0x8000, 0x83ff, 1, GalZ80Ram3);
+	ZetMapArea(0x8000, 0x83ff, 2, GalZ80Ram3);
+	ZetClose();
+	
+	nGalCyclesTotal[2] = (14318000 / 8) / 60;
 }
 
 static INT32 SfxInit()
@@ -16700,7 +16697,12 @@ static void SkelagonPostLoad()
 	ZetSetOutHandler(SfxSampleZ80PortWrite);
 	ZetMapArea(0x0000, GalZ80Rom3Size - 1, 0, GalZ80Rom3);
 	ZetMapArea(0x0000, GalZ80Rom3Size - 1, 2, GalZ80Rom3);
-	ZetClose();	
+	ZetMapArea(0x8000, 0x83ff, 0, GalZ80Ram3);
+	ZetMapArea(0x8000, 0x83ff, 1, GalZ80Ram3);
+	ZetMapArea(0x8000, 0x83ff, 2, GalZ80Ram3);
+	ZetClose();
+	
+	nGalCyclesTotal[2] = (14318000 / 8) / 60;
 }
 
 static INT32 SkelagonInit()
@@ -16750,6 +16752,9 @@ static void MonsterzPostLoad()
 	ZetSetOutHandler(SfxSampleZ80PortWrite);
 	ZetMapArea(0x0000, GalZ80Rom3Size - 1, 0, GalZ80Rom3);
 	ZetMapArea(0x0000, GalZ80Rom3Size - 1, 2, GalZ80Rom3);
+	ZetMapArea(0x8000, 0x83ff, 0, GalZ80Ram3);
+	ZetMapArea(0x8000, 0x83ff, 1, GalZ80Ram3);
+	ZetMapArea(0x8000, 0x83ff, 2, GalZ80Ram3);
 	ZetClose();
 	
 	GalTempRom = (UINT8*)BurnMalloc(GalZ80Rom3Size);
@@ -16758,6 +16763,8 @@ static void MonsterzPostLoad()
 	memset(GalZ80Rom3 + 0x3000, 0xff, 0x1000);
 	memcpy(GalZ80Rom3 + 0x4000, GalTempRom + 0x3000, 0x2000);
 	BurnFree(GalTempRom);
+	
+	nGalCyclesTotal[2] = (14318000 / 8) / 60;
 }
 
 static INT32 MonsterzInit()

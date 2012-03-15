@@ -186,10 +186,13 @@ void GalSoundInit()
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC) {
 		AY8910Init(0, 14318000 / 8, nBurnSoundRate, NULL, NULL, &SfxSoundLatch2Write, &SfxSampleControlWrite);
 		AY8910Init(1, 14318000 / 8, nBurnSoundRate, &KonamiSoundLatchRead, &KonamiSoundTimerRead, NULL, NULL);
+		
+		DACInit(0, 0, 1, SfxSyncDAC);
+		DACSetVolShift(0, 2);
 	}
 	
-	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KINGBALLDAC || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC) {
-		DACInit(0, 0, 1);
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KINGBALLDAC) {
+		DACInit(0, 0, 1, KingballSyncDAC);
 		DACSetVolShift(0, 2);
 	}
 	
@@ -537,12 +540,17 @@ void SfxSampleControlWrite(UINT32, UINT32 d)
 	if ((Old & 0x01) && !(d & 0x01)) {
 		INT32 nActiveCPU = ZetGetActive();
 		
-		if (nActiveCPU == 1) {
+		if (nActiveCPU == 2) {
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			nGalCyclesDone[2] += ZetRun(100);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			
 		} else {
 			ZetClose();
-			ZetOpen(1);
+			ZetOpen(2);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			nGalCyclesDone[2] += ZetRun(100);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 			ZetClose();
 			ZetOpen(nActiveCPU);
 		}
@@ -722,6 +730,17 @@ void HunchbksSoundInit()
 	ZetClose();
 	
 	nGalCyclesTotal[1] = (14318000 / 8) / 60;
+}
+
+// DAC handlers
+INT32 KingballSyncDAC()
+{
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / ((nGalCyclesTotal[1] * 60.0000) / (nBurnFPS / 100.0000))));
+}
+
+INT32 SfxSyncDAC()
+{
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / ((nGalCyclesTotal[2] * 60.0000) / (nBurnFPS / 100.0000))));
 }
 
 // Galaxian samples

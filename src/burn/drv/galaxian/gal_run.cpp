@@ -22,6 +22,7 @@ UINT8 *GalZ80Rom3            = NULL;
 UINT8 *GalS2650Rom1          = NULL;
 UINT8 *GalZ80Ram1            = NULL;
 UINT8 *GalZ80Ram2            = NULL;
+UINT8 *GalZ80Ram3            = NULL;
 UINT8 *GalVideoRam           = NULL;
 UINT8 *GalVideoRam2          = NULL;
 UINT8 *GalSpriteRam          = NULL;
@@ -111,6 +112,10 @@ static INT32 GalMemIndex()
 	
 	if (GalZ80Rom2Size) {
 		GalZ80Ram2     = Next; Next += 0x00400;
+	}
+	
+	if (GalZ80Rom3Size) {
+		GalZ80Ram3     = Next; Next += 0x00400;
 	}
 	
 	GalRamEnd              = Next;
@@ -1600,9 +1605,9 @@ INT32 GalFrame()
 		nInterleave = nBurnSoundLen;
 		GalaxianSoundUpdateTimers();
 	}
-	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_EXPLORERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910) nInterleave = nBurnSoundLen / 4;
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_EXPLORERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910) nInterleave = nBurnSoundLen / 4;
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC) nInterleave = 32;
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910) nInterleave = 32;
-	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KINGBALLDAC) nInterleave = nBurnSoundLen;
 	
 	INT32 nIrqInterleaveFire = nInterleave / 4;	
 
@@ -1759,7 +1764,7 @@ INT32 GalFrame()
 			}
 		}
 		
-		if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KINGBALLDAC/* || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC*/) {
+		if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KINGBALLDAC) {
 			if (pBurnSoundOut) {
 				INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -1831,7 +1836,7 @@ INT32 GalFrame()
 		}
 	}
 	
-	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KINGBALLDAC/* || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC*/) {
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KINGBALLDAC) {
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -1841,6 +1846,10 @@ INT32 GalFrame()
 				DACUpdate(pSoundBuf, nSegmentLength);
 			}
 		}
+	}
+	
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC) {
+		if (pBurnSoundOut) DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_RACKNROLSN76496 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HEXPOOLASN76496) {

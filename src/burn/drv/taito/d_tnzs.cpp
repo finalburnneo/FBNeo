@@ -2113,6 +2113,38 @@ struct BurnDriver BurnDrvArknid2j = {
 };
 
 
+// Arkanoid - Revenge of DOH (Japan bootleg)
+
+static struct BurnRomInfo arknid2bRomDesc[] = {
+	{ "boot.11c",		0x10000, 0x3847dfb0, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+
+	{ "b08_13.3e",		0x10000, 0xe8035ef1, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+
+	{ "ark28742.3g",	0x00800, 0x00000000, 3 | BRF_NODUMP },	      //  2 I8742 MCU
+
+	{ "b08-01.13a",		0x20000, 0x2ccc86b4, 4 | BRF_GRA },	      //  3 Graphics
+	{ "b08-02.10a",		0x20000, 0x056a985f, 4 | BRF_GRA },	      //  4
+	{ "b08-03.7a",		0x20000, 0x274a795f, 4 | BRF_GRA },	      //  5
+	{ "b08-04.4a",		0x20000, 0x9754f703, 4 | BRF_GRA },	      //  6
+
+	{ "b08-08.15f",		0x00200, 0xa4f7ebd9, 5 | BRF_GRA },	      //  7 Color PROMs
+	{ "b08-07.16f",		0x00200, 0xea34d9f7, 5 | BRF_GRA },	      //  8
+};
+
+STD_ROM_PICK(arknid2b)
+STD_ROM_FN(arknid2b)
+
+struct BurnDriver BurnDrvArknid2b = {
+	"arknoid2b", "arknoid2", NULL, NULL, "1987",
+	"Arkanoid - Revenge of DOH (Japan bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	NULL, arknid2bRomInfo, arknid2bRomName, NULL, NULL, Arknoid2InputInfo, Arknid2uDIPInfo,
+	Arknoid2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+
 // Dr. Toppel's Adventure (World)
 
 static struct BurnRomInfo drtoppelRomDesc[] = {

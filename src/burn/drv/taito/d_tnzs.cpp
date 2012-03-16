@@ -1472,7 +1472,7 @@ static void kageki_sample_render(INT16 *pSoundBuf, INT32 nLength)
 	if (kageki_sample_select == -1) return;
 
 	double Addr = kageki_sample_pos;
-	double Step = (double)7000 / nBurnSoundRate;	// not sure about freq of the samples?
+	double Step = (double)7000 / nBurnSoundRate;
 
 	double size = kageki_sample_size[kageki_sample_select];
 	short *ptr  = kageki_sample_data[kageki_sample_select];
@@ -1716,6 +1716,7 @@ static INT32 DrvFrame()
 	assemble_inputs();
 
 	INT32 nInterleave = 100;
+	if (tnzs_mcu_type() == MCU_NONE_KAGEKI) nInterleave = nBurnSoundLen;
 	INT32 nSoundBufferPos = 0;
 
 	INT32 nCyclesSegment;

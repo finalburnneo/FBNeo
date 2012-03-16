@@ -410,6 +410,11 @@ void stratvox_sn76477_write(UINT32, UINT32)
 
 }
 
+static INT32 DrvSyncDAC()
+{
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCyclesPrecise() / (2500000.000 / (nBurnFPS / 100.000))));
+}
+
 static INT32 DrvInit()
 {
 	Mem = (UINT8*)BurnMalloc(0x10000 + 0x10000 + 0x200);
@@ -459,7 +464,7 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 1250000, nBurnSoundRate, NULL, NULL, &stratvox_sn76477_write, NULL);
 	
-	DACInit(0, 0, 1);
+	DACInit(0, 0, 1, DrvSyncDAC);
 	DACSetVolShift(0, 2);
 
 	DrvDoReset();
@@ -628,7 +633,7 @@ static INT32 DrvFrame()
 				pSoundBuf[(n << 1) + 0] = nSample;
 				pSoundBuf[(n << 1) + 1] = nSample;
 			}
-
+			
 			DACUpdate(pSoundBuf, nSegmentLength);
 
 			nSoundBufferPos += nSegmentLength;
@@ -654,9 +659,9 @@ static INT32 DrvFrame()
 				pSoundBuf[(n << 1) + 0] = nSample;
 				pSoundBuf[(n << 1) + 1] = nSample;
 			}
+			
+			DACUpdate(pSoundBuf, nSegmentLength);
 		}
-
-		DACUpdate(pSoundBuf, nSegmentLength);
 	}
 
 	if (pBurnDraw) {

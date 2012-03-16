@@ -573,7 +573,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nSoundBufferPos = 0;
-	INT32 nInterleave = nBurnSoundLen;
+	INT32 nInterleave = 100;
 	
 	INT32 DACIRQFireSlice[48];
 	for (INT32 i = 0; i < 48; i++) {
@@ -586,6 +586,8 @@ static INT32 DrvFrame()
 	nCyclesTotal[0] = 2500000 / 60;
 	nCyclesTotal[1] = 2500000 / 60;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
+	
+	ZetNewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
@@ -634,8 +636,6 @@ static INT32 DrvFrame()
 				pSoundBuf[(n << 1) + 1] = nSample;
 			}
 			
-			DACUpdate(pSoundBuf, nSegmentLength);
-
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -659,9 +659,9 @@ static INT32 DrvFrame()
 				pSoundBuf[(n << 1) + 0] = nSample;
 				pSoundBuf[(n << 1) + 1] = nSample;
 			}
-			
-			DACUpdate(pSoundBuf, nSegmentLength);
 		}
+		
+		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

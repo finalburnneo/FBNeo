@@ -910,7 +910,7 @@ int I8039Run(int cycles)
 
 INT32 I8039TotalCycles()
 {
-	return R.total_cycles + (i8039_ICount_cycles - i8039_ICount);
+	return (INT32)R.total_cycles + (i8039_ICount_cycles - i8039_ICount);
 }
 
 void I8039NewFrame()

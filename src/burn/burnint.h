@@ -11,15 +11,6 @@
 
 #include "burn.h"
 
-// ---------------------------------------------------------------------------
-// CPU emulation interfaces
-
-// sek.cpp
-#include "sek.h"
-
-// zet.cpp
-#include "zet.h"
-
 #ifdef LSB_FIRST
 typedef union
 {

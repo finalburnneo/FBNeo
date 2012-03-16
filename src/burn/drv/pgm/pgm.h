@@ -1,4 +1,6 @@
 #include "tiles_generic.h"
+#include "sek.h"
+#include "zet.h"
 #include "arm7_intf.h"
 #include "ics2115.h"
 

@@ -1,4 +1,6 @@
 #include "tiles_generic.h"
+#include "sek.h"
+#include "zet.h"
 #include "burn_ym3526.h"
 #include "burn_ym2203.h"
 #include "dac.h"

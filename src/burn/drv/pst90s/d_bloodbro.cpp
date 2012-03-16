@@ -3,6 +3,8 @@
 // Based on MAME driver by Carlos A. Lozano Baides and Richard Bush
 
 #include "tiles_generic.h"
+#include "sek.h"
+#include "zet.h"
 #include "seibusnd.h"
 
 static UINT8 *AllMem;

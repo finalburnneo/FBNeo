@@ -2,6 +2,7 @@
 // Based on code by Zsolt Vasvari
 
 #include "burnint.h"
+#include "zet.h"
 #include "driver.h"
 #include "dac.h"
 extern "C" {

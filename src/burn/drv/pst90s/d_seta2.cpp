@@ -6,6 +6,7 @@
  ********************************************************************************/
 
 #include "tiles_generic.h"
+#include "sek.h"
 #include "burn_gun.h"
 #include "eeprom.h"
 #include "x1010.h"

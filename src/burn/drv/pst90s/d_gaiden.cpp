@@ -2,6 +2,8 @@
 // Based on MAME driver by Alex Pasadyn, Phil Stroffolino, Nicola Salmoria, and various others
 
 #include "tiles_generic.h"
+#include "sek.h"
+#include "zet.h"
 #include "msm6295.h"
 #include "burn_ym2151.h"
 #include "burn_ym2203.h"

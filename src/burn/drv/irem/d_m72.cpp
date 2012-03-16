@@ -9,6 +9,7 @@
 */
 
 #include "tiles_generic.h"
+#include "zet.h"
 #include "burn_ym2151.h"
 #include "vez.h"
 #include "irem_cpu.h"

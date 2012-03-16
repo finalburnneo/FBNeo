@@ -2,6 +2,7 @@
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"
+#include "zet.h"
 #include "dac.h"
 
 static UINT8 *AllMem;
@@ -171,7 +172,7 @@ static void DrvPaletteInit()
 
 static INT32 moguraDACSync()
 {
-	return (float)(nBurnSoundLen * (ZetTotalCyclesPrecise() / (3000000.0000 / (nBurnFPS / 100.0000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCyclesPrecise() / (3000000.0000 / (nBurnFPS / 100.0000))));
 }
 
 static INT32 DrvDoReset()

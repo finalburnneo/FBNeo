@@ -1,5 +1,6 @@
 // Z80 (Zed Eight-Ty) Interface
 #include "burnint.h"
+#include "zet.h"
 
 #define MAX_Z80		8
 static struct ZetExt * ZetCPUContext[MAX_Z80] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };

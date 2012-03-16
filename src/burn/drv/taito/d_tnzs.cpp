@@ -892,6 +892,11 @@ inline static double DrvGetTime()
 	return (double)ZetTotalCycles() / 6000000;
 }
 
+static INT32 kabukizSyncDAC()
+{
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCyclesPrecise() / (6000000.000 / (nBurnFPS / 100.000))));
+}
+
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -1323,7 +1328,7 @@ static INT32 Type1Init(INT32 mcutype)
 		}
 	}	
 
-	DACInit(0, 0, 0); // kabukiz
+	DACInit(0, 0, 1, kabukizSyncDAC); // kabukiz
 
 	GenericTilesInit();
 
@@ -1430,7 +1435,7 @@ static INT32 Type2Init()
 	BurnYM2203SetPorts(0, NULL, NULL, &kabukiz_sound_bankswitch, &kabukiz_dac_write);
 	BurnTimerAttachZet(6000000);
 
-	DACInit(0, 0, 0); // kabukiz
+	DACInit(0, 0, 1, kabukizSyncDAC); // kabukiz
 
 	GenericTilesInit();
 
@@ -1463,10 +1468,11 @@ static INT32 DrvExit()
 // Stolen from TMNT. Thanks to Barry. :) 
 static void kageki_sample_render(INT16 *pSoundBuf, INT32 nLength)
 {
+	memset(pSoundBuf, 0, nLength * sizeof(INT16) * 2);
 	if (kageki_sample_select == -1) return;
 
 	double Addr = kageki_sample_pos;
-	double Step = (double)7000 / nBurnSoundRate;
+	double Step = (double)7000 / nBurnSoundRate;	// not sure about freq of the samples?
 
 	double size = kageki_sample_size[kageki_sample_select];
 	short *ptr  = kageki_sample_data[kageki_sample_select];
@@ -1709,7 +1715,7 @@ static INT32 DrvFrame()
 
 	assemble_inputs();
 
-	INT32 nInterleave = nBurnSoundLen ? nBurnSoundLen : 100;
+	INT32 nInterleave = 100;
 	INT32 nSoundBufferPos = 0;
 
 	INT32 nCyclesSegment;
@@ -1771,7 +1777,6 @@ static INT32 DrvFrame()
 				BurnYM2151Render(pSoundBuf, nSegmentLength);
 			}
 			kageki_sample_render(pSoundBuf2, nSegmentLength);
-			DACUpdate(pSoundBuf2, nSegmentLength);
 			ZetClose();
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -1791,13 +1796,13 @@ static INT32 DrvFrame()
 				BurnYM2151Render(pSoundBuf, nSegmentLength);
 			}
 			kageki_sample_render(pSoundBuf2, nSegmentLength);
-			DACUpdate(pSoundBuf2, nSegmentLength);
 		}
 	}
 	
 	if (tnzs_mcu_type() != MCU_NONE_JPOPNICS) {
 		if (pBurnSoundOut) {
 			BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+			DACUpdate(pBurnSoundOut, nBurnSoundLen);
 			for (INT32 i = 0; i < nBurnSoundLen; i++) {
 				pBurnSoundOut[(i << 1) + 0] += SampleBuffer[(i << 1) + 0];
 				pBurnSoundOut[(i << 1) + 1] += SampleBuffer[(i << 1) + 1];

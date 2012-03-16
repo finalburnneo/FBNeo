@@ -3,8 +3,6 @@
 
 #define DAC_NUM		(8)	// allow for 8 DAC chips
 
-#define OLD_STYLE_DAC		// depreciated!
-
 struct dac_info
 {
 	INT16			Output;
@@ -76,57 +74,27 @@ void DACUpdate(INT16* Buffer, INT32 Length)
 
 	struct dac_info *ptr;
 
-#ifdef OLD_STYLE_DAC
-	if (pSyncCallback == NULL)
-	{
-		INT32 Out = 0;
-
-		for (INT32 i = 0; i < NumChips; i++) {
-			ptr = &dac_table[i];
-
-			if (ptr->Initialized) Out += ptr->Output;
-		}
-		
-		Out = BURN_SND_CLIP(Out);
-		
-		while (Length--) {
-			if (bAddSignal) {
-				Buffer[0] += Out;
-				Buffer[1] += Out;
-			} else {
-				Buffer[0] = Out;
-				Buffer[1] = Out;
-			}
-			Buffer += 2;
-		}
+	for (INT32 i = 0; i < NumChips; i++) {
+		UpdateStream(i, nBurnSoundLen);
 	}
-	else
-#endif
-	{
-		for (INT32 i = 0; i < NumChips; i++) {
-			UpdateStream(i, nBurnSoundLen);
-		}
 
-		INT16 *buf = buffer;
+	INT16 *buf = buffer;
 	
-		while (Length--) {
-			if (bAddSignal) {
-				Buffer[1] = Buffer[0] += buf[0];
-			} else {
-				Buffer[1] = Buffer[0]  = buf[0];
-			}
-			Buffer += 2;
-			buf[0] = 0; // clear buffer
-			buf++;
+	while (Length--) {
+		if (bAddSignal) {
+			Buffer[1] = Buffer[0] += buf[0];
+		} else {
+			Buffer[1] = Buffer[0]  = buf[0];
 		}
-
-		for (INT32 i = 0; i < NumChips; i++) {
-			ptr = &dac_table[i];
-			ptr->nCurrentPosition = 0;
-		}
-#ifdef OLD_STYLE_DAC
+		Buffer += 2;
+		buf[0] = 0; // clear buffer
+		buf++;
 	}
-#endif
+
+	for (INT32 i = 0; i < NumChips; i++) {
+		ptr = &dac_table[i];
+		ptr->nCurrentPosition = 0;
+	}
 }
 
 void DACWrite(INT32 Chip, UINT8 Data)
@@ -138,10 +106,7 @@ void DACWrite(INT32 Chip, UINT8 Data)
 
 	struct dac_info *ptr;
 
-#ifdef OLD_STYLE_DAC
-	if (pSyncCallback != NULL)
-#endif
-		UpdateStream(Chip, pSyncCallback());
+	UpdateStream(Chip, pSyncCallback());
 
 	ptr = &dac_table[Chip];
 	ptr->Output = UnsignedVolTable[Data] >> ptr->nVolShift;
@@ -156,10 +121,7 @@ void DACSignedWrite(INT32 Chip, UINT8 Data)
 
 	struct dac_info *ptr;
 
-#ifdef OLD_STYLE_DAC
-	if (pSyncCallback != NULL)
-#endif
-		UpdateStream(Chip, pSyncCallback());
+	UpdateStream(Chip, pSyncCallback());
 
 	ptr = &dac_table[Chip];
 	ptr->Output = SignedVolTable[Data] >> ptr->nVolShift;
@@ -194,15 +156,6 @@ static void DACInitCommon(INT32 Num, UINT32, INT32 bAdd)
 	
 	bAddSignal = bAdd;
 }
-
-#ifdef OLD_STYLE_DAC
-void DACInit(INT32 Num, UINT32 Clock, INT32 bAdd)
-{
-	pSyncCallback = NULL;
-
-	DACInitCommon(Num, Clock, bAdd);
-}
-#endif
 
 void DACInit(INT32 Num, UINT32 Clock, INT32 bAdd, INT32 (*pSyncCB)())
 {

@@ -35,6 +35,7 @@ INT32 ZetNmi();
 INT32 ZetIdle(INT32 nCycles);
 INT32 ZetSegmentCycles();
 INT32 ZetTotalCycles();
+INT32 ZetTotalCyclesPrecise();
 
 #define ZET_IRQSTATUS_NONE 0
 #define ZET_IRQSTATUS_ACK  1

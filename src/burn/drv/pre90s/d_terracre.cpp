@@ -1008,7 +1008,7 @@ inline static double DrvGetTime()
 
 static INT32 TerracreSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (4000000.0000 / (nBurnFPS / 100.0000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCyclesPrecise() / (4000000.0000 / (nBurnFPS / 100.0000))));
 }
 
 static INT32 CharPlaneOffsets[4]       = { 0, 1, 2, 3 };

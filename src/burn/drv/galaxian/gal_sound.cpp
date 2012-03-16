@@ -735,12 +735,12 @@ void HunchbksSoundInit()
 // DAC handlers
 INT32 KingballSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / ((nGalCyclesTotal[1] * 60.0000) / (nBurnFPS / 100.0000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCyclesPrecise() / ((nGalCyclesTotal[1] * 60.0000) / (nBurnFPS / 100.0000))));
 }
 
 INT32 SfxSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / ((nGalCyclesTotal[2] * 60.0000) / (nBurnFPS / 100.0000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCyclesPrecise() / ((nGalCyclesTotal[2] * 60.0000) / (nBurnFPS / 100.0000))));
 }
 
 // Galaxian samples

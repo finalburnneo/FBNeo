@@ -670,7 +670,7 @@ UINT8 __fastcall flstory_sound_read(UINT16 address)
 
 static INT32 flstoryDACSync()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCyclesPrecise() / (4000000.000 / (nBurnFPS / 100.000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (4000000.000 / (nBurnFPS / 100.000))));
 }
 
 static INT32 DrvDoReset()

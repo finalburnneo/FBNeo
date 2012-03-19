@@ -969,7 +969,7 @@ static void m72YM2151IRQHandler(INT32 nStatus)
 
 static INT32 m90SyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCyclesPrecise() / (3579545.000 / (nBurnFPS / 100.000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3579545.000 / (nBurnFPS / 100.000))));
 }
 
 static INT32 DrvDoReset()

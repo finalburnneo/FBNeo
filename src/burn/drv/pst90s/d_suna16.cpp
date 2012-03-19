@@ -1392,12 +1392,12 @@ static INT32 bestbestSynchroniseStream(INT32 nSoundRate)
 
 static INT32 bestbestSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCyclesPrecise() / (6000000.0000 / (nBurnFPS / 100.0000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (6000000.0000 / (nBurnFPS / 100.0000))));
 }
 
 static INT32 bssoccerSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCyclesPrecise() / (5000000.0000 / (nBurnFPS / 100.0000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (5000000.0000 / (nBurnFPS / 100.0000))));
 }
 
 static INT32 BestbestInit()

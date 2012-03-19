@@ -894,7 +894,7 @@ inline static double DrvGetTime()
 
 static INT32 kabukizSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCyclesPrecise() / (6000000.000 / (nBurnFPS / 100.000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (6000000.000 / (nBurnFPS / 100.000))));
 }
 
 static INT32 DrvDoReset()

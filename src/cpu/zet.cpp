@@ -676,20 +676,10 @@ INT32 ZetSegmentCycles()
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetSegmentCycles called when no CPU open\n"));
 #endif
 
-	return 0;
+	return z80TotalCycles();
 }
 
 INT32 ZetTotalCycles()
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetTotalCycles called without init\n"));
-	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetTotalCycles called when no CPU open\n"));
-#endif
-
-	return nZetCyclesTotal;
-}
-
-INT32 ZetTotalCyclesPrecise()
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetTotalCycles called without init\n"));

@@ -412,7 +412,7 @@ void stratvox_sn76477_write(UINT32, UINT32)
 
 static INT32 DrvSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCyclesPrecise() / (2500000.000 / (nBurnFPS / 100.000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (2500000.000 / (nBurnFPS / 100.000))));
 }
 
 static INT32 DrvInit()

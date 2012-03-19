@@ -3541,6 +3541,8 @@ int Z80Execute(int cycles)
 		R++;
 		EXEC_INLINE(op,ROP());
 	} while( z80_ICount > 0 );
+
+	Z80.cycles_left = 0;
 	
 	return cycles - z80_ICount;
 }

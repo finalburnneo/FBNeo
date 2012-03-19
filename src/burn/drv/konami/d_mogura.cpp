@@ -172,7 +172,7 @@ static void DrvPaletteInit()
 
 static INT32 moguraDACSync()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCyclesPrecise() / (3000000.0000 / (nBurnFPS / 100.0000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3000000.0000 / (nBurnFPS / 100.0000))));
 }
 
 static INT32 DrvDoReset()

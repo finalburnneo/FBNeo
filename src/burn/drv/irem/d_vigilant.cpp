@@ -1351,7 +1351,7 @@ inline static double BuccanrsGetTime()
 
 static INT32 VigilantSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCyclesPrecise() / ((nCyclesTotal[1] * 55.0000) / (nBurnFPS / 100.0000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / ((nCyclesTotal[1] * 55.0000) / (nBurnFPS / 100.0000))));
 }
 
 static INT32 CharPlaneOffsets[4]         = { 0x80000, 0x80004, 0, 4 };

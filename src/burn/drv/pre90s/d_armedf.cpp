@@ -668,7 +668,7 @@ static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 
 static INT32 DrvSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCyclesPrecise() / (4000000.000 / (nBurnFPS / 100.000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (4000000.000 / (nBurnFPS / 100.000))));
 }
 
 static INT32 DrvDoReset()

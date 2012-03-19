@@ -1922,7 +1922,7 @@ static INT32 BestbestFrame()
 	SekOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
 
-		SekRun(nCyclesTotal[0] / 2);
+		SekRun(nCyclesTotal[0] / nInterleave);
 		if (i == (nInterleave / 2)-1) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
 		if (i == (nInterleave    )-1) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
 

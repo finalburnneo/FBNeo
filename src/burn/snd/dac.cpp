@@ -1,14 +1,15 @@
 #include "burnint.h"
 #include "burn_sound.h"
 
-#define DAC_NUM		(8)	// allow for 8 DAC chips
+#define DAC_NUM		(8)	// Maximum DAC chips
 
 struct dac_info
 {
-	INT16			Output;
-	INT32 			nVolShift;
-	INT32 			nCurrentPosition;
-	INT32			Initialized;
+	INT16	Output;
+	INT32 	nVolShift;
+	INT32 	nCurrentPosition;
+	INT32	Initialized;
+	INT32	(*pSyncCallback)();
 };
 
 static struct dac_info dac_table[DAC_NUM];
@@ -16,52 +17,37 @@ static struct dac_info dac_table[DAC_NUM];
 static INT16 UnsignedVolTable[256];
 static INT16 SignedVolTable[256];
 
-static INT32 (*pSyncCallback)() = NULL; // should be moved to struct?
-
 static INT16 *buffer = NULL;
 
 static INT32 NumChips;
 
 static INT32 bAddSignal;
 
-// delay buffer allocation for cases when fps is not 60
-static inline void allocate_buffer()
+static void UpdateStream(INT32 chip, INT32 length)
 {
-	if (buffer == NULL) {
-		buffer = (INT16*)BurnMalloc(nBurnSoundLen * sizeof(INT16));
-	}
-}
-
-static void UpdateStream(INT32 chip, INT32 len)
-{
-	// check buffer
-	allocate_buffer();
-
 	struct dac_info *ptr;
 
-	{
-		ptr = &dac_table[chip];
+	if (buffer == NULL) {	// delay buffer allocation for cases when fps is not 60
+		buffer = (INT16*)BurnMalloc(nBurnSoundLen * sizeof(INT16));
+		memset (buffer, 0, nBurnSoundLen * sizeof(INT16));
+	}
 
-		if (ptr->Initialized == 0) return;
+	ptr = &dac_table[chip];
+	if (ptr->Initialized == 0) return;
 
-		INT32 length = len - ptr->nCurrentPosition;
+	if (length > nBurnSoundLen) length = nBurnSoundLen;
+	length -= ptr->nCurrentPosition;
+	if (length <= 0) return;
 
-		// should never happen...
-		if (length <= 0) return;
+	INT16 *buf = buffer + ptr->nCurrentPosition;
 
-		// can happen, so let's make sure it doesn't
-		if ((length + ptr->nCurrentPosition) > nBurnSoundLen) length = nBurnSoundLen - ptr->nCurrentPosition;
-		if (length <= 0) return;
+	INT32 Out = ptr->Output;
 
-		INT16 *buf = buffer + ptr->nCurrentPosition;
+	ptr->nCurrentPosition += length;
 
-		ptr->nCurrentPosition += length;	
-
-		INT32 Out = ptr->Output;
-		
+	if (Out) {		
 		while (length--) {
-			*buf = BURN_SND_CLIP((INT32)(*buf + Out));
-			*buf++;
+			*buf++ = BURN_SND_CLIP((INT32)(*buf + Out));
 		}
 	}
 }
@@ -79,16 +65,19 @@ void DACUpdate(INT16* Buffer, INT32 Length)
 	}
 
 	INT16 *buf = buffer;
-	
-	while (Length--) {
-		if (bAddSignal) {
+
+	if (bAddSignal) {
+		while (Length--) {
 			Buffer[1] = Buffer[0] += buf[0];
-		} else {
-			Buffer[1] = Buffer[0]  = buf[0];
+			Buffer += 2;
+			*buf++ = 0; // clear buffer
 		}
-		Buffer += 2;
-		buf[0] = 0; // clear buffer
-		buf++;
+	} else {
+		while (Length--) {
+			Buffer[1] = Buffer[0]  = buf[0];
+			Buffer += 2;
+			*buf++ = 0; // clear buffer
+		}
 	}
 
 	for (INT32 i = 0; i < NumChips; i++) {
@@ -106,9 +95,10 @@ void DACWrite(INT32 Chip, UINT8 Data)
 
 	struct dac_info *ptr;
 
-	UpdateStream(Chip, pSyncCallback());
-
 	ptr = &dac_table[Chip];
+
+	UpdateStream(Chip, ptr->pSyncCallback());
+
 	ptr->Output = UnsignedVolTable[Data] >> ptr->nVolShift;
 }
 
@@ -121,29 +111,33 @@ void DACSignedWrite(INT32 Chip, UINT8 Data)
 
 	struct dac_info *ptr;
 
-	UpdateStream(Chip, pSyncCallback());
-
 	ptr = &dac_table[Chip];
+
+	UpdateStream(Chip, ptr->pSyncCallback());
+
 	ptr->Output = SignedVolTable[Data] >> ptr->nVolShift;
 }
 
 static void DACBuildVolTables()
 {
-	INT32 i;
-	
-	for (i = 0;i < 256;i++) {
+	for (INT32 i = 0;i < 256;i++) {
 		UnsignedVolTable[i] = i * 0x101 / 2;
 		SignedVolTable[i] = i * 0x101 - 0x8000;
 	}
 }
 
-static void DACInitCommon(INT32 Num, UINT32, INT32 bAdd)
+void DACInit(INT32 Num, UINT32 /*Clock*/, INT32 bAdd, INT32 (*pSyncCB)())
 {
+#if defined FBA_DEBUG
+	if (Num >= DAC_NUM) bprintf (PRINT_ERROR, _T("DACInit called for too many chips (%d)! Change DAC_NUM (%d)!\n"), Num, DAC_NUM);
+	if (pSyncCB == NULL) bprintf (PRINT_ERROR, _T("DACInit called with NULL callback!\n"));
+#endif
+
 	struct dac_info *ptr;
 
 	DebugSnd_DACInitted = 1;
 	
-	NumChips = Num+1;
+	NumChips = Num + 1;
 
 	ptr = &dac_table[Num];
 
@@ -151,17 +145,11 @@ static void DACInitCommon(INT32 Num, UINT32, INT32 bAdd)
 
 	ptr->Initialized = 1;
 	ptr->nVolShift = 0;
-	
-	DACBuildVolTables();
+	ptr->pSyncCallback = pSyncCB;
+
+	DACBuildVolTables(); // necessary to build for every chip?
 	
 	bAddSignal = bAdd;
-}
-
-void DACInit(INT32 Num, UINT32 Clock, INT32 bAdd, INT32 (*pSyncCB)())
-{
-	pSyncCallback = pSyncCB;
-
-	DACInitCommon(Num, Clock, bAdd);
 }
 
 void DACSetVolShift(INT32 Chip, INT32 nShift)
@@ -205,13 +193,12 @@ void DACExit()
 		ptr = &dac_table[i];
 
 		ptr->Initialized = 0;
+		ptr->pSyncCallback = NULL;
 	}
 
 	NumChips = 0;
 	
 	DebugSnd_DACInitted = 0;
-
-	pSyncCallback = NULL;
 
 	BurnFree (buffer);
 }

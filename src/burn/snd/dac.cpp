@@ -32,24 +32,24 @@ static void UpdateStream(INT32 chip, INT32 length)
 		memset (buffer, 0, nBurnSoundLen * sizeof(INT16));
 	}
 
-	ptr = &dac_table[chip];
-	if (ptr->Initialized == 0) return;
+        ptr = &dac_table[chip];
+        if (ptr->Initialized == 0) return;
 
-	if (length > nBurnSoundLen) length = nBurnSoundLen;
-	length -= ptr->nCurrentPosition;
-	if (length <= 0) return;
+        if (length > nBurnSoundLen) length = nBurnSoundLen;
+        length -= ptr->nCurrentPosition;
+        if (length <= 0) return;
 
-	INT16 *buf = buffer + ptr->nCurrentPosition;
+        INT16 *buf = buffer + ptr->nCurrentPosition;
 
-	INT32 Out = ptr->Output;
+        INT32 Out = ptr->Output;
 
-	ptr->nCurrentPosition += length;
+        ptr->nCurrentPosition += length;
 
-	if (Out) {		
-		while (length--) {
-			*buf++ = BURN_SND_CLIP((INT32)(*buf + Out));
-		}
-	}
+        if (Out) {              
+                while (length--) {
+                        *buf++ = BURN_SND_CLIP((INT32)(*buf + Out));
+                }
+        }
 }
 
 void DACUpdate(INT16* Buffer, INT32 Length)
@@ -68,15 +68,17 @@ void DACUpdate(INT16* Buffer, INT32 Length)
 
 	if (bAddSignal) {
 		while (Length--) {
-			Buffer[1] = Buffer[0] += buf[0];
+			Buffer[0] = BURN_SND_CLIP((INT32)(buf[0] + Buffer[0]));
+			Buffer[1] = BURN_SND_CLIP((INT32)(buf[0] + Buffer[1]));
 			Buffer += 2;
 			*buf++ = 0; // clear buffer
 		}
 	} else {
 		while (Length--) {
-			Buffer[1] = Buffer[0]  = buf[0];
+			Buffer[1] = Buffer[0] = buf[0];
 			Buffer += 2;
 			*buf++ = 0; // clear buffer
+			;
 		}
 	}
 

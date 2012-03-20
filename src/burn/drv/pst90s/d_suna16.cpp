@@ -407,7 +407,7 @@ STDDIPINFO(uballoon)
 static void suna_palette_write(INT32 offset)
 {
 	UINT8 r, b, g;
-	UINT16 data = *((UINT16*)(DrvPalRAM + offset));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	r = (data >>  0) & 0x1f;
 	r = (r << 3) | (r >> 2);
@@ -478,7 +478,7 @@ UINT8 __fastcall bestbest_read_byte(UINT32 address)
 void __fastcall bestbest_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfff000) == 0x540000) {
-		*((UINT16*)(DrvPalRAM + (address & 0x0fff))) = data;
+		*((UINT16*)(DrvPalRAM + (address & 0x0fff))) = BURN_ENDIAN_SWAP_INT16(data);
 		suna_palette_write(address & 0xffe);
 		return;
 	}
@@ -606,10 +606,10 @@ UINT16 __fastcall sunaq_read_word(UINT32 address)
 {
 	if ((address & 0xfff000) == 0x540000) {
 		if (address & 0x200) {
-			return *((UINT16*)(DrvPalRAM2 + (address & 0xffe)));
+			return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM2 + (address & 0xffe))));
 		} else {
 			address += color_bank << 9;
-			return *((UINT16*)(DrvPalRAM + (address & 0xffe)));
+			return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + (address & 0xffe))));
 		}
 	}
 
@@ -668,10 +668,10 @@ void __fastcall sunaq_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfff000) == 0x540000) {
 		if (address & 0x200) {
-			*((UINT16*)(DrvPalRAM2 + (address & 0xffff))) = data;
+			*((UINT16*)(DrvPalRAM2 + (address & 0xffff))) = BURN_ENDIAN_SWAP_INT16(data);
 		} else {
 			address += color_bank << 9;
-			*((UINT16*)(DrvPalRAM + (address & 0xffff))) = data;
+			*((UINT16*)(DrvPalRAM + (address & 0xffff))) = BURN_ENDIAN_SWAP_INT16(data);
 			suna_palette_write(address & 0xffff);
 		}
 		return;
@@ -765,10 +765,10 @@ UINT16 __fastcall uballoon_read_word(UINT32 address)
 {
 	if ((address & 0xfff000) == 0x200000) {
 		if (address & 0x200) {
-			return *((UINT16*)(DrvPalRAM2 + (address & 0xffe)));
+			return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM2 + (address & 0xffe))));
 		} else {
 			address += color_bank << 9;
-			return *((UINT16*)(DrvPalRAM + (address & 0xffe)));
+			return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + (address & 0xffe))));
 		}
 	}
 
@@ -827,10 +827,10 @@ void __fastcall uballoon_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfff000) == 0x200000) {
 		if (address & 0x200) {
-			*((UINT16*)(DrvPalRAM2 + (address & 0xffff))) = data;
+			*((UINT16*)(DrvPalRAM2 + (address & 0xffff))) = BURN_ENDIAN_SWAP_INT16(data);
 		} else {
 			address += color_bank << 9;
-			*((UINT16*)(DrvPalRAM + (address & 0xffff))) = data;
+			*((UINT16*)(DrvPalRAM + (address & 0xffff))) = BURN_ENDIAN_SWAP_INT16(data);
 			suna_palette_write(address & 0xffff);
 		}
 		return;
@@ -930,10 +930,10 @@ UINT16 __fastcall bssoccer_read_word(UINT32 address)
 {
 	if ((address & 0xfff000) == 0x400000) {
 		if (address & 0x200) {
-			return *((UINT16*)(DrvPalRAM2 + (address & 0xffe)));
+			return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM2 + (address & 0xffe))));
 		} else {
 			address += color_bank << 9;
-			return *((UINT16*)(DrvPalRAM + (address & 0xffe)));
+			return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + (address & 0xffe))));
 		}
 	}
 
@@ -1007,10 +1007,10 @@ void __fastcall bssoccer_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfff000) == 0x400000) {
 		if (address & 0x200) {
-			*((UINT16*)(DrvPalRAM2 + (address & 0xffff))) = data;
+			*((UINT16*)(DrvPalRAM2 + (address & 0xffff))) = BURN_ENDIAN_SWAP_INT16(data);
 		} else {
 			address += color_bank << 9;
-			*((UINT16*)(DrvPalRAM + (address & 0xffff))) = data;
+			*((UINT16*)(DrvPalRAM + (address & 0xffff))) = BURN_ENDIAN_SWAP_INT16(data);
 			suna_palette_write(address & 0xffff);
 		}
 		return;
@@ -1595,12 +1595,12 @@ static INT32 UballoonInit()
 	ZetClose();
 
 	// Patch out the protection checks
-	*((UINT16*)(Drv68KROM + 0x0113c)) = 0x4e71;
-	*((UINT16*)(Drv68KROM + 0x0113e)) = 0x4e71;
-	*((UINT16*)(Drv68KROM + 0x01784)) = 0x600c;
-	*((UINT16*)(Drv68KROM + 0x018e2)) = 0x600c;
-	*((UINT16*)(Drv68KROM + 0x03c54)) = 0x600c;
-	*((UINT16*)(Drv68KROM + 0x126a0)) = 0x4e71;
+	*((UINT16*)(Drv68KROM + 0x0113c)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	*((UINT16*)(Drv68KROM + 0x0113e)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	*((UINT16*)(Drv68KROM + 0x01784)) = BURN_ENDIAN_SWAP_INT16(0x600c);
+	*((UINT16*)(Drv68KROM + 0x018e2)) = BURN_ENDIAN_SWAP_INT16(0x600c);
+	*((UINT16*)(Drv68KROM + 0x03c54)) = BURN_ENDIAN_SWAP_INT16(0x600c);
+	*((UINT16*)(Drv68KROM + 0x126a0)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
 
 	BurnYM2151Init(3579545, 25.0);
 
@@ -1736,9 +1736,9 @@ static void draw_sprites(UINT16 *sprites, UINT8 *gfx_base, INT32 max_tile)
 		INT32 dx, dy;
 		INT32 flipx, y0;
 
-		INT32 y		=	sprites[ offs + 0 + 0x00000 / 2 ];
-		INT32 x		=	sprites[ offs + 1 + 0x00000 / 2 ];
-		INT32 dim 	=	sprites[ offs + 0 + 0x10000 / 2 ];
+		INT32 y		=	BURN_ENDIAN_SWAP_INT16(sprites[ offs + 0 + 0x00000 / 2 ]);
+		INT32 x		=	BURN_ENDIAN_SWAP_INT16(sprites[ offs + 1 + 0x00000 / 2 ]);
+		INT32 dim 	=	BURN_ENDIAN_SWAP_INT16(sprites[ offs + 0 + 0x10000 / 2 ]);
 
 		INT32 bank	=	(x >> 12) & 0xf;
 
@@ -1776,8 +1776,8 @@ static void draw_sprites(UINT16 *sprites, UINT8 *gfx_base, INT32 max_tile)
 								((srcx + tile_x) & 0x1f) * 0x20 +
 								((srcy + tile_y) & 0x1f);
 
-				INT32 tile	=	sprites[ addr + 0x00000 / 2 ];
-				INT32 color	=	sprites[ addr + 0x10000 / 2 ];
+				INT32 tile	=	BURN_ENDIAN_SWAP_INT16(sprites[ addr + 0x00000 / 2 ]);
+				INT32 color	=	BURN_ENDIAN_SWAP_INT16(sprites[ addr + 0x10000 / 2 ]);
 
 				INT32 sx		=	x + dx;
 				INT32 sy		=	(y + dy) & 0xff;

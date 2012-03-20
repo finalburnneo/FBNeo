@@ -17,7 +17,7 @@ static INT32 nSoundCommand;
 // Z80 ROM bank
 static INT32 nCurrentBank;
 
-static INT32 Bgareggabl = 0;
+INT32 Bgareggabl = 0;
 
 // Rom information
 static struct BurnRomInfo bgareggaRomDesc[] = {
@@ -763,6 +763,8 @@ static INT32 battlegInit()
 
 	nExtraTXOffset = 0x2C;
 	ToaExtraTextInit();
+	
+	if (Bgareggabl) nExtraTXOffset = 0;
 
 	DrvZ80Init();												// Initialize Z80
 
@@ -1000,7 +1002,7 @@ struct BurnDriver BurnDrvBgaregtw = {
 	240, 320, 3, 4
 };
 
-struct BurnDriverD BurnDrvBgareggabl = {
+struct BurnDriver BurnDrvBgareggabl = {
 	"bgareggabl", "bgaregga", NULL, NULL, "1996",
 	"1945 Part 2 (Battle Garaga hack)\0", NULL, "hack", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,

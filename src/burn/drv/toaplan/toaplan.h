@@ -292,3 +292,6 @@ inline UINT16 ToaFCU2ReadRAMSize()
 {
 	return ((UINT16*)FCU2RAMSize)[FCU2Pointer & 0x003F];
 }
+
+// d_battleg.cpp
+extern INT32 Bgareggabl;

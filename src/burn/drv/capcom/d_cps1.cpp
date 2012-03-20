@@ -5725,6 +5725,37 @@ static struct BurnRomInfo KodhRomDesc[] = {
 STD_ROM_PICK(Kodh)
 STD_ROM_FN(Kodh)
 
+// King Of Dragons 910731 ETC Phoenix set
+
+static struct BurnRomInfo KoddaRomDesc[] = {
+	{ "8f",            0x080000, 0x0a6ab826, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "7f",            0x080000, 0x9bd7ad4b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	
+	{ "kd-5m.4a",      0x080000, 0xe45b8701, BRF_GRA | CPS1_TILES },
+	{ "kd-7m.6a",      0x080000, 0xa7750322, BRF_GRA | CPS1_TILES },
+	{ "kd-1m.3a",      0x080000, 0x5f74bf78, BRF_GRA | CPS1_TILES },
+	{ "kdda-7m.6a",    0x080000, 0x0e2cb76f, BRF_GRA | CPS1_TILES },
+	{ "kd-6m.4c",      0x080000, 0x113358f3, BRF_GRA | CPS1_TILES },
+	{ "kd-8m.6c",      0x080000, 0x38853c44, BRF_GRA | CPS1_TILES },
+	{ "kd-2m.3c",      0x080000, 0x9ef36604, BRF_GRA | CPS1_TILES },
+	{ "kd-4m.5c",      0x080000, 0x402b9b4f, BRF_GRA | CPS1_TILES },
+	
+	{ "kd_9.12a",      0x010000, 0xbac6ec26, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "kd_18.11c",     0x020000, 0x4c63181d, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "kd_19.12c",     0x020000, 0x92941b80, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "kd29b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },// b-board PLDs
+	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "ioc1.ic7",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
+};
+
+STD_ROM_PICK(Kodda)
+STD_ROM_FN(Kodda)
+
 static struct BurnRomInfo MegamanRomDesc[] = {
 	{ "rcmu_23b.8f",   0x080000, 0x1cd33c7a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "rcmu_22b.7f",   0x080000, 0x708268c4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -10058,6 +10089,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "kodja"       , CPS_B_21_BT2, mapper_KD29B , 0, NULL                },
 	{ "kodb"        , CPS_B_21_BT2, mapper_KD29B , 0, NULL                },
 	{ "kodh"        , CPS_B_21_DEF, mapper_KD29B , 0, NULL                },
+	{ "kodda"       , CPS_B_21_DEF, mapper_KD29B , 0, NULL                },
 	{ "megaman"     , CPS_B_21_DEF, mapper_RCM63B, 0, NULL                },
 	{ "megamana"    , CPS_B_21_DEF, mapper_RCM63B, 0, NULL                },
 	{ "rockmanj"    , CPS_B_21_DEF, mapper_RCM63B, 0, NULL                },
@@ -12359,6 +12391,16 @@ struct BurnDriver BurnDrvCpsKodh = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, KodhRomInfo, KodhRomName, NULL, NULL, KodhInputInfo, KodDIPInfo,
 	KodhInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsKodda = {
+	"kodda", "kod", NULL, NULL, "1991",
+	"The King of Dragons (910731 etc Phoenix?)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, KoddaRomInfo, KoddaRomName, NULL, NULL, KodInputInfo, KodDIPInfo,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

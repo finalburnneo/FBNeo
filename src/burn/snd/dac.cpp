@@ -41,13 +41,13 @@ static void UpdateStream(INT32 chip, INT32 length)
 
         INT16 *buf = buffer + ptr->nCurrentPosition;
 
-        INT32 Out = ptr->Output;
+        INT16 Out = ptr->Output;
 
         ptr->nCurrentPosition += length;
 
         if (Out) {              
                 while (length--) {
-                        *buf++ = BURN_SND_CLIP((INT32)(*buf + Out));
+                        *buf++ = *buf + Out;
                 }
         }
 }

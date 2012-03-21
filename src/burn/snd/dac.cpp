@@ -71,13 +71,15 @@ void DACUpdate(INT16* Buffer, INT32 Length)
 			Buffer[0] = BURN_SND_CLIP((INT32)(buf[0] + Buffer[0]));
 			Buffer[1] = BURN_SND_CLIP((INT32)(buf[0] + Buffer[1]));
 			Buffer += 2;
-			*buf++ = 0; // clear buffer
+			buf[0] = 0; // clear buffer
+			buf++;
 		}
 	} else {
 		while (Length--) {
 			Buffer[1] = Buffer[0] = buf[0];
 			Buffer += 2;
-			*buf++ = 0; // clear buffer
+			buf[0] = 0; // clear buffer
+			buf++;
 		}
 	}
 

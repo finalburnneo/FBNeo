@@ -54,7 +54,7 @@ INT32 nPGMArm7Type = 0;
 #define Z80_CYCS_PER_FRAME	(( 8468000 * 100) / nBurnFPS)
 #define ARM7_CYCS_PER_FRAME	((20000000 * 100) / nBurnFPS)
 
-#define	PGM_INTER_LEAVE	2
+#define	PGM_INTER_LEAVE	100
 
 #define M68K_CYCS_PER_INTER	(M68K_CYCS_PER_FRAME / PGM_INTER_LEAVE)
 #define Z80_CYCS_PER_INTER	(Z80_CYCS_PER_FRAME  / PGM_INTER_LEAVE)
@@ -826,10 +826,13 @@ INT32 pgmFrame()
 			}
 		}
 
-		if (nPgmZ80Work) {
-			nCyclesDone[1] += ZetRun( nCyclesNext[1] - nCyclesDone[1] );
-		} else
-			nCyclesDone[1] += nCyclesNext[1] - nCyclesDone[1];
+		if (i == (PGM_INTER_LEAVE / 2) - 1 || i == (PGM_INTER_LEAVE - 1)) {
+			if (nPgmZ80Work) {
+				nCyclesDone[1] += ZetRun( nCyclesNext[1] - nCyclesDone[1] );
+			} else {
+				nCyclesDone[1] += nCyclesNext[1] - nCyclesDone[1];
+			}
+		}
 
 		if (i == ((PGM_INTER_LEAVE / 2)-1) && nPGMEnableIRQ4 != 0) {
 			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);

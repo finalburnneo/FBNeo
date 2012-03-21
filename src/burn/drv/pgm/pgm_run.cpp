@@ -777,18 +777,23 @@ INT32 pgmFrame()
 
 	SekNewFrame();
 	ZetNewFrame();
-	if (nEnableArm7) Arm7NewFrame();
 
-	if (nEnableArm7) // region hacks
+	if (nEnableArm7)
 	{
-		switch (nPGMArm7Type)
+		Arm7NewFrame();
+
+		switch (nPGMArm7Type) // region hacks
 		{
 			case 1: // kov/kovsh/kovshp/photoy2k/puzlstar/puzzli2/oldsplus/py2k2
 				PGMARMShareRAM[0x008] = PgmInput[7];
 			break;
 
-			case 2: // martmast/kov2/ddp2/dw2001
-				PGMARMShareRAM[0x138] = PgmInput[7];
+			case 2: // martmast/kov2/dw2001/ddp2
+				if (strncmp(BurnDrvGetTextA(DRV_NAME), "ddp2", 4) == 0) {
+					PGMARMShareRAM[0x002] = PgmInput[7];
+				} else {
+					PGMARMShareRAM[0x138] = PgmInput[7];
+				}
 			break;
 
 			case 3: // svg/killbldp/dmnfrnt/theglad/happy6in1

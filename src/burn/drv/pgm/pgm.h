@@ -72,7 +72,6 @@ void install_protection_asic27a_kovsh();
 void install_protection_asic27a_martmast();
 void install_protection_asic27a_oldsplus();
 void install_protection_asic27a_puzlstar();
-void install_protection_asic27a_ddp2();
 void install_protection_asic27a_svg();
 void install_protection_asic27a_ketsui();
 void install_protection_asic27a_ddp3();

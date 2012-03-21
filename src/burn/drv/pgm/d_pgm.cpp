@@ -313,7 +313,7 @@ static struct BurnDIPInfo martmastc102DIPList[] = {
 };
 
 static struct BurnDIPInfo ddp2DIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x00, NULL			},
+	{0x2E,	0xFF, 0xFF,	0x05, NULL			},
 
 	{0,	0xFE, 0,	6,    "Region (Fake)"		},
 	{0x2E,	0x01, 0x07,	0x00, "China"			},
@@ -2140,7 +2140,7 @@ static struct BurnRomInfo ddp2RomDesc[] = {
 
 	{ "m1300.u5",	   0x400000, 0x82d4015d, 5 | BRF_SND },		  //  5 Samples
 
-	{ "ddp2_igs027a.bin", 0x004000, 0,	 7 | BRF_PRG | BRF_NODUMP },//  6 Internal ARM7 Rom
+	{ "ddp2_igs027a.bin", 0x004000, 0x742D34D2, 7 | BRF_PRG },//  6 Internal ARM7 Rom
 
 	{ "v100.u23", 	   0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS }, //  7 External ARM7 Rom
 };
@@ -2150,22 +2150,27 @@ STD_ROM_FN(ddp2)
 
 static INT32 ddp2Init()
 {
+	nPGMEnableIRQ4 = 1;
 	pPgmInitCallback = pgm_decrypt_ddp2;
-	pPgmProtCallback = install_protection_asic27a_ddp2; // simulation
-//	pPgmProtCallback = install_protection_asic27a_martmast;
+	pPgmProtCallback = install_protection_asic27a_martmast;
 
-	return pgmInit();
+	INT32 nRet = pgmInit();
+
+	Arm7SetIdleLoopAddress(0x8010998);
+
+	return nRet;
 }
 
-struct BurnDriverD BurnDrvDdp2 = {
+struct BurnDriver BurnDrvDdp2 = {
 	"ddp2", NULL, "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V102)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	"Bee Storm - DoDonPachi II (V102)\0", NULL, "IGS", "PolyGameMaster",
 	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V102)\0", NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU */, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
 	NULL, ddp2RomInfo, ddp2RomName, NULL, NULL, pgmInputInfo, ddp2DIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x1200,
 	224,448,3,4
 };
+
 
 // Bee Storm - DoDonPachi II (V100)
 
@@ -2181,7 +2186,7 @@ static struct BurnRomInfo ddp2100RomDesc[] = {
 
 	{ "m1300.u5",	   0x400000, 0x82d4015d, 5 | BRF_SND },		  //  5 Samples
 
-	{ "ddp2_igs027a.bin", 0x004000, 0,	 7 | BRF_PRG | BRF_NODUMP },//  6 Internal ARM7 Rom
+	{ "ddp2_igs027a.bin", 0x004000, 0x742D34D2, 7 | BRF_PRG },//  6 Internal ARM7 Rom
 
 	{ "v100.u23", 	   0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS }, //  7 External ARM7 Rom
 };
@@ -2189,15 +2194,16 @@ static struct BurnRomInfo ddp2100RomDesc[] = {
 STDROMPICKEXT(ddp2100, ddp2100, pgm)
 STD_ROM_FN(ddp2100)
 
-struct BurnDriverD BurnDrvDdp2100 = {
+struct BurnDriver BurnDrvDdp2100 = {
 	"ddp2100", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V100)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	"Bee Storm - DoDonPachi II (V100)\0", NULL, "IGS", "PolyGameMaster",
 	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V100)\0", NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
 	NULL, ddp2100RomInfo, ddp2100RomName, NULL, NULL, pgmInputInfo, ddp2DIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x1200,
 	224,448,3,4
 };
+
 
 // Bee Storm - DoDonPachi II (V101)
 
@@ -2213,7 +2219,7 @@ static struct BurnRomInfo ddp2101RomDesc[] = {
 
 	{ "m1300.u5",	   0x400000, 0x82d4015d, 5 | BRF_SND },		  //  5 Samples
 
-	{ "ddp2_igs027a.bin", 0x004000, 0,	 7 | BRF_PRG | BRF_NODUMP },//  6 Internal ARM7 Rom
+	{ "ddp2_igs027a.bin", 0x004000, 0x742D34D2, 7 | BRF_PRG },//  6 Internal ARM7 Rom
 
 	{ "v100.u23", 	   0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS }, //  7 External ARM7 Rom
 };
@@ -2221,11 +2227,11 @@ static struct BurnRomInfo ddp2101RomDesc[] = {
 STDROMPICKEXT(ddp2101, ddp2101, pgm)
 STD_ROM_FN(ddp2101)
 
-struct BurnDriverD BurnDrvDdp2101 = {
+struct BurnDriver BurnDrvDdp2101 = {
 	"ddp2101", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V101)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	"Bee Storm - DoDonPachi II (V101)\0", NULL, "IGS", "PolyGameMaster",
 	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V101)\0", NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU */, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
 	NULL, ddp2101RomInfo, ddp2101RomName, NULL, NULL, pgmInputInfo, ddp2DIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x1200,
 	224,448,3,4

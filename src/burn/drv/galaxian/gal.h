@@ -51,6 +51,7 @@ extern "C" {
 #define GAL_SOUND_HARDWARE_TYPE_RACKNROLSN76496		15
 #define GAL_SOUND_HARDWARE_TYPE_HEXPOOLASN76496		16
 #define GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910		17
+#define GAL_SOUND_HARDWARE_TYPE_FANTASTCAY8910		18
 
 // Palette Numbers
 #define GAL_PALETTE_NUM_COLOURS_PROM			64
@@ -167,6 +168,7 @@ void DambustrDrawBullets(INT32 Offs, INT32 x, INT32 y);
 void GalDraw();
 void DkongjrmRenderFrame();
 void DambustrRenderFrame();
+void FantastcRenderFrame();
 
 // gal_run.cpp
 extern UINT8 GalInputPort0[8];

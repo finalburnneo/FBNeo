@@ -574,7 +574,7 @@ static void draw_background()
 	// do line scroll (slow)
 	for (INT32 y = 0; y < 224; y++, dst += nScreenWidth)
 	{
-		INT32 scrollx = (xscroll + rowscroll[y]) & 0x7ff;
+		INT32 scrollx = (xscroll + BURN_ENDIAN_SWAP_INT16(rowscroll[y])) & 0x7ff;
 		INT32 scrolly = (yscroll + y) & 0x7ff;
 
 		for (INT32 x = 0; x < 480; x+=32)

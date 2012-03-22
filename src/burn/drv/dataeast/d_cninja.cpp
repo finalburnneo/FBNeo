@@ -1084,15 +1084,15 @@ static void cninja_patch()
 
 	for (INT32 i = 0; i < 0x80000 / 2; i++)
 	{
-		if (rom[i] == 0x66ff || rom[i] == 0x67ff)
+		if (rom[i] == BURN_ENDIAN_SWAP_INT16(0x66ff) || rom[i] == BURN_ENDIAN_SWAP_INT16(0x67ff))
 		{
-			if (rom[i - 4] == 0x0c39 || rom[i - 4] == 0x0839)
+			if (rom[i - 4] == BURN_ENDIAN_SWAP_INT16(0x0c39) || rom[i - 4] == BURN_ENDIAN_SWAP_INT16(0x0839))
 			{
-				rom[i - 0] = 0x4e71;
-				rom[i - 1] = 0x4e71;
-				rom[i - 2] = 0x4e71;
-				rom[i - 3] = 0x4e71;
-				rom[i - 4] = 0x4e71;
+				rom[i - 0] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+				rom[i - 1] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+				rom[i - 2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+				rom[i - 3] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+				rom[i - 4] = BURN_ENDIAN_SWAP_INT16(0x4e71);
 			}
 		}
 	}
@@ -1751,11 +1751,11 @@ static void cninja_draw_sprites()
 	for (INT32 offs = 0x400 - 4; offs >=0 ; offs -= 4)
 	{
 		INT32 x, y, sprite, color, multi, flipx, flipy, inc, flash, mult, pri = 0;
-		sprite = buffered_spriteram[offs + 1];
+		sprite = BURN_ENDIAN_SWAP_INT16(buffered_spriteram[offs + 1]);
 		if (!sprite)
 			continue;
 
-		x = buffered_spriteram[offs + 2];
+		x = BURN_ENDIAN_SWAP_INT16(buffered_spriteram[offs + 2]);
 
 		switch (x & 0xc000)
 		{
@@ -1765,7 +1765,7 @@ static void cninja_draw_sprites()
 			case 0xc000: pri = 0xf0 | 0xcc; break;
 		}
 
-		y = buffered_spriteram[offs];
+		y = BURN_ENDIAN_SWAP_INT16(buffered_spriteram[offs]);
 		flash = y & 0x1000;
 		if (flash && (nCurrentFrame & 1))
 			continue;
@@ -1821,7 +1821,7 @@ static void cninjabl_draw_sprites()
 	endoffs = 0x400 - 4;
 	for (offs = 0; offs < 0x400 - 4 ; offs += 4)
 	{
-		INT32 y = buffered_spriteram[offs + 1];
+		INT32 y = BURN_ENDIAN_SWAP_INT16(buffered_spriteram[offs + 1]);
 
 		if (y == 0x180)
 		{
@@ -1834,13 +1834,13 @@ static void cninjabl_draw_sprites()
 	{
 		INT32 x, y, sprite, colour, multi, fx, fy, inc, flash, mult, pri = 0;
 
-		sprite = buffered_spriteram[offs + 0];
-		y = buffered_spriteram[offs + 1];
+		sprite = BURN_ENDIAN_SWAP_INT16(buffered_spriteram[offs + 0]);
+		y = BURN_ENDIAN_SWAP_INT16(buffered_spriteram[offs + 1]);
 
 		if (!sprite)
 			continue;
 
-		x = buffered_spriteram[offs + 2];
+		x = BURN_ENDIAN_SWAP_INT16(buffered_spriteram[offs + 2]);
 
 		switch (x & 0xc000)
 		{
@@ -1930,19 +1930,19 @@ static void mutantf_draw_sprites(UINT8 *ram, UINT8 *gfx, INT32 colbank, INT32 gf
 			continue;
 		}
 
-		sx = spriteptr[offs + 1];
+		sx = BURN_ENDIAN_SWAP_INT16(spriteptr[offs + 1]);
 
-		h = (spriteptr[offs + 2] & 0xf000) >> 12;
-		w = (spriteptr[offs + 2] & 0x0f00) >>  8;
+		h = (BURN_ENDIAN_SWAP_INT16(spriteptr[offs + 2]) & 0xf000) >> 12;
+		w = (BURN_ENDIAN_SWAP_INT16(spriteptr[offs + 2]) & 0x0f00) >>  8;
 
-		sy = spriteptr[offs];
+		sy = BURN_ENDIAN_SWAP_INT16(spriteptr[offs]);
 		if ((sy & 0x2000) && (nCurrentFrame & 1))
 		{
 			offs += inc;
 			continue;
 		}
 
-		colour = (spriteptr[offs + 2] >> 0) & 0x1f;
+		colour = (BURN_ENDIAN_SWAP_INT16(spriteptr[offs + 2]) >> 0) & 0x1f;
 
 		if (gfxbank == 4)
 		{
@@ -1950,8 +1950,8 @@ static void mutantf_draw_sprites(UINT8 *ram, UINT8 *gfx, INT32 colbank, INT32 gf
 			colour &= 0xf;
 		}
 
-		fx = (spriteptr[offs + 0] & 0x4000);
-		fy = (spriteptr[offs + 0] & 0x8000);
+		fx = (BURN_ENDIAN_SWAP_INT16(spriteptr[offs + 0]) & 0x4000);
+		fy = (BURN_ENDIAN_SWAP_INT16(spriteptr[offs + 0]) & 0x8000);
 
 		if (*flipscreen)
 		{

@@ -2037,7 +2037,7 @@ static void __fastcall svg_write_word(UINT32 address, UINT16 data)
 	pgm_cpu_sync();
 
 	if ((address & 0xffe0000) == 0x0500000) {
-		*((UINT16*)(svg_ram[svg_ram_sel^1] + (address & 0x1fffe))) = data;
+		*((UINT16*)(svg_ram[svg_ram_sel^1] + (address & 0x1fffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		
 		return;
 	}
@@ -2078,7 +2078,7 @@ static UINT16 __fastcall svg_read_word(UINT32 address)
 	if ((address & 0xffe0000) == 0x0500000) {
 		pgm_cpu_sync();
 
-		return *((UINT16*)(svg_ram[svg_ram_sel^1] + (address & 0x1fffe)));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(svg_ram[svg_ram_sel^1] + (address & 0x1fffe))));
 	}
 
 	switch (address)

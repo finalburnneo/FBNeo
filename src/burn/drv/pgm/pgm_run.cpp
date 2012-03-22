@@ -51,14 +51,14 @@ INT32 nPGMEnableIRQ4 = 0;
 INT32 nPGMArm7Type = 0;
 
 #define M68K_CYCS_PER_FRAME	((20000000 * 100) / nBurnFPS)
-#define Z80_CYCS_PER_FRAME	(( 8468000 * 100) / nBurnFPS)
 #define ARM7_CYCS_PER_FRAME	((20000000 * 100) / nBurnFPS)
+#define Z80_CYCS_PER_FRAME	(( 8468000 * 100) / nBurnFPS)
 
 #define	PGM_INTER_LEAVE	100
 
 #define M68K_CYCS_PER_INTER	(M68K_CYCS_PER_FRAME / PGM_INTER_LEAVE)
-#define Z80_CYCS_PER_INTER	(Z80_CYCS_PER_FRAME  / PGM_INTER_LEAVE)
 #define ARM7_CYCS_PER_INTER	(ARM7_CYCS_PER_FRAME / PGM_INTER_LEAVE)
+#define Z80_CYCS_PER_INTER	(Z80_CYCS_PER_FRAME  / PGM_INTER_LEAVE)
 
 static INT32 nCyclesDone[3];
 
@@ -812,14 +812,14 @@ INT32 pgmFrame()
 		nCyclesNext[1] += Z80_CYCS_PER_INTER;
 		nCyclesNext[2] += ARM7_CYCS_PER_INTER;
 
-		INT32 cycles = nCyclesNext[0] - nCyclesDone[0];
+		INT32 cycles = M68K_CYCS_PER_INTER; //nCyclesNext[0] - nCyclesDone[0];
 
-		if (cycles > 0) {
+		//if (cycles > 0) {
 			nCyclesDone[0] += SekRun(cycles);
-		}
+		//}
 
 		if (nEnableArm7) {
-			cycles = nCyclesNext[2] - Arm7TotalCycles();
+			cycles = SekTotalCycles() - Arm7TotalCycles();
 
 			if (cycles > 0) {
 				nCyclesDone[2] += Arm7Run(cycles);

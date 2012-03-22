@@ -2317,14 +2317,14 @@ static void dmfrntCallback()
 
 	// hack
 	UINT16 *temp16 = (UINT16 *)PGMARMROM;
-	temp16[(0x0000)/2] = 0xd088;
-	temp16[(0x0002)/2] = 0xe59f;
-	temp16[(0x0004)/2] = 0x0680;
-	temp16[(0x0006)/2] = 0xe3a0;
-	temp16[(0x0008)/2] = 0xff10;
-	temp16[(0x000a)/2] = 0xe12f;
-	temp16[(0x0090)/2] = 0x0400;
-	temp16[(0x0092)/2] = 0x1000;
+	temp16[(0x0000)/2] = BURN_ENDIAN_SWAP_INT16(0xd088);
+	temp16[(0x0002)/2] = BURN_ENDIAN_SWAP_INT16(0xe59f);
+	temp16[(0x0004)/2] = BURN_ENDIAN_SWAP_INT16(0x0680);
+	temp16[(0x0006)/2] = BURN_ENDIAN_SWAP_INT16(0xe3a0);
+	temp16[(0x0008)/2] = BURN_ENDIAN_SWAP_INT16(0xff10);
+	temp16[(0x000a)/2] = BURN_ENDIAN_SWAP_INT16(0xe12f);
+	temp16[(0x0090)/2] = BURN_ENDIAN_SWAP_INT16(0x0400);
+	temp16[(0x0092)/2] = BURN_ENDIAN_SWAP_INT16(0x1000);
 }
 
 static INT32 dmnfrntInit()

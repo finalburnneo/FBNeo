@@ -957,6 +957,25 @@ static struct BurnInputInfo CkongmcInputList[] =
 
 STDINPUTINFO(Ckongmc)
 
+static struct BurnInputInfo KongInputList[] =
+{
+	{"Coin 1"            , BIT_DIGITAL   , GalInputPort0 + 1, "p1 coin"   },
+
+	{"Up"                , BIT_DIGITAL   , GalInputPort0 + 7, "p1 up"     },
+	{"Down"              , BIT_DIGITAL   , GalInputPort1 + 5, "p1 down"   },
+	{"Left"              , BIT_DIGITAL   , GalInputPort0 + 2, "p1 left"   },
+	{"Right"             , BIT_DIGITAL   , GalInputPort0 + 3, "p1 right"  },
+	{"Fire 1"            , BIT_DIGITAL   , GalInputPort1 + 0, "p1 fire 1" },
+	{"Fire 2"            , BIT_DIGITAL   , GalInputPort1 + 1, "p2 fire 1" },
+	
+	{"Reset"             , BIT_DIGITAL   , &GalReset        , "reset"     },
+	{"Dip 1"             , BIT_DIPSWITCH , GalDip + 0       , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH , GalDip + 1       , "dip"       },
+	{"Dip 3"             , BIT_DIPSWITCH , GalDip + 2       , "dip"       },
+};
+
+STDINPUTINFO(Kong)
+
 static struct BurnInputInfo LadybuggInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL   , GalInputPort0 + 0, "p1 coin"   },
@@ -3806,6 +3825,45 @@ static struct BurnDIPInfo CkongmcDIPList[]=
 };
 
 STDDIPINFO(Ckongmc)
+
+static struct BurnDIPInfo KongDIPList[]=
+{
+	// Default Values
+	{0x08, 0xff, 0xff, 0x00, NULL                     },
+	{0x09, 0xff, 0xff, 0x00, NULL                     },
+	{0x0a, 0xff, 0xff, 0x00, NULL                     },
+	
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Service Mode"           },
+	{0x08, 0x01, 0x20, 0x00, "Off"                    },
+	{0x08, 0x01, 0x20, 0x20, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "99 Men/Max Timer"       },
+	{0x08, 0x01, 0x40, 0x00, "Off"                    },
+	{0x08, 0x01, 0x40, 0x40, "On"                     },
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Lives"                  },
+	{0x09, 0x01, 0x40, 0x00, "3"                      },
+	{0x09, 0x01, 0x40, 0x40, "5"                      },
+	
+	{0   , 0xfe, 0   , 2   , "Coinage"                },
+	{0x09, 0x01, 0x80, 0x00, "1 Coin  1 Credit"       },
+	{0x09, 0x01, 0x80, 0x80, "2 Coins 1 Credit"       },
+		
+	// Dip 3
+	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
+	{0x0a, 0x01, 0x03, 0x00, "10000"                  },
+	{0x0a, 0x01, 0x03, 0x01, "20000"                  },
+	{0x0a, 0x01, 0x03, 0x02, "30000"                  },
+	{0x0a, 0x01, 0x03, 0x03, "None"                   },
+	
+	{0   , 0xfe, 0   , 2   , "Mode"                   },
+	{0x0a, 0x01, 0x04, 0x04, "Tournament (Harder)"    },
+	{0x0a, 0x01, 0x04, 0x00, "Normal"                 },
+};
+
+STDDIPINFO(Kong)
 
 static struct BurnDIPInfo LadybuggDIPList[]=
 {
@@ -10105,6 +10163,29 @@ static struct BurnRomInfo PorterRomDesc[] = {
 STD_ROM_PICK(Porter)
 STD_ROM_FN(Porter)
 
+static struct BurnRomInfo KongRomDesc[] = {
+	{ "1",             0x01000, 0xa206beb5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2",             0x01000, 0xd75597b6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3",             0x01000, 0x54e0b87b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "4",             0x01000, 0x356c4ca2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5",             0x01000, 0x2d295976, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "6",             0x01000, 0x77131cca, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "7",             0x01000, 0x3d5ec3f1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "8",             0x01000, 0x015fe5e5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "9",             0x00800, 0xfe42a052, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "11",            0x00800, 0xad2b2cdd, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "10",            0x00800, 0x91fa187e, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "12",            0x00800, 0xb74724df, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "prom",          0x00020, 0x00000000, BRF_OPT | BRF_NODUMP },
+	
+	{ "13",            0x01000, 0x7d33ca0a, BRF_OPT }, // unknown
+};
+
+STD_ROM_PICK(Kong)
+STD_ROM_FN(Kong)
+
 UINT8 __fastcall BagmanmcZ80Read(UINT16 a)
 {
 	switch (a) {
@@ -10788,6 +10869,37 @@ static INT32 PorterInit()
 	return nRet;
 }
 
+static void KongAlterZ80()
+{
+	MapMooncrst();
+	
+	ZetOpen(0);
+	ZetMapArea(0x0000, 0x7fff, 0, GalZ80Rom1);
+	ZetMapArea(0x0000, 0x7fff, 2, GalZ80Rom1);
+	ZetMapArea(0x8000, 0x87ff, 0, GalZ80Ram1);
+	ZetMapArea(0x8000, 0x87ff, 1, GalZ80Ram1);
+	ZetMapArea(0x8000, 0x87ff, 2, GalZ80Ram1);
+	ZetClose();
+}
+
+static INT32 KongInit()
+{
+	INT32 nRet;
+	
+	GalPostLoadCallbackFunction = KongAlterZ80;
+	
+	GalPromRomSize = 0x20;
+	
+	nRet = GalInit();
+	
+	GalRenderBackgroundFunction = NULL;
+	GalExtendSpriteInfoFunction = UpperExtendSpriteInfo;
+	
+	HardCodeMooncrstPROM();
+	
+	return nRet;
+}
+
 struct BurnDriver BurnDrvSkybase = {
 	"skybase", NULL, NULL, NULL, "1982",
 	"Sky Base\0", NULL, "Omori Electric Co. Ltd", "Galaxian",
@@ -10855,6 +10967,16 @@ struct BurnDriver BurnDrvPorter = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_PLATFORM, 0,
 	NULL, PorterRomInfo, PorterRomName, NULL, NULL, PorterInputInfo, PorterDIPInfo,
 	PorterInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvKong = {
+	"kong", NULL, NULL, NULL, "198?",
+	"Kong (Brazil)\0", "Bad Colours", "Taito do Brasil", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_PLATFORM, 0,
+	NULL, KongRomInfo, KongRomName, NULL, NULL, KongInputInfo, KongDIPInfo,
+	KongInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

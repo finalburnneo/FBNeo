@@ -96,6 +96,7 @@ void pgm_decrypt_theglad();
 void pgm_decrypt_killbldp();
 void pgm_decrypt_oldsplus();
 void pgm_decrypt_svg();
+void pgm_decrypt_svgpcb();
 void pgm_decrypt_happy6in1();
 void pgm_decrypt_dw2001();
 void pgm_decrypt_py2k2();

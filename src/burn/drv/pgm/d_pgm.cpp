@@ -2145,7 +2145,7 @@ static struct BurnRomInfo ddp2RomDesc[] = {
 
 	{ "m1300.u5",	   0x400000, 0x82d4015d, 5 | BRF_SND },		  //  5 Samples
 
-	{ "ddp2_igs027a.bin", 0x004000, 0x742D34D2, 7 | BRF_PRG },//  6 Internal ARM7 Rom
+	{ "ddp2_igs027a_japan.bin", 0x004000, 0x742D34D2, 7 | BRF_PRG },//  6 Internal ARM7 Rom
 
 	{ "v100.u23", 	   0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS }, //  7 External ARM7 Rom
 };
@@ -2191,7 +2191,7 @@ static struct BurnRomInfo ddp2100RomDesc[] = {
 
 	{ "m1300.u5",	   0x400000, 0x82d4015d, 5 | BRF_SND },		  //  5 Samples
 
-	{ "ddp2_igs027a.bin", 0x004000, 0x742D34D2, 7 | BRF_PRG },//  6 Internal ARM7 Rom
+	{ "ddp2_igs027a_japan.bin", 0x004000, 0x742D34D2, 7 | BRF_PRG },//  6 Internal ARM7 Rom
 
 	{ "v100.u23", 	   0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS }, //  7 External ARM7 Rom
 };
@@ -2224,7 +2224,7 @@ static struct BurnRomInfo ddp2101RomDesc[] = {
 
 	{ "m1300.u5",	   0x400000, 0x82d4015d, 5 | BRF_SND },		  //  5 Samples
 
-	{ "ddp2_igs027a.bin", 0x004000, 0x742D34D2, 7 | BRF_PRG },//  6 Internal ARM7 Rom
+	{ "ddp2_igs027a_japan.bin", 0x004000, 0x742D34D2, 7 | BRF_PRG },//  6 Internal ARM7 Rom
 
 	{ "v100.u23", 	   0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS }, //  7 External ARM7 Rom
 };

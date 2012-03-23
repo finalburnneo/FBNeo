@@ -1145,42 +1145,48 @@ static inline void pgm_cpu_sync()
 
 static void __fastcall asic27a_write_byte(UINT32 address, UINT8 data)
 {
+#if 0
 	if ((address & 0xff0000) == 0xd00000) {
-		pgm_cpu_sync();
+		//pgm_cpu_sync();
 		PGMARMShareRAM[(address & 0xffff)^1] = data;
 		return;
 	}
+#endif
 
 	if ((address & 0xfffffe) == 0xd10000) {	// ddp2
 		pgm_cpu_sync();
-		asic27a_to_arm = data & 0xff;
-		Arm7SetIRQLine(ARM7_FIRQ_LINE, ARM7_HOLD_LINE);
+		asic27a_to_arm = data;
+		Arm7SetIRQLine(ARM7_FIRQ_LINE, ARM7_ASSERT_LINE);
 		return;
 	}
 }
 
 static void __fastcall asic27a_write_word(UINT32 address, UINT16 data)
 {
+#if 0
 	if ((address & 0xff0000) == 0xd00000) {
-		pgm_cpu_sync();
+		//pgm_cpu_sync();
 		*((UINT16*)(PGMARMShareRAM + (address & 0xfffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
+#endif
 
 	if ((address & 0xfffffe) == 0xd10000) {
 		pgm_cpu_sync();
 		asic27a_to_arm = data & 0xff;
-		Arm7SetIRQLine(ARM7_FIRQ_LINE, ARM7_HOLD_LINE);
+		Arm7SetIRQLine(ARM7_FIRQ_LINE, ARM7_ASSERT_LINE);
 		return;
 	}
 }
 
 static UINT8 __fastcall asic27a_read_byte(UINT32 address)
 {
+#if 0
 	if ((address & 0xff0000) == 0xd00000) {
-		pgm_cpu_sync();
+		//pgm_cpu_sync();
 		return PGMARMShareRAM[(address & 0xffff)^1];
 	}
+#endif
 
 	if ((address & 0xfffffc) == 0xd10000) {
 		pgm_cpu_sync();
@@ -1192,10 +1198,12 @@ static UINT8 __fastcall asic27a_read_byte(UINT32 address)
 
 static UINT16 __fastcall asic27a_read_word(UINT32 address)
 {
+#if 0
 	if ((address & 0xff0000) == 0xd00000) {
-		pgm_cpu_sync();
+		//pgm_cpu_sync();
 		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(PGMARMShareRAM + (address & 0xfffe))));
 	}
+#endif
 
 	if ((address & 0xfffffc) == 0xd10000) {
 		pgm_cpu_sync();
@@ -1220,6 +1228,7 @@ static UINT8 asic27a_arm7_read_byte(UINT32 address)
 	switch (address)
 	{
 		case 0x38000000:
+			Arm7SetIRQLine(ARM7_FIRQ_LINE, ARM7_CLEAR_LINE);
 			return asic27a_to_arm;
 	}
 
@@ -1233,9 +1242,9 @@ void install_protection_asic27a_martmast()
 
 	SekOpen(0);
 
-	SekMapMemory(PGMARMShareRAM,	0xd00000, 0xd0ffff, SM_FETCH);
+	SekMapMemory(PGMARMShareRAM,	0xd00000, 0xd0ffff, SM_RAM);
 
-	SekMapHandler(4,		0xd00000, 0xd10003, SM_READ | SM_WRITE);
+	SekMapHandler(4,		0xd10000, 0xd10003, SM_READ | SM_WRITE);
 	SekSetReadWordHandler(4, asic27a_read_word);
 	SekSetReadByteHandler(4, asic27a_read_byte);
 	SekSetWriteWordHandler(4, asic27a_write_word);

@@ -324,6 +324,18 @@ static struct BurnDIPInfo ddp2DIPList[] = {
 	{0x2E,	0x01, 0x07,	0x05, "World"			},
 };
 
+static struct BurnDIPInfo dmnfrntDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x05, NULL			},
+
+	{0,	0xFE, 0,	6,    "Region (Fake)"		},
+	{0x2E,	0x01, 0x07,	0x00, "China"			},
+	{0x2E,	0x01, 0x07,	0x01, "Taiwan"			},
+	{0x2E,	0x01, 0x07,	0x02, "Japan"			},
+	{0x2E,	0x01, 0x07,	0x03, "Korea"			},
+	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"		},
+	{0x2E,	0x01, 0x07,	0x05, "World"			},
+};
+
 STDDIPINFOEXT(orlegend,		pgm, orlegend		)
 STDDIPINFOEXT(orlegend112c, 	pgm, orlegend112c	)
 STDDIPINFOEXT(orld111c, 	pgm, orld111c		)
@@ -341,6 +353,8 @@ STDDIPINFOEXT(martmastc102, 	pgm, martmastc102	)
 STDDIPINFOEXT(olds,     	pgm, olds		)
 STDDIPINFOEXT(olds100,  	pgm, olds100		)
 STDDIPINFOEXT(ddp2,     	pgm, ddp2		)
+STDDIPINFOEXT(dmnfrnt,     	pgm, dmnfrnt		)
+STDDIPINFOEXT(dmnfrntpcb,     	pgm, dmnfrnt		)
 
 // -----------------------------------------------------------------------------
 // BIOS
@@ -2345,7 +2359,7 @@ struct BurnDriver BurnDrvDmnfrnt = {
 	"Demon Front (V105)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (V105)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PLATFORM, 0,
-	NULL, dmnfrntRomInfo, dmnfrntRomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, dmnfrntRomInfo, dmnfrntRomName, NULL, NULL, pgmInputInfo, dmnfrntDIPInfo,
 	dmnfrntInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x600,
 	448, 224, 4, 3
 };
@@ -2379,8 +2393,8 @@ struct BurnDriver BurnDrvdmnfrnta = {
 	"dmnfrnta", "dmnfrnt", "pgm", NULL, "2002",
 	"Demon Front (V102, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (V102, China)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PLATFORM, 0,
-	NULL, dmnfrntaRomInfo, dmnfrntaRomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PLATFORM, 0,
+	NULL, dmnfrntaRomInfo, dmnfrntaRomName, NULL, NULL, pgmInputInfo, dmnfrntDIPInfo,
 	dmnfrntInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x600,
 	448, 224, 4, 3
 };
@@ -3090,7 +3104,7 @@ struct BurnDriverD BurnDrvDmnfrntpcb = {
 	"Demon Front (V107, Korea, Single PCB Version)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (V107, Korea, Single PCB Version)\0", NULL, NULL, NULL,
 	0, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PLATFORM, 0,
-	NULL, dmnfrntpcbRomInfo, dmnfrntpcbRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	NULL, dmnfrntpcbRomInfo, dmnfrntpcbRomName, NULL, NULL, pgmInputInfo, dmnfrntpcbDIPInfo,
 	dmnfrntInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x600,
 	448, 224, 4, 3
 };

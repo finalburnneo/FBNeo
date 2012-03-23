@@ -382,7 +382,7 @@ inline static UINT32 CalcCol(UINT16 nColour)
 void __fastcall PgmPaletteWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	sekAddress = (sekAddress - 0xa00000) >> 1;
-	PGMPalRAM[sekAddress] = BURN_ENDIAN_SWAP_INT16(wordValue);
+	PGMPalRAM[sekAddress] =BURN_ENDIAN_SWAP_INT16(wordValue);
 	RamCurPal[sekAddress] = CalcCol(wordValue);
 }
 
@@ -797,7 +797,11 @@ INT32 pgmFrame()
 			break;
 
 			case 3: // svg/killbldp/dmnfrnt/theglad/happy6in1
-				// unknown...
+				if (strncmp(BurnDrvGetTextA(DRV_NAME), "dmnfrnt", 7) == 0) {
+					PGMARMShareRAM[0x158] = PgmInput[7];
+				} else {
+					// unknown
+				}
 			break;
 		}
 	}

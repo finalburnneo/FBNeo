@@ -105,6 +105,39 @@
 <a href="http://neosource.1emu.net/forums">http://neosource.1emu.net/forums</a></p>
 
 
+<h3>v0.2.97.24</h3>
+<ul>
+<li>Rewrote the DAC core, improving performance and timing [iq_132]</li>
+<li>Updated the Mogura and The FairyLand Story drivers to use the new DAC core [iq_132]</li>
+<li>Updated the Armed Formation, King & Balloon, Irem M72 and M90, Route16, Sega System 16A, SunA16, Terra Cresta, The New Zealand Story, Vigilante drivers to use the new DAC core [Barry]</li>
+<li>Fixed the new DAC core with GCC 3.4.5 [Barry]</li>
+<li>Updated Z80 cycle counting, improving accuracy [iq_132]</li>
+<li>Added cycle counting to the I8039 CPU core [iq_132]</li>
+<li>Updated PGM driver making Bee Storm - DoDonPachi II and Demon Front playable [iq_132]</li>
+<li>Added Fantasic and Kong to the Galaxian driver [Barry]</li>
+<li>Added Arange Mode hack of DoDonPachi to the Cave driver [JacKc]</li>
+<li>Added clone of 1941 to the CPS-1 driver [Bonky0013, JacKc, Techmotour]</li>
+<li>Added clone of King of Dragons to the CPS-1 driver [Barry]</li>
+<li>Added clone of Street Fighter II: Champion Edition to the CPS-1 driver [Barry]</li>
+<li>Added clone of Deer Hunting to the Seta2 driver [Barry]</li>
+<li>Added clone of Super Chase to the Taito driver [Barry]</li>
+<li>Added clone of Arkanoid 2 to the The New Zealand Story driver [Barry]</li>
+<li>Added 1945 Part 2 (hack of Battle Garegga) to the Toaplan-2 driver [Barry]</li>
+<li>Fixed sound samples in the Kageki driver [Barry]</li>
+<li>Fixed sample sounds in King & Balloon [Barry]</li>
+<li>Fixed 68000 CPU speed in Best of the Best driver [iq_132, reported by Cmart]</li>
+<li>Updated dip switches in the Side Pocket driver [Barry]</li>
+<li>Changed CPS-1 sprite timing for bootlegs/hacks that render the sprites in reverse order [Barry, identied by manliodp]</li>
+<li>Big-endian fixes for Data East, various Misc, and PGM drivers [lantus]</li>
+<li>Added Unicode title for 1945 Part 2 [JacKc]</li>
+<li>Added support for <i>insane</i> cheat file lengths [Barry, reported by money_114]</li>
+<li>Fixed issue with the load progress dialog not being killed when loading unavailable sets [Barry, reported by BisonSAS]</li>
+<li>Fixed crash if SampleInit is called without a sample list [iq_132]</li>
+<li>Removed sek.h and zet.h from burnint.h, and added to drivers where necessary [Barry]</li>
+<li>Synced sets with MAME 0.145u4 [Barry]</li>
+</ul>
+
+
 <h3>v0.2.97.23</h3>
 <ul>
 <li>Added clone of Caveman Ninja to the Data East drivers [JacKc, Corrado Tomaselli]</li>
@@ -143,7 +176,7 @@
 <li>Changed CPS-1/2 palette handling to be more accurate, should fix some glitches [Barry]</li>
 <li>Changed CPS-2 video timing to use the values in MAME that have come from hardware measurements [Barry]</li>
 <li>Improved CPS-2 sprite list end detection [Barry]</li>
-<li>Moved the CpsGetObj() call, fixing sprite lag in Super Street Fighter II and clones [manliodp.]</li>
+<li>Moved the CpsGetObj() call, fixing sprite lag in Super Street Fighter II and clones [manliodp]</li>
 <li>Fixed IRQ generation in the Irem M72 drivers, fixing video timing in Dragon Breed [Barry]</li>
 <li>Fixed sound in the Irem M72 drivers [Barry]</li>
 <li>Minor CPS-3 update with a small speedup [iq_132]</li>

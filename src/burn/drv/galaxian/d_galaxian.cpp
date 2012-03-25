@@ -7606,6 +7606,27 @@ static struct BurnRomInfo SkyraidrRomDesc[] = {
 STD_ROM_PICK(Skyraidr)
 STD_ROM_FN(Skyraidr)
 
+static struct BurnRomInfo GalempRomDesc[] = {
+	{ "1",             0x00800, 0xd975af10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2",             0x00800, 0xb2ed14c3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3",             0x00800, 0x945f4160, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "4",             0x00800, 0xdf7a13ea, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5",             0x00800, 0xff6128a2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "6",             0x00800, 0xd915a389, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "7",             0x00800, 0xc9245346, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "8",             0x00800, 0x797d45c7, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+		
+	{ "10",            0x00800, 0x30177b93, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "12",            0x00800, 0xc26132af, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "9",             0x00800, 0x7e8dcc13, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "11",            0x00800, 0xdcc2b33b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "l06_prom.bin",  0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galemp)
+STD_ROM_FN(Galemp)
+
 void __fastcall PiscesZ80Write(UINT16 a, UINT8 d)
 {
 	if (a >= 0x5800 && a <= 0x58ff) {
@@ -7813,6 +7834,16 @@ struct BurnDriver BurnDrvSkyraidr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, SkyraidrRomInfo, SkyraidrRomName, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
+	PiscesInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalemp = {
+	"galemp", "uniwars", NULL, NULL, "1980",
+	"Galaxy Empire (bootleg?)\0", NULL, "bootleg (Taito do Brasil)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, GalempRomInfo, GalempRomName, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
 	PiscesInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

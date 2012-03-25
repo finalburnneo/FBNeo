@@ -630,7 +630,7 @@ INT32 pgmDraw()
 
 	{
 		// black / magenta
-		RamCurPal[0x1200/2] = (nBurnLayer & 1) ? 0 : BurnHighCol(0xff, 0, 0xff, 0);
+		RamCurPal[0x1200/2] = (nBurnLayer & 1) ? RamCurPal[0x3ff] : BurnHighCol(0xff, 0, 0xff, 0);
 	}
 
 	// Fill in background color (0x1200/2)

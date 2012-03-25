@@ -645,7 +645,7 @@ static struct BurnRomInfo Boblbobl2RomDesc[] = {
 	{ "a78-07.46",     0x08000, 0x4f9a26e8, BRF_ESS | BRF_PRG }, //  4	Z80 #3 Program 
 	
 	{ "gfx7.bin",      0x10000, 0x702f61c0, BRF_GRA },	     //  5	Tiles
-	{ "gfx7.bin",      0x10000, 0x677840e8, BRF_GRA },	     //  6
+	{ "gfx8.bin",      0x10000, 0x677840e8, BRF_GRA },	     //  6
 	{ "a78-13.16",     0x08000, 0xd0af35c5, BRF_GRA },	     //  7
 	{ "a78-14.17",     0x08000, 0x7b5369a8, BRF_GRA },	     //  8
 	{ "gfx10.bin",     0x10000, 0xd370f499, BRF_GRA },	     //  9

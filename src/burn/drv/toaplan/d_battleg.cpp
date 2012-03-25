@@ -147,11 +147,13 @@ static struct BurnRomInfo bgareggablRomDesc[] = {
 	{ "6#-322",       0x400000, 0x37fe48ed, BRF_GRA },			 //  1 GP9001 Tile data
 	{ "5#-322",       0x400000, 0x5a06c031, BRF_GRA },			 //  2
 
-	{ "1#-256.bin",   0x008000, 0x760dcd14, BRF_GRA },			 //  3 Extra text layer tile data
+	{ "1#-256",       0x008000, 0x760dcd14, BRF_GRA },			 //  3 Extra text layer tile data
 
 	{ "snd.bin",      0x020000, 0x68632952, BRF_ESS | BRF_PRG }, //  4 Z80 program
 
 	{ "rom5.bin",     0x100000, 0xF6D49863, BRF_SND },			 //  5 MSM6295 ADPCM data
+	
+	{ "2#-256",       0x008000, 0x456dd16e, BRF_GRA },			 //  6 (looks like garbage)
 };
 
 

@@ -407,11 +407,7 @@ static struct BurnRomInfo dmnfrntBIOSRomDesc[] = {
 
 	{ "pgm_m01s.rom", 0x200000, 0x45ae7159, BRF_SND | BRF_BIOS },	// 0x81 - Samples
 
-<<<<<<< .mine
 	{ "pgm_p02s.u42", 0x020000, 0x78c15fa2, BRF_PRG | BRF_BIOS },	// 0x82 - 68K BIOS (V0001, newer - 07/10/97 - 16:36:08)
-=======
-	{ "pgm_p02s.u42", 0x020000, 0x78c15fa2, BRF_PRG | BRF_BIOS },	// 0x82 - 68K BIOS (V0001-01J, custom 02/25/03 17:51:01)
->>>>>>> .r469
 };
 
 static struct BurnRomInfo svgpcbBIOSRomDesc[] = {

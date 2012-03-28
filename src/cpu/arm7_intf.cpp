@@ -200,6 +200,8 @@ void Arm7_program_write_dword_32le(UINT32 addr, UINT32 data)
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_write_dword_32le called without init\n"));
 #endif
 
+	addr &= MAX_MEMORY_AND;
+
 #ifdef DEBUG_LOG
 	bprintf (PRINT_NORMAL, _T("%5.5x, %8.8x wd\n"), addr, data);
 #endif

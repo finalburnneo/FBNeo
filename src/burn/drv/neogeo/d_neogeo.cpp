@@ -13894,3 +13894,32 @@ struct BurnDriver BurnDrvtmnti = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+
+// Neo Thunder
+
+static struct BurnRomInfo neothndrRomDesc[] = {
+	{ "202-p1.bin", 0x100000, 0xF7050757, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
+
+	{ "202-s1.bin", 0x020000, 0xA545B593, 2 | BRF_GRA },		//  1 Text data
+
+	{ "202-c1.bin", 0x100000, 0x48B9126E, 3 | BRF_GRA },		//  2 Sprite data
+	{ "202-c2.bin", 0x100000, 0x214DF62E, 3 | BRF_GRA },		//  3
+
+	{ "202-m1.bin", 0x020000, 0x9C0291EA, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code
+
+	{ "202-v1.bin", 0x080000, 0xDEBEB8FB, 5 | BRF_SND },		//  5 Sound data
+}; 
+
+STDROMPICKEXT(neothndr, neothndr, neogeo)
+STD_ROM_FN(neothndr)
+
+struct BurnDriver BurnDrvneothndr = {
+	"neothndr", NULL, "neogeo", NULL, "2012",
+	"Neo Thunder\0", "sebastianmihai.com", "Sebastian Mihai", "Neo Geo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_HORSHOOT, 0,
+	NULL, neothndrRomInfo, neothndrRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};

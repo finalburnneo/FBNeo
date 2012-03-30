@@ -2800,7 +2800,7 @@ UINT16 __fastcall Midres68KReadWord(UINT32 a)
 		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
 		INT32 Offset = (a - 0x220000) >> 1;
 		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
-		return RAM[Offset];
+		return BURN_ENDIAN_SWAP_INT16(RAM[Offset]);
 	}
 	
 	if (a >= 0x220800 && a <= 0x220fff) {
@@ -2808,21 +2808,21 @@ UINT16 __fastcall Midres68KReadWord(UINT32 a)
 		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
 		INT32 Offset = (a - 0x220800) >> 1;
 		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
-		return RAM[Offset];
+		return BURN_ENDIAN_SWAP_INT16(RAM[Offset]);
 	}
 	
 	if (a >= 0x2a0000 && a <= 0x2a07ff) {
 		UINT16 *RAM = (UINT16*)DrvVideo2Ram;
 		INT32 Offset = (a - 0x2a0000) >> 1;
 		if (DrvTileRamBank[2] & 0x01) Offset += 0x1000;
-		return RAM[Offset];
+		return BURN_ENDIAN_SWAP_INT16(RAM[Offset]);
 	}
 	
 	if (a >= 0x320000 && a <= 0x321fff) {
 		UINT16 *RAM = (UINT16*)DrvCharRam;
 		INT32 Offset = (a - 0x320000) >> 1;
 		if (DrvTileRamBank[0] & 0x01) Offset += 0x1000;
-		return RAM[Offset];
+		return BURN_ENDIAN_SWAP_INT16(RAM[Offset]);
 	}
 	
 	switch (a) {
@@ -2867,7 +2867,7 @@ void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
 		INT32 Offset = (a - 0x220000) >> 1;
 		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
-		RAM[Offset] = d;
+		RAM[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 	
@@ -2876,7 +2876,7 @@ void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
 		INT32 Offset = (a - 0x220800) >> 1;
 		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
-		RAM[Offset] = d;
+		RAM[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 	
@@ -2884,7 +2884,7 @@ void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 		UINT16 *RAM = (UINT16*)DrvVideo2Ram;
 		INT32 Offset = (a - 0x2a0000) >> 1;
 		if (DrvTileRamBank[2] & 0x01) Offset += 0x1000;
-		RAM[Offset] = d;
+		RAM[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 	
@@ -2892,7 +2892,7 @@ void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 		UINT16 *RAM = (UINT16*)DrvCharRam;
 		INT32 Offset = (a - 0x320000) >> 1;
 		if (DrvTileRamBank[0] & 0x01) Offset += 0x1000;
-		RAM[Offset] = d;
+		RAM[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 	
@@ -2913,7 +2913,7 @@ void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 		case 0x200004:
 		case 0x200006: {		
 			UINT16 *Control0 = (UINT16*)DrvVideo1Ctrl0Ram;
-			Control0[(a - 0x200000) >> 1] = d;
+			Control0[(a - 0x200000) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 			if (a == 0x200004) {
 				DrvTileRamBank[1] = d & 0x01;
 				if (DrvTileRamBank[1]) bprintf(PRINT_IMPORTANT, _T("68K Set Tile RAM Bank 1\n"));
@@ -2926,7 +2926,7 @@ void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 		case 0x200014:
 		case 0x200016: {		
 			UINT16 *Control1 = (UINT16*)DrvVideo1Ctrl1Ram;
-			Control1[(a - 0x200010) >> 1] = d;
+			Control1[(a - 0x200010) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
@@ -2935,7 +2935,7 @@ void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 		case 0x280004:
 		case 0x280006: {		
 			UINT16 *Control0 = (UINT16*)DrvVideo2Ctrl0Ram;
-			Control0[(a - 0x280000) >> 1] = d;
+			Control0[(a - 0x280000) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 			if (a == 0x280004) {
 				DrvTileRamBank[2] = d & 0x01;
 				if (DrvTileRamBank[2]) bprintf(PRINT_IMPORTANT, _T("68K Set Tile RAM Bank 2\n"));
@@ -2948,7 +2948,7 @@ void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 		case 0x280014:
 		case 0x280016: {		
 			UINT16 *Control1 = (UINT16*)DrvVideo2Ctrl1Ram;
-			Control1[(a - 0x280010) >> 1] = d;
+			Control1[(a - 0x280010) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
@@ -2957,7 +2957,7 @@ void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 		case 0x300004:
 		case 0x300006: {		
 			UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-			Control0[(a - 0x300000) >> 1] = d;
+			Control0[(a - 0x300000) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 			if (a == 0x300004) {
 				DrvTileRamBank[0] = d & 0x01;
 				if (DrvTileRamBank[0]) bprintf(PRINT_IMPORTANT, _T("68K Set Tile RAM Bank 0\n"));
@@ -2970,7 +2970,7 @@ void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 		case 0x300014:
 		case 0x300016: {		
 			UINT16 *Control1 = (UINT16*)DrvCharCtrl1Ram;
-			Control1[(a - 0x300010) >> 1] = d;
+			Control1[(a - 0x300010) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		

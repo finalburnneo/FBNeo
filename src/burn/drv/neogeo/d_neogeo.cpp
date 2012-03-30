@@ -13899,16 +13899,16 @@ struct BurnDriver BurnDrvtmnti = {
 // Neo Thunder
 
 static struct BurnRomInfo neothndrRomDesc[] = {
-	{ "202-p1.bin", 0x100000, 0xF7050757, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
+	{ "thund_p1.rom", 0x100000, 0xF7050757, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
 
-	{ "202-s1.bin", 0x020000, 0xA545B593, 2 | BRF_GRA },		//  1 Text data
+	{ "thund_s1.rom", 0x020000, 0xA545B593, 2 | BRF_GRA },		//  1 Text data
 
-	{ "202-c1.bin", 0x100000, 0x48B9126E, 3 | BRF_GRA },		//  2 Sprite data
-	{ "202-c2.bin", 0x100000, 0x214DF62E, 3 | BRF_GRA },		//  3
+	{ "thund_c1.rom", 0x100000, 0x48B9126E, 3 | BRF_GRA },		//  2 Sprite data
+	{ "thund_c2.rom", 0x100000, 0x214DF62E, 3 | BRF_GRA },		//  3
 
-	{ "202-m1.bin", 0x020000, 0x9C0291EA, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code
+	{ "thund_m1.rom", 0x020000, 0x9C0291EA, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code
 
-	{ "202-v1.bin", 0x080000, 0xDEBEB8FB, 5 | BRF_SND },		//  5 Sound data
+	{ "thund_v1.rom", 0x080000, 0xDEBEB8FB, 5 | BRF_SND },		//  5 Sound data
 }; 
 
 STDROMPICKEXT(neothndr, neothndr, neogeo)

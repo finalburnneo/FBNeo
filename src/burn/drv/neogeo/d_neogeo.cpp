@@ -13945,7 +13945,7 @@ STD_ROM_FN(ngftdemo)
 
 struct BurnDriver BurnDrvngftdemo = {
 	"ngftdemo", NULL, "neogeo", NULL, "2012",
-	"NGF Transparency Demo\0", "redarmor.net/", "CeL", "Neo Geo",
+	"NGF Transparency Demo\0", "redarmor.net", "CeL", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_HORSHOOT, 0,
 	NULL, ngftdemoRomInfo, ngftdemoRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

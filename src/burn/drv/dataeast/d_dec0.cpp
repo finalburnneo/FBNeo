@@ -849,6 +849,42 @@ static struct BurnRomInfo DrgninjaRomDesc[] = {
 STD_ROM_PICK(Drgninja)
 STD_ROM_FN(Drgninja)
 
+static struct BurnRomInfo DrgninjabRomDesc[] = {
+	{ "n-12.d2",            0x10000, 0x5a70eb52, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "n-11.a2",            0x10000, 0x3887eb92, BRF_ESS | BRF_PRG },	//  1
+	{ "eg06.6c",            0x10000, 0x2b81faf7, BRF_ESS | BRF_PRG },	//  2
+	{ "eg03.6a",            0x10000, 0xc52c2e9d, BRF_ESS | BRF_PRG },	//  3
+	
+	{ "eg07.8a",            0x08000, 0x001d2f51, BRF_ESS | BRF_PRG },	//  4	6502 Program 
+	
+	{ "eg25.15j",           0x08000, 0xdd557b19, BRF_GRA },			//  5	Characters
+	{ "eg26.16j",           0x08000, 0x5d75fc8f, BRF_GRA },			//  6
+	
+	{ "eg18.14d",           0x10000, 0x05cfc3e5, BRF_GRA },			//  7	Tiles 1
+	{ "eg20.17d",           0x10000, 0xe11e988f, BRF_GRA },			//  8
+	{ "eg22.14f",           0x10000, 0xb893d880, BRF_GRA },			//  9
+	{ "eg24.17f",           0x10000, 0x6f226dda, BRF_GRA },			// 10
+	
+	{ "eg30.9j",            0x10000, 0x2438e67e, BRF_GRA },			// 11	Tiles 2
+	{ "eg28.9f",            0x10000, 0x5c692ab3, BRF_GRA },			// 12
+	
+	{ "eg15.16c",           0x10000, 0x5617d67f, BRF_GRA },			// 13	Sprites
+	{ "eg16.17c",           0x08000, 0x17e42633, BRF_GRA },			// 14
+	{ "eg11.16a",           0x10000, 0xba83e8d8, BRF_GRA },			// 15
+	{ "eg12.17a",           0x08000, 0xfea2a134, BRF_GRA },			// 16
+	{ "eg13.13c",           0x10000, 0xfd91e08e, BRF_GRA },			// 17
+	{ "eg14.14c",           0x08000, 0xe83c760a, BRF_GRA },			// 18
+	{ "eg09.13a",           0x10000, 0x601b7b23, BRF_GRA },			// 19
+	{ "eg10.14a",           0x08000, 0xeeee8a1a, BRF_GRA },			// 20
+	
+	{ "eg08.2c",            0x10000, 0x92f2c916, BRF_SND },			// 21	Samples
+	
+	{ "i8751",              0x01000, 0x00000000, BRF_PRG | BRF_NODUMP },	// 22	I8751
+};
+
+STD_ROM_PICK(Drgninjab)
+STD_ROM_FN(Drgninjab)
+
 static struct BurnRomInfo HbarrelRomDesc[] = {
 	{ "hb04.bin",           0x10000, 0x4877b09e, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "hb01.bin",           0x10000, 0x8b41c219, BRF_ESS | BRF_PRG },	//  1
@@ -4688,6 +4724,16 @@ struct BurnDriver BurnDrvDrgninja = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, DrgninjaRomInfo, DrgninjaRomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
+	BaddudesInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
+	NULL, 0x400, 256, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvDrgninjab = {
+	"drgninjab", "baddudes", NULL, NULL, "1988",
+	"Dragonninja (bootleg)\0", NULL, "bootleg", "DEC0",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	NULL, DrgninjabRomInfo, DrgninjabRomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
 	BaddudesInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };

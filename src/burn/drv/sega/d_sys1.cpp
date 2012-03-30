@@ -2678,6 +2678,31 @@ static struct BurnRomInfo Wboy4RomDesc[] = {
 STD_ROM_PICK(Wboy4)
 STD_ROM_FN(Wboy4)
 
+static struct BurnRomInfo Wboy5RomDesc[] = {
+	{ "wb1.ic116",         0x004000, 0x6c67407c, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "wb_2",              0x004000, 0x4081b624, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "wb_3",              0x004000, 0xc48a0e36, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+	
+	{ "epr-7498.120",      0x002000, 0x78ae1e7b, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
+	
+	{ "epr-7497.62",       0x002000, 0x08d609ca, BRF_GRA },		  //  4 Tiles
+	{ "epr-7496.61",       0x002000, 0x6f61fdf1, BRF_GRA },		  //  5 Tiles
+	{ "epr-7495.64",       0x002000, 0x6a0d2c2d, BRF_GRA },		  //  6 Tiles
+	{ "epr-7494.63",       0x002000, 0xa8e281c7, BRF_GRA },		  //  7 Tiles
+	{ "epr-7493.66",       0x002000, 0x89305df4, BRF_GRA },		  //  8 Tiles
+	{ "epr-7492.65",       0x002000, 0x60f806b1, BRF_GRA },		  //  9 Tiles
+	
+	{ "epr-7485.117",      0x004000, 0xc2891722, BRF_GRA },		  //  10 Sprites
+	{ "epr-7487.04",       0x004000, 0x2d3a421b, BRF_GRA },		  //  11 Sprites
+	{ "epr-7486.110",      0x004000, 0x8d622c50, BRF_GRA },		  //  12 Sprites
+	{ "epr-7488.05",       0x004000, 0x007c2f1b, BRF_GRA },		  //  13 Sprites
+
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
+};
+
+STD_ROM_PICK(Wboy5)
+STD_ROM_FN(Wboy5)
+
 static struct BurnRomInfo WboyuRomDesc[] = {
 	{ "ic116_89.bin",      0x004000, 0x73d8cef0, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "ic109_90.bin",      0x004000, 0x29546828, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
@@ -5460,6 +5485,16 @@ struct BurnDriver BurnDrvWboy4 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Wboy4RomInfo, Wboy4RomName, NULL, NULL, WboyInputInfo, WboyDIPInfo,
 	Wboy4Init, System1Exit, System1Frame, NULL, System1Scan,
+	NULL, 0x600, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWboy5 = {
+	"wboy5", "wboy", NULL, NULL, "1986",
+	"Wonder Boy (set 5, bootleg)\0", NULL, "bootleg", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, Wboy5RomInfo, Wboy5RomName, NULL, NULL, WboyInputInfo, Wboy3DIPInfo,
+	WboyoInit, System1Exit, System1Frame, NULL, System1Scan,
 	NULL, 0x600, 256, 224, 4, 3
 };
 

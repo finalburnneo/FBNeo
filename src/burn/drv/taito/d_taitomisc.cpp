@@ -1776,6 +1776,32 @@ static struct BurnRomInfo RastanRomDesc[] = {
 STD_ROM_PICK(Rastan)
 STD_ROM_FN(Rastan)
 
+static struct BurnRomInfo Rastan2RomDesc[] = {
+	{ "b04-38.19",   0x10000, 0x1c91dbb1, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b04-37.7",    0x10000, 0xecf20bdd, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b04-40.20",   0x10000, 0x0930d4b3, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b04-39.8",    0x10000, 0xd95ade5e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b04-42.21",   0x10000, 0x1857a7cb, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b04-43-1.9",  0x10000, 0xca4702ff, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+
+	{ "b04-19.49",   0x10000, 0xee81fdd8, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+
+	{ "b04-01.40",   0x20000, 0xcd30de19, BRF_GRA | TAITO_CHARS },
+	{ "b04-03.39",   0x20000, 0xab67e064, BRF_GRA | TAITO_CHARS },
+	{ "b04-02.67",   0x20000, 0x54040fec, BRF_GRA | TAITO_CHARS },
+	{ "b04-04.66",   0x20000, 0x94737e93, BRF_GRA | TAITO_CHARS },
+
+	{ "b04-05.15",   0x20000, 0xc22d94ac, BRF_GRA | TAITO_SPRITESA },
+	{ "b04-07.14",   0x20000, 0xb5632a51, BRF_GRA | TAITO_SPRITESA },
+	{ "b04-06.28",   0x20000, 0x002ccf39, BRF_GRA | TAITO_SPRITESA },
+	{ "b04-08.27",   0x20000, 0xfeafca05, BRF_GRA | TAITO_SPRITESA },
+
+	{ "b04-20.76",   0x10000, 0xfd1a34cc, BRF_SND | TAITO_MSM5205 },
+};
+
+STD_ROM_PICK(Rastan2)
+STD_ROM_FN(Rastan2)
+
 static struct BurnRomInfo RastanuRomDesc[] = {
 	{ "b04-35.19",   0x10000, 0x1c91dbb1, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "b04-37.07",   0x10000, 0xecf20bdd, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -5798,10 +5824,20 @@ struct BurnDriver BurnDrvJumping = {
 
 struct BurnDriver BurnDrvRastan = {
 	"rastan", NULL, NULL, NULL, "1987",
-	"Rastan (World)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"Rastan (World set 1)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, RastanRomInfo, RastanRomName, NULL, NULL, RastanInputInfo, RastanDIPInfo,
+	RastanInit, TaitoMiscExit, TaitoMiscFrame, NULL, TaitoMiscScan,
+	NULL, 0x2000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvRastan2 = {
+	"rastan2", "rastan", NULL, NULL, "1987",
+	"Rastan (World set 2)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, Rastan2RomInfo, Rastan2RomName, NULL, NULL, RastanInputInfo, RastanDIPInfo,
 	RastanInit, TaitoMiscExit, TaitoMiscFrame, NULL, TaitoMiscScan,
 	NULL, 0x2000, 320, 240, 4, 3
 };

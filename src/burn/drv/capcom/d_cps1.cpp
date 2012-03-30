@@ -11246,7 +11246,7 @@ static INT32 Sf2koryuInit()
 
 static void Sf2hfjbCallback()
 {
-	CpsRom[0x1d22a] = 0x20;	// Fix scroll
+	*((UINT16*)(CpsRom + 0x1d22a)) = 0x0120;	// Fix scroll
 	*((UINT16*)(CpsRom + 0x21bec)) = 0x0083;
 	*((UINT16*)(CpsRom + 0x21cf8)) = 0x828e;
 	*((UINT16*)(CpsRom + 0x21cfa)) = 0x829e;

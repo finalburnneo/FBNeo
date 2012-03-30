@@ -14465,7 +14465,7 @@ struct BurnDriverX BurnDrvCpsSf2turyu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2turyuRomInfo, Sf2turyuRomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
-	Sf2tloncInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Sf2tlondInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

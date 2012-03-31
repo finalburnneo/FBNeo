@@ -4647,12 +4647,12 @@ static void kogCallback()
 	}
 
 	for (i = 0x90000; i < 0x94000; i+=2) {
-		if ((*((UINT16 *)(Neo68KROMActive + i + 0)) & 0xf2bf) == 0x42b9 && *((UINT16 *)(Neo68KROMActive + i + 2)) == 0)
-			*((UINT16 *)(Neo68KROMActive + i + 2)) = 0x0009;
+		if ((*((UINT16 *)(Neo68KROMActive + i + 0)) & BURN_ENDIAN_SWAP_INT16(0xf2bf)) == BURN_ENDIAN_SWAP_INT16(0x42b9) && *((UINT16 *)(Neo68KROMActive + i + 2)) == 0)
+			*((UINT16 *)(Neo68KROMActive + i + 2)) = BURN_ENDIAN_SWAP_INT16(0x0009);
 
-		if (*((UINT16 *)(Neo68KROMActive + i + 0)) == 0x4eb8) {
-			*((UINT16 *)(Neo68KROMActive + i + 0))  = 0x6100;
-			*((UINT16 *)(Neo68KROMActive + i + 2)) += 0xfffe - (i & 0xfffe);
+		if (*((UINT16 *)(Neo68KROMActive + i + 0)) == BURN_ENDIAN_SWAP_INT16(0x4eb8)) {
+			*((UINT16 *)(Neo68KROMActive + i + 0))  = BURN_ENDIAN_SWAP_INT16(0x6100);
+			*((UINT16 *)(Neo68KROMActive + i + 2)) += BURN_ENDIAN_SWAP_INT16(0xfffe - (i & 0xfffe));
 		}
 	}
 
@@ -4661,8 +4661,8 @@ static void kogCallback()
 	memcpy (Neo68KROMActive + 0x0007e6, Neo68KROMActive + 0x0907e6, 0x000006);
 	memcpy (Neo68KROMActive + 0x100000, Neo68KROMActive + 0x200000, 0x400000);
 
-	*((UINT16 *)(Neo68KROMActive + 0x924ac)) = 0x0009;
-	*((UINT16 *)(Neo68KROMActive + 0x9251c)) = 0x0009;
+	*((UINT16 *)(Neo68KROMActive + 0x924ac)) = BURN_ENDIAN_SWAP_INT16(0x0009);
+	*((UINT16 *)(Neo68KROMActive + 0x9251c)) = BURN_ENDIAN_SWAP_INT16(0x0009);
 	
 	lans2004_sx_decode();
 	lans2004_cx_decode(0x800000 * 5);
@@ -10859,21 +10859,21 @@ static void lans2004Callback()
 	memcpy (Neo68KROMActive + 0x100000, Neo68KROMActive + 0x200000, 0x400000);
 
 	for (i = 0xbbb00; i < 0xbe000; i+=2) {
-		if ((*((UINT16 *)(Neo68KROMActive + i + 0)) & 0xf2bf) == 0x42b9 &&
+		if ((BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(Neo68KROMActive + i + 0))) & 0xf2bf) == BURN_ENDIAN_SWAP_INT16(0x42b9) &&
 		     *((UINT16 *)(Neo68KROMActive + i + 2)) == 0x0000)
 		{
-			*((UINT16 *)(Neo68KROMActive + i + 2)) = 0x000b;
-			*((UINT16 *)(Neo68KROMActive + i + 4)) += 0x6000;
+			*((UINT16 *)(Neo68KROMActive + i + 2)) = BURN_ENDIAN_SWAP_INT16(0x000b);
+			*((UINT16 *)(Neo68KROMActive + i + 4)) += BURN_ENDIAN_SWAP_INT16(0x6000);
 		}
 	}
 
-	*((UINT16 *)(Neo68KROMActive + 0x2d15c)) = 0x000b;
-	*((UINT16 *)(Neo68KROMActive + 0x2d15e)) = 0xbb00;
-	*((UINT16 *)(Neo68KROMActive + 0x2d1e4)) = 0x6002;
-	*((UINT16 *)(Neo68KROMActive + 0x2ea7e)) = 0x6002;
-	*((UINT16 *)(Neo68KROMActive + 0xbbcd0)) = 0x6002;
-	*((UINT16 *)(Neo68KROMActive + 0xbbdf2)) = 0x6002;
-	*((UINT16 *)(Neo68KROMActive + 0xbbe42)) = 0x6002;
+	*((UINT16 *)(Neo68KROMActive + 0x2d15c)) = BURN_ENDIAN_SWAP_INT16(0x000b);
+	*((UINT16 *)(Neo68KROMActive + 0x2d15e)) = BURN_ENDIAN_SWAP_INT16(0xbb00);
+	*((UINT16 *)(Neo68KROMActive + 0x2d1e4)) = BURN_ENDIAN_SWAP_INT16(0x6002);
+	*((UINT16 *)(Neo68KROMActive + 0x2ea7e)) = BURN_ENDIAN_SWAP_INT16(0x6002);
+	*((UINT16 *)(Neo68KROMActive + 0xbbcd0)) = BURN_ENDIAN_SWAP_INT16(0x6002);
+	*((UINT16 *)(Neo68KROMActive + 0xbbdf2)) = BURN_ENDIAN_SWAP_INT16(0x6002);
+	*((UINT16 *)(Neo68KROMActive + 0xbbe42)) = BURN_ENDIAN_SWAP_INT16(0x6002);
 
 	lans2004_sx_decode();
 	lans2004_cx_decode(0x800000 * 6);

@@ -154,7 +154,7 @@ static void pgm_draw_sprite_nozoom(INT32 wide, INT32 high, INT32 palt, INT32 bof
 			}
 		}
 
-		if (yoff >= 0 && yoff < nScreenHeight && xpos >= 0 && (xpos + wide) < nScreenWidth)
+		if (yoff >= 0 && yoff < nScreenHeight && xpos >= 0 && (xpos + wide + 8) < nScreenWidth)
 		{
 			for (INT32 xcnt = 0; xcnt < wide; xcnt+=8)
 			{

@@ -7,7 +7,11 @@
 #include <string.h>
 #include <assert.h>
 
+#if defined(__LIBSNES__) && defined(_MSC_VER)
+#include <tchar.h>
+#else
 #include "tchar.h"
+#endif
 
 #include "burn.h"
 

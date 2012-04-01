@@ -20,6 +20,8 @@ FBA_CPU_DIR := $(MAIN_FBA_DIR)/cpu
 FBA_LIB_DIR := $(MAIN_FBA_DIR)/dep/libs
 FBA_INTERFACE_DIR := $(MAIN_FBA_DIR)/intf
 
+EXTERNAL_ZLIB = 0
+
 ifeq ($(platform), unix)
    TARGET := libsnes.so
    fpic := -fPIC
@@ -32,11 +34,20 @@ else ifeq ($(platform), osx)
    ENDIANNESS_DEFINES := -DLSB_FIRST
 else ifeq ($(platform), ps3)
    TARGET := libsnes.a
-   CC = ppu-lv2-gcc
-   CXX = ppu-lv2-g++
-   AR = ppu-lv2-ar
+   CC = $(CELL_SDK)/host-win32/ppu/bin/ppu-lv2-gcc.exe
+   CXX = $(CELL_SDK)/host-win32/ppu/bin/ppu-lv2-g++.exe
+   AR = $(CELL_SDK)/host-win32/ppu/bin/ppu-lv2-ar.exe
    ENDIANNESS_DEFINES =  -DWORDS_BIGENDIAN
-   PLATFORM_DEFINES := -D__CELLOS_LV2 -DSN_TARGET_PS3
+   PLATFORM_DEFINES := -D__CELLOS_LV2
+   EXTERNAL_ZLIB = 1
+else ifeq ($(platform), sncps3)
+   TARGET := libsnes.a
+   CXX	= $(CELL_SDK)/host-win32/sn/bin/ps3ppusnc.exe
+   CC = $(CELL_SDK)/host-win32/sn/bin/ps3ppusnc.exe
+   AR = $(CELL_SDK)/host-win32/sn/bin/ps3snarl.exe
+   ENDIANNESS_DEFINES =  -DWORDS_BIGENDIAN
+   PLATFORM_DEFINES += -D__CELLOS_LV2__ -DSN_TARGET_PS3
+   EXTERNAL_ZLIB = 1
 else ifeq ($(platform), xenon)
    TARGET := libsnes.a
    CC = xenon-gcc
@@ -46,11 +57,12 @@ else ifeq ($(platform), xenon)
    PLATFORM_DEFINES := -D__LIBXENON__ -m32 -D__ppc__
 else ifeq ($(platform), wii)
    TARGET := libsnes.a
-   CC = powerpc-eabi-gcc
-   CXX = powerpc-eabi-g++
-   AR = powerpc-eabi-ar
+   CC = $(DEVKITPPC)/bin/powerpc-eabi-gcc
+   CXX = $(DEVKITPPC)/bin/powerpc-eabi-g++
+   AR = $(DEVKITPPC)/bin/powerpc-eabi-ar
    ENDIANNESS_DEFINES = -DWORDS_BIGENDIAN
-   PLATFORM_DEFINES := -DGEKKO -mrvl -mcpu=750 -meabi -mhard-float -D__ppc__
+   PLATFORM_DEFINES := -DGEKKO -DHW_RVL -mrvl -mcpu=750 -meabi -mhard-float
+   EXTERNAL_ZLIB = 1
 else
    TARGET := snes.dll
    CC = gcc
@@ -60,12 +72,11 @@ else
    ENDIANNESS_DEFINES := -DLSB_FIRST
 endif
 
+.PHONY: clean generate-files
+
 all: $(TARGET)
 
-BURN_BLACKLIST := $(FBA_BURN_DIR)/zet_c68k.cpp \
-	$(FBA_BURN_DIR)/sek_c68k.cpp \
-	$(FBA_BURNER_DIR)/un7z.cpp \
-	$(FBA_BURNER_DIR)/tracklst.cpp \
+BURN_BLACKLIST := $(FBA_BURNER_DIR)/un7z.cpp \
 	$(FBA_CPU_DIR)/arm7/arm7exec.c \
 	$(FBA_CPU_DIR)/arm7/arm7core.c \
 	$(FBA_CPU_DIR)/hd6309/6309tbl.c \
@@ -102,29 +113,38 @@ BURN_BLACKLIST := $(FBA_BURN_DIR)/zet_c68k.cpp \
 	$(FBA_CPU_DIR)/nec/necinstr.c \
 	$(FBA_BURN_DIR)/drv/capcom/ctv_make.cpp
 
+ifeq ($(EXTERNAL_ZLIB), 1)
+BURN_BLACKLIST += $(FBA_BURNER_DIR)/unzip.c \
+		$(FBA_BURNER_DIR)/ioapi.c	
+endif
+
+
 FBA_BURN_DIRS := $(FBA_BURN_DIR) \
 	$(FBA_BURN_DIR)/devices \
 	$(FBA_BURN_DIR)/snd \
 	$(FBA_BURN_DRIVERS_DIR)/capcom \
 	$(FBA_BURN_DRIVERS_DIR)/cave \
-	$(FBA_BURN_DRIVERS_DIR)/dataeast \
 	$(FBA_BURN_DRIVERS_DIR)/cps3 \
+	$(FBA_BURN_DRIVERS_DIR)/dataeast \
 	$(FBA_BURN_DRIVERS_DIR)/galaxian \
-	$(FBA_BURN_DRIVERS_DIR)/konami \
 	$(FBA_BURN_DRIVERS_DIR)/irem \
+	$(FBA_BURN_DRIVERS_DIR)/konami \
 	$(FBA_BURN_DRIVERS_DIR)/megadrive \
-	$(FBA_BURN_DRIVERS_DIR)/misc \
 	$(FBA_BURN_DRIVERS_DIR)/neogeo \
+	$(FBA_BURN_DRIVERS_DIR)/pce \
 	$(FBA_BURN_DRIVERS_DIR)/pgm \
+	$(FBA_BURN_DRIVERS_DIR)/pre90s \
 	$(FBA_BURN_DRIVERS_DIR)/psikyo \
+	$(FBA_BURN_DRIVERS_DIR)/pst90s \
 	$(FBA_BURN_DRIVERS_DIR)/sega \
+	$(FBA_BURN_DRIVERS_DIR)/snes \
 	$(FBA_BURN_DRIVERS_DIR)/taito \
-	$(FBA_BURN_DRIVERS_DIR)/toaplan \
-	$(FBA_BURN_DRIVERS_DIR)/pre90s
+	$(FBA_BURN_DRIVERS_DIR)/toaplan
 
 FBA_CPU_DIRS := $(FBA_CPU_DIR) \
-	$(FBA_CPU_DIR)/arm7 \
 	$(FBA_CPU_DIR)/arm \
+	$(FBA_CPU_DIR)/arm7 \
+	$(FBA_CPU_DIR)/h6280 \
 	$(FBA_CPU_DIR)/hd6309 \
 	$(FBA_CPU_DIR)/i8039 \
 	$(FBA_CPU_DIR)/konami \
@@ -136,12 +156,17 @@ FBA_CPU_DIRS := $(FBA_CPU_DIR) \
 	$(FBA_CPU_DIR)/nec \
 	$(FBA_CPU_DIR)/s2650 \
 	$(FBA_CPU_DIR)/sh2 \
-	$(FBA_CPU_DIR)/z80 \
-	$(FBA_CPU_DIR)/h6280
+	$(FBA_CPU_DIR)/z80
 
 FBA_LIB_DIRS := $(FBA_LIB_DIR)/zlib
 
-FBA_SRC_DIRS := $(FBA_BURNER_DIR) $(FBA_BURN_DIRS) $(FBA_CPU_DIRS) $(FBA_BURNER_DIRS) $(FBA_LIB_DIRS)
+FBA_SRC_DIRS := $(FBA_BURNER_DIR) $(FBA_BURN_DIRS) $(FBA_CPU_DIRS) $(FBA_BURNER_DIRS)
+
+ifeq ($(EXTERNAL_ZLIB), 1)
+FBA_DEFINES += -DEXTERNAL_ZLIB
+else
+FBA_SRC_DIRS += $(FBA_LIB_DIRS)
+endif
 
 FBA_CXXSRCS := $(filter-out $(BURN_BLACKLIST),$(foreach dir,$(FBA_SRC_DIRS),$(wildcard $(dir)/*.cpp)))
 FBA_CXXSRCS += $(LIBSNES_DIR)/libsnes.cpp $(LIBSNES_DIR)/neocdlist.cpp
@@ -151,17 +176,11 @@ FBA_COBJ := $(FBA_CSRCS:.c=.o)
 
 OBJS := $(FBA_COBJ) $(FBA_CXXOBJ)
 
-FBA_DEFINES := -DNO_ASMCORE \
-	-DNO_AUTOFIRE \
-	-DNO_CHEATSEARCH \
-	-DNO_COMBO \
-	-DUSE_SPEEDHACKS \
-	-DNO_PNG \
-	-DOLD_AUDIOCORE=0 \
-	-D__LIBSNES__ \
+FBA_DEFINES := -DUSE_SPEEDHACKS -D__LIBSNES__ \
 	$(ENDIANNESS_DEFINES) \
 	$(PLATFORM_DEFINES) \
-	-DTIXML_USE_TICPP
+	-DINLINE="static inline" \
+	-DSH2_INLINE="static inline"
 
 ifeq ($(DEBUG), 1)
 CFLAGS += -O0 -g
@@ -171,12 +190,20 @@ CFLAGS += -O3 -DNDEBUG
 CXXFLAGS += -O3 -DNDEBUG
 endif
 
-CFLAGS += -std=gnu99 $(fpic) -Wno-write-strings $(FBA_DEFINES)
-CXXFLAGS += $(fpic) -Wno-write-strings $(FBA_DEFINES)
+ifeq ($(platform), sncps3)
+WARNINGS_DEFINES =
+else
+WARNINGS_DEFINES = -Wno-write-strings
+C_STD_DEFINES = -std=gnu99
+endif
+
+CFLAGS += $(C_STD_DEFINES) $(fpic) $(WARNINGS_DEFINES) $(FBA_DEFINES)
+CXXFLAGS += $(fpic) $(WARNINGS_DEFINES) $(FBA_DEFINES)
 LDFLAGS += $(fpic)
 
 INCDIRS := -I$(FBA_BURNER_DIR)/win32 \
 	-I$(LIBSNES_DIR) \
+	-I$(LIBSNES_DIR)/tchar \
 	-I$(FBA_BURN_DIR) \
 	-I$(FBA_BURN_DIR)/burner \
 	-I$(MAIN_FBA_DIR)/cpu \
@@ -186,7 +213,7 @@ INCDIRS := -I$(FBA_BURNER_DIR)/win32 \
 	-I$(FBA_INTERFACE_DIR)/input \
 	-I$(FBA_INTERFACE_DIR)/cd \
 	-I$(FBA_BURNER_DIR) \
-	-I$(MAIN_FBA_DIR)/generated \
+	-I$(MAIN_FBA_DIR)/dep/generated \
 	-I$(FBA_CPU_DIR) \
 	-I$(FBA_CPU_DIR)/m6809 \
 	-I$(FBA_CPU_DIR)/m6805 \
@@ -214,14 +241,24 @@ INCDIRS := -I$(FBA_BURNER_DIR)/win32 \
 	-I$(FBA_BURN_DIR)/drv/taito \
 	-I$(FBA_LIB_DIR)
 
-$(TARGET): $(OBJS)
+ifeq ($(ZLIB_INTERNAL), 0)
+INCDIRS += -I$(FBA_LIB_DIR)
+endif
+
+generate:
+	rm -rf src/dep/generated
+	sh ./generate_files.sh
+
+$(TARGET): generate-files $(OBJS)
 	@echo "LD $@"
 ifeq ($(platform), ps3)
-	@$(AR) rcs $@ $(OBJECTS)
+	@$(AR) rcs $@ $(OBJS)
+else ifeq ($(platform), sncps3)
+	$(AR) rcs $@ $(OBJS)
 else ifeq ($(platform), xenon)
-	@$(AR) rcs $@ $(OBJECTS)
+	@$(AR) rcs $@ $(OBJS)
 else ifeq ($(platform), wii)
-	@$(AR) rcs $@ $(OBJECTS)
+	@$(AR) rcs $@ $(OBJS)
 else
 	@$(CXX) -o $@ $(SHARED) $(OBJS) $(LDFLAGS)
 endif
@@ -237,6 +274,6 @@ endif
 clean:
 	rm -f $(TARGET)
 	rm -f $(OBJS)
-
-.PHONY: clean
-
+ifeq ($(GENERATE_FILES), 1)
+	rm -rf src/dep/generated
+endif

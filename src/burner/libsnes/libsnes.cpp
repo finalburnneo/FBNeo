@@ -9,6 +9,8 @@
 #include <string>
 #include <ctype.h>
 
+#include "cd_interface.h"
+
 static unsigned int BurnDrvGetIndexByName(const char* name);
 
 #define STAT_NOFIND	0
@@ -22,6 +24,7 @@ struct ROMFIND
 	unsigned int nState;
 	int nArchive;
 	int nPos;
+   BurnRomInfo ri;
 };
 
 static std::vector<std::string> g_find_list_path;
@@ -32,7 +35,6 @@ static unsigned g_rom_count;
 #define AUDIO_SEGMENT_LENGTH_TIMES_CHANNELS (534 * 2)
 
 static uint16_t g_fba_frame[1024 * 1024];
-static uint16_t g_fba_frame_conv[1024 * 1024];
 static int16_t g_audio_buf[AUDIO_SEGMENT_LENGTH_TIMES_CHANNELS];
 
 // libsnes globals
@@ -41,6 +43,7 @@ static snes_video_refresh_t video_cb;
 static snes_audio_sample_t audio_cb;
 static snes_input_poll_t poll_cb;
 static snes_input_state_t input_cb;
+static snes_audio_sample_batch_t audio_batch_cb;
 void snes_set_video_refresh(snes_video_refresh_t cb) { video_cb = cb; }
 void snes_set_audio_sample(snes_audio_sample_t cb) { audio_cb = cb; }
 void snes_set_input_poll(snes_input_poll_t cb) { poll_cb = cb; }
@@ -48,7 +51,14 @@ void snes_set_input_state(snes_input_state_t cb) { input_cb = cb; }
 
 // SSNES extension.
 static snes_environment_t environ_cb;
-void snes_set_environment(snes_environment_t cb) { environ_cb = cb; }
+void snes_set_environment(snes_environment_t cb)
+{
+	bool dummy;
+   environ_cb = cb;
+   dummy = 1;
+   cb(SNES_ENVIRONMENT_SET_BATCH_LOAD, &dummy);
+   cb(SNES_ENVIRONMENT_SET_ROM_FORMATS, (void*)"zip|ZIP");
+}
 
 static char g_rom_name[1024];
 static char g_rom_dir[1024];
@@ -85,7 +95,44 @@ INT32 CDEmuLoadSector(INT32 LBA, char* pBuffer) { return 0; }
 UINT8* CDEmuReadTOC(INT32 track) { return 0; }
 UINT8* CDEmuReadQChannel() { return 0; }
 INT32 CDEmuGetSoundBuffer(INT16* buffer, INT32 samples) { return 0; }
-void InpDIPSWResetDIPs (void) {}
+
+static int nDIPOffset;
+
+static void InpDIPSWGetOffset (void)
+{
+	BurnDIPInfo bdi;
+	nDIPOffset = 0;
+
+	for(int i = 0; BurnDrvGetDIPInfo(&bdi, i) == 0; i++)
+	{
+		if (bdi.nFlags == 0xF0)
+		{
+			nDIPOffset = bdi.nInput;
+			break;
+		}
+	}
+}
+
+void InpDIPSWResetDIPs (void)
+{
+	int i = 0;
+	BurnDIPInfo bdi;
+	struct GameInp * pgi = NULL;
+
+	InpDIPSWGetOffset();
+
+	while (BurnDrvGetDIPInfo(&bdi, i) == 0)
+	{
+		if (bdi.nFlags == 0xFF)
+		{
+			pgi = GameInp + bdi.nInput + nDIPOffset;
+			if (pgi)
+				pgi->Input.Constant.nConst = (pgi->Input.Constant.nConst & ~bdi.nMask) | (bdi.nSetting & bdi.nMask);	
+		}
+		i++;
+	}
+}
+
 int InputSetCooperativeLevel(const bool bExclusive, const bool bForeGround) { return 0; }
 void Reinitialise(void) {}
 
@@ -105,9 +152,8 @@ char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, int /*nOutSize*/
 int QuoteRead(char **, char **, char*) { return 1; }
 char *LabelCheck(char *, char *) { return 0; }
 const int nConfigMinVersion = 0x020921;
-//////////////
 
-static int find_rom_by_crc(unsigned crc, const ZipEntry *list, unsigned elems)
+static int find_rom_by_crc(uint32_t crc, const ZipEntry *list, unsigned elems)
 {
    for (unsigned i = 0; i < elems; i++)
    {
@@ -154,9 +200,11 @@ static int archive_load_rom(uint8_t *dest, int *wrote, int i)
 // This code is very confusing. The original code is even more confusing :(
 static bool open_archive()
 {
+   memset(g_find_list, 0, sizeof(g_find_list));
+
    // FBA wants some roms ... Figure out how many.
    g_rom_count = 0;
-   while (!BurnDrvGetRomInfo(0, g_rom_count))
+   while (!BurnDrvGetRomInfo(&g_find_list[g_rom_count].ri, g_rom_count))
       g_rom_count++;
 
    g_find_list_path.clear();
@@ -166,27 +214,35 @@ static bool open_archive()
    char *rom_name;
    for (unsigned index = 0; index < 32; index++)
    {
-      //if (BurnDrvGetArchiveName(&rom_name, index, false, 0))
-      //   continue;
       if (BurnDrvGetZipName(&rom_name, index))
          continue;
 
+      fprintf(stderr, "[FBA] Archive: %s\n", rom_name);
+
       char path[1024];
+#ifdef _XBOX
+      snprintf(path, sizeof(path), "%s\\%s", g_rom_dir, rom_name);
+#else
       snprintf(path, sizeof(path), "%s/%s", g_rom_dir, rom_name);
+#endif
 
       if (ZipOpen(path) != 0)
+      {
+         fprintf(stderr, "[FBA] Failed to find archive: %s\n", path);
          return false;
+      }
       ZipClose();
 
       g_find_list_path.push_back(path);
    }
 
-   memset(g_find_list, 0, sizeof(g_find_list));
-
    for (unsigned z = 0; z < g_find_list_path.size(); z++)
    {
       if (ZipOpen((char*)g_find_list_path[z].c_str()) != 0)
-         continue;
+      {
+         fprintf(stderr, "[FBA] Failed to open archive %s\n", g_find_list_path[z].c_str());
+         return false;
+      }
 
       ZipEntry *list = NULL;
       int count;
@@ -198,35 +254,40 @@ static bool open_archive()
          if (g_find_list[i].nState == STAT_OK)
             continue;
 
-         BurnRomInfo ri = {0};
-         BurnDrvGetRomInfo(&ri, i);
-
-         int index = find_rom_by_crc(ri.nCrc, list, count);
-         if (index < 0)
+         if (g_find_list[i].ri.nType == 0 || g_find_list[i].ri.nLen == 0 || g_find_list[i].ri.nCrc == 0)
          {
-            ZipClose();
-            return false;
+            g_find_list[i].nState = STAT_OK;
+            continue;
          }
+
+         int index = find_rom_by_crc(g_find_list[i].ri.nCrc, list, count);
+         if (index < 0)
+            continue;
 
          // Yay, we found it!
          g_find_list[i].nArchive = z;
          g_find_list[i].nPos = index;
          g_find_list[i].nState = STAT_OK;
 
-         if (list[index].nLen == ri.nLen)
-         {
-            if (ri.nCrc && list[index].nCrc != ri.nCrc)
-               g_find_list[i].nState = STAT_CRC;
-         }
-         else if (list[index].nLen < ri.nLen)
+         if (list[index].nLen < g_find_list[i].ri.nLen)
             g_find_list[i].nState = STAT_SMALL;
-         else if (list[index].nLen > ri.nLen)
+         else if (list[index].nLen > g_find_list[i].ri.nLen)
             g_find_list[i].nState = STAT_LARGE;
       }
 
-
       free_archive_list(list, count);
       ZipClose();
+   }
+
+   // Going over every rom to see if they are properly loaded before we continue ...
+   for (unsigned i = 0; i < g_rom_count; i++)
+   {
+      if (g_find_list[i].nState != STAT_OK)
+      {
+         fprintf(stderr, "[FBA] ROM index %i was not found ... CRC: 0x%08x\n",
+               i, g_find_list[i].ri.nCrc);
+         return false;
+      }
    }
 
    BurnExtLoadRom = archive_load_rom;
@@ -237,10 +298,12 @@ void snes_init()
 {
    BurnLibInit();
 
+
    if (environ_cb)
    {
       bool need_fullpath = true;
       environ_cb(SNES_ENVIRONMENT_SET_NEED_FULLPATH, &need_fullpath);
+      environ_cb(SNES_ENVIRONMENT_GET_AUDIO_BATCH_CB, &audio_batch_cb);
    }
 }
 
@@ -254,70 +317,12 @@ static bool g_reset;
 void snes_power() { g_reset = true; }
 void snes_reset() { g_reset = true; }
 
-// Copy stuff :o
-static inline void blit_regular(unsigned width, unsigned height, unsigned pitch)
-{
-   for (unsigned y = 0; y < height; y++)
-   {
-      memcpy(g_fba_frame_conv + y * 1024,
-            g_fba_frame + y * (pitch >> 1),
-            width * sizeof(uint16_t));
-   }
-
-   video_cb(g_fba_frame_conv, width, height);
-}
-
-static inline void blit_flipped(unsigned width, unsigned height, unsigned pitch)
-{
-   for (unsigned y = 0; y < height; y++)
-   {
-      memcpy(g_fba_frame_conv + (height - 1 - y) * 1024,
-            g_fba_frame + y * (pitch >> 1),
-            width * sizeof(uint16_t));
-   }
-
-   video_cb(g_fba_frame_conv, width, height);
-}
-
-static inline void blit_vertical(unsigned width, unsigned height, unsigned pitch)
-{
-   unsigned in_width = height;
-   unsigned in_height = width;
-   pitch >>= 1;
-
-   // Flip y and x coords pretty much ...
-   for (unsigned y = 0; y < in_height; y++)
-      for (unsigned x = 0; x < in_width; x++)
-         g_fba_frame_conv[(height - x - 1) * 1024 + y] = g_fba_frame[y * pitch + x];
-
-   video_cb(g_fba_frame_conv, width, height);
-}
-
-static inline void blit_vertical_flipped(unsigned width, unsigned height, unsigned pitch)
-{
-   unsigned in_width = height;
-   unsigned in_height = width;
-   pitch >>= 1;
-
-   // Flip y and x coords pretty much ...
-   for (unsigned y = 0; y < in_height; y++)
-      for (unsigned x = 0; x < in_width; x++)
-         g_fba_frame_conv[x * 1024 + (width - 1 - y)] = g_fba_frame[y * pitch + x];
-
-   video_cb(g_fba_frame_conv, width, height);
-}
-
 void snes_run()
 {
    int width, height;
    BurnDrvGetVisibleSize(&width, &height);
    pBurnDraw = (uint8_t*)g_fba_frame;
 
-   unsigned drv_flags = BurnDrvGetFlags();
-   if (drv_flags & BDF_ORIENTATION_VERTICAL)
-      nBurnPitch = height * sizeof(uint16_t);
-   else
-      nBurnPitch = width * sizeof(uint16_t);
 
    nBurnLayer = 0xff;
    pBurnSoundOut = g_audio_buf;
@@ -328,18 +333,24 @@ void snes_run()
    poll_input();
 
    BurnDrvFrame();
-
-   if ((drv_flags & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED)) == (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED))
-      blit_vertical_flipped(width, height, nBurnPitch);
-   else if (drv_flags & BDF_ORIENTATION_VERTICAL)
-      blit_vertical(width, height, nBurnPitch);
-   else if (drv_flags & BDF_ORIENTATION_FLIPPED)
-      blit_flipped(width, height, nBurnPitch);
+   unsigned drv_flags = BurnDrvGetFlags();
+   uint32_t height_tmp = height;
+   if (drv_flags & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED))
+   {
+	nBurnPitch = height * sizeof(uint16_t);
+	height = width;
+	width = height_tmp;
+   }
    else
-      blit_regular(width, height, nBurnPitch);
+      nBurnPitch = width * sizeof(uint16_t);
 
-   for (unsigned i = 0; i < AUDIO_SEGMENT_LENGTH_TIMES_CHANNELS; i += 2)
-      audio_cb(g_audio_buf[i + 0], g_audio_buf[i + 1]);
+   video_cb(g_fba_frame, width, height);
+
+   if(audio_batch_cb)
+	   audio_batch_cb(g_audio_buf, AUDIO_SEGMENT_LENGTH);
+   else
+	   for (unsigned i = 0; i < AUDIO_SEGMENT_LENGTH_TIMES_CHANNELS; i += 2)
+		   audio_cb(g_audio_buf[i + 0], g_audio_buf[i + 1]);
 }
 
 static uint8_t *write_state_ptr;
@@ -363,6 +374,7 @@ static int burn_read_state_cb(BurnArea *pba)
 static int burn_dummy_state_cb(BurnArea *pba)
 {
    state_size += pba->nLen;
+   return 0;
 }
 
 unsigned snes_serialize_size()
@@ -414,15 +426,21 @@ static bool fba_init(unsigned driver)
 
    BurnDrvInit();
 
+   int width, height;
+   BurnDrvGetVisibleSize(&width, &height);
+   unsigned drv_flags = BurnDrvGetFlags();
+   if (drv_flags & BDF_ORIENTATION_VERTICAL)
+      nBurnPitch = height * sizeof(uint16_t);
+   else
+      nBurnPitch = width * sizeof(uint16_t);
+
    if (environ_cb)
    {
       int width, height;
       BurnDrvGetVisibleSize(&width, &height);
       snes_geometry geom = { width, height, width, height };
       environ_cb(SNES_ENVIRONMENT_SET_GEOMETRY, &geom);
-
-      unsigned pitch = 2048;
-      environ_cb(SNES_ENVIRONMENT_SET_PITCH, &pitch);
+      environ_cb(SNES_ENVIRONMENT_SET_PITCH, &nBurnPitch);
    }
 
    return true;
@@ -473,7 +491,10 @@ bool snes_load_cartridge_normal(const char*, const uint8_t *, unsigned)
       return true;
    }
    else
+   {
+      fprintf(stderr, "[FBA] Cannot find driver.\n");
       return false;
+   }
 }
 
 void snes_set_cartridge_basename(const char *basename)
@@ -535,7 +556,7 @@ unsigned snes_get_memory_size(unsigned) { return 0; }
 unsigned snes_library_revision_major() { return 1; }
 unsigned snes_library_revision_minor() { return 3; }
 
-const char *snes_library_id() { return "FBAlpha/libsnes"; }
+const char *snes_library_id() { return "FB Alpha"; }
 void snes_set_controller_port_device(bool, unsigned) {}
 
 // Input stuff.
@@ -597,7 +618,7 @@ void snes_set_controller_port_device(bool, unsigned) {}
 #define P4_FIRE6 0x4285
 
 static unsigned char keybinds[0x5000][2]; 
-#define _B(x) SNES_DEVICE_ID_JOYPAD_##x
+#define _BIND(x) SNES_DEVICE_ID_JOYPAD_##x
 #define RESET_BIND 12
 #define SERVICE_BIND 13
 static bool init_input()
@@ -629,89 +650,79 @@ static bool init_input()
    keybinds[P1_SERVICE	][0] = SERVICE_BIND;
    keybinds[P1_SERVICE	][1] = 0;
 
-   keybinds[P1_COIN	][0] = _B(SELECT);
+   keybinds[P1_COIN	][0] = _BIND(SELECT);
    keybinds[P1_COIN	][1] = 0;
-   keybinds[P1_START	][0] = _B(START);
+   keybinds[P1_START	][0] = _BIND(START);
    keybinds[P1_START	][1] = 0;
-   keybinds[P1_UP		][0] = _B(UP);
-   keybinds[P1_UP		][1] = 0;
-   keybinds[P1_DOWN	][0] = _B(DOWN);
+   keybinds[P1_UP	][0] = _BIND(UP);
+   keybinds[P1_UP	][1] = 0;
+   keybinds[P1_DOWN	][0] = _BIND(DOWN);
    keybinds[P1_DOWN	][1] = 0;
-   keybinds[P1_LEFT	][0] = _B(LEFT);
+   keybinds[P1_LEFT	][0] = _BIND(LEFT);
    keybinds[P1_LEFT	][1] = 0;
-   keybinds[P1_RIGHT	][0] = _B(RIGHT);
+   keybinds[P1_RIGHT	][0] = _BIND(RIGHT);
    keybinds[P1_RIGHT	][1] = 0;
-   keybinds[P1_FIRE1	][0] = _B(Y);
+   keybinds[P1_FIRE1	][0] = _BIND(Y);
    keybinds[P1_FIRE1	][1] = 0;
-   keybinds[P1_FIRE2	][0] = _B(X);
+   keybinds[P1_FIRE2	][0] = _BIND(X);
    keybinds[P1_FIRE2	][1] = 0;
-   keybinds[P1_FIRE3	][0] = _B(L);
+   keybinds[P1_FIRE3	][0] = _BIND(L);
    keybinds[P1_FIRE3	][1] = 0;
-   keybinds[P1_FIRE4	][0] = _B(B);
+   keybinds[P1_FIRE4	][0] = _BIND(B);
    keybinds[P1_FIRE4	][1] = 0;
-   keybinds[P1_FIRE5	][0] = _B(A);
+   keybinds[P1_FIRE5	][0] = _BIND(A);
    keybinds[P1_FIRE5	][1] = 0;
 
    if(boardrom && (strcmp(boardrom,"neogeo") == 0))
    {
-      keybinds[P1_FIRE6][0] = _B(Y);
+      keybinds[P1_FIRE6][0] = _BIND(Y);
       keybinds[P1_FIRE6][1] = 0;
-      keybinds[P1_FIRED][0] = _B(X);
+      keybinds[P1_FIRED][0] = _BIND(X);
       keybinds[P1_FIRED][1] = 0;
    }
    else
    {
-      keybinds[P1_FIRE6	][0] = _B(R);
+      keybinds[P1_FIRE6	][0] = _BIND(R);
       keybinds[P1_FIRE6	][1] = 0;
    }
-#if 0
-   keybinds[0x88		][0] = L2;
-   keybinds[0x88		][1] = 0;
-   keybinds[0x8A		][0] = R2;
-   keybinds[0x8A		][1] = 0;
-   keybinds[0x3b		][0] = L3;
-   keybinds[0x3b		][1] = 0;
-   keybinds[0x21		][0] = R2;
-   keybinds[0x21		][1] = 0;
-#endif
 
-   keybinds[P2_COIN	][0] = _B(SELECT);
+   keybinds[P2_COIN	][0] = _BIND(SELECT);
    keybinds[P2_COIN	][1] = 1;
-   keybinds[P2_START	][0] = _B(START);
+   keybinds[P2_START	][0] = _BIND(START);
    keybinds[P2_START	][1] = 1;
-   keybinds[P2_UP		][0] = _B(UP);
-   keybinds[P2_UP		][1] = 1;
-   keybinds[P2_DOWN	][0] = _B(DOWN);
+   keybinds[P2_UP	][0] = _BIND(UP);
+   keybinds[P2_UP	][1] = 1;
+   keybinds[P2_DOWN	][0] = _BIND(DOWN);
    keybinds[P2_DOWN	][1] = 1;
-   keybinds[P2_LEFT	][0] = _B(LEFT);
+   keybinds[P2_LEFT	][0] = _BIND(LEFT);
    keybinds[P2_LEFT	][1] = 1;
-   keybinds[P2_RIGHT	][0] = _B(RIGHT);
+   keybinds[P2_RIGHT	][0] = _BIND(RIGHT);
    keybinds[P2_RIGHT	][1] = 1;
-   keybinds[P2_FIRE1	][0] = _B(Y);
+   keybinds[P2_FIRE1	][0] = _BIND(Y);
 
    if (boardrom && (strcmp(boardrom, "neogeo") == 0))
    {
-      keybinds[P2_FIRE3][0] = _B(Y);
+      keybinds[P2_FIRE3][0] = _BIND(Y);
       keybinds[P2_FIRE3][1] = 1;
-      keybinds[P2_FIRE4][0] = _B(X);
+      keybinds[P2_FIRE4][0] = _BIND(X);
       keybinds[P2_FIRE4][1] = 1;
-      keybinds[P2_FIRE1][0] = _B(B);
+      keybinds[P2_FIRE1][0] = _BIND(B);
       keybinds[P2_FIRE1][1] = 1;
-      keybinds[P2_FIRE2][0] = _B(A);
+      keybinds[P2_FIRE2][0] = _BIND(A);
       keybinds[P2_FIRE2][1] = 1;
    }
    else
    {
       keybinds[P2_FIRE1	][1] = 1;
-      keybinds[P2_FIRE2	][0] = _B(X);
+      keybinds[P2_FIRE2	][0] = _BIND(X);
       keybinds[P2_FIRE2	][1] = 1;
-      keybinds[P2_FIRE3	][0] = _B(L);
+      keybinds[P2_FIRE3	][0] = _BIND(L);
       keybinds[P2_FIRE3	][1] = 1;
-      keybinds[P2_FIRE4	][0] = _B(B);
+      keybinds[P2_FIRE4	][0] = _BIND(B);
       keybinds[P2_FIRE4	][1] = 1;
-      keybinds[P2_FIRE5	][0] = _B(A);
+      keybinds[P2_FIRE5	][0] = _BIND(A);
       keybinds[P2_FIRE5	][1] = 1;
-      keybinds[P2_FIRE6	][0] = _B(R);
+      keybinds[P2_FIRE6	][0] = _BIND(R);
       keybinds[P2_FIRE6	][1] = 1;
    }
 
@@ -726,29 +737,29 @@ static bool init_input()
    keybinds[0x408c		][1] = 1;
 #endif
 
-   keybinds[P3_COIN	][0] = _B(SELECT);
+   keybinds[P3_COIN	][0] = _BIND(SELECT);
    keybinds[P3_COIN	][1] = 2;
-   keybinds[P3_START	][0] = _B(START);
+   keybinds[P3_START	][0] = _BIND(START);
    keybinds[P3_START	][1] = 2;
-   keybinds[P3_UP		][0] = _B(UP);
-   keybinds[P3_UP		][1] = 2;
-   keybinds[P3_DOWN	][0] = _B(DOWN);
+   keybinds[P3_UP	][0] = _BIND(UP);
+   keybinds[P3_UP	][1] = 2;
+   keybinds[P3_DOWN	][0] = _BIND(DOWN);
    keybinds[P3_DOWN	][1] = 2;
-   keybinds[P3_LEFT	][0] = _B(LEFT);
+   keybinds[P3_LEFT	][0] = _BIND(LEFT);
    keybinds[P3_LEFT	][1] = 2;
-   keybinds[P3_RIGHT	][0] = _B(RIGHT);
+   keybinds[P3_RIGHT	][0] = _BIND(RIGHT);
    keybinds[P3_RIGHT	][1] = 2;
-   keybinds[P3_FIRE1	][0] = _B(Y);
+   keybinds[P3_FIRE1	][0] = _BIND(Y);
    keybinds[P3_FIRE1	][1] = 2;
-   keybinds[P3_FIRE2	][0] = _B(X);
+   keybinds[P3_FIRE2	][0] = _BIND(X);
    keybinds[P3_FIRE2	][1] = 2;
-   keybinds[P3_FIRE3	][0] = _B(L);
+   keybinds[P3_FIRE3	][0] = _BIND(L);
    keybinds[P3_FIRE3	][1] = 2;
-   keybinds[P3_FIRE4	][0] = _B(B);
+   keybinds[P3_FIRE4	][0] = _BIND(B);
    keybinds[P3_FIRE4	][1] = 2;
-   keybinds[P3_FIRE5	][0] = _B(A);
+   keybinds[P3_FIRE5	][0] = _BIND(A);
    keybinds[P3_FIRE5	][1] = 2;
-   keybinds[P3_FIRE6	][0] = _B(R);
+   keybinds[P3_FIRE6	][0] = _BIND(R);
    keybinds[P3_FIRE6	][1] = 2;
 #if 0
    keybinds[0x4188		][0] = L2;
@@ -761,29 +772,29 @@ static bool init_input()
    keybinds[0x418c		][1] = 2;
 #endif
 
-   keybinds[P4_COIN	][0] = _B(SELECT);
+   keybinds[P4_COIN	][0] = _BIND(SELECT);
    keybinds[P4_COIN	][1] = 3;
-   keybinds[P4_START	][0] = _B(START);
+   keybinds[P4_START	][0] = _BIND(START);
    keybinds[P4_START	][1] = 3;
-   keybinds[P4_UP		][0] = _B(UP);
-   keybinds[P4_UP		][1] = 3;
-   keybinds[P4_DOWN	][0] = _B(DOWN);
+   keybinds[P4_UP	][0] = _BIND(UP);
+   keybinds[P4_UP	][1] = 3;
+   keybinds[P4_DOWN	][0] = _BIND(DOWN);
    keybinds[P4_DOWN	][1] = 3;
-   keybinds[P4_LEFT	][0] = _B(LEFT);
+   keybinds[P4_LEFT	][0] = _BIND(LEFT);
    keybinds[P4_LEFT	][1] = 3;
-   keybinds[P4_RIGHT	][0] = _B(RIGHT);
+   keybinds[P4_RIGHT	][0] = _BIND(RIGHT);
    keybinds[P4_RIGHT	][1] = 3;
-   keybinds[P4_FIRE1	][0] = _B(Y);
+   keybinds[P4_FIRE1	][0] = _BIND(Y);
    keybinds[P4_FIRE1	][1] = 3;
-   keybinds[P4_FIRE2	][0] = _B(X);
+   keybinds[P4_FIRE2	][0] = _BIND(X);
    keybinds[P4_FIRE2	][1] = 3;
-   keybinds[P4_FIRE3	][0] = _B(L);
+   keybinds[P4_FIRE3	][0] = _BIND(L);
    keybinds[P4_FIRE3	][1] = 3;
-   keybinds[P4_FIRE4	][0] = _B(B);
+   keybinds[P4_FIRE4	][0] = _BIND(B);
    keybinds[P4_FIRE4	][1] = 3;
-   keybinds[P4_FIRE5	][0] = _B(A);
+   keybinds[P4_FIRE5	][0] = _BIND(A);
    keybinds[P4_FIRE5	][1] = 3;
-   keybinds[P4_FIRE6	][0] = _B(R);
+   keybinds[P4_FIRE6	][0] = _BIND(R);
    keybinds[P4_FIRE6	][1] = 3;
 #if 0
    keybinds[0x4288		][0] = L2;
@@ -872,10 +883,10 @@ static void poll_input()
             else if (id == SERVICE_BIND)
             {
                state =
-                  input_cb(0, SNES_DEVICE_JOYPAD, 0, _B(START)) &&
-                  input_cb(0, SNES_DEVICE_JOYPAD, 0, _B(SELECT)) &&
-                  input_cb(0, SNES_DEVICE_JOYPAD, 0, _B(L)) &&
-                  input_cb(0, SNES_DEVICE_JOYPAD, 0, _B(R));
+                  input_cb(0, SNES_DEVICE_JOYPAD, 0, _BIND(START)) &&
+                  input_cb(0, SNES_DEVICE_JOYPAD, 0, _BIND(SELECT)) &&
+                  input_cb(0, SNES_DEVICE_JOYPAD, 0, _BIND(L)) &&
+                  input_cb(0, SNES_DEVICE_JOYPAD, 0, _BIND(R));
             }
             else if (port < 2)
                state = input_cb(port, SNES_DEVICE_JOYPAD, 0, id);

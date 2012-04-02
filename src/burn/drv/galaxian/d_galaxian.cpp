@@ -21035,7 +21035,7 @@ static void HunchbksPostLoad()
 	s2650SetOutHandler(HunchbksS2650PortWrite);
 	s2650Close();
 	
-	ZetInit(1);
+	ZetInit(0);
 }
 
 static INT32 HunchbksInit()
@@ -21069,7 +21069,7 @@ static void HncholmsPostLoad()
 	s2650SetOutHandler(HunchbksS2650PortWrite);
 	s2650Close();
 	
-	ZetInit(1);
+	ZetInit(0);
 }
 
 static INT32 HncholmsInit()

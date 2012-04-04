@@ -14668,21 +14668,13 @@ static struct BurnRomInfo Sf2m8badRomDesc[] = {
 STD_ROM_PICK(Sf2m8bad)
 STD_ROM_FN(Sf2m8bad)
 
-static INT32 Sf2m8badInit()
-{
-	Scroll1TileMask = 0x4fff;
-	Scroll3TileMask = 0x1fff;
-	
-	return Sf2m3Init();
-}
-
 struct BurnDriverX BurnDrvCpsSf2m8bad = {
 	"sf2m8bad", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II' - champion edition (bootleg, M8, bad dump)\0", "Gfx glitches", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2m8badRomInfo, Sf2m8badRomName, NULL, NULL, Sf2m3InputInfo, Sf2DIPInfo,
-	Sf2m8badInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Sf2m8Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

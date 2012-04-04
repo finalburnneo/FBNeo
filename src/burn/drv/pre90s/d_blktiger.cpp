@@ -963,7 +963,7 @@ struct BurnDriver BurnDrvBlktigerb1 = {
 
 // Black Tiger (bootleg set 2)
 
-static struct BurnRomInfo bktigrb2RomDesc[] = {
+static struct BurnRomInfo blktigerb2RomDesc[] = {
 	{ "1.bin",		0x08000, 0x47E2B21E, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
 	{ "bdu-02a.6e",		0x10000, 0x7bef96e8, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "3.bin",		0x10000, 0x52c56ed1, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -992,15 +992,15 @@ static struct BurnRomInfo bktigrb2RomDesc[] = {
 	{ "bd.5k",  		0x01000, 0xac7d14f1, 7 | BRF_PRG | BRF_OPT }, // 19 I8751 Mcu Code
 };
 
-STD_ROM_PICK(bktigrb2)
-STD_ROM_FN(bktigrb2)
+STD_ROM_PICK(blktigerb2)
+STD_ROM_FN(blktigerb2)
 
-struct BurnDriver BurnDrvBktigrb2 = {
-	"bktigrb2", "blktiger", NULL, NULL, "1987",
+struct BurnDriver BurnDrvblktigerb2 = {
+	"blktigerb2", "blktiger", NULL, NULL, "1987",
 	"Black Tiger (bootleg set 2)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
-	NULL, bktigrb2RomInfo, bktigrb2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, blktigerb2RomInfo, blktigerb2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

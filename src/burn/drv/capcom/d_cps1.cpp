@@ -8660,12 +8660,15 @@ STD_ROM_PICK(Sf2tlonc)
 STD_ROM_FN(Sf2tlonc)
 
 static struct BurnRomInfo Sf2thRomDesc[] = {
-	{ "stf2th-7.bin", 0x0080000, 0x03991fba, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
-	{ "stf2th-5.bin", 0x0080000, 0x3127302c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
-	{ "sf2th-4.bin",  0x0020000, 0xc95e4443, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
-	{ "stf2th-6.bin", 0x0020000, 0x64e6e091, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
-
-	// Some extra gfx too
+//	This was the original dump (JacKc found that if you split it into 4 then parts 2, 3 and 4 match u196 from sf2m5)
+//	The first 128Kb of the original dump appears to be missing data, and we are assuming that the dump is bad and using
+//	the u196 dump instead
+//	{ "stf2th-5.bin", 0x0080000, 0x3127302c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
+	
+	{ "stf2th-7.bin", 0x0080000, 0x03991fba, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "stf2th-5.bin", 0x0080000, 0x39f15a1e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "stf2th-6.bin", 0x0020000, 0x64e6e091, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "stf2th-4.bin", 0x0020000, 0xc95e4443, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	{ "s92_01.bin",   0x0080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
 	{ "s92_02.bin",   0x0080000, 0x840289ec, BRF_GRA | CPS1_TILES },
@@ -8684,6 +8687,13 @@ static struct BurnRomInfo Sf2thRomDesc[] = {
 
 	{ "s92_18.bin",   0x0020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "s92_19.bin",   0x0020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "stf2th-10.bin", 0x020000, 0x84427d1b, BRF_GRA }, // extra graphics - map over normal roms (add turbo graphics in place of Asian chars?)
+	{ "stf2th-12.bin", 0x020000, 0x55bc790c, BRF_GRA },
+	{ "stf2th-9.bin",  0x020000, 0xf8725add, BRF_GRA },
+	{ "stf2th-11.bin", 0x020000, 0xc2a5373e, BRF_GRA },
+	
+	{ "sf2th-8.bin",   0x010000, 0x13ea1c44, BRF_OPT }, // unknown
 };
 
 STD_ROM_PICK(Sf2th)
@@ -11209,7 +11219,10 @@ static INT32 Sf2rb2Init()
 
 static INT32 Sf2thInit()
 {
-	INT32 nRet = 0;
+	INT32 nRet = Sf2ceInit();
+	
+	memset(CpsGfx + 0x400000, 0, 0x80000);
+	CpsLoadTiles(CpsGfx + 0x400000, 19);
 	
 	Sf2Hack = 1;
 	
@@ -11217,8 +11230,6 @@ static INT32 Sf2thInit()
 	CpsLayer2XOffs = -14;
 	CpsLayer3XOffs = -16;
 	CpsDrawSpritesInReverse = 1;
-	
-	nRet = Sf2ceInit();
 	
 	return nRet;
 }
@@ -13476,11 +13487,11 @@ struct BurnDriver BurnDrvCpsSf2tlonc = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsSf2th = {
-	"sf2th", "sf2hf", NULL, NULL, "1992",
-	"Street Fighter II' - (Turbo Hack)\0", "Resets itself", "Capcom", "CPS1",
+struct BurnDriver BurnDrvCpsSf2th = {
+	"sf2th", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II' - (Turbo Hack)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2thRomInfo, Sf2thRomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
 	Sf2thInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

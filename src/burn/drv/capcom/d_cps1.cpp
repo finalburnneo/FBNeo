@@ -7829,15 +7829,15 @@ STD_ROM_PICK(Sf2rb)
 STD_ROM_FN(Sf2rb)
 
 static struct BurnRomInfo Sf2rb2RomDesc[] = {
-	{ "31.bin",        0x020000, 0x87954a41, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
-	{ "27.bin",        0x020000, 0x40296ecd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
-	{ "30.bin",        0x020000, 0x8141fe32, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },	
-	{ "26.bin",        0x020000, 0xa6974195, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
-	{ "29.bin",        0x020000, 0x7d9c479c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
-	{ "25.bin",        0x020000, 0x9ef8f772, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
-	{ "28.bin",        0x020000, 0xff728865, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
-	{ "24.bin",        0x020000, 0x93579684, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },	
-	{ "s92_21a.bin",   0x080000, 0x925a7877, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP  },
+	{ "27.bin",        0x020000, 0x40296ecd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "31.bin",        0x020000, 0x87954a41, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "26.bin",        0x020000, 0xa6974195, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "30.bin",        0x020000, 0x8141fe32, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "25.bin",        0x020000, 0x9ef8f772, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "29.bin",        0x020000, 0x7d9c479c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "24.bin",        0x020000, 0x93579684, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "28.bin",        0x020000, 0xff728865, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "s92_21a.bin",   0x080000, 0x925a7877, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "s92_01.bin",    0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
 	{ "s92_02.bin",    0x080000, 0x840289ec, BRF_GRA | CPS1_TILES },
@@ -8103,11 +8103,11 @@ static struct BurnRomInfo Sf2yycRomDesc[] = {
 STD_ROM_PICK(Sf2yyc)
 STD_ROM_FN(Sf2yyc)
 
-static struct BurnRomInfo KouryuRomDesc[] = {
-	{ "u196.rom",     0x0080000, 0xb23a869d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
+static struct BurnRomInfo Sf2koryuRomDesc[] = {
 	{ "u222.rom",     0x0080000, 0x9236a79a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
+	{ "u196.rom",     0x0080000, 0xb23a869d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
+	{ "u221.rom",     0x0020000, 0x64e6e091, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
 	{ "u195.rom",     0x0020000, 0xc95e4443, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
-	{ "u221.rom",     0x0020000, 0x64e6e091, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },	
 
 	{ "s92_01.bin",   0x0080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
 	{ "s92_02.bin",   0x0080000, 0x840289ec, BRF_GRA | CPS1_TILES },
@@ -8128,8 +8128,8 @@ static struct BurnRomInfo KouryuRomDesc[] = {
 	{ "s92_19.bin",   0x0020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
 };
 
-STD_ROM_PICK(Kouryu)
-STD_ROM_FN(Kouryu)
+STD_ROM_PICK(Sf2koryu)
+STD_ROM_FN(Sf2koryu)
 
 static struct BurnRomInfo Sf2m1RomDesc[] = {
 	{ "222e",         0x0080000, 0x1e20d0a3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -11203,7 +11203,6 @@ static INT32 Sf2rbInit()
 
 static void Sf2rb2Callback()
 {
-	BurnByteswap(CpsRom, 0x100000);
 	CpsRom[0xe5333] = 0x60;
 	CpsRom[0xe5332] = 0x14;
 }
@@ -11268,15 +11267,9 @@ static INT32 Sf2yycInit()
 	return Sf2ceInit();
 }
 
-static void Sf2koryuCallback()
-{
-	BurnByteswap(CpsRom, 0x140000);
-}
-
 static INT32 Sf2koryuInit()
 {
 	Sf2Hack = 1;
-	AmendProgRomCallback = Sf2koryuCallback;
 	
 	CpsLayer1XOffs = -12;
 	CpsLayer2XOffs = -14;
@@ -13285,12 +13278,12 @@ struct BurnDriver BurnDrvCpsSf2yyc = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsKouryu = {
+struct BurnDriver BurnDrvCpsSf2koryu = {
 	"sf2koryu", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II' - champion edition (Chinese bootleg, Xiang Long)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, KouryuRomInfo, KouryuRomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
+	NULL, Sf2koryuRomInfo, Sf2koryuRomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
 	Sf2koryuInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

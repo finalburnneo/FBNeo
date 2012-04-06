@@ -9,7 +9,6 @@
 #define CPS1_PIC			7
 
 //#define INCLUDE_DUPLICATES		1
-//#define INCLUDE_BAD_DUMPS			1
 
 typedef INT32 (*Cps1Callback)(INT32);
 static Cps1Callback Cps1CallbackFunction;
@@ -8324,6 +8323,9 @@ STD_ROM_PICK(Sf2m7)
 STD_ROM_FN(Sf2m7)
 
 static struct BurnRomInfo Sf2m8RomDesc[] = {
+//	This was the original dump which was bad
+//	{ "u221.epr",     0x0020000, 0xd8276822, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
+
 	{ "k4-222",       0x0080000, 0xdb567b66, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
 	{ "k4-196",       0x0080000, 0x95ea597e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
 	{ "u221.epr",     0x0020000, 0x1073b7b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
@@ -10398,10 +10400,6 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2tlond"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2turyu"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2tury2"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
-#endif
-
-#if defined INCLUDE_BAD_DUMPS
-	{ "sf2m8bad"    , HACK_B_2    , mapper_S9263B, 0, NULL                },
 #endif
 
 	{ 0         , 0           , 0            , 0, 0                   }
@@ -14648,51 +14646,7 @@ struct BurnDriverX BurnDrvCpsSf2ce13 = {
 
 #endif
 
-#if defined INCLUDE_BAD_DUMPS
-
-// previously known as sf2m8
-static struct BurnRomInfo Sf2m8badRomDesc[] = {
-	{ "k4-222",       0x0080000, 0xdb567b66, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
-	{ "k4-196",       0x0080000, 0x95ea597e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
-	{ "u221.epr",     0x0020000, 0xd8276822, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
-	{ "u195.epr",     0x0020000, 0x924c6ce2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
-
-	{ "s92_01.bin",   0x0080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
-	{ "s92_02.bin",   0x0080000, 0x840289ec, BRF_GRA | CPS1_TILES },
-	{ "s92_03.bin",   0x0080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
-	{ "s92_04.bin",   0x0080000, 0xe2799472, BRF_GRA | CPS1_TILES },
-	{ "s92_05.bin",   0x0080000, 0xba8a2761, BRF_GRA | CPS1_TILES },
-	{ "s92_06.bin",   0x0080000, 0xe584bfb5, BRF_GRA | CPS1_TILES },
-	{ "s92_07.bin",   0x0080000, 0x21e3f87d, BRF_GRA | CPS1_TILES },
-	{ "s92_08.bin",   0x0080000, 0xbefc47df, BRF_GRA | CPS1_TILES },
-	{ "s92_10.bin",   0x0080000, 0x960687d5, BRF_GRA | CPS1_TILES },
-	{ "s92_11.bin",   0x0080000, 0x978ecd18, BRF_GRA | CPS1_TILES },
-	{ "s92_12.bin",   0x0080000, 0xd6ec9a0a, BRF_GRA | CPS1_TILES },
-	{ "s92_13.bin",   0x0080000, 0xed2c67f6, BRF_GRA | CPS1_TILES },
-
-	{ "s92_09.bin",   0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
-
-	{ "s92_18.bin",   0x0020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "s92_19.bin",   0x0020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
-};
-
-STD_ROM_PICK(Sf2m8bad)
-STD_ROM_FN(Sf2m8bad)
-
-struct BurnDriverX BurnDrvCpsSf2m8bad = {
-	"sf2m8bad", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (bootleg, M8, bad dump)\0", "Gfx glitches", "Capcom", "CPS1",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2m8badRomInfo, Sf2m8badRomName, NULL, NULL, Sf2m3InputInfo, Sf2DIPInfo,
-	Sf2m8Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
-#endif
-
 #undef INCLUDE_DUPLICATES
-#undef INCLUDE_BAD_DUMPS
 
 #undef CPS1_68K_PROGRAM_BYTESWAP
 #undef CPS1_68K_PROGRAM_NO_BYTESWAP

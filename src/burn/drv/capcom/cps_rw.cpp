@@ -98,6 +98,11 @@ static UINT8 CpsReadPort(const UINT32 ia)
 		d = (UINT8)~Inp019;
 		return d;
 	}
+	if (ia == 0x01B) {
+		d = (UINT8)~Inp01B;
+		return d;
+	}
+	
 	if (ia == 0x01A) {
 		d = (UINT8)~Cpi01A;
 		return d;

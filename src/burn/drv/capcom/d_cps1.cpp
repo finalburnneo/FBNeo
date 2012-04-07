@@ -1368,6 +1368,43 @@ static struct BurnInputInfo WofhfhInputList[] =
 
 STDINPUTINFO(Wofhfh)
 
+static struct BurnInputInfo WofsjbInputList[] =
+{
+ 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0, "p1 coin"   },
+ 	{"P1 Start"         , BIT_DIGITAL  , CpsInp018+4, "p1 start"  },
+ 	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     },
+ 	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   },
+ 	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1, "p1 left"   },
+ 	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
+ 	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
+ 	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
+
+ 	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018+1, "p2 coin"   },
+ 	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  },
+ 	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     },
+ 	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   },
+ 	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1, "p2 left"   },
+ 	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
+ 	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
+ 	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
+
+ 	{"P3 Coin"          , BIT_DIGITAL  , CpsInp01B+6, "p3 coin"  },
+ 	{"P3 Start"         , BIT_DIGITAL  , CpsInp01B+7, "p3 start" },
+ 	{"P3 Up"            , BIT_DIGITAL  , CpsInp01B+3, "p3 up"    },
+ 	{"P3 Down"          , BIT_DIGITAL  , CpsInp01B+2, "p3 down"  },
+ 	{"P3 Left"          , BIT_DIGITAL  , CpsInp01B+1, "p3 left"  },
+ 	{"P3 Right"         , BIT_DIGITAL  , CpsInp01B+0, "p3 right" },
+ 	{"P3 Attack"        , BIT_DIGITAL  , CpsInp01B+4, "p3 fire 1"},
+ 	{"P3 Jump"          , BIT_DIGITAL  , CpsInp01B+5, "p3 fire 2"},
+
+ 	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
+ 	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6, "diag"      },
+ 	{"Service"          , BIT_DIGITAL  , CpsInp018+2, "service"   },
+ 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
+};
+
+STDINPUTINFO(Wofsjb)
+
 // Dip Switch Definitions
 
 #define CPS1_COINAGE_1(dipval) \
@@ -11723,11 +11760,35 @@ static INT32 StriderjInit()
 	return nRet;
 }
 
+static void WofbCallback()
+{
+	// Fix gfx
+	CpsRom[0x00506] = 0xe7;
+	CpsRom[0x00507] = 0x48;
+	CpsRom[0x00508] = 0xfe;
+	CpsRom[0x00509] = 0xff;
+	CpsRom[0x0050A] = 0xf8;
+	CpsRom[0x0050B] = 0x4b;
+	CpsRom[0x06ABC] = 0x06;
+	CpsRom[0x06ABD] = 0x01;
+	
+	// Fix sound
+	CpsRom[0x0764E] = 0x71;
+	CpsRom[0x07650] = 0x71;
+	CpsRom[0x07651] = 0x4e;
+	
+	// Fix screen transitions
+	CpsRom[0x5D236] = 0xfc;
+	CpsRom[0x5D237] = 0x28;
+	CpsRom[0x5D238] = 0x00;
+	CpsRom[0x5D23B] = 0x01;
+}
+
 static INT32 WofbInit()
 {
-	INT32 nRet = 0;
+	AmendProgRomCallback = WofbCallback;
 	
-	nRet = TwelveMhzInit();
+	INT32 nRet = TwelveMhzInit();
 	
 	memset(CpsGfx, 0, nCpsGfxLen);
 	CpsLoadTilesBootleg(CpsGfx + 0x000000, 4);
@@ -11829,6 +11890,89 @@ static INT32 WofhaInit()
 	CpsLoadTilesHack160(CpsGfx, 2);
 	
 	return nRet;
+}
+
+static void WofsjbCallback()
+{
+	// Fix sprites update
+	CpsRom[0x00532] = 0xed;
+	CpsRom[0x00533] = 0x33;
+	CpsRom[0x00534] = 0xd2;
+	CpsRom[0x00535] = 0xe3;
+	CpsRom[0x00536] = 0x80;
+	CpsRom[0x00537] = 0x00;
+	CpsRom[0x00538] = 0x00;
+	CpsRom[0x00539] = 0x01;
+
+	// Patch Q sound protection? check
+	CpsRom[0x05A1A] = 0x00;
+	CpsRom[0x05A1B] = 0x67;
+	CpsRom[0x05A1C] = 0x56;
+	CpsRom[0x05A1D] = 0x00;
+	CpsRom[0x05A1E] = 0x7c;
+	CpsRom[0x05A1F] = 0x20;
+	CpsRom[0x05A20] = 0xf1;
+	CpsRom[0x05A21] = 0x00;
+	CpsRom[0x05A22] = 0x00;
+	CpsRom[0x05A23] = 0x80;
+	CpsRom[0x05A24] = 0x28;
+	CpsRom[0x05A25] = 0x4a;
+	CpsRom[0x05A26] = 0x1f;
+	CpsRom[0x05A27] = 0x00;
+	CpsRom[0x05A28] = 0x00;
+	CpsRom[0x05A29] = 0x6a;
+	CpsRom[0x05A40] = 0x5c;
+	CpsRom[0x05A41] = 0x11;
+	CpsRom[0x05A42] = 0x01;
+	CpsRom[0x05A43] = 0x00;
+	CpsRom[0x05A44] = 0x5c;
+	CpsRom[0x05A45] = 0x11;
+	CpsRom[0x05A46] = 0x03;
+	CpsRom[0x05A47] = 0x00;
+	CpsRom[0x05A4A] = 0x07;
+	CpsRom[0x05A4B] = 0x00;
+	CpsRom[0x05A4C] = 0x5c;
+	CpsRom[0x05A4D] = 0x11;
+	CpsRom[0x05A4E] = 0x09;
+	CpsRom[0x05A4F] = 0x00;
+	CpsRom[0x05A50] = 0x5c;
+	CpsRom[0x05A51] = 0x31;
+	CpsRom[0x05A52] = 0x0c;
+	CpsRom[0x05A53] = 0x00;
+	CpsRom[0x05A54] = 0x5c;
+	CpsRom[0x05A55] = 0x11;
+	CpsRom[0x05A56] = 0x0f;
+	CpsRom[0x05A57] = 0x00;
+	CpsRom[0x05A58] = 0x5c;
+	CpsRom[0x05A59] = 0x11;
+	CpsRom[0x071BC] = 0x0c;
+	CpsRom[0x072A6] = 0x71;
+	CpsRom[0x072A7] = 0x4e;
+	CpsRom[0x072A8] = 0x71;
+	CpsRom[0x072A9] = 0x4e;
+	CpsRom[0x072AA] = 0x71;
+	CpsRom[0x072AB] = 0x4e;
+	CpsRom[0x072AC] = 0x71;
+	CpsRom[0x072AD] = 0x4e;
+	CpsRom[0x072AE] = 0x71;
+	CpsRom[0x072AF] = 0x4e;
+	CpsRom[0x072B0] = 0x71;
+	CpsRom[0x072B1] = 0x4e;
+	CpsRom[0x072B2] = 0x39;
+	CpsRom[0x072B3] = 0x30;
+	CpsRom[0x072B4] = 0xf1;
+	CpsRom[0x072B5] = 0x00;
+	CpsRom[0x072B6] = 0xfe;
+	CpsRom[0x072B7] = 0x9f;
+	CpsRom[0x072B8] = 0x00;
+	CpsRom[0x072B9] = 0x0c;
+}
+
+static INT32 WofsjbInit()
+{
+	AmendProgRomCallback = WofsjbCallback;
+	
+	return TwelveMhzInit();
 }
 
 static INT32 DrvExit()
@@ -13859,11 +14003,11 @@ struct BurnDriver BurnDrvCpsWofah = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsWofb = {
+struct BurnDriver BurnDrvCpsWofb = {
 	"wofb", "wof", NULL, NULL, "1992",
 	"Warriors of Fate (bootleg)\0", NULL, "bootleg", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofbRomInfo, WofbRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
 	WofbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -13969,13 +14113,13 @@ struct BurnDriverD BurnDrvCpsWofsja = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsWofsjb = {
+struct BurnDriver BurnDrvCpsWofsjb = {
 	"wofsjb", "wof", NULL, NULL, "1992",
 	"Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 3)\0", NULL, "bootleg", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
-	NULL, WofsjbRomInfo, WofsjbRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
-	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	NULL, WofsjbRomInfo, WofsjbRomName, NULL, NULL, WofsjbInputInfo, WofDIPInfo,
+	WofsjbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

@@ -184,7 +184,7 @@ inline static void GetPalette(INT32 nStart, INT32 nCount)
 
 // cps_rw.cpp
 // Treble Winner - Added INP(1FD) for sf2ue
-#define CPSINPSET INP(000) INP(001) INP(006) INP(007) INP(008) INP(010) INP(011) INP(012) INP(018) INP(019) INP(020) INP(021) INP(029) INP(176) INP(177) INP(179) INP(186) INP(1fd)
+#define CPSINPSET INP(000) INP(001) INP(006) INP(007) INP(008) INP(010) INP(011) INP(012) INP(018) INP(019) INP(01B) INP(020) INP(021) INP(029) INP(176) INP(177) INP(179) INP(186) INP(1fd)
 
 // prototype for input bits
 #define INP(nnn) extern UINT8 CpsInp##nnn[8];

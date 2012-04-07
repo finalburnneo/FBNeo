@@ -11810,11 +11810,127 @@ static INT32 Wof3jsInit()
 	return TwelveMhzInit();
 }
 
+static void Wof3sjCallback()
+{
+	// Disable Sprite Recoding
+	CpsRom[0x5de96] = 0x00;
+	CpsRom[0x5de97] = 0x61;
+	CpsRom[0x5de98] = 0xe6;
+	CpsRom[0x5de99] = 0x01;
+	CpsRom[0x5dece] = 0x6d;
+	CpsRom[0x5decf] = 0x0c;
+	CpsRom[0x5ded0] = 0x00;
+	CpsRom[0x5ded1] = 0x90;
+	CpsRom[0x5ded2] = 0xd2;
+	CpsRom[0x5ded3] = 0xe3;
+	CpsRom[0x5df26] = 0x90;
+	CpsRom[0x5df27] = 0x00;
+	CpsRom[0x5df28] = 0x00;
+	CpsRom[0x5df29] = 0x00;
+	CpsRom[0x5df36] = 0x90;
+	CpsRom[0x5df37] = 0x00;
+	CpsRom[0x5df38] = 0x00;
+	CpsRom[0x5df39] = 0x40;
+	
+	// Patch Q sound protection? check
+	CpsRom[0x05A0E] = 0x39;
+	CpsRom[0x05A0F] = 0x30;
+	CpsRom[0x05A10] = 0xF1;
+	CpsRom[0x05A12] = 0xFE;
+	CpsRom[0x05A13] = 0x9F;
+	CpsRom[0x05A14] = 0x00;
+	CpsRom[0x05A15] = 0x0C;
+	CpsRom[0x05A16] = 0x77;
+	CpsRom[0x05A17] = 0x00;
+	CpsRom[0x05A18] = 0xF4;
+	CpsRom[0x05A19] = 0x66;
+	CpsRom[0x05A1A] = 0xF9;
+	CpsRom[0x05A1B] = 0x4E;
+	CpsRom[0x05A1C] = 0x00;
+	CpsRom[0x05A1E] = 0xBE;
+	CpsRom[0x05A1F] = 0x72;
+	CpsRom[0x05A20] = 0x7C;
+	CpsRom[0x05A21] = 0x20;
+	CpsRom[0x05A22] = 0xF1;
+	CpsRom[0x05A23] = 0x00;
+	CpsRom[0x05A24] = 0x00;
+	CpsRom[0x05A25] = 0x80;
+	CpsRom[0x05A26] = 0x7C;
+	CpsRom[0x05A27] = 0x11;
+	CpsRom[0x05A29] = 0x00;
+	CpsRom[0x05A2A] = 0x01;
+	CpsRom[0x05A2C] = 0x7C;
+	CpsRom[0x05A2D] = 0x11;
+	CpsRom[0x05A2E] = 0x10;
+	CpsRom[0x05A2F] = 0x00;
+	CpsRom[0x05A30] = 0x0F;
+	CpsRom[0x05A31] = 0x00;
+	CpsRom[0x05A32] = 0x7C;
+	CpsRom[0x05A33] = 0x11;
+	CpsRom[0x05A34] = 0x00;
+	CpsRom[0x05A35] = 0x00;
+	CpsRom[0x05A36] = 0x07;
+	CpsRom[0x05A38] = 0x7C;
+	CpsRom[0x05A39] = 0x11;
+	CpsRom[0x05A3A] = 0x00;
+	CpsRom[0x05A3B] = 0x00;
+	CpsRom[0x05A3C] = 0x09;
+	CpsRom[0x05A3D] = 0x00;
+	CpsRom[0x05A3E] = 0x7C;
+	CpsRom[0x05A3F] = 0x11;
+	CpsRom[0x05A40] = 0x00;
+	CpsRom[0x05A41] = 0x00;
+	CpsRom[0x05A42] = 0x0C;
+	CpsRom[0x05A44] = 0x41;
+	CpsRom[0x05A48] = 0x7C;
+	CpsRom[0x05A4A] = 0x00;
+	CpsRom[0x05A4C] = 0x11;
+	CpsRom[0x05A4D] = 0x00;
+	CpsRom[0x05A4E] = 0x7C;
+	CpsRom[0x05A4F] = 0x11;
+	CpsRom[0x05A50] = 0x00;
+	CpsRom[0x05A51] = 0x00;
+	CpsRom[0x05A52] = 0x17;
+	CpsRom[0x05A54] = 0x7C;
+	CpsRom[0x05A56] = 0x00;
+	CpsRom[0x05A58] = 0x19;
+	CpsRom[0x05A59] = 0x00;
+	CpsRom[0x05A5A] = 0x7C;
+	CpsRom[0x05A5B] = 0x11;
+	CpsRom[0x05A5C] = 0x00;
+	CpsRom[0x05A5D] = 0x00;
+	CpsRom[0x05A5E] = 0x13;
+	CpsRom[0x05A60] = 0x7C;
+	CpsRom[0x05A62] = 0x00;
+	CpsRom[0x05A64] = 0x15;
+	CpsRom[0x05A65] = 0x00;
+	CpsRom[0x05A66] = 0x7C;
+	CpsRom[0x05A67] = 0x11;
+	CpsRom[0x05A68] = 0x00;
+	CpsRom[0x05A69] = 0x00;
+	CpsRom[0x05A6A] = 0x1F;
+	CpsRom[0x05A6C] = 0xF9;
+	CpsRom[0x05A6D] = 0x4E;
+	CpsRom[0x05A6E] = 0x05;
+	CpsRom[0x05A70] = 0x6A;
+	CpsRom[0x05A71] = 0xEE;
+	CpsRom[0x072A6] = 0xF9;
+	CpsRom[0x072A8] = 0x00;
+	CpsRom[0x072A9] = 0x00;
+	CpsRom[0x072AA] = 0x0E;
+	CpsRom[0x072AB] = 0x5A;
+	CpsRom[0x5EE64] = 0xF9;
+	CpsRom[0x5EE65] = 0x4E;
+	CpsRom[0x5EE66] = 0x00;
+	CpsRom[0x5EE68] = 0x20;
+	CpsRom[0x5EE69] = 0x5A;
+}
+
 static INT32 Wof3sjInit()
 {
-	INT32 nRet = 0;
+	AmendProgRomCallback = Wof3sjCallback;
 	
-	nRet = TwelveMhzInit();
+	INT32 nRet = TwelveMhzInit();
 	
 	memset(CpsGfx, 0, nCpsGfxLen);
 	CpsLoadTilesHack160(CpsGfx, 2);
@@ -11824,9 +11940,9 @@ static INT32 Wof3sjInit()
 
 static INT32 Wof3sjaInit()
 {
-	INT32 nRet = 0;
+	AmendProgRomCallback = Wof3sjCallback;
 	
-	nRet = TwelveMhzInit();
+	INT32 nRet = TwelveMhzInit();
 	
 	memset(CpsGfx, 0, nCpsGfxLen);
 	CpsLoadTilesHack160(CpsGfx, 1);
@@ -11890,6 +12006,13 @@ static INT32 WofhaInit()
 	CpsLoadTilesHack160(CpsGfx, 2);
 	
 	return nRet;
+}
+
+static INT32 WofsjInit()
+{
+	AmendProgRomCallback = Wof3sjCallback;
+	
+	return TwelveMhzInit();
 }
 
 static void WofsjbCallback()
@@ -14099,7 +14222,7 @@ struct BurnDriverD BurnDrvCpsWofsj = {
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofsjRomInfo, WofsjRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
-	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	WofsjInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -14109,7 +14232,7 @@ struct BurnDriverD BurnDrvCpsWofsja = {
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofsjaRomInfo, WofsjaRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
-	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	WofsjInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

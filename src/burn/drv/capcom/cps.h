@@ -313,7 +313,7 @@ extern INT32 nCpsObjectBank;
 
 extern UINT8 *BootlegSpriteRam;
 
-extern INT32 Sf2Hack;
+extern INT32 Cps1LockSpriteList910000;
 extern INT32 Cps1DetectEndSpriteList8000;
 
 INT32  CpsObjInit();

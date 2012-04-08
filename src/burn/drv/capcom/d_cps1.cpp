@@ -11195,7 +11195,7 @@ static INT32 Sf2ebblInit()
 	memset(CpsGfx + 0x400000, 0, 0x80000);
 	CpsLoadTilesSf2ebbl(CpsGfx + 0x400000, 19);
 	
-	Sf2Hack = 1;
+	Cps1LockSpriteList910000 = 1;
 	
 	CpsLayer1XOffs = -12;
 	CpsLayer2XOffs = -14;
@@ -11308,7 +11308,7 @@ static INT32 Sf2thInit()
 	memset(CpsGfx + 0x400000, 0, 0x80000);
 	CpsLoadTiles(CpsGfx + 0x400000, 19);
 	
-	Sf2Hack = 1;
+	Cps1LockSpriteList910000 = 1;
 	
 	CpsLayer1XOffs = -12;
 	CpsLayer2XOffs = -14;
@@ -11343,7 +11343,7 @@ static INT32 Sf2yycInit()
 {
 	nCpsRomLen = 0x40000;
 	
-	Sf2Hack = 1;
+	Cps1LockSpriteList910000 = 1;
 	AmendProgRomCallback = Sf2yycCallback;
 	
 	CpsLayer1XOffs = -12;
@@ -11356,7 +11356,7 @@ static INT32 Sf2yycInit()
 
 static INT32 Sf2koryuInit()
 {
-	Sf2Hack = 1;
+	Cps1LockSpriteList910000 = 1;
 	
 	CpsLayer1XOffs = -12;
 	CpsLayer2XOffs = -14;
@@ -11398,7 +11398,7 @@ static INT32 Sf2hfjbInit()
 
 static INT32 Sf2m4Init()
 {
-	Sf2Hack = 1;
+	Cps1LockSpriteList910000 = 1;
 	
 	CpsLayer1XOffs = -12;
 	CpsLayer2XOffs = -14;
@@ -11488,7 +11488,7 @@ static void Sf2m2Callback()
 
 static INT32 Sf2m2Init()
 {
-	Sf2Hack = 1;
+	Cps1LockSpriteList910000 = 1;
 	AmendProgRomCallback = Sf2m2Callback;
 	
 	CpsLayer1XOffs = -12;
@@ -12148,7 +12148,7 @@ static INT32 DrvExit()
 	PangEEP = 0;
 	Qad = 0;
 	Sf2jc = 0;
-	Sf2Hack = 0;
+	Cps1LockSpriteList910000 = 0;
 	Dinopic = 0;
 	Dinohunt = 0;
 	Sf2thndr = 0;

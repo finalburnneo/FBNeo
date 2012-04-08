@@ -5,7 +5,7 @@ INT32 nCpsObjectBank;
 
 UINT8 *BootlegSpriteRam = NULL;
 
-INT32 Sf2Hack = 0;
+INT32 Cps1LockSpriteList910000 = 0;
 INT32 Cps1DetectEndSpriteList8000 = 0;
 
 // Our copy of the sprite table
@@ -106,7 +106,7 @@ INT32 CpsObjGet()
 		nOff &= 0xfff800;
 		Get = CpsFindGfxRam(nOff, 0x800);		
 		
-		if (Sf2Hack) {
+		if (Cps1LockSpriteList910000) {
 			Get = CpsFindGfxRam(0x910000, 0x800);
 		} else {
 			if (Dinopic) {

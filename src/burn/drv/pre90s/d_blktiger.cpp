@@ -988,8 +988,6 @@ static struct BurnRomInfo blktigerb2RomDesc[] = {
 	{ "bd02.9j",		0x00100, 0x8b741e66, 6 | BRF_OPT },           // 16
 	{ "bd03.11k",		0x00100, 0x27201c75, 6 | BRF_OPT },           // 17
 	{ "bd04.11l",		0x00100, 0xe5490b68, 6 | BRF_OPT },           // 18
-
-	{ "bd.5k",  		0x01000, 0xac7d14f1, 7 | BRF_PRG | BRF_OPT }, // 19 I8751 Mcu Code
 };
 
 STD_ROM_PICK(blktigerb2)

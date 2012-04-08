@@ -8146,18 +8146,12 @@ static struct BurnRomInfo Sf2koryuRomDesc[] = {
 	{ "u221.rom",     0x0020000, 0x64e6e091, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
 	{ "u195.rom",     0x0020000, 0xc95e4443, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
 
-	{ "s92_01.bin",   0x0080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
-	{ "s92_02.bin",   0x0080000, 0x840289ec, BRF_GRA | CPS1_TILES },
-	{ "s92_03.bin",   0x0080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
-	{ "s92_04.bin",   0x0080000, 0xe2799472, BRF_GRA | CPS1_TILES },
-	{ "s92_05.bin",   0x0080000, 0xba8a2761, BRF_GRA | CPS1_TILES },
-	{ "s92_06.bin",   0x0080000, 0xe584bfb5, BRF_GRA | CPS1_TILES },
-	{ "s92_07.bin",   0x0080000, 0x21e3f87d, BRF_GRA | CPS1_TILES },
-	{ "s92_08.bin",   0x0080000, 0xbefc47df, BRF_GRA | CPS1_TILES },
-	{ "s92_10.bin",   0x0080000, 0x960687d5, BRF_GRA | CPS1_TILES },
-	{ "s92_11.bin",   0x0080000, 0x978ecd18, BRF_GRA | CPS1_TILES },
-	{ "s92_12.bin",   0x0080000, 0xd6ec9a0a, BRF_GRA | CPS1_TILES },
-	{ "s92_13.bin",   0x0080000, 0xed2c67f6, BRF_GRA | CPS1_TILES },
+	{ "u70.rom",      0x0100000, 0xbaa0f81f, BRF_GRA | CPS1_TILES },
+	{ "u68.rom",      0x0100000, 0x8edff95a, BRF_GRA | CPS1_TILES },
+	{ "u69.rom",      0x0100000, 0x468962b1, BRF_GRA | CPS1_TILES },
+	{ "u64.rom",      0x0100000, 0x8165f536, BRF_GRA | CPS1_TILES },
+	{ "u19.rom",      0x0100000, 0x39d763d3, BRF_GRA | CPS1_TILES },
+	{ "u18.rom",      0x0100000, 0x93ec42ae, BRF_GRA | CPS1_TILES },
 
 	{ "s92_09.bin",   0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
 
@@ -11356,6 +11350,20 @@ static INT32 Sf2yycInit()
 
 static INT32 Sf2koryuInit()
 {
+	Cps1CallbackFunction = CpsLoadTilesSf2koryu;
+	
+	Cps1LockSpriteList910000 = 1;
+	
+	CpsLayer1XOffs = -12;
+	CpsLayer2XOffs = -14;
+	CpsLayer3XOffs = -16;
+	CpsDrawSpritesInReverse = 1;
+	
+	return Sf2ceInit();
+}
+
+static INT32 Sf2koryu2Init()
+{
 	Cps1LockSpriteList910000 = 1;
 	
 	CpsLayer1XOffs = -12;
@@ -13611,7 +13619,7 @@ struct BurnDriver BurnDrvCpsSf2koryu2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2koryu2RomInfo, Sf2koryu2RomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
-	Sf2koryuInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Sf2koryu2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

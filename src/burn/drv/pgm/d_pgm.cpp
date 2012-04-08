@@ -2301,6 +2301,39 @@ struct BurnDriverD BurnDrvDw2001 = {
 };
 
 
+// Dragon World Pretty Chance (V101, Japan)
+
+static struct BurnRomInfo dwpcRomDesc[] = {
+	{ "dwpc_v100jp.u22",	0x080000, 0xB93027C0, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
+	{ "dwpc_v100jp.u11",	0x400000, 0x3AA5A787, 2 | BRF_GRA },		  //  1 Tile data
+
+	{ "dwpc_v100jp.u2",	0x200000, 0xE7115763, 3 | BRF_GRA },		  //  2 Sprite Color Data
+	{ "dwpc_v100jp.u3",	0x200000, 0x49C184A4, 3 | BRF_GRA },		  //  4
+
+	{ "dwpc_v100jp.u9",	0x200000, 0x412B9913, 4 | BRF_GRA },		  //  5 Sprite Masks & Color Indexes
+
+	{ "dwpc_v100jp.u7",	0x200000, 0x5CF9BADA, 5 | BRF_SND },		  //  6 Samples
+
+	{ "dwpc_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  7 Internal ARM7 rom
+
+	{ "dwpc_v100jp.u12",	0x080000, 0x0D112126, 8 | BRF_PRG | BRF_ESS }, // 8 External ARM7 rom
+};
+
+STDROMPICKEXT(dwpc, dwpc, pgm)
+STD_ROM_FN(dwpc)
+
+struct BurnDriverD BurnDrvdwpc = {
+	"dwpc", NULL, "pgm", NULL, "2001",
+	"Dragon World Pretty Chance (V101, Japan)\0", "Incomplete dump", "IGS / ALTA", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	0, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
+	NULL, dwpcRomInfo, dwpcRomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	dw2001Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
 // Demon Front (V105)
 
 static struct BurnRomInfo dmnfrntRomDesc[] = {

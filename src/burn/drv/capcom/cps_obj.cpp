@@ -131,7 +131,7 @@ INT32 CpsObjGet()
 					break;
 				}
 			} else {
-				if (BURN_ENDIAN_SWAP_INT16(ps[3]) == 0xff00) {													// end of sprite list
+				if (BURN_ENDIAN_SWAP_INT16(ps[3]) >= 0xff00) {													// end of sprite list
 					break;
 				}
 			}

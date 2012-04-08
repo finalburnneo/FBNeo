@@ -2304,7 +2304,7 @@ struct BurnDriverD BurnDrvDw2001 = {
 // Dragon World Pretty Chance (V101, Japan)
 
 static struct BurnRomInfo dwpcRomDesc[] = {
-	{ "dwpc_v100jp.u22",	0x080000, 0xB93027C0, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "dwpc_v101jp.u22",	0x080000, 0xB93027C0, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "dwpc_v100jp.u11",	0x400000, 0x3AA5A787, 2 | BRF_GRA },		  //  1 Tile data
 

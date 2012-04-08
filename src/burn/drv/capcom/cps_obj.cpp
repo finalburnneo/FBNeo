@@ -6,6 +6,7 @@ INT32 nCpsObjectBank;
 UINT8 *BootlegSpriteRam = NULL;
 
 INT32 Sf2Hack = 0;
+INT32 Cps1DetectEndSpriteList8000 = 0;
 
 // Our copy of the sprite table
 static UINT8 *ObjMem = NULL;
@@ -72,6 +73,8 @@ INT32 CpsObjExit()
 
 	nFrameCount = 0;
 	nMax = 0;
+	
+	Cps1DetectEndSpriteList8000 = 0;
 
 	return 0;
 }
@@ -132,6 +135,12 @@ INT32 CpsObjGet()
 				}
 			} else {
 				if (BURN_ENDIAN_SWAP_INT16(ps[3]) >= 0xff00) {													// end of sprite list
+					break;
+				}
+			}
+			
+			if (Cps1DetectEndSpriteList8000) {
+				if (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0x8000) {
 					break;
 				}
 			}

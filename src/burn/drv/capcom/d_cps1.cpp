@@ -10764,6 +10764,7 @@ static INT32 CaptcommbInit()
 	CpsLayer2XOffs = -11;
 	CpsLayer3XOffs = -12;
 	CpsDrawSpritesInReverse = 1;
+	Cps1DetectEndSpriteList8000 = 1;
 	
 	nRet = DrvInit();
 	
@@ -11070,6 +11071,14 @@ static INT32 DaimakbInit()
 {
 	Ghouls = 1;
 	Port6SoundWrite = 1;	
+	
+	return DrvInit();
+}
+
+static INT32 Knightsb2Init()
+{
+	CpsDrawSpritesInReverse = 1;
+	Cps1DetectEndSpriteList8000 = 1;
 	
 	return DrvInit();
 }
@@ -12286,11 +12295,11 @@ struct BurnDriver BurnDrvCpsCaptcommjr1 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsCaptcommb = {
+struct BurnDriver BurnDrvCpsCaptcommb = {
 	"captcommb", "captcomm", NULL, NULL, "1991",
 	"Captain Commando (bootleg)\0", "Sprite issues", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, CaptcommbRomInfo, CaptcommbRomName, NULL, NULL, CaptcommInputInfo, CaptcommDIPInfo,
 	CaptcommbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -12756,13 +12765,13 @@ struct BurnDriver BurnDrvCpsKnightsja = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsKnightsb2 = {
+struct BurnDriver BurnDrvCpsKnightsb2 = {
 	"knightsb2", "knights", NULL, NULL, "1991",
 	"Knights of the Round (911127 etc bootleg set 2)\0", "Some sprite problems", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Knightsb2RomInfo, Knightsb2RomName, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Knightsb2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

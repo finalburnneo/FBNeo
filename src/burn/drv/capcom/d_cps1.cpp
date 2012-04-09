@@ -11,7 +11,7 @@
 //#define INCLUDE_DUPLICATES		1
 
 typedef INT32 (*Cps1Callback)(INT32);
-static Cps1Callback Cps1CallbackFunction;
+static Cps1Callback Cps1GfxLoadCallbackFunction;
 
 // Input Definitions
 
@@ -10655,8 +10655,8 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 			Offset = 0;
 			i = nCps68KByteswapRomNum + nCps68KNoByteswapRomNum;
 			while (i < nCps68KByteswapRomNum + nCps68KNoByteswapRomNum + nCpsTilesRomNum) {
-				if (Cps1CallbackFunction) {
-					Cps1CallbackFunction(i);
+				if (Cps1GfxLoadCallbackFunction) {
+					Cps1GfxLoadCallbackFunction(i);
 				
 					i += nCpsTilesRomNum;
 				} else {
@@ -11065,7 +11065,7 @@ static INT32 ForgottnAltGfxInit()
 	INT32 nRet = 0;
 	
 	Forgottn = 1;
-	Cps1CallbackFunction = CpsLoadTilesForgottn;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesForgottn;
 	
 	nRet = DrvInit();
 	
@@ -11081,7 +11081,7 @@ static INT32 ForgottnAltGfxuInit()
 	INT32 nRet = 0;
 	
 	Forgottn = 1;
-	Cps1CallbackFunction = CpsLoadTilesForgottnu;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesForgottnu;
 	
 	nRet = DrvInit();
 	
@@ -11408,7 +11408,7 @@ static INT32 Sf2yycInit()
 
 static INT32 Sf2koryuInit()
 {
-	Cps1CallbackFunction = CpsLoadTilesSf2koryu;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2koryu;
 	
 	Cps1LockSpriteList910000 = 1;
 	
@@ -11468,7 +11468,7 @@ UINT16 __fastcall Sf2mdtReadWord(UINT32 a)
 
 static INT32 Sf2mdtInit()
 {
-	Cps1CallbackFunction = CpsLoadTilesSf2mdt;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2mdt;
 	
 	Cps1DisablePSnd = 1;
 	
@@ -12273,7 +12273,7 @@ static INT32 DrvExit()
 	
 	Cps1QsHack = 0;
 	
-	Cps1CallbackFunction = NULL;
+	Cps1GfxLoadCallbackFunction = NULL;
 	
 	BurnFree(BootlegSpriteRam);
 	

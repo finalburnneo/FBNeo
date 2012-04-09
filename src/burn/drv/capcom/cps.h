@@ -16,7 +16,7 @@ extern UINT32 CpsBID[3];										// Board ID changes
 // cps.cpp
 extern INT32 Cps;														// 1 = CPS1, 2 = CPS2, 3 = CPS CHanger
 extern INT32 Cps1Qs;
-extern INT32 Cps1Pic;
+extern INT32 Cps1DisablePSnd;
 extern INT32 nCPS68KClockspeed;
 extern INT32 nCpsCycles;												// Cycles per frame
 extern INT32 nCpsZ80Cycles;

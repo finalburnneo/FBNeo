@@ -10560,7 +10560,7 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 		if (Cps1Qs) nCpsZRomLen *= 2;
 		if (GameHasStars) nCpsGfxLen += 0x2000;
 		if (PangEEP) nCpsGfxLen *= 2;
-		if (nCpsPicRomNum) Cps1Pic = 1;
+		if (nCpsPicRomNum) Cps1DisablePSnd = 1;
 		
 #if 1 && defined FBA_DEBUG
 		if (nCpsRomLen) bprintf(PRINT_IMPORTANT, _T("68K Rom Length %06X, (%i roms byteswapped, %i roms not byteswapped)\n"), nCpsRomLen, nCps68KByteswapRomNum, nCps68KNoByteswapRomNum);
@@ -10954,7 +10954,7 @@ static INT32 DinohbInit()
 	INT32 nRet = 0;
 	
 	Dinopic = 1;
-	Cps1Pic = 1;
+	Cps1DisablePSnd = 1;
 	CpsDrawSpritesInReverse = 1;
 	
 	nRet = TwelveMhzInit();
@@ -11165,7 +11165,7 @@ static INT32 Punipic3Init()
 {
 	INT32 nRet = 0;
 	
-	Cps1Pic = 1;
+	Cps1DisablePSnd = 1;
 	
 	nRet = TwelveMhzInit();
 	
@@ -12148,7 +12148,7 @@ static INT32 DrvExit()
 
 	Cps = 0;
 	Cps1Qs = 0;
-	Cps1Pic = 0;
+	Cps1DisablePSnd = 0;
 	Forgottn = 0;
 	Ghouls = 0;
 	Kodb = 0;

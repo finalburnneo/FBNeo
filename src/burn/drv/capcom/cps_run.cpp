@@ -42,7 +42,7 @@ static INT32 DrvReset()
 	SekReset();
 	SekClose();
 
-	if (!Cps1Pic) {
+	if (!Cps1DisablePSnd) {
 		ZetOpen(0);
 		ZetReset();
 		ZetClose();
@@ -121,7 +121,7 @@ INT32 CpsRunInit()
 		return 1;
 	}
 
-	if ((Cps & 1) && Cps1Qs == 0 && Cps1Pic == 0) {			// Sound init (MSM6295 + YM2151)
+	if ((Cps & 1) && Cps1Qs == 0 && Cps1DisablePSnd == 0) {			// Sound init (MSM6295 + YM2151)
 		if (PsndInit()) {
 			return 1;
 		}
@@ -154,7 +154,7 @@ INT32 CpsRunExit()
 
 	// Sound exit
 	if (Cps == 2 || Cps1Qs == 1) QsndExit();
-	if (Cps != 2 && Cps1Qs == 0 && !Cps1Pic) PsndExit();
+	if (Cps != 2 && Cps1Qs == 0 && !Cps1DisablePSnd) PsndExit();
 
 	// Graphics exit
 	CpsObjExit();
@@ -264,7 +264,7 @@ INT32 Cps1Frame()
 	if (Cps1Qs == 1) {
 		QsndNewFrame();
 	} else {
-		if (!Cps1Pic) {
+		if (!Cps1DisablePSnd) {
 			ZetOpen(0);
 			PsndNewFrame();
 		}
@@ -309,7 +309,7 @@ INT32 Cps1Frame()
 	if (Cps1Qs == 1) {
 		QsndEndFrame();
 	} else {
-		if (!Cps1Pic) {
+		if (!Cps1DisablePSnd) {
 			PsndSyncZ80(nCpsZ80Cycles);
 			PsmUpdate(nBurnSoundLen);
 			ZetClose();

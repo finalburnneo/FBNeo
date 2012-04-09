@@ -3,7 +3,7 @@
 
 INT32 Cps = 0;							// 1 = CPS1, 2 = CPS2, 3 = CPS Changer
 INT32 Cps1Qs = 0;
-INT32 Cps1Pic = 0;
+INT32 Cps1DisablePSnd = 0;				// Disables the Z80 as well
 
 INT32 nCPS68KClockspeed = 0;
 INT32 nCpsCycles = 0;						// 68K Cycles per frame

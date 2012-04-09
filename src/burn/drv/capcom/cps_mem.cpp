@@ -101,7 +101,7 @@ void CpsMapObjectBanks(INT32 nBank)
 INT32 __fastcall CPSResetCallback()
 {
 	// Reset instruction on 68000
-	if (!Cps1Pic) ZetReset();						// Reset Z80 (CPU #1)
+	if (!Cps1DisablePSnd) ZetReset();						// Reset Z80 (CPU #1)
 
 	return 0;
 }

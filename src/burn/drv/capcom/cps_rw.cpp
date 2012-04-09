@@ -285,20 +285,22 @@ static UINT8 CpsReadPort(const UINT32 ia)
 static void CpsWritePort(const UINT32 ia, UINT8 d)
 {
 	if ((Cps & 1) && Cps1Qs == 0) {
-		// CPS1 sound code
-		if (ia == 0x181 || (Port6SoundWrite && (ia == 0x006 || ia == 0x007))) {
-			PsndSyncZ80((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles);
+		if (!Cps1DisablePSnd) {
+			// CPS1 sound code
+			if (ia == 0x181 || (Port6SoundWrite && (ia == 0x006 || ia == 0x007))) {
+				PsndSyncZ80((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles);
 
-			PsndCode = d;
-			return;
-		}
+				PsndCode = d;
+				return;
+			}
 
-		// CPS1 sound fade
-		if (ia == 0x189) {
-			PsndSyncZ80((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles);
+			// CPS1 sound fade
+			if (ia == 0x189) {
+				PsndSyncZ80((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles);
 
-			PsndFade = d;
-			return;
+				PsndFade = d;
+				return;
+			}
 		}
 
 		if (ia == 0x041) {

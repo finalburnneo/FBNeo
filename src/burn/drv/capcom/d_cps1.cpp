@@ -5434,6 +5434,30 @@ static struct BurnRomInfo KnightsjaRomDesc[] = {
 STD_ROM_PICK(Knightsja)
 STD_ROM_FN(Knightsja)
 
+static struct BurnRomInfo KnightsbRomDesc[] = {
+	{ "5.ic172",       0x040000, 0x7fd91118, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "3.ic173",       0x040000, 0xc9c6e720, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "4.ic176",       0x040000, 0xaf352703, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "2.ic175",       0x040000, 0x1eb91343, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	
+
+	{ "kr_gfx1.rom",   0x080000, 0x9e36c1a4, BRF_GRA | CPS1_TILES },
+	{ "kr_gfx3.rom",   0x080000, 0xc5832cae, BRF_GRA | CPS1_TILES },
+	{ "kr_gfx2.rom",   0x080000, 0xf095be2d, BRF_GRA | CPS1_TILES },
+	{ "kr_gfx4.rom",   0x080000, 0x179dfd96, BRF_GRA | CPS1_TILES },
+	{ "kr_gfx5.rom",   0x080000, 0x1f4298d2, BRF_GRA | CPS1_TILES },
+	{ "kr_gfx7.rom",   0x080000, 0x37fa8751, BRF_GRA | CPS1_TILES },
+	{ "kr_gfx6.rom",   0x080000, 0x0200bc3d, BRF_GRA | CPS1_TILES },
+	{ "kr_gfx8.rom",   0x080000, 0x0bb2b4e7, BRF_GRA | CPS1_TILES },
+
+	{ "kr_09.rom",     0x010000, 0x5e44d9ee, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "kr_18.rom",     0x020000, 0xda69d15f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "kr_19.rom",     0x020000, 0xbfc654e9, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Knightsb)
+STD_ROM_FN(Knightsb)
+
 static struct BurnRomInfo Knightsb2RomDesc[] = {
 	{ "040-z.02",      0x080000, 0x95d00a7e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "040-r.02",      0x080000, 0x5a9d0b64, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -10326,6 +10350,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "knightsu"    , CPS_B_21_BT4, mapper_KR63B , 0, NULL                },
 	{ "knightsj"    , CPS_B_21_BT4, mapper_KR63B , 0, NULL                },
 	{ "knightsja"   , CPS_B_21_BT4, mapper_KR63B , 0, NULL                },
+	{ "knightsb"    , CPS_B_21_BT4, mapper_KR63B , 0, NULL                },
 	{ "knightsb2"   , CPS_B_21_BT4, mapper_KR63B , 0, NULL                },
 	{ "knightsb3"   , CPS_B_21_DEF, mapper_KR63B , 0, NULL                },
 	{ "knightsh"    , CPS_B_21_DEF, mapper_KR63B , 0, NULL                },
@@ -11093,6 +11118,13 @@ static INT32 DaimakbInit()
 	Port6SoundWrite = 1;	
 	
 	return DrvInit();
+}
+
+static INT32 KnightsbInit()
+{
+	Cps1DisablePSnd = 1;
+	
+	return TwelveMhzInit();
 }
 
 static INT32 Knightsb2Init()
@@ -12850,9 +12882,19 @@ struct BurnDriver BurnDrvCpsKnightsja = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriverD BurnDrvCpsKnightsb = {
+	"knightsb", "knights", NULL, NULL, "1991",
+	"Knights of the Round (911127 etc bootleg set 1)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, KnightsbRomInfo, KnightsbRomName, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,
+	KnightsbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsKnightsb2 = {
 	"knightsb2", "knights", NULL, NULL, "1991",
-	"Knights of the Round (911127 etc bootleg set 2)\0", "Some sprite problems", "bootleg", "CPS1",
+	"Knights of the Round (911127 etc bootleg set 2)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Knightsb2RomInfo, Knightsb2RomName, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,
@@ -12862,7 +12904,7 @@ struct BurnDriver BurnDrvCpsKnightsb2 = {
 
 struct BurnDriver BurnDrvCpsKnightsb3 = {
 	"knightsb3", "knights", NULL, NULL, "1991",
-	"Knights of the Round (911127 Japan bootleg set 3)\0", "Some sprite problems", "bootleg", "CPS1",
+	"Knights of the Round (911127 Japan bootleg set 3)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Knightsb3RomInfo, Knightsb3RomName, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,

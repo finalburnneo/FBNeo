@@ -248,6 +248,8 @@ static void Cps1Layers()
 
     if (n==0) {
 	  if (nDrawMask & 1)  CpsObjDrawDoX(0,7);
+
+	  if (!Mercs && !Sf2jc && !Qad) {
 		nBgHi=1;
 		switch (Draw[i+1]) {
 			case 1:
@@ -261,6 +263,7 @@ static void Cps1Layers()
 				break;
 		}
 		nBgHi=0;
+	  }
 	}
 
     // Then Draw the scroll layer on top

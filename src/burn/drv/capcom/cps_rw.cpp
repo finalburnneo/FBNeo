@@ -54,8 +54,6 @@ static UINT8 CpsReadPort(const UINT32 ia)
 {
 	UINT8 d = 0xFF;
 	
-//	bprintf(PRINT_NORMAL, _T("Read Port %x\n"), ia);
-	
 	if (ia == 0x000) {
 		d = (UINT8)~Inp000;
 		if (Pzloop2) {
@@ -277,6 +275,8 @@ static UINT8 CpsReadPort(const UINT32 ia)
 			}
 		}	
 	}
+	
+//	bprintf(PRINT_NORMAL, _T("Read Port %x\n"), ia);
 
 	return d;
 }
@@ -360,6 +360,8 @@ static void CpsWritePort(const UINT32 ia, UINT8 d)
 			return;
 		}
 	}
+	
+//	bprintf(PRINT_NORMAL, _T("Write Port %x, %x\n"), ia, d);
 }
 
 UINT8 __fastcall CpsReadByte(UINT32 a)

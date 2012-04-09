@@ -43,6 +43,7 @@ INT32 CpsLoadTilesCaptcomb(UINT8 *Tile, INT32 nStart);
 INT32 CpsLoadTilesPunipic2(UINT8 *Tile, INT32 nStart);
 INT32 CpsLoadTilesSf2ebbl(UINT8 *Tile, INT32 nStart);
 INT32 CpsLoadTilesSf2koryu(INT32 nStart);
+INT32 CpsLoadTilesSf2mdt(INT32 nStart);
 INT32 CpsLoadStars(UINT8 *pStar, INT32 nStart);
 INT32 CpsLoadStarsByte(UINT8 *pStar, INT32 nStart);
 INT32 CpsLoadStarsForgottnAlt(UINT8 *pStar, INT32 nStart);

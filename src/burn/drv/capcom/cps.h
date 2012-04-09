@@ -329,10 +329,7 @@ INT32  Cps2ObjDraw(INT32 nLevelFrom,INT32 nLevelTo);
 #define SCROLL_2 0
 #define SCROLL_3 1
 extern INT32 Ghouls;
-extern INT32 Mercs;
-extern INT32 Sf2jc;
 extern INT32 Ssf2t;
-extern INT32 Qad;
 extern INT32 Xmcota;
 
 extern INT32 Scroll1TileMask;

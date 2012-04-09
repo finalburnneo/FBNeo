@@ -11156,13 +11156,6 @@ static INT32 KodhInit()
 	return DrvInit();
 }
 
-static INT32 MercsInit()
-{
-	Mercs = 1;
-
-	return DrvInit();
-}
-
 static INT32 Pang3bInit()
 {
 	PangEEP = 1;
@@ -11233,13 +11226,6 @@ static INT32 Punipic3Init()
 	return nRet;
 }
 
-static INT32 QadInit()
-{
-	Qad = 1;
-
-	return TwelveMhzInit();
-}
-
 static INT32 Sf2ebblInit()
 {
 	INT32 nRet = DrvInit();
@@ -11255,13 +11241,6 @@ static INT32 Sf2ebblInit()
 	CpsDrawSpritesInReverse = 1;
 	
 	return nRet;
-}
-
-static INT32 Sf2jcInit()
-{
-	Sf2jc = 1;
-
-	return DrvInit();
 }
 
 static void Sf2qp1Callback()
@@ -12261,10 +12240,7 @@ static INT32 DrvExit()
 	Forgottn = 0;
 	Ghouls = 0;
 	Kodb = 0;
-	Mercs = 0;
 	PangEEP = 0;
-	Qad = 0;
-	Sf2jc = 0;
 	Cps1LockSpriteList910000 = 0;
 	Dinopic = 0;
 	Dinohunt = 0;
@@ -13048,7 +13024,7 @@ struct BurnDriver BurnDrvCpsMercs = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_CAPCOM_CPS1, GBF_VERSHOOT, 0,
 	NULL, MercsRomInfo, MercsRomName, NULL, NULL, MercsInputInfo, MercsDIPInfo,
-	MercsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };
 
@@ -13058,7 +13034,7 @@ struct BurnDriver BurnDrvCpsMercsu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_CAPCOM_CPS1, GBF_VERSHOOT, 0,
 	NULL, MercsuRomInfo, MercsuRomName, NULL, NULL, MercsInputInfo, MercsDIPInfo,
-	MercsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };
 
@@ -13068,7 +13044,7 @@ struct BurnDriver BurnDrvCpsMercsur1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_CAPCOM_CPS1, GBF_VERSHOOT, 0,
 	NULL, Mercsur1RomInfo, Mercsur1RomName, NULL, NULL, MercsInputInfo, MercsDIPInfo,
-	MercsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };
 
@@ -13078,7 +13054,7 @@ struct BurnDriver BurnDrvCpsMercsj = {
 	L"\u6226\u5834\u306E\u72FC II\0Senjo no Ookami II (Ookami 2 900302 Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_CAPCOM_CPS1, GBF_VERSHOOT, 0,
 	NULL, MercsjRomInfo, MercsjRomName, NULL, NULL, MercsInputInfo, MercsDIPInfo,
-	MercsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };
 
@@ -13288,7 +13264,7 @@ struct BurnDriver BurnDrvCpsQad = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS1, GBF_QUIZ, 0,
 	NULL, QadRomInfo, QadRomName, NULL, NULL, QadInputInfo, QadDIPInfo,
-	QadInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -13298,7 +13274,7 @@ struct BurnDriver BurnDrvCpsQadj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_QUIZ, 0,
 	NULL, QadjRomInfo, QadjRomName, NULL, NULL, QadInputInfo, QadjDIPInfo,
-	QadInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -13468,7 +13444,7 @@ struct BurnDriver BurnDrvCpsSf2jc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2jcRomInfo, Sf2jcRomName, NULL, NULL, Sf2InputInfo, Sf2jDIPInfo,
-	Sf2jcInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

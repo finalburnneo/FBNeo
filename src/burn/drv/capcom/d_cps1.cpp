@@ -4882,6 +4882,39 @@ static struct BurnRomInfo FfightjhRomDesc[] = {
 STD_ROM_PICK(Ffightjh)
 STD_ROM_FN(Ffightjh)
 
+static struct BurnRomInfo FcrashRomDesc[] = {
+	{ "9.bin",         0x020000, 0xc6854c91, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "5.bin",         0x020000, 0x77f7c2b3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "8.bin",         0x020000, 0x1895b3df, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "4.bin",         0x020000, 0xbbd411ee, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "7.bin",         0x020000, 0x5b23ebf2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "3.bin",         0x020000, 0xaba2aebe, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "6.bin",         0x020000, 0xd4bf37f6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "2.bin",         0x020000, 0x07ac8f43, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "18.bin",        0x020000, 0xf1eee6d9, BRF_GRA | CPS1_TILES },
+	{ "20.bin",        0x020000, 0x675f4537, BRF_GRA | CPS1_TILES },
+	{ "22.bin",        0x020000, 0xdb8a32ac, BRF_GRA | CPS1_TILES },
+	{ "24.bin",        0x020000, 0xf4113e57, BRF_GRA | CPS1_TILES },
+	{ "10.bin",        0x020000, 0xd478853e, BRF_GRA | CPS1_TILES },
+	{ "12.bin",        0x020000, 0x25055642, BRF_GRA | CPS1_TILES },
+	{ "14.bin",        0x020000, 0xb77d0328, BRF_GRA | CPS1_TILES },
+	{ "16.bin",        0x020000, 0xea111a79, BRF_GRA | CPS1_TILES },
+	{ "19.bin",        0x020000, 0xb3aa1f48, BRF_GRA | CPS1_TILES },
+	{ "21.bin",        0x020000, 0x04d175c9, BRF_GRA | CPS1_TILES },
+	{ "23.bin",        0x020000, 0xe592ba4f, BRF_GRA | CPS1_TILES },
+	{ "25.bin",        0x020000, 0xb89a740f, BRF_GRA | CPS1_TILES },
+	{ "11.bin",        0x020000, 0xd4457a60, BRF_GRA | CPS1_TILES },
+	{ "13.bin",        0x020000, 0x3b26a37d, BRF_GRA | CPS1_TILES },
+	{ "15.bin",        0x020000, 0x6d837e09, BRF_GRA | CPS1_TILES },
+	{ "17.bin",        0x020000, 0xc59a4d6c, BRF_GRA | CPS1_TILES },
+
+	{ "1.bin",         0x020000, 0x5b276c14, BRF_PRG | CPS1_Z80_PROGRAM },
+};
+
+STD_ROM_PICK(Fcrash)
+STD_ROM_FN(Fcrash)
+
 static struct BurnRomInfo ForgottnRomDesc[] = {
 	{ "lw11.12f",      0x020000, 0x73e920b7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "lw15.12h",      0x020000, 0x50d7012d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -10335,6 +10368,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "ffightj1"    , CPS_B_01    , mapper_S224B , 0, NULL                },
 	{ "ffightj2"    , CPS_B_02    , mapper_S224B , 0, NULL                },
 	{ "ffightjh"    , CPS_B_01    , mapper_S224B , 0, NULL                },
+	{ "fcrash"      , HACK_B_3    , mapper_S224B , 0, NULL                },
 	{ "forgottn"    , CPS_B_01    , mapper_LW621 , 1, NULL                },
 	{ "forgottnu"   , CPS_B_01    , mapper_LW621 , 1, NULL                },
 	{ "forgottnu1"  , CPS_B_01    , mapper_LWCHR , 1, NULL                },
@@ -11040,6 +11074,93 @@ static INT32 DinohuntInit()
 	SekOpen(0);
 	SekMapHandler(1, 0xf18000, 0xf19fff, SM_READ);
 	SekSetReadByteHandler(1, DinohuntQSharedRamRead);
+	SekClose();
+	
+	return nRet;
+}
+
+UINT8 __fastcall FcrashInputReadByte(UINT32 a)
+{
+	switch (a) {
+		case 0x880000: {
+			return ~Inp000;
+		}
+		
+		case 0x880008: {
+			return ~Inp018;
+		}
+		
+		case 0x88000a: {
+			return ~Cpi01A;
+		}
+		
+		case 0x88000c: {
+			return ~Cpi01C;
+		}
+		
+		case 0x88000e: {
+			return ~Cpi01E;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Read Byte %x\n"), a);
+		}
+	}
+	
+	return 0;
+}
+
+UINT16 __fastcall FcrashInputReadWord(UINT32 a)
+{
+	switch (a) {
+		case 0x880000: {
+			return (~Inp000 << 8) | ~Inp001;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Read Word %x\n"), a);
+		}
+	}
+	
+	return 0;
+}
+
+void __fastcall FcrashInputWriteByte(UINT32 a, UINT8 d)
+{
+	switch (a) {
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Write Byte %x, %x\n"), a, d);
+		}
+	}
+}
+
+void __fastcall FcrashInputWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Write word %x, %x\n"), a, d);
+		}
+	}
+}
+
+static INT32 FcrashInit()
+{
+	Cps1DisablePSnd = 1;
+	bCpsUpdatePalEveryFrame = 1;
+	CpsLayer1XOffs = -0x3f;
+	CpsLayer2XOffs = -0x3c;
+	CpsLayer3XOffs = 0xffc0;
+	
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesFcrash;
+	
+	INT32 nRet = DrvInit();
+	
+	SekOpen(0);
+	SekMapHandler(1, 0x880000, 0x89ffff, SM_READ | SM_WRITE);
+	SekSetReadByteHandler(1, FcrashInputReadByte);
+	SekSetReadWordHandler(1, FcrashInputReadWord);
+	SekSetWriteByteHandler(1, FcrashInputWriteByte);
+	SekSetWriteWordHandler(1, FcrashInputWriteWord);
 	SekClose();
 	
 	return nRet;
@@ -12729,6 +12850,16 @@ struct BurnDriver BurnDrvCpsFfightjh = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, FfightjhRomInfo, FfightjhRomName, NULL, NULL, FfightInputInfo, FfightDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsFcrash = {
+	"fcrash", "ffight", NULL, NULL, "1990",
+	"Final Crash (bootleg)\0", NULL, "Playmark", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, FcrashRomInfo, FcrashRomName, NULL, NULL, FfightInputInfo, FfightDIPInfo,
+	FcrashInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

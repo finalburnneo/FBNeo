@@ -599,6 +599,28 @@ INT32 CpsLoadTilesSf2mdt(INT32 nStart)
 	return 0;
 }
 
+INT32 CpsLoadTilesFcrash(INT32 nStart)
+{
+	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  0, 0, 0);
+	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  1, 0, 1);
+	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  2, 0, 2);
+	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  3, 0, 3);
+	CpsLoadOneBootlegType3(CpsGfx + 0x080000, nStart +  4, 0, 0);
+	CpsLoadOneBootlegType3(CpsGfx + 0x080000, nStart +  5, 0, 1);
+	CpsLoadOneBootlegType3(CpsGfx + 0x080000, nStart +  6, 0, 2);
+	CpsLoadOneBootlegType3(CpsGfx + 0x080000, nStart +  7, 0, 3);
+	CpsLoadOneBootlegType3(CpsGfx + 0x100000, nStart +  8, 0, 0);
+	CpsLoadOneBootlegType3(CpsGfx + 0x100000, nStart +  9, 0, 1);
+	CpsLoadOneBootlegType3(CpsGfx + 0x100000, nStart + 10, 0, 2);
+	CpsLoadOneBootlegType3(CpsGfx + 0x100000, nStart + 11, 0, 3);
+	CpsLoadOneBootlegType3(CpsGfx + 0x180000, nStart + 12, 0, 0);
+	CpsLoadOneBootlegType3(CpsGfx + 0x180000, nStart + 13, 0, 1);
+	CpsLoadOneBootlegType3(CpsGfx + 0x180000, nStart + 14, 0, 2);
+	CpsLoadOneBootlegType3(CpsGfx + 0x180000, nStart + 15, 0, 3);
+	
+	return 0;
+}
+
 INT32 CpsLoadStars(UINT8* pStar, INT32 nStart)
 {
 	UINT8* pTemp[2] = { NULL, NULL};

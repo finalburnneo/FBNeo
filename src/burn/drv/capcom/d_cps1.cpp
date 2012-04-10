@@ -11147,6 +11147,7 @@ static INT32 FcrashInit()
 {
 	Cps1DisablePSnd = 1;
 	bCpsUpdatePalEveryFrame = 1;
+	Cps1DisableBgHi = 1;
 	CpsLayer1XOffs = -0x3f;
 	CpsLayer2XOffs = -0x3c;
 	CpsLayer3XOffs = 0xffc0;
@@ -11281,7 +11282,7 @@ static INT32 KodhInit()
 
 static INT32 MercsInit()
 {
-	Mercs = 1;
+	Cps1DisableBgHi = 1;
 
 	return DrvInit();
 }
@@ -11358,7 +11359,7 @@ static INT32 Punipic3Init()
 
 static INT32 QadInit()
 {
-	Qad = 1;
+	Cps1DisableBgHi = 1;
 
 	return TwelveMhzInit();
 }
@@ -11382,7 +11383,7 @@ static INT32 Sf2ebblInit()
 
 static INT32 Sf2jcInit()
 {
-	Sf2jc = 1;
+	Cps1DisableBgHi = 1;
 
 	return DrvInit();
 }
@@ -12384,11 +12385,9 @@ static INT32 DrvExit()
 	Forgottn = 0;
 	Ghouls = 0;
 	Kodb = 0;
-	Mercs = 0;
 	PangEEP = 0;
-	Qad = 0;
-	Sf2jc = 0;
 	Cps1LockSpriteList910000 = 0;
+	Cps1DisableBgHi = 0;
 	Dinopic = 0;
 	Dinohunt = 0;
 	Sf2thndr = 0;
@@ -12857,7 +12856,7 @@ struct BurnDriver BurnDrvCpsFfightjh = {
 
 struct BurnDriver BurnDrvCpsFcrash = {
 	"fcrash", "ffight", NULL, NULL, "1990",
-	"Final Crash (bootleg)\0", NULL, "Playmark", "CPS1",
+	"Final Crash (bootleg)\0", "No sound", "Playmark", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, FcrashRomInfo, FcrashRomName, NULL, NULL, FfightInputInfo, FfightDIPInfo,

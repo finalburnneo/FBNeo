@@ -18,6 +18,8 @@ INT32 CpsLayer1YOffs = 0;
 INT32 CpsLayer2YOffs = 0;
 INT32 CpsLayer3YOffs = 0;
 
+INT32 Cps1DisableBgHi = 0;
+
 static void Cps1Layers();
 static void Cps2Layers();
 
@@ -249,7 +251,7 @@ static void Cps1Layers()
     if (n==0) {
 	  if (nDrawMask & 1)  CpsObjDrawDoX(0,7);
 
-	  if (!Mercs && !Sf2jc && !Qad) {
+	  if (!Cps1DisableBgHi) {
 		nBgHi=1;
 		switch (Draw[i+1]) {
 			case 1:

@@ -244,6 +244,7 @@ extern INT32 CpsLayer3XOffs;
 extern INT32 CpsLayer1YOffs;
 extern INT32 CpsLayer2YOffs;
 extern INT32 CpsLayer3YOffs;
+extern INT32 Cps1DisableBgHi;
 void DrawFnInit();
 INT32  CpsDraw();
 INT32  CpsRedraw();
@@ -335,10 +336,7 @@ INT32  FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo);
 #define SCROLL_2 0
 #define SCROLL_3 1
 extern INT32 Ghouls;
-extern INT32 Mercs;
-extern INT32 Sf2jc;
 extern INT32 Ssf2t;
-extern INT32 Qad;
 extern INT32 Xmcota;
 
 extern INT32 Scroll1TileMask;

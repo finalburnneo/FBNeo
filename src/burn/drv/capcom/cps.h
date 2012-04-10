@@ -313,18 +313,23 @@ INT32 CtvReady();
 
 // cps_obj.cpp
 extern INT32 nCpsObjectBank;
-
 extern UINT8 *BootlegSpriteRam;
-
 extern INT32 Cps1LockSpriteList910000;
 extern INT32 Cps1DetectEndSpriteList8000;
+
+typedef INT32 (*Cps1ObjGetCallback)();
+extern Cps1ObjGetCallback Cps1ObjGetCallbackFunction;
+typedef INT32 (*Cps1ObjDrawCallback)(INT32, INT32);
+extern Cps1ObjDrawCallback Cps1ObjDrawCallbackFunction;
 
 INT32  CpsObjInit();
 INT32  CpsObjExit();
 INT32  CpsObjGet();
+INT32 FcrashObjGet();
 void CpsObjDrawInit();
 INT32  Cps1ObjDraw(INT32 nLevelFrom,INT32 nLevelTo);
 INT32  Cps2ObjDraw(INT32 nLevelFrom,INT32 nLevelTo);
+INT32  FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo);
 
 // cps_scr.cpp
 #define SCROLL_2 0

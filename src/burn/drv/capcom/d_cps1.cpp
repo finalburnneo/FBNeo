@@ -11152,6 +11152,8 @@ static INT32 FcrashInit()
 	CpsLayer3XOffs = 0xffc0;
 	
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesFcrash;
+	Cps1ObjGetCallbackFunction = FcrashObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	INT32 nRet = DrvInit();
 	

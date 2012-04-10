@@ -8,6 +8,9 @@ UINT8 *BootlegSpriteRam = NULL;
 INT32 Cps1LockSpriteList910000 = 0;
 INT32 Cps1DetectEndSpriteList8000 = 0;
 
+Cps1ObjGetCallback Cps1ObjGetCallbackFunction = NULL;
+Cps1ObjDrawCallback Cps1ObjDrawCallbackFunction = NULL;
+
 // Our copy of the sprite table
 static UINT8 *ObjMem = NULL;
 
@@ -75,6 +78,9 @@ INT32 CpsObjExit()
 	nMax = 0;
 	
 	Cps1DetectEndSpriteList8000 = 0;
+	
+	Cps1ObjGetCallbackFunction = NULL;
+	Cps1ObjDrawCallbackFunction = NULL;
 
 	return 0;
 }
@@ -86,6 +92,10 @@ INT32 CpsObjGet()
 	UINT8 *pg, *po;
 	struct ObjFrame* pof;
 	UINT8* Get = NULL;
+	
+	if (Cps1ObjGetCallbackFunction) {
+		return Cps1ObjGetCallbackFunction();
+	}
 
 	pof = of + nGetNext;
 
@@ -192,6 +202,10 @@ INT32 Cps1ObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 	INT32 i; UINT16 *ps; INT32 nPsAdd;
 	struct ObjFrame *pof;
 	(void)nLevelFrom; (void)nLevelTo;
+	
+	if (Cps1ObjDrawCallbackFunction) {
+		return Cps1ObjDrawCallbackFunction(nLevelFrom, nLevelTo);
+	}
 
 	// Draw the earliest frame we have in history
 	pof=of+nGetNext;
@@ -403,5 +417,105 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 		}
 	}
 
+	return 0;
+}
+
+// Final crash sprites
+
+INT32 FcrashObjGet()
+{
+	INT32 i;
+	UINT8 *pg, *po;
+	struct ObjFrame* pof;
+	UINT8* Get = NULL;
+	
+	pof = of + nGetNext;
+
+	pof->nCount = 0;
+
+	po = pof->Obj;
+	pof->nShiftX = -0x40;
+	pof->nShiftY = -0x10;
+
+	Get = CpsRam90 + 0x50c8;
+	
+	if (Get==NULL) return 1;
+
+	// Make a copy of all active sprites in the list
+	for (pg = Get, i = 0; i < nMax; pg += 8, i++) {
+		// Okay - this sprite is active:
+		memcpy(po, pg, 8); // copy it over
+
+		pof->nCount++;
+		po += 8;
+	}
+
+	nGetNext++;
+	if (nGetNext >= nFrameCount) {
+		nGetNext = 0;
+	}
+
+	return 0;
+}
+
+INT32 FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
+{
+	INT32 i; UINT16 *ps; INT32 nPsAdd;
+	struct ObjFrame *pof;
+	(void)nLevelFrom; (void)nLevelTo;
+
+	// Draw the earliest frame we have in history
+	pof=of+nGetNext;
+
+	// Point to Obj list
+	ps=(UINT16 *)pof->Obj;
+
+	nPsAdd=4;
+
+	// Go through all the Objs
+	for (i=0; i<pof->nCount; i++,ps+=nPsAdd) {
+		INT32 x,y,n,a,bx,by,dx,dy; INT32 nFlip;
+
+		n = BURN_ENDIAN_SWAP_INT16(ps[0]);
+		y = BURN_ENDIAN_SWAP_INT16(ps[-1]);
+		x = BURN_ENDIAN_SWAP_INT16(ps[2]);
+		a = BURN_ENDIAN_SWAP_INT16(ps[1]);
+		
+		bx = 1;
+		by = 1;
+		
+		x -= 16;
+		y = 224 - y;
+
+		// Find the palette for the tiles on this sprite
+		CpstPal = CpsPal + ((a & 0x1F) << 4);
+
+		nFlip=(a>>5)&3;		
+
+		// Take care with tiles if the sprite goes off the screen
+		if (x<0 || y<0 || x+(bx<<4)>384 || y+(by<<4)>224) {
+			nCpstType=CTT_16X16 | CTT_CARE;
+		} else {
+			nCpstType=CTT_16X16;
+		}
+
+		nCpstFlip=nFlip;
+		for (dy=0;dy<by;dy++) {
+			for (dx=0;dx<bx;dx++) {
+				INT32 ex,ey;
+				if (nFlip&1) ex=(bx-dx-1);
+				else ex=dx;
+				if (nFlip&2) ey=(by-dy-1);
+				else ey=dy;
+
+				nCpstX=x;
+				nCpstY=y;
+				nCpstTile = n;
+				nCpstTile <<= 7;
+				CpstOneObjDoX[0]();
+			}
+		}
+
+	}
 	return 0;
 }

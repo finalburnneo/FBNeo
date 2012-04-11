@@ -4081,7 +4081,7 @@ static struct BurnRomInfo CawingbRomDesc[] = {
 	{ "caw4.bin",      0x080000, 0x61192f7c, BRF_GRA | CPS1_TILES },
 	{ "caw6.bin",      0x080000, 0x4937fc41, BRF_GRA | CPS1_TILES },
 
-	{ "cau_09.12b",    0x010000, 0x96fe7485, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "caw3.bin",      0x020000, 0xffe16cdc, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "ca_18.11c",     0x020000, 0x4a613a2c, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "ca_19.12c",     0x020000, 0x74584493, BRF_SND | CPS1_OKIM6295_SAMPLES },

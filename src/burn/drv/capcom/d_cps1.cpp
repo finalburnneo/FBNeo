@@ -3927,6 +3927,27 @@ static struct BurnRomInfo CaptcommbRomDesc[] = {
 STD_ROM_PICK(Captcommb)
 STD_ROM_FN(Captcommb)
 
+static struct BurnRomInfo Captcommb2RomDesc[] = {
+	{ "5.bin",     	   0x080000, 0xc3a6ed28, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "4.bin",         0x080000, 0x28729335, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "3.bin",         0x040000, 0x1b526d73, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "2.bin",         0x040000, 0x73c99709, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	
+	{ "cap.bin",       0x080000, 0x7261d8ba, BRF_GRA | CPS1_TILES },
+	{ "cbp.bin",       0x080000, 0x6a60f949, BRF_GRA | CPS1_TILES },
+	{ "ccp.bin",       0x080000, 0x00637302, BRF_GRA | CPS1_TILES },
+	{ "cdp.bin",       0x080000, 0xcc87cf61, BRF_GRA | CPS1_TILES },
+	{ "cai.bin",       0x080000, 0x28718bed, BRF_GRA | CPS1_TILES },
+	{ "cbi.bin",       0x080000, 0xd4acc53a, BRF_GRA | CPS1_TILES },
+	{ "cci.bin",       0x080000, 0x0c69f151, BRF_GRA | CPS1_TILES },
+	{ "cdi.bin",       0x080000, 0x1f9ebb97, BRF_GRA | CPS1_TILES },
+				
+	{ "1.bin",         0x040000, 0xaed2f4bd, BRF_PRG | CPS1_Z80_PROGRAM },
+};
+
+STD_ROM_PICK(Captcommb2)
+STD_ROM_FN(Captcommb2)
+
 static struct BurnRomInfo CawingRomDesc[] = {
 	{ "cae_30a.11f",   0x020000, 0x91fceacd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "cae_35a.11h",   0x020000, 0x3ef03083, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -5534,6 +5555,25 @@ static struct BurnRomInfo Knightsb3RomDesc[] = {
 
 STD_ROM_PICK(Knightsb3)
 STD_ROM_FN(Knightsb3)
+
+static struct BurnRomInfo Knightsb4RomDesc[] = {
+	{ "3.bin",         0x080000, 0xb818272c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "2.bin",         0x080000, 0xb0b9a4c2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+    	
+	{ "kr_gfx1.rom",   0x080000, 0x9e36c1a4, BRF_GRA | CPS1_TILES },
+	{ "kr_gfx3.rom",   0x080000, 0xc5832cae, BRF_GRA | CPS1_TILES },
+	{ "kr_gfx2.rom",   0x080000, 0xf095be2d, BRF_GRA | CPS1_TILES },
+	{ "kr_gfx4.rom",   0x080000, 0x179dfd96, BRF_GRA | CPS1_TILES },
+	{ "kr_gfx5.rom",   0x080000, 0x1f4298d2, BRF_GRA | CPS1_TILES },
+	{ "kr_gfx7.rom",   0x080000, 0x37fa8751, BRF_GRA | CPS1_TILES },
+	{ "kr_gfx6.rom",   0x080000, 0x0200bc3d, BRF_GRA | CPS1_TILES },
+	{ "kr_gfx8.rom",   0x080000, 0x0bb2b4e7, BRF_GRA | CPS1_TILES },
+
+	{ "1.bin",         0x040000, 0xbd6f9cc1, BRF_PRG | CPS1_Z80_PROGRAM },
+};
+
+STD_ROM_PICK(Knightsb4)
+STD_ROM_FN(Knightsb4)
 
 static struct BurnRomInfo KnightshRomDesc[] = {
 	{ "krh_23.rom",    0x080000, 0xfa2ff63d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -10337,6 +10377,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "captcommj"   , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
 	{ "captcommjr1" , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
 	{ "captcommb"   , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
+	{ "captcommb2"  , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
 	{ "cawing"      , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cawingr1"    , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cawingu"     , CPS_B_16    , mapper_CA24B , 0, NULL                },
@@ -10387,6 +10428,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "knightsb"    , CPS_B_21_BT4, mapper_KR63B , 0, NULL                },
 	{ "knightsb2"   , CPS_B_21_BT4, mapper_KR63B , 0, NULL                },
 	{ "knightsb3"   , CPS_B_21_DEF, mapper_KR63B , 0, NULL                },
+	{ "knightsb4"   , CPS_B_21_BT4, mapper_KR63B , 0, NULL                },
 	{ "knightsh"    , CPS_B_21_DEF, mapper_KR63B , 0, NULL                },
 	{ "knghtsha"    , CPS_B_21_DEF, mapper_KR63B , 0, NULL                },
 	{ "kod"         , CPS_B_21_BT2, mapper_KD29B , 0, NULL                },
@@ -10853,6 +10895,13 @@ static INT32 CaptcommbInit()
 	return nRet;
 }
 
+static INT32 Captcommb2Init()
+{
+	Cps1DisablePSnd = 1;
+	
+	return DrvInit();
+}
+
 UINT8 __fastcall CawingbInputRead(UINT32 a)
 {
 	UINT8 d = 0xff;
@@ -11255,6 +11304,13 @@ static INT32 Knightsb2Init()
 {
 	CpsDrawSpritesInReverse = 1;
 	Cps1DetectEndSpriteList8000 = 1;
+	
+	return DrvInit();
+}
+
+static INT32 Knightsb4Init()
+{
+	Cps1DisablePSnd = 1;
 	
 	return DrvInit();
 }
@@ -12536,11 +12592,21 @@ struct BurnDriver BurnDrvCpsCaptcommjr1 = {
 
 struct BurnDriver BurnDrvCpsCaptcommb = {
 	"captcommb", "captcomm", NULL, NULL, "1991",
-	"Captain Commando (bootleg)\0", "Sprite issues", "bootleg", "CPS1",
+	"Captain Commando (bootleg, set 1)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, CaptcommbRomInfo, CaptcommbRomName, NULL, NULL, CaptcommInputInfo, CaptcommDIPInfo,
 	CaptcommbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsCaptcommb2 = {
+	"captcommb2", "captcomm", NULL, NULL, "1991",
+	"Captain Commando (bootleg, set 2)\0", "No sound", "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, Captcommb2RomInfo, Captcommb2RomName, NULL, NULL, CaptcommInputInfo, CaptcommDIPInfo,
+	Captcommb2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -13041,6 +13107,16 @@ struct BurnDriver BurnDrvCpsKnightsb3 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Knightsb3RomInfo, Knightsb3RomName, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriverD BurnDrvCpsKnightsb4 = {
+	"knightsb4", "knights", NULL, NULL, "1991",
+	"Knights of the Round (911127 etc bootleg set 4)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, Knightsb4RomInfo, Knightsb4RomName, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,
+	Knightsb4Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

@@ -154,37 +154,6 @@ static struct BurnInputInfo CawingInputList[] =
 
 STDINPUTINFO(Cawing)
 
-static struct BurnInputInfo CawingbInputList[] = {
-	{"P1 Coin"          , BIT_DIGITAL  , CpsInp008+0, "p1 coin"   },
- 	{"P1 Start"         , BIT_DIGITAL  , CpsInp008+4, "p1 start"  },
- 	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     },
- 	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   },
- 	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1, "p1 left"   },
- 	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
- 	{"P1 Shot"          , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
- 	{"P1 Special"       , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
- 	{"P1 Fire 3"        , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
-
- 	{"P2 Coin"          , BIT_DIGITAL  , CpsInp008+1, "p2 coin"   },
- 	{"P2 Start"         , BIT_DIGITAL  , CpsInp008+5, "p2 start"  },
- 	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     },
- 	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   },
- 	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1, "p2 left"   },
- 	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
- 	{"P2 Shot"          , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
- 	{"P2 Special"       , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
- 	{"P2 Fire 3"        , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
-
- 	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
- 	{"Diagnostic"       , BIT_DIGITAL  , CpsInp008+6, "diag"      },
- 	{"Service"          , BIT_DIGITAL  , CpsInp008+2, "service"   },
- 	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A    , "dip"       },
- 	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C    , "dip"       },
- 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
-};
-
-STDINPUTINFO(Cawingb)
-
 static struct BurnInputInfo Cworld2jInputList[] =
 {
 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0, "p1 coin"   },
@@ -4067,14 +4036,9 @@ static struct BurnRomInfo CawingjRomDesc[] = {
 STD_ROM_PICK(Cawingj)
 STD_ROM_FN(Cawingj)
 
-static struct BurnRomInfo CawingbRomDesc[] = {
-	{ "2.16d",         0x080000, 0x8125d3f0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	// caw2
-	{ "1.19d",         0x080000, 0xb19b10ce, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	// caw1
-
-//	{ "ca-5m.7a",      0x080000, 0x66d4cc37, BRF_GRA | CPS1_TILES },
-//	{ "ca-7m.9a",      0x080000, 0xb6f896f2, BRF_GRA | CPS1_TILES },
-//	{ "ca-1m.3a",      0x080000, 0x4d0620fd, BRF_GRA | CPS1_TILES },
-//	{ "ca-3m.5a",      0x080000, 0x0b0341c3, BRF_GRA | CPS1_TILES },
+static struct BurnRomInfo CawingblRomDesc[] = {
+	{ "caw2.bin",      0x080000, 0x8125d3f0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	// caw2
+	{ "caw1.bin",      0x080000, 0xb19b10ce, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	// caw1
 
 	{ "caw5.bin",      0x080000, 0xa045c689, BRF_GRA | CPS1_TILES },
 	{ "caw7.bin",      0x080000, 0x30dd78db, BRF_GRA | CPS1_TILES },	
@@ -4082,13 +4046,10 @@ static struct BurnRomInfo CawingbRomDesc[] = {
 	{ "caw6.bin",      0x080000, 0x4937fc41, BRF_GRA | CPS1_TILES },
 
 	{ "caw3.bin",      0x020000, 0xffe16cdc, BRF_PRG | CPS1_Z80_PROGRAM },
-
-	{ "ca_18.11c",     0x020000, 0x4a613a2c, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "ca_19.12c",     0x020000, 0x74584493, BRF_SND | CPS1_OKIM6295_SAMPLES },
 };
 
-STD_ROM_PICK(Cawingb)
-STD_ROM_FN(Cawingb)
+STD_ROM_PICK(Cawingbl)
+STD_ROM_FN(Cawingbl)
 
 static struct BurnRomInfo Cps1demoRomDesc[] = {
 	{ "cd30-36.bin",   0x020000, 0x5eb617d6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -10382,7 +10343,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "cawingr1"    , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cawingu"     , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cawingj"     , CPS_B_16    , mapper_CA22B , 0, NULL                },
-	{ "cawingb"     , CPS_B_16    , mapper_CA24B , 0, NULL                },
+	{ "cawingbl"    , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cps1demo"    , CPS_B_04    , mapper_sfzch , 0, NULL                },
 	{ "cworld2j"    , CPS_B_21_BT6, mapper_Q522B , 0, NULL                },
 	{ "dino"        , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
@@ -10902,7 +10863,7 @@ static INT32 Captcommb2Init()
 	return DrvInit();
 }
 
-UINT8 __fastcall CawingbInputRead(UINT32 a)
+UINT8 __fastcall CawingblInputRead(UINT32 a)
 {
 	UINT8 d = 0xff;
 	
@@ -10918,7 +10879,7 @@ UINT8 __fastcall CawingbInputRead(UINT32 a)
 		}
 		
 		case 0x882008: {
-			d = (UINT8)~Inp008;
+			d = (UINT8)~Inp018;
 			return d;
 		}
 		
@@ -10941,7 +10902,7 @@ UINT8 __fastcall CawingbInputRead(UINT32 a)
 	return 0;
 }
 
-void __fastcall CawingbInputWrite(UINT32 a, UINT8 d)
+void __fastcall CawingblInputWrite(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x882006: {
@@ -10954,7 +10915,7 @@ void __fastcall CawingbInputWrite(UINT32 a, UINT8 d)
 
 }
 
-static INT32 CawingbInit()
+static INT32 CawingblInit()
 {
 	INT32 nRet = 0;
 	
@@ -10966,8 +10927,8 @@ static INT32 CawingbInit()
 	
 	SekOpen(0);
 	SekMapHandler(1, 0x882000, 0x88200f, SM_RAM);
-	SekSetReadByteHandler(1, CawingbInputRead);
-	SekSetWriteByteHandler(1, CawingbInputWrite);
+	SekSetReadByteHandler(1, CawingblInputRead);
+	SekSetWriteByteHandler(1, CawingblInputWrite);
 	SekClose();
 	
 	return 0;
@@ -12764,13 +12725,13 @@ struct BurnDriver BurnDrvCpsCawingj = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsCawingb = {
-	"cawingb", "cawing", NULL, NULL, "1990",
+struct BurnDriverD BurnDrvCpsCawingbl = {
+	"cawingbl", "cawing", NULL, NULL, "1990",
 	"Carrier Air Wing (bootleg)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_HORSHOOT, 0,
-	NULL, CawingbRomInfo, CawingbRomName, NULL, NULL, CawingbInputInfo, CawingDIPInfo,
-	CawingbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	NULL, CawingblRomInfo, CawingblRomName, NULL, NULL, CawingInputInfo, CawingDIPInfo,
+	CawingblInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

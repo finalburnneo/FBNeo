@@ -3371,6 +3371,19 @@ static struct BurnDIPInfo WofDIPList[]=
 
 STDDIPINFO(Wof)
 
+static struct BurnDIPInfo WofhDIPList[]=
+{
+	// Defaults
+	{0x1b, 0xff, 0xff, 0x08, NULL                     },
+
+	// Dip C
+	{0   , 0xfe, 0   , 2   , "Freeze"                 },
+	{0x1b, 0x01, 0x08, 0x08, "Off"                    },
+	{0x1b, 0x01, 0x08, 0x00, "On"                     },
+};
+
+STDDIPINFO(Wofh)
+
 static struct BurnDIPInfo WofhfhDIPList[]=
 {
 	// Defaults
@@ -12341,6 +12354,104 @@ static INT32 WofchInit()
 	return nRet;
 }
 
+UINT8 __fastcall Wofh135ReadByte(UINT32)
+{
+	return 0xff;
+}
+
+UINT16 __fastcall Wofh135ReadWord(UINT32)
+{
+	return 0xffff;
+}
+
+UINT8 __fastcall WofhInputReadByte(UINT32 a)
+{
+	switch (a) {
+/*		case 0x880000: {
+			return ~Inp000;
+		}
+		
+		case 0x880008: {
+			return ~Inp018;
+		}
+		
+		case 0x88000a: {
+			return ~Cpi01A;
+		}
+		
+		case 0x88000c: {
+			return ~Cpi01C;
+		}
+		
+		case 0x88000e: {
+			return ~Cpi01E;
+		}*/
+		
+		case 0x880006: {
+			return ~Inp018;
+		}
+		
+		case 0x880008: {
+			return 0xff;
+		}
+		
+		case 0x88000a: {
+			return 0xff;
+		}
+		
+		case 0x88000c: {
+			return 0xff;
+		}
+		
+		case 0x880e78: {
+			return ~Cpi01E;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Read Byte %x\n"), a);
+		}
+	}
+	
+	return 0;
+}
+
+UINT16 __fastcall WofhInputReadWord(UINT32 a)
+{
+	switch (a) {
+		case 0x880000: {
+			return 0xffff;
+		}
+		
+		case 0x880006: {
+			return 0xff00 | ~Inp018;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Read Word %x\n"), a);
+		}
+	}
+	
+	return 0;
+}
+
+void __fastcall WofhInputWriteByte(UINT32 a, UINT8 d)
+{
+	switch (a) {
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Write Byte %x, %x\n"), a, d);
+		}
+	}
+}
+
+void __fastcall WofhInputWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Write word %x, %x\n"), a, d);
+		}
+	}
+}
+
 static void WofhCallback()
 {
 	// Patch protection? check
@@ -12355,15 +12466,31 @@ static INT32 WofhInit()
 	INT32 nRet = 0;
 	
 	AmendProgRomCallback = WofhCallback;
+	Cps1OverrideLayers = 1;
+	nCps1Layers[0] = 0;
+	nCps1Layers[1] = 1;
+	nCps1Layers[2] = 2;
+	nCps1Layers[3] = 3;
 	
 	CpsLayer1XOffs = 0xffc0;
-	CpsLayer2XOffs = 0xffc0;
-	CpsLayer3XOffs = 0xffc0;
+//	CpsLayer2XOffs = 0xffc0;
+//	CpsLayer3XOffs = 0xffc0;
 	
 	nRet = TwelveMhzInit();
 	
 	memset(CpsGfx, 0, nCpsGfxLen);
 	CpsLoadTilesHack160(CpsGfx, 1);
+	
+	SekOpen(0);
+	SekMapHandler(3, 0x880000, 0x89ffff, SM_READ | SM_WRITE);
+	SekSetReadByteHandler(3, WofhInputReadByte);
+	SekSetReadWordHandler(3, WofhInputReadWord);
+	SekSetWriteByteHandler(3, WofhInputWriteByte);
+	SekSetWriteWordHandler(3, WofhInputWriteWord);
+	SekMapHandler(4, 0x135000, 0x135fff, SM_READ);
+	SekSetReadByteHandler(4, Wofh135ReadByte);
+	SekSetReadWordHandler(4, Wofh135ReadWord);
+	SekClose();
 	
 	return nRet;
 }
@@ -14622,7 +14749,7 @@ struct BurnDriverD BurnDrvCpsWofh = {
 	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 1)\0", NULL, "bootleg", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
-	NULL, WofhRomInfo, WofhRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
+	NULL, WofhRomInfo, WofhRomName, NULL, NULL, WofhfhInputInfo, WofhDIPInfo,
 	WofhInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

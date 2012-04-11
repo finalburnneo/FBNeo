@@ -484,6 +484,8 @@ INT32 FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 		bx = 1;
 		by = 1;
 		
+		y &= 0xff;
+		
 		x -= 16;
 		y = 224 - y;
 

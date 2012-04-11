@@ -10420,7 +10420,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "ghoulsu"     , CPS_B_01    , mapper_DM620 , 0, NULL                },
 	{ "daimakai"    , CPS_B_01    , mapper_DM22A , 0, NULL                },
 	{ "daimakair"   , CPS_B_21_DEF, mapper_DAM63B, 0, NULL                },
-	{ "daimakb"     , CPS_B_01    , mapper_DM620 , 0, NULL                },
+	{ "daimakb"     , CPS_B_21_DEF, mapper_DAM63B, 0, NULL                },
 	{ "knights"     , CPS_B_21_BT4, mapper_KR63B , 0, NULL                },
 	{ "knightsu"    , CPS_B_21_BT4, mapper_KR63B , 0, NULL                },
 	{ "knightsj"    , CPS_B_21_BT4, mapper_KR63B , 0, NULL                },
@@ -11285,12 +11285,121 @@ static INT32 DaimakaiInit()
 	return DrvInit();
 }
 
+void __fastcall Daimakb88WriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x880000: {
+			*((UINT16*)(CpsReg + nCpsPalCtrlReg)) = d;
+			return;
+		}
+	}
+}
+
+void __fastcall Daimakb98WriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x980000: {
+			// scroll1 y
+			*((UINT16*)(CpsReg + 0x0e)) = d;
+			return;
+		}
+		
+		case 0x980002: {
+			// scroll1 x
+			*((UINT16*)(CpsReg + 0x0c)) = d - 0x40;
+			return;
+		}
+		
+		case 0x980004: {
+			// scroll2 y
+			*((UINT16*)(CpsReg + 0x12)) = d;
+			return;
+		}
+		
+		case 0x980006: {
+			// scroll2 x
+			*((UINT16*)(CpsReg + 0x10)) = d - 0x40;
+			return;
+		}
+		
+		case 0x980008: {
+			// scroll3 y
+			*((UINT16*)(CpsReg + 0x16)) = d;
+			return;
+		}
+		
+		case 0x98000a: {
+			// scroll3 x
+			*((UINT16*)(CpsReg + 0x14)) = d - 0x40;
+			return;
+		}
+		
+		case 0x98000c: {
+			// This seems to control layer order and enable
+			switch (d) {
+				case 0: {
+					nCps1Layers[0] = 1;
+					nCps1Layers[1] = 0;
+					nCps1Layers[2] = 2;
+					nCps1Layers[3] = 3;
+					break;
+				}
+				
+				case 1: {
+					nCps1Layers[0] = 1;
+					nCps1Layers[1] = 0;
+					nCps1Layers[2] = -1;
+					nCps1Layers[3] = 3;
+					break;
+				}
+				
+				case 2: {
+					nCps1Layers[0] = 3;
+					nCps1Layers[1] = 2;
+					nCps1Layers[2] = -1;
+					nCps1Layers[3] = 1;
+					break;
+				}
+				
+				case 6: {
+					nCps1Layers[0] = -1;
+					nCps1Layers[1] = -1;
+					nCps1Layers[2] = -1;
+					nCps1Layers[3] = -1;
+					break;
+				}
+				
+				default: {
+					nCps1Layers[0] = 0;
+					nCps1Layers[1] = 0;
+					nCps1Layers[2] = 0;
+					nCps1Layers[3] = 0;
+					bprintf(PRINT_IMPORTANT, _T("Unknown value written at 0x98000c %x\n"), d);
+				}
+			}
+			return;
+		}
+	}
+}
+
 static INT32 DaimakbInit()
 {
 	Ghouls = 1;
-	Port6SoundWrite = 1;	
+	Port6SoundWrite = 1;
+	Cps1OverrideLayers = 1;
+	Cps1DisableBgHi = 1;
 	
-	return DrvInit();
+	INT32 nRet = DrvInit();
+	
+	SekOpen(0);
+	SekMapHandler(1, 0x880000, 0x88ffff, SM_READ | SM_WRITE);
+	SekSetWriteWordHandler(1, Daimakb88WriteWord);
+	SekMapHandler(2, 0x980000, 0x98ffff, SM_READ | SM_WRITE);
+	SekSetWriteWordHandler(2, Daimakb98WriteWord);
+	// There are also writes in the 0x99xxxx area (unknown)
+	SekClose();
+	
+	return nRet;
 }
 
 static INT32 KnightsbInit()
@@ -12434,6 +12543,11 @@ static INT32 DrvExit()
 	CpsLayer2YOffs = 0;
 	CpsLayer3YOffs = 0;
 	CpsDrawSpritesInReverse = 0;
+	Cps1OverrideLayers = 0;
+	nCps1Layers[0] = -1;
+	nCps1Layers[1] = -1;
+	nCps1Layers[2] = -1;
+	nCps1Layers[3] = -1;
 
 	Cps = 0;
 	Cps1Qs = 0;
@@ -13030,11 +13144,11 @@ struct BurnDriver BurnDrvCpsDaimakair = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsDaimakb = {
+struct BurnDriver BurnDrvCpsDaimakb = {
 	"daimakb", "ghouls", NULL, NULL, "1988",
-	"Dai Makai-Mura (Japan, bootleg)\0", "No scroll layers", "Capcom", "CPS1",
+	"Dai Makai-Mura (Japan, bootleg)\0", NULL, "Capcom", "CPS1",
 	L"\u5927\u9B54\u754C\u6751\0Dai Makai-Mura (Japan, bootleg)\0", NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
 	NULL, DaimakbRomInfo, DaimakbRomName, NULL, NULL, GhoulsInputInfo, DaimakaiDIPInfo,
 	DaimakbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

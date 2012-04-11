@@ -20,6 +20,9 @@ INT32 CpsLayer3YOffs = 0;
 
 INT32 Cps1DisableBgHi = 0;
 
+INT32 Cps1OverrideLayers = 0;
+INT32 nCps1Layers[4] = { -1, -1, -1, -1 };
+
 static void Cps1Layers();
 static void Cps2Layers();
 
@@ -228,6 +231,18 @@ static void Cps1Layers()
   Draw[1]=(LayerCont>>10)&3;
   Draw[2]=(LayerCont>> 8)&3;
   Draw[3]=(LayerCont>> 6)&3; // bottom layer (most covered up)
+  
+  if (Cps1OverrideLayers) {
+	nDrawMask = 1;
+	Draw[0] = nCps1Layers[0];
+	Draw[1] = nCps1Layers[1];
+	Draw[2] = nCps1Layers[2];
+	Draw[3] = nCps1Layers[3];
+	if (Draw[1] != -1) nDrawMask |= 2;
+	if (Draw[2] != -1) nDrawMask |= 4;
+	if (Draw[3] != -1) nDrawMask |= 8;
+	nDrawMask &= nBurnLayer;
+  }
   
   // Check for repeated layers and if there are any, the lower layer is omitted
 #define CRP(a,b) if (Draw[a]==Draw[b]) Draw[b]=-1;

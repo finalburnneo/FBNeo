@@ -245,6 +245,8 @@ extern INT32 CpsLayer1YOffs;
 extern INT32 CpsLayer2YOffs;
 extern INT32 CpsLayer3YOffs;
 extern INT32 Cps1DisableBgHi;
+extern INT32 Cps1OverrideLayers;
+extern INT32 nCps1Layers[4];
 void DrawFnInit();
 INT32  CpsDraw();
 INT32  CpsRedraw();

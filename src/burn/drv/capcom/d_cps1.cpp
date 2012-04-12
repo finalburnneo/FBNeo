@@ -10987,12 +10987,24 @@ void __fastcall DinopicScrollWrite(UINT32 a, UINT16 d)
 	}
 }
 
+void __fastcall DinopicLayerWrite(UINT32 a, UINT16 d)
+{
+	if (a == 0x800222) {
+		*((UINT16*)(CpsReg + 0x06)) = d;
+		return;
+	}
+	
+	// Send anything else through the main handler
+	SEK_DEF_WRITE_WORD(0, a, d);
+}
+
 static INT32 DinopicInit()
 {
 	INT32 nRet = 0;
 	
-	Dinopic = 1;
-	CpsDrawSpritesInReverse = 1;
+	Cps1DisablePSnd = 1;
+	Cps1ObjGetCallbackFunction = DinopicObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	nRet = TwelveMhzInit();
 	
@@ -11000,12 +11012,14 @@ static INT32 DinopicInit()
 	CpsLoadTilesBootleg(CpsGfx + 0x000000, 4);
 	CpsLoadTilesBootleg(CpsGfx + 0x200000, 8);
 	
-	BootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
 	
 	SekOpen(0);
-	SekMapMemory(BootlegSpriteRam, 0x990000, 0x991FFF, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991FFF, SM_RAM);
 	SekMapHandler(1, 0x980000, 0x98000b, SM_WRITE);
 	SekSetWriteWordHandler(1, DinopicScrollWrite);
+	SekMapHandler(2, 0x800200, 0x8002ff, SM_WRITE);
+	SekSetWriteWordHandler(2, DinopicLayerWrite);
 	SekClose();
 	
 	return nRet;
@@ -11061,21 +11075,23 @@ static INT32 DinohbInit()
 {
 	INT32 nRet = 0;
 	
-	Dinopic = 1;
 	Cps1DisablePSnd = 1;
-	CpsDrawSpritesInReverse = 1;
+	Cps1ObjGetCallbackFunction = DinopicObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	nRet = TwelveMhzInit();
 	
 	memset(CpsGfx, 0, nCpsGfxLen);
 	CpsLoadTilesHack160(CpsGfx, 2);
 	
-	BootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
 	
 	SekOpen(0);
-	SekMapMemory(BootlegSpriteRam, 0x990000, 0x991FFF, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991FFF, SM_RAM);
 	SekMapHandler(1, 0x980000, 0x98000b, SM_WRITE);
 	SekSetWriteWordHandler(1, DinopicScrollWrite);
+	SekMapHandler(2, 0x800200, 0x8002ff, SM_WRITE);
+	SekSetWriteWordHandler(2, DinopicLayerWrite);
 	SekClose();
 	
 	return nRet;
@@ -11403,7 +11419,7 @@ static INT32 KodbInit()
 	INT32 nRet = 0;
 
 	Kodb = 1;
-	Cps1ObjGetCallbackFunction = FcrashObjGet;
+	Cps1ObjGetCallbackFunction = KodbObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	nRet = DrvInit();
@@ -12648,7 +12664,6 @@ static INT32 DrvExit()
 	PangEEP = 0;
 	Cps1LockSpriteList910000 = 0;
 	Cps1DisableBgHi = 0;
-	Dinopic = 0;
 	Dinohunt = 0;
 	Sf2thndr = 0;
 	Port6SoundWrite = 0;
@@ -12657,7 +12672,7 @@ static INT32 DrvExit()
 	
 	Cps1GfxLoadCallbackFunction = NULL;
 	
-	BurnFree(BootlegSpriteRam);
+	BurnFree(CpsBootlegSpriteRam);
 	
 	return 0;
 }
@@ -12914,21 +12929,21 @@ struct BurnDriver BurnDrvCpsDinou = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsDinopic = {
+struct BurnDriver BurnDrvCpsDinopic = {
 	"dinopic", "dino", NULL, NULL, "1993",
-	"Cadillacs and Dinosaurs (bootleg with PIC16c57, set 1)\0", "Missing sprites, no sound", "Capcom", "CPS1",
+	"Cadillacs and Dinosaurs (bootleg with PIC16c57, set 1)\0", "No sound", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, DinopicRomInfo, DinopicRomName, NULL, NULL, DinoInputInfo, DinoDIPInfo,
 	DinopicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsDinopic2 = {
+struct BurnDriver BurnDrvCpsDinopic2 = {
 	"dinopic2", "dino", NULL, NULL, "1993",
-	"Cadillacs and Dinosaurs (bootleg with PIC16c57, set 2)\0", "Missing sprites, no sound", "Capcom", "CPS1",
+	"Cadillacs and Dinosaurs (bootleg with PIC16c57, set 2)\0", "No sound, bad graphics rom dump", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Dinopic2RomInfo, Dinopic2RomName, NULL, NULL, DinoInputInfo, DinoDIPInfo,
 	DinopicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -12964,11 +12979,11 @@ struct BurnDriver BurnDrvCpsDinoha = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsDinohb = {
+struct BurnDriver BurnDrvCpsDinohb = {
 	"dinohb", "dino", NULL, NULL, "1993",
-	"Cadillacs and Dinosaurs Turbo (bootleg with PIC16c57)\0", NULL, "bootleg", "CPS1",
+	"Cadillacs and Dinosaurs Turbo (bootleg with PIC16c57)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, DinohbRomInfo, DinohbRomName, NULL, NULL, DinoInputInfo, DinoDIPInfo,
 	DinohbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

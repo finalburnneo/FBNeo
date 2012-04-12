@@ -217,7 +217,6 @@ extern INT32 Wofh;
 extern INT32 Sf2thndr;
 extern INT32 Pzloop2;
 extern INT32 Ssf2tb;
-extern INT32 Dinopic;
 extern INT32 Dinohunt;
 extern INT32 Port6SoundWrite;
 
@@ -316,7 +315,7 @@ INT32 CtvReady();
 
 // cps_obj.cpp
 extern INT32 nCpsObjectBank;
-extern UINT8 *BootlegSpriteRam;
+extern UINT8 *CpsBootlegSpriteRam;
 extern INT32 Cps1LockSpriteList910000;
 extern INT32 Cps1DetectEndSpriteList8000;
 
@@ -329,6 +328,8 @@ INT32  CpsObjInit();
 INT32  CpsObjExit();
 INT32  CpsObjGet();
 INT32 FcrashObjGet();
+INT32 KodbObjGet();
+INT32 DinopicObjGet();
 void CpsObjDrawInit();
 INT32  Cps1ObjDraw(INT32 nLevelFrom,INT32 nLevelTo);
 INT32  Cps2ObjDraw(INT32 nLevelFrom,INT32 nLevelTo);

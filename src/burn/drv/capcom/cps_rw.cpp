@@ -31,7 +31,6 @@ INT32 Wofh = 0;
 INT32 Sf2thndr = 0;
 INT32 Pzloop2 = 0;
 INT32 Ssf2tb = 0;
-INT32 Dinopic = 0;
 INT32 Dinohunt = 0;
 INT32 Port6SoundWrite = 0;
 
@@ -456,12 +455,6 @@ void __fastcall CpsWriteWord(UINT32 a, UINT16 d)
 		if ((d & 0x0008) == 0) {
 			ZetReset();
 		}
-	}
-	
-	if (Dinopic && a == 0x800222) {
-		CpsReg[6] = d & 0xff;
-		CpsReg[7] = d >> 8;
-		return;
 	}
 	
 //	bprintf(PRINT_NORMAL, _T("Write Word %x, %x\n"), a, d);

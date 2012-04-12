@@ -3,7 +3,7 @@
 
 INT32 nCpsObjectBank;
 
-UINT8 *BootlegSpriteRam = NULL;
+UINT8 *CpsBootlegSpriteRam = NULL;
 
 INT32 Cps1LockSpriteList910000 = 0;
 INT32 Cps1DetectEndSpriteList8000 = 0;
@@ -118,10 +118,6 @@ INT32 CpsObjGet()
 		
 		if (Cps1LockSpriteList910000) {
 			Get = CpsFindGfxRam(0x910000, 0x800);
-		} else {
-			if (Dinopic) {
-				Get = BootlegSpriteRam + 0x1000;
-			}
 		}
 	}
 	
@@ -139,16 +135,9 @@ INT32 CpsObjGet()
 				break;
 			}
 		} else {
-			if (Dinopic) {
-				if (BURN_ENDIAN_SWAP_INT16(ps[1]) == 0x8000) {													// end of sprite list
-					break;
-				}
-			} else {
-				if (BURN_ENDIAN_SWAP_INT16(ps[3]) >= 0xff00) {													// end of sprite list
-					break;
-				}
+			if (BURN_ENDIAN_SWAP_INT16(ps[3]) >= 0xff00) {													// end of sprite list
+				break;
 			}
-			
 			if (Cps1DetectEndSpriteList8000) {
 				if (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0x8000) {
 					break;
@@ -156,14 +145,8 @@ INT32 CpsObjGet()
 			}
 		}
 		
-		if (Dinopic) {
-			if (((BURN_ENDIAN_SWAP_INT16(ps[2]) - 461) | BURN_ENDIAN_SWAP_INT16(ps[1])) == 0) {													// sprite blank
-				continue;
-			}
-		} else {
-			if ((BURN_ENDIAN_SWAP_INT16(ps[0]) | BURN_ENDIAN_SWAP_INT16(ps[3])) == 0) {													// sprite blank
-				continue;
-			}
+		if ((BURN_ENDIAN_SWAP_INT16(ps[0]) | BURN_ENDIAN_SWAP_INT16(ps[3])) == 0) {													// sprite blank
+			continue;
 		}
 
 		// Okay - this sprite is active:
@@ -223,17 +206,11 @@ INT32 Cps1ObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 	for (i=0; i<pof->nCount; i++,ps+=nPsAdd) {
 		INT32 x,y,n,a,bx,by,dx,dy; INT32 nFlip;
 
-		if (Dinopic) {
-			n = BURN_ENDIAN_SWAP_INT16(ps[0]); a = BURN_ENDIAN_SWAP_INT16(ps[1]); x = BURN_ENDIAN_SWAP_INT16(ps[2]) - 461; y = 0x2f0 - BURN_ENDIAN_SWAP_INT16(ps[3]);
-			bx = 1;
-			by = 1;
-		} else {
-			x = BURN_ENDIAN_SWAP_INT16(ps[0]); y = BURN_ENDIAN_SWAP_INT16(ps[1]); n = BURN_ENDIAN_SWAP_INT16(ps[2]); a = BURN_ENDIAN_SWAP_INT16(ps[3]);
+		x = BURN_ENDIAN_SWAP_INT16(ps[0]); y = BURN_ENDIAN_SWAP_INT16(ps[1]); n = BURN_ENDIAN_SWAP_INT16(ps[2]); a = BURN_ENDIAN_SWAP_INT16(ps[3]);
 			
-			// Find out sprite size
-			bx=((a>> 8)&15)+1;
-			by=((a>>12)&15)+1;
-		}
+		// Find out sprite size
+		bx=((a>> 8)&15)+1;
+		by=((a>>12)&15)+1;
 		
 		n = GfxRomBankMapper(GFXTYPE_SPRITES, n);
 		if (n == -1) continue;
@@ -443,6 +420,96 @@ INT32 FcrashObjGet()
 
 	// Make a copy of all active sprites in the list
 	for (pg = Get, i = 0; i < nMax; pg += 8, i++) {
+		UINT16* ps = (UINT16*)pg;
+		
+		if (BURN_ENDIAN_SWAP_INT16(ps[-1]) == 0x8000) {													// end of sprite list
+			break;
+		}
+		
+		// Okay - this sprite is active:
+		memcpy(po, pg, 8); // copy it over
+
+		pof->nCount++;
+		po += 8;
+	}
+
+	nGetNext++;
+	if (nGetNext >= nFrameCount) {
+		nGetNext = 0;
+	}
+
+	return 0;
+}
+
+INT32 KodbObjGet()
+{
+	INT32 i;
+	UINT8 *pg, *po;
+	struct ObjFrame* pof;
+	UINT8* Get = NULL;
+	
+	pof = of + nGetNext;
+
+	pof->nCount = 0;
+
+	po = pof->Obj;
+	pof->nShiftX = -0x40;
+	pof->nShiftY = -0x10;
+
+	Get = CpsRam90 + 0x50c8;
+	
+	if (Get==NULL) return 1;
+
+	// Make a copy of all active sprites in the list
+	for (pg = Get, i = 0; i < nMax; pg += 8, i++) {
+		UINT16* ps = (UINT16*)pg;
+		
+		if (BURN_ENDIAN_SWAP_INT16(ps[-1]) == 0xffff) {													// end of sprite list
+			break;
+		}
+		
+		// Okay - this sprite is active:
+		memcpy(po, pg, 8); // copy it over
+
+		pof->nCount++;
+		po += 8;
+	}
+
+	nGetNext++;
+	if (nGetNext >= nFrameCount) {
+		nGetNext = 0;
+	}
+
+	return 0;
+}
+
+INT32 DinopicObjGet()
+{
+	INT32 i;
+	UINT8 *pg, *po;
+	struct ObjFrame* pof;
+	UINT8* Get = NULL;
+	
+	pof = of + nGetNext;
+
+	pof->nCount = 0;
+
+	po = pof->Obj;
+	pof->nShiftX = -0x40;
+	pof->nShiftY = -0x10;
+
+	Get = CpsBootlegSpriteRam + 0x1000;
+	
+	if (Get==NULL) return 1;
+
+	// Make a copy of all active sprites in the list
+	for (pg = Get, i = 0; i < nMax; pg += 8, i++) {
+		UINT16* ps = (UINT16*)pg;
+		
+		if (BURN_ENDIAN_SWAP_INT16(ps[-1]) == 0x8000) {													// end of sprite list
+			break;
+		}
+		
 		// Okay - this sprite is active:
 		memcpy(po, pg, 8); // copy it over
 
@@ -484,6 +551,7 @@ INT32 FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 		bx = 1;
 		by = 1;
 		
+		x &= 0x1ff;
 		y &= 0xff;
 		
 		x -= 16;

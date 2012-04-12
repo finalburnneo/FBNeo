@@ -82,6 +82,7 @@ INT32 Cps2LoadTilesSIM(UINT8 *Tile,INT32 nStart);
 #define HACK_B_2		27
 #define HACK_B_3		28
 #define HACK_B_4		29
+#define HACK_B_5		30
 
 #define GFXTYPE_SPRITES		(1<<0)
 #define GFXTYPE_SCROLL1		(1<<1)

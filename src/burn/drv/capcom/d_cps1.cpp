@@ -10383,7 +10383,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "ffightj1"    , CPS_B_01    , mapper_S224B , 0, NULL                },
 	{ "ffightj2"    , CPS_B_02    , mapper_S224B , 0, NULL                },
 	{ "ffightjh"    , CPS_B_01    , mapper_S224B , 0, NULL                },
-	{ "fcrash"      , HACK_B_3    , mapper_S224B , 0, NULL                },
+	{ "fcrash"      , HACK_B_5    , mapper_S224B , 0, NULL                },
 	{ "forgottn"    , CPS_B_01    , mapper_LW621 , 1, NULL                },
 	{ "forgottnu"   , CPS_B_01    , mapper_LW621 , 1, NULL                },
 	{ "forgottnu1"  , CPS_B_01    , mapper_LWCHR , 1, NULL                },
@@ -11186,7 +11186,6 @@ static INT32 FcrashInit()
 {
 	Cps1DisablePSnd = 1;
 	bCpsUpdatePalEveryFrame = 1;
-	Cps1DisableBgHi = 1;
 	CpsLayer1XOffs = -0x3f;
 	CpsLayer2XOffs = -0x3c;
 	CpsLayer3XOffs = 0xffc0;

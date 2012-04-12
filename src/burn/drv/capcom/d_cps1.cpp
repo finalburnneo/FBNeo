@@ -11392,24 +11392,113 @@ static INT32 DaimakbInit()
 	return nRet;
 }
 
+void __fastcall Knightsb98WriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x980000: {
+			// scroll1 y
+			*((UINT16*)(CpsReg + 0x0e)) = d;
+			return;
+		}
+		
+		case 0x980002: {
+			// scroll1 x
+			*((UINT16*)(CpsReg + 0x0c)) = d - 0x3e;
+			return;
+		}
+		
+		case 0x980004: {
+			// scroll2 y
+			*((UINT16*)(CpsReg + 0x12)) = d;
+			return;
+		}
+		
+		case 0x980006: {
+			// scroll2 x
+			*((UINT16*)(CpsReg + 0x10)) = d - 0x3c;
+			return;
+		}
+		
+		case 0x980008: {
+			// scroll3 y
+			*((UINT16*)(CpsReg + 0x16)) = d;
+			return;
+		}
+		
+		case 0x98000a: {
+			// scroll3 x
+			*((UINT16*)(CpsReg + 0x14)) = d - 0x40;
+			return;
+		}
+		
+		case 0x98000c: {
+			// This seems to control layer order and enable
+			switch (d) {
+				case 0x00:
+				case 0x1f: 
+				case 0xff: {
+					nCps1Layers[0] = 1;
+					nCps1Layers[1] = 0;
+					nCps1Layers[2] = 2;
+					nCps1Layers[3] = 3;
+					break;
+				}
+				
+				case 0x2000: {
+					nCps1Layers[0] = 0;
+					nCps1Layers[1] = 1;
+					nCps1Layers[2] = 2;
+					nCps1Layers[3] = 3;
+					break;
+				}
+				
+				case 0xa000: {
+					nCps1Layers[0] = 2;
+					nCps1Layers[1] = 1;
+					nCps1Layers[2] = 0;
+					nCps1Layers[3] = 3;
+					break;
+				}
+				
+				default: {
+					nCps1Layers[0] = 1;
+					nCps1Layers[1] = 0;
+					nCps1Layers[2] = 2;
+					nCps1Layers[3] = 3;
+					bprintf(PRINT_IMPORTANT, _T("Unknown value written at 0x98000c %x\n"), d);
+				}
+			}
+			return;
+		}
+	}
+}
+
 static INT32 KnightsbInit()
 {
 	Cps1DisablePSnd = 1;
+	bCpsUpdatePalEveryFrame = 1;
+	Cps1OverrideLayers = 1;
 	
-	return TwelveMhzInit();
+	Cps1ObjGetCallbackFunction = DinopicObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	
+	INT32 nRet = DrvInit();
+	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
+	
+	SekOpen(0);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991FFF, SM_RAM);
+	SekMapHandler(1, 0x980000, 0x98ffff, SM_WRITE);
+	SekSetWriteWordHandler(1, Knightsb98WriteWord);
+	SekClose();
+	
+	return nRet;
 }
 
 static INT32 Knightsb2Init()
 {
 	CpsDrawSpritesInReverse = 1;
 	Cps1DetectEndSpriteList8000 = 1;
-	
-	return DrvInit();
-}
-
-static INT32 Knightsb4Init()
-{
-	Cps1DisablePSnd = 1;
 	
 	return DrvInit();
 }
@@ -13299,11 +13388,11 @@ struct BurnDriver BurnDrvCpsKnightsja = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsKnightsb = {
+struct BurnDriver BurnDrvCpsKnightsb = {
 	"knightsb", "knights", NULL, NULL, "1991",
-	"Knights of the Round (911127 etc bootleg set 1)\0", NULL, "bootleg", "CPS1",
+	"Knights of the Round (911127 etc bootleg set 1)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, KnightsbRomInfo, KnightsbRomName, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,
 	KnightsbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -13329,19 +13418,19 @@ struct BurnDriver BurnDrvCpsKnightsb3 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsKnightsb4 = {
+struct BurnDriver BurnDrvCpsKnightsb4 = {
 	"knightsb4", "knights", NULL, NULL, "1991",
-	"Knights of the Round (911127 etc bootleg set 4)\0", NULL, "bootleg", "CPS1",
+	"Knights of the Round (911127 etc bootleg set 4)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Knightsb4RomInfo, Knightsb4RomName, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,
-	Knightsb4Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	KnightsbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvCpsKnightsh = {
 	"knightsh", "knights", NULL, NULL, "1991",
-	"Knights of the Round (911127 etc bootleg set 3)\0", NULL, "bootleg", "CPS1",
+	"Knights of the Round (911127 etc hack set 1)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, KnightshRomInfo, KnightshRomName, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,
@@ -13351,7 +13440,7 @@ struct BurnDriver BurnDrvCpsKnightsh = {
 
 struct BurnDriver BurnDrvCpsKnghtsha = {
 	"knghtsha", "knights", NULL, NULL, "1991",
-	"Knights of the Round (911127 etc hack)\0", NULL, "bootleg", "CPS1",
+	"Knights of the Round (911127 etc hack set 2)\0", NULL, "hack", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, KnghtshaRomInfo, KnghtshaRomName, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,

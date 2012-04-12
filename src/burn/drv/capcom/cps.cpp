@@ -621,6 +621,16 @@ INT32 CpsLoadTilesFcrash(INT32 nStart)
 	return 0;
 }
 
+INT32 CpsLoadTilesCawingbl(INT32 nStart)
+{
+	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  0, 0, 0);
+	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  1, 0, 1);
+	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  2, 0, 2);
+	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  3, 0, 3);
+	
+	return 0;
+}
+
 INT32 CpsLoadStars(UINT8* pStar, INT32 nStart)
 {
 	UINT8* pTemp[2] = { NULL, NULL};

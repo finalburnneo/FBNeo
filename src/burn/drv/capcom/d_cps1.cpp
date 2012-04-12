@@ -4054,9 +4054,9 @@ static struct BurnRomInfo CawingblRomDesc[] = {
 	{ "caw1.bin",      0x080000, 0xb19b10ce, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	// caw1
 
 	{ "caw5.bin",      0x080000, 0xa045c689, BRF_GRA | CPS1_TILES },
-	{ "caw7.bin",      0x080000, 0x30dd78db, BRF_GRA | CPS1_TILES },	
-	{ "caw4.bin",      0x080000, 0x61192f7c, BRF_GRA | CPS1_TILES },
-	{ "caw6.bin",      0x080000, 0x4937fc41, BRF_GRA | CPS1_TILES },
+	{ "caw4.bin",      0x080000, 0x61192f7c, BRF_GRA | CPS1_TILES },	
+	{ "caw7.bin",      0x080000, 0x30dd78db, BRF_GRA | CPS1_TILES },
+	{ "caw6.bin",      0x080000, 0x4937fc41, BRF_GRA | CPS1_TILES },	
 
 	{ "caw3.bin",      0x020000, 0xffe16cdc, BRF_PRG | CPS1_Z80_PROGRAM },
 };
@@ -10878,37 +10878,33 @@ static INT32 Captcommb2Init()
 
 UINT8 __fastcall CawingblInputRead(UINT32 a)
 {
-	UINT8 d = 0xff;
-	
 	switch (a) {
 		case 0x882000: {
-			d = (UINT8)~Inp000;
-			return d;
+			return ~Inp000;
 		}
 		
 		case 0x882001: {
-			d = (UINT8)~Inp001;
-			return d;
+			return ~Inp001;
 		}
 		
 		case 0x882008: {
-			d = (UINT8)~Inp018;
-			return d;
+			return ~Inp018;
 		}
 		
 		case 0x88200a: {
-			d = (UINT8)~Cpi01A;
-			return d;
+			return ~Cpi01A;
 		}
 		
 		case 0x88200c: {
-			d = (UINT8)~Cpi01C;
-			return d;
+			return ~Cpi01C;
 		}
 		
 		case 0x88200e: {
-			d = (UINT8)~Cpi01E;
-			return d;
+			return ~Cpi01E;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Read Byte %x\n"), a);
 		}
 	}
 
@@ -10918,14 +10914,10 @@ UINT8 __fastcall CawingblInputRead(UINT32 a)
 void __fastcall CawingblInputWrite(UINT32 a, UINT8 d)
 {
 	switch (a) {
-		case 0x882006: {
-			PsndSyncZ80((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles);
-			
-			PsndCode = d;
-			return;
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Write Byte %x, %x\n"), a, d);
 		}
 	}
-
 }
 
 static INT32 CawingblInit()
@@ -10935,11 +10927,13 @@ static INT32 CawingblInit()
 	CpsLayer1XOffs = 0xffc0;
 //	CpsLayer2XOffs = 0xffc0;
 //	CpsLayer3XOffs = 0xffc0;
+
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesCawingbl;
 	
 	nRet = DrvInit();
 	
 	SekOpen(0);
-	SekMapHandler(1, 0x882000, 0x88200f, SM_RAM);
+	SekMapHandler(1, 0x882000, 0x882fff, SM_READ | SM_WRITE);
 	SekSetReadByteHandler(1, CawingblInputRead);
 	SekSetWriteByteHandler(1, CawingblInputWrite);
 	SekClose();

@@ -2593,7 +2593,7 @@ STD_ROM_FN(kovshp)
 static INT32 kovshpInit()
 {
     pPgmInitCallback = pgm_decrypt_kovshp;
-	pPgmProtCallback = install_protection_asic27a_kovshp;
+//	pPgmProtCallback = install_protection_asic27a_kovshp;
 
 	INT32 nRet = pgmInit();
 
@@ -3537,7 +3537,7 @@ static struct BurnRomInfo kovassgaRomDesc[] = {
 
 	{ "m0600.rom",	   0x400000, 0x3ada4fd6, 5 | BRF_SND },		  //  8 Samples
 
-	{ "kovassg_v100_china.asic", 0x004000, 0x0f09a5c1, 7 | BRF_ESS | BRF_PRG }, //  9 Internal ARM7 Rom
+	{ "kovassga_v100_china.asic", 0x004000, 0x0f09a5c1, 7 | BRF_ESS | BRF_PRG }, //  9 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovassga, kovassga, pgm)
@@ -3545,7 +3545,7 @@ STD_ROM_FN(kovassga)
 
 static INT32 kovassgaInit()
 {
-    pPgmProtCallback = install_protection_asic27a_kovshp;
+//    pPgmProtCallback = install_protection_asic27a_kovshp;
 
 	INT32 nRet = pgmInit();
 	

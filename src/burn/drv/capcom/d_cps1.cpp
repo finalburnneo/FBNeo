@@ -11557,41 +11557,183 @@ static INT32 Pang3Init()
 	return Pang3bInit();
 }
 
+UINT8 __fastcall PunipicF18Read(UINT32)
+{
+	return 0xff;
+}
+
+void __fastcall Punipic98WriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x980000: {
+			// scroll1 y
+			*((UINT16*)(CpsReg + 0x0e)) = d;
+			return;
+		}
+		
+		case 0x980002: {
+			// scroll1 x
+			*((UINT16*)(CpsReg + 0x0c)) = d - 0x46;
+			return;
+		}
+		
+		case 0x980004: {
+			// scroll2 y
+			*((UINT16*)(CpsReg + 0x12)) = d;
+			return;
+		}
+		
+		case 0x980006: {
+			// scroll2 x
+			*((UINT16*)(CpsReg + 0x10)) = d - 0x40;
+			return;
+		}
+		
+		case 0x980008: {
+			// scroll3 y
+			*((UINT16*)(CpsReg + 0x16)) = d;
+			return;
+		}
+		
+		case 0x98000a: {
+			// scroll3 x
+			*((UINT16*)(CpsReg + 0x14)) = d - 0x46;
+			return;
+		}
+		
+		case 0x98000c: {		
+			// This seems to control layer order and enable (and ram offset?)
+			switch (d) {
+				case 0x64: {
+					nCps1Layers[0] = 1;
+					nCps1Layers[1] = 0;
+					nCps1Layers[2] = 2;
+					nCps1Layers[3] = 3;
+					nCps1LayerOffs[0] = 0x9080;
+					nCps1LayerOffs[1] = 0x90c0;
+					nCps1LayerOffs[2] = 0x9100;
+					break;
+				}
+				
+				case 0x24: {
+					nCps1Layers[0] = 1;
+					nCps1Layers[1] = 0;
+					nCps1Layers[2] = 3;
+					nCps1Layers[3] = 2;
+					nCps1LayerOffs[0] = 0x9080;
+					nCps1LayerOffs[1] = 0x90c0;
+					nCps1LayerOffs[2] = 0x9100;
+					break;
+				}
+				
+				case 0x54: {
+					nCps1Layers[0] = 1;
+					nCps1Layers[1] = 0;
+					nCps1Layers[2] = -1;
+					nCps1Layers[3] = -1;
+					nCps1LayerOffs[0] = 0x9080;
+					nCps1LayerOffs[1] = 0x9100;
+					nCps1LayerOffs[2] = 0x9100;
+					break;
+				}
+				
+				default: {
+					nCps1Layers[0] = 1;
+					nCps1Layers[1] = 0;
+					nCps1Layers[2] = 2;
+					nCps1Layers[3] = 3;
+					nCps1LayerOffs[0] = 0x9080;
+					nCps1LayerOffs[1] = 0x90c0;
+					nCps1LayerOffs[2] = 0x9100;
+					bprintf(PRINT_IMPORTANT, _T("Unknown value written at 0x98000c %x\n"), d);
+				}
+			}
+			return;
+		}
+	}
+}
+
 static INT32 PunipicInit()
 {
-	INT32 nRet = 0;
+	Cps1DisablePSnd = 1;
+	bCpsUpdatePalEveryFrame = 1;
+	Cps1OverrideLayers = 1;
 	
-	nRet = TwelveMhzInit();
+	Cps1ObjGetCallbackFunction = DinopicObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	
+	INT32 nRet = TwelveMhzInit();
 	
 	memset(CpsGfx, 0, nCpsGfxLen);
 	CpsLoadTilesBootleg(CpsGfx + 0x000000, 4);
 	CpsLoadTilesBootleg(CpsGfx + 0x200000, 8);
+	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
+	
+	SekOpen(0);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x992000, 0x993fff, SM_RAM);
+	SekMapHandler(1, 0xf18000, 0xf19fff, SM_READ);
+	SekSetReadByteHandler(1, PunipicF18Read);
+	SekMapHandler(2, 0x980000, 0x980fff, SM_WRITE);
+	SekSetWriteWordHandler(2, Punipic98WriteWord);
+	SekClose();
 	
 	return nRet;
 }
 
 static INT32 Punipic2Init()
 {
-	INT32 nRet = 0;
+	Cps1DisablePSnd = 1;
+	bCpsUpdatePalEveryFrame = 1;
+	Cps1OverrideLayers = 1;
 	
-	nRet = TwelveMhzInit();
+	Cps1ObjGetCallbackFunction = DinopicObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	
+	INT32 nRet = TwelveMhzInit();
 	
 	memset(CpsGfx, 0, nCpsGfxLen);
 	CpsLoadTilesPunipic2(CpsGfx, 4);
+	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
+	
+	SekOpen(0);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x992000, 0x993fff, SM_RAM);
+	SekMapHandler(1, 0xf18000, 0xf19fff, SM_READ);
+	SekSetReadByteHandler(1, PunipicF18Read);
+	SekMapHandler(2, 0x980000, 0x980fff, SM_WRITE);
+	SekSetWriteWordHandler(2, Punipic98WriteWord);
+	SekClose();
 	
 	return nRet;
 }
 
 static INT32 Punipic3Init()
 {
-	INT32 nRet = 0;
-	
 	Cps1DisablePSnd = 1;
+	bCpsUpdatePalEveryFrame = 1;
+	Cps1OverrideLayers = 1;
 	
-	nRet = TwelveMhzInit();
+	Cps1ObjGetCallbackFunction = DinopicObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	
+	INT32 nRet = TwelveMhzInit();
 	
 	memset(CpsGfx, 0, nCpsGfxLen);
 	CpsLoadTilesHack160(CpsGfx, 4);
+	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
+	
+	SekOpen(0);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x992000, 0x993fff, SM_RAM);
+	SekMapHandler(1, 0xf18000, 0xf19fff, SM_READ);
+	SekSetReadByteHandler(1, PunipicF18Read);
+	SekMapHandler(2, 0x980000, 0x980fff, SM_WRITE);
+	SekSetWriteWordHandler(2, Punipic98WriteWord);
+	SekClose();
 	
 	return nRet;
 }

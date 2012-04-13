@@ -22,6 +22,7 @@ INT32 Cps1DisableBgHi = 0;
 
 INT32 Cps1OverrideLayers = 0;
 INT32 nCps1Layers[4] = { -1, -1, -1, -1 };
+INT32 nCps1LayerOffs[3] = { -1, -1, -1 };
 
 static void Cps1Layers();
 static void Cps2Layers();
@@ -65,6 +66,9 @@ static INT32 DrawScroll1(INT32 i)
 	UINT8 *Find;
 
 	nOff = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x02)));
+	if (Cps1OverrideLayers && nCps1LayerOffs[0] != -1) {
+		nOff = BURN_ENDIAN_SWAP_INT16(nCps1LayerOffs[0]);
+	}
 
 	// Get scroll coordinates
 	nScrX = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x0c))); // Scroll 1 X
@@ -93,6 +97,9 @@ static INT32 DrawScroll2Init(INT32 i)
 	INT32 nScr2Off; INT32 n;
 
 	nScr2Off = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x04)));
+	if (Cps1OverrideLayers && nCps1LayerOffs[1] != -1) {
+		nScr2Off = BURN_ENDIAN_SWAP_INT16(nCps1LayerOffs[1]);
+	}
 
 	// Get scroll coordinates
 	nCpsrScrX= BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x10))); // Scroll 2 X
@@ -167,6 +174,9 @@ static INT32 DrawScroll3(INT32 i)
 	UINT8 *Find;
 
 	nOff = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x06)));
+	if (Cps1OverrideLayers && nCps1LayerOffs[2] != -1) {
+		nOff = BURN_ENDIAN_SWAP_INT16(nCps1LayerOffs[2]);
+	}
 
 	// Get scroll coordinates
 	nScrX = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(CpsSaveReg[i] + 0x14))); // Scroll 3 X

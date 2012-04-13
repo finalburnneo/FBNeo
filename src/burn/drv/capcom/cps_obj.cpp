@@ -421,13 +421,26 @@ INT32 FcrashObjGet()
 	// Make a copy of all active sprites in the list
 	for (pg = Get, i = 0; i < nMax; pg += 8, i++) {
 		UINT16* ps = (UINT16*)pg;
+		INT32 n, y, x, a;
 		
-		if (BURN_ENDIAN_SWAP_INT16(ps[-1]) == 0x8000) {													// end of sprite list
+		y = BURN_ENDIAN_SWAP_INT16(ps[-1]);
+		
+		if (y == 0x8000) { // end of sprite list
 			break;
 		}
 		
-		// Okay - this sprite is active:
-		memcpy(po, pg, 8); // copy it over
+		n = BURN_ENDIAN_SWAP_INT16(ps[0]);
+		a = BURN_ENDIAN_SWAP_INT16(ps[1]);
+		x = BURN_ENDIAN_SWAP_INT16(ps[2]);
+
+		po[0] = n & 0xff;
+		po[1] = n >> 8;
+		po[2] = a & 0xff;
+		po[3] = a >> 8;
+		po[4] = x & 0xff;
+		po[5] = x >> 8;
+		po[6] = y & 0xff;
+		po[7] = y >> 8;	
 
 		pof->nCount++;
 		po += 8;
@@ -463,13 +476,26 @@ INT32 KodbObjGet()
 	// Make a copy of all active sprites in the list
 	for (pg = Get, i = 0; i < nMax; pg += 8, i++) {
 		UINT16* ps = (UINT16*)pg;
+		INT32 n, y, x, a;
 		
-		if (BURN_ENDIAN_SWAP_INT16(ps[-1]) == 0xffff) {													// end of sprite list
+		y = BURN_ENDIAN_SWAP_INT16(ps[-1]);
+		
+		if (y == 0xffff) { // end of sprite list
 			break;
 		}
 		
-		// Okay - this sprite is active:
-		memcpy(po, pg, 8); // copy it over
+		n = BURN_ENDIAN_SWAP_INT16(ps[0]);
+		a = BURN_ENDIAN_SWAP_INT16(ps[1]);
+		x = BURN_ENDIAN_SWAP_INT16(ps[2]);
+
+		po[0] = n & 0xff;
+		po[1] = n >> 8;
+		po[2] = a & 0xff;
+		po[3] = a >> 8;
+		po[4] = x & 0xff;
+		po[5] = x >> 8;
+		po[6] = y & 0xff;
+		po[7] = y >> 8;
 
 		pof->nCount++;
 		po += 8;
@@ -505,13 +531,26 @@ INT32 DinopicObjGet()
 	// Make a copy of all active sprites in the list
 	for (pg = Get, i = 0; i < nMax; pg += 8, i++) {
 		UINT16* ps = (UINT16*)pg;
+		INT32 n, y, x, a;
 		
-		if (BURN_ENDIAN_SWAP_INT16(ps[-1]) == 0x8000) {													// end of sprite list
+		y = BURN_ENDIAN_SWAP_INT16(ps[-1]);
+		
+		if (y == 0x8000) { // end of sprite list
 			break;
 		}
 		
-		// Okay - this sprite is active:
-		memcpy(po, pg, 8); // copy it over
+		n = BURN_ENDIAN_SWAP_INT16(ps[0]);
+		a = BURN_ENDIAN_SWAP_INT16(ps[1]);
+		x = BURN_ENDIAN_SWAP_INT16(ps[2]);
+
+		po[0] = n & 0xff;
+		po[1] = n >> 8;
+		po[2] = a & 0xff;
+		po[3] = a >> 8;
+		po[4] = x & 0xff;
+		po[5] = x >> 8;
+		po[6] = y & 0xff;
+		po[7] = y >> 8;
 
 		pof->nCount++;
 		po += 8;
@@ -544,9 +583,9 @@ INT32 FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 		INT32 x,y,n,a; INT32 nFlip;
 
 		n = BURN_ENDIAN_SWAP_INT16(ps[0]);
-		y = BURN_ENDIAN_SWAP_INT16(ps[-1]);
-		x = BURN_ENDIAN_SWAP_INT16(ps[2]);
 		a = BURN_ENDIAN_SWAP_INT16(ps[1]);
+		x = BURN_ENDIAN_SWAP_INT16(ps[2]);
+		y = BURN_ENDIAN_SWAP_INT16(ps[3]);
 		
 		x &= 0x1ff;
 		y &= 0x1ff;

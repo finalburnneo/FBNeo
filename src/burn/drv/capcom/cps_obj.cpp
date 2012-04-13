@@ -541,18 +541,15 @@ INT32 FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 
 	// Go through all the Objs
 	for (i=0; i<pof->nCount; i++,ps+=nPsAdd) {
-		INT32 x,y,n,a,bx,by,dx,dy; INT32 nFlip;
+		INT32 x,y,n,a; INT32 nFlip;
 
 		n = BURN_ENDIAN_SWAP_INT16(ps[0]);
 		y = BURN_ENDIAN_SWAP_INT16(ps[-1]);
 		x = BURN_ENDIAN_SWAP_INT16(ps[2]);
 		a = BURN_ENDIAN_SWAP_INT16(ps[1]);
 		
-		bx = 1;
-		by = 1;
-		
 		x &= 0x1ff;
-		y &= 0xff;
+		y &= 0x1ff;
 		
 		x -= 16;
 		y = 224 - y;
@@ -563,29 +560,19 @@ INT32 FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 		nFlip=(a>>5)&3;		
 
 		// Take care with tiles if the sprite goes off the screen
-		if (x<0 || y<0 || x+(bx<<4)>384 || y+(by<<4)>224) {
+		if (x<0 || y<0 || x+(1<<4)>384 || y+(1<<4)>224) {
 			nCpstType=CTT_16X16 | CTT_CARE;
 		} else {
 			nCpstType=CTT_16X16;
 		}
 
 		nCpstFlip=nFlip;
-		for (dy=0;dy<by;dy++) {
-			for (dx=0;dx<bx;dx++) {
-				INT32 ex,ey;
-				if (nFlip&1) ex=(bx-dx-1);
-				else ex=dx;
-				if (nFlip&2) ey=(by-dy-1);
-				else ey=dy;
-
-				nCpstX=x;
-				nCpstY=y;
-				nCpstTile = n;
-				nCpstTile <<= 7;
-				CpstOneObjDoX[0]();
-			}
-		}
-
+		nCpstX=x;
+		nCpstY=y;
+		nCpstTile = n;
+		nCpstTile <<= 7;
+		CpstOneObjDoX[0]();
 	}
+	
 	return 0;
 }

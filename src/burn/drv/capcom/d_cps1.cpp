@@ -11668,11 +11668,10 @@ static INT32 PunipicInit()
 	CpsLoadTilesBootleg(CpsGfx + 0x000000, 4);
 	CpsLoadTilesBootleg(CpsGfx + 0x200000, 8);
 	
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
 	SekOpen(0);
-	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, SM_RAM);
-	SekMapMemory(CpsBootlegSpriteRam, 0x992000, 0x993fff, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, SM_RAM);
 	SekMapHandler(1, 0xf18000, 0xf19fff, SM_READ);
 	SekSetReadByteHandler(1, PunipicF18Read);
 	SekMapHandler(2, 0x980000, 0x980fff, SM_WRITE);
@@ -11696,11 +11695,10 @@ static INT32 Punipic2Init()
 	memset(CpsGfx, 0, nCpsGfxLen);
 	CpsLoadTilesPunipic2(CpsGfx, 4);
 	
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
 	SekOpen(0);
-	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, SM_RAM);
-	SekMapMemory(CpsBootlegSpriteRam, 0x992000, 0x993fff, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, SM_RAM);
 	SekMapHandler(1, 0xf18000, 0xf19fff, SM_READ);
 	SekSetReadByteHandler(1, PunipicF18Read);
 	SekMapHandler(2, 0x980000, 0x980fff, SM_WRITE);
@@ -11724,11 +11722,10 @@ static INT32 Punipic3Init()
 	memset(CpsGfx, 0, nCpsGfxLen);
 	CpsLoadTilesHack160(CpsGfx, 4);
 	
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
 	SekOpen(0);
-	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, SM_RAM);
-	SekMapMemory(CpsBootlegSpriteRam, 0x992000, 0x993fff, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, SM_RAM);
 	SekMapHandler(1, 0xf18000, 0xf19fff, SM_READ);
 	SekSetReadByteHandler(1, PunipicF18Read);
 	SekMapHandler(2, 0x980000, 0x980fff, SM_WRITE);
@@ -13893,31 +13890,31 @@ struct BurnDriver BurnDrvCpsPunisherj = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsPunipic = {
+struct BurnDriver BurnDrvCpsPunipic = {
 	"punipic", "punisher", NULL, NULL, "1993",
-	"The Punisher (bootleg with PIC16c57, set 1)\0", NULL, "bootleg", "CPS1",
+	"The Punisher (bootleg with PIC16c57, set 1)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, PunipicRomInfo, PunipicRomName, NULL, NULL, PunisherInputInfo, PunisherDIPInfo,
 	PunipicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsPunipic2 = {
+struct BurnDriver BurnDrvCpsPunipic2 = {
 	"punipic2", "punisher", NULL, NULL, "1993",
-	"The Punisher (bootleg with PIC16c57, set 2)\0", NULL, "bootleg", "CPS1",
+	"The Punisher (bootleg with PIC16c57, set 2)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Punipic2RomInfo, Punipic2RomName, NULL, NULL, PunisherInputInfo, PunisherDIPInfo,
 	Punipic2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsPunipic3 = {
+struct BurnDriver BurnDrvCpsPunipic3 = {
 	"punipic3", "punisher", NULL, NULL, "1993",
-	"The Punisher (bootleg with PIC16c57, set 3)\0", NULL, "bootleg", "CPS1",
+	"The Punisher (bootleg with PIC16c57, set 3)\0", "No sound", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Punipic3RomInfo, Punipic3RomName, NULL, NULL, PunisherInputInfo, PunisherDIPInfo,
 	Punipic3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

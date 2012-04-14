@@ -170,20 +170,8 @@ static void pce_write(UINT32 address, UINT8 data)
 		return;
 	}
 	
-	if ((address >= 0x1ee000) && (address <= 0x1ee7ff)) {
-//			bprintf(0,_T("bram write %x:%x\n"), address & 0x7ff, data );
-			if (!bram_locked)
-			{
-				PCECDBRAM[address & 0x7FF] = data;
-			}
-			return;
-	}	
-	
-	
 	switch (address & ~0x3ff)
 	{
-	
-
 		case 0x1fe000:
 			vdc_write(0, address, data);
 		return;
@@ -245,6 +233,17 @@ static void pce_write(UINT32 address, UINT8 data)
 			// cd system
 		return;
 	}
+	
+	if ((address >= 0x1ee000) && (address <= 0x1ee7ff)) {
+//			bprintf(0,_T("bram write %x:%x\n"), address & 0x7ff, data );
+			if (!bram_locked)
+			{
+				PCECDBRAM[address & 0x7FF] = data;
+			}
+			return;
+	}	
+	
+	
 	bprintf(0,_T("unknown write %x:%x\n"), address, data );
 }
 
@@ -252,13 +251,6 @@ static UINT8 pce_read(UINT32 address)
 {
 
 	address &= 0x1fffff;
-	
-	if ((address >= 0x1ee000) && (address <= 0x1ee7ff)) {
-		//	bprintf(0,_T("bram read %x:%x\n"), address,address & 0x7ff );
-			return PCECDBRAM[address & 0x7ff];
-	}	
-	
-	
 	
 	switch (address & ~0x3ff)
 	{
@@ -317,6 +309,12 @@ static UINT8 pce_read(UINT32 address)
 			bprintf(0,_T("CD read %x\n"), address );
 			return 0; // cd system
 	}
+	
+	if ((address >= 0x1ee000) && (address <= 0x1ee7ff)) {
+		//	bprintf(0,_T("bram read %x:%x\n"), address,address & 0x7ff );
+			return PCECDBRAM[address & 0x7ff];
+	}	
+		
 	bprintf(0,_T("Unknown read %x\n"), address );
 	return 0;
 }

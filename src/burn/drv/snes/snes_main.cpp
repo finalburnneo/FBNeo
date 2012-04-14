@@ -47,14 +47,6 @@ static INT32 MemIndex(UINT32 cart_size)
 }
 
 
-void freemem()
-{
-	for (int i=0;i<2048;i++)
-	{
-		memlookup[i]=NULL;
-	}
-	BurnFree (AllMem);
-}
 
 
 void __cdecl snemlog(TCHAR *format,...)
@@ -323,9 +315,7 @@ void SnesReset()
 INT32 SnesInit()
 {
 	INT32 nret = 0;
-	INT32 counter=0;
-	char name[22];
-	INT32 len;
+
 	UINT16 temp,temp2;
 	
 	struct BurnRomInfo ri;
@@ -342,10 +332,8 @@ INT32 SnesInit()
 	initppu();
 	initspc();
 	makeopcodetable();
-//	initdsp();
 
 	SnesReset();
-
 
 	spccycles=-10000;
 
@@ -372,13 +360,6 @@ INT32 SnesInit()
 		snes_mapmem(); 
 	}
 
-	len=counter;//-0x10000;
-	for (counter=0;counter<21;counter++)
-	{
-		name[counter]=snes_readmem(0xFFC0+counter);
-	}
-	
-	name[21]=0;
 	srammask=(1<<(snes_readmem(0xFFD8)+10))-1;
 	
 	if (!snes_readmem(0xFFD8)) 
@@ -409,7 +390,11 @@ INT32 SnesInit()
 
 INT32 SnesExit()
 {
-	freemem();
+	for (int i=0;i<2048;i++)
+	{
+		memlookup[i]=NULL;
+	}
+	BurnFree (AllMem);
 	return 0;
 }
 

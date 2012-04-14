@@ -10550,7 +10550,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "wofaha"      , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "wofah"       , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "wofh"        , HACK_B_6    , mapper_TK263B, 0, wof_decode          },
-	{ "wofha"       , HACK_B_3    , mapper_TK263B, 0, wof_decode          },
+	{ "wofha"       , HACK_B_6    , mapper_TK263B, 0, wof_decode          },
 	{ "wofjh"       , CPS_B_21_QS1, mapper_TK263B, 0, wof_decode          },
 	{ "wofsj"       , HACK_B_3    , mapper_TK263B, 0, wof_decode          },
 	{ "wofsja"      , HACK_B_3    , mapper_TK263B, 0, wof_decode          },
@@ -12740,16 +12740,30 @@ static INT32 WofhaInit()
 {
 	INT32 nRet = 0;
 	
-	AmendProgRomCallback = WofhCallback;
-	
+	bCpsUpdatePalEveryFrame = 1;
 	CpsLayer1XOffs = 0xffc0;
 	CpsLayer2XOffs = 0xffc0;
 	CpsLayer3XOffs = 0xffc0;
+	
+	AmendProgRomCallback = WofhCallback;
+	Cps1ObjGetCallbackFunction = WofhObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	nRet = TwelveMhzInit();
 	
 	memset(CpsGfx, 0, nCpsGfxLen);
 	CpsLoadTilesHack160(CpsGfx, 2);
+	
+	SekOpen(0);
+	SekMapHandler(3, 0x880000, 0x89ffff, SM_READ | SM_WRITE);
+	SekSetReadByteHandler(3, WofhInputReadByte);
+	SekSetReadWordHandler(3, WofhInputReadWord);
+	SekSetWriteByteHandler(3, WofhInputWriteByte);
+	SekSetWriteWordHandler(3, WofhInputWriteWord);
+	SekMapHandler(4, 0x135000, 0x135fff, SM_READ);
+	SekSetReadByteHandler(4, Wofh135ReadByte);
+	SekSetReadWordHandler(4, Wofh135ReadWord);
+	SekClose();
 	
 	return nRet;
 }
@@ -14994,12 +15008,12 @@ struct BurnDriver BurnDrvCpsWofh = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsWofha = {
+struct BurnDriver BurnDrvCpsWofha = {
 	"wofha", "wof", NULL, NULL, "1992",
-	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 2)\0", NULL, "bootleg", "CPS1 / QSound",
+	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 2)\0", "No sound, some sprite priority problems", "bootleg", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
-	NULL, WofhaRomInfo, WofhaRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	NULL, WofhaRomInfo, WofhaRomName, NULL, NULL, WofhfhInputInfo, WofhDIPInfo,
 	WofhaInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

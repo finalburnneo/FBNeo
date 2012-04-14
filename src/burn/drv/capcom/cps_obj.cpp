@@ -564,6 +564,61 @@ INT32 DinopicObjGet()
 	return 0;
 }
 
+INT32 WofhObjGet()
+{
+	INT32 i;
+	UINT8 *pg, *po;
+	struct ObjFrame* pof;
+	UINT8* Get = NULL;
+	
+	pof = of + nGetNext;
+
+	pof->nCount = 0;
+
+	po = pof->Obj;
+	pof->nShiftX = -0x40;
+	pof->nShiftY = -0x10;
+
+	Get = CpsRam90 + 0x1000;
+	
+	if (Get==NULL) return 1;
+
+	// Make a copy of all active sprites in the list
+	for (pg = Get, i = 0; i < nMax; pg += 8, i++) {
+		UINT16* ps = (UINT16*)pg;
+		INT32 n, y, x, a;
+		
+		y = BURN_ENDIAN_SWAP_INT16(ps[-1]);
+		
+		if (y == 0x8000) { // end of sprite list
+			break;
+		}
+		
+		n = BURN_ENDIAN_SWAP_INT16(ps[0]);
+		a = BURN_ENDIAN_SWAP_INT16(ps[1]);
+		x = BURN_ENDIAN_SWAP_INT16(ps[2]);
+
+		po[0] = n & 0xff;
+		po[1] = n >> 8;
+		po[2] = a & 0xff;
+		po[3] = a >> 8;
+		po[4] = x & 0xff;
+		po[5] = x >> 8;
+		po[6] = y & 0xff;
+		po[7] = y >> 8;
+
+		pof->nCount++;
+		po += 8;
+	}
+
+	nGetNext++;
+	if (nGetNext >= nFrameCount) {
+		nGetNext = 0;
+	}
+
+	return 0;
+}
+
 INT32 FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 {
 	INT32 i; UINT16 *ps; INT32 nPsAdd;

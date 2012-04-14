@@ -84,6 +84,7 @@ INT32 Cps2LoadTilesSIM(UINT8 *Tile,INT32 nStart);
 #define HACK_B_3		28
 #define HACK_B_4		29
 #define HACK_B_5		30
+#define HACK_B_6		31
 
 #define GFXTYPE_SPRITES		(1<<0)
 #define GFXTYPE_SCROLL1		(1<<1)
@@ -333,6 +334,7 @@ INT32  CpsObjGet();
 INT32 FcrashObjGet();
 INT32 KodbObjGet();
 INT32 DinopicObjGet();
+INT32 WofhObjGet();
 void CpsObjDrawInit();
 INT32  Cps1ObjDraw(INT32 nLevelFrom,INT32 nLevelTo);
 INT32  Cps2ObjDraw(INT32 nLevelFrom,INT32 nLevelTo);

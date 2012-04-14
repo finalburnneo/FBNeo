@@ -3374,12 +3374,23 @@ STDDIPINFO(Wof)
 static struct BurnDIPInfo WofhDIPList[]=
 {
 	// Defaults
-	{0x1b, 0xff, 0xff, 0x08, NULL                     },
-
+	{0x1b, 0xff, 0xff, 0x03, NULL                     },
+	{0x1c, 0xff, 0xff, 0x00, NULL                     },
+	{0x1d, 0xff, 0xff, 0xff, NULL                     },
+	
+	// Dip A
+	{0   , 0xfe, 0   , 2   , "Play Mode"              },
+	{0x1b, 0x01, 0x03, 0x03, "Normal"                 },
+	{0x1b, 0x01, 0x03, 0x00, "Tournament"             },
+	
+	// Dip B
+	{0   , 0xfe, 0   , 4   , "Coinage"                },
+	{0x1c, 0x01, 0x03, 0x00, "1 Coin 1 Credit"        },
+	{0x1c, 0x01, 0x03, 0x01, "1 Coin 2 Credits"       },
+	{0x1c, 0x01, 0x03, 0x02, "1 Coin 3 Credits"       },
+	{0x1c, 0x01, 0x03, 0x03, "1 Coin 4 Credits"       },
+	
 	// Dip C
-	{0   , 0xfe, 0   , 2   , "Freeze"                 },
-	{0x1b, 0x01, 0x08, 0x08, "Off"                    },
-	{0x1b, 0x01, 0x08, 0x00, "On"                     },
 };
 
 STDDIPINFO(Wofh)
@@ -10538,7 +10549,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "wof3sja"     , HACK_B_3    , mapper_TK263B, 0, wof_decode          },
 	{ "wofaha"      , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "wofah"       , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
-	{ "wofh"        , HACK_B_3    , mapper_TK263B, 0, wof_decode          },	
+	{ "wofh"        , HACK_B_6    , mapper_TK263B, 0, wof_decode          },
 	{ "wofha"       , HACK_B_3    , mapper_TK263B, 0, wof_decode          },
 	{ "wofjh"       , CPS_B_21_QS1, mapper_TK263B, 0, wof_decode          },
 	{ "wofsj"       , HACK_B_3    , mapper_TK263B, 0, wof_decode          },
@@ -12604,44 +12615,36 @@ UINT16 __fastcall Wofh135ReadWord(UINT32)
 UINT8 __fastcall WofhInputReadByte(UINT32 a)
 {
 	switch (a) {
-/*		case 0x880000: {
+		case 0x880000: {
 			return ~Inp000;
 		}
 		
-		case 0x880008: {
-			return ~Inp018;
+		case 0x880001: {
+			return ~Inp001;
 		}
-		
-		case 0x88000a: {
-			return ~Cpi01A;
-		}
-		
-		case 0x88000c: {
-			return ~Cpi01C;
-		}
-		
-		case 0x88000e: {
-			return ~Cpi01E;
-		}*/
 		
 		case 0x880006: {
 			return ~Inp018;
 		}
 		
-		case 0x880008: {
+		case 0x880007: {
 			return 0xff;
+		}
+		
+		case 0x880008: {
+			return ~Cpi01A;
 		}
 		
 		case 0x88000a: {
-			return 0xff;
+			return ~Cpi01C;
 		}
 		
 		case 0x88000c: {
-			return 0xff;
+			return ~Cpi01E;
 		}
 		
 		case 0x880e78: {
-			return ~Cpi01E;
+			return ~Inp177;
 		}
 		
 		default: {
@@ -12654,9 +12657,11 @@ UINT8 __fastcall WofhInputReadByte(UINT32 a)
 
 UINT16 __fastcall WofhInputReadWord(UINT32 a)
 {
+	SEK_DEF_READ_WORD(3, a);
+	
 	switch (a) {
 		case 0x880000: {
-			return 0xffff;
+			return ((~Inp000) << 8) | ~Inp001;
 		}
 		
 		case 0x880006: {
@@ -12683,6 +12688,7 @@ void __fastcall WofhInputWriteByte(UINT32 a, UINT8 d)
 void __fastcall WofhInputWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
+		
 		default: {
 			bprintf(PRINT_NORMAL, _T("Input Write word %x, %x\n"), a, d);
 		}
@@ -12694,24 +12700,22 @@ static void WofhCallback()
 	// Patch protection? check
 	CpsRom[0xf11ed] = 0x4e;
 	CpsRom[0xf11ec] = 0x71;
-	CpsRom[0xf11ef] = 0x4e;
-	CpsRom[0xf11ee] = 0x71;
+//	CpsRom[0xf11ef] = 0x4e;
+//	CpsRom[0xf11ee] = 0x71;
 }
 
 static INT32 WofhInit()
 {
 	INT32 nRet = 0;
 	
-	AmendProgRomCallback = WofhCallback;
-	Cps1OverrideLayers = 1;
-	nCps1Layers[0] = 0;
-	nCps1Layers[1] = 1;
-	nCps1Layers[2] = 2;
-	nCps1Layers[3] = 3;
-	
+	bCpsUpdatePalEveryFrame = 1;
 	CpsLayer1XOffs = 0xffc0;
-//	CpsLayer2XOffs = 0xffc0;
-//	CpsLayer3XOffs = 0xffc0;
+	CpsLayer2XOffs = 0xffc0;
+	CpsLayer3XOffs = 0xffc0;
+	
+	AmendProgRomCallback = WofhCallback;
+	Cps1ObjGetCallbackFunction = WofhObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	nRet = TwelveMhzInit();
 	
@@ -14980,11 +14984,11 @@ struct BurnDriverD BurnDrvCpsWofaha = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsWofh = {
+struct BurnDriver BurnDrvCpsWofh = {
 	"wofh", "wof", NULL, NULL, "1992",
-	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 1)\0", NULL, "bootleg", "CPS1 / QSound",
+	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 1)\0", "No sound, some sprite priority problems", "bootleg", "CPS1 / QSound",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofhRomInfo, WofhRomName, NULL, NULL, WofhfhInputInfo, WofhDIPInfo,
 	WofhInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

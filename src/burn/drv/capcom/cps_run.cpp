@@ -19,6 +19,12 @@ INT32 nIrqLine50, nIrqLine52;
 
 INT32 nCpsNumScanlines = 259;
 
+CpsRunInitCallback CpsRunInitCallbackFunction = NULL;
+CpsRunInitCallback CpsRunExitCallbackFunction = NULL;
+CpsRunResetCallback CpsRunResetCallbackFunction = NULL;
+CpsRunFrameStartCallback CpsRunFrameStartCallbackFunction = NULL;
+CpsRunFrameEndCallback CpsRunFrameEndCallbackFunction = NULL;
+
 static void CpsQSoundCheatSearchCallback()
 {
 	// Q-Sound Shared RAM ranges - not useful for cheat searching, and runs the Z80
@@ -63,6 +69,10 @@ static INT32 DrvReset()
 
 	if (Cps == 2 || Cps1Qs == 1) {			// Sound init (QSound)
 		QsndReset();
+	}
+	
+	if (CpsRunResetCallbackFunction) {
+		CpsRunResetCallbackFunction();
 	}
 	
 	HiscoreReset();
@@ -134,6 +144,11 @@ INT32 CpsRunInit()
 	}
 
 	if (Cps == 2 || PangEEP || Cps1Qs == 1) EEPROMReset();
+	
+	if (CpsRunInitCallbackFunction) {
+		CpsRunInitCallbackFunction();
+	}
+	
 	DrvReset();
 
 	//Init Draw Function
@@ -168,6 +183,15 @@ INT32 CpsRunExit()
 	CpsMemExit();
 
 	SekExit();
+	
+	if (CpsRunExitCallbackFunction) {
+		CpsRunExitCallbackFunction();
+		CpsRunExitCallbackFunction = NULL;
+	}
+	CpsRunInitCallbackFunction = NULL;
+	CpsRunResetCallbackFunction = NULL;
+	CpsRunFrameStartCallbackFunction = NULL;
+	CpsRunFrameEndCallbackFunction = NULL;
 
 	return 0;
 }
@@ -269,6 +293,10 @@ INT32 Cps1Frame()
 			PsndNewFrame();
 		}
 	}
+	
+	if (CpsRunFrameStartCallbackFunction) {
+		CpsRunFrameStartCallbackFunction();
+	}
 
 	nCpsCycles = (INT32)((INT64)nCPS68KClockspeed * nBurnCPUSpeedAdjust >> 8);
 
@@ -314,6 +342,10 @@ INT32 Cps1Frame()
 			PsmUpdate(nBurnSoundLen);
 			ZetClose();
 		}
+	}
+	
+	if (CpsRunFrameEndCallbackFunction) {
+		CpsRunFrameEndCallbackFunction();
 	}
 
 	nCpsCyclesExtra = SekTotalCycles() - nCpsCycles;

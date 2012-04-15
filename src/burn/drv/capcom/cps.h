@@ -169,6 +169,16 @@ INT32 CpsRunInit();
 INT32 CpsRunExit();
 INT32 Cps1Frame();
 INT32 Cps2Frame();
+typedef INT32 (*CpsRunInitCallback)();
+extern CpsRunInitCallback CpsRunInitCallbackFunction;
+typedef INT32 (*CpsRunExitCallback)();
+extern CpsRunExitCallback CpsRunExitCallbackFunction;
+typedef INT32 (*CpsRunResetCallback)();
+extern CpsRunResetCallback CpsRunResetCallbackFunction;
+typedef void (*CpsRunFrameStartCallback)();
+extern CpsRunFrameStartCallback CpsRunFrameStartCallbackFunction;
+typedef void (*CpsRunFrameEndCallback)();
+extern CpsRunFrameEndCallback CpsRunFrameEndCallbackFunction;
 
 inline static UINT8* CpsFindGfxRam(INT32 nAddr,INT32 nLen)
 {
@@ -411,3 +421,11 @@ void slammast_decode();
 
 // cps2_crypt.cpp
 void cps2_decrypt_game_data();
+
+// fcrash_snd.cpp
+void FrcashSoundCommand(UINT16 d);
+INT32 FcrashSoundInit();
+INT32 FcrashSoundReset();
+INT32 FcrashSoundExit();
+void FcrashSoundFrameStart();
+void FcrashSoundFrameEnd();

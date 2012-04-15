@@ -10925,6 +10925,11 @@ UINT8 __fastcall CawingblInputRead(UINT32 a)
 void __fastcall CawingblInputWrite(UINT32 a, UINT8 d)
 {
 	switch (a) {
+		case 0x882006: {
+			FrcashSoundCommand(d);
+			return;
+		}
+		
 		default: {
 			bprintf(PRINT_NORMAL, _T("Input Write Byte %x, %x\n"), a, d);
 		}
@@ -10935,11 +10940,18 @@ static INT32 CawingblInit()
 {
 	INT32 nRet = 0;
 	
+	Cps1DisablePSnd = 1;
+	
 	CpsLayer1XOffs = 0xffc0;
 //	CpsLayer2XOffs = 0xffc0;
 //	CpsLayer3XOffs = 0xffc0;
 
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesCawingbl;
+	CpsRunInitCallbackFunction = FcrashSoundInit;
+	CpsRunResetCallbackFunction = FcrashSoundReset;
+	CpsRunExitCallbackFunction = FcrashSoundExit;
+	CpsRunFrameStartCallbackFunction = FcrashSoundFrameStart;
+	CpsRunFrameEndCallbackFunction = FcrashSoundFrameEnd;
 	
 	nRet = DrvInit();
 	
@@ -11181,6 +11193,16 @@ void __fastcall FcrashInputWriteByte(UINT32 a, UINT8 d)
 void __fastcall FcrashInputWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
+		case 0x880006: {
+			FrcashSoundCommand(d);
+			return;
+		}
+		
+		case 0x890000: {
+			// ???
+			return;
+		}
+		
 		default: {
 			bprintf(PRINT_NORMAL, _T("Input Write word %x, %x\n"), a, d);
 		}
@@ -11198,6 +11220,11 @@ static INT32 FcrashInit()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesFcrash;
 	Cps1ObjGetCallbackFunction = FcrashObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsRunInitCallbackFunction = FcrashSoundInit;
+	CpsRunResetCallbackFunction = FcrashSoundReset;
+	CpsRunExitCallbackFunction = FcrashSoundExit;
+	CpsRunFrameStartCallbackFunction = FcrashSoundFrameStart;
+	CpsRunFrameEndCallbackFunction = FcrashSoundFrameEnd;
 	
 	INT32 nRet = DrvInit();
 	
@@ -11479,9 +11506,9 @@ void __fastcall Knightsb98WriteWord(UINT32 a, UINT16 d)
 
 static INT32 KnightsbInit()
 {
-	Cps1DisablePSnd = 1;
 	bCpsUpdatePalEveryFrame = 1;
 	Cps1OverrideLayers = 1;
+	Port6SoundWrite = 1;
 	
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
@@ -11505,6 +11532,28 @@ static INT32 Knightsb2Init()
 	Cps1DetectEndSpriteList8000 = 1;
 	
 	return DrvInit();
+}
+
+static INT32 Knightsb4Init()
+{
+	Cps1DisablePSnd = 1;
+	bCpsUpdatePalEveryFrame = 1;
+	Cps1OverrideLayers = 1;
+	
+	Cps1ObjGetCallbackFunction = DinopicObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	
+	INT32 nRet = DrvInit();
+	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
+	
+	SekOpen(0);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991FFF, SM_RAM);
+	SekMapHandler(1, 0x980000, 0x98ffff, SM_WRITE);
+	SekSetWriteWordHandler(1, Knightsb98WriteWord);
+	SekClose();
+	
+	return nRet;
 }
 
 static INT32 KodbInit()
@@ -13380,7 +13429,7 @@ struct BurnDriver BurnDrvCpsFfightjh = {
 
 struct BurnDriver BurnDrvCpsFcrash = {
 	"fcrash", "ffight", NULL, NULL, "1990",
-	"Final Crash (bootleg)\0", "No sound, some sprite priority issues", "Playmark", "CPS1",
+	"Final Crash (bootleg)\0", NULL, "Playmark", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, FcrashRomInfo, FcrashRomName, NULL, NULL, FfightInputInfo, FfightDIPInfo,
@@ -13540,7 +13589,7 @@ struct BurnDriver BurnDrvCpsKnightsja = {
 
 struct BurnDriver BurnDrvCpsKnightsb = {
 	"knightsb", "knights", NULL, NULL, "1991",
-	"Knights of the Round (911127 etc bootleg set 1)\0", "No sound", "bootleg", "CPS1",
+	"Knights of the Round (911127 etc bootleg set 1)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, KnightsbRomInfo, KnightsbRomName, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,
@@ -13574,7 +13623,7 @@ struct BurnDriver BurnDrvCpsKnightsb4 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Knightsb4RomInfo, Knightsb4RomName, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,
-	KnightsbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Knightsb4Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

@@ -283,7 +283,7 @@ static UINT8 CpsReadPort(const UINT32 ia)
 }
 
 // Write output port 0x000-0x1ff
-void CpsWritePort(const UINT32 ia, UINT8 d)
+static void CpsWritePort(const UINT32 ia, UINT8 d)
 {
 	if ((Cps & 1) && Cps1Qs == 0) {
 		if (!Cps1DisablePSnd) {

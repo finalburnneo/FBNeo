@@ -2,6 +2,10 @@
 #include "burn_ym2203.h"
 #include "msm5205.h"
 
+// fcrash_snd.cpp
+// Sound support for games using similar sound to Final Crash
+// 2 x YM2203 and 2 x MSM5205
+
 static UINT8 *FcrashZ80Ram = NULL;
 static INT32 FcrashZ80BankAddress = 0;
 static INT32 FcrashSoundLatch = 0;
@@ -10,19 +14,21 @@ static INT32 FcrashSampleBuffer1 = 0;
 static INT32 FcrashSampleBuffer2 = 0;
 static INT32 FcrashSampleSelect1 = 0;
 static INT32 FcrashSampleSelect2 = 0;
+static INT32 FcrashSoundPos = 0;
+static INT32 FcrashCyclesPerSegment = 0;
 
 void FrcashSoundCommand(UINT16 d)
 {
 	if (d & 0xff) {
-		INT32 nCyclesToDo = (INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles;
-		INT32 nFramePortion = (INT64)FcrashMSM5205Interleave * nCyclesToDo / nCpsZ80Cycles;
-		INT32 nCyclesPerPortion = nCyclesToDo / nFramePortion;
+		INT32 nCyclesToDo = ((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles) - ZetTotalCycles();
+		INT32 nEnd = FcrashSoundPos + (INT64)FcrashMSM5205Interleave * nCyclesToDo / nCpsZ80Cycles;
 		
-		for (INT32 i = 0; i < nFramePortion; i++) {
-			BurnTimerUpdate((i + 1) * nCyclesPerPortion);
+		for (INT32 i = FcrashSoundPos; i < nEnd; i++) {
+			BurnTimerUpdate((i + 1) * FcrashCyclesPerSegment);
 			MSM5205Update();
+			FcrashSoundPos = i;
 		}
-
+		
 		FcrashSoundLatch = d & 0xff;
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 	}
@@ -76,8 +82,8 @@ void __fastcall FcrashZ80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0xe000: {
-			MSM5205SetVolume(0, (d & 0x08) ? 0 : 30);
-			MSM5205SetVolume(1, (d & 0x10) ? 0 : 30);
+			MSM5205SetVolume(0, (d & 0x08) ? 0 : 20);
+			MSM5205SetVolume(1, (d & 0x10) ? 0 : 20);
 
 			FcrashZ80BankAddress = (d & 0x07) * 0x4000;
 			ZetMapArea(0x8000, 0xbfff, 0, CpsZRom + FcrashZ80BankAddress);
@@ -155,10 +161,10 @@ INT32 FcrashSoundInit()
 	
 	BurnYM2203Init(2, 24000000 / 6, NULL, FcrashSynchroniseStream, FcrashGetTime, 0);
 	BurnTimerAttachZet(24000000 / 6);
-	BurnYM2203SetVolumeShift(2);
+	BurnYM2203SetVolumeShift(1);
 	
-	MSM5205Init(0, FcrashSynchroniseStream, 24000000 / 64, FcrashMSM5205Vck0, MSM5205_S96_4B, 30, 1);
-	MSM5205Init(1, FcrashSynchroniseStream, 24000000 / 64, FcrashMSM5205Vck1, MSM5205_S96_4B, 30, 1);
+	MSM5205Init(0, FcrashSynchroniseStream, 24000000 / 64, FcrashMSM5205Vck0, MSM5205_S96_4B, 20, 1);
+	MSM5205Init(1, FcrashSynchroniseStream, 24000000 / 64, FcrashMSM5205Vck1, MSM5205_S96_4B, 20, 1);
 	
 	nCpsZ80Cycles = (24000000 / 6) * 100 / nBurnFPS;
 	
@@ -200,6 +206,7 @@ INT32 FcrashSoundExit()
 	FcrashSampleBuffer2 = 0;
 	FcrashSampleSelect1 = 0;
 	FcrashSampleSelect2 = 0;
+	FcrashCyclesPerSegment = 0;
 	
 	nCpsZ80Cycles = 0;
 
@@ -209,6 +216,8 @@ INT32 FcrashSoundExit()
 void FcrashSoundFrameStart()
 {
 	FcrashMSM5205Interleave = MSM5205CalcInterleave(0, 24000000 / 6);
+	FcrashSoundPos = 0;
+	FcrashCyclesPerSegment = (INT64)nCpsZ80Cycles / FcrashMSM5205Interleave;
 	
 	ZetNewFrame();
 	ZetOpen(0);	
@@ -216,14 +225,10 @@ void FcrashSoundFrameStart()
 
 void FcrashSoundFrameEnd()
 {
-	INT32 nStartCycles = ZetTotalCycles();
-	INT32 nCyclesToDo = nCpsZ80Cycles - nStartCycles;
-	INT32 nFramePortion = (INT64)FcrashMSM5205Interleave * nCyclesToDo / nCpsZ80Cycles;
-	INT32 nCyclesPerPortion = nCyclesToDo / nFramePortion;
-	
-	for (INT32 i = 0; i < nFramePortion; i++) {
-		BurnTimerUpdate(nStartCycles + ((i + 1) * nCyclesPerPortion));
+	for (INT32 i = FcrashSoundPos; i < FcrashMSM5205Interleave; i++) {
+		BurnTimerUpdate((i + 1) * FcrashCyclesPerSegment);
 		MSM5205Update();
+		FcrashSoundPos = i;
 	}
 	BurnTimerEndFrame(nCpsZ80Cycles);
 	

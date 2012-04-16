@@ -11573,6 +11573,28 @@ static INT32 Knightsb4Init()
 	return nRet;
 }
 
+void __fastcall Kodb98WriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x98000c: {
+			*((UINT16*)(CpsReg + nCpsLcReg)) = d;
+			return;
+		}
+		
+		case 0x980020: {
+			*((UINT16*)(CpsReg + MaskAddr[1])) = d;
+			return;
+		}
+		
+		case 0x980022: {
+			*((UINT16*)(CpsReg + MaskAddr[2])) = d;
+			return;
+		}
+	}
+	
+	bprintf(PRINT_IMPORTANT, _T("Unknown value written at %x %x\n"), a, d);
+}
+
 static INT32 KodbInit()
 {
 	INT32 nRet = 0;
@@ -11585,6 +11607,14 @@ static INT32 KodbInit()
 	
 	memset(CpsGfx, 0, nCpsGfxLen);
 	CpsLoadTilesByte(CpsGfx, 2);
+	
+	SekOpen(0);
+	SekMapHandler(1, 0x980000, 0x99ffff, SM_WRITE);
+	SekSetWriteWordHandler(1, Kodb98WriteWord);
+	SekClose();
+	
+	*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
+	*((UINT16*)(CpsReg + MaskAddr[3])) = 0xff00;
 
 	return nRet;
 }
@@ -13722,7 +13752,7 @@ struct BurnDriver BurnDrvCpsKodja = {
 
 struct BurnDriver BurnDrvCpsKodb = {
 	"kodb", "kod", NULL, NULL, "1991",
-	"The King of Dragons (bootleg set 1)\0", "Some sprite priority issues", "Capcom", "CPS1",
+	"The King of Dragons (bootleg set 1)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, KodbRomInfo, KodbRomName, NULL, NULL, KodInputInfo, KodDIPInfo,

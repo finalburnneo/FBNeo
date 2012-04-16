@@ -12943,8 +12943,7 @@ static INT32 WofbInit()
 	// todo;
 	// layer enables need checking
 	// need to check for more layer enable values
-	
-	Cps1DisablePSnd = 1;
+
 	bCpsUpdatePalEveryFrame = 1;
 	Cps1OverrideLayers = 1;
 	Port6SoundWrite = 1;

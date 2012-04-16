@@ -10189,13 +10189,6 @@ static struct BurnRomInfo WofhRomDesc[] = {
 
 	{ "sgyx-1.160",    0x200000, 0xa60be9f6, BRF_GRA | CPS1_TILES },
 	{ "sgyx-2.160",    0x200000, 0x6ad9d048, BRF_GRA | CPS1_TILES },
-
-	{ "tk2_qa.rom",    0x020000, 0xc9183a0d, BRF_PRG | CPS1_Z80_PROGRAM },
-
-	{ "tk2_q1.rom",    0x080000, 0x611268cf, BRF_SND | CPS1_QSOUND_SAMPLES },
-	{ "tk2_q2.rom",    0x080000, 0x20f55ca9, BRF_SND | CPS1_QSOUND_SAMPLES },
-	{ "tk2_q3.rom",    0x080000, 0xbfcf6f52, BRF_SND | CPS1_QSOUND_SAMPLES },
-	{ "tk2_q4.rom",    0x080000, 0x36642e88, BRF_SND | CPS1_QSOUND_SAMPLES },
 };
 
 STD_ROM_PICK(Wofh)
@@ -10207,13 +10200,6 @@ static struct BurnRomInfo WofhaRomDesc[] = {
 
 	{ "sgyx-1.160",    0x200000, 0xa60be9f6, BRF_GRA | CPS1_TILES },
 	{ "sgyx-2.160",    0x200000, 0x6ad9d048, BRF_GRA | CPS1_TILES },
-
-	{ "tk2_qa.rom",    0x020000, 0xc9183a0d, BRF_PRG | CPS1_Z80_PROGRAM },
-
-	{ "tk2_q1.rom",    0x080000, 0x611268cf, BRF_SND | CPS1_QSOUND_SAMPLES },
-	{ "tk2_q2.rom",    0x080000, 0x20f55ca9, BRF_SND | CPS1_QSOUND_SAMPLES },
-	{ "tk2_q3.rom",    0x080000, 0xbfcf6f52, BRF_SND | CPS1_QSOUND_SAMPLES },
-	{ "tk2_q4.rom",    0x080000, 0x36642e88, BRF_SND | CPS1_QSOUND_SAMPLES },
 };
 
 STD_ROM_PICK(Wofha)
@@ -12760,22 +12746,6 @@ UINT8 __fastcall WofhInputReadByte(UINT32 a)
 UINT16 __fastcall WofhInputReadWord(UINT32 a)
 {
 	SEK_DEF_READ_WORD(3, a);
-	
-	switch (a) {
-		case 0x880000: {
-			return ((~Inp000) << 8) | ~Inp001;
-		}
-		
-		case 0x880006: {
-			return 0xff00 | ~Inp018;
-		}
-		
-		default: {
-			bprintf(PRINT_NORMAL, _T("Input Read Word %x\n"), a);
-		}
-	}
-	
-	return 0;
 }
 
 void __fastcall WofhInputWriteByte(UINT32 a, UINT8 d)
@@ -12810,6 +12780,7 @@ static INT32 WofhInit()
 {
 	INT32 nRet = 0;
 	
+	Cps1DisablePSnd = 1;
 	bCpsUpdatePalEveryFrame = 1;
 	CpsLayer1XOffs = 0xffc0;
 	CpsLayer2XOffs = 0xffc0;
@@ -12843,6 +12814,7 @@ static INT32 WofhaInit()
 	INT32 nRet = 0;
 	
 	bCpsUpdatePalEveryFrame = 1;
+	Cps1DisablePSnd = 1;
 	CpsLayer1XOffs = 0xffc0;
 	CpsLayer2XOffs = 0xffc0;
 	CpsLayer3XOffs = 0xffc0;
@@ -15102,9 +15074,9 @@ struct BurnDriverD BurnDrvCpsWofaha = {
 
 struct BurnDriver BurnDrvCpsWofh = {
 	"wofh", "wof", NULL, NULL, "1992",
-	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 1)\0", "No sound, some sprite priority problems", "bootleg", "CPS1 / QSound",
+	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 1)\0", "No sound, some sprite priority problems", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofhRomInfo, WofhRomName, NULL, NULL, WofhfhInputInfo, WofhDIPInfo,
 	WofhInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -15112,9 +15084,9 @@ struct BurnDriver BurnDrvCpsWofh = {
 
 struct BurnDriver BurnDrvCpsWofha = {
 	"wofha", "wof", NULL, NULL, "1992",
-	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 2)\0", "No sound, some sprite priority problems", "bootleg", "CPS1 / QSound",
+	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 2)\0", "No sound, some sprite priority problems", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofhaRomInfo, WofhaRomName, NULL, NULL, WofhfhInputInfo, WofhDIPInfo,
 	WofhaInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

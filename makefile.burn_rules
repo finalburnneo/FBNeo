@@ -86,7 +86,7 @@ depobj	:= 	$(drvobj) \
 			cave.o cave_palette.o cave_sprite.o cave_tile.o \
 			\
 			cps2_crpt.o cps.o cps_config.o cps_draw.o cps_mem.o cps_obj.o cps_pal.o cps_run.o cps_rw.o cps_scr.o cpsr.o cpsrd.o \
-			cpst.o ctv.o fcrash_snd.o kabuki.o ps.o ps_m.o ps_z.o qs.o qs_c.o qs_z.o \
+			cpst.o ctv.o fcrash_snd.o kabuki.o ps.o ps_m.o ps_z.o qs.o qs_c.o qs_z.o sf2mdt_snd.o \
 			\
 			cps3run.o cps3snd.o \
 			\

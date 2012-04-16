@@ -34,6 +34,8 @@ INT32 Ssf2tb = 0;
 INT32 Dinohunt = 0;
 INT32 Port6SoundWrite = 0;
 
+CpsRWSoundCommandCallback CpsRWSoundCommandCallbackFunction = NULL;
+
 static INT32 nCalc[2] = {0, 0};
 
 static const bool nCPSExtraNVRAM = false;
@@ -281,7 +283,7 @@ static UINT8 CpsReadPort(const UINT32 ia)
 }
 
 // Write output port 0x000-0x1ff
-static void CpsWritePort(const UINT32 ia, UINT8 d)
+void CpsWritePort(const UINT32 ia, UINT8 d)
 {
 	if ((Cps & 1) && Cps1Qs == 0) {
 		if (!Cps1DisablePSnd) {
@@ -299,6 +301,12 @@ static void CpsWritePort(const UINT32 ia, UINT8 d)
 
 				PsndFade = d;
 				return;
+			}
+		} else {
+			if (ia == 0x181 || (Port6SoundWrite && (ia == 0x006 || ia == 0x007))) {
+				if (CpsRWSoundCommandCallbackFunction) {
+					CpsRWSoundCommandCallbackFunction(d);
+				}
 			}
 		}
 
@@ -487,6 +495,7 @@ INT32 CpsRwInit()
 INT32 CpsRwExit()
 {
 	InpBlank();
+	CpsRWSoundCommandCallbackFunction = NULL;
 	return 0;
 }
 

@@ -17,7 +17,7 @@ static INT32 FcrashSampleSelect2 = 0;
 static INT32 FcrashSoundPos = 0;
 static INT32 FcrashCyclesPerSegment = 0;
 
-void FrcashSoundCommand(UINT16 d)
+void FcrashSoundCommand(UINT16 d)
 {
 	if (d & 0xff) {
 		INT32 nCyclesToDo = ((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles) - ZetTotalCycles();

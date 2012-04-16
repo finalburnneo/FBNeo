@@ -238,10 +238,14 @@ extern UINT8* CpsEncZRom;
 INT32 CpsRwInit();
 INT32 CpsRwExit();
 INT32 CpsRwGetInp();
+void CpsWritePort(const UINT32 ia, UINT8 d);
 UINT8 __fastcall CpsReadByte(UINT32 a);
 void __fastcall CpsWriteByte(UINT32 a, UINT8 d);
 UINT16 __fastcall CpsReadWord(UINT32 a);
 void __fastcall CpsWriteWord(UINT32 a, UINT16 d);
+
+typedef void (*CpsRWSoundCommandCallback)(UINT16);
+extern CpsRWSoundCommandCallback CpsRWSoundCommandCallbackFunction;
 
 // cps_draw.cpp
 extern UINT8 CpsRecalcPal;				// Flag - If it is 1, recalc the whole palette
@@ -423,9 +427,17 @@ void slammast_decode();
 void cps2_decrypt_game_data();
 
 // fcrash_snd.cpp
-void FrcashSoundCommand(UINT16 d);
+void FcrashSoundCommand(UINT16 d);
 INT32 FcrashSoundInit();
 INT32 FcrashSoundReset();
 INT32 FcrashSoundExit();
 void FcrashSoundFrameStart();
 void FcrashSoundFrameEnd();
+
+// sf2mdt_snd.cpp
+void Sf2mdtSoundCommand(UINT16 d);
+INT32 Sf2mdtSoundInit();
+INT32 Sf2mdtSoundReset();
+INT32 Sf2mdtSoundExit();
+void Sf2mdtSoundFrameStart();
+void Sf2mdtSoundFrameEnd();

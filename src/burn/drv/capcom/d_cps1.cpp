@@ -10883,6 +10883,12 @@ static INT32 CaptcommbInit()
 static INT32 Captcommb2Init()
 {
 	Cps1DisablePSnd = 1;
+	CpsRunInitCallbackFunction = Sf2mdtSoundInit;
+	CpsRunResetCallbackFunction = Sf2mdtSoundReset;
+	CpsRunExitCallbackFunction = Sf2mdtSoundExit;
+	CpsRunFrameStartCallbackFunction = Sf2mdtSoundFrameStart;
+	CpsRunFrameEndCallbackFunction = Sf2mdtSoundFrameEnd;
+	CpsRWSoundCommandCallbackFunction = Sf2mdtSoundCommand;
 	
 	return DrvInit();
 }
@@ -10926,7 +10932,7 @@ void __fastcall CawingblInputWrite(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x882006: {
-			FrcashSoundCommand(d);
+			FcrashSoundCommand(d);
 			return;
 		}
 		
@@ -11194,7 +11200,7 @@ void __fastcall FcrashInputWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x880006: {
-			FrcashSoundCommand(d);
+			FcrashSoundCommand(d);
 			return;
 		}
 		
@@ -11539,9 +11545,16 @@ static INT32 Knightsb4Init()
 	Cps1DisablePSnd = 1;
 	bCpsUpdatePalEveryFrame = 1;
 	Cps1OverrideLayers = 1;
+	Port6SoundWrite = 1;
 	
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsRunInitCallbackFunction = Sf2mdtSoundInit;
+	CpsRunResetCallbackFunction = Sf2mdtSoundReset;
+	CpsRunExitCallbackFunction = Sf2mdtSoundExit;
+	CpsRunFrameStartCallbackFunction = Sf2mdtSoundFrameStart;
+	CpsRunFrameEndCallbackFunction = Sf2mdtSoundFrameEnd;
+	CpsRWSoundCommandCallbackFunction = Sf2mdtSoundCommand;
 	
 	INT32 nRet = DrvInit();
 	
@@ -11998,15 +12011,15 @@ UINT8 __fastcall Sf2mdtReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x70c01a: {
-			return 0xff;
+			return ~Cpi01A;
 		}
 		
 		case 0x70c01c: {
-			return 0xff;
+			return ~Cpi01C;
 		}
 		
 		case 0x70c01e: {
-			return 0xff;
+			return ~Cpi01E;
 		}		
 		
 		default: {
@@ -12033,6 +12046,12 @@ static INT32 Sf2mdtInit()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2mdt;
 	
 	Cps1DisablePSnd = 1;
+	CpsRunInitCallbackFunction = Sf2mdtSoundInit;
+	CpsRunResetCallbackFunction = Sf2mdtSoundReset;
+	CpsRunExitCallbackFunction = Sf2mdtSoundExit;
+	CpsRunFrameStartCallbackFunction = Sf2mdtSoundFrameStart;
+	CpsRunFrameEndCallbackFunction = Sf2mdtSoundFrameEnd;
+	CpsRWSoundCommandCallbackFunction = Sf2mdtSoundCommand;
 	
 	INT32 nRet = Sf2ceInit();
 	
@@ -13109,7 +13128,7 @@ struct BurnDriver BurnDrvCpsCaptcommb = {
 
 struct BurnDriver BurnDrvCpsCaptcommb2 = {
 	"captcommb2", "captcomm", NULL, NULL, "1991",
-	"Captain Commando (bootleg, set 2)\0", "No sound", "bootleg", "CPS1",
+	"Captain Commando (bootleg, set 2)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Captcommb2RomInfo, Captcommb2RomName, NULL, NULL, CaptcommInputInfo, CaptcommDIPInfo,
@@ -13619,7 +13638,7 @@ struct BurnDriver BurnDrvCpsKnightsb3 = {
 
 struct BurnDriver BurnDrvCpsKnightsb4 = {
 	"knightsb4", "knights", NULL, NULL, "1991",
-	"Knights of the Round (911127 etc bootleg set 4)\0", "No sound", "bootleg", "CPS1",
+	"Knights of the Round (911127 etc bootleg set 4)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Knightsb4RomInfo, Knightsb4RomName, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,
@@ -14459,7 +14478,7 @@ struct BurnDriver BurnDrvCpsSf2koryu2 = {
 
 struct BurnDriverD BurnDrvCpsSf2mdt = {
 	"sf2mdt", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - Magic Delta Turbo (bootleg)\0", "No sound, incorrect graphics", "Capcom", "CPS1",
+	"Street Fighter II' - Magic Delta Turbo (bootleg)\0", "Incorrect graphics", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2mdtRomInfo, Sf2mdtRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,

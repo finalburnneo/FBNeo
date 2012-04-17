@@ -12156,69 +12156,132 @@ static INT32 Sf2m4Init()
 
 void __fastcall Sf2m1ScrollWrite(UINT32 a, UINT16 d)
 {
-	if (a == 0x980000) {
-		CpsReg[0x0e] = d & 0xff;
-		CpsReg[0x0f] = d >> 8;
-		return;
-	}
-	
-	if (a == 0x980002) {
-		d -= 0x40;
-		CpsReg[0x0c] = d & 0xff;
-		CpsReg[0x0d] = d >> 8;
-		return;
-	}
-	
-	if (a == 0x980004) {
-		CpsReg[0x12] = d & 0xff;
-		CpsReg[0x13] = d >> 8;
-		return;
-	}
-	
-	if (a == 0x980006) {
-		d -= 0x40;
-		CpsReg[0x10] = d & 0xff;
-		CpsReg[0x11] = d >> 8;
-		return;
-	}
-	
-	if (a == 0x980008) {
-		CpsReg[0x16] = d & 0xff;
-		CpsReg[0x17] = d >> 8;
-		return;
-	}
-	
-	if (a == 0x98000a) {
-		d -= 0x40;
-		CpsReg[0x14] = d & 0xff;
-		CpsReg[0x15] = d >> 8;
-		return;
-	}
-	
-	if (a == 0x980016) {
-		CpsReg[0x06] = d & 0xff;
-		CpsReg[0x07] = d >> 8;
-		return;
-	}
-	
-	if (a == 0x980166) {
-		CpsReg[0x66] = d & 0xff;
-		CpsReg[0x67] = d >> 8;
-		return;
+	switch (a) {
+		case 0x980000: {
+			// scroll1 y
+			*((UINT16*)(CpsReg + 0x0e)) = d;
+			return;
+		}
+		
+		case 0x980002: {
+			// scroll1 x
+			*((UINT16*)(CpsReg + 0x0c)) = d - 0x40;
+			return;
+		}
+		
+		case 0x980004: {
+			// scroll2 y
+			*((UINT16*)(CpsReg + 0x12)) = d;
+			return;
+		}
+		
+		case 0x980006: {
+			// scroll2 x
+			*((UINT16*)(CpsReg + 0x10)) = d - 0x3c;
+			return;
+		}
+		
+		case 0x980008: {
+			// scroll3 y
+			*((UINT16*)(CpsReg + 0x16)) = d;
+			return;
+		}
+		
+		case 0x98000a: {
+			// scroll3 x
+			*((UINT16*)(CpsReg + 0x14)) = d - 0x40;
+			return;
+		}
+		
+		case 0x98000c: {
+			// This seems to control layer order and enable
+			switch (d) {
+				case 0x00: {
+					nCps1Layers[0] = 0;
+					nCps1Layers[1] = 1;
+					nCps1Layers[2] = 3;
+					nCps1Layers[3] = 2;
+					break;
+				}
+				
+				case 0x01: {
+					nCps1Layers[0] = 0;
+					nCps1Layers[1] = 3;
+					nCps1Layers[2] = 2;
+					nCps1Layers[3] = 1;
+					break;
+				}
+				
+				case 0x02: {
+					nCps1Layers[0] = 0;
+					nCps1Layers[1] = 1;
+					nCps1Layers[2] = 2;
+					nCps1Layers[3] = 3;
+					break;
+				}
+				
+				case 0x03: {
+					nCps1Layers[0] = 0;
+					nCps1Layers[1] = 2;
+					nCps1Layers[2] = 1;
+					nCps1Layers[3] = 3;
+					break;
+				}
+				
+				case 0x04: {
+					nCps1Layers[0] = 1;
+					nCps1Layers[1] = 0;
+					nCps1Layers[2] = 2;
+					nCps1Layers[3] = 3;
+					break;
+				}
+				
+				case 0x05: {
+					nCps1Layers[0] = 0;
+					nCps1Layers[1] = 2;
+					nCps1Layers[2] = 3;
+					nCps1Layers[3] = 1;
+					break;
+				}
+				
+				default: {
+					nCps1Layers[0] = 0;
+					nCps1Layers[1] = 3;
+					nCps1Layers[2] = 2;
+					nCps1Layers[3] = 1;
+					bprintf(PRINT_IMPORTANT, _T("Unknown value written at 0x98000c %x\n"), d);
+				}
+			}
+			return;
+		}
+		
+		case 0x980016: {
+			// scroll3 ram offset
+			*((UINT16*)(CpsReg + 0x06)) = d;
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Write Word %x, %x\n"), a, d);
+		}
 	}
 }
 
 static INT32 Sf2m1Init()
 {
-	INT32 nRet = 0;
-	
-	CpsLayer2XOffs = 4;
 	Port6SoundWrite = 1;
+	bCpsUpdatePalEveryFrame = 1;
+	Cps1OverrideLayers = 1;
+	Cps1ObjGetCallbackFunction = DinopicObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
-	nRet = Sf2ceInit();
+	INT32 nRet = Sf2ceInit();
+	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
 	SekOpen(0);
-	SekMapHandler(1, 0x980000, 0x980167, SM_WRITE);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, SM_RAM);
+	SekMapHandler(1, 0x980000, 0x980fff, SM_WRITE);
 	SekSetWriteWordHandler(1, Sf2m1ScrollWrite);
 	SekClose();
 	
@@ -14645,11 +14708,11 @@ struct BurnDriverD BurnDrvCpsSf2mdt = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsSf2m1 = {
+struct BurnDriver BurnDrvCpsSf2m1 = {
 	"sf2m1", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II' - champion edition (bootleg, M1)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2m1RomInfo, Sf2m1RomName, NULL, NULL, Sf2m1InputInfo, Sf2DIPInfo,
 	Sf2m1Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

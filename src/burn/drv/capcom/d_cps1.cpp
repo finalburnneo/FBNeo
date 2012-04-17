@@ -10124,6 +10124,22 @@ static struct BurnRomInfo Wof3jsRomDesc[] = {
 STD_ROM_PICK(Wof3js)
 STD_ROM_FN(Wof3js)
 
+static struct BurnRomInfo Wof3jsaRomDesc[] = {
+	{ "cx2.040",       0x080000, 0xc01a6d2f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cx1.040",       0x080000, 0xfd95e677, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "tx-a.160",      0x200000, 0xae348da2, BRF_GRA | CPS1_TILES },
+	{ "tx-b.160",      0x200000, 0x384a6db0, BRF_GRA | CPS1_TILES },
+
+	{ "3js_09.rom",    0x010000, 0x21ce044c, BRF_PRG | CPS1_Z80_PROGRAM },
+	
+	{ "3js_18.rom",    0x020000, 0xac6e307d, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "3js_19.rom",    0x020000, 0x068741db, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Wof3jsa)
+STD_ROM_FN(Wof3jsa)
+
 static struct BurnRomInfo Wof3sjRomDesc[] = {
 	{ "k6b.040",       0x080000, 0x7b365108, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "k6a.040",       0x080000, 0x10488a51, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -10557,6 +10573,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "wofha"       , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "sgyxz"       , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wof3js"      , CPS_B_21_DEF, mapper_TK263B, 0, NULL                },
+	{ "wof3jsa"     , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wof3sj"      , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wof3sja"     , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofsj"       , HACK_B_6    , mapper_TK263B, 0, NULL                },
@@ -12733,6 +12750,28 @@ static void Wof3jsCallback()
 static INT32 Wof3jsInit()
 {
 	AmendProgRomCallback = Wof3jsCallback;
+	
+	return TwelveMhzInit();
+}
+
+static void Wof3jsaCallback()
+{
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x40000);
+	
+	if (pTemp) {
+		memcpy(pTemp           , CpsRom + 0x40000, 0x40000);
+		memcpy(CpsRom + 0x40000, CpsRom + 0x80000, 0x40000);
+		memcpy(CpsRom + 0x80000, pTemp           , 0x40000);
+	}
+	
+	BurnFree(pTemp);
+}
+
+static INT32 Wof3jsaInit()
+{
+	AmendProgRomCallback = Wof3jsaCallback;
+	
+	bCpsUpdatePalEveryFrame = 1;
 	
 	return TwelveMhzInit();
 }
@@ -15157,11 +15196,21 @@ struct BurnDriver BurnDrvCpsSgyxz = {
 
 struct BurnDriver BurnDrvCpsWof3js = {
 	"wof3js", "wof", NULL, NULL, "1992",
-	"Sangokushi II: San Jian Sheng (Chinese bootleg)\0", NULL, "bootleg", "CPS1",
+	"Sangokushi II: San Jian Sheng (Chinese bootleg set 1)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Wof3jsRomInfo, Wof3jsRomName, NULL, NULL, WofhfhInputInfo, WofhfhDIPInfo,
 	Wof3jsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriverD BurnDrvCpsWof3jsa = {
+	"wof3jsa", "wof", NULL, NULL, "1992",
+	"Sangokushi II: San Jian Sheng (Chinese bootleg set 2)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, Wof3jsaRomInfo, Wof3jsaRomName, NULL, NULL, WofhfhInputInfo, WofhfhDIPInfo,
+	Wof3jsaInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

@@ -10336,6 +10336,31 @@ static struct BurnRomInfo WofahaRomDesc[] = {
 STD_ROM_PICK(Wofaha)
 STD_ROM_FN(Wofaha)
 
+static struct BurnRomInfo WofahbRomDesc[] = {
+	{ "tk2ah_23b.rom", 0x080000, 0x48fd83c6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	// Taken from wofah, possibly not correct, although does match original Asia set as well
+	{ "tk2a_22b.rom",  0x080000, 0x900ad4cd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "tk2_gfx1.rom",  0x080000, 0x0d9cb9bf, BRF_GRA | CPS1_TILES },
+	{ "tk2_gfx3.rom",  0x080000, 0x45227027, BRF_GRA | CPS1_TILES },
+	{ "tk2_gfx2.rom",  0x080000, 0xc5ca2460, BRF_GRA | CPS1_TILES },
+	{ "tk2_gfx4.rom",  0x080000, 0xe349551c, BRF_GRA | CPS1_TILES },
+	{ "tk2_gfx5.rom",  0x080000, 0x291f0f0b, BRF_GRA | CPS1_TILES },
+	{ "tk2_gfx7.rom",  0x080000, 0x3edeb949, BRF_GRA | CPS1_TILES },
+	{ "tk2_gfx6.rom",  0x080000, 0x1abd14d6, BRF_GRA | CPS1_TILES },
+	{ "tk2_gfx8.rom",  0x080000, 0xb27948e3, BRF_GRA | CPS1_TILES },
+
+	{ "tk2_qa.rom",    0x020000, 0xc9183a0d, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "tk2_q1.rom",    0x080000, 0x611268cf, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "tk2_q2.rom",    0x080000, 0x20f55ca9, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "tk2_q3.rom",    0x080000, 0xbfcf6f52, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "tk2_q4.rom",    0x080000, 0x36642e88, BRF_SND | CPS1_QSOUND_SAMPLES },
+};
+
+STD_ROM_PICK(Wofahb)
+STD_ROM_FN(Wofahb)
+
 static struct BurnRomInfo Cps1frogRomDesc[] = {
 	{ "frog30-36.bin", 0x020000, 0x8eb8ddbe, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "frog35-42.bin", 0x020000, 0xacb5a988, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -10584,6 +10609,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "wofjh"       , CPS_B_21_QS1, mapper_TK263B, 0, wof_decode          },
 	{ "wofah"       , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "wofaha"      , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
+	{ "wofahb"      , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "sfzch"       , CPS_B_21_DEF, mapper_sfzch , 0, NULL                },
 	{ "sfach"       , CPS_B_21_DEF, mapper_sfzch , 0, NULL                },
 	{ "sfabch"      , CPS_B_21_DEF, mapper_sfzch , 0, NULL                },
@@ -15364,6 +15390,16 @@ struct BurnDriver BurnDrvCpsWofaha = {
 	L"\u4E09\u56FD\u5FD7II\0Sangokushi II (921005 Asia bootleg set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofahaRomInfo, WofahaRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsWofahb = {
+	"wofahb", "wof", NULL, NULL, "1992",
+	"Sangokushi II (921005 Asia, bootleg set 3)\0", NULL, "bootleg", "CPS1 / QSound",
+	L"\u4E09\u56FD\u5FD7II\0Sangokushi II (921005 Asia bootleg set 3)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
+	NULL, WofahbRomInfo, WofahbRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

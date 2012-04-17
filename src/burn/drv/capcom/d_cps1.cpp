@@ -10055,37 +10055,50 @@ STD_ROM_PICK(Wofhfh)
 STD_ROM_FN(Wofhfh)
 
 static struct BurnRomInfo WofhRomDesc[] = {
-	{ "sgyx.800",      0x100000, 0x3703a650, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "sgyx.800",       0x100000, 0x3703a650, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
-	{ "sgyx-1.160",    0x200000, 0xa60be9f6, BRF_GRA | CPS1_TILES },
-	{ "sgyx-2.160",    0x200000, 0x6ad9d048, BRF_GRA | CPS1_TILES },
+	{ "sgyx-1.160",     0x200000, 0xa60be9f6, BRF_GRA | CPS1_TILES },
+	{ "sgyx-2.160",     0x200000, 0x6ad9d048, BRF_GRA | CPS1_TILES },
 	
-	// These sound roms are taken from wofhfh, this set looks it uses psound
-	{ "9",             0x020000, 0x86fe8a97, BRF_PRG | CPS1_Z80_PROGRAM },
+	// These sound roms are taken from sgyxz
+	{ "sgyxz_snd2.bin", 0x010000, 0x210c376f, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "18",            0x020000, 0xc04be720, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "19",            0x020000, 0xfbb8d8c1, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "sgyxz_snd1.bin", 0x040000, 0xc15ac0f2, BRF_SND | CPS1_OKIM6295_SAMPLES },
 };
 
 STD_ROM_PICK(Wofh)
 STD_ROM_FN(Wofh)
 
 static struct BurnRomInfo WofhaRomDesc[] = {
-	{ "fg-c.040",      0x080000, 0xd046fc86, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "fg-a.040",      0x080000, 0xf176ee8f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "fg-c.040",       0x080000, 0xd046fc86, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "fg-a.040",       0x080000, 0xf176ee8f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
-	{ "sgyx-1.160",    0x200000, 0xa60be9f6, BRF_GRA | CPS1_TILES },
-	{ "sgyx-2.160",    0x200000, 0x6ad9d048, BRF_GRA | CPS1_TILES },
+	{ "sgyx-1.160",     0x200000, 0xa60be9f6, BRF_GRA | CPS1_TILES },
+	{ "sgyx-2.160",     0x200000, 0x6ad9d048, BRF_GRA | CPS1_TILES },
 	
-	// These sound roms are taken from wofhfh, this set looks it uses psound
-	{ "9",             0x020000, 0x86fe8a97, BRF_PRG | CPS1_Z80_PROGRAM },
+	// These sound roms are taken from sgyxz
+	{ "sgyxz_snd2.bin", 0x010000, 0x210c376f, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "18",            0x020000, 0xc04be720, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "19",            0x020000, 0xfbb8d8c1, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "sgyxz_snd1.bin", 0x040000, 0xc15ac0f2, BRF_SND | CPS1_OKIM6295_SAMPLES },
 };
 
 STD_ROM_PICK(Wofha)
 STD_ROM_FN(Wofha)
+
+static struct BurnRomInfo SgyxzRomDesc[] = {
+	{ "sgyxz_prg2.bin", 0x080000, 0x95429c83, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "sgyxz_prg1.bin", 0x080000, 0xd8511929, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "sgyxz_gfx1.bin", 0x200000, 0xa60be9f6, BRF_GRA | CPS1_TILES },
+	{ "sgyxz_gfx2.bin", 0x200000, 0x6ad9d048, BRF_GRA | CPS1_TILES },
+
+	{ "sgyxz_snd2.bin", 0x010000, 0x210c376f, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "sgyxz_snd1.bin", 0x040000, 0xc15ac0f2, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Sgyxz)
+STD_ROM_FN(Sgyxz)
 
 static struct BurnRomInfo Wof3jsRomDesc[] = {
 	{ "3js_23.rom",    0x080000, 0x1ebb76da, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -10542,6 +10555,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "wofhfh"      , CPS_B_21_DEF, mapper_TK263B, 0, NULL                },
 	{ "wofh"        , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofha"       , HACK_B_6    , mapper_TK263B, 0, NULL                },
+	{ "sgyxz"       , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wof3js"      , CPS_B_21_DEF, mapper_TK263B, 0, NULL                },
 	{ "wof3sj"      , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wof3sja"     , HACK_B_6    , mapper_TK263B, 0, NULL                },
@@ -12637,6 +12651,57 @@ static INT32 WofhaInit()
 	CpsLayer3XOffs = 0xffc0;
 	
 	AmendProgRomCallback = WofhCallback;
+	Cps1ObjGetCallbackFunction = WofhObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	
+	nRet = TwelveMhzInit();
+	
+	memset(CpsGfx, 0, nCpsGfxLen);
+	CpsLoadTilesHack160(CpsGfx, 2);
+	
+	SekOpen(0);
+	SekMapHandler(3, 0x880000, 0x89ffff, SM_READ | SM_WRITE);
+	SekSetReadByteHandler(3, WofhInputReadByte);
+	SekSetReadWordHandler(3, WofhInputReadWord);
+	SekSetWriteByteHandler(3, WofhInputWriteByte);
+	SekSetWriteWordHandler(3, WofhInputWriteWord);
+	SekMapHandler(4, 0x135000, 0x135fff, SM_READ);
+	SekSetReadByteHandler(4, Wofh135ReadByte);
+	SekSetReadWordHandler(4, Wofh135ReadWord);
+	SekClose();
+	
+	return nRet;
+}
+
+static void SgyxzCallback()
+{
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x40000);
+	
+	if (pTemp) {
+		memcpy(pTemp           , CpsRom + 0x40000, 0x40000);
+		memcpy(CpsRom + 0x40000, CpsRom + 0x80000, 0x40000);
+		memcpy(CpsRom + 0x80000, pTemp           , 0x40000);
+	}
+	
+	BurnFree(pTemp);
+	
+	WofhCallback();
+	
+	// This set has more protection?
+	*((UINT16*)(CpsRom + 0x708be)) = 0x4e71;
+	*((UINT16*)(CpsRom + 0x708c0)) = 0x4e71;
+}
+
+static INT32 SgyxzInit()
+{
+	INT32 nRet = 0;
+	
+	bCpsUpdatePalEveryFrame = 1;
+	CpsLayer1XOffs = 0xffc0;
+	CpsLayer2XOffs = 0xffc0;
+	CpsLayer3XOffs = 0xffc0;
+	
+	AmendProgRomCallback = SgyxzCallback;
 	Cps1ObjGetCallbackFunction = WofhObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
@@ -15077,6 +15142,16 @@ struct BurnDriver BurnDrvCpsWofha = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofhaRomInfo, WofhaRomName, NULL, NULL, WofhfhInputInfo, WofhDIPInfo,
 	WofhaInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSgyxz = {
+	"sgyxz", "wof", NULL, NULL, "1992",
+	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 3)\0", "Some sprite priority problems", "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, SgyxzRomInfo, SgyxzRomName, NULL, NULL, WofhfhInputInfo, WofhDIPInfo,
+	SgyxzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

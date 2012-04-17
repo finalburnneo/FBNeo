@@ -12844,6 +12844,8 @@ static INT32 WofsjbInit()
 	CpsLayer2XOffs = 4;
 	CpsLayer3XOffs = 8;
 	
+	Cps1DisablePSnd = 1;
+	
 	return TwelveMhzInit();
 }
 
@@ -12887,21 +12889,40 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 		}
 		
 		case 0x98000c: {
-			// This seems to control layer order and enable
 			switch (d) {
 				case 0x00: {
 					nCps1Layers[0] = 1;
 					nCps1Layers[1] = 0;
 					nCps1Layers[2] = 2;
 					nCps1Layers[3] = 3;
+					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
+					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x01ff;
+					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x01ff;
+					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x7fff;
 					break;
 				}
 				
 				case 0x01: {
 					nCps1Layers[0] = 1;
 					nCps1Layers[1] = 0;
-					nCps1Layers[2] = -1;
-					nCps1Layers[3] = -1;
+					nCps1Layers[2] = 3;
+					nCps1Layers[3] = 2;
+					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
+					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x003f;
+					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x01ff;
+					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x7fff;
+					break;
+				}
+				
+				case 0x03: {
+					nCps1Layers[0] = 1;
+					nCps1Layers[1] = 3;
+					nCps1Layers[2] = 0;
+					nCps1Layers[3] = 2;
+					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
+					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x07ff;
+					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x0780;
+					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x0000;
 					break;
 				}
 				
@@ -12916,8 +12937,12 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 				case 0x0f: {
 					nCps1Layers[0] = 1;
 					nCps1Layers[1] = 0;
-					nCps1Layers[2] = -1;
-					nCps1Layers[3] = 3;
+					nCps1Layers[2] = 3;
+					nCps1Layers[3] = 2;
+					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
+					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x7fff;
+					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x7fff;
+					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x7fff;
 					break;
 				}
 				
@@ -12940,10 +12965,6 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 
 static INT32 WofbInit()
 {
-	// todo;
-	// layer enables need checking
-	// need to check for more layer enable values
-
 	bCpsUpdatePalEveryFrame = 1;
 	Cps1OverrideLayers = 1;
 	Port6SoundWrite = 1;
@@ -15126,11 +15147,11 @@ struct BurnDriver BurnDrvCpsWofsjb = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsWofb = {
+struct BurnDriver BurnDrvCpsWofb = {
 	"wofb", "wof", NULL, NULL, "1992",
 	"Warriors of Fate (bootleg)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofbRomInfo, WofbRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
 	WofbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

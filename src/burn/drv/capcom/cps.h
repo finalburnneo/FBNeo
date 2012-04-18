@@ -238,6 +238,7 @@ extern UINT8* CpsEncZRom;
 INT32 CpsRwInit();
 INT32 CpsRwExit();
 INT32 CpsRwGetInp();
+void CpsWritePort(const UINT32 ia, UINT8 d);
 UINT8 __fastcall CpsReadByte(UINT32 a);
 void __fastcall CpsWriteByte(UINT32 a, UINT8 d);
 UINT16 __fastcall CpsReadWord(UINT32 a);

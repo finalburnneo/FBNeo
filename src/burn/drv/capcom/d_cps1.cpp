@@ -11980,22 +11980,20 @@ static INT32 Sf2mdtInit()
 	return nRet;
 }
 
-static void Sf2hfjbCallback()
+void __fastcall Sf2hfjbWriteByte(UINT32 a, UINT8 d)
 {
-	*((UINT16*)(CpsRom + 0x1d22a)) = 0x0120;	// Fix scroll
-	*((UINT16*)(CpsRom + 0x21bec)) = 0x0083;
-	*((UINT16*)(CpsRom + 0x21cf8)) = 0x828e;
-	*((UINT16*)(CpsRom + 0x21cfa)) = 0x829e;
-	*((UINT16*)(CpsRom + 0x21cfc)) = 0x82ae;
-	*((UINT16*)(CpsRom + 0x21d06)) = 0x827f;
-	*((UINT16*)(CpsRom + 0x21d08)) = 0x828f;
-	*((UINT16*)(CpsRom + 0x21d0a)) = 0x829f;
-	*((UINT16*)(CpsRom + 0x21d0c)) = 0x82af;
-	*((UINT16*)(CpsRom + 0x21d16)) = 0x827e;
-	*((UINT16*)(CpsRom + 0x21d18)) = 0x82a0;
-	*((UINT16*)(CpsRom + 0x21d1a)) = 0x822c;
-	*((UINT16*)(CpsRom + 0x21d1c)) = 0x823c;
-	*((UINT16*)(CpsRom + 0x21d2a)) = 0x822d;
+	CpsWritePort(a & 0x1ff, d);
+}
+
+void __fastcall Sf2hfjbWriteWord(UINT32 a, UINT16 d)
+{
+	if (a == 0x800124) {
+		// row scroll start register moved in this set
+		*((UINT16*)(CpsReg + 0x20)) = d;
+		return;
+	}
+	
+	SEK_DEF_WRITE_WORD(1, a, d);
 }
 
 static INT32 Sf2hfjbInit()
@@ -12005,9 +12003,15 @@ static INT32 Sf2hfjbInit()
 	CpsLayer3XOffs = -16;
 	CpsDrawSpritesInReverse = 1;
 	
-	AmendProgRomCallback = Sf2hfjbCallback;
+	INT32 nRet = Sf2ceInit();
 	
-	return Sf2ceInit();
+	SekOpen(0);
+	SekMapHandler(1, 0x800000, 0x807fff, SM_WRITE);
+	SekSetWriteByteHandler(1, Sf2hfjbWriteByte);
+	SekSetWriteWordHandler(1, Sf2hfjbWriteWord);
+	SekClose();
+	
+	return nRet;
 }
 
 static INT32 Sf2m4Init()

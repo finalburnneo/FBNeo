@@ -11565,10 +11565,10 @@ static INT32 KnightsbInit()
 	
 	INT32 nRet = DrvInit();
 	
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
 	SekOpen(0);
-	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991FFF, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, SM_RAM);
 	SekMapHandler(1, 0x980000, 0x98ffff, SM_WRITE);
 	SekSetWriteWordHandler(1, Knightsb98WriteWord);
 	SekClose();
@@ -11602,10 +11602,10 @@ static INT32 Knightsb4Init()
 	
 	INT32 nRet = DrvInit();
 	
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
 	SekOpen(0);
-	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991FFF, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, SM_RAM);
 	SekMapHandler(1, 0x980000, 0x98ffff, SM_WRITE);
 	SekSetWriteWordHandler(1, Knightsb98WriteWord);
 	SekClose();

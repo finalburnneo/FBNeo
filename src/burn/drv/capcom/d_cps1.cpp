@@ -13109,10 +13109,11 @@ static INT32 WofbInit()
 	bCpsUpdatePalEveryFrame = 1;
 	Cps1OverrideLayers = 1;
 	Port6SoundWrite = 1;
-	Cps1DetectEndSpriteList8000 = 1;
 	CpsLayer1XOffs = 0xffc0;
 	CpsLayer2XOffs = 0xffc0;
 	CpsLayer3XOffs = 0xffc0;
+	Cps1ObjGetCallbackFunction = DinopicObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	INT32 nRet = TwelveMhzInit();
 	
@@ -13120,7 +13121,10 @@ static INT32 WofbInit()
 	CpsLoadTilesBootleg(CpsGfx + 0x000000, 4);
 	CpsLoadTilesBootleg(CpsGfx + 0x200000, 8);
 	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+	
 	SekOpen(0);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, SM_RAM);
 	SekMapHandler(1, 0x980000, 0x98ffff, SM_WRITE);
 	SekSetWriteWordHandler(1, Wofb98WriteWord);
 	SekClose();

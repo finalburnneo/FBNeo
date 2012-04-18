@@ -9971,10 +9971,11 @@ static struct BurnRomInfo Wof3jsaRomDesc[] = {
 	{ "tx-a.160",      0x200000, 0xae348da2, BRF_GRA | CPS1_TILES },
 	{ "tx-b.160",      0x200000, 0x384a6db0, BRF_GRA | CPS1_TILES },
 
-	{ "3js_09.rom",    0x010000, 0x21ce044c, BRF_PRG | CPS1_Z80_PROGRAM },
-	
-	{ "3js_18.rom",    0x020000, 0xac6e307d, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "3js_19.rom",    0x020000, 0x068741db, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	// These sound roms are taken from wofhfh, this set looks it uses psound
+	{ "9",             0x020000, 0x86fe8a97, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "18",            0x020000, 0xc04be720, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "19",            0x020000, 0xfbb8d8c1, BRF_SND | CPS1_OKIM6295_SAMPLES },
 };
 
 STD_ROM_PICK(Wof3jsa)
@@ -12690,6 +12691,91 @@ static INT32 Wof3jsInit()
 	return TwelveMhzInit();
 }
 
+UINT8 __fastcall Wof3jsaInputReadByte(UINT32 a)
+{
+	switch (a) {
+		case 0x880000: {
+			return ~Inp000;
+		}
+		
+		case 0x880001: {
+			return ~Inp001;
+		}
+		
+		case 0x880006: {
+			return ~Inp018;
+		}
+		
+		case 0x880007: {
+			return 0xff;
+		}
+		
+		case 0x880008: {
+			return ~Inp177;
+		}
+		
+		case 0x88000a: {
+			return ~Cpi01A;
+		}
+		
+		case 0x88000c: {
+			return ~Cpi01C;
+		}
+		
+		case 0x880e78: {
+			return ~Cpi01E;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Read Byte %x\n"), a);
+		}
+	}
+	
+	return 0;
+}
+
+UINT16 __fastcall Wof3jsaInputReadWord(UINT32 a)
+{
+	SEK_DEF_READ_WORD(3, a);
+}
+
+void __fastcall Wof3jsaInputWriteByte(UINT32 a, UINT8 d)
+{
+	switch (a) {
+		case 0x88000e: {
+			PsndSyncZ80((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles);
+
+			PsndCode = d;
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Write Byte %x, %x\n"), a, d);
+		}
+	}
+}
+
+void __fastcall Wof3jsaInputWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x88000e: {
+			PsndSyncZ80((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles);
+
+			PsndCode = d & 0xff;
+			return;
+		}
+		
+		case 0x890000: {
+			// ???
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Write word %x, %x\n"), a, d);
+		}
+	}
+}
+
 static void Wof3jsaCallback()
 {
 	UINT8 *pTemp = (UINT8*)BurnMalloc(0x40000);
@@ -12701,6 +12787,9 @@ static void Wof3jsaCallback()
 	}
 	
 	BurnFree(pTemp);
+	
+	// Patch protection?
+	*((UINT16*)(CpsRom + 0xe7ad0)) = 0x4e71;
 }
 
 static INT32 Wof3jsaInit()
@@ -12708,8 +12797,27 @@ static INT32 Wof3jsaInit()
 	AmendProgRomCallback = Wof3jsaCallback;
 	
 	bCpsUpdatePalEveryFrame = 1;
+	CpsLayer1XOffs = 0xffc0;
+	CpsLayer2XOffs = 0xffc0;
+	CpsLayer3XOffs = 0xffc0;
 	
-	return TwelveMhzInit();
+	Cps1ObjGetCallbackFunction = WofhObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	
+	INT32 nRet = TwelveMhzInit();
+	
+	memset(CpsGfx, 0, nCpsGfxLen);
+	CpsLoadTilesHack160(CpsGfx, 2);
+	
+	SekOpen(0);
+	SekMapHandler(3, 0x880000, 0x89ffff, SM_READ | SM_WRITE);
+	SekSetReadByteHandler(3, Wof3jsaInputReadByte);
+	SekSetReadWordHandler(3, Wof3jsaInputReadWord);
+	SekSetWriteByteHandler(3, Wof3jsaInputWriteByte);
+	SekSetWriteWordHandler(3, Wof3jsaInputWriteWord);
+	SekClose();
+	
+	return nRet;
 }
 
 UINT8 __fastcall Wof3sjInputReadByte(UINT32 a)
@@ -15093,11 +15201,11 @@ struct BurnDriver BurnDrvCpsWof3js = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsWof3jsa = {
+struct BurnDriver BurnDrvCpsWof3jsa = {
 	"wof3jsa", "wof", NULL, NULL, "1992",
 	"Sangokushi II: San Jian Sheng (Chinese bootleg set 2)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Wof3jsaRomInfo, Wof3jsaRomName, NULL, NULL, WofhfhInputInfo, WofhfhDIPInfo,
 	Wof3jsaInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

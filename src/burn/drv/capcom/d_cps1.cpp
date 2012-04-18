@@ -13017,6 +13017,9 @@ static INT32 WofbInit()
 	SekSetWriteWordHandler(1, Wofb98WriteWord);
 	SekClose();
 	
+	// scroll3 ram offset
+	*((UINT16*)(CpsReg + 0x06)) = 0x9100;
+	
 	return nRet;	
 }
 

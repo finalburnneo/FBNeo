@@ -10839,6 +10839,8 @@ static INT32 CawingblInit()
 //	CpsLayer2XOffs = 0xffc0;
 //	CpsLayer3XOffs = 0xffc0;
 
+	Cps1ObjGetCallbackFunction = FcrashObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesCawingbl;
 	CpsRunInitCallbackFunction = FcrashSoundInit;
 	CpsRunResetCallbackFunction = FcrashSoundReset;

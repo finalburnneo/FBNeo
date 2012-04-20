@@ -11389,13 +11389,39 @@ void __fastcall Knightsb98WriteWord(UINT32 a, UINT16 d)
 		case 0x98000c: {
 			// This seems to control layer order and enable
 			switch (d) {
-				case 0x00:
-				case 0x1f: 
+				case 0x00: {
+					nCps1Layers[0] = 1;
+					nCps1Layers[1] = 0;
+					nCps1Layers[2] = 2;
+					nCps1Layers[3] = 3;
+					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
+					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x0000;
+					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x0000;
+					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x0000;
+					break;
+				}
+				
+				case 0x1f: {
+					nCps1Layers[0] = 1;
+					nCps1Layers[1] = 0;
+					nCps1Layers[2] = 2;
+					nCps1Layers[3] = 3;
+					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
+					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x03ff;
+					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x003f;
+					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x01ff;
+					break;
+				}
+				
 				case 0xff: {
 					nCps1Layers[0] = 1;
 					nCps1Layers[1] = 0;
 					nCps1Layers[2] = 2;
 					nCps1Layers[3] = 3;
+					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
+					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x7fff;
+					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x7ff8;
+					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x00ff;
 					break;
 				}
 				
@@ -11404,6 +11430,10 @@ void __fastcall Knightsb98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[1] = 1;
 					nCps1Layers[2] = 2;
 					nCps1Layers[3] = 3;
+					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
+					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x0000;
+					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x0000;
+					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x0000;
 					break;
 				}
 				
@@ -11412,6 +11442,10 @@ void __fastcall Knightsb98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[1] = 1;
 					nCps1Layers[2] = 0;
 					nCps1Layers[3] = 3;
+					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
+					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x0000;
+					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x0000;
+					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x0000;
 					break;
 				}
 				

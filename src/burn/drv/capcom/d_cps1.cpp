@@ -10809,7 +10809,7 @@ static INT32 Captcommb2Init()
 	return DrvInit();
 }
 
-UINT8 __fastcall CawingblInputRead(UINT32 a)
+UINT8 __fastcall CawingblInputReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x882000: {
@@ -10844,7 +10844,18 @@ UINT8 __fastcall CawingblInputRead(UINT32 a)
 	return 0;
 }
 
-void __fastcall CawingblInputWrite(UINT32 a, UINT8 d)
+UINT16 __fastcall CawingblInputReadWord(UINT32 a)
+{
+	switch (a) {
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Read Word %x\n"), a);
+		}
+	}
+
+	return 0;
+}
+
+void __fastcall CawingblInputWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x882006: {
@@ -10858,31 +10869,55 @@ void __fastcall CawingblInputWrite(UINT32 a, UINT8 d)
 	}
 }
 
+void __fastcall CawingblInputWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x882006: {
+			FcrashSoundCommand(d);
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Write Word %x, %x\n"), a, d);
+		}
+	}
+}
+
+static void CawingblFrameEnd()
+{
+	// Needs an IRQ 6 to write scroll values
+	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+	
+	FcrashSoundFrameEnd();
+}
+
 static INT32 CawingblInit()
 {
 	INT32 nRet = 0;
 	
 	Cps1DisablePSnd = 1;
 	
-	CpsLayer1XOffs = 0xffc0;
-//	CpsLayer2XOffs = 0xffc0;
-//	CpsLayer3XOffs = 0xffc0;
+	CpsLayer1XOffs = -63;
+	CpsLayer2XOffs = -62;
+	CpsLayer3XOffs = -65;
 
-	Cps1ObjGetCallbackFunction = FcrashObjGet;
+	Cps1ObjGetCallbackFunction = WofhObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesCawingbl;
 	CpsRunInitCallbackFunction = FcrashSoundInit;
 	CpsRunResetCallbackFunction = FcrashSoundReset;
 	CpsRunExitCallbackFunction = FcrashSoundExit;
 	CpsRunFrameStartCallbackFunction = FcrashSoundFrameStart;
-	CpsRunFrameEndCallbackFunction = FcrashSoundFrameEnd;
+	CpsRunFrameEndCallbackFunction = CawingblFrameEnd;
 	
 	nRet = DrvInit();
 	
 	SekOpen(0);
 	SekMapHandler(1, 0x882000, 0x882fff, SM_READ | SM_WRITE);
-	SekSetReadByteHandler(1, CawingblInputRead);
-	SekSetWriteByteHandler(1, CawingblInputWrite);
+	SekSetReadByteHandler(1, CawingblInputReadByte);
+	SekSetReadWordHandler(1, CawingblInputReadWord);
+	SekSetWriteByteHandler(1, CawingblInputWriteByte);
+	SekSetWriteWordHandler(1, CawingblInputWriteWord);
 	SekClose();
 	
 	return 0;
@@ -13450,11 +13485,11 @@ struct BurnDriver BurnDrvCpsCawingj = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsCawingbl = {
+struct BurnDriver BurnDrvCpsCawingbl = {
 	"cawingbl", "cawing", NULL, NULL, "1990",
 	"Carrier Air Wing (bootleg)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_HORSHOOT, 0,
 	NULL, CawingblRomInfo, CawingblRomName, NULL, NULL, CawingInputInfo, CawingDIPInfo,
 	CawingblInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

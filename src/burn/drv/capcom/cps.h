@@ -177,6 +177,8 @@ typedef INT32 (*CpsRunResetCallback)();
 extern CpsRunResetCallback CpsRunResetCallbackFunction;
 typedef void (*CpsRunFrameStartCallback)();
 extern CpsRunFrameStartCallback CpsRunFrameStartCallbackFunction;
+typedef void (*CpsRunFrameMiddleCallback)();
+extern CpsRunFrameMiddleCallback CpsRunFrameMiddleCallbackFunction;
 typedef void (*CpsRunFrameEndCallback)();
 extern CpsRunFrameEndCallback CpsRunFrameEndCallbackFunction;
 

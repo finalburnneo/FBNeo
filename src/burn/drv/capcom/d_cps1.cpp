@@ -10883,12 +10883,11 @@ void __fastcall CawingblInputWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-static void CawingblFrameEnd()
+static void CawingblFrameMiddle()
 {
-	// Needs an IRQ 6 to write scroll values
-	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
-	
-	FcrashSoundFrameEnd();
+	// Needs an IRQ 6 to write scroll values (running it every frame results
+	// in the game running too fast
+	if (GetCurrentFrame() & 1) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
 }
 
 static INT32 CawingblInit()
@@ -10908,7 +10907,8 @@ static INT32 CawingblInit()
 	CpsRunResetCallbackFunction = FcrashSoundReset;
 	CpsRunExitCallbackFunction = FcrashSoundExit;
 	CpsRunFrameStartCallbackFunction = FcrashSoundFrameStart;
-	CpsRunFrameEndCallbackFunction = CawingblFrameEnd;
+	CpsRunFrameMiddleCallbackFunction = CawingblFrameMiddle;
+	CpsRunFrameEndCallbackFunction = FcrashSoundFrameEnd;
 	
 	nRet = DrvInit();
 	

@@ -23,6 +23,7 @@ CpsRunInitCallback CpsRunInitCallbackFunction = NULL;
 CpsRunInitCallback CpsRunExitCallbackFunction = NULL;
 CpsRunResetCallback CpsRunResetCallbackFunction = NULL;
 CpsRunFrameStartCallback CpsRunFrameStartCallbackFunction = NULL;
+CpsRunFrameMiddleCallback CpsRunFrameMiddleCallbackFunction = NULL;
 CpsRunFrameEndCallback CpsRunFrameEndCallbackFunction = NULL;
 
 static void CpsQSoundCheatSearchCallback()
@@ -191,6 +192,7 @@ INT32 CpsRunExit()
 	CpsRunInitCallbackFunction = NULL;
 	CpsRunResetCallbackFunction = NULL;
 	CpsRunFrameStartCallbackFunction = NULL;
+	CpsRunFrameMiddleCallbackFunction = NULL;
 	CpsRunFrameEndCallbackFunction = NULL;
 
 	return 0;
@@ -313,6 +315,10 @@ INT32 Cps1Frame()
 
 	for (i = 0; i < 4; i++) {
 		nNext = ((i + 1) * nCpsCycles) >> 2;					// find out next cycle count to run to
+		
+		if (i == 2 && CpsRunFrameMiddleCallbackFunction) {
+			CpsRunFrameMiddleCallbackFunction();
+		}
 
 		if (SekTotalCycles() < nDisplayEnd && nNext > nDisplayEnd) {
 

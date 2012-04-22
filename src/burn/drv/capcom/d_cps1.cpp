@@ -4062,10 +4062,10 @@ static struct BurnRomInfo CawingblRomDesc[] = {
 	{ "caw2.bin",      0x080000, 0x8125d3f0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	// caw2
 	{ "caw1.bin",      0x080000, 0xb19b10ce, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	// caw1
 
-	{ "caw5.bin",      0x080000, 0xa045c689, BRF_GRA | CPS1_TILES },
-	{ "caw4.bin",      0x080000, 0x61192f7c, BRF_GRA | CPS1_TILES },	
-	{ "caw7.bin",      0x080000, 0x30dd78db, BRF_GRA | CPS1_TILES },
-	{ "caw6.bin",      0x080000, 0x4937fc41, BRF_GRA | CPS1_TILES },	
+	{ "caw7.bin",      0x080000, 0xa045c689, BRF_GRA | CPS1_TILES },
+	{ "caw6.bin",      0x080000, 0x61192f7c, BRF_GRA | CPS1_TILES },	
+	{ "caw5.bin",      0x080000, 0x30dd78db, BRF_GRA | CPS1_TILES },
+	{ "caw4.bin",      0x080000, 0x4937fc41, BRF_GRA | CPS1_TILES },	
 
 	{ "caw3.bin",      0x020000, 0xffe16cdc, BRF_PRG | CPS1_Z80_PROGRAM },
 };
@@ -5492,10 +5492,7 @@ static struct BurnRomInfo KnightsbRomDesc[] = {
 	{ "kr_gfx6.rom",   0x080000, 0x0200bc3d, BRF_GRA | CPS1_TILES },
 	{ "kr_gfx8.rom",   0x080000, 0x0bb2b4e7, BRF_GRA | CPS1_TILES },
 
-	{ "kr_09.rom",     0x010000, 0x5e44d9ee, BRF_PRG | CPS1_Z80_PROGRAM },
-
-	{ "kr_18.rom",     0x020000, 0xda69d15f, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "kr_19.rom",     0x020000, 0xbfc654e9, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "1.ic26",        0x040000, 0xbd6f9cc1, BRF_PRG | CPS1_Z80_PROGRAM },
 };
 
 STD_ROM_PICK(Knightsb)
@@ -8261,12 +8258,27 @@ static struct BurnRomInfo Sf2koryuRomDesc[] = {
 	{ "u221.rom",     0x0020000, 0x64e6e091, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
 	{ "u195.rom",     0x0020000, 0xc95e4443, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
 
+#if !defined ROM_VERIFY
 	{ "u70.rom",      0x0100000, 0xbaa0f81f, BRF_GRA | CPS1_TILES },
 	{ "u68.rom",      0x0100000, 0x8edff95a, BRF_GRA | CPS1_TILES },
 	{ "u69.rom",      0x0100000, 0x468962b1, BRF_GRA | CPS1_TILES },
 	{ "u64.rom",      0x0100000, 0x8165f536, BRF_GRA | CPS1_TILES },
 	{ "u19.rom",      0x0100000, 0x39d763d3, BRF_GRA | CPS1_TILES },
 	{ "u18.rom",      0x0100000, 0x93ec42ae, BRF_GRA | CPS1_TILES },
+#else
+	{ "s92_01.bin",   0x0080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
+	{ "s92_02.bin",   0x0080000, 0x840289ec, BRF_GRA | CPS1_TILES },
+	{ "s92_03.bin",   0x0080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
+	{ "s92_04.bin",   0x0080000, 0xe2799472, BRF_GRA | CPS1_TILES },
+	{ "s92_05.bin",   0x0080000, 0xba8a2761, BRF_GRA | CPS1_TILES },
+	{ "s92_06.bin",   0x0080000, 0xe584bfb5, BRF_GRA | CPS1_TILES },
+	{ "s92_07.bin",   0x0080000, 0x21e3f87d, BRF_GRA | CPS1_TILES },
+	{ "s92_08.bin",   0x0080000, 0xbefc47df, BRF_GRA | CPS1_TILES },
+	{ "s92_10.bin",   0x0080000, 0x960687d5, BRF_GRA | CPS1_TILES },
+	{ "s92_11.bin",   0x0080000, 0x978ecd18, BRF_GRA | CPS1_TILES },
+	{ "s92_12.bin",   0x0080000, 0xd6ec9a0a, BRF_GRA | CPS1_TILES },
+	{ "s92_13.bin",   0x0080000, 0xed2c67f6, BRF_GRA | CPS1_TILES },
+#endif
 
 	{ "s92_09.bin",   0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
 
@@ -11499,36 +11511,6 @@ void __fastcall Knightsb98WriteWord(UINT32 a, UINT16 d)
 
 static INT32 KnightsbInit()
 {
-	bCpsUpdatePalEveryFrame = 1;
-	Cps1OverrideLayers = 1;
-	Port6SoundWrite = 1;
-	
-	Cps1ObjGetCallbackFunction = DinopicObjGet;
-	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-	
-	INT32 nRet = DrvInit();
-	
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
-	
-	SekOpen(0);
-	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, SM_RAM);
-	SekMapHandler(1, 0x980000, 0x98ffff, SM_WRITE);
-	SekSetWriteWordHandler(1, Knightsb98WriteWord);
-	SekClose();
-	
-	return nRet;
-}
-
-static INT32 Knightsb2Init()
-{
-	CpsDrawSpritesInReverse = 1;
-	Cps1DetectEndSpriteList8000 = 1;
-	
-	return DrvInit();
-}
-
-static INT32 Knightsb4Init()
-{
 	Cps1DisablePSnd = 1;
 	bCpsUpdatePalEveryFrame = 1;
 	Cps1OverrideLayers = 1;
@@ -11554,6 +11536,14 @@ static INT32 Knightsb4Init()
 	SekClose();
 	
 	return nRet;
+}
+
+static INT32 Knightsb2Init()
+{
+	CpsDrawSpritesInReverse = 1;
+	Cps1DetectEndSpriteList8000 = 1;
+	
+	return DrvInit();
 }
 
 void __fastcall Kodb98WriteWord(UINT32 a, UINT16 d)
@@ -13951,7 +13941,7 @@ struct BurnDriver BurnDrvCpsKnightsb4 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Knightsb4RomInfo, Knightsb4RomName, NULL, NULL, KnightsInputInfo, KnightsDIPInfo,
-	Knightsb4Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	KnightsbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

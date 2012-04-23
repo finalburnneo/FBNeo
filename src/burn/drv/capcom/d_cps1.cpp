@@ -8342,6 +8342,26 @@ static struct BurnRomInfo Sf2mdtRomDesc[] = {
 STD_ROM_PICK(Sf2mdt)
 STD_ROM_FN(Sf2mdt)
 
+static struct BurnRomInfo Sf2mdtaRomDesc[] = {
+    { "3.bin",          0x0080000, 0x9f544ef4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
+	{ "5.bin",          0x0080000, 0xd76d6621, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
+	{ "2.bin",          0x0020000, 0x74844192, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
+    { "4.bin",          0x0020000, 0xbd98ff15, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP  },
+
+	// is there a bad dump here? some of the sprites have vertical lines, whilst others are fine
+	{ "pf4-sh058.ic89", 0x0100000, 0x40fdf624, BRF_GRA | CPS1_TILES },
+	{ "pf7-sh072.ic92", 0x0100000, 0xfb78022e, BRF_GRA | CPS1_TILES },
+	{ "pf5-sh036.ic90", 0x0100000, 0x0a6be48b, BRF_GRA | CPS1_TILES },
+	{ "pf8-sh074.ic93", 0x0100000, 0x6258c7cf, BRF_GRA | CPS1_TILES },
+	{ "pf6-sh070.ic88", 0x0100000, 0x9b5b09d7, BRF_GRA | CPS1_TILES },
+	{ "pf9-sh001.ic91", 0x0100000, 0x9f25090e, BRF_GRA | CPS1_TILES },
+
+	{ "1.ic28",         0x0020000, 0xd5bee9cc, BRF_PRG | CPS1_Z80_PROGRAM },
+};
+
+STD_ROM_PICK(Sf2mdta)
+STD_ROM_FN(Sf2mdta)
+
 static struct BurnRomInfo Sf2m1RomDesc[] = {
 	{ "222e",         0x0080000, 0x1e20d0a3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "196e",         0x0080000, 0x88cc38a3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -10422,6 +10442,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2accp2"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2dkot2"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2mdt"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2mdta"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2m1"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2m2"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2m3"       , HACK_B_2    , mapper_S9263B, 0, NULL                },
@@ -12063,6 +12084,30 @@ static INT32 Sf2mdtInit()
 	INT32 nRet = Sf2ceInit();
 	
 	SekOpen(0);
+	SekMapHandler(1, 0x70c000, 0x70cfff, SM_READ);
+	SekSetReadByteHandler(1, Sf2mdtReadByte);
+	SekSetReadWordHandler(1, Sf2mdtReadWord);
+	SekClose();
+	
+	return nRet;
+}
+
+static INT32 Sf2mdtaInit()
+{
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2mdta;
+	
+	Cps1DisablePSnd = 1;
+	CpsRunInitCallbackFunction = Sf2mdtSoundInit;
+	CpsRunResetCallbackFunction = Sf2mdtSoundReset;
+	CpsRunExitCallbackFunction = Sf2mdtSoundExit;
+	CpsRunFrameStartCallbackFunction = Sf2mdtSoundFrameStart;
+	CpsRunFrameEndCallbackFunction = Sf2mdtSoundFrameEnd;
+	CpsRWSoundCommandCallbackFunction = Sf2mdtSoundCommand;
+	
+	INT32 nRet = Sf2ceInit();
+	
+	SekOpen(0);
+	SekMapMemory(CpsRamFF, 0xfc0000, 0xfcffff, SM_RAM);
 	SekMapHandler(1, 0x70c000, 0x70cfff, SM_READ);
 	SekSetReadByteHandler(1, Sf2mdtReadByte);
 	SekSetReadWordHandler(1, Sf2mdtReadWord);
@@ -14787,11 +14832,21 @@ struct BurnDriver BurnDrvCpsSf2koryu2 = {
 
 struct BurnDriverD BurnDrvCpsSf2mdt = {
 	"sf2mdt", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - Magic Delta Turbo (bootleg)\0", "Incorrect graphics", "Capcom", "CPS1",
+	"Street Fighter II' - Magic Delta Turbo (bootleg set 1)\0", "Incorrect graphics", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2mdtRomInfo, Sf2mdtRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	Sf2mdtInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriverD BurnDrvCpsSf2mdta = {
+	"sf2mdta", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II' - Magic Delta Turbo (bootleg set 2)\0", "Incorrect graphics", "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2mdtaRomInfo, Sf2mdtaRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	Sf2mdtaInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

@@ -215,3 +215,33 @@ void Sf2mdtSoundFrameEnd()
 	}
 	ZetClose();
 }
+
+INT32 Sf2mdtScanSound(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_MEMORY_RAM) {
+		struct BurnArea ba;
+		memset(&ba, 0, sizeof(ba));
+
+		ba.Data = Sf2mdtZ80Ram;
+		ba.nLen = 0x00800;
+		ba.szName = "Sf2mdtZ80Ram";
+		BurnAcb(&ba);
+	}
+	
+	if (nAction & ACB_DRIVER_DATA) {
+		ZetScan(nAction);
+		
+		BurnYM2151Scan(nAction);
+		MSM5205Scan(nAction, pnMin);
+		
+		SCAN_VAR(Sf2mdtZ80BankAddress);
+		SCAN_VAR(Sf2mdtSoundLatch);
+		SCAN_VAR(Sf2mdtSampleBuffer1);
+		SCAN_VAR(Sf2mdtSampleBuffer2);
+		SCAN_VAR(Sf2mdtSampleSelect1);
+		SCAN_VAR(Sf2mdtSampleSelect2);
+		SCAN_VAR(Sf2mdtSoundPos);
+	}
+
+	return 0;
+}

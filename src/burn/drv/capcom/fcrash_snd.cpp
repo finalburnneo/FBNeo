@@ -239,3 +239,33 @@ void FcrashSoundFrameEnd()
 	}
 	ZetClose();
 }
+
+INT32 FcrashScanSound(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_MEMORY_RAM) {
+		struct BurnArea ba;
+		memset(&ba, 0, sizeof(ba));
+
+		ba.Data = FcrashZ80Ram;
+		ba.nLen = 0x00800;
+		ba.szName = "FcrashZ80Ram";
+		BurnAcb(&ba);
+	}
+	
+	if (nAction & ACB_DRIVER_DATA) {
+		ZetScan(nAction);
+		
+		BurnYM2203Scan(nAction, pnMin);
+		MSM5205Scan(nAction, pnMin);
+		
+		SCAN_VAR(FcrashZ80BankAddress);
+		SCAN_VAR(FcrashSoundLatch);
+		SCAN_VAR(FcrashSampleBuffer1);
+		SCAN_VAR(FcrashSampleBuffer2);
+		SCAN_VAR(FcrashSampleSelect1);
+		SCAN_VAR(FcrashSampleSelect2);
+		SCAN_VAR(FcrashSoundPos);
+	}
+
+	return 0;
+}

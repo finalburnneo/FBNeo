@@ -10810,6 +10810,21 @@ static INT32 TwelveMhzInit()
 	return DrvInit();
 }
 
+static INT32 CpsBootlegSpriteRamScanCallback(INT32 nAction, INT32*)
+{
+	if (nAction & ACB_MEMORY_RAM) {
+		struct BurnArea ba;
+		memset(&ba, 0, sizeof(ba));
+
+		ba.Data = CpsBootlegSpriteRam;
+		ba.nLen = 0x4000;
+		ba.szName = "CpsBootlegSpriteRam";
+		BurnAcb(&ba);
+	}
+	
+	return 0;
+}
+
 static INT32 CaptcommbInit()
 {
 	CpsLayer1XOffs = -8;
@@ -10831,6 +10846,7 @@ static INT32 Captcommb2Init()
 	CpsRunFrameStartCallbackFunction = Sf2mdtSoundFrameStart;
 	CpsRunFrameEndCallbackFunction = Sf2mdtSoundFrameEnd;
 	CpsRWSoundCommandCallbackFunction = Sf2mdtSoundCommand;
+	CpsMemScanCallbackFunction = Sf2mdtScanSound;
 	
 	return DrvInit();
 }
@@ -10935,6 +10951,7 @@ static INT32 CawingblInit()
 	CpsRunFrameStartCallbackFunction = FcrashSoundFrameStart;
 	CpsRunFrameMiddleCallbackFunction = CawingblFrameMiddle;
 	CpsRunFrameEndCallbackFunction = FcrashSoundFrameEnd;
+	CpsMemScanCallbackFunction = FcrashScanSound;
 	
 	nRet = DrvInit();
 	
@@ -11008,10 +11025,11 @@ static INT32 DinopicInit()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic;
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 		
 	nRet = TwelveMhzInit();
 	
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
 	SekOpen(0);
 	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991FFF, SM_RAM);
@@ -11072,10 +11090,11 @@ static INT32 DinotpicInit()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	nRet = TwelveMhzInit();
 	
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
 	SekOpen(0);
 	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991FFF, SM_RAM);
@@ -11199,6 +11218,7 @@ static INT32 FcrashInit()
 	CpsRunExitCallbackFunction = FcrashSoundExit;
 	CpsRunFrameStartCallbackFunction = FcrashSoundFrameStart;
 	CpsRunFrameEndCallbackFunction = FcrashSoundFrameEnd;
+	CpsMemScanCallbackFunction = FcrashScanSound;
 	
 	INT32 nRet = DrvInit();
 	
@@ -11512,6 +11532,14 @@ void __fastcall Knightsb98WriteWord(UINT32 a, UINT16 d)
 	}
 }
 
+static INT32 KnightsbScanCallback(INT32 nAction, INT32*pnMin)
+{
+	CpsBootlegSpriteRamScanCallback(nAction, pnMin);
+	Sf2mdtScanSound(nAction, pnMin);
+	
+	return 0;
+}
+
 static INT32 KnightsbInit()
 {
 	Cps1DisablePSnd = 1;
@@ -11527,6 +11555,8 @@ static INT32 KnightsbInit()
 	CpsRunFrameStartCallbackFunction = Sf2mdtSoundFrameStart;
 	CpsRunFrameEndCallbackFunction = Sf2mdtSoundFrameEnd;
 	CpsRWSoundCommandCallbackFunction = Sf2mdtSoundCommand;
+	CpsMemScanCallbackFunction = Sf2mdtScanSound;
+	CpsMemScanCallbackFunction = KnightsbScanCallback;
 	
 	INT32 nRet = DrvInit();
 	
@@ -11742,6 +11772,7 @@ static INT32 PunipicInit()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic;
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
 	
@@ -11766,6 +11797,7 @@ static INT32 Punipic2Init()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160Alt;
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
 	
@@ -11790,6 +11822,7 @@ static INT32 Punipic3Init()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
 	
@@ -12051,6 +12084,7 @@ static INT32 Sf2mdtInit()
 	CpsRunFrameStartCallbackFunction = Sf2mdtSoundFrameStart;
 	CpsRunFrameEndCallbackFunction = Sf2mdtSoundFrameEnd;
 	CpsRWSoundCommandCallbackFunction = Sf2mdtSoundCommand;
+	CpsMemScanCallbackFunction = Sf2mdtScanSound;
 	
 	INT32 nRet = Sf2ceInit();
 	
@@ -12074,6 +12108,7 @@ static INT32 Sf2mdtaInit()
 	CpsRunFrameStartCallbackFunction = Sf2mdtSoundFrameStart;
 	CpsRunFrameEndCallbackFunction = Sf2mdtSoundFrameEnd;
 	CpsRWSoundCommandCallbackFunction = Sf2mdtSoundCommand;
+	CpsMemScanCallbackFunction = Sf2mdtScanSound;
 	
 	INT32 nRet = Sf2ceInit();
 	
@@ -13151,6 +13186,7 @@ static INT32 WofbInit()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic;
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
 	

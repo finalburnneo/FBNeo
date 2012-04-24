@@ -161,6 +161,9 @@ INT32 CpsMemInit();
 INT32 CpsMemExit();
 INT32 CpsAreaScan(INT32 nAction,INT32 *pnMin);
 
+typedef INT32 (*CpsMemScanCallback)(INT32, INT32*);
+extern CpsMemScanCallback CpsMemScanCallbackFunction;
+
 // cps_run.cpp
 extern UINT8 CpsReset;
 extern UINT8 Cpi01A, Cpi01C, Cpi01E;
@@ -437,6 +440,7 @@ INT32 FcrashSoundReset();
 INT32 FcrashSoundExit();
 void FcrashSoundFrameStart();
 void FcrashSoundFrameEnd();
+INT32 FcrashScanSound(INT32 nAction, INT32 *pnMin);
 
 // sf2mdt_snd.cpp
 void Sf2mdtSoundCommand(UINT16 d);
@@ -445,3 +449,4 @@ INT32 Sf2mdtSoundReset();
 INT32 Sf2mdtSoundExit();
 void Sf2mdtSoundFrameStart();
 void Sf2mdtSoundFrameEnd();
+INT32 Sf2mdtScanSound(INT32 nAction, INT32 *pnMin);

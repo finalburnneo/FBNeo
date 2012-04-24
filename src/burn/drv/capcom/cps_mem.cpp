@@ -15,6 +15,8 @@ static UINT8 *CpsSaveFrgData = NULL;
 UINT8 *CpsRam660=NULL,*CpsRam708=NULL,*CpsReg=NULL,*CpsFrg=NULL;
 UINT8 *CpsRamFF=NULL;
 
+CpsMemScanCallback CpsMemScanCallbackFunction = NULL;
+
 // This routine is called first to determine how much memory is needed
 // and then to set up all the pointers.
 static INT32 CpsMemIndex()
@@ -334,6 +336,8 @@ INT32 CpsMemExit()
 
 	// Deallocate all used memory
 	BurnFree(CpsMem);
+	
+	CpsMemScanCallbackFunction = NULL;
 
 	return 0;
 }
@@ -381,10 +385,12 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "CpsRom";
 		BurnAcb(&ba);
 
-		ba.Data   = CpsZRom;
-		ba.nLen   = nCpsZRomLen;
-		ba.szName = "CpsZRom";
-		BurnAcb(&ba);
+		if (nCpsZRomLen) {
+			ba.Data   = CpsZRom;
+			ba.nLen   = nCpsZRomLen;
+			ba.szName = "CpsZRom";
+			BurnAcb(&ba);
+		}
 	}
 
 	if (Cps == 2 || Cps1Qs == 1 || PangEEP == 1) {		// Scan EEPROM
@@ -417,7 +423,11 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 	if (Cps == 2 || Cps1Qs == 1) {						// Scan QSound chips
 		QsndScan(nAction);
 	} else {											// Scan PSound chips
-		PsndScan(nAction);
+		if (!Cps1DisablePSnd) PsndScan(nAction);
+	}
+	
+	if (CpsMemScanCallbackFunction) {
+		CpsMemScanCallbackFunction(nAction, pnMin);
 	}
 	
 	return 0;

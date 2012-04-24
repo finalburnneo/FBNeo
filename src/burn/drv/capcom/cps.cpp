@@ -176,9 +176,9 @@ static INT32 CpsLoadOnePang(UINT8 *Tile,INT32 nNum,INT32 nWord,INT32 nShift)
 	return 0;
 }
 
-static INT32 CpsLoadOneHack160(UINT8 *Tile, INT32 nNum, INT32 nWord, INT32 nOffset)
+static INT32 CpsLoadOneHack160(UINT8 *Tile, INT32 nNum, INT32 nWord, INT32 nType)
 {
-	INT32 i = 0;
+	INT32 i = 0, j = 0;
 	UINT8 *Rom1 = NULL, *Rom2 = NULL;
 	INT32 nRomLen1 = 0, nRomLen2 = 0;
 	UINT8 *pt = NULL, *pr = NULL;
@@ -191,31 +191,39 @@ static INT32 CpsLoadOneHack160(UINT8 *Tile, INT32 nNum, INT32 nWord, INT32 nOffs
 	if (Rom2 == NULL) {
 		return 1;
 	}
-
- 	for (i = 0, pt = Tile, pr = Rom1 + (0x80000 * nOffset); i < 0x80000; pt += 8) {
-		UINT32 Pix;		// Eight pixels
-		UINT8 b;
-		b = *pr++; i++; Pix = SepTable[b];
-		if (nWord) {
-			b = *pr++; i++; Pix |= SepTable[b] << 1;
-		}
-
-		Pix <<= 0;
-		*((UINT32 *)pt) |= Pix;
+	
+	INT32 TileOffset[4] = { 0x000000, 0x000004, 0x200000, 0x200004 };
+	if (nType == 1) {
+		TileOffset[1] = 0x200000;
+		TileOffset[2] = 0x000004;
 	}
 
-	for (i = 0, pt = Tile, pr = Rom2 + (0x80000 * nOffset); i < 0x80000; pt += 8) {
-		UINT32 Pix;		// Eight pixels
-		UINT8 b;
-		b = *pr++; i++; Pix = SepTable[b];
-		if (nWord) {
-			b = *pr++; i++; Pix |= SepTable[b] << 1;
+	for (j = 0; j < 4; j++) {
+		for (i = 0, pt = Tile + TileOffset[j], pr = Rom1 + (0x80000 * j); i < 0x80000; pt += 8) {
+			UINT32 Pix;		// Eight pixels
+			UINT8 b;
+			b = *pr++; i++; Pix = SepTable[b];
+			if (nWord) {
+				b = *pr++; i++; Pix |= SepTable[b] << 1;
+			}
+
+			Pix <<= 0;
+			*((UINT32 *)pt) |= Pix;
 		}
 
-		Pix <<= 2;
-		*((UINT32 *)pt) |= Pix;
-	}
+		for (i = 0, pt = Tile + TileOffset[j], pr = Rom2 + (0x80000 * j); i < 0x80000; pt += 8) {
+			UINT32 Pix;		// Eight pixels
+			UINT8 b;
+			b = *pr++; i++; Pix = SepTable[b];
+			if (nWord) {
+				b = *pr++; i++; Pix |= SepTable[b] << 1;
+			}
 
+			Pix <<= 2;
+			*((UINT32 *)pt) |= Pix;
+		}
+	}
+	
 	BurnFree(Rom2);
 	BurnFree(Rom1);
 	return 0;
@@ -555,42 +563,12 @@ INT32 CpsLoadTilesPang(UINT8* Tile, INT32 nStart)
 	return 0;
 }
 
-INT32 CpsLoadTilesHack160(UINT8* Tile, INT32 nStart)
+static INT32 CpsLoadTilesBootleg(UINT8 *Tile, INT32 nStart)
 {
-	CpsLoadOneHack160(Tile + 0 + 0x000000, nStart, 1, 0);
-	CpsLoadOneHack160(Tile + 4 + 0x000000, nStart, 1, 1);
-	CpsLoadOneHack160(Tile + 0 + 0x200000, nStart, 1, 2);
-	CpsLoadOneHack160(Tile + 4 + 0x200000, nStart, 1, 3);
-	
-	return 0;
-}
-
-INT32 CpsLoadTilesBootleg(UINT8 *Tile, INT32 nStart)
-{
-	CpsLoadOneBootleg(Tile, nStart,     0, 0);
+	CpsLoadOneBootleg(Tile, nStart + 0, 0, 0);
 	CpsLoadOneBootleg(Tile, nStart + 1, 0, 1);
 	CpsLoadOneBootleg(Tile, nStart + 2, 0, 2);
 	CpsLoadOneBootleg(Tile, nStart + 3, 0, 3);
-	
-	return 0;
-}
-
-INT32 CpsLoadTilesCaptcomb(UINT8 *Tile, INT32 nStart)
-{
-	CpsLoadOneBootlegType2(Tile, nStart,     0, 0);
-	CpsLoadOneBootlegType2(Tile, nStart + 1, 0, 1);
-	CpsLoadOneBootlegType2(Tile, nStart + 2, 0, 2);
-	CpsLoadOneBootlegType2(Tile, nStart + 3, 0, 3);
-	
-	return 0;
-}
-
-INT32 CpsLoadTilesPunipic2(UINT8 *Tile, INT32 nStart)
-{
-	CpsLoadOneHack160(Tile + 0 + 0x000000, nStart, 1, 0);
-	CpsLoadOneHack160(Tile + 0 + 0x200000, nStart, 1, 1);
-	CpsLoadOneHack160(Tile + 4 + 0x000000, nStart, 1, 2);
-	CpsLoadOneHack160(Tile + 4 + 0x200000, nStart, 1, 3);
 	
 	return 0;
 }
@@ -601,6 +579,30 @@ INT32 CpsLoadTilesSf2ebbl(UINT8 *Tile, INT32 nStart)
 	CpsLoadOneSf2ebbl(Tile, nStart + 1, 0, 2);
 	CpsLoadOneSf2ebbl(Tile, nStart + 2, 0, 1);
 	CpsLoadOneSf2ebbl(Tile, nStart + 3, 0, 3);
+	
+	return 0;
+}
+
+static INT32 CpsLoadTilesBootlegType3(UINT8 *Tile, INT32 nStart)
+{
+	CpsLoadOneBootlegType3(Tile, nStart +  0, 0, 0);
+	CpsLoadOneBootlegType3(Tile, nStart +  1, 0, 1);
+	CpsLoadOneBootlegType3(Tile, nStart +  2, 0, 2);
+	CpsLoadOneBootlegType3(Tile, nStart +  3, 0, 3);
+	
+	return 0;
+}
+
+INT32 CpsLoadTilesHack160(INT32 nStart)
+{
+	CpsLoadOneHack160(CpsGfx, nStart, 1, 0);
+	
+	return 0;
+}
+
+INT32 CpsLoadTilesHack160Alt(INT32 nStart)
+{
+	CpsLoadOneHack160(CpsGfx, nStart, 1, 1);
 	
 	return 0;
 }
@@ -619,18 +621,9 @@ INT32 CpsLoadTilesSf2koryu(INT32 nStart)
 
 INT32 CpsLoadTilesSf2mdt(INT32 nStart)
 {
-	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  0, 0, 0);
-	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  1, 0, 1);
-	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  2, 0, 2);
-	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  3, 0, 3);
-	CpsLoadOneBootlegType3(CpsGfx + 0x200000, nStart +  4, 0, 0);
-	CpsLoadOneBootlegType3(CpsGfx + 0x200000, nStart +  5, 0, 1);
-	CpsLoadOneBootlegType3(CpsGfx + 0x200000, nStart +  6, 0, 2);
-	CpsLoadOneBootlegType3(CpsGfx + 0x200000, nStart +  7, 0, 3);
-	CpsLoadOneBootlegType3(CpsGfx + 0x400000, nStart +  8, 0, 0);
-	CpsLoadOneBootlegType3(CpsGfx + 0x400000, nStart +  9, 0, 1);
-	CpsLoadOneBootlegType3(CpsGfx + 0x400000, nStart + 10, 0, 2);
-	CpsLoadOneBootlegType3(CpsGfx + 0x400000, nStart + 11, 0, 3);
+	CpsLoadTilesBootlegType3(CpsGfx + 0x000000, nStart + 0);
+	CpsLoadTilesBootlegType3(CpsGfx + 0x200000, nStart + 4);
+	CpsLoadTilesBootlegType3(CpsGfx + 0x400000, nStart + 8);
 	
 	return 0;
 }
@@ -649,33 +642,43 @@ INT32 CpsLoadTilesSf2mdta(INT32 nStart)
 
 INT32 CpsLoadTilesFcrash(INT32 nStart)
 {
-	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  0, 0, 0);
-	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  1, 0, 1);
-	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  2, 0, 2);
-	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  3, 0, 3);
-	CpsLoadOneBootlegType3(CpsGfx + 0x080000, nStart +  4, 0, 0);
-	CpsLoadOneBootlegType3(CpsGfx + 0x080000, nStart +  5, 0, 1);
-	CpsLoadOneBootlegType3(CpsGfx + 0x080000, nStart +  6, 0, 2);
-	CpsLoadOneBootlegType3(CpsGfx + 0x080000, nStart +  7, 0, 3);
-	CpsLoadOneBootlegType3(CpsGfx + 0x100000, nStart +  8, 0, 0);
-	CpsLoadOneBootlegType3(CpsGfx + 0x100000, nStart +  9, 0, 1);
-	CpsLoadOneBootlegType3(CpsGfx + 0x100000, nStart + 10, 0, 2);
-	CpsLoadOneBootlegType3(CpsGfx + 0x100000, nStart + 11, 0, 3);
-	CpsLoadOneBootlegType3(CpsGfx + 0x180000, nStart + 12, 0, 0);
-	CpsLoadOneBootlegType3(CpsGfx + 0x180000, nStart + 13, 0, 1);
-	CpsLoadOneBootlegType3(CpsGfx + 0x180000, nStart + 14, 0, 2);
-	CpsLoadOneBootlegType3(CpsGfx + 0x180000, nStart + 15, 0, 3);
+	CpsLoadTilesBootlegType3(CpsGfx + 0x000000, nStart +  0);
+	CpsLoadTilesBootlegType3(CpsGfx + 0x080000, nStart +  4);
+	CpsLoadTilesBootlegType3(CpsGfx + 0x100000, nStart +  8);
+	CpsLoadTilesBootlegType3(CpsGfx + 0x180000, nStart + 12);
 	
 	return 0;
 }
 
 INT32 CpsLoadTilesCawingbl(INT32 nStart)
 {
-	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  0, 0, 0);
-	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  1, 0, 1);
-	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  2, 0, 2);
-	CpsLoadOneBootlegType3(CpsGfx + 0x000000, nStart +  3, 0, 3);
+	CpsLoadTilesBootlegType3(CpsGfx + 0x000000, nStart + 0);
 	
+	return 0;
+}
+
+INT32 CpsLoadTilesCaptcommb(INT32 nStart)
+{
+	CpsLoadOneBootlegType2(CpsGfx + 0x000000, nStart + 0, 0, 0);
+	CpsLoadOneBootlegType2(CpsGfx + 0x000000, nStart + 1, 0, 1);
+	CpsLoadOneBootlegType2(CpsGfx + 0x000000, nStart + 2, 0, 2);
+	CpsLoadOneBootlegType2(CpsGfx + 0x000000, nStart + 3, 0, 3);
+	
+	return 0;
+}
+
+INT32 CpsLoadTilesDinopic(INT32 nStart)
+{
+	CpsLoadTilesBootleg(CpsGfx + 0x000000, nStart + 0);
+	CpsLoadTilesBootleg(CpsGfx + 0x200000, nStart + 4);
+	
+	return 0;
+}
+
+INT32 CpsLoadTilesKodb(INT32 nStart)
+{
+	CpsLoadTilesByte(CpsGfx, nStart);
+
 	return 0;
 }
 

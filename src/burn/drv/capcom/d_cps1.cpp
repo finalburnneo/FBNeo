@@ -10812,20 +10812,14 @@ static INT32 TwelveMhzInit()
 
 static INT32 CaptcommbInit()
 {
-	INT32 nRet = 0;
-	
 	CpsLayer1XOffs = -8;
 	CpsLayer2XOffs = -11;
 	CpsLayer3XOffs = -12;
 	CpsDrawSpritesInReverse = 1;
 	Cps1DetectEndSpriteList8000 = 1;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesCaptcommb;
 	
-	nRet = DrvInit();
-	
-	memset(CpsGfx, 0, nCpsGfxLen);
-	CpsLoadTilesCaptcomb(CpsGfx, 4);
-	
-	return nRet;
+	return DrvInit();
 }
 
 static INT32 Captcommb2Init()
@@ -11011,14 +11005,11 @@ static INT32 DinopicInit()
 	INT32 nRet = 0;
 	
 	Cps1DisablePSnd = 1;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic;
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-	
+		
 	nRet = TwelveMhzInit();
-	
-	memset(CpsGfx, 0, nCpsGfxLen);
-	CpsLoadTilesBootleg(CpsGfx + 0x000000, 4);
-	CpsLoadTilesBootleg(CpsGfx + 0x200000, 8);
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
 	
@@ -11066,17 +11057,11 @@ static void DinotCallback()
 
 static INT32 DinotInit()
 {
-	INT32 nRet = 0;
-	
 	Cps1QsHack = 1;
 	AmendProgRomCallback = DinotCallback;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
 	
-	nRet = TwelveMhzInit();
-	
-	memset(CpsGfx, 0, nCpsGfxLen);
-	CpsLoadTilesHack160(CpsGfx, 2);
-	
-	return nRet;
+	return TwelveMhzInit();
 }
 
 static INT32 DinotpicInit()
@@ -11084,13 +11069,11 @@ static INT32 DinotpicInit()
 	INT32 nRet = 0;
 	
 	Cps1DisablePSnd = 1;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	nRet = TwelveMhzInit();
-	
-	memset(CpsGfx, 0, nCpsGfxLen);
-	CpsLoadTilesHack160(CpsGfx, 2);
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
 	
@@ -11593,13 +11576,11 @@ static INT32 KodbInit()
 	INT32 nRet = 0;
 
 	Kodb = 1;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesKodb;
 	Cps1ObjGetCallbackFunction = KodbObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	nRet = DrvInit();
-	
-	memset(CpsGfx, 0, nCpsGfxLen);
-	CpsLoadTilesByte(CpsGfx, 2);
 	
 	SekOpen(0);
 	SekMapHandler(1, 0x980000, 0x99ffff, SM_WRITE);
@@ -11758,15 +11739,11 @@ static INT32 PunipicInit()
 	Cps1DisablePSnd = 1;
 	bCpsUpdatePalEveryFrame = 1;
 	Cps1OverrideLayers = 1;
-	
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic;
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	INT32 nRet = TwelveMhzInit();
-	
-	memset(CpsGfx, 0, nCpsGfxLen);
-	CpsLoadTilesBootleg(CpsGfx + 0x000000, 4);
-	CpsLoadTilesBootleg(CpsGfx + 0x200000, 8);
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -11786,14 +11763,11 @@ static INT32 Punipic2Init()
 	Cps1DisablePSnd = 1;
 	bCpsUpdatePalEveryFrame = 1;
 	Cps1OverrideLayers = 1;
-	
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160Alt;
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	INT32 nRet = TwelveMhzInit();
-	
-	memset(CpsGfx, 0, nCpsGfxLen);
-	CpsLoadTilesPunipic2(CpsGfx, 4);
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -11813,14 +11787,11 @@ static INT32 Punipic3Init()
 	Cps1DisablePSnd = 1;
 	bCpsUpdatePalEveryFrame = 1;
 	Cps1OverrideLayers = 1;
-	
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	INT32 nRet = TwelveMhzInit();
-	
-	memset(CpsGfx, 0, nCpsGfxLen);
-	CpsLoadTilesHack160(CpsGfx, 4);
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -11846,6 +11817,7 @@ static INT32 Sf2ebblInit()
 {
 	INT32 nRet = DrvInit();
 	
+	// load bootleg tiles over original tiles
 	memset(CpsGfx + 0x400000, 0, 0x80000);
 	CpsLoadTilesSf2ebbl(CpsGfx + 0x400000, 19);
 	
@@ -12705,47 +12677,12 @@ static INT32 WofhInit()
 	CpsLayer1XOffs = 0xffc0;
 	CpsLayer2XOffs = 0xffc0;
 	CpsLayer3XOffs = 0xffc0;
-	
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
 	AmendProgRomCallback = WofhCallback;
 	Cps1ObjGetCallbackFunction = WofhObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	nRet = TwelveMhzInit();
-	
-	memset(CpsGfx, 0, nCpsGfxLen);
-	CpsLoadTilesHack160(CpsGfx, 1);
-	
-	SekOpen(0);
-	SekMapHandler(3, 0x880000, 0x89ffff, SM_READ | SM_WRITE);
-	SekSetReadByteHandler(3, WofhInputReadByte);
-	SekSetReadWordHandler(3, WofhInputReadWord);
-	SekSetWriteByteHandler(3, WofhInputWriteByte);
-	SekSetWriteWordHandler(3, WofhInputWriteWord);
-	SekMapHandler(4, 0x135000, 0x135fff, SM_READ);
-	SekSetReadByteHandler(4, Wofh135ReadByte);
-	SekSetReadWordHandler(4, Wofh135ReadWord);
-	SekClose();
-	
-	return nRet;
-}
-
-static INT32 WofhaInit()
-{
-	INT32 nRet = 0;
-	
-	bCpsUpdatePalEveryFrame = 1;
-	CpsLayer1XOffs = 0xffc0;
-	CpsLayer2XOffs = 0xffc0;
-	CpsLayer3XOffs = 0xffc0;
-	
-	AmendProgRomCallback = WofhCallback;
-	Cps1ObjGetCallbackFunction = WofhObjGet;
-	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-	
-	nRet = TwelveMhzInit();
-	
-	memset(CpsGfx, 0, nCpsGfxLen);
-	CpsLoadTilesHack160(CpsGfx, 2);
 	
 	SekOpen(0);
 	SekMapHandler(3, 0x880000, 0x89ffff, SM_READ | SM_WRITE);
@@ -12788,15 +12725,12 @@ static INT32 SgyxzInit()
 	CpsLayer1XOffs = 0xffc0;
 	CpsLayer2XOffs = 0xffc0;
 	CpsLayer3XOffs = 0xffc0;
-	
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
 	AmendProgRomCallback = SgyxzCallback;
 	Cps1ObjGetCallbackFunction = WofhObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	nRet = TwelveMhzInit();
-	
-	memset(CpsGfx, 0, nCpsGfxLen);
-	CpsLoadTilesHack160(CpsGfx, 2);
 	
 	SekOpen(0);
 	SekMapHandler(3, 0x880000, 0x89ffff, SM_READ | SM_WRITE);
@@ -12934,14 +12868,11 @@ static INT32 Wof3jsaInit()
 	CpsLayer1XOffs = 0xffc0;
 	CpsLayer2XOffs = 0xffc0;
 	CpsLayer3XOffs = 0xffc0;
-	
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
 	Cps1ObjGetCallbackFunction = WofhObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	INT32 nRet = TwelveMhzInit();
-	
-	memset(CpsGfx, 0, nCpsGfxLen);
-	CpsLoadTilesHack160(CpsGfx, 2);
 	
 	SekOpen(0);
 	SekMapHandler(3, 0x880000, 0x89ffff, SM_READ | SM_WRITE);
@@ -13044,40 +12975,11 @@ static INT32 Wof3sjInit()
 	CpsLayer1XOffs = 0xffc0;
 	CpsLayer2XOffs = 0xffc0;
 	CpsLayer3XOffs = 0xffc0;
-	
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
 	Cps1ObjGetCallbackFunction = WofhObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	INT32 nRet = TwelveMhzInit();
-	
-	memset(CpsGfx, 0, nCpsGfxLen);
-	CpsLoadTilesHack160(CpsGfx, 2);
-	
-	SekOpen(0);
-	SekMapHandler(3, 0x880000, 0x89ffff, SM_READ | SM_WRITE);
-	SekSetReadByteHandler(3, Wof3sjInputReadByte);
-	SekSetReadWordHandler(3, Wof3sjInputReadWord);
-	SekSetWriteByteHandler(3, Wof3sjInputWriteByte);
-	SekSetWriteWordHandler(3, Wof3sjInputWriteWord);
-	SekClose();
-	
-	return nRet;
-}
-
-static INT32 Wof3sjaInit()
-{
-	bCpsUpdatePalEveryFrame = 1;
-	CpsLayer1XOffs = 0xffc0;
-	CpsLayer2XOffs = 0xffc0;
-	CpsLayer3XOffs = 0xffc0;
-	
-	Cps1ObjGetCallbackFunction = WofhObjGet;
-	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-	
-	INT32 nRet = TwelveMhzInit();
-	
-	memset(CpsGfx, 0, nCpsGfxLen);
-	CpsLoadTilesHack160(CpsGfx, 1);
 	
 	SekOpen(0);
 	SekMapHandler(3, 0x880000, 0x89ffff, SM_READ | SM_WRITE);
@@ -13246,14 +13148,11 @@ static INT32 WofbInit()
 	CpsLayer1XOffs = 0xffc0;
 	CpsLayer2XOffs = 0xffc0;
 	CpsLayer3XOffs = 0xffc0;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic;
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
 	INT32 nRet = TwelveMhzInit();
-	
-	memset(CpsGfx, 0, nCpsGfxLen);
-	CpsLoadTilesBootleg(CpsGfx + 0x000000, 4);
-	CpsLoadTilesBootleg(CpsGfx + 0x200000, 8);
 	
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
@@ -15335,7 +15234,7 @@ struct BurnDriver BurnDrvCpsWofha = {
 	L"\u4E09\u56FD\u5FD7II: \u4E09\u56FD\u82F1\u96C4\u4F20\0Sangokushi II: Sanguo YingXiongZhuan (Chinese bootleg set 2, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofhaRomInfo, WofhaRomName, NULL, NULL, WofhfhInputInfo, WofhDIPInfo,
-	WofhaInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	WofhInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -15385,7 +15284,7 @@ struct BurnDriver BurnDrvCpsWof3sja = {
 	L"\u4E09\u56FD\u5FD7II: \u4E09\u5723\u5251\0Sangokushi II: San Sheng Jian (Chinese bootleg set 2, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Wof3sjaRomInfo, Wof3sjaRomName, NULL, NULL, WofhfhInputInfo, WofhfhDIPInfo,
-	Wof3sjaInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Wof3sjInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

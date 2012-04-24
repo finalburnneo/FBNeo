@@ -414,6 +414,11 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {					// Scan volatile variables/registers/RAM
 
 		SekScan(nAction);								// Scan 68000 state
+		
+		if (Cps1OverrideLayers) {
+			SCAN_VAR(nCps1Layers);
+			SCAN_VAR(nCps1LayerOffs);
+		}
 
 		if (nAction & ACB_WRITE) {						// Palette could have changed
 			CpsRecalcPal = 1;

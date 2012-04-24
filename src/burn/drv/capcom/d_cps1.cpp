@@ -10975,34 +10975,46 @@ static INT32 Cps1demoInit()
 
 void __fastcall DinopicScrollWrite(UINT32 a, UINT16 d)
 {
-	if (a == 0x980000) {
-		CpsLayer1YOffs = d;
-		return;
-	}
-	
-	if (a == 0x980002) {
-		CpsLayer1XOffs = d - 0x40;
-		return;
-	}
-	
-	if (a == 0x980004) {
-		CpsLayer2YOffs = d;
-		return;
-	}
-	
-	if (a == 0x980006) {
-		CpsLayer2XOffs = d - 0x40;
-		return;
-	}
-	
-	if (a == 0x980008) {
-		CpsLayer3YOffs = d;
-		return;
-	}
-	
-	if (a == 0x98000a) {
-		CpsLayer3XOffs = d - 0x40;
-		return;
+	switch (a) {
+		case 0x980000: {
+			// scroll1 y
+			*((UINT16*)(CpsReg + 0x0e)) = d;
+			return;
+		}
+		
+		case 0x980002: {
+			// scroll1 x
+			*((UINT16*)(CpsReg + 0x0c)) = d - 0x40;
+			return;
+		}
+		
+		case 0x980004: {
+			// scroll2 y
+			*((UINT16*)(CpsReg + 0x12)) = d;
+			return;
+		}
+		
+		case 0x980006: {
+			// scroll2 x
+			*((UINT16*)(CpsReg + 0x10)) = d - 0x40;
+			return;
+		}
+		
+		case 0x980008: {
+			// scroll3 y
+			*((UINT16*)(CpsReg + 0x16)) = d;
+			return;
+		}
+		
+		case 0x98000a: {
+			// scroll3 x
+			*((UINT16*)(CpsReg + 0x14)) = d - 0x40;
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Write Word %x, %x\n"), a, d);
+		}
 	}
 }
 
@@ -11032,8 +11044,8 @@ static INT32 DinopicInit()
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
 	SekOpen(0);
-	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991FFF, SM_RAM);
-	SekMapHandler(1, 0x980000, 0x98000b, SM_WRITE);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, SM_RAM);
+	SekMapHandler(1, 0x980000, 0x98000f, SM_WRITE);
 	SekSetWriteWordHandler(1, DinopicScrollWrite);
 	SekMapHandler(2, 0x800200, 0x8002ff, SM_WRITE);
 	SekSetWriteWordHandler(2, DinopicLayerWrite);
@@ -11097,8 +11109,8 @@ static INT32 DinotpicInit()
 	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
 	SekOpen(0);
-	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991FFF, SM_RAM);
-	SekMapHandler(1, 0x980000, 0x98000b, SM_WRITE);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, SM_RAM);
+	SekMapHandler(1, 0x980000, 0x98000f, SM_WRITE);
 	SekSetWriteWordHandler(1, DinopicScrollWrite);
 	SekMapHandler(2, 0x800200, 0x8002ff, SM_WRITE);
 	SekSetWriteWordHandler(2, DinopicLayerWrite);

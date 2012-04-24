@@ -10800,6 +10800,8 @@ static INT32 DrvInit()
 	
 	nRet = CpsRunInit(); if (nRet != 0) return 1;
 	
+	Cps1VBlankIRQLine = 2;
+	
 	return 0;
 }
 
@@ -10925,18 +10927,12 @@ void __fastcall CawingblInputWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-static void CawingblFrameMiddle()
-{
-	// Needs an IRQ 6 to write scroll values (running it every frame results
-	// in the game running too fast
-	if (GetCurrentFrame() & 1) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
-}
-
 static INT32 CawingblInit()
 {
 	INT32 nRet = 0;
 	
 	Cps1DisablePSnd = 1;
+	bCpsUpdatePalEveryFrame = 1;
 	
 	CpsLayer1XOffs = -63;
 	CpsLayer2XOffs = -62;
@@ -10949,7 +10945,6 @@ static INT32 CawingblInit()
 	CpsRunResetCallbackFunction = FcrashSoundReset;
 	CpsRunExitCallbackFunction = FcrashSoundExit;
 	CpsRunFrameStartCallbackFunction = FcrashSoundFrameStart;
-	CpsRunFrameMiddleCallbackFunction = CawingblFrameMiddle;
 	CpsRunFrameEndCallbackFunction = FcrashSoundFrameEnd;
 	CpsMemScanCallbackFunction = FcrashScanSound;
 	
@@ -10962,6 +10957,8 @@ static INT32 CawingblInit()
 	SekSetWriteByteHandler(1, CawingblInputWriteByte);
 	SekSetWriteWordHandler(1, CawingblInputWriteWord);
 	SekClose();
+	
+	Cps1VBlankIRQLine = 6;
 	
 	return 0;
 }

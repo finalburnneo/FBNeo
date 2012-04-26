@@ -14773,7 +14773,7 @@ struct BurnDriver BurnDrvCpsSf2koryu2 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsSf2mdt = {
+struct BurnDriver BurnDrvCpsSf2mdt = {
 	"sf2mdt", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II' - Magic Delta Turbo (bootleg set 1 (with YM2151 + 2xMSM5205), 920313 etc)\0", "Incorrect graphics", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
@@ -14783,7 +14783,7 @@ struct BurnDriverD BurnDrvCpsSf2mdt = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsSf2mdta = {
+struct BurnDriver BurnDrvCpsSf2mdta = {
 	"sf2mdta", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II' - Magic Delta Turbo (bootleg set 2 (with YM2151 + 2xMSM5205), 920313 etc)\0", "Incorrect graphics", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,

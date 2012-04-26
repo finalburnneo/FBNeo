@@ -106,8 +106,8 @@ STDDIPINFO(Silvmil)
 static inline void DrvPaletteUpdate(INT32 offset)
 {
 	UINT8 r,g,b;
-	UINT16 pal = *((UINT16*)(DrvPalRAM + offset))
-;
+	UINT16 pal = *((UINT16*)(DrvPalRAM + offset));
+	
 	r = (BURN_ENDIAN_SWAP_INT16(pal) >> 10) & 0x1f;
 	g = (BURN_ENDIAN_SWAP_INT16(pal) >>  5) & 0x1f;
 	b = (BURN_ENDIAN_SWAP_INT16(pal) >>  0) & 0x1f;
@@ -195,7 +195,7 @@ void __fastcall silvmil_palette_write_byte(UINT32 address, UINT8 data)
 void __fastcall silvmil_palette_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffff800) == 0x200000) {
-		*((unsigned short*)(DrvPalRAM +(address & 0x7fe))) = data;
+		*((UINT16*)(DrvPalRAM + (address & 0x7fe))) = BURN_ENDIAN_SWAP_INT16(data);
 		DrvPaletteUpdate(address & 0x7fe);
 		return;
 	}

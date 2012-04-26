@@ -13576,7 +13576,7 @@ struct BurnDriver BurnDrvCpsDinotpic = {
 struct BurnDriver BurnDrvCpsDinohunt = {
 	"dinohunt", "dino", NULL, NULL, "1993",
 	"Dinosaur Hunter (Chinese bootleg, 930223 Asia TW)\0", NULL, "bootleg", "CPS1",
-	NULL, NULL, NULL, NULL,
+	L"Dinosaur Hunter \u6050\u9F99\u730E\u4EBA (Chinese bootleg, 930223 Asia TW)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, DinohuntRomInfo, DinohuntRomName, NULL, NULL, DinoInputInfo, DinoDIPInfo,
 	DinohuntInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,

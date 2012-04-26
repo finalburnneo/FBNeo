@@ -2629,7 +2629,7 @@ static INT32 kovshpInit()
 struct BurnDriver BurnDrvkovshp = {
 	"kovshp", NULL, "pgm", NULL, "2004",
 	"Knights of Valour Super Heroes Plus / Sangoku Senki Super Heroes Plus (ver. 100)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
-	NULL, NULL, NULL, NULL,
+	L"Knights of Valour Super Heroes Plus\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u67AD\u96C4 (ver. 100)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovshpRomInfo, kovshpRomName, NULL, NULL, pgmInputInfo, sangoDIPInfo,
 	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -3620,7 +3620,7 @@ static INT32 kovassgaInit()
 struct BurnDriver BurnDrvkovassga = {
 	"kovassga", "kovshp", "pgm", NULL, "2008",
 	"Knights of Valour: Aoshi Sanguo / Sangoku Senki: Aoshi Sanguo (ver. 202CN)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
-	NULL, NULL, NULL, NULL,
+	L"Knights of Valour: Ao Shi San Guo\0\u4E09\u56FD\u6218\u7EAA\0\u50B2\u89C6\u4E09\u56FD (ver. 202CN)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovassgaRomInfo, kovassgaRomName, NULL, NULL, pgmInputInfo, kovassgaDIPInfo,
 	kovassgaInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

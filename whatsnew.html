@@ -105,6 +105,75 @@
 <a href="http://neosource.1emu.net/forums">http://neosource.1emu.net/forums</a></p>
 
 
+<h3>v0.2.97.25</h3>
+<ul>
+<li>CPS-1 Updates, most of the bootlegs now work well and without patches to hack them to work like the originals (brief, incomplete summary below) [Barry, JacKc, bonky_0013, f205v]</li>
+<ul>
+<li>Added some Street Fighter II M bootlegs</li>
+<li>Street Fighter II - Champion Edition (Turbo Hack) now works</li>
+<li>Added an alternate set for Street Fighter II - Champion Edition (Turbo Hack)</li>
+<li>Street Fighter II - Champion Edition (M1 bootleg) now works</li>
+<li>Added support for the dumped Street Fighter II - Champion Edition (Koryu bootleg) graphics roms</li>
+<li>Added Street Fighter II: Magic Delta Turbo (some issues with row-scroll)</li>
+<li>Added an alternate set for Street Fighter II: Magic Delta Turbo</li>
+<li>Added an alternate set for Street Fighter II - Hyper Fighting (bootleg)</li>
+<li>Added a new bootleg of Captain Commando to the driver</li>
+<li>Added new bootlegs of Knights of the Round to the driver</li>
+<li>Daimakai (bootleg) now works</li>
+<li>Carrier Air Wing (bootleg) now works</li>
+<li>King of Dragons (bootleg) now works</li>
+<li>Added Final Crash to the driver</li>
+<li>Emulated the alternative sprite system used in Final Crash and hooked it up in other bootlegs that use it</li>
+<li>Emulated the alternative sound system used in Final Crash and added it to Carrier Air Wing (bootleg) as well</li>
+<li>Emulated the alternative sound system used in Street Fighter: Magic Delta Turbo and added it to a Captain Commando bootleg and Knights of the Round bootleg as well</li>
+<li>Improved sprite list end detection</li>
+<li>Added optional end of sprite list detection, fixes some more of the bootleg sets</li>
+<li>All Warriors of Fate bootlegs now work properly or at least well</li>
+<li>Added some more Warriors of Fate bootlegs</li>
+<li>All the PIC sets now work, without sound obviously due to no good dump of the PIC data being available</li>
+<li>Tidied the driver</li>
+<li>Removed the CPS Changer region hacks</li>
+</ul>
+<li>Updated the ARM7 core to avoid out of page range accesses [iq_132]</li>
+<li>Added driver for Silver Millenium [iq_132]</li>
+<li>Added bootleg of Dragon Ninja to the DEC-0 driver [Barry]</li>
+<li>Added clone of Super Triv to the Jack the Giantkiller [JacKc]</li>
+<li>Added Neo Castlevania demo to the Neo Geo driver [Barry]</li>
+<li>Added Neo Thunder homebrew game to the Neo Geo driver [iq_132]</li>
+<li>Added NGF Transparency demo to the Neo Geo driver [Barry]</li>
+<li>Added Dragon World: Pretty Chance to the PGM driver (debug builds only) [iq_132]</li>
+<li>Added Ketsui Arrange to the PGM driver [iq_132]</li>
+<li>Added clone of Wonder Boy to the Sega System 1 driver [JacKc]</li>
+<li>Added clone of Rastan to the Misc Taito driver [Barry]</li>
+<li>Added clone of Rastan to the Misc Taito driver [JacKc]</li>
+<li>Tidied the Funky Bee driver [iq_132]</li>
+<li>Tidied the Meijinsen [iq_132]</li>
+<li>Tidied the PGM driver [iq_132]</li>
+<li>Improved protection simulation for some PGM sets [iq_132]</li>
+<li>Fixed sprites alignment in Knights of Valour [iq_132]</li>
+<li>Fixed a crash in PGM rendering code [iq_132]</li>
+<li>Improved sound in the PGM driver [lantus]</li>
+<li>Fixed a crash in the Hunchback sets in the Galaxian driver [Barry]</li>
+<li>Improvements to the Black Tiger driver [iq_132, issues reported by JacKc]</li>
+<li>Fixed savestates in the CPS-3 driver [Twinaphex]</li>
+<li>Fixed a potential crash in the EEPROM module [Twinaphex]</li>
+<li>Fixed custom-sized tile rendering in the generic tiles module [iq_132]</li>
+<li>Big-endian fixes for the ARM CPU interface [lantus]</li>
+<li>Big-endian fixes for the CPS-1, Data East, Neo Geo, Sega and Silver Millenium drivers [lantus]</li>
+<li>Big-endian fix for the Pskiyo 4 driver [Twinaphex]</li>
+<li>Added BRAM support to the PC-Engine driver [kev]</li>
+<li>Added some unicode titles [JacKc]</li>
+<li>Added BDF_CLONE to sfiii3u [iq_132, reported by DsNo]</li>
+<li>Tidied the SNES driver a bit [kev]</li>
+<li>Added SoftFX xBR filters [msbhvn, Hyllian, Barry]</li>
+<li>Fixed a UI issue with unidentified CDs [Barry]</li>
+<li>Rename endian.h to burn_endian.h [Barry]</li>
+<li>Improve portability by checking defines before defining them [Twinaphex]</li>
+<li>Updates to libsnes [Squarepusher2]</li>
+<li>Synced sets with MAME 0.145u7 [Barry]</li>
+</ul>
+
+
 <h3>v0.2.97.24</h3>
 <ul>
 <li>Rewrote the DAC core, improving performance and timing [iq_132]</li>

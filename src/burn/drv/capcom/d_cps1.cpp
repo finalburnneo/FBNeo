@@ -10975,37 +10975,37 @@ void __fastcall DinopicScrollWrite(UINT32 a, UINT16 d)
 	switch (a) {
 		case 0x980000: {
 			// scroll1 y
-			*((UINT16*)(CpsReg + 0x0e)) = d;
+			*((UINT16*)(CpsReg + 0x0e)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x980002: {
 			// scroll1 x
-			*((UINT16*)(CpsReg + 0x0c)) = d - 0x40;
+			*((UINT16*)(CpsReg + 0x0c)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
 			return;
 		}
 		
 		case 0x980004: {
 			// scroll2 y
-			*((UINT16*)(CpsReg + 0x12)) = d;
+			*((UINT16*)(CpsReg + 0x12)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x980006: {
 			// scroll2 x
-			*((UINT16*)(CpsReg + 0x10)) = d - 0x40;
+			*((UINT16*)(CpsReg + 0x10)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
 			return;
 		}
 		
 		case 0x980008: {
 			// scroll3 y
-			*((UINT16*)(CpsReg + 0x16)) = d;
+			*((UINT16*)(CpsReg + 0x16)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x98000a: {
 			// scroll3 x
-			*((UINT16*)(CpsReg + 0x14)) = d - 0x40;
+			*((UINT16*)(CpsReg + 0x14)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
 			return;
 		}
 		
@@ -11313,7 +11313,7 @@ void __fastcall Daimakaib88WriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x880000: {
-			*((UINT16*)(CpsReg + nCpsPalCtrlReg)) = d;
+			*((UINT16*)(CpsReg + nCpsPalCtrlReg)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 	}
@@ -11324,37 +11324,37 @@ void __fastcall Daimakaib98WriteWord(UINT32 a, UINT16 d)
 	switch (a) {
 		case 0x980000: {
 			// scroll1 y
-			*((UINT16*)(CpsReg + 0x0e)) = d;
+			*((UINT16*)(CpsReg + 0x0e)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x980002: {
 			// scroll1 x
-			*((UINT16*)(CpsReg + 0x0c)) = d - 0x40;
+			*((UINT16*)(CpsReg + 0x0c)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
 			return;
 		}
 		
 		case 0x980004: {
 			// scroll2 y
-			*((UINT16*)(CpsReg + 0x12)) = d;
+			*((UINT16*)(CpsReg + 0x12)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x980006: {
 			// scroll2 x
-			*((UINT16*)(CpsReg + 0x10)) = d - 0x40;
+			*((UINT16*)(CpsReg + 0x10)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
 			return;
 		}
 		
 		case 0x980008: {
 			// scroll3 y
-			*((UINT16*)(CpsReg + 0x16)) = d;
+			*((UINT16*)(CpsReg + 0x16)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x98000a: {
 			// scroll3 x
-			*((UINT16*)(CpsReg + 0x14)) = d - 0x40;
+			*((UINT16*)(CpsReg + 0x14)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
 			return;
 		}
 		
@@ -11431,37 +11431,37 @@ void __fastcall Knightsb98WriteWord(UINT32 a, UINT16 d)
 	switch (a) {
 		case 0x980000: {
 			// scroll1 y
-			*((UINT16*)(CpsReg + 0x0e)) = d;
+			*((UINT16*)(CpsReg + 0x0e)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x980002: {
 			// scroll1 x
-			*((UINT16*)(CpsReg + 0x0c)) = d - 0x3e;
+			*((UINT16*)(CpsReg + 0x0c)) = BURN_ENDIAN_SWAP_INT16(d - 0x3e);
 			return;
 		}
 		
 		case 0x980004: {
 			// scroll2 y
-			*((UINT16*)(CpsReg + 0x12)) = d;
+			*((UINT16*)(CpsReg + 0x12)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x980006: {
 			// scroll2 x
-			*((UINT16*)(CpsReg + 0x10)) = d - 0x3c;
+			*((UINT16*)(CpsReg + 0x10)) = BURN_ENDIAN_SWAP_INT16(d - 0x3c);
 			return;
 		}
 		
 		case 0x980008: {
 			// scroll3 y
-			*((UINT16*)(CpsReg + 0x16)) = d;
+			*((UINT16*)(CpsReg + 0x16)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x98000a: {
 			// scroll3 x
-			*((UINT16*)(CpsReg + 0x14)) = d - 0x40;
+			*((UINT16*)(CpsReg + 0x14)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
 			return;
 		}
 		
@@ -11486,9 +11486,9 @@ void __fastcall Knightsb98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[2] = 2;
 					nCps1Layers[3] = 3;
 					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x03ff;
-					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x003f;
-					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x01ff;
+					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0x03ff);
+					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x003f);
+					*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0x01ff);
 					break;
 				}
 				
@@ -11498,9 +11498,9 @@ void __fastcall Knightsb98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[2] = 2;
 					nCps1Layers[3] = 3;
 					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x7fff;
-					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x7ff8;
-					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x00ff;
+					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0x7fff);
+					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x7ff8);
+					*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0x00ff);
 					break;
 				}
 				
@@ -11592,17 +11592,17 @@ void __fastcall Kodb98WriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x98000c: {
-			*((UINT16*)(CpsReg + nCpsLcReg)) = d;
+			*((UINT16*)(CpsReg + nCpsLcReg)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x980020: {
-			*((UINT16*)(CpsReg + MaskAddr[1])) = d;
+			*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x980022: {
-			*((UINT16*)(CpsReg + MaskAddr[2])) = d;
+			*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 	}
@@ -11627,7 +11627,7 @@ static INT32 KodbInit()
 	SekClose();
 	
 	*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-	*((UINT16*)(CpsReg + MaskAddr[3])) = 0xff00;
+	*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0xff00);
 
 	return nRet;
 }
@@ -11687,37 +11687,37 @@ void __fastcall Punipic98WriteWord(UINT32 a, UINT16 d)
 	switch (a) {
 		case 0x980000: {
 			// scroll1 y
-			*((UINT16*)(CpsReg + 0x0e)) = d;
+			*((UINT16*)(CpsReg + 0x0e)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x980002: {
 			// scroll1 x
-			*((UINT16*)(CpsReg + 0x0c)) = d - 0x46;
+			*((UINT16*)(CpsReg + 0x0c)) = BURN_ENDIAN_SWAP_INT16(d - 0x46);
 			return;
 		}
 		
 		case 0x980004: {
 			// scroll2 y
-			*((UINT16*)(CpsReg + 0x12)) = d;
+			*((UINT16*)(CpsReg + 0x12)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x980006: {
 			// scroll2 x
-			*((UINT16*)(CpsReg + 0x10)) = d - 0x40;
+			*((UINT16*)(CpsReg + 0x10)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
 			return;
 		}
 		
 		case 0x980008: {
 			// scroll3 y
-			*((UINT16*)(CpsReg + 0x16)) = d;
+			*((UINT16*)(CpsReg + 0x16)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x98000a: {
 			// scroll3 x
-			*((UINT16*)(CpsReg + 0x14)) = d - 0x46;
+			*((UINT16*)(CpsReg + 0x14)) = BURN_ENDIAN_SWAP_INT16(d - 0x46);
 			return;
 		}
 		
@@ -12757,8 +12757,8 @@ static void SgyxzCallback()
 	WofhCallback();
 	
 	// This set has more protection?
-	*((UINT16*)(CpsRom + 0x708be)) = 0x4e71;
-	*((UINT16*)(CpsRom + 0x708c0)) = 0x4e71;
+	*((UINT16*)(CpsRom + 0x708be)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	*((UINT16*)(CpsRom + 0x708c0)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
 }
 
 static INT32 SgyxzInit()
@@ -12901,7 +12901,7 @@ static void Wof3jsaCallback()
 	BurnFree(pTemp);
 	
 	// Patch protection?
-	*((UINT16*)(CpsRom + 0xe7ad0)) = 0x4e71;
+	*((UINT16*)(CpsRom + 0xe7ad0)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
 }
 
 static INT32 Wof3jsaInit()
@@ -13075,37 +13075,37 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 	switch (a) {
 		case 0x980000: {
 			// scroll1 y
-			*((UINT16*)(CpsReg + 0x0e)) = d;
+			*((UINT16*)(CpsReg + 0x0e)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x980002: {
 			// scroll1 x
-			*((UINT16*)(CpsReg + 0x0c)) = d;
+			*((UINT16*)(CpsReg + 0x0c)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x980004: {
 			// scroll2 y
-			*((UINT16*)(CpsReg + 0x12)) = d;
+			*((UINT16*)(CpsReg + 0x12)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x980006: {
 			// scroll2 x
-			*((UINT16*)(CpsReg + 0x10)) = d;
+			*((UINT16*)(CpsReg + 0x10)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x980008: {
 			// scroll3 y
-			*((UINT16*)(CpsReg + 0x16)) = d;
+			*((UINT16*)(CpsReg + 0x16)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x98000a: {
 			// scroll3 x
-			*((UINT16*)(CpsReg + 0x14)) = d;
+			*((UINT16*)(CpsReg + 0x14)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
@@ -13117,9 +13117,9 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[2] = 2;
 					nCps1Layers[3] = 3;
 					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x01ff;
-					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x01ff;
-					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x7fff;
+					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0x01ff);
+					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x01ff);
+					*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0x7fff);
 					break;
 				}
 				
@@ -13129,9 +13129,9 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[2] = 3;
 					nCps1Layers[3] = 2;
 					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x003f;
-					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x01ff;
-					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x7fff;
+					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0x003f);
+					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x01ff);
+					*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0x7fff);
 					break;
 				}
 				
@@ -13141,8 +13141,8 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[2] = 0;
 					nCps1Layers[3] = 2;
 					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x07ff;
-					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x0780;
+					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0x07ff);
+					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x0780);
 					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x0000;
 					break;
 				}
@@ -13161,9 +13161,9 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[2] = 3;
 					nCps1Layers[3] = 2;
 					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x7fff;
-					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x7fff;
-					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x7fff;
+					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0x7fff);
+					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x7fff);
+					*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0x7fff);
 					break;
 				}
 				
@@ -13208,7 +13208,7 @@ static INT32 WofbInit()
 	SekClose();
 	
 	// scroll3 ram offset
-	*((UINT16*)(CpsReg + 0x06)) = 0x9100;
+	*((UINT16*)(CpsReg + 0x06)) = BURN_ENDIAN_SWAP_INT16(0x9100);
 	
 	return nRet;	
 }

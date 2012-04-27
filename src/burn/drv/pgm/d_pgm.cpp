@@ -2354,9 +2354,14 @@ static struct BurnRomInfo dmnfrntRomDesc[] = {
 
 	{ "w04501.u5",     		0x800000, 0x3ab58137, 5 | BRF_SND },		//  7 Samples
 
-	{ "dmnfrnt_igs027a.bin", 	0x004000, 0x00000000, 7 | BRF_PRG | BRF_NODUMP },  //  8 Internal ARM7 Rom
+	{ "dmnfrnt_igs027a.bin",0x004000, 0x00000000, 7 | BRF_PRG | BRF_NODUMP },  //  8 Internal ARM7 Rom
 
-	{ "v105_32m.u26", 		0x400000, 0xc798c2ef, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
+#if !defined ROM_VERIFY
+	{ "v105_32m.u26",	 	0x400000, 0xc798c2ef, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
+#else
+	{ "chinese-v105.u62", 	0x400000, 0xc798c2ef, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
+	{ "v105_32m.u26", 		0x400000, 0xd200ee63, 0 | BRF_PRG | BRF_OPT },
+#endif
 };
 
 STDROMPICKEXT(dmnfrnt, dmnfrnt, pgm)
@@ -2582,7 +2587,7 @@ static struct BurnRomInfo kovshpRomDesc[] = {
 
 	{ "m0600.rom",	   		0x400000, 0x3ada4fd6, 5 | BRF_SND },		//  8 Samples
 
-	{ "kovshp_v100_china.asic", 	0x004000, 0x0f09a5c1, 7 | BRF_ESS | BRF_PRG },  //  9 Internal ARM7 Rom
+	{ "kovsh_v100_china.asic", 	0x004000, 0x0f09a5c1, 7 | BRF_ESS | BRF_PRG },  //  9 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovshp, kovshp, pgm)
@@ -3401,7 +3406,11 @@ static struct BurnRomInfo kovlsqh2RomDesc[] = {
 
 	{ "lsqh2_m01.rom",		0x1000000, 0x01af1b65, 5 | BRF_SND },		//  6 Samples
 
+#if !defined ROM_VERIFY
 	{ "lsqh2_prot.c51",		0x0010000, 0x00000000, 7 | BRF_PRG | BRF_NODUMP },  //  7 Internal ARM7 Rom
+#else
+	{ "kovsh_v100_china.asic",	0x0004000, 0x0f09a5c1, 7 | BRF_PRG },  //  7 Internal ARM7 Rom
+#endif
 };
 
 STDROMPICKEXT(kovlsqh2, kovlsqh2, pgm)
@@ -3445,7 +3454,11 @@ static struct BurnRomInfo kovlsqhRomDesc[] = {
 
 	{ "lsqh2_m01.rom",		0x1000000, 0x01af1b65, 5 | BRF_SND },		//  6 Samples
 
-	{ "lsqh_prot.c51",	    	0x0010000, 0x00000000, 7 | BRF_PRG | BRF_NODUMP },  //  7 Internal ARM7 Rom
+#if !defined ROM_VERIFY
+	{ "lsqh_prot.c51",		0x0010000, 0x00000000, 7 | BRF_PRG | BRF_NODUMP },  //  7 Internal ARM7 Rom
+#else
+	{ "kovsh_v100_china.asic",	0x0004000, 0x0f09a5c1, 7 | BRF_PRG },  //  7 Internal ARM7 Rom
+#endif
 };
 
 STDROMPICKEXT(kovlsqh, kovlsqh, pgm)
@@ -3489,7 +3502,11 @@ static struct BurnRomInfo kovlsjbRomDesc[] = {
 
 	{ "lsqh2_m01.rom",		0x1000000, 0x01af1b65, 5 | BRF_SND },		//  6 Samples
 
+#if !defined ROM_VERIFY
 	{ "lsjb_prot.c51",		0x0010000, 0x00000000, 7 | BRF_PRG | BRF_NODUMP },  //  7 Internal ARM7 Rom
+#else
+	{ "kovsh_v100_china.asic",	0x0004000, 0x0f09a5c1, 7 | BRF_PRG },  //  7 Internal ARM7 Rom
+#endif
 };
 
 STDROMPICKEXT(kovlsjb, kovlsjb, pgm)
@@ -3521,7 +3538,11 @@ static struct BurnRomInfo kovlsjbaRomDesc[] = {
 
 	{ "lsqh2_m01.rom",		0x1000000, 0x01af1b65, 5 | BRF_SND },		//  6 Samples
 
+#if !defined ROM_VERIFY
 	{ "lsjba_prot.c51",		0x0010000, 0x00000000, 7 | BRF_PRG | BRF_NODUMP },  //  7 Internal ARM7 Rom
+#else
+	{ "kovsh_v100_china.asic",	0x0004000, 0x0f09a5c1, 7 | BRF_PRG },  //  7 Internal ARM7 Rom
+#endif
 };
 
 STDROMPICKEXT(kovlsjba, kovlsjba, pgm)
@@ -3585,21 +3606,21 @@ struct BurnDriverD BurnDrvkovassg = {
 // Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao Shi San Guo (ver. 202CN)
 
 static struct BurnRomInfo kovassgaRomDesc[] = {
-	{ "assg_v202cn.rom",  		0x400000, 0x3b7b627f, 1 | BRF_ESS | BRF_PRG },  //  0 68K Code
+	{ "de_p0609.322",  		0x400000, 0x3b7b627f, 1 | BRF_ESS | BRF_PRG },  //  0 68K Code
 
 	{ "t0600.rom",     		0x800000, 0x4acc1ad6, 2 | BRF_GRA },		//  1 Tile data
 
 	{ "a0600.rom",	   		0x800000, 0xd8167834, 3 | BRF_GRA },		//  2 Sprite Color Data
 	{ "a0601.rom",	   		0x800000, 0xff7a4373, 3 | BRF_GRA }, 	        //  3 
 	{ "a0602.rom",	   		0x800000, 0xe7a32959, 3 | BRF_GRA }, 	        //  4
-	{ "a0603as.rom",   		0x800000, 0x7057b37e, 3 | BRF_GRA }, 	        //  5
+	{ "a0603xas.rom",  		0x800000, 0x7057b37e, 3 | BRF_GRA }, 	        //  5
 
 	{ "b0600.rom",	  		0x800000, 0x7d3cd059, 4 | BRF_GRA },		//  6 Sprite Masks & Color Indexes
-	{ "b0601as.rom",   		0x800000, 0x3784fb49, 4 | BRF_GRA },		//  7
+	{ "b0601xas.rom",  		0x800000, 0x3784fb49, 4 | BRF_GRA },		//  7
 
 	{ "m0600.rom",	   		0x400000, 0x3ada4fd6, 5 | BRF_SND },	        //  8 Samples
 
-	{ "kovassga_v100_china.asic",	0x004000, 0x0f09a5c1, 7 | BRF_ESS | BRF_PRG },  //  9 Internal ARM7 Rom
+	{ "kovsh_v100_china.asic",	0x004000, 0x0f09a5c1, 7 | BRF_ESS | BRF_PRG },  //  9 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovassga, kovassga, pgm)
@@ -3618,7 +3639,7 @@ static INT32 kovassgaInit()
 }
 
 struct BurnDriver BurnDrvkovassga = {
-	"kovassga", "kovshp", "pgm", NULL, "2008",
+	"kovshxas", "kovshp", "pgm", NULL, "2008",
 	"Knights of Valour: Aoshi Sanguo / Sangoku Senki: Aoshi Sanguo (ver. 202CN)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
 	L"Knights of Valour: Ao Shi San Guo\0\u4E09\u56FD\u6218\u7EAA\0\u50B2\u89C6\u4E09\u56FD (ver. 202CN)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,

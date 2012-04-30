@@ -28,6 +28,7 @@ static unsigned int tbl_5_to_8[32]={0, 8, 16, 25, 33, 41, 49,  58, 66, 74, 82, 9
 static unsigned int tbl_6_to_8[64]={0, 4, 8, 12, 16, 20, 24,  28, 32, 36, 40, 45, 49, 53, 57, 61, 65, 69, 73, 77, 81, 85, 89, 93, 97, 101,  105, 109, 113, 117, 121, 125, 130, 134, 138, 142, 146, 150, 154, 158, 162, 166,  170, 174, 178, 182, 186, 190, 194, 198, 202, 206, 210, 215, 219, 223, 227, 231,  235, 239, 243, 247, 251, 255};
 
 #define RED_MASK565   0xF800
+#define RED_BLUE_MASK565 0xF81F
 #define GREEN_MASK565 0x07E0
 #define BLUE_MASK565  0x001F
 
@@ -39,6 +40,7 @@ static unsigned int tbl_6_to_8[64]={0, 4, 8, 12, 16, 20, 24,  28, 32, 36, 40, 45
 #define PG_LBMASK555 0x7BDE
 
 static const unsigned short int pg_red_mask = RED_MASK565;
+static const unsigned short int pg_red_blue_mask = RED_BLUE_MASK565;
 static const unsigned short int pg_green_mask = GREEN_MASK565;
 static const unsigned short int pg_blue_mask = BLUE_MASK565;
 static const unsigned short int pg_lbmask = PG_LBMASK565;
@@ -47,51 +49,39 @@ static const unsigned short int pg_lbmask = PG_LBMASK565;
 
 #define ALPHA_BLEND_32_W(dst, src) \
 	dst = ( \
-    (pg_red_mask & ((dst & pg_red_mask) + \
-        ((((src & pg_red_mask) - \
-        (dst & pg_red_mask))) >>3))) | \
+    (pg_red_blue_mask & ((dst & pg_red_blue_mask) + \
+        ((((src & pg_red_blue_mask) - \
+        (dst & pg_red_blue_mask))) >>3))) | \
     (pg_green_mask & ((dst & pg_green_mask) + \
         ((((src & pg_green_mask) - \
-        (dst & pg_green_mask))) >>3))) | \
-    (pg_blue_mask & ((dst & pg_blue_mask) + \
-        ((((src & pg_blue_mask) - \
-        (dst & pg_blue_mask))) >>3))) )
+        (dst & pg_green_mask))) >>3))))
 
 #define ALPHA_BLEND_64_W(dst, src) \
 	dst = ( \
-    (pg_red_mask & ((dst & pg_red_mask) + \
-        ((((src & pg_red_mask) - \
-        (dst & pg_red_mask))) >>2))) | \
+    (pg_red_blue_mask & ((dst & pg_red_blue_mask) + \
+        ((((src & pg_red_blue_mask) - \
+        (dst & pg_red_blue_mask))) >>2))) | \
     (pg_green_mask & ((dst & pg_green_mask) + \
         ((((src & pg_green_mask) - \
-        (dst & pg_green_mask))) >>2))) | \
-    (pg_blue_mask & ((dst & pg_blue_mask) + \
-        ((((src & pg_blue_mask) - \
-        (dst & pg_blue_mask))) >>2))) )
+        (dst & pg_green_mask))) >>2))))
 
 #define ALPHA_BLEND_192_W(dst, src) \
 	dst = ( \
-    (pg_red_mask & ((dst & pg_red_mask) + \
-        ((((src & pg_red_mask) - \
-        (dst & pg_red_mask)) * 192) >>8))) | \
+    (pg_red_blue_mask & ((dst & pg_red_blue_mask) + \
+        ((((src & pg_red_blue_mask) - \
+        (dst & pg_red_blue_mask)) * 3) >>2))) | \
     (pg_green_mask & ((dst & pg_green_mask) + \
         ((((src & pg_green_mask) - \
-        (dst & pg_green_mask)) * 192) >>8))) | \
-    (pg_blue_mask & ((dst & pg_blue_mask) + \
-        ((((src & pg_blue_mask) - \
-        (dst & pg_blue_mask)) * 192) >>8))) )
-        
+        (dst & pg_green_mask)) * 3) >>2))))
+
 #define ALPHA_BLEND_224_W(dst, src) \
 	dst = ( \
-    (pg_red_mask & ((dst & pg_red_mask) + \
-        ((((src & pg_red_mask) - \
-        (dst & pg_red_mask)) * 224) >>8))) | \
+    (pg_red_blue_mask & ((dst & pg_red_blue_mask) + \
+        ((((src & pg_red_blue_mask) - \
+        (dst & pg_red_blue_mask)) * 7) >>3))) | \
     (pg_green_mask & ((dst & pg_green_mask) + \
         ((((src & pg_green_mask) - \
-        (dst & pg_green_mask)) * 224) >>8))) | \
-    (pg_blue_mask & ((dst & pg_blue_mask) + \
-        ((((src & pg_blue_mask) - \
-        (dst & pg_blue_mask)) * 224) >>8))) );
+        (dst & pg_green_mask)) * 7) >>3))))
 
 
 #define LEFT_UP_2_2X(N3, N2, N1, PIXEL)\

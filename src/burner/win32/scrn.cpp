@@ -2298,7 +2298,8 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				case MENU_ENHANCED_SOFT_3XBR_C:
 				case MENU_ENHANCED_SOFT_4XBR_A:
 				case MENU_ENHANCED_SOFT_4XBR_B:
-				case MENU_ENHANCED_SOFT_4XBR_C: {
+				case MENU_ENHANCED_SOFT_4XBR_C:
+				case MENU_ENHANCED_SOFT_DDT3X: {
 					nVidBlitterOpt[nVidSelect] &= 0x0FFFFFFF;
 					nVidBlitterOpt[nVidSelect] |= 0x03000000 + ((long long)(id - MENU_ENHANCED_SOFT_STRETCH) << 32);
 					POST_INITIALISE_MESSAGE;
@@ -2415,6 +2416,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				case MENU_SOFTFX_SOFT_4XBR_A:
 				case MENU_SOFTFX_SOFT_4XBR_B:
 				case MENU_SOFTFX_SOFT_4XBR_C:
+				case MENU_SOFTFX_SOFT_DDT3X:
 					nVidBlitterOpt[nVidSelect] &= ~0xFF;
 					nVidBlitterOpt[nVidSelect] |= id - MENU_SOFTFX_SOFT_STRETCH;
 					POST_INITIALISE_MESSAGE;
@@ -2616,6 +2618,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				case MENU_DX9_ALT_SOFT_4XBR_A:
 				case MENU_DX9_ALT_SOFT_4XBR_B:
 				case MENU_DX9_ALT_SOFT_4XBR_C:
+				case MENU_DX9_ALT_SOFT_DDT3X:
 					nVidBlitterOpt[nVidSelect] &= ~0xFF;
 					nVidBlitterOpt[nVidSelect] |= id - MENU_DX9_ALT_SOFT_STRETCH;
 					POST_INITIALISE_MESSAGE;

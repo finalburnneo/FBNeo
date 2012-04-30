@@ -1063,6 +1063,7 @@ BEGIN
 						MENUITEM "4xBR Squared",						MENU_ENHANCED_SOFT_4XBR_A
 						MENUITEM "4xBR Semi-Rounded",					MENU_ENHANCED_SOFT_4XBR_B
 						MENUITEM "4xBR Rounded",						MENU_ENHANCED_SOFT_4XBR_C
+						MENUITEM "DDT3x",	        					MENU_ENHANCED_SOFT_DDT3X
                         MENUITEM SEPARATOR
                         MENUITEM "Force image to SoftFX size",          MENU_ENHANCED_SOFT_AUTOSIZE
                 END
@@ -1141,6 +1142,7 @@ BEGIN
 				MENUITEM "4xBR Squared\t(16-bit only)",					MENU_SOFTFX_SOFT_4XBR_A
 				MENUITEM "4xBR Semi-Rounded\t(16-bit only)",			MENU_SOFTFX_SOFT_4XBR_B
 				MENUITEM "4xBR Rounded\t(16-bit only)",					MENU_SOFTFX_SOFT_4XBR_C
+				MENUITEM "DDT3x\t(16-bit only)",            	        MENU_SOFTFX_SOFT_DDT3X
                 MENUITEM SEPARATOR
                 MENUITEM "&Force image to SoftFX size",                 MENU_SOFTFX_SOFT_AUTOSIZE
                 POPUP "Buffering &method"
@@ -1239,6 +1241,7 @@ BEGIN
 			MENUITEM "4xBR Squared",							MENU_DX9_ALT_SOFT_4XBR_A
 			MENUITEM "4xBR Semi-Rounded",						MENU_DX9_ALT_SOFT_4XBR_B
 			MENUITEM "4xBR Rounded",							MENU_DX9_ALT_SOFT_4XBR_C
+			MENUITEM "DDT3x",	        					    MENU_DX9_ALT_SOFT_DDT3X
 			MENUITEM SEPARATOR
 			MENUITEM "Force image to SoftFX size",          	MENU_DX9_ALT_SOFT_AUTOSIZE
         END

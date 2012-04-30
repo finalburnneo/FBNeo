@@ -48,6 +48,7 @@
 #define FILTER_4XBR_A			31
 #define FILTER_4XBR_B			32
 #define FILTER_4XBR_C			33
+#define FILTER_DDT3X            34
 
 TCHAR* VidSoftFXGetEffect(int nEffect);
 int VidSoftFXGetZoom(int nEffect);

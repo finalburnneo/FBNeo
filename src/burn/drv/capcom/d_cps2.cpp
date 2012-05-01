@@ -9871,6 +9871,8 @@ STD_ROM_FN(Megamn2d)
 
 static struct BurnRomInfo MmatrixdRomDesc[] = {
 #if !defined (ROM_VERIFY)
+	// Pretty sure this is supposed to to be USA set, MAME has it as Japan, but the in-game region select also fails in MAME
+	// see PhoenixOutputWriteByte() for more detail
 	{ "mmxud.03",      0x080000, 0x36711e60, 1 | BRF_ESS | BRF_PRG },
 	{ "mmxud.04",      0x080000, 0x4687226f, 1 | BRF_ESS | BRF_PRG },
 	{ "mmxud.05",      0x080000, 0x52124398, 1 | BRF_ESS | BRF_PRG },
@@ -10063,8 +10065,8 @@ STD_ROM_PICK(Progearjd)
 STD_ROM_FN(Progearjd)
 
 static struct BurnRomInfo ProgearjblRomDesc[] = {
-	{ "pgaj_bl.03",    0x080000, 0x4fef676c,  1 | BRF_ESS | BRF_PRG },
-	{ "pgaj_bl.04",    0x080000, 0xa069bd3b,  1 | BRF_ESS | BRF_PRG },
+	{ "pgaj_bl.03",    0x080000, 0x4fef676c,  1 | BRF_ESS | BRF_PRG }, // this fails the rom test - bootleggers probably didn't update checksum
+	{ "pgaj_bl.04",    0x080000, 0xa069bd3b,  1 | BRF_ESS | BRF_PRG }, // this fails the rom test - bootleggers probably didn't update checksum
 
 	{ "pga.13m",       0x400000, 0x5194c198,  3 | BRF_GRA },
 	{ "pga.15m",       0x400000, 0xb794e83f,  3 | BRF_GRA },
@@ -10459,11 +10461,13 @@ STD_ROM_PICK(Vsavd)
 STD_ROM_FN(Vsavd)
 
 static struct BurnRomInfo Vhunt2dRomDesc[] = {
+//	{ "vh2j_d.06",     0x080000, 0xf320ea30, 1 | BRF_ESS | BRF_PRG }, // apparently a bad dump of vh2j.06, originally loaded instead of vh2j.07 which wasn't encrypted, and clearly not correct
+
 	{ "vh2j_d.03a",    0x080000, 0x696e0157, 1 | BRF_ESS | BRF_PRG },
 	{ "vh2j_d.04a",    0x080000, 0xced9bba3, 1 | BRF_ESS | BRF_PRG },
 	{ "vh2j.05",       0x080000, 0xde34f624, 1 | BRF_ESS | BRF_PRG },
 	{ "vh2j.06",       0x080000, 0x6a3b9897, 1 | BRF_ESS | BRF_PRG },
-	{ "vh2j_d.06",     0x080000, 0xf320ea30, 1 | BRF_ESS | BRF_PRG },
+	{ "vh2j.07",       0x080000, 0xb021c029, 1 | BRF_ESS | BRF_PRG },
 	{ "vh2j.08",       0x080000, 0xac873dff, 1 | BRF_ESS | BRF_PRG },
 	{ "vh2j.09",       0x080000, 0xeaefce9c, 1 | BRF_ESS | BRF_PRG },
 	{ "vh2j.10",       0x080000, 0x11730952, 1 | BRF_ESS | BRF_PRG },
@@ -10488,12 +10492,17 @@ STD_ROM_PICK(Vhunt2d)
 STD_ROM_FN(Vhunt2d)
 
 static struct BurnRomInfo Vsav2dRomDesc[] = {
-	{ "vs2j_d.03",     0x080000, 0x5ee19aee, 1 | BRF_ESS | BRF_PRG },
-	{ "vs2j_d.04",     0x080000, 0x80116c47, 1 | BRF_ESS | BRF_PRG },
-	{ "vs2j_d.05",     0x080000, 0xdc74a062, 1 | BRF_ESS | BRF_PRG },
+//	{ "vs2j_d.03",     0x080000, 0x5ee19aee, 1 | BRF_ESS | BRF_PRG }, // bad dump?
+//	{ "vs2j_d.04",     0x080000, 0x80116c47, 1 | BRF_ESS | BRF_PRG }, // bad dump?
+//	{ "vs2j_d.05",     0x080000, 0xdc74a062, 1 | BRF_ESS | BRF_PRG }, // apparently a bad dump of vs2j.04, originally loaded instead of vs2j.05 which wasn't encrypted, and clearly not correct
+//	{ "vs2j_d.08",     0x080000, 0x97554918, 1 | BRF_ESS | BRF_PRG }, // apparently a bad dump of vs2j.08, originally loaded instead of vs2j.08 which wasn't encrypted, and clearly not correct
+
+	{ "vs2j_d.03",     0x080000, 0x50865f7b, 1 | BRF_ESS | BRF_PRG },
+	{ "vs2j_d.04",     0x080000, 0xc3bff0e3, 1 | BRF_ESS | BRF_PRG },
+	{ "vs2j.05",       0x080000, 0x61979638, 1 | BRF_ESS | BRF_PRG },
 	{ "vs2j.06",       0x080000, 0xf37c5bc2, 1 | BRF_ESS | BRF_PRG },
 	{ "vs2j.07",       0x080000, 0x8f885809, 1 | BRF_ESS | BRF_PRG },
-	{ "vs2j_d.08",     0x080000, 0x97554918, 1 | BRF_ESS | BRF_PRG },
+	{ "vs2j.08",       0x080000, 0x2018c120, 1 | BRF_ESS | BRF_PRG },
 	{ "vs2j.09",       0x080000, 0xfac3c217, 1 | BRF_ESS | BRF_PRG },
 	{ "vs2j.10",       0x080000, 0xeb490213, 1 | BRF_ESS | BRF_PRG },
 
@@ -10546,11 +10555,22 @@ STD_ROM_PICK(Xmcotad)
 STD_ROM_FN(Xmcotad)
 
 static struct BurnRomInfo Xmvsfu1dRomDesc[] = {
+//	{ "xvsd.05a",      0x080000, 0xde347b11, 1 | BRF_ESS | BRF_PRG }, // bad dump?, originally loaded in place of xvs.05a
+//	{ "xvsd.07",       0x080000, 0xf761ded7, 1 | BRF_ESS | BRF_PRG }, // bad dump?, originally loaded in place of xvs.07a
+	
 	{ "xvsud.03h",     0x080000, 0x4e2e76b7, 1 | BRF_ESS | BRF_PRG },
 	{ "xvsud.04h",     0x080000, 0x290c61a7, 1 | BRF_ESS | BRF_PRG },
-	{ "xvsd.05a",      0x080000, 0xde347b11, 1 | BRF_ESS | BRF_PRG },
+#if !defined (ROM_VERIFY)
+	{ "xvs.05a",       0x080000, 0x7db6025d, 1 | BRF_ESS | BRF_PRG },
+#else
+	{ "xvsd.05a",      0x080000, 0xde347b11, 1 | BRF_ESS | BRF_PRG }, // bad dump?
+#endif
 	{ "xvs.06a",       0x080000, 0xe8e2c75c, 1 | BRF_ESS | BRF_PRG },
-	{ "xvsd.07",       0x080000, 0xf761ded7, 1 | BRF_ESS | BRF_PRG },
+#if !defined (ROM_VERIFY)
+	{ "xvs.07",        0x080000, 0x08f0abed, 1 | BRF_ESS | BRF_PRG },
+#else
+	{ "xvsd.07",       0x080000, 0xf761ded7, 1 | BRF_ESS | BRF_PRG }, // bad dump?
+#endif
 	{ "xvs.08",        0x080000, 0x81929675, 1 | BRF_ESS | BRF_PRG },
 	{ "xvs.09",        0x080000, 0x9641f36b, 1 | BRF_ESS | BRF_PRG },
 
@@ -10573,24 +10593,35 @@ static struct BurnRomInfo Xmvsfu1dRomDesc[] = {
 STD_ROM_PICK(Xmvsfu1d)
 STD_ROM_FN(Xmvsfu1d)
 
-void __fastcall PhoenixOutputWriteByte(UINT32 a,UINT8 d)
+void __fastcall PhoenixOutputWriteByte(UINT32 a, UINT8 d)
 {
 	if (a >= 0xfffff0 && a <= 0xfffffb) {
 		CpsFrg[a & 0x0f] = d;
+		// should this value also feed through to RAM (CpsRamFF) or should I return here?
 	}
 	
-	if (a >= 0xff0000 && a <= 0xffffff) {
-		CpsRamFF[(a - 0xff0000) ^ 1] = d;
-		return;
-	}
+	// MAME only maps up to 0xffffef here (but ignorning 0xfffffc to 0xffffff
+	// breaks the region and in-game region select in Mars Matrix
+	CpsRamFF[(a - 0xff0000) ^ 1] = d;
 }
 
-void __fastcall PhoenixSpriteWriteByte(UINT32 a,UINT8 d)
+void __fastcall PhoenixOutputWriteWord(UINT32 a, UINT16 d)
 {
-	bprintf(PRINT_NORMAL, _T("Byte %x, %x\n"), a, d);
+	SEK_DEF_WRITE_WORD(3, a, d);
 }
 
-void __fastcall PhoenixSpriteWriteWord(UINT32 a,UINT16 d)
+void __fastcall PhoenixSpriteWriteByte(UINT32 a, UINT8 d)
+{
+	// Not seen anything write here but just in case...
+	INT32 Offset = a - 0x700000;
+	
+	CpsRam708[(Offset ^ 1) + 0x0000] = d;
+	CpsRam708[(Offset ^ 1) + 0x8000] = d;
+	
+	bprintf(PRINT_NORMAL, _T("Phoenix Sprite Write Byte %x, %x\n"), a, d);
+}
+
+void __fastcall PhoenixSpriteWriteWord(UINT32 a, UINT16 d)
 {
 	UINT16 *Ram = (UINT16*)CpsRam708;
 	INT32 Offset = (a - 0x700000) >> 1;
@@ -10606,8 +10637,9 @@ static INT32 PhoenixInit()
 	nCpsNumScanlines = 262;	// phoenix sets seem to be sensitive to timing??
 	
 	SekOpen(0);
-	SekMapHandler(3, 0xFF0000, 0xFFFFFF, SM_WRITE);
+	SekMapHandler(3, 0xff0000, 0xffffff, SM_WRITE);
 	SekSetWriteByteHandler(3, PhoenixOutputWriteByte);
+	SekSetWriteWordHandler(3, PhoenixOutputWriteWord);
 	SekMapHandler(4, 0x700000, 0x701fff, SM_WRITE);
 	SekSetWriteByteHandler(4, PhoenixSpriteWriteByte);
 	SekSetWriteWordHandler(4, PhoenixSpriteWriteWord);

@@ -7119,6 +7119,13 @@ static INT32 DrvExit()
 	Ssf2tb = 0;
 	Xmcota = 0;
 	
+	CpsLayer1XOffs = 0;
+	CpsLayer2XOffs = 0;
+	CpsLayer3XOffs = 0;
+	CpsLayer1YOffs = 0;
+	CpsLayer2YOffs = 0;
+	CpsLayer3YOffs = 0;
+	
 	return CpsExit();
 }
 

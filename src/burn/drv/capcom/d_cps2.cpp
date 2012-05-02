@@ -10064,24 +10064,6 @@ static struct BurnRomInfo ProgearjdRomDesc[] = {
 STD_ROM_PICK(Progearjd)
 STD_ROM_FN(Progearjd)
 
-static struct BurnRomInfo ProgearjblRomDesc[] = {
-	{ "pgaj_bl.03",    0x080000, 0x4fef676c,  1 | BRF_ESS | BRF_PRG }, // this fails the rom test - bootleggers probably didn't update checksum
-	{ "pgaj_bl.04",    0x080000, 0xa069bd3b,  1 | BRF_ESS | BRF_PRG }, // this fails the rom test - bootleggers probably didn't update checksum
-
-	{ "pga.13m",       0x400000, 0x5194c198,  3 | BRF_GRA },
-	{ "pga.15m",       0x400000, 0xb794e83f,  3 | BRF_GRA },
-	{ "pga.17m",       0x400000, 0x87f22918,  3 | BRF_GRA },
-	{ "pga.19m",       0x400000, 0x65ffb45b,  3 | BRF_GRA },
-
-	{ "pga.01",        0x020000, 0xBDBFA992,  4 | BRF_ESS | BRF_PRG },
-
-	{ "pga.11m",       0x400000, 0xabdd224e, 5 | BRF_SND },
-	{ "pga.12m",       0x400000, 0xdac53406, 5 | BRF_SND },	
-};
-
-STD_ROM_PICK(Progearjbl)
-STD_ROM_FN(Progearjbl)
-
 static struct BurnRomInfo RingdstdRomDesc[] = {
 	{ "smbed.03b",     0x080000, 0xf6fba4cd, 1 | BRF_ESS | BRF_PRG },
 	{ "smbed.04b",     0x080000, 0x193bc493, 1 | BRF_ESS | BRF_PRG },
@@ -10907,16 +10889,6 @@ struct BurnDriver BurnDrvCpsProgearjd = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsProgearjbl = {
-	"progearjbl", "progear", NULL, NULL, "2001",
-	"Progear No Arashi (010117 Japan, decrypted set)\0", NULL, "bootleg", "CPS2",
-	L"\u30D7\u30ED\u30AE\u30A2\u306E\u5D50 (Progear No Arashi 010117 Japan, decrypted set)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2 | HARDWARE_CAPCOM_CPS2_SIMM, GBF_HORSHOOT, 0,
-	NULL, ProgearjblRomInfo, ProgearjblRomName, NULL, NULL, ProgearInputInfo, NULL,
-	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
 struct BurnDriver BurnDrvCpsRingdstd = {
 	"ringdstd", "ringdest", NULL, NULL, "1994",
 	"Ring of Destruction - slammasters II (940902 Euro Phoenix Edition)\0", NULL, "bootleg", "CPS2",
@@ -11094,5 +11066,160 @@ struct BurnDriver BurnDrvCpsXmvsfu1d = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Xmvsfu1dRomInfo, Xmvsfu1dRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// other bootlegs
+
+// Progear No Arashi (010117 Japan, decrypted set)
+static struct BurnRomInfo ProgearjblRomDesc[] = {
+	{ "pgaj_bl.03",    0x080000, 0x4fef676c,  1 | BRF_ESS | BRF_PRG }, // this fails the rom test - bootleggers probably didn't update checksum
+	{ "pgaj_bl.04",    0x080000, 0xa069bd3b,  1 | BRF_ESS | BRF_PRG }, // this fails the rom test - bootleggers probably didn't update checksum
+
+	{ "pga.13m",       0x400000, 0x5194c198,  3 | BRF_GRA },
+	{ "pga.15m",       0x400000, 0xb794e83f,  3 | BRF_GRA },
+	{ "pga.17m",       0x400000, 0x87f22918,  3 | BRF_GRA },
+	{ "pga.19m",       0x400000, 0x65ffb45b,  3 | BRF_GRA },
+
+	{ "pga.01",        0x020000, 0xBDBFA992,  4 | BRF_ESS | BRF_PRG },
+
+	{ "pga.11m",       0x400000, 0xabdd224e, 5 | BRF_SND },
+	{ "pga.12m",       0x400000, 0xdac53406, 5 | BRF_SND },	
+};
+
+STD_ROM_PICK(Progearjbl)
+STD_ROM_FN(Progearjbl)
+
+struct BurnDriver BurnDrvCpsProgearjbl = {
+	"progearjbl", "progear", NULL, NULL, "2001",
+	"Progear No Arashi (010117 Japan, decrypted set)\0", NULL, "bootleg", "CPS2",
+	L"\u30D7\u30ED\u30AE\u30A2\u306E\u5D50 (Progear No Arashi 010117 Japan, decrypted set)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2 | HARDWARE_CAPCOM_CPS2_SIMM, GBF_HORSHOOT, 0,
+	NULL, ProgearjblRomInfo, ProgearjblRomName, NULL, NULL, ProgearInputInfo, NULL,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Gigaman 2: The Power Fighters (bootleg of Megaman 2)
+static struct BurnRomInfo Gigaman2RomDesc[] = {
+	{ "sys_rom1.bin",  0x400000, 0x2eaa5e10, BRF_ESS | BRF_PRG },
+
+	{ "cg_rom1.bin",   0x800000, 0xed55a641, BRF_GRA },
+	{ "cg_rom2.bin",   0x800000, 0x63918c05, BRF_GRA },
+
+	{ "pcm_rom1.bin",  0x800000, 0x41a854ab, BRF_SND },
+	
+	{ "89c4051.bin",   0x010000, 0x00000000, BRF_PRG | BRF_NODUMP }, // sound MCU
+};
+
+STD_ROM_PICK(Gigaman2)
+STD_ROM_FN(Gigaman2)
+
+static UINT8 *Gigaman2DummyQsndRam = NULL;
+
+static INT32 Gigaman2Init()
+{
+	Cps = 2;
+	Cps2DisableQSnd = 1;
+	
+	CpsLayer1XOffs = -0x09;
+	CpsLayer2XOffs = -0x09;
+	CpsLayer3XOffs = -0x09;
+	
+	nCpsGfxLen  = 0x800000;
+	nCpsRomLen  = 0x180000;
+	nCpsCodeLen = 0x180000;
+	nCpsZRomLen = 0;
+	nCpsQSamLen = 0;
+	nCpsAdLen   = 0x800000;
+	
+	Gigaman2DummyQsndRam = (UINT8*)BurnMalloc(0x20000);
+	
+	CpsInit();
+	
+	INT32 nRet = 0;
+	
+	// Load program rom (seperate data and code)
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x400000);
+	if (!pTemp) return 1;
+	nRet = BurnLoadRom(pTemp, 0, 1); if (nRet) return 1;
+	memcpy(CpsRom , pTemp + 0x000000, 0x180000);
+	memcpy(CpsCode, pTemp + 0x200000, 0x180000);
+	BurnFree(pTemp);
+	
+	// Load graphic roms, descramble and decode
+	pTemp = (UINT8*)BurnMalloc(0xc00000);
+	if (!pTemp) return 1;
+	// we are only interested in the first 0x400000 of each rom
+	nRet = BurnLoadRom(pTemp + 0x000000, 1, 1); if (nRet) return 1;
+	nRet = BurnLoadRom(pTemp + 0x400000, 2, 1); if (nRet) return 1;
+	
+	// copy to CpsGfx as a temp buffer and descramble
+	memcpy(CpsGfx, pTemp, nCpsGfxLen);
+	memset(pTemp, 0, 0xc00000);
+	UINT16 *pTemp16 = (UINT16*)pTemp;
+	UINT16 *CpsGfx16 = (UINT16*)CpsGfx;
+	for (INT32 i = 0; i < 0x800000 >> 1; i++) {
+		pTemp16[i] = CpsGfx16[((i & ~7) >> 2) | ((i & 4) << 18) | ((i & 2) >> 1) | ((i & 1) << 21)];
+	}
+	
+	// copy back to CpsGfx as a temp buffer and put into a format easier to decode
+	memcpy(CpsGfx, pTemp, nCpsGfxLen);
+	memset(pTemp, 0, 0xc00000);
+	for (INT32 i = 0; i < 0x100000; i++) {
+		pTemp16[i + 0x000000] = CpsGfx16[(i * 4) + 0];
+		pTemp16[i + 0x100000] = CpsGfx16[(i * 4) + 1];
+		pTemp16[i + 0x200000] = CpsGfx16[(i * 4) + 2];
+		pTemp16[i + 0x300000] = CpsGfx16[(i * 4) + 3];
+	}
+	
+	// clear CpsGfx and finally decode
+	memset(CpsGfx, 0, nCpsGfxLen);	
+	Cps2LoadTilesGigaman2(CpsGfx, pTemp);
+	BurnFree(pTemp);
+	
+	// Load the MSM6295 Data
+	nRet = BurnLoadRom(CpsAd, 3, 1); if (nRet) return 1;
+	
+	nRet = CpsRunInit();
+	
+	SekOpen(0);
+	SekMapMemory(Gigaman2DummyQsndRam, 0x618000, 0x619fff, SM_RAM);
+	SekClose();
+	
+//	nCpsNumScanlines = 262;	// phoenix sets seem to be sensitive to timing??
+	
+	return nRet;
+}
+
+static INT32 Gigaman2Exit()
+{
+	BurnFree(Gigaman2DummyQsndRam);
+	
+	return DrvExit();
+}
+
+static INT32 Gigaman2Scan(INT32 nAction, INT32 *pnMin)
+{
+	struct BurnArea ba;
+	
+	if (nAction & ACB_MEMORY_RAM) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data   = Gigaman2DummyQsndRam;
+		ba.nLen   = 0x020000;
+		ba.szName = "Gigaman2DummyQsndRam";
+		BurnAcb(&ba);
+	}
+
+	return CpsAreaScan(nAction, pnMin);
+}
+
+struct BurnDriver BurnDrvCpsGigaman2 = {
+	"gigaman2", "megaman2", NULL, NULL, "1996",
+	"Gigaman 2: The Power Fighters (bootleg)\0", "No Sound (MCU not dumped)", "bootleg", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
+	NULL, Gigaman2RomInfo, Gigaman2RomName, NULL, NULL, Megaman2InputInfo, NULL,
+	Gigaman2Init, Gigaman2Exit, Cps2Frame, CpsRedraw, Gigaman2Scan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

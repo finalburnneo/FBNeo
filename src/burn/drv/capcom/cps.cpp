@@ -4,6 +4,7 @@
 INT32 Cps = 0;							// 1 = CPS1, 2 = CPS2, 3 = CPS Changer
 INT32 Cps1Qs = 0;
 INT32 Cps1DisablePSnd = 0;				// Disables the Z80 as well
+INT32 Cps2DisableQSnd = 0;				// Disables the Z80 as well
 
 INT32 nCPS68KClockspeed = 0;
 INT32 nCpsCycles = 0;						// 68K Cycles per frame
@@ -893,6 +894,43 @@ INT32 Cps2LoadTilesSIM(UINT8* Tile, INT32 nStart)
 	Cps2LoadOne(Tile,     nStart + 2, 0, 2);
 	Cps2LoadOne(Tile + 4, nStart + 4, 0, 0);
 	Cps2LoadOne(Tile + 4, nStart + 6, 0, 2);
+
+	return 0;
+}
+
+INT32 Cps2LoadTilesGigaman2(UINT8 *Tile, UINT8 *pSrc)
+{
+	UINT8 *pt = Tile;
+	UINT8 *pr = pSrc;
+	for (INT32 b = 0; b < 0x200000 >> 19; b++) {
+		Cps2Load100000(pt, pr,     0); pt += 0x100000;
+		Cps2Load100000(pt, pr + 2, 0); pt += 0x100000;
+		pr += 0x80000;
+	}
+	
+	pt = Tile;
+	pr = pSrc + 0x200000;
+	for (INT32 b = 0; b < 0x200000 >> 19; b++) {
+		Cps2Load100000(pt, pr,     2); pt += 0x100000;
+		Cps2Load100000(pt, pr + 2, 2); pt += 0x100000;
+		pr += 0x80000;
+	}
+	
+	pt = Tile + 4;
+	pr = pSrc + 0x400000;
+	for (INT32 b = 0; b < 0x200000 >> 19; b++) {
+		Cps2Load100000(pt, pr,     0); pt += 0x100000;
+		Cps2Load100000(pt, pr + 2, 0); pt += 0x100000;
+		pr += 0x80000;
+	}
+	
+	pt = Tile + 4;
+	pr = pSrc + 0x600000;
+	for (INT32 b = 0; b < 0x200000 >> 19; b++) {
+		Cps2Load100000(pt, pr,     2); pt += 0x100000;
+		Cps2Load100000(pt, pr + 2, 2); pt += 0x100000;
+		pr += 0x80000;
+	}
 
 	return 0;
 }

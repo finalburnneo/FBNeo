@@ -29,7 +29,7 @@ static INT32 CpsMemIndex()
 
 	CpsSavePal    = Next; Next += 0x002000;							// Draw Copy of Correct Palette
 
-	if (Cps == 2 || Cps1Qs == 1) {
+	if (((Cps == 2) && !Cps2DisableQSnd) || Cps1Qs == 1) {
 		CpsZRamC0 = Next; Next += 0x001000;							// Z80 c000-cfff
 		CpsZRamF0 = Next; Next += 0x001000;							// Z80 f000-ffff
 	}
@@ -103,7 +103,7 @@ void CpsMapObjectBanks(INT32 nBank)
 INT32 __fastcall CPSResetCallback()
 {
 	// Reset instruction on 68000
-	if (!Cps1DisablePSnd) ZetReset();						// Reset Z80 (CPU #1)
+	if (((Cps & 1) && !Cps1DisablePSnd) || ((Cps == 2) && !Cps2DisableQSnd)) ZetReset();						// Reset Z80 (CPU #1)
 
 	return 0;
 }
@@ -294,7 +294,7 @@ INT32 CpsMemInit()
 	SekSetWriteWordHandler(0, CpsWriteWord);
 
 	// QSound
-	if (Cps == 2) {
+	if ((Cps == 2) && !Cps2DisableQSnd) {
 		SekMapHandler(1,	0x618000, 0x619FFF, SM_RAM);
 
 		SekSetReadByteHandler(1, CPSQSoundC0ReadByte);
@@ -352,7 +352,7 @@ static INT32 ScanRam()
 	ba.Data = CpsRamFF;  ba.nLen = 0x010000; ba.szName = "CpsRamFF";  BurnAcb(&ba);
 	ba.Data = CpsReg;    ba.nLen = 0x000100; ba.szName = "CpsReg";    BurnAcb(&ba);
 
-	if (Cps == 2 || Cps1Qs == 1) {
+	if (((Cps == 2) && !Cps2DisableQSnd) || Cps1Qs == 1) {
 		ba.Data = CpsZRamC0; ba.nLen = 0x001000; ba.szName = "CpsZRamC0"; BurnAcb(&ba);
 		ba.Data = CpsZRamF0; ba.nLen = 0x001000; ba.szName = "CpsZRamF0"; BurnAcb(&ba);
 	}
@@ -425,10 +425,10 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 		}
 	}
 
-	if (Cps == 2 || Cps1Qs == 1) {						// Scan QSound chips
+	if (((Cps == 2) && !Cps2DisableQSnd) || Cps1Qs == 1) {						// Scan QSound chips
 		QsndScan(nAction);
 	} else {											// Scan PSound chips
-		if (!Cps1DisablePSnd) PsndScan(nAction);
+		if ((Cps & 1) && !Cps1DisablePSnd) PsndScan(nAction);
 	}
 	
 	if (CpsMemScanCallbackFunction) {

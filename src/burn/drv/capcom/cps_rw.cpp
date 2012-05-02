@@ -461,7 +461,7 @@ void __fastcall CpsWriteWord(UINT32 a, UINT16 d)
 
 	if (a == 0x804040) {
 		if ((d & 0x0008) == 0) {
-			ZetReset();
+			if (!Cps2DisableQSnd) ZetReset();
 		}
 	}
 	

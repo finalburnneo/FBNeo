@@ -17,6 +17,7 @@ extern UINT32 CpsBID[3];										// Board ID changes
 extern INT32 Cps;														// 1 = CPS1, 2 = CPS2, 3 = CPS CHanger
 extern INT32 Cps1Qs;
 extern INT32 Cps1DisablePSnd;
+extern INT32 Cps2DisableQSnd;
 extern INT32 nCPS68KClockspeed;
 extern INT32 nCpsCycles;												// Cycles per frame
 extern INT32 nCpsZ80Cycles;
@@ -53,6 +54,7 @@ INT32 CpsLoadStarsByte(UINT8 *pStar, INT32 nStart);
 INT32 CpsLoadStarsForgottnAlt(UINT8 *pStar, INT32 nStart);
 INT32 Cps2LoadTiles(UINT8 *Tile,INT32 nStart);
 INT32 Cps2LoadTilesSIM(UINT8 *Tile,INT32 nStart);
+INT32 Cps2LoadTilesGigaman2(UINT8 *Tile, UINT8 *pSrc);
 
 // cps_config.h
 #define CPS_B_01		0

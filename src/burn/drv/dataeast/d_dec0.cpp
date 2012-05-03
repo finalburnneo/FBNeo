@@ -885,6 +885,48 @@ static struct BurnRomInfo DrgninjabRomDesc[] = {
 STD_ROM_PICK(Drgninjab)
 STD_ROM_FN(Drgninjab)
 
+// f205v id 932
+// f205v's page shows that this uses an MSM5205 instead of the MSM6295, the MSM5205 data ROM isn't dumped yet, but the MSM6295 ROM is still
+// present on the board? For now I'm using the original M6502 program and MSM6295, pending getting a dump of the MSM5205 data
+static struct BurnRomInfo Drgninjab2RomDesc[] = {
+	{ "a14.3e",             0x10000, 0xc4b9f4e7, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "a11.3b",             0x10000, 0xe4cc7c60, BRF_ESS | BRF_PRG },	//  1
+	{ "a12.2e",             0x10000, 0x2b81faf7, BRF_ESS | BRF_PRG },	//  2
+	{ "a9.2b",              0x10000, 0xc52c2e9d, BRF_ESS | BRF_PRG },	//  3
+	
+//	{ "a15.7b",             0x08000, 0x82007af2, BRF_ESS | BRF_PRG },	//  4	6502 Program (ADPCM sounds are wrong with this, see above, 1st half identical to orginal, 2nd half 99.225%)
+	{ "eg07.8a",            0x08000, 0x001d2f51, BRF_ESS | BRF_PRG },	//  4	6502 Program 
+	
+	{ "a22.9m",             0x08000, 0x6791bc20, BRF_GRA },			//  5	Characters
+	{ "a23.9n",             0x08000, 0x5d75fc8f, BRF_GRA },			//  6
+	
+	{ "a25.10f",            0x10000, 0x05cfc3e5, BRF_GRA },			//  7	Tiles 1
+	{ "a27.10h",            0x10000, 0xe11e988f, BRF_GRA },			//  8
+	{ "a24.10e",            0x10000, 0xb893d880, BRF_GRA },			//  9
+	{ "a26.10g",            0x10000, 0x6f226dda, BRF_GRA },			// 10
+	
+	{ "a21.9k",             0x08000, 0xb2e989fc, BRF_GRA },			// 11	Tiles 2
+	{ "a29.10k",            0x08000, 0x4bf80966, BRF_GRA },			// 12
+	{ "a20.9j",             0x08000, 0xe71c0793, BRF_GRA },			// 13
+	{ "a28.10j",            0x08000, 0x2d38032d, BRF_GRA },			// 14
+	
+	{ "a6.4g",              0x10000, 0x5617d67f, BRF_GRA },			// 15	Sprites
+	{ "a2.4c",              0x08000, 0x17e42633, BRF_GRA },			// 16
+	{ "a8.5g",              0x10000, 0xba83e8d8, BRF_GRA },			// 17
+	{ "a4.5c",              0x08000, 0xfea2a134, BRF_GRA },			// 18
+	{ "a5.3g",              0x10000, 0xfd91e08e, BRF_GRA },			// 19
+	{ "a1.3c",              0x08000, 0xe83c760a, BRF_GRA },			// 20
+	{ "a7.4-5g",            0x10000, 0x601b7b23, BRF_GRA },			// 21
+	{ "a3.4-5c",            0x08000, 0xeeee8a1a, BRF_GRA },			// 22
+	
+	{ "a30.10b",            0x10000, 0xf6806826, BRF_SND },			// 23	Samples
+	
+	{ "i8751",              0x01000, 0x00000000, BRF_PRG | BRF_NODUMP },	// 24	I8751
+};
+
+STD_ROM_PICK(Drgninjab2)
+STD_ROM_FN(Drgninjab2)
+
 static struct BurnRomInfo HbarrelRomDesc[] = {
 	{ "hb04.bin",           0x10000, 0x4877b09e, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "hb01.bin",           0x10000, 0x8b41c219, BRF_ESS | BRF_PRG },	//  1
@@ -3194,6 +3236,60 @@ static INT32 BaddudesInit()
 	return 0;
 }
 
+static INT32 Drgninjab2Init()
+{
+	INT32 nRet = 0;
+
+	Dec0MachineInit();
+
+	nRet = BurnLoadRom(Drv68KRom + 0x00001, 0, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x00000, 1, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x40001, 2, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x40000, 3, 2); if (nRet != 0) return 1;
+	
+	nRet = BurnLoadRom(DrvM6502Rom, 4, 1); if (nRet != 0) return 1;
+	
+	nRet = BurnLoadRom(DrvTempRom + 0x00000,  5, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x08000,  6, 1); if (nRet != 0) return 1;
+	GfxDecode(0x800, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvChars);
+	
+	memset(DrvTempRom, 0, 0x80000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000,  7, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x10000,  8, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x20000,  9, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x30000, 10, 1); if (nRet != 0) return 1;
+	GfxDecode(0x800, 4, 16, 16, Tile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
+	
+	memset(DrvTempRom, 0, 0x80000);
+	nRet = BurnLoadRom(DrvTempRom + 0x08000, 11, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x00000, 12, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x18000, 13, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x10000, 14, 1); if (nRet != 0) return 1;
+	GfxDecode(0x400, 4, 16, 16, Tile2PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
+	
+	memset(DrvTempRom, 0, 0x80000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000, 15, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x10000, 16, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x20000, 17, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x30000, 18, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x40000, 19, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x50000, 20, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x60000, 21, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x70000, 22, 1); if (nRet != 0) return 1;
+	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvSprites);
+	
+	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 23, 1); if (nRet != 0) return 1;
+	
+	BurnFree(DrvTempRom);
+	
+	Dec0DrawFunction = BaddudesDraw;
+	Dec0Game = DEC0_GAME_BADDUDES;
+
+	BaddudesDoReset();
+
+	return 0;
+}
+
 static INT32 HbarrelInit()
 {
 	INT32 nRet = 0;
@@ -4730,11 +4826,21 @@ struct BurnDriver BurnDrvDrgninja = {
 
 struct BurnDriver BurnDrvDrgninjab = {
 	"drgninjab", "baddudes", NULL, NULL, "1988",
-	"Dragonninja (bootleg)\0", NULL, "bootleg", "DEC0",
+	"Dragonninja (bootleg set 1)\0", NULL, "bootleg", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, DrgninjabRomInfo, DrgninjabRomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
 	BaddudesInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
+	NULL, 0x400, 256, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvDrgninjab2 = {
+	"drgninjab2", "baddudes", NULL, NULL, "1988",
+	"Dragonninja (bootleg set 2)\0", NULL, "bootleg", "DEC0",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	NULL, Drgninjab2RomInfo, Drgninjab2RomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
+	Drgninjab2Init, BaddudesExit, DrvFrame, NULL, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 

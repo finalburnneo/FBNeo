@@ -888,6 +888,7 @@ STD_ROM_FN(Drgninjab)
 // f205v id 932
 // f205v's page shows that this uses an MSM5205 instead of the MSM6295, the MSM5205 data ROM isn't dumped yet, but the MSM6295 ROM is still
 // present on the board? For now I'm using the original M6502 program and MSM6295, pending getting a dump of the MSM5205 data
+// this set should also use a M68705 apparently, no dump available though
 static struct BurnRomInfo Drgninjab2RomDesc[] = {
 	{ "a14.3e",             0x10000, 0xc4b9f4e7, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "a11.3b",             0x10000, 0xe4cc7c60, BRF_ESS | BRF_PRG },	//  1

@@ -2018,6 +2018,41 @@ struct BurnDriver BurnDrvKov2102 = {
 };
 
 
+static struct BurnRomInfo kov2101RomDesc[] = {
+	{ "u18.101",	   		0x400000, 0xc9926f35, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t1200.rom",	   		0x800000, 0xd7e26609, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1200.rom",	   		0x800000, 0xceeb81d8, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1201.rom",	   		0x800000, 0x82f0a878, 3 | BRF_GRA },		//  3
+	{ "a1202.rom",	   		0x800000, 0x4bb92fae, 3 | BRF_GRA },		//  4
+	{ "a1203.rom",	   		0x800000, 0xe73cb627, 3 | BRF_GRA },		//  5
+	{ "a1204.rom",	   		0x800000, 0x27527099, 3 | BRF_GRA },		//  6
+
+	{ "b1200.rom",	   		0x800000, 0xbed7d994, 4 | BRF_GRA },		//  7 Sprite Masks & Color Indexes
+	{ "b1201.rom",	   		0x800000, 0xf251eb57, 4 | BRF_GRA },		//  8
+
+	{ "m1200.rom",	   		0x800000, 0xb0d88720, 5 | BRF_SND },		//  9 Samples
+
+	{ "kov2_v100_hongkong.asic",	0x004000, 0xe0d7679f, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
+
+	{ "u19.101",	   		0x200000, 0x8c35f2fe, 8 | BRF_PRG | BRF_ESS }, // 11 External ARM7 Rom
+};
+
+STDROMPICKEXT(kov2101, kov2101, pgm)
+STD_ROM_FN(kov2101)
+
+struct BurnDriver BurnDrvKov2101 = {
+	"kov2101", "kov2", "pgm", NULL, "2000",
+	"Knights of Valour 2 (V101, 101, 100, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
+	L"Knights of Valour 2\0\u4e09\u56fd\u6218\u7eaa 2 (V101, 101, 100, Hong Kong)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kov2101RomInfo, kov2101RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	kov2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
 // Knights of Valour 2 (V100, 100, 100, Hong Kong)
 
 static struct BurnRomInfo kov2100RomDesc[] = {

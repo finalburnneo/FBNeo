@@ -8988,6 +8988,27 @@ static struct BurnRomInfo MooncrstukRomDesc[] = {
 STD_ROM_PICK(Mooncrstuk)
 STD_ROM_FN(Mooncrstuk)
 
+static struct BurnRomInfo MooncrstukuRomDesc[] = {
+	{ "smc1f",         0x00800, 0x389ca0d6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "smc2f",         0x00800, 0x410ab430, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "smc3f",         0x00800, 0xa6b4144b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "smc4f",         0x00800, 0x4cc046fe, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "smc5f",         0x00800, 0x06d378a6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "smc6f",         0x00800, 0x6e84a927, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "smc7f",         0x00800, 0xb45af1e8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "smc8f_uk",      0x00800, 0xb968b2ff, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "mcs_b",         0x00800, 0xfb0f1f81, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "mcs_d",         0x00800, 0x13932a15, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "mcs_a",         0x00800, 0x631ebb5a, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "mcs_c",         0x00800, 0x24cfd145, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "mmi6331.6l",    0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Mooncrstuku)
+STD_ROM_FN(Mooncrstuku)
+
 static struct BurnRomInfo MooncrstuRomDesc[] = {
 	{ "smc1f",         0x00800, 0x389ca0d6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "smc2f",         0x00800, 0x410ab430, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -9110,6 +9131,16 @@ struct BurnDriver BurnDrvMooncrstuk = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, MooncrstukRomInfo, MooncrstukRomName, NULL, NULL, OmegaInputInfo, MooncrstDIPInfo,
 	MooncrstEncryptedInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvMooncrstuku = {
+	"mooncrstuku", "mooncrst", NULL, NULL, "1980",
+	"Moon Cresta (Nichibutsu UK, unencrypted)\0", NULL, "Nichibutsu UK", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, MooncrstukuRomInfo, MooncrstukuRomName, NULL, NULL, OmegaInputInfo, MooncrstDIPInfo,
+	MooncrstInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

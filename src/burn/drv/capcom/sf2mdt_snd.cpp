@@ -16,19 +16,19 @@ static INT32 Sf2mdtSampleSelect1 = 0;
 static INT32 Sf2mdtSampleSelect2 = 0;
 static INT32 Sf2mdtSoundPos = 0;
 static INT32 Sf2mdtCyclesPerSegment = 0;
-static INT32 Sf2NumZ80Banks = 0;
+static INT32 Sf2mdtNumZ80Banks = 0;
 
 void Sf2mdtSoundCommand(UINT16 d)
 {
 	INT32 nCyclesToDo = ((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles) - ZetTotalCycles();
 	INT32 nEnd = Sf2mdtSoundPos + (INT64)Sf2mdtMSM5205Interleave * nCyclesToDo / nCpsZ80Cycles;
-		
+	
 	for (INT32 i = Sf2mdtSoundPos; i < nEnd; i++) {
 		ZetRun(Sf2mdtCyclesPerSegment);
 		MSM5205Update();
 		Sf2mdtSoundPos = i;
 	}
-		
+	
 	Sf2mdtSoundLatch = d & 0xff;
 	ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 }
@@ -70,7 +70,7 @@ void __fastcall Sf2mdtZ80Write(UINT16 a, UINT8 d)
 			MSM5205SetVolume(0, (d & 0x20) ? 0 : 20);
 			MSM5205SetVolume(1, (d & 0x10) ? 0 : 20);
 			
-			Sf2mdtZ80BankAddress = (d & Sf2NumZ80Banks) * 0x4000;
+			Sf2mdtZ80BankAddress = (d & Sf2mdtNumZ80Banks) * 0x4000;
 			ZetMapArea(0x8000, 0xbfff, 0, CpsZRom + Sf2mdtZ80BankAddress);
 			ZetMapArea(0x8000, 0xbfff, 2, CpsZRom + Sf2mdtZ80BankAddress);
 			return;
@@ -139,7 +139,7 @@ INT32 Sf2mdtSoundInit()
 	
 	nCpsZ80Cycles = 3579540 * 100 / nBurnFPS;
 	
-	Sf2NumZ80Banks = (nCpsZRomLen / 0x4000) - 1;
+	Sf2mdtNumZ80Banks = (nCpsZRomLen / 0x4000) - 1;
 	
 	return 0;
 }
@@ -150,7 +150,7 @@ INT32 Sf2mdtSoundReset()
 	ZetReset();
 	BurnYM2151Reset();
 	MSM5205Reset();
-	Sf2mdtZ80BankAddress = 2;
+	Sf2mdtZ80BankAddress = 0x8000;
 	ZetMapArea(0x8000, 0xbfff, 0, CpsZRom + Sf2mdtZ80BankAddress);
 	ZetMapArea(0x8000, 0xbfff, 2, CpsZRom + Sf2mdtZ80BankAddress);
 	ZetClose();
@@ -180,7 +180,7 @@ INT32 Sf2mdtSoundExit()
 	Sf2mdtSampleSelect1 = 0;
 	Sf2mdtSampleSelect2 = 0;
 	Sf2mdtCyclesPerSegment = 0;
-	Sf2NumZ80Banks = 0;
+	Sf2mdtNumZ80Banks = 0;
 	
 	nCpsZ80Cycles = 0;
 

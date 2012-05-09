@@ -175,7 +175,7 @@ INT32 FcrashSoundReset()
 	ZetReset();
 	BurnYM2203Reset();
 	MSM5205Reset();
-	FcrashZ80BankAddress = 2;
+	FcrashZ80BankAddress = 0x8000;
 	ZetMapArea(0x8000, 0xbfff, 0, CpsZRom + FcrashZ80BankAddress);
 	ZetMapArea(0x8000, 0xbfff, 2, CpsZRom + FcrashZ80BankAddress);
 	ZetClose();

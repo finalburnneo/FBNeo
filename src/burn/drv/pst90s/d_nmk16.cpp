@@ -6548,7 +6548,7 @@ STD_ROM_FN(redfoxwp2)
 struct BurnDriver BurnDrvRedfoxwp2 = {
 	"redfoxwp2", "grdnstrm", NULL, NULL, "1998",
 	"Red Fox War Planes II (China)\0", NULL, "Afega", "NMK16",
-	NULL, NULL, NULL, NULL,
+	L"\u7D05\u5B64\u6230\u6A5FII\0Red Fox War Planes II (China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, redfoxwp2RomInfo, redfoxwp2RomName, NULL, NULL, CommonInputInfo, GrdnstrkDIPInfo,
 	GrdnstrmkInit, AfegaExit, AfegaFrame, AfegaDraw, NULL, NULL, 0x300,

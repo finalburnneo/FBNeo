@@ -11468,75 +11468,16 @@ void __fastcall Knightsb98WriteWord(UINT32 a, UINT16 d)
 		case 0x98000c: {
 			// This seems to control layer order and enable
 			switch (d) {
-				case 0x00: {
-					nCps1Layers[0] = 1;
-					nCps1Layers[1] = 0;
-					nCps1Layers[2] = 2;
-					nCps1Layers[3] = 3;
-					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x0000;
-					break;
-				}
-				
-				case 0x1f: {
-					nCps1Layers[0] = 1;
-					nCps1Layers[1] = 0;
-					nCps1Layers[2] = 2;
-					nCps1Layers[3] = 3;
-					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0x03ff);
-					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x003f);
-					*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0x01ff);
-					break;
-				}
-				
-				case 0xff: {
-					nCps1Layers[0] = 1;
-					nCps1Layers[1] = 0;
-					nCps1Layers[2] = 2;
-					nCps1Layers[3] = 3;
-					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0x7fff);
-					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x7ff8);
-					*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0x00ff);
-					break;
-				}
-				
-				case 0x7ff: {
-					nCps1Layers[0] = 1;
-					nCps1Layers[1] = 0;
-					nCps1Layers[2] = 2;
-					nCps1Layers[3] = 3;
-					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0x001f);
-					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x00ff);
-					*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0x07ff);
-					break;
-				}
-				
-				case 0x5800: {
-					nCps1Layers[0] = 1;
-					nCps1Layers[1] = 0;
-					nCps1Layers[2] = 2;
-					nCps1Layers[3] = 3;
-					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0xffee);
-					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x01ff);
-					*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0x7800);
-					break;
-				}
-				
+				case 0x0000:
+				case 0x001f:
+				case 0x00ff:
+				case 0x07ff:
+				case 0x5800:
 				case 0x5f00: {
 					nCps1Layers[0] = 1;
 					nCps1Layers[1] = 0;
 					nCps1Layers[2] = 2;
 					nCps1Layers[3] = 3;
-					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0x03ff);
-					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x7e00);
-					*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0x7f00);
 					break;
 				}
 				
@@ -11545,34 +11486,16 @@ void __fastcall Knightsb98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[1] = 1;
 					nCps1Layers[2] = 2;
 					nCps1Layers[3] = 3;
-					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x0000;
 					break;
 				}
 				
-				case 0x80ff: {
+				case 0x80ff:
+				case 0x87ff:
+				case 0xd800: {
 					nCps1Layers[0] = 1;
 					nCps1Layers[1] = 0;
 					nCps1Layers[2] = 3;
 					nCps1Layers[3] = 2;
-					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0x7fff);
-					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x7ff8);
-					*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0x00ff);
-					break;
-				}
-				
-				case 0x87ff: {
-					nCps1Layers[0] = 1;
-					nCps1Layers[1] = 0;
-					nCps1Layers[2] = 3;
-					nCps1Layers[3] = 2;
-					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0x001f);
-					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x00ff);
-					*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0x07ff);
 					break;
 				}
 				
@@ -11581,22 +11504,6 @@ void __fastcall Knightsb98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[1] = 1;
 					nCps1Layers[2] = 0;
 					nCps1Layers[3] = 3;
-					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[2])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x0000;
-					break;
-				}
-				
-				case 0xd800: {
-					nCps1Layers[0] = 1;
-					nCps1Layers[1] = 0;
-					nCps1Layers[2] = 3;
-					nCps1Layers[3] = 2;
-					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0xffee);
-					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x01ff);
-					*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0x7800);
 					break;
 				}
 				
@@ -11609,6 +11516,25 @@ void __fastcall Knightsb98WriteWord(UINT32 a, UINT16 d)
 				}
 			}
 			return;
+		}
+		
+		case 0x980020: {
+			*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x980022: {
+			*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x980024: {
+			*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Write word %x, %x\n"), a, d);
 		}
 	}
 }

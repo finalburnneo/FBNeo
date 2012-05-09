@@ -20,19 +20,17 @@ static INT32 Sf2NumZ80Banks = 0;
 
 void Sf2mdtSoundCommand(UINT16 d)
 {
-	if (d & 0xff) {
-		INT32 nCyclesToDo = ((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles) - ZetTotalCycles();
-		INT32 nEnd = Sf2mdtSoundPos + (INT64)Sf2mdtMSM5205Interleave * nCyclesToDo / nCpsZ80Cycles;
+	INT32 nCyclesToDo = ((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles) - ZetTotalCycles();
+	INT32 nEnd = Sf2mdtSoundPos + (INT64)Sf2mdtMSM5205Interleave * nCyclesToDo / nCpsZ80Cycles;
 		
-		for (INT32 i = Sf2mdtSoundPos; i < nEnd; i++) {
-			ZetRun(Sf2mdtCyclesPerSegment);
-			MSM5205Update();
-			Sf2mdtSoundPos = i;
-		}
-		
-		Sf2mdtSoundLatch = d & 0xff;
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+	for (INT32 i = Sf2mdtSoundPos; i < nEnd; i++) {
+		ZetRun(Sf2mdtCyclesPerSegment);
+		MSM5205Update();
+		Sf2mdtSoundPos = i;
 	}
+		
+	Sf2mdtSoundLatch = d & 0xff;
+	ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 }
 
 UINT8 __fastcall Sf2mdtZ80Read(UINT16 a)

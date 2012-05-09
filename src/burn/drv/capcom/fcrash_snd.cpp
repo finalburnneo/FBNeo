@@ -19,19 +19,17 @@ static INT32 FcrashCyclesPerSegment = 0;
 
 void FcrashSoundCommand(UINT16 d)
 {
-	if (d & 0xff) {
-		INT32 nCyclesToDo = ((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles) - ZetTotalCycles();
-		INT32 nEnd = FcrashSoundPos + (INT64)FcrashMSM5205Interleave * nCyclesToDo / nCpsZ80Cycles;
+	INT32 nCyclesToDo = ((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles) - ZetTotalCycles();
+	INT32 nEnd = FcrashSoundPos + (INT64)FcrashMSM5205Interleave * nCyclesToDo / nCpsZ80Cycles;
 		
-		for (INT32 i = FcrashSoundPos; i < nEnd; i++) {
-			BurnTimerUpdate((i + 1) * FcrashCyclesPerSegment);
-			MSM5205Update();
-			FcrashSoundPos = i;
-		}
-		
-		FcrashSoundLatch = d & 0xff;
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+	for (INT32 i = FcrashSoundPos; i < nEnd; i++) {
+		BurnTimerUpdate((i + 1) * FcrashCyclesPerSegment);
+		MSM5205Update();
+		FcrashSoundPos = i;
 	}
+		
+	FcrashSoundLatch = d & 0xff;
+	ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 }
 
 UINT8 __fastcall FcrashZ80Read(UINT16 a)

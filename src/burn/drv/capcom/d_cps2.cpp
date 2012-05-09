@@ -9877,17 +9877,9 @@ STD_ROM_PICK(Megamn2d)
 STD_ROM_FN(Megamn2d)
 
 static struct BurnRomInfo MmatrixdRomDesc[] = {
-#if !defined (ROM_VERIFY)
-	// Pretty sure this is supposed to to be USA set, MAME has it as Japan, but the in-game region select also fails in MAME
-	// see PhoenixOutputWriteByte() for more detail
 	{ "mmxud.03",      0x080000, 0x36711e60, 1 | BRF_ESS | BRF_PRG },
 	{ "mmxud.04",      0x080000, 0x4687226f, 1 | BRF_ESS | BRF_PRG },
 	{ "mmxud.05",      0x080000, 0x52124398, 1 | BRF_ESS | BRF_PRG },
-#else
-	{ "mmxjd.03",      0x080000, 0x36711e60, 1 | BRF_ESS | BRF_PRG },
-	{ "mmxjd.04",      0x080000, 0x4687226f, 1 | BRF_ESS | BRF_PRG },
-	{ "mmxjd.05",      0x080000, 0x52124398, 1 | BRF_ESS | BRF_PRG },
-#endif
 
 	{ "mmx.13m",       0x400000, 0x04748718, 3 | BRF_GRA },
 	{ "mmx.15m",       0x400000, 0x38074F44, 3 | BRF_GRA },
@@ -10589,8 +10581,6 @@ void __fastcall PhoenixOutputWriteByte(UINT32 a, UINT8 d)
 		// should this value also feed through to RAM (CpsRamFF) or should I return here?
 	}
 	
-	// MAME only maps up to 0xffffef here (but ignorning 0xfffffc to 0xffffff
-	// breaks the region and in-game region select in Mars Matrix
 	CpsRamFF[(a - 0xff0000) ^ 1] = d;
 }
 

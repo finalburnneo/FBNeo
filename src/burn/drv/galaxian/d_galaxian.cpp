@@ -19947,6 +19947,22 @@ static struct BurnRomInfo DrivfrcgRomDesc[] = {
 STD_ROM_PICK(Drivfrcg)
 STD_ROM_FN(Drivfrcg)
 
+static struct BurnRomInfo DrivfrctRomDesc[] = {
+	{ "01.bin",        0x02000, 0x300a6750, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "02.bin",        0x02000, 0xf04e14c4, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "tbp18s030.02",  0x00020, 0x3110ddae, BRF_GRA | GAL_ROM_PROM },
+	{ "tbp18s030.01",  0x00020, 0x0f0782af, BRF_GRA | GAL_ROM_PROM },
+				
+	{ "03.bin",        0x04000, 0x9ab604cb, BRF_ESS | BRF_PRG | GAL_ROM_S2650_PROG1 },
+	
+	{ "tbp24s10.bin",  0x00100, 0x8c0d886d, BRF_OPT },
+	{ "tbp28s42.bin",  0x00200, 0x9b8f310a, BRF_OPT },
+};
+
+STD_ROM_PICK(Drivfrct)
+STD_ROM_FN(Drivfrct)
+
 static struct BurnRomInfo DrivfrcbRomDesc[] = {
 	{ "df1.bin",       0x02000, 0x8adc3de0, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "df2.bin",       0x02000, 0x6d95ec35, BRF_GRA | GAL_ROM_TILES_SHARED },
@@ -21148,9 +21164,19 @@ struct BurnDriver BurnDrvDrivfrcg = {
 	NULL, 392, 224, 256, 3, 4
 };
 
+struct BurnDriver BurnDrvDrivfrct = {
+	"drivfrct", "drivfrcp", NULL, NULL, "1985",
+	"Top Racer (bootleg of Driving Force)\0", NULL, "bootleg (EMT Germany)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_RACING, 0,
+	NULL, DrivfrctRomInfo, DrivfrctRomName, NULL, NULL, DrivfrcgInputInfo, DrivfrcgDIPInfo,
+	DrivfrcbInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
 struct BurnDriver BurnDrvDrivfrcb = {
 	"drivfrcb", "drivfrcp", NULL, NULL, "1985",
-	"Driving Force (Galaxian conversion bootleg)\0", NULL, "bootleg", "Galaxian",
+	"Driving Force (Galaxian conversion bootleg)\0", NULL, "bootleg (Elsys Software)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_RACING, 0,
 	NULL, DrivfrcbRomInfo, DrivfrcbRomName, NULL, NULL, DrivfrcgInputInfo, DrivfrcgDIPInfo,

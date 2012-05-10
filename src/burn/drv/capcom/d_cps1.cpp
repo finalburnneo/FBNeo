@@ -13322,10 +13322,6 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[1] = 0;
 					nCps1Layers[2] = 2;
 					nCps1Layers[3] = 3;
-					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0x01ff);
-					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x01ff);
-					*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0x7fff);
 					break;
 				}
 				
@@ -13334,10 +13330,6 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[1] = 0;
 					nCps1Layers[2] = 3;
 					nCps1Layers[3] = 2;
-					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0x003f);
-					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x01ff);
-					*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0x7fff);
 					break;
 				}
 				
@@ -13346,10 +13338,6 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[1] = 3;
 					nCps1Layers[2] = 0;
 					nCps1Layers[3] = 2;
-					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0x07ff);
-					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x0780);
-					*((UINT16*)(CpsReg + MaskAddr[3])) = 0x0000;
 					break;
 				}
 				
@@ -13366,10 +13354,6 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[1] = 0;
 					nCps1Layers[2] = 3;
 					nCps1Layers[3] = 2;
-					*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-					*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(0x7fff);
-					*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(0x7fff);
-					*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0x7fff);
 					break;
 				}
 				
@@ -13388,6 +13372,34 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 			bprintf(PRINT_NORMAL, _T("Write word %x, %x\n"), a, d);
 		}
 	}
+}
+
+void __fastcall WofbFFWriteByte(UINT32 a, UINT8 d)
+{
+	CpsRamFF[((a & 0xffff) ^ 1)] = d;
+}
+
+void __fastcall WofbFFWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0xff639a: {
+			*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
+		}
+		
+		case 0xff639c: {
+			*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
+		}
+		
+		case 0xff639e: {
+			*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
+		}
+	}
+	
+	UINT16 *RAM = (UINT16*)CpsRamFF;
+	RAM[((a & 0xffff) >> 1)] = d;
 }
 
 static INT32 WofbInit()
@@ -13411,6 +13423,9 @@ static INT32 WofbInit()
 	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, SM_RAM);
 	SekMapHandler(1, 0x980000, 0x98ffff, SM_WRITE);
 	SekSetWriteWordHandler(1, Wofb98WriteWord);
+	SekMapHandler(2, 0xff0000, 0xffffff, SM_WRITE);
+	SekSetWriteByteHandler(2, WofbFFWriteByte);
+	SekSetWriteWordHandler(2, WofbFFWriteWord);
 	SekClose();
 	
 	// scroll3 ram offset

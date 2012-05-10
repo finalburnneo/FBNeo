@@ -11420,14 +11420,17 @@ void __fastcall DaimakaibFFWriteWord(UINT32 a, UINT16 d)
 	switch (a) {
 		case 0xff0680: {
 			*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
 		}
 		
 		case 0xff0682: {
 			*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
 		}
 		
 		case 0xff0684: {
 			*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
 		}
 	}
 	
@@ -11763,9 +11766,6 @@ void __fastcall Punipic98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[1] = 0;
 					nCps1Layers[2] = 2;
 					nCps1Layers[3] = 3;
-					nCps1LayerOffs[0] = 0x9080;
-					nCps1LayerOffs[1] = 0x90c0;
-					nCps1LayerOffs[2] = 0x9100;
 					break;
 				}
 				
@@ -11774,9 +11774,6 @@ void __fastcall Punipic98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[1] = 0;
 					nCps1Layers[2] = 3;
 					nCps1Layers[3] = 2;
-					nCps1LayerOffs[0] = 0x9080;
-					nCps1LayerOffs[1] = 0x90c0;
-					nCps1LayerOffs[2] = 0x9100;
 					break;
 				}
 				
@@ -11785,9 +11782,6 @@ void __fastcall Punipic98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[1] = 0;
 					nCps1Layers[2] = -1;
 					nCps1Layers[3] = -1;
-					nCps1LayerOffs[0] = 0x9080;
-					nCps1LayerOffs[1] = 0x9100;
-					nCps1LayerOffs[2] = 0x9100;
 					break;
 				}
 				
@@ -11796,15 +11790,60 @@ void __fastcall Punipic98WriteWord(UINT32 a, UINT16 d)
 					nCps1Layers[1] = 0;
 					nCps1Layers[2] = 2;
 					nCps1Layers[3] = 3;
-					nCps1LayerOffs[0] = 0x9080;
-					nCps1LayerOffs[1] = 0x90c0;
-					nCps1LayerOffs[2] = 0x9100;
 					bprintf(PRINT_IMPORTANT, _T("Unknown value written at 0x98000c %x\n"), d);
 				}
 			}
 			return;
 		}
 	}
+	
+	bprintf(PRINT_NORMAL, _T("Write Word %x, %x\n"), a, d);
+}
+
+void __fastcall PunipicFFWriteByte(UINT32 a, UINT8 d)
+{
+	CpsRamFF[((a & 0xffff) ^ 1)] = d;
+}
+
+void __fastcall PunipicFFWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0xff5b30: {
+			*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
+		}
+		
+		case 0xff5b32: {
+			*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
+		}
+		
+		case 0xff5b34: {
+			*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
+		}
+		
+		case 0xff5b8a: {
+			// scroll 1 ram offset
+			*((UINT16*)(CpsReg + 0x02)) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
+		}
+		
+		case 0xff5b8c: {
+			// scroll 2 ram offset
+			*((UINT16*)(CpsReg + 0x04)) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
+		}
+		
+		case 0xff5b8e: {
+			// scroll 3 ram offset
+			*((UINT16*)(CpsReg + 0x06)) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
+		}
+	}
+	
+	UINT16 *RAM = (UINT16*)CpsRamFF;
+	RAM[((a & 0xffff) >> 1)] = d;
 }
 
 static INT32 PunipicInit()
@@ -11827,6 +11866,9 @@ static INT32 PunipicInit()
 	SekSetReadByteHandler(1, PunipicF18Read);
 	SekMapHandler(2, 0x980000, 0x980fff, SM_WRITE);
 	SekSetWriteWordHandler(2, Punipic98WriteWord);
+	SekMapHandler(3, 0xff0000, 0xffffff, SM_WRITE);
+	SekSetWriteByteHandler(3, PunipicFFWriteByte);
+	SekSetWriteWordHandler(3, PunipicFFWriteWord);
 	SekClose();
 	
 	return nRet;
@@ -11852,6 +11894,9 @@ static INT32 Punipic2Init()
 	SekSetReadByteHandler(1, PunipicF18Read);
 	SekMapHandler(2, 0x980000, 0x980fff, SM_WRITE);
 	SekSetWriteWordHandler(2, Punipic98WriteWord);
+	SekMapHandler(3, 0xff0000, 0xffffff, SM_WRITE);
+	SekSetWriteByteHandler(3, PunipicFFWriteByte);
+	SekSetWriteWordHandler(3, PunipicFFWriteWord);
 	SekClose();
 	
 	return nRet;
@@ -11877,6 +11922,9 @@ static INT32 Punipic3Init()
 	SekSetReadByteHandler(1, PunipicF18Read);
 	SekMapHandler(2, 0x980000, 0x980fff, SM_WRITE);
 	SekSetWriteWordHandler(2, Punipic98WriteWord);
+	SekMapHandler(3, 0xff0000, 0xffffff, SM_WRITE);
+	SekSetWriteByteHandler(3, PunipicFFWriteByte);
+	SekSetWriteWordHandler(3, PunipicFFWriteWord);
 	SekClose();
 	
 	return nRet;

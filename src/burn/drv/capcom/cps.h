@@ -358,6 +358,7 @@ INT32  CpsObjGet();
 INT32 FcrashObjGet();
 INT32 KodbObjGet();
 INT32 DinopicObjGet();
+INT32 DaimakaibObjGet();
 INT32 WofhObjGet();
 void CpsObjDrawInit();
 INT32  Cps1ObjDraw(INT32 nLevelFrom,INT32 nLevelTo);

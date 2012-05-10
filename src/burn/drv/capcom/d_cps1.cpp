@@ -11411,16 +11411,20 @@ static INT32 DaimakaibInit()
 	Ghouls = 1;
 	Port6SoundWrite = 1;
 	Cps1OverrideLayers = 1;
-	Cps1DisableBgHi = 1;
+	Cps1ObjGetCallbackFunction = DaimakaibObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
 	
 	INT32 nRet = DrvInit();
 	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+	
 	SekOpen(0);
-	SekMapHandler(1, 0x880000, 0x88ffff, SM_READ | SM_WRITE);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, SM_RAM);
+	SekMapHandler(1, 0x880000, 0x88ffff, SM_WRITE);
 	SekSetWriteWordHandler(1, Daimakaib88WriteWord);
-	SekMapHandler(2, 0x980000, 0x98ffff, SM_READ | SM_WRITE);
+	SekMapHandler(2, 0x980000, 0x98ffff, SM_WRITE);
 	SekSetWriteWordHandler(2, Daimakaib98WriteWord);
-	// There are also writes in the 0x99xxxx area (unknown)
 	SekClose();
 	
 	return nRet;

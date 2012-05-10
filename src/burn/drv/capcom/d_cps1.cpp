@@ -11381,7 +11381,7 @@ void __fastcall Daimakaib98WriteWord(UINT32 a, UINT16 d)
 				
 				case 2: {
 					nCps1Layers[0] = 3;
-					nCps1Layers[1] = 2;
+					nCps1Layers[1] = -1;
 					nCps1Layers[2] = -1;
 					nCps1Layers[3] = 1;
 					break;

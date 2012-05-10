@@ -10805,6 +10805,64 @@ static INT32 DrvInit()
 	return 0;
 }
 
+static INT32 DrvExit()
+{
+	CpsRunExit();
+	CpsExit();
+	
+	nCpsRomLen = 0;
+	nCpsZRomLen = 0;
+	nCpsGfxLen = 0;
+	nCpsAdLen = 0;
+	nCpsQSamLen = 0;
+	nCpsPicRomNum = 0;
+	
+	nCps68KByteswapRomNum = 0;
+	nCps68KNoByteswapRomNum = 0;
+	nCpsZ80RomNum = 0;
+	nCpsTilesRomNum = 0;
+	nCpsOkim6295RomNum = 0;
+	nCpsQsoundRomNum = 0;
+	KabukiDecodeFunction = NULL;
+	GameHasStars = 0;
+	
+	AmendProgRomCallback = NULL;
+	
+	CpsLayer1XOffs = 0;
+	CpsLayer2XOffs = 0;
+	CpsLayer3XOffs = 0;
+	CpsLayer1YOffs = 0;
+	CpsLayer2YOffs = 0;
+	CpsLayer3YOffs = 0;
+	CpsDrawSpritesInReverse = 0;
+	Cps1OverrideLayers = 0;
+	nCps1Layers[0] = -1;
+	nCps1Layers[1] = -1;
+	nCps1Layers[2] = -1;
+	nCps1Layers[3] = -1;
+
+	Cps = 0;
+	Cps1Qs = 0;
+	Cps1DisablePSnd = 0;
+	Forgottn = 0;
+	Ghouls = 0;
+	Kodb = 0;
+	PangEEP = 0;
+	Cps1LockSpriteList910000 = 0;
+	Cps1DisableBgHi = 0;
+	Dinohunt = 0;
+	Sf2thndr = 0;
+	Port6SoundWrite = 0;
+	
+	Cps1QsHack = 0;
+	
+	Cps1GfxLoadCallbackFunction = NULL;
+	
+	BurnFree(CpsBootlegSpriteRam);
+	
+	return 0;
+}
+
 static INT32 TwelveMhzInit()
 {
 	nCPS68KClockspeed = 12000000;
@@ -11714,6 +11772,8 @@ static INT32 Pang3Init()
 	return Pang3bInit();
 }
 
+static UINT16 PunipicPriorityValue = 0;
+
 UINT8 __fastcall PunipicF18Read(UINT32)
 {
 	return 0xff;
@@ -11758,41 +11818,89 @@ void __fastcall Punipic98WriteWord(UINT32 a, UINT16 d)
 			return;
 		}
 		
-		case 0x98000c: {		
-			// This seems to control layer order and enable (and ram offset?)
-			switch (d) {
-				case 0x64: {
-					nCps1Layers[0] = 1;
-					nCps1Layers[1] = 0;
-					nCps1Layers[2] = 2;
-					nCps1Layers[3] = 3;
-					break;
-				}
-				
-				case 0x24: {
-					nCps1Layers[0] = 1;
-					nCps1Layers[1] = 0;
-					nCps1Layers[2] = 3;
-					nCps1Layers[3] = 2;
-					break;
-				}
-				
-				case 0x54: {
-					nCps1Layers[0] = 1;
-					nCps1Layers[1] = 0;
-					nCps1Layers[2] = -1;
-					nCps1Layers[3] = -1;
-					break;
-				}
-				
-				default: {
-					nCps1Layers[0] = 1;
-					nCps1Layers[1] = 0;
-					nCps1Layers[2] = 2;
-					nCps1Layers[3] = 3;
-					bprintf(PRINT_IMPORTANT, _T("Unknown value written at 0x98000c %x\n"), d);
+		case 0x98000c: {
+			PunipicPriorityValue = d;
+			return;
+		}
+		
+		case 0x98000e: {
+			// layer enable and order appears to be handled by writes here and at 0x98000c
+			if (d == 0x0000) {
+				switch (PunipicPriorityValue) {
+					case 0x24: {
+						nCps1Layers[0] = 1;
+						nCps1Layers[1] = 0;
+						nCps1Layers[2] = 3;
+						nCps1Layers[3] = 2;
+						return;
+					}
+					
+					case 0x54:{
+						nCps1Layers[0] = 1;
+						nCps1Layers[1] = 0;
+						nCps1Layers[2] = 2;
+						nCps1Layers[3] = 3;
+						return;
+					}
+					
+					case 0x64: {
+						nCps1Layers[0] = 1;
+						nCps1Layers[1] = 0;
+						nCps1Layers[2] = 2;
+						nCps1Layers[3] = 3;
+						return;
+					}
+					
+					case 0x7c: {
+						nCps1Layers[0] = 0;
+						nCps1Layers[1] = 1;
+						nCps1Layers[2] = 3;
+						nCps1Layers[3] = 2;
+						return;
+					}
+					
+					default: {
+						bprintf(PRINT_NORMAL, _T("Unknown PunipicPriorityValue %x when 0x98000e is %x\n"), PunipicPriorityValue, d);
+						return;
+					}
 				}
 			}
+			
+			if (d == 0xffff) {
+				switch (PunipicPriorityValue) {
+					case 0x24: {
+						nCps1Layers[0] = 1;
+						nCps1Layers[1] = 0;
+						nCps1Layers[2] = -1;
+						nCps1Layers[3] = 3;
+						return;
+					}
+					
+					case 0x54: {
+						nCps1Layers[0] = 1;
+						nCps1Layers[1] = 0;
+						nCps1Layers[2] = 2;
+						nCps1Layers[3] = -1;
+						return;
+					}
+					
+					case 0x64: {
+						nCps1Layers[0] = 1;
+						nCps1Layers[1] = 0;
+						nCps1Layers[2] = 2;
+						nCps1Layers[3] = -1;
+						return;
+					}
+					
+					default: {
+						bprintf(PRINT_NORMAL, _T("Unknown PunipicPriorityValue %x when 0x98000e is %x\n"), PunipicPriorityValue, d);
+						return;
+					}
+				}
+			}
+			
+			bprintf(PRINT_NORMAL, _T("Unknown value written to 0x98000e %x\n"), d);
+			
 			return;
 		}
 	}
@@ -11846,6 +11954,15 @@ void __fastcall PunipicFFWriteWord(UINT32 a, UINT16 d)
 	RAM[((a & 0xffff) >> 1)] = d;
 }
 
+static INT32 PunipicScanCallback(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(PunipicPriorityValue);
+	}
+
+	return CpsBootlegSpriteRamScanCallback(nAction, pnMin);
+}
+
 static INT32 PunipicInit()
 {
 	Cps1DisablePSnd = 1;
@@ -11854,7 +11971,7 @@ static INT32 PunipicInit()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic;
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
+	CpsMemScanCallbackFunction = PunipicScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
 	
@@ -11874,6 +11991,13 @@ static INT32 PunipicInit()
 	return nRet;
 }
 
+static INT32 PunipicExit()
+{
+	PunipicPriorityValue = 0;
+	
+	return DrvExit();
+}
+
 static INT32 Punipic2Init()
 {
 	Cps1DisablePSnd = 1;
@@ -11882,7 +12006,7 @@ static INT32 Punipic2Init()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160Alt;
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
+	CpsMemScanCallbackFunction = PunipicScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
 	
@@ -11910,7 +12034,7 @@ static INT32 Punipic3Init()
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
+	CpsMemScanCallbackFunction = PunipicScanCallback;
 	
 	INT32 nRet = TwelveMhzInit();
 	
@@ -13295,64 +13419,6 @@ static INT32 WofbInit()
 	return nRet;	
 }
 
-static INT32 DrvExit()
-{
-	CpsRunExit();
-	CpsExit();
-	
-	nCpsRomLen = 0;
-	nCpsZRomLen = 0;
-	nCpsGfxLen = 0;
-	nCpsAdLen = 0;
-	nCpsQSamLen = 0;
-	nCpsPicRomNum = 0;
-	
-	nCps68KByteswapRomNum = 0;
-	nCps68KNoByteswapRomNum = 0;
-	nCpsZ80RomNum = 0;
-	nCpsTilesRomNum = 0;
-	nCpsOkim6295RomNum = 0;
-	nCpsQsoundRomNum = 0;
-	KabukiDecodeFunction = NULL;
-	GameHasStars = 0;
-	
-	AmendProgRomCallback = NULL;
-	
-	CpsLayer1XOffs = 0;
-	CpsLayer2XOffs = 0;
-	CpsLayer3XOffs = 0;
-	CpsLayer1YOffs = 0;
-	CpsLayer2YOffs = 0;
-	CpsLayer3YOffs = 0;
-	CpsDrawSpritesInReverse = 0;
-	Cps1OverrideLayers = 0;
-	nCps1Layers[0] = -1;
-	nCps1Layers[1] = -1;
-	nCps1Layers[2] = -1;
-	nCps1Layers[3] = -1;
-
-	Cps = 0;
-	Cps1Qs = 0;
-	Cps1DisablePSnd = 0;
-	Forgottn = 0;
-	Ghouls = 0;
-	Kodb = 0;
-	PangEEP = 0;
-	Cps1LockSpriteList910000 = 0;
-	Cps1DisableBgHi = 0;
-	Dinohunt = 0;
-	Sf2thndr = 0;
-	Port6SoundWrite = 0;
-	
-	Cps1QsHack = 0;
-	
-	Cps1GfxLoadCallbackFunction = NULL;
-	
-	BurnFree(CpsBootlegSpriteRam);
-	
-	return 0;
-}
-
 // Driver Definitions
 
 struct BurnDriver BurnDrvCps1941 = {
@@ -14351,7 +14417,7 @@ struct BurnDriver BurnDrvCpsPunipic = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, PunipicRomInfo, PunipicRomName, NULL, NULL, PunisherInputInfo, PunisherDIPInfo,
-	PunipicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	PunipicInit, PunipicExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -14361,7 +14427,7 @@ struct BurnDriver BurnDrvCpsPunipic2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Punipic2RomInfo, Punipic2RomName, NULL, NULL, PunisherInputInfo, PunisherDIPInfo,
-	Punipic2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Punipic2Init, PunipicExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -14371,7 +14437,7 @@ struct BurnDriver BurnDrvCpsPunipic3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Punipic3RomInfo, Punipic3RomName, NULL, NULL, PunisherInputInfo, PunisherDIPInfo,
-	Punipic3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Punipic3Init, PunipicExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

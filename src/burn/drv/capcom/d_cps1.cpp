@@ -11317,6 +11317,8 @@ void __fastcall Daimakaib88WriteWord(UINT32 a, UINT16 d)
 			return;
 		}
 	}
+	
+	bprintf(PRINT_NORMAL, _T("Write word %x, %x\n"), a, d);
 }
 
 void __fastcall Daimakaib98WriteWord(UINT32 a, UINT16 d)
@@ -11404,6 +11406,33 @@ void __fastcall Daimakaib98WriteWord(UINT32 a, UINT16 d)
 			return;
 		}
 	}
+	
+	bprintf(PRINT_NORMAL, _T("Write word %x, %x\n"), a, d);
+}
+
+void __fastcall DaimakaibFFWriteByte(UINT32 a, UINT8 d)
+{
+	CpsRamFF[((a & 0xffff) ^ 1)] = d;
+}
+
+void __fastcall DaimakaibFFWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0xff0680: {
+			*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(d);
+		}
+		
+		case 0xff0682: {
+			*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(d);
+		}
+		
+		case 0xff0684: {
+			*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(d);
+		}
+	}
+	
+	UINT16 *RAM = (UINT16*)CpsRamFF;
+	RAM[((a & 0xffff) >> 1)] = d;
 }
 
 static INT32 DaimakaibInit()
@@ -11425,6 +11454,9 @@ static INT32 DaimakaibInit()
 	SekSetWriteWordHandler(1, Daimakaib88WriteWord);
 	SekMapHandler(2, 0x980000, 0x98ffff, SM_WRITE);
 	SekSetWriteWordHandler(2, Daimakaib98WriteWord);
+	SekMapHandler(3, 0xff0000, 0xffffff, SM_WRITE);
+	SekSetWriteByteHandler(3, DaimakaibFFWriteByte);
+	SekSetWriteWordHandler(3, DaimakaibFFWriteWord);
 	SekClose();
 	
 	return nRet;

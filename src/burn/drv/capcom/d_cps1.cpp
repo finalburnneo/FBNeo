@@ -12910,6 +12910,34 @@ void __fastcall WofhInputWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
+void __fastcall WofbFFWriteByte(UINT32 a, UINT8 d)
+{
+	CpsRamFF[((a & 0xffff) ^ 1)] = d;
+}
+
+void __fastcall WofbFFWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0xff639a: {
+			*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
+		}
+		
+		case 0xff639c: {
+			*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
+		}
+		
+		case 0xff639e: {
+			*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
+		}
+	}
+	
+	UINT16 *RAM = (UINT16*)CpsRamFF;
+	RAM[((a & 0xffff) >> 1)] = d;
+}
+
 static void WofhCallback()
 {
 	// Patch protection? check
@@ -12943,6 +12971,9 @@ static INT32 WofhInit()
 	SekMapHandler(4, 0x135000, 0x135fff, SM_READ);
 	SekSetReadByteHandler(4, Wofh135ReadByte);
 	SekSetReadWordHandler(4, Wofh135ReadWord);
+	SekMapHandler(5, 0xff0000, 0xffffff, SM_WRITE);
+	SekSetWriteByteHandler(5, WofbFFWriteByte);
+	SekSetWriteWordHandler(5, WofbFFWriteWord);
 	SekClose();
 	
 	return nRet;
@@ -12991,6 +13022,9 @@ static INT32 SgyxzInit()
 	SekMapHandler(4, 0x135000, 0x135fff, SM_READ);
 	SekSetReadByteHandler(4, Wofh135ReadByte);
 	SekSetReadWordHandler(4, Wofh135ReadWord);
+	SekMapHandler(5, 0xff0000, 0xffffff, SM_WRITE);
+	SekSetWriteByteHandler(5, WofbFFWriteByte);
+	SekSetWriteWordHandler(5, WofbFFWriteWord);
 	SekClose();
 	
 	return nRet;
@@ -13130,6 +13164,9 @@ static INT32 Wof3jsaInit()
 	SekSetReadWordHandler(3, Wof3jsaInputReadWord);
 	SekSetWriteByteHandler(3, Wof3jsaInputWriteByte);
 	SekSetWriteWordHandler(3, Wof3jsaInputWriteWord);
+	SekMapHandler(4, 0xff0000, 0xffffff, SM_WRITE);
+	SekSetWriteByteHandler(4, WofbFFWriteByte);
+	SekSetWriteWordHandler(4, WofbFFWriteWord);
 	SekClose();
 	
 	return nRet;
@@ -13237,6 +13274,9 @@ static INT32 Wof3sjInit()
 	SekSetReadWordHandler(3, Wof3sjInputReadWord);
 	SekSetWriteByteHandler(3, Wof3sjInputWriteByte);
 	SekSetWriteWordHandler(3, Wof3sjInputWriteWord);
+	SekMapHandler(4, 0xff0000, 0xffffff, SM_WRITE);
+	SekSetWriteByteHandler(4, WofbFFWriteByte);
+	SekSetWriteWordHandler(4, WofbFFWriteWord);
 	SekClose();
 	
 	return nRet;
@@ -13260,6 +13300,9 @@ static INT32 WofsjInit()
 	SekSetReadWordHandler(3, Wof3sjInputReadWord);
 	SekSetWriteByteHandler(3, Wof3sjInputWriteByte);
 	SekSetWriteWordHandler(3, Wof3sjInputWriteWord);
+	SekMapHandler(4, 0xff0000, 0xffffff, SM_WRITE);
+	SekSetWriteByteHandler(4, WofbFFWriteByte);
+	SekSetWriteWordHandler(4, WofbFFWriteWord);
 	SekClose();
 	
 	return nRet;
@@ -13372,34 +13415,6 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 			bprintf(PRINT_NORMAL, _T("Write word %x, %x\n"), a, d);
 		}
 	}
-}
-
-void __fastcall WofbFFWriteByte(UINT32 a, UINT8 d)
-{
-	CpsRamFF[((a & 0xffff) ^ 1)] = d;
-}
-
-void __fastcall WofbFFWriteWord(UINT32 a, UINT16 d)
-{
-	switch (a) {
-		case 0xff639a: {
-			*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(d);
-			break;
-		}
-		
-		case 0xff639c: {
-			*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(d);
-			break;
-		}
-		
-		case 0xff639e: {
-			*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(d);
-			break;
-		}
-	}
-	
-	UINT16 *RAM = (UINT16*)CpsRamFF;
-	RAM[((a & 0xffff) >> 1)] = d;
 }
 
 static INT32 WofbInit()
@@ -15428,7 +15443,7 @@ struct BurnDriver BurnDrvCpsWofhfh = {
 
 struct BurnDriver BurnDrvCpsWofh = {
 	"wofh", "wof", NULL, NULL, "1992",
-	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 1, 921005 Asia)\0", "Some sprite priority problems", "bootleg", "CPS1",
+	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 1, 921005 Asia)\0", NULL, "bootleg", "CPS1",
 	L"\u4E09\u56FD\u5FD7II: \u4E09\u570B\u82F1\u96C4\u50B3\0Sangokushi II: Sanguo YingXiongZhuan (Chinese bootleg set 1, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofhRomInfo, WofhRomName, NULL, NULL, WofhfhInputInfo, WofhDIPInfo,
@@ -15438,7 +15453,7 @@ struct BurnDriver BurnDrvCpsWofh = {
 
 struct BurnDriver BurnDrvCpsWofha = {
 	"wofha", "wof", NULL, NULL, "1992",
-	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 2, 921005 Asia)\0", "Some sprite priority problems", "bootleg", "CPS1",
+	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 2, 921005 Asia)\0", NULL, "bootleg", "CPS1",
 	L"\u4E09\u56FD\u5FD7II: \u4E09\u570B\u82F1\u96C4\u50B3\0Sangokushi II: Sanguo YingXiongZhuan (Chinese bootleg set 2, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofhaRomInfo, WofhaRomName, NULL, NULL, WofhfhInputInfo, WofhDIPInfo,
@@ -15448,7 +15463,7 @@ struct BurnDriver BurnDrvCpsWofha = {
 
 struct BurnDriver BurnDrvCpsSgyxz = {
 	"sgyxz", "wof", NULL, NULL, "1992",
-	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 3, 921005 Asia)\0", "Some sprite priority problems", "bootleg", "CPS1",
+	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 3, 921005 Asia)\0", NULL, "bootleg", "CPS1",
 	L"\u4E09\u56FD\u5FD7II: \u4E09\u570B\u82F1\u96C4\u50B3\0Sangokushi II: Sanguo YingXiongZhuan (Chinese bootleg set 3, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, SgyxzRomInfo, SgyxzRomName, NULL, NULL, WofhfhInputInfo, WofhDIPInfo,
@@ -15468,7 +15483,7 @@ struct BurnDriver BurnDrvCpsWof3js = {
 
 struct BurnDriver BurnDrvCpsWof3jsa = {
 	"wof3jsa", "wof", NULL, NULL, "1992",
-	"Sangokushi II: San Jian Sheng (Chinese bootleg set 2, 921005 Asia)\0", "Some sprite priority problems", "bootleg", "CPS1",
+	"Sangokushi II: San Jian Sheng (Chinese bootleg set 2, 921005 Asia)\0", NULL, "bootleg", "CPS1",
 	L"\u4E09\u56FD\u5FD7II: \u4E09\u528D\u8056\0Sangokushi II: San Jian Sheng (Chinese bootleg set 2, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Wof3jsaRomInfo, Wof3jsaRomName, NULL, NULL, WofhfhInputInfo, WofhfhDIPInfo,
@@ -15478,7 +15493,7 @@ struct BurnDriver BurnDrvCpsWof3jsa = {
 
 struct BurnDriver BurnDrvCpsWof3sj = {
 	"wof3sj", "wof", NULL, NULL, "1992",
-	"Sangokushi II: San Sheng Jian (Chinese bootleg set 1, 921005 Asia)\0", "Some sprite priority problems", "bootleg", "CPS1",
+	"Sangokushi II: San Sheng Jian (Chinese bootleg set 1, 921005 Asia)\0", NULL, "bootleg", "CPS1",
 	L"\u4E09\u56FD\u5FD7II: \u4E09\u5723\u5251\0Sangokushi II: San Sheng Jian (Chinese bootleg set 1, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Wof3sjRomInfo, Wof3sjRomName, NULL, NULL, WofhfhInputInfo, WofhfhDIPInfo,
@@ -15488,7 +15503,7 @@ struct BurnDriver BurnDrvCpsWof3sj = {
 
 struct BurnDriver BurnDrvCpsWof3sja = {
 	"wof3sja", "wof", NULL, NULL, "1992",
-	"Sangokushi II: San Sheng Jian (Chinese bootleg set 2, 921005 Asia)\0", "Some sprite priority problems", "bootleg", "CPS1",
+	"Sangokushi II: San Sheng Jian (Chinese bootleg set 2, 921005 Asia)\0", NULL, "bootleg", "CPS1",
 	L"\u4E09\u56FD\u5FD7II: \u4E09\u5723\u5251\0Sangokushi II: San Sheng Jian (Chinese bootleg set 2, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Wof3sjaRomInfo, Wof3sjaRomName, NULL, NULL, WofhfhInputInfo, WofhfhDIPInfo,
@@ -15498,7 +15513,7 @@ struct BurnDriver BurnDrvCpsWof3sja = {
 
 struct BurnDriver BurnDrvCpsWofsj = {
 	"wofsj", "wof", NULL, NULL, "1992",
-	"Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 1, 921005 Asia)\0", "Some sprite priority problems", "bootleg", "CPS1",
+	"Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 1, 921005 Asia)\0", NULL, "bootleg", "CPS1",
 	L"\u4E09\u56FD\u5FD7II: \u5723\u5251\u4E09\0Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 1, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofsjRomInfo, WofsjRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
@@ -15508,7 +15523,7 @@ struct BurnDriver BurnDrvCpsWofsj = {
 
 struct BurnDriver BurnDrvCpsWofsja = {
 	"wofsja", "wof", NULL, NULL, "1992",
-	"Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 2, 921005 Asia)\0", "Some sprite priority problems", "bootleg", "CPS1",
+	"Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 2, 921005 Asia)\0", NULL, "bootleg", "CPS1",
 	L"\u4E09\u56FD\u5FD7II: \u5723\u5251\u4E09\0Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 2, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofsjaRomInfo, WofsjaRomName, NULL, NULL, WofInputInfo, WofDIPInfo,

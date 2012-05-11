@@ -393,7 +393,7 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 		}
 	}
 
-	if (Cps == 2 || Cps1Qs == 1 || PangEEP == 1) {		// Scan EEPROM
+	if (Cps == 2 || Cps1Qs == 1 || PangEEP == 1 || CpsBootlegEEPROM == 1) {		// Scan EEPROM
 		EEPROMScan(nAction, pnMin);
 	}
 

@@ -44,7 +44,7 @@ static void CpsQSoundCheatSearchCallback()
 static INT32 DrvReset()
 {
 	// Reset machine
-	if (Cps == 2 || PangEEP || Cps1Qs == 1) EEPROMReset();
+	if (Cps == 2 || PangEEP || Cps1Qs == 1 || CpsBootlegEEPROM) EEPROMReset();
 
 	SekOpen(0);
 	SekReset();
@@ -119,7 +119,7 @@ INT32 CpsRunInit()
 	if (Cps == 2 || PangEEP) {
 		EEPROMInit(&cps2_eeprom_interface);
 	} else {
-		if (Cps1Qs == 1) {
+		if (Cps1Qs == 1 || CpsBootlegEEPROM) {
 			EEPROMInit(&qsound_eeprom_interface);
 		}
 	}
@@ -145,7 +145,7 @@ INT32 CpsRunInit()
 		}
 	}
 
-	if (Cps == 2 || PangEEP || Cps1Qs == 1) EEPROMReset();
+	if (Cps == 2 || PangEEP || Cps1Qs == 1 || CpsBootlegEEPROM) EEPROMReset();
 	
 	if (CpsRunInitCallbackFunction) {
 		CpsRunInitCallbackFunction();
@@ -167,7 +167,7 @@ INT32 CpsRunInit()
 
 INT32 CpsRunExit()
 {
-	if (Cps == 2 || PangEEP || Cps1Qs == 1) EEPROMExit();
+	if (Cps == 2 || PangEEP || Cps1Qs == 1 || CpsBootlegEEPROM) EEPROMExit();
 
 	// Sound exit
 	if (((Cps == 2) && !Cps2DisableQSnd) || Cps1Qs == 1) QsndExit();
@@ -199,6 +199,7 @@ INT32 CpsRunExit()
 	Cps1VBlankIRQLine = 2;
 	
 	Cps2DisableQSnd = 0;
+	CpsBootlegEEPROM = 0;
 
 	return 0;
 }

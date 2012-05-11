@@ -33,6 +33,7 @@ INT32 Pzloop2 = 0;
 INT32 Ssf2tb = 0;
 INT32 Dinohunt = 0;
 INT32 Port6SoundWrite = 0;
+INT32 CpsBootlegEEPROM = 0;
 
 CpsRWSoundCommandCallback CpsRWSoundCommandCallbackFunction = NULL;
 
@@ -192,7 +193,7 @@ static UINT8 CpsReadPort(const UINT32 ia)
 		
 		// CPS1 EEPROM read
 		if (ia == 0xC007) {
-			if (Cps1Qs) {
+			if (Cps1Qs || CpsBootlegEEPROM) {
 				return EEPROMRead();
 			} else {
 				return 0;
@@ -360,7 +361,7 @@ void CpsWritePort(const UINT32 ia, UINT8 d)
 		}
 	}
 
-	if (Cps1Qs == 1) {
+	if (Cps1Qs == 1 || CpsBootlegEEPROM) {
 		//CPS1 EEPROM write
 		if (ia == 0xc007) {
 			EEPROMWrite(d & 0x40, d & 0x80, d & 0x01);
@@ -425,7 +426,7 @@ void __fastcall CpsWriteByte(UINT32 a,UINT8 d)
 		return;
 	}
 	
-	if (Cps1Qs == 1) {
+	if (Cps1Qs == 1 || CpsBootlegEEPROM) {
 		// CPS1 EEPROM
 		if (a == 0xf1c007) {
 			CpsWritePort(a & 0xC00F, d);

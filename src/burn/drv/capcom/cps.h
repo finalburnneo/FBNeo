@@ -242,6 +242,7 @@ extern INT32 Pzloop2;
 extern INT32 Ssf2tb;
 extern INT32 Dinohunt;
 extern INT32 Port6SoundWrite;
+extern INT32 CpsBootlegEEPROM;
 
 extern UINT8* CpsEncZRom;
 

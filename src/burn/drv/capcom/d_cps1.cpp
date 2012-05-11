@@ -13360,30 +13360,12 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 		
 		case 0x98000c: {
 			switch (d) {
-				case 0x00: {
-					nCps1Layers[0] = 1;
-					nCps1Layers[1] = 0;
-					nCps1Layers[2] = 2;
-					nCps1Layers[3] = 3;
-					break;
-				}
-				
-				case 0x01: {
-					nCps1Layers[0] = 1;
-					nCps1Layers[1] = 0;
-					nCps1Layers[2] = 3;
-					nCps1Layers[3] = 2;
-					break;
-				}
-				
-				case 0x03: {
-					nCps1Layers[0] = 1;
-					nCps1Layers[1] = 3;
-					nCps1Layers[2] = 0;
-					nCps1Layers[3] = 2;
-					break;
-				}
-				
+				case 0x00:
+				case 0x04:
+				case 0x06:
+				case 0x08:
+				case 0x0a:
+				case 0x0b:
 				case 0x0e: {
 					nCps1Layers[0] = 1;
 					nCps1Layers[1] = 0;
@@ -13392,10 +13374,22 @@ void __fastcall Wofb98WriteWord(UINT32 a, UINT16 d)
 					break;
 				}
 				
+				case 0x01:
+				case 0x05:
 				case 0x0f: {
 					nCps1Layers[0] = 1;
 					nCps1Layers[1] = 0;
 					nCps1Layers[2] = 3;
+					nCps1Layers[3] = 2;
+					break;
+				}
+				
+				case 0x03:
+				case 0x07:
+				case 0x09: {
+					nCps1Layers[0] = 1;
+					nCps1Layers[1] = 3;
+					nCps1Layers[2] = 0;
 					nCps1Layers[3] = 2;
 					break;
 				}

@@ -361,6 +361,7 @@ INT32 KodbObjGet();
 INT32 DinopicObjGet();
 INT32 DaimakaibObjGet();
 INT32 WofhObjGet();
+INT32 Sf2mdtObjGet();
 void CpsObjDrawInit();
 INT32  Cps1ObjDraw(INT32 nLevelFrom,INT32 nLevelTo);
 INT32  Cps2ObjDraw(INT32 nLevelFrom,INT32 nLevelTo);

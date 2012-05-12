@@ -12408,6 +12408,26 @@ static INT32 Sf2koryu2Init()
 UINT8 __fastcall Sf2mdtReadByte(UINT32 a)
 {
 	switch (a) {
+		case 0x70c000: {
+			return ~Inp000;
+		}
+		
+		case 0x70c001: {
+			return ~Inp001;
+		}
+		
+		case 0x70c008: {
+			return 0xff;
+		}
+		
+		case 0x70c009: {
+			return ~Inp177;
+		}
+		
+		case 0x70c018: {
+			return ~Inp018;
+		}
+		
 		case 0x70c01a: {
 			return ~Cpi01A;
 		}
@@ -12439,51 +12459,211 @@ UINT16 __fastcall Sf2mdtReadWord(UINT32 a)
 	return 0;
 }
 
+void __fastcall Sf2mdtWriteByte(UINT32 a, UINT8 d)
+{
+	switch (a) {
+		case 0x70c106: {
+			Sf2mdtSoundCommand(d);
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Write Byte %x, %x\n"), a, d);
+		}
+	}
+}
+
+void __fastcall Sf2mdtWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x70810c: {
+			// scroll3 x
+			*((UINT16*)(CpsReg + 0x14)) = BURN_ENDIAN_SWAP_INT16(d + 0xffbe);
+			return;
+		}
+		
+		case 0x70810e: {
+			// scroll3 y
+			*((UINT16*)(CpsReg + 0x16)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x708110: {
+			// scroll2 x
+			*((UINT16*)(CpsReg + 0x10)) = BURN_ENDIAN_SWAP_INT16(d + 0xffc0);
+			return;
+		}
+		
+		case 0x708112: {
+			// scroll1 x
+			*((UINT16*)(CpsReg + 0x0c)) = BURN_ENDIAN_SWAP_INT16(d + 0xffbe);
+			return;
+		}
+		
+		case 0x708114: {
+			// scroll2 y
+			*((UINT16*)(CpsReg + 0x12)) = BURN_ENDIAN_SWAP_INT16(d);
+			// update the row scroll start reg here as well
+			*((UINT16*)(CpsReg + 0x20)) = BURN_ENDIAN_SWAP_INT16(d);
+			// get the row scroll table address
+			*((UINT16*)(CpsReg + 0x08)) = *((UINT16*)(CpsRamFF + 0x802e));
+			return;
+		}
+		
+		case 0x708116: {
+			// scroll1 y
+			*((UINT16*)(CpsReg + 0x0e)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x70814c: {
+			*((UINT16*)(CpsReg + nCpsLcReg)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x70d000: {
+			// nop?
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Write Word %x, %x\n"), a, d);
+		}
+	}
+}
+
+void __fastcall Sf2mdtaWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x70810c: {
+			// scroll1 x
+			*((UINT16*)(CpsReg + 0x0c)) = BURN_ENDIAN_SWAP_INT16(d + 0xffbe);
+			return;
+		}
+		
+		case 0x70810e: {
+			// scroll1 y
+			*((UINT16*)(CpsReg + 0x0e)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x708110: {
+			// scroll3 x
+			*((UINT16*)(CpsReg + 0x14)) = BURN_ENDIAN_SWAP_INT16(d + 0xffbe);
+			return;
+		}
+		
+		case 0x708112: {
+			// scroll2 y
+			*((UINT16*)(CpsReg + 0x12)) = BURN_ENDIAN_SWAP_INT16(d);
+			// update the row scroll start reg here as well
+			*((UINT16*)(CpsReg + 0x20)) = BURN_ENDIAN_SWAP_INT16(d);
+			// get the row scroll table address
+			*((UINT16*)(CpsReg + 0x08)) = *((UINT16*)(CpsRamFF + 0x802e));
+			return;
+		}
+		
+		case 0x708114: {
+			// scroll2 x
+			*((UINT16*)(CpsReg + 0x10)) = BURN_ENDIAN_SWAP_INT16(d + 0xffc0);
+			return;
+		}
+		
+		case 0x708116: {
+			// scroll3 y
+			*((UINT16*)(CpsReg + 0x16)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x70814c: {
+			*((UINT16*)(CpsReg + nCpsLcReg)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x70d000: {
+			// nop?
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Write Word %x, %x\n"), a, d);
+		}
+	}
+}
+
+static INT32 Sf2mdtScanCallback(INT32 nAction, INT32*pnMin)
+{
+	CpsBootlegSpriteRamScanCallback(nAction, pnMin);
+	Sf2mdtScanSound(nAction, pnMin);
+	
+	return 0;
+}
+
 static INT32 Sf2mdtInit()
 {
-	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2mdt;
-	
+	bCpsUpdatePalEveryFrame = 1;	
 	Cps1DisablePSnd = 1;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2mdt;
+	Cps1ObjGetCallbackFunction = Sf2mdtObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	CpsRunInitCallbackFunction = Sf2mdtSoundInit;
 	CpsRunResetCallbackFunction = Sf2mdtSoundReset;
 	CpsRunExitCallbackFunction = Sf2mdtSoundExit;
 	CpsRunFrameStartCallbackFunction = Sf2mdtSoundFrameStart;
 	CpsRunFrameEndCallbackFunction = Sf2mdtSoundFrameEnd;
 	CpsRWSoundCommandCallbackFunction = Sf2mdtSoundCommand;
-	CpsMemScanCallbackFunction = Sf2mdtScanSound;
+	CpsMemScanCallbackFunction = Sf2mdtScanCallback;
 	
 	INT32 nRet = Sf2ceInit();
 	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+	
 	SekOpen(0);
-	SekMapHandler(1, 0x70c000, 0x70cfff, SM_READ);
+	SekMapMemory(CpsBootlegSpriteRam, 0x700000, 0x703fff, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x704000, 0x707fff, SM_RAM); // mirror? can use either of this - seems to make no difference
+	SekMapHandler(1, 0x708000, 0x7fffff, SM_READ | SM_WRITE);
 	SekSetReadByteHandler(1, Sf2mdtReadByte);
 	SekSetReadWordHandler(1, Sf2mdtReadWord);
+	SekSetWriteByteHandler(1, Sf2mdtWriteByte);
+	SekSetWriteWordHandler(1, Sf2mdtWriteWord);
 	SekClose();
+	
+	Cps1VBlankIRQLine = 4; // triggers the sprite ram and layer enable/scroll writes at 0x700000
 	
 	return nRet;
 }
 
 static INT32 Sf2mdtaInit()
 {
-	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2mdta;
-	
+	bCpsUpdatePalEveryFrame = 1;	
 	Cps1DisablePSnd = 1;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2mdta;
+	Cps1ObjGetCallbackFunction = Sf2mdtObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	CpsRunInitCallbackFunction = Sf2mdtSoundInit;
 	CpsRunResetCallbackFunction = Sf2mdtSoundReset;
 	CpsRunExitCallbackFunction = Sf2mdtSoundExit;
 	CpsRunFrameStartCallbackFunction = Sf2mdtSoundFrameStart;
 	CpsRunFrameEndCallbackFunction = Sf2mdtSoundFrameEnd;
 	CpsRWSoundCommandCallbackFunction = Sf2mdtSoundCommand;
-	CpsMemScanCallbackFunction = Sf2mdtScanSound;
+	CpsMemScanCallbackFunction = Sf2mdtScanCallback;
 	
 	INT32 nRet = Sf2ceInit();
 	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+	
 	SekOpen(0);
-	SekMapMemory(CpsRamFF, 0xfc0000, 0xfcffff, SM_RAM);
-	SekMapHandler(1, 0x70c000, 0x70cfff, SM_READ);
+	SekMapMemory(CpsBootlegSpriteRam, 0x700000, 0x703fff, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x704000, 0x707fff, SM_RAM); // mirror? can use either of this - seems to make no difference
+	SekMapMemory(CpsRamFF, 0xfc0000, 0xfcffff, SM_RAM);	
+	SekMapHandler(1, 0x708000, 0x7fffff, SM_READ | SM_WRITE);
 	SekSetReadByteHandler(1, Sf2mdtReadByte);
 	SekSetReadWordHandler(1, Sf2mdtReadWord);
+	SekSetWriteByteHandler(1, Sf2mdtWriteByte);
+	SekSetWriteWordHandler(1, Sf2mdtaWriteWord);
 	SekClose();
+	
+	Cps1VBlankIRQLine = 4; // triggers the sprite ram and layer enable/scroll writes at 0x700000
 	
 	return nRet;
 }
@@ -15014,9 +15194,9 @@ struct BurnDriver BurnDrvCpsSf2koryu2 = {
 
 struct BurnDriver BurnDrvCpsSf2mdt = {
 	"sf2mdt", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - Magic Delta Turbo (bootleg set 1 (with YM2151 + 2xMSM5205), 920313 etc)\0", "Incorrect graphics", "Capcom", "CPS1",
+	"Street Fighter II' - Magic Delta Turbo (bootleg set 1 (with YM2151 + 2xMSM5205), 920313 etc)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2mdtRomInfo, Sf2mdtRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	Sf2mdtInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -15024,9 +15204,9 @@ struct BurnDriver BurnDrvCpsSf2mdt = {
 
 struct BurnDriver BurnDrvCpsSf2mdta = {
 	"sf2mdta", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - Magic Delta Turbo (bootleg set 2 (with YM2151 + 2xMSM5205), 920313 etc)\0", "Incorrect graphics", "Capcom", "CPS1",
+	"Street Fighter II' - Magic Delta Turbo (bootleg set 2 (with YM2151 + 2xMSM5205), 920313 etc)\0", "Bad graphics rom dump", "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2mdtaRomInfo, Sf2mdtaRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	Sf2mdtaInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

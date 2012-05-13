@@ -105,6 +105,36 @@
 <a href="http://neosource.1emu.net/forums">http://neosource.1emu.net/forums</a></p>
 
 
+<h3>v0.2.97.26</h3>
+<ul>
+<li>Added Gigaman 2 to the CPS-2 driver, adding ability to disable Q-Sound in the CPS-2 drivers [Barry]</li>
+<li>Added two clones of Arkanoid to the Arkanoid driver[Barry, f205v]</li>
+<li>Added bootleg of Dragon Ninja to the DEC-0 driver [Barry, f205v]</li>
+<li>Added bootleg of Cobra Command to the DEC-8 driver [Barry, f205v]</li>
+<li>Added clone of Driving Force to the Galaxian driver [Barry, Team Europe]</li>
+<li>Added clone of Moon Cresta to the Galaxian driver [JacKc, Andy Welburn]</li>
+<li>Added clone of F-X to the Kyugo driver [Barry, f205v]</li>
+<li>Added Oxygene's NeoGeo 3D! demo to the Neo Geo driver [Barry]</li>
+<li>Added clone of Guardian Storm to the NMK16 driver [JacKc, B. St&aring;hl, Smitdogg, The Dumping Union]</li>
+<li>Added clone of Knights of Valour 2 to the PGM driver [JacKc, XingXing]</li>
+<li>Added clones of Flicky (alt graphics roms for 128k sets) to the Sega System 1 driver [Barry, f205v]</li>
+<li>Improvements to Street Fighter 2: Magic Delta Turbo which now works correctly [Barry]</li>
+<li>Fixed missing sounds in games based on Final Crash or Street Fighter 2: Magic Delta Turbo sound [Barry]</li>
+<li>Added support for missing priority mode writes in knightsb, knightsb4, the punipic sets, and wofb [Barry]</li>
+<li>Changed knights and knightsb4 to get the sprite mask values from work RAM [Barry]</li>
+<li>Changed the Daimakai bootleg to use the bootleg Sprite RAM it writes, and get the sprite priority masks from work RAM [Barry]</li>
+<li>Changed the punipic sets to get the scroll layer RAM offsets and sprite priority masks from work RAM [Barry]</li>
+<li>Changed wofb, and other wof sets that don't write the registers to get the sprite priority masks from work RAM [Barry]</li>
+<li>Hooked up the EEPROM in the dino, punipic and wof bootleg sets that don't read dip switches [Barry]</li>
+<li>Updated the EPOS driver, adding sound for Dealer and implementing the watchdog [iq_132]</li>
+<li>Tidied the Phoenix sets in the CPS-2 driver [Barry, based on info from Pythagoras]</li>
+<li>Fixed some unicode titles [JacKc, XingXing]</li>
+<li>Added Hyllian's Data Dependent Triangulation 3X to the softFX blitters [Hyllian, msbhvn]</li>
+<li>Optimised the xBR filters [Hyllian, Barry]</li>
+<li>Sync some sets and titles with latest MAME SVN [JacKc]</li>
+</ul>
+
+
 <h3>v0.2.97.25</h3>
 <ul>
 <li>CPS-1 Updates, most of the bootlegs now work well and without patches to hack them to work like the originals (brief, incomplete summary below) [Barry, JacKc, bonky_0013, f205v]</li>

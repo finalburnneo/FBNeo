@@ -12564,8 +12564,7 @@ void __fastcall Sf2mdtaWriteWord(UINT32 a, UINT16 d)
 		}
 		
 		case 0x708114: {
-			// scroll2 x
-			*((UINT16*)(CpsReg + 0x10)) = BURN_ENDIAN_SWAP_INT16(d + 0xffc0);
+			// ???
 			return;
 		}
 		
@@ -12637,6 +12636,7 @@ static INT32 Sf2mdtaInit()
 {
 	bCpsUpdatePalEveryFrame = 1;	
 	Cps1DisablePSnd = 1;
+	CpsLayer2XOffs = 0xffc0; // layer 2 scrolling seems to be taken care of by row scroll tables
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2mdta;
 	Cps1ObjGetCallbackFunction = Sf2mdtObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;

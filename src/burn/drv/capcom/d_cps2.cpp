@@ -10115,6 +10115,28 @@ static struct BurnRomInfo SfadRomDesc[] = {
 STD_ROM_PICK(Sfad)
 STD_ROM_FN(Sfad)
 
+static struct BurnRomInfo SfaudRomDesc[] = {
+	// is this a region hack of sfad, no original dump of 950727 USA exists currently
+	{ "sfzud.03a",     0x080000, 0x9f2ff577, 1 | BRF_ESS | BRF_PRG },
+	{ "sfz.04b",       0x080000, 0x8b73b0e5, 1 | BRF_ESS | BRF_PRG },
+	{ "sfz.05a",       0x080000, 0x0810544d, 1 | BRF_ESS | BRF_PRG },
+	{ "sfz.06",        0x080000, 0x806e8f38, 1 | BRF_ESS | BRF_PRG },
+	
+	{ "sfz.14m",       0x200000, 0x90fefdb3, 3 | BRF_GRA },
+	{ "sfz.16m",       0x200000, 0x5354c948, 3 | BRF_GRA },
+	{ "sfz.18m",       0x200000, 0x41a1e790, 3 | BRF_GRA },
+	{ "sfz.20m",       0x200000, 0xa549df98, 3 | BRF_GRA },
+
+	{ "sfz.01",        0x020000, 0xffffec7d, 4 | BRF_ESS | BRF_PRG },
+	{ "sfz.02",        0x020000, 0x45f46a08, 4 | BRF_ESS | BRF_PRG },
+
+	{ "sfz.11m",       0x200000, 0xc4b093cd, 5 | BRF_SND },
+	{ "sfz.12m",       0x200000, 0x8bdbc4b4, 5 | BRF_SND },
+};
+
+STD_ROM_PICK(Sfaud)
+STD_ROM_FN(Sfaud)
+
 static struct BurnRomInfo Sfz2adRomDesc[] = {
 	{ "sz2ad.03a",     0x080000, 0x017f8fab, 1 | BRF_ESS | BRF_PRG },
 	{ "sz2ad.04a",     0x080000, 0xf50e5ea2, 1 | BRF_ESS | BRF_PRG },
@@ -10379,6 +10401,38 @@ static struct BurnRomInfo Ssf2tbdRomDesc[] = {
 
 STD_ROM_PICK(Ssf2tbd)
 STD_ROM_FN(Ssf2tbd)
+
+static struct BurnRomInfo Ssf2tdRomDesc[] = {
+	{ "sfxed.03c",     0x080000, 0xed99d850, 1 | BRF_ESS | BRF_PRG },
+	{ "sfxed.04a",     0x080000, 0x38d9b364, 1 | BRF_ESS | BRF_PRG },
+	{ "sfxed.05",      0x080000, 0xc63358d0, 1 | BRF_ESS | BRF_PRG },
+	{ "sfxed.06a",     0x080000, 0xccb29808, 1 | BRF_ESS | BRF_PRG },
+	{ "sfxed.07",      0x080000, 0x61f94982, 1 | BRF_ESS | BRF_PRG },
+	{ "sfxed.08",      0x080000, 0xd399c36c, 1 | BRF_ESS | BRF_PRG },
+	{ "sfxed.09",      0x080000, 0x317b5dbc, 1 | BRF_ESS | BRF_PRG },
+
+	{ "sfx.13m",       0x200000, 0xcf94d275, 3 | BRF_GRA },
+	{ "sfx.15m",       0x200000, 0x5eb703af, 3 | BRF_GRA },
+	{ "sfx.17m",       0x200000, 0xffa60e0f, 3 | BRF_GRA },
+	{ "sfx.19m",       0x200000, 0x34e825c5, 3 | BRF_GRA },
+	{ "sfx.14m",       0x100000, 0xb7cc32e7, 3 | BRF_GRA },
+	{ "sfx.16m",       0x100000, 0x8376ad18, 3 | BRF_GRA },
+	{ "sfx.18m",       0x100000, 0xf5b1b336, 3 | BRF_GRA },
+	{ "sfx.20m",       0x100000, 0x459d5c6b, 3 | BRF_GRA },
+	{ "sfx.21m",       0x100000, 0xe32854af, 3 | BRF_GRA },
+	{ "sfx.23m",       0x100000, 0x760f2927, 3 | BRF_GRA },
+	{ "sfx.25m",       0x100000, 0x1ee90208, 3 | BRF_GRA },
+	{ "sfx.27m",       0x100000, 0xf814400f, 3 | BRF_GRA },
+
+	{ "sfx.01",        0x020000, 0xb47b8835, 4 | BRF_ESS | BRF_PRG },
+	{ "sfx.02",        0x020000, 0x0022633f, 4 | BRF_ESS | BRF_PRG },
+
+	{ "sfx.11m",       0x200000, 0x9bdbd476, 5 | BRF_SND },
+	{ "sfx.12m",       0x200000, 0xa05e3aab, 5 | BRF_SND },
+};
+
+STD_ROM_PICK(Ssf2td)
+STD_ROM_FN(Ssf2td)
 
 static struct BurnRomInfo Ssf2xjdRomDesc[] = {
 	{ "sfxjd.03c",     0x080000, 0x316de996, 1 | BRF_ESS | BRF_PRG },
@@ -10906,6 +10960,16 @@ struct BurnDriver BurnDrvCpsSfad = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCpsSfaud = {
+	"sfaud", "sfa", NULL, NULL, "1995",
+	"Street Fighter Alpha - warriors' dreams (950727 USA Phoenix Edition)\0", NULL, "bootleg", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, SfaudRomInfo, SfaudRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsSfz2ad = {
 	"sfz2ad", "sfa2", NULL, NULL, "1996",
 	"Street Fighter Zero 2 (960227 Asia Phoenix Edition)\0", NULL, "bootleg", "CPS2",
@@ -11003,6 +11067,16 @@ struct BurnDriver BurnDrvCpsSsf2tbd = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Ssf2tbdRomInfo, Ssf2tbdRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Ssf2tbPhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSsf2td = {
+	"ssf2td", "ssf2t", NULL, NULL, "1994",
+	"Super Street Fighter II Turbo (super street fighter 2 X 940223 etc Phoenix Edition)\0", NULL, "bootleg", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Ssf2tdRomInfo, Ssf2tdRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Ssf2tPhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

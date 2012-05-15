@@ -11,7 +11,6 @@ extern "C" void BurnYM2610UpdateRequest();
 void BurnYM2610MapADPCMROM(UINT8* YM2610ADPCMAROM, INT32 nYM2610ADPCMASize, UINT8* YM2610ADPCMBROM, INT32 nYM2610ADPCMBSize);
 INT32 BurnYM2610Init(INT32 nClockFrequency, UINT8* YM2610ADPCMAROM, INT32* nYM2610ADPCMASize, UINT8* YM2610ADPCMBROM, INT32* nYM2610ADPCMBSize, FM_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), double (*GetTimeCallback)(), INT32 bAddSignal);
 void BurnYM2610SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
-void BurnYM2610SetSoundMixMode(INT32 Mix);
 void BurnYM2610Reset();
 void BurnYM2610Exit();
 extern void (*BurnYM2610Update)(INT16* pSoundBuf, INT32 nSegmentEnd);

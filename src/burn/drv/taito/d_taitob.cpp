@@ -1810,7 +1810,9 @@ static void common_ym2610_init()
 
 	BurnYM2610Init(8000000, TaitoYM2610ARom, &len0, TaitoYM2610BRom, &len1, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnTimerAttachZet(cpu_speed[1]);
-	BurnYM2610SetSoundMixMode(1);
+	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);
 }
 
 static void common_ym2203_init()
@@ -1905,7 +1907,6 @@ static INT32 DrvExit()
 	ZetExit();
 	
 	if (sound_config == 0) {
-		BurnYM2610SetSoundMixMode(0);
 		BurnYM2610Exit();
 	} else {
 		BurnYM2203Exit();

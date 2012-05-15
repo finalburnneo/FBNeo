@@ -433,15 +433,6 @@ void BurnYM2610SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 	YM2610RouteDirs[nIndex] = nRouteDir;
 }
 
-void BurnYM2610SetSoundMixMode(INT32)
-{
-#if defined FBA_DEBUG
-	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("BurnYM2610SetSoundMixMode called without init\n"));
-#endif
-
-	// deprecated - to be removed
-}
-
 void BurnYM2610Scan(INT32 nAction, INT32* pnMin)
 {
 #if defined FBA_DEBUG

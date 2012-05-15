@@ -4129,7 +4129,7 @@ static INT32 AquajackInit()
 	BurnTimerAttachZet(16000000 / 4);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 2.00, BURN_SND_ROUTE_BOTH);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 2.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);	
+	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);
 	
 	TaitoMakeInputsFunction = AquajackMakeInputs;
 	TaitoDrawFunction = AquajackDraw;
@@ -4921,8 +4921,6 @@ static INT32 SpacegunInit()
 
 static INT32 TaitoZExit()
 {
-	BurnYM2610SetSoundMixMode(0);
-	
 	TaitoExit();
 
 	SciSpriteFrame = 0;

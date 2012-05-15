@@ -1412,7 +1412,9 @@ static INT32 Darius2Init()
 	
 	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &Darius2FMIRQHandler, Darius2SynchroniseStream, Darius2GetTime, 0);
 	BurnTimerAttachZet(16000000 / 4);
-	BurnYM2610SetSoundMixMode(1);
+	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);
 	
 	TaitoDrawFunction = Darius2Draw;
 	TaitoMakeInputsFunction = Darius2MakeInputs;
@@ -1506,7 +1508,9 @@ static INT32 Darius2dInit()
 	
 	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &Darius2FMIRQHandler, Darius2SynchroniseStream, Darius2GetTime, 0);
 	BurnTimerAttachZet(16000000 / 4);
-	BurnYM2610SetSoundMixMode(1);
+	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);
 	
 	TaitoDrawFunction = Darius2dDraw;
 	TaitoMakeInputsFunction = Darius2dMakeInputs;
@@ -1614,7 +1618,9 @@ static INT32 WarriorbInit()
 	
 	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &Darius2FMIRQHandler, Darius2SynchroniseStream, Darius2GetTime, 0);
 	BurnTimerAttachZet(16000000 / 4);
-	BurnYM2610SetSoundMixMode(1);
+	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);
 	
 	TaitoDrawFunction = WarriorbDraw;
 	TaitoMakeInputsFunction = WarriorbMakeInputs;
@@ -1632,8 +1638,6 @@ static INT32 WarriorbInit()
 static INT32 Darius2Exit()
 {
 	Ninjaw = 0;
-	
-	BurnYM2610SetSoundMixMode(0);
 	
 	return TaitoExit();
 }

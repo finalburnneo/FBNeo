@@ -1334,7 +1334,9 @@ static void BonzeSoundSetup()
 	INT32 DrvSndROMLen = 0x80000;
 	BurnYM2610Init(8000000, TaitoYM2610ARom, &DrvSndROMLen, TaitoYM2610ARom, &DrvSndROMLen, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnTimerAttachZet(4000000);
-	BurnYM2610SetSoundMixMode(1);
+	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);
 
 	TaitoNumYM2151  = 0;
 	TaitoNumYM2610  = 1; 

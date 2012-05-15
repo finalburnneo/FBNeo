@@ -815,7 +815,9 @@ static INT32 OthunderInit()
 	
 	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &OthunderFMIRQHandler, OthunderSynchroniseStream, OthunderGetTime, 0);
 	BurnTimerAttachZet(16000000 / 4);
-	BurnYM2610SetSoundMixMode(1);
+	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);
 	
 	EEPROMInit(&othunder_eeprom_interface);
 	if (!EEPROMAvailable()) EEPROMFill(TaitoDefaultEEProm, 0, 128);
@@ -839,8 +841,6 @@ static INT32 OthunderInit()
 
 static INT32 OthunderExit()
 {
-	BurnYM2610SetSoundMixMode(0);
-	
 	TaitoExit();
 	
 	// Switch back CPU core if needed

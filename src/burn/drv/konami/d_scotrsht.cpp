@@ -397,8 +397,8 @@ static INT32 DrvInit()
 	ZetClose();
 
 	BurnYM2203Init(1, 3072000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
-	BurnYM2203SetVolumeShift(2);
 	BurnTimerAttachZet(3072000);
+	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();
 

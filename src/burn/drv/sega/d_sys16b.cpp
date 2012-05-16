@@ -2474,10 +2474,10 @@ STD_ROM_PICK(Cottonu)
 STD_ROM_FN(Cottonu)
 
 static struct BurnRomInfo CottonjRomDesc[] = {
-	{ "epr-13858.a7",   0x20000, 0x276f42fe, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-13856.a5",   0x20000, 0x14e6b5e7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-13859.a8",   0x20000, 0x4703ef9d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-13857.a6",   0x20000, 0xde37e527, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13858a.a7",  0x20000, 0x276f42fe, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13856a.a5",  0x20000, 0x14e6b5e7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13859a.a8",  0x20000, 0x4703ef9d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13857a.a6",  0x20000, 0xde37e527, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	
 	{ "opr-13862.a14",  0x20000, 0xa47354b6, SYS16_ROM_TILES | BRF_GRA },
 	{ "opr-13877.b14",  0x20000, 0xd38424b5, SYS16_ROM_TILES | BRF_GRA },

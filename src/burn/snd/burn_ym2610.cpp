@@ -116,8 +116,7 @@ static void YM2610UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 	pYM2610Buffer[5] = pBuffer + 5 * 4096 + 4;
 
 	for (INT32 i = (nFractionalPosition >> 16) - 4; i < nSamplesNeeded; i++) {
-		pYM2610Buffer[5][i] = (((INT32)pYM2610Buffer[2][i] + pYM2610Buffer[3][i] + pYM2610Buffer[4][i]) * (4096 * 60 / 100)) >> 12;
-		pYM2610Buffer[5][i] = (INT32)(pYM2610Buffer[5][i] * YM2610Volumes[BURN_SND_YM2610_AY8910_ROUTE]);
+		pYM2610Buffer[5][i] = (INT32)((pYM2610Buffer[2][i] + pYM2610Buffer[3][i] + pYM2610Buffer[4][i]) * YM2610Volumes[BURN_SND_YM2610_AY8910_ROUTE]);
 	}
 
 	for (INT32 i = (nFractionalPosition & 0xFFFF0000) >> 15; i < nSegmentLength; i += 2, nFractionalPosition += nSampleSize) {
@@ -234,9 +233,6 @@ static void YM2610UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 		nAYSample += pYM2610Buffer[3][n];
 		nAYSample += pYM2610Buffer[4][n];
 
-		nAYSample  *= 4096 * 60 / 100;
-		nAYSample >>= 12;
-		
 		if ((YM2610RouteDirs[BURN_SND_YM2610_AY8910_ROUTE] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
 			nLeftSample += (INT32)(nAYSample * YM2610Volumes[BURN_SND_YM2610_AY8910_ROUTE]);
 		}

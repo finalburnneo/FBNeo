@@ -403,8 +403,8 @@ static INT32 DrvInit()
 
 	BurnYM2203Init(1, 4000000, &DrvIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnYM2203SetPorts(0, NULL, NULL, &DrvYM2203WritePortA, &DrvYM2203WritePortB);
-	BurnYM2203SetVolumeShift(4);
 	BurnTimerAttachZet(4000000);
+	BurnYM2203SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	ZetClose();
 

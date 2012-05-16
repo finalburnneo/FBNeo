@@ -1315,10 +1315,14 @@ static INT32 Type1Init(INT32 mcutype)
 		BurnYM2151Init(3000000, 30.0); // jpopnics
 	} else {
 		BurnYM2203Init(1, 3000000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+		BurnYM2203SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 
 		if (mcutype == MCU_NONE_KAGEKI) {
 			BurnYM2203SetPorts(0, &kageki_ym2203_portA, NULL, NULL, &kageki_ym2203_write_portB);
-			BurnYM2203SetVolumeShift(2);
+			BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.35, BURN_SND_ROUTE_BOTH);
+			BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
+			BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
+			BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
 		} else {
 			BurnYM2203SetPorts(0, &tnzs_ym2203_portA, &tnzs_ym2203_portB, NULL, NULL);
 		}
@@ -1434,6 +1438,14 @@ static INT32 Type2Init()
 	BurnYM2203Init(1, 3000000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnYM2203SetPorts(0, NULL, NULL, &kabukiz_sound_bankswitch, &kabukiz_dac_write);
 	BurnTimerAttachZet(6000000);
+	BurnYM2203SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
+	
+	if (strncmp(BurnDrvGetTextA(DRV_NAME), "kabukiz", 7) == 0 || strncmp(BurnDrvGetTextA(DRV_NAME), "tnzsb", 5) == 0) {
+		BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
+		BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
+		BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
+		BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 1.00, BURN_SND_ROUTE_BOTH);
+	}
 
 	DACInit(0, 0, 1, kabukizSyncDAC); // kabukiz
 

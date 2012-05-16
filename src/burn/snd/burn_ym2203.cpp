@@ -494,15 +494,6 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 	return 0;
 }
 
-void BurnYM2203SetVolumeShift(INT32)
-{
-#if defined FBA_DEBUG
-	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203SetVolumeShift called without init\n"));
-#endif
-
-	// deprecated
-}
-
 void BurnYM2203SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
 #if defined FBA_DEBUG

@@ -1756,6 +1756,7 @@ static INT32 MachineInit()
 	
 	BurnYM2203Init(1, 3000000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnTimerAttachZet(3000000);
+	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM3526Init(3000000, NULL, &DrvYM3526SynchroniseStream, 1);
 	BurnTimerAttachZetYM3526(6000000);
@@ -2148,8 +2149,11 @@ static INT32 TokioInit()
 	ZetClose();
 	
 	BurnYM2203Init(1, 3000000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
-	BurnYM2203SetVolumeShift(2);
 	BurnTimerAttachZet(3000000);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.10, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.08, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.08, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.08, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
 

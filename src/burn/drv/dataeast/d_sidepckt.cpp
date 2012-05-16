@@ -685,6 +685,7 @@ static INT32 DrvInit()
 	
 	BurnYM2203Init(1, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnTimerAttachM6809(2000000);
+	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM3526Init(3000000, &DrvFMIRQHandler, &DrvYM3526SynchroniseStream, 1);
 	BurnTimerAttachM6502YM3526(1500000);

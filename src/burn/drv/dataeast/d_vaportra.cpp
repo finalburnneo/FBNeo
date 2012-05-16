@@ -388,6 +388,7 @@ static INT32 DrvInit(INT32 type)
 	SekClose();
 
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, NULL, 40.0, 1006875, 75.0, 2013750, 60.0);
+	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

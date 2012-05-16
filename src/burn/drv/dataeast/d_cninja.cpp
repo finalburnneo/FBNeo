@@ -1183,6 +1183,7 @@ static INT32 CninjaInit()
 	SekClose();
 
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, DrvYM2151WritePort, 40.0, 1006875, 75.0, 2013750, 60.0);
+	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1282,6 +1283,7 @@ static INT32 EdrandyInit()
 	SekClose();
 
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, DrvYM2151WritePort, 40.0, 1006875, 75.0, 2013750, 60.0);
+	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1712,6 +1714,7 @@ static INT32 Robocop2Init()
 	SekClose();
 
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, DrvYM2151WritePort, 40.0, 1006875, 75.0, 2013750, 60.0);
+	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

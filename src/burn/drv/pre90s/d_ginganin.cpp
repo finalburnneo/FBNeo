@@ -404,6 +404,7 @@ static INT32 DrvInit()
 	
 	BurnY8950Init(3579545, DrvSndROM, 0x20000, NULL, &DrvSynchroniseStream, 1);
 	BurnTimerAttachM6809Y8950(1000000);
+	BurnY8950SetRoute(BURN_SND_Y8950_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

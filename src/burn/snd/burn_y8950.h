@@ -19,10 +19,13 @@ INT32 BurnTimerAttachM6502Y8950(INT32 nClockspeed);
 extern "C" void BurnY8950UpdateRequest();
 
 INT32 BurnY8950Init(INT32 nClockFrequency, UINT8* Y8950ADPCMROM, INT32 nY8950ADPCMSize, OPL_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), INT32 bAddSignal);
+void BurnY8950SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
 void BurnY8950Reset();
 void BurnY8950Exit();
 extern void (*BurnY8950Update)(INT16* pSoundBuf, INT32 nSegmentEnd);
 void BurnY8950Scan(INT32 nAction, INT32* pnMin);
+
+#define BURN_SND_Y8950_Y8950_ROUTE			0
 
 #define BurnY8950Read(a) Y8950Read(0, a)
 

@@ -6744,6 +6744,8 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 
 	BurnYM3438Init(1, 16000000/4, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 1);
 	BurnTimerAttachZet(4000000);
+	BurnYM3438SetRoute(0, BURN_SND_YM3438_YM3438_ROUTE_1, 0.30, BURN_SND_ROUTE_LEFT);
+	BurnYM3438SetRoute(0, BURN_SND_YM3438_YM3438_ROUTE_2, 0.30, BURN_SND_ROUTE_RIGHT);
 
 	GenericTilesInit();
 

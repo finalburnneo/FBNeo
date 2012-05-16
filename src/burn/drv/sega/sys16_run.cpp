@@ -1978,6 +1978,8 @@ INT32 System16Init()
 		
 		BurnYM3438Init(2, 8000000, NULL, System18SynchroniseStream, System18GetTime, 1);
 		BurnTimerAttachZet(8000000);
+		BurnYM3438SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
+		BurnYM3438SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
 		
 		RF5C68PCMInit(10000000);
 		

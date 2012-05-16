@@ -2074,8 +2074,11 @@ INT32 System16Init()
 		
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2203) {
 			BurnYM2203Init(1, 4000000, &System16YM2203IRQHandler, System16SynchroniseStream, System16GetTime, 0);
-			BurnYM2203SetVolumeShift(2);
 			BurnTimerAttachZet(4000000);
+			BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.37, BURN_SND_ROUTE_BOTH);
+			BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.13, BURN_SND_ROUTE_BOTH);
+			BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.13, BURN_SND_ROUTE_BOTH);
+			BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.13, BURN_SND_ROUTE_BOTH);
 		} else {
 			BurnYM2151Init(4000000, 25.0);
 			BurnYM2151SetIrqHandler(&System16YM2151IRQHandler);

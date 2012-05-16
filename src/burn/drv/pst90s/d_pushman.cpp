@@ -562,8 +562,9 @@ static INT32 DrvInit()
 //	m6805Close();
 
 	BurnYM2203Init(2, 2000000, &DrvIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
-	BurnYM2203SetVolumeShift(1);
 	BurnTimerAttachZet(4000000);
+	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

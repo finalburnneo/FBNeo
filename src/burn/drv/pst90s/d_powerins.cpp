@@ -855,8 +855,8 @@ static INT32 powerinsInit()
 	
 	if (game_drv == GAME_POWERINS ) {
 		BurnYM2203Init(1, 12000000 / 8, &powerinsIRQHandler, powerinsSynchroniseStream, powerinsGetTime, 0);
-		BurnYM2203SetVolumeShift(2);
 		BurnTimerAttachZet(6000000);
+		BurnYM2203SetAllRoutes(0, 2.00, BURN_SND_ROUTE_BOTH);
 		BurnSetRefreshRate(56.0);
 		
 		MSM6295Init(0, 4000000 / 165, 40, 1);

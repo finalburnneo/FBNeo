@@ -276,8 +276,9 @@ static INT32 DrvInit()
 
 	BurnYM2203Init(1, 3579545, NULL, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnTimerAttachZet(3579545);
+	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
 
-	MSM6295Init(0, 792000 / 132, 100.0, 1);
+	MSM6295Init(0, 792000 / 132, 60.0, 1);
 
 	GenericTilesInit();
 

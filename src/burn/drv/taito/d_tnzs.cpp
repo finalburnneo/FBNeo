@@ -1326,10 +1326,6 @@ static INT32 Type1Init(INT32 mcutype)
 		} else {
 			BurnYM2203SetPorts(0, &tnzs_ym2203_portA, &tnzs_ym2203_portB, NULL, NULL);
 		}
-		
-		if (mcutype == MCU_EXTRMATN || mcutype == MCU_DRTOPPEL) {
-			BurnYM2203SetVolumeShift(2);
-		}
 	}	
 
 	DACInit(0, 0, 1, kabukizSyncDAC); // kabukiz

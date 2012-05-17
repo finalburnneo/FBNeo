@@ -851,14 +851,16 @@ void AY8910Render(INT16** buffer, INT16* dest, INT32 length, INT32 bAddSignal)
 #endif
 
 	INT32 i;
-	for (i = 0; i < num;  i++) {
-		AY8910Update(i, buffer + (i * 3), length);
-	}
-	
 	INT16 *buf0 = buffer[0];
 	INT16 *buf1 = buffer[1];
 	INT16 *buf2 = buffer[2];
 	INT16 *buf3, *buf4, *buf5, *buf6, *buf7, *buf8, *buf9, *buf10, *buf11, *buf12, *buf13, *buf14, *buf15, *buf16, *buf17;
+	INT32 n;
+	
+	for (i = 0; i < num; i++) {
+		AY8910Update(i, buffer + (i * 3), length);
+	}
+	
 	if (num >= 2) {
 		buf3 = buffer[3];
 		buf4 = buffer[4];
@@ -885,7 +887,6 @@ void AY8910Render(INT16** buffer, INT16* dest, INT32 length, INT32 bAddSignal)
 		buf17 = buffer[17];
 	}
 		
-	INT32 n;
 	for (n = 0; n < length; n++) {
 		INT32 nLeftSample = 0, nRightSample = 0;
 		
@@ -939,9 +940,11 @@ void AY8910Render(INT16** buffer, INT16* dest, INT32 length, INT32 bAddSignal)
 void AY8910SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
 #if defined FBA_DEBUG
+#ifdef __GNUC__ 
 	if (!DebugSnd_AY8910Initted) bprintf(PRINT_ERROR, _T("AY8910SetRoute called without init\n"));
 	if (nIndex < 0 || nIndex > 2) bprintf(PRINT_ERROR, _T("AY8910SetRoute called with invalid index %i\n"), nIndex);
 	if (chip >= num) bprintf(PRINT_ERROR, _T("AY8910SetRoute called with invalid chip %i\n"), chip);
+#endif
 #endif
 	
 	AY8910Volumes[(chip * 3) + nIndex] = nVolume;

@@ -8518,7 +8518,7 @@ static INT32 ZigzagInit()
 	
 	GalDrawBulletsFunction = NULL;
 	
-	GalSoundVolumeShift = 3;
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -11637,7 +11637,7 @@ static INT32 JumpbugInit()
 	GalExtendTileInfoFunction = JumpbugExtendTileInfo;
 	GalExtendSpriteInfoFunction = JumpbugExtendSpriteInfo;
 	
-	GalSoundVolumeShift = 3;
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -11680,7 +11680,7 @@ static INT32 LeversInit()
 	GalExtendTileInfoFunction = JumpbugExtendTileInfo;
 	GalExtendSpriteInfoFunction = JumpbugExtendSpriteInfo;
 	
-	GalSoundVolumeShift = 2;
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -11715,8 +11715,6 @@ static INT32 BongoInit()
 	
 	GalExtendSpriteInfoFunction = UpperExtendSpriteInfo;
 	
-	GalSoundVolumeShift = 3;
-
 	return nRet;
 }
 
@@ -12174,6 +12172,8 @@ static INT32 CheckmanInit()
 	GalExtendTileInfoFunction = MooncrstExtendTileInfo;
 	GalExtendSpriteInfoFunction = MooncrstExtendSpriteInfo;
 	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	
 	return nRet;
 }
 
@@ -12212,6 +12212,8 @@ static INT32 CheckmanjInit()
 	
 	nRet = GalInit();
 	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	
 	return nRet;
 }
 
@@ -12237,7 +12239,7 @@ static INT32 DingoInit()
 	
 	nRet = GalInit();
 	
-	GalSoundVolumeShift = 0;
+	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -12272,6 +12274,8 @@ static INT32 DingoeInit()
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910;
 	
 	nRet = GalInit();
+	
+	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -15184,9 +15188,10 @@ static INT32 TheendInit()
 	GalRenderBackgroundFunction = GalaxianDrawBackground;
 	GalDrawBulletsFunction = TheendDrawBullets;
 	
-	GalSoundVolumeShift = 3;
-	
 	KonamiPPIInit();
+	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -15289,6 +15294,9 @@ static INT32 AtlantisInit()
 	
 	KonamiPPIInit();
 	
+	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+	
 	return nRet;
 }
 
@@ -15385,8 +15393,6 @@ static INT32 MarsInit()
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	
-	GalSoundVolumeShift = 0;
-	
 	KonamiPPIInit();
 	
 	return nRet;
@@ -15417,9 +15423,10 @@ static INT32 DevilfshInit()
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	
-	GalSoundVolumeShift = 0;
-	
 	KonamiPPIInit();
+	
+	AY8910SetAllRoutes(0, 0.75, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.75, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -15477,8 +15484,6 @@ static INT32 Newsin7Init()
 	GalColourDepth = 3;
 	GalSpriteClipStart = 0;
 	GalSpriteClipEnd = 246;
-	
-	GalSoundVolumeShift = 0;
 	
 	KonamiPPIInit();
 	
@@ -15596,8 +15601,6 @@ static INT32 HotshockInit()
 	GalSpriteClipStart = 7;
 	GalSpriteClipEnd = 246;
 	
-	GalSoundVolumeShift = 0;
-	
 	return nRet;
 }
 
@@ -15628,8 +15631,6 @@ static INT32 ConquerInit()
 	
 	GalExtendTileInfoFunction = PiscesExtendTileInfo;
 	
-	GalSoundVolumeShift = 0;
-	
 	return nRet;
 }
 
@@ -15657,9 +15658,10 @@ static INT32 CavelonInit()
 	GalDrawBulletsFunction = ScrambleDrawBullets;	
 	GalExtendSpriteInfoFunction = MshuttleExtendSpriteInfo;
 	
-	GalSoundVolumeShift = 2;
-	
 	KonamiPPIInit();
+	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -15706,6 +15708,9 @@ static INT32 MimonscrInit()
 	GalExtendSpriteInfoFunction = MimonkeyExtendSpriteInfo;
 
 	KonamiPPIInit();
+	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -16777,8 +16782,6 @@ static INT32 Ad2083Init()
 	GalExtendTileInfoFunction = Ad2083ExtendTileInfo;
 	GalExtendSpriteInfoFunction = Ad2083ExtendSpriteInfo;
 	
-	GalSoundVolumeShift = 0;
-	
 	return nRet;
 }
 
@@ -17050,8 +17053,6 @@ static INT32 SfxInit()
 	SfxTilemap = 1;
 	GalOrientationFlipX = 1;
 	
-	GalSoundVolumeShift = 3;
-
 	return nRet;
 }
 
@@ -18587,6 +18588,9 @@ static INT32 LosttombInit()
 	
 	KonamiPPIInit();
 	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	
 	return nRet;
 }
 
@@ -18659,9 +18663,10 @@ static INT32 AnteaterInit()
 	GalRenderBackgroundFunction = AnteaterDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	
-	GalSoundVolumeShift = 3;
-	
 	KonamiPPIInit();
+	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -18712,9 +18717,10 @@ static INT32 AnteatergInit()
 	GalRenderBackgroundFunction = AnteaterDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	
-	GalSoundVolumeShift = 3;
-	
 	KonamiPPIInit();
+	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -18762,9 +18768,10 @@ static INT32 AnteaterukInit()
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	
-	GalSoundVolumeShift = 3;
-	
 	KonamiPPIInit();
+	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -18797,11 +18804,12 @@ static INT32 SuperbonInit()
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	
-	GalSoundVolumeShift = 3;
-	
 	KonamiPPIInit();
 		
 	HardCodeGalaxianPROM();
+	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -18820,9 +18828,10 @@ static INT32 CalipsoInit()
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	GalExtendSpriteInfoFunction = CalipsoExtendSpriteInfo;
 	
-	GalSoundVolumeShift = 3;
-	
 	KonamiPPIInit();
+	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -18872,6 +18881,9 @@ static INT32 MoonwarInit()
 	
 	PPI0PortReadA = MoonwarPPIReadIN0;
 	PPI0PortWriteC = MoonwarPortSelectWrite;
+	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -18945,10 +18957,11 @@ static INT32 DarkplntInit()
 	GalCalcPaletteFunction = DarkplntCalcPalette;
 	GalDrawBulletsFunction = DarkplntDrawBullets;
 	
-	GalSoundVolumeShift = 2;
-	
 	KonamiPPIInit();	
 	PPI0PortReadB = DarkplntPPIReadIN1;
+	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -18984,9 +18997,10 @@ static INT32 RescueInit()
 	GalRenderBackgroundFunction = RescueDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	
-	GalSoundVolumeShift = 3;
-	
 	KonamiPPIInit();
+	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -19022,9 +19036,10 @@ static INT32 MinefldInit()
 	GalRenderBackgroundFunction = MinefldDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	
-	GalSoundVolumeShift = 2;
-	
 	KonamiPPIInit();
+	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -19232,6 +19247,9 @@ static INT32 MimonkeyInit()
 
 	KonamiPPIInit();
 	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	
 	return nRet;
 }
 
@@ -19251,6 +19269,9 @@ static INT32 MimonscoInit()
 	GalExtendSpriteInfoFunction = MimonkeyExtendSpriteInfo;
 
 	KonamiPPIInit();
+	
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -21098,8 +21119,6 @@ static INT32 HunchbksInit()
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	
-	GalSoundVolumeShift = 3;
-	
 	KonamiPPIInit();
 	PPI1PortWriteB = HunchbksSoundControlWrite;
 	
@@ -21135,8 +21154,6 @@ static INT32 HncholmsInit()
 	GalExtendSpriteInfoFunction = UpperExtendSpriteInfo;
 	
 	nGalCyclesTotal[0] = (18432000 / 6 / 2 / 2) / 60;
-	
-	GalSoundVolumeShift = 3;
 	
 	KonamiPPIInit();
 	PPI1PortWriteB = HunchbksSoundControlWrite;

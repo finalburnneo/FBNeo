@@ -267,7 +267,6 @@ INT32 GalScan(INT32 nAction, INT32 *pnMin);
 extern INT16* pFMBuffer;
 extern INT16* pAY8910Buffer[9];
 extern UINT8 GalSoundType;
-extern UINT8 GalSoundVolumeShift;
 extern UINT8 HunchbksSoundIrqFire;
 extern UINT8 GalLastPort2;
 extern UINT8 GalShootEnable;

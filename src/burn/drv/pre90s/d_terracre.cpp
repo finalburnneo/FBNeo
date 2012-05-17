@@ -1076,6 +1076,7 @@ static INT32 DrvInit()
 	} else {
 		BurnYM3526Init(4000000, NULL, &DrvSynchroniseStream, 0);
 		BurnTimerAttachZetYM3526(4000000);
+		BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	}
 	
 	DACInit(0, 0, 1, TerracreSyncDAC);
@@ -1131,6 +1132,7 @@ static INT32 DrvAmazonInit()
 	
 	BurnYM3526Init(4000000, NULL, &DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3526(4000000);
+	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	DACInit(0, 0, 1, TerracreSyncDAC);
 	DACInit(1, 0, 1, TerracreSyncDAC);

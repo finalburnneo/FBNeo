@@ -1459,6 +1459,7 @@ static INT32 BestbestInit()
 
 	BurnYM3526Init(3000000, &bestbestFMIRQHandler, &bestbestSynchroniseStream, 0);
 	BurnTimerAttachZetYM3526(6000000);
+	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, bestbest_ay8910_write_a, NULL);
 

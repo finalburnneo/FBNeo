@@ -1760,6 +1760,7 @@ static INT32 MachineInit()
 	
 	BurnYM3526Init(3000000, NULL, &DrvYM3526SynchroniseStream, 1);
 	BurnTimerAttachZetYM3526(6000000);
+	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 	
 	if (BublboblCallbackFunction()) return 1;
 

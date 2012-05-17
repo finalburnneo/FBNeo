@@ -25,7 +25,7 @@ void BurnY8950Exit();
 extern void (*BurnY8950Update)(INT16* pSoundBuf, INT32 nSegmentEnd);
 void BurnY8950Scan(INT32 nAction, INT32* pnMin);
 
-#define BURN_SND_Y8950_Y8950_ROUTE			0
+#define BURN_SND_Y8950_ROUTE			0
 
 #define BurnY8950Read(a) Y8950Read(0, a)
 

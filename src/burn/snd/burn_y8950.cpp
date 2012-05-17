@@ -363,17 +363,17 @@ static void Y8950UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 		INT32 nRightSample[4] = {0, 0, 0, 0};
 		INT32 nTotalLeftSample, nTotalRightSample;
 		
-		if ((Y8950RouteDirs[BURN_SND_Y8950_Y8950_ROUTE] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample[0] += (INT32)(pY8950Buffer[(nFractionalPosition >> 16) - 3] * Y8950Volumes[BURN_SND_Y8950_Y8950_ROUTE]);
-			nLeftSample[1] += (INT32)(pY8950Buffer[(nFractionalPosition >> 16) - 2] * Y8950Volumes[BURN_SND_Y8950_Y8950_ROUTE]);
-			nLeftSample[2] += (INT32)(pY8950Buffer[(nFractionalPosition >> 16) - 1] * Y8950Volumes[BURN_SND_Y8950_Y8950_ROUTE]);
-			nLeftSample[3] += (INT32)(pY8950Buffer[(nFractionalPosition >> 16) - 0] * Y8950Volumes[BURN_SND_Y8950_Y8950_ROUTE]);
+		if ((Y8950RouteDirs[BURN_SND_Y8950_ROUTE] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+			nLeftSample[0] += (INT32)(pY8950Buffer[(nFractionalPosition >> 16) - 3] * Y8950Volumes[BURN_SND_Y8950_ROUTE]);
+			nLeftSample[1] += (INT32)(pY8950Buffer[(nFractionalPosition >> 16) - 2] * Y8950Volumes[BURN_SND_Y8950_ROUTE]);
+			nLeftSample[2] += (INT32)(pY8950Buffer[(nFractionalPosition >> 16) - 1] * Y8950Volumes[BURN_SND_Y8950_ROUTE]);
+			nLeftSample[3] += (INT32)(pY8950Buffer[(nFractionalPosition >> 16) - 0] * Y8950Volumes[BURN_SND_Y8950_ROUTE]);
 		}
-		if ((Y8950RouteDirs[BURN_SND_Y8950_Y8950_ROUTE] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample[0] += (INT32)(pY8950Buffer[(nFractionalPosition >> 16) - 3] * Y8950Volumes[BURN_SND_Y8950_Y8950_ROUTE]);
-			nRightSample[1] += (INT32)(pY8950Buffer[(nFractionalPosition >> 16) - 2] * Y8950Volumes[BURN_SND_Y8950_Y8950_ROUTE]);
-			nRightSample[2] += (INT32)(pY8950Buffer[(nFractionalPosition >> 16) - 1] * Y8950Volumes[BURN_SND_Y8950_Y8950_ROUTE]);
-			nRightSample[3] += (INT32)(pY8950Buffer[(nFractionalPosition >> 16) - 0] * Y8950Volumes[BURN_SND_Y8950_Y8950_ROUTE]);
+		if ((Y8950RouteDirs[BURN_SND_Y8950_ROUTE] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+			nRightSample[0] += (INT32)(pY8950Buffer[(nFractionalPosition >> 16) - 3] * Y8950Volumes[BURN_SND_Y8950_ROUTE]);
+			nRightSample[1] += (INT32)(pY8950Buffer[(nFractionalPosition >> 16) - 2] * Y8950Volumes[BURN_SND_Y8950_ROUTE]);
+			nRightSample[2] += (INT32)(pY8950Buffer[(nFractionalPosition >> 16) - 1] * Y8950Volumes[BURN_SND_Y8950_ROUTE]);
+			nRightSample[3] += (INT32)(pY8950Buffer[(nFractionalPosition >> 16) - 0] * Y8950Volumes[BURN_SND_Y8950_ROUTE]);
 		}
 		
 		nTotalLeftSample = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
@@ -427,11 +427,11 @@ static void Y8950UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 	for (INT32 n = nFractionalPosition; n < nSegmentLength; n++) {
 		INT32 nLeftSample = 0, nRightSample = 0;
 		
-		if ((Y8950RouteDirs[BURN_SND_Y8950_Y8950_ROUTE] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += (INT32)(pY8950Buffer[n] * Y8950Volumes[BURN_SND_Y8950_Y8950_ROUTE]);
+		if ((Y8950RouteDirs[BURN_SND_Y8950_ROUTE] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+			nLeftSample += (INT32)(pY8950Buffer[n] * Y8950Volumes[BURN_SND_Y8950_ROUTE]);
 		}
-		if ((Y8950RouteDirs[BURN_SND_Y8950_Y8950_ROUTE] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += (INT32)(pY8950Buffer[n] * Y8950Volumes[BURN_SND_Y8950_Y8950_ROUTE]);
+		if ((Y8950RouteDirs[BURN_SND_Y8950_ROUTE] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+			nRightSample += (INT32)(pY8950Buffer[n] * Y8950Volumes[BURN_SND_Y8950_ROUTE]);
 		}
 		
 		nLeftSample = BURN_SND_CLIP(nLeftSample);
@@ -557,8 +557,8 @@ INT32 BurnY8950Init(INT32 nClockFrequency, UINT8* Y8950ADPCMROM, INT32 nY8950ADP
 	bY8950AddSignal = bAddSignal;
 	
 	// default routes
-	Y8950Volumes[BURN_SND_Y8950_Y8950_ROUTE] = 1.00;
-	Y8950RouteDirs[BURN_SND_Y8950_Y8950_ROUTE] = BURN_SND_ROUTE_BOTH;
+	Y8950Volumes[BURN_SND_Y8950_ROUTE] = 1.00;
+	Y8950RouteDirs[BURN_SND_Y8950_ROUTE] = BURN_SND_ROUTE_BOTH;
 	
 	DebugSnd_Y8950Initted = 1;
 

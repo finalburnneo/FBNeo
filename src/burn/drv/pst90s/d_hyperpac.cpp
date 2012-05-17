@@ -2573,6 +2573,7 @@ static INT32 HoneydolInit()
 
 	BurnYM3812Init(3000000, &snowbrosFMIRQHandler, &HoneydolSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(4000000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, 999900 / 132, 100.0, 1);
@@ -2668,6 +2669,7 @@ static INT32 SnowbrosInit()
 
 	BurnYM3812Init(3000000, &snowbrosFMIRQHandler, &snowbrosSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(6000000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

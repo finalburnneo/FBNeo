@@ -982,6 +982,7 @@ static INT32 TokibInit()
 
 	BurnYM3812Init(3579545, NULL, &TokibSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(3579545);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	MSM5205Init(0, TokibSynchroniseStream, 384000, toki_adpcm_int, MSM5205_S96_4B, 45, 1);
 
@@ -1143,6 +1144,7 @@ static INT32 DrvInit()
 
 	BurnYM3812Init(3579545, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(3579545);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	MSM6295Init(0, 1000000 / 132, 100.0, 1);
 	MSM6295ROM = DrvSndROM;
@@ -1261,6 +1263,7 @@ static INT32 JujubInit()
 
 	BurnYM3812Init(3579545, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(3579545);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	MSM6295Init(0, 1000000 / 132, 100.0, 1);
 	MSM6295ROM = DrvSndROM;

@@ -766,6 +766,7 @@ static INT32 RygarInit()
 
 	BurnYM3812Init(4000000, &TecmoFMIRQHandler, &TecmoSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(4000000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM5205Init(0, TecmoSynchroniseStream, 400000, TecmoMSM5205Vck, MSM5205_S48_4B, 100, 1);
 
@@ -845,6 +846,7 @@ static INT32 SilkwormInit()
 
 	BurnYM3812Init(4000000, &TecmoFMIRQHandler, &TecmoSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(4000000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM5205Init(0, TecmoSynchroniseStream, 400000, TecmoMSM5205Vck, MSM5205_S48_4B, 100, 1);
 
@@ -924,6 +926,7 @@ static INT32 GeminiInit()
 
 	BurnYM3812Init(4000000, &TecmoFMIRQHandler, &TecmoSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(4000000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	if (DrvHasADPCM) MSM5205Init(0, TecmoSynchroniseStream, 400000, TecmoMSM5205Vck, MSM5205_S48_4B, 100, 1);
 

@@ -668,6 +668,7 @@ static INT32 DrvInit(INT32 game_select)
 
 	BurnYM3812Init(4000000, &DrvYM3812IrqHandler, &DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(3000000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, (is_magicbub ? 1056000 : 1000000) / 132, 60.0, is_magicbub);
 

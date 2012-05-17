@@ -1343,6 +1343,7 @@ static INT32 DrvInit()
 
 	BurnYM3812Init(3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStream, 0);
 	BurnTimerAttachM6502YM3812(1500000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, DrvYM2203SynchroniseStream, DrvYM2203GetTime, 1);
 	BurnTimerAttachHD6309(12000000);
@@ -2149,6 +2150,7 @@ static INT32 CobraInit()
 	
 	BurnYM3812Init(3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStream, 1);
 	BurnTimerAttachM6502YM3812(1500000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -2743,6 +2745,7 @@ static INT32 SrdarwinInit()
 	
 	BurnYM3812Init(3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStream, 1);
 	BurnTimerAttachM6502YM3812(1500000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

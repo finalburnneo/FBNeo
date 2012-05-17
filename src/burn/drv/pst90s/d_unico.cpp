@@ -1099,6 +1099,7 @@ static INT32 BurglarxInit()
 	
 	BurnYM3812Init(3579545, NULL, &BurglarxSynchroniseStream, 0);
 	BurnTimerAttachSekYM3812(16000000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.40, BURN_SND_ROUTE_BOTH);
 	
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, 1056000 / 132, 100.0, 1);
@@ -1180,6 +1181,7 @@ static INT32 ZeropntInit()
 	
 	BurnYM3812Init(3579545, NULL, &BurglarxSynchroniseStream, 0);
 	BurnTimerAttachSekYM3812(16000000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.40, BURN_SND_ROUTE_BOTH);
 	
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, 1056000 / 132, 100.0, 1);

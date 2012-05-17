@@ -517,6 +517,7 @@ static void Dec0SoundInit()
 
 	BurnYM3812Init(3000000, &Dec0YM3812IRQHandler, &Dec0YM3812SynchroniseStream, 1);
 	BurnTimerAttachM6502YM3812(1500000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.90, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1024188 / 132, 85.0, 1);
 }

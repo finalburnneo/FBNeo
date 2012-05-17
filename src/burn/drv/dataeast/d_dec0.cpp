@@ -3172,6 +3172,7 @@ static INT32 Dec0MachineInit()
 	
 	BurnYM3812Init(3000000, &Dec0YM3812IRQHandler, &Dec0YM3812SynchroniseStream, 1);
 	BurnTimerAttachM6502YM3812(1500000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, Dec0YM2203SynchroniseStream, Dec0YM2203GetTime, 0);
 	BurnTimerAttachSek(10000000);
@@ -3611,6 +3612,7 @@ static INT32 SlyspyDrvInit()
 	
 	BurnYM3812Init(3000000, &Dec1YM3812IRQHandler, &Dec1YM3812SynchroniseStream, 1);
 	BurnTimerAttachH6280YM3812(2000000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, Dec0YM2203SynchroniseStream, Dec0YM2203GetTime, 0);
 	BurnTimerAttachSek(10000000);
@@ -3818,6 +3820,7 @@ static INT32 MidresInit()
 	
 	BurnYM3812Init(3000000, &Dec1YM3812IRQHandler, &Dec1YM3812SynchroniseStream, 1);
 	BurnTimerAttachH6280YM3812(2000000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, Dec0YM2203SynchroniseStream, Dec0YM2203GetTime, 0);
 	BurnTimerAttachSek(10000000);

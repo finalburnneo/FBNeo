@@ -512,6 +512,7 @@ static INT32 DrvInit()
 
 	BurnYM3812Init(3579545, NULL, DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(3579545);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	K007232Init(0, 3579545, DrvSndROM, 0x80000); // no idea...
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);

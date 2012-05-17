@@ -880,6 +880,7 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 
 	BurnYM3812Init(4000000, NULL, &DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(4000000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.30, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1056000 / 132, 60.0, 1);
 

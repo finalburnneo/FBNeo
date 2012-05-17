@@ -955,6 +955,7 @@ static INT32 DrvInit(INT32 game)
 
 	BurnYM3812Init(4000000, &powFMIRQHandler, &powSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(4000000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSnd0);
 

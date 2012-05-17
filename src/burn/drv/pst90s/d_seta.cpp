@@ -6741,6 +6741,7 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 
 	BurnYM3812Init(4000000, NULL, DrvYM3812SynchroniseStream, 0);
 	BurnTimerAttachSekYM3812(16000000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	BurnYM3438Init(1, 16000000/4, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 1);
 	BurnTimerAttachZet(4000000);

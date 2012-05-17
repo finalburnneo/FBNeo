@@ -772,6 +772,7 @@ static INT32 DrvInit(INT32 (*pInitCallback)(), INT32 lordgun)
 	// lordgun
 	BurnYM3812Init(3579545, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(5000000);
+	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1000000 / 132, 100, 1);
 	MSM6295Init(1, 1000000 / 132, 100, 1); // aliencha

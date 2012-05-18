@@ -1462,6 +1462,9 @@ static INT32 BestbestInit()
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, bestbest_ay8910_write_a, NULL);
+	AY8910SetRoute(0, BURN_SND_AY8910_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	AY8910SetRoute(0, BURN_SND_AY8910_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	AY8910SetRoute(0, BURN_SND_AY8910_ROUTE_3, 0.00, BURN_SND_ROUTE_BOTH); // suppressed?
 
 	DACInit(0, 0, 1, bestbestSyncDAC);
 	DACInit(1, 0, 1, bestbestSyncDAC);
@@ -1938,21 +1941,8 @@ static INT32 BestbestFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pSoundBuffer + (nSoundBufferPos << 1);
-			INT32 nSample;
 
-			AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
-			for (INT32 n = 0; n < nSegmentLength; n++) {
-				nSample  = pAY8910Buffer[0][n];
-				nSample += pAY8910Buffer[1][n];
-				nSample += pAY8910Buffer[2][n];
-
-				nSample /= 4;
-
-				nSample = BURN_SND_CLIP(nSample);
-				
-				pSoundBuf[(n << 1) + 0] = nSample;
-				pSoundBuf[(n << 1) + 1] = nSample;
-			}
+			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
 			
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -1962,22 +1952,9 @@ static INT32 BestbestFrame()
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pSoundBuffer + (nSoundBufferPos << 1);
-		INT32 nSample;
 
 		if (nSegmentLength) {
-			AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
-			for (INT32 n = 0; n < nSegmentLength; n++) {
-				nSample  = pAY8910Buffer[0][n];
-				nSample += pAY8910Buffer[1][n];
-				nSample += pAY8910Buffer[2][n];
-
-				nSample /= 4;
-
-				nSample = BURN_SND_CLIP(nSample);
-				
-				pSoundBuf[(n << 1) + 0] = nSample;
-				pSoundBuf[(n << 1) + 1] = nSample;
-			}
+			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
 		}
 	}
 	

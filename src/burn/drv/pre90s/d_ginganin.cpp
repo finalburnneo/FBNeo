@@ -401,6 +401,7 @@ static INT32 DrvInit()
 	M6809Close();
 
 	AY8910Init(0, 3579545 / 2, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 	
 	BurnY8950Init(3579545, DrvSndROM, 0x20000, NULL, &DrvSynchroniseStream, 1);
 	BurnTimerAttachM6809Y8950(1000000);
@@ -624,20 +625,7 @@ static INT32 DrvFrame()
 	BurnTimerEndFrameY8950(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
-		INT32 nSample;
-		AY8910Update(0, &pAY8910Buffer[0], nBurnSoundLen);
-		for (INT32 n = 0; n < nBurnSoundLen; n++) {
-			nSample  = pAY8910Buffer[0][n];
-			nSample += pAY8910Buffer[1][n];
-			nSample += pAY8910Buffer[2][n];
-
-			nSample /= 4;
-
-			nSample = BURN_SND_CLIP(nSample);
-
-			pBurnSoundOut[(n << 1) + 0] = nSample;
-			pBurnSoundOut[(n << 1) + 1] = nSample;
-		}
+		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
 		
 		BurnY8950Update(pBurnSoundOut, nBurnSoundLen);
 	}

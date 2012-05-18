@@ -435,6 +435,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	SN76489Init(0, 3000000, 0);
 	SN76489Init(1, 3000000, 1);
@@ -667,22 +668,7 @@ static INT32 DrvFrame()
 		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
 		SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
 
-		INT32 nSample;
-		if (nBurnSoundLen) {
-			AY8910Update(0, &pAY8910Buffer[0], nBurnSoundLen);
-			for (INT32 n = 0; n < nBurnSoundLen; n++) {
-				nSample  = pAY8910Buffer[0][n];
-				nSample += pAY8910Buffer[1][n];
-				nSample += pAY8910Buffer[2][n];
-
-				nSample >>= 4;
-
-				nSample = BURN_SND_CLIP(nSample);
-				
-				pBurnSoundOut[(n << 1) + 0] += nSample;
-				pBurnSoundOut[(n << 1) + 1] += nSample;
- 			}
-		}
+		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 1);
 	}
 
 	if (pBurnDraw) {

@@ -1081,8 +1081,8 @@ static INT32 DrvInit()
 	
 	DACInit(0, 0, 1, TerracreSyncDAC);
 	DACInit(1, 0, 1, TerracreSyncDAC);
-	DACSetVolShift(0, 1);
-	DACSetVolShift(1, 1);
+	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
 	
@@ -1136,8 +1136,8 @@ static INT32 DrvAmazonInit()
 	
 	DACInit(0, 0, 1, TerracreSyncDAC);
 	DACInit(1, 0, 1, TerracreSyncDAC);
-	DACSetVolShift(0, 2);
-	DACSetVolShift(1, 2);
+	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
 	

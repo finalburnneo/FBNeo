@@ -879,7 +879,7 @@ static INT32 DrvInit()
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, flstoryDACSync);
-	DACSetVolShift(0, 2);
+	DACSetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

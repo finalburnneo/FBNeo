@@ -1470,10 +1470,10 @@ static INT32 BestbestInit()
 	DACInit(1, 0, 1, bestbestSyncDAC);
 	DACInit(2, 0, 1, bestbestSyncDAC);
 	DACInit(3, 0, 1, bestbestSyncDAC);
-	DACSetVolShift(0, 2);
-	DACSetVolShift(1, 2);
-	DACSetVolShift(2, 2);
-	DACSetVolShift(3, 2);
+	DACSetRoute(0, 0.40, BURN_SND_ROUTE_LEFT);
+	DACSetRoute(1, 0.40, BURN_SND_ROUTE_RIGHT);
+	DACSetRoute(2, 0.40, BURN_SND_ROUTE_LEFT);
+	DACSetRoute(3, 0.40, BURN_SND_ROUTE_RIGHT);
 
 	DrvDoReset();
 
@@ -1536,8 +1536,8 @@ static INT32 SunaqInit()
 
 	DACInit(0, 0, 2, bestbestSyncDAC);
 	DACInit(1, 0, 2, bestbestSyncDAC);
-	DACSetVolShift(0, 2);
-	DACSetVolShift(1, 2);
+	DACSetRoute(0, 0.50, BURN_SND_ROUTE_LEFT);
+	DACSetRoute(1, 0.50, BURN_SND_ROUTE_RIGHT);
 
 	DrvDoReset();
 
@@ -1610,8 +1610,8 @@ static INT32 UballoonInit()
 
 	DACInit(0, 0, 1, bssoccerSyncDAC);
 	DACInit(1, 0, 1, bssoccerSyncDAC);
-	DACSetVolShift(0, 2);
-	DACSetVolShift(1, 2);
+	DACSetRoute(0, 0.50, BURN_SND_ROUTE_LEFT);
+	DACSetRoute(1, 0.50, BURN_SND_ROUTE_RIGHT);
 
 	GenericTilesInit();
 
@@ -1687,10 +1687,10 @@ static INT32 BssoccerInit()
 	DACInit(1, 0, 1, bssoccerSyncDAC);
 	DACInit(2, 0, 1, bssoccerSyncDAC);
 	DACInit(3, 0, 1, bssoccerSyncDAC);
-	DACSetVolShift(0, 2);
-	DACSetVolShift(1, 2);
-	DACSetVolShift(2, 2);
-	DACSetVolShift(3, 2);
+	DACSetRoute(0, 0.40, BURN_SND_ROUTE_LEFT);
+	DACSetRoute(1, 0.40, BURN_SND_ROUTE_RIGHT);
+	DACSetRoute(2, 0.40, BURN_SND_ROUTE_LEFT);
+	DACSetRoute(3, 0.40, BURN_SND_ROUTE_RIGHT);
 
 	DrvDoReset();
 

@@ -210,12 +210,12 @@ void GalSoundInit()
 		AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
 		
 		DACInit(0, 0, 1, SfxSyncDAC);
-		DACSetVolShift(0, 2);
+		DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KINGBALLDAC) {
 		DACInit(0, 0, 1, KingballSyncDAC);
-		DACSetVolShift(0, 2);
+		DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_HEXPOOLASN76496) {

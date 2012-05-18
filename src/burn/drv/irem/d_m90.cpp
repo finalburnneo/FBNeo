@@ -1148,7 +1148,7 @@ static INT32 DrvInit(INT32 codesize, INT32 gfxlen, INT32 samples, INT32 bank, IN
 	YM2151SetIrqHandler(0, &m72YM2151IRQHandler);
 
 	DACInit(0, 0, 1, m90SyncDAC);
-	DACSetVolShift(0, 4); // 1/16th of max
+	DACSetRoute(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	code_mask[0] = ((gfxlen * 2) - 1) / (8 * 8);
 	code_mask[1] = ((gfxlen * 2) - 1) / (16 * 16);

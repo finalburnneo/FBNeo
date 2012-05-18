@@ -1725,7 +1725,7 @@ static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32
 	YM2151SetIrqHandler(0, &m72YM2151IRQHandler);
 
 	DACInit(0, 0, 1, m72SyncDAC);
-	DACSetVolShift(0, 2); // 25% of max
+	DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();
 

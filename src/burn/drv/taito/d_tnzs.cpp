@@ -1329,6 +1329,7 @@ static INT32 Type1Init(INT32 mcutype)
 	}	
 
 	DACInit(0, 0, 1, kabukizSyncDAC); // kabukiz
+	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

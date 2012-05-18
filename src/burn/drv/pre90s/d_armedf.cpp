@@ -872,8 +872,8 @@ static INT32 DrvInit(INT32 (*pLoadRoms)(), void (*p68KInit)(), INT32 zLen)
 
 	DACInit(0, 0, 1, DrvSyncDAC);
 	DACInit(1, 0, 1, DrvSyncDAC);
-	DACSetVolShift(0, 1);
-	DACSetVolShift(1, 1);
+	DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(1, 0.40, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1289,7 +1289,12 @@ static INT32 ArmedfInit()
 	sprite_offy = 128;
 	irqline = 1;
 
-	return DrvInit(ArmedfLoadRoms, Armedf68KInit, 0xf800);
+	INT32 nRet = DrvInit(ArmedfLoadRoms, Armedf68KInit, 0xf800);
+	
+	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
+	
+	return nRet;
 }
 
 struct BurnDriver BurnDrvArmedf = {
@@ -1703,7 +1708,12 @@ static INT32 TerrafInit()
 	sprite_offy = 128;
 	irqline = 1;
 
-	return DrvInit(ArmedfLoadRoms, Cclimbr268KInit, 0xf800);
+	INT32 nRet = DrvInit(ArmedfLoadRoms, Cclimbr268KInit, 0xf800);
+	
+	DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
+	
+	return nRet;
 }
 
 struct BurnDriver BurnDrvTerraf = {
@@ -1754,7 +1764,12 @@ static INT32 TerrafuInit()
 	sprite_offy = 128;
 	irqline = 1;
 
-	return DrvInit(ArmedfLoadRoms, Cclimbr268KInit, 0xf800);
+	INT32 nRet = DrvInit(ArmedfLoadRoms, Cclimbr268KInit, 0xf800);
+	
+	DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
+	
+	return nRet;
 }
 
 struct BurnDriver BurnDrvTerrafu = {
@@ -1833,7 +1848,12 @@ static INT32 TerrafjbInit()
 	
 	Terrafjb = 1;
 
-	return DrvInit(TerrafjbLoadRoms, Cclimbr268KInit, 0xf800);
+	INT32 nRet = DrvInit(TerrafjbLoadRoms, Cclimbr268KInit, 0xf800);
+	
+	DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
+	
+	return nRet;
 }
 
 struct BurnDriver BurnDrvTerrafjb = {

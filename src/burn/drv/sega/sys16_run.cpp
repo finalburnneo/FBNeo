@@ -1852,6 +1852,7 @@ INT32 System16Init()
 			
 			YM2151SetPortWriteHandler(0, &System16N7751ControlWrite);
 			DACInit(0, 0, 1, System16ASyncDAC);
+			DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
 		}
 		
 		System16TileBankSize = 0x1000;

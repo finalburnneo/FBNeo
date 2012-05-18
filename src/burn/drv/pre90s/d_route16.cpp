@@ -466,7 +466,7 @@ static INT32 DrvInit()
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 	
 	DACInit(0, 0, 1, DrvSyncDAC);
-	DACSetVolShift(0, 2);
+	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();
 

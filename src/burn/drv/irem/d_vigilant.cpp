@@ -1460,7 +1460,7 @@ static INT32 DrvInit()
 	BurnYM2151Init(3579645, 25.0);
 	BurnYM2151SetIrqHandler(&VigilantYM2151IrqHandler);	
 	DACInit(0, 0, 1, VigilantSyncDAC);
-	DACSetVolShift(0, 1);
+	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	DrvDoReset();
 
@@ -1570,7 +1570,7 @@ static INT32 BuccanrsInit()
 	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.35, BURN_SND_ROUTE_BOTH);
 	
 	DACInit(0, 0, 1, VigilantSyncDAC);
-	DACSetVolShift(0, 1);
+	DACSetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
 	
 	DrvDoReset();
 
@@ -1693,7 +1693,7 @@ static INT32 KikcubicInit()
 	BurnYM2151Init(3579645, 25.0);
 	BurnYM2151SetIrqHandler(&VigilantYM2151IrqHandler);	
 	DACInit(0, 0, 1, VigilantSyncDAC);
-	DACSetVolShift(0, 1);
+	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	DrvKikcubicDraw = 1;
 	

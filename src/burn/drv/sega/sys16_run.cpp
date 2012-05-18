@@ -1913,8 +1913,8 @@ INT32 System16Init()
 		}
 		
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2413) {
-			BurnYM2413Init(5000000, 25.0);
-			BurnYM2413IncreaseVolume(4);
+			BurnYM2413Init(5000000);
+			BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 		} else {
 			BurnYM2151Init(4000000, 25.0);
 		}

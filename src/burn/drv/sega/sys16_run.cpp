@@ -1839,7 +1839,8 @@ INT32 System16Init()
 		if (PPI0PortWriteC == NULL) PPI0PortWriteC = System16APPI0WritePortC;
 		ppi8255_init(1);
 		
-		BurnYM2151Init(4000000, 25.0);
+		BurnYM2151Init(4000000);
+		BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 		
 		if (System167751ProgSize) {
 			N7751Init(NULL);
@@ -1851,6 +1852,7 @@ INT32 System16Init()
 			N7751SetCPUOpReadArgHandler(N7751Read);
 			
 			YM2151SetPortWriteHandler(0, &System16N7751ControlWrite);
+			BurnYM2151SetAllRoutes(0.43, BURN_SND_ROUTE_BOTH);
 			DACInit(0, 0, 1, System16ASyncDAC);
 			DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
 		}
@@ -1916,7 +1918,8 @@ INT32 System16Init()
 			BurnYM2413Init(5000000);
 			BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 		} else {
-			BurnYM2151Init(4000000, 25.0);
+			BurnYM2151Init(4000000);
+			BurnYM2151SetAllRoutes(0.43, BURN_SND_ROUTE_BOTH);
 		}
 		
 		if (System16UPD7759DataSize) {
@@ -2083,8 +2086,10 @@ INT32 System16Init()
 			BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.13, BURN_SND_ROUTE_BOTH);
 			BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.13, BURN_SND_ROUTE_BOTH);
 		} else {
-			BurnYM2151Init(4000000, 25.0);
+			BurnYM2151Init(4000000);
 			BurnYM2151SetIrqHandler(&System16YM2151IRQHandler);
+			BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.43, BURN_SND_ROUTE_LEFT);
+			BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.43, BURN_SND_ROUTE_RIGHT);
 		}
 		
 		if (System16PCMDataSize) {
@@ -2156,7 +2161,9 @@ INT32 System16Init()
 		if (PPI0PortWriteC == NULL) PPI0PortWriteC = OutrunPPI0WritePortC;
 		ppi8255_init(1);
 		
-		BurnYM2151Init(4000000, 25.0);
+		BurnYM2151Init(4000000);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.43, BURN_SND_ROUTE_LEFT);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.43, BURN_SND_ROUTE_RIGHT);
 		
 		if (System16PCMDataSize) {
 			SegaPCMInit(4000000, BANK_512, System16PCMData, System16PCMDataSize);
@@ -2245,8 +2252,10 @@ INT32 System16Init()
 			ZetClose();
 		}
 		
-		BurnYM2151Init(4000000, 25.0);
+		BurnYM2151Init(4000000);
 		BurnYM2151SetIrqHandler(&System16YM2151IRQHandler);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.43, BURN_SND_ROUTE_LEFT);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.43, BURN_SND_ROUTE_RIGHT);
 		
 		if (System16PCMDataSize) {
 			SegaPCMInit(4000000, BANK_512, System16PCMData, System16PCMDataSize);
@@ -2324,8 +2333,10 @@ INT32 System16Init()
 			ZetClose();
 		}
 		
-		BurnYM2151Init(32215900 / 8, 25.0);
+		BurnYM2151Init(32215900 / 8);
 		BurnYM2151SetIrqHandler(&System16YM2151IRQHandler);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.43, BURN_SND_ROUTE_LEFT);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.43, BURN_SND_ROUTE_RIGHT);
 		
 		if (System16PCMDataSize) {
 			SegaPCMInit(32215900 / 8, BANK_12M | BANK_MASKF8, System16PCMData, System16PCMDataSize);

@@ -1721,8 +1721,10 @@ static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32
 		break;
 	}
 
-	BurnYM2151Init(3579545, 100.0);
+	BurnYM2151Init(3579545);
 	YM2151SetIrqHandler(0, &m72YM2151IRQHandler);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	DACInit(0, 0, 1, m72SyncDAC);
 	DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);

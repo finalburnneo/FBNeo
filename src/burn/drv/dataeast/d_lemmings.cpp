@@ -455,8 +455,10 @@ static INT32 DrvInit()
 	M6809SetReadByteHandler(lemmings_sound_read);
 	M6809Close();
 
-	BurnYM2151Init(3580000, 45.0);
+	BurnYM2151Init(3580000);
 	BurnYM2151SetIrqHandler(&lemmingsYM2151IrqHandler);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
 
 	MSM6295Init(0, 1023924 / 132, 50.0, 1);
 

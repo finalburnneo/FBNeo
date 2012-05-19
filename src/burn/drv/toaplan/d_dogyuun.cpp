@@ -598,7 +598,8 @@ static INT32 DrvInit()
 		VezClose();
 	}
 
-	BurnYM2151Init(3375000, 50.0);
+	BurnYM2151Init(3375000);
+	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 	MSM6295Init(0, 1041667 / 132, 50.0, 1);
 
 	nSpriteXOffset = 0x0024;

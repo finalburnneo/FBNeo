@@ -19,9 +19,10 @@ INT32 PsmInit()
 		nRate = 11025;
 	}
 
-	if (BurnYM2151Init(3579540, 50.0)) {				// Init FM sound chip
+	if (BurnYM2151Init(3579540)) {				// Init FM sound chip
 		return 1;
 	}
+	BurnYM2151SetAllRoutes(0.35, BURN_SND_ROUTE_BOTH);
 
 	// Allocate a buffer for the intermediate sound (between YM2151 and pBurnSoundOut)
 	nMemLen = nBurnSoundLen * 2 * sizeof(INT16);

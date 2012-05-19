@@ -520,8 +520,10 @@ static INT32 DrvInit()
 	M6809SetWriteByteHandler(DrvContraM6809SoundWriteByte);
 	M6809Close();
 
-	BurnYM2151Init(3579545, 60.0);
+	BurnYM2151Init(3579545);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.60, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
 
 	DrvDoReset();
 

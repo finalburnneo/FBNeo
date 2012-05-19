@@ -1457,8 +1457,10 @@ static INT32 DrvInit()
 	nCyclesTotal[1] = 3579645 / 55;
 	
 	GenericTilesInit();
-	BurnYM2151Init(3579645, 25.0);
+	BurnYM2151Init(3579645);
 	BurnYM2151SetIrqHandler(&VigilantYM2151IrqHandler);	
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.55, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.55, BURN_SND_ROUTE_RIGHT);
 	DACInit(0, 0, 1, VigilantSyncDAC);
 	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	
@@ -1690,8 +1692,10 @@ static INT32 KikcubicInit()
 	nCyclesTotal[1] = 3579645 / 55;
 	
 	GenericTilesInit();
-	BurnYM2151Init(3579645, 25.0);
+	BurnYM2151Init(3579645);
 	BurnYM2151SetIrqHandler(&VigilantYM2151IrqHandler);	
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.55, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.55, BURN_SND_ROUTE_RIGHT);
 	DACInit(0, 0, 1, VigilantSyncDAC);
 	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	

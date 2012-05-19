@@ -510,7 +510,8 @@ static INT32 DrvInit()
 	ToaPalSrc = RamPal;
 	ToaPalInit();
 
-	BurnYM2151Init(27000000 / 8, 50.0);
+	BurnYM2151Init(27000000 / 8);
+	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 	MSM6295Init(0, 32000000 / 32 / 132, 50.0, 1);
 
 	bDrawScreen = true;

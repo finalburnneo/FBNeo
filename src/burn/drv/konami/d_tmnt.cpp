@@ -4401,7 +4401,8 @@ static INT32 TmntInit()
 	ZetClose();
 	
 	// Setup the YM2151 emulation
-	BurnYM2151Init(3579545, 25.0);
+	BurnYM2151Init(3579545);
+	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 	
 	K007232Init(0, 3579545, DrvSoundRom, 0x20000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
@@ -4497,7 +4498,8 @@ static INT32 MiaInit()
 	ZetClose();
 	
 	// Setup the YM2151 emulation
-	BurnYM2151Init(3579545, 25.0);
+	BurnYM2151Init(3579545);
+	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 	
 	K007232Init(0, 3579545, DrvSoundRom, 0x20000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
@@ -4566,8 +4568,9 @@ static INT32 CuebrickInit()
 	SekClose();
 	
 	// Setup the YM2151 emulation
-	BurnYM2151Init(3579545, 25.0);
+	BurnYM2151Init(3579545);
 	BurnYM2151SetIrqHandler(&CuebrickYM2151IrqHandler);
+	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
 	
@@ -4653,7 +4656,9 @@ static INT32 BlswhstlInit()
 	ZetClose();
 	
 	// Setup the YM2151 emulation
-	BurnYM2151Init(3579545, 25.0);
+	BurnYM2151Init(3579545);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.70, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.70, BURN_SND_ROUTE_RIGHT);
 	
 	K053260Init(0, 3579545, DrvSoundRom, 0x100000);
 
@@ -4737,7 +4742,9 @@ static INT32 SsridersInit()
 	ZetClose();
 	
 	// Setup the YM2151 emulation
-	BurnYM2151Init(3579545, 25.0);
+	BurnYM2151Init(3579545);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	
 	K053260Init(0, 3579545, DrvSoundRom, 0x100000);
 
@@ -4818,7 +4825,9 @@ static INT32 Thndrx2Init()
 	ZetClose();
 
 	// Setup the YM2151 emulation
-	BurnYM2151Init(3579545, 25.0);
+	BurnYM2151Init(3579545);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	
 	K053260Init(0, 3579545, DrvSoundRom, 0x80000);
 
@@ -4900,7 +4909,9 @@ static INT32 LgtnfghtInit()
 	ZetClose();
 
 	// Setup the YM2151 emulation
-	BurnYM2151Init(3579545, 25.0);
+	BurnYM2151Init(3579545);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	
 	K053260Init(0, 3579545, DrvSoundRom, 0x80000);
 
@@ -4990,7 +5001,9 @@ static INT32 Tmnt2Init()
 	ZetClose();
 	
 	// Setup the YM2151 emulation
-	BurnYM2151Init(3579545, 25.0);
+	BurnYM2151Init(3579545);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	
 	K053260Init(0, 3579545, DrvSoundRom, 0x200000);
 
@@ -5078,7 +5091,9 @@ static INT32 QgakumonInit()
 	ZetClose();
 	
 	// Setup the YM2151 emulation
-	BurnYM2151Init(3579545, 25.0);
+	BurnYM2151Init(3579545);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	
 	K053260Init(0, 3579545, DrvSoundRom, 0x200000);
 
@@ -5159,7 +5174,8 @@ static INT32 PunkshotInit()
 	ZetClose();
 
 	// Setup the YM2151 emulation
-	BurnYM2151Init(3579545, 25.0);
+	BurnYM2151Init(3579545);
+	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 	
 	K053260Init(0, 3579545, DrvSoundRom, 0x80000);
 

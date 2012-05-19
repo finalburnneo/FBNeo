@@ -290,7 +290,7 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(0,		dietgogo_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, NULL, 45.0, 1006875, 100.0, 0, 0);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, NULL, 0.45, 1006875, 100.0, 0, 0);
 
 	GenericTilesInit();
 

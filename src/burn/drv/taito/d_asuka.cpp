@@ -1307,9 +1307,10 @@ static void BonzeZ80Setup()
 
 static void CadashSoundSetup()
 {
-	BurnYM2151Init(4000000, 50.0);
+	BurnYM2151Init(4000000);
 	BurnYM2151SetIrqHandler(&CadashYM2151IRQHandler);
 	BurnYM2151SetPortHandler(&DrvSoundBankSwitch);
+	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 	
 	TaitoNumYM2151  = 1;
 	TaitoNumYM2610  = 0;
@@ -1318,9 +1319,10 @@ static void CadashSoundSetup()
 
 static void AsukaSoundSetup()
 {
-	BurnYM2151Init(4000000, 50.0);
+	BurnYM2151Init(4000000);
 	BurnYM2151SetIrqHandler(&CadashYM2151IRQHandler);
 	BurnYM2151SetPortHandler(&DrvSoundBankSwitch);
+	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 
 	MSM5205Init(0, DrvSynchroniseStream, 384000, AsukaMSM5205Vck, MSM5205_S48_4B, 100, 1);
 

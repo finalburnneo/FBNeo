@@ -503,7 +503,9 @@ static INT32 DrvInit()
 	K053247Init(DrvGfxROM1, 0x3fffff, K053247Callback, 0x03 /* shadows & highlights */);
 	K053247SetSpriteOffset(-59, 39);
 
-	BurnYM2151Init(3579545, 25.0);
+	BurnYM2151Init(3579545);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.00, BURN_SND_ROUTE_BOTH); // not connected
 
 	K053260Init(0, 3579545, DrvSndROM, 0x140000);
 

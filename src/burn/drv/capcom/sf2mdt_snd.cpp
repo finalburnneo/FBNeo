@@ -132,7 +132,8 @@ INT32 Sf2mdtSoundInit()
 	ZetMemEnd();
 	ZetClose();
 	
-	BurnYM2151Init(3579540, 50.0);
+	BurnYM2151Init(3579540);
+	BurnYM2151SetAllRoutes(0.35, BURN_SND_ROUTE_BOTH);
 	
 	MSM5205Init(0, Sf2mdtSynchroniseStream, 24000000 / 64, Sf2mdtMSM5205Vck0, MSM5205_S96_4B, 20, 1);
 	MSM5205Init(1, Sf2mdtSynchroniseStream, 24000000 / 64, Sf2mdtMSM5205Vck1, MSM5205_S96_4B, 20, 1);

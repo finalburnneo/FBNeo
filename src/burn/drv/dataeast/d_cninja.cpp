@@ -1182,7 +1182,7 @@ static INT32 CninjaInit()
 	SekSetReadByteHandler(0,		cninja_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, DrvYM2151WritePort, 40.0, 1006875, 75.0, 2013750, 60.0);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, DrvYM2151WritePort, 0.45, 1006875, 75.0, 2013750, 60.0);
 	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -1282,7 +1282,7 @@ static INT32 EdrandyInit()
 	SekSetReadByteHandler(0,		cninja_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, DrvYM2151WritePort, 40.0, 1006875, 75.0, 2013750, 60.0);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, DrvYM2151WritePort, 0.45, 1006875, 75.0, 2013750, 60.0);
 	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -1393,7 +1393,9 @@ static INT32 MutantfInit()
 	SekSetReadByteHandler(0,		mutantf_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 0, DrvYM2151WritePort, 40.0, 1006875, 75.0, 2013750, 60.0);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 0, DrvYM2151WritePort, 0.45, 1006875, 75.0, 2013750, 60.0);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
 
 	GenericTilesInit();
 
@@ -1490,8 +1492,9 @@ static INT32 CninjablInit()
 	ZetMemEnd();
 	ZetClose();
 
-	BurnYM2151Init(3580000, 45.0);
+	BurnYM2151Init(3580000);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
+	BurnYM2151SetAllRoutes(0.45, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1006875 / 132, 75.0, 1);
 	MSM6295Init(1, 2013750 / 132, 60.0, 1);
@@ -1605,7 +1608,8 @@ static INT32 StoneageInit()
 	MSM6295Init(0, 1006875 / 132, 75.0, 1);
 	MSM6295Init(1, 2013750 / 132, 60.0, 1);
 
-	BurnYM2151Init(3580000, 45.0);
+	BurnYM2151Init(3580000);
+	BurnYM2151SetAllRoutes(0.45, BURN_SND_ROUTE_BOTH);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 
 	GenericTilesInit();
@@ -1713,8 +1717,10 @@ static INT32 Robocop2Init()
 	SekSetReadByteHandler(0,		robocop2_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, DrvYM2151WritePort, 40.0, 1006875, 75.0, 2013750, 60.0);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, DrvYM2151WritePort, 0.45, 1006875, 75.0, 2013750, 60.0);
 	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
 
 	GenericTilesInit();
 

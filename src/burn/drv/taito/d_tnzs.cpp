@@ -1312,7 +1312,8 @@ static INT32 Type1Init(INT32 mcutype)
 	tnzs_mcu_init(mcutype);
 
 	if (mcutype == MCU_NONE_JPOPNICS) {
-		BurnYM2151Init(3000000, 30.0); // jpopnics
+		BurnYM2151Init(3000000); // jpopnics
+		BurnYM2151SetAllRoutes(0.30, BURN_SND_ROUTE_BOTH);
 	} else {
 		BurnYM2203Init(1, 3000000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
 		BurnYM2203SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);

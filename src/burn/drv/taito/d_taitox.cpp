@@ -1117,8 +1117,10 @@ static INT32 TaitoXInit(INT32 nSoundType)
 	ZetClose();
 	
 	if (nSoundType == 1) {
-		BurnYM2151Init(4000000, 50.0);
+		BurnYM2151Init(4000000);
 		BurnYM2151SetIrqHandler(&TaitoXYM2151IRQHandler);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
 	} else {
 		if (nSoundType == 2) {
 			BurnYM2610Init(8000000, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, NULL, TaitoXSynchroniseStream, TaitoXGetTime, 0);

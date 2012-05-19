@@ -1747,8 +1747,9 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), const UINT8 *sound_decrypt_tab
 
 	m92_irq_vectorbase = vectorbase;
 
-	BurnYM2151Init(3579545, 40.0);
+	BurnYM2151Init(3579545);
 	YM2151SetIrqHandler(0, &m92YM2151IRQHandler);
+	BurnYM2151SetAllRoutes(0.40, BURN_SND_ROUTE_BOTH);
 
 	iremga20_init(0, DrvSndROM, 0x100000, 3579545);
 

@@ -4246,9 +4246,11 @@ static INT32 OpwolfInit()
 	ZetMemEnd();
 	ZetClose();
 	
-	BurnYM2151Init(4000000, 50.0);
+	BurnYM2151Init(4000000);
 	BurnYM2151SetIrqHandler(&TaitoYM2151IRQHandler);
 	BurnYM2151SetPortHandler(&RbislandBankSwitch);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
 	
 	MSM5205Init(0, TaitoSynchroniseStream, 384000, OpwolfMSM5205Vck0, MSM5205_S48_4B, 60, 1);
 	MSM5205Init(1, TaitoSynchroniseStream, 384000, OpwolfMSM5205Vck1, MSM5205_S48_4B, 60, 1);
@@ -4362,9 +4364,11 @@ static INT32 OpwolfbInit()
 	ZetMemEnd();
 	ZetClose();
 	
-	BurnYM2151Init(4000000, 50.0);
+	BurnYM2151Init(4000000);
 	BurnYM2151SetIrqHandler(&TaitoYM2151IRQHandler);
 	BurnYM2151SetPortHandler(&RbislandBankSwitch);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
 	
 	MSM5205Init(0, TaitoSynchroniseStream, 384000, OpwolfMSM5205Vck0, MSM5205_S48_4B, 60, 1);
 	MSM5205Init(1, TaitoSynchroniseStream, 384000, OpwolfMSM5205Vck1, MSM5205_S48_4B, 60, 1);
@@ -4463,9 +4467,10 @@ static INT32 RbislandInit()
 	ZetMemEnd();
 	ZetClose();
 	
-	BurnYM2151Init(16000000 / 4, 50.0);
+	BurnYM2151Init(16000000 / 4);
 	BurnYM2151SetIrqHandler(&TaitoYM2151IRQHandler);
 	BurnYM2151SetPortHandler(&RbislandBankSwitch);
+	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
 	
@@ -4652,9 +4657,10 @@ static INT32 RastanInit()
 	ZetMemEnd();
 	ZetClose();
 	
-	BurnYM2151Init(16000000 / 4, 50.0);
+	BurnYM2151Init(16000000 / 4);
 	BurnYM2151SetIrqHandler(&TaitoYM2151IRQHandler);
 	BurnYM2151SetPortHandler(&RastanBankSwitch);
+	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 	
 	MSM5205Init(0, TaitoSynchroniseStream, 384000, RastanMSM5205Vck, MSM5205_S48_4B, 60, 1);
 	
@@ -4759,9 +4765,10 @@ static INT32 TopspeedInit()
 	ZetMemEnd();
 	ZetClose();
 	
-	BurnYM2151Init(16000000 / 4, 50.0);
+	BurnYM2151Init(16000000 / 4);
 	BurnYM2151SetIrqHandler(&TaitoYM2151IRQHandler);
 	BurnYM2151SetPortHandler(&TopspeedBankSwitch);
+	BurnYM2151SetAllRoutes(0.30, BURN_SND_ROUTE_BOTH);
 	
 	MSM5205Init(0, TaitoSynchroniseStream, 384000, TopspeedMSM5205Vck, MSM5205_S48_4B, 60, 1);
 	

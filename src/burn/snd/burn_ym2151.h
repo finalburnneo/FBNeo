@@ -4,7 +4,6 @@ extern "C" {
  #include "ym2151.h"
 }
 
-INT32 BurnYM2151Init(INT32 nClockFrequency, float nVolume);
 INT32 BurnYM2151Init(INT32 nClockFrequency);
 void BurnYM2151SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
 void BurnYM2151Reset();

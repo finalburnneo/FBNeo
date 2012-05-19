@@ -4395,8 +4395,10 @@ static INT32 AfegaInit(INT32 (*pLoadCallback)(), void (*pZ80Callback)(), INT32 p
 
 	BurnSetRefreshRate(56.00);
 
-	BurnYM2151Init(4000000, 70.0);
+	BurnYM2151Init(4000000);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.30, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.30, BURN_SND_ROUTE_RIGHT);
 
 	MSM6295Init(0, 1000000 / (pin7high ? 132 : 165), 60.0, 1);
 	MSM6295Init(1, 1000000 / (pin7high ? 132 : 165), 60.0, 1);

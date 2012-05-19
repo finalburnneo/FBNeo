@@ -2977,7 +2977,9 @@ static INT32 DrvInit(bool bReset, INT32 SpriteRamSize, INT32 SpriteMask, INT32 S
 	
 	if (DrvHasYM2151) {
 		if (!DrvYM2151Freq) DrvYM2151Freq = 3427190;
-		BurnYM2151Init(DrvYM2151Freq, 25.0);
+		BurnYM2151Init(DrvYM2151Freq);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.10, BURN_SND_ROUTE_LEFT);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.10, BURN_SND_ROUTE_RIGHT);
 		if (DrvHasZ80) { 
 			BurnYM2151SetIrqHandler(&SemicomYM2151IrqHandler);
 		}
@@ -3226,6 +3228,9 @@ static INT32 FncywldInit()
 	
 	nCyclesTotal[0] = 12000000 / 60;
 	DrvSpriteColourMask = 0x3f;
+	
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.20, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.20, BURN_SND_ROUTE_RIGHT);
 	
 	return nRet;
 }

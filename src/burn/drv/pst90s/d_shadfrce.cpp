@@ -722,8 +722,10 @@ static INT32 shadfrceInit()
 		ZetClose();
 	}
 	
-	BurnYM2151Init(3579545, 50.0);		// 3.5795 MHz
+	BurnYM2151Init(3579545);		// 3.5795 MHz
 	YM2151SetIrqHandler(0, &shadfrceYM2151IRQHandler);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
 	MSM6295Init(0, 12000, 50.0, 1);		// 12.000 KHz
 	nZ80Cycles = 3579545 * 100 / nBurnFPS;
 

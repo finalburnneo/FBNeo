@@ -449,7 +449,8 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 
-	BurnYM2151Init(3579545, 100.0);
+	BurnYM2151Init(3579545);
+	BurnYM2151SetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

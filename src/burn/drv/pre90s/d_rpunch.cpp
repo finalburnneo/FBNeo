@@ -572,8 +572,9 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 game)
 	ZetMemEnd();
 	ZetClose();
 
-	BurnYM2151Init(4000000, 100.0);
+	BurnYM2151Init(4000000);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
+	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSndROM);
 

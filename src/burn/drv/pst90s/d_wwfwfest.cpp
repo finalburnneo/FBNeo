@@ -703,8 +703,9 @@ static INT32 DrvInit()
 	ZetClose();
 	
 	// Setup the YM2151 emulation
-	BurnYM2151Init(3579545, 25.0);
+	BurnYM2151Init(3579545);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
+	BurnYM2151SetAllRoutes(0.45, BURN_SND_ROUTE_BOTH);
 	
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, 1024188 / 132, 100.0, 1);

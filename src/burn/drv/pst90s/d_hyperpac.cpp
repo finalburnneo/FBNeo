@@ -2000,8 +2000,9 @@ static INT32 HyperpacMachineInit()
 	ZetClose();
 
 	// Setup the YM2151 emulation
-	BurnYM2151Init(4000000, 25.0);
+	BurnYM2151Init(4000000);
 	BurnYM2151SetIrqHandler(&HyperpacYM2151IrqHandler);
+	BurnYM2151SetAllRoutes(0.10, BURN_SND_ROUTE_BOTH);
 
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, 999900 / 132, 100.0, 1);
@@ -2420,6 +2421,8 @@ static INT32 FinalttrInit()
 	BurnByteswap(HyperpacProtData, 0x200);
 	
 	nRet = HyperpacMachineInit(); if (nRet) return 1;
+	
+	BurnYM2151SetAllRoutes(0.08, BURN_SND_ROUTE_BOTH);
 
 	return 0;
 }

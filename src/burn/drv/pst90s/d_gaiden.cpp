@@ -1052,7 +1052,8 @@ static INT32 DrvInit()
 	ZetClose();
 
 	if (game == 1) {
-		BurnYM2151Init(4000000, 100.0);
+		BurnYM2151Init(4000000);
+		BurnYM2151SetAllRoutes(0.40, BURN_SND_ROUTE_BOTH);
 	} else {
 		BurnYM2203Init(2, 4000000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
 		BurnTimerAttachZet(4000000);

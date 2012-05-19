@@ -1849,8 +1849,9 @@ static INT32 DrvMachineInit()
 		M6809SetWriteByteHandler(DrvDdragonM6809WriteByte);
 		M6809Close();
 	
-		BurnYM2151Init(3579545, 25.0);
+		BurnYM2151Init(3579545);
 		BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
+		BurnYM2151SetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
 	
 		MSM5205Init(0, DrvSynchroniseStream, 375000, DrvMSM5205Vck0, MSM5205_S48_4B, 45, 1);
 		MSM5205Init(1, DrvSynchroniseStream, 375000, DrvMSM5205Vck1, MSM5205_S48_4B, 45, 1);
@@ -1915,8 +1916,9 @@ static INT32 Drv2MachineInit()
 	ZetMemEnd();
 	ZetClose();
 	
-	BurnYM2151Init(3579545, 25.0);
+	BurnYM2151Init(3579545);
 	BurnYM2151SetIrqHandler(&Ddragon2YM2151IrqHandler);
+	BurnYM2151SetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
 	
 	MSM6295Init(0, 1056000 / 132, 50.0, 1);
 	

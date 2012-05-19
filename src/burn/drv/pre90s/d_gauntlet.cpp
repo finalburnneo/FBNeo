@@ -2046,7 +2046,9 @@ static INT32 DrvInit()
 	atarigen_slapstic_init(0x038000, 104);
 	atarigen_eeprom_init();
 	
-	BurnYM2151Init(14318180 / 4, 25.0);
+	BurnYM2151Init(14318180 / 4);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.48, BURN_SND_ROUTE_RIGHT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.48, BURN_SND_ROUTE_LEFT);
 	
 	GenericTilesInit();
 	
@@ -2156,7 +2158,9 @@ static INT32 Gaunt2pInit()
 	atarigen_slapstic_init(0x038000, 107);
 	atarigen_eeprom_init();
 	
-	BurnYM2151Init(14318180 / 4, 25.0);
+	BurnYM2151Init(14318180 / 4);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.48, BURN_SND_ROUTE_RIGHT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.48, BURN_SND_ROUTE_LEFT);
 	
 	GenericTilesInit();
 	
@@ -2276,7 +2280,9 @@ static INT32 Gaunt2Init()
 	atarigen_slapstic_init(0x038000, 106);
 	atarigen_eeprom_init();
 	
-	BurnYM2151Init(14318180 / 4, 25.0);
+	BurnYM2151Init(14318180 / 4);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.48, BURN_SND_ROUTE_RIGHT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.48, BURN_SND_ROUTE_LEFT);
 	
 	GenericTilesInit();
 	

@@ -381,8 +381,9 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 
-	BurnYM2151Init(3579545, 100.0);
+	BurnYM2151Init(3579545);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
+	BurnYM2151SetAllRoutes(0.80, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1000000 / 132, 100.0, 1);
 

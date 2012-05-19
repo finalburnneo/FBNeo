@@ -3007,7 +3007,9 @@ static INT32 BlazeonInit()
 	ZetClose();
 	
 	// Setup the YM2151 emulation
-	BurnYM2151Init(4000000, 25.0);
+	BurnYM2151Init(4000000);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	
 	Kaneko16FrameRender = BlazeonFrameRender;
 	

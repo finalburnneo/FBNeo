@@ -435,8 +435,9 @@ void seibu_sound_init(INT32 type, INT32 len, INT32 freq0 /*cpu*/, INT32 freq1 /*
 		break;
 
 		case 1:
-			BurnYM2151Init(freq1, 100.0);
+			BurnYM2151Init(freq1);
 			BurnYM2151SetIrqHandler(&Drv2151FMIRQHandler);
+			BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 		break;
 
 		case 2:

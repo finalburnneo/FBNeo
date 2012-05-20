@@ -1925,6 +1925,7 @@ INT32 System16Init()
 		if (System16UPD7759DataSize) {
 			UPD7759Init(0,UPD7759_STANDARD_CLOCK, NULL);
 			UPD7759SetDrqCallback(0,System16UPD7759DrqCallback);
+			UPD7759SetRoute(0, 0.48, BURN_SND_ROUTE_BOTH);
 		}
 		
 		System16TileBankSize = 0x1000;

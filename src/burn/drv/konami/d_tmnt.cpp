@@ -4408,6 +4408,7 @@ static INT32 TmntInit()
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
 	
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvUPD7759CRom);
+	UPD7759SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
 	

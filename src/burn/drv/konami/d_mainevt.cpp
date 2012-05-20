@@ -762,6 +762,7 @@ static INT32 DrvInit(INT32 type)
 	BurnYM2151SetAllRoutes(0.30, BURN_SND_ROUTE_BOTH);
 
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSndROM1);
+	UPD7759SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

@@ -577,6 +577,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 game)
 	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSndROM);
+	UPD7759SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();
 

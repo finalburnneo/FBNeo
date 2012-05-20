@@ -16,6 +16,6 @@ void SegaPCMWrite(UINT32 Offset, UINT8 Data);
 #define BURN_SND_SEGAPCM_ROUTE_1		0
 #define BURN_SND_SEGAPCM_ROUTE_2		1
 
-#define SegaPCMSetAllRoutes(i, v, d)					\
-	SegaPCMSetRoute(i, BURN_SND_SEGAPCM_ROUTE_1, v, d);	\
-	SegaPCMSetRoute(i, BURN_SND_SEGAPCM_ROUTE_2, v, d);
+#define SegaPCMSetAllRoutes(v, d)						\
+	SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_1, v, d);	\
+	SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_2, v, d);

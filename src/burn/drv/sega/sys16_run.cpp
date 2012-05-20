@@ -1987,6 +1987,7 @@ INT32 System16Init()
 		BurnYM3438SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
 		
 		RF5C68PCMInit(10000000);
+		RF5C68PCMSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 		
 		System16TileBankSize = 0x400;
 		System16CreateOpaqueTileMaps = 1;

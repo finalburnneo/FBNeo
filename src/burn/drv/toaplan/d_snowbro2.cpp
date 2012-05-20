@@ -583,7 +583,8 @@ static INT32 DrvInit()
 
 	BurnYM2151Init(27000000 / 8);
 	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
-	MSM6295Init(0, 27000000 / 10 / 132, 50.0, 1);
+	MSM6295Init(0, 27000000 / 10 / 132, 1);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	bDrawScreen = true;
 

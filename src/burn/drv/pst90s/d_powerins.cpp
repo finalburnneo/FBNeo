@@ -850,7 +850,8 @@ static INT32 powerinsInit()
 	}
 
 	if ( game_drv == GAME_POWERINA ) {
-		MSM6295Init(0, 990000 / 165, 80, 0);
+		MSM6295Init(0, 990000 / 165, 0);
+		MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	}
 	
 	if (game_drv == GAME_POWERINS ) {
@@ -859,13 +860,17 @@ static INT32 powerinsInit()
 		BurnYM2203SetAllRoutes(0, 2.00, BURN_SND_ROUTE_BOTH);
 		BurnSetRefreshRate(56.0);
 		
-		MSM6295Init(0, 4000000 / 165, 40, 1);
-		MSM6295Init(1, 4000000 / 165, 40, 1);
+		MSM6295Init(0, 4000000 / 165, 1);
+		MSM6295Init(1, 4000000 / 165, 1);
+		MSM6295SetRoute(0, 0.15, BURN_SND_ROUTE_BOTH);
+		MSM6295SetRoute(1, 0.15, BURN_SND_ROUTE_BOTH);
 	}
 
 	if (game_drv == GAME_POWERINB ) {
-		MSM6295Init(0, 4000000 / 165, 40, 1);
-		MSM6295Init(1, 4000000 / 165, 40, 1);
+		MSM6295Init(0, 4000000 / 165, 1);
+		MSM6295Init(1, 4000000 / 165, 1);
+		MSM6295SetRoute(0, 0.15, BURN_SND_ROUTE_BOTH);
+		MSM6295SetRoute(1, 0.15, BURN_SND_ROUTE_BOTH);
 	}
 
 	GenericTilesInit();

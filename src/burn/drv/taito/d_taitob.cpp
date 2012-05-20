@@ -1843,7 +1843,8 @@ static void common_ym2203_init()
 
 	MSM6295ROM = TaitoMSM6295Rom;
 
-	MSM6295Init(0, 1056000 / 132, 40, 1);
+	MSM6295Init(0, 1056000 / 132, 1);
+	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 }
 
 static INT32 CommonInit(void (*pInitCallback)(), INT32 sound_type, INT32 color_select, INT32 input_type, INT32 irq0, INT32 irq1)

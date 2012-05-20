@@ -419,7 +419,8 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 
-	MSM6295Init(0, 1122000 / 132, 100.0, 1);
+	MSM6295Init(0, 1122000 / 132, 1);
+	MSM6295SetRoute(0, 0.47, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2151Init(3579545);
 	BurnYM2151SetIrqHandler(&aquariumYM2151IrqHandler);

@@ -670,7 +670,8 @@ static INT32 DrvInit(INT32 game_select)
 	BurnTimerAttachZetYM3812(3000000);
 	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 
-	MSM6295Init(0, (is_magicbub ? 1056000 : 1000000) / 132, 60.0, is_magicbub);
+	MSM6295Init(0, (is_magicbub ? 1056000 : 1000000) / 132, is_magicbub);
+	MSM6295SetRoute(0, (is_magicbub ? 0.80 : 1.00), BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

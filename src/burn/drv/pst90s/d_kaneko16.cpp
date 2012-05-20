@@ -2823,8 +2823,10 @@ static INT32 GtmrMachineInit()
 	SekClose();
 	
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, 1980000 / 165, 100.0, 0);
-	MSM6295Init(1, 1980000 / 165, 100.0, 0);
+	MSM6295Init(0, 1980000 / 165, 0);
+	MSM6295Init(1, 1980000 / 165, 0);
+	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 
 	return 0;
 }
@@ -2923,7 +2925,8 @@ static INT32 BerlwallInit()
 	AY8910SetAllRoutes(1, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, (12000000 / 6) / 132, 100.0, 1);
+	MSM6295Init(0, (12000000 / 6) / 132, 1);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	Kaneko16FrameRender = BerlwallFrameRender;
 
@@ -3259,7 +3262,8 @@ static INT32 ExplbrkrInit()
 	AY8910Init(1, 2000000, nBurnSoundRate, &Kaneko16EepromRead, NULL, NULL, &Kaneko16EepromReset);
 	
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, (12000000 / 6) / 132, 100.0, 1);
+	MSM6295Init(0, (12000000 / 6) / 132, 1);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	Kaneko16FrameRender = ExplbrkrFrameRender;
 	
@@ -3600,7 +3604,8 @@ static INT32 MgcrystlInit()
 	AY8910Init(1, 2000000, nBurnSoundRate, &Kaneko16EepromRead, NULL, NULL, &Kaneko16EepromReset);
 	
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, (12000000 / 4) / 165, 100.0, 1);
+	MSM6295Init(0, (12000000 / 4) / 165, 1);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	Kaneko16FrameRender = MgcrystlFrameRender;
 

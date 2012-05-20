@@ -446,8 +446,12 @@ void seibu_sound_init(INT32 type, INT32 len, INT32 freq0 /*cpu*/, INT32 freq1 /*
 		break;
 	}
 
-	MSM6295Init(0, freq2, 100.0, 1);
-	if (seibu_snd_type & 4) MSM6295Init(1, freq2, 100.0, 1);
+	MSM6295Init(0, freq2, 1);
+	MSM6295SetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
+	if (seibu_snd_type & 4) {
+		MSM6295Init(1, freq2, 1);
+		MSM6295SetRoute(1, 0.40, BURN_SND_ROUTE_BOTH);
+	}
 
 	// init kludge for sdgndmps
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "sdgndmps")) {

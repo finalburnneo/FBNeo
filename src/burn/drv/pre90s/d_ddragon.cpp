@@ -1920,7 +1920,8 @@ static INT32 Drv2MachineInit()
 	BurnYM2151SetIrqHandler(&Ddragon2YM2151IrqHandler);
 	BurnYM2151SetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
 	
-	MSM6295Init(0, 1056000 / 132, 50.0, 1);
+	MSM6295Init(0, 1056000 / 132, 1);
+	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	BurnSetRefreshRate(57.444853);
 	

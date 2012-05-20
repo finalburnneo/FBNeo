@@ -879,10 +879,12 @@ void deco16SoundInit(UINT8 *rom, UINT8 *ram, INT32 huc_clock, INT32 ym2203, void
 #endif
 	}
 
-	MSM6295Init(0, msmclk0 / 132, msmvol0, 1);
+	MSM6295Init(0, msmclk0 / 132, 1);
+	MSM6295SetRoute(0, msmvol0, BURN_SND_ROUTE_BOTH);
 
 	if (msmclk1) {
-		MSM6295Init(1, msmclk1 / 132, msmvol1, 1);
+		MSM6295Init(1, msmclk1 / 132, 1);
+		MSM6295SetRoute(1, msmvol1, BURN_SND_ROUTE_BOTH);
 	}
 }
 

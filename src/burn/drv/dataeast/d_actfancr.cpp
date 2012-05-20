@@ -519,7 +519,8 @@ static void Dec0SoundInit()
 	BurnTimerAttachM6502YM3812(1500000);
 	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.90, BURN_SND_ROUTE_BOTH);
 
-	MSM6295Init(0, 1024188 / 132, 85.0, 1);
+	MSM6295Init(0, 1024188 / 132, 1);
+	MSM6295SetRoute(0, 0.85, BURN_SND_ROUTE_BOTH);
 }
 
 static INT32 ActfanInit()

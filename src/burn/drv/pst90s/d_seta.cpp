@@ -6096,7 +6096,8 @@ static void triplfun68kInit()
 	SekClose();
 
 	MSM6295Exit(0);
-	MSM6295Init(0, 792000 / 132, 100.0, 0);
+	MSM6295Init(0, 792000 / 132, 0);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	memcpy (Drv68KROM + 0x100000, Drv68KROM + 0x080000, 0x080000);
 	memset (Drv68KROM + 0x080000, 0, 0x080000);
@@ -6723,7 +6724,8 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 
 	// make sure these are initialized so that we can use common routines
 	ZetInit(0);
-	MSM6295Init(0, 1000000 / 132, 100.0, 0);
+	MSM6295Init(0, 1000000 / 132, 0);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	if (p68kInit) {
 		p68kInit();

@@ -4137,8 +4137,10 @@ static INT32 DrvInit(INT32 (*pLoadCallback)())
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.50, BURN_SND_ROUTE_BOTH);
 
-	MSM6295Init(0, 4000000 / 165, 20.0, 1);
-	MSM6295Init(1, 4000000 / 165, 20.0, 1);
+	MSM6295Init(0, 4000000 / 165, 1);
+	MSM6295Init(1, 4000000 / 165, 1);
+	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -4175,8 +4177,10 @@ static INT32 BjtwinInit(INT32 (*pLoadCallback)())
 
 	BurnSetRefreshRate(56.00);
 
-	MSM6295Init(0, 4000000 / 165, 20.0, 1);
-	MSM6295Init(1, 4000000 / 165, 20.0, 1);
+	MSM6295Init(0, 4000000 / 165, 1);
+	MSM6295Init(1, 4000000 / 165, 1);
+	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
 
 	NMK112_init(0, DrvSndROM0, DrvSndROM1, 0x140000, 0x140000);
 
@@ -4259,8 +4263,10 @@ static INT32 Macross2Init()
 	BurnTimerAttachZet(4000000);
 	BurnYM2203SetAllRoutes(0, 0.90, BURN_SND_ROUTE_BOTH);
 
-	MSM6295Init(0, 4000000 / 165, 20.0, 1);
-	MSM6295Init(1, 4000000 / 165, 20.0, 1);
+	MSM6295Init(0, 4000000 / 165, 1);
+	MSM6295Init(1, 4000000 / 165, 1);
+	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
 
 	if (strcmp(BurnDrvGetTextA(DRV_NAME), "macross2") == 0) {
 		NMK112_init(0, DrvSndROM0, DrvSndROM1, 0x240000, 0x140000);
@@ -4302,7 +4308,8 @@ static INT32 MSM6295x1Init(INT32  (*pLoadCallback)())
 
 	BurnSetRefreshRate(56.00);
 
-	MSM6295Init(0, 1000000 / 165, 100.0, 0);
+	MSM6295Init(0, 1000000 / 165, 0);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -4400,8 +4407,10 @@ static INT32 AfegaInit(INT32 (*pLoadCallback)(), void (*pZ80Callback)(), INT32 p
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.30, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.30, BURN_SND_ROUTE_RIGHT);
 
-	MSM6295Init(0, 1000000 / (pin7high ? 132 : 165), 60.0, 1);
-	MSM6295Init(1, 1000000 / (pin7high ? 132 : 165), 60.0, 1);
+	MSM6295Init(0, 1000000 / (pin7high ? 132 : 165), 1);
+	MSM6295Init(1, 1000000 / (pin7high ? 132 : 165), 1);
+	MSM6295SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.60, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -4435,8 +4444,10 @@ static INT32 NMK004Init(INT32 (*pLoadCallback)(), INT32 nCpuSpeed, INT32 pin7hig
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.50, BURN_SND_ROUTE_BOTH);
 
-	MSM6295Init(0, 4000000 / (pin7high ? 132 : 165), 20.0, 1);
-	MSM6295Init(1, 4000000 / (pin7high ? 132 : 165), 20.0, 1);
+	MSM6295Init(0, 4000000 / (pin7high ? 132 : 165), 1);
+	MSM6295Init(1, 4000000 / (pin7high ? 132 : 165), 1);
+	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
 
 	NMK004OKIROM0 = DrvSndROM0;
 	NMK004OKIROM1 = DrvSndROM1;

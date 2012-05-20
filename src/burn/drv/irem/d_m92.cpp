@@ -1753,7 +1753,8 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), const UINT8 *sound_decrypt_tab
 
 	iremga20_init(0, DrvSndROM, 0x100000, 3579545);
 
-	MSM6295Init(0, 1000000 / 132, 100.0, 0); // ppan
+	MSM6295Init(0, 1000000 / 132, 0); // ppan
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

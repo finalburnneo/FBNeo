@@ -498,7 +498,8 @@ INT32 OhmygodInit()
 	SekClose();
 
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, 14000000/8/132, 100, 0);
+	MSM6295Init(0, 14000000/8/132, 0);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

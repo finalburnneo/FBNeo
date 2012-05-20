@@ -462,7 +462,8 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)())
 	BurnTimerAttachZetYM3812(3579545);
 	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
-	MSM6295Init(0, 1056000 / 132, 80.0, 1);
+	MSM6295Init(0, 1056000 / 132, 1);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

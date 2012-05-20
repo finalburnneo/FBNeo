@@ -397,7 +397,8 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 
-	MSM6295Init(0, 1056000 / 132, 25.0, 0);
+	MSM6295Init(0, 1056000 / 132, 0);
+	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	K051649Init(1500000, 1.00);
 

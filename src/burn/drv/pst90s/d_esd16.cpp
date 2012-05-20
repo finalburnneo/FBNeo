@@ -882,7 +882,8 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 	BurnTimerAttachZetYM3812(4000000);
 	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.30, BURN_SND_ROUTE_BOTH);
 
-	MSM6295Init(0, 1056000 / 132, 60.0, 1);
+	MSM6295Init(0, 1056000 / 132, 1);
+	MSM6295SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
 
 	EEPROMInit(&eeprom_interface_93C46); // not used in multchmp
 

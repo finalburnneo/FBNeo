@@ -668,7 +668,8 @@ static INT32 CommonInit(INT32 (*pRomLoadCallback)(), INT32 spritelen, INT32 sndl
 
 	YMZ280BInit(16900000, NULL, 3);
 
-	MSM6295Init(0, 2000000 / 132, 50.0, 1);
+	MSM6295Init(0, 2000000 / 132, 1);
+	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 #endif
 
 	GenericTilesInit();

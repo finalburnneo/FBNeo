@@ -1260,7 +1260,8 @@ static INT32 DrvInit()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
 	
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, 1000000 / 132, 100.0, 1);
+	MSM6295Init(0, 1000000 / 132, 1);
+	MSM6295SetRoute(0, 1.50, BURN_SND_ROUTE_BOTH);
 	
 	DrawFunction = DrvDraw;
 	
@@ -1372,7 +1373,8 @@ static INT32 DrvpInit()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
 	
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, 1000000 / 132, 100.0, 1);
+	MSM6295Init(0, 1000000 / 132, 1);
+	MSM6295SetRoute(0, 1.50, BURN_SND_ROUTE_BOTH);
 	
 	DrawFunction = DrvDraw;
 	
@@ -1481,7 +1483,8 @@ static INT32 DrvbInit()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
 	
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, 1000000 / 132, 100.0, 1);
+	MSM6295Init(0, 1000000 / 132, 1);
+	MSM6295SetRoute(0, 1.50, BURN_SND_ROUTE_BOTH);
 	
 	DrawFunction = DrvDraw;
 	
@@ -1620,7 +1623,8 @@ static INT32 CtribeInit()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.20, BURN_SND_ROUTE_RIGHT);
 	
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, 1000000 / 132, 10.0, 1);
+	MSM6295Init(0, 1000000 / 132, 1);
+	MSM6295SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
 	
 	DrawFunction = CtribeDraw;
 	

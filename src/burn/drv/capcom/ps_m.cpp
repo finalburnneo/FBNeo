@@ -36,10 +36,11 @@ INT32 PsmInit()
 	// Init ADPCM
 	MSM6295ROM = CpsAd;
 	if (Forgottn) {
-		nRet = MSM6295Init(0, 6061, 21.5, 1);
+		nRet = MSM6295Init(0, 6061, 1);
 	} else {
-		nRet = MSM6295Init(0, 7576, 21.5, 1);
+		nRet = MSM6295Init(0, 7576, 1);
 	}
+	MSM6295SetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
 
 	if (nRet!=0) {
 		PsmExit(); return 1;

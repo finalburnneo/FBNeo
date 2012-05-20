@@ -2987,9 +2987,11 @@ static INT32 DrvInit(bool bReset, INT32 SpriteRamSize, INT32 SpriteMask, INT32 S
 	
 	// Setup the OKIM6295 emulation
 	if (DrvHasYM2151) {
-		MSM6295Init(0, OkiFreq / 132, 20.0, 1);
+		MSM6295Init(0, OkiFreq / 132, 1);
+		MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	} else {
-		MSM6295Init(0, OkiFreq / 132, 20.0, 0);
+		MSM6295Init(0, OkiFreq / 132, 0);
+		MSM6295SetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
 	}
 	
 	BurnSetRefreshRate(Refresh);
@@ -3075,7 +3077,11 @@ static INT32 PangpangInit()
 	DrvMap68k = PangpangMap68k;
 	DrvRender = PangpangDraw;
 
-	return DrvInit(1, 0x800, 0x7fff, -1, 0, 0x2000, 0x8000, 0x2000, 58.0, 8000000 / 10);
+	INT32 nRet = DrvInit(1, 0x800, 0x7fff, -1, 0, 0x2000, 0x8000, 0x2000, 58.0, 8000000 / 10);
+	
+	MSM6295SetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
+	
+	return nRet;
 }
 
 static INT32 SuprtrioInit()
@@ -3094,6 +3100,8 @@ static INT32 SuprtrioInit()
 	Pf1XOffset = -6;
 	Pf2XOffset = -2;
 	nCyclesTotal[1] = 8000000 / 60;
+	
+	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	
 	return nRet;
 }
@@ -3434,7 +3442,8 @@ static INT32 JumppopInit()
 	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, 875000 / 132, 100.0, 1);
+	MSM6295Init(0, 875000 / 132, 1);
+	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	
 	BurnSetRefreshRate(60.0);
 	

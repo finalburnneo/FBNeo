@@ -297,8 +297,10 @@ static INT32 DrvInit()
 		SekClose();
 	}
 	
-	MSM6295Init(0, 7500, 80, 1);
-	MSM6295Init(1, 7500, 80, 1);
+	MSM6295Init(0, 7500, 1);
+	MSM6295Init(1, 7500, 1);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

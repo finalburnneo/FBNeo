@@ -708,7 +708,8 @@ static INT32 DrvInit()
 	BurnYM2151SetAllRoutes(0.45, BURN_SND_ROUTE_BOTH);
 	
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, 1024188 / 132, 100.0, 1);
+	MSM6295Init(0, 1024188 / 132, 1);
+	MSM6295SetRoute(0, 0.90, BURN_SND_ROUTE_BOTH);
 	
 	DrvSpriteXOffset = 0;
 	DrvBg0XOffset = 0;

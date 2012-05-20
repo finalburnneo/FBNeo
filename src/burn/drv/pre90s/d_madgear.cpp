@@ -987,7 +987,8 @@ static INT32 DrvInit()
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
 	
-	MSM6295Init(0, 7575, 98, 1);
+	MSM6295Init(0, 7575, 1);
+	MSM6295SetRoute(0, 0.98, BURN_SND_ROUTE_BOTH);
 
 	// Reset the driver
 	MadgearDoReset();
@@ -1082,7 +1083,8 @@ static INT32 Ledstrm2Init()
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
 		
-	MSM6295Init(0, 7575, 98, 1);
+	MSM6295Init(0, 7575, 1);
+	MSM6295SetRoute(0, 0.98, BURN_SND_ROUTE_BOTH);
 
 	// Reset the driver
 	MadgearDoReset();

@@ -413,7 +413,8 @@ static INT32 DrvInit()
 	SekSetReadWordHandler(0,	 pirates_read_word);
 	SekClose();
 
-	MSM6295Init(0, 1333333 / (132 + 39), 100.0, 0); // otherwise too fast!
+	MSM6295Init(0, 1333333 / (132 + 39), 0); // otherwise too fast!
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

@@ -338,8 +338,10 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(0,		pktgaldx_read_byte);
 	SekClose();
 
-	MSM6295Init(0, 1006875 / 132, 75.0, 1);
-	MSM6295Init(1, 2013750 / 132, 60.0, 1);
+	MSM6295Init(0, 1006875 / 132, 1);
+	MSM6295Init(1, 2013750 / 132, 1);
+	MSM6295SetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.60, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

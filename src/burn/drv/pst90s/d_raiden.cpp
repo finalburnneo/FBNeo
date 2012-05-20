@@ -950,7 +950,8 @@ static INT32 DrvInit()
 	BurnTimerAttachZetYM3812(3579545);
 	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
-	MSM6295Init(0, 8000, 80.0, 1); //	1320000
+	MSM6295Init(0, 8000, 1); //	1320000
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	DrvDoReset();
 	return 0;
 }

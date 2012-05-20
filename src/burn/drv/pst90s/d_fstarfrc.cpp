@@ -783,7 +783,8 @@ INT32 FstarfrcInit()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
 
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, 7575, 40, 1);
+	MSM6295Init(0, 7575, 1);
+	MSM6295SetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

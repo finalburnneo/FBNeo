@@ -7625,7 +7625,8 @@ static INT32 CamltryaInit()
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.20, BURN_SND_ROUTE_BOTH);
 	
-	MSM6295Init(0, (4224000 / 4) / 132 , 100.0, 1);
+	MSM6295Init(0, (4224000 / 4) / 132, 1);
+	MSM6295SetRoute(0, 0.10, BURN_SND_ROUTE_BOTH);
 	
 	nTaitoCyclesTotal[1] = (24000000 / 4) / 60;
 
@@ -7972,7 +7973,8 @@ static INT32 DriveoutInit()
 	ZetMemEnd();
 	ZetClose();
 	
-	MSM6295Init(0, 1056000 / 132 , 100.0, 0);
+	MSM6295Init(0, 1056000 / 132, 0);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	TaitoXOffset = 3;
 	TaitoDrawFunction = DriftoutDraw;

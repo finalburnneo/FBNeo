@@ -2005,7 +2005,8 @@ static INT32 HyperpacMachineInit()
 	BurnYM2151SetAllRoutes(0.10, BURN_SND_ROUTE_BOTH);
 
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, 999900 / 132, 100.0, 1);
+	MSM6295Init(0, 999900 / 132, 1);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -2423,6 +2424,7 @@ static INT32 FinalttrInit()
 	nRet = HyperpacMachineInit(); if (nRet) return 1;
 	
 	BurnYM2151SetAllRoutes(0.08, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
 
 	return 0;
 }
@@ -2492,7 +2494,8 @@ static INT32 TwinadvInit()
 	ZetClose();
 
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, (12000000/12) / 132 , 100.0, 0);
+	MSM6295Init(0, (12000000/12) / 132, 0);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -2579,7 +2582,8 @@ static INT32 HoneydolInit()
 	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, 999900 / 132, 100.0, 1);
+	MSM6295Init(0, 999900 / 132, 1);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -2745,7 +2749,8 @@ static INT32 Snowbro3Init()
 	SekClose();
 	
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, 999900 / 132, 100.0, 0);
+	MSM6295Init(0, 999900 / 132, 0);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

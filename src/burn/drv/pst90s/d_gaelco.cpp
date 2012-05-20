@@ -858,7 +858,8 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 encrypted_ram, INT32 sou
 		BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	}
 
-	MSM6295Init(0, 1056000 / 132, 100.0, has_sound_cpu ? 1 : 0);
+	MSM6295Init(0, 1056000 / 132, has_sound_cpu ? 1 : 0);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	gaelco_encryption_param1 = encrypted_ram;
 

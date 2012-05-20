@@ -1067,7 +1067,8 @@ static INT32 DrvInit()
 		BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
 	}
 
-	MSM6295Init(0, 1000000 / 132, 80, 1);
+	MSM6295Init(0, 1000000 / 132, 1);
+	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();
 
@@ -2004,7 +2005,11 @@ static INT32 drgnbowlInit()
 {
 	game = 1;
 
-	return DrvInit();
+	INT32 nRet = DrvInit();
+	
+	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	
+	return nRet;
 }
 
 struct BurnDriver BurnDrvDrgnbowl = {

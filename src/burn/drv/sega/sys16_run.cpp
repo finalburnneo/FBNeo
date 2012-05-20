@@ -2099,6 +2099,8 @@ INT32 System16Init()
 			} else {
 				SegaPCMInit(4000000, BANK_512, System16PCMData, System16PCMDataSize);
 			}
+			SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_1, 1.0, BURN_SND_ROUTE_LEFT);
+			SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_2, 1.0, BURN_SND_ROUTE_RIGHT);
 		}
 		
 		System16TileBankSize = 0x1000;
@@ -2168,6 +2170,8 @@ INT32 System16Init()
 		
 		if (System16PCMDataSize) {
 			SegaPCMInit(4000000, BANK_512, System16PCMData, System16PCMDataSize);
+			SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_1, 1.0, BURN_SND_ROUTE_LEFT);
+			SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_2, 1.0, BURN_SND_ROUTE_RIGHT);
 		}
 				
 		System16RoadColorOffset1 = 0x400;
@@ -2260,6 +2264,8 @@ INT32 System16Init()
 		
 		if (System16PCMDataSize) {
 			SegaPCMInit(4000000, BANK_512, System16PCMData, System16PCMDataSize);
+			SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_1, 1.0, BURN_SND_ROUTE_LEFT);
+			SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_2, 1.0, BURN_SND_ROUTE_RIGHT);
 		}		
 		
 		System16RoadColorOffset1 = 0x1700;
@@ -2341,6 +2347,8 @@ INT32 System16Init()
 		
 		if (System16PCMDataSize) {
 			SegaPCMInit(32215900 / 8, BANK_12M | BANK_MASKF8, System16PCMData, System16PCMDataSize);
+			SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_1, 1.0, BURN_SND_ROUTE_LEFT);
+			SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_2, 1.0, BURN_SND_ROUTE_RIGHT);
 		}
 	}
 	

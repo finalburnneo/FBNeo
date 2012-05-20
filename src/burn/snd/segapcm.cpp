@@ -10,6 +10,8 @@ struct segapcm
 	INT32 bankshift;
 	INT32 bankmask;
 	INT32 UpdateStep;
+	double Volume[2];
+	INT32 OutputDir[2];
 };
 
 static struct segapcm *Chip = NULL;
@@ -62,14 +64,28 @@ void SegaPCMUpdate(INT16* pSoundBuf, INT32 nLength)
 	}
 	
 	for (INT32 i = 0; i < nLength; i++) {
-		if (Left[i] > 32767) Left[i] = 32767;
-		if (Left[i] < -32768) Left[i] = -32768;
+		INT32 nLeftSample = 0;
+		INT32 nRightSample = 0;
 		
-		if (Right[i] > 32767) Right[i] = 32767;
-		if (Right[i] < -32768) Right[i] = -32768;
+		if ((Chip->OutputDir[BURN_SND_SEGAPCM_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+			nLeftSample += (INT32)(Left[i] * Chip->Volume[BURN_SND_SEGAPCM_ROUTE_1]);
+		}
+		if ((Chip->OutputDir[BURN_SND_SEGAPCM_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+			nRightSample += (INT32)(Left[i] * Chip->Volume[BURN_SND_SEGAPCM_ROUTE_1]);
+		}
 		
-		pSoundBuf[0] += Left[i];
-		pSoundBuf[1] += Right[i];
+		if ((Chip->OutputDir[BURN_SND_SEGAPCM_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+			nLeftSample += (INT32)(Right[i] * Chip->Volume[BURN_SND_SEGAPCM_ROUTE_2]);
+		}
+		if ((Chip->OutputDir[BURN_SND_SEGAPCM_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+			nRightSample += (INT32)(Right[i] * Chip->Volume[BURN_SND_SEGAPCM_ROUTE_2]);
+		}
+		
+		nLeftSample = BURN_SND_CLIP(nLeftSample);
+		nRightSample = BURN_SND_CLIP(nRightSample);
+		
+		pSoundBuf[0] += nLeftSample;
+		pSoundBuf[1] += nRightSample;
 		pSoundBuf += 2;
 	}
 }
@@ -102,7 +118,23 @@ void SegaPCMInit(INT32 clock, INT32 bank, UINT8 *pPCMData, INT32 PCMDataSize)
 	double Rate = (double)clock / 128 / nBurnSoundRate;
 	Chip->UpdateStep = (INT32)(Rate * 0x10000);
 	
+	Chip->Volume[BURN_SND_SEGAPCM_ROUTE_1] = 1.00;
+	Chip->Volume[BURN_SND_SEGAPCM_ROUTE_2] = 1.00;
+	Chip->OutputDir[BURN_SND_SEGAPCM_ROUTE_1] = BURN_SND_ROUTE_LEFT;
+	Chip->OutputDir[BURN_SND_SEGAPCM_ROUTE_2] = BURN_SND_ROUTE_RIGHT;
+	
 	DebugSnd_SegaPCMInitted = 1;
+}
+
+void SegaPCMSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_SegaPCMInitted) bprintf(PRINT_ERROR, _T("SegaPCMSetRoute called without init\n"));
+	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("SegaPCMSetRoute called with invalid index %i\n"), nIndex);
+#endif
+
+	Chip->Volume[nIndex] = nVolume;
+	Chip->OutputDir[nIndex] = nRouteDir;
 }
 
 void SegaPCMExit()

@@ -4406,6 +4406,7 @@ static INT32 TmntInit()
 	
 	K007232Init(0, 3579545, DrvSoundRom, 0x20000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
+	K007232PCMSetAllRoutes(0, 0.33, BURN_SND_ROUTE_BOTH);
 	
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvUPD7759CRom);
 	UPD7759SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
@@ -4504,6 +4505,7 @@ static INT32 MiaInit()
 	
 	K007232Init(0, 3579545, DrvSoundRom, 0x20000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
+	K007232PCMSetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
 	

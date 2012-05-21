@@ -757,6 +757,7 @@ static INT32 DrvInit(INT32 type)
 
 	K007232Init(0, 3579545, DrvSndROM0, 0x80000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
+	K007232PCMSetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2151Init(3579545);
 	BurnYM2151SetAllRoutes(0.30, BURN_SND_ROUTE_BOTH);

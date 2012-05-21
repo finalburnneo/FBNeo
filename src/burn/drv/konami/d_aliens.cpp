@@ -433,6 +433,7 @@ static INT32 DrvInit()
 
 	K007232Init(0, 3579545, DrvSndROM, 0x40000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
+	K007232PCMSetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

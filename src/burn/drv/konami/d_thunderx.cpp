@@ -688,6 +688,7 @@ static INT32 DrvInit()
 
 	K007232Init(0, 3579545, DrvSndROM, 0x80000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
+	K007232PCMSetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 
 	K052109Init(DrvGfxROM0, 0x0fffff >> thunderx);
 	K052109SetCallback(K052109Callback);

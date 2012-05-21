@@ -3391,8 +3391,10 @@ static void M62MachineInit()
 	pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
 	pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
 
-	MSM5205Init(0, M62SynchroniseStream, 384000, M62MSM5205Vck0, MSM5205_S96_4B, 50, 1);
-	MSM5205Init(1, M62SynchroniseStream, 384000, NULL, MSM5205_SEX_4B, 50, 1);
+	MSM5205Init(0, M62SynchroniseStream, 384000, M62MSM5205Vck0, MSM5205_S96_4B, 1);
+	MSM5205Init(1, M62SynchroniseStream, 384000, NULL, MSM5205_SEX_4B, 1);
+	MSM5205SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	MSM5205SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 	
 	AY8910Init(0, 894886, nBurnSoundRate, &M62SoundLatchRead, NULL, NULL, &AY8910_0PortBWrite);
 	AY8910Init(1, 894886, nBurnSoundRate, NULL, NULL, NULL, NULL);

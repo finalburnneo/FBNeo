@@ -80,8 +80,8 @@ void __fastcall FcrashZ80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0xe000: {
-			MSM5205SetVolume(0, (d & 0x08) ? 0 : 20);
-			MSM5205SetVolume(1, (d & 0x10) ? 0 : 20);
+			MSM5205SetRoute(0, (d & 0x08) ? 0 : 0.25, BURN_SND_ROUTE_BOTH);
+			MSM5205SetRoute(1, (d & 0x10) ? 0 : 0.25, BURN_SND_ROUTE_BOTH);
 
 			FcrashZ80BankAddress = (d & 0x07) * 0x4000;
 			ZetMapArea(0x8000, 0xbfff, 0, CpsZRom + FcrashZ80BankAddress);
@@ -168,8 +168,10 @@ INT32 FcrashSoundInit()
 	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, 0.07, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.07, BURN_SND_ROUTE_BOTH);
 	
-	MSM5205Init(0, FcrashSynchroniseStream, 24000000 / 64, FcrashMSM5205Vck0, MSM5205_S96_4B, 20, 1);
-	MSM5205Init(1, FcrashSynchroniseStream, 24000000 / 64, FcrashMSM5205Vck1, MSM5205_S96_4B, 20, 1);
+	MSM5205Init(0, FcrashSynchroniseStream, 24000000 / 64, FcrashMSM5205Vck0, MSM5205_S96_4B, 1);
+	MSM5205Init(1, FcrashSynchroniseStream, 24000000 / 64, FcrashMSM5205Vck1, MSM5205_S96_4B, 1);
+	MSM5205SetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
+	MSM5205SetRoute(1, 0.25, BURN_SND_ROUTE_BOTH);
 	
 	nCpsZ80Cycles = (24000000 / 6) * 100 / nBurnFPS;
 	

@@ -1324,7 +1324,8 @@ static void AsukaSoundSetup()
 	BurnYM2151SetPortHandler(&DrvSoundBankSwitch);
 	BurnYM2151SetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 
-	MSM5205Init(0, DrvSynchroniseStream, 384000, AsukaMSM5205Vck, MSM5205_S48_4B, 100, 1);
+	MSM5205Init(0, DrvSynchroniseStream, 384000, AsukaMSM5205Vck, MSM5205_S48_4B, 1);
+	MSM5205SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	TaitoNumYM2151  = 1;
 	TaitoNumMSM5205 = 1;

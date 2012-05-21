@@ -67,8 +67,8 @@ void __fastcall Sf2mdtZ80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0xe000: {
-			MSM5205SetVolume(0, (d & 0x20) ? 0 : 20);
-			MSM5205SetVolume(1, (d & 0x10) ? 0 : 20);
+			MSM5205SetRoute(0, (d & 0x20) ? 0 : 0.25, BURN_SND_ROUTE_BOTH);
+			MSM5205SetRoute(1, (d & 0x10) ? 0 : 0.25, BURN_SND_ROUTE_BOTH);
 			
 			Sf2mdtZ80BankAddress = (d & Sf2mdtNumZ80Banks) * 0x4000;
 			ZetMapArea(0x8000, 0xbfff, 0, CpsZRom + Sf2mdtZ80BankAddress);
@@ -135,8 +135,10 @@ INT32 Sf2mdtSoundInit()
 	BurnYM2151Init(3579540);
 	BurnYM2151SetAllRoutes(0.35, BURN_SND_ROUTE_BOTH);
 	
-	MSM5205Init(0, Sf2mdtSynchroniseStream, 24000000 / 64, Sf2mdtMSM5205Vck0, MSM5205_S96_4B, 20, 1);
-	MSM5205Init(1, Sf2mdtSynchroniseStream, 24000000 / 64, Sf2mdtMSM5205Vck1, MSM5205_S96_4B, 20, 1);
+	MSM5205Init(0, Sf2mdtSynchroniseStream, 24000000 / 64, Sf2mdtMSM5205Vck0, MSM5205_S96_4B, 1);
+	MSM5205Init(1, Sf2mdtSynchroniseStream, 24000000 / 64, Sf2mdtMSM5205Vck1, MSM5205_S96_4B, 1);
+	MSM5205SetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
+	MSM5205SetRoute(1, 0.25, BURN_SND_ROUTE_BOTH);
 	
 	nCpsZ80Cycles = 3579540 * 100 / nBurnFPS;
 	

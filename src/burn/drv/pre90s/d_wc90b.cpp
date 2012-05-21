@@ -649,7 +649,8 @@ static INT32 Wc90b1Init()
 	BurnTimerAttachZet(5000000);
 	BurnYM2203SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	
-	MSM5205Init(0, Wc90b1SynchroniseStream, 384000, Wc90b1MSM5205Vck0, MSM5205_S96_4B, 100, 1);
+	MSM5205Init(0, Wc90b1SynchroniseStream, 384000, Wc90b1MSM5205Vck0, MSM5205_S96_4B, 1);
+	MSM5205SetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
 	
 	Wc90b1DoReset();
 

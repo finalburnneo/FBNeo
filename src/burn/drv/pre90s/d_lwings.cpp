@@ -1043,7 +1043,8 @@ static INT32 TrojanInit()
 	ZetMemEnd();
 	ZetClose();
 	
-	MSM5205Init(0, DrvMSM5205SynchroniseStream, 455000, NULL, MSM5205_SEX_4B, 50, 1);
+	MSM5205Init(0, DrvMSM5205SynchroniseStream, 455000, NULL, MSM5205_SEX_4B, 1);
+	MSM5205SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	MSM5205InUse = 1;
 
 	GenericTilesInit();

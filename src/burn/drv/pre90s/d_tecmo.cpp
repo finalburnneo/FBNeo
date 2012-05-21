@@ -549,7 +549,9 @@ void __fastcall rygar_sound_write(UINT16 address, UINT8 data)
 
 		case 0xc800:
 		case 0xe000:
-			if (DrvHasADPCM) MSM5205SetVolume(0, (data & 0x0f) * 100 / 15);
+			if (DrvHasADPCM) {
+				MSM5205SetRoute(0, (data & 0x0f) / 15, BURN_SND_ROUTE_BOTH);
+			}
 		return;
 
 		case 0xf000:
@@ -768,7 +770,8 @@ static INT32 RygarInit()
 	BurnTimerAttachZetYM3812(4000000);
 	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
-	MSM5205Init(0, TecmoSynchroniseStream, 400000, TecmoMSM5205Vck, MSM5205_S48_4B, 100, 1);
+	MSM5205Init(0, TecmoSynchroniseStream, 400000, TecmoMSM5205Vck, MSM5205_S48_4B, 1);
+	MSM5205SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -848,7 +851,8 @@ static INT32 SilkwormInit()
 	BurnTimerAttachZetYM3812(4000000);
 	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
-	MSM5205Init(0, TecmoSynchroniseStream, 400000, TecmoMSM5205Vck, MSM5205_S48_4B, 100, 1);
+	MSM5205Init(0, TecmoSynchroniseStream, 400000, TecmoMSM5205Vck, MSM5205_S48_4B, 1);
+	MSM5205SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -928,7 +932,10 @@ static INT32 GeminiInit()
 	BurnTimerAttachZetYM3812(4000000);
 	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
-	if (DrvHasADPCM) MSM5205Init(0, TecmoSynchroniseStream, 400000, TecmoMSM5205Vck, MSM5205_S48_4B, 100, 1);
+	if (DrvHasADPCM) {
+		MSM5205Init(0, TecmoSynchroniseStream, 400000, TecmoMSM5205Vck, MSM5205_S48_4B, 1);
+		MSM5205SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	}
 
 	GenericTilesInit();
 

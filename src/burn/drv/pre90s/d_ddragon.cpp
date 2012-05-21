@@ -1853,8 +1853,10 @@ static INT32 DrvMachineInit()
 		BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 		BurnYM2151SetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
 	
-		MSM5205Init(0, DrvSynchroniseStream, 375000, DrvMSM5205Vck0, MSM5205_S48_4B, 45, 1);
-		MSM5205Init(1, DrvSynchroniseStream, 375000, DrvMSM5205Vck1, MSM5205_S48_4B, 45, 1);
+		MSM5205Init(0, DrvSynchroniseStream, 375000, DrvMSM5205Vck0, MSM5205_S48_4B, 1);
+		MSM5205Init(1, DrvSynchroniseStream, 375000, DrvMSM5205Vck1, MSM5205_S48_4B, 1);
+		MSM5205SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+		MSM5205SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 	}
 	
 	if (DrvGameType == DD_GAME_DARKTOWR) {

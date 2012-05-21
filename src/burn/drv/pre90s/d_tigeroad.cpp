@@ -733,7 +733,10 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 	
-	if (toramich) MSM5205Init(0, DrvMSM5205SynchroniseStream, 384000, NULL, MSM5205_SEX_4B, 100, 1);
+	if (toramich) {
+		MSM5205Init(0, DrvMSM5205SynchroniseStream, 384000, NULL, MSM5205_SEX_4B, 1);
+		MSM5205SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	}
 
 	GenericTilesInit();
 

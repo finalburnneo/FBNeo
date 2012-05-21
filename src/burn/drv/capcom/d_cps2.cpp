@@ -10595,17 +10595,9 @@ static struct BurnRomInfo Xmvsfu1dRomDesc[] = {
 	
 	{ "xvsud.03h",     0x080000, 0x4e2e76b7, 1 | BRF_ESS | BRF_PRG },
 	{ "xvsud.04h",     0x080000, 0x290c61a7, 1 | BRF_ESS | BRF_PRG },
-#if !defined (ROM_VERIFY)
 	{ "xvs.05a",       0x080000, 0x7db6025d, 1 | BRF_ESS | BRF_PRG },
-#else
-	{ "xvsd.05a",      0x080000, 0xde347b11, 1 | BRF_ESS | BRF_PRG }, // bad dump?
-#endif
 	{ "xvs.06a",       0x080000, 0xe8e2c75c, 1 | BRF_ESS | BRF_PRG },
-#if !defined (ROM_VERIFY)
 	{ "xvs.07",        0x080000, 0x08f0abed, 1 | BRF_ESS | BRF_PRG },
-#else
-	{ "xvsd.07",       0x080000, 0xf761ded7, 1 | BRF_ESS | BRF_PRG }, // bad dump?
-#endif
 	{ "xvs.08",        0x080000, 0x81929675, 1 | BRF_ESS | BRF_PRG },
 	{ "xvs.09",        0x080000, 0x9641f36b, 1 | BRF_ESS | BRF_PRG },
 

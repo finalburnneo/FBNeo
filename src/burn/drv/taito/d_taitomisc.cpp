@@ -2154,6 +2154,7 @@ static int MemIndex()
 	Taito68KRom2                        = Next; Next += Taito68KRom2Size;
 	TaitoZ80Rom1                        = Next; Next += TaitoZ80Rom1Size;
 	TaitoZ80Rom2                        = Next; Next += TaitoZ80Rom2Size;
+	TaitoSpriteMapRom                   = Next; Next += TaitoSpriteMapRomSize;
 	TaitoMSM5205Rom                     = Next; Next += TaitoMSM5205RomSize;
 	
 	TaitoRamStart                       = Next;

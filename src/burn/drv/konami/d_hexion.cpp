@@ -400,7 +400,8 @@ static INT32 DrvInit()
 	MSM6295Init(0, 1056000 / 132, 0);
 	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
-	K051649Init(1500000, 1.00);
+	K051649Init(1500000);
+	K051649SetRoute(0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

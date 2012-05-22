@@ -777,8 +777,8 @@ static INT32 DrvInit(INT32 game_select)
 
 	SN76489Init(0, 4000000, 0);
 	SN76489Init(1, 4000000, 1);
-	SN76496SetVolShift(0, 2);
-	SN76496SetVolShift(1, 2);
+	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -862,11 +862,11 @@ static INT32 SraiderInit()
 	SN76489Init(2, 4000000, 1);
 	SN76489Init(3, 4000000, 1);
 	SN76489Init(4, 4000000, 1);
-	SN76496SetVolShift(0, 3);
-	SN76496SetVolShift(1, 3);
-	SN76496SetVolShift(2, 3);
-	SN76496SetVolShift(3, 3);
-	SN76496SetVolShift(4, 3);
+	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(2, 1.00, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(3, 1.00, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(4, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

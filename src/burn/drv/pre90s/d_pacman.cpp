@@ -2496,7 +2496,9 @@ static INT32 DrvInit(void (*mapCallback)(), void (*pInitCallback)(), INT32 selec
 	if (game_select == DREMSHPR) AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	SN76496Init(0, 1789750, 0);
-	SN76496Init(1, 1789750, 1);		
+	SN76496Init(1, 1789750, 1);	
+	SN76496SetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(1, 0.75, BURN_SND_ROUTE_BOTH);
 
 	NamcoSoundInit(18432000 / 6 / 32);
 

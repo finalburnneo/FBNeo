@@ -586,10 +586,10 @@ static INT32 DrvInit()
 
 	use_mcu = ~BurnDrvGetFlags() & BDF_BOOTLEG;
 
-	SN76489Init(0, 18432000 / 6, 0);
-	SN76489Init(1, 18432000 / 6, 1);
-	SN76496SetVolShift(0, 2);
-	SN76496SetVolShift(1, 2);
+	SN76496Init(0, 18432000 / 6, 0);
+	SN76496Init(1, 18432000 / 6, 1);
+	SN76496SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

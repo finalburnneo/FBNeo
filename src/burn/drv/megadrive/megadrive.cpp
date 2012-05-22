@@ -1141,7 +1141,7 @@ static INT32 MegadriveResetDo()
 		
 		SN76496Exit();
 		SN76496Init(0, OSC_PAL / 15, 1);
-		SN76496SetVolShift(0, 1);
+		SN76496SetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
 	} else {
 		BurnSetRefreshRate(60.0);
 		Reinitialise();
@@ -1156,7 +1156,7 @@ static INT32 MegadriveResetDo()
 		
 		SN76496Exit();
 		SN76496Init(0, OSC_NTSC / 15, 1);
-		SN76496SetVolShift(0, 1);
+		SN76496SetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
 	}
 
 	// other reset
@@ -2975,7 +2975,7 @@ INT32 MegadriveInit()
 	BurnYM2612SetRoute(0, BURN_SND_YM2612_YM2612_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
 	
 	SN76496Init(0, OSC_NTSC / 15, 1);
-	SN76496SetVolShift(0, 1);
+	SN76496SetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
 	
 	MegadriveSetupSRAM();
 	SetupCustomCartridgeMappers();

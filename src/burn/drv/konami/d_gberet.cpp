@@ -684,7 +684,8 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 
-	SN76489Init(0, 18432000 / 12, 0);
+	SN76489AInit(0, 18432000 / 12, 0);
+	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();
 

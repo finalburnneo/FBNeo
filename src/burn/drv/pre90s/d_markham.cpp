@@ -334,8 +334,10 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 
-	SN76489Init(0, 4000000, 0);
-	SN76489Init(1, 4000000, 1);
+	SN76496Init(0, 4000000, 0);
+	SN76496Init(1, 4000000, 1);
+	SN76496SetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(1, 0.75, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

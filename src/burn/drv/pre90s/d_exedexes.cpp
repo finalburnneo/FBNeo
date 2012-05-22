@@ -439,8 +439,8 @@ static INT32 DrvInit()
 
 	SN76489Init(0, 3000000, 0);
 	SN76489Init(1, 3000000, 1);
-	SN76496SetVolShift(0, 2);
-	SN76496SetVolShift(1, 2);
+	SN76496SetRoute(0, 0.36, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(1, 0.36, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

@@ -335,7 +335,9 @@ static INT32 DrvInit()
 	SekSetReadWordHandler(0,		midas_read_word);
 	SekClose();
 
-	YMZ280BInit(16934400, NULL, 3);
+	YMZ280BInit(16934400, NULL);
+	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
+	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
 
 	EEPROMInit(&eeprom_interface_93C46);
 

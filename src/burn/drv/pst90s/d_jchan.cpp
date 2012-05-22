@@ -564,7 +564,9 @@ static INT32 DrvInit()
 	SekSetWriteByteHandler(1,	jchan_sub_command_write_byte);
 	SekClose();
 
-	YMZ280BInit(16000000, NULL, 3);
+	YMZ280BInit(16000000, NULL);
+	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	GenericTilesInit();
 

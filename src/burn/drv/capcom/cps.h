@@ -279,7 +279,11 @@ void DrawFnInit();
 INT32  CpsDraw();
 INT32  CpsRedraw();
 
+#define BURN_SND_QSND_OUTPUT_1			0
+#define BURN_SND_QSND_OUTPUT_2			1
+
 INT32 QsndInit();
+void QsndSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
 void QsndExit();
 void QsndReset();
 void QsndNewFrame();
@@ -293,7 +297,8 @@ INT32 QsndZExit();
 INT32 QsndZScan(INT32 nAction);
 
 // qs_c.cpp
-INT32 QscInit(INT32 nRate, INT32 nVolumeShift);
+INT32 QscInit(INT32 nRate);
+void QscSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
 void QscReset();
 void QscExit();
 INT32 QscScan(INT32 nAction);

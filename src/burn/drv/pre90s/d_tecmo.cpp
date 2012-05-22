@@ -437,7 +437,10 @@ static inline void palette_write(INT32 offset)
 	UINT8 r,g,b;
 
 	data = *((UINT16*)(DrvPalRAM + (offset & ~1)));
+
+	#ifdef LSB_FIRST
 	data = (data << 8) | (data >> 8);
+#endif
 
 	r = (data >> 4) & 0x0f;
 	g = (data >> 0) & 0x0f;

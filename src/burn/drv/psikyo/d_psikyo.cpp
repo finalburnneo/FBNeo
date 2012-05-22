@@ -1866,6 +1866,8 @@ static INT32 DrvInit()
 		case PSIKYO_HW_S1945:
 		case PSIKYO_HW_TENGAI: {
 			BurnYMF278BInit(0, PsikyoSampleROM02, &PsikyoFMIRQHandler, PsikyoSynchroniseStream);
+			BurnYMF278BSetRoute(BURN_SND_YMF278B_YMF278B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+			BurnYMF278BSetRoute(BURN_SND_YMF278B_YMF278B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 			BurnTimerAttachZet(4000000);
 			break;
 		}

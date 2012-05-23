@@ -1752,6 +1752,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), const UINT8 *sound_decrypt_tab
 	BurnYM2151SetAllRoutes(0.40, BURN_SND_ROUTE_BOTH);
 
 	iremga20_init(0, DrvSndROM, 0x100000, 3579545);
+	itemga20_set_route(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1000000 / 132, 0); // ppan
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);

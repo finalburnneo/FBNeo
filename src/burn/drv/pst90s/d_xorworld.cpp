@@ -268,7 +268,8 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(0,	xorworld_read_byte);
 	SekClose();
 
-	saa1099Init(0, 8000000, 1000, 0);
+	saa1099Init(0, 8000000, 0);
+	saa1099SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	EEPROMInit(&eeprom_interface_93C46);
 

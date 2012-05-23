@@ -6740,6 +6740,8 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 	buffer_sprites = spr_buffer;
 
 	x1010_sound_init(16000000, 0x0000);
+	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	BurnYM3812Init(4000000, NULL, DrvYM3812SynchroniseStream, 0);
 	BurnTimerAttachSekYM3812(16000000);
@@ -9305,7 +9307,11 @@ static INT32 downtownInit()
 	DrvSetVideoOffsets(0, 0, -1, 0);
 	DrvSetColorOffsets(0, 0, 0);
 
-	return DrvInit(downtown68kInit, 8000000, SET_IRQLINES(1, 2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 1, -1));
+	INT32 nRet = DrvInit(downtown68kInit, 8000000, SET_IRQLINES(1, 2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 1, -1));
+	
+	x1010_set_all_routes(0.50, BURN_SND_ROUTE_LEFT);
+	
+	return nRet;
 }
 
 struct BurnDriver BurnDrvDowntown = {
@@ -9772,7 +9778,11 @@ static INT32 calibr50Init()
 	DrvSetColorOffsets(0, 0, 0);
 	DrvSetVideoOffsets(-1, 2, -3, -2);
 
-	return DrvInit(calibr5068kInit, 8000000, SET_IRQLINES(0x80, 0x80) /*custom*/, NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 1, -1));
+	INT32 nRet = DrvInit(calibr5068kInit, 8000000, SET_IRQLINES(0x80, 0x80) /*custom*/, NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 1, -1));
+	
+	x1010_set_all_routes(0.50, BURN_SND_ROUTE_LEFT);
+	
+	return nRet;
 }
 
 struct BurnDriver BurnDrvCalibr50 = {

@@ -1642,6 +1642,8 @@ static INT32 grdiansInit()
 	gfx_code_mask = 0x0800000 * 4 / 64;
 
 	x1010_sound_init(50000000 / 3, 0x0000);
+	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	DrvDoReset();	
 
@@ -1803,6 +1805,8 @@ static INT32 mj4simaiInit()
 	gfx_code_mask = 0x0800000 * 4 / 64;
 
 	x1010_sound_init(50000000 / 3, 0x0000);
+	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 //	bMahjong = 1;
 
@@ -1953,6 +1957,8 @@ static INT32 myangelInit()
 	gfx_code_mask = 0x0400000 * 4 / 64;
 
 	x1010_sound_init(50000000 / 3, 0x0000);
+	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	DrvDoReset();	
 
@@ -2101,6 +2107,8 @@ static INT32 myangel2Init()
 	gfx_code_mask = 0x0600000 * 4 / 64;
 
 	x1010_sound_init(50000000 / 3, 0x0000);
+	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	DrvDoReset();	
 
@@ -2257,6 +2265,8 @@ static INT32 pzlbowlInit()
 	gfx_code_mask = 0x0400000 * 4 / 64;
 
 	x1010_sound_init(50000000 / 3, 0x0000);
+	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	DrvDoReset();
 
@@ -2406,6 +2416,8 @@ static INT32 penbrosInit()
 	gfx_code_mask = 0x0400000 * 4 / 64;
 
 	x1010_sound_init(50000000 / 3, 0x0000);
+	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	DrvDoReset();
 
@@ -2571,6 +2583,8 @@ static INT32 gundamexInit()
 	gfx_code_mask = 0x0800000 * 4 / 64;
 
 	x1010_sound_init(50000000 / 3, 0x0000);
+	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	EEPROMInit(&eeprom_interface_93C46);
 
@@ -2703,6 +2717,8 @@ static INT32 samshootInit()
 	gfx_code_mask = 0x0800000 * 4 / 64;
 
 	x1010_sound_init(50000000 / 3, 0x0000);
+	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	BurnGunInit(2, true);
 

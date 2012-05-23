@@ -552,6 +552,8 @@ static struct renegade_adpcm_state
 	UINT8 nibble;
 	UINT8 playing;
 	UINT8 *base;
+	double gain;
+	INT32 output_dir;
 } renegade_adpcm;
 
 static INT32 diff_lookup[49*16];
@@ -602,9 +604,17 @@ static void RenegadeADPCMInit(INT32 clock)
 	struct renegade_adpcm_state *state = &renegade_adpcm;
 	state->playing = 0;
 	state->base = DrvADPCMRom;
+	state->gain = 1.00;
+	state->output_dir = BURN_SND_ROUTE_BOTH;
 	reset_adpcm(&state->adpcm);
 	
 	nUpdateStep = (INT32)(((float)clock / nBurnSoundRate) * 32768);
+}
+
+void RenegadeADMPCMSetRoute(double nVolume, INT32 nRouteDir)
+{
+	renegade_adpcm.gain = nVolume;
+	renegade_adpcm.output_dir = nRouteDir;
 }
 
 static INT32 DrvDoReset()
@@ -1297,11 +1307,22 @@ static void RenderADPCMSample(INT16 *pSoundBuf, INT32 nLength)
 		}
 		
 		INT16 Sample = clock_adpcm(&renegade_adpcm.adpcm, val) << 2;
-		INT32 Left = pSoundBuf[0] + Sample;
-		INT32 Right = pSoundBuf[1] + Sample;
-
-		pSoundBuf[0] = BURN_SND_CLIP(Left);
-		pSoundBuf[1] = BURN_SND_CLIP(Right);
+		
+		INT32 nLeftSample = 0, nRightSample = 0;
+		
+		if ((renegade_adpcm.output_dir & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+			nLeftSample += (INT32)(Sample * renegade_adpcm.gain);
+		}
+		if ((renegade_adpcm.output_dir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+			nRightSample += (INT32)(Sample * renegade_adpcm.gain);
+		}
+		
+		nLeftSample = BURN_SND_CLIP(nLeftSample + pSoundBuf[0]);
+		nRightSample = BURN_SND_CLIP(nRightSample + pSoundBuf[1]);
+		
+		pSoundBuf[0] = nLeftSample;
+		pSoundBuf[1] = nRightSample;
+		
 		pSoundBuf += 2;
 		nLength--;
 	}

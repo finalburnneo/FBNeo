@@ -378,6 +378,7 @@ void saa1099SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 #if defined FBA_DEBUG
 	if (!DebugSnd_SAA1099Initted) bprintf(PRINT_ERROR, _T("saa1099SetRoute called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("saa1099SetRoute called with invalid chip %x\n"), chip);
+	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("saa1099SetRoute called with invalid index %i\n"), nIndex);
 #endif
 
 	saa1099_state *saa = &chips[chip];

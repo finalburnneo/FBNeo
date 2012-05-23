@@ -281,6 +281,8 @@ extern double GalLfoFreq;
 extern double GalLfoFreqFrameVar;
 extern INT32 GalLfoBit[4];
 
+void GalaxianSoundSetRoute(double nVolume, INT32 nRouteDir);
+
 void GalSoundReset();
 void GalSoundInit();
 void GalSoundExit();

@@ -57,6 +57,8 @@ INT32 GalLfoVolume[3];
 double GalLfoFreq;
 double GalLfoFreqFrameVar;
 INT32 GalLfoBit[4];
+static double GalGain;
+static INT32 GalOutputDir;
 
 static INT16 GalToneWave[4][TOOTHSAW_LENGTH];
 
@@ -67,6 +69,12 @@ static const INT16 GalBackgroundWave[32] =
   -0x4000,-0x4000,-0x4000,-0x4000,-0x4000,-0x4000,-0x4000,-0x4000,
   -0x4000,-0x4000,-0x4000,-0x4000,-0x4000,-0x4000,-0x4000,-0x4000,
 };
+
+void GalaxianSoundSetRoute(double nVolume, INT32 nRouteDir)
+{
+	GalGain = nVolume;
+	GalOutputDir = nRouteDir;
+}
 
 void GalSoundReset()
 {
@@ -350,6 +358,9 @@ void GalSoundInit()
 		
 		GalLfoFreq = MAXFREQ;
 		GalLfoFreqFrameVar = 0;
+		
+		GalGain = 1.00;
+		GalOutputDir = BURN_SND_ROUTE_BOTH;
 	}
 }
 
@@ -780,8 +791,20 @@ static void GalRenderShootSample(INT16 *pSoundBuf, INT32 nLength)
 		INT16 Sample = (INT16)(GalShootWave[(INT32)Addr] * SHOOT_VOLUME);
 		Sample >>= 4;
 		
-		pSoundBuf[i + 0] += Sample;
-		pSoundBuf[i + 1] += Sample;
+		INT32 nLeftSample = 0, nRightSample = 0;
+			
+		if ((GalOutputDir & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+			nLeftSample += (INT32)(Sample * GalGain);
+		}
+		if ((GalOutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+			nRightSample += (INT32)(Sample * GalGain);
+		}
+			
+		nLeftSample = BURN_SND_CLIP(nLeftSample);
+		nRightSample = BURN_SND_CLIP(nRightSample);
+			
+		pSoundBuf[i + 0] += nLeftSample;
+		pSoundBuf[i + 1] += nRightSample;
 		
 		Addr += Step;
 	}
@@ -802,8 +825,20 @@ static void GalRenderNoiseSample(INT16 *pSoundBuf, INT32 nLength)
 		INT16 Sample = (INT16)(GalNoiseWave[(INT32)Addr] * (GalNoiseVolume / 100));
 		Sample >>= 4;
 		
-		pSoundBuf[i + 0] += Sample;
-		pSoundBuf[i + 1] += Sample;
+		INT32 nLeftSample = 0, nRightSample = 0;
+			
+		if ((GalOutputDir & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+			nLeftSample += (INT32)(Sample * GalGain);
+		}
+		if ((GalOutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+			nRightSample += (INT32)(Sample * GalGain);
+		}
+			
+		nLeftSample = BURN_SND_CLIP(nLeftSample);
+		nRightSample = BURN_SND_CLIP(nRightSample);
+			
+		pSoundBuf[i + 0] += nLeftSample;
+		pSoundBuf[i + 1] += nRightSample;
 		
 		Addr += Step;
 	}
@@ -837,8 +872,20 @@ static void GalRenderToneWave(INT16 *pSoundBuf, INT32 nLength)
 			INT16 Sample = mix / STEPS;
 			Sample >>= 4;
 			
-			pSoundBuf[i + 0] = Sample;
-			pSoundBuf[i + 1] = Sample;
+			INT32 nLeftSample = 0, nRightSample = 0;
+			
+			if ((GalOutputDir & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+				nLeftSample += (INT32)(Sample * GalGain);
+			}
+			if ((GalOutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+				nRightSample += (INT32)(Sample * GalGain);
+			}
+			
+			nLeftSample = BURN_SND_CLIP(nLeftSample);
+			nRightSample = BURN_SND_CLIP(nRightSample);
+			
+			pSoundBuf[i + 0] = nLeftSample;
+			pSoundBuf[i + 1] = nRightSample;
 		}
 	}
 }
@@ -852,8 +899,20 @@ static void GalRenderLfoWaveSample(INT32 nLfoWave, INT16 *pSoundBuf, INT32 nLeng
 		INT16 Sample = (INT16)(GalBackgroundWave[(INT32)Addr] * (GalLfoVolume[nLfoWave] ? LFO_VOLUME : 0));
 		Sample >>= 4;
 		
-		pSoundBuf[i + 0] += Sample;
-		pSoundBuf[i + 1] += Sample;
+		INT32 nLeftSample = 0, nRightSample = 0;
+			
+		if ((GalOutputDir & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+			nLeftSample += (INT32)(Sample * GalGain);
+		}
+		if ((GalOutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+			nRightSample += (INT32)(Sample * GalGain);
+		}
+			
+		nLeftSample = BURN_SND_CLIP(nLeftSample);
+		nRightSample = BURN_SND_CLIP(nRightSample);
+			
+		pSoundBuf[i + 0] += nLeftSample;
+		pSoundBuf[i + 1] += nRightSample;
 		
 		Addr += Step;
 	}

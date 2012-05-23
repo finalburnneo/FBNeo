@@ -441,7 +441,7 @@ static struct BurnRomInfo Drvb2RomDesc[] = {
 	
 	{ "u88.bin",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
 
-	{ "u62.bin",       0x08000, 0x46cb9d3d, BRF_GRA },	     //  4	Characters
+	{ "u62.bin",       0x08000, 0x0aba2096, BRF_GRA },	     //  4	Characters
 	
 	{ "u66.bin",       0x10000, 0x075e9a7f, BRF_GRA },	     //  5	BG Tiles
 	{ "u65.bin",       0x10000, 0x05aca09a, BRF_GRA },	     //  6

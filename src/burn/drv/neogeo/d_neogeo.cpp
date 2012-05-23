@@ -12531,6 +12531,66 @@ struct BurnDriver BurnDrvironclado = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Bang 2 Busters (Prototype)
+
+static struct BurnRomInfo b2busterRomDesc[] = {
+	{ "071-p1.bin",    0x080000, 0x7687197d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "071-s1.bin",    0x020000, 0x44e5f154, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "071-c1.bin",    0x200000, 0x23d84a7a, 3 | BRF_GRA },           //  2 Sprite data
+	{ "071-c2.bin",    0x200000, 0xce7b6248, 3 | BRF_GRA },           //  3 	 
+
+	{ "071-m1.bin",    0x020000, 0x6da739ad, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+
+	{ "071-v1.bin",    0x100000, 0x50feffb0, 5 | BRF_SND },           //  7 Sound data
+	 
+};
+
+STDROMPICKEXT(b2buster, b2buster, neogeo)
+STD_ROM_FN(b2buster)
+
+struct BurnDriver BurnDrvb2buster = {
+	"b2buster", NULL, "neogeo", NULL, "2000",
+	"Bang 2 Busters (Prototype)\0", NULL, "Visco", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
+	NULL, b2busterRomInfo, b2busterRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Treasure of the Carribean (Prototype)
+
+static struct BurnRomInfo totcaribRomDesc[] = {
+	{ "totc-p1.bin",    0x100000, 0x99604539, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "totc-s1.bin",    0x020000, 0x0A3FEE41, 2 | BRF_GRA },          //  1 Text layer tiles
+
+	{ "totc-c1.bin",    0x200000, 0xCDD6600F, 3 | BRF_GRA },           //  2 Sprite data
+	{ "totc-c2.bin",    0x200000, 0xF362C271, 3 | BRF_GRA },           //  3 	 
+
+	{ "totc-m1.bin",    0x020000, 0x18B23ACE, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+
+	{ "totc-v1.bin",    0x200000, 0x15C7F9E6, 5 | BRF_SND },           //  7 Sound data
+	{ "totc-v2.bin",    0x200000, 0x1B264559, 5 | BRF_SND },           //  7 Sound data
+	{ "totc-v3.bin",    0x100000, 0x84B62C5D, 5 | BRF_SND },           //  7 Sound data
+	 
+};
+
+STDROMPICKEXT(totcarib, totcarib, neogeo)
+STD_ROM_FN(totcarib)
+
+struct BurnDriver BurnDrvtotcarib = {
+	"totcarib", NULL, "neogeo", NULL, "1994",
+	"Treasure of the Carribean (Prototype)\0", NULL, "FACE Corporation", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
+	NULL, totcaribRomInfo, totcaribRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 // The King of Fighters 2001 Plus (set 2, bootleg / hack)
 
 static struct BurnRomInfo kf2k1paRomDesc[] = {

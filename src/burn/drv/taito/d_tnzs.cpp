@@ -40,6 +40,8 @@ static double kageki_sample_pos;
 static INT32  kageki_sample_select;
 static INT16 *kageki_sample_data[0x30];
 static INT32  kageki_sample_size[0x30];
+static double kageki_sample_gain;
+static INT32 kageki_sample_output_dir;
 
 static INT32 cpu1_reset;
 static INT32 tnzs_banks[3];
@@ -1002,6 +1004,15 @@ static void kageki_sample_init()
 			*dest++ = ((*scan++) ^ 0x80) << 8;
 		}
 	}
+	
+	kageki_sample_gain = 1.00;
+	kageki_sample_output_dir = BURN_SND_ROUTE_BOTH;
+}
+
+void kageki_sample_set_route(double nVolume, INT32 nRouteDir)
+{
+	kageki_sample_gain = nVolume;
+	kageki_sample_output_dir = nRouteDir;
 }
 
 static void kageki_sample_exit()
@@ -1485,14 +1496,25 @@ static void kageki_sample_render(INT16 *pSoundBuf, INT32 nLength)
 	double Step = (double)7000 / nBurnSoundRate;
 
 	double size = kageki_sample_size[kageki_sample_select];
-	short *ptr  = kageki_sample_data[kageki_sample_select];
+	INT16 *ptr  = kageki_sample_data[kageki_sample_select];
 
 	for (INT32 i = 0; i < nLength; i += 2) {
 		if (Addr >= size) break;
-		short Sample = ptr[(INT32)Addr];
+		INT16 Sample = ptr[(INT32)Addr];
 
-		pSoundBuf[i    ] = Sample;
-		pSoundBuf[i + 1] = Sample;
+//		pSoundBuf[i    ] = Sample;
+//		pSoundBuf[i + 1] = Sample;
+		INT16 nLeftSample = 0, nRightSample = 0;
+		
+		if ((kageki_sample_output_dir & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+			nLeftSample += (INT32)(Sample * kageki_sample_gain);
+		}
+		if ((kageki_sample_output_dir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+			nRightSample += (INT32)(Sample * kageki_sample_gain);
+		}
+		
+		pSoundBuf[i + 0] += nLeftSample;
+		pSoundBuf[i + 1] += nRightSample;
 
 		Addr += Step;
 	}

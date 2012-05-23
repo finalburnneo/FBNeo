@@ -58,7 +58,9 @@ static INT32 BlswhstlTileRomBank;
 
 static INT32 TitleSoundLatch;
 static INT32 PlayTitleSample;
-double TitleSamplePos = 0;
+static double TitleSamplePos = 0;
+static double TitleSampleGain;
+static INT32 TitleSampleOutputDir;
 
 static UINT8 DrvVBlank;
 
@@ -4184,6 +4186,12 @@ static void TmntDecodeTitleSample()
 	}
 }
 
+static void TmntTitleSampleSetRoute(double nVolume, INT32 nRouteDir)
+{
+	TitleSampleGain = nVolume;
+	TitleSampleOutputDir = nRouteDir;
+}
+
 static INT32 TilePlaneOffsets[4]     = { 24, 16, 8, 0 };
 static INT32 TileXOffsets[8]         = { 0, 1, 2, 3, 4, 5, 6, 7 };
 static INT32 TileYOffsets[8]         = { 0, 32, 64, 96, 128, 160, 192, 224 };
@@ -4410,6 +4418,8 @@ static INT32 TmntInit()
 	
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvUPD7759CRom);
 	UPD7759SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
+	
+	TmntTitleSampleSetRoute(1.00, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
 	
@@ -5499,8 +5509,17 @@ static void RenderTitleSample(INT16 *pSoundBuf, INT32 nLength)
 		if (Addr > 0x3ffff) break;
 		INT16 Sample = DrvTitleSample[(INT32)Addr];
 		
-		pSoundBuf[i + 0] += Sample;
-		pSoundBuf[i + 1] += Sample;
+		INT16 nLeftSample = 0, nRightSample = 0;
+		
+		if ((TitleSampleOutputDir & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+			nLeftSample += (INT32)(Sample * TitleSampleGain);
+		}
+		if ((TitleSampleOutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+			nRightSample += (INT32)(Sample * TitleSampleGain);
+		}
+		
+		pSoundBuf[i + 0] += nLeftSample;
+		pSoundBuf[i + 1] += nRightSample;
 		
 		Addr += Step;
 	}

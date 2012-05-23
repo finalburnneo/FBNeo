@@ -512,6 +512,7 @@ static INT32 DrvInit(INT32 type)
 //	HD63701Close();
 
 	NamcoSoundInit(49152000/2048);
+	NacmoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH); // MAME uses 1.00, which is way too loud
 
 	BurnLEDInit(2, LED_POSITION_BOTTOM_RIGHT, LED_SIZE_5x5, LED_COLOR_GREEN, 100);
 

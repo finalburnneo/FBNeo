@@ -846,6 +846,7 @@ static void MachineInit()
 	ZetClose();
 	
 	NamcoSoundInit(18432000 / 6 / 32);
+	NacmoSoundSetAllRoutes(0.90 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 	BurnSampleInit(80, 0);
 
 	GenericTilesInit();

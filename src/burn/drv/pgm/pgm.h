@@ -77,6 +77,7 @@ void install_protection_asic27a_ketsui();
 void install_protection_asic27a_ddp3();
 void install_protection_asic27a_puzzli2();
 void install_protection_asic27a_kovshp();
+void install_protection_asic27a_py2k2();
 
 // pgm_crypt
 void pgm_decrypt_kov();

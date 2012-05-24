@@ -713,7 +713,7 @@ static struct BurnRomInfo GpriderRomDesc[] = {
 STD_ROM_PICK(Gprider)
 STD_ROM_FN(Gprider)
 
-static struct BurnRomInfo Gprider1RomDesc[] = {
+static struct BurnRomInfo GprideruRomDesc[] = {
 	{ "epr-13407.ic58",   0x20000, 0x03553ebd, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-13406.ic63",   0x20000, 0x122c711f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 		
@@ -753,8 +753,8 @@ static struct BurnRomInfo Gprider1RomDesc[] = {
 };
 
 
-STD_ROM_PICK(Gprider1)
-STD_ROM_FN(Gprider1)
+STD_ROM_PICK(Gprideru)
+STD_ROM_FN(Gprideru)
 
 static struct BurnRomInfo LoffireRomDesc[] = {
 	{ "epr-12849.58",     0x20000, 0x61cfd2fe, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -2308,7 +2308,7 @@ struct BurnDriver BurnDrvAburner = {
 
 struct BurnDriver BurnDrvGprider = {
 	"gprider", NULL, NULL, NULL, "1990",
-	"GP Rider (set 2, World, FD1094 317-0163)\0", NULL, "Sega", "X-Board",
+	"GP Rider (World, FD1094 317-0163)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, GpriderRomInfo, GpriderRomName, NULL, NULL, GpriderInputInfo, GpriderDIPInfo,
@@ -2316,12 +2316,12 @@ struct BurnDriver BurnDrvGprider = {
 	NULL, 0x6000, 320, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvGprider1 = {
-	"gprider1", "gprider", NULL, NULL, "1990",
-	"GP Rider (set 1, US, FD1094 317-0162)\0", NULL, "Sega", "X-Board",
+struct BurnDriver BurnDrvGprideru = {
+	"gprideru", "gprider", NULL, NULL, "1990",
+	"GP Rider (US, FD1094 317-0162)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
-	NULL, Gprider1RomInfo, Gprider1RomName, NULL, NULL, GpriderInputInfo, GpriderDIPInfo,
+	NULL, GprideruRomInfo, GprideruRomName, NULL, NULL, GpriderInputInfo, GpriderDIPInfo,
 	GpriderInit, XBoardExit, XBoardFrame, NULL, XBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };

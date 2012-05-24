@@ -381,7 +381,7 @@ static struct BurnSampleInfo GalagaSampleDesc[] = {
    { "bang.wav", SAMPLE_NOLOOP },
    { "bang.wav", SAMPLE_NOLOOP },
 #endif
-   { "", 0 }
+  { "", 0 }
 };
 
 STD_SAMPLE_PICK(Galaga)
@@ -847,7 +847,8 @@ static void MachineInit()
 	
 	NamcoSoundInit(18432000 / 6 / 32);
 	NacmoSoundSetAllRoutes(0.90 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
-	BurnSampleInit(80, 0);
+	BurnSampleInit(0);
+	BurnSampleSetAllRoutesAllSamples(0.80, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

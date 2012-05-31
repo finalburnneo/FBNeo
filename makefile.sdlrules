@@ -26,7 +26,7 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_m62.o d_m63.o d_m72.o d_m90.o d_m92.o d_vigilant.o \
 			\
 			d_88games.o d_ajax.o d_aliens.o d_blockhl.o d_bottom9.o d_contra.o d_crimfght.o d_gberet.o d_gbusters.o d_gradius3.o \
-			d_gyruss.o d_hcastle.o d_hexion.o d_mainevt.o d_mogura.o d_parodius.o d_pooyan.o d_rollerg.o d_scotrsht.o \
+			d_gyruss.o d_hcastle.o d_hexion.o d_kontest.o d_mainevt.o d_mogura.o d_parodius.o d_pooyan.o d_rollerg.o d_scotrsht.o \
 			d_simpsons.o d_spy.o d_surpratk.o d_thunderx.o d_tmnt.o d_twin16.o d_ultraman.o d_vendetta.o d_xmen.o \
 			\
 			d_neogeo.o \

@@ -24,6 +24,11 @@ static INT32 bYM2610AddSignal;
 static double YM2610Volumes[3];
 static INT32 YM2610RouteDirs[3];
 
+static double YM2610LeftVolumes[3];
+static double YM2610RightVolumes[3];
+
+INT32 bYM2610UseSeperateVolumes; // support custom Taito panning hardware
+
 // ----------------------------------------------------------------------------
 // Dummy functions
 
@@ -116,7 +121,7 @@ static void YM2610UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 	pYM2610Buffer[5] = pBuffer + 5 * 4096 + 4;
 
 	for (INT32 i = (nFractionalPosition >> 16) - 4; i < nSamplesNeeded; i++) {
-		pYM2610Buffer[5][i] = (INT32)((pYM2610Buffer[2][i] + pYM2610Buffer[3][i] + pYM2610Buffer[4][i]) * YM2610Volumes[BURN_SND_YM2610_AY8910_ROUTE]);
+		pYM2610Buffer[5][i] = pYM2610Buffer[2][i] + pYM2610Buffer[3][i] + pYM2610Buffer[4][i];
 	}
 
 	for (INT32 i = (nFractionalPosition & 0xFFFF0000) >> 15; i < nSegmentLength; i += 2, nFractionalPosition += nSampleSize) {
@@ -124,43 +129,75 @@ static void YM2610UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 		INT32 nRightSample[4] = {0, 0, 0, 0};
 		INT32 nTotalLeftSample, nTotalRightSample;
 		
-		if ((YM2610RouteDirs[BURN_SND_YM2610_AY8910_ROUTE] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample[0] += pYM2610Buffer[5][(nFractionalPosition >> 16) - 3];
-			nLeftSample[1] += pYM2610Buffer[5][(nFractionalPosition >> 16) - 2];
-			nLeftSample[2] += pYM2610Buffer[5][(nFractionalPosition >> 16) - 1];
-			nLeftSample[3] += pYM2610Buffer[5][(nFractionalPosition >> 16) - 0];
-		}
-		if ((YM2610RouteDirs[BURN_SND_YM2610_AY8910_ROUTE] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample[0] += pYM2610Buffer[5][(nFractionalPosition >> 16) - 3];
-			nRightSample[1] += pYM2610Buffer[5][(nFractionalPosition >> 16) - 2];
-			nRightSample[2] += pYM2610Buffer[5][(nFractionalPosition >> 16) - 1];
-			nRightSample[3] += pYM2610Buffer[5][(nFractionalPosition >> 16) - 0];
-		}
+		if (bYM2610UseSeperateVolumes) {
+			nLeftSample[0] += (INT32)(pYM2610Buffer[5][(nFractionalPosition >> 16) - 3] * YM2610LeftVolumes[BURN_SND_YM2610_AY8910_ROUTE]);
+			nLeftSample[1] += (INT32)(pYM2610Buffer[5][(nFractionalPosition >> 16) - 2] * YM2610LeftVolumes[BURN_SND_YM2610_AY8910_ROUTE]);
+			nLeftSample[2] += (INT32)(pYM2610Buffer[5][(nFractionalPosition >> 16) - 1] * YM2610LeftVolumes[BURN_SND_YM2610_AY8910_ROUTE]);
+			nLeftSample[3] += (INT32)(pYM2610Buffer[5][(nFractionalPosition >> 16) - 0] * YM2610LeftVolumes[BURN_SND_YM2610_AY8910_ROUTE]);
+			
+			nLeftSample[0] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 3] * YM2610LeftVolumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+			nLeftSample[1] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 2] * YM2610LeftVolumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+			nLeftSample[2] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 1] * YM2610LeftVolumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+			nLeftSample[3] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 0] * YM2610LeftVolumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+			
+			nLeftSample[0] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 3] * YM2610LeftVolumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+			nLeftSample[1] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 2] * YM2610LeftVolumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+			nLeftSample[2] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 1] * YM2610LeftVolumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+			nLeftSample[3] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 0] * YM2610LeftVolumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+				
+			nRightSample[0] += (INT32)(pYM2610Buffer[5][(nFractionalPosition >> 16) - 3] * YM2610RightVolumes[BURN_SND_YM2610_AY8910_ROUTE]);
+			nRightSample[1] += (INT32)(pYM2610Buffer[5][(nFractionalPosition >> 16) - 2] * YM2610RightVolumes[BURN_SND_YM2610_AY8910_ROUTE]);
+			nRightSample[2] += (INT32)(pYM2610Buffer[5][(nFractionalPosition >> 16) - 1] * YM2610RightVolumes[BURN_SND_YM2610_AY8910_ROUTE]);
+			nRightSample[3] += (INT32)(pYM2610Buffer[5][(nFractionalPosition >> 16) - 0] * YM2610RightVolumes[BURN_SND_YM2610_AY8910_ROUTE]);
+			
+			nRightSample[0] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 3] * YM2610RightVolumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+			nRightSample[1] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 2] * YM2610RightVolumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+			nRightSample[2] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 1] * YM2610RightVolumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+			nRightSample[3] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 0] * YM2610RightVolumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+			
+			nRightSample[0] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 3] * YM2610RightVolumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+			nRightSample[1] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 2] * YM2610RightVolumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+			nRightSample[2] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 1] * YM2610RightVolumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+			nRightSample[3] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 0] * YM2610RightVolumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+		} else {
+			if ((YM2610RouteDirs[BURN_SND_YM2610_AY8910_ROUTE] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+				nLeftSample[0] += (INT32)(pYM2610Buffer[5][(nFractionalPosition >> 16) - 3] * YM2610Volumes[BURN_SND_YM2610_AY8910_ROUTE]);
+				nLeftSample[1] += (INT32)(pYM2610Buffer[5][(nFractionalPosition >> 16) - 2] * YM2610Volumes[BURN_SND_YM2610_AY8910_ROUTE]);
+				nLeftSample[2] += (INT32)(pYM2610Buffer[5][(nFractionalPosition >> 16) - 1] * YM2610Volumes[BURN_SND_YM2610_AY8910_ROUTE]);
+				nLeftSample[3] += (INT32)(pYM2610Buffer[5][(nFractionalPosition >> 16) - 0] * YM2610Volumes[BURN_SND_YM2610_AY8910_ROUTE]);
+			}
+			if ((YM2610RouteDirs[BURN_SND_YM2610_AY8910_ROUTE] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+				nRightSample[0] += (INT32)(pYM2610Buffer[5][(nFractionalPosition >> 16) - 3] * YM2610Volumes[BURN_SND_YM2610_AY8910_ROUTE]);
+				nRightSample[1] += (INT32)(pYM2610Buffer[5][(nFractionalPosition >> 16) - 2] * YM2610Volumes[BURN_SND_YM2610_AY8910_ROUTE]);
+				nRightSample[2] += (INT32)(pYM2610Buffer[5][(nFractionalPosition >> 16) - 1] * YM2610Volumes[BURN_SND_YM2610_AY8910_ROUTE]);
+				nRightSample[3] += (INT32)(pYM2610Buffer[5][(nFractionalPosition >> 16) - 0] * YM2610Volumes[BURN_SND_YM2610_AY8910_ROUTE]);
+			}
 		
-		if ((YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample[0] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 3] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
-			nLeftSample[1] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 2] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
-			nLeftSample[2] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 1] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
-			nLeftSample[3] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 0] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
-		}
-		if ((YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample[0] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 3] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
-			nRightSample[1] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 2] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
-			nRightSample[2] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 1] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
-			nRightSample[3] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 0] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
-		}
+			if ((YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+				nLeftSample[0] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 3] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+				nLeftSample[1] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 2] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+				nLeftSample[2] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 1] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+				nLeftSample[3] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 0] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+			}
+			if ((YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+				nRightSample[0] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 3] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+				nRightSample[1] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 2] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+				nRightSample[2] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 1] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+				nRightSample[3] += (INT32)(pYM2610Buffer[0][(nFractionalPosition >> 16) - 0] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+			}
 		
-		if ((YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample[0] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 3] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
-			nLeftSample[1] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 2] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
-			nLeftSample[2] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 1] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
-			nLeftSample[3] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 0] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
-		}
-		if ((YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample[0] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 3] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
-			nRightSample[1] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 2] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
-			nRightSample[2] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 1] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
-			nRightSample[3] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 0] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+			if ((YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+				nLeftSample[0] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 3] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+				nLeftSample[1] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 2] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+				nLeftSample[2] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 1] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+				nLeftSample[3] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 0] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+			}
+			if ((YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+				nRightSample[0] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 3] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+				nRightSample[1] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 2] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+				nRightSample[2] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 1] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+				nRightSample[3] += (INT32)(pYM2610Buffer[1][(nFractionalPosition >> 16) - 0] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+			}
 		}
 		
 		nTotalLeftSample = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
@@ -232,26 +269,36 @@ static void YM2610UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 		nAYSample  = pYM2610Buffer[2][n];
 		nAYSample += pYM2610Buffer[3][n];
 		nAYSample += pYM2610Buffer[4][n];
-
-		if ((YM2610RouteDirs[BURN_SND_YM2610_AY8910_ROUTE] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += (INT32)(nAYSample * YM2610Volumes[BURN_SND_YM2610_AY8910_ROUTE]);
-		}
-		if ((YM2610RouteDirs[BURN_SND_YM2610_AY8910_ROUTE] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += (INT32)(nAYSample * YM2610Volumes[BURN_SND_YM2610_AY8910_ROUTE]);
-		}
 		
-		if ((YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += (INT32)(pYM2610Buffer[0][n] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
-		}
-		if ((YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += (INT32)(pYM2610Buffer[0][n] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
-		}
+		if (bYM2610UseSeperateVolumes) {
+			nLeftSample += (INT32)(nAYSample * YM2610LeftVolumes[BURN_SND_YM2610_AY8910_ROUTE]);
+			nLeftSample += (INT32)(pYM2610Buffer[0][n] * YM2610LeftVolumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+			nLeftSample += (INT32)(pYM2610Buffer[1][n] * YM2610LeftVolumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+			
+			nRightSample += (INT32)(nAYSample * YM2610RightVolumes[BURN_SND_YM2610_AY8910_ROUTE]);
+			nRightSample += (INT32)(pYM2610Buffer[0][n] * YM2610RightVolumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+			nRightSample += (INT32)(pYM2610Buffer[1][n] * YM2610RightVolumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+		} else {
+			if ((YM2610RouteDirs[BURN_SND_YM2610_AY8910_ROUTE] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+				nLeftSample += (INT32)(nAYSample * YM2610Volumes[BURN_SND_YM2610_AY8910_ROUTE]);
+			}
+			if ((YM2610RouteDirs[BURN_SND_YM2610_AY8910_ROUTE] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+				nRightSample += (INT32)(nAYSample * YM2610Volumes[BURN_SND_YM2610_AY8910_ROUTE]);
+			}
 		
-		if ((YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += (INT32)(pYM2610Buffer[1][n] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
-		}
-		if ((YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += (INT32)(pYM2610Buffer[1][n] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+			if ((YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+				nLeftSample += (INT32)(pYM2610Buffer[0][n] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+			}
+			if ((YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+				nRightSample += (INT32)(pYM2610Buffer[0][n] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_1]);
+			}
+		
+			if ((YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+				nLeftSample += (INT32)(pYM2610Buffer[1][n] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+			}
+			if ((YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+				nRightSample += (INT32)(pYM2610Buffer[1][n] * YM2610Volumes[BURN_SND_YM2610_YM2610_ROUTE_2]);
+			}
 		}
 		
 		nLeftSample = BURN_SND_CLIP(nLeftSample);
@@ -344,6 +391,7 @@ void BurnYM2610Exit()
 	}
 	
 	bYM2610AddSignal = 0;
+	bYM2610UseSeperateVolumes = 0;
 	
 	DebugSnd_YM2610Initted = 0;
 }
@@ -414,6 +462,14 @@ INT32 BurnYM2610Init(INT32 nClockFrequency, UINT8* YM2610ADPCMAROM, INT32* nYM26
 	YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_1] = BURN_SND_ROUTE_LEFT;
 	YM2610RouteDirs[BURN_SND_YM2610_YM2610_ROUTE_2] = BURN_SND_ROUTE_RIGHT;
 	YM2610RouteDirs[BURN_SND_YM2610_AY8910_ROUTE] = BURN_SND_ROUTE_BOTH;
+	
+	bYM2610UseSeperateVolumes = 0;
+	YM2610LeftVolumes[BURN_SND_YM2610_YM2610_ROUTE_1] = 1.00;
+	YM2610LeftVolumes[BURN_SND_YM2610_YM2610_ROUTE_2] = 1.00;
+	YM2610LeftVolumes[BURN_SND_YM2610_AY8910_ROUTE] = 1.00;
+	YM2610RightVolumes[BURN_SND_YM2610_YM2610_ROUTE_1] = 1.00;
+	YM2610RightVolumes[BURN_SND_YM2610_YM2610_ROUTE_2] = 1.00;
+	YM2610RightVolumes[BURN_SND_YM2610_AY8910_ROUTE] = 1.00;
 
 	return 0;
 }
@@ -427,6 +483,26 @@ void BurnYM2610SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 	
 	YM2610Volumes[nIndex] = nVolume;
 	YM2610RouteDirs[nIndex] = nRouteDir;
+}
+
+void BurnYM2610SetLeftVolume(INT32 nIndex, double nLeftVolume)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("BurnYM2610SetLeftVolume called without init\n"));
+	if (nIndex < 0 || nIndex > 2) bprintf(PRINT_ERROR, _T("BurnYM2610SetLeftVolume called with invalid index %i\n"), nIndex);
+#endif
+	
+	YM2610LeftVolumes[nIndex] = nLeftVolume;
+}
+
+void BurnYM2610SetRightVolume(INT32 nIndex, double nRightVolume)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("BurnYM2610SetRightVolume called without init\n"));
+	if (nIndex < 0 || nIndex > 2) bprintf(PRINT_ERROR, _T("BurnYM2610SetRightVolume called with invalid index %i\n"), nIndex);
+#endif
+	
+	YM2610RightVolumes[nIndex] = nRightVolume;
 }
 
 void BurnYM2610Scan(INT32 nAction, INT32* pnMin)

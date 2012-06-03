@@ -7,6 +7,9 @@
 
 static INT32 Ninjaw;
 
+static double Darius2YM2610Route1MasterVol;
+static double Darius2YM2610Route2MasterVol;
+
 static void Darius2Draw();
 static void Darius2dDraw();
 static void WarriorbDraw();
@@ -1249,11 +1252,23 @@ void __fastcall Darius2Z80Write(UINT16 a, UINT8 d)
 			return;
 		}
 		
-		case 0xe400:
-		case 0xe401:
-		case 0xe402:
+		case 0xe400: {
+			BurnYM2610SetLeftVolume(BURN_SND_YM2610_YM2610_ROUTE_1, Darius2YM2610Route1MasterVol * d / 255.0);
+			return;
+		}
+		
+		case 0xe401: {
+			BurnYM2610SetRightVolume(BURN_SND_YM2610_YM2610_ROUTE_1, Darius2YM2610Route1MasterVol * d / 255.0);
+			return;
+		}
+		
+		case 0xe402: {
+			BurnYM2610SetLeftVolume(BURN_SND_YM2610_YM2610_ROUTE_2, Darius2YM2610Route1MasterVol * d / 255.0);
+			return;
+		}
+		
 		case 0xe403: {
-			//pan control
+			BurnYM2610SetRightVolume(BURN_SND_YM2610_YM2610_ROUTE_2, Darius2YM2610Route1MasterVol * d / 255.0);
 			return;
 		}
 		
@@ -1412,9 +1427,11 @@ static INT32 Darius2Init()
 	
 	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &Darius2FMIRQHandler, Darius2SynchroniseStream, Darius2GetTime, 0);
 	BurnTimerAttachZet(16000000 / 4);
-	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
+	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
+	Darius2YM2610Route1MasterVol = 1.00;
+	Darius2YM2610Route2MasterVol = 1.00;
+	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoDrawFunction = Darius2Draw;
 	TaitoMakeInputsFunction = Darius2MakeInputs;
@@ -1508,9 +1525,11 @@ static INT32 Darius2dInit()
 	
 	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &Darius2FMIRQHandler, Darius2SynchroniseStream, Darius2GetTime, 0);
 	BurnTimerAttachZet(16000000 / 4);
-	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
+	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
+	Darius2YM2610Route1MasterVol = 12.00;
+	Darius2YM2610Route2MasterVol = 12.00;
+	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoDrawFunction = Darius2dDraw;
 	TaitoMakeInputsFunction = Darius2dMakeInputs;
@@ -1618,9 +1637,11 @@ static INT32 WarriorbInit()
 	
 	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &Darius2FMIRQHandler, Darius2SynchroniseStream, Darius2GetTime, 0);
 	BurnTimerAttachZet(16000000 / 4);
-	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
+	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
+	Darius2YM2610Route1MasterVol = 12.00;
+	Darius2YM2610Route2MasterVol = 12.00;
+	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoDrawFunction = WarriorbDraw;
 	TaitoMakeInputsFunction = WarriorbMakeInputs;

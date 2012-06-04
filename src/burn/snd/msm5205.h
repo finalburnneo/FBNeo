@@ -16,6 +16,9 @@ void MSM5205PlaymodeWrite(INT32 chip, INT32 select);
 
 void MSM5205Init(INT32 chip, INT32 (*stream_sync)(INT32), INT32 clock, void (*vclk_callback)(), INT32 select, INT32 bAdd);
 void MSM5205SetRoute(INT32 chip, double nVolume, INT32 nRouteDir);
+void MSM5205SetLeftVolume(INT32 chip, double nLeftVolume);
+void MSM5205SetRightVolume(INT32 chip, double nRightVolume);
+void MSM5205SetSeperateVolumes(INT32 chip, INT32 state);
 void MSM5205Reset();
 
 /*

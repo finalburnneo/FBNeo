@@ -26,6 +26,11 @@ static INT32 bYM2203AddSignal;
 static double YM2203Volumes[4 * MAX_YM2203];
 static INT32 YM2203RouteDirs[4 * MAX_YM2203];
 
+static double YM2203LeftVolumes[4 * MAX_YM2203];
+static double YM2203RightVolumes[4 * MAX_YM2203];
+
+INT32 bYM2203UseSeperateVolumes; // support custom Taito panning hardware
+
 // ----------------------------------------------------------------------------
 // Dummy functions
 
@@ -114,6 +119,18 @@ static void YM2203Render(INT32 nSegmentLength)
 		nRightSample[2] += (INT32)(pYM2203Buffer[buffer][(nFractionalPosition >> 16) - 1] * YM2203Volumes[route]);	\
 		nRightSample[3] += (INT32)(pYM2203Buffer[buffer][(nFractionalPosition >> 16) - 0] * YM2203Volumes[route]);	\
 	}
+	
+#define SPLIT_INTERPOLATE_ADD_SOUND_LEFT(route, buffer)																\
+	nLeftSample[0] += (INT32)(pYM2203Buffer[buffer][(nFractionalPosition >> 16) - 3] * YM2203LeftVolumes[route]);	\
+	nLeftSample[1] += (INT32)(pYM2203Buffer[buffer][(nFractionalPosition >> 16) - 2] * YM2203LeftVolumes[route]);	\
+	nLeftSample[2] += (INT32)(pYM2203Buffer[buffer][(nFractionalPosition >> 16) - 1] * YM2203LeftVolumes[route]);	\
+	nLeftSample[3] += (INT32)(pYM2203Buffer[buffer][(nFractionalPosition >> 16) - 0] * YM2203LeftVolumes[route]);
+	
+#define SPLIT_INTERPOLATE_ADD_SOUND_RIGHT(route, buffer)																\
+	nRightSample[0] += (INT32)(pYM2203Buffer[buffer][(nFractionalPosition >> 16) - 3] * YM2203RightVolumes[route]);	\
+	nRightSample[1] += (INT32)(pYM2203Buffer[buffer][(nFractionalPosition >> 16) - 2] * YM2203RightVolumes[route]);	\
+	nRightSample[2] += (INT32)(pYM2203Buffer[buffer][(nFractionalPosition >> 16) - 1] * YM2203RightVolumes[route]);	\
+	nRightSample[3] += (INT32)(pYM2203Buffer[buffer][(nFractionalPosition >> 16) - 0] * YM2203RightVolumes[route]);
 
 static void YM2203UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 {
@@ -156,24 +173,48 @@ static void YM2203UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 		INT32 nRightSample[4] = {0, 0, 0, 0};
 		INT32 nTotalLeftSample, nTotalRightSample;
 		
-		INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_YM2203_AY8910_ROUTE_1, 1)
-		INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_YM2203_AY8910_ROUTE_1, 1)
-		INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_YM2203_AY8910_ROUTE_2, 2)
-		INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_YM2203_AY8910_ROUTE_2, 2)
-		INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_YM2203_AY8910_ROUTE_3, 3)
-		INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_YM2203_AY8910_ROUTE_3, 3)
-		INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_YM2203_YM2203_ROUTE  , 0)
-		INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_YM2203_YM2203_ROUTE  , 0)
+		if (bYM2203UseSeperateVolumes) {
+			SPLIT_INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_YM2203_AY8910_ROUTE_1, 1)
+			SPLIT_INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_YM2203_AY8910_ROUTE_2, 2)
+			SPLIT_INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_YM2203_AY8910_ROUTE_3, 3)
+			SPLIT_INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_YM2203_YM2203_ROUTE  , 0)
+			
+			SPLIT_INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_YM2203_AY8910_ROUTE_1, 1)
+			SPLIT_INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_YM2203_AY8910_ROUTE_2, 2)
+			SPLIT_INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_YM2203_AY8910_ROUTE_3, 3)
+			SPLIT_INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_YM2203_YM2203_ROUTE  , 0)
+			
+			if (nNumChips > 1) {
+				SPLIT_INTERPOLATE_ADD_SOUND_LEFT  (4 + BURN_SND_YM2203_AY8910_ROUTE_1, 5)
+				SPLIT_INTERPOLATE_ADD_SOUND_LEFT  (4 + BURN_SND_YM2203_AY8910_ROUTE_2, 6)
+				SPLIT_INTERPOLATE_ADD_SOUND_LEFT  (4 + BURN_SND_YM2203_AY8910_ROUTE_3, 7)
+				SPLIT_INTERPOLATE_ADD_SOUND_LEFT  (4 + BURN_SND_YM2203_YM2203_ROUTE  , 4)
+			
+				SPLIT_INTERPOLATE_ADD_SOUND_RIGHT (4 + BURN_SND_YM2203_AY8910_ROUTE_1, 5)
+				SPLIT_INTERPOLATE_ADD_SOUND_RIGHT (4 + BURN_SND_YM2203_AY8910_ROUTE_2, 6)
+				SPLIT_INTERPOLATE_ADD_SOUND_RIGHT (4 + BURN_SND_YM2203_AY8910_ROUTE_3, 7)
+				SPLIT_INTERPOLATE_ADD_SOUND_RIGHT (4 + BURN_SND_YM2203_YM2203_ROUTE  , 4)
+			}
+		} else {		
+			INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_YM2203_AY8910_ROUTE_1, 1)
+			INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_YM2203_AY8910_ROUTE_1, 1)
+			INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_YM2203_AY8910_ROUTE_2, 2)
+			INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_YM2203_AY8910_ROUTE_2, 2)
+			INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_YM2203_AY8910_ROUTE_3, 3)
+			INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_YM2203_AY8910_ROUTE_3, 3)
+			INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_YM2203_YM2203_ROUTE  , 0)
+			INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_YM2203_YM2203_ROUTE  , 0)
 		
-		if (nNumChips > 1) {
-			INTERPOLATE_ADD_SOUND_LEFT  (4 + BURN_SND_YM2203_AY8910_ROUTE_1, 5)
-			INTERPOLATE_ADD_SOUND_RIGHT (4 + BURN_SND_YM2203_AY8910_ROUTE_1, 5)
-			INTERPOLATE_ADD_SOUND_LEFT  (4 + BURN_SND_YM2203_AY8910_ROUTE_2, 6)
-			INTERPOLATE_ADD_SOUND_RIGHT (4 + BURN_SND_YM2203_AY8910_ROUTE_2, 6)
-			INTERPOLATE_ADD_SOUND_LEFT  (4 + BURN_SND_YM2203_AY8910_ROUTE_3, 7)
-			INTERPOLATE_ADD_SOUND_RIGHT (4 + BURN_SND_YM2203_AY8910_ROUTE_3, 7)
-			INTERPOLATE_ADD_SOUND_LEFT  (4 + BURN_SND_YM2203_YM2203_ROUTE  , 4)
-			INTERPOLATE_ADD_SOUND_RIGHT (4 + BURN_SND_YM2203_YM2203_ROUTE  , 4)
+			if (nNumChips > 1) {
+				INTERPOLATE_ADD_SOUND_LEFT  (4 + BURN_SND_YM2203_AY8910_ROUTE_1, 5)
+				INTERPOLATE_ADD_SOUND_RIGHT (4 + BURN_SND_YM2203_AY8910_ROUTE_1, 5)
+				INTERPOLATE_ADD_SOUND_LEFT  (4 + BURN_SND_YM2203_AY8910_ROUTE_2, 6)
+				INTERPOLATE_ADD_SOUND_RIGHT (4 + BURN_SND_YM2203_AY8910_ROUTE_2, 6)
+				INTERPOLATE_ADD_SOUND_LEFT  (4 + BURN_SND_YM2203_AY8910_ROUTE_3, 7)
+				INTERPOLATE_ADD_SOUND_RIGHT (4 + BURN_SND_YM2203_AY8910_ROUTE_3, 7)
+				INTERPOLATE_ADD_SOUND_LEFT  (4 + BURN_SND_YM2203_YM2203_ROUTE  , 4)
+				INTERPOLATE_ADD_SOUND_RIGHT (4 + BURN_SND_YM2203_YM2203_ROUTE  , 4)
+			}
 		}
 		
 		nTotalLeftSample = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
@@ -255,61 +296,85 @@ static void YM2203UpdateNormal(INT16* pSoundBuf, INT32 nSegmentEnd)
 	for (INT32 n = nFractionalPosition; n < nSegmentLength; n++) {
 		INT32 nLeftSample = 0, nRightSample = 0;
 		
-		if ((YM2203RouteDirs[BURN_SND_YM2203_AY8910_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += (INT32)(pYM2203Buffer[1][n] * YM2203Volumes[BURN_SND_YM2203_AY8910_ROUTE_1]);
-		}
-		if ((YM2203RouteDirs[BURN_SND_YM2203_AY8910_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += (INT32)(pYM2203Buffer[1][n] * YM2203Volumes[BURN_SND_YM2203_AY8910_ROUTE_1]);
-		}
+		if (bYM2203UseSeperateVolumes) {
+			nLeftSample += (INT32)(pYM2203Buffer[1][n] * YM2203LeftVolumes[BURN_SND_YM2203_AY8910_ROUTE_1]);
+			nLeftSample += (INT32)(pYM2203Buffer[2][n] * YM2203LeftVolumes[BURN_SND_YM2203_AY8910_ROUTE_2]);
+			nLeftSample += (INT32)(pYM2203Buffer[3][n] * YM2203LeftVolumes[BURN_SND_YM2203_AY8910_ROUTE_3]);
+			nLeftSample += (INT32)(pYM2203Buffer[0][n] * YM2203LeftVolumes[BURN_SND_YM2203_YM2203_ROUTE]);
+			
+			nRightSample += (INT32)(pYM2203Buffer[1][n] * YM2203RightVolumes[BURN_SND_YM2203_AY8910_ROUTE_1]);
+			nRightSample += (INT32)(pYM2203Buffer[2][n] * YM2203RightVolumes[BURN_SND_YM2203_AY8910_ROUTE_2]);
+			nRightSample += (INT32)(pYM2203Buffer[3][n] * YM2203RightVolumes[BURN_SND_YM2203_AY8910_ROUTE_3]);
+			nRightSample += (INT32)(pYM2203Buffer[0][n] * YM2203RightVolumes[BURN_SND_YM2203_YM2203_ROUTE]);
+			
+			if (nNumChips > 1) {
+				nLeftSample += (INT32)(pYM2203Buffer[5][n] * YM2203LeftVolumes[4 + BURN_SND_YM2203_AY8910_ROUTE_1]);
+				nLeftSample += (INT32)(pYM2203Buffer[6][n] * YM2203LeftVolumes[4 + BURN_SND_YM2203_AY8910_ROUTE_2]);
+				nLeftSample += (INT32)(pYM2203Buffer[7][n] * YM2203LeftVolumes[4 + BURN_SND_YM2203_AY8910_ROUTE_3]);
+				nLeftSample += (INT32)(pYM2203Buffer[4][n] * YM2203LeftVolumes[4 + BURN_SND_YM2203_YM2203_ROUTE]);
+			
+				nRightSample += (INT32)(pYM2203Buffer[5][n] * YM2203RightVolumes[4 + BURN_SND_YM2203_AY8910_ROUTE_1]);
+				nRightSample += (INT32)(pYM2203Buffer[6][n] * YM2203RightVolumes[4 + BURN_SND_YM2203_AY8910_ROUTE_2]);
+				nRightSample += (INT32)(pYM2203Buffer[7][n] * YM2203RightVolumes[4 + BURN_SND_YM2203_AY8910_ROUTE_3]);
+				nRightSample += (INT32)(pYM2203Buffer[4][n] * YM2203RightVolumes[4 + BURN_SND_YM2203_YM2203_ROUTE]);
+			}
+		} else {
+			if ((YM2203RouteDirs[BURN_SND_YM2203_AY8910_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+				nLeftSample += (INT32)(pYM2203Buffer[1][n] * YM2203Volumes[BURN_SND_YM2203_AY8910_ROUTE_1]);
+			}
+			if ((YM2203RouteDirs[BURN_SND_YM2203_AY8910_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+				nRightSample += (INT32)(pYM2203Buffer[1][n] * YM2203Volumes[BURN_SND_YM2203_AY8910_ROUTE_1]);
+			}
 		
-		if ((YM2203RouteDirs[BURN_SND_YM2203_AY8910_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += (INT32)(pYM2203Buffer[2][n] * YM2203Volumes[BURN_SND_YM2203_AY8910_ROUTE_2]);
-		}
-		if ((YM2203RouteDirs[BURN_SND_YM2203_AY8910_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += (INT32)(pYM2203Buffer[2][n] * YM2203Volumes[BURN_SND_YM2203_AY8910_ROUTE_2]);
-		}
+			if ((YM2203RouteDirs[BURN_SND_YM2203_AY8910_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+				nLeftSample += (INT32)(pYM2203Buffer[2][n] * YM2203Volumes[BURN_SND_YM2203_AY8910_ROUTE_2]);
+			}
+			if ((YM2203RouteDirs[BURN_SND_YM2203_AY8910_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+				nRightSample += (INT32)(pYM2203Buffer[2][n] * YM2203Volumes[BURN_SND_YM2203_AY8910_ROUTE_2]);
+			}
 		
-		if ((YM2203RouteDirs[BURN_SND_YM2203_AY8910_ROUTE_3] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += (INT32)(pYM2203Buffer[3][n] * YM2203Volumes[BURN_SND_YM2203_AY8910_ROUTE_3]);
-		}
-		if ((YM2203RouteDirs[BURN_SND_YM2203_AY8910_ROUTE_3] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += (INT32)(pYM2203Buffer[3][n] * YM2203Volumes[BURN_SND_YM2203_AY8910_ROUTE_3]);
-		}
+			if ((YM2203RouteDirs[BURN_SND_YM2203_AY8910_ROUTE_3] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+				nLeftSample += (INT32)(pYM2203Buffer[3][n] * YM2203Volumes[BURN_SND_YM2203_AY8910_ROUTE_3]);
+			}
+			if ((YM2203RouteDirs[BURN_SND_YM2203_AY8910_ROUTE_3] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+				nRightSample += (INT32)(pYM2203Buffer[3][n] * YM2203Volumes[BURN_SND_YM2203_AY8910_ROUTE_3]);
+			}
 		
-		if ((YM2203RouteDirs[BURN_SND_YM2203_YM2203_ROUTE] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += (INT32)(pYM2203Buffer[0][n] * YM2203Volumes[BURN_SND_YM2203_YM2203_ROUTE]);
-		}
-		if ((YM2203RouteDirs[BURN_SND_YM2203_YM2203_ROUTE] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += (INT32)(pYM2203Buffer[0][n] * YM2203Volumes[BURN_SND_YM2203_YM2203_ROUTE]);
-		}
+			if ((YM2203RouteDirs[BURN_SND_YM2203_YM2203_ROUTE] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+				nLeftSample += (INT32)(pYM2203Buffer[0][n] * YM2203Volumes[BURN_SND_YM2203_YM2203_ROUTE]);
+			}
+			if ((YM2203RouteDirs[BURN_SND_YM2203_YM2203_ROUTE] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+				nRightSample += (INT32)(pYM2203Buffer[0][n] * YM2203Volumes[BURN_SND_YM2203_YM2203_ROUTE]);
+			}
 
-		if (nNumChips > 1) {
-			if ((YM2203RouteDirs[4 + BURN_SND_YM2203_AY8910_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-				nLeftSample += (INT32)(pYM2203Buffer[5][n] * YM2203Volumes[4 + BURN_SND_YM2203_AY8910_ROUTE_1]);
-			}
-			if ((YM2203RouteDirs[4 + BURN_SND_YM2203_AY8910_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-				nRightSample += (INT32)(pYM2203Buffer[5][n] * YM2203Volumes[4 + BURN_SND_YM2203_AY8910_ROUTE_1]);
-			}
+			if (nNumChips > 1) {
+				if ((YM2203RouteDirs[4 + BURN_SND_YM2203_AY8910_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+					nLeftSample += (INT32)(pYM2203Buffer[5][n] * YM2203Volumes[4 + BURN_SND_YM2203_AY8910_ROUTE_1]);
+				}
+				if ((YM2203RouteDirs[4 + BURN_SND_YM2203_AY8910_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+					nRightSample += (INT32)(pYM2203Buffer[5][n] * YM2203Volumes[4 + BURN_SND_YM2203_AY8910_ROUTE_1]);
+				}
 		
-			if ((YM2203RouteDirs[4 + BURN_SND_YM2203_AY8910_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-				nLeftSample += (INT32)(pYM2203Buffer[6][n] * YM2203Volumes[4 + BURN_SND_YM2203_AY8910_ROUTE_2]);
-			}
-			if ((YM2203RouteDirs[4 + BURN_SND_YM2203_AY8910_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-				nRightSample += (INT32)(pYM2203Buffer[6][n] * YM2203Volumes[4 + BURN_SND_YM2203_AY8910_ROUTE_2]);
-			}
+				if ((YM2203RouteDirs[4 + BURN_SND_YM2203_AY8910_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+					nLeftSample += (INT32)(pYM2203Buffer[6][n] * YM2203Volumes[4 + BURN_SND_YM2203_AY8910_ROUTE_2]);
+				}
+				if ((YM2203RouteDirs[4 + BURN_SND_YM2203_AY8910_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+					nRightSample += (INT32)(pYM2203Buffer[6][n] * YM2203Volumes[4 + BURN_SND_YM2203_AY8910_ROUTE_2]);
+				}
 		
-			if ((YM2203RouteDirs[4 + BURN_SND_YM2203_AY8910_ROUTE_3] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-				nLeftSample += (INT32)(pYM2203Buffer[7][n] * YM2203Volumes[4 + BURN_SND_YM2203_AY8910_ROUTE_3]);
-			}
-			if ((YM2203RouteDirs[4 + BURN_SND_YM2203_AY8910_ROUTE_3] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-				nRightSample += (INT32)(pYM2203Buffer[7][n] * YM2203Volumes[4 + BURN_SND_YM2203_AY8910_ROUTE_3]);
-			}
+				if ((YM2203RouteDirs[4 + BURN_SND_YM2203_AY8910_ROUTE_3] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+					nLeftSample += (INT32)(pYM2203Buffer[7][n] * YM2203Volumes[4 + BURN_SND_YM2203_AY8910_ROUTE_3]);
+				}
+				if ((YM2203RouteDirs[4 + BURN_SND_YM2203_AY8910_ROUTE_3] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+					nRightSample += (INT32)(pYM2203Buffer[7][n] * YM2203Volumes[4 + BURN_SND_YM2203_AY8910_ROUTE_3]);
+				}
 		
-			if ((YM2203RouteDirs[4 + BURN_SND_YM2203_YM2203_ROUTE] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-				nLeftSample += (INT32)(pYM2203Buffer[4][n] * YM2203Volumes[4 + BURN_SND_YM2203_YM2203_ROUTE]);
-			}
-			if ((YM2203RouteDirs[4 + BURN_SND_YM2203_YM2203_ROUTE] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-				nRightSample += (INT32)(pYM2203Buffer[4][n] * YM2203Volumes[4 + BURN_SND_YM2203_YM2203_ROUTE]);
+				if ((YM2203RouteDirs[4 + BURN_SND_YM2203_YM2203_ROUTE] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+					nLeftSample += (INT32)(pYM2203Buffer[4][n] * YM2203Volumes[4 + BURN_SND_YM2203_YM2203_ROUTE]);
+				}
+				if ((YM2203RouteDirs[4 + BURN_SND_YM2203_YM2203_ROUTE] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+					nRightSample += (INT32)(pYM2203Buffer[4][n] * YM2203Volumes[4 + BURN_SND_YM2203_YM2203_ROUTE]);
+				}
 			}
 		}
 		
@@ -411,6 +476,7 @@ void BurnYM2203Exit()
 	
 	nNumChips = 0;
 	bYM2203AddSignal = 0;
+	bYM2203UseSeperateVolumes = 0;
 	
 	DebugSnd_YM2203Initted = 0;
 }
@@ -480,6 +546,16 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 	YM2203RouteDirs[BURN_SND_YM2203_AY8910_ROUTE_2] = BURN_SND_ROUTE_BOTH;
 	YM2203RouteDirs[BURN_SND_YM2203_AY8910_ROUTE_3] = BURN_SND_ROUTE_BOTH;
 	
+	bYM2203UseSeperateVolumes = 0;
+	YM2203LeftVolumes[BURN_SND_YM2203_YM2203_ROUTE] = 1.00;
+	YM2203LeftVolumes[BURN_SND_YM2203_AY8910_ROUTE_1] = 1.00;
+	YM2203LeftVolumes[BURN_SND_YM2203_AY8910_ROUTE_2] = 1.00;
+	YM2203LeftVolumes[BURN_SND_YM2203_AY8910_ROUTE_3] = 1.00;
+	YM2203RightVolumes[BURN_SND_YM2203_YM2203_ROUTE] = 1.00;
+	YM2203RightVolumes[BURN_SND_YM2203_AY8910_ROUTE_1] = 1.00;
+	YM2203RightVolumes[BURN_SND_YM2203_AY8910_ROUTE_2] = 1.00;
+	YM2203RightVolumes[BURN_SND_YM2203_AY8910_ROUTE_3] = 1.00;	
+	
 	if (nNumChips > 0) {
 		YM2203Volumes[4 + BURN_SND_YM2203_YM2203_ROUTE] = 1.00;
 		YM2203Volumes[4 + BURN_SND_YM2203_AY8910_ROUTE_1] = 1.00;
@@ -489,6 +565,15 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 		YM2203RouteDirs[4 + BURN_SND_YM2203_AY8910_ROUTE_1] = BURN_SND_ROUTE_BOTH;
 		YM2203RouteDirs[4 + BURN_SND_YM2203_AY8910_ROUTE_2] = BURN_SND_ROUTE_BOTH;
 		YM2203RouteDirs[4 + BURN_SND_YM2203_AY8910_ROUTE_3] = BURN_SND_ROUTE_BOTH;
+		
+		YM2203LeftVolumes[4 + BURN_SND_YM2203_YM2203_ROUTE] = 1.00;
+		YM2203LeftVolumes[4 + BURN_SND_YM2203_AY8910_ROUTE_1] = 1.00;
+		YM2203LeftVolumes[4 + BURN_SND_YM2203_AY8910_ROUTE_2] = 1.00;
+		YM2203LeftVolumes[4 + BURN_SND_YM2203_AY8910_ROUTE_3] = 1.00;
+		YM2203RightVolumes[4 + BURN_SND_YM2203_YM2203_ROUTE] = 1.00;
+		YM2203RightVolumes[4 + BURN_SND_YM2203_AY8910_ROUTE_1] = 1.00;
+		YM2203RightVolumes[4 + BURN_SND_YM2203_AY8910_ROUTE_2] = 1.00;
+		YM2203RightVolumes[4 + BURN_SND_YM2203_AY8910_ROUTE_3] = 1.00;	
 	}
 
 	return 0;
@@ -511,6 +596,30 @@ void BurnYM2203SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteD
 		YM2203Volumes[4 + nIndex] = nVolume;
 		YM2203RouteDirs[4 + nIndex] = nRouteDir;
 	}
+}
+
+void BurnYM2203SetLeftVolume(INT32 nChip, INT32 nIndex, double nLeftVolume)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203SetLeftVolume called without init\n"));
+	if (nIndex < 0 || nIndex > 3) bprintf(PRINT_ERROR, _T("BurnYM2203SetLeftVolume called with invalid index %i\n"), nIndex);
+	if (nChip >= nNumChips) bprintf(PRINT_ERROR, _T("BurnYM2203SetLeftVolume called with invalid chip %i\n"), nChip);
+#endif
+	
+	if (nChip == 0) YM2203LeftVolumes[nIndex] = nLeftVolume;
+	if (nChip == 1) YM2203LeftVolumes[4 + nIndex] = nLeftVolume;
+}
+
+void BurnYM2203SetRightVolume(INT32 nChip, INT32 nIndex, double nRightVolume)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203SetRightVolume called without init\n"));
+	if (nIndex < 0 || nIndex > 3) bprintf(PRINT_ERROR, _T("BurnYM2203SetRightVolume called with invalid index %i\n"), nIndex);
+	if (nChip >= nNumChips) bprintf(PRINT_ERROR, _T("BurnYM2203SetRightVolume called with invalid chip %i\n"), nChip);
+#endif
+	
+	if (nChip == 0) YM2203RightVolumes[nIndex] = nRightVolume;
+	if (nChip == 1) YM2203RightVolumes[4 + nIndex] = nRightVolume;
 }
 
 void BurnYM2203Scan(INT32 nAction, INT32* pnMin)

@@ -171,14 +171,44 @@ void GalSoundInit()
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910) {
 		AY8910Init(0, 14318000 / 8, nBurnSoundRate, &KonamiSoundLatchRead, &FroggerSoundTimerRead, NULL, NULL);
-		AY8910SetAllRoutes(0, 0.75, BURN_SND_ROUTE_BOTH);
+		
+		filter_rc_init(0, FLT_RC_LOWPASS, 1, 1, 1, 0, 0);
+		filter_rc_init(1, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		filter_rc_init(2, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		
+		filter_rc_set_src_gain(0, 0.75);
+		filter_rc_set_src_gain(1, 0.75);
+		filter_rc_set_src_gain(2, 0.75);
+		
+		filter_rc_set_route(0, 1.00, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(1, 1.00, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(2, 1.00, BURN_SND_ROUTE_BOTH);
 	}	
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910) {
 		AY8910Init(0, 14318000 / 8, nBurnSoundRate, NULL, NULL, NULL, NULL);
 		AY8910Init(1, 14318000 / 8, nBurnSoundRate, &KonamiSoundLatchRead, &KonamiSoundTimerRead, NULL, NULL);
-		AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
-		AY8910SetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);
+		
+		filter_rc_init(0, FLT_RC_LOWPASS, 1, 1, 1, 0, 0);
+		filter_rc_init(1, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		filter_rc_init(2, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		filter_rc_init(3, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		filter_rc_init(4, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		filter_rc_init(5, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		
+		filter_rc_set_src_gain(0, 0.50);
+		filter_rc_set_src_gain(1, 0.50);
+		filter_rc_set_src_gain(2, 0.50);
+		filter_rc_set_src_gain(3, 0.50);
+		filter_rc_set_src_gain(4, 0.50);
+		filter_rc_set_src_gain(5, 0.50);
+		
+		filter_rc_set_route(0, 1.00, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(1, 1.00, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(2, 1.00, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(3, 1.00, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(4, 1.00, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(5, 1.00, BURN_SND_ROUTE_BOTH);
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_EXPLORERAY8910) {
@@ -389,6 +419,10 @@ void GalSoundExit()
 		SN76496Exit();
 	}
 	
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910) {
+		filter_rc_exit();
+	}
+	
 	BurnFree(pFMBuffer);
 	for (INT32 i = 0; i < 9; i++) pAY8910Buffer[i] = NULL;
 	
@@ -596,6 +630,16 @@ void SfxSampleControlWrite(UINT32, UINT32 d)
 }
 
 // Frogger Sound CPU Memory Map
+static void filter_w(INT32 num, UINT8 d)
+{
+	INT32 C;
+	
+	C = 0;
+	if (d & 1) C += 220000;	/* 220000pF = 0.220uF */
+	if (d & 2) C +=  47000;	/*  47000pF = 0.047uF */
+	filter_rc_set_RC(num, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(C));
+}
+
 UINT8 __fastcall FroggerSoundZ80Read(UINT16 a)
 {
 	switch (a) {
@@ -610,7 +654,10 @@ UINT8 __fastcall FroggerSoundZ80Read(UINT16 a)
 void __fastcall FroggerSoundZ80Write(UINT16 a, UINT8 d)
 {
 	if (a >= 0x6000 && a <= 0x6fff) {
-		// konami_sound_filter_w
+		INT32 Offset = a & 0xfff;
+		filter_w(0, (Offset >>  6) & 3);
+		filter_w(1, (Offset >>  8) & 3);
+		filter_w(2, (Offset >> 10) & 3);
 		return;
 	}
 	
@@ -683,7 +730,13 @@ UINT8 __fastcall KonamiSoundZ80Read(UINT16 a)
 void __fastcall KonamiSoundZ80Write(UINT16 a, UINT8 d)
 {
 	if (a >= 0x9000 && a <= 0x9fff) {
-		// konami_sound_filter_w
+		INT32 Offset = a & 0xfff;
+		filter_w(0, (Offset >>  0) & 3);
+		filter_w(1, (Offset >>  2) & 3);
+		filter_w(2, (Offset >>  4) & 3);
+		filter_w(3, (Offset >>  6) & 3);
+		filter_w(4, (Offset >>  8) & 3);
+		filter_w(5, (Offset >> 10) & 3);
 		return;
 	}
 	

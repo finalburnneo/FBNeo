@@ -73,9 +73,9 @@ depobj	:= 	$(drvobj) \
 			8255ppi.o eeprom.o pandora.o seibusnd.o sknsspr.o timekpr.o v3021.o vdc.o \
 			\
 			ay8910.o burn_y8950.o burn_ym2151.o burn_ym2203.o burn_ym2413.o burn_ym2608.o burn_ym2610.o burn_ym2612.o \
-			burn_ym3526.o burn_ym3812.o burn_ymf278b.o c6280.o dac.o es5506.o es8712.o fm.o fmopl.o ics2115.o iremga20.o k007232.o \
-			k051649.o k053260.o k054539.o msm5205.o msm6295.o namco_snd.o rf5c68.o saa1099.o samples.o segapcm.o sn76496.o \
-			upd7759.o x1010.o ym2151.o ym2413.o ymdeltat.o ymf278b.o ymz280b.o \
+			burn_ym3526.o burn_ym3812.o burn_ymf278b.o c6280.o dac.o es5506.o es8712.o flt_rc.o fm.o fmopl.o ics2115.o iremga20.o \
+			k007232.o k051649.o k053260.o k054539.o msm5205.o msm6295.o namco_snd.o rf5c68.o saa1099.o samples.o segapcm.o \
+			sn76496.o upd7759.o x1010.o ym2151.o ym2413.o ymdeltat.o ymf278b.o ymz280b.o \
 			\
 			arm7_intf.o arm_intf.o h6280_intf.o hd6309_intf.o konami_intf.o m6502_intf.o m6800_intf.o m6805_intf.o m6809_intf.o \
 			s2650_intf.o sek.o vez.o zet.o \

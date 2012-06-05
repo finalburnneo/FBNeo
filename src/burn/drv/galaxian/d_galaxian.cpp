@@ -15190,8 +15190,12 @@ static INT32 TheendInit()
 	
 	KonamiPPIInit();
 	
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.02);
+	filter_rc_set_src_gain(1, 0.02);
+	filter_rc_set_src_gain(2, 0.02);
+	filter_rc_set_src_gain(3, 0.02);
+	filter_rc_set_src_gain(4, 0.02);
+	filter_rc_set_src_gain(5, 0.02);
 	
 	return nRet;
 }
@@ -15294,8 +15298,12 @@ static INT32 AtlantisInit()
 	
 	KonamiPPIInit();
 	
-	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.25);
+	filter_rc_set_src_gain(1, 0.25);
+	filter_rc_set_src_gain(2, 0.25);
+	filter_rc_set_src_gain(3, 0.25);
+	filter_rc_set_src_gain(4, 0.25);
+	filter_rc_set_src_gain(5, 0.25);
 	
 	return nRet;
 }
@@ -15425,8 +15433,12 @@ static INT32 DevilfshInit()
 	
 	KonamiPPIInit();
 	
-	AY8910SetAllRoutes(0, 0.75, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.75, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.75);
+	filter_rc_set_src_gain(1, 0.75);
+	filter_rc_set_src_gain(2, 0.75);
+	filter_rc_set_src_gain(3, 0.75);
+	filter_rc_set_src_gain(4, 0.75);
+	filter_rc_set_src_gain(5, 0.75);
 	
 	return nRet;
 }
@@ -15660,8 +15672,12 @@ static INT32 CavelonInit()
 	
 	KonamiPPIInit();
 	
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.20);
+	filter_rc_set_src_gain(1, 0.20);
+	filter_rc_set_src_gain(2, 0.20);
+	filter_rc_set_src_gain(3, 0.20);
+	filter_rc_set_src_gain(4, 0.20);
+	filter_rc_set_src_gain(5, 0.20);
 	
 	return nRet;
 }
@@ -15709,8 +15725,12 @@ static INT32 MimonscrInit()
 
 	KonamiPPIInit();
 	
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.20);
+	filter_rc_set_src_gain(1, 0.20);
+	filter_rc_set_src_gain(2, 0.20);
+	filter_rc_set_src_gain(3, 0.20);
+	filter_rc_set_src_gain(4, 0.20);
+	filter_rc_set_src_gain(5, 0.20);
 	
 	return nRet;
 }
@@ -18588,8 +18608,12 @@ static INT32 LosttombInit()
 	
 	KonamiPPIInit();
 	
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.20);
+	filter_rc_set_src_gain(1, 0.20);
+	filter_rc_set_src_gain(2, 0.20);
+	filter_rc_set_src_gain(3, 0.20);
+	filter_rc_set_src_gain(4, 0.20);
+	filter_rc_set_src_gain(5, 0.20);
 	
 	return nRet;
 }
@@ -18665,8 +18689,12 @@ static INT32 AnteaterInit()
 	
 	KonamiPPIInit();
 	
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.20);
+	filter_rc_set_src_gain(1, 0.20);
+	filter_rc_set_src_gain(2, 0.20);
+	filter_rc_set_src_gain(3, 0.20);
+	filter_rc_set_src_gain(4, 0.20);
+	filter_rc_set_src_gain(5, 0.20);
 	
 	return nRet;
 }
@@ -18719,8 +18747,12 @@ static INT32 AnteatergInit()
 	
 	KonamiPPIInit();
 	
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.20);
+	filter_rc_set_src_gain(1, 0.20);
+	filter_rc_set_src_gain(2, 0.20);
+	filter_rc_set_src_gain(3, 0.20);
+	filter_rc_set_src_gain(4, 0.20);
+	filter_rc_set_src_gain(5, 0.20);
 	
 	return nRet;
 }
@@ -18770,8 +18802,12 @@ static INT32 AnteaterukInit()
 	
 	KonamiPPIInit();
 	
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.20);
+	filter_rc_set_src_gain(1, 0.20);
+	filter_rc_set_src_gain(2, 0.20);
+	filter_rc_set_src_gain(3, 0.20);
+	filter_rc_set_src_gain(4, 0.20);
+	filter_rc_set_src_gain(5, 0.20);
 	
 	return nRet;
 }
@@ -18808,8 +18844,12 @@ static INT32 SuperbonInit()
 		
 	HardCodeGalaxianPROM();
 	
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.20);
+	filter_rc_set_src_gain(1, 0.20);
+	filter_rc_set_src_gain(2, 0.20);
+	filter_rc_set_src_gain(3, 0.20);
+	filter_rc_set_src_gain(4, 0.20);
+	filter_rc_set_src_gain(5, 0.20);
 	
 	return nRet;
 }
@@ -18830,8 +18870,12 @@ static INT32 CalipsoInit()
 	
 	KonamiPPIInit();
 	
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.20);
+	filter_rc_set_src_gain(1, 0.20);
+	filter_rc_set_src_gain(2, 0.20);
+	filter_rc_set_src_gain(3, 0.20);
+	filter_rc_set_src_gain(4, 0.20);
+	filter_rc_set_src_gain(5, 0.20);
 	
 	return nRet;
 }
@@ -18882,8 +18926,12 @@ static INT32 MoonwarInit()
 	PPI0PortReadA = MoonwarPPIReadIN0;
 	PPI0PortWriteC = MoonwarPortSelectWrite;
 	
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.20);
+	filter_rc_set_src_gain(1, 0.20);
+	filter_rc_set_src_gain(2, 0.20);
+	filter_rc_set_src_gain(3, 0.20);
+	filter_rc_set_src_gain(4, 0.20);
+	filter_rc_set_src_gain(5, 0.20);
 	
 	return nRet;
 }
@@ -18960,8 +19008,12 @@ static INT32 DarkplntInit()
 	KonamiPPIInit();	
 	PPI0PortReadB = DarkplntPPIReadIN1;
 	
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.20);
+	filter_rc_set_src_gain(1, 0.20);
+	filter_rc_set_src_gain(2, 0.20);
+	filter_rc_set_src_gain(3, 0.20);
+	filter_rc_set_src_gain(4, 0.20);
+	filter_rc_set_src_gain(5, 0.20);
 	
 	return nRet;
 }
@@ -18999,8 +19051,12 @@ static INT32 RescueInit()
 	
 	KonamiPPIInit();
 	
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.20);
+	filter_rc_set_src_gain(1, 0.20);
+	filter_rc_set_src_gain(2, 0.20);
+	filter_rc_set_src_gain(3, 0.20);
+	filter_rc_set_src_gain(4, 0.20);
+	filter_rc_set_src_gain(5, 0.20);
 	
 	return nRet;
 }
@@ -19038,8 +19094,12 @@ static INT32 MinefldInit()
 	
 	KonamiPPIInit();
 	
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.20);
+	filter_rc_set_src_gain(1, 0.20);
+	filter_rc_set_src_gain(2, 0.20);
+	filter_rc_set_src_gain(3, 0.20);
+	filter_rc_set_src_gain(4, 0.20);
+	filter_rc_set_src_gain(5, 0.20);
 	
 	return nRet;
 }
@@ -19247,8 +19307,12 @@ static INT32 MimonkeyInit()
 
 	KonamiPPIInit();
 	
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.20);
+	filter_rc_set_src_gain(1, 0.20);
+	filter_rc_set_src_gain(2, 0.20);
+	filter_rc_set_src_gain(3, 0.20);
+	filter_rc_set_src_gain(4, 0.20);
+	filter_rc_set_src_gain(5, 0.20);
 	
 	return nRet;
 }
@@ -19270,8 +19334,12 @@ static INT32 MimonscoInit()
 
 	KonamiPPIInit();
 	
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_src_gain(0, 0.20);
+	filter_rc_set_src_gain(1, 0.20);
+	filter_rc_set_src_gain(2, 0.20);
+	filter_rc_set_src_gain(3, 0.20);
+	filter_rc_set_src_gain(4, 0.20);
+	filter_rc_set_src_gain(5, 0.20);
 	
 	return nRet;
 }

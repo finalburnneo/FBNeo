@@ -8,7 +8,6 @@
 #include "burn_gun.h"
 
 static INT32 Sci;
-static INT32 Dblaxle;
 static INT32 OldSteer; // Hack to centre the steering in SCI
 static INT32 SciSpriteFrame;
 
@@ -4461,8 +4460,6 @@ static INT32 DblaxleInit()
 {
 	INT32 nLen;
 	
-	Dblaxle = 1;
-	
 	TaitoCharModulo = 0x400;
 	TaitoCharNumPlanes = 4;
 	TaitoCharWidth = 16;
@@ -4955,7 +4952,6 @@ static INT32 TaitoZExit()
 
 	SciSpriteFrame = 0;
 	OldSteer = 0;
-	Dblaxle = 0;
 	Sci = 0;
 	
 	// Switch back CPU core if needed
@@ -5755,8 +5751,6 @@ static INT32 TaitoZFrame()
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
 		if (i == 10 && Sci && (GetCurrentFrame() & 1)) { SekSetIRQLine(6, SEK_IRQSTATUS_AUTO); nTaitoCyclesDone[0] += SekRun(200000 - 500); }
-		if (i == 10 && Dblaxle && (GetCurrentFrame() & 1)) { SekSetIRQLine(6, SEK_IRQSTATUS_AUTO); nTaitoCyclesDone[0] += SekRun(200000 - 500); }
-		if (i == 50 && Dblaxle) { SekSetIRQLine(6, SEK_IRQSTATUS_AUTO); nTaitoCyclesDone[0] += SekRun(200000 - 500); }
 		if (i == (TaitoFrameInterleave - 1)) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
 		SekClose();
 		

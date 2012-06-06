@@ -4982,7 +4982,7 @@ static INT32 RacingbInit()
 	MemIndex();
 	
 	TC0150RODInit(TaitoRoadRomSize, 0);
-	TC0480SCPInit(TaitoNumChar, 0, 0x1b, 8, 4, 0, 0);
+	TC0480SCPInit(TaitoNumChar, 0, 0x1f, 8, 4, 0, 0);
 	TC0140SYTInit();
 	TC0510NIOInit();
 	

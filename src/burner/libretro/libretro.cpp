@@ -1,4 +1,4 @@
-#include "libsnes.hpp"
+#include "libretro.h"
 #include "burner.h"
 #include "inp_keys.h"
 #include "state.h"
@@ -37,32 +37,30 @@ static unsigned g_rom_count;
 static uint16_t g_fba_frame[1024 * 1024];
 static int16_t g_audio_buf[AUDIO_SEGMENT_LENGTH_TIMES_CHANNELS];
 
-// libsnes globals
+// libretro globals
 
-static snes_video_refresh_t video_cb;
-static snes_audio_sample_t audio_cb;
-static snes_input_poll_t poll_cb;
-static snes_input_state_t input_cb;
-static snes_audio_sample_batch_t audio_batch_cb;
-void snes_set_video_refresh(snes_video_refresh_t cb) { video_cb = cb; }
-void snes_set_audio_sample(snes_audio_sample_t cb) { audio_cb = cb; }
-void snes_set_input_poll(snes_input_poll_t cb) { poll_cb = cb; }
-void snes_set_input_state(snes_input_state_t cb) { input_cb = cb; }
+static retro_environment_t environ_cb;
+static retro_video_refresh_t video_cb;
+static retro_input_poll_t poll_cb;
+static retro_input_state_t input_cb;
+static retro_audio_sample_batch_t audio_batch_cb;
+void retro_set_video_refresh(retro_video_refresh_t cb) { video_cb = cb; }
+void retro_set_audio_sample(retro_audio_sample_t) {}
+void retro_set_audio_sample_batch(retro_audio_sample_batch_t cb) { audio_batch_cb = cb; }
+void retro_set_input_poll(retro_input_poll_t cb) { poll_cb = cb; }
+void retro_set_input_state(retro_input_state_t cb) { input_cb = cb; }
+void retro_set_environment(retro_environment_t cb) { environ_cb = cb; }
 
-// SSNES extension.
-static snes_environment_t environ_cb;
-void snes_set_environment(snes_environment_t cb)
-{
-	bool dummy;
-   environ_cb = cb;
-   dummy = 1;
-   cb(SNES_ENVIRONMENT_SET_BATCH_LOAD, &dummy);
-   cb(SNES_ENVIRONMENT_SET_ROM_FORMATS, (void*)"zip|ZIP");
-}
-
-static char g_rom_name[1024];
 static char g_rom_dir[1024];
-static char g_basename[1024];
+
+void retro_get_system_info(struct retro_system_info *info)
+{
+   info->library_name = "FB Alpha";
+   info->library_version = "0.2.97.24";
+   info->need_fullpath = true;
+   info->block_extract = true;
+   info->valid_extensions = "zip|ZIP";
+}
 
 /////
 static void poll_input();
@@ -134,7 +132,27 @@ void InpDIPSWResetDIPs (void)
 }
 
 int InputSetCooperativeLevel(const bool bExclusive, const bool bForeGround) { return 0; }
-void Reinitialise(void) {}
+
+void Reinitialise(void)
+{
+#if 0 // ?!
+	int width, height;
+	BurnDrvGetVisibleSize(&width, &height);
+	unsigned drv_flags = BurnDrvGetFlags();
+	if (drv_flags & BDF_ORIENTATION_VERTICAL)
+		nBurnPitch = height * sizeof(uint16_t);
+	else
+		nBurnPitch = width * sizeof(uint16_t);
+
+	if (environ_cb)
+	{
+		BurnDrvGetVisibleSize(&width, &height);
+		retro_geometry geom = { width, height, width, height };
+		environ_cb(RETRO_ENVIRONMENT_SET_GEOMETRY, &geom);
+		environ_cb(RETRO_ENVIRONMENT_SET_PITCH, &nBurnPitch);
+	}
+#endif
+}
 
 // Non-idiomatic (OutString should be to the left to match strcpy())
 // Seems broken to not check nOutSize.
@@ -294,35 +312,25 @@ static bool open_archive()
    return true;
 }
 
-void snes_init()
+void retro_init()
 {
    BurnLibInit();
-
-
-   if (environ_cb)
-   {
-      bool need_fullpath = true;
-      environ_cb(SNES_ENVIRONMENT_SET_NEED_FULLPATH, &need_fullpath);
-      environ_cb(SNES_ENVIRONMENT_GET_AUDIO_BATCH_CB, &audio_batch_cb);
-   }
 }
 
-void snes_term()
+void retro_deinit()
 {
    BurnDrvExit();
    BurnLibExit();
 }
 
 static bool g_reset;
-void snes_power() { g_reset = true; }
-void snes_reset() { g_reset = true; }
+void retro_reset() { g_reset = true; }
 
-void snes_run()
+void retro_run()
 {
    int width, height;
    BurnDrvGetVisibleSize(&width, &height);
    pBurnDraw = (uint8_t*)g_fba_frame;
-
 
    nBurnLayer = 0xff;
    pBurnSoundOut = g_audio_buf;
@@ -337,20 +345,15 @@ void snes_run()
    uint32_t height_tmp = height;
    if (drv_flags & (BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED))
    {
-	nBurnPitch = height * sizeof(uint16_t);
-	height = width;
-	width = height_tmp;
+      nBurnPitch = height * sizeof(uint16_t);
+      height = width;
+      width = height_tmp;
    }
    else
       nBurnPitch = width * sizeof(uint16_t);
 
-   video_cb(g_fba_frame, width, height);
-
-   if(audio_batch_cb)
-	   audio_batch_cb(g_audio_buf, AUDIO_SEGMENT_LENGTH);
-   else
-	   for (unsigned i = 0; i < AUDIO_SEGMENT_LENGTH_TIMES_CHANNELS; i += 2)
-		   audio_cb(g_audio_buf[i + 0], g_audio_buf[i + 1]);
+   video_cb(g_fba_frame, width, height, nBurnPitch);
+   audio_batch_cb(g_audio_buf, AUDIO_SEGMENT_LENGTH);
 }
 
 static uint8_t *write_state_ptr;
@@ -377,7 +380,7 @@ static int burn_dummy_state_cb(BurnArea *pba)
    return 0;
 }
 
-unsigned snes_serialize_size()
+size_t retro_serialize_size()
 {
    if (state_size)
       return state_size;
@@ -388,31 +391,44 @@ unsigned snes_serialize_size()
    return state_size;
 }
 
-bool snes_serialize(uint8_t *data, unsigned size)
+bool retro_serialize(void *data, size_t size)
 {
    if (size != state_size)
       return false;
 
    BurnAcb = burn_write_state_cb;
-   write_state_ptr = data;
+   write_state_ptr = (uint8_t*)data;
    BurnAreaScan(ACB_VOLATILE | ACB_WRITE, 0);
 
    return true;
 }
 
-bool snes_unserialize(const uint8_t *data, unsigned size)
+bool retro_unserialize(const void *data, size_t size)
 {
    if (size != state_size)
       return false;
    BurnAcb = burn_read_state_cb;
-   read_state_ptr = data;
+   read_state_ptr = (const uint8_t*)data;
    BurnAreaScan(ACB_VOLATILE | ACB_READ, 0);
 
    return true;
 }
 
-void snes_cheat_reset() {}
-void snes_cheat_set(unsigned, bool, const char*) {}
+void retro_cheat_reset() {}
+void retro_cheat_set(unsigned, bool, const char*) {}
+
+void retro_get_system_av_info(struct retro_system_av_info *info)
+{
+   int width, height;
+   BurnDrvGetVisibleSize(&width, &height);
+   int maximum = width > height ? width : height;
+   struct retro_game_geometry geom = { width, height, maximum, maximum };
+
+   struct retro_system_timing timing = { 60.0, 32000.0 };
+
+   info->geometry = geom;
+   info->timing   = timing;
+}
 
 static bool fba_init(unsigned driver)
 {
@@ -433,15 +449,6 @@ static bool fba_init(unsigned driver)
       nBurnPitch = height * sizeof(uint16_t);
    else
       nBurnPitch = width * sizeof(uint16_t);
-
-   if (environ_cb)
-   {
-      int width, height;
-      BurnDrvGetVisibleSize(&width, &height);
-      snes_geometry geom = { width, height, width, height };
-      environ_cb(SNES_ENVIRONMENT_SET_GEOMETRY, &geom);
-      environ_cb(SNES_ENVIRONMENT_SET_PITCH, &nBurnPitch);
-   }
 
    return true;
 }
@@ -474,10 +481,47 @@ static void init_audio()
    nBurnSoundLen = AUDIO_SEGMENT_LENGTH;
 }
 
-// Infer paths from basename.
-bool snes_load_cartridge_normal(const char*, const uint8_t *, unsigned)
+static void extract_basename(char *buf, const char *path, size_t size)
 {
-   unsigned i = BurnDrvGetIndexByName(g_basename);
+   const char *base = strrchr(path, '/');
+   if (!base)
+      base = strrchr(path, '\\');
+   if (!base)
+      base = path;
+
+   if (*base == '\\' || *base == '/')
+      base++;
+
+   strncpy(buf, base, size - 1);
+   buf[size - 1] = '\0';
+
+   char *ext = strrchr(buf, '.');
+   if (ext)
+      *ext = '\0';
+}
+
+static void extract_directory(char *buf, const char *path, size_t size)
+{
+   strncpy(buf, path, size - 1);
+   buf[size - 1] = '\0';
+
+   char *base = strrchr(buf, '/');
+   if (!base)
+      base = strrchr(buf, '\\');
+
+   if (base)
+      *base = '\0';
+   else
+      buf[0] = '\0';
+}
+
+bool retro_load_game(const struct retro_game_info *info)
+{
+   char basename[128];
+   extract_basename(basename, info->path, sizeof(basename));
+   extract_directory(g_rom_dir, info->path, sizeof(g_rom_dir));
+
+   unsigned i = BurnDrvGetIndexByName(basename);
    if (i < nBurnDrvCount)
    {
       init_video();
@@ -497,67 +541,18 @@ bool snes_load_cartridge_normal(const char*, const uint8_t *, unsigned)
    }
 }
 
-void snes_set_cartridge_basename(const char *basename)
-{
-   snprintf(g_rom_name, sizeof(g_rom_name), "%s.zip", basename);
-   strcpy(g_rom_dir, g_rom_name);
+bool retro_load_game_special(unsigned, const struct retro_game_info*, size_t) { return false; }
 
-   char *split = strrchr(g_rom_dir, '/');
-   if (!split)
-      split = strrchr(g_rom_dir, '\\');
-   if (split)
-      *split = '\0';
+void retro_unload_game(void) {}
 
-   if (split)
-   {
-      strcpy(g_basename, split + 1);
-      split = strrchr(g_basename, '.');
-      if (split)
-         *split = '\0';
-   }
+unsigned retro_get_region() { return RETRO_REGION_NTSC; }
 
-   //fprintf(stderr, "PATH:     %s\n", g_rom_name);
-   //fprintf(stderr, "DIR:      %s\n", g_rom_dir);
-   //fprintf(stderr, "BASENAME: %s\n", g_basename);
-}
+void *retro_get_memory_data(unsigned) { return 0; }
+size_t retro_get_memory_size(unsigned) { return 0; }
 
-bool snes_load_cartridge_bsx_slotted(
-  const char*, const uint8_t*, unsigned,
-  const char*, const uint8_t*, unsigned
-)
-{ return false; }
+unsigned retro_api_version() { return RETRO_API_VERSION; }
 
-bool snes_load_cartridge_bsx(
-  const char*, const uint8_t *, unsigned,
-  const char*, const uint8_t *, unsigned
-)
-{ return false; }
-
-bool snes_load_cartridge_sufami_turbo(
-  const char*, const uint8_t*, unsigned,
-  const char*, const uint8_t*, unsigned,
-  const char*, const uint8_t*, unsigned
-)
-{ return false; }
-
-bool snes_load_cartridge_super_game_boy(
-  const char*, const uint8_t*, unsigned,
-  const char*, const uint8_t*, unsigned
-)
-{ return false; }
-
-void snes_unload_cartridge(void) {}
-
-bool snes_get_region() { return SNES_REGION_NTSC; }
-
-uint8_t *snes_get_memory_data(unsigned) { return 0; }
-unsigned snes_get_memory_size(unsigned) { return 0; }
-
-unsigned snes_library_revision_major() { return 1; }
-unsigned snes_library_revision_minor() { return 3; }
-
-const char *snes_library_id() { return "FB Alpha"; }
-void snes_set_controller_port_device(bool, unsigned) {}
+void retro_set_controller_port_device(unsigned, unsigned) {}
 
 // Input stuff.
 
@@ -618,7 +613,7 @@ void snes_set_controller_port_device(bool, unsigned) {}
 #define P4_FIRE6 0x4285
 
 static unsigned char keybinds[0x5000][2]; 
-#define _BIND(x) SNES_DEVICE_ID_JOYPAD_##x
+#define _BIND(x) RETRO_DEVICE_ID_JOYPAD_##x
 #define RESET_BIND 12
 #define SERVICE_BIND 13
 static bool init_input()
@@ -826,11 +821,11 @@ static void poll_input()
       if (pgi->nInput == GIT_KEYSLIDER)
       {
          // Get states of the two keys
-         if (input_cb(0, SNES_DEVICE_JOYPAD, 0,
+         if (input_cb(0, RETRO_DEVICE_JOYPAD, 0,
                   keybinds[pgi->Input.Slider.SliderAxis.nSlider[0]][0]))
             nAdd -= 0x100;
 
-         if (input_cb(0, SNES_DEVICE_JOYPAD, 0,
+         if (input_cb(0, RETRO_DEVICE_JOYPAD, 0,
                   keybinds[pgi->Input.Slider.SliderAxis.nSlider[1]][0]))
             nAdd += 0x100;
       }
@@ -879,19 +874,19 @@ static void poll_input()
             {
                state = g_reset;
                g_reset = false;
+	       Reinitialise();
             }
             else if (id == SERVICE_BIND)
             {
                state =
-                  input_cb(0, SNES_DEVICE_JOYPAD, 0, _BIND(START)) &&
-                  input_cb(0, SNES_DEVICE_JOYPAD, 0, _BIND(SELECT)) &&
-                  input_cb(0, SNES_DEVICE_JOYPAD, 0, _BIND(L)) &&
-                  input_cb(0, SNES_DEVICE_JOYPAD, 0, _BIND(R));
+                  input_cb(0, RETRO_DEVICE_JOYPAD, 0, _BIND(START)) &&
+                  input_cb(0, RETRO_DEVICE_JOYPAD, 0, _BIND(SELECT)) &&
+                  input_cb(0, RETRO_DEVICE_JOYPAD, 0, _BIND(L)) &&
+                  input_cb(0, RETRO_DEVICE_JOYPAD, 0, _BIND(R));
+               Reinitialise();
             }
-            else if (port < 2)
-               state = input_cb(port, SNES_DEVICE_JOYPAD, 0, id);
             else
-               state = input_cb(true, SNES_DEVICE_MULTITAP, port - 1, id);
+               state = input_cb(port, RETRO_DEVICE_JOYPAD, 0, id);
 
             if (pgi->nType & BIT_GROUP_ANALOG)
             {

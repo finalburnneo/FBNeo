@@ -1,5 +1,5 @@
-#ifndef _BURNER_LIBSNES_H
-#define _BURNER_LIBSNES_H
+#ifndef _BURNER_LIBRETRO_H
+#define _BURNER_LIBRETRO_H
 
 #include "gameinp.h"
 #include "inp_keys.h"

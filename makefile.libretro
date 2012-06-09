@@ -1,4 +1,5 @@
 DEBUG = 0
+LIBRETRO_OPTIMIZATIONS = 1
 
 ifeq ($(platform),)
 platform = unix
@@ -15,7 +16,7 @@ MAIN_FBA_DIR := src
 FBA_BURN_DIR := $(MAIN_FBA_DIR)/burn
 FBA_BURN_DRIVERS_DIR := $(MAIN_FBA_DIR)/burn/drv
 FBA_BURNER_DIR := $(MAIN_FBA_DIR)/burner
-LIBSNES_DIR := $(FBA_BURNER_DIR)/libsnes
+LIBRETRO_DIR := $(FBA_BURNER_DIR)/libretro
 FBA_CPU_DIR := $(MAIN_FBA_DIR)/cpu
 FBA_LIB_DIR := $(MAIN_FBA_DIR)/dep/libs
 FBA_INTERFACE_DIR := $(MAIN_FBA_DIR)/intf
@@ -23,17 +24,17 @@ FBA_INTERFACE_DIR := $(MAIN_FBA_DIR)/intf
 EXTERNAL_ZLIB = 0
 
 ifeq ($(platform), unix)
-   TARGET := libsnes.so
+   TARGET := libretro.so
    fpic := -fPIC
-   SHARED := -shared -Wl,-no-undefined -Wl,--version-script=$(LIBSNES_DIR)/link.T
+   SHARED := -shared -Wl,-no-undefined -Wl,--version-script=$(LIBRETRO_DIR)/link.T
    ENDIANNESS_DEFINES := -DLSB_FIRST
 else ifeq ($(platform), osx)
-   TARGET := libsnes.dylib
+   TARGET := libretro.dylib
    fpic := -fPIC
    SHARED := -dynamiclib
    ENDIANNESS_DEFINES := -DLSB_FIRST
 else ifeq ($(platform), ps3)
-   TARGET := libsnes.a
+   TARGET := libretro.a
    CC = $(CELL_SDK)/host-win32/ppu/bin/ppu-lv2-gcc.exe
    CXX = $(CELL_SDK)/host-win32/ppu/bin/ppu-lv2-g++.exe
    AR = $(CELL_SDK)/host-win32/ppu/bin/ppu-lv2-ar.exe
@@ -41,7 +42,7 @@ else ifeq ($(platform), ps3)
    PLATFORM_DEFINES := -D__CELLOS_LV2
    EXTERNAL_ZLIB = 1
 else ifeq ($(platform), sncps3)
-   TARGET := libsnes.a
+   TARGET := libretro.a
    CXX	= $(CELL_SDK)/host-win32/sn/bin/ps3ppusnc.exe
    CC = $(CELL_SDK)/host-win32/sn/bin/ps3ppusnc.exe
    AR = $(CELL_SDK)/host-win32/sn/bin/ps3snarl.exe
@@ -49,14 +50,14 @@ else ifeq ($(platform), sncps3)
    PLATFORM_DEFINES += -D__CELLOS_LV2__ -DSN_TARGET_PS3
    EXTERNAL_ZLIB = 1
 else ifeq ($(platform), xenon)
-   TARGET := libsnes.a
+   TARGET := libretro.a
    CC = xenon-gcc
    CXX = xenon-g++
    AR = xenon-ar
    ENDIANNESS_DEFINES = -DWORDS_BIGENDIAN
    PLATFORM_DEFINES := -D__LIBXENON__ -m32 -D__ppc__
 else ifeq ($(platform), wii)
-   TARGET := libsnes.a
+   TARGET := libretro.a
    CC = $(DEVKITPPC)/bin/powerpc-eabi-gcc
    CXX = $(DEVKITPPC)/bin/powerpc-eabi-g++
    AR = $(DEVKITPPC)/bin/powerpc-eabi-ar
@@ -64,10 +65,10 @@ else ifeq ($(platform), wii)
    PLATFORM_DEFINES := -DGEKKO -DHW_RVL -mrvl -mcpu=750 -meabi -mhard-float
    EXTERNAL_ZLIB = 1
 else
-   TARGET := snes.dll
+   TARGET := retro.dll
    CC = gcc
    CXX = g++
-   SHARED := -shared -Wl,-no-undefined -Wl,--version-script=$(LIBSNES_DIR)/link.T
+   SHARED := -shared -Wl,-no-undefined -Wl,--version-script=$(LIBRETRO_DIR)/link.T
    LDFLAGS += -static-libgcc -static-libstdc++
    ENDIANNESS_DEFINES := -DLSB_FIRST
 endif
@@ -94,7 +95,7 @@ BURN_BLACKLIST := $(FBA_BURNER_DIR)/un7z.cpp \
 	$(FBA_CPU_DIR)/m68k/m68kmake.c \
 	$(FBA_BURNER_DIR)/wave_writer.cpp \
 	$(FBA_CPU_DIR)/m68k/m68kdasm.c \
-	$(FBA_LIBSNES_DIR)/menu.cpp \
+	$(FBA_LIBRETRO_DIR)/menu.cpp \
 	$(FBA_CPU_DIR)/sh2/mksh2.cpp \
 	$(FBA_BURNER_DIR)/sshot.cpp \
 	$(FBA_BURNER_DIR)/conc.cpp \
@@ -112,6 +113,10 @@ BURN_BLACKLIST := $(FBA_BURNER_DIR)/un7z.cpp \
 	$(FBA_CPU_DIR)/nec/v25instr.c \
 	$(FBA_CPU_DIR)/nec/necinstr.c \
 	$(FBA_BURN_DIR)/drv/capcom/ctv_make.cpp
+
+ifeq ($(LIBRETRO_OPTIMIZATIONS), 1)
+BURN_BLACKLIST += $(FBA_BURN_DIR)/drv/capcom/ctv.cpp
+endif
 
 ifeq ($(EXTERNAL_ZLIB), 1)
 BURN_BLACKLIST += $(FBA_BURNER_DIR)/unzip.c \
@@ -169,41 +174,23 @@ FBA_SRC_DIRS += $(FBA_LIB_DIRS)
 endif
 
 FBA_CXXSRCS := $(filter-out $(BURN_BLACKLIST),$(foreach dir,$(FBA_SRC_DIRS),$(wildcard $(dir)/*.cpp)))
-FBA_CXXSRCS += $(LIBSNES_DIR)/libsnes.cpp $(LIBSNES_DIR)/neocdlist.cpp
+FBA_CXXSRCS += $(LIBRETRO_DIR)/libretro.cpp $(LIBRETRO_DIR)/neocdlist.cpp
 FBA_CXXOBJ := $(FBA_CXXSRCS:.cpp=.o)
 FBA_CSRCS := $(filter-out $(BURN_BLACKLIST),$(foreach dir,$(FBA_SRC_DIRS),$(wildcard $(dir)/*.c)))
 FBA_COBJ := $(FBA_CSRCS:.c=.o)
 
 OBJS := $(FBA_COBJ) $(FBA_CXXOBJ)
 
-FBA_DEFINES := -DUSE_SPEEDHACKS -D__LIBSNES__ \
+FBA_DEFINES := -DUSE_SPEEDHACKS -D__LIBRETRO__ \
+	-D__LIBRETRO_OPTIMIZATIONS__ \
 	$(ENDIANNESS_DEFINES) \
 	$(PLATFORM_DEFINES) \
 	-DINLINE="static inline" \
 	-DSH2_INLINE="static inline"
 
-ifeq ($(DEBUG), 1)
-CFLAGS += -O0 -g
-CXXFLAGS += -O0 -g
-else
-CFLAGS += -O3 -DNDEBUG
-CXXFLAGS += -O3 -DNDEBUG
-endif
-
-ifeq ($(platform), sncps3)
-WARNINGS_DEFINES =
-else
-WARNINGS_DEFINES = -Wno-write-strings
-C_STD_DEFINES = -std=gnu99
-endif
-
-CFLAGS += $(C_STD_DEFINES) $(fpic) $(WARNINGS_DEFINES) $(FBA_DEFINES)
-CXXFLAGS += $(fpic) $(WARNINGS_DEFINES) $(FBA_DEFINES)
-LDFLAGS += $(fpic)
-
 INCDIRS := -I$(FBA_BURNER_DIR)/win32 \
-	-I$(LIBSNES_DIR) \
-	-I$(LIBSNES_DIR)/tchar \
+	-I$(LIBRETRO_DIR) \
+	-I$(LIBRETRO_DIR)/tchar \
 	-I$(FBA_BURN_DIR) \
 	-I$(FBA_BURN_DIR)/burner \
 	-I$(MAIN_FBA_DIR)/cpu \
@@ -240,6 +227,31 @@ INCDIRS := -I$(FBA_BURNER_DIR)/win32 \
 	-I$(FBA_BURN_DIR)/drv/toaplan \
 	-I$(FBA_BURN_DIR)/drv/taito \
 	-I$(FBA_LIB_DIR)
+
+ifeq ($(LIBRETRO_OPTIMIZATIONS), 1)
+FBA_DEFINES += -D__LIBRETRO_OPTIMIZATIONS__ 
+INCDIRS += -I$(MAIN_FBA_DIR)/dep/generated-libretro
+endif
+
+ifeq ($(DEBUG), 1)
+CFLAGS += -O0 -g
+CXXFLAGS += -O0 -g
+else
+CFLAGS += -O3 -DNDEBUG
+CXXFLAGS += -O3 -DNDEBUG
+endif
+
+ifeq ($(platform), sncps3)
+WARNINGS_DEFINES =
+else
+WARNINGS_DEFINES = -Wno-write-strings
+C_STD_DEFINES = -std=gnu99
+endif
+
+CFLAGS += $(C_STD_DEFINES) $(fpic) $(WARNINGS_DEFINES) $(FBA_DEFINES)
+CXXFLAGS += $(fpic) $(WARNINGS_DEFINES) $(FBA_DEFINES)
+LDFLAGS += $(fpic)
+
 
 ifeq ($(ZLIB_INTERNAL), 0)
 INCDIRS += -I$(FBA_LIB_DIR)

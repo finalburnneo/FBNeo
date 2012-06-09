@@ -12,9 +12,6 @@
     <Filter Include="Source Files\burner">
       <UniqueIdentifier>{5934b0a0-a392-46b1-a6b9-85680f426502}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\burner\libsnes">
-      <UniqueIdentifier>{7bdcffa9-aeb6-4794-9e8e-458b9362ac6d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\cpu">
       <UniqueIdentifier>{7c7aaba6-9639-446b-97ad-78934fe6257e}</UniqueIdentifier>
     </Filter>
@@ -129,6 +126,9 @@
     <Filter Include="Source Files\burn\snd">
       <UniqueIdentifier>{aa239b2a-4448-46ed-aa06-51a84303473a}</UniqueIdentifier>
     </Filter>
+	<Filter Include="Source Files\burner\libretro">
+      <UniqueIdentifier>{7f4ef354-8a73-47f9-9c04-9924b98358ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\drv\cps3\cps3snd.cpp">
@@ -164,17 +164,8 @@
     <ClCompile Include="..\..\src\burn\drv\snes\snes_main.cpp">
       <Filter>Source Files\burn\drv\snes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\snes\snes_mem.cpp">
-      <Filter>Source Files\burn\drv\snes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\snes\snes_ppu.cpp">
       <Filter>Source Files\burn\drv\snes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burner\libsnes\neocdlist.cpp">
-      <Filter>Source Files\burner\libsnes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\burner\libsnes\libsnes.cpp">
-      <Filter>Source Files\burner\libsnes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\capcom\qs_z.cpp">
       <Filter>Source Files\burn\drv\capcom</Filter>
@@ -1579,6 +1570,21 @@
     </ClCompile>
     <ClCompile Include="..\..\src\cpu\m68k\m68kopnz.c">
       <Filter>Source Files\cpu\m68k</Filter>
+    </ClCompile>
+	<ClCompile Include="..\..\src\burner\libretro\neocdlist.cpp">
+      <Filter>Source Files\burner\libretro</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burner\libretro\libretro.cpp">
+      <Filter>Source Files\burner\libretro</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\capcom\fcrash_snd.cpp">
+      <Filter>Source Files\burn\drv\capcom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\capcom\sf2mdt_snd.cpp">
+      <Filter>Source Files\burn\drv\capcom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_silvmil.cpp">
+      <Filter>Source Files\burn\drv\pst90s</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

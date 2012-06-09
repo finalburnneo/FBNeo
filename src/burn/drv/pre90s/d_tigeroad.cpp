@@ -554,7 +554,7 @@ static double TigeroadGetTime()
 
 inline static INT32 DrvMSM5205SynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)(SekTotalCycles() * nSoundRate / 10000000);
+	return (INT64)((double)SekTotalCycles() * nSoundRate / 10000000);
 }
 
 static INT32 DrvDoReset()

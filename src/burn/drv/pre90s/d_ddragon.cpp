@@ -1464,7 +1464,7 @@ static void Ddragon2YM2151IrqHandler(INT32 Irq)
 
 inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)(HD6309TotalCycles() * nSoundRate / ((INT32)(nCyclesTotal[0] * 57.444853)));
+	return (INT64)((double)HD6309TotalCycles() * nSoundRate / ((INT32)(nCyclesTotal[0] * 57.444853)));
 }
 
 static void DrvMSM5205Vck0()

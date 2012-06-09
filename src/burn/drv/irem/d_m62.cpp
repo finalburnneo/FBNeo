@@ -2492,7 +2492,7 @@ static void AY8910_0PortBWrite(UINT32, UINT32 d)
 
 inline static INT32 M62SynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)(ZetTotalCycles() * nSoundRate / M62Z80Clock);
+	return (INT64)((double)ZetTotalCycles() * nSoundRate / M62Z80Clock);
 }
 
 static void M62MSM5205Vck0()

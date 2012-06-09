@@ -465,7 +465,7 @@ void __fastcall Wc90b1Write3(UINT16 a, UINT8 d)
 
 inline static INT32 Wc90b1SynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)ZetTotalCycles() * nSoundRate / 5000000;
+	return (INT64)(double)ZetTotalCycles() * nSoundRate / 5000000;
 }
 
 inline static double Wc90b1GetTime()

@@ -1098,7 +1098,7 @@ static double DrvYM2203M6809GetTime1500000()
 
 inline static INT32 CsilverMSM5205SynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)(M6809TotalCycles() * nSoundRate / 1500000);
+	return (INT64)((double)M6809TotalCycles() * nSoundRate / 1500000);
 }
 
 static void DrvYM3812FMIRQHandler(INT32, INT32 nStatus)

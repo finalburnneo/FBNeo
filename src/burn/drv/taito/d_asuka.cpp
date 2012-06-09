@@ -1121,7 +1121,7 @@ static void DrvFMIRQHandler(INT32, INT32 nStatus)
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
+	return (INT64)(double)ZetTotalCycles() * nSoundRate / 4000000;
 }
 
 static double DrvGetTime()

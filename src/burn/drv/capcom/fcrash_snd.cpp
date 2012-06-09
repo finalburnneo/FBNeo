@@ -114,7 +114,7 @@ void __fastcall FcrashZ80Write(UINT16 a, UINT8 d)
 
 inline static INT32 FcrashSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)(ZetTotalCycles() * nSoundRate / (24000000 / 6));
+	return (INT64)((double)ZetTotalCycles() * nSoundRate / (24000000 / 6));
 }
 
 inline static double FcrashGetTime()

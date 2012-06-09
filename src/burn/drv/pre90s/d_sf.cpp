@@ -626,7 +626,7 @@ UINT8 __fastcall sf_sound2_in(UINT16 port)
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)ZetTotalCycles() * nSoundRate / 3579545;
+	return (INT64)(double)ZetTotalCycles() * nSoundRate / 3579545;
 }
 
 static INT32 DrvGfxDecode()

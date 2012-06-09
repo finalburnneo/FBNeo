@@ -876,7 +876,7 @@ inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 
 inline static INT32 DrvMSM5205SynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)(ZetTotalCycles() * nSoundRate / (nCyclesTotal[0] * 60));
+	return (INT64)((double)ZetTotalCycles() * nSoundRate / (nCyclesTotal[0] * 60));
 }
 
 inline static double DrvGetTime()

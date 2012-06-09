@@ -94,7 +94,7 @@ void __fastcall Sf2mdtZ80Write(UINT16 a, UINT8 d)
 
 inline static INT32 Sf2mdtSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)(ZetTotalCycles() * nSoundRate / 3579540);
+	return (INT64)((double)ZetTotalCycles() * nSoundRate / 3579540);
 }
 
 static void Sf2mdtMSM5205Vck0()

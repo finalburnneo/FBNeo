@@ -3954,7 +3954,7 @@ static void TaitoYM2203IRQHandler(INT32, INT32 nStatus)
 
 inline static INT32 TaitoSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)(ZetTotalCycles() * nSoundRate / 4000000);
+	return (INT64)((double)ZetTotalCycles() * nSoundRate / 4000000);
 }
 
 inline static double TaitoGetTime()

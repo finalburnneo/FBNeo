@@ -4196,7 +4196,7 @@ static struct BurnRomInfo CawingjRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "ca22b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },	// b-board PLDs
+	{ "ca22b.1a",      0x000117, 0x5152e678, BRF_OPT },	// b-board PLDs
 	{ "iob1.12e",      0x000117, 0x3abc0700, BRF_OPT },
 };
 

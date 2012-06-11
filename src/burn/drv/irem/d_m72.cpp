@@ -2831,7 +2831,7 @@ static struct BurnRomInfo imgfightRomDesc[] = {
 	{ "if-c-v0.bin",	0x10000, 0xcb64a194, 0x05 | BRF_SND },           // 16 DAC Samples
 	{ "if-c-v1.bin",	0x10000, 0x45b68bf5, 0x05 | BRF_SND },           // 17
 
-	{ "imgfight_i8751h.bin",0x01000, 0xef0d5098, 0x00 | BRF_OPT }, // 18 i8751 Code
+	{ "imgfight_i8751h.bin",0x01000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 18 i8751 Code
 };
 
 STD_ROM_PICK(imgfight)
@@ -2864,7 +2864,7 @@ struct BurnDriver BurnDrvImgfight = {
 
 // Image Fight (Japan)
 
-static struct BurnRomInfo imgfightoRomDesc[] = {
+static struct BurnRomInfo imgfightjRomDesc[] = {
 	{ "if-c-h0.bin",	0x10000, 0x592d2d80, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
 	{ "if-c-l0.bin",	0x10000, 0x61f89056, 0x01 | BRF_PRG | BRF_ESS }, //  1
 	{ "if-c-h3.bin",	0x20000, 0xea030541, 0x01 | BRF_PRG | BRF_ESS }, //  2
@@ -2888,18 +2888,18 @@ static struct BurnRomInfo imgfightoRomDesc[] = {
 	{ "if-c-v0.bin",	0x10000, 0xcb64a194, 0x05 | BRF_SND },           // 16 DAC Samples
 	{ "if-c-v1.bin",	0x10000, 0x45b68bf5, 0x05 | BRF_SND },           // 17
 
-	{ "imgfight_i8751h.bin",0x01000, 0xef0d5098, 0x00 | BRF_OPT }, // 18 i8751 Code
+	{ "imgfightj_i8751h.bin",0x01000, 0xef0d5098, 0x00 | BRF_OPT }, // 18 i8751 Code
 };
 
-STD_ROM_PICK(imgfighto)
-STD_ROM_FN(imgfighto)
+STD_ROM_PICK(imgfightj)
+STD_ROM_FN(imgfightj)
 
-struct BurnDriver BurnDrvImgfighto = {
-	"imgfighto", "imgfight", NULL, NULL, "1988",
+struct BurnDriver BurnDrvImgfightj = {
+	"imgfightj", "imgfight", NULL, NULL, "1988",
 	"Image Fight (Japan)\0", NULL, "Irem", "M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
-	NULL, imgfightoRomInfo, imgfightoRomName, NULL, NULL, CommonInputInfo, ImgfightDIPInfo,
+	NULL, imgfightjRomInfo, imgfightjRomName, NULL, NULL, CommonInputInfo, ImgfightDIPInfo,
 	imgfightInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
 	256, 384, 3, 4
 };

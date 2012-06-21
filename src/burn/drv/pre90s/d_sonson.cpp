@@ -318,9 +318,9 @@ static INT32 MemIndex()
 
 	DrvScrollX	= Next; Next += 0x000020;
 
-	pFMBuffer	= (INT16*)Next; Next += nBurnSoundLen * 6 * sizeof (INT16);
-
 	RamEnd		= Next;
+
+	pFMBuffer	= (INT16*)Next; Next += nBurnSoundLen * 6 * sizeof (INT16);
 
 	MemEnd		= Next;
 

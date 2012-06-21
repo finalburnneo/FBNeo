@@ -215,11 +215,12 @@ static INT32 MemIndex()
 	DrvZ80RAM		= Next; Next += 0x000400;
 	DrvVidRAM		= Next; Next += 0x000400;
 
+	RamEnd			= Next;
+
 	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 
-	RamEnd			= Next;
 	MemEnd			= Next;
 
 	return 0;

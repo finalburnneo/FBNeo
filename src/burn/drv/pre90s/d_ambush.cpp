@@ -250,14 +250,14 @@ static INT32 MemIndex()
 	flipscreen 	= Next; Next += 0x000001;
 	color_bank	= Next; Next += 0x000001;
 
+	RamEnd		= Next;
+
 	pAY8910Buffer[0] = (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
 	pAY8910Buffer[1] = (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
 	pAY8910Buffer[2] = (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
 	pAY8910Buffer[3] = (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
 	pAY8910Buffer[4] = (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
 	pAY8910Buffer[5] = (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
-
-	RamEnd		= Next;
 
 	MemEnd		= Next;
 

@@ -6,7 +6,7 @@ extern "C" {
  #include "ay8910.h"
 }
 
-static UINT8 *Mem, *MemEnd, *AllRAM;
+static UINT8 *Mem, *MemEnd, *AllRAM, *RamEnd;
 static UINT8 *DrvZ80ROM0;
 static UINT8 *DrvZ80ROM1;
 static UINT8 *DrvZ80RAM0;
@@ -327,6 +327,8 @@ static INT32 MemIndex()
 
 	DrvVidControl	= Next; Next += 16;
 
+	RamEnd		= Next;
+
 	pFMBuffer	= (INT16 *)Next; Next += nBurnSoundLen * 3 * sizeof(INT16);
 
 	MemEnd		= Next;
@@ -338,7 +340,7 @@ static INT32 DrvDoReset()
 {
 	DrvReset = 0;
 
-	memset (AllRAM, 0, MemEnd - AllRAM);
+	memset (AllRAM, 0, RamEnd - AllRAM);
 
 	ZetOpen(0);
 	ZetReset();

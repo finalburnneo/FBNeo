@@ -597,7 +597,7 @@ void __fastcall main_write_byte(UINT32 address, UINT8 data)
 		case 0x70000f:
 			if (has_sound_cpu) {
 				*soundlatch = data;
-				M6809SetIRQ(1, M6809_IRQSTATUS_AUTO);
+				M6809SetIRQLine(1, M6809_IRQSTATUS_AUTO);
 			} else {
 				MSM6295Command(0, data);
 			}
@@ -849,8 +849,8 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 encrypted_ram, INT32 sou
 		M6809Open(0);
 		M6809MapMemory(Drv6809RAM,		0x0000, 0x07ff, M6809_RAM);
 		M6809MapMemory(Drv6809ROM + 0x0c00,	0x0c00, 0xffff, M6809_ROM);
-		M6809SetReadByteHandler(sound_read);
-		M6809SetWriteByteHandler(sound_write);
+		M6809SetReadHandler(sound_read);
+		M6809SetWriteHandler(sound_write);
 		M6809Close();
 
 		BurnYM3812Init(3580000, NULL, &DrvSynchroniseStream, 0);

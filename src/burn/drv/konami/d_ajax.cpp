@@ -178,7 +178,7 @@ void ajax_main_write(UINT16 address, UINT8 data)
 		{
 			case 0x0000:
 				if (address == 0 && firq_enable) {
-					M6809SetIRQ(1, M6809_IRQSTATUS_AUTO);
+					M6809SetIRQLine(1, M6809_IRQSTATUS_AUTO);
 				}
 			break;
 
@@ -576,8 +576,8 @@ static INT32 DrvInit()
 	M6809MapMemory(DrvShareRAM,		0x2000, 0x3fff, M6809_RAM);
 	M6809MapMemory(DrvM6809ROM  + 0x10000,	0x8000, 0x9fff, M6809_ROM);
 	M6809MapMemory(DrvM6809ROM  + 0x0a000,	0xa000, 0xffff, M6809_ROM);
-	M6809SetWriteByteHandler(ajax_sub_write);
-	M6809SetReadByteHandler(ajax_sub_read);
+	M6809SetWriteHandler(ajax_sub_write);
+	M6809SetReadHandler(ajax_sub_read);
 	M6809Close();
 
 	ZetInit(0);

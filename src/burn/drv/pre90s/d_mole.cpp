@@ -316,8 +316,8 @@ static INT32 DrvInit()
 	M6502MapMemory(Rom + 0x0000, 0x0000, 0x03ff, M6502_RAM); // Rom
 	M6502MapMemory(Rom + 0x5000, 0x5000, 0x7fff, M6502_ROM); // Rom
 	M6502MapMemory(Rom + 0x5000, 0xd000, 0xffff, M6502_ROM); // Rom Mirror
-	M6502SetReadByteHandler(mole_read_byte);
-	M6502SetWriteByteHandler(mole_write_byte);
+	M6502SetReadHandler(mole_read_byte);
+	M6502SetWriteHandler(mole_write_byte);
 	M6502SetReadMemIndexHandler(mole_read_byte);
 	M6502SetWriteMemIndexHandler(mole_write_byte);
 	M6502SetReadOpHandler(mole_read_byte);
@@ -393,7 +393,7 @@ static INT32 DrvFrame()
 
 	M6502Open(0);
 	M6502Run(4000000 / 60);
-	M6502SetIRQ(M6502_IRQ_LINE, M6502_IRQSTATUS_AUTO);
+	M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_AUTO);
 	M6502Close();
 
 	if (pBurnSoundOut) {

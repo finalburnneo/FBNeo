@@ -330,8 +330,8 @@ static INT32 DrvInit()
 
 		M6502Init(0, TYPE_M6502);
 		M6502Open(0);
-		M6502SetReadByteHandler(eggs_readmem);
-		M6502SetWriteByteHandler(eggs_writemem);
+		M6502SetReadHandler(eggs_readmem);
+		M6502SetWriteHandler(eggs_writemem);
 		M6502SetReadMemIndexHandler(eggs_readmem);
 		M6502SetWriteMemIndexHandler(eggs_writemem);
 		M6502SetReadOpHandler(eggs_readmem);
@@ -352,8 +352,8 @@ static INT32 DrvInit()
 
 		M6502Init(0, TYPE_M6502);
 		M6502Open(0);
-		M6502SetReadByteHandler(dommy_readmem);
-		M6502SetWriteByteHandler(dommy_writemem);
+		M6502SetReadHandler(dommy_readmem);
+		M6502SetWriteHandler(dommy_writemem);
 		M6502SetReadMemIndexHandler(dommy_readmem);
 		M6502SetWriteMemIndexHandler(dommy_writemem);
 		M6502SetReadOpHandler(dommy_readmem);
@@ -504,7 +504,7 @@ static inline void scregg_interrupt_handler(INT32 scanline)
 	if (scanline == 14)
 		VBLK = 0x80;
 
-	M6502SetIRQ(M6502_IRQ_LINE, M6502_IRQSTATUS_AUTO);
+	M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_AUTO);
 }
 
 static INT32 DrvFrame()

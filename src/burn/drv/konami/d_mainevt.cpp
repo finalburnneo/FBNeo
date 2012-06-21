@@ -731,8 +731,8 @@ static INT32 DrvInit(INT32 type)
 	HD6309MapMemory(DrvHD6309RAM,		0x4000, 0x5fff, HD6309_RAM);
 	HD6309MapMemory(DrvHD6309ROM + 0x10000, 0x6000, 0x7fff, HD6309_ROM);
 	HD6309MapMemory(DrvHD6309ROM + 0x08000, 0x8000, 0xffff, HD6309_ROM);
-	HD6309SetWriteByteHandler(mainevt_main_write);
-	HD6309SetReadByteHandler(mainevt_main_read);
+	HD6309SetWriteHandler(mainevt_main_write);
+	HD6309SetReadHandler(mainevt_main_read);
 	HD6309Close();
 
 	ZetInit(0);
@@ -896,9 +896,9 @@ static INT32 DrvFrame()
 	}
 
 	if (nGame) {
-		if (nmi_enable[0]) HD6309SetIRQ(0x20, HD6309_IRQSTATUS_AUTO); // nmi
+		if (nmi_enable[0]) HD6309SetIRQLine(0x20, HD6309_IRQSTATUS_AUTO); // nmi
 	} else {
-		if (K052109_irq_enabled) HD6309SetIRQ(HD6309_IRQ_LINE, HD6309_IRQSTATUS_AUTO);
+		if (K052109_irq_enabled) HD6309SetIRQLine(HD6309_IRQ_LINE, HD6309_IRQSTATUS_AUTO);
 	}
 
 	if (pBurnSoundOut) {

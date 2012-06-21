@@ -1914,7 +1914,7 @@ void __fastcall Dec068KWriteByte(UINT32 a, UINT8 d)
 		
 		case 0x30c015: {
 			DrvSoundLatch = d;
-			M6502SetIRQ(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
 			return;
 		}
 		
@@ -2097,7 +2097,7 @@ void __fastcall Dec068KWriteWord(UINT32 a, UINT16 d)
 		
 		case 0x30c014: {
 			DrvSoundLatch = d & 0xff;
-			M6502SetIRQ(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
 			return;
 		}
 		
@@ -3100,9 +3100,9 @@ inline static double Dec0YM2203GetTime()
 static void Dec0YM3812IRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		M6502SetIRQ(M6502_IRQ_LINE, M6502_IRQSTATUS_ACK);
+		M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_ACK);
 	} else {
-		M6502SetIRQ(M6502_IRQ_LINE, M6502_IRQSTATUS_NONE);
+		M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_NONE);
 	}
 }
 
@@ -3164,8 +3164,8 @@ static INT32 Dec0MachineInit()
 	M6502Open(0);
 	M6502MapMemory(DrvM6502Ram            , 0x0000, 0x05ff, M6502_RAM);
 	M6502MapMemory(DrvM6502Rom            , 0x8000, 0xffff, M6502_ROM);
-	M6502SetReadByteHandler(Dec0SoundReadByte);
-	M6502SetWriteByteHandler(Dec0SoundWriteByte);
+	M6502SetReadHandler(Dec0SoundReadByte);
+	M6502SetWriteHandler(Dec0SoundWriteByte);
 	M6502Close();
 	
 	GenericTilesInit();

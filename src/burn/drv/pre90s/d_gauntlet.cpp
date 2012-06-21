@@ -1772,7 +1772,7 @@ void __fastcall Gauntlet68KWriteWord(UINT32 a, UINT16 d)
 			DrvCPUtoSoundReady = 1;
 			M6502Open(0);
 			nCyclesDone[1] += M6502Run(100);
-			M6502SetIRQ(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
 			nCyclesDone[1] += M6502Run(100);
 			M6502Close();
 			return;
@@ -1931,7 +1931,7 @@ void GauntletSoundWrite(UINT16 Address, UINT8 Data)
 		}
 		
 		case 0x1830: {
-			M6502SetIRQ(M6502_IRQ_LINE, M6502_IRQSTATUS_NONE);
+			M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_NONE);
 			return;
 		}
 		
@@ -2039,8 +2039,8 @@ static INT32 DrvInit()
 	M6502Open(0);
 	M6502MapMemory(DrvM6502Ram            , 0x0000, 0x0fff, M6502_RAM);
 	M6502MapMemory(DrvM6502Rom            , 0x4000, 0xffff, M6502_ROM);
-	M6502SetReadByteHandler(GauntletSoundRead);
-	M6502SetWriteByteHandler(GauntletSoundWrite);
+	M6502SetReadHandler(GauntletSoundRead);
+	M6502SetWriteHandler(GauntletSoundWrite);
 	M6502Close();
 	
 	atarigen_slapstic_init(0x038000, 104);
@@ -2151,8 +2151,8 @@ static INT32 Gaunt2pInit()
 	M6502Open(0);
 	M6502MapMemory(DrvM6502Ram            , 0x0000, 0x0fff, M6502_RAM);
 	M6502MapMemory(DrvM6502Rom            , 0x4000, 0xffff, M6502_ROM);
-	M6502SetReadByteHandler(GauntletSoundRead);
-	M6502SetWriteByteHandler(GauntletSoundWrite);
+	M6502SetReadHandler(GauntletSoundRead);
+	M6502SetWriteHandler(GauntletSoundWrite);
 	M6502Close();
 	
 	atarigen_slapstic_init(0x038000, 107);
@@ -2273,8 +2273,8 @@ static INT32 Gaunt2Init()
 	M6502Open(0);
 	M6502MapMemory(DrvM6502Ram            , 0x0000, 0x0fff, M6502_RAM);
 	M6502MapMemory(DrvM6502Rom            , 0x4000, 0xffff, M6502_ROM);
-	M6502SetReadByteHandler(GauntletSoundRead);
-	M6502SetWriteByteHandler(GauntletSoundWrite);
+	M6502SetReadHandler(GauntletSoundRead);
+	M6502SetWriteHandler(GauntletSoundWrite);
 	M6502Close();
 	
 	atarigen_slapstic_init(0x038000, 106);
@@ -2508,7 +2508,7 @@ static INT32 DrvFrame()
 			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 			nCyclesDone[nCurrentCPU] += M6502Run(nCyclesSegment);
-			if (i == 64 || i == 128 || i == 192 || i == 256) M6502SetIRQ(M6502_IRQ_LINE, M6502_IRQSTATUS_ACK);
+			if (i == 64 || i == 128 || i == 192 || i == 256) M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_ACK);
 			M6502Close();
 		}
 		

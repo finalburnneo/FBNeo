@@ -377,8 +377,8 @@ static INT32 DrvInit()
 	M6809MapMemory(DrvBgRAM,		0x2000, 0x3fff, M6809_RAM);
 	M6809MapMemory(DrvFgRAM,		0x5000, 0x5fff, M6809_WRITE);
 	M6809MapMemory(DrvPalRAM,		0x7000, 0x73ff, M6809_WRITE);
-	M6809SetReadByteHandler(srumbler_main_read);
-	M6809SetWriteByteHandler(srumbler_main_write);
+	M6809SetReadHandler(srumbler_main_read);
+	M6809SetWriteHandler(srumbler_main_write);
 	M6809Close();
 
 	ZetInit(0);
@@ -618,8 +618,8 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
-		if (i == (nInterleave / 2) - 1) M6809SetIRQ(1, M6809_IRQSTATUS_AUTO);
-		if (i == (nInterleave / 1) - 1) M6809SetIRQ(0, M6809_IRQSTATUS_AUTO);
+		if (i == (nInterleave / 2) - 1) M6809SetIRQLine(1, M6809_IRQSTATUS_AUTO);
+		if (i == (nInterleave / 1) - 1) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
 
 		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
 		ZetRaiseIrq(0);

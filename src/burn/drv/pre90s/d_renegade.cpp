@@ -716,7 +716,7 @@ void RenegadeWriteByte(UINT16 Address, UINT8 Data)
 		case 0x3802: {
 			DrvSoundLatch = Data;
 			M6809Open(0);
-			M6809SetIRQ(M6809_IRQ_LINE, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(M6809_IRQ_LINE, M6809_IRQSTATUS_AUTO);
 			M6809Close();
 			return;
 		}
@@ -907,9 +907,9 @@ static INT32 TileYOffsets[16]      = { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80,
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		M6809SetIRQ(M6809_FIRQ_LINE, M6809_IRQSTATUS_ACK);
+		M6809SetIRQLine(M6809_FIRQ_LINE, M6809_IRQSTATUS_ACK);
 	} else {
-		M6809SetIRQ(M6809_FIRQ_LINE, M6809_IRQSTATUS_NONE);
+		M6809SetIRQLine(M6809_FIRQ_LINE, M6809_IRQSTATUS_NONE);
 	}
 }
 
@@ -1001,16 +1001,16 @@ static INT32 DrvInit(INT32 nMcuType)
 	M6502MapMemory(DrvPaletteRam2         , 0x3100, 0x31ff, M6502_RAM);
 	M6502MapMemory(DrvM6502Rom + 0x8000   , 0x4000, 0x7fff, M6502_ROM);
 	M6502MapMemory(DrvM6502Rom            , 0x8000, 0xffff, M6502_ROM);
-	M6502SetReadByteHandler(RenegadeReadByte);
-	M6502SetWriteByteHandler(RenegadeWriteByte);
+	M6502SetReadHandler(RenegadeReadByte);
+	M6502SetWriteHandler(RenegadeWriteByte);
 	M6502Close();
 	
 	M6809Init(1);
 	M6809Open(0);
 	M6809MapMemory(DrvM6809Ram          , 0x0000, 0x0fff, M6809_RAM);
 	M6809MapMemory(DrvM6809Rom          , 0x8000, 0xffff, M6809_ROM);
-	M6809SetReadByteHandler(RenegadeM6809ReadByte);
-	M6809SetWriteByteHandler(RenegadeM6809WriteByte);
+	M6809SetReadHandler(RenegadeM6809ReadByte);
+	M6809SetWriteHandler(RenegadeM6809WriteByte);
 	M6809Close();
 	
 	if (nMcuType == MCU_TYPE_RENEGADE) {
@@ -1269,9 +1269,9 @@ static void DrvInterrupt()
 	static INT32 Count;
 	Count = !Count;
 	if (Count) {
-		M6502SetIRQ(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+		M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
 	} else {
-		M6502SetIRQ(M6502_IRQ_LINE, M6502_IRQSTATUS_AUTO);
+		M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_AUTO);
 	}
 }
 

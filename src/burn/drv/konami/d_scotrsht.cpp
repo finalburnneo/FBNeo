@@ -379,8 +379,8 @@ static INT32 DrvInit()
 	M6809MapMemory(DrvVidRAM,		0x0800, 0x0fff, M6809_RAM);
 	M6809MapMemory(DrvSprRAM,		0x1000, 0x1fff, M6809_RAM);
 	M6809MapMemory(DrvM6809ROM + 0x04000,	0x4000, 0xffff, M6809_ROM);
-	M6809SetWriteByteHandler(scotrsht_main_write);
-	M6809SetReadByteHandler(scotrsht_main_read);
+	M6809SetWriteHandler(scotrsht_main_write);
+	M6809SetReadHandler(scotrsht_main_read);
 	M6809Close();
 
 	ZetInit(0);
@@ -574,7 +574,7 @@ static INT32 DrvFrame()
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
-	if (*irq_enable) M6809SetIRQ(0, M6809_IRQSTATUS_AUTO);
+	if (*irq_enable) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);

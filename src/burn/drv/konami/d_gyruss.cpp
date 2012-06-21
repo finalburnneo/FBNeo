@@ -646,8 +646,8 @@ static INT32 DrvInit()
 	M6809MapMemory(DrvShareRAM,			0x6000, 0x67ff, M6809_RAM);
 	M6809MapMemory(DrvM6809ROM + 0xe000, 		0xe000, 0xffff, M6809_READ);
 	M6809MapMemory(DrvM6809DecROM + 0xe000, 	0xe000, 0xffff, M6809_FETCH);
-	M6809SetReadByteHandler(gyruss_sub_read);
-	M6809SetWriteByteHandler(gyruss_sub_write);
+	M6809SetReadHandler(gyruss_sub_read);
+	M6809SetWriteHandler(gyruss_sub_write);
 	M6809Close();
 
 	ZetInit(1);
@@ -848,7 +848,7 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[1];
 		nCyclesDone[1] += M6809Run(nCyclesSegment);
 		if (i == (nInterleave - 1) && *interrupt_enable1) {
-			M6809SetIRQ(0, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
 		}
 		M6809Close();
 		ZetClose();

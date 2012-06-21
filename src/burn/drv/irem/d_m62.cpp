@@ -2072,7 +2072,7 @@ void __fastcall M62Z80PortWrite(UINT16 a, UINT8 d)
 			if ((d & 0x80) == 0) {
 				M62SoundLatch = d & 0x7f;
 			} else {
-				M6803SetIRQ(M6803_IRQ_LINE, M6803_IRQSTATUS_ACK);
+				M6803SetIRQLine(M6803_IRQ_LINE, M6803_IRQSTATUS_ACK);
 			}
 			return;
 		}
@@ -2379,7 +2379,7 @@ void M62M6803WriteByte(UINT16 a, UINT8 d)
 	
 	switch (a) {
 		case 0x0800: {
-			M6803SetIRQ(M6803_IRQ_LINE, M6803_IRQSTATUS_NONE);
+			M6803SetIRQLine(M6803_IRQ_LINE, M6803_IRQSTATUS_NONE);
 			return;
 		}
 		
@@ -2497,7 +2497,7 @@ inline static INT32 M62SynchroniseStream(INT32 nSoundRate)
 
 static void M62MSM5205Vck0()
 {
-	M6803SetIRQ(M6803_INPUT_LINE_NMI, M6803_IRQSTATUS_AUTO);
+	M6803SetIRQLine(M6803_INPUT_LINE_NMI, M6803_IRQSTATUS_AUTO);
 	M62SlaveMSM5205VClckReset = 1;
 }
 
@@ -3379,8 +3379,8 @@ static void M62MachineInit()
 	
 	M6803Init(1);
 	M6803MapMemory(M62M6803Rom, 0x4000, 0xffff, M6803_ROM);
-	M6803SetReadByteHandler(M62M6803ReadByte);
-	M6803SetWriteByteHandler(M62M6803WriteByte);
+	M6803SetReadHandler(M62M6803ReadByte);
+	M6803SetWriteHandler(M62M6803WriteByte);
 	M6803SetReadPortHandler(M62M6803ReadPort);
 	M6803SetWritePortHandler(M62M6803WritePort);
 	

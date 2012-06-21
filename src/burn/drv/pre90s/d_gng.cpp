@@ -889,8 +889,8 @@ static INT32 DrvInit()
 	M6809MapMemory(DrvPaletteRam1       , 0x3900, 0x39ff, M6809_RAM);
 	M6809MapMemory(DrvM6809Rom          , 0x4000, 0x5fff, M6809_ROM);
 	M6809MapMemory(DrvM6809Rom + 0x2000 , 0x6000, 0xffff, M6809_ROM);
-	M6809SetReadByteHandler(DrvGngM6809ReadByte);
-	M6809SetWriteByteHandler(DrvGngM6809WriteByte);
+	M6809SetReadHandler(DrvGngM6809ReadByte);
+	M6809SetWriteHandler(DrvGngM6809WriteByte);
 	M6809Close();
 	
 	// Setup the Z80 emulation
@@ -983,8 +983,8 @@ static INT32 DiamondInit()
 	M6809MapMemory(DrvPaletteRam1       , 0x3900, 0x39ff, M6809_RAM);
 	M6809MapMemory(DrvM6809Rom          , 0x4000, 0x5fff, M6809_ROM);
 	M6809MapMemory(DrvM6809Rom + 0x2000 , 0x6000, 0xffff, M6809_ROM);
-	M6809SetReadByteHandler(DrvGngM6809ReadByte);
-	M6809SetWriteByteHandler(DrvGngM6809WriteByte);
+	M6809SetReadHandler(DrvGngM6809ReadByte);
+	M6809SetWriteHandler(DrvGngM6809WriteByte);
 	M6809Close();
 	
 	// Setup the Z80 emulation
@@ -1314,7 +1314,7 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
 		if (i == 24) {
-			M6809SetIRQ(0, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
 		}
 		M6809Close();
 		

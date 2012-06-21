@@ -412,15 +412,15 @@ static INT32 DrvInit()
 	M6809MapMemory(DrvColRAM,		0x1400, 0x17ff, M6809_RAM);
 	M6809MapMemory(DrvSprRAM,		0x2020, 0x207f, M6809_RAM); // 0x100 min
 	M6809MapMemory(DrvM6809ROM0 + 0x04000,	0x4000, 0xffff, M6809_ROM);
-	M6809SetReadByteHandler(sonson_main_read);
-	M6809SetWriteByteHandler(sonson_main_write);
+	M6809SetReadHandler(sonson_main_read);
+	M6809SetWriteHandler(sonson_main_write);
 	M6809Close();
 
 	M6809Open(1);
 	M6809MapMemory(DrvM6809RAM1,		0x0000, 0x07ff, M6809_RAM);
 	M6809MapMemory(DrvM6809ROM1 + 0x0e000,	0xe000, 0xffff, M6809_ROM);
-	M6809SetReadByteHandler(sonson_sound_read);
-	M6809SetWriteByteHandler(sonson_sound_write);
+	M6809SetReadHandler(sonson_sound_read);
+	M6809SetWriteHandler(sonson_sound_write);
 	M6809Close();
 
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
@@ -576,7 +576,7 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
 		if (i == (nInterleave - 1)) {
-			M6809SetIRQ(0, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
 		}
 		M6809Close();
 
@@ -585,12 +585,12 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		if (DrvSoundIrqTrigger) {
-			M6809SetIRQ(1, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(1, M6809_IRQSTATUS_AUTO);
 			DrvSoundIrqTrigger = 0;
 		}
 		nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
 		if (i == 3 || i == 7 || i == 11 || i == 15) {
-			M6809SetIRQ(0, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
 		}
 		M6809Close();
 

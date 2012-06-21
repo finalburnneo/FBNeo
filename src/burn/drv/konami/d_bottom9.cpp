@@ -560,8 +560,8 @@ static INT32 DrvInit()
 	M6809MapMemory(DrvM6809RAM,	      0x4000, 0x5fff, M6809_RAM);
 	M6809MapMemory(DrvM6809ROM + 0x10000, 0x6000, 0x7fff, M6809_ROM);
 	M6809MapMemory(DrvM6809ROM + 0x08000, 0x8000, 0xffff, M6809_ROM);
-	M6809SetWriteByteHandler(bottom9_main_write);
-	M6809SetReadByteHandler(bottom9_main_read);
+	M6809SetWriteHandler(bottom9_main_write);
+	M6809SetReadHandler(bottom9_main_read);
 	M6809Close();
 
 	ZetInit(0);
@@ -681,7 +681,7 @@ static INT32 DrvFrame()
 		if (*nmi_enable) ZetNmi();
 	}
 
-	if (K052109_irq_enabled) M6809SetIRQ(0, M6809_IRQSTATUS_AUTO);
+	if (K052109_irq_enabled) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		memset(pBurnSoundOut, 0, nBurnSoundLen * sizeof(INT16) * 2);

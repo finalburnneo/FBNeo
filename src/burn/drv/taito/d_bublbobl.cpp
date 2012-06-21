@@ -1747,8 +1747,8 @@ static INT32 MachineInit()
 	if (DrvMCUInUse == 1) {
 		M6801Init(1);
 		M6801MapMemory(DrvMcuRom, 0xf000, 0xffff, M6801_ROM);
-		M6801SetReadByteHandler(BublboblMcuReadByte);
-		M6801SetWriteByteHandler(BublboblMcuWriteByte);
+		M6801SetReadHandler(BublboblMcuReadByte);
+		M6801SetWriteHandler(BublboblMcuWriteByte);
 	} else if (DrvMCUInUse == 2) {
 
 		m67805_taito_init(DrvMcuRom, DrvMcuRam, &bub68705_m68705_interface);
@@ -2396,8 +2396,8 @@ static INT32 DrvFrame()
 					if (i == 99) m68705SetIrqLine(0, 0 /*CLEAR_LINE*/);
 				} else {
 					nCyclesSegment = M6801Run(nCyclesSegment);
-					if (i == 98) M6801SetIRQ(0, M6801_IRQSTATUS_ACK);
-					if (i == 99) M6801SetIRQ(0, M6801_IRQSTATUS_NONE);
+					if (i == 98) M6801SetIRQLine(0, M6801_IRQSTATUS_ACK);
+					if (i == 99) M6801SetIRQLine(0, M6801_IRQSTATUS_NONE);
 				} 
 
 				nCyclesDone[nCurrentCPU] += nCyclesSegment;

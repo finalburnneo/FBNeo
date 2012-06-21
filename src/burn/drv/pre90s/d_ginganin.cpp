@@ -160,7 +160,7 @@ void __fastcall ginganin_write_word(UINT32 address, UINT16 data)
 
 		case 0x06000e:
 			*soundlatch = data & 0xff;
-			M6809SetIRQ(0x20, M6809_IRQSTATUS_AUTO); // nmi
+			M6809SetIRQLine(0x20, M6809_IRQSTATUS_AUTO); // nmi
 		return;
 	}
 }
@@ -396,8 +396,8 @@ static INT32 DrvInit()
 	M6809Open(0);
 	M6809MapMemory(DrvM6809RAM,		0x0000, 0x07ff, M6809_RAM);
 	M6809MapMemory(DrvM6809ROM + 0x4000,	0x4000, 0xffff, M6809_ROM);
-	M6809SetWriteByteHandler(ginganin_sound_write);
-	M6809SetReadByteHandler(ginganin_sound_read);
+	M6809SetWriteHandler(ginganin_sound_write);
+	M6809SetReadHandler(ginganin_sound_read);
 	M6809Close();
 
 	AY8910Init(0, 3579545 / 2, nBurnSoundRate, NULL, NULL, NULL, NULL);
@@ -577,7 +577,7 @@ static void sound_interrupt()
 	if (MC6840_flag) {
 		if (MC6840_ctr > MC6840_tempo) {
 			MC6840_ctr = 0;
-			M6809SetIRQ(0, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
 		} else {
 			MC6840_ctr++;
 		}

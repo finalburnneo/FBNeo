@@ -705,7 +705,7 @@ static void MachineInit()
 	ZetMemEnd();
 	ZetClose();
 	
-	NamcoSoundInit(18432000 / 6 / 32);
+	NamcoSoundInit(18432000 / 6 / 32, 3);
 	NacmoSoundSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 	BurnSampleInit(0);
 	BurnSampleSetAllRoutesAllSamples(0.80, BURN_SND_ROUTE_BOTH);

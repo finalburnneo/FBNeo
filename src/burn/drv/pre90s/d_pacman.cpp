@@ -2500,7 +2500,7 @@ static INT32 DrvInit(void (*mapCallback)(), void (*pInitCallback)(), INT32 selec
 	SN76496SetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 0.75, BURN_SND_ROUTE_BOTH);
 
-	NamcoSoundInit(18432000 / 6 / 32);
+	NamcoSoundInit(18432000 / 6 / 32, 3);
 	NacmoSoundSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

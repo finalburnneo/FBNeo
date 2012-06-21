@@ -482,7 +482,7 @@ static INT32 build_decoded_waveform()
 	return 0;
 }
 
-void NamcoSoundInit(INT32 clock)
+void NamcoSoundInit(INT32 clock, INT32 num_voices)
 {
 	DebugSnd_NamcoSndInitted = 1;
 	
@@ -495,7 +495,7 @@ void NamcoSoundInit(INT32 clock)
 	namco_soundregs = (UINT8*)malloc(0x40);
 	memset(namco_soundregs, 0, 0x40);
 
-	chip->num_voices = 3;
+	chip->num_voices = num_voices;
 	chip->last_channel = chip->channel_list + chip->num_voices;
 	chip->stereo = 0;
 

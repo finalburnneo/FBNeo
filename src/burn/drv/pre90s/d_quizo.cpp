@@ -2,7 +2,7 @@
 // Based on MAME driver by Tomasz Slanina
 
 #include "burnint.h"
-#include "zet.h"
+#include "z80_intf.h"
 
 #include "driver.h"
 extern "C" {

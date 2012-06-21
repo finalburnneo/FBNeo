@@ -1,5 +1,5 @@
 #include "tiles_generic.h"
-#include "zet.h"
+#include "z80_intf.h"
 #include "m6800_intf.h"
 #include "taito_m68705.h"
 #include "burn_ym2203.h"

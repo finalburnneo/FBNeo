@@ -2,9 +2,9 @@
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"
-#include "zet.h"
+#include "z80_intf.h"
 #include "burn_ym2151.h"
-#include "vez.h"
+#include "nec_intf.h"
 #include "irem_cpu.h"
 #include "dac.h"
 

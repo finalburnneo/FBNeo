@@ -19,8 +19,8 @@
  */
 
 #include "burnint.h"
-#include "sek.h"
-#include "zet.h"
+#include "m68000_intf.h"
+#include "z80_intf.h"
 #include "burn_ym2610.h"
 
 #define	USE_BURN_HIGHCOL	1

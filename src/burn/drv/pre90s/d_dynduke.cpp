@@ -2,9 +2,9 @@
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"
-#include "zet.h"
+#include "z80_intf.h"
 #include "seibusnd.h"
-#include "vez.h"
+#include "nec_intf.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

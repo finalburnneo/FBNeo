@@ -1,7 +1,7 @@
 // FB Alpha - World Cup '90 driver
 
 #include "tiles_generic.h"
-#include "zet.h"
+#include "z80_intf.h"
 #include "burn_ym2608.h"
 
 static UINT8 Wc90InputPort0[6] = {0, 0, 0, 0, 0, 0};

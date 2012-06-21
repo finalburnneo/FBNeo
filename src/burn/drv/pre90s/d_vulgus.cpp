@@ -4,7 +4,7 @@
 // To do: flip screen
 
 #include "tiles_generic.h"
-#include "zet.h"
+#include "z80_intf.h"
 
 #include "driver.h"
 extern "C" {

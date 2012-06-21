@@ -2,7 +2,7 @@
 // Based on MAME driver by David Haywood
 
 #include "tiles_generic.h"
-#include "sek.h"
+#include "m68000_intf.h"
 #include "sknsspr.h"
 #include "ymz280b.h"
 

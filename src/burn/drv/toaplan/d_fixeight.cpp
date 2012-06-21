@@ -1,6 +1,6 @@
 #include "toaplan.h"
 #include "eeprom.h"
-#include "vez.h"
+#include "nec_intf.h"
 
 static UINT8 DrvButton[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvJoy1[8] = {0, 0, 0, 0, 0, 0, 0, 0};

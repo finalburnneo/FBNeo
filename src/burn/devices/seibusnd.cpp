@@ -22,7 +22,7 @@
 //
 
 #include "burnint.h"
-#include "zet.h"
+#include "z80_intf.h"
 #include "burn_ym3812.h"
 #include "burn_ym2151.h"
 #include "burn_ym2203.h"

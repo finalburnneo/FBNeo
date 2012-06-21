@@ -1,5 +1,5 @@
 #include "tiles_generic.h"
-#include "sek.h"
+#include "m68000_intf.h"
 #include "msm6295.h"
 
 static UINT8 DrvInputPort0[8]     = {0, 0, 0, 0, 0, 0, 0, 0};

@@ -11,7 +11,7 @@
 
 #include "tiles_generic.h"
 #include "burn_ym2151.h"
-#include "vez.h"
+#include "nec_intf.h"
 #include "msm6295.h" // ppan
 #include "irem_cpu.h"
 #include "iremga20.h"

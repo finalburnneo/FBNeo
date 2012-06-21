@@ -2,7 +2,7 @@
 // Based on MAME driver by Zsolt Vasvari
 
 #include "tiles_generic.h"
-#include "zet.h"
+#include "z80_intf.h"
 #include "8255ppi.h"
 #include "bitswap.h"
 #include "driver.h"

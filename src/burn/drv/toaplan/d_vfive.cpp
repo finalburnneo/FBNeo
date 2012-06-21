@@ -1,5 +1,5 @@
 #include "toaplan.h"
-#include "vez.h"
+#include "nec_intf.h"
 
 // V-Five & Grind Stormer
 

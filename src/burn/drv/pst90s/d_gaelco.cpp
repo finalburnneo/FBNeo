@@ -2,7 +2,7 @@
 // Based on MAME driver by Manuel Abadia with various bits by Nicola Salmoria and Andreas Naive
 
 #include "tiles_generic.h"
-#include "sek.h"
+#include "m68000_intf.h"
 #include "m6809_intf.h"
 #include "msm6295.h"
 #include "burn_ym3812.h"

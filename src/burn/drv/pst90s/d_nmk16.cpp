@@ -3,8 +3,8 @@
 // Also, a huge "thank you!" to JackC for helping bug test
 
 #include "tiles_generic.h"
-#include "sek.h"
-#include "zet.h"
+#include "m68000_intf.h"
+#include "z80_intf.h"
 #include "seibusnd.h"
 #include "bitswap.h"
 #include "nmk004.h"

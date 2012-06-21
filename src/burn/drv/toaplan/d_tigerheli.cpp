@@ -1,7 +1,7 @@
 // Tiger Heli, Get Star / Guardian, & Slap Fight
 
 #include "burnint.h"
-#include "zet.h"
+#include "z80_intf.h"
 #include "taito_m68705.h"
 #include "bitswap.h"
 #include "driver.h"

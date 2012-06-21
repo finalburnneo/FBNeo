@@ -2,7 +2,7 @@
 // Based on MAME driver by BUT
 
 #include "tiles_generic.h"
-#include "zet.h"
+#include "z80_intf.h"
 #include "driver.h"
 extern "C" {
 #include "ay8910.h"

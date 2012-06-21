@@ -2,7 +2,7 @@
 // Based on MAME Driver by David Haywood and Phil Stroffolino
 
 #include "tiles_generic.h"
-#include "zet.h"
+#include "z80_intf.h"
 
 #include "driver.h"
 extern "C" {

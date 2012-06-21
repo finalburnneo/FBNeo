@@ -2,7 +2,7 @@
 // Based on MAME driver by Uki
 
 #include "tiles_generic.h"
-#include "zet.h"
+#include "z80_intf.h"
 #include "burn_ym2203.h"
 
 static UINT8 *AllMem;

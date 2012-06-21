@@ -2,7 +2,7 @@
 // Based on MAME driver by Farfetch, David Haywood, Tomasz Slanina, and nuapete
 
 #include "tiles_generic.h"
-#include "sek.h"
+#include "m68000_intf.h"
 #include "msm6295.h"
 #include "eeprom.h"
 #include "ymz280b.h"
@@ -11,7 +11,7 @@
 //#define ENABLE_SOUND_HARDWARE // no sound without ymf262 core anyway...
 
 #ifdef ENABLE_SOUND_HARDWARE
-#include "zet.h"
+#include "z80_intf.h"
 #endif
 
 static UINT8 *AllMem;

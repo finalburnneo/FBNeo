@@ -5,10 +5,10 @@
 
 
 #include "burnint.h"
-#include "zet.h"
+#include "z80_intf.h"
 #include "burn_ym3812.h"
 #include "msm6295.h"
-#include "vez.h"
+#include "nec_intf.h"
 
 static UINT8 *Mem = NULL, *MemEnd = NULL;
 static UINT8 *RamStart, *RamEnd;

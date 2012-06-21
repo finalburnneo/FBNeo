@@ -2,7 +2,7 @@
 // Based on MAME driver by Bryan McPhail
 
 #include "tiles_generic.h"
-#include "sek.h"
+#include "m68000_intf.h"
 #include "h6280_intf.h"
 #include "deco16ic.h"
 #include "burn_ym2203.h"

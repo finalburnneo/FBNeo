@@ -1,5 +1,5 @@
 #include "toaplan.h"
-#include "vez.h"
+#include "nec_intf.h"
 // Knuckle Bash
 
 static UINT8 DrvButton[8] = {0, 0, 0, 0, 0, 0, 0, 0};

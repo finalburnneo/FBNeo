@@ -2,7 +2,7 @@
 // Based on MAME driver by Jarek Burczynski
 
 #include "tiles_generic.h"
-#include "zet.h"
+#include "z80_intf.h"
 #include "bitswap.h"
 #include "driver.h"
 extern "C" {

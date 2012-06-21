@@ -2,7 +2,7 @@
 // Based on MAME driver by by Bryan McPhail, Manuel Abadia, and Eddie Edwards
 
 #include "tiles_generic.h"
-#include "zet.h"
+#include "z80_intf.h"
 #include "konami_intf.h"
 #include "konamiic.h"
 #include "burn_ym2151.h"

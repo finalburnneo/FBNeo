@@ -2,7 +2,7 @@
 // Based on MAME driver by Chris Moore, Brad Oliver, Nicola Salmoria, and many others
 
 #include "tiles_generic.h"
-#include "zet.h"
+#include "z80_intf.h"
 #include "burn_ym2203.h"
 #include "burn_ym2151.h"
 #include "tnzs_prot.h"

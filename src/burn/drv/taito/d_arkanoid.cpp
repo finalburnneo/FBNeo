@@ -2,7 +2,7 @@
 // Based on MAME driver by Brad Oliver and MANY others.
 
 #include "tiles_generic.h"
-#include "zet.h"
+#include "z80_intf.h"
 #include "taito_m68705.h"
 #include "driver.h"
 extern "C" {

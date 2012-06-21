@@ -1,6 +1,6 @@
 #include "tiles_generic.h"
 #include "taito_m68705.h"
-#include "zet.h"
+#include "z80_intf.h"
 #include "driver.h"
 #include "dac.h"
 extern "C" {

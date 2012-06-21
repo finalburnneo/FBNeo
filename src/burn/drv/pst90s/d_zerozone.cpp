@@ -2,8 +2,8 @@
 // Based on MAME driver by Brad Oliver
 
 #include "tiles_generic.h"
-#include "sek.h"
-#include "zet.h"
+#include "m68000_intf.h"
+#include "z80_intf.h"
 #include "msm6295.h"
 
 static UINT8 *AllMem;

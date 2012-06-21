@@ -20,13 +20,13 @@
  ********************************************************************************/
 
 #include "burnint.h"
-#include "sek.h"
-#include "zet.h"
+#include "m68000_intf.h"
+#include "z80_intf.h"
 #include "burn_ym2612.h"
 #include "sn76496.h"
 #include "megadrive.h"
 #include "bitswap.h"
-#include "sekdebug.h"
+#include "m68000_debug.h"
 
 #define OSC_NTSC 53693175
 #define OSC_PAL  53203424

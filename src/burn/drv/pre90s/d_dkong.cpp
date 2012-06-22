@@ -1801,7 +1801,7 @@ static INT32 radarscpInit()
 	return ret;
 }
 
-struct BurnDriverD BurnDrvRadarscp = {
+struct BurnDriver BurnDrvRadarscp = {
 	"radarscp", NULL, NULL, NULL, "1980",
 	"Radar Scope\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1870,9 +1870,9 @@ static INT32 radarscp1Init()
 	return ret;
 }
 
-struct BurnDriverD BurnDrvRadarscp1 = {
+struct BurnDriver BurnDrvRadarscp1 = {
 	"radarscp1", "radarscp", NULL, NULL, "1980",
-	"Radar Scope (TRS01)\0", NULL, "Nintendo", "Miscellaneous",
+	"Radar Scope (TRS01)\0", "No sound", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, radarscp1RomInfo, radarscp1RomName, NULL, NULL, RadarscpInputInfo, RadarscpDIPInfo,
@@ -1953,7 +1953,7 @@ static INT32 dkongInit()
 	return DrvInit(dkongRomLoad, dkongPaletteInit, 0);
 }
 
-struct BurnDriverD BurnDrvDkong = {
+struct BurnDriver BurnDrvDkong = {
 	"dkong", NULL, NULL, "dkong", "1981",
 	"Donkey Kong (US set 1)\0", NULL, "Nintendo of America", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1991,7 +1991,7 @@ static struct BurnRomInfo dkongoRomDesc[] = {
 STD_ROM_PICK(dkongo)
 STD_ROM_FN(dkongo)
 
-struct BurnDriverD BurnDrvDkongo = {
+struct BurnDriver BurnDrvDkongo = {
 	"dkongo", "dkong", NULL, "dkong", "1981",
 	"Donkey Kong (US set 2)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2029,7 +2029,7 @@ static struct BurnRomInfo dkongjRomDesc[] = {
 STD_ROM_PICK(dkongj)
 STD_ROM_FN(dkongj)
 
-struct BurnDriverD BurnDrvDkongj = {
+struct BurnDriver BurnDrvDkongj = {
 	"dkongj", "dkong", NULL, "dkong", "1981",
 	"Donkey Kong (Japan set 1)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2067,7 +2067,7 @@ static struct BurnRomInfo dkongjoRomDesc[] = {
 STD_ROM_PICK(dkongjo)
 STD_ROM_FN(dkongjo)
 
-struct BurnDriverD BurnDrvDkongjo = {
+struct BurnDriver BurnDrvDkongjo = {
 	"dkongjo", "dkong", NULL, "dkong", "1981",
 	"Donkey Kong (Japan set 2)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2105,7 +2105,7 @@ static struct BurnRomInfo dkongjo1RomDesc[] = {
 STD_ROM_PICK(dkongjo1)
 STD_ROM_FN(dkongjo1)
 
-struct BurnDriverD BurnDrvDkongjo1 = {
+struct BurnDriver BurnDrvDkongjo1 = {
 	"dkongjo1", "dkong", NULL, "dkong", "1981",
 	"Donkey Kong (Japan set 3)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2143,7 +2143,7 @@ static struct BurnRomInfo dkongfRomDesc[] = {
 STD_ROM_PICK(dkongf)
 STD_ROM_FN(dkongf)
 
-struct BurnDriverD BurnDrvDkongf = {
+struct BurnDriver BurnDrvDkongf = {
 	"dkongf", "dkong", NULL, "dkong", "2004",
 	"Donkey Kong Foundry (hack)\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2224,11 +2224,11 @@ static INT32 dkongxInit()
 	return ret;
 }
 
-struct BurnDriverD BurnDrvDkongx = {
+struct BurnDriver BurnDrvDkongx = {
 	"dkongx", "dkong", NULL, "dkong", "2006",
 	"Donkey Kong II - Jumpman Returns (V1.2) (hack)\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, dkongxRomInfo, dkongxRomName, DkongSampleInfo, DkongSampleName, DkongInputInfo, NULL,
 	dkongxInit, DrvExit, DrvFrame, dkongDraw, NULL, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -2264,7 +2264,7 @@ static struct BurnRomInfo dkongx11RomDesc[] = {
 STD_ROM_PICK(dkongx11)
 STD_ROM_FN(dkongx11)
 
-struct BurnDriverD BurnDrvDkongx11 = {
+struct BurnDriver BurnDrvDkongx11 = {
 	"dkongx11", "dkong", NULL, "dkong", "2006",
 	"Donkey Kong II - Jumpman Returns (V1.1) (hack)\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2344,7 +2344,7 @@ static INT32 dkongjrRomLoad()
 	memcpy (DrvZ80ROM + 0x5000, tmp + 0x1000, 0x0800);
 	memcpy (DrvZ80ROM + 0x1800, tmp + 0x1800, 0x0800);
 
-	free (tmp);
+	BurnFree (tmp);
 
 	if (BurnLoadRom(DrvSndROM0  + 0x0000,  3, 1)) return 1;
 
@@ -2372,7 +2372,7 @@ static INT32 dkongjrInit()
 	return DrvInit(dkongjrRomLoad, dkongPaletteInit, 0);
 }
 
-struct BurnDriverD BurnDrvDkongjr = {
+struct BurnDriver BurnDrvDkongjr = {
 	"dkongjr", NULL, NULL, "dkongjr", "1982",
 	"Donkey Kong Junior (US)\0", NULL, "Nintendo of America", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2408,7 +2408,7 @@ static struct BurnRomInfo dkongjrjRomDesc[] = {
 STD_ROM_PICK(dkongjrj)
 STD_ROM_FN(dkongjrj)
 
-struct BurnDriverD BurnDrvDkongjrj = {
+struct BurnDriver BurnDrvDkongjrj = {
 	"dkongjrj", "dkongjr", NULL, "dkongjr", "1982",
 	"Donkey Kong Jr. (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2444,7 +2444,7 @@ static struct BurnRomInfo dkongjnrjRomDesc[] = {
 STD_ROM_PICK(dkongjnrj)
 STD_ROM_FN(dkongjnrj)
 
-struct BurnDriverD BurnDrvDkongjnrj = {
+struct BurnDriver BurnDrvDkongjnrj = {
 	"dkongjnrj", "dkongjr", NULL, "dkongjr", "1982",
 	"Donkey Kong Junior (Japan?)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2480,7 +2480,7 @@ static struct BurnRomInfo dkongjrbRomDesc[] = {
 STD_ROM_PICK(dkongjrb)
 STD_ROM_FN(dkongjrb)
 
-struct BurnDriverD BurnDrvDkongjrb = {
+struct BurnDriver BurnDrvDkongjrb = {
 	"dkongjrb", "dkongjr", NULL, "dkongjr", "1982",
 	"Donkey Kong Jr. (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2516,7 +2516,7 @@ static struct BurnRomInfo jrkingRomDesc[] = {
 STD_ROM_PICK(jrking)
 STD_ROM_FN(jrking)
 
-struct BurnDriverD BurnDrvJrking = {
+struct BurnDriver BurnDrvJrking = {
 	"jrking", "dkongjr", NULL, "dkongjr", "1982",
 	"Junior King (bootleg of Donkey Kong Jr.)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2570,7 +2570,7 @@ static INT32 dkingjrInit()
 	return DrvInit(dkingjrRomLoad, dkongPaletteInit, 0);
 }
 
-struct BurnDriverD BurnDrvDkingjr = {
+struct BurnDriver BurnDrvDkingjr = {
 	"dkingjr", "dkongjr", NULL, "dkongjr", "1982",
 	"Donkey King Jr. (bootleg of Donkey Kong Jr.)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2626,7 +2626,7 @@ struct BurnDriverD BurnDrvDkongjre = {
 	"dkongjre", "dkongjr", NULL, "dkongjr", "1982",
 	"Donkey Kong Junior (Easy)\0", NULL, "Nintendo of America", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, dkongjreRomInfo, dkongjreRomName, DkongjrSampleInfo, DkongjrSampleName, DkongInputInfo, DkongDIPInfo,
 	dkongjreInit, DrvExit, DrvFrame, dkongDraw, NULL, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -2678,7 +2678,7 @@ static INT32 pestplceInit()
 	return DrvInit(pestplceRomLoad, dkongPaletteInit, 1);
 }
 
-struct BurnDriverD BurnDrvPestplce = {
+struct BurnDriver BurnDrvPestplce = {
 	"pestplce", "mario", NULL, NULL, "1983",
 	"Pest Place\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2764,9 +2764,9 @@ static INT32 dkong3Init()
 	return ret;
 }
 
-struct BurnDriverD BurnDrvDkong3 = {
+struct BurnDriver BurnDrvDkong3 = {
 	"dkong3", NULL, NULL, NULL, "1983",
-	"Donkey Kong 3 (US)\0", NULL, "Nintendo of America", "Miscellaneous",
+	"Donkey Kong 3 (US)\0", "No sound", "Nintendo of America", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, dkong3RomInfo, dkong3RomName, NULL, NULL, Dkong3InputInfo, Dkong3DIPInfo,
@@ -2805,9 +2805,9 @@ static struct BurnRomInfo dkong3jRomDesc[] = {
 STD_ROM_PICK(dkong3j)
 STD_ROM_FN(dkong3j)
 
-struct BurnDriverD BurnDrvDkong3j = {
+struct BurnDriver BurnDrvDkong3j = {
 	"dkong3j", "dkong3", NULL, NULL, "1983",
-	"Donkey Kong 3 (Japan)\0", NULL, "Nintendo", "Miscellaneous",
+	"Donkey Kong 3 (Japan)\0", "No sound", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, dkong3jRomInfo, dkong3jRomName, NULL, NULL, Dkong3InputInfo, Dkong3DIPInfo,
@@ -2864,7 +2864,7 @@ static INT32 dkong3bInit()
 	return DrvInit(dkong3bRomLoad, dkong3PaletteInit, 1);
 }
 
-struct BurnDriverD BurnDrvDkong3b = {
+struct BurnDriver BurnDrvDkong3b = {
 	"dkong3b", "dkong3", NULL, NULL, "1984",
 	"Donkey Kong 3 (bootleg on Donkey Kong Jr. hardware)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2941,9 +2941,9 @@ static INT32 herbiedkInit()
 	return s2650DkongInit(herbiedkRomLoad);
 }
 
-struct BurnDriverD BurnDrvHerbiedk = {
+struct BurnDriver BurnDrvHerbiedk = {
 	"herbiedk", "huncholy", NULL, NULL, "1984",
-	"Herbie at the Olympics (DK conversion)\0", NULL, "Century Electronics / Seatongrove Ltd", "Miscellaneous",
+	"Herbie at the Olympics (DK conversion)\0", "No sound", "Century Electronics / Seatongrove Ltd", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, herbiedkRomInfo, herbiedkRomName, NULL, NULL, DkongInputInfo, HerbiedkDIPInfo,
@@ -2990,9 +2990,9 @@ static INT32 hunchbkdInit()
 
 struct BurnDriverD BurnDrvHunchbkd = {
 	"hunchbkd", "hunchbak", NULL, NULL, "1983",
-	"Hunchback (DK conversion)\0", NULL, "Century Electronics", "Miscellaneous",
+	"Hunchback (DK conversion)\0", "No sound", "Century Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, hunchbkdRomInfo, hunchbkdRomName, NULL, NULL, DkongInputInfo, HunchbkdDIPInfo,
 	hunchbkdInit, s2650DkongExit, s2650DkongFrame, dkongDraw, NULL, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -3113,7 +3113,7 @@ static INT32 herodkLoad()
 	memcpy (Drv2650ROM + 0x6000, tmp + 0x3000, 0x0e00);
 	memcpy (Drv2650ROM + 0x2e00, tmp + 0x3e00, 0x0200);
 
-	free (tmp);
+	BurnFree (tmp);
 
 	for (INT32 i = 0; i < 0x8000; i++)
 	{

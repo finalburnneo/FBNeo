@@ -1909,11 +1909,13 @@ STD_ROM_PICK(dkong)
 STD_ROM_FN(dkong)
 
 static struct BurnSampleInfo DkongSampleDesc[] = {
+#if !defined (ROM_VERIFY)
 	{ "run01.wav",   SAMPLE_NOLOOP },
 	{ "run02.wav",   SAMPLE_NOLOOP },
 	{ "run03.wav",   SAMPLE_NOLOOP },
 	{ "jump.wav",    SAMPLE_NOLOOP },
 	{ "dkstomp.wav", SAMPLE_NOLOOP },
+#endif
 	{ "",            0             }
 };
 
@@ -2299,6 +2301,7 @@ STD_ROM_PICK(dkongjr)
 STD_ROM_FN(dkongjr)
 
 static struct BurnSampleInfo DkongjrSampleDesc[] = {
+#if !defined (ROM_VERIFY)
 	{ "jump.wav", SAMPLE_NOLOOP },
 	{ "land.wav", SAMPLE_NOLOOP },
 	{ "roar.wav", SAMPLE_NOLOOP },
@@ -2311,6 +2314,7 @@ static struct BurnSampleInfo DkongjrSampleDesc[] = {
  	{ "walk1.wav", SAMPLE_NOLOOP },
 	{ "walk2.wav", SAMPLE_NOLOOP },
 	{ "snapjaw.wav", SAMPLE_NOLOOP },
+#endif
 	{ "", 0 }
 };
 
@@ -2675,10 +2679,10 @@ static INT32 pestplceInit()
 }
 
 struct BurnDriverD BurnDrvPestplce = {
-	"pestplce", NULL, NULL, NULL, "1983",
+	"pestplce", "mario", NULL, NULL, "1983",
 	"Pest Place\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, pestplceRomInfo, pestplceRomName, NULL, NULL, PestplceInputInfo, PestplceDIPInfo,
 	pestplceInit, DrvExit, DrvFrame, pestplceDraw, NULL, &DrvRecalc, 0x100,
 	256, 224, 4, 3

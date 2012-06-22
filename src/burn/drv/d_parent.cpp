@@ -91,39 +91,6 @@ struct BurnDriver BurnDrvCkong = {
 	NULL, 0, 224, 256, 3, 4
 };
 
-static struct BurnRomInfo DkongjrRomDesc[] = {
-	{ "dkj.5b",             0x02000, 0xdea28158, BRF_ESS | BRF_PRG },
-	{ "dkj.5c",             0x02000, 0x6fb5faf6, BRF_ESS | BRF_PRG },
-	{ "dkj.5e",             0x02000, 0xd042b6a8, BRF_ESS | BRF_PRG },
-	
-	{ "c_3h.bin",           0x01000, 0x715da5f8, BRF_ESS | BRF_PRG },
-	
-	{ "dkj.3n",             0x01000, 0x8d51aca9, BRF_ESS | BRF_PRG },
-	{ "dkj.3p",             0x01000, 0x4ef64ba5, BRF_ESS | BRF_PRG },
-	
-	{ "v_7c.bin",           0x00800, 0xdc7f4164, BRF_ESS | BRF_PRG },
-	{ "v_7d.bin",           0x00800, 0x0ce7dcf6, BRF_ESS | BRF_PRG },
-	{ "v_7e.bin",           0x00800, 0x24d1ff17, BRF_ESS | BRF_PRG },
-	{ "v_7f.bin",           0x00800, 0x0f8c083f, BRF_ESS | BRF_PRG },
-
-	{ "c-2e.bpr",           0x00100, 0x463dc7ad, BRF_GRA },
-	{ "c-2f.bpr",           0x00100, 0x47ba0042, BRF_GRA },
-	{ "v-2n.bpr",           0x00100, 0xdbf185bf, BRF_GRA },
-};
-
-STD_ROM_PICK(Dkongjr)
-STD_ROM_FN(Dkongjr)
-
-struct BurnDriver BurnDrvDkongjr = {
-	"dkongjr", NULL, NULL, NULL, "1982",
-	"Donkey Kong Junior (US)\0", "Parent set for working drivers", "Nintendo of America", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, DkongjrRomInfo, DkongjrRomName, NULL, NULL, ParentInputInfo, NULL,
-	ParentInit, ParentExit, NULL, NULL, NULL,
-	NULL, 0, 224, 256, 3, 4
-};
-
 static struct BurnRomInfo DockmanRomDesc[] = {
 	{ "pe1.19",             0x01000, 0xeef2ec54, BRF_ESS | BRF_PRG },
 	{ "pe2.18",             0x01000, 0xbc48d16b, BRF_ESS | BRF_PRG },

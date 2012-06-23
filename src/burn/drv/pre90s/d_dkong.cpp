@@ -489,9 +489,9 @@ STDDIPINFO(Drakton)
 
 static void dkong_sh1_write(INT32 offset, UINT8 data)
 {
-	static int state[8];
-	static int count = 0;
-	int sample_order[7] = {1,2,1,2,0,1,0};
+	static INT32 state[8];
+	static INT32 count = 0;
+	INT32 sample_order[7] = {1,2,1,2,0,1,0};
 
 	if (state[offset] != data)
 	{
@@ -621,9 +621,9 @@ UINT8 __fastcall dkong_main_read(UINT16 address)
 
 static inline void dkongjr_climb_write(UINT8 data)
 {
-	static int climb = 0;
-	static int count;
-	int sample_order[7] = {1,2,1,2,0,1,0};
+	static INT32 climb = 0;
+	static INT32 count;
+	INT32 sample_order[7] = {1,2,1,2,0,1,0};
 
 	if (climb != data)
 	{
@@ -1087,12 +1087,12 @@ static INT32 DkongDACSync()
 #include <math.h>
 
 static double envelope,tt;
-static int decay;
+static INT32 decay;
 
 static void dkong_sh_p1_write(UINT8 data)
 {
 	envelope=exp(-tt);
-	DACWrite(0,(int)(data*envelope));
+	DACWrite(0,(INT32)(data*envelope));
 	if (decay) tt+=0.001;
 	else tt=0;
 }
@@ -1498,7 +1498,7 @@ static void draw_grid()
 	DrvPalette[0x101] = BurnHighCol(0, 0, 0xff, 0); // blue
 
 	const UINT8 *table = DrvGfxROM2;
-	int x,y,counter;
+	INT32 x,y,counter;
 
 	counter = 0x400; //flip_screen ? 0x000 : 0x400;
 
@@ -1527,7 +1527,7 @@ static void draw_grid()
 	}
 }
 
-static void draw_sprites(UINT32 code_mask, unsigned int mask_bank, unsigned int shift_bits, UINT32 swap)
+static void draw_sprites(UINT32 code_mask, UINT32 mask_bank, UINT32 shift_bits, UINT32 swap)
 {
 	INT32 bank = *sprite_bank * 0x200;
 	INT32 yoffset = (swap) ? -15 : -16;
@@ -3119,7 +3119,7 @@ static INT32 herodkLoad()
 	{
  		if ((i & 0x1000) == 0)
 		{
-			int v = Drv2650ROM[i];
+			INT32 v = Drv2650ROM[i];
 			Drv2650ROM[i] = (v & 0xe7) | ((v & 0x10) >> 1) | ((v & 0x08) << 1);
 		}
 	}
@@ -3134,9 +3134,9 @@ static INT32 herodkInit()
 	return s2650DkongInit(herodkLoad);
 }
 
-struct BurnDriverD BurnDrvHerodk = {
+struct BurnDriver BurnDrvHerodk = {
 	"herodk", "hero", NULL, NULL, "1984",
-	"Hero in the Castle of Doom (DK conversion)\0", NULL, "Seatongrove Ltd (Crown license)", "Miscellaneous",
+	"Hero in the Castle of Doom (DK conversion)\0", "No sound", "Seatongrove Ltd (Crown license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, herodkRomInfo, herodkRomName, NULL, NULL, HerodkInputInfo, HerodkDIPInfo,
@@ -3189,7 +3189,7 @@ static INT32 herodkuLoad()
 	memcpy (Drv2650ROM + 0x4000, tmp + 0x2000, 0x1000);
 	memcpy (Drv2650ROM + 0x6000, tmp + 0x3000, 0x1000);
 
-	free (tmp);
+	BurnFree (tmp);
 
 	return 0;
 }
@@ -3201,7 +3201,7 @@ static INT32 herodkuInit()
 	return s2650DkongInit(herodkuLoad);
 }
 
-struct BurnDriverD BurnDrvHerodku = {
+struct BurnDriver BurnDrvHerodku = {
 	"herodku", "hero", NULL, NULL, "1984",
 	"Hero in the Castle of Doom (DK conversion not encrypted)\0", NULL, "Seatongrove Ltd (Crown license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -3240,11 +3240,11 @@ UINT8 __fastcall epos_main_read_port(UINT16 port)
 }
 
 
-static void epos_decrypt_rom(UINT8 mod, int offs, int *bs)
+static void epos_decrypt_rom(UINT8 mod, INT32 offs, INT32 *bs)
 {
     UINT8 oldbyte,newbyte;
     UINT8 *ROM;
-    int mem;
+    INT32 mem;
 
     ROM = DrvZ80ROM;
 
@@ -3315,7 +3315,7 @@ STD_ROM_FN(drakton)
 
 static INT32 draktonLoad()
 {
-	int bs[4][8] = {
+	INT32 bs[4][8] = {
 		{7,6,1,3,0,4,2,5},
 		{7,1,4,3,0,6,2,5},
 		{7,6,1,0,3,4,2,5},
@@ -3350,9 +3350,9 @@ static INT32 draktonInit()
 	return ret;
 }
 
-struct BurnDriverD BurnDrvDrakton = {
+struct BurnDriver BurnDrvDrakton = {
 	"drakton", NULL, NULL, NULL, "1984",
-	"Drakton (DK conversion)\0", NULL, "Epos Corporation", "Miscellaneous",
+	"Drakton (DK conversion)\0", "No sound", "Epos Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, draktonRomInfo, draktonRomName, NULL, NULL, DkongInputInfo, DraktonDIPInfo,
@@ -3404,9 +3404,9 @@ static INT32 drktnjrInit()
 	return ret;
 }
 
-struct BurnDriverD BurnDrvDrktnjr = {
+struct BurnDriver BurnDrvDrktnjr = {
 	"drktnjr", "drakton", NULL, NULL, "1984",
-	"Drakton (DKJr conversion)\0", NULL, "Epos Corporation", "Miscellaneous",
+	"Drakton (DKJr conversion)\0", "No sound", "Epos Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, drktnjrRomInfo, drktnjrRomName, NULL, NULL, DkongInputInfo, DraktonDIPInfo,

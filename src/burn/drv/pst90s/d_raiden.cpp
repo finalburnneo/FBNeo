@@ -53,6 +53,7 @@ static INT32 seibu_bank = 0;
 #define	GAME_RAIDEN		0
 #define	GAME_RAIDENA	1
 #define	GAME_RAIDENK	2
+#define	GAME_RAIDENU	3
 static INT32 game_drv;
 
 inline static UINT32 CalcCol(INT32 offs)
@@ -543,6 +544,53 @@ void __fastcall raidenAltWriteByte(UINT32 vezAddress, UINT8 byteValue)
 	}
 }
 
+void __fastcall raidenuWriteByte(UINT32 vezAddress, UINT8 byteValue)
+{
+	
+	switch (vezAddress) {
+		
+		case 0x0b000:
+		case 0x0b001:
+		case 0x0b002:
+		case 0x0b003:
+		case 0x0b004:
+		case 0x0b005:
+		case 0x0b006:
+		case 0x0b007:
+			// raiden_control_w
+			// flip_screen not support
+			break;
+
+		case 0x08002: RamScroll[0] = byteValue; break;
+		case 0x08004: RamScroll[1] = byteValue;	break;
+		case 0x08012: RamScroll[2] = byteValue; break;
+		case 0x08014: RamScroll[3] = byteValue;	break;
+		case 0x08022: RamScroll[4] = byteValue; break;
+		case 0x08024: RamScroll[5] = byteValue;	break;
+		case 0x08032: RamScroll[6] = byteValue; break;
+		case 0x08034: RamScroll[7] = byteValue;	break;
+		
+		case 0x0d000:
+		case 0x0d001:
+		case 0x0d002:
+		case 0x0d003:
+		case 0x0d004:
+		case 0x0d005:
+		case 0x0d006:
+		case 0x0d007:
+		case 0x0d008:
+		case 0x0d009:
+		case 0x0d00a:
+		case 0x0d00b:
+		case 0x0d00c:
+		case 0x0d00d:
+			seibu_main_v30_w(vezAddress - 0x0d000, byteValue);
+			break;		
+		//default:
+		//	bprintf(PRINT_NORMAL, _T("CPU #0 Attempt to write byte value %x to location %x\n"), byteValue, vezAddress);
+	}
+}
+
 UINT8 __fastcall raidenSubReadByte(UINT32 vezAddress)
 {
 	switch (vezAddress) {
@@ -566,6 +614,42 @@ void __fastcall raidenSubWriteByte(UINT32 vezAddress, UINT8 byteValue)
 {
 	if ((vezAddress & 0xFF000) == 0x03000 ) {
 		vezAddress -= 0x03000;
+		RamPal[ vezAddress ] = byteValue;
+		if (vezAddress & 1)
+			RamCurPal[ vezAddress >> 1 ] = CalcCol( vezAddress - 1 );
+		return;
+	}
+
+//	switch (vezAddress) {
+//		default:
+//			bprintf(PRINT_NORMAL, _T("CPU #1 Attempt to write byte value %x to location %x\n"), byteValue, vezAddress);
+//	}
+
+}
+
+UINT8 __fastcall raidenuSubReadByte(UINT32 vezAddress)
+{
+	switch (vezAddress) {
+		case 0x08008: {
+			UINT8 nRet = RamV30S[0x8];
+			//INT32 pc = VezPC();
+			//if (pc==0xfcde6 && ret!=0x40) cpu_spin();
+			bprintf(PRINT_NORMAL, _T("sub_cpu_spin_r %02x%02x\n"), RamV30S[0x8], RamV30S[0x9]);
+			return nRet; }
+		case 0x08009:
+			bprintf(PRINT_NORMAL, _T("sub_cpu_spin_r %02x%02x\n"), RamV30S[0x8], RamV30S[0x9]);
+			return RamV30S[0x9];
+			
+		//default:
+		//	bprintf(PRINT_NORMAL, _T("CPU #1 Attempt to read byte value of location %x\n"), vezAddress);
+	}
+	return 0;
+}
+
+void __fastcall raidenuSubWriteByte(UINT32 vezAddress, UINT8 byteValue)
+{
+	if ((vezAddress & 0xFF000) == 0x07000 ) {
+		vezAddress -= 0x07000;
 		RamPal[ vezAddress ] = byteValue;
 		if (vezAddress & 1)
 			RamCurPal[ vezAddress >> 1 ] = CalcCol( vezAddress - 1 );
@@ -692,7 +776,7 @@ static INT32 MemIndex()
 	RamStart	= Next;
 	
 	RamV30A		= Next; Next += 0x007000;
-	RamV30B		= Next; Next += 0x002000;
+	RamV30B		= Next; Next += 0x006000;
 	RamV30S		= Next; Next += 0x001000;
 	RamZ80		= Next; Next += 0x000800;
 	
@@ -891,6 +975,9 @@ static INT32 DrvInit()
 	if ( strcmp(BurnDrvGetTextA(DRV_NAME), "raidenb") == 0 )
 		game_drv = GAME_RAIDENA;
 	else
+	if ( strcmp(BurnDrvGetTextA(DRV_NAME), "raidenua") == 0 )
+		game_drv = GAME_RAIDENU;
+	else
 		return 1;
 	
 	Mem = NULL;
@@ -908,12 +995,12 @@ static INT32 DrvInit()
 	nRet = BurnLoadRom(RomV30B + 0x000000, 4, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(RomV30B + 0x000001, 5, 2); if (nRet != 0) return 1;
 
-	if (game_drv != GAME_RAIDENA)
+	if (game_drv != GAME_RAIDENA && game_drv != GAME_RAIDENU)
 		common_decrypt();
 
 	nRet = BurnLoadRom(RomZ80  + 0x000000, 6, 1); if (nRet != 0) return 1;
 
-	if (game_drv == GAME_RAIDEN) 
+	if (game_drv == GAME_RAIDEN || game_drv == GAME_RAIDENU) 
 		seibu_sound_decrypt();
 
 	UINT8 * tmp = (UINT8 *) BurnMalloc (0x80000);
@@ -952,11 +1039,15 @@ static INT32 DrvInit()
 		VezMapArea(0xA0000, 0xFFFFF, 0, RomV30A);			// CPU 0 ROM
 		VezMapArea(0xA0000, 0xFFFFF, 2, RomV30A);			// CPU 0 ROM
 		
-		if (game_drv == GAME_RAIDENA) {
+		if (game_drv == GAME_RAIDENA || game_drv == GAME_RAIDENU) {
 			VezMapArea(0x0a000, 0x0afff, 0, RamV30S);			// Share RAM
 			VezMapArea(0x0a000, 0x0afff, 1, RamV30S);
 			VezSetReadHandler(raidenReadByte);
-			VezSetWriteHandler(raidenWriteByte);
+			if (game_drv == GAME_RAIDENU) {
+				VezSetWriteHandler(raidenuWriteByte);
+			} else {
+				VezSetWriteHandler(raidenWriteByte);
+			}
 		} else {
 			VezMapArea(0x08000, 0x08fff, 0, RamV30S);			// Share RAM
 			VezMapArea(0x08000, 0x08fff, 1, RamV30S);
@@ -969,26 +1060,46 @@ static INT32 DrvInit()
 	    // sub-cpu
 	    VezOpen(1);
 		
-		VezMapArea(0x00000, 0x01fff, 0, RamV30B);			// RAM
-		VezMapArea(0x00000, 0x01fff, 1, RamV30B);
+		if (game_drv != GAME_RAIDENU) {
+			VezMapArea(0x00000, 0x01fff, 0, RamV30B);			// RAM
+			VezMapArea(0x00000, 0x01fff, 1, RamV30B);
 
-		VezMapArea(0x02000, 0x027ff, 0, (UINT8 *)RamBg);				// Background
-		VezMapArea(0x02000, 0x027ff, 1, (UINT8 *)RamBg);
+			VezMapArea(0x02000, 0x027ff, 0, (UINT8 *)RamBg);				// Background
+			VezMapArea(0x02000, 0x027ff, 1, (UINT8 *)RamBg);
 
-		VezMapArea(0x02800, 0x02fff, 0, (UINT8 *)RamFg);				// Foreground
-		VezMapArea(0x02800, 0x02fff, 1, (UINT8 *)RamFg);
+			VezMapArea(0x02800, 0x02fff, 0, (UINT8 *)RamFg);				// Foreground
+			VezMapArea(0x02800, 0x02fff, 1, (UINT8 *)RamFg);
 
-		VezMapArea(0x03000, 0x03fff, 0, RamPal);			// Palette
-		//VezMapArea(0x03000, 0x03fff, 1, RamPal);
+			VezMapArea(0x03000, 0x03fff, 0, RamPal);			// Palette
+			//VezMapArea(0x03000, 0x03fff, 1, RamPal);
 		
-		VezMapArea(0x04000, 0x04fff, 0, RamV30S);			// Share RAM
-		VezMapArea(0x04000, 0x04fff, 1, RamV30S);
+			VezMapArea(0x04000, 0x04fff, 0, RamV30S);			// Share RAM
+			VezMapArea(0x04000, 0x04fff, 1, RamV30S);
+			
+			VezSetReadHandler(raidenSubReadByte);
+			VezSetWriteHandler(raidenSubWriteByte);
+		} else {
+			VezMapArea(0x00000, 0x05fff, 0, RamV30B);			// RAM
+			VezMapArea(0x00000, 0x05fff, 1, RamV30B);
+
+			VezMapArea(0x06000, 0x067ff, 0, (UINT8 *)RamBg);				// Background
+			VezMapArea(0x06000, 0x067ff, 1, (UINT8 *)RamBg);
+
+			VezMapArea(0x06800, 0x06fff, 0, (UINT8 *)RamFg);				// Foreground
+			VezMapArea(0x06800, 0x06fff, 1, (UINT8 *)RamFg);
+
+			VezMapArea(0x07000, 0x07fff, 0, RamPal);			// Palette
+			//VezMapArea(0x07000, 0x07fff, 1, RamPal);
+		
+			VezMapArea(0x08000, 0x08fff, 0, RamV30S);			// Share RAM
+			VezMapArea(0x08000, 0x08fff, 1, RamV30S);
+			
+			VezSetReadHandler(raidenuSubReadByte);
+			VezSetWriteHandler(raidenuSubWriteByte);
+		}
 		
 		VezMapArea(0xC0000, 0xFFFFF, 0, RomV30B);			// CPU 1 ROM
 		VezMapArea(0xC0000, 0xFFFFF, 2, RomV30B);			// CPU 1 ROM
-		
-		VezSetReadHandler(raidenSubReadByte);
-		VezSetWriteHandler(raidenSubWriteByte);
 		
 		VezClose();
 	}
@@ -999,7 +1110,7 @@ static INT32 DrvInit()
 		
 		ZetMapArea(0x0000, 0x1FFF, 0, RomZ80);
 		
-		if (game_drv == GAME_RAIDEN)
+		if (game_drv == GAME_RAIDEN || game_drv == GAME_RAIDENU)
 			ZetMapArea(0x0000, 0x1FFF, 2, RomZ80 + 0x10000, RomZ80);
 		else
 			ZetMapArea(0x0000, 0x1FFF, 2, RomZ80);
@@ -1773,21 +1884,21 @@ struct BurnDriver BurnDrvRaidenk = {
 	224, 256, 3, 4
 };
 
-struct BurnDriverD BurnDrvRaidenb = {
+struct BurnDriver BurnDrvRaidenb = {
 	"raidenb", "raiden", NULL, NULL, "1990",
 	"Raiden (set 3, Alternate hardware)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raidenbRomInfo, raidenbRomName, NULL, NULL, raidenInputInfo, raidenDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan, &bRecalcPalette, 0x1000,
 	224, 256, 3, 4
 };
 
-struct BurnDriverD BurnDrvRaidenua = {
+struct BurnDriver BurnDrvRaidenua = {
 	"raidenua", "raiden", NULL, NULL, "1990",
 	"Raiden (US, set 2, SEI8904 + SEI9008 PCBs)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raidenuaRomInfo, raidenuaRomName, NULL, NULL, raidenInputInfo, raidenDIPInfo,
 	DrvInit, DrvExit, DrvFrameAlt, NULL, DrvScan, &bRecalcPalette, 0x1000,
 	224, 256, 3, 4

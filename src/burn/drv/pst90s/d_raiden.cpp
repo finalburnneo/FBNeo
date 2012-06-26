@@ -282,7 +282,7 @@ static struct BurnRomInfo raidenbRomDesc[] = {
 	{ "4__(raidenb).u023",		0x020000, 0x8d184b99, BRF_ESS | BRF_PRG }, 
 
 	{ "5__(raidenb).u042",		0x020000, 0x7aca6d61, BRF_ESS | BRF_PRG },	// CPU 1, V30
-	{ "6__(raidenb).u043",		0x020000, 0xa19d5b5d, BRF_ESS | BRF_PRG }, 
+	{ "6__(raidenb).u043",		0x020000, 0xe3d35cc2, BRF_ESS | BRF_PRG }, 
 
 	{ "rai6.u212",				0x010000, 0x723a483b, BRF_ESS | BRF_PRG },	// CPU 2, Z80
 	

@@ -287,7 +287,7 @@ static struct BurnRomInfo MarioRomDesc[] = {
 	{ "tma1-c-7f_f.7f",     0x02000, 0xc0c6e014, BRF_ESS | BRF_PRG },
 	{ "tma1-c-7e_f.7e",     0x02000, 0x94fb60d6, BRF_ESS | BRF_PRG },
 	{ "tma1-c-7d_f.7d",     0x02000, 0xdcceb6c1, BRF_ESS | BRF_PRG },
-	{ "tma1-c-7c_f.7c",     0x02000, 0x4a63d96b, BRF_ESS | BRF_PRG },
+	{ "tma1-c-7c_f.7c",     0x01000, 0x4a63d96b, BRF_ESS | BRF_PRG },
 	
 	{ "tma1-c-6k_e.6k",     0x01000, 0x06b9ff85, BRF_ESS | BRF_PRG },
 	
@@ -302,7 +302,7 @@ static struct BurnRomInfo MarioRomDesc[] = {
 	{ "tma1-v-7u.7u",       0x01000, 0x7baf5309, BRF_GRA },
 	
 	{ "tma1-c-4p_1.4p",     0x00200, 0x8187d286, BRF_GRA },
-	{ "tma1-c-5p.5p",       0x00200, 0x58d86098, BRF_GRA },
+	{ "tma1-c-5p.5p",       0x00020, 0x58d86098, BRF_GRA },
 };
 
 STD_ROM_PICK(Mario)

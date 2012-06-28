@@ -134,6 +134,8 @@ extern System16MakeAnalogInputs System16MakeAnalogInputsDo;
 UINT8 __fastcall System16PPIZ80PortRead(UINT16 a);
 void __fastcall System16Z80PortWrite(UINT16 a, UINT8 d);
 
+INT32 System16LoadRoms(bool bLoad);
+
 INT32 CustomLoadRom20000();
 INT32 CustomLoadRom40000();
 

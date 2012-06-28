@@ -1031,8 +1031,20 @@ STDDIPINFO(Exctleag)
 static struct BurnDIPInfo Fantzn2xDIPList[]=
 {
 	// Default Values
-	{0x13, 0xff, 0xff, 0xfe, NULL                                 },
+	{0x13, 0xff, 0xff, 0xff, NULL                                 },
 	{0x14, 0xff, 0xff, 0xff, NULL                                 },
+	
+	{0   , 0xfe, 0   , 4   , "Lives"                              },
+	{0x13, 0x01, 0x0c, 0x08, "2"                                  },
+	{0x13, 0x01, 0x0c, 0x0c, "3"                                  },
+	{0x13, 0x01, 0x0c, 0x04, "4"                                  },
+	{0x13, 0x01, 0x0c, 0x00, "240"                                },
+	
+	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
+	{0x13, 0x01, 0xc0, 0x80, "Easy"                               },
+	{0x13, 0x01, 0xc0, 0xc0, "Normal"                             },
+	{0x13, 0x01, 0xc0, 0x40, "Hard"                               },
+	{0x13, 0x01, 0xc0, 0x00, "Hardest"                            },
 };
 
 STDDIPINFO(Fantzn2x)
@@ -2764,6 +2776,38 @@ STD_ROM_PICK(Exctleag)
 STD_ROM_FN(Exctleag)
 
 static struct BurnRomInfo Fantzn2xRomDesc[] = {
+	{ "fz2.a7",         0x020000, 0x94c05f0b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "fz2.a5",         0x020000, 0xf3526895, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "fz2.a8",         0x020000, 0xb2ebb209, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "fz2.a6",         0x020000, 0x6833f546, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "fz2.a14",        0x020000, 0x1c0a4537, SYS16_ROM_TILES | BRF_GRA },
+	{ "fz2.a15",        0x020000, 0x2b933344, SYS16_ROM_TILES | BRF_GRA },
+	{ "fz2.a16",        0x020000, 0xe63281a1, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "fz2.b1",         0x020000, 0x46bba615, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "fz2.b5",         0x020000, 0xbebeee5d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "fz2.b2",         0x020000, 0x6681a7b6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "fz2.b6",         0x020000, 0x42d3241f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "fz2.b3",         0x020000, 0x5863926f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "fz2.b7",         0x020000, 0xcd830510, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "fz2.b4",         0x020000, 0xb98fa5b6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "fz2.b8",         0x020000, 0xe8248f68, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "fz2.a1",         0x020000, 0x9d2f41f3, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "fz2.b10",        0x020000, 0x7686ea33, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "fz2.a2",         0x020000, 0x3b4050b7, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "fz2.b11",        0x020000, 0xda8a95dc, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "fz2.a10",        0x008000, 0x92c92924, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "fz2.a11",        0x020000, 0x8c641bb9, SYS16_ROM_UPD7759DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Fantzn2x)
+STD_ROM_FN(Fantzn2x)
+
+static struct BurnRomInfo Fantzn2xps2RomDesc[] = {
 	{ "fz2_s16c.p00",   0x040000, 0xb7d16c1d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "fz2_s16c.p01",   0x040000, 0x2c47487c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
@@ -2775,8 +2819,8 @@ static struct BurnRomInfo Fantzn2xRomDesc[] = {
 };
 
 
-STD_ROM_PICK(Fantzn2x)
-STD_ROM_FN(Fantzn2x)
+STD_ROM_PICK(Fantzn2xps2)
+STD_ROM_FN(Fantzn2xps2)
 
 static struct BurnRomInfo FantzntaRomDesc[] = {
 	{ "fz1_s16b_ta.p00",0x040000, 0xbad0537a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -4225,7 +4269,6 @@ void __fastcall AliensynWriteByte(UINT32 a, UINT8 d)
 		case 0xc00007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-//			ZetRaiseIrq(0);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			return;
@@ -4382,7 +4425,6 @@ void __fastcall BayrouteWriteByte(UINT32 a, UINT8 d)
 		case 0xff0007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-//			ZetRaiseIrq(0);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			return;
@@ -4435,7 +4477,6 @@ void __fastcall BulletWriteByte(UINT32 a, UINT8 d)
 		case 0xc00007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-//			ZetRaiseIrq(0);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			return;
@@ -4633,7 +4674,6 @@ void __fastcall DduxblWriteByte(UINT32 a, UINT8 d)
 		case 0xc40007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-//			ZetRaiseIrq(0);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			return;
@@ -4794,7 +4834,6 @@ void __fastcall EswatSoundWriteByte(UINT32 a, UINT8 d)
 		case 0x123407: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-//			ZetRaiseIrq(0);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			return;
@@ -4835,7 +4874,6 @@ void __fastcall EswatblSoundWriteByte(UINT32 a, UINT8 d)
 		case 0xc42007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-//			ZetRaiseIrq(0);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			return;
@@ -5044,7 +5082,6 @@ void __fastcall FpointblWriteByte(UINT32 a, UINT8 d)
 		case 0x600007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-//			ZetRaiseIrq(0);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			return;
@@ -5336,7 +5373,6 @@ void __fastcall PassshtWriteByte(UINT32 a, UINT8 d)
 		case 0xc00007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-//			ZetRaiseIrq(0);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			return;
@@ -5449,7 +5485,6 @@ void __fastcall RiotcityWriteByte(UINT32 a, UINT8 d)
 		case 0xf00007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-//			ZetRaiseIrq(0);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			return;
@@ -5560,7 +5595,6 @@ void __fastcall RyukyuWriteByte(UINT32 a, UINT8 d)
 		case 0xff0007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-//			ZetRaiseIrq(0);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			return;
@@ -5627,7 +5661,6 @@ void __fastcall SdibSoundWriteByte(UINT32 a, UINT8 d)
 		case 0x123407: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-//			ZetRaiseIrq(0);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			return;
@@ -5685,7 +5718,6 @@ void __fastcall SjryukoWriteByte(UINT32 a, UINT8 d)
 		case 0xc00007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-//			ZetRaiseIrq(0);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			return;
@@ -5714,7 +5746,6 @@ void __fastcall SonicbomWriteByte(UINT32 a, UINT8 d)
 		case 0x123407: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-//			ZetRaiseIrq(0);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			return;
@@ -5772,7 +5803,6 @@ void __fastcall TetrisblSndWriteByte(UINT32 a, UINT8 d)
 		case 0xc42007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-//			ZetRaiseIrq(0);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			return;
@@ -5845,7 +5875,6 @@ void __fastcall ToryumonWriteByte(UINT32 a, UINT8 d)
 		case 0xfe0007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-//			ZetRaiseIrq(0);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			return;
@@ -5890,7 +5919,6 @@ void __fastcall Wb3WriteByte(UINT32 a, UINT8 d)
 		case 0xdf0007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-//			ZetRaiseIrq(0);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			return;
@@ -6028,7 +6056,6 @@ void Altbeast_Sim8751()
 	if ((temp & 0xff00) != 0x0000) {
 		System16SoundLatch = temp >> 8;
 		ZetOpen(0);
-//		ZetRaiseIrq(0);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x30c4)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
@@ -6048,7 +6075,6 @@ void Altbeastj_Sim8751()
 	if ((temp & 0xff00) != 0x0000) {
 		System16SoundLatch = temp >> 8;
 		ZetOpen(0);
-//		ZetRaiseIrq(0);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x30d4)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
@@ -6068,7 +6094,6 @@ void Altbeast6_Sim8751()
 	if ((temp & 0xff00) != 0x0000) {
 		System16SoundLatch = temp >> 8;
 		ZetOpen(0);
-//		ZetRaiseIrq(0);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x3098)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
@@ -6296,9 +6321,7 @@ static INT32 BayrouteInit()
 	System16Map68KDo = BayrouteMap68K;
 	System16CustomLoadRomDo = CustomLoadRom40000;
 	
-	INT32 nRet = System16Init();
-	
-	return nRet;
+	return System16Init();
 }
 
 static INT32 Bayroute1Init()
@@ -6306,9 +6329,7 @@ static INT32 Bayroute1Init()
 	System16Map68KDo = BayrouteMap68K;
 	System16CustomLoadRomDo = CustomLoadRom20000;
 	
-	INT32 nRet = System16Init();
-	
-	return nRet;
+	return System16Init();
 }
 
 void Blox16bMap68K()
@@ -6354,9 +6375,7 @@ static INT32 Blox16bInit()
 	System16CustomLoadRomDo = Blox16bLoadRom;
 	System16UPD7759DataSize = 0x08000;
 	
-	INT32 nRet = System16Init();
-	
-	return nRet;
+	return System16Init();
 }
 
 static INT32 BulletInit()
@@ -6395,9 +6414,7 @@ static INT32 CottonInit()
 	System16Map68KDo = CottonMap68K;
 	System16CustomLoadRomDo = CustomLoadRom40000;
 	
-	INT32 nRet = System16Init();
-	
-	return nRet;
+	return System16Init();
 }
 
 void Ddux_Sim8751()
@@ -6407,7 +6424,6 @@ void Ddux_Sim8751()
 	if ((temp & 0xff00) != 0x0000) {
 		System16SoundLatch = temp >> 8;
 		ZetOpen(0);
-//		ZetRaiseIrq(0);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x0bd0)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
@@ -6698,8 +6714,8 @@ void Fantzn2xMap68K()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(System16Rom + 0x40000 , 0x080000, 0x0bffff, SM_ROM);
+	SekMapMemory(System16Rom           , 0x000000, 0x0fffff, SM_READ);
+	SekMapMemory(System16Code          , 0x000000, 0x0fffff, SM_FETCH);
 	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, SM_READ);
 	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, SM_RAM);
 	SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, SM_RAM);
@@ -6715,8 +6731,22 @@ void Fantzn2xMap68K()
 
 static INT32 Fantzn2xLoadRom()
 {
+	INT32 nRet = System16LoadRoms(1);
+	
+	memcpy(System16Rom + 0x80000, System16Rom + 0x40000, 0x40000);
+	memset(System16Rom + 0x40000, 0, 0x40000);
+	memcpy(System16Code + 0x80000, System16Code + 0x40000, 0x40000);
+	memset(System16Code + 0x40000, 0, 0x40000);
+	
+	return nRet;
+}
+
+static INT32 Fantzn2xps2LoadRom()
+{
 	if (BurnLoadRom(System16Rom + 0x00000, 0, 1)) return 1;
-	if (BurnLoadRom(System16Rom + 0x40000, 1, 1)) return 1;
+	if (BurnLoadRom(System16Rom + 0x80000, 1, 1)) return 1;
+	
+	memcpy(System16Code, System16Rom, 0x100000);
 	
 	System16TempGfx = (UINT8*)BurnMalloc(System16TileRomSize);
 	BurnLoadRom(System16TempGfx, 2, 1);
@@ -6736,11 +6766,17 @@ static INT32 Fantzn2xInit()
 {
 	System16Map68KDo = Fantzn2xMap68K;
 	System16CustomLoadRomDo = Fantzn2xLoadRom;
+	
+	return System16Init();
+}
+
+static INT32 Fantzn2xps2Init()
+{
+	System16Map68KDo = Fantzn2xMap68K;
+	System16CustomLoadRomDo = Fantzn2xps2LoadRom;
 	System16UPD7759DataSize = 0x20000;
 	
-	INT32 nRet = System16Init();
-	
-	return nRet;
+	return System16Init();
 }
 
 void FantzntaMap68K()
@@ -6786,9 +6822,7 @@ static INT32 FantzntaInit()
 	System16CustomLoadRomDo = FantzntaLoadRom;
 	System16UPD7759DataSize = 0x10000;
 	
-	INT32 nRet = System16Init();
-	
-	return nRet;
+	return System16Init();
 }
 
 static INT32 FpointblInit()
@@ -6860,7 +6894,6 @@ void Goldnaxe_Sim8751()
 	if ((temp & 0xff00) != 0x0000) {
 		System16SoundLatch = temp >> 8;
 		ZetOpen(0);
-//		ZetRaiseIrq(0);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x2cfc)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
@@ -7259,9 +7292,7 @@ static INT32 RyukyuInit()
 {
 	System16Map68KDo = RyukyuMap68K;
 	
-	INT32 nRet = System16Init();
-	
-	return nRet;
+	return System16Init();
 }
 
 static INT32 SdibInit()
@@ -7483,7 +7514,6 @@ void Tturf_Sim8751()
 	if ((temp & 0xff00) != 0x0000) {
 		System16SoundLatch = temp & 0xff;
 		ZetOpen(0);
-//		ZetRaiseIrq(0);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x01d0)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
@@ -7523,9 +7553,7 @@ static INT32 TturfuInit()
 	Simulate8751 = Tturf_Sim8751;
 	System16Map68KDo = TturfMap68K;
 	
-	INT32 nRet = System16Init();
-	
-	return nRet;
+	return System16Init();
 }
 
 void Wb3_Sim8751()
@@ -7535,7 +7563,6 @@ void Wb3_Sim8751()
 	if ((temp & 0xff00) != 0x0000) {
 		System16SoundLatch = temp >> 8;
 		ZetOpen(0);
-//		ZetRaiseIrq(0);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x0008)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
@@ -7676,7 +7703,6 @@ void Wrestwar_Sim8751()
 	if ((temp & 0xff00) != 0x0000) {
 		System16SoundLatch = temp & 0xff;
 		ZetOpen(0);
-//		ZetRaiseIrq(0);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x208e)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
@@ -8026,11 +8052,21 @@ struct BurnDriver BurnDrvExctleag = {
 
 struct BurnDriver BurnDrvFantzn2x = {
 	"fantzn2x", NULL, NULL, NULL, "2008",
-	"Fantasy Zone 2 (System 16C version, PS2 data file)\0", NULL, "Sega", "System 16C",
+	"Fantasy Zone II - The Tears of Opa-Opa (System 16C)\0", NULL, "Sega / M2", "System 16C",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704_PS2, GBF_HORSHOOT, 0,
 	NULL, Fantzn2xRomInfo, Fantzn2xRomName, NULL, NULL, System16bInputInfo, Fantzn2xDIPInfo,
 	Fantzn2xInit, System16Exit, System16BFrame, NULL, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvFantzn2xps2 = {
+	"fantzn2xps2", "fantzn2x", NULL, NULL, "2008",
+	"Fantasy Zone II - The Tears of Opa-Opa (System 16C, PS2 data file)\0", NULL, "Sega / M2", "System 16C",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704_PS2, GBF_HORSHOOT, 0,
+	NULL, Fantzn2xps2RomInfo, Fantzn2xps2RomName, NULL, NULL, System16bInputInfo, Fantzn2xDIPInfo,
+	Fantzn2xps2Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

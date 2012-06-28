@@ -942,7 +942,7 @@ static INT32 System16MemIndex()
 Rom Loading
 ====================================================*/
 
-static INT32 System16LoadRoms(bool bLoad)
+INT32 System16LoadRoms(bool bLoad)
 {
 	struct BurnRomInfo ri;
 	ri.nType = 0;

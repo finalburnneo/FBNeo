@@ -139,6 +139,10 @@ static INT32 GalDoReset()
 	
 	if (GalZ80Rom1Size) {
 		ZetOpen(0);
+		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "4in1")) {
+			ZetMapArea(0x0000, 0x3fff, 0, GalZ80Rom1);
+			ZetMapArea(0x0000, 0x3fff, 2, GalZ80Rom1);
+		}
 		ZetReset();
 		ZetClose();
 	}

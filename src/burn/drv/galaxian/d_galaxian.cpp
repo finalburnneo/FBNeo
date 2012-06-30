@@ -8641,7 +8641,7 @@ UINT8 __fastcall GmgalaxZ80Read(UINT16 a)
 		}
 	}
 
-	return 0xff;
+	return 0x00;
 }
 
 static void GmgalaxPostLoad()
@@ -8690,11 +8690,11 @@ static INT32 GmgalaxInit()
 	return nRet;
 }
 
-struct BurnDriverD BurnDrvGmgalax = {
+struct BurnDriver BurnDrvGmgalax = {
 	"gmgalax", NULL, NULL, NULL, "1981",
 	"Ghostmuncher Galaxian (bootleg)\0", NULL, "LAX", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, GmgalaxRomInfo, GmgalaxRomName, NULL, NULL, GmgalaxInputInfo, GmgalaxDIPInfo,
 	GmgalaxInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
@@ -8860,9 +8860,9 @@ static void Fourin1PostLoad()
 {
 	GalTempRom = (UINT8*)BurnMalloc(0x3000);
 	memcpy(GalTempRom, GalZ80Rom1 + 0xd000, 0x3000);
-	memset(GalZ80Rom1 + 0xd000, 0xff, 0x1000);
+	memset(GalZ80Rom1 + 0xd000, 0x00, 0x1000);
 	memcpy(GalZ80Rom1 + 0xe000, GalTempRom, 0x3000);
-	memset(GalZ80Rom1 + 0x11000, 0xff, 0x1000);
+	memset(GalZ80Rom1 + 0x11000, 0x00, 0x1000);
 	BurnFree(GalTempRom);
 	
 	for (UINT32 i = 0; i < GalZ80Rom1Size; i++) {
@@ -8870,10 +8870,21 @@ static void Fourin1PostLoad()
 	}
 
 	ZetOpen(0);
+	ZetMemCallback(0x0000, 0xffff, 0);
+	ZetMemCallback(0x0000, 0xffff, 1);
+	ZetMemCallback(0x0000, 0xffff, 2);
 	ZetSetReadHandler(Fourin1Z80Read);
 	ZetSetWriteHandler(Fourin1Z80Write);
-	ZetMapArea(0x0000, 0x3fff, 0, GalZ80Rom1 + 0x2000 + (Fourin1Bank * 0x4000));
-	ZetMapArea(0x0000, 0x3fff, 2, GalZ80Rom1 + 0x2000 + (Fourin1Bank * 0x4000));
+	ZetMapArea(0x0000, 0x3fff, 0, GalZ80Rom1);
+	ZetMapArea(0x0000, 0x3fff, 2, GalZ80Rom1);
+	ZetMapArea(0x4000, 0x43ff, 0, GalZ80Ram1);
+	ZetMapArea(0x4000, 0x43ff, 1, GalZ80Ram1);
+	ZetMapArea(0x4000, 0x43ff, 2, GalZ80Ram1);
+	ZetMapArea(0x5000, 0x53ff, 0, GalVideoRam);
+	ZetMapArea(0x5000, 0x53ff, 1, GalVideoRam);
+	ZetMapArea(0x5000, 0x53ff, 2, GalVideoRam);
+	ZetMapArea(0x5800, 0x58ff, 0, GalSpriteRam);
+	ZetMapArea(0x5800, 0x58ff, 2, GalSpriteRam);
 	ZetMapArea(0xc000, 0xdfff, 0, GalZ80Rom1);
 	ZetMapArea(0xc000, 0xdfff, 2, GalZ80Rom1);
 	ZetClose();
@@ -8935,11 +8946,11 @@ static INT32 Fourin1Init()
 	return nRet;
 }
 
-struct BurnDriverD BurnDrvFourin1 = {
+struct BurnDriver BurnDrvFourin1 = {
 	"4in1", NULL, NULL, NULL, "1981",
 	"4 Fun in 1\0", NULL, "Armenia / Food and Fun", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, Fourin1RomInfo, Fourin1RomName, NULL, NULL, Fourin1InputInfo, Fourin1DIPInfo,
 	Fourin1Init, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4

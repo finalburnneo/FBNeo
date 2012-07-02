@@ -15406,7 +15406,7 @@ struct BurnDriver BurnDrvCpsSf2koryu2 = {
 
 struct BurnDriver BurnDrvCpsSf2amf = {
 	"sf2amf", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II - champion edition (Alpha Magic-F, 920313 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II - champion edition (Alpha Magic-F bootleg, 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2amfRomInfo, Sf2amfRomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,

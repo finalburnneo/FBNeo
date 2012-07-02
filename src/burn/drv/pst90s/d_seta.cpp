@@ -8594,23 +8594,23 @@ struct BurnDriver BurnDrvGundhara = {
 // Blandia
 
 static struct BurnRomInfo blandiaRomDesc[] = {
-	{ "ux001001.003",	0x040000, 0x2376a1f3, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "ux001002.004",	0x040000, 0xb915e172, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "ux001003.202",	0x100000, 0x98052c63, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "ux001001.u3",	0x040000, 0x2376a1f3, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ux001002.u4",	0x040000, 0xb915e172, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "ux001003.u202",	0x100000, 0x98052c63, 0x01 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "ux001008.064",	0x100000, 0x413647b6, 0x03 | BRF_GRA },           //  6
-	{ "ux001007.201",	0x100000, 0x4440fdd1, 0x03 | BRF_GRA },           //  4
-	{ "ux001006.063",	0x100000, 0xabc01cf7, 0x03 | BRF_GRA },           //  5
-	{ "ux001005.200",	0x100000, 0xbea0c4a5, 0x03 | BRF_GRA },           //  3 Sprites
+	{ "ux001008.u64",	0x100000, 0x413647b6, 0x03 | BRF_GRA },           //  6
+	{ "ux001007.u201",	0x100000, 0x4440fdd1, 0x03 | BRF_GRA },           //  4
+	{ "ux001006.u63",	0x100000, 0xabc01cf7, 0x03 | BRF_GRA },           //  5
+	{ "ux001005.u200",	0x100000, 0xbea0c4a5, 0x03 | BRF_GRA },           //  3 Sprites
 
-	{ "ux001009.065",	0x080000, 0xbc6f6aea, 0x04 | BRF_GRA },           //  7 Layer 1 tiles
-	{ "ux001010.066",	0x080000, 0xbd7f7614, 0x04 | BRF_GRA },           //  8
+	{ "ux001009.u65",	0x080000, 0xbc6f6aea, 0x04 | BRF_GRA },           //  7 Layer 1 tiles
+	{ "ux001010.u66",	0x080000, 0xbd7f7614, 0x04 | BRF_GRA },           //  8
 
-	{ "ux001011.067",	0x080000, 0x5efe0397, 0x05 | BRF_GRA },           //  9 Layer 2 tiles
-	{ "ux001012.068",	0x080000, 0xf29959f6, 0x05 | BRF_GRA },           // 10
+	{ "ux001011.u67",	0x080000, 0x5efe0397, 0x05 | BRF_GRA },           //  9 Layer 2 tiles
+	{ "ux001012.u068",	0x080000, 0xf29959f6, 0x05 | BRF_GRA },           // 10
 
-	{ "ux001013.069",	0x100000, 0x5cd273cd, 0x06 | BRF_SND },           // 11 x1-010 Samples
-	{ "ux001014.070",	0x080000, 0x86b49b4e, 0x06 | BRF_SND },           // 12
+	{ "ux001013.u69",	0x100000, 0x5cd273cd, 0x06 | BRF_SND },           // 11 x1-010 Samples
+	{ "ux001014.u70",	0x080000, 0x86b49b4e, 0x06 | BRF_SND },           // 12
 };
 
 STD_ROM_PICK(blandia)
@@ -8919,24 +8919,24 @@ struct BurnDriver BurnDrvKeroppi = {
 // J. J. Squawkers
 
 static struct BurnRomInfo jjsquawkRomDesc[] = {
-	{ "jj-rom1.040",	0x80000, 0x7b9af960, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "jj-rom2.040",	0x80000, 0x47dd71a3, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "fe2002001.u3",	0x80000, 0x7b9af960, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "fe2002002.u4",	0x80000, 0x47dd71a3, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "jj-rom9",		0x80000, 0x27441cd3, 0x03 | BRF_GRA },           //  2 Sprites
-	{ "jj-rom10",		0x80000, 0xca2b42c4, 0x03 | BRF_GRA },           //  3
-	{ "jj-rom7",		0x80000, 0x62c45658, 0x03 | BRF_GRA },           //  4
-	{ "jj-rom8",		0x80000, 0x2690c57b, 0x03 | BRF_GRA },           //  5
+	{ "fe2001009",		0x80000, 0x27441cd3, 0x03 | BRF_GRA },           //  2 Sprites
+	{ "fe2001010",		0x80000, 0xca2b42c4, 0x03 | BRF_GRA },           //  3
+	{ "fe2001007",		0x80000, 0x62c45658, 0x03 | BRF_GRA },           //  4
+	{ "fe2001008",		0x80000, 0x2690c57b, 0x03 | BRF_GRA },           //  5
 
-	{ "jj-rom11",		0x80000, 0x98b9f4b4, 0x04 | BRF_GRA },           //  6 Layer 1 tiles
-	{ "jj-rom12",		0x80000, 0xd4aa916c, 0x04 | BRF_GRA },           //  7
-	{ "jj-rom3.040",	0x80000, 0xa5a35caf, 0x1c | BRF_GRA },           //  8
+	{ "fe2001011",		0x80000, 0x98b9f4b4, 0x04 | BRF_GRA },           //  6 Layer 1 tiles
+	{ "fe2001012",		0x80000, 0xd4aa916c, 0x04 | BRF_GRA },           //  7
+	{ "fe2001003",		0x80000, 0xa5a35caf, 0x1c | BRF_GRA },           //  8
 
-	{ "jj-rom14",		0x80000, 0x274bbb48, 0x05 | BRF_GRA },           //  9 Layer 2 tiles
-	{ "jj-rom13",		0x80000, 0x51e29871, 0x05 | BRF_GRA },           // 10
-	{ "jj-rom4.040",	0x80000, 0xa235488e, 0x1d | BRF_GRA },		 // 11
+	{ "fe2001014",		0x80000, 0x274bbb48, 0x05 | BRF_GRA },           //  9 Layer 2 tiles
+	{ "fe2001013",		0x80000, 0x51e29871, 0x05 | BRF_GRA },           // 10
+	{ "fe2001004",		0x80000, 0xa235488e, 0x1d | BRF_GRA },		 // 11
 
-	{ "jj-rom5.040",	0x80000, 0xd99f2879, 0x06 | BRF_SND },           // 12 x1-010 Samples
-	{ "jj-rom6.040",	0x80000, 0x9df1e478, 0x06 | BRF_SND },           // 13
+	{ "fe2001005.u69",	0x80000, 0xd99f2879, 0x06 | BRF_SND },           // 12 x1-010 Samples
+	{ "fe2001006.u70",	0x80000, 0x9df1e478, 0x06 | BRF_SND },           // 13
 };
 
 STD_ROM_PICK(jjsquawk)

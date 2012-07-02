@@ -42,6 +42,7 @@ INT32 CpsLoadTilesSf2ebbl(UINT8 *Tile, INT32 nStart);
 INT32 CpsLoadTilesHack160(INT32 nStart);
 INT32 CpsLoadTilesHack160Alt(INT32 nStart);
 INT32 CpsLoadTilesSf2koryu(INT32 nStart);
+INT32 CpsLoadTilesSf2stt(INT32 nStart);
 INT32 CpsLoadTilesSf2mdt(INT32 nStart);
 INT32 CpsLoadTilesSf2mdta(INT32 nStart);
 INT32 CpsLoadTilesFcrash(INT32 nStart);

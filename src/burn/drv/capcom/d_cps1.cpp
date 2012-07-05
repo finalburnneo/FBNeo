@@ -7169,33 +7169,6 @@ static struct BurnRomInfo Sf2sttRomDesc[] = {
 STD_ROM_PICK(Sf2stt)
 STD_ROM_FN(Sf2stt)
 
-static struct BurnRomInfo Sf2deRomDesc[] = {
-	// this is missing lots of code (PCB has lots of empty rom slots)
-	{ "w-6",           0x020000, 0xbb4af315, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // second half of 11.bin (sf2ebbl)
-	{ "w-5",           0x020000, 0xc02a13eb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // second half of 10.bin (sf2ebbl)
-	
-	{ "01",            0x100000, 0x4296de4d, BRF_GRA | CPS1_TILES }, 
-	{ "03",            0x100000, 0x16cf11d0, BRF_GRA | CPS1_TILES }, 
-	{ "02",            0x100000, 0x68ca7fce, BRF_GRA | CPS1_TILES }, 
-	{ "04",            0x100000, 0x9f46f926, BRF_GRA | CPS1_TILES }, 
-	{ "05",            0x100000, 0x4c161fa9, BRF_GRA | CPS1_TILES }, 
-	{ "06",            0x100000, 0xec949f8c, BRF_GRA | CPS1_TILES },
-
-	{ "de1",           0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
-	
-	{ "w-7",           0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	
-	{ "w-1",           0x010000, 0x124b9ffc, BRF_GRA }, // extra graphics - map over normal roms to remove CAPCOM logo
-	{ "w-3",           0x010000, 0x5992783a, BRF_GRA },
-	{ "w-2",           0x010000, 0x11d715f7, BRF_GRA },
-	{ "w-4",           0x010000, 0xdb0dd977, BRF_GRA },
-	
-	{ "de2",           0x010000, 0x13ea1c44, BRF_OPT }, // unknown
-};
-
-STD_ROM_PICK(Sf2de)
-STD_ROM_FN(Sf2de)
-
 static struct BurnRomInfo Sf2uaRomDesc[] = {
 	{ "sf2u_30a.11e",  0x020000, 0x08beb861, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "sf2u_37a.11f",  0x020000, 0xb7638d69, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -8544,8 +8517,8 @@ STD_ROM_FN(Sf2koryu2)
 static struct BurnRomInfo Sf2amfRomDesc[] = {
 	{ "amf5",          0x080000, 0x03991fba, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "amf4",          0x080000, 0x39f15a1e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "sfu9-2.020",    0x0040000, 0x0b3fe5dd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // wasn't in original dump (amf5 has a lot in common with sfu9-1.040 from sf2m10, and the extra graphics roms are for a turbo hack, so using this from those sets)
-	{ "sfu9-4.020",    0x0040000, 0xdbee7b18, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // wasn't in original dump (amf5 has a lot in common with sfu9-3.040 from sf2m10, and the extra graphics roms are for a turbo hack, so using this from those sets)
+	{ "stf2th-6.bin",  0x020000, 0x64e6e091, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // wasn't in original dump (set seems to be same as sf2th but with different graphics roms)
+	{ "stf2th-4.bin",  0x020000, 0xc95e4443, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // wasn't in original dump (set seems to be same as sf2th but with different graphics roms)
 	
 	{ "y.c.e.c-m.k.r-001", 0x100000, 0xa258de13, BRF_GRA | CPS1_TILES }, 
 	{ "y.c.e.c-m.k.r-003", 0x100000, 0xc781bf87, BRF_GRA | CPS1_TILES }, 
@@ -10664,7 +10637,6 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ee"       , CPS_B_18    , mapper_STF29 , 0, NULL                },
 	{ "sf2ebbl"     , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2stt"      , CPS_B_17    , mapper_STF29 , 0, NULL                },
-	{ "sf2de"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2ua"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2ub"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2uc"       , CPS_B_12    , mapper_STF29 , 0, NULL                },
@@ -12355,29 +12327,6 @@ static INT32 Sf2sttInit()
 	// load bootleg tiles over original tiles
 	memset(CpsGfx + 0x400000, 0, 0x80000);
 	CpsLoadTilesSf2ebbl(CpsGfx + 0x400000, 13);
-	
-	Cps1LockSpriteList910000 = 1;
-	
-	CpsLayer1XOffs = -12;
-	CpsLayer1YOffs = 1;
-	CpsLayer2XOffs = -14;
-	CpsLayer2YOffs = 1;
-	CpsLayer3XOffs = -16;
-	CpsLayer3YOffs = 1;
-	CpsDrawSpritesInReverse = 1;
-	
-	return nRet;
-}
-
-static INT32 Sf2deInit()
-{
-	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2stt;
-	
-	INT32 nRet = DrvInit();
-	
-	// load bootleg tiles over original tiles
-	memset(CpsGfx + 0x400000, 0, 0x80000);
-	CpsLoadTilesSf2ebbl(CpsGfx + 0x400000, 10);
 	
 	Cps1LockSpriteList910000 = 1;
 	
@@ -14991,16 +14940,6 @@ struct BurnDriver BurnDrvCpsSf2stt = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2sttRomInfo, Sf2sttRomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
 	Sf2sttInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
-struct BurnDriverD BurnDrvCpsSf2de = {
-	"sf2de", "sf2", NULL, NULL, "1992",
-	"Street Fighter II - the world warrior (DE 920201, TAB Austria bootleg)\0", NULL, "bootleg", "CPS1",
-	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2deRomInfo, Sf2deRomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
-	Sf2deInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

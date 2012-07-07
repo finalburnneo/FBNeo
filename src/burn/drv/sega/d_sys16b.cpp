@@ -2807,6 +2807,36 @@ static struct BurnRomInfo Fantzn2xRomDesc[] = {
 STD_ROM_PICK(Fantzn2x)
 STD_ROM_FN(Fantzn2x)
 
+static struct BurnRomInfo Fantzn2xpRomDesc[] = {
+	{ "cpu1b.bin",      0x020000, 0xd23ef944, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "cpu1a.bin",      0x020000, 0x407490e4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "cpu1d.bin",      0x020000, 0xc8c7716b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "cpu1c.bin",      0x020000, 0x242e7b6e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "tilea.bin",      0x020000, 0x47e0e5ce, SYS16_ROM_TILES | BRF_GRA },
+	{ "tileb.bin",      0x020000, 0x59e181b7, SYS16_ROM_TILES | BRF_GRA },
+	{ "tileb.bin",      0x020000, 0x375d354c, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "obja.bin",       0x020000, 0x9af87a4d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "objb.bin",       0x020000, 0x2fdbca68, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "objc.bin",       0x020000, 0x2587487a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "objd.bin",       0x020000, 0x8de4e7aa, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "obje.bin",       0x020000, 0xdfada4ff, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "objf.bin",       0x020000, 0x65e5d23d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "objg.bin",       0x020000, 0xdc9fbb75, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "objh.bin",       0x020000, 0x97bb7c19, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "obji.bin",       0x020000, 0xc7790fee, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "objj.bin",       0x020000, 0x4535eb0e, SYS16_ROM_SPRITES | BRF_GRA },
+		
+	{ "cpu2a.bin",      0x008000, 0x92c92924, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "cpu2b.bin",      0x020000, 0x2c8ad475, SYS16_ROM_UPD7759DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Fantzn2xp)
+STD_ROM_FN(Fantzn2xp)
+
 static struct BurnRomInfo Fantzn2xps2RomDesc[] = {
 	{ "fz2_s16c.p00",   0x040000, 0xb7d16c1d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "fz2_s16c.p01",   0x040000, 0x2c47487c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -8056,6 +8086,16 @@ struct BurnDriver BurnDrvFantzn2x = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704_PS2, GBF_HORSHOOT, 0,
 	NULL, Fantzn2xRomInfo, Fantzn2xRomName, NULL, NULL, System16bInputInfo, Fantzn2xDIPInfo,
+	Fantzn2xInit, System16Exit, System16BFrame, NULL, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvFantzn2xp = {
+	"fantzn2xp", "fantzn2x", NULL, NULL, "2008",
+	"Fantasy Zone II - The Tears of Opa-Opa (System 16C, prototype)\0", NULL, "Sega / M2", "System 16C",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704_PS2, GBF_HORSHOOT, 0,
+	NULL, Fantzn2xpRomInfo, Fantzn2xpRomName, NULL, NULL, System16bInputInfo, Fantzn2xDIPInfo,
 	Fantzn2xInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

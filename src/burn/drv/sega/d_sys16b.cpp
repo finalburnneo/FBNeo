@@ -2815,7 +2815,7 @@ static struct BurnRomInfo Fantzn2xpRomDesc[] = {
 
 	{ "tilea.bin",      0x020000, 0x47e0e5ce, SYS16_ROM_TILES | BRF_GRA },
 	{ "tileb.bin",      0x020000, 0x59e181b7, SYS16_ROM_TILES | BRF_GRA },
-	{ "tileb.bin",      0x020000, 0x375d354c, SYS16_ROM_TILES | BRF_GRA },
+	{ "tilec.bin",      0x020000, 0x375d354c, SYS16_ROM_TILES | BRF_GRA },
 	
 	{ "obja.bin",       0x020000, 0x9af87a4d, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "objb.bin",       0x020000, 0x2fdbca68, SYS16_ROM_SPRITES | BRF_GRA },

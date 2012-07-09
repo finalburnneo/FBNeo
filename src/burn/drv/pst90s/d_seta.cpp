@@ -7885,11 +7885,11 @@ struct BurnDriver BurnDrvQzkklgy2 = {
 };
 
 
-// Daioh
+// Daioh (set 1)
 
 static struct BurnRomInfo daiohRomDesc[] = {
-	{ "fg1-001",		0x080000, 0x104ae74a, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "fg1-002",		0x080000, 0xe39a4e67, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "fg001001.u3",	0x080000, 0xe1ef3007, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "fg001002.u4",	0x080000, 0x5e3481f9, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "fg1-004",		0x100000, 0x9ab0533e, 0x03 | BRF_GRA },           //  2 Sprites
 	{ "fg1-003",		0x100000, 0x1c9d51e2, 0x03 | BRF_GRA },           //  3
@@ -7914,10 +7914,40 @@ static INT32 daiohInit()
 
 struct BurnDriver BurnDrvDaioh = {
 	"daioh", NULL, NULL, NULL, "1993",
-	"Daioh\0", NULL, "Athena", "Seta",
+	"Daioh (set 1)\0", NULL, "Athena", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_MISC, 0,
 	NULL, daiohRomInfo, daiohRomName, NULL, NULL, DaiohInputInfo, DaiohDIPInfo,
+	daiohInit, DrvExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x600,
+	240, 384, 3, 4
+};
+
+
+// Daioh (set 2)
+
+static struct BurnRomInfo daiohaRomDesc[] = {
+	{ "fg1-001.u3",		0x080000, 0x104ae74a, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "fg1-002.u4",		0x080000, 0xe39a4e67, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "fg1-004",		0x100000, 0x9ab0533e, 0x03 | BRF_GRA },           //  2 Sprites
+	{ "fg1-003",		0x100000, 0x1c9d51e2, 0x03 | BRF_GRA },           //  3
+
+	{ "fg1-005",		0x200000, 0xc25159b9, 0x04 | BRF_GRA },           //  4 Layer 1 tiles
+
+	{ "fg1-006",		0x200000, 0x2052c39a, 0x05 | BRF_GRA },           //  5 Layer 2 tiles
+
+	{ "fg1-007",		0x100000, 0x4a2fe9e0, 0x06 | BRF_SND },           //  6 x1-010 Samples
+};
+
+STD_ROM_PICK(daioha)
+STD_ROM_FN(daioha)
+
+struct BurnDriver BurnDrvDaioha = {
+	"daioha", "daioh", NULL, NULL, "1993",
+	"Daioh (set 2)\0", NULL, "Athena", "Seta",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_MISC, 0,
+	NULL, daiohaRomInfo, daiohaRomName, NULL, NULL, DaiohInputInfo, DaiohDIPInfo,
 	daiohInit, DrvExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x600,
 	240, 384, 3, 4
 };
@@ -9280,22 +9310,22 @@ struct BurnDriver BurnDrvUtoukond = {
 // DownTown / Mokugeki (Set 1)
 
 static struct BurnRomInfo downtownRomDesc[] = {
-	{ "ud2001.000",		0x40000, 0xf1965260, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "ud2001.003",		0x40000, 0xe7d5fa5f, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "ud2001.002",		0x10000, 0xa300e3ac, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "ud2001.001",		0x10000, 0xd2918094, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "ud2-001-000.3c",			0x40000, 0xf1965260, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ud2-001-003.11c",		0x40000, 0xe7d5fa5f, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "ud2001002.9b",			0x10000, 0xa300e3ac, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "ud2001001.8b",			0x10000, 0xd2918094, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "ud2002.004",		0x40000, 0xbbd538b1, 0x02 | BRF_PRG | BRF_ESS }, //  4 M65c02 Code
+	{ "ud2-002-004.17c",		0x40000, 0xbbd538b1, 0x02 | BRF_PRG | BRF_ESS }, //  4 M65c02 Code
 
-	{ "ud2005.t01",		0x80000, 0x77e6d249, 0x0b | BRF_GRA },           //  5 Sprites
-	{ "ud2006.t02",		0x80000, 0x6e381bf2, 0x0b | BRF_GRA },           //  6
-	{ "ud2007.t03",		0x80000, 0x737b4971, 0x0b | BRF_GRA },           //  7
-	{ "ud2008.t04",		0x80000, 0x99b9d757, 0x0b | BRF_GRA },           //  8
+	{ "ud2-001-005-t01.2n",		0x80000, 0x77e6d249, 0x0b | BRF_GRA },           //  5 Sprites
+	{ "ud2-001-006-t02.3n",		0x80000, 0x6e381bf2, 0x0b | BRF_GRA },           //  6
+	{ "ud2-001-007-t03.5n",		0x80000, 0x737b4971, 0x0b | BRF_GRA },           //  7
+	{ "ud2-001-008-t04.6n",		0x80000, 0x99b9d757, 0x0b | BRF_GRA },           //  8
 
-	{ "ud2009.t05",		0x80000, 0xaee6c581, 0x04 | BRF_GRA },           //  9 Layer 1 tiles
-	{ "ud2010.t06",		0x80000, 0x3d399d54, 0x04 | BRF_GRA },           // 10
+	{ "ud2-001-009-t05.8n",		0x80000, 0xaee6c581, 0x04 | BRF_GRA },           //  9 Layer 1 tiles
+	{ "ud2-001-010-t06.9n",		0x80000, 0x3d399d54, 0x04 | BRF_GRA },           // 10
 
-	{ "ud2011.t07",		0x80000, 0x9c9ff69f, 0x06 | BRF_SND },           // 11 x1-010 Samples
+	{ "ud2-001-011-t07.14n",	0x80000, 0x9c9ff69f, 0x06 | BRF_SND },           // 11 x1-010 Samples
 };
 
 STD_ROM_PICK(downtown)
@@ -9328,22 +9358,22 @@ struct BurnDriver BurnDrvDowntown = {
 // DownTown / Mokugeki (Set 2)
 
 static struct BurnRomInfo downtown2RomDesc[] = {
-	{ "ud2001.000",		0x40000, 0xf1965260, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "ud2001.003",		0x40000, 0xe7d5fa5f, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "ud2000.002",		0x10000, 0xca976b24, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "ud2000.001",		0x10000, 0x1708aebd, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "ud2-001-000.3c",			0x40000, 0xf1965260, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ud2-001-003.11c",		0x40000, 0xe7d5fa5f, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "ud2000002.9b",			0x10000, 0xca976b24, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "ud2000001.8b",			0x10000, 0x1708aebd, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "ud2002.004",		0x40000, 0xbbd538b1, 0x02 | BRF_PRG | BRF_ESS }, //  4 M65c02 Code
+	{ "ud2-002-004.17c",		0x40000, 0xbbd538b1, 0x02 | BRF_PRG | BRF_ESS }, //  4 M65c02 Code
 
-	{ "ud2005.t01",		0x80000, 0x77e6d249, 0x0b | BRF_GRA },           //  5 Sprites
-	{ "ud2006.t02",		0x80000, 0x6e381bf2, 0x0b | BRF_GRA },           //  6
-	{ "ud2007.t03",		0x80000, 0x737b4971, 0x0b | BRF_GRA },           //  7
-	{ "ud2008.t04",		0x80000, 0x99b9d757, 0x0b | BRF_GRA },           //  8
+	{ "ud2-001-005-t01.2n",		0x80000, 0x77e6d249, 0x0b | BRF_GRA },           //  5 Sprites
+	{ "ud2-001-006-t02.3n",		0x80000, 0x6e381bf2, 0x0b | BRF_GRA },           //  6
+	{ "ud2-001-007-t03.5n",		0x80000, 0x737b4971, 0x0b | BRF_GRA },           //  7
+	{ "ud2-001-008-t04.6n",		0x80000, 0x99b9d757, 0x0b | BRF_GRA },           //  8
 
-	{ "ud2009.t05",		0x80000, 0xaee6c581, 0x04 | BRF_GRA },           //  9 Layer 1 tiles
-	{ "ud2010.t06",		0x80000, 0x3d399d54, 0x04 | BRF_GRA },           // 10
+	{ "ud2-001-009-t05.8n",		0x80000, 0xaee6c581, 0x04 | BRF_GRA },           //  9 Layer 1 tiles
+	{ "ud2-001-010-t06.9n",		0x80000, 0x3d399d54, 0x04 | BRF_GRA },           // 10
 
-	{ "ud2011.t07",		0x80000, 0x9c9ff69f, 0x06 | BRF_SND },           // 11 x1-010 Samples
+	{ "ud2-001-011-t07.14n",	0x80000, 0x9c9ff69f, 0x06 | BRF_SND },           // 11 x1-010 Samples
 };
 
 STD_ROM_PICK(downtown2)
@@ -9363,22 +9393,22 @@ struct BurnDriverD BurnDrvDowntown2 = {
 // DownTown / Mokugeki (Joystick Hack)
 
 static struct BurnRomInfo downtownjRomDesc[] = {
-	{ "ud2001.000",		0x40000, 0xf1965260, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "ud2001.003",		0x40000, 0xe7d5fa5f, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "u37.9a",		0x10000, 0x73047657, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "u31.8a",		0x10000, 0x6a050240, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "ud2-001-000.3c",			0x40000, 0xf1965260, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ud2-001-003.11c",		0x40000, 0xe7d5fa5f, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "u37.9b",					0x10000, 0x73047657, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "u31.8b",					0x10000, 0x6a050240, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "ud2002.004",		0x40000, 0xbbd538b1, 0x02 | BRF_PRG | BRF_ESS }, //  4 M65c02 Code
+	{ "ud2-002-004.17c",		0x40000, 0xbbd538b1, 0x02 | BRF_PRG | BRF_ESS }, //  4 M65c02 Code
 
-	{ "ud2005.t01",		0x80000, 0x77e6d249, 0x0b | BRF_GRA },           //  5 Sprites
-	{ "ud2006.t02",		0x80000, 0x6e381bf2, 0x0b | BRF_GRA },           //  6
-	{ "ud2007.t03",		0x80000, 0x737b4971, 0x0b | BRF_GRA },           //  7
-	{ "ud2008.t04",		0x80000, 0x99b9d757, 0x0b | BRF_GRA },           //  8
+	{ "ud2-001-005-t01.2n",		0x80000, 0x77e6d249, 0x0b | BRF_GRA },           //  5 Sprites
+	{ "ud2-001-006-t02.3n",		0x80000, 0x6e381bf2, 0x0b | BRF_GRA },           //  6
+	{ "ud2-001-007-t03.5n",		0x80000, 0x737b4971, 0x0b | BRF_GRA },           //  7
+	{ "ud2-001-008-t04.6n",		0x80000, 0x99b9d757, 0x0b | BRF_GRA },           //  8
 
-	{ "ud2009.t05",		0x80000, 0xaee6c581, 0x04 | BRF_GRA },           //  9 Layer 1 tiles
-	{ "ud2010.t06",		0x80000, 0x3d399d54, 0x04 | BRF_GRA },           // 10
+	{ "ud2-001-009-t05.8n",		0x80000, 0xaee6c581, 0x04 | BRF_GRA },           //  9 Layer 1 tiles
+	{ "ud2-001-010-t06.9n",		0x80000, 0x3d399d54, 0x04 | BRF_GRA },           // 10
 
-	{ "ud2011.t07",		0x80000, 0x9c9ff69f, 0x06 | BRF_SND },           // 11 x1-010 Samples
+	{ "ud2-001-011-t07.14n",	0x80000, 0x9c9ff69f, 0x06 | BRF_SND },           // 11 x1-010 Samples
 };
 
 STD_ROM_PICK(downtownj)
@@ -9398,22 +9428,22 @@ struct BurnDriver BurnDrvDowntownj = {
 // DownTown / Mokugeki (prototype)
 
 static struct BurnRomInfo downtownpRomDesc[] = {
-	{ "ud2001.000",		0x40000, 0xf1965260, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "ud2001.003",		0x40000, 0xe7d5fa5f, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "ud2_061e.bin",	0x10000, 0x251d6552, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "ud2_061o.bin",	0x10000, 0x6394a7c0, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "ud2-001-000.3c",			0x40000, 0xf1965260, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ud2-001-003.11c",		0x40000, 0xe7d5fa5f, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "ud2_even_v061.9b",		0x10000, 0x251d6552, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "ud2_odd_v061.8b",		0x10000, 0x6394a7c0, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "ud2002.004",		0x40000, 0xbbd538b1, 0x02 | BRF_PRG | BRF_ESS }, //  4 M65c02 Code
+	{ "ud2-002-004.17c",		0x40000, 0xbbd538b1, 0x02 | BRF_PRG | BRF_ESS }, //  4 M65c02 Code
 
-	{ "ud2005.t01",		0x80000, 0x77e6d249, 0x0b | BRF_GRA },           //  5 Sprites
-	{ "ud2006.t02",		0x80000, 0x6e381bf2, 0x0b | BRF_GRA },           //  6
-	{ "ud2007.t03",		0x80000, 0x737b4971, 0x0b | BRF_GRA },           //  7
-	{ "ud2008.t04",		0x80000, 0x99b9d757, 0x0b | BRF_GRA },           //  8
+	{ "ud2-001-005-t01.2n",		0x80000, 0x77e6d249, 0x0b | BRF_GRA },           //  5 Sprites
+	{ "ud2-001-006-t02.3n",		0x80000, 0x6e381bf2, 0x0b | BRF_GRA },           //  6
+	{ "ud2-001-007-t03.5n",		0x80000, 0x737b4971, 0x0b | BRF_GRA },           //  7
+	{ "ud2-001-008-t04.6n",		0x80000, 0x99b9d757, 0x0b | BRF_GRA },           //  8
 
-	{ "ud2009.t05",		0x80000, 0xaee6c581, 0x04 | BRF_GRA },           //  9 Layer 1 tiles
-	{ "ud2010.t06",		0x80000, 0x3d399d54, 0x04 | BRF_GRA },           // 10
+	{ "ud2-001-009-t05.8n",		0x80000, 0xaee6c581, 0x04 | BRF_GRA },           //  9 Layer 1 tiles
+	{ "ud2-001-010-t06.9n",		0x80000, 0x3d399d54, 0x04 | BRF_GRA },           // 10
 
-	{ "ud2011.t07",		0x80000, 0x9c9ff69f, 0x06 | BRF_SND },           // 11 x1-010 Samples
+	{ "ud2-001-011-t07.14n",	0x80000, 0x9c9ff69f, 0x06 | BRF_SND },           // 11 x1-010 Samples
 };
 
 STD_ROM_PICK(downtownp)
@@ -9509,23 +9539,23 @@ struct BurnDriverD BurnDrvTndrcadej = {
 // Arbalester
 
 static struct BurnRomInfo arbalestRomDesc[] = {
-	{ "uk001.03",		0x40000, 0xee878a2c, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "uk001.04",		0x40000, 0x902bb4e3, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "uk-001-003",			0x40000, 0xee878a2c, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "uk-001-004",			0x40000, 0x902bb4e3, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "uk001.05",		0x02000, 0x0339fc53, 0x02 | BRF_PRG | BRF_ESS }, //  2 M65c02 Code
+	{ "uk6005",				0x04000, 0x48c73a4a, 0x02 | BRF_PRG | BRF_ESS }, //  2 M65c02 Code
 
-	{ "uk001.06",		0x40000, 0x11c75746, 0x0b | BRF_GRA },           //  3 Sprites
-	{ "uk001.07",		0x40000, 0x01b166c7, 0x0b | BRF_GRA },           //  4
-	{ "uk001.08",		0x40000, 0x78d60ba3, 0x0b | BRF_GRA },           //  5
-	{ "uk001.09",		0x40000, 0xb4748ae0, 0x0b | BRF_GRA },           //  6
+	{ "uk001.06",			0x40000, 0x11c75746, 0x0b | BRF_GRA },           //  3 Sprites
+	{ "uk001.07",			0x40000, 0x01b166c7, 0x0b | BRF_GRA },           //  4
+	{ "uk001.08",			0x40000, 0x78d60ba3, 0x0b | BRF_GRA },           //  5
+	{ "uk001.09",			0x40000, 0xb4748ae0, 0x0b | BRF_GRA },           //  6
 
-	{ "uk001.10",		0x80000, 0xc1e2f823, 0x04 | BRF_GRA },           //  7 Layer 1 tiles
-	{ "uk001.11",		0x80000, 0x09dfe56a, 0x04 | BRF_GRA },           //  8
-	{ "uk001.12",		0x80000, 0x818a4085, 0x04 | BRF_GRA },           //  9
-	{ "uk001.13",		0x80000, 0x771fa164, 0x04 | BRF_GRA },           // 10
+	{ "uk-001-010-t26",		0x80000, 0xc1e2f823, 0x04 | BRF_GRA },           //  7 Layer 1 tiles
+	{ "uk-001-011-t27",		0x80000, 0x09dfe56a, 0x04 | BRF_GRA },           //  8
+	{ "uk-001-012-t28",		0x80000, 0x818a4085, 0x04 | BRF_GRA },           //  9
+	{ "uk-001-013-t29",		0x80000, 0x771fa164, 0x04 | BRF_GRA },           // 10
 
-	{ "uk001.15",		0x80000, 0xce9df5dd, 0x06 | BRF_SND },           // 11 x1-010 Samples
-	{ "uk001.14",		0x80000, 0x016b844a, 0x06 | BRF_SND },           // 12
+	{ "uk-001-015.t31",		0x80000, 0xce9df5dd, 0x06 | BRF_SND },           // 11 x1-010 Samples
+	{ "uk-001-014-t30",		0x80000, 0x016b844a, 0x06 | BRF_SND },           // 12
 };
 
 STD_ROM_PICK(arbalest)

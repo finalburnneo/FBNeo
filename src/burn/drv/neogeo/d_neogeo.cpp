@@ -4710,6 +4710,41 @@ struct BurnDriver BurnDrvKog = {
 	0x1000, 304, 224, 4, 3
 };
 
+// King of Gladiator Plus (The King of Fighters '97 bootleg)
+
+static struct BurnRomInfo kogplusRomDesc[] = {
+	{ "5232-p1p.bin", 0x200000, 0x0338f453, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "5232-p2p.bin", 0x400000, 0x5502b020, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "5232-s1p.bin", 0x020000, 0x6271e9ba, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "5232-c1a.bin", 0x800000, 0x4eab9b0a, 3 | BRF_GRA },           //  3 Sprite data
+	{ "5232-c2a.bin", 0x800000, 0x697f8fd0, 3 | BRF_GRA },           //  4 
+	{ "5232-c1b.bin", 0x800000, 0x1143fdf3, 3 | BRF_GRA },           //  5 
+	{ "5232-c2b.bin", 0x800000, 0xea82cf8f, 3 | BRF_GRA },           //  6 
+	{ "5232-c3.bin",  0x400000, 0xabd1be07, 3 | BRF_GRA },           //  7 
+	{ "5232-c4.bin",  0x400000, 0xd2bd967b, 3 | BRF_GRA },           //  8 
+
+	{ "232-m1.m1",    0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "232-v1.v1",    0x400000, 0x22a2b5b5, 5 | BRF_SND },           // 10 Sound data
+	{ "232-v2.v2",    0x400000, 0x2304e744, 5 | BRF_SND },           // 11 
+	{ "232-v3.v3",    0x400000, 0x759eb954, 5 | BRF_SND },           // 12 
+};
+
+STDROMPICKEXT(kogplus, kogplus, neogeo)
+STD_ROM_FN(kogplus)
+
+struct BurnDriver BurnDrvKogplus = {
+	"kogplus", "kof97", "neogeo", NULL, "1997",
+	"King of Gladiator Plus (The King of Fighters '97 bootleg)\0", NULL, "bootleg", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kogplusRomInfo, kogplusRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kogInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 // The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NGM-2340)
 
 static struct BurnRomInfo lastbladRomDesc[] = {

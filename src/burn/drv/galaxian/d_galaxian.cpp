@@ -18868,7 +18868,6 @@ static INT32 SuperbonInit()
 	
 	GalPostLoadCallbackFunction = SuperbonPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;	
-	GalPromRomSize = 0x20;
 	
 	nRet = GalInit();
 	KonamiSoundInit();
@@ -18878,8 +18877,6 @@ static INT32 SuperbonInit()
 	
 	KonamiPPIInit();
 		
-	HardCodeGalaxianPROM();
-	
 	filter_rc_set_src_gain(0, 0.20);
 	filter_rc_set_src_gain(1, 0.20);
 	filter_rc_set_src_gain(2, 0.20);

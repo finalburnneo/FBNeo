@@ -9554,7 +9554,7 @@ static struct BurnRomInfo arbalestRomDesc[] = {
 	{ "uk-001-012-t28",		0x80000, 0x818a4085, 0x04 | BRF_GRA },           //  9
 	{ "uk-001-013-t29",		0x80000, 0x771fa164, 0x04 | BRF_GRA },           // 10
 
-	{ "uk-001-015.t31",		0x80000, 0xce9df5dd, 0x06 | BRF_SND },           // 11 x1-010 Samples
+	{ "uk-001-015-t31",		0x80000, 0xce9df5dd, 0x06 | BRF_SND },           // 11 x1-010 Samples
 	{ "uk-001-014-t30",		0x80000, 0x016b844a, 0x06 | BRF_SND },           // 12
 };
 

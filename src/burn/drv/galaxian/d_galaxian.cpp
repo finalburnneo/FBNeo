@@ -17284,8 +17284,7 @@ static struct BurnRomInfo ScobraRomDesc[] = {
 	{ "epr1274.5h",    0x00800, 0x64d113b4, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "epr1273.5f",    0x00800, 0xa96316d3, BRF_GRA | GAL_ROM_TILES_SHARED },
 		
-	{ "82s123.6e",     0x00020, 0x9b87f90d, BRF_GRA | GAL_ROM_PROM },
-};
+	{ "82s123.6e",     0x00020, 0x9b87f90d, BRF_GRA | GAL_ROM_PROM },};
 
 STD_ROM_PICK(Scobra)
 STD_ROM_FN(Scobra)
@@ -17574,7 +17573,7 @@ static struct BurnRomInfo SuperbonRomDesc[] = {
 	{ "5f.cpu",        0x00800, 0x5b9d4686, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "5h.cpu",        0x00800, 0x58c29927, BRF_GRA | GAL_ROM_TILES_SHARED },
 		
-	{ "superbon.clr",  0x00020, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "82s123.6e",     0x00020, 0x9b87f90d, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Superbon)

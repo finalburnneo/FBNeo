@@ -1411,6 +1411,47 @@ struct BurnDriver BurnDrvRygarj = {
 };
 
 
+static struct BurnRomInfo rygarbRomDesc[] = {
+	{ "5.u64", 		0x08000, 0x0e13e0e4, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "4.u63",		0x04000, 0x7ac5191b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.u61",		0x08000, 0xed76d606, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "2.u72",		0x02000, 0xe4a2fa87, 2 | BRF_PRG | BRF_ESS }, //  3 - Z80 Code
+
+	{ "6.u19",		0x08000, 0x4d482fb6, 3 | BRF_GRA },	      //  4 - Characters
+
+	{ "11.u82",		0x08000, 0xaba6db9e, 4 | BRF_GRA },	      //  5 - Sprites
+	{ "12.u81",		0x08000, 0xae1f2ed6, 4 | BRF_GRA },	      //  6
+	{ "13.u80",		0x08000, 0x46d9e7df, 4 | BRF_GRA },	      //  7
+	{ "14.u79",		0x08000, 0x45839c9a, 4 | BRF_GRA },	      //  8
+
+	{ "7.u86",		0x08000, 0x9eae5f8e, 5 | BRF_GRA },	      //  9 - Foreground Tiles
+	{ "8.u85",		0x08000, 0x5a10a396, 5 | BRF_GRA },	      // 10
+	{ "9.u84",		0x08000, 0x7b12cf3f, 5 | BRF_GRA },	      // 11
+	{ "10.u83",		0x08000, 0x3cea7eaa, 5 | BRF_GRA },	      // 12
+
+	{ "15.u78",		0x08000, 0x9840edd8, 6 | BRF_GRA },	      // 13 - Background Tiles
+	{ "16.u77",		0x08000, 0xff65e074, 6 | BRF_GRA },	      // 14 
+	{ "17.u76",		0x08000, 0x89868c85, 6 | BRF_GRA },	      // 15 
+	{ "18.u75",		0x08000, 0x35389a7b, 6 | BRF_GRA },	      // 16 
+
+	{ "1.u102",		0x04000, 0x3cc98c5a, 7 | BRF_SND },	      // 17 - Samples
+};
+
+STD_ROM_PICK(rygarb)
+STD_ROM_FN(rygarb)
+
+struct BurnDriver BurnDrvRygarb = {
+	"rygarb", "rygar", NULL, NULL, "1986",
+	"Rygar (US, bootleg)\0", NULL, "Tecmo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, rygarbRomInfo, rygarbRomName, NULL, NULL, RygarInputInfo, RygarDIPInfo,
+	RygarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
+
+
 // Silk Worm (set 1)
 
 static struct BurnRomInfo silkwormRomDesc[] = {

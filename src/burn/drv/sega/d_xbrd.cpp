@@ -885,7 +885,7 @@ static struct BurnRomInfo LoffireuRomDesc[] = {
 STD_ROM_PICK(Loffireu)
 STD_ROM_FN(Loffireu)
 
-static struct BurnRomInfo Rascot2RomDesc[] = {
+static struct BurnRomInfo RascotRomDesc[] = {
 	{ "ep13965a",         0x20000, 0x7eacdfb3, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "ep13694a",         0x20000, 0x15b86498, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	
@@ -896,17 +896,17 @@ static struct BurnRomInfo Rascot2RomDesc[] = {
 	{ "epr13962",         0x10000, 0x7d7605bc, SYS16_ROM_TILES | BRF_GRA },
 	{ "epr13963",         0x10000, 0xf3376b65, SYS16_ROM_TILES | BRF_GRA },
 	
-	{ "epr13957",         0x20000, 0x6d50fb54, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr13958",         0x20000, 0x7803a027, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr13959",         0x20000, 0xdb245b22, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "epr13960",         0x20000, 0xb974128d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr13959",         0x20000, 0xdb245b22, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr13958",         0x20000, 0x7803a027, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr13957",         0x20000, 0x6d50fb54, SYS16_ROM_SPRITES | BRF_GRA },
 	
 	{ "ep13221a",         0x10000, 0x0d429ac4, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 };
 
 
-STD_ROM_PICK(Rascot2)
-STD_ROM_FN(Rascot2)
+STD_ROM_PICK(Rascot)
+STD_ROM_FN(Rascot)
 
 static struct BurnRomInfo RacheroRomDesc[] = {
 	{ "epr-13129.ic58",   0x20000, 0xad9f32e7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -2236,6 +2236,24 @@ static INT32 RacheroInit()
 	return System16Init();
 }
 
+static INT32 RascotInit()
+{
+	INT32 nRet = System16Init();
+	
+	if (!nRet) {
+		System16RoadPriority = 0;
+		
+		// patch out bootup link test
+		UINT16 *ROM = (UINT16*)System16Rom2;
+		ROM[0xb78 / 2] = 0x601e;
+		ROM[0x57e / 2] = 0x4e71;
+		ROM[0x5d0 / 2] = 0x6008;
+		ROM[0x606 / 2] = 0x4e71;
+	}
+
+	return nRet;
+}
+
 static INT32 SmgpInit()
 {
 	System16ProcessAnalogControlsDo = SmgpProcessAnalogControls;
@@ -2366,13 +2384,13 @@ struct BurnDriver BurnDrvRachero = {
 	NULL, 0x6000, 320, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvRascot2 = {
-	"rascot2", NULL, NULL, NULL, "19??",
-	"Royal Ascot 2\0", NULL, "????", "X-Board",
+struct BurnDriverD BurnDrvRascot = {
+	"rascot", NULL, NULL, NULL, "19??",
+	"Royal Ascot\0", NULL, "????", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_MISC, 0,
-	NULL, Rascot2RomInfo, Rascot2RomName, NULL, NULL, Aburner2InputInfo, Aburner2DIPInfo,
-	Aburner2Init, XBoardExit, XBoardFrame, NULL, XBoardScan,
+	NULL, RascotRomInfo, RascotRomName, NULL, NULL, Aburner2InputInfo, Aburner2DIPInfo,
+	RascotInit, XBoardExit, XBoardFrame, NULL, XBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
 

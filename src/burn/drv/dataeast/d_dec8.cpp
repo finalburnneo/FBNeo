@@ -3681,9 +3681,9 @@ static struct BurnRomInfo gondoRomDesc[] = {
 	{ "dt-10.512",		0x10000, 0xcfcfc9ed, 5 }, // 20
 	{ "dt-11.256",		0x08000, 0x53e9cf17, 5 }, // 21
 
-	{ "dt-a.1b",     	0x01000, 0x03abceeb, 6 }, // 22 mcu
+	{ "dt-a.b1",     	0x01000, 0x03abceeb, 6 }, // 22 mcu
 
-	{ "mb7122e.10b",	0x00400, 0xdcbfec4e, 7 }, // 23 proms
+	{ "ds-23.b10",		0x00400, 0xdcbfec4e, 7 }, // 23 proms
 };
 
 STD_ROM_PICK(gondo)
@@ -3703,23 +3703,23 @@ struct BurnDriverD BurnDrvGondo = {
 // Makyou Senshi (Japan)
 
 static struct BurnRomInfo makyosenRomDesc[] = {
-	{ "ds00",		0x08000, 0x33bb16fe, 1 }, //  0 maincpu
+	{ "ds00.f3",		0x08000, 0x33bb16fe, 1 }, //  0 maincpu
 	{ "dt-01.512",		0x10000, 0xc39bb877, 1 }, //  1
-	{ "ds02",		0x10000, 0x925307a4, 1 }, //  2
-	{ "ds03",		0x10000, 0x9c0fcbf6, 1 }, //  3
+	{ "ds02.f6",		0x10000, 0x925307a4, 1 }, //  2
+	{ "ds03.f7",		0x10000, 0x9c0fcbf6, 1 }, //  3
 
-	{ "ds05",		0x08000, 0xe6e28ca9, 2 }, //  4 audiocpu
+	{ "ds05.h5",		0x08000, 0xe6e28ca9, 2 }, //  4 audiocpu
 
-	{ "ds14",		0x08000, 0x00cbe9c8, 3 }, //  5 gfx1
+	{ "ds14.b8",		0x08000, 0x00cbe9c8, 3 }, //  5 gfx1
 
 	{ "dt-19.512",		0x10000, 0xda2abe4b, 4 }, //  6 gfx2
-	{ "ds20",		0x08000, 0x0eef7f56, 4 }, //  7
+	{ "ds20.f15",		0x08000, 0x0eef7f56, 4 }, //  7
 	{ "dt-16.512",		0x10000, 0xe9955d8f, 4 }, //  8
-	{ "ds18",		0x08000, 0x2b2d1468, 4 }, //  9
+	{ "ds18.f12",		0x08000, 0x2b2d1468, 4 }, //  9
 	{ "dt-15.512",		0x10000, 0xa54b2eb6, 4 }, // 10
-	{ "ds17",		0x08000, 0x75ae349a, 4 }, // 11
+	{ "ds17.f11",		0x08000, 0x75ae349a, 4 }, // 11
 	{ "dt-21.512",		0x10000, 0x1c5f682d, 4 }, // 12
-	{ "ds22",		0x08000, 0xc8ffb148, 4 }, // 13
+	{ "ds22.f18",		0x08000, 0xc8ffb148, 4 }, // 13
 
 	{ "dt-08.512",		0x10000, 0xaec483f5, 5 }, // 14 gfx3
 	{ "dt-09.256",		0x08000, 0x446f0ce0, 5 }, // 15
@@ -3730,13 +3730,13 @@ static struct BurnRomInfo makyosenRomDesc[] = {
 	{ "dt-10.512",		0x10000, 0xcfcfc9ed, 5 }, // 20
 	{ "dt-11.256",		0x08000, 0x53e9cf17, 5 }, // 21
 
-	{ "ds-a.1b",     	0x01000, 0xf61b77cf, 6 }, // 22 mcu
+	{ "ds-a.b1",     	0x01000, 0xf61b77cf, 6 }, // 22 mcu
 
-	{ "mb7122e.10b",	0x00400, 0xdcbfec4e, 7 }, // 23 proms
+	{ "ds-23.b10",		0x00400, 0xdcbfec4e, 7 }, // 23 proms
 
-	{ "pal16r4nc.10u",	0x00104, 0x00000000, 8 | BRF_NODUMP }, // 24 plds
-	{ "pal16r4nc.11g",	0x00104, 0x00000000, 8 | BRF_NODUMP }, // 25
-	{ "pal16r4nc.1s",	0x00104, 0x00000000, 8 | BRF_NODUMP }, // 26
+	{ "pal16r4nc.u10",	0x00104, 0x00000000, 8 | BRF_NODUMP }, // 24 plds
+	{ "pal16r4nc.g11",	0x00104, 0x00000000, 8 | BRF_NODUMP }, // 25
+	{ "pal16r4nc.s1",	0x00104, 0x00000000, 8 | BRF_NODUMP }, // 26
 };
 
 STD_ROM_PICK(makyosen)

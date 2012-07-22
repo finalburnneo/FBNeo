@@ -2444,7 +2444,7 @@ static void SetupCustomCartridgeMappers()
 		ROM16[0x0dd49c/2] = 0x6002;
 	}
 	
-/*	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_POKEMON2) {
+	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_POKEMON2) {
 		UINT16 *ROM16 = (UINT16 *)RomMain;
 
 		ROM16[0x06036/2] = 0xE000;
@@ -2453,7 +2453,7 @@ static void SetupCustomCartridgeMappers()
 		ROM16[0x02476/2] = 0x6022;
 
 		ROM16[0x7E300/2] = 0x60FE;
-	}*/
+	}
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_MULAN) {
 		UINT16 *ROM16 = (UINT16 *)RomMain;

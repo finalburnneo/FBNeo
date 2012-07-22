@@ -10357,7 +10357,7 @@ static struct BurnRomInfo FantastcRomDesc[] = {
 	{ "37",            0x01000, 0x3a54f749, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "38",            0x01000, 0x88b71264, BRF_GRA | GAL_ROM_TILES_SHARED },
 	
-	{ "prom-74g138",  0x00020, 0xb7cbbc1f, BRF_GRA | GAL_ROM_PROM },
+	{ "prom-74g138",   0x00020, 0x800f5718, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Fantastc)
@@ -10741,7 +10741,7 @@ void __fastcall CkongmcZ80Write(UINT16 a, UINT8 d)
 void __fastcall FantastcZ80Write(UINT16 a, UINT8 d)
 {
 	if (a >= 0x9800 && a <= 0x98ff) {
-		int Offset = a - 0x9800;
+		INT32 Offset = a - 0x9800;
 		
 		GalSpriteRam[Offset] = d;
 		
@@ -11183,8 +11183,6 @@ static INT32 FantastcInit()
 	GalRenderFrameFunction = FantastcRenderFrame;
 	GalExtendSpriteInfoFunction = UpperExtendSpriteInfo;
 	
-	HardCodeMooncrstPROM();
-	
 	return nRet;
 }
 
@@ -11270,7 +11268,7 @@ struct BurnDriver BurnDrvKong = {
 
 struct BurnDriver BurnDrvFantastc = {
 	"fantastc", NULL, NULL, NULL, "198?",
-	"Fantastic\0", "Bad Colours", "Taito do Brasil", "Galaxian",
+	"Fantastic\0", NULL, "Taito do Brasil", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, FantastcRomInfo, FantastcRomName, NULL, NULL, FantastcInputInfo, FantastcDIPInfo,

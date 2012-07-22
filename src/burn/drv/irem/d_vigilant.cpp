@@ -505,9 +505,9 @@ static struct BurnRomInfo DrvRomDesc[] = {
 	
 	{ "d04_c01.bin",   0x10000, 0x9b85101d, BRF_SND },		//  16	Samples
 	
-	{ "pal16l8.8r",    0x00104, 0x00000000, BRF_GRA | BRF_NODUMP },	//  17	PALs
-	{ "pal16l8.4m",    0x00104, 0x6c628a26, BRF_GRA },		//  18
-	{ "pal16l8.1b",    0x00104, 0x00000000, BRF_GRA | BRF_NODUMP },	//  19
+	{ "vg_b-8r.ic90",  0x00117, 0xdf368a7a, BRF_GRA },		//  17	PALs
+	{ "vg_b-4m.ic38",  0x00117, 0xdbca4204, BRF_GRA },		//  18
+	{ "vg_b-1b.ic1",   0x00117, 0x922e5167, BRF_GRA },		//  19
 };
 
 STD_ROM_PICK(Drv)
@@ -537,9 +537,9 @@ static struct BurnRomInfo Drv1RomDesc[] = {
 	
 	{ "d04_c01.bin",   0x10000, 0x9b85101d, BRF_SND },		//  16	Samples
 	
-	{ "pal16l8.8r",    0x00104, 0x00000000, BRF_GRA | BRF_NODUMP },	//  17	PALs
-	{ "pal16l8.4m",    0x00104, 0x6c628a26, BRF_GRA },		//  18
-	{ "pal16l8.1b",    0x00104, 0x00000000, BRF_GRA | BRF_NODUMP },	//  19
+	{ "vg_b-8r.ic90",  0x00117, 0xdf368a7a, BRF_GRA },		//  17	PALs
+	{ "vg_b-4m.ic38",  0x00117, 0xdbca4204, BRF_GRA },		//  18
+	{ "vg_b-1b.ic1",   0x00117, 0x922e5167, BRF_GRA },		//  19
 };
 
 STD_ROM_PICK(Drv1)
@@ -569,9 +569,9 @@ static struct BurnRomInfo DrvuRomDesc[] = {
 	
 	{ "d04_c01.bin",   0x10000, 0x9b85101d, BRF_SND },		//  16	Samples
 	
-	{ "pal16l8.8r",    0x00104, 0x00000000, BRF_GRA | BRF_NODUMP },	//  17	PALs
-	{ "pal16l8.4m",    0x00104, 0x6c628a26, BRF_GRA },		//  18
-	{ "pal16l8.1b",    0x00104, 0x00000000, BRF_GRA | BRF_NODUMP },	//  19
+	{ "vg_b-8r.ic90",  0x00117, 0xdf368a7a, BRF_GRA },		//  17	PALs
+	{ "vg_b-4m.ic38",  0x00117, 0xdbca4204, BRF_GRA },		//  18
+	{ "vg_b-1b.ic1",   0x00117, 0x922e5167, BRF_GRA },		//  19
 };
 
 STD_ROM_PICK(Drvu)
@@ -601,9 +601,9 @@ static struct BurnRomInfo Drvu2RomDesc[] = {
 	
 	{ "d04_c01.bin",   0x10000, 0x9b85101d, BRF_SND },		//  16	Samples
 	
-	{ "pal16l8.8r",    0x00104, 0x00000000, BRF_GRA | BRF_NODUMP },	//  17	PALs
-	{ "pal16l8.4m",    0x00104, 0x6c628a26, BRF_GRA },		//  18
-	{ "pal16l8.1b",    0x00104, 0x00000000, BRF_GRA | BRF_NODUMP },	//  19
+	{ "vg_b-8r.ic90",  0x00117, 0xdf368a7a, BRF_GRA },		//  17	PALs
+	{ "vg_b-4m.ic38",  0x00117, 0xdbca4204, BRF_GRA },		//  18
+	{ "vg_b-1b.ic1",   0x00117, 0x922e5167, BRF_GRA },		//  19
 };
 
 STD_ROM_PICK(Drvu2)
@@ -633,9 +633,9 @@ static struct BurnRomInfo DrvjRomDesc[] = {
 	
 	{ "d04_c01.bin",   0x10000, 0x9b85101d, BRF_SND },		//  16	Samples
 	
-	{ "pal16l8.8r",    0x00104, 0x00000000, BRF_GRA | BRF_NODUMP },	//  17	PALs
-	{ "pal16l8.4m",    0x00104, 0x6c628a26, BRF_GRA },		//  18
-	{ "pal16l8.1b",    0x00104, 0x00000000, BRF_GRA | BRF_NODUMP },	//  19
+	{ "vg_b-8r.ic90",  0x00117, 0xdf368a7a, BRF_GRA },		//  17	PALs
+	{ "vg_b-4m.ic38",  0x00117, 0xdbca4204, BRF_GRA },		//  18
+	{ "vg_b-1b.ic1",   0x00117, 0x922e5167, BRF_GRA },		//  19
 };
 
 STD_ROM_PICK(Drvj)

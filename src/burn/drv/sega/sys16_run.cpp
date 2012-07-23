@@ -535,7 +535,7 @@ void __fastcall System16Z80Write(UINT16 a, UINT8 d)
 UINT8 __fastcall System16Z80PCMRead(UINT16 a)
 {
 	if (a >= 0xf000 && a <= 0xf0ff) {
-		return SegaPCMRead(a - 0xf000);
+		return SegaPCMRead(0, a - 0xf000);
 	}
 
 #if 0 && defined FBA_DEBUG
@@ -548,7 +548,7 @@ UINT8 __fastcall System16Z80PCMRead(UINT16 a)
 void __fastcall System16Z80PCMWrite(UINT16 a, UINT8 d)
 {
 	if (a >= 0xf000 && a <= 0xf0ff) {
-		SegaPCMWrite(a - 0xf000, d);
+		SegaPCMWrite(0, a - 0xf000, d);
 		return;
 	}
 	
@@ -578,7 +578,7 @@ UINT8 __fastcall System16Z802203PortRead(UINT16 a)
 UINT8 __fastcall System16Z802203Read(UINT16 a)
 {
 	if (a >= 0xe000 && a <= 0xe0ff) {
-		return SegaPCMRead(a - 0xe000);
+		return SegaPCMRead(0, a - 0xe000);
 	}
 	
 	switch (a) {
@@ -597,7 +597,7 @@ UINT8 __fastcall System16Z802203Read(UINT16 a)
 void __fastcall System16Z802203Write(UINT16 a, UINT8 d)
 {
 	if (a >= 0xe000 && a <= 0xe0ff) {
-		SegaPCMWrite(a - 0xe000, d);
+		SegaPCMWrite(0, a - 0xe000, d);
 		return;
 	}
 	
@@ -2096,12 +2096,12 @@ INT32 System16Init()
 		
 		if (System16PCMDataSize) {
 			if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2203) {
-				SegaPCMInit(8000000, BANK_512, System16PCMData, System16PCMDataSize);
+				SegaPCMInit(0, 8000000, BANK_512, System16PCMData, System16PCMDataSize);
 			} else {
-				SegaPCMInit(4000000, BANK_512, System16PCMData, System16PCMDataSize);
+				SegaPCMInit(0, 4000000, BANK_512, System16PCMData, System16PCMDataSize);
 			}
-			SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_1, 1.0, BURN_SND_ROUTE_LEFT);
-			SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_2, 1.0, BURN_SND_ROUTE_RIGHT);
+			SegaPCMSetRoute(0, BURN_SND_SEGAPCM_ROUTE_1, 1.0, BURN_SND_ROUTE_LEFT);
+			SegaPCMSetRoute(0, BURN_SND_SEGAPCM_ROUTE_2, 1.0, BURN_SND_ROUTE_RIGHT);
 		}
 		
 		System16TileBankSize = 0x1000;
@@ -2170,11 +2170,11 @@ INT32 System16Init()
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.43, BURN_SND_ROUTE_RIGHT);
 		
 		if (System16PCMDataSize) {
-			SegaPCMInit(4000000, BANK_512, System16PCMData, System16PCMDataSize);
-			SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_1, 1.0, BURN_SND_ROUTE_LEFT);
-			SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_2, 1.0, BURN_SND_ROUTE_RIGHT);
+			SegaPCMInit(0, 4000000, BANK_512, System16PCMData, System16PCMDataSize);
+			SegaPCMSetRoute(0, BURN_SND_SEGAPCM_ROUTE_1, 1.0, BURN_SND_ROUTE_LEFT);
+			SegaPCMSetRoute(0, BURN_SND_SEGAPCM_ROUTE_2, 1.0, BURN_SND_ROUTE_RIGHT);
 		}
-				
+		
 		System16RoadColorOffset1 = 0x400;
 		System16RoadColorOffset2 = 0x420;
 		System16RoadColorOffset3 = 0x780;	
@@ -2264,9 +2264,9 @@ INT32 System16Init()
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.43, BURN_SND_ROUTE_RIGHT);
 		
 		if (System16PCMDataSize) {
-			SegaPCMInit(4000000, BANK_512, System16PCMData, System16PCMDataSize);
-			SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_1, 1.0, BURN_SND_ROUTE_LEFT);
-			SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_2, 1.0, BURN_SND_ROUTE_RIGHT);
+			SegaPCMInit(0, 4000000, BANK_512, System16PCMData, System16PCMDataSize);
+			SegaPCMSetRoute(0, BURN_SND_SEGAPCM_ROUTE_1, 1.0, BURN_SND_ROUTE_LEFT);
+			SegaPCMSetRoute(0, BURN_SND_SEGAPCM_ROUTE_2, 1.0, BURN_SND_ROUTE_RIGHT);
 		}		
 		
 		System16RoadColorOffset1 = 0x1700;
@@ -2347,9 +2347,9 @@ INT32 System16Init()
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.43, BURN_SND_ROUTE_RIGHT);
 		
 		if (System16PCMDataSize) {
-			SegaPCMInit(32215900 / 8, BANK_12M | BANK_MASKF8, System16PCMData, System16PCMDataSize);
-			SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_1, 1.0, BURN_SND_ROUTE_LEFT);
-			SegaPCMSetRoute(BURN_SND_SEGAPCM_ROUTE_2, 1.0, BURN_SND_ROUTE_RIGHT);
+			SegaPCMInit(0, 32215900 / 8, BANK_12M | BANK_MASKF8, System16PCMData, System16PCMDataSize);
+			SegaPCMSetRoute(0, BURN_SND_SEGAPCM_ROUTE_1, 1.0, BURN_SND_ROUTE_LEFT);
+			SegaPCMSetRoute(0, BURN_SND_SEGAPCM_ROUTE_2, 1.0, BURN_SND_ROUTE_RIGHT);
 		}
 	}
 	

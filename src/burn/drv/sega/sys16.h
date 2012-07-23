@@ -88,6 +88,7 @@ extern UINT32 System16SpriteRomSize;
 extern UINT32 System16Sprite2RomSize;
 extern UINT32 System16RoadRomSize;
 extern UINT32 System16Z80RomSize;
+extern UINT32 System16Z80Rom2Num;
 extern UINT32 System16PCMDataSize;
 extern UINT32 System16PCMDataSizePreAllocate;
 extern UINT32 System16ExtraRamSize;

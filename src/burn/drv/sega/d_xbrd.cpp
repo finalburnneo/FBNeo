@@ -989,7 +989,7 @@ static struct BurnRomInfo SmgpRomDesc[] = {
 	
 	{ "mpr-12437.11",     0x20000, 0xa1c7e712, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "mpr-12438.12",     0x20000, 0x6573d46b, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCM2DATA | BRF_SND },
+	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "mpr-12437.20",     0x20000, 0xa1c7e712, SYS16_ROM_PCM2DATA | BRF_SND },
 	{ "mpr-12438.21",     0x20000, 0x6573d46b, SYS16_ROM_PCM2DATA | BRF_SND },
@@ -1040,7 +1040,7 @@ static struct BurnRomInfo Smgp6RomDesc[] = {
 	
 	{ "mpr-12437.11",     0x20000, 0xa1c7e712, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "mpr-12438.12",     0x20000, 0x6573d46b, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCM2DATA | BRF_SND },
+	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "mpr-12437.20",     0x20000, 0xa1c7e712, SYS16_ROM_PCM2DATA | BRF_SND },
 	{ "mpr-12438.21",     0x20000, 0x6573d46b, SYS16_ROM_PCM2DATA | BRF_SND },
@@ -1090,7 +1090,7 @@ static struct BurnRomInfo Smgp5RomDesc[] = {
 	
 	{ "mpr-12437.11",     0x20000, 0xa1c7e712, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "mpr-12438.12",     0x20000, 0x6573d46b, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCM2DATA | BRF_SND },
+	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "mpr-12437.20",     0x20000, 0xa1c7e712, SYS16_ROM_PCM2DATA | BRF_SND },
 	{ "mpr-12438.21",     0x20000, 0x6573d46b, SYS16_ROM_PCM2DATA | BRF_SND },
@@ -1141,7 +1141,7 @@ static struct BurnRomInfo SmgpuRomDesc[] = {
 	
 	{ "mpr-12437.11",     0x20000, 0xa1c7e712, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "mpr-12438.12",     0x20000, 0x6573d46b, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCM2DATA | BRF_SND },
+	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "mpr-12437.20",     0x20000, 0xa1c7e712, SYS16_ROM_PCM2DATA | BRF_SND },
 	{ "mpr-12438.21",     0x20000, 0x6573d46b, SYS16_ROM_PCM2DATA | BRF_SND },
@@ -1192,7 +1192,7 @@ static struct BurnRomInfo Smgpu1RomDesc[] = {
 	
 	{ "mpr-12437.11",     0x20000, 0xa1c7e712, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "mpr-12438.12",     0x20000, 0x6573d46b, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCM2DATA | BRF_SND },
+	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "mpr-12437.20",     0x20000, 0xa1c7e712, SYS16_ROM_PCM2DATA | BRF_SND },
 	{ "mpr-12438.21",     0x20000, 0x6573d46b, SYS16_ROM_PCM2DATA | BRF_SND },
@@ -1243,7 +1243,7 @@ static struct BurnRomInfo Smgpu2RomDesc[] = {
 	
 	{ "mpr-12437.11",     0x20000, 0xa1c7e712, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "mpr-12438.12",     0x20000, 0x6573d46b, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCM2DATA | BRF_SND },
+	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "mpr-12437.20",     0x20000, 0xa1c7e712, SYS16_ROM_PCM2DATA | BRF_SND },
 	{ "mpr-12438.21",     0x20000, 0x6573d46b, SYS16_ROM_PCM2DATA | BRF_SND },
@@ -1294,7 +1294,7 @@ static struct BurnRomInfo SmgpjRomDesc[] = {
 	
 	{ "mpr-12437.11",     0x20000, 0xa1c7e712, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "mpr-12438.12",     0x20000, 0x6573d46b, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCM2DATA | BRF_SND },
+	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "mpr-12437.20",     0x20000, 0xa1c7e712, SYS16_ROM_PCM2DATA | BRF_SND },
 	{ "mpr-12438.21",     0x20000, 0x6573d46b, SYS16_ROM_PCM2DATA | BRF_SND },
@@ -1345,7 +1345,7 @@ static struct BurnRomInfo SmgpjaRomDesc[] = {
 	
 	{ "mpr-12437.11",     0x20000, 0xa1c7e712, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "mpr-12438.12",     0x20000, 0x6573d46b, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCM2DATA | BRF_SND },
+	{ "mpr-12439.13",     0x20000, 0x13bf6de5, SYS16_ROM_PCMDATA | BRF_SND },
 	
 	{ "mpr-12437.20",     0x20000, 0xa1c7e712, SYS16_ROM_PCM2DATA | BRF_SND },
 	{ "mpr-12438.21",     0x20000, 0x6573d46b, SYS16_ROM_PCM2DATA | BRF_SND },
@@ -1652,9 +1652,16 @@ void __fastcall XBoardWriteWord(UINT32 a, UINT16 d)
 		if (a == 0x0e8016) {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
+			nSystem16CyclesDone[2] += ZetRun(100);
 			ZetNmi();
-			nSystem16CyclesDone[1] += ZetRun(100);
 			ZetClose();
+			
+			if (System16Z80Rom2Num) {
+				ZetOpen(1);
+				nSystem16CyclesDone[3] += ZetRun(100);
+				ZetNmi();
+				ZetClose();
+			}
 		}
 		
 		System16CompareTimerChipWrite(0, (a - 0x0e8000) >> 1, d);
@@ -1785,9 +1792,16 @@ void __fastcall XBoardWriteByte(UINT32 a, UINT8 d)
 			System16CompareTimerChipWrite(0, (a - 0x0e8000) >> 1, d);
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
+			nSystem16CyclesDone[2] += ZetRun(100);
 			ZetNmi();
-			nSystem16CyclesDone[1] += ZetRun(100);
 			ZetClose();
+			
+			if (System16Z80Rom2Num) {
+				ZetOpen(1);
+				nSystem16CyclesDone[3] += ZetRun(100);
+				ZetNmi();
+				ZetClose();
+			}
 			return;
 		}
 	}

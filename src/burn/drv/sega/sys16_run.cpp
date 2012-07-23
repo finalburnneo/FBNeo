@@ -52,6 +52,7 @@ UINT8  *System16ExtraRam3     = NULL;
 UINT8  *System16BackupRam     = NULL;
 UINT8  *System16BackupRam2    = NULL;
 UINT8  *System16Z80Ram        = NULL;
+UINT8  *System16Z80Ram2       = NULL;
 UINT8  *System16TileRam       = NULL;
 UINT8  *System16TextRam       = NULL;
 UINT8  *System16SpriteRam     = NULL;
@@ -272,6 +273,12 @@ static INT32 System16DoReset()
 		ZetClose();
 	}
 	
+	if (System16Z80Rom2Num) {
+		ZetOpen(1);
+		ZetReset();
+		ZetClose();
+	}
+	
 	if (System167751ProgSize) {
 		N7751Reset();
 		DACReset();
@@ -430,6 +437,24 @@ UINT8 __fastcall SystemXZ80PortRead(UINT16 a)
 			return BurnYM2151ReadStatus();
 		}
 		
+		case 0x40:
+		case 0xc0: {
+			return System16SoundLatch;
+		}
+	}
+
+#if 0 && defined FBA_DEBUG
+	bprintf(PRINT_NORMAL, _T("Z80 Read Port -> %02X\n"), a);
+#endif
+
+	return 0;
+}
+
+UINT8 __fastcall System16Z80PortRead2(UINT16 a)
+{
+	a &= 0xff;
+	
+	switch (a) {
 		case 0x40:
 		case 0xc0: {
 			return System16SoundLatch;
@@ -613,6 +638,31 @@ void __fastcall System16Z802203Write(UINT16 a, UINT8 d)
 		}
 	}
 
+#if 0 && defined FBA_DEBUG
+	bprintf(PRINT_NORMAL, _T("Z80 Write -> %04X, %02X\n"), a, d);
+#endif
+}
+
+UINT8 __fastcall System16Z80Read2(UINT16 a)
+{
+	if (a >= 0xf000 && a <= 0xf0ff) {
+		return SegaPCMRead(1, a - 0xf000);
+	}
+
+#if 0 && defined FBA_DEBUG
+	bprintf(PRINT_NORMAL, _T("Z80 Read -> %04X\n"), a);
+#endif
+
+	return 0;
+}
+
+void __fastcall System16Z80Write2(UINT16 a, UINT8 d)
+{
+	if (a >= 0xf000 && a <= 0xf0ff) {
+		SegaPCMWrite(1, a - 0xf000, d);
+		return;
+	}
+	
 #if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("Z80 Write -> %04X, %02X\n"), a, d);
 #endif
@@ -918,6 +968,10 @@ static INT32 System16MemIndex()
 	System16BackupRam2   = Next; Next += System16BackupRam2Size;
 	
 	System16Z80Ram       = Next; Next += Z80RamSize;
+	
+	if (System16Z80Rom2Num) {
+		System16Z80Ram2  = Next; Next += 0x800;
+	}
 
 	RamEnd = Next;
 
@@ -2258,6 +2312,23 @@ INT32 System16Init()
 			ZetClose();
 		}
 		
+		if (System16Z80Rom2Num) {
+			ZetInit(1);
+			ZetOpen(1);
+			ZetMapArea(0x0000, 0xefff, 0, System16Z80Rom2);
+			ZetMapArea(0x0000, 0xefff, 2, System16Z80Rom2);
+	
+			ZetMapArea(0xf800, 0xffff, 0, System16Z80Ram2);
+			ZetMapArea(0xf800, 0xffff, 1, System16Z80Ram2);
+			ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram2);
+			ZetMemEnd();
+		
+			ZetSetReadHandler(System16Z80Read2);
+			ZetSetWriteHandler(System16Z80Write2);
+			ZetSetInHandler(System16Z80PortRead2);
+			ZetClose();
+		}
+		
 		BurnYM2151Init(4000000);
 		BurnYM2151SetIrqHandler(&System16YM2151IRQHandler);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.43, BURN_SND_ROUTE_LEFT);
@@ -2265,8 +2336,14 @@ INT32 System16Init()
 		
 		if (System16PCMDataSize) {
 			SegaPCMInit(0, 4000000, BANK_512, System16PCMData, System16PCMDataSize);
-			SegaPCMSetRoute(0, BURN_SND_SEGAPCM_ROUTE_1, 1.0, BURN_SND_ROUTE_LEFT);
-			SegaPCMSetRoute(0, BURN_SND_SEGAPCM_ROUTE_2, 1.0, BURN_SND_ROUTE_RIGHT);
+			SegaPCMSetRoute(0, BURN_SND_SEGAPCM_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+			SegaPCMSetRoute(0, BURN_SND_SEGAPCM_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+		}		
+		
+		if (System16PCM2DataSize) {
+			SegaPCMInit(1, 4000000, BANK_512, System16PCM2Data, System16PCM2DataSize);
+			SegaPCMSetRoute(1, BURN_SND_SEGAPCM_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+			SegaPCMSetRoute(1, BURN_SND_SEGAPCM_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 		}		
 		
 		System16RoadColorOffset1 = 0x1700;
@@ -3057,7 +3134,8 @@ INT32 XBoardFrame()
 	nCyclesTotal[0] = (INT32)((INT64)(50000000 / 4) * nBurnCPUSpeedAdjust / (0x0100 * 60));
 	nCyclesTotal[1] = (INT32)((INT64)(50000000 / 4) * nBurnCPUSpeedAdjust / (0x0100 * 60));
 	nCyclesTotal[2] = (16000000 / 4) / 60;
-	nSystem16CyclesDone[0] = nSystem16CyclesDone[1] = nSystem16CyclesDone[2] = 0;
+	nCyclesTotal[3] = (16000000 / 4) / 60;
+	nSystem16CyclesDone[0] = nSystem16CyclesDone[1] = nSystem16CyclesDone[2] = nSystem16CyclesDone[3] = 0;
 
 	INT32 nSoundBufferPos = 0;
 	
@@ -3095,6 +3173,17 @@ INT32 XBoardFrame()
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
 		ZetClose();
+		
+		// Run Z80 #2
+		if (System16Z80Rom2Num) {
+			nCurrentCPU = 3;
+			ZetOpen(1);
+			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+			nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
+			nCyclesSegment = ZetRun(nCyclesSegment);
+			nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
+			ZetClose();
+		}
 
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;

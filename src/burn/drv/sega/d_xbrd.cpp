@@ -1652,14 +1652,14 @@ void __fastcall XBoardWriteWord(UINT32 a, UINT16 d)
 		if (a == 0x0e8016) {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			nSystem16CyclesDone[2] += ZetRun(100);
 			ZetNmi();
+			nSystem16CyclesDone[2] += ZetRun(100);
 			ZetClose();
 			
 			if (System16Z80Rom2Num) {
 				ZetOpen(1);
-				nSystem16CyclesDone[3] += ZetRun(100);
 				ZetNmi();
+				nSystem16CyclesDone[3] += ZetRun(100);
 				ZetClose();
 			}
 		}
@@ -1792,14 +1792,14 @@ void __fastcall XBoardWriteByte(UINT32 a, UINT8 d)
 			System16CompareTimerChipWrite(0, (a - 0x0e8000) >> 1, d);
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			nSystem16CyclesDone[2] += ZetRun(100);
 			ZetNmi();
+			nSystem16CyclesDone[2] += ZetRun(100);
 			ZetClose();
 			
 			if (System16Z80Rom2Num) {
 				ZetOpen(1);
-				nSystem16CyclesDone[3] += ZetRun(100);
 				ZetNmi();
+				nSystem16CyclesDone[3] += ZetRun(100);
 				ZetClose();
 			}
 			return;
@@ -2331,7 +2331,13 @@ static INT32 SmgpInit()
 {
 	System16ProcessAnalogControlsDo = SmgpProcessAnalogControls;
 	
-	return System16Init();
+	INT32 nRet = System16Init();
+	
+	if (!nRet) {
+		System16RoadPriority = 0;
+	}
+	
+	return nRet;
 }
 
 static INT32 ThndrbldInit()

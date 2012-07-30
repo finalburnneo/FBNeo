@@ -3820,8 +3820,8 @@ STD_ROM_PICK(Dondokodu)
 STD_ROM_FN(Dondokodu)
 
 static struct BurnRomInfo DriftoutRomDesc[] = {
-	{ "do_46.rom",          0x080000, 0xf960363e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "do_45.rom",          0x080000, 0xe3fe66b9, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "ic46.rom",           0x080000, 0x71303738, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "ic45.rom",           0x080000, 0x43f81eca, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	
 	{ "do_50.rom",          0x010000, 0xffe10124, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 	
@@ -3834,6 +3834,22 @@ static struct BurnRomInfo DriftoutRomDesc[] = {
 
 STD_ROM_PICK(Driftout)
 STD_ROM_FN(Driftout)
+
+static struct BurnRomInfo DriftoutjRomDesc[] = {
+	{ "do_46.rom",          0x080000, 0xf960363e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "do_45.rom",          0x080000, 0xe3fe66b9, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	
+	{ "do_50.rom",          0x010000, 0xffe10124, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	
+	{ "do_obj.rom",         0x080000, 0x5491f1c4, BRF_GRA | TAITO_SPRITESA },
+	
+	{ "do_snd.rom",         0x080000, 0xf2deb82b, BRF_SND | TAITO_YM2610A },
+	
+	{ "do_piv.rom",         0x080000, 0xc4f012f7, BRF_GRA | TAITO_CHARS_PIVOT },
+};
+
+STD_ROM_PICK(Driftoutj)
+STD_ROM_FN(Driftoutj)
 
 static struct BurnRomInfo DriveoutRomDesc[] = {
 	{ "driveout.003",       0x080000, 0xdc431e4e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -10796,10 +10812,20 @@ struct BurnDriver BurnDrvDondokodu = {
 
 struct BurnDriver BurnDrvDriftout = {
 	"driftout", NULL, NULL, NULL, "1991",
-	"Drift Out (Japan)\0", NULL, "Visco", "Taito-F2",
+	"Drift Out (Europe)\0", NULL, "Visco (Europe)", "Taito-F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOF2, GBF_RACING, 0,
 	NULL, DriftoutRomInfo, DriftoutRomName, NULL, NULL, DriftoutInputInfo, DriftoutDIPInfo,
+	DriftoutInit, TaitoF2Exit, TaitoF2Frame, NULL, TaitoF2Scan,
+	NULL, 0x2000, 224, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvDriftoutj = {
+	"driftoutj", "driftout", NULL, NULL, "1991",
+	"Drift Out (Japan)\0", NULL, "Visco (Japan)", "Taito-F2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_RACING, 0,
+	NULL, DriftoutjRomInfo, DriftoutjRomName, NULL, NULL, DriftoutInputInfo, DriftoutDIPInfo,
 	DriftoutInit, TaitoF2Exit, TaitoF2Frame, NULL, TaitoF2Scan,
 	NULL, 0x2000, 224, 320, 3, 4
 };

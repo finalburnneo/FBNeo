@@ -46,13 +46,14 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_kbash.o d_kbash2.o d_mahoudai.o d_outzone.o d_pipibibs.o d_rallybik.o d_samesame.o d_shippumd.o d_snowbro2.o \
 			d_tekipaki.o d_tigerheli.o d_truxton.o d_truxton2.o d_vfive.o d_vimana.o d_zerowing.o \
 			\
-			d_4enraya.o d_1942.o d_1943.o d_ambush.o d_arabian.o d_armedf.o d_aztarac.o d_baraduke.o d_bionicc.o d_blktiger.o \
-			d_blockout.o d_blueprnt.o d_bombjack.o d_commando.o d_ddragon.o d_dynduke.o d_epos.o d_exedexes.o d_funkybee.o \
-			d_galaga.o d_gauntlet.o d_ginganin.o d_gng.o d_gunsmoke.o d_higemaru.o d_ikki.o d_jack.o d_kangaroo.o d_kyugo.o \
-			d_ladybug.o d_lwings.o d_madgear.o d_markham.o d_marineb.o d_meijinsn.o d_mitchell.o d_mole.o d_momoko.o d_mrdo.o \
-			d_mrflea.o d_mystston.o d_pacland.o d_pacman.o d_pac2650.o d_pkunwar.o d_prehisle.o d_quizo.o d_rallyx.o d_renegade.o \
-			d_rpunch.o d_route16.o d_scregg.o d_sf.o d_skyfox.o d_skykid.o d_snk68.o d_solomon.o d_sonson.o d_srumbler.o \
-			d_tecmo.o d_terracre.o d_tigeroad.o d_toki.o d_vulgus.o d_wallc.o d_wc90.o d_wc90b.o d_wwfsstar.o \
+			d_4enraya.o d_1942.o d_1943.o d_ambush.o d_arabian.o d_armedf.o d_atetris.o d_aztarac.o d_baraduke.o d_bionicc.o \
+			d_blktiger.o d_blockout.o d_blueprnt.o d_bombjack.o d_commando.o d_ddragon.o d_dkong.o d_dynduke.o d_epos.o \
+			d_exedexes.o d_funkybee.o d_galaga.o d_gauntlet.o d_ginganin.o d_gng.o d_gunsmoke.o d_higemaru.o d_ikki.o d_jack.o \
+			d_kangaroo.o d_kyugo.o d_ladybug.o d_lwings.o d_madgear.o d_markham.o d_marineb.o d_meijinsn.o d_mitchell.o d_mole.o \
+			d_momoko.o d_mrdo.o d_mrflea.o d_mystston.o d_pacland.o d_pacman.o d_pac2650.o d_pkunwar.o d_prehisle.o d_quizo.o \
+			d_rallyx.o d_renegade.o d_rpunch.o d_route16.o d_scregg.o d_sf.o d_skyfox.o d_skykid.o d_snk68.o d_solomon.o \
+			d_sonson.o d_srumbler.o d_tecmo.o d_terracre.o d_tigeroad.o d_toki.o d_vulgus.o d_wallc.o d_wc90.o d_wc90b.o \
+			d_wwfsstar.o \
 			\
 			d_1945kiii.o d_aerofgt.o d_airbustr.o d_aquarium.o d_blmbycar.o d_bloodbro.o d_crospang.o d_crshrace.o d_dcon.o \
 			d_deniam.o d_ddragon3.o d_diverboy.o d_drtomy.o d_egghunt.o d_esd16.o d_f1gp.o d_fstarfrc.o d_funybubl.o d_fuukifg3.o \
@@ -82,7 +83,7 @@ depobj	:= 	main.o drv.o load.o misc.o \
 			burn.o burn_gun.o burn_led.o burn_memory.o burn_sound.o burn_sound_c.o cheat.o debug_track.o hiscore.o load.o \
 			tiles_generic.o timer.o vector.o \
 			\
-			8255ppi.o eeprom.o pandora.o seibusnd.o timekpr.o v3021.o \
+			8255ppi.o eeprom.o pandora.o seibusnd.o slapstic.o timekpr.o v3021.o \
 			\
 			ay8910.o burn_y8950.o burn_ym2151.o burn_ym2203.o burn_ym2413.o burn_ym2608.o burn_ym2610.o burn_ym2612.o \
 			burn_ym3526.o burn_ym3812.o burn_ymf278b.o dac.o es5506.o es8712.o fm.o fmopl.o ics2115.o iremga20.o k007232.o \

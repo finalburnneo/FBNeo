@@ -3710,7 +3710,7 @@ static struct BurnRomInfo makyosenRomDesc[] = {
 
 	{ "ds05.h5",		0x08000, 0xe6e28ca9, 2 }, //  4 audiocpu
 
-	{ "ds14.b8",		0x08000, 0x00cbe9c8, 3 }, //  5 gfx1
+	{ "ds14.b18",		0x08000, 0x00cbe9c8, 3 }, //  5 gfx1
 
 	{ "dt-19.512",		0x10000, 0xda2abe4b, 4 }, //  6 gfx2
 	{ "ds20.f15",		0x08000, 0x0eef7f56, 4 }, //  7

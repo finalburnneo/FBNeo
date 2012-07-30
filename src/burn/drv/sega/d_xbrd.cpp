@@ -886,22 +886,22 @@ STD_ROM_PICK(Loffireu)
 STD_ROM_FN(Loffireu)
 
 static struct BurnRomInfo RascotRomDesc[] = {
-	{ "ep13965a",         0x20000, 0x7eacdfb3, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "ep13694a",         0x20000, 0x15b86498, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13965a.ic58",  0x20000, 0x7eacdfb3, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13694a.ic63",  0x20000, 0x15b86498, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	
-	{ "epr13967",         0x20000, 0x3b92e2b8, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
-	{ "epr13966",         0x20000, 0xeaa644e1, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-13967.ic20",   0x20000, 0x3b92e2b8, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-13966.ic29",   0x20000, 0xeaa644e1, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
 
-	{ "epr13961" ,        0x10000, 0x68038629, SYS16_ROM_TILES | BRF_GRA },
-	{ "epr13962",         0x10000, 0x7d7605bc, SYS16_ROM_TILES | BRF_GRA },
-	{ "epr13963",         0x10000, 0xf3376b65, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13961" ,       0x10000, 0x68038629, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13962",        0x10000, 0x7d7605bc, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13963",        0x10000, 0xf3376b65, SYS16_ROM_TILES | BRF_GRA },
 	
-	{ "epr13960",         0x20000, 0xb974128d, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr13959",         0x20000, 0xdb245b22, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr13958",         0x20000, 0x7803a027, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr13957",         0x20000, 0x6d50fb54, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13960",        0x20000, 0xb974128d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13959",        0x20000, 0xdb245b22, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13958",        0x20000, 0x7803a027, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13957",        0x20000, 0x6d50fb54, SYS16_ROM_SPRITES | BRF_GRA },
 	
-	{ "ep13221a",         0x10000, 0x0d429ac4, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	{ "epr-14221a",       0x10000, 0x0d429ac4, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 };
 
 

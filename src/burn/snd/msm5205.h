@@ -9,6 +9,11 @@
 #define MSM5205_S64_4B 6     /* prescaler 1/64(6KHz) , data 4bit */
 #define MSM5205_SEX_4B 7     /* VCLK slave mode      , data 4bit */
 
+#define MSM6585_S160  (4+8)  /* prescaler 1/160(4KHz), data 4bit */
+#define MSM6585_S40   (5+8)  /* prescaler 1/40(16KHz), data 4bit */
+#define MSM6585_S80   (6+8)  /* prescaler 1/80 (8KHz), data 4bit */
+#define MSM6585_S20   (7+8)  /* prescaler 1/20(32KHz), data 4bit */
+
 void MSM5205ResetWrite(INT32 chip, INT32 reset);
 void MSM5205DataWrite(INT32 chip, INT32 data);
 void MSM5205VCLKWrite(INT32 chip, INT32 reset);

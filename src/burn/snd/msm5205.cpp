@@ -76,8 +76,8 @@ static void ComputeTables(INT32 chip)
 
 static void MSM5205_playmode(INT32 , INT32 select)
 {
-	static const INT32 prescaler_table[4] = {96,48,64,0};
-	INT32 prescaler = prescaler_table[select & 3];
+	static const INT32 prescaler_table[2][4] = { {96,48,64,0}, {160, 40, 80, 20} };
+	INT32 prescaler = prescaler_table[(select >> 3) & 1][select & 3];
 	INT32 bitwidth = (select & 4) ? 4 : 3;
 
 	if( voice->prescaler != prescaler )
@@ -417,7 +417,7 @@ INT32 MSM5205CalcInterleave(INT32 chip, INT32 cpu_speed)
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("MSM5205CalcInterleave called with invalid chip %x\n"), chip);
 #endif
 
-	static const INT32 table[4] = {96, 48, 64, 0};
+	static const INT32 table[2][4] = { {96, 48, 64, 0}, {160, 40, 80, 20} };
 
 	voice = &chips[chip];
 
@@ -425,7 +425,7 @@ INT32 MSM5205CalcInterleave(INT32 chip, INT32 cpu_speed)
 		return 133;  // (usually...)
 	}
 
-	INT32 ret = cpu_speed / (cpu_speed / (voice->clock / table[voice->select & 3]));
+	INT32 ret = cpu_speed / (cpu_speed / (voice->clock / table[(voice->select >> 3) & 1][voice->select & 3]));
 	
 	return ret / (nBurnFPS / 100);
 }

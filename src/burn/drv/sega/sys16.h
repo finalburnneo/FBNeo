@@ -201,8 +201,6 @@ void __fastcall Outrun2WriteWord(UINT32 a, UINT16 d);
 void __fastcall Outrun2WriteByte(UINT32 a, UINT8 d);
 
 // d_xbrd.cpp
-extern UINT8 Lastsurv;
-extern INT32 LastsurvPosition[2];
 UINT16 __fastcall XBoardReadWord(UINT32 a);
 UINT8 __fastcall XBoardReadByte(UINT32 a);
 void __fastcall XBoardWriteWord(UINT32 a, UINT16 d);

@@ -1,7 +1,5 @@
 #include "sys16.h"
 
-UINT8 Lastsurv = 0;
-
 /*====================================================
 Input defs
 ====================================================*/
@@ -1613,37 +1611,55 @@ STD_ROM_FN(Thndrbld1)
 Memory Handlers
 ====================================================*/
 
+typedef UINT8 (*io_custom_read)(UINT8);
+static io_custom_read iochip_custom_read[2][4];
+
+typedef void (*io_custom_write)(UINT8);
+static io_custom_write iochip_custom_write[2][4];
+
 static UINT8 iochip_regs[2][8];
-static UINT8 iochip_force_input;
+
 static UINT8 LastsurvMux = 0;
-INT32 LastsurvPosition[2] = { 0, 0 };
+static INT32 LastsurvPosition[2] = { 0, 0 };
 
 inline UINT16 iochip_r(INT32 which, INT32 port, INT32 inputval)
 {
 	UINT16 result = iochip_regs[which][port];
 	
-	/* for ports 0-3, the direction is controlled 4 bits at a time by register 6 */
-	if (port <= 3)
-	{
-		if (iochip_force_input || ((iochip_regs[which][6] >> (2*port+0)) & 1))
-			result = (result & ~0x0f) | (inputval & 0x0f);
-		if (iochip_force_input || ((iochip_regs[which][6] >> (2*port+1)) & 1))
-			result = (result & ~0xf0) | (inputval & 0xf0);
+	if (iochip_custom_read[which][port]) {
+		inputval = iochip_custom_read[which][port](inputval);
 	}
-
-	/* for port 4, the direction is controlled 1 bit at a time by register 7 */
-	else
-	{
-		if ((iochip_regs[which][7] >> 0) & 1)
+	
+	if (port <= 0x03) {
+		// for ports 0-3, the direction is controlled 4 bits at a time by register 6
+		if (((iochip_regs[which][6] >> (2 * port + 0)) & 0x01)) {
+			result = (result & ~0x0f) | (inputval & 0x0f);
+		}
+		
+		if (((iochip_regs[which][6] >> (2 * port + 1)) & 0x01)) {
+			result = (result & ~0xf0) | (inputval & 0xf0);
+		}
+	} else {
+		// for port 4, the direction is controlled 1 bit at a time by register 7
+		if ((iochip_regs[which][7] >> 0) & 0x01) {
 			result = (result & ~0x01) | (inputval & 0x01);
-		if ((iochip_regs[which][7] >> 1) & 1)
+		}
+		
+		if ((iochip_regs[which][7] >> 1) & 0x01) {
 			result = (result & ~0x02) | (inputval & 0x02);
-		if ((iochip_regs[which][7] >> 2) & 1)
+		}
+		
+		if ((iochip_regs[which][7] >> 2) & 0x01) {
 			result = (result & ~0x04) | (inputval & 0x04);
-		if ((iochip_regs[which][7] >> 3) & 1)
+		}
+		
+		if ((iochip_regs[which][7] >> 3) & 0x01) {
 			result = (result & ~0x08) | (inputval & 0x08);
+		}
+		
 		result &= 0x0f;
 	}
+	
 	return result;
 }
 
@@ -1709,69 +1725,54 @@ UINT8 __fastcall XBoardReadByte(UINT32 a)
 	if (a >= 0x140000 && a <= 0x14ffff) {
 		INT32 offset = ((a - 0x140000) >> 1) & 7;
 		switch (offset) {
-			case 0: {
+			case 0x00: {
 				return iochip_r(0, 0, 0xff);
 			}
 	
-			case 1: {
+			case 0x01: {
 				return iochip_r(0, 1, 0xff);
 			}
 			
-			case 2: {
+			case 0x02: {
 				return iochip_r(0, 2, 0);
 			}
 			
-			case 3: {
+			case 0x03: {
 				return iochip_r(0, 3, 0);
 			}
 			
-			case 4: {
+			case 0x04: {
 				return iochip_r(0, 4, 0);
 			}
 		}
+		
 		return 0;
 	}
 	
-	if (a == 0x150001) return 0xff - System16Input[0];
-	if (a == 0x150003) {
-		if (Lastsurv) {
-			if (LastsurvMux < 2) {
-				UINT8 Positions[8] = { 0x60, 0xe0, 0xa0, 0xb0, 0x90, 0xd0, 0x50, 0x70 };
-				
-				return 0x0f - System16Input[1 + LastsurvMux] + Positions[LastsurvPosition[LastsurvMux ^ 0x01] >> 4];
-			} else {
-				return 0xff - System16Input[1 + LastsurvMux];
-			}
-		} else {
-			return 0xff - System16Input[1];
-		}
-	}
-	if (a == 0x150005) return System16Dip[0];
-	if (a == 0x150007) return System16Dip[1];
-	
-	if (a >= 0x150008 && a <= 0x15ffff) {
-		INT32 offset = ((a - 0x150000) >> 1) & 7;
+	if (a >= 0x150000 && a <= 0x15ffff) {
+		INT32 offset = ((a - 0x150000) >> 1) & 0x07;
 		switch (offset) {
-			case 0: {
+			case 0x00: {
 				return iochip_r(1, 0, ~System16Input[0]);
 			}
 			
-			case 1: {
+			case 0x01: {
 				return iochip_r(1, 1, 0xff);
 			}
 			
-			case 2: {
+			case 0x02: {
 				return iochip_r(1, 2, System16Dip[0]);
 			}
 			
-			case 3: {
+			case 0x03: {
 				return iochip_r(1, 3, System16Dip[1]);
 			}
 			
-			case 4: {
+			case 0x04: {
 				return iochip_r(1, 4, 0);
 			}
 		}
+		
 		return 0;
 	}
 	
@@ -1846,7 +1847,7 @@ void __fastcall XBoardWriteWord(UINT32 a, UINT16 d)
 		
 		iochip_regs[0][offset] = d;
 		
-		if (offset == 2) {
+		if (offset == 0x02) {
 			System16VideoEnable = d & 0x20;
 			if (!(d & 0x01)) {
 				ZetOpen(0);
@@ -1855,10 +1856,8 @@ void __fastcall XBoardWriteWord(UINT32 a, UINT16 d)
 			}
 		}
 		
-		if (Lastsurv) {
-			if (offset == 3) {
-				LastsurvMux = (d >> 5) & 0x03;
-			}
+		if (iochip_custom_write[0][offset]) {
+			iochip_custom_write[0][offset](d);
 		}
 		
 		return;
@@ -1868,6 +1867,11 @@ void __fastcall XBoardWriteWord(UINT32 a, UINT16 d)
 		INT32 offset = ((a - 0x150000) >> 1) & 7;
 		
 		iochip_regs[1][offset] = d;
+		
+		if (iochip_custom_write[1][offset]) {
+			iochip_custom_write[1][offset](d);
+		}
+		
 		return;
 	}
 	
@@ -1891,14 +1895,14 @@ void __fastcall XBoardWriteWord(UINT32 a, UINT16 d)
 			UINT32 *src = (UINT32 *)System16SpriteRam;
 			UINT32 *dst = (UINT32 *)System16SpriteRamBuff;
 
-			/* swap the halves of the sprite RAM */
+			// swap the halves of the sprite RAM
 			for (UINT32 i = 0; i < System16SpriteRamSize/4; i++) {
 				UINT32 temp = *src;
 				*src++ = *dst;
 				*dst++ = temp;
 			}
 		
-			/* hack for thunderblade */
+			// hack for thunderblade
 			memset(System16SpriteRam, 0xff, System16SpriteRamSize);
 			
 			return;
@@ -1927,7 +1931,7 @@ void __fastcall XBoardWriteByte(UINT32 a, UINT8 d)
 		
 		iochip_regs[0][offset] = d;
 		
-		if (offset == 2) {
+		if (offset == 0x02) {
 			System16VideoEnable = d & 0x20;
 			if (!(d & 0x01)) {
 				ZetOpen(0);
@@ -1936,10 +1940,8 @@ void __fastcall XBoardWriteByte(UINT32 a, UINT8 d)
 			}
 		}
 		
-		if (Lastsurv) {
-			if (offset == 3) {
-				LastsurvMux = (d >> 5) & 0x03;
-			}
+		if (iochip_custom_write[0][offset]) {
+			iochip_custom_write[0][offset](d);
 		}
 		
 		return;
@@ -1949,6 +1951,11 @@ void __fastcall XBoardWriteByte(UINT32 a, UINT8 d)
 		INT32 offset = ((a - 0x150000) >> 1) & 7;
 		
 		iochip_regs[1][offset] = d;
+		
+		if (iochip_custom_write[1][offset]) {
+			iochip_custom_write[1][offset](d);
+		}
+		
 		return;
 	}
 
@@ -1958,14 +1965,14 @@ void __fastcall XBoardWriteByte(UINT32 a, UINT8 d)
 			UINT32 *src = (UINT32 *)System16SpriteRam;
 			UINT32 *dst = (UINT32 *)System16SpriteRamBuff;
 
-			/* swap the halves of the sprite RAM */
+			// swap the halves of the sprite RAM
 			for (UINT32 i = 0; i < System16SpriteRamSize/4; i++) {
 				UINT32 temp = *src;
 				*src++ = *dst;
 				*dst++ = temp;
 			}
 		
-			/* hack for thunderblade */
+			// hack for thunderblade
 			memset(System16SpriteRam, 0xff, System16SpriteRamSize);
 			return;
 		}
@@ -2129,7 +2136,7 @@ void __fastcall XBoard2WriteByte(UINT32 a, UINT8 d)
 Driver Inits
 ====================================================*/
 
-UINT8 AbcopProcessAnalogControls(UINT16 value)
+static UINT8 AbcopProcessAnalogControls(UINT16 value)
 {
 	UINT8 temp = 0;
 	
@@ -2166,7 +2173,14 @@ UINT8 AbcopProcessAnalogControls(UINT16 value)
 	return 0;
 }
 
-UINT8 AburnerProcessAnalogControls(UINT16 value)
+static INT32 AbcopInit()
+{
+	System16ProcessAnalogControlsDo = AbcopProcessAnalogControls;
+	
+	return System16Init();
+}
+
+static UINT8 AburnerProcessAnalogControls(UINT16 value)
 {
 	UINT8 temp = 0;
 
@@ -2235,13 +2249,28 @@ UINT8 AburnerProcessAnalogControls(UINT16 value)
 			}
 
 			temp = 0x80;
+			
 			return temp;
 		}
 	}	
+	
 	return 0;
 }
 
-UINT8 GpriderProcessAnalogControls(UINT16 value)
+static INT32 Aburner2Init()
+{
+	System16ProcessAnalogControlsDo = AburnerProcessAnalogControls;
+	
+	INT32 nRet = System16Init();
+	
+	if (!nRet) {
+		System16RoadPriority = 0;
+	}
+
+	return nRet;
+}
+
+static UINT8 GpriderProcessAnalogControls(UINT16 value)
 {
 	switch (value) {
 		// Left / Right
@@ -2270,18 +2299,111 @@ UINT8 GpriderProcessAnalogControls(UINT16 value)
 	return 0;
 }
 
-UINT8 LoffireProcessAnalogControls(UINT16 value)
+static INT32 GpriderInit()
+{
+	System16ProcessAnalogControlsDo = GpriderProcessAnalogControls;
+	
+	return System16Init();
+}
+
+static UINT8 LastsurvIOCustomRead(UINT8)
+{
+	if (LastsurvMux < 2) {
+		UINT8 Positions[8] = { 0x60, 0xe0, 0xa0, 0xb0, 0x90, 0xd0, 0x50, 0x70 };
+				
+		return 0x0f - System16Input[1 + LastsurvMux] + Positions[LastsurvPosition[LastsurvMux ^ 0x01] >> 4];
+	}
+	
+	return 0xff - System16Input[1 + LastsurvMux];
+}
+
+static void LastsurvIOCustomWrite(UINT8 d)
+{
+	LastsurvMux = (d >> 5) & 0x03;
+}
+
+static void LastsurvMakeAnalogInputs()
+{
+	if (System16InputPort6[0]) {
+		LastsurvPosition[0] -= 0x02;
+		System16InputPort6[0] = 0;
+	}
+				
+	if (System16InputPort6[1]) {
+		LastsurvPosition[0] += 0x02;
+		System16InputPort6[1] = 0;
+	}
+		
+	if (System16InputPort6[2]) {
+		LastsurvPosition[1] -= 0x02;
+		System16InputPort6[2] = 0;
+	}
+				
+	if (System16InputPort6[3]) {
+		LastsurvPosition[1] += 0x02;
+		System16InputPort6[3] = 0;
+	}
+				
+	if (LastsurvPosition[0] < 0) LastsurvPosition[0] = 0x7e;
+	if (LastsurvPosition[0] > 0x7e) LastsurvPosition[0] = 0;
+		
+	if (LastsurvPosition[1] < 0) LastsurvPosition[1] = 0x7e;
+	if (LastsurvPosition[1] > 0x7e) LastsurvPosition[1] = 0;
+}
+
+static INT32 LastsurvInit()
+{
+	iochip_custom_read[1][1] = LastsurvIOCustomRead;
+	iochip_custom_write[0][3] = LastsurvIOCustomWrite;
+	
+	System16MakeAnalogInputsDo = LastsurvMakeAnalogInputs;
+	
+	INT32 nRet = System16Init();
+	
+	if (!nRet) {
+		System16RoadPriority = 0;
+		
+		// reverse YM2151 channels
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.43, BURN_SND_ROUTE_RIGHT);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.43, BURN_SND_ROUTE_LEFT);
+	}
+
+	return nRet;
+}
+
+static UINT8 LoffireProcessAnalogControls(UINT16 value)
 {
 	switch (value) {
-		case 0: {	return BurnGunReturnX(0);	}
-		case 1: {	return ~BurnGunReturnY(0);	}
-		case 2: {	return BurnGunReturnX(1);	}
-		case 3: {	return ~BurnGunReturnY(1);	}
-	}	
+		case 0: {
+			return BurnGunReturnX(0);
+		}
+		
+		case 1: {
+			return ~BurnGunReturnY(0);
+		}
+		
+		case 2: {
+			return BurnGunReturnX(1);
+		}
+		
+		case 3: {
+			return ~BurnGunReturnY(1);
+		}
+	}
+	
 	return 0;
 }
 
-UINT8 RacheroProcessAnalogControls(UINT16 value)
+static INT32 LoffireInit()
+{
+	BurnGunInit(2, true);
+	
+	System16ProcessAnalogControlsDo = LoffireProcessAnalogControls;
+	
+	return System16Init();
+}
+
+static UINT8 RacheroProcessAnalogControls(UINT16 value)
 {
 	UINT8 temp = 0;
 	
@@ -2316,7 +2438,32 @@ UINT8 RacheroProcessAnalogControls(UINT16 value)
 	return 0;
 }
 
-UINT8 SmgpProcessAnalogControls(UINT16 value)
+static INT32 RacheroInit()
+{
+	System16ProcessAnalogControlsDo = RacheroProcessAnalogControls;
+	
+	return System16Init();
+}
+
+static INT32 RascotInit()
+{
+	INT32 nRet = System16Init();
+	
+	if (!nRet) {
+		System16RoadPriority = 0;
+		
+		// patch out bootup link test
+		UINT16 *ROM = (UINT16*)System16Rom2;
+		ROM[0xb78 / 2] = 0x601e;
+		ROM[0x57e / 2] = 0x4e71;
+		ROM[0x5d0 / 2] = 0x6008;
+		ROM[0x606 / 2] = 0x4e71;
+	}
+
+	return nRet;
+}
+
+static UINT8 SmgpProcessAnalogControls(UINT16 value)
 {
 	UINT8 temp = 0;
 	
@@ -2351,7 +2498,20 @@ UINT8 SmgpProcessAnalogControls(UINT16 value)
 	return 0;
 }
 
-UINT8 ThndrbldProcessAnalogControls(UINT16 value)
+static INT32 SmgpInit()
+{
+	System16ProcessAnalogControlsDo = SmgpProcessAnalogControls;
+	
+	INT32 nRet = System16Init();
+	
+	if (!nRet) {
+		System16RoadPriority = 0;
+	}
+	
+	return nRet;
+}
+
+static UINT8 ThndrbldProcessAnalogControls(UINT16 value)
 {
 	UINT8 temp = 0;
 	
@@ -2417,97 +2577,6 @@ UINT8 ThndrbldProcessAnalogControls(UINT16 value)
 	return 0;
 }
 
-static INT32 AbcopInit()
-{
-	System16ProcessAnalogControlsDo = AbcopProcessAnalogControls;
-	
-	return System16Init();
-}
-
-static INT32 Aburner2Init()
-{
-	System16ProcessAnalogControlsDo = AburnerProcessAnalogControls;
-	
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		System16RoadPriority = 0;
-	}
-
-	return nRet;
-}
-
-static INT32 GpriderInit()
-{
-	System16ProcessAnalogControlsDo = GpriderProcessAnalogControls;
-	
-	return System16Init();
-}
-
-static INT32 LastsurvInit()
-{
-	Lastsurv = 1;
-	
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		System16RoadPriority = 0;
-		
-		// reverse YM2151 channels
-		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.43, BURN_SND_ROUTE_RIGHT);
-		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.43, BURN_SND_ROUTE_LEFT);
-	}
-
-	return nRet;
-}
-
-static INT32 LoffireInit()
-{
-	BurnGunInit(2, true);
-	
-	System16ProcessAnalogControlsDo = LoffireProcessAnalogControls;
-	
-	return System16Init();
-}
-
-static INT32 RacheroInit()
-{
-	System16ProcessAnalogControlsDo = RacheroProcessAnalogControls;
-	
-	return System16Init();
-}
-
-static INT32 RascotInit()
-{
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		System16RoadPriority = 0;
-		
-		// patch out bootup link test
-		UINT16 *ROM = (UINT16*)System16Rom2;
-		ROM[0xb78 / 2] = 0x601e;
-		ROM[0x57e / 2] = 0x4e71;
-		ROM[0x5d0 / 2] = 0x6008;
-		ROM[0x606 / 2] = 0x4e71;
-	}
-
-	return nRet;
-}
-
-static INT32 SmgpInit()
-{
-	System16ProcessAnalogControlsDo = SmgpProcessAnalogControls;
-	
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		System16RoadPriority = 0;
-	}
-	
-	return nRet;
-}
-
 static INT32 ThndrbldInit()
 {
 	System16ProcessAnalogControlsDo = ThndrbldProcessAnalogControls;
@@ -2518,10 +2587,16 @@ static INT32 ThndrbldInit()
 static INT32 XBoardExit()
 {
 	memset(iochip_regs, 0, sizeof(iochip_regs));
-	iochip_force_input = 0;
 	
-	Lastsurv = 0;
+	for (INT32 i = 0; i < 4; i++) {
+		iochip_custom_read[0][i] = NULL;
+		iochip_custom_read[1][i] = NULL;
+		iochip_custom_write[0][i] = NULL;
+		iochip_custom_write[1][i] = NULL;
+	}
+	
 	LastsurvMux = 0;
+	LastsurvPosition[0] = LastsurvPosition[1] = 0;
 
 	return System16Exit();
 }
@@ -2534,7 +2609,8 @@ static INT32 XBoardScan(INT32 nAction,INT32 *pnMin)
 	
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(iochip_regs);
-		SCAN_VAR(iochip_force_input);
+		SCAN_VAR(LastsurvPosition);
+		SCAN_VAR(LastsurvMux);
 	}
 	
 	return System16Scan(nAction, pnMin);;

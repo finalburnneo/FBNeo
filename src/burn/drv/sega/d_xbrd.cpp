@@ -1757,7 +1757,7 @@ UINT8 __fastcall XBoardReadByte(UINT32 a)
 			}
 			
 			case 0x01: {
-				return iochip_r(1, 1, 0xff);
+				return iochip_r(1, 1, ~System16Input[1]);
 			}
 			
 			case 0x02: {

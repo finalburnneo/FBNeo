@@ -783,6 +783,50 @@ static struct BurnRomInfo GpriderRomDesc[] = {
 STD_ROM_PICK(Gprider)
 STD_ROM_FN(Gprider)
 
+
+static struct BurnRomInfo GpriderjRomDesc[] = {
+	{ "epr-13387.ic58",   0x20000, 0xa1e8b2c5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13386.ic63",   0x20000, 0xd8be9e66, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+			
+	{ "epr-13395.ic20",   0x20000, 0xd6ccfac7, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-13394.ic29",   0x20000, 0x914a55ec, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-13393.ic21",   0x20000, 0x08d023cc, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-13392.ic30",   0x20000, 0xf927cd42, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "epr-13383.ic154",  0x10000, 0x24f897a7, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13384.ic153",  0x10000, 0xfe8238bd, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13385.ic152",  0x10000, 0x6df1b995, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr-13382.ic90",   0x20000, 0x01dac209, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13381.ic94",   0x20000, 0x3a50d931, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13380.ic98",   0x20000, 0xad1024c8, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13379.ic102",  0x20000, 0x1ac17625, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13378.ic91",   0x20000, 0x50c9b867, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13377.ic95",   0x20000, 0x9b12f5c0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13376.ic99",   0x20000, 0x449ac518, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13375.ic103",  0x20000, 0x5489a9ff, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13374.ic92",   0x20000, 0x6a319e4f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13373.ic96",   0x20000, 0xeca5588b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13372.ic100",  0x20000, 0x0b45a433, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13371.ic104",  0x20000, 0xb68f4cff, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13370.ic93",   0x20000, 0x78276620, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13369.ic97",   0x20000, 0x8625bf0f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13368.ic101",  0x20000, 0x0f50716c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13367.ic105",  0x20000, 0x4b1bb51f, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "epr-13388.ic17",   0x10000, 0x706581e4, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-13391.ic11",   0x20000, 0x8c30c867, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-13390.ic12",   0x20000, 0x8c93cd05, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-13389.ic13",   0x20000, 0x4e4c758e, SYS16_ROM_PCMDATA | BRF_SND },
+	
+	{ "317-0161.key",     0x02000, 0xe38ddc16, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Gpriderj)
+STD_ROM_FN(Gpriderj)
+
 static struct BurnRomInfo GprideruRomDesc[] = {
 	{ "epr-13407.ic58",   0x20000, 0x03553ebd, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-13406.ic63",   0x20000, 0x122c711f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -2572,6 +2616,16 @@ struct BurnDriver BurnDrvGprider = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, GpriderRomInfo, GpriderRomName, NULL, NULL, GpriderInputInfo, GpriderDIPInfo,
+	GpriderInit, XBoardExit, XBoardFrame, NULL, XBoardScan,
+	NULL, 0x6000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvGpriderj = {
+	"gpriderj", "gprider", NULL, NULL, "1990",
+	"GP Rider (Japan, FD1094 317-0161)\0", NULL, "Sega", "X-Board",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
+	NULL, GpriderjRomInfo, GpriderjRomName, NULL, NULL, GpriderInputInfo, GpriderDIPInfo,
 	GpriderInit, XBoardExit, XBoardFrame, NULL, XBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };

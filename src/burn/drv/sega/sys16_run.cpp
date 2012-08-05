@@ -3129,6 +3129,34 @@ INT32 XBoardFrame()
 
 	System16MakeInputs();
 	
+	if (Lastsurv) {
+		if (System16InputPort6[0]) {
+			LastsurvPosition[0] -= 0x02;
+			System16InputPort6[0] = 0;
+		}
+				
+		if (System16InputPort6[1]) {
+			LastsurvPosition[0] += 0x02;
+			System16InputPort6[1] = 0;
+		}
+		
+		if (System16InputPort6[2]) {
+			LastsurvPosition[1] -= 0x02;
+			System16InputPort6[2] = 0;
+		}
+				
+		if (System16InputPort6[3]) {
+			LastsurvPosition[1] += 0x02;
+			System16InputPort6[3] = 0;
+		}
+				
+		if (LastsurvPosition[0] < 0) LastsurvPosition[0] = 0x7e;
+		if (LastsurvPosition[0] > 0x7e) LastsurvPosition[0] = 0;
+		
+		if (LastsurvPosition[1] < 0) LastsurvPosition[1] = 0x7e;
+		if (LastsurvPosition[1] > 0x7e) LastsurvPosition[1] = 0;
+	}
+	
 	if (nBurnGunNumPlayers) System16GunMakeInputs();
 	
 	nCyclesTotal[0] = (INT32)((INT64)(50000000 / 4) * nBurnCPUSpeedAdjust / (0x0100 * 60));

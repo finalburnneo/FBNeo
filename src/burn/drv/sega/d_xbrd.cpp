@@ -1,5 +1,7 @@
 #include "sys16.h"
 
+UINT8 Lastsurv = 0;
+
 /*====================================================
 Input defs
 ====================================================*/
@@ -63,6 +65,36 @@ static struct BurnInputInfo GpriderInputList[] = {
 };
 
 STDINPUTINFO(Gprider)
+
+static struct BurnInputInfo LastsurvInputList[] = {
+	{"Coin 1"            , BIT_DIGITAL   , System16InputPort0 + 6, "p1 coin"    },
+	{"Coin 2"            , BIT_DIGITAL   , System16InputPort0 + 7, "p2 coin"    },
+
+	{"P1 Up"             , BIT_DIGITAL   , System16InputPort2 + 2, "p1 up"      },
+	{"P1 Down"           , BIT_DIGITAL   , System16InputPort2 + 3, "p1 down"    },
+	{"P1 Left"           , BIT_DIGITAL   , System16InputPort2 + 0, "p1 left"    },
+	{"P1 Right"          , BIT_DIGITAL   , System16InputPort2 + 1, "p1 right"   },
+	{"P1 Turn Left"      , BIT_DIGITAL   , System16InputPort6 + 0, "p1 fire 2"  },
+	{"P1 Turn Right"     , BIT_DIGITAL   , System16InputPort6 + 1, "p1 fire 3"  },
+	{"P1 Fire"           , BIT_DIGITAL   , System16InputPort3 + 4, "p1 fire 1"  },
+	
+	{"P2 Up"             , BIT_DIGITAL   , System16InputPort1 + 2, "p2 up"      },
+	{"P2 Down"           , BIT_DIGITAL   , System16InputPort1 + 3, "p2 down"    },
+	{"P2 Left"           , BIT_DIGITAL   , System16InputPort1 + 0, "p2 left"    },
+	{"P2 Right"          , BIT_DIGITAL   , System16InputPort1 + 1, "p2 right"   },
+	{"P2 Turn Left"      , BIT_DIGITAL   , System16InputPort6 + 2, "p2 fire 2"  },
+	{"P2 Turn Right"     , BIT_DIGITAL   , System16InputPort6 + 3, "p2 fire 3"  },
+	{"P2 Fire"           , BIT_DIGITAL   , System16InputPort3 + 0, "p2 fire 1"  },
+	
+	{"Service"           , BIT_DIGITAL   , System16InputPort0 + 2 , "service"   },
+	{"Service 2"         , BIT_DIGITAL   , System16InputPort0 + 3 , "service 2" },
+	{"Diagnostics"       , BIT_DIGITAL   , System16InputPort0 + 1 , "diag"      },
+	{"Reset"             , BIT_DIGITAL   , &System16Reset         , "reset"     },
+	{"Dip 1"             , BIT_DIPSWITCH , System16Dip + 0        , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH , System16Dip + 1        , "dip"       },
+};
+
+STDINPUTINFO(Lastsurv)
 
 static struct BurnInputInfo LoffireInputList[] = {
 	{"Coin 1"            , BIT_DIGITAL   , System16InputPort0 + 6, "p1 coin"    },
@@ -336,6 +368,44 @@ static struct BurnDIPInfo GpriderDIPList[]=
 };
 
 STDDIPINFO(Gprider)
+
+static struct BurnDIPInfo LastsurvDIPList[]=
+{
+	// Default Values
+	{0x14, 0xff, 0xff, 0xff, NULL                                 },
+	{0x15, 0xff, 0xff, 0xbf, NULL                                 },
+
+	// Dip 1
+	BOARDX_COINAGE(0x14)
+
+	// Dip 2
+	{0   , 0xfe, 0   , 4   , "ID No"                              },
+	{0x15, 0x01, 0x03, 0x03, "1"                                  },
+	{0x15, 0x01, 0x03, 0x02, "2"                                  },
+	{0x15, 0x01, 0x03, 0x01, "3"                                  },
+	{0x15, 0x01, 0x03, 0x00, "4"                                  },
+	
+	{0   , 0xfe, 0   , 3   , "Network"                            },
+	{0x15, 0x01, 0x0c, 0x0c, "Off"                                },
+	{0x15, 0x01, 0x0c, 0x08, "On (2)"                             },
+	{0x15, 0x01, 0x0c, 0x04, "On (4)"                             },
+	
+	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
+	{0x15, 0x01, 0x30, 0x20, "Easy"                               },
+	{0x15, 0x01, 0x30, 0x30, "Normal"                             },
+	{0x15, 0x01, 0x30, 0x10, "Hard"                               },
+	{0x15, 0x01, 0x30, 0x00, "Hardest"                            },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
+	{0x15, 0x01, 0x40, 0x40, "Off"                                },
+	{0x15, 0x01, 0x40, 0x00, "On"                                 },
+	
+	{0   , 0xfe, 0   , 2   , "Coin Chute"                         },
+	{0x15, 0x01, 0x80, 0x80, "Single"                             },
+	{0x15, 0x01, 0x80, 0x00, "Twin"                               },
+};
+
+STDDIPINFO(Lastsurv)
 
 static struct BurnDIPInfo LoffireDIPList[]=
 {
@@ -755,6 +825,51 @@ static struct BurnRomInfo GprideruRomDesc[] = {
 
 STD_ROM_PICK(Gprideru)
 STD_ROM_FN(Gprideru)
+
+static struct BurnRomInfo LastsurvRomDesc[] = {
+	{ "epr-12046.ic58",   0x20000, 0xf94f3a1a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12047.ic63",   0x20000, 0x1b45c116, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12048.ic57",   0x20000, 0x648e38ca, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12049.ic62",   0x20000, 0x6c5c4753, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+			
+	{ "epr-12050.ic20",   0x20000, 0x985a0f36, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-12051.ic29",   0x20000, 0xf967d5a8, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-12052.ic21",   0x20000, 0x9f7a424d, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-12053.ic30",   0x20000, 0xefcf30f6, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "epr-12055.ic154",  0x10000, 0x150014a4, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12056.ic153",  0x10000, 0x3cd4c306, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12057.ic152",  0x10000, 0x37e91770, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "mpr-12064.ic90",   0x20000, 0x84562a69, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-12063.ic94",   0x20000, 0xd163727c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-12062.ic98",   0x20000, 0x6b57833b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-12061.ic102",  0x20000, 0x8907d5ba, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12068.ic91",   0x20000, 0x8b12d342, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12067.ic95",   0x20000, 0x1a1cdd89, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12066.ic99",   0x20000, 0xa91d16b5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12065.ic103",  0x20000, 0xf4ce14c6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12072.ic92",   0x20000, 0x222064c8, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12071.ic96",   0x20000, 0xa329b78c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12070.ic100",  0x20000, 0x97cc6706, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12069.ic104",  0x20000, 0x2c3ba66e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12076.ic93",   0x20000, 0x24f628e1, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12075.ic97",   0x20000, 0x69b3507f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12074.ic101",  0x20000, 0xee6cbb73, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12073.ic105",  0x20000, 0x167e6342, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-12054.ic17",   0x10000, 0xe9b39216, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-12058.ic11",   0x20000, 0x4671cb46, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-12059.ic12",   0x20000, 0x8c99aff4, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-12060.ic13",   0x20000, 0x7ed382b3, SYS16_ROM_PCMDATA | BRF_SND },
+	
+	{ "317-0083.key",     0x02000, 0xdca0b9cc, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Lastsurv)
+STD_ROM_FN(Lastsurv)
 
 static struct BurnRomInfo LoffireRomDesc[] = {
 	{ "epr-12849.58",     0x20000, 0x61cfd2fe, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1456,11 +1571,13 @@ Memory Handlers
 
 static UINT8 iochip_regs[2][8];
 static UINT8 iochip_force_input;
+static UINT8 LastsurvMux = 0;
+INT32 LastsurvPosition[2] = { 0, 0 };
 
 inline UINT16 iochip_r(INT32 which, INT32 port, INT32 inputval)
 {
 	UINT16 result = iochip_regs[which][port];
-
+	
 	/* for ports 0-3, the direction is controlled 4 bits at a time by register 6 */
 	if (port <= 3)
 	{
@@ -1546,7 +1663,7 @@ UINT8 __fastcall XBoardReadByte(UINT32 a)
 	}
 	
 	if (a >= 0x140000 && a <= 0x14ffff) {
-		int offset = ((a - 0x140000) >> 1) & 7;
+		INT32 offset = ((a - 0x140000) >> 1) & 7;
 		switch (offset) {
 			case 0: {
 				return iochip_r(0, 0, 0xff);
@@ -1572,7 +1689,19 @@ UINT8 __fastcall XBoardReadByte(UINT32 a)
 	}
 	
 	if (a == 0x150001) return 0xff - System16Input[0];
-	if (a == 0x150003) return 0xff - System16Input[1];
+	if (a == 0x150003) {
+		if (Lastsurv) {
+			if (LastsurvMux < 2) {
+				UINT8 Positions[8] = { 0x60, 0xe0, 0xa0, 0xb0, 0x90, 0xd0, 0x50, 0x70 };
+				
+				return 0x0f - System16Input[1 + LastsurvMux] + Positions[LastsurvPosition[LastsurvMux ^ 0x01] >> 4];
+			} else {
+				return 0xff - System16Input[1 + LastsurvMux];
+			}
+		} else {
+			return 0xff - System16Input[1];
+		}
+	}
 	if (a == 0x150005) return System16Dip[0];
 	if (a == 0x150007) return System16Dip[1];
 	
@@ -1681,6 +1810,13 @@ void __fastcall XBoardWriteWord(UINT32 a, UINT16 d)
 				ZetClose();
 			}
 		}
+		
+		if (Lastsurv) {
+			if (offset == 3) {
+				LastsurvMux = (d >> 5) & 0x03;
+			}
+		}
+		
 		return;
 	}
 	
@@ -1755,6 +1891,13 @@ void __fastcall XBoardWriteByte(UINT32 a, UINT8 d)
 				ZetClose();
 			}
 		}
+		
+		if (Lastsurv) {
+			if (offset == 3) {
+				LastsurvMux = (d >> 5) & 0x03;
+			}
+		}
+		
 		return;
 	}
 	
@@ -2293,6 +2436,23 @@ static INT32 GpriderInit()
 	return System16Init();
 }
 
+static INT32 LastsurvInit()
+{
+	Lastsurv = 1;
+	
+	INT32 nRet = System16Init();
+	
+	if (!nRet) {
+		System16RoadPriority = 0;
+		
+		// reverse YM2151 channels
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.43, BURN_SND_ROUTE_RIGHT);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.43, BURN_SND_ROUTE_LEFT);
+	}
+
+	return nRet;
+}
+
 static INT32 LoffireInit()
 {
 	BurnGunInit(2, true);
@@ -2351,6 +2511,9 @@ static INT32 XBoardExit()
 {
 	memset(iochip_regs, 0, sizeof(iochip_regs));
 	iochip_force_input = 0;
+	
+	Lastsurv = 0;
+	LastsurvMux = 0;
 
 	return System16Exit();
 }
@@ -2420,6 +2583,16 @@ struct BurnDriver BurnDrvGprideru = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, GprideruRomInfo, GprideruRomName, NULL, NULL, GpriderInputInfo, GpriderDIPInfo,
 	GpriderInit, XBoardExit, XBoardFrame, NULL, XBoardScan,
+	NULL, 0x6000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvLastsurv = {
+	"lastsurv", NULL, NULL, NULL, "1987",
+	"Last Survivor (FD1094 317-0083)\0", NULL, "Sega", "X-Board",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_SHOOT, 0,
+	NULL, LastsurvRomInfo, LastsurvRomName, NULL, NULL, LastsurvInputInfo, LastsurvDIPInfo,
+	LastsurvInit, XBoardExit, XBoardFrame, NULL, XBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };
 

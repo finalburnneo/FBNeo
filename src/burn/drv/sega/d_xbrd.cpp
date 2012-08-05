@@ -2134,10 +2134,8 @@ UINT8 AbcopProcessAnalogControls(UINT16 value)
 	UINT8 temp = 0;
 	
 	switch (value) {
-
 		// Left / Right
 		case 0: {
-
 			// Prevent CHAR data overflow
 			if((System16AnalogPort0 >> 4) < 0xf82 && (System16AnalogPort0 >> 4) > 0x80) {
 				temp = (UINT8)(0x80 - 0xf82);
@@ -2145,21 +2143,15 @@ UINT8 AbcopProcessAnalogControls(UINT16 value)
 				temp = 0x80 - (System16AnalogPort0 >> 4);
 			}
 			
-			//if (temp < 32) {
 			if (temp < 0x20) {
-				//bprintf(0, _T("(temp < 0x20) int-> %i char-> %i\n"), 0x80 + (System16AnalogPort0 >> 4), temp);
 				temp = 0x20;
 				return temp;
 			}
 
-			// if (temp > 224) {
 			if (temp > 0xe0) {
-				//bprintf(0, _T("(temp > 0xe0) int-> %i char-> %i\n"), 0x80 + (System16AnalogPort0 >> 4), temp);
 				temp = 0xe0;
 				return temp;
 			}
-
-			//bprintf(0, _T("(0x80 + (System16AnalogPort0 >> 4)) int-> %i char-> %i\n"), 0x80 + (System16AnalogPort0 >> 4), temp);
 
 			return temp;
 		}
@@ -2179,10 +2171,8 @@ UINT8 AburnerProcessAnalogControls(UINT16 value)
 	UINT8 temp = 0;
 
 	switch (value) {
-
 		// Left / Right
 		case 0: {
-			
 			// Prevent CHAR data overflow
 			if((System16AnalogPort0 >> 4) > 0x7f && (System16AnalogPort0 >> 4) <= 0x80) {
 				temp = 0x80 + 0x7f;
@@ -2190,27 +2180,21 @@ UINT8 AburnerProcessAnalogControls(UINT16 value)
 				temp = 0x80 + (System16AnalogPort0 >> 4);
 			}
 
-			//if (temp < 32) {
 			if (temp < 0x20) {
-				//bprintf(0, _T("(temp < 0x20) int-> %i char-> %i\n"), 0x80 + (System16AnalogPort0 >> 4), temp);
 				temp = 0x20;
 				return temp;
 			}
 
-			// if (temp > 224) {
 			if (temp > 0xe0) {
-				//bprintf(0, _T("(temp > 0xe0) int-> %i char-> %i\n"), 0x80 + (System16AnalogPort0 >> 4), temp);
 				temp = 0xe0;
 				return temp;
 			}
 
-			//bprintf(0, _T("(0x80 + (System16AnalogPort0 >> 4)) int-> %i char-> %i\n"), 0x80 + (System16AnalogPort0 >> 4), temp);
 			return temp;
 		}
 		
 		// Up / Down 
 		case 1: {
-
 			// Prevent CHAR data overflow
 			if((System16AnalogPort1 >> 4) < 0xf82 && (System16AnalogPort1 >> 4) > 0x80) {
 				temp = (UINT8)(0x80 - 0xf82);
@@ -2218,27 +2202,21 @@ UINT8 AburnerProcessAnalogControls(UINT16 value)
 				temp = 0x80 - (System16AnalogPort1 >> 4);
 			}
 
-			// if (temp < 64) {
 			if (temp < 0x40) {
-				//bprintf(0, _T("(temp < 0x40) int-> %d port-> %d  char-> %d\n"), 0x80 - (System16AnalogPort1 >> 4), (System16AnalogPort1 >> 4), temp);
 				temp = 0x40;
 				return temp;
 			}
 
-			// if (temp > 192) {
 			if (temp > 0xc0) {
-				//bprintf(0, _T("(temp > 0xc0) int-> %d port-> %d char-> %d\n"), 0x80 - (System16AnalogPort1 >> 4), (System16AnalogPort1 >> 4), temp);
 				temp = 0xc0;
 				return temp;
 			}
 
-			//bprintf(0, _T("(0x80 - (System16AnalogPort1 >> 4)) int-> %d port-> %d char-> %d\n"), 0x80 - (System16AnalogPort1 >> 4), (System16AnalogPort1 >> 4), temp);
 			return temp;
 		}
 		
 		// Throttle
 		case 2: {
-
 			// Prevent CHAR data overflow
 			if((System16AnalogPort2 >> 4) > 0x7f && (System16AnalogPort2 >> 4) <= 0x80) {
 				temp = 0x80 + 0x7f;
@@ -2246,22 +2224,17 @@ UINT8 AburnerProcessAnalogControls(UINT16 value)
 				temp = 0x80 + (System16AnalogPort2 >> 4);
 			}
 
-			// if (temp > 192) {
 			if (temp > 0xc0) {
-				//bprintf(0, _T("(temp > 0xc0) int-> %d port-> %d  char-> %d\n"), 0x80 - (System16AnalogPort2 >> 4), (System16AnalogPort2 >> 4), temp);
 				temp = 0xff;
 				return temp;
 			}
 
-			// if (temp < 64) {
 			if (temp < 0x40) {
-				//bprintf(0, _T("(temp < 0x40) int-> %d port-> %d  char-> %d\n"), 0x80 - (System16AnalogPort2 >> 4), (System16AnalogPort2 >> 4), temp);
 				temp = 0;
 				return temp;
 			}
 
 			temp = 0x80;
-			//bprintf(0, _T("(0x80 - (System16AnalogPort1 >> 4)) int-> %d port-> %d char-> %d\n"), 0x80 - (System16AnalogPort1 >> 4), (System16AnalogPort1 >> 4), temp);
 			return temp;
 		}
 	}	
@@ -2271,7 +2244,6 @@ UINT8 AburnerProcessAnalogControls(UINT16 value)
 UINT8 GpriderProcessAnalogControls(UINT16 value)
 {
 	switch (value) {
-
 		// Left / Right
 		case 0: {
 			// Prevent CHAR data overflow
@@ -2314,10 +2286,8 @@ UINT8 RacheroProcessAnalogControls(UINT16 value)
 	UINT8 temp = 0;
 	
 	switch (value) {
-
 		// Left / Right
 		case 0: {
-
 			// Prevent CHAR data overflow
 			if((System16AnalogPort0 >> 4) < 0xf82 && (System16AnalogPort0 >> 4) > 0x80) {
 				temp = (UINT8)(0x80 - 0xf82);
@@ -2351,10 +2321,8 @@ UINT8 SmgpProcessAnalogControls(UINT16 value)
 	UINT8 temp = 0;
 	
 	switch (value) {
-
 		// Left / Right
 		case 0: {
-
 			// Prevent CHAR data overflow
 			if((System16AnalogPort0 >> 4) > 0x7f && (System16AnalogPort0 >> 4) <= 0x80) {
 				return 0x80 + 0x7f;
@@ -2388,10 +2356,8 @@ UINT8 ThndrbldProcessAnalogControls(UINT16 value)
 	UINT8 temp = 0;
 	
 	switch (value) {
-
 		// Left / Right
 		case 0: {
-
 			// Prevent CHAR data overflow
 			if((System16AnalogPort0 >> 4) < 0xf82 && (System16AnalogPort0 >> 4) > 0x80) {
 				temp = (UINT8)(0x80 - 0xf82);
@@ -2414,7 +2380,6 @@ UINT8 ThndrbldProcessAnalogControls(UINT16 value)
 		
 		// Throttle
 		case 1: {
-
 			// Prevent CHAR data overflow
 			if((System16AnalogPort2 >> 4) > 0x7f && (System16AnalogPort2 >> 4) <= 0x80) {
 				temp = 0x80 + 0x7f;
@@ -2428,7 +2393,6 @@ UINT8 ThndrbldProcessAnalogControls(UINT16 value)
 		
 		// Up / Down
 		case 2: {
-
 			// Prevent CHAR data overflow
 			if((System16AnalogPort1 >> 4) > 0x7f && (System16AnalogPort1 >> 4) <= 0x80) {
 				temp = 0x80 + 0x7f;

@@ -13823,7 +13823,7 @@ STD_ROM_FN(cndi)
 
 struct BurnDriver BurnDrvcndi = {
 	"cndi", NULL, "neogeo", NULL, "2009",
-	"Chip n Dale (Intro demo)\0", "You must use the Universe BIOS and set region to Japan AES", "Demo", "Neo Geo MVS",
+	"Chip n Dale (Intro demo)\0", "You must use the Universe BIOS and set region to Japan AES", "Sergi", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_DEMO, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
 	NULL, cndiRomInfo, cndiRomName, NULL, NULL, neogeoInputInfo, neogeouniDIPInfo,
@@ -13857,10 +13857,44 @@ STD_ROM_FN(dwi)
 
 struct BurnDriver BurnDrvdwi = {
 	"dwi", NULL, "neogeo", NULL, "2009",
-	"DarkWing Duck (Intro demo)\0", "You must use the Universe BIOS and set region to Japan AES", "Demo", "Neo Geo MVS",
+	"DarkWing Duck (Intro demo)\0", "You must use the Universe BIOS and set region to Japan AES", "Sergi", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_DEMO, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
 	NULL, dwiRomInfo, dwiRomName, NULL, NULL, neogeoInputInfo, neogeouniDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// DarkWing Duck (Intro demo, alt)
+
+static struct BurnRomInfo dwiaRomDesc[] = {
+	{ "dwi-p1.bin",   0x800000, 0x8e3f2ea8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "dwi-s1a.bin",  0x010000, 0x63b8b25e, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "dwi-c1.bin",   0x400000, 0x2b8bda94, 3 | BRF_GRA },           //  2 Sprite data
+	{ "dwi-c2.bin",   0x400000, 0x5345e4de, 3 | BRF_GRA },           //  3 
+	{ "dwi-c3.bin",   0x400000, 0xc6185f14, 3 | BRF_GRA },           //  4
+	{ "dwi-c4.bin",   0x400000, 0xc9e59701, 3 | BRF_GRA },           //  5 
+	{ "dwi-c5.bin",   0x400000, 0x42dd1c90, 3 | BRF_GRA },           //  6 
+	{ "dwi-c6.bin",   0x400000, 0x9fa6d651, 3 | BRF_GRA },           //  7 
+	{ "dwi-c7.bin",   0x400000, 0x5cfa6886, 3 | BRF_GRA },           //  8
+	{ "dwi-c8.bin",   0x400000, 0x59c37871, 3 | BRF_GRA },           //  9 
+
+	{ "dwi-m1a.bin",  0x002000, 0xb9f8df96, 4 | BRF_ESS | BRF_PRG }, //  10 Z80 code
+
+	{ "dwi-v1.bin",   0x09b000, 0x13bb4ce4, 5 | BRF_SND },           //  11 Sound data
+};
+
+STDROMPICKEXT(dwia, dwia, neogeo)
+STD_ROM_FN(dwia)
+
+struct BurnDriver BurnDrvdwia = {
+	"dwia", "dwi", "neogeo", NULL, "2009",
+	"DarkWing Duck (Intro demo, alt)\0", "You must use the Universe BIOS and set region to Japan AES", "Sergi", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_DEMO, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
+	NULL, dwiaRomInfo, dwiaRomName, NULL, NULL, neogeoInputInfo, neogeouniDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
@@ -13891,7 +13925,7 @@ STD_ROM_FN(ducki)
 
 struct BurnDriver BurnDrvducki = {
 	"ducki", NULL, "neogeo", NULL, "2009",
-	"Duck Tales (Intro demo)\0", "You must use the Universe BIOS and set region to Japan AES", "Demo", "Neo Geo MVS",
+	"Duck Tales (Intro demo)\0", "You must use the Universe BIOS and set region to Japan AES", "Sergi", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_DEMO, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
 	NULL, duckiRomInfo, duckiRomName, NULL, NULL, neogeoInputInfo, neogeouniDIPInfo,
@@ -13924,7 +13958,7 @@ STD_ROM_FN(ghostbi)
 
 struct BurnDriver BurnDrvghostbi = {
 	"ghostbi", NULL, "neogeo", NULL, "2009",
-	"Ghost Busters (Intro demo)\0", "You must use the Universe BIOS and set region to Japan AES", "Demo", "Neo Geo MVS",
+	"Ghost Busters (Intro demo)\0", "You must use the Universe BIOS and set region to Japan AES", "Sergi", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_DEMO, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
 	NULL, ghostbiRomInfo, ghostbiRomName, NULL, NULL, neogeoInputInfo, neogeouniDIPInfo,
@@ -13958,10 +13992,43 @@ STD_ROM_FN(robocopi)
 
 struct BurnDriver BurnDrvrobocopi = {
 	"robocopi", NULL, "neogeo", NULL, "2009",
-	"Robocop (Intro demo)\0", "You must use the Universe BIOS and set region to Japan AES", "Demo", "Neo Geo MVS",
+	"Robocop (Intro demo)\0", "You must use the Universe BIOS and set region to Japan AES", "Sergi", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_DEMO, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
 	NULL, robocopiRomInfo, robocopiRomName, NULL, NULL, neogeoInputInfo, neogeouniDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Spiderman (Intro demo)
+
+static struct BurnRomInfo spidermiRomDesc[] = {
+	{ "sman-p1.bin",  0x100000, 0x66b5cfe8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "sman-p2.bin",  0x400000, 0x72082aea, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "sman-s1.bin",  0x010000, 0x63b8b25e, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "sman-c1.bin",  0x400000, 0x8e5ccfdd, 3 | BRF_GRA },           //  3 Sprite data
+	{ "sman-c2.bin",  0x400000, 0xa6406f5b, 3 | BRF_GRA },           //  4 
+	{ "sman-c3.bin",  0x400000, 0xadfff926, 3 | BRF_GRA },           //  5
+	{ "sman-c4.bin",  0x400000, 0x068c307f, 3 | BRF_GRA },           //  6 
+	{ "sman-c5.bin",  0x400000, 0x9a5cf7a6, 3 | BRF_GRA },           //  7 
+	{ "sman-c6.bin",  0x400000, 0x934f03c0, 3 | BRF_GRA },           //  8 
+
+	{ "sman-m1.bin",  0x002000, 0x6a02cb1d, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "sman-v1.bin",  0x096100, 0x95c138da, 5 | BRF_SND },           //  10 Sound data
+};
+
+STDROMPICKEXT(spidermi, spidermi, neogeo)
+STD_ROM_FN(spidermi)
+
+struct BurnDriver BurnDrvspidermi = {
+	"spidermi", NULL, "neogeo", NULL, "2009",
+	"Spiderman (Intro demo)\0", "You must use the Universe BIOS and set region to Japan AES", "Sergi", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_DEMO, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
+	NULL, spidermiRomInfo, spidermiRomName, NULL, NULL, neogeoInputInfo, neogeouniDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
@@ -13992,10 +14059,44 @@ STD_ROM_FN(tmnti)
 
 struct BurnDriver BurnDrvtmnti = {
 	"tmnti", NULL, "neogeo", NULL, "2009",
-	"Teenage Mutant Ninja Turtles (Intro demo)\0", "You must use the Universe BIOS and set region to Japan AES", "Demo", "Neo Geo MVS",
+	"Teenage Mutant Ninja Turtles (Intro demo)\0", "You must use the Universe BIOS and set region to Japan AES", "Sergi", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_DEMO, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
 	NULL, tmntiRomInfo, tmntiRomName, NULL, NULL, neogeoInputInfo, neogeouniDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Teenage Mutant Ninja Turtles (Intro demo, alt)
+
+static struct BurnRomInfo tmntiaRomDesc[] = {
+	{ "tmnt-p1a.bin", 0x800000, 0xed4f5fec, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "tmnt-s1.bin",  0x010000, 0x3dc5c1ef, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "tmnt-c1.bin",  0x400000, 0xae1735c1, 3 | BRF_GRA },           //  2 Sprite data
+	{ "tmnt-c2.bin",  0x400000, 0x344281b5, 3 | BRF_GRA },           //  3 
+	{ "tmnt-c3.bin",  0x400000, 0x1058a648, 3 | BRF_GRA },           //  4
+	{ "tmnt-c4.bin",  0x400000, 0x1c6ba1b0, 3 | BRF_GRA },           //  5 
+	{ "tmnt-c5.bin",  0x400000, 0x73a89fb0, 3 | BRF_GRA },           //  6 
+	{ "tmnt-c6.bin",  0x400000, 0xa139246a, 3 | BRF_GRA },           //  7 
+	{ "tmnt-c7.bin",  0x400000, 0xed957842, 3 | BRF_GRA },           //  8
+	{ "tmnt-c8.bin",  0x400000, 0x8c15d91b, 3 | BRF_GRA },           //  9 
+
+	{ "tmnt-m1.bin",  0x002000, 0x953542ef, 4 | BRF_ESS | BRF_PRG }, //  10 Z80 code
+
+	{ "tmnt-v1.bin",  0x094900, 0x273640c3, 5 | BRF_SND },           //  11 Sound data
+};
+
+STDROMPICKEXT(tmntia, tmntia, neogeo)
+STD_ROM_FN(tmntia)
+
+struct BurnDriver BurnDrvtmntia = {
+	"tmntia", "tmnti", "neogeo", NULL, "2009",
+	"Teenage Mutant Ninja Turtles (Intro demo, alt)\0", "You must use the Universe BIOS and set region to Japan AES", "Sergi", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_DEMO, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
+	NULL, tmntiaRomInfo, tmntiaRomName, NULL, NULL, neogeoInputInfo, neogeouniDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

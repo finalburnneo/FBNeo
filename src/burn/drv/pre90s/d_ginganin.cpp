@@ -218,7 +218,7 @@ void ginganin_sound_write(UINT16 address, UINT8 data)
 
 		case 0x2000:
 		case 0x2001: // y8950
-			BurnY8950Write(address & 1, data);
+			BurnY8950Write(0, address & 1, data);
 		return;
 
 		case 0x2800:
@@ -403,9 +403,9 @@ static INT32 DrvInit()
 	AY8910Init(0, 3579545 / 2, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 	
-	BurnY8950Init(3579545, DrvSndROM, 0x20000, NULL, &DrvSynchroniseStream, 1);
+	BurnY8950Init(1, 3579545, DrvSndROM, 0x20000, NULL, 0, NULL, &DrvSynchroniseStream, 1);
 	BurnTimerAttachM6809Y8950(1000000);
-	BurnY8950SetRoute(BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

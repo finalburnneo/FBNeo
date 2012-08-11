@@ -24,7 +24,7 @@ static UINT8 *DrvGfxROM2;
 static UINT8 *DrvGfxROM3;
 static UINT8 *DrvGfxROM4;
 static UINT8 *DrvSndROM0;
-//static UINT8 *DrvSndROM1;
+static UINT8 *DrvSndROM1;
 static UINT8 *Drv68KRAM0;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvVidRAM0;
@@ -278,12 +278,12 @@ static void __fastcall cybertnk_sound_write(UINT16 address, UINT8 data)
 	{
 		case 0xa000:
 		case 0xa001:
-			// y8950_w #0
+			BurnY8950Write(0, address & 1, data);
 		return;
 
 		case 0xc000:
 		case 0xc001:
-			BurnY8950Write(address & 1, data);
+			BurnY8950Write(1, address & 1, data);
 		return;
 	}
 }
@@ -292,8 +292,8 @@ static UINT8 __fastcall cybertnk_sound_read(UINT16 address)
 {
 	switch (address)
 	{
-		case 0xa000: // y8950_r
-			return rand();	// keep the z80 happy until y8950 #0 is hooked up
+		case 0xa000:
+			return BurnY8950Read(0, address & 1);
 
 		case 0xa001:
 			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
@@ -301,7 +301,7 @@ static UINT8 __fastcall cybertnk_sound_read(UINT16 address)
 
 		case 0xc000:
 		case 0xc001:
-			return BurnY8950Read(address & 1);
+			return BurnY8950Read(1, address & 1);
 	}
 
 	return 0;
@@ -332,7 +332,7 @@ static INT32 MemIndex()
 	DrvTransTab3	= Next; Next += 0x080000 / (1 * 1024);
 
 	DrvSndROM0	= Next; Next += 0x040000;
-//	DrvSndROM1	= Next; Next += 0x080000;
+	DrvSndROM1	= Next; Next += 0x080000;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x2002 * sizeof(UINT32);
 
@@ -461,9 +461,9 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvSndROM0 + 0x000000,  5, 1)) return 1;
 		if (BurnLoadRom(DrvSndROM0 + 0x020000,  6, 1)) return 1;
 
-	//	if (BurnLoadRom(DrvSndROM1 + 0x000000,  7, 1)) return 1;
-	//	if (BurnLoadRom(DrvSndROM1 + 0x020000,  8, 1)) return 1;
-	//	memset (DrvSndROM1 + 0x40000, 0xff, 0x40000);
+		if (BurnLoadRom(DrvSndROM1 + 0x000000,  7, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM1 + 0x020000,  8, 1)) return 1;
+		memset (DrvSndROM1 + 0x40000, 0xff, 0x40000);
 
 		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  9, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x010000, 10, 1)) return 1;
@@ -550,11 +550,10 @@ static INT32 DrvInit()
 	ZetClose();
 
 	// These use the same roms!
-//	BurnY8950Init(3579545, DrvSndROM0, 0x40000, NULL, &DrvSynchroniseStream, 0);	// #0
-	BurnY8950Init(3579545, DrvSndROM0, 0x40000, NULL, &DrvSynchroniseStream, 0);	// #1
+	BurnY8950Init(2, 3579545, DrvSndROM0, 0x40000, DrvSndROM1, 0x80000, NULL, &DrvSynchroniseStream, 0);
 	BurnTimerAttachZetY8950(3579545);
-//	BurnY8950SetRoute(BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);	// #0
-	BurnY8950SetRoute(BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);	// #1
+	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_RIGHT);	// #0
+	BurnY8950SetRoute(1, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_RIGHT);	// #1
 
 	GenericTilesInit();
 

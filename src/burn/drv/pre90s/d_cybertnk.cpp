@@ -1,10 +1,6 @@
 // FB Alpha Cyber Tank driver module
 // Based on MAME driver by Angelo Salese and David Haywood
 
-// To do:
-//	Y8950 needs multiple chip support
-//	Analog inputs need hooked up
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -587,11 +583,10 @@ static INT32 DrvInit()
 	ZetMemEnd();
 	ZetClose();
 
-	// These use the same roms!
 	BurnY8950Init(2, 3579545, DrvSndROM0, 0x40000, DrvSndROM1, 0x80000, NULL, &DrvSynchroniseStream, 0);
 	BurnTimerAttachZetY8950(3579545);
-	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_RIGHT);	// #0
-	BurnY8950SetRoute(1, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_RIGHT);	// #1
+	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_RIGHT);
+	BurnY8950SetRoute(1, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	GenericTilesInit();
 

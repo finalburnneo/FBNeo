@@ -656,6 +656,51 @@ static struct BurnRomInfo AbcopRomDesc[] = {
 STD_ROM_PICK(Abcop)
 STD_ROM_FN(Abcop)
 
+static struct BurnRomInfo AbcopjRomDesc[] = {
+	{ "epr-13557b.ic58",  0x20000, 0x554e106a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13556b.ic63",  0x20000, 0x337bf32e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13559.ic57",   0x20000, 0x4588bf19, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13558.ic62",   0x20000, 0x11259ed4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-13566.ic20",   0x20000, 0x22e52f32, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-13565.ic29",   0x20000, 0xa21784bd, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "opr-13553.ic154",  0x10000, 0x8c418837, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-13554.ic153",  0x10000, 0x4e3df9f0, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-13555.ic152",  0x10000, 0x6c4a1d42, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "opr-13552.ic90",   0x20000, 0xcc2cf706, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13551.ic94",   0x20000, 0xd6f276c1, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13550.ic98",   0x20000, 0xf16518dd, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13549.ic102",  0x20000, 0xcba407a7, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13548.ic91",   0x20000, 0x080fd805, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13547.ic95",   0x20000, 0x42d4dd68, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13546.ic99",   0x20000, 0xca6fbf3d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13545.ic103",  0x20000, 0xc9e58dd2, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13544.ic92",   0x20000, 0x9c1436d9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13543.ic96",   0x20000, 0x2c1c8f0e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13542.ic100",  0x20000, 0x01fd52b8, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13541.ic104",  0x20000, 0xa45c547b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13540.ic93",   0x20000, 0x84b42ab0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13539.ic97",   0x20000, 0xcd6e524f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13538.ic101",  0x20000, 0xbf9a4586, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13537.ic105",  0x20000, 0xfa14ed3e, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "opr-13564.ic40",   0x10000, 0xe70ba138, SYS16_ROM_ROAD | BRF_GRA },
+	
+	{ "epr-13560.ic17",   0x10000, 0x83050925, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "opr-13563.ic11",   0x20000, 0x4083e74f, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-13562.ic12",   0x20000, 0x3cc3968f, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-13561.ic13",   0x20000, 0x80a7c02a, SYS16_ROM_PCMDATA | BRF_SND },
+	
+	{ "317-0169b.key",    0x02000, 0x058da36e, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Abcopj)
+STD_ROM_FN(Abcopj)
+
 static struct BurnRomInfo Aburner2RomDesc[] = {
 	{ "epr-11107.58",     0x20000, 0x6d87bab7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-11108.63",     0x20000, 0x202a3e1d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -2622,10 +2667,20 @@ Driver Defs
 
 struct BurnDriver BurnDrvAbcop = {
 	"abcop", NULL, NULL, NULL, "1990",
-	"A.B. Cop (FD1094 317-0169b)\0", NULL, "Sega", "X-Board",
+	"A.B. Cop (World, FD1094 317-0169b)\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
 	NULL, AbcopRomInfo, AbcopRomName, NULL, NULL, AbcopInputInfo, AbcopDIPInfo,
+	AbcopInit, XBoardExit, XBoardFrame, NULL, XBoardScan,
+	NULL, 0x6000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvAbcopj = {
+	"abcopj", "abcop", NULL, NULL, "1990",
+	"A.B. Cop (Japan, FD1094 317-0169b)\0", NULL, "Sega", "X-Board",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_FD1094_ENC, GBF_RACING, 0,
+	NULL, AbcopjRomInfo, AbcopjRomName, NULL, NULL, AbcopInputInfo, AbcopDIPInfo,
 	AbcopInit, XBoardExit, XBoardFrame, NULL, XBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };

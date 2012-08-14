@@ -1856,8 +1856,8 @@ struct BurnDriver BurnDrvLwingsb = {
 // Trojan (US)
 
 static struct BurnRomInfo trojanRomDesc[] = {
-	{ "t4",			0x8000, 0xc1bbeb4e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "t6",			0x8000, 0xd49592ef, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "t4",				0x8000, 0xc1bbeb4e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "t6",				0x8000, 0xd49592ef, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "tb05.bin",		0x8000, 0x9273b264, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "tb02.bin",		0x8000, 0x21154797, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
@@ -1902,6 +1902,60 @@ struct BurnDriver BurnDrvTrojan = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, trojanRomInfo, trojanRomName, NULL, NULL, DrvInputInfo, TrojanlsDIPInfo,
+	TrojanInit, TrojanExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 240, 4, 3
+};
+
+
+// Trojan (US, alt)
+
+static struct BurnRomInfo trojanaRomDesc[] = {
+	{ "tb04.10n",		0x8000, 0x0113a551, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "tb06.13n",		0x8000, 0xaa127a5b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tb05.12n",		0x8000, 0x9273b264, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "tb02.15h",		0x8000, 0x21154797, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "tb01.6d",		0x8000, 0x83c715b2, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+
+	{ "tb03.8k",		0x4000, 0x581a2b4c, 4 | BRF_GRA },           //  5 Characters
+
+	{ "tb13.bin",		0x8000, 0x285a052b, 5 | BRF_GRA },           //  6 Background Layer 1 Tiles
+	{ "tb09.bin",		0x8000, 0xaeb693f7, 5 | BRF_GRA },           //  7
+	{ "tb12.bin",		0x8000, 0xdfb0fe5c, 5 | BRF_GRA },           //  8
+	{ "tb08.bin",		0x8000, 0xd3a4c9d1, 5 | BRF_GRA },           //  9
+	{ "tb11.bin",		0x8000, 0x00f0f4fd, 5 | BRF_GRA },           // 10
+	{ "tb07.bin",		0x8000, 0xdff2ee02, 5 | BRF_GRA },           // 11
+	{ "tb14.bin",		0x8000, 0x14bfac18, 5 | BRF_GRA },           // 12
+	{ "tb10.bin",		0x8000, 0x71ba8a6d, 5 | BRF_GRA },           // 13
+
+	{ "tb18.bin",		0x8000, 0x862c4713, 6 | BRF_GRA },           // 14 Sprites
+	{ "tb16.bin",		0x8000, 0xd86f8cbd, 6 | BRF_GRA },           // 15
+	{ "tb17.bin",		0x8000, 0x12a73b3f, 6 | BRF_GRA },           // 16
+	{ "tb15.bin",		0x8000, 0xbb1a2769, 6 | BRF_GRA },           // 17
+	{ "tb22.bin",		0x8000, 0x39daafd4, 6 | BRF_GRA },           // 18
+	{ "tb20.bin",		0x8000, 0x94615d2a, 6 | BRF_GRA },           // 19
+	{ "tb21.bin",		0x8000, 0x66c642bd, 6 | BRF_GRA },           // 20
+	{ "tb19.bin",		0x8000, 0x81d5ab36, 6 | BRF_GRA },           // 21
+
+	{ "tb25.bin",		0x8000, 0x6e38c6fa, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
+	{ "tb24.bin",		0x8000, 0x14fc6cf2, 7 | BRF_GRA },           // 23
+
+	{ "tb23.bin",		0x8000, 0xeda13c0e, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
+
+	{ "tbp24s10.7j",	0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 25 Proms (not used)
+	{ "mb7114e.1e",		0x0100, 0x5052fa9d, 0 | BRF_OPT },           // 26
+};
+
+STD_ROM_PICK(trojana)
+STD_ROM_FN(trojana)
+
+struct BurnDriver BurnDrvTrojana = {
+	"trojana", "trojan", NULL, NULL, "1986",
+	"Trojan (US, alt)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NULL, trojanaRomInfo, trojanaRomName, NULL, NULL, DrvInputInfo, TrojanlsDIPInfo,
 	TrojanInit, TrojanExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };

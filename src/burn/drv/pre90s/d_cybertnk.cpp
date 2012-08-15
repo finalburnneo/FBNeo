@@ -167,7 +167,7 @@ STDDIPINFO(Cybertnk)
 
 static inline void DrvPaletteUpdate(INT32 offset)
 {
-	UINT16 p = *((UINT16*)(DrvPalRAM + offset));
+	UINT16 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	INT32 r = (p >>  0) & 0x1f;
 	INT32 g = (p >>  5) & 0x1f;
@@ -211,7 +211,7 @@ static void __fastcall cybertnk_main_write_byte(UINT32 address, UINT8 data)
 static void __fastcall cybertnk_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffc000) == 0x100000) {
-		*(UINT16*)(DrvPalRAM + (address & 0x3ffe)) = data;
+		*(UINT16*)(DrvPalRAM + (address & 0x3ffe)) = BURN_ENDIAN_SWAP_INT16(data);
 		DrvPaletteUpdate(address & 0x3ffe);
 		return;
 	}
@@ -221,19 +221,19 @@ static void __fastcall cybertnk_main_write_word(UINT32 address, UINT16 data)
 		case 0x110040:
 		case 0x110042:
 		case 0x110044:
-			DrvScroll0[(address / 2) & 3] = data;
+			DrvScroll0[(address / 2) & 3] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 
 		case 0x110048:
 		case 0x11004a:
 		case 0x11004c:
-			DrvScroll1[(address / 2) & 3] = data;
+			DrvScroll1[(address / 2) & 3] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 
 		case 0x110080:
 		case 0x110082:
 		case 0x110084:
-			DrvScroll2[(address / 2) & 3] = data;
+			DrvScroll2[(address / 2) & 3] = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 }
@@ -449,7 +449,7 @@ static void DrvSpriteReorder()
 	UINT32 *spr = (UINT32*)DrvGfxROM4;
 
 	for (INT32 x = 0; x< 0x200000/4;x++) {
-		spr[x] = BITSWAP32(spr[x],  27,26,25,24,   19,18,17,16,  11,10,9,8,  3,2,1,0, 31,30,29,28,   23,22,21,20,   15,14,13,12,   7,6,5,4 );
+		spr[x] = BURN_ENDIAN_SWAP_INT32(BITSWAP32(BURN_ENDIAN_SWAP_INT32(spr[x]),  27,26,25,24,   19,18,17,16,  11,10,9,8,  3,2,1,0, 31,30,29,28,   23,22,21,20,   15,14,13,12,   7,6,5,4 ));
 	}
 }
 
@@ -612,8 +612,8 @@ static INT32 DrvExit()
 static void draw_layer(UINT8 *ram_base, UINT8 *gfx_base, UINT16 *scroll_base, UINT8 *transtab, INT32 color_base)
 {
 	UINT16 *vram = (UINT16*)ram_base;
-	INT32 scrollx = scroll_base[0] & 0x03ff;
-	INT32 scrolly = scroll_base[2] & 0x00ff;
+	INT32 scrollx = BURN_ENDIAN_SWAP_INT16(scroll_base[0]) & 0x03ff;
+	INT32 scrolly = BURN_ENDIAN_SWAP_INT16(scroll_base[2]) & 0x00ff;
 
 	for (INT32 offs = 0; offs < 128 * 32; offs++)
 	{
@@ -627,7 +627,7 @@ static void draw_layer(UINT8 *ram_base, UINT8 *gfx_base, UINT16 *scroll_base, UI
 
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		INT32 attr  = vram[offs];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		INT32 code  = attr & 0x1fff;
 		INT32 color = ((attr & 0xe000) >> 13) | ((attr & 0x1c00) >> 7);
 
@@ -650,12 +650,12 @@ static void draw_road(INT32 priority)
 
 	for (INT32 i = 0; i < (nScreenHeight * 4); i+=4)
 	{
-		INT32 attr   = ram[i + 1];
+		INT32 attr   = BURN_ENDIAN_SWAP_INT16(ram[i + 1]);
 
 		if ((attr & 0x80) != priority) continue;
 
-		INT32 scroll = ram[i + 0] & 0x03ff;
-		INT32 code   = ram[i + 2] & 0x01ff;
+		INT32 scroll = BURN_ENDIAN_SWAP_INT16(ram[i + 0]) & 0x03ff;
+		INT32 code   = BURN_ENDIAN_SWAP_INT16(ram[i + 2]) & 0x01ff;
 		INT32 color  = ((attr & 0x3f) << 4) | 0x1000;
 
 		UINT8 *gfx = DrvGfxROM3 + (code * 1024);
@@ -704,17 +704,17 @@ static void draw_sprites() // Could probaby be more optimized
 
 	for (INT32 offs = 0; offs < 0x1000/2; offs+=8)
 	{
-		if ((spr_ram[offs+0] & 0x0008) == 0)
+		if ((BURN_ENDIAN_SWAP_INT16(spr_ram[offs+0]) & 0x0008) == 0)
 			continue;
 
-		INT32 spr_offs    =((spr_ram[offs+0] & 0x0007) << 16) + spr_ram[offs+1];
-		INT32 col_bank    = (spr_ram[offs+0] & 0xff00) >> 4;
-		INT32 y           = (spr_ram[offs+2] & 0x01ff);
-		INT32 ysize       = (spr_ram[offs+4] & 0x00ff)+1;
-		INT32 x           = (spr_ram[offs+5] & 0x03ff);
-		INT32 fx          = (spr_ram[offs+5] & 0x8000) >> 15;
-		INT32 xsize       =((spr_ram[offs+6] & 0x000f)+1) << 3;
-		INT32 zoom        = (spr_ram[offs+6] & 0xff00) >> 8;
+		INT32 spr_offs    =((BURN_ENDIAN_SWAP_INT16(spr_ram[offs+0]) & 0x0007) << 16) + BURN_ENDIAN_SWAP_INT16(spr_ram[offs+1]);
+		INT32 col_bank    = (BURN_ENDIAN_SWAP_INT16(spr_ram[offs+0]) & 0xff00) >> 4;
+		INT32 y           = (BURN_ENDIAN_SWAP_INT16(spr_ram[offs+2]) & 0x01ff);
+		INT32 ysize       = (BURN_ENDIAN_SWAP_INT16(spr_ram[offs+4]) & 0x00ff)+1;
+		INT32 x           = (BURN_ENDIAN_SWAP_INT16(spr_ram[offs+5]) & 0x03ff);
+		INT32 fx          = (BURN_ENDIAN_SWAP_INT16(spr_ram[offs+5]) & 0x8000) >> 15;
+		INT32 xsize       =((BURN_ENDIAN_SWAP_INT16(spr_ram[offs+6]) & 0x000f)+1) << 3;
+		INT32 zoom        = (BURN_ENDIAN_SWAP_INT16(spr_ram[offs+6]) & 0xff00) >> 8;
 
 		INT32 xf = 0, yf = 0, xz = 0, yz = 0;
 
@@ -746,7 +746,7 @@ static void draw_sprites() // Could probaby be more optimized
 				for (INT32 xi = start; xi != end; xi+=inc)
 				{
 					UINT16 dot;
-					UINT32 color = sprrom[spr_offs+xi/8];
+					UINT32 color = BURN_ENDIAN_SWAP_INT32(sprrom[spr_offs+xi/8]);
 					INT32 shift_pen = 0, x_dec = 0;
 
 					while (x_dec < 8)

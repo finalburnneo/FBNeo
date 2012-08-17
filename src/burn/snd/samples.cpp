@@ -34,17 +34,17 @@ static void make_raw(UINT8 *src, UINT32 len)
 	if (ptr[0] != 'R' || ptr[1] != 'I' || ptr[2] != 'F' || ptr[3] != 'F') return;
 	ptr += 4; // skip RIFF
 
-	UINT32 length = get_long();	ptr += 4; // total length of file
+	UINT32 length = get_long();		ptr += 4; // total length of file
 	if (len < length) length = len - 8;		  // first 8 bytes (RIFF + Len)
 
 	/* "WAVEfmt " */			ptr += 8; // WAVEfmt + 1 space
-	UINT32 length2 = get_long();	ptr += 4; // Wavefmt length
+	UINT32 length2 = get_long();		ptr += 4; // Wavefmt length
 /*	unsigned short format = get_short();  */ptr += 2; // format?
-	UINT16 channels = get_short();	ptr += 2; // channels
+	UINT16 channels = get_short();		ptr += 2; // channels
 	UINT32 sample_rate = get_long();	ptr += 4; // sample rate
 /*	unsigned int speed = get_long();      */ptr += 4; // speed - should equal (bits * channels * sample_rate)
 /*	unsigned short align = get_short();   */ptr += 2; // block align	should be ((bits / 8) * channels)
-	UINT16 bits = get_short() / 8;	ptr += 2; // bits per sample	(0010)
+	UINT16 bits = get_short() / 8;		ptr += 2; // bits per sample	(0010)
 	ptr += length2 - 16;				  // get past the wave format chunk
 
 	// are we in the 'data' chunk? if not, skip this chunk.

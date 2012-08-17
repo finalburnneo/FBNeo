@@ -46,21 +46,22 @@ static void UpdateStream(INT32 chip, INT32 length)
         if (length <= 0) return;
 
         INT16 *lbuf = lBuffer + ptr->nCurrentPosition;
-		INT16 *rbuf = rBuffer + ptr->nCurrentPosition;
+	INT16 *rbuf = rBuffer + ptr->nCurrentPosition;
 
-        INT16 Out = ptr->Output;
+	INT16 lOut = ((ptr->OutputDir & BURN_SND_ROUTE_LEFT ) == BURN_SND_ROUTE_LEFT ) ? ptr->Output : 0;
+        INT16 rOut = ((ptr->OutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) ? ptr->Output : 0;
 
         ptr->nCurrentPosition += length;
 
-        if (Out) {              
+        if (rOut && lOut) {              
                 while (length--) {
-                        if ((ptr->OutputDir & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-							*lbuf++ = *lbuf + Out;
-						}
-						if ((ptr->OutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-							*rbuf++ = *rbuf + Out;
-						}
+                        *lbuf++ = *lbuf + lOut;
+			*rbuf++ = *rbuf + rOut;
                 }
+        } else if (lOut) {              
+                while (length--) *lbuf++ = *lbuf + lOut;
+        } else if (rOut) {            
+                while (length--) *rbuf++ = *rbuf + rOut;
         }
 }
 

@@ -996,8 +996,6 @@ static struct BurnRomInfo thndzoneRomDesc[] = {
 
 	{ "mb7128y.10m",	0x000800, 0xbde780a2, 11 | BRF_OPT },           // 28 Unknown Proms
 	{ "mb7128y.16p",	0x000800, 0xc44d2751, 11 | BRF_OPT },           // 29
-	{ "mb7128y.16s",	0x000800, 0xc44d2751, 11 | BRF_OPT },           // 30
-	{ "mb7128y.17s",	0x000800, 0xc44d2751, 11 | BRF_OPT },           // 31
 
 	{ "pal16r8a 1h",	0x000104, 0x00000000, 12 | BRF_NODUMP },	// 32 PLDs
 	{ "pal16l8b.7c",	0x000104, 0x00000000, 12 | BRF_NODUMP },	// 33
@@ -1147,6 +1145,12 @@ static struct BurnRomInfo thndzonejRomDesc[] = {
 	{ "pal16l8b.8e",	0x000104, 0x00000000, 12 | BRF_NODUMP },	// 37
 	{ "pal16l8b.9d",	0x000104, 0x00000000, 12 | BRF_NODUMP },	// 38
 	{ "pal16l8b.10c",	0x000104, 0x00000000, 12 | BRF_NODUMP },	// 39
+	
+	{ "mal-12.n1",		0x020000, 0x00000000,  0 | BRF_NODUMP },           // 40
+	{ "mal-13.n2",		0x020000, 0x00000000,  0 | BRF_NODUMP },           // 41
+	{ "mal-14.n3",		0x020000, 0x00000000,  0 | BRF_NODUMP },           // 42
+	{ "mal-15.n5",		0x020000, 0x00000000,  0 | BRF_NODUMP },           // 43
+	{ "mal-07.h15",		0x020000, 0x00000000,  0 | BRF_NODUMP },           // 44
 };
 
 STD_ROM_PICK(thndzonej)
@@ -1195,10 +1199,10 @@ static struct BurnRomInfo dassaultRomDesc[] = {
 	{ "maj-10.s9",		0x080000, 0xa02fa641,  7 | BRF_GRA },           // 20
 	{ "maj-11.s11",		0x080000, 0xdabe9305,  7 | BRF_GRA },           // 21
 
-	{ "gt12.n1",		0x020000, 0x9a86a015,  8 | BRF_GRA },           // 22 Sprite Bank B
-	{ "gt13.n2",		0x020000, 0xf4709905,  8 | BRF_GRA },           // 23
-	{ "gt14.n3",		0x020000, 0x750fc523,  8 | BRF_GRA },           // 24
-	{ "gt15.n5",		0x020000, 0xf14edd3d,  8 | BRF_GRA },           // 25
+	{ "gs12.n1",		0x020000, 0x9a86a015,  8 | BRF_GRA },           // 22 Sprite Bank B
+	{ "gs13.n2",		0x020000, 0xf4709905,  8 | BRF_GRA },           // 23
+	{ "gs14.n3",		0x020000, 0x750fc523,  8 | BRF_GRA },           // 24
+	{ "gs15.n5",		0x020000, 0xf14edd3d,  8 | BRF_GRA },           // 25
 
 	{ "gs07.h15",		0x020000, 0x750b7e5d,  9 | BRF_SND },           // 26 MSM6295 Samples 0
 
@@ -1265,12 +1269,12 @@ static struct BurnRomInfo dassault4RomDesc[] = {
 	{ "maj-10.s9",		0x080000, 0xa02fa641,  7 | BRF_GRA },           // 20
 	{ "maj-11.s11",		0x080000, 0xdabe9305,  7 | BRF_GRA },           // 21
 
-	{ "gt12.n1",		0x020000, 0x9a86a015,  8 | BRF_GRA },           // 22 Sprite Bank B
-	{ "gt13.n2",		0x020000, 0xf4709905,  8 | BRF_GRA },           // 23
-	{ "gt14.n3",		0x020000, 0x750fc523,  8 | BRF_GRA },           // 24
-	{ "gt15.n5",		0x020000, 0xf14edd3d,  8 | BRF_GRA },           // 25
+	{ "gs12.n1",		0x020000, 0x9a86a015,  8 | BRF_GRA },           // 22 Sprite Bank B
+	{ "gs13.n2",		0x020000, 0xf4709905,  8 | BRF_GRA },           // 23
+	{ "gs14.n3",		0x020000, 0x750fc523,  8 | BRF_GRA },           // 24
+	{ "gs15.n5",		0x020000, 0xf14edd3d,  8 | BRF_GRA },           // 25
 
-	{ "gt07.h15",		0x020000, 0x750b7e5d,  9 | BRF_SND },           // 26 MSM6295 Samples 0
+	{ "gs07.h15",		0x020000, 0x750b7e5d,  9 | BRF_SND },           // 26 MSM6295 Samples 0
 
 	{ "maj-03.h16",		0x080000, 0x31dcfac3, 10 | BRF_SND },           // 27 MSM6295 Samples 1
 

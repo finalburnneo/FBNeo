@@ -1885,7 +1885,7 @@ static struct BurnRomInfo trojanRomDesc[] = {
 	{ "tb19.2n",		0x8000, 0x81d5ab36, 6 | BRF_GRA },           // 21
 
 	{ "tb25.15n",		0x8000, 0x6e38c6fa, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
-	{ "tb24.23n",		0x8000, 0x14fc6cf2, 7 | BRF_GRA },           // 23
+	{ "tb24.13n",		0x8000, 0x14fc6cf2, 7 | BRF_GRA },           // 23
 
 	{ "tb23.9n",		0x8000, 0xeda13c0e, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
 
@@ -1910,8 +1910,8 @@ struct BurnDriver BurnDrvTrojan = {
 // Trojan (US set 2)
 
 static struct BurnRomInfo trojanaRomDesc[] = {
-	{ "tb04.10n",		0x8000, 0x0113a551, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "tb06.13n",		0x8000, 0xaa127a5b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tb4.10n",		0x8000, 0x0113a551, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "tb6.13n",		0x8000, 0xaa127a5b, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "tb05.12n",		0x8000, 0x9273b264, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "tb02.15h",		0x8000, 0x21154797, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
@@ -1939,7 +1939,7 @@ static struct BurnRomInfo trojanaRomDesc[] = {
 	{ "tb19.2n",		0x8000, 0x81d5ab36, 6 | BRF_GRA },           // 21
 
 	{ "tb25.15n",		0x8000, 0x6e38c6fa, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
-	{ "tb24.23n",		0x8000, 0x14fc6cf2, 7 | BRF_GRA },           // 23
+	{ "tb24.13n",		0x8000, 0x14fc6cf2, 7 | BRF_GRA },           // 23
 
 	{ "tb23.9n",		0x8000, 0xeda13c0e, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
 
@@ -1993,7 +1993,7 @@ static struct BurnRomInfo trojanrRomDesc[] = {
 	{ "tb19.2n",		0x8000, 0x81d5ab36, 6 | BRF_GRA },           // 21
 
 	{ "tb25.15n",		0x8000, 0x6e38c6fa, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
-	{ "tb24.23n",		0x8000, 0x14fc6cf2, 7 | BRF_GRA },           // 23
+	{ "tb24.13n",		0x8000, 0x14fc6cf2, 7 | BRF_GRA },           // 23
 
 	{ "tb23.9n",		0x8000, 0xeda13c0e, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
 
@@ -2047,7 +2047,7 @@ static struct BurnRomInfo trojanjRomDesc[] = {
 	{ "tb19.2n",		0x8000, 0x81d5ab36, 6 | BRF_GRA },           // 21
 
 	{ "tb25.15n",		0x8000, 0x6e38c6fa, 7 | BRF_GRA },           // 22 Background Layer 2 Tiles
-	{ "tb24.23n",		0x8000, 0x14fc6cf2, 7 | BRF_GRA },           // 23
+	{ "tb24.13n",		0x8000, 0x14fc6cf2, 7 | BRF_GRA },           // 23
 
 	{ "tb23.9n",		0x8000, 0xeda13c0e, 8 | BRF_GRA },           // 24 Background Layer 2 Tile Map
 

@@ -105,6 +105,77 @@
 <a href="http://neosource.1emu.net/forums">http://neosource.1emu.net/forums</a></p>
 
 
+<h3>v0.2.97.27</h3>
+<ul>
+<li>Sound Improvements</li>
+<ul>
+<li>Tidied sound chip interfaces, adding support for volume and left/right selection for individual routes. Updated all drivers to support. Many drivers sound much better with these updates [Barry]</li>
+<li>Fixed an issue with multiple YM2203 chips that resulted in static noise in the sound output [Barry]</li>
+<li>Added pan support to Taito drivers that use panning with the YM2610 sound chip [Barry]</li>
+<li>Added pan support to the Darius driver [Barry]</li>
+<li>Added support for an RC filter, and added support to the Galaxian Konami sound based drivers [Barry]</li>
+<li>Fixed various drivers that rendered the MSM5205 sound too fast when the sample rate was greater than 22050Hz [Barry]</li>
+<li>Applied a YM2413 fix from MAME [Barry]</li>
+<li>Added support for a selectable number of voices in the Namco sound module (fixes sound in the Baraduke, Pac Land and Sky Kid drivers [Barry]</li>
+<li>Added multiple chip support to the Sega PCM module, updated Super Monaco Grand Prix to support the extra sound board [Barry]</li>
+<li>Added support for the MSM6585 chip to the MSM5205 core [iq_132]</li>
+<li>Added multiple chip support to the Y8950 interface, and hooked up in the Cybertank driver [Barry]</li>
+<li>Small speedup in the DAC core [iq_132]</li>
+</ul>
+<li>Standardised some CPU interfaces [iq_132]</li>
+<li>Improved Atari slapstic emulation, and updated the Gauntlet driver to support it [iq_132]</li>
+<li>Added driver for Atari Tetris [iq_132]</li>
+<li>Added driver for Cybertank [iq_132]</li>
+<li>Hooked up analog inputs in the Cybertank driver [Barry]</li>
+<li>Added driver for games on Donkey Kong hardware [iq_132]</li>
+<li>Tidied Donkey Kong driver to build with current FB Alpha, and fixed some bugs and crashes [Barry]</li>
+<li>Added driver for Konami Test Board (GX800) [iq_132]</li>
+<li>Added Bang 2 Busters to the Neo Geo driver [lantus]</li>
+<li>Added Treasures of the Carribean to the Neo Geo driver [lantus]</li>
+<li>Added Last Survivor to the Sega X-Board driver [Barry, JacKc, ShouTime, Charles MacDonald, Aaron Giles, 9ofzeven, TrevEB, Dr. Spankenstein, ghoolster, Surgeville, Tormod, Tjaberg, Waremonger]</li>
+<li>Added Racing Beats to the Taito Z driver [Barry]</li>
+<li>Added bootleg of 1943 to the driver [Barry, JacKc, bonky0013]</li>
+<li>Added clone of Arkanoid to the driver [Barry]</li>
+<li>Added bootleg of Pang! 3 to the CPS-1 driver [JacKc, porchy]</li>
+<li>Added some bootlegs of Street Fighter II to the CPS-1 driver [Barry, JacKc, smitdogg]</li>
+<li>Added clone of Super Street Fighter II to the CPS-2 driver [JacKc]</li>
+<li>Added two clones of Thunder Zone to the Data East drivers [ShouTime, JacKc]</li>
+<li>Added two clones of Dynamite Duke to the driver [JacKc, Arzeno Fabrice]</li>
+<li>Added clone of War of the Bugs or Monsterous Manouvers in a Mushroom Maze to the Galaxian driver [Barry]</li>
+<li>Added clone of Jumping Pop to the driver [Barry, The Dumping Union]</li>
+<li>Added clone of Parodius to the Konami driver [Barry, Andrew Welburn, The Dumping Union]</li>
+<li>Added King of Gladiators Plus to the Neo Geo driver [JacKc]</li>
+<li>Added homebrew WW2 Demo to the Neo Geo driver [Barry]</li>
+<li>Added homebrew Spiderman Intro demo, and added alt sets of TMNT and Dark Wing Duck intro sets to the Neo Geo driver [Barry]</li>
+<li>Added clone of Ketsui Arrange to the PGM driver [JacKc]</li>
+<li>Added clone of Raiden to the driver [Barry, JacKc]</li>
+<li>Added two clones of Fantasy Zone II (System 16C version) to the Sega System 16B driver [Barry]</li>
+<li>Added clone of Turbo Outrun to the Sega Outrun driver [JacKc]</li>
+<li>Added clone of AB Cop to the Sega X-Board driver [JacKc]</li>
+<li>Added clone of GP Rider to the Sega X-Board driver [Barry]</li>
+<li>Added clone of Deer Hunter to the Seta 2 driver [JacKc]</li>
+<li>Added clone of Drift Out to the Taito F2 driver [JacKc, Hammy]</li>
+<li>Added clone of Rygar to the Tecmo driver [JacKc, smitdogg]</li>
+<li>Added clone of Pipi & Bibis / Whoopee!! to the Toaplan 2 driver [Barry, Antonio Gonzalez Jr.]</li>
+<li>Added bootleg of Toki to the driver [Barry, skiltz]</li>
+<li>Added clone of Trojan to the driver [JacKc]</li>
+<li>Fixed bugs in 4 Fun in 1 and Ghostmuncher Galaxian in the Galaxian driver, promoting them to working [Barry]</li>
+<li>Changed Fantastic to use the proper PROM dump in the Galaxian driver, fixing the game colours [Barry]</li>
+<li>Changed Super Bond to use the proper PROM dump in the Galaxian driver, fixing the game colours [Barry]</li>
+<li>Various PGM improvements [iq_132, JacKc]</li>
+<li>Fixed a graphics glitch in the Super Monaco Grand Prix title screen [Barry]</li>
+<li>Fixed issue with Top Speed crashing on driver init [Barry]</li>
+<li>Big-endian fixes for the Cybertank driver [lantus]</li>
+<li>Big-endian fixes for the Sega System 16A and Tecmo drivers [lantus]</li>
+<li>Big-endian fix for Street Fighter II: Magic Delta Turbo sprite x position [lantus]</li>
+<li>Applied various libretro patches [Twinaphex]</li>
+<li>Updated the zlib library to v1.2.7 [Barry]</li>
+<li>Updated the libpng library to v1.5.12 [Barry]</li>
+<li>Matched the Megadrive sets to MESS 0.146u5 [Barry]</li>
+<li>Synced sets with MAME 0.146u5 [Barry]</li>
+</ul>
+
+
 <h3>v0.2.97.26</h3>
 <ul>
 <li>Added two clones of Arkanoid to the Arkanoid driver[Barry, f205v]</li>

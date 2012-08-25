@@ -70,7 +70,11 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 	fprintf(fDat, "<!DOCTYPE datafile PUBLIC \"-//FB Alpha//DTD ROM Management Datafile//EN\" \"http://www.logiqx.com/Dats/datafile.dtd\">\n\n");
 	fprintf(fDat, "<datafile>\n");
 	fprintf(fDat, "\t<header>\n");
-	fprintf(fDat, "\t\t<name>" APP_TITLE "</name>\n");
+	if (bType == DAT_ARCADE_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Arcade Games</name>\n");
+	if (bType == DAT_MEGADRIVE_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Megadrive Games</name>\n");
+	if (bType == DAT_PCENGINE_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - PC-Engine Games</name>\n");
+	if (bType == DAT_TG16_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - TurboGrafx 16 Games</name>\n");
+	if (bType == DAT_SGX_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - SuprGrafx Games</name>\n");
 	if (bType == DAT_ARCADE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Arcade Games</description>\n"), szAppBurnVer);
 	if (bType == DAT_MEGADRIVE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Megadrive Games</description>\n"), szAppBurnVer);
 	if (bType == DAT_PCENGINE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" PC-Engine Games</description>\n"), szAppBurnVer);

@@ -304,6 +304,53 @@ static struct BurnDIPInfo SupermanDIPList[]=
 
 STDDIPINFO(Superman)
 
+static struct BurnDIPInfo SupermanuDIPList[]=
+{
+	// Default Values
+	{0x13, 0xff, 0xff, 0xff, NULL                             },
+	{0x14, 0xff, 0xff, 0xff, NULL                             },
+	
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Flip Screen"                    },
+	{0x13, 0x01, 0x02, 0x02, "Off"                            },
+	{0x13, 0x01, 0x02, 0x00, "On"                             },
+	
+	{0   , 0xfe, 0   , 2   , "Service Mode"                   },
+	{0x13, 0x01, 0x04, 0x04, "Off"                            },
+	{0x13, 0x01, 0x04, 0x00, "On"                             },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                    },
+	{0x13, 0x01, 0x08, 0x00, "Off"                            },
+	{0x13, 0x01, 0x08, 0x08, "On"                             },
+	
+	{0   , 0xfe, 0   , 4   , "Coinage"                        },
+	{0x13, 0x01, 0x30, 0x00, "4 Coins 1 Credit"               },
+	{0x13, 0x01, 0x30, 0x10, "3 Coins 1 Credit"               },
+	{0x13, 0x01, 0x30, 0x20, "2 Coins 1 Credit"               },
+	{0x13, 0x01, 0x30, 0x30, "1 Coin  1 Credit"               },
+
+	{0   , 0xfe, 0   , 4   , "Price to Continue"              },
+	{0x13, 0x01, 0xc0, 0x00, "3 Coins 2 Credit"               },
+	{0x13, 0x01, 0xc0, 0x40, "2 Coins 3 Credit"               },
+	{0x13, 0x01, 0xc0, 0x80, "1 Coin  1 Credit"               },
+	{0x13, 0x01, 0xc0, 0xc0, "Same as Start"                  },
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 4   , "Difficulty"                     },
+	{0x14, 0x01, 0x03, 0x02, "Easy"                           },
+	{0x14, 0x01, 0x03, 0x03, "Medium"                         },
+	{0x14, 0x01, 0x03, 0x01, "Hard"                           },
+	{0x14, 0x01, 0x03, 0x00, "Hardest"                        },
+
+	{0   , 0xfe, 0   , 4   , "Lives"                          },
+	{0x14, 0x01, 0x30, 0x20, "2"                              },
+	{0x14, 0x01, 0x30, 0x30, "3"                              },
+	{0x14, 0x01, 0x30, 0x10, "4"                              },
+	{0x14, 0x01, 0x30, 0x00, "5"                              },
+};
+
+STDDIPINFO(Supermanu)
+
 static struct BurnDIPInfo SupermanjDIPList[]=
 {
 	// Default Values
@@ -546,8 +593,8 @@ STD_ROM_PICK(Ballbros)
 STD_ROM_FN(Ballbros)
 
 static struct BurnRomInfo GigandesRomDesc[] = {
-	{ "1.10a",         0x20000, 0x290c50e0, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "3.5a",          0x20000, 0x9cef82af, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "east_1.10a",    0x20000, 0xae74e4e5, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "east_3.5a",     0x20000, 0x8bcf2116, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "east_2.8a",     0x20000, 0xdd94b4d0, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "east_4.3a",     0x20000, 0xa647310a, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 
@@ -565,9 +612,9 @@ static struct BurnRomInfo GigandesRomDesc[] = {
 STD_ROM_PICK(Gigandes)
 STD_ROM_FN(Gigandes)
 
-static struct BurnRomInfo GigandesjRomDesc[] = {
-	{ "east_1.10a",    0x20000, 0xae74e4e5, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "east_3.5a",     0x20000, 0x8bcf2116, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+static struct BurnRomInfo GigandesaRomDesc[] = {
+	{ "east-1.10a",    0x20000, 0x290c50e0, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "east-3.5a",     0x20000, 0x9cef82af, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "east_2.8a",     0x20000, 0xdd94b4d0, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "east_4.3a",     0x20000, 0xa647310a, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 
@@ -582,8 +629,8 @@ static struct BurnRomInfo GigandesjRomDesc[] = {
 	{ "east-10.16e",   0x80000, 0xca0ac419, BRF_SND | TAITO_YM2610B },
 };
 
-STD_ROM_PICK(Gigandesj)
-STD_ROM_FN(Gigandesj)
+STD_ROM_PICK(Gigandesa)
+STD_ROM_FN(Gigandesa)
 
 static struct BurnRomInfo KyustrkrRomDesc[] = {
 	{ "pe.9a",         0x20000, 0x082b5f96, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -604,38 +651,63 @@ STD_ROM_PICK(Kyustrkr)
 STD_ROM_FN(Kyustrkr)
 
 static struct BurnRomInfo SupermanRomDesc[] = {
-	{ "a10_09.bin",    0x20000, 0x640f1d58, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "a05_07.bin",    0x20000, 0xfddb9953, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "a08_08.bin",    0x20000, 0x79fc028e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "a03_13.bin",    0x20000, 0x9f446a44, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b61_09.a10",    0x20000, 0x640f1d58, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b61_07.a5",     0x20000, 0xfddb9953, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b61_08.a8",     0x20000, 0x79fc028e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b61_13.a3",     0x20000, 0x9f446a44, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 
-	{ "d18_10.bin",    0x10000, 0x6efe79e8, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	{ "b61_10.d18",    0x10000, 0x6efe79e8, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 
-	{ "f01_14.bin",    0x80000, 0x89368c3e, BRF_GRA | TAITO_SPRITESA },
-	{ "h01_15.bin",    0x80000, 0x910cc4f9, BRF_GRA | TAITO_SPRITESA },
-	{ "j01_16.bin",    0x80000, 0x3622ed2f, BRF_GRA | TAITO_SPRITESA },	
-	{ "k01_17.bin",    0x80000, 0xc34f27e0, BRF_GRA | TAITO_SPRITESA },
+	{ "b61-14.f1",     0x80000, 0x89368c3e, BRF_GRA | TAITO_SPRITESA },
+	{ "b61-15.h1",     0x80000, 0x910cc4f9, BRF_GRA | TAITO_SPRITESA },
+	{ "b61-16.j1",     0x80000, 0x3622ed2f, BRF_GRA | TAITO_SPRITESA },	
+	{ "b61-17.k1",     0x80000, 0xc34f27e0, BRF_GRA | TAITO_SPRITESA },
 
-	{ "e18_01.bin",    0x80000, 0x3cf99786, BRF_SND | TAITO_YM2610B },
+	{ "b61-01.e18",    0x80000, 0x3cf99786, BRF_SND | TAITO_YM2610B },
+	
+	{ "b61_11.m11",    0x10000, 0x00000000, BRF_ESS | BRF_PRG | BRF_NODUMP },
 };
 
 STD_ROM_PICK(Superman)
 STD_ROM_FN(Superman)
 
+static struct BurnRomInfo SupermanuRomDesc[] = {
+	{ "b61_09.a10",    0x20000, 0x640f1d58, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b61_07.a5",     0x20000, 0xfddb9953, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b61_08.a8",     0x20000, 0x79fc028e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b61_12.a3",     0x20000, 0x064d3bfe, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+
+	{ "b61_10.d18",    0x10000, 0x6efe79e8, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+
+	{ "b61-14.f1",     0x80000, 0x89368c3e, BRF_GRA | TAITO_SPRITESA },
+	{ "b61-15.h1",     0x80000, 0x910cc4f9, BRF_GRA | TAITO_SPRITESA },
+	{ "b61-16.j1",     0x80000, 0x3622ed2f, BRF_GRA | TAITO_SPRITESA },	
+	{ "b61-17.k1",     0x80000, 0xc34f27e0, BRF_GRA | TAITO_SPRITESA },
+
+	{ "b61-01.e18",    0x80000, 0x3cf99786, BRF_SND | TAITO_YM2610B },
+	
+	{ "b61_11.m11",    0x10000, 0x00000000, BRF_ESS | BRF_PRG | BRF_NODUMP },
+};
+
+STD_ROM_PICK(Supermanu)
+STD_ROM_FN(Supermanu)
+
 static struct BurnRomInfo SupermanjRomDesc[] = {
-	{ "a10_09.bin",    0x20000, 0x640f1d58, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "a05_07.bin",    0x20000, 0xfddb9953, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "a08_08.bin",    0x20000, 0x79fc028e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b61_09.a10",    0x20000, 0x640f1d58, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b61_07.a5",     0x20000, 0xfddb9953, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b61_08.a8",     0x20000, 0x79fc028e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "b61-06.a3",     0x20000, 0x714a0b68, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 
-	{ "d18_10.bin",    0x10000, 0x6efe79e8, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	{ "b61_10.d18",    0x10000, 0x6efe79e8, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 
-	{ "f01_14.bin",    0x80000, 0x89368c3e, BRF_GRA | TAITO_SPRITESA },
-	{ "h01_15.bin",    0x80000, 0x910cc4f9, BRF_GRA | TAITO_SPRITESA },
-	{ "j01_16.bin",    0x80000, 0x3622ed2f, BRF_GRA | TAITO_SPRITESA },	
-	{ "k01_17.bin",    0x80000, 0xc34f27e0, BRF_GRA | TAITO_SPRITESA },
+	{ "b61-14.f1",     0x80000, 0x89368c3e, BRF_GRA | TAITO_SPRITESA },
+	{ "b61-15.h1",     0x80000, 0x910cc4f9, BRF_GRA | TAITO_SPRITESA },
+	{ "b61-16.j1",     0x80000, 0x3622ed2f, BRF_GRA | TAITO_SPRITESA },	
+	{ "b61-17.k1",     0x80000, 0xc34f27e0, BRF_GRA | TAITO_SPRITESA },
 
-	{ "e18_01.bin",    0x80000, 0x3cf99786, BRF_SND | TAITO_YM2610B },
+	{ "b61-01.e18",    0x80000, 0x3cf99786, BRF_SND | TAITO_YM2610B },
+	
+	{ "b61_11.m11",    0x10000, 0x00000000, BRF_ESS | BRF_PRG | BRF_NODUMP },
 };
 
 STD_ROM_PICK(Supermanj)
@@ -1581,12 +1653,12 @@ struct BurnDriver BurnDrvGigandes = {
 	NULL, 0x800, 384, 240, 4, 3
 };
 
-struct BurnDriver BurnDrvGigandesj = {
-	"gigandesj", "gigandes", NULL, NULL, "1989",
-	"Gigandes (Japan)\0", NULL, "East Technology", "Taito-X",
+struct BurnDriver BurnDrvGigandesa = {
+	"gigandesa", "gigandes", NULL, NULL, "1989",
+	"Gigandes (earlier)\0", NULL, "East Technology", "Taito-X",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOX, GBF_HORSHOOT, 0,
-	NULL, GigandesjRomInfo, GigandesjRomName, NULL, NULL, TwinhawkInputInfo, GigandesDIPInfo,
+	NULL, GigandesaRomInfo, GigandesaRomName, NULL, NULL, TwinhawkInputInfo, GigandesDIPInfo,
 	GigandesInit, TaitoXExit, TaitoXFrame, NULL, TaitoXScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
@@ -1603,10 +1675,20 @@ struct BurnDriver BurnDrvKyustrkr = {
 
 struct BurnDriver BurnDrvSuperman = {
 	"superman", NULL, NULL, NULL, "1988",
-	"Superman\0", NULL, "Taito Corporation", "Taito-X",
+	"Superman (World)\0", NULL, "Taito Corporation", "Taito-X",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOX, GBF_SCRFIGHT, 0,
 	NULL, SupermanRomInfo, SupermanRomName, NULL, NULL, SupermanInputInfo, SupermanDIPInfo,
+	SupermanInit, TaitoXExit, TaitoXFrame, NULL, TaitoXScan,
+	NULL, 0x800, 384, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvSupermanu = {
+	"supermanu", "superman", NULL, NULL, "1988",
+	"Superman (US)\0", NULL, "Taito Corporation", "Taito-X",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOX, GBF_SCRFIGHT, 0,
+	NULL, SupermanuRomInfo, SupermanuRomName, NULL, NULL, SupermanInputInfo, SupermanuDIPInfo,
 	SupermanInit, TaitoXExit, TaitoXFrame, NULL, TaitoXScan,
 	NULL, 0x800, 384, 240, 4, 3
 };

@@ -2784,13 +2784,13 @@ static struct BurnRomInfo puckmanRomDesc[] = {
 	{ "namcopac.6h",  0x1000, 0x02083b03, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "namcopac.6j",  0x1000, 0x7a36fe55, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },		//  4 Graphics
-	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },		//  5
+	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },			//  4 Graphics
+	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },			//  5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  7
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -2821,13 +2821,13 @@ static struct BurnRomInfo puckmanfRomDesc[] = {
 	{ "namcopac.6h",  0x1000, 0x02083b03, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "namcopac.6j",  0x1000, 0x7a36fe55, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },		//  4 Graphics
-	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },		//  5
+	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },			//  4 Graphics
+	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },			//  5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  7
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -2853,13 +2853,13 @@ static struct BurnRomInfo puckmodRomDesc[] = {
 	{ "namcopac.6h",  0x1000, 0x02083b03, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "npacmod.6j",   0x1000, 0x7d98d5f5, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },		//  4 Graphics
-	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },		//  5
+	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },			//  4 Graphics
+	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },			//  5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  7
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -2886,14 +2886,14 @@ static struct BurnRomInfo puckmanaRomDesc[] = {
 	{ "prg7",         0x0800, 0xb6289b26, 1 | BRF_ESS | BRF_PRG },	//  3
 	{ "prg8",         0x0800, 0x17a88c13, 1 | BRF_ESS | BRF_PRG },	//  4
 
-	{ "chg1",         0x0800, 0x2066a0b7, 2 | BRF_GRA },		//  5 Graphics
-	{ "chg2",         0x0800, 0x3591b89d, 2 | BRF_GRA },		//  6
-	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },		//  7
+	{ "chg1",         0x0800, 0x2066a0b7, 2 | BRF_GRA },			//  5 Graphics
+	{ "chg2",         0x0800, 0x3591b89d, 2 | BRF_GRA },			//  6
+	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },			//  7
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  8 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  9
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  8 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  9
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 10 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
 };
 
@@ -2919,13 +2919,13 @@ static struct BurnRomInfo pacmanRomDesc[] = {
 	{ "pacman.6h",    0x1000, 0xbcdd1beb, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "pacman.6j",    0x1000, 0x817d94e3, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },		//  4 Graphics
-	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },		//  5
+	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },			//  4 Graphics
+	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },			//  5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  7
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -2951,13 +2951,13 @@ static struct BurnRomInfo pacmanfRomDesc[] = {
 	{ "pacman.6h",    0x1000, 0xbcdd1beb, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "pacman.6j",    0x1000, 0x817d94e3, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },		//  4 Graphics
-	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },		//  5
+	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },			//  4 Graphics
+	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },			//  5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  7
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -2983,13 +2983,13 @@ static struct BurnRomInfo hanglyRomDesc[] = {
 	{ "hangly.6h",    0x1000, 0x4e7ef99f, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "hangly.6j",    0x1000, 0x7f4147e6, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },		//  4 Graphics
-	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },		//  5
+	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },			//  4 Graphics
+	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },			//  5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  7
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -3017,13 +3017,13 @@ static struct BurnRomInfo hangly2RomDesc[] = {
 	{ "hangly2.6j",   0x0800, 0x51305374, 1 | BRF_ESS | BRF_PRG },	//  4
 	{ "hangly2.6p",   0x0800, 0x427c9d4d, 1 | BRF_ESS | BRF_PRG },	//  5
 
-	{ "pacmanh.5e",   0x1000, 0x299fb17a, 2 | BRF_GRA },		//  6 Graphics
-	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },		//  7
+	{ "pacmanh.5e",   0x1000, 0x299fb17a, 2 | BRF_GRA },			//  6 Graphics
+	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },			//  7
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  8 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  9
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  8 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  9
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 10 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
 };
 
@@ -3053,15 +3053,15 @@ static struct BurnRomInfo hangly3RomDesc[] = {
 	{ "hm4.6j",       0x0800, 0x5039b082, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "hm8.6p",       0x0800, 0x931770d7, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "hm9.5e", 	  0x0800, 0x5f4be3cc, 2 | BRF_GRA },		//  8 Graphics
-	{ "hm11.5h",      0x0800, 0x3591b89d, 2 | BRF_GRA },		//  9
-	{ "hm10.5f", 	  0x0800, 0x9e39323a, 2 | BRF_GRA },		// 10
-	{ "hm12.5j", 	  0x0800, 0x1b1d9096, 2 | BRF_GRA },		// 11
+	{ "hm9.5e", 	  0x0800, 0x5f4be3cc, 2 | BRF_GRA },			//  8 Graphics
+	{ "hm11.5h",      0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
+	{ "hm10.5f", 	  0x0800, 0x9e39323a, 2 | BRF_GRA },			// 10
+	{ "hm12.5j", 	  0x0800, 0x1b1d9096, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -3091,15 +3091,15 @@ static struct BurnRomInfo popeyemanRomDesc[] = {
 	{ "pop4.6j",      0x0800, 0x5039b082, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "pop8.6p",      0x0800, 0x931770d7, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "pop9.5e", 	  0x0800, 0xb569c4c1, 2 | BRF_GRA },		//  8 Graphics
-	{ "pop11.5h",     0x0800, 0x3591b89d, 2 | BRF_GRA },		//  9
-	{ "pop10.5f", 	  0x0800, 0x014fb5a4, 2 | BRF_GRA },		// 10
-	{ "pop12.5j", 	  0x0800, 0x21b91c64, 2 | BRF_GRA },		// 11
+	{ "pop9.5e", 	  0x0800, 0xb569c4c1, 2 | BRF_GRA },			//  8 Graphics
+	{ "pop11.5h",     0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
+	{ "pop10.5f", 	  0x0800, 0x014fb5a4, 2 | BRF_GRA },			// 10
+	{ "pop12.5j", 	  0x0800, 0x21b91c64, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -3121,7 +3121,7 @@ struct BurnDriver BurnDrvpopeyeman = {
 
 static struct BurnRomInfo crockmanRomDesc[] = {
 	{ "p1.6e",        0x0800, 0x2c0fa0ab, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "p5.6k",	  0x0800, 0xafeca2f1, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "p5.6k",	      0x0800, 0xafeca2f1, 1 | BRF_ESS | BRF_PRG },	//  1
 	{ "p2.6f",        0x0800, 0x7d177853, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "p6.6m",        0x0800, 0xd3e8914c, 1 | BRF_ESS | BRF_PRG },	//  3
 	{ "p3.6h",        0x0800, 0x9045a44c, 1 | BRF_ESS | BRF_PRG },	//  4
@@ -3129,15 +3129,15 @@ static struct BurnRomInfo crockmanRomDesc[] = {
 	{ "p4.6j",        0x0800, 0xbed4a077, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "p8.6p",        0x0800, 0x800be41e, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "p9.5e", 	  0x0800, 0xa10218c4, 2 | BRF_GRA },		//  8 Graphics
-	{ "p11.5h",       0x0800, 0x3591b89d, 2 | BRF_GRA },		//  9
-	{ "p10.5f", 	  0x0800, 0x9e39323a, 2 | BRF_GRA },		// 10
-	{ "p12.5j", 	  0x0800, 0x1b1d9096, 2 | BRF_GRA },		// 11
+	{ "p9.5e", 	  	  0x0800, 0xa10218c4, 2 | BRF_GRA },			//  8 Graphics
+	{ "p11.5h",       0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
+	{ "p10.5f", 	  0x0800, 0x9e39323a, 2 | BRF_GRA },			// 10
+	{ "p12.5j", 	  0x0800, 0x1b1d9096, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -3163,13 +3163,13 @@ static struct BurnRomInfo pacmodRomDesc[] = {
 	{ "pacmanh.6h",   0x1000, 0x18811780, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "pacmanh.6j",   0x1000, 0x5c96a733, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "pacmanh.5e",   0x1000, 0x299fb17a, 2 | BRF_GRA },		//  4 Graphics
-	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },		//  5
+	{ "pacmanh.5e",   0x1000, 0x299fb17a, 2 | BRF_GRA },			//  4 Graphics
+	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },			//  5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  7
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -3195,15 +3195,15 @@ static struct BurnRomInfo puckmanhRomDesc[] = {
 	{ "pm03.6h",      0x1000, 0x4e7ef99f, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "pm04.6j",      0x1000, 0x8939ddd2, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "pm9.5e",       0x0800, 0x2229ab07, 2 | BRF_GRA },		//  4 Graphics
-	{ "pm11.5h",      0x0800, 0x3591b89d, 2 | BRF_GRA },		//  5
-	{ "pm10.5f",      0x0800, 0x9e39323a, 2 | BRF_GRA },		//  6
-	{ "pm12.5j",      0x0800, 0x1b1d9096, 2 | BRF_GRA },		//  7
+	{ "pm9.5e",       0x0800, 0x2229ab07, 2 | BRF_GRA },			//  4 Graphics
+	{ "pm11.5h",      0x0800, 0x3591b89d, 2 | BRF_GRA },			//  5
+	{ "pm10.5f",      0x0800, 0x9e39323a, 2 | BRF_GRA },			//  6
+	{ "pm12.5j",      0x0800, 0x1b1d9096, 2 | BRF_GRA },			//  7
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  8 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  9
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  8 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  9
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 10 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
 };
 
@@ -3229,13 +3229,13 @@ static struct BurnRomInfo newpuckxRomDesc[] = {
 	{ "puckman.6h",   0x1000, 0x197443f8, 1 | BRF_ESS | BRF_PRG },  //  2
 	{ "puckman.6j",   0x1000, 0x2e64a3ba, 1 | BRF_ESS | BRF_PRG },  //  3
 
-	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },		//  4 Graphics
-	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },		//  5
+	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },			//  4 Graphics
+	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },			//  5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  7
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -3265,15 +3265,15 @@ static struct BurnRomInfo pacheartRomDesc[] = {
 	{ "pacheart.pg7", 0x0800, 0xf5265c10, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "pacheart.pg8", 0x0800, 0x1a21a381, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "pacheart.ch1", 0x0800, 0xc62bbabf, 2 | BRF_GRA },		//  8 Graphics
-	{ "chg2",         0x0800, 0x3591b89d, 2 | BRF_GRA },		//  9
-	{ "pacheart.ch3", 0x0800, 0xca8c184c, 2 | BRF_GRA },		// 10
-	{ "pacheart.ch4", 0x0800, 0x1b1d9096, 2 | BRF_GRA },		// 11
+	{ "pacheart.ch1", 0x0800, 0xc62bbabf, 2 | BRF_GRA },			//  8 Graphics
+	{ "chg2",         0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
+	{ "pacheart.ch3", 0x0800, 0xca8c184c, 2 | BRF_GRA },			// 10
+	{ "pacheart.ch4", 0x0800, 0x1b1d9096, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -3303,15 +3303,15 @@ static struct BurnRomInfo joymanRomDesc[] = {
 	{ "joy4.6j",      0x0800, 0x00b553f8, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "joy8.6p",      0x0800, 0x5d5ce992, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "joy9.5e",  	  0x0800, 0x39b557bc, 2 | BRF_GRA },		//  8 Graphics
-	{ "joy11.5h", 	  0x0800, 0x33e0289e, 2 | BRF_GRA },		//  9
-	{ "joy10.5f", 	  0x0800, 0x338771a6, 2 | BRF_GRA },		// 10
-	{ "joy12.5j", 	  0x0800, 0xf4f0add5, 2 | BRF_GRA },		// 11
+	{ "joy9.5e",  	  0x0800, 0x39b557bc, 2 | BRF_GRA },			//  8 Graphics
+	{ "joy11.5h", 	  0x0800, 0x33e0289e, 2 | BRF_GRA },			//  9
+	{ "joy10.5f", 	  0x0800, 0x338771a6, 2 | BRF_GRA },			// 10
+	{ "joy12.5j", 	  0x0800, 0xf4f0add5, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -3341,15 +3341,15 @@ static struct BurnRomInfo bucanerRomDesc[] = {
 	{ "buc4.6j",      0x0800, 0x292de161, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "buc8.6p",      0x0800, 0x884af858, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "buc9.5e",  	  0x0800, 0x4060c077, 2 | BRF_GRA },		//  8 Graphics
-	{ "buc11.5h", 	  0x0800, 0xe3861283, 2 | BRF_GRA },		//  9
-	{ "buc10.5f", 	  0x0800, 0x09f66dec, 2 | BRF_GRA },		// 10
-	{ "buc12.5j", 	  0x0800, 0x653314e7, 2 | BRF_GRA },		// 11
+	{ "buc9.5e",  	  0x0800, 0x4060c077, 2 | BRF_GRA },			//  8 Graphics
+	{ "buc11.5h", 	  0x0800, 0xe3861283, 2 | BRF_GRA },			//  9
+	{ "buc10.5f", 	  0x0800, 0x09f66dec, 2 | BRF_GRA },			// 10
+	{ "buc12.5j", 	  0x0800, 0x653314e7, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -3379,15 +3379,15 @@ static struct BurnRomInfo ctrpllrpRomDesc[] = {
 	{ "c4.bin",       0x0800, 0x86c91e0e, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "c8.bin",       0x0800, 0x3d28134e, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "c9.bin",       0x0800, 0x1c4617be, 2 | BRF_GRA },		//  8 Graphics
-	{ "c11.bin",      0x0800, 0x46f72fef, 2 | BRF_GRA },		//  9
-	{ "c10.bin",      0x0800, 0xba9ec199, 2 | BRF_GRA },		// 10
-	{ "c12.bin",      0x0800, 0x41c09655, 2 | BRF_GRA },		// 11
+	{ "c9.bin",       0x0800, 0x1c4617be, 2 | BRF_GRA },			//  8 Graphics
+	{ "c11.bin",      0x0800, 0x46f72fef, 2 | BRF_GRA },			//  9
+	{ "c10.bin",      0x0800, 0xba9ec199, 2 | BRF_GRA },			// 10
+	{ "c12.bin",      0x0800, 0x41c09655, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -3413,13 +3413,13 @@ static struct BurnRomInfo pacplusRomDesc[] = {
 	{ "pacplus.6h",   0x1000, 0xae379430, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "pacplus.6j",   0x1000, 0x5a6dff7b, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "pacplus.5e",   0x1000, 0x022c35da, 2 | BRF_GRA },		//  4 Graphics
-	{ "pacplus.5f",   0x1000, 0x4de65cdd, 2 | BRF_GRA },		//  5
+	{ "pacplus.5e",   0x1000, 0x022c35da, 2 | BRF_GRA },			//  4 Graphics
+	{ "pacplus.5f",   0x1000, 0x4de65cdd, 2 | BRF_GRA },			//  5
 
-	{ "pacplus.7f",   0x0020, 0x063dd53a, 3 | BRF_GRA },		//  6 Color Proms
-	{ "pacplus.4a",   0x0100, 0xe271a166, 3 | BRF_GRA },		//  7
+	{ "pacplus.7f",   0x0020, 0x063dd53a, 3 | BRF_GRA },			//  6 Color Proms
+	{ "pacplus.4a",   0x0100, 0xe271a166, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -3489,15 +3489,15 @@ static struct BurnRomInfo newpuc2RomDesc[] = {
 	{ "6j.cpu", 	  0x0800, 0xe6675736, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "6p.cpu", 	  0x0800, 0x1f81e765, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "5e.cpu", 	  0x0800, 0x2066a0b7, 2 | BRF_GRA },		//  8 Graphics
-	{ "5h.cpu", 	  0x0800, 0x777c70d3, 2 | BRF_GRA },		//  9
-	{ "5f.cpu", 	  0x0800, 0xca8c184c, 2 | BRF_GRA },		// 10
-	{ "5j.cpu", 	  0x0800, 0x7dc75a81, 2 | BRF_GRA },		// 11
+	{ "5e.cpu", 	  0x0800, 0x2066a0b7, 2 | BRF_GRA },			//  8 Graphics
+	{ "5h.cpu", 	  0x0800, 0x777c70d3, 2 | BRF_GRA },			//  9
+	{ "5f.cpu", 	  0x0800, 0xca8c184c, 2 | BRF_GRA },			// 10
+	{ "5j.cpu", 	  0x0800, 0x7dc75a81, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -3527,15 +3527,15 @@ static struct BurnRomInfo newpuc2bRomDesc[] = {
 	{ "np2b4.bin",    0x0800, 0xf068e009, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "np2b8.bin",    0x0800, 0x1fadcc2f, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "5e.cpu", 	  0x0800, 0x2066a0b7, 2 | BRF_GRA },		//  8 Graphics
-	{ "5h.cpu", 	  0x0800, 0x777c70d3, 2 | BRF_GRA },		//  9
-	{ "5f.cpu", 	  0x0800, 0xca8c184c, 2 | BRF_GRA },		// 10
-	{ "5j.cpu", 	  0x0800, 0x7dc75a81, 2 | BRF_GRA },		// 11
+	{ "5e.cpu", 	  0x0800, 0x2066a0b7, 2 | BRF_GRA },			//  8 Graphics
+	{ "5h.cpu", 	  0x0800, 0x777c70d3, 2 | BRF_GRA },			//  9
+	{ "5f.cpu", 	  0x0800, 0xca8c184c, 2 | BRF_GRA },			// 10
+	{ "5j.cpu", 	  0x0800, 0x7dc75a81, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Prom
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Prom
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -3564,13 +3564,13 @@ static struct BurnRomInfo mspacmanRomDesc[] = {
 	{ "u6",           0x1000, 0xa90e7000, 1 | BRF_ESS | BRF_PRG },	//  5
 	{ "u7",           0x1000, 0xc82cd714, 1 | BRF_ESS | BRF_PRG },	//  6
 
-	{ "5e",           0x1000, 0x5c281d01, 2 | BRF_GRA },		//  7 Graphics
-	{ "5f",           0x1000, 0x615af909, 2 | BRF_GRA },		//  8
+	{ "5e",           0x1000, 0x5c281d01, 2 | BRF_GRA },			//  7 Graphics
+	{ "5f",           0x1000, 0x615af909, 2 | BRF_GRA },			//  8
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  9 Color Prom
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 10
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  9 Color Prom
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 10
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 11 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 11 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 12 Timing Prom (not used)
 };
 
@@ -3648,13 +3648,13 @@ static struct BurnRomInfo mspacmnfRomDesc[] = {
 	{ "u6",           0x1000, 0xa90e7000, 1 | BRF_ESS | BRF_PRG },	//  5
 	{ "u7",           0x1000, 0xc82cd714, 1 | BRF_ESS | BRF_PRG },	//  6
 
-	{ "5e",           0x1000, 0x5c281d01, 2 | BRF_GRA },		//  7 Graphics
-	{ "5f",           0x1000, 0x615af909, 2 | BRF_GRA },		//  8
+	{ "5e",           0x1000, 0x5c281d01, 2 | BRF_GRA },			//  7 Graphics
+	{ "5f",           0x1000, 0x615af909, 2 | BRF_GRA },			//  8
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  9 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  9 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 10 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
 };
 
@@ -3683,13 +3683,13 @@ static struct BurnRomInfo mspacmatRomDesc[] = {
 	{ "u6pacatk",     0x1000, 0xf6d83f4d, 1 | BRF_ESS | BRF_PRG },	//  5
 	{ "u7",           0x1000, 0xc82cd714, 1 | BRF_ESS | BRF_PRG },	//  6
 
-	{ "5e",           0x1000, 0x5c281d01, 2 | BRF_GRA },		//  7 Graphics
-	{ "5f",           0x1000, 0x615af909, 2 | BRF_GRA },		//  8
+	{ "5e",           0x1000, 0x5c281d01, 2 | BRF_GRA },			//  7 Graphics
+	{ "5f",           0x1000, 0x615af909, 2 | BRF_GRA },			//  8
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  9 Color Prom
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 10 
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  9 Color Prom
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 10 
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 11
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 11
  	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 12 Sound Prom (not used)
 };
 
@@ -3707,6 +3707,41 @@ struct BurnDriver BurnDrvmspacmat = {
 };
 
 
+// Ms. Pac-Man Heart Burn
+
+static struct BurnRomInfo msheartbRomDesc[] = {
+	{ "pacman.6e",    0x1000, 0xc1e6ab10, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pacman.6f",    0x1000, 0x1a6fb2d4, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "pacman.6h",    0x1000, 0xbcdd1beb, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "pacman.6j",    0x1000, 0x817d94e3, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "u5",           0x0800, 0xf45fbbcd, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "u6",     	  0x1000, 0xa90e7000, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "u7",           0x1000, 0xc82cd714, 1 | BRF_ESS | BRF_PRG },	//  6
+
+	{ "5e",           0x1000, 0x5431d4c4, 2 | BRF_GRA },			//  7 Graphics
+	{ "5f",           0x1000, 0xceb50654, 2 | BRF_GRA },			//  8
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  9 Color Prom
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 10 
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 11
+ 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 12 Sound Prom (not used)
+};
+
+STD_ROM_PICK(msheartb)
+STD_ROM_FN(msheartb)
+
+struct BurnDriver BurnDrvmsheartb = {
+	"msheartb", "mspacman", NULL, NULL, "1980",
+	"Ms. Pac-Man Heart Burn\0", NULL, "hack (Two-Bit Score)", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	NULL, msheartbRomInfo, msheartbRomName, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	mspacmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // MS Pacman (bootleg)
 
 static struct BurnRomInfo mspacmabRomDesc[] = {
@@ -3717,13 +3752,13 @@ static struct BurnRomInfo mspacmabRomDesc[] = {
 	{ "boot5",        0x1000, 0x8c3e6de6, 1 | BRF_ESS | BRF_PRG },	//  4
 	{ "boot6",        0x1000, 0x368cb165, 1 | BRF_ESS | BRF_PRG },	//  5
 
-	{ "5e",           0x1000, 0x5c281d01, 2 | BRF_GRA },		//  6 Graphics
-	{ "5f",           0x1000, 0x615af909, 2 | BRF_GRA },		//  7
+	{ "5e",           0x1000, 0x5c281d01, 2 | BRF_GRA },			//  6 Graphics
+	{ "5f",           0x1000, 0x615af909, 2 | BRF_GRA },			//  7
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  8 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  9
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  8 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  9
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 10 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
 };
 
@@ -3746,7 +3781,7 @@ struct BurnDriver BurnDrvmspacmab = {
 };
 
 
-// Ms. Pac-Man (bootleg, (encrypted))
+// Ms. Pac-Man (bootleg, encrypted)
 
 static struct BurnRomInfo mspacmbeRomDesc[] = {
 	{ "boot1",        0x1000, 0xd16b31b7, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -3756,13 +3791,13 @@ static struct BurnRomInfo mspacmbeRomDesc[] = {
 	{ "boot5",        0x1000, 0x8c3e6de6, 1 | BRF_ESS | BRF_PRG },	//  4
 	{ "6.bin",        0x1000, 0x206a9623, 1 | BRF_ESS | BRF_PRG },	//  5
 
-	{ "5e",           0x1000, 0x5c281d01, 2 | BRF_GRA },		//  6 Graphics
-	{ "5f",           0x1000, 0x615af909, 2 | BRF_GRA },		//  7
+	{ "5e",           0x1000, 0x5c281d01, 2 | BRF_GRA },			//  6 Graphics
+	{ "5f",           0x1000, 0x615af909, 2 | BRF_GRA },			//  7
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  8 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  9
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  8 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  9
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 10 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
 };
 
@@ -3789,7 +3824,7 @@ static INT32 mspacmbeInit()
 
 struct BurnDriver BurnDrvmspacmbe = {
 	"mspacmbe", "mspacman", NULL, NULL, "1981",
-	"Ms. Pac-Man (bootleg, (encrypted))\0", NULL, "bootleg", "Pac-man",
+	"Ms. Pac-Man (bootleg, encrypted)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, mspacmbeRomInfo, mspacmbeRomName, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
@@ -3808,14 +3843,14 @@ static struct BurnRomInfo pacgalRomDesc[] = {
 	{ "boot5",        0x1000, 0x8c3e6de6, 1 | BRF_ESS | BRF_PRG },	//  4
 	{ "boot6",        0x1000, 0x368cb165, 1 | BRF_ESS | BRF_PRG },	//  5
 
-	{ "5e",           0x1000, 0x5c281d01, 2 | BRF_GRA },		//  6 Graphics
-	{ "pacman.5ef",   0x0800, 0x65a3ee71, 2 | BRF_GRA },		//  7
-	{ "pacman.5hj",   0x0800, 0x50c7477d, 2 | BRF_GRA },		//  8
+	{ "5e",           0x1000, 0x5c281d01, 2 | BRF_GRA },			//  6 Graphics
+	{ "pacman.5ef",   0x0800, 0x65a3ee71, 2 | BRF_GRA },			//  7
+	{ "pacman.5hj",   0x0800, 0x50c7477d, 2 | BRF_GRA },			//  8
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  9 Color Proms
-	{ "82s129.4a",    0x0100, 0x63efb927, 3 | BRF_GRA },		// 10
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  9 Color Proms
+	{ "82s129.4a",    0x0100, 0x63efb927, 3 | BRF_GRA },			// 10
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 11 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 11 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 12 Timing Prom (not used)
 };
 
@@ -3843,13 +3878,13 @@ static struct BurnRomInfo mspacplsRomDesc[] = {
 	{ "mspacatk.5",   0x1000, 0xe6e06954, 1 | BRF_ESS | BRF_PRG },	//  4
 	{ "mspacatk.6",   0x1000, 0x3b5db308, 1 | BRF_ESS | BRF_PRG },	//  5
 
-	{ "5e",           0x1000, 0x5c281d01, 2 | BRF_GRA },		//  6 Graphics
-	{ "5f",           0x1000, 0x615af909, 2 | BRF_GRA },		//  7
+	{ "5e",           0x1000, 0x5c281d01, 2 | BRF_GRA },			//  6 Graphics
+	{ "5f",           0x1000, 0x615af909, 2 | BRF_GRA },			//  7
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  8 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  9
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  8 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  9
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 10 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
 };
 
@@ -3872,12 +3907,12 @@ struct BurnDriver BurnDrvmspacpls = {
 static struct BurnRomInfo mschampRomDesc[] = {
 	{ "9fg.bin",     0x10000, 0x04dba113, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 
-	{ "8e.bin",       0x2000, 0x17435f53, 2 | BRF_GRA },		//  1 Graphics
+	{ "8e.bin",       0x2000, 0x17435f53, 2 | BRF_GRA },			//  1 Graphics
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  2 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  3 
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  2 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  3 
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  4 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  4 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  5 Timing Prom (not used)) )
 };
 
@@ -3916,12 +3951,12 @@ struct BurnDriver BurnDrvmschamp = {
 static struct BurnRomInfo mschampsRomDesc[] = {
 	{ "pm4.bin",     0x10000, 0x7d6b6303, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 
-	{ "pm5.bin",      0x2000, 0x7fe6b9e2, 2 | BRF_GRA },		//  1 Graphics
+	{ "pm5.bin",      0x2000, 0x7fe6b9e2, 2 | BRF_GRA },			//  1 Graphics
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  2 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  3 
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  2 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  3 
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  4 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  4 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  5 Timing Prom (not used)) )
 };
 
@@ -3947,13 +3982,13 @@ static struct BurnRomInfo crushRomDesc[] = {
 	{ "crushkrl.6h",  0x1000, 0xd4455f27, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "crushkrl.6j",  0x1000, 0xd59fc251, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "maketrax.5e",  0x1000, 0x91bad2da, 2 | BRF_GRA },		//  4 Graphics
-	{ "maketrax.5f",  0x1000, 0xaea79f55, 2 | BRF_GRA },		//  5
+	{ "maketrax.5e",  0x1000, 0x91bad2da, 2 | BRF_GRA },			//  4 Graphics
+	{ "maketrax.5f",  0x1000, 0xaea79f55, 2 | BRF_GRA },			//  5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Prom
-	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },		//  7
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Prom
+	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -4011,13 +4046,13 @@ static struct BurnRomInfo crushblRomDesc[] = {
 	{ "cr3.bin",      0x1000, 0xd4455f27, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "cr4.bin",      0x1000, 0x9936ae06, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "maketrax.5e",  0x1000, 0x91bad2da, 2 | BRF_GRA },		//  4 Graphics
-	{ "maketrax.5f",  0x1000, 0xaea79f55, 2 | BRF_GRA },		//  5
+	{ "maketrax.5e",  0x1000, 0x91bad2da, 2 | BRF_GRA },			//  4 Graphics
+	{ "maketrax.5f",  0x1000, 0xaea79f55, 2 | BRF_GRA },			//  5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Prom
-	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },		//  7
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Prom
+	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -4043,15 +4078,15 @@ static struct BurnRomInfo crushbl2RomDesc[] = {
 	{ "cr7.7h",       0x1000, 0xd297108e, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "cr8.7j",       0x1000, 0xbcc40eaf, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "cr1.5e",       0x0800, 0xc7617198, 2 | BRF_GRA },		//  4 Graphics
-	{ "cr3.5h",       0x0800, 0xc15b6967, 2 | BRF_GRA },		//  5
-	{ "cr2.5f",       0x0800, 0xd5bc5cb8, 2 | BRF_GRA },		//  6 
-	{ "cr4.5j",       0x0800, 0xd35d1caf, 2 | BRF_GRA },		//  7 
+	{ "cr1.5e",       0x0800, 0xc7617198, 2 | BRF_GRA },			//  4 Graphics
+	{ "cr3.5h",       0x0800, 0xc15b6967, 2 | BRF_GRA },			//  5
+	{ "cr2.5f",       0x0800, 0xd5bc5cb8, 2 | BRF_GRA },			//  6 
+	{ "cr4.5j",       0x0800, 0xd35d1caf, 2 | BRF_GRA },			//  7 
 
-	{ "74s288.8a",    0x0020, 0xff344446, 3 | BRF_GRA },		//  8 Color Prom
-	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },		//  9
+	{ "74s288.8a",    0x0020, 0xff344446, 3 | BRF_GRA },			//  8 Color Prom
+	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },			//  9
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 10 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
 };
 
@@ -4081,15 +4116,15 @@ static struct BurnRomInfo crush2RomDesc[] = {
 	{ "tp4",          0x0800, 0x90b28fa3, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "tp8",          0x0800, 0x10854e1b, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "tpa",          0x0800, 0xc7617198, 2 | BRF_GRA },		//  8 Graphics
-	{ "tpc",          0x0800, 0xe129d76a, 2 | BRF_GRA },		//  9
-	{ "tpb",          0x0800, 0xd1899f05, 2 | BRF_GRA },		// 10 
-	{ "tpd",          0x0800, 0xd35d1caf, 2 | BRF_GRA },		// 11 
+	{ "tpa",          0x0800, 0xc7617198, 2 | BRF_GRA },			//  8 Graphics
+	{ "tpc",          0x0800, 0xe129d76a, 2 | BRF_GRA },			//  9
+	{ "tpb",          0x0800, 0xd1899f05, 2 | BRF_GRA },			// 10 
+	{ "tpd",          0x0800, 0xd35d1caf, 2 | BRF_GRA },			// 11 
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -4119,15 +4154,15 @@ static struct BurnRomInfo crush3RomDesc[] = {
 	{ "unkmol.4j",    0x0800, 0x072b91c9, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "unkmol.6j",    0x0800, 0x66fba07d, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "unkmol.5e",    0x0800, 0x338880a0, 2 | BRF_GRA },		//  8 Graphics
-	{ "unkmol.5h",    0x0800, 0x4ce9c81f, 2 | BRF_GRA },		//  9
-	{ "unkmol.5f",    0x0800, 0x752e3780, 2 | BRF_GRA },		// 10
-	{ "unkmol.5j",    0x0800, 0x6e00d2ac, 2 | BRF_GRA },		// 11
+	{ "unkmol.5e",    0x0800, 0x338880a0, 2 | BRF_GRA },			//  8 Graphics
+	{ "unkmol.5h",    0x0800, 0x4ce9c81f, 2 | BRF_GRA },			//  9
+	{ "unkmol.5f",    0x0800, 0x752e3780, 2 | BRF_GRA },			// 10
+	{ "unkmol.5j",    0x0800, 0x6e00d2ac, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -4302,13 +4337,13 @@ static struct BurnRomInfo maketraxRomDesc[] = {
 	{ "maketrax.6h",  0x1000, 0xa2cdc51e, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "maketrax.6j",  0x1000, 0x0b4b5e0a, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "maketrax.5e",  0x1000, 0x91bad2da, 2 | BRF_GRA },		//  4 Graphics
-	{ "maketrax.5f",  0x1000, 0xaea79f55, 2 | BRF_GRA },		//  5
+	{ "maketrax.5e",  0x1000, 0x91bad2da, 2 | BRF_GRA },			//  4 Graphics
+	{ "maketrax.5f",  0x1000, 0xaea79f55, 2 | BRF_GRA },			//  5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Proms
-	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },		//  7
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
+	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -4339,13 +4374,13 @@ static struct BurnRomInfo maketrxbRomDesc[] = {
 	{ "maketrxb.6h",  0x1000, 0x6ad342c9, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "maketrxb.6j",  0x1000, 0xbe27f729, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "maketrax.5e",  0x1000, 0x91bad2da, 2 | BRF_GRA },		//  4 Graphics
-	{ "maketrax.5f",  0x1000, 0xaea79f55, 2 | BRF_GRA },		//  5
+	{ "maketrax.5e",  0x1000, 0x91bad2da, 2 | BRF_GRA },			//  4 Graphics
+	{ "maketrax.5f",  0x1000, 0xaea79f55, 2 | BRF_GRA },			//  5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Proms
-	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },		//  7
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
+	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -4371,15 +4406,15 @@ static struct BurnRomInfo mbrushRomDesc[] = {
 	{ "mbrush.6h",    0x1000, 0xd297108e, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "mbrush.6j",    0x1000, 0x6fd719d0, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "tpa",          0x0800, 0xc7617198, 2 | BRF_GRA },		//  4 Graphics
-	{ "mbrush.5h",    0x0800, 0xc15b6967, 2 | BRF_GRA },		//  5
-	{ "mbrush.5f",    0x0800, 0xd5bc5cb8, 2 | BRF_GRA },		//  6
-	{ "tpd",          0x0800, 0xd35d1caf, 2 | BRF_GRA },		//  7
+	{ "tpa",          0x0800, 0xc7617198, 2 | BRF_GRA },			//  4 Graphics
+	{ "mbrush.5h",    0x0800, 0xc15b6967, 2 | BRF_GRA },			//  5
+	{ "mbrush.5f",    0x0800, 0xd5bc5cb8, 2 | BRF_GRA },			//  6
+	{ "tpd",          0x0800, 0xd35d1caf, 2 | BRF_GRA },			//  7
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  8 Color Proms
-	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },		//  9
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  8 Color Proms
+	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },			//  9
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 10 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
 };
 
@@ -4417,13 +4452,13 @@ static struct BurnRomInfo korosukeRomDesc[] = {
 	{ "kr.6h",        0x1000, 0x76a2e2e2, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "kr.6j",        0x1000, 0x33e0e3bb, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "kr.5e",        0x1000, 0xe0380be8, 2 | BRF_GRA },		//  4 Graphics
-	{ "kr.5f",        0x1000, 0x63fec9ee, 2 | BRF_GRA },		//  5
+	{ "kr.5e",        0x1000, 0xe0380be8, 2 | BRF_GRA },			//  4 Graphics
+	{ "kr.5f",        0x1000, 0x63fec9ee, 2 | BRF_GRA },			//  5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Proms
-	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },		//  7
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
+	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -4481,13 +4516,13 @@ static struct BurnRomInfo eyesRomDesc[] = {
 	{ "f7",           0x1000, 0x731e294e, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "h7",           0x1000, 0x22f7a719, 1 | BRF_ESS | BRF_PRG },	//  4
  
-	{ "d5",           0x1000, 0xd6af0030, 2 | BRF_GRA },		//  5 Graphics
-	{ "e5",           0x1000, 0xa42b5201, 2 | BRF_GRA },		//  6
+	{ "d5",           0x1000, 0xd6af0030, 2 | BRF_GRA },			//  5 Graphics
+	{ "e5",           0x1000, 0xa42b5201, 2 | BRF_GRA },			//  6
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  7 Color Proms
-	{ "82s129.4a",    0x0100, 0xd8d78829, 3 | BRF_GRA },		//  8
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  7 Color Proms
+	{ "82s129.4a",    0x0100, 0xd8d78829, 3 | BRF_GRA },			//  8
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  9 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  9 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 10 Timing Prom (not used)
 };
 
@@ -4518,13 +4553,13 @@ static struct BurnRomInfo eyes2RomDesc[] = {
 	{ "g38203.7f",    0x1000, 0xd618ba66, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "g38204.7h",    0x1000, 0xcf038276, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "g38205.5d",    0x1000, 0x03b1b4c7, 2 | BRF_GRA },		//  4 Graphics
-	{ "g38206.5e",    0x1000, 0xa42b5201, 2 | BRF_GRA },		//  5
+	{ "g38205.5d",    0x1000, 0x03b1b4c7, 2 | BRF_GRA },			//  4 Graphics
+	{ "g38206.5e",    0x1000, 0xa42b5201, 2 | BRF_GRA },			//  5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Proms
-	{ "82s129.4a",    0x0100, 0xd8d78829, 3 | BRF_GRA },		//  7
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
+	{ "82s129.4a",    0x0100, 0xd8d78829, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -4554,10 +4589,10 @@ static struct BurnRomInfo eyesbRomDesc[] = {
 	{ "4.bin",	  0x0800, 0x367a3884, 1 | BRF_ESS | BRF_PRG },  //  6
 	{ "8.bin",	  0x0800, 0x2baaadae, 1 | BRF_ESS | BRF_PRG },  //  7
 
-	{ "9.bin",	  0x0800, 0x342c0653, 2 | BRF_GRA },		//  8 Graphics
-	{ "11.bin",	  0x0800, 0xaaa7a537, 2 | BRF_GRA },		//  9
-	{ "10.bin",	  0x0800, 0xb247b82c, 2 | BRF_GRA },		// 10
-	{ "12.bin",	  0x0800, 0x99af4b30, 2 | BRF_GRA },		// 11
+	{ "9.bin",	  0x0800, 0x342c0653, 2 | BRF_GRA },			//  8 Graphics
+	{ "11.bin",	  0x0800, 0xaaa7a537, 2 | BRF_GRA },			//  9
+	{ "10.bin",	  0x0800, 0xb247b82c, 2 | BRF_GRA },			// 10
+	{ "12.bin",	  0x0800, 0x99af4b30, 2 | BRF_GRA },			// 11
 
 	{ "7051.bin",	  0x0020, 0x0dad2ccb, 3 | BRF_GRA },		// 12 Color Proms
 	{ "7051-3.bin",	  0x0100, 0xd8d78829, 3 | BRF_GRA },		// 13
@@ -4592,18 +4627,18 @@ static struct BurnRomInfo eyeszacbRomDesc[] = {
 	{ "zacb_4.bin",   0x0800, 0x965cf32b, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "zacb_8.bin",   0x0800, 0xc254e92e, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "x.bin",        0x0800, 0x59dce22e, 2 | BRF_GRA },		//  8 Graphics
-	{ "c.bin",        0x0800, 0xaaa7a537, 2 | BRF_GRA },		//  9
-	{ "b.bin",        0x0800, 0x1969792b, 2 | BRF_GRA },		// 10
-	{ "p.bin",        0x0800, 0x99af4b30, 2 | BRF_GRA },		// 11
+	{ "x.bin",        0x0800, 0x59dce22e, 2 | BRF_GRA },			//  8 Graphics
+	{ "c.bin",        0x0800, 0xaaa7a537, 2 | BRF_GRA },			//  9
+	{ "b.bin",        0x0800, 0x1969792b, 2 | BRF_GRA },			// 10
+	{ "p.bin",        0x0800, 0x99af4b30, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "82s129.4a",    0x0100, 0xd8d78829, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "82s129.4a",    0x0100, 0xd8d78829, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 	
-	{ "zacb_11.bin",  0x0800, 0x69c1602a, 0 | BRF_PRG },	//  16 (Not used)
+	{ "zacb_11.bin",  0x0800, 0x69c1602a, 0 | BRF_PRG },			//  16 (Not used)
 };
 
 STD_ROM_PICK(eyeszacb)
@@ -4628,13 +4663,13 @@ static struct BurnRomInfo mrtntRomDesc[] = {
 	{ "tnt.3",        0x1000, 0xad6fc688, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "tnt.4",        0x1000, 0xd77557b3, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "tnt.5",        0x1000, 0x3038cc0e, 2 | BRF_GRA },		//  4 Graphics
-	{ "tnt.6",        0x1000, 0x97634d8b, 2 | BRF_GRA },		//  5
+	{ "tnt.5",        0x1000, 0x3038cc0e, 2 | BRF_GRA },			//  4 Graphics
+	{ "tnt.6",        0x1000, 0x97634d8b, 2 | BRF_GRA },			//  5
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  6 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  7 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  7 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  8 Timing Prom (not used)
 };
 
@@ -4664,15 +4699,15 @@ static struct BurnRomInfo gorkansRomDesc[] = {
 	{ "gorkans5.rom", 0x0800, 0x122969b2, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "gorkans1.rom", 0x0800, 0xf2524b11, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "gorkgfx4.rom", 0x0800, 0x39cd0dbc, 2 | BRF_GRA },		//  8 Graphics
-	{ "gorkgfx2.rom", 0x0800, 0x33d52535, 2 | BRF_GRA },		//  9
-	{ "gorkgfx3.rom", 0x0800, 0x4b6b7970, 2 | BRF_GRA },		// 10
-	{ "gorkgfx1.rom", 0x0800, 0xed70bb3c, 2 | BRF_GRA },		// 11
+	{ "gorkgfx4.rom", 0x0800, 0x39cd0dbc, 2 | BRF_GRA },			//  8 Graphics
+	{ "gorkgfx2.rom", 0x0800, 0x33d52535, 2 | BRF_GRA },			//  9
+	{ "gorkgfx3.rom", 0x0800, 0x4b6b7970, 2 | BRF_GRA },			// 10
+	{ "gorkgfx1.rom", 0x0800, 0xed70bb3c, 2 | BRF_GRA },			// 11
 
-	{ "gorkprom.4",   0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "gorkprom.1",   0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 13
+	{ "gorkprom.4",   0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "gorkprom.1",   0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
 
-	{ "gorkprom.3",   0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "gorkprom.3",   0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "gorkprom.2",   0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -4702,15 +4737,15 @@ static struct BurnRomInfo eggorRomDesc[] = {
 	{ "4.bin",        0x0800, 0xdc805be4, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "8.bin",        0x0800, 0xf9ae204b, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "9.bin",        0x0800, 0x96ad8626, 2 | BRF_GRA },		//  8 Graphics
-	{ "11.bin",       0x0800, 0xcc324017, 2 | BRF_GRA },		//  9
-	{ "10.bin",       0x0800, 0x7c97f513, 2 | BRF_GRA },		// 10
-	{ "12.bin",       0x0800, 0x2e930602, 2 | BRF_GRA },		// 11
+	{ "9.bin",        0x0800, 0x96ad8626, 2 | BRF_GRA },			//  8 Graphics
+	{ "11.bin",       0x0800, 0xcc324017, 2 | BRF_GRA },			//  9
+	{ "10.bin",       0x0800, 0x7c97f513, 2 | BRF_GRA },			// 10
+	{ "12.bin",       0x0800, 0x2e930602, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -4741,15 +4776,15 @@ static struct BurnRomInfo piranhaRomDesc[] = {
 	{ "pir4.bin",     0x0800, 0x4cdf6704, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "pir8.bin",     0x0800, 0xb86fedb3, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "pir9.bin",     0x0800, 0x0f19eb28, 2 | BRF_GRA },		//  8 Graphics
-	{ "pir11.bin",    0x0800, 0x5f8bdabe, 2 | BRF_GRA },		//  9
-	{ "pir10.bin",    0x0800, 0xd19399fb, 2 | BRF_GRA },		// 10
-	{ "pir12.bin",    0x0800, 0xcfb4403d, 2 | BRF_GRA },		// 11
+	{ "pir9.bin",     0x0800, 0x0f19eb28, 2 | BRF_GRA },			//  8 Graphics
+	{ "pir11.bin",    0x0800, 0x5f8bdabe, 2 | BRF_GRA },			//  9
+	{ "pir10.bin",    0x0800, 0xd19399fb, 2 | BRF_GRA },			// 10
+	{ "pir12.bin",    0x0800, 0xcfb4403d, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Prom
-	{ "piranha.4a",   0x0100, 0x08c9447b, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Prom
+	{ "piranha.4a",   0x0100, 0x08c9447b, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -4784,15 +4819,15 @@ static struct BurnRomInfo piranhaoRomDesc[] = {
 	{ "p4.bin",       0x0800, 0x9363a4d1, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "p8.bin",       0x0800, 0x2769979c, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "p9.bin",       0x0800, 0x94eb7563, 2 | BRF_GRA },		//  8 Graphics
-	{ "p11.bin",      0x0800, 0xa3606973, 2 | BRF_GRA },		//  9
-	{ "p10.bin",      0x0800, 0x84165a2c, 2 | BRF_GRA },		// 10
-	{ "p12.bin",      0x0800, 0x2699ba9e, 2 | BRF_GRA },		// 11
+	{ "p9.bin",       0x0800, 0x94eb7563, 2 | BRF_GRA },			//  8 Graphics
+	{ "p11.bin",      0x0800, 0xa3606973, 2 | BRF_GRA },			//  9
+	{ "p10.bin",      0x0800, 0x84165a2c, 2 | BRF_GRA },			// 10
+	{ "p12.bin",      0x0800, 0x2699ba9e, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "piranha.4a",   0x0100, 0x08c9447b, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "piranha.4a",   0x0100, 0x08c9447b, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -4818,15 +4853,15 @@ static struct BurnRomInfo piranhahRomDesc[] = {
 	{ "pr3.cpu",      0x1000, 0x473c379d, 1 | BRF_ESS | BRF_PRG },  //  2
 	{ "pr4.cpu",      0x1000, 0x63fbf895, 1 | BRF_ESS | BRF_PRG },  //  3
 
-	{ "pr5.cpu",      0x0800, 0x3fc4030c, 2 | BRF_GRA },		//  4 Graphics
-	{ "pr7.cpu",      0x0800, 0x30b9a010, 2 | BRF_GRA },		//  5
-	{ "pr6.cpu",      0x0800, 0xf3e9c9d5, 2 | BRF_GRA },		//  6
-	{ "pr8.cpu",      0x0800, 0x133d720d, 2 | BRF_GRA },		//  7
+	{ "pr5.cpu",      0x0800, 0x3fc4030c, 2 | BRF_GRA },			//  4 Graphics
+	{ "pr7.cpu",      0x0800, 0x30b9a010, 2 | BRF_GRA },			//  5
+	{ "pr6.cpu",      0x0800, 0xf3e9c9d5, 2 | BRF_GRA },			//  6
+	{ "pr8.cpu",      0x0800, 0x133d720d, 2 | BRF_GRA },			//  7
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  8 Color Prom
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  9
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  8 Color Prom
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  9
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 10 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
 };
 
@@ -4856,15 +4891,15 @@ static struct BurnRomInfo abscamRomDesc[] = {
 	{ "as3.bin",      0x0800, 0xb39eb940, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "as7.bin",      0x0800, 0x16cf1c67, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "as8.bin",      0x0800, 0x61daabe5, 2 | BRF_GRA },		//  8 Graphics
-	{ "as10.bin",     0x0800, 0x81d50c98, 2 | BRF_GRA },		//  9
-	{ "as9.bin",      0x0800, 0xa3bd1613, 2 | BRF_GRA },		// 10
-	{ "as11.bin",     0x0800, 0x9d802b68, 2 | BRF_GRA },		// 11
+	{ "as8.bin",      0x0800, 0x61daabe5, 2 | BRF_GRA },			//  8 Graphics
+	{ "as10.bin",     0x0800, 0x81d50c98, 2 | BRF_GRA },			//  9
+	{ "as9.bin",      0x0800, 0xa3bd1613, 2 | BRF_GRA },			// 10
+	{ "as11.bin",     0x0800, 0x9d802b68, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "as4a.bin",     0x0100, 0x1605b324, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "as4a.bin",     0x0100, 0x1605b324, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -4890,13 +4925,13 @@ static struct BurnRomInfo jumpshotRomDesc[] = {
 	{ "6h",           0x1000, 0x894d6f68, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "6j",           0x1000, 0xf15a108a, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "5e",           0x1000, 0xd9fa90f5, 2 | BRF_GRA },		//  4 Graphics
-	{ "5f",           0x1000, 0x2ec711c1, 2 | BRF_GRA },		//  5
+	{ "5e",           0x1000, 0xd9fa90f5, 2 | BRF_GRA },			//  4 Graphics
+	{ "5f",           0x1000, 0x2ec711c1, 2 | BRF_GRA },			//  5
 
-	{ "prom.7f",      0x0020, 0x872b42f3, 3 | BRF_GRA },		//  6 Color Prom
-	{ "prom.4a",      0x0100, 0x0399f39f, 3 | BRF_GRA },		//  7
+	{ "prom.7f",      0x0020, 0x872b42f3, 3 | BRF_GRA },			//  6 Color Prom
+	{ "prom.4a",      0x0100, 0x0399f39f, 3 | BRF_GRA },			//  7
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -5030,15 +5065,15 @@ static struct BurnRomInfo cannonbpRomDesc[] = {
 	{ "n5-6h",        0x0800, 0x52846c9d, 1 | BRF_ESS | BRF_PRG },	//  4
 	{ "n6-6n",        0x0800, 0x59e890dd, 1 | BRF_ESS | BRF_PRG },	//  5
 
-	{ "z1-5e",        0x0800, 0x125779e0, 2 | BRF_GRA },		//  6 Graphics
-	{ "z3-5h",        0x0800, 0x78f866c0, 2 | BRF_GRA },		//  7
-	{ "z2-5f",        0x0800, 0xfbd2c99d, 2 | BRF_GRA },		//  8
-	{ "z4-5j",        0x0800, 0x8734c904, 2 | BRF_GRA },		//  9
+	{ "z1-5e",        0x0800, 0x125779e0, 2 | BRF_GRA },			//  6 Graphics
+	{ "z3-5h",        0x0800, 0x78f866c0, 2 | BRF_GRA },			//  7
+	{ "z2-5f",        0x0800, 0xfbd2c99d, 2 | BRF_GRA },			//  8
+	{ "z4-5j",        0x0800, 0x8734c904, 2 | BRF_GRA },			//  9
 
-	{ "colorprom_1",  0x0020, 0x08f8ae7e, 3 | BRF_GRA },		// 10 Color Proms
-	{ "colorprom_2",  0x0100, 0x359a15dc, 3 | BRF_GRA },		// 11
+	{ "colorprom_1",  0x0020, 0x08f8ae7e, 3 | BRF_GRA },			// 10 Color Proms
+	{ "colorprom_2",  0x0100, 0x359a15dc, 3 | BRF_GRA },			// 11
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 12 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 12 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom (not used)
 };
 
@@ -5070,15 +5105,15 @@ static struct BurnRomInfo woodpeckRomDesc[] = {
 	{ "g.bin", 0x1000, 0x024092f4, 1 | BRF_ESS | BRF_PRG },	//  3
 	{ "h.bin", 0x1000, 0x18ef0fc8, 1 | BRF_ESS | BRF_PRG },	//  4
 
-	{ "a.5e",  0x0800, 0x15a87f62, 2 | BRF_GRA },		//  5 Graphics
-	{ "c.5h",  0x0800, 0xab4abd88, 2 | BRF_GRA },		//  6
-	{ "b.5f",  0x0800, 0x5b9ba95b, 2 | BRF_GRA },		//  7
-	{ "d.5j",  0x0800, 0xd7b80a45, 2 | BRF_GRA },		//  8
+	{ "a.5e",  0x0800, 0x15a87f62, 2 | BRF_GRA },			//  5 Graphics
+	{ "c.5h",  0x0800, 0xab4abd88, 2 | BRF_GRA },			//  6
+	{ "b.5f",  0x0800, 0x5b9ba95b, 2 | BRF_GRA },			//  7
+	{ "d.5j",  0x0800, 0xd7b80a45, 2 | BRF_GRA },			//  8
 
-	{ "pr.8h", 0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  9 Color Prom
-	{ "pr.4a", 0x0100, 0xd8772167, 3 | BRF_GRA },		// 10
+	{ "pr.8h", 0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  9 Color Prom
+	{ "pr.4a", 0x0100, 0xd8772167, 3 | BRF_GRA },			// 10
 
-	{ "pr.1k", 0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 11 Sound Prom
+	{ "pr.1k", 0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 11 Sound Prom
 	{ "pr.3k", 0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 12 Timing Prom (not used)
 };
 
@@ -5121,13 +5156,13 @@ static struct BurnRomInfo woodpekaRomDesc[] = {
 	{ "3",     0x1000, 0xa3a3253a, 1 | BRF_PRG | BRF_ESS },	//  3
 	{ "4",     0x1000, 0x6c50546b, 1 | BRF_PRG | BRF_ESS },	//  4
 
-	{ "10.5f", 0x1000, 0x0bf52102, 2 | BRF_GRA },		//  5 Graphics
-	{ "11.5h", 0x1000, 0x0ed8def8, 2 | BRF_GRA },		//  6
+	{ "10.5f", 0x1000, 0x0bf52102, 2 | BRF_GRA },			//  5 Graphics
+	{ "11.5h", 0x1000, 0x0ed8def8, 2 | BRF_GRA },			//  6
 
-	{ "pr.8h", 0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  7 Color Proms
-	{ "pr.4a", 0x0100, 0xd8772167, 3 | BRF_GRA },		//  8
+	{ "pr.8h", 0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  7 Color Proms
+	{ "pr.4a", 0x0100, 0xd8772167, 3 | BRF_GRA },			//  8
 
-	{ "pr.1k", 0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  9
+	{ "pr.1k", 0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  9
 	{ "pr.3k", 0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 10 Timing Prom (not used)
 };
 
@@ -5155,13 +5190,13 @@ static struct BurnRomInfo lizwizRomDesc[] = {
 	{ "wiza",         0x1000, 0xf6dea3a6, 1 | BRF_ESS | BRF_PRG },	//  4
 	{ "wizb",         0x1000, 0xf27fb5a8, 1 | BRF_ESS | BRF_PRG },	//  5
 
-	{ "5e.cpu",       0x1000, 0x45059e73, 2 | BRF_GRA },		//  6 Graphics
-	{ "5f.cpu",       0x1000, 0xd2469717, 2 | BRF_GRA },		//  7
+	{ "5e.cpu",       0x1000, 0x45059e73, 2 | BRF_GRA },			//  6 Graphics
+	{ "5f.cpu",       0x1000, 0xd2469717, 2 | BRF_GRA },			//  7
 
-	{ "7f.cpu",       0x0020, 0x7549a947, 3 | BRF_GRA },		//  8 Color Proms
-	{ "4a.cpu",       0x0100, 0x5fdca536, 3 | BRF_GRA },		//  9
+	{ "7f.cpu",       0x0020, 0x7549a947, 3 | BRF_GRA },			//  8 Color Proms
+	{ "4a.cpu",       0x0100, 0x5fdca536, 3 | BRF_GRA },			//  9
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 10 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
 };
 
@@ -5196,13 +5231,13 @@ static struct BurnRomInfo ponpokoRomDesc[] = {
 	{ "ppoko7.bin",   0x1000, 0x3cbe47ca, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "ppokoj8.bin",  0x1000, 0x04b63fc6, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "ppoko9.bin",   0x1000, 0xb73e1a06, 2 | BRF_GRA },		//  8 Graphics
-	{ "ppoko10.bin",  0x1000, 0x62069b5d, 2 | BRF_GRA },		//  9
+	{ "ppoko9.bin",   0x1000, 0xb73e1a06, 2 | BRF_GRA },			//  8 Graphics
+	{ "ppoko10.bin",  0x1000, 0x62069b5d, 2 | BRF_GRA },			//  9
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 10 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 11
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 10 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 11
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 12 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 12 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom (not used)
 };
 
@@ -5262,13 +5297,13 @@ static struct BurnRomInfo ponpokovRomDesc[] = {
 	{ "ppoko7.bin",   0x1000, 0x3cbe47ca, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "ppoko8.bin",   0x1000, 0xb39be27d, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "ppoko9.bin",   0x1000, 0xb73e1a06, 2 | BRF_GRA },		//  8 Graphics
-	{ "ppoko10.bin",  0x1000, 0x62069b5d, 2 | BRF_GRA },		//  9
+	{ "ppoko9.bin",   0x1000, 0xb73e1a06, 2 | BRF_GRA },			//  8 Graphics
+	{ "ppoko10.bin",  0x1000, 0x62069b5d, 2 | BRF_GRA },			//  9
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 10 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 11
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 10 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 11
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 12 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 12 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom (not used)
 };
 
@@ -5292,13 +5327,13 @@ static struct BurnRomInfo theglobpRomDesc[] = {
 	{ "glob.u2",      0x2000, 0x829d0bea, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 	{ "glob.u3",      0x2000, 0x31de6628, 1 | BRF_ESS | BRF_PRG },	//  1
 
-	{ "glob.5e",      0x1000, 0x53688260, 2 | BRF_GRA },		//  2 Graphics
-	{ "glob.5f",      0x1000, 0x051f59c7, 2 | BRF_GRA },		//  3
+	{ "glob.5e",      0x1000, 0x53688260, 2 | BRF_GRA },			//  2 Graphics
+	{ "glob.5f",      0x1000, 0x051f59c7, 2 | BRF_GRA },			//  3
 
-	{ "glob.7f",      0x0020, 0x1f617527, 3 | BRF_GRA },		//  4 Color Proms
-	{ "glob.4a",      0x0100, 0x28faa769, 3 | BRF_GRA },		//  5
+	{ "glob.7f",      0x0020, 0x1f617527, 3 | BRF_GRA },			//  4 Color Proms
+	{ "glob.4a",      0x0100, 0x28faa769, 3 | BRF_GRA },			//  5
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  6 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  6 Sound Prom
 	{ "82s126.3m"  ,  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  7 Timing Prom (not used)
 };
 
@@ -5337,13 +5372,13 @@ static struct BurnRomInfo sprglobpRomDesc[] = {
 	{ "glob.u2",      0x2000, 0x829d0bea, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 	{ "glob.u3",      0x2000, 0x31de6628, 1 | BRF_ESS | BRF_PRG },	//  1
 
-	{ "5e_2532.dat",  0x1000, 0x1aa16109, 2 | BRF_GRA },		//  2 Graphics
-	{ "5f_2532.dat",  0x1000, 0xafe72a89, 2 | BRF_GRA },		//  3
+	{ "5e_2532.dat",  0x1000, 0x1aa16109, 2 | BRF_GRA },			//  2 Graphics
+	{ "5f_2532.dat",  0x1000, 0xafe72a89, 2 | BRF_GRA },			//  3
 
-	{ "glob.7f",      0x0020, 0x1f617527, 3 | BRF_GRA },		//  4 Color Prom
-	{ "glob.4a",      0x0100, 0x28faa769, 3 | BRF_GRA },		//  5
+	{ "glob.7f",      0x0020, 0x1f617527, 3 | BRF_GRA },			//  4 Color Prom
+	{ "glob.4a",      0x0100, 0x28faa769, 3 | BRF_GRA },			//  5
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  6 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  6 Sound Prom
 	{ "82s126.3m"  ,  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  7 Timing Prom (not used)
 };
 
@@ -5369,12 +5404,12 @@ static struct BurnRomInfo sprglbpgRomDesc[] = {
 	{ "ic15.3",       0x1000, 0xa252047f, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "ic14.4",       0x1000, 0x7efa81f1, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "ic92.5",       0x2000, 0xE54F484D, 2 | BRF_GRA },		//  4 Graphics
+	{ "ic92.5",       0x2000, 0xE54F484D, 2 | BRF_GRA },			//  4 Graphics
 
-	{ "ic78.prm",     0x0020, 0x1f617527, 3 | BRF_GRA },		//  5 Color Prom
-	{ "ic88.prm",     0x0100, 0x28faa769, 3 | BRF_GRA },		//  6
+	{ "ic78.prm",     0x0020, 0x1f617527, 3 | BRF_GRA },			//  5 Color Prom
+	{ "ic88.prm",     0x0100, 0x28faa769, 3 | BRF_GRA },			//  6
 
-	{ "ic51.prm",     0x0100, 0xc29dea27, 4 | BRF_SND },		//  7 Sound Prom
+	{ "ic51.prm",     0x0100, 0xc29dea27, 4 | BRF_SND },			//  7 Sound Prom
 	{ "ic70.prm"  ,   0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  8 Timing Prom (not used)
 };
 
@@ -5398,13 +5433,13 @@ static struct BurnRomInfo beastfRomDesc[] = {
 	{ "bf-u2.bin",    0x2000, 0x3afc517b, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 	{ "bf-u3.bin",    0x2000, 0x8dbd76d0, 1 | BRF_ESS | BRF_PRG },	//  1
 
-	{ "beastf.5e",    0x1000, 0x5654dc34, 2 | BRF_GRA },		//  2 Graphics
-	{ "beastf.5f",    0x1000, 0x1b30ca61, 2 | BRF_GRA },		//  3
+	{ "beastf.5e",    0x1000, 0x5654dc34, 2 | BRF_GRA },			//  2 Graphics
+	{ "beastf.5f",    0x1000, 0x1b30ca61, 2 | BRF_GRA },			//  3
 
-	{ "glob.7f",      0x0020, 0x1f617527, 3 | BRF_GRA },		//  4 Color Proms
-	{ "glob.4a",      0x0100, 0x28faa769, 3 | BRF_GRA },		//  5
+	{ "glob.7f",      0x0020, 0x1f617527, 3 | BRF_GRA },			//  4 Color Proms
+	{ "glob.4a",      0x0100, 0x28faa769, 3 | BRF_GRA },			//  5
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  6 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  6 Sound Prom
 	{ "82s126.3m"  ,  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  7 Timing Prom (not used)
 };
 
@@ -5431,11 +5466,11 @@ static struct BurnRomInfo vanvanRomDesc[] = {
 	{ "van-4.53",     0x1000, 0xb724cbe0, 1 | BRF_ESS | BRF_PRG },	//  3
 	{ "van-5.39",     0x1000, 0xdb67414c, 1 | BRF_ESS | BRF_PRG },	//  4
 
-	{ "van-20.18",    0x1000, 0x60efbe66, 2 | BRF_GRA },		//  5 Graphics
-	{ "van-21.19",    0x1000, 0x5dd53723, 2 | BRF_GRA },		//  6
+	{ "van-20.18",    0x1000, 0x60efbe66, 2 | BRF_GRA },			//  5 Graphics
+	{ "van-21.19",    0x1000, 0x5dd53723, 2 | BRF_GRA },			//  6
 
-	{ "6331-1.6",     0x0020, 0xce1d9503, 3 | BRF_GRA },		//  7 Color Proms
-	{ "6301-1.37",    0x0100, 0x4b803d9f, 3 | BRF_GRA },		//  8
+	{ "6331-1.6",     0x0020, 0xce1d9503, 3 | BRF_GRA },			//  7 Color Proms
+	{ "6301-1.37",    0x0100, 0x4b803d9f, 3 | BRF_GRA },			//  8
 };
 
 STD_ROM_PICK(vanvan)
@@ -5473,11 +5508,11 @@ static struct BurnRomInfo vanvankRomDesc[] = {
 	{ "van4.bin",     0x1000, 0xf8b37ed5, 1 | BRF_ESS | BRF_PRG },	//  3
 	{ "van5.bin",     0x1000, 0xb8c1e089, 1 | BRF_ESS | BRF_PRG },	//  4
 
-	{ "van-20.18",    0x1000, 0x60efbe66, 2 | BRF_GRA },		//  5 Graphics
-	{ "van-21.19",    0x1000, 0x5dd53723, 2 | BRF_GRA },		//  6
+	{ "van-20.18",    0x1000, 0x60efbe66, 2 | BRF_GRA },			//  5 Graphics
+	{ "van-21.19",    0x1000, 0x5dd53723, 2 | BRF_GRA },			//  6
 
-	{ "6331-1.6",     0x0020, 0xce1d9503, 3 | BRF_GRA },		//  7 Color Proms
-	{ "6301-1.37",    0x0100, 0x4b803d9f, 3 | BRF_GRA },		//  8
+	{ "6331-1.6",     0x0020, 0xce1d9503, 3 | BRF_GRA },			//  7 Color Proms
+	{ "6301-1.37",    0x0100, 0x4b803d9f, 3 | BRF_GRA },			//  8
 };
 
 STD_ROM_PICK(vanvank)
@@ -5503,11 +5538,11 @@ static struct BurnRomInfo vanvanbRomDesc[] = {
 	{ "vv4.bin",      0x1000, 0xb1f04006, 1 | BRF_ESS | BRF_PRG },	//  3
 	{ "vv5.bin",      0x1000, 0xdb67414c, 1 | BRF_ESS | BRF_PRG },	//  4
 
-	{ "vv20.bin",     0x1000, 0xeb56cb51, 2 | BRF_GRA },		//  5 Graphics
-	{ "vv21.bin",     0x1000, 0x5dd53723, 2 | BRF_GRA },		//  6
+	{ "vv20.bin",     0x1000, 0xeb56cb51, 2 | BRF_GRA },			//  5 Graphics
+	{ "vv21.bin",     0x1000, 0x5dd53723, 2 | BRF_GRA },			//  6
 
-	{ "6331-1.6",     0x0020, 0xce1d9503, 3 | BRF_GRA },		//  7 Color Proms
-	{ "6301-1.37",    0x0100, 0x4b803d9f, 3 | BRF_GRA },		//  8
+	{ "6331-1.6",     0x0020, 0xce1d9503, 3 | BRF_GRA },			//  7 Color Proms
+	{ "6301-1.37",    0x0100, 0x4b803d9f, 3 | BRF_GRA },			//  8
 };
 
 STD_ROM_PICK(vanvanb)
@@ -5536,15 +5571,15 @@ static struct BurnRomInfo nmouseRomDesc[] = {
 	{ "naumouse.j7",  0x0800, 0xcc3be185, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "naumouse.j6",  0x0800, 0x66b3e5dc, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "naumouse.d5",  0x0800, 0x2ea7cc3f, 2 | BRF_GRA },		//  8 Graphics
-	{ "naumouse.h5",  0x0800, 0x0511fcea, 2 | BRF_GRA },		//  9
-	{ "naumouse.e5",  0x0800, 0xf5a627cd, 2 | BRF_GRA },		// 10
-	{ "naumouse.j5",  0x0800, 0x65f2580e, 2 | BRF_GRA },		// 11
+	{ "naumouse.d5",  0x0800, 0x2ea7cc3f, 2 | BRF_GRA },			//  8 Graphics
+	{ "naumouse.h5",  0x0800, 0x0511fcea, 2 | BRF_GRA },			//  9
+	{ "naumouse.e5",  0x0800, 0xf5a627cd, 2 | BRF_GRA },			// 10
+	{ "naumouse.j5",  0x0800, 0x65f2580e, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "naumouse.a4",  0x0100, 0xd8772167, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "naumouse.a4",  0x0100, 0xd8772167, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -5579,15 +5614,15 @@ static struct BurnRomInfo nmousebRomDesc[] = {
 	{ "snatch3.bin",  0x0800, 0x06fb18ec, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "snatch7.bin",  0x0800, 0xd187b82b, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "naumouse.d5",  0x0800, 0x2ea7cc3f, 2 | BRF_GRA },		//  8 Graphics
-	{ "naumouse.h5",  0x0800, 0x0511fcea, 2 | BRF_GRA },		//  9
-	{ "naumouse.e5",  0x0800, 0xf5a627cd, 2 | BRF_GRA },		// 10
-	{ "snatch11.bin", 0x0800, 0x330230a5, 2 | BRF_GRA },		// 11
+	{ "naumouse.d5",  0x0800, 0x2ea7cc3f, 2 | BRF_GRA },			//  8 Graphics
+	{ "naumouse.h5",  0x0800, 0x0511fcea, 2 | BRF_GRA },			//  9
+	{ "naumouse.e5",  0x0800, 0xf5a627cd, 2 | BRF_GRA },			// 10
+	{ "snatch11.bin", 0x0800, 0x330230a5, 2 | BRF_GRA },			// 11
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 12 Color Proms
-	{ "naumouse.a4",  0x0100, 0xd8772167, 3 | BRF_GRA },		// 13
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "naumouse.a4",  0x0100, 0xd8772167, 3 | BRF_GRA },			// 13
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 14 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
@@ -5616,11 +5651,11 @@ static struct BurnRomInfo dremshprRomDesc[] = {
 	{ "red_6.40",     0x1000, 0x4cf8b121, 1 | BRF_ESS | BRF_PRG },	//  5
 	{ "red_7.41",     0x1000, 0xbd4fc4ba, 1 | BRF_ESS | BRF_PRG },	//  6
  
-	{ "red-20.18",    0x1000, 0x2d6698dc, 2 | BRF_GRA },		//  7 Graphics
-	{ "red-21.19",    0x1000, 0x38c9ce9b, 2 | BRF_GRA },		//  8
+	{ "red-20.18",    0x1000, 0x2d6698dc, 2 | BRF_GRA },			//  7 Graphics
+	{ "red-21.19",    0x1000, 0x38c9ce9b, 2 | BRF_GRA },			//  8
 
-	{ "6331-1.6",     0x0020, 0xce1d9503, 3 | BRF_GRA },		//  9 Color Proms
-	{ "6301-1.37",    0x0100, 0x39d6fb5c, 3 | BRF_GRA },		// 10
+	{ "6331-1.6",     0x0020, 0xce1d9503, 3 | BRF_GRA },			//  9 Color Proms
+	{ "6301-1.37",    0x0100, 0x39d6fb5c, 3 | BRF_GRA },			// 10
 
 	// Uses AY8910
 };
@@ -5650,12 +5685,12 @@ static struct BurnRomInfo bwcasinoRomDesc[] = {
 	{ "bwc_u2.bin",   0x2000, 0xe2eea868, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 	{ "bwc_u3.bin",   0x2000, 0xa935571e, 1 | BRF_ESS | BRF_PRG },	//  1
 
-	{ "bwc_5e.bin",   0x1000, 0xe334c01e, 2 | BRF_GRA },		//  2 Graphics
+	{ "bwc_5e.bin",   0x1000, 0xe334c01e, 2 | BRF_GRA },			//  2 Graphics
 
-	{ "aca_7f.bin",   0x0020, 0x133bb744, 3 | BRF_GRA },		//  3 Color Proms
-	{ "aca_4a.bin",   0x0100, 0x8e29208f, 3 | BRF_GRA },		//  4
+	{ "aca_7f.bin",   0x0020, 0x133bb744, 3 | BRF_GRA },			//  3 Color Proms
+	{ "aca_4a.bin",   0x0100, 0x8e29208f, 3 | BRF_GRA },			//  4
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  5 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  5 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  6 Timing Prom (not used)
 };
 
@@ -5696,12 +5731,12 @@ static struct BurnRomInfo acityaRomDesc[] = {
 	{ "aca_u2.bin",   0x2000, 0x261c2fdc, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 	{ "aca_u3.bin",   0x2000, 0x05fab4ca, 1 | BRF_ESS | BRF_PRG },	//  1
 
-	{ "aca_5e.bin",   0x1000, 0x7f2dd2c9, 2 | BRF_GRA },		//  2 Graphics
+	{ "aca_5e.bin",   0x1000, 0x7f2dd2c9, 2 | BRF_GRA },			//  2 Graphics
 
-	{ "aca_7f.bin",   0x0020, 0x133bb744, 3 | BRF_GRA },		//  3 Color Proms
-	{ "aca_4a.bin",   0x0100, 0x8e29208f, 3 | BRF_GRA },		//  4
+	{ "aca_7f.bin",   0x0020, 0x133bb744, 3 | BRF_GRA },			//  3 Color Proms
+	{ "aca_4a.bin",   0x0100, 0x8e29208f, 3 | BRF_GRA },			//  4
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  5 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  5 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  6 Timing Prom (not used)
 };
 
@@ -5725,12 +5760,12 @@ static struct BurnRomInfo bigbucksRomDesc[] = {
 	{ "p.rom",        0x4000, 0xeea6c1c9, 1 | BRF_ESS | BRF_PRG },	//  0  Z80 Code
 	{ "m.rom",        0x2000, 0xbb8f7363, 1 | BRF_ESS | BRF_PRG },	//  1
 
-	{ "5e.cpu",       0x1000, 0x18442c37, 2 | BRF_GRA },		//  2 Graphics
+	{ "5e.cpu",       0x1000, 0x18442c37, 2 | BRF_GRA },			//  2 Graphics
 
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  3 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  4
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  3 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  4
  
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  5 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  5 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  6 Timing Prom
 
 	{ "rom1.rom",     0x8000, 0x90b7785f, 7 | BRF_PRG | BRF_ESS },	//  7 Question Roms
@@ -5772,12 +5807,12 @@ static struct BurnRomInfo rocktrv2RomDesc[] = {
 	{ "1.aux",        0x4000, 0xd182947b, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 	{ "2.aux",        0x2000, 0x27a7461d, 1 | BRF_ESS | BRF_PRG },	//  1
 
-	{ "5e.cpu",       0x1000, 0x0a6cc43b, 2 | BRF_GRA },		//  2 Graphics
+	{ "5e.cpu",       0x1000, 0x0a6cc43b, 2 | BRF_GRA },			//  2 Graphics
 
-	{ "7f.cpu",       0x0020, 0x7549a947, 3 | BRF_GRA },		//  3 Color Proms
-	{ "4a.cpu",       0x0100, 0xddd5d88e, 3 | BRF_GRA },		//  4
+	{ "7f.cpu",       0x0020, 0x7549a947, 3 | BRF_GRA },			//  3 Color Proms
+	{ "4a.cpu",       0x0100, 0xddd5d88e, 3 | BRF_GRA },			//  4
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  5 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  5 Sound Prom
 	{ "82s126.3m"  ,  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  6 Timing Prom (not used)
 
 	{ "3.aux",        0x4000, 0x5b117ca6, 7 | BRF_PRG | BRF_ESS },	//  7 Question Roms
@@ -5833,18 +5868,18 @@ static struct BurnRomInfo alibabaRomDesc[] = {
 	{ "6l",           0x1000, 0x5ab315c1, 1 | BRF_ESS | BRF_PRG },	//  4
 	{ "6m",           0x0800, 0x438d0357, 1 | BRF_ESS | BRF_PRG },	//  5
 
-	{ "5e",           0x0800, 0x85bcb8f8, 2 | BRF_GRA },		//  6 Graphics
-	{ "5h",           0x0800, 0x38e50862, 2 | BRF_GRA },		//  7
-	{ "5f",           0x0800, 0xb5715c86, 2 | BRF_GRA },		//  8
-	{ "5k",           0x0800, 0x713086b3, 2 | BRF_GRA },		//  9
+	{ "5e",           0x0800, 0x85bcb8f8, 2 | BRF_GRA },			//  6 Graphics
+	{ "5h",           0x0800, 0x38e50862, 2 | BRF_GRA },			//  7
+	{ "5f",           0x0800, 0xb5715c86, 2 | BRF_GRA },			//  8
+	{ "5k",           0x0800, 0x713086b3, 2 | BRF_GRA },			//  9
 
-	{ "82s123.e7",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 10 Color Proms
-	{ "82s129.a4",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 11
+	{ "82s123.e7",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 10 Color Proms
+	{ "82s129.a4",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 11
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 12 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 12 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
 
-	{ "ab7.bin",      0x0800, 0x52294ef5, 0 | BRF_OPT },		// 14 Mystery Rom? (1st & 2nd halves identical)
+	{ "ab7.bin",      0x0800, 0x52294ef5, 0 | BRF_OPT },			// 14 Mystery Rom? (1st & 2nd halves identical)
 };
 
 STD_ROM_PICK(alibaba)
@@ -5882,18 +5917,18 @@ static struct BurnRomInfo alibababRomDesc[] = {
 	{ "ab5.bin",      0x1000, 0xae2f4aac, 1 | BRF_ESS | BRF_PRG },	//  4
 	{ "6m",           0x0800, 0x438d0357, 1 | BRF_ESS | BRF_PRG },	//  5
 
-	{ "5e",           0x0800, 0x85bcb8f8, 2 | BRF_GRA },		//  6 Graphics
-	{ "5h",           0x0800, 0x38e50862, 2 | BRF_GRA },		//  7
-	{ "5f",           0x0800, 0xb5715c86, 2 | BRF_GRA },		//  8
-	{ "5k",           0x0800, 0x713086b3, 2 | BRF_GRA },		//  9
+	{ "5e",           0x0800, 0x85bcb8f8, 2 | BRF_GRA },			//  6 Graphics
+	{ "5h",           0x0800, 0x38e50862, 2 | BRF_GRA },			//  7
+	{ "5f",           0x0800, 0xb5715c86, 2 | BRF_GRA },			//  8
+	{ "5k",           0x0800, 0x713086b3, 2 | BRF_GRA },			//  9
 
-	{ "82s123.e7",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		// 10 Color Proms
-	{ "82s129.a4",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		// 11
+	{ "82s123.e7",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 10 Color Proms
+	{ "82s129.a4",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 11
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		// 12 Sound Prom
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 12 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
 
-	{ "ab7.bin",      0x0800, 0x52294ef5, 0 | BRF_OPT },		// 14 Mystery Rom? (1st & 2nd halves identical)
+	{ "ab7.bin",      0x0800, 0x52294ef5, 0 | BRF_OPT },			// 14 Mystery Rom? (1st & 2nd halves identical)
 };
 
 STD_ROM_PICK(alibabab)
@@ -5918,13 +5953,13 @@ static struct BurnRomInfo birdiyRomDesc[] = {
 	{ "a4.4a",        0x1000, 0x3392783b, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "c4.4c",        0x1000, 0x2391d83d, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "c1.1c",        0x1000, 0x8f6bf54f, 2 | BRF_GRA },		//  4 Graphics
-	{ "c3.3c",        0x1000, 0x10b55440, 2 | BRF_GRA },		//  5
+	{ "c1.1c",        0x1000, 0x8f6bf54f, 2 | BRF_GRA },			//  4 Graphics
+	{ "c3.3c",        0x1000, 0x10b55440, 2 | BRF_GRA },			//  5
 
-	{ "n82s123n.10n", 0x0020, 0xff344446, 3 | BRF_GRA },		//  6 Color Proms
-	{ "n82s129n.9m",  0x0100, 0x63efb927, 3 | BRF_GRA },		//  7
+	{ "n82s123n.10n", 0x0020, 0xff344446, 3 | BRF_GRA },			//  6 Color Proms
+	{ "n82s129n.9m",  0x0100, 0x63efb927, 3 | BRF_GRA },			//  7
 
-	{ "n82s129n.4k",  0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "n82s129n.4k",  0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  8 Sound Prom
 	{ "n82s129n.6l",  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
@@ -5959,13 +5994,13 @@ static struct BurnRomInfo pengoRomDesc[] = {
 	{ "ep5118b.32",   0x1000, 0xaf7b12c4, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "ep5119c.31",   0x1000, 0x933950fe, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "ep1640.92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },		//  8 Graphics
-	{ "ep1695.105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },		//  9
+	{ "ep1640.92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },			//  8 Graphics
+	{ "ep1695.105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },			//  9
 
-	{ "pr1633.78",    0x0020, 0x3a5844ec, 3 | BRF_GRA },		// 10 Color Proms
-	{ "pr1634.88",    0x0400, 0x766b139b, 3 | BRF_GRA },		// 11
+	{ "pr1633.78",    0x0020, 0x3a5844ec, 3 | BRF_GRA },			// 10 Color Proms
+	{ "pr1634.88",    0x0400, 0x766b139b, 3 | BRF_GRA },			// 11
 
-	{ "pr1635.51",    0x0100, 0xc29dea27, 4 | BRF_SND },		// 12 Sound Prom
+	{ "pr1635.51",    0x0100, 0xc29dea27, 4 | BRF_SND },			// 12 Sound Prom
 	{ "pr1636.70",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
 };
 
@@ -6065,13 +6100,13 @@ static struct BurnRomInfo pengo2RomDesc[] = {
 	{ "ep5118b.32",   0x1000, 0xaf7b12c4, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "ic31.2",       0x1000, 0x669555c1, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "ep1640.92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },		//  8 Graphics
-	{ "ep1695.105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },		//  9
+	{ "ep1640.92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },			//  8 Graphics
+	{ "ep1695.105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },			//  9
 
-	{ "pr1633.78",    0x0020, 0x3a5844ec, 3 | BRF_GRA },		// 10 Color Proms
-	{ "pr1634.88",    0x0400, 0x766b139b, 3 | BRF_GRA },		// 11
+	{ "pr1633.78",    0x0020, 0x3a5844ec, 3 | BRF_GRA },			// 10 Color Proms
+	{ "pr1634.88",    0x0400, 0x766b139b, 3 | BRF_GRA },			// 11
 
-	{ "pr1635.51",    0x0100, 0xc29dea27, 4 | BRF_SND },		// 12 Sound Prom
+	{ "pr1635.51",    0x0100, 0xc29dea27, 4 | BRF_SND },			// 12 Sound Prom
 	{ "pr1636.70",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
 };
 
@@ -6101,13 +6136,13 @@ static struct BurnRomInfo pengo2uRomDesc[] = {
 	{ "ep5126.32",    0x1000, 0xe5920728, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "epr5135.u31",  0x1000, 0x13de47ed, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "ep1640.92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },		//  8 Graphics
-	{ "ep1695.105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },		//  9
+	{ "ep1640.92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },			//  8 Graphics
+	{ "ep1695.105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },			//  9
 
-	{ "pr1633.78",    0x0020, 0x3a5844ec, 3 | BRF_GRA },		// 10 Color Proms
-	{ "pr1634.88",    0x0400, 0x766b139b, 3 | BRF_GRA },		// 11
+	{ "pr1633.78",    0x0020, 0x3a5844ec, 3 | BRF_GRA },			// 10 Color Proms
+	{ "pr1634.88",    0x0400, 0x766b139b, 3 | BRF_GRA },			// 11
 
-	{ "pr1635.51",    0x0100, 0xc29dea27, 4 | BRF_SND },		// 12 Sound Prom
+	{ "pr1635.51",    0x0100, 0xc29dea27, 4 | BRF_SND },			// 12 Sound Prom
 	{ "pr1636.70",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
 };
 
@@ -6149,13 +6184,13 @@ static struct BurnRomInfo pengo3uRomDesc[] = {
 	{ "ep5126.32",    0x1000, 0xe5920728, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "ep5127.31",    0x1000, 0xa7d3d1d6, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "ep1640.92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },		//  8 Graphics
-	{ "ep1695.105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },		//  9
+	{ "ep1640.92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },			//  8 Graphics
+	{ "ep1695.105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },			//  9
 
-	{ "pr1633.78",    0x0020, 0x3a5844ec, 3 | BRF_GRA },		// 10 Color Proms
-	{ "pr1634.88",    0x0400, 0x766b139b, 3 | BRF_GRA },		// 11
+	{ "pr1633.78",    0x0020, 0x3a5844ec, 3 | BRF_GRA },			// 10 Color Proms
+	{ "pr1634.88",    0x0400, 0x766b139b, 3 | BRF_GRA },			// 11
 
-	{ "pr1635.51",    0x0100, 0xc29dea27, 4 | BRF_SND },		// 12 Sound Prom
+	{ "pr1635.51",    0x0100, 0xc29dea27, 4 | BRF_SND },			// 12 Sound Prom
 	{ "pr1636.70",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
 };
 
@@ -6185,13 +6220,13 @@ static struct BurnRomInfo pengo4RomDesc[] = {
 	{ "ep1744.32",    0x1000, 0xaf7b12c4, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "ep1745.31",    0x1000, 0x507e18b9, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "ep1640.92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },		//  8 Graphics
-	{ "ep1695.105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },		//  9
+	{ "ep1640.92",    0x2000, 0xd7eec6cd, 2 | BRF_GRA },			//  8 Graphics
+	{ "ep1695.105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },			//  9
 
-	{ "pr1633.78",    0x0020, 0x3a5844ec, 3 | BRF_GRA },		// 10 Color Proms
-	{ "pr1634.88",    0x0400, 0x766b139b, 3 | BRF_GRA },		// 11
+	{ "pr1633.78",    0x0020, 0x3a5844ec, 3 | BRF_GRA },			// 10 Color Proms
+	{ "pr1634.88",    0x0400, 0x766b139b, 3 | BRF_GRA },			// 11
 
-	{ "pr1635.51",    0x0100, 0xc29dea27, 4 | BRF_SND },		// 12 Sound Prom
+	{ "pr1635.51",    0x0100, 0xc29dea27, 4 | BRF_SND },			// 12 Sound Prom
 	{ "pr1636.70",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom
 };
 
@@ -6219,13 +6254,13 @@ static struct BurnRomInfo pengobRomDesc[] = {
 	{ "032_pn04.bin", 0x1000, 0xbfde44c1, 1 | BRF_ESS | BRF_PRG },	//  4
 	{ "031_pn08.bin", 0x1000, 0x64e8c30d, 1 | BRF_ESS | BRF_PRG },	//  5
 
-	{ "5",            0x2000, 0x1232437b, 2 | BRF_GRA },		//  6 Graphics
-	{ "ep1695.105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },		//  7
+	{ "5",            0x2000, 0x1232437b, 2 | BRF_GRA },			//  6 Graphics
+	{ "ep1695.105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },			//  7
 
-	{ "pr1633.78",    0x0020, 0x3a5844ec, 3 | BRF_GRA },		//  8 Color Proms
-	{ "pr1634.88",    0x0400, 0x766b139b, 3 | BRF_GRA },		//  9
+	{ "pr1633.78",    0x0020, 0x3a5844ec, 3 | BRF_GRA },			//  8 Color Proms
+	{ "pr1634.88",    0x0400, 0x766b139b, 3 | BRF_GRA },			//  9
 
-	{ "pr1635.51",    0x0100, 0xc29dea27, 4 | BRF_SND },		// 10 Sound Prom
+	{ "pr1635.51",    0x0100, 0xc29dea27, 4 | BRF_SND },			// 10 Sound Prom
 	{ "pr1636.70",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom
 };
 
@@ -6307,13 +6342,13 @@ static struct BurnRomInfo pentaRomDesc[] = {
 	{ "032_pn04.bin", 0x1000, 0xbfde44c1, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "031_pn08.bin", 0x1000, 0x64e8c30d, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "092_pn09.bin", 0x2000, 0x6afeba9d, 2 | BRF_GRA },		//  6 Graphics
-	{ "ep1695.105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },		//  7
+	{ "092_pn09.bin", 0x2000, 0x6afeba9d, 2 | BRF_GRA },			//  6 Graphics
+	{ "ep1695.105",   0x2000, 0x5bfd26e9, 2 | BRF_GRA },			//  7
 
-	{ "pr1633.78",    0x0020, 0x3a5844ec, 3 | BRF_GRA },		//  8 Color Proms
-	{ "pr1634.88",    0x0400, 0x766b139b, 3 | BRF_GRA },		//  9
+	{ "pr1633.78",    0x0020, 0x3a5844ec, 3 | BRF_GRA },			//  8 Color Proms
+	{ "pr1634.88",    0x0400, 0x766b139b, 3 | BRF_GRA },			//  9
 
-	{ "pr1635.51",    0x0100, 0xc29dea27, 4 | BRF_SND },		// 10 Sound Prom
+	{ "pr1635.51",    0x0100, 0xc29dea27, 4 | BRF_SND },			// 10 Sound Prom
 	{ "pr1636.70",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom
 };
 

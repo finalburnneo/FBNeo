@@ -933,7 +933,8 @@ static struct BurnRomInfo neogeoRomDesc[] = {
 #endif
 	{ "sp-1v1_3db8c.bin",  0x20000, 0x162f0ebe, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 13 Deck ver. 6 (Git Ver 1.3)
 #if !defined (ROM_VERIFY)
-	{ "uni-bios_3_0.rom",  0x20000, 0x4cd01e5f, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 14 Universe BIOS ver. 3.0
+	{ "uni-bios_3_0.rom",  0x20000, 0xa97c89a9, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 14 Universe BIOS ver. 3.0 (free)
+//	{ "uni-bios_3_0.rom",  0x20000, 0x4cd01e5f, BRF_ESS | BRF_PRG | BRF_BIOS | BRF_SELECT | BRF_OPT }, // 14 Universe BIOS ver. 3.0 (full)
 #else
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 14
 #endif

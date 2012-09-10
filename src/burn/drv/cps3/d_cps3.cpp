@@ -521,7 +521,7 @@ STD_ROM_PICK(sfiii3nr1)
 STD_ROM_FN(sfiii3nr1)
 
 // -------------------------------------------------
-// JoJo no Kimyouna Bouken / JoJo's Venture (990128)
+// JoJo no Kimyou na Bouken / JoJo's Venture (990128)
 // -------------------------------------------------
 
 #define JOJO_990128_FLASH \
@@ -553,7 +553,7 @@ STD_ROM_FN(sfiii3nr1)
 	{ "jojo-simm5.1",				0x200000, 0x734fd162, BRF_GRA },
 	
 // -----------------------------------------------------
-// JoJo no Kimyouna Bouken / JoJo's Venture (USA 990128)
+// JoJo no Kimyou na Bouken / JoJo's Venture (USA 990128)
 // -----------------------------------------------------
 static struct BurnRomInfo jojoRomDesc[] = {
 
@@ -566,7 +566,7 @@ STD_ROM_PICK(jojo)
 STD_ROM_FN(jojo)
 
 // -------------------------------------------------------
-// JoJo no Kimyouna Bouken / JoJo's Venture (Japan 990128)
+// JoJo no Kimyou na Bouken / JoJo's Venture (Japan 990128)
 // -------------------------------------------------------
 static struct BurnRomInfo jojojRomDesc[] = {
 
@@ -579,7 +579,7 @@ STD_ROM_PICK(jojoj)
 STD_ROM_FN(jojoj)
 
 // -------------------------------------------------------------
-// JoJo's Venture / JoJo no Kimyouna Bouken (Asia 990128, NO CD)
+// JoJo's Venture / JoJo no Kimyou na Bouken (Asia 990128, NO CD)
 // -------------------------------------------------------------
 static struct BurnRomInfo jojonRomDesc[] = {
 
@@ -592,7 +592,7 @@ STD_ROM_PICK(jojon)
 STD_ROM_FN(jojon)	
 
 // -------------------------------------------------
-// JoJo no Kimyouna Bouken / JoJo's Venture (990108)
+// JoJo no Kimyou na Bouken / JoJo's Venture (990108)
 // -------------------------------------------------
 
 #define JOJO_990108_FLASH \
@@ -624,7 +624,7 @@ STD_ROM_FN(jojon)
 	{ "jojo-simm5.1",				0x200000, 0x734fd162, BRF_GRA },
 
 // -----------------------------------------------------
-// JoJo no Kimyouna Bouken / JoJo's Venture (USA 990108)
+// JoJo no Kimyou na Bouken / JoJo's Venture (USA 990108)
 // -----------------------------------------------------
 static struct BurnRomInfo jojor1RomDesc[] = {
 
@@ -637,7 +637,7 @@ STD_ROM_PICK(jojor1)
 STD_ROM_FN(jojor1)
 
 // -------------------------------------------------------
-// JoJo no Kimyouna Bouken / JoJo's Venture (Japan 990108)
+// JoJo no Kimyou na Bouken / JoJo's Venture (Japan 990108)
 // -------------------------------------------------------
 static struct BurnRomInfo jojojr1RomDesc[] = {
 
@@ -650,7 +650,7 @@ STD_ROM_PICK(jojojr1)
 STD_ROM_FN(jojojr1)
 
 // -------------------------------------------------------------
-// JoJo's Venture / JoJo no Kimyouna Bouken (Asia 990108, NO CD)
+// JoJo's Venture / JoJo no Kimyou na Bouken (Asia 990108, NO CD)
 // -------------------------------------------------------------
 static struct BurnRomInfo jojonr1RomDesc[] = {
 
@@ -663,7 +663,7 @@ STD_ROM_PICK(jojonr1)
 STD_ROM_FN(jojonr1)
 
 // -------------------------------------------------
-// JoJo no Kimyouna Bouken / JoJo's Venture (981202)
+// JoJo no Kimyou na Bouken / JoJo's Venture (981202)
 // -------------------------------------------------
 
 #define JOJO_981202_FLASH \
@@ -695,7 +695,7 @@ STD_ROM_FN(jojonr1)
 	{ "jojo-simm5.1",				0x200000, 0x734fd162, BRF_GRA },
 
 // -----------------------------------------------------
-// JoJo no Kimyouna Bouken / JoJo's Venture (USA 981202)
+// JoJo no Kimyou na Bouken / JoJo's Venture (USA 981202)
 // -----------------------------------------------------
 static struct BurnRomInfo jojor2RomDesc[] = {
 
@@ -708,7 +708,7 @@ STD_ROM_PICK(jojor2)
 STD_ROM_FN(jojor2)
 
 // -------------------------------------------------------
-// JoJo no Kimyouna Bouken / JoJo's Venture (Japan 981202)
+// JoJo no Kimyou na Bouken / JoJo's Venture (Japan 981202)
 // -------------------------------------------------------
 static struct BurnRomInfo jojojr2RomDesc[] = {
 
@@ -721,7 +721,7 @@ STD_ROM_PICK(jojojr2)
 STD_ROM_FN(jojojr2)
 
 // -------------------------------------------------------------
-// JoJo's Venture / JoJo no Kimyouna Bouken (Asia 981202, NO CD)
+// JoJo's Venture / JoJo no Kimyou na Bouken (Asia 981202, NO CD)
 // -------------------------------------------------------------
 static struct BurnRomInfo jojonr2RomDesc[] = {
 
@@ -734,7 +734,7 @@ STD_ROM_PICK(jojonr2)
 STD_ROM_FN(jojonr2)
 
 // ---------------------------------------------------------------------------
-// JoJo no Kimyouna Bouken: Miraie no Isan / JoJo's Bizarre Adventure (990927)
+// JoJo no Kimyou na Bouken: Mirai e no Isan / JoJo's Bizarre Adventure (990927)
 // ---------------------------------------------------------------------------
 
 #define JOJOBA_990927_FLASH \
@@ -772,7 +772,7 @@ STD_ROM_FN(jojonr2)
 	{ "jojoba-simm5.7",				0x200000, 0x8c8be520, BRF_GRA },
 
 // ---------------------------------------------------------------------------------
-// JoJo no Kimyouna Bouken: Miraie no Isan / JoJo's Bizarre Adventure (Japan 990927)
+// JoJo no Kimyou na Bouken: Mirai e no Isan / JoJo's Bizarre Adventure (Japan 990927)
 // ---------------------------------------------------------------------------------
 static struct BurnRomInfo jojobaRomDesc[] = {
 
@@ -785,7 +785,7 @@ STD_ROM_PICK(jojoba)
 STD_ROM_FN(jojoba)
 
 // ----------------------------------------------------------------------------------------
-// JoJo no Kimyouna Bouken: Miraie no Isan / JoJo's Bizarre Adventure (Japan 990927, NO CD)
+// JoJo no Kimyou na Bouken: Mirai e no Isan / JoJo's Bizarre Adventure (Japan 990927, NO CD)
 // ----------------------------------------------------------------------------------------
 static struct BurnRomInfo jojobanRomDesc[] = {
 
@@ -798,7 +798,7 @@ STD_ROM_PICK(jojoban)
 STD_ROM_FN(jojoban)
 
 // ---------------------------------------------------------------------------------------
-// JoJo's Bizarre Adventure / JoJo no Kimyouna Bouken: Miraie no Isan (Euro 990927, NO CD)
+// JoJo's Bizarre Adventure / JoJo no Kimyou na Bouken: Mirai e no Isan (Euro 990927, NO CD)
 // ---------------------------------------------------------------------------------------
 static struct BurnRomInfo jojobaneRomDesc[] = {
 
@@ -811,7 +811,7 @@ STD_ROM_PICK(jojobane)
 STD_ROM_FN(jojobane)
 	
 // ---------------------------------------------------------------------------
-// JoJo no Kimyouna Bouken: Miraie no Isan / JoJo's Bizarre Adventure (990913)
+// JoJo no Kimyou na Bouken: Mirai e no Isan / JoJo's Bizarre Adventure (990913)
 // ---------------------------------------------------------------------------
 
 #define JOJOBA_990913_FLASH \
@@ -849,7 +849,7 @@ STD_ROM_FN(jojobane)
 	{ "jojoba-simm5.7",				0x200000, 0x8c8be520, BRF_GRA },
 
 // ---------------------------------------------------------------------------------
-// JoJo no Kimyouna Bouken: Miraie no Isan / JoJo's Bizarre Adventure (Japan 990913)
+// JoJo no Kimyou na Bouken: Mirai e no Isan / JoJo's Bizarre Adventure (Japan 990913)
 // ---------------------------------------------------------------------------------
 static struct BurnRomInfo jojobar1RomDesc[] = {
 
@@ -862,7 +862,7 @@ STD_ROM_PICK(jojobar1)
 STD_ROM_FN(jojobar1)
 
 // ----------------------------------------------------------------------------------------
-// JoJo no Kimyouna Bouken: Miraie no Isan / JoJo's Bizarre Adventure (Japan 990913, NO CD)
+// JoJo no Kimyou na Bouken: Mirai e no Isan / JoJo's Bizarre Adventure (Japan 990913, NO CD)
 // ----------------------------------------------------------------------------------------
 static struct BurnRomInfo jojobanr1RomDesc[] = {
 
@@ -875,7 +875,7 @@ STD_ROM_PICK(jojobanr1)
 STD_ROM_FN(jojobanr1)
 
 // ---------------------------------------------------------------------------------------
-// JoJo's Bizarre Adventure / JoJo no Kimyouna Bouken: Miraie no Isan (Euro 990913, NO CD)
+// JoJo's Bizarre Adventure / JoJo no Kimyou na Bouken: Mirai e no Isan (Euro 990913, NO CD)
 // ---------------------------------------------------------------------------------------
 static struct BurnRomInfo jojobaner1RomDesc[] = {
 
@@ -1256,7 +1256,7 @@ struct BurnDriver BurnDrvSfiii3nr1 = {
 
 struct BurnDriver BurnDrvJojo = {
 	"jojo", NULL, NULL, NULL, "1998",
-	"JoJo's Venture / JoJo no Kimyouna Bouken (USA 990128)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Venture / JoJo no Kimyou na Bouken (USA 990128)\0", NULL, "Capcom", "CPS-3",
 	L"\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A\0JoJo's Venture (USA 990128)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
 	NULL, jojoRomInfo, jojoRomName, NULL, NULL, cps3InputInfo, usaDIPInfo,
@@ -1266,7 +1266,7 @@ struct BurnDriver BurnDrvJojo = {
 
 struct BurnDriver BurnDrvJojoj = {
 	"jojoj", "jojo", NULL, NULL, "1998",
-	"JoJo's Venture / JoJo no Kimyouna Bouken (Japan 990128)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Venture / JoJo no Kimyou na Bouken (Japan 990128)\0", NULL, "Capcom", "CPS-3",
 	L"\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A\0JoJo's Venture (Japan 990128)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
 	NULL, jojojRomInfo, jojojRomName, NULL, NULL, cps3InputInfo, japanDIPInfo,
@@ -1276,7 +1276,7 @@ struct BurnDriver BurnDrvJojoj = {
 
 struct BurnDriver BurnDrvJojon = {
 	"jojon", "jojo", NULL, NULL, "1998",
-	"JoJo's Venture / JoJo no Kimyouna Bouken (Asia 990128, NO CD)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Venture / JoJo no Kimyou na Bouken (Asia 990128, NO CD)\0", NULL, "Capcom", "CPS-3",
 	L"JoJo's Venture\0\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A (Asia 990128, NO CD)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, 0,
 	NULL, jojonRomInfo, jojonRomName, NULL, NULL, cps3InputInfo, asiaDIPInfo,
@@ -1286,7 +1286,7 @@ struct BurnDriver BurnDrvJojon = {
 
 struct BurnDriver BurnDrvJojor1 = {
 	"jojor1", "jojo", NULL, NULL, "1998",
-	"JoJo's Venture / JoJo no Kimyouna Bouken (USA 990108)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Venture / JoJo no Kimyou na Bouken (USA 990108)\0", NULL, "Capcom", "CPS-3",
 	L"\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A\0JoJo's Venture (USA 990108)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
 	NULL, jojor1RomInfo, jojor1RomName, NULL, NULL, cps3InputInfo, usaDIPInfo,
@@ -1296,7 +1296,7 @@ struct BurnDriver BurnDrvJojor1 = {
 
 struct BurnDriver BurnDrvJojojr1 = {
 	"jojojr1", "jojo", NULL, NULL, "1998",
-	"JoJo's Venture / JoJo no Kimyouna Bouken (Japan 990108)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Venture / JoJo no Kimyou na Bouken (Japan 990108)\0", NULL, "Capcom", "CPS-3",
 	L"\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A\0JoJo's Venture (Japan 990108)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
 	NULL, jojojr1RomInfo, jojojr1RomName, NULL, NULL, cps3InputInfo, japanDIPInfo,
@@ -1306,7 +1306,7 @@ struct BurnDriver BurnDrvJojojr1 = {
 
 struct BurnDriver BurnDrvJojonr1 = {
 	"jojonr1", "jojo", NULL, NULL, "1998",
-	"JoJo's Venture / JoJo no Kimyouna Bouken (Asia 990108, NO CD)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Venture / JoJo no Kimyou na Bouken (Asia 990108, NO CD)\0", NULL, "Capcom", "CPS-3",
 	L"JoJo's Venture\0\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A (Asia 990108, NO CD)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, 0,
 	NULL, jojonr1RomInfo, jojonr1RomName, NULL, NULL, cps3InputInfo, asiaDIPInfo,
@@ -1316,7 +1316,7 @@ struct BurnDriver BurnDrvJojonr1 = {
 
 struct BurnDriver BurnDrvJojor2 = {
 	"jojor2", "jojo", NULL, NULL, "1998",
-	"JoJo's Venture / JoJo no Kimyouna Bouken (USA 981202)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Venture / JoJo no Kimyou na Bouken (USA 981202)\0", NULL, "Capcom", "CPS-3",
 	L"\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A\0JoJo's Venture (USA 981202)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
 	NULL, jojor2RomInfo, jojor2RomName, NULL, NULL, cps3InputInfo, usaDIPInfo,
@@ -1326,7 +1326,7 @@ struct BurnDriver BurnDrvJojor2 = {
 
 struct BurnDriver BurnDrvJojojr2 = {
 	"jojojr2", "jojo", NULL, NULL, "1998",
-	"JoJo's Venture / JoJo no Kimyouna Bouken (Japan 981202)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Venture / JoJo no Kimyou na Bouken (Japan 981202)\0", NULL, "Capcom", "CPS-3",
 	L"\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A\0JoJo's Venture (Japan 981202)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
 	NULL, jojojr2RomInfo, jojojr2RomName, NULL, NULL, cps3InputInfo, japanDIPInfo,
@@ -1336,7 +1336,7 @@ struct BurnDriver BurnDrvJojojr2 = {
 
 struct BurnDriver BurnDrvJojonr2 = {
 	"jojonr2", "jojo", NULL, NULL, "1998",
-	"JoJo's Venture / JoJo no Kimyouna Bouken (Asia 981202, NO CD)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Venture / JoJo no Kimyou na Bouken (Asia 981202, NO CD)\0", NULL, "Capcom", "CPS-3",
 	L"JoJo's Venture\0\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A (Asia 981202, NO CD)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, 0,
 	NULL, jojonr2RomInfo, jojonr2RomName, NULL, NULL, cps3InputInfo, asiaDIPInfo,
@@ -1346,7 +1346,7 @@ struct BurnDriver BurnDrvJojonr2 = {
 
 struct BurnDriver BurnDrvJojoba = {
 	"jojoba", NULL, NULL, NULL, "1999",
-	"JoJo's Bizarre Adventure: Heritage for the Future / JoJo no Kimyouna Bouken: Miraie no Isan (Japan 990927)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Bizarre Adventure: Heritage for the Future / JoJo no Kimyou na Bouken: Mirai e no Isan (Japan 990927)\0", NULL, "Capcom", "CPS-3",
 	L"\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A: \u672A\u6765\u3078\u306E\u907A\u7523\0JoJo's Bizarre Adventure (Japan 990927)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
 	NULL, jojobaRomInfo, jojobaRomName, NULL, NULL, cps3InputInfo, jojobaDIPInfo,
@@ -1356,7 +1356,7 @@ struct BurnDriver BurnDrvJojoba = {
 
 struct BurnDriver BurnDrvJojoban = {
 	"jojoban", "jojoba", NULL, NULL, "1999",
-	"JoJo's Bizarre Adventure: Heritage for the Future / JoJo no Kimyouna Bouken: Miraie no Isan (Japan 990927, NO CD)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Bizarre Adventure: Heritage for the Future / JoJo no Kimyou na Bouken: Mirai e no Isan (Japan 990927, NO CD)\0", NULL, "Capcom", "CPS-3",
 	L"\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A: \u672A\u6765\u3078\u306E\u907A\u7523\0JoJo's Bizarre Adventure (Japan 990927, NO CD)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, 0,
 	NULL, jojobanRomInfo, jojobanRomName, NULL, NULL, cps3InputInfo, jojobaDIPInfo,
@@ -1366,7 +1366,7 @@ struct BurnDriver BurnDrvJojoban = {
 
 struct BurnDriver BurnDrvJojobane = {
 	"jojobane", "jojoba", NULL, NULL, "1999",
-	"JoJo's Bizarre Adventure: Heritage for the Future / JoJo no Kimyouna Bouken: Miraie no Isan (Euro 990927, NO CD)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Bizarre Adventure: Heritage for the Future / JoJo no Kimyou na Bouken: Mirai e no Isan (Euro 990927, NO CD)\0", NULL, "Capcom", "CPS-3",
 	L"JoJo's Bizarre Adventure\0\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A: \u672A\u6765\u3078\u306E\u907A\u7523 (Euro 990927, NO CD)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, 0,
 	NULL, jojobaneRomInfo, jojobaneRomName, NULL, NULL, cps3InputInfo, jojobaneDIPInfo,
@@ -1376,7 +1376,7 @@ struct BurnDriver BurnDrvJojobane = {
 
 struct BurnDriver BurnDrvJojobar1 = {
 	"jojobar1", "jojoba", NULL, NULL, "1999",
-	"JoJo's Bizarre Adventure: Heritage for the Future / JoJo no Kimyouna Bouken: Miraie no Isan (Japan 990913)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Bizarre Adventure: Heritage for the Future / JoJo no Kimyou na Bouken: Mirai e no Isan (Japan 990913)\0", NULL, "Capcom", "CPS-3",
 	L"\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A: \u672A\u6765\u3078\u306E\u907A\u7523\0JoJo's Bizarre Adventure (Japan 990913)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, 0,
 	NULL, jojobar1RomInfo, jojobar1RomName, NULL, NULL, cps3InputInfo, jojobaDIPInfo,
@@ -1386,7 +1386,7 @@ struct BurnDriver BurnDrvJojobar1 = {
 
 struct BurnDriver BurnDrvJojobanr1 = {
 	"jojobanr1", "jojoba", NULL, NULL, "1999",
-	"JoJo's Bizarre Adventure: Heritage for the Future / JoJo no Kimyouna Bouken: Miraie no Isan (Japan 990913, NO CD)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Bizarre Adventure: Heritage for the Future / JoJo no Kimyou na Bouken: Mirai e no Isan (Japan 990913, NO CD)\0", NULL, "Capcom", "CPS-3",
 	L"\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A: \u672A\u6765\u3078\u306E\u907A\u7523\0JoJo's Bizarre Adventure (Japan 990913, NO CD)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, 0,
 	NULL, jojobanr1RomInfo, jojobanr1RomName, NULL, NULL, cps3InputInfo, jojobaDIPInfo,
@@ -1396,7 +1396,7 @@ struct BurnDriver BurnDrvJojobanr1 = {
 
 struct BurnDriver BurnDrvJojobaner1 = {
 	"jojobaner1", "jojoba", NULL, NULL, "1999",
-	"JoJo's Bizarre Adventure: Heritage for the Future / JoJo no Kimyouna Bouken: Miraie no Isan (Euro 990913, NO CD)\0", NULL, "Capcom", "CPS-3",
+	"JoJo's Bizarre Adventure: Heritage for the Future / JoJo no Kimyou na Bouken: Mirai e no Isan (Euro 990913, NO CD)\0", NULL, "Capcom", "CPS-3",
 	L"JoJo's Bizarre Adventure\0\u30B8\u30E7\u30B8\u30E7\u306E \u5947\u5999\u306A\u5192\u967A: \u672A\u6765\u3078\u306E\u907A\u7523 (Euro 990913, NO CD)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, 0,
 	NULL, jojobaner1RomInfo, jojobaner1RomName, NULL, NULL, cps3InputInfo, jojobaneDIPInfo,

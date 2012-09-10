@@ -1159,7 +1159,7 @@ struct BurnDriver BurnDrvTigeroad = {
 };
 
 
-// Tora-he no Michi (Japan)
+// Tora e no Michi (Japan)
 
 static struct BurnRomInfo toramichRomDesc[] = {
 	{ "tr_02.bin",	0x20000, 0xb54723b1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1202,7 +1202,7 @@ static INT32 ToramichInit()
 
 struct BurnDriver BurnDrvToramich = {
 	"toramich", "tigeroad", NULL, NULL, "1987",
-	"Tora-he no Michi (Japan)\0", NULL, "Capcom", "Miscellaneous",
+	"Tora e no Michi (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARWARE_CAPCOM_MISC, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, toramichRomInfo, toramichRomName, NULL, NULL, TigeroadInputInfo, ToramichDIPInfo,

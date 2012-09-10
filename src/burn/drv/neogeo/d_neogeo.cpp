@@ -3795,7 +3795,7 @@ struct BurnDriver BurnDrvFatfury3 = {
 	0x1000, 320, 224, 4, 3
 };
 
-// Super Sidekicks 3 - The Next Glory / Tokuten Ou 3 - eikoue no michi
+// Super Sidekicks 3 - The Next Glory / Tokuten Ou 3 - eikou e no michi
 
 static struct BurnRomInfo ssideki3RomDesc[] = {
 	{ "081-p1.p1",    0x200000, 0x6bc27a3d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -3821,7 +3821,7 @@ STD_ROM_FN(ssideki3)
 
 struct BurnDriver BurnDrvSsideki3 = {
 	"ssideki3", NULL, "neogeo", NULL, "1995",
-	"Super Sidekicks 3 - The Next Glory / Tokuten Ou 3 - eikoue no michi\0", NULL, "SNK", "Neo Geo MVS",
+	"Super Sidekicks 3 - The Next Glory / Tokuten Ou 3 - eikou e no michi\0", NULL, "SNK", "Neo Geo MVS",
 	L"Super Sidekicks 3 - The Next Glory\0\u5F97\u70B9\u738B\uFF13 - \u6804\u5149\u3078\u306E\u6311\u6226\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_SPORTSFOOTBALL, 0,
 	NULL, ssideki3RomInfo, ssideki3RomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -10624,7 +10624,7 @@ struct BurnDriver BurnDrvquizkofk = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Stakes Winner / Stakes Winner - GI kinzen seihae no michi
+// Stakes Winner / Stakes Winner - GI kinzen seiha e no michi
 
 static struct BurnRomInfo stakwinRomDesc[] = {
 	{ "088-p1.p1",    0x200000, 0xbd5814f6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -10646,7 +10646,7 @@ STD_ROM_FN(stakwin)
 
 struct BurnDriver BurnDrvstakwin = {
 	"stakwin", NULL, "neogeo", NULL, "1995",
-	"Stakes Winner / Stakes Winner - GI kinzen seihae no michi\0", NULL, "Saurus", "Neo Geo MVS",
+	"Stakes Winner / Stakes Winner - GI kinzen seiha e no michi\0", NULL, "Saurus", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_MISC, 0,
 	NULL, stakwinRomInfo, stakwinRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

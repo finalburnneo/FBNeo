@@ -1091,6 +1091,76 @@ struct BurnDriver BurnDrvThndzonea = {
 };
 
 
+// Thunder Zone (World 4 Players)
+
+static struct BurnRomInfo thndzone4RomDesc[] = {
+	{ "27c010.a15",		0x020000, 0x30f21608,  1 | BRF_PRG | BRF_ESS }, //  0 68k 'A' Code 
+	{ "27c010.a17",		0x020000, 0x60886a33,  1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gt00.a14",		0x020000, 0xb7277175,  1 | BRF_PRG | BRF_ESS }, //  2
+	{ "gt02.a16",		0x020000, 0xcde31e35,  1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "d27c010.a12",	0x020000, 0x99356cba,  2 | BRF_PRG | BRF_ESS }, //  4 68k 'B' Code
+	{ "d27c010.a9",		0x020000, 0x8bf114e7,  2 | BRF_PRG | BRF_ESS }, //  5
+	{ "d27c010.a14",	0x020000, 0x3d96d47e,  2 | BRF_PRG | BRF_ESS }, //  6
+	{ "d27c010.a11",	0x020000, 0x2ab9b63f,  2 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "gu04.f18",		0x010000, 0x81c29ebf,  3 | BRF_PRG | BRF_ESS }, //  8 Huc6280 Code
+
+	{ "27512.j10",		0x010000, 0xab22a078,  4 | BRF_GRA },           //  9 Characters
+	{ "27512.j12",		0x010000, 0x34fc4428,  4 | BRF_GRA },           // 10
+
+	{ "maj-02.h14",		0x100000, 0x383bbc37,  5 | BRF_GRA },           // 11 Foreground Tiles
+
+	{ "maj-01.c18",		0x100000, 0x9840a204,  6 | BRF_GRA },           // 12 Background Tiles
+	{ "maj-00.c17",		0x100000, 0x87ea8d16,  6 | BRF_GRA },           // 13
+
+	{ "maj-04.r1",		0x080000, 0x36e49b19,  7 | BRF_GRA },           // 14 Sprite Bank A
+	{ "maj-05.r2",		0x080000, 0x80fc71cc,  7 | BRF_GRA },           // 15
+	{ "maj-06.r3",		0x080000, 0x2e7a684b,  7 | BRF_GRA },           // 16
+	{ "maj-07.r5",		0x080000, 0x3acc1f78,  7 | BRF_GRA },           // 17
+	{ "maj-08.s6",		0x080000, 0x1958a36d,  7 | BRF_GRA },           // 18
+	{ "maj-09.s8",		0x080000, 0xc21087a1,  7 | BRF_GRA },           // 19
+	{ "maj-10.s9",		0x080000, 0xa02fa641,  7 | BRF_GRA },           // 20
+	{ "maj-11.s11",		0x080000, 0xdabe9305,  7 | BRF_GRA },           // 21
+
+	{ "gt12.n1",		0x020000, 0x9a86a015,  8 | BRF_GRA },           // 22 Sprite Bank B
+	{ "gt13.n2",		0x020000, 0xf4709905,  8 | BRF_GRA },           // 23
+	{ "gt14.n3",		0x020000, 0x750fc523,  8 | BRF_GRA },           // 24
+	{ "gt15.n5",		0x020000, 0xf14edd3d,  8 | BRF_GRA },           // 25
+
+	{ "gs07.h15",		0x020000, 0x750b7e5d,  9 | BRF_SND },           // 26 MSM6295 Samples 0
+
+	{ "maj-03.h16",		0x080000, 0x31dcfac3, 10 | BRF_SND },           // 27 MSM6295 Samples 1
+
+	{ "mb7128y.10m",	0x000800, 0xbde780a2, 11 | BRF_OPT },           // 28 Unknown Proms
+	{ "mb7128y.16p",	0x000800, 0xc44d2751, 11 | BRF_OPT },           // 29
+	{ "mb7128y.16s",	0x000800, 0xc44d2751, 11 | BRF_OPT },           // 30
+	{ "mb7128y.17s",	0x000800, 0xc44d2751, 11 | BRF_OPT },           // 31
+
+	{ "pal16r8a 1h",	0x000104, 0x00000000, 12 | BRF_NODUMP },	// 32 PLDs
+	{ "pal16l8b.7c",	0x000104, 0x00000000, 12 | BRF_NODUMP },	// 33
+	{ "pal16l8b.7d",	0x000104, 0x199e83fd, 12 | BRF_OPT },       // 34
+	{ "pal16l8b.7e",	0x000104, 0x00000000, 12 | BRF_NODUMP },	// 35
+	{ "pal16l8b.7l",	0x000104, 0x00000000, 12 | BRF_NODUMP },	// 36
+	{ "pal16l8b.8e",	0x000104, 0x00000000, 12 | BRF_NODUMP },	// 37
+	{ "pal16l8b.9d",	0x000104, 0x00000000, 12 | BRF_NODUMP },	// 38
+	{ "pal16l8b.10c",	0x000104, 0x00000000, 12 | BRF_NODUMP },	// 39
+};
+
+STD_ROM_PICK(thndzone4)
+STD_ROM_FN(thndzone4)
+
+struct BurnDriver BurnDrvThndzone4 = {
+	"thndzone4", "thndzone", NULL, NULL, "1991",
+	"Thunder Zone (World 4 Players)\0", NULL, "Data East Corporation", "DECO IC16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	NULL, thndzone4RomInfo, thndzone4RomName, NULL, NULL, ThndzoneInputInfo, ThndzoneDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	320, 240, 4, 3
+};
+
+
 // Thunder Zone (Japan)
 
 static struct BurnRomInfo thndzonejRomDesc[] = {

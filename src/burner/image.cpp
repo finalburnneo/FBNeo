@@ -113,7 +113,7 @@ static INT32 img_process(IMAGE* img, UINT32 width, UINT32 height, INT32 preset, 
 	
 	double ratio = (double)(height * width) / (img->height * img->width);
 
-	{
+/*	{
 		double LUT[256];
 
 		INT32 rdest = 0, gdest = 1, bdest = 2;
@@ -143,7 +143,7 @@ static INT32 img_process(IMAGE* img, UINT32 width, UINT32 height, INT32 preset, 
 				img->rowptr[y][x * 3 + bdest] = b;
 			}
 		}
-	}
+	}*/
 
 	if (img->height == height && img->width == width) {
 

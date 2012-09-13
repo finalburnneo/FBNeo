@@ -468,6 +468,35 @@ static struct BurnRomInfo DrvblitaRomDesc[] = {
 STD_ROM_PICK(Drvblita)
 STD_ROM_FN(Drvblita)
 
+static struct BurnRomInfo DrvprotRomDesc[] = {
+	{ "gg10n.bin",     0x04000, 0x5d2a2c90, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "gg9n.bin",      0x04000, 0x30eb183d, BRF_ESS | BRF_PRG }, //	 1
+	{ "gg8n.bin",      0x04000, 0x4b5e2145, BRF_ESS | BRF_PRG }, //	 2
+	{ "gg13n.bin",     0x04000, 0x2664aae6, BRF_ESS | BRF_PRG }, //	 3
+	{ "gg12n.bin",     0x04000, 0xc7ef4ae8, BRF_ESS | BRF_PRG }, //	 4
+	
+	{ "gg14h.bin",     0x08000, 0x55cfb196, BRF_ESS | BRF_PRG }, //  5	Z80 Program 
+	
+	{ "1.84490.11e",   0x04000, 0xecfccf07, BRF_GRA },	     //  6	Characters
+	
+	{ "gg3e.bin",      0x04000, 0x68db22c8, BRF_GRA },	     //  7	Tiles
+	{ "gg1e.bin",      0x04000, 0xdad8dd2f, BRF_GRA },	     //  8
+	{ "gg3c.bin",      0x04000, 0x7a158323, BRF_GRA },	     //  9
+	{ "gg1c.bin",      0x04000, 0x7314d095, BRF_GRA },	     //  10
+	{ "gg3b.bin",      0x04000, 0x03a96d9b, BRF_GRA },	     //  11
+	{ "gg1b.bin",      0x04000, 0x7b9899bc, BRF_GRA },	     //  12
+	
+	{ "gg41.bin",      0x04000, 0x49cf81b4, BRF_GRA },	     //  13	Sprites
+	{ "gg31.bin",      0x04000, 0xe61437b1, BRF_GRA },	     //  14
+	{ "gg11.bin",      0x04000, 0xbc1fe02d, BRF_GRA },	     //  15
+	{ "gg4n.bin",      0x04000, 0xd5aff5a7, BRF_GRA },	     //  16
+	{ "gg3n.bin",      0x04000, 0xd589caeb, BRF_GRA },	     //  17
+	{ "gg1n.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  18
+};
+
+STD_ROM_PICK(Drvprot)
+STD_ROM_FN(Drvprot)
+
 static struct BurnRomInfo DrvtRomDesc[] = {
 	{ "mm04",          0x04000, 0x652406f6, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
 	{ "mm03",          0x08000, 0xfb040b42, BRF_ESS | BRF_PRG }, //	 1
@@ -1432,6 +1461,16 @@ struct BurnDriver BurnDrvGngblita = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
 	NULL, DrvblitaRomInfo, DrvblitaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x100, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvGngprot = {
+	"gngprot", "gng", NULL, NULL, "1985",
+	"Ghosts'n Goblins (prototype)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
+	NULL, DrvprotRomInfo, DrvprotRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	GngaInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };
 

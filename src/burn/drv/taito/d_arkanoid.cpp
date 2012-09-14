@@ -1097,7 +1097,6 @@ static INT32 DrvInit()
 		ZetSetWriteHandler(arkanoid_write);
 	}
 	ZetSetReadHandler(arkanoid_read);
-	ZetMemEnd();
 	ZetClose();
 
 	m67805_taito_init(DrvMcuROM, DrvMcuRAM, &arkanoid_m68705_interface);

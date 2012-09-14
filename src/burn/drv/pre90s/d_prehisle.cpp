@@ -539,7 +539,6 @@ INT32 PrehisleInit()
 	ZetMapArea(0xf000, 0xf7ff, 0, PrehisleZ80Ram);
 	ZetMapArea(0xf000, 0xf7ff, 1, PrehisleZ80Ram);
 	ZetMapArea(0xf000, 0xf7ff, 2, PrehisleZ80Ram);
-	ZetMemEnd();
 	ZetSetReadHandler(PrehisleZ80Read);
 	ZetSetInHandler(PrehisleZ80PortRead);
 	ZetSetOutHandler(PrehisleZ80PortWrite);

@@ -433,12 +433,10 @@ static INT32 DrvInit()
 	ZetMapArea(0x9400, 0x94ff, 2, Rom0 + 0x9400);
 	ZetSetWriteHandler(pooyan_cpu0_write);
 	ZetSetReadHandler(pooyan_cpu0_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMemEnd();
 	ZetMapArea(0x0000, 0x1fff, 0, Rom1 + 0x0000);
 	ZetMapArea(0x0000, 0x1fff, 2, Rom1 + 0x0000);
 	ZetMapArea(0x3000, 0x33ff, 0, Rom1 + 0x3000);

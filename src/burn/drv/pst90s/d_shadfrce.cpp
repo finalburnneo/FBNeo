@@ -718,7 +718,6 @@ static INT32 shadfrceInit()
 		ZetMapArea(0xF000, 0xFFFF, 1, RamZ80+0x0800);
 		ZetMapArea(0xF000, 0xFFFF, 2, RamZ80+0x0800);
 		
-		ZetMemEnd();
 		ZetClose();
 	}
 	

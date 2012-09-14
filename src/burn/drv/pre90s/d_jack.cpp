@@ -1014,7 +1014,6 @@ static INT32 DrvInit()
 		ZetMapArea(0xc000, 0xffff, 2, Rom0 + 0xc000);
 	}
 
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -1026,7 +1025,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x4000, 0x43ff, 0, Rom1 + 0x4000);
 	ZetMapArea(0x4000, 0x43ff, 1, Rom1 + 0x4000);
 	ZetMapArea(0x4000, 0x43ff, 2, Rom1 + 0x4000);
-	ZetMemEnd();
 	ZetClose();
 
 	pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;

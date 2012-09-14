@@ -212,7 +212,6 @@ static INT32 DrvInit()
 	ZetSetWriteHandler(kontest_write);
 	ZetSetOutHandler(kontest_write_port);
 	ZetSetInHandler(kontest_read_port);
-	ZetMemEnd();
 	ZetClose();
 
 	SN76489AInit(0, 1500000, 0);

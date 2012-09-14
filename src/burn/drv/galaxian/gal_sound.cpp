@@ -702,7 +702,6 @@ void FroggerSoundNoEncryptionInit()
 	ZetMapArea(0x4000, 0x43ff, 0, GalZ80Ram2);
 	ZetMapArea(0x4000, 0x43ff, 1, GalZ80Ram2);
 	ZetMapArea(0x4000, 0x43ff, 2, GalZ80Ram2);
-	ZetMemEnd();
 	ZetClose();
 	
 	nGalCyclesTotal[1] = (14318000 / 8) / 60;
@@ -790,7 +789,6 @@ void KonamiSoundInit()
 	ZetMapArea(0x8000, 0x83ff, 0, GalZ80Ram2);
 	ZetMapArea(0x8000, 0x83ff, 1, GalZ80Ram2);
 	ZetMapArea(0x8000, 0x83ff, 2, GalZ80Ram2);
-	ZetMemEnd();
 	ZetClose();
 	
 	nGalCyclesTotal[1] = (14318000 / 8) / 60;
@@ -817,7 +815,6 @@ void HunchbksSoundInit()
 	ZetMapArea(0x8c00, 0x8fff, 0, GalZ80Ram1 + 0x400);
 	ZetMapArea(0x8c00, 0x8fff, 1, GalZ80Ram1 + 0x400);
 	ZetMapArea(0x8c00, 0x8fff, 2, GalZ80Ram1 + 0x400);
-	ZetMemEnd();
 	ZetClose();
 	
 	nGalCyclesTotal[1] = (14318000 / 8) / 60;

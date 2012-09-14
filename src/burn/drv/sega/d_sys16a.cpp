@@ -2684,7 +2684,6 @@ static void FantzonepMapZ80()
 	ZetMapArea(0xf800, 0xffff, 0, System16Z80Ram);
 	ZetMapArea(0xf800, 0xffff, 1, System16Z80Ram);
 	ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram);
-	ZetMemEnd();
 	
 	ZetSetInHandler(System16PPIZ80PortRead);
 	ZetSetOutHandler(System16Z80PortWrite);

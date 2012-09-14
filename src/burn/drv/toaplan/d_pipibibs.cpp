@@ -391,7 +391,6 @@ static INT32 DrvInit()
 		ZetMapArea(0x8000, 0x87ff, 2, RamZ80);
 		ZetSetWriteHandler(pipibibs_sound_write);
 		ZetSetReadHandler(pipibibs_sound_read);
-		ZetMemEnd();
 		ZetClose();
 	}
 

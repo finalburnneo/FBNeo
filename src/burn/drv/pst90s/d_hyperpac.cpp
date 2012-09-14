@@ -1994,7 +1994,6 @@ static INT32 HyperpacMachineInit()
 	ZetMapArea(0xd000, 0xd7ff, 0, HyperpacZ80Ram);
 	ZetMapArea(0xd000, 0xd7ff, 1, HyperpacZ80Ram);
 	ZetMapArea(0xd000, 0xd7ff, 2, HyperpacZ80Ram);
-	ZetMemEnd();
 	ZetSetReadHandler(HyperpacZ80Read);
 	ZetSetWriteHandler(HyperpacZ80Write);
 	ZetClose();
@@ -2488,7 +2487,6 @@ static INT32 TwinadvInit()
 	ZetMapArea(0x8000, 0x87ff, 0, HyperpacZ80Ram);
 	ZetMapArea(0x8000, 0x87ff, 1, HyperpacZ80Ram);
 	ZetMapArea(0x8000, 0x87ff, 2, HyperpacZ80Ram);
-	ZetMemEnd();
 	ZetSetInHandler(TwinadvZ80PortRead);
 	ZetSetOutHandler(TwinadvZ80PortWrite);
 	ZetClose();
@@ -2570,7 +2568,6 @@ static INT32 HoneydolInit()
 	ZetMapArea(0x8000, 0x87ff, 0, HyperpacZ80Ram);
 	ZetMapArea(0x8000, 0x87ff, 1, HyperpacZ80Ram);
 	ZetMapArea(0x8000, 0x87ff, 2, HyperpacZ80Ram);
-	ZetMemEnd();
 	ZetSetInHandler(SnowbrosZ80PortRead);
 	ZetSetOutHandler(SnowbrosZ80PortWrite);
 	ZetSetReadHandler(HoneydolZ80Read);
@@ -2669,7 +2666,6 @@ static INT32 SnowbrosInit()
 	ZetMapArea(0x8000, 0x87ff, 0, HyperpacZ80Ram);
 	ZetMapArea(0x8000, 0x87ff, 1, HyperpacZ80Ram);
 	ZetMapArea(0x8000, 0x87ff, 2, HyperpacZ80Ram);
-	ZetMemEnd();
 	ZetSetInHandler(SnowbrosZ80PortRead);
 	ZetSetOutHandler(SnowbrosZ80PortWrite);
 	ZetClose();

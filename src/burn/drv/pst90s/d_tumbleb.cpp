@@ -2951,7 +2951,6 @@ static void JumpkidsMapZ80()
 	ZetMapArea(0x8000, 0x87ff, 0, DrvZ80Ram                );
 	ZetMapArea(0x8000, 0x87ff, 1, DrvZ80Ram                );
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80Ram                );
-	ZetMemEnd();
 	ZetClose();
 }
 
@@ -2967,7 +2966,6 @@ static void SemicomMapZ80()
 	ZetMapArea(0xd000, 0xd7ff, 0, DrvZ80Ram                );
 	ZetMapArea(0xd000, 0xd7ff, 1, DrvZ80Ram                );
 	ZetMapArea(0xd000, 0xd7ff, 2, DrvZ80Ram                );
-	ZetMemEnd();
 	ZetClose();
 }
 
@@ -3490,7 +3488,6 @@ static INT32 JumppopInit()
 	ZetMapArea(0xf800, 0xffff, 0, DrvZ80Ram                );
 	ZetMapArea(0xf800, 0xffff, 1, DrvZ80Ram                );
 	ZetMapArea(0xf800, 0xffff, 2, DrvZ80Ram                );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM3812Init(3500000, NULL, JumppopSynchroniseStream, 0);

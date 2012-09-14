@@ -293,7 +293,6 @@ INT32 NewsInit()
 	ZetMapArea(0xe000, 0xffff, 0, NewsRam        );
 	ZetMapArea(0xe000, 0xffff, 1, NewsRam        );
 	ZetMapArea(0xe000, 0xffff, 2, NewsRam        );
-	ZetMemEnd();
 	ZetSetReadHandler(NewsRead);
 	ZetSetWriteHandler(NewsWrite);
 	ZetClose();

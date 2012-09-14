@@ -1719,7 +1719,6 @@ static INT32 MachineInit()
 	ZetMapArea(0xfc00, 0xffff, 0, DrvZ80Ram1             );
 	ZetMapArea(0xfc00, 0xffff, 1, DrvZ80Ram1             );
 	ZetMapArea(0xfc00, 0xffff, 2, DrvZ80Ram1             );	
-	ZetMemEnd();
 	ZetClose();
 	
 	ZetInit(1);
@@ -1729,7 +1728,6 @@ static INT32 MachineInit()
 	ZetMapArea(0xe000, 0xf7ff, 0, DrvSharedRam           );
 	ZetMapArea(0xe000, 0xf7ff, 1, DrvSharedRam           );
 	ZetMapArea(0xe000, 0xf7ff, 2, DrvSharedRam           );
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(2);
@@ -1741,7 +1739,6 @@ static INT32 MachineInit()
 	ZetMapArea(0x8000, 0x8fff, 0, DrvZ80Ram3             );
 	ZetMapArea(0x8000, 0x8fff, 1, DrvZ80Ram3             );
 	ZetMapArea(0x8000, 0x8fff, 2, DrvZ80Ram3             );	
-	ZetMemEnd();
 	ZetClose();
 	
 	if (DrvMCUInUse == 1) {
@@ -1868,7 +1865,6 @@ static INT32 BoblboblCallback()
 	ZetMemCallback(0xfe00, 0xffff, 0);
 	ZetMemCallback(0xfe00, 0xffff, 1);
 	ZetMemCallback(0xfe00, 0xffff, 2);
-	ZetMemEnd();
 	ZetClose();
 	
 	return 0;
@@ -1913,7 +1909,6 @@ static INT32 Boblbobl2Callback()
 	ZetMemCallback(0xfe00, 0xffff, 0);
 	ZetMemCallback(0xfe00, 0xffff, 1);
 	ZetMemCallback(0xfe00, 0xffff, 2);
-	ZetMemEnd();
 	ZetClose();
 	
 	return 0;
@@ -2033,7 +2028,6 @@ static INT32 DlandCallback()
 	ZetMemCallback(0xfe00, 0xffff, 0);
 	ZetMemCallback(0xfe00, 0xffff, 1);
 	ZetMemCallback(0xfe00, 0xffff, 2);
-	ZetMemEnd();
 	ZetClose();
 
 	return 0;
@@ -2124,7 +2118,6 @@ static INT32 TokioInit()
 	ZetMapArea(0xf800, 0xf9ff, 0, DrvPaletteRam          );
 	ZetMapArea(0xf800, 0xf9ff, 1, DrvPaletteRam          );
 	ZetMapArea(0xf800, 0xf9ff, 2, DrvPaletteRam          );
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -2134,7 +2127,6 @@ static INT32 TokioInit()
 	ZetMapArea(0x8000, 0x97ff, 0, DrvSharedRam           );
 	ZetMapArea(0x8000, 0x97ff, 1, DrvSharedRam           );
 	ZetMapArea(0x8000, 0x97ff, 2, DrvSharedRam           );
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(2);
@@ -2146,7 +2138,6 @@ static INT32 TokioInit()
 	ZetMapArea(0x8000, 0x8fff, 0, DrvZ80Ram3             );
 	ZetMapArea(0x8000, 0x8fff, 1, DrvZ80Ram3             );
 	ZetMapArea(0x8000, 0x8fff, 2, DrvZ80Ram3             );	
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2203Init(1, 3000000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);

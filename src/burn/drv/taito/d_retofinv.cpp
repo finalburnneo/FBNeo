@@ -548,7 +548,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xa000, 0xa7ff, 2, DrvBgVRAM);
 	ZetSetWriteHandler(retofinv_main_write);
 	ZetSetReadHandler(retofinv_main_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -566,7 +565,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xa000, 0xa7ff, 2, DrvBgVRAM);
 	ZetSetWriteHandler(retofinv_main_write);
 	ZetSetReadHandler(retofinv_main_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(2);

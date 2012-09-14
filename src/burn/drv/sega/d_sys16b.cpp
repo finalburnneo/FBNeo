@@ -4204,7 +4204,6 @@ void BootlegMapZ80()
 	ZetMapArea(0xf800, 0xffff, 0, System16Z80Ram);
 	ZetMapArea(0xf800, 0xffff, 1, System16Z80Ram);
 	ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram);
-	ZetMemEnd();
 	
 	ZetSetReadHandler(BootlegZ80Read);
 #if 0 && defined FBA_DEBUG

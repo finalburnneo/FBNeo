@@ -453,7 +453,6 @@ static void m63_main_map()
 	ZetMapArea(0xec00, 0xefff, 2, DrvColRAM);
 	ZetSetWriteHandler(m63_main_write);
 	ZetSetReadHandler(m63_main_read);
-	ZetMemEnd();
 	ZetClose();
 }
 
@@ -486,7 +485,6 @@ static void fghtbskt_main_map()
 	ZetMapArea(0xdc00, 0xdfff, 2, DrvColRAM);
 	ZetSetWriteHandler(fghtbskt_main_write);
 	ZetSetReadHandler(m63_main_read);
-	ZetMemEnd();
 	ZetClose();
 }
 

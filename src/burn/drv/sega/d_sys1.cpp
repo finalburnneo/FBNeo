@@ -4154,7 +4154,6 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	ZetMapArea(0xfc00, 0xffff, 0, System1fcRam);
 	ZetMapArea(0xfc00, 0xffff, 1, System1fcRam);
 	ZetMapArea(0xfc00, 0xffff, 2, System1fcRam);	
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -4166,7 +4165,6 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	ZetMapArea(0x8000, 0x87ff, 0, System1Ram2);
 	ZetMapArea(0x8000, 0x87ff, 1, System1Ram2);
 	ZetMapArea(0x8000, 0x87ff, 2, System1Ram2);
-	ZetMemEnd();
 	ZetClose();
 	
 	memset(SpriteOnScreenMap, 255, 256 * 256);

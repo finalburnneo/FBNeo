@@ -482,7 +482,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xe000, 0xe3ff, 2, DrvVidRAM);
 	ZetSetWriteHandler(momoko_main_write);
 	ZetSetReadHandler(momoko_main_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -494,7 +493,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM1);
 	ZetSetWriteHandler(momoko_sound_write);
 	ZetSetReadHandler(momoko_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM2203Init(2, 1250000, NULL, DrvSynchroniseStream, DrvGetTime, 0);

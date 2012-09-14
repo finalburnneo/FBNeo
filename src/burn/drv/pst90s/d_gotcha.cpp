@@ -378,7 +378,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xd000, 0xd7ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(gotcha_sound_write);
 	ZetSetReadHandler(gotcha_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM2151Init(3579545);

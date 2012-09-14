@@ -464,7 +464,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xc000, 0xdfff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(xmen_sound_write);
 	ZetSetReadHandler(xmen_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	EEPROMInit(&xmen_eeprom_intf);

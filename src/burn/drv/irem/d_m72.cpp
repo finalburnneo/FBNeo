@@ -1461,7 +1461,6 @@ static void sound_ram_map()
 	ZetMapArea(0x0000, 0xffff, 2, DrvZ80RAM);
 	ZetSetOutHandler(m72_sound_write_port);
 	ZetSetInHandler(m72_sound_read_port);
-	ZetMemEnd();
 	ZetClose();
 
 	enable_z80_reset = 1;
@@ -1478,7 +1477,6 @@ static void sound_rom_map()
 	ZetMapArea(0xf000, 0xffff, 2, DrvZ80RAM);
 	ZetSetOutHandler(m72_sound_write_port);
 	ZetSetInHandler(m72_sound_read_port);
-	ZetMemEnd();
 	ZetClose();
 
 	enable_z80_reset = 0;

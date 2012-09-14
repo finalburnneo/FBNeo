@@ -491,7 +491,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xf000, 0xf7ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(simpsons_sound_write);
 	ZetSetReadHandler(simpsons_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	EEPROMInit(&simpsons_eeprom_intf);

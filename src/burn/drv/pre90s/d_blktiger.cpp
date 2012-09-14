@@ -515,7 +515,6 @@ static INT32 DrvInit()
 	ZetSetReadHandler(blacktiger_read);
 	ZetSetInHandler(blacktiger_in);
 	ZetSetOutHandler(blacktiger_out);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -527,7 +526,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80RAM1);
 	ZetSetWriteHandler(blacktiger_sound_write);
 	ZetSetReadHandler(blacktiger_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	GenericTilesInit();

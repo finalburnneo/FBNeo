@@ -1446,7 +1446,6 @@ static INT32 BestbestInit()
 	ZetMapArea(0xe000, 0xe7ff, 2, DrvZ80RAM0);
 	ZetSetReadHandler(bestbest_sound0_read);
 	ZetSetWriteHandler(bestbest_sound0_write);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -1518,7 +1517,6 @@ static INT32 SunaqInit()
 	ZetMapArea(0xf000, 0xf7ff, 2, DrvZ80RAM0);
 	ZetSetWriteHandler(sunaq_sound0_write);
 	ZetSetReadHandler(bssoccer_sound0_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -1529,7 +1527,6 @@ static INT32 SunaqInit()
 	ZetMapArea(0x1000, 0xffff, 2, DrvZ80ROM1 + 0x1000);
 	ZetSetInHandler(bssoccer_sound1_in);
 	ZetSetOutHandler(bssoccer_sound1_out);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM2151Init(3579545);
@@ -1586,7 +1583,6 @@ static INT32 UballoonInit()
 	ZetMapArea(0xf000, 0xf7ff, 2, DrvZ80RAM0);
 	ZetSetWriteHandler(sunaq_sound0_write);
 	ZetSetReadHandler(bssoccer_sound0_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -1597,7 +1593,6 @@ static INT32 UballoonInit()
 	ZetMapArea(0x0400, 0xffff, 2, DrvZ80ROM1 + 0x400);
 	ZetSetInHandler(uballoon_sound1_in);
 	ZetSetOutHandler(uballoon_sound1_out);
-	ZetMemEnd();
 	ZetClose();
 
 	// Patch out the protection checks
@@ -1660,7 +1655,6 @@ static INT32 BssoccerInit()
 	ZetMapArea(0xf000, 0xf7ff, 2, DrvZ80RAM0);
 	ZetSetWriteHandler(bssoccer_sound0_write);
 	ZetSetReadHandler(bssoccer_sound0_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -1671,7 +1665,6 @@ static INT32 BssoccerInit()
 	ZetMapArea(0x1000, 0xffff, 2, DrvZ80ROM1 + 0x1000);
 	ZetSetInHandler(bssoccer_sound1_in);
 	ZetSetOutHandler(bssoccer_sound1_out);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(2);
@@ -1682,7 +1675,6 @@ static INT32 BssoccerInit()
 	ZetMapArea(0x1000, 0xffff, 2, DrvZ80ROM2 + 0x1000);
 	ZetSetInHandler(bssoccer_sound2_in);
 	ZetSetOutHandler(bssoccer_sound2_out);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM2151Init(3579545);

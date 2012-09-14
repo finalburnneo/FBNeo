@@ -1590,7 +1590,6 @@ static void MitchellMachineInit()
 	ZetMapArea(0xe000, 0xffff, 0, DrvZ80Ram                                );
 	ZetMapArea(0xe000, 0xffff, 1, DrvZ80Ram                                );
 	ZetMapArea(0xe000, 0xffff, 2, DrvZ80Ram                                );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2413Init(4000000);
@@ -1626,7 +1625,6 @@ static void MahjongMachineInit()
 	ZetMapArea(0xe000, 0xffff, 0, DrvZ80Ram                                );
 	ZetMapArea(0xe000, 0xffff, 1, DrvZ80Ram                                );
 	ZetMapArea(0xe000, 0xffff, 2, DrvZ80Ram                                );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2413Init(4000000);
@@ -1699,7 +1697,6 @@ static INT32 MgakuenInit()
 	ZetMapArea(0xf000, 0xffff, 0, DrvSpriteRam       );
 	ZetMapArea(0xf000, 0xffff, 1, DrvSpriteRam       );
 	ZetMapArea(0xf000, 0xffff, 2, DrvSpriteRam       );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2413Init(4000000);
@@ -2309,7 +2306,6 @@ static INT32 MstworldInit()
 	ZetMapArea(0xe000, 0xffff, 0, DrvZ80Ram                                );
 	ZetMapArea(0xe000, 0xffff, 1, DrvZ80Ram                                );
 	ZetMapArea(0xe000, 0xffff, 2, DrvZ80Ram                                );
-	ZetMemEnd();
 	ZetClose();
 	
 	ZetInit(1);
@@ -2321,7 +2317,6 @@ static INT32 MstworldInit()
 	ZetMapArea(0x8000, 0x87ff, 0, DrvZ80Ram2);
 	ZetMapArea(0x8000, 0x87ff, 1, DrvZ80Ram2);
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80Ram2);
-	ZetMemEnd();
 	ZetClose();
 	
 	MSM6295Init(0, 990000 / 132, 0);

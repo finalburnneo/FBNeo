@@ -847,7 +847,6 @@ static INT32 DrvInit(INT32 (*pLoadRoms)(), void (*p68KInit)(), INT32 zLen)
 	ZetMapArea(zLen+0, 0xffff, 2, DrvZ80RAM);
 	ZetSetOutHandler(armedf_write_port);
 	ZetSetInHandler(armedf_read_port);
-	ZetMemEnd();
 	ZetClose();
 	
 	if (Terrafjb) {
@@ -862,7 +861,6 @@ static INT32 DrvInit(INT32 (*pLoadRoms)(), void (*p68KInit)(), INT32 zLen)
 		ZetSetReadHandler(terrafjbextra_read);
 		ZetSetOutHandler(terrafjbextra_write_port);
 		ZetSetInHandler(terrafjbextra_read_port);
-		ZetMemEnd();
 		ZetClose();
 	}
 

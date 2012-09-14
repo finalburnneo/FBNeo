@@ -1086,7 +1086,6 @@ static INT32 DrvInit(INT32 loadtype, INT32 sektype, INT32 zettype) // 0 nmg, 1 p
 	}
 	ZetSetInHandler(nmg5_read_port);
 	ZetSetOutHandler(nmg5_write_port);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM3812Init(4000000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);

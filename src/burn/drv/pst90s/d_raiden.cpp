@@ -1123,7 +1123,6 @@ static INT32 DrvInit()
 		//ZetMapArea(0x8000, 0xFFFF, 2, RomZ80 + 0x8000);
 		//use set_seibu_bank(0); in DrvDoReset();
 		
-		ZetMemEnd();
 		
 		ZetSetReadHandler(raidenZ80Read);
 		ZetSetWriteHandler(raidenZ80Write);

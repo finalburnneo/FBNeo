@@ -580,7 +580,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x8000, 0x9fff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(cybertnk_sound_write);
 	ZetSetReadHandler(cybertnk_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnY8950Init(2, 3579545, DrvSndROM0, 0x40000, DrvSndROM1, 0x80000, NULL, &DrvSynchroniseStream, 0);

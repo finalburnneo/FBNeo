@@ -550,7 +550,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80RAM);
 	ZetSetReadHandler(pushman_sound_read);
 	ZetSetOutHandler(pushman_sound_out_port);
-	ZetMemEnd();
 	ZetClose();
 
 	m6805Init(1, 0x1000);

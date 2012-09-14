@@ -762,7 +762,6 @@ static INT32 DrvInit(INT32 (*pInitCallback)(), INT32 lordgun)
 	ZetMapArea(0xf000, 0xffff, 2, DrvZ80RAM);
 	ZetSetOutHandler(lordgun_sound_write_port);
 	ZetSetInHandler(lordgun_sound_read_port);
-	ZetMemEnd();
 	ZetClose();
 
 	// aliencha

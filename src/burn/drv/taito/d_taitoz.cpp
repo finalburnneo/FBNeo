@@ -4239,7 +4239,6 @@ static void TaitoZZ80Init()
 	ZetMapArea(0xc000, 0xdfff, 0, TaitoZ80Ram1               );
 	ZetMapArea(0xc000, 0xdfff, 1, TaitoZ80Ram1               );
 	ZetMapArea(0xc000, 0xdfff, 2, TaitoZ80Ram1               );
-	ZetMemEnd();
 	ZetClose();
 	
 	TaitoNumZ80s = 1;

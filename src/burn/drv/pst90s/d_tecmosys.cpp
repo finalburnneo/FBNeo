@@ -661,7 +661,6 @@ static INT32 CommonInit(INT32 (*pRomLoadCallback)(), INT32 spritelen, INT32 sndl
 	ZetMapArea(0xe000, 0xf7ff, 2, DrvZ80RAM);
 	ZetSetOutHandler(tecmosys_sound_out);
 	ZetSetInHandler(tecmosys_sound_in);
-	ZetMemEnd();
 	ZetClose();
 
 	// ymf262

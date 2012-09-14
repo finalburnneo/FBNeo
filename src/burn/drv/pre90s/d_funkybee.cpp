@@ -431,7 +431,6 @@ static INT32 DrvInit(INT32 game)
 	ZetSetReadHandler(funkybee_read);
 	ZetSetOutHandler(funkybee_out_port);
 	ZetSetInHandler(funkybee_in_port);
-	ZetMemEnd();
 	ZetClose();
 
 	AY8910Init(0, 1500000, nBurnSoundRate, &funkybee_ay8910_read_A, NULL, NULL, NULL);

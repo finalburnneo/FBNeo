@@ -1788,7 +1788,6 @@ static INT32 KyugoInit()
 	ZetMapArea(0xf000, 0xf7ff, 0, KyugoSharedZ80Ram        );
 	ZetMapArea(0xf000, 0xf7ff, 1, KyugoSharedZ80Ram        );
 	ZetMapArea(0xf000, 0xf7ff, 2, KyugoSharedZ80Ram        );
-	ZetMemEnd();
 	ZetClose();
 	
 	ZetInit(1);
@@ -1802,7 +1801,6 @@ static INT32 KyugoInit()
 		ZetMapArea(0x0000, 0x7fff, 0, KyugoZ80Rom2             );
 		ZetMapArea(0x0000, 0x7fff, 2, KyugoZ80Rom2             );
 	}
-	ZetMemEnd();
 	ZetClose();
 	
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "airwolf") || !strcmp(BurnDrvGetTextA(DRV_NAME), "airwolfa") || !strcmp(BurnDrvGetTextA(DRV_NAME), "skywolf") || !strcmp(BurnDrvGetTextA(DRV_NAME), "skywolf2")) {
@@ -2017,7 +2015,6 @@ static INT32 Skywolf3Init()
 	ZetMapArea(0xf000, 0xf7ff, 0, KyugoSharedZ80Ram        );
 	ZetMapArea(0xf000, 0xf7ff, 1, KyugoSharedZ80Ram        );
 	ZetMapArea(0xf000, 0xf7ff, 2, KyugoSharedZ80Ram        );
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -2026,7 +2023,6 @@ static INT32 Skywolf3Init()
 	ZetSetInHandler(KyugoPortRead2);
 	ZetMapArea(0x0000, 0x7fff, 0, KyugoZ80Rom2             );
 	ZetMapArea(0x0000, 0x7fff, 2, KyugoZ80Rom2             );
-	ZetMemEnd();
 	ZetClose();
 	
 	ZetOpen(0);

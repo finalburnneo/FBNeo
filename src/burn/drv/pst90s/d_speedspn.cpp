@@ -417,7 +417,6 @@ static INT32 DrvInit()
 	ZetSetWriteHandler(speedspn_main_write);
 	ZetSetOutHandler(speedspn_main_write_port);
 	ZetSetInHandler(speedspn_main_read_port);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -429,7 +428,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM1);
 	ZetSetWriteHandler(speedspn_sound_write);
 	ZetSetReadHandler(speedspn_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	MSM6295Init(0, 1122000 / 132, 0);

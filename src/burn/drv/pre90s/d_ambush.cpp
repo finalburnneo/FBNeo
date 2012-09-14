@@ -311,7 +311,6 @@ static INT32 DrvInit()
 	ZetSetReadHandler(ambush_read_byte);
 	ZetSetOutHandler(ambush_out_port);
 	ZetSetInHandler(ambush_in_port);
-	ZetMemEnd();
 	ZetClose();
 
 	AY8910Init(0, 1500000, nBurnSoundRate, &AY8910_0_port0, NULL, NULL, NULL);

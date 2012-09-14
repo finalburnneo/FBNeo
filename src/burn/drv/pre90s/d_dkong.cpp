@@ -1310,7 +1310,6 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), void (*pPaletteUpdate)(), UINT
 
 	ZetSetWriteHandler(dkong_main_write);
 	ZetSetReadHandler(dkong_main_read);
-	ZetMemEnd();
 	ZetClose();
 
 	I8039Init(NULL);

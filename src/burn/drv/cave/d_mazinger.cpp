@@ -671,7 +671,6 @@ static INT32 drvZInit()
 	ZetMapArea    (0xf800, 0xffFF, 0, RamZ80 + 0x0800);			// Direct Read from RAM
 	ZetMapArea    (0xf800, 0xffFF, 1, RamZ80 + 0x0800);			// Direct Write to RAM
 	ZetMapArea    (0xf800, 0xffFF, 2, RamZ80 + 0x0800);			//
-	ZetMemEnd();
 	ZetClose();
 
 	return 0;

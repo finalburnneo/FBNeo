@@ -8571,7 +8571,6 @@ static void Ozon1PostLoad()
 	ZetMapArea(0x4c00, 0x4fff, 2, GalVideoRam);
 	ZetMapArea(0x5000, 0x50ff, 0, GalSpriteRam);
 	ZetMapArea(0x5000, 0x50ff, 2, GalSpriteRam);
-	ZetMemEnd();
 	ZetClose();
 }
 
@@ -12147,7 +12146,6 @@ static void CheckmanInitSoundCPU()
 	ZetMapArea(0x2000, 0x23ff, 0, GalZ80Ram2);
 	ZetMapArea(0x2000, 0x23ff, 1, GalZ80Ram2);
 	ZetMapArea(0x2000, 0x23ff, 2, GalZ80Ram2);
-	ZetMemEnd();
 	ZetSetInHandler(CheckmanSoundZ80PortRead);
 	ZetSetOutHandler(CheckmanSoundZ80PortWrite);
 	ZetClose();
@@ -12220,7 +12218,6 @@ static void CheckmanjInitSoundCPU()
 	ZetMapArea(0x8000, 0x83ff, 0, GalZ80Ram2);
 	ZetMapArea(0x8000, 0x83ff, 1, GalZ80Ram2);
 	ZetMapArea(0x8000, 0x83ff, 2, GalZ80Ram2);
-	ZetMemEnd();
 	ZetSetReadHandler(CheckmanjSoundZ80Read);
 	ZetSetWriteHandler(CheckmanjSoundZ80Write);
 	ZetClose();
@@ -12926,7 +12923,6 @@ static void KingballPostLoad()
 	ZetSetOutHandler(KingballSoundZ80PortWrite);
 	ZetMapArea(0x0000, 0x1fff, 0, GalZ80Rom2);
 	ZetMapArea(0x0000, 0x1fff, 2, GalZ80Rom2);
-	ZetMemEnd();
 	ZetClose();
 	
 	nGalCyclesTotal[1] = (5000000 / 2) / 60;
@@ -18670,7 +18666,6 @@ static void MapTazmani2()
 	ZetMapArea(0x9000, 0x93ff, 0, GalVideoRam);
 	ZetMapArea(0x9000, 0x93ff, 1, GalVideoRam);
 	ZetMapArea(0x9000, 0x93ff, 2, GalVideoRam);	
-	ZetMemEnd();
 	ZetClose();
 }
 
@@ -18762,7 +18757,6 @@ static void AnteatergPostLoad()
 	ZetMapArea(0x8300, 0x98ff, 2, GalZ80Rom1 + 0x2500);
 	ZetMapArea(0xa300, 0xa7ff, 0, GalZ80Rom1 + 0x3b00);
 	ZetMapArea(0xa300, 0xa7ff, 2, GalZ80Rom1 + 0x3b00);
-	ZetMemEnd();
 	ZetClose();
 }
 
@@ -18817,7 +18811,6 @@ static void AnteaterukPostLoad()
 	ZetMapArea(0x8300, 0x98ff, 2, GalZ80Rom1 + 0x2500);
 	ZetMapArea(0xa300, 0xa7ff, 0, GalZ80Rom1 + 0x3b00);
 	ZetMapArea(0xa300, 0xa7ff, 2, GalZ80Rom1 + 0x3b00);
-	ZetMemEnd();
 	ZetClose();
 }
 
@@ -19950,7 +19943,6 @@ static void DambustrPostLoad()
 	ZetMapArea(0xd400, 0xd7ff, 2, GalVideoRam);
 	ZetMapArea(0xd800, 0xd8ff, 0, GalSpriteRam);
 	ZetMapArea(0xd800, 0xd8ff, 2, GalSpriteRam);
-	ZetMemEnd();
 	ZetClose();
 }
 

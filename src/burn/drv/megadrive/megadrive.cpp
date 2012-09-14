@@ -2956,7 +2956,6 @@ INT32 MegadriveInit()
 		ZetMapArea(0x2000, 0x3FFF, 1, RamZ80);
 		ZetMapArea(0x2000, 0x3FFF, 2, RamZ80);
 		
-		ZetMemEnd();
 		
 		ZetSetReadHandler(MegadriveZ80ProgRead);
 		ZetSetWriteHandler(MegadriveZ80ProgWrite);

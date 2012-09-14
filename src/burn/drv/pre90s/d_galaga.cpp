@@ -800,7 +800,6 @@ static void MachineInit()
 	ZetMapArea(0x9800, 0x9bff, 0, DrvSharedRam3);
 	ZetMapArea(0x9800, 0x9bff, 1, DrvSharedRam3);
 	ZetMapArea(0x9800, 0x9bff, 2, DrvSharedRam3);
-	ZetMemEnd();
 	ZetClose();
 	
 	ZetInit(1);
@@ -821,7 +820,6 @@ static void MachineInit()
 	ZetMapArea(0x9800, 0x9bff, 0, DrvSharedRam3);
 	ZetMapArea(0x9800, 0x9bff, 1, DrvSharedRam3);
 	ZetMapArea(0x9800, 0x9bff, 2, DrvSharedRam3);
-	ZetMemEnd();
 	ZetClose();
 	
 	ZetInit(2);
@@ -842,7 +840,6 @@ static void MachineInit()
 	ZetMapArea(0x9800, 0x9bff, 0, DrvSharedRam3);
 	ZetMapArea(0x9800, 0x9bff, 1, DrvSharedRam3);
 	ZetMapArea(0x9800, 0x9bff, 2, DrvSharedRam3);
-	ZetMemEnd();
 	ZetClose();
 	
 	NamcoSoundInit(18432000 / 6 / 32, 3);

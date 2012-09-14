@@ -771,7 +771,6 @@ INT32 FstarfrcInit()
 	ZetMapArea(0xfffe, 0xffff, 0, FstarfrcZ80Ram + 0xc000);
 	ZetMapArea(0xfffe, 0xffff, 1, FstarfrcZ80Ram + 0xc000);
 	ZetMapArea(0xfffe, 0xffff, 2, FstarfrcZ80Ram + 0xc000);
-	ZetMemEnd();
 	ZetSetReadHandler(FstarfrcZ80Read);
 	ZetSetWriteHandler(FstarfrcZ80Write);
 	ZetClose();

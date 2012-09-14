@@ -429,7 +429,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xf000, 0xf3ff, 2, DrvColRAM);
 	ZetSetWriteHandler(blueprint_write);
 	ZetSetReadHandler(blueprint_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -441,7 +440,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x4000, 0x43ff, 2, DrvZ80RAM1);
 	ZetSetWriteHandler(blueprint_sound_write);
 	ZetSetReadHandler(blueprint_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	AY8910Init(0, 625000, nBurnSoundRate, NULL, &ay8910_0_read_port_1, &ay8910_0_write_port_0, NULL);

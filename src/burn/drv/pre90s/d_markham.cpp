@@ -320,7 +320,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xd800, 0xdfff, 2, DrvShareRAM);
 	ZetSetWriteHandler(markham_main_write);
 	ZetSetReadHandler(markham_main_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -331,7 +330,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x8000, 0x87ff, 1, DrvShareRAM);
 	ZetMapArea(0x8000, 0x87ff, 2, DrvShareRAM);
 	ZetSetWriteHandler(markham_sound_write);
-	ZetMemEnd();
 	ZetClose();
 
 	SN76496Init(0, 4000000, 0);

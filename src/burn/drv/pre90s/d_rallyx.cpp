@@ -702,7 +702,6 @@ static void MachineInit()
 	ZetMapArea(0x9800, 0x9fff, 1, DrvZ80Ram1);
 	ZetMapArea(0x9800, 0x9fff, 2, DrvZ80Ram1);
 	ZetMapArea(0xa000, 0xa00f, 1, DrvRadarAttrRam);	
-	ZetMemEnd();
 	ZetClose();
 	
 	NamcoSoundInit(18432000 / 6 / 32, 3);
@@ -733,7 +732,6 @@ static void JunglerMachineInit()
 	ZetMapArea(0x9800, 0x9fff, 2, DrvZ80Ram1);
 	ZetMapArea(0xa000, 0xa00f, 1, DrvRadarAttrRam);	
 	ZetMapArea(0xa030, 0xa03f, 1, DrvRadarAttrRam);	
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);

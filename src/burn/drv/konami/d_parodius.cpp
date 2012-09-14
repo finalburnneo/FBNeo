@@ -448,7 +448,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xf000, 0xf7ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(parodius_sound_write);
 	ZetSetReadHandler(parodius_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	K052109Init(DrvGfxROM0, 0xfffff);

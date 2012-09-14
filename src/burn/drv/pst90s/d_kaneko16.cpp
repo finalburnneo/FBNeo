@@ -3004,7 +3004,6 @@ static INT32 BlazeonInit()
 	ZetMapArea(0xc000, 0xdfff, 0, Kaneko16Z80Ram         );
 	ZetMapArea(0xc000, 0xdfff, 1, Kaneko16Z80Ram         );
 	ZetMapArea(0xc000, 0xdfff, 2, Kaneko16Z80Ram         );
-	ZetMemEnd();
 	ZetSetInHandler(Kaneko16Z80PortRead);
 	ZetSetOutHandler(Kaneko16Z80PortWrite);
 	ZetClose();

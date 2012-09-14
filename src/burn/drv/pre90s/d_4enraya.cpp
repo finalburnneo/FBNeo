@@ -335,7 +335,6 @@ static INT32 DrvInit(INT32 game, INT32 sbit)
 	ZetSetOutHandler(enraya4_out_port);
 	ZetSetInHandler(enraya4_in_port);
 	ZetSetWriteHandler(enraya4_write);
-	ZetMemEnd();
 	ZetClose();
 
 	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);

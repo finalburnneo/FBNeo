@@ -220,7 +220,6 @@ static INT32 drvZInit()
 	ZetMapArea    (0xE000, 0xFFFF, 1, RamZ80);			// Direct Write to RAM
 	ZetMapArea    (0xE000, 0xFFFF, 2, RamZ80);			//
 
-	ZetMemEnd();
 	ZetClose();
 
 	return 0;

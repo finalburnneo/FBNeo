@@ -1877,7 +1877,6 @@ INT32 System16Init()
 			ZetMapArea(0xf800, 0xffff, 0, System16Z80Ram);
 			ZetMapArea(0xf800, 0xffff, 1, System16Z80Ram);
 			ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram);
-			ZetMemEnd();
 		
 #if 0 && defined FBA_DEBUG
 			ZetSetReadHandler(System16Z80Read);
@@ -1956,7 +1955,6 @@ INT32 System16Init()
 				ZetMapArea(0xf800, 0xffff, 0, System16Z80Ram);
 				ZetMapArea(0xf800, 0xffff, 1, System16Z80Ram);
 				ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram);
-				ZetMemEnd();
 		
 #if 0 && defined FBA_DEBUG
 				ZetSetReadHandler(System16Z80Read);
@@ -2026,7 +2024,6 @@ INT32 System16Init()
 			ZetMapArea(0xe000, 0xffff, 0, System16Z80Ram);
 			ZetMapArea(0xe000, 0xffff, 1, System16Z80Ram);
 			ZetMapArea(0xe000, 0xffff, 2, System16Z80Ram);
-			ZetMemEnd();
 		
 			ZetSetReadHandler(System18Z80Read);
 			ZetSetWriteHandler(System18Z80Write);
@@ -2102,7 +2099,6 @@ INT32 System16Init()
 				ZetMapArea(0xc000, 0xc7ff, 0, System16Z80Ram);
 				ZetMapArea(0xc000, 0xc7ff, 1, System16Z80Ram);
 				ZetMapArea(0xc000, 0xc7ff, 2, System16Z80Ram);
-				ZetMemEnd();
 		
 				ZetSetReadHandler(System16Z802203Read);
 				ZetSetWriteHandler(System16Z802203Write);
@@ -2117,7 +2113,6 @@ INT32 System16Init()
 				ZetMapArea(0xf800, 0xffff, 0, System16Z80Ram);
 				ZetMapArea(0xf800, 0xffff, 1, System16Z80Ram);
 				ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram);
-				ZetMemEnd();
 		
 				ZetSetReadHandler(System16Z80PCMRead);
 				ZetSetWriteHandler(System16Z80PCMWrite);
@@ -2207,7 +2202,6 @@ INT32 System16Init()
 			ZetMapArea(0xf800, 0xffff, 0, System16Z80Ram);
 			ZetMapArea(0xf800, 0xffff, 1, System16Z80Ram);
 			ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram);
-			ZetMemEnd();
 		
 			ZetSetReadHandler(System16Z80PCMRead);
 			ZetSetWriteHandler(System16Z80PCMWrite);
@@ -2303,7 +2297,6 @@ INT32 System16Init()
 			ZetMapArea(0xf800, 0xffff, 0, System16Z80Ram);
 			ZetMapArea(0xf800, 0xffff, 1, System16Z80Ram);
 			ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram);
-			ZetMemEnd();
 		
 			ZetSetReadHandler(System16Z80PCMRead);
 			ZetSetWriteHandler(System16Z80PCMWrite);
@@ -2321,7 +2314,6 @@ INT32 System16Init()
 			ZetMapArea(0xf800, 0xffff, 0, System16Z80Ram2);
 			ZetMapArea(0xf800, 0xffff, 1, System16Z80Ram2);
 			ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram2);
-			ZetMemEnd();
 		
 			ZetSetReadHandler(System16Z80Read2);
 			ZetSetWriteHandler(System16Z80Write2);
@@ -2409,7 +2401,6 @@ INT32 System16Init()
 			ZetMapArea(0xf800, 0xffff, 0, System16Z80Ram);
 			ZetMapArea(0xf800, 0xffff, 1, System16Z80Ram);
 			ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram);
-			ZetMemEnd();
 		
 			ZetSetReadHandler(System16Z80PCMRead);
 			ZetSetWriteHandler(System16Z80PCMWrite);

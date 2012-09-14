@@ -154,7 +154,6 @@ INT32 FcrashSoundInit()
 	ZetMapArea(0xd000, 0xd7ff, 0, FcrashZ80Ram     );
 	ZetMapArea(0xd000, 0xd7ff, 1, FcrashZ80Ram     );
 	ZetMapArea(0xd000, 0xd7ff, 2, FcrashZ80Ram     );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2203Init(2, 24000000 / 6, NULL, FcrashSynchroniseStream, FcrashGetTime, 0);

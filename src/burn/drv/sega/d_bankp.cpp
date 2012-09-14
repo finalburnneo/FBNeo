@@ -342,7 +342,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xe000, 0xefff, 2, Rom + 0xe000);
 	ZetMapArea(0xf000, 0xffff, 0, Rom + 0xf000);
 	ZetMapArea(0xf000, 0xffff, 1, Rom + 0xf000);
-	ZetMemEnd();
 	ZetClose();
 	
 	SN76489Init(0, 15468000 / 6, 0);

@@ -1800,7 +1800,6 @@ static void common_ym2610_init()
 	ZetMapArea(0xc000, 0xdfff, 2, TaitoZ80Ram1);
 	ZetSetWriteHandler(taitob_sound_write_ym2610);
 	ZetSetReadHandler(taitob_sound_read_ym2610);
-	ZetMemEnd();
 	ZetClose();
 
 	TC0140SYTInit();
@@ -1828,7 +1827,6 @@ static void common_ym2203_init()
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1);
 	ZetSetWriteHandler(taitob_sound_write_ym2203);
 	ZetSetReadHandler(taitob_sound_read_ym2203);
-	ZetMemEnd();
 	ZetClose();
 
 	TC0140SYTInit();

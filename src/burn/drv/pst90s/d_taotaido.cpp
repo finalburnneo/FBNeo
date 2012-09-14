@@ -722,7 +722,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x7800, 0x7fff, 2, DrvZ80RAM);
 	ZetSetInHandler(taotaido_sound_in);
 	ZetSetOutHandler(taotaido_sound_out);
-	ZetMemEnd();
 	ZetClose();
 
 	INT32 nDrvSndROM0Size = 0x100000;

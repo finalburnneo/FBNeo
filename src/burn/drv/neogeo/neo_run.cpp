@@ -3840,7 +3840,6 @@ static INT32 NeoInitCommon()
 			ZetMapArea(0xF800, 0xFFFF, 1, NeoZ80RAM);
 			ZetMapArea(0xF800, 0xFFFF, 2, NeoZ80RAM);
 
-			ZetMemEnd();
 
 			ZetSetInHandler(neogeoZ80In);
 			ZetSetOutHandler(neogeoZ80Out);
@@ -3852,7 +3851,6 @@ static INT32 NeoInitCommon()
 			ZetMapArea(0x0000, 0xFFFF, 1, NeoZ80ROMActive);
 			ZetMapArea(0x0000, 0xFFFF, 2, NeoZ80ROMActive);
 
-			ZetMemEnd();
 
 			ZetSetInHandler(neogeoZ80InCD);
 			ZetSetOutHandler(neogeoZ80Out);

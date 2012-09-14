@@ -598,7 +598,6 @@ static INT32 Wc90b1Init()
 	ZetMapArea(0xf800, 0xfbff, 0, Wc90b1SharedRam        );
 	ZetMapArea(0xf800, 0xfbff, 1, Wc90b1SharedRam        );
 	ZetMapArea(0xf800, 0xfbff, 2, Wc90b1SharedRam        );
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -626,7 +625,6 @@ static INT32 Wc90b1Init()
 	ZetMapArea(0xf800, 0xfbff, 0, Wc90b1SharedRam        );
 	ZetMapArea(0xf800, 0xfbff, 1, Wc90b1SharedRam        );
 	ZetMapArea(0xf800, 0xfbff, 2, Wc90b1SharedRam        );
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(2);
@@ -640,7 +638,6 @@ static INT32 Wc90b1Init()
 	ZetMapArea(0xf000, 0xf7ff, 0, Wc90b1Z80Ram3          );
 	ZetMapArea(0xf000, 0xf7ff, 1, Wc90b1Z80Ram3          );
 	ZetMapArea(0xf000, 0xf7ff, 2, Wc90b1Z80Ram3          );
-	ZetMemEnd();
 	ZetClose();
 
 	GenericTilesInit();

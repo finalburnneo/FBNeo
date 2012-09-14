@@ -397,7 +397,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x6000, 0x7fff, 2, DrvZ80RAM);
 	ZetSetOutHandler(ashnojoe_sound_write_port);
 	ZetSetInHandler(ashnojoe_sound_read_port);
-	ZetMemEnd();
 
 	MSM5205Init(0, DrvSynchroniseStream, 384000, ashnojoe_vclk_cb, MSM5205_S48_4B, 1);
 	MSM5205SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);

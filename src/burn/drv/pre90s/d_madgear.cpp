@@ -975,7 +975,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xd000, 0xd7ff, 0, DrvZ80Ram              );
 	ZetMapArea(0xd000, 0xd7ff, 1, DrvZ80Ram              );
 	ZetMapArea(0xd000, 0xd7ff, 2, DrvZ80Ram              );
-	ZetMemEnd();
 	ZetClose();
 	
 	GenericTilesInit();
@@ -1071,7 +1070,6 @@ static INT32 Ledstrm2Init()
 	ZetMapArea(0xd000, 0xd7ff, 0, DrvZ80Ram              );
 	ZetMapArea(0xd000, 0xd7ff, 1, DrvZ80Ram              );
 	ZetMapArea(0xd000, 0xd7ff, 2, DrvZ80Ram              );
-	ZetMemEnd();
 	ZetClose();
 	
 	GenericTilesInit();
@@ -1165,7 +1163,6 @@ static INT32 LastduelInit()
 	ZetMapArea(0xe000, 0xe7ff, 0, DrvZ80Ram              );
 	ZetMapArea(0xe000, 0xe7ff, 1, DrvZ80Ram              );
 	ZetMapArea(0xe000, 0xe7ff, 2, DrvZ80Ram              );
-	ZetMemEnd();
 	ZetClose();
 	
 	GenericTilesInit();
@@ -1271,7 +1268,6 @@ static INT32 LastduelbInit()
 	ZetMapArea(0xe000, 0xe7ff, 0, DrvZ80Ram              );
 	ZetMapArea(0xe000, 0xe7ff, 1, DrvZ80Ram              );
 	ZetMapArea(0xe000, 0xe7ff, 2, DrvZ80Ram              );
-	ZetMemEnd();
 	ZetClose();
 	
 	GenericTilesInit();

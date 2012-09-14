@@ -3374,7 +3374,6 @@ static void M62MachineInit()
 	ZetMapArea(0xe000, 0xefff, 0, M62Z80Ram   );
 	ZetMapArea(0xe000, 0xefff, 1, M62Z80Ram   );
 	ZetMapArea(0xe000, 0xefff, 2, M62Z80Ram   );
-	ZetMemEnd();
 	ZetClose();
 	
 	M6803Init(1);
@@ -3416,7 +3415,6 @@ static INT32 KungfumMachineInit()
 	ZetOpen(0);
 	ZetSetReadHandler(KungfumZ80Read);
 	ZetSetWriteHandler(KungfumZ80Write);
-	ZetMemEnd();
 	ZetClose();
 	
 	M62Z80Clock = 3072000;
@@ -3438,7 +3436,6 @@ static INT32 BattroadMachineInit()
 	ZetMapArea(0xc800, 0xcfff, 0, M62CharRam        );
 	ZetMapArea(0xc800, 0xcfff, 1, M62CharRam        );
 	ZetMapArea(0xc800, 0xcfff, 2, M62CharRam        );
-	ZetMemEnd();
 	ZetClose();
 	
 	M62Z80Clock = 3072000;
@@ -3473,7 +3470,6 @@ static INT32 Ldrun2MachineInit()
 	ZetSetOutHandler(Ldrun2Z80PortWrite);
 	ZetMapArea(0x8000, 0x9fff, 0, M62Z80Rom + 0x8000);
 	ZetMapArea(0x8000, 0x9fff, 2, M62Z80Rom + 0x8000);
-	ZetMemEnd();
 	ZetClose();
 	
 	M62RenderFunction = LdrunDraw;
@@ -3493,7 +3489,6 @@ static INT32 Ldrun3MachineInit()
 	ZetSetOutHandler(Ldrun3Z80PortWrite);
 	ZetMapArea(0x8000, 0xbfff, 0, M62Z80Rom + 0x8000);
 	ZetMapArea(0x8000, 0xbfff, 2, M62Z80Rom + 0x8000);
-	ZetMemEnd();
 	ZetClose();
 	
 	M62RenderFunction = Ldrun3Draw;
@@ -3513,7 +3508,6 @@ static INT32 Ldrun4MachineInit()
 	ZetSetOutHandler(Ldrun4Z80PortWrite);
 	ZetMapArea(0x8000, 0xbfff, 0, M62Z80Rom + 0x8000);
 	ZetMapArea(0x8000, 0xbfff, 2, M62Z80Rom + 0x8000);
-	ZetMemEnd();
 	ZetClose();
 	
 	M62RenderFunction = Ldrun4Draw;
@@ -3532,7 +3526,6 @@ static INT32 LotlotMachineInit()
 	ZetMapArea(0xa000, 0xafff, 0, M62CharRam);
 	ZetMapArea(0xa000, 0xafff, 1, M62CharRam);
 	ZetMapArea(0xa000, 0xafff, 2, M62CharRam);
-	ZetMemEnd();
 	ZetClose();
 	
 	M62RenderFunction = LotlotDraw;
@@ -3559,7 +3552,6 @@ static INT32 KidnikiMachineInit()
 	ZetMapArea(0xd000, 0xdfff, 0, M62CharRam        );
 	ZetMapArea(0xd000, 0xdfff, 1, M62CharRam        );
 	ZetMapArea(0xd000, 0xdfff, 2, M62CharRam        );
-	ZetMemEnd();
 	ZetClose();
 	
 	M62RenderFunction = KidnikiDraw;
@@ -3588,7 +3580,6 @@ static INT32 SpelunkrMachineInit()
 	ZetMemCallback(0xd000, 0xdfff, 0);
 	ZetMemCallback(0xd000, 0xdfff, 1);
 	ZetMemCallback(0xd000, 0xdfff, 2);
-	ZetMemEnd();
 	ZetClose();
 	
 	M62RenderFunction = SpelunkrDraw;
@@ -3619,7 +3610,6 @@ static INT32 Spelunk2MachineInit()
 	ZetMemCallback(0xd000, 0xdfff, 0);
 	ZetMemCallback(0xd000, 0xdfff, 1);
 	ZetMemCallback(0xd000, 0xdfff, 2);
-	ZetMemEnd();
 	ZetClose();
 	
 	M62RenderFunction = Spelunk2Draw;
@@ -3647,7 +3637,6 @@ static INT32 YoujyudnMachineInit()
 	ZetMemCallback(0xd800, 0xdfff, 0);
 	ZetMemCallback(0xd800, 0xdfff, 1);
 	ZetMemCallback(0xd800, 0xdfff, 2);
-	ZetMemEnd();
 	ZetClose();
 	
 	M62RenderFunction = YoujyudnDraw;
@@ -3674,7 +3663,6 @@ static INT32 HorizonMachineInit()
 	ZetMapArea(0xc800, 0xc83f, 0, M62ScrollRam      );
 	ZetMapArea(0xc800, 0xc83f, 1, M62ScrollRam      );
 	ZetMapArea(0xc800, 0xc83f, 2, M62ScrollRam      );
-	ZetMemEnd();
 	ZetClose();
 		
 	M62RenderFunction = HorizonDraw;

@@ -526,7 +526,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x8000, 0xffff, 2, DrvZ80ROM + 0x10000);
 	ZetSetOutHandler(crshrace_sound_out);
 	ZetSetInHandler(crshrace_sound_in);
-	ZetMemEnd();
 	ZetClose();
 
 	INT32 DrvSndROMLen = 0x100000;

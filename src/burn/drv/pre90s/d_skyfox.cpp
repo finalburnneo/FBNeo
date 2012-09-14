@@ -317,7 +317,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xd000, 0xdfff, 2, DrvSprRAM);
 	ZetSetWriteHandler(skyfox_write);
 	ZetSetReadHandler(skyfox_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -329,7 +328,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM1);
 	ZetSetWriteHandler(skyfox_sound_write);
 	ZetSetReadHandler(skyfox_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM2203Init(2, 1748000, NULL, DrvSynchroniseStream, DrvGetTime, 0);

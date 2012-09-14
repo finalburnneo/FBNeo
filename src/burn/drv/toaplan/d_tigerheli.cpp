@@ -2053,7 +2053,6 @@ static INT32 tigerhInit()
 		ZetMapArea(0xF000, 0xFFFF, 1, TigerHeliTextRAM);
 		ZetMapArea(0xF000, 0xFFFF, 2, TigerHeliTextRAM);
 
-		ZetMemEnd();
 
 		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "tigerhb1")) {
 			ZetSetReadHandler(tigerhReadCPU0_tigerhb1);
@@ -2091,7 +2090,6 @@ static INT32 tigerhInit()
 		ZetMapArea(0xC800, 0xCFFF, 1, RamShared);
 		ZetMapArea(0xC800, 0xCFFF, 2, RamShared);
 
-		ZetMemEnd();
 
 		ZetSetReadHandler(tigerhReadCPU1);
 		ZetSetWriteHandler(tigerhWriteCPU1);

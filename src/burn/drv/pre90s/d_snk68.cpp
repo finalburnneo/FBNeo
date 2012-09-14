@@ -950,7 +950,6 @@ static INT32 DrvInit(INT32 game)
 	ZetSetReadHandler(pow_sound_read);
 	ZetSetInHandler(pow_sound_in);
 	ZetSetOutHandler(pow_sound_out);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM3812Init(4000000, &powFMIRQHandler, &powSynchroniseStream, 0);

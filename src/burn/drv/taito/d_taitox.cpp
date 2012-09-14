@@ -1185,7 +1185,6 @@ static INT32 TaitoXInit(INT32 nSoundType)
 	ZetMapArea(0xc000, 0xdfff, 0, TaitoZ80Ram1                );
 	ZetMapArea(0xc000, 0xdfff, 1, TaitoZ80Ram1                );
 	ZetMapArea(0xc000, 0xdfff, 2, TaitoZ80Ram1                );
-	ZetMemEnd();
 	ZetClose();
 	
 	if (nSoundType == 1) {

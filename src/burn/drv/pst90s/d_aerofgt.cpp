@@ -628,7 +628,6 @@ static INT32 aerofgtInit()
 		ZetMapArea(0x7800, 0x7FFF, 1, RamZ80);
 		ZetMapArea(0x7800, 0x7FFF, 2, RamZ80);
 		
-		ZetMemEnd();
 		
 		//ZetSetReadHandler(aerofgtZ80Read);
 		//ZetSetWriteHandler(aerofgtZ80Write);
@@ -1665,7 +1664,6 @@ static INT32 turbofrcInit()
 		ZetMapArea(0x7800, 0x7FFF, 1, RamZ80);
 		ZetMapArea(0x7800, 0x7FFF, 2, RamZ80);
 		
-		ZetMemEnd();
 		
 		ZetSetInHandler(turbofrcZ80PortRead);
 		ZetSetOutHandler(turbofrcZ80PortWrite);
@@ -2629,7 +2627,6 @@ static INT32 karatblzInit()
 		ZetMapArea(0x7800, 0x7FFF, 1, RamZ80);
 		ZetMapArea(0x7800, 0x7FFF, 2, RamZ80);
 		
-		ZetMemEnd();
 		
 		ZetSetInHandler(turbofrcZ80PortRead);
 		ZetSetOutHandler(turbofrcZ80PortWrite);
@@ -3361,7 +3358,6 @@ static INT32 spinlbrkInit()
 		ZetMapArea(0x7800, 0x7FFF, 1, RamZ80);
 		ZetMapArea(0x7800, 0x7FFF, 2, RamZ80);
 		
-		ZetMemEnd();
 		
 		ZetSetInHandler(turbofrcZ80PortRead);
 		ZetSetOutHandler(turbofrcZ80PortWrite);
@@ -3872,7 +3868,6 @@ static INT32 aerofgtbInit()
 		ZetMapArea(0x7800, 0x7FFF, 1, RamZ80);
 		ZetMapArea(0x7800, 0x7FFF, 2, RamZ80);
 		
-		ZetMemEnd();
 		
 		//ZetSetReadHandler(aerofgtZ80Read);
 		//ZetSetWriteHandler(aerofgtZ80Write);

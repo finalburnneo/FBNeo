@@ -600,7 +600,6 @@ static INT32 DrvInit()
 	ZetSetReadHandler(mcatadv_sound_read);
 	ZetSetInHandler(mcatadv_sound_in);
 	ZetSetOutHandler(mcatadv_sound_out);
-	ZetMemEnd();
 	ZetClose();
 
 	INT32 DrvSndROMLen = nGame ? 0x100000 : 0x80000;

@@ -271,7 +271,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xf800, 0xffff, 2, DrvZ80RAM);
 	ZetSetOutHandler(pass_sound_write_port);
 	ZetSetInHandler(pass_sound_read_port);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM2203Init(1, 3579545, NULL, DrvSynchroniseStream, DrvGetTime, 0);

@@ -18,7 +18,6 @@ void ZetOpen(INT32 nCPU);
 void ZetClose();
 INT32 ZetGetActive();
 INT32 ZetMemCallback(INT32 nStart,INT32 nEnd,INT32 nMode);
-INT32 ZetMemEnd();
 INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem);
 INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem01, UINT8 *Mem02);
 void ZetReset();

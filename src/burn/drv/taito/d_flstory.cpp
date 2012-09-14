@@ -856,7 +856,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xe000, 0xe7ff, 2, DrvZ80RAM0);
 	ZetSetWriteHandler(flstory_main_write);
 	ZetSetReadHandler(flstory_main_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -870,7 +869,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xe000, 0xefff, 2, DrvZ80ROM1 + 0xe000);
 	ZetSetWriteHandler(flstory_sound_write);
 	ZetSetReadHandler(flstory_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	m67805_taito_init(DrvMcuROM, DrvMcuRAM, &standard_m68705_interface);

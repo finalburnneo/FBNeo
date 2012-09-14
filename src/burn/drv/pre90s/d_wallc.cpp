@@ -270,7 +270,6 @@ static INT32 DrvInit(INT32 incr)
 	ZetMapArea(0xa000, 0xa3ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(wallc_write);
 	ZetSetReadHandler(wallc_read);
-	ZetMemEnd();
 	ZetClose();
 
 	AY8910Init(0, 1536000, nBurnSoundRate, NULL, NULL, NULL, NULL);

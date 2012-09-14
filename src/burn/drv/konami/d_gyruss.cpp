@@ -637,7 +637,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xa000, 0xa7ff, 2, DrvShareRAM);
 	ZetSetReadHandler(gyruss_main_read);
 	ZetSetWriteHandler(gyruss_main_write);
-	ZetMemEnd();
 	ZetClose();
 
 	M6809Init(1);
@@ -660,7 +659,6 @@ static INT32 DrvInit()
 	ZetSetReadHandler(gyruss_sound0_read);
 	ZetSetOutHandler(gyruss_sound0_out);
 	ZetSetInHandler(gyruss_sound0_in);
-	ZetMemEnd();
 	ZetClose();
 
 	// don't bother with i8039 right now, descrete sounds not emulated

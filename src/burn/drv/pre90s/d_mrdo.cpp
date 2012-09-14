@@ -298,7 +298,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xe000, 0xefff, 0, Rom + 0xe000);
 	ZetMapArea(0xe000, 0xefff, 1, Rom + 0xe000);
 	ZetMapArea(0xe000, 0xefff, 2, Rom + 0xe000);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnSetRefreshRate(5000000.0/312/262);

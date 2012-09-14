@@ -545,7 +545,6 @@ static INT32 DrvInit()
 	ZetSetReadHandler(fuuki32_sound_read);
 	ZetSetOutHandler(fuuki32_sound_out);
 	ZetSetInHandler(fuuki32_sound_in);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYMF278BInit(0, DrvSndROM, &DrvFMIRQHandler, DrvSynchroniseStream);

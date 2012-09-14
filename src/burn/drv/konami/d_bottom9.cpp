@@ -573,7 +573,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(bottom9_sound_write);
 	ZetSetReadHandler(bottom9_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	K007232Init(0, 3579545, DrvSndROM0, 0x40000);

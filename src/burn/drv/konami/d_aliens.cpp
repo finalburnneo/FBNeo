@@ -416,7 +416,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(aliens_sound_write);
 	ZetSetReadHandler(aliens_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	K052109Init(DrvGfxROM0, 0x1fffff);

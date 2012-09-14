@@ -687,7 +687,6 @@ static INT32 DrvInit(INT32 game)
 	ZetSetWriteHandler(angelkds_write);
 	ZetSetOutHandler(angelkds_out_port);
 	ZetSetInHandler(angelkds_in_port);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -699,7 +698,6 @@ static INT32 DrvInit(INT32 game)
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM1);
 	ZetSetOutHandler(main_to_sound_out_port);
 	ZetSetInHandler(main_to_sound_in_port);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM2203Init(2, 4000000, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);

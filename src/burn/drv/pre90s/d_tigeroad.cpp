@@ -713,7 +713,6 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 	ZetSetWriteHandler(tigeroad_sound_write);
 	ZetSetReadHandler(tigeroad_sound_read);
 	ZetSetOutHandler(tigeroad_sound_out);
-	ZetMemEnd();
 	ZetClose();
 
 	if (toramich) {
@@ -724,7 +723,6 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 		ZetMapArea(0x0000, 0xffff, 2, DrvSndROM);
 		ZetSetOutHandler(tigeroad_sample_out);
 		ZetSetInHandler(tigeroad_sample_in);
-		ZetMemEnd();
 		ZetClose();
 	}
 

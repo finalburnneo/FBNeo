@@ -129,7 +129,6 @@ INT32 Sf2mdtSoundInit()
 	ZetMapArea(0xd000, 0xd7ff, 0, Sf2mdtZ80Ram     );
 	ZetMapArea(0xd000, 0xd7ff, 1, Sf2mdtZ80Ram     );
 	ZetMapArea(0xd000, 0xd7ff, 2, Sf2mdtZ80Ram     );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2151Init(3579540);

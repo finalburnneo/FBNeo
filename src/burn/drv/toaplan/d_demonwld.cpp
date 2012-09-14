@@ -486,7 +486,6 @@ static INT32 DrvInit()
 		ZetMapArea(0x8000, 0xffff, 2, DrvShareRAM);
 		ZetSetOutHandler(demonwld_sound_write_port);
 		ZetSetInHandler(demonwld_sound_read_port);
-		ZetMemEnd();
 		ZetClose();
 	}
 

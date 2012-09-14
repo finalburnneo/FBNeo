@@ -439,7 +439,6 @@ INT32 SolomonInit()
 	ZetMapArea(0xe400, 0xe5ff, 2, SolomonPaletteRam      );
 	ZetMapArea(0xf000, 0xffff, 0, SolomonZ80Rom1 + 0xf000);
 	ZetMapArea(0xf000, 0xffff, 2, SolomonZ80Rom1 + 0xf000);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -451,7 +450,6 @@ INT32 SolomonInit()
 	ZetMapArea(0x4000, 0x47ff, 0, SolomonZ80Ram2         );
 	ZetMapArea(0x4000, 0x47ff, 1, SolomonZ80Ram2         );
 	ZetMapArea(0x4000, 0x47ff, 2, SolomonZ80Ram2         );
-	ZetMemEnd();
 	ZetClose();
 
 	BurnFree(SolomonTempRom);

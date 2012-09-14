@@ -393,7 +393,6 @@ static INT32 DrvInit()
 	ZetSetReadHandler(scotrsht_sound_read);
 	ZetSetOutHandler(scotrsht_sound_out);
 	ZetSetInHandler(scotrsht_sound_in);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM2203Init(1, 3072000, NULL, DrvSynchroniseStream, DrvGetTime, 0);

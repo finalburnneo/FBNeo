@@ -732,7 +732,6 @@ static INT32 DrvInit(INT32 nGame)
 	ZetMapArea(0x8000, 0xffff, 2, DrvZ80ROM + 0x8000);
 	ZetSetOutHandler(f1gp_sound_out);
 	ZetSetInHandler(f1gp_sound_in);
-	ZetMemEnd();
 	ZetClose();
 
 	INT32 DrvSndROMLen = 0x100000;

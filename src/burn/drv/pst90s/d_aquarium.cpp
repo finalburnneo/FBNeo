@@ -416,7 +416,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x7800, 0x7fff, 2, DrvZ80RAM);
 	ZetSetOutHandler(aquarium_sound_out);
 	ZetSetInHandler(aquarium_sound_in);
-	ZetMemEnd();
 	ZetClose();
 
 	MSM6295Init(0, 1122000 / 132, 1);

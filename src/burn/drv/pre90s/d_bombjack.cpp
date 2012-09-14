@@ -366,7 +366,6 @@ INT32 BjZInit()
 
 	ZetSetReadHandler(BjMemRead);
 	ZetSetWriteHandler(BjMemWrite);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -384,7 +383,6 @@ INT32 BjZInit()
 	//	ZetMapArea    (0x6000,0x6000,1,BjRam+0xb800);
 	ZetSetReadHandler(SndMemRead);
 	ZetSetOutHandler(SndPortWrite);
-	ZetMemEnd();
 	ZetClose();
 
 	pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;

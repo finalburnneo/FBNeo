@@ -4245,7 +4245,6 @@ static INT32 DariusInit()
 	ZetMapArea(0x8000, 0x8fff, 0, TaitoZ80Ram1               );
 	ZetMapArea(0x8000, 0x8fff, 1, TaitoZ80Ram1               );
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1               );
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -4254,7 +4253,6 @@ static INT32 DariusInit()
 	ZetSetOutHandler(DariusZ802WritePort);
 	ZetMapArea(0x0000, 0xffff, 0, TaitoZ80Rom2               );
 	ZetMapArea(0x0000, 0xffff, 2, TaitoZ80Rom2               );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2203Init(2, 4000000, TaitoYM2203IRQHandler, TaitoSynchroniseStream, TaitoGetTime, 0);
@@ -4357,7 +4355,6 @@ static INT32 OpwolfInit()
 	ZetMapArea(0x8000, 0x8fff, 0, TaitoZ80Ram1               );
 	ZetMapArea(0x8000, 0x8fff, 1, TaitoZ80Ram1               );
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1               );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2151Init(4000000);
@@ -4465,7 +4462,6 @@ static INT32 OpwolfbInit()
 	ZetMapArea(0x8000, 0x8fff, 0, TaitoZ80Ram1               );
 	ZetMapArea(0x8000, 0x8fff, 1, TaitoZ80Ram1               );
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1               );
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -4477,7 +4473,6 @@ static INT32 OpwolfbInit()
 	ZetMapArea(0xc000, 0xc7ff, 0, TaitoZ80Ram2               );
 	ZetMapArea(0xc000, 0xc7ff, 1, TaitoZ80Ram2               );
 	ZetMapArea(0xc000, 0xc7ff, 2, TaitoZ80Ram2               );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2151Init(4000000);
@@ -4582,7 +4577,6 @@ static INT32 RbislandInit()
 	ZetMapArea(0x8000, 0x8fff, 0, TaitoZ80Ram1               );
 	ZetMapArea(0x8000, 0x8fff, 1, TaitoZ80Ram1               );
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1               );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2151Init(16000000 / 4);
@@ -4679,7 +4673,6 @@ static INT32 JumpingInit()
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1               );
 	ZetMapArea(0xc000, 0xffff, 0, TaitoZ80Rom1 + 0xc000      );
 	ZetMapArea(0xc000, 0xffff, 2, TaitoZ80Rom1 + 0xc000      );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2203Init(2, 3579545, NULL, TaitoSynchroniseStream, TaitoGetTime, 0);
@@ -4772,7 +4765,6 @@ static INT32 RastanInit()
 	ZetMapArea(0x8000, 0x8fff, 0, TaitoZ80Ram1               );
 	ZetMapArea(0x8000, 0x8fff, 1, TaitoZ80Ram1               );
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1               );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2151Init(16000000 / 4);
@@ -4881,7 +4873,6 @@ static INT32 TopspeedInit()
 	ZetMapArea(0x8000, 0x8fff, 0, TaitoZ80Ram1               );
 	ZetMapArea(0x8000, 0x8fff, 1, TaitoZ80Ram1               );
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1               );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2151Init(16000000 / 4);
@@ -4970,7 +4961,6 @@ static INT32 VolfiedInit()
 	ZetMapArea(0x8000, 0x87ff, 0, TaitoZ80Ram1               );
 	ZetMapArea(0x8000, 0x87ff, 1, TaitoZ80Ram1               );
 	ZetMapArea(0x8000, 0x87ff, 2, TaitoZ80Ram1               );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2203Init(1, 4000000, TaitoYM2203IRQHandler, TaitoSynchroniseStream, TaitoGetTime, 0);

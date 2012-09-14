@@ -2488,7 +2488,6 @@ static INT32 DrvInit(void (*mapCallback)(), void (*pInitCallback)(), INT32 selec
 	ZetInit(0);
 	ZetOpen(0);
 	mapCallback();	
-	ZetMemEnd();
 	ZetClose();
 
 	AY8910Init(0, 1789750, nBurnSoundRate, NULL, NULL, NULL, NULL);

@@ -390,7 +390,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(srumbler_sound_write);
 	ZetSetReadHandler(srumbler_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM2203Init(2, 4000000, NULL, DrvSynchroniseStream, DrvGetTime, 0);

@@ -338,7 +338,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xd000, 0xd7ff, 2, DrvVidRAM);
 	ZetSetWriteHandler(ikki_main_write);
 	ZetSetReadHandler(ikki_main_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -353,7 +352,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xc800, 0xcfff, 2, DrvShareRAM);
 	ZetSetWriteHandler(ikki_sub_write);
 	ZetSetReadHandler(ikki_sub_read);
-	ZetMemEnd();
 	ZetClose();
 
 	SN76496Init(0, 8000000/4, 0);

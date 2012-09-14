@@ -452,7 +452,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xf000, 0xffff, 1, Ram  + 0x02000);
 	ZetSetReadHandler(gunsmoke_cpu0_read);
 	ZetSetWriteHandler(gunsmoke_cpu0_write);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -464,7 +463,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xc000, 0xc7ff, 2, Ram  + 0x03000);
 	ZetSetReadHandler(gunsmoke_cpu1_read);
 	ZetSetWriteHandler(gunsmoke_cpu1_write);
-	ZetMemEnd();
 	ZetClose();
 
 	GenericTilesInit();

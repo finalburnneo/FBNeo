@@ -412,7 +412,6 @@ static INT32 DrvInit()
 
 	ZetSetWriteHandler(kangaroo_main_write);
 	ZetSetReadHandler(kangaroo_main_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -429,7 +428,6 @@ static INT32 DrvInit()
 	ZetSetReadHandler(kangaroo_sound_read);
 	ZetSetInHandler(kangaroo_sound_read);
 	ZetSetOutHandler(kangaroo_sound_write);
-	ZetMemEnd();
 	ZetClose();
 
 	AY8910Init(0, 1250000, nBurnSoundRate, NULL, NULL, NULL, NULL);

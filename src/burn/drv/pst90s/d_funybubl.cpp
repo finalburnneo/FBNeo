@@ -365,7 +365,6 @@ static INT32 DrvInit()
 	ZetSetWriteHandler(funybubl_write);
 	ZetSetOutHandler(funybubl_out);
 	ZetSetInHandler(funybubl_in);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -377,7 +376,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM1);
 	ZetSetWriteHandler(funybubl_sound_write);
 	ZetSetReadHandler(funybubl_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	MSM6295Init(0, 1056000 / 132, 0);

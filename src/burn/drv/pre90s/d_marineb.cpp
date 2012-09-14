@@ -390,7 +390,6 @@ static INT32 DrvInit()
 	ZetSetWriteHandler(marineb_write);
 	ZetSetOutHandler(marineb_write_port);
 
-	ZetMemEnd();
 	ZetClose();	
 	
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);

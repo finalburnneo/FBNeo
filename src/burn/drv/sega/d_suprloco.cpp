@@ -415,7 +415,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xf800, 0xffff, 2, DrvZ80RAM0);
 	ZetSetWriteHandler(suprloco_main_write);
 	ZetSetReadHandler(suprloco_main_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -427,7 +426,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM1);
 	ZetSetWriteHandler(suprloco_sound_write);
 	ZetSetReadHandler(suprloco_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	SN76496Init(0, 4000000, 0);

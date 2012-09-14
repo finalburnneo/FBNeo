@@ -450,7 +450,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(mugsmash_sound_write);
 	ZetSetReadHandler(mugsmash_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	GenericTilesInit();

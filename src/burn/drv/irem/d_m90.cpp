@@ -1141,7 +1141,6 @@ static INT32 DrvInit(INT32 codesize, INT32 gfxlen, INT32 samples, INT32 bank, IN
 	ZetMapArea(0xf000, 0xffff, 2, DrvZ80RAM);
 	ZetSetOutHandler(m90_sound_write_port);
 	ZetSetInHandler(m90_sound_read_port);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM2151Init(3579545);

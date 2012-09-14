@@ -170,7 +170,6 @@ INT32 PsndZInit()
 	// In case it tries to fetch other areas
 	ZetMapArea(0xc000,0xcfff,2,CpsZRom);
 	ZetMapArea(0xd800,0xffff,2,CpsZRom);
-	ZetMemEnd();
 	ZetClose();
 
 	return 0;

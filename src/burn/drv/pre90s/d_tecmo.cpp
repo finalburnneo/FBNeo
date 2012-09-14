@@ -734,7 +734,6 @@ static INT32 RygarInit()
 	ZetMapArea(0xe800, 0xefff, 0, DrvPalRAM);
 	ZetSetWriteHandler(rygar_main_write);
 	ZetSetReadHandler(rygar_main_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -746,7 +745,6 @@ static INT32 RygarInit()
 	ZetMapArea(0x4000, 0x47ff, 2, DrvZ80RAM1);
 	ZetSetWriteHandler(rygar_sound_write);
 	ZetSetReadHandler(rygar_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	{
@@ -815,7 +813,6 @@ static INT32 SilkwormInit()
 	ZetMapArea(0xe800, 0xefff, 0, DrvPalRAM);
 	ZetSetWriteHandler(rygar_main_write);
 	ZetSetReadHandler(rygar_main_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -827,7 +824,6 @@ static INT32 SilkwormInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM1);
 	ZetSetWriteHandler(rygar_sound_write);
 	ZetSetReadHandler(rygar_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	{
@@ -896,7 +892,6 @@ static INT32 GeminiInit()
 	ZetMapArea(0xe800, 0xefff, 1, DrvSprRAM);
 	ZetSetWriteHandler(rygar_main_write);
 	ZetSetReadHandler(rygar_main_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -908,7 +903,6 @@ static INT32 GeminiInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM1);
 	ZetSetWriteHandler(rygar_sound_write);
 	ZetSetReadHandler(rygar_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	{

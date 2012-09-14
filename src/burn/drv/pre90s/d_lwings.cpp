@@ -911,7 +911,6 @@ static void lwings_main_cpu_init()
 	ZetMapArea(0xf000, 0xf7ff, 2, DrvPalRAM);
 	ZetSetReadHandler(lwings_main_read);
 	ZetSetWriteHandler(lwings_main_write);
-	ZetMemEnd();
 	ZetClose();
 }
 
@@ -925,7 +924,6 @@ static void lwings_sound_init()
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80RAM1);
 	ZetSetReadHandler(lwings_sound_read);
 	ZetSetWriteHandler(lwings_sound_write);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
@@ -1040,7 +1038,6 @@ static INT32 TrojanInit()
 	ZetMapArea(0x0000, 0xffff, 2, DrvZ80ROM2);
 	ZetSetInHandler(trojan_adpcm_in);
 	ZetSetOutHandler(trojan_adpcm_out);
-	ZetMemEnd();
 	ZetClose();
 	
 	MSM5205Init(0, DrvMSM5205SynchroniseStream, 455000, NULL, MSM5205_SEX_4B, 1);

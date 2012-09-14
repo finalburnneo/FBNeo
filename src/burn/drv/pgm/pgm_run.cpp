@@ -673,7 +673,6 @@ INT32 pgmInit()
 		ZetMapArea(0x0000, 0xffff, 2, RamZ80);
 		ZetSetOutHandler(PgmZ80PortWrite);
 		ZetSetInHandler(PgmZ80PortRead);
-		ZetMemEnd();
 		ZetClose();
 	}
 

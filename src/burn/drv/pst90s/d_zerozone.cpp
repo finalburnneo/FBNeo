@@ -352,7 +352,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(zerozone_sound_write);
 	ZetSetReadHandler(zerozone_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	MSM6295Init(0, 1056000 / 132, 0);

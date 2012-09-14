@@ -663,7 +663,6 @@ static INT32 DrvInit(INT32 game_select)
 	ZetMapArea(0xe000, 0xe7ff, 2, DrvZ80RAM);
 	ZetSetOutHandler(magicbub_sound_out);
 	ZetSetInHandler(magicbub_sound_in);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM3812Init(4000000, &DrvYM3812IrqHandler, &DrvSynchroniseStream, 0);

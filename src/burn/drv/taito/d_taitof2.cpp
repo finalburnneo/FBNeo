@@ -7438,7 +7438,6 @@ static void TaitoF2SoundInit()
 	ZetMapArea(0xc000, 0xdfff, 0, TaitoZ80Ram1                 );
 	ZetMapArea(0xc000, 0xdfff, 1, TaitoZ80Ram1                 );
 	ZetMapArea(0xc000, 0xdfff, 2, TaitoZ80Ram1                 );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2610Init(24000000 / 3, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &TaitoF2FMIRQHandler, TaitoF2SynchroniseStream, TaitoF2GetTime, 0);
@@ -7631,7 +7630,6 @@ static INT32 CamltryaInit()
 	ZetMapArea(0x8000, 0x8fff, 0, TaitoZ80Ram1                 );
 	ZetMapArea(0x8000, 0x8fff, 1, TaitoZ80Ram1                 );
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1                 );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2203Init(1, 24000000 / 8, &TaitoF2FMIRQHandler, CamltryaSynchroniseStream, CamltryaGetTime, 0);
@@ -7986,7 +7984,6 @@ static INT32 DriveoutInit()
 	ZetMapArea(0x8000, 0x87ff, 0, TaitoZ80Ram1                 );
 	ZetMapArea(0x8000, 0x87ff, 1, TaitoZ80Ram1                 );
 	ZetMapArea(0x8000, 0x87ff, 2, TaitoZ80Ram1                 );
-	ZetMemEnd();
 	ZetClose();
 	
 	MSM6295Init(0, 1056000 / 132, 0);

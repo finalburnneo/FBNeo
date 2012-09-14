@@ -587,7 +587,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xf800, 0xffff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(gradius3_sound_write);
 	ZetSetReadHandler(gradius3_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM2151Init(3579545);

@@ -1063,7 +1063,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xc000, 0xcfff, 0, DrvZ80Ram);
 	ZetMapArea(0xc000, 0xcfff, 1, DrvZ80Ram);
 	ZetMapArea(0xc000, 0xcfff, 2, DrvZ80Ram);
-	ZetMemEnd();
 	ZetClose();
 	
 	if (DrvUseYM2203) {
@@ -1127,7 +1126,6 @@ static INT32 DrvAmazonInit()
 	ZetMapArea(0xc000, 0xcfff, 0, DrvZ80Ram);
 	ZetMapArea(0xc000, 0xcfff, 1, DrvZ80Ram);
 	ZetMapArea(0xc000, 0xcfff, 2, DrvZ80Ram);
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM3526Init(4000000, NULL, &DrvSynchroniseStream, 0);

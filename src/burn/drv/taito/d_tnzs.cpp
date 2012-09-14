@@ -1300,7 +1300,6 @@ static INT32 Type1Init(INT32 mcutype)
 	}
 	ZetSetWriteHandler(tnzs_cpu0_write);
 	ZetSetReadHandler(tnzs_cpu0_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -1315,7 +1314,6 @@ static INT32 Type1Init(INT32 mcutype)
 	ZetMapArea(0xe000, 0xefff, 2, DrvShareRAM);
 	ZetSetWriteHandler(tnzs_cpu1_write);
 	ZetSetReadHandler(tnzs_cpu1_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(2); // For common reset routine
@@ -1409,7 +1407,6 @@ static INT32 Type2Init()
 	ZetMapArea(0xf200, 0xf2ff, 1, DrvScrollRAM);
 	ZetSetWriteHandler(tnzs_cpu0_write);
 	ZetSetReadHandler(tnzs_cpu0_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -1426,7 +1423,6 @@ static INT32 Type2Init()
 	ZetMapArea(0xf800, 0xfbff, 1, DrvPalRAM); // kabukiz
 	ZetSetWriteHandler(tnzsb_cpu1_write);
 	ZetSetReadHandler(tnzsb_cpu1_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(2);
@@ -1441,7 +1437,6 @@ static INT32 Type2Init()
 	ZetMapArea(0xe000, 0xffff, 2, DrvZ80RAM2);
 	ZetSetOutHandler(tnzs_cpu2_out);
 	ZetSetInHandler(tnzs_cpu2_in);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM2203Init(1, 3000000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);

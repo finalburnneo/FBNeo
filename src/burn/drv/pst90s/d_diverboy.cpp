@@ -308,7 +308,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(diverboy_sound_write);
 	ZetSetReadHandler(diverboy_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	MSM6295Init(0, 1320000 / 132, 0);

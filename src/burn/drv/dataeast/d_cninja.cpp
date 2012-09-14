@@ -1489,7 +1489,6 @@ static INT32 CninjablInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(stoneage_sound_write);
 	ZetSetReadHandler(stoneage_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM2151Init(3580000);
@@ -1604,7 +1603,6 @@ static INT32 StoneageInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(stoneage_sound_write);
 	ZetSetReadHandler(stoneage_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	MSM6295Init(0, 1006875 / 132, 1);

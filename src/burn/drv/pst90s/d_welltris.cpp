@@ -580,7 +580,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x7800, 0x7fff, 2, DrvZ80RAM);
 	ZetSetOutHandler(welltris_sound_write_port);
 	ZetSetInHandler(welltris_sound_read_port);
-	ZetMemEnd();
 	ZetClose();
 
 	INT32 DrvSndROMLen1 = 0x100000;

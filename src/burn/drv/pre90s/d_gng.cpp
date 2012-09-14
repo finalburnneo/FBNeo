@@ -932,7 +932,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80Ram             );
 	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80Ram             );
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram             );
-	ZetMemEnd();
 	ZetClose();	
 	
 	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
@@ -1026,7 +1025,6 @@ static INT32 DiamondInit()
 	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80Ram             );
 	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80Ram             );
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram             );
-	ZetMemEnd();
 	ZetClose();	
 	
 	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);

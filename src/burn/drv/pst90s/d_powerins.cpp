@@ -845,7 +845,6 @@ static INT32 powerinsInit()
 		ZetMapArea(0xC000, 0xDFFF, 1, RamZ80);
 		ZetMapArea(0xC000, 0xDFFF, 2, RamZ80);
 
-		ZetMemEnd();
 		ZetClose();
 	}
 

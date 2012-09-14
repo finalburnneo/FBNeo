@@ -113,7 +113,6 @@ INT32 QsndZInit()
 	ZetMapArea(0xF000, 0xFFFF, 1, CpsZRamF0);
 	ZetMapArea(0xF000, 0xFFFF, 2, CpsZRamF0);
 
-	ZetMemEnd();
 	ZetClose();
 
 	return 0;

@@ -501,7 +501,6 @@ static INT32 DrvInit()
 	ZetSetWriteHandler(arabian_write);
 	ZetSetReadHandler(arabian_read);
 	ZetSetOutHandler(arabian_out);
-	ZetMemEnd();
 	ZetClose();
 
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, ay8910_porta_w, ay8910_portb_w);

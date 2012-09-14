@@ -1903,7 +1903,6 @@ static INT32 Drv2MachineInit()
 	ZetMapArea(0x0000, 0xbfff, 2, DrvSubCPURom);
 	ZetMapArea(0xc000, 0xc3ff, 0, DrvSpriteRam);
 	ZetMapArea(0xc000, 0xc3ff, 2, DrvSpriteRam);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -1915,7 +1914,6 @@ static INT32 Drv2MachineInit()
 	ZetMapArea(0x8000, 0x87ff, 0, DrvSoundCPURam);
 	ZetMapArea(0x8000, 0x87ff, 1, DrvSoundCPURam);
 	ZetMapArea(0x8000, 0x87ff, 2, DrvSoundCPURam);
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2151Init(3579545);

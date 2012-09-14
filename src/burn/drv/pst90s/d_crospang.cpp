@@ -455,7 +455,6 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)())
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80RAM);
 	ZetSetOutHandler(crospang_sound_out);
 	ZetSetInHandler(crospang_sound_in);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM3812Init(3579545, &crospangYM3812IrqHandler, crospangSynchroniseStream, 0);

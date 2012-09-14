@@ -569,7 +569,6 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 game)
 	ZetMapArea(0xf800, 0xffff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(rpunch_sound_write);
 	ZetSetReadHandler(rpunch_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM2151Init(4000000);

@@ -588,7 +588,6 @@ static INT32 DrvInit()
 	ZetSetWriteHandler(airbustr_main_write);
 	ZetSetReadHandler(airbustr_main_read);
 	ZetSetOutHandler(airbustr_main_out);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -612,7 +611,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xf000, 0xffff, 2, DrvShareRAM);
 	ZetSetOutHandler(airbustr_sub_out);
 	ZetSetInHandler(airbustr_sub_in);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(2);
@@ -624,7 +622,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xc000, 0xdfff, 2, DrvZ80RAM2);
 	ZetSetOutHandler(airbustr_sound_out);
 	ZetSetInHandler(airbustr_sound_in);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM2203Init(1, 3000000, NULL, DrvSynchroniseStream, DrvGetTime, 0);

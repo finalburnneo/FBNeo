@@ -346,7 +346,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xc000, 0xcfff, 0, Ram  + 0xc000);
 	ZetMapArea(0xc000, 0xcfff, 1, Ram  + 0xc000);
 	ZetMapArea(0xc000, 0xcfff, 2, Ram  + 0xc000);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -361,7 +360,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x9000, 0x905a, 0, Ram  + 0x9000);
 	ZetMapArea(0x9000, 0x905a, 1, Ram  + 0x9000);
 	ZetMapArea(0x9000, 0x905a, 2, Ram  + 0x9000);
-	ZetMemEnd();
 	ZetClose();
 
 	for (INT32 i = 0; i < 9; i++)

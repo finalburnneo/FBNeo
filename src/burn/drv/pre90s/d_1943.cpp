@@ -942,7 +942,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xf000, 0xffff, 0, DrvSpriteRam           );
 	ZetMapArea(0xf000, 0xffff, 1, DrvSpriteRam           );
 	ZetMapArea(0xf000, 0xffff, 2, DrvSpriteRam           );
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -956,7 +955,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80Ram2             );
 	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80Ram2             );
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram2             );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
@@ -1071,7 +1069,6 @@ static INT32 DrvbInit()
 	ZetMapArea(0xf000, 0xffff, 0, DrvSpriteRam           );
 	ZetMapArea(0xf000, 0xffff, 1, DrvSpriteRam           );
 	ZetMapArea(0xf000, 0xffff, 2, DrvSpriteRam           );
-	ZetMemEnd();
 	ZetClose();
 	
 	ZetInit(1);
@@ -1085,7 +1082,6 @@ static INT32 DrvbInit()
 	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80Ram2             );
 	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80Ram2             );
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram2             );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
@@ -1227,7 +1223,6 @@ static INT32 Drvb2Init()
 	ZetMapArea(0xf000, 0xffff, 0, DrvSpriteRam           );
 	ZetMapArea(0xf000, 0xffff, 1, DrvSpriteRam           );
 	ZetMapArea(0xf000, 0xffff, 2, DrvSpriteRam           );
-	ZetMemEnd();
 	ZetClose();
 	
 	ZetInit(1);
@@ -1241,7 +1236,6 @@ static INT32 Drvb2Init()
 	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80Ram2             );
 	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80Ram2             );
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram2             );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);

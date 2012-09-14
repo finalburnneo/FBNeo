@@ -86,7 +86,6 @@ static INT32 DrvInit()
 	ZetMapArea (0xa000, 0xbfff, 1, DrvZ80RAM);
 	ZetMapArea (0xa000, 0xbfff, 2, DrvZ80RAM);
 	ZetSetReadHandler(minivdr_read);
-	ZetMemEnd();
 	ZetClose();
 
 	GenericTilesInit();

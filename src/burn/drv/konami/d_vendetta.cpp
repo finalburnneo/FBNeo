@@ -707,7 +707,6 @@ static INT32 DrvInit(INT32 nGame)
 	ZetMapArea(0xf000, 0xf7ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(vendetta_sound_write);
 	ZetSetReadHandler(vendetta_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	EEPROMInit(&vendetta_eeprom_intf);

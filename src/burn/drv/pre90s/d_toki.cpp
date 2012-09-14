@@ -977,7 +977,6 @@ static INT32 TokibInit()
 	ZetMapArea(0xf000, 0xf7ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(tokib_sound_write);
 	ZetSetReadHandler(tokib_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM3812Init(3579545, NULL, &TokibSynchroniseStream, 0);
@@ -1140,7 +1139,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x2000, 0x27ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(toki_seibu_sound_write);
 	ZetSetReadHandler(toki_seibu_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM3812Init(3579545, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
@@ -1260,7 +1258,6 @@ static INT32 JujubaInit()
 	ZetMapArea(0x2000, 0x27ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(toki_seibu_sound_write);
 	ZetSetReadHandler(toki_seibu_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM3812Init(3579545, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);

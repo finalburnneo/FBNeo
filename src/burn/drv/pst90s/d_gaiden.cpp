@@ -1048,7 +1048,6 @@ static INT32 DrvInit()
 		ZetSetWriteHandler(gaiden_sound_write);
 		ZetSetReadHandler(gaiden_sound_read);
 	}
-	ZetMemEnd();
 	ZetClose();
 
 	if (game == 1) {

@@ -1250,7 +1250,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80Ram                );
 	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80Ram                );
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram                );
-	ZetMemEnd();
 	ZetClose();
 	
 	// Setup the YM2151 emulation
@@ -1363,7 +1362,6 @@ static INT32 DrvpInit()
 	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80Ram                );
 	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80Ram                );
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram                );
-	ZetMemEnd();
 	ZetClose();
 	
 	// Setup the YM2151 emulation
@@ -1473,7 +1471,6 @@ static INT32 DrvbInit()
 	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80Ram                );
 	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80Ram                );
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram                );
-	ZetMemEnd();
 	ZetClose();
 	
 	// Setup the YM2151 emulation
@@ -1613,7 +1610,6 @@ static INT32 CtribeInit()
 	ZetMapArea(0x8000, 0x87ff, 0, DrvZ80Ram                );
 	ZetMapArea(0x8000, 0x87ff, 1, DrvZ80Ram                );
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80Ram                );
-	ZetMemEnd();
 	ZetClose();
 	
 	// Setup the YM2151 emulation

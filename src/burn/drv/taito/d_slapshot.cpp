@@ -544,7 +544,6 @@ static INT32 MachineInit()
 	ZetMapArea(0xc000, 0xdfff, 0, TaitoZ80Ram1               );
 	ZetMapArea(0xc000, 0xdfff, 1, TaitoZ80Ram1               );
 	ZetMapArea(0xc000, 0xdfff, 2, TaitoZ80Ram1               );
-	ZetMemEnd();
 	ZetClose();	
 	
 	BurnYM2610Init(8000000, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &SlapshotFMIRQHandler, SlapshotSynchroniseStream, SlapshotGetTime, 0);

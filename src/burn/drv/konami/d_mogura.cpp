@@ -244,7 +244,6 @@ static INT32 DrvInit()
 	ZetSetWriteHandler(mogura_write);
 	ZetSetOutHandler(mogura_write_port);
 	ZetSetInHandler(mogura_read_port);
-	ZetMemEnd();
 	ZetClose();
 
 	DACInit(0, 0, 0, moguraDACSync);

@@ -1286,7 +1286,6 @@ static void CadashZ80Setup()
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1);
 	ZetSetWriteHandler(cadash_sound_write);
 	ZetSetReadHandler(cadash_sound_read);
-	ZetMemEnd();
 	ZetClose();
 }
 
@@ -1301,7 +1300,6 @@ static void BonzeZ80Setup()
 	ZetMapArea(0xc000, 0xdfff, 2, TaitoZ80Ram1);
 	ZetSetWriteHandler(bonze_sound_write);
 	ZetSetReadHandler(bonze_sound_read);
-	ZetMemEnd();
 	ZetClose();
 }
 

@@ -770,7 +770,6 @@ static INT32 DrvInit(INT32 game_select)
 	ZetMapArea(0xd400, 0xd7ff, 2, DrvColRAM);
 	ZetSetWriteHandler(ladybug_write);
 	ZetSetReadHandler(ladybug_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1); // So reset function can be shared
@@ -838,7 +837,6 @@ static INT32 SraiderInit()
 	ZetMapArea(0xd400, 0xd7ff, 2, DrvColRAM);
 	ZetSetWriteHandler(sraider_main_write);
 	ZetSetReadHandler(ladybug_read);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -854,7 +852,6 @@ static INT32 SraiderInit()
 	ZetSetWriteHandler(sraider_sub_write);
 	ZetSetReadHandler(sraider_sub_read);
 	ZetSetOutHandler(sraider_sub_out);
-	ZetMemEnd();
 	ZetClose();
 
 	SN76489Init(0, 4000000, 0);

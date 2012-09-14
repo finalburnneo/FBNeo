@@ -366,7 +366,6 @@ static INT32 DrvInit(INT32 select)
 	ZetMapArea(0xf000, 0xf7ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(galspnbl_sound_write);
 	ZetSetReadHandler(galspnbl_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnYM3812Init(3579545, &DrvYM3812IrqHandler, &DrvSynchroniseStream, 0);

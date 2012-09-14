@@ -1435,7 +1435,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xe000, 0xefff, 0, DrvZ80Ram1             );
 	ZetMapArea(0xe000, 0xefff, 1, DrvZ80Ram1             );
 	ZetMapArea(0xe000, 0xefff, 2, DrvZ80Ram1             );
-	ZetMemEnd();
 	ZetClose();
 	
 	ZetInit(1);
@@ -1449,7 +1448,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xf000, 0xffff, 0, DrvZ80Ram2             );
 	ZetMapArea(0xf000, 0xffff, 1, DrvZ80Ram2             );
 	ZetMapArea(0xf000, 0xffff, 2, DrvZ80Ram2             );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnSetRefreshRate(55.0);
@@ -1536,7 +1534,6 @@ static INT32 BuccanrsInit()
 	ZetMapArea(0xe000, 0xefff, 0, DrvZ80Ram1             );
 	ZetMapArea(0xe000, 0xefff, 1, DrvZ80Ram1             );
 	ZetMapArea(0xe000, 0xefff, 2, DrvZ80Ram1             );
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -1550,7 +1547,6 @@ static INT32 BuccanrsInit()
 	ZetMapArea(0xf000, 0xffff, 0, DrvZ80Ram2             );
 	ZetMapArea(0xf000, 0xffff, 1, DrvZ80Ram2             );
 	ZetMapArea(0xf000, 0xffff, 2, DrvZ80Ram2             );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnSetRefreshRate(55.0);
@@ -1670,7 +1666,6 @@ static INT32 KikcubicInit()
 	ZetMapArea(0xe000, 0xffff, 0, DrvZ80Ram1             );
 	ZetMapArea(0xe000, 0xffff, 1, DrvZ80Ram1             );
 	ZetMapArea(0xe000, 0xffff, 2, DrvZ80Ram1             );
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -1684,7 +1679,6 @@ static INT32 KikcubicInit()
 	ZetMapArea(0xf000, 0xffff, 0, DrvZ80Ram2             );
 	ZetMapArea(0xf000, 0xffff, 1, DrvZ80Ram2             );
 	ZetMapArea(0xf000, 0xffff, 2, DrvZ80Ram2             );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnSetRefreshRate(55.0);

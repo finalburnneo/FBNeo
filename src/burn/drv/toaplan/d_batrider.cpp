@@ -468,7 +468,6 @@ static INT32 drvZInit()
 	ZetMapArea(0xC000, 0xDFFF, 1, RamZ80);			// Direct Write to RAM
 	ZetMapArea(0xC000, 0xDFFF, 2, RamZ80);			//
 
-	ZetMemEnd();
 	ZetClose();
 
 	nCurrentBank = 2;

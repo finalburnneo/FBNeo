@@ -6134,7 +6134,6 @@ static void utoukond68kInit()
 	ZetSetReadHandler(utoukond_sound_read);
 	ZetSetOutHandler(utoukond_sound_write_port);
 	ZetSetInHandler(utoukond_sound_read_port);
-	ZetMemEnd();
 	ZetClose();
 
 	for (INT32 i = 0; i < 0x400000; i++) DrvGfxROM0[i] ^= 0xff;
@@ -6174,7 +6173,6 @@ static void wiggie68kInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvSubRAM);
 	ZetSetWriteHandler(wiggie_sound_write);
 	ZetSetReadHandler(wiggie_sound_read);
-	ZetMemEnd();
 	ZetClose();
 }
 

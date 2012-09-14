@@ -516,7 +516,6 @@ static INT32 DrvInit()
 	bankswitch(0);
 	ZetSetWriteHandler(chaknpop_write);
 	ZetSetReadHandler(chaknpop_read);
-	ZetMemEnd();
 	ZetClose();
 
 	AY8910Init(0, 1536000, nBurnSoundRate, &ay8910_0_read_port_A, &ay8910_0_read_port_B, NULL, NULL);

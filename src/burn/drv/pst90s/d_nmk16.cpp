@@ -4125,7 +4125,6 @@ static INT32 DrvInit(INT32 (*pLoadCallback)())
 	ZetSetReadHandler(tharrier_sound_read);
 	ZetSetOutHandler(tharrier_sound_out);
 	ZetSetInHandler(tharrier_sound_in);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnSetRefreshRate(56.00);
@@ -4254,7 +4253,6 @@ static INT32 Macross2Init()
 	ZetSetReadHandler(macross2_sound_read);
 	ZetSetOutHandler(macross2_sound_out);
 	ZetSetInHandler(macross2_sound_in);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnSetRefreshRate(56.00);
@@ -4303,7 +4301,6 @@ static INT32 MSM6295x1Init(INT32  (*pLoadCallback)())
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(ssmissin_sound_write);
 	ZetSetReadHandler(ssmissin_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	BurnSetRefreshRate(56.00);
@@ -6229,7 +6226,6 @@ static void pAfegaZ80Callback()
 	ZetMapArea(0xf000, 0xf7ff, 2, DrvZ80RAM);
 	ZetSetWriteHandler(afega_sound_write);
 	ZetSetReadHandler(afega_sound_read);
-	ZetMemEnd();
 	ZetClose();
 }
 
@@ -6848,7 +6844,6 @@ static void pFirehawkZ80Callback()
 
 	ZetSetWriteHandler(firehawk_sound_write);
 	ZetSetReadHandler(firehawk_sound_read);
-	ZetMemEnd();
 	ZetClose();
 }
 

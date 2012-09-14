@@ -444,7 +444,6 @@ static INT32 DrvInit()
 	ZetMapArea (0x4000, 0x43ff, 0, Rom0 + 0x4000); // Read Shared RAM
 	ZetMapArea (0x8000, 0xbfff, 0, Rom0 + 0x8000); // Video RAM
 	ZetMapArea (0x8000, 0xbfff, 1, Rom0 + 0x8000);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -455,7 +454,6 @@ static INT32 DrvInit()
 	ZetMapArea (0x4000, 0x43ff, 0, Rom0 + 0x4000); // Read Shared RAM
 	ZetMapArea (0x8000, 0xbfff, 0, Rom1 + 0x8000); // Video RAM
 	ZetMapArea (0x8000, 0xbfff, 1, Rom1 + 0x8000);
-	ZetMemEnd();
 	ZetClose();
 
 	pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;

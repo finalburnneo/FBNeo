@@ -315,7 +315,6 @@ static INT32 DrvZ80Init()
 	ZetMemCallback(0xE000, 0xE0FF, 0);			// Read
 	ZetMemCallback(0xE000, 0xE0FF, 1);			// Write
 
-	ZetMemEnd();
 	ZetClose();
 
 	return 0;

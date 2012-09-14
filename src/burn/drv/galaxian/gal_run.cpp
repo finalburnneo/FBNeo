@@ -590,7 +590,6 @@ INT32 GalInit()
 			ZetMapArea(0x5000, 0x53ff, 2, GalVideoRam);
 			ZetMapArea(0x5800, 0x58ff, 0, GalSpriteRam);
 			ZetMapArea(0x5800, 0x58ff, 2, GalSpriteRam);
-			ZetMemEnd();
 			ZetClose();
 		}
 	}
@@ -776,7 +775,6 @@ void MapMooncrst()
 	ZetMapArea(0x9000, 0x93ff, 2, GalVideoRam);
 	ZetMapArea(0x9800, 0x98ff, 0, GalSpriteRam);
 	ZetMapArea(0x9800, 0x98ff, 2, GalSpriteRam);
-	ZetMemEnd();
 	ZetClose();
 }
 
@@ -938,7 +936,6 @@ void MapJumpbug()
 	ZetMapArea(0x5000, 0x50ff, 2, GalSpriteRam);
 	ZetMapArea(0x8000, GalZ80Rom1Size + 0x4000 - 1, 0, GalZ80Rom1 + 0x4000);
 	ZetMapArea(0x8000, GalZ80Rom1Size + 0x4000 - 1, 2, GalZ80Rom1 + 0x4000);
-	ZetMemEnd();
 	ZetClose();
 }
 
@@ -1062,7 +1059,6 @@ void MapFrogger()
 	ZetMapArea(0xa800, 0xabff, 2, GalVideoRam);
 	ZetMapArea(0xb000, 0xb0ff, 0, GalSpriteRam);
 	ZetMapArea(0xb000, 0xb0ff, 2, GalSpriteRam);
-	ZetMemEnd();
 	ZetClose();
 }
 
@@ -1199,7 +1195,6 @@ void MapTheend()
 	ZetMapArea(0x4c00, 0x4fff, 2, GalVideoRam);
 	ZetMapArea(0x5000, 0x50ff, 0, GalSpriteRam);
 	ZetMapArea(0x5000, 0x50ff, 2, GalSpriteRam);
-	ZetMemEnd();
 	ZetClose();
 }
 
@@ -1352,7 +1347,6 @@ void MapTurtles()
 	ZetMapArea(0x9400, 0x97ff, 2, GalVideoRam);
 	ZetMapArea(0x9800, 0x98ff, 0, GalSpriteRam);
 	ZetMapArea(0x9800, 0x98ff, 2, GalSpriteRam);
-	ZetMemEnd();
 	ZetClose();
 }
 
@@ -1502,7 +1496,6 @@ void MapScobra()
 	ZetMapArea(0x8c00, 0x8fff, 2, GalVideoRam);
 	ZetMapArea(0x9000, 0x90ff, 0, GalSpriteRam);
 	ZetMapArea(0x9000, 0x90ff, 2, GalSpriteRam);
-	ZetMemEnd();
 	ZetClose();
 }
 

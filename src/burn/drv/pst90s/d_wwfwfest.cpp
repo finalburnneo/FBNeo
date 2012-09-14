@@ -699,7 +699,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80Ram                );
 	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80Ram                );
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram                );
-	ZetMemEnd();
 	ZetClose();
 	
 	// Setup the YM2151 emulation

@@ -1422,7 +1422,6 @@ static INT32 Darius2Init()
 	ZetMapArea(0xc000, 0xdfff, 0, TaitoZ80Ram1               );
 	ZetMapArea(0xc000, 0xdfff, 1, TaitoZ80Ram1               );
 	ZetMapArea(0xc000, 0xdfff, 2, TaitoZ80Ram1               );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &Darius2FMIRQHandler, Darius2SynchroniseStream, Darius2GetTime, 0);
@@ -1520,7 +1519,6 @@ static INT32 Darius2dInit()
 	ZetMapArea(0xc000, 0xdfff, 0, TaitoZ80Ram1               );
 	ZetMapArea(0xc000, 0xdfff, 1, TaitoZ80Ram1               );
 	ZetMapArea(0xc000, 0xdfff, 2, TaitoZ80Ram1               );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &Darius2FMIRQHandler, Darius2SynchroniseStream, Darius2GetTime, 0);
@@ -1632,7 +1630,6 @@ static INT32 WarriorbInit()
 	ZetMapArea(0xc000, 0xdfff, 0, TaitoZ80Ram1               );
 	ZetMapArea(0xc000, 0xdfff, 1, TaitoZ80Ram1               );
 	ZetMapArea(0xc000, 0xdfff, 2, TaitoZ80Ram1               );
-	ZetMemEnd();
 	ZetClose();
 	
 	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &Darius2FMIRQHandler, Darius2SynchroniseStream, Darius2GetTime, 0);

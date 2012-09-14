@@ -1807,7 +1807,6 @@ static INT32 DrvInit()
 				ZetMapArea(0x7800, 0x7FFF, 1, PsikyoZ80RAM);
 				ZetMapArea(0x7800, 0x7FFF, 2, PsikyoZ80RAM);
 
-				ZetMemEnd();
 
 				ZetSetInHandler(samuraiaZ80In);
 				ZetSetOutHandler(samuraiaZ80Out);
@@ -1822,7 +1821,6 @@ static INT32 DrvInit()
 				ZetMapArea(0x8000, 0x81FF, 1, PsikyoZ80RAM);
 				ZetMapArea(0x8000, 0x81FF, 2, PsikyoZ80RAM);
 
-				ZetMemEnd();
 
 				ZetSetInHandler(gunbirdZ80In);
 				ZetSetOutHandler(gunbirdZ80Out);
@@ -1838,7 +1836,6 @@ static INT32 DrvInit()
 				ZetMapArea(0x8000, 0x81FF, 1, PsikyoZ80RAM);
 				ZetMapArea(0x8000, 0x81FF, 2, PsikyoZ80RAM);
 
-				ZetMemEnd();
 				ZetSetInHandler(tengaiZ80In);
 				ZetSetOutHandler(tengaiZ80Out);
 				break;

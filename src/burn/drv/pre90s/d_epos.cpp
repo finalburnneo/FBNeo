@@ -502,7 +502,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x8000, 0xffff, 2, DrvVidRAM);
 	ZetSetInHandler(epos_read_port);
 	ZetSetOutHandler(epos_write_port);
-	ZetMemEnd();
 	ZetClose();
 
 	AY8910Init(0, 2750000, nBurnSoundRate, NULL, NULL, NULL, NULL);
@@ -546,7 +545,6 @@ static INT32 DealerInit()
 	ZetMapArea(0x8000, 0xffff, 2, DrvVidRAM);
 	ZetSetInHandler(dealer_read_port);
 	ZetSetOutHandler(dealer_write_port);
-	ZetMemEnd();
 	ZetClose();
 
 	AY8910Init(0, 2750000, nBurnSoundRate, NULL, NULL, NULL, NULL);

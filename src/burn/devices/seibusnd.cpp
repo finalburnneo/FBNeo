@@ -424,7 +424,6 @@ void seibu_sound_init(INT32 type, INT32 len, INT32 freq0 /*cpu*/, INT32 freq1 /*
 	ZetMapArea(0x2000, 0x27ff, 2, SeibuZ80RAM);
 	ZetSetWriteHandler(seibu_sound_write);
 	ZetSetReadHandler(seibu_sound_read);
-	ZetMemEnd();
 	ZetClose();
 
 	switch (seibu_snd_type & 3)

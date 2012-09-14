@@ -429,16 +429,6 @@ INT32 ZetMemCallback(INT32 nStart, INT32 nEnd, INT32 nMode)
 	return 0;
 }
 
-INT32 ZetMemEnd()
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetMemEnd called without init\n"));
-	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetMemEnd called when no CPU open\n"));
-#endif
-
-	return 0;
-}
-
 void ZetExit()
 {
 #if defined FBA_DEBUG

@@ -357,7 +357,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM);
 	ZetSetOutHandler(meijinsn_out_port);
 	ZetSetInHandler(meijinsn_in_port);
-	ZetMemEnd();
 	ZetClose();
 
 	AY8910Init(0, 2000000, nBurnSoundRate, &ay8910_port_a_r, NULL, NULL, NULL);

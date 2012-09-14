@@ -396,7 +396,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xe000, 0xefff, 2, Rom0 + 0xe000);
 	ZetSetWriteHandler(vulgus_write_main);
 	ZetSetReadHandler(vulgus_read_main);
-	ZetMemEnd();
 	ZetClose();
 
 	ZetInit(1);
@@ -408,7 +407,6 @@ static INT32 DrvInit()
 	ZetMapArea(0x4000, 0x47ff, 2, Rom1 + 0x4000);
 	ZetSetWriteHandler(vulgus_write_sound);
 	ZetSetReadHandler(vulgus_read_sound);
-	ZetMemEnd();
 	ZetClose();
 
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);

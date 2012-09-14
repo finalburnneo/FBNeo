@@ -459,7 +459,6 @@ static INT32 DrvInit()
 	ZetMapArea(0xf800, 0xffff, 2, DrvZ80RAM);
 	ZetSetOutHandler(deniam16_sound_out);
 	ZetSetInHandler(deniam16_sound_in);
-	ZetMemEnd();
 	ZetClose();
 
 	if (nGame != 2) {

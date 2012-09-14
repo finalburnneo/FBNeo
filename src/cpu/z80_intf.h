@@ -17,9 +17,22 @@ void ZetNewFrame();
 void ZetOpen(INT32 nCPU);
 void ZetClose();
 INT32 ZetGetActive();
+
+#define ZET_FETCHOP	4
+#define ZET_FETCHARG	8
+#define ZET_READ	1
+#define ZET_WRITE	2
+#define ZET_FETCH	(ZET_FETCHOP|ZET_FETCHARG)
+#define ZET_ROM		(ZET_READ|ZET_FETCH)
+#define ZET_RAM		(ZET_ROM|ZET_WRITE)
+
+INT32 ZetUnmapMemory(INT32 nStart,INT32 nEnd,INT32 nFlags);
+void ZetMapMemory(UINT8 *Mem, INT32 nStart, INT32 nEnd, INT32 nFlags);
+
 INT32 ZetMemCallback(INT32 nStart,INT32 nEnd,INT32 nMode);
 INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem);
 INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem01, UINT8 *Mem02);
+
 void ZetReset();
 INT32 ZetPc(INT32 n);
 INT32 ZetBc(INT32 n);

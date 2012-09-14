@@ -450,6 +450,45 @@ void ZetExit()
 }
 
 
+// This function will make an area callback ZetRead/ZetWrite
+INT32 ZetUnmapMemory(INT32 nStart, INT32 nEnd, INT32 nFlags)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetUnmapMemory called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetUnmapMemory called when no CPU open\n"));
+#endif
+
+	UINT8 cStart = (nStart >> 8);
+	UINT8 **pMemMap = ZetCPUContext[nOpenedCPU]->pZetMemMap;
+
+	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
+		if (nFlags & (1 << 0)) pMemMap[0     + i] = NULL; // READ
+		if (nFlags & (1 << 1)) pMemMap[0x100 + i] = NULL; // WRITE
+		if (nFlags & (1 << 2)) pMemMap[0x200 + i] = NULL; // OP
+		if (nFlags & (1 << 3)) pMemMap[0x300 + i] = NULL; // ARG
+	}
+
+	return 0;
+}
+
+void ZetMapMemory(UINT8 *Mem, INT32 nStart, INT32 nEnd, INT32 nFlags)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetMapMemory called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetMapMemory called when no CPU open\n"));
+#endif
+
+	UINT8 cStart = (nStart >> 8);
+	UINT8 **pMemMap = ZetCPUContext[nOpenedCPU]->pZetMemMap;
+
+	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
+		if (nFlags & (1 << 0)) pMemMap[0     + i] = Mem + ((i - cStart) << 8); // READ
+		if (nFlags & (1 << 1)) pMemMap[0x100 + i] = Mem + ((i - cStart) << 8); // WRITE
+		if (nFlags & (1 << 2)) pMemMap[0x200 + i] = Mem + ((i - cStart) << 8); // OP
+		if (nFlags & (1 << 3)) pMemMap[0x300 + i] = Mem + ((i - cStart) << 8); // ARG
+	}
+}
+
 INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem)
 {
 #if defined FBA_DEBUG

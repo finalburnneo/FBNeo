@@ -14245,3 +14245,33 @@ struct BurnDriver BurnDrvneoww2 = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+
+// Time's UP Demo
+
+static struct BurnRomInfo timesupRomDesc[] = {
+	{ "tup_p1.rom",   0x200000, 0xbe86adb1, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
+
+	{ "tup_s1.rom",   0x020000, 0xa545b593, 2 | BRF_GRA },		//  1 Text data
+
+	{ "tup_c1.rom",   0x200000, 0xc19a300a, 3 | BRF_GRA },		//  2 Sprite data
+	{ "tup_c2.rom",   0x200000, 0xfdb3f7ed, 3 | BRF_GRA },		//  3
+
+	{ "tup_m1.rom",   0x020000, 0xfe795d11, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code
+
+	{ "tup_v1.rom",   0x400000, 0x13b8f47b, 5 | BRF_SND },		//  5 Sound data
+	{ "tup_v2.rom",   0x400000, 0x6fdd663d, 5 | BRF_SND },		//  6 Sound data
+}; 
+
+STDROMPICKEXT(timesup, timesup, neogeo)
+STD_ROM_FN(timesup)
+
+struct BurnDriver BurnDrvtimesup = {
+	"timesup", NULL, "neogeo", NULL, "2012",
+	"Time's Up Demo\0", NULL, "NGF Dev. Inc.", "Neo Geo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
+	NULL, timesupRomInfo, timesupRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};

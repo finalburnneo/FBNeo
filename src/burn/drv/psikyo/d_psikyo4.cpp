@@ -4,7 +4,7 @@
 #include "tiles_generic.h"
 #include "burn_ymf278b.h"
 #include "eeprom.h"
-#include "sh2.h"
+#include "sh2_intf.h"
 
 static UINT8 *AllMem;
 static UINT8 *DrvSh2ROM;

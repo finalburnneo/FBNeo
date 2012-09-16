@@ -18,7 +18,7 @@ Port to FBA by OopsWare
 **********************************************************************/
 
 #include "cps3.h"
-#include "sh2.h"
+#include "sh2_intf.h"
 
 #define	BE_GFX		1
 //#define	FAST_BOOT	1

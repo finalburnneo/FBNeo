@@ -7,7 +7,7 @@
 #include "hd6309_intf.h"
 #include "m6800_intf.h"
 #include "m6502_intf.h"
-#include "sh2.h"
+#include "sh2_intf.h"
 #include "h6280_intf.h"
 
 #define MAX_TIMER_VALUE ((1 << 30) - 65536)

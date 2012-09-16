@@ -34,7 +34,7 @@
 //#include <string.h>
 
 #include "burnint.h"
-#include "sh2.h"
+#include "sh2_intf.h"
 
 //#include "tchar.h"
 //extern int (__cdecl *bprintf) (int nStatus, TCHAR* szFormat, ...);

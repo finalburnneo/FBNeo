@@ -2,7 +2,7 @@
 #include "m68000_intf.h"
 #include "z80_intf.h"
 #include "nec_intf.h"
-#include "sh2.h"
+#include "sh2_intf.h"
 #include "m6502_intf.h"
 #include "m6809_intf.h"
 #include "hd6309_intf.h"

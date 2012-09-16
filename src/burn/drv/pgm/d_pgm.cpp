@@ -3808,3 +3808,49 @@ struct BurnDriver BurnDrvKovsgqyzc = {
 	kovsgqyzInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
+
+// Knights of Valour Superheroes / Sangoku Senki Superheroes (bootleg, V104, China)
+
+static struct BurnRomInfo kovshbRomDesc[] = {
+	{ "u0706.rom",	   		0x400000, 0x57c75b34, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t0600.rom",     		0x800000, 0x4acc1ad6, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a0600.rom",	   		0x800000, 0xd8167834, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a0601.rom",	   		0x800000, 0xff7a4373, 3 | BRF_GRA },		//  3
+	{ "a0602.rom",	   		0x800000, 0xe7a32959, 3 | BRF_GRA },		//  4
+	{ "a0603.rom",	   		0x400000, 0xec31abda, 3 | BRF_GRA },		//  5
+	{ "a0604.rom",	   		0x400000, 0x26b59fd3, 3 | BRF_GRA },		//  6
+
+	{ "b0600.rom",	   		0x800000, 0x7d3cd059, 4 | BRF_GRA },		//  7 Sprite Masks & Color Indexes
+	{ "b0601.rom",	   		0x400000, 0xa0bb1c2f, 4 | BRF_GRA },		//  8
+	{ "b0602.rom",	   		0x100000, 0x9df77934, 4 | BRF_GRA },		//  9
+
+	{ "m0600.rom",	   		0x400000, 0x3ada4fd6, 5 | BRF_SND },		// 10 Samples
+
+	{ "kovsh_v100_china.asic", 	0x004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS },  // 11 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovshb, kovshb, pgm)
+STD_ROM_FN(kovshb)
+
+static INT32 kovshbInit()
+{
+	pPgmProtCallback = install_protection_asic27a_kovsh;
+	
+	INT32 nRet = pgmInit();
+
+	Arm7SetIdleLoopAddress(0x00000260);
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvKovshb = {
+	"kovshb", "kovsh", "pgm", NULL, "1999",
+	"Knights of Valour Superheroes / Sangoku Senki Superheroes (bootleg, V104, China)\0", NULL, "IGS", "PolyGameMaster",
+	L"Knights of Valour Superheroes\0\u4E09\u56FD\u6218\u7EAA\0\u98CE\u4E91\u518D\u8D77 (bootleg, V104, China)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovshbRomInfo, kovshbRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
+	kovshbInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};

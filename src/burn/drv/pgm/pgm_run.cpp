@@ -549,7 +549,8 @@ static void expand_colourdata()
 				// fix for 2x size b0601 rom
                			if (strcmp(BurnDrvGetTextA(DRV_NAME), "kovsh") == 0 ||
 					strcmp(BurnDrvGetTextA(DRV_NAME), "kovsh103") == 0 ||
-					strcmp(BurnDrvGetTextA(DRV_NAME), "kovsh101") == 0) {
+					strcmp(BurnDrvGetTextA(DRV_NAME), "kovsh101") == 0 ||
+					strcmp(BurnDrvGetTextA(DRV_NAME), "kovshb") == 0) {
 					if (ri.nLen == 0x400000) {
 						PGMSPRColROMLoad -= 0x200000;
 					}

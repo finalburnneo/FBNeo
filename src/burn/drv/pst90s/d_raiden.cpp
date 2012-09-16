@@ -596,7 +596,7 @@ UINT8 __fastcall raidenSubReadByte(UINT32 vezAddress)
 	switch (vezAddress) {
 		case 0x04008: {
 			UINT8 nRet = RamV30S[0x8];
-			//INT32 pc = VezPC();
+			//INT32 pc = VezGetPC();
 			//if (pc==0xfcde6 && ret!=0x40) cpu_spin();
 			bprintf(PRINT_NORMAL, _T("sub_cpu_spin_r %02x%02x\n"), RamV30S[0x8], RamV30S[0x9]);
 			return nRet; }
@@ -632,7 +632,7 @@ UINT8 __fastcall raidenuSubReadByte(UINT32 vezAddress)
 	switch (vezAddress) {
 		case 0x08008: {
 			UINT8 nRet = RamV30S[0x8];
-			//INT32 pc = VezPC();
+			//INT32 pc = VezGetPC();
 			//if (pc==0xfcde6 && ret!=0x40) cpu_spin();
 			bprintf(PRINT_NORMAL, _T("sub_cpu_spin_r %02x%02x\n"), RamV30S[0x8], RamV30S[0x9]);
 			return nRet; }

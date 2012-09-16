@@ -1510,7 +1510,7 @@ void bublbobl_68705_portB_out(UINT8 *bytevalue)
 		ZetOpen(0);
 
 		/* hack to get random EXTEND letters (who is supposed to do this? 68705? PAL?) */
-		DrvZ80Ram1[0x7c] = (ZetTotalCycles() ^ ZetPc(-1)) % 6;
+		DrvZ80Ram1[0x7c] = (ZetTotalCycles() ^ ZetGetPC(-1)) % 6;
 
 		ZetSetVector(DrvZ80Ram1[0]);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);

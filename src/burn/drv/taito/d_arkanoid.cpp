@@ -524,27 +524,27 @@ static void arkanoid_bootleg_d018_write(UINT8 data)
 			switch (data)
 			{
 				case 0x36:  // unneeded value : no call 0x2050, unused A and overwritten HL (0x0313 -> 0x0340)
-					if (ZetPc(-1) == 0x7c47)
+					if (ZetGetPC(-1) == 0x7c47)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0x38:  // unneeded value : no call 0x2050, unused A and fixed HL (0x7bd5)
-					if (ZetPc(-1) == 0x7b87)
+					if (ZetGetPC(-1) == 0x7b87)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0x8a:  // unneeded value : no call 0x2050, unused A and overwritten HL (0x7b77 -> 0x7c1c)
-					if (ZetPc(-1) == 0x9661)
+					if (ZetGetPC(-1) == 0x9661)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0xe3:  // unneeded value : call 0x2050 but fixed A (0x00) and fixed HL (0xed83)
-					if (ZetPc(-1) == 0x67e3)
+					if (ZetGetPC(-1) == 0x67e3)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0xf7:  // unneeded value : 3 * 'NOP' at 0x034f + 2 * 'NOP' at 0x35b
-					if (ZetPc(-1) == 0x0349)
+					if (ZetGetPC(-1) == 0x0349)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0xff:  // unneeded value : no call 0x2050, unused A and overwritten HL (0x7c4f -> 0x7d31)
-					if (ZetPc(-1) == 0x9670)
+					if (ZetGetPC(-1) == 0x9670)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				default:
@@ -557,37 +557,37 @@ static void arkanoid_bootleg_d018_write(UINT8 data)
 			switch (data)
 			{
 				case 0x36:  // unneeded value : call 0x2050 but fixed A (0x2d)
-					if (ZetPc(-1) == 0x7c4c)
+					if (ZetGetPC(-1) == 0x7c4c)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0x38:  // unneeded value : call 0x2050 but fixed A (0xf3)
-					if (ZetPc(-1) == 0x7b87)
+					if (ZetGetPC(-1) == 0x7b87)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0x88:  // unneeded value : no read back
-					if (ZetPc(-1) == 0x67e3)
+					if (ZetGetPC(-1) == 0x67e3)
 						arkanoid_bootleg_cmd = 0x00;
-					if (ZetPc(-1) == 0x7c47)
+					if (ZetGetPC(-1) == 0x7c47)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0x89:  // unneeded value : no read back
-					if (ZetPc(-1) == 0x67e5)
+					if (ZetGetPC(-1) == 0x67e5)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0x8a:  // unneeded value : call 0x2050 but fixed A (0xa5)
-					if (ZetPc(-1) == 0x9661)
+					if (ZetGetPC(-1) == 0x9661)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0xc0:  // unneeded value : no read back
-					if (ZetPc(-1) == 0x67e7)
+					if (ZetGetPC(-1) == 0x67e7)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0xe3:  // unneeded value : call 0x2050 but fixed A (0x61)
-					if (ZetPc(-1) == 0x67e9)
+					if (ZetGetPC(-1) == 0x67e9)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0xff:  // unneeded value : call 0x2050 but fixed A (0xe2)
-					if (ZetPc(-1) == 0x9670)
+					if (ZetGetPC(-1) == 0x9670)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				default:
@@ -600,41 +600,41 @@ static void arkanoid_bootleg_d018_write(UINT8 data)
 			switch (data)
 			{
 				case 0x36:  // unneeded value : call 0x2050 but fixed A (0x2d)
-					if (ZetPc(-1) == 0x7c4c)
+					if (ZetGetPC(-1) == 0x7c4c)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0x38:  // unneeded value : call 0x2050 but fixed A (0xf3)
-					if (ZetPc(-1) == 0x7b87)
+					if (ZetGetPC(-1) == 0x7b87)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0x88:  // unneeded value : no read back
-					if (ZetPc(-1) == 0x67e3)
+					if (ZetGetPC(-1) == 0x67e3)
 						arkanoid_bootleg_cmd = 0x00;
-					if (ZetPc(-1) == 0x7c47)
+					if (ZetGetPC(-1) == 0x7c47)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0x89:  // unneeded value : no read back
-					if (ZetPc(-1) == 0x67e5)
+					if (ZetGetPC(-1) == 0x67e5)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0x8a:  // unneeded value : call 0x2050 but unused HL and fixed DE (0x7c1c)
-					if (ZetPc(-1) == 0x9661)
+					if (ZetGetPC(-1) == 0x9661)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0xc0:  // unneeded value : no read back
-					if (ZetPc(-1) == 0x67e7)
+					if (ZetGetPC(-1) == 0x67e7)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0xe3:  // unneeded value : call 0x2050 but fixed A (0x61)
-					if (ZetPc(-1) == 0x67e9)
+					if (ZetGetPC(-1) == 0x67e9)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0xf7:  // unneeded value : call 0x2050 but never called (check code at 0x0340)
-					if (ZetPc(-1) == 0x0349)
+					if (ZetGetPC(-1) == 0x0349)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0xff:  // unneeded value : no call 0x2050, unused A and fixed HL (0x7d31)
-					if (ZetPc(-1) == 0x9670)
+					if (ZetGetPC(-1) == 0x9670)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				default:
@@ -647,40 +647,40 @@ static void arkanoid_bootleg_d018_write(UINT8 data)
 			switch (data)
 			{
 				case 0x36:  // unneeded value : call 0x2050 but fixed A (0x2d)
-					if (ZetPc(-1) == 0x7c4c)
+					if (ZetGetPC(-1) == 0x7c4c)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0x38:  // unneeded value : call 0x2050 but fixed A (0xf3)
-					if (ZetPc(-1) == 0x7b87)
+					if (ZetGetPC(-1) == 0x7b87)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0x88:  // unneeded value : no read back
-					if (ZetPc(-1) == 0x67e3)
+					if (ZetGetPC(-1) == 0x67e3)
 						arkanoid_bootleg_cmd = 0x00;
-					if (ZetPc(-1) == 0x7c47)
+					if (ZetGetPC(-1) == 0x7c47)
 						arkanoid_bootleg_cmd = 0x00;
 				case 0x89:  // unneeded value : no read back
-					if (ZetPc(-1) == 0x67e5)
+					if (ZetGetPC(-1) == 0x67e5)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0x8a:  // call 0x2050 with A read from 0xf002 and wrong HL
-					if (ZetPc(-1) == 0x9661)
+					if (ZetGetPC(-1) == 0x9661)
 						arkanoid_bootleg_cmd = data;
 					break;
 				case 0xc0:  // unneeded value : no read back
-					if (ZetPc(-1) == 0x67e7)
+					if (ZetGetPC(-1) == 0x67e7)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0xe3:  // unneeded value : call 0x2050 but fixed A (0x61)
-					if (ZetPc(-1) == 0x67e9)
+					if (ZetGetPC(-1) == 0x67e9)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0xf7:  // unneeded value : 3 * 'NOP' at 0x034f + 'JR NZ,$035D' at 0x35b
-					if (ZetPc(-1) == 0x0349)
+					if (ZetGetPC(-1) == 0x0349)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0xff:  // call 0x2050 with A read from 0xf002 and wrong HL
-					if (ZetPc(-1) == 0x9670)
+					if (ZetGetPC(-1) == 0x9670)
 						arkanoid_bootleg_cmd = data;
 					break;
 				default:
@@ -693,48 +693,48 @@ static void arkanoid_bootleg_d018_write(UINT8 data)
 			switch (data)
 			{
 				case 0x24:  // A read from 0xf002 (expected to be 0x9b)
-					if (ZetPc(-1) == 0xbd7a)
+					if (ZetGetPC(-1) == 0xbd7a)
 						arkanoid_bootleg_cmd = data;
 					break;
 				case 0x36:  // call 0x2050 with A read from 0xf002 and wrong HL
-					if (ZetPc(-1) == 0x7c4c)
+					if (ZetGetPC(-1) == 0x7c4c)
 						arkanoid_bootleg_cmd = data;
 					break;
 				case 0x38:  // call 0x2050 with A read from 0xf002 and wrong HL
-					if (ZetPc(-1) == 0x7b87)
+					if (ZetGetPC(-1) == 0x7b87)
 						arkanoid_bootleg_cmd = data;
 					break;
 				case 0x88:  // unneeded value : no read back
-					if (ZetPc(-1) == 0x67e3)
+					if (ZetGetPC(-1) == 0x67e3)
 						arkanoid_bootleg_cmd = 0x00;
-					if (ZetPc(-1) == 0x7c47)
+					if (ZetGetPC(-1) == 0x7c47)
 						arkanoid_bootleg_cmd = 0x00;
 				case 0x89:  // unneeded value : no read back
-					if (ZetPc(-1) == 0x67e5)
+					if (ZetGetPC(-1) == 0x67e5)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0x8a:  // call 0x2050 with A read from 0xf002 and wrong HL
-					if (ZetPc(-1) == 0x9661)
+					if (ZetGetPC(-1) == 0x9661)
 						arkanoid_bootleg_cmd = data;
 					break;
 				case 0xc0:  // unneeded value : no read back
-					if (ZetPc(-1) == 0x67e7)
+					if (ZetGetPC(-1) == 0x67e7)
 						arkanoid_bootleg_cmd = 0x00;
 					break;
 				case 0xc3:  // A read from 0xf002 (expected to be 0x1d)
-					if (ZetPc(-1) == 0xbd8a)
+					if (ZetGetPC(-1) == 0xbd8a)
 						arkanoid_bootleg_cmd = data;
 					break;
 				case 0xe3:  // call 0x2050 with A read from 0xf002 and wrong HL
-					if (ZetPc(-1) == 0x67e9)
+					if (ZetGetPC(-1) == 0x67e9)
 						arkanoid_bootleg_cmd = data;
 					break;
 				case 0xf7:  // call 0x2050 with A read from 0xf002 and wrong HL
-					if (ZetPc(-1) == 0x0349)
+					if (ZetGetPC(-1) == 0x0349)
 						arkanoid_bootleg_cmd = data;
 					break;
 				case 0xff:  // call 0x2050 with A read from 0xf002 and wrong HL
-					if (ZetPc(-1) == 0x9670)
+					if (ZetGetPC(-1) == 0x9670)
 						arkanoid_bootleg_cmd = data;
 					break;
 				default:

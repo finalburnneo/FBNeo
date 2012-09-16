@@ -471,7 +471,7 @@ static INT32 MemIndex()
 // Avengers protection code ripped directly from MAME
 static void avengers_protection_w(UINT8 data)
 {
-	INT32 pc = ZetPc(-1);
+	INT32 pc = ZetGetPC(-1);
 
 	if (pc == 0x2eeb)
 	{
@@ -587,7 +587,7 @@ static UINT8 avengers_protection_r()
 	INT32 x,y;
 	INT32 dx,dy,dist,dir;
 
-	if(ZetPc(-1) == 0x7c7 )
+	if(ZetGetPC(-1) == 0x7c7 )
 	{
 		// palette data
 		return avengers_fetch_paldata();

@@ -6791,7 +6791,7 @@ UINT8 __fastcall ScramblbZ80Read(UINT16 a)
 		}
 		
 		case 0x8102: {
-			switch (ZetPc(-1)) {
+			switch (ZetGetPC(-1)) {
 				case 0x1da: return 0x80;
 				case 0x1e4: return 0x00;
 			}
@@ -6799,7 +6799,7 @@ UINT8 __fastcall ScramblbZ80Read(UINT16 a)
 		}
 		
 		case 0x8202: {
-			switch (ZetPc(-1)) {
+			switch (ZetGetPC(-1)) {
 				case 0x1ca: return 0x90;
 			}
 			return 0xff;
@@ -11975,7 +11975,7 @@ UINT8 __fastcall CheckmanjZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0x3800: {
-			switch (ZetPc(-1)) {
+			switch (ZetGetPC(-1)) {
 				case 0x0f15:  return 0xf5;
 				case 0x0f8f:  return 0x7c;
 				case 0x10b3:  return 0x7c;
@@ -16078,13 +16078,13 @@ UINT8 __fastcall TriplepZ80PortRead(UINT16 a)
 		}
 		
 		case 0x02: {
-			if (ZetPc(-1) == 0x015a) return 0xff;
-			if (ZetPc(-1) == 0x0886) return 0x05;
+			if (ZetGetPC(-1) == 0x015a) return 0xff;
+			if (ZetGetPC(-1) == 0x0886) return 0x05;
 			return 0;
 		}
 		
 		case 0x03: {
-			if (ZetPc(-1) == 0x015d) return 0x04;
+			if (ZetGetPC(-1) == 0x015d) return 0x04;
 			return 0;
 		}
 		

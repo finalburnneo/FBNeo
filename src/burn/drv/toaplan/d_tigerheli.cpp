@@ -698,7 +698,7 @@ static inline void sync_mcu()
 UINT8 __fastcall tigerhReadCPU0(UINT16 a)
 {
 	if (a >= 0xc800 && a <= 0xcfff) {
-		if (ZetPc(-1) == 0x6d34) return 0xff;
+		if (ZetGetPC(-1) == 0x6d34) return 0xff;
 		return RamShared[a - 0xc800];
 	}
 	
@@ -717,7 +717,7 @@ UINT8 __fastcall tigerhReadCPU0(UINT16 a)
 			//	nProtectIndex = 0;
 			//}
 
-//			bprintf(PRINT_NORMAL, "Protection read (%02X) PC: %04X.\n", nProtectSequence[nProtectIndex], ZetPc(-1));
+//			bprintf(PRINT_NORMAL, "Protection read (%02X) PC: %04X.\n", nProtectSequence[nProtectIndex], ZetGetPC(-1));
 			//return nProtectSequence[nProtectIndex++];
 			
 			UINT8 val = nProtectSequence[nProtectIndex];
@@ -735,7 +735,7 @@ UINT8 __fastcall tigerhReadCPU0(UINT16 a)
 UINT8 __fastcall tigerhReadCPU0_tigerhb1(UINT16 a)
 {
 	if (a >= 0xc800 && a <= 0xcfff) {
-		if (ZetPc(-1) == 0x6d34) return 0xff;
+		if (ZetGetPC(-1) == 0x6d34) return 0xff;
 		return RamShared[a - 0xc800];
 	}
 	
@@ -808,7 +808,7 @@ UINT8 __fastcall tigerhInCPU0(UINT16 a)
 			//	nStatusIndex = 0;
 			//}
 
-//			bprintf(PRINT_NORMAL, "Status read (%02X) PC: %04X.\n", nStatusSequence[nStatusIndex], ZetPc(-1));
+//			bprintf(PRINT_NORMAL, "Status read (%02X) PC: %04X.\n", nStatusSequence[nStatusIndex], ZetGetPC(-1));
 			//return nStatusSequence[nStatusIndex++];
 			
 			UINT8 nStatus = nStatusSequence[nStatusIndex];
@@ -839,10 +839,10 @@ UINT8 __fastcall tigerhInCPU0_gtstarba(UINT16 a)
 
 	switch (a) {
 		case 0x00: {
-			if (ZetPc(-1) == 0x6d1e)	return 0;
-			if (ZetPc(-1) == 0x6d24)	return 6;
-			if (ZetPc(-1) == 0x6d2c)	return 2;
-			if (ZetPc(-1) == 0x6d34)	return 4;
+			if (ZetGetPC(-1) == 0x6d1e)	return 0;
+			if (ZetGetPC(-1) == 0x6d24)	return 6;
+			if (ZetGetPC(-1) == 0x6d2c)	return 2;
+			if (ZetGetPC(-1) == 0x6d34)	return 4;
 			return 0;
 		}
 
@@ -1161,7 +1161,7 @@ static UINT8 getstar_e803_r()
 		
 		case GETSTARB1: {
 			/* value isn't computed by the bootleg but we want to please the "test mode" */
-			if (ZetPc(-1) == 0x6b04) return (lives_lookup_table[GSa]);
+			if (ZetGetPC(-1) == 0x6b04) return (lives_lookup_table[GSa]);
 			break;
 		}
 			
@@ -1176,11 +1176,11 @@ static UINT8 getstar_e803_r()
             0576: BE            cp   (hl)
             0577: C2 6E 05      jp   nz,$056E
             */
-			if (ZetPc(-1) == 0x056e) return (getstar_val);
-			if (ZetPc(-1) == 0x0570) return (getstar_val+1);
-			if (ZetPc(-1) == 0x0577) return ((getstar_val+0x05) ^ 0x56);
+			if (ZetGetPC(-1) == 0x056e) return (getstar_val);
+			if (ZetGetPC(-1) == 0x0570) return (getstar_val+1);
+			if (ZetGetPC(-1) == 0x0577) return ((getstar_val+0x05) ^ 0x56);
 			/* value isn't computed by the bootleg but we want to please the "test mode" */
-			if (ZetPc(-1) == 0x6b04) return (lgsb2_lookup_table[GSa]);
+			if (ZetGetPC(-1) == 0x6b04) return (lgsb2_lookup_table[GSa]);
 			break;
 		}
 	}
@@ -1193,183 +1193,183 @@ static void getstar_e803_w()
 	switch (GetStarType) {
 		case GETSTAR: {
 			/* unknown effect - not read back */
-			if (ZetPc(-1) == 0x00bf)
+			if (ZetGetPC(-1) == 0x00bf)
 			{
 				GSCommand = 0x00;
 				GS_RESET_REGS
 			}
 			/* players inputs */
-			if (ZetPc(-1) == 0x0560)
+			if (ZetGetPC(-1) == 0x0560)
 			{
 				GSCommand = 0x25;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x056d)
+			if (ZetGetPC(-1) == 0x056d)
 			{
 				GSCommand = 0x25;
 				GS_SAVE_REGS
 			}
 			/* lose life */
-			if (ZetPc(-1) == 0x0a0a)
+			if (ZetGetPC(-1) == 0x0a0a)
 			{
 				GSCommand = 0x21;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x0a17)
+			if (ZetGetPC(-1) == 0x0a17)
 			{
 				GSCommand = 0x21;
 				GS_SAVE_REGS
 			}
 			/* unknown effect */
-			if (ZetPc(-1) == 0x0a51)
+			if (ZetGetPC(-1) == 0x0a51)
 			{
 				GSCommand = 0x29;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x0a6e)
+			if (ZetGetPC(-1) == 0x0a6e)
 			{
 				GSCommand = 0x29;
 				GS_SAVE_REGS
 			}
 			/* continue play */
-			if (ZetPc(-1) == 0x0ae3)
+			if (ZetGetPC(-1) == 0x0ae3)
 			{
 				GSCommand = 0x20;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x0af0)
+			if (ZetGetPC(-1) == 0x0af0)
 			{
 				GSCommand = 0x20;
 				GS_SAVE_REGS
 			}
 			/* unknown effect - not read back */
-			if (ZetPc(-1) == 0x0b62)
+			if (ZetGetPC(-1) == 0x0b62)
 			{
 				GSCommand = 0x00;     /* 0x1f */
 				GS_RESET_REGS
 			}
 			/* change player (if 2 players game) */
-			if (ZetPc(-1) == 0x0bab)
+			if (ZetGetPC(-1) == 0x0bab)
 			{
 				GSCommand = 0x2a;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x0bb8)
+			if (ZetGetPC(-1) == 0x0bb8)
 			{
 				GSCommand = 0x2a;
 				GS_SAVE_REGS
 			}
 			/* game phase */
-			if (ZetPc(-1) == 0x0d37)
+			if (ZetGetPC(-1) == 0x0d37)
 			{
 				GSCommand = 0x24;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x0d44)
+			if (ZetGetPC(-1) == 0x0d44)
 			{
 				GSCommand = 0x24;
 				GS_SAVE_REGS
 			}
 			/* starting lives */
-			if (ZetPc(-1) == 0x0d79)
+			if (ZetGetPC(-1) == 0x0d79)
 			{
 				GSCommand = 0x23;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x0d8a)
+			if (ZetGetPC(-1) == 0x0d8a)
 			{
 				GSCommand = 0x23;
 				GS_SAVE_REGS
 			}
 			/* starting difficulty */
-			if (ZetPc(-1) == 0x0dc1)
+			if (ZetGetPC(-1) == 0x0dc1)
 			{
 				GSCommand = 0x22;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x0dd0)
+			if (ZetGetPC(-1) == 0x0dd0)
 			{
 				GSCommand = 0x22;
 				GS_SAVE_REGS
 			}
 			/* starting lives (again) */
-			if (ZetPc(-1) == 0x1011)
+			if (ZetGetPC(-1) == 0x1011)
 			{
 				GSCommand = 0x23;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x101e)
+			if (ZetGetPC(-1) == 0x101e)
 			{
 				GSCommand = 0x23;
 				GS_SAVE_REGS
 			}
 			/* hardware test */
-			if (ZetPc(-1) == 0x107a)
+			if (ZetGetPC(-1) == 0x107a)
 			{
 				GSCommand = 0x73;
 				GS_RESET_REGS
 			}
 			/* game phase (again) */
-			if (ZetPc(-1) == 0x10c6)
+			if (ZetGetPC(-1) == 0x10c6)
 			{
 				GSCommand = 0x24;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x10d3)
+			if (ZetGetPC(-1) == 0x10d3)
 			{
 				GSCommand = 0x24;
 				GS_SAVE_REGS
 			}
 			/* background */
-			if (ZetPc(-1) == 0x1910)
+			if (ZetGetPC(-1) == 0x1910)
 			{
 				GSCommand = 0x26;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x191d)
+			if (ZetGetPC(-1) == 0x191d)
 			{
 				GSCommand = 0x26;
 				GS_SAVE_REGS
 			}
 			/* foreground */
-			if (ZetPc(-1) == 0x19d5)
+			if (ZetGetPC(-1) == 0x19d5)
 			{
 				GSCommand = 0x37;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x19e4)
+			if (ZetGetPC(-1) == 0x19e4)
 			{
 				GSCommand = 0x37;
 				GS_SAVE_REGS
 			}
-			if (ZetPc(-1) == 0x19f1)
+			if (ZetGetPC(-1) == 0x19f1)
 			{
 				GSCommand = 0x37;
 				/* do NOT update the registers because there are 2 writes before 2 reads ! */
 			}
 			/* laser position */
-			if (ZetPc(-1) == 0x26af)
+			if (ZetGetPC(-1) == 0x26af)
 			{
 				GSCommand = 0x38;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x26be)
+			if (ZetGetPC(-1) == 0x26be)
 			{
 				GSCommand = 0x38;
 				GS_SAVE_REGS
 			}
-			if (ZetPc(-1) == 0x26cb)
+			if (ZetGetPC(-1) == 0x26cb)
 			{
 				GSCommand = 0x38;
 				/* do NOT update the registers because there are 2 writes before 2 reads ! */
 			}
 			/* starting lives (for "test mode") */
-			if (ZetPc(-1) == 0x6a27)
+			if (ZetGetPC(-1) == 0x6a27)
 			{
 				GSCommand = 0x23;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x6a38)
+			if (ZetGetPC(-1) == 0x6a38)
 			{
 				GSCommand = 0x23;
 				GS_SAVE_REGS
@@ -1379,183 +1379,183 @@ static void getstar_e803_w()
 		
 		case GETSTARJ: {
 			/* unknown effect - not read back */
-			if (ZetPc(-1) == 0x00bf)
+			if (ZetGetPC(-1) == 0x00bf)
 			{
 				GSCommand = 0x00;
 				GS_RESET_REGS
 			}
 			/* players inputs */
-			if (ZetPc(-1) == 0x0560)
+			if (ZetGetPC(-1) == 0x0560)
 			{
 				GSCommand = 0x25;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x056d)
+			if (ZetGetPC(-1) == 0x056d)
 			{
 				GSCommand = 0x25;
 				GS_SAVE_REGS
 			}
 			/* lose life */
-			if (ZetPc(-1) == 0x0ad5)
+			if (ZetGetPC(-1) == 0x0ad5)
 			{
 				GSCommand = 0x21;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x0ae2)
+			if (ZetGetPC(-1) == 0x0ae2)
 			{
 				GSCommand = 0x21;
 				GS_SAVE_REGS
 			}
 			/* unknown effect */
-			if (ZetPc(-1) == 0x0b1c)
+			if (ZetGetPC(-1) == 0x0b1c)
 			{
 				GSCommand = 0x29;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x0b29)
+			if (ZetGetPC(-1) == 0x0b29)
 			{
 				GSCommand = 0x29;
 				GS_SAVE_REGS
 			}
 			/* continue play */
-			if (ZetPc(-1) == 0x0bae)
+			if (ZetGetPC(-1) == 0x0bae)
 			{
 				GSCommand = 0x20;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x0bbb)
+			if (ZetGetPC(-1) == 0x0bbb)
 			{
 				GSCommand = 0x20;
 				GS_SAVE_REGS
 			}
 			/* unknown effect - not read back */
-			if (ZetPc(-1) == 0x0c2d)
+			if (ZetGetPC(-1) == 0x0c2d)
 			{
 				GSCommand = 0x00;     /* 0x1f */
 				GS_RESET_REGS
 			}
 			/* change player (if 2 players game) */
-			if (ZetPc(-1) == 0x0c76)
+			if (ZetGetPC(-1) == 0x0c76)
 			{
 				GSCommand = 0x2a;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x0c83)
+			if (ZetGetPC(-1) == 0x0c83)
 			{
 				GSCommand = 0x2a;
 				GS_SAVE_REGS
 			}
 			/* game phase */
-			if (ZetPc(-1) == 0x0e02)
+			if (ZetGetPC(-1) == 0x0e02)
 			{
 				GSCommand = 0x24;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x0e0f)
+			if (ZetGetPC(-1) == 0x0e0f)
 			{
 				GSCommand = 0x24;
 				GS_SAVE_REGS
 			}
 			/* starting lives */
-			if (ZetPc(-1) == 0x0e44)
+			if (ZetGetPC(-1) == 0x0e44)
 			{
 				GSCommand = 0x23;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x0e55)
+			if (ZetGetPC(-1) == 0x0e55)
 			{
 				GSCommand = 0x23;
 				GS_SAVE_REGS
 			}
 			/* starting difficulty */
-			if (ZetPc(-1) == 0x0e8c)
+			if (ZetGetPC(-1) == 0x0e8c)
 			{
 				GSCommand = 0x22;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x0e9b)
+			if (ZetGetPC(-1) == 0x0e9b)
 			{
 				GSCommand = 0x22;
 				GS_SAVE_REGS
 			}
 			/* starting lives (again) */
-			if (ZetPc(-1) == 0x10d6)
+			if (ZetGetPC(-1) == 0x10d6)
 			{
 				GSCommand = 0x23;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x10e3)
+			if (ZetGetPC(-1) == 0x10e3)
 			{
 				GSCommand = 0x23;
 				GS_SAVE_REGS
 			}
 			/* hardware test */
-			if (ZetPc(-1) == 0x113f)
+			if (ZetGetPC(-1) == 0x113f)
 			{
 				GSCommand = 0x73;
 				GS_RESET_REGS
 			}
 			/* game phase (again) */
-			if (ZetPc(-1) == 0x118b)
+			if (ZetGetPC(-1) == 0x118b)
 			{
 				GSCommand = 0x24;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x1198)
+			if (ZetGetPC(-1) == 0x1198)
 			{
 				GSCommand = 0x24;
 				GS_SAVE_REGS
 			}
 			/* background */
-			if (ZetPc(-1) == 0x19f8)
+			if (ZetGetPC(-1) == 0x19f8)
 			{
 				GSCommand = 0x26;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x1a05)
+			if (ZetGetPC(-1) == 0x1a05)
 			{
 				GSCommand = 0x26;
 				GS_SAVE_REGS
 			}
 			/* foreground */
-			if (ZetPc(-1) == 0x1abd)
+			if (ZetGetPC(-1) == 0x1abd)
 			{
 				GSCommand = 0x37;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x1acc)
+			if (ZetGetPC(-1) == 0x1acc)
 			{
 				GSCommand = 0x37;
 				GS_SAVE_REGS
 			}
-			if (ZetPc(-1) == 0x1ad9)
+			if (ZetGetPC(-1) == 0x1ad9)
 			{
 				GSCommand = 0x37;
 				/* do NOT update the registers because there are 2 writes before 2 reads ! */
 			}
 			/* laser position */
-			if (ZetPc(-1) == 0x2792)
+			if (ZetGetPC(-1) == 0x2792)
 			{
 				GSCommand = 0x38;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x27a1)
+			if (ZetGetPC(-1) == 0x27a1)
 			{
 				GSCommand = 0x38;
 				GS_SAVE_REGS
 			}
-			if (ZetPc(-1) == 0x27ae)
+			if (ZetGetPC(-1) == 0x27ae)
 			{
 				GSCommand = 0x38;
 				/* do NOT update the registers because there are 2 writes before 2 reads ! */
 			}
 			/* starting lives (for "test mode") */
-			if (ZetPc(-1) == 0x6ae2)
+			if (ZetGetPC(-1) == 0x6ae2)
 			{
 				GSCommand = 0x23;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x6af3)
+			if (ZetGetPC(-1) == 0x6af3)
 			{
 				GSCommand = 0x23;
 				GS_SAVE_REGS
@@ -1589,12 +1589,12 @@ static void getstar_e803_w()
                 6B01: 3A 03 E8      ld   a,($E803)
                We save the regs though to hack it in 'getstar_e803_r' read handler.
             */
-			if (ZetPc(-1) == 0x6ae2)
+			if (ZetGetPC(-1) == 0x6ae2)
 			{
 				GSCommand = 0x00;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x6af3)
+			if (ZetGetPC(-1) == 0x6af3)
 			{
 				GSCommand = 0x00;
 				GS_SAVE_REGS
@@ -1630,12 +1630,12 @@ static void getstar_e803_w()
                 6B01: 3A 03 E8      ld   a,($E803)
                We save the regs though to hack it in 'getstar_e803_r' read handler.
             */
-			if (ZetPc(-1) == 0x6ae2)
+			if (ZetGetPC(-1) == 0x6ae2)
 			{
 				GSCommand = 0x00;
 				GS_RESET_REGS
 			}
-			if (ZetPc(-1) == 0x6af3)
+			if (ZetGetPC(-1) == 0x6af3)
 			{
 				GSCommand = 0x00;
 				GS_SAVE_REGS

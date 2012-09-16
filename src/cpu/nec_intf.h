@@ -47,7 +47,7 @@ void VezSetWritePort(void (__fastcall*)(UINT32, UINT8));
 void VezSetIrqCallBack(INT32 (*cb)(INT32));
 
 void VezReset();
-INT32 VezPc(INT32 n);
+INT32 VezGetPc(INT32 n);
 INT32 VezScan(INT32 nAction);
 
 INT32 VezRun(INT32 nCycles);

@@ -1608,7 +1608,7 @@ static UINT8 cannonbp_protection_r(UINT16 offset)
 			return 0x00;
 
 		case 0x0001:
-			if (ZetPc(-1) == 0x2b97)
+			if (ZetGetPC(-1) == 0x2b97)
 				return ((0x46 >> (cannonb_bit_to_read--)) & 1) << 7;
 			else
 				return 0xff;
@@ -1643,7 +1643,7 @@ static UINT8 epos_hardware_decrypt_rom(UINT16 offset)
 static UINT8 maketrax_special_port2_r(UINT16 offset) // and korosuke
 {
 	INT32 data = DrvDips[2];
-	INT32 pc = ZetPc(-1);
+	INT32 pc = ZetGetPC(-1);
 
 	if (pc == 0x1973 || pc == 0x2389 || pc == 0x196e || pc == 0x2387) return data | 0x40;
 
@@ -1661,7 +1661,7 @@ static UINT8 maketrax_special_port2_r(UINT16 offset) // and korosuke
 
 static UINT8 maketrax_special_port3_r(UINT16 offset)
 {
-	INT32 pc = ZetPc(-1);
+	INT32 pc = ZetGetPC(-1);
 
 	if (pc == 0x040e || pc == 0x0445) return 0x20;
 	if (pc == 0x115e || pc == 0x3ae2 || pc == 0x115b || pc == 0x3ae6) return 0x00;

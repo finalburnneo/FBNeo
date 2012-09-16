@@ -276,7 +276,7 @@ UINT8 __fastcall route16_cpu0_read(UINT16 offset)
 
 		case 0x6400:		// routex
 		{
-			if (ZetPc(-1) == 0x2f)
+			if (ZetGetPC(-1) == 0x2f)
 				return 0xfb;
 			else
 				return 0;

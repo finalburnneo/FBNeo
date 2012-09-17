@@ -827,9 +827,58 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
+// Gradius III (World)
+
+static struct BurnRomInfo grdius3RomDesc[] = {
+	{ "945_r13.f15",	0x20000, 0xcffd103f, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "945_r12.e15",	0x20000, 0x0b968ef6, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "945_m09.r17",	0x20000, 0xb4a6df25, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
+	{ "945_m08.n17",	0x20000, 0x74e981d2, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "945_l06b.r11",	0x20000, 0x83772304, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "945_l06a.n11",	0x20000, 0xe1fd75b6, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "945_l07c.r15",	0x20000, 0xc1e399b6, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "945_l07a.n15",	0x20000, 0x96222d04, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "945_l07d.r13",	0x20000, 0x4c16d4bd, 2 | BRF_PRG | BRF_ESS }, //  8
+	{ "945_l07b.n13",	0x20000, 0x5e209d01, 2 | BRF_PRG | BRF_ESS }, //  9
+
+	{ "945_r05.d9",		0x10000, 0xc8c45365, 3 | BRF_PRG | BRF_ESS }, // 10 Z80 Code
+
+	{ "945_a02.l3",		0x80000, 0x4dfffd74, 4 | BRF_GRA },           // 11 Sprites
+	{ "945_l04a.k6",	0x20000, 0x884e21ee, 4 | BRF_GRA },           // 12
+	{ "945_l04c.m6",	0x20000, 0x45bcd921, 4 | BRF_GRA },           // 13
+	{ "945_l04b.k8",	0x20000, 0x843bc67d, 4 | BRF_GRA },           // 14
+	{ "945_l04d.m8",	0x20000, 0x0a98d08e, 4 | BRF_GRA },           // 15
+	{ "945_a01.h3",		0x80000, 0x339d6dd2, 4 | BRF_GRA },           // 16
+	{ "945_l03a.e6",	0x20000, 0xa67ef087, 4 | BRF_GRA },           // 17
+	{ "945_l03c.h6",	0x20000, 0xa56be17a, 4 | BRF_GRA },           // 18
+	{ "945_l03b.e8",	0x20000, 0x933e68b9, 4 | BRF_GRA },           // 19
+	{ "945_l03d.h8",	0x20000, 0xf375e87b, 4 | BRF_GRA },           // 20
+
+	{ "945_a10.b15",	0x40000, 0x1d083e10, 5 | BRF_SND },           // 21 K007232
+	{ "945_l11a.c18",	0x20000, 0x6043f4eb, 5 | BRF_SND },           // 22
+	{ "945_l11b.c20",	0x20000, 0x89ea3baf, 5 | BRF_SND },           // 23
+
+	{ "945l14.j28",		0x00100, 0xc778c189, 6 | BRF_OPT },           // 24 Prom
+};
+
+STD_ROM_PICK(grdius3)
+STD_ROM_FN(grdius3)
+
+struct BurnDriver BurnDrvGrdius3 = {
+	"gradius3", NULL, NULL, NULL, "1989",
+	"Gradius III (World)\0", NULL, "Konami", "GX945",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
+	NULL, grdius3RomInfo, grdius3RomName, NULL, NULL, Gradius3InputInfo, Gradius3DIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 224, 4, 3
+};
+
+
 // Gradius III (Japan)
 
-static struct BurnRomInfo gradius3RomDesc[] = {
+static struct BurnRomInfo gradius3jRomDesc[] = {
 	{ "945_s13.f15",	0x20000, 0x70c240a2, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
 	{ "945_s12.e15",	0x20000, 0xbbc300d4, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -862,15 +911,15 @@ static struct BurnRomInfo gradius3RomDesc[] = {
 	{ "945l14.j28",		0x00100, 0xc778c189, 6 | BRF_OPT },           // 24 Prom
 };
 
-STD_ROM_PICK(gradius3)
-STD_ROM_FN(gradius3)
+STD_ROM_PICK(gradius3j)
+STD_ROM_FN(gradius3j)
 
-struct BurnDriver BurnDrvGradius3 = {
-	"gradius3", NULL, NULL, NULL, "1989",
+struct BurnDriver BurnDrvGradius3j = {
+	"gradius3j", "gradius3", NULL, NULL, "1989",
 	"Gradius III (Japan)\0", NULL, "Konami", "GX945",
 	L"Gradius III \u4F1D\u8AAC\u304B\u3089\u795E\u8A71\u3078 (Japan)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, gradius3RomInfo, gradius3RomName, NULL, NULL, Gradius3InputInfo, Gradius3DIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
+	NULL, gradius3jRomInfo, gradius3jRomName, NULL, NULL, Gradius3InputInfo, Gradius3DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
 };
@@ -920,55 +969,6 @@ struct BurnDriver BurnDrvGrdius3a = {
 	L"Gradius III \u4F1D\u8AAC\u304B\u3089\u795E\u8A71\u3078 (Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, grdius3aRomInfo, grdius3aRomName, NULL, NULL, Gradius3InputInfo, Gradius3DIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	320, 224, 4, 3
-};
-
-
-// Gradius III (World ?)
-
-static struct BurnRomInfo grdius3eRomDesc[] = {
-	{ "945_r13.f15",	0x20000, 0xcffd103f, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
-	{ "945_r12.e15",	0x20000, 0x0b968ef6, 1 | BRF_PRG | BRF_ESS }, //  1
-
-	{ "945_m09.r17",	0x20000, 0xb4a6df25, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
-	{ "945_m08.n17",	0x20000, 0x74e981d2, 2 | BRF_PRG | BRF_ESS }, //  3
-	{ "945_l06b.r11",	0x20000, 0x83772304, 2 | BRF_PRG | BRF_ESS }, //  4
-	{ "945_l06a.n11",	0x20000, 0xe1fd75b6, 2 | BRF_PRG | BRF_ESS }, //  5
-	{ "945_l07c.r15",	0x20000, 0xc1e399b6, 2 | BRF_PRG | BRF_ESS }, //  6
-	{ "945_l07a.n15",	0x20000, 0x96222d04, 2 | BRF_PRG | BRF_ESS }, //  7
-	{ "945_l07d.r13",	0x20000, 0x4c16d4bd, 2 | BRF_PRG | BRF_ESS }, //  8
-	{ "945_l07b.n13",	0x20000, 0x5e209d01, 2 | BRF_PRG | BRF_ESS }, //  9
-
-	{ "945_m05.d9",		0x10000, 0xc8c45365, 3 | BRF_PRG | BRF_ESS }, // 10 Z80 Code
-
-	{ "945_a02.l3",		0x80000, 0x4dfffd74, 4 | BRF_GRA },           // 11 Sprites
-	{ "945_l04a.k6",	0x20000, 0x884e21ee, 4 | BRF_GRA },           // 12
-	{ "945_l04c.m6",	0x20000, 0x45bcd921, 4 | BRF_GRA },           // 13
-	{ "945_l04b.k8",	0x20000, 0x843bc67d, 4 | BRF_GRA },           // 14
-	{ "945_l04d.m8",	0x20000, 0x0a98d08e, 4 | BRF_GRA },           // 15
-	{ "945_a01.h3",		0x80000, 0x339d6dd2, 4 | BRF_GRA },           // 16
-	{ "945_l03a.e6",	0x20000, 0xa67ef087, 4 | BRF_GRA },           // 17
-	{ "945_l03c.h6",	0x20000, 0xa56be17a, 4 | BRF_GRA },           // 18
-	{ "945_l03b.e8",	0x20000, 0x933e68b9, 4 | BRF_GRA },           // 19
-	{ "945_l03d.h8",	0x20000, 0xf375e87b, 4 | BRF_GRA },           // 20
-
-	{ "945_a10.b15",	0x40000, 0x1d083e10, 5 | BRF_SND },           // 21 K007232
-	{ "945_l11a.c18",	0x20000, 0x6043f4eb, 5 | BRF_SND },           // 22
-	{ "945_l11b.c20",	0x20000, 0x89ea3baf, 5 | BRF_SND },           // 23
-
-	{ "945l14.j28",		0x00100, 0xc778c189, 6 | BRF_OPT },           // 24 Prom
-};
-
-STD_ROM_PICK(grdius3e)
-STD_ROM_FN(grdius3e)
-
-struct BurnDriver BurnDrvGrdius3e = {
-	"gradius3e", "gradius3", NULL, NULL, "1989",
-	"Gradius III (World)\0", NULL, "Konami", "GX945",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
-	NULL, grdius3eRomInfo, grdius3eRomName, NULL, NULL, Gradius3InputInfo, Gradius3DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
 };

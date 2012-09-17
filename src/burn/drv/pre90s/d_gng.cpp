@@ -486,9 +486,9 @@ static struct BurnRomInfo DrvprotRomDesc[] = {
 	{ "gg3b.bin",      0x04000, 0x03a96d9b, BRF_GRA },	     //  11
 	{ "gg1b.bin",      0x04000, 0x7b9899bc, BRF_GRA },	     //  12
 	
-	{ "gg41.bin",      0x04000, 0x49cf81b4, BRF_GRA },	     //  13	Sprites
-	{ "gg31.bin",      0x04000, 0xe61437b1, BRF_GRA },	     //  14
-	{ "gg11.bin",      0x04000, 0xbc1fe02d, BRF_GRA },	     //  15
+	{ "gg4l.bin",      0x04000, 0x49cf81b4, BRF_GRA },	     //  13	Sprites
+	{ "gg3l.bin",      0x04000, 0xe61437b1, BRF_GRA },	     //  14
+	{ "gg1l.bin",      0x04000, 0xbc1fe02d, BRF_GRA },	     //  15
 	{ "gg4n.bin",      0x04000, 0xd5aff5a7, BRF_GRA },	     //  16
 	{ "gg3n.bin",      0x04000, 0xd589caeb, BRF_GRA },	     //  17
 	{ "gg1n.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  18

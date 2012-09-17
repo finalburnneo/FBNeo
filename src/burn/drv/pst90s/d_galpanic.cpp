@@ -421,10 +421,10 @@ static struct BurnRomInfo FantasiaaRomDesc[] = {
 	{ "music1_1.ub6",   	0x080000, 0xaf0be817, BRF_SND },			  // PCM
 	{ "music2_2.uc6",   	0x080000, 0x4cd4d6c3, BRF_SND },
 
-	{ "g-scr2_15.u116b",	0x080000, 0x46666768, BRF_OPT },			  // unknown
-	{ "g-scr1_12.u116a",   	0x080000, 0x4bd25be6, BRF_OPT },
-	{ "g-scr4_14.u119b",   	0x080000, 0x4e7e6ed4, BRF_OPT },
-	{ "g-scr3_11.u119a",   	0x080000, 0x6d00a4c5, BRF_OPT },
+	{ "g-scr2_15.ul16b",	0x080000, 0x46666768, BRF_OPT },			  // unknown
+	{ "g-scr1_12.ul16a",   	0x080000, 0x4bd25be6, BRF_OPT },
+	{ "g-scr4_14.ul19b",   	0x080000, 0x4e7e6ed4, BRF_OPT },
+	{ "g-scr3_11.ul19a",   	0x080000, 0x6d00a4c5, BRF_OPT },
 };
 
 STD_ROM_PICK(Fantasiaa)

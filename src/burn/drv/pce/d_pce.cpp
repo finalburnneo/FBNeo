@@ -3269,10 +3269,10 @@ struct BurnDriver BurnDrvpce_makyoden = {
 };
 
 
-// Maniac Pro Wres - Asu Heno Tatakai
+// Maniac Pro Wres - Asu e no Tatakai
 
 static struct BurnRomInfo pce_maniacpwRomDesc[] = {
-	{ "maniac puroresu - asu heno tatakai (japan).pce", 0x080000, 0x99f2865c, BRF_PRG | BRF_ESS },
+	{ "maniac puroresu - asu e no tatakai (japan).pce", 0x080000, 0x99f2865c, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(pce_maniacpw)
@@ -3280,7 +3280,7 @@ STD_ROM_FN(pce_maniacpw)
 
 struct BurnDriver BurnDrvpce_maniacpw = {
 	"pce_maniacpw", NULL, NULL, NULL, "1990",
-	"Maniac Pro Wres - Asu Heno Tatakai\0", NULL, "Hudson", "PC Engine",
+	"Maniac Pro Wres - Asu e no Tatakai\0", NULL, "Hudson", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_maniacpwRomInfo, pce_maniacpwRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -5849,21 +5849,21 @@ struct BurnDriver BurnDrvpce_toiletk = {
 };
 
 
-// Tora Heno Michi
+// Tora e no Michi
 
-static struct BurnRomInfo pce_torahenoRomDesc[] = {
-	{ "tora heno michi (japan).pce", 0x060000, 0x82ae3b16, BRF_PRG | BRF_ESS },
+static struct BurnRomInfo pce_toramichRomDesc[] = {
+	{ "tora e no michi (japan).pce", 0x060000, 0x82ae3b16, BRF_PRG | BRF_ESS },
 };
 
-STD_ROM_PICK(pce_toraheno)
-STD_ROM_FN(pce_toraheno)
+STD_ROM_PICK(pce_toramich)
+STD_ROM_FN(pce_toramich)
 
-struct BurnDriver BurnDrvpce_toraheno = {
-	"pce_toraheno", NULL, NULL, NULL, "1990",
-	"Tora Heno Michi\0", NULL, "Victor Entertainment", "PC Engine",
+struct BurnDriver BurnDrvpce_toramich = {
+	"pce_toramich", NULL, NULL, NULL, "1990",
+	"Tora e no Michi\0", NULL, "Victor Entertainment", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
-	PceGetZipName, pce_torahenoRomInfo, pce_torahenoRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PceGetZipName, pce_toramichRomInfo, pce_toramichRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };

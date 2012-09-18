@@ -5371,32 +5371,132 @@ static struct BurnRomInfo mslugxRomDesc[] = {
 STDROMPICKEXT(mslugx, mslugx, neogeo)
 STD_ROM_FN(mslugx)
 
-static void mslugxPatch()
+static UINT16 mslugx_command;
+static UINT16 mslugx_counter;
+
+static void mslugx_protection_write(UINT32 SekAddress, UINT16 wordValue)
 {
-	for (INT32 i = 0; i < 0x100000 - 8; i += 2) {
-		if (*((UINT16*)(Neo68KROMActive + i + 0)) == BURN_ENDIAN_SWAP_INT16(0x0243) && *((UINT16*)(Neo68KROMActive + i + 2)) == BURN_ENDIAN_SWAP_INT16(0x0001) && *((UINT16*)(Neo68KROMActive + i + 4)) == BURN_ENDIAN_SWAP_INT16(0x6600)) {
-			*((UINT16*)(Neo68KROMActive + i + 4)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-			*((UINT16*)(Neo68KROMActive + i + 6)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	switch (SekAddress)
+	{
+		case 0x2fffe0: // start new read?
+			mslugx_command = 0;
+		return;
+
+		case 0x2fffe2: // command? These are pulsed with data and then 0
+		case 0x2fffe4:
+			mslugx_command |= wordValue;
+		return;
+
+		case 0x2fffe6: // finished?
+		return;
+
+		case 0x2fffea: // init?
+			mslugx_counter = 0;
+		return;
+	}
+}
+
+static UINT16 __fastcall mslugx_protection_read()
+{
+	UINT16 ret = 0;
+
+	switch (mslugx_command)
+	{
+		case 0x0001: // $3bdc(?) and $3c30 (Register D7)
+		{
+			ret = (SekReadByte(0xdedd2 + ((mslugx_counter >> 3) & 0xfff)) >> (~mslugx_counter & 0x07)) & 1;
+			mslugx_counter++;
 		}
+		break;
+
+		case 0x0fff: // All other accesses (Register D2)
+		{
+			INT32 select = SekReadWord(0x10f00a) - 1; // Cheat and read calculated offset
+			ret = (SekReadByte(0xdedd2 + ((select >> 3) & 0x0fff)) >> (~select & 0x07)) & 1;
+		}
+		break;
 	}
 
-	*((UINT16*)(Neo68KROMActive + 0x3bdc)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(Neo68KROMActive + 0x3bde)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(Neo68KROMActive + 0x3be0)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	return ret;
+}
 
-	*((UINT16*)(Neo68KROMActive + 0x3c0c)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(Neo68KROMActive + 0x3c0e)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(Neo68KROMActive + 0x3c10)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+static void mslugxMapBank()
+{
+	SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2ffbff, SM_ROM);
+}
 
-	*((UINT16*)(Neo68KROMActive + 0x3c36)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(Neo68KROMActive + 0x3c38)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+static void mslugxBankswitch(UINT32 nBank)
+{
+	nBank = ((nBank & 7) + 1) * 0x100000;
+
+	if (nBank != nNeo68KROMBank) {
+		nNeo68KROMBank = nBank;
+		mslugxMapBank();
+	}
+}
+
+static UINT16 __fastcall mslugx_read_protection_word(UINT32 SekAddress)
+{
+	if (SekAddress == 0x2fffe8) {
+		return mslugx_protection_read();
+	}
+
+	return *((UINT16*)(Neo68KROMActive + nNeo68KROMBank + (SekAddress & 0xffffe)));
+}
+
+static UINT8 __fastcall mslugx_read_protection_byte(UINT32 SekAddress)
+{
+	return Neo68KROMActive[(nNeo68KROMBank + (SekAddress & 0xfffff)) ^ 1];
+}
+
+static void __fastcall mslugx_write_protection_word(UINT32 SekAddress, UINT16 wordValue)
+{
+	if ((SekAddress & 0xfffff0) == 0x2fffe0) {
+		mslugx_protection_write(SekAddress, wordValue);
+	}
+
+	if (SekAddress == 0x2ffff0) {
+		mslugxBankswitch(wordValue);
+	}
+}
+
+static void __fastcall mslugx_write_protection_byte(UINT32 SekAddress, UINT8 byteValue)
+{
+	if (SekAddress == 0x2ffff0) {
+		mslugxBankswitch(byteValue);
+	}
+}
+
+static void mslugxInstallBankSwitchHandler()
+{
+	SekMapHandler(6,	0x2ffc00, 0x2fffff, SM_WRITE | SM_READ | SM_FETCH);
+	SekSetReadWordHandler(6, mslugx_read_protection_word);
+	SekSetReadByteHandler(6, mslugx_read_protection_byte);
+	SekSetWriteWordHandler(6, mslugx_write_protection_word);
+	SekSetWriteByteHandler(6, mslugx_write_protection_byte);
 }
 
 static INT32 mslugxInit()
 {
-	NeoCallbackActive->pInitialise = mslugxPatch;
+	NeoCallbackActive->pInstallHandlers = mslugxInstallBankSwitchHandler;
+	NeoCallbackActive->pBankswitch = mslugxMapBank;
 
 	return NeoInit();
+}
+
+static INT32 mslugxScan(INT32 nAction, INT32 *pnMin)
+{
+	if (pnMin) {
+		*pnMin =  0x029727;
+	}
+
+	if (nAction & ACB_DRIVER_DATA)
+	{
+		SCAN_VAR(mslugx_command);
+		SCAN_VAR(mslugx_counter);
+	}
+
+	return NeoScan(nAction,pnMin);
 }
 
 struct BurnDriver BurnDrvMSlugX = {
@@ -5405,7 +5505,7 @@ struct BurnDriver BurnDrvMSlugX = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, FBF_MSLUG,
 	NULL, mslugxRomInfo, mslugxRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	mslugxInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	mslugxInit, NeoExit, NeoFrame, NeoRender, mslugxScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 

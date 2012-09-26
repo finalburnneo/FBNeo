@@ -536,6 +536,7 @@ static void expand_colourdata()
 		struct BurnRomInfo ri;
 	
 		UINT8 *PGMSPRColROMLoad = tmp;
+		INT32 prev_len = 0;
 	
 		for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
 	
@@ -543,18 +544,14 @@ static void expand_colourdata()
 	
 			if ((ri.nType & BRF_GRA) && (ri.nType & 0x0f) == 3)
 			{
+				// Fix for kovsh a0603 rom overlap
+				if (ri.nLen == 0x400000 && prev_len == 0x400000 && nPGMSPRColROMLen == 0x2000000) {
+					PGMSPRColROMLoad -= 0x200000;
+				}
+
 				BurnLoadRom(PGMSPRColROMLoad, i, 1);
 				PGMSPRColROMLoad += ri.nLen;
-
-				// fix for 2x size b0601 rom
-               			if (strcmp(BurnDrvGetTextA(DRV_NAME), "kovsh") == 0 ||
-					strcmp(BurnDrvGetTextA(DRV_NAME), "kovsh103") == 0 ||
-					strcmp(BurnDrvGetTextA(DRV_NAME), "kovsh101") == 0 ||
-					strcmp(BurnDrvGetTextA(DRV_NAME), "kovshb") == 0) {
-					if (ri.nLen == 0x400000) {
-						PGMSPRColROMLoad -= 0x200000;
-					}
-				}
+				prev_len = ri.nLen;
 
 				continue;
 			}

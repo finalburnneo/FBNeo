@@ -1630,21 +1630,20 @@ struct BurnDriver BurnDrvPuzlstar = {
 };
 
 
-// Puzzli 2 Super (V200)
+// Puzzli 2 (V100)
 
 static struct BurnRomInfo puzzli2RomDesc[] = {
-	{ "2sp_v200.u4",   		0x080000, 0xfa5c86c1, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
-	{ "2sp_v200.u3",   		0x080000, 0x2a5ba8a6, 1 | BRF_PRG | BRF_ESS },  //  1
+	{ "v100.u5",   			0x200000, 0x1abb4595, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
-	{ "t0900.u9",	   		0x200000, 0x70615611, 2 | BRF_GRA },		//  2 Tile data
+	{ "t0900.u9",	   		0x200000, 0x70615611, 2 | BRF_GRA },		//  1 Tile data
 
-	{ "a0900.u3",	   		0x400000, 0x14911251, 3 | BRF_GRA },		//  3 Sprite Color Data
+	{ "a0900.u3",	   		0x400000, 0x14911251, 3 | BRF_GRA },		//  2 Sprite Color Data
 
-	{ "b0900.u4",	   		0x200000, 0x6f0638b6, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+	{ "b0900.u4",	   		0x200000, 0x6f0638b6, 4 | BRF_GRA },		//  3 Sprite Masks & Color Indexes
 
-	{ "m0900.u2",	   		0x400000, 0x9ea7af2e, 5 | BRF_SND },		//  5 Samples
+	{ "m0900.u2",	   		0x400000, 0x9ea7af2e, 5 | BRF_SND },		//  4 Samples
 
-	{ "puzzli2_igs027a.bin", 	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
+	{ "puzzli2_igs027a.bin", 	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  5 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(puzzli2, puzzli2, pgm)
@@ -1661,11 +1660,42 @@ static INT32 puzzli2Init()
 }
 
 struct BurnDriverD BurnDrvPuzzli2 = {
-	"puzzli2", NULL, "pgm", NULL, "2001",
-	"Puzzli 2 Super (V200)\0", "Incomplete dump", "IGS", "PolyGameMaster",
+	"puzzli2", NULL, "pgm", NULL, "1999",
+	"Puzzli 2 (V100)\0", "Incomplete dump", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	0, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
 	NULL, puzzli2RomInfo, puzzli2RomName, NULL, NULL, pgmInputInfo, puzzli2DIPInfo,
+	puzzli2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Puzzli 2 Super (V200)
+
+static struct BurnRomInfo puzzli2sRomDesc[] = {
+	{ "2sp_v200.u4",   		0x080000, 0xfa5c86c1, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "2sp_v200.u3",   		0x080000, 0x2a5ba8a6, 1 | BRF_PRG | BRF_ESS },  //  1
+
+	{ "t0900.u9",	   		0x200000, 0x70615611, 2 | BRF_GRA },		//  2 Tile data
+
+	{ "a0900.u3",	   		0x400000, 0x14911251, 3 | BRF_GRA },		//  3 Sprite Color Data
+
+	{ "b0900.u4",	   		0x200000, 0x6f0638b6, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m0900.u2",	   		0x400000, 0x9ea7af2e, 5 | BRF_SND },		//  5 Samples
+
+	{ "puzzli2_igs027a.bin", 	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(puzzli2s, puzzli2s, pgm)
+STD_ROM_FN(puzzli2s)
+
+struct BurnDriverD BurnDrvPuzzli2s = {
+	"puzzli2s", "puzzli2", "pgm", NULL, "2001",
+	"Puzzli 2 Super (V200)\0", "Incomplete dump", "IGS", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
+	NULL, puzzli2sRomInfo, puzzli2sRomName, NULL, NULL, pgmInputInfo, puzzli2DIPInfo,
 	puzzli2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

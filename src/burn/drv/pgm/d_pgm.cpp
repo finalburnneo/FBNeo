@@ -1876,10 +1876,10 @@ static struct BurnRomInfo kov2RomDesc[] = {
 	{ "t1200.rom",	  		0x800000, 0xd7e26609, 2 | BRF_GRA },		//  1 Tile data
 
 	{ "a1200.rom",	   		0x800000, 0xceeb81d8, 3 | BRF_GRA },		//  2 Sprite Color Data
-	{ "a1201.rom",	   		0x800000, 0x82f0a878, 3 | BRF_GRA },		//  3
+	{ "a1201.rom",   		0x800000, 0x21063ca7, 3 | BRF_GRA },		//  3
 	{ "a1202.rom",	   		0x800000, 0x4bb92fae, 3 | BRF_GRA },		//  4
 	{ "a1203.rom",	   		0x800000, 0xe73cb627, 3 | BRF_GRA },		//  5
-	{ "a1204.rom",	  		0x800000, 0x27527099, 3 | BRF_GRA },		//  6
+	{ "a1204.rom",   		0x200000, 0x14b4b5bb, 3 | BRF_GRA },		//  6
 
 	{ "b1200.rom",	   		0x800000, 0xbed7d994, 4 | BRF_GRA },		//  7 Sprite Masks & Color Indexes
 	{ "b1201.rom",	   		0x800000, 0xf251eb57, 4 | BRF_GRA },		//  8
@@ -1924,11 +1924,11 @@ static struct BurnRomInfo kov2106RomDesc[] = {
 
 	{ "t1200.rom",	   		0x800000, 0xd7e26609, 2 | BRF_GRA },		//  1 Tile data
 
-	{ "a1200.rom",	  		0x800000, 0xceeb81d8, 3 | BRF_GRA },		//  2 Sprite Color Data
-	{ "a1201.rom",	   		0x800000, 0x82f0a878, 3 | BRF_GRA },		//  3
+	{ "a1200.rom",	   		0x800000, 0xceeb81d8, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1201.rom",   		0x800000, 0x21063ca7, 3 | BRF_GRA },		//  3
 	{ "a1202.rom",	   		0x800000, 0x4bb92fae, 3 | BRF_GRA },		//  4
 	{ "a1203.rom",	   		0x800000, 0xe73cb627, 3 | BRF_GRA },		//  5
-	{ "a1204.rom",	   		0x800000, 0x27527099, 3 | BRF_GRA },		//  6
+	{ "a1204.rom",   		0x200000, 0x14b4b5bb, 3 | BRF_GRA },		//  6
 
 	{ "b1200.rom",	   		0x800000, 0xbed7d994, 4 | BRF_GRA },		//  7 Sprite Masks & Color Indexes
 	{ "b1201.rom",	   		0x800000, 0xf251eb57, 4 | BRF_GRA },		//  8
@@ -1961,11 +1961,11 @@ static struct BurnRomInfo kov2103RomDesc[] = {
 
 	{ "t1200.rom",			0x800000, 0xd7e26609, 2 | BRF_GRA },		//  1 Tile data
 
-	{ "a1200.rom",			0x800000, 0xceeb81d8, 3 | BRF_GRA },		//  2 Sprite Color Data
-	{ "a1201.rom",			0x800000, 0x82f0a878, 3 | BRF_GRA },		//  3
-	{ "a1202.rom",			0x800000, 0x4bb92fae, 3 | BRF_GRA },		//  4
-	{ "a1203.rom",			0x800000, 0xe73cb627, 3 | BRF_GRA },		//  5
-	{ "a1204.rom",			0x800000, 0x27527099, 3 | BRF_GRA },		//  6
+	{ "a1200.rom",	   		0x800000, 0xceeb81d8, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1201.rom",   		0x800000, 0x21063ca7, 3 | BRF_GRA },		//  3
+	{ "a1202.rom",	   		0x800000, 0x4bb92fae, 3 | BRF_GRA },		//  4
+	{ "a1203.rom",	   		0x800000, 0xe73cb627, 3 | BRF_GRA },		//  5
+	{ "a1204.rom",   		0x200000, 0x14b4b5bb, 3 | BRF_GRA },		//  6
 
 	{ "b1200.rom",			0x800000, 0xbed7d994, 4 | BRF_GRA },		//  7 Sprite Masks & Color Indexes
 	{ "b1201.rom",			0x800000, 0xf251eb57, 4 | BRF_GRA },		//  8
@@ -1999,10 +1999,10 @@ static struct BurnRomInfo kov2102RomDesc[] = {
 	{ "t1200.rom",	   		0x800000, 0xd7e26609, 2 | BRF_GRA },		//  1 Tile data
 
 	{ "a1200.rom",	   		0x800000, 0xceeb81d8, 3 | BRF_GRA },		//  2 Sprite Color Data
-	{ "a1201.rom",	   		0x800000, 0x82f0a878, 3 | BRF_GRA },		//  3
+	{ "a1201.rom",   		0x800000, 0x21063ca7, 3 | BRF_GRA },		//  3
 	{ "a1202.rom",	   		0x800000, 0x4bb92fae, 3 | BRF_GRA },		//  4
 	{ "a1203.rom",	   		0x800000, 0xe73cb627, 3 | BRF_GRA },		//  5
-	{ "a1204.rom",	   		0x800000, 0x27527099, 3 | BRF_GRA },		//  6
+	{ "a1204.rom",   		0x200000, 0x14b4b5bb, 3 | BRF_GRA },		//  6
 
 	{ "b1200.rom",	   		0x800000, 0xbed7d994, 4 | BRF_GRA },		//  7 Sprite Masks & Color Indexes
 	{ "b1201.rom",	   		0x800000, 0xf251eb57, 4 | BRF_GRA },		//  8
@@ -2036,10 +2036,10 @@ static struct BurnRomInfo kov2101RomDesc[] = {
 	{ "t1200.rom",	   		0x800000, 0xd7e26609, 2 | BRF_GRA },		//  1 Tile data
 
 	{ "a1200.rom",	   		0x800000, 0xceeb81d8, 3 | BRF_GRA },		//  2 Sprite Color Data
-	{ "a1201.rom",	   		0x800000, 0x82f0a878, 3 | BRF_GRA },		//  3
+	{ "a1201.rom",   		0x800000, 0x21063ca7, 3 | BRF_GRA },		//  3
 	{ "a1202.rom",	   		0x800000, 0x4bb92fae, 3 | BRF_GRA },		//  4
 	{ "a1203.rom",	   		0x800000, 0xe73cb627, 3 | BRF_GRA },		//  5
-	{ "a1204.rom",	   		0x800000, 0x27527099, 3 | BRF_GRA },		//  6
+	{ "a1204.rom",   		0x200000, 0x14b4b5bb, 3 | BRF_GRA },		//  6
 
 	{ "b1200.rom",	   		0x800000, 0xbed7d994, 4 | BRF_GRA },		//  7 Sprite Masks & Color Indexes
 	{ "b1201.rom",	   		0x800000, 0xf251eb57, 4 | BRF_GRA },		//  8
@@ -2073,10 +2073,10 @@ static struct BurnRomInfo kov2100RomDesc[] = {
 	{ "t1200.rom",	   		0x800000, 0xd7e26609, 2 | BRF_GRA },		//  1 Tile data
 
 	{ "a1200.rom",	   		0x800000, 0xceeb81d8, 3 | BRF_GRA },		//  2 Sprite Color Data
-	{ "a1201.rom",	   		0x800000, 0x82f0a878, 3 | BRF_GRA },		//  3
+	{ "a1201.rom",   		0x800000, 0x21063ca7, 3 | BRF_GRA },		//  3
 	{ "a1202.rom",	   		0x800000, 0x4bb92fae, 3 | BRF_GRA },		//  4
 	{ "a1203.rom",	   		0x800000, 0xe73cb627, 3 | BRF_GRA },		//  5
-	{ "a1204.rom",	   		0x800000, 0x27527099, 3 | BRF_GRA },		//  6
+	{ "a1204.rom",   		0x200000, 0x14b4b5bb, 3 | BRF_GRA },		//  6
 
 	{ "b1200.rom",	   		0x800000, 0xbed7d994, 4 | BRF_GRA },		//  7 Sprite Masks & Color Indexes
 	{ "b1201.rom",	   		0x800000, 0xf251eb57, 4 | BRF_GRA },		//  8
@@ -2110,10 +2110,10 @@ static struct BurnRomInfo kov2pRomDesc[] = {
 	{ "t1200.rom",	   		0x800000, 0xd7e26609, 2 | BRF_GRA },		//  1 Tile data
 
 	{ "a1200.rom",	   		0x800000, 0xceeb81d8, 3 | BRF_GRA },		//  2 Sprite Color Data
-	{ "a1201.rom_p",   		0x800000, 0x21063ca7, 3 | BRF_GRA },		//  3
+	{ "a1201.rom",   		0x800000, 0x21063ca7, 3 | BRF_GRA },		//  3
 	{ "a1202.rom",	   		0x800000, 0x4bb92fae, 3 | BRF_GRA },		//  4
 	{ "a1203.rom",	   		0x800000, 0xe73cb627, 3 | BRF_GRA },		//  5
-	{ "a1204.rom_p",   		0x200000, 0x14b4b5bb, 3 | BRF_GRA },		//  6
+	{ "a1204.rom",   		0x200000, 0x14b4b5bb, 3 | BRF_GRA },		//  6
 
 	{ "b1200.rom",	   		0x800000, 0xbed7d994, 4 | BRF_GRA },		//  7 Sprite Masks & Color Indexes
 	{ "b1201.rom",	   		0x800000, 0xf251eb57, 4 | BRF_GRA },		//  8
@@ -2171,10 +2171,10 @@ static struct BurnRomInfo kov2p205RomDesc[] = {
 	{ "t1200.rom",	   		0x800000, 0xd7e26609, 2 | BRF_GRA },		//  1 Tile data
 
 	{ "a1200.rom",	   		0x800000, 0xceeb81d8, 3 | BRF_GRA },		//  2 Sprite Color Data
-	{ "a1201.rom_p",   		0x800000, 0x21063ca7, 3 | BRF_GRA },		//  3
+	{ "a1201.rom",   		0x800000, 0x21063ca7, 3 | BRF_GRA },		//  3
 	{ "a1202.rom",	   		0x800000, 0x4bb92fae, 3 | BRF_GRA },		//  4
 	{ "a1203.rom",	   		0x800000, 0xe73cb627, 3 | BRF_GRA },		//  5
-	{ "a1204.rom_p",   		0x200000, 0x14b4b5bb, 3 | BRF_GRA },		//  6
+	{ "a1204.rom",   		0x200000, 0x14b4b5bb, 3 | BRF_GRA },		//  6
 
 	{ "b1200.rom",	   		0x800000, 0xbed7d994, 4 | BRF_GRA },		//  7 Sprite Masks & Color Indexes
 	{ "b1201.rom",	   		0x800000, 0xf251eb57, 4 | BRF_GRA },		//  8

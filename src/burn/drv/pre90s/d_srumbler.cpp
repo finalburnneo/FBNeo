@@ -676,36 +676,36 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // The Speed Rumbler (set 1)
 
 static struct BurnRomInfo srumblerRomDesc[] = {
-	{ "14e_sr04.bin",	0x8000, 0xa68ce89c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "13e_sr03.bin",	0x8000, 0x87bda812, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "12e_sr02.bin",	0x8000, 0xd8609cca, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "11e_sr01.bin",	0x8000, 0x27ec4776, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "14f_sr09.bin",	0x8000, 0x2146101d, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "13f_sr08.bin",	0x8000, 0x838369a6, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "12f_sr07.bin",	0x8000, 0xde785076, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "11f_sr06.bin",	0x8000, 0xa70f4fd4, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "rc04.14e",		0x8000, 0xa68ce89c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "rc03.13e",		0x8000, 0x87bda812, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rc02.12e",		0x8000, 0xd8609cca, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "rc01.11e",		0x8000, 0x27ec4776, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "rc09.14f",		0x8000, 0x2146101d, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "rc08.13f",		0x8000, 0x838369a6, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "rc07.12f",		0x8000, 0xde785076, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "rc06.11f",		0x8000, 0xa70f4fd4, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "2f_sr05.bin",	0x8000, 0x0177cebe, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
+	{ "rc05.2f",		0x8000, 0x0177cebe, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
 
-	{ "6g_sr10.bin",	0x4000, 0xadabe271, 3 | BRF_GRA },           //  9 Characters
+	{ "rc10.6g",		0x4000, 0xadabe271, 3 | BRF_GRA },           //  9 Characters
 
-	{ "11a_sr11.bin",	0x8000, 0x5fa042ba, 4 | BRF_GRA },           // 10 Tiles
-	{ "13a_sr12.bin",	0x8000, 0xa2db64af, 4 | BRF_GRA },           // 11
-	{ "14a_sr13.bin",	0x8000, 0xf1df5499, 4 | BRF_GRA },           // 12
-	{ "15a_sr14.bin",	0x8000, 0xb22b31b3, 4 | BRF_GRA },           // 13
-	{ "11c_sr15.bin",	0x8000, 0xca3a3af3, 4 | BRF_GRA },           // 14
-	{ "13c_sr16.bin",	0x8000, 0xc49a4a11, 4 | BRF_GRA },           // 15
-	{ "14c_sr17.bin",	0x8000, 0xaa80aaab, 4 | BRF_GRA },           // 16
-	{ "15c_sr18.bin",	0x8000, 0xce67868e, 4 | BRF_GRA },           // 17
+	{ "rc11.11a",		0x8000, 0x5fa042ba, 4 | BRF_GRA },           // 10 Tiles
+	{ "rc12.13a",		0x8000, 0xa2db64af, 4 | BRF_GRA },           // 11
+	{ "rc13.14a",		0x8000, 0xf1df5499, 4 | BRF_GRA },           // 12
+	{ "rc14.15a",		0x8000, 0xb22b31b3, 4 | BRF_GRA },           // 13
+	{ "rc15.11c",		0x8000, 0xca3a3af3, 4 | BRF_GRA },           // 14
+	{ "rc16.13c",		0x8000, 0xc49a4a11, 4 | BRF_GRA },           // 15
+	{ "rc17.14c",		0x8000, 0xaa80aaab, 4 | BRF_GRA },           // 16
+	{ "rc18.15c",		0x8000, 0xce67868e, 4 | BRF_GRA },           // 17
 
-	{ "15e_sr20.bin",	0x8000, 0x3924c861, 5 | BRF_GRA },           // 18 Sprites
-	{ "14e_sr19.bin",	0x8000, 0xff8f9129, 5 | BRF_GRA },           // 19
-	{ "15f_sr22.bin",	0x8000, 0xab64161c, 5 | BRF_GRA },           // 20
-	{ "14f_sr21.bin",	0x8000, 0xfd64bcd1, 5 | BRF_GRA },           // 21
-	{ "15h_sr24.bin",	0x8000, 0xc972af3e, 5 | BRF_GRA },           // 22
-	{ "14h_sr23.bin",	0x8000, 0x8c9abf57, 5 | BRF_GRA },           // 23
-	{ "15j_sr26.bin",	0x8000, 0xd4f1732f, 5 | BRF_GRA },           // 24
-	{ "14j_sr25.bin",	0x8000, 0xd2a4ea4f, 5 | BRF_GRA },           // 25
+	{ "rc20.15e",		0x8000, 0x3924c861, 5 | BRF_GRA },           // 18 Sprites
+	{ "rc19.14e",		0x8000, 0xff8f9129, 5 | BRF_GRA },           // 19
+	{ "rc22.15f",		0x8000, 0xab64161c, 5 | BRF_GRA },           // 20
+	{ "rc21.14f",		0x8000, 0xfd64bcd1, 5 | BRF_GRA },           // 21
+	{ "rc24.15h",		0x8000, 0xc972af3e, 5 | BRF_GRA },           // 22
+	{ "rc23.14h",		0x8000, 0x8c9abf57, 5 | BRF_GRA },           // 23
+	{ "rc26.15j",		0x8000, 0xd4f1732f, 5 | BRF_GRA },           // 24
+	{ "rc25.14j",		0x8000, 0xd2a4ea4f, 5 | BRF_GRA },           // 25
 
 	{ "63s141.12a",		0x0100, 0x8421786f, 6 | BRF_PRG | BRF_ESS }, // 26 Rom Bank Proms
 	{ "63s141.13a",		0x0100, 0x6048583f, 6 | BRF_PRG | BRF_ESS }, // 27
@@ -730,36 +730,36 @@ struct BurnDriver BurnDrvSrumbler = {
 // The Speed Rumbler (set 2)
 
 static struct BurnRomInfo srumblr2RomDesc[] = {
-	{ "14e_sr04.bin",	0x8000, 0xa68ce89c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "rc04.14e",		0x8000, 0xa68ce89c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
 	{ "rc03.13e",		0x8000, 0xe82f78d4, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "rc02.12e",		0x8000, 0x009a62d8, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "rc01.11e",		0x8000, 0x2ac48d1d, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "rc09.14f",		0x8000, 0x64f23e72, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "rc08.13f",		0x8000, 0x74c71007, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "12f_sr07.bin",	0x8000, 0xde785076, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "11f_sr06.bin",	0x8000, 0xa70f4fd4, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "rc07.12f",		0x8000, 0xde785076, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "rc06.11f",		0x8000, 0xa70f4fd4, 1 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "rc05.2f",		0x8000, 0xea04fa07, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
 
-	{ "6g_sr10.bin",	0x4000, 0xadabe271, 3 | BRF_GRA },           //  9 Characters
+	{ "rc10.6g",		0x4000, 0xadabe271, 3 | BRF_GRA },           //  9 Characters
 
-	{ "11a_sr11.bin",	0x8000, 0x5fa042ba, 4 | BRF_GRA },           // 10 Tiles
-	{ "13a_sr12.bin",	0x8000, 0xa2db64af, 4 | BRF_GRA },           // 11
-	{ "14a_sr13.bin",	0x8000, 0xf1df5499, 4 | BRF_GRA },           // 12
-	{ "15a_sr14.bin",	0x8000, 0xb22b31b3, 4 | BRF_GRA },           // 13
-	{ "11c_sr15.bin",	0x8000, 0xca3a3af3, 4 | BRF_GRA },           // 14
-	{ "13c_sr16.bin",	0x8000, 0xc49a4a11, 4 | BRF_GRA },           // 15
-	{ "14c_sr17.bin",	0x8000, 0xaa80aaab, 4 | BRF_GRA },           // 16
-	{ "15c_sr18.bin",	0x8000, 0xce67868e, 4 | BRF_GRA },           // 17
+	{ "rc11.11a",		0x8000, 0x5fa042ba, 4 | BRF_GRA },           // 10 Tiles
+	{ "rc12.13a",		0x8000, 0xa2db64af, 4 | BRF_GRA },           // 11
+	{ "rc13.14a",		0x8000, 0xf1df5499, 4 | BRF_GRA },           // 12
+	{ "rc14.15a",		0x8000, 0xb22b31b3, 4 | BRF_GRA },           // 13
+	{ "rc15.11c",		0x8000, 0xca3a3af3, 4 | BRF_GRA },           // 14
+	{ "rc16.13c",		0x8000, 0xc49a4a11, 4 | BRF_GRA },           // 15
+	{ "rc17.14c",		0x8000, 0xaa80aaab, 4 | BRF_GRA },           // 16
+	{ "rc18.15c",		0x8000, 0xce67868e, 4 | BRF_GRA },           // 17
 
-	{ "15e_sr20.bin",	0x8000, 0x3924c861, 5 | BRF_GRA },           // 18 Sprites
-	{ "14e_sr19.bin",	0x8000, 0xff8f9129, 5 | BRF_GRA },           // 19
-	{ "15f_sr22.bin",	0x8000, 0xab64161c, 5 | BRF_GRA },           // 20
-	{ "14f_sr21.bin",	0x8000, 0xfd64bcd1, 5 | BRF_GRA },           // 21
-	{ "15h_sr24.bin",	0x8000, 0xc972af3e, 5 | BRF_GRA },           // 22
-	{ "14h_sr23.bin",	0x8000, 0x8c9abf57, 5 | BRF_GRA },           // 23
-	{ "15j_sr26.bin",	0x8000, 0xd4f1732f, 5 | BRF_GRA },           // 24
-	{ "14j_sr25.bin",	0x8000, 0xd2a4ea4f, 5 | BRF_GRA },           // 25
+	{ "rc20.15e",		0x8000, 0x3924c861, 5 | BRF_GRA },           // 18 Sprites
+	{ "rc19.14e",		0x8000, 0xff8f9129, 5 | BRF_GRA },           // 19
+	{ "rc22.15f",		0x8000, 0xab64161c, 5 | BRF_GRA },           // 20
+	{ "rc21.14f",		0x8000, 0xfd64bcd1, 5 | BRF_GRA },           // 21
+	{ "rc24.15h",		0x8000, 0xc972af3e, 5 | BRF_GRA },           // 22
+	{ "rc23.14h",		0x8000, 0x8c9abf57, 5 | BRF_GRA },           // 23
+	{ "rc26.15j",		0x8000, 0xd4f1732f, 5 | BRF_GRA },           // 24
+	{ "rc25.14j",		0x8000, 0xd2a4ea4f, 5 | BRF_GRA },           // 25
 
 	{ "63s141.12a",		0x0100, 0x8421786f, 6 | BRF_PRG | BRF_ESS }, // 26 Rom Bank Proms
 	{ "63s141.13a",		0x0100, 0x6048583f, 6 | BRF_PRG | BRF_ESS }, // 27
@@ -781,39 +781,93 @@ struct BurnDriver BurnDrvSrumblr2 = {
 };
 
 
-// Rush & Crash (Japan)
+// The Speed Rumbler (set 3)
 
-static struct BurnRomInfo rushcrshRomDesc[] = {
-	{ "14e_sr04.bin",	0x8000, 0xa68ce89c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "rc03.bin",		0x8000, 0xa49c9be0, 1 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo srumblr3RomDesc[] = {
+	{ "rc04.14e",		0x8000, 0xa68ce89c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "rc03.13e",		0x8000, 0x0a21992b, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "rc02.12e",		0x8000, 0x009a62d8, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "rc01.11e",		0x8000, 0x2ac48d1d, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "rc09.14f",		0x8000, 0x64f23e72, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "rc08.bin",		0x8000, 0x2c25874b, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "12f_sr07.bin",	0x8000, 0xde785076, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "11f_sr06.bin",	0x8000, 0xa70f4fd4, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "rc08.13f",		0x8000, 0xe361b55c, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "rc07.12f",		0x8000, 0xde785076, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "rc06.11f",		0x8000, 0xa70f4fd4, 1 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "rc05.2f",		0x8000, 0xea04fa07, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
 
-	{ "rc10.bin",		0x4000, 0x0a3c0b0d, 3 | BRF_GRA },           //  9 Characters
+	{ "rc10.6g",		0x4000, 0xadabe271, 3 | BRF_GRA },           //  9 Characters
 
-	{ "11a_sr11.bin",	0x8000, 0x5fa042ba, 4 | BRF_GRA },           // 10 Tiles
-	{ "13a_sr12.bin",	0x8000, 0xa2db64af, 4 | BRF_GRA },           // 11
-	{ "14a_sr13.bin",	0x8000, 0xf1df5499, 4 | BRF_GRA },           // 12
-	{ "15a_sr14.bin",	0x8000, 0xb22b31b3, 4 | BRF_GRA },           // 13
-	{ "11c_sr15.bin",	0x8000, 0xca3a3af3, 4 | BRF_GRA },           // 14
-	{ "13c_sr16.bin",	0x8000, 0xc49a4a11, 4 | BRF_GRA },           // 15
-	{ "14c_sr17.bin",	0x8000, 0xaa80aaab, 4 | BRF_GRA },           // 16
-	{ "15c_sr18.bin",	0x8000, 0xce67868e, 4 | BRF_GRA },           // 17
+	{ "rc11.11a",		0x8000, 0x5fa042ba, 4 | BRF_GRA },           // 10 Tiles
+	{ "rc12.13a",		0x8000, 0xa2db64af, 4 | BRF_GRA },           // 11
+	{ "rc13.14a",		0x8000, 0xf1df5499, 4 | BRF_GRA },           // 12
+	{ "rc14.15a",		0x8000, 0xb22b31b3, 4 | BRF_GRA },           // 13
+	{ "rc15.11c",		0x8000, 0xca3a3af3, 4 | BRF_GRA },           // 14
+	{ "rc16.13c",		0x8000, 0xc49a4a11, 4 | BRF_GRA },           // 15
+	{ "rc17.14c",		0x8000, 0xaa80aaab, 4 | BRF_GRA },           // 16
+	{ "rc18.15c",		0x8000, 0xce67868e, 4 | BRF_GRA },           // 17
 
-	{ "15e_sr20.bin",	0x8000, 0x3924c861, 5 | BRF_GRA },           // 18 Sprites
-	{ "14e_sr19.bin",	0x8000, 0xff8f9129, 5 | BRF_GRA },           // 19
-	{ "15f_sr22.bin",	0x8000, 0xab64161c, 5 | BRF_GRA },           // 20
-	{ "14f_sr21.bin",	0x8000, 0xfd64bcd1, 5 | BRF_GRA },           // 21
-	{ "15h_sr24.bin",	0x8000, 0xc972af3e, 5 | BRF_GRA },           // 22
-	{ "14h_sr23.bin",	0x8000, 0x8c9abf57, 5 | BRF_GRA },           // 23
-	{ "15j_sr26.bin",	0x8000, 0xd4f1732f, 5 | BRF_GRA },           // 24
-	{ "14j_sr25.bin",	0x8000, 0xd2a4ea4f, 5 | BRF_GRA },           // 25
+	{ "rc20.15e",		0x8000, 0x3924c861, 5 | BRF_GRA },           // 18 Sprites
+	{ "rc19.14e",		0x8000, 0xff8f9129, 5 | BRF_GRA },           // 19
+	{ "rc22.15f",		0x8000, 0xab64161c, 5 | BRF_GRA },           // 20
+	{ "rc21.14f",		0x8000, 0xfd64bcd1, 5 | BRF_GRA },           // 21
+	{ "rc24.15h",		0x8000, 0xc972af3e, 5 | BRF_GRA },           // 22
+	{ "rc23.14h",		0x8000, 0x8c9abf57, 5 | BRF_GRA },           // 23
+	{ "rc26.15j",		0x8000, 0xd4f1732f, 5 | BRF_GRA },           // 24
+	{ "rc25.14j",		0x8000, 0xd2a4ea4f, 5 | BRF_GRA },           // 25
+
+	{ "63s141.12a",		0x0100, 0x8421786f, 6 | BRF_PRG | BRF_ESS }, // 26 Rom Bank Proms
+	{ "63s141.13a",		0x0100, 0x6048583f, 6 | BRF_PRG | BRF_ESS }, // 27
+
+	{ "63s141.8j",		0x0100, 0x1a89a7ff, 0 | BRF_OPT },           // 28 Priority Prom
+};
+
+STD_ROM_PICK(srumblr3)
+STD_ROM_FN(srumblr3)
+
+struct BurnDriver BurnDrvSrumblr3 = {
+	"srumbler3", "srumbler", NULL, NULL, "1986",
+	"The Speed Rumbler (set 3)\0", NULL, "Capcom (Tecfri license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_SHOOT, 0,
+	NULL, srumblr3RomInfo, srumblr3RomName, NULL, NULL, SrumblerInputInfo, SrumblerDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x200, 240, 352, 3, 4
+};
+
+
+// Rush & Crash (Japan)
+
+static struct BurnRomInfo rushcrshRomDesc[] = {
+	{ "rc04.14e",		0x8000, 0xa68ce89c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "rc03.13e",		0x8000, 0xa49c9be0, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rc02.12e",		0x8000, 0x009a62d8, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "rc01.11e",		0x8000, 0x2ac48d1d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "rc09.14f",		0x8000, 0x64f23e72, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "rc08.13f",		0x8000, 0x2c25874b, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "rc07.12f",		0x8000, 0xde785076, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "rc06.11f",		0x8000, 0xa70f4fd4, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "rc05.2f",		0x8000, 0xea04fa07, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
+
+	{ "rc10.6g",		0x4000, 0x0a3c0b0d, 3 | BRF_GRA },           //  9 Characters
+
+	{ "rc11.11a",		0x8000, 0x5fa042ba, 4 | BRF_GRA },           // 10 Tiles
+	{ "rc12.13a",		0x8000, 0xa2db64af, 4 | BRF_GRA },           // 11
+	{ "rc13.14a",		0x8000, 0xf1df5499, 4 | BRF_GRA },           // 12
+	{ "rc14.15a",		0x8000, 0xb22b31b3, 4 | BRF_GRA },           // 13
+	{ "rc15.11c",		0x8000, 0xca3a3af3, 4 | BRF_GRA },           // 14
+	{ "rc16.13c",		0x8000, 0xc49a4a11, 4 | BRF_GRA },           // 15
+	{ "rc17.14c",		0x8000, 0xaa80aaab, 4 | BRF_GRA },           // 16
+	{ "rc18.15c",		0x8000, 0xce67868e, 4 | BRF_GRA },           // 17
+
+	{ "rc20.15e",		0x8000, 0x3924c861, 5 | BRF_GRA },           // 18 Sprites
+	{ "rc19.14e",		0x8000, 0xff8f9129, 5 | BRF_GRA },           // 19
+	{ "rc22.15f",		0x8000, 0xab64161c, 5 | BRF_GRA },           // 20
+	{ "rc21.14f",		0x8000, 0xfd64bcd1, 5 | BRF_GRA },           // 21
+	{ "rc24.15h",		0x8000, 0xc972af3e, 5 | BRF_GRA },           // 22
+	{ "rc23.14h",		0x8000, 0x8c9abf57, 5 | BRF_GRA },           // 23
+	{ "rc26.15j",		0x8000, 0xd4f1732f, 5 | BRF_GRA },           // 24
+	{ "rc25.14j",		0x8000, 0xd2a4ea4f, 5 | BRF_GRA },           // 25
 
 	{ "63s141.12a",		0x0100, 0x8421786f, 6 | BRF_PRG | BRF_ESS }, // 26 Rom Bank Proms
 	{ "63s141.13a",		0x0100, 0x6048583f, 6 | BRF_PRG | BRF_ESS }, // 27

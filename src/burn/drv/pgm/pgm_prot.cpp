@@ -1525,8 +1525,6 @@ static const UINT8 BATABLE[0x40] = {
 
 static void kov_asic27a_sim_command(UINT8 command)
 {
-	bprintf (0, _T("C: %2.2x, V: %4.4x\n"), command, asic27a_sim_value);
-
 	switch (command)
 	{
 		case 0x67: // unknown or status check?

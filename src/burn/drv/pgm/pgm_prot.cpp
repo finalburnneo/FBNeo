@@ -1508,6 +1508,13 @@ void install_protection_asic27a_oldsplus()
 //-------------------------------------
 // Knights of Valour
 
+
+
+
+//-----------------------------------------------------------------------------------------------------
+// ASIC28 - Knights of Valour
+
+
 static const UINT8 B0TABLE[8] = { 2, 0, 1, 4, 3 }; // Maps char portraits to tables
 
 static const UINT8 BATABLE[0x40] = {
@@ -1518,6 +1525,8 @@ static const UINT8 BATABLE[0x40] = {
 
 static void kov_asic27a_sim_command(UINT8 command)
 {
+	bprintf (0, _T("C: %2.2x, V: %4.4x\n"), command, asic27a_sim_value);
+
 	switch (command)
 	{
 		case 0x67: // unknown or status check?
@@ -1530,8 +1539,8 @@ static void kov_asic27a_sim_command(UINT8 command)
 		break;
 
 		case 0x99: // Reset
-			asic27a_sim_response = 0x880000;
 			asic27a_sim_key = 0;
+			asic27a_sim_response = 0x880000;
 		break;
 
 		case 0x9d: // Sprite palette offset
@@ -1570,8 +1579,11 @@ static void kov_asic27a_sim_command(UINT8 command)
 		break;
 
 		case 0xcc: // Background layer offset
-			if (asic27a_sim_value & 0x400) asic27a_sim_value = -(0x400 - (asic27a_sim_value & 0x3ff));
-			asic27a_sim_response = 0x900000 + ((asic27a_sim_regs[0xcb] + (asic27a_sim_value * 0x40)) * 4);
+		{
+	   	 	INT32 y = asic27a_sim_value;
+	    		if (y & 0x400) y = -(0x400 - (y & 0x3ff));
+	    		asic27a_sim_response = 0x900000 + (((asic27a_sim_regs[0xcb] + y * 64) * 4));
+   		}
 		break;
 
 		case 0xd0: // Text palette offset

@@ -3108,9 +3108,9 @@ struct BurnDriver BurnDrvKetb = {
 // Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.0, hack by Trap15)
 
 static struct BurnRomInfo ketarrRomDesc[] = {
-	{ "ketarr_v100.u38",	0x200000, 0xd4c7a8ab, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "ketarr_v100.u38",		0x200000, 0xd4c7a8ab, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t04701w064.u19", 	0x800000, 0x2665b041, 2 | BRF_GRA },		//  1 Tile data
+	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },		//  1 Tile data
 
 	{ "a04701w064.u7", 		0x800000, 0x5ef1b94b, 3 | BRF_GRA },		//  2 Sprite Color Data
 	{ "a04702w064.u8", 		0x800000, 0x26d6da7f, 3 | BRF_GRA },		//  3
@@ -3119,9 +3119,9 @@ static struct BurnRomInfo ketarrRomDesc[] = {
 
 	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },		//  5 Samples
 
-	{ "ket_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
+	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ket_defaults.nv",	0x020000, 0x3ca892d8, 0 | BRF_OPT },		//  7 NV RAM
+	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },		//  7 NV RAM
 };
 
 STDROMPICKEXT(ketarr, ketarr, ketsuiBios) // custom bios
@@ -3141,9 +3141,9 @@ struct BurnDriver BurnDrvketarr = {
 // Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.5, hack by Trap15)
 
 static struct BurnRomInfo ketarr15RomDesc[] = {
-	{ "ketarr15_v100.u38",	0x200000, 0x552a7d95, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "ketarr15_v100.u38",		0x200000, 0x552a7d95, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t04701w064.u19", 	0x800000, 0x2665b041, 2 | BRF_GRA },		//  1 Tile data
+	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },		//  1 Tile data
 
 	{ "a04701w064.u7", 		0x800000, 0x5ef1b94b, 3 | BRF_GRA },		//  2 Sprite Color Data
 	{ "a04702w064.u8", 		0x800000, 0x26d6da7f, 3 | BRF_GRA },		//  3
@@ -3152,9 +3152,9 @@ static struct BurnRomInfo ketarr15RomDesc[] = {
 
 	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },		//  5 Samples
 
-	{ "ket_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
+	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ket_defaults.nv",	0x020000, 0x3ca892d8, 0 | BRF_OPT },		//  7 NV RAM
+	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },		//  7 NV RAM
 };
 
 STDROMPICKEXT(ketarr15, ketarr15, ketsuiBios) // custom bios

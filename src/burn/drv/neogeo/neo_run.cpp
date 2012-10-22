@@ -571,6 +571,8 @@ static INT32 LoadRoms()
 			}
 			nSpriteSize[nNeoActiveSlot] *= pInfo->nSpriteNum - 2;
 
+			if (!strcmp("kof97oro", BurnDrvGetTextA(DRV_NAME))) nSpriteSize[nNeoActiveSlot] = 0x2400000;
+
 			// The final 2 ROMs may have a different size
 			BurnDrvGetRomInfo(&ri, pInfo->nSpriteOffset + pInfo->nSpriteNum - 2);
 			nSpriteSize[nNeoActiveSlot] += ri.nLen * 2;

@@ -163,10 +163,12 @@ INT32 NeoLoadSprites(INT32 nOffset, INT32 nNum, UINT8* pDest, UINT32 nSpriteSize
 		nSpriteSize = 0;
 
 		// Compute correct size to gaps into account (Kizuna)
-		for (INT32 i = 0; i < nNum - 2; i++) {
-			BurnDrvGetRomInfo(&ri, nOffset + i);
-			if (ri.nLen > nRomSize) {
-				nRomSize = ri.nLen;
+		if (strcmp("kof97oro", BurnDrvGetTextA(DRV_NAME)) != 0) {
+			for (INT32 i = 0; i < nNum - 2; i++) {
+				BurnDrvGetRomInfo(&ri, nOffset + i);
+				if (ri.nLen > nRomSize) {
+					nRomSize = ri.nLen;
+				}
 			}
 		}
 	
@@ -192,7 +194,7 @@ INT32 NeoLoadSprites(INT32 nOffset, INT32 nNum, UINT8* pDest, UINT32 nSpriteSize
 
 				BurnDrvGetRomInfo(&ri, nOffset + (i << 1));
 
-				if (i < (nNum >> 1) - 1) {
+				if ((i < (nNum >> 1) - 1) && strcmp("kof97oro", BurnDrvGetTextA(DRV_NAME)) != 0) {
 					nSpriteSize += nRomSize << 1;
 				} else {
 					nSpriteSize += ri.nLen << 1;

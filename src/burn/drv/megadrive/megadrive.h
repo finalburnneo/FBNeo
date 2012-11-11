@@ -9,6 +9,7 @@
 #define SEGA_MD_ROM_OFFS_100000										0x05
 #define SEGA_MD_ROM_OFFS_100001										0x06
 #define SEGA_MD_ROM_OFFS_200000										0x07
+#define SEGA_MD_ROM_OFFS_300000										0x08
 
 extern UINT8 MegadriveReset;
 extern UINT8 bMegadriveRecalcPalette;

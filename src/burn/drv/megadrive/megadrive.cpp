@@ -1364,7 +1364,8 @@ static INT32 MegadriveLoadRoms(bool bLoad)
 				case SEGA_MD_ROM_OFFS_080000: Offset = 0x080000; break;
 				case SEGA_MD_ROM_OFFS_100000: Offset = 0x100000; break;
 				case SEGA_MD_ROM_OFFS_100001: Offset = 0x100001; break;
-				case SEGA_MD_ROM_OFFS_200000: Offset = 0x200000; break;				
+				case SEGA_MD_ROM_OFFS_200000: Offset = 0x200000; break;
+				case SEGA_MD_ROM_OFFS_300000: Offset = 0x300000; break;
 			}
 			
 			switch (ri.nType & 0xf0) {

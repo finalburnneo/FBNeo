@@ -1000,7 +1000,7 @@ STD_ROM_FN(pce_columns)
 
 struct BurnDriver BurnDrvpce_columns = {
 	"pce_columns", NULL, NULL, NULL, "1991",
-	"Columns\0", NULL, "Nippon Telenet", "PC Engine",
+	"Columns\0", NULL, "Nihon Telenet", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_columnsRomInfo, pce_columnsRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -4700,7 +4700,7 @@ STD_ROM_FN(pce_puzzlboy)
 
 struct BurnDriver BurnDrvpce_puzzlboy = {
 	"pce_puzzlboy", NULL, NULL, NULL, "1991",
-	"Puzzle Boy\0", NULL, "Nippon Telenet", "PC Engine",
+	"Puzzle Boy\0", NULL, "Nihon Telenet", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_puzzlboyRomInfo, pce_puzzlboyRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -5260,7 +5260,7 @@ STD_ROM_FN(pce_sokoban)
 
 struct BurnDriver BurnDrvpce_sokoban = {
 	"pce_sokoban", NULL, NULL, NULL, "1990",
-	"Sokoban World\0", NULL, "Media Rings", "PC Engine",
+	"Sokoban World\0", NULL, "Media Rings Corporation", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_sokobanRomInfo, pce_sokobanRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -5340,7 +5340,7 @@ STD_ROM_FN(pce_spinpair)
 
 struct BurnDriver BurnDrvpce_spinpair = {
 	"pce_spinpair", NULL, NULL, NULL, "1990",
-	"Spin Pair\0", NULL, "Media Rings", "PC Engine",
+	"Spin Pair\0", NULL, "Media Rings Corporation", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_spinpairRomInfo, pce_spinpairRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -5360,7 +5360,7 @@ STD_ROM_FN(pce_spirwave)
 
 struct BurnDriver BurnDrvpce_spirwave = {
 	"pce_spirwave", NULL, NULL, NULL, "1991",
-	"Spiral Wave\0", NULL, "Media Rings", "PC Engine",
+	"Spiral Wave\0", NULL, "Media Rings Corporation", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_spirwaveRomInfo, pce_spirwaveRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -5840,7 +5840,7 @@ STD_ROM_FN(pce_toiletk)
 
 struct BurnDriver BurnDrvpce_toiletk = {
 	"pce_toiletk", NULL, NULL, NULL, "1992",
-	"Toilet Kids\0", NULL, "Media Rings", "PC Engine",
+	"Toilet Kids\0", NULL, "Media Rings Corporation", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_toiletkRomInfo, pce_toiletkRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -6420,7 +6420,7 @@ STD_ROM_FN(pce_zero4ca)
 
 struct BurnDriver BurnDrvpce_zero4ca = {
 	"pce_zero4ca", "pce_zero4c", NULL, NULL, "1991",
-	"Zero 4 Champ\0", NULL, "Media Rings", "PC Engine",
+	"Zero 4 Champ\0", NULL, "Media Rings Corporation", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_zero4caRomInfo, pce_zero4caRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -6440,7 +6440,7 @@ STD_ROM_FN(pce_zero4c)
 
 struct BurnDriver BurnDrvpce_zero4c = {
 	"pce_zero4c", NULL, NULL, NULL, "1991",
-	"Zero 4 Champ (v1.5)\0", NULL, "Media Rings", "PC Engine",
+	"Zero 4 Champ (v1.5)\0", NULL, "Media Rings Corporation", "PC Engine",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_zero4cRomInfo, pce_zero4cRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
@@ -7709,7 +7709,7 @@ struct BurnDriver BurnDrvtg_ordyne = {
 };
 
 
-// Pac-land
+// Pac-Land
 
 static struct BurnRomInfo tg_paclandRomDesc[] = {
 	{ "pac-land (usa).pce", 0x040000, 0xd6e30ccd, BRF_PRG | BRF_ESS },
@@ -7720,7 +7720,7 @@ STD_ROM_FN(tg_pacland)
 
 struct BurnDriver BurnDrvtg_pacland = {
 	"tg_pacland", NULL, NULL, NULL, "1990",
-	"Pac-land\0", NULL, "NEC", "TurboGrafx 16",
+	"Pac-Land\0", NULL, "NEC", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
 	TgGetZipName, tg_paclandRomInfo, tg_paclandRomName, NULL, NULL, pceInputInfo, pceDIPInfo,

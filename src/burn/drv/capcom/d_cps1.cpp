@@ -12410,31 +12410,97 @@ static INT32 Sf2dkot2Init()
 	return nRet;
 }
 
+UINT8 __fastcall Sf2rbProtReadByte(UINT32 a)
+{
+	switch (a) {
+		case 0x201201: {
+			return 0x02;
+		}
+		
+		case 0x281201: {
+			return 0x40;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Prot Read Byte %x\n"), a);
+		}
+	}
+	
+	return 0;
+}
+
+UINT16 __fastcall Sf2rbProtReadWord(UINT32 a)
+{
+	switch (a) {
+		default: {
+			bprintf(PRINT_NORMAL, _T("Prot Read Word %x\n"), a);
+		}
+	}
+	
+	return 0;
+}
+
 static void Sf2rbCallback()
 {
 	BurnByteswap(CpsRom, 0x100000);
-	CpsRom[0xe5465] = 0x60;
-	CpsRom[0xe5464] = 0x12;
 }
 
 static INT32 Sf2rbInit()
 {
 	AmendProgRomCallback = Sf2rbCallback;
 	
-	return Sf2ceInit();
+	INT32 nRet = Sf2ceInit();
+
+	SekOpen(0);
+	SekMapHandler(1, 0x200000, 0x2fffff, SM_READ);
+	SekSetReadByteHandler(1, Sf2rbProtReadByte);
+	SekSetReadWordHandler(1, Sf2rbProtReadWord);
+	SekClose();
+
+	return nRet;
 }
 
-static void Sf2rb2Callback()
+UINT8 __fastcall Sf2rb2ProtReadByte(UINT32 a)
 {
-	CpsRom[0xe5333] = 0x60;
-	CpsRom[0xe5332] = 0x14;
+	switch (a) {
+		case 0x201201: {
+			return 0x00;
+		}
+		
+		case 0x281201: {
+			return 0x40;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Prot Read Byte %x\n"), a);
+		}
+	}
+	
+	return 0;
+}
+
+UINT16 __fastcall Sf2rb2ProtReadWord(UINT32 a)
+{
+	switch (a) {
+		default: {
+			bprintf(PRINT_NORMAL, _T("Prot Read Word %x\n"), a);
+		}
+	}
+	
+	return 0;
 }
 
 static INT32 Sf2rb2Init()
 {
-	AmendProgRomCallback = Sf2rb2Callback;
-	
-	return Sf2ceInit();
+	INT32 nRet = Sf2ceInit();
+
+	SekOpen(0);
+	SekMapHandler(1, 0x200000, 0x2fffff, SM_READ);
+	SekSetReadByteHandler(1, Sf2rb2ProtReadByte);
+	SekSetReadWordHandler(1, Sf2rb2ProtReadWord);
+	SekClose();
+
+	return nRet;
 }
 
 static INT32 Sf2thInit()

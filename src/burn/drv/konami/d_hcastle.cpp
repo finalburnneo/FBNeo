@@ -827,9 +827,9 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 static struct BurnRomInfo hcastleRomDesc[] = {
 	{ "m03.k12",	0x08000, 0xd85e743d, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
-	{ "b06.k8",	0x20000, 0xabd07866, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b06.k8",	    0x20000, 0xabd07866, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "768.e01",	0x08000, 0xb9fff184, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "768e01.e4",	0x08000, 0xb9fff184, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "768c09.g21",	0x80000, 0xe3be3fdd, 3 | BRF_GRA }, 	      //  3 Bank #0 Tiles
 	{ "768c08.g19",	0x80000, 0x9633db8b, 3 | BRF_GRA },           //  4
@@ -863,11 +863,11 @@ struct BurnDriver BurnDrvHcastle = {
 
 // Haunted Castle (ver. K)
 
-static struct BurnRomInfo hcastleoRomDesc[] = {
-	{ "768.k03",	0x08000, 0x40ce4f38, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
-	{ "768.g06",	0x20000, 0xcdade920, 1 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo hcastlekRomDesc[] = {
+	{ "768k03.k12",	0x08000, 0x40ce4f38, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "768g06.k8",	0x20000, 0xcdade920, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "768.e01",	0x08000, 0xb9fff184, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "768e01.e4",	0x08000, 0xb9fff184, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "768c09.g21",	0x80000, 0xe3be3fdd, 3 | BRF_GRA }, 	      //  3 Bank #0 Tiles
 	{ "768c08.g19",	0x80000, 0x9633db8b, 3 | BRF_GRA },           //  4
@@ -885,15 +885,53 @@ static struct BurnRomInfo hcastleoRomDesc[] = {
 	{ "768b12.d20",	0x00100, 0x362544b8, 0 | BRF_GRA | BRF_OPT }, // 12 Priority Prom
 };
 
-STD_ROM_PICK(hcastleo)
-STD_ROM_FN(hcastleo)
+STD_ROM_PICK(hcastlek)
+STD_ROM_FN(hcastlek)
 
-struct BurnDriver BurnDrvHcastleo = {
-	"hcastleo", "hcastle", NULL, NULL, "1988",
+struct BurnDriver BurnDrvHcastlek = {
+	"hcastlek", "hcastle", NULL, NULL, "1988",
 	"Haunted Castle (ver. K)\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, hcastleoRomInfo, hcastleoRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
+	NULL, hcastlekRomInfo, hcastlekRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	256, 224, 4, 3
+};
+
+
+// Haunted Castle (ver. E)
+
+static struct BurnRomInfo hcastleeRomDesc[] = {
+	{ "768e03.k12",	0x08000, 0x0b32619c, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "768e06.k8",	0x20000, 0x0431b8c0, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "768e01.e4",	0x08000, 0xb9fff184, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "768c09.g21",	0x80000, 0xe3be3fdd, 3 | BRF_GRA }, 	      //  3 Bank #0 Tiles
+	{ "768c08.g19",	0x80000, 0x9633db8b, 3 | BRF_GRA },           //  4
+
+	{ "768c04.j5",	0x80000, 0x2960680e, 4 | BRF_GRA },           //  5 Bank #1 Tiles
+	{ "768c05.j6",	0x80000, 0x65a2f227, 4 | BRF_GRA },           //  6
+
+	{ "768c07.e17",	0x80000, 0x01f9889c, 5 | BRF_SND },           //  7 K007232 Samples
+
+	{ "768c13.j21",	0x00100, 0xf5de80cb, 6 | BRF_GRA },           //  8 Color Proms
+	{ "768c14.j22",	0x00100, 0xb32071b7, 6 | BRF_GRA },           //  9
+	{ "768c11.i4",	0x00100, 0xf5de80cb, 6 | BRF_GRA },           // 10
+	{ "768c10.i3",	0x00100, 0xb32071b7, 6 | BRF_GRA },           // 11
+
+	{ "768b12.d20",	0x00100, 0x362544b8, 0 | BRF_GRA | BRF_OPT }, // 12 Priority Prom
+};
+
+STD_ROM_PICK(hcastlee)
+STD_ROM_FN(hcastlee)
+
+struct BurnDriver BurnDrvHcastlee = {
+	"hcastlee", "hcastle", NULL, NULL, "1988",
+	"Haunted Castle (ver. E)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	NULL, hcastleeRomInfo, hcastleeRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -901,11 +939,11 @@ struct BurnDriver BurnDrvHcastleo = {
 
 // Akuma-Jou Dracula (Japan ver. P)
 
-static struct BurnRomInfo hcastlejRomDesc[] = {
+static struct BurnRomInfo akumajouRomDesc[] = {
 	{ "768p03.k12",	0x08000, 0xd509e340, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
 	{ "768j06.k8",	0x20000, 0x42283c3e, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "768.e01",	0x08000, 0xb9fff184, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "768e01.e4",	0x08000, 0xb9fff184, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "768c09.g21",	0x80000, 0xe3be3fdd, 3 | BRF_GRA }, 	      //  3 Bank #0 Tiles
 	{ "768c08.g19",	0x80000, 0x9633db8b, 3 | BRF_GRA },           //  4
@@ -923,15 +961,15 @@ static struct BurnRomInfo hcastlejRomDesc[] = {
 	{ "768b12.d20",	0x00100, 0x362544b8, 0 | BRF_GRA | BRF_OPT }, // 12 Priority Prom
 };
 
-STD_ROM_PICK(hcastlej)
-STD_ROM_FN(hcastlej)
+STD_ROM_PICK(akumajou)
+STD_ROM_FN(akumajou)
 
-struct BurnDriver BurnDrvHcastlej = {
-	"hcastlej", "hcastle", NULL, NULL, "1988",
+struct BurnDriver BurnDrvAkumajou = {
+	"akumajou", "hcastle", NULL, NULL, "1988",
 	"Akuma-Jou Dracula (Japan ver. P)\0", NULL, "Konami", "Miscellaneous",
 	L"\u60AA\u9B54\u57CE \u30C9\u30E9\u30AD\u30E5\u30E9 (Japan ver. P)\0Akuma-Jou Dracula\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, hcastlejRomInfo, hcastlejRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
+	NULL, akumajouRomInfo, akumajouRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };
@@ -939,11 +977,11 @@ struct BurnDriver BurnDrvHcastlej = {
 
 // Akuma-Jou Dracula (Japan ver. N)
 
-static struct BurnRomInfo hcastljoRomDesc[] = {
+static struct BurnRomInfo akumajounRomDesc[] = {
 	{ "768n03.k12",	0x08000, 0x3e4dca2a, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
 	{ "768j06.k8",	0x20000, 0x42283c3e, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "768.e01",	0x08000, 0xb9fff184, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "768e01.e4",	0x08000, 0xb9fff184, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "768c09.g21",	0x80000, 0xe3be3fdd, 3 | BRF_GRA }, 	      //  3 Bank #0 Tiles
 	{ "768c08.g19",	0x80000, 0x9633db8b, 3 | BRF_GRA },           //  4
@@ -961,15 +999,15 @@ static struct BurnRomInfo hcastljoRomDesc[] = {
 	{ "768b12.d20",	0x00100, 0x362544b8, 0 | BRF_GRA | BRF_OPT }, // 12 Priority Prom
 };
 
-STD_ROM_PICK(hcastljo)
-STD_ROM_FN(hcastljo)
+STD_ROM_PICK(akumajoun)
+STD_ROM_FN(akumajoun)
 
-struct BurnDriver BurnDrvHcastljo = {
-	"hcastljo", "hcastle", NULL, NULL, "1988",
+struct BurnDriver BurnDrvAkumajoun = {
+	"akumajoun", "hcastle", NULL, NULL, "1988",
 	"Akuma-Jou Dracula (Japan ver. N)\0", NULL, "Konami", "Miscellaneous",
 	L"\u60AA\u9B54\u57CE \u30C9\u30E9\u30AD\u30E5\u30E9 (Japan ver. N)\0Akuma-Jou Dracula\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	NULL, hcastljoRomInfo, hcastljoRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
+	NULL, akumajounRomInfo, akumajounRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };

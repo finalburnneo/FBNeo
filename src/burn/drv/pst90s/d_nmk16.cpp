@@ -5673,12 +5673,12 @@ static void decode_tdragonb()
 // Task Force Harrier
 
 static struct BurnRomInfo tharrierRomDesc[] = {
-	{ "2",			0x020000, 0x78923aaa, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "3",			0x020000, 0x99cea259, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.bin",		0x020000, 0xf3887a44, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "3.bin",		0x020000, 0x65c247f6, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "12",			0x010000, 0xb959f837, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
-	{ "1",			0x010000, 0xc7402e4a, 3 | BRF_GRA },           //  3 Characters
+	{ "1.bin",		0x010000, 0x005c26c3, 3 | BRF_GRA },           //  3 Characters
 
 	{ "89050-4",		0x080000, 0x64d7d687, 4 | BRF_GRA },           //  4 Tiles
 
@@ -5751,24 +5751,23 @@ static INT32 TharrierInit()
 
 struct BurnDriver BurnDrvTharrier = {
 	"tharrier", NULL, NULL, NULL, "1989",
-	"Task Force Harrier\0", NULL, "UPL (American Sammy license)", "NMK16",
+	"Task Force Harrier\0", NULL, "UPL", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, tharrierRomInfo, tharrierRomName, NULL, NULL, TharrierInputInfo, TharrierDIPInfo,
 	TharrierInit, DrvExit, DrvFrame, TharrierDraw, NULL, NULL, 0x200,
 	224, 256, 3, 4
 };
 
+// Task Force Harrier (US?)
 
-// Task Force Harrier (Japan)
-
-static struct BurnRomInfo tharrierjRomDesc[] = {
-	{ "2.bin",		0x020000, 0xf3887a44, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "3.bin",		0x020000, 0x65c247f6, 1 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo tharrieruRomDesc[] = {
+	{ "2",			0x020000, 0x78923aaa, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "3",			0x020000, 0x99cea259, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "12",			0x010000, 0xb959f837, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
-	{ "1.bin",		0x010000, 0x005c26c3, 3 | BRF_GRA },           //  3 Characters
+	{ "1",			0x010000, 0xc7402e4a, 3 | BRF_GRA },           //  3 Characters
 
 	{ "89050-4",		0x080000, 0x64d7d687, 4 | BRF_GRA },           //  4 Tiles
 
@@ -5787,15 +5786,15 @@ static struct BurnRomInfo tharrierjRomDesc[] = {
 	{ "26.bpr",		0x000020, 0x0cbfb33e, 0 | BRF_OPT },           // 14
 };
 
-STD_ROM_PICK(tharrierj)
-STD_ROM_FN(tharrierj)
+STD_ROM_PICK(tharrieru)
+STD_ROM_FN(tharrieru)
 
-struct BurnDriver BurnDrvTharrierj = {
-	"tharrierj", "tharrier", NULL, NULL, "1989",
-	"Task Force Harrier (Japan)\0", NULL, "UPL", "NMK16",
+struct BurnDriver BurnDrvTharrieru = {
+	"tharrieru", "tharrier", NULL, NULL, "1989",
+	"Task Force Harrier (US?)\0", NULL, "UPL (American Sammy license)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, tharrierjRomInfo, tharrierjRomName, NULL, NULL, TharrierInputInfo, TharrierDIPInfo,
+	NULL, tharrieruRomInfo, tharrieruRomName, NULL, NULL, TharrierInputInfo, TharrierDIPInfo,
 	TharrierInit, DrvExit, DrvFrame, TharrierDraw, NULL, NULL, 0x200,
 	224, 256, 3, 4
 };

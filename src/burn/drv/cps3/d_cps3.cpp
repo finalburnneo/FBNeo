@@ -228,7 +228,9 @@ static struct BurnRomInfo sfiiiRomDesc[] = {
 
 	{ "sfiii_usa.29f400.u2",			0x080000, 0xfb172a8e, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 
+#if !defined ROM_VERIFY
 	SFIII_970204_FLASH
+#endif
 };
 
 STD_ROM_PICK(sfiii)
@@ -241,7 +243,9 @@ static struct BurnRomInfo sfiiijRomDesc[] = {
 
 	{ "sfiii_japan.29f400.u2",			0x080000, 0x74205250, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	SFIII_970204_FLASH
+#endif
 };
 
 STD_ROM_PICK(sfiiij)
@@ -254,7 +258,9 @@ static struct BurnRomInfo sfiiihRomDesc[] = {
 
 	{ "sfiii_hispanic.29f400.u2",		0x080000, 0xd2b3cd48, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 
+#if !defined ROM_VERIFY
 	SFIII_970204_FLASH
+#endif
 };
 
 STD_ROM_PICK(sfiiih)
@@ -318,7 +324,9 @@ static struct BurnRomInfo sfiii2RomDesc[] = {
 
 	{ "sfiii2_usa.29f400.u2",			0x080000, 0x75dd72e0, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 					  
+#if !defined ROM_VERIFY
 	SFIII2_970930_FLASH
+#endif
 };
 
 STD_ROM_PICK(sfiii2)
@@ -331,7 +339,9 @@ static struct BurnRomInfo sfiii2jRomDesc[] = {
 
 	{ "sfiii2_japan.29f400.u2",			0x080000, 0xfaea0a3e, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	SFIII2_970930_FLASH
+#endif
 };
 
 STD_ROM_PICK(sfiii2j)
@@ -403,7 +413,9 @@ static struct BurnRomInfo sfiii3RomDesc[] = {
 
 	{ "sfiii3_euro.29f400.u2",			0x080000, 0x30bbf293, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	SFIII3_990608_FLASH
+#endif
 };
 
 STD_ROM_PICK(sfiii3)
@@ -416,7 +428,9 @@ static struct BurnRomInfo sfiii3uRomDesc[] = {
 
 	{ "sfiii3_usa.29f400.u2",			0x080000, 0xecc545c1, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	SFIII3_990608_FLASH
+#endif
 };
 
 STD_ROM_PICK(sfiii3u)
@@ -488,7 +502,9 @@ static struct BurnRomInfo sfiii3r1RomDesc[] = {
 
 	{ "sfiii3_euro.29f400.u2",			0x080000, 0x30bbf293, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	SFIII3_990512_FLASH
+#endif
 };
 
 STD_ROM_PICK(sfiii3r1)
@@ -501,7 +517,9 @@ static struct BurnRomInfo sfiii3ur1RomDesc[] = {
 
 	{ "sfiii3_usa.29f400.u2",			0x080000, 0xecc545c1, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	SFIII3_990512_FLASH
+#endif
 };
 
 STD_ROM_PICK(sfiii3ur1)
@@ -559,7 +577,9 @@ static struct BurnRomInfo jojoRomDesc[] = {
 
 	{ "jojo_usa.29f400.u2",				0x080000, 0x8d40f7be, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	JOJO_990128_FLASH
+#endif
 };
 
 STD_ROM_PICK(jojo)
@@ -572,7 +592,9 @@ static struct BurnRomInfo jojojRomDesc[] = {
 
 	{ "jojo_japan.29f400.u2",			0x080000, 0x02778f60, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	JOJO_990128_FLASH
+#endif
 };
 
 STD_ROM_PICK(jojoj)
@@ -630,7 +652,9 @@ static struct BurnRomInfo jojor1RomDesc[] = {
 
 	{ "jojo_usa.29f400.u2",				0x080000, 0x8d40f7be, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	JOJO_990108_FLASH
+#endif
 };
 
 STD_ROM_PICK(jojor1)
@@ -643,7 +667,9 @@ static struct BurnRomInfo jojojr1RomDesc[] = {
 
 	{ "jojo_japan.29f400.u2",			0x080000, 0x02778f60, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	JOJO_990108_FLASH
+#endif
 };
 
 STD_ROM_PICK(jojojr1)
@@ -701,7 +727,9 @@ static struct BurnRomInfo jojor2RomDesc[] = {
 
 	{ "jojo_usa.29f400.u2",				0x080000, 0x8d40f7be, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	JOJO_981202_FLASH
+#endif
 };
 
 STD_ROM_PICK(jojor2)
@@ -714,7 +742,9 @@ static struct BurnRomInfo jojojr2RomDesc[] = {
 
 	{ "jojo_japan.29f400.u2",			0x080000, 0x02778f60, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	JOJO_981202_FLASH
+#endif
 };
 
 STD_ROM_PICK(jojojr2)
@@ -778,7 +808,9 @@ static struct BurnRomInfo jojobaRomDesc[] = {
 
 	{ "jojoba_japan.29f400.u2",			0x080000, 0x3085478c, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 					  
+#if !defined ROM_VERIFY
 	JOJOBA_990927_FLASH
+#endif
 };
 
 STD_ROM_PICK(jojoba)
@@ -855,7 +887,9 @@ static struct BurnRomInfo jojobar1RomDesc[] = {
 
 	{ "jojoba_japan.29f400.u2",			0x080000, 0x3085478c, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 					  
+#if !defined ROM_VERIFY
 	JOJOBA_990913_FLASH
+#endif
 };
 
 STD_ROM_PICK(jojobar1)
@@ -922,7 +956,9 @@ static struct BurnRomInfo redearthRomDesc[] = {
 
 	{ "redearth_euro.29f400.u2",		0x080000, 0x02e0f336, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	REDEARTH_961121_FLASH
+#endif
 };
 
 STD_ROM_PICK(redearth)
@@ -935,7 +971,9 @@ static struct BurnRomInfo warzardRomDesc[] = {
 
 	{ "warzard_japan.29f400.u2",		0x080000, 0xf8e2f0c6, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	REDEARTH_961121_FLASH
+#endif
 };
 
 STD_ROM_PICK(warzard)
@@ -976,7 +1014,9 @@ static struct BurnRomInfo redearthr1RomDesc[] = {
 
 	{ "redearth_euro.29f400.u2",		0x080000, 0x02e0f336, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	REDEARTH_961023_FLASH
+#endif
 };
 
 STD_ROM_PICK(redearthr1)
@@ -989,7 +1029,9 @@ static struct BurnRomInfo warzardr1RomDesc[] = {
 
 	{ "warzard_japan.29f400.u2",		 0x080000, 0xf8e2f0c6, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	REDEARTH_961023_FLASH
+#endif
 };
 
 STD_ROM_PICK(warzardr1)

@@ -650,9 +650,10 @@ static struct BurnRomInfo Boblbobl2RomDesc[] = {
 	{ "a78-14.17",     0x08000, 0x7b5369a8, BRF_GRA },	     //  8
 	{ "gfx10.bin",     0x10000, 0xd370f499, BRF_GRA },	     //  9
 	{ "gfx11.bin",     0x10000, 0x76f2b367, BRF_GRA },	     //  10
-	{ "a78-20.35",     0x08000, 0x9ef863ad, BRF_GRA },	     //  11
+	{ "a78-19.34",     0x08000, 0x66e9438c, BRF_GRA },	     //  11
+	{ "a78-20.35",     0x08000, 0x9ef863ad, BRF_GRA },	     //  12
 
-	{ "a71-25.41",     0x00100, 0x2d0f8545, BRF_GRA },	     //  12	PROMs
+	{ "a71-25.41",     0x00100, 0x2d0f8545, BRF_GRA },	     //  13	PROMs
 };
 
 STD_ROM_PICK(Boblbobl2)
@@ -1892,14 +1893,15 @@ static INT32 Boblbobl2Callback()
 	nRet = BurnLoadRom(DrvTempRom + 0x10000,  6, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x20000,  7, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x28000,  8, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x50000,  9, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x60000, 10, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x68000, 11, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x40000,  9, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x50000, 10, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x60000, 11, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x68000, 12, 1); if (nRet != 0) return 1;
 	for (INT32 i = 0; i < 0x80000; i++) DrvTempRom[i] ^= 0xff;
 	GfxDecode(0x4000, 4, 8, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x80, DrvTempRom, DrvTiles);
 	
 	// Load the PROM
-	nRet = BurnLoadRom(DrvProm + 0x00000,  12, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvProm + 0x00000,  13, 1); if (nRet != 0) return 1;
 	
 	BurnFree(DrvTempRom);
 	

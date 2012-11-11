@@ -13289,24 +13289,24 @@ struct BurnDriver BurnDrvkof97pla = {
 // The King of Fighters '97 oroshi plus 2003
 
 static struct BurnRomInfo kof97oroRomDesc[] = {
-	{ "p1",           0x0100000, 0x6DCB2946, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "p21",          0x0200000, 0x6E1C4D8C, 1 | BRF_ESS | BRF_PRG }, //  1 
-	{ "p29",          0x0200000, 0x4C7C0221, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "orochi-p1.bin",  0x0100000, 0x6DCB2946, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "orochi-p21.bin", 0x0200000, 0x6E1C4D8C, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "orochi-p29.bin", 0x0200000, 0x4C7C0221, 1 | BRF_ESS | BRF_PRG }, //  2
 
-	{ "s1",           0x0020000, 0x4EE2149A, 2 | BRF_GRA },           //  3 Text layer tiles
+	{ "orochi-s1.bin",  0x0020000, 0x4EE2149A, 2 | BRF_GRA },           //  3 Text layer tiles
 
-	{ "c1",           0x1000000, 0xF13E841C, 3 | BRF_GRA },           //  4 Sprite data
-	{ "c2",           0x1000000, 0x2DB1F6D3, 3 | BRF_GRA },           //  5 
-	{ "c51",          0x0200000, 0xA90340CB, 3 | BRF_GRA },           //  6 
-	{ "c61",          0x0200000, 0x188E351A, 3 | BRF_GRA },           //  7 
-	{ "c52",          0x0200000, 0xD4EEC50A, 3 | BRF_GRA },           //  8 
-	{ "c62",          0x0200000, 0x031B1AD5, 3 | BRF_GRA },           //  9 
+	{ "orochi-c1.bin",  0x1000000, 0xF13E841C, 3 | BRF_GRA },           //  4 Sprite data
+	{ "orochi-c2.bin",  0x1000000, 0x2DB1F6D3, 3 | BRF_GRA },           //  5 
+	{ "orochi-c51.bin", 0x0200000, 0xA90340CB, 3 | BRF_GRA },           //  6 
+	{ "orochi-c61.bin", 0x0200000, 0x188E351A, 3 | BRF_GRA },           //  7 
+	{ "orochi-c52.bin", 0x0200000, 0xD4EEC50A, 3 | BRF_GRA },           //  8 
+	{ "orochi-c62.bin", 0x0200000, 0x031B1AD5, 3 | BRF_GRA },           //  9 
 
-	{ "232-m1.m1",    0x0020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "orochi-m1.bin",  0x0020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
-	{ "232-v1.v1",    0x0400000, 0x22a2b5b5, 5 | BRF_SND },           // 11 Sound data
-	{ "232-v2.v2",    0x0400000, 0x2304e744, 5 | BRF_SND },           // 12 
-	{ "232-v3.v3",    0x0400000, 0x759eb954, 5 | BRF_SND },           // 13 
+	{ "orochi-v1.bin",  0x0400000, 0x22a2b5b5, 5 | BRF_SND },           // 11 Sound data
+	{ "orochi-v2.bin",  0x0400000, 0x2304e744, 5 | BRF_SND },           // 12 
+	{ "orochi-v3.bin",  0x0400000, 0x759eb954, 5 | BRF_SND },           // 13 
 };
 
 STDROMPICKEXT(kof97oro, kof97oro, neogeo)

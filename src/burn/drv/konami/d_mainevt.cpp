@@ -963,7 +963,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // The Main Event (4 Players ver. Y)
 
 static struct BurnRomInfo mainevtRomDesc[] = {
-	{ "799c02.k11",		0x10000, 0xe2e7dbd5, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
+	{ "799y02.k11",		0x10000, 0xe2e7dbd5, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
 
 	{ "799c01.f7",		0x08000, 0x447c4c5c, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
@@ -1005,7 +1005,7 @@ struct BurnDriver BurnDrvMainevt = {
 // The Main Event (4 Players ver. F)
 
 static struct BurnRomInfo mainevtoRomDesc[] = {
-	{ "799_02.k11",		0x10000, 0xc143596b, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
+	{ "799f02.k11",		0x10000, 0xc143596b, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
 
 	{ "799c01.f7",		0x08000, 0x447c4c5c, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 

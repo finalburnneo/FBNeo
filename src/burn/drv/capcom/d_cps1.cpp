@@ -7141,8 +7141,8 @@ STD_ROM_PICK(Sf2ebbl)
 STD_ROM_FN(Sf2ebbl)
 
 static struct BurnRomInfo Sf2sttRomDesc[] = {
-	{ "12.bin",        0x040000, 0xa258b4d5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // from sf2ebbl - missing from dump (empty space on pcb near ce91e-b and ce91e-a)?
-	{ "09.bin",        0x040000, 0x59ccd474, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // from sf2ebbl - missing from dump (empty space on pcb near ce91e-b and ce91e-a)?
+	{ "10.bin",        0x040000, 0xa258b4d5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "09.bin",        0x040000, 0x59ccd474, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "ce91e-b",       0x040000, 0x0862386e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "ce91e-a",       0x040000, 0x0c83844d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	

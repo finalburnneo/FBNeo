@@ -13322,6 +13322,10 @@ static INT32 Sf2yyc2Init()
 	
 	nRet = Sf2m3Init();
 	
+	// load bootleg tiles over original tiles
+	memset(CpsGfx + 0x400000, 0, 0x80000);
+	CpsLoadTilesSf2ebbl(CpsGfx + 0x400000, 12);
+	
 	return nRet;
 }
 

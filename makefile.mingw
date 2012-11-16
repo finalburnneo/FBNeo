@@ -81,8 +81,8 @@ endif
 ifdef GCC452
 objdir	= obj/45/$(COMPILENAME)/
 endif
-ifdef GCC461
-objdir	= obj/46/$(COMPILENAME)/
+ifdef GCC471
+objdir	= obj/47/$(COMPILENAME)/
 endif
 
 srcdir	= src/
@@ -96,7 +96,7 @@ endif
 ifdef GCC452
 incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated -I$(srcdir)dep/mingw/include -I$(srcdir)dep/mingw/include/directx9 -I$(srcdir)dep/mingw/include/xaudio2
 endif
-ifdef GCC461
+ifdef GCC471
 incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated -I$(srcdir)dep/mingw/include -I$(srcdir)dep/mingw/include/directx9 -I$(srcdir)dep/mingw/include/xaudio2
 endif
 
@@ -209,7 +209,7 @@ CXXFLAGS = -pipe \
 	   -Wno-sequence-point \
 	   $(DEF) $(incdir)
 endif
-ifdef GCC461
+ifdef GCC471
 CFLAGS	 = -pipe \
 	   -std=gnu99 -O1 \
 	   -mwindows \
@@ -362,8 +362,8 @@ endif
 ifdef GCC452
 	@$(MAKE) -f makefile.mingw -s GCC452=1
 endif
-ifdef GCC461
-	@$(MAKE) -f makefile.mingw -s GCC461=1
+ifdef GCC471
+	@$(MAKE) -f makefile.mingw -s GCC471=1
 endif
 
 else
@@ -375,8 +375,8 @@ endif
 ifdef GCC452
 	@$(MAKE) -f makefile.mingw -s GCC452=1
 endif
-ifdef GCC461
-	@$(MAKE) -f makefile.mingw -s GCC461=1
+ifdef GCC471
+	@$(MAKE) -f makefile.mingw -s GCC471=1
 endif
 
 endif
@@ -626,7 +626,7 @@ endif
 ifdef GCC452
 	@windres $(DEF) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(foreach dir,$(alldir),--include-dir $(srcdir)$(dir))
 endif
-ifdef GCC461
+ifdef GCC471
 ifdef BUILD_X64_EXE
 	@windres -F pe-x86-64 $(DEF) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(foreach dir,$(alldir),--include-dir $(srcdir)$(dir))
 else

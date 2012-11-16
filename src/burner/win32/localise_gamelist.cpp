@@ -1,5 +1,5 @@
 #include "burner.h"
-#include <string>
+#include <string.h>
 
 #define MAX_LST_GAMES		25000
 #define MAX_LST_LINE_LEN	256

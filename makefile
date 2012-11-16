@@ -68,8 +68,8 @@ mingw345: FORCE
 mingw452: FORCE
 	@$(MAKE) -s -f makefile.mingw GCC452=1
 	
-mingw461: FORCE
-	@$(MAKE) -s -f makefile.mingw GCC461=1
+mingw471: FORCE
+	@$(MAKE) -s -f makefile.mingw GCC471=1
 
 sdl: FORCE
 	@$(MAKE) -s -f makefile.sdl

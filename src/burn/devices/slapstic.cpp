@@ -846,7 +846,7 @@ static INT32 alt2_kludge(UINT32 /*offset*/)
        and 3rd accesses. */
 	if (access_68k)
 	{
-		static const SekRegister SekRegs[8] = { SEK_REG_A0, SEK_REG_A1, SEK_REG_A2, SEK_REG_A3, SEK_REG_A4, SEK_REG_A5, SEK_REG_A6, SEK_REG_A7 };
+		static const SekRegister SekRegs1[8] = { SEK_REG_A0, SEK_REG_A1, SEK_REG_A2, SEK_REG_A3, SEK_REG_A4, SEK_REG_A5, SEK_REG_A6, SEK_REG_A7 };
 
 		/* first verify that the prefetched PC matches the first alternate */
 		if (MATCHES_MASK_VALUE(SekGetPC(-1) >> 1, slapstic.alt1))
@@ -858,8 +858,8 @@ static INT32 alt2_kludge(UINT32 /*offset*/)
 			{
 				/* fetch the value of the register for the second operand, and see */
 				/* if it matches the third alternate */
-				UINT32 regval = SekDbgGetRegister(SekRegs[((opcode >> 9) & 7)]) >> 1;
-				if (MATCHES_MASK_VALUE(regval, slapstic.alt3))
+				UINT32 regval = SekDbgGetRegister(SekRegs1[((opcode >> 9) & 7)]) >> 1;
+				if (MATCHES_MASK_VALUE((INT32)regval, slapstic.alt3))
 				{
 					alt_bank = (regval >> slapstic.altshift) & 3;
 					return ALTERNATE3;

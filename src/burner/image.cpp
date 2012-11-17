@@ -94,9 +94,9 @@ static inline void interpolateRowV(const double f, const INT32 y, double** row, 
 }
 
 // Resize the image to the required size using area averaging
-static INT32 img_process(IMAGE* img, UINT32 width, UINT32 height, INT32 preset, bool swapRB)
+static INT32 img_process(IMAGE* img, UINT32 width, UINT32 height, INT32 /*preset*/, bool /*swapRB*/)
 {
-	static struct { double gamma; double sharpness; INT32 min; INT32 max; } presetdata[] = {
+/*	static struct { double gamma; double sharpness; INT32 min; INT32 max; } presetdata[] = {
 		{ 1.000, 0.000, 0x000000, 0xFFFFFF },			//  0 no effects
 		{ 1.000, 1.000, 0x000000, 0xFFFFFF },			//  1 normal sharpening
 		{ 1.000, 1.250, 0x000000, 0xFFFFFF },			//  2 preview 1
@@ -107,7 +107,7 @@ static INT32 img_process(IMAGE* img, UINT32 width, UINT32 height, INT32 preset, 
 		{ 1.250, 1.000, 0x202020, 0xFFFFFF },			//  7 marquee light 1
 		{ 1.250, 1.000, 0x000000, 0xEFEFEF },			//  8 marquee dim   2
 		{ 0.750, 1.750, 0x202020, 0xFFFFFF },			//  9 marquee light 2
-	};
+	};*/
 
 	IMAGE sized_img;
 	

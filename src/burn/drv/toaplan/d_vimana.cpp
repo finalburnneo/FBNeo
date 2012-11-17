@@ -588,7 +588,7 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 }
 
 
-// Vimana
+// Vimana (World, set 1)
 
 static struct BurnRomInfo vimanaRomDesc[] = {
 	{ "tp019-7a.bin",	0x20000, 0x5a4bf73e, BRF_ESS | BRF_PRG },    //  0 CPU #0 code
@@ -613,7 +613,7 @@ STD_ROM_FN(vimana)
 
 struct BurnDriver BurnDrvVimana = {
 	"vimana", NULL, NULL, NULL, "1991",
-	"Vimana\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Vimana (World, set 1)\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, vimanaRomInfo, vimanaRomName, NULL, NULL, VimanaInputInfo, VimanaDIPInfo,
@@ -622,41 +622,7 @@ struct BurnDriver BurnDrvVimana = {
 };
 
 
-// Vimana (old set)
-
-static struct BurnRomInfo vimana1RomDesc[] = {
-	{ "vim07.bin",		0x20000, 0x1efaea84, BRF_ESS | BRF_PRG },    //  0 CPU #0 code
-	{ "vim08.bin",		0x20000, 0xe45b7def, BRF_ESS | BRF_PRG },    //  1
-
-	{ "vim6.bin",		0x20000, 0x2886878d, BRF_GRA },		     //  2 Tile data
-	{ "vim5.bin",		0x20000, 0x61a63d7a, BRF_GRA },		     //  3
-	{ "vim4.bin",		0x20000, 0xb0515768, BRF_GRA },		     //  4
-	{ "vim3.bin",		0x20000, 0x0b539131, BRF_GRA },		     //  5
-
-	{ "vim1.bin",		0x80000, 0xcdde26cd, BRF_GRA },		     //  6
-	{ "vim2.bin",		0x80000, 0x1dbfc118, BRF_GRA },		     //  7
-
-	{ "tp019-09.bpr",	0x00020, 0xbc88cced, BRF_GRA },		     //  8 Sprite attribute PROM
-	{ "tp019-10.bpr",	0x00020, 0xa1e17492, BRF_GRA },		     //  9
-
-	{ "hd647180.019",	0x08000, 0x00000000, BRF_OPT | BRF_NODUMP }, // 10 Sound HD647180 code
-};
-
-STD_ROM_PICK(vimana1)
-STD_ROM_FN(vimana1)
-
-struct BurnDriver BurnDrvVimana1 = {
-	"vimana1", "vimana", NULL, NULL, "1991",
-	"Vimana (old set)\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, vimana1RomInfo, vimana1RomName, NULL, NULL, VimanaInputInfo, VimanaDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
-	240, 320, 3, 4
-};
-
-
-// Vimana (Nova Apparate GMBH & Co)
+// Vimana (World, set 2)
 
 static struct BurnRomInfo vimananRomDesc[] = {
 	{ "tp019-07.rom",	0x20000, 0x78888ff2, BRF_ESS | BRF_PRG },    //  0 CPU #0 code
@@ -681,10 +647,44 @@ STD_ROM_FN(vimanan)
 
 struct BurnDriver BurnDrvVimanan = {
 	"vimanan", "vimana", NULL, NULL, "1991",
-	"Vimana (Nova Apparate GMBH & Co)\0", "No sound", "Toaplan (Nova Apparate GMBH & Co license)", "Toaplan BCU-2 / FCU-2 based",
+	"Vimana (World, set 2)\0", "No sound", "Toaplan (Nova Apparate GMBH & Co license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, vimananRomInfo, vimananRomName, NULL, NULL, VimanaInputInfo, VimananDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	240, 320, 3, 4
+};
+
+
+// Vimana (Japan)
+
+static struct BurnRomInfo vimanajRomDesc[] = {
+	{ "vim07.bin",		0x20000, 0x1efaea84, BRF_ESS | BRF_PRG },    //  0 CPU #0 code
+	{ "vim08.bin",		0x20000, 0xe45b7def, BRF_ESS | BRF_PRG },    //  1
+
+	{ "vim6.bin",		0x20000, 0x2886878d, BRF_GRA },		     //  2 Tile data
+	{ "vim5.bin",		0x20000, 0x61a63d7a, BRF_GRA },		     //  3
+	{ "vim4.bin",		0x20000, 0xb0515768, BRF_GRA },		     //  4
+	{ "vim3.bin",		0x20000, 0x0b539131, BRF_GRA },		     //  5
+
+	{ "vim1.bin",		0x80000, 0xcdde26cd, BRF_GRA },		     //  6
+	{ "vim2.bin",		0x80000, 0x1dbfc118, BRF_GRA },		     //  7
+
+	{ "tp019-09.bpr",	0x00020, 0xbc88cced, BRF_GRA },		     //  8 Sprite attribute PROM
+	{ "tp019-10.bpr",	0x00020, 0xa1e17492, BRF_GRA },		     //  9
+
+	{ "hd647180.019",	0x08000, 0x00000000, BRF_OPT | BRF_NODUMP }, // 10 Sound HD647180 code
+};
+
+STD_ROM_PICK(vimanaj)
+STD_ROM_FN(vimanaj)
+
+struct BurnDriver BurnDrvVimanaj = {
+	"vimanaj", "vimana", NULL, NULL, "1991",
+	"Vimana (Japan)\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	NULL, vimanajRomInfo, vimanajRomName, NULL, NULL, VimanaInputInfo, VimanaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

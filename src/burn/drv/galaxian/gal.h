@@ -137,6 +137,8 @@ void DambustrExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x);
 void Ad2083ExtendTileInfo(UINT16 *Code, INT32 *Colour, INT32 Attr, INT32);
 void Ad2083ExtendSpriteInfo(const UINT8 *Base, INT32*, INT32*, UINT8 *xFlip, UINT8*, UINT16 *Code, UINT8*);
 void RacknrolExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x);
+void BagmanmcExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32);
+void BagmanmcExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
 void HardCodeGalaxianPROM();
 void HardCodeMooncrstPROM();
 void GalaxianCalcPalette();
@@ -244,6 +246,7 @@ extern UINT8 MshuttleAY8910CS;
 extern UINT8 GmgalaxSelectedGame;
 extern UINT8 Fourin1Bank;
 extern UINT8 GameIsGmgalax;
+extern UINT8 GameIsBagmanmc;
 extern UINT8 CavelonBankSwitch;
 extern UINT8 GalVBlank;
 

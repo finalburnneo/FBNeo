@@ -75,6 +75,7 @@ UINT8 MshuttleAY8910CS;
 UINT8 GmgalaxSelectedGame;
 UINT8 Fourin1Bank;
 UINT8 GameIsGmgalax;
+UINT8 GameIsBagmanmc;
 UINT8 CavelonBankSwitch;
 UINT8 GalVBlank;
 
@@ -1570,6 +1571,7 @@ INT32 GalExit()
 	MshuttleAY8910CS = 0;
 	Fourin1Bank = 0;
 	GameIsGmgalax = 0;
+	GameIsBagmanmc = 0;
 	CavelonBankSwitch = 0;
 	DarkplntBulletColour = 0;
 	DambustrBgColour1 = 0;
@@ -1606,7 +1608,9 @@ INT32 GalFrame()
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910) nInterleave = 32;
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_FANTASTCAY8910) nInterleave = 32;
 	
-	INT32 nIrqInterleaveFire = nInterleave / 4;	
+	INT32 nIrqInterleaveFire = nInterleave / 4;
+	
+	if (GameIsBagmanmc) nIrqInterleaveFire = 0;
 
 	if (GalReset) GalDoReset();
 	

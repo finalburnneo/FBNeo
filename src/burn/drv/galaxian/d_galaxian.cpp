@@ -10222,16 +10222,30 @@ static struct BurnRomInfo BagmanmcRomDesc[] = {
 	{ "b5.bin",        0x01000, 0x0fe24b8c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "b6.bin",        0x01000, 0xf50390e7, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	
-	{ "g1-u.bin",      0x01000, 0xb63cfae4, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "g2-u.bin",      0x01000, 0xa2790089, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "g1-l.bin",      0x00800, 0x2ae6b5ab, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "g2-u.bin",      0x01000, 0xa2790089, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "g2-l.bin",      0x00800, 0x98b37397, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "g1-u.bin",      0x01000, 0xb63cfae4, BRF_GRA | GAL_ROM_TILES_SHARED },
 		
-	{ "bagmanmc.clr",  0x00020, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "bagmanmc.clr",  0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Bagmanmc)
 STD_ROM_FN(Bagmanmc)
+
+static struct BurnRomInfo Bagmanm2RomDesc[] = {
+	{ "bagmanm2.1",    0x02000, 0x53769ebe, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "bagmanm2.2",    0x02000, 0x9435bb87, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "bagmanm2.3",    0x02000, 0xf37ba7f6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "bagmanm2.9",    0x02000, 0xf1e70d9e, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "bagmanm2.7",    0x02000, 0x777e48c4, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "bagmanmc.clr",  0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Bagmanm2)
+STD_ROM_FN(Bagmanm2)
 
 static struct BurnRomInfo DkongjrmRomDesc[] = {
 	{ "a1",            0x01000, 0x299486e9, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -10410,7 +10424,7 @@ void __fastcall BagmanmcZ80Write(UINT16 a, UINT8 d)
 		case 0xa000:
 		case 0xa001:
 		case 0xa002: {
-			GalGfxBank[a - 0xa000] = d;
+			// ???
 			return;
 		}
 		
@@ -10441,6 +10455,11 @@ void __fastcall BagmanmcZ80Write(UINT16 a, UINT8 d)
 		
 		case 0xb001: {
 			GalIrqFire = d & 1;
+			return;
+		}
+		
+		case 0xb002: {
+			GalGfxBank[0] = d;
 			return;
 		}
 		
@@ -10848,34 +10867,13 @@ static INT32 BagmanmcInit()
 	INT32 nRet;
 	
 	GalPostLoadCallbackFunction = BagmanmcPostLoad;
-	GalPromRomSize = 0x20;
+	GameIsBagmanmc = 1;
 	
 	nRet = GalInit();
 	
-	GalNumChars = 512;
-	GalNumSprites = 64;
-	CharPlaneOffsets[1] = GalNumChars * 8 * 8;
-	SpritePlaneOffsets[1] = GalNumSprites * 16 * 16;
-	
-	UINT8 *TempRom = (UINT8*)BurnMalloc(0x1000);
-	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
-	nRet = BurnLoadRom(TempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1); if (nRet) return 1;
-	memcpy(GalTempRom + 0x0000, TempRom + 0x0000, 0x800);
-	memcpy(GalTempRom + 0x2000, TempRom + 0x0800, 0x800);
-	nRet = BurnLoadRom(TempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 1, 1); if (nRet) return 1;
-	memcpy(GalTempRom + 0x1000, TempRom + 0x0000, 0x800);
-	memcpy(GalTempRom + 0x2800, TempRom + 0x0800, 0x800);
-	nRet = BurnLoadRom(GalTempRom + 0x0800, GAL_ROM_OFFSET_TILES_SHARED + 2, 1); if (nRet) return 1;
-	nRet = BurnLoadRom(GalTempRom + 0x1800, GAL_ROM_OFFSET_TILES_SHARED + 3, 1); if (nRet) return 1;
-	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
-	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom + 0x2000, GalSprites);
-	BurnFree(GalTempRom);
-	BurnFree(TempRom);
-	
-	HardCodeMooncrstPROM();
-		
 	GalIrqType = GAL_IRQ_TYPE_IRQ0;
-	GalExtendTileInfoFunction = PiscesExtendTileInfo;
+	GalExtendTileInfoFunction = BagmanmcExtendTileInfo;
+	GalExtendSpriteInfoFunction = BagmanmcExtendSpriteInfo;
 	
 	return nRet;
 }
@@ -11197,10 +11195,20 @@ struct BurnDriver BurnDrvSkybase = {
 
 struct BurnDriverD BurnDrvBagmanmc = {
 	"bagmanmc", "bagman", NULL, NULL, "1982",
-	"Bagman (Moon Cresta hardware)\0", "Bad Colours", "bootleg", "Galaxian",
+	"Bagman (bootleg on Moon Cresta hardware)\0", "Bad Colours", "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, BagmanmcRomInfo, BagmanmcRomName, NULL, NULL, BagmanmcInputInfo, BagmanmcDIPInfo,
+	BagmanmcInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvBagmanm2 = {
+	"bagmanm2", "bagman", NULL, NULL, "1982",
+	"Bagman (Moon Cresta hardware)\0", "Bad Colours", "Valadon Automation", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	NULL, Bagmanm2RomInfo, Bagmanm2RomName, NULL, NULL, BagmanmcInputInfo, BagmanmcDIPInfo,
 	BagmanmcInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

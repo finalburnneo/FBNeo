@@ -45,7 +45,7 @@ static struct BurnRomInfo BagmanRomDesc[] = {
 STD_ROM_PICK(Bagman)
 STD_ROM_FN(Bagman)
 
-struct BurnDriverD BurnDrvBagman = {
+struct BurnDriver BurnDrvBagman = {
 	"bagman", NULL, NULL, NULL, "1982",
 	"Bagman\0", "Parent set for working drivers", "Valadon Automation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

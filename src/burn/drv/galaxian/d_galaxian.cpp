@@ -11195,7 +11195,7 @@ struct BurnDriver BurnDrvSkybase = {
 
 struct BurnDriverD BurnDrvBagmanmc = {
 	"bagmanmc", "bagman", NULL, NULL, "1982",
-	"Bagman (bootleg on Moon Cresta hardware)\0", "Bad Colours", "bootleg", "Galaxian",
+	"Bagman (bootleg on Moon Cresta hardware set 1)\0", "Bad Colours", "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, BagmanmcRomInfo, BagmanmcRomName, NULL, NULL, BagmanmcInputInfo, BagmanmcDIPInfo,
@@ -11205,7 +11205,7 @@ struct BurnDriverD BurnDrvBagmanmc = {
 
 struct BurnDriver BurnDrvBagmanm2 = {
 	"bagmanm2", "bagman", NULL, NULL, "1982",
-	"Bagman (Moon Cresta hardware)\0", "Bad Colours", "Valadon Automation", "Galaxian",
+	"Bagman (bootleg on Moon Cresta hardware set 2)\0", "Bad Colours", "Valadon Automation", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, Bagmanm2RomInfo, Bagmanm2RomName, NULL, NULL, BagmanmcInputInfo, BagmanmcDIPInfo,

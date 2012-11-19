@@ -1166,6 +1166,17 @@ static INT32 CpsGetROMs(bool bLoad)
 			}
 			continue;
 		}
+		if ((ri.nType & 15) == 8) {
+			if (bLoad) {
+				BurnLoadRom(CpsRomLoad + 0x01, i + 0, 2);
+				BurnLoadRom(CpsRomLoad + 0x00, i + 1, 2);
+				CpsRomLoad += ri.nLen * 2;
+				i++;
+			} else {
+				nCpsRomLen += ri.nLen;
+			}
+			continue;
+		}
 		// XOR tables
 		if ((ri.nType & 7) == 2) {
 			if (bLoad) {

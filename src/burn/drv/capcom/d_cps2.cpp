@@ -3950,6 +3950,24 @@ static struct BurnRomInfo Mvscur1RomDesc[] = {
 STD_ROM_PICK(Mvscur1)
 STD_ROM_FN(Mvscur1)
 
+static struct BurnRomInfo MvscjsingRomDesc[] = {
+	{ "mvc_ja.simm1",  0x200000, 0x6a2ef7c2, 8 | BRF_ESS | BRF_PRG },
+	{ "mvc_ja.simm2",  0x200000, 0x699d09ad, 8 | BRF_ESS | BRF_PRG },
+
+	{ "mvc64-13m.13",  0x800000, 0x8428ce69, 3 | BRF_GRA },
+	{ "mvc64-15m.15",  0x800000, 0x2e0028f4, 3 | BRF_GRA },
+	{ "mvc64-17m.17",  0x800000, 0x308ca826, 3 | BRF_GRA },
+	{ "mvc64-19m.19",  0x800000, 0x10699fe1, 3 | BRF_GRA },
+
+	{ "mvc.01",        0x020000, 0x41629e95, 4 | BRF_ESS | BRF_PRG },
+	{ "mvc.02",        0x020000, 0x963abf6b, 4 | BRF_ESS | BRF_PRG },
+
+	{ "mvc64-11m.11",  0x800000, 0x5d8819e0, 5 | BRF_SND },
+};
+
+STD_ROM_PICK(Mvscjsing)
+STD_ROM_FN(Mvscjsing)
+
 static struct BurnRomInfo NwarrRomDesc[] = {
 	{ "vphe.03f",      0x080000, 0xa922c44f, 1 | BRF_ESS | BRF_PRG },
 	{ "vphe.04c",      0x080000, 0x7312d890, 1 | BRF_ESS | BRF_PRG },
@@ -8337,6 +8355,16 @@ struct BurnDriver BurnDrvCpsMvscur1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Mvscur1RomInfo, Mvscur1RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsMvscjsing = {
+	"mvscjsing", "mvsc", NULL, NULL, "1998",
+	"Marvel vs Capcom - clash of super heroes (980123 Japan, single PCB)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, MvscjsingRomInfo, MvscjsingRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

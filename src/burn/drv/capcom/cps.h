@@ -463,3 +463,16 @@ INT32 Sf2mdtSoundExit();
 void Sf2mdtSoundFrameStart();
 void Sf2mdtSoundFrameEnd();
 INT32 Sf2mdtScanSound(INT32 nAction, INT32 *pnMin);
+
+// d_cps2.cpp
+#define CPS2_PRG_68K						1
+#define CPS2_PRG_68K_SIMM					2
+#define CPS2_PRG_68K_XOR_TABLE				3
+#define CPS2_GFX							5
+#define CPS2_GFX_SIMM						6
+#define CPS2_GFX_SPLIT4						7
+#define CPS2_GFX_SPLIT8						8
+#define CPS2_PRG_Z80						10
+#define CPS2_QSND							12
+#define CPS2_QSND_SIMM						13
+#define CPS2_QSND_SIMM_BYTESWAP				14

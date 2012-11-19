@@ -1091,7 +1091,6 @@ static UINT32 nGfxMaxSize;
 
 static INT32 CpsGetROMs(bool bLoad)
 {
-	char* pRomName;
 	struct BurnRomInfo ri;
 
 	UINT8* CpsCodeLoad = CpsCode;
@@ -1115,108 +1114,51 @@ static INT32 CpsGetROMs(bool bLoad)
 		}
 	}
 
-	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
-
+	INT32 i = 0;
+	do {
+		ri.nLen = 0;
+		ri.nType = 0;
 		BurnDrvGetRomInfo(&ri, i);
-
-		// SIMM Graphics ROMs
-		if (BurnDrvGetHardwareCode() & HARDWARE_CAPCOM_CPS2_SIMM) {
-			if ((ri.nType & BRF_GRA) && (ri.nType & 8)) {
-				if (bLoad) {
-					Cps2LoadTilesSIM(CpsGfxLoad, i);
-					CpsGfxLoad += ri.nLen * 8;
-					i += 7;
-				} else {
-					nCpsGfxLen += ri.nLen;
-				}
-				continue;
-			}
-			// SIMM QSound sample ROMs
-			if ((ri.nType & BRF_SND) && ((ri.nType & 15) == 13)) {
-				if (bLoad) {
-					BurnLoadRom(CpsQSamLoad, i, 1);
-					BurnByteswap(CpsQSamLoad, ri.nLen);
-					CpsQSamLoad += ri.nLen;
-				} else {
-					nCpsQSamLen += ri.nLen;
-				}
-				continue;
-			}
-			
-			// Different interleave SIMM QSound sample ROMs
-			if ((ri.nType & BRF_SND) && ((ri.nType & 15) == 15)) {
-				if (bLoad) {
-					BurnLoadRom(CpsQSamLoad + 1, i + 0, 2);
-					BurnLoadRom(CpsQSamLoad + 0, i + 1, 2);
-					i += 2;
-				} else {
-					nCpsQSamLen += ri.nLen;
-				}
-				continue;
-			}
-		}
-
-		// 68K program ROMs
-		if ((ri.nType & 7) == 1) {
+		
+		bprintf(PRINT_NORMAL, _T("%i, %x\n"), i, ri.nLen);
+		
+		if ((ri.nType & 0x0f) == CPS2_PRG_68K) {
 			if (bLoad) {
 				BurnLoadRom(CpsRomLoad, i, 1);
 				CpsRomLoad += ri.nLen;
 			} else {
 				nCpsRomLen += ri.nLen;
 			}
-			continue;
+			i++;
 		}
-		if ((ri.nType & 15) == 8) {
+		
+		if ((ri.nType & 0x0f) == CPS2_PRG_68K_SIMM) {
 			if (bLoad) {
-				BurnLoadRom(CpsRomLoad + 0x01, i + 0, 2);
-				BurnLoadRom(CpsRomLoad + 0x00, i + 1, 2);
+				BurnLoadRom(CpsRomLoad + 0x000001, i + 0, 2);
+				BurnLoadRom(CpsRomLoad + 0x000000, i + 1, 2);
 				CpsRomLoad += ri.nLen * 2;
-				i++;
+				i += 2;
 			} else {
 				nCpsRomLen += ri.nLen;
+				i++;
 			}
-			continue;
 		}
-		// XOR tables
-		if ((ri.nType & 7) == 2) {
+		
+		if ((ri.nType & 0x0f) == CPS2_PRG_68K_XOR_TABLE) {
 			if (bLoad) {
 				BurnLoadRom(CpsCodeLoad, i, 1);
 				CpsCodeLoad += ri.nLen;
 			} else {
 				nCpsCodeLen += ri.nLen;
 			}
-			continue;
+			i++;
 		}
-
-		// Z80 program ROMs
-		if ((ri.nType & 7) == 4) {
+		
+		if ((ri.nType & 0x0f) == CPS2_GFX) {
 			if (bLoad) {
-				BurnLoadRom(CpsZRomLoad, i, 1);
-				CpsZRomLoad += ri.nLen;
-			} else {
-				nCpsZRomLen += ri.nLen;
-			}
-			continue;
-		}
-
-		// Normal Graphics ROMs
-		if (ri.nType & BRF_GRA) {
-			if (bLoad) {
-				if ((ri.nType & 15) == 6) {
-					Cps2LoadTilesSplit4(CpsGfxLoad, i);
-					CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 16;
-					i += 15;
-				} else {
-					if ((ri.nType & 15) == 7) {
-						Cps2LoadTilesSplit8(CpsGfxLoad, i);
-						CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 32;
-						i += 31;
-					} else {
-						Cps2LoadTiles(CpsGfxLoad, i);
-						CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 4;
-						i += 3;
-					}
-				}
+				Cps2LoadTiles(CpsGfxLoad, i);
+				CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 4;
+				i += 4;
 			} else {
 				if (ri.nLen > nGfxMaxSize) {
 					nGfxMaxSize = ri.nLen;
@@ -1226,12 +1168,68 @@ static INT32 CpsGetROMs(bool bLoad)
 				}
 				nCpsGfxLen += ri.nLen;
 				nGfxNum++;
+				i++;
 			}
-			continue;			
 		}
-
-		// QSound sample ROMs
-		if (ri.nType & BRF_SND) {
+		
+		if ((ri.nType & 0x0f) == CPS2_GFX_SIMM) {
+			if (bLoad) {
+				Cps2LoadTilesSIM(CpsGfxLoad, i);
+				CpsGfxLoad += ri.nLen * 8;
+				i += 8;
+			} else {
+				nCpsGfxLen += ri.nLen;
+				i++;
+			}
+		}
+		
+		if ((ri.nType & 0x0f) == CPS2_GFX_SPLIT4) {
+			if (bLoad) {
+				Cps2LoadTilesSplit4(CpsGfxLoad, i);
+				CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 16;
+				i += 16;
+			} else {
+				if (ri.nLen > nGfxMaxSize) {
+					nGfxMaxSize = ri.nLen;
+				}
+				if (ri.nLen < nGfxMaxSize) {
+					nGfxMaxSize = ~0U;
+				}
+				nCpsGfxLen += ri.nLen;
+				nGfxNum++;
+				i++;
+			}
+		}
+		
+		if ((ri.nType & 0x0f) == CPS2_GFX_SPLIT8) {
+			if (bLoad) {
+				Cps2LoadTilesSplit8(CpsGfxLoad, i);
+				CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 32;
+				i += 32;
+			} else {
+				if (ri.nLen > nGfxMaxSize) {
+					nGfxMaxSize = ri.nLen;
+				}
+				if (ri.nLen < nGfxMaxSize) {
+					nGfxMaxSize = ~0U;
+				}
+				nCpsGfxLen += ri.nLen;
+				nGfxNum++;
+				i++;
+			}
+		}
+				
+		if ((ri.nType & 0x0f) == CPS2_PRG_Z80) {
+			if (bLoad) {
+				BurnLoadRom(CpsZRomLoad, i, 1);
+				CpsZRomLoad += ri.nLen;
+			} else {
+				nCpsZRomLen += ri.nLen;
+			}
+			i++;
+		}
+		
+		if ((ri.nType & 0x0f) == CPS2_QSND) {
 			if (bLoad) {
 				BurnLoadRom(CpsQSamLoad, i, 1);
 				BurnByteswap(CpsQSamLoad, ri.nLen);
@@ -1239,9 +1237,31 @@ static INT32 CpsGetROMs(bool bLoad)
 			} else {
 				nCpsQSamLen += ri.nLen;
 			}
-			continue;
+			i++;
 		}
-	}
+		
+		if ((ri.nType & 0x0f) == CPS2_QSND_SIMM) {
+			if (bLoad) {
+				BurnLoadRom(CpsQSamLoad, i, 1);
+				BurnByteswap(CpsQSamLoad, ri.nLen);
+				CpsQSamLoad += ri.nLen;
+			} else {
+				nCpsQSamLen += ri.nLen;
+			}
+			i++;
+		}
+		
+		if ((ri.nType & 0x0f) == CPS2_QSND_SIMM_BYTESWAP) {
+			if (bLoad) {
+				BurnLoadRom(CpsQSamLoad + 1, i + 0, 2);
+				BurnLoadRom(CpsQSamLoad + 0, i + 1, 2);
+				i += 2;
+			} else {
+				nCpsQSamLen += ri.nLen;
+				i++;
+			}
+		}
+	} while (ri.nLen);
 
 	if (bLoad) {
 #if 0

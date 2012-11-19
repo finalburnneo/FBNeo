@@ -1120,8 +1120,6 @@ static INT32 CpsGetROMs(bool bLoad)
 		ri.nType = 0;
 		BurnDrvGetRomInfo(&ri, i);
 		
-		bprintf(PRINT_NORMAL, _T("%i, %x\n"), i, ri.nLen);
-		
 		if ((ri.nType & 0x0f) == CPS2_PRG_68K) {
 			if (bLoad) {
 				BurnLoadRom(CpsRomLoad, i, 1);

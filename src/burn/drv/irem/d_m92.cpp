@@ -3413,25 +3413,25 @@ struct BurnDriver BurnDrvThndblst = {
 // Dream Soccer '94
 
 static struct BurnRomInfo dsoccr94RomDesc[] = {
-	{ "ds_h0-c.rom",	0x040000, 0xd01d3fd7, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
-	{ "ds_l0-c.rom",	0x040000, 0x8af0afe2, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ds_h1-c.rom",	0x040000, 0x6109041b, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ds_l1-c.rom",	0x040000, 0x97a01f6b, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "a3-4p_h0-c-0.ic59",	0x040000, 0xd01d3fd7, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "a3-4p_l0-c-0.ic61",	0x040000, 0x8af0afe2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a3_h1-c-0.ic60",		0x040000, 0x6109041b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "a3_l1-c-0.ic62",		0x040000, 0x97a01f6b, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "ds_sh0.rom",		0x010000, 0x23fe6ffc, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
-	{ "ds_sl0.rom",		0x010000, 0x768132e5, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "a3-sh0-c-0.ic31",	0x010000, 0x23fe6ffc, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "a3-sl0-c-0.ic37",	0x010000, 0x768132e5, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "ds_c00.rom",		0x100000, 0x2d31d418, 3 | BRF_GRA },           //  6 Background Tiles
-	{ "ds_c10.rom",		0x100000, 0x57f7bcd3, 3 | BRF_GRA },           //  7
-	{ "ds_c01.rom",		0x100000, 0x9d31a464, 3 | BRF_GRA },           //  8
-	{ "ds_c11.rom",		0x100000, 0xa372e79f, 3 | BRF_GRA },           //  9
+	{ "ds_c00.ic29",		0x100000, 0x2d31d418, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "ds_c10.ic28",		0x100000, 0x57f7bcd3, 3 | BRF_GRA },           //  7
+	{ "ds_c01.ic21",		0x100000, 0x9d31a464, 3 | BRF_GRA },           //  8
+	{ "ds_c11.ic20",		0x100000, 0xa372e79f, 3 | BRF_GRA },           //  9
 
-	{ "ds_000.rom",		0x100000, 0x366b3e29, 4 | BRF_GRA },           // 10 Sprites
-	{ "ds_010.rom",		0x100000, 0x28a4cc40, 4 | BRF_GRA },           // 11
-	{ "ds_020.rom",		0x100000, 0x5a310f7f, 4 | BRF_GRA },           // 12
-	{ "ds_030.rom",		0x100000, 0x328b1f45, 4 | BRF_GRA },           // 13
+	{ "ds_000.ic11",		0x100000, 0x366b3e29, 4 | BRF_GRA },           // 10 Sprites
+	{ "ds_010.ic12",		0x100000, 0x28a4cc40, 4 | BRF_GRA },           // 11
+	{ "ds_020.ic13",		0x100000, 0x5a310f7f, 4 | BRF_GRA },           // 12
+	{ "ds_030.ic14",		0x100000, 0x328b1f45, 4 | BRF_GRA },           // 13
 
-	{ "ds_da0.rom",		0x100000, 0x67fc52fd, 5 | BRF_SND },           // 14 Irem GA20 Samples
+	{ "ds_da0.ic24",		0x100000, 0x67fc52fd, 5 | BRF_SND },           // 14 Irem GA20 Samples
 };
 
 STD_ROM_PICK(dsoccr94)

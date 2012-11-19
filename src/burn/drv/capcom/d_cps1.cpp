@@ -3940,7 +3940,7 @@ static struct BurnRomInfo Captcommr1RomDesc[] = {
 	
 	{ "cc63b.1a",      0x000117, 0xcae8f0f9, BRF_OPT },	// b-board PLDs
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
-	{ "ccprg.11d",     0x000117, 0xe1c225c4, BRF_OPT },
+	{ "ccprg.11d",     0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
 	{ "ioc1.ic7",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
@@ -4036,7 +4036,7 @@ static struct BurnRomInfo Captcommjr1RomDesc[] = {
 	
 	{ "cc63b.1a",      0x000117, 0xcae8f0f9, BRF_OPT },	// b-board PLDs
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
-	{ "ccprg.11d",     0x000117, 0xe1c225c4, BRF_OPT },
+	{ "ccprg.11d",     0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
 	{ "ioc1.ic7",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
@@ -7141,29 +7141,34 @@ STD_ROM_PICK(Sf2ebbl)
 STD_ROM_FN(Sf2ebbl)
 
 static struct BurnRomInfo Sf2sttRomDesc[] = {
-	{ "10.bin",        0x040000, 0xa258b4d5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "09.bin",        0x040000, 0x59ccd474, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "ce91e-b",       0x040000, 0x0862386e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "ce91e-a",       0x040000, 0x0c83844d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+#if !defined ROM_VERIFY
+	{ "10.bin",         0x040000, 0xa258b4d5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "09.bin",         0x040000, 0x59ccd474, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+#else
+	{ "prg part 1.stt", 0x040000, 0x00000000, BRF_OPT | BRF_PRG | BRF_NODUMP },
+	{ "prg part 2.stt", 0x040000, 0x00000000, BRF_OPT | BRF_PRG | BRF_NODUMP },
+#endif
+	{ "ce91e-b",        0x040000, 0x0862386e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ce91e-a",        0x040000, 0x0c83844d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	
-	{ "stt-a-910913",  0x100000, 0x10a7036d, BRF_GRA | CPS1_TILES }, 
-	{ "stt-d-910913",  0x100000, 0x3580b124, BRF_GRA | CPS1_TILES }, 
-	{ "stt-b-910913",  0x100000, 0x7a09224e, BRF_GRA | CPS1_TILES }, 
-	{ "stt-e-910913",  0x100000, 0x382a612c, BRF_GRA | CPS1_TILES }, 
-	{ "stt-c-910913",  0x100000, 0x11701b8f, BRF_GRA | CPS1_TILES }, 
-	{ "stt-f-910913",  0x100000, 0x101a0b72, BRF_GRA | CPS1_TILES },
+	{ "stt-a 910913",   0x100000, 0x10a7036d, BRF_GRA | CPS1_TILES }, 
+	{ "stt-d 910913",   0x100000, 0x3580b124, BRF_GRA | CPS1_TILES }, 
+	{ "stt-b 910913",   0x100000, 0x7a09224e, BRF_GRA | CPS1_TILES }, 
+	{ "stt-e 910913",   0x100000, 0x382a612c, BRF_GRA | CPS1_TILES }, 
+	{ "stt-c 910913",   0x100000, 0x11701b8f, BRF_GRA | CPS1_TILES }, 
+	{ "stt-f 910913",   0x100000, 0x101a0b72, BRF_GRA | CPS1_TILES },
 
-	{ "stt3",          0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "3.stt",          0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
 	
-	{ "stt2",          0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "stt1",          0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "2.stt",          0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "1.stt",          0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
-	{ "stt5",          0x020000, 0xa505621e, BRF_GRA }, // extra graphics - map over normal roms to remove CAPCOM logo
-	{ "stt7",          0x020000, 0xde6271fb, BRF_GRA },
-	{ "stt6",          0x020000, 0x23775344, BRF_GRA },
-	{ "stt8",          0x020000, 0x81c9550f, BRF_GRA },
+	{ "5.stt",          0x020000, 0xa505621e, BRF_GRA }, // extra graphics - map over normal roms to remove CAPCOM logo
+	{ "7.stt",          0x020000, 0xde6271fb, BRF_GRA },
+	{ "6.stt",          0x020000, 0x23775344, BRF_GRA },
+	{ "8.stt",          0x020000, 0x81c9550f, BRF_GRA },
 	
-	{ "stt4",          0x010000, 0x13ea1c44, BRF_OPT }, // unknown
+	{ "4.stt",          0x010000, 0x13ea1c44, BRF_OPT }, // unknown
 };
 
 STD_ROM_PICK(Sf2stt)
@@ -8038,9 +8043,9 @@ STD_ROM_PICK(Sf2acc)
 STD_ROM_FN(Sf2acc)
 
 static struct BurnRomInfo Sf2accaRomDesc[] = {
-	{ "sf2ca_23-c.8f",  0x080000, 0x35f9517b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "sf2ca_22-c.7f",  0x080000, 0x99f1cca4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "sf2ca_21-c.6f",  0x080000, 0x2ab2034f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "23-c.8f",        0x080000, 0x35f9517b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "22-c.7f",        0x080000, 0x99f1cca4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "21-c.6f",        0x080000, 0x2ab2034f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "s92_01.bin",     0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
 	{ "s92_02.bin",     0x080000, 0x840289ec, BRF_GRA | CPS1_TILES },
@@ -8515,29 +8520,34 @@ STD_ROM_PICK(Sf2koryu2)
 STD_ROM_FN(Sf2koryu2)
 
 static struct BurnRomInfo Sf2amfRomDesc[] = {
-	{ "amf5",          0x080000, 0x03991fba, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "amf4",          0x080000, 0x39f15a1e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "stf2th-6.bin",  0x020000, 0x64e6e091, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // wasn't in original dump (set seems to be same as sf2th but with different graphics roms)
-	{ "stf2th-4.bin",  0x020000, 0xc95e4443, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // wasn't in original dump (set seems to be same as sf2th but with different graphics roms)
+	{ "5.amf",             0x080000, 0x03991fba, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "4.amf",             0x080000, 0x39f15a1e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+#if !defined ROM_VERIFY
+	{ "stf2th-6.bin",      0x020000, 0x64e6e091, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // wasn't in original dump (set seems to be same as sf2th but with different graphics roms)
+	{ "stf2th-4.bin",      0x020000, 0xc95e4443, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // wasn't in original dump (set seems to be same as sf2th but with different graphics roms)
+#else
+	{ "prg part 3.amf",    0x040000, 0x00000000, BRF_OPT | BRF_PRG | BRF_NODUMP | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "prg part 4.amf",    0x040000, 0x00000000, BRF_OPT | BRF_PRG | BRF_NODUMP | CPS1_68K_PROGRAM_BYTESWAP },
+#endif	
 	
-	{ "y.c.e.c-m.k.r-001", 0x100000, 0xa258de13, BRF_GRA | CPS1_TILES }, 
-	{ "y.c.e.c-m.k.r-003", 0x100000, 0xc781bf87, BRF_GRA | CPS1_TILES }, 
-	{ "y.c.e.c-m.k.r-002", 0x100000, 0x5726cab8, BRF_GRA | CPS1_TILES }, 
-	{ "y.c.e.c-d.w.c-011", 0x100000, 0xbc90c12f, BRF_GRA | CPS1_TILES }, 
-	{ "y.c.e.c-d.w.c-012", 0x100000, 0x187667cc, BRF_GRA | CPS1_TILES }, 
-	{ "y.c.e.c-d.w.c-013", 0x100000, 0x5b585071, BRF_GRA | CPS1_TILES }, 
+	{ "y.c.e.c m.k.r-001", 0x100000, 0xa258de13, BRF_GRA | CPS1_TILES }, 
+	{ "y.c.e.c m.k.r-003", 0x100000, 0xc781bf87, BRF_GRA | CPS1_TILES }, 
+	{ "y.c.e.c m.k.r-002", 0x100000, 0x5726cab8, BRF_GRA | CPS1_TILES }, 
+	{ "y.c.e.c d.w.c-011", 0x100000, 0xbc90c12f, BRF_GRA | CPS1_TILES }, 
+	{ "y.c.e.c d.w.c-012", 0x100000, 0x187667cc, BRF_GRA | CPS1_TILES }, 
+	{ "y.c.e.c d.w.c-013", 0x100000, 0x5b585071, BRF_GRA | CPS1_TILES }, 
 
-	{ "amf3",          0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "3.amf",             0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
 	
-	{ "amf2",          0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "amf1",          0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "2.amf",             0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "1.amf",             0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
-	{ "amf6",          0x020000, 0x3a85a275, BRF_GRA }, // extra graphics - map over normal roms to remove CAPCOM logo
-	{ "amf9",          0x020000, 0x9156472f, BRF_GRA },
-	{ "amf8",          0x020000, 0xecdb083b, BRF_GRA },
-	{ "amf10",         0x020000, 0x8fea8384, BRF_GRA },
+	{ "6.amf",             0x020000, 0x3a85a275, BRF_GRA }, // extra graphics - map over normal roms to remove CAPCOM logo
+	{ "9.amf",             0x020000, 0x9156472f, BRF_GRA },
+	{ "8.amf",             0x020000, 0xecdb083b, BRF_GRA },
+	{ "10.amf",            0x020000, 0x8fea8384, BRF_GRA },
 
-	{ "amf7",          0x010000, 0x13ea1c44, BRF_OPT }, // unknown
+	{ "7.amf",             0x010000, 0x13ea1c44, BRF_OPT }, // unknown
 };
 
 STD_ROM_PICK(Sf2amf)

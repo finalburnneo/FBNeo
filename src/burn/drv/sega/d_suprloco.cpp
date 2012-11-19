@@ -645,11 +645,11 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Super Locomotive
+// Super Locomotive (Rev.A)
 
 static struct BurnRomInfo suprlocoRomDesc[] = {
-	{ "ic37.bin",		0x4000, 0x57f514dd, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "ic15.bin",		0x4000, 0x5a1d2fb0, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "epr-5226a.37",	0x4000, 0x33b02368, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "epr-5227a.15",	0x4000, 0xa5e67f50, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "epr-5228.28",	0x4000, 0xa597828a, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "epr-5222.64",	0x2000, 0x0aa57207, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
@@ -672,7 +672,7 @@ STD_ROM_FN(suprloco)
 
 struct BurnDriver BurnDrvSuprloco = {
 	"suprloco", NULL, NULL, NULL, "1982",
-	"Super Locomotive\0", NULL, "Sega", "Miscellaneous",
+	"Super Locomotive (Rev.A)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, suprlocoRomInfo, suprlocoRomName, NULL, NULL, SuprlocoInputInfo, SuprlocoDIPInfo,
@@ -681,11 +681,11 @@ struct BurnDriver BurnDrvSuprloco = {
 };
 
 
-// Super Locomotive (Rev.A)
+// Super Locomotive
 
-static struct BurnRomInfo suprlocoaRomDesc[] = {
-	{ "epr-5226a.37",	0x4000, 0x33b02368, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "epr-5227a.15",	0x4000, 0xa5e67f50, 1 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo suprlocooRomDesc[] = {
+	{ "epr-5226.37",	0x4000, 0x57f514dd, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "epr-5227.15",	0x4000, 0x5a1d2fb0, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "epr-5228.28",	0x4000, 0xa597828a, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "epr-5222.64",	0x2000, 0x0aa57207, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
@@ -703,15 +703,15 @@ static struct BurnRomInfo suprlocoaRomDesc[] = {
 	{ "pr-5221.7",		0x0020, 0x89ba674f, 0 | BRF_OPT },           // 11 Unknown
 };
 
-STD_ROM_PICK(suprlocoa)
-STD_ROM_FN(suprlocoa)
+STD_ROM_PICK(suprlocoo)
+STD_ROM_FN(suprlocoo)
 
-struct BurnDriver BurnDrvSuprlocoa = {
-	"suprlocoa", "suprloco", NULL, NULL, "1982",
-	"Super Locomotive (Rev.A)\0", NULL, "Sega", "Miscellaneous",
+struct BurnDriver BurnDrvSuprlocoo = {
+	"suprlocoo", "suprloco", NULL, NULL, "1982",
+	"Super Locomotive\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
-	NULL, suprlocoaRomInfo, suprlocoaRomName, NULL, NULL, SuprlocoInputInfo, SuprlocoDIPInfo,
+	NULL, suprlocooRomInfo, suprlocooRomName, NULL, NULL, SuprlocoInputInfo, SuprlocoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	240, 224, 4, 3
 };

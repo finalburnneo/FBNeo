@@ -16078,6 +16078,21 @@ static struct BurnRomInfo TriplepRomDesc[] = {
 STD_ROM_PICK(Triplep)
 STD_ROM_FN(Triplep)
 
+static struct BurnRomInfo TriplepaRomDesc[] = {
+	{ "td4.2h",        0x01000, 0x15a6d46a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tc3.2k",        0x01000, 0xbc26d2c0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "te2.2l",        0x01000, 0x02025c10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "td1.2m",        0x01000, 0xe9abc42b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "ta6.5f",        0x00800, 0xd51cbd6f, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "ta7.5h",        0x00800, 0xf21c0059, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "ta.6e",         0x00020, 0x624f75df, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Triplepa)
+STD_ROM_FN(Triplepa)
+
 static struct BurnRomInfo KnockoutRomDesc[] = {
 	{ "knockout.2h",   0x01000, 0xeaaa848e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "knockout.2k",   0x01000, 0xbc26d2c0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -16281,10 +16296,20 @@ static INT32 MarinerInit()
 
 struct BurnDriver BurnDrvTriplep = {
 	"triplep", NULL, NULL, NULL, "1982",
-	"Triple Punch\0", NULL, "KKI", "Galaxian",
+	"Triple Punch (set 1)\0", NULL, "KKI", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, TriplepRomInfo, TriplepRomName, NULL, NULL, AmidarInputInfo, TriplepDIPInfo,
+	TriplepInit, KonamiExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvTriplepa = {
+	"triplepa", "triplep", NULL, NULL, "1982",
+	"Triple Punch (set 2)\0", NULL, "KKK", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	NULL, TriplepaRomInfo, TriplepaRomName, NULL, NULL, AmidarInputInfo, TriplepDIPInfo,
 	TriplepInit, KonamiExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

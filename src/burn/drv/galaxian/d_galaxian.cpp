@@ -11095,8 +11095,8 @@ static INT32 PorterInit()
 	
 	nRet = GalInit();
 	
-	GalExtendTileInfoFunction = MooncrstExtendTileInfo;
-	GalExtendSpriteInfoFunction = MooncrstExtendSpriteInfo;
+	GalExtendTileInfoFunction = SkybaseExtendTileInfo;
+	GalExtendSpriteInfoFunction = SkybaseExtendSpriteInfo;
 
 	return nRet;
 }

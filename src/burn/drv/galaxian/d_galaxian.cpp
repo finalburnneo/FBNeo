@@ -9270,6 +9270,21 @@ static struct BurnRomInfo Mooncrs3RomDesc[] = {
 STD_ROM_PICK(Mooncrs3)
 STD_ROM_FN(Mooncrs3)
 
+static struct BurnRomInfo Mooncrs4RomDesc[] = {
+	{ "mooncrs4.7k",   0x01000, 0x5e201041, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mooncrs4.7j",   0x01000, 0x8de07c8e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mooncrs4.7h",   0x01000, 0x888c6d61, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mooncrs4.7f",   0x01000, 0x492f9b01, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "mooncrs4.1h",   0x01000, 0xf508a7a5, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "mooncrs4.1k",   0x01000, 0x9b549313, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "prom.6l",       0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Mooncrs4)
+STD_ROM_FN(Mooncrs4)
+
 static struct BurnRomInfo FantaziaRomDesc[] = {
 	{ "f01.bin",       0x00800, 0xd3e23863, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "f02.bin",       0x00800, 0x63fa4149, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -9912,6 +9927,39 @@ static INT32 Mooncrs3Init()
 	return nRet;
 }
 
+static INT32 Mooncrs4Init()
+{
+	INT32 nRet;
+	
+	GalPostLoadCallbackFunction = MapMooncrst;
+	
+	nRet = GalInit();
+	
+	UINT8* TempRom = (UINT8*)BurnMalloc(0x1000);
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
+	BurnLoadRom(TempRom, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
+	memcpy(GalTempRom + 0x0800, TempRom + 0x0000, 0x200);
+	memcpy(GalTempRom + 0x0c00, TempRom + 0x0200, 0x200);
+	memcpy(GalTempRom + 0x0a00, TempRom + 0x0400, 0x200);
+	memcpy(GalTempRom + 0x0e00, TempRom + 0x0600, 0x200);
+	memcpy(GalTempRom + 0x0000, TempRom + 0x0800, 0x800);
+	BurnLoadRom(TempRom, GAL_ROM_OFFSET_TILES_SHARED + 1, 1);
+	memcpy(GalTempRom + 0x1800, TempRom + 0x0000, 0x200);
+	memcpy(GalTempRom + 0x1c00, TempRom + 0x0200, 0x200);
+	memcpy(GalTempRom + 0x1a00, TempRom + 0x0400, 0x200);
+	memcpy(GalTempRom + 0x1e00, TempRom + 0x0600, 0x200);
+	memcpy(GalTempRom + 0x1000, TempRom + 0x0800, 0x800);
+	BurnFree(TempRom);
+	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
+	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);	
+	BurnFree(GalTempRom);
+	
+	GalExtendTileInfoFunction = MooncrstExtendTileInfo;
+	GalExtendSpriteInfoFunction = MooncrstExtendSpriteInfo;
+	
+	return nRet;
+}
+
 static void MooncrgxInstallHandler()
 {
 	ZetOpen(0);
@@ -10031,6 +10079,16 @@ struct BurnDriver BurnDrvMooncrs3 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, Mooncrs3RomInfo, Mooncrs3RomName, NULL, NULL, OmegaInputInfo, MooncrstDIPInfo,
 	Mooncrs3Init, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvMooncrs4 = {
+	"mooncrs4", "mooncrst", NULL, NULL, "1980",
+	"Moon Crest\0", NULL, "SG-Florence", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, Mooncrs4RomInfo, Mooncrs4RomName, NULL, NULL, OmegaInputInfo, MooncrstDIPInfo,
+	Mooncrs4Init, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

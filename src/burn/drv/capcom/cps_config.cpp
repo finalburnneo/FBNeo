@@ -350,7 +350,7 @@ static const struct GfxRange mapper_QD63B_table[] = {
 	{ 0                                ,      0,      0, 0 }
 };
 
-static const struct GfxRange mapper_qtono2_table[] = {
+static const struct GfxRange mapper_TN2292_table[] = {
 	{ GFXTYPE_SCROLL1,                   0x0000, 0x0fff, 0 },
 	{ GFXTYPE_SCROLL3,                   0x1000, 0x3fff, 0 },
 	{ GFXTYPE_SPRITES | GFXTYPE_SCROLL2, 0x4000, 0x7fff, 0 },
@@ -717,12 +717,12 @@ void SetGfxMapper(INT32 MapperId)
 			return;
 		}
 		
-		case mapper_qtono2: {
+		case mapper_TN2292: {
 			GfxBankSizes[0] = 0x8000;
 			GfxBankSizes[1] = 0x8000;
 			GfxBankSizes[2] = 0x0000;
 			GfxBankSizes[3] = 0x0000;
-			GfxBankMapper = mapper_qtono2_table;
+			GfxBankMapper = mapper_TN2292_table;
 			return;
 		}
 		

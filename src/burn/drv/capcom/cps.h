@@ -133,7 +133,7 @@ INT32 Cps2LoadTilesGigaman2(UINT8 *Tile, UINT8 *pSrc);
 #define mapper_MB63B		32
 #define mapper_QD22B		33
 #define mapper_QD63B		34
-#define mapper_qtono2		35
+#define mapper_TN2292		35
 #define mapper_RCM63B		36
 #define mapper_PKB10B		37
 #define mapper_pang3		38

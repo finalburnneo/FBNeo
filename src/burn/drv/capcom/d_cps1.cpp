@@ -6975,14 +6975,14 @@ static struct BurnRomInfo Qtono2jRomDesc[] = {
 	{ "tn2-10m.3c",    0x080000, 0xa34ece70, BRF_GRA | CPS1_TILES },
 	{ "tn2-12m.5c",    0x080000, 0xe04ff2f4, BRF_GRA | CPS1_TILES },
 
-	{ "tn2j_09.12a",   0x008000, 0x6d8edcef, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "tn2j_09.12a",   0x010000, 0xe464b969, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "tn2j_18.11c",   0x020000, 0xa40bf9a7, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "tn2j_19.12c",   0x020000, 0x5b3b931e, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
 	A_BOARD_PLDS
 	
-	{ "qtono2j.1a",    0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },	// b-board PLDs
+	{ "tn2292.1a",     0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },	// b-board PLDs
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "ioc1.ic7",      0x000117, 0x0d182081, BRF_OPT },			// c-board PLDs
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
@@ -10669,7 +10669,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "punisherbz"  , CPS_B_21_DEF, mapper_PS63B , 0, NULL                },
 	{ "qad"         , CPS_B_21_BT7, mapper_QD22B , 0, NULL                },
 	{ "qadj"        , CPS_B_21_DEF, mapper_QD63B , 0, NULL                },
-	{ "qtono2j"     , CPS_B_21_DEF, mapper_qtono2, 0, NULL                },
+	{ "qtono2j"     , CPS_B_21_DEF, mapper_TN2292, 0, NULL                },
 	{ "sf2"         , CPS_B_11    , mapper_STF29 , 0, NULL                },
 	{ "sf2eb"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2ee"       , CPS_B_18    , mapper_STF29 , 0, NULL                },

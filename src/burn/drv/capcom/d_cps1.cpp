@@ -9050,13 +9050,6 @@ static struct BurnRomInfo Sf2m16RomDesc[] = {
 	{ "4.bin",        0x0020000, 0x1073b7b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "3.bin",        0x0020000, 0x924c6ce2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	
-//	{ "yyc-a-920413",  0x0100000, 0x8242621f, BRF_GRA | CPS1_TILES },
-//	{ "yyc-c-920413",  0x0100000, 0x0793a960, BRF_GRA | CPS1_TILES }, 
-//	{ "yyc-b-920413",  0x0100000, 0xb0159973, BRF_GRA | CPS1_TILES }, 
-//	{ "yyc-d-920413",  0x0100000, 0x92a8b572, BRF_GRA | CPS1_TILES },	
-//	{ "yyc-e-920413",  0x0100000, 0x61138469, BRF_GRA | CPS1_TILES },
-//	{ "yyc-f-920413",  0x0100000, 0xb800dcdb, BRF_GRA | CPS1_TILES },	
-
 	{ "tat-01.bin",   0x0080000, 0xa887f7d4, BRF_GRA | CPS1_TILES },
 	{ "tat-03.bin",   0x0080000, 0x79fa8bf0, BRF_GRA | CPS1_TILES },
 	{ "tat-05.bin",   0x0080000, 0x9390ff23, BRF_GRA | CPS1_TILES },

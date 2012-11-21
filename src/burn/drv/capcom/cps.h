@@ -46,6 +46,7 @@ INT32 CpsLoadTilesSf2stt(INT32 nStart);
 INT32 CpsLoadTilesSf2mdt(INT32 nStart);
 INT32 CpsLoadTilesSf2mdta(INT32 nStart);
 INT32 CpsLoadTilesSf2m8a(INT32 nStart);
+INT32 CpsLoadTilesSf2m16(INT32 nStart);
 INT32 CpsLoadTilesFcrash(INT32 nStart);
 INT32 CpsLoadTilesCawingbl(INT32 nStart);
 INT32 CpsLoadTilesCaptcommb(INT32 nStart);

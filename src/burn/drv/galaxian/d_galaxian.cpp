@@ -6111,6 +6111,22 @@ static struct BurnRomInfo SwarmRomDesc[] = {
 STD_ROM_PICK(Swarm)
 STD_ROM_FN(Swarm)
 
+static struct BurnRomInfo AstriansRomDesc[] = {
+	{ "astrians.7h",   0x00800, 0x21eba3d0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "astrians.7j",   0x00800, 0xf3a436cd, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "astrians.7k",   0x00800, 0x2915e38b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "astrians.7l",   0x00800, 0x2db56b2f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "astrians.7m",   0x00800, 0x41075efb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "astrians.1h",   0x00800, 0x77c074b4, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "astrians.1k",   0x00800, 0xc30fcc46, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "prom.6l",       0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Astrians)
+STD_ROM_FN(Astrians)
+
 static struct BurnRomInfo ZerotimeRomDesc[] = {
 	{ "zt-p01c.016",   0x00800, 0x90a2bc61, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "zt-2.016",      0x00800, 0xa433067e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -6307,6 +6323,16 @@ struct BurnDriver BurnDrvSwarm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, SwarmRomInfo, SwarmRomName, NULL, NULL, GalaxianInputInfo, SwarmDIPInfo,
+	GalInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvAstrians = {
+	"astrians", "galaxian", NULL, NULL, "1979",
+	"Astrians (clone of Swarm)\0", NULL, "BGV Ltd", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, AstriansRomInfo, AstriansRomName, NULL, NULL, GalaxianInputInfo, SwarmDIPInfo,
 	GalInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

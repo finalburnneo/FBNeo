@@ -3489,6 +3489,41 @@ static struct BurnDIPInfo GalaxianDIPList[]=
 
 STDDIPINFO(Galaxian)
 
+static struct BurnDIPInfo GhostmunDIPList[]=
+{
+	// Default Values
+	{0x0c, 0xff, 0xff, 0x00, NULL                     },
+	{0x0d, 0xff, 0xff, 0x40, NULL                     },
+	{0x0e, 0xff, 0xff, 0x06, NULL                     },
+	
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Cabinet"                },
+	{0x0c, 0x01, 0x20, 0x00, "Upright"                },
+	{0x0c, 0x01, 0x20, 0x20, "Cocktail"               },
+		
+	// Dip 2
+	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
+	{0x0d, 0x01, 0xc0, 0x40, "10000"                  },
+	{0x0d, 0x01, 0xc0, 0x80, "15000"                  },
+	{0x0d, 0x01, 0xc0, 0xc0, "20000"                  },
+	{0x0d, 0x01, 0xc0, 0x00, "None"                   },
+	
+	// Dip 3
+	{0   , 0xfe, 0   , 4   , "Coinage"                },
+	{0x0e, 0x01, 0x03, 0x00, "2 Coins 1 Play"         },
+	{0x0e, 0x01, 0x03, 0x02, "1 Coin  1 Play"         },
+	{0x0e, 0x01, 0x03, 0x01, "1 Coin  2 Plays"        },
+	{0x0e, 0x01, 0x03, 0x03, "Freeplay"               },
+
+	{0   , 0xfe, 0   , 4   , "Lives"                  },
+	{0x0e, 0x01, 0x0c, 0x0c, "1"                      },
+	{0x0e, 0x01, 0x0c, 0x08, "2"                      },
+	{0x0e, 0x01, 0x0c, 0x04, "3"                      },
+	{0x0e, 0x01, 0x0c, 0x00, "4"                      },
+};
+
+STDDIPINFO(Ghostmun)
+
 static struct BurnDIPInfo GmgalaxDIPList[]=
 {
 	// Default Values
@@ -8071,6 +8106,24 @@ static struct BurnRomInfo PacmanblaRomDesc[] = {
 STD_ROM_PICK(Pacmanbla)
 STD_ROM_FN(Pacmanbla)
 
+static struct BurnRomInfo GhostmunRomDesc[] = {
+	{ "pac1.bin",      0x01000, 0x19338c70, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pac2.bin",      0x01000, 0x18db074d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pac3.bin",      0x01000, 0xabb98b1d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pac4.bin",      0x01000, 0x2403c78e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "blpac12b",      0x00800, 0xb2ed320b, BRF_GRA | GAL_ROM_TILES_CHARS },
+	{ "blpac11b",      0x00800, 0xab88b2c4, BRF_GRA | GAL_ROM_TILES_CHARS },
+	
+	{ "blpac10b",      0x00800, 0x44a45b72, BRF_GRA | GAL_ROM_TILES_SPRITES },
+	{ "blpac9b",       0x00800, 0xfa84659f, BRF_GRA | GAL_ROM_TILES_SPRITES },
+	
+	{ "ghostmun.clr",  0x00020, 0x499f4440, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Ghostmun)
+STD_ROM_FN(Ghostmun)
+
 static struct BurnRomInfo Phoenxp2RomDesc[] = {
 	{ "1",             0x00800, 0xf6dcfd51, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "2",             0x00800, 0xde951936, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -8109,6 +8162,34 @@ static struct BurnRomInfo AtlantisbRomDesc[] = {
 
 STD_ROM_PICK(Atlantisb)
 STD_ROM_FN(Atlantisb)
+
+UINT8 __fastcall GhostmunZ80Read(UINT16 a)
+{
+	switch (a) {
+		case 0x6000: {
+			return GalInput[0] | GalDip[0];
+		}
+		
+		case 0x6800: {
+			return GalInput[1] | GalDip[1];
+		}
+		
+		case 0x7000: {
+			return GalInput[2] | GalDip[2];
+		}
+		
+		case 0x7800: {
+			// watchdog read
+			return 0xff;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Z80 #1 Read => %04X\n"), a);
+		}
+	}
+
+	return 0x00;
+}
 
 static INT32 PacmanblInit()
 {
@@ -8160,6 +8241,25 @@ static INT32 PacmanblaInit()
 	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom + 0x1000, GalSprites);
 	BurnFree(GalTempRom);
 	BurnFree(TempRom);
+	
+	return nRet;
+}
+
+static void GhostmunInstallHandler()
+{
+	ZetOpen(0);
+	ZetSetReadHandler(GhostmunZ80Read);
+	ZetClose();
+}
+
+static INT32 GhostmunInit()
+{
+	GalPostLoadCallbackFunction = GhostmunInstallHandler;
+	
+	INT32 nRet = GalInit();
+	
+	GalSpriteClipStart = 7;
+	GalSpriteClipEnd = 246;
 	
 	return nRet;
 }
@@ -8220,6 +8320,16 @@ struct BurnDriver BurnDrvPacmanbla = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, PacmanblaRomInfo, PacmanblaRomName, NULL, NULL, PacmanblInputInfo, PacmanblDIPInfo,
 	PacmanblaInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGhostmun = {
+	"ghostmun", "puckman", NULL, NULL, "1981",
+	"Ghost Muncher\0", NULL, "Leisure and Allied", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	NULL, GhostmunRomInfo, GhostmunRomName, NULL, NULL, StreakngInputInfo, GhostmunDIPInfo,
+	GhostmunInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

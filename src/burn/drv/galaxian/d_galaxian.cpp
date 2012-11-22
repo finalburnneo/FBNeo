@@ -13193,6 +13193,24 @@ static struct BurnRomInfo FroggRomDesc[] = {
 STD_ROM_PICK(Frogg)
 STD_ROM_FN(Frogg)
 
+static struct BurnRomInfo FroggrsRomDesc[] = {
+	{ "frog4.bin",     0x01000, 0x4d563992, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "frog5.bin",     0x01000, 0xd8b8c06e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "frog6.bin",     0x01000, 0xb55a1cb5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "frogger.608",   0x00800, 0xe8ab0256, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "frogger.609",   0x00800, 0x7380a48f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "frog3.bin",     0x00800, 0x837c16ab, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	
+	{ "frogger.607",   0x00800, 0x05f7d883, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "frogger.606",   0x00800, 0xf524ee30, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "pr-91.6l",      0x00020, 0x413703bf, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Froggrs)
+STD_ROM_FN(Froggrs)
+
 void __fastcall FroggermcZ80Write(UINT16 a, UINT8 d)
 {
 	if (a >= 0x9800 && a <= 0x98ff) {
@@ -13491,6 +13509,39 @@ static INT32 FroggInit()
 	return nRet;
 }
 
+static void FroggrsPostLoad()
+{
+	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
+	BurnLoadRom(GalTempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
+	BurnLoadRom(GalTempRom + 0x0800, GAL_ROM_OFFSET_TILES_SHARED + 1, 1);
+	for (UINT32 Offset = 0x0800; Offset < 0x1000; Offset++) GalTempRom[Offset] = BITSWAP08(GalTempRom[Offset], 7, 6, 5, 4, 3, 2, 0, 1);
+	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
+	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
+	BurnFree(GalTempRom);
+	
+	MapTheend();
+}
+
+static INT32 FroggrsInit()
+{
+	INT32 nRet;
+	
+	GalPostLoadCallbackFunction = FroggrsPostLoad;
+	GalSoundType = GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910;
+	
+	nRet = GalInit();	
+	FroggerSoundInit();
+	
+	KonamiPPIInit();
+	
+	GalRenderBackgroundFunction = FroggerDrawBackground;
+	GalDrawBulletsFunction = NULL;
+	GalExtendTileInfoFunction = FroggerExtendTileInfo;
+	GalExtendSpriteInfoFunction = FroggerExtendSpriteInfo;
+	
+	return nRet;
+}
+
 struct BurnDriver BurnDrvFrogger = {
 	"frogger", NULL, NULL, NULL, "1981",
 	"Frogger\0", NULL, "Konami", "Galaxian",
@@ -13558,6 +13609,16 @@ struct BurnDriver BurnDrvFrogg = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MISC, 0,
 	NULL, FroggRomInfo, FroggRomName, NULL, NULL, FroggInputInfo, FroggDIPInfo,
 	FroggInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvFroggrs = {
+	"froggrs", "frogger", NULL, NULL, "1981",
+	"Frogger (Scramble hardware)\0", NULL, "Coin Music", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MISC, 0,
+	NULL, FroggrsRomInfo, FroggrsRomName, NULL, NULL, FroggerInputInfo, FroggerDIPInfo,
+	FroggrsInit, KonamiExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

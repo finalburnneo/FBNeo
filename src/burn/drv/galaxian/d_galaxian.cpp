@@ -14192,6 +14192,28 @@ static struct BurnRomInfo ExplorerRomDesc[] = {
 STD_ROM_PICK(Explorer)
 STD_ROM_FN(Explorer)
 
+static struct BurnRomInfo BomberRomDesc[] = {
+	{ "bomber.3l",     0x00800, 0x8c30c7c3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "bomber.3k",     0x00800, 0x1fca370c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "bomber.3h",     0x00800, 0x8a714167, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "bomber.3f",     0x00800, 0xdd380a22, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "bomber.3e",     0x00800, 0x92980e72, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "bomber.3d",     0x00800, 0x9fd96374, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "bomber.3c",     0x00800, 0x88ac07a0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "bomber.3a",     0x00800, 0x75232e09, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "bomber.8k",     0x00800, 0x97ba15e8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "bomber.8l",     0x00800, 0x6510761d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+
+	{ "bomber.4k",     0x00800, 0x4708845b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "bomber.4l",     0x00800, 0x11fd2887, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "c01s.6e",       0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Bomber)
+STD_ROM_FN(Bomber)
+
 static struct BurnRomInfo AtlantisRomDesc[] = {
 	{ "2c",            0x00800, 0x0e485b9a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "2e",            0x00800, 0xc1640513, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -15935,6 +15957,16 @@ struct BurnDriver BurnDrvExplorer = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, ExplorerRomInfo, ExplorerRomName, NULL, NULL, ExplorerInputInfo, ExplorerDIPInfo,
 	ExplorerInit, KonamiExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvBomber = {
+	"bomber", "scramble", NULL, NULL, "1981",
+	"Bomber (bootleg of Scramble)\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
+	NULL, BomberRomInfo, BomberRomName, NULL, NULL, ScrambleInputInfo, ScrambleDIPInfo,
+	ScrambleInit, KonamiExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

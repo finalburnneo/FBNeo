@@ -4210,13 +4210,46 @@ static struct BurnRomInfo CawingblRomDesc[] = {
 	{ "caw7.bin",      0x080000, 0xa045c689, BRF_GRA | CPS1_TILES },
 	{ "caw6.bin",      0x080000, 0x61192f7c, BRF_GRA | CPS1_TILES },	
 	{ "caw5.bin",      0x080000, 0x30dd78db, BRF_GRA | CPS1_TILES },
-	{ "caw4.bin",      0x080000, 0x4937fc41, BRF_GRA | CPS1_TILES },	
+	{ "caw4.bin",      0x080000, 0x4937fc41, BRF_GRA | CPS1_TILES },
 
 	{ "caw3.bin",      0x020000, 0xffe16cdc, BRF_PRG | CPS1_Z80_PROGRAM },
 };
 
 STD_ROM_PICK(Cawingbl)
 STD_ROM_FN(Cawingbl)
+
+static struct BurnRomInfo Cawingb2RomDesc[] = {
+	{ "8.8",      	   0x020000, 0xf655708c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	
+	{ "4.4",      	   0x020000, 0xa02fb5aa, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	
+	{ "7.7",      	   0x020000, 0x8c6c7430, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	// caw2
+	{ "3.3",      	   0x020000, 0xf585bf2c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	// caw1
+	{ "6.6",      	   0x020000, 0x5fda906e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	// caw2
+	{ "2.2",      	   0x020000, 0x736c1835, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	// caw1	
+	{ "5.5",      	   0x020000, 0x76458083, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	// caw2	
+	{ "1.1",      	   0x020000, 0xd3523f34, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	// caw1
+	
+	{ "17.17",         0x020000, 0x0b538062, BRF_GRA | CPS1_TILES },   //caw7
+	{ "19.19",         0x020000, 0x3ad62311, BRF_GRA | CPS1_TILES },   //caw6
+	{ "21.21",         0x020000, 0x1b872a98, BRF_GRA | CPS1_TILES },   //caw5
+	{ "23.23",         0x020000, 0xad49eecd, BRF_GRA | CPS1_TILES },	
+	{ "9.9",           0x020000, 0x8cd4df5b, BRF_GRA | CPS1_TILES },   //caw7
+	{ "11.11",         0x020000, 0xbf14418a, BRF_GRA | CPS1_TILES },   //caw6
+	{ "13.13",         0x020000, 0xcef1aab8, BRF_GRA | CPS1_TILES },   //caw5
+	{ "15.15",         0x020000, 0x397725dc, BRF_GRA | CPS1_TILES },   //caw4
+	{ "18.18",         0x020000, 0x9b14f7ed, BRF_GRA | CPS1_TILES },   //caw7
+	{ "20.20",         0x020000, 0x59bcc1bb, BRF_GRA | CPS1_TILES },   //caw6
+	{ "22.22",         0x020000, 0x23dc647a, BRF_GRA | CPS1_TILES },   //caw5
+	{ "24.24",         0x020000, 0xeda9fa6b, BRF_GRA | CPS1_TILES },   //caw4
+	{ "10.10",         0x020000, 0x17174249, BRF_GRA | CPS1_TILES },   //caw7	
+	{ "12.12",         0x020000, 0x490440b2, BRF_GRA | CPS1_TILES },   //caw6	
+	{ "14.14",         0x020000, 0x344a8270, BRF_GRA | CPS1_TILES },   //caw5	
+	{ "16.16",         0x020000, 0xb991ad91, BRF_GRA | CPS1_TILES },   //caw4
+
+	{ "5.a",           0x020000, 0xffe16cdc, BRF_PRG | CPS1_Z80_PROGRAM },
+};
+
+STD_ROM_PICK(Cawingb2)
+STD_ROM_FN(Cawingb2)
 
 static struct BurnRomInfo Cps1demoRomDesc[] = {
 	{ "cd30-36.bin",   0x020000, 0x5eb617d6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -10613,6 +10646,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "cawingu"     , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cawingj"     , CPS_B_16    , mapper_CA22B , 0, NULL                },
 	{ "cawingbl"    , CPS_B_16    , mapper_CA24B , 0, NULL                },
+	{ "cawingb2"    , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cworld2j"    , CPS_B_21_BT6, mapper_Q522B , 0, NULL                },
 	{ "dino"        , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinou"       , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
@@ -11298,6 +11332,42 @@ static INT32 CawingblInit()
 	Cps1ObjGetCallbackFunction = WofhObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesCawingbl;
+	CpsRunInitCallbackFunction = FcrashSoundInit;
+	CpsRunResetCallbackFunction = FcrashSoundReset;
+	CpsRunExitCallbackFunction = FcrashSoundExit;
+	CpsRunFrameStartCallbackFunction = FcrashSoundFrameStart;
+	CpsRunFrameEndCallbackFunction = FcrashSoundFrameEnd;
+	CpsMemScanCallbackFunction = FcrashScanSound;
+	
+	nRet = DrvInit();
+	
+	SekOpen(0);
+	SekMapHandler(1, 0x882000, 0x882fff, SM_READ | SM_WRITE);
+	SekSetReadByteHandler(1, CawingblInputReadByte);
+	SekSetReadWordHandler(1, CawingblInputReadWord);
+	SekSetWriteByteHandler(1, CawingblInputWriteByte);
+	SekSetWriteWordHandler(1, CawingblInputWriteWord);
+	SekClose();
+	
+	Cps1VBlankIRQLine = 6;
+	
+	return 0;
+}
+
+static INT32 Cawingb2Init()
+{
+	INT32 nRet = 0;
+	
+	Cps1DisablePSnd = 1;
+	bCpsUpdatePalEveryFrame = 1;
+	
+	CpsLayer1XOffs = -63;
+	CpsLayer2XOffs = -62;
+	CpsLayer3XOffs = -65;
+
+	Cps1ObjGetCallbackFunction = WofhObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesFcrash;
 	CpsRunInitCallbackFunction = FcrashSoundInit;
 	CpsRunResetCallbackFunction = FcrashSoundReset;
 	CpsRunExitCallbackFunction = FcrashSoundExit;
@@ -14172,11 +14242,21 @@ struct BurnDriver BurnDrvCpsCawingj = {
 
 struct BurnDriver BurnDrvCpsCawingbl = {
 	"cawingbl", "cawing", NULL, NULL, "1990",
-	"Carrier Air Wing (bootleg (with 2xYM2203 + 2xMSM5205), U.S. navy 901012 etc)\0", NULL, "bootleg", "CPS1",
+	"Carrier Air Wing (bootleg set 1 (with 2xYM2203 + 2xMSM5205), U.S. navy 901012 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_HORSHOOT, 0,
 	NULL, CawingblRomInfo, CawingblRomName, NULL, NULL, CawingInputInfo, CawingDIPInfo,
 	CawingblInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsCawingb2 = {
+	"cawingb2", "cawing", NULL, NULL, "1990",
+	"Carrier Air Wing (bootleg set 2 (with 2xYM2203 + 2xMSM5205), U.S. navy 901012 etc)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_HORSHOOT, 0,
+	NULL, Cawingb2RomInfo, Cawingb2RomName, NULL, NULL, CawingInputInfo, CawingDIPInfo,
+	Cawingb2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

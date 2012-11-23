@@ -477,3 +477,9 @@ INT32 Sf2mdtScanSound(INT32 nAction, INT32 *pnMin);
 #define CPS2_QSND							12
 #define CPS2_QSND_SIMM						13
 #define CPS2_QSND_SIMM_BYTESWAP				14
+
+extern INT32 Cps2Volume;
+extern UINT16 Cps2VolumeStates[40];
+extern INT32 Cps2DisableDigitalVolume;
+extern UINT8 Cps2VolUp;
+extern UINT8 Cps2VolDwn;

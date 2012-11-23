@@ -389,7 +389,16 @@ INT32 Cps2Frame()
 	SekSetCyclesScanline(nCpsCycles / nCpsNumScanlines);
 
 	CpsRwGetInp();											// Update the input port values
-
+	
+	// Check the volumes every 5 frames or so
+	if (GetCurrentFrame() % 5 == 0) {
+		if (Cps2VolUp) Cps2Volume++;
+		if (Cps2VolDwn) Cps2Volume--;
+		
+		if (Cps2Volume > 39) Cps2Volume = 39;
+		if (Cps2Volume < 0) Cps2Volume = 0;
+	}
+	
 	nDisplayEnd = nCpsCycles * (nFirstLine + 224) / nCpsNumScanlines;	// Account for VBlank
 
 	nInterrupt = 0;

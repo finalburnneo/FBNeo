@@ -134,12 +134,13 @@ static UINT8 CpsReadPort(const UINT32 ia)
 			if (Ssf2tb) {
 				d = 0x20;
 			} else {
-				d = 0xe0;
+				d = Cps2VolumeStates[Cps2Volume] >> 8;
+				if (Cps2DisableDigitalVolume) d = 0xd0;
 			}
 			return d;
 		}
 		if (ia == 0x031) {
-			d = 0x21;
+			d = Cps2VolumeStates[Cps2Volume] & 0xff;
 			return d;
 		}
 

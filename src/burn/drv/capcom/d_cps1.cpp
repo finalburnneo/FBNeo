@@ -13699,13 +13699,15 @@ static void SgyxzCallback()
 		memcpy(pTemp           , CpsRom + 0x40000, 0x40000);
 		memcpy(CpsRom + 0x40000, CpsRom + 0x80000, 0x40000);
 		memcpy(CpsRom + 0x80000, pTemp           , 0x40000);
+		BurnFree(pTemp);
 	}
-	
-	BurnFree(pTemp);
-	
-	// This set has more protection?
-	*((UINT16*)(CpsRom + 0x708be)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(CpsRom + 0x708c0)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
+}
+
+static void __fastcall SgyxzSpriteRamWriteLong(UINT32 a, UINT32 d)
+{
+	if (d == 0xffffffff) d = 0xefffefff; // Strange protection or glitch???
+
+	*((UINT32*)(CpsRam90 + (a & 0x3fffc))) = (d << 16) | (d >> 16);
 }
 
 static INT32 SgyxzInit()
@@ -13737,8 +13739,10 @@ static INT32 SgyxzInit()
 	SekMapHandler(5, 0xff0000, 0xffffff, SM_WRITE);
 	SekSetWriteByteHandler(5, WofbFFWriteByte);
 	SekSetWriteWordHandler(5, WofbFFWriteWord);
+	SekMapHandler(6, 0x900000, 0x9007FF, SM_WRITE);
+	SekSetWriteLongHandler(6, SgyxzSpriteRamWriteLong);
 	SekClose();
-	
+
 	return nRet;
 }
 

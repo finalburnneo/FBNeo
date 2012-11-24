@@ -13759,22 +13759,9 @@ static INT32 Wof3jsInit()
 	return TwelveMhzInit();
 }
 
-static void Wof3jsaCallback()
-{
-	UINT8 *pTemp = (UINT8*)BurnMalloc(0x40000);
-	
-	if (pTemp) {
-		memcpy(pTemp           , CpsRom + 0x40000, 0x40000);
-		memcpy(CpsRom + 0x40000, CpsRom + 0x80000, 0x40000);
-		memcpy(CpsRom + 0x80000, pTemp           , 0x40000);
-	}
-	
-	BurnFree(pTemp);
-}
-
 static INT32 Wof3jsaInit()
 {
-	AmendProgRomCallback = Wof3jsaCallback;
+	AmendProgRomCallback = SgyxzCallback;
 
 	WofhProtValue = 0x50;
 

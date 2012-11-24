@@ -12715,23 +12715,6 @@ static INT32 Sf2thInit()
 static void Sf2yycCallback()
 {
 	memcpy(CpsRom + 0x140000, CpsRom + 0x100000, 0x40000);
-
-	// What exactly do these do?
-	*((UINT16*)(CpsRom + 0xe55be)) = 0x4e71;
-	*((UINT16*)(CpsRom + 0xe55ca)) = 0x4e71;
-	*((UINT16*)(CpsRom + 0xe55cc)) = 0x4e71;
-	*((UINT16*)(CpsRom + 0xe55ce)) = 0x4e71;
-	*((UINT16*)(CpsRom + 0xe55d0)) = 0x4e71;
-	*((UINT16*)(CpsRom + 0xe55d2)) = 0x4e71;
-	*((UINT16*)(CpsRom + 0xe55d4)) = 0x4e71;
-	*((UINT16*)(CpsRom + 0xe55d6)) = 0x4e71;
-	*((UINT16*)(CpsRom + 0xe55d8)) = 0x4e71;
-	*((UINT16*)(CpsRom + 0xe55da)) = 0x4e71;
-	*((UINT16*)(CpsRom + 0xe55de)) = 0x4e71;
-	*((UINT16*)(CpsRom + 0xe55e2)) = 0x4e71;
-	*((UINT16*)(CpsRom + 0xe55e4)) = 0x4e71;
-	*((UINT16*)(CpsRom + 0xe55e6)) = 0x4e71;
-	*((UINT16*)(CpsRom + 0xe55e8)) = 0x4e71;
 }
 
 static INT32 Sf2yycInit()

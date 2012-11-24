@@ -3099,6 +3099,51 @@ static struct BurnDIPInfo Sf2jDIPList[]=
 
 STDDIPINFO(Sf2j)
 
+static struct BurnDIPInfo Sf2m2DIPList[]=
+{
+	// Defaults
+	{0x1b, 0xff, 0xff, 0x00, NULL                     },
+	{0x1c, 0xff, 0xff, 0x13, NULL                     }, // 0x10 high to boot
+	{0x1d, 0xff, 0xff, 0x60, NULL                     },
+	
+	// Dip A
+	CPS1_COINAGE_1(0x1b)
+
+	{0   , 0xfe, 0   , 2   , "2C to Start, 1 to Cont" },
+	{0x1b, 0x01, 0x40, 0x00, "Off"                    },
+	{0x1b, 0x01, 0x40, 0x40, "On"                     },
+
+	// Dip B
+	CPS1_DIFFICULTY_1(0x1c)
+
+	// Dip C
+	{0   , 0xfe, 0   , 2   , "Free Play"              },
+        {0x1d, 0x01, 0x04, 0x00, "Off"                    },
+        {0x1d, 0x01, 0x04, 0x04, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Freeze"                 },
+        {0x1d, 0x01, 0x08, 0x00, "Off"                    },
+        {0x1d, 0x01, 0x08, 0x08, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
+        {0x1d, 0x01, 0x10, 0x00, "Off"                    },
+        {0x1d, 0x01, 0x10, 0x10, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
+        {0x1d, 0x01, 0x20, 0x00, "Off"                    },
+        {0x1d, 0x01, 0x20, 0x20, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
+        {0x1d, 0x01, 0x40, 0x00, "Off"                    },
+        {0x1d, 0x01, 0x40, 0x40, "On"                     },
+        
+        {0   , 0xfe, 0   , 2   , "Game Mode"              },
+	{0x1d, 0x01, 0x80, 0x00, "Game"                   },
+	{0x1d, 0x01, 0x80, 0x80, "Test"                   },
+};
+
+STDDIPINFO(Sf2m2)
+
 static struct BurnDIPInfo SlammastDIPList[]=
 {
 	// Defaults
@@ -13184,17 +13229,9 @@ static INT32 Sf2m1Init()
 	return nRet;
 }
 
-static void Sf2m2Callback()
-{
-	*((UINT16*)(CpsRom + 0xC0680)) = 0x4E71;
-	*((UINT16*)(CpsRom + 0xC0682)) = 0x4E71;
-	*((UINT16*)(CpsRom + 0xC0684)) = 0x4E71;
-}
-
 static INT32 Sf2m2Init()
 {
 	Cps1LockSpriteList910000 = 1;
-	AmendProgRomCallback = Sf2m2Callback;
 	
 	CpsLayer1XOffs = -12;
 	CpsLayer2XOffs = -14;
@@ -15625,7 +15662,7 @@ struct BurnDriver BurnDrvCpsSf2m2 = {
 	"Street Fighter II' - champion edition (M2 bootleg (Mega Co), 920313 etc)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2m2RomInfo, Sf2m2RomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
+	NULL, Sf2m2RomInfo, Sf2m2RomName, NULL, NULL, Sf2yycInputInfo, Sf2m2DIPInfo,
 	Sf2m2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -15705,7 +15742,7 @@ struct BurnDriver BurnDrvCpsSf2m9 = {
 	"Street Fighter II' - champion edition (M9 bootleg (Mega Co), 920313 etc)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2m9RomInfo, Sf2m9RomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
+	NULL, Sf2m9RomInfo, Sf2m9RomName, NULL, NULL, Sf2yycInputInfo, Sf2m2DIPInfo,
 	Sf2m2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

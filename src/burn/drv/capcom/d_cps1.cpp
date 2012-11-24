@@ -11524,18 +11524,25 @@ static INT32 DinopicInit()
 	return nRet;
 }
 
-static void DinohCallback()
+UINT8 __fastcall DinohuntQSharedRamRead(UINT32 /*a*/)
 {
-	// Patch Q-Sound Test ???
-	*((UINT16*)(CpsRom + 0xaacf4)) = 0x4e71;
+	return 0xff;
 }
 
 static INT32 DinohInit()
 {
+	INT32 nRet = 0;
+
 	Cps1QsHack = 1;
-	AmendProgRomCallback = DinohCallback;
 	
-	return TwelveMhzInit();
+	nRet = TwelveMhzInit();
+
+	SekOpen(0);
+	SekMapHandler(1, 0xf18000, 0xf19fff, SM_READ);
+	SekSetReadByteHandler(1, DinohuntQSharedRamRead);
+	SekClose();
+
+	return nRet;
 }
 
 static void DinotCallback()
@@ -11550,18 +11557,24 @@ static void DinotCallback()
 		memcpy(CpsRom + 0x100000, TempRom + 0x180000, 0x80000);
 		BurnFree(TempRom);
 	}
-	
-	// Patch Q-Sound Test ???
-	*((UINT16*)(CpsRom + 0xaacf4)) = 0x4e71;
 }
 
 static INT32 DinotInit()
 {
+	INT32 nRet = 0;
+
 	Cps1QsHack = 1;
 	AmendProgRomCallback = DinotCallback;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
 	
-	return TwelveMhzInit();
+	nRet = TwelveMhzInit();
+
+	SekOpen(0);
+	SekMapHandler(1, 0xf18000, 0xf19fff, SM_READ);
+	SekSetReadByteHandler(1, DinohuntQSharedRamRead);
+	SekClose();
+
+	return nRet;
 }
 
 static INT32 DinotpicInit()
@@ -11588,11 +11601,6 @@ static INT32 DinotpicInit()
 	SekClose();
 	
 	return nRet;
-}
-
-UINT8 __fastcall DinohuntQSharedRamRead(UINT32 /*a*/)
-{
-	return 0xff;
 }
 
 static INT32 DinohuntInit()
@@ -12569,8 +12577,8 @@ static INT32 Sf2ceInit()
 
 static void Sf2accp2Callback()
 {
-	CpsRom[0x11755] = 0x4e;
-	CpsRom[0x11756] = 0x71;
+	// This opcode is broken in FBA???
+	*((UINT16*)(CpsRom + 0x11756)) = 0x4e71;
 }
 
 static INT32 Sf2accp2Init()
@@ -12707,7 +12715,8 @@ static INT32 Sf2thInit()
 static void Sf2yycCallback()
 {
 	memcpy(CpsRom + 0x140000, CpsRom + 0x100000, 0x40000);
-        
+
+	// What exactly do these do?
 	*((UINT16*)(CpsRom + 0xe55be)) = 0x4e71;
 	*((UINT16*)(CpsRom + 0xe55ca)) = 0x4e71;
 	*((UINT16*)(CpsRom + 0xe55cc)) = 0x4e71;
@@ -13546,6 +13555,8 @@ static INT32 WofchInit()
 	return nRet;
 }
 
+static UINT8 WofhProtValue;
+
 UINT8 __fastcall Wofh135ReadByte(UINT32)
 {
 	return 0xff;
@@ -13586,9 +13597,9 @@ UINT8 __fastcall WofhInputReadByte(UINT32 a)
 		case 0x88000c: {
 			return ~Cpi01E;
 		}
-		
+
 		case 0x880e78: {
-			return 0xff;
+			return WofhProtValue; // protection
 		}
 		
 		default: {
@@ -13664,25 +13675,17 @@ void __fastcall WofbFFWriteWord(UINT32 a, UINT16 d)
 	RAM[((a & 0xffff) >> 1)] = d;
 }
 
-static void WofhCallback()
-{
-	// Patch protection? check
-	CpsRom[0xf11ed] = 0x4e;
-	CpsRom[0xf11ec] = 0x71;
-//	CpsRom[0xf11ef] = 0x4e;
-//	CpsRom[0xf11ee] = 0x71;
-}
-
 static INT32 WofhInit()
 {
 	INT32 nRet = 0;
-	
+
+	WofhProtValue = 0xD0;
+
 	bCpsUpdatePalEveryFrame = 1;
 	CpsLayer1XOffs = 0xffc0;
 	CpsLayer2XOffs = 0xffc0;
 	CpsLayer3XOffs = 0xffc0;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesHack160;
-	AmendProgRomCallback = WofhCallback;
 	Cps1ObjGetCallbackFunction = WofhObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	
@@ -13717,8 +13720,6 @@ static void SgyxzCallback()
 	
 	BurnFree(pTemp);
 	
-	WofhCallback();
-	
 	// This set has more protection?
 	*((UINT16*)(CpsRom + 0x708be)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
 	*((UINT16*)(CpsRom + 0x708c0)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
@@ -13727,7 +13728,9 @@ static void SgyxzCallback()
 static INT32 SgyxzInit()
 {
 	INT32 nRet = 0;
-	
+
+	WofhProtValue = 0xD0;
+
 	bCpsUpdatePalEveryFrame = 1;
 	CpsLayer1XOffs = 0xffc0;
 	CpsLayer2XOffs = 0xffc0;
@@ -13780,15 +13783,14 @@ static void Wof3jsaCallback()
 	}
 	
 	BurnFree(pTemp);
-	
-	// Patch protection?
-	*((UINT16*)(CpsRom + 0xe7ad0)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
 }
 
 static INT32 Wof3jsaInit()
 {
 	AmendProgRomCallback = Wof3jsaCallback;
-	
+
+	WofhProtValue = 0x50;
+
 	bCpsUpdatePalEveryFrame = 1;
 	CpsLayer1XOffs = 0xffc0;
 	CpsLayer2XOffs = 0xffc0;

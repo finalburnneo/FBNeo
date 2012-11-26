@@ -1656,6 +1656,28 @@ static struct BurnRomInfo SsridersaddRomDesc[] = {
 STD_ROM_PICK(Ssridersadd)
 STD_ROM_FN(Ssridersadd)
 
+static struct BurnRomInfo SsridersjacRomDesc[] = {
+	{ "064jac02.8e",        0x040000, 0x64a35f6f, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "064jac03.8g",        0x040000, 0xb5957946, BRF_ESS | BRF_PRG }, //  1
+	{ "064eab04.10e",       0x020000, 0xef2315bd, BRF_ESS | BRF_PRG }, //  2
+	{ "064eab05.10g",       0x020000, 0x51d6fbc4, BRF_ESS | BRF_PRG }, //  3
+	
+	{ "064e01.2f",          0x010000, 0x44b9bc52, BRF_ESS | BRF_PRG }, //  4	Z80 Program 
+	
+	{ "064e12.16k",         0x080000, 0xe2bdc619, BRF_GRA },	   //  5	Tiles
+	{ "064e11.12k",         0x080000, 0x2d8ca8b0, BRF_GRA },	   //  6
+	
+	{ "064e09.7l",          0x100000, 0x4160c372, BRF_GRA },	   //  7	Sprites
+	{ "064e07.3l",          0x100000, 0x64dd673c, BRF_GRA },	   //  8
+	
+	{ "064e06.1d",          0x100000, 0x59810df9, BRF_SND },	   //  9	K053260 Samples
+
+	{ "ssriders_jac.nv",  0x000080, 0xeeb0c55f, BRF_OPT },
+};
+
+STD_ROM_PICK(Ssridersjac)
+STD_ROM_FN(Ssridersjac)
+
 static struct BurnRomInfo SsridersjbdRomDesc[] = {
 	{ "064jbd02.8e",        0x040000, 0x7acdc1e3, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "064jbd03.8g",        0x040000, 0x6a424918, BRF_ESS | BRF_PRG }, //  1
@@ -6471,6 +6493,16 @@ struct BurnDriver BurnDrvSsridersadd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_PLATFORM, 0,
 	NULL, SsridersaddRomInfo, SsridersaddRomName, NULL, NULL, Ssriders4psInputInfo, NULL,
+	SsridersInit, BlswhstlExit, SsridersFrame, NULL, SsridersScan,
+	NULL, 0x810, 288, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvSsridersjac = {
+	"ssridersjac", "ssriders", NULL, NULL, "1991",
+	"Sunset Riders (4 Players ver. JAC)\0", NULL, "Konami", "GX064",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_PLATFORM, 0,
+	NULL, SsridersjacRomInfo, SsridersjacRomName, NULL, NULL, SsridersInputInfo, NULL,
 	SsridersInit, BlswhstlExit, SsridersFrame, NULL, SsridersScan,
 	NULL, 0x810, 288, 224, 4, 3
 };

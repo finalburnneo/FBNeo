@@ -2894,7 +2894,7 @@ static struct BurnDIPInfo QadDIPList[]=
 
 STDDIPINFO(Qad)
 
-static struct BurnDIPInfo QadjDIPList[]=
+static struct BurnDIPInfo QadjrDIPList[]=
 {
 	// Defaults
 	{0x0f, 0xff, 0xff, 0x00, NULL                     },
@@ -2947,7 +2947,7 @@ static struct BurnDIPInfo QadjDIPList[]=
 	{0x11, 0x01, 0x80, 0x80, "Test"                   },
 };
 
-STDDIPINFO(Qadj)
+STDDIPINFO(Qadjr)
 
 static struct BurnDIPInfo Qtono2jDIPList[]=
 {
@@ -3985,7 +3985,7 @@ static struct BurnRomInfo Captcommr1RomDesc[] = {
 	
 	{ "cc63b.1a",      0x000117, 0xcae8f0f9, BRF_OPT },	// b-board PLDs
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
-	{ "ccprg.11d",     0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "ccprg.11d",     0x000117, 0xe1c225c4, BRF_OPT },
 	{ "ioc1.ic7",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
@@ -4081,7 +4081,7 @@ static struct BurnRomInfo Captcommjr1RomDesc[] = {
 	
 	{ "cc63b.1a",      0x000117, 0xcae8f0f9, BRF_OPT },	// b-board PLDs
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
-	{ "ccprg.11d",     0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "ccprg.11d",     0x000117, 0xe1c225c4, BRF_OPT },
 	{ "ioc1.ic7",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
@@ -4825,7 +4825,7 @@ static struct BurnRomInfo FfightRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "s224b.1a",      0x000117, 0x4e85b158, BRF_OPT },	// b-board PLDs
+	{ "s224b.1a",      0x000117, 0xcdc4413e, BRF_OPT },	// b-board PLDs
 	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
 };
 
@@ -4851,7 +4851,7 @@ static struct BurnRomInfo FfightaRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "s224b.1a",      0x000117, 0x4e85b158, BRF_OPT },	// b-board PLDs
+	{ "s224b.1a",      0x000117, 0xcdc4413e, BRF_OPT },	// b-board PLDs
 	{ "lwio.11e",      0x000117, 0xad52b90c, BRF_OPT },
 };
 
@@ -4877,7 +4877,7 @@ static struct BurnRomInfo FfightuRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "s224b.1a",      0x000117, 0x4e85b158, BRF_OPT },	// b-board PLDs
+	{ "s224b.1a",      0x000117, 0xcdc4413e, BRF_OPT },	// b-board PLDs
 	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
 };
 
@@ -4906,7 +4906,7 @@ static struct BurnRomInfo Ffightu1RomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "s224b.1a",      0x000117, 0x4e85b158, BRF_OPT },	// b-board PLDs
+	{ "s224b.1a",      0x000117, 0xcdc4413e, BRF_OPT },	// b-board PLDs
 	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
 };
 
@@ -4932,7 +4932,7 @@ static struct BurnRomInfo FfightuaRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "s224b.1a",      0x000117, 0x4e85b158, BRF_OPT },	// b-board PLDs
+	{ "s224b.1a",      0x000117, 0xcdc4413e, BRF_OPT },	// b-board PLDs
 	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
 };
 
@@ -4958,7 +4958,7 @@ static struct BurnRomInfo FfightubRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "s224b.1a",      0x000117, 0x4e85b158, BRF_OPT },	// b-board PLDs
+	{ "s224b.1a",      0x000117, 0xcdc4413e, BRF_OPT },	// b-board PLDs
 	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
 };
 
@@ -7008,7 +7008,7 @@ static struct BurnRomInfo QadRomDesc[] = {
 STD_ROM_PICK(Qad)
 STD_ROM_FN(Qad)
 
-static struct BurnRomInfo QadjRomDesc[] = {
+static struct BurnRomInfo QadjrRomDesc[] = {
 	{ "qad_23a.8f",    0x080000, 0x4d3553de, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "qad_22a.7f",    0x080000, 0x3191ddd0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
@@ -7024,15 +7024,15 @@ static struct BurnRomInfo QadjRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "qd63b.1a",      0x000117, 0xb3312b13, BRF_OPT },	// b-board PLDs
+	{ "qad63b.1a",     0x000117, 0xb3312b13, BRF_OPT },	// b-board PLDs
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
 	{ "ioc1.ic7",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
 
-STD_ROM_PICK(Qadj)
-STD_ROM_FN(Qadj)
+STD_ROM_PICK(Qadjr)
+STD_ROM_FN(Qadjr)
 
 static struct BurnRomInfo Qtono2jRomDesc[] = {
 	{ "tn2j_30.11e",   0x020000, 0x9226eb5e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -7060,7 +7060,7 @@ static struct BurnRomInfo Qtono2jRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "tn2292.1a",     0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },	// b-board PLDs
+	{ "tn2292.1a",     0x000117, 0x3d899539, BRF_OPT },	// b-board PLDs
 	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "ioc1.ic7",      0x000117, 0x0d182081, BRF_OPT },			// c-board PLDs
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
@@ -10776,7 +10776,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "punipic3"    , CPS_B_21_QS3, mapper_PS63B , 0, NULL                }, // game controls layers at 0x98000c
 	{ "punisherbz"  , CPS_B_21_DEF, mapper_PS63B , 0, NULL                },
 	{ "qad"         , CPS_B_21_BT7, mapper_QD22B , 0, NULL                },
-	{ "qadj"        , CPS_B_21_DEF, mapper_QD63B , 0, NULL                },
+	{ "qadjr"       , CPS_B_21_DEF, mapper_QD63B , 0, NULL                },
 	{ "qtono2j"     , CPS_B_21_DEF, mapper_TN2292, 0, NULL                },
 	{ "sf2"         , CPS_B_11    , mapper_STF29 , 0, NULL                },
 	{ "sf2eb"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
@@ -15123,12 +15123,12 @@ struct BurnDriver BurnDrvCpsQad = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsQadj = {
-	"qadj", "qad", NULL, NULL, "1992",
-	"Quiz & Dragons (940921 Japan)\0", NULL, "Capcom", "CPS1",
+struct BurnDriver BurnDrvCpsQadjr = {
+	"qadjr", "qad", NULL, NULL, "1992",
+	"Quiz & Dragons (940921 Japan Resale Ver.)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_QUIZ, 0,
-	NULL, QadjRomInfo, QadjRomName, NULL, NULL, QadInputInfo, QadjDIPInfo,
+	NULL, QadjrRomInfo, QadjrRomName, NULL, NULL, QadInputInfo, QadjrDIPInfo,
 	QadInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

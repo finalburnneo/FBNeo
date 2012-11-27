@@ -2882,6 +2882,14 @@ int ScrnSize()
 	// Find out how much space is taken up by the borders
 	ew = GetSystemMetrics(SM_CXSIZEFRAME) << 1;
 	eh = GetSystemMetrics(SM_CYSIZEFRAME) << 1;
+	
+	// Visual Studio 2012 seems to have an issue with these, other reports on the web about it too
+#if defined _MSC_VER
+	#if _MSC_VER >= 1700
+		ew <<= 1;
+		eh <<= 1;
+	#endif
+#endif
 
 	if (bMenuEnabled) {
 		eh += GetSystemMetrics(SM_CYCAPTION);

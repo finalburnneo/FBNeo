@@ -1,4 +1,4 @@
-# Makefile for FBA, for use with GNU make & Microsoft Visual C++ 2010
+# Makefile for FBA, for use with GNU make & Microsoft Visual C++ 2012
 #
 # The first pass makes sure all intermediary targets are present. The second pass updates
 # any targets, if necessary. (Intermediary) targets which have their own unique rules
@@ -57,6 +57,9 @@ endif
 ifndef UNICODE
 	NAME := $(NAME)a
 	COMPILENAME := $(COMPILENAME)a
+endif
+ifdef BUILD_VS2012_XP_TARGET
+	NAME := $(NAME)xp
 endif
 
 cpulevel = 6
@@ -212,6 +215,10 @@ ifdef BUILD_X64_EXE
 	DEF := $(DEF) /DBUILD_X64_EXE
 endif
 
+ifdef BUILD_VS2012_XP_TARGET
+	DEF := $(DEF) /DBUILD_VS2012_XP_TARGET
+endif
+
 ifdef	SYMBOL
 	CFLAGS	 = /nologo /Od /GF /GS /RTC1 /Zi /Zc:forScope /MTd /EHsc /Fp$(objdir)/dep/generated/ # /Wall
 	ASFLAGS += -g
@@ -227,6 +234,11 @@ endif
 else
 	CFLAGS	 = /nologo /w /O2 /Ox /Oi /Ot /Oy /Ob2 /GF /Gs /Gy /GL /Zc:forScope /MT /EHsc
 	LDFLAGS += /LTCG:STATUS
+endif
+
+ifdef BUILD_VS2012_XP_TARGET
+	CFLAGS	+= /D_USING_V110_SDK71_
+	LDFLAGS += /SUBSYSTEM:WINDOWS,5.01
 endif
 
 # Change the priority of some warnings so they are only shown at warning level 4. They are:

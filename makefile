@@ -27,6 +27,9 @@ BUILD_X86_ASM = 1
 # Build for x64 targets (MinGW64 and MSVC only, this will undefine BUILD_A68K and BUILD_X86_ASM)
 #BUILD_X64_EXE = 1
 
+# Build for Windows XP target (for use with Visual Studio 2012)
+#BUILD_VS2012_XP_TARGET = 1
+
 # Include 7-zip support
 INCLUDE_7Z_SUPPORT = 1
 

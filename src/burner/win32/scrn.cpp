@@ -2883,11 +2883,14 @@ int ScrnSize()
 	ew = GetSystemMetrics(SM_CXSIZEFRAME) << 1;
 	eh = GetSystemMetrics(SM_CYSIZEFRAME) << 1;
 	
-	// Visual Studio 2012 seems to have an issue with these, other reports on the web about it too
+	// Visual Studio 2012 (seems to have an issue with these, other reports on the web about it too
 #if defined _MSC_VER
 	#if _MSC_VER >= 1700
-		ew <<= 1;
-		eh <<= 1;
+		// using the old XP supporting SDK we don't need to alter anything
+		#if !defined BUILD_VS2012_XP_TARGET
+			ew <<= 1;
+			eh <<= 1;
+		#endif
 	#endif
 #endif
 

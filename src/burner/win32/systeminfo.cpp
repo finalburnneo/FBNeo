@@ -185,6 +185,12 @@ int PrintOSInfo()
 			if (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 1 && osvi.wProductType == VER_NT_WORKSTATION) {
 				AddText(_T("Microsoft Windows 7 "));
 			}
+			if (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 2 && osvi.wProductType != VER_NT_WORKSTATION) {
+				AddText(_T("Microsoft Server 2012 "));
+			}
+			if (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 2 && osvi.wProductType == VER_NT_WORKSTATION) {
+				AddText(_T("Microsoft Windows 8 "));
+			}
 
 			if (osvi.dwMajorVersion == 5) {
 				if (osvi.wProductType == VER_NT_WORKSTATION) {

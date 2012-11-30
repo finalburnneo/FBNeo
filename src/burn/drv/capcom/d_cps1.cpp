@@ -3024,31 +3024,80 @@ static struct BurnDIPInfo Sf2DIPList[]=
 
 	// Dip C
 	{0   , 0xfe, 0   , 2   , "Free Play"              },
-        {0x1d, 0x01, 0x04, 0x00, "Off"                    },
-        {0x1d, 0x01, 0x04, 0x04, "On"                     },
+	{0x1d, 0x01, 0x04, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x04, 0x04, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Freeze"                 },
-        {0x1d, 0x01, 0x08, 0x00, "Off"                    },
-        {0x1d, 0x01, 0x08, 0x08, "On"                     },
+	{0x1d, 0x01, 0x08, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x08, 0x08, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-        {0x1d, 0x01, 0x10, 0x00, "Off"                    },
-        {0x1d, 0x01, 0x10, 0x10, "On"                     },
+	{0x1d, 0x01, 0x10, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x10, 0x10, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
-        {0x1d, 0x01, 0x20, 0x00, "Off"                    },
-        {0x1d, 0x01, 0x20, 0x20, "On"                     },
+	{0x1d, 0x01, 0x20, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x20, 0x20, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-        {0x1d, 0x01, 0x40, 0x00, "Off"                    },
-        {0x1d, 0x01, 0x40, 0x40, "On"                     },
+	{0x1d, 0x01, 0x40, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x40, 0x40, "On"                     },
         
-        {0   , 0xfe, 0   , 2   , "Game Mode"              },
+	{0   , 0xfe, 0   , 2   , "Game Mode"              },
 	{0x1d, 0x01, 0x80, 0x00, "Game"                   },
 	{0x1d, 0x01, 0x80, 0x80, "Test"                   },
 };
 
 STDDIPINFO(Sf2)
+
+static struct BurnDIPInfo Sf2amfDIPList[]=
+{
+	// Defaults
+	{0x1b, 0xff, 0xff, 0x00, NULL                     },
+	{0x1c, 0xff, 0xff, 0x03, NULL                     },
+	{0x1d, 0xff, 0xff, 0x60, NULL                     },
+	
+	// Dip A
+	CPS1_COINAGE_1(0x1b)
+
+	{0   , 0xfe, 0   , 2   , "2C to Start, 1 to Cont" },
+	{0x1b, 0x01, 0x40, 0x00, "Off"                    },
+	{0x1b, 0x01, 0x40, 0x40, "On"                     },
+
+	// Dip B
+	CPS1_DIFFICULTY_1(0x1c)
+	
+	{0   , 0xfe, 0   , 2   , "Turbo Mode"             },
+	{0x1c, 0x01, 0x38, 0x00, "Off"                    },
+	{0x1c, 0x01, 0x38, 0x38, "On"                     },
+
+	// Dip C
+	{0   , 0xfe, 0   , 2   , "Free Play"              },
+	{0x1d, 0x01, 0x04, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x04, 0x04, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Freeze"                 },
+	{0x1d, 0x01, 0x08, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x08, 0x08, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
+	{0x1d, 0x01, 0x10, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x10, 0x10, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
+	{0x1d, 0x01, 0x20, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x20, 0x20, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
+	{0x1d, 0x01, 0x40, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x40, 0x40, "On"                     },
+        
+	{0   , 0xfe, 0   , 2   , "Game Mode"              },
+	{0x1d, 0x01, 0x80, 0x00, "Game"                   },
+	{0x1d, 0x01, 0x80, 0x80, "Test"                   },
+};
+
+STDDIPINFO(Sf2amf)
 
 static struct BurnDIPInfo Sf2jDIPList[]=
 {
@@ -3073,26 +3122,26 @@ static struct BurnDIPInfo Sf2jDIPList[]=
 
 	// Dip C
 	{0   , 0xfe, 0   , 2   , "Free Play"              },
-        {0x1d, 0x01, 0x04, 0x00, "Off"                    },
-        {0x1d, 0x01, 0x04, 0x04, "On"                     },
+	{0x1d, 0x01, 0x04, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x04, 0x04, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Freeze"                 },
-        {0x1d, 0x01, 0x08, 0x00, "Off"                    },
-        {0x1d, 0x01, 0x08, 0x08, "On"                     },
+	{0x1d, 0x01, 0x08, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x08, 0x08, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-        {0x1d, 0x01, 0x10, 0x00, "Off"                    },
-        {0x1d, 0x01, 0x10, 0x10, "On"                     },
+	{0x1d, 0x01, 0x10, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x10, 0x10, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
-        {0x1d, 0x01, 0x20, 0x00, "Off"                    },
-        {0x1d, 0x01, 0x20, 0x20, "On"                     },
+	{0x1d, 0x01, 0x20, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x20, 0x20, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-        {0x1d, 0x01, 0x40, 0x00, "Off"                    },
-        {0x1d, 0x01, 0x40, 0x40, "On"                     },
+	{0x1d, 0x01, 0x40, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x40, 0x40, "On"                     },
         
-        {0   , 0xfe, 0   , 2   , "Game Mode"              },
+	{0   , 0xfe, 0   , 2   , "Game Mode"              },
 	{0x1d, 0x01, 0x80, 0x00, "Game"                   },
 	{0x1d, 0x01, 0x80, 0x80, "Test"                   },
 };
@@ -3118,26 +3167,26 @@ static struct BurnDIPInfo Sf2m2DIPList[]=
 
 	// Dip C
 	{0   , 0xfe, 0   , 2   , "Free Play"              },
-        {0x1d, 0x01, 0x04, 0x00, "Off"                    },
-        {0x1d, 0x01, 0x04, 0x04, "On"                     },
+	{0x1d, 0x01, 0x04, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x04, 0x04, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Freeze"                 },
-        {0x1d, 0x01, 0x08, 0x00, "Off"                    },
-        {0x1d, 0x01, 0x08, 0x08, "On"                     },
+	{0x1d, 0x01, 0x08, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x08, 0x08, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-        {0x1d, 0x01, 0x10, 0x00, "Off"                    },
-        {0x1d, 0x01, 0x10, 0x10, "On"                     },
+	{0x1d, 0x01, 0x10, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x10, 0x10, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
-        {0x1d, 0x01, 0x20, 0x00, "Off"                    },
-        {0x1d, 0x01, 0x20, 0x20, "On"                     },
+	{0x1d, 0x01, 0x20, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x20, 0x20, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-        {0x1d, 0x01, 0x40, 0x00, "Off"                    },
-        {0x1d, 0x01, 0x40, 0x40, "On"                     },
+	{0x1d, 0x01, 0x40, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x40, 0x40, "On"                     },
         
-        {0   , 0xfe, 0   , 2   , "Game Mode"              },
+	{0   , 0xfe, 0   , 2   , "Game Mode"              },
 	{0x1d, 0x01, 0x80, 0x00, "Game"                   },
 	{0x1d, 0x01, 0x80, 0x80, "Test"                   },
 };
@@ -15598,7 +15647,7 @@ struct BurnDriver BurnDrvCpsSf2amf = {
 	"Street Fighter II - champion edition (Alpha Magic-F bootleg, 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2amfRomInfo, Sf2amfRomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
+	NULL, Sf2amfRomInfo, Sf2amfRomName, NULL, NULL, Sf2yycInputInfo, Sf2amfDIPInfo,
 	Sf2amfInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

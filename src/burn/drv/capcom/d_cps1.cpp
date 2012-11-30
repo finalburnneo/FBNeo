@@ -7220,8 +7220,9 @@ STD_ROM_FN(Sf2ebbl)
 
 static struct BurnRomInfo Sf2sttRomDesc[] = {
 #if !defined ROM_VERIFY
-	{ "10.bin",         0x040000, 0xa258b4d5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "09.bin",         0x040000, 0x59ccd474, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	// These first two are missing from the PCB
+	{ "prg part 1.stt", 0x040000, 0xa258b4d5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "prg part 2.stt", 0x040000, 0x59ccd474, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 #else
 	{ "prg part 1.stt", 0x040000, 0x00000000, BRF_OPT | BRF_PRG | BRF_NODUMP },
 	{ "prg part 2.stt", 0x040000, 0x00000000, BRF_OPT | BRF_PRG | BRF_NODUMP },
@@ -9125,8 +9126,8 @@ STD_ROM_FN(Sf2m15)
 static struct BurnRomInfo Sf2m16RomDesc[] = {
 	{ "joe-922",      0x0080000, 0xe927556c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "joe-921",      0x0080000, 0x8632e786, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "4.bin",        0x0020000, 0x1073b7b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "3.bin",        0x0020000, 0x924c6ce2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "sf2m16_4.bin", 0x0020000, 0x1073b7b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "sf2m16_3.bin", 0x0020000, 0x924c6ce2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	
 	{ "tat-01.bin",   0x0080000, 0xa887f7d4, BRF_GRA | CPS1_TILES },
 	{ "tat-03.bin",   0x0080000, 0x79fa8bf0, BRF_GRA | CPS1_TILES },
@@ -9135,8 +9136,7 @@ static struct BurnRomInfo Sf2m16RomDesc[] = {
 	{ "tat-02.bin",   0x0080000, 0xafb3b589, BRF_GRA | CPS1_TILES },
 	{ "tat-04.bin",   0x0080000, 0x32518120, BRF_GRA | CPS1_TILES },
 	{ "tat-06.bin",   0x0080000, 0x90f2053e, BRF_GRA | CPS1_TILES },	
-	{ "tat-08.bin",   0x0080000, 0xc16579ae, BRF_GRA | CPS1_TILES },
-	
+	{ "tat-08.bin",   0x0080000, 0xc16579ae, BRF_GRA | CPS1_TILES },	
 	
 	{ "tat-09.bin",   0x0080000, 0x169d85a6, BRF_GRA | CPS1_TILES },
 	{ "tat-10.bin",   0x0080000, 0x0c638630, BRF_GRA | CPS1_TILES },
@@ -9145,7 +9145,7 @@ static struct BurnRomInfo Sf2m16RomDesc[] = {
 
 	{ "1.bin",        0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "2.bin",        0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "sf2m16_2.bin", 0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
 };
 
 STD_ROM_PICK(Sf2m16)

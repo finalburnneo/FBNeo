@@ -8118,7 +8118,7 @@ static struct BurnRomInfo GhostmunRomDesc[] = {
 	{ "blpac10b",      0x00800, 0x44a45b72, BRF_GRA | GAL_ROM_TILES_SPRITES },
 	{ "blpac9b",       0x00800, 0xfa84659f, BRF_GRA | GAL_ROM_TILES_SPRITES },
 	
-	{ "ghostmun.clr",  0x00020, 0x499f4440, BRF_GRA | GAL_ROM_PROM },
+	{ "ghostmun.clr",  0x00020, 0x759647e3, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Ghostmun)

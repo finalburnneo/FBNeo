@@ -6494,6 +6494,35 @@ STD_ROM_PICK(Vsav2)
 STD_ROM_FN(Vsav2)
 
 static struct BurnRomInfo XmcotaRomDesc[] = {
+	{ "xmne.03f",      0x080000, 0x5a726d13, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmne.04f",      0x080000, 0x06a83f3a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.05b",       0x080000, 0x87b0ed0f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.06a",       0x080000, 0x1b86a328, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.07a",       0x080000, 0x2c142a44, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.08a",       0x080000, 0xf712d44f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.09a",       0x080000, 0x9241cae8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.10b",       0x080000, 0xcb36b0a4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "xmn.13m",       0x400000, 0xbf4df073, CPS2_GFX | BRF_GRA },
+	{ "xmn.15m",       0x400000, 0x4d7e4cef, CPS2_GFX | BRF_GRA },
+	{ "xmn.17m",       0x400000, 0x513eea17, CPS2_GFX | BRF_GRA },
+	{ "xmn.19m",       0x400000, 0xd23897fc, CPS2_GFX | BRF_GRA },
+	{ "xmn.14m",       0x400000, 0x778237b7, CPS2_GFX | BRF_GRA },
+	{ "xmn.16m",       0x400000, 0x67b36948, CPS2_GFX | BRF_GRA },
+	{ "xmn.18m",       0x400000, 0x015a7c4c, CPS2_GFX | BRF_GRA },
+	{ "xmn.20m",       0x400000, 0x9dde2758, CPS2_GFX | BRF_GRA },
+
+	{ "xmn.01a",       0x020000, 0x40f479ea, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "xmn.02a",       0x020000, 0x39d9b5ad, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "xmn.11m",       0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
+	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
+};
+
+STD_ROM_PICK(Xmcota)
+STD_ROM_FN(Xmcota)
+
+static struct BurnRomInfo Xmcotar1RomDesc[] = {
 	{ "xmne.03e",      0x080000, 0xa9a09b09, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xmne.04e",      0x080000, 0x52fa2106, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xmn.05a",       0x080000, 0xac0d7759, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -6519,8 +6548,8 @@ static struct BurnRomInfo XmcotaRomDesc[] = {
 	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
 };
 
-STD_ROM_PICK(Xmcota)
-STD_ROM_FN(Xmcota)
+STD_ROM_PICK(Xmcotar1)
+STD_ROM_FN(Xmcotar1)
 
 static struct BurnRomInfo XmcotaaRomDesc[] = {
 	{ "xmna.03e",      0x080000, 0xf1ade6e7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -6583,12 +6612,12 @@ STD_ROM_FN(Xmcotaar1)
 static struct BurnRomInfo XmcotahRomDesc[] = {
 	{ "xmnh.03",       0x080000, 0xe4b85a90, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xmnh.04",       0x080000, 0x7dfe1406, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "xmnh.05",       0x080000, 0x87b0ed0f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.05b",       0x080000, 0x87b0ed0f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xmn.06a",       0x080000, 0x1b86a328, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xmn.07a",       0x080000, 0x2c142a44, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xmn.08a",       0x080000, 0xf712d44f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xmn.09a",       0x080000, 0x9241cae8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "xmnh.10",       0x080000, 0xcb36b0a4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.10b",       0x080000, 0xcb36b0a4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
 	{ "xmn.13m",       0x400000, 0xbf4df073, CPS2_GFX | BRF_GRA },
 	{ "xmn.15m",       0x400000, 0x4d7e4cef, CPS2_GFX | BRF_GRA },
@@ -9344,10 +9373,20 @@ struct BurnDriver BurnDrvCpsVsav2 = {
 
 struct BurnDriver BurnDrvCpsXmcota = {
 	"xmcota", NULL, NULL, NULL, "1995",
-	"X-Men - children of the atom (950105 Euro)\0", NULL, "Capcom", "CPS2",
+	"X-Men - children of the atom (950331 Euro)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
 	NULL, XmcotaRomInfo, XmcotaRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	XmcotaInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsXmcotar1 = {
+	"xmcotar1", "xmcota", NULL, NULL, "1995",
+	"X-Men - children of the atom (950105 Euro)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
+	NULL, Xmcotar1RomInfo, Xmcotar1RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	XmcotaInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

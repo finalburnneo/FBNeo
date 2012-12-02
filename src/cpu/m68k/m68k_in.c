@@ -154,6 +154,13 @@ M68KMAKE_TABLE_FOOTER
 };
 
 
+// This is a hack for specific cases like sf2accp2. For some reason MAME ignores this
+// but FBA does not. This should be investigated further at some point.
+static void m68k_66ff(void)
+{
+	return;
+}
+
 /* Build the opcode handler jump table */
 void m68ki_build_opcode_table(void)
 {
@@ -248,6 +255,8 @@ void m68ki_build_opcode_table(void)
 			m68ki_cycles[k][ostruct->match] = ostruct->cycles[k];
 		ostruct++;
 	}
+
+	m68ki_instruction_jump_table[0x66ff] = m68k_66ff;	// hack
 }
 
 

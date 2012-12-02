@@ -12646,8 +12646,10 @@ static INT32 Sf2ceInit()
 
 static void Sf2accp2Callback()
 {
-	// This opcode is broken in FBA???
-	*((UINT16*)(CpsRom + 0x11756)) = 0x4e71;
+	// This causes problems in FBA, but is ignored in MAME??
+	// 011756: 66FF                       dc.w    $66ff; ILLEGAL
+
+//	*((UINT16*)(CpsRom + 0x11756)) = 0x4e71;
 }
 
 static INT32 Sf2accp2Init()

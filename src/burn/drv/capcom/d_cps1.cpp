@@ -8902,6 +8902,7 @@ STD_ROM_PICK(Sf2mega)
 STD_ROM_FN(Sf2mega)
 
 static struct BurnRomInfo Sf2mega2RomDesc[] = {
+	// this set was previously known as sf2m9
 	{ "sf3a-1.040",   0x0080000, 0x9e6d058a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "sf3a-3.040",   0x0080000, 0x518d8404, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "sf3a-2",       0x0020000, 0xfca4fc1e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },

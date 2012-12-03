@@ -8995,6 +8995,9 @@ static struct BurnRomInfo Sf2mdtRomDesc[] = {
 	{ "17.ic83",      0x0080000, 0x91a9a05d, BRF_GRA | CPS1_TILES },
 
 	{ "5.ic26",       0x0020000, 0x17d5ba8a, BRF_PRG | CPS1_Z80_PROGRAM },
+	
+	// extra graphics roms are required (see bike's on Chun-Li stage), but using the current dumps we have lead to a corrupt
+	// Street Fighter II logo
 };
 
 STD_ROM_PICK(Sf2mdt)
@@ -9015,6 +9018,9 @@ static struct BurnRomInfo Sf2mdtaRomDesc[] = {
 	{ "pf9-sh001.ic91", 0x0100000, 0x9f25090e, BRF_GRA | CPS1_TILES },
 
 	{ "1.ic28",         0x0020000, 0xd5bee9cc, BRF_PRG | CPS1_Z80_PROGRAM },
+	
+	// extra graphics roms are required (see bike's on Chun-Li stage), but using the current dumps we have lead to a corrupt
+	// Street Fighter II logo
 };
 
 STD_ROM_PICK(Sf2mdta)

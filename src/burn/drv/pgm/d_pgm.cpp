@@ -3171,6 +3171,72 @@ struct BurnDriver BurnDrvketarr15 = {
 };
 
 
+// Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.51, hack by Trap15)
+
+static struct BurnRomInfo ketarr151RomDesc[] = {
+	{ "ketarr151_v100.u38",		0x200000, 0x2b7c030d, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a04701w064.u7", 		0x800000, 0x5ef1b94b, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a04702w064.u8", 		0x800000, 0x26d6da7f, 3 | BRF_GRA },		//  3
+
+	{ "b04701w064.u1",		0x800000, 0x1bec008d, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },		//  5 Samples
+
+	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
+	
+	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },		//  7 NV RAM
+};
+
+STDROMPICKEXT(ketarr151, ketarr151, ketsuiBios) // custom bios
+STD_ROM_FN(ketarr151)
+
+struct BurnDriver BurnDrvketarr151 = {
+	"ketarr151", "ket", NULL, NULL, "2002",
+	"Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.51, hack by Trap15)\0", NULL, "hack / Trap15", "PolyGameMaster based",
+	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (Arrange Mode version 1.51, hack by Trap15)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
+	NULL, ketarr151RomInfo, ketarr151RomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224, 448, 3, 4
+};
+
+
+// Ketsui Kizuna Jigoku Tachi (MR. Stoic version, hack by Trap15)
+
+static struct BurnRomInfo ketstoicuRomDesc[] = {
+	{ "ketstoicu_v100.u38",		0x200000, 0x35c984e4, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a04701w064.u7", 		0x800000, 0x5ef1b94b, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a04702w064.u8", 		0x800000, 0x26d6da7f, 3 | BRF_GRA },		//  3
+
+	{ "b04701w064.u1",		0x800000, 0x1bec008d, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },		//  5 Samples
+
+	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
+	
+	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },		//  7 NV RAM
+};
+
+STDROMPICKEXT(ketstoicu, ketstoicu, ketsuiBios) // custom bios
+STD_ROM_FN(ketstoicu)
+
+struct BurnDriver BurnDrvketstoicu = {
+	"ketstoicu", "ket", NULL, NULL, "2002",
+	"Ketsui Kizuna Jigoku Tachi (MR. Stoic version, hack by Trap15)\0", NULL, "hack / Trap15", "PolyGameMaster based",
+	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (MR. Stoic version, hack by Trap15)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
+	NULL, ketstoicuRomInfo, ketstoicuRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224, 448, 3, 4
+};
+
+
 // Espgaluda (V100, Japan)
 
 static struct BurnRomInfo espgalRomDesc[] = {

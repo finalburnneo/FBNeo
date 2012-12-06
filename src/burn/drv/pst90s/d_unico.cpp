@@ -393,6 +393,26 @@ static struct BurnRomInfo ZeropntaRomDesc[] = {
 STD_ROM_PICK(Zeropnta)
 STD_ROM_FN(Zeropnta)
 
+static struct BurnRomInfo ZeropntjRomDesc[] = {
+	{ "zero_2.bin",    0x080000, 0x098d9756, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "zero_3.bin",    0x080000, 0x58e105f3, BRF_ESS | BRF_PRG }, //  1
+	
+	{ "zpobjz01.bin",  0x200000, 0x1f2768a3, BRF_GRA },	     //  2	Sprites
+	{ "zpobjz02.bin",  0x200000, 0x529c36ee, BRF_GRA },	     //  3
+	{ "zpobjz03.bin",  0x200000, 0xd7a657f7, BRF_GRA },	     //  4
+	{ "zpobjz04.bin",  0x200000, 0x3aec2f8d, BRF_GRA },	     //  5
+	
+	{ "zpscrz06.bin",  0x200000, 0xe1e53cf0, BRF_GRA },	     //  6	Layers
+	{ "zpscrz05.bin",  0x200000, 0x0d7d4850, BRF_GRA },	     //  7
+	{ "zpscrz07.bin",  0x200000, 0xbb178f32, BRF_GRA },	     //  8
+	{ "zpscrz08.bin",  0x200000, 0x672f02e5, BRF_GRA },	     //  9
+	
+	{ "zero_1.bin",    0x080000, 0xfd2384fa, BRF_SND },	     //  10	Samples
+};
+
+STD_ROM_PICK(Zeropntj)
+STD_ROM_FN(Zeropntj)
+
 static struct BurnRomInfo Zeropnt2RomDesc[] = {
 	{ "d16-d31.4",     0x100000, 0x48314fdb, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "d0-d15.3",      0x100000, 0x5ec4151e, BRF_ESS | BRF_PRG }, //  1
@@ -1898,6 +1918,16 @@ struct BurnDriver BurnDrvZeropnt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, ZeropntRomInfo, ZeropntRomName, NULL, NULL, ZeropntInputInfo, ZeropntDIPInfo,
+	ZeropntInit, DrvExit, DrvFrame, NULL, ZeropntScan,
+	NULL, 0x2000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvZeropntj = {
+	"zeropntj", "zeropnt", NULL, NULL, "1998",
+	"Zero Point (Japan)\0", NULL, "Unico", "Unico",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, ZeropntjRomInfo, ZeropntjRomName, NULL, NULL, ZeropntInputInfo, ZeropntDIPInfo,
 	ZeropntInit, DrvExit, DrvFrame, NULL, ZeropntScan,
 	NULL, 0x2000, 384, 224, 4, 3
 };

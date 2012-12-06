@@ -19,6 +19,7 @@ INT32 CpsLayer2YOffs = 0;
 INT32 CpsLayer3YOffs = 0;
 
 INT32 Cps1DisableBgHi = 0;
+INT32 CpsDisableRowScroll = 0;
 
 INT32 Cps1OverrideLayers = 0;
 INT32 nCps1Layers[4] = { -1, -1, -1, -1 };
@@ -129,7 +130,7 @@ static INT32 DrawScroll2Init(INT32 i)
 
 	CpsrRows = NULL;
 
-	if (n & 1) {
+	if ((n & 1) && !CpsDisableRowScroll) {
 		INT32 nTab, nStart;
 		// Find row scroll table:
 

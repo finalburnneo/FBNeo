@@ -11417,6 +11417,7 @@ static INT32 DrvExit()
 	PangEEP = 0;
 	Cps1LockSpriteList910000 = 0;
 	Cps1DisableBgHi = 0;
+	CpsDisableRowScroll = 0;
 	Dinohunt = 0;
 	Sf2thndr = 0;
 	Port6SoundWrite = 0;
@@ -12297,9 +12298,85 @@ static INT32 Knightsb2Init()
 	return DrvInit();
 }
 
+UINT8 __fastcall KodbInputReadByte(UINT32 a)
+{
+	switch (a) {
+		case 0x992000: {
+			return ~Inp000;
+		}
+		
+		case 0x992001: {
+			return ~Inp001;
+		}
+		
+		case 0x992008: {
+			return ~Inp018;
+		}
+		
+		case 0x992009: {
+			return 0xff;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Input Read Byte %x\n"), a);
+		}
+	}
+	
+	return 0;
+}
+
+void __fastcall Kodb98WriteByte(UINT32 a, UINT8 d)
+{
+	switch (a) {
+		case 0x992007: {
+			PsndSyncZ80((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles);
+			PsndCode = d;
+			return;
+		}
+	}
+	
+	bprintf(PRINT_IMPORTANT, _T("Unknown byte value written at %x %x\n"), a, d);
+}
+
 void __fastcall Kodb98WriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
+		case 0x980000: {
+			// scroll1 y
+			*((UINT16*)(CpsReg + 0x0e)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x980002: {
+			// scroll1 x
+			*((UINT16*)(CpsReg + 0x0c)) = BURN_ENDIAN_SWAP_INT16(d - 0x3e);
+			return;
+		}
+		
+		case 0x980004: {
+			// scroll2 y
+			*((UINT16*)(CpsReg + 0x12)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x980006: {
+			// scroll2 x
+			*((UINT16*)(CpsReg + 0x10)) = BURN_ENDIAN_SWAP_INT16(d - 0x3c);
+			return;
+		}
+		
+		case 0x980008: {
+			// scroll3 y
+			*((UINT16*)(CpsReg + 0x16)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x98000a: {
+			// scroll3 x
+			*((UINT16*)(CpsReg + 0x14)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
+			return;
+		}
+		
 		case 0x98000c: {
 			*((UINT16*)(CpsReg + nCpsLcReg)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
@@ -12314,6 +12391,11 @@ void __fastcall Kodb98WriteWord(UINT32 a, UINT16 d)
 			*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
+		
+		case 0x994000: {
+			// ???
+			return;
+		}
 	}
 	
 	bprintf(PRINT_IMPORTANT, _T("Unknown value written at %x %x\n"), a, d);
@@ -12324,6 +12406,8 @@ static INT32 KodbInit()
 	INT32 nRet = 0;
 
 	Kodb = 1;
+	bCpsUpdatePalEveryFrame = 1;
+	CpsDisableRowScroll = 1;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesKodb;
 	Cps1ObjGetCallbackFunction = KodbObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
@@ -12332,11 +12416,13 @@ static INT32 KodbInit()
 	
 	SekOpen(0);
 	SekMapHandler(1, 0x980000, 0x99ffff, SM_WRITE);
+	SekSetWriteByteHandler(1, Kodb98WriteByte);
 	SekSetWriteWordHandler(1, Kodb98WriteWord);
+	SekMapHandler(2, 0x992000, 0x992009, SM_READ);
+	SekSetReadByteHandler(2, KodbInputReadByte);
 	SekClose();
 	
-	*((UINT16*)(CpsReg + MaskAddr[0])) = 0x0000;
-	*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(0xff00);
+	Cps1VBlankIRQLine = 4;
 
 	return nRet;
 }

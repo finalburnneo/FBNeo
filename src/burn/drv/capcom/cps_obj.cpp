@@ -469,12 +469,7 @@ INT32 KodbObjGet()
 	pof->nShiftX = -0x40;
 	pof->nShiftY = -0x10;
 
-	// needs to alternate between the two sprite ram areas to achieve flashing
-	INT32 nOff = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(CpsRamFF + 0x1256))) << 8;
-	nOff &= 0xffff;
-	nOff += 0x1140;
-
-	Get = CpsRam90 + nOff;
+	Get = CpsBootlegSpriteRam + 0x1000;
 	
 	if (Get==NULL) return 1;
 
@@ -510,6 +505,8 @@ INT32 KodbObjGet()
 	if (nGetNext >= nFrameCount) {
 		nGetNext = 0;
 	}
+	
+	memset(CpsBootlegSpriteRam, 0, 0x3000);
 
 	return 0;
 }

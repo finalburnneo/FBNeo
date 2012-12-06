@@ -12414,7 +12414,11 @@ static INT32 KodbInit()
 	
 	nRet = DrvInit();
 	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x3000);
+	
 	SekOpen(0);
+	SekMapMemory(CpsBootlegSpriteRam, 0x900000, 0x902fff, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x904000, 0x906fff, SM_RAM);
 	SekMapHandler(1, 0x980000, 0x99ffff, SM_WRITE);
 	SekSetWriteByteHandler(1, Kodb98WriteByte);
 	SekSetWriteWordHandler(1, Kodb98WriteWord);

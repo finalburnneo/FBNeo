@@ -48,14 +48,16 @@ static INT32 AllocatedOwnDataArea = 0;
 
 #define SECONDS_ST ( 0x80 )
 
-#define DAY_FT ( 0x40 ) /* not emulated */
-#define DAY_CEB ( 0x20 ) /* M48T58 */
-#define DAY_CB ( 0x10 ) /* M48T58 */
+#define DAY_FT ( 0x40 ) /* M48T37 - not emulated */
+#define DAY_CEB ( 0x20 ) /* M48T35/M48T58 */
+#define DAY_CB ( 0x10 ) /* M48T35/M48T58 */
 
 #define DATE_BLE ( 0x80 ) /* M48T58: not emulated */
 #define DATE_BL ( 0x40 ) /* M48T58: not emulated */
 
-#define FLAGS_BL ( 0x10 ) /* MK48T08: not emulated */
+#define FLAGS_BL ( 0x10 ) /* MK48T08/M48T37: not emulated */
+#define FLAGS_AF ( 0x40 ) /* M48T37: not emulated */
+#define FLAGS_WDF ( 0x80 ) /* M48T37: not emulated */
 
 static inline UINT8 make_bcd(UINT8 data)
 {
@@ -150,6 +152,7 @@ void TimeKeeperWrite(INT32 offset, UINT8 data)
 
 	if( offset == Chip.offset_control )
 	{
+		bprintf(PRINT_NORMAL, _T("Offset Control %x, %x\n"), offset, data);
 		if( ( Chip.control & CONTROL_W ) != 0 &&
 			( data & CONTROL_W ) == 0 )
 		{
@@ -157,17 +160,9 @@ void TimeKeeperWrite(INT32 offset, UINT8 data)
 		}
 		Chip.control = data;
 	}
-	else if( Chip.type == TIMEKEEPER_M48T58 && offset == Chip.offset_day )
+	else if( (Chip.type == TIMEKEEPER_M48T58 || Chip.type == TIMEKEEPER_M48T35) && offset == Chip.offset_day )
 	{
 		Chip.day = ( Chip.day & ~DAY_CEB ) | ( data & DAY_CEB );
-	}
-	else if( Chip.type == TIMEKEEPER_M48T58 && offset == Chip.offset_date )
-	{
-		data &= ~DATE_BL;
-	}
-	else if( Chip.type == TIMEKEEPER_MK48T08 && offset == Chip.offset_flags )
-	{
-		data &= ~FLAGS_BL;
 	}
 
 	Chip.data[ offset ] = data;
@@ -235,7 +230,7 @@ void TimeKeeperTick()
 	if( carry )
 	{
 		carry = inc_bcd( &Chip.century, MASK_CENTURY, 0x00, 0x99 );
-		if( Chip.type == TIMEKEEPER_M48T58 && ( Chip.day & DAY_CEB ) != 0 )
+		if( (Chip.type == TIMEKEEPER_M48T58 || Chip.type == TIMEKEEPER_M48T35) && ( Chip.day & DAY_CEB ) != 0 )
 		{
 			Chip.day ^= DAY_CB;
 		}
@@ -270,6 +265,32 @@ void TimeKeeperInit(INT32 type, UINT8 *data)
 		Chip.offset_century = -1;
 		Chip.offset_flags = -1;
 		Chip.size = 0x800;
+		break;
+	case TIMEKEEPER_M48T35:
+		Chip.offset_control = 0x7ff8;
+		Chip.offset_seconds = 0x7ff9;
+		Chip.offset_minutes = 0x7ffa;
+		Chip.offset_hours = 0x7ffb;
+		Chip.offset_day = 0x7ffc;
+		Chip.offset_date = 0x7ffd;
+		Chip.offset_month = 0x7ffe;
+		Chip.offset_year = 0x7fff;
+		Chip.offset_century = -1;
+		Chip.offset_flags = -1;
+		Chip.size = 0x8000;	
+		break;
+	case TIMEKEEPER_M48T37:
+		Chip.offset_control = 0x7ff8;
+		Chip.offset_seconds = 0x7ff9;
+		Chip.offset_minutes = 0x7ffa;
+		Chip.offset_hours = 0x7ffb;
+		Chip.offset_day = 0x7ffc;
+		Chip.offset_date = 0x7ffd;
+		Chip.offset_month = 0x7ffe;
+		Chip.offset_year = 0x7fff;
+		Chip.offset_century = 0x7ff1;
+		Chip.offset_flags = 0x7ff0;
+		Chip.size = 0x8000;	
 		break;
 	case TIMEKEEPER_M48T58:
 		Chip.offset_control = 0x1ff8;

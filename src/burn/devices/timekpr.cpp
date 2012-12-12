@@ -152,7 +152,6 @@ void TimeKeeperWrite(INT32 offset, UINT8 data)
 
 	if( offset == Chip.offset_control )
 	{
-		bprintf(PRINT_NORMAL, _T("Offset Control %x, %x\n"), offset, data);
 		if( ( Chip.control & CONTROL_W ) != 0 &&
 			( data & CONTROL_W ) == 0 )
 		{

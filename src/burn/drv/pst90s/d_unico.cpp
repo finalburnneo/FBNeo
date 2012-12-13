@@ -354,60 +354,60 @@ STD_ROM_PICK(Burglarx)
 STD_ROM_FN(Burglarx)
 
 static struct BurnRomInfo ZeropntRomDesc[] = {
-	{ "zero_2.bin",    0x080000, 0x1e599509, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "zero_3.bin",    0x080000, 0x588aeef7, BRF_ESS | BRF_PRG }, //  1
+	{ "unico_2.rom2",  			0x080000, 0x1e599509, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "unico_3.rom3",  			0x080000, 0x588aeef7, BRF_ESS | BRF_PRG }, //  1
 	
-	{ "zpobjz01.bin",  0x200000, 0x1f2768a3, BRF_GRA },	     //  2	Sprites
-	{ "zpobjz02.bin",  0x200000, 0xde34f33a, BRF_GRA },	     //  3
-	{ "zpobjz03.bin",  0x200000, 0xd7a657f7, BRF_GRA },	     //  4
-	{ "zpobjz04.bin",  0x200000, 0x3aec2f8d, BRF_GRA },	     //  5
+	{ "unico_zpobj_z01.bin",  	0x200000, 0x1f2768a3, BRF_GRA },	     //  2	Sprites
+	{ "unico_zpobj_z02.bin",  	0x200000, 0xde34f33a, BRF_GRA },	     //  3
+	{ "unico_zpobj_z03.bin",  	0x200000, 0xd7a657f7, BRF_GRA },	     //  4
+	{ "unico_zpobj_z04.bin",  	0x200000, 0x3aec2f8d, BRF_GRA },	     //  5
 	
-	{ "zpscrz06.bin",  0x200000, 0xe1e53cf0, BRF_GRA },	     //  6	Layers
-	{ "zpscrz05.bin",  0x200000, 0x0d7d4850, BRF_GRA },	     //  7
-	{ "zpscrz07.bin",  0x200000, 0xbb178f32, BRF_GRA },	     //  8
-	{ "zpscrz08.bin",  0x200000, 0x672f02e5, BRF_GRA },	     //  9
+	{ "unico_zpscr_z06.bin",  	0x200000, 0xe1e53cf0, BRF_GRA },	     //  6	Layers
+	{ "unico_zpscr_z05.bin",  	0x200000, 0x0d7d4850, BRF_GRA },	     //  7
+	{ "unico_zpscr_z07.bin",  	0x200000, 0xbb178f32, BRF_GRA },	     //  8
+	{ "unico_zpscr_z08.bin",  	0x200000, 0x672f02e5, BRF_GRA },	     //  9
 	
-	{ "zero_1.bin",    0x080000, 0xfd2384fa, BRF_SND },	     //  10	Samples
+	{ "unico_1.rom1",    		0x080000, 0xfd2384fa, BRF_SND },	     //  10	Samples
 };
 
 STD_ROM_PICK(Zeropnt)
 STD_ROM_FN(Zeropnt)
 
 static struct BurnRomInfo ZeropntaRomDesc[] = {
-	{ "zpa2.bin",      0x080000, 0x285fbca3, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "zpa3.bin",      0x080000, 0xad7b3129, BRF_ESS | BRF_PRG }, //  1
+	{ "unico2.rom2",      		0x080000, 0x285fbca3, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "unico3.rom3",      		0x080000, 0xad7b3129, BRF_ESS | BRF_PRG }, //  1
 	
-	{ "zpobjz01.bin",  0x200000, 0x1f2768a3, BRF_GRA },	     //  2	Sprites
-	{ "zpobjz02.bin",  0x200000, 0xde34f33a, BRF_GRA },	     //  3
-	{ "zpobjz03.bin",  0x200000, 0xd7a657f7, BRF_GRA },	     //  4
-	{ "zpobjz04.bin",  0x200000, 0x3aec2f8d, BRF_GRA },	     //  5
+	{ "unico_zpobj_z01.bin",  	0x200000, 0x1f2768a3, BRF_GRA },	     //  2	Sprites
+	{ "unico_zpobj_z02.bin",  	0x200000, 0xde34f33a, BRF_GRA },	     //  3
+	{ "unico_zpobj_z03.bin",  	0x200000, 0xd7a657f7, BRF_GRA },	     //  4
+	{ "unico_zpobj_z04.bin",  	0x200000, 0x3aec2f8d, BRF_GRA },	     //  5
 	
-	{ "zpscrz06.bin",  0x200000, 0xe1e53cf0, BRF_GRA },	     //  6	Layers
-	{ "zpscrz05.bin",  0x200000, 0x0d7d4850, BRF_GRA },	     //  7
-	{ "zpscrz07.bin",  0x200000, 0xbb178f32, BRF_GRA },	     //  8
-	{ "zpscrz08.bin",  0x200000, 0x672f02e5, BRF_GRA },	     //  9
+	{ "unico_zpscr_z06.bin",  	0x200000, 0xe1e53cf0, BRF_GRA },	     //  6	Layers
+	{ "unico_zpscr_z05.bin",  	0x200000, 0x0d7d4850, BRF_GRA },	     //  7
+	{ "unico_zpscr_z07.bin",  	0x200000, 0xbb178f32, BRF_GRA },	     //  8
+	{ "unico_zpscr_z08.bin",  	0x200000, 0x672f02e5, BRF_GRA },	     //  9
 	
-	{ "zero_1.bin",    0x080000, 0xfd2384fa, BRF_SND },	     //  10	Samples
+	{ "unico_1.rom1",    		0x080000, 0xfd2384fa, BRF_SND },	     //  10	Samples
 };
 
 STD_ROM_PICK(Zeropnta)
 STD_ROM_FN(Zeropnta)
 
 static struct BurnRomInfo ZeropntjRomDesc[] = {
-	{ "zero_2.bin",    0x080000, 0x098d9756, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "zero_3.bin",    0x080000, 0x58e105f3, BRF_ESS | BRF_PRG }, //  1
+	{ "unico_2.bin",    		0x080000, 0x098d9756, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "unico_3.bin",    		0x080000, 0x58e105f3, BRF_ESS | BRF_PRG }, //  1
 	
-	{ "zpobjz01.bin",  0x200000, 0x1f2768a3, BRF_GRA },	     //  2	Sprites
-	{ "zpobjz02.bin",  0x200000, 0x529c36ee, BRF_GRA },	     //  3
-	{ "zpobjz03.bin",  0x200000, 0xd7a657f7, BRF_GRA },	     //  4
-	{ "zpobjz04.bin",  0x200000, 0x3aec2f8d, BRF_GRA },	     //  5
+	{ "unico_zpobj_z01.bin",  	0x200000, 0x1f2768a3, BRF_GRA },	     //  2	Sprites
+	{ "unico_4.bin",  			0x200000, 0x529c36ee, BRF_GRA },	     //  3
+	{ "unico_zpobj_z03.bin",  	0x200000, 0xd7a657f7, BRF_GRA },	     //  4
+	{ "unico_zpobj_z04.bin",  	0x200000, 0x3aec2f8d, BRF_GRA },	     //  5
 	
-	{ "zpscrz06.bin",  0x200000, 0xe1e53cf0, BRF_GRA },	     //  6	Layers
-	{ "zpscrz05.bin",  0x200000, 0x0d7d4850, BRF_GRA },	     //  7
-	{ "zpscrz07.bin",  0x200000, 0xbb178f32, BRF_GRA },	     //  8
-	{ "zpscrz08.bin",  0x200000, 0x672f02e5, BRF_GRA },	     //  9
+	{ "unico_zpscr_z06.bin",  	0x200000, 0xe1e53cf0, BRF_GRA },	     //  6	Layers
+	{ "unico_zpscr_z05.bin",  	0x200000, 0x0d7d4850, BRF_GRA },	     //  7
+	{ "unico_zpscr_z07.bin",  	0x200000, 0xbb178f32, BRF_GRA },	     //  8
+	{ "unico_zpscr_z08.bin",  	0x200000, 0x672f02e5, BRF_GRA },	     //  9
 	
-	{ "zero_1.bin",    0x080000, 0xfd2384fa, BRF_SND },	     //  10	Samples
+	{ "unico_1.rom1",    		0x080000, 0xfd2384fa, BRF_SND },	     //  10	Samples
 };
 
 STD_ROM_PICK(Zeropntj)

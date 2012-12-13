@@ -506,8 +506,6 @@ INT32 KodbObjGet()
 		nGetNext = 0;
 	}
 	
-	memset(CpsBootlegSpriteRam, 0, 0x3000);
-
 	return 0;
 }
 

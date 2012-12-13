@@ -5487,14 +5487,14 @@ STD_ROM_FN(Lostwrldo)
 static struct BurnRomInfo GanbareRomDesc[] = {
 	{ "mrnj_23d.8f",   0x080000, 0xf929be72, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
-	{ "mnrj_01.3a",    0x080000, 0x3f878020, BRF_GRA | CPS1_TILES },
-	{ "mnrj_02.4a",    0x080000, 0x3e5624d8, BRF_GRA | CPS1_TILES },
-	{ "mnrj_03.5a",    0x080000, 0xd1e61f96, BRF_GRA | CPS1_TILES },
-	{ "mnrj_04.6a",    0x080000, 0xd241971b, BRF_GRA | CPS1_TILES },
-	{ "mnrj_05.7a",    0x080000, 0xc0a14562, BRF_GRA | CPS1_TILES },
-	{ "mnrj_06.8a",    0x080000, 0xe6a71dfc, BRF_GRA | CPS1_TILES },
-	{ "mnrj_07.9a",    0x080000, 0x99afb6c7, BRF_GRA | CPS1_TILES },
-	{ "mnrj_08.10",    0x080000, 0x52882c20, BRF_GRA | CPS1_TILES },
+	{ "mrnj_01.3a",    0x080000, 0x3f878020, BRF_GRA | CPS1_TILES },
+	{ "mrnj_02.4a",    0x080000, 0x3e5624d8, BRF_GRA | CPS1_TILES },
+	{ "mrnj_03.5a",    0x080000, 0xd1e61f96, BRF_GRA | CPS1_TILES },
+	{ "mrnj_04.6a",    0x080000, 0xd241971b, BRF_GRA | CPS1_TILES },
+	{ "mrnj_05.7a",    0x080000, 0xc0a14562, BRF_GRA | CPS1_TILES },
+	{ "mrnj_06.8a",    0x080000, 0xe6a71dfc, BRF_GRA | CPS1_TILES },
+	{ "mrnj_07.9a",    0x080000, 0x99afb6c7, BRF_GRA | CPS1_TILES },
+	{ "mrnj_08.10",    0x080000, 0x52882c20, BRF_GRA | CPS1_TILES },
 
 	{ "mrnj_09.12c",   0x010000, 0x62470d72, BRF_PRG | CPS1_Z80_PROGRAM },
 

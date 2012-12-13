@@ -2015,7 +2015,7 @@ static struct BurnDIPInfo GanbareDIPList[]=
 	// Dip A
 	{0   , 0xfe, 0   , 2   , "Medal Setup"            },
 	{0x0a, 0x01, 0x01, 0x00, "1 Medal 1 Credit"       },
-	{0x0a, 0x01, 0x01, 0x01, "Unknown"                },
+	{0x0a, 0x01, 0x01, 0x01, "Don't use"              },
 	
 	{0   , 0xfe, 0   , 2   , "Coin Setup"             },
 	{0x0a, 0x01, 0x02, 0x00, "100 Yen"                },
@@ -2029,17 +2029,17 @@ static struct BurnDIPInfo GanbareDIPList[]=
 	{0x0a, 0x01, 0x1c, 0x08, "7"                      },
 	{0x0a, 0x01, 0x1c, 0x0c, "6"                      },
 	{0x0a, 0x01, 0x1c, 0x10, "5"                      },
-	{0x0a, 0x01, 0x1c, 0x14, "Unknown"                },
+	{0x0a, 0x01, 0x1c, 0x14, "No change"              },
 	
 	{0   , 0xfe, 0   , 4   , "10 Yen Setup"           },
 	{0x0a, 0x01, 0x60, 0x00, "1 Coin  1 Credit"       },
 	{0x0a, 0x01, 0x60, 0x20, "2 Coins 1 Credit"       },
 	{0x0a, 0x01, 0x60, 0x40, "3 Coins 1 Credit"       },
-	{0x0a, 0x01, 0x60, 0x60, "Unknown"                },
+	{0x0a, 0x01, 0x60, 0x60, "Don't use"              },
 	
 	{0   , 0xfe, 0   , 2   , "Payout Setup"           },
 	{0x0a, 0x01, 0x80, 0x00, "Credit Mode"            },
-	{0x0a, 0x01, 0x80, 0x80, "Unknown"                },
+	{0x0a, 0x01, 0x80, 0x80, "Payout Mode"            },
 	
 	// Dip B
 	{0   , 0xfe, 0   , 8   , "Payout Rate Setup"      },
@@ -2055,9 +2055,9 @@ static struct BurnDIPInfo GanbareDIPList[]=
 	// Dip C
 	{0   , 0xfe, 0   , 4   , "Demo Sound Setup"       },
 	{0x0c, 0x01, 0x03, 0x00, "Always"                 },
-	{0x0c, 0x01, 0x03, 0x01, "2 1 Unknown"            },
-	{0x0c, 0x01, 0x03, 0x02, "3 1 Unknown"            },
-	{0x0c, 0x01, 0x03, 0x03, "Unknown"                },
+	{0x0c, 0x01, 0x03, 0x01, "Every second sound"     },
+	{0x0c, 0x01, 0x03, 0x02, "Every third sound"      },
+	{0x0c, 0x01, 0x03, 0x03, "Off"                    },
 	
 	{0   , 0xfe, 0   , 2   , "Clear RAM"              },
 	{0x0c, 0x01, 0x40, 0x00, "No"                     },
@@ -5502,6 +5502,12 @@ static struct BurnRomInfo GanbareRomDesc[] = {
 	{ "mrnj_19.12c",   0x020000, 0x5fa59927, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
 	{ "m48t35y.9n",    0x008000, 0x96107b4a, BRF_OPT }, // timekeeper internal ram - game overwrites it on init anyway
+	
+	A_BOARD_PLDS
+	
+	{ "gbp.1a",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },	// b-board PLDs
+	{ "iob1.12e",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "bprg1.11e",     0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(Ganbare)

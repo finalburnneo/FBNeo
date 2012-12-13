@@ -1,4 +1,5 @@
 #include "cps.h"
+#include "timekpr.h"
 
 #define CPS1_68K_PROGRAM_BYTESWAP		1
 #define CPS1_68K_PROGRAM_NO_BYTESWAP	2
@@ -351,6 +352,25 @@ static struct BurnInputInfo ForgottnInputList[] =
 #undef A
 
 STDINPUTINFO(Forgottn)
+
+static struct BurnInputInfo GanbareInputList[] = {
+	{"Coin 1"           , BIT_DIGITAL  , CpsInp018+0, "p1 coin"   },
+	{"Coin 2"           , BIT_DIGITAL  , CpsInp018+1, "p2 coin"   },
+	{"Start"            , BIT_DIGITAL  , CpsInp018+4, "p1 start"  },
+	{"Left Switch"      , BIT_DIGITAL  , CpsInp001+1, "p1 left"   },
+	{"Right Switch"     , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
+	{"Show Switch"      , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
+	{"Pay Switch"       , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
+
+	{"Reset"            , BIT_DIGITAL  , &CpsReset  , "reset"     },
+	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6, "diag"      },
+	{"Service"          , BIT_DIGITAL  , CpsInp018+2, "service"   },
+ 	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A    , "dip"       },
+ 	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C    , "dip"       },
+ 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
+};
+
+STDINPUTINFO(Ganbare)
 
 static struct BurnInputInfo GhoulsInputList[] =
 {
@@ -1984,6 +2004,71 @@ static struct BurnDIPInfo ForgottnDIPList[]=
 };
 
 STDDIPINFO(Forgottn)
+
+static struct BurnDIPInfo GanbareDIPList[]=
+{
+	// Defaults
+	{0x0a, 0xff, 0xff, 0x00, NULL                     },
+	{0x0b, 0xff, 0xff, 0x00, NULL                     },
+	{0x0c, 0xff, 0xff, 0x00, NULL                     },
+	
+	// Dip A
+	{0   , 0xfe, 0   , 2   , "Medal Setup"            },
+	{0x0a, 0x01, 0x01, 0x00, "1 Medal 1 Credit"       },
+	{0x0a, 0x01, 0x01, 0x01, "Unknown"                },
+	
+	{0   , 0xfe, 0   , 2   , "Coin Setup"             },
+	{0x0a, 0x01, 0x02, 0x00, "100 Yen"                },
+	{0x0a, 0x01, 0x02, 0x02, "10 Yen"                 },
+	
+	{0   , 0xfe, 0   , 8   , "Change Setup"           },
+	{0x0a, 0x01, 0x1c, 0x18, "12"                     },
+	{0x0a, 0x01, 0x1c, 0x1c, "11"                     },
+	{0x0a, 0x01, 0x1c, 0x00, "10"                     },
+	{0x0a, 0x01, 0x1c, 0x04, "8"                      },
+	{0x0a, 0x01, 0x1c, 0x08, "7"                      },
+	{0x0a, 0x01, 0x1c, 0x0c, "6"                      },
+	{0x0a, 0x01, 0x1c, 0x10, "5"                      },
+	{0x0a, 0x01, 0x1c, 0x14, "Unknown"                },
+	
+	{0   , 0xfe, 0   , 4   , "10 Yen Setup"           },
+	{0x0a, 0x01, 0x60, 0x00, "1 Coin  1 Credit"       },
+	{0x0a, 0x01, 0x60, 0x20, "2 Coins 1 Credit"       },
+	{0x0a, 0x01, 0x60, 0x40, "3 Coins 1 Credit"       },
+	{0x0a, 0x01, 0x60, 0x60, "Unknown"                },
+	
+	{0   , 0xfe, 0   , 2   , "Payout Setup"           },
+	{0x0a, 0x01, 0x80, 0x00, "Credit Mode"            },
+	{0x0a, 0x01, 0x80, 0x80, "Unknown"                },
+	
+	// Dip B
+	{0   , 0xfe, 0   , 8   , "Payout Rate Setup"      },
+	{0x0b, 0x01, 0x07, 0x06, "90%"                    },
+	{0x0b, 0x01, 0x07, 0x07, "85%"                    },
+	{0x0b, 0x01, 0x07, 0x00, "80%"                    },
+	{0x0b, 0x01, 0x07, 0x01, "75%"                    },
+	{0x0b, 0x01, 0x07, 0x02, "70%"                    },
+	{0x0b, 0x01, 0x07, 0x03, "65%"                    },
+	{0x0b, 0x01, 0x07, 0x04, "60%"                    },
+	{0x0b, 0x01, 0x07, 0x05, "55%"                    },
+	
+	// Dip C
+	{0   , 0xfe, 0   , 4   , "Demo Sound Setup"       },
+	{0x0c, 0x01, 0x03, 0x00, "Always"                 },
+	{0x0c, 0x01, 0x03, 0x01, "2 1 Unknown"            },
+	{0x0c, 0x01, 0x03, 0x02, "3 1 Unknown"            },
+	{0x0c, 0x01, 0x03, 0x03, "Unknown"                },
+	
+	{0   , 0xfe, 0   , 2   , "Clear RAM"              },
+	{0x0c, 0x01, 0x40, 0x00, "No"                     },
+	{0x0C, 0x01, 0x40, 0x40, "Yes"                    },
+	
+	{0   , 0xfe, 0   , 2   , "Test Mode Display"      },
+	{0x0c, 0x01, 0x80, 0x00, "Off"                    },
+	{0x0C, 0x01, 0x80, 0x80, "On"                     },	
+};
+
+STDDIPINFO(Ganbare)
 
 static struct BurnDIPInfo GhoulsDIPList[]=
 {
@@ -5398,6 +5483,29 @@ static struct BurnRomInfo LostwrldoRomDesc[] = {
 
 STD_ROM_PICK(Lostwrldo)
 STD_ROM_FN(Lostwrldo)
+
+static struct BurnRomInfo GanbareRomDesc[] = {
+	{ "mrnj_23d.8f",   0x080000, 0xf929be72, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "mnrj_01.3a",    0x080000, 0x3f878020, BRF_GRA | CPS1_TILES },
+	{ "mnrj_02.4a",    0x080000, 0x3e5624d8, BRF_GRA | CPS1_TILES },
+	{ "mnrj_03.5a",    0x080000, 0xd1e61f96, BRF_GRA | CPS1_TILES },
+	{ "mnrj_04.6a",    0x080000, 0xd241971b, BRF_GRA | CPS1_TILES },
+	{ "mnrj_05.7a",    0x080000, 0xc0a14562, BRF_GRA | CPS1_TILES },
+	{ "mnrj_06.8a",    0x080000, 0xe6a71dfc, BRF_GRA | CPS1_TILES },
+	{ "mnrj_07.9a",    0x080000, 0x99afb6c7, BRF_GRA | CPS1_TILES },
+	{ "mnrj_08.10",    0x080000, 0x52882c20, BRF_GRA | CPS1_TILES },
+
+	{ "mrnj_09.12c",   0x010000, 0x62470d72, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "mrnj_18.11c",   0x020000, 0x08e13940, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "mrnj_19.12c",   0x020000, 0x5fa59927, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "m48t35y.9n",    0x008000, 0x96107b4a, BRF_OPT }, // timekeeper internal ram - game overwrites it on init anyway
+};
+
+STD_ROM_PICK(Ganbare)
+STD_ROM_FN(Ganbare)
 
 static struct BurnRomInfo GhoulsRomDesc[] = {
 	{ "dme_29.10h",    0x020000, 0x166a58a2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -10882,6 +10990,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "forgottnua"  , CPS_B_01    , mapper_LWCHR , 1, NULL                },
 	{ "lostwrld"    , CPS_B_01    , mapper_LWCHR , 1, NULL                },
 	{ "lostwrldo"   , CPS_B_01    , mapper_LWCHR , 1, NULL                },
+	{ "ganbare"     , CPS_B_21_DEF, mapper_sfzch , 0, NULL                },
 	{ "ghouls"      , CPS_B_01    , mapper_DM620 , 0, NULL                },
 	{ "ghoulsu"     , CPS_B_01    , mapper_DM620 , 0, NULL                },
 	{ "daimakai"    , CPS_B_01    , mapper_DM22A , 0, NULL                },
@@ -11960,6 +12069,77 @@ static INT32 ForgottnAltGfxuInit()
 	CpsLoadStarsForgottnAlt(CpsStar, 15);
 	
 	return nRet;
+}
+
+UINT8 __fastcall GanbareTimeKeeperReadByte(UINT32 a)
+{
+	if (a & 1) {
+		return TimeKeeperRead((a & 0xffff) >> 1);
+	} else {
+		return CpsRamFF[(a & 0xffff) >> 1];
+	}
+}
+
+UINT16 __fastcall GanbareTimeKeeperReadWord(UINT32 a)
+{
+	SEK_DEF_READ_WORD(1, a);
+}
+
+void __fastcall GanbareTimeKeeperWriteByte(UINT32 a, UINT8 d)
+{
+	if (a & 1) {
+		TimeKeeperWrite((a & 0xffff) >> 1, d);
+	} else {
+		CpsRamFF[(a & 0xffff) >> 1] = d;
+	}
+}
+
+void __fastcall GanbareTimeKeeperWriteWord(UINT32 a, UINT16 d)
+{
+	SEK_DEF_WRITE_WORD(1, a, d);
+}
+
+static void GanabareTimeKeeperTick()
+{
+	if ((GetCurrentFrame() % 60) == 0) TimeKeeperTick(); // refresh is 59.61
+	
+	SekOpen(0);
+	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekClose();
+}
+
+static INT32 GanbareScanCallback(INT32 nAction, INT32*)
+{
+	TimeKeeperScan(nAction);
+
+	return 0;
+}
+
+static INT32 GanbareInit()
+{
+	CpsRunFrameStartCallbackFunction = GanabareTimeKeeperTick;
+	CpsMemScanCallbackFunction = GanbareScanCallback;
+	
+	INT32 nRet = DrvInit();
+	
+	SekOpen(0);
+	SekMapHandler(1, 0xff0000, 0xffffff, SM_RAM);
+	SekSetReadByteHandler(1, GanbareTimeKeeperReadByte);
+	SekSetReadWordHandler(1, GanbareTimeKeeperReadWord);
+	SekSetWriteByteHandler(1, GanbareTimeKeeperWriteByte);
+	SekSetWriteWordHandler(1, GanbareTimeKeeperWriteWord);
+	SekClose();
+	
+	TimeKeeperInit(TIMEKEEPER_M48T35, NULL);
+	
+	return nRet;
+}
+
+static INT32 GanbareExit()
+{
+	TimeKeeperExit();
+	
+	return DrvExit();
 }
 
 static void GhoulsCallback()
@@ -14811,6 +14991,16 @@ struct BurnDriver BurnDrvCpsLostwrldo = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_HORSHOOT, 0,
  	NULL, LostwrldoRomInfo, LostwrldoRomName, NULL, NULL, ForgottnInputInfo, ForgottnDIPInfo,
 	ForgottnInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsGanbare = {
+	"ganbare", NULL, NULL, NULL, "2000",
+	"Ganbare Marin-kun (Marine 2K0411 JPN)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_HORSHOOT, 0,
+	NULL, GanbareRomInfo, GanbareRomName, NULL, NULL, GanbareInputInfo, GanbareDIPInfo,
+	GanbareInit, GanbareExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

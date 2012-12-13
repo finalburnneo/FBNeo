@@ -5494,7 +5494,7 @@ static struct BurnRomInfo GanbareRomDesc[] = {
 	{ "mrnj_05.7a",    0x080000, 0xc0a14562, BRF_GRA | CPS1_TILES },
 	{ "mrnj_06.8a",    0x080000, 0xe6a71dfc, BRF_GRA | CPS1_TILES },
 	{ "mrnj_07.9a",    0x080000, 0x99afb6c7, BRF_GRA | CPS1_TILES },
-	{ "mrnj_08.10",    0x080000, 0x52882c20, BRF_GRA | CPS1_TILES },
+	{ "mrnj_08.10a",   0x080000, 0x52882c20, BRF_GRA | CPS1_TILES },
 
 	{ "mrnj_09.12c",   0x010000, 0x62470d72, BRF_PRG | CPS1_Z80_PROGRAM },
 

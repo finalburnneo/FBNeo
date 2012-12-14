@@ -2,7 +2,7 @@
 #define _BURNER_LIBRETRO_H
 
 #include "gameinp.h"
-#include "inp_keys.h"
+#include "input/inp_keys.h"
 
 extern int bDrvOkay;
 extern int bRunPause;

@@ -10,11 +10,7 @@
 #include <assert.h>
 #include <ctype.h>
 
-#if defined(__LIBRETRO__) && defined(_XBOX)
-#include <tchar.h>
-#else
 #include "tchar.h"
-#endif
 
 // Macro to make quoted strings
 #define MAKE_STRING_2(s) #s

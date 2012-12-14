@@ -1,5 +1,6 @@
 DEBUG = 0
-LIBRETRO_OPTIMIZATIONS = 0
+LIBRETRO_OPTIMIZATIONS = 1
+FRONTEND_SUPPORTS_RGB565 = 1
 
 ifeq ($(platform),)
 platform = unix
@@ -12,6 +13,18 @@ else ifneq ($(findstring MINGW,$(shell uname -a)),)
 endif
 endif
 
+# system platform
+system_platform = unix
+ifeq ($(shell uname -a),)
+   system_platform = win
+EXE_EXT=.exe
+else ifneq ($(findstring Darwin,$(shell uname -a)),)
+   system_platform = osx
+else ifneq ($(findstring MINGW,$(shell uname -a)),)
+   system_platform = win
+endif
+
+
 MAIN_FBA_DIR := src
 FBA_BURN_DIR := $(MAIN_FBA_DIR)/burn
 FBA_BURN_DRIVERS_DIR := $(MAIN_FBA_DIR)/burn/drv
@@ -20,6 +33,8 @@ LIBRETRO_DIR := $(FBA_BURNER_DIR)/libretro
 FBA_CPU_DIR := $(MAIN_FBA_DIR)/cpu
 FBA_LIB_DIR := $(MAIN_FBA_DIR)/dep/libs
 FBA_INTERFACE_DIR := $(MAIN_FBA_DIR)/intf
+FBA_GENERATED_DIR = $(MAIN_FBA_DIR)/dep/generated
+FBA_SCRIPTS_DIR = $(MAIN_FBA_DIR)/dep/scripts
 
 EXTERNAL_ZLIB = 0
 
@@ -34,33 +49,49 @@ else ifeq ($(platform), osx)
    SHARED := -dynamiclib
    ENDIANNESS_DEFINES := -DLSB_FIRST
 else ifeq ($(platform), ps3)
-   TARGET := libretro.a
+   TARGET := libretro_ps3.a
    CC = $(CELL_SDK)/host-win32/ppu/bin/ppu-lv2-gcc.exe
    CXX = $(CELL_SDK)/host-win32/ppu/bin/ppu-lv2-g++.exe
    AR = $(CELL_SDK)/host-win32/ppu/bin/ppu-lv2-ar.exe
    ENDIANNESS_DEFINES =  -DWORDS_BIGENDIAN
-   PLATFORM_DEFINES := -D__CELLOS_LV2
+   PLATFORM_DEFINES += -D__CELLOS_LV2__
    EXTERNAL_ZLIB = 1
 else ifeq ($(platform), sncps3)
-   TARGET := libretro.a
+   TARGET := libretro_ps3.a
    CXX	= $(CELL_SDK)/host-win32/sn/bin/ps3ppusnc.exe
    CC = $(CELL_SDK)/host-win32/sn/bin/ps3ppusnc.exe
    AR = $(CELL_SDK)/host-win32/sn/bin/ps3snarl.exe
    ENDIANNESS_DEFINES =  -DWORDS_BIGENDIAN
    PLATFORM_DEFINES += -D__CELLOS_LV2__ -DSN_TARGET_PS3
    EXTERNAL_ZLIB = 1
+else ifeq ($(platform), psl1ght)
+   TARGET := libretro_psl1ght.a
+   CC = $(PS3DEV)/ppu/bin/ppu-gcc$(EXE_EXT)
+   CXX = $(PS3DEV)/ppu/bin/ppu-g++$(EXE_EXT)
+   AR = $(PS3DEV)/ppu/bin/ppu-ar$(EXE_EXT)
+   ENDIANNESS_DEFINES =  -DWORDS_BIGENDIAN
+   PLATFORM_DEFINES += -D__CELLOS_LV2__
+   EXTERNAL_ZLIB = 1
 else ifeq ($(platform), xenon)
-   TARGET := libretro.a
-   CC = xenon-gcc
-   CXX = xenon-g++
-   AR = xenon-ar
+   TARGET := libretro_xenon360.a
+   CC = xenon-gcc$(EXE_EXT)
+   CXX = xenon-g++$(EXE_EXT)
+   AR = xenon-ar$(EXE_EXT)
    ENDIANNESS_DEFINES = -DWORDS_BIGENDIAN
    PLATFORM_DEFINES := -D__LIBXENON__ -m32 -D__ppc__
+else ifeq ($(platform), ngc)
+   TARGET := libretro_ngc.a
+   CC = $(DEVKITPPC)/bin/powerpc-eabi-gcc$(EXE_EXT)
+   CXX = $(DEVKITPPC)/bin/powerpc-eabi-g++$(EXE_EXT)
+   AR = $(DEVKITPPC)/bin/powerpc-eabi-ar$(EXE_EXT)
+   ENDIANNESS_DEFINES = -DWORDS_BIGENDIAN
+   PLATFORM_DEFINES := -DGEKKO -DHW_DOL -mrvl -mcpu=750 -meabi -mhard-float
+   EXTERNAL_ZLIB = 1
 else ifeq ($(platform), wii)
-   TARGET := libretro.a
-   CC = $(DEVKITPPC)/bin/powerpc-eabi-gcc
-   CXX = $(DEVKITPPC)/bin/powerpc-eabi-g++
-   AR = $(DEVKITPPC)/bin/powerpc-eabi-ar
+   TARGET := libretro_wii.a
+   CC = $(DEVKITPPC)/bin/powerpc-eabi-gcc$(EXE_EXT)
+   CXX = $(DEVKITPPC)/bin/powerpc-eabi-g++$(EXE_EXT)
+   AR = $(DEVKITPPC)/bin/powerpc-eabi-ar$(EXE_EXT)
    ENDIANNESS_DEFINES = -DWORDS_BIGENDIAN
    PLATFORM_DEFINES := -DGEKKO -DHW_RVL -mrvl -mcpu=750 -meabi -mhard-float
    EXTERNAL_ZLIB = 1
@@ -73,7 +104,10 @@ else
    ENDIANNESS_DEFINES := -DLSB_FIRST
 endif
 
-.PHONY: clean generate-files
+CC_SYSTEM = gcc
+CXX_SYSTEM = g++
+
+.PHONY: clean generate-files generate-files-clean clean-objs
 
 all: $(TARGET)
 
@@ -114,9 +148,9 @@ BURN_BLACKLIST := $(FBA_BURNER_DIR)/un7z.cpp \
 	$(FBA_CPU_DIR)/nec/necinstr.c \
 	$(FBA_BURN_DIR)/drv/capcom/ctv_make.cpp
 
-ifeq ($(LIBRETRO_OPTIMIZATIONS), 1)
-BURN_BLACKLIST += $(FBA_BURN_DIR)/drv/capcom/ctv.cpp
-endif
+#ifeq ($(LIBRETRO_OPTIMIZATIONS), 1)
+#BURN_BLACKLIST += $(FBA_BURN_DIR)/drv/capcom/ctv.cpp
+#endif
 
 ifeq ($(EXTERNAL_ZLIB), 1)
 BURN_BLACKLIST += $(FBA_BURNER_DIR)/unzip.c \
@@ -192,7 +226,6 @@ INCDIRS := -I$(FBA_BURNER_DIR)/win32 \
 	-I$(LIBRETRO_DIR) \
 	-I$(LIBRETRO_DIR)/tchar \
 	-I$(FBA_BURN_DIR) \
-	-I$(FBA_BURN_DIR)/burner \
 	-I$(MAIN_FBA_DIR)/cpu \
 	-I$(FBA_BURN_DIR)/snd \
 	-I$(FBA_BURN_DIR)/devices \
@@ -200,23 +233,8 @@ INCDIRS := -I$(FBA_BURNER_DIR)/win32 \
 	-I$(FBA_INTERFACE_DIR)/input \
 	-I$(FBA_INTERFACE_DIR)/cd \
 	-I$(FBA_BURNER_DIR) \
-	-I$(MAIN_FBA_DIR)/dep/generated \
 	-I$(FBA_CPU_DIR) \
-	-I$(FBA_CPU_DIR)/m6809 \
-	-I$(FBA_CPU_DIR)/m6805 \
-	-I$(FBA_CPU_DIR)/m6800 \
-	-I$(FBA_CPU_DIR)/h6280 \
-	-I$(FBA_CPU_DIR)/nec \
-	-I$(FBA_CPU_DIR)/hd6309 \
-	-I$(FBA_CPU_DIR)/arm7 \
 	-I$(FBA_CPU_DIR)/i8039 \
-	-I$(FBA_CPU_DIR)/konami \
-	-I$(FBA_CPU_DIR)/m68k \
-	-I$(FBA_CPU_DIR)/m6502 \
-	-I$(FBA_CPU_DIR)/z80 \
-	-I$(FBA_CPU_DIR)/sh2 \
-	-I$(FBA_CPU_DIR)/s2650 \
-	-I$(FBA_CPU_DIR)/arm \
 	-I$(FBA_LIB_DIR)/zlib \
 	-I$(FBA_BURN_DIR)/drv/capcom \
 	-I$(FBA_BURN_DIR)/drv/dataeast \
@@ -226,11 +244,11 @@ INCDIRS := -I$(FBA_BURNER_DIR)/win32 \
 	-I$(FBA_BURN_DIR)/drv/sega \
 	-I$(FBA_BURN_DIR)/drv/toaplan \
 	-I$(FBA_BURN_DIR)/drv/taito \
+	-I$(FBA_GENERATED_DIR) \
 	-I$(FBA_LIB_DIR)
 
 ifeq ($(LIBRETRO_OPTIMIZATIONS), 1)
 FBA_DEFINES += -D__LIBRETRO_OPTIMIZATIONS__ 
-INCDIRS += -I$(MAIN_FBA_DIR)/dep/generated-libretro
 endif
 
 ifeq ($(DEBUG), 1)
@@ -252,22 +270,86 @@ CFLAGS += $(C_STD_DEFINES) $(fpic) $(WARNINGS_DEFINES) $(FBA_DEFINES)
 CXXFLAGS += $(fpic) $(WARNINGS_DEFINES) $(FBA_DEFINES)
 LDFLAGS += $(fpic)
 
+ifeq ($(FRONTEND_SUPPORTS_RGB565), 1)
+CFLAGS += -DFRONTEND_SUPPORTS_RGB565
+CXXFLAGS += -DFRONTEND_SUPPORTS_RGB565
+endif
 
 ifeq ($(ZLIB_INTERNAL), 0)
 INCDIRS += -I$(FBA_LIB_DIR)
 endif
 
-generate:
-	rm -rf src/dep/generated
-	sh ./generate_files.sh
+ifeq ($(LIBRETRO_OPTIMIZATIONS), 1)
+GENERATE_OPTS := -D__LIBRETRO_OPTIMIZATIONS__
+else
+GENERATE_OPTS :=
+endif
 
-$(TARGET): generate-files $(OBJS)
+PERL = perl$(EXE_EXT)
+M68KMAKE_EXE = m68kmake$(EXE_EXT)
+CTVMAKE_EXE = ctvmake$(EXE_EXT)
+PGM_SPRITE_CREATE_EXE = pgmspritecreate$(EXE_EXT)
+EXE_PREFIX = ./
+
+generate-files-clean:
+	rm -rf $(FBA_GENERATED_DIR)/
+	rm -rf $(FBA_CPU_DIR)/m68k/m68kopac.c
+	rm -rf $(FBA_CPU_DIR)/m68k/m68kopdm.c
+	rm -rf $(FBA_CPU_DIR)/m68k/m68kopnz.c
+	rm -rf $(FBA_CPU_DIR)/m68k/m68kops.c
+	rm -rf $(FBA_CPU_DIR)/m68k/m68kops.h
+
+generate-files:
+	@mkdir -p $(FBA_GENERATED_DIR) 2>/dev/null || /bin/true
+	@echo "Generating $(FBA_GENERATED_DIR)/driverlist.h..."
+	@echo ""
+	$(PERL) $(FBA_SCRIPTS_DIR)/gamelist.pl -o $(FBA_GENERATED_DIR)/driverlist.h -l gamelist.txt $(FBA_BURN_DRIVERS_DIR)/capcom $(FBA_BURN_DRIVERS_DIR)/cave $(FBA_BURN_DRIVERS_DIR)/cps3 $(FBA_BURN_DRIVERS_DIR)/dataeast $(FBA_BURN_DRIVERS_DIR)/galaxian $(FBA_BURN_DRIVERS_DIR)/irem $(FBA_BURN_DRIVERS_DIR)/konami $(FBA_BURN_DRIVERS_DIR)/megadrive $(FBA_BURN_DRIVERS_DIR)/neogeo $(FBA_BURN_DRIVERS_DIR)/pce $(FBA_BURN_DRIVERS_DIR)/pgm $(FBA_BURN_DRIVERS_DIR)/pre90s $(FBA_BURN_DRIVERS_DIR)/psikyo $(FBA_BURN_DRIVERS_DIR)/pst90s $(FBA_BURN_DRIVERS_DIR)/sega $(FBA_BURN_DRIVERS_DIR)/snes $(FBA_BURN_DRIVERS_DIR)/taito $(FBA_BURN_DRIVERS_DIR)/toaplan
+	@echo ""
+	@echo "Generating $(FBA_GENERATED_DIR)/neo_sprite_func.h..."
+	@echo ""
+	@echo "Generating $(FBA_GENERATED_DIR)/neo_sprite_func_table.h..."
+	@echo ""
+	$(PERL) $(FBA_SCRIPTS_DIR)/neo_sprite_func.pl -o $(FBA_GENERATED_DIR)/neo_sprite_func.h $(LIBRETRO_OPTIMIZATIONS)
+	@echo ""
+	@echo "Generating $(FBA_GENERATED_DIR)/psikyo_tile_func.h..."
+	@echo ""
+	@echo "Generating $(FBA_GENERATED_DIR)/psikyo_tile_func_table.h..."
+	@echo ""
+	$(PERL) $(FBA_SCRIPTS_DIR)/psikyo_tile_func.pl -o $(FBA_GENERATED_DIR)/psikyo_tile_func.h
+	@echo "Generating $(FBA_GENERATED_DIR)/cave_sprite_func.h..."
+	@echo ""
+	@echo "Generating[ $(FBA_GENERATED_DIR)/cave_tile_func_table.h"
+	@echo ""
+	$(PERL) $(FBA_SCRIPTS_DIR)/cave_sprite_func.pl -o $(FBA_GENERATED_DIR)/cave_sprite_func.h
+	$(PERL) $(FBA_SCRIPTS_DIR)/cave_tile_func.pl -o $(FBA_GENERATED_DIR)/cave_tile_func.h
+	@echo ""
+	@echo "Generate $(FBA_GENERATED_DIR)/toa_gp9001_func_table.h"
+	@echo ""
+	$(PERL) $(FBA_SCRIPTS_DIR)/toa_gp9001_func.pl -o $(FBA_GENERATED_DIR)/toa_gp9001_func.h
+	$(CXX_SYSTEM) $(GENERATE_OPTS) -o $(PGM_SPRITE_CREATE_EXE) $(FBA_BURN_DRIVERS_DIR)/pgm/pgm_sprite_create.cpp
+	@echo ""
+	@echo "Generating $(FBA_GENERATED_DIR)/pgm_sprite.h..."
+	@echo ""
+	$(EXE_PREFIX)$(PGM_SPRITE_CREATE_EXE) > $(FBA_GENERATED_DIR)/pgm_sprite.h
+	$(CC_SYSTEM) $(GENERATE_OPTS) -o $(M68KMAKE_EXE) $(FBA_CPU_DIR)/m68k/m68kmake.c
+	$(EXE_PREFIX)$(M68KMAKE_EXE) $(FBA_CPU_DIR)/m68k/ $(FBA_CPU_DIR)/m68k/m68k_in.c
+	$(CXX_SYSTEM) $(GENERATE_OPTS) -o $(CTVMAKE_EXE) $(FBA_BURN_DRIVERS_DIR)/capcom/ctv_make.cpp
+	@echo ""
+	@echo "Generating $(FBA_GENERATED_DIR)/ctv.h..."
+	@echo ""
+	$(EXE_PREFIX)$(CTVMAKE_EXE) > $(FBA_GENERATED_DIR)/ctv.h
+
+$(TARGET): $(OBJS)
 	@echo "LD $@"
 ifeq ($(platform), ps3)
 	@$(AR) rcs $@ $(OBJS)
 else ifeq ($(platform), sncps3)
 	$(AR) rcs $@ $(OBJS)
+else ifeq ($(platform), psl1ght)
+	$(AR) rcs $@ $(OBJS)
 else ifeq ($(platform), xenon)
+	@$(AR) rcs $@ $(OBJS)
+else ifeq ($(platform), ngc)
 	@$(AR) rcs $@ $(OBJS)
 else ifeq ($(platform), wii)
 	@$(AR) rcs $@ $(OBJS)
@@ -283,9 +365,12 @@ endif
 	@echo "CC $<"
 	@$(CC) -c -o $@ $< $(CFLAGS) $(INCDIRS)
 
+clean-objs:
+	rm -f $(OBJS)
+
 clean:
 	rm -f $(TARGET)
 	rm -f $(OBJS)
-ifeq ($(GENERATE_FILES), 1)
-	rm -rf src/dep/generated
-endif
+	rm -f $(M68KMAKE_EXE)
+	rm -f $(PGM_SPRITE_CREATE_EXE)
+	rm -f $(CTVMAKE_EXE)

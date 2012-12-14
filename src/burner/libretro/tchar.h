@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <wchar.h>
 
-#include "inp_keys.h"
+#include "input/inp_keys.h"
 
 #ifdef _MSC_VER
 #include <tchar.h>
@@ -16,7 +16,15 @@ typedef struct { int x, y, width, height; } RECT;
 #undef __cdecl
 #define __cdecl
 
-#define bprintf(...) {}
+#ifdef _XBOX1
+static inline void bprintf(int code, const char *format, ...)
+{
+	(void)0;
+}
+#else
+#define bprintf
+#endif
+
 #define _strnicmp(s1, s2, n) strncasecmp(s1, s2, n)
 #define _stricmp(x, y) strcasecmp(x,y)
 
@@ -38,10 +46,13 @@ typedef struct { int x, y, width, height; } RECT;
 #define _tcsstr strstr
 #define _stscanf sscanf
 #define _ftprintf fprintf
-#ifndef _MSC_VER
+#define _tcscpy(to, from) strcpy(to, from)
+
+#ifdef _MSC_VER
+#define _tcsicmp(a, b) _stricmp(a, b)
+#else
 #define _tcsicmp(a, b) strcasecmp(a, b)
 #endif
-#define _tcscpy(to, from) strcpy(to, from)
 /*define lstrlen			what does lstrlen correspond to?*/
 
 #undef __fastcall
@@ -66,6 +77,5 @@ extern bool bAlwaysProcessKeyboardInput;
 extern HWND hScrnWnd;		// Handle to the screen window
 
 extern void InpDIPSWResetDIPs (void);
-
 
 #endif

@@ -1,5 +1,5 @@
 #include "tiles_generic.h"
-#include "sh2.h"
+#include "sh2_intf.h"
 
 static UINT8 DrvInputPort0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort1[8] = {0, 0, 0, 0, 0, 0, 0, 0};

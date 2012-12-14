@@ -1,4 +1,4 @@
-#include "m6805.h"
+#include "m6805/m6805.h"
 
 #define M6805_READ		1
 #define M6805_WRITE		2

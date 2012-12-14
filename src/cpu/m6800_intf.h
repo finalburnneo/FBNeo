@@ -1,4 +1,4 @@
-#include "m6800.h"
+#include "m6800/m6800.h"
 
 typedef UINT8 (*pReadByteHandler)(UINT16 a);
 typedef void (*pWriteByteHandler)(UINT16 a, UINT8 d);

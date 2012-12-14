@@ -5,7 +5,7 @@
  #define __fastcall
 #endif
 
-#include "z80.h"
+#include "z80/z80.h"
 
 extern INT32 nHasZet;
 void ZetWriteByte(UINT16 address, UINT8 data);

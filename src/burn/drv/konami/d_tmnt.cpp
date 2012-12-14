@@ -3011,6 +3011,10 @@ void __fastcall Blswhstl68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
+#ifdef _XBOX1
+#define pow powf
+#endif
+
 static void tmnt2_protection_write()
 {
 	UINT32 src_addr, dst_addr, mod_addr, attr1, code, attr2, cbase, cmod, color;

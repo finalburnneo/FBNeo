@@ -2,7 +2,7 @@
 // NeoGeo CD Game Info Module (by CaptainCPS-X)
 // ---------------------------------------------------------------------------------------
 #include "burner.h"
-#include "neocdlist.h"
+#include "../neocdlist.h"
 
 struct NGCDGAME games[] = 
 {

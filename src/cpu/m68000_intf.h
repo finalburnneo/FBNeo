@@ -14,7 +14,7 @@
 #define SEK_MAX	(4)								// Maximum number of CPUs supported
 
 #if defined EMU_M68K
- #include "m68k.h"
+ #include "m68k/m68k.h"
 #endif
 
 // Number of bits used for each page in the fast memory map

@@ -1,4 +1,4 @@
-#include "m6502.h"
+#include "m6502/m6502.h"
 
 typedef UINT8 (*pReadPortHandler)(UINT16 a);
 typedef void (*pWritePortHandler)(UINT16 a, UINT8 d);

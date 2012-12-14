@@ -1,4 +1,4 @@
-#include "hd6309.h"
+#include "hd6309/hd6309.h"
 
 typedef UINT8 (*pReadByteHandler)(UINT16 a);
 typedef void (*pWriteByteHandler)(UINT16 a, UINT8 d);

@@ -1,6 +1,6 @@
 #include "libretro.h"
 #include "burner.h"
-#include "inp_keys.h"
+#include "input/inp_keys.h"
 #include "state.h"
 #include <string.h>
 #include <stdio.h>
@@ -9,7 +9,7 @@
 #include <string>
 #include <ctype.h>
 
-#include "cd_interface.h"
+#include "cd/cd_interface.h"
 
 static unsigned int BurnDrvGetIndexByName(const char* name);
 
@@ -52,14 +52,15 @@ void retro_set_input_state(retro_input_state_t cb) { input_cb = cb; }
 void retro_set_environment(retro_environment_t cb) { environ_cb = cb; }
 
 static char g_rom_dir[1024];
+static bool driver_inited;
 
 void retro_get_system_info(struct retro_system_info *info)
 {
    info->library_name = "FB Alpha";
-   info->library_version = "0.2.97.26";
+   info->library_version = "v0.2.97.27";
    info->need_fullpath = true;
    info->block_extract = true;
-   info->valid_extensions = "zip|ZIP";
+   info->valid_extensions = "iso|ISO|zip|ZIP";
 }
 
 /////
@@ -319,7 +320,9 @@ void retro_init()
 
 void retro_deinit()
 {
-   BurnDrvExit();
+   if (driver_inited)
+      BurnDrvExit();
+   driver_inited = false;
    BurnLibExit();
 }
 
@@ -332,13 +335,14 @@ void retro_run()
    BurnDrvGetVisibleSize(&width, &height);
    pBurnDraw = (uint8_t*)g_fba_frame;
 
+   poll_input();
+
    nBurnLayer = 0xff;
    pBurnSoundOut = g_audio_buf;
    nBurnSoundRate = 32000;
    nBurnSoundLen = AUDIO_SEGMENT_LENGTH;
    nCurrentFrame++;
 
-   poll_input();
 
    BurnDrvFrame();
    unsigned drv_flags = BurnDrvGetFlags();
@@ -424,7 +428,7 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
    int maximum = width > height ? width : height;
    struct retro_game_geometry geom = { width, height, maximum, maximum };
 
-   struct retro_system_timing timing = { 60.0, 32000.0 };
+   struct retro_system_timing timing = { 60.0, 60.0 * AUDIO_SEGMENT_LENGTH };
 
    info->geometry = geom;
    info->timing   = timing;
@@ -450,17 +454,41 @@ static bool fba_init(unsigned driver)
    else
       nBurnPitch = width * sizeof(uint16_t);
 
+   unsigned rotation;
+   switch (drv_flags & (BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL))
+   {
+      case BDF_ORIENTATION_VERTICAL:
+         rotation = 1;
+         break;
+
+      case BDF_ORIENTATION_FLIPPED:
+         rotation = 2;
+         break;
+
+      case BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED:
+         rotation = 3;
+         break;
+
+      default:
+         rotation = 0;
+   }
+
+   environ_cb(RETRO_ENVIRONMENT_SET_ROTATION, &rotation);
+
    return true;
 }
 
+#if defined(FRONTEND_SUPPORTS_RGB565)
+static unsigned int HighCol16(int r, int g, int b, int  /* i */)
+{
+   return (((r << 8) & 0xf800) | ((g << 3) & 0x07e0) | ((b >> 3) & 0x001f));
+}
+#else
 static unsigned int HighCol15(int r, int g, int b, int  /* i */)
 {
-   unsigned int t = 0;
-   t |= (r << 7) & 0x7c00;
-   t |= (g << 2) & 0x03e0;
-   t |= (b >> 3) & 0x001f;
-   return t;
+   return (((r << 7) & 0x7c00) | ((g << 2) & 0x03e0) | ((b >> 3) & 0x001f));
 }
+#endif
 
 int VidRecalcPal()
 {
@@ -471,7 +499,13 @@ static void init_video()
 {
    nBurnBpp = 2;
    VidRecalcPal();
+#if 0
+#ifdef FRONTEND_SUPPORTS_RGB565
+   BurnHighCol = HighCol16;
+#else
    BurnHighCol = HighCol15;
+#endif
+#endif
 }
 
 static void init_audio()
@@ -515,8 +549,11 @@ static void extract_directory(char *buf, const char *path, size_t size)
       buf[0] = '\0';
 }
 
+bool analog_controls_enabled = false;
+
 bool retro_load_game(const struct retro_game_info *info)
 {
+   bool retval = false;
    char basename[128];
    extract_basename(basename, info->path, sizeof(basename));
    extract_directory(g_rom_dir, info->path, sizeof(g_rom_dir));
@@ -530,15 +567,21 @@ bool retro_load_game(const struct retro_game_info *info)
       if (!fba_init(i))
          return false;
 
-      init_input();
+      driver_inited = true;
+      analog_controls_enabled = init_input();
 
-      return true;
+      retval = true;
    }
    else
-   {
       fprintf(stderr, "[FBA] Cannot find driver.\n");
-      return false;
-   }
+
+#ifdef FRONTEND_SUPPORTS_RGB565
+   enum retro_pixel_format fmt = RETRO_PIXEL_FORMAT_RGB565;
+   if(environ_cb(RETRO_ENVIRONMENT_SET_PIXEL_FORMAT, &fmt)) 
+      fprintf(stderr, "Frontend supports RGB565 - will use that instead of XRGB1555.\n");
+#endif
+
+   return retval;
 }
 
 bool retro_load_game_special(unsigned, const struct retro_game_info*, size_t) { return false; }
@@ -557,65 +600,18 @@ void retro_set_controller_port_device(unsigned, unsigned) {}
 // Input stuff.
 
 // Ref GamcPlayer() in ../gamc.cpp
-#define P1_COIN	FBK_5
-#define P1_START  FBK_1
-#define P1_LEFT   FBK_LEFTARROW
-#define P1_RIGHT  FBK_RIGHTARROW
-#define P1_UP     FBK_UPARROW
-#define P1_DOWN   FBK_DOWNARROW
-#define P1_FIRE1  FBK_A
-#define P1_FIRE2  FBK_S
-#define P1_FIRE3  FBK_D
-#define P1_FIRE4  FBK_Z
-#define P1_FIRE5  FBK_X
-#define P1_FIRE6  FBK_C
-#define P1_FIRED  FBK_V
-#define P1_SERVICE FBK_F2
-
-#define P2_COIN 0x07
-#define P2_START 0x03
-#define P2_LEFT 0x4000
-#define P2_RIGHT 0x4001
-#define P2_UP 0x4002
-#define P2_DOWN 0x4003
-#define P2_FIRE1 0x4080
-#define P2_FIRE2 0x4081
-#define P2_FIRE3 0x4082
-#define P2_FIRE4 0x4083
-#define P2_FIRE5 0x4084
-#define P2_FIRE6 0x4085
-#define P2_FIRED 0x4086
-
-#define P3_COIN 0x08
-#define P3_START 0x04
-#define P3_LEFT 0x4100
-#define P3_RIGHT 0x4101
-#define P3_UP 0x4102
-#define P3_DOWN 0x4103
-#define P3_FIRE1 0x4180
-#define P3_FIRE2 0x4181
-#define P3_FIRE3 0x4182
-#define P3_FIRE4 0x4183
-#define P3_FIRE5 0x4184
-#define P3_FIRE6 0x4185
-
-#define P4_COIN 0x09
-#define P4_START 0x05
-#define P4_LEFT 0x4200
-#define P4_RIGHT 0x4201
-#define P4_UP 0x4202
-#define P4_DOWN 0x4203
-#define P4_FIRE1 0x4280
-#define P4_FIRE2 0x4281
-#define P4_FIRE3 0x4282
-#define P4_FIRE4 0x4283
-#define P4_FIRE5 0x4284
-#define P4_FIRE6 0x4285
-
-static unsigned char keybinds[0x5000][2]; 
+struct key_map
+{
+   const char *bii_name;
+   unsigned nCode[2];
+};
+static uint8_t keybinds[0x5000][2]; 
 #define _BIND(x) RETRO_DEVICE_ID_JOYPAD_##x
 #define RESET_BIND 12
 #define SERVICE_BIND 13
+
+#define BIND_MAP_COUNT 145
+
 static bool init_input()
 {
    GameInpInit();
@@ -633,179 +629,752 @@ static bool init_input()
    }
 
    //needed for Neo Geo button mappings (and other drivers in future)
-   const char * boardrom = BurnDrvGetTextA(DRV_BOARDROM);
+   const char * parentrom	= BurnDrvGetTextA(DRV_PARENT);
+   const char * boardrom	= BurnDrvGetTextA(DRV_BOARDROM);
+   const char * drvname		= BurnDrvGetTextA(DRV_NAME);
+   INT32	genre		= BurnDrvGetGenreFlags();
+   INT32	hardware	= BurnDrvGetHardwareCode();
+
+   fprintf(stderr, "has_analog: %d\n", has_analog);
+   fprintf(stderr, "parentrom: %s\n", parentrom);
+   fprintf(stderr, "boardrom: %s\n", boardrom);
+   fprintf(stderr, "drvname: %s\n", drvname);
+   fprintf(stderr, "genre: %d\n", genre);
+   fprintf(stderr, "hardware: %d\n", hardware);
+
+   /* initialization */
+   struct BurnInputInfo bii;
+   memset(&bii, 0, sizeof(bii));
 
    // Bind to nothing.
    for (unsigned i = 0; i < 0x5000; i++)
       keybinds[i][0] = 0xff;
 
+   pgi = GameInp;
+
+   key_map bind_map[BIND_MAP_COUNT];
+
+   bind_map[0].bii_name = "P1 Coin";
+   bind_map[0].nCode[0] = _BIND(SELECT);
+   bind_map[0].nCode[1] = 0;
+
+   bind_map[1].bii_name = "P1 Start";
+   bind_map[1].nCode[0] = _BIND(START);
+   bind_map[1].nCode[1] = 0;
+
+   bind_map[2].bii_name = "Start 1";
+   bind_map[2].nCode[0] = _BIND(START);
+   bind_map[2].nCode[1] = 0;
+
+   bind_map[3].bii_name = "P1 Up";
+   bind_map[3].nCode[0] = _BIND(UP);
+   bind_map[3].nCode[1] = 0;
+
+   bind_map[4].bii_name = "P1 Down";
+   bind_map[4].nCode[0] = _BIND(DOWN);
+   bind_map[4].nCode[1] = 0;
+
+   bind_map[5].bii_name = "P1 Left";
+   bind_map[5].nCode[0] = _BIND(LEFT);
+   bind_map[5].nCode[1] = 0;
+
+   bind_map[6].bii_name = "P1 Right";
+   bind_map[6].nCode[0] = _BIND(RIGHT);
+   bind_map[6].nCode[1] = 0;
+
+   bind_map[7].bii_name = "P1 Attack";
+   bind_map[7].nCode[0] = _BIND(Y);
+   bind_map[7].nCode[1] = 0;
+
+   bind_map[8].bii_name = "Accelerate";
+   bind_map[8].nCode[0] = _BIND(B);
+   bind_map[8].nCode[1] = 0;
+
+   bind_map[9].bii_name = "Brake";
+   bind_map[9].nCode[0] = _BIND(Y);
+   bind_map[9].nCode[1] = 0;
+
+   bind_map[10].bii_name = "Gear";
+   bind_map[10].nCode[0] = _BIND(A);
+   bind_map[10].nCode[1] = 0;
+
+   /* for Forgotten Worlds, etc */
+   bind_map[11].bii_name = "P1 Turn";
+   bind_map[11].nCode[0] = _BIND(A);
+   bind_map[11].nCode[1] = 0;
+
+   bind_map[12].bii_name = "P1 Jump";
+   bind_map[12].nCode[0] = _BIND(B);
+   bind_map[12].nCode[1] = 0;
+
+   bind_map[13].bii_name = "P1 Pin";
+   bind_map[13].nCode[0] = _BIND(A);
+   bind_map[13].nCode[1] = 0;
+
+   bind_map[14].bii_name = "P1 Select";
+   bind_map[14].nCode[0] = _BIND(A);
+   bind_map[14].nCode[1] = 0;
+
+   bind_map[15].bii_name = "P1 Use";
+   bind_map[15].nCode[0] = _BIND(X);
+   bind_map[15].nCode[1] = 0;
+
+   bind_map[16].bii_name = "P1 Weak Punch";
+   bind_map[16].nCode[0] = _BIND(Y);
+   bind_map[16].nCode[1] = 0;
+
+   bind_map[17].bii_name = "P1 Medium Punch";
+   bind_map[17].nCode[0] = _BIND(X);
+   bind_map[17].nCode[1] = 0;
+
+   bind_map[18].bii_name = "P1 Strong Punch";
+   bind_map[18].nCode[0] = _BIND(L);
+   bind_map[18].nCode[1] = 0;
+
+   bind_map[19].bii_name = "P1 Weak Kick";
+   bind_map[19].nCode[0] = _BIND(B);
+   bind_map[19].nCode[1] = 0;
+
+   bind_map[20].bii_name = "P1 Medium Kick";
+   bind_map[20].nCode[0] = _BIND(A);
+   bind_map[20].nCode[1] = 0;
+
+   bind_map[21].bii_name = "P1 Strong Kick";
+   bind_map[21].nCode[0] = _BIND(R);
+   bind_map[21].nCode[1] = 0;
+
+   bind_map[22].bii_name = "P1 Rotate Left";
+   bind_map[22].nCode[0] = _BIND(B);
+   bind_map[22].nCode[1] = 0;
+
+   bind_map[23].bii_name = "P1 Rotate Right";
+   bind_map[23].nCode[0] = _BIND(A);
+   bind_map[23].nCode[1] = 0;
+
+   bind_map[24].bii_name = "P1 Punch";
+   bind_map[24].nCode[0] = _BIND(Y);
+   bind_map[24].nCode[1] = 0;
+
+   bind_map[25].bii_name = "P1 Kick";
+   bind_map[25].nCode[0] = _BIND(B);
+   bind_map[25].nCode[1] = 0;
+
+   bind_map[26].bii_name = "P1 Special";
+   bind_map[26].nCode[0] = _BIND(A);
+   bind_map[26].nCode[1] = 0;
+
+   bind_map[27].bii_name = "P1 Shot";
+   bind_map[27].nCode[0] = _BIND(B);
+   bind_map[27].nCode[1] = 0;
+
+   bind_map[28].bii_name = "P1 Shot (auto)";
+   bind_map[28].nCode[0] = _BIND(X);
+   bind_map[28].nCode[1] = 0;
+
+   /* Simpsons - Konami */
+   bind_map[29].bii_name = "P1 Button 1";
+   bind_map[29].nCode[0] = _BIND(Y);
+   bind_map[29].nCode[1] = 0;
+
+   /* Simpsons - Konami */
+   bind_map[30].bii_name = "P1 Button 2";
+   bind_map[30].nCode[0] = _BIND(B);
+   bind_map[30].nCode[1] = 0;
+
+   bind_map[31].bii_name = "P1 Button 3";
+   bind_map[31].nCode[0] = _BIND(A);
+   bind_map[31].nCode[1] = 0;
+
+   bind_map[32].bii_name = "P1 Button 4";
+   bind_map[32].nCode[0] = _BIND(X);
+   bind_map[32].nCode[1] = 0;
+
+   /* Progear */
+   bind_map[33].bii_name = "P1 Auto";
+   bind_map[33].nCode[0] = _BIND(A);
+   bind_map[33].nCode[1] = 0;
+
+   /* Punisher */
+   bind_map[34].bii_name = "P1 Super";
+   bind_map[34].nCode[0] = _BIND(A);
+   bind_map[34].nCode[1] = 0;
+
+   bind_map[35].bii_name = "P1 Answer 1";
+   bind_map[35].nCode[0] = _BIND(Y);
+   bind_map[35].nCode[1] = 0;
+
+   bind_map[36].bii_name = "P1 Answer 2";
+   bind_map[36].nCode[0] = _BIND(X);
+   bind_map[36].nCode[1] = 0;
+
+   bind_map[37].bii_name = "P1 Answer 3";
+   bind_map[37].nCode[0] = _BIND(B);
+   bind_map[37].nCode[1] = 0;
+
+   bind_map[38].bii_name = "P1 Answer 4";
+   bind_map[38].nCode[0] = _BIND(A);
+   bind_map[38].nCode[1] = 0;
+
+   bind_map[39].bii_name = "P1 Shot 1";
+   bind_map[39].nCode[0] = _BIND(B);
+   bind_map[39].nCode[1] = 0;
+
+   /* Pang 3 */
+   bind_map[40].bii_name = "P1 Shot 1";
+   bind_map[40].nCode[0] = _BIND(B);
+   bind_map[40].nCode[1] = 0;
+
+   /* Pang 3 */
+   bind_map[41].bii_name = "P1 Shot 2";
+   bind_map[41].nCode[0] = _BIND(A);
+   bind_map[41].nCode[1] = 0;
+
+   bind_map[42].bii_name = "P1 Bomb";
+   bind_map[42].nCode[0] = _BIND(A);
+   bind_map[42].nCode[1] = 0;
+
+   bind_map[43].bii_name = "P1 Special";
+   bind_map[43].nCode[0] = _BIND(A);
+   bind_map[43].nCode[1] = 0;
+
+   /* for Ghouls 'n Ghosts */
+   bind_map[44].bii_name = "P1 Fire";
+   bind_map[44].nCode[0] = _BIND(Y);
+   bind_map[44].nCode[1] = 0;
+
+   /* TMNT */
+   bind_map[45].bii_name = "P1 Fire 1";
+   bind_map[45].nCode[0] = _BIND(Y);
+   bind_map[45].nCode[1] = 0;
+
+   /* Space Harrier */
+   bind_map[46].bii_name = "Fire 1";
+   bind_map[46].nCode[0] = _BIND(Y);
+   bind_map[46].nCode[1] = 0;
+
+   /* Space Harrier */
+   bind_map[47].bii_name = "Fire 2";
+   bind_map[47].nCode[0] = _BIND(B);
+   bind_map[47].nCode[1] = 0;
+
+   /* Space Harrier */
+   bind_map[48].bii_name = "Fire 3";
+   bind_map[48].nCode[0] = _BIND(A);
+   bind_map[48].nCode[1] = 0;
+
+   /* TMNT */
+   bind_map[49].bii_name = "P1 Fire 2";
+   bind_map[49].nCode[0] = _BIND(B);
+   bind_map[49].nCode[1] = 0;
+
+   /* Strider */
+   bind_map[50].bii_name = "P1 Fire 3";
+   bind_map[50].nCode[0] = _BIND(A);
+   bind_map[50].nCode[1] = 0;
+
+   /* Strider */
+   bind_map[51].bii_name = "Coin 1";
+   bind_map[51].nCode[0] = _BIND(SELECT);
+   bind_map[51].nCode[1] = 0;
+
+   /* Neo Geo */
+   bind_map[52].bii_name = "P1 Button A";
+   bind_map[52].nCode[0] = _BIND(B);
+   bind_map[52].nCode[1] = 0;
+
+   /* Neo Geo */
+   bind_map[53].bii_name = "P1 Button B";
+   bind_map[53].nCode[0] = _BIND(A);
+   bind_map[53].nCode[1] = 0;
+
+   /* Neo Geo */
+   bind_map[54].bii_name = "P1 Button C";
+   bind_map[54].nCode[0] = _BIND(Y);
+   bind_map[54].nCode[1] = 0;
+
+   /* Neo Geo */
+   bind_map[55].bii_name = "P1 Button D";
+   bind_map[55].nCode[0] = _BIND(X);
+   bind_map[55].nCode[1] = 0;
+
+   bind_map[56].bii_name = "P2 Coin";
+   bind_map[56].nCode[0] = _BIND(SELECT);
+   bind_map[56].nCode[1] = 1;
+
+   bind_map[57].bii_name = "P2 Start";
+   bind_map[57].nCode[0] = _BIND(START);
+   bind_map[57].nCode[1] = 1;
+
+   bind_map[58].bii_name = "P2 Up";
+   bind_map[58].nCode[0] = _BIND(UP);
+   bind_map[58].nCode[1] = 1;
+
+   bind_map[59].bii_name = "P2 Down";
+   bind_map[59].nCode[0] = _BIND(DOWN);
+   bind_map[59].nCode[1] = 1;
+
+   bind_map[60].bii_name = "P2 Left";
+   bind_map[60].nCode[0] = _BIND(LEFT);
+   bind_map[60].nCode[1] = 1;
+
+   bind_map[61].bii_name = "P2 Right";
+   bind_map[61].nCode[0] = _BIND(RIGHT);
+   bind_map[61].nCode[1] = 1;
+
+   bind_map[62].bii_name = "P2 Attack";
+   bind_map[62].nCode[0] = _BIND(Y);
+   bind_map[62].nCode[1] = 1;
+
+   // for Forgotten Worlds, etc.
+   bind_map[63].bii_name = "P2 Turn";
+   bind_map[63].nCode[0] = _BIND(A);
+   bind_map[63].nCode[1] = 1;
+
+   bind_map[64].bii_name = "P2 Jump";
+   bind_map[64].nCode[0] = _BIND(B);
+   bind_map[64].nCode[1] = 1;
+
+   bind_map[65].bii_name = "P2 Pin";
+   bind_map[65].nCode[0] = _BIND(A);
+   bind_map[65].nCode[1] = 1;
+
+   bind_map[66].bii_name = "P2 Select";
+   bind_map[66].nCode[0] = _BIND(A);
+   bind_map[66].nCode[1] = 1;
+
+   bind_map[67].bii_name = "P2 Use";
+   bind_map[67].nCode[0] = _BIND(X);
+   bind_map[67].nCode[1] = 1;
+
+   bind_map[68].bii_name = "P2 Weak Punch";
+   bind_map[68].nCode[0] = _BIND(Y);
+   bind_map[68].nCode[1] = 1;
+
+   bind_map[69].bii_name = "P2 Medium Punch";
+   bind_map[69].nCode[0] = _BIND(X);
+   bind_map[69].nCode[1] = 1;
+
+   bind_map[70].bii_name = "P2 Strong Punch";
+   bind_map[70].nCode[0] = _BIND(L);
+   bind_map[70].nCode[1] = 1;
+
+   bind_map[71].bii_name = "P2 Weak Kick";
+   bind_map[71].nCode[0] = _BIND(B);
+   bind_map[71].nCode[1] = 1;
+
+   bind_map[72].bii_name = "P2 Medium Kick";
+   bind_map[72].nCode[0] = _BIND(A);
+   bind_map[72].nCode[1] = 1;
+
+   bind_map[73].bii_name = "P2 Strong Kick";
+   bind_map[73].nCode[0] = _BIND(R);
+   bind_map[73].nCode[1] = 1;
+
+   bind_map[74].bii_name = "P2 Rotate Left";
+   bind_map[74].nCode[0] = _BIND(B);
+   bind_map[74].nCode[1] = 1;
+
+   bind_map[75].bii_name = "P2 Rotate Right";
+   bind_map[75].nCode[0] = _BIND(A);
+   bind_map[75].nCode[1] = 1;
+
+   bind_map[76].bii_name = "P2 Punch";
+   bind_map[76].nCode[0] = _BIND(Y);
+   bind_map[76].nCode[1] = 1;
+
+   bind_map[77].bii_name = "P2 Kick";
+   bind_map[77].nCode[0] = _BIND(B);
+   bind_map[77].nCode[1] = 1;
+
+   bind_map[78].bii_name = "P2 Special";
+   bind_map[78].nCode[0] = _BIND(A);
+   bind_map[78].nCode[1] = 1;
+
+   bind_map[79].bii_name = "P2 Shot";
+   bind_map[79].nCode[0] = _BIND(B);
+   bind_map[79].nCode[1] = 1;
+
+   /* Simpsons - Konami */
+   bind_map[80].bii_name = "P2 Button 1";
+   bind_map[80].nCode[0] = _BIND(Y);
+   bind_map[80].nCode[1] = 1;
+
+   bind_map[81].bii_name = "P2 Button 2";
+   bind_map[81].nCode[0] = _BIND(B);
+   bind_map[81].nCode[1] = 1;
+
+   /* Various */
+   bind_map[82].bii_name = "P2 Button 3";
+   bind_map[82].nCode[0] = _BIND(A);
+   bind_map[82].nCode[1] = 1;
+
+   bind_map[83].bii_name = "P2 Button 4";
+   bind_map[83].nCode[0] = _BIND(X);
+   bind_map[83].nCode[1] = 1;
+
+   /* Progear */
+   bind_map[84].bii_name = "P2 Auto";
+   bind_map[84].nCode[0] = _BIND(A);
+   bind_map[84].nCode[1] = 1;
+
+   bind_map[85].bii_name = "P2 Shot (auto)";
+   bind_map[85].nCode[0] = _BIND(X);
+   bind_map[85].nCode[1] = 1;
+
+   /* Punisher */
+   bind_map[86].bii_name = "P2 Super";
+   bind_map[86].nCode[0] = _BIND(A);
+   bind_map[86].nCode[1] = 1;
+
+   bind_map[87].bii_name = "P2 Answer 1";
+   bind_map[87].nCode[0] = _BIND(Y);
+   bind_map[87].nCode[1] = 1;
+
+   bind_map[88].bii_name = "P2 Answer 2";
+   bind_map[88].nCode[0] = _BIND(X);
+   bind_map[88].nCode[1] = 1;
+
+   bind_map[89].bii_name = "P2 Answer 3";
+   bind_map[89].nCode[0] = _BIND(B);
+   bind_map[89].nCode[1] = 1;
+
+   bind_map[90].bii_name = "P2 Answer 4";
+   bind_map[90].nCode[0] = _BIND(A);
+   bind_map[90].nCode[1] = 1;
+
+   /* Pang 3 */
+   bind_map[91].bii_name = "P2 Shot 1";
+   bind_map[91].nCode[0] = _BIND(B);
+   bind_map[91].nCode[1] = 1;
+
+   bind_map[92].bii_name = "P2 Shot 2";
+   bind_map[92].nCode[0] = _BIND(A);
+   bind_map[92].nCode[1] = 1;
+
+   bind_map[93].bii_name = "P2 Bomb";
+   bind_map[93].nCode[0] = _BIND(A);
+   bind_map[93].nCode[1] = 1;
+
+   bind_map[94].bii_name = "P2 Special";
+   bind_map[94].nCode[0] = _BIND(A);
+   bind_map[94].nCode[1] = 1;
+
+   /* Ghouls 'n Ghosts */
+   bind_map[95].bii_name = "P2 Fire";
+   bind_map[95].nCode[0] = _BIND(Y);
+   bind_map[95].nCode[1] = 1;
+
+   /* TMNT */
+   bind_map[96].bii_name = "P2 Fire 1";
+   bind_map[96].nCode[0] = _BIND(Y);
+   bind_map[96].nCode[1] = 1;
+
+   bind_map[97].bii_name = "P2 Fire 2";
+   bind_map[97].nCode[0] = _BIND(B);
+   bind_map[97].nCode[1] = 1;
+
+   /* Strider */
+   bind_map[98].bii_name = "P2 Fire 3";
+   bind_map[98].nCode[0] = _BIND(A);
+   bind_map[98].nCode[1] = 1;
+
+   bind_map[99].bii_name = "Coin 2";
+   bind_map[99].nCode[0] = _BIND(SELECT);
+   bind_map[99].nCode[1] = 1;
+
+   /* Neo Geo */
+   bind_map[100].bii_name = "P2 Button A";
+   bind_map[100].nCode[0] = _BIND(B);
+   bind_map[100].nCode[1] = 1;
+
+   bind_map[101].bii_name = "P2 Button B";
+   bind_map[101].nCode[0] = _BIND(A);
+   bind_map[101].nCode[1] = 1;
+
+   bind_map[102].bii_name = "P2 Button C";
+   bind_map[102].nCode[0] = _BIND(Y);
+   bind_map[102].nCode[1] = 1;
+
+   bind_map[103].bii_name = "P2 Button D";
+   bind_map[103].nCode[0] = _BIND(X);
+   bind_map[103].nCode[1] = 1;
+
+   bind_map[104].bii_name = "P3 Coin";
+   bind_map[104].nCode[0] = _BIND(SELECT);
+   bind_map[104].nCode[1] = 2;
+
+   bind_map[105].bii_name = "P3 Start";
+   bind_map[105].nCode[0] = _BIND(START);
+   bind_map[105].nCode[1] = 2;
+
+   bind_map[106].bii_name = "P3 Up";
+   bind_map[106].nCode[0] = _BIND(UP);
+   bind_map[106].nCode[1] = 2;
+
+   bind_map[107].bii_name = "P3 Down";
+   bind_map[107].nCode[0] = _BIND(DOWN);
+   bind_map[107].nCode[1] = 2;
+
+   bind_map[108].bii_name = "P3 Left";
+   bind_map[108].nCode[0] = _BIND(LEFT);
+   bind_map[108].nCode[1] = 2;
+
+   bind_map[109].bii_name = "P3 Right";
+   bind_map[109].nCode[0] = _BIND(RIGHT);
+   bind_map[109].nCode[1] = 2;
+
+   bind_map[110].bii_name = "P3 Attack";
+   bind_map[110].nCode[0] = _BIND(Y);
+   bind_map[110].nCode[1] = 2;
+
+   bind_map[111].bii_name = "P3 Jump";
+   bind_map[111].nCode[0] = _BIND(B);
+   bind_map[111].nCode[1] = 2;
+
+   bind_map[112].bii_name = "P3 Pin";
+   bind_map[112].nCode[0] = _BIND(A);
+   bind_map[112].nCode[1] = 2;
+
+   bind_map[113].bii_name = "P3 Select";
+   bind_map[113].nCode[0] = _BIND(A);
+   bind_map[113].nCode[1] = 2;
+
+   bind_map[114].bii_name = "P3 Use";
+   bind_map[114].nCode[0] = _BIND(X);
+   bind_map[114].nCode[1] = 2;
+
+   /* Simpsons - Konami */
+   bind_map[115].bii_name = "P3 Button 1";
+   bind_map[115].nCode[0] = _BIND(Y);
+   bind_map[115].nCode[1] = 2;
+
+   bind_map[116].bii_name = "P3 Button 2";
+   bind_map[116].nCode[0] = _BIND(B);
+   bind_map[116].nCode[1] = 2;
+
+   bind_map[117].bii_name = "P3 Button 3";
+   bind_map[117].nCode[0] = _BIND(A);
+   bind_map[117].nCode[1] = 2;
+
+   bind_map[118].bii_name = "P3 Button 4";
+   bind_map[118].nCode[0] = _BIND(X);
+   bind_map[118].nCode[1] = 2;
+
+   /* TMNT */
+   bind_map[119].bii_name = "P3 Fire 1";
+   bind_map[119].nCode[0] = _BIND(Y);
+   bind_map[119].nCode[1] = 2;
+
+   bind_map[120].bii_name = "P3 Fire 2";
+   bind_map[120].nCode[0] = _BIND(B);
+   bind_map[120].nCode[1] = 2;
+
+   /* Strider */
+   bind_map[121].bii_name = "P3 Fire 3";
+   bind_map[121].nCode[0] = _BIND(A);
+   bind_map[121].nCode[1] = 2;
+
+   bind_map[122].bii_name = "Coin 3";
+   bind_map[122].nCode[0] = _BIND(SELECT);
+   bind_map[122].nCode[1] = 2;
+
+   bind_map[123].bii_name = "P4 Coin";
+   bind_map[123].nCode[0] = _BIND(SELECT);
+   bind_map[123].nCode[1] = 3;
+
+   bind_map[124].bii_name = "P4 Start";
+   bind_map[124].nCode[0] = _BIND(START);
+   bind_map[124].nCode[1] = 3;
+
+   bind_map[125].bii_name = "P4 Up";
+   bind_map[125].nCode[0] = _BIND(UP);
+   bind_map[125].nCode[1] = 3;
+
+   bind_map[126].bii_name = "P4 Down";
+   bind_map[126].nCode[0] = _BIND(DOWN);
+   bind_map[126].nCode[1] = 3;
+
+   bind_map[127].bii_name = "P4 Left";
+   bind_map[127].nCode[0] = _BIND(LEFT);
+   bind_map[127].nCode[1] = 3;
+
+   bind_map[128].bii_name = "P4 Right";
+   bind_map[128].nCode[0] = _BIND(RIGHT);
+   bind_map[128].nCode[1] = 3;
+
+   bind_map[129].bii_name = "P4 Attack";
+   bind_map[129].nCode[0] = _BIND(Y);
+   bind_map[129].nCode[1] = 3;
+
+   bind_map[130].bii_name = "P4 Jump";
+   bind_map[130].nCode[0] = _BIND(B);
+   bind_map[130].nCode[1] = 3;
+   
+   bind_map[131].bii_name = "P4 Pin";
+   bind_map[131].nCode[0] = _BIND(A);
+   bind_map[131].nCode[1] = 3;
+
+   bind_map[132].bii_name = "P4 Select";
+   bind_map[132].nCode[0] = _BIND(A);
+   bind_map[132].nCode[1] = 3;
+
+   bind_map[133].bii_name = "P4 Use";
+   bind_map[133].nCode[0] = _BIND(X);
+   bind_map[133].nCode[1] = 3;
+
+   /* Simpsons */
+   bind_map[134].bii_name = "P4 Button 1";
+   bind_map[134].nCode[0] = _BIND(Y);
+   bind_map[134].nCode[1] = 3;
+
+   bind_map[135].bii_name = "P4 Button 2";
+   bind_map[135].nCode[0] = _BIND(B);
+   bind_map[135].nCode[1] = 3;
+
+   bind_map[136].bii_name = "P4 Button 3";
+   bind_map[136].nCode[0] = _BIND(A);
+   bind_map[136].nCode[1] = 3;
+
+   bind_map[137].bii_name = "P4 Button 4";
+   bind_map[137].nCode[0] = _BIND(X);
+   bind_map[137].nCode[1] = 3;
+
+   /* TMNT */
+   bind_map[138].bii_name = "P4 Fire 1";
+   bind_map[138].nCode[0] = _BIND(Y);
+   bind_map[138].nCode[1] = 3;
+
+   bind_map[139].bii_name = "P4 Fire 2";
+   bind_map[139].nCode[0] = _BIND(B);
+   bind_map[139].nCode[1] = 3;
+
+   bind_map[140].bii_name = "P4 Fire 3";
+   bind_map[140].nCode[0] = _BIND(A);
+   bind_map[140].nCode[1] = 3;
+
+   bind_map[141].bii_name = "Coin 4";
+   bind_map[141].nCode[0] = _BIND(SELECT);
+   bind_map[141].nCode[1] = 3;
+
+   bind_map[142].bii_name = "Missile";
+   bind_map[142].nCode[0] = _BIND(A);
+   bind_map[142].nCode[1] = 3;
+
+   /* Afterburner */
+   bind_map[143].bii_name = "Vulcan";
+   bind_map[143].nCode[0] = _BIND(B);
+   bind_map[143].nCode[1] = 3;
+
+   bind_map[144].bii_name = "Throttle";
+   bind_map[144].nCode[0] = _BIND(Y);
+   bind_map[144].nCode[1] = 3;
+
+   for(unsigned int i = 0; i < nGameInpCount; i++, pgi++)
+   {
+      /* TODO: Cyberbots: Full Metal Madness */
+      /* TODO: Armored Warriors */
+      BurnDrvGetInputInfo(&bii, i);
+
+      bool value_found = false;
+      for(int j = 0; j < BIND_MAP_COUNT; j++)
+      {
+         if((strcmp(bii.szName,"P1 Select") ==0) && (boardrom && (strcmp(boardrom,"neogeo") == 0)))
+         {
+            keybinds[pgi->Input.Switch.nCode][0] = _BIND(SELECT);
+            keybinds[pgi->Input.Switch.nCode][1] = 0;
+            value_found = true;
+         }
+         else if((strcmp(bii.szName,"P1 Shot") ==0) && (parentrom && strcmp(parentrom,"avsp") == 0 || strcmp(drvname,"avsp") == 0))
+         {
+            keybinds[pgi->Input.Switch.nCode][0] = _BIND(A);
+            keybinds[pgi->Input.Switch.nCode][1] = 0;
+            value_found = true;
+         }
+         else if((strcmp(bii.szName,"P2 Select") ==0) && (boardrom && (strcmp(boardrom,"neogeo") == 0)))
+         {
+            keybinds[pgi->Input.Switch.nCode][0] = _BIND(SELECT);
+            keybinds[pgi->Input.Switch.nCode][1] = 1;
+            value_found = true;
+         }
+         else if((parentrom && strcmp(parentrom,"avsp") == 0 || strcmp(drvname,"avsp") == 0) && (strcmp(bii.szName,"P2 Shot") ==0))
+         {
+            keybinds[pgi->Input.Switch.nCode][0] = _BIND(A);
+            keybinds[pgi->Input.Switch.nCode][1] = 1;
+            value_found = true;
+         }
+         else if(strcmp(bii.szName, bind_map[j].bii_name) == 0)
+         {
+            keybinds[pgi->Input.Switch.nCode][0] = bind_map[j].nCode[0];
+            keybinds[pgi->Input.Switch.nCode][1] = bind_map[j].nCode[1];
+            value_found = true;
+         }
+         else
+            value_found = false;
+
+         if(value_found)
+         {
+            fprintf(stderr, "%s: %d.\n", bii.szName, pgi->Input.Switch.nCode );
+            break;
+         }
+      }
+
+      if(!value_found)
+         fprintf(stderr, "WARNING! Button accounted for: [%s].\n", bii.szName);
+   }
+
    // Reset
    keybinds[FBK_F3		][0] = RESET_BIND;
    keybinds[FBK_F3		][1] = 0;
-   keybinds[P1_SERVICE	][0] = SERVICE_BIND;
-   keybinds[P1_SERVICE	][1] = 0;
 
-   keybinds[P1_COIN	][0] = _BIND(SELECT);
-   keybinds[P1_COIN	][1] = 0;
-   keybinds[P1_START	][0] = _BIND(START);
-   keybinds[P1_START	][1] = 0;
-   keybinds[P1_UP	][0] = _BIND(UP);
-   keybinds[P1_UP	][1] = 0;
-   keybinds[P1_DOWN	][0] = _BIND(DOWN);
-   keybinds[P1_DOWN	][1] = 0;
-   keybinds[P1_LEFT	][0] = _BIND(LEFT);
-   keybinds[P1_LEFT	][1] = 0;
-   keybinds[P1_RIGHT	][0] = _BIND(RIGHT);
-   keybinds[P1_RIGHT	][1] = 0;
-   keybinds[P1_FIRE1	][0] = _BIND(Y);
-   keybinds[P1_FIRE1	][1] = 0;
-   keybinds[P1_FIRE2	][0] = _BIND(X);
-   keybinds[P1_FIRE2	][1] = 0;
-   keybinds[P1_FIRE3	][0] = _BIND(L);
-   keybinds[P1_FIRE3	][1] = 0;
-   keybinds[P1_FIRE4	][0] = _BIND(B);
-   keybinds[P1_FIRE4	][1] = 0;
-   keybinds[P1_FIRE5	][0] = _BIND(A);
-   keybinds[P1_FIRE5	][1] = 0;
-
-   if(boardrom && (strcmp(boardrom,"neogeo") == 0))
-   {
-      keybinds[P1_FIRE6][0] = _BIND(Y);
-      keybinds[P1_FIRE6][1] = 0;
-      keybinds[P1_FIRED][0] = _BIND(X);
-      keybinds[P1_FIRED][1] = 0;
-   }
-   else
-   {
-      keybinds[P1_FIRE6	][0] = _BIND(R);
-      keybinds[P1_FIRE6	][1] = 0;
-   }
-
-   keybinds[P2_COIN	][0] = _BIND(SELECT);
-   keybinds[P2_COIN	][1] = 1;
-   keybinds[P2_START	][0] = _BIND(START);
-   keybinds[P2_START	][1] = 1;
-   keybinds[P2_UP	][0] = _BIND(UP);
-   keybinds[P2_UP	][1] = 1;
-   keybinds[P2_DOWN	][0] = _BIND(DOWN);
-   keybinds[P2_DOWN	][1] = 1;
-   keybinds[P2_LEFT	][0] = _BIND(LEFT);
-   keybinds[P2_LEFT	][1] = 1;
-   keybinds[P2_RIGHT	][0] = _BIND(RIGHT);
-   keybinds[P2_RIGHT	][1] = 1;
-   keybinds[P2_FIRE1	][0] = _BIND(Y);
-
-   if (boardrom && (strcmp(boardrom, "neogeo") == 0))
-   {
-      keybinds[P2_FIRE3][0] = _BIND(Y);
-      keybinds[P2_FIRE3][1] = 1;
-      keybinds[P2_FIRE4][0] = _BIND(X);
-      keybinds[P2_FIRE4][1] = 1;
-      keybinds[P2_FIRE1][0] = _BIND(B);
-      keybinds[P2_FIRE1][1] = 1;
-      keybinds[P2_FIRE2][0] = _BIND(A);
-      keybinds[P2_FIRE2][1] = 1;
-   }
-   else
-   {
-      keybinds[P2_FIRE1	][1] = 1;
-      keybinds[P2_FIRE2	][0] = _BIND(X);
-      keybinds[P2_FIRE2	][1] = 1;
-      keybinds[P2_FIRE3	][0] = _BIND(L);
-      keybinds[P2_FIRE3	][1] = 1;
-      keybinds[P2_FIRE4	][0] = _BIND(B);
-      keybinds[P2_FIRE4	][1] = 1;
-      keybinds[P2_FIRE5	][0] = _BIND(A);
-      keybinds[P2_FIRE5	][1] = 1;
-      keybinds[P2_FIRE6	][0] = _BIND(R);
-      keybinds[P2_FIRE6	][1] = 1;
-   }
-
-#if 0
-   keybinds[0x4088		][0] = L2;
-   keybinds[0x4088		][1] = 1;
-   keybinds[0x408A		][0] = R2;
-   keybinds[0x408A		][1] = 1;
-   keybinds[0x408b		][0] = L3;
-   keybinds[0x408b		][1] = 1;
-   keybinds[0x408c		][0] = R3;
-   keybinds[0x408c		][1] = 1;
-#endif
-
-   keybinds[P3_COIN	][0] = _BIND(SELECT);
-   keybinds[P3_COIN	][1] = 2;
-   keybinds[P3_START	][0] = _BIND(START);
-   keybinds[P3_START	][1] = 2;
-   keybinds[P3_UP	][0] = _BIND(UP);
-   keybinds[P3_UP	][1] = 2;
-   keybinds[P3_DOWN	][0] = _BIND(DOWN);
-   keybinds[P3_DOWN	][1] = 2;
-   keybinds[P3_LEFT	][0] = _BIND(LEFT);
-   keybinds[P3_LEFT	][1] = 2;
-   keybinds[P3_RIGHT	][0] = _BIND(RIGHT);
-   keybinds[P3_RIGHT	][1] = 2;
-   keybinds[P3_FIRE1	][0] = _BIND(Y);
-   keybinds[P3_FIRE1	][1] = 2;
-   keybinds[P3_FIRE2	][0] = _BIND(X);
-   keybinds[P3_FIRE2	][1] = 2;
-   keybinds[P3_FIRE3	][0] = _BIND(L);
-   keybinds[P3_FIRE3	][1] = 2;
-   keybinds[P3_FIRE4	][0] = _BIND(B);
-   keybinds[P3_FIRE4	][1] = 2;
-   keybinds[P3_FIRE5	][0] = _BIND(A);
-   keybinds[P3_FIRE5	][1] = 2;
-   keybinds[P3_FIRE6	][0] = _BIND(R);
-   keybinds[P3_FIRE6	][1] = 2;
-#if 0
-   keybinds[0x4188		][0] = L2;
-   keybinds[0x4188		][1] = 2;
-   keybinds[0x418A		][0] = R2;
-   keybinds[0x418A		][1] = 2;
-   keybinds[0x418b		][0] = L3;
-   keybinds[0x418b		][1] = 2;
-   keybinds[0x418c		][0] = R3;
-   keybinds[0x418c		][1] = 2;
-#endif
-
-   keybinds[P4_COIN	][0] = _BIND(SELECT);
-   keybinds[P4_COIN	][1] = 3;
-   keybinds[P4_START	][0] = _BIND(START);
-   keybinds[P4_START	][1] = 3;
-   keybinds[P4_UP	][0] = _BIND(UP);
-   keybinds[P4_UP	][1] = 3;
-   keybinds[P4_DOWN	][0] = _BIND(DOWN);
-   keybinds[P4_DOWN	][1] = 3;
-   keybinds[P4_LEFT	][0] = _BIND(LEFT);
-   keybinds[P4_LEFT	][1] = 3;
-   keybinds[P4_RIGHT	][0] = _BIND(RIGHT);
-   keybinds[P4_RIGHT	][1] = 3;
-   keybinds[P4_FIRE1	][0] = _BIND(Y);
-   keybinds[P4_FIRE1	][1] = 3;
-   keybinds[P4_FIRE2	][0] = _BIND(X);
-   keybinds[P4_FIRE2	][1] = 3;
-   keybinds[P4_FIRE3	][0] = _BIND(L);
-   keybinds[P4_FIRE3	][1] = 3;
-   keybinds[P4_FIRE4	][0] = _BIND(B);
-   keybinds[P4_FIRE4	][1] = 3;
-   keybinds[P4_FIRE5	][0] = _BIND(A);
-   keybinds[P4_FIRE5	][1] = 3;
-   keybinds[P4_FIRE6	][0] = _BIND(R);
-   keybinds[P4_FIRE6	][1] = 3;
-#if 0
-   keybinds[0x4288		][0] = L2;
-   keybinds[0x4288		][1] = 3;
-   keybinds[0x428A		][0] = R2;
-   keybinds[0x428A		][1] = 3;
-   keybinds[0x428b		][0] = L3;
-   keybinds[0x428b		][1] = 3;
-   keybinds[0x428c		][0] = R3;
-   keybinds[0x428c		][1] = 3;
-#endif
+   // Service
+   keybinds[FBK_F2	][0] = SERVICE_BIND;
+   keybinds[FBK_F2   ][1] = 0;
 
    return has_analog;
 }
 
-static void poll_input()
+//#define DEBUG_INPUT
+//
+
+static inline int CinpJoyAxis(int i, int axis)
+{
+   switch(axis)
+   {
+      case 0:
+         return input_cb(i, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_LEFT,
+               RETRO_DEVICE_ID_ANALOG_X);
+      case 1:
+         return input_cb(i, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_LEFT,
+               RETRO_DEVICE_ID_ANALOG_Y);
+      case 2:
+         return 0;
+      case 3:
+         return input_cb(i, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_RIGHT,
+               RETRO_DEVICE_ID_ANALOG_X);
+      case 4:
+         return input_cb(i, RETRO_DEVICE_ANALOG, RETRO_DEVICE_INDEX_ANALOG_RIGHT,
+               RETRO_DEVICE_ID_ANALOG_Y);
+      case 5:
+         return 0;
+      case 6:
+         return 0;
+      case 7:
+         return 0;
+   }
+   return 0;
+}
+
+static inline int CinpMouseAxis(int i, int axis)
+{
+   return 0;
+}
+
+static inline int CinpState(int i)
+{
+   return keybinds[i][0];
+}
+
+static void poll_input(void)
 {
    poll_cb();
 
@@ -815,19 +1384,17 @@ static void poll_input()
    for (int i = 0; i < controller_binds_count; i++, pgi++)
    {
       int nAdd = 0;
+
       if ((pgi->nInput & GIT_GROUP_SLIDER) == 0)                           // not a slider
          continue;
 
       if (pgi->nInput == GIT_KEYSLIDER)
       {
          // Get states of the two keys
-         if (input_cb(0, RETRO_DEVICE_JOYPAD, 0,
-                  keybinds[pgi->Input.Slider.SliderAxis.nSlider[0]][0]))
-            nAdd -= 0x100;
-
-         if (input_cb(0, RETRO_DEVICE_JOYPAD, 0,
-                  keybinds[pgi->Input.Slider.SliderAxis.nSlider[1]][0]))
-            nAdd += 0x100;
+			if (input_cb(0, RETRO_DEVICE_JOYPAD, 0, _BIND(LEFT)))
+				nAdd -= 0x100;
+			if (input_cb(0, RETRO_DEVICE_JOYPAD, 0, _BIND(RIGHT)))
+				nAdd += 0x100;
       }
 
       // nAdd is now -0x100 to +0x100
@@ -857,77 +1424,182 @@ static void poll_input()
 
    for (unsigned i = 0; i < controller_binds_count; i++, pgi++)
    {
+      if (pgi->Input.pVal == NULL)
+         continue;
+
       switch (pgi->nInput)
       {
+         case 0:									// Undefined
+            pgi->Input.nVal = 0;
+            break;
          case GIT_CONSTANT: // Constant value
             pgi->Input.nVal = pgi->Input.Constant.nConst;
-            *(pgi->Input.pVal) = pgi->Input.nVal;
-            break;
-         case GIT_SWITCH:
-         {
-            // Digital input
-            unsigned id = keybinds[pgi->Input.Switch.nCode][0];
-            unsigned port = keybinds[pgi->Input.Switch.nCode][1];
-
-            bool state;
-            if (id == RESET_BIND)
-            {
-               state = g_reset;
-               g_reset = false;
-	       Reinitialise();
-            }
-            else if (id == SERVICE_BIND)
-            {
-               state =
-                  input_cb(0, RETRO_DEVICE_JOYPAD, 0, _BIND(START)) &&
-                  input_cb(0, RETRO_DEVICE_JOYPAD, 0, _BIND(SELECT)) &&
-                  input_cb(0, RETRO_DEVICE_JOYPAD, 0, _BIND(L)) &&
-                  input_cb(0, RETRO_DEVICE_JOYPAD, 0, _BIND(R));
-               Reinitialise();
-            }
-            else
-               state = input_cb(port, RETRO_DEVICE_JOYPAD, 0, id);
-
-            if (pgi->nType & BIT_GROUP_ANALOG)
-            {
-               // Set analog controls to full
-               if (state)
-                  pgi->Input.nVal = 0xFFFF;
-               else
-                  pgi->Input.nVal = 0x0001;
-#ifdef LSB_FIRST
-               *(pgi->Input.pShortVal) = pgi->Input.nVal;
-#else
-               *((int *)pgi->Input.pShortVal) = pgi->Input.nVal;
-#endif
-            }
-            else
-            {
-               // Binary controls
-               if (state)
-                  pgi->Input.nVal = 1;
-               else
-                  pgi->Input.nVal = 0;
-               *(pgi->Input.pVal) = pgi->Input.nVal;
-            }
-            break;
-         }
-         case GIT_KEYSLIDER:						// Keyboard slider
-         {
-            int nSlider = pgi->Input.Slider.nSliderValue;
-            if (pgi->nType == BIT_ANALOG_REL) {
-               nSlider -= 0x8000;
-               nSlider >>= 4;
-            }
-
-            pgi->Input.nVal = (unsigned short)nSlider;
 #ifdef LSB_FIRST
             *(pgi->Input.pShortVal) = pgi->Input.nVal;
 #else
             *((int *)pgi->Input.pShortVal) = pgi->Input.nVal;
 #endif
             break;
-         }
+         case GIT_SWITCH:
+            {
+               // Digital input
+               INT32 s = CinpState(pgi->Input.Switch.nCode);
+               unsigned port = keybinds[pgi->Input.Switch.nCode][1];
+
+               bool state;
+               if (s == RESET_BIND)
+               {
+                  state = g_reset;
+                  g_reset = false;
+                  Reinitialise();
+               }
+               else if (s == SERVICE_BIND)
+               {
+                  state =
+                     input_cb(0, RETRO_DEVICE_JOYPAD, 0, _BIND(START)) &&
+                     input_cb(0, RETRO_DEVICE_JOYPAD, 0, _BIND(SELECT)) &&
+                     input_cb(0, RETRO_DEVICE_JOYPAD, 0, _BIND(L)) &&
+                     input_cb(0, RETRO_DEVICE_JOYPAD, 0, _BIND(R)) &&
+                     input_cb(0, RETRO_DEVICE_JOYPAD, 0, _BIND(DOWN));
+                  Reinitialise();
+               }
+               else
+                  state = input_cb(port, RETRO_DEVICE_JOYPAD, 0, s);
+
+               if (pgi->nType & BIT_GROUP_ANALOG)
+               {
+                  // Set analog controls to full
+                  if (state)
+                     pgi->Input.nVal = 0xFFFF;
+                  else
+                     pgi->Input.nVal = 0x0001;
+#ifdef LSB_FIRST
+                  *(pgi->Input.pShortVal) = pgi->Input.nVal;
+#else
+                  *((int *)pgi->Input.pShortVal) = pgi->Input.nVal;
+#endif
+               }
+               else
+               {
+                  // Binary controls
+                  if (state)
+                     pgi->Input.nVal = 1;
+                  else
+                     pgi->Input.nVal = 0;
+                  *(pgi->Input.pVal) = pgi->Input.nVal;
+               }
+               break;
+            }
+         case GIT_KEYSLIDER:						// Keyboard slider
+         case GIT_JOYSLIDER:	 					// Joystick slider
+            {
+               int nSlider = pgi->Input.Slider.nSliderValue;
+               if (pgi->nType == BIT_ANALOG_REL) {
+                  nSlider -= 0x8000;
+                  nSlider >>= 4;
+               }
+
+               pgi->Input.nVal = (unsigned short)nSlider;
+#ifdef LSB_FIRST
+               *(pgi->Input.pShortVal) = pgi->Input.nVal;
+#else
+               *((int *)pgi->Input.pShortVal) = pgi->Input.nVal;
+#endif
+               break;
+            }
+         case GIT_MOUSEAXIS:						// Mouse axis
+            {
+               pgi->Input.nVal = (UINT16)(CinpMouseAxis(pgi->Input.MouseAxis.nMouse, pgi->Input.MouseAxis.nAxis) * nAnalogSpeed);
+#ifdef LSB_FIRST
+               *(pgi->Input.pShortVal) = pgi->Input.nVal;
+#else
+               *((int *)pgi->Input.pShortVal) = pgi->Input.nVal;
+#endif
+            }
+            break;
+         case GIT_JOYAXIS_FULL:
+            {				// Joystick axis
+               INT32 nJoy = CinpJoyAxis(pgi->Input.JoyAxis.nJoy, pgi->Input.JoyAxis.nAxis);
+
+               if (pgi->nType == BIT_ANALOG_REL) {
+                  nJoy *= nAnalogSpeed;
+                  nJoy >>= 13;
+
+                  // Clip axis to 8 bits
+                  if (nJoy < -32768) {
+                     nJoy = -32768;
+                  }
+                  if (nJoy >  32767) {
+                     nJoy =  32767;
+                  }
+               } else {
+                  nJoy >>= 1;
+                  nJoy += 0x8000;
+
+                  // Clip axis to 16 bits
+                  if (nJoy < 0x0001) {
+                     nJoy = 0x0001;
+                  }
+                  if (nJoy > 0xFFFF) {
+                     nJoy = 0xFFFF;
+                  }
+               }
+
+               pgi->Input.nVal = (UINT16)nJoy;
+#ifdef LSB_FIRST
+               *(pgi->Input.pShortVal) = pgi->Input.nVal;
+#else
+               *((int *)pgi->Input.pShortVal) = pgi->Input.nVal;
+#endif
+               break;
+            }
+         case GIT_JOYAXIS_NEG:
+            {				// Joystick axis Lo
+               INT32 nJoy = CinpJoyAxis(pgi->Input.JoyAxis.nJoy, pgi->Input.JoyAxis.nAxis);
+               if (nJoy < 32767)
+               {
+                  nJoy = -nJoy;
+
+                  if (nJoy < 0x0000)
+                     nJoy = 0x0000;
+                  if (nJoy > 0xFFFF)
+                     nJoy = 0xFFFF;
+
+                  pgi->Input.nVal = (UINT16)nJoy;
+               }
+               else
+                  pgi->Input.nVal = 0;
+
+#ifdef LSB_FIRST
+               *(pgi->Input.pShortVal) = pgi->Input.nVal;
+#else
+               *((int *)pgi->Input.pShortVal) = pgi->Input.nVal;
+#endif
+               break;
+            }
+         case GIT_JOYAXIS_POS:
+            {				// Joystick axis Hi
+               INT32 nJoy = CinpJoyAxis(pgi->Input.JoyAxis.nJoy, pgi->Input.JoyAxis.nAxis);
+               if (nJoy > 32767)
+               {
+
+                  if (nJoy < 0x0000)
+                     nJoy = 0x0000;
+                  if (nJoy > 0xFFFF)
+                     nJoy = 0xFFFF;
+
+                  pgi->Input.nVal = (UINT16)nJoy;
+               }
+               else
+                  pgi->Input.nVal = 0;
+
+#ifdef LSB_FIRST
+               *(pgi->Input.pShortVal) = pgi->Input.nVal;
+#else
+               *((int *)pgi->Input.pShortVal) = pgi->Input.nVal;
+#endif
+               break;
+            }
       }
    }
 }
@@ -945,3 +1617,19 @@ static unsigned int BurnDrvGetIndexByName(const char* name)
    return ret;
 }
 
+#ifdef ANDROID
+#include <wchar.h>
+
+size_t mbstowcs(wchar_t *pwcs, const char *s, size_t n)
+{
+   if (pwcs == NULL)
+      return strlen(s);
+   return mbsrtowcs(pwcs, &s, n, NULL);
+}
+
+size_t wcstombs(char *s, const wchar_t *pwcs, size_t n)
+{
+   return wcsrtombs(s, &pwcs, n, NULL);
+}
+
+#endif

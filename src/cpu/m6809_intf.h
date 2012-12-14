@@ -1,4 +1,4 @@
-#include "m6809.h"
+#include "m6809/m6809.h"
 
 typedef UINT8 (*pReadByteHandler)(UINT16 a);
 typedef void (*pWriteByteHandler)(UINT16 a, UINT8 d);

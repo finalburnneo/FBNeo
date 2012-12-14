@@ -1,5 +1,5 @@
 #include "burnint.h"
-#include "h6280.h"
+#include "h6280/h6280.h"
 #include "h6280_intf.h"
 
 #define MAX_H6280	2	//

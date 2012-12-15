@@ -209,7 +209,9 @@ extern UINT32 *pBurnDrvPalette;
 #define PRINT_IMPORTANT (2)
 #define PRINT_ERROR		(3)
 
+#ifndef bprintf
 extern INT32 (__cdecl *bprintf) (INT32 nStatus, TCHAR* szFormat, ...);
+#endif
 
 INT32 BurnLibInit();
 INT32 BurnLibExit();

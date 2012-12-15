@@ -13,11 +13,6 @@ static INT32 nBurnGunMaxY = 0;
 INT32 BurnGunX[MAX_GUNS];
 INT32 BurnGunY[MAX_GUNS];
 
-#define P1Colour	0xfc, 0x12, 0xee
-#define P2Colour	0x1c, 0xfc, 0x1c
-#define P3Colour	0x15, 0x93, 0xfd
-#define P4Colour	0xf7, 0xfa, 0x0e
-
 #define a 0,
 #define b 1,
 
@@ -155,10 +150,10 @@ void BurnGunDrawTarget(INT32 num, INT32 x, INT32 y)
 	UINT8* pTile = pBurnDraw + nBurnGunMaxX * nBurnBpp * (y - 1) + nBurnBpp * x;
 	
 	UINT32 nTargetCol = 0;
-	if (num == 0) nTargetCol = BurnHighCol(P1Colour, 0);
-	if (num == 1) nTargetCol = BurnHighCol(P2Colour, 0);
-	if (num == 2) nTargetCol = BurnHighCol(P3Colour, 0);
-	if (num == 3) nTargetCol = BurnHighCol(P4Colour, 0);
+	if (num == 0) nTargetCol = BurnHighCol(0xfc, 0x12, 0xee, 0);
+	if (num == 1) nTargetCol = BurnHighCol(0x1c, 0xfc, 0x1c, 0);
+	if (num == 2) nTargetCol = BurnHighCol(0x15, 0x93, 0xfd, 0);
+	if (num == 3) nTargetCol = BurnHighCol(0xf7, 0xfa, 0x0e, 0);
 
 	for (INT32 y2 = 0; y2 < 17; y2++) {
 
@@ -184,8 +179,3 @@ void BurnGunDrawTarget(INT32 num, INT32 x, INT32 y)
 		}
 	}
 }
-
-#undef P1Colour
-#undef P2Colour
-#undef P3Colour
-#undef P4Colour

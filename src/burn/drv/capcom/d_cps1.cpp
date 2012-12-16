@@ -7437,12 +7437,12 @@ static struct BurnRomInfo Sf2sttRomDesc[] = {
 	{ "ce91e-b",        0x040000, 0x0862386e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "ce91e-a",        0x040000, 0x0c83844d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	
-	{ "stt-a 910913",   0x100000, 0x10a7036d, BRF_GRA | CPS1_TILES }, 
-	{ "stt-d 910913",   0x100000, 0x3580b124, BRF_GRA | CPS1_TILES }, 
-	{ "stt-b 910913",   0x100000, 0x7a09224e, BRF_GRA | CPS1_TILES }, 
-	{ "stt-e 910913",   0x100000, 0x382a612c, BRF_GRA | CPS1_TILES }, 
-	{ "stt-c 910913",   0x100000, 0x11701b8f, BRF_GRA | CPS1_TILES }, 
-	{ "stt-f 910913",   0x100000, 0x101a0b72, BRF_GRA | CPS1_TILES },
+	{ "stt-a",          0x100000, 0x10a7036d, BRF_GRA | CPS1_TILES }, 
+	{ "stt-d",          0x100000, 0x3580b124, BRF_GRA | CPS1_TILES }, 
+	{ "stt-b",          0x100000, 0x7a09224e, BRF_GRA | CPS1_TILES }, 
+	{ "stt-e",          0x100000, 0x382a612c, BRF_GRA | CPS1_TILES }, 
+	{ "stt-c",          0x100000, 0x11701b8f, BRF_GRA | CPS1_TILES }, 
+	{ "stt-f",          0x100000, 0x101a0b72, BRF_GRA | CPS1_TILES },
 
 	{ "3.stt",          0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
 	
@@ -8863,12 +8863,14 @@ static struct BurnRomInfo Sf2yycRomDesc[] = {
 
 	{ "s92_18.bin",   0x0020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "s92_19.bin",   0x0020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	
+
+#if !defined ROM_VERIFY	
 	// these weren't present with this set, but extra graphics are required (see bike's on Chun-Li stage)
 	{ "6.amf",        0x020000, 0x3a85a275, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
 	{ "9.amf",        0x020000, 0x9156472f, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
 	{ "8.amf",        0x020000, 0xecdb083b, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
 	{ "10.amf",       0x020000, 0x8fea8384, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+#endif
 };
 
 STD_ROM_PICK(Sf2yyc)
@@ -9330,18 +9332,18 @@ STD_ROM_PICK(Sf2mdt)
 STD_ROM_FN(Sf2mdt)
 
 static struct BurnRomInfo Sf2mdtaRomDesc[] = {
-    { "3.bin",          0x0080000, 0x9f544ef4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "5.bin",          0x0080000, 0xd76d6621, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "2.bin",          0x0020000, 0x74844192, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-    { "4.bin",          0x0020000, 0xbd98ff15, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+    { "3.mdta",         0x0080000, 0x9f544ef4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "5.mdta",         0x0080000, 0xd76d6621, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "2.mdta",         0x0020000, 0x74844192, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+    { "4.mdta",         0x0020000, 0xbd98ff15, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	// is there a bad dump here? some of the sprites have vertical lines, whilst others are fine
-	{ "pf4-sh058.ic89", 0x0100000, 0x40fdf624, BRF_GRA | CPS1_TILES }, // f205v has redumped this with the same result, it reports an error on pin 30, assumed bad
-	{ "pf7-sh072.ic92", 0x0100000, 0xfb78022e, BRF_GRA | CPS1_TILES },
-	{ "pf5-sh036.ic90", 0x0100000, 0x0a6be48b, BRF_GRA | CPS1_TILES },
-	{ "pf8-sh074.ic93", 0x0100000, 0x6258c7cf, BRF_GRA | CPS1_TILES },
-	{ "pf6-sh070.ic88", 0x0100000, 0x9b5b09d7, BRF_GRA | CPS1_TILES },
-	{ "pf9-sh001.ic91", 0x0100000, 0x9f25090e, BRF_GRA | CPS1_TILES },
+	{ "pf4 sh058.ic89", 0x0100000, 0x40fdf624, BRF_GRA | CPS1_TILES }, // f205v has redumped this with the same result, it reports an error on pin 30, assumed bad
+	{ "pf7 sh072.ic92", 0x0100000, 0xfb78022e, BRF_GRA | CPS1_TILES },
+	{ "pf5 sh036.ic90", 0x0100000, 0x0a6be48b, BRF_GRA | CPS1_TILES },
+	{ "pf8 sh074.ic93", 0x0100000, 0x6258c7cf, BRF_GRA | CPS1_TILES },
+	{ "pf6 sh070.ic88", 0x0100000, 0x9b5b09d7, BRF_GRA | CPS1_TILES },
+	{ "pf9 sh001.ic91", 0x0100000, 0x9f25090e, BRF_GRA | CPS1_TILES },
 
 	{ "1.ic28",         0x0020000, 0xd5bee9cc, BRF_PRG | CPS1_Z80_PROGRAM },
 	
@@ -9527,28 +9529,28 @@ STD_ROM_FN(Sf2ceuab2)
 
 static struct BurnRomInfo Sf2ceuab3RomDesc[] = {
 	// this set was previously known as sf2m8a
-	{ "yyc-2-020528",  0x0080000, 0xdb567b66, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
-	{ "yyc-3-020528",  0x0080000, 0x95ea597e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
-	{ "yyc-4-020528",  0x0020000, 0x1073b7b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
-	{ "yyc-5-020528",  0x0020000, 0x924c6ce2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
+	{ "yyc-2.2",  0x0080000, 0xdb567b66, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
+	{ "yyc-3.4",  0x0080000, 0x95ea597e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
+	{ "yyc-4.1",  0x0020000, 0x1073b7b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
+	{ "yyc-5.3",  0x0020000, 0x924c6ce2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // same as sf2m8
 	
-	{ "yyc-a-920413",  0x0100000, 0x8242621f, BRF_GRA | CPS1_TILES },
-	{ "yyc-c-920413",  0x0100000, 0x0793a960, BRF_GRA | CPS1_TILES }, 
-	{ "yyc-b-920413",  0x0100000, 0xb0159973, BRF_GRA | CPS1_TILES }, 
-	{ "yyc-d-920413",  0x0100000, 0x92a8b572, BRF_GRA | CPS1_TILES },	
-	{ "yyc-e-920413",  0x0100000, 0x61138469, BRF_GRA | CPS1_TILES },
-	{ "yyc-f-920413",  0x0100000, 0xb800dcdb, BRF_GRA | CPS1_TILES },	
+	{ "yyc-a",    0x0100000, 0x8242621f, BRF_GRA | CPS1_TILES },
+	{ "yyc-c",    0x0100000, 0x0793a960, BRF_GRA | CPS1_TILES }, 
+	{ "yyc-b",    0x0100000, 0xb0159973, BRF_GRA | CPS1_TILES }, 
+	{ "yyc-d",    0x0100000, 0x92a8b572, BRF_GRA | CPS1_TILES },	
+	{ "yyc-e",    0x0100000, 0x61138469, BRF_GRA | CPS1_TILES },
+	{ "yyc-f",    0x0100000, 0xb800dcdb, BRF_GRA | CPS1_TILES },	
 
-	{ "a-15",          0x0010000, 0x6f07d2cb, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "a-15.5",   0x0010000, 0x6f07d2cb, BRF_PRG | CPS1_Z80_PROGRAM },
 	
-	{ "b-16",          0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "b-16.6",   0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
 		
-	{ "yyc-6-020528",  0x0020000, 0x94778332, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
-	{ "yyc-8-020528",  0x0020000, 0xf95bc505, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
-	{ "yyc-7-020528",  0x0020000, 0xd1e452d3, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
-	{ "yyc-9-020528",  0x0020000, 0x155824a9, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "yyc-6.1",  0x0020000, 0x94778332, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "yyc-8.9",  0x0020000, 0xf95bc505, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "yyc-7.10", 0x0020000, 0xd1e452d3, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "yyc-9.8",  0x0020000, 0x155824a9, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
 	
-	{ "c-27",          0x0010000, 0x13ea1c44, BRF_OPT }, // unknown
+	{ "c-27.7",   0x0010000, 0x13ea1c44, BRF_OPT }, // unknown
 };
 
 STD_ROM_PICK(Sf2ceuab3)

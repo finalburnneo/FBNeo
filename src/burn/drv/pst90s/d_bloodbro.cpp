@@ -927,21 +927,21 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Blood Bros. (set 1)
 
 static struct BurnRomInfo bloodbroRomDesc[] = {
-	{ "2j.u021",	0x020000, 0xc0fdc3e4, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "1j.i022",	0x020000, 0x2d7e0fdf, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "bb_04.bin",	0x020000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "bb_03.bin",	0x020000, 0x18d3c460, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "2j.u021.7n",		0x020000, 0xc0fdc3e4, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "1j.u022.8n",		0x020000, 0x2d7e0fdf, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bb_04.u023.7l",	0x020000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bb_03.u024.8l",	0x020000, 0x18d3c460, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "bb_07.bin",	0x010000, 0x411b94e8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "bb_07.u1016.6a",	0x010000, 0x411b94e8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
-	{ "bb_05.bin",	0x010000, 0x04ba6d19, 3 | BRF_GRA },           //  5 Characters
-	{ "bb_06.bin",	0x010000, 0x7092e35b, 3 | BRF_GRA },           //  6
+	{ "bb_05.u061.6f",	0x010000, 0x04ba6d19, 3 | BRF_GRA },           //  5 Characters
+	{ "bb_06.u063.6d",	0x010000, 0x7092e35b, 3 | BRF_GRA },           //  6
 
-	{ "bloodb.bk",	0x100000, 0x1aa87ee6, 4 | BRF_GRA },           //  7 Tiles
+	{ "blood_bros_bk__(c)1990_tad_corp.u064.4d",	0x100000, 0x1aa87ee6, 4 | BRF_GRA },           //  7 Tiles
 
-	{ "bloodb.obj",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
+	{ "blood_bros_obj__(c)1990_tad_corp.u078.2n",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
 
-	{ "bb_08.bin",	0x020000, 0xdeb1b975, 6 | BRF_SND },           //  9 Samples
+	{ "bb_08.u095.5a",	0x020000, 0xdeb1b975, 6 | BRF_SND },           //  9 Samples
 };
 
 STD_ROM_PICK(bloodbro)
@@ -961,21 +961,21 @@ struct BurnDriver BurnDrvBloodbro = {
 // Blood Bros. (set 2)
 
 static struct BurnRomInfo bloodbroaRomDesc[] = {
-	{ "2j.21",	0x020000, 0xe8ca21b8, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "1j.22",	0x020000, 0x6b28cfc7, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "bb_04.bin",	0x020000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "bb_03.bin",	0x020000, 0x18d3c460, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "2j_a.u021.7n",	0x020000, 0xe8ca21b8, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "1j_a.u022.8n",	0x020000, 0x6b28cfc7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bb_04.u023.7l",	0x020000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bb_03.u024.8l",	0x020000, 0x18d3c460, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "bb_07.bin",	0x010000, 0x411b94e8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "bb_07.u1016.6a",	0x010000, 0x411b94e8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
-	{ "bb_05.bin",	0x010000, 0x04ba6d19, 3 | BRF_GRA },           //  5 Characters
-	{ "bb_06.bin",	0x010000, 0x7092e35b, 3 | BRF_GRA },           //  6
+	{ "bb_05.u061.6f",	0x010000, 0x04ba6d19, 3 | BRF_GRA },           //  5 Characters
+	{ "bb_06.u063.6d",	0x010000, 0x7092e35b, 3 | BRF_GRA },           //  6
 
-	{ "bloodb.bk",	0x100000, 0x1aa87ee6, 4 | BRF_GRA },           //  7 Tiles
+	{ "blood_bros_bk__(c)1990_tad_corp.u064.4d",	0x100000, 0x1aa87ee6, 4 | BRF_GRA },           //  7 Tiles
 
-	{ "bloodb.obj",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
+	{ "blood_bros_obj__(c)1990_tad_corp.u078.2n",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
 
-	{ "bb_08.bin",	0x020000, 0xdeb1b975, 6 | BRF_SND },           //  9 Samples
+	{ "bb_08.u095.5a",	0x020000, 0xdeb1b975, 6 | BRF_SND },           //  9 Samples
 };
 
 STD_ROM_PICK(bloodbroa)
@@ -995,21 +995,21 @@ struct BurnDriver BurnDrvBloodbroa = {
 // Blood Bros. (set 3)
 
 static struct BurnRomInfo bloodbrobRomDesc[] = {
-	{ "bloodbros02.bin",	0x020000, 0x204dca6e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "bloodbros01.bin",	0x020000, 0xac6719e7, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "bb_04.bin",	0x020000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "bb_03.bin",	0x020000, 0x18d3c460, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "bloodbros02.u021.7n",	0x020000, 0x204dca6e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "bloodbros01.u022.8n",	0x020000, 0xac6719e7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bb_04.u023.7l",	0x020000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bb_03.u024.8l",	0x020000, 0x18d3c460, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "bb_07.bin",	0x010000, 0x411b94e8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "bb_07.u1016.6a",	0x010000, 0x411b94e8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
-	{ "bb_05.bin",	0x010000, 0x04ba6d19, 3 | BRF_GRA },           //  5 Characters
-	{ "bb_06.bin",	0x010000, 0x7092e35b, 3 | BRF_GRA },           //  6
+	{ "bb_05.u061.6f",	0x010000, 0x04ba6d19, 3 | BRF_GRA },           //  5 Characters
+	{ "bb_06.u063.6d",	0x010000, 0x7092e35b, 3 | BRF_GRA },           //  6
 
-	{ "bloodb.bk",	0x100000, 0x1aa87ee6, 4 | BRF_GRA },           //  7 Tiles
+	{ "blood_bros_bk__(c)1990_tad_corp.u064.4d",	0x100000, 0x1aa87ee6, 4 | BRF_GRA },           //  7 Tiles
 
-	{ "bloodb.obj",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
+	{ "blood_bros_obj__(c)1990_tad_corp.u078.2n",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
 
-	{ "bb_08.bin",	0x020000, 0xdeb1b975, 6 | BRF_SND },           //  9 Samples
+	{ "bb_08.u095.5a",	0x020000, 0xdeb1b975, 6 | BRF_SND },           //  9 Samples
 };
 
 STD_ROM_PICK(bloodbrob)

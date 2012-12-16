@@ -4014,7 +4014,7 @@ STD_ROM_FN(Mvscur1)
 
 static struct BurnRomInfo MvscjsingRomDesc[] = {
 	{ "mvc_ja.simm1",  0x200000, 0x6a2ef7c2, CPS2_PRG_68K_SIMM | BRF_ESS | BRF_PRG },
-	{ "mvc_ja.simm2",  0x200000, 0x699d09ad, CPS2_PRG_68K_SIMM | BRF_ESS | BRF_PRG },
+	{ "mvc_ja.simm3",  0x200000, 0x699d09ad, CPS2_PRG_68K_SIMM | BRF_ESS | BRF_PRG },
 
 	{ "mvc64-13m.13",  0x800000, 0x8428ce69, CPS2_GFX | BRF_GRA },
 	{ "mvc64-15m.15",  0x800000, 0x2e0028f4, CPS2_GFX | BRF_GRA },

@@ -6156,7 +6156,7 @@ static struct BurnRomInfo AstriansRomDesc[] = {
 	{ "astrians.1h",   0x00800, 0x77c074b4, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "astrians.1k",   0x00800, 0xc30fcc46, BRF_GRA | GAL_ROM_TILES_SHARED },
 	
-	{ "prom.6l",       0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+	{ "prom.6l",       0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Astrians)

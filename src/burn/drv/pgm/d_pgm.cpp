@@ -1608,7 +1608,7 @@ static struct BurnRomInfo pgm3in1RomDesc[] = {
 	{ "ext_bit_map.u21", 	        0x200000, 0xfe31dca6, 4 | BRF_GRA },		//  9
 
 	{ "pgm_m1100.u17", 		0x200000, 0xfb1515f8, 5 | BRF_SND },		// 10 Samples
-	{ "u16.u16", 		   	0x800000, 0xfb1515f8, 5 | BRF_SND },		// 11 
+	{ "u16.u16", 		   	0x800000, 0x714c33e5, 5 | BRF_SND },		// 11 
 
 	{ "igs027a_pgm3in1.asic",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 12 Internal ARM7 Rom
 };

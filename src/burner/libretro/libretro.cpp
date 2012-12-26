@@ -305,7 +305,8 @@ static bool open_archive()
       {
          fprintf(stderr, "[FBA] ROM index %i was not found ... CRC: 0x%08x\n",
                i, g_find_list[i].ri.nCrc);
-         return false;
+         if(!(g_find_list[i].ri.nType & BRF_OPT))
+			return false;
       }
    }
 

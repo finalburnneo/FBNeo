@@ -801,6 +801,9 @@ static struct BurnRomInfo BlazeonRomDesc[] = {
 	{ "bz_bg.u2",          0x100000, 0xfc67f19f, BRF_GRA },		  //  4 Tiles
 	
 	{ "3.u45",             0x020000, 0x52fe4c94, BRF_ESS | BRF_PRG }, //  5 Z80 Program Code
+	
+	{ "bz_sp1.u68",        0x100000, 0x0d5809a1, BRF_OPT },
+	{ "bz_sp2.u86",        0x100000, 0x56ead2bd, BRF_OPT },
 };
 
 

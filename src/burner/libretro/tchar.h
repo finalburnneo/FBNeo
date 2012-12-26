@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <wchar.h>
 
-#include "input/inp_keys.h"
+#include "inp_keys.h"
 
 #ifdef _MSC_VER
 #include <tchar.h>
@@ -16,15 +16,7 @@ typedef struct { int x, y, width, height; } RECT;
 #undef __cdecl
 #define __cdecl
 
-#ifdef _XBOX1
-static inline void bprintf(int code, const char *format, ...)
-{
-	(void)0;
-}
-#else
-#define bprintf
-#endif
-
+#define bprintf(...) {}
 #define _strnicmp(s1, s2, n) strncasecmp(s1, s2, n)
 #define _stricmp(x, y) strcasecmp(x,y)
 
@@ -46,13 +38,10 @@ static inline void bprintf(int code, const char *format, ...)
 #define _tcsstr strstr
 #define _stscanf sscanf
 #define _ftprintf fprintf
-#define _tcscpy(to, from) strcpy(to, from)
-
-#ifdef _MSC_VER
-#define _tcsicmp(a, b) _stricmp(a, b)
-#else
+#ifndef _MSC_VER
 #define _tcsicmp(a, b) strcasecmp(a, b)
 #endif
+#define _tcscpy(to, from) strcpy(to, from)
 /*define lstrlen			what does lstrlen correspond to?*/
 
 #undef __fastcall

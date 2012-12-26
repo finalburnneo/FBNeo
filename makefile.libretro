@@ -1,6 +1,7 @@
 DEBUG = 0
 LIBRETRO_OPTIMIZATIONS = 1
 FRONTEND_SUPPORTS_RGB565 = 1
+HAVE_GRIFFIN = 0
 
 ifeq ($(platform),)
 platform = unix
@@ -35,6 +36,7 @@ FBA_LIB_DIR := $(MAIN_FBA_DIR)/dep/libs
 FBA_INTERFACE_DIR := $(MAIN_FBA_DIR)/intf
 FBA_GENERATED_DIR = $(MAIN_FBA_DIR)/dep/generated
 FBA_SCRIPTS_DIR = $(MAIN_FBA_DIR)/dep/scripts
+GRIFFIN_DIR = griffin-libretro
 
 EXTERNAL_ZLIB = 0
 
@@ -157,26 +159,38 @@ BURN_BLACKLIST += $(FBA_BURNER_DIR)/unzip.c \
 		$(FBA_BURNER_DIR)/ioapi.c	
 endif
 
+ifeq ($(HAVE_GRIFFIN), 1)
+GRIFFIN_CXXSRCFILES := $(GRIFFIN_DIR)/cps12.cpp $(GRIFFIN_DIR)/cps3.cpp $(GRIFFIN_DIR)/neogeo.cpp $(GRIFFIN_DIR)/pgm.cpp $(GRIFFIN_DIR)/snes.cpp $(GRIFFIN_DIR)/galaxian.cpp $(GRIFFIN_DIR)/cpu-m68k.cpp
+BURN_BLACKLIST += $(FBA_CPU_DIR)/m68000_intf.cpp
+else
+CPS2_DIR := $(FBA_BURN_DRIVERS_DIR)/capcom
+CPS3_DIR := $(FBA_BURN_DRIVERS_DIR)/cps3
+GALAXIAN_DIR := $(FBA_BURN_DRIVERS_DIR)/galaxian
+NEOGEO_DIR := $(FBA_BURN_DRIVERS_DIR)/neogeo
+PGM_DIR := $(FBA_BURN_DRIVERS_DIR)/pgm
+SNES_DIR := $(FBA_BURN_DRIVERS_DIR)/snes
+M68K_DIR := $(FBA_CPU_DIR)/m68k
+endif
 
 FBA_BURN_DIRS := $(FBA_BURN_DIR) \
 	$(FBA_BURN_DIR)/devices \
 	$(FBA_BURN_DIR)/snd \
-	$(FBA_BURN_DRIVERS_DIR)/capcom \
+	$(CPS2_DIR) \
 	$(FBA_BURN_DRIVERS_DIR)/cave \
-	$(FBA_BURN_DRIVERS_DIR)/cps3 \
+	$(CPS3_DIR) \
 	$(FBA_BURN_DRIVERS_DIR)/dataeast \
-	$(FBA_BURN_DRIVERS_DIR)/galaxian \
+	$(GALAXIAN_DIR) \
 	$(FBA_BURN_DRIVERS_DIR)/irem \
 	$(FBA_BURN_DRIVERS_DIR)/konami \
 	$(FBA_BURN_DRIVERS_DIR)/megadrive \
-	$(FBA_BURN_DRIVERS_DIR)/neogeo \
+	$(NEOGEO_DIR) \
 	$(FBA_BURN_DRIVERS_DIR)/pce \
-	$(FBA_BURN_DRIVERS_DIR)/pgm \
+	$(PGM_DIR) \
 	$(FBA_BURN_DRIVERS_DIR)/pre90s \
 	$(FBA_BURN_DRIVERS_DIR)/psikyo \
 	$(FBA_BURN_DRIVERS_DIR)/pst90s \
 	$(FBA_BURN_DRIVERS_DIR)/sega \
-	$(FBA_BURN_DRIVERS_DIR)/snes \
+	$(SNES_DIR) \
 	$(FBA_BURN_DRIVERS_DIR)/taito \
 	$(FBA_BURN_DRIVERS_DIR)/toaplan
 
@@ -187,7 +201,7 @@ FBA_CPU_DIRS := $(FBA_CPU_DIR) \
 	$(FBA_CPU_DIR)/hd6309 \
 	$(FBA_CPU_DIR)/i8039 \
 	$(FBA_CPU_DIR)/konami \
-	$(FBA_CPU_DIR)/m68k \
+	$(M68K_DIR) \
 	$(FBA_CPU_DIR)/m6502 \
 	$(FBA_CPU_DIR)/m6800 \
 	$(FBA_CPU_DIR)/m6805 \
@@ -201,13 +215,14 @@ FBA_LIB_DIRS := $(FBA_LIB_DIR)/zlib
 
 FBA_SRC_DIRS := $(FBA_BURNER_DIR) $(FBA_BURN_DIRS) $(FBA_CPU_DIRS) $(FBA_BURNER_DIRS)
 
+
 ifeq ($(EXTERNAL_ZLIB), 1)
 FBA_DEFINES += -DEXTERNAL_ZLIB
 else
 FBA_SRC_DIRS += $(FBA_LIB_DIRS)
 endif
 
-FBA_CXXSRCS := $(filter-out $(BURN_BLACKLIST),$(foreach dir,$(FBA_SRC_DIRS),$(wildcard $(dir)/*.cpp)))
+FBA_CXXSRCS := $(GRIFFIN_CXXSRCFILES) $(filter-out $(BURN_BLACKLIST),$(foreach dir,$(FBA_SRC_DIRS),$(wildcard $(dir)/*.cpp)))
 FBA_CXXSRCS += $(LIBRETRO_DIR)/libretro.cpp $(LIBRETRO_DIR)/neocdlist.cpp
 FBA_CXXOBJ := $(FBA_CXXSRCS:.cpp=.o)
 FBA_CSRCS := $(filter-out $(BURN_BLACKLIST),$(foreach dir,$(FBA_SRC_DIRS),$(wildcard $(dir)/*.c)))

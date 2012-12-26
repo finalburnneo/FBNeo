@@ -31,11 +31,11 @@ static std::vector<std::string> g_find_list_path;
 static ROMFIND g_find_list[1024];
 static unsigned g_rom_count;
 
+#define AUDIO_SAMPLERATE 32000
 #define AUDIO_SEGMENT_LENGTH 534 // <-- Hardcoded value that corresponds well to 32kHz audio.
-#define AUDIO_SEGMENT_LENGTH_TIMES_CHANNELS (534 * 2)
 
 static uint16_t g_fba_frame[1024 * 1024];
-static int16_t g_audio_buf[AUDIO_SEGMENT_LENGTH_TIMES_CHANNELS];
+static int16_t g_audio_buf[AUDIO_SEGMENT_LENGTH * 2];
 
 // libretro globals
 
@@ -57,7 +57,7 @@ static bool driver_inited;
 void retro_get_system_info(struct retro_system_info *info)
 {
    info->library_name = "FB Alpha";
-   info->library_version = "v0.2.97.27";
+   info->library_version = "v0.2.97.28";
    info->need_fullpath = true;
    info->block_extract = true;
    info->valid_extensions = "iso|ISO|zip|ZIP";
@@ -339,8 +339,8 @@ void retro_run()
 
    nBurnLayer = 0xff;
    pBurnSoundOut = g_audio_buf;
-   nBurnSoundRate = 32000;
-   nBurnSoundLen = AUDIO_SEGMENT_LENGTH;
+   nBurnSoundRate = AUDIO_SAMPLERATE;
+   //nBurnSoundLen = AUDIO_SEGMENT_LENGTH;
    nCurrentFrame++;
 
 
@@ -357,7 +357,7 @@ void retro_run()
       nBurnPitch = width * sizeof(uint16_t);
 
    video_cb(g_fba_frame, width, height, nBurnPitch);
-   audio_batch_cb(g_audio_buf, AUDIO_SEGMENT_LENGTH);
+   audio_batch_cb(g_audio_buf, nBurnSoundLen);
 }
 
 static uint8_t *write_state_ptr;
@@ -428,7 +428,7 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
    int maximum = width > height ? width : height;
    struct retro_game_geometry geom = { width, height, maximum, maximum };
 
-   struct retro_system_timing timing = { 60.0, 60.0 * AUDIO_SEGMENT_LENGTH };
+   struct retro_system_timing timing = { (nBurnFPS / 100.0), (nBurnFPS / 100.0) * AUDIO_SEGMENT_LENGTH };
 
    info->geometry = geom;
    info->timing   = timing;
@@ -497,22 +497,6 @@ int VidRecalcPal()
 
 static void init_video()
 {
-   nBurnBpp = 2;
-   VidRecalcPal();
-#if 0
-#ifdef FRONTEND_SUPPORTS_RGB565
-   BurnHighCol = HighCol16;
-#else
-   BurnHighCol = HighCol15;
-#endif
-#endif
-}
-
-static void init_audio()
-{
-   pBurnSoundOut = g_audio_buf;
-   nBurnSoundRate = 32000;
-   nBurnSoundLen = AUDIO_SEGMENT_LENGTH;
 }
 
 static void extract_basename(char *buf, const char *path, size_t size)
@@ -561,8 +545,11 @@ bool retro_load_game(const struct retro_game_info *info)
    unsigned i = BurnDrvGetIndexByName(basename);
    if (i < nBurnDrvCount)
    {
-      init_video();
-      init_audio();
+      nBurnBpp = 2;
+      VidRecalcPal();
+      pBurnSoundOut = g_audio_buf;
+      nBurnSoundRate = AUDIO_SAMPLERATE;
+      nBurnSoundLen = AUDIO_SEGMENT_LENGTH;
 
       if (!fba_init(i))
          return false;
@@ -1361,12 +1348,10 @@ static inline int CinpJoyAxis(int i, int axis)
       case 7:
          return 0;
    }
-   return 0;
 }
 
 static inline int CinpMouseAxis(int i, int axis)
 {
-   return 0;
 }
 
 static inline int CinpState(int i)

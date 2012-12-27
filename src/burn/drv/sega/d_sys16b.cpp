@@ -1854,6 +1854,40 @@ static struct BurnRomInfo Aliensyn3RomDesc[] = {
 STD_ROM_PICK(Aliensyn3)
 STD_ROM_FN(Aliensyn3)
 
+static struct BurnRomInfo Aliensyn7RomDesc[] = {
+	{ "epr-11083.a4",   0x08000, 0xcb2ad9b3, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11080.a1",   0x08000, 0xfe7378d9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11084.a5",   0x08000, 0x2e1ec7b1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11081.a2",   0x08000, 0x1308ee63, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11085.a6",   0x08000, 0xcff78f39, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11082.a3",   0x08000, 0x9cdc2a14, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-10702.b9",   0x10000, 0x393bc813, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10703.b10",  0x10000, 0x6b6dd9f5, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10704.b11",  0x10000, 0x911e7ebc, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr-10709.b1",   0x10000, 0xaddf0a90, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10713.b5",   0x10000, 0xececde3a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10710.b2",   0x10000, 0x992369eb, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10714.b6",   0x10000, 0x91bf42fb, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10711.b3",   0x10000, 0x29166ef6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10715.b7",   0x10000, 0xa7c57384, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10712.b4",   0x10000, 0x876ad019, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10716.b8",   0x10000, 0x40ba1d48, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-11086.a7",   0x08000, 0xc7fddc28, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-10724.a8",   0x08000, 0xf971a817, SYS16_ROM_UPD7759DATA | BRF_SND },
+	{ "epr-10725.a9",   0x08000, 0x6a50e08f, SYS16_ROM_UPD7759DATA | BRF_SND },
+	{ "epr-10726.a10",  0x08000, 0xd50b7736, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "317-00xx.key",   0x02000, 0x76b370cd, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Aliensyn7)
+STD_ROM_FN(Aliensyn7)
+
 static struct BurnRomInfo AliensynjRomDesc[] = {
 	{ "epr-10720a.a4",  0x08000, 0x1b920893, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-10717a.a1",  0x08000, 0x972ae358, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -7786,6 +7820,16 @@ struct BurnDriver BurnDrvAliensyn3 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE, 0,
 	NULL, Aliensyn3RomInfo, Aliensyn3RomName, NULL, NULL, System16bfire1InputInfo, AliensynDIPInfo,
 	Aliensyn3Init, System16Exit, System16BFrame, NULL, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvAliensyn7 = {
+	"aliensyn7", "aliensyn", NULL, NULL, "1987",
+	"Alien Syndrome (set 7, System 16B, MC-8123B 317-00xx)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_MC8123_ENC, GBF_MAZE, 0,
+	NULL, Aliensyn7RomInfo, Aliensyn7RomName, NULL, NULL, System16bfire1InputInfo, AliensynDIPInfo,
+	AliensynInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

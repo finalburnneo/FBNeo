@@ -607,7 +607,7 @@ void m68k_set_cpu_type(unsigned int cpu_type)
 			CYC_MOVEM_L      = 3;
 			CYC_SHIFT        = 1;
 			CYC_RESET        = 132;
-			return;
+			break;
 		case M68K_CPU_TYPE_68008:
 			CPU_TYPE         = CPU_TYPE_008;
 			CPU_ADDRESS_MASK = 0x003fffff;
@@ -623,7 +623,7 @@ void m68k_set_cpu_type(unsigned int cpu_type)
 			CYC_MOVEM_L      = 3;
 			CYC_SHIFT        = 1;
 			CYC_RESET        = 132;
-			return;
+			break;
 		case M68K_CPU_TYPE_68010:
 			CPU_TYPE         = CPU_TYPE_010;
 			CPU_ADDRESS_MASK = 0x00ffffff;
@@ -639,7 +639,7 @@ void m68k_set_cpu_type(unsigned int cpu_type)
 			CYC_MOVEM_L      = 3;
 			CYC_SHIFT        = 1;
 			CYC_RESET        = 130;
-			return;
+			break;
 		case M68K_CPU_TYPE_68EC020:
 			CPU_TYPE         = CPU_TYPE_EC020;
 			CPU_ADDRESS_MASK = 0x00ffffff;
@@ -655,7 +655,7 @@ void m68k_set_cpu_type(unsigned int cpu_type)
 			CYC_MOVEM_L      = 2;
 			CYC_SHIFT        = 0;
 			CYC_RESET        = 518;
-			return;
+			break;
 		case M68K_CPU_TYPE_68020:
 			CPU_TYPE         = CPU_TYPE_020;
 			CPU_ADDRESS_MASK = 0xffffffff;
@@ -671,8 +671,10 @@ void m68k_set_cpu_type(unsigned int cpu_type)
 			CYC_MOVEM_L      = 2;
 			CYC_SHIFT        = 0;
 			CYC_RESET        = 518;
-			return;
+			break;
 	}
+	
+	m68ki_build_opcode_table(CPU_TYPE_IS_000(CPU_TYPE));
 }
 
 /* Execute some instructions until we use up num_cycles clock cycles */
@@ -785,7 +787,7 @@ void m68k_init(void)
 	/* The first call to this function initializes the opcode handler jump table */
 	if(!emulation_initialized)
 		{
-		m68ki_build_opcode_table();
+		m68ki_build_opcode_table(CPU_TYPE_IS_000(CPU_TYPE));
 		emulation_initialized = 1;
 	}
 

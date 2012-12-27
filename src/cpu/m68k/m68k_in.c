@@ -102,7 +102,7 @@ M68KMAKE_PROTOTYPE_FOOTER
 
 
 /* Build the opcode handler table */
-void m68ki_build_opcode_table(void);
+void m68ki_build_opcode_table(int is_000);
 
 extern void (*m68ki_instruction_jump_table[0x10000])(void); /* opcode handler jump table */
 extern unsigned char m68ki_cycles[][0x10000];
@@ -162,7 +162,7 @@ static void m68k_66ff(void)
 }
 
 /* Build the opcode handler jump table */
-void m68ki_build_opcode_table(void)
+void m68ki_build_opcode_table(int is_000)
 {
 	opcode_handler_struct *ostruct;
 	int instr;
@@ -256,7 +256,7 @@ void m68ki_build_opcode_table(void)
 		ostruct++;
 	}
 
-	m68ki_instruction_jump_table[0x66ff] = m68k_66ff;	// hack
+	if (is_000) m68ki_instruction_jump_table[0x66ff] = m68k_66ff;	// hack
 }
 
 

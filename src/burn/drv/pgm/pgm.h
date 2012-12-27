@@ -104,6 +104,7 @@ void pgm_decrypt_dw2001();
 void pgm_decrypt_py2k2();
 void pgm_decrypt_espgaluda();
 void pgm_decrypt_ketsui();
+void pgm_decrypt_pgm3in1();
 
 void pgm_decode_kovqhsgs_gfx_block(UINT8 *src);
 void pgm_decode_kovqhsgs_tile_data(UINT8 *source);

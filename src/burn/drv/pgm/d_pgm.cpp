@@ -1590,43 +1590,6 @@ struct BurnDriver BurnDrvphotoy2k102 = {
 };
 
 
-// Photo Y2K 2 (3-in-1)
-
-static struct BurnRomInfo pgm3in1RomDesc[] = {
-	{ "v-100cn.u3",			0x200000, 0xa39f59b4, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
-	
-	{ "u5.u5",	 	        0x200000, 0xda375a50, 2 | BRF_GRA },		//  1 Tile data
-
-	{ "pgm_a1100.u4", 		0x800000, 0xe32ce499, 3 | BRF_GRA },		//  2 Sprite Color Data
-	{ "pgm_a1101.u5", 		0x800000, 0x4e7568bc, 3 | BRF_GRA },		//  3
-	{ "pgm_a1102.u6", 		0x800000, 0x6da7c143, 3 | BRF_GRA },		//  4
-	{ "pgm_a1103.u7", 		0x800000, 0x0ebebfdc, 3 | BRF_GRA },		//  4
-	{ "ext_bit_cg.u20", 	        0x400000, 0xfe314754, 3 | BRF_GRA },		//  6
-
-	{ "pgm_b1100.u8", 		0x800000, 0xfa53d6f6, 4 | BRF_GRA },		//  7 Sprite Masks & Color Indexes
-	{ "pgm_b1101.u9", 		0x800000, 0x001e4c81, 4 | BRF_GRA },		//  8
-	{ "ext_bit_map.u21", 	        0x200000, 0xfe31dca6, 4 | BRF_GRA },		//  9
-
-	{ "pgm_m1100.u17", 		0x200000, 0xfb1515f8, 5 | BRF_SND },		// 10 Samples
-	{ "u16.u16", 		   	0x800000, 0x714c33e5, 5 | BRF_SND },		// 11 
-
-	{ "igs027a_pgm3in1.asic",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 12 Internal ARM7 Rom
-};
-
-STDROMPICKEXT(pgm3in1, pgm3in1, pgm)
-STD_ROM_FN(pgm3in1)
-
-struct BurnDriverD BurnDrvPgm3in1 = {
-	"pgm3in1", NULL, "pgm", NULL, "2001",
-	"Photo Y2K 2 (3-in-1)\0", "Incomplete dump", "IGS", "PolyGameMaster",
-	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
-	NULL, pgm3in1RomInfo, pgm3in1RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
-	pgmInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
-	448, 224, 4, 3
-};
-
-
 // Puzzle Star (V100MG)
 
 static struct BurnRomInfo puzlstarRomDesc[] = {
@@ -2613,6 +2576,52 @@ struct BurnDriverD BurnDrvtheglada = {
 	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, thegladaRomInfo, thegladaRomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	thegladInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Photo Y2K 2 (3-in-1)
+
+static struct BurnRomInfo pgm3in1RomDesc[] = {
+	{ "v-100cn.u3",			0x200000, 0xa39f59b4, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	
+	{ "u5.u5",	 	        0x200000, 0xda375a50, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "pgm_a1100.u4", 		0x800000, 0xe32ce499, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "pgm_a1101.u5", 		0x800000, 0x4e7568bc, 3 | BRF_GRA },		//  3
+	{ "pgm_a1102.u6", 		0x800000, 0x6da7c143, 3 | BRF_GRA },		//  4
+	{ "pgm_a1103.u7", 		0x800000, 0x0ebebfdc, 3 | BRF_GRA },		//  4
+	{ "ext_bit_cg.u20", 	        0x400000, 0xfe314754, 3 | BRF_GRA },		//  6
+
+	{ "pgm_b1100.u8", 		0x800000, 0xfa53d6f6, 4 | BRF_GRA },		//  7 Sprite Masks & Color Indexes
+	{ "pgm_b1101.u9", 		0x800000, 0x001e4c81, 4 | BRF_GRA },		//  8
+	{ "ext_bit_map.u21", 	        0x200000, 0xfe31dca6, 4 | BRF_GRA },		//  9
+
+	{ "pgm_m1100.u17", 		0x200000, 0xfb1515f8, 5 | BRF_SND },		// 10 Samples
+	{ "u16.u16", 		   	0x800000, 0x714c33e5, 5 | BRF_SND },		// 11 
+
+	{ "igs027a_pgm3in1.asic",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 12 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(pgm3in1, pgm3in1, pgm)
+STD_ROM_FN(pgm3in1)
+
+static INT32 pgm3in1Init()
+{
+	pPgmInitCallback = pgm_decrypt_pgm3in1;
+	pPgmProtCallback = install_protection_asic27a_py2k2;
+//	pPgmProtCallback = install_protection_asic27a_kovsh;
+
+	return pgmInit();
+}
+
+struct BurnDriverD BurnDrvPgm3in1 = {
+	"pgm3in1", NULL, "pgm", NULL, "2001",
+	"Photo Y2K 2 (3-in-1)\0", "Incomplete dump", "IGS", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
+	NULL, pgm3in1RomInfo, pgm3in1RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	pgm3in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 

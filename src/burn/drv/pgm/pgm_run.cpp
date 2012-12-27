@@ -172,6 +172,10 @@ static INT32 pgmGetRoms(bool bLoad)
 		if ((ri.nType & BRF_GRA) && (ri.nType & 0x0f) == 4)
 		{
 			if (bLoad) {
+				if (strcmp(BurnDrvGetTextA(DRV_NAME), "pgm3in1") == 0) {
+					if ((PGMSPRMaskROMLoad - PGMSPRMaskROM) == 0x1000000) PGMSPRMaskROMLoad -= 0x100000;
+				}
+
 				BurnLoadRom(PGMSPRMaskROMLoad, i, 1);
 				PGMSPRMaskROMLoad += ri.nLen;
 			} else {

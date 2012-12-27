@@ -1988,6 +1988,18 @@ static void py2k2_asic27a_sim_command(UINT8 command)
 			asic27a_sim_response = 0xa00000 + ((asic27a_sim_value & 0x1f) * 0x40);
 		break;
 
+		case 0xcb: // Background layer 'x' select (pgm3in1, same as kov)
+			asic27a_sim_response = 0x880000;
+		break;
+
+		case 0xcc: // Background layer offset (pgm3in1, same as kov)
+		{
+			INT32 y = asic27a_sim_value;
+			if (y & 0x400) y = -(0x400 - (y & 0x3ff));
+			asic27a_sim_response = 0x900000 + ((asic27a_sim_regs[0xcb] + (y * 0x40)) * 4);
+		}
+		break;
+
 	//	case 0x32: // ?
 	//	break;
 

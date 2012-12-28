@@ -5976,8 +5976,8 @@ static struct BurnRomInfo GalaxiantRomDesc[] = {
 	{ "gl-06.8d",      0x00800, 0x097d92a2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "gl-07.8c",      0x00800, 0x5341d75a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	
-	{ "gl-01.1j",      0x00800, 0x968b6016, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "gl-02.1k",      0x00800, 0xd14f7510, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "gl-01.1j",      0x00800, 0x968b6016, BRF_GRA | GAL_ROM_TILES_SHARED },
 	
 	{ "6l.bpr",        0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
 };

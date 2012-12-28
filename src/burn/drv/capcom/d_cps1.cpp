@@ -4091,7 +4091,7 @@ static struct BurnRomInfo CaptcommRomDesc[] = {
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "ccprg1.11d",    0x000117, 0xe1c225c4, BRF_OPT },
 	{ "ioc1.ic7",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
-	{ "c632b.ic1",     0x000117, 0x00000000, BRF_OPT | BRF_NODUMP},
+	{ "c632b.ic1",     0x000117, 0x0fbd9270, BRF_OPT },
 };
 
 STD_ROM_PICK(Captcomm)
@@ -4187,7 +4187,7 @@ static struct BurnRomInfo CaptcommjRomDesc[] = {
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "ccprg1.11d",    0x000117, 0xe1c225c4, BRF_OPT },
 	{ "ioc1.ic7",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
-	{ "c632b.ic1",     0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "c632b.ic1",     0x000117, 0x0fbd9270, BRF_OPT },
 };
 
 STD_ROM_PICK(Captcommj)
@@ -5496,18 +5496,21 @@ static struct BurnRomInfo GanbareRomDesc[] = {
 	{ "mrnj_07.9a",    0x080000, 0x99afb6c7, BRF_GRA | CPS1_TILES },
 	{ "mrnj_08.10a",   0x080000, 0x52882c20, BRF_GRA | CPS1_TILES },
 
-	{ "mrnj_09.12c",   0x010000, 0x62470d72, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "mrnj_09.12a",   0x010000, 0x62470d72, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "mrnj_18.11c",   0x020000, 0x08e13940, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "mrnj_19.12c",   0x020000, 0x5fa59927, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
-	{ "m48t35y.9n",    0x008000, 0x96107b4a, BRF_OPT }, // timekeeper internal ram - game overwrites it on init anyway
+	{ "m48t35y-70pc1.9n", 0x008000, 0x96107b4a, BRF_OPT }, // timekeeper internal ram - game overwrites it on init anyway
 	
 	A_BOARD_PLDS
 	
-	{ "gbp.1a",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },	// b-board PLDs
-	{ "iob1.12e",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
-	{ "bprg1.11e",     0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "gbpr2.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },	// b-board PLDs
+	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT | BRF_NODUMP },
+	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT | BRF_NODUMP },
+	
+	{ "ioc1.ic7",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
 
 STD_ROM_PICK(Ganbare)
@@ -7408,7 +7411,7 @@ static struct BurnRomInfo Sf2eeRomDesc[] = {
 	
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },			// b-board PLDs
 	{ "iob2.11d",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
-	{ "c632b.ic1",     0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },	// c-board PLDs
+	{ "c632b.ic1",     0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
 
 STD_ROM_PICK(Sf2ee)
@@ -7668,7 +7671,7 @@ static struct BurnRomInfo Sf2ueRomDesc[] = {
 	
 	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },			// b-board PLDs
 	{ "iob2.11d",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
-	{ "c632b.ic1",     0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },	// c-board PLDs
+	{ "c632b.ic1",     0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
 
 STD_ROM_PICK(Sf2ue)
@@ -7755,7 +7758,7 @@ static struct BurnRomInfo Sf2uiRomDesc[] = {
 	{ "sf2u_37i.11f",  0x020000, 0x9df707dd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "sf2u_31i.12e",  0x020000, 0x69a0a301, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "sf2u_38i.12f",  0x020000, 0x4cb46daf, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "sf2_28i.9e",    0x020000, 0x1580be4c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "sf2u_28i.9e",   0x020000, 0x1580be4c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "sf2u_35i.9f",   0x020000, 0x1468d185, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "sf2_29b.10e",   0x020000, 0xbb4af315, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "sf2_36b.10f",   0x020000, 0xc02a13eb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },

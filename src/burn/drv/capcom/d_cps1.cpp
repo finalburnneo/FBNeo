@@ -9408,34 +9408,6 @@ static struct BurnRomInfo Sf2mdtaRomDesc[] = {
 STD_ROM_PICK(Sf2mdta)
 STD_ROM_FN(Sf2mdta)
 
-static struct BurnRomInfo Sf2mstreet6RomDesc[] = {
-	{ "6st-u196.u196",  0x0100000, 0x596609d4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "6st-u10.u10",    0x0100000, 0x7be4b175, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP }, // first and second half are both identical to turboii.21
-
-	{ "6st-u70.u70",  	0x0100000, 0xbaa0f81f, BRF_GRA | CPS1_TILES },
-	{ "6st-u68.u68",  	0x0100000, 0x8edff95a, BRF_GRA | CPS1_TILES },
-	{ "6st-u69.u69",  	0x0100000, 0x468962b1, BRF_GRA | CPS1_TILES },
-	{ "6st-u64.u64",  	0x0100000, 0x8165f536, BRF_GRA | CPS1_TILES },
-	{ "6st-u19.u19",  	0x0100000, 0x39d763d3, BRF_GRA | CPS1_TILES },
-	{ "6st-u18.u18",  	0x0100000, 0x2ddfe46e, BRF_GRA | CPS1_TILES },
-
-	{ "u191",           0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
-
-	{ "u210",           0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	
-	{ "u133",           0x0010000, 0x13ea1c44, BRF_OPT }, // unknown
-	
-	// extra graphics roms are required (see bike's on Chun-Li stage), but using the current dumps we have lead to a corrupt
-	// Street Fighter II logo
-	
-	// these still need looking at
-	{ "6st-u31.u31",    0x0100000, 0xb9cbdc41, BRF_OPT },
-	{ "6st-u29.u29",    0x0100000, 0x1da5bf2d, BRF_OPT },
-};
-
-STD_ROM_PICK(Sf2mstreet6)
-STD_ROM_FN(Sf2mstreet6)
-
 static struct BurnRomInfo Sf2ceeablRomDesc[] = {
 	// this set was previously known as sf2m16
 	{ "joe-922",      0x0080000, 0xe927556c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -9637,6 +9609,31 @@ static struct BurnRomInfo Sf2ceuab3RomDesc[] = {
 
 STD_ROM_PICK(Sf2ceuab3)
 STD_ROM_FN(Sf2ceuab3)
+
+static struct BurnRomInfo Sf2ceuab4RomDesc[] = {
+	{ "6st-u196.u196",  0x0100000, 0x596609d4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "6st-u10.u10",    0x0100000, 0x7be4b175, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP }, // first and second half are both identical to turboii.21
+
+	{ "6st-u70.u70",  	0x0100000, 0xbaa0f81f, BRF_GRA | CPS1_TILES },
+	{ "6st-u68.u68",  	0x0100000, 0x8edff95a, BRF_GRA | CPS1_TILES },
+	{ "6st-u69.u69",  	0x0100000, 0x468962b1, BRF_GRA | CPS1_TILES },
+	{ "6st-u64.u64",  	0x0100000, 0x8165f536, BRF_GRA | CPS1_TILES },
+	{ "6st-u19.u19",  	0x0100000, 0x39d763d3, BRF_GRA | CPS1_TILES },
+	{ "6st-u18.u18",  	0x0100000, 0x2ddfe46e, BRF_GRA | CPS1_TILES },
+
+	{ "u191",           0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "u210",           0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	// extra graphics roms, load on the left side at 0x400000, but dumps look bad
+	{ "6st-u31.u31",    0x0100000, 0xb9cbdc41, BRF_OPT }, // 256kb of data repeated throughout
+	{ "6st-u29.u29",    0x0100000, 0x1da5bf2d, BRF_OPT }, // 256kb of data repeated throughout
+	
+	{ "u133",           0x0010000, 0x13ea1c44, BRF_OPT }, // unknown
+};
+
+STD_ROM_PICK(Sf2ceuab4)
+STD_ROM_FN(Sf2ceuab4)
 
 static struct BurnRomInfo Sf2tlonaRomDesc[] = {
 	// There is a set known as sf2tlond and sf2turyu which contains the same data, but has double-size program roms
@@ -11250,7 +11247,6 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2dkot2"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2mdt"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2mdta"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
-	{ "sf2mstreet6" , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2tlona"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2tlonb"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2tlonc"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -11274,6 +11270,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ceuabl"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab2"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab3"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
+	{ "sf2ceuab4"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2hf"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hfu"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hfj"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -14006,7 +14003,7 @@ static INT32 Sf2ceuab3Init()
 	return Sf2ceuablInit();
 }
 
-static INT32 Sf2mstreet6Init()
+static INT32 Sf2ceuab4Init()
 {
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2koryu;
 	
@@ -16365,16 +16362,6 @@ struct BurnDriver BurnDrvCpsSf2mdta = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsSf2mstreet6 = {
-	"sf2mstreet6", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (MSTREET-6 bootleg, 920313 USA)\0", NULL, "bootleg", "CPS1",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2mstreet6RomInfo, Sf2mstreet6RomName, NULL, NULL, Sf2ceuablInputInfo, Sf2DIPInfo,
-	Sf2mstreet6Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
 struct BurnDriver BurnDrvCpsSf2ceeabl = {
 	"sf2ceeabl", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II' - champion edition (920313 etc bootleg set 1)\0", NULL, "bootleg", "CPS1",
@@ -16442,6 +16429,16 @@ struct BurnDriver BurnDrvCpsSf2ceuab3 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceuab3RomInfo, Sf2ceuab3RomName, NULL, NULL, Sf2ceuablInputInfo, Sf2DIPInfo,
 	Sf2ceuab3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2ceuab4 = {
+	"sf2ceuab4", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II' - champion edition (920313 USA bootleg set 4)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2ceuab4RomInfo, Sf2ceuab4RomName, NULL, NULL, Sf2ceuablInputInfo, Sf2DIPInfo,
+	Sf2ceuab4Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

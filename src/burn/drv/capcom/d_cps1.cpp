@@ -1395,6 +1395,46 @@ static struct BurnInputInfo WofhInputList[] =
 
 STDINPUTINFO(Wofh)
 
+static struct BurnInputInfo Wof3jsInputList[] =
+{
+ 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0, "p1 coin"   },
+ 	{"P1 Start"         , BIT_DIGITAL  , CpsInp018+4, "p1 start"  },
+ 	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     },
+ 	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   },
+ 	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1, "p1 left"   },
+ 	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
+ 	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
+ 	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
+	{"P1 Fire"          , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
+
+ 	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018+1, "p2 coin"   },
+ 	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  },
+ 	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     },
+ 	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   },
+ 	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1, "p2 left"   },
+ 	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
+ 	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
+ 	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
+	{"P2 Fire"          , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
+
+ 	{"P3 Start"         , BIT_DIGITAL  , CpsInp177+7, "p3 start"  },
+ 	{"P3 Up"            , BIT_DIGITAL  , CpsInp177+3, "p3 up"     },
+ 	{"P3 Down"          , BIT_DIGITAL  , CpsInp177+2, "p3 down"   },
+ 	{"P3 Left"          , BIT_DIGITAL  , CpsInp177+1, "p3 left"   },
+ 	{"P3 Right"         , BIT_DIGITAL  , CpsInp177+0, "p3 right"  },
+ 	{"P3 Attack"        , BIT_DIGITAL  , CpsInp177+4, "p3 fire 1" },
+ 	{"P3 Jump"          , BIT_DIGITAL  , CpsInp177+5, "p3 fire 2" },
+	{"P3 Fire"          , BIT_DIGITAL  , CpsInp177+6, "p3 fire 3" },
+
+ 	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
+ 	{"Service"          , BIT_DIGITAL  , CpsInp018+2, "service"   },
+ 	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A    , "dip"       },
+ 	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C    , "dip"       },
+ 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
+};
+
+STDINPUTINFO(Wof3js)
+
 // don't know where this one reads config data from (if at all), reads values at 0x80001a, 0x80001e, 0x80001f (but values make no difference)
 // if I force it to use EEPROM, the config data gets forgotten
 static struct BurnInputInfo WofsjbInputList[] =
@@ -3681,43 +3721,87 @@ STDDIPINFO(Wofh)
 static struct BurnDIPInfo Wof3jsDIPList[]=
 {
 	// Defaults
-	{0x1a, 0xff, 0xff, 0x00, NULL                     },
-	{0x1b, 0xff, 0xff, 0x00, NULL                     },
 	{0x1c, 0xff, 0xff, 0x00, NULL                     },
+	{0x1d, 0xff, 0xff, 0x00, NULL                     },
+	{0x1e, 0xff, 0xff, 0x00, NULL                     },
 	
 	// Dip A
 	{0   , 0xfe, 0   , 4   , "Coinage"                },
-	{0x1a, 0x01, 0x03, 0x01, "2 Coins 1 Credit"       },
-	{0x1a, 0x01, 0x03, 0x00, "1 Coin  1 Credit"       },	
-	{0x1a, 0x01, 0x03, 0x02, "1 Coin  2 Credits"      },
-	{0x1a, 0x01, 0x03, 0x03, "1 Coin  3 Credits"      },
+	{0x1c, 0x01, 0x03, 0x01, "2 Coins 1 Credit"       },
+	{0x1c, 0x01, 0x03, 0x00, "1 Coin  1 Credit"       },	
+	{0x1c, 0x01, 0x03, 0x02, "1 Coin  2 Credits"      },
+	{0x1c, 0x01, 0x03, 0x03, "1 Coin  3 Credits"      },
 	
 	// Dip B
 	{0   , 0xfe, 0   , 2   , "Coin Slots"             },
-	{0x1b, 0x01, 0x01, 0x01, "3 Players 1 Shooter"    },
-	{0x1b, 0x01, 0x01, 0x00, "3 Players 3 Shooters"   },
+	{0x1d, 0x01, 0x01, 0x01, "3 Players 1 Shooter"    },
+	{0x1d, 0x01, 0x01, 0x00, "3 Players 3 Shooters"   },
 	
 	// Dip C
 	// not sure about difficulty (no way to test)
 	{0   , 0xfe, 0   , 8   , "Difficulty"             },
-	{0x1c, 0x01, 0x07, 0x00, "Value 0"                },
-	{0x1c, 0x01, 0x07, 0x01, "Value 1"                },
-	{0x1c, 0x01, 0x07, 0x02, "Value 2"                },
-	{0x1c, 0x01, 0x07, 0x03, "Value 3"                },
-	{0x1c, 0x01, 0x07, 0x04, "Value 4"                },
-	{0x1c, 0x01, 0x07, 0x05, "Value 5"                },
-	{0x1c, 0x01, 0x07, 0x06, "Value 6"                },
-	{0x1c, 0x01, 0x07, 0x07, "Value 7"                },
+	{0x1e, 0x01, 0x07, 0x00, "Value 0"                },
+	{0x1e, 0x01, 0x07, 0x01, "Value 1"                },
+	{0x1e, 0x01, 0x07, 0x02, "Value 2"                },
+	{0x1e, 0x01, 0x07, 0x03, "Value 3"                },
+	{0x1e, 0x01, 0x07, 0x04, "Value 4"                },
+	{0x1e, 0x01, 0x07, 0x05, "Value 5"                },
+	{0x1e, 0x01, 0x07, 0x06, "Value 6"                },
+	{0x1e, 0x01, 0x07, 0x07, "Value 7"                },
 	
 	{0   , 0xfe, 0   , 5   , "Lives"                  },
-	{0x1c, 0x01, 0x70, 0x40, "Start 1 Continue 1"     },
-	{0x1c, 0x01, 0x70, 0x30, "Start 4 Continue 3"     },
-	{0x1c, 0x01, 0x70, 0x20, "Start 4 Continue 4"     },
-	{0x1c, 0x01, 0x70, 0x10, "Start 3 Continue 3"     },
-	{0x1c, 0x01, 0x70, 0x00, "Start 2 Continue 2"     },
+	{0x1e, 0x01, 0x70, 0x40, "Start 1 Continue 1"     },
+	{0x1e, 0x01, 0x70, 0x30, "Start 4 Continue 3"     },
+	{0x1e, 0x01, 0x70, 0x20, "Start 4 Continue 4"     },
+	{0x1e, 0x01, 0x70, 0x10, "Start 3 Continue 3"     },
+	{0x1e, 0x01, 0x70, 0x00, "Start 2 Continue 2"     },
 };
 
 STDDIPINFO(Wof3js)
+
+static struct BurnDIPInfo Wof3jsaDIPList[]=
+{
+	// Defaults
+	{0x1c, 0xff, 0xff, 0x00, NULL                     },
+	{0x1d, 0xff, 0xff, 0x00, NULL                     },
+	{0x1e, 0xff, 0xff, 0x13, NULL                     },
+	
+	// Dip A
+	{0   , 0xfe, 0   , 3   , "Coin Slots"             },
+	{0x1c, 0x01, 0x03, 0x02, "2 Players 1 Shooter"    },
+	{0x1c, 0x01, 0x03, 0x01, "3 Players 1 Shooter"    },
+	{0x1c, 0x01, 0x03, 0x00, "3 Players 3 Shooters"   },
+	
+	// Dip B
+	{0   , 0xfe, 0   , 4   , "Coinage"                },
+	{0x1d, 0x01, 0x03, 0x00, "1 Coin 1 Credit"        },
+	{0x1d, 0x01, 0x03, 0x01, "1 Coin 2 Credits"       },
+	{0x1d, 0x01, 0x03, 0x02, "1 Coin 3 Credits"       },
+	{0x1d, 0x01, 0x03, 0x03, "1 Coin 4 Credits"       },
+	
+	// Dip C
+	{0   , 0xfe, 0   , 8   , "Difficulty"             },
+	{0x1e, 0x01, 0x07, 0x00, "Extra Easy"             },
+	{0x1e, 0x01, 0x07, 0x01, "Very Easy"              },
+	{0x1e, 0x01, 0x07, 0x02, "Easy"                   },
+	{0x1e, 0x01, 0x07, 0x03, "Normal"                 },
+	{0x1e, 0x01, 0x07, 0x04, "Hard"                   },
+	{0x1e, 0x01, 0x07, 0x05, "Very Hard"              },
+	{0x1e, 0x01, 0x07, 0x06, "Extra Hard"             },
+	{0x1e, 0x01, 0x07, 0x07, "Hardest"                },
+	
+	{0   , 0xfe, 0   , 8   , "Lives"                  },
+	{0x1e, 0x01, 0x70, 0x70, "Start 4 Continue 5"     },
+	{0x1e, 0x01, 0x70, 0x60, "Start 3 Continue 4"     },
+	{0x1e, 0x01, 0x70, 0x50, "Start 2 Continue 3"     },
+	{0x1e, 0x01, 0x70, 0x40, "Start 1 Continue 2"     },
+	{0x1e, 0x01, 0x70, 0x30, "Start 4 Continue 4"     },
+	{0x1e, 0x01, 0x70, 0x20, "Start 3 Continue 3"     },
+	{0x1e, 0x01, 0x70, 0x10, "Start 2 Continue 2"     },
+	{0x1e, 0x01, 0x70, 0x00, "Start 1 Continue 1"     },
+};
+
+STDDIPINFO(Wof3jsa)
 
 static struct BurnDIPInfo Wof3sjDIPList[]=
 {
@@ -16777,7 +16861,7 @@ struct BurnDriver BurnDrvCpsWof3js = {
 	"Sangokushi II: San Jian Sheng (Chinese bootleg set 1, 921005 Asia)\0", NULL, "bootleg", "CPS1",
 	L"\u4E09\u56FD\u5FD7II: \u4E09\u528D\u8056\0Sangokushi II: San Jian Sheng (Chinese bootleg set 1, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Wof3jsRomInfo, Wof3jsRomName, NULL, NULL, WofhInputInfo, Wof3jsDIPInfo,
+	NULL, Wof3jsRomInfo, Wof3jsRomName, NULL, NULL, Wof3jsInputInfo, Wof3jsDIPInfo,
 	Wof3jsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -16787,7 +16871,7 @@ struct BurnDriver BurnDrvCpsWof3jsa = {
 	"Sangokushi II: San Jian Sheng (Chinese bootleg set 2, 921005 Asia)\0", NULL, "bootleg", "CPS1",
 	L"\u4E09\u56FD\u5FD7II: \u4E09\u528D\u8056\0Sangokushi II: San Jian Sheng (Chinese bootleg set 2, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Wof3jsaRomInfo, Wof3jsaRomName, NULL, NULL, WofhInputInfo, WofhDIPInfo,
+	NULL, Wof3jsaRomInfo, Wof3jsaRomName, NULL, NULL, Wof3jsInputInfo, Wof3jsaDIPInfo,
 	Wof3jsaInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

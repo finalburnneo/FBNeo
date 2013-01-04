@@ -1,15 +1,16 @@
 #include "cps.h"
 #include "timekpr.h"
 
-#define CPS1_68K_PROGRAM_BYTESWAP		1
-#define CPS1_68K_PROGRAM_NO_BYTESWAP	2
-#define CPS1_Z80_PROGRAM				3
-#define CPS1_TILES						4
-#define CPS1_OKIM6295_SAMPLES			5
-#define CPS1_QSOUND_SAMPLES				6
-#define CPS1_PIC						7
-#define CPS1_EXTRA_TILES_SF2EBBL_400000	8
-#define CPS1_EXTRA_TILES_400000			9
+#define CPS1_68K_PROGRAM_BYTESWAP			1
+#define CPS1_68K_PROGRAM_NO_BYTESWAP		2
+#define CPS1_Z80_PROGRAM					3
+#define CPS1_TILES							4
+#define CPS1_OKIM6295_SAMPLES				5
+#define CPS1_QSOUND_SAMPLES					6
+#define CPS1_PIC							7
+#define CPS1_EXTRA_TILES_SF2EBBL_400000		8
+#define CPS1_EXTRA_TILES_400000				9
+#define CPS1_EXTRA_TILES_SF2KORYU_400000	10
 
 typedef INT32 (*Cps1Callback)(INT32);
 static Cps1Callback Cps1GfxLoadCallbackFunction = NULL;
@@ -9696,7 +9697,7 @@ STD_ROM_FN(Sf2ceuab3)
 
 static struct BurnRomInfo Sf2ceuab4RomDesc[] = {
 	{ "6st-u196.u196",  0x0100000, 0x596609d4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "6st-u10.u10",    0x0100000, 0x7be4b175, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP }, // first and second half are both identical to turboii.21
+	{ "6st-u10.u10",    0x0080000, 0xed4186bd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "6st-u70.u70",  	0x0100000, 0xbaa0f81f, BRF_GRA | CPS1_TILES },
 	{ "6st-u68.u68",  	0x0100000, 0x8edff95a, BRF_GRA | CPS1_TILES },
@@ -9709,9 +9710,8 @@ static struct BurnRomInfo Sf2ceuab4RomDesc[] = {
 
 	{ "u210",           0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
-	// extra graphics roms, load on the left side at 0x400000, but dumps look bad
-	{ "6st-u31.u31",    0x0100000, 0xb9cbdc41, BRF_OPT }, // 256kb of data repeated throughout
-	{ "6st-u29.u29",    0x0100000, 0x1da5bf2d, BRF_OPT }, // 256kb of data repeated throughout
+	{ "6st-u31.u31",    0x0040000, 0x35486f2d, BRF_GRA | CPS1_EXTRA_TILES_SF2KORYU_400000 }, 
+	{ "6st-u29.u29",    0x0040000, 0xe4eca601, BRF_GRA | CPS1_EXTRA_TILES_SF2KORYU_400000 },
 	
 	{ "u133",           0x0010000, 0x13ea1c44, BRF_OPT }, // unknown
 };
@@ -11505,7 +11505,7 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 				nCpsQSamLen += ri.nLen;
 				nCpsQsoundRomNum++;
 			}
-			if (((ri.nType & 0xff) == CPS1_EXTRA_TILES_SF2EBBL_400000) || ((ri.nType & 0xff) == CPS1_EXTRA_TILES_400000)) {
+			if (((ri.nType & 0xff) == CPS1_EXTRA_TILES_SF2EBBL_400000) || ((ri.nType & 0xff) == CPS1_EXTRA_TILES_400000) || ((ri.nType & 0xff) == CPS1_EXTRA_TILES_SF2KORYU_400000)) {
 				nCpsExtraGfxLen += ri.nLen;
 				nCpsExtraTilesRomNum++;
 			}
@@ -11685,6 +11685,13 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 					CpsLoadTiles(CpsGfx + 0x400000, i);
 				
 					i += 4;
+				}
+				
+				if ((ri.nType & 0xff) == CPS1_EXTRA_TILES_SF2KORYU_400000) {
+					memset(CpsGfx + 0x400000, 0, nCpsExtraGfxLen);
+					CpsLoadTilesSf2koryuExtra(CpsGfx + 0x400000, i);
+					
+					i += 2;
 				}
 			}
 		}

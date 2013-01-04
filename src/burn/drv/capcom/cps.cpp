@@ -825,6 +825,14 @@ INT32 CpsLoadTilesSf2ebbl(UINT8 *Tile, INT32 nStart)
 	return 0;
 }
 
+INT32 CpsLoadTilesSf2koryuExtra(UINT8* Tile, INT32 nStart)
+{
+	CpsLoadOneSf2koryu(Tile, nStart + 0, 1, 0);
+	CpsLoadOneSf2koryu(Tile, nStart + 1, 1, 2);
+	
+	return 0;
+}
+
 static INT32 CpsLoadTilesBootlegType3(UINT8 *Tile, INT32 nStart)
 {
 	CpsLoadOneBootlegType3(Tile, nStart +  0, 0, 0);

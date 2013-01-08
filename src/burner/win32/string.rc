@@ -100,7 +100,7 @@ BEGIN
 	IDS_ROMINFO_GRAPHICS		"%s, Graphics"
 	IDS_ROMINFO_SOUND			"%s, Sound"
 	IDS_ROMINFO_BIOS			"%s, BIOS"
-	IDS_ROMINFO_NODUMP			"%s, No Dump"
+	IDS_ROMINFO_NODUMP			"No Dump"
 	
 	IDS_SPATH_PREVIEW			"Previews"
 	IDS_SPATH_TITLES			"Titles"

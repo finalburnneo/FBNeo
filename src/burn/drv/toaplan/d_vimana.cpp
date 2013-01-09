@@ -252,7 +252,7 @@ static void StopSamplesChannel11()
 	}
 }
 
-static void ESDFadeout()
+static void ESEFadeout()
 {
 	if (FadeoutStop == 1) {
 		Playing2 = 0xff;
@@ -818,7 +818,7 @@ static INT32 DrvFrame()
 	
 	BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 #ifdef TOAPLAN_SOUND_SAMPLES_HACK
-	ESDFadeout();
+	ESEFadeout();
 #endif
 
 	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];

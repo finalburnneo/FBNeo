@@ -33,6 +33,9 @@ BUILD_X86_ASM = 1
 # Include 7-zip support
 INCLUDE_7Z_SUPPORT = 1
 
+# Include Toaplan sound sample hacks for games without MCU dumps
+TOAPLAN_SOUND_SAMPLES_HACK = 1
+
 # Include symbols and other debug information in the executable
 #SYMBOL = 1
 

@@ -1,8 +1,6 @@
 #include "toaplan.h"
 #include "samples.h"
 
-#define TOAPLAN_SOUND_SAMPLES_HACK		1 // move this to makefile
-
 #define REFRESHRATE 57.59
 #define VBLANK_LINES (32)
 

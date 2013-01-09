@@ -1,4 +1,7 @@
 #include "toaplan.h"
+#include "samples.h"
+
+#define TOAPLAN_SOUND_SAMPLES_HACK		1 // move this to makefile
 
 #define REFRESHRATE 57.59
 #define VBLANK_LINES (32)
@@ -28,6 +31,16 @@ static UINT8 bDrawScreen;
 static bool bVBlank;
 
 static bool bEnableInterrupts;
+
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+static UINT8 FadeoutReady;
+static UINT8 FadeoutStop;
+static UINT8 Playing1;
+static UINT8 Playing2;
+static UINT8 Play1;
+static UINT8 Counter1;
+static float Vol1;
+#endif
 
 static struct BurnInputInfo VimanaInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 coin"	},
@@ -177,6 +190,221 @@ static struct BurnDIPInfo VimananDIPList[]=
 
 STDDIPINFO(Vimanan)
 
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+static void StopAllSamples()
+{
+	for (INT32 i = 0x00; i <= 0x22; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel0()
+{
+	for (INT32 i = 0x01; i <= 0x07; i++) {
+		BurnSampleStop(i);
+		BurnSampleSetLoop(i, 0);
+	}
+	
+	BurnSampleStop(0x1d);
+	BurnSampleSetLoop(0x1d, 0);
+	BurnSampleStop(0x1e);
+	BurnSampleSetLoop(0x1e, 0);
+	BurnSampleStop(0x22);
+	BurnSampleSetLoop(0x22, 0);
+}
+
+static void SetVolumeSamplesChannel0(double nVol)
+{
+	for (INT32 i = 0x01; i <= 0x07; i++) {
+		BurnSampleSetAllRoutes(i, nVol, BURN_SND_ROUTE_BOTH);
+	}
+	
+	BurnSampleSetAllRoutes(0x1d, nVol, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetAllRoutes(0x1e, nVol, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetAllRoutes(0x22, nVol, BURN_SND_ROUTE_BOTH);
+}
+
+static void StopSamplesChannel2()
+{
+	for (INT32 i = 0x09; i <= 0x0c; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel4()
+{
+	for (INT32 i = 0x0e; i <= 0x10; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel6()
+{
+	for (INT32 i = 0x12; i <= 0x13; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel11()
+{
+	for (INT32 i = 0x18; i <= 0x1a; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void ESDFadeout()
+{
+	if (FadeoutStop == 1) {
+		Playing2 = 0xff;
+		FadeoutReady = 0;
+		FadeoutStop = 0;
+		Vol1 = 1.00;
+		SetVolumeSamplesChannel0(1.00);
+	}
+	
+	if (Counter1 >= 17) {
+		Counter1 = 0;
+		if (FadeoutReady == 1) {
+			Vol1 = Vol1 - 0.10;
+			if (Vol1 <= 0) Vol1 = 0;
+			SetVolumeSamplesChannel0(Vol1);
+		}
+		if (Vol1 == 0) {
+			StopSamplesChannel0();
+			FadeoutReady = 0;
+			FadeoutStop = 0;
+			Vol1 = 1.00;
+			SetVolumeSamplesChannel0(1.00);
+			if (Playing2 != 0xff) {
+				BurnSampleSetLoop(Playing2, 1);
+				BurnSamplePlay(Playing2);
+				Playing1 = 0xff;
+				Playing2 = 0xff;
+			}
+		}
+	}
+	Counter1++;
+}
+
+static void vimanaMcuWrite(UINT16 d)
+{
+	if (d == 0x00) {
+		FadeoutStop = 1;
+		StopAllSamples();
+	}
+	
+	if (d >= 0x01 && d <= 0x06) {
+		if (Play1 >= 0x01 && Play1 <= 0x06) {
+			FadeoutReady = 1;
+			Playing2 = d;
+			Play1 = d;
+		} else {
+			FadeoutStop = 1;
+			StopSamplesChannel0();
+			BurnSampleSetLoop(d, 1);
+			BurnSamplePlay(d);
+			Play1 = d;
+		}
+	}
+	
+	if (d == 0x07) {
+		FadeoutStop = 1;
+		StopSamplesChannel0();
+		BurnSamplePlay(0x07);
+		Play1 = 0;
+	}
+	
+	if (d == 0x08) {
+		BurnSamplePlay(0x08);
+	}
+	
+	if (d >= 0x09 && d <= 0x0c) {
+		StopSamplesChannel2();
+		BurnSamplePlay(d);
+	}
+	
+	if (d == 0x0d) {
+		BurnSamplePlay(0x0d);
+	}
+	
+	if (d >= 0x0e && d <= 0x10) {
+		StopSamplesChannel4();
+		BurnSamplePlay(d);
+	}
+	
+	if (d == 0x11) {
+		BurnSamplePlay(0x11);
+	}
+
+	if (d == 0x12) {
+		BurnSamplePlay(0x12);
+	}
+
+	if (d == 0x91) {
+		BurnSampleStop(0x11);
+		StopSamplesChannel6();
+	}
+	
+	if (d == 0x13) {
+		BurnSamplePlay(0x13);
+	}
+	
+	if (d == 0x14) {
+		BurnSamplePlay(0x14);
+	}
+
+	if (d == 0x15) {
+		BurnSamplePlay(0x15);
+	}
+
+	if (d == 0x16) {
+		BurnSamplePlay(0x16);
+	}
+
+	if (d == 0x17) {
+		BurnSamplePlay(0x17);
+	}
+	
+	if (d == 0x18 || d == 0x19) {
+		StopSamplesChannel11();
+		BurnSamplePlay(d);
+	}
+	
+	if (d == 0x1a) {
+		FadeoutReady = 1;
+		StopSamplesChannel11();
+		BurnSamplePlay(0x1a);
+	}
+	
+	if (d == 0x1c) {
+		BurnSamplePlay(0x1c);
+	}
+		
+	if (d == 0x1d) {
+		FadeoutStop = 1;
+		StopSamplesChannel0();
+		BurnSamplePlay(0x1d);
+		Play1 = 1;
+	}
+
+	if (d == 0x1e) {
+		StopSamplesChannel0();
+		BurnSamplePlay(0x1e);
+		Play1 = 0;
+	}
+
+	if (d == 0x20) {
+		BurnSamplePlay(0x20);
+	}
+
+	if (d == 0x22) {
+		StopSamplesChannel0();
+		BurnSamplePlay(0x22);
+		Play1 = 0;
+	}
+}
+#endif
+
 void __fastcall vimanaWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a)
@@ -224,9 +452,15 @@ void __fastcall vimanaWriteWord(UINT32 a, UINT16 d)
 
 		case 0x440000:
 		case 0x440002:
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+			vimanaMcuWrite(d);
+#endif
 		return;
 
 		case 0x440004:
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+			vimanaMcuWrite(d);
+#endif
 			vimana_credits = d & 0xff;
 		return;
 
@@ -258,9 +492,8 @@ void __fastcall vimanaWriteWord(UINT32 a, UINT16 d)
 	bprintf (0, _T("%5.5x %4.4x ww\n"), a, d);
 }
 
-void __fastcall vimanaWriteByte(UINT32 , UINT8 )
+void __fastcall vimanaWriteByte(UINT32, UINT8)
 {
-	return;
 }
 
 UINT16 __fastcall vimanaReadWord(UINT32 a)
@@ -323,10 +556,11 @@ UINT8 __fastcall vimanaReadByte(UINT32 a)
 		{
 			INT32 p = DrvInputs[2];
 			vimana_latch ^= p;
-			p = vimana_latch & p;
+			UINT8 data = vimana_latch & p;
 
-			if (p & 0x18) {
+			if (data & 0x18) {
 				vimana_credits++;
+				BurnSamplePlay(0);
 			}
 			vimana_latch = p;
 
@@ -356,6 +590,25 @@ static INT32 DrvDoReset()
 	SekClose();
 
 //	BurnYM3812Reset();
+	
+	BurnSampleReset();
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+	StopAllSamples();
+	
+	for (INT32 i = 0; i < 0x22; i++) {
+		BurnSampleSetAllRoutes(i, 0.60, BURN_SND_ROUTE_BOTH);
+		BurnSampleSetLoop(i, 0);
+	}
+	SetVolumeSamplesChannel0(1.00);
+	
+	FadeoutReady = 0;
+	FadeoutStop = 0;
+	Playing1 = 0xff;
+	Playing2 = 0xff;
+	Play1 = 0;
+	Counter1 = 0;
+	Vol1 = 0;
+#endif
 
 	bEnableInterrupts = false;
 
@@ -442,6 +695,9 @@ static INT32 DrvInit()
 //	BurnYM3812Init(28000000 / 8, &toaplan1FMIRQHandler, &toaplan1SynchroniseStream, 0);
 //	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
+	BurnSampleInit(0);
+	BurnSampleSetAllRoutesAllSamples(0.60, BURN_SND_ROUTE_BOTH);
+
 	bDrawScreen = true;
 
 	DrvDoReset();
@@ -455,8 +711,19 @@ static INT32 DrvExit()
 
 	ToaExitBCU2();
 	SekExit();
+	BurnSampleExit();
 
 	BurnFree(AllMem);
+
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+	FadeoutReady = 0;
+	FadeoutStop = 0;
+	Playing1 = 0xff;
+	Playing2 = 0xff;
+	Play1 = 0;
+	Counter1 = 0;
+	Vol1 = 0;
+#endif
 
 	return 0;
 }
@@ -548,6 +815,11 @@ static INT32 DrvFrame()
 	nToa1Cycles68KSync = SekTotalCycles();
 //	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 //	BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+	
+	BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+	ESDFadeout();
+#endif
 
 	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];
 
@@ -587,6 +859,52 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 	return 0;
 }
 
+// samples
+
+static struct BurnSampleInfo vimanaSampleDesc[] = {
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+	{ "00.wav", SAMPLE_NOLOOP },
+	{ "01.wav", SAMPLE_NOLOOP },
+	{ "02.wav", SAMPLE_NOLOOP },
+	{ "03.wav", SAMPLE_NOLOOP },
+	{ "04.wav", SAMPLE_NOLOOP },
+	{ "05.wav", SAMPLE_NOLOOP },
+	{ "06.wav", SAMPLE_NOLOOP },
+	{ "07.wav", SAMPLE_NOLOOP },
+	{ "08.wav", SAMPLE_NOLOOP },
+	{ "09.wav", SAMPLE_NOLOOP },
+	{ "0a.wav", SAMPLE_NOLOOP },
+	{ "0b.wav", SAMPLE_NOLOOP },
+	{ "0c.wav", SAMPLE_NOLOOP },
+	{ "0d.wav", SAMPLE_NOLOOP },
+	{ "0e.wav", SAMPLE_NOLOOP },
+	{ "0f.wav", SAMPLE_NOLOOP },
+	{ "10.wav", SAMPLE_NOLOOP },
+	{ "11.wav", SAMPLE_NOLOOP },
+	{ "12.wav", SAMPLE_NOLOOP },
+	{ "13.wav", SAMPLE_NOLOOP },
+	{ "14.wav", SAMPLE_NOLOOP },
+	{ "15.wav", SAMPLE_NOLOOP },
+	{ "16.wav", SAMPLE_NOLOOP },
+	{ "17.wav", SAMPLE_NOLOOP },
+	{ "18.wav", SAMPLE_NOLOOP },
+	{ "19.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "1c.wav", SAMPLE_NOLOOP },
+	{ "1d.wav", SAMPLE_NOLOOP },
+	{ "1e.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "20.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "22.wav", SAMPLE_NOLOOP },
+#endif
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(vimana)
+STD_SAMPLE_FN(vimana)
+
 
 // Vimana (World, set 1)
 
@@ -612,11 +930,11 @@ STD_ROM_PICK(vimana)
 STD_ROM_FN(vimana)
 
 struct BurnDriver BurnDrvVimana = {
-	"vimana", NULL, NULL, NULL, "1991",
+	"vimana", NULL, NULL, "vimana", "1991",
 	"Vimana (World, set 1)\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, vimanaRomInfo, vimanaRomName, NULL, NULL, VimanaInputInfo, VimanaDIPInfo,
+	NULL, vimanaRomInfo, vimanaRomName, vimanaSampleInfo, vimanaSampleName, VimanaInputInfo, VimanaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -646,11 +964,11 @@ STD_ROM_PICK(vimanan)
 STD_ROM_FN(vimanan)
 
 struct BurnDriver BurnDrvVimanan = {
-	"vimanan", "vimana", NULL, NULL, "1991",
+	"vimanan", "vimana", NULL, "vimana", "1991",
 	"Vimana (World, set 2)\0", "No sound", "Toaplan (Nova Apparate GMBH & Co license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, vimananRomInfo, vimananRomName, NULL, NULL, VimanaInputInfo, VimananDIPInfo,
+	NULL, vimananRomInfo, vimananRomName, vimanaSampleInfo, vimanaSampleName, VimanaInputInfo, VimananDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -680,11 +998,11 @@ STD_ROM_PICK(vimanaj)
 STD_ROM_FN(vimanaj)
 
 struct BurnDriver BurnDrvVimanaj = {
-	"vimanaj", "vimana", NULL, NULL, "1991",
+	"vimanaj", "vimana", NULL, "vimana", "1991",
 	"Vimana (Japan)\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, vimanajRomInfo, vimanajRomName, NULL, NULL, VimanaInputInfo, VimanaDIPInfo,
+	NULL, vimanajRomInfo, vimanajRomName, vimanaSampleInfo, vimanaSampleName, VimanaInputInfo, VimanaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

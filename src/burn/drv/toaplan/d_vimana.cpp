@@ -595,7 +595,7 @@ static INT32 DrvDoReset()
 #ifdef TOAPLAN_SOUND_SAMPLES_HACK
 	StopAllSamples();
 	
-	for (INT32 i = 0; i < 0x22; i++) {
+	for (INT32 i = 0; i <= 0x22; i++) {
 		BurnSampleSetAllRoutes(i, 0.60, BURN_SND_ROUTE_BOTH);
 		BurnSampleSetLoop(i, 0);
 	}

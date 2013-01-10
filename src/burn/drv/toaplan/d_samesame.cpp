@@ -999,7 +999,7 @@ STD_ROM_PICK(fireshrk)
 STD_ROM_FN(fireshrk)
 
 struct BurnDriver BurnDrvFireshrk = {
-	"fireshrk", NULL, NULL, "samesame", "1990",
+	"fireshrk", NULL, NULL, "fireshrk", "1990",
 	"Fire Shark\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
@@ -1037,7 +1037,7 @@ STD_ROM_PICK(fireshrkd)
 STD_ROM_FN(fireshrkd)
 
 struct BurnDriver BurnDrvFireshrkd = {
-	"fireshrkd", "fireshrk", NULL, "samesame", "1990",
+	"fireshrkd", "fireshrk", NULL, "fireshrk", "1990",
 	"Fire Shark (Korea, set 1, easier)\0", "No sound", "Toaplan (Dooyong license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
@@ -1075,7 +1075,7 @@ STD_ROM_PICK(fireshrkdh)
 STD_ROM_FN(fireshrkdh)
 
 struct BurnDriver BurnDrvFireshrkdh = {
-	"fireshrkdh", "fireshrk", NULL, "samesame", "1990",
+	"fireshrkdh", "fireshrk", NULL, "fireshrk", "1990",
 	"Fire Shark (Korea, set 2, harder)\0", "No sound", "Toaplan (Dooyong license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
@@ -1113,7 +1113,7 @@ STD_ROM_PICK(samesame)
 STD_ROM_FN(samesame)
 
 struct BurnDriver BurnDrvSamesame = {
-	"samesame", "fireshrk", NULL, "samesame", "1989",
+	"samesame", "fireshrk", NULL, "fireshrk", "1989",
 	"Same! Same! Same! (2 player alternating ver.)\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same! (2 player alternating ver.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
@@ -1151,7 +1151,7 @@ STD_ROM_PICK(samesame2)
 STD_ROM_FN(samesame2)
 
 struct BurnDriver BurnDrvSamesame2 = {
-	"samesame2", "fireshrk", NULL, "samesame", "1989",
+	"samesame2", "fireshrk", NULL, "fireshrk", "1989",
 	"Same! Same! Same!\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same!\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,

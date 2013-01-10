@@ -5042,6 +5042,33 @@ STD_ROM_PICK(Sfz2h)
 STD_ROM_FN(Sfz2h)
 
 static struct BurnRomInfo Sfz2jRomDesc[] = {
+	{ "sz2j.03b",      0x080000, 0x3e1e2e85, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2j.04b",      0x080000, 0xf53d6c45, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2j.05b",      0x080000, 0xdd224156, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2j.06b",      0x080000, 0xa45a75a6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2j.07b",      0x080000, 0x6352f038, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2j.08b",      0x080000, 0x92b66e01, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sz2.13m",       0x400000, 0x4d1f1f22, CPS2_GFX | BRF_GRA },
+	{ "sz2.15m",       0x400000, 0x19cea680, CPS2_GFX | BRF_GRA },
+	{ "sz2.17m",       0x400000, 0xe01b4588, CPS2_GFX | BRF_GRA },
+	{ "sz2.19m",       0x400000, 0x0feeda64, CPS2_GFX | BRF_GRA },
+	{ "sz2.14m",       0x100000, 0x0560c6aa, CPS2_GFX | BRF_GRA },
+	{ "sz2.16m",       0x100000, 0xae940f87, CPS2_GFX | BRF_GRA },
+	{ "sz2.18m",       0x100000, 0x4bc3c8bc, CPS2_GFX | BRF_GRA },
+	{ "sz2.20m",       0x100000, 0x39e674c0, CPS2_GFX | BRF_GRA },
+
+	{ "sz2.01a",       0x020000, 0x1bc323cf, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz2.02a",       0x020000, 0xba6a5013, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sz2.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
+	{ "sz2.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+};
+
+STD_ROM_PICK(Sfz2j)
+STD_ROM_FN(Sfz2j)
+
+static struct BurnRomInfo Sfz2jr1RomDesc[] = {
 	{ "sz2j.03a",      0x080000, 0x97461e28, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz2j.04a",      0x080000, 0xae4851a9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz2.05a",       0x080000, 0x98e8e992, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -5065,8 +5092,8 @@ static struct BurnRomInfo Sfz2jRomDesc[] = {
 	{ "sz2.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
 };
 
-STD_ROM_PICK(Sfz2j)
-STD_ROM_FN(Sfz2j)
+STD_ROM_PICK(Sfz2jr1)
+STD_ROM_FN(Sfz2jr1)
 
 static struct BurnRomInfo Sfz2nRomDesc[] = {
 	{ "sz2n.03" ,      0x080000, 0x58924741, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -8904,10 +8931,20 @@ struct BurnDriver BurnDrvCpsSfz2h = {
 
 struct BurnDriver BurnDrvCpsSfz2j = {
 	"sfz2j", "sfa2", NULL, NULL, "1996",
-	"Street Fighter Zero 2 (960227 Japan)\0", NULL, "Capcom", "CPS2",
+	"Street Fighter Zero 2 (960430 Japan)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz2jRomInfo, Sfz2jRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSfz2jr1 = {
+	"sfz2jr1", "sfa2", NULL, NULL, "1996",
+	"Street Fighter Zero 2 (960227 Japan)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfz2jrRomInfo, Sfz2jr1RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

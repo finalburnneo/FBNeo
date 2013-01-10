@@ -8944,7 +8944,7 @@ struct BurnDriver BurnDrvCpsSfz2jr1 = {
 	"Street Fighter Zero 2 (960227 Japan)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
-	NULL, Sfz2jrRomInfo, Sfz2jr1RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	NULL, Sfz2jr1RomInfo, Sfz2jr1RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

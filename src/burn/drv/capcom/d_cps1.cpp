@@ -9520,6 +9520,82 @@ static struct BurnRomInfo Sf2mdtaRomDesc[] = {
 STD_ROM_PICK(Sf2mdta)
 STD_ROM_FN(Sf2mdta)
 
+// unsure of a name for this set until it does more
+// gfx decoding works fine, program roms need looking at in more detail
+static struct BurnRomInfo Sf2anyRomDesc[] = {
+/*	SF2' CE "bootleg"
+
+CPS1 motherboard (no dash)
+Original 88622-c-2 C board
+
+Bootleg B board with
+	PIC16c55 near PRG roms seem protected
+	8 dipswith near both sound roms and gfx roms
+	1,4,5,8 ON
+	2,3,6,7 OFF
+
+Sound rom match various romset*/
+
+//	{ "joe-922",      0x0080000, 0xe927556c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+//  1 prg36.bin
+//	2 prg31.bin
+//	3 prg30.bin
+//	4 prg28.bin 1/2	
+//	{ "joe-921",      0x0080000, 0x8632e786, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+//	1 prg29.bin ?
+//	2 prg35.bin
+//	3 prg34.bin ?
+//	4 prg33.bin 1/2
+//	{ "sf2m16_4.bin", 0x0020000, 0x1073b7b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+//	prg28.bin 2/2
+//	{ "sf2m16_3.bin", 0x0020000, 0x924c6ce2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+// prg33.bin 2/2
+
+	{ "prg36.bin",    0x0020000, 0xd30c263e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "prg31.bin",    0x0020000, 0xea78f9b4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "prg30.bin",    0x0020000, 0x005b54cc, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "prg28.bin",    0x0040000, 0xb7ad5214, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "prg29.bin",    0x0020000, 0x524f5c55, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "prg35.bin",    0x0020000, 0xc184d26d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "prg34.bin",    0x0020000, 0xf06a12f2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "prg33.bin",    0x0040000, 0x00638b0b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	
+	{ "gfx24.bin",    0x0040000, 0xa8b5633a, BRF_GRA | CPS1_TILES },
+	{ "gfx20.bin",    0x0040000, 0x8d5d0045, BRF_GRA | CPS1_TILES },
+	{ "gfx25.bin",    0x0040000, 0x72e923df, BRF_GRA | CPS1_TILES },
+	{ "gfx21.bin",    0x0040000, 0x55c2b455, BRF_GRA | CPS1_TILES },
+	{ "gfx14.bin",    0x0040000, 0x5db24ca7, BRF_GRA | CPS1_TILES },
+	{ "gfx10.bin",    0x0040000, 0xeb48f7f2, BRF_GRA | CPS1_TILES },
+	{ "gfx15.bin",    0x0040000, 0x9a96be48, BRF_GRA | CPS1_TILES },
+	{ "gfx11.bin",    0x0040000, 0xff36859e, BRF_GRA | CPS1_TILES },
+	{ "gfx26.bin",    0x0040000, 0x82e8e384, BRF_GRA | CPS1_TILES },
+	{ "gfx22.bin",    0x0040000, 0x4109d637, BRF_GRA | CPS1_TILES },
+	{ "gfx27.bin",    0x0040000, 0x4a3a8d09, BRF_GRA | CPS1_TILES },
+	{ "gfx23.bin",    0x0040000, 0xef9c2d4d, BRF_GRA | CPS1_TILES },
+	{ "gfx16.bin",    0x0040000, 0x1fd98ad0, BRF_GRA | CPS1_TILES },
+	{ "gfx12.bin",    0x0040000, 0x5d21d8b3, BRF_GRA | CPS1_TILES },
+	{ "gfx17.bin",    0x0040000, 0xa917a922, BRF_GRA | CPS1_TILES },
+	{ "gfx13.bin",    0x0040000, 0xbc937c96, BRF_GRA | CPS1_TILES },
+	{ "gfx6.bin",     0x0040000, 0x023baa18, BRF_GRA | CPS1_TILES },
+	{ "gfx1.bin",     0x0040000, 0x877b2b18, BRF_GRA | CPS1_TILES },
+	{ "gfx8.bin",     0x0040000, 0x26fb340c, BRF_GRA | CPS1_TILES },
+	{ "gfx4.bin",     0x0040000, 0xf2c400b4, BRF_GRA | CPS1_TILES },
+	{ "gfx5.bin",     0x0040000, 0xa6ad6ef3, BRF_GRA | CPS1_TILES },
+	{ "gfx2.bin",     0x0040000, 0x144aa4c9, BRF_GRA | CPS1_TILES },
+	{ "gfx7.bin",     0x0040000, 0xf56085ba, BRF_GRA | CPS1_TILES },
+	{ "gfx3.bin",     0x0040000, 0x8053335d, BRF_GRA | CPS1_TILES },
+
+	{ "snd6.bin",     0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "snd18.bin",    0x0020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "snd19.bin",    0x0020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "pic16c55",     0x0002000, 0xf22e2311, BRF_OPT }, // PIC
+};
+
+STD_ROM_PICK(Sf2any)
+STD_ROM_FN(Sf2any)
+
 static struct BurnRomInfo Sf2ceeablRomDesc[] = {
 	// this set was previously known as sf2m16
 	{ "joe-922",      0x0080000, 0xe927556c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -9541,7 +9617,7 @@ static struct BurnRomInfo Sf2ceeablRomDesc[] = {
 	{ "tat-11.bin",   0x0080000, 0x32a3a841, BRF_GRA | CPS1_TILES },	
 	{ "tat-12.bin",   0x0080000, 0x6ee19b94, BRF_GRA | CPS1_TILES },
 
-	{ "1.bin",        0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "sf2m16_1.bin", 0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "sf2m16_2.bin", 0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
 };
@@ -11359,6 +11435,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2dkot2"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2mdt"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2mdta"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2any"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2tlona"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2tlonb"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2tlonc"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -13742,6 +13819,13 @@ static INT32 Sf2mdtaInit()
 	Cps1VBlankIRQLine = 4; // triggers the sprite ram and layer enable/scroll writes at 0x700000
 	
 	return nRet;
+}
+
+static INT32 Sf2anyInit()
+{
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2any;
+	
+	return Sf2ceInit();
 }
 
 void __fastcall Sf2ceeablScrollWrite(UINT32 a, UINT16 d)
@@ -16531,6 +16615,16 @@ struct BurnDriver BurnDrvCpsSf2mdta = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2mdtaRomInfo, Sf2mdtaRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	Sf2mdtaInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriverD BurnDrvCpsSf2any = {
+	"sf2any", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II' - champion edition (bootleg)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2anyRomInfo, Sf2anyRomName, NULL, NULL, Sf2ceeablInputInfo, Sf2DIPInfo,
+	Sf2anyInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

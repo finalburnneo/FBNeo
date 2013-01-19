@@ -15420,7 +15420,7 @@ struct BurnDriver BurnDrvCpsLostwrldo = {
 
 struct BurnDriver BurnDrvCpsGanbare = {
 	"ganbare", NULL, NULL, NULL, "2000",
-	"Ganbare Marin-kun (Marine 2K0411 JPN)\0", NULL, "Capcom", "CPS1",
+	"Ganbare! Marine kkun (Marine 2K0411 JPN)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_HORSHOOT, 0,
 	NULL, GanbareRomInfo, GanbareRomName, NULL, NULL, GanbareInputInfo, GanbareDIPInfo,

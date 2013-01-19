@@ -4880,9 +4880,9 @@ STD_ROM_PICK(Sfa2)
 STD_ROM_FN(Sfa2)
 
 static struct BurnRomInfo Sfa2uRomDesc[] = {
-	{ "sz2ua.03",      0x080000, 0xd03e504f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz2ua.04",      0x080000, 0xfae0e9c3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz2ua.05",      0x080000, 0xd02dd758, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2u.03a",      0x080000, 0xd03e504f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2u.04a",      0x080000, 0xfae0e9c3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2u.05a",      0x080000, 0xd02dd758, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz2u.06",       0x080000, 0xc5c8eb63, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz2u.07",       0x080000, 0x5de01cc5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz2u.08",       0x080000, 0xbea11d56, CPS2_PRG_68K | BRF_ESS | BRF_PRG },

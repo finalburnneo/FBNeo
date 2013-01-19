@@ -360,7 +360,64 @@ static INT32 DrvInit()
 	MemIndex();
 
 	{
-		if (strcmp(BurnDrvGetTextA(DRV_NAME), "wwfsstara") == 0) {
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "wwfsstarb") == 0) {
+			if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
+			if (BurnLoadRom(Drv68KROM  + 0x020001,  1, 2)) return 1;
+			if (BurnLoadRom(Drv68KROM  + 0x000000,  2, 2)) return 1;
+			if (BurnLoadRom(Drv68KROM  + 0x020000,  3, 2)) return 1;
+
+			if (BurnLoadRom(DrvZ80ROM  + 0x000000,  4, 1)) return 1;
+
+			if (BurnLoadRom(DrvSndROM  + 0x000000,  5, 1)) return 1;
+			if (BurnLoadRom(DrvSndROM  + 0x010000,  6, 1)) return 1;
+			if (BurnLoadRom(DrvSndROM  + 0x020000,  7, 1)) return 1;
+			if (BurnLoadRom(DrvSndROM  + 0x030000,  8, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM0 + 0x000000,  9, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x010000, 10, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM1 + 0x000000, 11, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x010000, 12, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x020000, 13, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x030000, 14, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x040000, 15, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x050000, 16, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x060000, 17, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x070000, 18, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x080000, 19, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x090000, 20, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x0a0000, 21, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x0b0000, 22, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x0c0000, 23, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x0d0000, 24, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x0e0000, 25, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x0f0000, 26, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x100000, 27, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x110000, 28, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x120000, 29, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x130000, 30, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x140000, 31, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x150000, 32, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x160000, 33, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x170000, 34, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x180000, 35, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x190000, 36, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x1a0000, 37, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x1b0000, 38, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x1c0000, 39, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x1d0000, 40, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x1e0000, 41, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x1f0000, 42, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM2 + 0x000000, 43, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x010000, 44, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x020000, 45, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x030000, 46, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x040000, 47, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x050000, 48, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x060000, 49, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x070000, 50, 1)) return 1;
+		} else {
 			if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
 			if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
 
@@ -380,59 +437,6 @@ static INT32 DrvInit()
 
 			if (BurnLoadRom(DrvGfxROM2 + 0x000000, 12, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM2 + 0x040000, 13, 1)) return 1;
-		} else {
-			if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
-			if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
-
-			if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
-
-			if (BurnLoadRom(DrvSndROM  + 0x000000,  3, 1)) return 1;
-			if (BurnLoadRom(DrvSndROM  + 0x020000,  4, 1)) return 1;
-			if (BurnLoadRom(DrvSndROM  + 0x030000,  5, 1)) return 1;
-
-			if (BurnLoadRom(DrvGfxROM0 + 0x000000,  6, 1)) return 1;
-
-			if (BurnLoadRom(DrvGfxROM1 + 0x000000,  7, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x010000,  8, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x020000,  9, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x030000, 10, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x040000, 11, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x050000, 12, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x060000, 13, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x070000, 14, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x080000, 15, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x090000, 16, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x0a0000, 17, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x0b0000, 18, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x0c0000, 19, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x0d0000, 20, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x0e0000, 21, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x0f0000, 22, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x100000, 23, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x110000, 24, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x120000, 25, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x130000, 26, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x140000, 27, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x150000, 28, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x160000, 29, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x170000, 30, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x180000, 31, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x190000, 32, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x1a0000, 33, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x1b0000, 34, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x1c0000, 35, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x1d0000, 36, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x1e0000, 37, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + 0x1f0000, 38, 1)) return 1;
-
-			if (BurnLoadRom(DrvGfxROM2 + 0x000000, 39, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM2 + 0x010000, 40, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM2 + 0x020000, 41, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM2 + 0x030000, 42, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM2 + 0x040000, 43, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM2 + 0x050000, 44, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM2 + 0x060000, 45, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM2 + 0x070000, 46, 1)) return 1;
 		}
 
 		DrvGfxDecode();
@@ -768,55 +772,22 @@ static struct BurnRomInfo wwfsstarRomDesc[] = {
 	{ "24ac-0_j-1.34",	0x20000, 0xec8fd2c9, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "24ad-0_j-1.35",	0x20000, 0x54e614e4, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b.12",		0x08000, 0x1e44f8aa, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "24ab-0.12",		0x08000, 0x1e44f8aa, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "24a9.46",		0x20000, 0x703ff08f, 3 | BRF_SND },           //  3 oki
-	{ "wwfs03.bin",		0x10000, 0x8a35a20e, 3 | BRF_SND },           //  4
-	{ "wwfs05.bin",		0x10000, 0x6df08962, 3 | BRF_SND },           //  5
+	{ "24a9-0.46",		0x20000, 0x703ff08f, 3 | BRF_SND },           //  3 oki
+	{ "24j8-0.45",		0x20000, 0x61138487, 3 | BRF_SND },           //  4
 
-	{ "24a4-0.58",		0x20000, 0xcb12ba40, 4 | BRF_GRA },           //  6 Characters
+	{ "24aa-0_j.58",	0x20000, 0xb9201b36, 4 | BRF_GRA },           //  5 Characters
 
-	{ "wwfs39.bin",		0x10000, 0xd807b09a, 5 | BRF_GRA },           //  7 Sprites
-	{ "wwfs38.bin",		0x10000, 0xd8ea94d3, 5 | BRF_GRA },           //  8
-	{ "wwfs37.bin",		0x10000, 0x5e8d7407, 5 | BRF_GRA },           //  9
-	{ "wwfs36.bin",		0x10000, 0x9005e942, 5 | BRF_GRA },           // 10
-	{ "wwfs43.bin",		0x10000, 0xaafc4a38, 5 | BRF_GRA },           // 11
-	{ "wwfs42.bin",		0x10000, 0xe48b88fb, 5 | BRF_GRA },           // 12
-	{ "wwfs41.bin",		0x10000, 0xed7f69d5, 5 | BRF_GRA },           // 13
-	{ "wwfs40.bin",		0x10000, 0x4d75fd89, 5 | BRF_GRA },           // 14
-	{ "wwfs19.bin",		0x10000, 0x7426d444, 5 | BRF_GRA },           // 15
-	{ "wwfs18.bin",		0x10000, 0xaf11ad2a, 5 | BRF_GRA },           // 16
-	{ "wwfs17.bin",		0x10000, 0xef12069f, 5 | BRF_GRA },           // 17
-	{ "wwfs16.bin",		0x10000, 0x08343e7f, 5 | BRF_GRA },           // 18
-	{ "wwfs15.bin",		0x10000, 0xaac5a928, 5 | BRF_GRA },           // 19
-	{ "wwfs14.bin",		0x10000, 0x67eb7bea, 5 | BRF_GRA },           // 20
-	{ "wwfs13.bin",		0x10000, 0x970b6e76, 5 | BRF_GRA },           // 21
-	{ "wwfs12.bin",		0x10000, 0x242caff5, 5 | BRF_GRA },           // 22
-	{ "wwfs27.bin",		0x10000, 0xf3eb8ab9, 5 | BRF_GRA },           // 23
-	{ "wwfs26.bin",		0x10000, 0x2ca91eaf, 5 | BRF_GRA },           // 24
-	{ "wwfs25.bin",		0x10000, 0xbbf69c6a, 5 | BRF_GRA },           // 25
-	{ "wwfs24.bin",		0x10000, 0x76b08bcd, 5 | BRF_GRA },           // 26
-	{ "wwfs23.bin",		0x10000, 0x681f5b5e, 5 | BRF_GRA },           // 27
-	{ "wwfs22.bin",		0x10000, 0x81fe1bf7, 5 | BRF_GRA },           // 28
-	{ "wwfs21.bin",		0x10000, 0xc52eee5e, 5 | BRF_GRA },           // 29
-	{ "wwfs20.bin",		0x10000, 0xb2a8050e, 5 | BRF_GRA },           // 30
-	{ "wwfs35.bin",		0x10000, 0x9d648d82, 5 | BRF_GRA },           // 31
-	{ "wwfs34.bin",		0x10000, 0x742a79db, 5 | BRF_GRA },           // 32
-	{ "wwfs33.bin",		0x10000, 0xf6923db6, 5 | BRF_GRA },           // 33
-	{ "wwfs32.bin",		0x10000, 0x9becd621, 5 | BRF_GRA },           // 34
-	{ "wwfs31.bin",		0x10000, 0xf94c74d5, 5 | BRF_GRA },           // 35
-	{ "wwfs30.bin",		0x10000, 0x94094518, 5 | BRF_GRA },           // 36
-	{ "wwfs29.bin",		0x10000, 0x7b5b9d83, 5 | BRF_GRA },           // 37
-	{ "wwfs28.bin",		0x10000, 0x70fda626, 5 | BRF_GRA },           // 38
+	{ "c951.114",		0x80000, 0xfa76d1f0, 5 | BRF_GRA },           //  6 Sprites
+	{ "24j4-0.115",		0x40000, 0xc4a589a3, 5 | BRF_GRA },           //  7
+	{ "24j5-0.116",		0x40000, 0xd6bca436, 5 | BRF_GRA },           //  8
+	{ "c950.117",		0x80000, 0xcca5703d, 5 | BRF_GRA },           //  9
+	{ "24j2-0.118",		0x40000, 0xdc1b7600, 5 | BRF_GRA },           // 10
+	{ "24j3-0.119",		0x40000, 0x3ba12d43, 5 | BRF_GRA },           // 11
 
-	{ "wwfs51.bin",		0x10000, 0x51157385, 6 | BRF_GRA },           // 39 Tiles
-	{ "wwfs50.bin",		0x10000, 0x7fc79df5, 6 | BRF_GRA },           // 40
-	{ "wwfs49.bin",		0x10000, 0xa14076b0, 6 | BRF_GRA },           // 41
-	{ "wwfs48.bin",		0x10000, 0x251372fd, 6 | BRF_GRA },           // 42
-	{ "wwfs47.bin",		0x10000, 0x6fd7b6ea, 6 | BRF_GRA },           // 43
-	{ "wwfs46.bin",		0x10000, 0x985e5180, 6 | BRF_GRA },           // 44
-	{ "wwfs45.bin",		0x10000, 0xb2fad792, 6 | BRF_GRA },           // 45
-	{ "wwfs44.bin",		0x10000, 0x4f965fa9, 6 | BRF_GRA },           // 46
+	{ "24j7-0.113",		0x40000, 0xe0a1909e, 6 | BRF_GRA },           // 12 Tiles
+	{ "24j6-0.112",		0x40000, 0x77932ef8, 6 | BRF_GRA },           // 13
 };
 
 STD_ROM_PICK(wwfsstar)
@@ -833,80 +804,9 @@ struct BurnDriver BurnDrvWwfsstar = {
 };
 
 
-// WWF Superstars (US)
+// WWF Superstars (US, newer)
 
 static struct BurnRomInfo wwfsstaruRomDesc[] = {
-	{ "24ac-04.34",		0x20000, 0xee9b850e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "24ad-04.35",		0x20000, 0x057c2eef, 1 | BRF_PRG | BRF_ESS }, //  1
-
-	{ "b.12",		0x08000, 0x1e44f8aa, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
-
-	{ "24a9.46",		0x20000, 0x703ff08f, 3 | BRF_SND },           //  3 oki
-	{ "wwfs03.bin",		0x10000, 0x8a35a20e, 3 | BRF_SND },           //  4
-	{ "wwfs05.bin",		0x10000, 0x6df08962, 3 | BRF_SND },           //  5
-
-	{ "24a4-0.58",		0x20000, 0xcb12ba40, 4 | BRF_GRA },           //  6 Characters
-
-	{ "wwfs39.bin",		0x10000, 0xd807b09a, 5 | BRF_GRA },           //  7 Sprites
-	{ "wwfs38.bin",		0x10000, 0xd8ea94d3, 5 | BRF_GRA },           //  8
-	{ "wwfs37.bin",		0x10000, 0x5e8d7407, 5 | BRF_GRA },           //  9
-	{ "wwfs36.bin",		0x10000, 0x9005e942, 5 | BRF_GRA },           // 10
-	{ "wwfs43.bin",		0x10000, 0xaafc4a38, 5 | BRF_GRA },           // 11
-	{ "wwfs42.bin",		0x10000, 0xe48b88fb, 5 | BRF_GRA },           // 12
-	{ "wwfs41.bin",		0x10000, 0xed7f69d5, 5 | BRF_GRA },           // 13
-	{ "wwfs40.bin",		0x10000, 0x4d75fd89, 5 | BRF_GRA },           // 14
-	{ "wwfs19.bin",		0x10000, 0x7426d444, 5 | BRF_GRA },           // 15
-	{ "wwfs18.bin",		0x10000, 0xaf11ad2a, 5 | BRF_GRA },           // 16
-	{ "wwfs17.bin",		0x10000, 0xef12069f, 5 | BRF_GRA },           // 17
-	{ "wwfs16.bin",		0x10000, 0x08343e7f, 5 | BRF_GRA },           // 18
-	{ "wwfs15.bin",		0x10000, 0xaac5a928, 5 | BRF_GRA },           // 19
-	{ "wwfs14.bin",		0x10000, 0x67eb7bea, 5 | BRF_GRA },           // 20
-	{ "wwfs13.bin",		0x10000, 0x970b6e76, 5 | BRF_GRA },           // 21
-	{ "wwfs12.bin",		0x10000, 0x242caff5, 5 | BRF_GRA },           // 22
-	{ "wwfs27.bin",		0x10000, 0xf3eb8ab9, 5 | BRF_GRA },           // 23
-	{ "wwfs26.bin",		0x10000, 0x2ca91eaf, 5 | BRF_GRA },           // 24
-	{ "wwfs25.bin",		0x10000, 0xbbf69c6a, 5 | BRF_GRA },           // 25
-	{ "wwfs24.bin",		0x10000, 0x76b08bcd, 5 | BRF_GRA },           // 26
-	{ "wwfs23.bin",		0x10000, 0x681f5b5e, 5 | BRF_GRA },           // 27
-	{ "wwfs22.bin",		0x10000, 0x81fe1bf7, 5 | BRF_GRA },           // 28
-	{ "wwfs21.bin",		0x10000, 0xc52eee5e, 5 | BRF_GRA },           // 29
-	{ "wwfs20.bin",		0x10000, 0xb2a8050e, 5 | BRF_GRA },           // 30
-	{ "wwfs35.bin",		0x10000, 0x9d648d82, 5 | BRF_GRA },           // 31
-	{ "wwfs34.bin",		0x10000, 0x742a79db, 5 | BRF_GRA },           // 32
-	{ "wwfs33.bin",		0x10000, 0xf6923db6, 5 | BRF_GRA },           // 33
-	{ "wwfs32.bin",		0x10000, 0x9becd621, 5 | BRF_GRA },           // 34
-	{ "wwfs31.bin",		0x10000, 0xf94c74d5, 5 | BRF_GRA },           // 35
-	{ "wwfs30.bin",		0x10000, 0x94094518, 5 | BRF_GRA },           // 36
-	{ "wwfs29.bin",		0x10000, 0x7b5b9d83, 5 | BRF_GRA },           // 37
-	{ "wwfs28.bin",		0x10000, 0x70fda626, 5 | BRF_GRA },           // 38
-
-	{ "wwfs51.bin",		0x10000, 0x51157385, 6 | BRF_GRA },           // 39 Tiles
-	{ "wwfs50.bin",		0x10000, 0x7fc79df5, 6 | BRF_GRA },           // 40
-	{ "wwfs49.bin",		0x10000, 0xa14076b0, 6 | BRF_GRA },           // 41
-	{ "wwfs48.bin",		0x10000, 0x251372fd, 6 | BRF_GRA },           // 42
-	{ "wwfs47.bin",		0x10000, 0x6fd7b6ea, 6 | BRF_GRA },           // 43
-	{ "wwfs46.bin",		0x10000, 0x985e5180, 6 | BRF_GRA },           // 44
-	{ "wwfs45.bin",		0x10000, 0xb2fad792, 6 | BRF_GRA },           // 45
-	{ "wwfs44.bin",		0x10000, 0x4f965fa9, 6 | BRF_GRA },           // 46
-};
-
-STD_ROM_PICK(wwfsstaru)
-STD_ROM_FN(wwfsstaru)
-
-struct BurnDriver BurnDrvWwfsstaru = {
-	"wwfsstaru", "wwfsstar", NULL, NULL, "1989",
-	"WWF Superstars (US)\0", NULL, "Technos Japan", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
-	NULL, wwfsstaruRomInfo, wwfsstaruRomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
-	256, 240, 4, 3
-};
-
-
-// WWF Superstars (US, Newer)
-
-static struct BurnRomInfo wwfsstaraRomDesc[] = {
 	{ "24ac-06.34",		0x20000, 0x924a50e4, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "24ad-07.35",		0x20000, 0x9a76a50e, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -928,15 +828,53 @@ static struct BurnRomInfo wwfsstaraRomDesc[] = {
 	{ "24j6-0.112",		0x40000, 0x77932ef8, 6 | BRF_GRA },           // 13
 };
 
-STD_ROM_PICK(wwfsstara)
-STD_ROM_FN(wwfsstara)
+STD_ROM_PICK(wwfsstaru)
+STD_ROM_FN(wwfsstaru)
 
-struct BurnDriver BurnDrvWwfsstara = {
-	"wwfsstara", "wwfsstar", NULL, NULL, "1989",
-	"WWF Superstars (US, Newer)\0", NULL, "Technos Japan", "Miscellaneous",
+struct BurnDriver BurnDrvWwfsstaru = {
+	"wwfsstaru", "wwfsstar", NULL, NULL, "1989",
+	"WWF Superstars (US, newer)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
-	NULL, wwfsstaraRomInfo, wwfsstaraRomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
+	NULL, wwfsstaruRomInfo, wwfsstaruRomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
+	256, 240, 4, 3
+};
+
+
+// WWF Superstars (US)
+
+static struct BurnRomInfo wwfsstaruaRomDesc[] = {
+	{ "24ac-04.34",		0x20000, 0xee9b850e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "24ad-04.35",		0x20000, 0x057c2eef, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "24ab-0.12",		0x08000, 0x1e44f8aa, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "24a9-0.46",		0x20000, 0x703ff08f, 3 | BRF_SND },           //  3 oki
+	{ "24j8-0.45",		0x20000, 0x61138487, 3 | BRF_SND },           //  4
+
+	{ "24aa-0.58",		0x20000, 0xcb12ba40, 4 | BRF_GRA },           //  5 Characters
+
+	{ "c951.114",		0x80000, 0xfa76d1f0, 5 | BRF_GRA },           //  6 Sprites
+	{ "24j4-0.115",		0x40000, 0xc4a589a3, 5 | BRF_GRA },           //  7
+	{ "24j5-0.116",		0x40000, 0xd6bca436, 5 | BRF_GRA },           //  8
+	{ "c950.117",		0x80000, 0xcca5703d, 5 | BRF_GRA },           //  9
+	{ "24j2-0.118",		0x40000, 0xdc1b7600, 5 | BRF_GRA },           // 10
+	{ "24j3-0.119",		0x40000, 0x3ba12d43, 5 | BRF_GRA },           // 11
+
+	{ "24j7-0.113",		0x40000, 0xe0a1909e, 6 | BRF_GRA },           // 12 Tiles
+	{ "24j6-0.112",		0x40000, 0x77932ef8, 6 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(wwfsstarua)
+STD_ROM_FN(wwfsstarua)
+
+struct BurnDriver BurnDrvWwfsstarua = {
+	"wwfsstarua", "wwfsstar", NULL, NULL, "1989",
+	"WWF Superstars (US)\0", NULL, "Technos Japan", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
+	NULL, wwfsstaruaRomInfo, wwfsstaruaRomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
 	256, 240, 4, 3
 };
@@ -946,68 +884,109 @@ struct BurnDriver BurnDrvWwfsstara = {
 
 static struct BurnRomInfo wwfsstarjRomDesc[] = {
 	{ "24ac-0_j-1_japan.34",0x20000, 0xf872e968, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "24ad-0_j-1_japan.35",0x20000, 0x00000000, 1 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  1
+	{ "24ad-0_j-1_japan.35",0x20000, 0xc70bcd23, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b.12",		0x08000, 0x1e44f8aa, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "24ab-0.12",		0x08000, 0x1e44f8aa, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "24a9.46",		0x20000, 0x703ff08f, 3 | BRF_SND },           //  3 oki
-	{ "wwfs03.bin",		0x10000, 0x8a35a20e, 3 | BRF_SND },           //  4
-	{ "wwfs05.bin",		0x10000, 0x6df08962, 3 | BRF_SND },           //  5
+	{ "24a9-0.46",		0x20000, 0x703ff08f, 3 | BRF_SND },           //  3 oki
+	{ "24j8-0.45",		0x20000, 0x61138487, 3 | BRF_SND },           //  4
 
-	{ "24a4-0.58",		0x20000, 0xcb12ba40, 4 | BRF_GRA },           //  6 Characters
+	{ "24aa-0_j.58",	0x20000, 0xb9201b36, 4 | BRF_GRA },           //  5 Characters
 
-	{ "wwfs39.bin",		0x10000, 0xd807b09a, 5 | BRF_GRA },           //  7 Sprites
-	{ "wwfs38.bin",		0x10000, 0xd8ea94d3, 5 | BRF_GRA },           //  8
-	{ "wwfs37.bin",		0x10000, 0x5e8d7407, 5 | BRF_GRA },           //  9
-	{ "wwfs36.bin",		0x10000, 0x9005e942, 5 | BRF_GRA },           // 10
-	{ "wwfs43.bin",		0x10000, 0xaafc4a38, 5 | BRF_GRA },           // 11
-	{ "wwfs42.bin",		0x10000, 0xe48b88fb, 5 | BRF_GRA },           // 12
-	{ "wwfs41.bin",		0x10000, 0xed7f69d5, 5 | BRF_GRA },           // 13
-	{ "wwfs40.bin",		0x10000, 0x4d75fd89, 5 | BRF_GRA },           // 14
-	{ "wwfs19.bin",		0x10000, 0x7426d444, 5 | BRF_GRA },           // 15
-	{ "wwfs18.bin",		0x10000, 0xaf11ad2a, 5 | BRF_GRA },           // 16
-	{ "wwfs17.bin",		0x10000, 0xef12069f, 5 | BRF_GRA },           // 17
-	{ "wwfs16.bin",		0x10000, 0x08343e7f, 5 | BRF_GRA },           // 18
-	{ "wwfs15.bin",		0x10000, 0xaac5a928, 5 | BRF_GRA },           // 19
-	{ "wwfs14.bin",		0x10000, 0x67eb7bea, 5 | BRF_GRA },           // 20
-	{ "wwfs13.bin",		0x10000, 0x970b6e76, 5 | BRF_GRA },           // 21
-	{ "wwfs12.bin",		0x10000, 0x242caff5, 5 | BRF_GRA },           // 22
-	{ "wwfs27.bin",		0x10000, 0xf3eb8ab9, 5 | BRF_GRA },           // 23
-	{ "wwfs26.bin",		0x10000, 0x2ca91eaf, 5 | BRF_GRA },           // 24
-	{ "wwfs25.bin",		0x10000, 0xbbf69c6a, 5 | BRF_GRA },           // 25
-	{ "wwfs24.bin",		0x10000, 0x76b08bcd, 5 | BRF_GRA },           // 26
-	{ "wwfs23.bin",		0x10000, 0x681f5b5e, 5 | BRF_GRA },           // 27
-	{ "wwfs22.bin",		0x10000, 0x81fe1bf7, 5 | BRF_GRA },           // 28
-	{ "wwfs21.bin",		0x10000, 0xc52eee5e, 5 | BRF_GRA },           // 29
-	{ "wwfs20.bin",		0x10000, 0xb2a8050e, 5 | BRF_GRA },           // 30
-	{ "wwfs35.bin",		0x10000, 0x9d648d82, 5 | BRF_GRA },           // 31
-	{ "wwfs34.bin",		0x10000, 0x742a79db, 5 | BRF_GRA },           // 32
-	{ "wwfs33.bin",		0x10000, 0xf6923db6, 5 | BRF_GRA },           // 33
-	{ "wwfs32.bin",		0x10000, 0x9becd621, 5 | BRF_GRA },           // 34
-	{ "wwfs31.bin",		0x10000, 0xf94c74d5, 5 | BRF_GRA },           // 35
-	{ "wwfs30.bin",		0x10000, 0x94094518, 5 | BRF_GRA },           // 36
-	{ "wwfs29.bin",		0x10000, 0x7b5b9d83, 5 | BRF_GRA },           // 37
-	{ "wwfs28.bin",		0x10000, 0x70fda626, 5 | BRF_GRA },           // 38
+	{ "c951.114",		0x80000, 0xfa76d1f0, 5 | BRF_GRA },           //  6 Sprites
+	{ "24j4-0.115",		0x40000, 0xc4a589a3, 5 | BRF_GRA },           //  7
+	{ "24j5-0.116",		0x40000, 0xd6bca436, 5 | BRF_GRA },           //  8
+	{ "c950.117",		0x80000, 0xcca5703d, 5 | BRF_GRA },           //  9
+	{ "24j2-0.118",		0x40000, 0xdc1b7600, 5 | BRF_GRA },           // 10
+	{ "24j3-0.119",		0x40000, 0x3ba12d43, 5 | BRF_GRA },           // 11
 
-	{ "wwfs51.bin",		0x10000, 0x51157385, 6 | BRF_GRA },           // 39 Tiles
-	{ "wwfs50.bin",		0x10000, 0x7fc79df5, 6 | BRF_GRA },           // 40
-	{ "wwfs49.bin",		0x10000, 0xa14076b0, 6 | BRF_GRA },           // 41
-	{ "wwfs48.bin",		0x10000, 0x251372fd, 6 | BRF_GRA },           // 42
-	{ "wwfs47.bin",		0x10000, 0x6fd7b6ea, 6 | BRF_GRA },           // 43
-	{ "wwfs46.bin",		0x10000, 0x985e5180, 6 | BRF_GRA },           // 44
-	{ "wwfs45.bin",		0x10000, 0xb2fad792, 6 | BRF_GRA },           // 45
-	{ "wwfs44.bin",		0x10000, 0x4f965fa9, 6 | BRF_GRA },           // 46
+	{ "24j7-0.113",		0x40000, 0xe0a1909e, 6 | BRF_GRA },           // 12 Tiles
+	{ "24j6-0.112",		0x40000, 0x77932ef8, 6 | BRF_GRA },           // 13
 };
 
 STD_ROM_PICK(wwfsstarj)
 STD_ROM_FN(wwfsstarj)
 
-struct BurnDriverD BurnDrvWwfsstarj = {
+struct BurnDriver BurnDrvWwfsstarj = {
 	"wwfsstarj", "wwfsstar", NULL, NULL, "1989",
-	"WWF Superstars (Japan)\0", "Missing program ROM", "Technos Japan", "Miscellaneous",
+	"WWF Superstars (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
 	NULL, wwfsstarjRomInfo, wwfsstarjRomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
+	256, 240, 4, 3
+};
+
+// WWF Superstars (bootleg)
+
+static struct BurnRomInfo wwfsstarbRomDesc[] = {
+	{ "wwfs08.bin",		0x10000, 0x621df265, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "wwfs10.bin",		0x10000, 0xa3382dfe, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "wwfs07.bin",		0x10000, 0x369559e6, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "wwfs09.bin",		0x10000, 0x8cbcd5aa, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "wwfs01.bin",		0x08000, 0x1e44f8aa, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "wwfs02.bin",		0x10000, 0x6e63c457, 3 | BRF_SND },           //  5 oki
+	{ "wwfs04.bin",		0x10000, 0xd7018a9c, 3 | BRF_SND },           //  6
+	{ "wwfs03.bin",		0x10000, 0x8a35a20e, 3 | BRF_SND },           //  7
+	{ "wwfs05.bin",		0x10000, 0x6df08962, 3 | BRF_SND },           //  8
+
+	{ "wwfs06.bin",		0x10000, 0x154ca5ce, 4 | BRF_GRA },           //  9 Characters
+	{ "wwfs11.bin",		0x10000, 0x3d4684dc, 4 | BRF_GRA },           // 10
+
+	{ "wwfs39.bin",		0x10000, 0xd807b09a, 5 | BRF_GRA },           // 11 Sprites
+	{ "wwfs38.bin",		0x10000, 0xd8ea94d3, 5 | BRF_GRA },           // 12
+	{ "wwfs37.bin",		0x10000, 0x5e8d7407, 5 | BRF_GRA },           // 13
+	{ "wwfs36.bin",		0x10000, 0x9005e942, 5 | BRF_GRA },           // 14
+	{ "wwfs43.bin",		0x10000, 0xaafc4a38, 5 | BRF_GRA },           // 15
+	{ "wwfs42.bin",		0x10000, 0xe48b88fb, 5 | BRF_GRA },           // 16
+	{ "wwfs41.bin",		0x10000, 0xed7f69d5, 5 | BRF_GRA },           // 17
+	{ "wwfs40.bin",		0x10000, 0x4d75fd89, 5 | BRF_GRA },           // 18
+	{ "wwfs19.bin",		0x10000, 0x7426d444, 5 | BRF_GRA },           // 19
+	{ "wwfs18.bin",		0x10000, 0xaf11ad2a, 5 | BRF_GRA },           // 20
+	{ "wwfs17.bin",		0x10000, 0xef12069f, 5 | BRF_GRA },           // 21
+	{ "wwfs16.bin",		0x10000, 0x08343e7f, 5 | BRF_GRA },           // 22
+	{ "wwfs15.bin",		0x10000, 0xaac5a928, 5 | BRF_GRA },           // 23
+	{ "wwfs14.bin",		0x10000, 0x67eb7bea, 5 | BRF_GRA },           // 24
+	{ "wwfs13.bin",		0x10000, 0x970b6e76, 5 | BRF_GRA },           // 25
+	{ "wwfs12.bin",		0x10000, 0x242caff5, 5 | BRF_GRA },           // 26
+	{ "wwfs27.bin",		0x10000, 0xf3eb8ab9, 5 | BRF_GRA },           // 27
+	{ "wwfs26.bin",		0x10000, 0x2ca91eaf, 5 | BRF_GRA },           // 28
+	{ "wwfs25.bin",		0x10000, 0xbbf69c6a, 5 | BRF_GRA },           // 29
+	{ "wwfs24.bin",		0x10000, 0x76b08bcd, 5 | BRF_GRA },           // 30
+	{ "wwfs23.bin",		0x10000, 0x681f5b5e, 5 | BRF_GRA },           // 31
+	{ "wwfs22.bin",		0x10000, 0x81fe1bf7, 5 | BRF_GRA },           // 32
+	{ "wwfs21.bin",		0x10000, 0xc52eee5e, 5 | BRF_GRA },           // 33
+	{ "wwfs20.bin",		0x10000, 0xb2a8050e, 5 | BRF_GRA },           // 34
+	{ "wwfs35.bin",		0x10000, 0x9d648d82, 5 | BRF_GRA },           // 35
+	{ "wwfs34.bin",		0x10000, 0x742a79db, 5 | BRF_GRA },           // 36
+	{ "wwfs33.bin",		0x10000, 0xf6923db6, 5 | BRF_GRA },           // 37
+	{ "wwfs32.bin",		0x10000, 0x9becd621, 5 | BRF_GRA },           // 38
+	{ "wwfs31.bin",		0x10000, 0xf94c74d5, 5 | BRF_GRA },           // 39
+	{ "wwfs30.bin",		0x10000, 0x94094518, 5 | BRF_GRA },           // 40
+	{ "wwfs29.bin",		0x10000, 0x7b5b9d83, 5 | BRF_GRA },           // 41
+	{ "wwfs28.bin",		0x10000, 0x70fda626, 5 | BRF_GRA },           // 42
+
+	{ "wwfs51.bin",		0x10000, 0x51157385, 6 | BRF_GRA },           // 43 Tiles
+	{ "wwfs50.bin",		0x10000, 0x7fc79df5, 6 | BRF_GRA },           // 44
+	{ "wwfs49.bin",		0x10000, 0xa14076b0, 6 | BRF_GRA },           // 45
+	{ "wwfs48.bin",		0x10000, 0x251372fd, 6 | BRF_GRA },           // 46
+	{ "wwfs47.bin",		0x10000, 0x6fd7b6ea, 6 | BRF_GRA },           // 47
+	{ "wwfs46.bin",		0x10000, 0x985e5180, 6 | BRF_GRA },           // 48
+	{ "wwfs45.bin",		0x10000, 0xb2fad792, 6 | BRF_GRA },           // 49
+	{ "wwfs44.bin",		0x10000, 0x4f965fa9, 6 | BRF_GRA },           // 50
+};
+
+STD_ROM_PICK(wwfsstarb)
+STD_ROM_FN(wwfsstarb)
+
+struct BurnDriver BurnDrvWwfsstarb = {
+	"wwfsstarb", "wwfsstar", NULL, NULL, "1989",
+	"WWF Superstars (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
+	NULL, wwfsstarbRomInfo, wwfsstarbRomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
 	256, 240, 4, 3
 };

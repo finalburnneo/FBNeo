@@ -1,4 +1,6 @@
 #include "toaplan.h"
+#include "samples.h"
+
 // Teki Paki
 
 static UINT8 DrvButton[8] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -327,6 +329,106 @@ static INT32 LoadRoms()
 	return 0;
 }
 
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+static void StopAllSamples()
+{
+	for (INT32 i = 0x00; i <= 0x15; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel0()
+{
+	for (INT32 i = 0x01; i <= 0x05; i++) {
+		BurnSampleStop(i);
+		BurnSampleSetLoop(i, 0);
+	}
+}
+
+static void StopSamplesChannel1()
+{
+	for (INT32 i = 0x06; i <= 0x07; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel2()
+{
+	for (INT32 i = 0x08; i <= 0x09; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel3()
+{
+	for (INT32 i = 0x0a; i <= 0x0d; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel4()
+{
+	for (INT32 i = 0x0e; i <= 0x12; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel5()
+{
+	for (INT32 i = 0x13; i <= 0x14; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void tekipakiHD647180Write(UINT16 d)
+{
+	if (d == 0xfe) {
+		StopAllSamples();
+	}
+
+	if (d >= 0x01 && d <= 0x03) {
+		StopSamplesChannel0();
+		BurnSampleSetLoop(d, 1);
+		BurnSamplePlay(d);
+	}
+	
+	if (d >= 0x04 && d <= 0x05) {
+		StopSamplesChannel0();
+		BurnSamplePlay(d);
+	}
+
+	if (d >= 0x06 && d <= 0x07) {
+		StopSamplesChannel1();
+		BurnSamplePlay(d);
+	}
+
+	if (d == 0x08 || d == 0x09) {
+		StopSamplesChannel2();
+		BurnSamplePlay(d);
+	}
+
+	if (d >= 0x0a && d <= 0x0d) {
+		StopSamplesChannel3();
+		BurnSamplePlay(d);
+	}
+
+	if (d == 0x0e || d == 0x12) {
+		StopSamplesChannel4();
+		BurnSamplePlay(d);
+	}
+
+	if (d >= 0x13 && d <= 0x14) {
+		StopSamplesChannel5();
+		BurnSamplePlay(d);
+	}
+
+	if (d == 0x15) {
+		BurnSampleStop(d);
+		BurnSamplePlay(d);
+	}
+}
+#endif
+
 UINT8 __fastcall tekipakiReadByte(UINT32 sekAddress)
 {
 	switch (sekAddress) {
@@ -347,8 +449,8 @@ UINT8 __fastcall tekipakiReadByte(UINT32 sekAddress)
 		case 0x14000D:								// VBlank
 			return ToaVBlankRegister();
 
-//		default:
-//			printf("Attempt to read byte value of location %x\n", sekAddress);
+		default:
+			bprintf(PRINT_NORMAL, _T("Attempt to read byte value of location %x\n"), sekAddress);
 	}
 
 	return 0;
@@ -380,8 +482,8 @@ UINT16 __fastcall tekipakiReadWord(UINT32 sekAddress)
 		case 0x14000C:
 			return ToaVBlankRegister();
 
-//		default:
-//			printf("Attempt to read word value of location %x\n", sekAddress);
+		default:
+			bprintf(PRINT_NORMAL, _T("Attempt to read word value of location %x\n"), sekAddress);
 	}
 
 	return 0;
@@ -390,9 +492,9 @@ UINT16 __fastcall tekipakiReadWord(UINT32 sekAddress)
 void __fastcall tekipakiWriteByte(UINT32 /*sekAddress*/, UINT8 /*byteValue*/)
 {
 //	switch (sekAddress) {
-
+//
 //		default:
-//			printf("Attempt to write byte value %x to location %x\n", byteValue, sekAddress);
+//			bprintf(PRINT_NORMAL, _T("Attempt to write byte value %x to location %x\n"), byteValue, sekAddress);
 //	}
 }
 
@@ -418,9 +520,15 @@ void __fastcall tekipakiWriteWord(UINT32 sekAddress, UINT16 wordValue)
 		case 0x14000C:
 			ToaGP9001WriteRegister(wordValue);
 			break;
+			
+		case 0x180070:
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+			tekipakiHD647180Write(wordValue);
+#endif
+			break;
 
-//		default:
-//			printf("Attempt to write word value %x to location %x\n", wordValue, sekAddress);
+		default:
+			bprintf(PRINT_NORMAL, _T("Attempt to write word value %x to location %x\n"), wordValue, sekAddress);
 	}
 }
 
@@ -429,6 +537,11 @@ static INT32 DrvDoReset()
 	SekOpen(0);
 	SekReset();
 	SekClose();
+	
+	BurnSampleReset();
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+	StopAllSamples();
+#endif
 
 	return 0;
 }
@@ -486,6 +599,9 @@ static INT32 DrvInit()
 	nToaPalLen = nColCount;
 	ToaPalSrc = RamPal;
 	ToaPalInit();
+	
+	BurnSampleInit(0);
+	BurnSampleSetAllRoutesAllSamples(1.00, BURN_SND_ROUTE_BOTH);
 
 	bDrawScreen = true;
 
@@ -499,6 +615,7 @@ static INT32 DrvExit()
 
 	ToaExitGP9001();
 	SekExit();				// Deallocate 68000s
+	BurnSampleExit();
 
 	BurnFree(Mem);
 
@@ -588,6 +705,8 @@ static INT32 DrvFrame()
 		}
 
 	}
+	
+	BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 
 	SekClose();
 
@@ -598,12 +717,43 @@ static INT32 DrvFrame()
 	return 0;
 }
 
+static struct BurnSampleInfo tekipakiSampleDesc[] = {
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "01.wav", SAMPLE_NOLOOP },
+	{ "02.wav", SAMPLE_NOLOOP },
+	{ "03.wav", SAMPLE_NOLOOP },
+	{ "04.wav", SAMPLE_NOLOOP },
+	{ "05.wav", SAMPLE_NOLOOP },
+	{ "06.wav", SAMPLE_NOLOOP },
+	{ "07.wav", SAMPLE_NOLOOP },
+	{ "08.wav", SAMPLE_NOLOOP },
+	{ "09.wav", SAMPLE_NOLOOP },
+	{ "0a.wav", SAMPLE_NOLOOP },
+	{ "0b.wav", SAMPLE_NOLOOP },
+	{ "0c.wav", SAMPLE_NOLOOP },
+	{ "0d.wav", SAMPLE_NOLOOP },
+	{ "0e.wav", SAMPLE_NOLOOP },
+	{ "0f.wav", SAMPLE_NOLOOP },
+	{ "10.wav", SAMPLE_NOLOOP },
+	{ "11.wav", SAMPLE_NOLOOP },
+	{ "12.wav", SAMPLE_NOLOOP },
+	{ "13.wav", SAMPLE_NOLOOP },
+	{ "14.wav", SAMPLE_NOLOOP },
+	{ "15.wav", SAMPLE_NOLOOP },
+#endif
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(tekipaki)
+STD_SAMPLE_FN(tekipaki)
+
 struct BurnDriver BurnDrvTekiPaki = {
-	"tekipaki", NULL, NULL, NULL, "1991",
+	"tekipaki", NULL, NULL, "tekipaki", "1991",
 	"Teki Paki\0", "No sound (sound MCU not dumped)", "Toaplan", "Toaplan GP9001 based",
 	L"Teki Paki\0\u6D17\u8133\u30B2\u30FC\u30E0\0", NULL, NULL, NULL,
 	1, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_PUZZLE, 0,
-	NULL, drvRomInfo, drvRomName, NULL, NULL, tekipakiInputInfo, tekipakiDIPInfo,
+	NULL, drvRomInfo, drvRomName, tekipakiSampleInfo, tekipakiSampleName, tekipakiInputInfo, tekipakiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };

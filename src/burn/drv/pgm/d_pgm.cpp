@@ -2739,6 +2739,40 @@ struct BurnDriver BurnDrvkovshp = {
 };
 
 
+// Knights of Valour Super Heroes / Sangoku Senki Super Heroes (ver. 201, China)
+
+static struct BurnRomInfo kovshytzyRomDesc[] = {
+	{ "ytzy_v201cn.rom",	        0x400000, 0xf3705ea0, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t0600.rom",    		0x800000, 0x4acc1ad6, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a0600.rom",	   		0x800000, 0xd8167834, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a0601.rom",	   		0x800000, 0xff7a4373, 3 | BRF_GRA }, 	        //  3 
+	{ "a0602.rom",	   		0x800000, 0xe7a32959, 3 | BRF_GRA }, 	        //  4
+	{ "a0540.rom",	   		0x800000, 0x4fd3413e, 3 | BRF_GRA }, 	        //  5
+
+	{ "b0600.rom",	   		0x800000, 0x7d3cd059, 4 | BRF_GRA },		//  6 Sprite Masks & Color Indexes
+	{ "b0540.rom",	   		0x800000, 0x60999757, 4 | BRF_GRA },		//  7
+
+	{ "m0600.rom",	   		0x400000, 0x3ada4fd6, 5 | BRF_SND },		//  8 Samples
+
+	{ "kovsh_v100_china.asic", 	0x004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS },  //  9 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovshytzy, kovshytzy, pgm)
+STD_ROM_FN(kovshytzy)
+
+struct BurnDriver BurnDrvkovshytzy = {
+	"kovshytzy", "kovshp", "pgm", NULL, "1999",
+	"Knights of Valour Super Heroes / Sangoku Senki Super Heroes (ver. 201, China)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
+	L"Knights of Valour Super Heroes\0\u4E09\u56FD\u6218\u7EAA\0\u4E00\u7EDF\u4E2D\u539F (ver. 201, China)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovshytzyRomInfo, kovshytzyRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
+	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
 // Oriental Legend Special Plus / Xi You Shi E Zhuan Super Plus (ver. 205)
 
 static struct BurnRomInfo oldsplusRomDesc[] = {

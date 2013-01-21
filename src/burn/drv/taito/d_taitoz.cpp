@@ -2150,10 +2150,10 @@ STD_ROM_PICK(Chasehqu)
 STD_ROM_FN(Chasehqu)
 
 static struct BurnRomInfo ContcircRomDesc[] = {
-	{ "ic25",          0x20000, 0xf5c92e42, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "ic26",          0x20000, 0xe7c1d1fa, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b33-ww.ic25",   0x20000, 0xf5c92e42, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b33-xx.ic26",   0x20000, 0xe7c1d1fa, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	
-	{ "ic35",          0x20000, 0x16522f2d, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "b33-yy.ic35",   0x20000, 0x16522f2d, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
 	{ "cc_36.bin",     0x20000, 0xa1732ea5, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
 	
 	{ "b33-30.11",     0x10000, 0xd8746234, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
@@ -2184,11 +2184,11 @@ STD_ROM_PICK(Contcirc)
 STD_ROM_FN(Contcirc)
 
 static struct BurnRomInfo ContcircuRomDesc[] = {
-	{ "ic25",          0x20000, 0xf5c92e42, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "ic26",          0x20000, 0xe7c1d1fa, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b33-ww.ic25",   0x20000, 0xf5c92e42, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b33-xx.ic26",   0x20000, 0xe7c1d1fa, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	
-	{ "ic35",          0x20000, 0x16522f2d, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
-	{ "ic36",          0x20000, 0xd6741e33, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "b33-yy.ic35",   0x20000, 0x16522f2d, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "b33-zz.ic36",   0x20000, 0xd6741e33, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
 	
 	{ "b33-30.11",     0x10000, 0xd8746234, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 	
@@ -2221,8 +2221,8 @@ static struct BurnRomInfo ContcircuaRomDesc[] = {
 	{ "b33-34.ic25",   0x20000, 0xe1e016c1, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "b33-33.ic26",   0x20000, 0xf539d44b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	
-	{ "21-2.ic35",     0x20000, 0x2723f9e3, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
-	{ "31-1.ic36",     0x20000, 0x438431f7, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "b33-21-2.ic35", 0x20000, 0x2723f9e3, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "b33-31-1.ic36", 0x20000, 0x438431f7, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
 	
 	{ "b33-30.11",     0x10000, 0xd8746234, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 	
@@ -2250,6 +2250,40 @@ static struct BurnRomInfo ContcircuaRomDesc[] = {
 
 STD_ROM_PICK(Contcircua)
 STD_ROM_FN(Contcircua)
+
+static struct BurnRomInfo ContcircjRomDesc[] = {
+	{ "b33-19.ic25",   0x20000, 0xb85360c8, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b33-20.ic26",   0x20000, 0x9f88378b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	
+	{ "b33-21-2.ic35", 0x20000, 0x2723f9e3, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "b33-22-2.ic36", 0x20000, 0xda8d604d, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	
+	{ "b33-30.11",     0x10000, 0xd8746234, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	
+	{ "b33-02.57",     0x80000, 0xf6fb3ba2, BRF_GRA | TAITO_CHARS },
+	
+	{ "b33-06",        0x80000, 0x2cb40599, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "b33-05",        0x80000, 0xbddf9eea, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "b33-04",        0x80000, 0x8df866a2, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "b33-03",        0x80000, 0x4f6c36d9, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	
+	{ "b33-01.3",      0x80000, 0xf11f2be8, BRF_GRA | TAITO_ROAD },
+	
+	{ "b33-07.64",     0x80000, 0x151e1f52, BRF_GRA | TAITO_SPRITEMAP },
+	
+	{ "b33-09.18",     0x80000, 0x1e6724b5, BRF_SND | TAITO_YM2610A },
+	{ "b33-10.17",     0x80000, 0xe9ce03ab, BRF_SND | TAITO_YM2610A },
+	
+	{ "b33-08.19",     0x80000, 0xcaa1c4c8, BRF_SND | TAITO_YM2610B },
+	
+	{ "b14-30.97",     0x10000, 0xdccb0c7f, BRF_OPT },
+	{ "b14-31.50",     0x02000, 0x5c6b013d, BRF_OPT },
+	{ "b33-17.16",     0x00100, 0x7b7d8ff4, BRF_OPT },
+	{ "b33-18.17",     0x00100, 0xfbf81f30, BRF_OPT },
+};
+
+STD_ROM_PICK(Contcircj)
+STD_ROM_FN(Contcircj)
 
 static struct BurnRomInfo DblaxleRomDesc[] = {
 	{ "c78_49-1.2",    0x020000, 0xa6f0c631, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -6385,6 +6419,16 @@ struct BurnDriver BurnDrvContcircua = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ContcircuaRomInfo, ContcircuaRomName, NULL, NULL, ContcircInputInfo, ContcircuDIPInfo,
+	ContcircInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	NULL, 0x1000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvContcircj = {
+	"contcircj", "contcirc", NULL, NULL, "1987",
+	"Continental Circus (Japan)\0", NULL, "Taito Corporation", "Taito-Z",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
+	NULL, ContcircjRomInfo, ContcircjRomName, NULL, NULL, ContcircInputInfo, ContcircuDIPInfo,
 	ContcircInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
 	NULL, 0x1000, 320, 224, 4, 3
 };

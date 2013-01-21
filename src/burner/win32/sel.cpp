@@ -494,14 +494,14 @@ static int SelListMake()
 		
 		if (DoExtraFilters()) continue;
 		
-		TCHAR szSearchString[100];
+		TCHAR szSearchString[256];
 		GetDlgItemText(hSelDlg, IDC_SEL_SEARCH, szSearchString, sizeof(szSearchString));
 		if (szSearchString[0]) {
 			TCHAR *StringFound = NULL;
 			TCHAR *StringFound2 = NULL;
-			TCHAR szDriverName[256];
+			TCHAR szDriverName[256] = { _T("") };
 			wcscpy(szDriverName, BurnDrvGetText(DRV_FULLNAME));
-			for (int k =0; k < 100; k++) {
+			for (int k =0; k < 256; k++) {
 				szSearchString[k] = _totlower(szSearchString[k]);
 				szDriverName[k] = _totlower(szDriverName[k]);
 			}
@@ -553,14 +553,14 @@ static int SelListMake()
 		
 		if (DoExtraFilters()) continue;
 		
-		TCHAR szSearchString[100];
+		TCHAR szSearchString[256];
 		GetDlgItemText(hSelDlg, IDC_SEL_SEARCH, szSearchString, sizeof(szSearchString));
 		if (szSearchString[0]) {
 			TCHAR *StringFound = NULL;
 			TCHAR *StringFound2 = NULL;
-			TCHAR szDriverName[100];
+			TCHAR szDriverName[256];
 			wcscpy(szDriverName, BurnDrvGetText(DRV_FULLNAME));
-			for (int k =0; k < 100; k++) {
+			for (int k =0; k < 256; k++) {
 				szSearchString[k] = _totlower(szSearchString[k]);
 				szDriverName[k] = _totlower(szDriverName[k]);
 			}
@@ -2167,8 +2167,8 @@ static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 			for (int i = 0; i < 0x100; i++) { // assume max 0x100 roms per game
 				int nRet;
 				struct BurnRomInfo ri;
-				char nLen[10] = "";
-				char nCrc[8] = "";
+				char nLen[16] = "";
+				char nCrc[16] = "";
 				char *szRomName = NULL;
 				TCHAR Type[100] = _T("");
 				TCHAR FormatType[100] = _T("");
@@ -2235,8 +2235,8 @@ static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				for (int j = 0; j < 0x100; j++) {
 					int nRetBoard;
 					struct BurnRomInfo riBoard;
-					char nLenBoard[10] = "";
-					char nCrcBoard[8] = "";
+					char nLenBoard[16] = "";
+					char nCrcBoard[16] = "";
 					char *szBoardRomName = NULL;
 					TCHAR BoardType[100] = _T("");
 					TCHAR BoardFormatType[100] = _T("");

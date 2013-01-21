@@ -491,7 +491,9 @@ void __fastcall samesameWriteWord(UINT32 a, UINT16 d)
 		return;
 
 		case 0x14000e:
-			samesameSndCmd(d);
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+		samesameSndCmd(d);
+#endif
 		return;	// mcu writes...
 
 		case 0x180000:

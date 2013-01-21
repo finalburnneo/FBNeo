@@ -1,4 +1,5 @@
 #include "toaplan.h"
+#include "samples.h"
 
 #define REFRESHRATE 60
 #define VBLANK_LINES (32)
@@ -193,6 +194,170 @@ static INT32 LoadRoms()
 	return 0;
 }
 
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+static void StopAllSamples()
+{
+	for (INT32 i = 0x00; i <= 79; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel0()
+{
+	BurnSampleStop(0x00);
+	BurnSampleSetLoop(0x00, 0);
+	BurnSampleStop(0x42);
+	BurnSampleSetLoop(0x42, 0);
+	BurnSampleStop(0x44);
+	BurnSampleSetLoop(0x44, 0);
+	BurnSampleStop(0x45);
+	BurnSampleSetLoop(0x45, 0);
+	BurnSampleStop(0x47);
+	BurnSampleSetLoop(0x47, 0);
+	BurnSampleStop(0x48);
+	BurnSampleSetLoop(0x48, 0);
+	BurnSampleStop(0x49);
+	BurnSampleSetLoop(0x49, 0);
+	BurnSampleStop(0x4c);
+	BurnSampleSetLoop(0x4c, 0);
+	BurnSampleStop(0x4d);
+	BurnSampleSetLoop(0x4d, 0);
+	BurnSampleStop(0x4e);
+	BurnSampleSetLoop(0x4e, 0);
+	BurnSampleStop(0x4f);
+	BurnSampleSetLoop(0x4f, 0);
+}
+
+static void StopSamplesChannel1()
+{
+	for (INT32 i = 0x02; i <= 0x0f; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel2()
+{
+	for (INT32 i = 0x10; i <= 0x17; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel3()
+{
+	for (INT32 i = 0x18; i <= 0x1f; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel4()
+{
+	for (INT32 i = 0x20; i <= 0x27; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel5()
+{
+	for (INT32 i = 0x28; i <= 0x2f; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel6()
+{
+	for (INT32 i = 0x30; i <= 0x38; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel7()
+{
+	for (INT32 i = 0x3a; i <= 0x3f; i++) {
+		BurnSampleStop(i);
+	}
+}
+
+static void StopSamplesChannel8()
+{
+	BurnSampleStop(0x01);
+	BurnSampleStop(0x39);
+}
+
+static void ghoxSoundCmd(UINT16 d)
+{
+	if (d == 0xfe) {
+		StopSamplesChannel0();
+	}
+	
+	if (d == 0x42 || d == 0x44 || d == 0x45 || d == 0x47 || d == 0x48 || d == 0x4c || d == 0x4d || d == 0x4e) {
+		StopSamplesChannel0();
+		BurnSampleSetLoop(d, 1);
+		BurnSamplePlay(d);
+	}
+
+	if (d == 0xd0) {
+		StopSamplesChannel0();
+		BurnSampleSetLoop(0, 1);
+		BurnSamplePlay(0);
+	}
+
+	if (d == 0x49) {
+		StopSamplesChannel0();
+		BurnSamplePlay(d);
+	}
+	
+	if (d >= 0x02 && d <= 0x0f) {
+		StopSamplesChannel1();
+		BurnSamplePlay(d);
+	}
+	
+	if (d >= 0x10 && d <= 0x17) {
+		StopSamplesChannel2();
+		BurnSamplePlay(d);
+	}
+	
+	if (d >= 0x18 && d <= 0x1f) {
+		StopSamplesChannel3();
+		BurnSamplePlay(d);
+	}
+	
+	if (d >= 0x20 && d <= 0x27) {
+		StopSamplesChannel4();
+		BurnSamplePlay(d);
+	}
+	
+	if (d >= 0x28 && d <= 0x2f) {
+		StopSamplesChannel5();
+		BurnSamplePlay(d);
+	}
+	
+	if (d >= 0x30 && d <= 0x38) {
+		StopSamplesChannel6();
+		BurnSamplePlay(d);
+	}
+	
+	if (d == 0x39) {
+		StopSamplesChannel8();
+		BurnSamplePlay(d);
+	}
+	
+	if (d >= 0x3a && d <= 0x3f) {
+		StopSamplesChannel7();
+		BurnSamplePlay(d);
+	}
+	
+	if (d == 0x01) {
+		StopSamplesChannel8();
+		BurnSamplePlay(d);
+	}
+	
+	if (d == 0x4b) {
+		StopSamplesChannel0();
+		BurnSamplePlay(0x4f);
+	}
+}
+#endif
+
 UINT8 PaddleRead(UINT8 Num)
 {
 	INT8 Value;
@@ -295,6 +460,10 @@ UINT16 __fastcall ghoxReadWord(UINT32 sekAddress)
 
 static void ghox_mcu_write(INT32 data)
 {
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+	ghoxSoundCmd(data);
+#endif
+
 	if ((data >= 0xd0) && (data < 0xe0))
 	{
 		INT32 offset = ((data & 0x0f) * 2) + (0x38 / 2);
@@ -373,6 +542,11 @@ static INT32 DrvDoReset()
 	SekOpen(0);
 	SekReset();
 	SekClose();
+	
+	BurnSampleReset();
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+	StopAllSamples();
+#endif
 
 	Paddle[0] = 0;
 	PaddleOld[0] = 0;
@@ -435,6 +609,9 @@ static INT32 DrvInit()
 	nToaPalLen = nColCount;
 	ToaPalSrc = RamPal;
 	ToaPalInit();
+	
+	BurnSampleInit(0);
+	BurnSampleSetAllRoutesAllSamples(1.00, BURN_SND_ROUTE_BOTH);
 
 	bDrawScreen = true;
 
@@ -448,6 +625,7 @@ static INT32 DrvExit()
 
 	ToaExitGP9001();
 	SekExit();				// Deallocate 68000s
+	BurnSampleExit();
 
 	BurnFree(Mem);
 
@@ -540,6 +718,8 @@ static INT32 DrvFrame()
 	}
 
 	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];
+	
+	BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 
 //	bprintf(PRINT_NORMAL, _T("    %i\n"), nCyclesDone[0]);
 
@@ -549,6 +729,95 @@ static INT32 DrvFrame()
 
 	return 0;
 }
+
+static struct BurnSampleInfo ghoxSampleDesc[] = {
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+	{ "d0.wav", SAMPLE_NOLOOP },
+	{ "01.wav", SAMPLE_NOLOOP },
+	{ "02.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "04.wav", SAMPLE_NOLOOP },
+	{ "05.wav", SAMPLE_NOLOOP },
+	{ "06.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "08.wav", SAMPLE_NOLOOP },
+	{ "09.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "0b.wav", SAMPLE_NOLOOP },
+	{ "0c.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "0f.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "11.wav", SAMPLE_NOLOOP },
+	{ "12.wav", SAMPLE_NOLOOP },
+	{ "12.wav", SAMPLE_NOLOOP },
+	{ "14.wav", SAMPLE_NOLOOP },
+	{ "15.wav", SAMPLE_NOLOOP },
+	{ "16.wav", SAMPLE_NOLOOP },
+	{ "17.wav", SAMPLE_NOLOOP },
+	{ "18.wav", SAMPLE_NOLOOP },
+	{ "19.wav", SAMPLE_NOLOOP },
+	{ "1a.wav", SAMPLE_NOLOOP },
+	{ "1b.wav", SAMPLE_NOLOOP },
+	{ "1c.wav", SAMPLE_NOLOOP },
+	{ "1c.wav", SAMPLE_NOLOOP },
+	{ "1c.wav", SAMPLE_NOLOOP },
+	{ "1f.wav", SAMPLE_NOLOOP },
+	{ "20.wav", SAMPLE_NOLOOP },
+	{ "21.wav", SAMPLE_NOLOOP },
+	{ "22.wav", SAMPLE_NOLOOP },
+	{ "23.wav", SAMPLE_NOLOOP },
+	{ "24.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "27.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "2a.wav", SAMPLE_NOLOOP },
+	{ "2b.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "2d.wav", SAMPLE_NOLOOP },
+	{ "2e.wav", SAMPLE_NOLOOP },
+	{ "2f.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "33.wav", SAMPLE_NOLOOP },
+	{ "34.wav", SAMPLE_NOLOOP },
+	{ "35.wav", SAMPLE_NOLOOP },
+	{ "36.wav", SAMPLE_NOLOOP },
+	{ "37.wav", SAMPLE_NOLOOP },
+	{ "38.wav", SAMPLE_NOLOOP },
+	{ "39.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "3c.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "3e.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "42.wav", SAMPLE_NOLOOP },
+	{ "43.wav", SAMPLE_NOLOOP },
+	{ "44.wav", SAMPLE_NOLOOP },
+	{ "45.wav", SAMPLE_NOLOOP },
+	{ "43.wav", SAMPLE_NOLOOP },
+	{ "47.wav", SAMPLE_NOLOOP },
+	{ "48.wav", SAMPLE_NOLOOP },
+	{ "49.wav", SAMPLE_NOLOOP },
+	{ "43.wav", SAMPLE_NOLOOP },
+	{ "dm.wav", SAMPLE_NOLOOP },
+	{ "4c.wav", SAMPLE_NOLOOP },
+	{ "4d.wav", SAMPLE_NOLOOP },
+	{ "4e.wav", SAMPLE_NOLOOP },
+	{ "d1.wav", SAMPLE_NOLOOP },
+#endif
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(ghox)
+STD_SAMPLE_FN(ghox)
 
 
 // Ghox (spinner)
@@ -567,11 +836,11 @@ STD_ROM_PICK(ghox)
 STD_ROM_FN(ghox)
 
 struct BurnDriver BurnDrvGhox = {
-	"ghox", NULL, NULL, NULL, "1991",
+	"ghox", NULL, NULL, "ghox", "1991",
 	"Ghox (spinner)\0", "No Sound (undumped MCU)", "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,
-	NULL, ghoxRomInfo, ghoxRomName, NULL, NULL, GhoxInputInfo, GhoxDIPInfo,
+	NULL, ghoxRomInfo, ghoxRomName, ghoxSampleInfo, ghoxSampleName, GhoxInputInfo, GhoxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -593,11 +862,11 @@ STD_ROM_PICK(ghoxj)
 STD_ROM_FN(ghoxj)
 
 struct BurnDriver BurnDrvGhoxj = {
-	"ghoxj", "ghox", NULL, NULL, "1991",
+	"ghoxj", "ghox", NULL, "ghox", "1991",
 	"Ghox (joystick)\0", "No Sound (undumped MCU)", "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,
-	NULL, ghoxjRomInfo, ghoxjRomName, NULL, NULL, GhoxInputInfo, GhoxDIPInfo,
+	NULL, ghoxjRomInfo, ghoxjRomName, ghoxSampleInfo, ghoxSampleName, GhoxInputInfo, GhoxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

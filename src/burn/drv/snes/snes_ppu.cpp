@@ -1092,7 +1092,7 @@ struct OAM
 	int height, width;
 };
 
-static struct OAM oam_list[SNES_SCR_WIDTH / 2];
+static struct OAM oam_list[(SNES_SCR_WIDTH / 2) + 1];
 
 #if 0
 

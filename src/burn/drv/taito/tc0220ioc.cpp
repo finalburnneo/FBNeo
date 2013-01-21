@@ -7,7 +7,8 @@ UINT8 TC0220IOCInputPort0[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 UINT8 TC0220IOCInputPort1[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 UINT8 TC0220IOCInputPort2[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 UINT8 TC0220IOCDip[2]        = { 0, 0 };
-UINT8 TC0220IOCInput[3]      = { 0, 0, 0 };
+
+UINT8 TC0220IOCInput[6]      = { 0, 0, 0, 0, 0, 0 };
 
 static UINT8 TC0220IOCRegs[8];
 static UINT8 TC0220IOCPort;

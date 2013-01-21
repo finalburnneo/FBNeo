@@ -1090,7 +1090,7 @@ UINT8 __fastcall bonze_sound_read(UINT16 a)
 
 static void DrvMakeInputs()
 {
-	memset (TC0220IOCInput, 0xff, 3);
+	memset (TC0220IOCInput, 0xff, sizeof ( TC0220IOCInput ));
 
 	TC0220IOCInput[2] &= ~TaitoInputConfig; // asuka
 

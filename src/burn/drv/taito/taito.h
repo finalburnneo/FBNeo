@@ -3,7 +3,7 @@ extern UINT8 TaitoInputPort1[8];
 extern UINT8 TaitoInputPort2[8];
 extern UINT8 TaitoInputPort3[8];
 extern UINT8 TaitoInputPort4[8];
-extern UINT8 TaitoInputPort5[8];
+extern UINT8 TaitoInputPort5[16];
 extern UINT8 TaitoDip[2];
 extern UINT8 TaitoInput[6];
 extern UINT8 TaitoReset;

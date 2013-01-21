@@ -16,7 +16,8 @@ UINT8 TaitoInputPort1[8]       = { 0, 0, 0, 0, 0, 0, 0, 0 };
 UINT8 TaitoInputPort2[8]       = { 0, 0, 0, 0, 0, 0, 0, 0 };
 UINT8 TaitoInputPort3[8]       = { 0, 0, 0, 0, 0, 0, 0, 0 };
 UINT8 TaitoInputPort4[8]       = { 0, 0, 0, 0, 0, 0, 0, 0 };
-UINT8 TaitoInputPort5[8]       = { 0, 0, 0, 0, 0, 0, 0, 0 };
+
+UINT8 TaitoInputPort5[16]      = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 UINT8 TaitoDip[2]              = { 0, 0 };
 UINT8 TaitoInput[6]            = { 0, 0, 0, 0, 0, 0 };
 UINT8 TaitoReset               = 0;

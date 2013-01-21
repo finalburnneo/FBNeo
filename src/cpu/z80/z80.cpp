@@ -3505,6 +3505,10 @@ void Z80Reset()
 void Z80Exit()
 {
 
+	if (SZHVC_add) free(SZHVC_add);
+	SZHVC_add = NULL;
+	if (SZHVC_sub) free(SZHVC_sub);
+	SZHVC_sub = NULL;
 }
 
 int Z80Execute(int cycles)

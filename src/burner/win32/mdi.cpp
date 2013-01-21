@@ -124,12 +124,12 @@ BOOL RegNewMDIChild()
 	wcex.lpfnWndProc		= VideoWndProc;										// video window process callback
 	wcex.cbClsExtra			= 0;
 	wcex.cbWndExtra			= 0;
-	wcex.hInstance			= hAppInst;											// fba instance handle
-	wcex.hIcon				= LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));		// fba icon
-	wcex.hCursor			= LoadCursor(NULL, IDC_ARROW);						// regular cursor
-	wcex.hbrBackground		= CreateSolidBrush(0);								// black video window background
-	wcex.lpszMenuName		= NULL;												// no menu
-	wcex.lpszClassName		= szVidWndClass;									// video window class (MDI child)
+	wcex.hInstance			= hAppInst;												// fba instance handle
+	wcex.hIcon				= LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));			// fba icon
+	wcex.hCursor			= LoadCursor(NULL, IDC_ARROW);							// regular cursor
+	wcex.hbrBackground		= static_cast<HBRUSH>( GetStockObject( BLACK_BRUSH ));	// black video window background
+	wcex.lpszMenuName		= NULL;													// no menu
+	wcex.lpszClassName		= szVidWndClass;										// video window class (MDI child)
 	wcex.hIconSm			= LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));
 
 	if(!RegisterClassEx(&wcex))	

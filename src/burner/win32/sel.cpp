@@ -499,7 +499,7 @@ static int SelListMake()
 		if (szSearchString[0]) {
 			TCHAR *StringFound = NULL;
 			TCHAR *StringFound2 = NULL;
-			TCHAR szDriverName[100];
+			TCHAR szDriverName[256];
 			wcscpy(szDriverName, BurnDrvGetText(DRV_FULLNAME));
 			for (int k =0; k < 100; k++) {
 				szSearchString[k] = _totlower(szSearchString[k]);

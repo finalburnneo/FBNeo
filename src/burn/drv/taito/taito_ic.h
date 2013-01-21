@@ -198,7 +198,7 @@ extern UINT8 TC0220IOCInputPort0[8];
 extern UINT8 TC0220IOCInputPort1[8];
 extern UINT8 TC0220IOCInputPort2[8];
 extern UINT8 TC0220IOCDip[2];
-extern UINT8 TC0220IOCInput[3];
+extern UINT8 TC0220IOCInput[6];
 
 UINT8 TC0220IOCPortRead();
 UINT8 TC0220IOCHalfWordPortRead();

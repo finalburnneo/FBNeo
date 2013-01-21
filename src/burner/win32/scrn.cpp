@@ -2791,7 +2791,7 @@ static int ScrnRegister()
 	WndClassEx.hInstance		= hAppInst;
 	WndClassEx.hIcon			= LoadIcon(hAppInst, MAKEINTRESOURCE(IDI_APP));
 	WndClassEx.hCursor			= LoadCursor(NULL, IDC_ARROW);
-	WndClassEx.hbrBackground	= CreateSolidBrush(0);
+	WndClassEx.hbrBackground	= static_cast<HBRUSH>( GetStockObject ( BLACK_BRUSH ));
 	WndClassEx.lpszClassName	= szClass;
 
 	// Register the window class with the above information:

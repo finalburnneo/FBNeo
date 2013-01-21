@@ -5,44 +5,37 @@
 #include <wchar.h>
 
 #include "inp_keys.h"
+#define TCHAR char
+#define _T(x) x
+#define _tfopen fopen
+#define _tcstol strtol
+#define _tcsstr strstr
+#define _istspace(x) isspace(x)
+#define _stprintf sprintf
+#define _tcslen strlen
+#define _tcsicmp(a, b) strcasecmp(a, b)
+#define _tcscpy(to, from) strcpy(to, from)
+#define _fgetts fgets
+#define _strnicmp(s1, s2, n) strncasecmp(s1, s2, n)
+#define _tcsncmp strncmp
+#define _tcsncpy strncpy
+#define _stscanf sscanf
+#define _ftprintf fprintf
 
 #ifdef _MSC_VER
 #include <tchar.h>
-#endif
+#define strncasecmp(s1, s2, n) _strnicmp(s1, s2, n)
+#define strcasecmp(x, y) _stricmp(x, y)
+#define snprintf _snprintf
+#else
+#define _stricmp(x, y) strcasecmp(x,y)
 
 typedef struct { int x, y, width, height; } RECT;
-
-#define TCHAR char
 #undef __cdecl
 #define __cdecl
 
 #define bprintf(...) {}
-#define _strnicmp(s1, s2, n) strncasecmp(s1, s2, n)
-#define _stricmp(x, y) strcasecmp(x,y)
-
-#ifdef _MSC_VER
-#define strncasecmp(s1, s2, n) _strnicmp(s1, s2, n)
-#define strcasecmp(x, y) _stricmp(x, y)
-#define snprintf _snprintf
 #endif
-
-#define _T(x) x
-#define _tcstol strtol
-#define _tfopen fopen
-#define _fgetts fgets
-#define _tcslen strlen
-#define _stprintf sprintf
-#define _istspace(x) isspace(x)
-#define _tcsncmp strncmp
-#define _tcsncpy strncpy
-#define _tcsstr strstr
-#define _stscanf sscanf
-#define _ftprintf fprintf
-#ifndef _MSC_VER
-#define _tcsicmp(a, b) strcasecmp(a, b)
-#endif
-#define _tcscpy(to, from) strcpy(to, from)
-/*define lstrlen			what does lstrlen correspond to?*/
 
 #undef __fastcall
 #undef _fastcall

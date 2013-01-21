@@ -43,10 +43,12 @@
     <ClCompile Include="..\..\src\burn\cheat.cpp" />
     <ClCompile Include="..\..\src\burn\debug_track.cpp" />
     <ClCompile Include="..\..\src\burn\devices\8255ppi.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\8257dma.cpp" />
     <ClCompile Include="..\..\src\burn\devices\eeprom.cpp" />
     <ClCompile Include="..\..\src\burn\devices\pandora.cpp" />
     <ClCompile Include="..\..\src\burn\devices\seibusnd.cpp" />
     <ClCompile Include="..\..\src\burn\devices\sknsspr.cpp" />
+    <ClCompile Include="..\..\src\burn\devices\slapstic.cpp" />
     <ClCompile Include="..\..\src\burn\devices\timekpr.cpp" />
     <ClCompile Include="..\..\src\burn\devices\v3021.cpp" />
     <ClCompile Include="..\..\src\burn\devices\vdc.cpp" />
@@ -69,7 +71,7 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\capcom\d_cps1.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\d_cps2.cpp" />
-	<ClCompile Include="..\..\src\burn\drv\capcom\fcrash_snd.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\capcom\fcrash_snd.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\kabuki.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\ps.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\ps_m.cpp" />
@@ -77,7 +79,7 @@
     <ClCompile Include="..\..\src\burn\drv\capcom\qs.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\qs_c.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\qs_z.cpp" />
-	<ClCompile Include="..\..\src\burn\drv\capcom\sf2mdt_snd.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\capcom\sf2mdt_snd.cpp" />
     <ClCompile Include="..\..\src\burn\drv\cave\cave.cpp" />
     <ClCompile Include="..\..\src\burn\drv\cave\cave_palette.cpp" />
     <ClCompile Include="..\..\src\burn\drv\cave\cave_sprite.cpp" />
@@ -145,6 +147,7 @@
     <ClCompile Include="..\..\src\burn\drv\konami\d_gyruss.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\d_hcastle.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\d_hexion.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\konami\d_kontest.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\d_mainevt.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\d_mogura.cpp" />
     <ClCompile Include="..\..\src\burn\drv\konami\d_parodius.cpp" />
@@ -196,6 +199,7 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_ambush.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_arabian.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_armedf.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_atetris.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_aztarac.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_baraduke.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_bionicc.cpp" />
@@ -204,7 +208,9 @@
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_blueprnt.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_bombjack.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_commando.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_cybertnk.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_ddragon.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_dkong.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_dynduke.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_epos.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_exedexes.cpp" />
@@ -310,7 +316,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_seta2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_shadfrce.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_silkroad.cpp" />
-	<ClCompile Include="..\..\src\burn\drv\pst90s\d_silvmil.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_silvmil.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_speedspn.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_suna16.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_suprnova.cpp" />
@@ -440,6 +446,7 @@
     <ClCompile Include="..\..\src\burn\snd\dac.cpp" />
     <ClCompile Include="..\..\src\burn\snd\es5506.cpp" />
     <ClCompile Include="..\..\src\burn\snd\es8712.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\flt_rc.cpp" />
     <ClCompile Include="..\..\src\burn\snd\fm.c">
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='CodeAnalysis|Xbox 360'">CompileAsC</CompileAs>
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'">CompileAsC</CompileAs>
@@ -557,6 +564,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\src\cpu\m6502_intf.cpp" />
+    <ClCompile Include="..\..\src\cpu\m68000_intf.cpp" />
     <ClCompile Include="..\..\src\cpu\m6800\6800ops.c">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">true</ExcludedFromBuild>
     </ClCompile>
@@ -638,14 +646,13 @@
     <ClCompile Include="..\..\src\cpu\nec\v25sfr.c">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\src\cpu\nec_intf.cpp" />
     <ClCompile Include="..\..\src\cpu\s2650\s2650.cpp" />
     <ClCompile Include="..\..\src\cpu\s2650_intf.cpp" />
-    <ClCompile Include="..\..\src\cpu\sek.cpp" />
     <ClCompile Include="..\..\src\cpu\sh2\sh2.cpp" />
-    <ClCompile Include="..\..\src\cpu\vez.cpp" />
     <ClCompile Include="..\..\src\cpu\z80\z80.cpp" />
     <ClCompile Include="..\..\src\cpu\z80\z80daisy.cpp" />
-    <ClCompile Include="..\..\src\cpu\zet.cpp" />
+    <ClCompile Include="..\..\src\cpu\z80_intf.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{00AAF92F-A249-4DF2-AE24-0C5427DB319E}</ProjectGuid>
@@ -729,7 +736,7 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <PrecompiledHeaderOutputFile>$(OutDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PreprocessorDefinitions>_DEBUG;_XBOX;_LIB;%(PreprocessorDefinitions);USE_SPEEDHACKS;__LIBRETRO__;INLINE=__inline static;EXTERNAL_ZLIB;__fastcall=;MAME_INLINE=_inline static</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_XBOX;_XBOX360;_LIB;%(PreprocessorDefinitions);USE_SPEEDHACKS;__LIBRETRO__;INLINE=__inline static;EXTERNAL_ZLIB;__fastcall=;MAME_INLINE=_inline static;MSB_FIRST;__LIBRETRO_OPTIMIZATIONS__;FRONTEND_SUPPORTS_RGB565</PreprocessorDefinitions>
       <CallAttributedProfiling>Callcap</CallAttributedProfiling>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\..\src\burn\drv\taito;$(SolutionDir)\..\..\src\dep\generated;$(SolutionDir)\..\..\src\burner\libretro;$(SolutionDir)\..\..\src\burner;$(SolutionDir)\..\..\src\burn;$(SolutionDir)\..\..\src\burn\drv\pgm;$(SolutionDir)\..\..\src\burn\devices;$(SolutionDir)\..\..\src\burn\snd;$(SolutionDir)\..\..\src\cpu\;$(SolutionDir)\..\..\src\cpu\arm;$(SolutionDir)\..\..\src\cpu\arm7;$(SolutionDir)\..\..\src\cpu\h6280;$(SolutionDir)\..\..\src\cpu\hd6309;$(SolutionDir)\..\..\src\cpu\i8039;$(SolutionDir)\..\..\src\cpu\konami;$(SolutionDir)\..\..\src\cpu\m6502;$(SolutionDir)\..\..\src\cpu\m6800;$(SolutionDir)\..\..\src\cpu\m6805;$(SolutionDir)\..\..\src\cpu\m6809;$(SolutionDir)\..\..\src\cpu\m68k;$(SolutionDir)\..\..\src\cpu\nec;$(SolutionDir)\..\..\src\cpu\s2650;$(SolutionDir)\..\..\src\cpu\sh2;$(SolutionDir)\..\..\src\cpu\z80;$(SolutionDir)\..\..\src\intf\input;$(SolutionDir)\..\..\src\intf;$(SolutionDir)\..\..\src\dep\libs\zlib;$(SolutionDir)\..\..\src\intf\cd</AdditionalIncludeDirectories>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -750,7 +757,7 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <PrecompiledHeaderOutputFile>$(OutDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PreprocessorDefinitions>_DEBUG;_XBOX;_LIB;%(PreprocessorDefinitions);USE_SPEEDHACKS;__LIBRETRO__;INLINE=__inline static;EXTERNAL_ZLIB;__fastcall=;MAME_INLINE=_inline static</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_XBOX;_XBOX360;_LIB;%(PreprocessorDefinitions);USE_SPEEDHACKS;__LIBRETRO__;INLINE=__inline static;EXTERNAL_ZLIB;__fastcall=;MAME_INLINE=_inline static;MSB_FIRST;__LIBRETRO_OPTIMIZATIONS__;FRONTEND_SUPPORTS_RGB565</PreprocessorDefinitions>
       <CallAttributedProfiling>Callcap</CallAttributedProfiling>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\..\src\burn\drv\taito;$(SolutionDir)\..\..\src\dep\generated;$(SolutionDir)\..\..\src\burner\libretro;$(SolutionDir)\..\..\src\burner;$(SolutionDir)\..\..\src\burn;$(SolutionDir)\..\..\src\burn\drv\pgm;$(SolutionDir)\..\..\src\burn\devices;$(SolutionDir)\..\..\src\burn\snd;$(SolutionDir)\..\..\src\cpu\;$(SolutionDir)\..\..\src\cpu\arm;$(SolutionDir)\..\..\src\cpu\arm7;$(SolutionDir)\..\..\src\cpu\h6280;$(SolutionDir)\..\..\src\cpu\hd6309;$(SolutionDir)\..\..\src\cpu\i8039;$(SolutionDir)\..\..\src\cpu\konami;$(SolutionDir)\..\..\src\cpu\m6502;$(SolutionDir)\..\..\src\cpu\m6800;$(SolutionDir)\..\..\src\cpu\m6805;$(SolutionDir)\..\..\src\cpu\m6809;$(SolutionDir)\..\..\src\cpu\m68k;$(SolutionDir)\..\..\src\cpu\nec;$(SolutionDir)\..\..\src\cpu\s2650;$(SolutionDir)\..\..\src\cpu\sh2;$(SolutionDir)\..\..\src\cpu\z80;$(SolutionDir)\..\..\src\intf\input;$(SolutionDir)\..\..\src\intf;$(SolutionDir)\..\..\src\dep\libs\zlib;$(SolutionDir)\..\..\src\intf\cd</AdditionalIncludeDirectories>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -772,7 +779,7 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <PrecompiledHeaderOutputFile>$(OutDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <PreprocessorDefinitions>NDEBUG;_XBOX;PROFILE;_LIB;%(PreprocessorDefinitions);USE_SPEEDHACKS;__LIBRETRO__;INLINE=__inline static;EXTERNAL_ZLIB;__fastcall=;MAME_INLINE=_inline static</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_XBOX;_XBOX360;PROFILE;_LIB;%(PreprocessorDefinitions);USE_SPEEDHACKS;__LIBRETRO__;INLINE=__inline static;EXTERNAL_ZLIB;__fastcall=;MAME_INLINE=_inline static;MSB_FIRST;__LIBRETRO_OPTIMIZATIONS__;FRONTEND_SUPPORTS_RGB565</PreprocessorDefinitions>
       <CallAttributedProfiling>Callcap</CallAttributedProfiling>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\..\src\burn\drv\taito;$(SolutionDir)\..\..\src\dep\generated;$(SolutionDir)\..\..\src\burner\libretro;$(SolutionDir)\..\..\src\burner;$(SolutionDir)\..\..\src\burn;$(SolutionDir)\..\..\src\burn\drv\pgm;$(SolutionDir)\..\..\src\burn\devices;$(SolutionDir)\..\..\src\burn\snd;$(SolutionDir)\..\..\src\cpu\;$(SolutionDir)\..\..\src\cpu\arm;$(SolutionDir)\..\..\src\cpu\arm7;$(SolutionDir)\..\..\src\cpu\h6280;$(SolutionDir)\..\..\src\cpu\hd6309;$(SolutionDir)\..\..\src\cpu\i8039;$(SolutionDir)\..\..\src\cpu\konami;$(SolutionDir)\..\..\src\cpu\m6502;$(SolutionDir)\..\..\src\cpu\m6800;$(SolutionDir)\..\..\src\cpu\m6805;$(SolutionDir)\..\..\src\cpu\m6809;$(SolutionDir)\..\..\src\cpu\m68k;$(SolutionDir)\..\..\src\cpu\nec;$(SolutionDir)\..\..\src\cpu\s2650;$(SolutionDir)\..\..\src\cpu\sh2;$(SolutionDir)\..\..\src\cpu\z80;$(SolutionDir)\..\..\src\intf\input;$(SolutionDir)\..\..\src\intf;$(SolutionDir)\..\..\src\dep\libs\zlib;$(SolutionDir)\..\..\src\intf\cd</AdditionalIncludeDirectories>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -798,7 +805,7 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <PrecompiledHeaderOutputFile>$(OutDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <PreprocessorDefinitions>NDEBUG;_XBOX;PROFILE;FASTCAP;_LIB;%(PreprocessorDefinitions);USE_SPEEDHACKS;__LIBRETRO__;INLINE=__inline static;EXTERNAL_ZLIB;__fastcall=;MAME_INLINE=_inline static</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_XBOX;_XBOX360;PROFILE;FASTCAP;_LIB;%(PreprocessorDefinitions);USE_SPEEDHACKS;__LIBRETRO__;INLINE=__inline static;EXTERNAL_ZLIB;__fastcall=;MAME_INLINE=_inline static;MSB_FIRST;__LIBRETRO_OPTIMIZATIONS__;FRONTEND_SUPPORTS_RGB565</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\..\src\burn\drv\taito;$(SolutionDir)\..\..\src\generated;$(SolutionDir)\..\..\src\burner\libretro;$(SolutionDir)\..\..\src\burner;$(SolutionDir)\..\..\src\burn;$(SolutionDir)\..\..\src\burn\drv\pgm;$(SolutionDir)\..\..\src\burn\devices;$(SolutionDir)\..\..\src\burn\snd;$(SolutionDir)\..\..\src\cpu\;$(SolutionDir)\..\..\src\cpu\arm;$(SolutionDir)\..\..\src\cpu\arm7;$(SolutionDir)\..\..\src\cpu\h6280;$(SolutionDir)\..\..\src\cpu\hd6309;$(SolutionDir)\..\..\src\cpu\i8039;$(SolutionDir)\..\..\src\cpu\konami;$(SolutionDir)\..\..\src\cpu\m6502;$(SolutionDir)\..\..\src\cpu\m6800;$(SolutionDir)\..\..\src\cpu\m6805;$(SolutionDir)\..\..\src\cpu\m6809;$(SolutionDir)\..\..\src\cpu\m68k;$(SolutionDir)\..\..\src\cpu\nec;$(SolutionDir)\..\..\src\cpu\s2650;$(SolutionDir)\..\..\src\cpu\sh2;$(SolutionDir)\..\..\src\cpu\z80;$(SolutionDir)\..\..\src\intf\input;$(SolutionDir)\..\..\src\intf;$(SolutionDir)\..\..\src\dep\libs\zlib;$(SolutionDir)\..\..\src\intf\cd</AdditionalIncludeDirectories>
       <IntrinsicFunctions>true</IntrinsicFunctions>
     </ClCompile>
@@ -821,7 +828,7 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <PrecompiledHeaderOutputFile>$(OutDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <PreprocessorDefinitions>NDEBUG;_XBOX;_LIB;%(PreprocessorDefinitions);USE_SPEEDHACKS;__LIBRETRO__;INLINE=__inline static;EXTERNAL_ZLIB;__fastcall=;MAME_INLINE=_inline static</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_XBOX;_XBOX360;_LIB;%(PreprocessorDefinitions);USE_SPEEDHACKS;__LIBRETRO__;INLINE=__inline static;EXTERNAL_ZLIB;__fastcall=;MAME_INLINE=_inline static;MSB_FIRST;__LIBRETRO_OPTIMIZATIONS__;FRONTEND_SUPPORTS_RGB565</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\..\src\burn\drv\taito;$(SolutionDir)\..\..\src\dep\generated;$(SolutionDir)\..\..\src\burner\libretro;$(SolutionDir)\..\..\src\burner;$(SolutionDir)\..\..\src\burn;$(SolutionDir)\..\..\src\burn\drv\pgm;$(SolutionDir)\..\..\src\burn\devices;$(SolutionDir)\..\..\src\burn\snd;$(SolutionDir)\..\..\src\cpu\;$(SolutionDir)\..\..\src\cpu\arm;$(SolutionDir)\..\..\src\cpu\arm7;$(SolutionDir)\..\..\src\cpu\h6280;$(SolutionDir)\..\..\src\cpu\hd6309;$(SolutionDir)\..\..\src\cpu\i8039;$(SolutionDir)\..\..\src\cpu\konami;$(SolutionDir)\..\..\src\cpu\m6502;$(SolutionDir)\..\..\src\cpu\m6800;$(SolutionDir)\..\..\src\cpu\m6805;$(SolutionDir)\..\..\src\cpu\m6809;$(SolutionDir)\..\..\src\cpu\m68k;$(SolutionDir)\..\..\src\cpu\nec;$(SolutionDir)\..\..\src\cpu\s2650;$(SolutionDir)\..\..\src\cpu\sh2;$(SolutionDir)\..\..\src\cpu\z80;$(SolutionDir)\..\..\src\intf\input;$(SolutionDir)\..\..\src\intf;$(SolutionDir)\..\..\src\dep\libs\zlib;$(SolutionDir)\..\..\src\intf\cd</AdditionalIncludeDirectories>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreschedulingOptimization>true</PreschedulingOptimization>
@@ -845,7 +852,7 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <PrecompiledHeaderOutputFile>$(OutDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <PreprocessorDefinitions>NDEBUG;_XBOX;LTCG;_LIB;%(PreprocessorDefinitions);USE_SPEEDHACKS;__LIBRETRO__;INLINE=__inline static;EXTERNAL_ZLIB;__fastcall=;MAME_INLINE=_inline static</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_XBOX;_XBOX360;LTCG;_LIB;%(PreprocessorDefinitions);USE_SPEEDHACKS;__LIBRETRO__;INLINE=__inline static;EXTERNAL_ZLIB;__fastcall=;MAME_INLINE=_inline static;MSB_FIRST;__LIBRETRO_OPTIMIZATIONS__;FRONTEND_SUPPORTS_RGB565</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\..\src\burn\drv\taito;$(SolutionDir)\..\..\src\dep\generated;$(SolutionDir)\..\..\src\burner\libretro;$(SolutionDir)\..\..\src\burner;$(SolutionDir)\..\..\src\burn;$(SolutionDir)\..\..\src\burn\drv\pgm;$(SolutionDir)\..\..\src\burn\devices;$(SolutionDir)\..\..\src\burn\snd;$(SolutionDir)\..\..\src\cpu\;$(SolutionDir)\..\..\src\cpu\arm;$(SolutionDir)\..\..\src\cpu\arm7;$(SolutionDir)\..\..\src\cpu\h6280;$(SolutionDir)\..\..\src\cpu\hd6309;$(SolutionDir)\..\..\src\cpu\i8039;$(SolutionDir)\..\..\src\cpu\konami;$(SolutionDir)\..\..\src\cpu\m6502;$(SolutionDir)\..\..\src\cpu\m6800;$(SolutionDir)\..\..\src\cpu\m6805;$(SolutionDir)\..\..\src\cpu\m6809;$(SolutionDir)\..\..\src\cpu\m68k;$(SolutionDir)\..\..\src\cpu\nec;$(SolutionDir)\..\..\src\cpu\s2650;$(SolutionDir)\..\..\src\cpu\sh2;$(SolutionDir)\..\..\src\cpu\z80;$(SolutionDir)\..\..\src\intf\input;$(SolutionDir)\..\..\src\intf;$(SolutionDir)\..\..\src\dep\libs\zlib;$(SolutionDir)\..\..\src\intf\cd</AdditionalIncludeDirectories>
       <IntrinsicFunctions>true</IntrinsicFunctions>
     </ClCompile>

@@ -246,6 +246,9 @@
 						RelativePath="..\..\src\burn\devices\8255ppi.cpp">
 					</File>
 					<File
+						RelativePath="..\..\src\burn\devices\8257dma.cpp">
+					</File>
+					<File
 						RelativePath="..\..\src\burn\devices\eeprom.cpp">
 					</File>
 					<File
@@ -256,6 +259,9 @@
 					</File>
 					<File
 						RelativePath="..\..\src\burn\devices\sknsspr.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\burn\devices\slapstic.cpp">
 					</File>
 					<File
 						RelativePath="..\..\src\burn\devices\timekpr.cpp">
@@ -610,6 +616,9 @@
 							RelativePath="..\..\src\burn\drv\konami\d_hexion.cpp">
 						</File>
 						<File
+							RelativePath="..\..\src\burn\drv\konami\d_kontest.cpp">
+						</File>
+						<File
 							RelativePath="..\..\src\burn\drv\konami\d_mainevt.cpp">
 						</File>
 						<File
@@ -807,6 +816,9 @@
 							RelativePath="..\..\src\burn\drv\pre90s\d_armedf.cpp">
 						</File>
 						<File
+							RelativePath="..\..\src\burn\drv\pre90s\d_atetris.cpp">
+						</File>
+						<File
 							RelativePath="..\..\src\burn\drv\pre90s\d_aztarac.cpp">
 						</File>
 						<File
@@ -831,7 +843,13 @@
 							RelativePath="..\..\src\burn\drv\pre90s\d_commando.cpp">
 						</File>
 						<File
+							RelativePath="..\..\src\burn\drv\pre90s\d_cybertnk.cpp">
+						</File>
+						<File
 							RelativePath="..\..\src\burn\drv\pre90s\d_ddragon.cpp">
+						</File>
+						<File
+							RelativePath="..\..\src\burn\drv\pre90s\d_dkong.cpp">
 						</File>
 						<File
 							RelativePath="..\..\src\burn\drv\pre90s\d_dynduke.cpp">
@@ -1472,6 +1490,31 @@
 							RelativePath="..\..\src\burn\drv\toaplan\toaplan1.cpp">
 						</File>
 					</Filter>
+					<Filter
+						Name="psikyo"
+						Filter="">
+						<File
+							RelativePath="..\..\src\burn\drv\psikyo\d_psikyo.cpp">
+						</File>
+						<File
+							RelativePath="..\..\src\burn\drv\psikyo\d_psikyo4.cpp">
+						</File>
+						<File
+							RelativePath="..\..\src\burn\drv\psikyo\d_psikyosh.cpp">
+						</File>
+						<File
+							RelativePath="..\..\src\burn\drv\psikyo\psikyo_palette.cpp">
+						</File>
+						<File
+							RelativePath="..\..\src\burn\drv\psikyo\psikyo_sprite.cpp">
+						</File>
+						<File
+							RelativePath="..\..\src\burn\drv\psikyo\psikyo_tile.cpp">
+						</File>
+						<File
+							RelativePath="..\..\src\burn\drv\psikyo\psikyosh_render.cpp">
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="snd"
@@ -1550,6 +1593,9 @@
 					</File>
 					<File
 						RelativePath="..\..\src\burn\snd\es8712.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\burn\snd\flt_rc.cpp">
 					</File>
 					<File
 						RelativePath="..\..\src\burn\snd\fm.c">
@@ -2482,156 +2528,19 @@
 					Name="m68k"
 					Filter="">
 					<File
-						RelativePath="..\..\src\cpu\m68k\m68k_in.c">
-						<FileConfiguration
-							Name="Debug|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Profile|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Profile_FastCap|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release_LTCG|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-					</File>
-					<File
 						RelativePath="..\..\src\cpu\m68k\m68kcpu.c">
-						<FileConfiguration
-							Name="Debug|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Profile|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Profile_FastCap|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release_LTCG|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
 					</File>
 					<File
-						RelativePath="..\..\src\cpu\m68k\m68kdasm.c">
-						<FileConfiguration
-							Name="Debug|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Profile|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Profile_FastCap|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release_LTCG|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
+						RelativePath="..\..\src\cpu\m68k\m68kopac.c">
 					</File>
 					<File
-						RelativePath="..\..\src\cpu\m68k\m68kmake.c">
-						<FileConfiguration
-							Name="Debug|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Profile|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Profile_FastCap|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release_LTCG|Xbox"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"
-								CompileAs="1"/>
-						</FileConfiguration>
+						RelativePath="..\..\src\cpu\m68k\m68kopdm.c">
+					</File>
+					<File
+						RelativePath="..\..\src\cpu\m68k\m68kopnz.c">
+					</File>
+					<File
+						RelativePath="..\..\src\cpu\m68k\m68kops.c">
 					</File>
 				</Filter>
 				<Filter

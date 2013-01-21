@@ -126,7 +126,7 @@
     <Filter Include="Source Files\burn\snd">
       <UniqueIdentifier>{aa239b2a-4448-46ed-aa06-51a84303473a}</UniqueIdentifier>
     </Filter>
-	<Filter Include="Source Files\burner\libretro">
+    <Filter Include="Source Files\burner\libretro">
       <UniqueIdentifier>{7f4ef354-8a73-47f9-9c04-9924b98358ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -1367,9 +1367,6 @@
     <ClCompile Include="..\..\src\cpu\m6502\tn2a03.c">
       <Filter>Source Files\cpu\m6502</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\cpu\zet.cpp">
-      <Filter>Source Files\cpu</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\cpu\arm7_intf.cpp">
       <Filter>Source Files\cpu</Filter>
     </ClCompile>
@@ -1398,12 +1395,6 @@
       <Filter>Source Files\cpu</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\cpu\s2650_intf.cpp">
-      <Filter>Source Files\cpu</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\cpu\sek.cpp">
-      <Filter>Source Files\cpu</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\cpu\vez.cpp">
       <Filter>Source Files\cpu</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\vector.cpp">
@@ -1571,7 +1562,7 @@
     <ClCompile Include="..\..\src\cpu\m68k\m68kopnz.c">
       <Filter>Source Files\cpu\m68k</Filter>
     </ClCompile>
-	<ClCompile Include="..\..\src\burner\libretro\neocdlist.cpp">
+    <ClCompile Include="..\..\src\burner\libretro\neocdlist.cpp">
       <Filter>Source Files\burner\libretro</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burner\libretro\libretro.cpp">
@@ -1585,6 +1576,36 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_silvmil.cpp">
       <Filter>Source Files\burn\drv\pst90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_atetris.cpp">
+      <Filter>Source Files\burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_cybertnk.cpp">
+      <Filter>Source Files\burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_dkong.cpp">
+      <Filter>Source Files\burn\drv\pre90s</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\z80_intf.cpp">
+      <Filter>Source Files\cpu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\m68000_intf.cpp">
+      <Filter>Source Files\cpu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cpu\nec_intf.cpp">
+      <Filter>Source Files\cpu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\flt_rc.cpp">
+      <Filter>Source Files\burn\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\konami\d_kontest.cpp">
+      <Filter>Source Files\burn\drv\konami</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\slapstic.cpp">
+      <Filter>Source Files\burn\devices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\devices\8257dma.cpp">
+      <Filter>Source Files\burn\devices</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

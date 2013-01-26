@@ -58,7 +58,13 @@ int WINAPI Empty_Kaillera_End_Game()
 
 int Init_Network(void)
 {
-	Kaillera_HDLL = LoadLibrary("kailleraclient.dll");
+	#if defined (_UNICODE)
+		Kaillera_HDLL = LoadLibrary(L"kailleraclient.dll");
+	#else
+		Kaillera_HDLL = LoadLibrary("kailleraclient.dll");
+	#endif
+
+	
 
 	if (Kaillera_HDLL != NULL)
 	{

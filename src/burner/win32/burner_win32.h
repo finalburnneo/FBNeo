@@ -14,7 +14,9 @@
 #define STRICT
 
 #if defined (_UNICODE)
+#ifndef UNICODE
  #define UNICODE
+#endif
 #endif
 
 #define WIN32_LEAN_AND_MEAN

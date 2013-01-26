@@ -31,7 +31,9 @@ to do:
 #include "ym2413.h"
 
 #ifndef MAME_INLINE
+#ifndef MAME_INLINE
 #define MAME_INLINE static inline
+#endif
 #endif
 
 #ifndef PI

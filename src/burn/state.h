@@ -7,7 +7,9 @@
 #if !defined(__cplusplus) && defined(_XBOX)
 #define C_INLINE _inline
 #else
+#ifndef C_INLINE
 #define C_INLINE inline
+#endif
 #endif
 
 /* Scan driver data */

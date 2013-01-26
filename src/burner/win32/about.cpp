@@ -105,8 +105,11 @@ static bool AboutDrawStrings(unsigned int nControlID, LPDRAWITEMSTRUCT pdis)
 
 			RECT rect = pdis->rcItem;
 			rect.top += 1;
-
+#ifdef MMX
 			_stprintf(szBuild, _T("built on ") _T(MAKE_STRING(BUILD_DATE)) _T(", ") _T(MAKE_STRING(BUILD_TIME)) _T(" (") _T(MAKE_STRING(BUILD_CHAR)) _T(", ") _T(MAKE_STRING(BUILD_COMP)) _T(", ") _T(MAKE_STRING(BUILD_CPU)) _T("%s)"), MMX ? _T(", MMX") : _T(""));
+#else
+			_stprintf(szBuild, _T("built on ") _T(MAKE_STRING(BUILD_DATE)) _T(", ") _T(MAKE_STRING(BUILD_TIME)) _T(" (") _T(MAKE_STRING(BUILD_CHAR)) _T(", ") _T(MAKE_STRING(BUILD_COMP)) _T(", ") _T(MAKE_STRING(BUILD_CPU)) _T("%s)"), _T(""));
+#endif 
 
 			myDrawText(pdis->hDC, &rect, szBuild, -2, RGB(0xDB, 0xDB, 0xDB), DT_CENTER);
 #endif

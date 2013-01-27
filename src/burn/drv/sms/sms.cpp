@@ -3,7 +3,7 @@
 #include "bitswap.h"
 #include "z80_intf.h"
 
-unsigned int MastEx; // Extra options
+UINT32 MastEx; // Extra options
 #define MX_GG     (1) // Run as Game Gear
 #define MX_PAL    (2) // Run as PAL timing
 #define MX_JAPAN  (4) // Return Japan as Region
@@ -16,18 +16,18 @@ static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
 
-static int Hint=0; // Hint counter
-static int LineCyc=0,TotalCyc=0;
-static int FrameCyc=0; // Total cycles done this frame, (apart from current call)
+static INT32 Hint=0; // Hint counter
+static INT32 LineCyc=0,TotalCyc=0;
+static INT32 FrameCyc=0; // Total cycles done this frame, (apart from current call)
 
-static int CpuBase=0; // Value to subtract nDozeCycles from in order to get midcycle count
+static INT32 CpuBase=0; // Value to subtract nDozeCycles from in order to get midcycle count
 
 struct Mdraw
 {
 	UINT16 *Pal; // Palette (0000rrrr ggggbbbb) (0x1000 used)
 	UINT8 *Data; // Pixel values
 	UINT8 PalChange;
-	int Line; // Image line
+	INT32 Line; // Image line
 	UINT8 ThreeD; // 0/1=normal, 2=probably 3D right image, 3=probably 3D left image
 };
 
@@ -56,9 +56,9 @@ UINT8 MastInput[2];
 UINT8 SMSJoy1[12];
 UINT8 SMSDips[3];
 
-int RomPage[3]; // Offsets to Rom banks
+INT32 RomPage[3]; // Offsets to Rom banks
 UINT8 Bank[4];  // Values written to fffc-f
-int MastY;
+INT32 MastY;
 
 UINT8 *qc; // Quick color lookup from bits
 
@@ -81,7 +81,7 @@ UINT8 *MemFetch[0x100], *MemRead[0x100], *MemWrite[0x100];
 
 UINT8 SMSPaletteRecalc;
 
-int MdrawInit()
+INT32 MdrawInit()
 {
 	static UINT8 Src[0x20]=
 	{
@@ -95,8 +95,10 @@ int MdrawInit()
 
 	// Make the quick color table AC 000S BD = Color SABCD
 	memset(qc,0,sizeof(qc));
-	memcpy(qc+0x000,Src+0x00,8); memcpy(qc+0x100,Src+0x08,8);
-	memcpy(qc+0x200,Src+0x10,8); memcpy(qc+0x300,Src+0x18,8);
+	memcpy(qc+0x000,Src+0x00,8); 
+	memcpy(qc+0x100,Src+0x08,8);
+	memcpy(qc+0x200,Src+0x10,8);
+	memcpy(qc+0x300,Src+0x18,8);
 
 
 	return 0;
@@ -110,11 +112,11 @@ void MdrawCall()
 	// Draw line at 1 byte per pixel
 	UINT16 *pd;
 	UINT16	*pe;
-	unsigned int *pwp;
+	UINT32 *pwp;
 	UINT16 *pLine=NULL;
-	unsigned char *ps=NULL;
+	UINT8 *ps=NULL;
 	// Find destination line
-	int y=mdraw.Line; 
+	INT32 y=mdraw.Line; 
 	if (MastEx&MX_GG)
 		y-=24;
 	if (y<0) 
@@ -126,7 +128,7 @@ void MdrawCall()
 
 	// Find source pixels
 	ps=mdraw.Data+16;
-	int Len=256;
+	INT32 Len=256;
 	if (MastEx&MX_GG) 
 	{ 
 		ps+=48; 
@@ -138,7 +140,7 @@ void MdrawCall()
 	pe=pd+Len;
 	//pwp=DispWholePal;
 	do { 
-		*pd=(unsigned short) mdraw.Pal[*ps];
+		*pd=(UINT16) mdraw.Pal[*ps];
 		pd++; 
 		ps++;
 	}
@@ -147,10 +149,10 @@ void MdrawCall()
 
 
 // A change in CRam - update the color in Mdraw
-void MdrawCramChange(int a)
+void MdrawCramChange(INT32 a)
 {
-	static int i = 0;
-	int s,c;
+	static INT32 i = 0;
+	INT32 s,c;
 
 	if (MastEx&MX_GG)
 	{
@@ -168,9 +170,7 @@ void MdrawCramChange(int a)
 		c|=(s&0x03)<<2; // -> 00000000RR00
 	}
 	mdraw.Pal[a]=(UINT16)c; 
-	//DrvPalette[a] = c;
 	mdraw.PalChange=1;
-	// printf("MdrawCramChange %d %d\n", a,i++);
 }
 
 void MdrawCramChangeAll()
@@ -181,40 +181,53 @@ void MdrawCramChangeAll()
 }
 
 
-int TileLine(UINT8 *pd,unsigned int Line,char nPal,UINT8 *cv,unsigned int x)
+INT32 TileLine(UINT8 *pd,UINT32 Line,INT8 nPal,UINT8 *cv,UINT32 x)
 {
 	UINT8 *pe=pd+8, collision=0;
 	do
 	{
-		unsigned int c;
-		c=Line&0x80808080; if (c==0) goto Trans;
+		UINT32 c;
+		c=Line&0x80808080; 
+		if (c==0) 
+			goto Trans;
 		c|=c>>15; // 18180
 		c>>=7; c&=0x0303; *pd=qc[nPal+c];
-		if (cv) { if (cv[x/8]&(1<<(x%8))) collision=1; cv[x/8]|=1<<x%8; }
+		if (cv) 
+		{ 
+			if (cv[x/8]&(1<<(x%8))) 
+				collision=1; 
+			cv[x/8]|=1<<x%8; 
+		}
 Trans:
-		pd++; x++; Line<<=1;
+		pd++; x++; 
+		Line<<=1;
 	}
 	while (pd<pe);
 	return collision;
 }
 
-void TileFlip(UINT8 *pd,unsigned int Line,char nPal)
+void TileFlip(UINT8 *pd,UINT32 Line,char nPal)
 {
 	UINT8 *pe; pe=pd+8;
 	do
 	{
-		unsigned int c;
-		c=Line&0x01010101; if (c==0) goto Trans;
-		c|=c>>15; c&=0x0303; *pd=qc[nPal+c];
+		UINT32 c;
+		c=Line&0x01010101; 
+		if (c==0) 
+			goto Trans;
+		c|=c>>15; 
+		c&=0x0303; 
+		*pd=qc[nPal+c];
 Trans:
-		pd++; Line>>=1;
+		pd++; 
+		Line>>=1;
 	}
 	while (pd<pe);
 }
 
 char MdrawBackground(UINT16 nPass)
 {
-	UINT8 *Name; int x,BackY,BackX;
+	UINT8 *Name; INT32 x,BackY,BackX;
 	char NeedHigh=0;
 	// Find background line
 	BackY=v.Reg[9]+mdraw.Line;
@@ -235,10 +248,10 @@ char MdrawBackground(UINT16 nPass)
 	for (x=8-(BackX&7); x<0x108; x+=8)
 	{
 		UINT8 *Tile; 
-		unsigned int Line;
-		unsigned int t; 
-		char nPal; 
-		int ty;
+		UINT32 Line;
+		UINT32 t; 
+		INT8 nPal; 
+		INT32 ty;
 		UINT8 *Dest;
 
 		if (v.Reg[0]&0x80 && x>=0xc8)
@@ -260,12 +273,17 @@ char MdrawBackground(UINT16 nPass)
 			// Low pass
 			// Low background is color zero of the tile (even if high)
 			memset(Dest,(t&0x0800)>>7,8);
-			if (t&0x1000) { NeedHigh=1; continue; } // skip and return that we need a high pass
+			if (t&0x1000) 
+			{ 
+				NeedHigh=1; 
+				continue; 
+			} // skip and return that we need a high pass
 		}
 		else
 		{
 			// High pass
-			if ((t&0x1000)==0) continue; // low tile: skip it
+			if ((t&0x1000)==0) 
+				continue; // low tile: skip it
 		}
 
 		Tile=VRam + ((t<<5)&0x3fe0);
@@ -275,7 +293,7 @@ char MdrawBackground(UINT16 nPass)
 			ty=7-ty;
 		Tile+=ty<<2;
 		nPal=(char)(t&0x800?4:0);
-		Line=*((unsigned int *)Tile);
+		Line=*((UINT32 *)Tile);
 
 		if (t&0x200) 
 			TileFlip(Dest,Line,nPal);
@@ -305,7 +323,7 @@ void MdrawSprites()
 	for (ps=Sprite+i; i>=0; i--,ps--)
 	{
 		int x,y,t;
-		unsigned int Line; 
+		UINT32 Line; 
 		UINT8 *pa; 
 		int Height;
 
@@ -340,7 +358,7 @@ void MdrawSprites()
 
 		// Find sprite tile line
 		t+=(mdraw.Line-y)<<2;
-		Line=*((unsigned int *)(Tile+t));
+		Line=*((UINT32 *)(Tile+t));
 		// Draw sprite tile line
 		if (TileLine(mdraw.Data+16+x,Line,4,cv,16+x))
 		{
@@ -460,7 +478,7 @@ void MastMapPage1()
 // 8000-bfff Page 2
 void MastMapPage2()
 {
-	UINT8 *Page=0; int i=0;
+	UINT8 *Page=0; INT32 i=0;
 	if (Bank[0]&0x08)
 	{
 		// Map Battery Ram
@@ -748,7 +766,7 @@ void SysWrite(UINT16 a,UINT8 d)
 	{ 
 		Bank[3]=d; 
 		MastMapPage2(); 
-		goto End; 
+		return;
 	} // Codemasters mapper
 
 	if ((a&0xc000)==0xc000) 
@@ -756,10 +774,12 @@ void SysWrite(UINT16 a,UINT8 d)
 	if ((a&0xfffc)==0xfffc)
 	{
 		// bank select write
-		int b; b=a&3;
+		int b;
+		b=a&3;
 		if (d==Bank[b]) 
-			goto End; // No change
+			return;
 		Bank[b]=d;
+
 		if (b==0)
 			MastMapPage2();
 		if (b==1) 
@@ -768,7 +788,7 @@ void SysWrite(UINT16 a,UINT8 d)
 			MastMapPage1();
 		if (b==3) 
 			MastMapPage2();
-		goto End;
+		return;
 	}
 
 	if ((a&0xfffc)==0xfff8)
@@ -780,10 +800,8 @@ void SysWrite(UINT16 a,UINT8 d)
 		ThreeD|=d&1;
 		if (d!=e) 
 			ThreeD|=2; // A toggle: looks like it's probably a 3D game
-		goto End;
+		return;
 	}
-
-End:
 	return;
 }
 
@@ -802,17 +820,25 @@ static void __fastcall WriteIoHandler(UINT16 a, UINT8 v)
 static UINT8 __fastcall ReadProgHandler(UINT16 a)
 {
 	if (MemRead[a >> 8])
+	{
 		return MemRead[a >> 8][a];
+	}
 	else
+	{
 		return SysRead(a);
+	}
 }
 
 static void __fastcall WriteProgHandler(UINT16 a, UINT8 v)
 {
 	if (MemWrite[a >> 8])
+	{
 		MemWrite[a >> 8][a] = v;
+	}
 	else
+	{
 		SysWrite(a,v);
+	}
 }
 
 
@@ -956,16 +982,17 @@ INT32 SMSExit()
 void DrvCalcPalette()
 {
 	int i;
-	unsigned int *pw = DrvPalette;
 	// Precalc the whole 4096 color palette
-	for (i=0; i<0x1000; i++,pw++)
+	for (i=0; i<0x1000; i++)
 	{
 		int r,g,b,c; 
 		r=i&15;
 		g=(i>>4)&15;
 		b=(i>>8)&15;
 		// Convert to maximum colors
-		r*=0xff; g*=0xff; b*=0xff;
+		r*=0xff; 
+		g*=0xff; 
+		b*=0xff;
 		if (MastEx&MX_GG) 
 		{ 
 			r/=15; 
@@ -980,41 +1007,15 @@ void DrvCalcPalette()
 		} // Colors e.g. 13,13,13 will overflow, but are unused
 
 		//ColAdjust(r,g,b,Filter);
-
-		c=i;
-	/*	switch (DispFormat)
-		{
-			int y,u,v;
-//		default: break;
-	//	case 15: c=(r&0xf8)<<7; c|=(g&0xf8)<<2; c|=b>>3; break;
-		//case 16: 
-			
-			break;
-		case 24: case 32:  c=r<<16; c|=g<<8; c|=b; break;
-		case 'U'|('Y'<<8)|('V'<<16)|('Y'<<24):
-
-			RgbToYuv(r,g,b,y,u,v); c= u |(y<<8)|(v<<16)|(y<<24);
-			break;
-		case 'Y'|('U'<<8)|('Y'<<16)|('2'<<24):
-			RgbToYuv(r,g,b,y,u,v); c= y |(u<<8)|(y<<16)|(v<<24);
-			break;
-		}*/
-		c=(r&0xf8)<<8;
-		c|=(g&0xfc)<<3;
-		c|=b>>3; 
-		*pw=c;
+		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
 
 }
 
 INT32 SMSDraw()
-{
-
+{	
+	MdrawCramChangeAll();
 	DrvCalcPalette();
-	//BurnTransferClear();
-	 MdrawCramChangeAll();
-
-
 	BurnTransferCopy(DrvPalette);
 	return 0;
 }
@@ -1068,8 +1069,9 @@ static void RunLine()
 		}
 	}
 	else
+	{
 		Hint=v.Reg[10];
-
+	}
 
 	if (v.Stat&0x80)
 	{
@@ -1087,20 +1089,15 @@ static void RunLine()
 
 INT32 SMSFrame()
 {
-
 	ZetOpen(0);
 	ZetNewFrame();
-	//MvidPreFrame();
 	ZetSetVector(Irq);
-
-
 	if (MastEx&MX_PAL) 
 		LineCyc=273; // PAL timings (but not really: not enough lines)
 	else              
 		LineCyc=228; // NTSC timings
 
 	TotalCyc=LineCyc*262; // For sound
-
 	// Start counter and sound
 	//MsndDone=0; 
 	FrameCyc=0; 

@@ -76,6 +76,7 @@
     <ClInclude Include="..\..\src\burn\drv\sega\genesis_vid.h" />
     <ClInclude Include="..\..\src\burn\drv\sega\mc8123.h" />
     <ClInclude Include="..\..\src\burn\drv\sega\sys16.h" />
+    <ClInclude Include="..\..\src\burn\drv\sms\sms.h" />
     <ClInclude Include="..\..\src\burn\drv\snes\snes.h" />
     <ClInclude Include="..\..\src\burn\drv\taito\taito.h" />
     <ClInclude Include="..\..\src\burn\drv\taito\taito_ic.h" />
@@ -613,6 +614,8 @@
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_fd1094.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_gfx.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_run.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sms\d_sms.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sms\sms.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\d_snes.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\snes_65816.cpp" />
     <ClCompile Include="..\..\src\burn\drv\snes\snes_io.cpp" />
@@ -935,8 +938,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\src\dep\vc\include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files %28x86%29\Visual Leak Detector\include;..\..\src\dep\vc\include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
     <IntDir>$(SolutionDir)$(Configuration)\</IntDir>
+    <LibraryPath>C:\Program Files %28x86%29\Visual Leak Detector\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>src\depend\dx7\include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>

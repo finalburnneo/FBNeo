@@ -43,10 +43,12 @@ INT32 ZetRun(INT32 nCycles);
 void ZetRunEnd();
 void ZetSetIRQLine(const INT32 line, const INT32 status);
 void ZetSetVector(INT32 vector);
+UINT8 ZetGetVector();
 INT32 ZetNmi();
 INT32 ZetIdle(INT32 nCycles);
 INT32 ZetSegmentCycles();
 INT32 ZetTotalCycles();
+void ZetSetHL(INT32 n, UINT16 value);
 
 #define ZET_IRQSTATUS_NONE 0
 #define ZET_IRQSTATUS_ACK  1

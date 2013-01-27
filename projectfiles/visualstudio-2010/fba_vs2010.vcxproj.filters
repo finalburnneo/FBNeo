@@ -676,6 +676,9 @@
     <ClInclude Include="..\..\src\dep\kaillera\client\net.h">
       <Filter>shitty networking code</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\burn\drv\sms\sms.h">
+      <Filter>Burn\drv\sms</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\burn\burn.cpp">
@@ -2541,6 +2544,12 @@
     <ClCompile Include="..\..\src\dep\kaillera\client\net.cpp">
       <Filter>shitty networking code</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sms\d_sms.cpp">
+      <Filter>Burn\drv\sms</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sms\sms.cpp">
+      <Filter>Burn\drv\sms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Burn">
@@ -2713,6 +2722,9 @@
     </Filter>
     <Filter Include="shitty networking code">
       <UniqueIdentifier>{9cda8029-cb8c-41ad-821d-ea5f7689041d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Burn\drv\sms">
+      <UniqueIdentifier>{4419ca8b-16c8-43ef-ab6b-cdd4da2922f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

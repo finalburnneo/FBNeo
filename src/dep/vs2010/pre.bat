@@ -10,7 +10,7 @@ perl cave_tile_func.pl -o ../generated/cave_tile_func.h
 perl neo_sprite_func.pl -o ../generated/neo_sprite_func.h
 perl psikyo_tile_func.pl -o ../generated/psikyo_tile_func.h
 perl toa_gp9001_func.pl -o ../generated/toa_gp9001_func.h
-perl gamelist.pl -o ../generated/driverlist.h -l ../../gamelist.txt ../../burn/drv/capcom ../../burn/drv/cave ../../burn/drv/cps3 ../../burn/drv/dataeast ../../burn/drv/galaxian ../../burn/drv/irem ../../burn/drv/konami ../../burn/drv/megadrive ../../burn/drv/neogeo ../../burn/drv/pce ../../burn/drv/pgm ../../burn/drv/pst90s ../../burn/drv/pre90s ../../burn/drv/psikyo ../../burn/drv/sega ../../burn/drv/taito ../../burn/drv/toaplan ../../burn/drv/snes
+perl gamelist.pl -o ../generated/driverlist.h -l ../../gamelist.txt ../../burn/drv/capcom ../../burn/drv/cave ../../burn/drv/cps3 ../../burn/drv/dataeast ../../burn/drv/galaxian ../../burn/drv/irem ../../burn/drv/konami ../../burn/drv/megadrive ../../burn/drv/neogeo ../../burn/drv/pce ../../burn/drv/pgm ../../burn/drv/pst90s ../../burn/drv/pre90s ../../burn/drv/psikyo ../../burn/drv/sega ../../burn/drv/taito ../../burn/drv/toaplan ../../burn/drv/snes ../../burn/drv/sms
 
 echo %CD%
 echo building buildinfo
@@ -42,4 +42,3 @@ echo %CD%
 m68kmake ../../dep/generated/ m68k_in.c
 del m68kmake.exe
 del m68kmake.obj
-

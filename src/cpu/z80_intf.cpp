@@ -669,6 +669,15 @@ void ZetSetVector(INT32 vector)
 	Z80Vector = vector;
 }
 
+UINT8 ZetGetVector()
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetVector called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetGetVector called when no CPU open\n"));
+#endif
+	return Z80Vector;
+}
+
 INT32 ZetNmi()
 {
 #if defined FBA_DEBUG
@@ -728,6 +737,11 @@ void ZetSetBUSREQLine(INT32 nStatus)
 	if (nOpenedCPU < 0) return;
 	
 	ZetCPUContext[nOpenedCPU]->BusReq = nStatus;
+}
+
+void ZetSetHL(INT32 n, UINT16 value)
+{
+	ZetCPUContext[n]->reg.sp.w.l=value;
 }
 
 #undef MAX_Z80

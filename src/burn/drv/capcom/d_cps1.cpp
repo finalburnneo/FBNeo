@@ -6861,7 +6861,7 @@ static struct BurnRomInfo NemojRomDesc[] = {
 	{ "nm_39.9h",      0x020000, 0x6a274ecd, BRF_GRA | CPS1_TILES },
 	{ "nm_33.9f",      0x020000, 0xc469dc74, BRF_GRA | CPS1_TILES },
 	
-	{ "nm_23.13b",     0x010000, 0x8d3c5a42, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "nm_23.13b",     0x010000, 0x0f4b0581, BRF_PRG | CPS1_Z80_PROGRAM },
 	
 	{ "nm_30.12c",     0x020000, 0xbab333d4, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "nm_31.13c",     0x020000, 0x2650a0a8, BRF_SND | CPS1_OKIM6295_SAMPLES },

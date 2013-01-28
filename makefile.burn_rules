@@ -1,8 +1,8 @@
 alldir	= 	burn burn/devices burn/snd burn/drv burn/drv/capcom burn/drv/cave burn/drv/cps3 burn/drv/dataeast \
 			burn/drv/galaxian burn/drv/irem burn/drv/konami burn/drv/megadrive burn/drv/pce burn/drv/pst90s burn/drv/pre90s \
-			burn/drv/neogeo burn/drv/pgm burn/drv/psikyo burn/drv/sega burn/drv/snes burn/drv/taito burn/drv/toaplan \
-			cpu cpu/a68k cpu/arm cpu/arm7 cpu/h6280 cpu/hd6309 cpu/i8039 cpu/konami cpu/m68k cpu/m6502 cpu/m6800 cpu/m6805 \
-			cpu/m6809 cpu/nec cpu/s2650 cpu/sh2 cpu/z80
+			burn/drv/neogeo burn/drv/pgm burn/drv/psikyo burn/drv/sega brun/drv/sms burn/drv/snes burn/drv/taito \
+			burn/drv/toaplan cpu cpu/a68k cpu/arm cpu/arm7 cpu/h6280 cpu/hd6309 cpu/i8039 cpu/konami cpu/m68k cpu/m6502 cpu/m6800 \
+			cpu/m6805 cpu/m6809 cpu/nec cpu/s2650 cpu/sh2 cpu/z80
 
 drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwange.o d_hotdogst.o d_korokoro.o d_mazinger.o \
 			d_metmqstr.o d_pwrinst2.o d_sailormn.o d_tjumpman.o d_uopoko.o \
@@ -64,6 +64,8 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			\
 			d_pce.o \
 			\
+			d_sms.o \
+			\
 			d_snes.o
 
 depobj	:= 	$(drvobj) \
@@ -117,6 +119,8 @@ depobj	:= 	$(drvobj) \
 			megadrive.o \
 			\
 			pce.o \
+			\
+			sms.o \
 			\
 			snes_65816.o snes_io.o snes_main.o snes_ppu.o snes_spc700.o
 			

@@ -107,12 +107,10 @@ INT32 MdrawInit()
 
 void MdrawCall()
 {
-	
-
 	// Draw line at 1 byte per pixel
 	UINT16 *pd;
 	UINT16	*pe;
-	UINT32 *pwp;
+
 	UINT16 *pLine=NULL;
 	UINT8 *ps=NULL;
 	// Find destination line
@@ -985,7 +983,7 @@ void DrvCalcPalette()
 	// Precalc the whole 4096 color palette
 	for (i=0; i<0x1000; i++)
 	{
-		int r,g,b,c; 
+		int r,g,b; 
 		r=i&15;
 		g=(i>>4)&15;
 		b=(i>>8)&15;
@@ -1143,3 +1141,4 @@ INT32 SMSScan(INT32 nAction, INT32 *pnMin)
 
 	return 0;
 }
+

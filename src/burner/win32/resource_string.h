@@ -181,6 +181,7 @@
 #define IDS_SEL_SETA					(IDS_STRING +  622)
 #define IDS_SEL_TECHNOS					(IDS_STRING +  624)
 #define IDS_SEL_PCE						(IDS_STRING +  626)
+#define IDS_SEL_SMS						(IDS_STRING +  628)
 
 #define IDS_GENRE						(IDS_STRING +  650)
 #define IDS_GENRE_HORSHOOT				(IDS_STRING +  652)

@@ -36,11 +36,11 @@ static struct BurnRomInfo sms_akmwRomDesc[] = {
 STD_ROM_PICK(sms_akmw)
 STD_ROM_FN(sms_akmw)
 
-struct BurnDriver BurnDrvsms_akmw = {
+struct BurnDriverD BurnDrvsms_akmw = {
 	"sms_akmw", NULL, NULL, NULL, "1990",
 	"Alex Kidd\0", NULL, "SEGA", "Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	BDF_GAME_WORKING, 5, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName,  sms_akmwRomInfo, sms_akmwRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan,
 	&SMSPaletteRecalc, 0x400, 512, 240, 4, 3

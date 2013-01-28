@@ -2466,9 +2466,44 @@ struct BurnDriver BurnDrvDmnfrnt = {
 };
 
 
+// Demon Front (V103)
+
+static struct BurnRomInfo dmnfrnt103RomDesc[] = {
+	{ "v103_16m.u5",   		0x200000, 0x2ddafb3d, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t04501.u29",	   		0x800000, 0x900eaaac, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a04501.u3",     		0x800000, 0x9741bea6, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a04502.u4",     		0x800000, 0xe104f405, 3 | BRF_GRA },		//  3
+	{ "a04503.u6",     		0x800000, 0xbfd5cfe3, 3 | BRF_GRA },		//  4
+
+	{ "b04501.u9",	   		0x800000, 0x29320b7d, 4 | BRF_GRA },		//  5 Sprite Masks & Color Indexes
+	{ "b04502.u11",	   		0x200000, 0x578c00e9, 4 | BRF_GRA },		//  6
+
+	{ "w04501.u5",     		0x800000, 0x3ab58137, 5 | BRF_SND },		//  7 Samples
+
+	{ "dmnfrnt_igs027a.bin", 	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
+
+	{ "v103_32m.u26",  		0x400000, 0xe78383a3, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
+};
+
+STDROMPICKEXT(dmnfrnt103, dmnfrnt103, pgm)
+STD_ROM_FN(dmnfrnt103)
+
+struct BurnDriver BurnDrvdmnfrnt103 = {
+	"dmnfrnt103", "dmnfrnt", "pgm", NULL, "2002",
+	"Demon Front (V103)\0", NULL, "IGS", "PolyGameMaster",
+	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (V103)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PLATFORM, 0,
+	NULL, dmnfrnt103RomInfo, dmnfrnt103RomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	dmnfrntInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
 // Demon Front (V102, China)
 
-static struct BurnRomInfo dmnfrntaRomDesc[] = {
+static struct BurnRomInfo dmnfrnt102RomDesc[] = {
 	{ "v102_16m.u5",   		0x200000, 0x3d4d481a, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "t04501.u29",	   		0x800000, 0x900eaaac, 2 | BRF_GRA },		//  1 Tile data
@@ -2487,15 +2522,15 @@ static struct BurnRomInfo dmnfrntaRomDesc[] = {
 	{ "v101_32m.u26",  		0x400000, 0x93965281, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
 };
 
-STDROMPICKEXT(dmnfrnta, dmnfrnta, pgm)
-STD_ROM_FN(dmnfrnta)
+STDROMPICKEXT(dmnfrnt102, dmnfrnt102, pgm)
+STD_ROM_FN(dmnfrnt102)
 
-struct BurnDriver BurnDrvdmnfrnta = {
-	"dmnfrnta", "dmnfrnt", "pgm", NULL, "2002",
+struct BurnDriver BurnDrvdmnfrnt102 = {
+	"dmnfrnt102", "dmnfrnt", "pgm", NULL, "2002",
 	"Demon Front (V102, China)\0", NULL, "IGS", "PolyGameMaster",
 	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (V102, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PLATFORM, 0,
-	NULL, dmnfrntaRomInfo, dmnfrntaRomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, dmnfrnt102RomInfo, dmnfrnt102RomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
 	dmnfrntInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -2739,9 +2774,9 @@ struct BurnDriver BurnDrvkovshp = {
 };
 
 
-// Knights of Valour Super Heroes / Sangoku Senki Super Heroes (ver. 201, China)
+// Knights of Valour: Yi Tong Zhong Yuan  / Sangoku Senki: Yi Tong Zhong Yuan (ver. 201, China)
 
-static struct BurnRomInfo kovshytzyRomDesc[] = {
+static struct BurnRomInfo kovytzyRomDesc[] = {
 	{ "ytzy_v201cn.rom",	        0x400000, 0xf3705ea0, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "t0600.rom",    		0x800000, 0x4acc1ad6, 2 | BRF_GRA },		//  1 Tile data
@@ -2759,15 +2794,15 @@ static struct BurnRomInfo kovshytzyRomDesc[] = {
 	{ "kovsh_v100_china.asic", 	0x004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS },  //  9 Internal ARM7 Rom
 };
 
-STDROMPICKEXT(kovshytzy, kovshytzy, pgm)
-STD_ROM_FN(kovshytzy)
+STDROMPICKEXT(kovytzy, kovytzy, pgm)
+STD_ROM_FN(kovytzy)
 
-struct BurnDriver BurnDrvkovshytzy = {
-	"kovshytzy", "kovshp", "pgm", NULL, "1999",
-	"Knights of Valour Super Heroes / Sangoku Senki Super Heroes (ver. 201, China)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
-	L"Knights of Valour Super Heroes\0\u4E09\u56FD\u6218\u7EAA\0\u4E00\u7EDF\u4E2D\u539F (ver. 201, China)\0", NULL, NULL, NULL,
+struct BurnDriver BurnDrvkovytzy = {
+	"kovytzy", "kovshp", "pgm", NULL, "1999",
+	"Knights of Valour: Yi Tong Zhong Yuan / Sangoku Senki: Yi Tong Zhong Yuan (ver. 201, China)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
+	L"Knights of Valour: Yi Tong Zhong Yuan\0\u4E09\u56FD\u6218\u7EAA\0\u4E00\u7EDF\u4E2D\u539F (ver. 201, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kovshytzyRomInfo, kovshytzyRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
+	NULL, kovytzyRomInfo, kovytzyRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
 	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

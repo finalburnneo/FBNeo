@@ -753,7 +753,7 @@ struct BurnDriver BurnDrvXmen = {
 
 // X-Men (4 Players ver ADA)
 
-static struct BurnRomInfo xmenaRomDesc[] = {
+static struct BurnRomInfo xmenaaRomDesc[] = {
 	{ "065-ada.10d",	0x020000, 0xb8276624, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "065-ada.10f",	0x020000, 0xc68582ad, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "065-a02.9d",		0x040000, 0xb31dc44c, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -774,15 +774,15 @@ static struct BurnRomInfo xmenaRomDesc[] = {
 	{ "xmen_ada.nv",  0x000080, 0xa77a3891, BRF_OPT },
 };
 
-STD_ROM_PICK(xmena)
-STD_ROM_FN(xmena)
+STD_ROM_PICK(xmenaa)
+STD_ROM_FN(xmenaa)
 
-struct BurnDriver BurnDrvXmena = {
-	"xmena", "xmen", NULL, NULL, "1992",
+struct BurnDriver BurnDrvXmenaa = {
+	"xmenaa", "xmen", NULL, NULL, "1992",
 	"X-Men (4 Players ver ADA)\0", NULL, "Konami", "GX065",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, xmenaRomInfo, xmenaRomName, NULL, NULL, XmenInputInfo, NULL,
+	NULL, xmenaaRomInfo, xmenaaRomName, NULL, NULL, XmenInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
 };

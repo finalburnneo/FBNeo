@@ -5251,6 +5251,24 @@ struct BurnDriver BurnDrvmd_bodyco = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Body Count (Bra)
+static struct BurnRomInfo md_bodycobRomDesc[] = {
+	{ "mpr-16252 w51.ic1", 0x100000, 0x649607d1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
+};
+
+STD_ROM_PICK(md_bodycob)
+STD_ROM_FN(md_bodycob)
+
+struct BurnDriver BurnDrvmd_bodycob = {
+	"md_bodycob", "md_bodyco", NULL, NULL, "1994",
+	"Body Count (Bra)\0", NULL, "Tec Toy", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_bodycobRomInfo, md_bodycobRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Body Count (Euro, Prototype)
 static struct BurnRomInfo md_bodycopRomDesc[] = {
 	{ "body count (euro) (beta).bin", 0x100000, 0xb4ffb6ce, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
@@ -5337,24 +5355,6 @@ struct BurnDriver BurnDrvmd_bodycop2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_bodycop2RomInfo, md_bodycop2RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Body Count (USA, Prototype, 19940309)
-static struct BurnRomInfo md_bodycop1RomDesc[] = {
-	{ "body count (prototype - mar 09, 1994).bin", 0x100000, 0x649607d1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
-};
-
-STD_ROM_PICK(md_bodycop1)
-STD_ROM_FN(md_bodycop1)
-
-struct BurnDriver BurnDrvmd_bodycop1 = {
-	"md_bodycop1", "md_bodyco", NULL, NULL, "1994",
-	"Body Count (USA, Prototype, 19940309)\0", NULL, "Sega", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_bodycop1RomInfo, md_bodycop1RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -9675,6 +9675,24 @@ struct BurnDriver BurnDrvmd_mauimall = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_mauimallRomInfo, md_mauimallRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Donald in Maui Mallard (Bra)
+static struct BurnRomInfo md_mauimallbRomDesc[] = {
+	{ "mpr-19625-u.ic1", 0x300000, 0x5f9b9a48, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
+};
+
+STD_ROM_PICK(md_mauimallb)
+STD_ROM_FN(md_mauimallb)
+
+struct BurnDriver BurnDrvmd_mauimallb = {
+	"md_mauimallb", "md_mauimall", NULL, NULL, "1995",
+	"Donald in Maui Mallard (Bra)\0", NULL, "Tec Toy", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mauimallbRomInfo, md_mauimallbRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -29452,17 +29470,17 @@ struct BurnDriver BurnDrvmd_splatth3j = {
 
 // Sport Games (Bra)
 static struct BurnRomInfo md_sportgRomDesc[] = {
-	{ "sport games (bra).bin", 0x200000, 0x7e3ecabf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
+	{ "mpr-19945-mx.ic1", 0x400000, 0x25da0747, BRF_PRG | SEGA_MD_ROM_LOAD_NORMAL | SEGA_MD_ROM_OFFS_000000 },
 };
 
 STD_ROM_PICK(md_sportg)
 STD_ROM_FN(md_sportg)
 
 struct BurnDriver BurnDrvmd_sportg = {
-	"md_sportg", "md_wcs2", NULL, NULL, "199?",
-	"Sport Games (Bra)\0", NULL, "<unknown>", "Sega Megadrive",
+	"md_sportg", NULL, NULL, NULL, "199?",
+	"Sport Games (Bra)\0", NULL, "Tec Toy", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_sportgRomInfo, md_sportgRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -40174,6 +40192,24 @@ struct BurnDriver BurnDrvmd_mario4 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_mario4RomInfo, md_mario4RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Super Mario World 64 (Unl)
+static struct BurnRomInfo md_smario64RomDesc[] = {
+	{ "super mario world 64 (unl).bin", 0x100000, 0xe7ac4161, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
+};
+
+STD_ROM_PICK(md_smario64)
+STD_ROM_FN(md_smario64)
+
+struct BurnDriver BurnDrvmd_smario64 = {
+	"md_smario64", NULL, NULL, NULL, "199?",
+	"Super Mario World 64 (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_smario64RomInfo, md_smario64RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

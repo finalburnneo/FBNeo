@@ -1519,7 +1519,7 @@ static void poll_input(void)
          case GIT_CONSTANT: // Constant value
             {
                pgi->Input.nVal = pgi->Input.Constant.nConst;
-               *(pgi->Input.pShortVal) = pgi->Input.nVal;
+               *(pgi->Input.pVal) = pgi->Input.nVal;
             }
             break;
          case GIT_SWITCH:

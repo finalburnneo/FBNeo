@@ -1260,6 +1260,53 @@ struct BurnDriver BurnDrvKarnov = {
 };
 
 
+// Karnov (US, alt set)
+
+static struct BurnRomInfo karnovaRomDesc[] = {
+	{ "dn08-6",		0x10000, 0x4c60837f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "dn11-6",		0x10000, 0xcd4abb99, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dn07-",		0x10000, 0xfc14291b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dn10-",		0x10000, 0xa4a34e37, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "dn06-5",		0x10000, 0x29d64e42, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "dn09-5",		0x10000, 0x072d7c49, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "dn05-5",		0x08000, 0xfa1a31a8, 2 | BRF_PRG | BRF_ESS }, //  6 m6502 Code
+
+	{ "dn00-",		0x08000, 0x0ed77c6d, 3 | BRF_GRA},            //  7 Characters
+
+	{ "dn04-",		0x10000, 0xa9121653, 4 | BRF_GRA},            //  8 Tiles
+	{ "dn01-",		0x10000, 0x18697c9e, 4 | BRF_GRA},            //  9
+	{ "dn03-",		0x10000, 0x90d9dd9c, 4 | BRF_GRA},            // 10
+	{ "dn02-",		0x10000, 0x1e04d7b9, 4 | BRF_GRA},            // 11
+
+	{ "dn12-",		0x10000, 0x9806772c, 5 | BRF_GRA},            // 12 Sprites
+	{ "dn14-5",		0x08000, 0xac9e6732, 5 | BRF_GRA},            // 13
+	{ "dn13-",		0x10000, 0xa03308f9, 5 | BRF_GRA},            // 14
+	{ "dn15-5",		0x08000, 0x8933fcb8, 5 | BRF_GRA},            // 15
+	{ "dn16-",		0x10000, 0x55e63a11, 5 | BRF_GRA},            // 16
+	{ "dn17-5",		0x08000, 0xb70ae950, 5 | BRF_GRA},            // 17
+	{ "dn18-",		0x10000, 0x2ad53213, 5 | BRF_GRA},            // 18
+	{ "dn19-5",		0x08000, 0x8fd4fa40, 5 | BRF_GRA},            // 19
+
+	{ "karnprom.21",	0x00400, 0xaab0bb93, 6 | BRF_GRA},            // 20 Color Color Proms
+	{ "karnprom.20",	0x00400, 0x02f78ffb, 6 | BRF_GRA},            // 21
+	
+	{ "karnov_i8751",  0x01000, 0x00000000, BRF_OPT | BRF_NODUMP},
+};
+
+STD_ROM_PICK(karnova)
+STD_ROM_FN(karnova)
+
+struct BurnDriver BurnDrvKarnova = {
+	"karnova", "karnov", NULL, NULL, "1987",
+	"Karnov (US, alt set)\0", NULL, "Data East USA", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_HORSHOOT, 0,
+	NULL, karnovaRomInfo, karnovaRomName, NULL, NULL, KarnovInputInfo, KarnovDIPInfo,
+	KarnovInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
+	&DrvRecalc, 0x300, 256, 240, 4, 3
+};
+
 
 // Karnov (Japan)
 

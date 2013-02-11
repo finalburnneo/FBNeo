@@ -1357,16 +1357,14 @@ static INT32 MegadriveLoadRoms(bool bLoad)
 		for (i = 0; i < RomNum; i++) {
 			BurnDrvGetRomInfo(&ri, i);
 			
-			switch (ri.nType & 0x0f) {
-				case SEGA_MD_ROM_OFFS_000000: Offset = 0x000000; break;
-				case SEGA_MD_ROM_OFFS_000001: Offset = 0x000001; break;
-				case SEGA_MD_ROM_OFFS_020000: Offset = 0x020000; break;
-				case SEGA_MD_ROM_OFFS_080000: Offset = 0x080000; break;
-				case SEGA_MD_ROM_OFFS_100000: Offset = 0x100000; break;
-				case SEGA_MD_ROM_OFFS_100001: Offset = 0x100001; break;
-				case SEGA_MD_ROM_OFFS_200000: Offset = 0x200000; break;
-				case SEGA_MD_ROM_OFFS_300000: Offset = 0x300000; break;
-			}
+			if ((ri.nType & SEGA_MD_ROM_OFFS_000000) == SEGA_MD_ROM_OFFS_000000) Offset = 0x000000;
+			if ((ri.nType & SEGA_MD_ROM_OFFS_000001) == SEGA_MD_ROM_OFFS_000001) Offset = 0x000001;
+			if ((ri.nType & SEGA_MD_ROM_OFFS_020000) == SEGA_MD_ROM_OFFS_020000) Offset = 0x020000;
+			if ((ri.nType & SEGA_MD_ROM_OFFS_080000) == SEGA_MD_ROM_OFFS_080000) Offset = 0x080000;
+			if ((ri.nType & SEGA_MD_ROM_OFFS_100000) == SEGA_MD_ROM_OFFS_100000) Offset = 0x100000;
+			if ((ri.nType & SEGA_MD_ROM_OFFS_100001) == SEGA_MD_ROM_OFFS_100001) Offset = 0x100001;
+			if ((ri.nType & SEGA_MD_ROM_OFFS_200000) == SEGA_MD_ROM_OFFS_200000) Offset = 0x200000;
+			if ((ri.nType & SEGA_MD_ROM_OFFS_300000) == SEGA_MD_ROM_OFFS_300000) Offset = 0x300000;
 			
 			switch (ri.nType & 0xf0) {
 				case SEGA_MD_ROM_LOAD_NORMAL: {
@@ -1391,6 +1389,14 @@ static INT32 MegadriveLoadRoms(bool bLoad)
 					BurnByteswap(RomMain + Offset, 0x140000);
 					break;
 				}
+			}
+			
+			if ((ri.nType & SEGA_MD_ROM_RELOAD_200000_200000) == SEGA_MD_ROM_RELOAD_200000_200000) {
+				memcpy(RomMain + 0x200000, RomMain + 0x000000, 0x200000);
+			}
+			
+			if ((ri.nType & SEGA_MD_ROM_RELOAD_100000_300000) == SEGA_MD_ROM_RELOAD_100000_300000) {
+				memcpy(RomMain + 0x300000, RomMain + 0x000000, 0x100000);
 			}
 		}
 	}
@@ -2402,7 +2408,7 @@ static void SetupCustomCartridgeMappers()
 		SekClose();
 	}
 	
-	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_12IN1) {
+	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_MC_12IN1) {
 		OriginalRom = (UINT8*)BurnMalloc(RomSize);
 		memcpy(OriginalRom, RomMain, RomSize);
 		

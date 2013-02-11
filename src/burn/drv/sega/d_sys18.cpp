@@ -898,35 +898,6 @@ static struct BurnRomInfo AstormjRomDesc[] = {
 STD_ROM_PICK(Astormj)
 STD_ROM_FN(Astormj)
 
-static struct BurnRomInfo AstormjaRomDesc[] = {
-	{ "epr-13085.a6",   0x40000, 0x15f74e2d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-13084.a5",   0x40000, 0x9687b38f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-
-	{ "epr-13073.bin",  0x40000, 0xdf5d0a61, SYS16_ROM_TILES | BRF_GRA },
-	{ "epr-13074.bin",  0x40000, 0x787afab8, SYS16_ROM_TILES | BRF_GRA },
-	{ "epr-13075.bin",  0x40000, 0x4e01b477, SYS16_ROM_TILES | BRF_GRA },
-	
-	{ "mpr-13082.bin",  0x40000, 0xa782b704, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-13089.bin",  0x40000, 0x2a4227f0, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-13081.bin",  0x40000, 0xeb510228, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-13088.bin",  0x40000, 0x3b6b4c55, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-13080.bin",  0x40000, 0xe668eefb, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-13087.bin",  0x40000, 0x2293427d, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-13079.bin",  0x40000, 0xde9221ed, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-13086.bin",  0x40000, 0x8c9a71c4, SYS16_ROM_SPRITES | BRF_GRA },
-
-	{ "epr-13083b.bin", 0x20000, 0x169b4b5f, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
-	
-	{ "epr-13076.bin",  0x40000, 0x94e6c76e, SYS16_ROM_RF5C68DATA | BRF_SND },
-	{ "epr-13077.bin",  0x40000, 0xe2ec0d8d, SYS16_ROM_RF5C68DATA | BRF_SND },
-	{ "epr-13078.bin",  0x40000, 0x15684dc5, SYS16_ROM_RF5C68DATA | BRF_SND },
-	
-	{ "317-0146.key",   0x02000, 0xe94991c5, SYS16_ROM_KEY | BRF_ESS | BRF_PRG},
-};
-
-
-STD_ROM_PICK(Astormja)
-STD_ROM_FN(Astormja)
 
 static struct BurnRomInfo AstormuRomDesc[] = {
 	{ "epr-13095.a6",   0x40000, 0x55d40742, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -2524,20 +2495,10 @@ struct BurnDriver BurnDrvAstorm3 = {
 
 struct BurnDriver BurnDrvAstormj = {
 	"astormj", "astorm", NULL, NULL, "1990",
-	"Alien Storm (set 1, Japan, 2 Players, FD1094 317-0146)\0", NULL, "Sega", "System 18",
+	"Alien Storm (set 1, Japan Rev B, 2 Players, FD1094 317-0146)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, AstormjRomInfo, AstormjRomName, NULL, NULL, System18InputInfo, Astorm2pDIPInfo,
-	Astorm3Init, System18Exit, System18Frame, NULL, System18Scan,
-	NULL, 0x1800, 320, 224, 4, 3
-};
-
-struct BurnDriver BurnDrvAstormja = {
-	"astormja", "astorm", NULL, NULL, "1990",
-	"Alien Storm (set 5, Japan Rev B, 2 Players, FD1094 317-0146)\0", NULL, "Sega", "System 18",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
-	NULL, AstormjaRomInfo, AstormjaRomName, NULL, NULL, System18InputInfo, Astorm2pDIPInfo,
 	Astorm3Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

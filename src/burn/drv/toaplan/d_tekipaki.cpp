@@ -719,6 +719,7 @@ static INT32 DrvFrame()
 
 static struct BurnSampleInfo tekipakiSampleDesc[] = {
 #ifdef TOAPLAN_SOUND_SAMPLES_HACK
+#if !defined ROM_VERIFY
 	{ "dm.wav", SAMPLE_NOLOOP },
 	{ "01.wav", SAMPLE_NOLOOP },
 	{ "02.wav", SAMPLE_NOLOOP },
@@ -741,6 +742,7 @@ static struct BurnSampleInfo tekipakiSampleDesc[] = {
 	{ "13.wav", SAMPLE_NOLOOP },
 	{ "14.wav", SAMPLE_NOLOOP },
 	{ "15.wav", SAMPLE_NOLOOP },
+#endif
 #endif
 	{ "", 0 }
 };

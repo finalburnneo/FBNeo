@@ -732,6 +732,7 @@ static INT32 DrvFrame()
 
 static struct BurnSampleInfo ghoxSampleDesc[] = {
 #ifdef TOAPLAN_SOUND_SAMPLES_HACK
+#if !defined ROM_VERIFY
 	{ "d0.wav", SAMPLE_NOLOOP },
 	{ "01.wav", SAMPLE_NOLOOP },
 	{ "02.wav", SAMPLE_NOLOOP },
@@ -812,6 +813,7 @@ static struct BurnSampleInfo ghoxSampleDesc[] = {
 	{ "4d.wav", SAMPLE_NOLOOP },
 	{ "4e.wav", SAMPLE_NOLOOP },
 	{ "d1.wav", SAMPLE_NOLOOP },
+#endif
 #endif
 	{ "", 0 }
 };

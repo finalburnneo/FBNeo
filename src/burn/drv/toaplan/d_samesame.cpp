@@ -925,6 +925,7 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 
 static struct BurnSampleInfo samesameSampleDesc[] = {
 #ifdef TOAPLAN_SOUND_SAMPLES_HACK
+#if !defined ROM_VERIFY
 	{ "dm.wav", SAMPLE_NOLOOP },
 	{ "01.wav", SAMPLE_NOLOOP },
 	{ "02.wav", SAMPLE_NOLOOP },
@@ -966,6 +967,7 @@ static struct BurnSampleInfo samesameSampleDesc[] = {
 	{ "26.wav", SAMPLE_NOLOOP },
 	{ "27.wav", SAMPLE_NOLOOP },
 	{ "28.wav", SAMPLE_NOLOOP },
+#endif
 #endif
 	{ "", 0 }
 };

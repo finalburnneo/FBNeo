@@ -861,6 +861,7 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 
 static struct BurnSampleInfo vimanaSampleDesc[] = {
 #ifdef TOAPLAN_SOUND_SAMPLES_HACK
+#if !defined ROM_VERIFY
 	{ "00.wav", SAMPLE_NOLOOP },
 	{ "01.wav", SAMPLE_NOLOOP },
 	{ "02.wav", SAMPLE_NOLOOP },
@@ -896,6 +897,7 @@ static struct BurnSampleInfo vimanaSampleDesc[] = {
 	{ "20.wav", SAMPLE_NOLOOP },
 	{ "dm.wav", SAMPLE_NOLOOP },
 	{ "22.wav", SAMPLE_NOLOOP },
+#endif
 #endif
 	{ "", 0 }
 };

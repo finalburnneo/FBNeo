@@ -3246,7 +3246,7 @@ static INT32 HyperpacCalcPalette()
 	UINT32* pd;
 
 	for (i = 0, ps = (UINT16*)HyperpacPaletteRam, pd = HyperpacPalette; i < 0x200; i++, ps++, pd++) {
-		*pd = CalcCol(*ps);
+		*pd = CalcCol(BURN_ENDIAN_SWAP_INT16(*((UINT16*)ps)));
 	}
 
 	return 0;
@@ -3259,7 +3259,7 @@ static INT32 HoneydolCalcPalette()
 	UINT32* pd;
 
 	for (i = 0, ps = (UINT16*)HyperpacPaletteRam, pd = HyperpacPalette; i < 0x800; i++, ps++, pd++) {
-		*pd = CalcCol(*ps);
+		*pd = CalcCol(BURN_ENDIAN_SWAP_INT16(*((UINT16*)ps)));
 	}
 
 	return 0;
@@ -3272,7 +3272,7 @@ static INT32 Snowbro3CalcPalette()
 	UINT32* pd;
 
 	for (i = 0, ps = (UINT16*)HyperpacPaletteRam, pd = HyperpacPalette; i < 0x400; i++, ps++, pd++) {
-		*pd = CalcCol(*ps);
+		*pd = CalcCol(BURN_ENDIAN_SWAP_INT16(*((UINT16*)ps)));
 	}
 
 	return 0;

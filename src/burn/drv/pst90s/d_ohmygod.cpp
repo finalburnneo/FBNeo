@@ -601,7 +601,7 @@ INT32 OhmygodCalcPalette()
 	UINT32* pd;
 
 	for (i = 0, ps = (UINT16*)OhmygodPaletteRam, pd = OhmygodPalette; i < 0x800; i++, ps++, pd++) {
-		*pd = CalcCol(*ps);
+		*pd = CalcCol(BURN_ENDIAN_SWAP_INT16(*((UINT16*)ps)));
 	}
 
 	return 0;

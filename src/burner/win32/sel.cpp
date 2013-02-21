@@ -13,7 +13,7 @@ bool bDrvSelected				= false;
 static int nShowMVSCartsOnly	= 0;
 
 HBITMAP hPrevBmp				= NULL;
-static HBITMAP hPreview			= NULL;
+HBITMAP hTitleBmp				= NULL;
 
 HWND hSelDlg					= NULL;
 static HWND hSelList			= NULL;
@@ -680,9 +680,9 @@ static void MyEndDialog()
 		DeleteObject((HGDIOBJ)hPrevBmp);
 		hPrevBmp = NULL;
 	}
-	if (hPreview) {
-		DeleteObject((HGDIOBJ)hPreview);
-		hPreview = NULL;
+	if(hTitleBmp) {
+		DeleteObject((HGDIOBJ)hTitleBmp);
+		hTitleBmp = NULL;
 	}
 
 	if (hExpand) {
@@ -763,6 +763,10 @@ static void RefreshPanel()
 		DeleteObject((HGDIOBJ)hPrevBmp);
 		hPrevBmp = NULL;
 	}
+	if (hTitleBmp) {
+		DeleteObject((HGDIOBJ)hPrevBmp);
+		hPrevBmp = NULL;
+	}
 	if (nTimer) {
 		KillTimer(hSelDlg, nTimer);
 		nTimer = 0;
@@ -770,11 +774,12 @@ static void RefreshPanel()
 
 	
 	hPrevBmp = PNGLoadBitmap(hSelDlg, NULL, 213, 160, 2);
+	hTitleBmp = PNGLoadBitmap(hSelDlg, NULL, 213, 160, 2);
 
 	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hPrevBmp);
 	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT_V, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 	
-	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT2_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hPrevBmp);
+	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT2_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hTitleBmp);
 	SendDlgItemMessage(hSelDlg, IDC_SCREENSHOT2_V, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 	
 	// Clear the things in our Info-box
@@ -870,10 +875,6 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 		if (bReset) {
 			nIndex = 1;
 			nOldIndex = -1;
-			if (hPrevBmp) {
-				DeleteObject((HGDIOBJ)hPrevBmp);
-				hPrevBmp = NULL;
-			}
 			if (nTimer) {
 				KillTimer(hSelDlg, 1);
 				nTimer = 0;
@@ -890,12 +891,12 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 
 		//if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
 		if (ay > ax) {
-			bImageOrientation = true;
+			bImageOrientation = TRUE;
 
 			y = 160;
 			x = y * ax / ay;
 		} else {
-			bImageOrientation = false;
+			bImageOrientation = FALSE;
 
 			x = 213;
 			y = x * ay / ax;
@@ -942,23 +943,30 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 			}
 		}
 
-		bImageOrientation = false;
+		bImageOrientation = FALSE;
 		hNewImage = PNGLoadBitmap(hSelDlg, NULL, 213, 160, 2);
 	}
 
-//	if (hPrevBmp) {
-//		DeleteObject((HGDIOBJ)hPrevBmp);
-//	}
-	hPrevBmp = hNewImage;
+	if (hPrevBmp && (HorCtrl == IDC_SCREENSHOT_H || VerCtrl == IDC_SCREENSHOT_V)) {
+		DeleteObject((HGDIOBJ)hPrevBmp);
+		*&hPrevBmp = NULL;
+		hPrevBmp = hNewImage;
+	}
+
+	if (hTitleBmp && (HorCtrl == IDC_SCREENSHOT2_H || VerCtrl == IDC_SCREENSHOT2_V)) {
+		DeleteObject((HGDIOBJ)hTitleBmp);
+		*&hTitleBmp = NULL;
+		hTitleBmp = hNewImage;
+	}
 
 	if (bImageOrientation == 0) {
-		SendDlgItemMessage(hSelDlg, HorCtrl, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hPrevBmp);
+		SendDlgItemMessage(hSelDlg, HorCtrl, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hNewImage);
 		SendDlgItemMessage(hSelDlg, VerCtrl, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 		ShowWindow(GetDlgItem(hSelDlg, HorCtrl), SW_SHOW);
 		ShowWindow(GetDlgItem(hSelDlg, VerCtrl), SW_HIDE);
 	} else {
 		SendDlgItemMessage(hSelDlg, HorCtrl, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
-		SendDlgItemMessage(hSelDlg, VerCtrl, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hPrevBmp);
+		SendDlgItemMessage(hSelDlg, VerCtrl, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hNewImage);
 		ShowWindow(GetDlgItem(hSelDlg, HorCtrl), SW_HIDE);
 		ShowWindow(GetDlgItem(hSelDlg, VerCtrl), SW_SHOW);
 	}

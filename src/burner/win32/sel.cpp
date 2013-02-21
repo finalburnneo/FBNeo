@@ -764,8 +764,8 @@ static void RefreshPanel()
 		hPrevBmp = NULL;
 	}
 	if (hTitleBmp) {
-		DeleteObject((HGDIOBJ)hPrevBmp);
-		hPrevBmp = NULL;
+		DeleteObject((HGDIOBJ)hTitleBmp);
+		hTitleBmp = NULL;
 	}
 	if (nTimer) {
 		KillTimer(hSelDlg, nTimer);

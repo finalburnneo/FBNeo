@@ -4016,7 +4016,7 @@ static struct BurnRomInfo ThreeWondersRomDesc[] = {
 STD_ROM_PICK(ThreeWonders)
 STD_ROM_FN(ThreeWonders)
 
-static struct BurnRomInfo ThreeWondersaRomDesc[] = {
+static struct BurnRomInfo ThreeWondersr1RomDesc[] = {
 	{ "rte_30.11f",    0x020000, 0x0d541519, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "rte_35.11h",    0x020000, 0x73dd0e20, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "rte_31.12f",    0x020000, 0x33e0337d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -4035,9 +4035,9 @@ static struct BurnRomInfo ThreeWondersaRomDesc[] = {
 	{ "rt-2m.4a",      0x080000, 0xe9a034f4, BRF_GRA | CPS1_TILES },
 	{ "rt-4m.6a",      0x080000, 0xdf0eea8b, BRF_GRA | CPS1_TILES },
 
-	{ "rt_09.12b",     0x010000, 0x7d5a77a7, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "rt_09.12b",     0x010000, 0xabfca165, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "rt_18a.11c",    0x020000, 0xf6dc0d3d, BRF_SND | CPS1_OKIM6295_SAMPLES }, // possible bad dump or the newer rom in the other sets should be the 'a' version rom, wait for MAME addition to decide
+	{ "rt_18.11c",     0x020000, 0x26b211ab, BRF_SND | CPS1_OKIM6295_SAMPLES }, 
 	{ "rt_19.12c",     0x020000, 0xdbe64ad0, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
 	A_BOARD_PLDS
@@ -4047,8 +4047,8 @@ static struct BurnRomInfo ThreeWondersaRomDesc[] = {
 	{ "ioc1.ic1",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
 };
 
-STD_ROM_PICK(ThreeWondersa)
-STD_ROM_FN(ThreeWondersa)
+STD_ROM_PICK(ThreeWondersr1)
+STD_ROM_FN(ThreeWondersr1)
 
 static struct BurnRomInfo Wonder3uRomDesc[] = {
 	{ "rtu_30a.11f",   0x020000, 0x0b156fd8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -11327,7 +11327,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "1941u"       , CPS_B_05    , mapper_YI24B , 0, NULL                },
 	{ "1941j"       , CPS_B_05    , mapper_YI24B , 0, NULL                },
 	{ "3wonders"    , CPS_B_21_BT1, mapper_RT24B , 0, NULL                },
-	{ "3wondersa"   , CPS_B_21_BT1, mapper_RT24B , 0, NULL                },
+	{ "3wondersr1"  , CPS_B_21_BT1, mapper_RT24B , 0, NULL                },
 	{ "3wondersu"   , CPS_B_21_BT1, mapper_RT24B , 0, NULL                },
 	{ "wonder3"     , CPS_B_21_BT1, mapper_RT22B , 0, NULL                },
 	{ "3wondersh"   , CPS_B_02    , mapper_RT24B , 0, NULL                },
@@ -14971,12 +14971,12 @@ struct BurnDriver BurnDrvCps3wonders = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCps3wondersa = {
-	"3wondersa", "3wonders", NULL, NULL, "1991",
+struct BurnDriver BurnDrvCps3wondersr1 = {
+	"3wondersr1", "3wonders", NULL, NULL, "1991",
 	"Three Wonders (wonder 3 910513 etc)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_MINIGAMES, 0,
-	NULL, ThreeWondersaRomInfo, ThreeWondersaRomName, NULL, NULL, ThreeWondersInputInfo, ThreeWondersDIPInfo,
+	NULL, ThreeWondersr1RomInfo, ThreeWondersr1RomName, NULL, NULL, ThreeWondersInputInfo, ThreeWondersDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

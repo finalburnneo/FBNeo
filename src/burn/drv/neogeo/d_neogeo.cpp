@@ -14474,3 +14474,32 @@ struct BurnDriver BurnDrvneogalag = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+
+// NeoGeo 2-Player Tetris
+
+static struct BurnRomInfo neotetRomDesc[] = {
+	{ "tet_p1.rom",   0x080000, 0x3465569a, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
+
+	{ "tet_s1.rom",   0x020000, 0xa545b593, 2 | BRF_GRA },		//  1 Text data
+
+	{ "tet_c1.rom",   0x080000, 0xacc6d1d4, 3 | BRF_GRA },		//  2 Sprite data
+	{ "tet_c2.rom",   0x080000, 0x7ec06ab5, 3 | BRF_GRA },		//  3
+
+	{ "tet_m1.rom",   0x020000, 0x6b3703c6, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code
+
+	{ "tet_v1.rom",   0x080000, 0x2be8e290, 5 | BRF_SND },		//  5 Sound data
+}; 
+
+STDROMPICKEXT(neotet, neotet, neogeo)
+STD_ROM_FN(neotet)
+
+struct BurnDriver BurnDrvneotet = {
+	"neotet", NULL, "neogeo", NULL, "2013",
+	"NeoGeo 2-Player Tetris\0", NULL, "Crim/Stephen", "Neo Geo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
+	NULL, neotetRomInfo, neotetRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};

@@ -14445,3 +14445,32 @@ struct BurnDriver BurnDrvtimesup = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+
+// Galaga Demo
+
+static struct BurnRomInfo neogalagRomDesc[] = {
+	{ "gal_p1.rom",   0x100000, 0xa315fb81, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
+
+	{ "gal_s1.rom",   0x020000, 0xa545b593, 2 | BRF_GRA },		//  1 Text data
+
+	{ "gal_c1.rom",   0x100000, 0xd68941e1, 3 | BRF_GRA },		//  2 Sprite data
+	{ "gal_c2.rom",   0x100000, 0xdf7e359f, 3 | BRF_GRA },		//  3
+
+	{ "gal_m1.rom",   0x020000, 0x9c0291ea, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code
+
+	{ "gal_v1.rom",   0x080000, 0xdebeb8fb, 5 | BRF_SND },		//  5 Sound data
+}; 
+
+STDROMPICKEXT(neogalag, neogalag, neogeo)
+STD_ROM_FN(neogalag)
+
+struct BurnDriver BurnDrvneogalag = {
+	"neogalag", NULL, "neogeo", NULL, "2013",
+	"Galaga Demo (RGM-Iocero.com NG Demo 1)\0", NULL, "Cristiano Bei/www.iocerom.com", "Neo Geo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
+	NULL, neogalagRomInfo, neogalagRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};

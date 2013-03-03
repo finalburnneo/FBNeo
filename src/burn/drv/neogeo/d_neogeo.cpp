@@ -14537,16 +14537,16 @@ struct BurnDriver BurnDrvneotet = {
 // Primo Demo
 
 static struct BurnRomInfo neoprimoRomDesc[] = {
-	{ "gal_p1.rom",   0x100000, 0xa315fb81, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
+	{ "pri_p1.rom",   0x100000, 0xa315fb81, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
 
-	{ "gal_s1.rom",   0x020000, 0xa545b593, 2 | BRF_GRA },		//  1 Text data
+	{ "pri_s1.rom",   0x020000, 0xa545b593, 2 | BRF_GRA },		//  1 Text data
 
-	{ "gal_c1.rom",   0x100000, 0xd68941e1, 3 | BRF_GRA },		//  2 Sprite data
-	{ "gal_c2.rom",   0x100000, 0xdf7e359f, 3 | BRF_GRA },		//  3
+	{ "pri_c1.rom",   0x100000, 0xd68941e1, 3 | BRF_GRA },		//  2 Sprite data
+	{ "pri_c2.rom",   0x100000, 0xdf7e359f, 3 | BRF_GRA },		//  3
 
-	{ "gal_m1.rom",   0x020000, 0x9c0291ea, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code
+	{ "pri_m1.rom",   0x020000, 0x9c0291ea, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code
 
-	{ "gal_v1.rom",   0x080000, 0xdebeb8fb, 5 | BRF_SND },		//  5 Sound data
+	{ "pri_v1.rom",   0x080000, 0xdebeb8fb, 5 | BRF_SND },		//  5 Sound data
 }; 
 
 STDROMPICKEXT(neoprimo, neoprimo, neogeo)

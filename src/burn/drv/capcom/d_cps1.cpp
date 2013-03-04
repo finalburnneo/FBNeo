@@ -4035,9 +4035,9 @@ static struct BurnRomInfo ThreeWondersr1RomDesc[] = {
 	{ "rt-2m.4a",      0x080000, 0xe9a034f4, BRF_GRA | CPS1_TILES },
 	{ "rt-4m.6a",      0x080000, 0xdf0eea8b, BRF_GRA | CPS1_TILES },
 
-	{ "rt_09.12b",     0x010000, 0xabfca165, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "rt_9.9",        0x010000, 0x7d5a77a7, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "rt_18.11c",     0x020000, 0x26b211ab, BRF_SND | CPS1_OKIM6295_SAMPLES }, 
+	{ "rt_18.11",      0x020000, 0xf6dc0d3d, BRF_SND | CPS1_OKIM6295_SAMPLES }, 
 	{ "rt_19.12c",     0x020000, 0xdbe64ad0, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
 	A_BOARD_PLDS
@@ -4127,7 +4127,7 @@ static struct BurnRomInfo Wonder3RomDesc[] = {
 	{ "rt_29.11e",     0x020000, 0x8fa77f9f, BRF_GRA | CPS1_TILES },
 	{ "rt_22.11c",     0x020000, 0x228a0d4a, BRF_GRA | CPS1_TILES },	
 
-	{ "rt_23.13b",     0x010000, 0xabfca165, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "rt_23.13",      0x010000, 0x7d5a77a7, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "rt_30.12c",     0x020000, 0x26b211ab, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "rt_31.13c",     0x020000, 0xdbe64ad0, BRF_SND | CPS1_OKIM6295_SAMPLES },
@@ -4579,7 +4579,7 @@ static struct BurnRomInfo Cworld2jRomDesc[] = {
 	{ "q5_43.13h",     0x020000, 0x3ef65ea8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "q5_34.10f",     0x020000, 0x7fcc1317, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "q5_40.10h",     0x020000, 0x7f14b7b4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "q5_35.11f",     0x020000, 0xabacee26, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "q5_35.35",      0x020000, 0x59961612, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "q5_41.11h",     0x020000, 0xd3654067, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	{ "q5_09.4b",      0x020000, 0x48496d80, BRF_GRA | CPS1_TILES },
@@ -4993,7 +4993,7 @@ static struct BurnRomInfo DynwarjRomDesc[] = {
 	{ "32.8f",         0x020000, 0x21a0a453, BRF_GRA | CPS1_TILES },
 	{ "10.5b",         0x020000, 0xff28f8d0, BRF_GRA | CPS1_TILES },
 	{ "02.5a",         0x020000, 0xcc83c02f, BRF_GRA | CPS1_TILES },
-	{ "14.10b",        0x020000, 0x58d9b32f, BRF_GRA | CPS1_TILES },
+	{ "14.14",         0x020000, 0x18fb232c, BRF_GRA | CPS1_TILES },
 	{ "06.10a",        0x020000, 0x6f9edd75, BRF_GRA | CPS1_TILES },
 	{ "25.7e",         0x020000, 0x152ea74a, BRF_GRA | CPS1_TILES },
 	{ "18.7c",         0x020000, 0x1833f932, BRF_GRA | CPS1_TILES },
@@ -6895,7 +6895,7 @@ static struct BurnRomInfo NemojRomDesc[] = {
 	{ "nm_39.9h",      0x020000, 0x6a274ecd, BRF_GRA | CPS1_TILES },
 	{ "nm_33.9f",      0x020000, 0xc469dc74, BRF_GRA | CPS1_TILES },
 	
-	{ "nm_23.13b",     0x010000, 0x0f4b0581, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "nm_23.13b",     0x010000, 0x8d3c5a42, BRF_PRG | CPS1_Z80_PROGRAM },
 	
 	{ "nm_30.12c",     0x020000, 0xbab333d4, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "nm_31.13c",     0x020000, 0x2650a0a8, BRF_SND | CPS1_OKIM6295_SAMPLES },
@@ -10926,7 +10926,7 @@ static struct BurnRomInfo WofchRomDesc[] = {
 	{ "tk2-4m.6a",     0x080000, 0xe349551c, BRF_GRA | CPS1_TILES },
 	{ "tk2(ch)_05.7a", 0x080000, 0xe4a44d53, BRF_GRA | CPS1_TILES },
 	{ "tk2(ch)_06.8a", 0x080000, 0x58066ba8, BRF_GRA | CPS1_TILES },
-	{ "tk2(ch)_07.9a", 0x080000, 0xd706568e, BRF_GRA | CPS1_TILES },
+	{ "tk2(ch)_07.9a", 0x080000, 0xcc9006c9, BRF_GRA | CPS1_TILES },
 	{ "tk2(ch)_08.10a",0x080000, 0xd4a19a02, BRF_GRA | CPS1_TILES },
 	
 	{ "tk2_qa.5k",     0x020000, 0xc9183a0d, BRF_PRG | CPS1_Z80_PROGRAM },

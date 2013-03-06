@@ -1125,6 +1125,44 @@ struct BurnDriver BurnDrvOlds100a = {
 };
 
 
+// Oriental Legend Special / Xi Yo Gi Shi Re Zuang Super (V103, China, Tencent)
+
+static struct BurnRomInfo olds103tRomDesc[] = {
+	{ "p0500.v103",	   		0x400000, 0x17e32e14, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t0500.rom",	   		0x400000, 0xd881726c, 2 | BRF_GRA },		//  1 Tile data
+	{ "t0501.rom",	   		0x200000, 0xd2106864, 2 | BRF_GRA },		//  2
+
+	{ "a0500.rom",	   		0x400000, 0x80a59197, 3 | BRF_GRA },		//  3 Sprite Color Data
+	{ "a0501.rom",	   		0x400000, 0x98c931b1, 3 | BRF_GRA },		//  4
+	{ "a0502.rom",	   		0x400000, 0xc3fcdf1d, 3 | BRF_GRA },		//  5
+	{ "a0503.rom",	   		0x400000, 0x066dffec, 3 | BRF_GRA },		//  6
+	{ "a0504.rom",	   		0x400000, 0x45337583, 3 | BRF_GRA },		//  7
+	{ "a0505.rom",	   		0x400000, 0x5b8cf3a5, 3 | BRF_GRA },		//  8
+	{ "a0506.rom",	   		0x400000, 0x087ac60c, 3 | BRF_GRA },		//  9
+
+	{ "b0500.rom",	   		0x400000, 0xcde07f74, 4 | BRF_GRA },		// 10 Sprite Masks & Color Indexes
+	{ "b0501.rom",	   		0x400000, 0x1546c2e9, 4 | BRF_GRA },		// 11
+	{ "b0502.rom",	   		0x400000, 0xe97b31c3, 4 | BRF_GRA },		// 12
+	{ "b0503.u16",	   		0x400000, 0xe41d98e4, 4 | BRF_GRA },		// 13
+
+	{ "m0500.rom",	   		0x200000, 0x37928cdd, 5 | BRF_SND },		// 14 Samples
+};
+
+STDROMPICKEXT(olds103t, olds103t, pgm)
+STD_ROM_FN(olds103t)
+
+struct BurnDriver BurnDrvOlds103t = {
+	"olds103t", "olds", "pgm", NULL, "2003",
+	"Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V103, China, Tencent)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
+	L"Oriental Legend Super\0\u897F\u6E38\u91CA\u5384\u4F20 Super (V103, China, Tencent)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
+	NULL, olds103tRomInfo, olds103tRomName, NULL, NULL, pgmInputInfo, oldsDIPInfo,
+	pgmInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
 // Knights of Valour / Sangoku Senki (V117)
 
 static struct BurnRomInfo kovRomDesc[] = {

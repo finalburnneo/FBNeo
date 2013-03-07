@@ -1154,7 +1154,7 @@ STD_ROM_FN(olds103t)
 
 struct BurnDriver BurnDrvOlds103t = {
 	"olds103t", "olds", "pgm", NULL, "2003",
-	"Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V103, China, Tencent)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
+	"Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V103, China, Tencent)\0", NULL, "IGS", "PolyGameMaster",
 	L"Oriental Legend Super\0\u897F\u6E38\u91CA\u5384\u4F20 Super (V103, China, Tencent)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
 	NULL, olds103tRomInfo, olds103tRomName, NULL, NULL, pgmInputInfo, oldsDIPInfo,

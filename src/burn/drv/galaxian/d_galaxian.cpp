@@ -9587,6 +9587,27 @@ static struct BurnRomInfo MooncmwRomDesc[] = {
 STD_ROM_PICK(Mooncmw)
 STD_ROM_FN(Mooncmw)
 
+static struct BurnRomInfo StarfgmcRomDesc[] = {
+	{ "sei-sf-a2.bin",  0x00800, 0x322859e6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sei-sf-a1.bin",  0x00800, 0x7fed0654, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sei-sf-b2.bin",  0x00800, 0x935f7435, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sei-sf-c1.bin",  0x00800, 0x29d54869, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sei-sf-d1.bin",  0x00800, 0x9126cca6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sei-sf-e2.bin",  0x00800, 0x9d394261, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sei-sf-f2.bin",  0x00800, 0x94f161dd, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sei-sf-f1.bin",  0x00800, 0x6ced7f80, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "sei-sf-jh2.bin", 0x00800, 0x8edba3cd, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sei-sf-jh3.bin", 0x00800, 0xf5a871a9, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sei-sf-lk2.bin", 0x00800, 0x44b0f06a, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sei-sf-lk3.bin", 0x00800, 0x773b1ee6, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "prom-sn74s288n-71.6l", 0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Starfgmc)
+STD_ROM_FN(Starfgmc)
+
 static struct BurnRomInfo SpcdragRomDesc[] = {
 	{ "a.bin",         0x00800, 0x38cc9839, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "b.bin",         0x00800, 0x419fa8d6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -10304,6 +10325,16 @@ struct BurnDriver BurnDrvMooncmw = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, MooncmwRomInfo, MooncmwRomName, NULL, NULL, OmegaInputInfo, MooncrsaDIPInfo,
+	MooncrstInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvStarfgmc = {
+	"starfgmc", "mooncrst", NULL, NULL, "198?",
+	"Star Fighter (Moon Cresta bootleg)\0", NULL, "bootleg (Samyra Engineering)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, StarfgmcRomInfo, StarfgmcRomName, NULL, NULL, OmegaInputInfo, MooncrsaDIPInfo,
 	MooncrstInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

@@ -1082,7 +1082,7 @@ struct BurnDriver BurnDrvShocking = {
 };
 
 
-// Bomb Kick
+// Bomb Kick (set 1)
 
 static struct BurnRomInfo bombkickRomDesc[] = {
 	{ "bk_u33",		0x40000, 0xd6eb50bf, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -1106,7 +1106,7 @@ STD_ROM_FN(bombkick)
 
 struct BurnDriver BurnDrvBombkick = {
 	"bombkick", NULL, NULL, NULL, "1998",
-	"Bomb Kick\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
+	"Bomb Kick (set 1)\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, bombkickRomInfo, bombkickRomName, NULL, NULL, BombkickInputInfo, BombkickDIPInfo,
@@ -1114,3 +1114,35 @@ struct BurnDriver BurnDrvBombkick = {
 	384, 224, 4, 3
 };
 
+
+// Bomb Kick (set 2)
+
+static struct BurnRomInfo bombkickaRomDesc[] = {
+	{ "u33.bin",	0x40000, 0x4624d618, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "u32.bin",	0x40000, 0xc5a105f3, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "bk_u67",		0x80000, 0x1962f536, 3 | BRF_GRA },           //  2 Background Tiles
+	{ "bk_u68",		0x80000, 0xd80c75a4, 3 | BRF_GRA },           //  3
+	{ "bk_u69",		0x80000, 0x615e1e6f, 3 | BRF_GRA },           //  4
+	{ "bk_u70",		0x80000, 0x59817ef1, 3 | BRF_GRA },           //  5
+
+	{ "bk_u20",		0x40000, 0xc2b83e3f, 4 | BRF_GRA },           //  6 Sprites
+	{ "bk_u21",		0x40000, 0xd6890192, 4 | BRF_GRA },           //  7
+	{ "bk_u22",		0x40000, 0x9538c46c, 4 | BRF_GRA },           //  8
+	{ "bk_u23",		0x40000, 0xe3831f3d, 4 | BRF_GRA },           //  9
+
+	{ "bk_u131",		0x80000, 0x22cc5732, 5 | BRF_SND },           // 10 Samples
+};
+
+STD_ROM_PICK(bombkicka)
+STD_ROM_FN(bombkicka)
+
+struct BurnDriver BurnDrvBombkicka = {
+	"bombkicka", "bombkick", NULL, NULL, "1998",
+	"Bomb Kick (set 2)\0", NULL, "Yun Sung", "Yun Sung 16 Bit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, bombkickaRomInfo, bombkickaRomName, NULL, NULL, BombkickInputInfo, BombkickDIPInfo,
+	ShockingInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	384, 224, 4, 3
+};

@@ -777,7 +777,7 @@ static struct BurnRomInfo wwfsstarRomDesc[] = {
 	{ "24a9-0.46",		0x20000, 0x703ff08f, 3 | BRF_SND },           //  3 oki
 	{ "24j8-0.45",		0x20000, 0x61138487, 3 | BRF_SND },           //  4
 
-	{ "24aa-0_j.58",	0x20000, 0xb9201b36, 4 | BRF_GRA },           //  5 Characters
+	{ "24aa-0.58",		0x20000, 0xcb12ba40, 4 | BRF_GRA },           //  5 Characters
 
 	{ "c951.114",		0x80000, 0xfa76d1f0, 5 | BRF_GRA },           //  6 Sprites
 	{ "24j4-0.115",		0x40000, 0xc4a589a3, 5 | BRF_GRA },           //  7

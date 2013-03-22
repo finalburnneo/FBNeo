@@ -14285,23 +14285,23 @@ STD_ROM_PICK(Scramble)
 STD_ROM_FN(Scramble)
 
 static struct BurnRomInfo ScramblesRomDesc[] = {
-	{ "2d",            0x00800, 0xb89207a1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2e",            0x00800, 0xe9b4b9eb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2f",            0x00800, 0xa1f14f4c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2h",            0x00800, 0x591bc0d9, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2j",            0x00800, 0x22f11b6b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2l",            0x00800, 0x705ffe49, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2m",            0x00800, 0xea26c35c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2p",            0x00800, 0x94d8f5e3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2d(__scrambles)", 0x00800, 0xb89207a1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2e(__scrambles)", 0x00800, 0xe9b4b9eb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2f(__scrambles)", 0x00800, 0xa1f14f4c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2h(__scrambles)", 0x00800, 0x591bc0d9, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2j(__scrambles)", 0x00800, 0x22f11b6b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2l(__scrambles)", 0x00800, 0x705ffe49, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2m(__scrambles)", 0x00800, 0xea26c35c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2p(__scrambles)", 0x00800, 0x94d8f5e3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	
-	{ "ot1.5c",        0x00800, 0xbcd297f0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
-	{ "ot2.5d",        0x00800, 0xde7912da, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
-	{ "ot3.5e",        0x00800, 0xba2fa933, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "ot1.5c",          0x00800, 0xbcd297f0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "ot2.5d",          0x00800, 0xde7912da, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "ot3.5e",          0x00800, 0xba2fa933, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
 
-	{ "5f",            0x00800, 0x5f30311a, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "5h",            0x00800, 0x516e029e, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "5f",              0x00800, 0x5f30311a, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "5h",              0x00800, 0x516e029e, BRF_GRA | GAL_ROM_TILES_SHARED },
 		
-	{ "c01s.6e",       0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+	{ "c01s.6e",         0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Scrambles)
@@ -16612,41 +16612,41 @@ static struct BurnRomInfo ScorpionRomDesc[] = {
 	{ "4.2h",          0x01000, 0xaba2276a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "5.2k",          0x01000, 0x952f78f2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 		
-	{ "32_a4.7c",      0x01000, 0x361b8a36, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
-	{ "32_a5.7d",      0x01000, 0xaddecdd4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "igr_scorpion_32_a4.ic12", 0x01000, 0x361b8a36, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "igr_scorpion_32_a5.ic13", 0x01000, 0xaddecdd4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
 
-	{ "32_f5.5f",      0x01000, 0x1e5da9d6, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "32_h5.5h",      0x01000, 0xa57adb0a, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "igr_scorpion_32_f5.ic72", 0x01000, 0x1e5da9d6, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "igr_scorpion_32_h5.ic73", 0x01000, 0xa57adb0a, BRF_GRA | GAL_ROM_TILES_SHARED },
 		
-	{ "prom.6e",       0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+	{ "mmi6331_6e.ic59",         0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
 	
-	{ "32_a3.6e",      0x01000, 0x279ae6f9, BRF_OPT | BRF_SND }, // Speech samples?
-	{ "32_a2.6d",      0x01000, 0x90352dd4, BRF_OPT | BRF_SND },
-	{ "32_a1.6c",      0x01000, 0x3bf2452d, BRF_OPT | BRF_SND },
+	{ "igr_scorpion_32_a3.ic25", 0x01000, 0x04abf178, BRF_OPT | BRF_SND }, // Speech samples?
+	{ "igr_scorpion_32_a2.ic24", 0x01000, 0x90352dd4, BRF_OPT | BRF_SND },
+	{ "igr_scorpion_32_a1.ic23", 0x01000, 0x3bf2452d, BRF_OPT | BRF_SND },
 };
 
 STD_ROM_PICK(Scorpion)
 STD_ROM_FN(Scorpion)
 
 static struct BurnRomInfo ScorpionaRomDesc[] = {
-	{ "scor_d2.bin",   0x01000, 0xc5b9daeb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "scor_e2.bin",   0x01000, 0x82308d05, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "scor_g2.bin",   0x01000, 0x756b09cd, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "scor_h2.bin",   0x01000, 0xa0457b93, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "scor_l2.bin",   0x00800, 0x6623da33, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "scor_k2.bin",   0x00800, 0x42ec34d8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },	
+	{ "igr_scorpion_32_d2.ic109", 0x01000, 0xc5b9daeb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "igr_scorpion_32_e2.ic110", 0x01000, 0x82308d05, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "igr_scorpion_32_g2.ic111", 0x01000, 0x756b09cd, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "igr_scorpion_32_h2.ic112", 0x01000, 0x667ad8be, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "igr_scorpion_16_l2.ic114", 0x00800, 0x6623da33, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "igr_scorpion_16_k2.ic113", 0x00800, 0x42ec34d8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },	
 		
-	{ "32_a4.7c",      0x01000, 0x361b8a36, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
-	{ "32_a5.7d",      0x01000, 0xaddecdd4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "igr_scorpion_32_a4.ic12",  0x01000, 0x361b8a36, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "igr_scorpion_32_a5.ic13",  0x01000, 0xaddecdd4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
 
-	{ "scor_f5.bin",   0x01000, 0x60180a38, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "32_h5.5h",      0x01000, 0xa57adb0a, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "igr_scorpion_32_f5.ic72",  0x01000, 0x1e5da9d6, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "igr_scorpion_32_h5.ic73",  0x01000, 0xa57adb0a, BRF_GRA | GAL_ROM_TILES_SHARED },
 		
-	{ "prom.6e",       0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+	{ "mmi6331_6e.ic59",          0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
 	
-	{ "scor_a3.bin",   0x01000, 0x04abf178, BRF_OPT | BRF_SND }, // Speech samples?
-	{ "scor_a2.bin",   0x01000, 0x452d6354, BRF_OPT | BRF_SND },
-	{ "32_a1.6c",      0x01000, 0x3bf2452d, BRF_OPT | BRF_SND },
+	{ "igr_scorpion_32_a3.ic25",  0x01000, 0x04abf178, BRF_OPT | BRF_SND }, // Speech samples?
+	{ "igr_scorpion_32_a2.ic24",  0x01000, 0x90352dd4, BRF_OPT | BRF_SND },
+	{ "igr_scorpion_32_a1.ic23",  0x01000, 0x3bf2452d, BRF_OPT | BRF_SND },
 };
 
 STD_ROM_PICK(Scorpiona)
@@ -16659,17 +16659,17 @@ static struct BurnRomInfo ScorpionbRomDesc[] = {
 	{ "ic112.2h",      0x01000, 0x53e2a983, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "ic113.2k",      0x01000, 0xe4ad299a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 		
-	{ "32_a4.7c",      0x01000, 0x361b8a36, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
-	{ "ic13.7d",       0x01000, 0xaddecdd4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "igr_scorpion_32_a4.ic12", 0x01000, 0x361b8a36, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "igr_scorpion_32_a5.ic13", 0x01000, 0xaddecdd4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
 
-	{ "ic72.5f",       0x01000, 0x1e5da9d6, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "ic73.5h",       0x01000, 0xa57adb0a, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "igr_scorpion_32_f5.ic72", 0x01000, 0x1e5da9d6, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "igr_scorpion_32_h5.ic73", 0x01000, 0xa57adb0a, BRF_GRA | GAL_ROM_TILES_SHARED },
 		
-	{ "prom.6e",       0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+	{ "mmi6331_6e.ic59",         0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
 	
-	{ "ic25.6e",       0x01000, 0x04abf178, BRF_OPT | BRF_SND }, // Speech samples?
-	{ "ic24.6d",       0x01000, 0x90352dd4, BRF_OPT | BRF_SND },
-	{ "ic23.6c",       0x01000, 0x3bf2452d, BRF_OPT | BRF_SND },
+	{ "igr_scorpion_32_a3.ic25", 0x01000, 0x04abf178, BRF_OPT | BRF_SND }, // Speech samples?
+	{ "igr_scorpion_32_a2.ic24", 0x01000, 0x90352dd4, BRF_OPT | BRF_SND },
+	{ "igr_scorpion_32_a1.ic23", 0x01000, 0x3bf2452d, BRF_OPT | BRF_SND },
 };
 
 STD_ROM_PICK(Scorpionb)

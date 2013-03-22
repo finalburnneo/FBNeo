@@ -3658,7 +3658,7 @@ static struct BurnRomInfo SjryukoRomDesc[] = {
 	{ "epr-12247.a10",    0x08000, 0xef8a64c6, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "epr-12248.a11",    0x08000, 0xd1eabdab, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-5021.key",     0x02000, 0x4a3422e4, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-5021.key",     0x02000, 0xc3e32937, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 

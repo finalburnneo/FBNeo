@@ -4035,9 +4035,9 @@ static struct BurnRomInfo ThreeWondersr1RomDesc[] = {
 	{ "rt-2m.4a",      0x080000, 0xe9a034f4, BRF_GRA | CPS1_TILES },
 	{ "rt-4m.6a",      0x080000, 0xdf0eea8b, BRF_GRA | CPS1_TILES },
 
-	{ "rt_9(_3wondersr1).12b",   0x010000, 0x7d5a77a7, BRF_PRG | CPS1_Z80_PROGRAM }, // 1 byte different from 3wonders, pcb verified
+	{ "rt_9(__3wondersr1).12b",  0x010000, 0x7d5a77a7, BRF_PRG | CPS1_Z80_PROGRAM }, // 1 byte different from 3wonders, pcb verified
 
-	{ "rt_18(_3wondersr1).11c",  0x020000, 0xf6dc0d3d, BRF_SND | CPS1_OKIM6295_SAMPLES }, // 6 bytes different from 3wonders, pcb verified
+	{ "rt_18(__3wondersr1).11c", 0x020000, 0xf6dc0d3d, BRF_SND | CPS1_OKIM6295_SAMPLES }, // 6 bytes different from 3wonders, pcb verified
 	{ "rt_19.12c",     			 0x020000, 0xdbe64ad0, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
 	A_BOARD_PLDS
@@ -4995,7 +4995,7 @@ static struct BurnRomInfo DynwarjRomDesc[] = {
 	{ "32.8f",         			 0x020000, 0x21a0a453, BRF_GRA | CPS1_TILES },
 	{ "10.5b",         			 0x020000, 0xff28f8d0, BRF_GRA | CPS1_TILES },
 	{ "02.5a",         			 0x020000, 0xcc83c02f, BRF_GRA | CPS1_TILES },
-	{ "14(_dynawarj).10b",       0x020000, 0x18fb232c, BRF_GRA | CPS1_TILES }, // 1 byte different from dynwara, pcb verified
+	{ "14(__dynwarj).10b",       0x020000, 0x18fb232c, BRF_GRA | CPS1_TILES }, // 1 byte different from dynwara, pcb verified
 	{ "06.10a",        			 0x020000, 0x6f9edd75, BRF_GRA | CPS1_TILES },
 	{ "25.7e",         			 0x020000, 0x152ea74a, BRF_GRA | CPS1_TILES },
 	{ "18.7c",         			 0x020000, 0x1833f932, BRF_GRA | CPS1_TILES },
@@ -5174,7 +5174,7 @@ static struct BurnRomInfo FfightuaRomDesc[] = {
 	{ "ffu_36.11f",    			 0x020000, 0xe2a48af9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // in "30" socket
 	{ "ffu_42.11h",    			 0x020000, 0xf4bb480e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // in "35" socket
 	{ "ffu_37.12f",    			 0x020000, 0xc371c667, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // in "31" socket
-	{ "ffu_43(_ffightua).12h",   0x020000, 0x2f5771f9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // in "36" socket / different CRC from ffightu, ffightu1, pcb verified
+	{ "ffu_43(__ffightua).12h",  0x020000, 0x2f5771f9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // in "36" socket / different CRC from ffightu, ffightu1, pcb verified
 	{ "ff-32m.8h",     			 0x080000, 0xc747696e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "ff-5m.7a",      0x080000, 0x9c284108, BRF_GRA | CPS1_TILES },
@@ -6170,10 +6170,10 @@ static struct BurnRomInfo Kodr1RomDesc[] = {
 	{ "kd-2m.3c",      0x080000, 0x9ef36604, BRF_GRA | CPS1_TILES },
 	{ "kd-4m.5c",      0x080000, 0x402b9b4f, BRF_GRA | CPS1_TILES },
 
-	{ "kd_9(_kodr1).12a",        0x010000, 0xf5514510, BRF_PRG | CPS1_Z80_PROGRAM }, // different CRC from kod, pcb verified
+	{ "kd_9(__kodr1).12a",  0x010000, 0xf5514510, BRF_PRG | CPS1_Z80_PROGRAM }, // different CRC from kod, pcb verified
 
-	{ "kd_18(_kodr1).11c",      0x020000, 0x69ecb2c8, BRF_SND | CPS1_OKIM6295_SAMPLES }, // different CRC from kod, pcb verified
-	{ "kd_19(_kodr1).12c",      0x020000, 0x02d851c1, BRF_SND | CPS1_OKIM6295_SAMPLES }, // different CRC from kod, pcb verified
+	{ "kd_18(__kodr1).11c", 0x020000, 0x69ecb2c8, BRF_SND | CPS1_OKIM6295_SAMPLES }, // different CRC from kod, pcb verified
+	{ "kd_19(__kodr1).12c", 0x020000, 0x02d851c1, BRF_SND | CPS1_OKIM6295_SAMPLES }, // different CRC from kod, pcb verified
 	
 	A_BOARD_PLDS
 	
@@ -6966,7 +6966,7 @@ static struct BurnRomInfo Pang3bRomDesc[] = {
 	{ "pa3-01m.2c",    0x200000, 0x068a152c, BRF_GRA | CPS1_TILES },
 	{ "pa3-07m.2f",    0x200000, 0x3a4a619d, BRF_GRA | CPS1_TILES },
 
-	{ "pa3_11(_pang3b).11f",     0x008000, 0x90a08c46, BRF_PRG | CPS1_Z80_PROGRAM }, // == pa3_11.11f but different size, resized by bootlegger
+	{ "pa3_11(__pang3b).11f", 0x008000, 0x90a08c46, BRF_PRG | CPS1_Z80_PROGRAM }, // == pa3_11.11f but different size, resized by bootlegger
 
 	{ "pa3_05.10d",    0x020000, 0x73a10d5d, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "pa3_06.11d",    0x020000, 0xaffa4f82, BRF_SND | CPS1_OKIM6295_SAMPLES },
@@ -10276,11 +10276,11 @@ STD_ROM_PICK(Strider)
 STD_ROM_FN(Strider)
 
 static struct BurnRomInfo StrideruaRomDesc[] = {
-	{ "30(_striderua).11f",		 0x020000, 0x66aec273, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // different CRC from strider, pcb verified
-	{ "35(_striderua).11h",      0x020000, 0x50e0e865, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // different CRC from strider, pcb verified
-	{ "31(_striderua).12f",      0x020000, 0xeae93bd1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // different CRC from strider, pcb verified
-	{ "36(_striderua).12h",      0x020000, 0xb904a31d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // different CRC from strider, pcb verified
-	{ "st-14.8h",      0x080000, 0x9b3cfc08, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP }, // in "32" socket
+	{ "30(__striderua).11f", 0x020000, 0x66aec273, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // different CRC from strider, pcb verified
+	{ "35(__striderua).11h", 0x020000, 0x50e0e865, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // different CRC from strider, pcb verified
+	{ "31(__striderua).12f", 0x020000, 0xeae93bd1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // different CRC from strider, pcb verified
+	{ "36(__striderua).12h", 0x020000, 0xb904a31d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // different CRC from strider, pcb verified
+	{ "st-14.8h",            0x080000, 0x9b3cfc08, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP }, // in "32" socket
 
 	{ "st-2.8a",       0x080000, 0x4eee9aea, BRF_GRA | CPS1_TILES },
 	{ "st-11.10a",     0x080000, 0x2d7f21e4, BRF_GRA | CPS1_TILES },
@@ -10291,7 +10291,7 @@ static struct BurnRomInfo StrideruaRomDesc[] = {
 	{ "st-4.3a",       0x080000, 0xb7d04e8b, BRF_GRA | CPS1_TILES },
 	{ "st-8.5a",       0x080000, 0x6b4713b4, BRF_GRA | CPS1_TILES },
 
-	{ "09(_striderua).12b",      0x010000, 0x08d63519, BRF_PRG | CPS1_Z80_PROGRAM }, // different CRC from strider, pcb verified
+	{ "09(__striderua).12b", 0x010000, 0x08d63519, BRF_PRG | CPS1_Z80_PROGRAM }, // different CRC from strider, pcb verified
 
 	{ "18.11c",        0x020000, 0x4386bc80, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "19.12c",        0x020000, 0x444536d7, BRF_SND | CPS1_OKIM6295_SAMPLES },

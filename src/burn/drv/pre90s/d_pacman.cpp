@@ -3717,8 +3717,8 @@ static struct BurnRomInfo msheartbRomDesc[] = {
 	{ "u6",     	  0x1000, 0xa90e7000, 1 | BRF_ESS | BRF_PRG },	//  5
 	{ "u7",           0x1000, 0xc82cd714, 1 | BRF_ESS | BRF_PRG },	//  6
 
-	{ "5e",           0x1000, 0x5431d4c4, 2 | BRF_GRA },			//  7 Graphics
-	{ "5f",           0x1000, 0xceb50654, 2 | BRF_GRA },			//  8
+	{ "5e(__msheartb)", 0x1000, 0x5431d4c4, 2 | BRF_GRA },			//  7 Graphics
+	{ "5f(__msheartb)", 0x1000, 0xceb50654, 2 | BRF_GRA },			//  8
 
 	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  9 Color Prom
 	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 10 

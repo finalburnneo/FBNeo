@@ -219,7 +219,7 @@ static struct BurnRomInfo DrvaRomDesc[] = {
 	
 	{ "31a11-2.ic42",  0x010000, 0x5ddebfea, BRF_ESS | BRF_PRG }, //  2	Z80 Program 
 	
-	{ "wf_33.rom",     0x020000, 0x06f22615, BRF_GRA },	      //  3	Chars
+	{ "31e12-0.ic33",  0x020000, 0x06f22615, BRF_GRA },	      //  3	Chars
 	
 	{ "31j0.ic1",      0x040000, 0x8a12b450, BRF_GRA },	      //  4	Tiles
 	{ "31j1.ic2",      0x040000, 0x82ed7155, BRF_GRA },	      //  5

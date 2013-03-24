@@ -5371,6 +5371,21 @@ static struct BurnRomInfo FfightjhRomDesc[] = {
 STD_ROM_PICK(Ffightjh)
 STD_ROM_FN(Ffightjh)
 
+static struct BurnRomInfo FfightblRomDesc[] = {
+	{ "fg-e.bin",      0x080000, 0xf8ccf27e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "fg-f.bin",      0x080000, 0xd96c76b2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	
+	{ "fg-d.bin",      0x080000, 0x4303f863, BRF_GRA | CPS1_TILES },
+	{ "fg-c.bin",      0x080000, 0xd1dfcd2d, BRF_GRA | CPS1_TILES },
+	{ "fg-b.bin",      0x080000, 0x22f2c097, BRF_GRA | CPS1_TILES },
+	{ "fg-a.bin",      0x080000, 0x16a89b2c, BRF_GRA | CPS1_TILES },
+	
+	{ "ff1.bin",       0x020000, 0x5b276c14, BRF_PRG | CPS1_Z80_PROGRAM },
+};
+
+STD_ROM_PICK(Ffightbl)
+STD_ROM_FN(Ffightbl)
+
 static struct BurnRomInfo FcrashRomDesc[] = {
 	{ "9.bin",         0x020000, 0xc6854c91, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "5.bin",         0x020000, 0x77f7c2b3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -11363,6 +11378,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "ffightj1"    , CPS_B_01    , mapper_S224B , 0, NULL                },
 	{ "ffightj2"    , CPS_B_02    , mapper_S224B , 0, NULL                },
 	{ "ffightjh"    , CPS_B_01    , mapper_S224B , 0, NULL                },
+	{ "ffightbl"    , HACK_B_5    , mapper_S224B , 0, NULL                },
 	{ "fcrash"      , HACK_B_5    , mapper_S224B , 0, NULL                }, // doesn't really have an ID, but this used to give the relevant values to our rendering functions
 	{ "forgottn"    , CPS_B_01    , mapper_LW621 , 1, NULL                },
 	{ "forgottnu"   , CPS_B_01    , mapper_LW621 , 1, NULL                },
@@ -12385,6 +12401,37 @@ void __fastcall FcrashInputWriteWord(UINT32 a, UINT16 d)
 			bprintf(PRINT_NORMAL, _T("Input Write word %x, %x\n"), a, d);
 		}
 	}
+}
+
+static INT32 FfightblInit()
+{
+	Cps1DisablePSnd = 1;
+	bCpsUpdatePalEveryFrame = 1;
+	CpsLayer1XOffs = -0x3f;
+	CpsLayer2XOffs = -0x3c;
+	CpsLayer3XOffs = 0xffc0;
+	
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesCawingbl;
+	Cps1ObjGetCallbackFunction = FcrashObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsRunInitCallbackFunction = FcrashSoundInit;
+	CpsRunResetCallbackFunction = FcrashSoundReset;
+	CpsRunExitCallbackFunction = FcrashSoundExit;
+	CpsRunFrameStartCallbackFunction = FcrashSoundFrameStart;
+	CpsRunFrameEndCallbackFunction = FcrashSoundFrameEnd;
+	CpsMemScanCallbackFunction = FcrashScanSound;
+	
+	INT32 nRet = DrvInit();
+	
+	SekOpen(0);
+	SekMapHandler(1, 0x880000, 0x89ffff, SM_READ | SM_WRITE);
+	SekSetReadByteHandler(1, FcrashInputReadByte);
+	SekSetReadWordHandler(1, FcrashInputReadWord);
+	SekSetWriteByteHandler(1, FcrashInputWriteByte);
+	SekSetWriteWordHandler(1, FcrashInputWriteWord);
+	SekClose();
+	
+	return nRet;
 }
 
 static INT32 FcrashInit()
@@ -15392,6 +15439,16 @@ struct BurnDriver BurnDrvCpsFfightjh = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, FfightjhRomInfo, FfightjhRomName, NULL, NULL, FfightInputInfo, FfightDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsFfightbl = {
+	"ffightbl", "ffight", NULL, NULL, "1990",
+	"Final Fight (bootleg, World)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, FfightblRomInfo, FfightblRomName, NULL, NULL, FfightInputInfo, FfightDIPInfo,
+	FfightblInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

@@ -2514,6 +2514,29 @@ static struct BurnRomInfo TeddybboRomDesc[] = {
 STD_ROM_PICK(Teddybbo)
 STD_ROM_FN(Teddybbo)
 
+static struct BurnRomInfo TeddybboblRomDesc[] = {
+	{ "1.f2",      		   0x004000, 0x81a37e69, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "2.j2",      		   0x004000, 0x715388a9, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "3.k2",       	   0x004000, 0xe5a74f5f, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+
+//	No sound rom present on the PCB - Instead use epr-6748.120 from Teddybbo set //	
+	{ "epr-6748.120",      0x002000, 0x9325a1cf, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
+	
+	{ "11.r7",       	   0x004000, 0x55d7aaf7, BRF_GRA },		  //  4 Tiles
+	{ "10.r8",       	   0x004000, 0x52a5083d, BRF_GRA },		  //  5 Tiles
+	{ "9.r10",       	   0x004000, 0x8076d3a3, BRF_GRA },		  //  6 Tiles
+		
+	{ "4.f3",      		   0x004000, 0x1be35a97, BRF_GRA },		  //  7 Sprites
+	{ "6.k3",       	   0x004000, 0x6b53aa7a, BRF_GRA },		  //  8 Sprites
+	{ "5.h3",      		   0x004000, 0x565c25d0, BRF_GRA },		  //  9 Sprites
+	{ "7.m3",       	   0x004000, 0xe116285f, BRF_GRA },		  //  10 Sprites
+
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
+};
+
+STD_ROM_PICK(Teddybbobl)
+STD_ROM_FN(Teddybbobl)
+
 static struct BurnRomInfo UpndownRomDesc[] = {
 	{ "epr5516a.129",      0x002000, 0x038c82da, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr5517a.130",      0x002000, 0x6930e1de, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
@@ -4537,6 +4560,13 @@ static INT32 TeddybbInit()
 	return System1Init(3, 0x4000, 1, 0x2000, 6, 0x2000, 4, 0x4000, 1);
 }
 
+static INT32 TeddybboblInit()
+{
+	DecodeFunction = teddybb_decode;
+
+	return System1Init(3, 0x4000, 1, 0x2000, 3, 0x4000, 4, 0x4000, 1);
+}
+
 static INT32 UpndownInit()
 {
 	DecodeFunction = nprinces_decode;
@@ -5473,6 +5503,16 @@ struct BurnDriver BurnDrvTeddybbo = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, TeddybboRomInfo, TeddybboRomName, NULL, NULL, MyheroInputInfo, TeddybbDIPInfo,
 	TeddybbInit, System1Exit, System1Frame, NULL, System1Scan,
+	NULL, 0x600, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvTeddybbobl = {
+	"teddybbobl", "teddybb", NULL, NULL, "1985",
+	"TeddyBoy Blues (bootleg)\0", NULL, "bootleg", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, TeddybboblRomInfo, TeddybboblRomName, NULL, NULL, MyheroInputInfo, TeddybbDIPInfo,
+	TeddybboblInit, System1Exit, System1Frame, NULL, System1Scan,
 	NULL, 0x600, 256, 224, 4, 3
 };
 

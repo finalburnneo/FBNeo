@@ -280,7 +280,7 @@ static struct BurnRomInfo RallyxmrRomDesc[] = {
 	{ "173.bin",  	   0x00800, 0x3b5b1a81, BRF_ESS | BRF_PRG }, //	 7
 	
 	{ "175.bin",  	   0x00800, 0x50a224e2, BRF_GRA },	     //  8	Characters & Sprites
-	{ "176.bin",  	   0x00800, 0x68dff552, BRF_GRA },	     //  9
+	{ "174.bin",  	   0x00800, 0x68dff552, BRF_GRA },	     //  9
 	
 	{ "037.bin",       0x00100, 0x3c16f62c, BRF_GRA },	     //  10	Dots
 	
@@ -290,7 +290,7 @@ static struct BurnRomInfo RallyxmrRomDesc[] = {
 	{ "181.bin",       0x00020, 0xb8861096, BRF_GRA },	     //  14	Video Timing PROM
 	
 	{ "177.bin",       0x00100, 0x4bad7017, BRF_SND },	     //  15	Sound PROMs
-	{ "178.bin",       0x00100, 0x77245b66, BRF_SND },	     //  16 correct name (originally named 176.bin, same as second char rom)
+	{ "176.bin",       0x00100, 0x77245b66, BRF_SND },	     //  16
 };
 
 STD_ROM_PICK(Rallyxmr)

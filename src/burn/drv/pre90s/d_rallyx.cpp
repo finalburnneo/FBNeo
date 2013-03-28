@@ -290,7 +290,7 @@ static struct BurnRomInfo RallyxmrRomDesc[] = {
 	{ "181.bin",       0x00020, 0xb8861096, BRF_GRA },	     //  14	Video Timing PROM
 	
 	{ "177.bin",       0x00100, 0x4bad7017, BRF_SND },	     //  15	Sound PROMs
-	{ "176.bin",       0x00100, 0x77245b66, BRF_SND },	     //  16
+	{ "178.bin",       0x00100, 0x77245b66, BRF_SND },	     //  16 correct name (originally named 176.bin, same as second char rom)
 };
 
 STD_ROM_PICK(Rallyxmr)

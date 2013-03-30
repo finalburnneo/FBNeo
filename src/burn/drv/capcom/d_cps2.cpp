@@ -10074,6 +10074,35 @@ static struct BurnRomInfo Hsf2dRomDesc[] = {
 STD_ROM_PICK(Hsf2d)
 STD_ROM_FN(Hsf2d)
 
+static struct BurnRomInfo Hsf2daRomDesc[] = {
+	{ "hs2ad.03",      0x080000, 0x0153d371, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2ad.04",      0x080000, 0x0276b78a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.05",        0x080000, 0xdde34a35, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.06",        0x080000, 0xf4e56dda, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.07",        0x080000, 0xee4420fc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.08",        0x080000, 0xc9441533, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.09",        0x080000, 0x3fc638a8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.10",        0x080000, 0x20d0f9e4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "hs2.13",        0x400000, 0x6ff7f5f1, CPS2_GFX | BRF_GRA },
+	{ "hs2.15",        0x400000, 0x26da2f5d, CPS2_GFX | BRF_GRA },
+	{ "hs2.17",        0x400000, 0xe769ee8e, CPS2_GFX | BRF_GRA },
+	{ "hs2.19",        0x400000, 0x7f47fd07, CPS2_GFX | BRF_GRA },
+	{ "hs2.14",        0x400000, 0xc549e333, CPS2_GFX | BRF_GRA },
+	{ "hs2.16",        0x400000, 0x0a8541f9, CPS2_GFX | BRF_GRA },
+	{ "hs2.18",        0x400000, 0xf4c92b27, CPS2_GFX | BRF_GRA },
+	{ "hs2.20",        0x400000, 0xba355a75, CPS2_GFX | BRF_GRA },
+
+	{ "hs2.01",        0x020000, 0xc1a13786, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "hs2.02",        0x020000, 0x2d8794aa, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "hs2.11m",       0x400000, 0x5cb00496, CPS2_QSND | BRF_SND },
+	{ "hs2.12m",       0x400000, 0x8f298007, CPS2_QSND | BRF_SND },
+};
+
+STD_ROM_PICK(Hsf2da)
+STD_ROM_FN(Hsf2da)
+
 static struct BurnRomInfo Megamn2dRomDesc[] = {
 	{ "rm2ud.03",      0x080000, 0xd3635f25, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "rm2ud.04",      0x080000, 0x768a1705, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -11098,6 +11127,16 @@ struct BurnDriver BurnDrvCpsHsf2d = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Hsf2dRomInfo, Hsf2dRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Ssf2tPhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsHsf2da = {
+	"hsf2da", "hsf2", NULL, NULL, "2004",
+	"Hyper Street Fighter 2: The Anniversary Edition (040202 Asia Phoenix Edition, alt)\0", NULL, "bootleg", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Hsf2daRomInfo, Hsf2daRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Ssf2tPhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

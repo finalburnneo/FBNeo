@@ -39,6 +39,7 @@ INT32 CpsLoadTilesForgottn(INT32 nStart);
 INT32 CpsLoadTilesForgottnu(INT32 nStart);
 INT32 CpsLoadTilesPang(UINT8 *Tile,INT32 nStart);
 INT32 CpsLoadTilesSf2ebbl(UINT8 *Tile, INT32 nStart);
+INT32 CpsLoadTilesSf2b(UINT8 *Tile, INT32 nStart);
 INT32 CpsLoadTilesSf2koryuExtra(UINT8 *Tile, INT32 nStart);
 INT32 CpsLoadTilesHack160(INT32 nStart);
 INT32 CpsLoadTilesHack160Alt(INT32 nStart);

@@ -506,6 +506,46 @@ static INT32 CpsLoadOneSf2ebbl(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShif
 	return 0;
 }
 
+static INT32 CpsLoadOneSf2b(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift)
+{
+	UINT8 *Rom = NULL; INT32 nRomLen=0;
+	UINT8 *pt = NULL, *pr = NULL;
+	INT32 i;
+
+	LoadUp(&Rom, &nRomLen, nNum);
+	if (Rom == NULL) {
+		return 1;
+	}
+	nRomLen &= ~1;								// make sure even
+
+	for (i = 0, pt = Tile + 4, pr = Rom; i < 0x10000; pt += 8) {
+		UINT32 Pix;						// Eight pixels
+		UINT8 b;
+		b = *pr++; i++; Pix = SepTable[b];
+		if (nWord) {
+			b = *pr++; i++; Pix |= SepTable[b] << 1;
+		}
+
+		Pix <<= nShift;
+		*((UINT32 *)pt) |= Pix;
+	}
+
+	for (i = 0, pt = Tile, pr = Rom + 0x10000; i < 0x10000; pt += 8) {
+		UINT32 Pix;						// Eight pixels
+		UINT8 b;
+		b = *pr++; i++; Pix = SepTable[b];
+		if (nWord) {
+			b = *pr++; i++; Pix |= SepTable[b] << 1;
+		}
+
+		Pix <<= nShift;
+		*((UINT32 *)pt) |= Pix;
+	}
+
+	BurnFree(Rom);
+	return 0;
+}
+
 static INT32 CpsLoadOneSf2koryu(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift)
 {
 	UINT8 *Rom = NULL; INT32 nRomLen=0;
@@ -953,6 +993,16 @@ INT32 CpsLoadTilesSf2ebbl(UINT8 *Tile, INT32 nStart)
 	CpsLoadOneSf2ebbl(Tile, nStart + 1, 0, 2);
 	CpsLoadOneSf2ebbl(Tile, nStart + 2, 0, 1);
 	CpsLoadOneSf2ebbl(Tile, nStart + 3, 0, 3);
+	
+	return 0;
+}
+
+INT32 CpsLoadTilesSf2b(UINT8 *Tile, INT32 nStart)
+{
+	CpsLoadOneSf2b(Tile, nStart + 0, 0, 0);
+	CpsLoadOneSf2b(Tile, nStart + 1, 0, 2);
+	CpsLoadOneSf2b(Tile, nStart + 2, 0, 1);
+	CpsLoadOneSf2b(Tile, nStart + 3, 0, 3);
 	
 	return 0;
 }

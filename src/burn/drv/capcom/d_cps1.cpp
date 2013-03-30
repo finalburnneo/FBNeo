@@ -11,6 +11,7 @@
 #define CPS1_EXTRA_TILES_SF2EBBL_400000		8
 #define CPS1_EXTRA_TILES_400000				9
 #define CPS1_EXTRA_TILES_SF2KORYU_400000	10
+#define CPS1_EXTRA_TILES_SF2B_400000		11
 
 typedef INT32 (*Cps1Callback)(INT32);
 static Cps1Callback Cps1GfxLoadCallbackFunction = NULL;
@@ -8142,25 +8143,37 @@ STD_ROM_PICK(Sf2thndr)
 STD_ROM_FN(Sf2thndr)
 
 static struct BurnRomInfo Sf2bRomDesc[] = {
-	{ "u3.bin",        0x020000, 0x2c9ece7c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "u4.bin",        0x020000, 0x4efb4c7a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	
-	{ "sf2_31a.bin",   0x020000, 0xa673143d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "sf2_38a.bin",   0x020000, 0x4c2ccef7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+/*Street Fighter 2 bootleg
 
-//	{ "sf2-4.bin",     0x020000, 0x76f9f91f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	
-//	{ "sf2-3.bin",     0x020000, 0xe8f14362, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	
+
+This game runs on a single bootleg PCB.
+It uses 2 square PLCC custom graphics chips by Altera
+On chips are written ...
+ALTERA EP1810LC
+I have seen a similar ALTERA chip on a Killer Instinct PCB
+
+
+CPU: 68000-10, Z8400 (Z80A)
+SND: YM2151, OKI6295, YM3012A
+OSC: 16.000Mhz, 10.000Mhz, 3.5795Mhz
+
+Developers:
+This PCB also has some 42 Pin Mask roms which are not dumped 
+as my reader will only accept up to 40 pin roms.
+Hopefully, the existing dumped gfx roms will be the same.
+
+If you need more info, contact me.
+
+theguru@emuunlim.com*/
+
+	{ "sf2e_30b.11e",  0x020000, 0x57bd7051, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // missing from dump (u6.bin and u5.bin match this set closest)
+	{ "sf2e_37b.11f",  0x020000, 0x62691cdd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // missing from dump (u6.bin and u5.bin match this set closest)
+	{ "sf2e_31b.12e",  0x020000, 0xa673143d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // missing from dump (u6.bin and u5.bin match this set closest)
+	{ "sf2e_38b.12f",  0x020000, 0x4c2ccef7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // missing from dump (u6.bin and u5.bin match this set closest)
 	{ "u6.bin",        0x020000, 0x5cfc3f39, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "u5.bin",        0x020000, 0x47dd24b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-		
-	{ "sf2_29a.bin",   0x020000, 0xbb4af315, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "sf2_36a.bin",   0x020000, 0xc02a13eb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	
-//	{ "sf2-1.bin",     0x020000, 0x6de44671, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-//	{ "sf2-2.bin",     0x020000, 0xbf0cd819, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	
-	
+	{ "sf2_29b.10e",   0x020000, 0xbb4af315, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // missing from dump (u6.bin and u5.bin match this set closest)
+	{ "sf2_36b.10f",   0x020000, 0xc02a13eb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // missing from dump (u6.bin and u5.bin match this set closest)
 	
 	{ "sf2_06.bin",    0x080000, 0x22c9cc8e, BRF_GRA | CPS1_TILES },
 	{ "sf2_08.bin",    0x080000, 0x57213be8, BRF_GRA | CPS1_TILES },
@@ -8175,10 +8188,19 @@ static struct BurnRomInfo Sf2bRomDesc[] = {
 	{ "sf2_24.bin",    0x080000, 0xc1befaa8, BRF_GRA | CPS1_TILES },
 	{ "sf2_26.bin",    0x080000, 0x0627c831, BRF_GRA | CPS1_TILES },
 
-	{ "sf2_09.bin",    0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "u7.bin",        0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "sf2_18.bin",    0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "sf2_19.bin",    0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "u8.bin",        0x040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "sf2-1.bin",     0x020000, 0x6de44671, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	{ "sf2-3.bin",     0x020000, 0xe8f14362, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	{ "sf2-2.bin",     0x020000, 0xbf0cd819, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	{ "sf2-4.bin",     0x020000, 0x76f9f91f, BRF_GRA | CPS1_EXTRA_TILES_SF2B_400000 },
+	
+	{ "sf2-5.bin",     0x010000, 0x13ea1c44, BRF_OPT }, // unknown
+	
+	{ "u3.bin",        0x020000, 0x2c9ece7c, BRF_OPT }, // seems to have most in common with some extra gfx roms, but also some program roms, maybe bad dump or maybe needing data from Altera chip?
+	{ "u4.bin",        0x020000, 0x4efb4c7a, BRF_OPT }, // seems to have most in common with some extra gfx roms, but also some program roms, maybe bad dump or maybe needing data from Altera chip?
 };
 
 STD_ROM_PICK(Sf2b)
@@ -11691,7 +11713,7 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 				nCpsQSamLen += ri.nLen;
 				nCpsQsoundRomNum++;
 			}
-			if (((ri.nType & 0xff) == CPS1_EXTRA_TILES_SF2EBBL_400000) || ((ri.nType & 0xff) == CPS1_EXTRA_TILES_400000) || ((ri.nType & 0xff) == CPS1_EXTRA_TILES_SF2KORYU_400000)) {
+			if (((ri.nType & 0xff) == CPS1_EXTRA_TILES_SF2EBBL_400000) || ((ri.nType & 0xff) == CPS1_EXTRA_TILES_400000) || ((ri.nType & 0xff) == CPS1_EXTRA_TILES_SF2KORYU_400000) || ((ri.nType & 0xff) == CPS1_EXTRA_TILES_SF2B_400000)) {
 				nCpsExtraGfxLen += ri.nLen;
 				nCpsExtraTilesRomNum++;
 			}
@@ -11878,6 +11900,13 @@ static INT32 Cps1LoadRoms(INT32 bLoad)
 					CpsLoadTilesSf2koryuExtra(CpsGfx + 0x400000, i);
 					
 					i += 2;
+				}
+				
+				if ((ri.nType & 0xff) == CPS1_EXTRA_TILES_SF2B_400000) {
+					memset(CpsGfx + 0x400000, 0, nCpsExtraGfxLen);
+					CpsLoadTilesSf2b(CpsGfx + 0x400000, i);
+				
+					i += 4;
 				}
 			}
 		}
@@ -16329,11 +16358,11 @@ struct BurnDriver BurnDrvCpsSf2thndr = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverX BurnDrvCpsSf2b = {
+struct BurnDriver BurnDrvCpsSf2b = {
 	"sf2b", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (bootleg)\0", "Bad dump?, Resets itself", "Capcom", "CPS1",
+	"Street Fighter II - the world warrior (bootleg, 910214 etc)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2bRomInfo, Sf2bRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

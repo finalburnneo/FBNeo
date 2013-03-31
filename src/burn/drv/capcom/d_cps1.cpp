@@ -10000,6 +10000,43 @@ static struct BurnRomInfo Sf2ceuab5RomDesc[] = {
 STD_ROM_PICK(Sf2ceuab5)
 STD_ROM_FN(Sf2ceuab5)
 
+static struct BurnRomInfo Sf2ceuab6RomDesc[] = {
+	{ "s92u_23a.8f",  0x0080000, 0xac44415b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP }, // not in original dump
+	{ "s92_22a.7f",   0x0080000, 0x99f1cca4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP }, // not in original dump
+	{ "6",            0x0020000, 0x1073b7b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+    { "4",            0x0020000, 0x924c6ce2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "7",            0x0020000, 0x8312d055, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // loads over final part of s92u_23a.8f
+	{ "5",            0x0020000, 0xd0580ff2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // loads over final part of s92_22a.7f
+	
+	{ "11",           0x0080000, 0xa887f7d4, BRF_GRA | CPS1_TILES },
+	{ "13",           0x0080000, 0x79fa8bf0, BRF_GRA | CPS1_TILES },
+	{ "12",           0x0080000, 0x9390ff23, BRF_GRA | CPS1_TILES },
+	{ "14",           0x0080000, 0x6a5f153c, BRF_GRA | CPS1_TILES },
+	{ "19",           0x0080000, 0xafb3b589, BRF_GRA | CPS1_TILES },
+	{ "21",           0x0080000, 0x32518120, BRF_GRA | CPS1_TILES },
+	{ "20",           0x0080000, 0x90f2053e, BRF_GRA | CPS1_TILES },	
+	{ "22",           0x0080000, 0xc16579ae, BRF_GRA | CPS1_TILES },	
+	{ "15",           0x0080000, 0x169d85a6, BRF_GRA | CPS1_TILES },
+	{ "23",           0x0080000, 0x0c638630, BRF_GRA | CPS1_TILES },
+	{ "16",           0x0080000, 0x32a3a841, BRF_GRA | CPS1_TILES },	
+	{ "24",           0x0080000, 0x6ee19b94, BRF_GRA | CPS1_TILES },
+
+	{ "3",            0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "2",            0x0020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "1",            0x0020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "9",            0x0020000, 0x94778332, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "17",           0x0020000, 0xf95bc505, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "10",           0x0020000, 0xd1e452d3, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "18",           0x0020000, 0x155824a9, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	
+	{ "8",            0x0010000, 0x13ea1c44, BRF_OPT }, // unknown
+};
+
+STD_ROM_PICK(Sf2ceuab6)
+STD_ROM_FN(Sf2ceuab6)
+
 static struct BurnRomInfo Sf2tlonaRomDesc[] = {
 	// There is a set known as sf2tlond and sf2turyu which contains the same data, but has double-size program roms
 	{ "tl4mt.1",       0x080000, 0x158635ca, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -11642,6 +11679,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ceuab3"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab4"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab5"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
+	{ "sf2ceuab6"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hf"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hfu"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hfj"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -14457,6 +14495,19 @@ static INT32 Sf2ceuab4Init()
 	return Sf2ceuablInit();
 }
 
+static void Sf2ceuab6Callback()
+{
+	memcpy(CpsRom + 0x0c0000, CpsRom + 0x140000, 0x40000);
+}
+
+static INT32 Sf2ceuab6Init()
+{
+	AmendProgRomCallback = Sf2ceuab6Callback;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2ceeabl;
+	
+	return Sf2ceInit();
+}
+
 UINT8 __fastcall Sf2dongbProtReadByte(UINT32 a)
 {
 	switch (a) {
@@ -17018,6 +17069,16 @@ struct BurnDriver BurnDrvCpsSf2ceuab5 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceuab5RomInfo, Sf2ceuab5RomName, NULL, NULL, Sf2ceuablInputInfo, Sf2DIPInfo,
 	Sf2ceuablInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2ceuab6 = {
+	"sf2ceuab6", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II' - champion edition (920313 USA bootleg set 6)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2ceuab6RomInfo, Sf2ceuab6RomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	Sf2ceuab6Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

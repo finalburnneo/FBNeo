@@ -8739,6 +8739,33 @@ static struct BurnRomInfo Sf2rb5RomDesc[] = {
 STD_ROM_PICK(Sf2rb5)
 STD_ROM_FN(Sf2rb5)
 
+static struct BurnRomInfo Sf2rb6RomDesc[] = {
+	{ "cebl_23",       0x080000, 0x1439fcad, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cebl_22",       0x080000, 0x27e80cb1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "cebl_21",       0x080000, 0xf21e3046, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "s92-1m.3a",     0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
+	{ "s92-3m.5a",     0x080000, 0x840289ec, BRF_GRA | CPS1_TILES },
+	{ "s92-2m.4a",     0x080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
+	{ "s92-4m.6a",     0x080000, 0xe2799472, BRF_GRA | CPS1_TILES },
+	{ "s92-5m.7a",     0x080000, 0xba8a2761, BRF_GRA | CPS1_TILES },
+	{ "s92-7m.9a",     0x080000, 0xe584bfb5, BRF_GRA | CPS1_TILES },
+	{ "s92-6m.8a",     0x080000, 0x21e3f87d, BRF_GRA | CPS1_TILES },
+	{ "s92-8m.10a",    0x080000, 0xbefc47df, BRF_GRA | CPS1_TILES },
+	{ "s92-10m.3c",    0x080000, 0x960687d5, BRF_GRA | CPS1_TILES },
+	{ "s92-12m.5c",    0x080000, 0x978ecd18, BRF_GRA | CPS1_TILES },
+	{ "s92-11m.4c",    0x080000, 0xd6ec9a0a, BRF_GRA | CPS1_TILES },
+	{ "s92-13m.6c",    0x080000, 0xed2c67f6, BRF_GRA | CPS1_TILES },
+
+	{ "s92_09.11a",    0x010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "s92_18.11c",    0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "s92_19.12c",    0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Sf2rb6)
+STD_ROM_FN(Sf2rb6)
+
 static struct BurnRomInfo Sf2redRomDesc[] = {
 	{ "sf2red.23",     0x080000, 0x40276abb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "sf2red.22",     0x080000, 0x18daf387, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -11525,6 +11552,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2rb3"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2rb4"      , HACK_B_1    , mapper_S9263B, 0, NULL                },
 	{ "sf2rb5"      , HACK_B_1    , mapper_S9263B, 0, NULL                },
+	{ "sf2rb6"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2red"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2red2"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2v004"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -13644,6 +13672,29 @@ static INT32 Sf2rb2Init()
 	SekClose();
 
 	return nRet;
+}
+
+static void Sf2rb6Callback()
+{
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x180000);
+	
+	if (pTemp) {
+		memcpy(pTemp, CpsRom, 0x180000);
+		memcpy(CpsRom + 0x080000, pTemp + 0x000000, 0x40000);
+		memcpy(CpsRom + 0x140000, pTemp + 0x040000, 0x40000);
+		memcpy(CpsRom + 0x100000, pTemp + 0x080000, 0x40000);
+		memcpy(CpsRom + 0x040000, pTemp + 0x0c0000, 0x40000);
+		memcpy(CpsRom + 0x000000, pTemp + 0x100000, 0x40000);
+		memcpy(CpsRom + 0x0c0000, pTemp + 0x140000, 0x40000);
+		BurnFree(pTemp);
+	}
+}
+
+static INT32 Sf2rb6Init()
+{
+	AmendProgRomCallback = Sf2rb6Callback;
+
+	return Sf2ceInit();
 }
 
 static void Sf2yycCallback()
@@ -16538,6 +16589,16 @@ struct BurnDriver BurnDrvCpsSf2rb5 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCpsSf2rb6 = {
+	"sf2rb6", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II' - champion edition (Rainbow bootleg set 6, 920313 etc)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2rb6RomInfo, Sf2rb6RomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	Sf2rb6Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsSf2red = {
 	"sf2red", "sf2ce", NULL, NULL, "1992",
 	"Street Fighter II' - champion edition (Red Wave bootleg set 1, 920313 etc)\0", NULL, "bootleg", "CPS1",
@@ -16590,7 +16651,7 @@ struct BurnDriver BurnDrvCpsSf2v0043 = {
 
 struct BurnDriver BurnDrvCpsSf2dongb = {
 	"sf2dongb", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II': Champion Edition (Dongfang Bubai protection bootleg, etc 920313) \0", NULL, "bootleg", "CPS1",
+	"Street Fighter II': Champion Edition (Dongfang Bubai protection bootleg, etc 920313)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2dongbRomInfo, Sf2dongbRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,

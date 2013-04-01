@@ -10067,6 +10067,59 @@ static struct BurnRomInfo Sf2ceuab6RomDesc[] = {
 STD_ROM_PICK(Sf2ceuab6)
 STD_ROM_FN(Sf2ceuab6)
 
+static struct BurnRomInfo Sf2ceucblRomDesc[] = {
+	{ "s92u_23c.8f",   0x080000, 0x0a8b6aa2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP }, // not included in dump (matches first half of ym.u23)
+	{ "s92_22c.7f",    0x080000, 0x5fd8630b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP }, // not included in dump (matches first half of ym.u22)
+	{ "s92_21a.6f",    0x080000, 0x925a7877, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP }, // not included in dump (nearly matches first half of ym.u21)
+	{ "ym.u23",        0x040000, 0xd6b39cc3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP }, // this looks half-sized (loading over the top of above roms)
+	{ "ym.u22",        0x040000, 0xefa0a775, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP }, // this looks half-sized (loading over the top of above roms)
+	{ "ym.u21",        0x040000, 0xc812b7b2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP }, // this looks half-sized (loading over the top of above roms)
+	
+	// not in the original dump (see below)
+	{ "s92_01.bin",   0x0080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
+	{ "s92_02.bin",   0x0080000, 0x840289ec, BRF_GRA | CPS1_TILES },
+	{ "s92_03.bin",   0x0080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
+	{ "s92_04.bin",   0x0080000, 0xe2799472, BRF_GRA | CPS1_TILES },
+	{ "s92_05.bin",   0x0080000, 0xba8a2761, BRF_GRA | CPS1_TILES },
+	{ "s92_06.bin",   0x0080000, 0xe584bfb5, BRF_GRA | CPS1_TILES },
+	{ "s92_07.bin",   0x0080000, 0x21e3f87d, BRF_GRA | CPS1_TILES },
+	{ "s92_08.bin",   0x0080000, 0xbefc47df, BRF_GRA | CPS1_TILES },
+	{ "s92_10.bin",   0x0080000, 0x960687d5, BRF_GRA | CPS1_TILES },
+	{ "s92_11.bin",   0x0080000, 0x978ecd18, BRF_GRA | CPS1_TILES },
+	{ "s92_12.bin",   0x0080000, 0xd6ec9a0a, BRF_GRA | CPS1_TILES },
+	{ "s92_13.bin",   0x0080000, 0xed2c67f6, BRF_GRA | CPS1_TILES },
+
+	{ "s92_09.11a",    0x010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM }, // this was missing from dump, but the pcm data is the same, so assuming the z80 program is too
+
+	{ "2.bin",         0x040000, 0x06dec6cd, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	// these weren't in this dump - but given the presence of the bad graphic rom dumps (from sf2ceuab5), I think these should be here too
+	{ "9.bin",         0x020000, 0x94778332, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "17.bin",        0x020000, 0xf95bc505, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "10.bin",        0x020000, 0xd1e452d3, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	{ "18.bin",        0x020000, 0x155824a9, BRF_GRA | CPS1_EXTRA_TILES_SF2EBBL_400000 },
+	
+	// original gfx files (these are in similar format to the tat-x gfx roms with each half swapped,
+	// however, only about 60% of the data is the same and each of these compress to approx. 52-55%
+	// of the others, I believe these are bad dumps
+	// romcmp also reports BADADDR -xxx-xxxxxxxxxxxxxx for each one
+	{ "11.bin",        0x080000, 0xc5430b62, BRF_OPT },
+	{ "13.bin",        0x080000, 0xe57f4114, BRF_OPT },
+	{ "12.bin",        0x080000, 0x9a3672e9, BRF_OPT },
+	{ "14.bin",        0x080000, 0x36b69ebd, BRF_OPT },
+	{ "19.bin",        0x080000, 0xadb33f90, BRF_OPT },
+	{ "21.bin",        0x080000, 0xfacffca9, BRF_OPT },
+	{ "20.bin",        0x080000, 0x28b4c2d1, BRF_OPT },
+	{ "22.bin",        0x080000, 0xcb49e6a7, BRF_OPT },
+	{ "15.bin",        0x080000, 0x8c08c9bd, BRF_OPT },
+	{ "23.bin",        0x080000, 0xf613febd, BRF_OPT },
+	{ "16.bin",        0x080000, 0xf23b588b, BRF_OPT },
+	{ "24.bin",        0x080000, 0xb4f16226, BRF_OPT },
+};
+
+STD_ROM_PICK(Sf2ceucbl)
+STD_ROM_FN(Sf2ceucbl)
+
 static struct BurnRomInfo Sf2tlonaRomDesc[] = {
 	// There is a set known as sf2tlond and sf2turyu which contains the same data, but has double-size program roms
 	{ "tl4mt.1",       0x080000, 0x158635ca, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -11711,6 +11764,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ceuab4"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab5"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab6"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2ceucbl"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hf"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hfu"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hfj"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -14546,6 +14600,20 @@ static INT32 Sf2ceuab6Init()
 	return Sf2ceInit();
 }
 
+static void Sf2ceucblCallback()
+{
+	memcpy(CpsRom + 0x000000, CpsRom + 0x180000, 0x40000);
+	memcpy(CpsRom + 0x080000, CpsRom + 0x1c0000, 0x40000);
+	memcpy(CpsRom + 0x100000, CpsRom + 0x200000, 0x40000);
+}
+
+static INT32 Sf2ceucblInit()
+{
+	AmendProgRomCallback = Sf2ceucblCallback;
+	
+	return Sf2ceInit();
+}
+
 UINT8 __fastcall Sf2dongbProtReadByte(UINT32 a)
 {
 	switch (a) {
@@ -17127,6 +17195,16 @@ struct BurnDriver BurnDrvCpsSf2ceuab6 = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceuab6RomInfo, Sf2ceuab6RomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	Sf2ceuab6Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2ceucbl = {
+	"sf2ceucbl", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II' - champion edition (920803 USA bootleg)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2ceucblRomInfo, Sf2ceucblRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	Sf2ceucblInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

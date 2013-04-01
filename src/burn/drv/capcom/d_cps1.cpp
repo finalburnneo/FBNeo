@@ -10024,7 +10024,7 @@ static struct BurnRomInfo Sf2ceuab5RomDesc[] = {
 	{ "15.bin",        0x080000, 0x8c08c9bd, BRF_OPT },
 	{ "23.bin",        0x080000, 0xf613febd, BRF_OPT },
 	{ "16.bin",        0x080000, 0xf23b588b, BRF_OPT },
-	{ "24.bin",        0x080000, 0xb4f16226, BRF_OPT },
+	{ "24(__sf2ceuab5).bin",        0x080000, 0xb4f16226, BRF_OPT },
 };
 
 STD_ROM_PICK(Sf2ceuab5)
@@ -10114,7 +10114,7 @@ static struct BurnRomInfo Sf2ceucblRomDesc[] = {
 	{ "15.bin",        0x080000, 0x8c08c9bd, BRF_OPT },
 	{ "23.bin",        0x080000, 0xf613febd, BRF_OPT },
 	{ "16.bin",        0x080000, 0xf23b588b, BRF_OPT },
-	{ "24.bin",        0x080000, 0xb4f16226, BRF_OPT },
+	{ "24(__sf2ceucbl).bin", 0x080000, 0xb4f16226, BRF_OPT },
 };
 
 STD_ROM_PICK(Sf2ceucbl)

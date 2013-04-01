@@ -10096,7 +10096,7 @@ static struct BurnRomInfo Hsf2daRomDesc[] = {
 	{ "hs2.01",        0x020000, 0xc1a13786, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 	{ "hs2.02",        0x020000, 0x2d8794aa, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "hs2.11m",       0x400000, 0x5cb00496, CPS2_QSND | BRF_SND },
+	{ "hs2(__hsf2da).11m", 0x400000, 0x5cb00496, CPS2_QSND | BRF_SND },
 	{ "hs2.12m",       0x400000, 0x8f298007, CPS2_QSND | BRF_SND },
 };
 

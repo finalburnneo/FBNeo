@@ -8207,6 +8207,11 @@ STD_ROM_PICK(Sf2b)
 STD_ROM_FN(Sf2b)
 
 static struct BurnRomInfo Sf2b2RomDesc[] = {
+	//  program roms u195 and u221 were missing from the PCB
+//  { "prg.u195",      0x040000, 0x00000000, BRF_ESS | BRF_PRG | BRF_NODUMP }, // missing from dump
+//	{ "prg.u221",      0x040000, 0x00000000, BRF_ESS | BRF_PRG | BRF_NODUMP }, // missing from dump
+// Instead we use some programs rom from sf2eb
+
 	{ "sf2e_30b.11e",  0x020000, 0x57bd7051, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // missing from dump 
 	{ "sf2e_37b.11f",  0x020000, 0x62691cdd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // missing from dump 
 	{ "sf2e_31b.12e",  0x020000, 0xa673143d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // missing from dump 

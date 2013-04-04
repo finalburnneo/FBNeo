@@ -14945,6 +14945,12 @@ static INT32 WofhInit()
 	return nRet;
 }
 
+static void SgyxzPatch()
+{
+	// This fixes sprite ram clearing - shouldn't be necessary, but used for now pending understanding of the underlying issue
+	CpsRom[0x2449] = 0x07;
+}
+
 static void SgyxzCallback()
 {
 	UINT8 *pTemp = (UINT8*)BurnMalloc(0x40000);
@@ -14955,6 +14961,8 @@ static void SgyxzCallback()
 		memcpy(CpsRom + 0x80000, pTemp           , 0x40000);
 		BurnFree(pTemp);
 	}
+	
+	SgyxzPatch();
 }
 
 static void __fastcall SgyxzSpriteRamWriteLong(UINT32 a, UINT32 d)

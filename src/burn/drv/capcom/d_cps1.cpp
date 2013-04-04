@@ -12699,6 +12699,12 @@ static INT32 FfightblInit()
 	return nRet;
 }
 
+static void FcrashPatch()
+{
+	// This fixes sprite ram clearing - shouldn't be necessary, but used for now pending understanding of the underlying issue
+	CpsRom[0x2611] = 0x07;
+}
+
 static INT32 FcrashInit()
 {
 	Cps1DisablePSnd = 1;
@@ -12707,6 +12713,7 @@ static INT32 FcrashInit()
 	CpsLayer2XOffs = -0x3c;
 	CpsLayer3XOffs = 0xffc0;
 	
+	AmendProgRomCallback = FcrashPatch;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesFcrash;
 	Cps1ObjGetCallbackFunction = FcrashObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
@@ -13287,6 +13294,12 @@ void __fastcall Kodb98WriteWord(UINT32 a, UINT16 d)
 	bprintf(PRINT_IMPORTANT, _T("Unknown value written at %x %x\n"), a, d);
 }
 
+static void KodbPatch()
+{
+	// This fixes sprite ram clearing - shouldn't be necessary, but used for now pending understanding of the underlying issue
+	CpsRom[0x953] = 0x07;
+}
+
 static INT32 KodbInit()
 {
 	INT32 nRet = 0;
@@ -13294,6 +13307,7 @@ static INT32 KodbInit()
 	Kodb = 1;
 	bCpsUpdatePalEveryFrame = 1;
 	CpsDisableRowScroll = 1;
+	AmendProgRomCallback = KodbPatch;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesKodb;
 	Cps1ObjGetCallbackFunction = KodbObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;

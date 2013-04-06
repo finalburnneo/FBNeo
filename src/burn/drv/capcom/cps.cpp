@@ -1172,6 +1172,15 @@ INT32 CpsLoadTilesDinopic(INT32 nStart)
 	return 0;
 }
 
+INT32 CpsLoadTilesSlampic(INT32 nStart)
+{
+	CpsLoadTilesBootleg(CpsGfx + 0x000000, nStart + 0);
+	CpsLoadTilesBootleg(CpsGfx + 0x200000, nStart + 4);
+	CpsLoadTilesBootleg(CpsGfx + 0x400000, nStart + 8);
+	
+	return 0;
+}
+
 INT32 CpsLoadTilesKodb(INT32 nStart)
 {
 	CpsLoadTilesByte(CpsGfx, nStart);

@@ -10518,21 +10518,25 @@ static struct BurnRomInfo SlampicRomDesc[] = {
 	{ "4.bin",         0x080000, 0xd14d0e42, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "2.bin",         0x080000, 0x38063cd8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	
 
-	{ "mb-1m.3a",      0x080000, 0x41468e06, BRF_GRA | CPS1_TILES },
-	{ "mb-3m.5a",      0x080000, 0xf453aa9e, BRF_GRA | CPS1_TILES },
-	{ "mb-2m.4a",      0x080000, 0x2ffbfea8, BRF_GRA | CPS1_TILES },
-	{ "mb-4m.6a",      0x080000, 0x1eb9841d, BRF_GRA | CPS1_TILES },
-	{ "mb-5m.7a",      0x080000, 0x506b9dc9, BRF_GRA | CPS1_TILES },
-	{ "mb-7m.9a",      0x080000, 0xaff8c2fb, BRF_GRA | CPS1_TILES },
-	{ "mb-6m.8a",      0x080000, 0xb76c70e9, BRF_GRA | CPS1_TILES },
-	{ "mb-8m.10a",     0x080000, 0xe60c9556, BRF_GRA | CPS1_TILES },
-	{ "mb-10m.3c",     0x080000, 0x97976ff5, BRF_GRA | CPS1_TILES },
-	{ "mb-12m.5c",     0x080000, 0xb350a840, BRF_GRA | CPS1_TILES },
-	{ "mb-11m.4c",     0x080000, 0x8fb94743, BRF_GRA | CPS1_TILES },
-	{ "mb-13m.6c",     0x080000, 0xda810d5f, BRF_GRA | CPS1_TILES },
+	{ "9.bin",         0x080000, 0xdc140351, BRF_GRA | CPS1_TILES },
+	{ "8.bin",         0x080000, 0x9ae88035, BRF_GRA | CPS1_TILES },
+	{ "7.bin",         0x080000, 0x5321f759, BRF_GRA | CPS1_TILES },
+	{ "6.bin",         0x080000, 0xc8eb5f76, BRF_GRA | CPS1_TILES },
+	{ "17.bin",        0x080000, 0x21652214, BRF_GRA | CPS1_TILES },
+	{ "16.bin",        0x080000, 0xd49d2eb0, BRF_GRA | CPS1_TILES },
+	{ "15.bin",        0x080000, 0x0d98bfd6, BRF_GRA | CPS1_TILES },
+	{ "14.bin",        0x080000, 0x807284f1, BRF_GRA | CPS1_TILES },
+	{ "13.bin",        0x080000, 0x293579c5, BRF_GRA | CPS1_TILES },
+	{ "12.bin",        0x080000, 0xc3727ce7, BRF_GRA | CPS1_TILES },
+	{ "11.bin",        0x080000, 0x2919883b, BRF_GRA | CPS1_TILES },
+	{ "10.bin",        0x080000, 0xf538e620, BRF_GRA | CPS1_TILES },
 	
 	// not in dump but the game expects to read it as protection, maybe the PIC writes to the same area?
 	{ "mb_qa.5k",      0x020000, 0xe21a03c4, BRF_ESS | BRF_PRG | CPS1_Z80_PROGRAM },
+	
+	{ "pic16c57-xt-p.bin", 0x002000, 0xaeae5ccc, BRF_PRG | CPS1_PIC },
+
+	{ "18.bin",        0x080000, 0x73a0c11c, BRF_SND | CPS1_OKIM6295_SAMPLES },
 };
 
 STD_ROM_PICK(Slampic)
@@ -14857,11 +14861,12 @@ static INT32 SlampicInit()
 	
 	Cps1DisablePSnd = 1;
 	CpsBootlegEEPROM = 1;
-
 	bCpsUpdatePalEveryFrame = 1;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesSlampic;
 	Cps1ObjGetCallbackFunction = Sf2mdtObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
-			
+	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
+	
 	nRet = TwelveMhzInit();
 	
 	for (INT32 i = 0x7fff; i >= 0; i--) {

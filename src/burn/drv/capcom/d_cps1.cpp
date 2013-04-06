@@ -10535,6 +10535,7 @@ static struct BurnRomInfo SlampicRomDesc[] = {
 	{ "mb_qa.5k",      0x020000, 0xe21a03c4, BRF_ESS | BRF_PRG | CPS1_Z80_PROGRAM },
 	
 	{ "pic16c57-xt-p.bin", 0x002000, 0xaeae5ccc, BRF_PRG | CPS1_PIC },
+	{ "pic16c57-xt-p.hex", 0x005a1e, 0x61f8607e, BRF_OPT }, // hex dump of PIC
 
 	{ "18.bin",        0x080000, 0x73a0c11c, BRF_SND | CPS1_OKIM6295_SAMPLES },
 };

@@ -10512,6 +10512,32 @@ static struct BurnRomInfo MbombrdjRomDesc[] = {
 STD_ROM_PICK(Mbombrdj)
 STD_ROM_FN(Mbombrdj)
 
+static struct BurnRomInfo SlampicRomDesc[] = {
+	{ "5.bin",         0x080000, 0x7dba63cd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "3.bin",         0x080000, 0xd86671f3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "4.bin",         0x080000, 0xd14d0e42, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "2.bin",         0x080000, 0x38063cd8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	
+
+	{ "mb-1m.3a",      0x080000, 0x41468e06, BRF_GRA | CPS1_TILES },
+	{ "mb-3m.5a",      0x080000, 0xf453aa9e, BRF_GRA | CPS1_TILES },
+	{ "mb-2m.4a",      0x080000, 0x2ffbfea8, BRF_GRA | CPS1_TILES },
+	{ "mb-4m.6a",      0x080000, 0x1eb9841d, BRF_GRA | CPS1_TILES },
+	{ "mb-5m.7a",      0x080000, 0x506b9dc9, BRF_GRA | CPS1_TILES },
+	{ "mb-7m.9a",      0x080000, 0xaff8c2fb, BRF_GRA | CPS1_TILES },
+	{ "mb-6m.8a",      0x080000, 0xb76c70e9, BRF_GRA | CPS1_TILES },
+	{ "mb-8m.10a",     0x080000, 0xe60c9556, BRF_GRA | CPS1_TILES },
+	{ "mb-10m.3c",     0x080000, 0x97976ff5, BRF_GRA | CPS1_TILES },
+	{ "mb-12m.5c",     0x080000, 0xb350a840, BRF_GRA | CPS1_TILES },
+	{ "mb-11m.4c",     0x080000, 0x8fb94743, BRF_GRA | CPS1_TILES },
+	{ "mb-13m.6c",     0x080000, 0xda810d5f, BRF_GRA | CPS1_TILES },
+	
+	// not in dump but the game expects to read it as protection, maybe the PIC writes to the same area?
+	{ "mb_qa.5k",      0x020000, 0xe21a03c4, BRF_ESS | BRF_PRG | CPS1_Z80_PROGRAM },
+};
+
+STD_ROM_PICK(Slampic)
+STD_ROM_FN(Slampic)
+
 static struct BurnRomInfo StriderRomDesc[] = {
 	{ "30.11f",        0x020000, 0xda997474, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "35.11h",        0x020000, 0x5463aaa3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -11781,6 +11807,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "mbomberj"    , CPS_B_21_QS4, mapper_MB63B , 0, slammast_decode     },
 	{ "mbombrd"     , CPS_B_21_QS5, mapper_MB63B , 0, slammast_decode     },
 	{ "mbombrdj"    , CPS_B_21_QS5, mapper_MB63B , 0, slammast_decode     },
+	{ "slampic"     , CPS_B_21_QS4, mapper_MB63B , 0, NULL                },
 	{ "strider"     , CPS_B_01    , mapper_ST24M1, 1, NULL                },
 	{ "striderua"   , CPS_B_01    , mapper_ST24M1, 1, NULL                },
 	{ "striderjr"   , CPS_B_21_DEF, mapper_ST24M1, 1, NULL                },
@@ -14740,6 +14767,128 @@ static INT32 SfzchInit()
 	return nRet;
 }
 
+UINT8 __fastcall SlampicF18Read(UINT32)
+{
+	return 0xff;
+}
+
+void __fastcall SlampicScrollWrite(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x980000: {
+			// scroll1 y
+			*((UINT16*)(CpsReg + 0x0e)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x980002: {
+			// scroll1 x
+			*((UINT16*)(CpsReg + 0x0c)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
+			return;
+		}
+		
+		case 0x980004: {
+			// scroll2 y
+			*((UINT16*)(CpsReg + 0x12)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x980006: {
+			// scroll2 x
+			*((UINT16*)(CpsReg + 0x10)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
+			return;
+		}
+		
+		case 0x980008: {
+			// scroll3 y
+			*((UINT16*)(CpsReg + 0x16)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x98000a: {
+			// scroll3 x
+			*((UINT16*)(CpsReg + 0x14)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
+			return;
+		}
+		
+		case 0x98000c: {
+			// scroll 2 ram offset
+			*((UINT16*)(CpsReg + 0x04)) = BURN_ENDIAN_SWAP_INT16(d << 4);
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Write Word %x, %x\n"), a, d);
+		}
+	}
+}
+
+void __fastcall SlampicFFWriteByte(UINT32 a, UINT8 d)
+{
+	CpsRamFF[((a & 0xffff) ^ 1)] = d;
+}
+
+void __fastcall SlampicFFWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0xff8d74: {
+			*((UINT16*)(CpsReg + MaskAddr[1])) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
+		}
+		
+		case 0xff8d76: {
+			*((UINT16*)(CpsReg + MaskAddr[2])) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
+		}
+		
+		case 0xff8d78: {
+			*((UINT16*)(CpsReg + MaskAddr[3])) = BURN_ENDIAN_SWAP_INT16(d);
+			break;
+		}
+	}
+	
+	UINT16 *RAM = (UINT16*)CpsRamFF;
+	RAM[((a & 0xffff) >> 1)] = d;
+}
+
+static INT32 SlampicInit()
+{
+	INT32 nRet = 0;
+	
+	Cps1DisablePSnd = 1;
+	CpsBootlegEEPROM = 1;
+
+	bCpsUpdatePalEveryFrame = 1;
+	Cps1ObjGetCallbackFunction = Sf2mdtObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+			
+	nRet = TwelveMhzInit();
+	
+	for (INT32 i = 0x7fff; i >= 0; i--) {
+		CpsZRom[(i << 1) + 0] = CpsZRom[i];
+		CpsZRom[(i << 1) + 1] = 0xff;
+	}
+	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
+	
+	SekOpen(0);
+	SekMapMemory(CpsZRom, 0xf00000, 0xf0ffff, SM_ROM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x992000, 0x993fff, SM_RAM);
+	SekMapHandler(1, 0xf18000, 0xf19fff, SM_READ);
+	SekSetReadByteHandler(1, SlampicF18Read);
+	SekMapHandler(2, 0xf1e000, 0xf1ffff, SM_READ);
+	SekSetReadByteHandler(2, SlampicF18Read);
+	SekMapHandler(3, 0x980000, 0x980fff, SM_WRITE);
+	SekSetWriteWordHandler(3, SlampicScrollWrite);
+	SekMapHandler(4, 0xff0000, 0xffffff, SM_WRITE);
+	SekSetWriteByteHandler(4, SlampicFFWriteByte);
+	SekSetWriteWordHandler(4, SlampicFFWriteWord);
+	SekClose();
+	
+	return nRet;
+}
+
 static INT32 StriderInit()
 {
 	INT32 nRet = 0;
@@ -17322,6 +17471,16 @@ struct BurnDriver BurnDrvCpsMbombrdj = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, 0,
 	NULL, MbombrdjRomInfo, MbombrdjRomName, NULL, NULL, SlammastInputInfo, SlammastDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSlampic = {
+	"slampic", "slammast", NULL, NULL, "1993",
+	"Saturday Night Slam Masters (bootleg (with PIC16c57), 930713 etc)\0", "No Sound", "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, 0,
+	NULL, SlampicRomInfo, SlampicRomName, NULL, NULL, SlammastInputInfo, SlammastDIPInfo,
+	SlampicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

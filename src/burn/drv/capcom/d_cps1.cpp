@@ -13345,11 +13345,11 @@ static INT32 KodbInit()
 	
 	nRet = DrvInit();
 	
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x3000);
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
 	SekOpen(0);
-	SekMapMemory(CpsBootlegSpriteRam, 0x900000, 0x902fff, SM_RAM);
-	SekMapMemory(CpsBootlegSpriteRam, 0x904000, 0x906fff, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x900000, 0x903fff, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x904000, 0x907fff, SM_RAM);
 	SekMapHandler(1, 0x980000, 0x99ffff, SM_WRITE);
 	SekSetWriteByteHandler(1, Kodb98WriteByte);
 	SekSetWriteWordHandler(1, Kodb98WriteWord);
@@ -14874,12 +14874,11 @@ static INT32 SlampicInit()
 		CpsZRom[(i << 1) + 1] = 0xff;
 	}
 	
-	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x2000);
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
 	
 	SekOpen(0);
 	SekMapMemory(CpsZRom, 0xf00000, 0xf0ffff, SM_ROM);
-	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x991fff, SM_RAM);
-	SekMapMemory(CpsBootlegSpriteRam, 0x992000, 0x993fff, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, SM_RAM);
 	SekMapHandler(1, 0xf18000, 0xf19fff, SM_READ);
 	SekSetReadByteHandler(1, SlampicF18Read);
 	SekMapHandler(2, 0xf1e000, 0xf1ffff, SM_READ);

@@ -38,6 +38,8 @@
  *     the W register.                                                      *
  *   - 'tris' instruction no longer modifies Port-C on PIC models that      *
  *     do not have Port-C implemented.                                      *
+ *  TLP (07-Sep-2009) Ver 1.14                                              *
+ *   - Edge sense control for the T0 count input was incorrectly reversed   *
  *                                                                          *
  *                                                                          *
  *  **** Notes: ****                                                        *
@@ -131,8 +133,8 @@ static const unsigned cycles_000_other[16]=
 
 #define ADDR	(R.opcode.b.l & 0x1f)
 
-#define POSITIVE_EDGE_T0  (( (int)(T0_in-old_T0) > 0) ? 1 : 0)
-#define NEGATIVE_EDGE_T0  (( (int)(old_T0-T0_in) > 0) ? 1 : 0)
+#define  RISING_EDGE_T0  (( (int)(T0_in-old_T0) > 0) ? 1 : 0)
+#define FALLING_EDGE_T0  (( (int)(T0_in-old_T0) < 0) ? 1 : 0)
 
 
 /********  The following is the Status Flag register definition.  *********/
@@ -824,7 +826,7 @@ static void pic16C5x_update_timer(int counts)
 
 int pic16c5xRun(int cycles)
 {
-	int T0_in;
+	UINT8 T0_in;
 	pic16C5x_icount = cycles;
 
 	do
@@ -856,13 +858,14 @@ int pic16c5xRun(int cycles)
 
 			if (T0CS) {						/* Count mode */
 				T0_in = S_T0_IN;
-				if (T0SE) {					/* Count rising edge */
-					if (POSITIVE_EDGE_T0) {
+				if (T0_in) T0_in = 1;
+				if (T0SE) {					/* Count falling edge T0 input */
+					if (FALLING_EDGE_T0) {
 						pic16C5x_update_timer(1);
 					}
 				}
-				else {						/* Count falling edge */
-					if (NEGATIVE_EDGE_T0) {
+				else {						/* Count rising edge T0 input */
+					if (RISING_EDGE_T0) {
 						pic16C5x_update_timer(1);
 					}
 				}

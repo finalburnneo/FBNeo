@@ -1,5 +1,6 @@
 #include "tiles_generic.h"
 #include "m68000_intf.h"
+#include "pic16c5x_intf.h"
 #include "msm6295.h"
 
 static UINT8 DrvInputPort0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -39,6 +40,7 @@ static UINT16 DrvBgScrollY = 0;
 static UINT8 DrvSoundCommand = 0;
 static UINT8 DrvSoundFlag = 0;
 static UINT8 DrvOkiControl = 0;
+static UINT8 DrvOkiCommand = 0;
 static UINT8 DrvOldOkiBank = 0;
 static UINT8 DrvOkiBank = 0;
 
@@ -180,6 +182,10 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 	
+	pic16c5xReset();
+	
+	MSM6295Reset(0);
+	
 	DrvFgScrollX = 0;
 	DrvFgScrollY = 0;
 	DrvCharScrollX = 0;
@@ -192,6 +198,7 @@ static INT32 DrvDoReset()
 	DrvSoundCommand = 0;
 	DrvSoundFlag = 0;
 	DrvOkiControl = 0;
+	DrvOkiCommand = 0;
 	DrvOldOkiBank = 0;
 	DrvOkiBank = 0;
 
@@ -253,6 +260,8 @@ void __fastcall DrvWriteByte(UINT32 a, UINT8 d)
 			DrvSoundCommand = d;
 			DrvSoundFlag = 1;
 			// space.device().execute().yield();
+			INT32 cycles = (SekTotalCycles() / 4) - nCyclesDone[1];
+			nCyclesDone[1] += pic16c5xRun(cycles);
 			return;
 		}
 		
@@ -351,71 +360,66 @@ void __fastcall DrvWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-static UINT8 playmark_asciitohex(UINT8 data)
+UINT8 PlaymarkSoundReadPort(UINT16 Port)
 {
-	// Convert ASCII data to HEX
+	switch (Port) {
+		case 0x01: {
+			UINT8 Data = 0;
 
-	if ((data >= 0x30) && (data < 0x3a)) data -= 0x30;
-	data &= 0xdf;           // remove case sensitivity */
-	if ((data >= 0x41) && (data < 0x5b)) data -= 0x37;
-
-	return data;
-}
-
-static void DrvPICHexConvert()
-{
-	UINT8 *playmark_PICROM_HEX = (UINT8*)BurnMalloc(0x2d4c);
-	UINT16 *playmark_PICROM = (UINT16*)DrvPicRom;
-	INT32 Data;
-	UINT16 SrcPos = 0;
-	UINT16 DstPos = 0;
-	UINT8 DataHi, DataLo;
-	
-	BurnLoadRom(playmark_PICROM_HEX, 2, 1);
-
-	DrvSoundFlag = 0;
-
-	// Convert the PIC16C57 ASCII HEX dumps to pure HEX
-	do {
-		if ((playmark_PICROM_HEX[SrcPos + 0] == ':') && (playmark_PICROM_HEX[SrcPos + 1] == '1') && (playmark_PICROM_HEX[SrcPos + 2] == '0')) {
-			SrcPos += 9;
-
-			for (INT32 Offs = 0; Offs < 32; Offs += 4) {
-				DataHi = playmark_asciitohex((playmark_PICROM_HEX[SrcPos + Offs + 0]));
-				DataLo = playmark_asciitohex((playmark_PICROM_HEX[SrcPos + Offs + 1]));
-				if ((DataHi <= 0x0f) && (DataLo <= 0x0f)) {
-					Data = (DataHi <<  4) | (DataLo << 0);
-					DataHi = playmark_asciitohex((playmark_PICROM_HEX[SrcPos + Offs + 2]));
-					DataLo = playmark_asciitohex((playmark_PICROM_HEX[SrcPos + Offs + 3]));
-
-					if ((DataHi <= 0x0f) && (DataLo <= 0x0f)) {
-						Data |= (DataHi << 12) | (DataLo << 8);
-						playmark_PICROM[DstPos] = Data;
-						DstPos += 1;
-					}
+			if ((DrvOkiControl & 0x38) == 0x30) {
+				Data = DrvSoundCommand;
+			} else {
+				if ((DrvOkiControl & 0x38) == 0x28) {
+					Data = MSM6295ReadStatus(0) & 0x0f;
 				}
 			}
-			SrcPos += 32;
+
+			return Data;
 		}
-
-		// Get the PIC16C57 Config register data
-
-		if ((playmark_PICROM_HEX[SrcPos + 0] == ':') && (playmark_PICROM_HEX[SrcPos + 1] == '0') && (playmark_PICROM_HEX[SrcPos + 2] == '2') && (playmark_PICROM_HEX[SrcPos + 3] == '1')) {
-			SrcPos += 9;
-
-			DataHi = playmark_asciitohex((playmark_PICROM_HEX[SrcPos + 0]));
-			DataLo = playmark_asciitohex((playmark_PICROM_HEX[SrcPos + 1]));
-			Data = (DataHi <<  4) | (DataLo << 0);
-			DataHi = playmark_asciitohex((playmark_PICROM_HEX[SrcPos + 2]));
-			DataLo = playmark_asciitohex((playmark_PICROM_HEX[SrcPos + 3]));
-			Data |= (DataHi << 12) | (DataLo << 8);
-
-//			pic16c5x_set_config(machine().device("audiocpu"), data);
-
-			SrcPos = 0x7fff;       // Force Exit
+		
+		case 0x02: {
+			if (DrvSoundFlag) {
+				DrvSoundFlag = 0;
+				return 0x00;
+			}
+			return 0x40;
 		}
-		SrcPos += 1;
-	} while (SrcPos < 0x2d4c);
+		
+		case 0x10: {
+			return 0;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Sound Read Port %x\n"), Port);
+		}
+	}
+
+	return 0;
+}
+
+void PlaymarkSoundWritePort(UINT16 Port, UINT8 Data)
+{
+	switch (Port & 0xff) {
+		case 0x01: {
+			DrvOkiCommand = Data;
+			return;
+		}
+		
+		case 0x02: {
+			DrvOkiControl = Data;
+			bprintf(PRINT_NORMAL, _T("Oki Control %x\n"), DrvOkiControl);
+
+			if ((Data & 0x38) == 0x18) {
+				MSM6295Command(0, DrvOkiCommand);
+				bprintf(PRINT_NORMAL, _T("Play %x\n"), DrvOkiCommand);
+			}
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Sound Write Port %x, %x\n"), Port, Data);
+		}
+	}
 }
 
 static INT32 DrvCharPlaneOffsets[4]   = { 0x600000, 0x400000, 0x200000, 0 };
@@ -443,6 +447,8 @@ static INT32 DrvInit()
 	
 	nRet = BurnLoadRom(Drv68kRom  + 0x00001, 0, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Drv68kRom  + 0x00000, 1, 2); if (nRet != 0) return 1;
+	
+	if (BurnLoadPicROM(DrvPicRom, 2, 0x2d4c)) return 1;
 	
 	nRet = BurnLoadRom(DrvTempGfx + 0x00000, 3, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempGfx + 0x40000, 4, 1); if (nRet != 0) return 1;
@@ -478,8 +484,13 @@ static INT32 DrvInit()
 	SekSetWriteWordHandler(0, DrvWriteWord);
 	SekClose();
 	
-	DrvPICHexConvert();
-
+	pic16c5xInit(0x16C57, DrvPicRom);
+	pPic16c5xReadPort = PlaymarkSoundReadPort;
+	pPic16c5xWritePort = PlaymarkSoundWritePort;
+	
+	MSM6295Init(0, 1000000 / 132, 1);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	
 	GenericTilesInit();
 
 	DrvDoReset();
@@ -490,6 +501,8 @@ static INT32 DrvInit()
 static INT32 DrvExit()
 {
 	SekExit();
+	pic16c5xExit();
+	MSM6295Exit(0);
 	
 	GenericTilesExit();
 	
@@ -507,6 +520,7 @@ static INT32 DrvExit()
 	DrvSoundCommand = 0;
 	DrvSoundFlag = 0;
 	DrvOkiControl = 0;
+	DrvOkiCommand = 0;
 	DrvOldOkiBank = 0;
 	DrvOkiBank = 0;
 	
@@ -723,14 +737,15 @@ static void DrvRender()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 10;
+	INT32 nInterleave = 100;
+	INT32 nSoundBufferPos = 0;
 
 	if (DrvReset) DrvDoReset();
 
 	DrvMakeInputs();
 
 	nCyclesTotal[0] = (INT32)((double)12000000 / 58.0);
-	nCyclesTotal[1] = (INT32)((double)12000000 / 58.0);
+	nCyclesTotal[1] = (INT32)((double)3000000 / 58.0);
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 
 	SekNewFrame();
@@ -739,15 +754,34 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
 
-		// Run 68000
 		nCurrentCPU = 0;
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-
-		if (i == 9) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == 90) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		
+		nCurrentCPU = 1;
+		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
+		nCyclesDone[nCurrentCPU] += pic16c5xRun(nCyclesSegment);
+		
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			MSM6295Render(0, pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 	SekClose();
+	
+	if (pBurnSoundOut) {
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+
+		if (nSegmentLength) {
+			MSM6295Render(0, pSoundBuf, nSegmentLength);
+		}
+	}
 
 	if (pBurnDraw) DrvRender();
 

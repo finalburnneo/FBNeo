@@ -19,6 +19,12 @@ UINT8 pic16c5x_read_byte(UINT16 address)
 	address &= rom_address_mask;
 
 	if (address <= rom_address_mask) {
+		if (nPic16c5xCpuType == 0x16C57 || nPic16c5xCpuType == 0x16C58) {
+			if (address >= 0x60 && address <= 0x6f) {
+				// mirror
+				return pic16c5x_mem[address & 0x0f];
+			}
+		}
 		return pic16c5x_mem[address];
 	}
 
@@ -28,8 +34,16 @@ UINT8 pic16c5x_read_byte(UINT16 address)
 void pic16c5x_write_byte(UINT16 address, UINT8 data)
 {
 	address &= rom_address_mask;
-
-	if (address <= ram_address_mask && (address & 0x30) != 0x20) {
+	
+	if (address <= ram_address_mask/* && (address & 0x30) != 0x20*/) {
+		if (nPic16c5xCpuType == 0x16C57 || nPic16c5xCpuType == 0x16C58) {
+			if (address >= 0x60 && address <= 0x6f) {
+				// mirror
+				pic16c5x_mem[address & 0x0f] = data;
+				return;
+			}
+		}
+		
 		pic16c5x_mem[address] = data;
 		return;
 	}

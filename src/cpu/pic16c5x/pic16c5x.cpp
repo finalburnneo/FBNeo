@@ -190,7 +190,7 @@ static const unsigned int bit_clr[8] = { 0xfe, 0xfd, 0xfb, 0xf7, 0xef, 0xdf, 0xb
 static const unsigned int bit_set[8] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
 
 
-INLINE void CLR(UINT16 flag) { R.STATUS &= ~flag; }
+INLINE void CLR(UINT16 flag) { R.STATUS &= (UINT8)(~flag); }
 INLINE void SET(UINT16 flag) { R.STATUS |=  flag; }
 
 
@@ -421,7 +421,7 @@ static void btfss(void)
 	{
 		R.PC++ ;
 		R.PCL = R.PC & 0xff;
-		inst_cycles += cycles_000_other[0];		/* Add NOP cycles */
+		inst_cycles += 1;		/* Add NOP cycles */
 	}
 }
 
@@ -431,7 +431,7 @@ static void btfsc(void)
 	{
 		R.PC++ ;
 		R.PCL = R.PC & 0xff;
-		inst_cycles += cycles_000_other[0];		/* Add NOP cycles */
+		inst_cycles += 1;		/* Add NOP cycles */
 	}
 }
 
@@ -485,7 +485,7 @@ static void decfsz(void)
 	{
 		R.PC++ ;
 		R.PCL = R.PC & 0xff;
-		inst_cycles += cycles_000_other[0];		/* Add NOP cycles */
+		inst_cycles += 1;		/* Add NOP cycles */
 	}
 }
 
@@ -511,14 +511,14 @@ static void incfsz(void)
 	{
 		R.PC++ ;
 		R.PCL = R.PC & 0xff;
-		inst_cycles += cycles_000_other[0];		/* Add NOP cycles */
+		inst_cycles += 1;		/* Add NOP cycles */
 	}
 }
 
 static void iorlw(void)
 {
 	R.ALU = R.opcode.b.l | R.W;
-	STORE_RESULT(ADDR, R.ALU);
+	R.W = R.ALU;
 	CALCULATE_Z_FLAG();
 }
 
@@ -620,7 +620,7 @@ static void tris(void)
 						if (R.TRISC == R.W) break;
 						else R.TRISC = R.W; P_OUT(2,R.PORTC & (UINT8)(~R.TRISC)); break;
 					} else {
-						break;
+						illegal(); break;
 					}
 		default:	illegal(); break;
 	}
@@ -651,6 +651,8 @@ static const unsigned cycles_main[256]=
 /*00*/	1*CLK, 0*CLK, 1*CLK, 1*CLK, 1*CLK, 0*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
 /*10*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
 /*20*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
+
+
 /*30*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
 /*40*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
 /*50*/	1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK, 1*CLK,
@@ -828,7 +830,7 @@ int pic16c5xRun(int cycles)
 {
 	UINT8 T0_in;
 	pic16C5x_icount = cycles;
-
+	
 	do
 	{
 		if (PD == 0)						/* Sleep Mode */
@@ -898,7 +900,7 @@ static void pic16C54_reset(void)
 	picRAMmask = 0x1f;
 	pic16C5x_reset_vector = 0x1ff;
 	pic16C5x_reset_regs();
-	SET(PA_REG);
+	CLR(PA_REG);
 	SET((TO_FLAG | PD_FLAG));
 }
 
@@ -908,7 +910,7 @@ static void pic16C55_reset(void)
 	picRAMmask = 0x1f;
 	pic16C5x_reset_vector = 0x1ff;
 	pic16C5x_reset_regs();
-	SET(PA_REG);
+	CLR(PA_REG);
 	SET((TO_FLAG | PD_FLAG));
 }
 
@@ -918,7 +920,7 @@ static void pic16C56_reset(void)
 	picRAMmask = 0x1f;
 	pic16C5x_reset_vector = 0x3ff;
 	pic16C5x_reset_regs();
-	SET(PA_REG);
+	CLR(PA_REG);
 	SET((TO_FLAG | PD_FLAG));
 }
 
@@ -928,7 +930,7 @@ static void pic16C57_reset(void)
 	picRAMmask = 0x7f;
 	pic16C5x_reset_vector = 0x7ff;
 	pic16C5x_reset_regs();
-	SET(PA_REG);
+	CLR(PA_REG);
 	SET((TO_FLAG | PD_FLAG));
 }
 
@@ -938,7 +940,7 @@ static void pic16C58_reset(void)
 	picRAMmask = 0x7f;
 	pic16C5x_reset_vector = 0x7ff;
 	pic16C5x_reset_regs();
-	SET(PA_REG);
+	CLR(PA_REG);
 	SET((TO_FLAG | PD_FLAG));
 }
 
@@ -967,7 +969,7 @@ void pic16c5xDoReset(int type, int *romlen, int *ramlen)
 
 		case 0x16C57:
 			pic16C57_reset();
-			*romlen = 0xfff;
+			*romlen = 0x7ff;
 			*ramlen = 0x07f;
 		return;
 

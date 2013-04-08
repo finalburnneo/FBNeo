@@ -31,6 +31,13 @@
  *   - The Prescaler rate was incorrectly being zeroed, instead of the      *
  *     actual Prescaler counter in the CLRWDT and SLEEP instructions.       *
  *   - Added masking to the FSR register. Upper unused bits are always 1.   *
+ *  TLP (27-Aug-2009) Ver 1.13                                              *
+ *   - Indirect addressing was not taking into account special purpose      *
+ *     memory mapped locations.                                             *
+ *   - 'iorlw' instruction was saving the result to memory instead of       *
+ *     the W register.                                                      *
+ *   - 'tris' instruction no longer modifies Port-C on PIC models that      *
+ *     do not have Port-C implemented.                                      *
  *                                                                          *
  *                                                                          *
  *  **** Notes: ****                                                        *
@@ -251,40 +258,44 @@ INLINE void PUSH_STACK(UINT16 data)
 UINT8 GET_REGFILE(offs_t addr)	/* Read from internal memory */
 {
 	UINT8 data;
+	
+	if (addr == 0) { /* Indirect addressing */
+		addr = (R.FSR & picRAMmask);
+	}
 
 	if ((picmodel == 0x16C57) || (picmodel == 0x16C58))
 	{
-		addr |= (R.FSR & 0x60);		/* FSR used for banking */
+		addr |= (R.FSR & 0x60);		/* FSR bits 6-5 are used for banking in direct mode */
 	}
 	if ((addr & 0x10) == 0) addr &= 0x0f;
 
 	switch(addr)
 	{
-		case 00:	addr = (R.FSR & picRAMmask);
-					if (addr == 0) { data = 0; break; }
-					if ((addr & 0x10) == 0) addr &= 0x0f;
-					data = M_RDRAM(addr);			/* Indirect address */
+		case 00:	/* Not an actual register, so return 0 */
+					data = 0;
 					break;
-		case 04:	data = (R.FSR | (~picRAMmask)); break;
+		case 04:	data = (R.FSR | (UINT8)(~picRAMmask));
+					break;
 		case 05:	data = P_IN(0);
 					data &= R.TRISA;
-					data |= (~R.TRISA & R.PORTA);
+					data |= ((UINT8)(~R.TRISA) & R.PORTA);
 					data &= 0xf;		/* 4-bit port (only lower 4 bits used) */
 					break;
 		case 06:	data = P_IN(1);
 					data &= R.TRISB;
-					data |= (~R.TRISB & R.PORTB);
+					data |= ((UINT8)(~R.TRISB) & R.PORTB);
 					break;
 		case 07:	if ((picmodel == 0x16C55) || (picmodel == 0x16C57)) {
 						data = P_IN(2);
 						data &= R.TRISC;
-						data |= (~R.TRISC & R.PORTC);
+						data |= ((UINT8)(~R.TRISC) & R.PORTC);
 					}
 					else {		/* PIC16C54, PIC16C56, PIC16C58 */
 						data = M_RDRAM(addr);
 					}
 					break;
-		default:	data = M_RDRAM(addr); break;
+		default:	data = M_RDRAM(addr);
+					break;
 	}
 
 	return data;
@@ -293,37 +304,46 @@ UINT8 GET_REGFILE(offs_t addr)	/* Read from internal memory */
 //INLINE 
 void STORE_REGFILE(offs_t addr, UINT8 data)	/* Write to internal memory */
 {
+	if (addr == 0) { /* Indirect addressing */
+		addr = (R.FSR & picRAMmask);
+	}
+	
 	if ((picmodel == 0x16C57) || (picmodel == 0x16C58))
 	{
-		addr |= (R.FSR & 0x60);
+		addr |= (R.FSR & 0x60);			/* FSR bits 6-5 are used for banking in direct mode */
 	}
 	if ((addr & 0x10) == 0) addr &= 0x0f;
 
 	switch(addr)
 	{
-		case 00:	addr = (R.FSR & picRAMmask);
-					if (addr == 0) break;
-					if ((addr & 0x10) == 0) addr &= 0x0f;
-					M_WRTRAM(addr, data); break;	/* Indirect address */
+		case 00:	/* Not an actual register, nothing to save */
+					break;
 		case 01:	delay_timer = 2;		/* Timer starts after next two instructions */
 					if (PSA == 0) R.prescaler = 0;	/* Must clear the Prescaler */
-					R.TMR0 = data; break;
+					R.TMR0 = data;
+					break;
 		case 02:	R.PCL = data;
-					R.PC = ((R.STATUS & PA_REG) << 4) | data; break;
-		case 03:	R.STATUS &= ~PA_REG; R.STATUS |= (data & PA_REG); break;
-		case 04:	R.FSR = (data | (~picRAMmask)); break;
+					R.PC = ((R.STATUS & PA_REG) << 4) | data;
+					break;
+		case 03:	R.STATUS &= (UINT8)(~PA_REG); R.STATUS |= (data & PA_REG);
+					break;
+		case 04:	R.FSR = (data | (UINT8)(~picRAMmask));
+					break;
 		case 05:	data &= 0xf;		/* 4-bit port (only lower 4 bits used) */
-					P_OUT(0,data & (~R.TRISA)); R.PORTA = data; break;
-		case 06:	P_OUT(1,data & (~R.TRISB)); R.PORTB = data; break;
+					P_OUT(0,data & (UINT8)(~R.TRISA)); R.PORTA = data;
+					break;
+		case 06:	P_OUT(1,data & (UINT8)(~R.TRISB)); R.PORTB = data;
+					break;
 		case 07:	if ((picmodel == 0x16C55) || (picmodel == 0x16C57)) {
-						P_OUT(2,data & (~R.TRISC));
+						P_OUT(2,data & (UINT8)(~R.TRISC));
 						R.PORTC = data;
 					}
 					else {		/* PIC16C54, PIC16C56, PIC16C58 */
 						M_WRTRAM(addr, data);
 					}
 					break;
-		default:	M_WRTRAM(addr, data); break;
+		default:	M_WRTRAM(addr, data);
+					break;
 	}
 }
 
@@ -443,7 +463,7 @@ static void clrwdt(void)
 
 static void comf(void)
 {
-	R.ALU = ~(GET_REGFILE(ADDR));
+	R.ALU = (UINT8)(~(GET_REGFILE(ADDR)));
 	STORE_RESULT(ADDR, R.ALU);
 	CALCULATE_Z_FLAG();
 }
@@ -531,7 +551,7 @@ static void nop(void)
 
 static void option(void)
 {
-	R.OPTION = R.W & 0x3f;
+	R.OPTION = R.W & (T0CS_FLAG | T0SE_FLAG | PSA_FLAG | PS_REG);
 }
 
 static void retlw(void)
@@ -591,11 +611,15 @@ static void tris(void)
 	switch(R.opcode.b.l & 0x7)
 	{
 		case 05:	if (R.TRISA == R.W) break;
-					else R.TRISA = R.W; P_OUT(0,R.PORTA & (~R.TRISA) & 0xf); break;
+					else R.TRISA = R.W | 0xf0; P_OUT(0,R.PORTA & (UINT8)(~R.TRISA) & 0xf); break;
 		case 06:	if (R.TRISB == R.W) break;
-					else R.TRISB = R.W; P_OUT(1,R.PORTB & (~R.TRISB)); break;
-		case 07:	if (R.TRISC == R.W) break;
-					else R.TRISC = R.W; P_OUT(2,R.PORTC & (~R.TRISC)); break;
+					else R.TRISB = R.W; P_OUT(1,R.PORTB & (UINT8)(~R.TRISB)); break;
+		case 07:	if ((picmodel == 0x16C55) || (picmodel == 0x16C57)) {
+						if (R.TRISC == R.W) break;
+						else R.TRISC = R.W; P_OUT(2,R.PORTC & (UINT8)(~R.TRISC)); break;
+					} else {
+						break;
+					}
 		default:	illegal(); break;
 	}
 }
@@ -699,9 +723,9 @@ static void pic16C5x_reset_regs(void)
 	R.TRISA  = 0xff;
 	R.TRISB  = 0xff;
 	R.TRISC  = 0xff;
-	R.OPTION = 0x3f;
+	R.OPTION = (T0CS_FLAG | T0SE_FLAG | PSA_FLAG | PS_REG);
 	R.PCL    = 0xff;
-	R.FSR   |= (~picRAMmask);
+	R.FSR   |= (UINT8)(~picRAMmask);
 	R.PORTA &= 0x0f;
 	R.prescaler = 0;
 	delay_timer = 0;
@@ -711,7 +735,8 @@ static void pic16C5x_reset_regs(void)
 
 static void pic16C5x_soft_reset(void)
 {
-	R.STATUS &= 0x1f;
+//	R.STATUS &= 0x1f;
+	SET((TO_FLAG | PD_FLAG | Z_FLAG | DC_FLAG | C_FLAG));
 	pic16C5x_reset_regs();
 }
 
@@ -870,9 +895,8 @@ static void pic16C54_reset(void)
 	picRAMmask = 0x1f;
 	pic16C5x_reset_vector = 0x1ff;
 	pic16C5x_reset_regs();
-	R.STATUS = 0x00;
-	SET(TO_FLAG);
-	SET(PD_FLAG);
+	SET(PA_REG);
+	SET((TO_FLAG | PD_FLAG));
 }
 
 static void pic16C55_reset(void)
@@ -881,9 +905,8 @@ static void pic16C55_reset(void)
 	picRAMmask = 0x1f;
 	pic16C5x_reset_vector = 0x1ff;
 	pic16C5x_reset_regs();
-	R.STATUS = 0x00;
-	SET(TO_FLAG);
-	SET(PD_FLAG);
+	SET(PA_REG);
+	SET((TO_FLAG | PD_FLAG));
 }
 
 static void pic16C56_reset(void)
@@ -892,9 +915,8 @@ static void pic16C56_reset(void)
 	picRAMmask = 0x1f;
 	pic16C5x_reset_vector = 0x3ff;
 	pic16C5x_reset_regs();
-	R.STATUS = 0x00;
-	SET(TO_FLAG);
-	SET(PD_FLAG);
+	SET(PA_REG);
+	SET((TO_FLAG | PD_FLAG));
 }
 
 static void pic16C57_reset(void)
@@ -903,9 +925,8 @@ static void pic16C57_reset(void)
 	picRAMmask = 0x7f;
 	pic16C5x_reset_vector = 0x7ff;
 	pic16C5x_reset_regs();
-	R.STATUS = 0x00;
-	SET(TO_FLAG);
-	SET(PD_FLAG);
+	SET(PA_REG);
+	SET((TO_FLAG | PD_FLAG));
 }
 
 static void pic16C58_reset(void)
@@ -914,9 +935,8 @@ static void pic16C58_reset(void)
 	picRAMmask = 0x7f;
 	pic16C5x_reset_vector = 0x7ff;
 	pic16C5x_reset_regs();
-	R.STATUS = 0x00;
-	SET(TO_FLAG);
-	SET(PD_FLAG);
+	SET(PA_REG);
+	SET((TO_FLAG | PD_FLAG));
 }
 
 

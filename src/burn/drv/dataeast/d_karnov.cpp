@@ -1204,11 +1204,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Karnov (US)
+// Karnov (US, rev 6)
 
 static struct BurnRomInfo karnovRomDesc[] = {
-	{ "dn08-5",		0x10000, 0xdb92c264, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "dn11-5",		0x10000, 0x05669b4b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dn08-6",		0x10000, 0x4c60837f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "dn11-6",		0x10000, 0xcd4abb99, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "dn07-",		0x10000, 0xfc14291b, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "dn10-",		0x10000, 0xa4a34e37, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "dn06-5",		0x10000, 0x29d64e42, 1 | BRF_PRG | BRF_ESS }, //  4
@@ -1251,7 +1251,7 @@ static INT32 KarnovInit()
 
 struct BurnDriver BurnDrvKarnov = {
 	"karnov", NULL, NULL, NULL, "1987",
-	"Karnov (US)\0", NULL, "Data East USA", "Miscellaneous",
+	"Karnov (US, rev 6)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_HORSHOOT, 0,
 	NULL, karnovRomInfo, karnovRomName, NULL, NULL, KarnovInputInfo, KarnovDIPInfo,
@@ -1260,11 +1260,11 @@ struct BurnDriver BurnDrvKarnov = {
 };
 
 
-// Karnov (US, alt set)
+// Karnov (US, rev 5)
 
 static struct BurnRomInfo karnovaRomDesc[] = {
-	{ "dn08-6",		0x10000, 0x4c60837f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "dn11-6",		0x10000, 0xcd4abb99, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dn08-5",		0x10000, 0xdb92c264, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "dn11-5",		0x10000, 0x05669b4b, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "dn07-",		0x10000, 0xfc14291b, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "dn10-",		0x10000, 0xa4a34e37, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "dn06-5",		0x10000, 0x29d64e42, 1 | BRF_PRG | BRF_ESS }, //  4
@@ -1299,7 +1299,7 @@ STD_ROM_FN(karnova)
 
 struct BurnDriver BurnDrvKarnova = {
 	"karnova", "karnov", NULL, NULL, "1987",
-	"Karnov (US, alt set)\0", NULL, "Data East USA", "Miscellaneous",
+	"Karnov (US, rev 5)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_HORSHOOT, 0,
 	NULL, karnovaRomInfo, karnovaRomName, NULL, NULL, KarnovInputInfo, KarnovDIPInfo,

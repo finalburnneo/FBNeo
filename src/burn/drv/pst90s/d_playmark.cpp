@@ -104,8 +104,8 @@ static struct BurnDIPInfo BigtwinDIPList[]=
 	
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Language"               },
-	{0x0f, 0x01, 0x01, 0x01, "English"                },
-	{0x0f, 0x01, 0x01, 0x00, "Italian"                },
+	{0x0f, 0x01, 0x01, 0x00, "English"                },
+	{0x0f, 0x01, 0x01, 0x01, "Italian"                },
 	
 	{0   , 0xfe, 0   , 2   , "Censor Pictures"        },
 	{0x0f, 0x01, 0x04, 0x00, "No"                     },
@@ -488,7 +488,7 @@ static INT32 DrvInit()
 	pPic16c5xReadPort = PlaymarkSoundReadPort;
 	pPic16c5xWritePort = PlaymarkSoundWritePort;
 	
-	MSM6295Init(0, 1000000 / 132, 1);
+	MSM6295Init(0, 1000000 / 132, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();

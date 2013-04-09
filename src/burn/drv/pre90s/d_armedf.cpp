@@ -1856,7 +1856,7 @@ static INT32 TerrafjbInit()
 
 struct BurnDriver BurnDrvTerrafjb = {
 	"terrafjb", "terraf", NULL, NULL, "1987",
-	"Terra Force (Japan bootleg with additional Z80)\0", "imperfect graphics", "bootleg", "Miscellaneous",
+	"Terra Force (Japan bootleg set 1, with additional Z80)\0", "imperfect graphics", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, terrafjbRomInfo, terrafjbRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
@@ -1867,29 +1867,25 @@ struct BurnDriver BurnDrvTerrafjb = {
 // Terra Force (set 2)
 
 static struct BurnRomInfo terrafbRomDesc[] = {
-	{ "tf-014.6e",		0x10000, 0x8e5f557f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "tf-011.6h",		0x10000, 0x5320162a, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "tf-013.4e",		0x10000, 0xa86951e0, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "tf-010.4h",		0x10000, 0x58b5f43b, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "tf-012.3e",		0x08000, 0x4f0e1d76, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "tf-009.3h",		0x08000, 0xd1014280, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "f-14.4s",		0x10000, 0x8e5f557f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "f-11.3s",		0x10000, 0x5320162a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "f-13.4p",		0x10000, 0xa86951e0, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "f-9.3p",			0x10000, 0x58b5f43b, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "f-12.4m",		0x08000, 0x4f0e1d76, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "f-8.3m",			0x08000, 0xd1014280, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "tf-001.17k",		0x10000, 0xeb6b4138, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 code
+	{ "f-1.1a",			0x10000, 0xeb6b4138, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 code
 
-	{ "9.11e",		0x08000, 0xbc6f7cbc, 3 | BRF_GRA },           //  7 Characters
+	{ "f-11.4g",		0x08000, 0xbc6f7cbc, 3 | BRF_GRA },           //  7 Characters
 
-	{ "5.15h",		0x10000, 0x25d23dfd, 4 | BRF_GRA },           //  8 Foreground Tiles
-	{ "4.13h",		0x10000, 0xb9b0fe27, 4 | BRF_GRA },           //  9
+	{ "f-6.3c",			0x10000, 0x25d23dfd, 4 | BRF_GRA },           //  8 Foreground Tiles
+	{ "f-7.3e",			0x10000, 0xb9b0fe27, 4 | BRF_GRA },           //  9
 
-	{ "15.8a",		0x10000, 0x2144d8e0, 5 | BRF_GRA },           // 10 Background Tiles
-	{ "14.6a",		0x10000, 0x744f5c9e, 5 | BRF_GRA },           // 11
+	{ "f-4.9k",			0x10000, 0x2144d8e0, 5 | BRF_GRA },           // 10 Background Tiles
+	{ "f-5.9m",			0x10000, 0x744f5c9e, 5 | BRF_GRA },           // 11
 
-	{ "tfj-12.7d",		0x10000, 0xd74085a1, 6 | BRF_GRA },           // 12 Sprites
-	{ "tfj-13.9d",		0x10000, 0x148aa0c5, 6 | BRF_GRA },           // 13
-
-	{ "tf-10.11c",		0x04000, 0xac705812, 7 | BRF_GRA | BRF_OPT }, // 14 MCU data
-
-	{ "n82s129an.11j",	0x00100, 0x81244757, 8 | BRF_OPT },           // 15 Proms
+	{ "f-3.6l",			0x10000, 0xd74085a1, 6 | BRF_GRA },           // 12 Sprites
+	{ "f-2.6j",			0x10000, 0x148aa0c5, 6 | BRF_GRA },           // 13
 };
 
 STD_ROM_PICK(terrafb)
@@ -1897,7 +1893,7 @@ STD_ROM_FN(terrafb)
 
 struct BurnDriver BurnDrvTerrafb = {
 	"terrafb", "terraf", NULL, NULL, "1987",
-	"Terra Force (bootleg)\0", "imperfect graphics", "Nichibutsu", "Miscellaneous",
+	"Terra Force (bootleg set 2)\0", "imperfect graphics", "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, terrafbRomInfo, terrafbRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,

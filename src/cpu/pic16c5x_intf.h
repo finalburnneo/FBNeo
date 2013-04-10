@@ -1,4 +1,5 @@
 
+UINT16 pic16c5x_read_op(UINT16 address);
 UINT8 pic16c5x_read_byte(UINT16 address);
 void pic16c5x_write_byte(UINT16 address, UINT8 data);
 UINT8 pic16c5x_read_port(UINT16 port);

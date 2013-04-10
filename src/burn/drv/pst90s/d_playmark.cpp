@@ -259,9 +259,6 @@ void __fastcall DrvWriteByte(UINT32 a, UINT8 d)
 		case 0x70001f: {
 			DrvSoundCommand = d;
 			DrvSoundFlag = 1;
-			// space.device().execute().yield();
-			INT32 cycles = (SekTotalCycles() / 4) - nCyclesDone[1];
-			nCyclesDone[1] += pic16c5xRun(cycles);
 			return;
 		}
 		
@@ -407,11 +404,9 @@ void PlaymarkSoundWritePort(UINT16 Port, UINT8 Data)
 		
 		case 0x02: {
 			DrvOkiControl = Data;
-			bprintf(PRINT_NORMAL, _T("Oki Control %x\n"), DrvOkiControl);
 
 			if ((Data & 0x38) == 0x18) {
 				MSM6295Command(0, DrvOkiCommand);
-				bprintf(PRINT_NORMAL, _T("Play %x\n"), DrvOkiCommand);
 			}
 			return;
 		}
@@ -809,7 +804,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvBigtwin = {
 	"bigtwin", NULL, NULL, NULL, "1995",
-	"Big Twin\0", "No Sound", "SemiCom", "Misc",
+	"Big Twin\0", NULL, "SemiCom", "Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, BigtwinRomInfo, BigtwinRomName, NULL, NULL, BigtwinInputInfo, BigtwinDIPInfo,

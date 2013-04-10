@@ -33,8 +33,6 @@ enum
 	PIC16C5x_PSCL
 };
 
-#define pic16cx_read_word(A)	\
-		(pic16c5x_read_byte((A<<1)) | (pic16c5x_read_byte((A<<1)+1) << 8))
 
 
 
@@ -94,7 +92,7 @@ void pic16c5x_config(int data);
  *  can be used to greatly speed up emulation
  */
 
-#define PIC16C5x_RDOP(A) pic16cx_read_word(A)
+#define PIC16C5x_RDOP(A) pic16c5x_read_op(A)
 
 
 /****************************************************************************
@@ -103,7 +101,7 @@ void pic16c5x_config(int data);
  *  that use different encoding mechanisms for opcodes and opcode arguments
  */
 
-#define PIC16C5x_RDOP_ARG(A) (pic16cx_read_word(A))
+#define PIC16C5x_RDOP_ARG(A) (pic16c5x_read_op(A))
 
 
 

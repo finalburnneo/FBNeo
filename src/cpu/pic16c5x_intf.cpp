@@ -1,4 +1,3 @@
-
 #include "burnint.h"
 
 void pic16c5xDoReset(INT32 type, INT32 *rom, INT32 *ram);
@@ -9,44 +8,47 @@ static INT32 rom_address_mask = 0x7ff;
 static INT32 ram_address_mask = 0x07f;
 
 INT32 nPic16c5xCpuType = -1;
-static UINT8 *pic16c5x_mem = NULL;
+static UINT8 *pic16c5x_rom = NULL;
+static UINT8 *pic16c5x_ram = NULL;
 
 INT32 (*pPic16c5xReadPort)(UINT16 port) = NULL;
 void (*pPic16c5xWritePort)(UINT16 port, UINT8 data) = NULL;
 
+UINT16 pic16c5x_read_op(UINT16 address)
+{
+	UINT16 *ROM = (UINT16*)pic16c5x_rom;
+	
+	address &= rom_address_mask;
+	
+	return ROM[address];
+}
+
 UINT8 pic16c5x_read_byte(UINT16 address)
 {
-	address &= rom_address_mask;
+	address &= ram_address_mask;
 
-	if (address <= rom_address_mask) {
-		if (nPic16c5xCpuType == 0x16C57 || nPic16c5xCpuType == 0x16C58) {
-			if (address >= 0x60 && address <= 0x6f) {
-				// mirror
-				return pic16c5x_mem[address & 0x0f];
-			}
+	if (nPic16c5xCpuType == 0x16C57 || nPic16c5xCpuType == 0x16C58) {
+		if (address >= 0x60 && address <= 0x6f) {
+			// mirror
+			return pic16c5x_ram[address & 0x0f];
 		}
-		return pic16c5x_mem[address];
 	}
-
-	return 0;
+	return pic16c5x_ram[address];
 }
 
 void pic16c5x_write_byte(UINT16 address, UINT8 data)
 {
-	address &= rom_address_mask;
+	address &= ram_address_mask;
 	
-	if (address <= ram_address_mask/* && (address & 0x30) != 0x20*/) {
-		if (nPic16c5xCpuType == 0x16C57 || nPic16c5xCpuType == 0x16C58) {
-			if (address >= 0x60 && address <= 0x6f) {
-				// mirror
-				pic16c5x_mem[address & 0x0f] = data;
-				return;
-			}
+	if (nPic16c5xCpuType == 0x16C57 || nPic16c5xCpuType == 0x16C58) {
+		if (address >= 0x60 && address <= 0x6f) {
+			// mirror
+			pic16c5x_ram[address & 0x0f] = data;
+			return;
 		}
-		
-		pic16c5x_mem[address] = data;
-		return;
 	}
+		
+	pic16c5x_ram[address] = data;
 }
 
 UINT8 pic16c5x_read_port(UINT16 port)
@@ -77,13 +79,17 @@ void pic16c5xInit(INT32 type, UINT8 *mem)
 
 	pic16c5xDoReset(type, &rom_address_mask, &ram_address_mask);
 
-	pic16c5x_mem = mem;
+	pic16c5x_rom = mem;
+	
+	pic16c5x_ram = (UINT8*)BurnMalloc(ram_address_mask + 1);
 }
 
 void pic16c5xExit()
 {
-	pic16c5x_mem = NULL;
+	pic16c5x_rom = NULL;
 	nPic16c5xCpuType = -1;
+	
+	BurnFree(pic16c5x_ram);
 }
 
 INT32 pic16c5xScan(INT32 nAction,INT32 */*pnMin*/)
@@ -93,7 +99,7 @@ INT32 pic16c5xScan(INT32 nAction,INT32 */*pnMin*/)
 	pic16c5xScanCpu(nAction, 0);
 
 	if (nAction & ACB_MEMORY_RAM) {
-		ba.Data		= pic16c5x_mem;
+		ba.Data		= pic16c5x_ram;
 		ba.nLen		= ram_address_mask + 1;
 		ba.nAddress = 0;
 		ba.szName	= "Internal RAM";

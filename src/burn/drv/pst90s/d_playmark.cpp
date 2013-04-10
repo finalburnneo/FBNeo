@@ -791,7 +791,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		*pnMin = 0x02729;
 	}
 
-	if (nAction & ACB_MEMORY_RAM) {								// Scan all memory, devices & variables
+	if (nAction & ACB_MEMORY_RAM) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = RamStart;
 		ba.nLen	  = RamEnd - RamStart;

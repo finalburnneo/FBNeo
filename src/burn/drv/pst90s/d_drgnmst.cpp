@@ -613,8 +613,9 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	SekExit();
-
 	pic16c5xExit();
+	MSM6295Exit(0);
+	MSM6295Exit(1);
 
 	BurnFree (AllMem);
 

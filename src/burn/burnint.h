@@ -214,7 +214,7 @@ extern UINT8 DebugCPU_S2650Initted;
 extern UINT8 DebugCPU_SekInitted;
 extern UINT8 DebugCPU_VezInitted;
 extern UINT8 DebugCPU_ZetInitted;
-
+extern UINT8 DebugCPU_PIC16C5XInitted;
 extern UINT8 DebugCPU_I8039Initted;
 extern UINT8 DebugCPU_SH2Initted;
 

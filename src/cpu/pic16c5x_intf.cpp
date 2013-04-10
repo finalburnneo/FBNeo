@@ -16,6 +16,10 @@ void (*pPic16c5xWritePort)(UINT16 port, UINT8 data) = NULL;
 
 UINT16 pic16c5x_read_op(UINT16 address)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_read_op called without init\n"));
+#endif
+
 	UINT16 *ROM = (UINT16*)pic16c5x_rom;
 	
 	address &= rom_address_mask;
@@ -25,6 +29,10 @@ UINT16 pic16c5x_read_op(UINT16 address)
 
 UINT8 pic16c5x_read_byte(UINT16 address)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_read_byte called without init\n"));
+#endif
+
 	address &= ram_address_mask;
 
 	if (nPic16c5xCpuType == 0x16C57 || nPic16c5xCpuType == 0x16C58) {
@@ -38,6 +46,10 @@ UINT8 pic16c5x_read_byte(UINT16 address)
 
 void pic16c5x_write_byte(UINT16 address, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_write_byte called without init\n"));
+#endif
+
 	address &= ram_address_mask;
 	
 	if (nPic16c5xCpuType == 0x16C57 || nPic16c5xCpuType == 0x16C58) {
@@ -53,6 +65,10 @@ void pic16c5x_write_byte(UINT16 address, UINT8 data)
 
 UINT8 pic16c5x_read_port(UINT16 port)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_read_port called without init\n"));
+#endif
+
 	if (pPic16c5xReadPort) {
 		return pPic16c5xReadPort(port);
 	}
@@ -62,6 +78,10 @@ UINT8 pic16c5x_read_port(UINT16 port)
 
 void pic16c5x_write_port(UINT16 port, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_write_port called without init\n"));
+#endif
+
 	if (pPic16c5xWritePort) {
 		pPic16c5xWritePort(port, data);
 		return;
@@ -70,11 +90,17 @@ void pic16c5x_write_port(UINT16 port, UINT8 data)
 
 void pic16c5xReset()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5xReset called without init\n"));
+#endif
+
 	pic16c5xDoReset(nPic16c5xCpuType, &rom_address_mask, &ram_address_mask);
 }
 
 void pic16c5xInit(INT32 type, UINT8 *mem)
 {
+	DebugCPU_PIC16C5XInitted = 1;
+	
 	nPic16c5xCpuType = type;
 
 	pic16c5xDoReset(type, &rom_address_mask, &ram_address_mask);
@@ -86,14 +112,24 @@ void pic16c5xInit(INT32 type, UINT8 *mem)
 
 void pic16c5xExit()
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5xExit called without init\n"));
+#endif
+
 	pic16c5x_rom = NULL;
 	nPic16c5xCpuType = -1;
 	
 	BurnFree(pic16c5x_ram);
+	
+	DebugCPU_PIC16C5XInitted = 0;
 }
 
 INT32 pic16c5xScan(INT32 nAction,INT32 */*pnMin*/)
 {
+#if defined FBA_DEBUG
+	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5xScan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 
 	pic16c5xScanCpu(nAction, 0);

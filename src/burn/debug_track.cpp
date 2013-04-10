@@ -60,7 +60,7 @@ UINT8 DebugCPU_S2650Initted;
 UINT8 DebugCPU_SekInitted;
 UINT8 DebugCPU_VezInitted;
 UINT8 DebugCPU_ZetInitted;
-
+UINT8 DebugCPU_PIC16C5XInitted;
 UINT8 DebugCPU_I8039Initted;
 UINT8 DebugCPU_SH2Initted;
 
@@ -123,7 +123,7 @@ void DebugTrackerExit()
 	if (DebugCPU_SekInitted) 			bprintf(PRINT_ERROR, _T("CPU Sek Not Exited\n"));
 	if (DebugCPU_VezInitted) 			bprintf(PRINT_ERROR, _T("CPU Vez Not Exited\n"));
 	if (DebugCPU_ZetInitted) 			bprintf(PRINT_ERROR, _T("CPU Zet Not Exited\n"));
-	
+	if (DebugCPU_PIC16C5XInitted)		bprintf(PRINT_ERROR, _T("CPU PIC16C5X Not Exited\n"));
 	if (DebugCPU_I8039Initted) 			bprintf(PRINT_ERROR, _T("CPU I8039 Not Exited\n"));
 	if (DebugCPU_SH2Initted) 			bprintf(PRINT_ERROR, _T("CPU SH2 Not Exited\n"));
 }

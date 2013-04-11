@@ -375,6 +375,27 @@ static INT32 MemIndex()
 	return 0;
 }
 
+static inline UINT8 pal5bit(UINT8 bits)
+{
+	bits &= 0x1f;
+	return (bits << 3) | (bits >> 2);
+}
+
+static inline void CalcCol(UINT16 Offset, UINT16 nColour)
+{
+	INT32 r, g, b;
+	
+	r = (nColour >> 11) & 0x1e;
+	g = (nColour >>  7) & 0x1e;
+	b = (nColour >>  3) & 0x1e;
+
+	r |= ((nColour & 0x08) >> 3);
+	g |= ((nColour & 0x04) >> 2);
+	b |= ((nColour & 0x02) >> 1);
+
+	DrvPalette[Offset] = BurnHighCol(pal5bit(r), pal5bit(g), pal5bit(b), 0);
+}
+
 UINT8 __fastcall DrvReadByte(UINT32 a)
 {
 	switch (a) {
@@ -441,6 +462,14 @@ void __fastcall DrvWriteWord(UINT32 a, UINT16 d)
 	
 	if (a >= 0x504000 && a <= 0x50ffff) {
 		// unused ram???
+		return;
+	}
+	
+	if (a >= 0x780000 && a <= 0x7807ff) {
+		UINT16 *PalRam = (UINT16*)DrvPaletteRam;
+		INT32 Offset = (a & 0x7ff) >> 1;
+		PalRam[Offset] = d;
+		CalcCol(Offset, d);
 		return;
 	}
 	
@@ -557,6 +586,14 @@ UINT16 __fastcall ExcelsrReadWord(UINT32 a)
 
 void __fastcall ExcelsrWriteWord(UINT32 a, UINT16 d)
 {
+	if (a >= 0x780000 && a <= 0x7807ff) {
+		UINT16 *PalRam = (UINT16*)DrvPaletteRam;
+		INT32 Offset = (a & 0x7ff) >> 1;
+		PalRam[Offset] = d;
+		CalcCol(Offset, d);
+		return;
+	}
+	
 	switch (a) {
 		case 0x304000: {
 			// nop
@@ -657,9 +694,7 @@ void PlaymarkSoundWritePort(UINT16 Port, UINT8 Data)
 					DrvOldOkiBank = Data & 0x07;
 
 					if (((DrvOldOkiBank - 1) * 0x40000) < DrvMSM6295RomSize) {
-//						downcast<okim6295_device *>(device)->set_bank_base(0x40000 * (m_old_oki_bank - 1));
 						memcpy(MSM6295ROM + 0x00000, DrvMSM6295Src + (0x40000 * (DrvOldOkiBank - 1)), 0x40000);
-						bprintf(PRINT_NORMAL, _T("Changing OKI Bank %x\n"), DrvOldOkiBank - 1);
 					}
 				}
 			}
@@ -749,7 +784,7 @@ static INT32 DrvInit()
 	SekMapMemory(DrvVideo2Ram    , 0x500000, 0x500fff, SM_RAM);
 	SekMapMemory(DrvVideo1Ram    , 0x502000, 0x503fff, SM_RAM);
 	SekMapMemory(DrvBgVideoRam   , 0x600000, 0x67ffff, SM_RAM);
-	SekMapMemory(DrvPaletteRam   , 0x780000, 0x7807ff, SM_RAM);
+	SekMapMemory(DrvPaletteRam   , 0x780000, 0x7807ff, SM_READ);
 	SekMapMemory(Drv68kRam       , 0xff0000, 0xffffff, SM_RAM);
 	SekSetReadByteHandler(0, DrvReadByte);
 	SekSetReadWordHandler(0, DrvReadWord);
@@ -835,11 +870,11 @@ static INT32 ExcelsrInit()
 	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(Drv68kRom       , 0x000000, 0x2fffff, SM_ROM);
-	SekMapMemory(DrvSpriteRam    , 0x440000, 0x440cff, SM_RAM);
+	SekMapMemory(DrvSpriteRam    , 0x440000, 0x440fff, SM_RAM);
 	SekMapMemory(DrvVideo2Ram    , 0x500000, 0x500fff, SM_RAM);
 	SekMapMemory(DrvVideo1Ram    , 0x501000, 0x501fff, SM_RAM);
 	SekMapMemory(DrvBgVideoRam   , 0x600000, 0x67ffff, SM_RAM);
-	SekMapMemory(DrvPaletteRam   , 0x780000, 0x7807ff, SM_RAM);
+	SekMapMemory(DrvPaletteRam   , 0x780000, 0x7807ff, SM_READ);
 	SekMapMemory(Drv68kRam       , 0xff0000, 0xffffff, SM_RAM);
 	SekSetReadByteHandler(0, ExcelsrReadByte);
 	SekSetReadWordHandler(0, ExcelsrReadWord);
@@ -901,38 +936,6 @@ static INT32 DrvExit()
 	DrawFunction = NULL;
 	
 	return 0;
-}
-
-static inline UINT8 pal5bit(UINT8 bits)
-{
-	bits &= 0x1f;
-	return (bits << 3) | (bits >> 2);
-}
-
-static inline UINT32 CalcCol(UINT16 nColour)
-{
-	INT32 r, g, b;
-	
-	r = (nColour >> 11) & 0x1e;
-	g = (nColour >>  7) & 0x1e;
-	b = (nColour >>  3) & 0x1e;
-
-	r |= ((nColour & 0x08) >> 3);
-	g |= ((nColour & 0x04) >> 2);
-	b |= ((nColour & 0x02) >> 1);
-
-	return BurnHighCol(pal5bit(r), pal5bit(g), pal5bit(b), 0);
-}
-
-static void DrvCalcPalette()
-{
-	INT32 i;
-	UINT16* ps;
-	UINT32* pd;
-
-	for (i = 0, ps = (UINT16*)DrvPaletteRam, pd = DrvPalette; i < 0x400; i++, ps++, pd++) {
-		*pd = CalcCol(*ps);
-	}
 }
 
 static void DrvRenderFgLayer()
@@ -1009,47 +1012,31 @@ static void DrvRenderCharLayer(INT32 Columns, INT32 CharSize)
 	}
 }
 
-static void DrvRenderSprites(INT32 CodeShift, INT32 SpriteRamSize, INT32 SpriteSize, INT32 PriDraw, INT32 yOffset)
+static void DrvRenderSprites(INT32 CodeShift, INT32 SpriteRamSize, INT32 SpriteSize, INT32 PriDraw)
 {
-	INT32 Offs, EndOffset = SpriteRamSize / 2 - 4;
-	INT32 Height = 32;
+	INT32 Offs;
 	INT32 ColourDiv = 0x10 / 16;
 	UINT16 *SpriteRam = (UINT16*)DrvSpriteRam;
 
-	for (Offs = 4; Offs < SpriteRamSize / 2; Offs += 4) {
-		if (SpriteRam[Offs + 3 - 4] == 0x2000) {
-			EndOffset = Offs - 4;
-			break;
-		}
-	}
-
-	for (Offs = 0; Offs < EndOffset; Offs += 4) {
+	for (Offs = 0; Offs < SpriteRamSize; Offs += 4) {
 		INT32 sx, sy, Code, Colour, xFlip, Pri;
-
-		sy = SpriteRam[Offs + 3 - 4]; 
-
-		xFlip = sy & 0x4000;
-		sx = (SpriteRam[Offs + 1] & 0x01ff) - 16 - 7;
-		sy = (256 - 8 - Height - sy) & 0xff;
-		Code = SpriteRam[Offs + 2] >> CodeShift;
-		Code &= (DrvNumSprites - 1);
-		Colour = ((SpriteRam[Offs + 1] & 0x3e00) >> 9) / ColourDiv;
-		Pri = (SpriteRam[Offs + 1] & 0x8000) >> 15;
-
-		if(!Pri && (Colour & 0x0c) == 0x0c)	Pri = 2;
-			
-		sy -= yOffset;
 		
-		/*pdrawgfx_transpen(bitmap,cliprect,machine().gfx[0],
-					code,
-					color,
-					flipx,0,
-					sx + m_xoffset,sy + m_yoffset,
-					machine().priority_bitmap,m_pri_masks[pri],0);*/
-					
-		// other games need priority support adding
+		sy = SpriteRam[Offs + 3 - 4];
+		if (sy == 0x2000) break;
+		
+		Pri = (SpriteRam[Offs + 1] & 0x8000) >> 15;
+		Colour = ((SpriteRam[Offs + 1] & 0x3e00) >> 9) / ColourDiv;
+		if(!Pri && (Colour & 0x0c) == 0x0c)	Pri = 2;
 		
 		if (Pri == PriDraw || PriDraw == -1) {
+			xFlip = sy & 0x4000;
+			sx = (SpriteRam[Offs + 1] & 0x01ff) - 16 - 7;
+			sy = (256 - 8 - SpriteSize - sy) & 0xff;
+			Code = SpriteRam[Offs + 2] >> CodeShift;
+			Code &= (DrvNumSprites - 1);
+			
+			sy -= 16;
+			
 			if (SpriteSize == 16) {
 				if (sx > 16 && sx < 304 && sy > 16 && sy < 224) {
 					if (xFlip) {
@@ -1088,7 +1075,6 @@ static void DrvRenderSprites(INT32 CodeShift, INT32 SpriteRamSize, INT32 SpriteS
 static void DrvRenderBitmap()
 {
 	INT32 Colour;
-//	UINT8 *Pri;
 	UINT16 *VideoRam = (UINT16*)DrvBgVideoRam;
 	INT32 Count = 0;
 	
@@ -1104,9 +1090,6 @@ static void DrvRenderBitmap()
 					if (xPlot >= 0 && xPlot < 320 && yPlot >= 0 && yPlot < 240) {
 						pTransDraw[(yPlot * nScreenWidth) + xPlot] = 0x100 + Colour;
 					}
-					
-//					pri = &machine().priority_bitmap.pix8((y + m_bgscrolly) & 0x1ff);
-//					pri[(x + m_bgscrollx) & 0x1ff] |= 2;
 				} else {
 					// 50% size
 					if(!(x % 2) && !(y % 2)) {
@@ -1117,11 +1100,6 @@ static void DrvRenderBitmap()
 						if (xPlot >= 0 && xPlot < 320 && yPlot >= 0 && yPlot < 240) {
 							pTransDraw[(yPlot * nScreenWidth) + xPlot] = 0x100 + Colour;
 						}
-					
-//						bitmap.pix16((y / 2 + m_bgscrolly) & 0x1ff, (x / 2 + m_bgscrollx) & 0x1ff) = 0x100 + color;
-
-//						pri = &machine().priority_bitmap.pix8((y / 2 + m_bgscrolly) & 0x1ff);
-//						pri[(x / 2 + m_bgscrollx) & 0x1ff] |= 2;
 					}
 				}
 			}
@@ -1134,10 +1112,9 @@ static void DrvRenderBitmap()
 static void DrvRender()
 {
 	BurnTransferClear();
-	DrvCalcPalette();
 	DrvRenderFgLayer();
 	if (DrvBgEnable) DrvRenderBitmap();
-	DrvRenderSprites(4, 0x400, 32, -1, 16);
+	DrvRenderSprites(4, 0x400, 32, -1);
 	DrvRenderCharLayer(64, 8);	
 	BurnTransferCopy(DrvPalette);
 }
@@ -1145,13 +1122,12 @@ static void DrvRender()
 static void ExcelsrRender()
 {
 	BurnTransferClear();
-	DrvCalcPalette();
 	DrvRenderFgLayer();
-	DrvRenderSprites(2, 0xd00, 16, 2, 0);
+	DrvRenderSprites(2, 0xd00, 16, 2);
 	if (DrvBgEnable) DrvRenderBitmap();
-	DrvRenderSprites(2, 0xd00, 16, 1, 0);
+	DrvRenderSprites(2, 0xd00, 16, 1);
 	DrvRenderCharLayer(32, 16);
-	DrvRenderSprites(2, 0xd00, 16, 0, 0);
+	DrvRenderSprites(2, 0xd00, 16, 0);
 	BurnTransferCopy(DrvPalette);
 }
 
@@ -1237,11 +1213,11 @@ struct BurnDriver BurnDrvBigtwin = {
 	NULL, 0x400, 320, 240, 4, 3
 };
 
-struct BurnDriver BurnDrvExcelsrD = {
+struct BurnDriver BurnDrvExcelsr = {
 	"excelsr", NULL, NULL, NULL, "1996",
 	"Excelsior\0", NULL, "Playmark", "Misc",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, ExcelsrRomInfo, ExcelsrRomName, NULL, NULL, ExcelsrInputInfo, ExcelsrDIPInfo,
 	ExcelsrInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 320, 240, 4, 3

@@ -550,10 +550,10 @@ STD_ROM_PICK(Hangon1)
 STD_ROM_FN(Hangon1)
 
 static struct BurnRomInfo Hangon2RomDesc[] = {
-	{ "nolabel.ic22",     0x08000, 0x1e4d2217, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "nolabel.ic8",      0x08000, 0x3793e50e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "nolabel.ic20",     0x08000, 0x5d715e3b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "nolabel.ic6",      0x08000, 0xf1439a30, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-6851a_(needs_verification).ic22",     0x08000, 0x1e4d2217, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // as per the manual
+	{ "epr-6849a_(needs_verification).ic28",     0x08000, 0x3793e50e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // as per the manual
+	{ "epr-6850a_(needs_verification).ic20",     0x08000, 0x5d715e3b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // as per the manual
+	{ "epr-6848a_(needs_verification).ic6",      0x08000, 0xf1439a30, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // as per the manual
 	
 	{ "epr-6838.ic63",    0x08000, 0x2747b794, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
 	{ "epr-6839.ic51",    0x08000, 0x73e9fa6e, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },

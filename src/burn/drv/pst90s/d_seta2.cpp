@@ -1162,6 +1162,21 @@ static struct BurnRomInfo wschampaRomDesc[] = {
 STD_ROM_PICK(wschampa)
 STD_ROM_FN(wschampa)
 
+static struct BurnRomInfo wschampbRomDesc[] = {
+	{ "as10u6.u06",		0x100000, 0x70a18bef, 1 }, //  0 68000 code
+	{ "as10u7.u07",		0x100000, 0xcf23be7d, 1 }, //  1
+
+	{ "as1001m01.u38",	0x800000, 0x92595579, 2 }, //  2 GFX
+	{ "as1002m01.u39",	0x800000, 0x16c2bb08, 2 }, //  3
+	{ "as1003m01.u40",	0x800000, 0x89618858, 2 }, //  4
+	{ "as1004m01.u41",	0x800000, 0x500c0909, 2 }, //  5
+
+	{ "as1005m01.u18",	0x400000, 0xe4b137b8, 3 }, //  6 PCM
+};
+
+STD_ROM_PICK(wschampb)
+STD_ROM_FN(wschampb)
+
 static struct BurnRomInfo trophyhRomDesc[] = {
 	{ "as1106e01.u06",	0x100000, 0xb4950882, 1 }, //  0 68000 code
 	{ "as1107e01.u07",	0x100000, 0x19ee67cb, 1 }, //  1
@@ -3441,6 +3456,16 @@ struct BurnDriver BurnDrvWschampa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, wschampaRomInfo, wschampaRomName, NULL, NULL, WschampInputInfo, WschampDIPInfo,
+	samshootInit, grdiansExit, samshootFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvWschampb = {
+	"wschampb", "wschamp", NULL, NULL, "2001",
+	"Wing Shooting Championship V1.00\0", NULL, "Sammy USA Corporation", "Newer Seta",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA2, GBF_SHOOT, 0,
+	NULL, wschampbRomInfo, wschampbRomName, NULL, NULL, WschampInputInfo, WschampDIPInfo,
 	samshootInit, grdiansExit, samshootFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };

@@ -2605,7 +2605,7 @@ struct BurnDriver BurnDrvDdcrew2 = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvDdcrewj = {
+struct BurnDriverD BurnDrvDdcrewj = {
 	"ddcrewj", "ddcrew", NULL, NULL, "1991",
 	"D. D. Crew (set 5, Japan, 4 Players, FD1094 317-0185)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,

@@ -240,14 +240,26 @@ static struct BurnDIPInfo martmastc102DIPList[] = {
 
 static struct BurnDIPInfo ddp2DIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x05, NULL				},
+};
 
-	{0,	0xFE, 0,	6,    "Region (Fake)"			},
-	{0x2E,	0x01, 0x07,	0x00, "China"				},
-	{0x2E,	0x01, 0x07,	0x01, "Taiwan"				},
-	{0x2E,	0x01, 0x07,	0x02, "Japan (Cave License)"		},
-	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
-	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "World"				},
+static struct BurnDIPInfo ddp2hkDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x04, NULL				},
+};
+
+static struct BurnDIPInfo ddp2kDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x03, NULL				},
+};
+
+static struct BurnDIPInfo ddp2jDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x02, NULL				},
+};
+
+static struct BurnDIPInfo ddp2tDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x01, NULL				},
+};
+
+static struct BurnDIPInfo ddp2cDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x00, NULL				},
 };
 
 static struct BurnDIPInfo kovshxasDIPList[] = {
@@ -274,6 +286,11 @@ STDDIPINFOEXT(martmast, 	pgm,	martmast	)
 STDDIPINFOEXT(martmastc102, 	pgm,	martmastc102	)
 STDDIPINFOEXT(olds,     	pgm,	olds		)
 STDDIPINFOEXT(ddp2,     	pgm,	ddp2		)
+STDDIPINFOEXT(ddp2hk,     	pgm,	ddp2hk		)
+STDDIPINFOEXT(ddp2k,     	pgm,	ddp2k		)
+STDDIPINFOEXT(ddp2j,     	pgm,	ddp2j		)
+STDDIPINFOEXT(ddp2t,     	pgm,	ddp2t		)
+STDDIPINFOEXT(ddp2c,     	pgm,	ddp2c		)
 STDDIPINFOEXT(dmnfrntpcb,     	jamma,	kov		)
 
 // -----------------------------------------------------------------------------
@@ -1125,7 +1142,7 @@ struct BurnDriver BurnDrvOlds100a = {
 };
 
 
-// Oriental Legend Special / Xi Yo Gi Shi Re Zuang Super (V103, China, Tencent)
+// Oriental Legend Special / Xi Yo Gi Shi Re Zuang Super (V103, China, Tencent) (unprotected)
 
 static struct BurnRomInfo olds103tRomDesc[] = {
 	{ "p0500.v103",	   		0x400000, 0x17e32e14, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -1154,8 +1171,8 @@ STD_ROM_FN(olds103t)
 
 struct BurnDriver BurnDrvOlds103t = {
 	"olds103t", "olds", "pgm", NULL, "2003",
-	"Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V103, China, Tencent)\0", NULL, "IGS", "PolyGameMaster",
-	L"Oriental Legend Super\0\u897F\u6E38\u91CA\u5384\u4F20 Super (V103, China, Tencent)\0", NULL, NULL, NULL,
+	"Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V103, China, Tencent) (unprotected)\0", NULL, "IGS", "PolyGameMaster",
+	L"Oriental Legend Super\0\u897F\u6E38\u91CA\u5384\u4F20 Super (V103, China, Tencent) (unprotected)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
 	NULL, olds103tRomInfo, olds103tRomName, NULL, NULL, pgmInputInfo, oldsDIPInfo,
 	pgmInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -2238,7 +2255,7 @@ struct BurnDriver BurnDrvKov2p205 = {
 };
 
 
-// Bee Storm - DoDonPachi II (V102)
+// Bee Storm - DoDonPachi II (V102, World)
 
 static struct BurnRomInfo ddp2RomDesc[] = {
 	{ "v102.u8",       		0x200000, 0x5a9ea040, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -2252,7 +2269,7 @@ static struct BurnRomInfo ddp2RomDesc[] = {
 
 	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
 
-	{ "ddp2_igs027a_japan.bin",	0x004000, 0x742d34d2, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+	{ "ddp2_igs027a_world.bin",	0x004000, 0x3654e20b, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
 
 	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },  //  7 External ARM7 Rom
 };
@@ -2274,8 +2291,8 @@ static INT32 ddp2Init()
 
 struct BurnDriver BurnDrvDdp2 = {
 	"ddp2", NULL, "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V102)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V102)\0", NULL, NULL, NULL,
+	"Bee Storm - DoDonPachi II (V102, World)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V102, World)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
 	NULL, ddp2RomInfo, ddp2RomName, NULL, NULL, pgmInputInfo, ddp2DIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -2283,7 +2300,40 @@ struct BurnDriver BurnDrvDdp2 = {
 };
 
 
-// Bee Storm - DoDonPachi II (V100)
+// Bee Storm - DoDonPachi II (V101, World)
+
+static struct BurnRomInfo ddp2101RomDesc[] = {
+	{ "v101_16m.u8",   		0x200000, 0x5e5786fd, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t1300.u21",	   		0x800000, 0xe748f0cb, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1300.u1",	   		0x800000, 0xfc87a405, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1301.u2",	   		0x800000, 0x0c8520da, 3 | BRF_GRA },		//  3
+
+	{ "b1300.u7",	   		0x800000, 0xef646604, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
+
+	{ "ddp2_igs027a_world.bin",	0x004000, 0x3654e20b, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+
+	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },  //  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(ddp2101, ddp2101, pgm)
+STD_ROM_FN(ddp2101)
+
+struct BurnDriver BurnDrvDdp2101 = {
+	"ddp2101", "ddp2", "pgm", NULL, "2001",
+	"Bee Storm - DoDonPachi II (V101, World)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V101, World)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ddp2101RomInfo, ddp2101RomName, NULL, NULL, pgmInputInfo, ddp2DIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224,448,3,4
+};
+
+
+// Bee Storm - DoDonPachi II (V100, World)
 
 static struct BurnRomInfo ddp2100RomDesc[] = {
 	{ "v100.u8",	   		0x200000, 0x0c8aa8ea, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -2297,7 +2347,7 @@ static struct BurnRomInfo ddp2100RomDesc[] = {
 
 	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
 
-	{ "ddp2_igs027a_japan.bin",	0x004000, 0x742d34d2, 7 | BRF_PRG | BRF_ESS },	//  6 Internal ARM7 Rom
+	{ "ddp2_igs027a_world.bin",	0x004000, 0x3654e20b, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
 
 	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },	//  7 External ARM7 Rom
 };
@@ -2307,8 +2357,8 @@ STD_ROM_FN(ddp2100)
 
 struct BurnDriver BurnDrvDdp2100 = {
 	"ddp2100", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V100)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V100)\0", NULL, NULL, NULL,
+	"Bee Storm - DoDonPachi II (V100, World)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V100, World)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
 	NULL, ddp2100RomInfo, ddp2100RomName, NULL, NULL, pgmInputInfo, ddp2DIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -2316,9 +2366,240 @@ struct BurnDriver BurnDrvDdp2100 = {
 };
 
 
-// Bee Storm - DoDonPachi II (V101)
+// Bee Storm - DoDonPachi II (V102, Hong Kong)
 
-static struct BurnRomInfo ddp2101RomDesc[] = {
+static struct BurnRomInfo ddp2hkRomDesc[] = {
+	{ "v102.u8",       		0x200000, 0x5a9ea040, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t1300.u21",	   		0x800000, 0xe748f0cb, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1300.u1",	   		0x800000, 0xfc87a405, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1301.u2",	   		0x800000, 0x0c8520da, 3 | BRF_GRA },		//  3
+
+	{ "b1300.u7",	   		0x800000, 0xef646604, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
+
+	{ "ddp2_igs027a_hong_kong.bin",	0x004000, 0xa7d1cace, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+
+	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },  //  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(ddp2hk, ddp2hk, pgm)
+STD_ROM_FN(ddp2hk)
+
+struct BurnDriver BurnDrvDdp2hk = {
+	"ddp2hk", "ddp2", "pgm", NULL, "2001",
+	"Bee Storm - DoDonPachi II (V102, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V102, Hong Kong)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ddp2hkRomInfo, ddp2hkRomName, NULL, NULL, pgmInputInfo, ddp2hkDIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224,448,3,4
+};
+
+
+// Bee Storm - DoDonPachi II (V101, Hong Kong)
+
+static struct BurnRomInfo ddp2101hkRomDesc[] = {
+	{ "v101_16m.u8",   		0x200000, 0x5e5786fd, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t1300.u21",	   		0x800000, 0xe748f0cb, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1300.u1",	   		0x800000, 0xfc87a405, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1301.u2",	   		0x800000, 0x0c8520da, 3 | BRF_GRA },		//  3
+
+	{ "b1300.u7",	   		0x800000, 0xef646604, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
+
+	{ "ddp2_igs027a_hong_kong.bin",	0x004000, 0xa7d1cace, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+
+	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },  //  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(ddp2101hk, ddp2101hk, pgm)
+STD_ROM_FN(ddp2101hk)
+
+struct BurnDriver BurnDrvDdp2101hk = {
+	"ddp2101hk", "ddp2", "pgm", NULL, "2001",
+	"Bee Storm - DoDonPachi II (V101, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V101, Hong Kong)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ddp2101hkRomInfo, ddp2101hkRomName, NULL, NULL, pgmInputInfo, ddp2hkDIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224,448,3,4
+};
+
+
+// Bee Storm - DoDonPachi II (V100, Hong Kong)
+
+static struct BurnRomInfo ddp2100hkRomDesc[] = {
+	{ "v100.u8",	   		0x200000, 0x0c8aa8ea, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t1300.u21",	   		0x800000, 0xe748f0cb, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1300.u1",	   		0x800000, 0xfc87a405, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1301.u2",	   		0x800000, 0x0c8520da, 3 | BRF_GRA },		//  3
+
+	{ "b1300.u7",	   		0x800000, 0xef646604, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
+
+	{ "ddp2_igs027a_hong_kong.bin",	0x004000, 0xa7d1cace, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+
+	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },	//  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(ddp2100hk, ddp2100hk, pgm)
+STD_ROM_FN(ddp2100hk)
+
+struct BurnDriver BurnDrvDdp2100hk = {
+	"ddp2100hk", "ddp2", "pgm", NULL, "2001",
+	"Bee Storm - DoDonPachi II (V100, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V100, Hong Kong)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ddp2100hkRomInfo, ddp2100hkRomName, NULL, NULL, pgmInputInfo, ddp2hkDIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224,448,3,4
+};
+
+
+// Bee Storm - DoDonPachi II (V102, Korea)
+
+static struct BurnRomInfo ddp2kRomDesc[] = {
+	{ "v102.u8",       		0x200000, 0x5a9ea040, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t1300.u21",	   		0x800000, 0xe748f0cb, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1300.u1",	   		0x800000, 0xfc87a405, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1301.u2",	   		0x800000, 0x0c8520da, 3 | BRF_GRA },		//  3
+
+	{ "b1300.u7",	   		0x800000, 0xef646604, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
+
+	{ "ddp2_igs027a_korea.bin",	0x004000, 0xe5a81c17, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+
+	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },  //  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(ddp2k, ddp2k, pgm)
+STD_ROM_FN(ddp2k)
+
+struct BurnDriver BurnDrvDdp2k = {
+	"ddp2k", "ddp2", "pgm", NULL, "2001",
+	"Bee Storm - DoDonPachi II (V102, Korea)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V102, Korea)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ddp2kRomInfo, ddp2kRomName, NULL, NULL, pgmInputInfo, ddp2kDIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224,448,3,4
+};
+
+
+// Bee Storm - DoDonPachi II (V101, Korea)
+
+static struct BurnRomInfo ddp2101kRomDesc[] = {
+	{ "v101_16m.u8",   		0x200000, 0x5e5786fd, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t1300.u21",	   		0x800000, 0xe748f0cb, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1300.u1",	   		0x800000, 0xfc87a405, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1301.u2",	   		0x800000, 0x0c8520da, 3 | BRF_GRA },		//  3
+
+	{ "b1300.u7",	   		0x800000, 0xef646604, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
+
+	{ "ddp2_igs027a_korea.bin",	0x004000, 0xe5a81c17, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+
+	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },  //  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(ddp2101k, ddp2101k, pgm)
+STD_ROM_FN(ddp2101k)
+
+struct BurnDriver BurnDrvDdp2101k = {
+	"ddp2101k", "ddp2", "pgm", NULL, "2001",
+	"Bee Storm - DoDonPachi II (V101, Korea)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V101, Korea)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ddp2101kRomInfo, ddp2101kRomName, NULL, NULL, pgmInputInfo, ddp2kDIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224,448,3,4
+};
+
+
+// Bee Storm - DoDonPachi II (V100, Korea)
+
+static struct BurnRomInfo ddp2100kRomDesc[] = {
+	{ "v100.u8",	   		0x200000, 0x0c8aa8ea, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t1300.u21",	   		0x800000, 0xe748f0cb, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1300.u1",	   		0x800000, 0xfc87a405, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1301.u2",	   		0x800000, 0x0c8520da, 3 | BRF_GRA },		//  3
+
+	{ "b1300.u7",	   		0x800000, 0xef646604, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
+
+	{ "ddp2_igs027a_korea.bin",	0x004000, 0xe5a81c17, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+
+	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },	//  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(ddp2100k, ddp2100k, pgm)
+STD_ROM_FN(ddp2100k)
+
+struct BurnDriver BurnDrvDdp2100k = {
+	"ddp2100k", "ddp2", "pgm", NULL, "2001",
+	"Bee Storm - DoDonPachi II (V100, Korea)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V100, Korea)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ddp2100kRomInfo, ddp2100kRomName, NULL, NULL, pgmInputInfo, ddp2kDIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224,448,3,4
+};
+
+
+// Bee Storm - DoDonPachi II (V102, Japan)
+
+static struct BurnRomInfo ddp2jRomDesc[] = {
+	{ "v102.u8",       		0x200000, 0x5a9ea040, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t1300.u21",	   		0x800000, 0xe748f0cb, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1300.u1",	   		0x800000, 0xfc87a405, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1301.u2",	   		0x800000, 0x0c8520da, 3 | BRF_GRA },		//  3
+
+	{ "b1300.u7",	   		0x800000, 0xef646604, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
+
+	{ "ddp2_igs027a_japan.bin",	0x004000, 0x742d34d2, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+
+	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },  //  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(ddp2j, ddp2j, pgm)
+STD_ROM_FN(ddp2j)
+
+struct BurnDriver BurnDrvDdp2j = {
+	"ddp2j", "ddp2", "pgm", NULL, "2001",
+	"Bee Storm - DoDonPachi II (V102, Japan)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V102, Japan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ddp2jRomInfo, ddp2jRomName, NULL, NULL, pgmInputInfo, ddp2jDIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224,448,3,4
+};
+
+
+// Bee Storm - DoDonPachi II (V101, Japan)
+
+static struct BurnRomInfo ddp2101jRomDesc[] = {
 	{ "v101_16m.u8",   		0x200000, 0x5e5786fd, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "t1300.u21",	   		0x800000, 0xe748f0cb, 2 | BRF_GRA },		//  1 Tile data
@@ -2335,15 +2616,246 @@ static struct BurnRomInfo ddp2101RomDesc[] = {
 	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },  //  7 External ARM7 Rom
 };
 
-STDROMPICKEXT(ddp2101, ddp2101, pgm)
-STD_ROM_FN(ddp2101)
+STDROMPICKEXT(ddp2101j, ddp2101j, pgm)
+STD_ROM_FN(ddp2101j)
 
-struct BurnDriver BurnDrvDdp2101 = {
-	"ddp2101", "ddp2", "pgm", NULL, "2001",
-	"Bee Storm - DoDonPachi II (V101)\0", NULL, "IGS", "PolyGameMaster",
-	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V101)\0", NULL, NULL, NULL,
+struct BurnDriver BurnDrvDdp2101j = {
+	"ddp2101j", "ddp2", "pgm", NULL, "2001",
+	"Bee Storm - DoDonPachi II (V101, Japan)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V101, Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
-	NULL, ddp2101RomInfo, ddp2101RomName, NULL, NULL, pgmInputInfo, ddp2DIPInfo,
+	NULL, ddp2101jRomInfo, ddp2101jRomName, NULL, NULL, pgmInputInfo, ddp2jDIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224,448,3,4
+};
+
+
+// Bee Storm - DoDonPachi II (V100, Japan)
+
+static struct BurnRomInfo ddp2100jRomDesc[] = {
+	{ "v100.u8",	   		0x200000, 0x0c8aa8ea, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t1300.u21",	   		0x800000, 0xe748f0cb, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1300.u1",	   		0x800000, 0xfc87a405, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1301.u2",	   		0x800000, 0x0c8520da, 3 | BRF_GRA },		//  3
+
+	{ "b1300.u7",	   		0x800000, 0xef646604, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
+
+	{ "ddp2_igs027a_japan.bin",	0x004000, 0x742d34d2, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+
+	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },	//  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(ddp2100j, ddp2100j, pgm)
+STD_ROM_FN(ddp2100j)
+
+struct BurnDriver BurnDrvDdp2100j = {
+	"ddp2100j", "ddp2", "pgm", NULL, "2001",
+	"Bee Storm - DoDonPachi II (V100, Japan)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V100, Japan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ddp2100jRomInfo, ddp2100jRomName, NULL, NULL, pgmInputInfo, ddp2jDIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224,448,3,4
+};
+
+
+// Bee Storm - DoDonPachi II (V102, Taiwan)
+
+static struct BurnRomInfo ddp2tRomDesc[] = {
+	{ "v102.u8",       		0x200000, 0x5a9ea040, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t1300.u21",	   		0x800000, 0xe748f0cb, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1300.u1",	   		0x800000, 0xfc87a405, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1301.u2",	   		0x800000, 0x0c8520da, 3 | BRF_GRA },		//  3
+
+	{ "b1300.u7",	   		0x800000, 0xef646604, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
+
+	{ "ddp2_igs027a_taiwan.bin",	0x004000, 0x1dd34bdc, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+
+	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },  //  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(ddp2t, ddp2t, pgm)
+STD_ROM_FN(ddp2t)
+
+struct BurnDriver BurnDrvDdp2t = {
+	"ddp2t", "ddp2", "pgm", NULL, "2001",
+	"Bee Storm - DoDonPachi II (V102, Taiwan)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V102, Taiwan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ddp2tRomInfo, ddp2tRomName, NULL, NULL, pgmInputInfo, ddp2tDIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224,448,3,4
+};
+
+
+// Bee Storm - DoDonPachi II (V101, Taiwan)
+
+static struct BurnRomInfo ddp2101tRomDesc[] = {
+	{ "v101_16m.u8",   		0x200000, 0x5e5786fd, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t1300.u21",	   		0x800000, 0xe748f0cb, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1300.u1",	   		0x800000, 0xfc87a405, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1301.u2",	   		0x800000, 0x0c8520da, 3 | BRF_GRA },		//  3
+
+	{ "b1300.u7",	   		0x800000, 0xef646604, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
+
+	{ "ddp2_igs027a_taiwan.bin",	0x004000, 0x1dd34bdc, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+
+	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },  //  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(ddp2101t, ddp2101t, pgm)
+STD_ROM_FN(ddp2101t)
+
+struct BurnDriver BurnDrvDdp2101t = {
+	"ddp2101t", "ddp2", "pgm", NULL, "2001",
+	"Bee Storm - DoDonPachi II (V101, Taiwan)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V101, Taiwan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ddp2101tRomInfo, ddp2101tRomName, NULL, NULL, pgmInputInfo, ddp2tDIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224,448,3,4
+};
+
+
+// Bee Storm - DoDonPachi II (V100, Taiwan)
+
+static struct BurnRomInfo ddp2100tRomDesc[] = {
+	{ "v100.u8",	   		0x200000, 0x0c8aa8ea, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t1300.u21",	   		0x800000, 0xe748f0cb, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1300.u1",	   		0x800000, 0xfc87a405, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1301.u2",	   		0x800000, 0x0c8520da, 3 | BRF_GRA },		//  3
+
+	{ "b1300.u7",	   		0x800000, 0xef646604, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
+
+	{ "ddp2_igs027a_taiwan.bin",	0x004000, 0x1dd34bdc, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+
+	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },	//  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(ddp2100t, ddp2100t, pgm)
+STD_ROM_FN(ddp2100t)
+
+struct BurnDriver BurnDrvDdp2100t = {
+	"ddp2100t", "ddp2", "pgm", NULL, "2001",
+	"Bee Storm - DoDonPachi II (V100, Taiwan)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V100, Taiwan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ddp2100tRomInfo, ddp2100tRomName, NULL, NULL, pgmInputInfo, ddp2tDIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224,448,3,4
+};
+
+
+// Bee Storm - DoDonPachi II (V102, China)
+
+static struct BurnRomInfo ddp2cRomDesc[] = {
+	{ "v102.u8",       		0x200000, 0x5a9ea040, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t1300.u21",	   		0x800000, 0xe748f0cb, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1300.u1",	   		0x800000, 0xfc87a405, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1301.u2",	   		0x800000, 0x0c8520da, 3 | BRF_GRA },		//  3
+
+	{ "b1300.u7",	   		0x800000, 0xef646604, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
+
+	{ "ddp2_igs027a_china.bin",	0x004000, 0x8c566319, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+
+	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },  //  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(ddp2c, ddp2c, pgm)
+STD_ROM_FN(ddp2c)
+
+struct BurnDriver BurnDrvDdp2c = {
+	"ddp2c", "ddp2", "pgm", NULL, "2001",
+	"Bee Storm - DoDonPachi II (V102, China)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V102, China)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ddp2cRomInfo, ddp2cRomName, NULL, NULL, pgmInputInfo, ddp2cDIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224,448,3,4
+};
+
+
+// Bee Storm - DoDonPachi II (V101, China)
+
+static struct BurnRomInfo ddp2101cRomDesc[] = {
+	{ "v101_16m.u8",   		0x200000, 0x5e5786fd, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t1300.u21",	   		0x800000, 0xe748f0cb, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1300.u1",	   		0x800000, 0xfc87a405, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1301.u2",	   		0x800000, 0x0c8520da, 3 | BRF_GRA },		//  3
+
+	{ "b1300.u7",	   		0x800000, 0xef646604, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
+
+	{ "ddp2_igs027a_china.bin",	0x004000, 0x8c566319, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+
+	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },  //  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(ddp2101c, ddp2101c, pgm)
+STD_ROM_FN(ddp2101c)
+
+struct BurnDriver BurnDrvDdp2101c = {
+	"ddp2101c", "ddp2", "pgm", NULL, "2001",
+	"Bee Storm - DoDonPachi II (V101, China)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V101, China)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ddp2101cRomInfo, ddp2101cRomName, NULL, NULL, pgmInputInfo, ddp2cDIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224,448,3,4
+};
+
+
+// Bee Storm - DoDonPachi II (V100, Taiwan)
+
+static struct BurnRomInfo ddp2100cRomDesc[] = {
+	{ "v100.u8",	   		0x200000, 0x0c8aa8ea, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t1300.u21",	   		0x800000, 0xe748f0cb, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1300.u1",	   		0x800000, 0xfc87a405, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1301.u2",	   		0x800000, 0x0c8520da, 3 | BRF_GRA },		//  3
+
+	{ "b1300.u7",	   		0x800000, 0xef646604, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m1300.u5",	   		0x400000, 0x82d4015d, 5 | BRF_SND },		//  5 Samples
+
+	{ "ddp2_igs027a_china.bin",	0x004000, 0x8c566319, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+
+	{ "v100.u23", 	   		0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },	//  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(ddp2100c, ddp2100c, pgm)
+STD_ROM_FN(ddp2100c)
+
+struct BurnDriver BurnDrvDdp2100c = {
+	"ddp2100c", "ddp2", "pgm", NULL, "2001",
+	"Bee Storm - DoDonPachi II (V100, China)\0", NULL, "IGS", "PolyGameMaster",
+	L"Bee Storm - DoDonPatchi II\0\u6012\u9996\u9886\u8702\uff0d\u8702\u66b4 (V100, China)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ddp2100cRomInfo, ddp2100cRomName, NULL, NULL, pgmInputInfo, ddp2cDIPInfo,
 	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224,448,3,4
 };

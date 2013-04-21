@@ -349,10 +349,53 @@ static void SuperchsMakeInputs()
 }
 
 static struct BurnRomInfo SuperchsRomDesc[] = {
-	{ "d46-35.ic27",        0x040000, 0x1575c9a7, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
-	{ "d46-34.ic25",        0x040000, 0xc72a4d2b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
-	{ "d46-33.ic23",        0x040000, 0x3094bcd0, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
-	{ "d46-31.ic21",        0x040000, 0x38b983a3, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
+	{ "d46-35+.ic27",       0x040000, 0x1575c9a7, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
+	{ "d46-34+.ic25",       0x040000, 0xc72a4d2b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
+	{ "d46-33+.ic23",       0x040000, 0x3094bcd0, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
+	{ "d46-32+.ic21",       0x040000, 0x4fbeb335, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
+	
+	{ "d46-24.ic127",       0x020000, 0xa006baa1, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "d46-23.ic112",       0x020000, 0x9a69dbd0, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	
+	{ "d46-37.ic8",         0x020000, 0x60b51b91, BRF_ESS | BRF_PRG | TAITO_68KROM3_BYTESWAP },
+	{ "d46-36.ic7",         0x020000, 0x8f7aa276, BRF_ESS | BRF_PRG | TAITO_68KROM3_BYTESWAP },
+	
+	{ "d46-05.ic87",        0x100000, 0x150d0e4c, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "d46-06.ic88",        0x100000, 0x321308be, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	
+	{ "d46-04.ic67",        0x200000, 0x832769a9, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "d46-03.ic66",        0x200000, 0xe0e9cbfd, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "d46-02.ic65",        0x200000, 0xa83ca82e, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "d46-01.ic64",        0x200000, 0x5c2ae92d, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	
+	{ "d46-07.ic34",        0x080000, 0xc3b8b093, BRF_GRA | TAITO_SPRITEMAP },
+	
+	{ "d46-10.ic2",         0x200000, 0x306256be, BRF_SND | TAITO_ES5505_BYTESWAP },
+	{ "d46-12.ic4",         0x200000, 0xa24a53a8, BRF_SND | TAITO_ES5505_BYTESWAP },
+	{ "d46-11.ic5",         0x200000, 0xd4ea0f56, BRF_SND | TAITO_ES5505_BYTESWAP },	
+	
+	{ "eeprom-superchs.bin",0x000080, 0x230f0753, BRF_PRG | TAITO_DEFAULT_EEPROM },
+
+	{ "d46-18.ic6",    		0x000c27, 0x3df69013, BRF_OPT }, // Main Board Pals	
+	{ "d46-19.ic7",    		0x000c27, 0xf53fbf3a, BRF_OPT },
+	{ "d46-16.ic8",     	0x000e27, 0x7d8eee6c, BRF_OPT },
+	{ "d46-15.ic9",      	0x000b5a, 0x0256e777, BRF_OPT },	
+	{ "d46-17.ic10",      	0x000e27, 0x4a3ebbef, BRF_OPT },
+	{ "d46-13.ic82",      	0x000b5a, 0xea4e47b7, BRF_OPT },	
+	{ "d46-14.ic84",      	0x000b5a, 0x22bb5aac, BRF_OPT },
+	{ "d46-20.ic22-sb",    	0x000e27, 0x6385bb30, BRF_OPT }, // Sound Board Pals	
+	{ "d46-21.ic23-sb",    	0x000e27, 0x4e5e33e4, BRF_OPT },
+	{ "d46-22.ic24-sb",     0x000e27, 0x479b11d4, BRF_OPT },
+};
+
+STD_ROM_PICK(Superchs)
+STD_ROM_FN(Superchs)
+
+static struct BurnRomInfo SuperchsuRomDesc[] = {
+	{ "d46-35+.ic27",       0x040000, 0x1575c9a7, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
+	{ "d46-34+.ic25",       0x040000, 0xc72a4d2b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
+	{ "d46-33+.ic23",       0x040000, 0x3094bcd0, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
+	{ "d46-31+.ic21",       0x040000, 0x38b983a3, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
 	
 	{ "d46-24.ic127",       0x020000, 0xa006baa1, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
 	{ "d46-23.ic112",       0x020000, 0x9a69dbd0, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
@@ -377,8 +420,8 @@ static struct BurnRomInfo SuperchsRomDesc[] = {
 	{ "eeprom-superchs.bin",0x000080, 0x230f0753, BRF_PRG | TAITO_DEFAULT_EEPROM },
 };
 
-STD_ROM_PICK(Superchs)
-STD_ROM_FN(Superchs)
+STD_ROM_PICK(Superchsu)
+STD_ROM_FN(Superchsu)
 
 static struct BurnRomInfo SuperchsjRomDesc[] = {
 	{ "d46-28+.ic27",       0x040000, 0x5c33784f, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
@@ -1178,7 +1221,7 @@ static INT32 SuperchsScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvSuperchs = {
 	"superchs", NULL, NULL, NULL, "1992",
-	"Super Chase - Criminal Termintation (US)\0", "No Sound", "Taito America Corporation", "Taito Misc",
+	"Super Chase - Criminal Termination (World)\0", "No Sound", "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, SuperchsRomInfo, SuperchsRomName, NULL, NULL, SuperchsInputInfo, NULL,
@@ -1186,9 +1229,19 @@ struct BurnDriver BurnDrvSuperchs = {
 	NULL, 0x2000, 320, 240, 4, 3
 };
 
+struct BurnDriver BurnDrvSuperchsu = {
+	"superchsu", "superchs", NULL, NULL, "1992",
+	"Super Chase - Criminal Termination (US)\0", "No Sound", "Taito America Corporation", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
+	NULL, SuperchsuRomInfo, SuperchsuRomName, NULL, NULL, SuperchsInputInfo, NULL,
+	SuperchsInit, SuperchsExit, SuperchsFrame, NULL, SuperchsScan,
+	NULL, 0x2000, 320, 240, 4, 3
+};
+
 struct BurnDriver BurnDrvSuperchsj = {
 	"superchsj", "superchs", NULL, NULL, "1992",
-	"Super Chase - Criminal Termintation (Japan)\0", "No Sound", "Taito Corporation", "Taito Misc",
+	"Super Chase - Criminal Termination (Japan)\0", "No Sound", "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, SuperchsjRomInfo, SuperchsjRomName, NULL, NULL, SuperchsInputInfo, NULL,

@@ -1130,7 +1130,7 @@ static struct BurnRomInfo DdcrewjRomDesc[] = {
 	{ "mpr-14131.c5",   0x80000, 0xbe5a7d0b, SYS16_ROM_RF5C68DATA | BRF_SND },
 	{ "epr-14130.c4",   0x80000, 0x948f34a1, SYS16_ROM_RF5C68DATA | BRF_SND },
 	
-	{ "317-0185.key",   0x02000, 0x00000000, SYS16_ROM_KEY | BRF_ESS | BRF_PRG | BRF_NODUMP },
+	{ "317-0185.key",   0x02000, 0xa650b506, SYS16_ROM_KEY | BRF_ESS | BRF_PRG | BRF_NODUMP },
 };
 
 
@@ -2605,11 +2605,11 @@ struct BurnDriver BurnDrvDdcrew2 = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvDdcrewj = {
+struct BurnDriver BurnDrvDdcrewj = {
 	"ddcrewj", "ddcrew", NULL, NULL, "1991",
 	"D. D. Crew (set 5, Japan, 4 Players, FD1094 317-0185)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, DdcrewjRomInfo, DdcrewjRomName, NULL, NULL, DdcrewuInputInfo, DdcrewuDIPInfo,
 	DdcrewuInit, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3

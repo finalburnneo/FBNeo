@@ -1130,7 +1130,7 @@ static struct BurnRomInfo DdcrewjRomDesc[] = {
 	{ "mpr-14131.c5",   0x80000, 0xbe5a7d0b, SYS16_ROM_RF5C68DATA | BRF_SND },
 	{ "epr-14130.c4",   0x80000, 0x948f34a1, SYS16_ROM_RF5C68DATA | BRF_SND },
 	
-	{ "317-0185.key",   0x02000, 0xa650b506, SYS16_ROM_KEY | BRF_ESS | BRF_PRG | BRF_NODUMP },
+	{ "317-0185.key",   0x02000, 0xa650b506, SYS16_ROM_KEY | BRF_ESS | BRF_PRG},
 };
 
 

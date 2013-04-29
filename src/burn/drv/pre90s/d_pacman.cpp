@@ -2775,10 +2775,53 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 //------------------------------------------------------------------------------------------------------
 
 
-// PuckMan (Japan set 1, Probably Bootleg)
+// Puck Man (Japan set 1)
 
 static struct BurnRomInfo puckmanRomDesc[] = {
-	{ "namcopac.6e",  0x1000, 0xfee263b3, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pm1_prg1.6e",  0x0800, 0xf36e88ab, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pm1_prg2.6k",  0x0800, 0x618bd9b3, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "pm1_prg3.6f",  0x0800, 0x7d177853, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "pm1_prg4.6m",  0x0800, 0xd3e8914c, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "pm1_prg5.6h",  0x0800, 0x6bf4f625, 1 | BRF_ESS | BRF_PRG },	//  4 
+	{ "pm1_prg6.6n",  0x0800, 0xa948ce83, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "pm1_prg7.6j",  0x0800, 0xb6289b26, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "pm1_prg8.6p",  0x0800, 0x17a88c13, 1 | BRF_ESS | BRF_PRG },	//  7
+
+	{ "pm1_chg1.5e",  0x0800, 0x2066a0b7, 2 | BRF_GRA },			//  8 Graphics
+	{ "pm1_chg2.5h",  0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
+	{ "pm1_chg3.5f",  0x0800, 0x9e39323a, 2 | BRF_GRA },			// 10
+	{ "pm1_chg4.5j",  0x0800, 0x1b1d9096, 2 | BRF_GRA },			// 11
+
+	{ "pm1-1.7f",     0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "pm1-1.4a",     0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
+
+	{ "pm1-3.1m",     0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
+	{ "pm1-2.3m",     0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
+};
+
+STD_ROM_PICK(puckman)
+STD_ROM_FN(puckman)
+
+static INT32 puckmanInit()
+{
+	return DrvInit(StandardMap, NULL, PACMAN);
+}
+
+struct BurnDriver BurnDrvpuckman = {
+	"puckman", NULL, NULL, NULL, "1980",
+	"Puck Man (Japan set 1)\0", NULL, "Namco", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	NULL, puckmanRomInfo, puckmanRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Puck Man (Bootleg set 1)
+
+static struct BurnRomInfo puckmanbRomDesc[] = {
+	{ "namcopac.6e",  0x1000, 0xfee263b3, 1 | BRF_ESS | BRF_PRG },  //  0 Z80 Code
 	{ "namcopac.6f",  0x1000, 0x39d1fc83, 1 | BRF_ESS | BRF_PRG },	//  1
 	{ "namcopac.6h",  0x1000, 0x02083b03, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "namcopac.6j",  0x1000, 0x7a36fe55, 1 | BRF_ESS | BRF_PRG },	//  3
@@ -2793,26 +2836,21 @@ static struct BurnRomInfo puckmanRomDesc[] = {
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
 };
 
-STD_ROM_PICK(puckman)
-STD_ROM_FN(puckman)
+STD_ROM_PICK(puckmanb)
+STD_ROM_FN(puckmanb)
 
-static INT32 puckmanInit()
-{
-	return DrvInit(StandardMap, NULL, PACMAN);
-}
-
-struct BurnDriver BurnDrvpuckman = {
-	"puckman", NULL, NULL, NULL, "1980",
-	"PuckMan (Japan set 1, Probably Bootleg)\0", NULL, "Namco", "Pac-man",
+struct BurnDriver BurnDrvpuckmanb = {
+	"puckmanb", "puckman", NULL, NULL, "1980",
+	"Puck Man (Bootleg set 1)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
-	NULL, puckmanRomInfo, puckmanRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	NULL, puckmanbRomInfo, puckmanbRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 
 
-// PuckMan (Japan set 1 with speedup hack)
+// Puck Man (Speedup hack)
 
 static struct BurnRomInfo puckmanfRomDesc[] = {
 	{ "namcopac.6e",  0x1000, 0xfee263b3, 1 | BRF_ESS | BRF_PRG },  //  0 Z80 Code
@@ -2835,7 +2873,7 @@ STD_ROM_FN(puckmanf)
 
 struct BurnDriver BurnDrvpuckmanf = {
 	"puckmanf", "puckman", NULL, NULL, "1980",
-	"PuckMan (Japan set 1 with speedup hack)\0", NULL, "Namco", "Pac-man",
+	"PuckMan (speedup hack)\0", NULL, "hack", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, puckmanfRomInfo, puckmanfRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -2844,14 +2882,48 @@ struct BurnDriver BurnDrvpuckmanf = {
 };
 
 
-// PuckMan (Japan set 3)
+// Puck Man (Bootleg set 2)
+
+static struct BurnRomInfo puckmanhRomDesc[] = {
+	{ "pm01.6e",      0x1000, 0x5fe8610a, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pm02.6f",      0x1000, 0x61d38c6c, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "pm03.6h",      0x1000, 0x4e7ef99f, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "pm04.6j",      0x1000, 0x8939ddd2, 1 | BRF_ESS | BRF_PRG },	//  3
+
+	{ "pm9.5e",       0x0800, 0x2229ab07, 2 | BRF_GRA },			//  4 Graphics
+	{ "pm11.5h",      0x0800, 0x3591b89d, 2 | BRF_GRA },			//  5
+	{ "pm10.5f",      0x0800, 0x9e39323a, 2 | BRF_GRA },			//  6
+	{ "pm12.5j",      0x0800, 0x1b1d9096, 2 | BRF_GRA },			//  7
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  8 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  9
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
+};
+
+STD_ROM_PICK(puckmanh)
+STD_ROM_FN(puckmanh)
+
+struct BurnDriver BurnDrvpuckmanh = {
+	"puckmanh", "puckman", NULL, NULL, "1981",
+	"Puck Man (bootleg set 2)\0", NULL, "bootleg (Falcom?)", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	NULL, puckmanhRomInfo, puckmanhRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Puck Man (Japan set 2)
 
 static struct BurnRomInfo puckmodRomDesc[] = {
-	{ "namcopac.6e",  0x1000, 0xfee263b3, 1 | BRF_ESS | BRF_PRG },  //  0 Z80 Code
-	{ "namcopac.6f",  0x1000, 0x39d1fc83, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "namcopac.6h",  0x1000, 0x02083b03, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "namcopac.6e",  0x1000, 0xc1e6ab10, 1 | BRF_ESS | BRF_PRG },  //  0 Z80 Code
+	{ "namcopac.6f",  0x1000, 0x1a6fb2d4, 1 | BRF_ESS | BRF_PRG },  //  1
+	{ "namcopac.6h",  0x1000, 0xbcdd1beb, 1 | BRF_ESS | BRF_PRG },  //  2
 	{ "npacmod.6j",   0x1000, 0x7d98d5f5, 1 | BRF_ESS | BRF_PRG },	//  3
-
+	
 	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },			//  4 Graphics
 	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },			//  5
 
@@ -2867,44 +2939,10 @@ STD_ROM_FN(puckmod)
 
 struct BurnDriver BurnDrvpuckmod = {
 	"puckmod", "puckman", NULL, NULL, "1981",
-	"PuckMan (Japan set 3)\0", NULL, "Namco", "Pac-man",
+	"Puck Man (Japan set 2)\0", NULL, "Namco", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, puckmodRomInfo, puckmodRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	224, 288, 3, 4
-};
-
-
-// PuckMan (Japan set 2)
-
-static struct BurnRomInfo puckmanaRomDesc[] = {
-	{ "pacman.6e",    0x1000, 0xc1e6ab10, 1 | BRF_ESS | BRF_PRG },  //  0 Z80 Code
-	{ "pacman.6f",    0x1000, 0x1a6fb2d4, 1 | BRF_ESS | BRF_PRG },  //  1
-	{ "pacman.6h",    0x1000, 0xbcdd1beb, 1 | BRF_ESS | BRF_PRG },  //  2
-	{ "prg7",         0x0800, 0xb6289b26, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "prg8",         0x0800, 0x17a88c13, 1 | BRF_ESS | BRF_PRG },	//  4
-
-	{ "chg1",         0x0800, 0x2066a0b7, 2 | BRF_GRA },			//  5 Graphics
-	{ "chg2",         0x0800, 0x3591b89d, 2 | BRF_GRA },			//  6
-	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },			//  7
-
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  8 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  9
-
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
-	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
-};
-
-STD_ROM_PICK(puckmana)
-STD_ROM_FN(puckmana)
-
-struct BurnDriver BurnDrvpuckmana = {
-	"puckmana", "puckman", NULL, NULL, "1981",
-	"PuckMan (Japan set 2)\0", NULL, "Namco", "Pac-man",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
-	NULL, puckmanaRomInfo, puckmanaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -3181,40 +3219,6 @@ struct BurnDriver BurnDrvpacmod = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, pacmodRomInfo, pacmodRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	224, 288, 3, 4
-};
-
-
-// Puckman (Falcom?)
-
-static struct BurnRomInfo puckmanhRomDesc[] = {
-	{ "pm01.6e",      0x1000, 0x5fe8610a, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "pm02.6f",      0x1000, 0x61d38c6c, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "pm03.6h",      0x1000, 0x4e7ef99f, 1 | BRF_ESS | BRF_PRG },	//  2
-	{ "pm04.6j",      0x1000, 0x8939ddd2, 1 | BRF_ESS | BRF_PRG },	//  3
-
-	{ "pm9.5e",       0x0800, 0x2229ab07, 2 | BRF_GRA },			//  4 Graphics
-	{ "pm11.5h",      0x0800, 0x3591b89d, 2 | BRF_GRA },			//  5
-	{ "pm10.5f",      0x0800, 0x9e39323a, 2 | BRF_GRA },			//  6
-	{ "pm12.5j",      0x0800, 0x1b1d9096, 2 | BRF_GRA },			//  7
-
-	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			//  8 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  9
-
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
-	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
-};
-
-STD_ROM_PICK(puckmanh)
-STD_ROM_FN(puckmanh)
-
-struct BurnDriver BurnDrvpuckmanh = {
-	"puckmanh", "puckman", NULL, NULL, "1981",
-	"Puckman (Falcom?)\0", NULL, "hack", "Pac-man",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
-	NULL, puckmanhRomInfo, puckmanhRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

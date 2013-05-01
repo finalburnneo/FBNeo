@@ -376,16 +376,16 @@ static struct BurnRomInfo SuperchsRomDesc[] = {
 	
 	{ "eeprom-superchs.bin",0x000080, 0x230f0753, BRF_PRG | TAITO_DEFAULT_EEPROM },
 
-	{ "pal1618bcn-d46-13.ic82",    	0x000104, 0x2f32e889, BRF_OPT }, 	
-	{ "pal1618bcn-d46-14.ic84",    	0x000104, 0x5ac8b5f8, BRF_OPT },
-	{ "pal1618bcn-d46-15.ic9",     	0x000104, 0x38ea9f36, BRF_OPT },
+	{ "pal16l8bcn-d46-13.ic82",    	0x000104, 0x2f32e889, BRF_OPT }, 	
+	{ "pal16l8bcn-d46-14.ic84",    	0x000104, 0x5ac8b5f8, BRF_OPT },
+	{ "pal16l8bcn-d46-15.ic9",     	0x000104, 0x38ea9f36, BRF_OPT },
 	{ "palce20v8h-d46-16.ic8",      0x000157, 0x64e1ff9f, BRF_OPT },	
 	{ "palce20v8h-d46-17.ic10",     0x000157, 0x5c9d94e1, BRF_OPT },
 	{ "palce16v8h-d46-18.ic6",      0x000117, 0x7581b894, BRF_OPT },	
 	{ "palce16v8h-d46-19.ic7",      0x000117, 0xa5d863d0, BRF_OPT },
 	{ "palce20v8h-d46-20.ic22",     0x000157, 0x838cbc11, BRF_OPT }, // Located on the sound board	
 	{ "palce20v8h-d46-21.ic23",     0x000157, 0x93c5aac2, BRF_OPT }, // Located on the sound board
-	{ "palce20v8h-d46-22.ic24",     0x000157, 0x64e1ff9f, BRF_OPT }, // Located on the sound board
+	{ "palce20v8h-d46-22.ic24",     0x000157, 0xc6a10b06, BRF_OPT }, // Located on the sound board
 };
 
 STD_ROM_PICK(Superchs)
@@ -419,26 +419,26 @@ static struct BurnRomInfo SuperchsuRomDesc[] = {
 	
 	{ "eeprom-superchs.bin",0x000080, 0x230f0753, BRF_PRG | TAITO_DEFAULT_EEPROM },
 
-	{ "pal1618bcn-d46-13.ic82",    	0x000104, 0x2f32e889, BRF_OPT }, 	
-	{ "pal1618bcn-d46-14.ic84",    	0x000104, 0x5ac8b5f8, BRF_OPT },
-	{ "pal1618bcn-d46-15.ic9",     	0x000104, 0x38ea9f36, BRF_OPT },
+	{ "pal16l8bcn-d46-13.ic82",    	0x000104, 0x2f32e889, BRF_OPT }, 	
+	{ "pal16l8bcn-d46-14.ic84",    	0x000104, 0x5ac8b5f8, BRF_OPT },
+	{ "pal16l8bcn-d46-15.ic9",     	0x000104, 0x38ea9f36, BRF_OPT },
 	{ "palce20v8h-d46-16.ic8",      0x000157, 0x64e1ff9f, BRF_OPT },	
 	{ "palce20v8h-d46-17.ic10",     0x000157, 0x5c9d94e1, BRF_OPT },
 	{ "palce16v8h-d46-18.ic6",      0x000117, 0x7581b894, BRF_OPT },	
 	{ "palce16v8h-d46-19.ic7",      0x000117, 0xa5d863d0, BRF_OPT },
 	{ "palce20v8h-d46-20.ic22",     0x000157, 0x838cbc11, BRF_OPT }, // Located on the sound board	
 	{ "palce20v8h-d46-21.ic23",     0x000157, 0x93c5aac2, BRF_OPT }, // Located on the sound board
-	{ "palce20v8h-d46-22.ic24",     0x000157, 0x64e1ff9f, BRF_OPT }, // Located on the sound board
+	{ "palce20v8h-d46-22.ic24",     0x000157, 0xc6a10b06, BRF_OPT }, // Located on the sound board
 };
 
 STD_ROM_PICK(Superchsu)
 STD_ROM_FN(Superchsu)
 
 static struct BurnRomInfo SuperchsjRomDesc[] = {
-	{ "d46-28.ic27",        0x040000, 0x5c33784f, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
-	{ "d46-27.ic25",        0x040000, 0xe81125b8, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
-	{ "d46-26.ic23",        0x040000, 0x2aaba1b0, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
-	{ "d46-25.ic21",        0x040000, 0x4241e97a, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
+	{ "d46-28+.ic27",       0x040000, 0x5c33784f, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
+	{ "d46-27+.ic25",       0x040000, 0xe81125b8, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
+	{ "d46-26+.ic23",       0x040000, 0x2aaba1b0, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
+	{ "d46-25+.ic21",       0x040000, 0x4241e97a, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP32 },
 	
 	{ "d46-24.ic127",       0x020000, 0xa006baa1, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
 	{ "d46-23.ic112",       0x020000, 0x9a69dbd0, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
@@ -462,16 +462,16 @@ static struct BurnRomInfo SuperchsjRomDesc[] = {
 	
 	{ "eeprom-superchs.bin",0x000080, 0x230f0753, BRF_PRG | TAITO_DEFAULT_EEPROM },
 
-	{ "pal1618bcn-d46-13.ic82",    	0x000104, 0x2f32e889, BRF_OPT }, 	
-	{ "pal1618bcn-d46-14.ic84",    	0x000104, 0x5ac8b5f8, BRF_OPT },
-	{ "pal1618bcn-d46-15.ic9",     	0x000104, 0x38ea9f36, BRF_OPT },
+	{ "pal16l8bcn-d46-13.ic82",    	0x000104, 0x2f32e889, BRF_OPT }, 	
+	{ "pal16l8bcn-d46-14.ic84",    	0x000104, 0x5ac8b5f8, BRF_OPT },
+	{ "pal16l8bcn-d46-15.ic9",     	0x000104, 0x38ea9f36, BRF_OPT },
 	{ "palce20v8h-d46-16.ic8",      0x000157, 0x64e1ff9f, BRF_OPT },	
 	{ "palce20v8h-d46-17.ic10",     0x000157, 0x5c9d94e1, BRF_OPT },
 	{ "palce16v8h-d46-18.ic6",      0x000117, 0x7581b894, BRF_OPT },	
 	{ "palce16v8h-d46-19.ic7",      0x000117, 0xa5d863d0, BRF_OPT },
 	{ "palce20v8h-d46-20.ic22",     0x000157, 0x838cbc11, BRF_OPT }, // Located on the sound board	
 	{ "palce20v8h-d46-21.ic23",     0x000157, 0x93c5aac2, BRF_OPT }, // Located on the sound board
-	{ "palce20v8h-d46-22.ic24",     0x000157, 0x64e1ff9f, BRF_OPT }, // Located on the sound board
+	{ "palce20v8h-d46-22.ic24",     0x000157, 0xc6a10b06, BRF_OPT }, // Located on the sound board
 };
 
 STD_ROM_PICK(Superchsj)

@@ -2793,7 +2793,7 @@ static struct BurnRomInfo puckmanRomDesc[] = {
 	{ "pm1_chg4.5j",  0x0800, 0x1b1d9096, 2 | BRF_GRA },			// 11
 
 	{ "pm1-1.7f",     0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
-	{ "pm1-1.4a",     0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
+	{ "pm1-4.4a",     0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
 
 	{ "pm1-3.1m",     0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
 	{ "pm1-2.3m",     0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
@@ -2919,9 +2919,9 @@ struct BurnDriver BurnDrvpuckmanh = {
 // Puck Man (Japan set 2)
 
 static struct BurnRomInfo puckmodRomDesc[] = {
-	{ "namcopac.6e",  0x1000, 0xc1e6ab10, 1 | BRF_ESS | BRF_PRG },  //  0 Z80 Code
-	{ "namcopac.6f",  0x1000, 0x1a6fb2d4, 1 | BRF_ESS | BRF_PRG },  //  1
-	{ "namcopac.6h",  0x1000, 0xbcdd1beb, 1 | BRF_ESS | BRF_PRG },  //  2
+	{ "namcopac.6e",  0x1000, 0xfee263b3, 1 | BRF_ESS | BRF_PRG },  //  0 Z80 Code
+	{ "namcopac.6f",  0x1000, 0x39d1fc83, 1 | BRF_ESS | BRF_PRG },  //  1
+	{ "namcopac.6h",  0x1000, 0x02083b03, 1 | BRF_ESS | BRF_PRG },  //  2
 	{ "npacmod.6j",   0x1000, 0x7d98d5f5, 1 | BRF_ESS | BRF_PRG },	//  3
 	
 	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },			//  4 Graphics

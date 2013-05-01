@@ -4119,17 +4119,17 @@ struct BurnDriver BurnDrvWintbob = {
 };
 
 struct BurnDriver BurnDrvSnowbro3 = {
-	"snowbro3", "snowbros", NULL, NULL, "2002",
+	"snowbro3", NULL, NULL, NULL, "2002",
 	"Snow Brothers 3 - Magical Adventure\0", NULL, "bootleg", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, Snowbro3RomInfo, Snowbro3RomName, NULL, NULL, SnowbrosInputInfo, SnowbrojDIPInfo,
 	Snowbro3Init, SnowbrosExit, Snowbro3Frame, NULL, Snowbro3Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvBallboy = {
-	"ballboy", "snowbros", NULL, NULL, "2003",
+	"ballboy", "snowbro3", NULL, NULL, "2003",
 	"Ball Boy\0", NULL, "bootleg", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,

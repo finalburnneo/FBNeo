@@ -502,21 +502,21 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Diet Go Go (USA v1.1 1992.09.26)
 
 static struct BurnRomInfo dietgouRomDesc[] = {
-	{ "jx.00",		0x040000, 0x1a9de04f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "jx.01",		0x040000, 0x79c097c8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "jx_00-.4h",			0x040000, 0x1a9de04f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "jx_01-.5h",			0x040000, 0x79c097c8, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "jx.02",		0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
+	{ "jx_02.14m",			0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
 
-	{ "may00",		0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+	{ "may00",				0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
 
-	{ "may01",		0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
-	{ "may02",		0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
+	{ "may01",				0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
+	{ "may02",				0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
 
-	{ "may03",		0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
+	{ "may03",				0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
 
-	{ "pal16l8b.6h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  7 PLDs
-	{ "pal16l8b.7h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  8
-	{ "pal16r6a.11h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  9
+	{ "pal16l8b_vd-00.6h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  7 PLDs
+	{ "pal16l8b_vd-01.7h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  8
+	{ "pal16r6a_vd-02.11h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  9
 };
 
 STD_ROM_PICK(dietgou)
@@ -536,21 +536,21 @@ struct BurnDriver BurnDrvDietgou = {
 // Diet Go Go (Euro v1.1 1992.08.04)
 
 static struct BurnRomInfo dietgoeRomDesc[] = {
-	{ "jy00-1.4h",		0x040000, 0x8bce137d, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "jy01-1.5h",		0x040000, 0xeca50450, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "jy_00-1.4h",			0x040000, 0x8bce137d, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "jy_01-1.5h",			0x040000, 0xeca50450, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "jy02.m14",		0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
+	{ "jy_02.m14",			0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
 
-	{ "may00",		0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+	{ "may00",				0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
 
-	{ "may01",		0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
-	{ "may02",		0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
+	{ "may01",				0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
+	{ "may02",				0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
 
-	{ "may03",		0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
+	{ "may03",				0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
 
-	{ "pal16l8b.6h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  7 PLDs
-	{ "pal16l8b.7h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  8
-	{ "pal16r6a.11h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  9
+	{ "pal16l8b_vd-00.6h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  7 PLDs
+	{ "pal16l8b_vd-01.7h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  8
+	{ "pal16r6a_vd-02.11h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  9
 };
 
 STD_ROM_PICK(dietgoe)
@@ -570,21 +570,21 @@ struct BurnDriver BurnDrvDietgoe = {
 // Diet Go Go (Euro v1.1 1992.09.26)
 
 static struct BurnRomInfo dietgoRomDesc[] = {
-	{ "jy00-2.h4",		0x040000, 0x014dcf62, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "jy01-2.h5",		0x040000, 0x793ebd83, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "jy_00-2.h4",			0x040000, 0x014dcf62, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "jy_01-2.h5",			0x040000, 0x793ebd83, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "jy02.m14",		0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
+	{ "jy_02.m14",			0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
 
-	{ "may00",		0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+	{ "may00",				0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
 
-	{ "may01",		0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
-	{ "may02",		0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
+	{ "may01",				0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
+	{ "may02",				0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
 
-	{ "may03",		0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
+	{ "may03",				0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
 
-	{ "pal16l8b.6h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  7 PLDs
-	{ "pal16l8b.7h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  8
-	{ "pal16r6a.11h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  9
+	{ "pal16l8b_vd-00.6h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  7 PLDs
+	{ "pal16l8b_vd-01.7h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  8
+	{ "pal16r6a_vd-02.11h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  9
 };
 
 STD_ROM_PICK(dietgo)
@@ -604,17 +604,21 @@ struct BurnDriver BurnDrvDietgo = {
 // Diet Go Go (Japan v1.1 1992.09.26)
 
 static struct BurnRomInfo dietgojRomDesc[] = {
-	{ "jw-00-2.4h",		0x040000, 0xe6ba6c49, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "jw-01-2.5h",		0x040000, 0x684a3d57, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "jw_00-2.4h",			0x040000, 0xe6ba6c49, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "jw_01-2.5h",			0x040000, 0x684a3d57, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "jx.02",		0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
+	{ "jw_02.14m",			0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
 
-	{ "may00",		0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+	{ "may00",				0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
 
-	{ "may01",		0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
-	{ "may02",		0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
+	{ "may01",				0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
+	{ "may02",				0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
 
-	{ "may03",		0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
+	{ "may03",				0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
+	
+	{ "pal16l8b_vd-00.6h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  7 PLDs
+	{ "pal16l8b_vd-01.7h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  8
+	{ "pal16r6a_vd-02.11h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  9
 };
 
 STD_ROM_PICK(dietgoj)

@@ -2300,17 +2300,17 @@ struct BurnDriver BurnDrvSunaq = {
 // Ultra Balloon
 
 static struct BurnRomInfo uballoonRomDesc[] = {
-	{ "prg2.rom",	0x80000, 0x72ab80ea, 1 | BRF_ESS | BRF_PRG },   //  0 - 68K Code
-	{ "prg1.rom",	0x80000, 0x27a04f55, 1 | BRF_ESS | BRF_PRG },   //  1
+	{ "prg2.rom2",	0x80000, 0x72ab80ea, 1 | BRF_ESS | BRF_PRG },   //  0 - 68K Code
+	{ "prg1.rom1",	0x80000, 0x27a04f55, 1 | BRF_ESS | BRF_PRG },   //  1
 
-	{ "audio1.rom",	0x10000, 0xc771f2b4, 2 | BRF_ESS | BRF_PRG },   //  2 - Z80 #0 Code
+	{ "audio1.rom7",	0x10000, 0xc771f2b4, 2 | BRF_ESS | BRF_PRG },   //  2 - Z80 #0 Code
 
-	{ "audio2.rom",	0x20000, 0xc7f75347, 3 | BRF_ESS | BRF_PRG },   //  3 - Z80 #1 Code
+	{ "audio2.rom8",	0x20000, 0xc7f75347, 3 | BRF_ESS | BRF_PRG },   //  3 - Z80 #1 Code
 
-	{ "gfx1.rom",	0x80000, 0xfd2ec297, 5 | BRF_GRA },		//  4 - Sprites
-	{ "gfx2.rom",	0x80000, 0x6307aa60, 5 | BRF_GRA },		//  5
-	{ "gfx3.rom",	0x80000, 0x718f3150, 5 | BRF_GRA },		//  6
-	{ "gfx4.rom",	0x80000, 0xaf7e057e, 5 | BRF_GRA },		//  7
+	{ "gfx3.rom3",	0x80000, 0xfd2ec297, 5 | BRF_GRA },		//  4 - Sprites
+	{ "gfx5.rom5",	0x80000, 0x6307aa60, 5 | BRF_GRA },		//  5
+	{ "gfx4.rom4",	0x80000, 0x718f3150, 5 | BRF_GRA },		//  6
+	{ "gfx6.rom6",	0x80000, 0xaf7e057e, 5 | BRF_GRA },		//  7
 };
 
 STD_ROM_PICK(uballoon)

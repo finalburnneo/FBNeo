@@ -11,7 +11,7 @@ INT32 nPic16c5xCpuType = -1;
 static UINT8 *pic16c5x_rom = NULL;
 static UINT8 *pic16c5x_ram = NULL;
 
-INT32 (*pPic16c5xReadPort)(UINT16 port) = NULL;
+UINT8 (*pPic16c5xReadPort)(UINT16 port) = NULL;
 void (*pPic16c5xWritePort)(UINT16 port, UINT8 data) = NULL;
 
 UINT16 pic16c5x_read_op(UINT16 address)

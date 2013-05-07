@@ -4041,7 +4041,7 @@ struct BurnDriver BurnDrvcrush = {
 };
 
 
-// Crush Roller (bootleg)
+// Crush Roller (bootleg set 1)
 
 static struct BurnRomInfo crushblRomDesc[] = {
 	{ "cr1.bin",      0x1000, 0xe2e84cd1, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -4064,7 +4064,7 @@ STD_ROM_FN(crushbl)
 
 struct BurnDriver BurnDrvcrushbl = {
 	"crushbl", "crush", NULL, NULL, "1981",
-	"Crush Roller (bootleg)\0", NULL, "Kural Samno Electric", "Pac-man",
+	"Crush Roller (bootleg set 1)\0", NULL, "Kural Samno Electric", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, crushblRomInfo, crushblRomName, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
@@ -4073,7 +4073,7 @@ struct BurnDriver BurnDrvcrushbl = {
 };
 
 
-// Crush Roller (bootleg?)
+// Crush Roller (bootleg set 2)
 
 static struct BurnRomInfo crushbl2RomDesc[] = {
 	{ "cr5.7d",       0x1000, 0x4954d51d, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
@@ -4098,10 +4098,44 @@ STD_ROM_FN(crushbl2)
 
 struct BurnDriver BurnDrvcrushbl2 = {
 	"crushbl2", "crush", NULL, NULL, "1981",
-	"Crush Roller (bootleg?)\0", NULL, "bootleg", "Pac-man",
+	"Crush Roller (bootleg set 2)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, crushbl2RomInfo, crushbl2RomName, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
+	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Crush Roller (bootleg set 3)
+
+static struct BurnRomInfo crushbl3RomDesc[] = {
+	{ "cre.bin",      0x1000, 0xe1ecc4da, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "crf.bin",      0x1000, 0xb5193960, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "crg.bin",      0x1000, 0x964b9f24, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "crh.bin",      0x1000, 0xdfd2380e, 1 | BRF_ESS | BRF_PRG },	//  3
+
+	{ "cr1.5e",       0x0800, 0xc7617198, 2 | BRF_GRA },			//  4 Graphics
+	{ "cr3.5h",       0x0800, 0xc15b6967, 2 | BRF_GRA },			//  5
+	{ "cr2.5f",       0x0800, 0xd5bc5cb8, 2 | BRF_GRA },			//  6 
+	{ "cr4.5j",       0x0800, 0xd35d1caf, 2 | BRF_GRA },			//  7 
+
+	{ "74s288.8a",    0x0020, 0xff344446, 3 | BRF_GRA },			//  8 Color Prom
+	{ "2s140.4a",     0x0100, 0x63efb927, 3 | BRF_GRA },			//  9
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 10 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 11 Timing Prom (not used)
+};
+
+STD_ROM_PICK(crushbl3)
+STD_ROM_FN(crushbl3)
+
+struct BurnDriver BurnDrvcrushbl3 = {
+	"crushbl3", "crush", NULL, NULL, "1981",
+	"Crush Roller (bootleg set 3)\0", NULL, "bootleg", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	NULL, crushbl3RomInfo, crushbl3RomName, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

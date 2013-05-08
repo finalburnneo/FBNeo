@@ -9547,6 +9547,27 @@ static struct BurnRomInfo SmooncrsRomDesc[] = {
 STD_ROM_PICK(Smooncrs)
 STD_ROM_FN(Smooncrs)
 
+static struct BurnRomInfo MooncptcRomDesc[] = {
+	{ "mc1.bin",       0x00800, 0x16f17cd5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mc2.bin",       0x00800, 0xe2128805, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mc3.bin",       0x00800, 0x716eaa10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mc4.bin",       0x00800, 0xbd45cd8f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mc5.bin",       0x00800, 0x9a1e0528, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mc6.bin",       0x00800, 0xf0230048, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mc7.bin",       0x00800, 0xeafd4d02, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "mc8.bin",       0x00800, 0xccee32f8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "mc12.bin",      0x00800, 0x528da705, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "mc14.bin",      0x00800, 0x5a4b17ea, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "mc11.bin",      0x00800, 0x4e79ff6b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "mc13.bin",      0x00800, 0xe0edccbd, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "mmi6331.6l",    0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Mooncptc)
+STD_ROM_FN(Mooncptc)
+
 static struct BurnRomInfo SstarcrsRomDesc[] = {
 	{ "ss1",           0x00800, 0x2ff72897, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "ss2",           0x00800, 0x565e7880, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -10281,7 +10302,7 @@ struct BurnDriver BurnDrvEagle2 = {
 
 struct BurnDriver BurnDrvEagle3 = {
 	"eagle3", "mooncrst", NULL, NULL, "1980",
-	"Eagle (set 3)\0", NULL, "Centuri", "Galaxian",
+	"Eagle (set 3)\0", NULL, "Nichibutsu (Centuri license)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, Eagle3RomInfo, Eagle3RomName, NULL, NULL, OmegaInputInfo, MooncrsaDIPInfo,
@@ -10291,7 +10312,7 @@ struct BurnDriver BurnDrvEagle3 = {
 
 struct BurnDriver BurnDrvSpctbird = {
 	"spctbird", "mooncrst", NULL, NULL, "1981?",
-	"Space Thunderbird\0", NULL, "Fortrek", "Galaxian",
+	"Space Thunderbird\0", NULL, "bootleg? (Fortrek)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, SpctbirdRomInfo, SpctbirdRomName, NULL, NULL, OmegaInputInfo, Eagle2DIPInfo,
@@ -10301,10 +10322,20 @@ struct BurnDriver BurnDrvSpctbird = {
 
 struct BurnDriver BurnDrvSmooncrs = {
 	"smooncrs", "mooncrst", NULL, NULL, "1981?",
-	"Super Moon Cresta\0", NULL, "Gremlin", "Galaxian",
+	"Super Moon Cresta\0", NULL, "Nichibutsu (Gremlin license)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, SmooncrsRomInfo, SmooncrsRomName, NULL, NULL, SmooncrsInputInfo, SmooncrsDIPInfo,
+	MooncrstInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvMooncptc = {
+	"mooncptc", "mooncrst", NULL, NULL, "1980?",
+	"Moon Cresta (Petaco S.A. Spanish bootleg)\0", NULL, "bootleg (Petaco S.A.)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, MooncptcRomInfo, MooncptcRomName, NULL, NULL, SmooncrsInputInfo, SmooncrsDIPInfo,
 	MooncrstInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

@@ -662,7 +662,7 @@ STD_ROM_FN(scessjoe)
 
 struct BurnDriver BurnDrvScessjoe = {
 	"scessjoe", NULL, NULL, NULL, "1990",
-	"Success Joe (World)\0", "Incomplete sound", "WAVE / Taito Corporation", "Miscellaneous",
+	"Success Joe (World)\0", "Incomplete sound", "Taito Corporation / Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, scessjoeRomInfo, scessjoeRomName, NULL, NULL, AshnojoeInputInfo, AshnojoeDIPInfo,
@@ -707,7 +707,7 @@ STD_ROM_FN(ashnojoe)
 
 struct BurnDriver BurnDrvAshnojoe = {
 	"ashnojoe", "scessjoe", NULL, NULL, "1990",
-	"Ashita no Joe (Japan)\0", "Incomplete sound", "WAVE / Taito Corporation", "Miscellaneous",
+	"Ashita no Joe (Japan)\0", "Incomplete sound", "Taito Corporation / Wave", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, ashnojoeRomInfo, ashnojoeRomName, NULL, NULL, AshnojoeInputInfo, AshnojoeDIPInfo,

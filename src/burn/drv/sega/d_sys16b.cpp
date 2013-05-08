@@ -8005,7 +8005,7 @@ struct BurnDriver BurnDrvBullet = {
 
 struct BurnDriver BurnDrvCotton = {
 	"cotton", NULL, NULL, NULL, "1991",
-	"Cotton (set 3, World, FD1094 317-0181a)\0", NULL, "Sega / Success", "System 16B",
+	"Cotton (set 3, World, FD1094 317-0181a)\0", NULL, "Success / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
 	NULL, CottonRomInfo, CottonRomName, NULL, NULL, System16bInputInfo, CottonDIPInfo,
@@ -8015,7 +8015,7 @@ struct BurnDriver BurnDrvCotton = {
 
 struct BurnDriver BurnDrvCottonu = {
 	"cottonu", "cotton", NULL, NULL, "1991",
-	"Cotton (set 2, US, FD1094 317-0180)\0", NULL, "Sega / Success", "System 16B",
+	"Cotton (set 2, US, FD1094 317-0180)\0", NULL, "Success / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
 	NULL, CottonuRomInfo, CottonuRomName, NULL, NULL, System16bInputInfo, CottonDIPInfo,
@@ -8025,7 +8025,7 @@ struct BurnDriver BurnDrvCottonu = {
 
 struct BurnDriver BurnDrvCottonj = {
 	"cottonj", "cotton", NULL, NULL, "1991",
-	"Cotton (set 1, Japan, FD1094 317-0179a))\0", NULL, "Sega / Success", "System 16B",
+	"Cotton (set 1, Japan, FD1094 317-0179a))\0", NULL, "Success / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
 	NULL, CottonjRomInfo, CottonjRomName, NULL, NULL, System16bInputInfo, CottonDIPInfo,

@@ -5178,7 +5178,7 @@ struct BurnDriver BurnDrvFlickyo = {
 
 struct BurnDriver BurnDrvGardia = {
 	"gardia", NULL, NULL, NULL, "1986",
-	"Gardia (317-0006)\0", NULL, "Sega / Coreland", "System 1",
+	"Gardia (317-0006)\0", NULL, "Coreland / Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, GardiaRomInfo, GardiaRomName, NULL, NULL, MyheroInputInfo, GardiaDIPInfo,

@@ -4186,6 +4186,33 @@ static struct BurnRomInfo Wonder3hRomDesc[] = {
 STD_ROM_PICK(Wonder3h)
 STD_ROM_FN(Wonder3h)
 
+static struct BurnRomInfo Wonder3bRomDesc[] = {
+	{ "274001.4",      0x080000, 0x47887cf3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "274001.3",      0x080000, 0xe79eacb3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	
+	{ "274001.12",     0x080000, 0x47cf8dfb, BRF_GRA | CPS1_TILES },
+	{ "274001.10",     0x080000, 0xa0d27605, BRF_GRA | CPS1_TILES },
+	{ "274001.11",     0x080000, 0x8112bbb4, BRF_GRA | CPS1_TILES },
+	{ "274001.9",      0x080000, 0xcb73759d, BRF_GRA | CPS1_TILES },
+	{ "274001.8",      0x080000, 0x3bc2ef5e, BRF_GRA | CPS1_TILES },
+	{ "274001.6",      0x080000, 0x312d790c, BRF_GRA | CPS1_TILES },
+	{ "274001.7",      0x080000, 0x58307167, BRF_GRA | CPS1_TILES },
+	{ "274001.5",      0x080000, 0x3f765ae8, BRF_GRA | CPS1_TILES },	
+
+	{ "27512.2",       0x010000, 0xabfca165, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "27020.1",       0x040000, 0x3c4348cf, BRF_SND | CPS1_OKIM6295_SAMPLES },
+		
+	A_BOARD_PLDS
+	
+	{ "rt24b.1a",      0x000117, 0x54b85159, BRF_OPT },	// b-board PLDs
+	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "ioc1.ic1",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
+};
+
+STD_ROM_PICK(Wonder3b)
+STD_ROM_FN(Wonder3b)
+
 static struct BurnRomInfo CaptcommRomDesc[] = {
 	{ "cce_23f.8f",    0x080000, 0x42c814c5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "cc_22f.7f",     0x080000, 0x0fd34195, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -11653,6 +11680,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "3wondersu"   , CPS_B_21_BT1, mapper_RT24B , 0, NULL                },
 	{ "wonder3"     , CPS_B_21_BT1, mapper_RT22B , 0, NULL                },
 	{ "3wondersh"   , CPS_B_02    , mapper_RT24B , 0, NULL                },
+	{ "3wondersb"   , CPS_B_21_BT1, mapper_RT24B , 0, NULL                },
 	{ "captcomm"    , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
 	{ "captcommr1"  , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
 	{ "captcommu"   , CPS_B_21_BT3, mapper_CC63B , 0, NULL                },
@@ -12298,6 +12326,26 @@ static INT32 CpsBootlegSpriteRamScanCallback(INT32 nAction, INT32*)
 	}
 	
 	return 0;
+}
+
+static INT32 Wonder3bInit()
+{
+	bCpsUpdatePalEveryFrame = 1;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesWonder3b;
+	
+	CpsLayer1XOffs = 4;
+	CpsLayer2XOffs = 6;
+	CpsLayer3XOffs = 10;
+	
+	INT32 nRet = DrvInit();
+	
+	// the game doesn't write these anywhere - does the hardware have them stored somewhere?	
+	*((UINT16*)(CpsReg + 0x04)) = BURN_ENDIAN_SWAP_INT16(0x90c0); // scroll2 address
+	*((UINT16*)(CpsReg + 0x06)) = BURN_ENDIAN_SWAP_INT16(0x9100); // scroll3 address
+	*((UINT16*)(CpsReg + 0x0a)) = BURN_ENDIAN_SWAP_INT16(0x9140); // palette address
+	*((UINT16*)(CpsReg + nCpsPalCtrlReg)) = BURN_ENDIAN_SWAP_INT16(0x003f); // palette control
+	
+	return nRet;
 }
 
 static INT32 CaptcommbInit()
@@ -15592,11 +15640,21 @@ struct BurnDriver BurnDrvCpsWonder3 = {
 
 struct BurnDriver BurnDrvCps3wondersh = {
 	"3wondersh", "3wonders", NULL, NULL, "1991",
-	"Three Wonders (bootleg, wonder 3 910520 etc)\0", NULL, "Capcom", "CPS1",
+	"Three Wonders (bootleg set 1, wonder 3 910520 etc)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_MINIGAMES, 0,
 	NULL, Wonder3hRomInfo, Wonder3hRomName, NULL, NULL, ThreeWondersInputInfo, ThreeWondersDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCps3wondersb = {
+	"3wondersb", "3wonders", NULL, NULL, "1991",
+	"Three Wonders (bootleg set 2, wonder 3 910520 etc)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_MINIGAMES, 0,
+	NULL, Wonder3bRomInfo, Wonder3bRomName, NULL, NULL, ThreeWondersInputInfo, ThreeWondersDIPInfo,
+	Wonder3bInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

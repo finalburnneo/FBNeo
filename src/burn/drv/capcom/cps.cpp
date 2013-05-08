@@ -632,6 +632,47 @@ static INT32 CpsLoadOneSf2stt(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift
 	return 0;
 }
 
+static INT32 CpsLoadOneWonder3b(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift)
+{
+	UINT8 *Rom = NULL; INT32 nRomLen=0;
+	UINT8 *pt = NULL, *pr = NULL;
+	INT32 i;
+
+	LoadUp(&Rom, &nRomLen, nNum);
+	if (Rom == NULL) {
+		return 1;
+	}
+
+	nRomLen &= ~1;								// make sure even
+
+	for (i = 0, pt = Tile, pr = Rom; i < (nRomLen >> 1); pt += 8) {
+		UINT32 Pix;						// Eight pixels
+		UINT8 b;
+		b = *pr++; i++; Pix = SepTable[b];
+		if (nWord) {
+			b = *pr++; i++; Pix |= SepTable[b] << 1;
+		}
+
+		Pix <<= nShift;
+		*((UINT32 *)pt) |= Pix;
+	}
+	
+	for (i = 0, pt = Tile + 0x200000, pr = Rom + 0x40000; i < (nRomLen >> 1); pt += 8) {
+		UINT32 Pix;						// Eight pixels
+		UINT8 b;
+		b = *pr++; i++; Pix = SepTable[b];
+		if (nWord) {
+			b = *pr++; i++; Pix |= SepTable[b] << 1;
+		}
+
+		Pix <<= nShift;
+		*((UINT32 *)pt) |= Pix;
+	}
+
+	BurnFree(Rom);
+	return 0;
+}
+
 static INT32 CpsLoadSf2ceuab3Tiles(UINT8* Tile, INT32 nNum)
 {
 	UINT8 *Rom = (UINT8*)BurnMalloc(0x200000 * sizeof(UINT8));
@@ -1185,6 +1226,20 @@ INT32 CpsLoadTilesKodb(INT32 nStart)
 {
 	CpsLoadTilesByte(CpsGfx, nStart);
 
+	return 0;
+}
+
+INT32 CpsLoadTilesWonder3b(INT32 nStart)
+{
+	CpsLoadOneWonder3b(CpsGfx + 0x000000, nStart + 0, 0, 0);
+	CpsLoadOneWonder3b(CpsGfx + 0x000000, nStart + 1, 0, 2);
+	CpsLoadOneWonder3b(CpsGfx + 0x000004, nStart + 2, 0, 0);
+	CpsLoadOneWonder3b(CpsGfx + 0x000004, nStart + 3, 0, 2);
+	CpsLoadOneWonder3b(CpsGfx + 0x000000, nStart + 4, 0, 1);
+	CpsLoadOneWonder3b(CpsGfx + 0x000000, nStart + 5, 0, 3);
+	CpsLoadOneWonder3b(CpsGfx + 0x000004, nStart + 6, 0, 1);
+	CpsLoadOneWonder3b(CpsGfx + 0x000004, nStart + 7, 0, 3);
+	
 	return 0;
 }
 

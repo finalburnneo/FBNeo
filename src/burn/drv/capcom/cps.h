@@ -56,6 +56,7 @@ INT32 CpsLoadTilesCaptcommb(INT32 nStart);
 INT32 CpsLoadTilesDinopic(INT32 nStart);
 INT32 CpsLoadTilesSlampic(INT32 nStart);
 INT32 CpsLoadTilesKodb(INT32 nStart);
+INT32 CpsLoadTilesWonder3b(INT32 nStart);
 INT32 CpsLoadStars(UINT8 *pStar, INT32 nStart);
 INT32 CpsLoadStarsByte(UINT8 *pStar, INT32 nStart);
 INT32 CpsLoadStarsForgottnAlt(UINT8 *pStar, INT32 nStart);

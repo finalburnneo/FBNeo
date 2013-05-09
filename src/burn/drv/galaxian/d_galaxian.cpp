@@ -13586,7 +13586,7 @@ static INT32 FroggermcInit()
 	INT32 nRet;
 	
 	GalPostLoadCallbackFunction = FroggermcPostLoad;
-//	GalSoundType = GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910;
+	GalSoundType = GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910;
 	
 	nRet = GalInit();	
 	FroggerSoundInit();

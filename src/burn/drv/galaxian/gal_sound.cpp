@@ -222,16 +222,34 @@ void GalSoundInit()
 		AY8910Init(0, 14318000 / 8, nBurnSoundRate, NULL, NULL, NULL, NULL);
 		AY8910Init(1, 14318000 / 8, nBurnSoundRate, &KonamiSoundLatchRead, &KonamiSoundTimerRead, NULL, NULL);
 		AY8910Init(2, 14318000 / 8, nBurnSoundRate, NULL, NULL, NULL, NULL);
-		AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-		AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
-		AY8910SetAllRoutes(2, 0.25, BURN_SND_ROUTE_BOTH);
+
+		filter_rc_init(0, FLT_RC_LOWPASS, 1, 1, 1, 0, 0);
+		filter_rc_init(1, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		filter_rc_init(2, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		filter_rc_init(3, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		filter_rc_init(4, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		filter_rc_init(5, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		
+		filter_rc_set_src_gain(0, 0.50);
+		filter_rc_set_src_gain(1, 0.50);
+		filter_rc_set_src_gain(2, 0.50);
+		filter_rc_set_src_gain(3, 0.50);
+		filter_rc_set_src_gain(4, 0.50);
+		filter_rc_set_src_gain(5, 0.50);
+		
+		filter_rc_set_route(0, 1.00, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(1, 1.00, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(2, 1.00, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(3, 1.00, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(4, 1.00, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(5, 1.00, BURN_SND_ROUTE_BOTH);
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_AD2083AY8910) {
 		AY8910Init(0, 14318000 / 8, nBurnSoundRate, &KonamiSoundTimerRead, NULL, NULL, NULL);
 		AY8910Init(1, 14318000 / 8, nBurnSoundRate, &KonamiSoundLatchRead, NULL, NULL, NULL);
-		AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
-		AY8910SetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);
+		AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
+		AY8910SetAllRoutes(1, 1.00, BURN_SND_ROUTE_BOTH);
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_FANTASTCAY8910) {
@@ -246,6 +264,27 @@ void GalSoundInit()
 		AY8910Init(1, 14318000 / 8, nBurnSoundRate, &KonamiSoundLatchRead, &KonamiSoundTimerRead, NULL, NULL);
 		AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 		AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
+
+		filter_rc_init(0, FLT_RC_LOWPASS, 1, 1, 1, 0, 0);
+		filter_rc_init(1, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		filter_rc_init(2, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		filter_rc_init(3, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		filter_rc_init(4, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		filter_rc_init(5, FLT_RC_LOWPASS, 1, 1, 1, 0, 1);
+		
+		filter_rc_set_src_gain(0, 0.50);
+		filter_rc_set_src_gain(1, 0.50);
+		filter_rc_set_src_gain(2, 0.50);
+		filter_rc_set_src_gain(3, 0.50);
+		filter_rc_set_src_gain(4, 0.50);
+		filter_rc_set_src_gain(5, 0.50);
+		
+		filter_rc_set_route(0, 0.10, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(1, 0.10, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(2, 0.10, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(3, 0.10, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(4, 0.10, BURN_SND_ROUTE_BOTH);
+		filter_rc_set_route(5, 0.10, BURN_SND_ROUTE_BOTH);
 		
 		DACInit(0, 0, 1, SfxSyncDAC);
 		DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -419,7 +458,7 @@ void GalSoundExit()
 		SN76496Exit();
 	}
 	
-	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910) {
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC) {
 		filter_rc_exit();
 	}
 	
@@ -728,15 +767,17 @@ UINT8 __fastcall KonamiSoundZ80Read(UINT16 a)
 
 void __fastcall KonamiSoundZ80Write(UINT16 a, UINT8 d)
 {
-	if (a >= 0x9000 && a <= 0x9fff) {
-		INT32 Offset = a & 0xfff;
-		filter_w(0, (Offset >>  0) & 3);
-		filter_w(1, (Offset >>  2) & 3);
-		filter_w(2, (Offset >>  4) & 3);
-		filter_w(3, (Offset >>  6) & 3);
-		filter_w(4, (Offset >>  8) & 3);
-		filter_w(5, (Offset >> 10) & 3);
-		return;
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC) {
+		if (a >= 0x9000 && a <= 0x9fff) {
+			INT32 Offset = a & 0xfff;
+			filter_w(0, (Offset >>  0) & 3);
+			filter_w(1, (Offset >>  2) & 3);
+			filter_w(2, (Offset >>  4) & 3);
+			filter_w(3, (Offset >>  6) & 3);
+			filter_w(4, (Offset >>  8) & 3);
+			filter_w(5, (Offset >> 10) & 3);
+			return;
+		}
 	}
 	
 	switch (a) {

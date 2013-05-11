@@ -1243,6 +1243,20 @@ INT32 CpsLoadTilesWonder3b(INT32 nStart)
 	return 0;
 }
 
+INT32 CpsLoadTilesPang3r1a(INT32 nStart)
+{
+	CpsLoadOne(CpsGfx + 0x000000, nStart + 0, 1, 0);
+	CpsLoadOne(CpsGfx + 0x200000, nStart + 1, 1, 0);
+	CpsLoadOne(CpsGfx + 0x000004, nStart + 2, 1, 0);
+	CpsLoadOne(CpsGfx + 0x200004, nStart + 3, 1, 0);
+	CpsLoadOne(CpsGfx + 0x000000, nStart + 4, 1, 2);
+	CpsLoadOne(CpsGfx + 0x200000, nStart + 5, 1, 2);
+	CpsLoadOne(CpsGfx + 0x000004, nStart + 6, 1, 2);
+	CpsLoadOne(CpsGfx + 0x200004, nStart + 7, 1, 2);
+	
+	return 0;
+}
+
 INT32 CpsLoadStars(UINT8* pStar, INT32 nStart)
 {
 	UINT8* pTemp[2] = { NULL, NULL};

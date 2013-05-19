@@ -6438,7 +6438,7 @@ struct BurnDriver BurnDrvRedhawkb = {
 };
 
 
-// Guardian Storm
+// Guardian Storm (horizontal, not encrypted)
 
 static struct BurnRomInfo grdnstrmRomDesc[] = {
 	{ "afega4.u112",	0x040000, 0x2244713a, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -6489,14 +6489,13 @@ static INT32 GrdnstrmInit()
 
 struct BurnDriver BurnDrvGrdnstrm = {
 	"grdnstrm", NULL, NULL, NULL, "1998",
-	"Guardian Storm\0", NULL, "Afega (Apples Industries license)", "NMK16",
+	"Guardian Storm (horizontal, not encrypted)\0", NULL, "Afega (Apples Industries license)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, grdnstrmRomInfo, grdnstrmRomName, NULL, NULL, CommonInputInfo, GrdnstrmDIPInfo,
 	GrdnstrmInit, AfegaExit, AfegaFrame, FirehawkDraw, NULL, NULL, 0x300,
 	256, 224, 4, 3
 };
-
 
 // Sen Jin - Guardian Storm (Korea)
 
@@ -6536,6 +6535,38 @@ struct BurnDriver BurnDrvGrdnstrmk = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, grdnstrmkRomInfo, grdnstrmkRomName, NULL, NULL, CommonInputInfo, GrdnstrkDIPInfo,
+	GrdnstrmkInit, AfegaExit, AfegaFrame, AfegaDraw, NULL, NULL, 0x300,
+	224, 256, 3, 4
+};
+
+
+// Guardian Storm (vertical)
+
+static struct BurnRomInfo grdnstrmvRomDesc[] = {
+	{ "afega2.u112",	    0x040000, 0x16d41050, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "afega3.u107",		0x040000, 0x05920a99, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "afega7.u92",		    0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+
+	{ "afega1.u4",			0x010000, 0x9e7ef086, 3 | BRF_GRA },           //  3 Characters
+
+	{ "afega_af1-b2.uc8",	0x200000, 0xd68588c2, 4 | BRF_GRA },           //  4 Tiles
+	{ "afega_af1-b1.uc3",	0x200000, 0xf8b200a8, 4 | BRF_GRA },           //  5
+
+	{ "afega6.uc13",	    0x200000, 0x9b54ff84, 5 | BRF_GRA },           //  6 Sprites
+
+	{ "afega1.u95",		    0x040000, 0xe911ce33, 6 | BRF_SND },           //  7 OKI1 Samples
+};
+
+STD_ROM_PICK(grdnstrmv)
+STD_ROM_FN(grdnstrmv)
+
+struct BurnDriver BurnDrvGrdnstrmv = {
+	"grdnstrmv", "grdnstrm", NULL, NULL, "1998",
+	"Guardian Storm (vertical)\0", NULL, "Afega (Apples Industries license)", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, grdnstrmvRomInfo, grdnstrmvRomName, NULL, NULL, CommonInputInfo, GrdnstrkDIPInfo,
 	GrdnstrmkInit, AfegaExit, AfegaFrame, AfegaDraw, NULL, NULL, 0x300,
 	224, 256, 3, 4
 };

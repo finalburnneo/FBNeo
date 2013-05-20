@@ -4043,10 +4043,10 @@ static struct BurnRomInfo mspacmanbgRomDesc[] = {
 	{ "10.e5",        0x8000, 0xf2c5da43, 2 | BRF_GRA },			//  1 Graphics
 
 	{ "82s123.h7",    0x0020, 0x3545e7e9, 3 | BRF_GRA },			//  2 Color Proms
-	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  3
+	{ "82s129-3.d1",  0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  3
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  4 Sound Prom
-	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  5 Timing Prom (not used)
+	{ "82s129-1.a9",  0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  4 Sound Prom
+	{ "82s129-2.c9",  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  5 Timing Prom (not used)
 };
 
 STD_ROM_PICK(mspacmanbg)

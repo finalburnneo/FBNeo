@@ -3663,6 +3663,43 @@ static struct BurnDIPInfo Gteikob2DIPList[]=
 
 STDDIPINFO(Gteikob2)
 
+static struct BurnDIPInfo AsideralDIPList[]=
+{
+	// Default Values
+	{0x0c, 0xff, 0xff, 0x00, NULL                     },
+	{0x0d, 0xff, 0xff, 0x40, NULL                     },
+	{0x0e, 0xff, 0xff, 0x01, NULL                     },
+	
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Cabinet"                },
+	{0x0c, 0x01, 0x20, 0x00, "Upright"                },
+	{0x0c, 0x01, 0x20, 0x20, "Cocktail"               },
+	
+	{0   , 0xfe, 0   , 2   , "Service Mode"           },
+	{0x0c, 0x01, 0x40, 0x00, "Off"                    },
+	{0x0c, 0x01, 0x40, 0x40, "On"                     },
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 4   , "Coinage"                },
+	{0x0d, 0x01, 0xc0, 0x40, "1 Coin 1 Play"          },
+	{0x0d, 0x01, 0xc0, 0x00, "1C/2C, 1C/1C"           },
+	{0x0d, 0x01, 0xc0, 0x80, "1C/4C, 1C/2C"           },
+	{0x0d, 0x01, 0xc0, 0xc0, "Freeplay"               },
+	
+	// Dip 3	
+	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
+	{0x0e, 0x01, 0x03, 0x00, "None"                   },
+	{0x0e, 0x01, 0x03, 0x01, "4000"                   },
+	{0x0e, 0x01, 0x03, 0x02, "5000"                   },
+	{0x0e, 0x01, 0x03, 0x03, "7000"                   },
+	
+	{0   , 0xfe, 0   , 2   , "Lives"                  },
+	{0x0e, 0x01, 0x04, 0x00, "4"                      },
+	{0x0e, 0x01, 0x04, 0x04, "5"                      },
+};
+
+STDDIPINFO(Asideral)
+
 static struct BurnDIPInfo HotshockDIPList[]=
 {
 	// Default Values
@@ -7714,6 +7751,27 @@ static struct BurnRomInfo GalempRomDesc[] = {
 STD_ROM_PICK(Galemp)
 STD_ROM_FN(Galemp)
 
+static struct BurnRomInfo AsideralRomDesc[] = {
+	{ "1401.7f",       0x00800, 0x82a9da91, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "1302.7h",       0x00800, 0xcc59b49c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "1203.7k",       0x00800, 0x3bc5a165, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "1104.7m",       0x00800, 0xc50149d0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5.8f",          0x00800, 0x17720c9e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "6.8f",          0x00800, 0xf157a8db, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "7.8f",          0x00800, 0x75085cb6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "8.8f",          0x00800, 0x797d45c7, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+		
+	{ "u10.j2",        0x00800, 0x012941e0, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "u12.j2",        0x00800, 0xc26132af, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "u9.l2",         0x00800, 0xfc8b58fd, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "u11.l2",        0x00800, 0xdcc2b33b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "uniwars.clr",   0x00020, 0x25c79518, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Asideral)
+STD_ROM_FN(Asideral)
+
 void __fastcall PiscesZ80Write(UINT16 a, UINT8 d)
 {
 	if (a >= 0x5800 && a <= 0x58ff) {
@@ -7931,6 +7989,16 @@ struct BurnDriver BurnDrvGalemp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, GalempRomInfo, GalempRomName, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
+	PiscesInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvAsideral = {
+	"asideral", "uniwars", NULL, NULL, "1980",
+	"Ataque Sideral (Spanish bootleg of UniWar S)\0", NULL, "bootleg (Electrogame S.A.)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, AsideralRomInfo, AsideralRomName, NULL, NULL, GalaxianInputInfo, AsideralDIPInfo,
 	PiscesInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

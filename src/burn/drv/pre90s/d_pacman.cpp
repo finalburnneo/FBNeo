@@ -3408,6 +3408,50 @@ struct BurnDriver BurnDrvctrpllrp = {
 };
 
 
+// Puck Man (Spanish, 'Made in Greece' bootleg)
+
+static struct BurnRomInfo pacmanspRomDesc[] = {
+	{ "1.bin",        0x8000, 0xf2404b4d, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+
+	{ "2.bin",        0x2000, 0x7a75b696, 2 | BRF_GRA },			//  1 Graphics
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
+};
+
+STD_ROM_PICK(pacmansp)
+STD_ROM_FN(pacmansp)
+
+static void pacmansp_gfx_decode()
+{
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x2000);
+	memcpy(pTemp, DrvGfxROM, 0x2000);
+	memcpy(DrvGfxROM + 0x0000, pTemp + 0x0000, 0x800);
+	memcpy(DrvGfxROM + 0x1000, pTemp + 0x0800, 0x800);
+	memcpy(DrvGfxROM + 0x0800, pTemp + 0x1000, 0x800);
+	memcpy(DrvGfxROM + 0x1800, pTemp + 0x1800, 0x800);	
+	BurnFree(pTemp);
+}
+
+static INT32 pacmanspInit()
+{
+	return DrvInit(StandardMap, pacmansp_gfx_decode, PACMAN);
+}
+
+struct BurnDriver BurnDrvpacmansp = {
+	"pacmansp", "puckman", NULL, NULL, "198?",
+	"Puck Man (Spanish, 'Made in Greece' bootleg)\0", NULL, "hack", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	NULL, pacmanspRomInfo, pacmanspRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	pacmanspInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Pac-Man Plus
 
 static struct BurnRomInfo pacplusRomDesc[] = {

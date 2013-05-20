@@ -700,6 +700,24 @@ static struct BurnRomInfo PangboldRomDesc[] = {
 STD_ROM_PICK(Pangbold)
 STD_ROM_FN(Pangbold)
 
+static struct BurnRomInfo Pangb2RomDesc[] = {
+	{ "27c512.11h",    0x10000, 0x369a453e, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "27c020.13h",    0x40000, 0x5e7f24b1, BRF_ESS | BRF_PRG }, //	 1
+	
+	{ "pang_09.bin",   0x20000, 0x3a5883f5, BRF_GRA },	     //  2	Characters
+	{ "bb3.bin",       0x20000, 0x79a8ed08, BRF_GRA },	     //  3
+	{ "pang_11.bin",   0x20000, 0x166a16ae, BRF_GRA },	     //  4
+	{ "bb5.bin",       0x20000, 0x2fb3db6c, BRF_GRA },	     //  5
+	
+	{ "bb10.bin",      0x20000, 0xfdba4f6e, BRF_GRA },	     //  6	Sprites
+	{ "bb9.bin",       0x20000, 0x39f47a63, BRF_GRA },	     //  7
+	
+	{ "bb1.bin",       0x20000, 0xc52e5b8e, BRF_SND },	     //  8	Samples
+};
+
+STD_ROM_PICK(Pangb2)
+STD_ROM_FN(Pangb2)
+
 static struct BurnRomInfo CworldRomDesc[] = {
 	{ "cw05.bin",      0x08000, 0xd3c1723d, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "cw06.bin",      0x20000, 0xd71ed4a3, BRF_ESS | BRF_PRG }, //	 1
@@ -1977,6 +1995,48 @@ static INT32 PangboldInit()
 	return 0;
 }
 
+static INT32 Pangb2Init()
+{
+	INT32 nRet = 0, nLen;
+	
+	Mem = NULL;
+	PangMemIndex();
+	nLen = MemEnd - (UINT8 *)0;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(Mem, 0, nLen);
+	PangMemIndex();
+
+	DrvTempRom = (UINT8 *)BurnMalloc(0x100000);
+	
+	nRet = BurnLoadRom(DrvZ80Code + 0x00000,  0, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvZ80Code + 0x10000,  1, 1); if (nRet != 0) return 1;
+	memcpy(DrvZ80Rom + 0x00000, DrvZ80Code + 0x08000, 0x08000);
+	memcpy(DrvZ80Rom + 0x10000, DrvZ80Code + 0x30000, 0x20000);
+	memset(DrvZ80Code + 0x8000, 0, 0x8000);
+	
+	memset(DrvTempRom, 0xff, 0x100000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000,  2, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x20000,  3, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x80000,  4, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0xa0000,  5, 1); if (nRet != 0) return 1;
+	GfxDecode(0x8000, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x80, DrvTempRom, DrvChars);
+	
+	memset(DrvTempRom, 0xff, 0x100000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000,  6, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x20000,  7, 1); if (nRet != 0) return 1;
+	GfxDecode(0x0800, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x200, DrvTempRom, DrvSprites);
+	
+	BurnFree(DrvTempRom);
+	
+	nRet = BurnLoadRom(DrvSoundRom + 0x00000,  8, 1); if (nRet != 0) return 1;
+	
+	MitchellMachineInit();
+	
+	DrvDoReset();
+
+	return 0;
+}
+
 static INT32 CworldInit()
 {
 	INT32 nRet = 0, nLen;
@@ -3124,6 +3184,16 @@ struct BurnDriver BurnDrvPangbold = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, PangboldRomInfo, PangboldRomName, NULL, NULL, PangInputInfo, NULL,
 	PangboldInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x800, 384, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvPangb2 = {
+	"pangb2", "pang", NULL, NULL, "1989",
+	"Pang (bootleg, set 4)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	NULL, Pangb2RomInfo, Pangb2RomName, NULL, NULL, PangInputInfo, NULL,
+	Pangb2Init, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };
 

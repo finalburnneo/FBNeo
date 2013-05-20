@@ -282,15 +282,15 @@ static struct BurnRomInfo RallyxmrRomDesc[] = {
 	{ "175.bin",  	   0x00800, 0x50a224e2, BRF_GRA },	     //  8	Characters & Sprites
 	{ "174.bin",  	   0x00800, 0x68dff552, BRF_GRA },	     //  9
 	
-	{ "037.bin",       0x00100, 0x3c16f62c, BRF_GRA },	     //  10	Dots
+	{ "rx1-6.8m",      0x00100, 0x3c16f62c, BRF_GRA },	     //  10	Dots
 	
-	{ "179.bin",       0x00020, 0xc7865434, BRF_GRA },	     //  11	Palette PROM
-	{ "036.bin",       0x00100, 0x834d4fda, BRF_GRA },	     //  12	Lookup PROM
-	{ "180.bin",       0x00020, 0x8f574815, BRF_GRA },	     //  13	Video Layout PROM
-	{ "181.bin",       0x00020, 0xb8861096, BRF_GRA },	     //  14	Video Timing PROM
+	{ "rx1-1.11n",     0x00020, 0xc7865434, BRF_GRA },	     //  11	Palette PROM
+	{ "rx1-7.8p",      0x00100, 0x834d4fda, BRF_GRA },	     //  12	Lookup PROM
+	{ "rx1-2.4n",      0x00020, 0x8f574815, BRF_GRA },	     //  13	Video Layout PROM
+	{ "rx1-3.7k",      0x00020, 0xb8861096, BRF_GRA },	     //  14	Video Timing PROM
 	
-	{ "177.bin",       0x00100, 0x4bad7017, BRF_SND },	     //  15	Sound PROMs
-	{ "176.bin",       0x00100, 0x77245b66, BRF_SND },	     //  16
+	{ "rx1-5.3p",      0x00100, 0x4bad7017, BRF_SND },	     //  15	Sound PROMs
+	{ "rx1-4.2m",      0x00100, 0x77245b66, BRF_SND },	     //  16
 };
 
 STD_ROM_PICK(Rallyxmr)

@@ -226,12 +226,6 @@ static INT32 DrvGfxROMDecode()
 		if (BurnLoadRom(tmp + 0x200000, 3 + i * 3, 1)) return 1;
 		if (BurnLoadRom(tmp + 0x400000, 4 + i * 3, 1)) return 1;
 
-		if (i == 0) { // fix rom04
-			for (INT32 j = 0x1b3fff; j >= 0; j--) {
-				tmp[0x44c000 + j] = tmp[0x44c000 + (j - 1)];
-			}
-		}
-
 		for (INT32 j = 0; j < 0x600000; j++) {
 			tmp[j] ^= 0xff;
 		}
@@ -611,27 +605,27 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // The Legend of Silkroad
 
 static struct BurnRomInfo silkroadRomDesc[] = {
-	{ "rom02.bin",	0x100000, 0x4e5200fc, 1 | BRF_PRG }, //  0 Motorola '020 Code
-	{ "rom03.bin",	0x100000, 0x73ccc78c, 1 | BRF_PRG }, //  1
+	{ "rom02.bin",		0x100000, 0x4e5200fc, 1 | BRF_PRG }, //  0 Motorola '020 Code
+	{ "rom03.bin",		0x100000, 0x73ccc78c, 1 | BRF_PRG }, //  1
 
-	{ "rom12.bin",	0x200000, 0x96393d04, 2 | BRF_GRA }, //  2 Tiles
-	{ "rom08.bin",	0x200000, 0x23f1d462, 2 | BRF_GRA }, //  3
-	{ "rom04.bin",	0x200000, 0x2cf6ed30, 2 | BRF_GRA }, //  4
+	{ "rom12.rom12",	0x200000, 0x96393d04, 2 | BRF_GRA }, //  2 Tiles
+	{ "rom08.rom08",	0x200000, 0x23f1d462, 2 | BRF_GRA }, //  3
+	{ "rom04.rom04",	0x200000, 0xd9f0bbd7, 2 | BRF_GRA }, //  4
 
-	{ "rom13.bin",	0x200000, 0x4ca1698e, 2 | BRF_GRA }, //  5
-	{ "rom09.bin",	0x200000, 0xef0b5bf4, 2 | BRF_GRA }, //  6
-	{ "rom05.bin",	0x200000, 0x512d6e25, 2 | BRF_GRA }, //  7
+	{ "rom13.rom13",	0x200000, 0x4ca1698e, 2 | BRF_GRA }, //  5
+	{ "rom09.rom09",	0x200000, 0xef0b5bf4, 2 | BRF_GRA }, //  6
+	{ "rom05.rom05",	0x200000, 0x512d6e25, 2 | BRF_GRA }, //  7
 
-	{ "rom14.bin",	0x200000, 0xd00b19c4, 2 | BRF_GRA }, //  8
-	{ "rom10.bin",	0x200000, 0x7d324280, 2 | BRF_GRA }, //  9
-	{ "rom06.bin",	0x200000, 0x3ac26060, 2 | BRF_GRA }, // 10
+	{ "rom14.rom14",	0x200000, 0xd00b19c4, 2 | BRF_GRA }, //  8
+	{ "rom10.rom10",	0x200000, 0x7d324280, 2 | BRF_GRA }, //  9
+	{ "rom06.rom06",	0x200000, 0x3ac26060, 2 | BRF_GRA }, // 10
 
-	{ "rom07.bin",	0x200000, 0x9fc6ff9d, 2 | BRF_GRA }, // 11
-	{ "rom11.bin",	0x200000, 0x11abaf1c, 2 | BRF_GRA }, // 12
-	{ "rom15.bin",	0x200000, 0x26a3b168, 2 | BRF_GRA }, // 13
+	{ "rom07.rom07",	0x200000, 0x9fc6ff9d, 2 | BRF_GRA }, // 11
+	{ "rom11.rom11",	0x200000, 0x11abaf1c, 2 | BRF_GRA }, // 12
+	{ "rom15.rom15",	0x200000, 0x26a3b168, 2 | BRF_GRA }, // 13
 
-	{ "rom00.bin",  0x080000, 0xb10ba7ab, 3 | BRF_SND }, // 14 OKI Samples
-	{ "rom01.bin",  0x040000, 0xdb8cb455, 4 | BRF_SND }, // 15
+	{ "rom00.bin",  	0x080000, 0xb10ba7ab, 3 | BRF_SND }, // 14 OKI Samples
+	{ "rom01.bin",		0x040000, 0xdb8cb455, 4 | BRF_SND }, // 15
 };
 
 STD_ROM_PICK(silkroad)

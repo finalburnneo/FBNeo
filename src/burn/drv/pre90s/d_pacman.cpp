@@ -3506,8 +3506,13 @@ static struct BurnRomInfo pacmanspRomDesc[] = {
 STD_ROM_PICK(pacmansp)
 STD_ROM_FN(pacmansp)
 
-static void pacmansp_gfx_decode()
+static void pacmansp_decode()
 {
+	// code
+	memcpy(DrvZ80ROM + 0x8000, DrvZ80ROM + 0x4000, 0x4000);
+	memset(DrvZ80ROM + 0x4000, 0, 0x4000);
+	
+	// gfx
 	UINT8 *pTemp = (UINT8*)BurnMalloc(0x2000);
 	memcpy(pTemp, DrvGfxROM, 0x2000);
 	memcpy(DrvGfxROM + 0x0000, pTemp + 0x0000, 0x800);
@@ -3519,7 +3524,7 @@ static void pacmansp_gfx_decode()
 
 static INT32 pacmanspInit()
 {
-	return DrvInit(StandardMap, pacmansp_gfx_decode, PACMAN);
+	return DrvInit(StandardMap, pacmansp_decode, PACMAN);
 }
 
 struct BurnDriver BurnDrvpacmansp = {
@@ -4026,6 +4031,39 @@ struct BurnDriver BurnDrvmspacpls = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, mspacplsRomInfo, mspacplsRomName, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	mspacmanbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Ms. Pac-Man ('Made in Greece' bootleg)
+
+static struct BurnRomInfo mspacmanbgRomDesc[] = {
+	{ "9.g5",         0x8000, 0x97c64918, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+
+	{ "10.e5",        0x8000, 0xf2c5da43, 2 | BRF_GRA },			//  1 Graphics
+
+	{ "82s123.h7",    0x0020, 0x3545e7e9, 3 | BRF_GRA },			//  2 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  3
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  4 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  5 Timing Prom (not used)
+};
+
+STD_ROM_PICK(mspacmanbg)
+STD_ROM_FN(mspacmanbg)
+
+static INT32 mspacmanbgInit()
+{
+	return DrvInit(MspacmanMap, pacmansp_decode, PACMAN);
+}
+
+struct BurnDriver BurnDrvmspacmanbg = {
+	"mspacmanbg", "mspacman", NULL, NULL, "1981",
+	"Ms. Pac-Man ('Made in Greece' bootleg)\0", NULL, "bootleg", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	NULL, mspacmanbgRomInfo, mspacmanbgRomName, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	mspacmanbgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 

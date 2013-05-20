@@ -30,6 +30,8 @@ static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[2];
 
+static UINT8 DrvLargerRoms = 0;
+
 static struct BurnInputInfo DrvInputList[] = {
 	{"Coin 1",	BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"Coin 2",	BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
@@ -216,23 +218,66 @@ static INT32 DrvGfxROMDecode()
 	static INT32 YOffs[16] = { 0x000, 0x020, 0x040, 0x060, 0x080, 0x0a0, 0x0c0, 0x0e0,
 				 0x100, 0x120, 0x140, 0x160, 0x180, 0x1a0, 0x1c0, 0x1e0 };
 
-	UINT8 *tmp = (UINT8*)BurnMalloc(0x600000);
+	INT32 TempRomSize = 0x600000;
+	if (DrvLargerRoms) TempRomSize = 0xa00000;
+				 
+	UINT8 *tmp = (UINT8*)BurnMalloc(TempRomSize);
 	if (tmp == NULL) {
 		return 1;
 	}
 
-	for (INT32 i = 0; i < 4; i++ ){
-		if (BurnLoadRom(tmp + 0x000000, 2 + i * 3, 1)) return 1;
-		if (BurnLoadRom(tmp + 0x200000, 3 + i * 3, 1)) return 1;
-		if (BurnLoadRom(tmp + 0x400000, 4 + i * 3, 1)) return 1;
+	if (DrvLargerRoms) {
+		// first half of sprite roms
+		if (BurnLoadRom(tmp + 0x000000, 2, 1)) return 1;
+		if (BurnLoadRom(tmp + 0x200000, 3, 1)) return 1;
+		if (BurnLoadRom(tmp + 0x400000, 4, 1)) return 1;
 
 		for (INT32 j = 0; j < 0x600000; j++) {
 			tmp[j] ^= 0xff;
 		}
 
-		GfxDecode(0x08000, 6, 16, 16, Planes, XOffs, YOffs, 0x200, tmp, DrvGfxROM + 0x0800000 * i);
-	}
+		GfxDecode(0x08000, 6, 16, 16, Planes, XOffs, YOffs, 0x200, tmp + 0x000000, DrvGfxROM + 0x0800000 * 0);
+		
+		// second half of sprite roms
+		if (BurnLoadRom(tmp + 0x600000, 2, 1)) return 1;
+		memcpy(tmp + 0x000000, tmp + 0x800000, 0x200000);
+		if (BurnLoadRom(tmp + 0x600000, 3, 1)) return 1;
+		memcpy(tmp + 0x200000, tmp + 0x800000, 0x200000);
+		if (BurnLoadRom(tmp + 0x600000, 4, 1)) return 1;
+		memcpy(tmp + 0x400000, tmp + 0x800000, 0x200000);
 
+		for (INT32 j = 0; j < 0x600000; j++) {
+			tmp[j] ^= 0xff;
+		}
+
+		GfxDecode(0x08000, 6, 16, 16, Planes, XOffs, YOffs, 0x200, tmp + 0x000000, DrvGfxROM + 0x0800000 * 1);
+
+		// background
+		for (INT32 i = 1; i < 3; i++ ){
+			if (BurnLoadRom(tmp + 0x000000, 2 + i * 3, 1)) return 1;
+			if (BurnLoadRom(tmp + 0x200000, 3 + i * 3, 1)) return 1;
+			if (BurnLoadRom(tmp + 0x400000, 4 + i * 3, 1)) return 1;
+
+			for (INT32 j = 0; j < 0x600000; j++) {
+				tmp[j] ^= 0xff;
+			}
+
+			GfxDecode(0x08000, 6, 16, 16, Planes, XOffs, YOffs, 0x200, tmp, DrvGfxROM + 0x0800000 * (i + 1));
+		}
+	} else {
+		for (INT32 i = 0; i < 4; i++ ){
+			if (BurnLoadRom(tmp + 0x000000, 2 + i * 3, 1)) return 1;
+			if (BurnLoadRom(tmp + 0x200000, 3 + i * 3, 1)) return 1;
+			if (BurnLoadRom(tmp + 0x400000, 4 + i * 3, 1)) return 1;
+
+			for (INT32 j = 0; j < 0x600000; j++) {
+				tmp[j] ^= 0xff;
+			}
+
+			GfxDecode(0x08000, 6, 16, 16, Planes, XOffs, YOffs, 0x200, tmp, DrvGfxROM + 0x0800000 * i);
+		}
+	}
+	
 	BurnFree (tmp);
 
 	DrvTransTab = (UINT8*)BurnMalloc(0x20000);
@@ -371,6 +416,13 @@ static INT32 DrvInit()
 	return 0;
 }
 
+static INT32 DrvaInit()
+{
+	DrvLargerRoms = 1;
+	
+	return DrvInit();
+}
+
 static INT32 DrvExit()
 {
 	SekExit();
@@ -386,6 +438,8 @@ static INT32 DrvExit()
 	BurnFree (DrvTransTab);
 
 	DrvRecalc = 0;
+	
+	DrvLargerRoms = 0;
 
 	return 0;
 }
@@ -638,5 +692,41 @@ struct BurnDriver BurnDrvSilkroad = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, silkroadRomInfo, silkroadRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1001,
+	380, 224, 4, 3
+};
+
+
+// The Legend of Silkroad (larger roms)
+
+static struct BurnRomInfo silkroadaRomDesc[] = {
+	{ "rom02.bin",			0x100000, 0x4e5200fc, 1 | BRF_PRG }, //  0 Motorola '020 Code
+	{ "rom03.bin",			0x100000, 0x73ccc78c, 1 | BRF_PRG }, //  1
+
+	{ "unico_sr13.rom13",	0x400000, 0xd001c3df, 2 | BRF_GRA }, //  2 Tiles
+	{ "unico_sr09.rom09",	0x400000, 0x696d908d, 2 | BRF_GRA }, //  3
+	{ "unico_sr05.rom05",	0x400000, 0x00f638c1, 2 | BRF_GRA }, //  4
+
+	{ "rom14.rom14",		0x200000, 0xd00b19c4, 2 | BRF_GRA }, //  5
+	{ "rom10.rom10",		0x200000, 0x7d324280, 2 | BRF_GRA }, //  6
+	{ "rom06.rom06",		0x200000, 0x3ac26060, 2 | BRF_GRA }, //  7
+
+	{ "rom07.rom07",		0x200000, 0x9fc6ff9d, 2 | BRF_GRA }, //  8
+	{ "rom11.rom11",		0x200000, 0x11abaf1c, 2 | BRF_GRA }, //  9
+	{ "rom15.rom15",		0x200000, 0x26a3b168, 2 | BRF_GRA }, // 10
+
+	{ "rom00.bin",  		0x080000, 0xb10ba7ab, 3 | BRF_SND }, // 11 OKI Samples
+	{ "rom01.bin",			0x040000, 0xdb8cb455, 4 | BRF_SND }, // 12
+};
+
+STD_ROM_PICK(silkroada)
+STD_ROM_FN(silkroada)
+
+struct BurnDriver BurnDrvSilkroada = {
+	"silkroada", "silkroad", NULL, NULL, "1999",
+	"The Legend of Silkroad (larger roms)\0", NULL, "Unico", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, silkroadaRomInfo, silkroadaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1001,
 	380, 224, 4, 3
 };

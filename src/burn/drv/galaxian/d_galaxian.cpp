@@ -4395,6 +4395,46 @@ static struct BurnDIPInfo MooncrstDIPList[]=
 
 STDDIPINFO(Mooncrst)
 
+static struct BurnDIPInfo MooncregDIPList[]=
+{
+	// Default Values
+	{0x0b, 0xff, 0xff, 0x00, NULL                     },
+	{0x0c, 0xff, 0xff, 0xc0, NULL                     },
+	{0x0d, 0xff, 0xff, 0x00, NULL                     },
+	
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Cabinet"                },
+	{0x0b, 0x01, 0x20, 0x00, "Upright"                },
+	{0x0b, 0x01, 0x20, 0x20, "Cocktail"               },
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Difficulty"             },
+	{0x0c, 0x01, 0x40, 0x40, "Easy"                   },
+	{0x0c, 0x01, 0x40, 0x00, "Hard"                   },
+	
+	{0   , 0xfe, 0   , 2   , "Player's Bullet Speed"  },
+	{0x0c, 0x01, 0x80, 0x00, "Slow"                   },
+	{0x0c, 0x01, 0x80, 0x80, "Fast"                   },
+	
+	// Dip 3	
+	{0   , 0xfe, 0   , 13   , "Coinage"               },
+	{0x0d, 0x01, 0x0f, 0x00, "1C 1P, 1C 2P"           },
+	{0x0d, 0x01, 0x0f, 0x01, "2C 1P, 2C 3P"           },
+	{0x0d, 0x01, 0x0f, 0x02, "3C 1P, 3C 4P"           },
+	{0x0d, 0x01, 0x0f, 0x03, "4C 1P, 4C 5P"           },
+	{0x0d, 0x01, 0x0f, 0x04, "1C 1P, 1C 3P"           },
+	{0x0d, 0x01, 0x0f, 0x05, "2C 1P, 2C 5P"           },
+	{0x0d, 0x01, 0x0f, 0x06, "3C 1P, 3C 7P"           },
+	{0x0d, 0x01, 0x0f, 0x07, "4C 1P, 4C 9P"           },
+	{0x0d, 0x01, 0x0f, 0x08, "1C 1P, 1C 4P"           },
+	{0x0d, 0x01, 0x0f, 0x09, "2C 1P, 2C 7P"           },
+	{0x0d, 0x01, 0x0f, 0x0a, "3C 1P, 3C 10P"          },
+	{0x0d, 0x01, 0x0f, 0x0b, "4C 1P, 4C 13P"          },
+	{0x0d, 0x01, 0x0f, 0x0c, "Free Play"              },
+};
+
+STDDIPINFO(Mooncreg)
+
 static struct BurnDIPInfo MoonqsrDIPList[]=
 {
 	// Default Values
@@ -5379,6 +5419,43 @@ static struct BurnDIPInfo SmooncrsDIPList[]=
 };
 
 STDDIPINFO(Smooncrs)
+
+static struct BurnDIPInfo MooncptcDIPList[]=
+{
+	// Default Values
+	{0x08, 0xff, 0xff, 0x00, NULL                     },
+	{0x09, 0xff, 0xff, 0xc0, NULL                     },
+	{0x10, 0xff, 0xff, 0x03, NULL                     },
+	
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Cabinet"                },
+	{0x08, 0x01, 0x20, 0x00, "Upright"                },
+	{0x08, 0x01, 0x20, 0x20, "Cocktail"               },
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Difficulty"             },
+	{0x09, 0x01, 0x40, 0x40, "Easy"                   },
+	{0x09, 0x01, 0x40, 0x00, "Hard"                   },
+	
+	{0   , 0xfe, 0   , 2   , "Players Bullet Speed"   },
+	{0x09, 0x01, 0x80, 0x00, "Slow"                   },
+	{0x09, 0x01, 0x80, 0x80, "Fast"                   },
+	
+	// Dip 3
+	{0   , 0xfe, 0   , 4   , "Coin A"                 },
+	{0x10, 0x01, 0x03, 0x00, "1 Coin  2 Plays"        },
+	{0x10, 0x01, 0x03, 0x01, "2 Coins 3 Plays"        },
+	{0x10, 0x01, 0x03, 0x02, "3 Coins 4 Plays"        },
+	{0x10, 0x01, 0x03, 0x03, "4 Coins 5 Plays"        },
+	
+	{0   , 0xfe, 0   , 4   , "Coin B"                 },
+	{0x10, 0x01, 0x0c, 0x00, "1 Coin 1 Play"          },
+	{0x10, 0x01, 0x0c, 0x04, "1 Coin 2 Plays"         },
+	{0x10, 0x01, 0x0c, 0x08, "1 Coin 3 Plays"         },
+	{0x10, 0x01, 0x0c, 0x0c, "Freeplay"               },
+};
+
+STDDIPINFO(Mooncptc)
 
 static struct BurnDIPInfo SpacbattDIPList[]=
 {
@@ -9739,6 +9816,27 @@ static struct BurnRomInfo SpcdragaRomDesc[] = {
 STD_ROM_PICK(Spcdraga)
 STD_ROM_FN(Spcdraga)
 
+static struct BurnRomInfo MooncregRomDesc[] = {
+	{ "eg1",           0x00800, 0xa67ca4af, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "eg2",           0x00800, 0xb57b140e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "eg3",           0x00800, 0xa1939def, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "eg4",           0x00800, 0x068f8830, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "eg5",           0x00800, 0x32cd9adc, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "eg6",           0x00800, 0x3a4b62d9, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "eg7",           0x00800, 0x22415271, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "eg8",           0x00800, 0x7b9cc105, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "eg_2b",         0x00800, 0xfb0f1f81, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "eg_4b",         0x00800, 0x13932a15, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "eg_1b",         0x00800, 0x631ebb5a, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "eg_3b",         0x00800, 0x24cfd145, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "prom_6331.10f", 0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Mooncreg)
+STD_ROM_FN(Mooncreg)
+
 static struct BurnRomInfo SteraRomDesc[] = {
 	{ "stera.1",       0x00800, 0xcd04fea8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "stera.2",       0x00800, 0xccd1878e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -10403,7 +10501,7 @@ struct BurnDriver BurnDrvMooncptc = {
 	"Moon Cresta (Petaco S.A. Spanish bootleg)\0", NULL, "bootleg (Petaco S.A.)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
-	NULL, MooncptcRomInfo, MooncptcRomName, NULL, NULL, SmooncrsInputInfo, SmooncrsDIPInfo,
+	NULL, MooncptcRomInfo, MooncptcRomName, NULL, NULL, SmooncrsInputInfo, MooncptcDIPInfo,
 	MooncrstInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
@@ -10454,6 +10552,16 @@ struct BurnDriver BurnDrvSpcdraga = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, SpcdragaRomInfo, SpcdragaRomName, NULL, NULL, SmooncrsInputInfo, SmooncrsDIPInfo,
+	MooncrstInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvMooncreg = {
+	"mooncreg", "mooncrst", NULL, NULL, "1980",
+	"Moon Cresta (Electrogame S.A. Spanish bootleg)\0", NULL, "bootleg (Electrogame S.A.)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, MooncregRomInfo, MooncregRomName, NULL, NULL, OmegaInputInfo, MooncregDIPInfo,
 	MooncrstInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

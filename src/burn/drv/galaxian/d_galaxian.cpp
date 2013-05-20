@@ -3489,6 +3489,47 @@ static struct BurnDIPInfo GalaxianDIPList[]=
 
 STDDIPINFO(Galaxian)
 
+static struct BurnDIPInfo GalaxrfDIPList[]=
+{
+	// Default Values
+	{0x0c, 0xff, 0xff, 0x00, NULL                     },
+	{0x0d, 0xff, 0xff, 0x00, NULL                     },
+	{0x0e, 0xff, 0xff, 0x01, NULL                     },
+	
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Cabinet"                },
+	{0x0c, 0x01, 0x20, 0x00, "Upright"                },
+	{0x0c, 0x01, 0x20, 0x20, "Cocktail"               },
+	
+	{0   , 0xfe, 0   , 2   , "Service Mode"           },
+	{0x0c, 0x01, 0x40, 0x00, "Off"                    },
+	{0x0c, 0x01, 0x40, 0x40, "On"                     },
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 4   , "Coinage"                },
+	{0x0d, 0x01, 0xc0, 0x40, "2 Coins 1 Play"         },
+	{0x0d, 0x01, 0xc0, 0x00, "1 Coin  1 Play"         },
+	{0x0d, 0x01, 0xc0, 0x80, "1 Coin  2 Plays"        },
+	{0x0d, 0x01, 0xc0, 0xc0, "Freeplay"               },
+	
+	// Dip 3	
+	{0   , 0xfe, 0   , 4   , "Bonus Life / Enemy Bullet Speed" },
+	{0x0e, 0x01, 0x03, 0x00, "None, Slow"             },
+	{0x0e, 0x01, 0x03, 0x01, "12000, Medium"          },
+	{0x0e, 0x01, 0x03, 0x02, "20000, Fast"            },
+	{0x0e, 0x01, 0x03, 0x03, "30000, Fastest"         },
+	
+	{0   , 0xfe, 0   , 2   , "Lives"                  },
+	{0x0e, 0x01, 0x04, 0x00, "2"                      },
+	{0x0e, 0x01, 0x04, 0x04, "3"                      },
+	
+	{0   , 0xfe, 0   , 2   , "Player Bullet Speed"    },
+	{0x0e, 0x01, 0x08, 0x00, "Slow"                   },
+	{0x0e, 0x01, 0x08, 0x08, "Fast"                   },
+};
+
+STDDIPINFO(Galaxrf)
+
 static struct BurnDIPInfo GhostmunDIPList[]=
 {
 	// Default Values
@@ -6383,6 +6424,22 @@ static struct BurnRomInfo TstgalxRomDesc[] = {
 STD_ROM_PICK(Tstgalx)
 STD_ROM_FN(Tstgalx)
 
+static struct BurnRomInfo GalaxrfRomDesc[] = {
+	{ "princip1.u",    0x00800, 0x3d5d9bae, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "princip2.v",    0x00800, 0xa433067e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "princip3.w",    0x00800, 0xaaf038d4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "princip4.y",    0x00800, 0xd74bdd2a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "princip5.z",    0x00800, 0x7eeb9e63, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "graphhj.j1",    0x00800, 0x39fb43a4, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "graphkl.l1",    0x00800, 0x7e3f56a2, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "6l.bpr",        0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galaxrf)
+STD_ROM_FN(Galaxrf)
+
 static INT32 SupergxInit()
 {
 	INT32 nRet;
@@ -6542,6 +6599,16 @@ struct BurnDriver BurnDrvTstgalx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_PROTOTYPE, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, TstgalxRomInfo, TstgalxRomName, NULL, NULL, GalaxianInputInfo, GalaxianDIPInfo,
+	GalInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalaxrf = {
+	"galaxrf", "galaxian", NULL, NULL, "1980",
+	"Galaxian (Recreativos Franco S.A. Spanish bootleg)\0", NULL, "bootleg (Recreativos Franco S.A.)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, GalaxrfRomInfo, GalaxrfRomName, NULL, NULL, GalaxianInputInfo, GalaxrfDIPInfo,
 	GalInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

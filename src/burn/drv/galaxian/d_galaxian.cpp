@@ -11846,10 +11846,10 @@ static INT32 TimefgtrInit()
 	
 	nRet = GalInit();
 	
-	GalRenderFrameFunction = FantastcRenderFrame;
+	GalRenderFrameFunction = TimefgtrRenderFrame;
 	GalExtendSpriteInfoFunction = UpperExtendSpriteInfo;
 	
-	HardCodeGalaxianPROM();
+	HardCodeMooncrstPROM();
 	
 	return nRet;
 }
@@ -11954,11 +11954,11 @@ struct BurnDriver BurnDrvFantastc = {
 	NULL, 392, 224, 256, 3, 4
 };
 
-struct BurnDriverD BurnDrvTimefgtr = {
+struct BurnDriver BurnDrvTimefgtr = {
 	"timefgtr", NULL, NULL, NULL, "198?",
-	"Time Fighter (Time Pilot conversion on Galaxian hardware)\0", NULL, "Taito do Brasil", "Galaxian",
+	"Time Fighter (Time Pilot conversion on Galaxian hardware)\0", "Bad Colours", "Taito do Brasil", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, TimefgtrRomInfo, TimefgtrRomName, NULL, NULL, TimefgtrInputInfo, TimefgtrDIPInfo,
 	TimefgtrInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4

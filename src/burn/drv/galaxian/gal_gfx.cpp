@@ -1274,3 +1274,17 @@ void FantastcRenderFrame()
 	if (GalDrawBulletsFunction) GalDrawBullets(&GalSpriteRam[0xc0]);
 	BurnTransferCopy(GalPalette);
 }
+
+void TimefgtrRenderFrame()
+{
+	BurnTransferClear();
+	GalCalcPaletteFunction();
+	if (GalRenderBackgroundFunction) GalRenderBackgroundFunction();
+	GalRenderBgLayer(GalVideoRam);
+	GalRenderSprites(&GalSpriteRam[0x040]); // MAME renders different sprite ram areas depending on screen-area - necessary?
+	GalRenderSprites(&GalSpriteRam[0x140]);
+	GalRenderSprites(&GalSpriteRam[0x240]);
+	GalRenderSprites(&GalSpriteRam[0x340]);
+	if (GalDrawBulletsFunction) GalDrawBullets(&GalSpriteRam[0xc0]);
+	BurnTransferCopy(GalPalette);
+}

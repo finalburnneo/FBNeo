@@ -645,6 +645,49 @@ static struct BurnDIPInfo DrvDIPList[]=
 
 STDDIPINFO(Drv)
 
+static struct BurnDIPInfo PacumanDIPList[]=
+{
+	{0x0e, 0xff, 0xff, 0xc8, NULL                     },
+	{0x0f, 0xff, 0xff, 0xff, NULL                     },
+	{0x10, 0xff, 0xff, 0xff, NULL                     },
+
+	{0   , 0xfe, 0   , 4   , "Coinage"                },
+	{0x0e, 0x01, 0x03, 0x03, "2C 1C, 1C 1C"    		  },
+	{0x0e, 0x01, 0x03, 0x01, "1C 2C, 1C 3C"    		  },
+	{0x0e, 0x01, 0x03, 0x02, "1C 2C, 1C 4C"    		  },
+	{0x0e, 0x01, 0x03, 0x00, "1C 1C, 1C 2C"     	  },
+
+	{0   , 0xfe, 0   , 4   , "Lives"                  },
+	{0x0e, 0x01, 0x0c, 0x00, "1"     		  },
+	{0x0e, 0x01, 0x0c, 0x04, "2"    		  },
+	{0x0e, 0x01, 0x0c, 0x08, "3"     		  },
+	{0x0e, 0x01, 0x0c, 0x0c, "5"     		  },
+
+	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
+	{0x0e, 0x01, 0x30, 0x00, "10000"     		  },
+	{0x0e, 0x01, 0x30, 0x10, "15000"    		  },
+	{0x0e, 0x01, 0x30, 0x20, "20000"     		  },
+	{0x0e, 0x01, 0x30, 0x30, "None"     		  },
+
+	{0   , 0xfe, 0   , 2   , "Difficulty"             },
+	{0x0e, 0x01, 0x40, 0x40, "Normal"      		  },
+	{0x0e, 0x01, 0x40, 0x00, "Hard"       		  },
+
+	{0   , 0xfe, 0   , 2   , "Ghost Names"            },
+	{0x0e, 0x01, 0x80, 0x80, "Normal"     		  },
+	{0x0e, 0x01, 0x80, 0x00, "Alternate"   		  },
+
+	{0   , 0xfe, 0   , 2   , "Rack Test (Cheat)"      },
+	{0x0f, 0x01, 0x10, 0x10, "Off"     		  },
+	{0x0f, 0x01, 0x10, 0x00, "On"    		  },
+
+	{0   , 0xfe, 0   , 2   , "Cabinet"	          },
+	{0x10, 0x01, 0x80, 0x80, "Upright"     		  },
+	{0x10, 0x01, 0x80, 0x00, "Cocktail"    		  },
+};
+
+STDDIPINFO(Pacuman)
+
 static struct BurnDIPInfo PengoDIPList[]=
 {
 	{0x0f, 0xff, 0xff, 0xff, NULL				},
@@ -3149,6 +3192,44 @@ struct BurnDriver BurnDrvpopeyeman = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, popeyemanRomInfo, popeyemanRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Pacu-Man (Spanish bootleg of Puck Man)
+
+static struct BurnRomInfo pacumanRomDesc[] = {
+	{ "pacuman01.bin", 0x0800, 0xec8c1ed8, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pacuman02.bin", 0x0800, 0x40edaf56, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "pacuman03.bin", 0x0800, 0xdb4f702b, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "pacuman04.bin", 0x0800, 0x28f7257d, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "pacuman05.bin", 0x0800, 0x212acb41, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "pacuman06.bin", 0x0800, 0xe73dd1b9, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "pacuman07.bin", 0x0800, 0x908a2cb2, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "pacuman08.bin", 0x0800, 0xcf4ba26c, 1 | BRF_ESS | BRF_PRG },	//  7
+
+	{ "chg1", 	       0x0800, 0x2066a0b7, 2 | BRF_GRA },			//  8 Graphics
+	{ "chg2",          0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
+	{ "chg3", 	       0x0800, 0x9e39323a, 2 | BRF_GRA },			// 10
+	{ "chg4", 	       0x0800, 0x7dc75a81, 2 | BRF_GRA },			// 11
+
+	{ "82s123.7f",     0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "82s126.4a",     0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
+
+	{ "82s126.1m",     0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
+	{ "82s126.3m",     0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
+};
+
+STD_ROM_PICK(pacuman)
+STD_ROM_FN(pacuman)
+
+struct BurnDriver BurnDrvpacuman = {
+	"pacuman", "puckman", NULL, NULL, "1980",
+	"Pacu-Man (Spanish bootleg of Puck Man)\0", NULL, "bootleg (Recreativos Franco S.A.)", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	NULL, pacumanRomInfo, pacumanRomName, NULL, NULL, DrvInputInfo, PacumanDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

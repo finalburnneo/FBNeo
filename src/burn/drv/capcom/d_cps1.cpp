@@ -4916,6 +4916,29 @@ static struct BurnRomInfo DinoehRomDesc[] = {
 STD_ROM_PICK(Dinoeh)
 STD_ROM_FN(Dinoeh)
 
+static struct BurnRomInfo DinohcRomDesc[] = {
+	{ "23",     	   0x080000, 0xcecf4b12, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "22",   		   0x080000, 0x07eeb238, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "21",     	   0x080000, 0x3bc3d57a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "1",  		   0x080000, 0x8da4f917, BRF_GRA | CPS1_TILES },
+	{ "2",  		   0x080000, 0x6c40f603, BRF_GRA | CPS1_TILES },
+	{ "3",  		   0x080000, 0x09c8fc2d, BRF_GRA | CPS1_TILES },
+	{ "4",  		   0x080000, 0x637ff38f, BRF_GRA | CPS1_TILES },
+	{ "5",  		   0x080000, 0x470befee, BRF_GRA | CPS1_TILES },
+	{ "6",  		   0x080000, 0x22bfb7a3, BRF_GRA | CPS1_TILES },
+	{ "7",  		   0x080000, 0xe7599ac4, BRF_GRA | CPS1_TILES },
+	{ "8",  		   0x080000, 0x211b4b15, BRF_GRA | CPS1_TILES },
+
+	{ "9",     		   0x010000, 0x698e8b58, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "18",     	   0x020000, 0x6de2c2db, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "19",     	   0x020000, 0xb99091ae, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Dinohc)
+STD_ROM_FN(Dinohc)
+
 static struct BurnRomInfo DynwarRomDesc[] = {
 	{ "30.11f",        0x020000, 0xf9ec6d68, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "35.11h",        0x020000, 0xe41fff2f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -11732,6 +11755,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "dinopic2"    , CPS_B_21_QS2, mapper_CD63B , 0, NULL                },
 	{ "dinoeh"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinoh"       , CPS_B_21_DEF, mapper_CD63B , 0, dino_decode         },
+	{ "dinohc"      , CPS_B_21_DEF, mapper_CD63B , 0, dino_decode         }, // hacked to run on Street Fighter II' champion edition C-Board
 	{ "dinot"       , CPS_B_21_DEF, mapper_CD63B , 0, dino_decode         },
 	{ "dinotpic"    , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinohunt"    , CPS_B_21_DEF, mapper_CD63B , 0, NULL                },
@@ -15943,6 +15967,16 @@ struct BurnDriver BurnDrvCpsDinoeh = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, DinoehRomInfo, DinoehRomName, NULL, NULL, DinoInputInfo, DinoDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsDinohc = {
+	"dinohc", "dino", NULL, NULL, "1993",
+	"Cadillacs and Dinosaurs (Chinese bootleg, 930223 Asia TW)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, DinohcRomInfo, DinohcRomName, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	DinohuntInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

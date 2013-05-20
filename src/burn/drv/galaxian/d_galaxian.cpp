@@ -11521,7 +11521,7 @@ struct BurnDriver BurnDrvPorter = {
 
 struct BurnDriver BurnDrvKong = {
 	"kong", NULL, NULL, NULL, "198?",
-	"Kong (Brazil)\0", "Bad Colours", "Taito do Brasil", "Galaxian",
+	"Kong (Donkey Kong conversion on Galaxian hardware)\0", "Bad Colours", "Taito do Brasil", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_PLATFORM, 0,
 	NULL, KongRomInfo, KongRomName, NULL, NULL, KongInputInfo, KongDIPInfo,
@@ -11531,7 +11531,7 @@ struct BurnDriver BurnDrvKong = {
 
 struct BurnDriver BurnDrvFantastc = {
 	"fantastc", NULL, NULL, NULL, "198?",
-	"Fantastic\0", NULL, "Taito do Brasil", "Galaxian",
+	"Fantastic (Galaga conversion on Galaxian hardware)\0", NULL, "Taito do Brasil", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, FantastcRomInfo, FantastcRomName, NULL, NULL, FantastcInputInfo, FantastcDIPInfo,

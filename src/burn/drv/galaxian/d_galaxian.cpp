@@ -1881,6 +1881,26 @@ static struct BurnInputInfo ThepitmInputList[] =
 
 STDINPUTINFO(Thepitm)
 
+static struct BurnInputInfo TimefgtrInputList[] =
+{
+	{"Coin 1"            , BIT_DIGITAL   , GalInputPort0 + 1, "p1 coin"   },
+	{"Start 1"           , BIT_DIGITAL   , GalInputPort1 + 0, "p1 start"  },
+	{"Start 2"           , BIT_DIGITAL   , GalInputPort1 + 1, "p2 start"  },
+
+	{"Up"                , BIT_DIGITAL   , GalInputPort0 + 7, "p1 up"     },
+	{"Down"              , BIT_DIGITAL   , GalInputPort1 + 5, "p1 down"   },
+	{"Left"              , BIT_DIGITAL   , GalInputPort0 + 2, "p1 left"   },
+	{"Right"             , BIT_DIGITAL   , GalInputPort0 + 3, "p1 right"  },
+	{"Fire 1"            , BIT_DIGITAL   , GalInputPort0 + 4, "p1 fire 1" },
+
+	{"Reset"             , BIT_DIGITAL   , &GalReset        , "reset"     },
+	{"Dip 1"             , BIT_DIPSWITCH , GalDip + 0       , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH , GalDip + 1       , "dip"       },
+	{"Dip 3"             , BIT_DIPSWITCH , GalDip + 2       , "dip"       },
+};
+
+STDINPUTINFO(Timefgtr)
+
 static struct BurnInputInfo TurtlesInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL   , GalInputPort0 + 7, "p1 coin"   },
@@ -5835,6 +5855,41 @@ static struct BurnDIPInfo ThepitmDIPList[]=
 };
 
 STDDIPINFO(Thepitm)
+
+static struct BurnDIPInfo TimefgtrDIPList[]=
+{
+	// Default Values
+	{0x09, 0xff, 0xff, 0x40, NULL                     },
+	{0x0a, 0xff, 0xff, 0x00, NULL                     },
+	{0x0b, 0xff, 0xff, 0x03, NULL                     },
+	
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "255 Lives"              },
+	{0x09, 0x01, 0x20, 0x00, "Off"                    },
+	{0x09, 0x01, 0x20, 0x20, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Extended Bonus Life"    },
+	{0x09, 0x01, 0x40, 0x00, "Off"                    },
+	{0x09, 0x01, 0x40, 0x40, "On"                     },
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Coinage"                },
+	{0x0a, 0x01, 0x40, 0x00, "1 Coin  1 Play"         },
+	{0x0a, 0x01, 0x40, 0x40, "2 Coins 1 Play"         },
+	
+	{0   , 0xfe, 0   , 2   , "Lives"                  },
+	{0x0a, 0x01, 0x80, 0x00, "3"                      },
+	{0x0a, 0x01, 0x80, 0x80, "5"                      },
+	
+	// Dip 3	
+	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
+	{0x0b, 0x01, 0x0c, 0x00, "10000 50000"            },
+	{0x0b, 0x01, 0x0c, 0x04, "20000 50000"            },
+	{0x0b, 0x01, 0x0c, 0x08, "10000 60000"            },
+	{0x0b, 0x01, 0x0c, 0x0c, "20000 60000"            },
+};
+
+STDDIPINFO(Timefgtr)
 
 static struct BurnDIPInfo TriplepDIPList[]=
 {
@@ -10875,6 +10930,25 @@ static struct BurnRomInfo FantastcRomDesc[] = {
 STD_ROM_PICK(Fantastc)
 STD_ROM_FN(Fantastc)
 
+static struct BurnRomInfo TimefgtrRomDesc[] = {
+	{ "tp01",          0x01000, 0xba8b3e70, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tp02",          0x01000, 0x796158c0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tp03",          0x01000, 0xfe6a1c98, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tp04",          0x01000, 0xeff73185, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tp05",          0x01000, 0x85023e4a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tp06",          0x01000, 0xb6b8aaf9, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "tp07",          0x01000, 0x5f57342c, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "tp09",          0x01000, 0x636fd772, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "tp08",          0x01000, 0x2dc3c48b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "tp10",          0x01000, 0xb27b450c, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "prom",          0x00020, 0x00000000, BRF_GRA | BRF_NODUMP },
+};
+
+STD_ROM_PICK(Timefgtr)
+STD_ROM_FN(Timefgtr)
+
 UINT8 __fastcall BagmanmcZ80Read(UINT16 a)
 {
 	switch (a) {
@@ -11313,6 +11387,70 @@ void __fastcall FantastcZ80Write(UINT16 a, UINT8 d)
 	}
 }
 
+void __fastcall TimefgtrZ80Write(UINT16 a, UINT8 d)
+{
+	if (a >= 0x9800 && a <= 0x9bff) {
+		INT32 Offset = a - 0x9800;
+		
+		GalSpriteRam[Offset] = d;
+		
+		if (Offset < 0x40) {
+			if ((Offset & 0x01) == 0) {
+				GalScrollVals[Offset >> 1] = d;
+			}
+		}
+		
+		return;
+	}
+	
+	if (a >= 0xfff8) {
+		// ???
+		return;
+	}
+	
+	switch (a) {
+		case 0x8803: {
+			AY8910Write(0, 0, d);
+			return;
+		}
+		
+		case 0x880b: {
+			AY8910Write(0, 1, d);
+			return;
+		}
+		
+		case 0x880c: {
+			AY8910Write(1, 0, d);
+			return;
+		}
+		
+		case 0x880e: {
+			AY8910Write(1, 1, d);
+			return;
+		}
+		
+		case 0xb000: {
+			GalIrqFire = d & 1;
+			return;
+		}
+		
+		case 0xb004: {
+			GalStarsEnable = d & 0x01;
+			if (!GalStarsEnable) GalStarsScrollPos = -1;		
+			return;
+		}
+		
+		case 0xb800: {
+			// ???
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Z80 #1 Write => %04X, %02X\n"), a, d);
+		}
+	}
+}
+
 static void SkybaseAlterZ80()
 {
 	MapMooncrst();
@@ -11682,6 +11820,40 @@ static INT32 FantastcInit()
 	return nRet;
 }
 
+static void TimefgtrPostLoad()
+{
+	MapMooncrst();
+	
+	ZetOpen(0);
+	ZetMapArea(0x0000, 0x7fff, 0, GalZ80Rom1);
+	ZetMapArea(0x0000, 0x7fff, 2, GalZ80Rom1);
+	ZetMapArea(0x8000, 0x87ff, 0, GalZ80Ram1);
+	ZetMapArea(0x8000, 0x87ff, 1, GalZ80Ram1);
+	ZetMapArea(0x8000, 0x87ff, 2, GalZ80Ram1);
+	ZetSetWriteHandler(TimefgtrZ80Write);
+	ZetClose();
+}
+
+static INT32 TimefgtrInit()
+{
+	INT32 nRet;
+	
+	GalSoundType = GAL_SOUND_HARDWARE_TYPE_FANTASTCAY8910;
+	GalPromRomSize = 0x20;
+	
+	GalPostLoadCallbackFunction = TimefgtrPostLoad;
+	GalNumSprites = 0x40;
+	
+	nRet = GalInit();
+	
+	GalRenderFrameFunction = FantastcRenderFrame;
+	GalExtendSpriteInfoFunction = UpperExtendSpriteInfo;
+	
+	HardCodeGalaxianPROM();
+	
+	return nRet;
+}
+
 struct BurnDriver BurnDrvSkybase = {
 	"skybase", NULL, NULL, NULL, "1982",
 	"Sky Base\0", NULL, "Omori Electric Co. Ltd", "Galaxian",
@@ -11779,6 +11951,16 @@ struct BurnDriver BurnDrvFantastc = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, FantastcRomInfo, FantastcRomName, NULL, NULL, FantastcInputInfo, FantastcDIPInfo,
 	FantastcInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriverD BurnDrvTimefgtr = {
+	"timefgtr", NULL, NULL, NULL, "198?",
+	"Time Fighter (Time Pilot conversion on Galaxian hardware)\0", NULL, "Taito do Brasil", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, TimefgtrRomInfo, TimefgtrRomName, NULL, NULL, TimefgtrInputInfo, TimefgtrDIPInfo,
+	TimefgtrInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

@@ -295,6 +295,41 @@ static struct BurnRomInfo DrvbRomDesc[] = {
 STD_ROM_PICK(Drvb)
 STD_ROM_FN(Drvb)
 
+static struct BurnRomInfo Drvb2RomDesc[] = {
+	{ "10", 		   0x08000, 0xab5d1469, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "11",       	   0x04000, 0xd1a43ba1, BRF_ESS | BRF_PRG }, //	 1
+	
+	{ "8(so02.9f)",    0x04000, 0xca20aca5, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program 
+	
+	{ "7(vt01.5d)",    0x04000, 0x505726e0, BRF_GRA },	     //  3	Characters
+	
+	{ "17(vt11.5a)",   0x04000, 0x7b2e1b48, BRF_GRA },	     //  4	Tiles
+	{ "16(vt12.6a)",   0x04000, 0x81b417d3, BRF_GRA },	     //  5
+	{ "15(vt13.7a)",   0x04000, 0x5612dbd2, BRF_GRA },	     //  6
+	{ "14(vt14.8a)",   0x04000, 0x2b2dee36, BRF_GRA },	     //  7
+	{ "13(vt15.9a)",   0x04000, 0xde70babf, BRF_GRA },	     //  8
+	{ "12(vt16.10a)",  0x04000, 0x14178237, BRF_GRA },	     //  9
+	
+	{ "3(vt05.7e)",    0x04000, 0x79f16e3d, BRF_GRA },	     //  10	Sprites
+	{ "2(vt06.8e)",    0x04000, 0x26fee521, BRF_GRA },	     //  11
+	{ "1(vt07.9e)",    0x04000, 0xca88bdfd, BRF_GRA },	     //  12
+	{ "6(vt08.7h)",    0x04000, 0x2019c883, BRF_GRA },	     //  13
+	{ "5(vt09.8h)",    0x04000, 0x98703982, BRF_GRA },	     //  14
+	{ "4(vt10.9h)",    0x04000, 0xf069d2f8, BRF_GRA },	     //  15
+	
+	{ "vtb1.1d",       0x00100, 0x3aba15a1, BRF_GRA },	     //  16	PROMs
+	{ "vtb2.2d",       0x00100, 0x88865754, BRF_GRA },	     //  17
+	{ "vtb3.3d",       0x00100, 0x4c14c3f6, BRF_GRA },	     //  18
+	{ "vtb4.1h",       0x00100, 0xb388c246, BRF_GRA },	     //  19
+	{ "vtb5.6l",       0x00100, 0x712ac508, BRF_GRA },	     //  20
+	{ "vtb6.6e",       0x00100, 0x0eaf5158, BRF_GRA },	     //  21
+	
+	{ "commandob_pal16l8a.bin", 0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },		// 22 PLDs
+};
+
+STD_ROM_PICK(Drvb2)
+STD_ROM_FN(Drvb2)
+
 static struct BurnRomInfo SinvasnRomDesc[] = {
 	{ "sp04.9m",       0x08000, 0x33f9601e, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "sp03.8m",       0x04000, 0xc7fb43b3, BRF_ESS | BRF_PRG }, //	 1
@@ -1076,6 +1111,16 @@ struct BurnDriver BurnDrvCommandb = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	BootlegInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x100, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvCommandb2 = {
+	"commandob2", "commando", NULL, NULL, "1985",
+	"Commando (bootleg 2)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
+	NULL, Drvb2RomInfo, Drvb2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x100, 224, 256, 3, 4
 };
 

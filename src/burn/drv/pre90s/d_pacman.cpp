@@ -3209,10 +3209,10 @@ static struct BurnRomInfo pacumanRomDesc[] = {
 	{ "pacuman07.bin", 0x0800, 0x908a2cb2, 1 | BRF_ESS | BRF_PRG },	//  6
 	{ "pacuman08.bin", 0x0800, 0xcf4ba26c, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "chg1", 	       0x0800, 0x2066a0b7, 2 | BRF_GRA },			//  8 Graphics
-	{ "chg2",          0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
-	{ "chg3", 	       0x0800, 0x9e39323a, 2 | BRF_GRA },			// 10
-	{ "chg4", 	       0x0800, 0x7dc75a81, 2 | BRF_GRA },			// 11
+	{ "pm1chg1.bin",   0x0800, 0x2066a0b7, 2 | BRF_GRA },			//  8 Graphics
+	{ "pm1chg2.bin",   0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
+	{ "pm1chg3.bin",   0x0800, 0x9e39323a, 2 | BRF_GRA },			// 10
+	{ "pm1chg4.bin",   0x0800, 0x1b1d9096, 2 | BRF_GRA },			// 11
 
 	{ "82s123.7f",     0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
 	{ "82s126.4a",     0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13

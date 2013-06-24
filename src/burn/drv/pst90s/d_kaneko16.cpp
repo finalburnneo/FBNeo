@@ -978,22 +978,22 @@ STD_ROM_PICK(Gtmre)
 STD_ROM_FN(Gtmre)
 
 static struct BurnRomInfo GtmrusaRomDesc[] = {
-	{ "gtmrusa.u2",        0x080000, 0x5be615c4, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "gtmrusa.u1",        0x080000, 0xae853e4e, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "mmp0x3.u2",          0x080000, 0x5be615c4, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "mmp1x3.u1",          0x080000, 0xae853e4e, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 	
-	{ "gtmrusa.u12",       0x020000, 0x2e1a06ff, BRF_PRG | BRF_OPT }, //  2	MCU Code
+	{ "mmd0x3.u12",         0x020000, 0x2e1a06ff, BRF_PRG | BRF_OPT }, //  2	MCU Code
 
-	{ "gmmu27.bin",        0x200000, 0xc0ab3efc, BRF_GRA },		  //  3	Sprites
-	{ "gmmu28.bin",        0x200000, 0xcf6b23dc, BRF_GRA },	 	  //  4	Sprites
-	{ "gmmu29.bin",        0x200000, 0x8f27f5d3, BRF_GRA },		  //  5	Sprites
-	{ "gmmu30.bin",        0x080000, 0xe9747c8c, BRF_GRA },		  //  6	Sprites
-	{ "gmmu64.bin",        0x100000, 0x57d77b33, BRF_GRA },		  //  7	Sprites
-	{ "gmmu65.bin",        0x100000, 0x05b8bdca, BRF_GRA },		  //  8	Sprites
+	{ "mm-200-402-s0.bin",  0x200000, 0xc0ab3efc, BRF_GRA },		  //  3	Sprites
+	{ "mm-201-403-s1.bin",  0x200000, 0xcf6b23dc, BRF_GRA },	 	  //  4	Sprites
+	{ "mm-202-404-s2.bin",  0x200000, 0x8f27f5d3, BRF_GRA },		  //  5	Sprites
+	{ "mm-203-405-s3.bin",  0x080000, 0xe9747c8c, BRF_GRA },		  //  6	Sprites
+	{ "mm-204-564.bin",     0x100000, 0x57d77b33, BRF_GRA },		  //  7	Sprites
+	{ "mm-204-406-565.bin", 0x100000, 0x05b8bdca, BRF_GRA },		  //  8	Sprites
 	
-	{ "gmmu52.bin",        0x200000, 0xb15f6b7f, BRF_GRA },		  //  9	Tiles
+	{ "mm-300-406-a0.bin",  0x200000, 0xb15f6b7f, BRF_GRA },		  //  9	Tiles
 
-	{ "gmmu23.bin",        0x100000, 0xb9cbfbee, BRF_SND },		  //  10 Samples
-	{ "gmmu24.bin",        0x100000, 0x380cdc7c, BRF_SND },		  //  11 Samples
+	{ "mm-100-401-a0.bin",  0x100000, 0xb9cbfbee, BRF_SND },		  //  10 Samples
+	{ "mm-101-402-e24.bin", 0x100000, 0x380cdc7c, BRF_SND },		  //  11 Samples
 };
 
 

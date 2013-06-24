@@ -2515,9 +2515,9 @@ STD_ROM_PICK(Teddybbo)
 STD_ROM_FN(Teddybbo)
 
 static struct BurnRomInfo TeddybboblRomDesc[] = {
-	{ "1.f2",      		   0x004000, 0x81a37e69, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "2.j2",      		   0x004000, 0x715388a9, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
-	{ "3.k2",       	   0x004000, 0xe5a74f5f, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+	{ "epr-6739.116", 	   0x004000, 0x81a37e69, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "epr-6740.109",	   0x004000, 0x715388a9, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "epr-6741.96",   	   0x004000, 0xe5a74f5f, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
 
 //	No sound rom present on the PCB - Instead use epr-6748.120 from Teddybbo set //	
 	{ "epr-6748.120",      0x002000, 0x9325a1cf, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
@@ -2526,10 +2526,10 @@ static struct BurnRomInfo TeddybboblRomDesc[] = {
 	{ "10.r8",       	   0x004000, 0x52a5083d, BRF_GRA },		  //  5 Tiles
 	{ "9.r10",       	   0x004000, 0x8076d3a3, BRF_GRA },		  //  6 Tiles
 		
-	{ "4.f3",      		   0x004000, 0x1be35a97, BRF_GRA },		  //  7 Sprites
-	{ "6.k3",       	   0x004000, 0x6b53aa7a, BRF_GRA },		  //  8 Sprites
-	{ "5.h3",      		   0x004000, 0x565c25d0, BRF_GRA },		  //  9 Sprites
-	{ "7.m3",       	   0x004000, 0xe116285f, BRF_GRA },		  //  10 Sprites
+	{ "epr-6735.117",	   0x004000, 0x1be35a97, BRF_GRA },		  //  7 Sprites
+	{ "epr-6737.04",   	   0x004000, 0x6b53aa7a, BRF_GRA },		  //  8 Sprites
+	{ "epr-6736.110",	   0x004000, 0x565c25d0, BRF_GRA },		  //  9 Sprites
+	{ "epr-6738.05",   	   0x004000, 0xe116285f, BRF_GRA },		  //  10 Sprites
 
 	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
 };

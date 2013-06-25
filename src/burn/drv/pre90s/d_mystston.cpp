@@ -656,3 +656,47 @@ struct BurnDriver BurnDrvmyststno = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	240, 256, 3, 4
 };
+
+// Mysterious Stones - Dr. Kick in Adventure (Itisa PCB)
+
+static struct BurnRomInfo myststniRomDesc[] = {
+	{ "14.bin",       0x2000, 0x78bf2a58, 1 | BRF_PRG | BRF_ESS }, //  0 M6205 Code
+	{ "13.bin",       0x2000, 0xa3546df7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "12.bin",       0x2000, 0x43bc6182, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "11.bin",       0x2000, 0x9322222b, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "8.bin",        0x2000, 0x47cefe9b, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "7.bin",        0x2000, 0xb37ae12b, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "18.bin",       0x2000, 0x85c83806, 2 | BRF_GRA }, 	       //  6 Character + Sprite Tiles
+	{ "15.bin",       0x2000, 0xb146c6ab, 2 | BRF_GRA },  	       //  7
+	{ "19.bin",       0x2000, 0xd025f84d, 2 | BRF_GRA },  	       //  8
+	{ "16.bin",       0x2000, 0xd85015b5, 2 | BRF_GRA },  	       //  9
+	{ "20.bin",       0x2000, 0x53765d89, 2 | BRF_GRA },  	       // 10
+	{ "17.bin",       0x2000, 0x919ee527, 2 | BRF_GRA },  	       // 11
+
+	{ "1.bin",        0x2000, 0x72d8331d, 3 | BRF_GRA },  	       // 12 Background Tiles
+	{ "2.bin",        0x2000, 0x845a1f9b, 3 | BRF_GRA },  	       // 13
+	{ "3.bin",        0x2000, 0x822874b0, 3 | BRF_GRA },  	       // 14 
+	{ "4.bin",        0x2000, 0x4594e53c, 3 | BRF_GRA },  	       // 15 
+	{ "5.bin",        0x2000, 0x2f470b0f, 3 | BRF_GRA },  	       // 16
+	{ "6.bin",        0x2000, 0x38966d1b, 3 | BRF_GRA },  	       // 17
+
+	{ "82s123.bin",   0x0020, 0xe802d6cf, 4 | BRF_GRA },  	       // 18 Color Prom
+	
+	{ "pal10l8.bin",  0x002c, 0x2d4d034c, 0 | BRF_OPT },  	       // 19
+	{ "pal16r4-1.bin",0x0104, 0xc57555d0, 0 | BRF_OPT },  	       // 20
+	{ "pal16r4-2.bin",0x0104, 0xc57555d0, 0 | BRF_OPT },  	       // 21
+};
+
+STD_ROM_PICK(myststni)
+STD_ROM_FN(myststni)
+
+struct BurnDriver BurnDrvmyststni = {
+	"myststoni", "mystston", NULL, NULL, "1984",
+	"Mysterious Stones - Dr. Kick in Adventure (Itisa PCB)\0", NULL, "Technos", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
+	NULL, myststniRomInfo, myststniRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
+	240, 256, 3, 4
+};

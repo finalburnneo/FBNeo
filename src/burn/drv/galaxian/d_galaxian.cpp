@@ -8076,6 +8076,27 @@ static struct BurnRomInfo AsideralRomDesc[] = {
 STD_ROM_PICK(Asideral)
 STD_ROM_FN(Asideral)
 
+static struct BurnRomInfo PajaroesRomDesc[] = {
+	{ "pea.rom",       0x00800, 0x82a9da91, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "peb.rom",       0x00800, 0xcc59b49c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pec.rom",       0x00800, 0x3bc5a165, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "ped.rom",       0x00800, 0xc50149d0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pe05.rom",      0x00800, 0xcb461871, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pe04.rom",      0x00800, 0xf157a8db, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pe03.rom",      0x00800, 0x75085cb6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "pe02.rom",      0x00800, 0x797d45c7, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+		
+	{ "pe07.rom",      0x00800, 0x012941e0, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "pe09.rom",      0x00800, 0xc26132af, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "pe06.rom",      0x00800, 0xfc8b58fd, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "pe08.rom",      0x00800, 0xdcc2b33b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "uniwars.clr",   0x00020, 0x25c79518, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Pajaroes)
+STD_ROM_FN(Pajaroes)
+
 void __fastcall PiscesZ80Write(UINT16 a, UINT8 d)
 {
 	if (a >= 0x5800 && a <= 0x58ff) {
@@ -8303,6 +8324,16 @@ struct BurnDriver BurnDrvAsideral = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, AsideralRomInfo, AsideralRomName, NULL, NULL, GalaxianInputInfo, AsideralDIPInfo,
+	PiscesInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvPajaroes = {
+	"pajaroes", "uniwars", NULL, NULL, "1980",
+	"Pajaro del Espacio (Spanish bootleg of UniWar S)\0", NULL, "bootleg (PSV S.A.)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, PajaroesRomInfo, PajaroesRomName, NULL, NULL, GalaxianInputInfo, AsideralDIPInfo,
 	PiscesInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

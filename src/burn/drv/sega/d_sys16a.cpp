@@ -1885,6 +1885,34 @@ static struct BurnRomInfo Wb31RomDesc[] = {
 STD_ROM_PICK(Wb31)
 STD_ROM_FN(Wb31)
 
+static struct BurnRomInfo Wb35RomDesc[] = {
+	{ "epr-12120.43",  0x10000, 0xcbd8c99b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12118.26",  0x10000, 0xe9a3280c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12121.42",  0x10000, 0x5e44c0a9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12119.25",  0x10000, 0x01ed3ef9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-12086.95",  0x10000, 0x45b949df, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12087.94",  0x10000, 0x6f0396b7, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12088.83",  0x10000, 0xba8c0749, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr-12090.10",  0x10000, 0xaeeecfca, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12094.11",  0x10000, 0x615e4927, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12091.17",  0x10000, 0x8409a243, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12095.18",  0x10000, 0xe774ec2c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12092.23",  0x10000, 0x5c2f0d90, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12096.24",  0x10000, 0x0cd59d6e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12093.29",  0x10000, 0x4891e7bb, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12097.30",  0x10000, 0xe645902c, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-12089.12",  0x08000, 0x8321eb0b, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "317-0086.key",  0x02000, 0xec480b80, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Wb35)
+STD_ROM_FN(Wb35)
+
 /*====================================================
 Memory Handlers
 ====================================================*/
@@ -3249,10 +3277,20 @@ struct BurnDriver BurnDrvTimescan1 = {
 
 struct BurnDriver BurnDrvWb31 = {
 	"wb31", "wb3", NULL, NULL, "1988",
-	"Wonder Boy III - Monster Lair (set 1, System 16A, FD1094 317-0084)\0", NULL, "Sega / Westone", "System 16A",
+	"Wonder Boy III - Monster Lair (set 1, Japan, System 16A, FD1094 317-0084)\0", NULL, "Sega / Westone", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, Wb31RomInfo, Wb31RomName, NULL, NULL, System16aInputInfo, Wb31DIPInfo,
+	Wb31Init, System16Exit, System16AFrame, NULL, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWb35 = {
+	"wb35", "wb3", NULL, NULL, "1988",
+	"Wonder Boy III - Monster Lair (set 5, Japan, System 16A, FD1089A 317-0086)\0", NULL, "Sega / Westone", "System 16A",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089A_ENC, GBF_PLATFORM, 0,
+	NULL, Wb35RomInfo, Wb35RomName, NULL, NULL, System16aInputInfo, Wb31DIPInfo,
 	Wb31Init, System16Exit, System16AFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

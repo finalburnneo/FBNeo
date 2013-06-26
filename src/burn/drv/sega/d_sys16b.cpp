@@ -8545,7 +8545,7 @@ struct BurnDriver BurnDrvTturfu = {
 
 struct BurnDriver BurnDrvWb3 = {
 	"wb3", NULL, NULL, NULL, "1988",
-	"Wonder Boy III - Monster Lair (set 5, World, System 16B, 8751 317-0098)\0", NULL, "Sega / Westone", "System 16B",
+	"Wonder Boy III - Monster Lair (set 6, World, System 16B, 8751 317-0098)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_PLATFORM, 0,
 	NULL, Wb3RomInfo, Wb3RomName, NULL, NULL, System16bInputInfo, Wb3DIPInfo,

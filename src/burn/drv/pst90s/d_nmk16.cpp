@@ -6572,6 +6572,83 @@ struct BurnDriver BurnDrvGrdnstrmv = {
 };
 
 
+// Guardian Storm (Germany)
+
+static struct BurnRomInfo grdnstrmgRomDesc[] = {
+	{ "gs6_c2.uc9",         0x040000, 0xea363e4d, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+    { "gs5_c1.uc1",         0x040000, 0xc0263e4a, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "gs1_s1.uc14",		0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+
+	{ "gs3_t1.uc2",			0x010000, 0x88c423ef, 3 | BRF_GRA },           //  3 Characters
+
+	{ "gs10_cr5.uc15",	    0x080000, 0x2c8c23e3, 4 | BRF_GRA },           //  4 Tiles
+	{ "gs4_cr7.uc19",	    0x080000, 0xc3f6c908, 4 | BRF_GRA },           //  5
+	{ "gs8_cr1.uc6",	    0x080000, 0xdc0125f0, 4 | BRF_GRA },           //  6
+	{ "gs9_cr3.uc12",	    0x080000, 0xd8a0636b, 4 | BRF_GRA },           //  7
+	
+	{ "gs8_br3.uc10",		0x080000, 0x7b42a57a, 5 | BRF_GRA },           //  8 Sprites
+	{ "gs7_br1.uc3",		0x080000, 0xe6794265, 5 | BRF_GRA },           //  9
+	{ "gs10_br4.uc11",		0x080000, 0x1d3b57e1, 5 | BRF_GRA },           // 10
+	{ "gs9_br2.uc4",		0x080000, 0x4d2c220b, 5 | BRF_GRA },           // 11
+
+	{ "gs2_s2.uc18",		0x040000, 0xe911ce33, 6 | BRF_SND },           // 12 OKI1 Samples
+};
+
+STD_ROM_PICK(grdnstrmg)
+STD_ROM_FN(grdnstrmg)
+
+static INT32 GrdnstrmgLoadCallback()
+{
+	if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
+
+	if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM1 + 0x000000,  4, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x080000,  5, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x100000,  6, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x180000,  7, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM2 + 0x000001,  8, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x000000,  9, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x100001, 10, 2)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x100000, 11, 2)) return 1;
+
+	if (BurnLoadRom(DrvSndROM0 + 0x000000, 12, 1)) return 1;
+
+	GrdnstrmGfxDecode(0x10000, 0x400000, 0x200000);
+
+	return 0;
+}
+
+static INT32 GrdnstrmgInit()
+{
+	INT32 nRet = AfegaInit(GrdnstrmgLoadCallback, pAfegaZ80Callback, 1);
+
+	if (nRet == 0) {
+		decryptcode(0x80000, 13, 17, 16, 15, 14);
+		decryptcode(0x80000, 17, 16, 14, 15, 13);
+		decryptcode(0x80000, 17, 15, 16, 14, 13);
+		decryptcode(0x80000, 16, 17, 15, 14, 13);
+	}
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvGrdnstrmg = {
+	"grdnstrmg", "grdnstrm", NULL, NULL, "1998",
+	"Guardian Storm (Germany)\0", NULL, "Afega", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, grdnstrmgRomInfo, grdnstrmgRomName, NULL, NULL, CommonInputInfo, GrdnstrkDIPInfo,
+	GrdnstrmgInit, AfegaExit, AfegaFrame, AfegaDraw, NULL, NULL, 0x300,
+	224, 256, 3, 4
+};
+
+
 // Red Fox War Planes II (China, set 1)
 
 static struct BurnRomInfo redfoxwp2RomDesc[] = {

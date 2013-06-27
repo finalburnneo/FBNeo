@@ -1288,3 +1288,14 @@ void TimefgtrRenderFrame()
 	if (GalDrawBulletsFunction) GalDrawBullets(&GalSpriteRam[0xc0]);
 	BurnTransferCopy(GalPalette);
 }
+
+void ScramblerRenderFrame()
+{
+	BurnTransferClear();
+	GalCalcPaletteFunction();
+	if (GalRenderBackgroundFunction) GalRenderBackgroundFunction();
+	GalRenderBgLayer(GalVideoRam);
+	GalRenderSprites(&GalSpriteRam[0xc0]);
+	if (GalDrawBulletsFunction) GalDrawBullets(&GalSpriteRam[0xe0]);
+	BurnTransferCopy(GalPalette);
+}

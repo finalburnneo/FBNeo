@@ -692,7 +692,7 @@ STD_ROM_PICK(myststni)
 STD_ROM_FN(myststni)
 
 struct BurnDriver BurnDrvmyststni = {
-	"myststoni", "mystston", NULL, NULL, "1984",
+	"myststonoi", "mystston", NULL, NULL, "1984",
 	"Mysterious Stones - Dr. Kick in Adventure (Itisa PCB)\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,

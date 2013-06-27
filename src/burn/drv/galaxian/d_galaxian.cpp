@@ -10376,7 +10376,7 @@ static struct BurnRomInfo MooncrslRomDesc[] = {
 	{ "07.bin",        0x00800, 0x8e9ac0fc, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "08.bin",        0x00800, 0x020a8e2f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	
-	{ "mcs_a",         0x00800, 0xfb0f1f81, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "mcs_b",         0x00800, 0xfb0f1f81, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "mcs_d",         0x00800, 0x13932a15, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "mcs_a",         0x00800, 0x631ebb5a, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "mcs_c",         0x00800, 0x24cfd145, BRF_GRA | GAL_ROM_TILES_SHARED },

@@ -65,7 +65,7 @@ static inline void draw_sprite_line(INT32 wide, UINT16* dest, UINT8 *pdest, INT3
 		if (flip) xoffset = wide - xcnt - 1;
 		else	  xoffset = xcnt;
 
-		UINT32 srcdat = pTempDraw[yoffset + xoffset];
+		UINT32 srcdat = pTempDraw[yoffset + (xoffset & 0x3ff)];
 		xzoombit = (xzoom >> (xcnt & 0x1f)) & 1;
 
 		if (xzoombit == 1 && xgrow == 1)
@@ -267,7 +267,7 @@ static void draw_sprite_new_zoomed(INT32 wide, INT32 high, INT32 xpos, INT32 ypo
 			{
 				dest = pTempScreen + ydrawpos * nScreenWidth;
 				pdest = SpritePrio + ydrawpos * nScreenWidth;
-				draw_sprite_line(wide, dest, pdest, xzoom, xgrow, yoffset, flip, xpos, prio);
+				draw_sprite_line(wide, dest, pdest, xzoom, xgrow, yoffset & 0x7fc00, flip, xpos, prio);
 			}
 			ycntdraw++;
 
@@ -278,7 +278,7 @@ static void draw_sprite_new_zoomed(INT32 wide, INT32 high, INT32 xpos, INT32 ypo
 			{
 				dest = pTempScreen + ydrawpos * nScreenWidth;
 				pdest = SpritePrio + ydrawpos * nScreenWidth;
-				draw_sprite_line(wide, dest, pdest, xzoom, xgrow, yoffset, flip, xpos, prio);
+				draw_sprite_line(wide, dest, pdest, xzoom, xgrow, yoffset & 0x7fc00, flip, xpos, prio);
 			}
 			ycntdraw++;
 
@@ -299,7 +299,7 @@ static void draw_sprite_new_zoomed(INT32 wide, INT32 high, INT32 xpos, INT32 ypo
 			{
 				dest = pTempScreen + ydrawpos * nScreenWidth;
 				pdest = SpritePrio + ydrawpos * nScreenWidth;
-				draw_sprite_line(wide, dest, pdest, xzoom, xgrow, yoffset, flip, xpos, prio);
+				draw_sprite_line(wide, dest, pdest, xzoom, xgrow, yoffset & 0x7fc00, flip, xpos, prio);
 			}
 			ycntdraw++;
 
@@ -328,7 +328,7 @@ static void pgm_drawsprites()
 		INT32 ygrow= (BURN_ENDIAN_SWAP_INT16(source[1]) & 0x8000) >> 15;
 		INT32 palt = (BURN_ENDIAN_SWAP_INT16(source[2]) & 0x1f00) >> 8;
 		INT32 flip = (BURN_ENDIAN_SWAP_INT16(source[2]) & 0x6000) >> 13;
-		INT32 boff =((BURN_ENDIAN_SWAP_INT16(source[2]) & 0x007f) << 16) | (BURN_ENDIAN_SWAP_INT16(source[3]) & 0xffff);
+		INT32 boff =((BURN_ENDIAN_SWAP_INT16(source[2]) & 0x007f) << 16) | (BURN_ENDIAN_SWAP_INT16(source[3]));
 		INT32 wide = (BURN_ENDIAN_SWAP_INT16(source[4]) & 0x7e00) >> 9;
 		INT32 prio = (BURN_ENDIAN_SWAP_INT16(source[2]) & 0x0080) >> 7;
 		INT32 high =  BURN_ENDIAN_SWAP_INT16(source[4]) & 0x01ff;

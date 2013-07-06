@@ -3954,7 +3954,7 @@ static INT32 MemIndex()
 	DrvGfxROM1		= Next; Next += 0x800000;
 	DrvGfxROM2		= Next; Next += 0x800000;
 
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0) {
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadia") == 0) {
 					Next += 0x800000;
 	}
 
@@ -3965,7 +3965,7 @@ static INT32 MemIndex()
 	DrvSndROM0		= Next; Next += 0x300000;
 	DrvSndROM1		= Next; Next += 0x300000;
 
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0) {
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadia") == 0) {
 					Next += 0x600000;
 	}
 
@@ -9020,6 +9020,46 @@ struct BurnDriver BurnDrvRaphero = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rapheroRomInfo, rapheroRomName, NULL, NULL, Tdragon2InputInfo, RapheroDIPInfo,
+	RapheroInit, NMK004Exit, NMK004Frame, RapheroDraw, NULL, NULL, 0x400,
+	224, 384, 3, 4
+};
+
+// Aracdia
+
+static struct BurnRomInfo arcadiaRomDesc[] = {
+	{ "arcadia.3",		0x080000, 0x8b46d609, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+
+	{ "rhp94099.2",		0x020000, 0xfe01ece1, 2 | BRF_PRG | BRF_ESS }, //  1 Tmp90c841 Code
+
+	{ "arcadia.1",		0x020000, 0x1c2c4008, 3 | BRF_GRA },           //  2 Characters
+
+	{ "rhp94099.4",		0x200000, 0x076eee7b, 4 | BRF_GRA },           //  3 Tiles
+
+	{ "rhp94099.8",		0x200000, 0x49892f07, 5 | BRF_GRA },           //  4 Sprites
+	{ "rhp94099.9",		0x200000, 0xea2e47f0, 5 | BRF_GRA },           //  5
+	{ "rhp94099.10",	0x200000, 0x512cb839, 5 | BRF_GRA },           //  6
+
+	{ "rhp94099.7",		0x200000, 0x0d99547e, 6 | BRF_SND },           //  7 OKI1 Samples
+
+	{ "rhp94099.5",		0x200000, 0x515eba93, 7 | BRF_SND },           //  8 OKI2 Samples
+	{ "rhp94099.6",		0x200000, 0xf1a80e5a, 7 | BRF_SND },           //  9
+	{ "rhp94099.7",		0x200000, 0x0d99547e, 7 | BRF_SND },           // 10
+	{ "rhp94099.7",		0x200000, 0x0d99547e, 7 | BRF_SND },           // 11
+
+	{ "prom1.u19",		0x000100, 0x4299776e, 0 | BRF_OPT },           // 12 Unused proms
+	{ "prom2.u53",		0x000100, 0xe6ead349, 0 | BRF_OPT },           // 13
+	{ "prom3.u60",		0x000100, 0x304f98c6, 0 | BRF_OPT },           // 14
+};
+
+STD_ROM_PICK(arcadia)
+STD_ROM_FN(arcadia)
+
+struct BurnDriver BurnDrvArcadia = {
+	"arcadia", "raphero", NULL, NULL, "1994",
+	"Arcadia\0", "Incomplete sound", "NMK", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, arcadiaRomInfo, arcadiaRomName, NULL, NULL, Tdragon2InputInfo, RapheroDIPInfo,
 	RapheroInit, NMK004Exit, NMK004Frame, RapheroDraw, NULL, NULL, 0x400,
 	224, 384, 3, 4
 };

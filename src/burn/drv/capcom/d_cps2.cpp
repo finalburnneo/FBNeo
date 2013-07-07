@@ -4664,7 +4664,7 @@ STD_ROM_PICK(Sfar3)
 STD_ROM_FN(Sfar3)
 
 static struct BurnRomInfo SfauRomDesc[] = {
-	{ "sfzu.03a",      0x080000, 0x49fc7db9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfzu.03a",      0x080000, 0x49fc7db9, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, // If there's a US 950605 then this should be sfzu.03b
 	{ "sfz.04a",       0x080000, 0x5f99e9a5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sfz.05a",       0x080000, 0x0810544d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sfz.06",        0x080000, 0x806e8f38, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -4685,7 +4685,7 @@ STD_ROM_PICK(Sfau)
 STD_ROM_FN(Sfau)
 
 static struct BurnRomInfo SfzaRomDesc[] = {
-	{ "sfza.03a",      0x080000, 0xca91bed9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfza.03b",      0x080000, 0xca91bed9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sfz.04a",       0x080000, 0x5f99e9a5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sfz.05a",       0x080000, 0x0810544d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sfz.06",        0x080000, 0x806e8f38, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -4704,6 +4704,27 @@ static struct BurnRomInfo SfzaRomDesc[] = {
 
 STD_ROM_PICK(Sfza)
 STD_ROM_FN(Sfza)
+
+static struct BurnRomInfo Sfzar1RomDesc[] = {
+	{ "sfza.03a",      0x080000, 0xf38d8c8d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz.04",        0x080000, 0x0c436d30, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz.05",        0x080000, 0x1f363612, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfz.06",        0x080000, 0x806e8f38, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sfz.14m",       0x200000, 0x90fefdb3, CPS2_GFX | BRF_GRA },
+	{ "sfz.16m",       0x200000, 0x5354c948, CPS2_GFX | BRF_GRA },
+	{ "sfz.18m",       0x200000, 0x41a1e790, CPS2_GFX | BRF_GRA },
+	{ "sfz.20m",       0x200000, 0xa549df98, CPS2_GFX | BRF_GRA },
+
+	{ "sfz.01",        0x020000, 0xffffec7d, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sfz.02",        0x020000, 0x45f46a08, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
+	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+};
+
+STD_ROM_PICK(Sfzar1)
+STD_ROM_FN(Sfzar1)
 
 static struct BurnRomInfo SfzbRomDesc[] = {
 	{ "sfzb.03g",      0x080000, 0x348862d4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -8785,6 +8806,16 @@ struct BurnDriver BurnDrvCpsSfza = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, SfzaRomInfo, SfzaRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSfzar1 = {
+	"sfzar1", "sfa", NULL, NULL, "1995",
+	"Street Fighter Zero (950605 Asia)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfzar1RomInfo, Sfzar1RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

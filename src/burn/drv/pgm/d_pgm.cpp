@@ -2157,10 +2157,10 @@ struct BurnDriver BurnDrvKov2100 = {
 };
 
 
-// Knights of Valour 2 Plus - Nine Dragons (VM204XX)
+// Knights of Valour 2 Plus - Nine Dragons (VM205XX, China)
 
 static struct BurnRomInfo kov2pRomDesc[] = {
-	{ "v204-32m.rom",  		0x400000, 0x583e0650, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "u8-27322.rom",  		0x400000, 0x3a2cc0de, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "t1200.rom",	   		0x800000, 0xd7e26609, 2 | BRF_GRA },		//  1 Tile data
 
@@ -2175,7 +2175,7 @@ static struct BurnRomInfo kov2pRomDesc[] = {
 
 	{ "m1200.rom",	   		0x800000, 0xb0d88720, 5 | BRF_SND },		//  9 Samples
 
-	{ "kov2p_igs027a.bin",		0x004000, 0xe0d7679f, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
+	{ "kov2p_igs027a.bin",	0x004000, 0xe0d7679f, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
 
 	{ "v200-16.rom",   		0x200000, 0x16a0c11f, 8 | BRF_PRG | BRF_ESS },  // 11 External ARM7 Rom
 };
@@ -2209,8 +2209,8 @@ static INT32 kov2pInit()
 
 struct BurnDriver BurnDrvKov2p = {
 	"kov2p", NULL, "pgm", NULL, "2001",
-	"Knights of Valour 2 Plus - Nine Dragons (VM204XX)\0", NULL, "IGS", "PolyGameMaster",
-	L"Knights of Valour 2 Plus\0\u4e09\u56fd\u6218\u7eaa 2 - \u7fa4\u96c4\u4e89\u9738 (VM204XX)\0", NULL, NULL, NULL,
+	"Knights of Valour 2 Plus - Nine Dragons (VM205XX, China)\0", NULL, "IGS", "PolyGameMaster",
+	L"Knights of Valour 2 Plus\0\u4e09\u56fd\u6218\u7eaa 2 - \u7fa4\u96c4\u4e89\u9738 (VM205XX, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kov2pRomInfo, kov2pRomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
 	kov2pInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -2218,10 +2218,10 @@ struct BurnDriver BurnDrvKov2p = {
 };
 
 
-// Knights of Valour 2 Plus - Nine Dragons (VM205XX, China)
+// Knights of Valour 2 Plus - Nine Dragons (VM204XX)
 
-static struct BurnRomInfo kov2p205RomDesc[] = {
-	{ "u8-27322.rom",  		0x400000, 0x3a2cc0de, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+static struct BurnRomInfo kov2p204RomDesc[] = {
+	{ "v204-32m.rom",  		0x400000, 0x3a2cc0de, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "t1200.rom",	   		0x800000, 0xd7e26609, 2 | BRF_GRA },		//  1 Tile data
 
@@ -2236,23 +2236,61 @@ static struct BurnRomInfo kov2p205RomDesc[] = {
 
 	{ "m1200.rom",	   		0x800000, 0xb0d88720, 5 | BRF_SND },		//  9 Samples
 
-	{ "kov2p_igs027a.bin",		0x004000, 0xe0d7679f, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
+	{ "kov2p_igs027a.bin",	0x004000, 0xe0d7679f, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
 
 	{ "v200-16.rom",		0x200000, 0x16a0c11f, 8 | BRF_PRG | BRF_ESS },  // 11 External ARM7 Rom
 };
 
-STDROMPICKEXT(kov2p205, kov2p205, pgm)
-STD_ROM_FN(kov2p205)
+STDROMPICKEXT(kov2p204, kov2p204, pgm)
+STD_ROM_FN(kov2p204)
 
-struct BurnDriver BurnDrvKov2p205 = {
-	"kov2p205", "kov2p", "pgm", NULL, "2001",
-	"Knights of Valour 2 Plus - Nine Dragons (VM205XX, China)\0", NULL, "IGS", "PolyGameMaster",
-	L"Knights of Valour 2 Plus\0\u4e09\u56fd\u6218\u7eaa 2 - \u7fa4\u96c4\u4e89\u9738 (VM205XX, China)\0", NULL, NULL, NULL,
+struct BurnDriver BurnDrvKov2p204 = {
+	"kov2p204", "kov2p", "pgm", NULL, "2001",
+	"Knights of Valour 2 Plus - Nine Dragons (VM204XX)\0", NULL, "IGS", "PolyGameMaster",
+	L"Knights of Valour 2 Plus\0\u4e09\u56fd\u6218\u7eaa 2 - \u7fa4\u96c4\u4e89\u9738 (VM204XX)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kov2p205RomInfo, kov2p205RomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kov2p204RomInfo, kov2p204RomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
 	kov2pInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
+
+
+// Knights of Valour 2 Plus - Nine Dragons (VM202XX)
+
+static struct BurnRomInfo kov2p202RomDesc[] = {
+	{ "v202.bin",  		    0x400000, 0xe9b5aa0c, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t1200.rom",	   		0x800000, 0xd7e26609, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a1200.rom",	   		0x800000, 0xceeb81d8, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a1201.rom",   		0x800000, 0x21063ca7, 3 | BRF_GRA },		//  3
+	{ "a1202.rom",	   		0x800000, 0x4bb92fae, 3 | BRF_GRA },		//  4
+	{ "a1203.rom",	   		0x800000, 0xe73cb627, 3 | BRF_GRA },		//  5
+	{ "a1204.rom",   		0x200000, 0x14b4b5bb, 3 | BRF_GRA },		//  6
+
+	{ "b1200.rom",	   		0x800000, 0xbed7d994, 4 | BRF_GRA },		//  7 Sprite Masks & Color Indexes
+	{ "b1201.rom",	   		0x800000, 0xf251eb57, 4 | BRF_GRA },		//  8
+
+	{ "m1200.rom",	   		0x800000, 0xb0d88720, 5 | BRF_SND },		//  9 Samples
+
+	{ "kov2p_igs027a.bin",	0x004000, 0xe0d7679f, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
+
+	{ "v200-16.rom",		0x200000, 0x16a0c11f, 8 | BRF_PRG | BRF_ESS },  // 11 External ARM7 Rom
+};
+
+STDROMPICKEXT(kov2p202, kov2p202, pgm)
+STD_ROM_FN(kov2p202)
+
+struct BurnDriver BurnDrvKov2p202 = {
+	"kov2p202", "kov2p", "pgm", NULL, "2001",
+	"Knights of Valour 2 Plus - Nine Dragons (VM202XX)\0", NULL, "IGS", "PolyGameMaster",
+	L"Knights of Valour 2 Plus\0\u4e09\u56fd\u6218\u7eaa 2 - \u7fa4\u96c4\u4e89\u9738 (VM202XX)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kov2p202RomInfo, kov2p202RomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	kov2pInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
 
 // Bee Storm - DoDonPachi II definitions
 

@@ -181,7 +181,8 @@ INT32 MakeScreenShot()
 	text_ptr[1].key = "Author";			text_ptr[1].text = szAuthor;
 	text_ptr[2].key = "Description";	text_ptr[2].text = szDescription;
 	text_ptr[3].key = "Copyright";		text_ptr[3].text = szCopyright;
-	text_ptr[4].key = "Creation Time";	text_ptr[4].text = (char*)png_convert_to_rfc1123(png_ptr, &png_time_now);
+//	text_ptr[4].key = "Creation Time";	text_ptr[4].text = (char*)png_convert_to_rfc1123(png_ptr, &png_time_now); // deprecated in libpng
+	text_ptr[4].key = "Creation Time";	png_convert_to_rfc1123_buffer(text_ptr[4].text, &png_time_now);
 	text_ptr[5].key = "Software";		text_ptr[5].text = szSoftware;
 	text_ptr[6].key = "Source";			text_ptr[6].text = szSource;
 	text_ptr[7].key = "Comment";		text_ptr[7].text = "This screenshot was created by running the game in an emulator; it might not accurately reflect the actual hardware the game was designed to run on.";

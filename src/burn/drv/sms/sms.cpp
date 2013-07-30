@@ -50,7 +50,7 @@ static UINT32 RomLen;
 
 static UINT32 *DrvPalette;
 
-static UINT16 SMSInputs[5];
+//static UINT16 SMSInputs[5];
 UINT8 SMSReset;
 UINT8 MastInput[2];
 UINT8 SMSJoy1[12];
@@ -149,7 +149,7 @@ void MdrawCall()
 // A change in CRam - update the color in Mdraw
 void MdrawCramChange(INT32 a)
 {
-	static INT32 i = 0;
+//	static INT32 i = 0;
 	INT32 s,c;
 
 	if (MastEx&MX_GG)
@@ -415,7 +415,7 @@ void CalcRomPage(int n)
 {
 	// Point to the rom page selected for page n
 	int b; 
-	int PageOff; 
+	unsigned int PageOff; 
 	int Fold=0xff;
 
 	b=Bank[1+n];
@@ -957,7 +957,7 @@ INT32 SMSInit()
 
 	GenericTilesInit();
 
-	for (int i = 0; i < sizeof(DrvPalette); i++)
+	for (unsigned int i = 0; i < sizeof(DrvPalette); i++)
 	{
 		DrvPalette[i] = i*100;
 	}
@@ -1017,7 +1017,7 @@ INT32 SMSDraw()
 	BurnTransferCopy(DrvPalette);
 	return 0;
 }
-
+#if 0
 static void SMSCompileInputs()
 {
 	memset (SMSInputs, 0xff, 5 * sizeof(UINT16));
@@ -1026,7 +1026,7 @@ static void SMSCompileInputs()
 		SMSInputs[0] ^= (SMSJoy1[i] & 1) << i;
 	}
 }
-
+#endif
 
 int CpuMid() // Returns how many cycles the z80 has done inside the run call
 {
@@ -1136,7 +1136,7 @@ INT32 SMSFrame()
 
 }
 
-INT32 SMSScan(INT32 nAction, INT32 *pnMin)
+INT32 SMSScan(INT32 /*nAction*/, INT32 */*pnMin*/)
 {
 
 	return 0;

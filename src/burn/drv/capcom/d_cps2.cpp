@@ -9915,6 +9915,35 @@ static struct BurnRomInfo CybotsudRomDesc[] = {
 STD_ROM_PICK(Cybotsud)
 STD_ROM_FN(Cybotsud)
 
+static struct BurnRomInfo CybotsjdRomDesc[] = {
+	{ "cybj_d.03",     0x080000, 0x9eb34071, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cybj_d.04",     0x080000, 0xcf223cd7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.05",        0x080000, 0xec40408e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.06",        0x080000, 0x1ad0bed2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.07",        0x080000, 0x6245a39a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.08",        0x080000, 0x4b48e223, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.09",        0x080000, 0xe15238f6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "cyb.10",        0x080000, 0x75f4003b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "cyb.13m",       0x400000, 0xf0dce192, CPS2_GFX | BRF_GRA },
+	{ "cyb.15m",       0x400000, 0x187aa39c, CPS2_GFX | BRF_GRA },
+	{ "cyb.17m",       0x400000, 0x8a0e4b12, CPS2_GFX | BRF_GRA },
+	{ "cyb.19m",       0x400000, 0x34b62612, CPS2_GFX | BRF_GRA },
+	{ "cyb.14m",       0x400000, 0xc1537957, CPS2_GFX | BRF_GRA },
+	{ "cyb.16m",       0x400000, 0x15349e86, CPS2_GFX | BRF_GRA },
+	{ "cyb.18m",       0x400000, 0xd83e977d, CPS2_GFX | BRF_GRA },
+	{ "cyb.20m",       0x400000, 0x77cdad5c, CPS2_GFX | BRF_GRA },
+
+	{ "cyb.01",        0x020000, 0x9c0fb079, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "cyb.02",        0x020000, 0x51cb0c4e, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "cyb.11m",       0x200000, 0x362ccab2, CPS2_QSND | BRF_SND },
+	{ "cyb.12m",       0x200000, 0x7066e9cc, CPS2_QSND | BRF_SND },
+};
+
+STD_ROM_PICK(Cybotsjd)
+STD_ROM_FN(Cybotsjd)
+
 static struct BurnRomInfo DdsomudRomDesc[] = {
 	{ "dd2ud.03g",     0x080000, 0x816f695a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dd2ud.04g",     0x080000, 0x7cc81c6b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -11110,6 +11139,16 @@ struct BurnDriver BurnDrvCpsCybotsud = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
 	NULL, CybotsudRomInfo, CybotsudRomName, NULL, NULL, CybotsInputInfo, NULL,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsCybotsjd = {
+	"cybotsjd", "cybots", NULL, NULL, "1995",
+	"Cyberbots - fullmetal madness (Japan 950424) (decrypted bootleg)\0", NULL, "bootleg", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
+	NULL, CybotsjdRomInfo, CybotsjdRomName, NULL, NULL, CybotsInputInfo, NULL,
 	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

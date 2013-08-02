@@ -9748,7 +9748,7 @@ STD_ROM_PICK(Ninexxd)
 STD_ROM_FN(Ninexxd)
 
 static struct BurnRomInfo Nine44dRomDesc[] = {
-	{ "nffud.03",      0x080000, 0x28e8aae4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nffud.03",      0x080000, 0x28E8AAE4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "nff.04",        0x080000, 0xDBA1C66E, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "nffu.05",       0x080000, 0xEA813EB7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
@@ -9769,6 +9769,29 @@ static struct BurnRomInfo Nine44dRomDesc[] = {
 
 STD_ROM_PICK(Nine44d)
 STD_ROM_FN(Nine44d)
+
+static struct BurnRomInfo Nine44adRomDesc[] = {
+	{ "nffuad.03",     0x080000, 0x78188E42, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nff.04",        0x080000, 0xDBA1C66E, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nffu.05",       0x080000, 0xEA813EB7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "nff.13m",       0x400000, 0xC9FCA741, CPS2_GFX | BRF_GRA },
+	{ "nff.15m",       0x400000, 0xF809D898, CPS2_GFX | BRF_GRA },
+	{ "nff.17m",       0x400000, 0x15BA4507, CPS2_GFX | BRF_GRA },
+	{ "nff.19m",       0x400000, 0x3DD41B8C, CPS2_GFX | BRF_GRA },
+	{ "nff.14m",       0x100000, 0x3FE3A54B, CPS2_GFX | BRF_GRA },
+	{ "nff.16m",       0x100000, 0x565CD231, CPS2_GFX | BRF_GRA },
+	{ "nff.18m",       0x100000, 0x63CA5988, CPS2_GFX | BRF_GRA },
+	{ "nff.20m",       0x100000, 0x21EB8F3B, CPS2_GFX | BRF_GRA },
+
+	{ "nff.01",        0x020000, 0xD2E44318, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "nff.11m",       0x400000, 0x243E4E05, CPS2_QSND | BRF_SND },
+	{ "nff.12m",       0x400000, 0x4FCF1600, CPS2_QSND | BRF_SND },
+};
+
+STD_ROM_PICK(Nine44ad)
+STD_ROM_FN(Nine44ad)
 
 static struct BurnRomInfo Armwar1dRomDesc[] = {
 	{ "pwged.03b",     0x080000, 0x496bd483, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -11089,6 +11112,16 @@ struct BurnDriver BurnDrvCps1944d = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
 	NULL, Nine44dRomInfo, Nine44dRomName, NULL, NULL, Nine44InputInfo, NULL,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCps1944ad = {
+	"1944ad", "1944", NULL, NULL, "2000",
+	"1944 - the loop master (000620 USA Phoenix Edition, alt)\0", NULL, "bootleg", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
+	NULL, Nine44adRomInfo, Nine44adRomName, NULL, NULL, Nine44InputInfo, NULL,
 	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

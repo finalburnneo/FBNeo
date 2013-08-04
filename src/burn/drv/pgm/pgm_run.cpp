@@ -49,6 +49,7 @@ INT32 (*pPgmScanCallback)(INT32, INT32*) = NULL;
 static INT32 nEnableArm7 = 0;
 INT32 nPGMDisableIRQ4 = 0;
 INT32 nPGMArm7Type = 0;
+UINT32 nPgmAsicRegionHackAddress = 0;
 
 #define M68K_CYCS_PER_FRAME	((20000000 * 100) / nBurnFPS)
 #define ARM7_CYCS_PER_FRAME	((20000000 * 100) / nBurnFPS)
@@ -737,6 +738,7 @@ INT32 pgmExit()
 	nEnableArm7 = 0;
 	nPGMDisableIRQ4 = 0;
 	nPGMArm7Type = 0;
+	nPgmAsicRegionHackAddress = 0;
 
 	nPgmCurrentBios = -1;
 
@@ -786,15 +788,10 @@ INT32 pgmFrame()
 
 		switch (nPGMArm7Type) // region hacks
 		{
-			case 1: // kov/kovsh/kovshp/photoy2k/puzlstar/puzzli2/oldsplus/py2k2
-				PGMARMShareRAM[0x008] = PgmInput[7];
-			break;
-
-			case 2: // martmast/kov2/dw2001/ddp2
-				if (strncmp(BurnDrvGetTextA(DRV_NAME), "ddp2", 4) == 0) {
-					PGMARMShareRAM[0x002] = PgmInput[7];
-				} else {
-					PGMARMShareRAM[0x138] = PgmInput[7];
+			case 1: // kov/kovsh/kovshp/photoy2k/puzlstar/puzzli2/oldsplus/py2k2 (SharedRam offset 0008)
+			case 2: // martmast/kov2/dw2001/dwpc (shared ram offset 0138) ddp2 (shared ram offset 0002)
+				if (nPgmAsicRegionHackAddress) {
+					PGMARMROM[nPgmAsicRegionHackAddress] = PgmInput[7];
 				}
 			break;
 

@@ -51,6 +51,7 @@ extern void (*pPgmProtCallback)();
 
 extern INT32 nPGMDisableIRQ4;
 extern INT32 nPGMArm7Type;
+extern UINT32 nPgmAsicRegionHackAddress;
 
 INT32 pgmInit();
 INT32 pgmExit();

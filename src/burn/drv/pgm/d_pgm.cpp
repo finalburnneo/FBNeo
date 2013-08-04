@@ -1395,7 +1395,9 @@ static INT32 kovshInit()
 {
 	pPgmInitCallback = pgm_decrypt_kovsh;
 	pPgmProtCallback = install_protection_asic27a_kovsh;
-	
+
+	nPgmAsicRegionHackAddress = 0x3f0d;
+
 	INT32 nRet = pgmInit();
 
 	Arm7SetIdleLoopAddress(0x00000260);
@@ -1551,6 +1553,8 @@ static INT32 photoy2kInit()
 {
 	pPgmInitCallback = pgm_decrypt_photoy2k;
 	pPgmProtCallback = install_protection_asic27a_kovsh;
+
+	nPgmAsicRegionHackAddress = 0x17b1;
 
 	INT32 nRet = pgmInit();
 	
@@ -1787,6 +1791,8 @@ static INT32 martmastInit()
 {
 	pPgmInitCallback = pgm_decrypt_martmast;
 	pPgmProtCallback = install_protection_asic27a_martmast;
+
+	nPgmAsicRegionHackAddress = 0x37c1;
 	
 	INT32 nRet = pgmInit();
 	
@@ -1833,13 +1839,27 @@ static struct BurnRomInfo martmastcRomDesc[] = {
 STDROMPICKEXT(martmastc, martmastc, pgm)
 STD_ROM_FN(martmastc)
 
+static INT32 martmastcInit()
+{
+	pPgmInitCallback = pgm_decrypt_martmast;
+	pPgmProtCallback = install_protection_asic27a_martmast;
+
+	nPgmAsicRegionHackAddress = 0x2cb5;
+	
+	INT32 nRet = pgmInit();
+	
+	Arm7SetIdleLoopAddress(0x800039e);
+
+	return nRet;
+}
+
 struct BurnDriver BurnDrvmartmastc = {
 	"martmastc", "martmast", "pgm", NULL, "2001",
 	"Martial Masters (V104, 102, 101, China)\0", NULL, "IGS", "PolyGameMaster",
 	L"Martial Masters\0\u5f62\u610f\u62f3 (V104, 102, 101, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VSFIGHT, 0,
 	NULL, martmastcRomInfo, martmastcRomName, NULL, NULL, pgmInputInfo, martmastDIPInfo,
-	martmastInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	martmastcInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 
@@ -1877,7 +1897,7 @@ struct BurnDriver BurnDrvmartmastc102 = {
 	L"Martial Masters\0\u5f62\u610f\u62f3 (V102, 101, 101, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VSFIGHT, 0,
 	NULL, martmastc102RomInfo, martmastc102RomName, NULL, NULL, pgmInputInfo, martmastc102DIPInfo,
-	martmastInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	martmastcInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 
@@ -1953,7 +1973,9 @@ static INT32 kov2Init()
 {
 	pPgmInitCallback = pgm_decrypt_kov2;
 	pPgmProtCallback = install_protection_asic27a_martmast;
-	
+
+	nPgmAsicRegionHackAddress = 0x23e5;
+
 	INT32 nRet = pgmInit();
 	
 	Arm7SetIdleLoopAddress(0x80000ae);
@@ -2175,7 +2197,7 @@ static struct BurnRomInfo kov2pRomDesc[] = {
 
 	{ "m1200.rom",	   		0x800000, 0xb0d88720, 5 | BRF_SND },		//  9 Samples
 
-	{ "kov2p_igs027a.bin",	0x004000, 0xe0d7679f, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
+	{ "kov2p_igs027a.bin",		0x004000, 0x19a0bd95, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
 
 	{ "v200-16.rom",   		0x200000, 0x16a0c11f, 8 | BRF_PRG | BRF_ESS },  // 11 External ARM7 Rom
 };
@@ -2183,23 +2205,13 @@ static struct BurnRomInfo kov2pRomDesc[] = {
 STDROMPICKEXT(kov2p, kov2p, pgm)
 STD_ROM_FN(kov2p)
 
-static void kov2pCallback()
-{
-	pgm_decrypt_kov2p();
-
-	*((UINT16*)(PGMUSER0 + 0x0000de)) = BURN_ENDIAN_SWAP_INT16(0x46c0);
-	*((UINT16*)(PGMUSER0 + 0x1ffffc)) = BURN_ENDIAN_SWAP_INT16(0x9933);
-
-	for (INT32 i = 0x4ed8; i <= 0x4f0c; i+=4) {
-		PGMUSER0[i] -= 0x08;
-	}
-}
-
 static INT32 kov2pInit()
 {
-	pPgmInitCallback = kov2pCallback;
+	pPgmInitCallback = pgm_decrypt_kov2p;
 	pPgmProtCallback = install_protection_asic27a_martmast;
-	
+
+	nPgmAsicRegionHackAddress = 0x26ed;
+
 	INT32 nRet = pgmInit();
 	
 	Arm7SetIdleLoopAddress(0x80000a6);
@@ -2236,7 +2248,7 @@ static struct BurnRomInfo kov2p204RomDesc[] = {
 
 	{ "m1200.rom",	   		0x800000, 0xb0d88720, 5 | BRF_SND },		//  9 Samples
 
-	{ "kov2p_igs027a.bin",	0x004000, 0xe0d7679f, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
+	{ "kov2p_igs027a.bin",		0x004000, 0x19a0bd95, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
 
 	{ "v200-16.rom",		0x200000, 0x16a0c11f, 8 | BRF_PRG | BRF_ESS },  // 11 External ARM7 Rom
 };
@@ -2348,6 +2360,8 @@ static INT32 ddp2Init()
 {
 	pPgmInitCallback = pgm_decrypt_ddp2;
 	pPgmProtCallback = install_protection_asic27a_martmast;
+
+//	nPgmAsicRegionHackAddress = 0x2882; // 2883?
 
 	INT32 nRet = pgmInit();
 
@@ -3185,6 +3199,8 @@ static INT32 kovshpInit()
 {
 	pPgmInitCallback = kovshpCallback; // pgm_decrypt_kovshp;
 	pPgmProtCallback = install_protection_asic27a_kovshp;
+
+	nPgmAsicRegionHackAddress = 0x3f0d;
 
 	INT32 nRet = pgmInit();
 
@@ -4101,7 +4117,9 @@ static INT32 kovqhsgsInit()
 {
 	pPgmInitCallback = pgm_decrypt_kovqhsgs;
 	pPgmProtCallback = install_protection_asic27a_kovsh;
-	
+
+	nPgmAsicRegionHackAddress = 0x3f0d;
+
 	INT32 nRet = pgmInit();
 	
 	Arm7SetIdleLoopAddress(0x00000260);
@@ -4360,6 +4378,8 @@ static INT32 kovshxasInit()
 	pPgmInitCallback = kovshp_asic_patch; // hack
 	pPgmProtCallback = install_protection_asic27a_kovshp;
 
+	nPgmAsicRegionHackAddress = 0x3f0d;
+
 	INT32 nRet = pgmInit();
 	
 	Arm7SetIdleLoopAddress(0x00000260);
@@ -4520,6 +4540,7 @@ struct BurnDriver BurnDrvKovsgqyzc = {
 	448, 224, 4, 3
 };
 
+
 // Knights of Valour Superheroes / Sangoku Senki Superheroes (bootleg, V104, China)
 
 static struct BurnRomInfo kovshbRomDesc[] = {
@@ -4548,7 +4569,9 @@ STD_ROM_FN(kovshb)
 static INT32 kovshbInit()
 {
 	pPgmProtCallback = install_protection_asic27a_kovsh;
-	
+
+	nPgmAsicRegionHackAddress = 0x3f0d;
+
 	INT32 nRet = pgmInit();
 
 	Arm7SetIdleLoopAddress(0x00000260);

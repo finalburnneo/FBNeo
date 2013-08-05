@@ -979,46 +979,46 @@ STD_ROM_PICK(Ninexxjr1)
 STD_ROM_FN(Ninexxjr1)
 
 static struct BurnRomInfo Nine44RomDesc[] = {
-	{ "nffu.03",       0x080000, 0x9693CF8F, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "nff.04",        0x080000, 0xDBA1C66E, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "nffu.05",       0x080000, 0xEA813EB7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nffu.03",       0x080000, 0x9693cf8f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nff.04",        0x080000, 0xdba1c66e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nffu.05",       0x080000, 0xea813eb7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "nff.13m",       0x400000, 0xC9FCA741, CPS2_GFX | BRF_GRA },
-	{ "nff.15m",       0x400000, 0xF809D898, CPS2_GFX | BRF_GRA },
-	{ "nff.17m",       0x400000, 0x15BA4507, CPS2_GFX | BRF_GRA },
-	{ "nff.19m",       0x400000, 0x3DD41B8C, CPS2_GFX | BRF_GRA },
-	{ "nff.14m",       0x100000, 0x3FE3A54B, CPS2_GFX | BRF_GRA },
-	{ "nff.16m",       0x100000, 0x565CD231, CPS2_GFX | BRF_GRA },
-	{ "nff.18m",       0x100000, 0x63CA5988, CPS2_GFX | BRF_GRA },
-	{ "nff.20m",       0x100000, 0x21EB8F3B, CPS2_GFX | BRF_GRA },
+	{ "nff.13m",       0x400000, 0xc9fca741, CPS2_GFX | BRF_GRA },
+	{ "nff.15m",       0x400000, 0xf809d898, CPS2_GFX | BRF_GRA },
+	{ "nff.17m",       0x400000, 0x15ba4507, CPS2_GFX | BRF_GRA },
+	{ "nff.19m",       0x400000, 0x3dd41b8c, CPS2_GFX | BRF_GRA },
+	{ "nff.14m",       0x100000, 0x3fe3a54b, CPS2_GFX | BRF_GRA },
+	{ "nff.16m",       0x100000, 0x565cd231, CPS2_GFX | BRF_GRA },
+	{ "nff.18m",       0x100000, 0x63ca5988, CPS2_GFX | BRF_GRA },
+	{ "nff.20m",       0x100000, 0x21eb8f3b, CPS2_GFX | BRF_GRA },
 
-	{ "nff.01",        0x020000, 0xD2E44318, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "nff.01",        0x020000, 0xd2e44318, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "nff.11m",       0x400000, 0x243E4E05, CPS2_QSND | BRF_SND },
-	{ "nff.12m",       0x400000, 0x4FCF1600, CPS2_QSND | BRF_SND },
+	{ "nff.11m",       0x400000, 0x243e4e05, CPS2_QSND | BRF_SND },
+	{ "nff.12m",       0x400000, 0x4fcf1600, CPS2_QSND | BRF_SND },
 };
 
 STD_ROM_PICK(Nine44)
 STD_ROM_FN(Nine44)
 
 static struct BurnRomInfo Nine44jRomDesc[] = {
-	{ "nffj.03",       0x080000, 0x247521EF, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "nff.04",        0x080000, 0xDBA1C66E, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "nffj.05",       0x080000, 0x7F20C2EF, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nffj.03",       0x080000, 0x247521ef, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nff.04",        0x080000, 0xdba1c66e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nffj.05",       0x080000, 0x7f20c2ef, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "nff.13m",       0x400000, 0xC9FCA741, CPS2_GFX | BRF_GRA },
-	{ "nff.15m",       0x400000, 0xF809D898, CPS2_GFX | BRF_GRA },
-	{ "nff.17m",       0x400000, 0x15BA4507, CPS2_GFX | BRF_GRA },
-	{ "nff.19m",       0x400000, 0x3DD41B8C, CPS2_GFX | BRF_GRA },
-	{ "nff.14m",       0x100000, 0x3FE3A54B, CPS2_GFX | BRF_GRA },
-	{ "nff.16m",       0x100000, 0x565CD231, CPS2_GFX | BRF_GRA },
-	{ "nff.18m",       0x100000, 0x63CA5988, CPS2_GFX | BRF_GRA },
-	{ "nff.20m",       0x100000, 0x21EB8F3B, CPS2_GFX | BRF_GRA },
+	{ "nff.13m",       0x400000, 0xc9fca741, CPS2_GFX | BRF_GRA },
+	{ "nff.15m",       0x400000, 0xf809d898, CPS2_GFX | BRF_GRA },
+	{ "nff.17m",       0x400000, 0x15ba4507, CPS2_GFX | BRF_GRA },
+	{ "nff.19m",       0x400000, 0x3dd41b8c, CPS2_GFX | BRF_GRA },
+	{ "nff.14m",       0x100000, 0x3fe3a54b, CPS2_GFX | BRF_GRA },
+	{ "nff.16m",       0x100000, 0x565cd231, CPS2_GFX | BRF_GRA },
+	{ "nff.18m",       0x100000, 0x63ca5988, CPS2_GFX | BRF_GRA },
+	{ "nff.20m",       0x100000, 0x21eb8f3b, CPS2_GFX | BRF_GRA },
 
-	{ "nff.01",        0x020000, 0xD2E44318, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "nff.01",        0x020000, 0xd2e44318, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "nff.11m",       0x400000, 0x243E4E05, CPS2_QSND | BRF_SND },
-	{ "nff.12m",       0x400000, 0x4FCF1600, CPS2_QSND | BRF_SND },
+	{ "nff.11m",       0x400000, 0x243e4e05, CPS2_QSND | BRF_SND },
+	{ "nff.12m",       0x400000, 0x4fcf1600, CPS2_QSND | BRF_SND },
 };
 
 STD_ROM_PICK(Nine44j)
@@ -2310,63 +2310,63 @@ STD_ROM_PICK(Ddtodur1)
 STD_ROM_FN(Ddtodur1)
 
 static struct BurnRomInfo DimahooRomDesc[] = {
-	{ "gmde.03",       0x080000, 0x968FCECD, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "gmde.03",       0x080000, 0x968fcecd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "gmd.04",        0x080000, 0x37485567, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "gmd.05",        0x080000, 0xDA269FFB, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "gmd.06",        0x080000, 0x55B483C9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "gmd.05",        0x080000, 0xda269ffb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "gmd.06",        0x080000, 0x55b483c9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "gmd.13m",       0x400000, 0x80DD19F0, CPS2_GFX | BRF_GRA },
-	{ "gmd.15m",       0x400000, 0xDFD93A78, CPS2_GFX | BRF_GRA },
+	{ "gmd.13m",       0x400000, 0x80dd19f0, CPS2_GFX | BRF_GRA },
+	{ "gmd.15m",       0x400000, 0xdfd93a78, CPS2_GFX | BRF_GRA },
 	{ "gmd.17m",       0x400000, 0x16356520, CPS2_GFX | BRF_GRA },
-	{ "gmd.19m",       0x400000, 0xDFC33031, CPS2_GFX | BRF_GRA },
+	{ "gmd.19m",       0x400000, 0xdfc33031, CPS2_GFX | BRF_GRA },
 
-	{ "gmd.01",        0x020000, 0x3F9BC985, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "gmd.02",        0x020000, 0x3FD39DDE, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "gmd.01",        0x020000, 0x3f9bc985, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "gmd.02",        0x020000, 0x3fd39dde, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "gmd.11m",       0x400000, 0x06A65542, CPS2_QSND | BRF_SND },
-	{ "gmd.12m",       0x400000, 0x50BC7A31, CPS2_QSND | BRF_SND },
+	{ "gmd.11m",       0x400000, 0x06a65542, CPS2_QSND | BRF_SND },
+	{ "gmd.12m",       0x400000, 0x50bc7a31, CPS2_QSND | BRF_SND },
 };
 
 STD_ROM_PICK(Dimahoo)
 STD_ROM_FN(Dimahoo)
 
 static struct BurnRomInfo GmdjRomDesc[] = {
-	{ "gmdj.03",       0x080000, 0xCD6979E3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "gmdj.03",       0x080000, 0xcd6979e3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "gmd.04",        0x080000, 0x37485567, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "gmd.05",        0x080000, 0xDA269FFB, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "gmd.06",        0x080000, 0x55B483C9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "gmd.05",        0x080000, 0xda269ffb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "gmd.06",        0x080000, 0x55b483c9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "gmd.13m",       0x400000, 0x80DD19F0, CPS2_GFX | BRF_GRA },
-	{ "gmd.15m",       0x400000, 0xDFD93A78, CPS2_GFX | BRF_GRA },
+	{ "gmd.13m",       0x400000, 0x80dd19f0, CPS2_GFX | BRF_GRA },
+	{ "gmd.15m",       0x400000, 0xdfd93a78, CPS2_GFX | BRF_GRA },
 	{ "gmd.17m",       0x400000, 0x16356520, CPS2_GFX | BRF_GRA },
-	{ "gmd.19m",       0x400000, 0xDFC33031, CPS2_GFX | BRF_GRA },
+	{ "gmd.19m",       0x400000, 0xdfc33031, CPS2_GFX | BRF_GRA },
 
-	{ "gmd.01",        0x020000, 0x3F9BC985, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "gmd.02",        0x020000, 0x3FD39DDE, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "gmd.01",        0x020000, 0x3f9bc985, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "gmd.02",        0x020000, 0x3fd39dde, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "gmd.11m",       0x400000, 0x06A65542, CPS2_QSND | BRF_SND },
-	{ "gmd.12m",       0x400000, 0x50BC7A31, CPS2_QSND | BRF_SND },
+	{ "gmd.11m",       0x400000, 0x06a65542, CPS2_QSND | BRF_SND },
+	{ "gmd.12m",       0x400000, 0x50bc7a31, CPS2_QSND | BRF_SND },
 };
 
 STD_ROM_PICK(Gmdj)
 STD_ROM_FN(Gmdj)
 
 static struct BurnRomInfo DimahoouRomDesc[] = {
-	{ "gmdu.03",       0x080000, 0x43BCB15F, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "gmdu.03",       0x080000, 0x43bcb15f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "gmd.04",        0x080000, 0x37485567, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "gmd.05",        0x080000, 0xDA269FFB, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "gmd.06",        0x080000, 0x55B483C9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "gmd.05",        0x080000, 0xda269ffb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "gmd.06",        0x080000, 0x55b483c9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "gmd.13m",       0x400000, 0x80DD19F0, CPS2_GFX | BRF_GRA },
-	{ "gmd.15m",       0x400000, 0xDFD93A78, CPS2_GFX | BRF_GRA },
+	{ "gmd.13m",       0x400000, 0x80dd19f0, CPS2_GFX | BRF_GRA },
+	{ "gmd.15m",       0x400000, 0xdfd93a78, CPS2_GFX | BRF_GRA },
 	{ "gmd.17m",       0x400000, 0x16356520, CPS2_GFX | BRF_GRA },
-	{ "gmd.19m",       0x400000, 0xDFC33031, CPS2_GFX | BRF_GRA },
+	{ "gmd.19m",       0x400000, 0xdfc33031, CPS2_GFX | BRF_GRA },
 
-	{ "gmd.01",        0x020000, 0x3F9BC985, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "gmd.02",        0x020000, 0x3FD39DDE, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "gmd.01",        0x020000, 0x3f9bc985, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "gmd.02",        0x020000, 0x3fd39dde, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "gmd.11m",       0x400000, 0x06A65542, CPS2_QSND | BRF_SND },
-	{ "gmd.12m",       0x400000, 0x50BC7A31, CPS2_QSND | BRF_SND },
+	{ "gmd.11m",       0x400000, 0x06a65542, CPS2_QSND | BRF_SND },
+	{ "gmd.12m",       0x400000, 0x50bc7a31, CPS2_QSND | BRF_SND },
 };
 
 STD_ROM_PICK(Dimahoou)
@@ -4317,72 +4317,72 @@ STD_ROM_PICK(Vhuntjr2)
 STD_ROM_FN(Vhuntjr2)
 
 static struct BurnRomInfo ProgearRomDesc[] = {
-	{ "pgau.03",       0x080000, 0x343A783E, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "pgau.04",       0x080000, 0x16208D79, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pgau.03",       0x080000, 0x343a783e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pgau.04",       0x080000, 0x16208d79, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "pga-simm.01c",  0x200000, 0x452F98B0, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.01d",  0x200000, 0x9E672092, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.01a",  0x200000, 0xAE9DDAFE, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.01b",  0x200000, 0x94D72D94, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03c",  0x200000, 0x48A1886D, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03d",  0x200000, 0x172D7E37, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03a",  0x200000, 0x9EE33D98, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03b",  0x200000, 0x848DEE32, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01c",  0x200000, 0x452f98b0, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01d",  0x200000, 0x9e672092, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01a",  0x200000, 0xae9ddafe, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01b",  0x200000, 0x94d72D94, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03c",  0x200000, 0x48a1886d, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03d",  0x200000, 0x172d7e37, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03a",  0x200000, 0x9ee33d98, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03b",  0x200000, 0x848dee32, CPS2_GFX_SIMM | BRF_GRA },
 
-	{ "pga.01",        0x020000, 0xBDBFA992, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "pga.01",        0x020000, 0xbdbfa992, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "pga-simm.05a",  0x200000, 0xC0AAC80C, CPS2_QSND_SIMM | BRF_SND },
-	{ "pga-simm.05b",  0x200000, 0x37A65D86, CPS2_QSND_SIMM | BRF_SND },
-	{ "pga-simm.06a",  0x200000, 0xD3F1E934, CPS2_QSND_SIMM | BRF_SND },
-	{ "pga-simm.06b",  0x200000, 0x8B39489A, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.05a",  0x200000, 0xc0aac80c, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.05b",  0x200000, 0x37a65d86, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.06a",  0x200000, 0xd3f1e934, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.06b",  0x200000, 0x8b39489a, CPS2_QSND_SIMM | BRF_SND },
 };
 
 STD_ROM_PICK(Progear)
 STD_ROM_FN(Progear)
 
 static struct BurnRomInfo ProgearaRomDesc[] = {
-	{ "pgaa.03",       0x080000, 0x25E6E2CE, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "pgaa.04",       0x080000, 0x8104307E, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pgaa.03",       0x080000, 0x25e6e2ce, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pgaa.04",       0x080000, 0x8104307e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "pga-simm.01c",  0x200000, 0x452F98B0, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.01d",  0x200000, 0x9E672092, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.01a",  0x200000, 0xAE9DDAFE, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.01b",  0x200000, 0x94D72D94, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03c",  0x200000, 0x48A1886D, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03d",  0x200000, 0x172D7E37, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03a",  0x200000, 0x9EE33D98, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03b",  0x200000, 0x848DEE32, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01c",  0x200000, 0x452f98b0, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01d",  0x200000, 0x9e672092, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01a",  0x200000, 0xae9ddafe, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01b",  0x200000, 0x94d72D94, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03c",  0x200000, 0x48a1886d, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03d",  0x200000, 0x172d7e37, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03a",  0x200000, 0x9ee33d98, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03b",  0x200000, 0x848dee32, CPS2_GFX_SIMM | BRF_GRA },
 
-	{ "pga.01",        0x020000, 0xBDBFA992, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "pga.01",        0x020000, 0xbdbfa992, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "pga-simm.05a",  0x200000, 0xC0AAC80C, CPS2_QSND_SIMM | BRF_SND },
-	{ "pga-simm.05b",  0x200000, 0x37A65D86, CPS2_QSND_SIMM | BRF_SND },
-	{ "pga-simm.06a",  0x200000, 0xD3F1E934, CPS2_QSND_SIMM | BRF_SND },
-	{ "pga-simm.06b",  0x200000, 0x8B39489A, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.05a",  0x200000, 0xc0aac80c, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.05b",  0x200000, 0x37a65d86, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.06a",  0x200000, 0xd3f1e934, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.06b",  0x200000, 0x8b39489a, CPS2_QSND_SIMM | BRF_SND },
 };
 
 STD_ROM_PICK(Progeara)
 STD_ROM_FN(Progeara)
 
 static struct BurnRomInfo ProgearjRomDesc[] = {
-	{ "pgaj.03",       0x080000, 0x06DBBA54, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "pgaj.04",       0x080000, 0xA1F1F1BC, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pgaj.03",       0x080000, 0x06dbba54, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pgaj.04",       0x080000, 0xa1f1f1bc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "pga-simm.01c",  0x200000, 0x452F98B0, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.01d",  0x200000, 0x9E672092, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.01a",  0x200000, 0xAE9DDAFE, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.01b",  0x200000, 0x94D72D94, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03c",  0x200000, 0x48A1886D, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03d",  0x200000, 0x172D7E37, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03a",  0x200000, 0x9EE33D98, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03b",  0x200000, 0x848DEE32, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01c",  0x200000, 0x452f98b0, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01d",  0x200000, 0x9e672092, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01a",  0x200000, 0xae9ddafe, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01b",  0x200000, 0x94d72D94, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03c",  0x200000, 0x48a1886d, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03d",  0x200000, 0x172d7e37, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03a",  0x200000, 0x9ee33d98, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03b",  0x200000, 0x848dee32, CPS2_GFX_SIMM | BRF_GRA },
 
-	{ "pga.01",        0x020000, 0xBDBFA992, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "pga.01",        0x020000, 0xbdbfa992, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "pga-simm.05a",  0x200000, 0xC0AAC80C, CPS2_QSND_SIMM | BRF_SND },
-	{ "pga-simm.05b",  0x200000, 0x37A65D86, CPS2_QSND_SIMM | BRF_SND },
-	{ "pga-simm.06a",  0x200000, 0xD3F1E934, CPS2_QSND_SIMM | BRF_SND },
-	{ "pga-simm.06b",  0x200000, 0x8B39489A, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.05a",  0x200000, 0xc0aac80c, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.05b",  0x200000, 0x37a65d86, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.06a",  0x200000, 0xd3f1e934, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.06b",  0x200000, 0x8b39489a, CPS2_QSND_SIMM | BRF_SND },
 };
 
 STD_ROM_PICK(Progearj)
@@ -9784,45 +9784,45 @@ STD_ROM_FN(Ninexxd)
 
 static struct BurnRomInfo Nine44dRomDesc[] = {
 	{ "nffud.03",      0x080000, 0x28E8AAE4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "nff.04",        0x080000, 0xDBA1C66E, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "nffu.05",       0x080000, 0xEA813EB7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nff.04",        0x080000, 0xdba1C66e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nffu.05",       0x080000, 0xea813eb7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "nff.13m",       0x400000, 0xC9FCA741, CPS2_GFX | BRF_GRA },
-	{ "nff.15m",       0x400000, 0xF809D898, CPS2_GFX | BRF_GRA },
-	{ "nff.17m",       0x400000, 0x15BA4507, CPS2_GFX | BRF_GRA },
-	{ "nff.19m",       0x400000, 0x3DD41B8C, CPS2_GFX | BRF_GRA },
-	{ "nff.14m",       0x100000, 0x3FE3A54B, CPS2_GFX | BRF_GRA },
-	{ "nff.16m",       0x100000, 0x565CD231, CPS2_GFX | BRF_GRA },
-	{ "nff.18m",       0x100000, 0x63CA5988, CPS2_GFX | BRF_GRA },
-	{ "nff.20m",       0x100000, 0x21EB8F3B, CPS2_GFX | BRF_GRA },
+	{ "nff.13m",       0x400000, 0xC9fca741, CPS2_GFX | BRF_GRA },
+	{ "nff.15m",       0x400000, 0xf809d898, CPS2_GFX | BRF_GRA },
+	{ "nff.17m",       0x400000, 0x15ba4507, CPS2_GFX | BRF_GRA },
+	{ "nff.19m",       0x400000, 0x3dd41b8c, CPS2_GFX | BRF_GRA },
+	{ "nff.14m",       0x100000, 0x3fe3a54b, CPS2_GFX | BRF_GRA },
+	{ "nff.16m",       0x100000, 0x565cd231, CPS2_GFX | BRF_GRA },
+	{ "nff.18m",       0x100000, 0x63ca5988, CPS2_GFX | BRF_GRA },
+	{ "nff.20m",       0x100000, 0x21eb8f3B, CPS2_GFX | BRF_GRA },
 
-	{ "nff.01",        0x020000, 0xD2E44318, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "nff.01",        0x020000, 0xd2e44318, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "nff.11m",       0x400000, 0x243E4E05, CPS2_QSND | BRF_SND },
-	{ "nff.12m",       0x400000, 0x4FCF1600, CPS2_QSND | BRF_SND },
+	{ "nff.11m",       0x400000, 0x243e4e05, CPS2_QSND | BRF_SND },
+	{ "nff.12m",       0x400000, 0x4fcf1600, CPS2_QSND | BRF_SND },
 };
 
 STD_ROM_PICK(Nine44d)
 STD_ROM_FN(Nine44d)
 
 static struct BurnRomInfo Nine44adRomDesc[] = {
-	{ "nffuad.03",     0x080000, 0x78188E42, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "nff.04",        0x080000, 0xDBA1C66E, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "nffu.05",       0x080000, 0xEA813EB7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nffuad.03",     0x080000, 0x78188e42, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nff.04",        0x080000, 0xdba1C66e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "nffu.05",       0x080000, 0xea813eb7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "nff.13m",       0x400000, 0xC9FCA741, CPS2_GFX | BRF_GRA },
-	{ "nff.15m",       0x400000, 0xF809D898, CPS2_GFX | BRF_GRA },
-	{ "nff.17m",       0x400000, 0x15BA4507, CPS2_GFX | BRF_GRA },
-	{ "nff.19m",       0x400000, 0x3DD41B8C, CPS2_GFX | BRF_GRA },
-	{ "nff.14m",       0x100000, 0x3FE3A54B, CPS2_GFX | BRF_GRA },
-	{ "nff.16m",       0x100000, 0x565CD231, CPS2_GFX | BRF_GRA },
-	{ "nff.18m",       0x100000, 0x63CA5988, CPS2_GFX | BRF_GRA },
-	{ "nff.20m",       0x100000, 0x21EB8F3B, CPS2_GFX | BRF_GRA },
+	{ "nff.13m",       0x400000, 0xC9fca741, CPS2_GFX | BRF_GRA },
+	{ "nff.15m",       0x400000, 0xf809d898, CPS2_GFX | BRF_GRA },
+	{ "nff.17m",       0x400000, 0x15ba4507, CPS2_GFX | BRF_GRA },
+	{ "nff.19m",       0x400000, 0x3dd41b8c, CPS2_GFX | BRF_GRA },
+	{ "nff.14m",       0x100000, 0x3fe3a54b, CPS2_GFX | BRF_GRA },
+	{ "nff.16m",       0x100000, 0x565cd231, CPS2_GFX | BRF_GRA },
+	{ "nff.18m",       0x100000, 0x63ca5988, CPS2_GFX | BRF_GRA },
+	{ "nff.20m",       0x100000, 0x21eb8f3B, CPS2_GFX | BRF_GRA },
 
-	{ "nff.01",        0x020000, 0xD2E44318, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "nff.01",        0x020000, 0xd2e44318, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "nff.11m",       0x400000, 0x243E4E05, CPS2_QSND | BRF_SND },
-	{ "nff.12m",       0x400000, 0x4FCF1600, CPS2_QSND | BRF_SND },
+	{ "nff.11m",       0x400000, 0x243e4e05, CPS2_QSND | BRF_SND },
+	{ "nff.12m",       0x400000, 0x4fcf1600, CPS2_QSND | BRF_SND },
 };
 
 STD_ROM_PICK(Nine44ad)
@@ -10059,19 +10059,19 @@ STD_ROM_FN(Ddtodd)
 static struct BurnRomInfo DimahoudRomDesc[] = {
 	{ "gmdud.03",      0x080000, 0x12888435, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "gmd.04",        0x080000, 0x37485567, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "gmd.05",        0x080000, 0xDA269FFB, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "gmd.05",        0x080000, 0xda269ffb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "gmdud.06",      0x080000, 0xd825efda, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "gmd.13m",       0x400000, 0x80DD19F0, CPS2_GFX | BRF_GRA },
-	{ "gmd.15m",       0x400000, 0xDFD93A78, CPS2_GFX | BRF_GRA },
+	{ "gmd.13m",       0x400000, 0x80dd19f0, CPS2_GFX | BRF_GRA },
+	{ "gmd.15m",       0x400000, 0xdfd93A78, CPS2_GFX | BRF_GRA },
 	{ "gmd.17m",       0x400000, 0x16356520, CPS2_GFX | BRF_GRA },
-	{ "gmd.19m",       0x400000, 0xDFC33031, CPS2_GFX | BRF_GRA },
+	{ "gmd.19m",       0x400000, 0xdfc33031, CPS2_GFX | BRF_GRA },
 
-	{ "gmd.01",        0x020000, 0x3F9BC985, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "gmd.02",        0x020000, 0x3FD39DDE, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "gmd.01",        0x020000, 0x3f9bc985, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "gmd.02",        0x020000, 0x3fd39dde, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "gmd.11m",       0x400000, 0x06A65542, CPS2_QSND | BRF_SND },
-	{ "gmd.12m",       0x400000, 0x50BC7A31, CPS2_QSND | BRF_SND },
+	{ "gmd.11m",       0x400000, 0x06a65542, CPS2_QSND | BRF_SND },
+	{ "gmd.12m",       0x400000, 0x50bc7a31, CPS2_QSND | BRF_SND },
 };
 
 STD_ROM_PICK(Dimahoud)
@@ -10247,18 +10247,18 @@ static struct BurnRomInfo MmatrixdRomDesc[] = {
 	{ "mmxud.05",      0x080000, 0x52124398, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
 	{ "mmx.13m",       0x400000, 0x04748718, CPS2_GFX | BRF_GRA },
-	{ "mmx.15m",       0x400000, 0x38074F44, CPS2_GFX | BRF_GRA },
-	{ "mmx.17m",       0x400000, 0xE4635E35, CPS2_GFX | BRF_GRA },
-	{ "mmx.19m",       0x400000, 0x4400A3F2, CPS2_GFX | BRF_GRA },
-	{ "mmx.14m",       0x400000, 0xD52BF491, CPS2_GFX | BRF_GRA },
-	{ "mmx.16m",       0x400000, 0x23F70780, CPS2_GFX | BRF_GRA },
-	{ "mmx.18m",       0x400000, 0x2562C9D5, CPS2_GFX | BRF_GRA },
-	{ "mmx.20m",       0x400000, 0x583A9687, CPS2_GFX | BRF_GRA },
+	{ "mmx.15m",       0x400000, 0x38074f44, CPS2_GFX | BRF_GRA },
+	{ "mmx.17m",       0x400000, 0xe4635e35, CPS2_GFX | BRF_GRA },
+	{ "mmx.19m",       0x400000, 0x4400a3f2, CPS2_GFX | BRF_GRA },
+	{ "mmx.14m",       0x400000, 0xd52bf491, CPS2_GFX | BRF_GRA },
+	{ "mmx.16m",       0x400000, 0x23f70780, CPS2_GFX | BRF_GRA },
+	{ "mmx.18m",       0x400000, 0x2562c9d5, CPS2_GFX | BRF_GRA },
+	{ "mmx.20m",       0x400000, 0x583a9687, CPS2_GFX | BRF_GRA },
 
-	{ "mmx.01",        0x020000, 0xC57E8171, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "mmx.01",        0x020000, 0xc57e8171, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "mmx.11m",       0x400000, 0x4180B39F, CPS2_QSND | BRF_SND },
-	{ "mmx.12m",       0x400000, 0x95E22A59, CPS2_QSND | BRF_SND },
+	{ "mmx.11m",       0x400000, 0x4180b39f, CPS2_QSND | BRF_SND },
+	{ "mmx.12m",       0x400000, 0x95e22a59, CPS2_QSND | BRF_SND },
 };
 
 STD_ROM_PICK(Mmatrixd)
@@ -10384,21 +10384,21 @@ static struct BurnRomInfo ProgearudRomDesc[] = {
 	{ "pgau_d.03",     0x080000, 0xba22b9c5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "pgau_d.04",     0x080000, 0xdf3927ef, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "pga-simm.01c",  0x200000, 0x452F98B0, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.01d",  0x200000, 0x9E672092, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.01a",  0x200000, 0xAE9DDAFE, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.01b",  0x200000, 0x94D72D94, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03c",  0x200000, 0x48A1886D, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03d",  0x200000, 0x172D7E37, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03a",  0x200000, 0x9EE33D98, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03b",  0x200000, 0x848DEE32, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01c",  0x200000, 0x452f98b0, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01d",  0x200000, 0x9e672092, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01a",  0x200000, 0xae9ddafe, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01b",  0x200000, 0x94d72d94, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03c",  0x200000, 0x48a1886d, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03d",  0x200000, 0x172d7e37, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03a",  0x200000, 0x9ee33d98, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03b",  0x200000, 0x848dee32, CPS2_GFX_SIMM | BRF_GRA },
 
-	{ "pga.01",        0x020000, 0xBDBFA992, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "pga.01",        0x020000, 0xbdbfa992, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "pga-simm.05a",  0x200000, 0xC0AAC80C, CPS2_QSND_SIMM | BRF_SND },
-	{ "pga-simm.05b",  0x200000, 0x37A65D86, CPS2_QSND_SIMM | BRF_SND },
-	{ "pga-simm.06a",  0x200000, 0xD3F1E934, CPS2_QSND_SIMM | BRF_SND },
-	{ "pga-simm.06b",  0x200000, 0x8B39489A, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.05a",  0x200000, 0xc0aac80c, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.05b",  0x200000, 0x37a65d86, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.06a",  0x200000, 0xd3f1e934, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.06b",  0x200000, 0x8b39489a, CPS2_QSND_SIMM | BRF_SND },
 };
 
 STD_ROM_PICK(Progearud)
@@ -10408,21 +10408,21 @@ static struct BurnRomInfo ProgearjdRomDesc[] = {
 	{ "pgaj_d.03",     0x080000, 0x0271f3a3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "pgaj_d.04",     0x080000, 0xbe4b7799, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "pga-simm.01c",  0x200000, 0x452F98B0, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.01d",  0x200000, 0x9E672092, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.01a",  0x200000, 0xAE9DDAFE, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.01b",  0x200000, 0x94D72D94, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03c",  0x200000, 0x48A1886D, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03d",  0x200000, 0x172D7E37, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03a",  0x200000, 0x9EE33D98, CPS2_GFX_SIMM | BRF_GRA },
-	{ "pga-simm.03b",  0x200000, 0x848DEE32, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01c",  0x200000, 0x452f98b0, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01d",  0x200000, 0x9e672092, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01a",  0x200000, 0xae9ddafe, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.01b",  0x200000, 0x94d72d94, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03c",  0x200000, 0x48a1886d, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03d",  0x200000, 0x172d7e37, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03a",  0x200000, 0x9ee33d98, CPS2_GFX_SIMM | BRF_GRA },
+	{ "pga-simm.03b",  0x200000, 0x848dee32, CPS2_GFX_SIMM | BRF_GRA },
 
-	{ "pga.01",        0x020000, 0xBDBFA992, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "pga.01",        0x020000, 0xbdbfa992, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "pga-simm.05a",  0x200000, 0xC0AAC80C, CPS2_QSND_SIMM | BRF_SND },
-	{ "pga-simm.05b",  0x200000, 0x37A65D86, CPS2_QSND_SIMM | BRF_SND },
-	{ "pga-simm.06a",  0x200000, 0xD3F1E934, CPS2_QSND_SIMM | BRF_SND },
-	{ "pga-simm.06b",  0x200000, 0x8B39489A, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.05a",  0x200000, 0xc0aac80c, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.05b",  0x200000, 0x37a65d86, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.06a",  0x200000, 0xd3f1e934, CPS2_QSND_SIMM | BRF_SND },
+	{ "pga-simm.06b",  0x200000, 0x8b39489a, CPS2_QSND_SIMM | BRF_SND },
 };
 
 STD_ROM_PICK(Progearjd)
@@ -11623,7 +11623,7 @@ static struct BurnRomInfo ProgearjblRomDesc[] = {
 	{ "pga.17m",       0x400000, 0x87f22918,  CPS2_GFX | BRF_GRA },
 	{ "pga.19m",       0x400000, 0x65ffb45b,  CPS2_GFX | BRF_GRA },
 
-	{ "pga.01",        0x020000, 0xBDBFA992, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "pga.01",        0x020000, 0xbdbfa992, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
 	{ "pga.11m",       0x400000, 0xabdd224e, CPS2_QSND | BRF_SND },
 	{ "pga.12m",       0x400000, 0xdac53406, CPS2_QSND | BRF_SND },	

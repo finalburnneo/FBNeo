@@ -2197,7 +2197,7 @@ static struct BurnRomInfo kov2pRomDesc[] = {
 
 	{ "m1200.rom",	   		0x800000, 0xb0d88720, 5 | BRF_SND },		//  9 Samples
 
-	{ "kov2p_igs027a.bin",		0x004000, 0x19a0bd95, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
+	{ "kov2p_igs027a_china.bin",	0x004000, 0x19a0bd95, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
 
 	{ "v200-16.rom",   		0x200000, 0x16a0c11f, 8 | BRF_PRG | BRF_ESS },  // 11 External ARM7 Rom
 };
@@ -2248,7 +2248,7 @@ static struct BurnRomInfo kov2p204RomDesc[] = {
 
 	{ "m1200.rom",	   		0x800000, 0xb0d88720, 5 | BRF_SND },		//  9 Samples
 
-	{ "kov2p_igs027a.bin",		0x004000, 0x19a0bd95, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
+	{ "kov2p_igs027a_china.bin",	0x004000, 0x19a0bd95, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
 
 	{ "v200-16.rom",		0x200000, 0x16a0c11f, 8 | BRF_PRG | BRF_ESS },  // 11 External ARM7 Rom
 };
@@ -2285,7 +2285,7 @@ static struct BurnRomInfo kov2p202RomDesc[] = {
 
 	{ "m1200.rom",	   		0x800000, 0xb0d88720, 5 | BRF_SND },		//  9 Samples
 
-	{ "kov2p_igs027a.bin",	0x004000, 0xe0d7679f, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
+	{ "kov2p_igs027a_china.bin",	0x004000, 0x19a0bd95, 7 | BRF_PRG | BRF_ESS },  // 10 Internal ARM7 Rom
 
 	{ "v200-16.rom",		0x200000, 0x16a0c11f, 8 | BRF_PRG | BRF_ESS },  // 11 External ARM7 Rom
 };

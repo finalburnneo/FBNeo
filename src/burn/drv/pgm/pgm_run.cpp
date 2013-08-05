@@ -486,6 +486,7 @@ static void expand_tile_gfx()
 	UINT8 *dst = PGMTileROMExp;
 
 	if (strcmp(BurnDrvGetTextA(DRV_NAME), "kovqhsgs") == 0 ||
+	    strcmp(BurnDrvGetTextA(DRV_NAME), "kovqhsgsa") == 0 ||
 		strcmp(BurnDrvGetTextA(DRV_NAME), "kovlsqh2") == 0 || 
 		strcmp(BurnDrvGetTextA(DRV_NAME), "kovlsjb") == 0 || 
 		strcmp(BurnDrvGetTextA(DRV_NAME), "kovlsjba") == 0 ||
@@ -564,6 +565,7 @@ static void expand_colourdata()
 	}
 
 	if (strcmp(BurnDrvGetTextA(DRV_NAME), "kovqhsgs") == 0 ||
+		strcmp(BurnDrvGetTextA(DRV_NAME), "kovqhsgsa") == 0 ||
 		strcmp(BurnDrvGetTextA(DRV_NAME), "kovlsqh2") == 0 || 
 		strcmp(BurnDrvGetTextA(DRV_NAME), "kovlsjb") == 0 || 
 		strcmp(BurnDrvGetTextA(DRV_NAME), "kovlsjba") == 0 ||

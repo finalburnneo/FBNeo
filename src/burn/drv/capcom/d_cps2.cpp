@@ -2060,6 +2060,31 @@ STD_ROM_PICK(Ddtodr1)
 STD_ROM_FN(Ddtodr1)
 
 static struct BurnRomInfo DdtodaRomDesc[] = {
+	{ "dada.03c",      0x080000, 0xbf243e15, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dada.04c",      0x080000, 0x76551eec, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dada.05c",      0x080000, 0x0a0ad827, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dada.06a",      0x080000, 0x6225495a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dada.07a",      0x080000, 0xb3480ec3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "dad.13m",       0x200000, 0xda3cb7d6, CPS2_GFX | BRF_GRA },
+	{ "dad.15m",       0x200000, 0x92b63172, CPS2_GFX | BRF_GRA },
+	{ "dad.17m",       0x200000, 0xb98757f5, CPS2_GFX | BRF_GRA },
+	{ "dad.19m",       0x200000, 0x8121ce46, CPS2_GFX | BRF_GRA },
+	{ "dad.14m",       0x100000, 0x837e6f3f, CPS2_GFX | BRF_GRA },
+	{ "dad.16m",       0x100000, 0xf0916bdb, CPS2_GFX | BRF_GRA },
+	{ "dad.18m",       0x100000, 0xcef393ef, CPS2_GFX | BRF_GRA },
+	{ "dad.20m",       0x100000, 0x8953fe9e, CPS2_GFX | BRF_GRA },
+
+	{ "dad.01",        0x020000, 0x3f5e2424, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "dad.11m",       0x200000, 0x0c499b67, CPS2_QSND | BRF_SND },
+	{ "dad.12m",       0x200000, 0x2f0b5a4e, CPS2_QSND | BRF_SND },
+};
+
+STD_ROM_PICK(Ddtoda)
+STD_ROM_FN(Ddtoda)
+
+static struct BurnRomInfo Ddtodar1RomDesc[] = {
 	{ "dada.03a",      0x080000, 0xfc6f2dd7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dada.04a",      0x080000, 0xd4be4009, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dada.05a",      0x080000, 0x6712d1cf, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -2081,8 +2106,8 @@ static struct BurnRomInfo DdtodaRomDesc[] = {
 	{ "dad.12m",       0x200000, 0x2f0b5a4e, CPS2_QSND | BRF_SND },
 };
 
-STD_ROM_PICK(Ddtoda)
-STD_ROM_FN(Ddtoda)
+STD_ROM_PICK(Ddtodar1)
+STD_ROM_FN(Ddtodar1)
 
 static struct BurnRomInfo DdtodhRomDesc[] = {
 	{ "dadh.03c",      0x080000, 0x5750a861, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -7792,10 +7817,20 @@ struct BurnDriver BurnDrvCpsDdtodr1 = {
 
 struct BurnDriver BurnDrvCpsDdtoda = {
 	"ddtoda", "ddtod", NULL, NULL, "1994",
-	"Dungeons & Dragons - tower of doom (940113 Asia)\0", NULL, "Capcom", "CPS2",
+	"Dungeons & Dragons - tower of doom (940412 Asia)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
 	NULL, DdtodaRomInfo, DdtodaRomName, NULL, NULL, DdtodInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsDdtodar1 = {
+	"ddtodar1", "ddtod", NULL, NULL, "1994",
+	"Dungeons & Dragons - tower of doom (940113 Asia)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
+	NULL, Ddtodar1RomInfo, Ddtodar1RomName, NULL, NULL, DdtodInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

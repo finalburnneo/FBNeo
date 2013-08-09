@@ -14944,6 +14944,14 @@ static INT32 Sf2dongbInit()
 	return nRet;
 }
 
+static INT32 Sf2hunghsiInit()
+{
+	nCPS68KClockspeed = 7000000;
+	AmendProgRomCallback = Sf2qp1Callback;
+
+	return DrvInit();
+}
+
 static void Sf2hfubCallback()
 {
 	UINT8 *pTemp = (UINT8*)BurnMalloc(0x40000);
@@ -17347,11 +17355,11 @@ struct BurnDriver BurnDrvCpsSf2dongb = {
 
 struct BurnDriver BurnDrvCpsSf2hunghsi = {
 	"sf2hunghsi", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Hungh-Hsi bootleg, 920313 Taiwan)\0", "resets itself at Vs screen", "bootleg", "CPS1",
+	"Street Fighter II' - champion edition (Hungh-Hsi bootleg, 920313 Taiwan)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2,HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2,HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2hunghsiRomInfo, Sf2hunghsiRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	Sf2ceInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Sf2hunghsiInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

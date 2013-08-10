@@ -14997,7 +14997,7 @@ static INT32 Sf2hunghsiInit()
 {
 	AmendProgRomCallback = Sf2qp1Callback;
 
-	return DrvInit();
+	return Sf2ceInit();
 }
 
 static void Sf2hfubCallback()

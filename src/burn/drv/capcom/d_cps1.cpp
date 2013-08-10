@@ -9176,8 +9176,8 @@ STD_ROM_PICK(Sf2dongb)
 STD_ROM_FN(Sf2dongb)
 
 static struct BurnRomInfo Sf2hunghsiRomDesc[] = {
-	{ "23",       	   0x0080000, 0x5cf63a9e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "22",       	   0x0080000, 0x3ed72bca, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "23(__sf2hunghsi)", 0x0080000, 0x5cf63a9e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "22(__sf2hunghsi)", 0x0080000, 0x3ed72bca, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "s92_21a.bin",   0x0080000, 0x925a7877, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "s92_01.bin",    0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },

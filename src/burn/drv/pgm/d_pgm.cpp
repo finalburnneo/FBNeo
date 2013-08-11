@@ -886,6 +886,7 @@ STD_ROM_FN(drgw3)
 static INT32 drgw3Init()
 {
 	pPgmInitCallback = pgm_decrypt_dw3;
+	pPgmProtCallback = install_protection_asic25_asic22_drgw3;
 
 	return pgmInit();
 }
@@ -1026,7 +1027,7 @@ static struct BurnRomInfo oldsRomDesc[] = {
 
 	{ "sp_v101.u6",	   		0x010000, 0x097046bc, 0 | BRF_PRG | BRF_ESS },  // 19 Protection Rom
 
-	{ "ram_dump", 	   		0x004000, 0x280cfb4e, 0 | BRF_PRG | BRF_ESS },  // 20 ram dump
+//	{ "ram_dump", 	   		0x004000, 0x280cfb4e, 0 | BRF_PRG | BRF_ESS },  // 20 ram dump
 };
 
 STDROMPICKEXT(olds, olds, pgm)
@@ -1079,7 +1080,7 @@ static struct BurnRomInfo olds100RomDesc[] = {
 
 	{ "kd-u6.512",	   		0x010000, 0xe7613dda, 0 | BRF_PRG | BRF_ESS },  // 19 Protection Rom
 
-	{ "ram_dump", 	   		0x004000, 0x280cfb4e, 0 | BRF_PRG | BRF_ESS },  // 20 ram dump
+//	{ "ram_dump", 	   		0x004000, 0x280cfb4e, 0 | BRF_PRG | BRF_ESS },  // 20 ram dump
 };
 
 STDROMPICKEXT(olds100, olds100, pgm)
@@ -1119,13 +1120,9 @@ static struct BurnRomInfo olds100aRomDesc[] = {
 
 	{ "m0500.rom",	   		0x200000, 0x37928cdd, 5 | BRF_SND },		// 14 Samples
 	
-#if !defined (ROM_VERIFY)
-	{ "protection_data.u6",	  	0x010000, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  // 15 Protection Rom
-#else
-	{ "",                     	0x000000, 0x00000000, 0           },		// 15
-#endif
+	{ "kd-u6.512",	   		0x010000, 0xe7613dda, 0 | BRF_PRG | BRF_ESS },  // 15 Protection Rom
 
-	{ "ram_dump", 	   		0x004000, 0x280cfb4e, 0 | BRF_PRG | BRF_ESS },  // 16 ram dump
+//	{ "ram_dump", 	   		0x004000, 0x280cfb4e, 0 | BRF_PRG | BRF_ESS },  // 16 ram dump
 };
 
 STDROMPICKEXT(olds100a, olds100a, pgm)
@@ -1718,11 +1715,11 @@ static INT32 puzzli2Init()
 	return pgmInit();
 }
 
-struct BurnDriverD BurnDrvPuzzli2 = {
+struct BurnDriver BurnDrvPuzzli2 = {
 	"puzzli2", NULL, "pgm", NULL, "1999",
 	"Puzzli 2 (V100)\0", "Incomplete dump", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	0, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
 	NULL, puzzli2RomInfo, puzzli2RomName, NULL, NULL, pgmInputInfo, puzzli2DIPInfo,
 	puzzli2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
@@ -1749,11 +1746,11 @@ static struct BurnRomInfo puzzli2sRomDesc[] = {
 STDROMPICKEXT(puzzli2s, puzzli2s, pgm)
 STD_ROM_FN(puzzli2s)
 
-struct BurnDriverD BurnDrvPuzzli2s = {
+struct BurnDriver BurnDrvPuzzli2s = {
 	"puzzli2s", "puzzli2", "pgm", NULL, "2001",
 	"Puzzli 2 Super (V200)\0", "Incomplete dump", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
 	NULL, puzzli2sRomInfo, puzzli2sRomName, NULL, NULL, pgmInputInfo, puzzli2DIPInfo,
 	puzzli2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3

@@ -67,6 +67,7 @@ INT32 pgmDraw();
 void install_protection_asic3_orlegend();
 void install_protection_asic25_asic12_dw2();
 void install_protection_asic25_asic22_killbld();
+void install_protection_asic25_asic22_drgw3();
 void install_protection_asic25_asic28_olds();
 void install_protection_asic27_kov();
 void install_protection_asic27a_kovsh();

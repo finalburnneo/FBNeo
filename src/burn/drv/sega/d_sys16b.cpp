@@ -2170,6 +2170,42 @@ static struct BurnRomInfo Altbeast6RomDesc[] = {
 STD_ROM_PICK(Altbeast6)
 STD_ROM_FN(Altbeast6)
 
+static struct BurnRomInfo AltbeastblRomDesc[] = {
+	{ "4.bin",          0x10000, 0x790b4b3a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "6.bin",          0x10000, 0x0f65f25d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "3.bin",          0x10000, 0x65cdd72b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "5.bin",          0x10000, 0x3393fbc4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "12.bin",         0x10000, 0xa4967d10, SYS16_ROM_TILES | BRF_GRA },
+	{ "11.bin",         0x10000, 0x021e82ab, SYS16_ROM_TILES | BRF_GRA },
+	{ "10.bin",         0x10000, 0x1a26cf3f, SYS16_ROM_TILES | BRF_GRA },
+	{ "9.bin",          0x10000, 0x277ef086, SYS16_ROM_TILES | BRF_GRA },
+	{ "8.bin",          0x10000, 0x661225af, SYS16_ROM_TILES | BRF_GRA },
+	{ "7.bin",          0x10000, 0xd7019da7, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "18.bin",         0x10000, 0xf8b3684e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "22.bin",         0x10000, 0xae3c2793, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "17.bin",         0x10000, 0x3cce5419, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "21.bin",         0x10000, 0x3af62b55, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "16.bin",         0x10000, 0xb0390078, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "20.bin",         0x10000, 0x2a87744a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "15.bin",         0x10000, 0xf3a43fd8, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "19.bin",         0x10000, 0x2fb3e355, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "23.bin",         0x10000, 0x676be0cb, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "25.bin",         0x10000, 0x802cac94, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "24.bin",         0x10000, 0x882864c2, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "26.bin",         0x10000, 0x76c704d2, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "13.bin",         0x10000, 0x339987f7, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "14.bin",         0x10000, 0x4fe406aa, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "1.bin",          0x10000, 0x67e09da3, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	{ "2.bin",          0x10000, 0x7c653d8b, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Altbeastbl)
+STD_ROM_FN(Altbeastbl)
+
 static struct BurnRomInfo AtomicpRomDesc[] = {
 	{ "ap-t2.bin",      0x10000, 0x97421047, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "ap-t1.bin",      0x10000, 0x5c65fe56, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -4339,6 +4375,72 @@ void __fastcall AliensynWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
+void __fastcall AltbeastblSoundWriteByte(UINT32 a, UINT8 d)
+{
+	switch (a) {
+		case 0xc42007: {
+			System16SoundLatch = d;
+			bprintf(PRINT_NORMAL, _T("Sound Latch Wrote %x\n"), d);
+//			ZetOpen(0);
+//			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+//			ZetClose();
+			return;
+		}
+	}
+}
+
+void __fastcall AltbeastblGfxWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x418000: {
+			System16ScrollY[0] = d + 1;
+			return;
+		}
+	
+		case 0x418008: {
+			System16ScrollX[0] = ((d ^ 0xffff) & 0x3ff) + 2;
+			return;
+		}
+		
+		case 0x418010: {
+			System16ScrollY[1] = d + 1;
+			return;
+		}
+		
+		case 0x418018: {
+			System16ScrollX[1] = ((d ^ 0xffff) & 0x3ff) + 4;
+			return;
+		}
+		
+		case 0x418020: {
+			BootlegBgPage[3] = (d >> 0) & 0xf;
+			BootlegFgPage[3] = (d >> 4) & 0xf;
+			return;
+		}
+		
+		case 0x418022: {
+			BootlegBgPage[2] = (d >> 0) & 0xf;
+			BootlegFgPage[2] = (d >> 4) & 0xf;
+			return;
+		}
+		
+		case 0x418024: {
+			BootlegBgPage[1] = (d >> 0) & 0xf;
+			BootlegFgPage[1] = (d >> 4) & 0xf;
+			return;
+		}
+		
+		case 0x418026: {
+			BootlegBgPage[0] = (d >> 0) & 0xf;
+			BootlegFgPage[0] = (d >> 4) & 0xf;
+			return;
+		}
+	}
+#if 0 && defined FBA_DEBUG
+	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X, 0x%04X\n"), a, d, d ^ 0xffff);
+#endif
+}
+
 UINT8 __fastcall AtomicpReadByte(UINT32 a)
 {
 	switch (a) {
@@ -6286,6 +6388,26 @@ static INT32 Altbeast4Init()
 	return nRet;
 }
 
+static INT32 AltbeastblInit()
+{
+	INT32 nRet = System16Init();
+	
+	System16SpriteXOffset = 114;
+	
+	if (!nRet) {
+		SekOpen(0);
+		SekMapHandler(1, 0x418000, 0x418031, SM_WRITE);
+		SekSetWriteWordHandler(1, AltbeastblGfxWriteWord);
+		SekMapHandler(2, 0xc42006, 0xc42007, SM_WRITE);
+		SekSetWriteByteHandler(2, AltbeastblSoundWriteByte);
+		SekClose();
+		
+		bSystem16BootlegRender = true;
+	}
+	
+	return nRet;
+}
+
 void AtomicpMap68K()
 {
 	SekInit(0, 0x68000);
@@ -7910,6 +8032,16 @@ struct BurnDriver BurnDrvAltbeast6 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, Altbeast6RomInfo, Altbeast6RomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	Altbeast6Init, System16Exit, System16BFrame, NULL, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvAltbeastbl = {
+	"altbeastbl", "altbeast", NULL, NULL, "1988",
+	"Altered Beast (Datsu bootleg)\0", "no Sound", "bootleg (Datsu)", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_INVERT_TILES, GBF_SCRFIGHT, 0,
+	NULL, AltbeastblRomInfo, AltbeastblRomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
+	AltbeastblInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

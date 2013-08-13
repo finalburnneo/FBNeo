@@ -3208,13 +3208,41 @@ static void __fastcall olds_protection_w(UINT32 offset, UINT16 data)
 
 					case 0x64: // incomplete...
 					{
-						UINT16 p1 = sharedprotram[0x3050 / 2];
-						UINT16 p2 = sharedprotram[0x3082 / 2];
+					        UINT16 p1 = sharedprotram[0x3050 / 2];
+					        UINT16 p2 = sharedprotram[0x3082 / 2];
+					        UINT16 p3 = sharedprotram[0x3054 / 2];
+					        UINT16 p4 = sharedprotram[0x3088 / 2];
 
-						if (p2  == 0x02)
-							olds_write_reg(p1, olds_read_reg(p1) + 0x10000);
+					        if (p2  == 0x02)
+					                olds_write_reg(p1, olds_read_reg(p1) + 0x10000);
+
+					        switch (p4)
+					        {
+					                case 0xd:
+					                        olds_write_reg(p1,olds_read_reg(p3));
+					                        break;
+					                case 0x0:
+					                        olds_write_reg(p3,(olds_read_reg(p2))^(olds_read_reg(p1)));
+					                        break;
+					                case 0xe:
+					                        olds_write_reg(p3,olds_read_reg(p3)+0x10000);
+					                        break;
+					                case 0x2:
+					                        olds_write_reg(p1,(olds_read_reg(p2))+(olds_read_reg(p3)));
+					                        break;
+					                case 0x6:
+					                        olds_write_reg(p3,(olds_read_reg(p2))&(olds_read_reg(p1)));
+					                        break;
+					                case 0x1:
+					                        olds_write_reg(p2,olds_read_reg(p1)+0x10000);
+					                        break;
+					                case 0x7:
+					                        olds_write_reg(p3,olds_read_reg(p1));
+					                        break;
+					                default:
+					                        break;
+					        }
 					}
-					break;
 				}
 
 				m_olds_cmd3 = ((data >> 4) + 1) & 0x3;

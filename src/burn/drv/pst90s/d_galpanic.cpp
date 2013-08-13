@@ -454,25 +454,47 @@ STD_ROM_FN(Supmodel)
 
 // Rom information
 static struct BurnRomInfo NewfantRomDesc[] = {
-	{ "prog2_12.rom",   	0x080000, 0xde43a457, BRF_ESS | BRF_PRG }, // 68000 code
-	{ "prog1_07.rom",   	0x080000, 0x370b45be, BRF_ESS | BRF_PRG },
-	{ "iscr2_10.rom",  		0x080000, 0x4f2da2eb, BRF_ESS | BRF_PRG },
-	{ "iscr1_05.rom",		0x080000, 0x63c6894f, BRF_ESS | BRF_PRG },
-	{ "iscr4_09.rom",  		0x080000, 0x725741ec, BRF_ESS | BRF_PRG },
-	{ "iscr3_04.rom",		0x080000, 0x51d6b362, BRF_ESS | BRF_PRG },
-	{ "iscr6_08.rom", 		0x080000, 0x178b2ef3, BRF_ESS | BRF_PRG },
-	{ "iscr5_03.rom",		0x080000, 0xd2b5c5fa, BRF_ESS | BRF_PRG },
-	{ "iscr8_11.rom", 		0x080000, 0xf4148528, BRF_ESS | BRF_PRG },
-	{ "iscr7_06.rom",		0x080000, 0x2dee0c31, BRF_ESS | BRF_PRG },
+	{ "prog2.12",   		0x080000, 0xde43a457, BRF_ESS | BRF_PRG }, // 68000 code
+	{ "prog1.07",   		0x080000, 0x370b45be, BRF_ESS | BRF_PRG },
+	{ "iscr2.10",  			0x080000, 0x4f2da2eb, BRF_ESS | BRF_PRG },
+	{ "iscr1.05",			0x080000, 0x63c6894f, BRF_ESS | BRF_PRG },
+	{ "iscr4.09",  			0x080000, 0x725741ec, BRF_ESS | BRF_PRG },
+	{ "iscr3.04",			0x080000, 0x51d6b362, BRF_ESS | BRF_PRG },
+	{ "iscr6.08", 			0x080000, 0x178b2ef3, BRF_ESS | BRF_PRG },
+	{ "iscr5.03",			0x080000, 0xd2b5c5fa, BRF_ESS | BRF_PRG },
+	{ "iscr8.11", 			0x080000, 0xf4148528, BRF_ESS | BRF_PRG },
+	{ "iscr7.06",			0x080000, 0x2dee0c31, BRF_ESS | BRF_PRG },
 
-	{ "obj1_13.rom",    	0x080000, 0xe6d1bc71, BRF_GRA },			  // graphics
+	{ "obj1.13",    		0x080000, 0x832cd451, BRF_GRA },			  // graphics
 
-	{ "musc1_01.rom",   	0x080000, 0x10347fce, BRF_SND },			  // PCM
-	{ "musc2_02.rom",   	0x080000, 0xb9646a8c, BRF_SND },
+	{ "musc1.01",   		0x080000, 0x10347fce, BRF_SND },			  // PCM
+	{ "musc2.02",   		0x080000, 0xb9646a8c, BRF_SND },
 };
 
 STD_ROM_PICK(Newfant)
 STD_ROM_FN(Newfant)
+
+// Rom information
+static struct BurnRomInfo NewfantaRomDesc[] = {
+	{ "prog2.12",   		0x080000, 0xde43a457, BRF_ESS | BRF_PRG }, // 68000 code
+	{ "prog1.07",   		0x080000, 0x370b45be, BRF_ESS | BRF_PRG },
+	{ "iscr2.10",  			0x080000, 0x4f2da2eb, BRF_ESS | BRF_PRG },
+	{ "iscr1.05",			0x080000, 0x63c6894f, BRF_ESS | BRF_PRG },
+	{ "iscr4.09",  			0x080000, 0x725741ec, BRF_ESS | BRF_PRG },
+	{ "iscr3.04",			0x080000, 0x51d6b362, BRF_ESS | BRF_PRG },
+	{ "iscr6.08", 			0x080000, 0x178b2ef3, BRF_ESS | BRF_PRG },
+	{ "iscr5.03",			0x080000, 0xd2b5c5fa, BRF_ESS | BRF_PRG },
+	{ "iscr8.11", 			0x080000, 0xf4148528, BRF_ESS | BRF_PRG },
+	{ "iscr7.06",			0x080000, 0x2dee0c31, BRF_ESS | BRF_PRG },
+
+	{ "nf95obj1.13",    	0x080000, 0xe6d1bc71, BRF_GRA },			  // graphics
+
+	{ "musc1.01",   		0x080000, 0x10347fce, BRF_SND },			  // PCM
+	{ "musc2.02",   		0x080000, 0xb9646a8c, BRF_SND },
+};
+
+STD_ROM_PICK(Newfanta)
+STD_ROM_FN(Newfanta)
 
 // Rom information
 static struct BurnRomInfo Fantsy95RomDesc[] = {
@@ -1982,6 +2004,16 @@ struct BurnDriver BurnDrvNewfant = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, NewfantRomInfo, NewfantRomName, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
+	FantasiaInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
+	224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvNewfanta = {
+	"newfanta", "newfant", NULL, NULL, "1995",
+	"New Fantasia (set 2)\0", NULL, "Comad / New Japan System", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, NewfantaRomInfo, NewfantaRomName, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
 	FantasiaInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	224, 256, 3, 4
 };

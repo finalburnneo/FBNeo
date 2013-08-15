@@ -3277,7 +3277,7 @@ static struct BurnDIPInfo Sf2jDIPList[]=
 
 STDDIPINFO(Sf2j)
 
-static struct BurnDIPInfo Sf2hunghsiDIPList[]=
+static struct BurnDIPInfo Sf2bhhDIPList[]=
 {
 	// Defaults
 	{0x1b, 0xff, 0xff, 0x00, NULL                     },
@@ -3324,7 +3324,7 @@ static struct BurnDIPInfo Sf2hunghsiDIPList[]=
 	{0x1d, 0x01, 0x80, 0x80, "Test"                   },
 };
 
-STDDIPINFO(Sf2hunghsi)
+STDDIPINFO(Sf2bhh)
 
 static struct BurnDIPInfo Sf2megaDIPList[]=
 {
@@ -9213,32 +9213,40 @@ static struct BurnRomInfo Sf2dongbRomDesc[] = {
 STD_ROM_PICK(Sf2dongb)
 STD_ROM_FN(Sf2dongb)
 
-static struct BurnRomInfo Sf2hunghsiRomDesc[] = {
-	{ "23(__sf2hunghsi)", 0x0080000, 0x5cf63a9e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "22(__sf2hunghsi)", 0x0080000, 0x3ed72bca, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "s92_21a.bin",   0x0080000, 0x925a7877, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+static struct BurnRomInfo Sf2bhhRomDesc[] = {
+	{ "23(__sf2bhh)",  0x0080000, 0x5cf63a9e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "22(__sf2bhh)",  0x0080000, 0x3ed72bca, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "s92_21a.6f",   0x0080000, 0x925a7877, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
-	{ "s92_01.bin",    0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
-	{ "s92_02.bin",    0x080000, 0x840289ec, BRF_GRA | CPS1_TILES },
-	{ "s92_03.bin",    0x080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
-	{ "s92_04.bin",    0x080000, 0xe2799472, BRF_GRA | CPS1_TILES },
-	{ "s92_05.bin",    0x080000, 0xba8a2761, BRF_GRA | CPS1_TILES },
-	{ "s92_06.bin",    0x080000, 0xe584bfb5, BRF_GRA | CPS1_TILES },
-	{ "s92_07.bin",    0x080000, 0x21e3f87d, BRF_GRA | CPS1_TILES },
-	{ "s92_08.bin",    0x080000, 0xbefc47df, BRF_GRA | CPS1_TILES },
-	{ "s92_10.bin",    0x080000, 0x960687d5, BRF_GRA | CPS1_TILES },
-	{ "s92_11.bin",    0x080000, 0x978ecd18, BRF_GRA | CPS1_TILES },
-	{ "s92_12.bin",    0x080000, 0xd6ec9a0a, BRF_GRA | CPS1_TILES },
-	{ "s92_13.bin",    0x080000, 0xed2c67f6, BRF_GRA | CPS1_TILES },
+	{ "s92-1m.3a",     0x080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
+	{ "s92-3m.5a",     0x080000, 0x840289ec, BRF_GRA | CPS1_TILES },
+	{ "s92-2m.4a",     0x080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
+	{ "s92-4m.6a",     0x080000, 0xe2799472, BRF_GRA | CPS1_TILES },
+	{ "s92-5m.7a",     0x080000, 0xba8a2761, BRF_GRA | CPS1_TILES },
+	{ "s92-7m.9a",     0x080000, 0xe584bfb5, BRF_GRA | CPS1_TILES },
+	{ "s92-6m.8a",     0x080000, 0x21e3f87d, BRF_GRA | CPS1_TILES },
+	{ "s92-8m.10a",    0x080000, 0xbefc47df, BRF_GRA | CPS1_TILES },
+	{ "s92-10m.3c",    0x080000, 0x960687d5, BRF_GRA | CPS1_TILES },
+	{ "s92-12m.5c",    0x080000, 0x978ecd18, BRF_GRA | CPS1_TILES },
+	{ "s92-11m.4c",    0x080000, 0xd6ec9a0a, BRF_GRA | CPS1_TILES },
+	{ "s92-13m.6c",    0x080000, 0xed2c67f6, BRF_GRA | CPS1_TILES },
 
-	{ "s92_09.bin",    0x010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "s92_09.11a",    0x010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "s92_18.bin",    0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "s92_19.bin",    0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "s92_18.11c",    0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "s92_19.12c",    0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+
+	A_BOARD_PLDS
+	
+	{ "s9263b.1a",     0x000117, 0x0a7ecfe0, BRF_OPT },	// b-board PLDs
+	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
+	{ "ioc1.ic7",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 };
 
-STD_ROM_PICK(Sf2hunghsi)
-STD_ROM_FN(Sf2hunghsi)
+STD_ROM_PICK(Sf2bhh)
+STD_ROM_FN(Sf2bhh)
 
 static struct BurnRomInfo Sf2hfRomDesc[] = {
 	{ "s2te_23.8f",    0x080000, 0x2dd72514, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -11931,7 +11939,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "dinopic2"    , CPS_B_21_QS2, mapper_CD63B , 0, NULL                },
 	{ "dinoeh"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinoh"       , CPS_B_21_DEF, mapper_CD63B , 0, dino_decode         },
-	{ "dinohc"      , CPS_B_21_DEF, mapper_CD63B , 0, dino_decode         }, // hacked to run on Street Fighter II' champion edition C-Board
+	{ "dinohc"      , CPS_B_21_DEF, mapper_CD63B , 0, dino_decode         }, // hacked to run on Street Fighter II' Champion Edition C-Board
 	{ "dinot"       , CPS_B_21_DEF, mapper_CD63B , 0, dino_decode         },
 	{ "dinotpic"    , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinohunt"    , CPS_B_21_DEF, mapper_CD63B , 0, NULL                },
@@ -12039,6 +12047,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2thndr"    , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2b"        , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2b2"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
+	{ "sf2bhh"  	, CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ce"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceea"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceua"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -12059,7 +12068,6 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2v0042"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2v0043"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2dongb"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
-	{ "sf2hunghsi"  , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2acc"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2acca"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2accp2"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -15029,7 +15037,7 @@ static INT32 Sf2dongbInit()
 	return nRet;
 }
 
-static INT32 Sf2hunghsiInit()
+static INT32 Sf2bhhInit()
 {
 	AmendProgRomCallback = Sf2qp1Callback;
 
@@ -16979,7 +16987,7 @@ struct BurnDriver BurnDrvCpsQtono2j = {
 
 struct BurnDriver BurnDrvCpsSf2 = {
 	"sf2", NULL, NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (910522 etc)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910522 etc)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2RomInfo, Sf2RomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -16989,7 +16997,7 @@ struct BurnDriver BurnDrvCpsSf2 = {
 
 struct BurnDriver BurnDrvCpsSf2eb = {
 	"sf2eb", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (910214 etc)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910214 etc)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ebRomInfo, Sf2ebRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -16999,7 +17007,7 @@ struct BurnDriver BurnDrvCpsSf2eb = {
 
 struct BurnDriver BurnDrvCpsSf2ee = {
 	"sf2ee", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (910228 etc)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910228 etc)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2eeRomInfo, Sf2eeRomName, NULL, NULL, Sf2ueInputInfo, Sf2DIPInfo,
@@ -17009,7 +17017,7 @@ struct BurnDriver BurnDrvCpsSf2ee = {
 
 struct BurnDriver BurnDrvCpsSf2ebbl = {
 	"sf2ebbl", "sf2", NULL, NULL, "1992",
-	"Street Fighter II - the world warrior (TAB Austria bootleg, 910214 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II - The World Warrior (TAB Austria bootleg, 910214 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ebblRomInfo, Sf2ebblRomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
@@ -17019,7 +17027,7 @@ struct BurnDriver BurnDrvCpsSf2ebbl = {
 
 struct BurnDriver BurnDrvCpsSf2stt = {
 	"sf2stt", "sf2", NULL, NULL, "1992",
-	"Street Fighter II - the world warrior (STT, TAB Austria bootleg, 910214 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II - The World Warrior (STT, TAB Austria bootleg, 910214 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2sttRomInfo, Sf2sttRomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
@@ -17029,7 +17037,7 @@ struct BurnDriver BurnDrvCpsSf2stt = {
 
 struct BurnDriver BurnDrvCpsSf2ua = {
 	"sf2ua", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (910206 USA)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910206 USA)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2uaRomInfo, Sf2uaRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17039,7 +17047,7 @@ struct BurnDriver BurnDrvCpsSf2ua = {
 
 struct BurnDriver BurnDrvCpsSf2ub = {
 	"sf2ub", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (910214 USA)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910214 USA)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ubRomInfo, Sf2ubRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17049,7 +17057,7 @@ struct BurnDriver BurnDrvCpsSf2ub = {
 
 struct BurnDriver BurnDrvCpsSf2uc = {
 	"sf2uc", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (910306 USA)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910306 USA)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ucRomInfo, Sf2ucRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17059,7 +17067,7 @@ struct BurnDriver BurnDrvCpsSf2uc = {
 
 struct BurnDriver BurnDrvCpsSf2ud = {
 	"sf2ud", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (910318 USA)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910318 USA)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2udRomInfo, Sf2udRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17069,7 +17077,7 @@ struct BurnDriver BurnDrvCpsSf2ud = {
 
 struct BurnDriver BurnDrvCpsSf2ue = {
 	"sf2ue", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (910228 USA)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910228 USA)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ueRomInfo, Sf2ueRomName, NULL, NULL, Sf2ueInputInfo, Sf2DIPInfo,
@@ -17079,7 +17087,7 @@ struct BurnDriver BurnDrvCpsSf2ue = {
 
 struct BurnDriver BurnDrvCpsSf2uf = {
 	"sf2uf", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (910411 USA)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910411 USA)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ufRomInfo, Sf2ufRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17089,7 +17097,7 @@ struct BurnDriver BurnDrvCpsSf2uf = {
 
 struct BurnDriver BurnDrvCpsSf2ug = {
 	"sf2ug", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (910522 USA, rev G)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910522 USA, rev G)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ugRomInfo, Sf2ugRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17099,7 +17107,7 @@ struct BurnDriver BurnDrvCpsSf2ug = {
 
 struct BurnDriver BurnDrvCpsSf2ui = {
 	"sf2ui", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (910522 USA, rev I)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910522 USA, rev I)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2uiRomInfo, Sf2uiRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17109,7 +17117,7 @@ struct BurnDriver BurnDrvCpsSf2ui = {
 
 struct BurnDriver BurnDrvCpsSf2uk = {
 	"sf2uk", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (911101 USA)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (911101 USA)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ukRomInfo, Sf2ukRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17119,7 +17127,7 @@ struct BurnDriver BurnDrvCpsSf2uk = {
 
 struct BurnDriver BurnDrvCpsSf2j = {
 	"sf2j", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (911210 Japan)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (911210 Japan)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2jRomInfo, Sf2jRomName, NULL, NULL, Sf2InputInfo, Sf2jDIPInfo,
@@ -17129,7 +17137,7 @@ struct BurnDriver BurnDrvCpsSf2j = {
 
 struct BurnDriver BurnDrvCpsSf2ja = {
 	"sf2ja", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (910214 Japan)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910214 Japan)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2jaRomInfo, Sf2jaRomName, NULL, NULL, Sf2InputInfo, Sf2jDIPInfo,
@@ -17139,7 +17147,7 @@ struct BurnDriver BurnDrvCpsSf2ja = {
 
 struct BurnDriver BurnDrvCpsSf2jc = {
 	"sf2jc", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (910306 Japan)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910306 Japan)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2jcRomInfo, Sf2jcRomName, NULL, NULL, Sf2InputInfo, Sf2jDIPInfo,
@@ -17149,7 +17157,7 @@ struct BurnDriver BurnDrvCpsSf2jc = {
 
 struct BurnDriver BurnDrvCpsSf2jh = {
 	"sf2jh", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (910522 Japan)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (910522 Japan)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2jhRomInfo, Sf2jhRomName, NULL, NULL, Sf2InputInfo, Sf2jDIPInfo,
@@ -17159,7 +17167,7 @@ struct BurnDriver BurnDrvCpsSf2jh = {
 
 struct BurnDriver BurnDrvCpsSf2jl = {
 	"sf2jl", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (920312 Japan)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (920312 Japan)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2jlRomInfo, Sf2jlRomName, NULL, NULL, Sf2InputInfo, Sf2jDIPInfo,
@@ -17169,7 +17177,7 @@ struct BurnDriver BurnDrvCpsSf2jl = {
 
 struct BurnDriver BurnDrvCpsSf2qp1 = {
 	"sf2qp1", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (Quicken Pt-I bootleg, 910214 USA)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II - The World Warrior (Quicken Pt-I bootleg, 910214 USA)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2qp1RomInfo, Sf2qp1RomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17179,7 +17187,7 @@ struct BurnDriver BurnDrvCpsSf2qp1 = {
 
 struct BurnDriver BurnDrvCpsSf2thndr = {
 	"sf2thndr", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (Thunder Edition bootleg, 910214 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II - The World Warrior (Thunder Edition bootleg, 910214 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2thndrRomInfo, Sf2thndrRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17189,7 +17197,7 @@ struct BurnDriver BurnDrvCpsSf2thndr = {
 
 struct BurnDriver BurnDrvCpsSf2b = {
 	"sf2b", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (bootleg, 910214 etc, set 1)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (bootleg, 910214 etc, set 1)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2bRomInfo, Sf2bRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17199,7 +17207,7 @@ struct BurnDriver BurnDrvCpsSf2b = {
 
 struct BurnDriver BurnDrvCpsSf2b2 = {
 	"sf2b2", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - the world warrior (bootleg, 910214 etc, set 2)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II - The World Warrior (bootleg, 910214 etc, set 2)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2b2RomInfo, Sf2b2RomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17209,7 +17217,7 @@ struct BurnDriver BurnDrvCpsSf2b2 = {
 
 struct BurnDriver BurnDrvCpsSf2ce = {
 	"sf2ce", NULL, NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (street fighter 2' 920513 etc)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' - Champion Edition (street fighter 2' 920513 etc)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceRomInfo, Sf2ceRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17219,7 +17227,7 @@ struct BurnDriver BurnDrvCpsSf2ce = {
 
 struct BurnDriver BurnDrvCpsSf2ceea = {
 	"sf2ceea", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (street fighter 2' 920313 etc)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' - Champion Edition (street fighter 2' 920313 etc)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceeaRomInfo, Sf2ceeaRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17229,7 +17237,7 @@ struct BurnDriver BurnDrvCpsSf2ceea = {
 
 struct BurnDriver BurnDrvCpsSf2ceja = {
 	"sf2ceja", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (street fighter 2' 920322 Japan)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' - Champion Edition (street fighter 2' 920322 Japan)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2cejaRomInfo, Sf2cejaRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17239,7 +17247,7 @@ struct BurnDriver BurnDrvCpsSf2ceja = {
 
 struct BurnDriver BurnDrvCpsSf2cejb = {
 	"sf2cejb", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (street fighter 2' 920513 Japan)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' - Champion Edition (street fighter 2' 920513 Japan)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2cejbRomInfo, Sf2cejbRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17249,7 +17257,7 @@ struct BurnDriver BurnDrvCpsSf2cejb = {
 
 struct BurnDriver BurnDrvCpsSf2cejc = {
 	"sf2cejc", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (street fighter 2' 920803 Japan)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' - Champion Edition (street fighter 2' 920803 Japan)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2cejcRomInfo, Sf2cejcRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17259,7 +17267,7 @@ struct BurnDriver BurnDrvCpsSf2cejc = {
 
 struct BurnDriver BurnDrvCpsSf2ceua = {
 	"sf2ceua", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (street fighter 2' 920313 USA)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' - Champion Edition (street fighter 2' 920313 USA)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceuaRomInfo, Sf2ceuaRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17269,7 +17277,7 @@ struct BurnDriver BurnDrvCpsSf2ceua = {
 
 struct BurnDriver BurnDrvCpsSf2ceub = {
 	"sf2ceub", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (street fighter 2' 920513 USA)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' - Champion Edition (street fighter 2' 920513 USA)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceubRomInfo, Sf2ceubRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17279,7 +17287,7 @@ struct BurnDriver BurnDrvCpsSf2ceub = {
 
 struct BurnDriver BurnDrvCpsSf2ceuc = {
 	"sf2ceuc", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (street fighter 2' 920803 USA)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' - Champion Edition (street fighter 2' 920803 USA)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceucRomInfo, Sf2ceucRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17289,7 +17297,7 @@ struct BurnDriver BurnDrvCpsSf2ceuc = {
 
 struct BurnDriver BurnDrvCpsSf2acc = {
 	"sf2acc", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Accelerator! bootleg set 1, 920313 USA)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (Accelerator! bootleg set 1, 920313 USA)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2,HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2accRomInfo, Sf2accRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17299,7 +17307,7 @@ struct BurnDriver BurnDrvCpsSf2acc = {
 
 struct BurnDriver BurnDrvCpsSf2acca = {
 	"sf2acca", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Accelerator! bootleg set 2, 920310 Accelerator!)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (Accelerator! bootleg set 2, 920310 Accelerator!)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2,HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2accaRomInfo, Sf2accaRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17309,7 +17317,7 @@ struct BurnDriver BurnDrvCpsSf2acca = {
 
 struct BurnDriver BurnDrvCpsSf2accp2 = {
 	"sf2accp2", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Accelerator Pt.II bootleg, 920313 Testron)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (Accelerator Pt.II bootleg, 920313 Testron)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2,HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2accp2RomInfo, Sf2accp2RomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17319,7 +17327,7 @@ struct BurnDriver BurnDrvCpsSf2accp2 = {
 
 struct BurnDriver BurnDrvCpsSf2dkot2 = {
 	"sf2dkot2", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Double K.O. Turbo II bootleg, 902140 USA)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (Double K.O. Turbo II bootleg, 902140 USA)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2,HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2dkot2RomInfo, Sf2dkot2RomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17329,7 +17337,7 @@ struct BurnDriver BurnDrvCpsSf2dkot2 = {
 
 struct BurnDriver BurnDrvCpsSf2rb = {
 	"sf2rb", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Rainbow bootleg set 1, 920322 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (Rainbow bootleg set 1, 920322 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2,HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2rbRomInfo, Sf2rbRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17339,7 +17347,7 @@ struct BurnDriver BurnDrvCpsSf2rb = {
 
 struct BurnDriver BurnDrvCpsSf2rb2 = {
 	"sf2rb2", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Rainbow bootleg set 2, 920322 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (Rainbow bootleg set 2, 920322 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2,HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2rb2RomInfo, Sf2rb2RomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17349,7 +17357,7 @@ struct BurnDriver BurnDrvCpsSf2rb2 = {
 
 struct BurnDriver BurnDrvCpsSf2rb3 = {
 	"sf2rb3", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Rainbow bootleg set 3, 920322 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (Rainbow bootleg set 3, 920322 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2,HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2rb3RomInfo, Sf2rb3RomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17359,7 +17367,7 @@ struct BurnDriver BurnDrvCpsSf2rb3 = {
 
 struct BurnDriver BurnDrvCpsSf2rb4 = {
 	"sf2rb4", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Rainbow bootleg set 4, 920322 Japan)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (Rainbow bootleg set 4, 920322 Japan)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2rb4RomInfo, Sf2rb4RomName, NULL, NULL, Sf2yycInputInfo, Sf2jDIPInfo,
@@ -17369,7 +17377,7 @@ struct BurnDriver BurnDrvCpsSf2rb4 = {
 
 struct BurnDriver BurnDrvCpsSf2rb5 = {
 	"sf2rb5", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Rainbow bootleg set 5, 920322 Japan)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (Rainbow bootleg set 5, 920322 Japan)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2rb5RomInfo, Sf2rb5RomName, NULL, NULL, Sf2yycInputInfo, Sf2jDIPInfo,
@@ -17379,7 +17387,7 @@ struct BurnDriver BurnDrvCpsSf2rb5 = {
 
 struct BurnDriver BurnDrvCpsSf2rb6 = {
 	"sf2rb6", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Rainbow bootleg set 6, 920313 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (Rainbow bootleg set 6, 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2rb6RomInfo, Sf2rb6RomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17389,7 +17397,7 @@ struct BurnDriver BurnDrvCpsSf2rb6 = {
 
 struct BurnDriver BurnDrvCpsSf2red = {
 	"sf2red", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Red Wave bootleg set 1, 920313 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (Red Wave bootleg set 1, 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2redRomInfo, Sf2redRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17399,7 +17407,7 @@ struct BurnDriver BurnDrvCpsSf2red = {
 
 struct BurnDriver BurnDrvCpsSf2red2 = {
 	"sf2red2", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Red Wave bootleg set 2, 920313 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (Red Wave bootleg set 2, 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2red2RomInfo, Sf2red2RomName, NULL, NULL, Sf2yycInputInfo, Sf2jDIPInfo,
@@ -17409,7 +17417,7 @@ struct BurnDriver BurnDrvCpsSf2red2 = {
 
 struct BurnDriver BurnDrvCpsSf2v004 = {
 	"sf2v004", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (V004 bootleg set 1, 102092 USA)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (V004 bootleg set 1, 102092 USA)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2v004RomInfo, Sf2v004RomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17419,7 +17427,7 @@ struct BurnDriver BurnDrvCpsSf2v004 = {
 
 struct BurnDriver BurnDrvCpsSf2v0042 = {
 	"sf2v0042", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (V004 bootleg set 2, 920313 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (V004 bootleg set 2, 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2v0042RomInfo, Sf2v0042RomName, NULL, NULL, Sf2yycInputInfo, Sf2jDIPInfo,
@@ -17429,7 +17437,7 @@ struct BurnDriver BurnDrvCpsSf2v0042 = {
 
 struct BurnDriver BurnDrvCpsSf2v0043 = {
 	"sf2v0043", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (V004 bootleg set 3, 920313 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (V004 bootleg set 3, 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2,HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2v0043RomInfo, Sf2v0043RomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17447,19 +17455,19 @@ struct BurnDriver BurnDrvCpsSf2dongb = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsSf2hunghsi = {
-	"sf2hunghsi", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Hungh-Hsi bootleg, 920313 Taiwan)\0", NULL, "bootleg", "CPS1",
+struct BurnDriver BurnDrvCpsSf2bhh = {
+	"sf2bhh", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II' - Champion Edition (Hungh-Hsi bootleg, 920313 Taiwan)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2,HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2hunghsiRomInfo, Sf2hunghsiRomName, NULL, NULL, Sf2InputInfo, Sf2hunghsiDIPInfo,
-	Sf2hunghsiInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	NULL, Sf2bhhRomInfo, Sf2bhhRomName, NULL, NULL, Sf2InputInfo, Sf2bhhDIPInfo,
+	Sf2bhhInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvCpsSf2hf = {
 	"sf2hf", NULL, NULL, NULL, "1992",
-	"Street Fighter II' - hyper fighting (street fighter 2' T 921209 ETC)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' - Hyper Fighting (street fighter 2' T 921209 ETC)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2hfRomInfo, Sf2hfRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17469,7 +17477,7 @@ struct BurnDriver BurnDrvCpsSf2hf = {
 
 struct BurnDriver BurnDrvCpsSf2hfu = {
 	"sf2hfu", "sf2hf", NULL, NULL, "1992",
-	"Street Fighter II' - hyper fighting (street fighter 2' T 921209 USA)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' - Hyper Fighting (street fighter 2' T 921209 USA)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2hfuRomInfo, Sf2hfuRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17479,7 +17487,7 @@ struct BurnDriver BurnDrvCpsSf2hfu = {
 
 struct BurnDriver BurnDrvCpsSf2hfj = {
 	"sf2hfj", "sf2hf", NULL, NULL, "1992",
-	"Street Fighter II' Turbo - hyper fighting (street fighter 2' T 921209 Japan)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' Turbo - Hyper Fighting (street fighter 2' T 921209 Japan)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2hfjRomInfo, Sf2hfjRomName, NULL, NULL, Sf2InputInfo, Sf2jDIPInfo,
@@ -17489,7 +17497,7 @@ struct BurnDriver BurnDrvCpsSf2hfj = {
 
 struct BurnDriverD BurnDrvCpsSf2hfub = {
 	"sf2hfub", "sf2hf", NULL, NULL, "1992",
-	"Street Fighter II' - hyper fighting (bootleg set 3, street fighter 2' T 921209 USA)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Hyper Fighting (bootleg set 3, street fighter 2' T 921209 USA)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2hfubRomInfo, Sf2hfubRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17499,7 +17507,7 @@ struct BurnDriverD BurnDrvCpsSf2hfub = {
 
 struct BurnDriver BurnDrvCpsSf2hfjb = {
 	"sf2hfjb", "sf2hf", NULL, NULL, "1992",
-	"Street Fighter II' Turbo - hyper fighting (bootleg set 1, 921209 Japan)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' Turbo - Hyper Fighting (bootleg set 1, 921209 Japan)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2hfjbRomInfo, Sf2hfjbRomName, NULL, NULL, Sf2yycInputInfo, Sf2jDIPInfo,
@@ -17509,7 +17517,7 @@ struct BurnDriver BurnDrvCpsSf2hfjb = {
 
 struct BurnDriver BurnDrvCpsSf2hfjb2 = {
 	"sf2hfjb2", "sf2hf", NULL, NULL, "1992",
-	"Street Fighter II' Turbo - hyper fighting (bootleg set 2, 921209 Japan)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' Turbo - Hyper Fighting (bootleg set 2, 921209 Japan)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2hfjb2RomInfo, Sf2hfjb2RomName, NULL, NULL, Sf2yycInputInfo, Sf2jDIPInfo,
@@ -17519,7 +17527,7 @@ struct BurnDriver BurnDrvCpsSf2hfjb2 = {
 
 struct BurnDriver BurnDrvCpsSf2yyc = {
 	"sf2yyc", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (YYC bootleg set 1, 920313 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (YYC bootleg set 1, 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2yycRomInfo, Sf2yycRomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
@@ -17529,7 +17537,7 @@ struct BurnDriver BurnDrvCpsSf2yyc = {
 
 struct BurnDriver BurnDrvCpsSf2yyc2 = {
 	"sf2yyc2", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (YYC bootleg set 2, 920313 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (YYC bootleg set 2, 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2yyc2RomInfo, Sf2yyc2RomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
@@ -17569,7 +17577,7 @@ struct BurnDriver BurnDrvCpsSf2koryu3 = {
 
 struct BurnDriver BurnDrvCpsSf2amf = {
 	"sf2amf", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II - champion edition (Alpha Magic-F bootleg set 1, 920313 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II - Champion Edition (Alpha Magic-F bootleg set 1, 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2amfRomInfo, Sf2amfRomName, NULL, NULL, Sf2yycInputInfo, Sf2amfDIPInfo,
@@ -17579,7 +17587,7 @@ struct BurnDriver BurnDrvCpsSf2amf = {
 
 struct BurnDriver BurnDrvCpsSf2amf2 = {
 	"sf2amf2", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II - champion edition (Alpha Magic-F bootleg set 2, 920313 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II - Champion Edition (Alpha Magic-F bootleg set 2, 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2amf2RomInfo, Sf2amf2RomName, NULL, NULL, Sf2yycInputInfo, Sf2amfDIPInfo,
@@ -17589,7 +17597,7 @@ struct BurnDriver BurnDrvCpsSf2amf2 = {
 
 struct BurnDriver BurnDrvCpsSf2amf3 = {
 	"sf2amf3", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II - champion edition (Alpha Magic-F bootleg set 3, 920313 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II - Champion Edition (Alpha Magic-F bootleg set 3, 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2amf3RomInfo, Sf2amf3RomName, NULL, NULL, Sf2yycInputInfo, Sf2amfDIPInfo,
@@ -17599,7 +17607,7 @@ struct BurnDriver BurnDrvCpsSf2amf3 = {
 
 struct BurnDriver BurnDrvCpsSf2amf4 = {
 	"sf2amf4", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II - champion edition (Alpha Magic-F bootleg set 4, 920313 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II - Champion Edition (Alpha Magic-F bootleg set 4, 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2amf4RomInfo, Sf2amf4RomName, NULL, NULL, Sf2yycInputInfo, Sf2amfDIPInfo,
@@ -17609,7 +17617,7 @@ struct BurnDriver BurnDrvCpsSf2amf4 = {
 
 struct BurnDriver BurnDrvCpsSf2amf5 = {
 	"sf2amf5", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II - champion edition (Alpha Magic-F bootleg set 5, 920313 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II - Champion Edition (Alpha Magic-F bootleg set 5, 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2amf5RomInfo, Sf2amf5RomName, NULL, NULL, Sf2yycInputInfo, Sf2amfDIPInfo,
@@ -17619,7 +17627,7 @@ struct BurnDriver BurnDrvCpsSf2amf5 = {
 
 struct BurnDriver BurnDrvCpsSf2amf6 = {
 	"sf2amf6", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II - champion edition (Alpha Magic-F bootleg set 6, 920313 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II - Champion Edition (Alpha Magic-F bootleg set 6, 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2amf6RomInfo, Sf2amf6RomName, NULL, NULL, Sf2yycInputInfo, Sf2amfDIPInfo,
@@ -17629,7 +17637,7 @@ struct BurnDriver BurnDrvCpsSf2amf6 = {
 
 struct BurnDriver BurnDrvCpsSf2amf7 = {
 	"sf2amf7", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II - champion edition (Alpha Magic-F bootleg set 7, 920313 etc)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II - Champion Edition (Alpha Magic-F bootleg set 7, 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2amf7RomInfo, Sf2amf7RomName, NULL, NULL, Sf2yycInputInfo, Sf2amfDIPInfo,
@@ -17639,7 +17647,7 @@ struct BurnDriver BurnDrvCpsSf2amf7 = {
 
 struct BurnDriver BurnDrvCpsSf2mega = {
 	"sf2mega", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Mega Co bootleg set 1, 920313 etc)\0", NULL, "Mega Co", "CPS1",
+	"Street Fighter II' - Champion Edition (Mega Co bootleg set 1, 920313 etc)\0", NULL, "Mega Co", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2megaRomInfo, Sf2megaRomName, NULL, NULL, Sf2yycInputInfo, Sf2megaDIPInfo,
@@ -17649,7 +17657,7 @@ struct BurnDriver BurnDrvCpsSf2mega = {
 
 struct BurnDriver BurnDrvCpsSf2mega2 = {
 	"sf2mega2", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Mega Co bootleg set 2, 920313 etc)\0", NULL, "Mega Co", "CPS1",
+	"Street Fighter II' - Champion Edition (Mega Co bootleg set 2, 920313 etc)\0", NULL, "Mega Co", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2mega2RomInfo, Sf2mega2RomName, NULL, NULL, Sf2yycInputInfo, Sf2megaDIPInfo,
@@ -17679,7 +17687,7 @@ struct BurnDriver BurnDrvCpsSf2mdta = {
 
 struct BurnDriverD BurnDrvCpsSf2any = {
 	"sf2any", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (bootleg)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (bootleg)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2anyRomInfo, Sf2anyRomName, NULL, NULL, Sf2ceeablInputInfo, Sf2DIPInfo,
@@ -17689,7 +17697,7 @@ struct BurnDriverD BurnDrvCpsSf2any = {
 
 struct BurnDriver BurnDrvCpsSf2ceeabl = {
 	"sf2ceeabl", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (920313 etc bootleg set 1)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (920313 etc bootleg set 1)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceeablRomInfo, Sf2ceeablRomName, NULL, NULL, Sf2ceeablInputInfo, Sf2DIPInfo,
@@ -17699,7 +17707,7 @@ struct BurnDriver BurnDrvCpsSf2ceeabl = {
 
 struct BurnDriver BurnDrvCpsSf2ceeab2 = {
 	"sf2ceeab2", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (920313 etc bootleg set 2)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (920313 etc bootleg set 2)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceeab2RomInfo, Sf2ceeab2RomName, NULL, NULL, Sf2ceeablInputInfo, Sf2DIPInfo,
@@ -17709,7 +17717,7 @@ struct BurnDriver BurnDrvCpsSf2ceeab2 = {
 
 struct BurnDriver BurnDrvCpsSf2cejabl = {
 	"sf2cejabl", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (920322 Japan bootleg set 1)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (920322 Japan bootleg set 1)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2cejablRomInfo, Sf2cejablRomName, NULL, NULL, Sf2yycInputInfo, Sf2jDIPInfo,
@@ -17719,7 +17727,7 @@ struct BurnDriver BurnDrvCpsSf2cejabl = {
 
 struct BurnDriver BurnDrvCpsSf2cejab2 = {
 	"sf2cejab2", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (920322 Japan bootleg set 2)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (920322 Japan bootleg set 2)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2cejab2RomInfo, Sf2cejab2RomName, NULL, NULL, Sf2yycInputInfo, Sf2jDIPInfo,
@@ -17729,7 +17737,7 @@ struct BurnDriver BurnDrvCpsSf2cejab2 = {
 
 struct BurnDriver BurnDrvCpsSf2ceuabl = {
 	"sf2ceuabl", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (920313 USA bootleg set 1)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (920313 USA bootleg set 1)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceuablRomInfo, Sf2ceuablRomName, NULL, NULL, Sf2ceuablInputInfo, Sf2DIPInfo,
@@ -17739,7 +17747,7 @@ struct BurnDriver BurnDrvCpsSf2ceuabl = {
 
 struct BurnDriver BurnDrvCpsSf2ceuab2 = {
 	"sf2ceuab2", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (920313 USA bootleg set 2)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (920313 USA bootleg set 2)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceuab2RomInfo, Sf2ceuab2RomName, NULL, NULL, Sf2ceuablInputInfo, Sf2DIPInfo,
@@ -17749,7 +17757,7 @@ struct BurnDriver BurnDrvCpsSf2ceuab2 = {
 
 struct BurnDriver BurnDrvCpsSf2ceuab3 = {
 	"sf2ceuab3", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (920313 USA bootleg set 3)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (920313 USA bootleg set 3)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceuab3RomInfo, Sf2ceuab3RomName, NULL, NULL, Sf2ceuablInputInfo, Sf2DIPInfo,
@@ -17759,7 +17767,7 @@ struct BurnDriver BurnDrvCpsSf2ceuab3 = {
 
 struct BurnDriver BurnDrvCpsSf2ceuab4 = {
 	"sf2ceuab4", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (920313 USA bootleg set 4)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (920313 USA bootleg set 4)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceuab4RomInfo, Sf2ceuab4RomName, NULL, NULL, Sf2ceuablInputInfo, Sf2DIPInfo,
@@ -17769,7 +17777,7 @@ struct BurnDriver BurnDrvCpsSf2ceuab4 = {
 
 struct BurnDriver BurnDrvCpsSf2ceuab5 = {
 	"sf2ceuab5", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (920313 USA bootleg set 5)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (920313 USA bootleg set 5)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceuab5RomInfo, Sf2ceuab5RomName, NULL, NULL, Sf2ceuablInputInfo, Sf2DIPInfo,
@@ -17779,7 +17787,7 @@ struct BurnDriver BurnDrvCpsSf2ceuab5 = {
 
 struct BurnDriver BurnDrvCpsSf2ceuab6 = {
 	"sf2ceuab6", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (920313 USA bootleg set 6)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (920313 USA bootleg set 6)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceuab6RomInfo, Sf2ceuab6RomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17789,7 +17797,7 @@ struct BurnDriver BurnDrvCpsSf2ceuab6 = {
 
 struct BurnDriver BurnDrvCpsSf2ceucbl = {
 	"sf2ceucbl", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (920803 USA bootleg)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (920803 USA bootleg)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceucblRomInfo, Sf2ceucblRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -17799,7 +17807,7 @@ struct BurnDriver BurnDrvCpsSf2ceucbl = {
 
 struct BurnDriver BurnDrvCpsSf2tlona = {
 	"sf2tlona", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Tu Long bootleg set 1, 811102 001)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (Tu Long bootleg set 1, 811102 001)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2tlonaRomInfo, Sf2tlonaRomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
@@ -17809,7 +17817,7 @@ struct BurnDriver BurnDrvCpsSf2tlona = {
 
 struct BurnDriver BurnDrvCpsSf2tlonb = {
 	"sf2tlonb", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Tu Long bootleg set 2, 811102 001)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (Tu Long bootleg set 2, 811102 001)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2tlonbRomInfo, Sf2tlonbRomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
@@ -17819,7 +17827,7 @@ struct BurnDriver BurnDrvCpsSf2tlonb = {
 
 struct BurnDriver BurnDrvCpsSf2tlonc = {
 	"sf2tlonc", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (Tu Long bootleg set 3, 811102 001)\0", NULL, "bootleg", "CPS1",
+	"Street Fighter II' - Champion Edition (Tu Long bootleg set 3, 811102 001)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2tloncRomInfo, Sf2tloncRomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
@@ -18647,7 +18655,7 @@ STD_ROM_FN(Sf2cebr)
 
 struct BurnDriverX BurnDrvCpsSf2cebr = {
 	"sf2cebr", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (bootleg, Brazil)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' - Champion Edition (bootleg, Brazil)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2cebrRomInfo, Sf2cebrRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
@@ -18684,7 +18692,7 @@ STD_ROM_FN(Sf2ceh)
 
 struct BurnDriverX BurnDrvCpsSf2ceh = {
 	"sf2ceh", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - champion edition (bootleg, Hispanic)\0", NULL, "Capcom", "CPS1",
+	"Street Fighter II' - Champion Edition (bootleg, Hispanic)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2cehRomInfo, Sf2cehRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,

@@ -973,13 +973,13 @@ static struct BurnDIPInfo ContcircDIPList[]=
 	{0x0e, 0x01, 0xc0, 0x00, "1 Coin 6 Credits"               },
 	
 	// Dip 2
-	{0   , 0xfe, 0   , 4   , "Time Difficulty"                },
+	{0   , 0xfe, 0   , 4   , "Difficulty 1 (time/speed)"      },
 	{0x0f, 0x01, 0x03, 0x02, "Easy"                           },
 	{0x0f, 0x01, 0x03, 0x03, "Normal"                         },
 	{0x0f, 0x01, 0x03, 0x01, "Hard"                           },
 	{0x0f, 0x01, 0x03, 0x00, "Hardest"                        },
 	
-	{0   , 0xfe, 0   , 4   , "Opponent Difficulty"            },
+	{0   , 0xfe, 0   , 4   , "Difficulty 2 (other cars)"      },
 	{0x0f, 0x01, 0x0c, 0x08, "Easy"                           },
 	{0x0f, 0x01, 0x0c, 0x0c, "Normal"                         },
 	{0x0f, 0x01, 0x0c, 0x04, "Hard"                           },
@@ -989,7 +989,7 @@ static struct BurnDIPInfo ContcircDIPList[]=
 	{0x0f, 0x01, 0x10, 0x10, "Free"                           },
 	{0x0f, 0x01, 0x10, 0x00, "Locked"                         },
 	
-	{0   , 0xfe, 0   , 2   , "Enable 3D Alternate Frames"     },
+	{0   , 0xfe, 0   , 2   , "3D Effects"     				  },
 	{0x0f, 0x01, 0x20, 0x00, "Off"                            },
 	{0x0f, 0x01, 0x20, 0x20, "On"                             },
 };
@@ -1028,13 +1028,13 @@ static struct BurnDIPInfo ContcircuDIPList[]=
 	{0x0e, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"              },
 	
 	// Dip 2
-	{0   , 0xfe, 0   , 4   , "Time Difficulty"                },
+	{0   , 0xfe, 0   , 4   , "Difficulty 1 (time/speed)"      },
 	{0x0f, 0x01, 0x03, 0x02, "Easy"                           },
 	{0x0f, 0x01, 0x03, 0x03, "Normal"                         },
 	{0x0f, 0x01, 0x03, 0x01, "Hard"                           },
 	{0x0f, 0x01, 0x03, 0x00, "Hardest"                        },
 	
-	{0   , 0xfe, 0   , 4   , "Opponent Difficulty"            },
+	{0   , 0xfe, 0   , 4   , "Difficulty 2 (other cars)"      },
 	{0x0f, 0x01, 0x0c, 0x08, "Easy"                           },
 	{0x0f, 0x01, 0x0c, 0x0c, "Normal"                         },
 	{0x0f, 0x01, 0x0c, 0x04, "Hard"                           },
@@ -1044,12 +1044,63 @@ static struct BurnDIPInfo ContcircuDIPList[]=
 	{0x0f, 0x01, 0x10, 0x10, "Free"                           },
 	{0x0f, 0x01, 0x10, 0x00, "Locked"                         },
 	
-	{0   , 0xfe, 0   , 2   , "Enable 3D Alternate Frames"     },
+	{0   , 0xfe, 0   , 2   , "3D Effects"     				  },
 	{0x0f, 0x01, 0x20, 0x00, "Off"                            },
 	{0x0f, 0x01, 0x20, 0x20, "On"                             },
 };
 
 STDDIPINFO(Contcircu)
+
+static struct BurnDIPInfo ContcircjDIPList[]=
+{
+	// Default Values
+	{0x0e, 0xff, 0xff, 0xff, NULL                             },
+	{0x0f, 0xff, 0xff, 0xdf, NULL                             },
+	
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Cabinet"                        },
+	{0x0e, 0x01, 0x01, 0x01, "Upright"                        },
+	{0x0e, 0x01, 0x01, 0x00, "Cockpit"                        },
+	
+	{0   , 0xfe, 0   , 2   , "Service Mode"                   },
+	{0x0e, 0x01, 0x04, 0x04, "Off"                            },
+	{0x0e, 0x01, 0x04, 0x00, "On"                             },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                    },
+	{0x0e, 0x01, 0x08, 0x00, "Off"                            },
+	{0x0e, 0x01, 0x08, 0x08, "On"                             },
+	
+	{0   , 0xfe, 0   , 4   , "Coin A"                         },
+	{0x0e, 0x01, 0x30, 0x10, "2 Coins 1 Credit"               },
+	{0x0e, 0x01, 0x30, 0x30, "1 Coin  1 Credit"               },
+	{0x0e, 0x01, 0x30, 0x00, "2 Coins 3 Credits"              },
+	{0x0e, 0x01, 0x30, 0x20, "1 Coin  2 Credits"              },
+	
+	{0   , 0xfe, 0   , 4   , "Coin B"                         },
+	{0x0e, 0x01, 0xc0, 0x40, "2 Coins 1 Credit"               },
+	{0x0e, 0x01, 0xc0, 0xc0, "1 Coin  1 Credit"               },
+	{0x0e, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"              },
+	{0x0e, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"              },
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 4   , "Difficulty 1 (time/speed)"      },
+	{0x0f, 0x01, 0x03, 0x02, "Easy"                           },
+	{0x0f, 0x01, 0x03, 0x03, "Normal"                         },
+	{0x0f, 0x01, 0x03, 0x01, "Hard"                           },
+	{0x0f, 0x01, 0x03, 0x00, "Hardest"                        },
+	
+	{0   , 0xfe, 0   , 4   , "Difficulty 2 (other cars)"      },
+	{0x0f, 0x01, 0x0c, 0x08, "Easy"                           },
+	{0x0f, 0x01, 0x0c, 0x0c, "Normal"                         },
+	{0x0f, 0x01, 0x0c, 0x04, "Hard"                           },
+	{0x0f, 0x01, 0x0c, 0x00, "Hardest"                        },
+	
+	{0   , 0xfe, 0   , 2   , "Steering Wheel"                 },
+	{0x0f, 0x01, 0x10, 0x10, "Free"                           },
+	{0x0f, 0x01, 0x10, 0x00, "Locked"                         },
+};
+
+STDDIPINFO(Contcircj)
 
 static struct BurnDIPInfo DblaxleDIPList[]=
 {
@@ -1226,6 +1277,47 @@ static struct BurnDIPInfo EnforcejDIPList[]=
 };
 
 STDDIPINFO(Enforcej)
+
+static struct BurnDIPInfo EnforcejaDIPList[]=
+{
+	// Default Values
+	{0x0c, 0xff, 0xff, 0xff, NULL                             },
+	{0x0d, 0xff, 0xff, 0xef, NULL                             },
+	
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Service Mode"                   },
+	{0x0c, 0x01, 0x04, 0x04, "Off"                            },
+	{0x0c, 0x01, 0x04, 0x00, "On"                             },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                    },
+	{0x0c, 0x01, 0x08, 0x00, "Off"                            },
+	{0x0c, 0x01, 0x08, 0x08, "On"                             },
+	
+	{0   , 0xfe, 0   , 4   , "Coin A"                         },
+	{0x0c, 0x01, 0x30, 0x10, "2 Coins 1 Credit"               },
+	{0x0c, 0x01, 0x30, 0x30, "1 Coin  1 Credit"               },
+	{0x0c, 0x01, 0x30, 0x00, "2 Coins 3 Credits"              },
+	{0x0c, 0x01, 0x30, 0x20, "1 Coin  2 Credits"              },
+	
+	{0   , 0xfe, 0   , 4   , "Coin B"                         },
+	{0x0c, 0x01, 0xc0, 0x40, "2 Coins 1 Credit"               },
+	{0x0c, 0x01, 0xc0, 0xc0, "1 Coin  1 Credit"               },
+	{0x0c, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"              },
+	{0x0c, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"              },
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Background Scenery"             },
+	{0x0d, 0x01, 0x10, 0x10, "Crazy Scolling"                 },
+	{0x0d, 0x01, 0x10, 0x00, "Normal"                         },
+	
+	{0   , 0xfe, 0   , 2   , "3D Effects" 					  },
+	{0x0d, 0x01, 0x30, 0x30, "Off"                            },
+	{0x0d, 0x01, 0x30, 0x20, "On"                             },
+	{0x0d, 0x01, 0x30, 0x10, "In Game Only"                   },
+	{0x0d, 0x01, 0x30, 0x00, "In Game Only"                   },
+};
+
+STDDIPINFO(Enforceja)
 
 static struct BurnDIPInfo NightstrDIPList[]=
 {
@@ -2468,6 +2560,41 @@ static struct BurnRomInfo EnforcejRomDesc[] = {
 
 STD_ROM_PICK(Enforcej)
 STD_ROM_FN(Enforcej)
+
+static struct BurnRomInfo EnforcejaRomDesc[] = {
+	{ "b58-31.27",     0x20000, 0xd686e371, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b58-30.19",     0x20000, 0xcd73c0d8, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	
+	{ "b58-29.26",     0x20000, 0x8482a4e4, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "b58-28.18",     0x20000, 0x9735e2b1, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	
+	{ "b58-32.41",     0x10000, 0xf3fd8eca, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	
+	{ "b58-09.13",     0x80000, 0x9ffd5b31, BRF_GRA | TAITO_CHARS },
+	
+	{ "b58-04.7",      0x80000, 0x9482f08d, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "b58-03.6",      0x80000, 0x158bc440, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "b58-02.2",      0x80000, 0x6a6e307c, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "b58-01.1",      0x80000, 0x01e9f0a8, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	
+	{ "b58-06.116",    0x80000, 0xb3495d70, BRF_GRA | TAITO_ROAD },
+	
+	{ "b58-05.71",     0x80000, 0xd1f4991b, BRF_GRA | TAITO_SPRITEMAP },
+	
+	{ "b58-07.11",     0x80000, 0xeeb5ba08, BRF_SND | TAITO_YM2610A },
+	{ "b58-08.12",     0x80000, 0x049243cf, BRF_SND | TAITO_YM2610A },
+	
+	{ "b58-10.14",     0x80000, 0xedce0cc1, BRF_SND | TAITO_YM2610B },
+	
+	{ "b58-26.104",    0x10000, 0xdccb0c7f, BRF_OPT },
+	{ "b58-27.56",     0x02000, 0x5c6b013d, BRF_OPT },
+	{ "b58-23.52",     0x00100, 0x7b7d8ff4, BRF_OPT },
+	{ "b58-24.51",     0x00100, 0xfbf81f30, BRF_OPT },
+	{ "b58-25.75",     0x00100, 0xde547342, BRF_OPT },
+};
+
+STD_ROM_PICK(Enforceja)
+STD_ROM_FN(Enforceja)
 
 static struct BurnRomInfo NightstrRomDesc[] = {
 	{ "b91-45.bin",    0x20000, 0x7ad63421, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -6418,7 +6545,7 @@ struct BurnDriver BurnDrvContcircua = {
 	"Continental Circus (US set 2)\0", NULL, "Taito America Corporation", "Taito-Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
-	NULL, ContcircuaRomInfo, ContcircuaRomName, NULL, NULL, ContcircInputInfo, ContcircuDIPInfo,
+	NULL, ContcircuaRomInfo, ContcircuaRomName, NULL, NULL, ContcircInputInfo, ContcircjDIPInfo,
 	ContcircInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
 	NULL, 0x1000, 320, 224, 4, 3
 };
@@ -6428,7 +6555,7 @@ struct BurnDriver BurnDrvContcircj = {
 	"Continental Circus (Japan)\0", NULL, "Taito Corporation", "Taito-Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
-	NULL, ContcircjRomInfo, ContcircjRomName, NULL, NULL, ContcircInputInfo, ContcircuDIPInfo,
+	NULL, ContcircjRomInfo, ContcircjRomName, NULL, NULL, ContcircInputInfo, ContcircjDIPInfo,
 	ContcircInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
 	NULL, 0x1000, 320, 224, 4, 3
 };
@@ -6479,6 +6606,16 @@ struct BurnDriver BurnDrvEnforcej = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, EnforcejRomInfo, EnforcejRomName, NULL, NULL, EnforceInputInfo, EnforcejDIPInfo,
+	EnforceInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	NULL, 0x1000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvEnforceja = {
+	"enforceja", "enforce", NULL, NULL, "1988",
+	"Enforce (Japan, Analog Controls)\0", NULL, "Taito Corporation", "Taito-Z",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
+	NULL, EnforcejaRomInfo, EnforcejaRomName, NULL, NULL, EnforceInputInfo, EnforcejaDIPInfo,
 	EnforceInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
 	NULL, 0x1000, 320, 224, 4, 3
 };

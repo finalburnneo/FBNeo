@@ -1272,7 +1272,7 @@ static struct BurnDIPInfo EnforcejDIPList[]=
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Background Scenery"             },
-	{0x0d, 0x01, 0x10, 0x10, "Crazy Scolling"                 },
+	{0x0d, 0x01, 0x10, 0x10, "Crazy Scrolling"                },
 	{0x0d, 0x01, 0x10, 0x00, "Normal"                         },
 };
 
@@ -1282,7 +1282,7 @@ static struct BurnDIPInfo EnforcejaDIPList[]=
 {
 	// Default Values
 	{0x0c, 0xff, 0xff, 0xff, NULL                             },
-	{0x0d, 0xff, 0xff, 0xef, NULL                             },
+	{0x0d, 0xff, 0xff, 0xff, NULL                             },
 	
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Service Mode"                   },
@@ -1305,12 +1305,8 @@ static struct BurnDIPInfo EnforcejaDIPList[]=
 	{0x0c, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"              },
 	{0x0c, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"              },
 	
-	// Dip 2
-	{0   , 0xfe, 0   , 2   , "Background Scenery"             },
-	{0x0d, 0x01, 0x10, 0x10, "Crazy Scolling"                 },
-	{0x0d, 0x01, 0x10, 0x00, "Normal"                         },
-	
-	{0   , 0xfe, 0   , 2   , "3D Effects" 					  },
+	// Dip 2	
+	{0   , 0xfe, 0   , 4   , "3D Effects" 					  },
 	{0x0d, 0x01, 0x30, 0x30, "Off"                            },
 	{0x0d, 0x01, 0x30, 0x20, "On"                             },
 	{0x0d, 0x01, 0x30, 0x10, "In Game Only"                   },

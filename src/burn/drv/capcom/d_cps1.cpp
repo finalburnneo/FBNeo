@@ -4859,6 +4859,36 @@ static struct BurnRomInfo Dinopic2RomDesc[] = {
 STD_ROM_PICK(Dinopic2)
 STD_ROM_FN(Dinopic2)
 
+static struct BurnRomInfo Dinopic3RomDesc[] = {
+	{ "27c4000-m15377-a-5.bin",    	0x080000, 0x96dfcbf1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "27c4000-m15262-a-3.bin", 	0x080000, 0x13dfeb08, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "27c4000-m15295-a-4.bin", 	0x080000, 0x6133f349, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "27c4000-m15263-a-1-2.bin", 	0x080000, 0x0e4058ba, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	
+	{ "27c4000-m15263-a-1-9.bin",  	0x080000, 0xf3c2c98d, BRF_GRA | CPS1_TILES },
+	{ "27c4000-m15262-a-8.bin",  	0x080000, 0xa0e1f6e0, BRF_GRA | CPS1_TILES },
+	{ "27c4000-m15279-a-7.bin",  	0x080000, 0x55ef0adc, BRF_GRA | CPS1_TILES },
+	{ "27c4000-m15279-a-6.bin",  	0x080000, 0xcc0805fc, BRF_GRA | CPS1_TILES },
+	{ "27c4000-m15013-b-1-13.bin",  0x080000, 0x1371f714, BRF_GRA | CPS1_TILES },
+	{ "27c4000-m15263-a-1-12.bin",  0x080000, 0xb284c4a7, BRF_GRA | CPS1_TILES },
+	{ "27c4000-m15377-a-11.bin",  	0x080000, 0xb7ad3394, BRF_GRA | CPS1_TILES },
+	{ "27c4000-m15279-a-10.bin",  	0x080000, 0x88847705, BRF_GRA | CPS1_TILES },
+	
+	{ "pic16c57-rc.bin",       		0x001030, 0x4d262eaa, BRF_PRG | CPS1_PIC },
+
+	{ "27c4000-m15388-a-1.bin",    	0x080000, 0x7d921309, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "cat93c46p.bin",         		0x000080, 0xd49fa351, BRF_OPT },
+	{ "gal20v8a-1.bin",        		0x000157, 0xcd99ca47, BRF_OPT },
+	{ "gal20v8a-2.bin",        		0x000157, 0x60d016b9, BRF_OPT },
+	{ "gal20v8a-3.bin",        		0x000157, 0x049b7f4f, BRF_OPT },
+	{ "palce16v8h-1.bin",      		0x000117, 0x48253c66, BRF_OPT },
+	{ "palce16v8h-2.bin",      		0x000117, 0x9ae375ba, BRF_OPT },
+};
+
+STD_ROM_PICK(Dinopic3)
+STD_ROM_FN(Dinopic3)
+
 static struct BurnRomInfo DinohRomDesc[] = {
 	{ "cda_23h.rom",   0x080000, 0x8e2a9cf0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "cda_22h.rom",   0x080000, 0xf72cd219, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -11937,6 +11967,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "dinoj"       , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinopic"     , CPS_B_21_QS2, mapper_CD63B , 0, NULL                },
 	{ "dinopic2"    , CPS_B_21_QS2, mapper_CD63B , 0, NULL                },
+	{ "dinopic3"    , CPS_B_21_QS2, mapper_CD63B , 0, NULL                },
 	{ "dinoeh"      , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinoh"       , CPS_B_21_DEF, mapper_CD63B , 0, dino_decode         },
 	{ "dinohc"      , CPS_B_21_DEF, mapper_CD63B , 0, dino_decode         }, // hacked to run on Street Fighter II' Champion Edition C-Board
@@ -16111,6 +16142,16 @@ struct BurnDriver BurnDrvCpsDinopic2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Dinopic2RomInfo, Dinopic2RomName, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	DinopicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsDinopic3 = {
+	"dinopic3", "dino", NULL, NULL, "1993",
+	"Cadillacs and Dinosaurs (bootleg set 3 (with PIC16c57), 930201 etc)\0", "No sound", "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, Dinopic3RomInfo, Dinopic3RomName, NULL, NULL, DinoInputInfo, DinoDIPInfo,
 	DinopicInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

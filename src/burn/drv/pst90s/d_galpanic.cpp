@@ -465,7 +465,7 @@ static struct BurnRomInfo NewfantRomDesc[] = {
 	{ "iscr8.11", 			0x080000, 0xf4148528, BRF_ESS | BRF_PRG },
 	{ "iscr7.06",			0x080000, 0x2dee0c31, BRF_ESS | BRF_PRG },
 
-	{ "obj1.13",    		0x080000, 0x832cd451, BRF_GRA },			  // graphics
+	{ "nf95obj1.13",    	0x080000, 0xe6d1bc71, BRF_GRA },			  // graphics
 
 	{ "musc1.01",   		0x080000, 0x10347fce, BRF_SND },			  // PCM
 	{ "musc2.02",   		0x080000, 0xb9646a8c, BRF_SND },
@@ -487,7 +487,7 @@ static struct BurnRomInfo NewfantaRomDesc[] = {
 	{ "iscr8.11", 			0x080000, 0xf4148528, BRF_ESS | BRF_PRG },
 	{ "iscr7.06",			0x080000, 0x2dee0c31, BRF_ESS | BRF_PRG },
 
-	{ "nf95obj1.13",    	0x080000, 0xe6d1bc71, BRF_GRA },			  // graphics
+	{ "obj1.13",    		0x080000, 0x832cd451, BRF_GRA },			  // graphics
 
 	{ "musc1.01",   		0x080000, 0x10347fce, BRF_SND },			  // PCM
 	{ "musc2.02",   		0x080000, 0xb9646a8c, BRF_SND },

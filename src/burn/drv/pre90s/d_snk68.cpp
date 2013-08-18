@@ -1774,7 +1774,7 @@ struct BurnDriver BurnDrvikari3 = {
 	"ikari3", NULL, NULL, NULL, "1989",
 	"Ikari III - The Rescue (8-Way Joystick)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, ikari3RomInfo, ikari3RomName, NULL, NULL, IkariInputInfo, IkariDIPInfo,
 	ikari3Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
@@ -1876,6 +1876,56 @@ struct BurnDriver BurnDrvikari3j = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, ikari3jRomInfo, ikari3jRomName, NULL, NULL, IkariInputInfo, IkariDIPInfo,
+	ikari3Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 256, 224, 4, 3
+};
+
+// Ikari III - The Rescue (Korea, 8-Way Joystick)
+
+static struct BurnRomInfo ikari3kRomDesc[] = {
+	{ "ik3-2k.bin", 	0x20000, 0xa15d2222, 1 | BRF_PRG }, //  0 68k Code
+	{ "ik3-3k.bin",  	0x20000, 0xe3fc006e, 1 | BRF_PRG }, //  1
+	{ "ik3-1.c8",       0x10000, 0x47e4d256, 1 | BRF_PRG }, //  2
+	{ "ik3-4.c12",      0x10000, 0xa43af6b5, 1 | BRF_PRG }, //  3
+
+	{ "ik3-5.bin",      0x10000, 0xce6706fc, 2 | BRF_PRG }, //  4 Z80 Code
+
+	{ "ik3-7k.bin",     0x08000, 0x8bfb399b, 3 | BRF_GRA }, //  5 Characters
+	{ "ik3-8k.bin",     0x08000, 0x3f0fe576, 3 | BRF_GRA }, //  6
+
+	{ "ik3-13.bin",     0x20000, 0x9a56bd32, 4 | BRF_GRA }, //  7 Sprites
+	{ "ik3-12.bin",     0x20000, 0x0ce6a10a, 4 | BRF_GRA }, //  8
+	{ "ik3-11.bin",     0x20000, 0xe4e2be43, 4 | BRF_GRA }, //  9
+	{ "ik3-10.bin",     0x20000, 0xac222372, 4 | BRF_GRA }, // 10
+	{ "ik3-9.bin",      0x20000, 0xc33971c2, 4 | BRF_GRA }, // 11
+	{ "ik3-14.bin",     0x20000, 0x453bea77, 4 | BRF_GRA }, // 12
+	{ "ik3-15.bin",     0x20000, 0x781a81fc, 4 | BRF_GRA }, // 13
+	{ "ik3-16.bin",     0x20000, 0x80ba400b, 4 | BRF_GRA }, // 14
+	{ "ik3-17.bin",     0x20000, 0x0cc3ce4a, 4 | BRF_GRA }, // 15
+	{ "ik3-18.bin",     0x20000, 0xba106245, 4 | BRF_GRA }, // 16
+	{ "ik3-23.bin",     0x20000, 0xd0fd5c77, 4 | BRF_GRA }, // 17
+	{ "ik3-22.bin",     0x20000, 0x4878d883, 4 | BRF_GRA }, // 18
+	{ "ik3-21.bin",     0x20000, 0x50d0fbf0, 4 | BRF_GRA }, // 19
+	{ "ik3-20.bin",     0x20000, 0x9a851efc, 4 | BRF_GRA }, // 20
+	{ "ik3-19.bin",     0x20000, 0x4ebdba89, 4 | BRF_GRA }, // 21
+	{ "ik3-24.bin",     0x20000, 0xe9b26d68, 4 | BRF_GRA }, // 22
+	{ "ik3-25.bin",     0x20000, 0x073b03f1, 4 | BRF_GRA }, // 23
+	{ "ik3-26.bin",     0x20000, 0x9c613561, 4 | BRF_GRA }, // 24
+	{ "ik3-27.bin",     0x20000, 0x16dd227e, 4 | BRF_GRA }, // 25
+	{ "ik3-28.bin",     0x20000, 0x711715ae, 4 | BRF_GRA }, // 26
+
+	{ "ik3-6.bin",      0x20000, 0x59d256a4, 5 | BRF_SND }, // 27 upd7759 samples
+};
+
+STD_ROM_PICK(ikari3k)
+STD_ROM_FN(ikari3k)
+
+struct BurnDriver BurnDrvikari3k = {
+	"ikari3k", "ikari3", NULL, NULL, "1989",
+	"Ikari III - The Rescue (Korea, 8-Way Joystick)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, ikari3kRomInfo, ikari3kRomName, NULL, NULL, IkariInputInfo, IkariDIPInfo,
 	ikari3Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 256, 224, 4, 3
 };

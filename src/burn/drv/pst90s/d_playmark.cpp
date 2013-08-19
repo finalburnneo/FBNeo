@@ -405,6 +405,32 @@ static struct BurnRomInfo ExcelsrRomDesc[] = {
 STD_ROM_PICK(Excelsr)
 STD_ROM_FN(Excelsr)
 
+static struct BurnRomInfo ExcelsraRomDesc[] = {
+	{ "22(__excelsra).u301",      0x80000, 0x55dca2da, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "19(__excelsra).u302",      0x80000, 0xd13990a8, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "21.u303",          0x80000, 0xfdf9bd64, BRF_ESS | BRF_PRG }, //  2	68000 Program Code
+	{ "18.u304",          0x80000, 0xfe517e0e, BRF_ESS | BRF_PRG }, //  3	68000 Program Code
+	{ "20.u305",          0x80000, 0x8692afe9, BRF_ESS | BRF_PRG }, //  4	68000 Program Code
+	{ "17.u306",          0x80000, 0x978f9a6b, BRF_ESS | BRF_PRG }, //  5	68000 Program Code
+	
+	{ "pic16c57-hs.i015", 0x02d4c, 0x022c6941, BRF_ESS | BRF_PRG }, //  6	PIC16C57 HEX
+
+	{ "26.u311",          0x80000, 0xc171c059, BRF_GRA },			//  7	Tiles
+	{ "30.u312",          0x80000, 0xb4a4c510, BRF_GRA },			//  8	Tiles
+	{ "25.u313",          0x80000, 0x667eec1b, BRF_GRA },			//  9	Tiles
+	{ "29.u314",          0x80000, 0x4acb0745, BRF_GRA },			//  10	Tiles
+	
+	{ "24.u321",          0x80000, 0x17f46825, BRF_GRA },			//  11	Sprites
+	{ "28.u322",          0x80000, 0xa823f2bd, BRF_GRA },			//  12	Sprites
+	{ "23.u323",          0x80000, 0xd8e1453b, BRF_GRA },			//  13	Sprites
+	{ "27.u324",          0x80000, 0xeca2c079, BRF_GRA },			//  14	Sprites
+	
+	{ "16.i013",          0x80000, 0x7ed9da5d, BRF_SND },			//  15	Samples
+};
+
+STD_ROM_PICK(Excelsra)
+STD_ROM_FN(Excelsra)
+
 static struct BurnRomInfo HotmindRomDesc[] = {
 	{ "21.u87",           0x20000, 0xe9000f7f, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "22.u68",           0x20000, 0x2c518ec5, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
@@ -1670,10 +1696,20 @@ struct BurnDriver BurnDrvBigtwin = {
 
 struct BurnDriver BurnDrvExcelsr = {
 	"excelsr", NULL, NULL, NULL, "1996",
-	"Excelsior\0", NULL, "Playmark", "Misc",
+	"Excelsior (set 1)\0", NULL, "Playmark", "Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, ExcelsrRomInfo, ExcelsrRomName, NULL, NULL, ExcelsrInputInfo, ExcelsrDIPInfo,
+	ExcelsrInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x400, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvExcelsra = {
+	"excelsra", "excelsr", NULL, NULL, "1996",
+	"Excelsior (set 2)\0", NULL, "Playmark", "Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, ExcelsraRomInfo, ExcelsraRomName, NULL, NULL, ExcelsrInputInfo, ExcelsrDIPInfo,
 	ExcelsrInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 320, 240, 4, 3
 };

@@ -2556,6 +2556,47 @@ STD_ROM_PICK(Cottonu)
 STD_ROM_FN(Cottonu)
 
 static struct BurnRomInfo CottonjRomDesc[] = {
+	{ "epr-13858b.a7",  0x20000, 0x2d113dac, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13856b.a5",  0x20000, 0x5aab2ac4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13859b.a8",  0x20000, 0x2e67367d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13857b.a6",  0x20000, 0x20361f02, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "opr-13862.a14",  0x20000, 0xa47354b6, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-13877.b14",  0x20000, 0xd38424b5, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-13863.a15",  0x20000, 0x8c990026, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-13878.b15",  0x20000, 0x21c15b8a, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-13864.a16",  0x20000, 0xd2b175bf, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-13879.b16",  0x20000, 0xb9d62531, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "opr-13865.b1",   0x20000, 0x7024f404, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13869.b5",   0x20000, 0xab4b3468, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13866.b2",   0x20000, 0x6169bba4, SYS16_ROM_SPRITES | BRF_GRA },	
+	{ "opr-13870.b6",   0x20000, 0x69b41ac3, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13867.b3",   0x20000, 0xb014f02d, SYS16_ROM_SPRITES | BRF_GRA },	
+	{ "opr-13871.b7",   0x20000, 0x0801cf02, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13868.b4",   0x20000, 0xe62a7cd6, SYS16_ROM_SPRITES | BRF_GRA },	
+	{ "opr-13872.b8",   0x20000, 0xf066f315, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13852.a1",   0x20000, 0x943aba8b, SYS16_ROM_SPRITES | BRF_GRA },	
+	{ "opr-13873.b10",  0x20000, 0x1bd145f3, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13853.a2",   0x20000, 0x7ea93200, SYS16_ROM_SPRITES | BRF_GRA },	
+	{ "opr-13874.b11",  0x20000, 0x4fd59bff, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13854.a3",   0x20000, 0x1c942190, SYS16_ROM_SPRITES | BRF_GRA },	
+	{ "opr-13875.b12",  0x20000, 0x6a66868d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-13855.a4",   0x20000, 0x856f3ee2, SYS16_ROM_SPRITES | BRF_GRA },	
+	{ "opr-13876.b13",  0x20000, 0x1c5ffad8, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "epr-13860.a10",  0x08000, 0x6a57b027, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "opr-13061.a11",  0x20000, 0x4d21153f, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "317-0179b.key",  0x02000, 0x488096d3, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },  // Same key data, but labeled as REV B
+};
+
+
+STD_ROM_PICK(Cottonj)
+STD_ROM_FN(Cottonj)
+
+static struct BurnRomInfo CottonjaRomDesc[] = {
 	{ "epr-13858a.a7",  0x20000, 0x276f42fe, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-13856a.a5",  0x20000, 0x14e6b5e7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-13859a.a8",  0x20000, 0x4703ef9d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -2593,8 +2634,8 @@ static struct BurnRomInfo CottonjRomDesc[] = {
 };
 
 
-STD_ROM_PICK(Cottonj)
-STD_ROM_FN(Cottonj)
+STD_ROM_PICK(Cottonja)
+STD_ROM_FN(Cottonja)
 
 static struct BurnRomInfo DduxRomDesc[] = {
 	{ "epr-11191.a7",   0x20000, 0x500e400a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -8157,10 +8198,20 @@ struct BurnDriver BurnDrvCottonu = {
 
 struct BurnDriver BurnDrvCottonj = {
 	"cottonj", "cotton", NULL, NULL, "1991",
-	"Cotton (set 1, Japan, FD1094 317-0179a))\0", NULL, "Success / Sega", "System 16B",
+	"Cotton (set 2, Japan, Rev B, FD1094 317-0179b))\0", NULL, "Success / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
 	NULL, CottonjRomInfo, CottonjRomName, NULL, NULL, System16bInputInfo, CottonDIPInfo,
+	CottonInit, System16Exit, System16BFrame, NULL, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCottonja = {
+	"cottonja", "cotton", NULL, NULL, "1991",
+	"Cotton (set 1, Japan, Rev A, FD1094 317-0179a))\0", NULL, "Success / Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
+	NULL, CottonjaRomInfo, CottonjaRomName, NULL, NULL, System16bInputInfo, CottonDIPInfo,
 	CottonInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

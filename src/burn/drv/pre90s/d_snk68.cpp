@@ -1733,10 +1733,10 @@ static struct BurnRomInfo ikari3RomDesc[] = {
 	{ "ik3-1.c8",       0x10000, 0x47e4d256, 1 | BRF_PRG }, //  2
 	{ "ik3-4.c12",      0x10000, 0xa43af6b5, 1 | BRF_PRG }, //  3
 
-	{ "ik3-5.bin",      0x10000, 0xce6706fc, 2 | BRF_PRG }, //  4 Z80 Code
+	{ "ik3-5.16d",      0x10000, 0xce6706fc, 2 | BRF_PRG }, //  4 Z80 Code
 
-	{ "ik3-7.bin",      0x08000, 0x0b4804df, 3 | BRF_GRA }, //  5 Characters
-	{ "ik3-8.bin",      0x08000, 0x10ab4e50, 3 | BRF_GRA }, //  6
+	{ "ik3-7.16l",      0x08000, 0x0b4804df, 3 | BRF_GRA }, //  5 Characters
+	{ "ik3-8.16m",      0x08000, 0x10ab4e50, 3 | BRF_GRA }, //  6
 
 	{ "ik3-13.bin",     0x20000, 0x9a56bd32, 4 | BRF_GRA }, //  7 Sprites
 	{ "ik3-12.bin",     0x20000, 0x0ce6a10a, 4 | BRF_GRA }, //  8
@@ -1759,7 +1759,7 @@ static struct BurnRomInfo ikari3RomDesc[] = {
 	{ "ik3-27.bin",     0x20000, 0x16dd227e, 4 | BRF_GRA }, // 25
 	{ "ik3-28.bin",     0x20000, 0x711715ae, 4 | BRF_GRA }, // 26
 
-	{ "ik3-6.bin",      0x20000, 0x59d256a4, 5 | BRF_SND }, // 27 upd7759 samples
+	{ "ik3-6.18e",      0x20000, 0x59d256a4, 5 | BRF_SND }, // 27 upd7759 samples
 };
 
 STD_ROM_PICK(ikari3)
@@ -1788,10 +1788,10 @@ static struct BurnRomInfo ikari3uRomDesc[] = {
 	{ "ik3-1.c8",   0x10000, 0x47e4d256, 1 | BRF_PRG }, //  2
 	{ "ik3-4.c12",  0x10000, 0xa43af6b5, 1 | BRF_PRG }, //  3
 
-	{ "ik3-5.bin",  0x10000, 0xce6706fc, 2 | BRF_PRG }, //  4 Z80 Code
+	{ "ik3-5.16d",  0x10000, 0xce6706fc, 2 | BRF_PRG }, //  4 Z80 Code
 
-	{ "ik3-7.bin",  0x08000, 0x0b4804df, 3 | BRF_GRA }, //  5 Characters
-	{ "ik3-8.bin",  0x08000, 0x10ab4e50, 3 | BRF_GRA }, //  6
+	{ "ik3-7.16l",  0x08000, 0x0b4804df, 3 | BRF_GRA }, //  5 Characters
+	{ "ik3-8.16m",  0x08000, 0x10ab4e50, 3 | BRF_GRA }, //  6
 
 	{ "ik3-13.bin", 0x20000, 0x9a56bd32, 4 | BRF_GRA }, //  7 Sprites
 	{ "ik3-12.bin", 0x20000, 0x0ce6a10a, 4 | BRF_GRA }, //  8
@@ -1814,7 +1814,7 @@ static struct BurnRomInfo ikari3uRomDesc[] = {
 	{ "ik3-27.bin", 0x20000, 0x16dd227e, 4 | BRF_GRA }, // 25
 	{ "ik3-28.bin", 0x20000, 0x711715ae, 4 | BRF_GRA }, // 26
 
-	{ "ik3-6.bin",  0x20000, 0x59d256a4, 5 | BRF_SND }, // 27 upd7759 samples
+	{ "ik3-6.18e",  0x20000, 0x59d256a4, 5 | BRF_SND }, // 27 upd7759 samples
 };
 
 STD_ROM_PICK(ikari3u)
@@ -1838,10 +1838,10 @@ static struct BurnRomInfo ikari3jRomDesc[] = {
 	{ "ik3-1.c8",     0x10000, 0x47e4d256, 1 | BRF_PRG }, //  2
 	{ "ik3-4.c12",    0x10000, 0xa43af6b5, 1 | BRF_PRG }, //  3
 
-	{ "ik3-5.bin",    0x10000, 0xce6706fc, 2 | BRF_PRG }, //  4 Z80 Code
+	{ "ik3-5.16d",    0x10000, 0xce6706fc, 2 | BRF_PRG }, //  4 Z80 Code
 
-	{ "ik3-7.bin",    0x08000, 0x0b4804df, 3 | BRF_GRA }, //  5 Characters
-	{ "ik3-8.bin",    0x08000, 0x10ab4e50, 3 | BRF_GRA }, //  6
+	{ "ik3-7.16l",    0x08000, 0x0b4804df, 3 | BRF_GRA }, //  5 Characters
+	{ "ik3-8.16m",    0x08000, 0x10ab4e50, 3 | BRF_GRA }, //  6
 
 	{ "ik3-13.bin",   0x20000, 0x9a56bd32, 4 | BRF_GRA }, //  7 Sprites
 	{ "ik3-12.bin",   0x20000, 0x0ce6a10a, 4 | BRF_GRA }, //  8
@@ -1864,7 +1864,7 @@ static struct BurnRomInfo ikari3jRomDesc[] = {
 	{ "ik3-27.bin",   0x20000, 0x16dd227e, 4 | BRF_GRA }, // 25
 	{ "ik3-28.bin",   0x20000, 0x711715ae, 4 | BRF_GRA }, // 26
 
-	{ "ik3-6.bin",    0x20000, 0x59d256a4, 5 | BRF_SND }, // 27 upd7759 samples
+	{ "ik3-6.18e",    0x20000, 0x59d256a4, 5 | BRF_SND }, // 27 upd7759 samples
 };
 
 STD_ROM_PICK(ikari3j)
@@ -1883,15 +1883,15 @@ struct BurnDriver BurnDrvikari3j = {
 // Ikari III - The Rescue (Korea, 8-Way Joystick)
 
 static struct BurnRomInfo ikari3kRomDesc[] = {
-	{ "ik3-2k.bin", 	0x20000, 0xa15d2222, 1 | BRF_PRG }, //  0 68k Code
-	{ "ik3-3k.bin",  	0x20000, 0xe3fc006e, 1 | BRF_PRG }, //  1
+	{ "ik3-2k.c10", 	0x20000, 0xa15d2222, 1 | BRF_PRG }, //  0 68k Code
+	{ "ik3-3k.c9",  	0x20000, 0xe3fc006e, 1 | BRF_PRG }, //  1
 	{ "ik3-1.c8",       0x10000, 0x47e4d256, 1 | BRF_PRG }, //  2
 	{ "ik3-4.c12",      0x10000, 0xa43af6b5, 1 | BRF_PRG }, //  3
 
-	{ "ik3-5.bin",      0x10000, 0xce6706fc, 2 | BRF_PRG }, //  4 Z80 Code
+	{ "ik3-5.16d",      0x10000, 0xce6706fc, 2 | BRF_PRG }, //  4 Z80 Code
 
-	{ "ik3-7k.bin",     0x08000, 0x8bfb399b, 3 | BRF_GRA }, //  5 Characters
-	{ "ik3-8k.bin",     0x08000, 0x3f0fe576, 3 | BRF_GRA }, //  6
+	{ "ik3-7k.16l",     0x08000, 0x8bfb399b, 3 | BRF_GRA }, //  5 Characters
+	{ "ik3-8k.16m",     0x08000, 0x3f0fe576, 3 | BRF_GRA }, //  6
 
 	{ "ik3-13.bin",     0x20000, 0x9a56bd32, 4 | BRF_GRA }, //  7 Sprites
 	{ "ik3-12.bin",     0x20000, 0x0ce6a10a, 4 | BRF_GRA }, //  8
@@ -1914,7 +1914,7 @@ static struct BurnRomInfo ikari3kRomDesc[] = {
 	{ "ik3-27.bin",     0x20000, 0x16dd227e, 4 | BRF_GRA }, // 25
 	{ "ik3-28.bin",     0x20000, 0x711715ae, 4 | BRF_GRA }, // 26
 
-	{ "ik3-6.bin",      0x20000, 0x59d256a4, 5 | BRF_SND }, // 27 upd7759 samples
+	{ "ik3-6.18e",      0x20000, 0x59d256a4, 5 | BRF_SND }, // 27 upd7759 samples
 };
 
 STD_ROM_PICK(ikari3k)

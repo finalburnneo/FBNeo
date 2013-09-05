@@ -152,7 +152,7 @@ static struct BurnDIPInfo orld105kDIPList[] = {
 };
 
 static struct BurnDIPInfo killbldDIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x21, NULL				},
+	{0x2E,	0xFF, 0xFF,	0x17, NULL				},
 
 	{0,	0xFE, 0,	6,    "Region (Fake)"			},
 	{0x2E,	0x01, 0xFF,	0x16, "Taiwan"				},
@@ -177,7 +177,7 @@ static struct BurnDIPInfo photoy2kDIPList[] = {
 };
 
 static struct BurnDIPInfo oldsDIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x05, NULL				},
+	{0x2E,	0xFF, 0xFF,	0x04, NULL				},
 
 	{0,	0xFE, 0,	6,    "Region (Fake)"			},
 	{0x2E,	0x01, 0x0F,	0x01, "Taiwan"				},
@@ -213,7 +213,7 @@ static struct BurnDIPInfo kovDIPList[] = {
 };
 
 static struct BurnDIPInfo martmastDIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x05, NULL				},
+	{0x2E,	0xFF, 0xFF,	0x06, NULL				},
 
 	{0,	0xFE, 0,	7,    "Region (Fake)"			},
 	{0x2E,	0x01, 0x07,	0x00, "China"				},
@@ -226,7 +226,7 @@ static struct BurnDIPInfo martmastDIPList[] = {
 };
 
 static struct BurnDIPInfo martmastc102DIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x05, NULL				},
+	{0x2E,	0xFF, 0xFF,	0x00, NULL				},
 
 	{0,	0xFE, 0,	6,    "Region (Fake)"			},
 	{0x2E,	0x01, 0x07,	0x00, "China"				},
@@ -3532,10 +3532,10 @@ struct BurnDriver BurnDrvDdp3b = {
 };
 
 
-// DoDonPachi Dai-Ou-Jou Black Label (V100, Japan)
+// DoDonPachi Dai-Ou-Jou Black Label (V100 (2002.10.07.Black Ver), Japan)
 
 static struct BurnRomInfo ddp3blkRomDesc[] = {
-	{ "ddb10.u45",			0x200000, 0x72b35510, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "ddb_1dot.u45",		0x200000, 0x265f26cd, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t04401w064.u19",		0x800000, 0x3a95f19c, 2 | BRF_GRA },		//  1 Tile data
 
@@ -3581,10 +3581,43 @@ static INT32 ddp3blkInit()
 
 struct BurnDriver BurnDrvDdp3blk = {
 	"ddpdojblk", "ddpdoj", NULL, NULL, "2002",
-	"DoDonPachi Dai-Ou-Jou Black Label (V100, Japan)\0", NULL, "Cave / AMI", "PolyGameMaster",
-	L"DoDonPachi Dai-Ou-Jou Black Label\0\u6012\u9996\u9818\u8702 \u5927\u5F80\u751F Black Label (V100, Japan)\0", NULL, NULL, NULL,
+	"DoDonPachi Dai-Ou-Jou Black Label (V100, (2002.10.07.Black Ver), Japan)\0", NULL, "Cave / AMI", "PolyGameMaster",
+	L"DoDonPachi Dai-Ou-Jou Black Label\0\u6012\u9996\u9818\u8702 \u5927\u5F80\u751F Black Label (V100 (2002.10.07.Black Ver), Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM /* | HARDWARE_IGS_USE_ARM_CPU */, GBF_VERSHOOT, 0,
 	NULL, ddp3blkRomInfo, ddp3blkRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	ddp3blkInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224, 448, 3, 4
+};
+
+
+// DoDonPachi Dai-Ou-Jou Black Label (V100 (2002.10.07 Black Ver), Japan)
+
+static struct BurnRomInfo ddp3blkaRomDesc[] = {
+	{ "ddb10.u45",			0x200000, 0x72b35510, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t04401w064.u19",		0x800000, 0x3a95f19c, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a04401w064.u7",		0x800000, 0xed229794, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a04402w064.u8",		0x800000, 0x752167b0, 3 | BRF_GRA },		//  3
+
+	{ "b04401w064.u1",		0x800000, 0x8cbff066, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m04401b032.u17",		0x400000, 0x5a0dbd76, 5 | BRF_SND },		//  5 Samples
+
+	{ "ddp3_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
+
+	{ "ddp3blk_defaults.nv",	0x020000, 0xa1651904, 0 | BRF_OPT },		//  7 NV RAM (patch below instead)
+};
+
+STDROMPICKEXT(ddp3blka, ddp3blka, ddp3Bios) // custom bios
+STD_ROM_FN(ddp3blka)
+
+struct BurnDriver BurnDrvDdp3blka = {
+	"ddpdojblka", "ddpdoj", NULL, NULL, "2002",
+	"DoDonPachi Dai-Ou-Jou Black Label (V100 (2002.10.07 Black Ver), Japan)\0", NULL, "Cave / AMI", "PolyGameMaster",
+	L"DoDonPachi Dai-Ou-Jou Black Label\0\u6012\u9996\u9818\u8702 \u5927\u5F80\u751F Black Label (V100 (2002.10.07 Black Ver), Japan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM /* | HARDWARE_IGS_USE_ARM_CPU */, GBF_VERSHOOT, 0,
+	NULL, ddp3blkaRomInfo, ddp3blkaRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	ddp3blkInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };
@@ -4215,7 +4248,7 @@ struct BurnDriverD BurnDrvkovlsqh2 = {
 };
 
 
-// Knights of Valour: Luan Shi Quan Huang 2 / Sangoku Senki: Luan Shi Quan Huang (ver. 200CN)
+// Knights of Valour: Luan Shi Quan Huang / Sangoku Senki: Luan Shi Quan Huang (ver. 200CN)
 
 static struct BurnRomInfo kovlsqhRomDesc[] = {
 	{ "lsqh_v200cn.rom",  		0x0400000, 0x9935a27a, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -4418,7 +4451,7 @@ static INT32 kovshxasInit()
 
 struct BurnDriver BurnDrvkovshxas = {
 	"kovshxas", "kovshp", "pgm", NULL, "2008",
-	"Knights of Valour: Aoshi Sanguo / Sangoku Senki: Aoshi Sanguo (ver. 202CN)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
+	"Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao shi San Guo (ver. 202CN)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
 	L"Knights of Valour: Ao Shi San Guo\0\u4E09\u56FD\u6218\u7EAA\0\u50B2\u89C6\u4E09\u56FD (ver. 202CN)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovshxasRomInfo, kovshxasRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
@@ -4615,5 +4648,38 @@ struct BurnDriver BurnDrvKovshb = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovshbRomInfo, kovshbRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
 	kovshbInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+// Knights of Valour: Luan Shi Quan Huang / Sangoku Senki: Luan Shi Quan Huang (ver. 203CN)
+
+static struct BurnRomInfo kovlsqhdRomDesc[] = {
+	{ "p0600kof.203",  		0x400000, 0x54f6c5d9, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t0600.rom",     		0x800000, 0x4acc1ad6, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a0600.rom",	   		0x800000, 0xd8167834, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a0601.rom",	   		0x800000, 0xff7a4373, 3 | BRF_GRA }, 	        //  3 
+	{ "a0602.rom",	   		0x800000, 0xe7a32959, 3 | BRF_GRA }, 	        //  4
+	{ "a603kof.rom",  		0x800000, 0xfe74e90a, 3 | BRF_GRA }, 	        //  5
+
+	{ "b0600.rom",	  		0x800000, 0x7d3cd059, 4 | BRF_GRA },		//  6 Sprite Masks & Color Indexes
+	{ "b601kof.rom",  		0x800000, 0x188406ee, 4 | BRF_GRA },		//  7
+
+	{ "m0600.rom",	   		0x400000, 0x3ada4fd6, 5 | BRF_SND },	        //  8 Samples
+
+	{ "kovlsqhd_v203_china.asic",	0x004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS },  //  9 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovlsqhd, kovlsqhd, pgm)
+STD_ROM_FN(kovlsqhd)
+
+struct BurnDriver BurnDrvkovlsqhd = {
+	"kovlsqhd", "kovshp", "pgm", NULL, "2008",
+	"Knights of Valour: Luan Shi Quan Huang / Sangoku Senki: Luan Shi Quan Huang (ver. 203CN)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
+	L"Knights of Valour: Luan Shi Quan Huang\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u62F3\u7687 (ver. 203CN)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovlsqhdRomInfo, kovlsqhdRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
+	kovshxasInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

@@ -204,8 +204,8 @@ void cps3SndUpdate()
 				nLeftSample = BURN_SND_CLIP(nLeftSample + buffer[0]);
 				nRightSample = BURN_SND_CLIP(nRightSample + buffer[1]);
 				
-				buffer[0] = nLeftSample;
-				buffer[1] = nRightSample;
+				buffer[0] = nRightSample; // swapped. correct??
+				buffer[1] = nLeftSample;
 
 				buffer += 2;
 			}

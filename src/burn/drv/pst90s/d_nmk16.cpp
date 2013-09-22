@@ -10,6 +10,7 @@
 #include "nmk004.h"
 
 #if 0
+	dolmen		-- good
 	blkheart	-- good
 	mustang		-- good
 	acrobatm	-- good
@@ -258,6 +259,33 @@ static struct BurnInputInfo AcrobatmInputList[] = {
 };
 
 STDINPUTINFO(Acrobatm)
+
+static struct BurnInputInfo DolmenInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 11,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 10,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 8,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 13,	"p2 fire 2"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+};
+
+STDINPUTINFO(Dolmen)
 
 static struct BurnDIPInfo RedhawkbDIPList[]=
 {
@@ -1813,6 +1841,48 @@ static struct BurnDIPInfo GunnailDIPList[]=
 };
 
 STDDIPINFO(Gunnail)
+
+static struct BurnDIPInfo DolmenDIPList[]=
+{
+	{0x12, 0xff, 0xff, 0xff, NULL			},
+	{0x13, 0xff, 0xff, 0xff, NULL			},
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"		},
+	{0x12, 0x01, 0x0c, 0x08, "Easy"			},
+	{0x12, 0x01, 0x0c, 0x0c, "Normal"		},
+	{0x12, 0x01, 0x0c, 0x04, "Hard"			},
+	{0x12, 0x01, 0x0c, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    2, "Free Credit"		},
+	{0x12, 0x01, 0xc0, 0x80, "500k"			},
+	{0x12, 0x01, 0xc0, 0xc0, "800k"			},
+	{0x12, 0x01, 0xc0, 0x40, "1000k"		},
+	{0x12, 0x01, 0xc0, 0x00, "1500k"		},
+	
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x13, 0x01, 0x02, 0x00, "Off"			},
+	{0x13, 0x01, 0x02, 0x02, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Coin B"		},
+	{0x13, 0x01, 0x1c, 0x10, "4 Coins 1 Credits"	},
+	{0x13, 0x01, 0x1c, 0x08, "3 Coins 1 Credits"	},
+	{0x13, 0x01, 0x1c, 0x18, "2 Coins 1 Credits"	},
+	{0x13, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"	},
+	{0x13, 0x01, 0x1c, 0x0c, "1 Coin  2 Credits"	},
+	{0x13, 0x01, 0x1c, 0x14, "1 Coin  3 Credits"	},
+	{0x13, 0x01, 0x1c, 0x04, "1 Coin  4 Credits"	},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"		},
+	{0x13, 0x01, 0xe0, 0x80, "4 Coins 1 Credits"	},
+	{0x13, 0x01, 0xe0, 0x40, "3 Coins 1 Credits"	},
+	{0x13, 0x01, 0xe0, 0xc0, "2 Coins 1 Credits"	},
+	{0x13, 0x01, 0xe0, 0xe0, "1 Coin  1 Credits"	},
+	{0x13, 0x01, 0xe0, 0x60, "1 Coin  2 Credits"	},
+	{0x13, 0x01, 0xe0, 0xa0, "1 Coin  3 Credits"	},
+	{0x13, 0x01, 0xe0, 0x20, "1 Coin  4 Credits"	},
+};
+
+STDDIPINFO(Dolmen)
 
 //------------------------------------------------------------------------------------------------------------
 // NMK112 chip emulation -- probably should be in an external file
@@ -7132,6 +7202,23 @@ static struct BurnRomInfo twinactnRomDesc[] = {
 STD_ROM_PICK(twinactn)
 STD_ROM_FN(twinactn)
 
+static void Twinactn68kInit()
+{
+	SekInit(0, 0x68000);	
+	SekOpen(0);
+	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, SM_ROM);
+	SekMapMemory(DrvPalRAM,		0x088000, 0x0887ff, SM_RAM);
+	SekMapMemory(DrvScrollRAM,	0x08c000, 0x08c3ff, SM_WRITE);
+	SekMapMemory(DrvBgRAM0,		0x090000, 0x093fff, SM_RAM);
+	SekMapMemory(DrvTxRAM,		0x09c000, 0x09c7ff, SM_RAM);
+	SekMapMemory(Drv68KRAM,		0x0f0000, 0x0fffff, SM_ROM);
+	SekSetWriteWordHandler(0,	afega_main_write_word);
+	SekSetWriteByteHandler(0,	afega_main_write_byte);
+	SekSetReadWordHandler(0,	afega_main_read_word);
+	SekSetReadByteHandler(0,	afega_main_read_byte);
+	SekClose();
+}
+
 static INT32 TwinactnLoadCallback()
 {
 	{
@@ -7155,19 +7242,7 @@ static INT32 TwinactnLoadCallback()
 		DrvGfxDecode(0x20000, 0x80000, 0x100000);
 	}
 
-	SekInit(0, 0x68000);	
-	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(DrvPalRAM,		0x088000, 0x0887ff, SM_RAM);
-	SekMapMemory(DrvScrollRAM,	0x08c000, 0x08c3ff, SM_WRITE);
-	SekMapMemory(DrvBgRAM0,		0x090000, 0x093fff, SM_RAM);
-	SekMapMemory(DrvTxRAM,		0x09c000, 0x09c7ff, SM_RAM);
-	SekMapMemory(Drv68KRAM,		0x0f0000, 0x0fffff, SM_ROM);
-	SekSetWriteWordHandler(0,	afega_main_write_word);
-	SekSetWriteByteHandler(0,	afega_main_write_byte);
-	SekSetReadWordHandler(0,	afega_main_read_word);
-	SekSetReadByteHandler(0,	afega_main_read_byte);
-	SekClose();
+	Twinactn68kInit();
 
 	return 0;
 }
@@ -7188,6 +7263,77 @@ struct BurnDriver BurnDrvTwinactn = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, twinactnRomInfo, twinactnRomName, NULL, NULL, CommonInputInfo, TwinactnDIPInfo,
 	TwinactnInit, MSM6295x1Exit, SsmissinFrame, MacrossDraw, NULL, NULL, 0x400,
+	256, 224, 4, 3
+};
+
+
+// Dolmen
+
+static struct BurnRomInfo dolmenRomDesc[] = {
+	{ "afega8.uj3",		0x20000, 0xf1b73e4c, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "afega7.uj2",		0x20000, 0xc91bda0b, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "afega1.su6",		0x08000, 0x166b53cb, 2 | BRF_PRG | BRF_ESS }, //  2 z80 code
+
+	{ "afega6.uj11",	0x20000, 0x13fa4415, 3 | BRF_GRA },           //  3 Characters
+
+	{ "afega9.ui20",	0x80000, 0xb3fa7be6, 4 | BRF_GRA },           //  4 Tiles
+
+	{ "afega4.ub11",	0x80000, 0x5a259393, 5 | BRF_GRA },           //  5 Sprites
+	{ "afega5.ub13",	0x80000, 0x7f6a683d, 6 | BRF_GRA },           //  6
+
+	{ "afega2.su12",	0x20000, 0x1a2ce1c2, 6 | BRF_SND },           //  7 OKI1 Samples
+	{ "afega3.su13",	0x40000, 0xd3531018, 6 | BRF_SND },           //  8
+};
+
+STD_ROM_PICK(dolmen)
+STD_ROM_FN(dolmen)
+
+static INT32 DolmenLoadCallback()
+{
+	{
+		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
+	
+		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
+	
+		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 1)) return 1;
+	
+		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  4, 1)) return 1;
+	
+		if (BurnLoadRom(DrvGfxROM2 + 0x000000,  5, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x000001,  6, 2)) return 1;
+	
+		if (BurnLoadRom(DrvSndROM0 + 0x000000,  7, 1)) return 1;
+		memcpy (DrvSndROM0 + 0x40000, DrvSndROM0 + 0x00000, 0x20000);
+		memcpy (DrvSndROM0 + 0x60000, DrvSndROM0 + 0x00000, 0x20000);
+		memcpy (DrvSndROM0 + 0x80000, DrvSndROM0 + 0x00000, 0x20000);
+		memcpy (DrvSndROM0 + 0xc0000, DrvSndROM0 + 0x00000, 0x20000);
+		if (BurnLoadRom(DrvSndROM0 + 0x0a0000,  8, 1)) return 1;
+		memcpy (DrvSndROM0 + 0xe0000, DrvSndROM0 + 0xa0000, 0x20000);
+	
+		DrvGfxDecode(0x20000, 0x80000, 0x100000);
+	}
+
+	Twinactn68kInit();
+
+	return 0;
+}
+
+static INT32 DolmenInit()
+{
+	nNMK004EnableIrq2 = 1;
+
+	return MSM6295x1Init(DolmenLoadCallback);
+}
+
+struct BurnDriver BurnDrvDolmen = {
+	"dolmen", NULL, NULL, NULL, "1995",
+	"Dolmen\0", NULL, "Afega", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, dolmenRomInfo, dolmenRomName, NULL, NULL, DolmenInputInfo, DolmenDIPInfo,
+	DolmenInit, MSM6295x1Exit, SsmissinFrame, MacrossDraw, NULL, NULL, 0x400,
 	256, 224, 4, 3
 };
 

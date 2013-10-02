@@ -742,6 +742,47 @@ static struct BurnRomInfo Aburner2RomDesc[] = {
 STD_ROM_PICK(Aburner2)
 STD_ROM_FN(Aburner2)
 
+static struct BurnRomInfo Aburner2gRomDesc[] = {
+	{ "epr-11173a.58",    0x20000, 0xcbf480f4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11174a.63",    0x20000, 0xed7cba77, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-11109.20",     0x20000, 0x85a0fe07, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-11110.29",     0x20000, 0xf3d6797c, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "epr-11115.154",    0x10000, 0xe8e32921, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-11114.153",    0x10000, 0x2e97f633, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-11113.152",    0x10000, 0x36058c8c, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "mpr-10932.90",     0x20000, 0xcc0821d6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10934.94",     0x20000, 0x4a51b1fa, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10936.98",     0x20000, 0xada70d64, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10938.102",    0x20000, 0xe7675baf, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10933.91",     0x20000, 0xc8efb2c3, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10935.95",     0x20000, 0xc1e23521, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10937.99",     0x20000, 0xf0199658, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10939.103",    0x20000, 0xa0d49480, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11103.92",     0x20000, 0xbdd60da2, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11104.96",     0x20000, 0x06a35fce, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11105.100",    0x20000, 0x027b0689, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11106.104",    0x20000, 0x9e1fec09, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11116.93",     0x20000, 0x49b4c1ba, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11117.97",     0x20000, 0x821fbb71, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11118.101",    0x20000, 0x8f38540b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11119.105",    0x20000, 0xd0343a8e, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "epr-10922.40",     0x10000, 0xb49183d4, SYS16_ROM_ROAD | BRF_GRA },
+	
+	{ "epr-11112.17",     0x10000, 0xd777fc6d, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "mpr-10931.11",     0x20000, 0x9209068f, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "mpr-10930.12",     0x20000, 0x6493368b, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-10929.13",     0x20000, 0x6c07c78d, SYS16_ROM_PCMDATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Aburner2g)
+STD_ROM_FN(Aburner2g)
+
 static struct BurnRomInfo AburnerRomDesc[] = {
 	{ "epr-10940.58",     0x20000, 0x4d132c4e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-10941.63",     0x20000, 0x136ea264, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -776,7 +817,7 @@ static struct BurnRomInfo AburnerRomDesc[] = {
 	
 	{ "mpr-10931.11",     0x20000, 0x9209068f, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "mpr-10930.12",     0x20000, 0x6493368b, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "epr-11102.13",     0x20000, 0x6c07c78d, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-10929.13",     0x20000, 0x6c07c78d, SYS16_ROM_PCMDATA | BRF_SND },
 };
 
 
@@ -2695,9 +2736,19 @@ struct BurnDriver BurnDrvAburner2 = {
 	NULL, 0x6000, 320, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvAburner2g = {
+	"aburner2g", "aburner2", NULL, NULL, "1987",
+	"After Burner II (German)\0", NULL, "Sega", "X-Board",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_SHOOT, 0,
+	NULL, Aburner2gRomInfo, Aburner2gRomName, NULL, NULL, Aburner2InputInfo, Aburner2DIPInfo,
+	Aburner2Init, XBoardExit, XBoardFrame, NULL, XBoardScan,
+	NULL, 0x6000, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvAburner = {
 	"aburner", "aburner2", NULL, NULL, "1987",
-	"After Burner (Japan)\0", NULL, "Sega", "X-Board",
+	"After Burner\0", NULL, "Sega", "X-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMX | HARDWARE_SEGA_SPRITE_LOAD32, GBF_SHOOT, 0,
 	NULL, AburnerRomInfo, AburnerRomName, NULL, NULL, Aburner2InputInfo, AburnerDIPInfo,

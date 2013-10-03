@@ -200,11 +200,11 @@ void cps3SndUpdate()
 				if ((chip->output_dir[BURN_SND_CPS3SND_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
 					nRightSample += (INT32)(((sample * vol_r) >> 8) * chip->gain[BURN_SND_CPS3SND_ROUTE_2]);
 				}
+
+				nLeftSample = BURN_SND_CLIP(nLeftSample + buffer[1]); 
+				nRightSample = BURN_SND_CLIP(nRightSample + buffer[0]);
 				
-				nLeftSample = BURN_SND_CLIP(nLeftSample + buffer[0]);
-				nRightSample = BURN_SND_CLIP(nRightSample + buffer[1]);
-				
-				buffer[0] = nRightSample; // swapped. correct??
+				buffer[0] = nRightSample;
 				buffer[1] = nLeftSample;
 
 				buffer += 2;

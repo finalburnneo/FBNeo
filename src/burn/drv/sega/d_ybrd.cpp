@@ -1195,8 +1195,8 @@ STD_ROM_PICK(Rchasej)
 STD_ROM_FN(Rchasej)
 
 static struct BurnRomInfo StrkfgtrRomDesc[] = {
-	{ "epr-13824.25",     0x20000, 0x2cf2610c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-13823.24",     0x20000, 0x2c98242f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13889.25",     0x20000, 0xf4173114, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13888.24",     0x20000, 0x65e2b226, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-13826.27",     0x20000, 0x3d34ea55, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-13825.26",     0x20000, 0xfe218d83, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	
@@ -1257,6 +1257,70 @@ static struct BurnRomInfo StrkfgtrRomDesc[] = {
 
 STD_ROM_PICK(Strkfgtr)
 STD_ROM_FN(Strkfgtr)
+
+static struct BurnRomInfo StrkfgtrjRomDesc[] = {
+	{ "epr-13824.25",     0x20000, 0x2cf2610c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13823.24",     0x20000, 0x2c98242f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13826.27",     0x20000, 0x3d34ea55, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13825.26",     0x20000, 0xfe218d83, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-13830.81",     0x20000, 0xf9adc9d1, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-13829.80",     0x20000, 0xc5cd85dd, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	
+	{ "epr-13828.54",     0x20000, 0x2470cf5f, SYS16_ROM_PROG3 | BRF_ESS | BRF_PRG },
+	{ "epr-13827.53",     0x20000, 0xa9d0cf7d, SYS16_ROM_PROG3 | BRF_ESS | BRF_PRG },
+	
+	{ "epr-13832.14",     0x80000, 0x41679754, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13833.16",     0x80000, 0x6148e11a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13038.15",     0x80000, 0x0b2edb6d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13040.17",     0x80000, 0x4aeb3a85, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "epr-13048.67",     0x80000, 0xfe1eb0dd, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13056.75",     0x80000, 0x5904f8e6, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13044.63",     0x80000, 0x4d931f89, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13052.71",     0x80000, 0x0291f040, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13064.86",     0x80000, 0x5f8e651b, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13072.114",    0x80000, 0x6b85641a, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13060.82",     0x80000, 0xee16ad97, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13068.110",    0x80000, 0x64d52bbb, SYS16_ROM_SPRITES2 | BRF_GRA },
+	
+	{ "epr-13047.66",     0x80000, 0x53340832, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13055.74",     0x80000, 0x39b6b665, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13043.62",     0x80000, 0x208f16fd, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13051.70",     0x80000, 0xad62cbd4, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13063.85",     0x80000, 0xc580bf6d, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13071.113",    0x80000, 0xdf99ef99, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13059.81",     0x80000, 0x4c982558, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13067.109",    0x80000, 0xf97f6119, SYS16_ROM_SPRITES2 | BRF_GRA },
+	
+	{ "epr-13046.65",     0x80000, 0xc75a86e9, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13054.73",     0x80000, 0x2934549a, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13042.61",     0x80000, 0x53ed97af, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13050.69",     0x80000, 0x04429068, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13062.84",     0x80000, 0x4fdb4ee3, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13070.112",    0x80000, 0x52ea130e, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13058.80",     0x80000, 0x19ff1626, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13066.108",    0x80000, 0xbc70a250, SYS16_ROM_SPRITES2 | BRF_GRA },
+	
+	{ "epr-13045.64",     0x80000, 0x54d5bc6d, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13053.72",     0x80000, 0x9502af13, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13041.60",     0x80000, 0xd0a7402c, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13049.68",     0x80000, 0x5b9c0b6c, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13061.83",     0x80000, 0x7b95ec3b, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13069.111",    0x80000, 0xe1f538f0, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13057.79",     0x80000, 0x73baefee, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-13065.107",    0x80000, 0x8937a655, SYS16_ROM_SPRITES2 | BRF_GRA },
+		
+	{ "epr-13831.102",    0x10000, 0xdabbcea1, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "mpr-13036.107",    0x80000, 0x7890c26c, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "mpr-13035.106",    0x80000, 0x009fa13e, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "mpr-13034.105",    0x80000, 0xcd22d95d, SYS16_ROM_PCMDATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Strkfgtrj)
+STD_ROM_FN(Strkfgtrj)
 
 /*====================================================
 Memory Handlers
@@ -2006,10 +2070,20 @@ struct BurnDriver BurnDrvRchasej = {
 
 struct BurnDriver BurnDrvStrkfgtr = {
 	"strkfgtr", NULL, NULL, NULL, "1991",
-	"Strike Fighter (Japan)\0", NULL, "Sega", "Y-Board",
+	"Strike Fighter (World)\0", NULL, "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
 	NULL, StrkfgtrRomInfo, StrkfgtrRomName, NULL, NULL, GlocInputInfo, StrkfgtrDIPInfo,
+	GlocInit, YBoardExit, YBoardFrame, NULL, YBoardScan,
+	NULL, 0x6000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvStrkfgtrj = {
+	"strkfgtrj", "strkfgtr", NULL, NULL, "1991",
+	"Strike Fighter (Japan)\0", NULL, "Sega", "Y-Board",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
+	NULL, StrkfgtrjRomInfo, StrkfgtrjRomName, NULL, NULL, GlocInputInfo, StrkfgtrDIPInfo,
 	GlocInit, YBoardExit, YBoardFrame, NULL, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };

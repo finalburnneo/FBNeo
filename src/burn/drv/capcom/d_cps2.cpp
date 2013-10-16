@@ -7030,8 +7030,8 @@ STD_ROM_PICK(Xmvsfa)
 STD_ROM_FN(Xmvsfa)
 
 static struct BurnRomInfo Xmvsfar1RomDesc[] = {
-	{ "xvsa.03e",      0x080000, 0x9bdde21c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "xvsa.04e",      0x080000, 0x33300edf, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvsa.03",       0x080000, 0x520054df, CPS2_PRG_68K | BRF_ESS | BRF_PRG },  // Missing revision letter
+	{ "xvsa.04",       0x080000, 0x13086e55, CPS2_PRG_68K | BRF_ESS | BRF_PRG },  // Missing revision letter
 	{ "xvs.05a",       0x080000, 0x7db6025d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xvs.06a",       0x080000, 0xe8e2c75c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xvs.07",        0x080000, 0x08f0abed, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -7058,6 +7058,34 @@ STD_ROM_PICK(Xmvsfar1)
 STD_ROM_FN(Xmvsfar1)
 
 static struct BurnRomInfo Xmvsfar2RomDesc[] = {
+	{ "xvsa.03e",      0x080000, 0x9bdde21c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvsa.04e",      0x080000, 0x33300edf, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvs.05a",       0x080000, 0x7db6025d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvs.06a",       0x080000, 0xe8e2c75c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvs.07",        0x080000, 0x08f0abed, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvs.08",        0x080000, 0x81929675, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvs.09",        0x080000, 0x9641f36b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	
+	{ "xvs.13m",       0x400000, 0xf6684efd, CPS2_GFX | BRF_GRA },
+	{ "xvs.15m",       0x400000, 0x29109221, CPS2_GFX | BRF_GRA },
+	{ "xvs.17m",       0x400000, 0x92db3474, CPS2_GFX | BRF_GRA },
+	{ "xvs.19m",       0x400000, 0x3733473c, CPS2_GFX | BRF_GRA },
+	{ "xvs.14m",       0x400000, 0xbcac2e41, CPS2_GFX | BRF_GRA },
+	{ "xvs.16m",       0x400000, 0xea04a272, CPS2_GFX | BRF_GRA },
+	{ "xvs.18m",       0x400000, 0xb0def86a, CPS2_GFX | BRF_GRA },
+	{ "xvs.20m",       0x400000, 0x4b40ff9f, CPS2_GFX | BRF_GRA },
+
+	{ "xvs.01",        0x020000, 0x3999e93a, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "xvs.02",        0x020000, 0x101bdee9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
+	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+};
+
+STD_ROM_PICK(Xmvsfar2)
+STD_ROM_FN(Xmvsfar2)
+
+static struct BurnRomInfo Xmvsfar3RomDesc[] = {
 	{ "xvsa.03d",      0x080000, 0x2b164fd7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xvsa.04d",      0x080000, 0x2d32f039, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xvs.05a",       0x080000, 0x7db6025d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -7082,8 +7110,8 @@ static struct BurnRomInfo Xmvsfar2RomDesc[] = {
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
 };
 
-STD_ROM_PICK(Xmvsfar2)
-STD_ROM_FN(Xmvsfar2)
+STD_ROM_PICK(Xmvsfar3)
+STD_ROM_FN(Xmvsfar3)
 
 static struct BurnRomInfo XmvsfbRomDesc[] = {
 	{ "xvsb.03h",      0x080000, 0x05baccca, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -9667,7 +9695,7 @@ struct BurnDriver BurnDrvCpsXmvsfa = {
 
 struct BurnDriver BurnDrvCpsXmvsfar1 = {
 	"xmvsfar1", "xmvsf", NULL, NULL, "1996",
-	"X-Men vs Street Fighter (960919 Asia)\0", NULL, "Capcom", "CPS2",
+	"X-Men vs Street Fighter (961004 Asia)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Xmvsfar1RomInfo, Xmvsfar1RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
@@ -9677,10 +9705,20 @@ struct BurnDriver BurnDrvCpsXmvsfar1 = {
 
 struct BurnDriver BurnDrvCpsXmvsfar2 = {
 	"xmvsfar2", "xmvsf", NULL, NULL, "1996",
-	"X-Men vs Street Fighter (960910 Asia)\0", NULL, "Capcom", "CPS2",
+	"X-Men vs Street Fighter (960919 Asia)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Xmvsfar2RomInfo, Xmvsfar2RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsXmvsfar3 = {
+	"xmvsfar3", "xmvsf", NULL, NULL, "1996",
+	"X-Men vs Street Fighter (960910 Asia)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Xmvsfar3RomInfo, Xmvsfar3RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

@@ -1594,7 +1594,7 @@ static struct BurnRomInfo bbmanwjRomDesc[] = {
 	{ "bbm2-h0.77",		0x40000, 0xe1407b91, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
 	{ "bbm2-l0.79",		0x40000, 0x20873b49, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "bbm2-sp-b.bin",	0x10000, 0xb8d8108c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "bbm2-sp-a.33",	0x10000, 0xa4b0a66e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "bbm2-c0.81",		0x40000, 0xe7ce058a, 3 | BRF_GRA },           //  3 Tiles and sprites
 	{ "bbm2-c1.82",		0x40000, 0x636a78a9, 3 | BRF_GRA },           //  4
@@ -1613,6 +1613,36 @@ struct BurnDriver BurnDrvBbmanwj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
 	NULL, bbmanwjRomInfo, bbmanwjRomName, NULL, NULL, p4commonInputInfo, BbmanwjDIPInfo,
+	bbmanwInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	320, 240, 4, 3
+};
+
+
+// Bomber Man World (Japan, revised sound hardware)
+
+static struct BurnRomInfo bbmanwjaRomDesc[] = {
+	{ "bbm2-h0.77",		0x40000, 0xe1407b91, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "bbm2-l0.79",		0x40000, 0x20873b49, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "bbm2-sp-b.33",	0x10000, 0xb8d8108c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "bbm2-c0.81",		0x40000, 0xe7ce058a, 3 | BRF_GRA },           //  3 Tiles and sprites
+	{ "bbm2-c1.82",		0x40000, 0x636a78a9, 3 | BRF_GRA },           //  4
+	{ "bbm2-c2.83",		0x40000, 0x9ac2142f, 3 | BRF_GRA },           //  5
+	{ "bbm2-c3.84",		0x40000, 0x47af1750, 3 | BRF_GRA },           //  6
+
+	{ "bbm2-v0-b.30",	0x20000, 0x0ae655ff, 4 | BRF_SND },           //  7 Samples
+};
+
+STD_ROM_PICK(bbmanwja)
+STD_ROM_FN(bbmanwja)
+
+struct BurnDriver BurnDrvBbmanwja = {
+	"bbmanwja", "bbmanw", NULL, NULL, "1992",
+	"Bomber Man World (Japan, revised sound hardware)\0", NULL, "Irem", "M90",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
+	NULL, bbmanwjaRomInfo, bbmanwjaRomName, NULL, NULL, p4commonInputInfo, BbmanwjDIPInfo,
 	bbmanwInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };

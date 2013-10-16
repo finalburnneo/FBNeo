@@ -5475,6 +5475,47 @@ static struct BurnRomInfo Ffightj2RomDesc[] = {
 STD_ROM_PICK(Ffightj2)
 STD_ROM_FN(Ffightj2)
 
+static struct BurnRomInfo Ffightj3RomDesc[] = {
+	{ "ff_36.12f",     			  0x020000, 0xed988977, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ffj_42(__ffightj3).12h",   0x020000, 0x07bf1c21, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ff_37.13f",     			  0x020000, 0xdba5a476, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ffj_43(__ffightj3).13h",   0x020000, 0xfbeca028, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ff_34.10f",     			  0x020000, 0x0c8dc3fc, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ffj_40.10h",     		  0x020000, 0x8075bab9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ff_35.11f",     			  0x020000, 0x4a934121, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ffj_41.11h",     		  0x020000, 0x2af68154, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "ff_09.4b",      0x020000, 0x5b116d0d, BRF_GRA | CPS1_TILES },
+	{ "ff_01.4a",      0x020000, 0x815b1797, BRF_GRA | CPS1_TILES },
+	{ "ff_13.9b",      0x020000, 0x8721a7da, BRF_GRA | CPS1_TILES },
+	{ "ff_05.9a",      0x020000, 0xd0fcd4b5, BRF_GRA | CPS1_TILES },
+	{ "ff_24.5e",      0x020000, 0xa1ab607a, BRF_GRA | CPS1_TILES },
+	{ "ff_17.5c",      0x020000, 0x2dc18cf4, BRF_GRA | CPS1_TILES },
+	{ "ffj_38.8h",     0x020000, 0x6535a57f, BRF_GRA | CPS1_TILES },
+	{ "ff_32.8f",      0x020000, 0xc8bc4a57, BRF_GRA | CPS1_TILES },
+	{ "ff_10.5b",      0x020000, 0x624a924a, BRF_GRA | CPS1_TILES },
+	{ "ff_02.5a",      0x020000, 0x5d91f694, BRF_GRA | CPS1_TILES },
+	{ "ff_14.10b",     0x020000, 0x0a2e9101, BRF_GRA | CPS1_TILES },
+	{ "ff_06.10a",     0x020000, 0x1c18f042, BRF_GRA | CPS1_TILES },
+	{ "ff_25.7e",      0x020000, 0x6e8181ea, BRF_GRA | CPS1_TILES },
+	{ "ff_18.7c",      0x020000, 0xb19ede59, BRF_GRA | CPS1_TILES },
+	{ "ffj_39.9h",     0x020000, 0x9416b477, BRF_GRA | CPS1_TILES },
+	{ "ff_33.9f",      0x020000, 0x7369fa07, BRF_GRA | CPS1_TILES },
+
+	{ "ff_23.13b",     0x010000, 0xb8367eb5, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "ff_30.12c",     0x020000, 0x375c66e7, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "ff_31.13c",     0x020000, 0x1ef137f9, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "s222b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
+	{ "lwio.12c",      0x000117, 0xad52b90c, BRF_OPT },
+};
+
+STD_ROM_PICK(Ffightj3)
+STD_ROM_FN(Ffightj3)
+
 static struct BurnRomInfo FfightjhRomDesc[] = {
 	{ "ff_23.8f",      0x080000, 0xae3dda7f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "ff_22.7f",      0x080000, 0xb2d5a3aa, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -12063,6 +12104,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "ffightj"     , CPS_B_04    , mapper_S224B , 0, NULL                },
 	{ "ffightj1"    , CPS_B_01    , mapper_S224B , 0, NULL                },
 	{ "ffightj2"    , CPS_B_02    , mapper_S224B , 0, NULL                },
+	{ "ffightj3"    , CPS_B_05    , mapper_S224B , 0, NULL                },
 	{ "ffightjh"    , CPS_B_01    , mapper_S224B , 0, NULL                },
 	{ "ffightbl"    , HACK_B_5    , mapper_S224B , 0, NULL                },
 	{ "fcrash"      , HACK_B_5    , mapper_S224B , 0, NULL                }, // doesn't really have an ID, but this used to give the relevant values to our rendering functions
@@ -16420,6 +16462,16 @@ struct BurnDriver BurnDrvCpsFfightj2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Ffightj2RomInfo, Ffightj2RomName, NULL, NULL, FfightInputInfo, FfightDIPInfo,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsFfightj3 = {
+	"ffightj3", "ffight", NULL, NULL, "1989",
+	"Final Fight (900613 Japan)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, Ffightj3RomInfo, Ffightj3RomName, NULL, NULL, FfightInputInfo, FfightDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

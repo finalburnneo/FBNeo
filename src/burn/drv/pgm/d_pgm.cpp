@@ -2977,7 +2977,7 @@ struct BurnDriver BurnDrvdmnfrnta = {
 };
 
 
-// The Gladiator / Shen Jian (V101)
+// The Gladiator - Road Of The Sword / Shen Jian (V101)
 
 static struct BurnRomInfo thegladRomDesc[] = {
 	{ "v101.u6",			0x080000, 0xf799e866, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -3011,8 +3011,8 @@ static INT32 thegladInit()
 
 struct BurnDriverD BurnDrvTheglad = {
 	"theglad", NULL, "pgm", NULL, "2003",
-	"The Gladiator / Shen Jian (V101)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
-	L"The Gladiator (V101)\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2\0", NULL, NULL, NULL,
+	"The Gladiator - Road Of The Sword / Shen Jian (V101)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	L"The Gladiator - Road of The Sword (V101)\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2\0", NULL, NULL, NULL,
 	0, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, thegladRomInfo, thegladRomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	thegladInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -3020,7 +3020,7 @@ struct BurnDriverD BurnDrvTheglad = {
 };
 
 
-// The Gladiator / Shen Jian (V100, Taiwan)
+// The Gladiator - Road of The Sword / Shen Jian (V100, Taiwan)
 
 static struct BurnRomInfo thegladaRomDesc[] = {
 	{ "u6.rom",				0x080000, 0x14c85212, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -3047,8 +3047,8 @@ STD_ROM_FN(theglada)
 
 struct BurnDriverD BurnDrvtheglada = {
 	"theglada", "theglad", "pgm", NULL, "2003",
-	"The Gladiator / Shen Jian (V101, Taiwan)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
-	L"The Gladiator (V100, Taiwan)\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2\0", NULL, NULL, NULL,
+	"The Gladiator - Road Of The Sword / Shen Jian (V100, Taiwan)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	L"The Gladiator - Road Of The Sword (V100, Taiwan)\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2\0", NULL, NULL, NULL,
 	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, thegladaRomInfo, thegladaRomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	thegladInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -3904,7 +3904,7 @@ struct BurnDriver BurnDrvEspgal = {
 };
 	
 
-// The Gladiator / Shen Jian (V100, Japan, PCB Version)
+// The Gladiator - Road Of The Sword / Shen Jian (V100, Japan, PCB Version)
 
 static struct BurnRomInfo thegladpcbRomDesc[] = {
 	{ "glad_v100.43",		0x080000, 0xbcf3b172, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -3920,7 +3920,7 @@ static struct BurnRomInfo thegladpcbRomDesc[] = {
 
 	{ "w04601.u1",			0x800000, 0x5f15ddb3, 5 | BRF_SND },		//  7 Samples
 
-	{ "theglad_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
+	{ "thegladpcb_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 
 	{ "igs.62",				0x200000, 0x0f3f511e, 8 | BRF_PRG | BRF_ESS },	//  9 External ARM7 Rom
 };
@@ -3943,8 +3943,8 @@ static INT32 thegladpcbInit()
 
 struct BurnDriverD BurnDrvThegladpcb = {
 	"thegladpcb", "theglad", NULL, NULL, "2003",
-	"The Gladiator / Shen Jian (V100, Japan, Single PCB Version)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
-	L"The Gladiator (V100, Japan, PCB Version)\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2\0", NULL, NULL, NULL,
+	"The Gladiator - Road Of The Sword / Shen Jian (V100, Japan, Single PCB Version)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	L"The Gladiator - Road Of The Sword (V100, Japan, PCB Version)\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2\0", NULL, NULL, NULL,
 	BDF_CLONE, 4, HARDWARE_IGS_PGM /* | HARDWARE_IGS_USE_ARM_CPU */, GBF_SCRFIGHT, 0,
 	NULL, thegladpcbRomInfo, thegladpcbRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	thegladpcbInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

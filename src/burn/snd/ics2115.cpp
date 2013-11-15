@@ -413,6 +413,7 @@ void ics2115_update(INT32 /*length*/)
 	for(INT32 osc=0; osc<32; osc++)
 		if(chip->voice[osc].state & V_ON) {
 			UINT32 badr = (chip->voice[osc].saddr << 20) & 0x0f00000;
+
 			UINT32 adr = (chip->voice[osc].addrh << 16) | chip->voice[osc].addrl;
 			UINT32 end = (chip->voice[osc].endh << 16) | (chip->voice[osc].endl << 8);
 			UINT32 loop = (chip->voice[osc].strth << 16) | (chip->voice[osc].strtl << 8);
@@ -422,7 +423,11 @@ void ics2115_update(INT32 /*length*/)
 			UINT32 delta = chip->voice[osc].fc << 2;
 
 			for(INT32 i=0; i<ICS2115_FRAME_BUFFER_SIZE; i++) {
-				INT32 v = chip->rom[(badr|(adr >> 12))];
+				UINT32 address = badr+(adr / 0x1000);
+				INT32 v = 0;
+
+				if (address < nICSSNDROMLen)
+					v = chip->rom[address];
 				
 				if(conf & 1)v = chip->ulaw[v];
 				else		v = ((INT8)v) << 6;
@@ -447,7 +452,7 @@ void ics2115_update(INT32 /*length*/)
 		}
 
 	if(rec_irq) recalc_irq();
-	
+
 	if (pBurnSoundOut) {
 		INT32 pos = 0;
 		INT16 * pOut = (INT16*)pBurnSoundOut;

@@ -3071,9 +3071,45 @@ struct BurnDriverD BurnDrvTheglad = {
 };
 
 
+// The Gladiator - Road Of The Sword / Shen Jian (V100)
+
+static struct BurnRomInfo theglad101RomDesc[] = {
+	{ "v100.u6",			0x080000, 0xbcf3b172, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t04601.u33",			0x800000, 0xe5dab371, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a04601.u2",			0x800000, 0xd9b2e004, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a04602.u4",			0x800000, 0x14f22308, 3 | BRF_GRA },		//  3
+	{ "a04603.u6",			0x800000, 0x8f621e17, 3 | BRF_GRA },		//  4
+
+	{ "b04601.u11",			0x800000, 0xee72bccf, 4 | BRF_GRA },		//  5 Sprite Masks & Color Indexes
+	{ "b04602.u12",			0x400000, 0x7dba9c38, 4 | BRF_GRA },		//  6
+
+	{ "w04601.u1",			0x800000, 0x5f15ddb3, 5 | BRF_SND },		//  7 Samples
+
+	{ "thegladpcb_igs027a_execute_only_area",	0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
+	{ "thegladpcb_igs027a.bin",     0x003e78, 0xd7f06e2d, 7 | BRF_PRG | BRF_ESS },  //  9
+
+	{ "v101.u26",			0x200000, 0x23faec02, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
+};
+
+STDROMPICKEXT(theglad101, theglad101, pgm)
+STD_ROM_FN(theglad101)
+
+struct BurnDriverD BurnDrvTheglad101 = {
+	"theglad101", "theglad", "pgm", NULL, "2003",
+	"The Gladiator - Road Of The Sword / Shen Jian (V100)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	L"The Gladiator - Road of The Sword (V100)\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, theglad101RomInfo, theglad101RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	thegladInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
 // The Gladiator - Road of The Sword / Shen Jian (V100, Taiwan)
 
-static struct BurnRomInfo thegladaRomDesc[] = {
+static struct BurnRomInfo theglad100RomDesc[] = {
 	{ "u6.rom",				0x080000, 0x14c85212, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t04601.u33",			0x800000, 0xe5dab371, 2 | BRF_GRA },		//  1 Tile data
@@ -3093,15 +3129,15 @@ static struct BurnRomInfo thegladaRomDesc[] = {
 
 };
 
-STDROMPICKEXT(theglada, theglada, pgm)
-STD_ROM_FN(theglada)
+STDROMPICKEXT(theglad100, theglad100, pgm)
+STD_ROM_FN(theglad100)
 
 struct BurnDriverD BurnDrvtheglada = {
-	"theglada", "theglad", "pgm", NULL, "2003",
+	"theglad100", "theglad", "pgm", NULL, "2003",
 	"The Gladiator - Road Of The Sword / Shen Jian (V100, Taiwan)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"The Gladiator - Road Of The Sword (V100, Taiwan)\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2\0", NULL, NULL, NULL,
 	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
-	NULL, thegladaRomInfo, thegladaRomName, NULL, NULL, pgmInputInfo, thegladDIPInfo,
+	NULL, theglad100RomInfo, theglad100RomName, NULL, NULL, pgmInputInfo, thegladDIPInfo,
 	thegladInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

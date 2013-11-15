@@ -348,10 +348,6 @@ static struct BurnRomInfo thegladBIOSRomDesc[] = {
 	{ "pgm_m01s.rom", 		0x200000, 0x45ae7159, BRF_SND | BRF_BIOS },	// 0x81 - Samples
 
 	{ "bios.42",      		0x020000, 0x517cf7a2, BRF_PRG | BRF_BIOS },	// 0x82 - 68K BIOS (V0001-01J, custom 02/25/03 17:51:01)
-
-#if !defined ROM_VERIFY
-	{ "wave.u29",     		0x200000, 0x51acb395, BRF_SND | BRF_BIOS },	// 0x83 - More samples
-#endif
 };
 
 static struct BurnRomInfo dmnfrntBIOSRomDesc[] = {
@@ -3974,6 +3970,8 @@ static struct BurnRomInfo thegladpcbRomDesc[] = {
 	{ "b04602.u12",			0x400000, 0x7dba9c38, 4 | BRF_GRA },		//  6
 
 	{ "w04601.u1",			0x800000, 0x5f15ddb3, 5 | BRF_SND },		//  7 Samples
+	// these contain samples for the japan region
+	{ "wave.u29",     		0x200000, 0x51acb395, 5 | BRF_SND },		//  8
 
 	{ "thegladpcb_igs027a_execute_only_area",	0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 	{ "thegladpcb_igs027a.bin",     0x003e78, 0xd7f06e2d, 7 | BRF_PRG | BRF_ESS },  //  9
@@ -3984,26 +3982,13 @@ static struct BurnRomInfo thegladpcbRomDesc[] = {
 STDROMPICKEXT(thegladpcb, thegladpcb, thegladBIOS) // custom bios
 STD_ROM_FN(thegladpcb)
 
-static INT32 thegladpcbInit()
-{
-	INT32 nRet = thegladInit();
-
-#if !defined (ROM_VERIFY)
-	if (nRet == 0) {
-		if (BurnLoadRom(ICSSNDROM + 0x200000, 0x83, 1)) return 1; // load extra 'wave' bios sample rom
-	}
-#endif
-
-	return nRet;
-}
-
 struct BurnDriverD BurnDrvThegladpcb = {
 	"thegladpcb", "theglad", NULL, NULL, "2003",
 	"The Gladiator - Road Of The Sword / Shen Jian (V100, Japan, Single PCB Version)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"The Gladiator - Road Of The Sword (V100, Japan, PCB Version)\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, thegladpcbRomInfo, thegladpcbRomName, NULL, NULL, pgmInputInfo, thegladpcbDIPInfo,
-	thegladpcbInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	thegladInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 

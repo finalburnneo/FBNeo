@@ -229,7 +229,7 @@ static INT32 pgmGetRoms(bool bLoad)
 		if (kov2) nPGMSNDROMLen += 0x400000;
 
 		nPGMSNDROMLen = ((nPGMSNDROMLen-1) | 0xfffff) + 1;
-		nICSSNDROMLen = (nPGMSNDROMLen-1) & 0xf00000;
+		nICSSNDROMLen = nPGMSNDROMLen;
 
 		if (nPGMExternalARMLen == 0) nPGMExternalARMLen = 0x200000;
 	}

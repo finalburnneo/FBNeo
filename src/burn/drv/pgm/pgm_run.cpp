@@ -788,22 +788,15 @@ INT32 pgmFrame()
 	{
 		Arm7NewFrame();
 
-		switch (nPGMArm7Type) // region hacks
+		// region hacks
 		{
-			case 1: // kov/kovsh/kovshp/photoy2k/puzlstar/puzzli2/oldsplus/py2k2 (SharedRam offset 0008)
-			case 2: // martmast/kov2/dw2001/dwpc (shared ram offset 0138) ddp2 (shared ram offset 0002)
+			if (strncmp(BurnDrvGetTextA(DRV_NAME), "dmnfrnt", 7) == 0) {
+				PGMARMShareRAM[0x158] = PgmInput[7];
+			} else {
 				if (nPgmAsicRegionHackAddress) {
 					PGMARMROM[nPgmAsicRegionHackAddress] = PgmInput[7];
 				}
-			break;
-
-			case 3: // svg/killbldp/dmnfrnt/theglad/happy6in1
-				if (strncmp(BurnDrvGetTextA(DRV_NAME), "dmnfrnt", 7) == 0) {
-					PGMARMShareRAM[0x158] = PgmInput[7];
-				} else {
-					// unknown
-				}
-			break;
+			}
 		}
 	}
 
@@ -846,11 +839,11 @@ INT32 pgmFrame()
 
 	ics2115_frame();
 
+	ics2115_update(nBurnSoundLen);
+
 	if (nEnableArm7) Arm7Close();
 	ZetClose();
 	SekClose();
-
-	ics2115_update(nBurnSoundLen);
 
 	if (pBurnDraw) {
 		pgmDraw();

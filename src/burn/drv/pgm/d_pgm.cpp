@@ -343,9 +343,9 @@ struct BurnDriver BurnDrvPgm = {
 };
 
 static struct BurnRomInfo thegladBIOSRomDesc[] = {
-	{ "pgm_t01s.rom", 		0x200000, 0x1a7123a0, BRF_GRA | BRF_BIOS }, 	// 0x80 - 8x8 Text Layer Tiles
+	{ "pgm_t01s.u72", 		0x200000, 0x1a7123a0, BRF_GRA | BRF_BIOS }, 	// 0x80 - 8x8 Text Layer Tiles
 
-	{ "pgm_m01s.rom", 		0x200000, 0x45ae7159, BRF_SND | BRF_BIOS },	// 0x81 - Samples
+	{ "pgm_m01s.u4", 		0x200000, 0x45ae7159, BRF_SND | BRF_BIOS },	// 0x81 - Samples
 
 	{ "bios.42",      		0x020000, 0x517cf7a2, BRF_PRG | BRF_BIOS },	// 0x82 - 68K BIOS (V0001-01J, custom 02/25/03 17:51:01)
 };
@@ -3005,7 +3005,7 @@ static struct BurnRomInfo thegladRomDesc[] = {
 	{ "w04601.u1",			0x800000, 0x5f15ddb3, 5 | BRF_SND },		//  7 Samples
 
 	{ "thegladpcb_igs027a_execute_only_area",	0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
-	{ "thegladpcb_igs027a.bin",     0x003e78, 0xd7f06e2d, 7 | BRF_PRG | BRF_ESS },  //  9
+	{ "thegladpcb_igs027a_v100_japan.bin",      0x003e78, 0xd7f06e2d, 7 | BRF_PRG | BRF_ESS },  //  9
 
 	{ "v107.u26",			0x200000, 0xf7c61357, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
 };
@@ -3088,7 +3088,7 @@ static struct BurnRomInfo theglad101RomDesc[] = {
 	{ "w04601.u1",			0x800000, 0x5f15ddb3, 5 | BRF_SND },		//  7 Samples
 
 	{ "thegladpcb_igs027a_execute_only_area",	0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
-	{ "thegladpcb_igs027a.bin",     0x003e78, 0xd7f06e2d, 7 | BRF_PRG | BRF_ESS },  //  9
+	{ "thegladpcb_igs027a_v100_japan.bin",      0x003e78, 0xd7f06e2d, 7 | BRF_PRG | BRF_ESS },  //  9
 
 	{ "v101.u26",			0x200000, 0x23faec02, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
 };
@@ -3996,23 +3996,23 @@ struct BurnDriver BurnDrvEspgal = {
 static struct BurnRomInfo thegladpcbRomDesc[] = {
 	{ "glad_v100.43",		0x080000, 0xbcf3b172, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t04601.u33",			0x800000, 0xe5dab371, 2 | BRF_GRA },		//  1 Tile data
+	{ "t04601.u71",			0x800000, 0xe5dab371, 2 | BRF_GRA },		//  1 Tile data
 
-	{ "a04601.u2",			0x800000, 0xd9b2e004, 3 | BRF_GRA },		//  2 Sprite Color Data
-	{ "a04602.u4",			0x800000, 0x14f22308, 3 | BRF_GRA },		//  3
-	{ "a04603.u6",			0x800000, 0x8f621e17, 3 | BRF_GRA },		//  4
+	{ "a04601.u30",			0x800000, 0xd9b2e004, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a04602.u31",			0x800000, 0x14f22308, 3 | BRF_GRA },		//  3
+	{ "a04603.u32",			0x800000, 0x8f621e17, 3 | BRF_GRA },		//  4
 
-	{ "b04601.u11",			0x800000, 0xee72bccf, 4 | BRF_GRA },		//  5 Sprite Masks & Color Indexes
-	{ "b04602.u12",			0x400000, 0x7dba9c38, 4 | BRF_GRA },		//  6
+	{ "b04601.u40",			0x800000, 0xee72bccf, 4 | BRF_GRA },		//  5 Sprite Masks & Color Indexes
+	{ "b04602.u41",			0x400000, 0x7dba9c38, 4 | BRF_GRA },		//  6
 
-	{ "w04601.u1",			0x800000, 0x5f15ddb3, 5 | BRF_SND },		//  7 Samples
+	{ "w04601.u8",			0x800000, 0x5f15ddb3, 5 | BRF_SND },		//  7 Samples
 	// these contain samples for the japan region
 	{ "wave.u29",     		0x200000, 0x51acb395, 5 | BRF_SND },		//  8
 
 	{ "thegladpcb_igs027a_execute_only_area",	0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
-	{ "thegladpcb_igs027a.bin",     0x003e78, 0xd7f06e2d, 7 | BRF_PRG | BRF_ESS },  //  9
+	{ "thegladpcb_igs027a_v100_japan.bin",      0x003e78, 0xd7f06e2d, 7 | BRF_PRG | BRF_ESS },  //  9
 
-	{ "igs.62",			0x200000, 0x0f3f511e, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
+	{ "igs_v100.62",		0x200000, 0x0f3f511e, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
 };
 
 STDROMPICKEXT(thegladpcb, thegladpcb, thegladBIOS) // custom bios

@@ -34,6 +34,7 @@ static UINT8 *Wc90FgTiles      = NULL;
 static UINT8 *Wc90Sprites      = NULL;
 static UINT8 *Wc90TempGfx      = NULL;
 static UINT8 *Wc90YM2608Rom    = NULL;
+static UINT8 *Wc90YM2608IRom   = NULL;
 
 static INT32 Wc90Scroll0YLo;
 static INT32 Wc90Scroll0YHi;
@@ -177,6 +178,17 @@ static struct BurnDIPInfo Wc90DIPList[]=
 
 STDDIPINFO(Wc90)
 
+static struct BurnRomInfo emptyRomDesc[] = {
+	{ "",                    0,          0, 0 },
+};
+
+static struct BurnRomInfo Ym2608RomDesc[] = {
+	{ "ym2608_adpcm_rom.bin",  0x002000, 0x23c9e0d8, BRF_ESS | BRF_PRG | BRF_BIOS },
+};
+
+STD_ROM_PICK(Ym2608)
+STD_ROM_FN(Ym2608)
+
 static struct BurnRomInfo Wc90RomDesc[] = {
 	{ "ic87_01.bin",   0x08000, 0x4a1affbc, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "ic95_02.bin",   0x10000, 0x847d439c, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
@@ -199,7 +211,7 @@ static struct BurnRomInfo Wc90RomDesc[] = {
 	{ "ic82_06.bin",   0x20000, 0x2fd692ed, BRF_SND },			 //  14	ADPCM Samples
 };
 
-STD_ROM_PICK(Wc90)
+STDROMPICKEXT(Wc90, Wc90, Ym2608)
 STD_ROM_FN(Wc90)
 
 static struct BurnRomInfo Wc90aRomDesc[] = {
@@ -224,7 +236,7 @@ static struct BurnRomInfo Wc90aRomDesc[] = {
 	{ "ic82_06.bin",   0x20000, 0x2fd692ed, BRF_SND },			 //  14	ADPCM Samples
 };
 
-STD_ROM_PICK(Wc90a)
+STDROMPICKEXT(Wc90a, Wc90a, Ym2608)
 STD_ROM_FN(Wc90a)
 
 static struct BurnRomInfo Wc90bRomDesc[] = {
@@ -249,7 +261,7 @@ static struct BurnRomInfo Wc90bRomDesc[] = {
 	{ "ic82_06.bin",   0x20000, 0x2fd692ed, BRF_SND },			 //  14	ADPCM Samples
 };
 
-STD_ROM_PICK(Wc90b)
+STDROMPICKEXT(Wc90b, Wc90b, Ym2608)
 STD_ROM_FN(Wc90b)
 
 static struct BurnRomInfo Wc90tRomDesc[] = {
@@ -274,7 +286,7 @@ static struct BurnRomInfo Wc90tRomDesc[] = {
 	{ "ic82_06.bin",   0x20000, 0x2fd692ed, BRF_SND },			 //  14	ADPCM Samples
 };
 
-STD_ROM_PICK(Wc90t)
+STDROMPICKEXT(Wc90t, Wc90t, Ym2608)
 STD_ROM_FN(Wc90t)
 
 static INT32 Wc90DoReset()
@@ -498,6 +510,7 @@ static INT32 MemIndex()
 	Wc90Z80Rom2            = Next; Next += 0x20000;
 	Wc90Z80Rom3            = Next; Next += 0x10000;
 	Wc90YM2608Rom          = Next; Next += 0x20000;
+	Wc90YM2608IRom         = Next; Next += 0x02000;
 
 	RamStart               = Next;
 
@@ -1085,6 +1098,8 @@ static INT32 Wc90Init()
 	BurnFree(Wc90TempGfx);
 
 	nRet = BurnLoadRom(Wc90YM2608Rom, 14, 1); if (nRet !=0) return 1;
+	
+	nRet = BurnLoadRom(Wc90YM2608IRom, 0x80, 1); if (nRet !=0) return 1;
 
 	ZetInit(0);
 	ZetOpen(0);
@@ -1157,7 +1172,7 @@ static INT32 Wc90Init()
 	BurnSetRefreshRate(59.17);
 
 	INT32 Wc90YM2608RomSize = 0x20000;
-	BurnYM2608Init(8000000, Wc90YM2608Rom, &Wc90YM2608RomSize, &wc90FMIRQHandler, wc90SynchroniseStream, wc90GetTime, 0);
+	BurnYM2608Init(8000000, Wc90YM2608Rom, &Wc90YM2608RomSize, Wc90YM2608IRom, &wc90FMIRQHandler, wc90SynchroniseStream, wc90GetTime, 0);
 	BurnTimerAttachZet(4000000);
 	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
 	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
@@ -1257,8 +1272,18 @@ static INT32 Wc90Scan(INT32 nAction,INT32 *pnMin)
 	return 0;
 }
 
+struct BurnDriver BurnDrvYm2608 = {
+	"ym2608", NULL, NULL, NULL, "1989",
+	"YM2608 Internal ROM\0", "Internal ROM only", "Yamaha", "YM2608 Internal ROM",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_BOARDROM, 0, HARDWARE_MISC_PRE90S, GBF_BIOS, 0,
+	NULL, Ym2608RomInfo, Ym2608RomName, NULL, NULL, Wc90InputInfo, NULL,
+	NULL, NULL, NULL, NULL, NULL,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvWc90 = {
-	"wc90", NULL, NULL, NULL, "1989",
+	"wc90", NULL, "ym2608", NULL, "1989",
 	"World Cup '90 (World)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
@@ -1268,7 +1293,7 @@ struct BurnDriver BurnDrvWc90 = {
 };
 
 struct BurnDriver BurnDrvWc90a = {
-	"wc90a", "wc90", NULL, NULL, "1989",
+	"wc90a", "wc90", "ym2608", NULL, "1989",
 	"World Cup '90 (Euro set 1)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
@@ -1278,7 +1303,7 @@ struct BurnDriver BurnDrvWc90a = {
 };
 
 struct BurnDriver BurnDrvWc90b = {
-	"wc90b", "wc90", NULL, NULL, "1989",
+	"wc90b", "wc90", "ym2608", NULL, "1989",
 	"World Cup '90 (Euro set 2)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
@@ -1288,7 +1313,7 @@ struct BurnDriver BurnDrvWc90b = {
 };
 
 struct BurnDriver BurnDrvWc90t = {
-	"wc90t", "wc90", NULL, NULL, "1989",
+	"wc90t", "wc90", "ym2608", NULL, "1989",
 	"World Cup '90 (trackball)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,

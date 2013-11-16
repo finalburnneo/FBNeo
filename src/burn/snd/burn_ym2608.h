@@ -8,7 +8,7 @@ extern "C" {
 
 extern "C" void BurnYM2608UpdateRequest();
 
-INT32 BurnYM2608Init(INT32 nClockFrequency, UINT8* YM2608ADPCMROM, INT32* nYM2608ADPCMSize, FM_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), double (*GetTimeCallback)(), INT32 bAddSignal);
+INT32 BurnYM2608Init(INT32 nClockFrequency, UINT8* YM2608ADPCMROM, INT32* nYM2608ADPCMSize, UINT8* YM2608IROM, FM_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), double (*GetTimeCallback)(), INT32 bAddSignal);
 void BurnYM2608SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
 void BurnYM2608Reset();
 void BurnYM2608Exit();

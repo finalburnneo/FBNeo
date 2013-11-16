@@ -175,7 +175,7 @@ int YM2203TimerOver(int n, int c);
 #if BUILD_YM2608
 /* -------------------- YM2608(OPNA) Interface -------------------- */
 int YM2608Init(int num, int baseclock, int rate,
-               void **pcmroma,int *pcmsizea,
+               void **pcmroma,int *pcmsizea, unsigned char *irom,
                FM_TIMERHANDLER TimerHandler,FM_IRQHANDLER IRQHandler);
 void YM2608Shutdown(void);
 void YM2608ResetChip(int num);

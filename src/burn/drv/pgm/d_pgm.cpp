@@ -3019,7 +3019,7 @@ static void thegladPatch()
 
 	// Replace undumpable area of the arm7 internal rom with a custom-built
 	// version created by David Haywood in order to make game playable
-	static UINT16 thegladEOHackData[0x188/2] = {
+	static const UINT16 thegladEOHackData[0x188/2] = {
 		0x000a, 0xea00, 0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xfffe, 0xeaff,
 		0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xf000, 0xe59f,
 		0x0010, 0x0800, 0x0010, 0x0800, 0xfffe, 0xeaff, 0xfffe, 0xeaff,
@@ -3057,10 +3057,14 @@ static INT32 thegladInit()
 	pPgmInitCallback = thegladPatch;
 	pPgmProtCallback = install_protection_asic27a_svg;
 
-	return pgmInit();
+	INT32 nRet = pgmInit();
+
+	Arm7SetIdleLoopAddress(0x000007c4);
+
+	return nRet;
 }
 
-struct BurnDriverD BurnDrvTheglad = {
+struct BurnDriver BurnDrvTheglad = {
 	"theglad", NULL, "pgm", NULL, "2003",
 	"The Gladiator - Road Of The Sword / Shen Jian (V101)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"The Gladiator - Road of The Sword (V101)\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2\0", NULL, NULL, NULL,
@@ -3096,7 +3100,7 @@ static struct BurnRomInfo theglad101RomDesc[] = {
 STDROMPICKEXT(theglad101, theglad101, pgm)
 STD_ROM_FN(theglad101)
 
-struct BurnDriverD BurnDrvTheglad101 = {
+struct BurnDriver BurnDrvTheglad101 = {
 	"theglad101", "theglad", "pgm", NULL, "2003",
 	"The Gladiator - Road Of The Sword / Shen Jian (V100)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"The Gladiator - Road of The Sword (V100)\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2\0", NULL, NULL, NULL,
@@ -3110,7 +3114,7 @@ struct BurnDriverD BurnDrvTheglad101 = {
 // The Gladiator - Road of The Sword / Shen Jian (V100, Taiwan)
 
 static struct BurnRomInfo theglad100RomDesc[] = {
-	{ "u6.rom",				0x080000, 0x14c85212, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "u6.rom",			0x080000, 0x14c85212, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t04601.u33",			0x800000, 0xe5dab371, 2 | BRF_GRA },		//  1 Tile data
 
@@ -3123,22 +3127,68 @@ static struct BurnRomInfo theglad100RomDesc[] = {
 
 	{ "w04601.u1",			0x800000, 0x5f15ddb3, 5 | BRF_SND },		//  7 Samples
 
-	{ "theglad_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  8 Internal ARM7 Rom
+	{ "thegladpcb_igs027a_execute_only_area",	0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
+	{ "thegladpcb_igs027a_older.bin",      0x003e78, 0xd7f06e2d, 7 | BRF_PRG | BRF_ESS },  //  9
 
 	{ "u2.rom",			0x200000, 0xc7bcf2ae, 8 | BRF_PRG | BRF_ESS },	//  9 External ARM7 Rom
-
 };
 
 STDROMPICKEXT(theglad100, theglad100, pgm)
 STD_ROM_FN(theglad100)
 
-struct BurnDriverD BurnDrvtheglada = {
+static void theglad100Patch()
+{
+	thegladPatch();
+
+	// Hack the jump table in the external rom to work correctly with the internal rom we have...
+	static const UINT16 subroutine_addresses[] = {
+		0x00FC, 0x00E8, 0x0110, 0x0150, 0x0194, 0x06C8, 0x071C, 0x0728,
+		0x0734, 0x0740, 0x0784, 0x0794, 0x07FC, 0x0840, 0x086C, 0x0988,
+		0x0A54, 0x0AA8, 0x0AD4, 0x0EB8, 0x0EF8, 0x0F2C, 0x0F3C, 0x0F78,
+		0x0FA8, 0x0FD8, 0x1028, 0x1038, 0x1048, 0x1058, 0x1068, 0x1070,
+		0x1090, 0x10B0, 0x10D4, 0x1100, 0x113C, 0x1198, 0x1234, 0x1258,
+		0x127C, 0x12A8, 0x12E4, 0x1368, 0x142C, 0x0B10, 0x0B54, 0x0B74,
+		0x0C08, 0x0C90, 0x0D18, 0x0D90, 0x1570, 0x1600, 0x1640, 0x1694,
+		0x1730, 0x176C, 0x17AC, 0x17D8, 0x18C4, 0x18E0, 0x1904, 0x1930,
+		0x19D8, 0x1A38, 0x1950, 0x1970, 0x1990, 0x19B8, 0x19C8, 0x1A9C,
+		0x1AC4, 0x1AE8, 0x1B20, 0x1B48, 0x1B70, 0x1B8C, 0x1BB4, 0x1BD8,
+		0x1BFC, 0x1C10, 0x1C24, 0x1CA0, 0x1D5C, 0x1D7C, 0x1D8C, 0x1DAC,
+		0x1DCC, 0x1DE0, 0x1DF4, 0x1E1C, 0x1E2C, 0x1E60, 0x1E94, 0x1EA4,
+		0x1ECC, 0x1ED8, 0x1EE4, 0x1F14, 0x1F44, 0x1FB4, 0x1FC4, 0x2040,
+		0x20BC, 0x2140, 0x21C4, 0x2240, 0x22BC, 0x2340, 0x23C4, 0x23D0,
+		0x2400, 0x2430, 0x244C, 0x245C, 0x246C, 0x2FCC, 0x3000, 0x3028,
+		0x3050, 0x30A4, 0x30F8, 0x3120, 0x249C, 0x24C0, 0x27BC, 0x2B40,
+		0x2BF4, 0x2CD8, 0x2E2C
+	};
+
+	UINT16 *extprot = (UINT16 *)PGMUSER0;
+
+	for (int i = 0; i < 131; i++)
+	{
+		extprot[((0x82078 + (i * 4)) / 2)] = subroutine_addresses[i];
+	}
+}
+
+static INT32 theglad100Init()
+{
+	nPgmAsicRegionHackAddress = 0x3316;
+	pPgmInitCallback = theglad100Patch;
+	pPgmProtCallback = install_protection_asic27a_svg;
+
+	INT32 nRet = pgmInit();
+
+	Arm7SetIdleLoopAddress(0x000007c4);
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvtheglada = {
 	"theglad100", "theglad", "pgm", NULL, "2003",
 	"The Gladiator - Road Of The Sword / Shen Jian (V100, Taiwan)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"The Gladiator - Road Of The Sword (V100, Taiwan)\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2\0", NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, theglad100RomInfo, theglad100RomName, NULL, NULL, pgmInputInfo, thegladDIPInfo,
-	thegladInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	theglad100Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 
@@ -3989,7 +4039,7 @@ struct BurnDriver BurnDrvEspgal = {
 	espgalInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };
-	
+
 
 // The Gladiator - Road Of The Sword / Shen Jian (V100, Japan, PCB Version)
 

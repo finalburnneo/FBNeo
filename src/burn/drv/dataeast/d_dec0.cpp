@@ -5060,7 +5060,7 @@ struct BurnDriver BurnDrvRobocopb = {
 };
 
 struct BurnDriver BurnDrvRobocopb2 = {
-	"robocopb2", "robocop", NULL, NULL, "1988",
+	"robocopb2", "robocop", NULL, NULL, "1989",
 	"Robocop (Red Corporation World bootleg)\0", NULL, "bootleg", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,

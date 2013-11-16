@@ -826,7 +826,7 @@ static INT32 killbldInit()
 struct BurnDriver BurnDrvKillbld = {
 	"killbld", NULL, "pgm", NULL, "1998",
 	"The Killing Blade (V109, China)\0", NULL, "IGS", "PolyGameMaster",
-	L"The Killing Blade\0\u50B2\u5251\u72C2\u5200\0\u50B2\u528D\u72C2\u5200 (V109, China)\0", NULL, NULL, NULL,
+	L"The Killing Blade\0\u50B2\u5251\u72C2\u5200 (V109, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM, GBF_VSFIGHT, 0,
 	NULL, killbldRomInfo, killbldRomName, NULL, NULL, pgmInputInfo, killbldDIPInfo,
 	killbldInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -865,7 +865,7 @@ STD_ROM_FN(killbld104)
 struct BurnDriver BurnDrvKillbld104 = {
 	"killbld104", "killbld", "pgm", NULL, "1998",
 	"The Killing Blade (V104)\0", NULL, "IGS", "PolyGameMaster",
-	L"The Killing Blade\0\u50B2\u5251\u72C2\u5200\0\u50B2\u528D\u72C2\u5200 (V104)\0", NULL, NULL, NULL,
+	L"The Killing Blade\0\u50B2\u5251\u72C2\u5200 (V104)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_VSFIGHT, 0,
 	NULL, killbld104RomInfo, killbld104RomName, NULL, NULL, pgmInputInfo, killbldDIPInfo,
 	killbldInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -3468,25 +3468,25 @@ struct BurnDriver BurnDrvoldsplus = {
 // The Killing Blade Plus (V300)
 
 static struct BurnRomInfo killbldpRomDesc[] = {
-	{ "v300x.u6",       		0x080000, 0xb7fb8ec9, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "v300xx.u6",       		0x080000, 0xb7fb8ec9, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 	
-	{ "t05701w032.bin", 		0x400000, 0x567c714f, 2 | BRF_GRA },		//  1 Tile data
+	{ "t05701w032.u33", 		0x400000, 0x567c714f, 2 | BRF_GRA },		//  1 Tile data
 
-	{ "a05701w064.bin", 		0x800000, 0x8c0c992c, 3 | BRF_GRA },		//  3 Sprite Color Data
-	{ "a05702w064.bin", 		0x800000, 0x7e5b0f27, 3 | BRF_GRA },		//  4
-	{ "a05703w064.bin", 		0x800000, 0xaccbdb44, 3 | BRF_GRA },		//  5
+	{ "a05701w064.u3", 		0x800000, 0x8c0c992c, 3 | BRF_GRA },		//  3 Sprite Color Data
+	{ "a05702w064.u4", 		0x800000, 0x7e5b0f27, 3 | BRF_GRA },		//  4
+	{ "a05703w064.u6", 		0x800000, 0xaccbdb44, 3 | BRF_GRA },		//  5
 	
-	{ "b05701w064.bin", 		0x800000, 0xa20cdcef, 4 | BRF_GRA },		//  6 Sprite Masks & Color Indexes
-	{ "b05702w016.bin", 		0x200000, 0xfe7457df, 4 | BRF_GRA },		//  7
+	{ "b05701w064.u9", 		0x800000, 0xa20cdcef, 4 | BRF_GRA },		//  6 Sprite Masks & Color Indexes
+	{ "b05702w016.u11", 	0x200000, 0xfe7457df, 4 | BRF_GRA },		//  7
 	
-	{ "w05701b032.bin", 		0x400000, 0x2d3ae593, 5 | BRF_SND },		//  8 Samples
+	{ "w05701b032.u5", 		0x400000, 0x2d3ae593, 5 | BRF_SND },		//  8 Samples
 
 // this is the original rom with the first 0x268 bytes from the bootleg - but it doesn't work?
 //	{ "killbldp_igs027a.bin",	0x004000, 0xc7868d90, 7 | BRF_PRG }, 		//  9 Internal ARM7 Rom
 // from a bootleg
 	{ "killbldp_igs027a_alt.bin",	0x004000, 0x98316b06, 7 | BRF_PRG }, 		//  9 Internal ARM7 Rom
 	
-	{ "v300x.u26",			0x200000, 0x144388c8, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
+	{ "v300xx.u26",			0x200000, 0x144388c8, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
 };
 
 STDROMPICKEXT(killbldp, killbldp, pgm)
@@ -3507,7 +3507,7 @@ INT32 killbldpInit()
 struct BurnDriverD BurnDrvKillbldp = {
 	"killbldp", NULL, "pgm", NULL, "2005",
 	"The Killing Blade Plus (V300)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
-	L"The Killing Blade Plus \0\u50B2\u5251\u72C2\u5200\0\u50B2\u528D\u72C2\u5200 (V300)\0", NULL, NULL, NULL,
+	L"The Killing Blade Plus \0\u50B2\u5251\u72C2\u5200\u00A0\u52A0\u5F3A\u7248 (V300)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VSFIGHT, 0,
 	NULL, killbldpRomInfo, killbldpRomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	killbldpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

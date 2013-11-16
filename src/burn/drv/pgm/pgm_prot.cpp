@@ -2191,8 +2191,8 @@ static void puzlstar_asic27a_sim_command(UINT8 command)
 	switch (command)
 	{
 		case 0x99: // Reset?
-			asic27a_sim_key = 0;
-			asic27a_sim_response = 0x890000 | (PgmInput[7] << 8);
+			asic27a_sim_key = 0x100;
+			asic27a_sim_response = 0x880000 | (PgmInput[7] << 8);
 		break;
 
 		case 0xb1:

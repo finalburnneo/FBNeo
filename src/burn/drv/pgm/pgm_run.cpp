@@ -81,8 +81,8 @@ static INT32 pgmMemIndex()
 	RamZ80		= Next; Next += 0x0010000;
 
 	if (BurnDrvGetHardwareCode() & HARDWARE_IGS_USE_ARM_CPU) {
-		PGMARMShareRAM	= Next; Next += 0x0020000;
-		PGMARMShareRAM2	= Next; Next += 0x0020000;
+		PGMARMShareRAM	= Next; Next += 0x0010000;
+		PGMARMShareRAM2	= Next; Next += 0x0010000;
 		PGMARMRAM0	= Next; Next += 0x0001000; // minimum map is 0x1000 - should be 0x400
 		PGMARMRAM1	= Next; Next += 0x0040000;
 		PGMARMRAM2	= Next; Next += 0x0001000; // minimum map is 0x1000 - should be 0x400

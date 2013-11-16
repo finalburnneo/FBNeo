@@ -2173,8 +2173,6 @@ static const UINT8 Pstar_80[0x1a3]={
 
 static UINT16 __fastcall puzlstar_protram_read_word(UINT32 offset)
 {
-	bprintf (0, _T("RAMRW: %2.2x\n"), offset & 0x3f);
-
 	if ((offset & 0x3e) == 0x08) return PgmInput[7]; // Region
 	if ((offset & 0x38) == 0x20) return asic27a_sim_slots[((offset & 0x06)/2)+0x10]--; // Timer
 
@@ -2183,7 +2181,6 @@ static UINT16 __fastcall puzlstar_protram_read_word(UINT32 offset)
 
 static UINT8 __fastcall puzlstar_protram_read_byte(UINT32 offset)
 {
-	bprintf (0, _T("RAMRB: %2.2x\n"), offset & 0x3f);
 	if ((offset & 0x3e) == 0x08) return PgmInput[7]; // Region
 
 	return 0;
@@ -2191,8 +2188,6 @@ static UINT8 __fastcall puzlstar_protram_read_byte(UINT32 offset)
 
 static void puzlstar_asic27a_sim_command(UINT8 command)
 {
-	bprintf (0, _T("CMD: %2.2x\n"), command);
-
 	switch (command)
 	{
 		case 0x99: // Reset?

@@ -1476,6 +1476,42 @@ static struct BurnRomInfo RobocopbRomDesc[] = {
 STD_ROM_PICK(Robocopb)
 STD_ROM_FN(Robocopb)
 
+static struct BurnRomInfo Robocopb2RomDesc[] = {
+	{ "s-9.e3",       		0x10000, 0xbcef3e9b, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "s-11.c3",       		0x10000, 0xc9803685, BRF_ESS | BRF_PRG },	//  1
+	{ "s-10.e2",       		0x10000, 0x9d7b79e0, BRF_ESS | BRF_PRG },	//  2
+	{ "s-12.c2",       		0x10000, 0x631301c1, BRF_ESS | BRF_PRG },	//  3
+	
+	{ "ep03-3",             0x08000, 0x5b164b24, BRF_ESS | BRF_PRG },	//  4	6502 Program 
+		
+	{ "ep23",               0x10000, 0xa77e4ab1, BRF_GRA },			//  5	Characters
+	{ "ep22",               0x10000, 0x9fbd6903, BRF_GRA },			//  6
+
+	{ "ep20",               0x10000, 0x1d8d38b8, BRF_GRA },			//  7	Tiles 1
+	{ "ep21",               0x10000, 0x187929b2, BRF_GRA },			//  8
+	{ "ep18",               0x10000, 0xb6580b5e, BRF_GRA },			//  9
+	{ "ep19",               0x10000, 0x9bad01c7, BRF_GRA },			// 10
+	
+	{ "ep14",               0x08000, 0xca56ceda, BRF_GRA },			// 11	Tiles 2
+	{ "ep15",               0x08000, 0xa945269c, BRF_GRA },			// 12
+	{ "ep16",               0x08000, 0xe7fa4d58, BRF_GRA },			// 13
+	{ "ep17",               0x08000, 0x84aae89d, BRF_GRA },			// 14
+	
+	{ "ep07",               0x10000, 0x495d75cf, BRF_GRA },			// 15	Sprites
+	{ "ep06",               0x08000, 0xa2ae32e2, BRF_GRA },			// 16
+	{ "ep11",               0x10000, 0x62fa425a, BRF_GRA },			// 17
+	{ "ep10",               0x08000, 0xcce3bd95, BRF_GRA },			// 18
+	{ "ep09",               0x10000, 0x11bed656, BRF_GRA },			// 19
+	{ "ep08",               0x08000, 0xc45c7b4c, BRF_GRA },			// 20
+	{ "ep13",               0x10000, 0x8fca9f28, BRF_GRA },			// 21
+	{ "ep12",               0x08000, 0x3cd1d0c3, BRF_GRA },			// 22
+	
+	{ "ep02",               0x10000, 0x711ce46f, BRF_SND },			// 23	Samples
+};
+
+STD_ROM_PICK(Robocopb2)
+STD_ROM_FN(Robocopb2)
+
 static struct BurnRomInfo SlyspyRomDesc[] = {
 	{ "fa14-3.17l",         0x10000, 0x54353a84, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "fa12-2.9l",          0x10000, 0x1b534294, BRF_ESS | BRF_PRG },	//  1
@@ -5019,6 +5055,16 @@ struct BurnDriver BurnDrvRobocopb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, RobocopbRomInfo, RobocopbRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
+	RobocopbInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
+	NULL, 0x400, 256, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvRobocopb2 = {
+	"robocopb2", "robocop", NULL, NULL, "1988",
+	"Robocop (Red Corporation World bootleg)\0", NULL, "bootleg", "DEC0",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	NULL, Robocopb2RomInfo, Robocopb2RomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
 	RobocopbInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };

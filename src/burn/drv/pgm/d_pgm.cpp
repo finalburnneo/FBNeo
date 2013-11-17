@@ -251,6 +251,32 @@ static struct BurnDIPInfo thegladDIPList[] = {
 	{0x2E,  0x01, 0x07,     0x06, "World"				},
 };
 
+static struct BurnDIPInfo theglad100DIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x01, NULL				},
+
+	{0,	0xFE, 0,	7,    "Region (Fake)"			},
+	{0x2E,	0x01, 0x07,	0x00, "China"				},
+	{0x2E,	0x01, 0x07,	0x01, "Taiwan"				},
+	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
+	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
+	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
+	{0x2E,  0x01, 0x07,     0x06, "World"				},
+};
+
+static struct BurnDIPInfo thegladpcbDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x02, NULL				},
+
+	{0,	0xFE, 0,	7,    "Region (Fake)"			},
+	{0x2E,	0x01, 0x07,	0x00, "China"				},
+	{0x2E,	0x01, 0x07,	0x01, "Taiwan"				},
+	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
+	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
+	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
+	{0x2E,  0x01, 0x07,     0x06, "World"				},
+};
+
 static struct BurnDIPInfo ddp2DIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x05, NULL				},
 };
@@ -287,26 +313,27 @@ static struct BurnDIPInfo kovshxasDIPList[] = {
 	{0x2E,	0x01, 0x0F,	0x05, "World"				},
 };
 
-STDDIPINFOEXT(orlegend,		pgm,	orlegend	)
-STDDIPINFOEXT(orld111c, 	pgm,	orld111c	)
-STDDIPINFOEXT(orld105k, 	pgm,	orld105k	)
-STDDIPINFOEXT(kov,       	pgm,	kov		)
-STDDIPINFOEXT(kovshxas,    	pgm,	kovshxas	)
-STDDIPINFOEXT(killbld,	 	pgm,	killbld		)
-STDDIPINFOEXT(photoy2k, 	pgm,	photoy2k	)
-STDDIPINFOEXT(puzzli2,  	pgm,	puzzli2		)
-STDDIPINFOEXT(martmast, 	pgm,	martmast	)
-STDDIPINFOEXT(martmastc102, 	pgm,	martmastc102	)
-STDDIPINFOEXT(olds,     	pgm,	olds		)
-STDDIPINFOEXT(ddp2,     	pgm,	ddp2		)
-STDDIPINFOEXT(ddp2hk,     	pgm,	ddp2hk		)
-STDDIPINFOEXT(ddp2k,     	pgm,	ddp2k		)
-STDDIPINFOEXT(ddp2j,     	pgm,	ddp2j		)
-STDDIPINFOEXT(ddp2t,     	pgm,	ddp2t		)
-STDDIPINFOEXT(ddp2c,     	pgm,	ddp2c		)
-STDDIPINFOEXT(theglad,	 	pgm,	theglad 	)
-STDDIPINFOEXT(dmnfrntpcb,     	jamma,	kov		)
-STDDIPINFOEXT(thegladpcb,     	jamma,	theglad		)
+STDDIPINFOEXT(orlegend,		pgm,	orlegend		)
+STDDIPINFOEXT(orld111c, 	pgm,	orld111c		)
+STDDIPINFOEXT(orld105k, 	pgm,	orld105k		)
+STDDIPINFOEXT(kov,       	pgm,	kov		    	)
+STDDIPINFOEXT(kovshxas,    	pgm,	kovshxas		)
+STDDIPINFOEXT(killbld,	 	pgm,	killbld			)
+STDDIPINFOEXT(photoy2k, 	pgm,	photoy2k		)
+STDDIPINFOEXT(puzzli2,  	pgm,	puzzli2			)
+STDDIPINFOEXT(martmast, 	pgm,	martmast		)
+STDDIPINFOEXT(martmastc102, pgm,	martmastc102	)
+STDDIPINFOEXT(olds,     	pgm,	olds			)
+STDDIPINFOEXT(ddp2,     	pgm,	ddp2			)
+STDDIPINFOEXT(ddp2hk,     	pgm,	ddp2hk			)
+STDDIPINFOEXT(ddp2k,     	pgm,	ddp2k			)
+STDDIPINFOEXT(ddp2j,     	pgm,	ddp2j			)
+STDDIPINFOEXT(ddp2t,     	pgm,	ddp2t			)
+STDDIPINFOEXT(ddp2c,     	pgm,	ddp2c			)
+STDDIPINFOEXT(theglad,	 	pgm,	theglad 		)
+STDDIPINFOEXT(theglad100,	pgm,	theglad100 		)
+STDDIPINFOEXT(dmnfrntpcb,   jamma,	kov		    	)
+STDDIPINFOEXT(thegladpcb,   jamma,	thegladpcb		)
 
 // -----------------------------------------------------------------------------
 // BIOS
@@ -3069,7 +3096,7 @@ struct BurnDriver BurnDrvTheglad = {
 	"The Gladiator - Road Of The Sword / Shen Jian (V101)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"The Gladiator - Road of The Sword (V101)\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, thegladRomInfo, thegladRomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, thegladRomInfo, thegladRomName, NULL, NULL, pgmInputInfo, thegladDIPInfo,
 	thegladInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -3105,7 +3132,7 @@ struct BurnDriver BurnDrvTheglad101 = {
 	"The Gladiator - Road Of The Sword / Shen Jian (V100)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"The Gladiator - Road of The Sword (V100)\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, theglad101RomInfo, theglad101RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, theglad101RomInfo, theglad101RomName, NULL, NULL, pgmInputInfo, thegladDIPInfo,
 	thegladInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -3187,7 +3214,7 @@ struct BurnDriver BurnDrvtheglada = {
 	"The Gladiator - Road Of The Sword / Shen Jian (V100, Taiwan)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"The Gladiator - Road Of The Sword (V100, Taiwan)\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, theglad100RomInfo, theglad100RomName, NULL, NULL, pgmInputInfo, thegladDIPInfo,
+	NULL, theglad100RomInfo, theglad100RomName, NULL, NULL, pgmInputInfo, theglad100DIPInfo,
 	theglad100Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

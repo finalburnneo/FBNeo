@@ -3046,7 +3046,7 @@ static void thegladPatch()
 
 	// Replace undumpable area of the arm7 internal rom with a custom-built
 	// version created by David Haywood in order to make game playable
-	static const UINT16 thegladEOHackData[0x188/2] = {
+	static UINT16 thegladEOHackData[0x188/2] = {
 		0x000a, 0xea00, 0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xfffe, 0xeaff,
 		0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xf000, 0xe59f,
 		0x0010, 0x0800, 0x0010, 0x0800, 0xfffe, 0xeaff, 0xfffe, 0xeaff,
@@ -3073,6 +3073,12 @@ static void thegladPatch()
 		0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xfffe, 0xeaff,
 		0xfffe, 0xeaff, 0x105c, 0xe59f
 	};
+
+	// byte swap for Big Endian arch
+	for (int i = 0; i < 0x188/2; i++)
+	{
+		thegladEOHackData[i] = BURN_ENDIAN_SWAP_INT16(thegladEOHackData[i]);
+	}
 
 	memmove (PGMARMROM + 0x188, PGMARMROM, 0x4000-0x188);
 	memcpy  (PGMARMROM, thegladEOHackData, 0x188);
@@ -3192,7 +3198,7 @@ static void theglad100Patch()
 
 	for (int i = 0; i < 131; i++)
 	{
-		extprot[((0x82078 + (i * 4)) / 2)] = subroutine_addresses[i];
+		extprot[((0x82078 + (i * 4)) / 2)] = (subroutine_addresses[i]);
 	}
 }
 

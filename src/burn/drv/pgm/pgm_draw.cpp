@@ -622,7 +622,7 @@ INT32 pgmDraw()
 {
 	if (nPgmPalRecalc) {
 		for (INT32 i = 0; i < 0x1200 / 2; i++) {
-			RamCurPal[i] = CalcCol(PGMPalRAM[i]);
+			RamCurPal[i] = CalcCol(BURN_ENDIAN_SWAP_INT16(PGMPalRAM[i]));
 		}
 		nPgmPalRecalc = 0;
 	}

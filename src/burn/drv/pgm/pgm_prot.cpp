@@ -1098,7 +1098,7 @@ static void IGS022_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
 
 		for (x = 0; x < size; x++)
 		{
-			UINT16 dat2 = PROTROM[src + x];
+			UINT16 dat2 = BURN_ENDIAN_SWAP_INT16(PROTROM[src + x]);
 
 			UINT8 extraoffset = param&0xff;
 			UINT8* dectable = (UINT8*)PROTROM; // the basic decryption table is at the start of the mcu data rom! at least in killbld
@@ -1112,7 +1112,7 @@ static void IGS022_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
 			if (mode==2) dat2 += extraxor;
 			if (mode==1) dat2 -= extraxor;
 
-			sharedprotram[dst + x] = dat2;
+			sharedprotram[dst + x] = BURN_ENDIAN_SWAP_INT16(dat2);
 		}
 
 		/* Killing Blade: hack, patches out some additional security checks... we need to emulate them instead! */
@@ -1144,14 +1144,14 @@ static void IGS022_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
 		UINT16 *PROTROM = (UINT16*)(PGMUSER0 + 0x10000);
 		for (x = 0; x < size; x++)
 		{
-			UINT16 dat = PROTROM[src + x];
+			UINT16 dat = BURN_ENDIAN_SWAP_INT16(PROTROM[src + x]);
 
 			dat = ((dat & 0xf000) >> 12)|
 					((dat & 0x0f00) >> 4)|
 					((dat & 0x00f0) << 4)|
 					((dat & 0x000f) << 12);
 
-			sharedprotram[dst + x] = dat;
+			sharedprotram[dst + x] = BURN_ENDIAN_SWAP_INT16(dat);
 		}
 	}
 	else if (mode == 7)
@@ -1177,13 +1177,13 @@ static void IGS022_reset()
 
 	// fill ram with A5 patern
 	for (i = 0; i < 0x4000/2; i++)
-		sharedprotram[i] = 0xa55a;
+		sharedprotram[i] = BURN_ENDIAN_SWAP_INT16(0xa55a);
 
 	// the auto-dma
-	UINT16 src = PROTROM[0x100 / 2];
-	UINT32 dst = PROTROM[0x102 / 2];
-	UINT16 size = PROTROM[0x104/ 2];
-	UINT16 mode = PROTROM[0x106 / 2];
+	UINT16 src = BURN_ENDIAN_SWAP_INT16(PROTROM[0x100 / 2]);
+	UINT32 dst = BURN_ENDIAN_SWAP_INT16(PROTROM[0x102 / 2]);
+	UINT16 size = BURN_ENDIAN_SWAP_INT16(PROTROM[0x104/ 2]);
+	UINT16 mode = BURN_ENDIAN_SWAP_INT16(PROTROM[0x106 / 2]);
 
 	src = ((src & 0xff00) >> 8) | ((src & 0x00ff) << 8);
 	dst = ((dst & 0xff00) >> 8) | ((dst & 0x00ff) << 8);
@@ -1196,19 +1196,19 @@ static void IGS022_reset()
 
 	// there is also a version ID? (or is it some kind of checksum) that is stored in the data rom, and gets copied..
 	// Dragon World 3 checks it
-	tmp = PROTROM[0x114/2];
+	tmp = BURN_ENDIAN_SWAP_INT16(PROTROM[0x114/2]);
 	tmp = ((tmp & 0xff00) >> 8) | ((tmp & 0x00ff) << 8);
-	sharedprotram[0x2a2/2] = tmp;
+	sharedprotram[0x2a2/2] = BURN_ENDIAN_SWAP_INT16(tmp);
 }
 
 void IGS022_handle_command()
 {
-	UINT16 cmd = sharedprotram[0x200/2];
+	UINT16 cmd = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x200/2]);
 
 	if (cmd == 0x6d)    // Store values to asic ram
 	{
-		UINT32 p1 = (sharedprotram[0x298/2] << 16) | sharedprotram[0x29a/2];
-		UINT32 p2 = (sharedprotram[0x29c/2] << 16) | sharedprotram[0x29e/2];
+		UINT32 p1 = (BURN_ENDIAN_SWAP_INT16(sharedprotram[0x298/2]) << 16) | BURN_ENDIAN_SWAP_INT16(sharedprotram[0x29a/2]);
+		UINT32 p2 = (BURN_ENDIAN_SWAP_INT16(sharedprotram[0x29c/2]) << 16) | BURN_ENDIAN_SWAP_INT16(sharedprotram[0x29e/2]);
 
 		if ((p2 & 0xffff) == 0x9)   // Set value
 		{
@@ -1246,10 +1246,10 @@ void IGS022_handle_command()
 
 	if(cmd == 0x4f) //memcpy with encryption / scrambling
 	{
-		UINT16 src = sharedprotram[0x290 / 2] >> 1; // ?
-		UINT32 dst = sharedprotram[0x292 / 2];
-		UINT16 size = sharedprotram[0x294 / 2];
-		UINT16 mode = sharedprotram[0x296 / 2];
+		UINT16 src = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x290 / 2]) >> 1; // ?
+		UINT32 dst = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x292 / 2]);
+		UINT16 size = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x294 / 2]);
+		UINT16 mode = BURN_ENDIAN_SWAP_INT16(sharedprotram[0x296 / 2]);
 
 		IGS022_do_dma(src,dst,size,mode);
 	}

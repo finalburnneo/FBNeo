@@ -1807,6 +1807,37 @@ struct BurnDriver BurnDrvCadashg = {
 };
 
 
+// Cadash (World, prototype)
+
+static struct BurnRomInfo cadashpRomDesc[] = {
+	{ "euro main h.ic11",		0x20000, 0x9dae00ca, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "euro main l.ic15",		0x20000, 0xba66b6a5, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "euro data h.bin",		0x20000, 0xbcce9d44, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
+	{ "euro data l.bin",		0x20000, 0x21f5b591, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
+
+	{ "c21-08.38",			0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  4 Z80 Code
+
+	{ "c21-02.9",			0x80000, 0x205883b9, BRF_GRA | TAITO_CHARS },				//  5 Characters
+
+	{ "c21-01.1",			0x80000, 0x1ff6f39c, BRF_GRA | TAITO_SPRITESA },			//  6 Sprites
+
+	{ "com.ic57",			0x08000, 0xbae1a92f, BRF_PRG | BRF_OPT },				//  7 Z180 Code?
+};
+
+STD_ROM_PICK(cadashp)
+STD_ROM_FN(cadashp)
+
+struct BurnDriver BurnDrvCadashp = {
+	"cadashp", "cadash", NULL, NULL, "1989",
+	"Cadash (World, prototype)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	NULL, cadashpRomInfo, cadashpRomName, NULL, NULL, CadashInputInfo, CadashjDIPInfo,
+	CadashInit, TaitoExit, CadashFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	320, 240, 4, 3
+};
+
+
 // Kokontouzai Eto Monogatari (Japan)
 
 static struct BurnRomInfo etoRomDesc[] = {

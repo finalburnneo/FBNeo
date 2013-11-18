@@ -456,7 +456,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// 4 En Raya
+// 4 En Raya (set 1)
 
 static struct BurnRomInfo enraya4RomDesc[] = {
 	{ "5.bin",   0x8000, 0xcf1cd151, BRF_ESS | BRF_PRG }, //  0 Z80 Code
@@ -479,10 +479,37 @@ static INT32 enraya4Init()
 
 struct BurnDriver BurnDrvEnraya4 = {
 	"4enraya", NULL, NULL, NULL, "1990",
-	"4 En Raya\0", NULL, "IDSA", "Miscellaneous",
+	"4 En Raya (set 1)\0", NULL, "IDSA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, enraya4RomInfo, enraya4RomName, NULL, NULL, Enraya4InputInfo, Enraya4DIPInfo,
+	enraya4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8,
+	256, 224, 4, 3
+};
+
+
+// 4 En Raya (set 2)
+
+static struct BurnRomInfo enrayaa4RomDesc[] = {
+	{ "(__4enrayaa)5.bin",   0x8000, 0x76e8656c, BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "4.bin",   			 0x4000, 0xf9ec1be7, BRF_ESS | BRF_PRG }, //  1
+
+	{ "(__4enrayaa)1.bin",   0x2000, 0x0e5072fd, BRF_GRA },	      //  2 Graphics
+	{ "2.bin",   			 0x2000, 0x2b0a3793, BRF_GRA },	      //  3
+	{ "3.bin",   			 0x2000, 0xf6940836, BRF_GRA },	      //  4
+
+	{ "1.bpr",   			 0x0020, 0xdcbd2352, BRF_GRA },	      //  5 Address control prom - not used
+};
+
+STD_ROM_PICK(enrayaa4)
+STD_ROM_FN(enrayaa4)
+
+struct BurnDriver BurnDrvEnrayaa4 = {
+	"4enrayaa", "4enraya", NULL, NULL, "1990",
+	"4 En Raya (set 2)\0", NULL, "IDSA", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	NULL, enrayaa4RomInfo, enrayaa4RomName, NULL, NULL, Enraya4InputInfo, Enraya4DIPInfo,
 	enraya4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8,
 	256, 224, 4, 3
 };

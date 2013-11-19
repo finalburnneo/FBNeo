@@ -239,7 +239,7 @@ static struct BurnDIPInfo martmastc102DIPList[] = {
 };
 
 static struct BurnDIPInfo thegladDIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x06, NULL				},
+	{0x2E,	0xFF, 0xFF,	0x06, NULL			 },
 
 	{0,	0xFE, 0,	7,    "Region (Fake)"			},
 	{0x2E,	0x01, 0x07,	0x00, "China"				},
@@ -247,8 +247,8 @@ static struct BurnDIPInfo thegladDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
-	{0x2E,  0x01, 0x07,     0x06, "World"				},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
+	{0x2E,  0x01, 0x07, 0x06, "World"				},
 };
 
 static struct BurnDIPInfo theglad100DIPList[] = {
@@ -260,8 +260,8 @@ static struct BurnDIPInfo theglad100DIPList[] = {
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
-	{0x2E,  0x01, 0x07,     0x06, "World"				},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
+	{0x2E,  0x01, 0x07, 0x06, "World"				},
 };
 
 static struct BurnDIPInfo thegladpcbDIPList[] = {
@@ -273,8 +273,8 @@ static struct BurnDIPInfo thegladpcbDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
-	{0x2E,  0x01, 0x07,     0x06, "World"				},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
+	{0x2E,  0x01, 0x07, 0x06, "World"				},
 };
 
 static struct BurnDIPInfo ddp2DIPList[] = {
@@ -3031,8 +3031,8 @@ static struct BurnRomInfo thegladRomDesc[] = {
 
 	{ "w04601.u1",			0x800000, 0x5f15ddb3, 5 | BRF_SND },		//  7 Samples
 
-	{ "thegladpcb_igs027a_execute_only_area",	0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
-	{ "thegladpcb_igs027a_v100_japan.bin",      0x003e78, 0xd7f06e2d, 7 | BRF_PRG | BRF_ESS },  //  9
+	{ "theglad_igs027a_execute_only_area",	    0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
+	{ "theglad_igs027a_v100_overseas.bin",      0x003e78, 0x02fe6f52, 7 | BRF_PRG | BRF_ESS },  //  9
 
 	{ "v107.u26",			0x200000, 0xf7c61357, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
 };
@@ -3124,8 +3124,8 @@ static struct BurnRomInfo theglad101RomDesc[] = {
 
 	{ "w04601.u1",			0x800000, 0x5f15ddb3, 5 | BRF_SND },		//  7 Samples
 
-	{ "thegladpcb_igs027a_execute_only_area",	0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
-	{ "thegladpcb_igs027a_v100_japan.bin",      0x003e78, 0xd7f06e2d, 7 | BRF_PRG | BRF_ESS },  //  9
+	{ "theglad_igs027a_execute_only_area",	    0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
+	{ "theglad_igs027a_v100_overseas.bin",      0x003e78, 0x02fe6f52, 7 | BRF_PRG | BRF_ESS },  //  9
 
 	{ "v101.u26",			0x200000, 0x23faec02, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
 };
@@ -3160,8 +3160,8 @@ static struct BurnRomInfo theglad100RomDesc[] = {
 
 	{ "w04601.u1",			0x800000, 0x5f15ddb3, 5 | BRF_SND },		//  7 Samples
 
-	{ "thegladpcb_igs027a_execute_only_area",	0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
-	{ "thegladpcb_igs027a_older.bin",      0x003e78, 0xd7f06e2d, 7 | BRF_PRG | BRF_ESS },  //  9
+	{ "theglad_igs027a_execute_only_area",	    0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
+	{ "theglad_igs027a_older.bin",              0x003e78, 0x02fe6f52, 7 | BRF_PRG | BRF_ESS },  //  9
 
 	{ "u2.rom",			0x200000, 0xc7bcf2ae, 8 | BRF_PRG | BRF_ESS },	//  9 External ARM7 Rom
 };

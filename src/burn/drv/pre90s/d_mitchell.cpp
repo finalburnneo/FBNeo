@@ -700,6 +700,27 @@ static struct BurnRomInfo PangboldRomDesc[] = {
 STD_ROM_PICK(Pangbold)
 STD_ROM_FN(Pangbold)
 
+static struct BurnRomInfo Pangbold2RomDesc[] = {
+	{ "4.l6",          0x10000, 0xf5e6e2fa, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "2.l3",          0x20000, 0x3f15bb61, BRF_ESS | BRF_PRG }, //	 1
+	{ "3.l5",          0x20000, 0xce6375e4, BRF_ESS | BRF_PRG }, //	 2
+	
+	{ "9.o10",         0x20000, 0x3a5883f5, BRF_GRA },	     //  3	Characters
+	{ "10.o13",        0x20000, 0x79a8ed08, BRF_GRA },	     //  4
+	{ "11.j17",        0x20000, 0x166a16ae, BRF_GRA },	     //  5
+	{ "12.j20",        0x20000, 0x2fb3db6c, BRF_GRA },	     //  6
+	
+	{ "8.o7",          0x10000, 0xf3188aa1, BRF_GRA },	     //  7	Sprites
+	{ "7.o5",          0x10000, 0x011da14b, BRF_GRA },	     //  8
+	{ "6.o3",          0x10000, 0x0e25e797, BRF_GRA },	     //  9
+	{ "5.o2",          0x10000, 0x6daa4e27, BRF_GRA },	     //  10
+	
+	{ "1.a1",          0x10000, 0xb6463907, BRF_SND },	     //  11	Samples
+};
+
+STD_ROM_PICK(Pangbold2)
+STD_ROM_FN(Pangbold2)
+
 static struct BurnRomInfo Pangb2RomDesc[] = {
 	{ "27c512.11h",    0x10000, 0x369a453e, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "27c020.13h",    0x40000, 0x5e7f24b1, BRF_ESS | BRF_PRG }, //	 1
@@ -3183,6 +3204,16 @@ struct BurnDriver BurnDrvPangbold = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, PangboldRomInfo, PangboldRomName, NULL, NULL, PangInputInfo, NULL,
+	PangboldInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x800, 384, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvPangbold2 = {
+	"pangbold2", "pang", NULL, NULL, "1989",
+	"Pang (bootleg, set 5)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	NULL, Pangbold2RomInfo, Pangbold2RomName, NULL, NULL, PangInputInfo, NULL,
 	PangboldInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
 };

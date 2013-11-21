@@ -352,6 +352,44 @@ static struct BurnRomInfo DrvwRomDesc[] = {
 STD_ROM_PICK(Drvw)
 STD_ROM_FN(Drvw)
 
+static struct BurnRomInfo DrvhRomDesc[] = {
+	{ "42-3.bin",      0x04000, 0xec70785f, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "42-4.bin",      0x04000, 0xcc11355f, BRF_ESS | BRF_PRG }, //	 1
+	{ "42-5.bin",      0x04000, 0x42746d75, BRF_ESS | BRF_PRG }, //	 2
+	{ "srb-06.m6",     0x02000, 0x466f8248, BRF_ESS | BRF_PRG }, //	 3
+	{ "srb-07.m7",     0x04000, 0x0d31038c, BRF_ESS | BRF_PRG }, //	 4
+	
+	{ "sr-01.c11",     0x04000, 0xbd87f06b, BRF_ESS | BRF_PRG }, //  5	Z80 #2 Program 
+	
+	{ "sr-02.f2",      0x02000, 0x6ebca191, BRF_GRA },	     //  6	Characters
+	
+	{ "sr-08.a1",      0x02000, 0x3884d9eb, BRF_GRA },	     //  7	Tiles
+	{ "sr-09.a2",      0x02000, 0x999cf6e0, BRF_GRA },	     //  8
+	{ "sr-10.a3",      0x02000, 0x8edb273a, BRF_GRA },	     //  9
+	{ "sr-11.a4",      0x02000, 0x3a2726c3, BRF_GRA },	     //  10
+	{ "sr-12.a5",      0x02000, 0x1bd3d8bb, BRF_GRA },	     //  11
+	{ "sr-13.a6",      0x02000, 0x658f02c4, BRF_GRA },	     //  12
+	
+	{ "sr-14.l1",      0x04000, 0x2528bec6, BRF_GRA },	     //  13	Sprites
+	{ "sr-15.l2",      0x04000, 0xf89287aa, BRF_GRA },	     //  14
+	{ "sr-16.n1",      0x04000, 0x024418f8, BRF_GRA },	     //  15
+	{ "sr-17.n2",      0x04000, 0xe2c7e489, BRF_GRA },	     //  16
+	
+	{ "sb-5.e8",       0x00100, 0x93ab8153, BRF_GRA },	     //  17	PROMs
+	{ "sb-6.e9",       0x00100, 0x8ab44f7d, BRF_GRA },	     //  18
+	{ "sb-7.e10",      0x00100, 0xf4ade9a4, BRF_GRA },	     //  19
+	{ "sb-0.f1",       0x00100, 0x6047d91b, BRF_GRA },	     //  20
+	{ "sb-4.d6",       0x00100, 0x4858968d, BRF_GRA },	     //  21
+	{ "sb-8.k3",       0x00100, 0xf6fad943, BRF_GRA },	     //  22
+	{ "sb-2.d1",       0x00100, 0x8bb8b3df, BRF_GRA },	     //  23
+	{ "sb-3.d2",       0x00100, 0x3b0c99af, BRF_GRA },	     //  24
+	{ "sb-1.k6",       0x00100, 0x712ac508, BRF_GRA },	     //  25
+	{ "sb-9.m11",      0x00100, 0x4921635c, BRF_GRA },	     //  26
+};
+
+STD_ROM_PICK(Drvh)
+STD_ROM_FN(Drvh)
+
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = Mem;
@@ -1058,6 +1096,16 @@ struct BurnDriver BurnDrvNineteen42w = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvwRomInfo, DrvwRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x600, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvNineteen42h = {
+	"1942h", "1942", NULL, NULL, "1984",
+	"42 (Screamware bootleg, hack)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
+	NULL, DrvhRomInfo, DrvhRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x600, 224, 256, 3, 4
 };

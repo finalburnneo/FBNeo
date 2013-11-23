@@ -2889,7 +2889,7 @@ static struct BurnRomInfo dmnfrntRomDesc[] = {
 #if !defined ROM_VERIFY
 	{ "v105_32m.u26",	 	0x400000, 0xc798c2ef, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
 #else
-	{ "chinese-v105.u62", 		0x400000, 0xc798c2ef, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
+	{ "chinese-v105.u62", 	0x400000, 0xc798c2ef, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
 	{ "v105_32m.u26", 		0x400000, 0xd200ee63, 0 | BRF_PRG | BRF_OPT },  //  9 External ARM7 Rom
 #endif
 };
@@ -3800,7 +3800,7 @@ struct BurnDriver BurnDrvDdp3blka = {
 
 static struct BurnRomInfo ketRomDesc[] = {
 	{ "ketsui_v100.u38",		0x200000, 0xdfe62f3b, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
-
+	
 	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },		//  1 Tile data
 
 	{ "a04701w064.u7", 		0x800000, 0x5ef1b94b, 3 | BRF_GRA },		//  2 Sprite Color Data
@@ -3837,11 +3837,12 @@ struct BurnDriver BurnDrvKet = {
 };
 
 
-// Ketsui Kizuna Jigoku Tachi (Revision 1?, Japan)
+// Ketsui Kizuna Jigoku Tachi (Revision 2? alt, Japan)
 
 static struct BurnRomInfo ketaRomDesc[] = {
-	{ "ketsui_prg_revised.bin",	0x200000, 0x69fcf5eb, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
-
+	// alt version with 0xff fill in the unused area after 0x1443bc rather than random data, there are no code changes.
+	{ "ketsui_v100_alt.u38",	0x200000, 0xe140f8a4, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	
 	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },		//  1 Tile data
 
 	{ "a04701w064.u7", 		0x800000, 0x5ef1b94b, 3 | BRF_GRA },		//  2 Sprite Color Data
@@ -3851,7 +3852,7 @@ static struct BurnRomInfo ketaRomDesc[] = {
 
 	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },		//  5 Samples
 
-	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
+	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
 	
 	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },		//  7 NV RAM
 };
@@ -3861,8 +3862,8 @@ STD_ROM_FN(keta)
 
 struct BurnDriver BurnDrvKeta = {
 	"keta", "ket", NULL, NULL, "2002",
-	"Ketsui Kizuna Jigoku Tachi (Revision 1?, Japan)\0", NULL, "CAVE / AMI", "PolyGameMaster based",
-	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (Revision 1?, Japan)\0", NULL, NULL, NULL,
+	"Ketsui Kizuna Jigoku Tachi (Revision 2? alt, Japan)\0", NULL, "CAVE / AMI", "PolyGameMaster based",
+	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (Revision 2? alt, Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
 	NULL, ketaRomInfo, ketaRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
@@ -3870,10 +3871,10 @@ struct BurnDriver BurnDrvKeta = {
 };
 
 
-// Ketsui Kizuna Jigoku Tachi (Original?, Japan)
+// Ketsui Kizuna Jigoku Tachi (Revision 1?, Japan)
 
 static struct BurnRomInfo ketbRomDesc[] = {
-	{ "ketsui_prg_original.bin",	0x200000, 0xcca5e153, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "ketsui_prg_revised.bin",	0x200000, 0x69fcf5eb, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },		//  1 Tile data
 
@@ -3894,10 +3895,43 @@ STD_ROM_FN(ketb)
 
 struct BurnDriver BurnDrvKetb = {
 	"ketb", "ket", NULL, NULL, "2002",
+	"Ketsui Kizuna Jigoku Tachi (Revision 1?, Japan)\0", NULL, "CAVE / AMI", "PolyGameMaster based",
+	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (Revision 1?, Japan)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
+	NULL, ketbRomInfo, ketbRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224, 448, 3, 4
+};
+
+
+// Ketsui Kizuna Jigoku Tachi (Original?, Japan)
+
+static struct BurnRomInfo ketcRomDesc[] = {
+	{ "ketsui_prg_original.bin",	0x200000, 0xcca5e153, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a04701w064.u7", 		0x800000, 0x5ef1b94b, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a04702w064.u8", 		0x800000, 0x26d6da7f, 3 | BRF_GRA },		//  3
+
+	{ "b04701w064.u1",		0x800000, 0x1bec008d, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },		//  5 Samples
+
+	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
+	
+	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },		//  7 NV RAM
+};
+
+STDROMPICKEXT(ketc, ketc, ketsuiBios) // custom bios
+STD_ROM_FN(ketc)
+
+struct BurnDriver BurnDrvKetc = {
+	"ketc", "ket", NULL, NULL, "2002",
 	"Ketsui Kizuna Jigoku Tachi (Original?, Japan)\0", NULL, "CAVE / AMI", "PolyGameMaster based",
 	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (Original?, Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
-	NULL, ketbRomInfo, ketbRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	NULL, ketcRomInfo, ketcRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };

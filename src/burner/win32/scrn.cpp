@@ -2887,7 +2887,7 @@ int ScrnSize()
 #if defined _MSC_VER
 	#if _MSC_VER >= 1700
 		// using the old XP supporting SDK we don't need to alter anything
-		#if !defined BUILD_VS2012_XP_TARGET
+		#if !defined BUILD_VS_XP_TARGET
 			ew <<= 1;
 			eh <<= 1;
 		#endif

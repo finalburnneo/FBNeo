@@ -2457,14 +2457,14 @@ struct BurnDriver BurnDrvDkongjnrj = {
 // Donkey Kong Jr. (bootleg)
 
 static struct BurnRomInfo dkongjrbRomDesc[] = {
-	{ "dkjr1",	0x2000, 0xec7e097f, 1 }, //  0 maincpu
+	{ "dkjr1",		0x2000, 0xec7e097f, 1 }, //  0 maincpu
 	{ "c_5ca.bin",	0x2000, 0xc0a18f0d, 1 }, //  1
 	{ "c_5ea.bin",	0x2000, 0xa81dd00c, 1 }, //  2
 
 	{ "c_3h.bin",	0x1000, 0x715da5f8, 2 }, //  3 soundcpu
 
 	{ "v_3na.bin",	0x1000, 0xa95c4c63, 3 }, //  4 gfx1
-	{ "dkjr10",	0x1000, 0xadc11322, 3 }, //  5
+	{ "dkjr10",		0x1000, 0xadc11322, 3 }, //  5
 
 	{ "v_7c.bin",	0x0800, 0xdc7f4164, 4 }, //  6 gfx2
 	{ "v_7d.bin",	0x0800, 0x0ce7dcf6, 4 }, //  7
@@ -2580,7 +2580,7 @@ struct BurnDriver BurnDrvDkingjr = {
 };
 
 
-// Donkey Kong Junior (Easy)
+// Donkey Kong Junior (E Kit)
 
 static struct BurnRomInfo dkongjreRomDesc[] = {
 	{ "djr1-c.5b",	0x2000, 0xffe9e1a5, 1 }, //  0 maincpu
@@ -2589,8 +2589,8 @@ static struct BurnRomInfo dkongjreRomDesc[] = {
 
 	{ "c_3h.bin",	0x1000, 0x715da5f8, 2 }, //  3 soundcpu
 
-	{ "dkj.3n",	0x1000, 0x8d51aca9, 3 }, //  4 gfx1
-	{ "dkj.3p",	0x1000, 0x4ef64ba5, 3 }, //  5
+	{ "dkj.3n",		0x1000, 0x8d51aca9, 3 }, //  4 gfx1
+	{ "dkj.3p",		0x1000, 0x4ef64ba5, 3 }, //  5
 
 	{ "v_7c.bin",	0x0800, 0xdc7f4164, 4 }, //  6 gfx2
 	{ "v_7d.bin",	0x0800, 0x0ce7dcf6, 4 }, //  7
@@ -2623,11 +2623,47 @@ static INT32 dkongjreInit()
 
 struct BurnDriverD BurnDrvDkongjre = {
 	"dkongjre", "dkongjr", NULL, "dkongjr", "1982",
-	"Donkey Kong Junior (Easy)\0", NULL, "Nintendo of America", "Miscellaneous",
+	"Donkey Kong Junior (E Kit)\0", NULL, "Nintendo of America", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, dkongjreRomInfo, dkongjreRomName, DkongjrSampleInfo, DkongjrSampleName, DkongInputInfo, DkongDIPInfo,
 	dkongjreInit, DrvExit, DrvFrame, dkongDraw, NULL, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong Junior (P Kit, bootleg)
+
+static struct BurnRomInfo dkongjrpbRomDesc[] = {
+	{ "djr1-c.5b-p",	0x2000, 0x8d99b3e0, 1 }, //  0 maincpu
+	{ "djr1-c.5c-p",	0x2000, 0xb92d258c, 1 }, //  1
+	{ "djr1-c.5e",		0x2000, 0x24c3d325, 1 }, //  2
+
+	{ "c_3h.bin",	0x1000, 0x715da5f8, 2 }, //  3 soundcpu
+
+	{ "dkj.3n",		0x1000, 0x8d51aca9, 3 }, //  4 gfx1
+	{ "dkj.3p",		0x1000, 0x4ef64ba5, 3 }, //  5
+
+	{ "v_7c.bin",	0x0800, 0xdc7f4164, 4 }, //  6 gfx2
+	{ "v_7d.bin",	0x0800, 0x0ce7dcf6, 4 }, //  7
+	{ "v_7e.bin",	0x0800, 0x24d1ff17, 4 }, //  8
+	{ "v_7f.bin",	0x0800, 0x0f8c083f, 4 }, //  9
+
+	{ "c-2e.bpr",	0x0100, 0x463dc7ad, 5 }, // 10 proms
+	{ "c-2f.bpr",	0x0100, 0x47ba0042, 5 }, // 11
+	{ "v-2n.bpr",	0x0100, 0xdbf185bf, 5 }, // 12
+};
+
+STD_ROM_PICK(dkongjrpb)
+STD_ROM_FN(dkongjrpb)
+
+struct BurnDriverD BurnDrvDkongjrpb = {
+	"dkongjrpb", "dkongjr", NULL, "dkongjr", "1982",
+	"Donkey Kong Junior (P kit, bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, dkongjrpbRomInfo, dkongjrpbRomName, DkongjrSampleInfo, DkongjrSampleName, DkongInputInfo, DkongDIPInfo,
+	dkongjrInit, DrvExit, DrvFrame, dkongDraw, NULL, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
 

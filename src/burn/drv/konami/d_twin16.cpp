@@ -1708,10 +1708,10 @@ static struct BurnRomInfo vulcanRomDesc[] = {
 
 	{ "785_h14.d8",		0x04000, 0x02f4b16f, 4 | BRF_GRA },           //  9 Characters
 
-	{ "785f17.p16",		0x80000, 0x8fbec1a4, 5 | BRF_GRA },           // 10 Sprites / Bg Tiles
-	{ "785f18.p18",		0x80000, 0x50d61e38, 5 | BRF_GRA },           // 11
-	{ "785f15.p13",		0x80000, 0xaf96aef3, 5 | BRF_GRA },           // 12
-	{ "785f16.p15",		0x80000, 0xb858df1f, 5 | BRF_GRA },           // 13
+	{ "785f17.p16",		0x80000, 0x4e7a7b82, 5 | BRF_GRA },           // 10 Sprites / Bg Tiles
+	{ "785f18.p18",		0x80000, 0x3f604e9a, 5 | BRF_GRA },           // 11
+	{ "785f15.p13",		0x80000, 0x5bd239ac, 5 | BRF_GRA },           // 12
+	{ "785f16.p15",		0x80000, 0x95c6b8a3, 5 | BRF_GRA },           // 13
 
 	{ "785_f01.5a",		0x20000, 0xa0d8d69e, 7 | BRF_SND },           // 14 K007232 Samples
 
@@ -1734,8 +1734,6 @@ static INT32 vulcanCallback()
 	if (BurnLoadRom(DrvGfxROM1 + 0x080000, 11, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x100000, 12, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x180000, 13, 1)) return 1;
-
-	BurnByteswap(DrvGfxROM1, 0x200000);
 
 	if (BurnLoadRom(DrvSndROM0 + 0x000000, 14, 1)) return 1;
 	if (BurnLoadRom(DrvSndROM1 + 0x000000, 15, 1)) return 1;
@@ -1779,10 +1777,10 @@ static struct BurnRomInfo vulcanaRomDesc[] = {
 
 	{ "785_h14.d8",		0x04000, 0x02f4b16f, 4 | BRF_GRA },           //  9 Characters
 
-	{ "785f17.p16",		0x80000, 0x8fbec1a4, 5 | BRF_GRA },           // 10 Sprites / Bg Tiles
-	{ "785f18.p18",		0x80000, 0x50d61e38, 5 | BRF_GRA },           // 11
-	{ "785f15.p13",		0x80000, 0xaf96aef3, 5 | BRF_GRA },           // 12
-	{ "785f16.p15",		0x80000, 0xb858df1f, 5 | BRF_GRA },           // 13
+	{ "785f17.p16",		0x80000, 0x4e7a7b82, 5 | BRF_GRA },           // 10 Sprites / Bg Tiles
+	{ "785f18.p18",		0x80000, 0x3f604e9a, 5 | BRF_GRA },           // 11
+	{ "785f15.p13",		0x80000, 0x5bd239ac, 5 | BRF_GRA },           // 12
+	{ "785f16.p15",		0x80000, 0x95c6b8a3, 5 | BRF_GRA },           // 13
 
 	{ "785_f01.5a",		0x20000, 0xa0d8d69e, 7 | BRF_SND },           // 14 K007232 Samples
 
@@ -1820,10 +1818,10 @@ static struct BurnRomInfo vulcanbRomDesc[] = {
 
 	{ "785_h14.d8",		0x04000, 0x02f4b16f, 4 | BRF_GRA },           //  9 Characters
 
-	{ "785f17.p16",		0x80000, 0x8fbec1a4, 5 | BRF_GRA },           // 10 Sprites / Bg Tiles
-	{ "785f18.p18",		0x80000, 0x50d61e38, 5 | BRF_GRA },           // 11
-	{ "785f15.p13",		0x80000, 0xaf96aef3, 5 | BRF_GRA },           // 12
-	{ "785f16.p15",		0x80000, 0xb858df1f, 5 | BRF_GRA },           // 13
+	{ "785f17.p16",		0x80000, 0x4e7a7b82, 5 | BRF_GRA },           // 10 Sprites / Bg Tiles
+	{ "785f18.p18",		0x80000, 0x3f604e9a, 5 | BRF_GRA },           // 11
+	{ "785f15.p13",		0x80000, 0x5bd239ac, 5 | BRF_GRA },           // 12
+	{ "785f16.p15",		0x80000, 0x95c6b8a3, 5 | BRF_GRA },           // 13
 
 	{ "785_f01.5a",		0x20000, 0xa0d8d69e, 7 | BRF_SND },           // 14 K007232 Samples
 
@@ -1861,10 +1859,10 @@ static struct BurnRomInfo gradius2RomDesc[] = {
 
 	{ "785_g14.d8",		0x04000, 0x9dcdad9d, 4 | BRF_GRA },           //  9 Characters
 
-	{ "gr2.p16",		0x80000, 0x4e7a7b82, 5 | BRF_GRA },           // 10 Sprites / Bg Tiles
-	{ "gr2.p18",		0x80000, 0x3f604e9a, 5 | BRF_GRA },           // 11
-	{ "gr2.p13",		0x80000, 0x5bd239ac, 5 | BRF_GRA },           // 12
-	{ "gr2.p15",		0x80000, 0x95c6b8a3, 5 | BRF_GRA },           // 13
+	{ "785f17.p16",		0x80000, 0x4e7a7b82, 5 | BRF_GRA },           // 10 Sprites / Bg Tiles
+	{ "785f18.p18",		0x80000, 0x3f604e9a, 5 | BRF_GRA },           // 11
+	{ "785f15.p13",		0x80000, 0x5bd239ac, 5 | BRF_GRA },           // 12
+	{ "785f16.p15",		0x80000, 0x95c6b8a3, 5 | BRF_GRA },           // 13
 
 	{ "785_f01.5a",		0x20000, 0xa0d8d69e, 7 | BRF_SND },           // 14 K007232 Samples
 
@@ -1874,41 +1872,13 @@ static struct BurnRomInfo gradius2RomDesc[] = {
 STD_ROM_PICK(gradius2)
 STD_ROM_FN(gradius2)
 
-static INT32 gradius2Callback()
-{
-	if (load68k(Drv68KROM0,  0)) return 1;
-	if (load68k(Drv68KROM1,  4)) return 1;
-	
-	if (BurnLoadRom(DrvZ80ROM  + 0x000000,  8, 1)) return 1;
-	
-	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  9, 1)) return 1;	
-
-	if (BurnLoadRom(DrvGfxROM1 + 0x000000, 10, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x080000, 11, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x100000, 12, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x180000, 13, 1)) return 1;
-
-	if (BurnLoadRom(DrvSndROM0 + 0x000000, 14, 1)) return 1;
-	if (BurnLoadRom(DrvSndROM1 + 0x000000, 15, 1)) return 1;
-
-	return 0;
-}
-
-static INT32 gradius2Init()
-{
-	is_vulcan = 1;
-	twin16_custom_video = 0;
-
-	return DrvInit(gradius2Callback);
-}
-
 struct BurnDriver BurnDrvGradius2 = {
 	"gradius2", "vulcan", NULL, NULL, "1988",
 	"Gradius II - GOFER no Yabou (Japan New ver.)\0", NULL, "Konami", "GX785",
 	L"Gradius II - GOFER \u306E\u91CE\u671B (Japan New ver.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, gradius2RomInfo, gradius2RomName, NULL, NULL, DrvInputInfo, Gradius2DIPInfo,
-	gradius2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	vulcanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3
 };
 
@@ -1930,10 +1900,10 @@ static struct BurnRomInfo gradius2aRomDesc[] = {
 
 	{ "785_g14.d8",		0x04000, 0x9dcdad9d, 4 | BRF_GRA },           //  9 Characters
 
-	{ "785f17.p16",		0x80000, 0x8fbec1a4, 5 | BRF_GRA },           // 10 Sprites / Bg Tiles
-	{ "785f18.p18",		0x80000, 0x50d61e38, 5 | BRF_GRA },           // 11
-	{ "785f15.p13",		0x80000, 0xaf96aef3, 5 | BRF_GRA },           // 12
-	{ "785f16.p15",		0x80000, 0xb858df1f, 5 | BRF_GRA },           // 13
+	{ "785f17.p16",		0x80000, 0x4e7a7b82, 5 | BRF_GRA },           // 10 Sprites / Bg Tiles
+	{ "785f18.p18",		0x80000, 0x3f604e9a, 5 | BRF_GRA },           // 11
+	{ "785f15.p13",		0x80000, 0x5bd239ac, 5 | BRF_GRA },           // 12
+	{ "785f16.p15",		0x80000, 0x95c6b8a3, 5 | BRF_GRA },           // 13
 
 	{ "785_f01.5a",		0x20000, 0xa0d8d69e, 7 | BRF_SND },           // 14 K007232 Samples
 
@@ -1971,10 +1941,10 @@ static struct BurnRomInfo gradius2bRomDesc[] = {
 
 	{ "785_g14.d8",		0x04000, 0x9dcdad9d, 4 | BRF_GRA },           //  9 Characters
 
-	{ "785f17.p16",		0x80000, 0x8fbec1a4, 5 | BRF_GRA },           // 10 Sprites / Bg Tiles
-	{ "785f18.p18",		0x80000, 0x50d61e38, 5 | BRF_GRA },           // 11
-	{ "785f15.p13",		0x80000, 0xaf96aef3, 5 | BRF_GRA },           // 12
-	{ "785f16.p15",		0x80000, 0xb858df1f, 5 | BRF_GRA },           // 13
+	{ "785f17.p16",		0x80000, 0x4e7a7b82, 5 | BRF_GRA },           // 10 Sprites / Bg Tiles
+	{ "785f18.p18",		0x80000, 0x3f604e9a, 5 | BRF_GRA },           // 11
+	{ "785f15.p13",		0x80000, 0x5bd239ac, 5 | BRF_GRA },           // 12
+	{ "785f16.p15",		0x80000, 0x95c6b8a3, 5 | BRF_GRA },           // 13
 
 	{ "785_f01.5a",		0x20000, 0xa0d8d69e, 7 | BRF_GRA },           // 14 K007232 Samples
 

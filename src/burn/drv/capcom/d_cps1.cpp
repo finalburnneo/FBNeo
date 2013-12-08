@@ -5386,7 +5386,7 @@ static struct BurnRomInfo FfightjRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "s222b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
+	{ "s222b.1a",      0x000117, 0x6d86b45e, BRF_OPT }, // b-board PLDs
 	{ "lwio.12c",      0x000117, 0xad52b90c, BRF_OPT },
 };
 
@@ -5427,7 +5427,7 @@ static struct BurnRomInfo Ffightj1RomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "s222b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
+	{ "s222b.1a",      0x000117, 0x6d86b45e, BRF_OPT }, // b-board PLDs
 	{ "lwio.12e",      0x000117, 0xad52b90c, BRF_OPT },
 };
 
@@ -5468,7 +5468,7 @@ static struct BurnRomInfo Ffightj2RomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "s222b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
+	{ "s222b.1a",      0x000117, 0x6d86b45e, BRF_OPT }, // b-board PLDs
 	{ "lwio.12c",      0x000117, 0xad52b90c, BRF_OPT },
 };
 
@@ -5509,7 +5509,7 @@ static struct BurnRomInfo Ffightj3RomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "s222b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
+	{ "s222b.1a",      0x000117, 0x6d86b45e, BRF_OPT }, // b-board PLDs
 	{ "lwio.12c",      0x000117, 0xad52b90c, BRF_OPT },
 };
 

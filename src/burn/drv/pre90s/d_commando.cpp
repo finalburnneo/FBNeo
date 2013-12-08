@@ -227,6 +227,39 @@ static struct BurnRomInfo DrvuRomDesc[] = {
 STD_ROM_PICK(Drvu)
 STD_ROM_FN(Drvu)
 
+static struct BurnRomInfo Drvu2RomDesc[] = {
+	{ "uc4.9m",        0x08000, 0x89ee8e17, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "uc3.8m",        0x04000, 0x72a1a529, BRF_ESS | BRF_PRG }, //	 1
+	
+	{ "cd02.9f",       0x04000, 0xf9cc4a74, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program 
+	
+	{ "vt01.5d",       0x04000, 0x505726e0, BRF_GRA },	     //  3	Characters
+	
+	{ "vt11.5a",       0x04000, 0x7b2e1b48, BRF_GRA },	     //  4	Tiles
+	{ "vt12.6a",       0x04000, 0x81b417d3, BRF_GRA },	     //  5
+	{ "vt13.7a",       0x04000, 0x5612dbd2, BRF_GRA },	     //  6
+	{ "vt14.8a",       0x04000, 0x2b2dee36, BRF_GRA },	     //  7
+	{ "vt15.9a",       0x04000, 0xde70babf, BRF_GRA },	     //  8
+	{ "vt16.10a",      0x04000, 0x14178237, BRF_GRA },	     //  9
+	
+	{ "vt05.7e",       0x04000, 0x79f16e3d, BRF_GRA },	     //  10	Sprites
+	{ "vt06.8e",       0x04000, 0x26fee521, BRF_GRA },	     //  11
+	{ "vt07.9e",       0x04000, 0xca88bdfd, BRF_GRA },	     //  12
+	{ "vt08.7h",       0x04000, 0x2019c883, BRF_GRA },	     //  13
+	{ "vt09.8h",       0x04000, 0x98703982, BRF_GRA },	     //  14
+	{ "vt10.9h",       0x04000, 0xf069d2f8, BRF_GRA },	     //  15
+	
+	{ "vtb-1.1d",      0x00100, 0x3aba15a1, BRF_GRA },	     //  16	PROMs
+	{ "vtb-2.2d",      0x00100, 0x88865754, BRF_GRA },	     //  17
+	{ "vtb-3.3d",      0x00100, 0x4c14c3f6, BRF_GRA },	     //  18
+	{ "vtb-4.1h",      0x00100, 0xb388c246, BRF_GRA },	     //  19
+	{ "vtb-5.6l",      0x00100, 0x712ac508, BRF_GRA },	     //  20
+	{ "vtb-6.6e",      0x00100, 0x0eaf5158, BRF_GRA },	     //  21
+};
+
+STD_ROM_PICK(Drvu2)
+STD_ROM_FN(Drvu2)
+
 static struct BurnRomInfo DrvjRomDesc[] = {
 	{ "so04.9m",       0x08000, 0xd3f2bfb3, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "so03.8m",       0x04000, 0xed01f472, BRF_ESS | BRF_PRG }, //	 1
@@ -1086,10 +1119,20 @@ struct BurnDriver BurnDrvCommando = {
 
 struct BurnDriver BurnDrvCommandu = {
 	"commandou", "commando", NULL, NULL, "1985",
-	"Commando (US)\0", NULL, "Capcom (Data East USA license)", "Miscellaneous",
+	"Commando (US, set 1)\0", NULL, "Capcom (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x100, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvCommandu2 = {
+	"commandou2", "commando", NULL, NULL, "1985",
+	"Commando (US, set 2)\0", NULL, "Capcom (Data East USA license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
+	NULL, Drvu2RomInfo, Drvu2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x100, 224, 256, 3, 4
 };

@@ -118,6 +118,7 @@ static INT32 pgmGetRoms(bool bLoad)
 	UINT8 *PGMTileROMLoad = PGMTileROM + 0x180000;
 	UINT8 *PGMSPRMaskROMLoad = PGMSPRMaskROM;
 	UINT8 *PGMSNDROMLoad = ICSSNDROM + 0x400000;
+	UINT8 *PGMARMROMLoad = PGMARMROM;
 
 	if (kov2 && bLoad) {
 		PGMSNDROMLoad += 0x400000;
@@ -200,7 +201,8 @@ static INT32 pgmGetRoms(bool bLoad)
 		{
 			if (bLoad) {
 				if (BurnDrvGetHardwareCode() & HARDWARE_IGS_USE_ARM_CPU) {
-					BurnLoadRom(PGMARMROM, i, 1);
+					if (ri.nLen == 0x3e78) PGMARMROMLoad += 0x188;
+					BurnLoadRom(PGMARMROMLoad, i, 1);
 				}
 			}
 			continue;
@@ -210,7 +212,7 @@ static INT32 pgmGetRoms(bool bLoad)
 		{
 			if (BurnDrvGetHardwareCode() & HARDWARE_IGS_USE_ARM_CPU) {
 				if (bLoad) {
-					BurnLoadRom(PGMUSER0, i, 1);
+					BurnLoadRom(PGMUSER0Load, i, 1);
 					PGMUSER0Load += ri.nLen;
 				} else {
 					nPGMExternalARMLen += ri.nLen;

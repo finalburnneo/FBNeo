@@ -3040,13 +3040,11 @@ static struct BurnRomInfo thegladRomDesc[] = {
 STDROMPICKEXT(theglad, theglad, pgm)
 STD_ROM_FN(theglad)
 
-static void thegladPatch()
+static void pgm_create_theglad_E0_data()
 {
-	pgm_decrypt_theglad();
-
 	// Replace undumpable area of the arm7 internal rom with a custom-built
 	// version created by David Haywood in order to make game playable
-	static UINT16 thegladEOHackData[0x188/2] = {
+	static const UINT16 thegladEOHackData[0x188/2] = {
 		0x000a, 0xea00, 0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xfffe, 0xeaff,
 		0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xf000, 0xe59f,
 		0x0010, 0x0800, 0x0010, 0x0800, 0xfffe, 0xeaff, 0xfffe, 0xeaff,
@@ -3074,14 +3072,13 @@ static void thegladPatch()
 		0xfffe, 0xeaff, 0x105c, 0xe59f
 	};
 
-	// byte swap for Big Endian arch
-	for (int i = 0; i < 0x188/2; i++)
-	{
-		thegladEOHackData[i] = BURN_ENDIAN_SWAP_INT16(thegladEOHackData[i]);
-	}
-
-	memmove (PGMARMROM + 0x188, PGMARMROM, 0x4000-0x188);
 	memcpy  (PGMARMROM, thegladEOHackData, 0x188);
+}
+
+static void thegladPatch()
+{
+	pgm_decrypt_theglad();
+	pgm_create_theglad_E0_data();
 }
 
 static INT32 thegladInit()
@@ -3171,7 +3168,8 @@ STD_ROM_FN(theglad100)
 
 static void theglad100Patch()
 {
-	thegladPatch();
+	pgm_decrypt_theglad();
+	pgm_create_theglad_E0_data();
 
 	// Hack the jump table in the external rom to work correctly with the internal rom we have...
 	static const UINT16 subroutine_addresses[] = {
@@ -4199,29 +4197,43 @@ static struct BurnRomInfo svgpcbRomDesc[] = {
 	{ "w05601b064.bin",		0x800000, 0xbfe61a71, 5 | BRF_SND },		//  8 Samples
 	{ "w05602b032.bin",		0x400000, 0x0685166d, 5 | BRF_SND },		//  9
 
-	{ "svg_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 10 Internal ARM7 Rom
+//	{ "svg_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 10 Internal ARM7 Rom
+	{ "svg_igs027a_execute_only_area", 0x000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 10 Internal ARM7 Rom
+	{ "svgcpb_igs027a_v100_japan.bin", 0x003e78, 0x7a59da5d, 7 | BRF_PRG | BRF_ESS },	// 11 Internal ARM7 Rom
 
-	{ "svg_v100jp.u64",		0x400000, 0x399d4a8b, 8 | BRF_PRG | BRF_ESS },	// 11 External ARM7 Rom
-	{ "svg_v100jp.u65",		0x400000, 0x6e1c33b1, 8 | BRF_PRG | BRF_ESS },	// 12
+	{ "svg_v100jp.u64",		0x400000, 0x399d4a8b, 8 | BRF_PRG | BRF_ESS },	// 12 External ARM7 Rom
+	{ "svg_v100jp.u65",		0x400000, 0x6e1c33b1, 8 | BRF_PRG | BRF_ESS },	// 13
 };
 
 STDROMPICKEXT(svgpcb, svgpcb, svgpcbBIOS) // custom bios
 STD_ROM_FN(svgpcb)
 
+static void svgpcbPatch()
+{
+	pgm_decrypt_svgpcb();
+	pgm_create_theglad_E0_data();
+}
+
 static INT32 svgpcbInit()
 {
-	pPgmInitCallback = pgm_decrypt_svgpcb;
-//	pPgmProtCallback = install_protection_asic27a_svg;
+	pPgmInitCallback = svgpcbPatch;
+	pPgmProtCallback = install_protection_asic27a_svg;
 
-	return pgmInit();
+	nPgmAsicRegionHackAddress = 0x3a8e;
+
+	INT32 nRet = pgmInit();
+	
+	Arm7SetIdleLoopAddress(0x00009e0);
+
+	return nRet;
 }
 
 struct BurnDriverD BurnDrvSvgpcb = {
 	"svgpcb", "svg", NULL, NULL, "2005",
 	"S.V.G. - Spectral vs Generation (V100, Japan, Single PCB Version)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
-	NULL, svgpcbRomInfo, svgpcbRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, svgpcbRomInfo, svgpcbRomName, NULL, NULL, pgmInputInfo, thegladpcbDIPInfo,
 	svgpcbInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

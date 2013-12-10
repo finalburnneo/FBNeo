@@ -3040,7 +3040,7 @@ static struct BurnRomInfo thegladRomDesc[] = {
 STDROMPICKEXT(theglad, theglad, pgm)
 STD_ROM_FN(theglad)
 
-static void pgm_create_theglad_E0_data()
+static void pgm_create_theglad_EO_data()
 {
 	// Replace undumpable area of the arm7 internal rom with a custom-built
 	// version created by David Haywood in order to make game playable
@@ -3072,13 +3072,17 @@ static void pgm_create_theglad_E0_data()
 		0xfffe, 0xeaff, 0x105c, 0xe59f
 	};
 
+	for (int i = 0; i < 0x188/2; i++) {
+		thegladEOHackData[i] = BURN_ENDIAN_SWAP_INT16(thegladEOHackData[i]);
+	}
+
 	memcpy  (PGMARMROM, thegladEOHackData, 0x188);
 }
 
 static void thegladPatch()
 {
 	pgm_decrypt_theglad();
-	pgm_create_theglad_E0_data();
+	pgm_create_theglad_EO_data();
 }
 
 static INT32 thegladInit()
@@ -3169,7 +3173,7 @@ STD_ROM_FN(theglad100)
 static void theglad100Patch()
 {
 	pgm_decrypt_theglad();
-	pgm_create_theglad_E0_data();
+	pgm_create_theglad_EO_data();
 
 	// Hack the jump table in the external rom to work correctly with the internal rom we have...
 	static const UINT16 subroutine_addresses[] = {
@@ -4211,7 +4215,7 @@ STD_ROM_FN(svgpcb)
 static void svgpcbPatch()
 {
 	pgm_decrypt_svgpcb();
-	pgm_create_theglad_E0_data();
+	pgm_create_theglad_EO_data();
 }
 
 static INT32 svgpcbInit()
@@ -4228,11 +4232,11 @@ static INT32 svgpcbInit()
 	return nRet;
 }
 
-struct BurnDriverD BurnDrvSvgpcb = {
+struct BurnDriver BurnDrvSvgpcb = {
 	"svgpcb", "svg", NULL, NULL, "2005",
 	"S.V.G. - Spectral vs Generation (V100, Japan, Single PCB Version)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, svgpcbRomInfo, svgpcbRomName, NULL, NULL, pgmInputInfo, thegladpcbDIPInfo,
 	svgpcbInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3

@@ -768,6 +768,35 @@ STD_ROM_PICK(Dland)
 STD_ROM_FN(Dland)
 
 static struct BurnRomInfo BublcaveRomDesc[] = {
+	{ "lcave06_12",    0x08000, 0xe8b9af5e, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "lcave05_12",    0x10000, 0xcfe14cb8, BRF_ESS | BRF_PRG }, //	 1
+	
+	{ "lcave08_12",    0x08000, 0xa9384086, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program 
+	
+	{ "a78-07.46",     0x08000, 0x4f9a26e8, BRF_ESS | BRF_PRG }, //  3	Z80 #3 Program 
+	
+	{ "a78-01.17",     0x01000, 0xb1bfb53d, BRF_ESS | BRF_PRG }, //  4	MCU Program 
+	
+	{ "lcave09_10",    0x08000, 0xb90b7eef, BRF_GRA },	     //  5	Tiles
+	{ "lcave10_10",    0x08000, 0x4fb22f05, BRF_GRA },	     //  6
+	{ "a78-11.14",     0x08000, 0x9773e512, BRF_GRA },	     //  7
+	{ "lcave12_10",    0x08000, 0xe49eb49e, BRF_GRA },	     //  8
+	{ "lcave13_10",    0x08000, 0x61919734, BRF_GRA },	     //  9
+	{ "lcave14_10",    0x08000, 0x7e3a13bd, BRF_GRA },	     //  10
+	{ "lcave15_10",    0x08000, 0xc253c73a, BRF_GRA },	     //  11
+	{ "lcave16_10",    0x08000, 0xe66c92ee, BRF_GRA },	     //  12
+	{ "a78-17.32",     0x08000, 0xd69762d5, BRF_GRA },	     //  13
+	{ "lcave18_10",    0x08000, 0x47ee2544, BRF_GRA },	     //  14
+	{ "lcave19_10",    0x08000, 0x1ceeb1fa, BRF_GRA },	     //  15
+	{ "lcave20_10",    0x08000, 0x64322e24, BRF_GRA },	     //  16
+	
+	{ "a71-25.41",     0x00100, 0x2d0f8545, BRF_GRA },	     //  17	PROMs
+};
+
+STD_ROM_PICK(Bublcave)
+STD_ROM_FN(Bublcave)
+
+static struct BurnRomInfo Bublcave11RomDesc[] = {
 	{ "lcave06_10",    0x08000, 0x185cc219, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "lcave05_11",    0x10000, 0xb6b02df3, BRF_ESS | BRF_PRG }, //	 1
 	
@@ -793,8 +822,8 @@ static struct BurnRomInfo BublcaveRomDesc[] = {
 	{ "a71-25.41",     0x00100, 0x2d0f8545, BRF_GRA },	     //  17	PROMs
 };
 
-STD_ROM_PICK(Bublcave)
-STD_ROM_FN(Bublcave)
+STD_ROM_PICK(Bublcave11)
+STD_ROM_FN(Bublcave11)
 
 static struct BurnRomInfo Bublcave10RomDesc[] = {
 	{ "lcave06_10",    0x08000, 0x185cc219, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
@@ -2712,10 +2741,20 @@ struct BurnDriver BurnDrvDland = {
 
 struct BurnDriver BurnDrvBublcave = {
 	"bublcave", "bublbobl", NULL, NULL, "1986",
-	"Bubble Bobble Lost Cave (v1.1)\0", NULL, "Bisboch and Aladar", "Taito Misc",
+	"Bubble Bobble Lost Cave (v1.2)\0", NULL, "Bisboch and Aladar", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, BublcaveRomInfo, BublcaveRomName, NULL, NULL, BublboblInputInfo, BublboblDIPInfo,
+	BublboblInit, BublboblExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x100, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvBublcave11 = {
+	"bublcave11", "bublbobl", NULL, NULL, "1986",
+	"Bubble Bobble Lost Cave (v1.1)\0", NULL, "Bisboch and Aladar", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, Bublcave11RomInfo, Bublcave11RomName, NULL, NULL, BublboblInputInfo, BublboblDIPInfo,
 	BublboblInit, BublboblExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };

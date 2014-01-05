@@ -4024,7 +4024,7 @@ static INT32 MemIndex()
 	DrvGfxROM1		= Next; Next += 0x800000;
 	DrvGfxROM2		= Next; Next += 0x800000;
 
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadia") == 0) {
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadian") == 0) {
 					Next += 0x800000;
 	}
 
@@ -4035,7 +4035,7 @@ static INT32 MemIndex()
 	DrvSndROM0		= Next; Next += 0x300000;
 	DrvSndROM1		= Next; Next += 0x300000;
 
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadia") == 0) {
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadian") == 0) {
 					Next += 0x600000;
 	}
 
@@ -9161,10 +9161,10 @@ static INT32 RapheroInit()
 }
 
 struct BurnDriver BurnDrvRaphero = {
-	"raphero", NULL, NULL, NULL, "1994",
+	"raphero", "arcadian", NULL, NULL, "1994",
 	"Rapid Hero\0", "Incomplete sound", "Media Trading Corp", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rapheroRomInfo, rapheroRomName, NULL, NULL, Tdragon2InputInfo, RapheroDIPInfo,
 	RapheroInit, NMK004Exit, NMK004Frame, RapheroDraw, NULL, NULL, 0x400,
 	224, 384, 3, 4
@@ -9172,7 +9172,7 @@ struct BurnDriver BurnDrvRaphero = {
 
 // Aracdia
 
-static struct BurnRomInfo arcadiaRomDesc[] = {
+static struct BurnRomInfo arcadianRomDesc[] = {
 	{ "arcadia.3",		0x080000, 0x8b46d609, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
 
 	{ "rhp94099.2",		0x020000, 0xfe01ece1, 2 | BRF_PRG | BRF_ESS }, //  1 Tmp90c841 Code
@@ -9197,15 +9197,15 @@ static struct BurnRomInfo arcadiaRomDesc[] = {
 	{ "prom3.u60",		0x000100, 0x304f98c6, 0 | BRF_OPT },           // 14
 };
 
-STD_ROM_PICK(arcadia)
-STD_ROM_FN(arcadia)
+STD_ROM_PICK(arcadian)
+STD_ROM_FN(arcadian)
 
-struct BurnDriver BurnDrvArcadia = {
-	"arcadia", "raphero", NULL, NULL, "1994",
-	"Arcadia\0", "Incomplete sound", "NMK", "NMK16",
+struct BurnDriver BurnDrvArcadian = {
+	"arcadian", NULL, NULL, NULL, "1994",
+	"Arcadia (NMK)\0", "Incomplete sound", "NMK", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, arcadiaRomInfo, arcadiaRomName, NULL, NULL, Tdragon2InputInfo, RapheroDIPInfo,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, arcadianRomInfo, arcadianRomName, NULL, NULL, Tdragon2InputInfo, RapheroDIPInfo,
 	RapheroInit, NMK004Exit, NMK004Frame, RapheroDraw, NULL, NULL, 0x400,
 	224, 384, 3, 4
 };

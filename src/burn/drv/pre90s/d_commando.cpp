@@ -357,7 +357,7 @@ static struct BurnRomInfo Drvb2RomDesc[] = {
 	{ "vtb5.6l",       0x00100, 0x712ac508, BRF_GRA },	     //  20
 	{ "vtb6.6e",       0x00100, 0x0eaf5158, BRF_GRA },	     //  21
 	
-	{ "commandob2_pal16l8a.bin", 0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },		// 22 PLDs
+	{ "commandob2_pal16l8.bin", 0x00104, 0xbdbcaf02, BRF_OPT },		// 22 PLDs
 };
 
 STD_ROM_PICK(Drvb2)

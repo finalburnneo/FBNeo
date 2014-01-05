@@ -1074,8 +1074,8 @@ STD_ROM_PICK(Wintbob)
 STD_ROM_FN(Wintbob)
 
 static struct BurnRomInfo SnowbroswbRomDesc[] = {
-	{ "toa03.bin",     0x10000, 0x55d302da, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "toa01.bin",     0x10000, 0x3c64e145, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "toa3.bin",      0x10000, 0x55d302da, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "toa1.bin",      0x10000, 0x3c64e145, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 	{ "wb04.bin",      0x10000, 0x53be758d, BRF_ESS | BRF_PRG }, //  2	68000 Program Code
 	{ "wb02.bin",      0x10000, 0xfc8e292e, BRF_ESS | BRF_PRG }, //  3	68000 Program Code
 

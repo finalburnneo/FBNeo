@@ -2635,9 +2635,9 @@ struct BurnDriverD BurnDrvDkongjre = {
 // Donkey Kong Junior (P Kit, bootleg)
 
 static struct BurnRomInfo dkongjrpbRomDesc[] = {
-	{ "djr1-c.5b-p",	0x2000, 0x8d99b3e0, 1 }, //  0 maincpu
-	{ "djr1-c.5c-p",	0x2000, 0xb92d258c, 1 }, //  1
-	{ "djr1-c.5e",		0x2000, 0x24c3d325, 1 }, //  2
+	{ "dkjr1-c.5b-p",	0x2000, 0x8d99b3e0, 1 }, //  0 maincpu
+	{ "dkjr1-c.5c-p",	0x2000, 0xb92d258c, 1 }, //  1
+	{ "dkjr1-c.5e",		0x2000, 0xd042b6a8, 1 }, //  2
 
 	{ "c_3h.bin",	0x1000, 0x715da5f8, 2 }, //  3 soundcpu
 

@@ -2063,8 +2063,8 @@ static struct BurnRomInfo DdtodaRomDesc[] = {
 	{ "dada.03c",      0x080000, 0xbf243e15, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dada.04c",      0x080000, 0x76551eec, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dada.05c",      0x080000, 0x0a0ad827, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "dada.06a",      0x080000, 0x6225495a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "dada.07a",      0x080000, 0xb3480ec3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dad.06a",       0x080000, 0x6225495a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dad.07a",       0x080000, 0xb3480ec3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
 	{ "dad.13m",       0x200000, 0xda3cb7d6, CPS2_GFX | BRF_GRA },
 	{ "dad.15m",       0x200000, 0x92b63172, CPS2_GFX | BRF_GRA },

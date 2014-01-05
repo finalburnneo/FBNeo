@@ -2831,9 +2831,9 @@ static struct BurnRomInfo EswatblRomDesc[] = {
 	{ "eswat_a.rom",   0x08000, 0x2af4fc62, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "eswat_d.rom",   0x08000, 0xb4751e19, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	
-	{ "mpr12624.b11",  0x40000, 0x375a5ec4, SYS16_ROM_TILES | BRF_GRA },
-	{ "mpr12625.b12",  0x40000, 0x3b8c757e, SYS16_ROM_TILES | BRF_GRA },
-	{ "mpr12626.b13",  0x40000, 0x3efca25c, SYS16_ROM_TILES | BRF_GRA },
+	{ "ic19",          0x40000, 0x375a5ec4, SYS16_ROM_TILES | BRF_GRA },
+	{ "ic20",          0x40000, 0x3b8c757e, SYS16_ROM_TILES | BRF_GRA },
+	{ "ic21",          0x40000, 0x3efca25c, SYS16_ROM_TILES | BRF_GRA },
 	
 	{ "ic9",           0x40000, 0x0d1530bf, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "ic12",          0x40000, 0x18ff0799, SYS16_ROM_SPRITES | BRF_GRA },
@@ -2842,9 +2842,9 @@ static struct BurnRomInfo EswatblRomDesc[] = {
 	{ "ic11",          0x40000, 0xf6b096e0, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "ic14",          0x40000, 0x6773fef6, SYS16_ROM_SPRITES | BRF_GRA },
 
-	{ "epr12617.a13",  0x08000, 0x7efecf23, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	{ "ic8",           0x08000, 0x7efecf23, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
-	{ "mpr12616.a11",  0x40000, 0x254347c2, SYS16_ROM_UPD7759DATA | BRF_SND },
+	{ "ic6",           0x40000, 0x254347c2, SYS16_ROM_UPD7759DATA | BRF_SND },
 };
 
 
@@ -3849,8 +3849,8 @@ static struct BurnRomInfo Tetris2RomDesc[] = {
 	{ "epr-12166.b10", 0x10000, 0x9abd183b, SYS16_ROM_TILES | BRF_GRA },
 	{ "epr-12167.b11", 0x10000, 0x2495fd4e, SYS16_ROM_TILES | BRF_GRA },
 	
-	{ "obj0-o.rom",    0x10000, 0x2fb38880, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "obj0-e.rom",    0x10000, 0xd6a02cba, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12194.b1",  0x10000, 0x2fb38880, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12195.b5",  0x10000, 0xd6a02cba, SYS16_ROM_SPRITES | BRF_GRA },
 
 	{ "epr-12168.a7",  0x08000, 0xbd9ba01b, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	

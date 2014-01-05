@@ -796,8 +796,8 @@ struct BurnDriver BurnDrvHellfire = {
 };
 
 struct BurnDriver BurnDrvHellfir1 = {
-	"hellfire1", "hellfire", NULL, NULL, "1989",
-	"Hellfire (1P Ver.)\0", NULL, "Toaplan (Taito License)", "Toaplan BCU-2 / FCU-2 based",
+	"hellfire1a", "hellfire", NULL, NULL, "1989",
+	"Hellfire (1P Ver., older)\0", NULL, "Toaplan (Taito License)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
 	NULL, hellfir1RomInfo, hellfir1RomName, NULL, NULL, hellfireInputInfo, hellfir1DIPInfo,
@@ -816,8 +816,8 @@ struct BurnDriver BurnDrvHellfir2 = {
 };
 
 struct BurnDriver BurnDrvHellfir3 = {
-	"hellfire3", "hellfire", NULL, NULL, "1989",
-	"Hellfire (1P Ver., alt)\0", NULL, "Toaplan (Taito License)", "Toaplan BCU-2 / FCU-2 based",
+	"hellfire1", "hellfire", NULL, NULL, "1989",
+	"Hellfire (1P Ver.)\0", NULL, "Toaplan (Taito License)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
 	NULL, hellfir3RomInfo, hellfir3RomName, NULL, NULL, hellfireInputInfo, hellfireDIPInfo,

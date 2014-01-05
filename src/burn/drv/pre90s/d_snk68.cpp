@@ -1788,7 +1788,7 @@ static struct BurnRomInfo ikari3uRomDesc[] = {
 	{ "ik3-1.c8",   0x10000, 0x47e4d256, 1 | BRF_PRG }, //  2
 	{ "ik3-4.c12",  0x10000, 0xa43af6b5, 1 | BRF_PRG }, //  3
 
-	{ "ik3-5.16d",  0x10000, 0xce6706fc, 2 | BRF_PRG }, //  4 Z80 Code
+	{ "ik3-5.15d",  0x10000, 0xce6706fc, 2 | BRF_PRG }, //  4 Z80 Code
 
 	{ "ik3-7.16l",  0x08000, 0x0b4804df, 3 | BRF_GRA }, //  5 Characters
 	{ "ik3-8.16m",  0x08000, 0x10ab4e50, 3 | BRF_GRA }, //  6

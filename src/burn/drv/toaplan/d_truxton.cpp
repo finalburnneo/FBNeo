@@ -31,7 +31,7 @@ static struct BurnRomInfo truxtonRomDesc[] = {
 	{ "b65_02.bin",   0x020000, 0x1dd55161, BRF_GRA },			 //  8
 	{ "b65_01.bin",   0x020000, 0xe974937f, BRF_GRA },			 //  9
 
-	{ "b65_09.bin",   0x008000, 0xf1c0f410, BRF_ESS | BRF_PRG }, //  10 Z80 program
+	{ "b65_09.bin",   0x008000, 0x1bdd4ddc, BRF_ESS | BRF_PRG }, //  10 Z80 program
 
 	{ "b65_12.bpr",   0x000020, 0xbc88cced, BRF_SND },			 // 11 Sprite attribute PROM
 	{ "b65_13.bpr",   0x000020, 0xa1e17492, BRF_SND },			 // 12 ???

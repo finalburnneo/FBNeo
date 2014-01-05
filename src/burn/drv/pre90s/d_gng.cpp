@@ -527,30 +527,30 @@ STD_ROM_PICK(Drvprot)
 STD_ROM_FN(Drvprot)
 
 static struct BurnRomInfo DrvtRomDesc[] = {
-	{ "mm04",          0x04000, 0x652406f6, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
-	{ "mm03",          0x08000, 0xfb040b42, BRF_ESS | BRF_PRG }, //	 1
-	{ "mm05",          0x08000, 0x8f7cff61, BRF_ESS | BRF_PRG }, //	 2
+	{ "mmt04d.10n",    0x04000, 0x652406f6, BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "mmt03d.8n",     0x08000, 0xfb040b42, BRF_ESS | BRF_PRG }, //	 1
+	{ "mmt05d.13n",    0x08000, 0x8f7cff61, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "gg2.bin",       0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program 
+	{ "mm02.14h",      0x08000, 0x615f5b6f, BRF_ESS | BRF_PRG }, //  3	Z80 Program 
 	
-	{ "gg1.bin",       0x04000, 0xecfccf07, BRF_GRA },	     //  4	Characters
+	{ "mm01.11e",      0x04000, 0xecfccf07, BRF_GRA },	     //  4	Characters
 	
-	{ "gg11.bin",      0x04000, 0xddd56fa9, BRF_GRA },	     //  5	Tiles
-	{ "gg10.bin",      0x04000, 0x7302529d, BRF_GRA },	     //  6
-	{ "gg9.bin",       0x04000, 0x20035bda, BRF_GRA },	     //  7
-	{ "gg8.bin",       0x04000, 0xf12ba271, BRF_GRA },	     //  8
-	{ "gg7.bin",       0x04000, 0xe525207d, BRF_GRA },	     //  9
-	{ "gg6.bin",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
+	{ "mm11.3e",       0x04000, 0xddd56fa9, BRF_GRA },	     //  5	Tiles
+	{ "mm10.1e",       0x04000, 0x7302529d, BRF_GRA },	     //  6
+	{ "mm09.3c",       0x04000, 0x20035bda, BRF_GRA },	     //  7
+	{ "mm08.1c",       0x04000, 0xf12ba271, BRF_GRA },	     //  8
+	{ "mm07.3b",       0x04000, 0xe525207d, BRF_GRA },	     //  9
+	{ "mm06.1b",       0x04000, 0x2d77e9b2, BRF_GRA },	     //  10
 	
-	{ "gg17.bin",      0x04000, 0x93e50a8f, BRF_GRA },	     //  11	Sprites
-	{ "gg16.bin",      0x04000, 0x06d7e5ca, BRF_GRA },	     //  12
-	{ "gg15.bin",      0x04000, 0xbc1fe02d, BRF_GRA },	     //  13
-	{ "gg14.bin",      0x04000, 0x6aaf12f9, BRF_GRA },	     //  14
-	{ "gg13.bin",      0x04000, 0xe80c3fca, BRF_GRA },	     //  15
-	{ "gg12.bin",      0x04000, 0x7780a925, BRF_GRA },	     //  16
+	{ "mm17.4n",       0x04000, 0x93e50a8f, BRF_GRA },	     //  11	Sprites
+	{ "mm16.3n",       0x04000, 0x06d7e5ca, BRF_GRA },	     //  12
+	{ "mm15.1n",       0x04000, 0xbc1fe02d, BRF_GRA },	     //  13
+	{ "mm14.4l",       0x04000, 0x6aaf12f9, BRF_GRA },	     //  14
+	{ "mm13.3l",       0x04000, 0xe80c3fca, BRF_GRA },	     //  15
+	{ "mm12.1l",       0x04000, 0x7780a925, BRF_GRA },	     //  16
 	
-	{ "tbp24s10.14k",  0x00100, 0x0eaf5158, BRF_GRA },	     //  17	PROMs
-	{ "63s141.2e",     0x00100, 0x4a1285a4, BRF_GRA },	     //  18
+	{ "m-02.14k",      0x00100, 0x0eaf5158, BRF_GRA },	     //  17	PROMs
+	{ "m-01.2e",       0x00100, 0x4a1285a4, BRF_GRA },	     //  18
 };
 
 STD_ROM_PICK(Drvt)

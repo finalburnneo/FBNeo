@@ -507,12 +507,12 @@ static struct BurnRomInfo dietgouRomDesc[] = {
 
 	{ "jx_02.14m",			0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
 
-	{ "may00",				0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+	{ "may-00.10a",			0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
 
-	{ "may01",				0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
-	{ "may02",				0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
+	{ "may-01.14a",			0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
+	{ "may-02.16a",			0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
 
-	{ "may03",				0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
+	{ "may-03.11l",			0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
 
 	{ "pal16l8b_vd-00.6h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  7 PLDs
 	{ "pal16l8b_vd-01.7h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  8
@@ -539,14 +539,14 @@ static struct BurnRomInfo dietgoeRomDesc[] = {
 	{ "jy_00-1.4h",			0x040000, 0x8bce137d, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "jy_01-1.5h",			0x040000, 0xeca50450, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "jy_02.m14",			0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
+	{ "jy_02.14m",			0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
 
-	{ "may00",				0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+	{ "may-00.10a",			0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
 
-	{ "may01",				0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
-	{ "may02",				0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
+	{ "may-01.14a",			0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
+	{ "may-02.16a",			0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
 
-	{ "may03",				0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
+	{ "may-03.11l",			0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
 
 	{ "pal16l8b_vd-00.6h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  7 PLDs
 	{ "pal16l8b_vd-01.7h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  8
@@ -570,17 +570,17 @@ struct BurnDriver BurnDrvDietgoe = {
 // Diet Go Go (Euro v1.1 1992.09.26)
 
 static struct BurnRomInfo dietgoRomDesc[] = {
-	{ "jy_00-2.h4",			0x040000, 0x014dcf62, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "jy_01-2.h5",			0x040000, 0x793ebd83, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "jy_00-2.4h",			0x040000, 0x014dcf62, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "jy_01-2.5h",			0x040000, 0x793ebd83, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "jy_02.m14",			0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
+	{ "jy_02.14m",			0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
 
-	{ "may00",				0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+	{ "may-00.10a",			0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
 
-	{ "may01",				0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
-	{ "may02",				0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
+	{ "may-01.14a",			0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
+	{ "may-02.16a",			0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
 
-	{ "may03",				0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
+	{ "may-03.11l",			0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
 
 	{ "pal16l8b_vd-00.6h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  7 PLDs
 	{ "pal16l8b_vd-01.7h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  8
@@ -609,12 +609,12 @@ static struct BurnRomInfo dietgojRomDesc[] = {
 
 	{ "jw_02.14m",			0x010000, 0x4e3492a5, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
 
-	{ "may00",				0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+	{ "may-00.10a",			0x100000, 0x234d1f8d, 3 | BRF_GRA },           //  3 Characters & Background Tiles
 
-	{ "may01",				0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
-	{ "may02",				0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
+	{ "may-01.14a",			0x100000, 0x2da57d04, 4 | BRF_GRA },           //  4 Sprites
+	{ "may-02.16a",			0x100000, 0x3a66a713, 4 | BRF_GRA },           //  5
 
-	{ "may03",				0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
+	{ "may-03.11l",			0x080000, 0xb6e42bae, 5 | BRF_SND },           //  6 OKI M6295 Samples
 	
 	{ "pal16l8b_vd-00.6h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  7 PLDs
 	{ "pal16l8b_vd-01.7h",	0x000104, 0x00000000, 6 | BRF_NODUMP },        //  8

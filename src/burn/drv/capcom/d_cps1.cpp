@@ -4251,12 +4251,6 @@ static struct BurnRomInfo Wonder3bRomDesc[] = {
 	{ "27512.2",       0x010000, 0xabfca165, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "27020.1",       0x040000, 0x3c4348cf, BRF_SND | CPS1_OKIM6295_SAMPLES },
-		
-	A_BOARD_PLDS
-	
-	{ "rt24b.1a",      0x000117, 0x54b85159, BRF_OPT },	// b-board PLDs
-	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
-	{ "ioc1.ic1",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
 };
 
 STD_ROM_PICK(Wonder3b)
@@ -5510,7 +5504,7 @@ static struct BurnRomInfo Ffightj3RomDesc[] = {
 	A_BOARD_PLDS
 	
 	{ "s222b.1a",      0x000117, 0x6d86b45e, BRF_OPT }, // b-board PLDs
-	{ "lwio.12c",      0x000117, 0xad52b90c, BRF_OPT },
+	{ "lwio.12e",      0x000117, 0xad52b90c, BRF_OPT },
 };
 
 STD_ROM_PICK(Ffightj3)
@@ -8276,8 +8270,8 @@ static struct BurnRomInfo Sf2jRomDesc[] = {
 	{ "sf2j38.bin",    0x020000, 0x38614d70, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "sf2j28.bin",    0x020000, 0xd283187a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "sf2j35.bin",    0x020000, 0xd28158e4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "sf2j_29a.10e",  0x020000, 0xbb4af315, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "sf2j_36a.10f",  0x020000, 0xc02a13eb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "sf2_29a.bin",   0x020000, 0xbb4af315, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "sf2_36a.bin",   0x020000, 0xc02a13eb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	{ "sf2_06.8a",     0x080000, 0x22c9cc8e, BRF_GRA | CPS1_TILES },
 	{ "sf2_08.10a",    0x080000, 0x57213be8, BRF_GRA | CPS1_TILES },
@@ -8292,10 +8286,10 @@ static struct BurnRomInfo Sf2jRomDesc[] = {
 	{ "sf2_24.7d",     0x080000, 0xc1befaa8, BRF_GRA | CPS1_TILES },
 	{ "sf2_26.9d",     0x080000, 0x0627c831, BRF_GRA | CPS1_TILES },
 
-	{ "sf2_09.12a",    0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "sf2_09.bin",    0x010000, 0xa4823a1b, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "sf2_18.11c",    0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "sf2_19.12c",    0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "sf2_18.bin",    0x020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "sf2_19.bin",    0x020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
 	A_BOARD_PLDS
 	

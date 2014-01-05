@@ -2721,8 +2721,8 @@ STD_ROM_PICK(Wboy3)
 STD_ROM_FN(Wboy3)
 
 static struct BurnRomInfo Wboy4RomDesc[] = {
-	{ "ic2.bin",           0x008000, 0x48b2c006, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "ic3.bin",           0x008000, 0x466cae31, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "epr7622.ic1",       0x008000, 0x48b2c006, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "epr7621.ic2",       0x008000, 0x466cae31, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	
 	{ "7583.126",          0x008000, 0x99334b3c, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program Code
 	

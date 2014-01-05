@@ -2982,7 +2982,7 @@ static struct BurnRomInfo masterwRomDesc[] = {
 
 	{ "b72_07.30",			0x010000, 0x2b1a946f, TAITO_Z80ROM1 },		//  4 Z80 code
 
-	{ "b72-02.rom",			0x080000, 0xc519f65a, TAITO_CHARS },		//  5 Graphics Tiles
+	{ "b72-02.6",			0x080000, 0x843444eb, TAITO_CHARS },		//  5 Graphics Tiles
 	{ "b72-01.5",			0x080000, 0xa24ac26e, TAITO_CHARS },		//  6
 };
 
@@ -3015,7 +3015,7 @@ static struct BurnRomInfo masterwuRomDesc[] = {
 
 	{ "b72_07.30",			0x010000, 0x2b1a946f, TAITO_Z80ROM1 },		//  4 Z80 code
 
-	{ "b72-02.rom",			0x080000, 0xc519f65a, TAITO_CHARS },		//  5 Graphics Tiles
+	{ "b72-02.6",			0x080000, 0x843444eb, TAITO_CHARS },		//  5 Graphics Tiles
 	{ "b72-01.5",			0x080000, 0xa24ac26e, TAITO_CHARS },		//  6
 };
 
@@ -3394,12 +3394,19 @@ struct BurnDriver BurnDrvCrimecj = {
 // Tetris (Japan, B-System, YM2610)
 
 static struct BurnRomInfo tetristRomDesc[] = {
-	{ "c12-03.bin",			0x020000, 0x38f1ed41, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "c12-02.bin",			0x020000, 0xed9530bc, TAITO_68KROM1_BYTESWAP }, //  1
-	{ "c12-05.bin",			0x020000, 0x128e9927, TAITO_68KROM1_BYTESWAP }, //  2
-	{ "c12-04.bin",			0x020000, 0x5da7a319, TAITO_68KROM1_BYTESWAP }, //  3
+	{ "c12-03.50",			0x020000, 0x38f1ed41, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "c12-02.31",			0x020000, 0xed9530bc, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "c12-05.49",			0x020000, 0x128e9927, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "c12-04.30",			0x020000, 0x5da7a319, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "c12-06.bin",			0x010000, 0xf2814b38, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "c12-06.37",			0x010000, 0xf2814b38, TAITO_Z80ROM1 },		//  4 Z80 Code
+	
+	{ "b81-03.14",			0x080000, 0x551b75e6, BRF_OPT },
+	{ "b81-04.15",			0x080000, 0xcf734e12, BRF_OPT },
+
+	{ "b81-02.2",			0x080000, 0x20ec3b86, BRF_OPT },
+
+	{ "b81-01.1",			0x080000, 0xb33f796b, BRF_OPT },
 };
 
 STD_ROM_PICK(tetrist)
@@ -3424,15 +3431,15 @@ struct BurnDriver BurnDrvTetrist = {
 // Tetris (Japan, B-System, YM2203)
 
 static struct BurnRomInfo tetristaRomDesc[] = {
-	{ "c35-04.bin",			0x020000, 0xfa6e42ff, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "c35-03.bin",			0x020000, 0xaebd8539, TAITO_68KROM1_BYTESWAP }, //  1
-	{ "c35-02.bin",			0x020000, 0x128e9927, TAITO_68KROM1_BYTESWAP }, //  2
-	{ "c35-01.bin",			0x020000, 0x5da7a319, TAITO_68KROM1_BYTESWAP }, //  3
+	{ "c35-04.33",			0x020000, 0xfa6e42ff, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "c35-03.24",			0x020000, 0xaebd8539, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "c35-02.34",			0x020000, 0x128e9927, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "c35-01.25",			0x020000, 0x5da7a319, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "c35-05.bin",			0x010000, 0x785c63fb, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "c35-05.30",			0x010000, 0x785c63fb, TAITO_Z80ROM1 },		//  4 Z80 Code
 
-	{ "b72-02.rom",			0x080000, 0x843444eb, BRF_OPT },		//  5 Graphics Tiles (not used)
-	{ "b72-01.rom",			0x080000, 0xa24ac26e, BRF_OPT },		//  6
+	{ "b72-02.6",			0x080000, 0x843444eb, BRF_OPT },		//  5 Graphics Tiles (not used)
+	{ "b72-01.5",			0x080000, 0xa24ac26e, BRF_OPT },		//  6
 };
 
 STD_ROM_PICK(tetrista)

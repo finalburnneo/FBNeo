@@ -471,8 +471,8 @@ static INT32 LoadRoms()
 	// Load MSM6295 ADPCM data
 	BurnLoadRom(MSM6295ROM, 3, 1);
 
-	BurnLoadRom(EEPROM,     4, 1); // dumped version
-	BurnLoadRom(EEPROM,     5, 1); // load over dumped version
+//	BurnLoadRom(EEPROM,     4, 1); // dumped version
+	BurnLoadRom(EEPROM,     4, 1); // load over dumped version
 
 	return 0;
 }
@@ -619,14 +619,14 @@ static INT32 DrvInit(INT32 region)
 // FixEight (Europe)
 
 static struct BurnRomInfo fixeightRomDesc[] = {
-	{ "tp-026-1.u27",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "tp-026-1",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
 
 	{ "tp-026-3",		0x200000, 0xe5578d98, BRF_GRA },           //  1 GP9001 Tile data
 	{ "tp-026-4",		0x200000, 0xb760cb53, BRF_GRA },           //  2
 
 	{ "tp-026-2",		0x040000, 0x85063f1f, BRF_SND },           //  3 MSM6295 ADPCM data
 
-	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
+//	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
 	{ "fixeight.nv",	0x000080, 0x02e925d0, BRF_PRG | BRF_ESS }, //  5 EEPROM
 };
 
@@ -649,14 +649,14 @@ struct BurnDriver BurnDrvFixeight = {
 // FixEight (Korea, Taito license)
 
 static struct BurnRomInfo fixeightktRomDesc[] = {
-	{ "tp-026-1.u27",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "tp-026-1",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
 
 	{ "tp-026-3",		0x200000, 0xe5578d98, BRF_GRA },           //  1 GP9001 Tile data
 	{ "tp-026-4",		0x200000, 0xb760cb53, BRF_GRA },           //  2
 
 	{ "tp-026-2",		0x040000, 0x85063f1f, BRF_SND },           //  3 MSM6295 ADPCM data
 
-	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
+//	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
 	{ "fixeightkt.nv",	0x000080, 0x08fa73ba, BRF_PRG | BRF_ESS }, //  5
 };
 
@@ -679,14 +679,14 @@ struct BurnDriver BurnDrvFixeightkt = {
 // FixEight (Korea)
 
 static struct BurnRomInfo fixeightkRomDesc[] = {
-	{ "tp-026-1.u27",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "tp-026-1",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
 
 	{ "tp-026-3",		0x200000, 0xe5578d98, BRF_GRA },           //  1 GP9001 Tile data
 	{ "tp-026-4",		0x200000, 0xb760cb53, BRF_GRA },           //  2
 
 	{ "tp-026-2",		0x040000, 0x85063f1f, BRF_SND },           //  3 MSM6295 ADPCM data
 
-	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
+//	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
 	{ "fixeightk.nv",	0x000080, 0xcac91c6f, BRF_PRG | BRF_ESS }, //  5
 };
 
@@ -709,14 +709,14 @@ struct BurnDriver BurnDrvFixeightk = {
 // FixEight (Hong Kong, Taito license)
 
 static struct BurnRomInfo fixeighthtRomDesc[] = {
-	{ "tp-026-1.u27",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "tp-026-1",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
 
 	{ "tp-026-3",		0x200000, 0xe5578d98, BRF_GRA },           //  1 GP9001 Tile data
 	{ "tp-026-4",		0x200000, 0xb760cb53, BRF_GRA },           //  2
 
 	{ "tp-026-2",		0x040000, 0x85063f1f, BRF_SND },           //  3 MSM6295 ADPCM data
 
-	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
+//	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
 	{ "fixeightht.nv",	0x000080, 0x57edaa51, BRF_PRG | BRF_ESS }, //  5 EEPROM
 };
 
@@ -739,14 +739,14 @@ struct BurnDriver BurnDrvFixeightht = {
 // FixEight (Hong Kong)
 
 static struct BurnRomInfo fixeighthRomDesc[] = {
-	{ "tp-026-1.u27",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "tp-026-1",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
 
 	{ "tp-026-3",		0x200000, 0xe5578d98, BRF_GRA },           //  1 GP9001 Tile data
 	{ "tp-026-4",		0x200000, 0xb760cb53, BRF_GRA },           //  2
 
 	{ "tp-026-2",		0x040000, 0x85063f1f, BRF_SND },           //  3 MSM6295 ADPCM data
 
-	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
+//	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
 	{ "fixeighth.nv",	0x000080, 0x95dec584, BRF_PRG | BRF_ESS }, //  5
 };
 
@@ -769,14 +769,14 @@ struct BurnDriver BurnDrvFixeighth = {
 // FixEight (Taiwan, Taito license)
 
 static struct BurnRomInfo fixeighttwtRomDesc[] = {
-	{ "tp-026-1.u27",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "tp-026-1",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
 
 	{ "tp-026-3",		0x200000, 0xe5578d98, BRF_GRA },           //  1 GP9001 Tile data
 	{ "tp-026-4",		0x200000, 0xb760cb53, BRF_GRA },           //  2
 
 	{ "tp-026-2",		0x040000, 0x85063f1f, BRF_SND },           //  3 MSM6295 ADPCM data
 
-	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
+//	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
 	{ "fixeighttwt.nv",	0x000080, 0xb6d5c06c, BRF_PRG | BRF_ESS }, //  5
 };
 
@@ -799,14 +799,14 @@ struct BurnDriver BurnDrvFixeighttwt = {
 // FixEight (Taiwan)
 
 static struct BurnRomInfo fixeighttwRomDesc[] = {
-	{ "tp-026-1.u27",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "tp-026-1",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
 
 	{ "tp-026-3",		0x200000, 0xe5578d98, BRF_GRA },           //  1 GP9001 Tile data
 	{ "tp-026-4",		0x200000, 0xb760cb53, BRF_GRA },           //  2
 
 	{ "tp-026-2",		0x040000, 0x85063f1f, BRF_SND },           //  3 MSM6295 ADPCM data
 
-	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
+//	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
 	{ "fixeighttw.nv",	0x000080, 0x74e6afb9, BRF_PRG | BRF_ESS }, //  5
 };
 
@@ -830,14 +830,14 @@ struct BurnDriver BurnDrvFixeighttw = {
 // FixEight (Southeast Asia, Taito license)
 
 static struct BurnRomInfo fixeightatRomDesc[] = {
-	{ "tp-026-1.u27",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "tp-026-1",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
 
 	{ "tp-026-3",		0x200000, 0xe5578d98, BRF_GRA },           //  1 GP9001 Tile data
 	{ "tp-026-4",		0x200000, 0xb760cb53, BRF_GRA },           //  2
 
 	{ "tp-026-2",		0x040000, 0x85063f1f, BRF_SND },           //  3 MSM6295 ADPCM data
 
-	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
+//	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
 	{ "fixeightat.nv",	0x000080, 0xe9c21987, BRF_PRG | BRF_ESS }, //  5
 };
 
@@ -860,14 +860,14 @@ struct BurnDriver BurnDrvFixeightat = {
 // FixEight (Southeast Asia)
 
 static struct BurnRomInfo fixeightaRomDesc[] = {
-	{ "tp-026-1.u27",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "tp-026-1",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
 
 	{ "tp-026-3",		0x200000, 0xe5578d98, BRF_GRA },           //  1 GP9001 Tile data
 	{ "tp-026-4",		0x200000, 0xb760cb53, BRF_GRA },           //  2
 
 	{ "tp-026-2",		0x040000, 0x85063f1f, BRF_SND },           //  3 MSM6295 ADPCM data
 
-	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
+//	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
 	{ "fixeighta.nv",	0x000080, 0x2bf17652, BRF_PRG | BRF_ESS }, //  5
 };
 
@@ -890,14 +890,14 @@ struct BurnDriver BurnDrvFixeighta = {
 // FixEight (Europe, Taito license)
 
 static struct BurnRomInfo fixeighttRomDesc[] = {
-	{ "tp-026-1.u27",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "tp-026-1",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
 
 	{ "tp-026-3",		0x200000, 0xe5578d98, BRF_GRA },           //  1 GP9001 Tile data
 	{ "tp-026-4",		0x200000, 0xb760cb53, BRF_GRA },           //  2
 
 	{ "tp-026-2",		0x040000, 0x85063f1f, BRF_SND },           //  3 MSM6295 ADPCM data
 
-	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
+//	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
 	{ "fixeightt.nv",	0x000080, 0xc0da4a05, BRF_PRG | BRF_ESS }, //  5
 };
 
@@ -920,14 +920,14 @@ struct BurnDriver BurnDrvFixeightt = {
 // FixEight (USA, Taito license)
 
 static struct BurnRomInfo fixeightutRomDesc[] = {
-	{ "tp-026-1.u27",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "tp-026-1",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
 
 	{ "tp-026-3",		0x200000, 0xe5578d98, BRF_GRA },           //  1 GP9001 Tile data
 	{ "tp-026-4",		0x200000, 0xb760cb53, BRF_GRA },           //  2
 
 	{ "tp-026-2",		0x040000, 0x85063f1f, BRF_SND },           //  3 MSM6295 ADPCM data
 
-	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
+//	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
 	{ "fixeightut.nv",	0x000080, 0x9fcd93ee, BRF_PRG | BRF_ESS }, //  5
 };
 
@@ -950,14 +950,14 @@ struct BurnDriver BurnDrvFixeightut = {
 // FixEight (USA)
 
 static struct BurnRomInfo fixeightuRomDesc[] = {
-	{ "tp-026-1.u27",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "tp-026-1",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
 
 	{ "tp-026-3",		0x200000, 0xe5578d98, BRF_GRA },           //  1 GP9001 Tile data
 	{ "tp-026-4",		0x200000, 0xb760cb53, BRF_GRA },           //  2
 
 	{ "tp-026-2",		0x040000, 0x85063f1f, BRF_SND },           //  3 MSM6295 ADPCM data
 
-	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
+//	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
 	{ "fixeightu.nv",	0x000080, 0x5dfefc3b, BRF_PRG | BRF_ESS }, //  5
 };
 
@@ -980,14 +980,14 @@ struct BurnDriver BurnDrvFixeightu = {
 // FixEight (Japan, Taito license)
 
 static struct BurnRomInfo fixeightjtRomDesc[] = {
-	{ "tp-026-1.u27",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "tp-026-1",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
 
 	{ "tp-026-3",		0x200000, 0xe5578d98, BRF_GRA },           //  1 GP9001 Tile data
 	{ "tp-026-4",		0x200000, 0xb760cb53, BRF_GRA },           //  2
 
 	{ "tp-026-2",		0x040000, 0x85063f1f, BRF_SND },           //  3 MSM6295 ADPCM data
 
-	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
+//	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
 	{ "fixeightjt.nv",	0x000080, 0xe3d14fed, BRF_PRG | BRF_ESS }, //  5
 };
 
@@ -1010,14 +1010,14 @@ struct BurnDriver BurnDrvFixeightjt = {
 // FixEight (Japan)
 
 static struct BurnRomInfo fixeightjRomDesc[] = {
-	{ "tp-026-1.u27",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "tp-026-1",	0x080000, 0xf7b1746a, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
 
 	{ "tp-026-3",		0x200000, 0xe5578d98, BRF_GRA },           //  1 GP9001 Tile data
 	{ "tp-026-4",		0x200000, 0xb760cb53, BRF_GRA },           //  2
 
 	{ "tp-026-2",		0x040000, 0x85063f1f, BRF_SND },           //  3 MSM6295 ADPCM data
 
-	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
+//	{ "93c45.u23",		0x000080, 0xea419312, BRF_PRG | BRF_ESS }, //  4 EEPROM (dumped)
 	{ "fixeightj.nv",	0x000080, 0x21e22038, BRF_PRG | BRF_ESS }, //  5
 };
 

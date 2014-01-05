@@ -2019,10 +2019,10 @@ struct BurnDriver BurnDrvNewfanta = {
 };
 
 struct BurnDriver BurnDrvFantsy95 = {
-	"fantsy95", NULL, NULL, NULL, "1995",
+	"fantsy95", "newfant", NULL, NULL, "1995",
 	"Fantasy '95\0", NULL, "Hi-max Technology Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Fantsy95RomInfo, Fantsy95RomName, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
 	FantasiaInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	224, 256, 3, 4

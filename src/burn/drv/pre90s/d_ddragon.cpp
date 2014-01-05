@@ -404,8 +404,8 @@ static struct BurnRomInfo DrvwRomDesc[] = {
 	{ "21j-6",         0x10000, 0x34755de3, BRF_GRA },	     //  19	Samples
 	{ "21j-7",         0x10000, 0x904de6f8, BRF_GRA },	     //  20
 	
-	{ "21j-k-0",       0x00100, 0xfdb130a9, BRF_GRA },	     //  21	PROMs
-	{ "21j-l-0",       0x00200, 0x46339529, BRF_GRA },	     //  22
+	{ "21j-k-0.101",   0x00100, 0xfdb130a9, BRF_GRA },	     //  21	PROMs
+	{ "21j-l-0.16",    0x00200, 0x46339529, BRF_GRA },	     //  22
 };
 
 STD_ROM_PICK(Drvw)
@@ -440,8 +440,8 @@ static struct BurnRomInfo Drvw1RomDesc[] = {
 	{ "21j-6",         0x10000, 0x34755de3, BRF_GRA },	     //  19	Samples
 	{ "21j-7",         0x10000, 0x904de6f8, BRF_GRA },	     //  20
 	
-	{ "21j-k-0",       0x00100, 0xfdb130a9, BRF_GRA },	     //  21	PROMs
-	{ "21j-l-0",       0x00200, 0x46339529, BRF_GRA },	     //  22
+	{ "21j-k-0.101",   0x00100, 0xfdb130a9, BRF_GRA },	     //  21	PROMs
+	{ "21j-l-0.16",    0x00200, 0x46339529, BRF_GRA },	     //  22
 };
 
 STD_ROM_PICK(Drvw1)
@@ -476,8 +476,8 @@ static struct BurnRomInfo DrvuRomDesc[] = {
 	{ "21j-6",         0x10000, 0x34755de3, BRF_GRA },	     //  19	Samples
 	{ "21j-7",         0x10000, 0x904de6f8, BRF_GRA },	     //  20
 	
-	{ "21j-k-0",       0x00100, 0xfdb130a9, BRF_GRA },	     //  21	PROMs
-	{ "21j-l-0",       0x00200, 0x46339529, BRF_GRA },	     //  22
+	{ "21j-k-0.101",   0x00100, 0xfdb130a9, BRF_GRA },	     //  21	PROMs
+	{ "21j-l-0.16",    0x00200, 0x46339529, BRF_GRA },	     //  22
 };
 
 STD_ROM_PICK(Drvu)
@@ -512,8 +512,8 @@ static struct BurnRomInfo DrvuaRomDesc[] = {
 	{ "21j-6",         0x10000, 0x34755de3, BRF_GRA },	     //  19	Samples
 	{ "21j-7",         0x10000, 0x904de6f8, BRF_GRA },	     //  20
 	
-	{ "21j-k-0",       0x00100, 0xfdb130a9, BRF_GRA },	     //  21	PROMs
-	{ "21j-l-0",       0x00200, 0x46339529, BRF_GRA },	     //  22
+	{ "21j-k-0.101",   0x00100, 0xfdb130a9, BRF_GRA },	     //  21	PROMs
+	{ "21j-l-0.16",    0x00200, 0x46339529, BRF_GRA },	     //  22
 };
 
 STD_ROM_PICK(Drvua)
@@ -548,8 +548,8 @@ static struct BurnRomInfo DrvubRomDesc[] = {
 	{ "21j-6",         0x10000, 0x34755de3, BRF_GRA },	     //  19	Samples
 	{ "21j-7",         0x10000, 0x904de6f8, BRF_GRA },	     //  20
 	
-	{ "21j-k-0",       0x00100, 0xfdb130a9, BRF_GRA },	     //  21	PROMs
-	{ "21j-l-0",       0x00200, 0x46339529, BRF_GRA },	     //  22
+	{ "21j-k-0.101",   0x00100, 0xfdb130a9, BRF_GRA },	     //  21	PROMs
+	{ "21j-l-0.16",    0x00200, 0x46339529, BRF_GRA },	     //  22
 };
 
 STD_ROM_PICK(Drvub)
@@ -584,8 +584,8 @@ static struct BurnRomInfo Drvb2RomDesc[] = {
 	{ "b2_1.bin",      0x10000, 0x34755de3, BRF_GRA },	     //  19	Samples
 	{ "2.bin",         0x10000, 0x904de6f8, BRF_GRA },	     //  20
 	
-	{ "21j-k-0",       0x00100, 0xfdb130a9, BRF_GRA },	     //  21	PROMs
-	{ "21j-l-0",       0x00200, 0x46339529, BRF_GRA },	     //  22
+	{ "21j-k-0.101",   0x00100, 0xfdb130a9, BRF_GRA },	     //  21	PROMs
+	{ "21j-l-0.16",    0x00200, 0x46339529, BRF_GRA },	     //  22
 };
 
 STD_ROM_PICK(Drvb2)
@@ -620,8 +620,8 @@ static struct BurnRomInfo DrvbRomDesc[] = {
 	{ "21j-6",         0x10000, 0x34755de3, BRF_GRA },	     //  19	Samples
 	{ "21j-7",         0x10000, 0x904de6f8, BRF_GRA },	     //  20
 	
-	{ "21j-k-0",       0x00100, 0xfdb130a9, BRF_GRA },	     //  21	PROMs
-	{ "21j-l-0",       0x00200, 0x46339529, BRF_GRA },	     //  22
+	{ "21j-k-0.101",   0x00100, 0xfdb130a9, BRF_GRA },	     //  21	PROMs
+	{ "21j-l-0.16",    0x00200, 0x46339529, BRF_GRA },	     //  22
 };
 
 STD_ROM_PICK(Drvb)
@@ -655,8 +655,8 @@ static struct BurnRomInfo DrvbaRomDesc[] = {
 	{ "8.bin",         0x10000, 0x34755de3, BRF_GRA },	     //  18	Samples
 	{ "7.bin",         0x10000, 0xf9311f72, BRF_GRA },	     //  19
 	
-	{ "21j-k-0",       0x00100, 0xfdb130a9, BRF_GRA },	     //  20	PROMs
-	{ "21j-l-0",       0x00200, 0x46339529, BRF_GRA },	     //  21
+	{ "21j-k-0.101",   0x00100, 0xfdb130a9, BRF_GRA },	     //  20	PROMs
+	{ "21j-l-0.16",    0x00200, 0x46339529, BRF_GRA },	     //  21
 };
 
 STD_ROM_PICK(Drvba)
@@ -745,8 +745,8 @@ static struct BurnRomInfo DdungeonRomDesc[] = {
 	{ "21j-6",         0x10000, 0x34755de3, BRF_GRA },	     //  10	Samples
 	{ "21j-7",         0x10000, 0x904de6f8, BRF_GRA },	     //  11
 	
-	{ "21j-k-0",       0x00100, 0xfdb130a9, BRF_GRA },	     //  12	PROMs
-	{ "21j-l-0",       0x00200, 0x46339529, BRF_GRA },	     //  13
+	{ "21j-k-0.101",   0x00100, 0xfdb130a9, BRF_GRA },	     //  12	PROMs
+	{ "21j-l-0.16",    0x00200, 0x46339529, BRF_GRA },	     //  13
 };
 
 STD_ROM_PICK(Ddungeon)
@@ -782,8 +782,8 @@ static struct BurnRomInfo DarktowrRomDesc[] = {
 	{ "21j-6",         0x10000, 0x34755de3, BRF_GRA },	     //  19	Samples
 	{ "21j-7",         0x10000, 0x904de6f8, BRF_GRA },	     //  20
 	
-	{ "21j-k-0",       0x00100, 0xfdb130a9, BRF_GRA },	     //  21	PROMs
-	{ "21j-l-0",       0x00200, 0x46339529, BRF_GRA },	     //  22
+	{ "21j-k-0.101",   0x00100, 0xfdb130a9, BRF_GRA },	     //  21	PROMs
+	{ "21j-l-0.16",    0x00200, 0x46339529, BRF_GRA },	     //  22
 };
 
 STD_ROM_PICK(Darktowr)

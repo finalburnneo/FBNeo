@@ -794,7 +794,7 @@ static struct BurnRomInfo simpsonsRomDesc[] = {
 	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },           // 11 K053260 Samples
 	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },           // 12
 
-	{ "simpsons.nv",  0x000080, 0xec3f0449, BRF_OPT },
+	{ "simpsons.12c.nv",  0x000080, 0xec3f0449, BRF_OPT },
 };
 
 STD_ROM_PICK(simpsons)
@@ -832,7 +832,7 @@ static struct BurnRomInfo simpsons4paRomDesc[] = {
 	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },           // 11 K053260 Samples
 	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },           // 12
 
-	{ "simpsons4pa.nv",  0x000080, 0xec3f0449, BRF_OPT },
+	{ "simpsons4pa.12c.nv",  0x000080, 0xec3f0449, BRF_OPT },
 };
 
 STD_ROM_PICK(simpsons4pa)
@@ -870,7 +870,7 @@ static struct BurnRomInfo simpsons2pRomDesc[] = {
 	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },           // 11 K053260 Samples
 	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },           // 12
 
-	{ "simpsons2p.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "simpsons2p.12c.nv",  0x000080, 0xfbac4e30, BRF_OPT },
 };
 
 STD_ROM_PICK(simpsons2p)
@@ -908,7 +908,7 @@ static struct BurnRomInfo simpsons2p2RomDesc[] = {
 	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },           // 11 K053260 Samples
 	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },           // 12
 
-	{ "simpsons2p2.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "simpsons2p2.12c.nv",  0x000080, 0xfbac4e30, BRF_OPT },
 };
 
 STD_ROM_PICK(simpsons2p2)
@@ -946,7 +946,7 @@ static struct BurnRomInfo simpsons2paRomDesc[] = {
 	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },           // 11 K053260 Samples
 	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },           // 12
 
-	{ "simpsons2pa.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "simpsons2pa.12c.nv",  0x000080, 0xfbac4e30, BRF_OPT },
 };
 
 STD_ROM_PICK(simpsons2pa)
@@ -984,7 +984,7 @@ static struct BurnRomInfo simpsons2pjRomDesc[] = {
 	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },           // 11 K053260 Samples
 	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },           // 12
 
-	{ "simpsons2pj.nv",  0x000080, 0x3550a54e, BRF_OPT },
+	{ "simpsons2pj.12c.nv",  0x000080, 0x3550a54e, BRF_OPT },
 };
 
 STD_ROM_PICK(simpsons2pj)

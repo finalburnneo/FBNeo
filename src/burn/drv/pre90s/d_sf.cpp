@@ -1397,10 +1397,10 @@ static struct BurnRomInfo sfRomDesc[] = {
 	{ "sf-32.bin",  0x10000, 0x72df2bd9, 8 | BRF_GRA },           // 38
 	{ "sf-33.bin",  0x10000, 0x3e99d3d5, 8 | BRF_GRA },           // 39
 
-	{ "mb7114h.12k", 0x0100, 0x75af3553, 0 | BRF_OPT },           // 40 Proms
-	{ "mb7114h.11h", 0x0100, 0xc0e56586, 0 | BRF_OPT },           // 41
-	{ "mb7114h.12j", 0x0100, 0x4c734b64, 0 | BRF_OPT },           // 42
-	{ "mmi-7603.13h",0x0020, 0x06bcda53, 0 | BRF_OPT },           // 43
+	{ "sfb05(__sf).mb7114h.12k", 0x0100, 0x75af3553, 0 | BRF_OPT },           // 40 Proms
+	{ "sfb10(__sf).mb7114h.11h", 0x0100, 0xc0e56586, 0 | BRF_OPT },           // 41
+	{ "sfb04(__sf).mb7114h.12j", 0x0100, 0x4c734b64, 0 | BRF_OPT },           // 42
+	{ "sfb00(__sf).mb7051.13h",0x0020, 0x06bcda53, 0 | BRF_OPT },           // 43
 };
 
 STD_ROM_PICK(sf)

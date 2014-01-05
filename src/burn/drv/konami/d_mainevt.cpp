@@ -1186,7 +1186,7 @@ struct BurnDriver BurnDrvDevstors2 = {
 // Devastators (ver. V)
 
 static struct BurnRomInfo devstors3RomDesc[] = {
-	{ "890k02.k11",		0x10000, 0x52f4ccdd, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
+	{ "890v02.k11",		0x10000, 0x52f4ccdd, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
 
 	{ "890k01.f7",		0x08000, 0xd44b3eb0, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 

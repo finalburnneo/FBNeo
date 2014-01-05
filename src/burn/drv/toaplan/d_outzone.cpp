@@ -965,10 +965,10 @@ static INT32 DrvFrame()
 }
 
 struct BurnDriver BurnDrvOutZone = {
-	"outzone", NULL, NULL, NULL, "1990",
-	"Out Zone (set 1)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"outzoneh", "outzone", NULL, NULL, "1990",
+	"Out Zone (harder)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, outzoneRomInfo, outzoneRomName, NULL, NULL, outzoneInputInfo, outzoneDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x400,
 	240, 320, 3, 4
@@ -985,8 +985,8 @@ struct BurnDriver BurnDrvOutZonea = {
 };
 
 struct BurnDriver BurnDrvOutZoneb = {
-	"outzoneb", "outzone", NULL, NULL, "1990",
-	"Out Zone (set 3, prototype?)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"outzonec", "outzone", NULL, NULL, "1990",
+	"Out Zone (oldest set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, outzonebRomInfo, outzonebRomName, NULL, NULL, outzoneInputInfo, outzonebDIPInfo,
@@ -995,18 +995,18 @@ struct BurnDriver BurnDrvOutZoneb = {
 };
 
 struct BurnDriver BurnDrvOutZonec = {
-	"outzonec", "outzone", NULL, NULL, "1990",
-	"Out Zone (set 4)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"outzone", NULL, NULL, NULL, "1990",
+	"Out Zone\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, outzonecRomInfo, outzonecRomName, NULL, NULL, outzoneInputInfo, outzonecDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x400,
 	240, 320, 3, 4
 };
 
 struct BurnDriver BurnDrvOutZoned = {
-	"outzoned", "outzone", NULL, NULL, "1990",
-	"Out Zone (set 5)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"outzoneb", "outzone", NULL, NULL, "1990",
+	"Out Zone (older set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, outzonedRomInfo, outzonedRomName, NULL, NULL, outzoneInputInfo, outzonedDIPInfo,

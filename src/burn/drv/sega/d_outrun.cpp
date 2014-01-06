@@ -552,6 +552,52 @@ static struct BurnRomInfo OutrunraRomDesc[] = {
 STD_ROM_PICK(Outrunra)
 STD_ROM_FN(Outrunra)
 
+static struct BurnRomInfo OutrunjRomDesc[] = {
+	{ "epr-10331.ic133",  0x10000, 0x64a7f657, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10333.ic118",  0x10000, 0xfce8394e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10332.ic132",  0x10000, 0x53d298d7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10334.ic117",  0x10000, 0xff22ad0b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-10327a.76",    0x10000, 0xe28a5baf, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10329a.58",    0x10000, 0xda131c81, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10328a.75",    0x10000, 0xd5ec5e5d, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10330a.57",    0x10000, 0xba9ec82a, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "opr-10268.99",     0x08000, 0x95344b04, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10232.102",    0x08000, 0x776ba1eb, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10267.100",    0x08000, 0xa85bb823, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10231.103",    0x08000, 0x8908bcbf, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10266.101",    0x08000, 0x9f6f1a74, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10230.104",    0x08000, 0x686f5e50, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "mpr-10371.9",      0x20000, 0x7cc86208, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10373.10",     0x20000, 0xb0d26ac9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10375.11",     0x20000, 0x59b60bd7, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10377.12",     0x20000, 0x17a1b04a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10372.13",     0x20000, 0xb557078c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10374.14",     0x20000, 0x8051e517, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10376.15",     0x20000, 0xf3b8f318, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10378.16",     0x20000, 0xa1062984, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "opr-10186.47",     0x08000, 0x22794426, SYS16_ROM_ROAD | BRF_GRA },
+	{ "opr-10185.11",     0x08000, 0x22794426, SYS16_ROM_ROAD | BRF_GRA },
+
+	{ "epr-10187.88",     0x08000, 0xa10abaa9, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "opr-10193.66",     0x08000, 0xbcd10dde, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10192.67",     0x08000, 0x770f1270, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10191.68",     0x08000, 0x20a284ab, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10190.69",     0x08000, 0x7cab70e2, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10189.70",     0x08000, 0x01366b54, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10188.71",     0x08000, 0xbad30ad9, SYS16_ROM_PCMDATA | BRF_SND },
+	
+	{ "317-0019.key",  0x02000, 0x6ff847c6, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Outrunj)
+STD_ROM_FN(Outrunj)
+
 static struct BurnRomInfo OutrunbRomDesc[] = {
 	{ "a-10.bin",         0x10000, 0xcddceea2, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "a-9.bin",          0x10000, 0x14e97a67, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1631,6 +1677,16 @@ struct BurnDriver BurnDrvOutrunra = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, OutrunraRomInfo, OutrunraRomName, NULL, NULL, OutrunInputInfo, OutrunDIPInfo,
+	OutrunInit, System16Exit, OutrunFrame, NULL, System16Scan,
+	NULL, 0x3000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvOutrunj = {
+	"outrunj", "outrun", NULL, NULL, "1986",
+	"Out Run (Japan, FD1089A 317-0019)\0", NULL, "Sega", "Out Run",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
+	NULL, OutrunjRomInfo, OutrunjRomName, NULL, NULL, OutrunInputInfo, OutrunDIPInfo,
 	OutrunInit, System16Exit, OutrunFrame, NULL, System16Scan,
 	NULL, 0x3000, 320, 224, 4, 3
 };

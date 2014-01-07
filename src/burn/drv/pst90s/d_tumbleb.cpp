@@ -1201,6 +1201,30 @@ static struct BurnRomInfo CookbibRomDesc[] = {
 STD_ROM_PICK(Cookbib)
 STD_ROM_FN(Cookbib)
 
+static struct BurnRomInfo CookbibaRomDesc[] = {
+	{ "d14.u817",      0x20000, 0x0021349f, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "d13.u818",      0x20000, 0x19c75b1f, BRF_ESS | BRF_PRG }, //	 1
+	
+	{ "d12.ub5",       0x10000, 0x0a16e0b4, BRF_ESS | BRF_PRG }, //  2	Z80 Program Code
+	
+	{ "cookbiba_protdata.bin",  0x00200, 0x7f05b832, BRF_ESS | BRF_PRG }, //  3	Shared RAM Data
+	
+	{ "srom5.bin",     0x40000, 0x73a46e43, BRF_GRA },	     //  4	Tiles
+	{ "srom6.bin",     0x40000, 0xade2dbec, BRF_GRA },	     //  5
+	
+	{ "d17.uor1",      0x20000, 0x2fab7c2d, BRF_GRA },	     //  6	Sprites
+	{ "d18.uor2",      0x20000, 0x341750a0, BRF_GRA },	     //  7
+	{ "d19.uor3",      0x20000, 0x343d2e41, BRF_GRA },	     //  8
+	{ "d20.uor4",      0x20000, 0xc35cc03d, BRF_GRA },	     //  9
+	
+	{ "sound.uc1",     0x20000, 0x545e19b6, BRF_SND },	     //  10	Samples
+	
+	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },	     //  11
+};
+
+STD_ROM_PICK(Cookbiba)
+STD_ROM_FN(Cookbiba)
+
 static struct BurnRomInfo ChokchokRomDesc[] = {
 	{ "ub17.bin",      0x40000, 0xecdb45ca, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "ub18.bin",      0x40000, 0xb183852a, BRF_ESS | BRF_PRG }, //	 1
@@ -4611,10 +4635,20 @@ struct BurnDriver BurnDrvHtchctch = {
 
 struct BurnDriver BurnDrvCookbib = {
 	"cookbib", NULL, NULL, NULL, "1995",
-	"Cookie & Bibi\0", NULL, "SemiCom", "Miscellaneous",
+	"Cookie & Bibi (set 1)\0", NULL, "SemiCom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, CookbibRomInfo, CookbibRomName, NULL, NULL, HtchctchInputInfo, CookbibDIPInfo,
+	CookbibInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x800, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvCookbiba = {
+	"cookbiba", "cookbib", NULL, NULL, "1995",
+	"Cookie & Bibi (set 2)\0", NULL, "SemiCom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, CookbibaRomInfo, CookbibaRomName, NULL, NULL, HtchctchInputInfo, CookbibDIPInfo,
 	CookbibInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 320, 240, 4, 3
 };

@@ -10187,45 +10187,45 @@ Sound rom match various romset*/
 // prg33.bin 2/2
 
 	{ "prg36.bin",    0x0020000, 0xd30c263e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "prg31.bin",    0x0020000, 0xea78f9b4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "prg30.bin",    0x0020000, 0x005b54cc, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "prg28.bin",    0x0040000, 0xb7ad5214, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "prg29.bin",    0x0020000, 0x524f5c55, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "prg35.bin",    0x0020000, 0xc184d26d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "prg34.bin",    0x0020000, 0xf06a12f2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "prg33.bin",    0x0040000, 0x00638b0b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	
-	{ "gfx24.bin",    0x0040000, 0xa8b5633a, BRF_GRA | CPS1_TILES },
-	{ "gfx20.bin",    0x0040000, 0x8d5d0045, BRF_GRA | CPS1_TILES },
-	{ "gfx25.bin",    0x0040000, 0x72e923df, BRF_GRA | CPS1_TILES },
-	{ "gfx21.bin",    0x0040000, 0x55c2b455, BRF_GRA | CPS1_TILES },
-	{ "gfx14.bin",    0x0040000, 0x5db24ca7, BRF_GRA | CPS1_TILES },
-	{ "gfx10.bin",    0x0040000, 0xeb48f7f2, BRF_GRA | CPS1_TILES },
-	{ "gfx15.bin",    0x0040000, 0x9a96be48, BRF_GRA | CPS1_TILES },
-	{ "gfx11.bin",    0x0040000, 0xff36859e, BRF_GRA | CPS1_TILES },
-	{ "gfx26.bin",    0x0040000, 0x82e8e384, BRF_GRA | CPS1_TILES },
-	{ "gfx22.bin",    0x0040000, 0x4109d637, BRF_GRA | CPS1_TILES },
-	{ "gfx27.bin",    0x0040000, 0x4a3a8d09, BRF_GRA | CPS1_TILES },
-	{ "gfx23.bin",    0x0040000, 0xef9c2d4d, BRF_GRA | CPS1_TILES },
-	{ "gfx16.bin",    0x0040000, 0x1fd98ad0, BRF_GRA | CPS1_TILES },
-	{ "gfx12.bin",    0x0040000, 0x5d21d8b3, BRF_GRA | CPS1_TILES },
-	{ "gfx17.bin",    0x0040000, 0xa917a922, BRF_GRA | CPS1_TILES },
-	{ "gfx13.bin",    0x0040000, 0xbc937c96, BRF_GRA | CPS1_TILES },
-	{ "gfx6.bin",     0x0040000, 0x023baa18, BRF_GRA | CPS1_TILES },
-	{ "gfx1.bin",     0x0040000, 0x877b2b18, BRF_GRA | CPS1_TILES },
-	{ "gfx8.bin",     0x0040000, 0x26fb340c, BRF_GRA | CPS1_TILES },
-	{ "gfx4.bin",     0x0040000, 0xf2c400b4, BRF_GRA | CPS1_TILES },
-	{ "gfx5.bin",     0x0040000, 0xa6ad6ef3, BRF_GRA | CPS1_TILES },
-	{ "gfx2.bin",     0x0040000, 0x144aa4c9, BRF_GRA | CPS1_TILES },
-	{ "gfx7.bin",     0x0040000, 0xf56085ba, BRF_GRA | CPS1_TILES },
-	{ "gfx3.bin",     0x0040000, 0x8053335d, BRF_GRA | CPS1_TILES },
+    { "prg31.bin",    0x0020000, 0xea78f9b4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+    { "prg30.bin",    0x0020000, 0x005b54cc, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+    { "prg28.bin",    0x0040000, 0xb7ad5214, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+    { "prg29.bin",    0x0020000, 0x524f5c55, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+    { "prg35.bin",    0x0020000, 0xc184d26d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+    { "prg34.bin",    0x0020000, 0xf06a12f2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+    { "prg33.bin",    0x0040000, 0x00638b0b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
-	{ "snd6.bin",     0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+    { "gfx24.bin",    0x0040000, 0xa8b5633a, BRF_GRA | CPS1_TILES },
+    { "gfx20.bin",    0x0040000, 0x8d5d0045, BRF_GRA | CPS1_TILES },
+    { "gfx25.bin",    0x0040000, 0x72e923df, BRF_GRA | CPS1_TILES },
+    { "gfx21.bin",    0x0040000, 0x55c2b455, BRF_GRA | CPS1_TILES },
+    { "gfx14.bin",    0x0040000, 0x5db24ca7, BRF_GRA | CPS1_TILES },
+    { "gfx10.bin",    0x0040000, 0xeb48f7f2, BRF_GRA | CPS1_TILES },
+    { "gfx15.bin",    0x0040000, 0x9a96be48, BRF_GRA | CPS1_TILES },
+    { "gfx11.bin",    0x0040000, 0xff36859e, BRF_GRA | CPS1_TILES },
+    { "gfx26.bin",    0x0040000, 0x82e8e384, BRF_GRA | CPS1_TILES },
+    { "gfx22.bin",    0x0040000, 0x4109d637, BRF_GRA | CPS1_TILES },
+    { "gfx27.bin",    0x0040000, 0x4a3a8d09, BRF_GRA | CPS1_TILES },
+    { "gfx23.bin",    0x0040000, 0xef9c2d4d, BRF_GRA | CPS1_TILES },
+    { "gfx16.bin",    0x0040000, 0x1fd98ad0, BRF_GRA | CPS1_TILES },
+    { "gfx12.bin",    0x0040000, 0x5d21d8b3, BRF_GRA | CPS1_TILES },
+    { "gfx17.bin",    0x0040000, 0xa917a922, BRF_GRA | CPS1_TILES },
+    { "gfx13.bin",    0x0040000, 0xbc937c96, BRF_GRA | CPS1_TILES },
+    { "gfx6.bin",     0x0040000, 0x023baa18, BRF_GRA | CPS1_TILES },
+    { "gfx1.bin",     0x0040000, 0x877b2b18, BRF_GRA | CPS1_TILES },
+    { "gfx8.bin",     0x0040000, 0x26fb340c, BRF_GRA | CPS1_TILES },
+    { "gfx4.bin",     0x0040000, 0xf2c400b4, BRF_GRA | CPS1_TILES },
+    { "gfx5.bin",     0x0040000, 0xa6ad6ef3, BRF_GRA | CPS1_TILES },
+    { "gfx2.bin",     0x0040000, 0x144aa4c9, BRF_GRA | CPS1_TILES },
+    { "gfx7.bin",     0x0040000, 0xf56085ba, BRF_GRA | CPS1_TILES },
+    { "gfx3.bin",     0x0040000, 0x8053335d, BRF_GRA | CPS1_TILES },
 
-	{ "snd18.bin",    0x0020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "snd19.bin",    0x0020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	
-	{ "pic16c55",     0x0002000, 0xf22e2311, BRF_OPT }, // PIC
+    { "snd6.bin",     0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+    { "snd18.bin",    0x0020000, 0x7f162009, BRF_SND | CPS1_OKIM6295_SAMPLES },
+    { "snd19.bin",    0x0020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+
+    { "pic16c55",     0x0002000, 0xf22e2311, BRF_OPT }, // PIC
 };
 
 STD_ROM_PICK(Sf2any)
@@ -10701,6 +10701,35 @@ static struct BurnRomInfo Sf2tloncRomDesc[] = {
 
 STD_ROM_PICK(Sf2tlonc)
 STD_ROM_FN(Sf2tlonc)
+
+static struct BurnRomInfo Sf2sl73aRomDesc[] = {
+	// Sheng Long Hack is based off of sf2m5. 
+	// It runs perfectly fine on an real sf2ce capcom cps1 arcade board.
+	{ "sf2ced_23b.8f", 	0x080000, 0x190f5419, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "sf2ced_22b.7f", 	0x080000, 0x2b329193, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "sf2ced_21a.6f", 	0x080000, 0xb4f13bef, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "s92_01.bin",   0x0080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
+	{ "s92_02.bin",   0x0080000, 0x840289ec, BRF_GRA | CPS1_TILES },
+	{ "s92_03.bin",   0x0080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
+	{ "s92_04.bin",   0x0080000, 0xe2799472, BRF_GRA | CPS1_TILES },
+	{ "s92_05.bin",   0x0080000, 0xba8a2761, BRF_GRA | CPS1_TILES },
+	{ "s92_06.bin",   0x0080000, 0xe584bfb5, BRF_GRA | CPS1_TILES },
+	{ "s92_07.bin",   0x0080000, 0x21e3f87d, BRF_GRA | CPS1_TILES },
+	{ "s92_08.bin",   0x0080000, 0xbefc47df, BRF_GRA | CPS1_TILES },
+	{ "s92_10.bin",   0x0080000, 0x960687d5, BRF_GRA | CPS1_TILES },
+	{ "s92_11.bin",   0x0080000, 0x978ecd18, BRF_GRA | CPS1_TILES },
+	{ "s92_12.bin",   0x0080000, 0xd6ec9a0a, BRF_GRA | CPS1_TILES },
+	{ "s92_13.bin",   0x0080000, 0xed2c67f6, BRF_GRA | CPS1_TILES },
+
+	{ "s92_09.bin",   0x0010000, 0x08f6b60e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "sf2ced_18.11c",  0x0020000, 0xa446a596, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "s92_19.bin",   	0x0020000, 0xbeade53f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Sf2sl73a)
+STD_ROM_FN(Sf2sl73a)
 
 static struct BurnRomInfo SfzchRomDesc[] = {
 	{ "sfzch23",       0x080000, 0x1140743f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -12284,6 +12313,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ceuab5"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab6"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceucbl"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2sl73a"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hf"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hfu"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hfj"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -18063,6 +18093,16 @@ struct BurnDriver BurnDrvCpsSf2tlonc = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2tloncRomInfo, Sf2tloncRomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
 	Sf2koryu2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2sl73a = {
+	"sf2sl73a", "sf2ce", NULL, NULL, "2013",
+	"Street Fighter II' - Champion Edition (Sheng Long v 7.3a)\0", NULL, "Drakon", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2sl73aRomInfo, Sf2sl73aRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	Sf2ceInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

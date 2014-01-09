@@ -3344,7 +3344,7 @@ struct BurnDriverD BurnDrvhappy6101 = {
 	"Happy 6-in-1 (V101 - V100MK, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_MISC, 0,
-	NULL, happy6RomInfo, happy6RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, happy6101RomInfo, happy6101RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	happy6in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

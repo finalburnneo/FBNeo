@@ -3274,10 +3274,10 @@ struct BurnDriverD BurnDrvPgm3in1 = {
 };
 
 
-// Happy 6in1 (V100 - V100MK)
+// Happy 6-in-1 (V102 - V101MK, China)
 
 static struct BurnRomInfo happy6RomDesc[] = {
-	{ "happy6in1_v100cn.u5",	0x080000, 0xa25418e8, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "v101cn.u5",			0x080000, 0xaa4646e3, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t01w64m.u29",   		0x800000, 0x2d3feb8b, 2 | BRF_GRA },		//  1 Tile data
 
@@ -3288,9 +3288,10 @@ static struct BurnRomInfo happy6RomDesc[] = {
 
 	{ "w01w64m.u17",	  	0x800000, 0x7e23e2be, 5 | BRF_SND },		//  5 Samples
 
-	{ "happy6_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, 	//  6 Internal ARM7 Rom
+	{ "happy6_igs027a_execute_only_area",	0x000188, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, 	//  6 Internal ARM7 Rom
+	{ "happy6_igs027a_v100_china.bin",		0x003e78, 0xed530445, 7 | BRF_PRG | BRF_ESS }, 	//  7
 
-	{ "happy6in1_v101cn.u26",	0x400000, 0x4a48ca1c, 8 | BRF_PRG | BRF_ESS },	// 7 External ARM7 Rom
+	{ "v102cn.u26",			0x400000, 0x310510fb, 8 | BRF_PRG | BRF_ESS },	// 8 External ARM7 Rom
 };
 
 STDROMPICKEXT(happy6, happy6, pgm)
@@ -3306,9 +3307,43 @@ static INT32 happy6in1Init()
 
 struct BurnDriverD BurnDrvhappy6 = {
 	"happy6", NULL, "pgm", NULL, "2004",
-	"Happy 6in1 (V100 - V100MK)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	"Happy 6-in-1 (V102 - V101MK, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	0, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_MISC, 0,
+	NULL, happy6RomInfo, happy6RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	happy6in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+// Happy 6-in-1 (V101 - V100MK, China)
+
+static struct BurnRomInfo happy6101RomDesc[] = {
+	{ "happy6in1_v100cn.u5",	0x080000, 0xa25418e8, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t01w64m.u29",   		0x800000, 0x2d3feb8b, 2 | BRF_GRA },		//  1 Tile data
+
+	{ "a01w64m.u5",	  		0x800000, 0xbbaa3df3, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a02w64m.u6",	  		0x800000, 0xf8c9cd36, 3 | BRF_GRA },		//  3
+
+	{ "b01w64m.u19", 		0x800000, 0x73f5f225, 4 | BRF_GRA },		//  4 Sprite Masks & Color Indexes
+
+	{ "w01w64m.u17",	  	0x800000, 0x7e23e2be, 5 | BRF_SND },		//  5 Samples
+
+	{ "happy6_igs027a_execute_only_area",	0x000188, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, 	//  6 Internal ARM7 Rom
+	{ "happy6_igs027a_v100_china.bin",		0x003e78, 0xed530445, 7 | BRF_PRG | BRF_ESS }, 	//  7
+
+	{ "happy6in1_v101cn.u26",	0x400000, 0x4a48ca1c, 8 | BRF_PRG | BRF_ESS },	// 8 External ARM7 Rom
+};
+
+STDROMPICKEXT(happy6101, happy6101, pgm)
+STD_ROM_FN(happy6101)
+
+struct BurnDriverD BurnDrvhappy6101 = {
+	"happy6101", "happy6", "pgm", NULL, "2004",
+	"Happy 6-in-1 (V101 - V100MK, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_MISC, 0,
 	NULL, happy6RomInfo, happy6RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	happy6in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3

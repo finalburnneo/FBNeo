@@ -1963,6 +1963,44 @@ struct BurnDriver BurnDrvDkong = {
 };
 
 
+// Donkey Kong (US set 1) with Hard Kit
+
+static struct BurnRomInfo dkonghrdRomDesc[] = {
+	{ "dk5ehard.bin",	0x1000, 0xa9445215, 1 }, //  0 maincpu
+	{ "c_5ct_g.bin",	0x1000, 0x5ec461ec, 1 }, //  1
+	{ "c_5bt_g.bin",	0x1000, 0x1c97d324, 1 }, //  2
+	{ "dk5ahard.bin",	0x1000, 0xa990729b, 1 }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
+
+	{ "v_5h_b.bin",		0x0800, 0x12c8c95d, 3 }, //  6 gfx1
+	{ "v_3pt.bin",		0x0800, 0x15e9c5e9, 3 }, //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 }, //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 }, //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 }, // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 }, // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 }, // 14
+};
+
+STD_ROM_PICK(dkonghrd)
+STD_ROM_FN(dkonghrd)
+
+struct BurnDriver BurnDrvDkonghrd = {
+	"dkonghrd", "dkong", NULL, "dkong", "1981",
+	"Donkey Kong (US set 1) with Hard kit\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, dkonghrdRomInfo, dkonghrdRomName, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, NULL, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
 // Donkey Kong (US set 2)
 
 static struct BurnRomInfo dkongoRomDesc[] = {

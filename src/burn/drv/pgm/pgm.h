@@ -101,7 +101,7 @@ void pgm_decrypt_killbldp();
 void pgm_decrypt_oldsplus();
 void pgm_decrypt_svg();
 void pgm_decrypt_svgpcb();
-void pgm_decrypt_happy6in1();
+void pgm_decrypt_happy6();
 void pgm_decrypt_dw2001();
 void pgm_decrypt_py2k2();
 void pgm_decrypt_espgaluda();
@@ -113,3 +113,5 @@ void pgm_decode_kovqhsgs_tile_data(UINT8 *source);
 void pgm_decrypt_kovqhsgs();
 void pgm_decrypt_kovlsqh2();
 void pgm_decrypt_kovassg();
+
+void pgm_descramble_happy6_data(UINT8 *src, INT32 len);

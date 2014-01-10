@@ -3289,7 +3289,7 @@ static struct BurnRomInfo happy6RomDesc[] = {
 	{ "w01w64m.u17",	  	0x800000, 0x7e23e2be, 5 | BRF_SND },		//  5 Samples
 
 	{ "happy6_igs027a_execute_only_area",	0x000188, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, 	//  6 Internal ARM7 Rom
-	{ "happy6_igs027a_v100_china.bin",		0x003e78, 0xed530445, 7 | BRF_PRG | BRF_ESS }, 	//  7
+	{ "happy6_igs027a_v100_china.bin",	0x003e78, 0xed530445, 7 | BRF_PRG | BRF_ESS }, 	//  7
 
 	{ "v102cn.u26",			0x400000, 0x310510fb, 8 | BRF_PRG | BRF_ESS },	// 8 External ARM7 Rom
 };
@@ -3297,19 +3297,32 @@ static struct BurnRomInfo happy6RomDesc[] = {
 STDROMPICKEXT(happy6, happy6, pgm)
 STD_ROM_FN(happy6)
 
-static INT32 happy6in1Init()
+static void happy6Patch()
 {
-	pPgmInitCallback = pgm_decrypt_happy6in1;
-//	pPgmProtCallback = install_protection_asic27a_svg;
-
-	return pgmInit();
+	pgm_decrypt_happy6();
+	pgm_create_theglad_EO_data();
+	pgm_descramble_happy6_data(PGMSPRMaskROM, 0x800000);
 }
 
-struct BurnDriverD BurnDrvhappy6 = {
+static INT32 happy6in1Init()
+{
+	pPgmInitCallback = happy6Patch;
+	pPgmProtCallback = install_protection_asic27a_svg;
+
+	nPgmAsicRegionHackAddress = 0x3586;
+
+	INT32 nRet = pgmInit();
+
+	Arm7SetIdleLoopAddress(0x00000a08);
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvhappy6 = {
 	"happy6", NULL, "pgm", NULL, "2004",
-	"Happy 6-in-1 (V102 - V101MK, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	"Happy 6-in-1 (V102 - V101MK, China)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	0, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_MISC, 0,
 	NULL, happy6RomInfo, happy6RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	happy6in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
@@ -3331,7 +3344,7 @@ static struct BurnRomInfo happy6101RomDesc[] = {
 	{ "w01w64m.u17",	  	0x800000, 0x7e23e2be, 5 | BRF_SND },		//  5 Samples
 
 	{ "happy6_igs027a_execute_only_area",	0x000188, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, 	//  6 Internal ARM7 Rom
-	{ "happy6_igs027a_v100_china.bin",		0x003e78, 0xed530445, 7 | BRF_PRG | BRF_ESS }, 	//  7
+	{ "happy6_igs027a_v100_china.bin",	0x003e78, 0xed530445, 7 | BRF_PRG | BRF_ESS }, 	//  7
 
 	{ "happy6in1_v101cn.u26",	0x400000, 0x4a48ca1c, 8 | BRF_PRG | BRF_ESS },	// 8 External ARM7 Rom
 };
@@ -3339,11 +3352,11 @@ static struct BurnRomInfo happy6101RomDesc[] = {
 STDROMPICKEXT(happy6101, happy6101, pgm)
 STD_ROM_FN(happy6101)
 
-struct BurnDriverD BurnDrvhappy6101 = {
+struct BurnDriver BurnDrvhappy6101 = {
 	"happy6101", "happy6", "pgm", NULL, "2004",
 	"Happy 6-in-1 (V101 - V100MK, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_MISC, 0,
 	NULL, happy6101RomInfo, happy6101RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
 	happy6in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
@@ -3574,7 +3587,7 @@ INT32 killbldpInit()
 	return nRet;
 }
 
-struct BurnDriverD BurnDrvKillbldp = {
+struct BurnDriver BurnDrvKillbldp = {
 	"killbldp", NULL, "pgm", NULL, "2005",
 	"The Killing Blade Plus (V300)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"The Killing Blade Plus \0\u50B2\u5251\u72C2\u5200\u00A0\u52A0\u5F3A\u7248 (V300)\0", NULL, NULL, NULL,
@@ -3620,7 +3633,7 @@ static INT32 svgInit()
 	return pgmInit();
 }
 
-struct BurnDriverD BurnDrvSvg = {
+struct BurnDriver BurnDrvSvg = {
 	"svg", NULL, "pgm", NULL, "2005",
 	"S.V.G. - Spectral vs Generation (V200, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
@@ -4172,7 +4185,7 @@ static struct BurnRomInfo thegladpcbRomDesc[] = {
 STDROMPICKEXT(thegladpcb, thegladpcb, thegladBIOS) // custom bios
 STD_ROM_FN(thegladpcb)
 
-struct BurnDriverD BurnDrvThegladpcb = {
+struct BurnDriver BurnDrvThegladpcb = {
 	"thegladpcb", "theglad", NULL, NULL, "2003",
 	"The Gladiator - Road Of The Sword / Shen Jian (V100, Japan, Single PCB Version)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"The Gladiator - Road Of The Sword (V100, Japan, PCB Version)\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2\0", NULL, NULL, NULL,

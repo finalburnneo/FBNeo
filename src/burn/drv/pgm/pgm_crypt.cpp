@@ -825,7 +825,7 @@ static const UINT8 happy6in1_tab[256] = {
 	0x9f, 0xba, 0xa6, 0xd3, 0xb0, 0x5b, 0x3d, 0xdd, 0x22, 0x1f, 0x1b, 0x0e, 0x7f, 0x5a, 0xf4, 0x6a
 };
 
-void pgm_decrypt_happy6in1()
+void pgm_decrypt_happy6()
 {
 	UINT16 *src = (UINT16*)PGMUSER0;
 
@@ -1022,4 +1022,24 @@ void pgm_decrypt_kovassg()
 	// sprite colors are decoded in pgm_run.cpp
 
 	pgm_decode_kovqhsgs_samples();
+}
+
+void pgm_descramble_happy6_data(UINT8 *src, INT32 len)
+{
+	INT32 x, i, j;
+	UINT8 *buffer = (UINT8*)BurnMalloc(0x800000);
+
+	for (x = 0; x < len; x += 0x800000)
+	{
+		for (i = 0; i < 0x800000; i++) //=0x200)
+		{
+			j = (i & 0xf8c01ff) | ((i >> 12) & 0x600) | ((i << 2) & 0x43f800) | ((i << 4) & 0x300000);
+
+			buffer[i] = src[j + x];
+		}
+
+		memcpy (src + x, buffer, 0x800000);
+	}
+
+	BurnFree (buffer);
 }

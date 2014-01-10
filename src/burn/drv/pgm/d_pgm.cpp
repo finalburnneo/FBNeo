@@ -239,7 +239,7 @@ static struct BurnDIPInfo martmastc102DIPList[] = {
 };
 
 static struct BurnDIPInfo thegladDIPList[] = {
-	{0x2E,	0xFF, 0xFF,	0x06, NULL			 },
+	{0x2E,	0xFF, 0xFF,	0x06, NULL				},
 
 	{0,	0xFE, 0,	7,    "Region (Fake)"			},
 	{0x2E,	0x01, 0x07,	0x00, "China"				},
@@ -247,7 +247,7 @@ static struct BurnDIPInfo thegladDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
 	{0x2E,  0x01, 0x07, 0x06, "World"				},
 };
 
@@ -260,7 +260,7 @@ static struct BurnDIPInfo theglad100DIPList[] = {
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
 	{0x2E,  0x01, 0x07, 0x06, "World"				},
 };
 
@@ -273,8 +273,8 @@ static struct BurnDIPInfo thegladpcbDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
-	{0x2E,  0x01, 0x07, 0x06, "World"				},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
+	{0x2E,  0x01, 0x07, 	0x06, "World"				},
 };
 
 static struct BurnDIPInfo ddp2DIPList[] = {
@@ -313,6 +313,17 @@ static struct BurnDIPInfo kovshxasDIPList[] = {
 	{0x2E,	0x01, 0x0F,	0x05, "World"				},
 };
 
+static struct BurnDIPInfo happy6DIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x00, NULL				},
+
+	{0,	0xFE, 0,	5,    "Region (Fake)"			},
+	{0x2E,	0x01, 0x0F,	0x00, "China"				},
+	{0x2E,	0x01, 0x0F,	0x01, "Taiwan"				},
+	{0x2E,	0x01, 0x0F,	0x02, "Hong Kong"			},
+	{0x2E,	0x01, 0x0F,	0x03, "Singapore"			},
+	{0x2E,	0x01, 0x0F,	0x04, "World"				},
+};
+
 STDDIPINFOEXT(orlegend,		pgm,	orlegend		)
 STDDIPINFOEXT(orld111c, 	pgm,	orld111c		)
 STDDIPINFOEXT(orld105k, 	pgm,	orld105k		)
@@ -322,7 +333,7 @@ STDDIPINFOEXT(killbld,	 	pgm,	killbld			)
 STDDIPINFOEXT(photoy2k, 	pgm,	photoy2k		)
 STDDIPINFOEXT(puzzli2,  	pgm,	puzzli2			)
 STDDIPINFOEXT(martmast, 	pgm,	martmast		)
-STDDIPINFOEXT(martmastc102, pgm,	martmastc102	)
+STDDIPINFOEXT(martmastc102, pgm,	martmastc102		)
 STDDIPINFOEXT(olds,     	pgm,	olds			)
 STDDIPINFOEXT(ddp2,     	pgm,	ddp2			)
 STDDIPINFOEXT(ddp2hk,     	pgm,	ddp2hk			)
@@ -332,6 +343,7 @@ STDDIPINFOEXT(ddp2t,     	pgm,	ddp2t			)
 STDDIPINFOEXT(ddp2c,     	pgm,	ddp2c			)
 STDDIPINFOEXT(theglad,	 	pgm,	theglad 		)
 STDDIPINFOEXT(theglad100,	pgm,	theglad100 		)
+STDDIPINFOEXT(happy6,		pgm,	happy6	 		)
 STDDIPINFOEXT(dmnfrntpcb,   jamma,	kov		    	)
 STDDIPINFOEXT(thegladpcb,   jamma,	thegladpcb		)
 
@@ -3301,7 +3313,8 @@ static void happy6Patch()
 {
 	pgm_decrypt_happy6();
 	pgm_create_theglad_EO_data();
-	pgm_descramble_happy6_data(PGMSPRMaskROM, 0x800000);
+	pgm_descramble_happy6_data(PGMSPRMaskROM,        0x800000);
+	pgm_descramble_happy6_data(ICSSNDROM + 0x400000, 0x800000);
 }
 
 static INT32 happy6in1Init()
@@ -3323,7 +3336,7 @@ struct BurnDriver BurnDrvhappy6 = {
 	"Happy 6-in-1 (V102 - V101MK, China)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_MISC, 0,
-	NULL, happy6RomInfo, happy6RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, happy6RomInfo, happy6RomName, NULL, NULL, pgmInputInfo, happy6DIPInfo,
 	happy6in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -3357,7 +3370,7 @@ struct BurnDriver BurnDrvhappy6101 = {
 	"Happy 6-in-1 (V101 - V100MK, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_MISC, 0,
-	NULL, happy6101RomInfo, happy6101RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, happy6101RomInfo, happy6101RomName, NULL, NULL, pgmInputInfo, happy6DIPInfo,
 	happy6in1Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -4220,7 +4233,7 @@ static struct BurnRomInfo dmnfrntpcbRomDesc[] = {
 STDROMPICKEXT(dmnfrntpcb, dmnfrntpcb, dmnfrntBIOS) // custom bios
 STD_ROM_FN(dmnfrntpcb)
 
-struct BurnDriverD BurnDrvDmnfrntpcb = {
+struct BurnDriver BurnDrvDmnfrntpcb = {
 	"dmnfrntpcb", "dmnfrnt", NULL, NULL, "2002",
 	"Demon Front (V107, Korea, Single PCB Version)\0", "Insert coin to get past ERROR", "IGS", "PolyGameMaster",
 	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (V107, Korea, Single PCB Version)\0", NULL, NULL, NULL,

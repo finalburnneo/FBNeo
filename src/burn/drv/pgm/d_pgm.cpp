@@ -3313,7 +3313,7 @@ static void happy6Patch()
 {
 	pgm_decrypt_happy6();
 	pgm_create_theglad_EO_data();
-	pgm_descramble_happy6_data(PGMSPRMaskROM         0x800000);
+	pgm_descramble_happy6_data(PGMSPRMaskROM,        0x800000);
 	pgm_descramble_happy6_data(ICSSNDROM + 0x400000, 0x800000);
 }
 

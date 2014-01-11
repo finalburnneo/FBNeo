@@ -2824,9 +2824,17 @@ static struct BurnRomInfo dw2001RomDesc[] = {
 STDROMPICKEXT(dw2001, dw2001, pgm)
 STD_ROM_FN(dw2001)
 
+static void dw2001Callback()
+{
+	pgm_decrypt_martmast();
+
+	// add proper fix to rom loading routines at a later date
+	memcpy (ICSSNDROM + 0x200000, ICSSNDROM + 0x400000, 0x200000);
+}
+
 static INT32 dw2001Init()
 {
-	pPgmInitCallback = pgm_decrypt_martmast;
+	pPgmInitCallback = dw2001Callback;
 	pPgmProtCallback = install_protection_asic27a_martmast;
 
 	INT32 nRet = pgmInit();

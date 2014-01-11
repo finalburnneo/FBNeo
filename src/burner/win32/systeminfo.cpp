@@ -4,6 +4,10 @@
 #include <setupapi.h>
 #include <psapi.h>
 
+#if defined _MSC_VER
+ #include <intrin.h>
+#endif
+
 // these are not defined in the Cygwin/MinGW winapi package
 #ifndef DISPLAY_DEVICE_ACTIVE
  #define DISPLAY_DEVICE_ACTIVE              0x00000001
@@ -248,348 +252,54 @@ int PrintOSInfo()
 
 int PrintCPUInfo()
 {
-	// Determine the processor type using the CPUID instruction
-	SYSTEM_INFO si;
-	unsigned int nSignatureEAX = 0, nSignatureEBX = 0, nVendorEBX = 0, nVendorECX = 0, nVendorEDX = 0;
-#if !defined BUILD_X64_EXE
-	unsigned int nSignatureECX = 0, nSignatureEDX = 0, nVendorEAX = 0;
-#endif
-	bool bMMX = false, bXMMI = false, bXMMI64 = false;
-	char szCPUText[13] = { 0,0,0,0, 0,0,0,0, 0,0,0,0, 0 };
-	TCHAR* szModel = NULL;
-	DWORD nSpeed = 0;
-	HKEY hKey;
-
 	AddText(_T("CPU: "));
+	
+	char CPUBrandStringFinal[0x40] = { 0 };
 
-	CPUID(0, nVendorEAX, nVendorEBX, nVendorECX, nVendorEDX);
-	CPUID(0, nVendorEAX, nVendorEBX, nVendorECX, nVendorEDX);
+#if defined _MSC_VER
+	int CPUInfo[4] = {-1};
+	__cpuid(CPUInfo, 0x80000000);
+	unsigned int nExIds = CPUInfo[0];
+	unsigned int i, j = 0;
 
-	for (int n = 0; n < 4; n++) {
-		szCPUText[n + 0] = (nVendorEBX >> (n << 3)) & 255;
-		szCPUText[n + 4] = (nVendorEDX >> (n << 3)) & 255;
-		szCPUText[n + 8] = (nVendorECX >> (n << 3)) & 255;
-	}
+	// Get the information associated with each extended ID.
+	char CPUBrandString[0x40] = { 0 };
 
-	CPUID(1, nSignatureEAX, nSignatureEBX, nSignatureECX, nSignatureEDX);
+    for (i = 0x80000000; i <= nExIds; ++i) {
+		__cpuid(CPUInfo, i);
 
-	if (strcmp("GenuineIntel", szCPUText) == 0) {
-		switch (nSignatureEAX & 0x0F00) {
-			case 0x0500:
-				switch (nSignatureEAX & 0x00F0) {
-					case 0x040:
-					case 0x080: {
-						szModel = _T("Pentium MMX");
-							break;
-						}
-						default: {
-							szModel = _T("Pentium");
-						}
-				}
-				break;
-			case 0x0600: {
-				switch (nSignatureEAX & 0x00F0) {
-					case 0x010: {
-						szModel = _T("Pentium Pro");
-						break;
-					}
-					case 0x030: {
-						szModel = _T("Pentium II \"Klamath\"");
-						break;
-					}
-					case 0x050: {
-						if (nSignatureEAX & 0x2000) {
-							szModel = _T("Pentium II Xeon \"Drake\"");
-							} else {
-								szModel = _T("Celeron \"Covington\" / Pentium II \"Deschutes\"");
-							}
-							break;
-						}
-					case 0x060: {
-						szModel = _T("Celeron A \"Mendochino\" / Mobile Pentium II \"Dixon\"");
-						break;
-					}
-					case 0x070: {
-						if (nSignatureEAX & 0x2000) {
-							szModel = _T("Pentium III Xeon \"Tanner\"");
-						} else {
-							szModel = _T("Pentium III \"Katmai\"");
-						}
-						break;
-					}
-					case 0x080: {
-						switch (nSignatureEBX & 0x0F) {
-							case 0x01:
-								szModel = _T("Celeron 2 \"Coppermine\"");
-								break;
-							case 0x03:
-								szModel = _T("Pentium III Xeon \"Coppermine\"");
-								break;
-							case 0x06:
-								szModel = _T("Mobile Pentium III \"Geyserville\"");
-								break;
-							case 0x07:
-								szModel = _T("Mobile Celeron 2 \"Coppermine\"");
-								break;
-							default:
-								szModel = _T("Pentium III \"Coppermine\"");
-						}
-						break;
-					}
-					case 0x090: {
-						szModel = _T("Pentium-M \"Banias\"");
-						break;
-					}
-					case 0x0A0: {
-						szModel = _T("Pentium III Xeon \"Cascades\"");
-						break;
-					}
-					case 0x0B0: {
-						switch (nSignatureEBX & 0x0F) {
-							case 0x03:
-								szModel = _T("Celeron 3 \"Tualatin\"");
-								break;
-							default:
-								szModel = _T("Pentium III \"Tualatin\"");
-						}
-						break;
-					}
-					default: {
-						szModel = _T("P6 family");
-					}
-				}
-				break;
-			}
-			case 0x0F00: {
-				switch (nSignatureEAX & 0x00F0) {
-					case 0x000:
-					case 0x010: {
-						switch (nSignatureEBX & 0x0F) {
-							case 0x0A:
-								szModel = _T("Celeron 4 \"Willamette\"");
-								break;
-							case 0x0B:
-								if ((nSignatureEAX & 0xFF) < 0x13) {
-									szModel = _T("Pentium 4 Xeon MP \"Foster\"");
-								} else {
-									szModel = _T("Pentium 4 Xeon \"Foster\"");
-								}
-								break;
-							case 0x0C:
-								szModel = _T("Pentium 4 Xeon MP \"Foster\"");
-								break;
-							case 0x0E:
-								szModel = _T("Pentium 4 Xeon \"Foster\"");
-								break;
-							case 0x0F:
-								szModel = _T("Mobile Celeron 4 \"Willamette\"");
-								break;
-							default:
-								szModel = _T("Pentium 4 \"Willamette\"");
-						}
-						break;
-					}
-					case 0x020: {
-						switch (nSignatureEBX & 0x0F) {
-							case 0x0A:
-								szModel = _T("Celeron 4 \"Northwood\"");
-								break;
-							case 0x0B:
-								szModel = _T("Pentium 4 Xeon \"Prestonia\"");
-								break;
-							case 0x0C:
-								szModel = _T("Pentium 4 Xeon MP \"Prestonia\"");
-								break;
-							case 0x0E:
-								szModel = _T("Mobile Pentium 4 M \"Northwood\"");
-								break;
-							case 0x0F:
-								szModel = _T("Mobile Celeron 4 \"Northwood\"");
-								break;
-							default:
-								szModel = _T("Pentium 4 \"Northwood\"");
-						}
-						break;
-					}
-					case 0x030: {
-						switch (nSignatureEBX & 0x0F) {
-							case 0x02:
-								szModel = _T("Celeron 4 \"Prescott\"");
-								break;
-							case 0x03:
-								szModel = _T("Pentium 4 Xeon \"Nocona\"");
-								break;
-							case 0x04:
-								szModel = _T("Pentium 4 Xeon MP \"Nocona\"");
-								break;
-							case 0x06:
-								szModel = _T("Mobile Pentium 4 M \"Prescott\"");
-								break;
-							case 0x07:
-								szModel = _T("Mobile Celeron 4 \"Prescott\"");
-								break;
-							default:
-								szModel = _T("Pentium 4 \"Prescott\"");
-						}
-						break;
-					}
-					default: {
-						szModel = _T("Pentium 4 family");
-					}
-				}
-				break;
-			}
+		// Interpret CPU brand string and cache information.
+		if (i == 0x80000002) {
+			memcpy( CPUBrandString,
+			CPUInfo,
+			sizeof(CPUInfo));
+		} else if (i == 0x80000003) {
+			memcpy( CPUBrandString + 16,
+			CPUInfo,
+			sizeof(CPUInfo));
+		} else if (i == 0x80000004) {
+			memcpy(CPUBrandString + 32, CPUInfo, sizeof(CPUInfo));
 		}
 	}
-
-	if (strcmp("AuthenticAMD", szCPUText) == 0) {
-		switch (nSignatureEAX & 0x0F00) {
-			case 0x0500: {
-				switch (nSignatureEAX & 0x00F0) {
-					case 0x000:
-					case 0x010:
-					case 0x020:
-					case 0x030:
-						szModel = _T("K5");
-						break;
-					case 0x060:
-						szModel = _T("K6");
-						break;
-					case 0x070:
-						szModel = _T("K6-2 \"Little Foot\"");
-						break;
-					case 0x080:
-						szModel = _T("K6-2 \"Chomper\"");
-						break;
-					case 0x090:
-						szModel = _T("K6-III \"Sharptooth\"");
-						break;
-					case 0x0D0:
-						szModel = _T("K6-2+ / K6-III+ \"Sharptooth\"");
-						break;
-					default:
-						szModel = _T("K5 / K6 family");
-				}
-				break;
+	
+	// trim the leading white space
+	int nCheckForSpace = 1;
+	for (i = 0; CPUBrandString[i] != '\0'; i++) {
+		if (!isspace(CPUBrandString[i])) nCheckForSpace = 0;
+		
+		if (nCheckForSpace) {
+			if (!isspace(CPUBrandString[i])) {
+				CPUBrandStringFinal[j++] = CPUBrandString[i];
 			}
-			case 0x0600: {
-				switch (nSignatureEAX & 0x00F0) {
-					case 0x010:
-						szModel = _T("Athlon \"Pluto\"");
-						break;
-					case 0x020:
-						szModel = _T("Athlon \"Orion\"");
-						break;
-					case 0x030:
-						szModel = _T("Duron \"Spitfire\"");
-						break;
-					case 0x040:
-						szModel = _T("Athon \"Thunderbird\"");
-						break;
-					case 0x060:
-						if (nSignatureEAX & 0x2000) {
-							szModel = _T("Athlon MP \"Palomino\"");
-						} else {
-							szModel = _T("Mobile Athon 4 / Athon XP \"Palomino\"");
-						}
-						break;
-					case 0x070:
-						szModel = _T("Mobile Duron \"Camaro\" / Duron \"Morgan\"");
-						break;
-					case 0x080:
-						if (nSignatureEAX & 0x2000) {
-							szModel = _T("Sempron / Athlon MP \"Thoroughbred\"");
-						} else {
-							szModel = _T("Duron \"Applebred\" / Athon XP \"Thoroughbred\"");
-						}
-						break;
-					case 0x0A0:
-						if (nSignatureEAX & 0x2000) {
-							szModel = _T("Sempron \"Thorton\" / Athlon MP \"Barton\"");
-						} else {
-							// Thorton has 256KB cache, Barton has 512KB
-							szModel = _T("Athlon XP \"Thorton\" / Athon XP \"Barton\"");
-						}
-						break;
-					default:
-						szModel = _T("K7 family");
-				}
-				break;
-			}
-			case 0x0F00: {
-				switch (nSignatureEAX & 0x00F0) {
-					case 0x040:	// 1024KB l2 cache, socket 754
-					case 0x080:	//  256KB l2 cache, socket 754
-					case 0x0B0:	//  256KB l2 cache, socket 939
-					case 0x0C0:	//  512KB l2 cache, socket 754
-						szModel = _T("Athlon 64 / Athlon 64 Mobile");
-						break;
-					case 0x070:	// 1024KB l2 cache, socket 939
-					case 0x0F0:	//  512KB l2 cache, socket 939
-						szModel = _T("Athlon 64 FX / Athlon 64 / Athlon 64 Mobile");
-						break;
-					case 0x050:	// 1024KB l2 cache, socket 940
-						szModel = _T("Athlon 64 FX / Opteron / Opteron FX");
-						break;
-					default:
-						szModel = _T("x86-64 family");
-				}
-				break;
-			}
+		} else {
+			CPUBrandStringFinal[j++] = CPUBrandString[i];
 		}
 	}
+#else
+	sprintf(CPUBrandStringFinal, "%s", "CPU Detection not enabled for GCC builds");
+#endif
 
-	// Get the OS hardware info
-	GetSystemInfo(&si);
-
-	// Determine speed (read from the registry as there's no reliable way to determine it on modern systems)
-	if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, _T("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0"), 0, KEY_EXECUTE, &hKey) == ERROR_SUCCESS) {
-		DWORD nType = REG_DWORD;
-		DWORD nSize = sizeof(nSpeed);
-
-		RegQueryValueEx(hKey, _T("~MHz"), NULL, &nType, (BYTE*)&nSpeed, &nSize);
-		RegCloseKey(hKey);
-	}
-
-	// Determine extensions supported (MMX, etc.)
-	{
-		BOOL (WINAPI* pIsProcessorFeaturePresent)(DWORD) = NULL;
-		HINSTANCE hKernel32DLL;
-
-		hKernel32DLL = LoadLibrary(_T("kernel32.dll"));
-		if (hKernel32DLL) {
-			pIsProcessorFeaturePresent = (BOOL (WINAPI*)(DWORD))GetProcAddress(hKernel32DLL, "IsProcessorFeaturePresent");
-			if (pIsProcessorFeaturePresent) {
-				if (pIsProcessorFeaturePresent(PF_MMX_INSTRUCTIONS_AVAILABLE)) {
-					bMMX = true;
-				}
-				if (pIsProcessorFeaturePresent(PF_XMMI_INSTRUCTIONS_AVAILABLE)) {
-					bXMMI = true;
-				}
-				if (pIsProcessorFeaturePresent(PF_XMMI64_INSTRUCTIONS_AVAILABLE)) {
-					bXMMI64 = true;
-				}
-			}
-			FreeLibrary(hKernel32DLL);
-		}
-	}
-
-	// Finally, print out the info
-	if (szModel) {
-		AddLine(_T("%12hs, %s"), szCPUText, szModel);
-	} else {
-		AddLine(_T("%12hs, Unknown CPU (CPUID 0x%08X:%08X)"), szCPUText, nSignatureEAX, nSignatureEBX);
-	}
-
-	if (nSpeed) {
-		AddText(_T("     %i MHz"), nSpeed);
-	} else {
-		AddText(_T("     unknown speed"));
-	}
-	if (bMMX || bXMMI || bXMMI64) {
-		AddText(_T("%s%s%s"), bMMX ? _T(", MMX") : _T(""), bXMMI ? _T(", SSE") : _T(""), bXMMI64 ? _T(", SSE2") : _T(""));
-	}
-	AddText(_T(" (%i system processor%s)\r\n"), si.dwNumberOfProcessors, si.dwNumberOfProcessors > 1 ? _T("s") : _T(""));
+	AddLine(_T("%hs"), CPUBrandStringFinal);
 
 	return 0;
 }

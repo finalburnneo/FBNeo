@@ -1,7 +1,7 @@
 
 /* pngwrite.c - general routines to write a PNG file
  *
- * Last changed in libpng 1.6.2 [April 25, 2013]
+ * Last changed in libpng 1.6.8 [December 19, 2013]
  * Copyright (c) 1998-2013 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
@@ -494,51 +494,50 @@ png_create_write_struct_2,(png_const_charp user_png_ver, png_voidp error_ptr,
    png_structrp png_ptr = png_create_png_struct(user_png_ver, error_ptr,
       error_fn, warn_fn, mem_ptr, malloc_fn, free_fn);
 #endif /* PNG_USER_MEM_SUPPORTED */
+   if (png_ptr != NULL)
+   {
+      /* Set the zlib control values to defaults; they can be overridden by the
+       * application after the struct has been created.
+       */
+      png_ptr->zbuffer_size = PNG_ZBUF_SIZE;
 
-   /* Set the zlib control values to defaults; they can be overridden by the
-    * application after the struct has been created.
-    */
-   png_ptr->zbuffer_size = PNG_ZBUF_SIZE;
-
-   /* The 'zlib_strategy' setting is irrelevant because png_default_claim in
-    * pngwutil.c defaults it according to whether or not filters will be used,
-    * and ignores this setting.
-    */
-   png_ptr->zlib_strategy = PNG_Z_DEFAULT_STRATEGY;
-   png_ptr->zlib_level = PNG_Z_DEFAULT_COMPRESSION;
-   png_ptr->zlib_mem_level = 8;
-   png_ptr->zlib_window_bits = 15;
-   png_ptr->zlib_method = 8;
+      /* The 'zlib_strategy' setting is irrelevant because png_default_claim in
+       * pngwutil.c defaults it according to whether or not filters will be
+       * used, and ignores this setting.
+       */
+      png_ptr->zlib_strategy = PNG_Z_DEFAULT_STRATEGY;
+      png_ptr->zlib_level = PNG_Z_DEFAULT_COMPRESSION;
+      png_ptr->zlib_mem_level = 8;
+      png_ptr->zlib_window_bits = 15;
+      png_ptr->zlib_method = 8;
 
 #ifdef PNG_WRITE_COMPRESSED_TEXT_SUPPORTED
-   png_ptr->zlib_text_strategy = PNG_TEXT_Z_DEFAULT_STRATEGY;
-   png_ptr->zlib_text_level = PNG_TEXT_Z_DEFAULT_COMPRESSION;
-   png_ptr->zlib_text_mem_level = 8;
-   png_ptr->zlib_text_window_bits = 15;
-   png_ptr->zlib_text_method = 8;
+      png_ptr->zlib_text_strategy = PNG_TEXT_Z_DEFAULT_STRATEGY;
+      png_ptr->zlib_text_level = PNG_TEXT_Z_DEFAULT_COMPRESSION;
+      png_ptr->zlib_text_mem_level = 8;
+      png_ptr->zlib_text_window_bits = 15;
+      png_ptr->zlib_text_method = 8;
 #endif /* PNG_WRITE_COMPRESSED_TEXT_SUPPORTED */
 
-   /* This is a highly dubious configuration option; by default it is off, but
-    * it may be appropriate for private builds that are testing extensions not
-    * conformant to the current specification, or of applications that must not
-    * fail to write at all costs!
-    */
-#  ifdef PNG_BENIGN_WRITE_ERRORS_SUPPORTED
+      /* This is a highly dubious configuration option; by default it is off,
+       * but it may be appropriate for private builds that are testing
+       * extensions not conformant to the current specification, or of
+       * applications that must not fail to write at all costs!
+       */
+#ifdef PNG_BENIGN_WRITE_ERRORS_SUPPORTED
       png_ptr->flags |= PNG_FLAG_BENIGN_ERRORS_WARN;
       /* In stable builds only warn if an application error can be completely
        * handled.
        */
-#  endif
+#endif
 
-   /* App warnings are warnings in release (or release candidate) builds but
-    * are errors during development.
-    */
-#  if PNG_LIBPNG_BUILD_BASE_TYPE >= PNG_LIBPNG_BUILD_RC
+      /* App warnings are warnings in release (or release candidate) builds but
+       * are errors during development.
+       */
+#if PNG_LIBPNG_BUILD_BASE_TYPE >= PNG_LIBPNG_BUILD_RC
       png_ptr->flags |= PNG_FLAG_APP_WARNINGS_WARN;
-#  endif
+#endif
 
-   if (png_ptr != NULL)
-   {
       /* TODO: delay this, it can be done in png_init_io() (if the app doesn't
        * do it itself) avoiding setting the default function if it is not
        * required.
@@ -1639,14 +1638,16 @@ png_write_image_16bit(png_voidp argument)
 
    if (image->format & PNG_FORMAT_FLAG_ALPHA)
    {
-      if (image->format & PNG_FORMAT_FLAG_AFIRST)
-      {
-         aindex = -1;
-         ++input_row; /* To point to the first component */
-         ++output_row;
-      }
+#     ifdef PNG_SIMPLIFIED_WRITE_AFIRST_SUPPORTED
+         if (image->format & PNG_FORMAT_FLAG_AFIRST)
+         {
+            aindex = -1;
+            ++input_row; /* To point to the first component */
+            ++output_row;
+         }
 
-      else
+         else
+#     endif
          aindex = channels;
    }
 
@@ -1795,14 +1796,16 @@ png_write_image_8bit(png_voidp argument)
       png_bytep row_end;
       int aindex;
 
-      if (image->format & PNG_FORMAT_FLAG_AFIRST)
-      {
-         aindex = -1;
-         ++input_row; /* To point to the first component */
-         ++output_row;
-      }
+#     ifdef PNG_SIMPLIFIED_WRITE_AFIRST_SUPPORTED
+         if (image->format & PNG_FORMAT_FLAG_AFIRST)
+         {
+            aindex = -1;
+            ++input_row; /* To point to the first component */
+            ++output_row;
+         }
 
-      else
+         else
+#     endif
          aindex = channels;
 
       /* Use row_end in place of a loop counter: */
@@ -1882,7 +1885,8 @@ png_image_set_PLTE(png_image_write_control *display)
    const png_uint_32 format = image->format;
    const int channels = PNG_IMAGE_SAMPLE_CHANNELS(format);
 
-#  ifdef PNG_FORMAT_BGR_SUPPORTED
+#  if defined(PNG_FORMAT_BGR_SUPPORTED) &&\
+      defined(PNG_SIMPLIFIED_WRITE_AFIRST_SUPPORTED)
       const int afirst = (format & PNG_FORMAT_FLAG_AFIRST) != 0 &&
          (format & PNG_FORMAT_FLAG_ALPHA) != 0;
 #  else

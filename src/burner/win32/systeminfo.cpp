@@ -156,7 +156,7 @@ int PrintOSInfo()
 		osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 		GetVersionEx((OSVERSIONINFO*)&osvi);
 	}
-
+	
 	AddText(_T("OS:  "));
 	{
 		if (osvi.dwPlatformId == VER_PLATFORM_WIN32_NT) {
@@ -170,7 +170,7 @@ int PrintOSInfo()
 			if (osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2) {
 				AddText(_T("Microsoft Windows 2003 "));
 			}
-			if (osvi.dwMajorVersion < 5 || osvi.dwMinorVersion > 2) {
+			if (osvi.dwMajorVersion < 5 || osvi.dwMinorVersion > 3) {
 				AddText(_T("Microsoft Windows NT %d.%d "), osvi.dwMajorVersion, osvi.dwMinorVersion);
 			}
 			if (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 0 && osvi.wProductType == VER_NT_WORKSTATION) {
@@ -190,6 +190,12 @@ int PrintOSInfo()
 			}
 			if (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 2 && osvi.wProductType == VER_NT_WORKSTATION) {
 				AddText(_T("Microsoft Windows 8 "));
+			}
+			if (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 3 && osvi.wProductType != VER_NT_WORKSTATION) {
+				AddText(_T("Microsoft Server 2012 R2 "));
+			}
+			if (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion == 3 && osvi.wProductType == VER_NT_WORKSTATION) {
+				AddText(_T("Microsoft Windows 8.1 "));
 			}
 
 			if (osvi.dwMajorVersion == 5) {

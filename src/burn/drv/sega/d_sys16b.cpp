@@ -2685,6 +2685,30 @@ static struct BurnRomInfo Ddux1RomDesc[] = {
 STD_ROM_PICK(Ddux1)
 STD_ROM_FN(Ddux1)
 
+static struct BurnRomInfo DduxjRomDesc[] = {
+	{ "epr-11114.a7",   0x20000, 0xa3eedc3b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11112.a5",   0x20000, 0x05989323, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11915.a8",   0x20000, 0xd8ed3132, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11913.a6",   0x20000, 0x30c6cb92, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "mpr-11917.a14",  0x10000, 0x6f772190, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-11918.a15",  0x10000, 0xc731db95, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-11919.a16",  0x10000, 0x64d5a491, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "mpr-11920.b1",   0x20000, 0xe5d1e3cd, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-11922.b5",   0x20000, 0x70b0c4dd, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-11921.b2",   0x20000, 0x61d2358c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-11923.b6",   0x20000, 0xc9ffe47d, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-11916.a10",  0x08000, 0x7ab541cf, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "317-0094.key",   0x02000, 0xdb98f594, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Dduxj)
+STD_ROM_FN(Dduxj)
+
 static struct BurnRomInfo DduxblRomDesc[] = {
 	{ "dduxb03.bin",    0x20000, 0xe7526012, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "dduxb05.bin",    0x20000, 0x459d1237, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -8222,6 +8246,16 @@ struct BurnDriver BurnDrvDdux = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, DduxRomInfo, DduxRomName, NULL, NULL, System16bInputInfo, DduxDIPInfo,
+	DduxInit, System16Exit, System16BFrame, NULL, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvDduxj = {
+	"dduxj", "ddux", NULL, NULL, "1989",
+	"Dynamite Dux (set 2, Japan, FD1094 317-0094)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
+	NULL, DduxjRomInfo, DduxjRomName, NULL, NULL, System16bInputInfo, DduxDIPInfo,
 	DduxInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

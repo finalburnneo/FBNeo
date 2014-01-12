@@ -2821,6 +2821,44 @@ static struct BurnRomInfo EswatjRomDesc[] = {
 STD_ROM_PICK(Eswatj)
 STD_ROM_FN(Eswatj)
 
+static struct BurnRomInfo Eswatj1RomDesc[] = {
+	{ "epr-12683.a7",   0x20000, 0x33c34cfd, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12681.a5",   0x20000, 0x6b2feb09, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12683.a8",   0x20000, 0x2e5b866b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12682.a6",   0x20000, 0x8e1f57d2, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-12688.a14",  0x20000, 0x12f898db, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12700.b14",  0x10000, 0x37a721c7, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12689.a15",  0x20000, 0x339746d0, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12701.b15",  0x10000, 0x703bf496, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12690.a16",  0x20000, 0x33cf7a55, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12702.b16",  0x10000, 0x70b70211, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr-12691.b1",   0x20000, 0x2ff5cb9e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12694.b5",   0x20000, 0x10a27526, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12692.b2",   0x20000, 0x01b2e832, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12695.b6",   0x20000, 0xba3ba6fd, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12693.b3",   0x20000, 0xd12ef57a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12696.b7",   0x20000, 0x54b51ca4, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12678.a1",   0x20000, 0xa8afd649, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12697.b10",  0x20000, 0x6ac4cbfb, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12679.a2",   0x20000, 0xb4c4a2ab, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12698.b11",  0x20000, 0x99784b36, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12680.a3",   0x20000, 0xf321452c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12699.b12",  0x20000, 0xac329586, SYS16_ROM_SPRITES | BRF_GRA },
+		
+	{ "epr-12685.a10",  0x08000, 0x5d0c16d7, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "mpr-12686.a11",  0x20000, 0xf451705e, SYS16_ROM_UPD7759DATA | BRF_SND },
+	{ "mpr-12686.a12",  0x20000, 0x9e87571f, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	{ "317-0131.key",   0x02000, 0x8f71726d, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Eswatj1)
+STD_ROM_FN(Eswatj1)
+
 static struct BurnRomInfo EswatuRomDesc[] = {
 	{ "epr-12657.a2",   0x40000, 0x43ca72aa, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-12656.a1",   0x40000, 0x5f018967, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -5098,6 +5136,33 @@ void __fastcall EswatWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
+void __fastcall Eswatj1WriteByte(UINT32 a, UINT8 d)
+{
+	switch (a) {
+		case 0x3f0001: {
+			if (System16TileBanks[0] != (d & 0x07)) {
+				System16TileBanks[0] = d & 0x07;
+				System16RecalcBgTileMap = 1;
+				System16RecalcBgAltTileMap = 1;
+				System16RecalcFgTileMap = 1;
+				System16RecalcFgAltTileMap = 1;
+			}
+			return;
+		}
+		
+		case 0x3f0003: {
+			if (System16TileBanks[1] != (d & 0x07)) {
+				System16TileBanks[1] = d & 0x07;
+				System16RecalcBgTileMap = 1;
+				System16RecalcBgAltTileMap = 1;
+				System16RecalcFgTileMap = 1;
+				System16RecalcFgAltTileMap = 1;
+			}
+			return;
+		}
+	}
+}
+
 void __fastcall EswatblSoundWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
@@ -6873,6 +6938,65 @@ static INT32 EswatInit()
 	return nRet;
 }
 
+static INT32 Eswatj1Init()
+{
+	System16Map68KDo = EswatMap68K;
+	
+	// Start off with some sprite rom and let the load routine add on the rest
+	System16SpriteRomSize = 0x1c0000 - 0x180000;
+	
+	System16TileRomSize = 0x0c0000 - 0x090000;
+	
+	INT32 nRet = System16Init();
+	
+	if (!nRet) {
+		SekOpen(0);
+		SekMapMemory(System16Rom + 0x40000 , 0x080000, 0x0bffff, SM_READ);	// mirror
+		SekMapMemory(System16Code + 0x40000, 0x080000, 0x0bffff, SM_FETCH);	// mirror
+		SekMapMemory(System16Ram           , 0xff0000, 0xff3fff, SM_RAM);
+		
+		SekMapHandler(1, 0x123406, 0x123407, SM_WRITE);
+		SekSetWriteByteHandler(1, EswatSoundWriteByte);
+		
+		SekMapHandler(2, 0x3e0000, 0x3e0fff, SM_RAM);
+		SekSetReadWordHandler(2, EswatMultiply0ReadWord);
+		SekSetWriteWordHandler(2, EswatMultiply0WriteWord);
+		
+		SekMapHandler(3, 0x3e1000, 0x3e1fff, SM_RAM);
+		SekSetReadWordHandler(3, EswatCompare0ReadWord);
+		SekSetWriteWordHandler(3, EswatCompare0WriteWord);
+		
+		SekMapHandler(4, 0x3f0000, 0x3f0003, SM_WRITE);
+		SekSetWriteByteHandler(4, Eswatj1WriteByte);
+		SekClose();
+		
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0x0c0000);
+		if (pTemp) {
+			memcpy(pTemp, System16Sprites + 0x0c0000, 0x0c0000);
+			memcpy(System16Sprites + 0x100000, pTemp + 0x000000, 0xc0000);
+		} else {
+			nRet = 1;
+		}
+		BurnFree(pTemp);
+		
+		System16TempGfx = (UINT8*)BurnMalloc(System16TileRomSize);
+		if (System16TempGfx) {
+			BurnLoadRom(System16TempGfx + 0x000000, 4, 1);
+			BurnLoadRom(System16TempGfx + 0x020000, 5, 1);
+			BurnLoadRom(System16TempGfx + 0x040000, 6, 1);
+			BurnLoadRom(System16TempGfx + 0x060000, 7, 1);
+			BurnLoadRom(System16TempGfx + 0x080000, 8, 1);
+			BurnLoadRom(System16TempGfx + 0x0a0000, 9, 1);
+			System16Decode8x8Tiles(System16Tiles, System16NumTiles, System16TileRomSize * 2 / 3, System16TileRomSize * 1 / 3, 0);
+		} else {
+			nRet = 1;
+		}
+		BurnFree(System16TempGfx);
+	}
+	
+	return nRet;
+}
+
 static INT32 EswatblInit()
 {
 	System16Map68KDo = EswatMap68K;
@@ -8292,7 +8416,7 @@ struct BurnDriver BurnDrvDunkshot = {
 
 struct BurnDriver BurnDrvEswat = {
 	"eswat", NULL, NULL, NULL, "1989",
-	"E-Swat - Cyber Police (set 3, World, FD1094 317-0130)\0", NULL, "Sega", "System 16B",
+	"E-Swat - Cyber Police (set 4, World, FD1094 317-0130)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, EswatRomInfo, EswatRomName, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
@@ -8302,7 +8426,7 @@ struct BurnDriver BurnDrvEswat = {
 
 struct BurnDriver BurnDrvEswatj = {
 	"eswatj", "eswat", NULL, NULL, "1989",
-	"E-Swat - Cyber Police (set 1, Japan, FD1094 317-0128)\0", NULL, "Sega", "System 16B",
+	"E-Swat - Cyber Police (set 2, Japan, FD1094 317-0128)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, EswatjRomInfo, EswatjRomName, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
@@ -8310,9 +8434,19 @@ struct BurnDriver BurnDrvEswatj = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvEswatj1 = {
+	"eswatj1", "eswat", NULL, NULL, "1989",
+	"E-Swat - Cyber Police (set 1, Japan, FD1094 317-0131)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
+	NULL, Eswatj1RomInfo, Eswatj1RomName, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
+	Eswatj1Init, System16Exit, System16BFrame, NULL, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvEswatu = {
 	"eswatu", "eswat", NULL, NULL, "1989",
-	"E-Swat - Cyber Police (set 2, US, FD1094 317-0129)\0", NULL, "Sega", "System 16B",
+	"E-Swat - Cyber Police (set 3, US, FD1094 317-0129)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, EswatuRomInfo, EswatuRomName, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,

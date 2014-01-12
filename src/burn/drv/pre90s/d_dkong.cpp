@@ -2312,26 +2312,26 @@ struct BurnDriver BurnDrvDkongx11 = {
 };
 
 
-// Donkey Kong Junior (US)
+// Donkey Kong Junior (US set F-2)
 
 static struct BurnRomInfo dkongjrRomDesc[] = {
-	{ "dkj.5b",	0x2000, 0xdea28158, 1 }, //  0 maincpu
-	{ "dkj.5c",	0x2000, 0x6fb5faf6, 1 }, //  1
-	{ "dkj.5e",	0x2000, 0xd042b6a8, 1 }, //  2
+	{ "djr1-c_5b_f-2.5b",	0x2000, 0xdea28158, 1 }, //  0 maincpu
+	{ "djr1-c_5c_f-2.5c",	0x2000, 0x6fb5faf6, 1 }, //  1
+	{ "djr1-c_5e_f-2.5e",	0x2000, 0xd042b6a8, 1 }, //  2
 
-	{ "c_3h.bin",	0x1000, 0x715da5f8, 2 }, //  3 soundcpu
+	{ "djr1-c_3h.3h",		0x1000, 0x715da5f8, 2 }, //  3 soundcpu
 
-	{ "dkj.3n",	0x1000, 0x8d51aca9, 3 }, //  4 gfx1
-	{ "dkj.3p",	0x1000, 0x4ef64ba5, 3 }, //  5
+	{ "djr1-v.3n",			0x1000, 0x8d51aca9, 3 }, //  4 gfx1
+	{ "djr1-v.3p",			0x1000, 0x4ef64ba5, 3 }, //  5
 
-	{ "v_7c.bin",	0x0800, 0xdc7f4164, 4 }, //  6 gfx2
-	{ "v_7d.bin",	0x0800, 0x0ce7dcf6, 4 }, //  7
-	{ "v_7e.bin",	0x0800, 0x24d1ff17, 4 }, //  8
-	{ "v_7f.bin",	0x0800, 0x0f8c083f, 4 }, //  9
+	{ "djr1-v_7c.7c",		0x0800, 0xdc7f4164, 4 }, //  6 gfx2
+	{ "djr1-v_7d.7d",		0x0800, 0x0ce7dcf6, 4 }, //  7
+	{ "djr1-v_7e.7e",		0x0800, 0x24d1ff17, 4 }, //  8
+	{ "djr1-v_7f.7f",		0x0800, 0x0f8c083f, 4 }, //  9
 
-	{ "c-2e.bpr",	0x0100, 0x463dc7ad, 5 }, // 10 proms
-	{ "c-2f.bpr",	0x0100, 0x47ba0042, 5 }, // 11
-	{ "v-2n.bpr",	0x0100, 0xdbf185bf, 5 }, // 12
+	{ "djr1-c-2e.2e",		0x0100, 0x463dc7ad, 5 }, // 10 proms
+	{ "djr1-c-2f.2f",		0x0100, 0x47ba0042, 5 }, // 11
+	{ "djr1-v-2n.2n",		0x0100, 0xdbf185bf, 5 }, // 12
 };
 
 STD_ROM_PICK(dkongjr)
@@ -2411,7 +2411,7 @@ static INT32 dkongjrInit()
 
 struct BurnDriver BurnDrvDkongjr = {
 	"dkongjr", NULL, NULL, "dkongjr", "1982",
-	"Donkey Kong Junior (US)\0", NULL, "Nintendo of America", "Miscellaneous",
+	"Donkey Kong Junior (US set F-2)\0", NULL, "Nintendo of America", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, dkongjrRomInfo, dkongjrRomName, DkongjrSampleInfo, DkongjrSampleName, DkongInputInfo, DkongDIPInfo,

@@ -554,13 +554,13 @@ static struct BurnRomInfo uopokoRomDesc[] = {
 	{ "u26.int",      0x080000, 0xb445c9ac, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 	{ "u25.int",      0x080000, 0xa1258482, BRF_ESS | BRF_PRG }, //  1
 
-	{ "u33.bin",      0x400000, 0x5D142Ad2, BRF_GRA },			 //  2 Sprite data
+	{ "cave_cv-02_u33.u33", 	0x400000, 0x5d142ad2, BRF_GRA }, //  2 Sprite data
 
-	{ "u49.bin",      0x400000, 0x12FB11BB, BRF_GRA },			 //  3 Layer 0 Tile data
+	{ "cave_cv-02_u49.u49",     0x400000, 0x12fb11bb, BRF_GRA }, //  3 Layer 0 Tile data
 
-	{ "u4.bin",       0x200000, 0xA2D0D755, BRF_SND },			 //  4 YMZ280B (AD)PCM data
+	{ "cave_cv-02_u4.u4",       0x200000, 0xa2d0d755, BRF_SND }, //  4 YMZ280B (AD)PCM data
 	
-	{ "eeprom-uopoko.bin", 0x0080, 0xf4a24b95, BRF_ESS | BRF_PRG },
+	{ "eeprom-uopoko.bin", 		0x0080, 0xf4a24b95, BRF_ESS | BRF_PRG },
 };
 
 
@@ -571,13 +571,13 @@ static struct BurnRomInfo uopokojRomDesc[] = {
 	{ "u26.bin",      0x080000, 0xE7EEC050, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 	{ "u25.bin",      0x080000, 0x68CB6211, BRF_ESS | BRF_PRG }, //  1
 
-	{ "u33.bin",      0x400000, 0x5D142Ad2, BRF_GRA },			 //  2 Sprite data
+	{ "cave_cv-02_u33.u33", 	0x400000, 0x5d142ad2, BRF_GRA }, //  2 Sprite data
 
-	{ "u49.bin",      0x400000, 0x12FB11BB, BRF_GRA },			 //  3 Layer 0 Tile data
+	{ "cave_cv-02_u49.u49",     0x400000, 0x12fb11bb, BRF_GRA }, //  3 Layer 0 Tile data
 
-	{ "u4.bin",       0x200000, 0xA2D0D755, BRF_SND },			 //  4 YMZ280B (AD)PCM data
+	{ "cave_cv-02_u4.u4",       0x200000, 0xa2d0d755, BRF_SND }, //  4 YMZ280B (AD)PCM data
 	
-	{ "eeprom-uopoko.bin", 0x0080, 0xf4a24b95, BRF_ESS | BRF_PRG },
+	{ "eeprom-uopoko.bin", 		0x0080, 0xf4a24b95, BRF_ESS | BRF_PRG },
 };
 
 

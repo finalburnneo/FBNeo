@@ -496,6 +496,10 @@ static void expand_tile_gfx()
 			pgm_decode_kovqhsgs_tile_data(PGMTileROM + 0x180000);
 	}
 
+	if (strncmp(BurnDrvGetTextA(DRV_NAME), "happy6", 6) == 0) {
+		pgm_descramble_happy6_data(PGMTileROM + 0x180000, 0x800000);
+	}
+
 	for (INT32 i = nPGMTileROMLen/5-1; i >= 0 ; i --) {
 		dst[0+8*i] = ((src[0+5*i] >> 0) & 0x1f);
 		dst[1+8*i] = ((src[0+5*i] >> 5) & 0x07) | ((src[1+5*i] << 3) & 0x18);
@@ -578,6 +582,10 @@ static void expand_colourdata()
 		pgm_decode_kovqhsgs_gfx_block(tmp + 0x1800000);
 		pgm_decode_kovqhsgs_gfx_block(tmp + 0x2000000);
 		pgm_decode_kovqhsgs_gfx_block(tmp + 0x2800000);
+	}
+
+	if (strncmp(BurnDrvGetTextA(DRV_NAME), "happy6", 6) == 0) {
+		pgm_descramble_happy6_data(tmp, 0x800000 * 2);
 	}
 
 	// convert from 3bpp packed

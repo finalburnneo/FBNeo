@@ -626,6 +626,7 @@ static INT32 LoadRoms()
 	}
 	
 	if (!strcmp("kof2k4se", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x800000;
+	if (!strcmp("cphd", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x4000000;
 	if (!strcmp("kf2k4pls", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x800000;
 	if (!strcmp("svcboot", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x400000;
 	if (!strcmp("svcplus", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] += 0x400000;

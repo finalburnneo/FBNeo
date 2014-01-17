@@ -3624,21 +3624,21 @@ struct BurnDriver BurnDrvKillbldp = {
 static struct BurnRomInfo svgRomDesc[] = {
 	{ "u30.bin",			0x080000, 0x34c18f3f, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t05601w016.bin",		0x200000, 0x03e110dc, 2 | BRF_GRA },			//  1 Tile data
+	{ "t05601w016.bin",		0x200000, 0x03e110dc, 2 | BRF_GRA },		//  1 Tile data
 
-	{ "a05601w064.bin",		0x800000, 0xea6453e4, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a05602w064.bin",		0x800000, 0x6d00621b, 3 | BRF_GRA },			//  3
-	{ "a05603w064.bin",		0x800000, 0x7b71c64f, 3 | BRF_GRA },			//  4
-	{ "a05604w032.bin",		0x400000, 0x9452a567, 3 | BRF_GRA },			//  5
+	{ "a05601w064.bin",		0x800000, 0xea6453e4, 3 | BRF_GRA },		//  2 Sprite Color Data
+	{ "a05602w064.bin",		0x800000, 0x6d00621b, 3 | BRF_GRA },		//  3
+	{ "a05603w064.bin",		0x800000, 0x7b71c64f, 3 | BRF_GRA },		//  4
+	{ "a05604w032.bin",		0x400000, 0x9452a567, 3 | BRF_GRA },		//  5
 
-	{ "b05601w064.bin",		0x800000, 0x35c0a489, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
-	{ "b05602w064.bin",		0x800000, 0x8aad3f85, 4 | BRF_GRA },			//  7
+	{ "b05601w064.bin",		0x800000, 0x35c0a489, 4 | BRF_GRA },		//  6 Sprite Masks & Color Indexes
+	{ "b05602w064.bin",		0x800000, 0x8aad3f85, 4 | BRF_GRA },		//  7
 
-	{ "w05601b064.bin",		0x800000, 0xbfe61a71, 5 | BRF_SND },			//  8 Samples
-	{ "w05602b032.bin",		0x400000, 0x0685166d, 5 | BRF_SND },			//  9
+	{ "w05601b064.bin",		0x800000, 0xbfe61a71, 5 | BRF_SND },		//  8 Samples
+	{ "w05602b032.bin",		0x400000, 0x0685166d, 5 | BRF_SND },		//  9
 
-	{ "svg_igs027a_execute_only_area", 0x000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },  // 10 Internal ARM7 Rom
-	{ "svgcpb_igs027a_v100_japan.bin", 0x003e78, 0x7a59da5d, 7 | BRF_PRG | BRF_ESS },	  // 11 Internal ARM7 Rom
+	{ "svg_igs027a_execute_only_area", 0x000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 10 Internal ARM7 Rom
+	{ "svg_igs027a_v200_china.bin", 0x003e78, 0x72b73169, 7 | BRF_PRG | BRF_ESS },	// 11 Internal ARM7 Rom
 
 	{ "u26.bin",			0x400000, 0x46826ec8, 8 | BRF_PRG | BRF_ESS },	// 12 External ARM7 Rom
 	{ "u29.bin",			0x400000, 0xfa5f3901, 8 | BRF_PRG | BRF_ESS },	// 13
@@ -3665,33 +3665,25 @@ static void pgm_create_svg_EO_data()
 		0x0000, 0xe5c8, 0x7805, 0xe1a0, 0x6a01, 0xe3a0, 0x0012, 0xe3a0,
 		0x0a02, 0xe280, 0x6806, 0xe080, 0x6000, 0xe587, 0x00d3, 0xe3a0,
 		0xf000, 0xe121, 0x4001, 0xe3a0, 0x4b06, 0xe284, 0x0cf2, 0xe3a0,
-		0xd804, 0xe080, 0x0013, 0xe3a0, 0xf000, 0xe121, 0x001c, 0xea00,
+		0xd804, 0xe080, 0x0013, 0xe3a0, 0xf000, 0xe121, 0x0028, 0xea00,
 		0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xe004, 0xe52d, 0x00d3, 0xe3a0,
 		0xf000, 0xe121, 0xe004, 0xe49d, 0xff1e, 0xe12f, 0xe004, 0xe52d,
 		0x0013, 0xe3a0, 0xf000, 0xe121, 0xe004, 0xe49d, 0xff1e, 0xe12f,
 		0x00d1, 0xe3a0, 0xf000, 0xe121, 0xd0b8, 0xe59f, 0x00d3, 0xe3a0,
 		0xf000, 0xe121, 0xd0b0, 0xe59f, 0x10b8, 0xe59f, 0x0000, 0xe3a0,
-		0x0000, 0xe581, 0xf302, 0xe3a0, 0xfffe, 0xeaff, 0xfffe, 0xeaff,
+		0x0000, 0xe581, 0xf0b0, 0xe59f, 0xfffe, 0xeaff, 0xfffe, 0xeaff,
 		0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xfffe, 0xeaff,
-		0xff1e, 0xe12f, 0xf000, 0xe59f, 0x0028, 0x0800, 0x0028, 0x0800,
+		0xff1e, 0xe12f, 0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xfffe, 0xeaff,
 		0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xfffe, 0xeaff,
 		0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xfffe, 0xeaff, 0xfffe, 0xeaff,
 		0xfffe, 0xeaff, 0x105c, 0xe59f
 	};
-
-	UINT16 *extprot = (UINT16*)(PGMUSER0 + 0x53f24);
 
 	for (int i = 0; i < 0x188/2; i++) {
 		svgEOHackData[i] = BURN_ENDIAN_SWAP_INT16(svgEOHackData[i]);
 	}
 
 	memcpy  (PGMARMROM, svgEOHackData, 0x188);
-
-	// patch jump table (necessary due to the different internal rom used by
-	// the cartridge version
-	for (int i = 0; i < 130; i++, extprot+=2) {
-		extprot[0] = (extprot[0] | (extprot[1] << 16)) - 0x1b0;
-	}
 }
 
 static void svgPatch()
@@ -3705,11 +3697,11 @@ static INT32 svgInit()
 	pPgmInitCallback = svgPatch;
 	pPgmProtCallback = install_protection_asic27a_svg;
 
-	nPgmAsicRegionHackAddress = 0x3a8e;
+	nPgmAsicRegionHackAddress = 0x3c3e;
 
 	INT32 nRet = pgmInit();
 	
-	Arm7SetIdleLoopAddress(0x00009e0);
+	Arm7SetIdleLoopAddress(0x0000B90);
 
 	return nRet;
 }

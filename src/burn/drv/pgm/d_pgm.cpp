@@ -61,14 +61,14 @@ static struct BurnInputInfo pgmInputList[] = {
 
 	{"Dip A",		BIT_DIPSWITCH,	PgmInput + 6,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	PgmInput + 7,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,  PgmInput + 8,   "dip"           },
+	{"Dip C",		BIT_DIPSWITCH,  PgmInput + 8,   "dip"       },
 };
 
 STDINPUTINFO(pgm)
 
 static struct BurnDIPInfo pgmDIPList[] = {
 	{0x2D,	0xFF, 0xFF,	0x00, NULL				},
-	{0x2F,  0xFF, 0x01,     0x01, NULL				},
+	{0x2F,  0xFF, 0x01, 0x01, NULL				},
 
 	{0,	0xFE, 0,	2,    "Test mode"			},
 	{0x2D,	0x01, 0x01,	0x00, "Off"				},
@@ -173,7 +173,7 @@ static struct BurnDIPInfo photoy2kDIPList[] = {
 	{0x2E,	0x01, 0x0F,	0x03, "World"				},
 	{0x2E,	0x01, 0x0F,	0x04, "Korea"				},
 	{0x2E,	0x01, 0x0F,	0x05, "Hong Kong"			},
-	{0x2E,	0x01, 0x0F,	0x06, "Singapore / Malaysia"		},
+	{0x2E,	0x01, 0x0F,	0x06, "Singapore / Malaysia"	},
 };
 
 static struct BurnDIPInfo oldsDIPList[] = {
@@ -222,7 +222,7 @@ static struct BurnDIPInfo martmastDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
 	{0x2E,	0x01, 0x07,	0x05, "World"				},
-	{0x2E,	0x01, 0x07,	0x06, "USA"				},
+	{0x2E,	0x01, 0x07,	0x06, "USA"					},
 };
 
 static struct BurnDIPInfo martmastc102DIPList[] = {
@@ -247,7 +247,7 @@ static struct BurnDIPInfo thegladDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
 	{0x2E,  0x01, 0x07, 0x06, "World"				},
 };
 
@@ -260,7 +260,7 @@ static struct BurnDIPInfo theglad100DIPList[] = {
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
 	{0x2E,  0x01, 0x07, 0x06, "World"				},
 };
 
@@ -273,8 +273,8 @@ static struct BurnDIPInfo thegladpcbDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
-	{0x2E,  0x01, 0x07, 	0x06, "World"				},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
+	{0x2E,  0x01, 0x07, 0x06, "World"				},
 };
 
 static struct BurnDIPInfo ddp2DIPList[] = {
@@ -324,6 +324,19 @@ static struct BurnDIPInfo happy6DIPList[] = {
 	{0x2E,	0x01, 0x0F,	0x04, "World"				},
 };
 
+static struct BurnDIPInfo svgDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x00, NULL				},
+
+	{0,	0xFE, 0,	7,    "Region (Fake)"			},
+	{0x2E,	0x01, 0x07,	0x00, "China"				},
+	{0x2E,	0x01, 0x07,	0x01, "Taiwan"				},
+	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
+	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
+	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
+	{0x2E,  0x01, 0x07, 0x06, "World"				},
+};
+
 STDDIPINFOEXT(orlegend,		pgm,	orlegend		)
 STDDIPINFOEXT(orld111c, 	pgm,	orld111c		)
 STDDIPINFOEXT(orld105k, 	pgm,	orld105k		)
@@ -333,7 +346,7 @@ STDDIPINFOEXT(killbld,	 	pgm,	killbld			)
 STDDIPINFOEXT(photoy2k, 	pgm,	photoy2k		)
 STDDIPINFOEXT(puzzli2,  	pgm,	puzzli2			)
 STDDIPINFOEXT(martmast, 	pgm,	martmast		)
-STDDIPINFOEXT(martmastc102, pgm,	martmastc102		)
+STDDIPINFOEXT(martmastc102, pgm,	martmastc102	)
 STDDIPINFOEXT(olds,     	pgm,	olds			)
 STDDIPINFOEXT(ddp2,     	pgm,	ddp2			)
 STDDIPINFOEXT(ddp2hk,     	pgm,	ddp2hk			)
@@ -344,6 +357,7 @@ STDDIPINFOEXT(ddp2c,     	pgm,	ddp2c			)
 STDDIPINFOEXT(theglad,	 	pgm,	theglad 		)
 STDDIPINFOEXT(theglad100,	pgm,	theglad100 		)
 STDDIPINFOEXT(happy6,		pgm,	happy6	 		)
+STDDIPINFOEXT(svg,			pgm,	svg	 			)
 STDDIPINFOEXT(dmnfrntpcb,   jamma,	kov		    	)
 STDDIPINFOEXT(thegladpcb,   jamma,	thegladpcb		)
 
@@ -3637,8 +3651,8 @@ static struct BurnRomInfo svgRomDesc[] = {
 	{ "w05601b064.bin",		0x800000, 0xbfe61a71, 5 | BRF_SND },		//  8 Samples
 	{ "w05602b032.bin",		0x400000, 0x0685166d, 5 | BRF_SND },		//  9
 
-	{ "svg_igs027a_execute_only_area", 0x000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 10 Internal ARM7 Rom
-	{ "svg_igs027a_v200_china.bin", 0x003e78, 0x72b73169, 7 | BRF_PRG | BRF_ESS },	// 11 Internal ARM7 Rom
+	{ "svg_igs027a_execute_only_area", 	0x000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 10 Internal ARM7 Rom
+	{ "svg_igs027a_v200_china.bin", 	0x003e78, 0x72b73169, 7 | BRF_PRG | BRF_ESS },		// 11 Internal ARM7 Rom
 
 	{ "u26.bin",			0x400000, 0x46826ec8, 8 | BRF_PRG | BRF_ESS },	// 12 External ARM7 Rom
 	{ "u29.bin",			0x400000, 0xfa5f3901, 8 | BRF_PRG | BRF_ESS },	// 13
@@ -3711,7 +3725,7 @@ struct BurnDriver BurnDrvSvg = {
 	"S.V.G. - Spectral vs Generation (V200, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"S.V.G. - Spectral vs Generation\0\u5723\u9B54\u4E16\u7EAA (V200, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, svgRomInfo, svgRomName, NULL, NULL, pgmInputInfo, thegladpcbDIPInfo,
+	NULL, svgRomInfo, svgRomName, NULL, NULL, pgmInputInfo, svgDIPInfo,
 	svgInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

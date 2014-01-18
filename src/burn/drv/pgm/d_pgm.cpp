@@ -2905,6 +2905,15 @@ struct BurnDriver BurnDrvdwpc = {
 // Demon Front (V105)
 
 static struct BurnRomInfo dmnfrntRomDesc[] = {
+	// 1st dump (01/01/2006) : v105_32m.u26 size 4 194 304 crc 877cac84
+	// - 1st and 2nd half identical crc 7c0690e1
+	// 2nd dump (15/04/2009) : v105_32m.u26 size 4 194 304 crc d200ee63
+	// - 1st half crc 341f0f22
+	// - 2nd half crc 3ce2fe8a
+	// 3rd dump (21/11/2009) : chinese-v105.u62 size 4 194 304 crc c798c2ef
+	// - 1st half crc 7c0690e1
+	// - 2nd half crc 3ce2fe8a
+	// Regarding these 3 dumps, it appears only the 3rd one seems to be correct
 	{ "v105_16m.u5",   		0x200000, 0xbda083bd, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "t04501.u29",	   		0x800000, 0x900eaaac, 2 | BRF_GRA },			//  1 Tile data
@@ -2920,12 +2929,7 @@ static struct BurnRomInfo dmnfrntRomDesc[] = {
 
 	{ "dmnfrnt_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 
-#if !defined ROM_VERIFY
 	{ "v105_32m.u26",	 	0x400000, 0xc798c2ef, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
-#else
-	{ "chinese-v105.u62", 	0x400000, 0xc798c2ef, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
-	{ "v105_32m.u26", 		0x400000, 0xd200ee63, 0 | BRF_PRG | BRF_OPT },  //  9 External ARM7 Rom
-#endif
 };
 
 STDROMPICKEXT(dmnfrnt, dmnfrnt, pgm)
@@ -3065,6 +3069,7 @@ static struct BurnRomInfo thegladRomDesc[] = {
 
 	{ "w04601.u1",			0x800000, 0x5f15ddb3, 5 | BRF_SND },			//  7 Samples
 
+//	{ "theglad_igs027a.bin",					0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 	{ "theglad_igs027a_execute_only_area",	    0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 	{ "theglad_igs027a_v100_overseas.bin",      0x003e78, 0x02fe6f52, 7 | BRF_PRG | BRF_ESS },  //  9
 
@@ -3159,6 +3164,7 @@ static struct BurnRomInfo theglad101RomDesc[] = {
 
 	{ "w04601.u1",			0x800000, 0x5f15ddb3, 5 | BRF_SND },			//  7 Samples
 
+//	{ "theglad_igs027a.bin",					0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 	{ "theglad_igs027a_execute_only_area",	    0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 	{ "theglad_igs027a_v100_overseas.bin",      0x003e78, 0x02fe6f52, 7 | BRF_PRG | BRF_ESS },  //  9
 
@@ -3195,6 +3201,7 @@ static struct BurnRomInfo theglad100RomDesc[] = {
 
 	{ "w04601.u1",			0x800000, 0x5f15ddb3, 5 | BRF_SND },			//  7 Samples
 
+//	{ "theglad_igs027a.bin",					0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 	{ "theglad_igs027a_execute_only_area",	    0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 	{ "theglad_igs027a_older.bin",              0x003e78, 0x02fe6f52, 7 | BRF_PRG | BRF_ESS },  //  9
 
@@ -3322,6 +3329,7 @@ static struct BurnRomInfo happy6RomDesc[] = {
 
 	{ "w01w64m.u17",	  	0x800000, 0x7e23e2be, 5 | BRF_SND },			//  5 Samples
 
+//	{ "happy6_igs027a.bin",					0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 	{ "happy6_igs027a_execute_only_area",	0x000188, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, 	//  6 Internal ARM7 Rom
 	{ "happy6_igs027a_v100_china.bin",	0x003e78, 0xed530445, 7 | BRF_PRG | BRF_ESS }, 	//  7
 
@@ -3378,6 +3386,7 @@ static struct BurnRomInfo happy6101RomDesc[] = {
 
 	{ "w01w64m.u17",	  	0x800000, 0x7e23e2be, 5 | BRF_SND },				//  5 Samples
 
+//	{ "happy6_igs027a.bin",					0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 	{ "happy6_igs027a_execute_only_area",	0x000188, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP }, 	//  6 Internal ARM7 Rom
 	{ "happy6_igs027a_v100_china.bin",		0x003e78, 0xed530445, 7 | BRF_PRG | BRF_ESS }, 	//  7
 
@@ -3651,6 +3660,7 @@ static struct BurnRomInfo svgRomDesc[] = {
 	{ "w05601b064.bin",		0x800000, 0xbfe61a71, 5 | BRF_SND },		//  8 Samples
 	{ "w05602b032.bin",		0x400000, 0x0685166d, 5 | BRF_SND },		//  9
 
+//	{ "svg_igs027a.bin",			    0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 10 Internal ARM7 Rom
 	{ "svg_igs027a_execute_only_area", 	0x000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 10 Internal ARM7 Rom
 	{ "svg_igs027a_v200_china.bin", 	0x003e78, 0x72b73169, 7 | BRF_PRG | BRF_ESS },		// 11 Internal ARM7 Rom
 
@@ -4263,6 +4273,7 @@ static struct BurnRomInfo thegladpcbRomDesc[] = {
 	// these contain samples for the japan region
 	{ "wave.u29",     		0x200000, 0x51acb395, 5 | BRF_SND },			//  8
 
+//	{ "thegladpcb_igs027a.bin",					0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 	{ "thegladpcb_igs027a_execute_only_area",	0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 	{ "thegladpcb_igs027a_v100_japan.bin",      0x003e78, 0xd7f06e2d, 7 | BRF_PRG | BRF_ESS },  //  9
 
@@ -4286,7 +4297,7 @@ struct BurnDriver BurnDrvThegladpcb = {
 // Demon Front (V107, Korea, PCB Version)
 
 static struct BurnRomInfo dmnfrntpcbRomDesc[] = {
-	{ "demonfront_v107-u43.bin",	0x200000, 0x671d8a31, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "v107kr.u43",	    	0x200000, 0x671d8a31, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "t04501.u29",			0x800000, 0x900eaaac, 2 | BRF_GRA },					//  1 Tile data
 
@@ -4301,7 +4312,7 @@ static struct BurnRomInfo dmnfrntpcbRomDesc[] = {
 
 	{ "dmnfrnt_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 
-	{ "demonfront_v107-u62.bin",	0x400000, 0xcb94772e, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
+	{ "v107kr.u62",			0x400000, 0xcb94772e, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
 };
 
 STDROMPICKEXT(dmnfrntpcb, dmnfrntpcb, dmnfrntBIOS) // custom bios
@@ -4336,9 +4347,9 @@ static struct BurnRomInfo svgpcbRomDesc[] = {
 	{ "w05601b064.bin",		0x800000, 0xbfe61a71, 5 | BRF_SND },			//  8 Samples
 	{ "w05602b032.bin",		0x400000, 0x0685166d, 5 | BRF_SND },			//  9
 
-//	{ "svg_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 10 Internal ARM7 Rom
+//	{ "svgpcb_igs027a.bin",			   0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 10 Internal ARM7 Rom
 	{ "svg_igs027a_execute_only_area", 0x000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 10 Internal ARM7 Rom
-	{ "svgcpb_igs027a_v100_japan.bin", 0x003e78, 0x7a59da5d, 7 | BRF_PRG | BRF_ESS },	// 11 Internal ARM7 Rom
+	{ "svgpcb_igs027a_v100_japan.bin", 0x003e78, 0x7a59da5d, 7 | BRF_PRG | BRF_ESS },		// 11 Internal ARM7 Rom
 
 	{ "svg_v100jp.u64",		0x400000, 0x399d4a8b, 8 | BRF_PRG | BRF_ESS },	// 12 External ARM7 Rom
 	{ "svg_v100jp.u65",		0x400000, 0x6e1c33b1, 8 | BRF_PRG | BRF_ESS },	// 13

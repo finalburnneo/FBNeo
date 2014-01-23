@@ -1007,7 +1007,7 @@ valid values are:
  
 static struct BurnRomInfo batridRomDesc[] = {
 	{ "prg0_europe.u22", 0x080000, 0x91d3e975, BRF_ESS | BRF_PRG }, //  0 CPU #0 code	(even)
-	{ "prg2.u21",     	 0x080000, 0xbdda5fbf, BRF_ESS | BRF_PRG }, //  1
+	{ "prg2.u21",     	 0x080000, 0xbdaa5fbf, BRF_ESS | BRF_PRG }, //  1
 	{ "prg1b.u23",    	 0x080000, 0x8e70b492, BRF_ESS | BRF_PRG }, //  2				(odd)
 	{ "prg3.u24",     	 0x080000, 0x7aa9f941, BRF_ESS | BRF_PRG }, //  3
 
@@ -1028,7 +1028,7 @@ STD_ROM_FN(batrid)
 
 static struct BurnRomInfo batriduRomDesc[] = {
 	{ "prg0_usa.u22", 	 0x080000, 0x2049d007, BRF_ESS | BRF_PRG }, //  0 CPU #0 code	(even)
-	{ "prg2.u21",     	 0x080000, 0xbdda5fbf, BRF_ESS | BRF_PRG }, //  1
+	{ "prg2.u21",     	 0x080000, 0xbdaa5fbf, BRF_ESS | BRF_PRG }, //  1
 	{ "prg1b.u23",    	 0x080000, 0x8e70b492, BRF_ESS | BRF_PRG }, //  2				(odd)
 	{ "prg3.u24",     	 0x080000, 0x7aa9f941, BRF_ESS | BRF_PRG }, //  3
 
@@ -1049,7 +1049,7 @@ STD_ROM_FN(batridu)
 
 static struct BurnRomInfo batridcRomDesc[] = {
 	{ "prg0_china.u22",  0x080000, 0xc3b91f7e, BRF_ESS | BRF_PRG }, //  0 CPU #0 code	(even)
-	{ "prg2.u21",     	 0x080000, 0xbdda5fbf, BRF_ESS | BRF_PRG }, //  1
+	{ "prg2.u21",     	 0x080000, 0xbdaa5fbf, BRF_ESS | BRF_PRG }, //  1
 	{ "prg1b.u23",    	 0x080000, 0x8e70b492, BRF_ESS | BRF_PRG }, //  2				(odd)
 	{ "prg3.u24",     	 0x080000, 0x7aa9f941, BRF_ESS | BRF_PRG }, //  3
 
@@ -1070,7 +1070,7 @@ STD_ROM_FN(batridc)
 
 static struct BurnRomInfo batridjRomDesc[] = {
 	{ "prg0b.u22",    	 0x080000, 0x4f3fc729, BRF_ESS | BRF_PRG }, //  0 CPU #0 code	(even)
-	{ "prg2.u21",     	 0x080000, 0xbdda5fbf, BRF_ESS | BRF_PRG }, //  1
+	{ "prg2.u21",     	 0x080000, 0xbdaa5fbf, BRF_ESS | BRF_PRG }, //  1
 	{ "prg1b.u23",    	 0x080000, 0x8e70b492, BRF_ESS | BRF_PRG }, //  2				(odd)
 	{ "prg3.u24",     	 0x080000, 0x7aa9f941, BRF_ESS | BRF_PRG }, //  3
 
@@ -1091,7 +1091,7 @@ STD_ROM_FN(batridj)
 
 static struct BurnRomInfo batridkRomDesc[] = {
 	{ "prg0_korea.u22",  0x080000, 0xd9d8c907, BRF_ESS | BRF_PRG }, //  0 CPU #0 code	(even)
-	{ "prg2.u21",     	 0x080000, 0xbdda5fbf, BRF_ESS | BRF_PRG }, //  1
+	{ "prg2.u21",     	 0x080000, 0xbdaa5fbf, BRF_ESS | BRF_PRG }, //  1
 	{ "prg1b.u23",    	 0x080000, 0x8e70b492, BRF_ESS | BRF_PRG }, //  2				(odd)
 	{ "prg3.u24",     	 0x080000, 0x7aa9f941, BRF_ESS | BRF_PRG }, //  3
 

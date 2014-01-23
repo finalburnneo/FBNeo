@@ -654,6 +654,20 @@ STD_ROM_PICK(Pgalvip)
 STD_ROM_FN(Pgalvip)
 
 // Rom information
+static struct BurnRomInfo PgalvipaRomDesc[] = {
+	{ "pgalvip_3.ue17", 		0x80000, 0xa48e8255, BRF_ESS | BRF_PRG }, // 68000 code
+	{ "pgalvip_4.ud17",		0x80000, 0x829a2085, BRF_ESS | BRF_PRG },
+
+	{ "pgalvip_5.u5",		0x80000, 0xa8a50745, BRF_GRA },			  // graphics
+
+	{ "pgalvip_1.ub6",		0x20000, 0xd32a6c0c, BRF_SND },			  // PCM
+	{ "pgalvip_2.uc6",		0x80000, 0x2168e54a, BRF_SND },
+};
+
+STD_ROM_PICK(Pgalvipa)
+STD_ROM_FN(Pgalvipa)
+
+// Rom information
 static struct BurnRomInfo ZipzapRomDesc[] = {
 	{ "ue17.bin",  			0x040000, 0xda6c3fc8, BRF_ESS | BRF_PRG }, // 68000 code
 	{ "ud17.bin",  			0x040000, 0x2901fae1, BRF_ESS | BRF_PRG },
@@ -2118,6 +2132,16 @@ struct BurnDriver BurnDrvGalhustl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, GalhustlRomInfo, GalhustlRomName, NULL, NULL, GalhustlInputInfo, GalhustlDIPInfo,
+	GalhustlInit, GalpanicExit, GalhustlFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
+	256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvPgalvipa = {
+	"pgalvipa", "pgalvip", NULL, NULL, "1997",
+	"Pocket Gals V.I.P (Newer?)\0", NULL, "ACE International / Afega", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	NULL, PgalvipaRomInfo, PgalvipaRomName, NULL, NULL, GalhustlInputInfo, GalhustlDIPInfo,
 	GalhustlInit, GalpanicExit, GalhustlFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	256, 224, 4, 3
 };

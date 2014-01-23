@@ -431,6 +431,33 @@ STD_ROM_PICK(Fantasiaa)
 STD_ROM_FN(Fantasiaa)
 
 // Rom information
+static struct BurnRomInfo Fantasia1RomDesc[] = {
+	{ "prog2.16",   		0x080000, 0xc5d93077, BRF_ESS | BRF_PRG }, // 68000 code
+	{ "prog1.13",   		0x080000, 0xd88529bd, BRF_ESS | BRF_PRG },
+	{ "9.bg7",  			0x080000, 0x2a588393, BRF_ESS | BRF_PRG },
+	{ "5.bg3",	 			0x080000, 0x6160e0f0, BRF_ESS | BRF_PRG },
+	{ "8.bg6",  			0x080000, 0xf776b743, BRF_ESS | BRF_PRG },
+	{ "4.bg2",	  			0x080000, 0x5df0dff2, BRF_ESS | BRF_PRG },
+	{ "7.bg5", 				0x080000, 0x5707d861, BRF_ESS | BRF_PRG },
+	{ "3.bg1",	  			0x080000, 0x36cb811a, BRF_ESS | BRF_PRG },
+	{ "10.imag2", 			0x080000, 0x1f14a395, BRF_ESS | BRF_PRG },
+	{ "6.imag1",	  		0x080000, 0xfaf870e4, BRF_ESS | BRF_PRG },
+
+	{ "17.scr3",    		0x080000, 0xaadb6eb7, BRF_GRA },			  // graphics
+
+	{ "2.music1",   		0x080000, 0x22955efb, BRF_SND },			  // PCM
+	{ "1.music2",   		0x080000, 0x4cd4d6c3, BRF_SND },
+
+	{ "15.obj3",   			0x080000, 0x46666768, BRF_OPT },			  // unknown
+	{ "12.obj1",   			0x080000, 0x4bd25be6, BRF_OPT },
+	{ "14.obj4",   			0x080000, 0x4e7e6ed4, BRF_OPT },
+	{ "11.obj2",   			0x080000, 0x6d00a4c5, BRF_OPT },
+};
+
+STD_ROM_PICK(Fantasia1)
+STD_ROM_FN(Fantasia1)
+
+// Rom information
 static struct BurnRomInfo SupmodelRomDesc[] = {
 	{ "prog2.12",   		0x080000, 0x714b7e74, BRF_ESS | BRF_PRG }, // 68000 code
 	{ "prog1.7",    		0x080000, 0x0bb858de, BRF_ESS | BRF_PRG },
@@ -2022,6 +2049,16 @@ struct BurnDriver BurnDrvFantasiaa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, FantasiaaRomInfo, FantasiaaRomName, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
+	FantasiaInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
+	224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvFantasia1 = {
+	"fantasia1", "fantasia", NULL, NULL, "1994",
+	"Fantasia (Newer revision)\0", NULL, "Comad / New Japan System", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, Fantasia1RomInfo, Fantasia1RomName, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
 	FantasiaInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	224, 256, 3, 4
 };

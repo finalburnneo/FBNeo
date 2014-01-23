@@ -635,6 +635,24 @@ static struct BurnRomInfo GalhustlRomDesc[] = {
 STD_ROM_PICK(Galhustl)
 STD_ROM_FN(Galhustl)
 
+
+// Rom information
+static struct BurnRomInfo PgalvipRomDesc[] = {
+	{ "afega_15.ue17", 		0x20000, 0x050060ca, BRF_ESS | BRF_PRG }, // 68000 code
+	{ "afega_16.ud17",		0x20000, 0xd32e4052, BRF_ESS | BRF_PRG },
+
+	{ "afega_17.u5",		0x80000, 0xa8a50745, BRF_GRA },			  // graphics
+
+	{ "afega_12.ub6",		0x20000, 0xd32a6c0c, BRF_SND },			  // PCM
+	{ "afega_11.uc6",		0x80000, 0x2168e54a, BRF_SND },
+
+	{ "afega_13.rob1", 		0x80000, 0xac51ef72, BRF_ESS | BRF_PRG }, // more 68000 code
+	{ "afega_14.roa1", 		0x80000, 0x0877c00f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(Pgalvip)
+STD_ROM_FN(Pgalvip)
+
 // Rom information
 static struct BurnRomInfo ZipzapRomDesc[] = {
 	{ "ue17.bin",  			0x040000, 0xda6c3fc8, BRF_ESS | BRF_PRG }, // 68000 code
@@ -685,7 +703,7 @@ static INT32 MemIndex2()
 {
 	UINT8 *Next; Next = Mem;
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "galhustl")) {
-	Rom68K 		= Next; Next += 0x100000;			// 68000 ROM
+	Rom68K 		= Next; Next += 0x200000;			// 68000 ROM
 		} else {
 	Rom68K 		= Next; Next += 0x500000;			// 68000 ROM
 		}
@@ -1290,12 +1308,18 @@ static INT32 GalhustlInit()
 	BurnLoadRom(RomSnd + 0x0C0000, 4, 1);
 	memcpy(RomSnd, RomSnd + 0x040000, 0x040000);
 
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "pgalvip")) {
+		nRet = BurnLoadRom(Rom68K + 0x100001, 5, 2); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(Rom68K + 0x100000, 6, 2); if (nRet != 0) return 1;
+	}
+
 	{
 		SekInit(0, 0x68000);										// Allocate 68000
-	    SekOpen(0);
+		SekOpen(0);
 
 		// Map 68000 memory:
 		SekMapMemory(Rom68K,		0x000000, 0x0FFFFF, SM_ROM);	// CPU 0 ROM
+		SekMapMemory(Rom68K + 0x100000,	0x200000, 0x2fffff, SM_ROM); // pgalvip
 		SekMapMemory((UINT8 *)RamFg,
 									0x500000, 0x51FFFF, SM_RAM);	// f ground
 		SekMapMemory((UINT8 *)RamBg,
@@ -2078,11 +2102,21 @@ struct BurnDriver BurnDrvWownfant = {
 	256, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvGalhustl = {
-	"galhustl", NULL, NULL, NULL, "1997",
-	"Gals Hustler\0", NULL, "ACE International", "Miscellaneous",
+struct BurnDriver BurnDrvPgalvip = {
+	"pgalvip", NULL, NULL, NULL, "1997",
+	"Pocket Gals V.I.P\0", NULL, "ACE International / Afega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	NULL, PgalvipRomInfo, PgalvipRomName, NULL, NULL, GalhustlInputInfo, GalhustlDIPInfo,
+	GalhustlInit, GalpanicExit, GalhustlFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
+	256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvGalhustl = {
+	"galhustl", "pgalvip", NULL, NULL, "1997",
+	"Gals Hustler\0", NULL, "ACE International", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, GalhustlRomInfo, GalhustlRomName, NULL, NULL, GalhustlInputInfo, GalhustlDIPInfo,
 	GalhustlInit, GalpanicExit, GalhustlFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	256, 224, 4, 3

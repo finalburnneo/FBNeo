@@ -39,7 +39,6 @@ static UINT8 *PCECartRAM;
 static UINT8 *PCEUserRAM;
 static UINT8 *PCECDBRAM;
 
-
 static UINT32 *DrvPalette;
 UINT8 PCEPaletteRecalc;
 
@@ -62,7 +61,6 @@ static UINT8 system_identify;
 static INT32 pce_sf2 = 0;
 static INT32 pce_sf2_bank;
 static UINT8 bram_locked = 1;
-
 
 INT32 PceGetZipName(char** pszName, UINT32 i)
 {
@@ -218,29 +216,32 @@ static void pce_write(UINT32 address, UINT8 data)
 			h6280_irq_status_w(address & 0x3ff, data);
 		return;
 
-		case 0x1ff800:
-		
+		case 0x1ff800:	// cd system
+		{
 			switch( address & 0xf )
 			{
-			case 0x07:	/* BRAM unlock / CD status */
-				if ( data & 0x80 )
+				case 0x07:	/* BRAM unlock / CD status */
 				{
-					bram_locked = 0;
+					if (data & 0x80)
+					{
+						bram_locked = 0;
+					}
 				}
 				break;
 			}
+
 			bprintf(0,_T("CD write %x:%x\n"), address, data );
-			// cd system
+		}
 		return;
 	}
 	
 	if ((address >= 0x1ee000) && (address <= 0x1ee7ff)) {
-//			bprintf(0,_T("bram write %x:%x\n"), address & 0x7ff, data );
-			if (!bram_locked)
-			{
-				PCECDBRAM[address & 0x7FF] = data;
-			}
-			return;
+//		bprintf(0,_T("bram write %x:%x\n"), address & 0x7ff, data );
+		if (!bram_locked)
+		{
+			PCECDBRAM[address & 0x7FF] = data;
+		}
+		return;
 	}	
 	
 	
@@ -249,13 +250,10 @@ static void pce_write(UINT32 address, UINT8 data)
 
 static UINT8 pce_read(UINT32 address)
 {
-
 	address &= 0x1fffff;
 	
 	switch (address & ~0x3ff)
 	{
-
-			
 		case 0x1fe000:
 			return vdc_read(0, address);
 
@@ -311,11 +309,12 @@ static UINT8 pce_read(UINT32 address)
 	}
 	
 	if ((address >= 0x1ee000) && (address <= 0x1ee7ff)) {
-		//	bprintf(0,_T("bram read %x:%x\n"), address,address & 0x7ff );
-			return PCECDBRAM[address & 0x7ff];
+	//	bprintf(0,_T("bram read %x:%x\n"), address,address & 0x7ff );
+		return PCECDBRAM[address & 0x7ff];
 	}	
 		
 	bprintf(0,_T("Unknown read %x\n"), address );
+
 	return 0;
 }
 

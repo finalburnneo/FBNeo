@@ -1362,7 +1362,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 //-----------------------------------------------------------------------------------------------
 
-// Multi 5 / New Multi Game 5
+// Multi 5 / New Multi Game 5 (set 1)
 
 static struct BurnRomInfo nmg5RomDesc[] = {
 	{ "ub15.bin",	0x80000, 0x36af3e2f, 1 | BRF_PRG | BRF_ESS }, //  0 - 68k Code
@@ -1400,7 +1400,7 @@ static INT32 Nmg5Init()
 
 struct BurnDriver BurnDrvNmg5 = {
 	"nmg5", NULL, NULL, NULL, "1998",
-	"Multi 5 / New Multi Game 5\0", NULL, "Yun Sung", "Miscellaneous",
+	"Multi 5 / New Multi Game 5 (set 1)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, nmg5RomInfo, nmg5RomName, NULL, NULL, Nmg5InputInfo, Nmg5DIPInfo,
@@ -1409,7 +1409,47 @@ struct BurnDriver BurnDrvNmg5 = {
 };
 
 
-// Multi 5 / New Multi Game 5 (earlier)
+// Multi 5 / New Multi Game 5 (set 2)
+
+static struct BurnRomInfo nmg5aRomDesc[] = {
+	{ "m5_p1.ub15",		0x80000, 0x0d63a21d, 1 | BRF_PRG | BRF_ESS }, //  0 - 68k Code
+	{ "m5_p2.ub16",		0x80000, 0x230438db, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "m5_sndcpu.xh15",	0x10000, 0x12d047c4, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
+
+	{ "m5_12.srom1",	0x80000, 0x3adff261, 3 | BRF_GRA },	      //  3 - Tiles
+	{ "m5_8.srom2",		0x80000, 0xb0736b66, 3 | BRF_GRA },	      //  4
+	{ "m5_13.srom3",	0x80000, 0x8e904919, 3 | BRF_GRA },	      //  5
+	{ "m5_9.srom4",		0x80000, 0x779e0e30, 3 | BRF_GRA },	      //  6
+	{ "m5_6.srom5",		0x80000, 0x41061258, 3 | BRF_GRA },	      //  7
+	{ "m5_10.srom6",	0x80000, 0x8147d8ef, 3 | BRF_GRA },	      //  8
+	{ "m5_7.srom7",		0x80000, 0xacb00d15, 3 | BRF_GRA },	      //  9
+	{ "m5_11.srom8",	0x80000, 0x0ba74fce, 3 | BRF_GRA },	      // 10
+
+	{ "m5_3.uf1",		0x40000, 0x9a9fb6f4, 4 | BRF_GRA },	      // 11 - Sprites
+	{ "m5_5.uf2",		0x40000, 0x66954d63, 4 | BRF_GRA },	      // 12
+	{ "m5_1.ufa1",		0x40000, 0xba73ed2d, 4 | BRF_GRA },	      // 13
+	{ "m5_4.uh1",		0x40000, 0xf7726e8e, 4 | BRF_GRA },	      // 14
+	{ "m5_2.uj1",		0x40000, 0x54f7486e, 4 | BRF_GRA },	      // 15
+
+	{ "m5_oki.xra1",	0x20000, 0xc74a4f3e, 5 | BRF_SND },	      // 16 - Samples
+};
+
+STD_ROM_PICK(nmg5a)
+STD_ROM_FN(nmg5a)
+
+struct BurnDriver BurnDrvNmg5a = {
+	"nmg5a", "nmg5", NULL, NULL, "1997",
+	"Multi 5 / New Multi Game 5 (set 2)\0", NULL, "Yun Sung", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
+	NULL, nmg5aRomInfo, nmg5aRomName, NULL, NULL, Nmg5InputInfo, Nmg5DIPInfo,
+	Nmg5Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x400, 320, 240, 4, 3
+};
+
+
+// Multi 5 / New Multi Game 5 (set 3, earlier)
 
 static struct BurnRomInfo nmg5eRomDesc[] = {
 	{ "ub15.rom",	0x80000, 0x578516e2, 1 | BRF_PRG | BRF_ESS }, //  0 - 68k Code
@@ -1440,7 +1480,7 @@ STD_ROM_FN(nmg5e)
 
 struct BurnDriver BurnDrvNmg5e = {
 	"nmg5e", "nmg5", NULL, NULL, "1997",
-	"Multi 5 / New Multi Game 5 (earlier)\0", NULL, "Yun Sung", "Miscellaneous",
+	"Multi 5 / New Multi Game 5 (set 3, earlier)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, nmg5eRomInfo, nmg5eRomName, NULL, NULL, Nmg5InputInfo, Nmg5DIPInfo,

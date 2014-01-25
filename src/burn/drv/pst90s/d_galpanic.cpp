@@ -431,9 +431,9 @@ STD_ROM_PICK(Fantasiaa)
 STD_ROM_FN(Fantasiaa)
 
 // Rom information
-static struct BurnRomInfo Fantasia1RomDesc[] = {
-	{ "prog2.16",   		0x080000, 0xc5d93077, BRF_ESS | BRF_PRG }, // 68000 code
-	{ "prog1.13",   		0x080000, 0xd88529bd, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo FantasiabRomDesc[] = {
+	{ "fantasia_16",   		0x080000, 0xc5d93077, BRF_ESS | BRF_PRG }, // 68000 code
+	{ "fantasia_13",   		0x080000, 0xd88529bd, BRF_ESS | BRF_PRG },
 	{ "9.bg7",  			0x080000, 0x2a588393, BRF_ESS | BRF_PRG },
 	{ "5.bg3",	 			0x080000, 0x6160e0f0, BRF_ESS | BRF_PRG },
 	{ "8.bg6",  			0x080000, 0xf776b743, BRF_ESS | BRF_PRG },
@@ -454,8 +454,8 @@ static struct BurnRomInfo Fantasia1RomDesc[] = {
 	{ "11.obj2",   			0x080000, 0x6d00a4c5, BRF_OPT },
 };
 
-STD_ROM_PICK(Fantasia1)
-STD_ROM_FN(Fantasia1)
+STD_ROM_PICK(Fantasiab)
+STD_ROM_FN(Fantasiab)
 
 // Rom information
 static struct BurnRomInfo SupmodelRomDesc[] = {
@@ -470,7 +470,7 @@ static struct BurnRomInfo SupmodelRomDesc[] = {
 	{ "i-scr8.11", 			0x080000, 0x7c1813c8, BRF_ESS | BRF_PRG },
 	{ "i-scr7.6",	  		0x080000, 0x19c73268, BRF_ESS | BRF_PRG },
 
-	{ "obj1.13",    		0x080000, 0x832cd451, BRF_GRA },			  // graphics
+	{ "(__1994)obj1.13",    0x080000, 0x832cd451, BRF_GRA },			  // graphics
 
 	{ "music1.1",   		0x080000, 0x2b1f6655, BRF_SND },			  // PCM
 	{ "music2.2",   		0x080000, 0xcccae65a, BRF_SND },
@@ -492,7 +492,7 @@ static struct BurnRomInfo NewfantRomDesc[] = {
 	{ "iscr8.11", 			0x080000, 0xf4148528, BRF_ESS | BRF_PRG },
 	{ "iscr7.06",			0x080000, 0x2dee0c31, BRF_ESS | BRF_PRG },
 
-	{ "nf95obj1.13",    	0x080000, 0xe6d1bc71, BRF_GRA },			  // graphics
+	{ "(__1995)nf95obj1.13",    	0x080000, 0xe6d1bc71, BRF_GRA },			  // graphics
 
 	{ "musc1.01",   		0x080000, 0x10347fce, BRF_SND },			  // PCM
 	{ "musc2.02",   		0x080000, 0xb9646a8c, BRF_SND },
@@ -514,7 +514,7 @@ static struct BurnRomInfo NewfantaRomDesc[] = {
 	{ "iscr8.11", 			0x080000, 0xf4148528, BRF_ESS | BRF_PRG },
 	{ "iscr7.06",			0x080000, 0x2dee0c31, BRF_ESS | BRF_PRG },
 
-	{ "obj1.13",    		0x080000, 0x832cd451, BRF_GRA },			  // graphics
+	{ "(__1994)obj1.13",    0x080000, 0x832cd451, BRF_GRA },			  // graphics
 
 	{ "musc1.01",   		0x080000, 0x10347fce, BRF_SND },			  // PCM
 	{ "musc2.02",   		0x080000, 0xb9646a8c, BRF_SND },
@@ -536,7 +536,7 @@ static struct BurnRomInfo Fantsy95RomDesc[] = {
 	{ "i-scr8.11", 			0x080000, 0x33db8177, BRF_ESS | BRF_PRG },
 	{ "i-scr7.6",	  		0x080000, 0x8662dd01, BRF_ESS | BRF_PRG },
 
-	{ "obj1.13",    		0x080000, 0x832cd451, BRF_GRA },			  // graphics
+	{ "(__1994)obj1.13",    0x080000, 0x832cd451, BRF_GRA },			  // graphics
 
 	{ "music1.1",   		0x080000, 0x3117e2ef, BRF_SND },			  // PCM
 	{ "music2.2",   		0x080000, 0x0c1109f9, BRF_SND },
@@ -682,7 +682,7 @@ STD_ROM_FN(Pgalvip)
 
 // Rom information
 static struct BurnRomInfo PgalvipaRomDesc[] = {
-	{ "pgalvip_3.ue17", 		0x80000, 0xa48e8255, BRF_ESS | BRF_PRG }, // 68000 code
+	{ "pgalvip_3.ue17", 	0x80000, 0xa48e8255, BRF_ESS | BRF_PRG }, // 68000 code
 	{ "pgalvip_4.ud17",		0x80000, 0x829a2085, BRF_ESS | BRF_PRG },
 
 	{ "pgalvip_5.u5",		0x80000, 0xa8a50745, BRF_GRA },			  // graphics
@@ -2035,7 +2035,7 @@ struct BurnDriver BurnDrvGalpanic = {
 
 struct BurnDriver BurnDrvFantasia = {
 	"fantasia", NULL, NULL, NULL, "1994",
-	"Fantasia (940429 PCB)\0", NULL, "Comad / New Japan System", "Miscellaneous",
+	"Fantasia (940429 PCB, set 1)\0", NULL, "Comad / New Japan System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, FantasiaRomInfo, FantasiaRomName, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
@@ -2053,12 +2053,12 @@ struct BurnDriver BurnDrvFantasiaa = {
 	224, 256, 3, 4
 };
 
-struct BurnDriver BurnDrvFantasia1 = {
-	"fantasia1", "fantasia", NULL, NULL, "1994",
-	"Fantasia (Newer revision)\0", NULL, "Comad / New Japan System", "Miscellaneous",
+struct BurnDriver BurnDrvFantasiab = {
+	"fantasiab", "fantasia", NULL, NULL, "1994",
+	"Fantasia (940429 PCB, set 2)\0", NULL, "Comad / New Japan System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, Fantasia1RomInfo, Fantasia1RomName, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
+	NULL, FantasiabRomInfo, FantasiabRomName, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
 	FantasiaInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	224, 256, 3, 4
 };
@@ -2075,7 +2075,7 @@ struct BurnDriver BurnDrvSupmodel = {
 
 struct BurnDriver BurnDrvNewfant = {
 	"newfant", NULL, NULL, NULL, "1995",
-	"New Fantasia\0", NULL, "Comad / New Japan System", "Miscellaneous",
+	"New Fantasia (1995 copyright)\0", NULL, "Comad / New Japan System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, NewfantRomInfo, NewfantRomName, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
@@ -2085,7 +2085,7 @@ struct BurnDriver BurnDrvNewfant = {
 
 struct BurnDriver BurnDrvNewfanta = {
 	"newfanta", "newfant", NULL, NULL, "1995",
-	"New Fantasia (set 2)\0", NULL, "Comad / New Japan System", "Miscellaneous",
+	"New Fantasia (1994 copyright)\0", NULL, "Comad / New Japan System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, NewfantaRomInfo, NewfantaRomName, NULL, NULL, GalpanicInputInfo, FantasiaDIPInfo,
@@ -2154,8 +2154,8 @@ struct BurnDriver BurnDrvWownfant = {
 };
 
 struct BurnDriver BurnDrvPgalvip = {
-	"pgalvip", NULL, NULL, NULL, "1997",
-	"Pocket Gals V.I.P\0", NULL, "ACE International / Afega", "Miscellaneous",
+	"pgalvip", NULL, NULL, NULL, "1996",
+	"Pocket Gals V.I.P (set 1)\0", NULL, "ACE International / Afega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, PgalvipRomInfo, PgalvipRomName, NULL, NULL, GalhustlInputInfo, GalhustlDIPInfo,
@@ -2174,8 +2174,8 @@ struct BurnDriver BurnDrvGalhustl = {
 };
 
 struct BurnDriver BurnDrvPgalvipa = {
-	"pgalvipa", "pgalvip", NULL, NULL, "1997",
-	"Pocket Gals V.I.P (Newer?)\0", NULL, "ACE International / Afega", "Miscellaneous",
+	"pgalvipa", "pgalvip", NULL, NULL, "1996",
+	"Pocket Gals V.I.P (set 2)\0", NULL, "unknown", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, PgalvipaRomInfo, PgalvipaRomName, NULL, NULL, GalhustlInputInfo, GalhustlDIPInfo,

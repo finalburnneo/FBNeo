@@ -1246,6 +1246,20 @@ static INT32 SpunchoutLoadRoms()
 	return 0;
 }
 
+static INT32 SpunchoutjLoadRoms()
+{
+	if (PunchoutLoadRoms()) return 1;
+
+	swap_gfx(DrvGfxROM1 + 0x00000);
+	swap_gfx(DrvGfxROM1 + 0x04000);
+	swap_gfx(DrvGfxROM3 + 0x00000);
+	swap_gfx(DrvGfxROM3 + 0x02000);
+	swap_gfx(DrvGfxROM3 + 0x08000);
+	swap_gfx(DrvGfxROM3 + 0x0a000);
+
+	return 0;
+}
+
 // Punch-Out!!
 
 static struct BurnRomInfo punchoutRomDesc[] = {
@@ -1547,7 +1561,7 @@ STD_ROM_FN(spnchoutj)
 
 static INT32 SpnchoutjInit()
 {
-	return CommonInit(SpunchoutLoadRoms, 1, 0xffff, 0x00000000);
+	return CommonInit(SpunchoutjLoadRoms, 1, 0xffff, 0x000000ff);
 }
 
 struct BurnDriver BurnDrvSpnchoutj = {

@@ -667,7 +667,6 @@ static INT32 CommonInit(INT32 (*pInitCallback)(), INT32 punchout, INT32 reverse_
 
 	ZetSetOutHandler(punchout_write_port);
 	ZetSetInHandler(punchout_read_port);
-	ZetMemEnd();
 	ZetClose();
 
 	M6502Init(0, TYPE_N2A03);

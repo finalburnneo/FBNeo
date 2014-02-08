@@ -3061,6 +3061,41 @@ struct BurnDriver BurnDrvMasterwj = {
 };
 
 
+// Yukiwo (World, prototype)
+
+static struct BurnRomInfo yukiwoRomDesc[] = {
+	{ "ic33-rom0e.bin",		0x020000, 0xa0dd51d9, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "ic24-e882.bin",		0x020000, 0xd66f29d4, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "ic34-rom1e.bin",		0x010000, 0x5ab7bc95, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "ic25-rom10.bin",		0x010000, 0x0571b986, TAITO_68KROM1_BYTESWAP }, //  3
+
+	{ "ic30-snd.bin",		0x008000, 0x8632adb7, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "ic30-snd.bin",		0x008000, 0x8632adb7, TAITO_Z80ROM1 },		//
+
+	{ "ic5-9df1.bin",		0x020000, 0x0507b908, TAITO_CHARS_BYTESWAP },	//  5 Graphics Tiles
+	{ "ic1-a010.bin",		0x020000, 0x0030dce2, TAITO_CHARS_BYTESWAP },	//  6
+	{ "ic6-6f3f.bin",		0x020000, 0x77afcf80, TAITO_CHARS_BYTESWAP },	//  7
+	{ "ic2-6588.bin",		0x020000, 0x25e79bc2, TAITO_CHARS_BYTESWAP },	//  8
+	{ "ic7-7c16.bin",		0x020000, 0xa366bffd, TAITO_CHARS_BYTESWAP },	//  9
+	{ "ic3-1305.bin",		0x020000, 0x8772b1a6, TAITO_CHARS_BYTESWAP },	// 10
+	{ "ic8-e28a.bin",		0x020000, 0x1b3db354, TAITO_CHARS_BYTESWAP },	// 11
+	{ "ic4-9e5e.bin",		0x020000, 0x3b30166b, TAITO_CHARS_BYTESWAP },	// 12
+};
+
+STD_ROM_PICK(yukiwo)
+STD_ROM_FN(yukiwo)
+
+struct BurnDriver BurnDrvYukiwo = {
+	"yukiwo", "masterw", NULL, NULL, "1989",
+	"Yukiwo (World, prototype)\0", "Imperfect graphics", "Taito Corporation Japan", "Taito B System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_PROTOTYPE, 2, HARDWARE_TAITO_TAITOB, GBF_VERSHOOT, 0,
+	NULL, yukiwoRomInfo, yukiwoRomName, NULL, NULL, CommonInputInfo, MasterwDIPInfo,
+	MasterwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	224, 320, 3, 4
+};
+
+
 // Nastar (World)
 
 static struct BurnRomInfo nastarRomDesc[] = {

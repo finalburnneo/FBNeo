@@ -1850,7 +1850,7 @@ static struct BurnRomInfo Timescan1RomDesc[] = {
 	
 	{ "epr-10547.1",   0x08000, 0xd24ffc4b, SYS16_ROM_7751DATA | BRF_SND },
 	
-	{ "317-0024.key",  0x02000, 0xee42ec18, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0024.key",  0x02000, 0x0e64a504, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 

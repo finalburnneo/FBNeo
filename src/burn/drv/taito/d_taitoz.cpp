@@ -2765,6 +2765,44 @@ static struct BurnRomInfo RacingbRomDesc[] = {
 STD_ROM_PICK(Racingb)
 STD_ROM_FN(Racingb)
 
+static struct BurnRomInfo RacingbjRomDesc[] = {
+	{ "c84-107.ic3",   0x020000, 0x520aa110, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c84-109.ic5",   0x020000, 0x7ec710de, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c84-104.2",     0x020000, 0x37077fc6, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c84-108.ic4",   0x020000, 0xa2afb0ee, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	
+	{ "c84-99.35",     0x020000, 0x24778f40, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "c84-100.36",    0x020000, 0x2b99258a, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	
+	{ "c84-101.42",    0x020000, 0x9322106e, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+
+	{ "c84-90.12",     0x080000, 0x83ee0e8d, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "c84-89.11",     0x080000, 0xaae43c87, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	
+	{ "c84-92.25",     0x100000, 0x56e8fd55, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c84-94.33",     0x100000, 0x6117c19b, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c84-91.23",     0x100000, 0xb1b0146c, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "c84-93.31",     0x100000, 0x8837bb4e, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	
+	{ "c84-84.12",     0x080000, 0x34dc486b, BRF_GRA | TAITO_ROAD },
+	
+	{ "c84-88.3",      0x080000, 0xedd1f49c, BRF_GRA | TAITO_SPRITEMAP },
+	
+	{ "c84-86.33",     0x100000, 0x98d9771e, BRF_SND | TAITO_YM2610A },
+	{ "c84-87.46",     0x080000, 0x9c1dd80c, BRF_SND | TAITO_YM2610A },
+	
+	{ "c84-85.31",     0x080000, 0x24cd838d, BRF_SND | TAITO_YM2610B },
+	
+	{ "c84-19.15",     0x010000, 0x7245a6f6, BRF_OPT },
+	{ "c84-07.22",     0x000100, 0x95a15c77, BRF_OPT },
+	{ "c84-09.74",     0x000100, 0x71217472, BRF_OPT },
+	{ "c84-10.16",     0x000400, 0x643e8bfc, BRF_OPT },
+	{ "c84-11.17",     0x000400, 0x10728853, BRF_OPT },
+};
+
+STD_ROM_PICK(Racingbj)
+STD_ROM_FN(Racingbj)
+
 static struct BurnRomInfo SciRomDesc[] = {
 	{ "c09-37.43",     0x20000, 0x0fecea17, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c09-38.40",     0x20000, 0xe46ebd9b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -6652,6 +6690,16 @@ struct BurnDriver BurnDrvRacingb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, RacingbRomInfo, RacingbRomName, NULL, NULL, RacingbInputInfo, RacingbDIPInfo,
+	RacingbInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	NULL, 0x1000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvRacingbj = {
+	"racingbj", "racingb", NULL, NULL, "1991",
+	"Racing Beat (Japan)\0", NULL, "Taito Corporation", "Taito-Z",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
+	NULL, RacingbjRomInfo, RacingbjRomName, NULL, NULL, RacingbInputInfo, RacingbDIPInfo,
 	RacingbInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };

@@ -566,6 +566,46 @@ STD_ROM_PICK(Missw96)
 STD_ROM_FN(Missw96)
 
 // Rom information
+static struct BurnRomInfo Missw96aRomDesc[] = {
+	{ "mw96n2_10.prog2",   	0x080000, 0x563ce811, BRF_ESS | BRF_PRG }, // 68000 code
+	{ "mw96n2_6.prog1",   	0x080000, 0x98e91a3b, BRF_ESS | BRF_PRG },
+	{ "mw96_09.bin",   		0x080000, 0x7032dfdf, BRF_ESS | BRF_PRG },
+	{ "mw96_05.bin",		0x080000, 0x91de5ab5, BRF_ESS | BRF_PRG },
+	{ "mw96_08.bin",   		0x080000, 0xb8e66fb5, BRF_ESS | BRF_PRG },
+	{ "mw96_04.bin",		0x080000, 0xe77a04f8, BRF_ESS | BRF_PRG },
+	{ "mw96_07.bin", 		0x080000, 0x26112ed3, BRF_ESS | BRF_PRG },
+	{ "mw96_03.bin",		0x080000, 0xe9374a46, BRF_ESS | BRF_PRG },
+
+	{ "mw96_11.bin",   		0x080000, 0x3983152f, BRF_GRA },			  // graphics
+
+	{ "mw96_01.bin",   		0x080000, 0xe78a659e, BRF_SND },			  // PCM
+	{ "mw96_02.bin",   		0x080000, 0x60fa0c00, BRF_SND },
+};
+
+STD_ROM_PICK(Missw96a)
+STD_ROM_FN(Missw96a)
+
+// Rom information
+static struct BurnRomInfo Missw96bRomDesc[] = {
+	{ "mw96n3_10.prog2",   	0x080000, 0x67bde86b, BRF_ESS | BRF_PRG }, // 68000 code
+	{ "mw96n3_6.prog1",   	0x080000, 0xde99cc48, BRF_ESS | BRF_PRG },
+	{ "mw96_09.bin",   		0x080000, 0x7032dfdf, BRF_ESS | BRF_PRG },
+	{ "mw96_05.bin",		0x080000, 0x91de5ab5, BRF_ESS | BRF_PRG },
+	{ "mw96_08.bin",   		0x080000, 0xb8e66fb5, BRF_ESS | BRF_PRG },
+	{ "mw96_04.bin",		0x080000, 0xe77a04f8, BRF_ESS | BRF_PRG },
+	{ "mw96_07.bin", 		0x080000, 0x26112ed3, BRF_ESS | BRF_PRG },
+	{ "mw96_03.bin",		0x080000, 0xe9374a46, BRF_ESS | BRF_PRG },
+
+	{ "mw96_11.bin",   		0x080000, 0x3983152f, BRF_GRA },			  // graphics
+
+	{ "mw96_01.bin",   		0x080000, 0xe78a659e, BRF_SND },			  // PCM
+	{ "mw96_02.bin",   		0x080000, 0x60fa0c00, BRF_SND },
+};
+
+STD_ROM_PICK(Missw96b)
+STD_ROM_FN(Missw96b)
+
+// Rom information
 static struct BurnRomInfo Missmw96RomDesc[] = {
 	{ "mmw96_10.bin",  		0x080000, 0x45ed1cd9, BRF_ESS | BRF_PRG }, // 68000 code
 	{ "mmw96_06.bin",  		0x080000, 0x52ec9e5d, BRF_ESS | BRF_PRG },
@@ -2105,10 +2145,30 @@ struct BurnDriver BurnDrvFantsy95 = {
 
 struct BurnDriver BurnDrvMissw96 = {
 	"missw96", NULL, NULL, NULL, "1996",
-	"Miss World '96 (Nude)\0", NULL, "Comad", "Miscellaneous",
+	"Miss World '96 (Nude) (set1)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Missw96RomInfo, Missw96RomName, NULL, NULL, GalpanicInputInfo, Missw96DIPInfo,
+	Missw96Init, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
+	256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvMissw96a = {
+	"missw96a", "missw96", NULL, NULL, "1996",
+	"Miss World '96 (Nude) (set 2)\0", NULL, "Comad", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, Missw96aRomInfo, Missw96aRomName, NULL, NULL, GalpanicInputInfo, Missw96DIPInfo,
+	Missw96Init, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
+	256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvMissw96b = {
+	"missw96b", "missw96", NULL, NULL, "1996",
+	"Miss World '96 (Nude) (set 3)\0", NULL, "Comad", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, Missw96bRomInfo, Missw96bRomName, NULL, NULL, GalpanicInputInfo, Missw96DIPInfo,
 	Missw96Init, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	256, 224, 4, 3
 };

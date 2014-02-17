@@ -635,18 +635,18 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Funky Jet (World)
+// Funky Jet (World, rev 1)
 
 static struct BurnRomInfo funkyjetRomDesc[] = {
-	{ "jk00.12f",		0x40000, 0x712089c1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "jk01.13f",		0x40000, 0xbe3920d7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "jk00-1.12f",		0x40000, 0xce61579d, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "jk01-1.13f",		0x40000, 0x274d04be, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "jk02.16f",		0x10000, 0x748c0bd8, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
 
-	{ "mat02",		0x80000, 0xe4b94c7e, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+	{ "mat02",			0x80000, 0xe4b94c7e, 3 | BRF_GRA },           //  3 Characters & Background Tiles
 
-	{ "mat01",		0x80000, 0x24093a8d, 4 | BRF_GRA },           //  4 Sprites
-	{ "mat00",		0x80000, 0xfbda0228, 4 | BRF_GRA },           //  5
+	{ "mat01",			0x80000, 0x24093a8d, 4 | BRF_GRA },           //  4 Sprites
+	{ "mat00",			0x80000, 0xfbda0228, 4 | BRF_GRA },           //  5
 
 	{ "jk03.15h",		0x20000, 0x69a0eaf7, 5 | BRF_SND },           //  6 OKI M6295 Samples
 };
@@ -656,7 +656,7 @@ STD_ROM_FN(funkyjet)
 
 struct BurnDriver BurnDrvFunkyjet = {
 	"funkyjet", NULL, NULL, NULL, "1992",
-	"Funky Jet (World)\0", NULL, "[Data East] (Mitchell license)", "DECO IC16",
+	"Funky Jet (World, rev 1)\0", NULL, "[Data East] (Mitchell license)", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, funkyjetRomInfo, funkyjetRomName, NULL, NULL, FunkyjetInputInfo, FunkyjetDIPInfo,
@@ -665,20 +665,50 @@ struct BurnDriver BurnDrvFunkyjet = {
 };
 
 
-// Funky Jet (Japan)
+// Funky Jet (World)
+
+static struct BurnRomInfo funkyjetaRomDesc[] = {
+	{ "jk00.12f",		0x40000, 0x712089c1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "jk01.13f",		0x40000, 0xbe3920d7, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "jk02.16f",		0x10000, 0x748c0bd8, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
+
+	{ "mat02",			0x80000, 0xe4b94c7e, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+
+	{ "mat01",			0x80000, 0x24093a8d, 4 | BRF_GRA },           //  4 Sprites
+	{ "mat00",			0x80000, 0xfbda0228, 4 | BRF_GRA },           //  5
+
+	{ "jk03.15h",		0x20000, 0x69a0eaf7, 5 | BRF_SND },           //  6 OKI M6295 Samples
+};
+
+STD_ROM_PICK(funkyjeta)
+STD_ROM_FN(funkyjeta)
+
+struct BurnDriver BurnDrvFunkyjeta = {
+	"funkyjeta", "funkyjet", NULL, NULL, "1992",
+	"Funky Jet (World)\0", NULL, "[Data East] (Mitchell license)", "DECO IC16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
+	NULL, funkyjetaRomInfo, funkyjetaRomName, NULL, NULL, FunkyjetInputInfo, FunkyjetDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	320, 240, 4, 3
+};
+
+
+// Funky Jet (Japan, rev 2)
 
 static struct BurnRomInfo funkyjetjRomDesc[] = {
 	{ "jh00-2.11f",		0x40000, 0x5b98b700, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "jh01-2.13f",		0x40000, 0x21280220, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "jk02.16f",		0x10000, 0x748c0bd8, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
+	{ "jh02.16f",		0x10000, 0x748c0bd8, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
 
-	{ "mat02",		0x80000, 0xe4b94c7e, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+	{ "mat02",			0x80000, 0xe4b94c7e, 3 | BRF_GRA },           //  3 Characters & Background Tiles
 
-	{ "mat01",		0x80000, 0x24093a8d, 4 | BRF_GRA },           //  4 Sprites
-	{ "mat00",		0x80000, 0xfbda0228, 4 | BRF_GRA },           //  5
+	{ "mat01",			0x80000, 0x24093a8d, 4 | BRF_GRA },           //  4 Sprites
+	{ "mat00",			0x80000, 0xfbda0228, 4 | BRF_GRA },           //  5
 
-	{ "jk03.15h",		0x20000, 0x69a0eaf7, 5 | BRF_SND },           //  6 OKI M6295 Samples
+	{ "jh03.15h",		0x20000, 0x69a0eaf7, 5 | BRF_SND },           //  6 OKI M6295 Samples
 };
 
 STD_ROM_PICK(funkyjetj)
@@ -686,7 +716,7 @@ STD_ROM_FN(funkyjetj)
 
 struct BurnDriver BurnDrvFunkyjetj = {
 	"funkyjetj", "funkyjet", NULL, NULL, "1992",
-	"Funky Jet (Japan)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Funky Jet (Japan, rev 2)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM, 0,
 	NULL, funkyjetjRomInfo, funkyjetjRomName, NULL, NULL, FunkyjetInputInfo, FunkyjetjDIPInfo,
@@ -698,15 +728,15 @@ struct BurnDriver BurnDrvFunkyjetj = {
 // Sotsugyo Shousho
 
 static struct BurnRomInfo sotsugyoRomDesc[] = {
-	{ "03.12f",		0x40000, 0xd175dfd1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "04.13f",		0x40000, 0x2072477c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "03.12f",			0x40000, 0xd175dfd1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "04.13f",			0x40000, 0x2072477c, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "sb020.16f",		0x10000, 0xbaf5ec93, 2 | BRF_PRG | BRF_ESS }, //  2 Huc6280 Code
 
-	{ "02.2f",		0x80000, 0x337b1451, 3 | BRF_GRA },           //  3 Characters & Background Tiles
+	{ "02.2f",			0x80000, 0x337b1451, 3 | BRF_GRA },           //  3 Characters & Background Tiles
 
-	{ "01.4a",		0x80000, 0xfa10dd54, 4 | BRF_GRA },           //  4 Sprites
-	{ "00.2a",		0x80000, 0xd35a14ef, 4 | BRF_GRA },           //  5
+	{ "01.4a",			0x80000, 0xfa10dd54, 4 | BRF_GRA },           //  4 Sprites
+	{ "00.2a",			0x80000, 0xd35a14ef, 4 | BRF_GRA },           //  5
 
 	{ "sb030.15h",		0x20000, 0x1ea43f48, 5 | BRF_SND },           //  6 OKI M6295 Samples
 };

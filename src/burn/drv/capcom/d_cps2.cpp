@@ -929,6 +929,49 @@ STD_ROM_PICK(Ninexxh)
 STD_ROM_FN(Ninexxh)
 
 static struct BurnRomInfo NinexxjRomDesc[] = {
+	{ "19xj.03b",      0x080000, 0xbcad93dd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "19xj.04b",      0x080000, 0x931882a1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "19xj.05b",      0x080000, 0xe7eeddc4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "19xj.06b",      0x080000, 0xf27cd6b8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "19xj.07",       0x080000, 0x61c0296c, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, // 19x.07
+
+	{ "19x-69.4j",     0x080000, 0x427aeb18, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.13m
+	{ "19x-59.4d",     0x080000, 0x63bdbf54, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.15m
+	{ "19x-79.4m",     0x080000, 0x2dfe18b5, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.17m
+	{ "19x-89.4p",     0x080000, 0xcbef9579, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.19m
+	{ "19x-73.8j",     0x080000, 0x8e81f595, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.14m
+	{ "19x-74.9j",     0x080000, 0x6d7ad22e, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.14m
+	{ "19x-75.10j",    0x080000, 0xcb1a1b6a, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.14m
+	{ "19x-76.11j",    0x080000, 0x26fc2b08, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.14m
+	{ "19x-63.8d",     0x080000, 0x6f8b045e, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.16m
+	{ "19x-64.9d",     0x080000, 0xccd5725a, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.16m
+	{ "19x-65.10d",    0x080000, 0x6cf6db35, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.16m
+	{ "19x-66.11d",    0x080000, 0x16115dd3, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.16m
+	{ "19x-83.8m",     0x080000, 0xc11f88c1, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.18m
+	{ "19x-84.9m",     0x080000, 0x68cc9cd8, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.18m
+	{ "19x-85.10m",    0x080000, 0xf213666b, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.18m
+	{ "19x-86.11m",    0x080000, 0x574e0473, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.18m
+	{ "19x-93.8p",     0x080000, 0x9fad3c55, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.20m
+	{ "19x-94.9p",     0x080000, 0xe10e252c, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.20m
+	{ "19x-95.10p",    0x080000, 0x2b86fa67, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.20m
+	{ "19x-96.11p",    0x080000, 0xae6eb692, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.20m
+
+	{ "19x-01.1a",     0x020000, 0xef55195e, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG }, // 19x.01
+
+	{ "19x-51.6a",     0x080000, 0xe9cd7780, CPS2_QSND | BRF_SND }, // 19x.11m
+	{ "19x-52.7a",     0x080000, 0xb27b91a8, CPS2_QSND | BRF_SND }, // 19x.11m
+	{ "19x-53.8a",     0x080000, 0x2e563ee2, CPS2_QSND | BRF_SND }, // 19x.11m
+	{ "19x-54.9a",     0x080000, 0xf47c1f24, CPS2_QSND | BRF_SND }, // 19x.11m
+	{ "19x-55.10a",    0x080000, 0x0b1af6e0, CPS2_QSND | BRF_SND }, // 19x.12m
+	{ "19x-56.11a",    0x080000, 0xdfa8819f, CPS2_QSND | BRF_SND }, // 19x.12m
+	{ "19x-57.12a",    0x080000, 0x229ba777, CPS2_QSND | BRF_SND }, // 19x.12m
+	{ "19x-58.13a",    0x080000, 0xc7dceba4, CPS2_QSND | BRF_SND }, // 19x.12m
+};
+
+STD_ROM_PICK(Ninexxj)
+STD_ROM_FN(Ninexxj)
+
+static struct BurnRomInfo Ninexxjr1RomDesc[] = {
 	{ "19xj.03a",      0x080000, 0xed08bdd1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "19xj.04a",      0x080000, 0xfb8e3f29, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "19xj.05a",      0x080000, 0xaa508ac4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -950,10 +993,10 @@ static struct BurnRomInfo NinexxjRomDesc[] = {
 	{ "19x.12m",       0x200000, 0xd47c96e2, CPS2_QSND | BRF_SND },
 };
 
-STD_ROM_PICK(Ninexxj)
-STD_ROM_FN(Ninexxj)
+STD_ROM_PICK(Ninexxjr1)
+STD_ROM_FN(Ninexxjr1)
 
-static struct BurnRomInfo Ninexxjr1RomDesc[] = {
+static struct BurnRomInfo Ninexxjr2RomDesc[] = {
 	{ "19xj.03",       0x080000, 0x26a381ed, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "19xj.04",       0x080000, 0x30100cca, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "19xj.05",       0x080000, 0xde67e938, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -975,51 +1018,8 @@ static struct BurnRomInfo Ninexxjr1RomDesc[] = {
 	{ "19x.12m",       0x200000, 0xd47c96e2, CPS2_QSND | BRF_SND },
 };
 
-STD_ROM_PICK(Ninexxjr1)
-STD_ROM_FN(Ninexxjr1)
-
-static struct BurnRomInfo NinexxjrRomDesc[] = {
-	{ "19xj.03b",      0x080000, 0xbcad93dd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "19xj.04b",      0x080000, 0x931882a1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "19xj.05b",      0x080000, 0xe7eeddc4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "19xj.06b",      0x080000, 0xf27cd6b8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "19xj.07",       0x080000, 0x61c0296c, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, // 19x.07
-
-	{ "19x-69.4j",     0x080000, 0x427aeb18, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.13m
-	{ "19x-59.4d",     0x080000, 0x63bdbf54, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.15m
-	{ "19x-79.4m",     0x080000, 0x2dfe18b5, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.17m
-	{ "19x-89.4p",     0x080000, 0xcbef9579, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.19m
-	{ "19x-73.8j",     0x080000, 0x8e81f595, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.14m
-	{ "19x-74.9j",     0x080000, 0x6d7ad22e, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.14m
-	{ "19x-75.10j",    0x080000, 0xcb1a1b6a, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.14m
-	{ "19x-76.11j",    0x080000, 0x26fc2b08, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.14m
-	{ "19x-63.8d",     0x080000, 0x6f8b045e, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.16m
-	{ "19x-64.9d",     0x080000, 0xccd5725a, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.16m
-	{ "19x-65.10d",    0x080000, 0x6cf6db35, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.16m
-	{ "19x-66.11d",    0x080000, 0x16115dd3, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.16m
-	{ "19x-83.8m",     0x080000, 0xc11f88c1, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.18m
-	{ "19x-84.9m",     0x080000, 0x68cc9cd8, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.18m
-	{ "19x-85.10m",    0x080000, 0xf213666b, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.18m
-	{ "19x-86.11m",    0x080000, 0x574e0473, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.18m
-	{ "19x-93.8p",     0x080000, 0x9fad3c55, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.20m
-	{ "19x-94.9p",     0x080000, 0xe10e252c, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.20m
-	{ "19x-95.10p",    0x080000, 0x2b86fa67, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.20m
-	{ "19x-96.11p",    0x080000, 0xae6eb692, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.20m
-
-	{ "19x-01.1a",     0x020000, 0xef55195e, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG }, // 19x.01
-
-	{ "19x-51.6a",     0x080000, 0xe9cd7780, CPS2_QSND | BRF_SND }, // 19x.11m
-	{ "19x-52.7a",     0x080000, 0xb27b91a8, CPS2_QSND | BRF_SND }, // 19x.11m
-	{ "19x-53.8a",     0x080000, 0x2e563ee2, CPS2_QSND | BRF_SND }, // 19x.11m
-	{ "19x-54.9a",     0x080000, 0xf47c1f24, CPS2_QSND | BRF_SND }, // 19x.11m
-	{ "19x-55.10a",    0x080000, 0x0b1af6e0, CPS2_QSND | BRF_SND }, // 19x.12m
-	{ "19x-56.11a",    0x080000, 0xdfa8819f, CPS2_QSND | BRF_SND }, // 19x.12m
-	{ "19x-57.12a",    0x080000, 0x229ba777, CPS2_QSND | BRF_SND }, // 19x.12m
-	{ "19x-58.13a",    0x080000, 0xc7dceba4, CPS2_QSND | BRF_SND }, // 19x.12m
-};
-
-STD_ROM_PICK(Ninexxjr)
-STD_ROM_FN(Ninexxjr)
+STD_ROM_PICK(Ninexxjr2)
+STD_ROM_FN(Ninexxjr2)
 
 static struct BurnRomInfo Nine44RomDesc[] = {
 	{ "nffu.03",       0x080000, 0x9693cf8f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -1607,7 +1607,8 @@ static struct BurnRomInfo CsclubjRomDesc[] = {
 STD_ROM_PICK(Csclubj)
 STD_ROM_FN(Csclubj)
 
-static struct BurnRomInfo CsclubjrRomDesc[] = {
+static struct BurnRomInfo CsclubjyRomDesc[] = {
+// this is fairly redundant, same code as csclubj, same gfx as csclub (yellow case - all eprom), but it's a valid shipped combination
 	{ "cscj.03",       0x080000, 0xec4ddaa2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "cscj.04",       0x080000, 0x60c632bb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "cscj.05",       0x080000, 0xad042003, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -1643,8 +1644,8 @@ static struct BurnRomInfo CsclubjrRomDesc[] = {
 	{ "csc.58",        0x080000, 0x2300b7b3, CPS2_QSND | BRF_SND },
 };
 
-STD_ROM_PICK(Csclubjr)
-STD_ROM_FN(Csclubjr)
+STD_ROM_PICK(Csclubjy)
+STD_ROM_FN(Csclubjy)
 
 static struct BurnRomInfo CybotsRomDesc[] = {
 	{ "cybe.03",       0x080000, 0x234381cd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -7467,8 +7468,8 @@ struct BurnDriver BurnDrvCps19xxh = {
 };
 
 struct BurnDriver BurnDrvCps19xxj = {
-	"19xxj", "19xx", NULL, NULL, "1995",
-	"19XX - the war against destiny (951225 Japan)\0", NULL, "Capcom", "CPS2",
+	"19xxj", "19xx", NULL, NULL, "1996",
+	"19XX - the war against destiny (960104 Japan, yellow case)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
 	NULL, NinexxjRomInfo, NinexxjRomName, NULL, NULL, NineXXInputInfo, NULL,
@@ -7478,7 +7479,7 @@ struct BurnDriver BurnDrvCps19xxj = {
 
 struct BurnDriver BurnDrvCps19xxjr1 = {
 	"19xxjr1", "19xx", NULL, NULL, "1995",
-	"19XX - the war against destiny (951207 Japan)\0", NULL, "Capcom", "CPS2",
+	"19XX - the war against destiny (951225 Japan)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
 	NULL, Ninexxjr1RomInfo, Ninexxjr1RomName, NULL, NULL, NineXXInputInfo, NULL,
@@ -7486,12 +7487,12 @@ struct BurnDriver BurnDrvCps19xxjr1 = {
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };
 
-struct BurnDriver BurnDrvCps19xxjr = {
-	"19xxjr", "19xx", NULL, NULL, "1996",
-	"19XX - the war against destiny (960104 Japan, Rent version)\0", NULL, "Capcom", "CPS2",
+struct BurnDriver BurnDrvCps19xxjr2 = {
+	"19xxjr2", "19xx", NULL, NULL, "1995",
+	"19XX - the war against destiny (951207 Japan)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
-	NULL, NinexxjrRomInfo, NinexxjrRomName, NULL, NULL, NineXXInputInfo, NULL,
+	NULL, Ninexxjr2RomInfo, Ninexxjr2RomName, NULL, NULL, NineXXInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };
@@ -7726,12 +7727,12 @@ struct BurnDriver BurnDrvCpsCsclubj = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsCsclubjr = {
-	"csclubjr", "csclub", NULL, NULL, "1997",
-	"Capcom Sports Club (970722 Japan, Rent version)\0", NULL, "Capcom", "CPS2",
+struct BurnDriver BurnDrvCpsCsclubjy = {
+	"csclubjy", "csclub", NULL, NULL, "1997",
+	"Capcom Sports Club (970722 Japan, yellow case)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_SPORTSMISC, 0,
-	NULL, CsclubjrRomInfo, CsclubjrRomName, NULL, NULL, CsclubInputInfo, NULL,
+	NULL, CsclubjyRomInfo, CsclubjyRomName, NULL, NULL, CsclubInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

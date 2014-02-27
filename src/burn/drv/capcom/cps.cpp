@@ -1472,7 +1472,7 @@ INT32 Cps2LoadTilesSIM(UINT8* Tile, INT32 nStart)
 	return 0;
 }
 
-INT32 Cps2LoadTiles19xxjr(UINT8* Tile, INT32 nStart)
+INT32 Cps2LoadTiles19xxj(UINT8* Tile, INT32 nStart)
 {
 	// left
 	Cps2LoadOne(Tile + 0x000000, nStart +  0, 1, 0);
@@ -1683,9 +1683,9 @@ static INT32 CpsGetROMs(bool bLoad)
 			}
 		}
 		
-		if ((ri.nType & 0x0f) == CPS2_GFX_19XXJR) {
+		if ((ri.nType & 0x0f) == CPS2_GFX_19XXJ) {
 			if (bLoad) {
-				Cps2LoadTiles19xxjr(CpsGfxLoad, i);
+				Cps2LoadTiles19xxj(CpsGfxLoad, i);
 				CpsGfxLoad += (nGfxMaxSize == ~0U ? ri.nLen : nGfxMaxSize) * 20;
 				i += 20;
 			} else {

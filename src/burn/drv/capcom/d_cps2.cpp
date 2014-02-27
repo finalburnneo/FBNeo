@@ -1,7 +1,5 @@
 #include "cps.h"
 
-// Input Definitions
-
 INT32 Cps2Volume = 39;
 INT32 Cps2DisableDigitalVolume = 0;
 UINT8 Cps2VolUp;
@@ -13,6 +11,8 @@ UINT16 Cps2VolumeStates[40] = {
 	0xe110, 0xe108, 0xe104, 0xe102, 0xe101, 0xe090, 0xe088, 0xe084, 0xe082, 0xe081,
 	0xe050, 0xe048, 0xe044, 0xe042, 0xe041, 0xe030, 0xe028, 0xe024, 0xe022, 0xe021
 };
+
+// Input Definitions
 
 static struct BurnInputInfo Cps2FightingInputList[] = {
 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp020+4, "p1 coin"   },
@@ -977,6 +977,49 @@ static struct BurnRomInfo Ninexxjr1RomDesc[] = {
 
 STD_ROM_PICK(Ninexxjr1)
 STD_ROM_FN(Ninexxjr1)
+
+static struct BurnRomInfo NinexxjrRomDesc[] = {
+	{ "19xj.03b",      0x080000, 0xbcad93dd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "19xj.04b",      0x080000, 0x931882a1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "19xj.05b",      0x080000, 0xe7eeddc4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "19xj.06b",      0x080000, 0xf27cd6b8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "19xj.07",       0x080000, 0x61c0296c, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, // 19x.07
+
+	{ "19x-69.4j",     0x080000, 0x427aeb18, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.13m
+	{ "19x-59.4d",     0x080000, 0x63bdbf54, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.15m
+	{ "19x-79.4m",     0x080000, 0x2dfe18b5, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.17m
+	{ "19x-89.4p",     0x080000, 0xcbef9579, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.19m
+	{ "19x-73.8j",     0x080000, 0x8e81f595, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.14m
+	{ "19x-74.9j",     0x080000, 0x6d7ad22e, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.14m
+	{ "19x-75.10j",    0x080000, 0xcb1a1b6a, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.14m
+	{ "19x-76.11j",    0x080000, 0x26fc2b08, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.14m
+	{ "19x-63.8d",     0x080000, 0x6f8b045e, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.16m
+	{ "19x-64.9d",     0x080000, 0xccd5725a, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.16m
+	{ "19x-65.10d",    0x080000, 0x6cf6db35, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.16m
+	{ "19x-66.11d",    0x080000, 0x16115dd3, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.16m
+	{ "19x-83.8m",     0x080000, 0xc11f88c1, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.18m
+	{ "19x-84.9m",     0x080000, 0x68cc9cd8, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.18m
+	{ "19x-85.10m",    0x080000, 0xf213666b, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.18m
+	{ "19x-86.11m",    0x080000, 0x574e0473, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.18m
+	{ "19x-93.8p",     0x080000, 0x9fad3c55, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.20m
+	{ "19x-94.9p",     0x080000, 0xe10e252c, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.20m
+	{ "19x-95.10p",    0x080000, 0x2b86fa67, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.20m
+	{ "19x-96.11p",    0x080000, 0xae6eb692, CPS2_GFX_19XXJR | BRF_GRA }, // 19x.20m
+
+	{ "19x-01.1a",     0x020000, 0xef55195e, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG }, // 19x.01
+
+	{ "19x-51.6a",     0x080000, 0xe9cd7780, CPS2_QSND | BRF_SND }, // 19x.11m
+	{ "19x-52.7a",     0x080000, 0xb27b91a8, CPS2_QSND | BRF_SND }, // 19x.11m
+	{ "19x-53.8a",     0x080000, 0x2e563ee2, CPS2_QSND | BRF_SND }, // 19x.11m
+	{ "19x-54.9a",     0x080000, 0xf47c1f24, CPS2_QSND | BRF_SND }, // 19x.11m
+	{ "19x-55.10a",    0x080000, 0x0b1af6e0, CPS2_QSND | BRF_SND }, // 19x.12m
+	{ "19x-56.11a",    0x080000, 0xdfa8819f, CPS2_QSND | BRF_SND }, // 19x.12m
+	{ "19x-57.12a",    0x080000, 0x229ba777, CPS2_QSND | BRF_SND }, // 19x.12m
+	{ "19x-58.13a",    0x080000, 0xc7dceba4, CPS2_QSND | BRF_SND }, // 19x.12m
+};
+
+STD_ROM_PICK(Ninexxjr)
+STD_ROM_FN(Ninexxjr)
 
 static struct BurnRomInfo Nine44RomDesc[] = {
 	{ "nffu.03",       0x080000, 0x9693cf8f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -7367,7 +7410,7 @@ static INT32 DrvExit()
 	Ssf2t = 0;
 	Ssf2tb = 0;
 	Xmcota = 0;
-	
+
 	Cps2Volume = 39;
 	Cps2DisableDigitalVolume = 0;
 	
@@ -7439,6 +7482,16 @@ struct BurnDriver BurnDrvCps19xxjr1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
 	NULL, Ninexxjr1RomInfo, Ninexxjr1RomName, NULL, NULL, NineXXInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
+};
+
+struct BurnDriver BurnDrvCps19xxjr = {
+	"19xxjr", "19xx", NULL, NULL, "1996",
+	"19XX - the war against destiny (960104 Japan, Rent version)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
+	NULL, NinexxjrRomInfo, NinexxjrRomName, NULL, NULL, NineXXInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };

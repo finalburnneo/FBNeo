@@ -480,6 +480,7 @@ INT32 Sf2mdtScanSound(INT32 nAction, INT32 *pnMin);
 #define CPS2_GFX_SIMM						6
 #define CPS2_GFX_SPLIT4						7
 #define CPS2_GFX_SPLIT8						8
+#define CPS2_GFX_19XXJR						9
 #define CPS2_PRG_Z80						10
 #define CPS2_QSND							12
 #define CPS2_QSND_SIMM						13

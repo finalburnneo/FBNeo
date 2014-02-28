@@ -929,11 +929,11 @@ STD_ROM_PICK(Ninexxh)
 STD_ROM_FN(Ninexxh)
 
 static struct BurnRomInfo NinexxjRomDesc[] = {
-	{ "19xj.03b",      0x080000, 0xbcad93dd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "19xj.04b",      0x080000, 0x931882a1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "19xj.05b",      0x080000, 0xe7eeddc4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "19xj.06b",      0x080000, 0xf27cd6b8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "19xj.07",       0x080000, 0x61c0296c, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, // 19x.07
+	{ "19xj-03b.6a",   0x080000, 0xbcad93dd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "19xj-04b.7a",   0x080000, 0x931882a1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "19xj-05b.8a",   0x080000, 0xe7eeddc4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "19xj-06b.9a",   0x080000, 0xf27cd6b8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "19xj-07.6d",    0x080000, 0x61c0296c, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, // 19x.07
 
 	{ "19x-69.4j",     0x080000, 0x427aeb18, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.13m
 	{ "19x-59.4d",     0x080000, 0x63bdbf54, CPS2_GFX_19XXJ | BRF_GRA }, // 19x.15m

@@ -14596,3 +14596,39 @@ struct BurnDriver BurnDrvcphd = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+
+// Samurai Shodown V / Samurai Spirits Zero (bootleg, XBOX version)
+
+static struct BurnRomInfo samsho5xRomDesc[] = {
+	{ "ssvx_p1.rom",  0x800000, 0x16983af9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+		
+	{ "ssv_s1.rom",   0x020000, 0x2ad6048b, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "ssvx_c1.rom",  0x800000, 0x25272e50, 3 | BRF_GRA },           //  2 Sprite data
+	{ "ssvx_c2.rom",  0x800000, 0xba68f2e7, 3 | BRF_GRA },           //  3 
+	{ "ssvx_c3.rom",  0x800000, 0x75883cde, 3 | BRF_GRA },           //  4 
+	{ "ssvx_c4.rom",  0x800000, 0x348540e6, 3 | BRF_GRA },           //  5 
+	{ "ssvx_c5.rom",  0x800000, 0x1fee8dc8, 3 | BRF_GRA },           //  6
+	{ "ssvx_c6.rom",  0x800000, 0xc300b50d, 3 | BRF_GRA },           //  7
+	{ "ssvx_c7.rom",  0x800000, 0x5e722b0b, 3 | BRF_GRA },           //  8
+	{ "ssvx_c8.rom",  0x800000, 0xe2a2c546, 3 | BRF_GRA },           //  9
+
+	{ "ssvx_m1.rom",  0x080000, 0x5218a10a, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	{ "ssv_v1.bin",   0x800000, 0x809c7617, 5 | BRF_SND },           // 11 Sound data
+	{ "ssv_v2.bin",   0x800000, 0x42671607, 5 | BRF_SND },           // 12 
+};
+
+STDROMPICKEXT(samsho5x, samsho5x, neogeo)
+STD_ROM_FN(samsho5x)
+
+struct BurnDriverD BurnDrvsamsho5x = {
+	"samsho5x", "samsho5", "neogeo", NULL, "2003",
+	"Samurai Shodown V / Samurai Spirits Zero (bootleg, XBOX version)\0", NULL, "bootleg", "Neo Geo MVS",
+	L"Samurai Shodown V\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4\u96F6 (bootleg, XBOX version)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
+	NULL, samsho5xRomInfo, samsho5xRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};

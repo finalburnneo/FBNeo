@@ -4086,21 +4086,21 @@ INT32 NeoInit()
 	}
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_MVS) {
-		BurnLoadRom(NeoZ80BIOS,		0x00000 + 28, 1);
-		BurnLoadRom(NeoTextROMBIOS,	0x00000 + 29, 1);
-		BurnLoadRom(NeoZoomROM,		0x00000 + 30, 1);
+		BurnLoadRom(NeoZ80BIOS,		0x00000 + 29, 1);
+		BurnLoadRom(NeoTextROMBIOS,	0x00000 + 30, 1);
+		BurnLoadRom(NeoZoomROM,		0x00000 + 31, 1);
 	} else {
 
 		// Still load the Z80 BIOS & text layer data for AES systems, since it might be switched to MVS later
 
 		if (nNeoSystemType & NEO_SYS_PCB) {
 			bZ80BIOS = false;
-			BurnLoadRom(NeoTextROMBIOS,	0x00080 + 29, 1);
-			BurnLoadRom(NeoZoomROM,		0x00080 + 30, 1);
+			BurnLoadRom(NeoTextROMBIOS,	0x00080 + 30, 1);
+			BurnLoadRom(NeoZoomROM,		0x00080 + 31, 1);
 		} else {
-			BurnLoadRom(NeoZ80BIOS,		0x00080 + 28, 1);
-			BurnLoadRom(NeoTextROMBIOS,	0x00080 + 29, 1);
-			BurnLoadRom(NeoZoomROM,		0x00080 + 30, 1);
+			BurnLoadRom(NeoZ80BIOS,		0x00080 + 29, 1);
+			BurnLoadRom(NeoTextROMBIOS,	0x00080 + 30, 1);
+			BurnLoadRom(NeoZoomROM,		0x00080 + 31, 1);
 		}
 	}
 	BurnUpdateProgress(0.0, _T("Preprocessing text layer graphics...")/*, BST_PROCESS_TXT*/, 0);

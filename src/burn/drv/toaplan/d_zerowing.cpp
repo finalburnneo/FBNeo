@@ -18,8 +18,8 @@ static bool bEnableInterrupts;
 
 // Rom information
 static struct BurnRomInfo zerowingRomDesc[] = {
-	{ "o15-11.rom",   0x008000, 0x6ff2b9a0, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
-	{ "o15-12.rom",   0x008000, 0x9773e60b, BRF_ESS | BRF_PRG }, //  1
+	{ "o15-11ii.bin", 0x008000, 0xe697ecb9, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "o15-12ii.bin", 0x008000, 0xb29ee3ad, BRF_ESS | BRF_PRG }, //  1
 	{ "o15-09.rom",   0x020000, 0x13764e95, BRF_ESS | BRF_PRG }, //  1
 	{ "o15-10.rom",   0x020000, 0x351ba71a, BRF_ESS | BRF_PRG }, //  1
 
@@ -43,7 +43,33 @@ static struct BurnRomInfo zerowingRomDesc[] = {
 STD_ROM_PICK(zerowing)
 STD_ROM_FN(zerowing)
 
-static struct BurnRomInfo zerowng2RomDesc[] = {
+static struct BurnRomInfo zerowing1RomDesc[] = {
+	{ "o15-11.rom",   0x008000, 0x6ff2b9a0, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "o15-12.rom",   0x008000, 0x9773e60b, BRF_ESS | BRF_PRG }, //  1
+	{ "o15-09.rom",   0x020000, 0x13764e95, BRF_ESS | BRF_PRG }, //  1
+	{ "o15-10.rom",   0x020000, 0x351ba71a, BRF_ESS | BRF_PRG }, //  1
+
+	{ "o15-05.rom",   0x020000, 0x4e5dd246, BRF_GRA },			 //  6
+	{ "o15-06.rom",   0x020000, 0xc8c6d428, BRF_GRA },			 //  7
+	{ "o15-07.rom",   0x020000, 0xefc40e99, BRF_GRA },			 //  8
+	{ "o15-08.rom",   0x020000, 0x1b019eab, BRF_GRA },			 //  9
+	
+	{ "o15-03.rom",   0x020000, 0x7f245fd3, BRF_GRA },			 //  2
+	{ "o15-04.rom",   0x020000, 0x0b1a1289, BRF_GRA },			 //  3
+	{ "o15-01.rom",   0x020000, 0x70570e43, BRF_GRA },			 //  4
+	{ "o15-02.rom",   0x020000, 0x724b487f, BRF_GRA },			 //  5
+
+	{ "o15-13.rom",   0x008000, 0xe7b72383, BRF_ESS | BRF_PRG }, //  10 Z80 program
+
+	{ "tp015_14.bpr", 0x000020, 0xbc88cced, BRF_SND },			 // 11 Sprite attribute PROM
+	{ "tp015_15.bpr", 0x000020, 0xa1e17492, BRF_SND },			 // 12 ???
+};
+
+
+STD_ROM_PICK(zerowing1)
+STD_ROM_FN(zerowing1)
+
+static struct BurnRomInfo zerowingwRomDesc[] = {
 	{ "o15-11iiw.bin",0x008000, 0x38b0bb5b, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 	{ "o15-12iiw.bin",0x008000, 0x74c91e6f, BRF_ESS | BRF_PRG }, //  1
 	{ "o15-09.rom",   0x020000, 0x13764e95, BRF_ESS | BRF_PRG }, //  1
@@ -66,8 +92,8 @@ static struct BurnRomInfo zerowng2RomDesc[] = {
 };
 
 
-STD_ROM_PICK(zerowng2)
-STD_ROM_FN(zerowng2)
+STD_ROM_PICK(zerowingw)
+STD_ROM_FN(zerowingw)
 
 static struct BurnInputInfo zerowingInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvButton + 3,	"p1 coin"},
@@ -145,22 +171,22 @@ static struct BurnDIPInfo zerowingDIPList[] = {
 	{0x13,	0x01, 0x30,	0x20, "4"},
 	{0x13,	0x01, 0x30,	0x10, "5"},
 	{0,		0xFE, 0,	2,	  NULL},
-    	{0x13,	0x01, 0x40,	0x00, "Normal Game"},
-    	{0x13,	0x01, 0x40,	0x40, "No death & stop mode"},
-        {0,		0xFE, 0,	2,	  "Allow Continue"},
-    	{0x13,	0x01, 0x80,	0x00, "Yes"},
-    	{0x13,	0x01, 0x80,	0x80, "No"},
+    {0x13,	0x01, 0x40,	0x00, "Normal Game"},
+    {0x13,	0x01, 0x40,	0x40, "No death & stop mode"},
+    {0,		0xFE, 0,	2,	  "Allow Continue"},
+    {0x13,	0x01, 0x80,	0x00, "Yes"},
+    {0x13,	0x01, 0x80,	0x80, "No"},
 
 	// Region
 	{0,		0xFE, 0,	3,	  "Region"},
-    	{0x14,	0x01, 0x03,	0x00, "Japan"},
+    {0x14,	0x01, 0x03,	0x00, "Japan"},
     {0x14,	0x01, 0x03,	0x01, "US"},
     {0x14,	0x01, 0x03,	0x02, "Europe"},
 };
 
 STDDIPINFO(zerowing)
 
-static struct BurnDIPInfo zerowng2DIPList[] = {
+static struct BurnDIPInfo zerowing2DIPList[] = {
 	// Defaults
 	{0x12,	0xFF, 0xFF,	0x01, NULL},
 	{0x13,	0xFF, 0xFF,	0x00, NULL},
@@ -206,14 +232,14 @@ static struct BurnDIPInfo zerowng2DIPList[] = {
 	{0x13,	0x01, 0x30,	0x20, "4"},
 	{0x13,	0x01, 0x30,	0x10, "5"},
 	{0,		0xFE, 0,	2,	  NULL},
-    	{0x13,	0x01, 0x40,	0x00, "Normal Game"},
-    	{0x13,	0x01, 0x40,	0x40, "No death & stop mode"},
-        {0,		0xFE, 0,	2,	  "Allow Continue"},
-    	{0x13,	0x01, 0x80,	0x00, "Yes"},
-    	{0x13,	0x01, 0x80,	0x80, "No"},
+    {0x13,	0x01, 0x40,	0x00, "Normal Game"},
+    {0x13,	0x01, 0x40,	0x40, "No death & stop mode"},
+    {0,		0xFE, 0,	2,	  "Allow Continue"},
+    {0x13,	0x01, 0x80,	0x00, "Yes"},
+    {0x13,	0x01, 0x80,	0x80, "No"},
 };
 
-STDDIPINFO(zerowng2)
+STDDIPINFO(zerowing2)
 
 static UINT8 *Mem = NULL, *MemEnd = NULL;
 static UINT8 *RamStart, *RamEnd;
@@ -735,20 +761,30 @@ static INT32 DrvFrame()
 
 struct BurnDriver BurnDrvZerowing = {
 	"zerowing", NULL, NULL, NULL, "1989",
-	"Zero Wing\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Zero Wing (2P set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
-	NULL, zerowingRomInfo, zerowingRomName, NULL, NULL, zerowingInputInfo, zerowingDIPInfo,
+	NULL, zerowingRomInfo, zerowingRomName, NULL, NULL, zerowingInputInfo, zerowing2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x400,
 	320, 240, 4, 3
 };
 
-struct BurnDriver BurnDrvZerowng2 = {
-	"zerowing2", "zerowing", NULL, NULL, "1989",
-	"Zero Wing (2 player simultaneous ver.)\0", NULL, "[Toaplan] Williams Electronics Games, Inc", "Toaplan BCU-2 / FCU-2 based",
+struct BurnDriver BurnDrvZerowing1 = {
+	"zerowing1", "zerowing", NULL, NULL, "1989",
+	"Zero Wing (1P set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
-	NULL, zerowng2RomInfo, zerowng2RomName, NULL, NULL, zerowingInputInfo, zerowng2DIPInfo,
+	NULL, zerowing1RomInfo, zerowing1RomName, NULL, NULL, zerowingInputInfo, zerowingDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x400,
+	320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvZerowingw = {
+	"zerowingw", "zerowing", NULL, NULL, "1989",
+	"Zero Wing (2P set, Williams Electronics)\0", NULL, "Toaplan / Williams Electronics", "Toaplan BCU-2 / FCU-2 based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
+	NULL, zerowingwRomInfo, zerowingwRomName, NULL, NULL, zerowingInputInfo, zerowing2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x400,
 	320, 240, 4, 3
 };

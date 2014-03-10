@@ -6326,6 +6326,22 @@ static struct BurnRomInfo GalaxiantRomDesc[] = {
 STD_ROM_PICK(Galaxiant)
 STD_ROM_FN(Galaxiant)
 
+static struct BurnRomInfo GalaxianiRomDesc[] = {
+	{ "cp-1.8g",       0x00800, 0xe8f3aa67, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "cp-2.8f",       0x00800, 0xf58283e3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "cp-3.8e",       0x00800, 0x4c7031c0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "cp-4.8d",       0x00800, 0x097d92a2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "cp-5.8c",       0x00800, 0x5341d75a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "cp-7.1k",       0x00800, 0x287159b7, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "cp-6.1j",       0x00800, 0x6fb54cb1, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "6l.bpr",        0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galaxiani)
+STD_ROM_FN(Galaxiani)
+
 struct BurnDriver BurnDrvGalaxian = {
 	"galaxian", NULL, NULL, NULL, "1979",
 	"Galaxian (Namco set 1)\0", NULL, "Namco", "Galaxian",
@@ -6372,6 +6388,16 @@ struct BurnDriver BurnDrvGalaxiant = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, GalaxiantRomInfo, GalaxiantRomName, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
+	GalInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalaxiani = {
+	"galaxiani", "galaxian", NULL, NULL, "1979",
+	"Galaxian (Irem)\0", NULL, "bootleg? (Irem)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, GalaxianiRomInfo, GalaxianiRomName, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
 	GalInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

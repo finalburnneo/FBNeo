@@ -242,7 +242,7 @@ STD_ROM_FN(sfiii)
 // -----------------------------------------------
 static struct BurnRomInfo sfiiiuRomDesc[] = {
 
-	{ "sfiii_usa.29f400.u2",			0x080000, 0xfb172a8e, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	{ "sfiii_usa_region_b1.29f400.u2", 		0x080000, 0xfb172a8e, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 
 #if !defined ROM_VERIFY
 	SFIII_970204_FLASH
@@ -251,6 +251,21 @@ static struct BurnRomInfo sfiiiuRomDesc[] = {
 
 STD_ROM_PICK(sfiiiu)
 STD_ROM_FN(sfiiiu)
+
+// -----------------------------------------------
+// Street Fighter III: New Generation (Asia 970204)
+// -----------------------------------------------
+static struct BurnRomInfo sfiiiaRomDesc[] = {
+
+	{ "sfiii_asia_region_bd.29f400.u2", 	0x080000, 0xcbd28de7, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+
+#if !defined ROM_VERIFY
+	SFIII_970204_FLASH
+#endif
+};
+
+STD_ROM_PICK(sfiiia)
+STD_ROM_FN(sfiiia)
 
 // -------------------------------------------------
 // Street Fighter III: New Generation (Japan 970204)
@@ -1211,6 +1226,16 @@ struct BurnDriver BurnDrvSfiiiu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, FBF_SF,
 	NULL, sfiiiuRomInfo, sfiiiuRomName, NULL, NULL, cps3InputInfo, sfiiiusaDIPInfo,
+	sfiiiInit, cps3Exit, cps3Frame, NULL, cps3Scan, &cps3_palette_change, 0x40000,
+	384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvSfiiia = {
+	"sfiiia", "sfiii", NULL, NULL, "1997",
+	"Street Fighter III: New Generation (Asia 970204)\0", NULL, "Capcom", "CPS-3",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, FBF_SF,
+	NULL, sfiiiaRomInfo, sfiiiaRomName, NULL, NULL, cps3InputInfo, sfiiiasiaDIPInfo,
 	sfiiiInit, cps3Exit, cps3Frame, NULL, cps3Scan, &cps3_palette_change, 0x40000,
 	384, 224, 4, 3
 };

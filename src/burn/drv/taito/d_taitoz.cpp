@@ -2167,6 +2167,76 @@ static struct BurnRomInfo ChasehqjRomDesc[] = {
 STD_ROM_PICK(Chasehqj)
 STD_ROM_FN(Chasehqj)
 
+static struct BurnRomInfo ChasehqjuRomDesc[] = {
+	{ "b52-130.36",    0x20000, 0x4e7beb46, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b52-128.29",    0x20000, 0xc14f2cdc, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b52-131.37",    0x20000, 0xaa945d83, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b52-129.30",    0x20000, 0x0eaebc08, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	
+	{ "b52-132.39",    0x10000, 0xa2f54789, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "b52-133.55",    0x10000, 0x12232f95, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	
+	{ "b52-134.51",    0x10000, 0x91faac7f, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	
+	{ "b52-29.27",     0x80000, 0x8366d27c, BRF_GRA | TAITO_CHARS },
+	
+	{ "b52-34.5",      0x80000, 0x7d8dce36, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "b52-35.7",      0x80000, 0x78eeec0d, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "b52-36.9",      0x80000, 0x61e89e91, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "b52-37.11",     0x80000, 0xf02e47b9, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	
+	{ "b52-30.4",      0x80000, 0x1b8cc647, BRF_GRA | TAITO_SPRITESB_BYTESWAP32 },
+	{ "b52-31.6",      0x80000, 0xf1998e20, BRF_GRA | TAITO_SPRITESB_BYTESWAP32 },
+	{ "b52-32.8",      0x80000, 0x8620780c, BRF_GRA | TAITO_SPRITESB_BYTESWAP32 },
+	{ "b52-33.10",     0x80000, 0xe6f4b8c4, BRF_GRA | TAITO_SPRITESB_BYTESWAP32 },
+	
+	{ "b52-28.4",      0x80000, 0x963bc82b, BRF_GRA | TAITO_ROAD },
+	
+	{ "b52-38.34",     0x80000, 0x5b5bf7f6, BRF_GRA | TAITO_SPRITEMAP },
+	
+	{ "b52-41.71",     0x80000, 0x8204880c, BRF_SND | TAITO_YM2610A },
+	{ "b52-40.72",     0x80000, 0xf0551055, BRF_SND | TAITO_YM2610A },
+	{ "b52-39.73",     0x80000, 0xac9cbbd3, BRF_SND | TAITO_YM2610A },
+	
+	{ "b52-42.70",     0x80000, 0x6e617df1, BRF_SND | TAITO_YM2610B },
+	
+	{ "b52-01.7",      0x00100, 0x89719d17, BRF_OPT },
+	{ "b52-03.135",    0x00400, 0xa3f8490d, BRF_OPT },
+	{ "b52-06.24",     0x00100, 0xfbf81f30, BRF_OPT },
+	{ "b52-18.93",     0x00100, 0x60bdaf1a, BRF_OPT },
+	{ "b52-18a",       0x00100, 0x6271be0d, BRF_OPT },
+	{ "b52-49.68",     0x02000, 0x60dd2ed1, BRF_OPT },
+	{ "b52-50.66",     0x10000, 0xc189781c, BRF_OPT },
+	{ "b52-51.65",     0x10000, 0x30cc1f79, BRF_OPT },
+	{ "b52-126.136",   0x00400, 0xfa2f840e, BRF_OPT },
+	{ "b52-127.156",   0x00400, 0x77682a4f, BRF_OPT },
+	
+	{ "pal20l8b-b52-17.ic18",   0x00144, 0x4851316d, BRF_OPT },
+	{ "pal20l8b-b52-17.ic16",   0x00144, 0x4851316d, BRF_OPT },
+	{ "pal20l8b-b52-17.ic53",   0x00144, 0x4851316d, BRF_OPT },
+	{ "pal20l8b-b52-17.ic55",   0x00144, 0x4851316d, BRF_OPT },
+	{ "pal16l8b-b52-19.ic33",   0x00104, 0x3ba292dc, BRF_OPT },
+	{ "pal16l8b-b52-20.ic35",   0x00104, 0xbd39ad73, BRF_OPT },
+	{ "pal16l8b-b52-21.ic51",   0x00104, 0x2fe76aa4, BRF_OPT },
+	{ "pal20l8b-b52-25.ic123",  0x00144, 0x372b632d, BRF_OPT },
+	{ "pal20l8b-b52-26.ic15",   0x00144, 0xd94f2bc2, BRF_OPT },
+	{ "pal20l8b-b52-26.ic18",   0x00144, 0xd94f2bc2, BRF_OPT },
+	{ "pal20l8b-b52-26.ic52",   0x00144, 0xd94f2bc2, BRF_OPT },
+	{ "pal20l8b-b52-26.ic54",   0x00144, 0xd94f2bc2, BRF_OPT },
+	{ "pal20l8b-b52-27.ic64",   0x00144, 0x61c2ab26, BRF_OPT },
+	{ "pal20l8b-b52-118.ic20",  0x00144, 0x9c5fe4af, BRF_OPT },
+	{ "pal20l8b-b52-119.ic21",  0x00144, 0x8b8e2106, BRF_OPT },
+	{ "pal16l8b-b52-120.ic56",  0x00104, 0x3e7effa0, BRF_OPT },
+	{ "pal20l8b-b52-121.ic57",  0x00144, 0x7056fd1d, BRF_OPT },
+	{ "pal16l8b-b52-122.ic124", 0x00104, 0x04c0fb04, BRF_OPT },
+	{ "pal16l8b-b52-123.ic125", 0x00104, 0x3865d1c8, BRF_OPT },
+	{ "pal16l8b-b52-124.ic180", 0x00104, 0xd448a25a, BRF_OPT },
+	{ "pal16l8b-b52-125.ic112", 0x00104, 0x7628c557, BRF_OPT },
+};
+
+STD_ROM_PICK(Chasehqju)
+STD_ROM_FN(Chasehqju)
+
 static struct BurnRomInfo ChasehquRomDesc[] = {
 	{ "b52-138.36",    0x20000, 0x8b71fe51, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "b52-135.29",    0x20000, 0x5ba56a7c, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -6540,6 +6610,16 @@ struct BurnDriver BurnDrvChasehqj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ChasehqjRomInfo, ChasehqjRomName, NULL, NULL, ChasehqInputInfo, ChasehqjDIPInfo,
+	ChasehqInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	NULL, 0x1000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvChasehqju = {
+	"chasehqju", "chasehq", NULL, NULL, "1988",
+	"Chase H.Q. (Japan UP)\0", NULL, "Taito Corporation", "Taito-Z",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
+	NULL, ChasehqjuRomInfo, ChasehqjuRomName, NULL, NULL, ChasehqInputInfo, ChasehqjDIPInfo,
 	ChasehqInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };

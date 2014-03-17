@@ -4478,7 +4478,7 @@ struct BurnDriver BurnDrvPgemeni = {
 
 
 //-----------------------------------------------------------------------------------------------------------------
-// Bootlegs
+// Bootlegs & hacks
 
 
 // Knights of Valour: Quan Huang San Guo Special / Sangoku Senki: Quan Huang San Guo Special (ver. 303CN)
@@ -5040,5 +5040,38 @@ struct BurnDriverD BurnDrvkovlsqhd = {
 	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovlsqhdRomInfo, kovlsqhdRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
 	kovshxasInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+// Knights of Valour Super Heroes Plus Enhanced Version / Sangoku Senki Super Heroes Plus Enhanced Version (ver. 100, IGHT hack)
+
+static struct BurnRomInfo kovshpehRomDesc[] = {
+	{ "p0600eh.rom",		0x400000, 0x617e53fb, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t0600.rom",    		0x800000, 0x4acc1ad6, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a0600eh.rom",	   	0x800000, 0xeaa46772, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0601eh.rom",	   	0x800000, 0xd94abe4b, 3 | BRF_GRA }, 	        //  3 
+	{ "a0602.rom",	   		0x800000, 0xe7a32959, 3 | BRF_GRA }, 	        //  4
+	{ "a0540eh.rom",	   	0x800000, 0x631a868d, 3 | BRF_GRA }, 	        //  5
+
+	{ "b0600eh.rom",	   	0x800000, 0xf2a85ce6, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "b0540eh.rom",	   	0x800000, 0x53002691, 4 | BRF_GRA },			//  7
+
+	{ "m0600.rom",	   		0x400000, 0x3ada4fd6, 5 | BRF_SND },			//  8 Samples
+
+	{ "kovshpeh_v100_china.asic", 	0x004000, 0x7ece721c, 7 | BRF_PRG | BRF_ESS },  //  9 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovshpeh, kovshpeh, pgm)
+STD_ROM_FN(kovshpeh)
+
+struct BurnDriver BurnDrvkovshpeh = {
+	"kovshpeh", "kovshp", "pgm", NULL, "2004",
+	"Knights of Valour Super Heroes Plus Enhanced Version / Sangoku Senki Super Heroes Plus Enhanced Version (ver. 100, IGHT Hack)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
+	L"Knights of Valour Super Heroes Plus Enhanced Version\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u67AD\u96C4\u52A0\u5F3A\u7248 (ver. 100)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovshpehRomInfo, kovshpehRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
+	kovshpInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

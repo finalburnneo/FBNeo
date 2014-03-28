@@ -3870,6 +3870,45 @@ struct BurnDriver BurnDrvKof95 = {
 	0x1000, 304, 224, 4, 3
 };
 
+// The King of Fighters '95 (NGH-084, alternate board)
+
+static struct BurnRomInfo kof95aRomDesc[] = {
+	{ "084-epr.ep1",  0x080000, 0x577ca1bb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "084-epr.ep2",  0x080000, 0x30802a5d, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "084-epr.ep3",  0x080000, 0x21ae248a, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "084-epr.ep4",  0x080000, 0x19d3fbee, 1 | BRF_ESS | BRF_PRG }, //  3
+
+	{ "084-s1.s1",    0x020000, 0xde716f8a, 2 | BRF_GRA },           //  4 Text layer tiles
+
+	{ "084-c1.c1",    0x400000, 0xfe087e32, 3 | BRF_GRA },           //  5 Sprite data
+	{ "084-c2.c2",    0x400000, 0x07864e09, 3 | BRF_GRA },           //  6 
+	{ "084-c3.c3",    0x400000, 0xa4e65d1b, 3 | BRF_GRA },           //  7
+	{ "084-c4.c4",    0x400000, 0xc1ace468, 3 | BRF_GRA },           //  5 
+	{ "084-c5.c5",    0x200000, 0x8a2c1edc, 3 | BRF_GRA },           //  6 
+	{ "084-c6.c6",    0x200000, 0xf593ac35, 3 | BRF_GRA },           //  7 
+	{ "084-c7.c7",    0x100000, 0x9904025f, 3 | BRF_GRA },           //  8 
+	{ "084-c8.c8",    0x100000, 0x78eb0f9b, 3 | BRF_GRA },           //  9 
+
+	{ "084-m1.m1",    0x020000, 0x6f2d7429, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	{ "084-v1.v1",    0x400000, 0x84861b56, 5 | BRF_SND },           // 11 Sound data
+	{ "084-v2.v2",    0x200000, 0xb38a2803, 5 | BRF_SND },           // 12 
+	{ "084-v3.v3",    0x100000, 0xd683a338, 5 | BRF_SND },           // 13 
+};
+
+STDROMPICKEXT(kof95a, kof95a, neogeo)
+STD_ROM_FN(kof95a)
+
+struct BurnDriver BurnDrvKof95a = {
+	"kof95a", "kof95", "neogeo", NULL, "1995",
+	"The King of Fighters '95 (NGH-084, alternate board)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof95aRomInfo, kof95aRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 // The King of Fighters '95 (NGH-084)
 
 static struct BurnRomInfo kof95hRomDesc[] = {
@@ -5168,6 +5207,46 @@ struct BurnDriver BurnDrvKof98 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof98RomInfo, kof98RomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof98Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420, alternate board)
+
+static struct BurnRomInfo kof98aRomDesc[] = {
+	{ "242-p1.p1",    0x200000, 0x8893df89, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "242-ep1.ep1",  0x200000, 0x3f74a000, 1 | BRF_ESS | BRF_PRG }, //  1 
+    { "242-ep2.ep2",  0x200000, 0x6e474841, 1 | BRF_ESS | BRF_PRG }, //  2 
+	
+	{ "242-s1.s1",    0x020000, 0x7f7b4805, 2 | BRF_GRA },           //  3 Text layer tiles
+
+	{ "242-c1.c1",    0x800000, 0xe564ecd6, 3 | BRF_GRA },           //  4 Sprite data
+	{ "242-c2.c2",    0x800000, 0xbd959b60, 3 | BRF_GRA },           //  5 
+	{ "242-c3.c3",    0x800000, 0x22127b4f, 3 | BRF_GRA },           //  6 
+	{ "242-c4.c4",    0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  7 
+	{ "242-c5.c5",    0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  8 
+	{ "242-c6.c6",    0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  9 
+	{ "242-c7.c7",    0x800000, 0xf6d7a38a, 3 | BRF_GRA },           // 10 
+	{ "242-c8.c8",    0x800000, 0xc823e045, 3 | BRF_GRA },           // 11 
+
+	{ "242-m1.m1",    0x040000, 0x4ef7016b, 4 | BRF_ESS | BRF_PRG }, // 12 Z80 code
+
+	{ "242-v1.v1",    0x400000, 0xb9ea8051, 5 | BRF_SND },           // 13 Sound data
+	{ "242-v2.v2",    0x400000, 0xcc11106e, 5 | BRF_SND },           // 14 
+	{ "242-v3.v3",    0x400000, 0x044ea4e1, 5 | BRF_SND },           // 15 
+	{ "242-v4.v4",    0x400000, 0x7985ea30, 5 | BRF_SND },           // 16 
+};
+
+STDROMPICKEXT(kof98a, kof98a, neogeo)
+STD_ROM_FN(kof98a)
+
+
+struct BurnDriver BurnDrvKof98a = {
+	"kof98a", "kof98", "neogeo", NULL, "1998",
+	"The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420, alternate board)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof98aRomInfo, kof98aRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	kof98Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
@@ -11807,7 +11886,7 @@ struct BurnDriver BurnDrvbreakers = {
 static struct BurnRomInfo puzzldprRomDesc[] = {
 	{ "235-p1.p1",    0x080000, 0xafed5de2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "235-s1.s1",    0x010000, 0x5a68d91e, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "235-s1.s1",    0x020000, 0x3b13a22f, 2 | BRF_GRA },           //  1 Text layer tiles
 
 	{ "202-c1.c1",    0x100000, 0xcc0095ef, 3 | BRF_GRA },           //  2 Sprite data
 	{ "202-c2.c2",    0x100000, 0x42371307, 3 | BRF_GRA },           //  3 
@@ -12395,12 +12474,12 @@ struct BurnDriver BurnDrvvlinero = {
 static struct BurnRomInfo diggermaRomDesc[] = {
 	{ "dig-p1.bin",   0x080000, 0xeda433d7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "dig-s1.bin",   0x010000, 0x75a88c1f, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "dig-s1.bin",   0x020000, 0x9b3168f0, 2 | BRF_GRA },           //  1 Text layer tiles
 
 	{ "dig-c1.bin",   0x080000, 0x3db0a4ed, 3 | BRF_GRA },           //  2 Sprite data
 	{ "dig-c2.bin",   0x080000, 0x3e632161, 3 | BRF_GRA },           //  3 
 
-	{ "dig-m1.bin",   0x010000, 0x833cdf1b, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "dig-m1.bin",   0x020000, 0xe777a234, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
 	{ "dig-v1.bin",   0x080000, 0xee15bda4, 5 | BRF_SND },           //  5 Sound data
 };

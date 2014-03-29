@@ -4826,6 +4826,44 @@ struct BurnDriver BurnDrvlastblad = {
 	0x1000, 320, 224, 4, 3
 };
 
+// The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NGM-2340, alternate board)
+
+static struct BurnRomInfo lastbladaRomDesc[] = {
+	{ "0234-ep1.ep1", 0x080000, 0x3893d38b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "0234-ep2.ep2", 0x080000, 0x9470c788, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "0234-p1.p1",   0x200000, 0xb45e631c, 1 | BRF_ESS | BRF_PRG }, //  2 
+	{ "0234-sp2.sp2", 0x200000, 0xaa34e149, 1 | BRF_ESS | BRF_PRG }, //  3 
+
+	{ "234-s1.s1",    0x020000, 0x95561412, 2 | BRF_GRA },           //  4 Text layer tiles
+
+	{ "234-c1.c1",    0x800000, 0x9f7e2bd3, 3 | BRF_GRA },           //  5 Sprite data
+	{ "234-c2.c2",    0x800000, 0x80623d3c, 3 | BRF_GRA },           //  6 
+	{ "234-c3.c3",    0x800000, 0x91ab1a30, 3 | BRF_GRA },           //  7 
+	{ "234-c4.c4",    0x800000, 0x3d60b037, 3 | BRF_GRA },           //  8 
+	{ "234-c5.c5",    0x400000, 0x1ba80cee, 3 | BRF_GRA },           //  9 
+	{ "234-c6.c6",    0x400000, 0xbeafd091, 3 | BRF_GRA },           // 10 
+
+	{ "0234-m1.m1",   0x020000, 0x087628ea, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "234-v1.v1",    0x400000, 0xed66b76f, 5 | BRF_SND },           // 12 Sound data
+	{ "234-v2.v2",    0x400000, 0xa0e7f6e2, 5 | BRF_SND },           // 13 
+	{ "234-v3.v3",    0x400000, 0xa506e1e2, 5 | BRF_SND },           // 14 
+	{ "234-v4.v4",    0x400000, 0x0e34157f, 5 | BRF_SND },           // 15 
+};
+
+STDROMPICKEXT(lastblada, lastblada, neogeo)
+STD_ROM_FN(lastblada)
+
+struct BurnDriver BurnDrvlastblada = {
+	"lastblada", "lastblad", "neogeo", NULL, "1997",
+	"The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NGM-2340, alternate board)\0", NULL, "SNK", "Neo Geo MVS",
+	L"The Last Blade\0\u5E55\u672B\u6D6A\u6F2B \u6708\u83EF\u306E\u5263\u58EB (NGM-2340, alternate board)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
+	NULL, lastbladaRomInfo, lastbladaRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
 // The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NGH-2340)
 
 static struct BurnRomInfo lastbladhRomDesc[] = {

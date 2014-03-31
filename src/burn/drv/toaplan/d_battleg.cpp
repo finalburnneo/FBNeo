@@ -434,7 +434,9 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		if (nAction & ACB_WRITE) {
 			INT32 nBank = nCurrentBank;
 			nCurrentBank = -1;
+                        ZetOpen(0);               // March 28, 2014: Fix for crash on savestate load - dink
 			drvZ80Bankswitch(nBank);
+			ZetClose();
 		}
 	}
 

@@ -2156,6 +2156,41 @@ static INT32 DrvFrame()
 	return 0;
 }
 
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+{
+	struct BurnArea ba;
+	
+	if (pnMin != NULL) {			// Return minimum compatible version
+		*pnMin = 0x029705;
+	}
+
+	if (nAction & ACB_MEMORY_RAM) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = AllRam;
+		ba.nLen	  = MemEnd-AllRam; // MemEnd to get palette too - dink
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+	}
+
+	if (nAction & ACB_DRIVER_DATA) {
+            ZetScan(nAction);
+            BurnYM2151Scan(nAction);
+            DACScan(nAction, pnMin);
+            VezScan(nAction);
+
+            SCAN_VAR(irq_raster_position);
+	}
+	
+	if (nAction & ACB_WRITE) {
+/*		ZetOpen(0);
+		ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
+		ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
+                ZetClose();
+*/
+	}
+
+	return 0;
+}
 
 
 
@@ -2201,7 +2236,7 @@ struct BurnDriver BurnDrvRtype = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtypeRomInfo, rtypeRomName, NULL, NULL, CommonInputInfo, RtypeDIPInfo,
-	rtypeInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	rtypeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -2243,7 +2278,7 @@ struct BurnDriver BurnDrvRtypej = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtypejRomInfo, rtypejRomName, NULL, NULL, CommonInputInfo, RtypeDIPInfo,
-	rtypeInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	rtypeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -2285,7 +2320,7 @@ struct BurnDriver BurnDrvRtypejp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtypejpRomInfo, rtypejpRomName, NULL, NULL, CommonInputInfo, RtypepDIPInfo,
-	rtypeInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	rtypeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -2334,7 +2369,7 @@ struct BurnDriver BurnDrvRtypeu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtypeuRomInfo, rtypeuRomName, NULL, NULL, CommonInputInfo, RtypeDIPInfo,
-	rtypeInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	rtypeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -2376,7 +2411,7 @@ struct BurnDriver BurnDrvRtypeb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtypebRomInfo, rtypebRomName, NULL, NULL, CommonInputInfo, RtypeDIPInfo,
-	rtypeInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	rtypeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -2430,7 +2465,7 @@ struct BurnDriver BurnDrvXmultipl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, xmultiplRomInfo, xmultiplRomName, NULL, NULL, CommonInputInfo, XmultiplDIPInfo,
-	xmultiplInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	xmultiplInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -2483,7 +2518,7 @@ struct BurnDriver BurnDrvXmultiplm72 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, xmultiplm72RomInfo, xmultiplm72RomName, NULL, NULL, CommonInputInfo, XmultiplDIPInfo,
-	xmultiplm72Init, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	xmultiplm72Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -2530,7 +2565,7 @@ struct BurnDriver BurnDrvDbreed = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, dbreedRomInfo, dbreedRomName, NULL, NULL, CommonInputInfo, DbreedDIPInfo,
-	dbreedInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	dbreedInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -2586,7 +2621,7 @@ struct BurnDriver BurnDrvDbreedm72 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, dbreedm72RomInfo, dbreedm72RomName, NULL, NULL, CommonInputInfo, DbreedDIPInfo,
-	dbreedm72Init, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	dbreedm72Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -2641,7 +2676,7 @@ struct BurnDriver BurnDrvBchopper = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, bchopperRomInfo, bchopperRomName, NULL, NULL, CommonInputInfo, BchopperDIPInfo,
-	bchopperInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	bchopperInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -2692,7 +2727,7 @@ struct BurnDriver BurnDrvMrheli = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, mrheliRomInfo, mrheliRomName, NULL, NULL, CommonInputInfo, BchopperDIPInfo,
-	mrheliInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	mrheliInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -2745,7 +2780,7 @@ struct BurnDriver BurnDrvNspirit = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, nspiritRomInfo, nspiritRomName, NULL, NULL, CommonInputInfo, NspiritDIPInfo,
-	nspiritInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	nspiritInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -2798,7 +2833,7 @@ struct BurnDriver BurnDrvNspiritj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, nspiritjRomInfo, nspiritjRomName, NULL, NULL, CommonInputInfo, NspiritDIPInfo,
-	nspiritjInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	nspiritjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -2855,7 +2890,7 @@ struct BurnDriver BurnDrvImgfight = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
 	NULL, imgfightRomInfo, imgfightRomName, NULL, NULL, CommonInputInfo, ImgfightDIPInfo,
-	imgfightInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	imgfightInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 384, 3, 4
 };
 
@@ -2898,7 +2933,7 @@ struct BurnDriver BurnDrvImgfightj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
 	NULL, imgfightjRomInfo, imgfightjRomName, NULL, NULL, CommonInputInfo, ImgfightDIPInfo,
-	imgfightInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	imgfightInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 384, 3, 4
 };
 
@@ -2947,7 +2982,7 @@ struct BurnDriver BurnDrvAirduel = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
 	NULL, airduelRomInfo, airduelRomName, NULL, NULL, CommonInputInfo, AirduelDIPInfo,
-	airduelInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	airduelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 384, 3, 4
 };
 
@@ -2993,7 +3028,7 @@ struct BurnDriver BurnDrvRtype2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtype2RomInfo, rtype2RomName, NULL, NULL, CommonInputInfo, Rtype2DIPInfo,
-	rtype2Init, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	rtype2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -3034,7 +3069,7 @@ struct BurnDriver BurnDrvRtype2j = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtype2jRomInfo, rtype2jRomName, NULL, NULL, CommonInputInfo, Rtype2DIPInfo,
-	rtype2Init, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	rtype2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -3075,7 +3110,7 @@ struct BurnDriver BurnDrvRtype2jc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtype2jcRomInfo, rtype2jcRomName, NULL, NULL, CommonInputInfo, Rtype2DIPInfo,
-	rtype2Init, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	rtype2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -3117,7 +3152,7 @@ struct BurnDriver BurnDrvHharry = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hharryRomInfo, hharryRomName, NULL, NULL, CommonInputInfo, HharryDIPInfo,
-	hharryInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	hharryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -3159,7 +3194,7 @@ struct BurnDriver BurnDrvHharryu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hharryuRomInfo, hharryuRomName, NULL, NULL, CommonInputInfo, HharryDIPInfo,
-	hharryuInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	hharryuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -3196,7 +3231,7 @@ struct BurnDriver BurnDrvDkgensan = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, dkgensanRomInfo, dkgensanRomName, NULL, NULL, CommonInputInfo, HharryDIPInfo,
-	hharryuInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	hharryuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -3245,7 +3280,7 @@ struct BurnDriver BurnDrvDkgensanm72 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, dkgensanm72RomInfo, dkgensanm72RomName, NULL, NULL, CommonInputInfo, HharryDIPInfo,
-	dkgensanm72Init, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	dkgensanm72Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -3293,7 +3328,7 @@ struct BurnDriverD BurnDrvKengo = {
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, kengoRomInfo, kengoRomName, NULL, NULL, CommonInputInfo, KengoDIPInfo,
-	kengoInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	kengoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -3333,7 +3368,7 @@ struct BurnDriver BurnDrvCosmccop = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, cosmccopRomInfo, cosmccopRomName, NULL, NULL, CommonInputInfo, GallopDIPInfo,
-	cosmccopInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	cosmccopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -3380,7 +3415,7 @@ struct BurnDriver BurnDrvGallop = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, gallopRomInfo, gallopRomName, NULL, NULL, CommonInputInfo, GallopDIPInfo,
-	gallopInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	gallopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -3430,7 +3465,7 @@ struct BurnDriver BurnDrvLoht = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, lohtRomInfo, lohtRomName, NULL, NULL, CommonInputInfo, LohtDIPInfo,
-	lohtInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	lohtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -3472,7 +3507,7 @@ struct BurnDriver BurnDrvLohtj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, lohtjRomInfo, lohtjRomName, NULL, NULL, CommonInputInfo, LohtDIPInfo,
-	lohtInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	lohtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -3615,7 +3650,7 @@ struct BurnDriver BurnDrvLohtb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, lohtbRomInfo, lohtbRomName, NULL, NULL, CommonInputInfo, LohtDIPInfo,
-	lohtbInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	lohtbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -3665,7 +3700,7 @@ struct BurnDriver BurnDrvLohtb2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, lohtb2RomInfo, lohtb2RomName, NULL, NULL, CommonInputInfo, LohtDIPInfo,
-	lohtInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	lohtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -3707,7 +3742,7 @@ struct BurnDriverD BurnDrvPoundfor = {
 	NULL, NULL, NULL, NULL,
 	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, poundforRomInfo, poundforRomName, NULL, NULL, PoundforInputInfo, PoundforDIPInfo,
-	poundforInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	poundforInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 384, 3, 4
 };
 
@@ -3744,7 +3779,7 @@ struct BurnDriverD BurnDrvPoundforj = {
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, poundforjRomInfo, poundforjRomName, NULL, NULL, PoundforInputInfo, PoundforDIPInfo,
-	poundforInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	poundforInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 384, 3, 4
 };
 
@@ -3781,7 +3816,7 @@ struct BurnDriverD BurnDrvPoundforu = {
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, poundforuRomInfo, poundforuRomName, NULL, NULL, PoundforInputInfo, PoundforDIPInfo,
-	poundforInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	poundforInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 384, 3, 4
 };
 
@@ -3828,7 +3863,7 @@ struct BurnDriver BurnDrvMajtitle = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, majtitleRomInfo, majtitleRomName, NULL, NULL, CommonInputInfo, Rtype2DIPInfo,
-	majtitleInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	majtitleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };
 
@@ -3870,6 +3905,6 @@ struct BurnDriver BurnDrvMajtitlej = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, majtitlejRomInfo, majtitlejRomName, NULL, NULL, CommonInputInfo, Rtype2DIPInfo,
-	majtitleInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	majtitleInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };

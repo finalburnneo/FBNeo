@@ -522,6 +522,39 @@ static INT32 DrvDraw()
 	return 0;
 }
 
+static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+{
+	if ( pnMin ) *pnMin =  0x029671;
+	
+	struct BurnArea ba;
+	
+	if (nAction & ACB_MEMORY_RAM) {					// Scan all memory, devices & variables
+		memset(&ba, 0, sizeof(ba));
+                ba.Data	  = AllRAM;
+		ba.nLen	  = MemEnd-AllRAM;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+		
+	}
+
+        if (nAction & ACB_DRIVER_DATA) {
+            ZetScan(nAction);
+            AY8910Scan(nAction, pnMin);
+
+//            SCAN_VAR(irq_raster_position);
+	}
+	
+	if (nAction & ACB_WRITE) {
+/*		ZetOpen(0);
+		ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
+		ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
+                ZetClose();
+*/
+	}
+	
+	return 0;
+}
+
 INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -621,7 +654,7 @@ struct BurnDriver BurnDrvfnkyfish = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, fnkyfishRomInfo, fnkyfishRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, 
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x08, 256, 512, 3, 4
 };
 
@@ -657,7 +690,7 @@ struct BurnDriver BurnDrvkangaroo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, kangarooRomInfo, kangarooRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, 
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x08, 256, 512, 3, 4
 };
 
@@ -692,7 +725,7 @@ struct BurnDriver BurnDrvkangaroa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, kangaroaRomInfo, kangaroaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, 
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x08, 256, 512, 3, 4
 };
 
@@ -724,6 +757,6 @@ struct BurnDriver BurnDrvkangarob = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, kangarobRomInfo, kangarobRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, 
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x08, 256, 512, 3, 4
 };

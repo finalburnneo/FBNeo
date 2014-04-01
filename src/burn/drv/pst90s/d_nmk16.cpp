@@ -95,6 +95,10 @@ static INT32 screen_flip_y = 0;
 static UINT32 nNMK004CpuSpeed;
 static INT32 nNMK004EnableIrq2;
 static INT32 macross2_sound_enable;
+static INT32 MSM6295x1_only = 0;
+static INT32 MSM6295x2_only = 0;
+static INT32 no_z80 = 0;
+static INT32 AFEGA_SYS = 0;
 
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -4250,6 +4254,8 @@ static INT32 BjtwinInit(INT32 (*pLoadCallback)())
 	MSM6295Init(1, 4000000 / 165, 1);
 	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
+        MSM6295x2_only = 1;
+        no_z80 = 1;
 
 	NMK112_init(0, DrvSndROM0, DrvSndROM1, 0x140000, 0x140000);
 
@@ -4378,6 +4384,8 @@ static INT32 MSM6295x1Init(INT32  (*pLoadCallback)())
 	MSM6295Init(0, 1000000 / 165, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
+        MSM6295x1_only = 1;
+
 	GenericTilesInit();
 
 	SmissinDoReset();
@@ -4478,6 +4486,7 @@ static INT32 AfegaInit(INT32 (*pLoadCallback)(), void (*pZ80Callback)(), INT32 p
 	MSM6295Init(1, 1000000 / (pin7high ? 132 : 165), 1);
 	MSM6295SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 0.60, BURN_SND_ROUTE_BOTH);
+        AFEGA_SYS = 1;
 
 	GenericTilesInit();
 
@@ -4519,6 +4528,7 @@ static INT32 NMK004Init(INT32 (*pLoadCallback)(), INT32 nCpuSpeed, INT32 pin7hig
 	NMK004OKIROM0 = DrvSndROM0;
 	NMK004OKIROM1 = DrvSndROM1;
 	NMK004PROGROM = DrvZ80ROM;
+        no_z80 = 1;
 
 	GenericTilesInit();
 
@@ -4560,6 +4570,7 @@ static INT32 MSM6295x1Exit()
 	ZetExit();
 	MSM6295Exit(0);
 	MSM6295ROM = NULL;
+        MSM6295x1_only = 0;
 
 	return CommonExit();
 }
@@ -4588,6 +4599,7 @@ static INT32 AfegaExit()
 	MSM6295Exit(0);
 	MSM6295Exit(1);
 	MSM6295ROM = NULL;
+        AFEGA_SYS = 0;
 
 	return CommonExit();
 }
@@ -4597,6 +4609,8 @@ static INT32 BjtwinExit()
 	MSM6295Exit(0);
 	MSM6295Exit(1);
 	MSM6295ROM = NULL;
+        MSM6295x2_only = 0;
+        no_z80 = 0;
 
 	return CommonExit();
 }
@@ -4608,6 +4622,7 @@ static INT32 NMK004Exit()
 	MSM6295Exit(0);
 	MSM6295Exit(1);
 	MSM6295ROM = NULL;
+        no_z80 = 0;
 
 	return CommonExit();
 }
@@ -5272,25 +5287,28 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-
-            ZetScan(nAction);
+            if (!no_z80)
+                ZetScan(nAction);
             SekScan(nAction);
-            if (strstr(BurnDrvGetTextA(DRV_MANUFACTURER), "Afega")) {
-                //bprintf(PRINT_NORMAL, _T("Afega!\n"));
+
+            if (AFEGA_SYS) {
                 if (strstr(BurnDrvGetTextA(DRV_NAME), "ssmiss") ||
                     strstr(BurnDrvGetTextA(DRV_NAME), "twinact") ||
                     strstr(BurnDrvGetTextA(DRV_NAME), "dolmen")) {
-                    //bprintf(PRINT_NORMAL, _T("ssmissin twinact dolmen!\n"));
+                    // Afega with no YM
                 } else {
-                    BurnYM2151Scan(nAction); // twin action,etc dont use this
+                    if (!MSM6295x2_only && !MSM6295x1_only)
+                        BurnYM2151Scan(nAction); // twin action,etc dont use this
                                              // and will crash if called.
                 }
             } else {
-                //bprintf(PRINT_NORMAL, _T("not afega.\n"));
-                BurnYM2203Scan(nAction, pnMin);
+                // Everything else
+                if (!MSM6295x1_only && !MSM6295x2_only)
+                    BurnYM2203Scan(nAction, pnMin);
             }
             MSM6295Scan(0, nAction);
-            MSM6295Scan(1, nAction);
+            if (!MSM6295x1_only)
+                MSM6295Scan(1, nAction);
 	}
 	
 	if (nAction & ACB_WRITE) {

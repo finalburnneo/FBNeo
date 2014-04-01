@@ -1804,6 +1804,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	}
 	
 	if (nAction & ACB_DRIVER_DATA) {
+		static INT32 cbank = 0;
 
 		VezScan(nAction);
 		ZetScan(nAction);
@@ -1811,13 +1812,14 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		BurnYM3812Scan(nAction, pnMin);
 		MSM6295Scan(0, nAction);
 
-		INT32 cbank;
 		if (nAction & ACB_WRITE) {
-			SCAN_VAR(cbank);
-			set_seibu_bank(cbank);
+                    SCAN_VAR(cbank);
+                    ZetOpen(0);
+                    set_seibu_bank(cbank);
+                    ZetClose();
 		} else {
-			cbank = seibu_bank;
-			SCAN_VAR(cbank);
+                    cbank = seibu_bank;
+                    SCAN_VAR(cbank);
 		}
 
 		SCAN_VAR(DrvInput);

@@ -1218,8 +1218,10 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		
 		if (nAction & ACB_WRITE) {
 			INT32 nBank = nAerofgtZ80Bank;
-			nAerofgtZ80Bank = -1;
-			aerofgtSndBankSwitch(nBank);
+                        nAerofgtZ80Bank = -1;
+                        ZetOpen(0);
+                        aerofgtSndBankSwitch(nBank);
+                        ZetClose();
 		}
 	}
 	return 0;

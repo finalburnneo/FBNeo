@@ -436,10 +436,10 @@ static INT32 MemIndex()
 	DrvGfxROM2	= Next; Next += 0x080000;
 
 	MSM6295ROM	= Next; Next += 0x040000;
-
-	DrvPalette	= (UINT32*)Next; Next += 0x0400 * sizeof(INT32);
-
+// April 3, 2014 - move DrvPalette under AllRam for savestate fix - dink
 	AllRam		= Next;
+
+        DrvPalette	= (UINT32*)Next; Next += 0x0400 * sizeof(INT32);
 
 	Drv6280RAM	= Next; Next += 0x004000;
 	Drv6502RAM	= Next; Next += 0x000800;

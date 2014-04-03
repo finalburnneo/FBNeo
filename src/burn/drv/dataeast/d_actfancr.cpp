@@ -436,10 +436,10 @@ static INT32 MemIndex()
 	DrvGfxROM2	= Next; Next += 0x080000;
 
 	MSM6295ROM	= Next; Next += 0x040000;
-// April 3, 2014 - move DrvPalette under AllRam for savestate fix - dink
-	AllRam		= Next;
 
         DrvPalette	= (UINT32*)Next; Next += 0x0400 * sizeof(INT32);
+
+	AllRam		= Next;
 
 	Drv6280RAM	= Next; Next += 0x004000;
 	Drv6502RAM	= Next; Next += 0x000800;
@@ -958,9 +958,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM2203Scan(nAction, pnMin);
 		BurnYM3812Scan(nAction, pnMin);
-		MSM6295Scan(0, nAction);	
+		MSM6295Scan(0, nAction);
 
-		SCAN_VAR(control_select);
+                SCAN_VAR(control_select);
+                DrvRecalc = 1; // April 3, 2014 - Fix palette problem on state load - dink & iq_132
 	}
 
 	return 0;

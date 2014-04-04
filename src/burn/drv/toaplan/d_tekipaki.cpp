@@ -313,7 +313,13 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SekScan(nAction);				// scan 68000 states
 
 		ToaScanGP9001(nAction, pnMin);
-	}
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+		BurnSampleScan(nAction, pnMin);
+#endif
+                ToaRecalcPalette = 1;
+                bDrawScreen = true; // get background back ?
+
+        }
 
 	return 0;
 }
@@ -600,8 +606,12 @@ static INT32 DrvInit()
 	ToaPalSrc = RamPal;
 	ToaPalInit();
 	
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+        BurnUpdateProgress(0.0, _T("Loading samples..."), 0);
+
 	BurnSampleInit(0);
 	BurnSampleSetAllRoutesAllSamples(1.00, BURN_SND_ROUTE_BOTH);
+#endif
 
 	bDrawScreen = true;
 

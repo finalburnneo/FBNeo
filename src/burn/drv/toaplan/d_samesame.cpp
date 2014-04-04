@@ -808,8 +808,12 @@ static INT32 DrvInit()
 //	BurnYM3812Init(28000000 / 8, &toaplan1FMIRQHandler, &toaplan1SynchroniseStream, 0);
 //	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+        BurnUpdateProgress(0.0, _T("Loading samples..."), 0);
+
 	BurnSampleInit(0);
 	BurnSampleSetAllRoutesAllSamples(0.60, BURN_SND_ROUTE_BOTH);
+#endif
 
 	bDrawScreen = true;
 
@@ -977,9 +981,24 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 
 		SekScan(nAction);
 
-	//	BurnYM3812Scan(nAction, pnMin);
+#ifdef TOAPLAN_SOUND_SAMPLES_HACK
+		BurnSampleScan(nAction, pnMin);
+		SCAN_VAR(FadeoutReady);
+		SCAN_VAR(FadeoutStop);
+		SCAN_VAR(Playing1);
+		SCAN_VAR(Playing2);
+		SCAN_VAR(Play1);
+		SCAN_VAR(Counter1);
+		SCAN_VAR(Vol1);
+		SCAN_VAR(Wait);
+		SCAN_VAR(Start);
+		SCAN_VAR(Start2);
+#endif
 
-		SCAN_VAR(nCyclesDone);
+                SCAN_VAR(nCyclesDone);
+
+                ToaRecalcPalette = 1;
+                bDrawScreen = true; // get background back ?
 	}
 
 	return 0;

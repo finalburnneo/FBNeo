@@ -382,7 +382,11 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 	if (pBurnSoundOut == NULL) return;
 
 	INT32 nFirstSample = 0;
-	UINT32 *dest = (UINT32*)pDest;
+        UINT32 *dest = (UINT32*)pDest;
+
+        if (bAddToStream == 0) {
+            memset(dest, 0, pLen * 4); // clear buffer to get rid of unwanted noise at end of short samples - dink
+        }
 
 	for (INT32 i = 0; i < nTotalSamples; i++)
 	{
@@ -461,14 +465,13 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 
 			if (length <= 0) {
 				if (loop == 0) {
-					sample_ptr->playing = 0;
-					continue;
+                                       sample_ptr->playing = 0;
+                                       continue;
 				}
-			}
+                        }
 
 			data += position;
 			if (playlen > length) playlen = length;
-			
 			if (bAddToStream == 0 && nFirstSample == 0) {
 				INT16 *dst = (INT16*)dest;
 				INT16 *dat = (INT16*)data;

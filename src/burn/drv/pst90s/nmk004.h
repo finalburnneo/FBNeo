@@ -8,3 +8,4 @@ void NMK004Write(INT32, INT32 data);
 UINT8 NMK004Read();
 
 void NMK004_irq(INT32 irq);
+INT32 NMK004Scan(INT32 nAction, INT32* pnMin);

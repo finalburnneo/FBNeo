@@ -94,6 +94,7 @@ static INT32 global_y_offset = 16;
 static INT32 screen_flip_y = 0;
 static UINT32 nNMK004CpuSpeed;
 static INT32 nNMK004EnableIrq2;
+static INT32 NMK004_enabled = 0;
 static INT32 macross2_sound_enable;
 static INT32 MSM6295x1_only = 0;
 static INT32 MSM6295x2_only = 0;
@@ -4298,7 +4299,7 @@ static INT32 Macross2Init()
 		DrvGfxDecode(0x20000, 0x200000, 0x400000);
 	}
 
-	SekInit(0, 0x68000);	
+	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, SM_ROM);
 	SekMapMemory(DrvPalRAM,		0x120000, 0x1207ff, SM_RAM);
@@ -4529,6 +4530,7 @@ static INT32 NMK004Init(INT32 (*pLoadCallback)(), INT32 nCpuSpeed, INT32 pin7hig
 	NMK004OKIROM1 = DrvSndROM1;
 	NMK004PROGROM = DrvZ80ROM;
         no_z80 = 1;
+        NMK004_enabled = 1;
 
 	GenericTilesInit();
 
@@ -4623,7 +4625,8 @@ static INT32 NMK004Exit()
 	MSM6295Exit(1);
 	MSM6295ROM = NULL;
         no_z80 = 0;
-
+        NMK004_enabled = 0;
+        
 	return CommonExit();
 }
 
@@ -5306,10 +5309,19 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
                 if (!MSM6295x1_only && !MSM6295x2_only)
                     BurnYM2203Scan(nAction, pnMin);
             }
+
             MSM6295Scan(0, nAction);
             if (!MSM6295x1_only)
                 MSM6295Scan(1, nAction);
-	}
+
+            SCAN_VAR(macross2_sound_enable);
+            if (NMK004_enabled) {
+                SCAN_VAR(nNMK004CpuSpeed);
+                SCAN_VAR(nNMK004EnableIrq2);
+                NMK004Scan(nAction, pnMin);
+            }
+
+        }
 	
 	if (nAction & ACB_WRITE) {
 /*		ZetOpen(0);
@@ -8310,7 +8322,7 @@ static INT32 MacrossLoadCallback()
 
 static INT32 MacrossInit()
 {
-	return NMK004Init(MacrossLoadCallback, 10000000, 0, 0);
+    	return NMK004Init(MacrossLoadCallback, 10000000, 0, 0);
 }
 
 struct BurnDriver BurnDrvMacross = {

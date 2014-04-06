@@ -506,7 +506,12 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 		MSM6295Scan(0, nAction);
 		BurnYM2151Scan(nAction);
 
-		ToaScanGP9001(nAction, pnMin);
+                ToaScanGP9001(nAction, pnMin);
+
+                SCAN_VAR(v25_reset); // level 2.5 savestate hung on load,
+                SCAN_VAR(set_region); // hoping this might fix it.. -dink
+
+                bDrawScreen = true;
 	}
 
 	return 0;

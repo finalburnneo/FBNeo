@@ -395,8 +395,10 @@ static void YM3812UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 		nTotalRightSample = BURN_SND_CLIP(nTotalRightSample);
 			
 		if (bYM3812AddSignal) {
-			pSoundBuf[i + 0] += nTotalLeftSample;
-			pSoundBuf[i + 1] += nTotalRightSample;
+			//pSoundBuf[i + 0] += nTotalLeftSample;
+			//pSoundBuf[i + 1] += nTotalRightSample;
+			pSoundBuf[i + 0] = BURN_SND_CLIP(pSoundBuf[i + 0] + nTotalLeftSample);
+			pSoundBuf[i + 1] = BURN_SND_CLIP(pSoundBuf[i + 1] + nTotalRightSample);
 		} else {
 			pSoundBuf[i + 0] = nTotalLeftSample;
 			pSoundBuf[i + 1] = nTotalRightSample;

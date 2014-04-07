@@ -141,8 +141,10 @@ INT32 NMK004Scan(INT32 nAction, INT32* pnMin)
 		if (pnMin) {
 			*pnMin = 0x029496;
 		}
+                const UINT8 *rtemp = NMK004_state.rom;
 
-		SCAN_VAR(NMK004_state);
+                SCAN_VAR(NMK004_state);
+                NMK004_state.rom = rtemp;
 	}
 
 	return 0;

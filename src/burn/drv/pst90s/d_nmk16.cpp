@@ -5284,7 +5284,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_MEMORY_RAM) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = AllRam;
-		ba.nLen	  = MemEnd-AllRam; // MemEnd to get palette too - dink
+		ba.nLen	  = MemEnd-AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}

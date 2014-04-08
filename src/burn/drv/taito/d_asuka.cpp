@@ -1041,7 +1041,7 @@ static void DrvSoundBankSwitch(UINT32, UINT32 bank)
 	TaitoZ80Bank = bank & 0x03;
 
 	ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + TaitoZ80Bank * 0x4000);
-	ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + TaitoZ80Bank * 0x4000);
+        ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + TaitoZ80Bank * 0x4000);
 }
 
 void __fastcall bonze_sound_write(UINT16 a, UINT8 d)
@@ -1580,7 +1580,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029707;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = TaitoRamStart;
@@ -1594,12 +1594,14 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		TaitoICScan(nAction);
 		BonzeCChipScan(nAction);
 
+                ZetOpen(0); // ZetOpen() here because it uses ZetMapArea() in the PortHandler of the YM
 		if (TaitoNumYM2151) BurnYM2151Scan(nAction);
 		if (TaitoNumYM2610) BurnYM2610Scan(nAction, pnMin);
 		if (TaitoNumMSM5205) MSM5205Scan(nAction, pnMin);
 
 		SCAN_VAR(TaitoZ80Bank);
-	}
+                ZetClose();
+        }
 
 	if (nAction & ACB_WRITE) {
 		ZetOpen(0);

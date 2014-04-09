@@ -5871,7 +5871,7 @@ static struct BurnRomInfo GanbareRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "gbpr2.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
+	{ "gbpr2.1a",      0x000117, 0x486e8ca0, BRF_OPT }, // b-board PLDs
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
 	
@@ -6989,7 +6989,7 @@ static struct BurnRomInfo MswordjRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "ms22b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
+	{ "ms22b.1a",      0x000117, 0xdde86cb0, BRF_OPT }, // b-board PLDs
 	{ "iob1.12e",      0x000117, 0x3abc0700, BRF_OPT },
 };
 

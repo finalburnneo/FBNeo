@@ -7115,6 +7115,32 @@ static struct BurnRomInfo NemoRomDesc[] = {
 STD_ROM_PICK(Nemo)
 STD_ROM_FN(Nemo)
 
+static struct BurnRomInfo NemoaRomDesc[] = {
+	{ "nme_30.11f",    0x020000, 0x71b333db, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "nme_35.11h",    0x020000, 0xd153bc18, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "nme_31.12f",    0x020000, 0x7e83dbd2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "nme_36.12h",    0x020000, 0x6aeeec81, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "nm-32m.8h",     0x080000, 0xd6d1add3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "nm-5m.7a",      0x080000, 0x487b8747, BRF_GRA | CPS1_TILES },
+	{ "nm-7m.9a",      0x080000, 0x203dc8c6, BRF_GRA | CPS1_TILES },
+	{ "nm-1m.3a",      0x080000, 0x9e878024, BRF_GRA | CPS1_TILES },
+	{ "nm-3m.5a",      0x080000, 0xbb01e6b6, BRF_GRA | CPS1_TILES },
+
+	{ "nme_09.12b",    0x010000, 0x0f4b0581, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "nme_18.11c",    0x020000, 0xbab333d4, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "nme_19.12c",    0x020000, 0x2650a0a8, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "nm24b.1a",      0x000117, 0x7b25bac6, BRF_OPT },	// b-board PLDs
+	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
+};
+
+STD_ROM_PICK(Nemoa)
+STD_ROM_FN(Nemoa)
+
 static struct BurnRomInfo NemojRomDesc[] = {
 	{ "nmj_36a.12f",   0x020000, 0xdaeceabb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "nmj_42a.12h",   0x020000, 0x55024740, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -10558,6 +10584,7 @@ STD_ROM_PICK(Sf2ceuab6)
 STD_ROM_FN(Sf2ceuab6)
 
 static struct BurnRomInfo Sf2ceuab7RomDesc[] = {
+	// this set is known as sf2ceblp in MAME 0.153
 	{ "prg31.bin",    0x0020000, 0xea78f9b4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "prg36.bin",    0x0020000, 0xd30c263e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "prg30.bin",    0x0020000, 0x005b54cc, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -12270,6 +12297,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "mtwins"      , CPS_B_14    , mapper_CK24B , 0, NULL                },
 	{ "chikij"      , CPS_B_14    , mapper_CK24B , 0, NULL                },
 	{ "nemo"        , CPS_B_15    , mapper_NM24B , 0, NULL                },
+	{ "nemoa"       , CPS_B_15    , mapper_NM24B , 0, NULL                },
 	{ "nemoj"       , CPS_B_15    , mapper_NM24B , 0, NULL                },
 	{ "pang3"       , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
 	{ "pang3r1"     , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
@@ -17143,6 +17171,16 @@ struct BurnDriver BurnDrvCpsNemo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
 	NULL, NemoRomInfo, NemoRomName, NULL, NULL, NemoInputInfo, NemoDIPInfo,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsNemoa = {
+	"nemoa", "nemo", NULL, NULL, "1990",
+	"Nemo (90 11 09 etc)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
+	NULL, NemoaRomInfo, NemoaRomName, NULL, NULL, NemoInputInfo, NemoDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

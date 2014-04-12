@@ -205,8 +205,10 @@ void MSM5205Render(INT32 chip, INT16 *buffer, INT32 len)
 		nRightSample = BURN_SND_CLIP(nRightSample);
 		
 		if (voice->bAdd) {
-			buffer[0] += nLeftSample;
-			buffer[1] += nRightSample;
+			//buffer[0] += nLeftSample;
+			//buffer[1] += nRightSample;
+			buffer[0] = BURN_SND_CLIP(buffer[0] + nLeftSample);
+			buffer[1] = BURN_SND_CLIP(buffer[1] + nRightSample);
 		} else {
 			buffer[0] = nLeftSample;
 			buffer[1] = nRightSample;

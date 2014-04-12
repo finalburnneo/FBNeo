@@ -4527,8 +4527,8 @@ static void HippodrmDraw()
 	DrvCalcPalette();
 	
 	if (DrvPriority & 0x01) {
-		DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
-		DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);		
+		DrvRenderTile1Layer(1, TILEMAP_BOTH_LAYERS);
+		DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);		
 	} else {
 		DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
 		DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
@@ -4555,9 +4555,9 @@ static void MidresDraw()
 	Dec1CalcPalette();
 	
 	if (DrvPriority & 0x01) {
-		DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+		DrvRenderTile1Layer(1, TILEMAP_BOTH_LAYERS);
 		if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
-		DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);		
+		DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);		
 	} else {
 		DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
 		if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
@@ -4590,9 +4590,9 @@ static void RobocopDraw()
 	DrvCalcPalette();
 	
 	if (DrvPriority & 0x01) {
-		DrvRenderTile1Layer(0, TILEMAP_LAYER1);
+		DrvRenderTile1Layer(1, TILEMAP_LAYER1);
 		if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
-		DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);		
+		DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);		
 	} else {
 		DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
 		if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);

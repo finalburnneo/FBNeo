@@ -4970,7 +4970,7 @@ static INT32 FirehawkDraw()
 {
 	UINT16 *scroll = (UINT16*)DrvScrollRAM;
 	INT32 scrolly = (BURN_ENDIAN_SWAP_INT16(scroll[3]) + 0x100) & 0x1ff;
-	INT32 scrollx = (BURN_ENDIAN_SWAP_INT16(scroll[2]) + 0x000) & 0xfff;
+	INT32 scrollx = (BURN_ENDIAN_SWAP_INT16(scroll[1]) - 0x100) & 0xfff;
 
 	common_draw(1, scrollx, scrolly, 0, 0, 0x200);
 
@@ -7112,26 +7112,30 @@ struct BurnDriver BurnDrvMangchi = {
 };
 
 
-// Fire Hawk
+// Spectrum 2000 (vertical)
 
-static struct BurnRomInfo firehawkRomDesc[] = {
-	{ "fhawk_p1.u59",	0x080000, 0xd6d71a50, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "fhawk_p2.u60",	0x080000, 0x9f35d245, 1 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo spec2kRomDesc[] = {
+	{ "u124",		0x040000, 0xdbd6f65d, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "u120",		0x040000, 0xbe53e243, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "fhawk_s1.u40",	0x020000, 0xc6609c39, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+	{ "u103",		0x010000, 0xf4e4fb10, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
-	{ "fhawk_g1.uc6",	0x200000, 0x2ab0b06b, 4 | BRF_GRA },           //  3 Tiles
-	{ "fhawk_g2.uc5",	0x200000, 0xd11bfa20, 4 | BRF_GRA },           //  4
 
-	{ "fhawk_g3.uc2",	0x200000, 0xcae72ff4, 5 | BRF_GRA },           //  5 Sprites
+	{ "u3",			0x020000, 0x921503b8, 3 | BRF_GRA },           //  3 Characters
 
-	{ "fhawk_s2.u36",	0x040000, 0xd16aaaad, 6 | BRF_SND },           //  6 OKI1 Samples
+	{ "uc3",		0x200000, 0x1d087122, 4 | BRF_GRA },           //  4 Tiles
+	{ "uc2",		0x200000, 0x998dc05c, 4 | BRF_GRA },           //  5
 
-	{ "fhawk_s3.u41",	0x040000, 0x3fdcfac2, 7 | BRF_SND },           //  7 OKI2 Samples
+	{ "uc1",		0x200000, 0x3139a213, 5 | BRF_GRA },           //  6 Sprites
+
+
+	{ "u101",		0x040000, 0xd16aaaad, 6 | BRF_SND },           //  7 OKI1 Samples
+
+	{ "u106",		0x080000, 0x65d61f3a, 7 | BRF_SND },           //  8 OKI2 Samples
 };
 
-STD_ROM_PICK(firehawk)
-STD_ROM_FN(firehawk)
+STD_ROM_PICK(spec2k)
+STD_ROM_FN(spec2k)
 
 static void pFirehawkZ80Callback()
 {
@@ -7142,75 +7146,10 @@ static void pFirehawkZ80Callback()
 	ZetMapArea(0xf000, 0xfeff, 0, DrvZ80RAM);
 	ZetMapArea(0xf000, 0xfeff, 1, DrvZ80RAM);
 	ZetMapArea(0xf000, 0xfeff, 2, DrvZ80RAM);
-
 	ZetSetWriteHandler(firehawk_sound_write);
 	ZetSetReadHandler(firehawk_sound_read);
 	ZetClose();
 }
-
-static INT32 FirehawkLoadCallback()
-{
-	if (BurnLoadRom(Drv68KROM  + 0x000000,  0, 2)) return 1;
-	if (BurnLoadRom(Drv68KROM  + 0x000001,  1, 2)) return 1;
-
-	if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
-
-	memset (DrvGfxROM0, 0xff, 0x20);
-
-	if (BurnLoadRom(DrvGfxROM1 + 0x000000,  3, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x200000,  4, 1)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM2 + 0x000000,  5, 1)) return 1;
-
-	if (BurnLoadRom(DrvSndROM0 + 0x000000,  6, 1)) return 1;
-
-	if (BurnLoadRom(DrvSndROM1 + 0x040000,  7, 1)) return 1;
-
-	GrdnstrmGfxDecode(0x20, 0x400000, 0x200000);
-
-	return 0;
-}
-
-static INT32 FirehawkInit()
-{
-	screen_flip_y = 1;
-
-	return AfegaInit(FirehawkLoadCallback, pFirehawkZ80Callback, 1);
-}
-
-struct BurnDriver BurnDrvFirehawk = {
-	"firehawk", NULL, NULL, NULL, "2001",
-	"Fire Hawk\0", NULL, "ESD", "NMK16",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, firehawkRomInfo, firehawkRomName, NULL, NULL, CommonInputInfo, FirehawkDIPInfo,
-	FirehawkInit, AfegaExit, AfegaFrame, FirehawkDraw, DrvScan, NULL, 0x300,
-	256, 224, 4, 3
-};
-
-
-// Spectrum 2000 (Euro)
-
-static struct BurnRomInfo spec2kRomDesc[] = {
-	{ "yonatech5.u124",	0x040000, 0x72ab5c05, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "yonatech6.u120",	0x040000, 0x7e44bd9c, 1 | BRF_PRG | BRF_ESS }, //  1
-
-	{ "yonatech1.u103",	0x010000, 0xef5acda7, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
-
-	{ "yonatech4.u3",	0x020000, 0x5626b08e, 3 | BRF_GRA },           //  3 Characters
-
-	{ "u153.bin",		0x200000, 0xa00bbf8f, 4 | BRF_GRA },           //  4 Tiles
-	{ "u152.bin",		0x200000, 0xf6423fab, 4 | BRF_GRA },           //  5
-
-	{ "u154.bin",		0x200000, 0xf77b764e, 5 | BRF_GRA },           //  6 Sprites
-
-	{ "yonatech2.u101",	0x020000, 0x4160f172, 6 | BRF_SND },           //  7 OKI1 Samples
-
-	{ "yonatech3.u106",	0x080000, 0x6644c404, 7 | BRF_SND },           //  8 OKI2 Samples
-};
-
-STD_ROM_PICK(spec2k)
-STD_ROM_FN(spec2k)
 
 static INT32 Spec2kLoadCallback()
 {
@@ -7250,11 +7189,120 @@ static INT32 Spec2kInit()
 
 struct BurnDriver BurnDrvSpec2k = {
 	"spec2k", NULL, NULL, NULL, "2000",
-	"Spectrum 2000 (Euro)\0", NULL, "YONA Tech", "NMK16",
+	"Spectrum 2000 (vertical)\0", NULL, "YONA Tech", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, spec2kRomInfo, spec2kRomName, NULL, NULL, CommonInputInfo, Spec2kDIPInfo,
 	Spec2kInit, AfegaExit, AfegaFrame, FirehawkDraw, DrvScan, NULL, 0x300,
+	224, 256, 3, 4
+};
+
+
+// Spectrum 2000 (horizontal, buggy) (Europe)
+
+static struct BurnRomInfo spec2khRomDesc[] = {
+	{ "yonatech5.u124",	0x040000, 0x72ab5c05, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "yonatech6.u120",	0x040000, 0x7e44bd9c, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "yonatech1.u103",	0x010000, 0xef5acda7, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+
+	{ "yonatech4.u3",	0x020000, 0x5626b08e, 3 | BRF_GRA },           //  3 Characters
+
+	{ "u153.bin",		0x200000, 0xa00bbf8f, 4 | BRF_GRA },           //  4 Tiles
+	{ "u152.bin",		0x200000, 0xf6423fab, 4 | BRF_GRA },           //  5
+
+	{ "u154.bin",		0x200000, 0xf77b764e, 5 | BRF_GRA },           //  6 Sprites
+
+	{ "yonatech2.u101",	0x020000, 0x4160f172, 6 | BRF_SND },           //  7 OKI1 Samples
+
+	{ "yonatech3.u106",	0x080000, 0x6644c404, 7 | BRF_SND },           //  8 OKI2 Samples
+};
+
+STD_ROM_PICK(spec2kh)
+STD_ROM_FN(spec2kh)
+
+static INT32 Spec2khInit()
+{
+	screen_flip_y = 1;
+
+	INT32 nRet = AfegaInit(Spec2kLoadCallback, pFirehawkZ80Callback, 1);
+
+	if (nRet == 0) {
+		decryptcode(0x80000, 17,13,14,15,16);
+	}
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvSpec2kh = {
+	"spec2kh", "spec2k", NULL, NULL, "2000",
+	"Spectrum 2000 (horizontal, buggy) (Europe)\0", NULL, "YONA Tech", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, spec2khRomInfo, spec2khRomName, NULL, NULL, CommonInputInfo, Spec2kDIPInfo,
+	Spec2khInit, AfegaExit, AfegaFrame, FirehawkDraw, DrvScan, NULL, 0x300,
+	256, 224, 4, 3
+};
+
+
+// Fire Hawk (horizontal)
+
+static struct BurnRomInfo firehawkRomDesc[] = {
+	{ "fhawk_p1.u59",	0x080000, 0xd6d71a50, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "fhawk_p2.u60",	0x080000, 0x9f35d245, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "fhawk_s1.u40",	0x020000, 0xc6609c39, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+
+	{ "fhawk_g1.uc6",	0x200000, 0x2ab0b06b, 4 | BRF_GRA },           //  3 Tiles
+	{ "fhawk_g2.uc5",	0x200000, 0xd11bfa20, 4 | BRF_GRA },           //  4
+
+	{ "fhawk_g3.uc2",	0x200000, 0xcae72ff4, 5 | BRF_GRA },           //  5 Sprites
+
+	{ "fhawk_s2.u36",	0x040000, 0xd16aaaad, 6 | BRF_SND },           //  6 OKI1 Samples
+
+	{ "fhawk_s3.u41",	0x040000, 0x3fdcfac2, 7 | BRF_SND },           //  7 OKI2 Samples
+};
+
+STD_ROM_PICK(firehawk)
+STD_ROM_FN(firehawk)
+
+static INT32 FirehawkLoadCallback()
+{
+	if (BurnLoadRom(Drv68KROM  + 0x000000,  0, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000001,  1, 2)) return 1;
+
+	if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
+
+	memset (DrvGfxROM0, 0xff, 0x20);
+
+	if (BurnLoadRom(DrvGfxROM1 + 0x000000,  3, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x200000,  4, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM2 + 0x000000,  5, 1)) return 1;
+
+	if (BurnLoadRom(DrvSndROM0 + 0x000000,  6, 1)) return 1;
+
+	if (BurnLoadRom(DrvSndROM1 + 0x040000,  7, 1)) return 1;
+
+	GrdnstrmGfxDecode(0x20, 0x400000, 0x200000);
+
+	return 0;
+}
+
+static INT32 FirehawkInit()
+{
+	screen_flip_y = 1;
+
+	return AfegaInit(FirehawkLoadCallback, pFirehawkZ80Callback, 1);
+}
+
+struct BurnDriver BurnDrvFirehawk = {
+	"firehawk", "spec2k", NULL, NULL, "2001",
+	"Fire Hawk (horizontal)\0", NULL, "ESD", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, firehawkRomInfo, firehawkRomName, NULL, NULL, CommonInputInfo, FirehawkDIPInfo,
+	FirehawkInit, AfegaExit, AfegaFrame, FirehawkDraw, DrvScan, NULL, 0x300,
 	256, 224, 4, 3
 };
 

@@ -2015,7 +2015,7 @@ UINT8 __fastcall Dec068KReadByte(UINT32 a)
 		return DrvVideo2Ram[Offset];
 	}
 	
-        if (a >= 0x300000 && a <= 0x30001f) {
+	if (a >= 0x300000 && a <= 0x30001f) {
 			return HbarrelRotation(a - 0x300000);
 			// rotary_r
 			//return 0;
@@ -4688,7 +4688,7 @@ static void MidresDraw()
 	BurnTransferClear();
 	Dec1CalcPalette();
 	
-        if (DrvPriority & 0x01) {
+	if (DrvPriority & 0x01) {
 		DrvRenderTile1Layer(1, TILEMAP_BOTH_LAYERS);
 		if (DrvPriority & 0x02) DrvRenderSprites(0x08, Trans);
 		DrvRenderTile2Layer(0, TILEMAP_BOTH_LAYERS);

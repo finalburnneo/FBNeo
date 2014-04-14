@@ -1022,4 +1022,3 @@ UINT8 NMK004Read()
 {
 	return NMK004_state.to_main;
 }
-

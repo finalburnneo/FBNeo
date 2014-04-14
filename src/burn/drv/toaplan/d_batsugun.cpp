@@ -26,6 +26,9 @@ static struct BurnRomInfo batsugunRomDesc[] = {
 	{ "tp030_6.bin",  0x100000, 0x0666FECD, BRF_GRA },			 //  6
 
 	{ "tp030_2.bin",  0x040000, 0x276146F5, BRF_SND },			 //  7 ADPCM data
+	
+	{ "tp030_u19_gal16v8b-15.bin", 0x000117, 0xf71669e8, BRF_OPT }, // 8 Logic for mixing output of both GP9001 GFX controllers
+// 	{ "tp030_u19_gal16v8b-15.jed", 0x000991, 0x31be54a2, BRF_OPT },
 };
 
 STD_ROM_PICK(batsugun)
@@ -43,6 +46,8 @@ static struct BurnRomInfo batsugnaRomDesc[] = {
 	{ "tp030_6.bin",  0x100000, 0x0666FECD, BRF_GRA },			 //  6
 
 	{ "tp030_2.bin",  0x040000, 0x276146F5, BRF_SND },			 //  7 ADPCM data
+	
+	{ "tp030_u19_gal16v8b-15.bin", 0x000117, 0xf71669e8, BRF_OPT }, // 8 Logic for mixing output of both GP9001 GFX controllers
 };
 
 STD_ROM_PICK(batsugna)
@@ -60,6 +65,8 @@ static struct BurnRomInfo batugnspRomDesc[] = {
 	{ "tp030_6.bin",  0x100000, 0x0666FECD, BRF_GRA },			 //  6
 
 	{ "tp030_2.bin",  0x040000, 0x276146F5, BRF_SND },			 //  7 ADPCM data
+	
+	{ "tp030_u19_gal16v8b-15.bin", 0x000117, 0xf71669e8, BRF_OPT }, // 8 Logic for mixing output of both GP9001 GFX controllers
 };
 
 STD_ROM_PICK(batugnsp)

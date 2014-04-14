@@ -7115,7 +7115,7 @@ static struct BurnRomInfo NemoRomDesc[] = {
 STD_ROM_PICK(Nemo)
 STD_ROM_FN(Nemo)
 
-static struct BurnRomInfo NemoaRomDesc[] = {
+static struct BurnRomInfo Nemor1RomDesc[] = {
 	{ "nme_30.11f",    0x020000, 0x71b333db, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "nme_35.11h",    0x020000, 0xd153bc18, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "nme_31.12f",    0x020000, 0x7e83dbd2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -7138,8 +7138,8 @@ static struct BurnRomInfo NemoaRomDesc[] = {
 	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
 };
 
-STD_ROM_PICK(Nemoa)
-STD_ROM_FN(Nemoa)
+STD_ROM_PICK(Nemor1)
+STD_ROM_FN(Nemor1)
 
 static struct BurnRomInfo NemojRomDesc[] = {
 	{ "nmj_36a.12f",   0x020000, 0xdaeceabb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -12297,7 +12297,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "mtwins"      , CPS_B_14    , mapper_CK24B , 0, NULL                },
 	{ "chikij"      , CPS_B_14    , mapper_CK24B , 0, NULL                },
 	{ "nemo"        , CPS_B_15    , mapper_NM24B , 0, NULL                },
-	{ "nemoa"       , CPS_B_15    , mapper_NM24B , 0, NULL                },
+	{ "Nemor1"       , CPS_B_15    , mapper_NM24B , 0, NULL                },
 	{ "nemoj"       , CPS_B_15    , mapper_NM24B , 0, NULL                },
 	{ "pang3"       , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
 	{ "pang3r1"     , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
@@ -17175,12 +17175,12 @@ struct BurnDriver BurnDrvCpsNemo = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsNemoa = {
-	"nemoa", "nemo", NULL, NULL, "1990",
+struct BurnDriver BurnDrvCpsNemor1 = {
+	"Nemor1", "nemo", NULL, NULL, "1990",
 	"Nemo (90 11 09 etc)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
-	NULL, NemoaRomInfo, NemoaRomName, NULL, NULL, NemoInputInfo, NemoDIPInfo,
+	NULL, Nemor1RomInfo, Nemor1RomName, NULL, NULL, NemoInputInfo, NemoDIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

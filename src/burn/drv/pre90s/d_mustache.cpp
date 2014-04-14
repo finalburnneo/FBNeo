@@ -113,7 +113,7 @@ static struct BurnDIPInfo MustacheDIPList[]=
 
 STDDIPINFO(Mustache)
 
-static UINT8 mustache_main_read(UINT16 a)
+UINT8 __fastcall mustache_main_read(UINT16 a)
 {
 	switch (a)
 	{
@@ -139,7 +139,7 @@ static UINT8 mustache_main_read(UINT16 a)
 	return 0;
 }
 
-static void mustache_main_write(UINT16 a, UINT8 d)
+void __fastcall mustache_main_write(UINT16 a, UINT8 d)
 {
 	switch (a)
 	{

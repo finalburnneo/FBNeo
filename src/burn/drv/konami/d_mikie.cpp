@@ -159,7 +159,7 @@ static void mikie_main_write(UINT16 a, UINT8 d)
 		case 0x2002:
 			if (*sound_irq == 0 && d == 1) {
 				ZetSetVector(0xff);
-				ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+				ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			}
 			*sound_irq = d;
 		return;
@@ -233,6 +233,7 @@ static UINT8 __fastcall mikie_sound_read(UINT16 a)
 	switch (a)
 	{
 		case 0x8003:
+			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0x8005:
@@ -543,14 +544,14 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 10;
+	INT32 nInterleave = 50;
 	INT32 nCyclesTotal[2] = { 18432000 / 12 / 60, 14318180 / 4 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	M6809Open(0);
 	ZetOpen(0);
 
-	for (INT32 i = 0; i < 10; i++) {
+	for (INT32 i = 0; i < nInterleave; i++) {
 		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
 	}

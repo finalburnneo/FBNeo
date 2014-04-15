@@ -10252,8 +10252,10 @@ static struct BurnRomInfo Sf2mdtaRomDesc[] = {
 	{ "2.mdta",         0x0020000, 0x74844192, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
     { "4.mdta",         0x0020000, 0xbd98ff15, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
-	// is there a bad dump here? some of the sprites have vertical lines, whilst others are fine
-	{ "pf4 sh058.ic89", 0x0100000, 0x40fdf624, BRF_GRA | CPS1_TILES }, // f205v has redumped this with the same result, it reports an error on pin 30, assumed bad
+	//  f205v has redumped pf4 sh058.ic89 with the same result, it reports an error on pin 30, assumed bad.
+	//  Instead we used pf4-sg072.bin from a sf2mdta alt set dump by ANY.
+//	{ "pf4 sh058.ic89", 0x0100000, 0x40fdf624, BRF_GRA | CPS1_TILES }, 
+	{ "pf4 sh058.ic89", 0x0100000, 0x16289710, BRF_GRA | CPS1_TILES }, // == pf4-sg072.bin
 	{ "pf7 sh072.ic92", 0x0100000, 0xfb78022e, BRF_GRA | CPS1_TILES },
 	{ "pf5 sh036.ic90", 0x0100000, 0x0a6be48b, BRF_GRA | CPS1_TILES },
 	{ "pf8 sh074.ic93", 0x0100000, 0x6258c7cf, BRF_GRA | CPS1_TILES },
@@ -10268,6 +10270,55 @@ static struct BurnRomInfo Sf2mdtaRomDesc[] = {
 
 STD_ROM_PICK(Sf2mdta)
 STD_ROM_FN(Sf2mdta)
+
+static struct BurnRomInfo Sf2mdta2RomDesc[] = {
+	//':maincpu' (000416): unmapped program memory write to 800030 = 8000 & FF00
+	//':maincpu' (00041E): unmapped program memory write to 800030 = 0000 & FF00
+	//':maincpu' (000436): unmapped program memory write to 800180 = 00F0 & 00FF
+	{ "pf1-2-sg076.bin",	0x0100000, 0x1d15bc7a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	
+	// pf4-sg072.bin can fix sf2mdta set
+	// the pcb is missing some pals/gals so it cannot be tested 
+	{ "pf4-sg072.bin",  0x0100000, 0x16289710, BRF_GRA | CPS1_TILES },
+	{ "pf7-sg103.bin", 	0x0100000, 0xfb78022e, BRF_GRA | CPS1_TILES },
+	{ "pf5-sg095.bin",  0x0100000, 0x0a6be48b, BRF_GRA | CPS1_TILES },
+	{ "pf8-sg101.bin",  0x0100000, 0x6258c7cf, BRF_GRA | CPS1_TILES },
+	{ "pf6-sg068.bin",  0x0100000, 0x9b5b09d7, BRF_GRA | CPS1_TILES },
+	{ "pf9-sh001.bin",  0x0100000, 0x9f25090e, BRF_GRA | CPS1_TILES },
+
+	{ "3snd.ic28",     	0x0020000, 0xd5bee9cc, BRF_PRG | CPS1_Z80_PROGRAM },
+};
+
+STD_ROM_PICK(Sf2mdta2)
+STD_ROM_FN(Sf2mdta2)
+
+static struct BurnRomInfo Sf2mdtbRomDesc[] = {
+    { "3.ic172",      0x0080000, 0x0bdb9da2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "1.ic171",      0x0080000, 0xd88abbce, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "4.ic176",      0x0020000, 0x74844192, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+    { "2.ic175",      0x0020000, 0xbd98ff15, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "7.ic90",       0x0080000, 0x896eaf48, BRF_GRA | CPS1_TILES },
+	{ "13.ic89",      0x0080000, 0x305dd72a, BRF_GRA | CPS1_TILES },	
+	{ "10.ic88",      0x0080000, 0xef3f5be8, BRF_GRA | CPS1_TILES },	
+	{ "16.ic87",      0x0080000, 0xe57f6db9, BRF_GRA | CPS1_TILES },
+	{ "6.ic91",       0x0080000, 0x054cd5c4, BRF_GRA | CPS1_TILES },
+	{ "12.ic92",      0x0080000, 0x87e069e8, BRF_GRA | CPS1_TILES },
+	{ "9.ic93",       0x0080000, 0x818ca33d, BRF_GRA | CPS1_TILES },	
+	{ "15.ic94",      0x0080000, 0x5dfb44d1, BRF_GRA | CPS1_TILES },
+	{ "8.ic86",       0x0080000, 0x34bbb3fa, BRF_GRA | CPS1_TILES },
+	{ "14.ic85",      0x0080000, 0x7d9f1a67, BRF_GRA | CPS1_TILES },
+	{ "11.ic84",      0x0080000, 0xcea6d1d6, BRF_GRA | CPS1_TILES },	
+	{ "17.ic83",      0x0080000, 0x91a9a05d, BRF_GRA | CPS1_TILES },
+
+	{ "5.ic28",       0x0020000, 0xd5bee9cc, BRF_PRG | CPS1_Z80_PROGRAM },
+	
+	// extra graphics roms are required (see bike's on Chun-Li stage), but using the current dumps we have lead to a corrupt
+	// Street Fighter II logo
+};
+
+STD_ROM_PICK(Sf2mdtb)
+STD_ROM_FN(Sf2mdtb)
 
 static struct BurnRomInfo Sf2ceeablRomDesc[] = {
 	// this set was previously known as sf2m16
@@ -12372,6 +12423,8 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2md"   	, CPS_B_21_DEF, mapper_S9263B, 0, NULL                }, // game controls layers at 0x98000c
 	{ "sf2mdt"      , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2mdta"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2mdta2"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2mdtb"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2tlona"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2tlonb"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2tlonc"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -18127,11 +18180,31 @@ struct BurnDriver BurnDrvCpsSf2mdt = {
 
 struct BurnDriver BurnDrvCpsSf2mdta = {
 	"sf2mdta", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - Magic Delta Turbo (bootleg set 2 (with YM2151 + 2xMSM5205), 920313 etc)\0", "Bad graphics rom dump", "bootleg", "CPS1",
+	"Street Fighter II' - Magic Delta Turbo (bootleg set 2 (with YM2151 + 2xMSM5205), 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2mdtaRomInfo, Sf2mdtaRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	Sf2mdtaInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriverD BurnDrvCpsSf2mdta2 = {
+	"sf2mdta2", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II' - Magic Delta Turbo (bootleg set 2 alt (with YM2151 + 2xMSM5205), 920313 etc)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2mdta2RomInfo, Sf2mdta2RomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	Sf2mdtaInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2mdtb = {
+	"sf2mdtb", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II' - Magic Delta Turbo (bootleg set 3 (with YM2151 + 2xMSM5205), 920313 etc)\0", "imperfect graphics", "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2mdtbRomInfo, Sf2mdtbRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	Sf2mdtInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

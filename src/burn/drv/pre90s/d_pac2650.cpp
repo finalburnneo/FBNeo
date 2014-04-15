@@ -519,8 +519,10 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
+		s2650Open(0);
 		s2650Scan(nAction, pnMin);
-
+		s2650Close();
+                SN76496Scan(nAction, pnMin);
 		SCAN_VAR(watchdog);
 		SCAN_VAR(s2650_bank);
 	}

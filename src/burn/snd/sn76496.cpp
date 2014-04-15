@@ -28,7 +28,7 @@ struct SN76496
 	INT32 nOutputDir;
 };
 
-static INT32 NumChips;
+static INT32 NumChips = 0;
 static struct SN76496 *Chip0 = NULL;
 static struct SN76496 *Chip1 = NULL;
 static struct SN76496 *Chip2 = NULL;

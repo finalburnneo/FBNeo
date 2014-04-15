@@ -488,6 +488,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ZetScan(nAction);
 
 		SCAN_VAR(flipscreen);
+		SN76496Scan(nAction, pnMin);
 	}
 
 	return 0;

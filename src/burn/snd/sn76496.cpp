@@ -445,7 +445,7 @@ INT32 SN76496Scan(INT32 nAction,INT32 *pnMin)
 	}
 	
 	if (nAction & ACB_DRIVER_DATA) {
-		for (INT32 i = 0; i < NumChips; i++) {
+		for (INT32 i = 0; i <= NumChips; i++) {
 			SN76496 *Chip = Chip0;
 			if (i == 1) Chip = Chip1;
 			if (i == 2) Chip = Chip2;

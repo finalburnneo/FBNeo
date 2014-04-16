@@ -875,7 +875,9 @@ static INT32 System16MemIndex()
 	
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_HANGON) {
 		System16ExtraRamSize = 0x4000;
-		System16SpriteRamSize = 0x10000;
+		System16SpriteRamSize = 0x1000;
+		System16RamSize = 0x10000;
+		
 		HasRoad = true;
 	}
 	

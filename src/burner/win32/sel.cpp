@@ -1329,7 +1329,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterSnes, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterSms, TRUE);
 				
-				nLoadMenuShowX &= 0xff000000;
+				nLoadMenuShowX &= 0xfe000000;
 			}
 		}
 		

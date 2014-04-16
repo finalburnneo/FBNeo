@@ -558,7 +558,7 @@ static struct BurnRomInfo uopokoRomDesc[] = {
 
 	{ "cave_cv-02_u49.u49",     0x400000, 0x12fb11bb, BRF_GRA }, //  3 Layer 0 Tile data
 
-	{ "cave_cv-02_u4.u4",       0x200000, 0xa2d0d755, BRF_SND }, //  4 YMZ280B (AD)PCM data
+	{ "came_cv-02_u4.u4",       0x200000, 0xa2d0d755, BRF_SND }, //  4 YMZ280B (AD)PCM data
 	
 	{ "eeprom-uopoko.bin", 		0x0080, 0xf4a24b95, BRF_ESS | BRF_PRG },
 };
@@ -575,7 +575,7 @@ static struct BurnRomInfo uopokojRomDesc[] = {
 
 	{ "cave_cv-02_u49.u49",     0x400000, 0x12fb11bb, BRF_GRA }, //  3 Layer 0 Tile data
 
-	{ "cave_cv-02_u4.u4",       0x200000, 0xa2d0d755, BRF_SND }, //  4 YMZ280B (AD)PCM data
+	{ "came_cv-02_u4.u4",       0x200000, 0xa2d0d755, BRF_SND }, //  4 YMZ280B (AD)PCM data
 	
 	{ "eeprom-uopoko.bin", 		0x0080, 0xf4a24b95, BRF_ESS | BRF_PRG },
 };

@@ -462,7 +462,7 @@ static struct BurnRomInfo enraya4RomDesc[] = {
 	{ "5.bin",   0x8000, 0xcf1cd151, BRF_ESS | BRF_PRG }, //  0 Z80 Code
 	{ "4.bin",   0x4000, 0xf9ec1be7, BRF_ESS | BRF_PRG }, //  1
 
-	{ "1.bin",   0x2000, 0x87f92552, BRF_GRA },	      //  2 Graphics
+	{ "1.bin",   0x2000, 0x0e5072fd, BRF_GRA },	      //  2 Graphics
 	{ "2.bin",   0x2000, 0x2b0a3793, BRF_GRA },	      //  3
 	{ "3.bin",   0x2000, 0xf6940836, BRF_GRA },	      //  4
 
@@ -494,7 +494,7 @@ static struct BurnRomInfo enrayaa4RomDesc[] = {
 	{ "(__4enrayaa)5.bin",   0x8000, 0x76e8656c, BRF_ESS | BRF_PRG }, //  0 Z80 Code
 	{ "4.bin",   			 0x4000, 0xf9ec1be7, BRF_ESS | BRF_PRG }, //  1
 
-	{ "(__4enrayaa)1.bin",   0x2000, 0x0e5072fd, BRF_GRA },	      //  2 Graphics
+	{ "1.bin",               0x2000, 0x0e5072fd, BRF_GRA },	      //  2 Graphics
 	{ "2.bin",   			 0x2000, 0x2b0a3793, BRF_GRA },	      //  3
 	{ "3.bin",   			 0x2000, 0xf6940836, BRF_GRA },	      //  4
 

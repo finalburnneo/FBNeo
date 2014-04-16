@@ -725,7 +725,7 @@ static struct BurnRomInfo PgalvipaRomDesc[] = {
 	{ "pgalvip_3.ue17", 	0x80000, 0xa48e8255, BRF_ESS | BRF_PRG }, // 68000 code
 	{ "pgalvip_4.ud17",		0x80000, 0x829a2085, BRF_ESS | BRF_PRG },
 
-	{ "pgalvip_5.u5",		0x80000, 0xa8a50745, BRF_GRA },			  // graphics
+	{ "pgalvip_5.u5",		0x80000, 0x2d6e5a90, BRF_GRA },			  // graphics
 
 	{ "pgalvip_1.ub6",		0x20000, 0xd32a6c0c, BRF_SND },			  // PCM
 	{ "pgalvip_2.uc6",		0x80000, 0x2168e54a, BRF_SND },

@@ -648,7 +648,7 @@ static struct BurnRomInfo screggRomDesc[] = {
 	{ "d90.g12",      0x1000, 0xff3c2894, 2 | BRF_GRA },	       //  9
 	{ "da0.g10",      0x1000, 0x9c20214a, 2 | BRF_GRA },	       // 10
 
-	{ "dc0.c6 ",      0x0020, 0xff23bdd6, 3 | BRF_GRA },	       // 11 Palette
+	{ "dc0.c6",       0x0020, 0xff23bdd6, 3 | BRF_GRA },	       // 11 Palette
 
 	{ "db1.b4",       0x0020, 0x7cc4824b, 0 | BRF_OPT },	       // 12
 };

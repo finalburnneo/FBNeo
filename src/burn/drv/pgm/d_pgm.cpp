@@ -3595,25 +3595,25 @@ struct BurnDriver BurnDrvoldsplus = {
 // The Killing Blade Plus (V300)
 
 static struct BurnRomInfo killbldpRomDesc[] = {
-	{ "v300xx.u6",       	0x080000, 0xb7fb8ec9, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "v300x.u6",       	0x080000, 0xb7fb8ec9, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 	
-	{ "t05701w032.u33", 	0x400000, 0x567c714f, 2 | BRF_GRA },			//  1 Tile data
+	{ "t05701w032.bin", 	0x400000, 0x567c714f, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a05701w064.u3", 		0x800000, 0x8c0c992c, 3 | BRF_GRA },			//  3 Sprite Color Data
-	{ "a05702w064.u4", 		0x800000, 0x7e5b0f27, 3 | BRF_GRA },			//  4
-	{ "a05703w064.u6", 		0x800000, 0xaccbdb44, 3 | BRF_GRA },			//  5
+	{ "a05701w064.bin",		0x800000, 0x8c0c992c, 3 | BRF_GRA },			//  3 Sprite Color Data
+	{ "a05702w064.bin",		0x800000, 0x7e5b0f27, 3 | BRF_GRA },			//  4
+	{ "a05703w064.bin",		0x800000, 0xaccbdb44, 3 | BRF_GRA },			//  5
 	
-	{ "b05701w064.u9", 		0x800000, 0xa20cdcef, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
-	{ "b05702w016.u11", 	0x200000, 0xfe7457df, 4 | BRF_GRA },			//  7
+	{ "b05701w064.bin",		0x800000, 0xa20cdcef, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "b05702w016.bin", 	0x200000, 0xfe7457df, 4 | BRF_GRA },			//  7
 	
-	{ "w05701b032.u5", 		0x400000, 0x2d3ae593, 5 | BRF_SND },			//  8 Samples
+	{ "w05701b032.bin",		0x400000, 0x2d3ae593, 5 | BRF_SND },			//  8 Samples
 
 // this is the original rom with the first 0x268 bytes from the bootleg - but it doesn't work?
 //	{ "killbldp_igs027a.bin",	0x004000, 0xc7868d90, 7 | BRF_PRG }, 		//  9 Internal ARM7 Rom
 // from a bootleg
 	{ "killbldp_igs027a_alt.bin",	0x004000, 0x98316b06, 7 | BRF_PRG }, 	//  9 Internal ARM7 Rom
 	
-	{ "v300xx.u26",			0x200000, 0x144388c8, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
+	{ "v300x.u26",			0x200000, 0x144388c8, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
 };
 
 STDROMPICKEXT(killbldp, killbldp, pgm)
@@ -3986,7 +3986,7 @@ struct BurnDriver BurnDrvKet = {
 
 // Ketsui Kizuna Jigoku Tachi (Revision 2? alt, Japan)
 
-static struct BurnRomInfo ketaRomDesc[] = {
+static struct BurnRomInfo ketaltRomDesc[] = {
 	// alt version with 0xff fill in the unused area after 0x1443bc rather than random data, there are no code changes.
 	{ "ketsui_v100_alt.u38",	0x200000, 0xe140f8a4, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 	
@@ -4004,15 +4004,15 @@ static struct BurnRomInfo ketaRomDesc[] = {
 	{ "ket_defaults.nv",	0x020000, 0x3ca892d8, 0 | BRF_OPT },				//  7 NV RAM
 };
 
-STDROMPICKEXT(keta, keta, ketsuiBios) // custom bios
-STD_ROM_FN(keta)
+STDROMPICKEXT(ketalt, ketalt, ketsuiBios) // custom bios
+STD_ROM_FN(ketalt)
 
-struct BurnDriver BurnDrvKeta = {
-	"keta", "ket", NULL, NULL, "2002",
+struct BurnDriver BurnDrvKetakt = {
+	"ketalt", "ket", NULL, NULL, "2002",
 	"Ketsui Kizuna Jigoku Tachi (Revision 2? alt, Japan)\0", NULL, "CAVE / AMI", "PolyGameMaster based",
 	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (Revision 2? alt, Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
-	NULL, ketaRomInfo, ketaRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	NULL, ketaltRomInfo, ketaltRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };
@@ -4020,7 +4020,7 @@ struct BurnDriver BurnDrvKeta = {
 
 // Ketsui Kizuna Jigoku Tachi (Revision 1?, Japan)
 
-static struct BurnRomInfo ketbRomDesc[] = {
+static struct BurnRomInfo ketaRomDesc[] = {
 	{ "ketsui_prg_revised.bin",	0x200000, 0x69fcf5eb, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t04701w064.u19", 	0x800000, 0x2665b041, 2 | BRF_GRA },				//  1 Tile data
@@ -4037,15 +4037,15 @@ static struct BurnRomInfo ketbRomDesc[] = {
 	{ "ket_defaults.nv",	0x020000, 0x3ca892d8, 0 | BRF_OPT },				//  7 NV RAM
 };
 
-STDROMPICKEXT(ketb, ketb, ketsuiBios) // custom bios
-STD_ROM_FN(ketb)
+STDROMPICKEXT(keta, keta, ketsuiBios) // custom bios
+STD_ROM_FN(keta)
 
-struct BurnDriver BurnDrvKetb = {
-	"ketb", "ket", NULL, NULL, "2002",
+struct BurnDriver BurnDrvKeta = {
+	"keta", "ket", NULL, NULL, "2002",
 	"Ketsui Kizuna Jigoku Tachi (Revision 1?, Japan)\0", NULL, "CAVE / AMI", "PolyGameMaster based",
 	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (Revision 1?, Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
-	NULL, ketbRomInfo, ketbRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	NULL, ketaRomInfo, ketaRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };
@@ -4053,7 +4053,7 @@ struct BurnDriver BurnDrvKetb = {
 
 // Ketsui Kizuna Jigoku Tachi (Original?, Japan)
 
-static struct BurnRomInfo ketcRomDesc[] = {
+static struct BurnRomInfo ketbRomDesc[] = {
 	{ "ketsui_prg_original.bin",	0x200000, 0xcca5e153, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t04701w064.u19", 	0x800000, 0x2665b041, 2 | BRF_GRA },					//  1 Tile data
@@ -4070,15 +4070,15 @@ static struct BurnRomInfo ketcRomDesc[] = {
 	{ "ket_defaults.nv",	0x020000, 0x3ca892d8, 0 | BRF_OPT },					//  7 NV RAM
 };
 
-STDROMPICKEXT(ketc, ketc, ketsuiBios) // custom bios
-STD_ROM_FN(ketc)
+STDROMPICKEXT(ketb, ketb, ketsuiBios) // custom bios
+STD_ROM_FN(ketb)
 
-struct BurnDriver BurnDrvKetc = {
-	"ketc", "ket", NULL, NULL, "2002",
+struct BurnDriver BurnDrvKetb = {
+	"ketb", "ket", NULL, NULL, "2002",
 	"Ketsui Kizuna Jigoku Tachi (Original?, Japan)\0", NULL, "CAVE / AMI", "PolyGameMaster based",
 	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (Original?, Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
-	NULL, ketcRomInfo, ketcRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	NULL, ketbRomInfo, ketbRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };
@@ -4258,7 +4258,7 @@ struct BurnDriver BurnDrvEspgal = {
 // The Gladiator - Road Of The Sword / Shen Jian (V100, Japan, PCB Version)
 
 static struct BurnRomInfo thegladpcbRomDesc[] = {
-	{ "v100.u43",			0x080000, 0xbcf3b172, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "glad_v100.43",		0x080000, 0xbcf3b172, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t04601.u71",			0x800000, 0xe5dab371, 2 | BRF_GRA },			//  1 Tile data
 
@@ -4271,13 +4271,13 @@ static struct BurnRomInfo thegladpcbRomDesc[] = {
 
 	{ "w04601.u8",			0x800000, 0x5f15ddb3, 5 | BRF_SND },			//  7 Samples
 	// these contain samples for the japan region
-	{ "wave.u29",     		0x200000, 0x51acb395, 5 | BRF_SND },			//  8
+	{ "igs29.bin",     		0x200000, 0x51acb395, 5 | BRF_SND },			//  8
 
 //	{ "thegladpcb_igs027a.bin",					0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 	{ "thegladpcb_igs027a_execute_only_area",	0x000188, 0x00000000, 0 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 	{ "thegladpcb_igs027a_v100_japan.bin",      0x003e78, 0xd7f06e2d, 7 | BRF_PRG | BRF_ESS },  //  9
 
-	{ "v100.u62",		    0x200000, 0x0f3f511e, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
+	{ "igs_v100.62",	    0x200000, 0x0f3f511e, 8 | BRF_PRG | BRF_ESS },	// 10 External ARM7 Rom
 };
 
 STDROMPICKEXT(thegladpcb, thegladpcb, thegladBIOS) // custom bios
@@ -4348,8 +4348,8 @@ static struct BurnRomInfo svgpcbRomDesc[] = {
 	{ "w05602b032.bin",		0x400000, 0x0685166d, 5 | BRF_SND },			//  9
 
 //	{ "svgpcb_igs027a.bin",			   0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 10 Internal ARM7 Rom
-	{ "svg_igs027a_execute_only_area", 0x000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 10 Internal ARM7 Rom
-	{ "svgpcb_igs027a_v100_japan.bin", 0x003e78, 0x7a59da5d, 7 | BRF_PRG | BRF_ESS },		// 11 Internal ARM7 Rom
+	{ "svgpcb_igs027a_execute_only_area", 0x000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 10 Internal ARM7 Rom
+	{ "svgcpb_igs027a_v100_japan.bin", 0x003e78, 0x7a59da5d, 7 | BRF_PRG | BRF_ESS },		// 11 Internal ARM7 Rom
 
 	{ "svg_v100jp.u64",		0x400000, 0x399d4a8b, 8 | BRF_PRG | BRF_ESS },	// 12 External ARM7 Rom
 	{ "svg_v100jp.u65",		0x400000, 0x6e1c33b1, 8 | BRF_PRG | BRF_ESS },	// 13

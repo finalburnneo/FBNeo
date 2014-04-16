@@ -740,25 +740,25 @@ ROM Descriptions
 ===============================================================================================*/
 
 static struct BurnRomInfo BerlwallRomDesc[] = {
-	{ "u23_01.bin",        0x020000, 0x76b526ce, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "u39_01.bin",        0x020000, 0x78fa7ef2, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "u23_01.u23",        0x020000, 0x76b526ce, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "u39_01.u39",        0x020000, 0x78fa7ef2, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 	
-	{ "bw001",             0x080000, 0xbc927260, BRF_GRA },		  //  2	Sprites
-	{ "bw002",             0x080000, 0x223f5465, BRF_GRA },		  //  3	Sprites
-	{ "bw300",             0x020000, 0xb258737a, BRF_GRA },		  //  4	Sprites
+	{ "bw001.u84",         0x080000, 0xbc927260, BRF_GRA },		  //  2	Sprites
+	{ "bw002.u83",         0x080000, 0x223f5465, BRF_GRA },		  //  3	Sprites
+	{ "bw300.u82",         0x020000, 0xb258737a, BRF_GRA },		  //  4	Sprites
 	
-	{ "bw003",             0x080000, 0xfbb4b72d, BRF_GRA },		  //  5 Tiles
+	{ "bw003.u77",         0x080000, 0xfbb4b72d, BRF_GRA },		  //  5 Tiles
 	
-	{ "bw004",             0x080000, 0x5300c34d, BRF_GRA },		  //  6 High colour background
-	{ "bw008",             0x080000, 0x9aaf2f2f, BRF_GRA },		  //  7 High colour background
-	{ "bw005",             0x080000, 0x16db6d43, BRF_GRA },		  //  8 High colour background
-	{ "bw009",             0x080000, 0x1151a0b0, BRF_GRA },		  //  9 High colour background
-	{ "bw006",             0x080000, 0x73a35d1f, BRF_GRA },		  //  10 High colour background
-	{ "bw00a",             0x080000, 0xf447dfc2, BRF_GRA },		  //  11 High colour background
-	{ "bw007",             0x080000, 0x97f85c87, BRF_GRA },		  //  12 High colour background
-	{ "bw00b",             0x080000, 0xb0a48225, BRF_GRA },		  //  13 High colour background
+	{ "bw004.u73",         0x080000, 0x5300c34d, BRF_GRA },		  //  6 High colour background
+	{ "bw008.u65",         0x080000, 0x9aaf2f2f, BRF_GRA },		  //  7 High colour background
+	{ "bw005.u74",         0x080000, 0x16db6d43, BRF_GRA },		  //  8 High colour background
+	{ "bw009.u66",         0x080000, 0x1151a0b0, BRF_GRA },		  //  9 High colour background
+	{ "bw006.u75",         0x080000, 0x73a35d1f, BRF_GRA },		  //  10 High colour background
+	{ "bw00a.u67",         0x080000, 0xf447dfc2, BRF_GRA },		  //  11 High colour background
+	{ "bw007.u76",         0x080000, 0x97f85c87, BRF_GRA },		  //  12 High colour background
+	{ "bw00b.u68",         0x080000, 0xb0a48225, BRF_GRA },		  //  13 High colour background
 
-	{ "bw000",             0x040000, 0xd8fe869d, BRF_SND },		  //  14 Samples
+	{ "bw000.u46",         0x040000, 0xd8fe869d, BRF_SND },		  //  14 Samples
 };
 
 
@@ -766,25 +766,25 @@ STD_ROM_PICK(Berlwall)
 STD_ROM_FN(Berlwall)
 
 static struct BurnRomInfo BerlwalltRomDesc[] = {
-	{ "bw100a",            0x020000, 0xe6bcb4eb, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "bw101a",            0x020000, 0x38056fb2, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "bw100a.u23",        0x020000, 0xe6bcb4eb, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "bw101a.u39",        0x020000, 0x38056fb2, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 	
-	{ "bw001",             0x080000, 0xbc927260, BRF_GRA },		  //  2	Sprites
-	{ "bw002",             0x080000, 0x223f5465, BRF_GRA },		  //  3	Sprites
-	{ "bw300",             0x020000, 0xb258737a, BRF_GRA },		  //  4	Sprites
+	{ "bw001.u84",         0x080000, 0xbc927260, BRF_GRA },		  //  2	Sprites
+	{ "bw002.u83",         0x080000, 0x223f5465, BRF_GRA },		  //  3	Sprites
+	{ "bw300.u82",         0x020000, 0xb258737a, BRF_GRA },		  //  4	Sprites
 	
-	{ "bw003",             0x080000, 0xfbb4b72d, BRF_GRA },		  //  5 Tiles
+	{ "bw003.u77",         0x080000, 0xfbb4b72d, BRF_GRA },		  //  5 Tiles
 	
-	{ "bw004",             0x080000, 0x5300c34d, BRF_GRA },		  //  6 High colour background
-	{ "bw008",             0x080000, 0x9aaf2f2f, BRF_GRA },		  //  7 High colour background
-	{ "bw005",             0x080000, 0x16db6d43, BRF_GRA },		  //  8 High colour background
-	{ "bw009",             0x080000, 0x1151a0b0, BRF_GRA },		  //  9 High colour background
-	{ "bw006",             0x080000, 0x73a35d1f, BRF_GRA },		  //  10 High colour background
-	{ "bw00a",             0x080000, 0xf447dfc2, BRF_GRA },		  //  11 High colour background
-	{ "bw007",             0x080000, 0x97f85c87, BRF_GRA },		  //  12 High colour background
-	{ "bw00b",             0x080000, 0xb0a48225, BRF_GRA },		  //  13 High colour background
+	{ "bw004.u73",         0x080000, 0x5300c34d, BRF_GRA },		  //  6 High colour background
+	{ "bw008.u65",         0x080000, 0x9aaf2f2f, BRF_GRA },		  //  7 High colour background
+	{ "bw005.u74",         0x080000, 0x16db6d43, BRF_GRA },		  //  8 High colour background
+	{ "bw009.u66",         0x080000, 0x1151a0b0, BRF_GRA },		  //  9 High colour background
+	{ "bw006.u75",         0x080000, 0x73a35d1f, BRF_GRA },		  //  10 High colour background
+	{ "bw00a.u67",         0x080000, 0xf447dfc2, BRF_GRA },		  //  11 High colour background
+	{ "bw007.u76",         0x080000, 0x97f85c87, BRF_GRA },		  //  12 High colour background
+	{ "bw00b.u68",         0x080000, 0xb0a48225, BRF_GRA },		  //  13 High colour background
 
-	{ "bw000",             0x040000, 0xd8fe869d, BRF_SND },		  //  14 Samples
+	{ "bw000.u46",         0x040000, 0xd8fe869d, BRF_SND },		  //  14 Samples
 };
 
 

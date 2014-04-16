@@ -8918,6 +8918,32 @@ struct BurnDriver BurnDrvOrbs = {
 // Kero Kero Keroppi no Issyoni Asobou (Japan)
 
 static struct BurnRomInfo keroppiRomDesc[] = {
+	{ "keroppi jr. code (u10) v1.0.u10", 0x40000, 0x1fc2e895, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "keroppi jr. code (u9) v1.0.u9", 0x40000, 0xe0599e7b, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "keroppi jr. chr(u12) v1.0.u12", 0x80000, 0x6f4dae98, 0x03 | BRF_GRA },           //  2
+	{ "keroppi jr. chr(u11) v1.0.u11", 0x80000, 0x74148c23, 0x03 | BRF_GRA },           //  3
+
+	{ "keroppi jr. snd (u15) v1.0.u15",	0x80000, 0xc98dacf0, 0x06 | BRF_SND },           //  4 x1-010 Samples
+	{ "keroppi jr. snd (u16) v1.0.u16",	0x80000, 0xd61e5a32, 0x06 | BRF_SND },           //  5
+};
+
+STD_ROM_PICK(keroppi)
+STD_ROM_FN(keroppi)
+
+struct BurnDriver BurnDrvKeroppi = {
+	"keroppi", NULL, NULL, NULL, "1993",
+	"Kero Kero Keroppi no Issyoni Asobou (Japan)\0", NULL, "Sammy Industries", "Seta",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SETA1, GBF_MISC, 0,
+	NULL, keroppiRomInfo, keroppiRomName, NULL, NULL, KeroppiInputInfo, KeroppiDIPInfo,
+	orbsInit, DrvExit, DrvFrame, setaNoLayersDraw, DrvScan, &DrvRecalc, 0x200,
+	320, 240, 4, 3
+};
+
+// Kero Kero Keroppi no Issyoni Asobou (Japan)
+
+static struct BurnRomInfo keroppijRomDesc[] = {
 	{ "ft-001-001.u10",	0x80000, 0x37861e7d, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "ft-001-002.u9",	0x80000, 0xf531d4ef, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
@@ -8930,15 +8956,15 @@ static struct BurnRomInfo keroppiRomDesc[] = {
 	{ "ft-001-008.u16",	0x80000, 0xb9c4b637, 0x06 | BRF_SND },           //  7
 };
 
-STD_ROM_PICK(keroppi)
-STD_ROM_FN(keroppi)
+STD_ROM_PICK(keroppij)
+STD_ROM_FN(keroppij)
 
-struct BurnDriver BurnDrvKeroppi = {
-	"keroppi", NULL, NULL, NULL, "1993",
+struct BurnDriver BurnDrvKeroppij = {
+	"keroppij", "keroppi", NULL, NULL, "1993",
 	"Kero Kero Keroppi no Issyoni Asobou (Japan)\0", NULL, "Sammy Industries", "Seta",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SETA1, GBF_MISC, 0,
-	NULL, keroppiRomInfo, keroppiRomName, NULL, NULL, KeroppiInputInfo, KeroppiDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SETA1, GBF_MISC, 0,
+	NULL, keroppijRomInfo, keroppijRomName, NULL, NULL, KeroppiInputInfo, KeroppiDIPInfo,
 	orbsInit, DrvExit, DrvFrame, setaNoLayersDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };

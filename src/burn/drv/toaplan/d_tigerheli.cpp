@@ -1981,12 +1981,12 @@ static INT32 tigerhInit()
 	if (strcmp(BurnDrvGetTextA(DRV_NAME), "tigerh") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "tigerhj") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "tigerhb1") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "tigerhb2") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "tigerhb3") == 0) {
 		nWhichGame = 0;
 	}
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "getstar") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "getstarj") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "gtstarb1") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "gtstarb2") == 0) {
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "grdian") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "getstarj") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "getstarb1") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "getstarb2") == 0) {
 		nWhichGame = 1;
-		if (strcmp(BurnDrvGetTextA(DRV_NAME), "getstar") == 0) GetStarType = GETSTAR;
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "grdian") == 0) GetStarType = GETSTAR;
 		if (strcmp(BurnDrvGetTextA(DRV_NAME), "getstarj") == 0) GetStarType = GETSTARJ;
-		if (strcmp(BurnDrvGetTextA(DRV_NAME), "gtstarb1") == 0) GetStarType = GETSTARB1;
-		if (strcmp(BurnDrvGetTextA(DRV_NAME), "gtstarb2") == 0) GetStarType = GETSTARB2;
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "getstarb1") == 0) GetStarType = GETSTARB1;
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "getstarb2") == 0) GetStarType = GETSTARB2;
 	}
 	if (strcmp(BurnDrvGetTextA(DRV_NAME), "alcon") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "slapfigh") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "slapfighb1") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "slapfighb2") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "slapfighb3") == 0) {
 		nWhichGame = 2;
@@ -2007,7 +2007,7 @@ static INT32 tigerhInit()
 		return 1;
 	}
 	
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "gtstarb1")) Rom01[0x6d56] = 0xc3;
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "getstarb1")) Rom01[0x6d56] = 0xc3;
 
 	{
 		ZetInit(0);
@@ -2028,7 +2028,7 @@ static INT32 tigerhInit()
 		ZetMapArea(0xC000, 0xC7FF, 2, Ram01);
 
 		// Shared RAM
-		if (strcmp(BurnDrvGetTextA(DRV_NAME), "gtstarb1")) {
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "getstarb1")) {
 			ZetMapArea(0xC800, 0xCFFF, 0, RamShared);
 		}
 		ZetMapArea(0xC800, 0xCFFF, 1, RamShared);
@@ -2066,7 +2066,7 @@ static INT32 tigerhInit()
 			ZetSetWriteHandler(tigerhWriteCPU0);
 		}
 		
-		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "gtstarb1")) {
+		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "getstarb1")) {
 			ZetSetInHandler(tigerhInCPU0_gtstarba);
 		} else {
 			ZetSetInHandler(tigerhInCPU0);
@@ -2803,7 +2803,7 @@ struct BurnDriver BurnDrvTigerHB3 = {
 };
 
 struct BurnDriver BurnDrvGetStar = {
-	"getstar", NULL, NULL, NULL, "1986",
+	"grdian", NULL, NULL, NULL, "1986",
 	"Guardian\0", NULL, "Toaplan / Taito America Corporation (Kitkorp license)", "Early Toaplan",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TOAPLAN_MISC, GBF_SCRFIGHT, 0,
@@ -2813,7 +2813,7 @@ struct BurnDriver BurnDrvGetStar = {
 };
 
 struct BurnDriver BurnDrvGetStarj = {
-	"getstarj", "getstar", NULL, NULL, "1986",
+	"getstarj", "grdian", NULL, NULL, "1986",
 	"Get Star (Japan)\0", NULL, "Toaplan / Taito", "Early Toaplan",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_MISC, GBF_SCRFIGHT, 0,
@@ -2823,7 +2823,7 @@ struct BurnDriver BurnDrvGetStarj = {
 };
 
 struct BurnDriver BurnDrvGetStarb2 = {
-	"gtstarb2", "getstar", NULL, NULL, "1986",
+	"getstarb2", "grdian", NULL, NULL, "1986",
 	"Get Star (bootleg, set 2)\0", NULL, "Taito", "Early Toaplan",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TOAPLAN_MISC, GBF_SCRFIGHT, 0,
@@ -2833,7 +2833,7 @@ struct BurnDriver BurnDrvGetStarb2 = {
 };
 
 struct BurnDriver BurnDrvGetStarb1 = {
-	"gtstarb1", "getstar", NULL, NULL, "1986",
+	"getstarb1", "grdian", NULL, NULL, "1986",
 	"Get Star (bootleg, set 1)\0", NULL, "Taito", "Early Toaplan",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TOAPLAN_MISC, GBF_SCRFIGHT, 0,

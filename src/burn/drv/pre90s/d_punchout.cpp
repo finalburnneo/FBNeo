@@ -1387,19 +1387,19 @@ struct BurnDriver BurnDrvPunchoutj = {
 // Punch-Out!! (Italian bootleg)
 
 static struct BurnRomInfo punchitaRomDesc[] = {
-	{ "chp1-c.8l",	0x2000, 0x1d595ce2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "chp1-c.8k",	0x2000, 0xc062fa5c, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "chp1-c.8j",	0x2000, 0x48d453ef, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "chp1-c.8h",	0x2000, 0x67f5aedc, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "chp1-c.8f",	0x4000, 0x761de4f3, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "chp1-c(__ita).8l",	0x2000, 0x1d595ce2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "chp1-c(__ita).8k",	0x2000, 0xc062fa5c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "chp1-c(__ita).8j",	0x2000, 0x48d453ef, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "chp1-c(__ita).8h",	0x2000, 0x67f5aedc, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "chp1-c(__ita).8f",	0x4000, 0x761de4f3, 1 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "chp1-c.4k",	0x2000, 0xcb6ef376, 2 | BRF_PRG | BRF_ESS }, //  5 N2A03 Code
 
-	{ "chp1-b.4c",	0x2000, 0x9a9ff1d3, 3 | BRF_GRA },           //  6 Top Screen Background Characters
-	{ "chp1-b.4d",	0x2000, 0x4c23350f, 3 | BRF_GRA },           //  7
+	{ "chp1-b(__ita).4c",	0x2000, 0x9a9ff1d3, 3 | BRF_GRA },           //  6 Top Screen Background Characters
+	{ "chp1-b(__ita).4d",	0x2000, 0x4c23350f, 3 | BRF_GRA },           //  7
 
-	{ "chp1-b.4a",	0x2000, 0xc075f831, 4 | BRF_GRA },           //  8 Bottom Screen Background Characters
-	{ "chp1-b.4b",	0x2000, 0xc4cc2b5a, 4 | BRF_GRA },           //  9
+	{ "chp1-b(__ita).4a",	0x2000, 0xc075f831, 4 | BRF_GRA },           //  8 Bottom Screen Background Characters
+	{ "chp1-b(__ita).4b",	0x2000, 0xc4cc2b5a, 4 | BRF_GRA },           //  9
 
 	{ "chp1-v.2r",	0x4000, 0xbd1d4b2e, 5 | BRF_GRA },           // 10 Big Sprite Characters
 	{ "chp1-v.2t",	0x4000, 0xdd9a688a, 5 | BRF_GRA },           // 11
@@ -1413,10 +1413,10 @@ static struct BurnRomInfo punchitaRomDesc[] = {
 	{ "chp1-v.4t",	0x4000, 0x37ffc940, 5 | BRF_GRA },           // 19
 	{ "chp1-v.4u",	0x2000, 0x1a7521d4, 5 | BRF_GRA },           // 20
 
-	{ "chp1-v.6p",	0x2000, 0x75be7aae, 6 | BRF_GRA },           // 21 Bottom Screen Big Sprite Characters
-	{ "chp1-v.6n",	0x2000, 0xdaf74de0, 6 | BRF_GRA },           // 22
-	{ "chp1-v.8p",	0x2000, 0x4cb7ea82, 6 | BRF_GRA },           // 23
-	{ "chp1-v.8n",	0x2000, 0x1c0d09aa, 6 | BRF_GRA },           // 24
+	{ "chp1-v(__ita).6p",	0x2000, 0x75be7aae, 6 | BRF_GRA },           // 21 Bottom Screen Big Sprite Characters
+	{ "chp1-v(__ita).6n",	0x2000, 0xdaf74de0, 6 | BRF_GRA },           // 22
+	{ "chp1-v(__ita).8p",	0x2000, 0x4cb7ea82, 6 | BRF_GRA },           // 23
+	{ "chp1-v(__ita).8n",	0x2000, 0x1c0d09aa, 6 | BRF_GRA },           // 24
 
 	{ "chp1-b.6e",	0x0200, 0xe9ca3ac6, 7 | BRF_GRA },           // 25 Color PROMs
 	{ "chp1-b.6f",	0x0200, 0x02be56ab, 7 | BRF_GRA },           // 26

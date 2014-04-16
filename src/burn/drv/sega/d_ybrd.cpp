@@ -554,6 +554,8 @@ static struct BurnRomInfo Gforce2RomDesc[] = {
 	{ "mpr-11465.107",    0x80000, 0xe1436dab, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "epr-11516.106",    0x20000, 0x19d0e17f, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "epr-11814.105",    0x20000, 0x0b05d376, SYS16_ROM_PCMDATA | BRF_SND },
+	
+	{ "motorpcb.prg",     0x08000, 0xfecee31e, BRF_OPT },
 };
 
 

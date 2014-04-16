@@ -2686,8 +2686,8 @@ STD_ROM_PICK(Ddux1)
 STD_ROM_FN(Ddux1)
 
 static struct BurnRomInfo DduxjRomDesc[] = {
-	{ "epr-11114.a7",   0x20000, 0xa3eedc3b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-11112.a5",   0x20000, 0x05989323, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11914.a7",   0x20000, 0xa3eedc3b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11912.a5",   0x20000, 0x05989323, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-11915.a8",   0x20000, 0xd8ed3132, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-11913.a6",   0x20000, 0x30c6cb92, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	
@@ -2824,7 +2824,7 @@ STD_ROM_FN(Eswatj)
 static struct BurnRomInfo Eswatj1RomDesc[] = {
 	{ "epr-12683.a7",   0x20000, 0x33c34cfd, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-12681.a5",   0x20000, 0x6b2feb09, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-12683.a8",   0x20000, 0x2e5b866b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12684.a8",   0x20000, 0x2e5b866b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-12682.a6",   0x20000, 0x8e1f57d2, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	
 	{ "epr-12688.a14",  0x20000, 0x12f898db, SYS16_ROM_TILES | BRF_GRA },
@@ -2850,7 +2850,7 @@ static struct BurnRomInfo Eswatj1RomDesc[] = {
 	{ "epr-12685.a10",  0x08000, 0x5d0c16d7, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "mpr-12686.a11",  0x20000, 0xf451705e, SYS16_ROM_UPD7759DATA | BRF_SND },
-	{ "mpr-12686.a12",  0x20000, 0x9e87571f, SYS16_ROM_UPD7759DATA | BRF_SND },
+	{ "mpr-12687.a12",  0x20000, 0x9e87571f, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	{ "317-0131.key",   0x02000, 0x8f71726d, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };

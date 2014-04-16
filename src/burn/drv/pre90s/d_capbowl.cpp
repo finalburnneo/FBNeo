@@ -83,7 +83,7 @@ static void bankswitch(INT32 d)
 	M6809MapMemory(DrvMainROM + bank, 0x0000, 0x3fff, M6809_ROM);
 }
 
-static void __fastcall main_write(UINT16 a, UINT8 d)
+static void main_write(UINT16 a, UINT8 d)
 {
 	if ((a & 0xf800) == 0x5800) {
 		tms34061_write((a & 0xff) ^ ((~a & 0x100) >> 7), *rowaddress, (a >> 8) & 3, d);
@@ -130,7 +130,7 @@ static void __fastcall main_write(UINT16 a, UINT8 d)
 	}
 }
 
-static UINT8 __fastcall main_read(UINT16 a)
+static UINT8 main_read(UINT16 a)
 {
 	if ((a & 0xf800) == 0x5800) {
 		return tms34061_read((a & 0xff) ^ ((~a & 0x100) >> 7), *rowaddress, (a >> 8) & 3);
@@ -166,7 +166,7 @@ static UINT8 __fastcall main_read(UINT16 a)
 	return 0;
 }
 
-static void __fastcall sound_write(UINT16 a, UINT8 d)
+static void sound_write(UINT16 a, UINT8 d)
 {
 	switch (a)
 	{
@@ -184,7 +184,7 @@ static void __fastcall sound_write(UINT16 a, UINT8 d)
 	}
 }
 
-static UINT8 __fastcall sound_read(UINT16 a)
+static UINT8 sound_read(UINT16 a)
 {
 	switch (a)
 	{

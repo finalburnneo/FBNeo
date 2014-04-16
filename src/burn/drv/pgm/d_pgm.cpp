@@ -4007,7 +4007,7 @@ static struct BurnRomInfo ketaltRomDesc[] = {
 STDROMPICKEXT(ketalt, ketalt, ketsuiBios) // custom bios
 STD_ROM_FN(ketalt)
 
-struct BurnDriver BurnDrvKetakt = {
+struct BurnDriver BurnDrvKetalt = {
 	"ketalt", "ket", NULL, NULL, "2002",
 	"Ketsui Kizuna Jigoku Tachi (Revision 2? alt, Japan)\0", NULL, "CAVE / AMI", "PolyGameMaster based",
 	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (Revision 2? alt, Japan)\0", NULL, NULL, NULL,

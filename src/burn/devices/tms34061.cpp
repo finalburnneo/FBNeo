@@ -188,7 +188,7 @@ static void register_w(INT32 offset, UINT8 data)
 			if (scanline < 0)
 				scanline += m_regs[TMS34061_VERTOTAL];
 
-			// FBA -- these isn't accurate, it will only trigger on a per-scanline basis, but should be
+			// FBA -- this isn't accurate, it will only trigger on a per-scanline basis, but should be
 			// scanline and horizontal position in the scanline. It doesn't seem to bother the tested
 			// games much though, so don't worry about it
 			m_timer = scanline; //m_regs[TMS34061_HORSTARTBLNK];

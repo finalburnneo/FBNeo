@@ -2090,7 +2090,7 @@ static struct BurnRomInfo ChasehqRomDesc[] = {
 	{ "pal20l8b-b52-121.ic57",  0x00144, 0x7056fd1d, BRF_OPT },
 	{ "pal16l8b-b52-122.ic124", 0x00104, 0x04c0fb04, BRF_OPT },
 	{ "pal16l8b-b52-123.ic125", 0x00104, 0x3865d1c8, BRF_OPT },
-	{ "pal16l8b-b52-124.ic180", 0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "pal16l8b-b52-124.ic180", 0x00104, 0xd448a25a, BRF_OPT },
 	{ "pal16l8b-b52-125.ic112", 0x00104, 0x7628c557, BRF_OPT },
 };
 
@@ -2160,7 +2160,7 @@ static struct BurnRomInfo ChasehqjRomDesc[] = {
 	{ "pal20l8b-b52-121.ic57",  0x00144, 0x7056fd1d, BRF_OPT },
 	{ "pal16l8b-b52-122.ic124", 0x00104, 0x04c0fb04, BRF_OPT },
 	{ "pal16l8b-b52-123.ic125", 0x00104, 0x3865d1c8, BRF_OPT },
-	{ "pal16l8b-b52-124.ic180", 0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "pal16l8b-b52-124.ic180", 0x00104, 0xd448a25a, BRF_OPT },
 	{ "pal16l8b-b52-125.ic112", 0x00104, 0x7628c557, BRF_OPT },
 };
 
@@ -2300,7 +2300,7 @@ static struct BurnRomInfo ChasehquRomDesc[] = {
 	{ "pal20l8b-b52-121.ic57",  0x00144, 0x7056fd1d, BRF_OPT },
 	{ "pal16l8b-b52-122.ic124", 0x00104, 0x04c0fb04, BRF_OPT },
 	{ "pal16l8b-b52-123.ic125", 0x00104, 0x3865d1c8, BRF_OPT },
-	{ "pal16l8b-b52-124.ic180", 0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "pal16l8b-b52-124.ic180", 0x00104, 0xd448a25a, BRF_OPT },
 	{ "pal16l8b-b52-125.ic112", 0x00104, 0x7628c557, BRF_OPT },
 };
 

@@ -816,6 +816,7 @@ static INT32 DrvDraw()
 			INT32 rgb = Palette[DrvColTable[i]];
 			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
 		}
+		DrvRecalc = 0;
 	}
 
 	draw_bg();
@@ -834,7 +835,7 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 10;
+	INT32 nInterleave = 20;
 	
 	if (DrvReset) {
 		DrvDoReset();
@@ -858,7 +859,8 @@ static INT32 DrvFrame()
 
 	INT32 nCyclesSegment = 0;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] =  { 1500000 / 60, 2000000 / 60 };
+//	INT32 nCyclesTotal[2] =  { 1500000 / 60, 2000000 / 60 };
+	INT32 nCyclesTotal[2] =  { 12000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2] =  { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {

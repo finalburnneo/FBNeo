@@ -551,8 +551,8 @@ static void draw_bg()
 	INT32 bit2 = (K007121_ctrlram[1][0x05] >> 4) & 0x03;
 	INT32 bit3 = (K007121_ctrlram[1][0x05] >> 6) & 0x03;
 	INT32 mask = (K007121_ctrlram[1][0x04] & 0xf0) >> 4;
-	INT32 scrollx = K007121_ctrlram[1][0x00] - 40;
-	INT32 scrolly = K007121_ctrlram[1][0x02];
+	INT32 scrollx = K007121_ctrlram[1][0x00] & 0xff;
+	INT32 scrolly = K007121_ctrlram[1][0x02] & 0xff;
 	INT32 flipscreen = K007121_flipscreen[1];
 
 	for (INT32 offs = 0; offs < 0x400; offs++)
@@ -562,8 +562,9 @@ static void draw_bg()
 
 		sx -= scrollx;
 		sy -= scrolly;
-		if (sx < -7) sx += 296;
+		if (sx < -7) sx += 256;
 		if (sy < -7) sy += 256;
+		sx += 40;
 		sy -= 16;
 
 		INT32 attr = DrvBgCRAM[offs];
@@ -596,8 +597,8 @@ static void draw_fg()
 	INT32 bit2 = (K007121_ctrlram[0][0x05] >> 4) & 0x03;
 	INT32 bit3 = (K007121_ctrlram[0][0x05] >> 6) & 0x03;
 	INT32 mask = (K007121_ctrlram[0][0x04] & 0xf0) >> 4;
-	INT32 scrollx = K007121_ctrlram[0][0x00] - 40;
-	INT32 scrolly = K007121_ctrlram[0][0x02];
+	INT32 scrollx = K007121_ctrlram[0][0x00] & 0xff;
+	INT32 scrolly = K007121_ctrlram[0][0x02] & 0xff;
 	INT32 flipscreen = K007121_flipscreen[0];
 
 	for (INT32 offs = 0; offs < 0x400; offs++)
@@ -607,9 +608,9 @@ static void draw_fg()
 
 		sx -= scrollx;
 		sy -= scrolly;
-		if (sx < -7) sx += 296;
+		if (sx < -7) sx += 256;
 		if (sy < -7) sy += 256;
-
+		sx += 40;
 		sy -= 16;
 
 		INT32 attr = DrvFgCRAM[offs];

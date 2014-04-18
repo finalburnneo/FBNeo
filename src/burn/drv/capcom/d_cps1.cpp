@@ -14949,6 +14949,42 @@ static INT32 Sf2mdtaInit()
 	return nRet;
 }
 
+static INT32 Sf2mdtbInit()
+{
+	bCpsUpdatePalEveryFrame = 1;	
+	Cps1DisablePSnd = 1;
+	CpsLayer2XOffs = 0xffc0; // layer 2 scrolling seems to be taken care of by row scroll tables
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2mdt;
+	Cps1ObjGetCallbackFunction = Sf2mdtObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsRunInitCallbackFunction = Sf2mdtSoundInit;
+	CpsRunResetCallbackFunction = Sf2mdtSoundReset;
+	CpsRunExitCallbackFunction = Sf2mdtSoundExit;
+	CpsRunFrameStartCallbackFunction = Sf2mdtSoundFrameStart;
+	CpsRunFrameEndCallbackFunction = Sf2mdtSoundFrameEnd;
+	CpsRWSoundCommandCallbackFunction = Sf2mdtSoundCommand;
+	CpsMemScanCallbackFunction = Sf2mdtScanCallback;
+	
+	INT32 nRet = Sf2ceInit();
+	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+	
+	SekOpen(0);
+	SekMapMemory(CpsBootlegSpriteRam, 0x700000, 0x703fff, SM_RAM);
+	SekMapMemory(CpsBootlegSpriteRam, 0x704000, 0x707fff, SM_RAM); // mirror? can use either of this - seems to make no difference
+	SekMapMemory(CpsRamFF, 0xfc0000, 0xfcffff, SM_RAM);	
+	SekMapHandler(1, 0x708000, 0x7fffff, SM_READ | SM_WRITE);
+	SekSetReadByteHandler(1, Sf2mdtReadByte);
+	SekSetReadWordHandler(1, Sf2mdtReadWord);
+	SekSetWriteByteHandler(1, Sf2mdtWriteByte);
+	SekSetWriteWordHandler(1, Sf2mdtaWriteWord);
+	SekClose();
+	
+	Cps1VBlankIRQLine = 4; // triggers the sprite ram and layer enable/scroll writes at 0x700000
+	
+	return nRet;
+}
+
 void __fastcall Sf2ceeablScrollWrite(UINT32 a, UINT16 d)
 {
 	switch (a) {
@@ -18198,11 +18234,11 @@ struct BurnDriverD BurnDrvCpsSf2mdta2 = {
 
 struct BurnDriver BurnDrvCpsSf2mdtb = {
 	"sf2mdtb", "sf2ce", NULL, NULL, "1992",
-	"Street Fighter II' - Magic Delta Turbo (bootleg set 3 (with YM2151 + 2xMSM5205), 920313 etc)\0", "imperfect graphics", "bootleg", "CPS1",
+	"Street Fighter II' - Magic Delta Turbo (bootleg set 3 (with YM2151 + 2xMSM5205), 920313 etc)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2mdtbRomInfo, Sf2mdtbRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
-	Sf2mdtInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Sf2mdtbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

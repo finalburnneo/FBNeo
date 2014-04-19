@@ -1,20 +1,13 @@
 // FB Alpha Wyvern F-0 driver module
 // Based on MAME driver by Luca Elia
 
-/*
-	To do / known bugs
-
-	Sound is missing msm5232 core
-	I think YM2149 is not exactly an ay8910, may need work
-	test! test! test!
-*/
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "driver.h"
 extern "C" {
 #include "ay8910.h"
 }
+#include "msm5232.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -287,7 +280,7 @@ static UINT8 __fastcall wyvernf0_main_read(UINT16 address)
 static void __fastcall wyvernf0_sound_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xfff0) == 0xc900) {
-		// MSM5232Write(address & 0x0f, data);
+		MSM5232Write(address & 0x0f, data);
 		return;
 	}
 
@@ -353,7 +346,7 @@ static INT32 DrvDoReset()
 	AY8910Reset(0);
 	AY8910Reset(1);
 
-	// MSM5232Reset();
+	MSM5232Reset();
 
 	return 0;
 }
@@ -484,7 +477,16 @@ static INT32 DrvInit()
 	AY8910Init(1, 3000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910SetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);
 
-	// MSM5232Init();
+	MSM5232Init(2000000, 1);
+	MSM5232SetCapacitors(0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6);
+	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_0);
+	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_1);
+	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_2);
+	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_3);
+	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_4);
+	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_5);
+	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_6);
+	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_7);
 
 	GenericTilesInit();
 
@@ -502,7 +504,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	AY8910Exit(1);
 
-	// MSM5232Exit();
+	MSM5232Exit();
 
 	BurnFree(AllMem);
 
@@ -575,12 +577,12 @@ static void draw_sprites(INT32 is_foreground)
 		{
 			for (INT32 x = 0; x < 4; x++)
 			{
-				INT32 objoffs = code * 0x20 + (x + y * 4);
+				INT32 objoffs = code * 0x20 + (x + y * 4) * 2;
 
 				INT32 sxx = sx + (flipx ? 3-x : x) * 8;
 				INT32 syy = sy + (flipy ? 3-y : y) * 8;
 
-				INT32 code1 = ((DrvObjRAM[objoffs * 2 + 1] & 0x07) << 8) + DrvObjRAM[objoffs * 2];
+				INT32 code1 = ((DrvObjRAM[objoffs + 1] & 0x07) << 8) + DrvObjRAM[objoffs];
 
 				if (flipy) {
 					if (flipx) {
@@ -662,6 +664,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		MSM5232Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -690,6 +693,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ZetScan(nAction);
 
 		AY8910Scan(nAction, pnMin);
+		MSM5232Scan(nAction, pnMin);
 	}
 
 	if (nAction & ACB_WRITE) {

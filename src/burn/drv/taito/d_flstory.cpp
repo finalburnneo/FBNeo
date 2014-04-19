@@ -3,6 +3,7 @@
 #include "z80_intf.h"
 #include "driver.h"
 #include "dac.h"
+#include "msm5232.h"
 extern "C" {
 #include "ay8910.h"
 }
@@ -632,7 +633,7 @@ void __fastcall flstory_sound_write(UINT16 address, UINT8 data)
 		case 0xca0b:
 		case 0xca0c:
 		case 0xca0d:
-			// msm5232
+			MSM5232Write(address, data);
 		return;
 
 		case 0xd800:
@@ -689,6 +690,8 @@ static INT32 DrvDoReset()
 	m67805_taito_reset();
 
 	AY8910Reset(0);
+	MSM5232Reset();
+
 	DACReset();
 
 	snd_data = 0;
@@ -876,6 +879,17 @@ static INT32 DrvInit()
 	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 
+	MSM5232Init(2000000, 1);
+	MSM5232SetCapacitors(1.0e-6, 1.0e-6, 1.0e-6, 1.0e-6, 1.0e-6, 1.0e-6, 1.0e-6, 1.0e-6);
+	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_0);
+	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_1);
+	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_2);
+	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_3);
+	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_4);
+	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_5);
+	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_6);
+	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_7);
+
 	DACInit(0, 0, 1, flstoryDACSync);
 	DACSetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
 
@@ -894,6 +908,7 @@ static INT32 DrvExit()
 	m67805_taito_exit();
 
 	AY8910Exit(0);
+	MSM5232Exit();
 	DACExit();
 
 	BurnFree (AllMem);
@@ -1178,7 +1193,8 @@ static INT32 DrvFrame()
 	ZetOpen(1);
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);			
+		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		MSM5232Update(pBurnSoundOut, nBurnSoundLen);			
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

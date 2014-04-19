@@ -49,12 +49,8 @@ static INT32 K007121_flipscreen[2];
 
 static struct BurnInputInfo DrvInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvJoy1 + 0, "p1 coin"   },
-	{"Coin 2"            , BIT_DIGITAL  , DrvJoy1 + 1, "p2 coin"   },
-
-	{"Start 1"           , BIT_DIGITAL  , DrvJoy1 + 3, "p1 start"  },
-	{"Start 2"           , BIT_DIGITAL  , DrvJoy1 + 4, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvJoy1 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvJoy1 + 3, "p1 start"  },
 	{"P1 Left"           , BIT_DIGITAL  , DrvJoy2 + 0, "p1 left"   },
 	{"P1 Right"          , BIT_DIGITAL  , DrvJoy2 + 1, "p1 right"  },
 	{"P1 Up"             , BIT_DIGITAL  , DrvJoy2 + 2, "p1 up"     },
@@ -62,6 +58,8 @@ static struct BurnInputInfo DrvInputList[] =
 	{"P1 Fire 1"         , BIT_DIGITAL  , DrvJoy2 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvJoy2 + 5, "p1 fire 2" },
 
+	{"P2 Coin"           , BIT_DIGITAL  , DrvJoy1 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvJoy1 + 4, "p2 start"  },
 	{"P2 Left"           , BIT_DIGITAL  , DrvJoy3 + 0, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL  , DrvJoy3 + 1, "p2 right"  },
 	{"P2 Up"             , BIT_DIGITAL  , DrvJoy3 + 2, "p2 up"     },
@@ -950,7 +948,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		if (nAction & ACB_WRITE) {
 			M6809Open(0);
 			contra_bankswitch_w(nBankData);
-			M6809Close();
+                        M6809Close();
+                        DrvRecalc = 1;
 		}
 	}
 

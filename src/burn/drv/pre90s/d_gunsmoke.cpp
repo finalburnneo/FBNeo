@@ -68,7 +68,7 @@ static struct BurnDIPInfo DrvDIPList[]=
 	{0x14, 0x01, 0x04, 0x04, "On"    		        },
 };
 
-static struct BurnDIPInfo gunsmokaDIPList[]=
+static struct BurnDIPInfo gunsmokeuaDIPList[]=
 {
 	// Default Values
 	{0x14, 0xff, 0xff, 0xf7, NULL               },
@@ -137,7 +137,7 @@ static struct BurnDIPInfo gunsmokeDIPList[]=
 };
 
 STDDIPINFOEXT(Drv, Drv, gunsmoke)
-STDDIPINFOEXT(gunsmoka, gunsmoka, gunsmoke)
+STDDIPINFOEXT(gunsmokeua, gunsmokeua, gunsmoke)
 
 
 static inline void gunsmoke_bankswitch(INT32 nBank)
@@ -785,7 +785,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Gun. Smoke (World)
+// Gun.Smoke (World)
 
 static struct BurnRomInfo gunsmokeRomDesc[] = {
 	{ "09n_gs03.bin", 0x8000, 0x40a06cef, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -834,7 +834,7 @@ STD_ROM_FN(gunsmoke)
 
 struct BurnDriver BurnDrvGunsmoke = {
 	"gunsmoke", NULL, NULL, NULL, "1985",
-	"Gun. Smoke (World)\0", NULL, "Capcom", "Miscellaneous",
+	"Gun.Smoke (World)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, gunsmokeRomInfo, gunsmokeRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -843,9 +843,68 @@ struct BurnDriver BurnDrvGunsmoke = {
 };
 
 
-// Gun. Smoke (Japan)
+// Gun.Smoke (bootleg)
+// based on world version, warning message patched out
 
-static struct BurnRomInfo gunsmokjRomDesc[] = {
+static struct BurnRomInfo gunsmokebRomDesc[] = {
+	{ "3.ic85", 	  0x8000, 0xae6f4b75, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "10n_gs04.bin", 0x8000, 0x8d4b423f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "12n_gs05.bin", 0x8000, 0x2b5667fb, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "14h_gs02.bin", 0x8000, 0xcd7a2c38, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "11f_gs01.bin", 0x4000, 0xb61ece9b, 3 | BRF_GRA },	       //  4 Character Tiles
+
+	{ "06c_gs13.bin", 0x8000, 0xf6769fc5, 4 | BRF_GRA },	       //  5 32x32 Tiles
+	{ "05c_gs12.bin", 0x8000, 0xd997b78c, 4 | BRF_GRA },	       //  6
+	{ "04c_gs11.bin", 0x8000, 0x125ba58e, 4 | BRF_GRA },	       //  7
+	{ "02c_gs10.bin", 0x8000, 0xf469c13c, 4 | BRF_GRA },	       //  8
+	{ "06a_gs09.bin", 0x8000, 0x539f182d, 4 | BRF_GRA },	       //  9
+	{ "05a_gs08.bin", 0x8000, 0xe87e526d, 4 | BRF_GRA },	       // 10
+	{ "04a_gs07.bin", 0x8000, 0x4382c0d2, 4 | BRF_GRA },	       // 11 
+	{ "02a_gs06.bin", 0x8000, 0x4cafe7a6, 4 | BRF_GRA },	       // 12 
+
+	{ "06n_gs22.bin", 0x8000, 0xdc9c508c, 5 | BRF_GRA },	       // 13 Sprites
+	{ "04n_gs21.bin", 0x8000, 0x68883749, 5 | BRF_GRA },	       // 14
+	{ "03n_gs20.bin", 0x8000, 0x0be932ed, 5 | BRF_GRA },	       // 15
+	{ "01n_gs19.bin", 0x8000, 0x63072f93, 5 | BRF_GRA },	       // 16
+	{ "06l_gs18.bin", 0x8000, 0xf69a3c7c, 5 | BRF_GRA },	       // 17
+	{ "04l_gs17.bin", 0x8000, 0x4e98562a, 5 | BRF_GRA },	       // 18
+	{ "03l_gs16.bin", 0x8000, 0x0d99c3b3, 5 | BRF_GRA },	       // 19
+	{ "01l_gs15.bin", 0x8000, 0x7f14270e, 5 | BRF_GRA },	       // 20
+
+	{ "11c_gs14.bin", 0x8000, 0x0af4f7eb, 6 | BRF_GRA },	       // 21 Background Tilemaps
+
+	{ "03b_g-01.bin", 0x0100, 0x02f55589, 7 | BRF_GRA },	       // 22 Color Proms
+	{ "04b_g-02.bin", 0x0100, 0xe1e36dd9, 7 | BRF_GRA },	       // 23
+	{ "05b_g-03.bin", 0x0100, 0x989399c0, 7 | BRF_GRA },	       // 24
+	{ "09d_g-04.bin", 0x0100, 0x906612b5, 7 | BRF_GRA },	       // 25
+	{ "14a_g-06.bin", 0x0100, 0x4a9da18b, 7 | BRF_GRA },	       // 26
+	{ "15a_g-07.bin", 0x0100, 0xcb9394fc, 7 | BRF_GRA },	       // 27
+	{ "09f_g-09.bin", 0x0100, 0x3cee181e, 7 | BRF_GRA },	       // 28
+	{ "08f_g-08.bin", 0x0100, 0xef91cdd2, 7 | BRF_GRA },	       // 29
+
+	{ "02j_g-10.bin", 0x0100, 0x0eaf5158, 0 | BRF_OPT },	       // 30 Video Timing
+	{ "01f_g-05.bin", 0x0100, 0x25c90c2a, 0 | BRF_OPT },	       // 31 Priority
+};
+
+STD_ROM_PICK(gunsmokeb)
+STD_ROM_FN(gunsmokeb)
+
+struct BurnDriver BurnDrvGunsmokeb = {
+	"gunsmokeb", "gunsmoke", NULL, NULL, "1985",
+	"Gun.Smoke (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
+	NULL, gunsmokebRomInfo, gunsmokebRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x300,
+	224, 256, 3, 4
+};
+
+
+// Gun.Smoke (Japan)
+
+static struct BurnRomInfo gunsmokejRomDesc[] = {
 	{ "gs03_9n.rom",  0x8000, 0xb56b5df6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "10n_gs04.bin", 0x8000, 0x8d4b423f, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "12n_gs05.bin", 0x8000, 0x2b5667fb, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -887,23 +946,23 @@ static struct BurnRomInfo gunsmokjRomDesc[] = {
 	{ "01f_g-05.bin", 0x0100, 0x25c90c2a, 0 | BRF_OPT },	       // 31 Priority
 };
 
-STD_ROM_PICK(gunsmokj)
-STD_ROM_FN(gunsmokj)
+STD_ROM_PICK(gunsmokej)
+STD_ROM_FN(gunsmokej)
 
-struct BurnDriver BurnDrvGunsmokj = {
+struct BurnDriver BurnDrvGunsmokej = {
 	"gunsmokej", "gunsmoke", NULL, NULL, "1985",
 	"Gun. Smoke (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
-	NULL, gunsmokjRomInfo, gunsmokjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, gunsmokejRomInfo, gunsmokejRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x300,
 	224, 256, 3, 4
 };
 
 
-// Gun. Smoke (US set 1)
+// Gun.Smoke (US set 1)
 
-static struct BurnRomInfo gunsmokuRomDesc[] = {
+static struct BurnRomInfo gunsmokeuRomDesc[] = {
 	{ "9n_gs03.bin",  0x8000, 0x592f211b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "10n_gs04.bin", 0x8000, 0x8d4b423f, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "12n_gs05.bin", 0x8000, 0x2b5667fb, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -945,23 +1004,23 @@ static struct BurnRomInfo gunsmokuRomDesc[] = {
 	{ "01f_g-05.bin", 0x0100, 0x25c90c2a, 0 | BRF_OPT },	       // 31 Priority
 };
 
-STD_ROM_PICK(gunsmoku)
-STD_ROM_FN(gunsmoku)
+STD_ROM_PICK(gunsmokeu)
+STD_ROM_FN(gunsmokeu)
 
-struct BurnDriver BurnDrvGunsmoku = {
+struct BurnDriver BurnDrvGunsmokeu = {
 	"gunsmokeu", "gunsmoke", NULL, NULL, "1985",
-	"Gun. Smoke (US set 1)\0", NULL, "Capcom (Romstar License)", "Miscellaneous",
+	"Gun.Smoke (US set 1)\0", NULL, "Capcom (Romstar License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
-	NULL, gunsmokuRomInfo, gunsmokuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, gunsmokeuRomInfo, gunsmokeuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x300,
 	224, 256, 3, 4
 };
 
 
-// Gun. Smoke (US set 2)
+// Gun.Smoke (US set 2)
 
-static struct BurnRomInfo gunsmokaRomDesc[] = {
+static struct BurnRomInfo gunsmokeuaRomDesc[] = {
 	{ "gs03.9n",      0x8000, 0x51dc3f76, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "gs04.10n",     0x8000, 0x5ecf31b8, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "gs05.12n",     0x8000, 0x1c9aca13, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1003,15 +1062,15 @@ static struct BurnRomInfo gunsmokaRomDesc[] = {
 	{ "01f_g-05.bin", 0x0100, 0x25c90c2a, 0 | BRF_OPT },	       // 31 Priority
 };
 
-STD_ROM_PICK(gunsmoka)
-STD_ROM_FN(gunsmoka)
+STD_ROM_PICK(gunsmokeua)
+STD_ROM_FN(gunsmokeua)
 
-struct BurnDriver BurnDrvGunsmoka = {
+struct BurnDriver BurnDrvGunsmokeua = {
 	"gunsmokeua", "gunsmoke", NULL, NULL, "1986",
-	"Gun. Smoke (US set 2)\0", NULL, "Capcom (Romstar License)", "Miscellaneous",
+	"Gun.Smoke (US set 2)\0", NULL, "Capcom (Romstar License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
-	NULL, gunsmokaRomInfo, gunsmokaRomName, NULL, NULL, DrvInputInfo, gunsmokaDIPInfo,
+	NULL, gunsmokeuaRomInfo, gunsmokeuaRomName, NULL, NULL, DrvInputInfo, gunsmokeuaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x300,
 	224, 256, 3, 4
 };

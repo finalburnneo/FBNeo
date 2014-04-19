@@ -7176,8 +7176,6 @@ static INT32 Spec2kLoadCallback()
 
 static INT32 Spec2kInit()
 {
-	screen_flip_y = 1;
-
 	INT32 nRet = AfegaInit(Spec2kLoadCallback, pFirehawkZ80Callback, 1);
 
 	if (nRet == 0) {

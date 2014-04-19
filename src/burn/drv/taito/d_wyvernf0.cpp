@@ -4,12 +4,8 @@
 /*
 	To do / known bugs
 
-	Sprites aren't quite right -- see planes on intro vs MAME
-	https://www.youtube.com/watch?v=TUVeU0RnIGc
-
 	Sound is missing msm5232 core
 	I think YM2149 is not exactly an ay8910, may need work
-	Clean up sprite routine, pretty much stright code ripped from mame atm
 	test! test! test!
 */
 
@@ -527,7 +523,7 @@ static void draw_layer(UINT8 *ram, INT32 color_offset, UINT8 scrollx, UINT8 scro
 
 		if (sy >= 224) continue;
 
-		INT32 code = ram[offs * 2] + (ram[offs * 2 + 1] * 256);
+		INT32 code = ((ram[offs * 2 + 1] & 0x03) << 8) + ram[offs * 2];
 
 		INT32 color = (code >> 12) & 0x07;
 		INT32 flipx = (code >> 15) & 0x01;
@@ -553,59 +549,50 @@ static void draw_sprites(INT32 is_foreground)
 {
 	UINT8 *RAM = DrvSprRAM + (is_foreground ? 0x80 : 0);
 
-	for (INT32 offs = 0; offs < 0x80; offs += 4)
+	for (INT32 offs = 0; offs < 0x100 / 2; offs += 4)
 	{
-		int sx, sy, code, color;
+		INT32 sx = RAM[offs + 3] - ((RAM[offs + 2] & 0x80) << 1);
+		INT32 sy = 256 - 8 - RAM[offs + 0] - 23;
 
-		sx = RAM[offs + 3] - (RAM[offs + 2] << 1);
-		sy = 256 - 8 - RAM[offs + 0] - 23;	// center player sprite: 256 - 8 - 0x71 + dy = 256/2-32/2 -> dy = -23
-
-		int flipx = RAM[offs + 2] & 0x40;	// maybe
-		int flipy = RAM[offs + 1] & 0x80;
+		INT32 flipx = RAM[offs + 2] & 0x40;
+		INT32 flipy = RAM[offs + 1] & 0x80;
 
 		if (*flipscreen & 0x01)
 		{
 			flipx = !flipx;
-			sx = 256 - 8 - sx - 3*8;
+			sx = 256 - 8 - sx - 3 * 8;
 		}
-
 		if (*flipscreen & 0x02)
 		{
 			flipy = !flipy;
-			sy = 256 - 8 - sy - 3*8;
+			sy = 256 - 8 - sy - 3 * 8;
 		}
 
-		code = RAM[offs + 1] & 0x7f;
-		color = (RAM[offs + 2] & 0x0f);
+		INT32 code  = (RAM[offs + 1] & 0x7f) + (is_foreground ? 0x80 : 0);
+		INT32 color = (RAM[offs + 2] & 0x0f) + (is_foreground ? 0x10 : 0);
 
-		if (is_foreground)
+		for (INT32 y = 0; y < 4; y++)
 		{
-			code  += 0x80;
-			color += 0x10;
-		}
-
-		for (int y = 0; y < 4; y++)
-		{
-			for (int x = 0; x < 4; x++)
+			for (INT32 x = 0; x < 4; x++)
 			{
-				int objoffs = code * 0x20 + (x + y * 4) * 2;
+				INT32 objoffs = code * 0x20 + (x + y * 4);
 
-				INT32 code1 = ((DrvObjRAM[objoffs + 1] & 0x07) << 8) + DrvObjRAM[objoffs];
+				INT32 sxx = sx + (flipx ? 3-x : x) * 8;
+				INT32 syy = sy + (flipy ? 3-y : y) * 8;
 
-				INT32 sxx = sx + (flipx ? 3-x : x) * 8 + 10; // + 10???
-				INT32 syy = sy + (flipy ? 3-y : y) * 8 - 16;
+				INT32 code1 = ((DrvObjRAM[objoffs * 2 + 1] & 0x07) << 8) + DrvObjRAM[objoffs * 2];
 
 				if (flipy) {
 					if (flipx) {
-						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code1, sxx, syy, color, 4, 0, 0, DrvGfxROM0);
+						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code1, sxx, syy - 16, color, 4, 0, 0, DrvGfxROM0);
 					} else {
-						Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code1, sxx, syy, color, 4, 0, 0, DrvGfxROM0);
+						Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code1, sxx, syy - 16, color, 4, 0, 0, DrvGfxROM0);
 					}
 				} else {
 					if (flipx) {
-						Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code1, sxx, syy, color, 4, 0, 0, DrvGfxROM0);
+						Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code1, sxx, syy - 16, color, 4, 0, 0, DrvGfxROM0);
 					} else {
-						Render8x8Tile_Mask_Clip(pTransDraw, code1, sxx, syy, color, 4, 0, 0, DrvGfxROM0);
+						Render8x8Tile_Mask_Clip(pTransDraw, code1, sxx, syy - 16, color, 4, 0, 0, DrvGfxROM0);
 					}
 				}
 			}

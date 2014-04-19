@@ -75,10 +75,8 @@ static INT32 DrvGameType;
 
 static struct BurnInputInfo DrvInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort1 + 6, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort0 + 7, "p2 start"  },
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort1 + 6, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 start"  },
 
 	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 down"   },
@@ -88,6 +86,8 @@ static struct BurnInputInfo DrvInputList[] =
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
 	{"P1 Fire 3"         , BIT_DIGITAL  , DrvInputPort2 + 1, "p1 fire 3" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort0 + 7, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 left"   },
@@ -1110,7 +1110,7 @@ void DrvDdragonHD6309WriteByte(UINT16 Address, UINT8 Data)
 		}
 	}	
 	
-	bprintf(PRINT_NORMAL, _T("HD6309 Write Byte -> %04X, %02X\n"), Address, Data);
+//	bprintf(PRINT_NORMAL, _T("HD6309 Write Byte -> %04X, %02X\n"), Address, Data);
 }
 
 UINT8 DrvDdragonHD63701ReadByte(UINT16 Address)
@@ -2498,7 +2498,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvADPCMData);
 		SCAN_VAR(nCyclesDone);
 		SCAN_VAR(nCyclesSegment);
-		
+
 		if (nAction & ACB_WRITE) {
 			HD6309Open(0);
 			HD6309MapMemory(DrvHD6309Rom + 0x8000 + (DrvRomBank * 0x4000), 0x4000, 0x7fff, M6809_ROM);

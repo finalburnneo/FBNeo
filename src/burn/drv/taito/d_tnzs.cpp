@@ -810,18 +810,12 @@ UINT8 __fastcall tnzs_cpu2_in(UINT16 port)
 	return 0;
 }
 
-static INT32 FROM_SAVESTATE = 0;
-
 static void kabukiz_sound_bankswitch(UINT32, UINT32 data)
 {
 	if (data != 0xff) {
 		tnzs_banks[2] = data;
 
-		if (FROM_SAVESTATE) {
-			ZetOpen(2);
-			FROM_SAVESTATE = 0;
-		}
-			// I don't like this either - but to avoid a crash on Savestate load, it has to be, as
+	if (ZetGetActive() == -1) return; // fix crash on init
 			// YM2203_postload() eventually gets to code that writes to a port that is mapped to
 			// kabukiz_sound_bankswitch() and at this time, the cpu isn't open
 			// Stack backtrace from crash:
@@ -1882,11 +1876,10 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	struct BurnArea ba;
 
 	if (pnMin) {
-		*pnMin = 0x029707;
+		*pnMin = 0x029730;
 	}
 
 	if (nAction & ACB_VOLATILE) {
-		FROM_SAVESTATE = 1; // see notes @ kabukiz_sound_bankswitch() - dink
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";
@@ -1904,13 +1897,10 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		tnzs_mcu_scan();
 
-		SCAN_VAR(tnzs_banks[0]);
-		SCAN_VAR(tnzs_banks[1]);
-		SCAN_VAR(tnzs_banks[2]);
+		SCAN_VAR(tnzs_banks);
 		SCAN_VAR(cpu1_reset);
 
-		SCAN_VAR(nAnalogAxis[0]);
-		SCAN_VAR(nAnalogAxis[1]);
+		SCAN_VAR(nAnalogAxis);
 
 		SCAN_VAR(kageki_csport_sel);
 		SCAN_VAR(kageki_sample_pos);

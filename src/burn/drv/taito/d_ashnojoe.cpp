@@ -220,6 +220,8 @@ void DrvYM2203WritePortA(UINT32, UINT32 d)
 
 void DrvYM2203WritePortB(UINT32, UINT32 d)
 {
+	if (ZetGetActive() == -1) return; // fix crash on init
+
 	INT32 bank = (d & 0x0f) * 0x8000;
 
 	ZetMapArea(0x8000, 0xffff, 0, DrvZ80Banks + bank);
@@ -237,11 +239,15 @@ inline static void DrvIRQHandler(INT32, INT32 nStatus)
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
+	if (ZetGetActive() == -1) return 0;
+
 	return (INT64)(double)ZetTotalCycles() * nSoundRate / 4000000;
 }
 
 static double DrvGetTime()
 {
+	if (ZetGetActive() == -1) return 0;
+
 	return (double)ZetTotalCycles() / 4000000.0;
 }
 

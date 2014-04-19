@@ -47,7 +47,7 @@ static int m_noise_rng;
 static int m_noise_clocks;   /* number of the noise_rng (output) level changes */
 static unsigned int m_UpdateStep;
 
-static INT32 volume[11];
+static double volume[11];
 
 /* rate tables */
 static double  m_ar_tbl[8];
@@ -65,7 +65,7 @@ static int     m_rate;       /* sample rate in Hz */
 static double  m_external_capacity[8]; /* in Farads, eg 0.39e-6 = 0.36 uF (microFarads) */
 static void (*m_gate_handler_cb)(INT32 state) = NULL;/* callback called when the GATE output pin changes state */
 
-static INT16 *sound_buffer[11];
+static INT32 *sound_buffer[11];
 
 //-------------------------------------------------
 //  set gate handler
@@ -201,18 +201,18 @@ static const UINT16 MSM5232_ROM[88]={
 
 static void init_tables()
 {
-	int i;
+	INT32 i;
 	double scale;
 
 	/* sample rate = chip clock !!!  But : */
 	/* highest possible frequency is chipclock/13/16 (pitch data=0x57) */
 	/* at 2MHz : 2000000/13/16 = 9615 Hz */
 
-	i = ((double)(1<<STEP_SH) * (double)m_rate) / (double)m_chip_clock;
+	i = (INT32)(((double)(1<<STEP_SH) * (double)m_rate) / (double)m_chip_clock);
 	m_UpdateStep = i;
 
 	scale = ((double)m_chip_clock) / (double)m_rate;
-	m_noise_step = ((1<<STEP_SH)/128.0) * scale; /* step of the rng reg in 16.16 format */
+	m_noise_step = (INT32)(((1<<STEP_SH)/128.0) * scale); /* step of the rng reg in 16.16 format */
 
 	for (i=0; i<8; i++)
 	{
@@ -234,9 +234,9 @@ static void init_voice(int i)
 	m_voi[i].dr_rate= m_dr_tbl[0] * m_external_capacity[i];
 	m_voi[i].rr_rate= m_dr_tbl[0] * m_external_capacity[i]; /* this is constant value */
 	m_voi[i].eg_sect= -1;
-	m_voi[i].eg     = 0.0;
+	m_voi[i].eg     = 0;
 	m_voi[i].eg_arm = 0;
-	m_voi[i].pitch  = -1.0;
+	m_voi[i].pitch  = -1;
 }
 
 void MSM5232Init(int clock, int bAdd)
@@ -261,17 +261,17 @@ void MSM5232Init(int clock, int bAdd)
 	}
 
 	for (j = 0; j < 11; j++) {
-		sound_buffer[j] = (INT16*)BurnMalloc(m_rate * sizeof(INT16));
+		sound_buffer[j] = (INT32*)BurnMalloc(m_rate * sizeof(INT32));
 	}
 
-	volume[BURN_SND_MSM5232_ROUTE_0] = 100;
-	volume[BURN_SND_MSM5232_ROUTE_1] = 100;
-	volume[BURN_SND_MSM5232_ROUTE_2] = 100;
-	volume[BURN_SND_MSM5232_ROUTE_3] = 100;
-	volume[BURN_SND_MSM5232_ROUTE_4] = 100;
-	volume[BURN_SND_MSM5232_ROUTE_5] = 100;
-	volume[BURN_SND_MSM5232_ROUTE_6] = 100;
-	volume[BURN_SND_MSM5232_ROUTE_7] = 100;
+	volume[BURN_SND_MSM5232_ROUTE_0] = 1.00;
+	volume[BURN_SND_MSM5232_ROUTE_1] = 1.00;
+	volume[BURN_SND_MSM5232_ROUTE_2] = 1.00;
+	volume[BURN_SND_MSM5232_ROUTE_3] = 1.00;
+	volume[BURN_SND_MSM5232_ROUTE_4] = 1.00;
+	volume[BURN_SND_MSM5232_ROUTE_5] = 1.00;
+	volume[BURN_SND_MSM5232_ROUTE_6] = 1.00;
+	volume[BURN_SND_MSM5232_ROUTE_7] = 1.00;
 	volume[BURN_SND_MSM5232_ROUTE_SOLO8] = 0;
 	volume[BURN_SND_MSM5232_ROUTE_SOLO16] = 0;
 	volume[BURN_SND_MSM5232_ROUTE_NOISE] = 0;
@@ -289,7 +289,7 @@ void MSM5232Exit()
 
 void MSM5232SetRoute(double vol, INT32 route)
 {
-	volume[route] = (vol * 100);
+	volume[route] = vol;
 }
 
 void MSM5232Write(INT32 offset, UINT8 data)
@@ -614,7 +614,7 @@ void MSM5232SetClock(int clock)
 			if (sound_buffer[j]) {
 				BurnFree(sound_buffer[j]);
 			}
-			sound_buffer[j] = (INT16*)BurnMalloc(m_rate * 2);
+			sound_buffer[j] = (INT32*)BurnMalloc(m_rate * 2);
 		}
 	}
 }
@@ -626,17 +626,17 @@ void MSM5232SetClock(int clock)
 
 void MSM5232Update(INT16 *buffer, int samples)
 {
-	INT16 *buf1 = sound_buffer[0];
-	INT16 *buf2 = sound_buffer[1];
-	INT16 *buf3 = sound_buffer[2];
-	INT16 *buf4 = sound_buffer[3];
-	INT16 *buf5 = sound_buffer[4];
-	INT16 *buf6 = sound_buffer[5];
-	INT16 *buf7 = sound_buffer[6];
-	INT16 *buf8 = sound_buffer[7];
-	INT16 *bufsolo1 = sound_buffer[8];
-	INT16 *bufsolo2 = sound_buffer[9];
-	INT16 *bufnoise = sound_buffer[10];
+	INT32 *buf1 = sound_buffer[0];
+	INT32 *buf2 = sound_buffer[1];
+	INT32 *buf3 = sound_buffer[2];
+	INT32 *buf4 = sound_buffer[3];
+	INT32 *buf5 = sound_buffer[4];
+	INT32 *buf6 = sound_buffer[5];
+	INT32 *buf7 = sound_buffer[6];
+	INT32 *buf8 = sound_buffer[7];
+	INT32 *bufsolo1 = sound_buffer[8];
+	INT32 *bufsolo2 = sound_buffer[9];
+	INT32 *bufnoise = sound_buffer[10];
 	int i;
 
 	for (i = 0; i < m_rate; i++)
@@ -687,17 +687,17 @@ void MSM5232Update(INT16 *buffer, int samples)
 			INT32 offs = (i * m_rate) / samples;
 			if (offs >= m_rate) offs = m_rate - 1;
 	
-			INT32 sample = (sound_buffer[0][offs] * volume[0]) / 100;
-			sample += (sound_buffer[1][offs] * volume[1]) / 100;
-			sample += (sound_buffer[2][offs] * volume[2]) / 100;
-			sample += (sound_buffer[3][offs] * volume[3]) / 100;
-			sample += (sound_buffer[4][offs] * volume[4]) / 100;
-			sample += (sound_buffer[5][offs] * volume[5]) / 100;
-			sample += (sound_buffer[6][offs] * volume[6]) / 100;
-			sample += (sound_buffer[7][offs] * volume[7]) / 100;
-			sample += (sound_buffer[8][offs] * volume[8]) / 100;
-			sample += (sound_buffer[9][offs] * volume[9]) / 100;
-			sample += (sound_buffer[10][offs] * volume[10]) / 100;
+			INT32 sample = (INT32)(double)(BURN_SND_CLIP(sound_buffer[0][offs]) * volume[0]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[1][offs]) * volume[1]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[2][offs]) * volume[2]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[3][offs]) * volume[3]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[4][offs]) * volume[4]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[5][offs]) * volume[5]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[6][offs]) * volume[6]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[7][offs]) * volume[7]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[8][offs]) * volume[8]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[9][offs]) * volume[9]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[10][offs]) * volume[10]);
 	
 			sample = BURN_SND_CLIP(sample);
 	
@@ -710,17 +710,17 @@ void MSM5232Update(INT16 *buffer, int samples)
 			INT32 offs = (i * m_rate) / samples;
 			if (offs >= m_rate) offs = m_rate - 1;
 	
-			INT32 sample = (sound_buffer[0][offs] * volume[0]) / 100;
-			sample += (sound_buffer[1][offs] * volume[1]) / 100;
-			sample += (sound_buffer[2][offs] * volume[2]) / 100;
-			sample += (sound_buffer[3][offs] * volume[3]) / 100;
-			sample += (sound_buffer[4][offs] * volume[4]) / 100;
-			sample += (sound_buffer[5][offs] * volume[5]) / 100;
-			sample += (sound_buffer[6][offs] * volume[6]) / 100;
-			sample += (sound_buffer[7][offs] * volume[7]) / 100;
-			sample += (sound_buffer[8][offs] * volume[8]) / 100;
-			sample += (sound_buffer[9][offs] * volume[9]) / 100;
-			sample += (sound_buffer[10][offs] * volume[10]) / 100;
+			INT32 sample = (INT32)(double)(BURN_SND_CLIP(sound_buffer[0][offs]) * volume[0]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[1][offs]) * volume[1]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[2][offs]) * volume[2]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[3][offs]) * volume[3]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[4][offs]) * volume[4]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[5][offs]) * volume[5]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[6][offs]) * volume[6]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[7][offs]) * volume[7]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[8][offs]) * volume[8]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[9][offs]) * volume[9]);
+			sample += (INT32)(double)(BURN_SND_CLIP(sound_buffer[10][offs]) * volume[10]);
 	
 			sample = BURN_SND_CLIP(sample);
 	

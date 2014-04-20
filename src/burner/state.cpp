@@ -289,7 +289,8 @@ INT32 BurnStateSave(TCHAR* szName, INT32 bAll)
 {
 	const char szHeader[] = "FB1 ";						// File identifier
 	INT32 nLen = 0, nVer = 0;
-	INT32 nRet = 0;
+        INT32 nRet = 0;
+        TCHAR szBackupName[1024] = _T("");
 
 	if (bAll) {											// Get amount of data
 		StateInfo(&nLen, &nVer, 1);
@@ -299,7 +300,12 @@ INT32 BurnStateSave(TCHAR* szName, INT32 bAll)
 	if (nLen <= 0) {									// No data, so exit without creating a savestate
 		return 0;										// Don't return an error code
 	}
-
+#ifdef _WIN32
+        // backup last savestate just incase - dink
+        _stprintf(szBackupName, _T("%s.backup"), szName);
+        DeleteFileW(szBackupName);
+        MoveFileW(szName, szBackupName);
+#endif
 	FILE* fp = _tfopen(szName, _T("wb"));
 	if (fp == NULL) {
 		return 1;

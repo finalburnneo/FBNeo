@@ -29,6 +29,7 @@ UINT8 DebugSnd_YM2612Initted;
 UINT8 DebugSnd_YM3526Initted;
 UINT8 DebugSnd_YM3812Initted;
 UINT8 DebugSnd_YMF278BInitted;
+UINT8 DebugSnd_C6280Initted;
 UINT8 DebugSnd_DACInitted;
 UINT8 DebugSnd_ES5506Initted;
 UINT8 DebugSnd_ES8712Initted;
@@ -100,6 +101,7 @@ void DebugTrackerExit()
 	if (DebugSnd_YM3526Initted) 		bprintf(PRINT_ERROR, _T("Sound Module YM3526 Not Exited\n"));
 	if (DebugSnd_YM3812Initted) 		bprintf(PRINT_ERROR, _T("Sound Module YM3812 Not Exited\n"));
 	if (DebugSnd_YMF278BInitted) 		bprintf(PRINT_ERROR, _T("Sound Module YMF278B Not Exited\n"));
+	if (DebugSnd_C6280Initted)	 		bprintf(PRINT_ERROR, _T("Sound Module C6280 Not Exited\n"));
 	if (DebugSnd_DACInitted) 			bprintf(PRINT_ERROR, _T("Sound Module DAC Not Exited\n"));
 	if (DebugSnd_ES5506Initted) 		bprintf(PRINT_ERROR, _T("Sound Module ES5506 Not Exited\n"));
 	if (DebugSnd_ES8712Initted) 		bprintf(PRINT_ERROR, _T("Sound Module ES8712 Not Exited\n"));

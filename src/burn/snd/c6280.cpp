@@ -93,6 +93,10 @@ static c6280_t chip[1];
 
 INT32 c6280_sync_get_offset_end()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_sync_get_offset_end called without init\n"));
+#endif
+
 	// should we get these externally? The c6280 *should* only ever be used with
 	// the h6280 and should use the same clocks.
 	INT32 cycles = (INT32)((INT64)7159090 * nBurnCPUSpeedAdjust / (0x0100 * 60));
@@ -107,6 +111,10 @@ INT32 c6280_sync_get_offset_end()
 
 void c6280_reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_reset called without init\n"));
+#endif
+
 	c6280_t *p = &chip[0];
 
 	p->select = 0;
@@ -120,7 +128,9 @@ void c6280_reset()
 
 void c6280_init(double clk, INT32 bAdd)
 {
-	int i;
+	DebugSnd_C6280Initted = 1;
+
+	INT32 i;
 	double step;
 	c6280_t *p = &chip[0];
 
@@ -172,6 +182,10 @@ void c6280_init(double clk, INT32 bAdd)
 
 void c6280_set_route(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_set_route called without init\n"));
+#endif
+
 	c6280_t *p = &chip[0];
 	
 	p->gain[nIndex] = nVolume;
@@ -180,9 +194,15 @@ void c6280_set_route(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void c6280_exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_exit called without init\n"));
+#endif
+
 	if (stream_buffer) {
 		BurnFree(stream_buffer);
 	}
+	
+	DebugSnd_C6280Initted = 0;
 }
 
 static void c6280_stream_update()
@@ -206,16 +226,16 @@ static void c6280_stream_update()
 	}
 #endif
 
-	static const int scale_tab[] = {
+	static const INT32 scale_tab[] = {
 		0x00, 0x03, 0x05, 0x07, 0x09, 0x0B, 0x0D, 0x0F,
 		0x10, 0x13, 0x15, 0x17, 0x19, 0x1B, 0x1D, 0x1F
 	};
-	int ch;
-	int i;
+	INT32 ch;
+	INT32 i;
 
-	int lmal = (p->balance >> 4) & 0x0F;
-	int rmal = (p->balance >> 0) & 0x0F;
-	int vll, vlr;
+	INT32 lmal = (p->balance >> 4) & 0x0F;
+	INT32 rmal = (p->balance >> 0) & 0x0F;
+	INT32 vll, vlr;
 
 	lmal = scale_tab[lmal];
 	rmal = scale_tab[rmal];
@@ -228,9 +248,9 @@ static void c6280_stream_update()
 		/* Only look at enabled channels */
 		if(p->channel[ch].control & 0x80)
 		{
-			int lal = (p->channel[ch].balance >> 4) & 0x0F;
-			int ral = (p->channel[ch].balance >> 0) & 0x0F;
-			int al  = p->channel[ch].control & 0x1F;
+			INT32 lal = (p->channel[ch].balance >> 4) & 0x0F;
+			INT32 ral = (p->channel[ch].balance >> 0) & 0x0F;
+			INT32 al  = p->channel[ch].control & 0x1F;
 
 			lal = scale_tab[lal];
 			ral = scale_tab[ral];
@@ -281,7 +301,7 @@ static void c6280_stream_update()
 				UINT32 step = p->wave_freq_tab[p->channel[ch].frequency];
 				for(i = 0; i < samples; i++, pBuf+=2)
 				{
-					int offset = (p->channel[ch].counter >> 12) & 0x1F;
+					INT32 offset = (p->channel[ch].counter >> 12) & 0x1F;
 					p->channel[ch].counter += step;
 					p->channel[ch].counter &= 0x1FFFF;
 					INT16 data = p->channel[ch].waveform[offset];
@@ -293,7 +313,7 @@ static void c6280_stream_update()
 	}
 }
 
-static void c6280_write_internal(int offset, int data)
+static void c6280_write_internal(INT32 offset, INT32 data)
 {
 	c6280_t *p = &chip[0];
 	t_channel *q = &p->channel[p->select];
@@ -377,6 +397,10 @@ static void c6280_write_internal(int offset, int data)
 
 void c6280_update(INT16 *pBuffer, INT32 samples)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_update called without init\n"));
+#endif
+
 	c6280_t *p = &chip[0];
 
 	c6280_stream_update();
@@ -409,17 +433,29 @@ void c6280_update(INT16 *pBuffer, INT32 samples)
 
 UINT8 c6280_read()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_read called without init\n"));
+#endif
+
 	return h6280io_get_buffer();
 }
 
 void c6280_write(UINT8 offset, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_write called without init\n"));
+#endif
+
 	h6280io_set_buffer(data);
 	c6280_write_internal(offset, data);
 }
 
 INT32 c6280_scan(INT32 nAction, INT32 *pnMin)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 
 	if (pnMin) {
@@ -438,4 +474,3 @@ INT32 c6280_scan(INT32 nAction, INT32 *pnMin)
 
 	return 0;
 }
-

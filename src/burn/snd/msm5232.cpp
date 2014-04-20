@@ -11,8 +11,8 @@
 struct VOICE {
 	UINT8 mode;
 
-	int     TG_count_period;
-	int     TG_count;
+	INT32     TG_count_period;
+	INT32     TG_count;
 
 	UINT8   TG_cnt;     /* 7 bits binary counter (frequency output) */
 	UINT8   TG_out16;   /* bit number (of TG_cnt) for 16' output */
@@ -20,10 +20,10 @@ struct VOICE {
 	UINT8   TG_out4;    /* bit number (of TG_cnt) for  4' output */
 	UINT8   TG_out2;    /* bit number (of TG_cnt) for  2' output */
 
-	int     egvol;
-	int     eg_sect;
-	int     counter;
-	int     eg;
+	INT32     egvol;
+	INT32     eg_sect;
+	INT32     counter;
+	INT32     eg;
 
 	UINT8   eg_arm;     /* attack/release mode */
 
@@ -31,9 +31,9 @@ struct VOICE {
 	double  dr_rate;
 	double  rr_rate;
 
-	int     pitch;          /* current pitch data */
+	INT32     pitch;          /* current pitch data */
 
-	int GF;
+	INT32 GF;
 };
 
 static VOICE   m_voi[8];
@@ -41,11 +41,11 @@ static UINT32 m_EN_out16[2]; /* enable 16' output masks for both groups (0-disab
 static UINT32 m_EN_out8[2];  /* enable 8'  output masks */
 static UINT32 m_EN_out4[2];  /* enable 4'  output masks */
 static UINT32 m_EN_out2[2];  /* enable 2'  output masks */
-static int m_noise_cnt;
-static int m_noise_step;
-static int m_noise_rng;
-static int m_noise_clocks;   /* number of the noise_rng (output) level changes */
-static unsigned int m_UpdateStep;
+static INT32 m_noise_cnt;
+static INT32 m_noise_step;
+static INT32 m_noise_rng;
+static INT32 m_noise_clocks;   /* number of the noise_rng (output) level changes */
+static UINT32 m_UpdateStep;
 
 static double volume[11];
 
@@ -56,11 +56,11 @@ static double  m_dr_tbl[16];
 static UINT8   m_control1;
 static UINT8   m_control2;
 
-static int     m_gate;       /* current state of the GATE output */
+static INT32     m_gate;       /* current state of the GATE output */
 
-static int     m_add;
-static int     m_chip_clock;      /* chip clock in Hz */
-static int     m_rate;       /* sample rate in Hz */
+static INT32     m_add;
+static INT32     m_chip_clock;      /* chip clock in Hz */
+static INT32     m_rate;       /* sample rate in Hz */
 
 static double  m_external_capacity[8]; /* in Farads, eg 0.39e-6 = 0.36 uF (microFarads) */
 static void (*m_gate_handler_cb)(INT32 state) = NULL;/* callback called when the GATE output pin changes state */
@@ -73,7 +73,7 @@ static INT32 *sound_buffer[11];
 
 static void gate_update()
 {
-	int new_state = (m_control2 & 0x20) ? m_voi[7].GF : 0;
+	INT32 new_state = (m_control2 & 0x20) ? m_voi[7].GF : 0;
 
 	if (m_gate != new_state && m_gate_handler_cb)
 	{
@@ -84,6 +84,10 @@ static void gate_update()
 
 void MSM5232SetGateCallback(void (*callback)(INT32))
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232SetGateCallback called without init\n"));
+#endif
+
 	m_gate_handler_cb = callback;
 }
 
@@ -94,7 +98,11 @@ void MSM5232SetGateCallback(void (*callback)(INT32))
 
 void MSM5232Reset()
 {
-	int i;
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232Reset called without init\n"));
+#endif
+
+	INT32 i;
 
 	for (i=0; i<8; i++)
 	{
@@ -124,6 +132,10 @@ void MSM5232Reset()
 
 void MSM5232SetCapacitors(double cap1, double cap2, double cap3, double cap4, double cap5, double cap6, double cap7, double cap8)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232SetCapacitors called without init\n"));
+#endif
+
 	m_external_capacity[0] = cap1;
 	m_external_capacity[1] = cap2;
 	m_external_capacity[2] = cap3;
@@ -228,7 +240,7 @@ static void init_tables()
 	}
 }
 
-static void init_voice(int i)
+static void init_voice(INT32 i)
 {
 	m_voi[i].ar_rate= m_ar_tbl[0] * m_external_capacity[i];
 	m_voi[i].dr_rate= m_dr_tbl[0] * m_external_capacity[i];
@@ -239,9 +251,11 @@ static void init_voice(int i)
 	m_voi[i].pitch  = -1;
 }
 
-void MSM5232Init(int clock, int bAdd)
+void MSM5232Init(INT32 clock, INT32 bAdd)
 {
-	int j, rate;
+	DebugSnd_MSM5232Initted = 1;
+	
+	INT32 j, rate;
 
 	m_add = bAdd;
 
@@ -279,21 +293,35 @@ void MSM5232Init(int clock, int bAdd)
 
 void MSM5232Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232Exit called without init\n"));
+#endif
+
 	for (INT32 j = 0; j < 11; j++) {
 		BurnFree(sound_buffer[j]);
 		sound_buffer[j] = NULL;
 	}
 
 	m_gate_handler_cb = NULL;
+	
+	DebugSnd_MSM5232Initted = 0;
 }
 
 void MSM5232SetRoute(double vol, INT32 route)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232SetRoute called without init\n"));
+#endif
+
 	volume[route] = vol;
 }
 
 void MSM5232Write(INT32 offset, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232Write called without init\n"));
+#endif
+
 	offset &= 0x0f;
 
 	if (offset > 0x0d)
@@ -356,7 +384,7 @@ void MSM5232Write(INT32 offset, UINT8 data)
 	}
 	else
 	{
-		int i;
+		INT32 i;
 		switch(offset)
 		{
 		case 0x08:  /* group1 attack */
@@ -417,8 +445,8 @@ void MSM5232Write(INT32 offset, UINT8 data)
 static void EG_voices_advance()
 {
 	VOICE *voi = &m_voi[0];
-	int samplerate = m_rate;
-	int i;
+	INT32 samplerate = m_rate;
+	INT32 i;
 
 	i = 8;
 	do
@@ -430,10 +458,10 @@ static void EG_voices_advance()
 			/* capacitor charge */
 			if (voi->eg < VMAX)
 			{
-				voi->counter -= (int)((VMAX - voi->eg) / voi->ar_rate);
+				voi->counter -= (INT32)((VMAX - voi->eg) / voi->ar_rate);
 				if ( voi->counter <= 0 )
 				{
-					int n = -voi->counter / samplerate + 1;
+					INT32 n = -voi->counter / samplerate + 1;
 					voi->counter += n * samplerate;
 					if ( (voi->eg += n) > VMAX )
 						voi->eg = VMAX;
@@ -463,10 +491,10 @@ static void EG_voices_advance()
 			/* capacitor discharge */
 			if (voi->eg > VMIN)
 			{
-				voi->counter -= (int)((voi->eg - VMIN) / voi->dr_rate);
+				voi->counter -= (INT32)((voi->eg - VMIN) / voi->dr_rate);
 				if ( voi->counter <= 0 )
 				{
-					int n = -voi->counter / samplerate + 1;
+					INT32 n = -voi->counter / samplerate + 1;
 					voi->counter += n * samplerate;
 					if ( (voi->eg -= n) < VMIN )
 						voi->eg = VMIN;
@@ -486,10 +514,10 @@ static void EG_voices_advance()
 			/* capacitor discharge */
 			if (voi->eg > VMIN)
 			{
-				voi->counter -= (int)((voi->eg - VMIN) / voi->rr_rate);
+				voi->counter -= (INT32)((voi->eg - VMIN) / voi->rr_rate);
 				if ( voi->counter <= 0 )
 				{
-					int n = -voi->counter / samplerate + 1;
+					INT32 n = -voi->counter / samplerate + 1;
 					voi->counter += n * samplerate;
 					if ( (voi->eg -= n) < VMIN )
 						voi->eg = VMIN;
@@ -514,28 +542,28 @@ static void EG_voices_advance()
 
 }
 
-static int o2,o4,o8,o16,solo8,solo16;
+static INT32 o2,o4,o8,o16,solo8,solo16;
 
-static void TG_group_advance(int groupidx)
+static void TG_group_advance(INT32 groupidx)
 {
 	VOICE *voi = &m_voi[groupidx*4];
-	int i;
+	INT32 i;
 
 	o2 = o4 = o8 = o16 = solo8 = solo16 = 0;
 
 	i=4;
 	do
 	{
-		int out2, out4, out8, out16;
+		INT32 out2, out4, out8, out16;
 
 		out2 = out4 = out8 = out16 = 0;
 
 		if (voi->mode==0)   /* generate square tone */
 		{
-			int left = 1<<STEP_SH;
+			INT32 left = 1<<STEP_SH;
 			do
 			{
-				int nextevent = left;
+				INT32 nextevent = left;
 
 				if (voi->TG_cnt&voi->TG_out16)  out16+=voi->TG_count;
 				if (voi->TG_cnt&voi->TG_out8)   out8 +=voi->TG_count;
@@ -603,8 +631,12 @@ static void TG_group_advance(int groupidx)
 	o2  &= m_EN_out2 [groupidx];
 }
 
-void MSM5232SetClock(int clock)
+void MSM5232SetClock(INT32 clock)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232SetClock called without init\n"));
+#endif
+
 	if (m_chip_clock != clock)
 	{
 		m_rate = ((clock/CLOCK_RATE_DIVIDER) * 100) / nBurnFPS;
@@ -624,8 +656,12 @@ void MSM5232SetClock(int clock)
 //  sound_stream_update - handle a stream update
 //-------------------------------------------------
 
-void MSM5232Update(INT16 *buffer, int samples)
+void MSM5232Update(INT16 *buffer, INT32 samples)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232Update called without init\n"));
+#endif
+
 	INT32 *buf1 = sound_buffer[0];
 	INT32 *buf2 = sound_buffer[1];
 	INT32 *buf3 = sound_buffer[2];
@@ -637,7 +673,7 @@ void MSM5232Update(INT16 *buffer, int samples)
 	INT32 *bufsolo1 = sound_buffer[8];
 	INT32 *bufsolo2 = sound_buffer[9];
 	INT32 *bufnoise = sound_buffer[10];
-	int i;
+	INT32 i;
 
 	for (i = 0; i < m_rate; i++)
 	{
@@ -661,11 +697,11 @@ void MSM5232Update(INT16 *buffer, int samples)
 
 		/* update noise generator */
 		{
-			int cnt = (m_noise_cnt+=m_noise_step) >> STEP_SH;
+			INT32 cnt = (m_noise_cnt+=m_noise_step) >> STEP_SH;
 			m_noise_cnt &= ((1<<STEP_SH)-1);
 			while (cnt > 0)
 			{
-				int tmp = m_noise_rng & (1<<16);        /* store current level */
+				INT32 tmp = m_noise_rng & (1<<16);        /* store current level */
 
 				if (m_noise_rng&1)
 					m_noise_rng ^= 0x24000;
@@ -733,6 +769,10 @@ void MSM5232Update(INT16 *buffer, int samples)
 
 INT32 MSM5232Scan(INT32 nAction, INT32 *)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232Scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 
 	if (nAction & ACB_DRIVER_DATA) {		

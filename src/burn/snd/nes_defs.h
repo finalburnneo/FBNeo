@@ -50,8 +50,8 @@ typedef UINT8         boolean;
 
 typedef struct queue_s
 {
-  int pos;
-  unsigned char reg,val;
+  INT32 pos;
+  UINT8 reg,val;
 } queue_t;
 
 #endif
@@ -87,8 +87,8 @@ typedef struct queue_s
 typedef struct square_s
 {
    uint8 regs[4];
-   int vbl_length;
-   int freq;
+   INT32 vbl_length;
+   INT32 freq;
    float phaseacc;
    float output_vol;
    float env_phase;
@@ -102,9 +102,9 @@ typedef struct square_s
 typedef struct triangle_s
 {
    uint8 regs[4]; /* regs[1] unused */
-   int linear_length;
-   int vbl_length;
-   int write_latency;
+   INT32 linear_length;
+   INT32 vbl_length;
+   INT32 write_latency;
    float phaseacc;
    float output_vol;
    uint8 adder;
@@ -116,8 +116,8 @@ typedef struct triangle_s
 typedef struct noise_s
 {
    uint8 regs[4]; /* regs[1] unused */
-   int cur_pos;
-   int vbl_length;
+   INT32 cur_pos;
+   INT32 vbl_length;
    float phaseacc;
    float output_vol;
    float env_phase;
@@ -131,13 +131,13 @@ typedef struct dpcm_s
    uint8 regs[4];
    uint32 address;
    uint32 length;
-   int bits_left;
+   INT32 bits_left;
    float phaseacc;
    float output_vol;
    uint8 cur_byte;
    boolean enabled;
    boolean irq_occurred;
-   signed char vol;
+   INT8 vol;
 } dpcm_t;
 
 /* APU type */
@@ -150,7 +150,7 @@ typedef struct apu
    dpcm_t     dpcm;
 
    /* APU registers */
-   unsigned char regs[0x17];
+   UINT8 regs[0x17];
 
    /* Sound pointers */
    void *buffer;
@@ -159,11 +159,11 @@ typedef struct apu
 
    /* Event queue */
    queue_t queue[QUEUE_SIZE];
-   int head,tail;
+   INT32 head,tail;
 
 #else
 
-   int buf_pos;
+   INT32 buf_pos;
 
 #endif
 
@@ -179,26 +179,26 @@ static const uint8 vbl_length[32] =
 };
 
 /* frequency limit of square channels */
-static const int freq_limit[8] =
+static const INT32 freq_limit[8] =
 {
    0x3FF, 0x555, 0x666, 0x71C, 0x787, 0x7C1, 0x7E0, 0x7F0,
 };
 
 /* table of noise frequencies */
-static const int noise_freq[16] =
+static const INT32 noise_freq[16] =
 {
    4, 8, 16, 32, 64, 96, 128, 160, 202, 254, 380, 508, 762, 1016, 2034, 2046
 };
 
 /* dpcm transfer freqs */
-static const int dpcm_clocks[16] =
+static const INT32 dpcm_clocks[16] =
 {
    428, 380, 340, 320, 286, 254, 226, 214, 190, 160, 142, 128, 106, 85, 72, 54
 };
 
 /* ratios of pos/neg pulse for square waves */
 /* 2/16 = 12.5%, 4/16 = 25%, 8/16 = 50%, 12/16 = 75% */
-static const int duty_lut[4] =
+static const INT32 duty_lut[4] =
 {
    2, 4, 8, 12
 };

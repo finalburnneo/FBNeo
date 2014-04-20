@@ -79,7 +79,7 @@ struct nesapu_info
 	// FBA-specific variables
 	INT16 *stream;
 	INT32 samples_per_frame;
-	UINT32 (*pSyncCallback)(int samples_per_frame);
+	UINT32 (*pSyncCallback)(INT32 samples_per_frame);
 	INT32 current_position;
 	INT32 fill_buffer_hack;
 	double gain[2];
@@ -92,19 +92,19 @@ static nesapu_info nesapu_chips[CHIP_NUM];
 /* INTERNAL FUNCTIONS */
 
 /* INITIALIZE WAVE TIMES RELATIVE TO SAMPLE RATE */
-static void create_vbltimes(UINT32* table,const UINT8 *vbl,unsigned int rate)
+static void create_vbltimes(UINT32* table,const UINT8 *vbl,UINT32 rate)
 {
-  int i;
+  INT32 i;
 
   for (i=0;i<0x20;i++)
     table[i]=vbl[i]*rate;
 }
 
 /* INITIALIZE SAMPLE TIMES IN TERMS OF VSYNCS */
-static void create_syncs(struct nesapu_info *info, unsigned long sps)
+static void create_syncs(struct nesapu_info *info, UINT64 sps)
 {
-  int i;
-  unsigned long val=sps;
+  INT32 i;
+  UINT64 val=sps;
 
   for (i=0;i<SYNCS_MAX1;i++)
   {
@@ -122,10 +122,10 @@ static void create_syncs(struct nesapu_info *info, unsigned long sps)
 }
 
 /* INITIALIZE NOISE LOOKUP TABLE */
-static void create_noise(UINT8 *buf, const int bits, int size)
+static void create_noise(UINT8 *buf, const INT32 bits, INT32 size)
 {
-   static int m = 0x0011;
-   int xor_val, i;
+   static INT32 m = 0x0011;
+   INT32 xor_val, i;
 
    for (i = 0; i < size; i++)
    {
@@ -143,8 +143,8 @@ static void create_noise(UINT8 *buf, const int bits, int size)
 /* OUTPUT SQUARE WAVE SAMPLE (VALUES FROM -16 to +15) */
 static int8 apu_square(struct nesapu_info *info, square_t *chan)
 {
-   int env_delay;
-   int sweep_delay;
+   INT32 env_delay;
+   INT32 sweep_delay;
    int8 output;
 
    /* reg0: 0-3=volume, 4=envelope, 5=hold, 6-7=duty cycle
@@ -218,7 +218,7 @@ static int8 apu_square(struct nesapu_info *info, square_t *chan)
 /* OUTPUT TRIANGLE WAVE SAMPLE (VALUES FROM -16 to +15) */
 static int8 apu_triangle(struct nesapu_info *info, triangle_t *chan)
 {
-   int freq;
+   INT32 freq;
    int8 output;
    /* reg0: 7=holdnote, 6-0=linear length counter
    ** reg2: low 8 bits of frequency
@@ -276,7 +276,7 @@ static int8 apu_triangle(struct nesapu_info *info, triangle_t *chan)
 /* OUTPUT NOISE WAVE SAMPLE (VALUES FROM -16 to +15) */
 static int8 apu_noise(struct nesapu_info *info, noise_t *chan)
 {
-   int freq, env_delay;
+   INT32 freq, env_delay;
    UINT8 outvol;
    UINT8 output;
 
@@ -355,7 +355,7 @@ static inline void apu_dpcmreset(dpcm_t *chan)
 /* TODO: centerline naughtiness */
 static int8 apu_dpcm(struct nesapu_info *info, dpcm_t *chan)
 {
-   int freq, bit_pos;
+   INT32 freq, bit_pos;
 
    /* reg0: 7=irq gen, 6=looping, 3-0=pointer to clock table
    ** reg1: output dc level, 7 bits unsigned
@@ -417,9 +417,9 @@ static int8 apu_dpcm(struct nesapu_info *info, dpcm_t *chan)
 }
 
 /* WRITE REGISTER VALUE */
-static inline void apu_regwrite(struct nesapu_info *info,int address, UINT8 value)
+static inline void apu_regwrite(struct nesapu_info *info,INT32 address, UINT8 value)
 {
-   int chan = (address & 4) ? 1 : 0;
+   INT32 chan = (address & 4) ? 1 : 0;
 
    switch (address)
    {
@@ -616,7 +616,7 @@ logerror("invalid apu write: $%02X at $%04X\n", value, address);
 /* UPDATE SOUND BUFFER USING CURRENT DATA */
 static inline void apu_update(struct nesapu_info *info)
 {
-   int accum;
+   INT32 accum;
 
 //------------------------------------------------------------------------------------------------------
 	if (info->pSyncCallback == NULL) return;
@@ -660,12 +660,16 @@ static inline void apu_update(struct nesapu_info *info)
 }
 
 /* READ VALUES FROM REGISTERS */
-UINT8 nesapuRead(int chip,int address)
+UINT8 nesapuRead(INT32 chip,INT32 address)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuRead called without init\n"));
+#endif
+
   struct nesapu_info *info = &nesapu_chips[chip];
   if (address == 0x0f) /*FIXED* Address $4015 has different behaviour*/
   	{
-  	int readval = 0;
+  	INT32 readval = 0;
   		if ( info->APU.dpcm.enabled == TRUE )
   			{
   				readval |= 0x10;
@@ -682,8 +686,12 @@ UINT8 nesapuRead(int chip,int address)
 }
 
 /* WRITE VALUE TO TEMP REGISTRY AND QUEUE EVENT */
-void nesapuWrite(int chip,int address, UINT8 value)
+void nesapuWrite(INT32 chip,INT32 address, UINT8 value)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuWrite called without init\n"));
+#endif
+
   struct nesapu_info *info = &nesapu_chips[chip]; //sndti_token(SOUND_NES, chip);
    info->APU.regs[address]=value;
    apu_update(info);
@@ -693,8 +701,12 @@ void nesapuWrite(int chip,int address, UINT8 value)
 /* EXTERNAL INTERFACE FUNCTIONS */
 
 /* UPDATE APU SYSTEM */
-void nesapuUpdate(int chip, INT16 *buf, INT32 samples)
+void nesapuUpdate(INT32 chip, INT16 *buf, INT32 samples)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuUpdate called without init\n"));
+#endif
+
 	struct nesapu_info *info = &nesapu_chips[chip];
 
 	if (pBurnSoundOut == NULL) {
@@ -705,7 +717,7 @@ void nesapuUpdate(int chip, INT16 *buf, INT32 samples)
 	info->fill_buffer_hack = 1;
 	apu_update(info);
 
-	int nAdd = info->bAdd;
+	INT32 nAdd = info->bAdd;
 	INT16 *stream = info->stream;
 
 	UINT32 step = (info->samples_per_frame << 12) / nBurnSoundLen;
@@ -753,6 +765,10 @@ void nesapuUpdate(int chip, INT16 *buf, INT32 samples)
 
 void nesapuReset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuReset called without init\n"));
+#endif
+
 	for (INT32 i = 0; i < CHIP_NUM; i++) {
 		struct nesapu_info *info = &nesapu_chips[i];
 
@@ -816,10 +832,12 @@ void nesapuReset()
 }
 
 /* INITIALIZE APU SYSTEM */
-void nesapuInit(int chip, int clock, UINT32 (*pSyncCallback)(int samples_per_frame), INT32 bAdd)
+void nesapuInit(INT32 chip, INT32 clock, UINT32 (*pSyncCallback)(INT32 samples_per_frame), INT32 bAdd)
 {
+	DebugSnd_NESAPUSndInitted = 1;
+
 	struct nesapu_info *info = &nesapu_chips[chip];
-	int rate = clock / 4;
+	INT32 rate = clock / 4;
 
 	memset(info, 0, sizeof(nesapu_info));
 
@@ -853,6 +871,10 @@ void nesapuInit(int chip, int clock, UINT32 (*pSyncCallback)(int samples_per_fra
 
 void nesapuSetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuSetRoute called without init\n"));
+#endif
+
 	struct nesapu_info *info = &nesapu_chips[nChip];
 	
 	info->gain[nIndex] = nVolume;
@@ -861,7 +883,11 @@ void nesapuSetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void nesapuExit()
 {
-	int i;
+#if defined FBA_DEBUG
+	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuExit called without init\n"));
+#endif
+
+	INT32 i;
 	struct nesapu_info *info;
 	for (i = 0; i < CHIP_NUM; i++)
 	{
@@ -869,10 +895,16 @@ void nesapuExit()
 		if (info->stream)
 			BurnFree(info->stream);
 	}
+	
+	DebugSnd_NESAPUSndInitted = 0;
 }
 
 INT32 nesapuScan(INT32 nAction)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuScan called without init\n"));
+#endif
+
 	if (nAction & ACB_DRIVER_DATA)
 	{
 		for (INT32 i = 0; i < CHIP_NUM; i++)

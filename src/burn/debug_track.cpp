@@ -40,14 +40,17 @@ UINT8 DebugSnd_K051649Initted;
 UINT8 DebugSnd_K053260Initted;
 UINT8 DebugSnd_K054539Initted;
 UINT8 DebugSnd_MSM5205Initted;
+UINT8 DebugSnd_MSM5232Initted;
 UINT8 DebugSnd_MSM6295Initted;
 UINT8 DebugSnd_NamcoSndInitted;
+UINT8 DebugSnd_NESAPUSndInitted;
 UINT8 DebugSnd_RF5C68Initted;
 UINT8 DebugSnd_SAA1099Initted;
 UINT8 DebugSnd_SamplesInitted;
 UINT8 DebugSnd_SegaPCMInitted;
 UINT8 DebugSnd_SN76496Initted;
 UINT8 DebugSnd_UPD7759Initted;
+UINT8 DebugSnd_VLM5030Initted;
 UINT8 DebugSnd_X1010Initted;
 UINT8 DebugSnd_YMZ280BInitted;
 
@@ -108,13 +111,16 @@ void DebugTrackerExit()
 	if (DebugSnd_K053260Initted) 		bprintf(PRINT_ERROR, _T("Sound Module K053260 Not Exited\n"));
 	if (DebugSnd_K054539Initted) 		bprintf(PRINT_ERROR, _T("Sound Module K054539 Not Exited\n"));
 	if (DebugSnd_MSM5205Initted) 		bprintf(PRINT_ERROR, _T("Sound Module MSM5205 Not Exited\n"));
+	if (DebugSnd_MSM5232Initted) 		bprintf(PRINT_ERROR, _T("Sound Module MSM5232 Not Exited\n"));
 	if (DebugSnd_MSM6295Initted) 		bprintf(PRINT_ERROR, _T("Sound Module MSM6295 Not Exited\n"));
 	if (DebugSnd_NamcoSndInitted) 		bprintf(PRINT_ERROR, _T("Sound Module NamcoSnd Not Exited\n"));
+	if (DebugSnd_NESAPUSndInitted) 		bprintf(PRINT_ERROR, _T("Sound Module NESAPUSnd Not Exited\n"));
 	if (DebugSnd_SAA1099Initted) 		bprintf(PRINT_ERROR, _T("Sound Module SAA1099 Not Exited\n"));
 	if (DebugSnd_SamplesInitted) 		bprintf(PRINT_ERROR, _T("Sound Module Samples Not Exited\n"));
 	if (DebugSnd_SegaPCMInitted) 		bprintf(PRINT_ERROR, _T("Sound Module SegaPCM Not Exited\n"));
 	if (DebugSnd_SN76496Initted) 		bprintf(PRINT_ERROR, _T("Sound Module SN76496 Not Exited\n"));
 	if (DebugSnd_UPD7759Initted) 		bprintf(PRINT_ERROR, _T("Sound Module UPD7759 Not Exited\n"));
+	if (DebugSnd_VLM5030Initted) 		bprintf(PRINT_ERROR, _T("Sound Module VLM5030 Not Exited\n"));
 	if (DebugSnd_X1010Initted) 			bprintf(PRINT_ERROR, _T("Sound Module X1010 Not Exited\n"));
 	if (DebugSnd_YMZ280BInitted) 		bprintf(PRINT_ERROR, _T("Sound Module YMZ280B Not Exited\n"));
 	

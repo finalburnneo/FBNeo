@@ -194,14 +194,17 @@ extern UINT8 DebugSnd_K051649Initted;
 extern UINT8 DebugSnd_K053260Initted;
 extern UINT8 DebugSnd_K054539Initted;
 extern UINT8 DebugSnd_MSM5205Initted;
+extern UINT8 DebugSnd_MSM5232Initted;
 extern UINT8 DebugSnd_MSM6295Initted;
 extern UINT8 DebugSnd_NamcoSndInitted;
+extern UINT8 DebugSnd_NESAPUSndInitted;
 extern UINT8 DebugSnd_RF5C68Initted;
 extern UINT8 DebugSnd_SAA1099Initted;
 extern UINT8 DebugSnd_SamplesInitted;
 extern UINT8 DebugSnd_SegaPCMInitted;
 extern UINT8 DebugSnd_SN76496Initted;
 extern UINT8 DebugSnd_UPD7759Initted;
+extern UINT8 DebugSnd_VLM5030Initted;
 extern UINT8 DebugSnd_X1010Initted;
 extern UINT8 DebugSnd_YMZ280BInitted;
 

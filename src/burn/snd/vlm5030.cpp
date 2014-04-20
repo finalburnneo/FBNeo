@@ -99,7 +99,7 @@ struct vlm5030_info
 	/* need to save state */
 
 	UINT8 *rom;
-	int address_mask;
+	INT32 address_mask;
 	UINT16 address;
 	UINT8 pin_BSY;
 	UINT8 pin_ST;
@@ -111,8 +111,8 @@ struct vlm5030_info
 	UINT8 phase;
 
 	/* state of option paramter */
-	int frame_size;
-	int pitch_offset;
+	INT32 frame_size;
+	INT32 pitch_offset;
 	UINT8 interp_step;
 
 	UINT8 interp_count;       /* number of interp periods    */
@@ -132,14 +132,14 @@ struct vlm5030_info
 	INT16 new_k[10];
 
 	/* these are all used to contain the current state of the sound generation */
-	unsigned int current_energy;
-	unsigned int current_pitch;
-	int current_k[10];
+	UINT32 current_energy;
+	UINT32 current_pitch;
+	INT32 current_k[10];
 
 	INT32 x[10];
 
 	// FBA-specific variables
-	short *output;
+	INT16 *output;
 	INT32 samples_per_frame;
 	UINT32 (*pSyncCallback)(int samples_per_frame);
 	INT32 current_position;
@@ -171,7 +171,7 @@ SPC SPB SPA
  0   0   1  fast      (01h)     : 20.2ms  (75%) : 30sample
  0   1   x  more fast (02h,03h) : 12.2ms  (50%) : 20sample
 */
-static const int vlm5030_speed_table[8] =
+static const INT32 vlm5030_speed_table[8] =
 {
  IP_SIZE_NORMAL,
  IP_SIZE_FAST,
@@ -190,7 +190,7 @@ static const char VLM_NAME[] = "VLM5030";
 /* This is the energy lookup table */
 
 /* sampled from real chip */
-static const unsigned short energytable[0x20] =
+static const UINT16 energytable[0x20] =
 {
 	  0,  2,  4,  6, 10, 12, 14, 18, /*  0-7  */
 	 22, 26, 30, 34, 38, 44, 48, 54, /*  8-15 */
@@ -199,7 +199,7 @@ static const unsigned short energytable[0x20] =
 };
 
 /* This is the pitch lookup table */
-static const unsigned char pitchtable [0x20]=
+static const UINT8 pitchtable [0x20]=
 {
    1,                               /* 0     : random mode */
    22,                              /* 1     : start=22    */
@@ -233,13 +233,13 @@ static const INT16 K5_table[] = {
        0,   -8127,  -16384,  -24511,   32638,   24511,   16254,    8127
 };
 
-static int get_bits(struct vlm5030_info *chip, int sbit,int bits)
+static INT32 get_bits(struct vlm5030_info *chip, INT32 sbit,INT32 bits)
 {
-	int offset = chip->address + (sbit>>3);
-	int data;
+	INT32 offset = chip->address + (sbit>>3);
+	INT32 data;
 
 	data = chip->rom[offset&chip->address_mask] +
-	       (((int)chip->rom[(offset+1)&chip->address_mask])*256);
+	       (((INT32)chip->rom[(offset+1)&chip->address_mask])*256);
 	data >>= (sbit&7);
 	data &= (0xff>>(8-bits));
 
@@ -247,10 +247,10 @@ static int get_bits(struct vlm5030_info *chip, int sbit,int bits)
 }
 
 /* get next frame */
-static int parse_frame (struct vlm5030_info *chip)
+static INT32 parse_frame (struct vlm5030_info *chip)
 {
-	unsigned char cmd;
-	int i;
+	UINT8 cmd;
+	INT32 i;
 
 	/* remember previous frame */
 	chip->old_energy = chip->new_energy;
@@ -304,10 +304,10 @@ static int parse_frame (struct vlm5030_info *chip)
 /* decode and buffering data */
 static void vlm5030_update(struct vlm5030_info *chip)
 {
-	int buf_count=0;
-	int interp_effect;
-	int i;
-	int u[11];
+	INT32 buf_count=0;
+	INT32 interp_effect;
+	INT32 i;
+	INT32 u[11];
 
 //------------------------------------------------------------------------------------------------------
 	if (chip->pSyncCallback == NULL) return;
@@ -338,7 +338,7 @@ static void vlm5030_update(struct vlm5030_info *chip)
 		/* playing speech */
 		while (samples > 0)
 		{
-			int current_val;
+			INT32 current_val;
 
 			/* check new interpolator or  new frame */
 			if( chip->sample_count == 0 )
@@ -527,8 +527,12 @@ static void vlm5030_reset(struct vlm5030_info *chip)
 	vlm5030_setup_parameter(chip, 0x00);
 }
 
-void vlm5030Reset(int nChip)
+void vlm5030Reset(INT32 nChip)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_VLM5030Initted) bprintf(PRINT_ERROR, _T("vlm5030Reset called without init\n"));
+#endif
+
 	struct vlm5030_info *chip = &vlm5030_chips[nChip];
 
 	vlm5030_reset(chip);
@@ -537,13 +541,21 @@ void vlm5030Reset(int nChip)
 /* set speech rom address */
 void vlm5030_set_rom(INT32 nChip, void *speech_rom)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_VLM5030Initted) bprintf(PRINT_ERROR, _T("vlm5030_set_rom called without init\n"));
+#endif
+
 	struct vlm5030_info *chip = &vlm5030_chips[nChip];;
 	chip->rom = (UINT8 *)speech_rom;
 }
 
 /* get BSY pin level */
-int vlm5030_bsy(INT32 nChip)
+INT32 vlm5030_bsy(INT32 nChip)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_VLM5030Initted) bprintf(PRINT_ERROR, _T("vlm5030_bsy called without init\n"));
+#endif
+
 	struct vlm5030_info *chip = &vlm5030_chips[nChip];
 	vlm5030_update(chip);
 	return chip->pin_BSY;
@@ -552,14 +564,22 @@ int vlm5030_bsy(INT32 nChip)
 /* latch contoll data */
 void vlm5030_data_write(INT32 nChip, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_VLM5030Initted) bprintf(PRINT_ERROR, _T("vlm5030_data_write called without init\n"));
+#endif
+
 	struct vlm5030_info *chip = &vlm5030_chips[nChip];
 
 	chip->latch_data = (UINT8)data;
 }
 
 /* set RST pin level : reset / set table address A8-A15 */
-void vlm5030_rst(INT32 nChip, int pin)
+void vlm5030_rst(INT32 nChip, INT32 pin)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_VLM5030Initted) bprintf(PRINT_ERROR, _T("vlm5030_rst called without init\n"));
+#endif
+
 	struct vlm5030_info *chip = &vlm5030_chips[nChip];
 	if( chip->pin_RST )
 	{
@@ -583,8 +603,12 @@ void vlm5030_rst(INT32 nChip, int pin)
 }
 
 /* set VCU pin level : ?? unknown */
-void vlm5030_vcu(INT32 nChip, int pin)
+void vlm5030_vcu(INT32 nChip, INT32 pin)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_VLM5030Initted) bprintf(PRINT_ERROR, _T("vlm5030_vcu called without init\n"));
+#endif
+
 	struct vlm5030_info *chip = &vlm5030_chips[nChip];
 	/* direct mode / indirect mode */
 	chip->pin_VCU = pin;
@@ -592,10 +616,14 @@ void vlm5030_vcu(INT32 nChip, int pin)
 }
 
 /* set ST pin level  : set table address A0-A7 / start speech */
-void vlm5030_st(INT32 nChip, int pin)
+void vlm5030_st(INT32 nChip, INT32 pin)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_VLM5030Initted) bprintf(PRINT_ERROR, _T("vlm5030_st called without init\n"));
+#endif
+
 	struct vlm5030_info *chip = &vlm5030_chips[nChip];
-	int table;
+	INT32 table;
 
 	if( chip->pin_ST != pin )
 	{
@@ -606,7 +634,7 @@ void vlm5030_st(INT32 nChip, int pin)
 
 			if( chip->pin_VCU )
 			{	/* direct access mode & address High */
-				chip->vcu_addr_h = ((int)chip->latch_data<<8) + 0x01;
+				chip->vcu_addr_h = ((INT32)chip->latch_data<<8) + 0x01;
 			}
 			else
 			{
@@ -619,8 +647,8 @@ void vlm5030_st(INT32 nChip, int pin)
 				}
 				else
 				{	/* indirect accedd mode */
-					table = (chip->latch_data&0xfe) + (((int)chip->latch_data&1)<<8);
-					chip->address = (((int)chip->rom[table&chip->address_mask])<<8)
+					table = (chip->latch_data&0xfe) + (((INT32)chip->latch_data&1)<<8);
+					chip->address = (((INT32)chip->rom[table&chip->address_mask])<<8)
 					                |        chip->rom[(table+1)&chip->address_mask];
 				}
 				vlm5030_update(chip);
@@ -646,8 +674,10 @@ void vlm5030_st(INT32 nChip, int pin)
 
 /* start VLM5030 with sound rom              */
 /* speech_rom == 0 -> use sampling data mode */
-void vlm5030Init(int nChip, INT32 clock, UINT32 (*pSyncCallback)(int samples_per_frame), UINT8 *rom, INT32 rom_size, INT32 bAdd)
+void vlm5030Init(INT32 nChip, INT32 clock, UINT32 (*pSyncCallback)(INT32 samples_per_frame), UINT8 *rom, INT32 rom_size, INT32 bAdd)
 {
+	DebugSnd_VLM5030Initted = 1;
+	
 	struct vlm5030_info *chip = &vlm5030_chips[nChip];
 	memset (chip, 0, sizeof(vlm5030_info));
 
@@ -675,6 +705,10 @@ void vlm5030Init(int nChip, INT32 clock, UINT32 (*pSyncCallback)(int samples_per
 
 void vlm5030SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_VLM5030Initted) bprintf(PRINT_ERROR, _T("vlm5030SetRoute called without init\n"));
+#endif
+
 	struct vlm5030_info *chip = &vlm5030_chips[nChip];
 	
 	chip->gain[nIndex] = nVolume;
@@ -683,7 +717,11 @@ void vlm5030SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 void vlm5030Exit()
 {
-	int i;
+#if defined FBA_DEBUG
+	if (!DebugSnd_VLM5030Initted) bprintf(PRINT_ERROR, _T("vlm5030Exit called without init\n"));
+#endif
+
+	INT32 i;
 	struct vlm5030_info *chip;
 
 	for (i = 0; i < CHIP_COUNT; i++) {
@@ -693,10 +731,16 @@ void vlm5030Exit()
 			BurnFree(chip->output);
 		}
 	}
+	
+	DebugSnd_VLM5030Initted = 0;
 }
 
-void vlm5030Update(int nChip, INT16 *buf, INT32 samples)
+void vlm5030Update(INT32 nChip, INT16 *buf, INT32 samples)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_VLM5030Initted) bprintf(PRINT_ERROR, _T("vlm5030Update called without init\n"));
+#endif
+
 	struct vlm5030_info *chip = &vlm5030_chips[nChip];
 
 	if (pBurnSoundOut == NULL) {
@@ -753,12 +797,12 @@ void vlm5030Update(int nChip, INT16 *buf, INT32 samples)
 	memset (chip->output, 0, chip->samples_per_frame * sizeof(INT16));
 }
 
-static void vlm5030_restore_state(int nChip)
+static void vlm5030_restore_state(INT32 nChip)
 {
 	struct vlm5030_info *chip = &vlm5030_chips[nChip];
-	int i;
+	INT32 i;
 
-	int interp_effect = FR_SIZE - (chip->interp_count%FR_SIZE);
+	INT32 interp_effect = FR_SIZE - (chip->interp_count%FR_SIZE);
 	/* restore parameter data */
 	vlm5030_setup_parameter(chip, chip->parameter);
 
@@ -772,6 +816,10 @@ static void vlm5030_restore_state(int nChip)
 
 INT32 vlm5030Scan(INT32 nAction)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_VLM5030Initted) bprintf(PRINT_ERROR, _T("vlm5030Scan called without init\n"));
+#endif
+
 	if (nAction & ACB_DRIVER_DATA) {
 		for (INT32 i = 0; i < CHIP_COUNT; i++) {
 			struct vlm5030_info *chip = &vlm5030_chips[i];
@@ -802,5 +850,3 @@ INT32 vlm5030Scan(INT32 nAction)
 
 	return 0;
 }
-
-

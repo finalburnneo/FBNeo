@@ -711,9 +711,9 @@ void vlm5030Update(int nChip, INT16 *buf, INT32 samples)
 	INT16 *stream = chip->output;
 
 	UINT32 step = (chip->samples_per_frame << 12) / nBurnSoundLen;
-	UINT32 pos = 0;
+	INT32 pos = 0;
 
-	for (int i = 0; i < samples; i++) {
+	for (INT32 i = 0; i < samples; i++) {
 		if ((pos>>12) >= chip->samples_per_frame) pos = (chip->samples_per_frame-1) << 12;
 
 		INT16 output = stream[pos>>12];

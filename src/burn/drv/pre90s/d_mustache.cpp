@@ -660,4 +660,3 @@ struct BurnDriver BurnDrvMustache = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	248, 240, 3, 4
 };
-

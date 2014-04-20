@@ -709,9 +709,9 @@ void nesapuUpdate(int chip, INT16 *buf, INT32 samples)
 	INT16 *stream = info->stream;
 
 	UINT32 step = (info->samples_per_frame << 12) / nBurnSoundLen;
-	UINT32 pos = 0;
+	INT32 pos = 0;
 
-	for (int i = 0; i < samples; i++) {
+	for (INT32 i = 0; i < samples; i++) {
 		if ((pos>>12) >= info->samples_per_frame) pos = (info->samples_per_frame-1) << 12;
 
 		INT16 output = stream[pos>>12];

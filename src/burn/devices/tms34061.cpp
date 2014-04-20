@@ -207,7 +207,7 @@ static void register_w(INT32 offset, UINT8 data)
 				case 0x20:  m_yshift = 7;    break;
 				case 0x40:  m_yshift = 8;    break;
 				case 0x80:  m_yshift = 9;    break;
-				default:    logerror("Invalid value for XYOFFSET = %04x\n", m_regs[TMS34061_XYOFFSET]);  break;
+				default:    /*logerror("Invalid value for XYOFFSET = %04x\n", m_regs[TMS34061_XYOFFSET]);*/  break;
 			}
 			m_xmask = (1 << m_yshift) - 1;
 			break;

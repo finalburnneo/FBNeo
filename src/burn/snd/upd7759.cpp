@@ -345,8 +345,8 @@ void UPD7759Update(INT32 chip, INT16 *pSoundBuf, INT32 nLength)
 			nLeftSample = BURN_SND_CLIP(nLeftSample);
 			nRightSample = BURN_SND_CLIP(nRightSample);
 			
-			pSoundBuf[0] += nLeftSample;
-			pSoundBuf[1] += nRightSample;
+			pSoundBuf[0] = BURN_SND_CLIP(pSoundBuf[0] + nLeftSample);
+			pSoundBuf[1] = BURN_SND_CLIP(pSoundBuf[1] + nRightSample);
 			pSoundBuf += 2;
 			nLength--;
 
@@ -535,9 +535,6 @@ INT32 UPD7759Scan(INT32 chip, INT32 nAction,INT32 *pnMin)
 	if (!DebugSnd_UPD7759Initted) bprintf(PRINT_ERROR, _T("UPD7759Scan called without init\n"));
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("UPD7759Scan called with invalid chip %x\n"), chip);
 #endif
-
-	struct BurnArea ba;
-	char szName[16];
 	
 	if ((nAction & ACB_DRIVER_DATA) == 0) {
 		return 1;
@@ -549,13 +546,32 @@ INT32 UPD7759Scan(INT32 chip, INT32 nAction,INT32 *pnMin)
 	
 	Chip = Chips[chip];
 
-	sprintf(szName, "UPD7759 %d", chip);
-	ba.Data		= &Chip;
-	ba.nLen		= sizeof(struct upd7759_chip);
-	ba.nAddress = 0;
-	ba.szName	= szName;
-	BurnAcb(&ba);
-	
+	SCAN_VAR(Chip->pos);
+	SCAN_VAR(Chip->step);
+	SCAN_VAR(Chip->fifo_in);
+	SCAN_VAR(Chip->reset);
+	SCAN_VAR(Chip->start);
+	SCAN_VAR(Chip->drq);
+	SCAN_VAR(Chip->state);
+	SCAN_VAR(Chip->clocks_left);
+	SCAN_VAR(Chip->nibbles_left);
+	SCAN_VAR(Chip->repeat_count);
+	SCAN_VAR(Chip->post_drq_state);
+	SCAN_VAR(Chip->post_drq_clocks);
+	SCAN_VAR(Chip->req_sample);
+	SCAN_VAR(Chip->last_sample);
+	SCAN_VAR(Chip->block_header);
+	SCAN_VAR(Chip->sample_rate);
+	SCAN_VAR(Chip->first_valid_header);
+	SCAN_VAR(Chip->offset);
+	SCAN_VAR(Chip->repeat_offset);
+	SCAN_VAR(Chip->adpcm_state);
+	SCAN_VAR(Chip->adpcm_data);
+	SCAN_VAR(Chip->sample);
+	SCAN_VAR(Chip->romoffset);
+	SCAN_VAR(Chip->volume);
+	SCAN_VAR(Chip->output_dir);
+
 	return 0;
 }
 

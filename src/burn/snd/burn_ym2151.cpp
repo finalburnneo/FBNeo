@@ -233,6 +233,13 @@ void BurnYM2151Scan(INT32 nAction)
 	}
 	SCAN_VAR(nBurnCurrentYM2151Register);
 	SCAN_VAR(BurnYM2151Registers);
+	SCAN_VAR(YM2151Volumes);
+	SCAN_VAR(YM2151RouteDirs);
+	SCAN_VAR(nBurnYM2151SoundRate);
+	SCAN_VAR(nBurnPosition);
+	SCAN_VAR(nSampleSize);
+	SCAN_VAR(nFractionalPosition);
+	SCAN_VAR(nSamplesRendered);
 
 	if (nAction & ACB_WRITE) {
 		for (INT32 i = 0; i < 0x0100; i++) {

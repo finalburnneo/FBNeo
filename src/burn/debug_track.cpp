@@ -9,10 +9,14 @@ UINT8 Debug_HiscoreInitted;
 UINT8 Debug_GenericTilesInitted;
 
 UINT8 DebugDev_8255PPIInitted;
+UINT8 DebugDev_8257DMAInitted;
 UINT8 DebugDev_EEPROMInitted;
 UINT8 DebugDev_PandoraInitted;
 UINT8 DebugDev_SeibuSndInitted;
+UINT8 DebugDev_SlapsticInitted;
+UINT8 DebugDev_T5182Initted;
 UINT8 DebugDev_TimeKprInitted;
+UINT8 DebugDev_Tms34061Initted;
 
 UINT8 DebugSnd_AY8910Initted;
 UINT8 DebugSnd_Y8950Initted;
@@ -73,10 +77,14 @@ void DebugTrackerExit()
 	if (Debug_GenericTilesInitted) 		bprintf(PRINT_ERROR, _T("GenericTiles Not Exited\n"));
 	
 	if (DebugDev_8255PPIInitted) 		bprintf(PRINT_ERROR, _T("Device 8255PPI Not Exited\n"));
+	if (DebugDev_8257DMAInitted) 		bprintf(PRINT_ERROR, _T("Device 8257DMA Not Exited\n"));
 	if (DebugDev_EEPROMInitted) 		bprintf(PRINT_ERROR, _T("Device EEPROM Not Exited\n"));
 	if (DebugDev_PandoraInitted) 		bprintf(PRINT_ERROR, _T("Device Pandora Not Exited\n"));
 	if (DebugDev_SeibuSndInitted) 		bprintf(PRINT_ERROR, _T("Device SeibuSnd Not Exited\n"));
+	if (DebugDev_SlapsticInitted) 		bprintf(PRINT_ERROR, _T("Device Slapstic Not Exited\n"));
+	if (DebugDev_T5182Initted) 			bprintf(PRINT_ERROR, _T("Device T5182 Not Exited\n"));
 	if (DebugDev_TimeKprInitted) 		bprintf(PRINT_ERROR, _T("Device TimeKpr Not Exited\n"));
+	if (DebugDev_Tms34061Initted) 		bprintf(PRINT_ERROR, _T("Device TMS34061 Not Exited\n"));
 	
 	if (DebugSnd_AY8910Initted) 		bprintf(PRINT_ERROR, _T("Sound Module AY8910 Not Exited\n"));
 	if (DebugSnd_Y8950Initted) 			bprintf(PRINT_ERROR, _T("Sound Module Y8950 Not Exited\n"));

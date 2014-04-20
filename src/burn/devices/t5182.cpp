@@ -5,11 +5,11 @@
 #include "burn_ym2151.h"
 
 // only used in t5182.c
-static int irqstate;
+static INT32 irqstate;
 static UINT8 *t5182RAM	= NULL;
 
-static int nCPU;
-static int coin_frame;
+static INT32 nCPU;
+static INT32 coin_frame;
 
 // use externally
 UINT8 *t5182SharedRAM = NULL;	// allocate externally
@@ -21,6 +21,10 @@ UINT8 t5182_coin_input;
 
 void t5182_setirq_callback(INT32 param)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_T5182Initted) bprintf(PRINT_ERROR, _T("t5182_setirq_callback called without init\n"));
+#endif
+
 	switch (param)
 	{
 		case YM2151_ASSERT:
@@ -113,6 +117,10 @@ static void t5182YM2151IrqHandler(INT32 Irq)
 
 void t5182Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_T5182Initted) bprintf(PRINT_ERROR, _T("t5182Reset called without init\n"));
+#endif
+
 	ZetOpen(nCPU);
 	ZetReset();
 	ZetClose();
@@ -127,8 +135,10 @@ void t5182Reset()
 	irqstate = 0;
 }
 
-void t5182Init(int nZ80CPU, int clock)
+void t5182Init(INT32 nZ80CPU, INT32 clock)
 {
+	DebugDev_T5182Initted = 1;
+	
 	nCPU = nZ80CPU;
 
 	t5182RAM	= (UINT8*)BurnMalloc(0x800);
@@ -137,11 +147,11 @@ void t5182Init(int nZ80CPU, int clock)
 	ZetOpen(nCPU);
 	ZetMapMemory(t5182ROM + 0x0000, 0x0000, 0x1fff, ZET_ROM);
 
-	for (int i = 0x2000; i < 0x4000; i += 0x800) {
+	for (INT32 i = 0x2000; i < 0x4000; i += 0x800) {
 		ZetMapMemory(t5182RAM,       i, i + 0x7ff, ZET_RAM); // internal ram
 	}
 
-	for (int i = 0x4000; i < 0x8000; i += 0x100) {
+	for (INT32 i = 0x4000; i < 0x8000; i += 0x100) {
 		ZetMapMemory(t5182SharedRAM, i, i + 0x0ff, ZET_RAM); // shared ram
 	}
 
@@ -159,6 +169,10 @@ void t5182Init(int nZ80CPU, int clock)
 
 void t5182Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_T5182Initted) bprintf(PRINT_ERROR, _T("t5182Exit called without init\n"));
+#endif
+
 	BurnYM2151Exit();
 
 	if (nHasZet > 0) {
@@ -174,6 +188,10 @@ void t5182Exit()
 
 INT32 t5182Scan(INT32 nAction)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_T5182Initted) bprintf(PRINT_ERROR, _T("t5182Scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 
 	if (nAction & ACB_VOLATILE) {

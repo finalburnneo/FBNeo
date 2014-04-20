@@ -59,6 +59,10 @@ INT32 			   tms34061_current_scanline;
 
 void tms34061_reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_reset called without init\n"));
+#endif
+
 	memset (m_vram, 0, m_vramsize);
 	memset (m_latchram, 0, m_vramsize);
 
@@ -88,6 +92,8 @@ void tms34061_reset()
 
 void tms34061_init(UINT8 rowshift, UINT32 ram_size, void (*partial_update)(), void (*callback)(INT32 state))
 {
+	DebugDev_Tms34061Initted = 1;
+	
 	m_partial_update = partial_update;
 	m_rowshift = rowshift;
 	m_vramsize = ram_size;
@@ -114,6 +120,10 @@ void tms34061_init(UINT8 rowshift, UINT32 ram_size, void (*partial_update)(), vo
 
 void tms34061_exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_exit called without init\n"));
+#endif
+
 	BurnFree(m_vram);
 	m_vram = NULL;
 	BurnFree(m_latchram);
@@ -142,6 +152,10 @@ static void update_interrupts()
 
 void tms34061_interrupt()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_interrupt called without init\n"));
+#endif
+
 	if (tms34061_current_scanline != m_timer) return;
 
 	/* set the interrupt bit in the status reg */
@@ -398,6 +412,10 @@ static UINT8 xypixel_r(INT32 offset)
 
 void tms34061_write(INT32 col, INT32 row, INT32 func, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_write called without init\n"));
+#endif
+
 	INT32 offs;
 
 	/* the function code determines what to do */
@@ -457,6 +475,10 @@ void tms34061_write(INT32 col, INT32 row, INT32 func, UINT8 data)
 
 UINT8 tms34061_read(INT32 col, INT32 row, INT32 func)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_read called without init\n"));
+#endif
+
 	INT32 result = 0;
 	INT32 offs;
 
@@ -519,22 +541,38 @@ UINT8 tms34061_read(INT32 col, INT32 row, INT32 func)
 
 UINT8 tms34061_latch_read()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_latch_read called without init\n"));
+#endif
+
 	return m_latchdata;
 }
 
 
 void tms34061_latch_write(UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_latch_write called without init\n"));
+#endif
+
 	m_latchdata = data;
 }
 
 INT32 tms34061_display_blanked()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_display_blanked called without init\n"));
+#endif
+
 	return (~m_regs[TMS34061_CONTROL2] >> 13) & 1;
 }
 
 UINT8 *tms34061_get_vram_pointer()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_get_vram_pointer called without init\n"));
+#endif
+
 	return m_vram;
 }
 
@@ -547,6 +585,10 @@ UINT8 *tms34061_get_vram_pointer()
 
 INT32 tms34061_scan(INT32 nAction, INT32 *)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_Tms34061Initted) bprintf(PRINT_ERROR, _T("tms34061_scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 
 	if (nAction & ACB_VOLATILE) {		

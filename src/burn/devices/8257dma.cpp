@@ -87,6 +87,8 @@ static INT32 trigger_transfer = 0;
 
 void i8257Init()
 {
+	DebugDev_8257DMAInitted = 1;
+	
 	// these aren't used atm.
 	m_out_hrq_func  = null_line;
 	m_out_tc_func   = null_line;
@@ -105,6 +107,10 @@ void i8257Init()
 
 void i8257Config(UINT8 (*cpuread)(UINT16), void (*cpuwrite)(UINT16,UINT8), INT32 (*idle)(INT32), ior_in_functs *read_f, ior_out_functs *write_f)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257Config called without init\n"));
+#endif
+
 	m_in_memr_func  = cpuread;
 	m_out_memw_func = cpuwrite;
 
@@ -122,15 +128,19 @@ void i8257Config(UINT8 (*cpuread)(UINT16), void (*cpuwrite)(UINT16,UINT8), INT32
 
 void i8257Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257Reset called without init\n"));
+#endif
+
 	trigger_transfer = 0;
 	m_status &= 0xf0;
 	m_mode = 0;
 	i8257_update_status();
 }
 
-static int i8257_do_operation(int channel)
+static INT32 i8257_do_operation(INT32 channel)
 {
-	int done = 0;
+	INT32 done = 0;
 	UINT8 data;
 
 	UINT8 mode = m_rwmode[channel];
@@ -183,14 +193,14 @@ static int i8257_do_operation(int channel)
 	return done;
 }
 
-static void i8257_timer(INT32 id, int param)
+static void i8257_timer(INT32 id, INT32 param)
 {
 	switch (id)
 	{
 		case TIMER_OPERATION:
 		{
-			int i, channel = 0, rr;
-			int done;
+			INT32 i, channel = 0, rr;
+			INT32 done;
 
 			rr = DMA_MODE_ROTPRIO(m_mode) ? m_rr : 0;
 			for (i = 0; i < I8257_NUM_CHANNELS; i++)
@@ -229,8 +239,8 @@ static void i8257_timer(INT32 id, int param)
 
 		case TIMER_DRQ_SYNC:
 		{
-			int channel = param >> 1;
-			int state = param & 0x01;
+			INT32 channel = param >> 1;
+			INT32 state = param & 0x01;
 
 			/* normalize state */
 			if (state)
@@ -253,6 +263,10 @@ static void i8257_timer(INT32 id, int param)
 
 void i8257_update_status()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257_update_status called without init\n"));
+#endif
+
 	UINT16 pending_transfer;
 
 	/* no transfer is active right now; is there a transfer pending right now? */
@@ -277,6 +291,10 @@ static void i8257_prepare_msb_flip()
 
 UINT8 i8257Read(UINT8 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257Read called without init\n"));
+#endif
+
 	UINT8 data = 0xFF;
 
 	switch (offset & 0x0f)
@@ -311,6 +329,10 @@ UINT8 i8257Read(UINT8 offset)
 
 void i8257Write(UINT8 offset, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257Write called without init\n"));
+#endif
+
 	switch (offset & 0x0f)
 	{
 		case 0:
@@ -360,15 +382,23 @@ void i8257Write(UINT8 offset, UINT8 data)
 	}
 }
 
-void i8257_drq_write(int channel, int state)
+void i8257_drq_write(INT32 channel, INT32 state)
 {
-	int param = (channel << 1) | (state ? 1 : 0);
+#if defined FBA_DEBUG
+	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257_drq_write called without init\n"));
+#endif
+
+	INT32 param = (channel << 1) | (state ? 1 : 0);
 
 	i8257_timer(TIMER_DRQ_SYNC, param);
 }
 
-void i8257_do_transfer(int)
+void i8257_do_transfer(INT32)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257_do_transfer called without init\n"));
+#endif
+
 	if (trigger_transfer)
 		i8257_update_status();
 	trigger_transfer = 0;
@@ -376,6 +406,10 @@ void i8257_do_transfer(int)
 
 void i8257Scan()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257Scan called without init\n"));
+#endif
+
 	for (INT32 i = 0; i < I8257_NUM_CHANNELS; i++) {
 		SCAN_VAR(m_registers[i * 2 + 0]);
 		SCAN_VAR(m_registers[i * 2 + 1]);

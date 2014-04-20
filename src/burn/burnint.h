@@ -163,10 +163,14 @@ extern UINT8 Debug_HiscoreInitted;
 extern UINT8 Debug_GenericTilesInitted;
 
 extern UINT8 DebugDev_8255PPIInitted;
+extern UINT8 DebugDev_8257DMAInitted;
 extern UINT8 DebugDev_EEPROMInitted;
 extern UINT8 DebugDev_PandoraInitted;
 extern UINT8 DebugDev_SeibuSndInitted;
+extern UINT8 DebugDev_SlapsticInitted;
+extern UINT8 DebugDev_T5182Initted;
 extern UINT8 DebugDev_TimeKprInitted;
+extern UINT8 DebugDev_Tms34061Initted;
 
 extern UINT8 DebugSnd_AY8910Initted;
 extern UINT8 DebugSnd_Y8950Initted;

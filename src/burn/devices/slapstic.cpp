@@ -789,6 +789,10 @@ static struct slapstic_data slapstic;
 
 void SlapsticReset(void)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_SlapsticInitted) bprintf(PRINT_ERROR, _T("SlapsticReset called without init\n"));
+#endif
+
 	/* reset the chip */
 	state = DISABLED;
 
@@ -799,6 +803,8 @@ void SlapsticReset(void)
 
 void SlapsticInit(INT32 chip)
 {
+	DebugDev_SlapsticInitted = 1;
+	
 	/* only a small number of chips are known to exist */
 	if (chip < 101 || chip > 118)
 		return;
@@ -826,6 +832,10 @@ void SlapsticInit(INT32 chip)
 
 INT32 SlapsticBank(void)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_SlapsticInitted) bprintf(PRINT_ERROR, _T("SlapsticBank called without init\n"));
+#endif
+
 	return current_bank;
 }
 
@@ -886,6 +896,10 @@ static INT32 alt2_kludge(UINT32 /*offset*/)
 
 INT32 SlapsticTweak(INT32 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_SlapsticInitted) bprintf(PRINT_ERROR, _T("SlapsticTweak called without init\n"));
+#endif
+
 	/* reset is universal */
 	if (offset == 0x0000)
 	{
@@ -1099,6 +1113,10 @@ INT32 SlapsticTweak(INT32 offset)
 
 void SlapsticScan(INT32 nAction)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_SlapsticInitted) bprintf(PRINT_ERROR, _T("SlapsticScan called without init\n"));
+#endif
+
 	if (nAction & ACB_NVRAM) {
 		SCAN_VAR(state);
 		SCAN_VAR(current_bank);

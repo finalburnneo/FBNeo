@@ -1357,6 +1357,7 @@ static INT32 DrvExit()
 
 	ZetExit();
 	I8039Exit();
+	i8257Exit();
 
 	BurnSampleExit();
 	DACExit();
@@ -1480,6 +1481,7 @@ static INT32 s2650DkongExit()
 
 	s2650Exit();
 	I8039Exit();
+	i8257Exit();
 
 	BurnSampleExit();
 	DACExit();

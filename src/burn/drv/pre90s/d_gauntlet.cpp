@@ -122,6 +122,7 @@ void atarigen_eeprom_init()
 void atarigen_slapstic_exit()
 {
 	BurnFree(atarigen_slapstic);
+	SlapsticExit();
 }
 
 

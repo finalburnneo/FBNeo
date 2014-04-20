@@ -341,6 +341,7 @@ static INT32 DrvExit()
 	{
 		SN76496Exit();
 	}
+	SlapsticExit();
 
 	BurnFree (AllMem);
 

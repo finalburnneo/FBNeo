@@ -515,6 +515,7 @@ static INT32 CommonInit(int type)
 	
 	bram_locked = 1;
 	
+	vdc_init();
 	vce_palette_init(DrvPalette);
 
 	c6280_init(3579545, 0);
@@ -564,7 +565,7 @@ INT32 PCEExit()
 	GenericTilesExit();
 
 	c6280_exit();
-	// video exit
+	vdc_exit();
 
 	h6280Exit();
 

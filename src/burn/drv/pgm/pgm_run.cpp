@@ -698,6 +698,7 @@ INT32 pgmInit()
 
 	pgmInitDraw();
 
+	v3021Init();
 	ics2115_init();
 	
 	pBurnDrvPalette = (UINT32*)PGMPalRAM;
@@ -728,6 +729,7 @@ INT32 pgmExit()
 
 	BurnFree(Mem);
 
+	v3021Exit();
 	ics2115_exit(); // frees ICSSNDROM
 
 	BurnFree (PGMTileROM);

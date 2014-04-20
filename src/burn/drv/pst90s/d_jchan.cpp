@@ -568,6 +568,7 @@ static INT32 DrvInit()
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
+	skns_init();
 	GenericTilesInit();
 
 	DrvDoReset(1);
@@ -583,6 +584,8 @@ static INT32 DrvExit()
 
 	YMZ280BExit();
 	YMZ280BROM = NULL;
+	
+	skns_exit();
 
 	BurnFree(AllMem);
 

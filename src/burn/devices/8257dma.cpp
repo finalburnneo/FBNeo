@@ -105,6 +105,15 @@ void i8257Init()
 	}
 }
 
+void i8257Exit()
+{
+#if defined FBA_DEBUG
+	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257Exit called without init\n"));
+#endif
+
+	DebugDev_8257DMAInitted = 0;
+}
+
 void i8257Config(UINT8 (*cpuread)(UINT16), void (*cpuwrite)(UINT16,UINT8), INT32 (*idle)(INT32), ior_in_functs *read_f, ior_out_functs *write_f)
 {
 #if defined FBA_DEBUG

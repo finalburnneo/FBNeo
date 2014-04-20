@@ -10,6 +10,7 @@
 *************************************************************************/
 
 void SlapsticInit(INT32 chip);
+void SlapsticExit();
 void SlapsticReset(void);
 
 INT32 SlapsticBank(void);

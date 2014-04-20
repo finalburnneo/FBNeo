@@ -184,6 +184,8 @@ void t5182Exit()
 	t5182SharedRAM = NULL;
 	t5182RAM = NULL;
 	t5182ROM = NULL;
+	
+	DebugDev_T5182Initted = 0;
 }
 
 INT32 t5182Scan(INT32 nAction)

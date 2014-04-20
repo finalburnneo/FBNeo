@@ -823,6 +823,14 @@ void SlapsticInit(INT32 chip)
 	access_68k = (nSekCount != -1); // Ok?
 }
 
+void SlapsticExit()
+{
+#if defined FBA_DEBUG
+	if (!DebugDev_SlapsticInitted) bprintf(PRINT_ERROR, _T("SlapsticExit called without init\n"));
+#endif
+
+	DebugDev_SlapsticInitted = 0;
+}
 
 /*************************************
  *

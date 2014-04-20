@@ -54,6 +54,10 @@ static INT32 skns_rle_decode ( INT32 romoffset, INT32 size, UINT8*gfx_source, IN
 
 void skns_sprite_kludge(INT32 x, INT32 y)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_SknsSprInitted) bprintf(PRINT_ERROR, _T("skns_sprite_kludge called without init\n"));
+#endif
+
 	sprite_kludge_x = x;
 	sprite_kludge_y = y;
 }
@@ -223,6 +227,10 @@ static void (*const blit_z[4])(UINT16 *bitmap, const UINT8 *src, INT32 x, INT32 
 // disable_priority is a hack to make jchan drawing a bit quicker (rather than moving the sprites around different bitmaps and adding colors
 void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram_size, UINT8* gfx_source, INT32 gfx_length, UINT32* sprite_regs, INT32 disable_priority)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_SknsSprInitted) bprintf(PRINT_ERROR, _T("skns_draw_sprites called without init\n"));
+#endif
+
 	/*- SPR RAM Format -**
 
       16 bytes per sprite
@@ -532,4 +540,18 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT32 spriteram
 			source+=4;
 		}
 	}
+}
+
+void skns_init()
+{
+	DebugDev_SknsSprInitted = 1;
+}
+
+void skns_exit()
+{
+#if defined FBA_DEBUG
+	if (!DebugDev_SknsSprInitted) bprintf(PRINT_ERROR, _T("skns_exit called without init\n"));
+#endif
+
+	DebugDev_SknsSprInitted = 0;
 }

@@ -52,6 +52,10 @@ static void vpc_update_prio_map()
 
 void vpc_write(UINT8 offset, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vpc_write called without init\n"));
+#endif
+
 	switch (offset & 0x07)
 	{
 		case 0x00:	/* Priority register #0 */
@@ -102,6 +106,10 @@ void vpc_write(UINT8 offset, UINT8 data)
 
 UINT8 vpc_read(UINT8 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vpc_read called without init\n"));
+#endif
+
 	switch (offset & 0x07)
 	{
 		case 0x00:  /* Priority register #0 */
@@ -128,6 +136,10 @@ UINT8 vpc_read(UINT8 offset)
 
 void vpc_reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vpc_reset called without init\n"));
+#endif
+
 	memset (vpc_prio, 0, 4);
 	memset (vpc_vdc0_enabled, 0, 4);
 	memset (vpc_vdc1_enabled, 0, 4);
@@ -145,6 +157,10 @@ void vpc_reset()
 
 UINT8 vce_read(UINT8 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vce_read called without init\n"));
+#endif
+
 	switch (offset & 7)
 	{
 		case 0x04:
@@ -161,6 +177,10 @@ UINT8 vce_read(UINT8 offset)
 
 void vce_write(UINT8 offset, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vce_write called without init\n"));
+#endif
+
 	switch (offset & 7)
 	{
 		case 0x00:
@@ -188,6 +208,10 @@ void vce_write(UINT8 offset, UINT8 data)
 
 void vce_palette_init(UINT32 *Palette)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vce_palette_init called without init\n"));
+#endif
+
 	for (INT32 i = 0; i < 512; i++)
 	{
 		INT32 r = ((i >> 3) & 7) << 5;
@@ -203,6 +227,10 @@ void vce_palette_init(UINT32 *Palette)
 
 void vce_reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vce_reset called without init\n"));
+#endif
+
 	memset (vce_data, 0, 512 * sizeof(UINT16));
 
 	vce_address = 0;
@@ -361,7 +389,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 
 									if ( vdc_width[which] != 512 )
 									{
-										int dp = 1;
+										INT32 dp = 1;
 										while ( pixel_x + dp < ( ( ( obj_x + x + 1 ) * 512 ) / vdc_width[which] ) )
 										{
 											drawn[pixel_x + dp] = i + 2;
@@ -411,7 +439,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 									line_buffer[pixel_x] = color_base + vce_data[0x100 + (palette << 4) + buf[x]];
 									if ( vdc_width[which] != 512 )
 									{
-										int dp = 1;
+										INT32 dp = 1;
 										while ( pixel_x + dp < ( ( ( obj_x + x + 1 ) * 512 ) / vdc_width[which] ) )
 										{
 											drawn[pixel_x + dp] = i + 2;
@@ -470,7 +498,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 										line_buffer[pixel_x] = color_base + vce_data[0x100 + (palette << 4) + buf[x]];
 										if ( vdc_width[which] != 512 )
 										{
-											int dp = 1;
+											INT32 dp = 1;
 											while ( pixel_x + dp < ( ( ( obj_x + x + 17 ) * 512 ) / vdc_width[which] ) )
 											{
 												drawn[pixel_x + dp] = i + 2;
@@ -771,6 +799,10 @@ static void pce_refresh_line(INT32 which, INT32 /*line*/, INT32 external_input, 
 
 void pce_interrupt()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("pce_interrupt called without init\n"));
+#endif
+
 	INT32 which = 0; // only 1 on pce
 
 	if (vce_current_bitmap_line >= 14 && vce_current_bitmap_line < 256)
@@ -805,6 +837,10 @@ void pce_interrupt()
 
 void sgx_interrupt()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("sgx_interrupt called without init\n"));
+#endif
+
 	if (vce_current_bitmap_line >= 14 && vce_current_bitmap_line < 256)
 	{
 		draw_sgx_overscan_line(vce_current_bitmap_line);
@@ -839,7 +875,7 @@ void sgx_interrupt()
 
 			for( i = 0; i < 512; i++ )
 			{
-				int cur_prio = vpc_prio_map[i];
+				INT32 cur_prio = vpc_prio_map[i];
 
 				if ( vpc_vdc0_enabled[cur_prio] )
 				{
@@ -983,6 +1019,10 @@ static void vdc_do_dma(INT32 which)
 
 void vdc_write(INT32 which, UINT8 offset, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vdc_write called without init\n"));
+#endif
+
 	switch (offset & 3)
 	{
 		case 0x00:
@@ -1080,6 +1120,10 @@ void vdc_write(INT32 which, UINT8 offset, UINT8 data)
 
 UINT8 vdc_read(INT32 which, UINT8 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vdc_read called without init\n"));
+#endif
+
 	switch(offset & 3)
 	{
 		case 0x00: {
@@ -1106,6 +1150,10 @@ UINT8 vdc_read(INT32 which, UINT8 offset)
 
 void sgx_vdc_write(UINT8 offset, UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("sgx_vdc_write called without init\n"));
+#endif
+
 	if (vpc_vdc_select)
 	{
 		vdc_write( 1, offset, data );
@@ -1118,11 +1166,19 @@ void sgx_vdc_write(UINT8 offset, UINT8 data)
 
 UINT8 sgx_vdc_read(UINT8 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("sgx_vdc_read called without init\n"));
+#endif
+
 	return (vpc_vdc_select) ? vdc_read( 1, offset ) : vdc_read( 0, offset );
 }
 
 void vdc_reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vdc_reset called without init\n"));
+#endif
+
 	memset (vdc_register,			0, 2);
 	memset (vdc_data,			0, 2 * 32 * sizeof(UINT16));
 	memset (vdc_latch,			0, 2);
@@ -1146,12 +1202,34 @@ void vdc_reset()
 
 void vdc_get_dimensions(INT32 which, INT32 *x, INT32 *y)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vdc_get_dimensions called without init\n"));
+#endif
+
 	*x = vdc_width[which] * 2;
 	*y = vdc_height[which];
 }
 
+void vdc_init()
+{
+	DebugDev_VDCInitted = 1;
+}
+
+void vdc_exit()
+{
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vdc_exit called without init\n"));
+#endif
+
+	DebugDev_VDCInitted = 0;
+}
+
 INT32 vdc_scan(INT32 nAction, INT32 *pnMin)
 {
+#if defined FBA_DEBUG
+	if (!DebugDev_VDCInitted) bprintf(PRINT_ERROR, _T("vdc_scan called without init\n"));
+#endif
+
 	struct BurnArea ba;
 
 	if (pnMin) {

@@ -1491,6 +1491,7 @@ static INT32 TokibDraw()
 			INT32 rgb = Palette[i];
 			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
 		}
+		DrvRecalc = 0;
 	}
 
 	UINT16 *scrollram = (UINT16 *)DrvScrollRAM;
@@ -1580,6 +1581,7 @@ static INT32 DrvDraw()
 			INT32 rgb = Palette[i];
 			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
 		}
+		DrvRecalc = 0;
 	}
 
 	UINT16 *scrollram = (UINT16*)DrvScrollRAM;
@@ -1621,6 +1623,7 @@ static INT32 DrawByLine(INT32 line)
 			INT32 rgb = Palette[i];
 			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
 		}
+		DrvRecalc = 0;
 	}
 
 	UINT16 *scrollram = (UINT16*)DrvScrollRAM;
@@ -1710,6 +1713,50 @@ static INT32 DrvFrame()
 	return 0;
 }
 
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+{
+	struct BurnArea ba;
+	
+	if (pnMin != NULL) {			// Return minimum compatible version
+		*pnMin = 0x029719;
+	}
+
+	if (nAction & ACB_MEMORY_RAM) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd-AllRam;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+	}
+	
+	if (nAction & ACB_DRIVER_DATA) {
+
+            BurnYM3812Scan(nAction, pnMin);
+            if (is_bootleg) {
+                MSM5205Scan(nAction, pnMin);
+            } else {
+                MSM6295Scan(0, nAction);
+            }
+
+            SekScan(nAction);
+            ZetScan(nAction);
+
+            SCAN_VAR(main2sub);
+            SCAN_VAR(sub2main);
+            SCAN_VAR(main2sub_pending);
+            SCAN_VAR(sub2main_pending);
+            SCAN_VAR(is_bootleg);
+            SCAN_VAR(TokibMSM5205Next);
+            SCAN_VAR(TokibMSM5205Toggle);
+
+            DrvRecalc = 1;
+
+            if (nAction & ACB_WRITE) {
+            }
+	}
+
+	return 0;
+}
 
 // Toki (World set 1)
 
@@ -1744,7 +1791,7 @@ struct BurnDriver BurnDrvToki = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, tokiRomInfo, tokiRomName, NULL, NULL, TokiInputInfo, TokiDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, NULL, 0x400,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
 };
 
@@ -1782,7 +1829,7 @@ struct BurnDriver BurnDrvTokia = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, tokiaRomInfo, tokiaRomName, NULL, NULL, TokiInputInfo, TokiDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, NULL, 0x400,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
 };
 
@@ -1820,7 +1867,7 @@ struct BurnDriver BurnDrvTokiu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, tokiuRomInfo, tokiuRomName, NULL, NULL, TokiInputInfo, TokiDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, NULL, 0x400,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
 };
 
@@ -1858,7 +1905,7 @@ struct BurnDriver BurnDrvJuju = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, jujuRomInfo, jujuRomName, NULL, NULL, TokiInputInfo, TokiDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, NULL, 0x400,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
 };
 
@@ -1915,7 +1962,7 @@ struct BurnDriver BurnDrvJujub = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, jujubRomInfo, jujubRomName, NULL, NULL, TokibInputInfo, TokibDIPInfo,
-	TokibInit, DrvExit, TokibFrame, TokibDraw, NULL, NULL, 0x400,
+	TokibInit, DrvExit, TokibFrame, TokibDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
 };
 
@@ -1976,7 +2023,7 @@ struct BurnDriver BurnDrvJujuba = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, jujubaRomInfo, jujubaRomName, NULL, NULL, TokiInputInfo, TokiDIPInfo,
-	JujubaInit, DrvExit, DrvFrame, DrvDraw, NULL, NULL, 0x400,
+	JujubaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
 };
 
@@ -2032,7 +2079,7 @@ struct BurnDriver BurnDrvTokib = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, tokibRomInfo, tokibRomName, NULL, NULL, TokibInputInfo, TokibDIPInfo,
-	TokibInit, DrvExit, TokibFrame, TokibDraw, NULL, NULL, 0x400,
+	TokibInit, DrvExit, TokibFrame, TokibDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
 };
 

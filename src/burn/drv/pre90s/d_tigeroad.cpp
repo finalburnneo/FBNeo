@@ -954,7 +954,8 @@ static INT32 DrvDraw()
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x240 * 2; i+=2) {
 			palette_write(i);
-		}
+                }
+                DrvRecalc = 0;
 	}
 
 	memset (pTransDraw, 0, nScreenWidth * nScreenHeight * 2);
@@ -1079,6 +1080,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		BurnYM2203Scan(nAction, pnMin);
+                if (toramich) {
+                    MSM5205Scan(nAction, pnMin);
+                }
 	}
 
 	return 0;

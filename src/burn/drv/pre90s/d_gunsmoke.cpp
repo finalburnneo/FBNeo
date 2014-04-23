@@ -497,7 +497,7 @@ static INT32 DrvExit()
 	SprTrnsp = NULL;
 	Palette = DrvPal = NULL;
 
-	soundlatch = flipscreen = nGunsmokeBank;
+	soundlatch = flipscreen = nGunsmokeBank = 0;
 
 	sprite3bank = chon = bgon = objon = 0;
 	gunsmoke_scrollx[0] = gunsmoke_scrollx[1] = 0;
@@ -657,6 +657,7 @@ static INT32 DrvDraw()
 			UINT32 col = Palette[i];
 			DrvPal[i] = BurnHighCol(col >> 16, col >> 8, col, 0);
 		}
+		DrvCalcPal = 0;
 	}
 
 	if (!bgon) memset (pTransDraw, 0, 224 * 256 * 2);
@@ -679,7 +680,7 @@ static INT32 DrvFrame()
 
 	ZetNewFrame();
 
-	INT32 nInterleave = 25;
+	INT32 nInterleave = 278;
 	INT32 nSoundBufferPos = 0;
 
 	INT32 nCyclesSegment;
@@ -699,8 +700,8 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 20) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == 21) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == 274) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		if (i == 276) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 		ZetClose();
 
 		// Run Z80 #1
@@ -710,9 +711,10 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
-		if (i == 5 || i == 10 || i == 15 || i == 20) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
- 		if (i == 6 || i == 11 || i == 16 || i == 21) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
-	
+		// execute IRQ quarterly 68.5 (or 69) is 25% of 278 (nInterleave)
+		if (i%69 == 0 && i>0) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		// execute ZET_IRQSTATUS_NONE 1 interleave past the last one
+		if ((i-1)%69 == 0 && i>1) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 		ZetClose();
 		
 		// Render Sound Segment
@@ -776,9 +778,15 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(chon);
 		SCAN_VAR(bgon);
 		SCAN_VAR(objon);
-		SCAN_VAR(gunsmoke_scrollx[0]);
-		SCAN_VAR(gunsmoke_scrollx[1]);
+		SCAN_VAR(gunsmoke_scrollx);
 		SCAN_VAR(gunsmoke_scrolly);
+		if (nAction & ACB_WRITE) {
+			INT32 banktemp = nGunsmokeBank;
+			ZetOpen(0);
+			gunsmoke_bankswitch(0);
+			gunsmoke_bankswitch(banktemp);
+			ZetClose();
+		}
 	}
 
 	return 0;

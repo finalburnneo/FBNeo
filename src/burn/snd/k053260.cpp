@@ -217,8 +217,10 @@ void K053260Update(INT32 chip, INT16 *pBuf, INT32 length)
 			nLeftSample = BURN_SND_CLIP(nLeftSample);
 			nRightSample = BURN_SND_CLIP(nRightSample);
 		
-			pBuf[0] += nLeftSample;
-			pBuf[1] += nRightSample;
+//			pBuf[0] += nLeftSample;
+//			pBuf[1] += nRightSample;
+			pBuf[0] = BURN_SND_CLIP(pBuf[0] + nLeftSample);
+			pBuf[1] = BURN_SND_CLIP(pBuf[1] + nRightSample);
 			pBuf += 2;
 		}
 

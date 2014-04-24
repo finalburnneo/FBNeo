@@ -6646,7 +6646,54 @@ struct BurnDriver BurnDrvGrdnstrm = {
 	256, 224, 4, 3
 };
 
-// Sen Jin - Guardian Storm (Korea)
+
+// Sen Jing - Guardian Storm (Japan)
+
+static struct BurnRomInfo grdnstrmjRomDesc[] = {
+	{ "afega_3.u112",	0x040000, 0xe51a35fb, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "afega_4.u107",	0x040000, 0xcb10aa54, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "afega7.u92",		0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+
+	{ "gst-03.u4",		0x010000, 0xa1347297, 3 | BRF_GRA },           //  3 Characters
+
+	{ "afega_af1-b2.uc8",	0x200000, 0xd68588c2, 4 | BRF_GRA },           //  4 Tiles
+	{ "afega_af1-b1.uc3",	0x200000, 0xf8b200a8, 4 | BRF_GRA },           //  5
+
+	{ "afega_af1-sp.uc13",	0x200000, 0x7d4d4985, 5 | BRF_GRA },           //  6 Sprites
+
+	{ "afega1.u95",		0x040000, 0xe911ce33, 6 | BRF_SND },           //  7 OKI1 Samples
+};
+
+STD_ROM_PICK(grdnstrmj)
+STD_ROM_FN(grdnstrmj)
+
+static INT32 GrdnstrmjInit()
+{
+	INT32 nRet = AfegaInit(GrdnstrmLoadCallback, pAfegaZ80Callback, 1);
+
+	if (nRet == 0) {
+		decryptcode(0x80000, 13, 17, 16, 15, 14);
+		decryptcode(0x80000, 17, 16, 14, 15, 13);
+		decryptcode(0x80000, 17, 15, 16, 14, 13);
+		decryptcode(0x80000, 16, 17, 15, 14, 13);
+	}
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvGrdnstrmj = {
+	"grdnstrmj", "grdnstrm", NULL, NULL, "1998",
+	"Sen Jing - Guardian Storm (Japan)\0", NULL, "Afega", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, grdnstrmjRomInfo, grdnstrmjRomName, NULL, NULL, CommonInputInfo, GrdnstrkDIPInfo,
+	GrdnstrmjInit, AfegaExit, AfegaFrame, AfegaDraw, DrvScan, NULL, 0x300,
+	224, 256, 3, 4
+};
+
+
+// Jeon Sin - Guardian Storm (Korea)
 
 static struct BurnRomInfo grdnstrmkRomDesc[] = {
 	{ "gst-04.u112",	0x040000, 0x922c931a, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -6680,7 +6727,7 @@ static INT32 GrdnstrmkInit()
 
 struct BurnDriver BurnDrvGrdnstrmk = {
 	"grdnstrmk", "grdnstrm", NULL, NULL, "1998",
-	"Sen Jin - Guardian Storm (Korea)\0", NULL, "Afega", "NMK16",
+	"Jeon Sin - Guardian Storm (Korea)\0", NULL, "Afega", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, grdnstrmkRomInfo, grdnstrmkRomName, NULL, NULL, CommonInputInfo, GrdnstrkDIPInfo,

@@ -688,7 +688,8 @@ static void draw_sprites()
 		INT32 flipy =  attr & 0x40;
 		INT32 flipx =  attr & 0x80;
 
-		if (attr & 0x20) code += *sprite_bank * 256;
+		//if (attr & 0x20) code += *sprite_bank * 256;
+		if (attr & 0x20) code += (*sprite_bank & 0x07) * 256;
 
 		if (attr & 0x01) color = rand() & 0x0f; // ?
 

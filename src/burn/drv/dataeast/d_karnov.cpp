@@ -711,11 +711,13 @@ static INT32 DrvDoReset()
 	SekClose();
 
 	M6502Open(0);
-	M6502Reset();
-	M6502Close();
-
 	BurnYM3526Reset();
 	BurnYM2203Reset();
+	M6502Close();
+
+	M6502Open(0);
+	M6502Reset();
+	M6502Close();
 
 	i8751_return = 0;
 	i8751_needs_ack = 0;

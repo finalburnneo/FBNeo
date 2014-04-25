@@ -90,7 +90,7 @@ static INT32 Kaneko16SpriteRamSize;
 
 // Flags
 static INT32 Kaneko168BppSprites;
-static INT32 Kaneko16Eeprom;
+static INT32 Kaneko16Eeprom = 0;
 static INT32 Kaneko16Bg15;
 static INT32 Gtmr;
 static INT32 Bloodwar;
@@ -1871,8 +1871,10 @@ static INT32 ExplbrkrDoReset()
 	for (INT32 i = 0; i < 2; i++) {
 		AY8910Reset(i);
 	}
-	
-	EEPROMReset();
+
+	if (Kaneko16Eeprom) {
+		EEPROMReset();
+	}
 	
 	MSM6295Reset(0);
 	MSM6295Bank0 = 0;

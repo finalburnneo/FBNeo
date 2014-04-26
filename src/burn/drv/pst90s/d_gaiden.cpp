@@ -90,28 +90,28 @@ static struct BurnInputInfo DrvInputList[] = {
 STDINPUTINFO(Drv)
 
 static struct BurnInputInfo RaigaInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy1 + 6,	"p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy1 + 7,	"p2 coin"  },
+	{"Coin 1"       , BIT_DIGITAL  , DrvJoy1 + 6, "p1 coin"  },
+	{"Coin 2"       , BIT_DIGITAL  , DrvJoy1 + 7, "p2 coin"  },
 
-	{"P1 Start"     , BIT_DIGITAL  , DrvJoy1 + 0,	"p1 start" },
+	{"P1 Start"     , BIT_DIGITAL  , DrvJoy1 + 0, "p1 start" },
 	{"P1 Left"      , BIT_DIGITAL  , DrvJoy2 + 0, "p1 left"  },
 	{"P1 Right"     , BIT_DIGITAL  , DrvJoy2 + 1, "p1 right" },
-	{"P1 Down"      ,	BIT_DIGITAL  , DrvJoy2 + 2, "p1 down"  },
-	{"P1 Up"        ,	BIT_DIGITAL  , DrvJoy2 + 3, "p1 up"    },
-	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 4,	"p1 fire 1"},
-	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 5,	"p1 fire 2"},
+	{"P1 Down"      , BIT_DIGITAL  , DrvJoy2 + 2, "p1 down"  },
+	{"P1 Up"        , BIT_DIGITAL  , DrvJoy2 + 3, "p1 up"    },
+	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 4, "p1 fire 1"},
+	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 5, "p1 fire 2"},
 
-	{"P2 Start"     , BIT_DIGITAL  , DrvJoy1 + 1,	"p2 start" },
+	{"P2 Start"     , BIT_DIGITAL  , DrvJoy1 + 1, "p2 start" },
 	{"P2 Left"      , BIT_DIGITAL  , DrvJoy3 + 0, "p2 left"  },
 	{"P2 Right"     , BIT_DIGITAL  , DrvJoy3 + 1, "p2 right" },
-	{"P2 Down"      ,	BIT_DIGITAL  , DrvJoy3 + 2, "p2 down"  },
-	{"P2 Up"        ,	BIT_DIGITAL  , DrvJoy3 + 3, "p2 up"    },
-	{"P2 Button 1"  , BIT_DIGITAL  , DrvJoy3 + 4,	"p2 fire 1"},
-	{"P2 Button 2"  , BIT_DIGITAL  , DrvJoy3 + 5,	"p2 fire 2"},
+	{"P2 Down"      , BIT_DIGITAL  , DrvJoy3 + 2, "p2 down"  },
+	{"P2 Up"        , BIT_DIGITAL  , DrvJoy3 + 3, "p2 up"    },
+	{"P2 Button 1"  , BIT_DIGITAL  , DrvJoy3 + 4, "p2 fire 1"},
+	{"P2 Button 2"  , BIT_DIGITAL  , DrvJoy3 + 5, "p2 fire 2"},
 
-	{"Reset"        ,	BIT_DIGITAL  , &DrvReset  ,	"reset"    },
-	{"Dip 1"        ,	BIT_DIPSWITCH, DrvDips + 0,	"dip"	     },
-	{"Dip 2"        ,	BIT_DIPSWITCH, DrvDips + 1,	"dip"	     },
+	{"Reset"        , BIT_DIGITAL  , &DrvReset  , "reset"    },
+	{"Dip 1"        , BIT_DIPSWITCH, DrvDips + 0, "dip"	 },
+	{"Dip 2"        , BIT_DIPSWITCH, DrvDips + 1, "dip"	 },
 };
 
 STDINPUTINFO(Raiga)
@@ -854,17 +854,19 @@ static INT32 DrvGfxDecode()
 	return 0;
 }
 
-static INT32 drgnbowlDecode()
+static INT32 drgnbowlDecode(INT32 decode_cpu)
 {
 	UINT8 *buf = (UINT8*)BurnMalloc(0x100000);
 	if (buf == NULL) {
 		return 1;
 	}
 
-	memcpy (buf, Drv68KROM, 0x40000);
+	if (decode_cpu) {
+		memcpy (buf, Drv68KROM, 0x40000);
 
-	for (INT32 i = 0; i < 0x40000; i++) {
-		Drv68KROM[i] = buf[BITSWAP24(i,23,22,21,20,19,18,17,15,16,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0)];
+		for (INT32 i = 0; i < 0x40000; i++) {
+			Drv68KROM[i] = buf[BITSWAP24(i,23,22,21,20,19,18,17,15,16,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0)];
+		}
 	}
 
 	for (INT32 i = 0; i < 0x100000; i++) {
@@ -1008,8 +1010,11 @@ static INT32 DrvInit()
 	MemIndex();
 
 	if (DrvGetRoms()) return 1;
-	if (game == 1) {
-		if (drgnbowlDecode()) return 1;
+
+	if (game == 1||game==3) {
+		if (drgnbowlDecode((game==1)?1:0)) return 1;
+
+		game = 1;
 	} else {
 		if (DrvGfxDecode()) return 1;
 	}
@@ -2021,3 +2026,59 @@ struct BurnDriver BurnDrvDrgnbowl = {
 	256, 224, 4, 3
 };
 
+
+// Dragon Bowl (set 2, unencrypted program)
+
+static struct BurnRomInfo drgnbowlaRomDesc[] = {
+	{ "dbowl_4.u4",		  	0x20000, 0x58d69235, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "dbowl_5.u3",		  	0x20000, 0xe3176ebb, 1 | BRF_PRG | BRF_ESS }, //  1 
+
+	{ "1.2r",		  		0x10000, 0xd9cbf84a, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "22.6m",				0x10000, 0x86e41198, 3 | BRF_GRA },           //  3 Characters
+
+	{ "6.5a",		  		0x20000, 0xb15759f7, 4 | BRF_GRA },           //  4 Foreground & Background Tiles
+	{ "7.5b",		  		0x20000, 0x2541d445, 4 | BRF_GRA },           //  5
+	{ "8.6a",		  		0x20000, 0x51a2f5c4, 4 | BRF_GRA },           //  6
+	{ "9.6b",		  		0x20000, 0xf4c8850f, 4 | BRF_GRA },           //  7
+	{ "10.7a",				0x20000, 0x9e4b3c61, 4 | BRF_GRA },           //  8
+	{ "11.7b",				0x20000, 0x0d33d083, 4 | BRF_GRA },           //  9
+	{ "12.8a",				0x20000, 0x6c497ad3, 4 | BRF_GRA },           // 10
+	{ "13.8b",				0x20000, 0x7a84adff, 4 | BRF_GRA },           // 11
+
+	{ "21.8r",				0x20000, 0x0cee8711, 6 | BRF_GRA },           // 18 Sprites
+	{ "20.8q",				0x20000, 0x9647e02a, 6 | BRF_GRA },           // 19
+	{ "19.7r",				0x20000, 0x5082ceff, 6 | BRF_GRA },           // 16
+	{ "18.7q",				0x20000, 0xd18a7ffb, 6 | BRF_GRA },           // 17
+	{ "17.6r",				0x20000, 0x9088af09, 6 | BRF_GRA },           // 14
+	{ "16.6q",				0x20000, 0x8ade4e01, 6 | BRF_GRA },           // 15
+	{ "15.5r",				0x20000, 0x7429371c, 6 | BRF_GRA },           // 12
+	{ "14.5q",				0x20000, 0x4301b97f, 6 | BRF_GRA },           // 13
+
+	{ "3.3q",		  		0x20000, 0x489c6d0e, 7 | BRF_SND },           // 20 MSM6295 Samples
+	{ "2.3r",		  		0x20000, 0x7710ce39, 7 | BRF_SND },           // 21
+};
+
+STD_ROM_PICK(drgnbowla)
+STD_ROM_FN(drgnbowla)
+
+static INT32 drgnbowlaInit()
+{
+	game = 3;
+
+	INT32 nRet = DrvInit();
+	
+	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	
+	return nRet;
+}
+
+struct BurnDriver BurnDrvDrgnbowla = {
+	"drgnbowla", "drgnbowl", NULL, NULL, "1992",
+	"Dragon Bowl (set 2, unencrypted program)\0", NULL, "Nics", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, drgnbowlaRomInfo, drgnbowlaRomName, NULL, NULL, DrvInputInfo, DrgnbowlDIPInfo,
+	drgnbowlaInit, DrvExit, DrvFrame, DrgnbowlDraw, DrvScan, &DrvRecalc, 0x1000,
+	256, 224, 4, 3
+};

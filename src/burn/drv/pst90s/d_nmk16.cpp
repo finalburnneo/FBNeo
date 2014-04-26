@@ -8470,10 +8470,10 @@ static INT32 GunnailLoadCallback()
 		if (BurnLoadRom(DrvGfxROM2 + 0x000000,  5, 1)) return 1;
 		BurnByteswap(DrvGfxROM2, 0x200000);
 
-		if (BurnLoadRom(DrvSndROM0 + 0x020000,  5, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM0 + 0x020000,  6, 1)) return 1;
 		memcpy (DrvSndROM0 + 0x00000, DrvSndROM0 + 0x20000, 0x20000);
 
-		if (BurnLoadRom(DrvSndROM1 + 0x020000,  6, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM1 + 0x020000,  7, 1)) return 1;
 		memcpy (DrvSndROM1 + 0x00000, DrvSndROM1 + 0x20000, 0x20000);
 
 		decode_gfx(0x100000, 0x200000);

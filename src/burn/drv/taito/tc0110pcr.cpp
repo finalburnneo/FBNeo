@@ -9,6 +9,7 @@ static UINT8 *TC0110PCRRam[MAX_TC0110PCR];
 UINT32 *TC0110PCRPalette = NULL;
 static INT32 TC0110PCRAddr[MAX_TC0110PCR];
 INT32 TC0110PCRTotalColours;
+INT32 TC0110PCRCount = 0;
 
 static inline UINT8 pal5bit(UINT8 bits)
 {
@@ -148,7 +149,9 @@ void TC0110PCRInit(INT32 Num, INT32 nNumColours)
 	memset(TC0110PCRPalette, 0, nNumColours);
 	
 	TC0110PCRTotalColours = nNumColours;
-	
+
+	TC0110PCRCount = Num; // dink
+
 	TaitoIC_TC0110PCRInUse = 1;
 }
 
@@ -162,6 +165,7 @@ void TC0110PCRExit()
 	BurnFree(TC0110PCRPalette);
 	
 	TC0110PCRTotalColours = 0;
+	TC0110PCRCount = 0; // dink
 }
 
 void TC0110PCRScan(INT32 nAction)
@@ -169,12 +173,13 @@ void TC0110PCRScan(INT32 nAction)
 	struct BurnArea ba;
 	
 	if (nAction & ACB_MEMORY_RAM) {
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = TC0110PCRRam[0];
-		ba.nLen	  = 0x4000;
-		ba.szName = "TC0110PCR Ram";
-		BurnAcb(&ba);
-		
+		for (INT32 i = 0; i < TC0110PCRCount; i++) {
+			memset(&ba, 0, sizeof(ba));
+			ba.Data	  = TC0110PCRRam[i];
+			ba.nLen	  = 0x4000;
+			ba.szName = "TC0110PCR Ram";
+			BurnAcb(&ba);
+		}
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = TC0110PCRPalette;
 		ba.nLen	  = TC0110PCRTotalColours * sizeof(UINT32);
@@ -183,6 +188,6 @@ void TC0110PCRScan(INT32 nAction)
 	}
 	
 	if (nAction & ACB_DRIVER_DATA) {
-		SCAN_VAR(TC0110PCRAddr[0]);
+		SCAN_VAR(TC0110PCRAddr);
 	}
 }

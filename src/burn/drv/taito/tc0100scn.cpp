@@ -603,16 +603,22 @@ void TC0100SCNScan(INT32 nAction)
 {
 	struct BurnArea ba;
 	
-	if (nAction & ACB_MEMORY_RAM) {
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = TC0100SCNRam[0];
-		ba.nLen	  = 0x14000;
-		ba.szName = "TC0100SCN Ram";
-		BurnAcb(&ba);
-	}
-	
 	if (nAction & ACB_DRIVER_DATA) {
-		SCAN_VAR(TC0100SCNCtrl[0]);
+		for (INT32 i = 0;i < TC0100SCNNum; i++) {
+			memset(&ba, 0, sizeof(ba));
+			ba.Data	  = TC0100SCNRam[i];
+			ba.nLen	  = 0x14000;
+			ba.szName = "TC0100SCN Ram";
+			BurnAcb(&ba);
+
+			memset(&ba, 0, sizeof(ba));
+			ba.Data	  = TC0100SCNChars[i];
+			ba.nLen	  = 256 * 8 * 8;
+			ba.szName = "TC0100SCN CharsRam";
+			BurnAcb(&ba);
+		}
+
+		SCAN_VAR(TC0100SCNCtrl);
 		SCAN_VAR(BgScrollX);
 		SCAN_VAR(BgScrollY);
 		SCAN_VAR(FgScrollX);
@@ -622,5 +628,9 @@ void TC0100SCNScan(INT32 nAction)
 		SCAN_VAR(TC0100SCNFlip);
 		SCAN_VAR(TC0100SCNGfxBank);
 		SCAN_VAR(TC0100SCNDblWidth);
+		SCAN_VAR(TC0100SCNBgLayerUpdate);
+		SCAN_VAR(TC0100SCNFgLayerUpdate);
+		SCAN_VAR(TC0100SCNCharLayerUpdate);
+		SCAN_VAR(TC0100SCNCharRamUpdate);
 	}
 }

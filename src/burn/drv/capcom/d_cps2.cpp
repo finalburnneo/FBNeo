@@ -7325,6 +7325,16 @@ STD_ROM_PICK(Xmvsfu)
 STD_ROM_FN(Xmvsfu)
 
 static struct BurnRomInfo Xmvsfur1RomDesc[] = {
+	// Smitdogg has dumped a version "I" of Xmen vs Street Fighters - US version.
+	// It is the same set as version "H" but with different labels.
+//	{ "xvsu.03i",      0x080000, 0x5481155a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+//	{ "xvsu.04i",      0x080000, 0x1e236388, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+//	{ "xvs.05a",       0x080000, 0x7db6025d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+//	{ "xvs.06a",       0x080000, 0xe8e2c75c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+//	{ "xvs.07",        0x080000, 0x08f0abed, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+//	{ "xvs.08",        0x080000, 0x81929675, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+//	{ "xvs.09",        0x080000, 0x9641f36b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	
 	{ "xvsu.03h",      0x080000, 0x5481155a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xvsu.04h",      0x080000, 0x1e236388, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xvs.05a",       0x080000, 0x7db6025d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },

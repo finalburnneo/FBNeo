@@ -900,6 +900,41 @@ static INT32 DrvInit()
 	return 0;
 }
 
+static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+{
+	struct BurnArea ba;
+
+	if (pnMin) {
+		*pnMin = 0x029707;
+	}
+
+	if (nAction & ACB_VOLATILE) {		
+		memset(&ba, 0, sizeof(ba));
+
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd - AllRam;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+
+		ZetScan(nAction);
+		m68705_taito_scan(nAction);
+		AY8910Scan(nAction, pnMin);
+		MSM5232Scan(nAction, pnMin);
+		DACScan(nAction, pnMin);
+
+		SCAN_VAR(snd_data);
+		SCAN_VAR(snd_flag);
+		SCAN_VAR(nmi_enable);
+		SCAN_VAR(pending_nmi);
+		SCAN_VAR(char_bank);
+		SCAN_VAR(mcu_select);
+
+		DrvRecalc = 1;
+	}
+
+	return 0;
+}
+
 static INT32 DrvExit()
 {
 	GenericTilesExit();
@@ -1246,7 +1281,7 @@ struct BurnDriver BurnDrvFlstory = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, flstoryRomInfo, flstoryRomName, NULL, NULL, FlstoryInputInfo, FlstoryDIPInfo,
-	flstoryInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	flstoryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 
@@ -1282,7 +1317,7 @@ struct BurnDriver BurnDrvFlstoryj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, flstoryjRomInfo, flstoryjRomName, NULL, NULL, FlstoryInputInfo, FlstoryDIPInfo,
-	flstoryInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	flstoryInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 
@@ -1328,7 +1363,7 @@ struct BurnDriver BurnDrvOnna34ro = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, onna34roRomInfo, onna34roRomName, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,
-	onna34roInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	onna34roInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 
@@ -1367,7 +1402,7 @@ struct BurnDriver BurnDrvOnna34ra = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, onna34raRomInfo, onna34raRomName, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,
-	onna34roInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	onna34roInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 
@@ -1421,7 +1456,7 @@ struct BurnDriverD BurnDrvVictnine = {
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, victnineRomInfo, victnineRomName, NULL, NULL, VictnineInputInfo, VictnineDIPInfo,
-	victnineInit, DrvExit, DrvFrame, victnineDraw, NULL, &DrvRecalc, 0x200,
+	victnineInit, DrvExit, DrvFrame, victnineDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 

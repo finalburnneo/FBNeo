@@ -5,7 +5,7 @@
 #include "taito_ic.h"
 #include "burn_ym2610.h"
 
-static INT32 Ninjaw = 0, Warriorb = 0, WarriorbRedraw = 0;
+static INT32 Ninjaw = 0, Warriorb = 0;
 
 static double Darius2YM2610Route1MasterVol;
 static double Darius2YM2610Route2MasterVol;
@@ -1855,12 +1855,6 @@ static void WarriorbDraw()
 
 	BurnTransferClear();
 
-        if (WarriorbRedraw) {
-            //bprintf(PRINT_NORMAL, _T("woohoo!\n"));
-            //not yet.
-            WarriorbRedraw = 0;
-        }
-	
 	if (TC0100SCNBottomLayer(0)) {
 		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
 		if (!(Disable2 & 0x02)) TC0100SCNRenderFgLayer(1, 0, TaitoCharsB);
@@ -1997,15 +1991,6 @@ static INT32 Darius2Scan(INT32 nAction, INT32 *pnMin)
 
 		if (TaitoNumYM2610) BurnYM2610Scan(nAction, pnMin);
 
-		TC0100SCNScan(nAction);
-		TC0110PCRScan(nAction);
-		TC0140SYTScan(nAction);
-		if (Warriorb) {
-			TC0510NIOScan(nAction);
-		} else {
-			TC0220IOCScan(nAction);
-		}
-
 		SCAN_VAR(TaitoInput);
 		SCAN_VAR(TaitoZ80Bank);
 		SCAN_VAR(nTaitoCyclesDone);
@@ -2017,7 +2002,6 @@ static INT32 Darius2Scan(INT32 nAction, INT32 *pnMin)
 		ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
 		ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
 		ZetClose();
-		WarriorbRedraw = 1;
 	}
 	
 	return 0;

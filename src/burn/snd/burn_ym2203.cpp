@@ -490,7 +490,7 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 	if (num > MAX_YM2203) num = MAX_YM2203;
 	
 	BurnTimerInit(&YM2203TimerOver, GetTimeCallback);
-
+	bprintf(PRINT_NORMAL, _T("User-Defined SoundRate (nBurnSoundRate)[%d].\n"), nBurnSoundRate);
 	if (nBurnSoundRate <= 0) {
 		BurnYM2203StreamCallback = YM2203StreamCallbackDummy;
 
@@ -500,6 +500,7 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 			AY8910InitYM(i, nClockFrequency, 11025, NULL, NULL, NULL, NULL, BurnAY8910UpdateRequest);
 		}
 		YM2203Init(num, nClockFrequency, 11025, &BurnOPNTimerCallback, IRQCallback);
+
 		return 0;
 	}
 
@@ -514,11 +515,18 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 		}
 
 		BurnYM2203Update = YM2203UpdateResample;
-
 		nSampleSize = (UINT32)nBurnYM2203SoundRate * (1 << 16) / nBurnSoundRate;
-	} else {
-		nBurnYM2203SoundRate = nBurnSoundRate;
+		bprintf(PRINT_NORMAL, _T("Suggested nBurnYM2203SoundRate[%d]???\n"), nBurnYM2203SoundRate);
 
+		// something seriously wrong here - dink
+		// nBurnYM2203SoundRate ends up being about 5khz in games like
+		// gng, gun.smoke, and other misc. ym2203-games when using FM interpolation.
+		// Temporary fix for the issue: use the user-defined samplerate.
+		nBurnYM2203SoundRate = nBurnSoundRate;
+		nSampleSize = (UINT32)nBurnYM2203SoundRate * (1 << 16) / nBurnSoundRate;
+		bprintf(PRINT_NORMAL, _T("Forced nBurnYM2203SoundRate[%d]!!!\n"), nBurnYM2203SoundRate);
+    } else {
+		nBurnYM2203SoundRate = nBurnSoundRate;
 		BurnYM2203Update = YM2203UpdateNormal;
 	}
 

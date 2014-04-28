@@ -217,8 +217,8 @@ static void YM2203UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 			}
 		}
 		
-		nTotalLeftSample = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
-		nTotalRightSample = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nRightSample[0], nRightSample[1], nRightSample[2], nRightSample[3]);
+		nTotalLeftSample = INTERPOLATE4PS_CUSTOM((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3], 16384.0);
+		nTotalRightSample = INTERPOLATE4PS_CUSTOM((nFractionalPosition >> 4) & 0x0fff, nRightSample[0], nRightSample[1], nRightSample[2], nRightSample[3], 16384.0);
 		
 		nTotalLeftSample = BURN_SND_CLIP(nTotalLeftSample);
 		nTotalRightSample = BURN_SND_CLIP(nTotalRightSample);
@@ -490,7 +490,6 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 	if (num > MAX_YM2203) num = MAX_YM2203;
 	
 	BurnTimerInit(&YM2203TimerOver, GetTimeCallback);
-	bprintf(PRINT_NORMAL, _T("User-Defined SoundRate (nBurnSoundRate)[%d].\n"), nBurnSoundRate);
 	if (nBurnSoundRate <= 0) {
 		BurnYM2203StreamCallback = YM2203StreamCallbackDummy;
 
@@ -500,7 +499,6 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 			AY8910InitYM(i, nClockFrequency, 11025, NULL, NULL, NULL, NULL, BurnAY8910UpdateRequest);
 		}
 		YM2203Init(num, nClockFrequency, 11025, &BurnOPNTimerCallback, IRQCallback);
-
 		return 0;
 	}
 
@@ -508,7 +506,7 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 
 	if (nFMInterpolation == 3) {
 		// Set YM2203 core samplerate to match the hardware
-		nBurnYM2203SoundRate = nClockFrequency / (144 * num);
+		nBurnYM2203SoundRate = nClockFrequency >> 6;
 		// Bring YM2203 core samplerate within usable range
 		while (nBurnYM2203SoundRate > nBurnSoundRate * 3) {
 			nBurnYM2203SoundRate >>= 1;
@@ -516,15 +514,7 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 
 		BurnYM2203Update = YM2203UpdateResample;
 		nSampleSize = (UINT32)nBurnYM2203SoundRate * (1 << 16) / nBurnSoundRate;
-		bprintf(PRINT_NORMAL, _T("Suggested nBurnYM2203SoundRate[%d]???\n"), nBurnYM2203SoundRate);
 
-		// something seriously wrong here - dink
-		// nBurnYM2203SoundRate ends up being about 5khz in games like
-		// gng, gun.smoke, and other misc. ym2203-games when using FM interpolation.
-		// Temporary fix for the issue: use the user-defined samplerate.
-		nBurnYM2203SoundRate = nBurnSoundRate;
-		nSampleSize = (UINT32)nBurnYM2203SoundRate * (1 << 16) / nBurnSoundRate;
-		bprintf(PRINT_NORMAL, _T("Forced nBurnYM2203SoundRate[%d]!!!\n"), nBurnYM2203SoundRate);
     } else {
 		nBurnYM2203SoundRate = nBurnSoundRate;
 		BurnYM2203Update = YM2203UpdateNormal;

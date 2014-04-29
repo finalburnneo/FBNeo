@@ -2280,16 +2280,16 @@ static UINT8 AburnerProcessAnalogControls(UINT16 value)
 				temp = 0x80 + (System16AnalogPort0 >> 4);
 			}
 
-			if (temp < 0x20) {
+			if (temp < 0x45) {
 				temp = 0x20;
 				return temp;
 			}
 
-			if (temp > 0xe0) {
+			if (temp > 0xb0) {
 				temp = 0xe0;
 				return temp;
 			}
-
+//                        bprintf(PRINT_NORMAL, _T("[%X,%X]"), temp, System16AnalogPort0 >> 4);
 			return temp;
 		}
 		
@@ -2324,12 +2324,13 @@ static UINT8 AburnerProcessAnalogControls(UINT16 value)
 				temp = 0x80 + (System16AnalogPort2 >> 4);
 			}
 
-			if (temp > 0xc0) {
+//                        bprintf(PRINT_NORMAL, _T("[%X,%X]"), temp, System16AnalogPort2 >> 4);
+			if (temp > 0xb0) {
 				temp = 0xff;
 				return temp;
 			}
 
-			if (temp < 0x40) {
+			if (temp < 0x45) {
 				temp = 0;
 				return temp;
 			}

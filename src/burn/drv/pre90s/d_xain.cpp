@@ -521,15 +521,15 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvMainROM		= Next; Next += 0x0180000;
-	DrvSubROM		= Next; Next += 0x0180000;
-	DrvSoundROM		= Next; Next += 0x0100000;
-	DrvMcuROM		= Next; Next += 0x0008000;
+	DrvMainROM		= Next; Next += 0x018000;
+	DrvSubROM		= Next; Next += 0x018000;
+	DrvSoundROM		= Next; Next += 0x010000;
+	DrvMcuROM		= Next; Next += 0x000800;
 
-	DrvGfxROM0		= Next; Next += 0x0100000;
-	DrvGfxROM1		= Next; Next += 0x0800000;
-	DrvGfxROM2		= Next; Next += 0x0800000;
-	DrvGfxROM3		= Next; Next += 0x0800000;
+	DrvGfxROM0		= Next; Next += 0x010000;
+	DrvGfxROM1		= Next; Next += 0x080000;
+	DrvGfxROM2		= Next; Next += 0x080000;
+	DrvGfxROM3		= Next; Next += 0x080000;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
 

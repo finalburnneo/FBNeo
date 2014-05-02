@@ -130,25 +130,18 @@ STDDIPINFO(Momoko)
 
 static inline void palette_write(UINT16 offset)
 {
-	UINT16 p = DrvPalRAM[offset + 1] + (DrvPalRAM[offset + 0] * 256);
+	INT32 r = DrvPalRAM[offset + 0] & 0x0f;
+	INT32 g = DrvPalRAM[offset + 1] >> 4;
+	INT32 b = DrvPalRAM[offset + 1] & 0x0f;
 
-	INT32 r = (p >> 8) & 0x0f;
-	INT32 g = (p >> 4) & 0x0f;
-	INT32 b = (p >> 0) & 0x0f;
-
-	r |= r << 4;
-	g |= g << 4;
-	b |= b << 4;
-
-	DrvPalette[offset/2] = BurnHighCol(r, g, b, 0);
+	DrvPalette[offset/2] = BurnHighCol(r + (r * 16), g + (g * 16), b + (b * 16), 0);
 }
 
 static void bankswitch(INT32 data)
 {
 	*bg_bank = data;
 
-	ZetMapArea(0xf000, 0xffff, 0, DrvBankROM + (data & 0x1f) * 0x1000);
-	ZetMapArea(0xf000, 0xffff, 2, DrvBankROM + (data & 0x1f) * 0x1000);
+	ZetMapMemory(DrvBankROM + (data & 0x1f) * 0x1000, 0xf000, 0xffff, ZET_ROM);
 }
 
 void __fastcall momoko_main_write(UINT16 address, UINT8 data)
@@ -362,9 +355,9 @@ static INT32 MemIndex()
 static INT32 DrvGfxDecode()
 {
 	INT32 Planes[4]  = { 4,0,12,8 };
-	INT32 XOffs0[8]  = { 0, 1, 2, 3, 256*8*8+0, 256*8*8+1, 256*8*8+2, 256*8*8+3 };
+	INT32 XOffs0[8]  = { STEP4(0,1), STEP4(256*8*8,1) };
 	INT32 YOffs0[8]  = { STEP8(0, 8) };
-	INT32 XOffs1[8]  = { 0, 1, 2, 3, 4096*8+0, 4096*8+1, 4096*8+2, 4096*8+3 };
+	INT32 XOffs1[8]  = { STEP4(0,1), STEP4(4096*8,1) };
 	INT32 YOffs1[16] = { STEP16(0, 16) };
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(0x20000);
@@ -397,12 +390,9 @@ static void DrvFillTransTab(INT32 tab, UINT8 *gfx, INT32 len, INT32 size)
 {
 	memset (DrvTransTab[tab], 1, len / size);
 
-	for (INT32 i = 0; i < len; i+= size)
-	{
-		for (INT32 j = 0; j < size; j++)
-		{
-			if (gfx[i+j])
-			{
+	for (INT32 i = 0; i < len; i+= size) {
+		for (INT32 j = 0; j < size; j++) {
+			if (gfx[i+j]) {
 				DrvTransTab[tab][i/size] = 0;
 				break;
 			}
@@ -466,31 +456,19 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0xbfff, 0, DrvZ80ROM0);
-	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM0);
-	ZetMapArea(0xc000, 0xcfff, 0, DrvZ80RAM0);
-	ZetMapArea(0xc000, 0xcfff, 1, DrvZ80RAM0);
-	ZetMapArea(0xc000, 0xcfff, 2, DrvZ80RAM0);
-	ZetMapArea(0xd000, 0xd0ff, 0, DrvSprRAM);
-	ZetMapArea(0xd000, 0xd0ff, 1, DrvSprRAM);
-	ZetMapArea(0xd000, 0xd0ff, 2, DrvSprRAM);
-	ZetMapArea(0xd800, 0xdbff, 0, DrvPalRAM);
-//	ZetMapArea(0xd800, 0xdbff, 1, DrvPalRAM);
-	ZetMapArea(0xd800, 0xdbff, 2, DrvPalRAM);
-	ZetMapArea(0xe000, 0xe3ff, 0, DrvVidRAM);
-	ZetMapArea(0xe000, 0xe3ff, 1, DrvVidRAM);
-	ZetMapArea(0xe000, 0xe3ff, 2, DrvVidRAM);
+	ZetMapMemory(DrvZ80ROM0,	0x0000, 0xbfff, ZET_ROM);
+	ZetMapMemory(DrvZ80RAM0,	0xc000, 0xcfff, ZET_RAM);
+	ZetMapMemory(DrvSprRAM,		0xd000, 0xd0ff, ZET_RAM);
+	ZetMapMemory(DrvPalRAM,		0xd800, 0xdbff, ZET_ROM); // write through handler
+	ZetMapMemory(DrvVidRAM,		0xe000, 0xe3ff, ZET_RAM);
 	ZetSetWriteHandler(momoko_main_write);
 	ZetSetReadHandler(momoko_main_read);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM1);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM1);
-	ZetMapArea(0x8000, 0x87ff, 0, DrvZ80RAM1);
-	ZetMapArea(0x8000, 0x87ff, 1, DrvZ80RAM1);
-	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM1);
+	ZetMapMemory(DrvZ80ROM1,	0x0000, 0x7fff, ZET_ROM);
+	ZetMapMemory(DrvZ80RAM1,	0x8000, 0x87ff, ZET_RAM);
 	ZetSetWriteHandler(momoko_sound_write);
 	ZetSetReadHandler(momoko_sound_read);
 	ZetClose();
@@ -527,7 +505,7 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static void draw_bg_layer_pri()
+static void draw_bg_layer(int pri)
 {
 	INT32 dx   = ~bg_scrollx[0] & 7;
 	INT32 dy   = ~bg_scrolly[0] & 7;
@@ -542,38 +520,18 @@ static void draw_bg_layer_pri()
 
 		INT32 ofst  = (((ry + sy + 2) & 0x3ff) << 7) + ((rx + sx) & 0x7f);
 		INT32 code  = DrvBankROM[ofst] + bank;
-		INT32 color = DrvBgCPROM[code + (*bg_priority * 0x100)];
+		INT32 color = DrvBgCPROM[code + (*bg_priority * 0x100)] & 0x1f;
 
-		if (color & 0x10) continue;
-
-		sx = (sx * 8) + dx - 6 - 8;
-		sy = (sy * 8) + dy + 9 - 16;
-
-		RenderTileTranstab(pTransDraw, DrvGfxROM1, code, ((color&0x0f)<<4)+0x100, 0, sx, sy, 0, 0, 8, 8, DrvTransTab[1]);
-	}
-}
-
-static void draw_bg_layer()
-{
-	INT32 dx   = ~bg_scrollx[0] & 7;
-	INT32 dy   = ~bg_scrolly[0] & 7;
-	INT32 rx   = (bg_scrollx[0] + bg_scrollx[1] * 256) >> 3;
-	INT32 ry   = (bg_scrolly[0] + bg_scrolly[1] * 256) >> 3;
-	INT32 bank = (*bg_select & 0x0f) * 0x200;
-
-	for (INT32 offs = 0; offs < 32 * 32; offs++)
-	{
-		INT32 sx = (offs & 0x1f);
-		INT32 sy = (offs / 0x20);
-
-		INT32 ofst  = (((ry + sy + 2) & 0x3ff) << 7) + ((rx + sx) & 0x7f);
-		INT32 code  = DrvBankROM[ofst] + bank;
-		INT32 color = DrvBgCPROM[code + (*bg_priority * 0x100)] & 0x0f;
+		if ((color & 0x10) == pri && !pri) continue;
 
 		sx = (sx * 8) + dx - 6;
 		sy = (sy * 8) + dy + 9 - 16;
 
-		Render8x8Tile_Clip(pTransDraw, code, sx - 8, sy, color, 4, 0x100, DrvGfxROM1);
+		if (pri) {
+			Render8x8Tile_Clip(pTransDraw, code, sx - 8, sy, color&0x0f, 4, 0x100, DrvGfxROM1);
+		} else {
+			RenderTileTranstab(pTransDraw, DrvGfxROM1, code, ((color&0x0f)<<4)+0x100, 0, sx - 8, sy, 0, 0, 8, 8, DrvTransTab[1]);
+		}
 	}
 }
 
@@ -598,7 +556,7 @@ static void draw_fg_layer()
 
 		if (DrvTransTab[2][code]) continue;
 
-		Render8x8Tile_Mask_Clip(pTransDraw, code, sx - 8, sy, 0, 2, 0, 0, DrvGfxROM2);
+		Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, 0, 2, 0, 0, DrvGfxROM2);
 	}
 }
 
@@ -645,27 +603,6 @@ static void draw_sprites(INT32 start, INT32 end)
 
 		if (DrvTransTab[3][code]) continue;
 
-#if 1		// 8x16 tiles don't seem to work well for custom tile drawing?
-		{
-			UINT8 *gfx = DrvGfxROM3 + (code * 0x80);
-
-			INT32 flip = (flipx ? 0 : 7) | (flipy ? 0x78 : 0);
-
-			color = (color << 4) + 0x80;
-
-			for (INT32 y = 0; y < 16; y++, sy++, sx-=8) {
-				for (INT32 x = 0; x < 8; x++, sx++) {
-					INT32 pxl = gfx[((y * 8) + x) ^ flip];
-
-					if (pxl) {
-						if (sy >= 0 && sy < nScreenHeight && sx >= 0 && sx < nScreenWidth) {
-							pTransDraw[sy * nScreenWidth + sx] = pxl + color;
-						}
-					}
-				}
-			}
-		}
-#else
 		if (flipy) {
 			if (!flipx) {
 				RenderCustomTile_Mask_FlipXY_Clip(pTransDraw, 8, 16, code, sx, sy, color, 4, 0, 0x80, DrvGfxROM3);
@@ -679,7 +616,6 @@ static void draw_sprites(INT32 start, INT32 end)
 				RenderCustomTile_Mask_Clip(pTransDraw, 8, 16, code, sx, sy, color, 4, 0, 0x80, DrvGfxROM3);
 			}
 		}
-#endif
 	}
 }
 
@@ -693,9 +629,11 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
+	BurnTransferClear();
+
 	if ((*bg_select & 0x10) == 0)
 	{
-		draw_bg_layer();
+		if (nBurnLayer & 1) draw_bg_layer(0x10);
 	}
 	else
 	{
@@ -708,7 +646,7 @@ static INT32 DrvDraw()
 
 	if ((*bg_select & 0x10) == 0)
 	{
-		draw_bg_layer_pri();
+		draw_bg_layer(0);
 	}
 
 	draw_sprites(0x24, 0x100-0x64);
@@ -749,7 +687,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nCycleSegment;
-	INT32 nInterleave = 10;
+	INT32 nInterleave = 100;
 	INT32 nCyclesTotal[2] = { 5000000 / 60, 2500000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -759,7 +697,7 @@ static INT32 DrvFrame()
 
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCycleSegment);
-		if (i == (nInterleave-1)) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if (i == 66) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
 		ZetClose();
 
 		nCycleSegment = nCyclesTotal[1] / nInterleave;
@@ -808,6 +746,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ZetOpen(0);
 		bankswitch(*bg_bank);
 		ZetClose();
+
+		DrvRecalc = 1;
 	}
 
 	return 0;

@@ -6,7 +6,6 @@ extern UINT8 *deco16_pf_ram[4];
 extern UINT8 *deco16_pf_rowscroll[4];
 
 extern UINT16 deco16_priority;
-extern UINT16 deco16ic_cninja_scrolly; // use different indexing of scroll_y for Caveman Ninja
 
 void deco16_set_bank_callback(INT32 tmap, INT32 (*callback)(const INT32 bank));
 void deco16_set_color_base(INT32 tmap, INT32 base);

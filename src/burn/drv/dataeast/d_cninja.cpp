@@ -1185,8 +1185,6 @@ static INT32 CninjaInit()
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, DrvYM2151WritePort, 0.45, 1006875, 0.75, 2013750, 0.60);
 	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
 
-	deco16ic_cninja_scrolly = 1;
-
 	GenericTilesInit();
 
 	DrvDoReset();
@@ -1753,7 +1751,6 @@ static INT32 DrvExit()
 	BurnFree (AllMem);
 
 	MSM6295ROM = NULL;
-	deco16ic_cninja_scrolly = 0;
 
 	return 0;
 }

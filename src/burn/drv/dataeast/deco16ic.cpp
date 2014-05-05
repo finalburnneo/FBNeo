@@ -53,6 +53,7 @@ UINT8 *deco16_prio_map;
 UINT8 *deco16_sprite_prio_map; // boogwing
 
 INT32 deco16_vblank;
+UINT16 deco16ic_cninja_scrolly = 0; // use different indexing of scroll_y for Caveman Ninja
 
 void deco16ProtScan();
 void deco16ProtReset();
@@ -270,7 +271,11 @@ void deco16_draw_layer(INT32 tmap, UINT16 *dest, INT32 flags)
 
 		for (INT32 x = 0; x < nScreenWidth + size; x+=size)
 		{
-			INT32 yoff = deco16_scroll_y[tmap][x] & hmask;
+			INT32 yoff;
+			if (deco16ic_cninja_scrolly)
+				yoff = deco16_scroll_y[tmap][x + deco16_scroll_x[tmap][y]] & hmask;
+			else
+				yoff = deco16_scroll_y[tmap][x] & hmask;
 
 			INT32 yy = (y + yoff) & hmask;
 			INT32 xx = (x + xoff) & wmask;

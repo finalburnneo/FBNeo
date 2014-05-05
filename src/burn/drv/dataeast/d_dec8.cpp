@@ -1709,6 +1709,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(i8751_value);
 		SCAN_VAR(vblank);
 		SCAN_VAR(RomBank);
+		DrvRecalc = 1;
 	}
 
 	return 0;
@@ -4088,7 +4089,7 @@ static INT32 OscarDraw()
 
 	draw_bg_layer(DrvPf0RAM, DrvPf0Ctrl, DrvGfxROM2, 0x180, 0x07, 0x7ff, 0x0000, 0);
 	draw_sprites2(0xf, 0);
-	draw_bg_layer(DrvPf0RAM, DrvPf0Ctrl, DrvGfxROM2, 0x180, 0x07, 0x7ff, 0x00ff, 0);
+	draw_bg_layer(DrvPf0RAM, DrvPf0Ctrl, DrvGfxROM2, 0x180, 0x07, 0x7ff, 0x00ff, 0x08);
 	oscar_draw_txt_layer();
 
 	BurnTransferCopy(DrvPalette);

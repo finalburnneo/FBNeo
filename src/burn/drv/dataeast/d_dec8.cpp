@@ -2180,7 +2180,7 @@ static void draw_cobra_txt_layer()
 	}
 }
 
-static void draw_sprites2(INT32 colmask, INT32 priority)
+static void draw_sprites2(INT32 colmask, INT32 priority, INT32 oscarmode)
 {
 	for (INT32 offs = 0;offs < 0x800;offs += 8)
 	{
@@ -2194,8 +2194,12 @@ static void draw_sprites2(INT32 colmask, INT32 priority)
 		if (priority==1 &&  (colour&4)) continue;
 		if (priority==2 && !(colour&4)) continue;
 
-		colour &= colmask;
-		colour += 0x4;
+                if (oscarmode) {
+                    colour = ((x & 0xf000) >> 12);
+                } else {
+                    colour &= colmask;
+                    colour += 0x4;
+                }
 
 		INT32 fx = y & 0x2000;
 		INT32 fy = y & 0x4000;
@@ -2276,9 +2280,9 @@ static INT32 CobraDraw()
 	DrvPf1Ctrl[1] &= ~0x04; // doesn't have ram for the offsets
 
 	draw_bg_layer(DrvPf0RAM, DrvPf0Ctrl, DrvGfxROM2, 0x80, 0x03, 0xfff, 0, 0);
-	draw_sprites2(0x03, 1);
+	draw_sprites2(0x03, 1, 0);
 	draw_bg_layer(DrvPf1RAM, DrvPf1Ctrl, DrvGfxROM3, 0xc0, 0x03, 0xfff, 1, 0);
-	draw_sprites2(0x03, 2);
+	draw_sprites2(0x03, 2, 0);
 	draw_cobra_txt_layer();
 
 	BurnTransferCopy(DrvPalette);
@@ -4088,7 +4092,7 @@ static INT32 OscarDraw()
 	}
 
 	draw_bg_layer(DrvPf0RAM, DrvPf0Ctrl, DrvGfxROM2, 0x180, 0x07, 0x7ff, 0x0000, 0);
-	draw_sprites2(0xf, 0);
+	draw_sprites2(0xf, 0, 1);
 	draw_bg_layer(DrvPf0RAM, DrvPf0Ctrl, DrvGfxROM2, 0x180, 0x07, 0x7ff, 0x00ff, 0x08);
 	oscar_draw_txt_layer();
 

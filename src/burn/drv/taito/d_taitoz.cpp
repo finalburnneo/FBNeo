@@ -6413,6 +6413,7 @@ static void SpacegunDraw()
 static INT32 TaitoZFrame()
 {
 	INT32 nInterleave = TaitoFrameInterleave;
+	INT32 nVBlankIRQFire = (INT32)(((double)256 / 271) * TaitoFrameInterleave);
 
 	if (TaitoReset) TaitoZDoReset();
 
@@ -6433,17 +6434,25 @@ static INT32 TaitoZFrame()
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
 		if (i == 10 && Sci && ((GetCurrentFrame() & 1) == 0)) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
-		if (i == (TaitoFrameInterleave - 1)) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
+		if (i == nVBlankIRQFire) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
 		SekClose();
 		
 		// Run 68000 #2
-		if ((TaitoCpuACtrl & 0x01) && TaitoNumZ80s) {
+		if (TaitoNumZ80s) {
+			if (TaitoCpuACtrl & 0x01) {
+				nCurrentCPU = 1;
+				SekOpen(1);
+				nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
+				nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
+				nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
+				if (i == nVBlankIRQFire) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
+				SekClose();
+			}
+		} else {
 			nCurrentCPU = 1;
 			SekOpen(1);
-			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-			nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-			if (i == (TaitoFrameInterleave - 1)) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
+			BurnTimerUpdate(i * (nTaitoCyclesTotal[nCurrentCPU] / nInterleave));
+			if (i == nVBlankIRQFire) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
 			SekClose();
 		}
 		
@@ -6463,7 +6472,6 @@ static INT32 TaitoZFrame()
 		SekOpen(1);
 		if (TaitoCpuACtrl & 0x01) BurnTimerEndFrame(nTaitoCyclesTotal[1]);
 		if (pBurnSoundOut) BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
-		if (TaitoCpuACtrl & 0x01) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
 		SekClose();
 	}
 	

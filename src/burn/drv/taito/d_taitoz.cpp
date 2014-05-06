@@ -4804,7 +4804,7 @@ static INT32 BsharkInit()
 	TaitoMakeInputsFunction = BsharkMakeInputs;
 	TaitoDrawFunction = BsharkDraw;
 	TaitoIrqLine = 4;
-	TaitoFrameInterleave = 100;
+	TaitoFrameInterleave = 271;
 	TaitoFlipScreenX = 1;
 
 	nTaitoCyclesTotal[0] = 12000000 / 60;

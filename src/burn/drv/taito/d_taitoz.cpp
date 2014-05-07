@@ -6413,7 +6413,7 @@ static void SpacegunDraw()
 static INT32 TaitoZFrame()
 {
 	INT32 nInterleave = TaitoFrameInterleave;
-	INT32 nVBlankIRQFire = (INT32)(((double)256 / 271) * TaitoFrameInterleave);
+	INT32 nVBlankIRQFire = (INT32)(((double)270 / 271) * TaitoFrameInterleave);
 
 	if (TaitoReset) TaitoZDoReset();
 

@@ -2200,7 +2200,7 @@ static INT32 CninjaFrame()
 		DrvInputs[2] = (DrvDips[1] << 8) | (DrvDips[0] << 0);
 	}
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 232; //58 * 4
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -2210,7 +2210,7 @@ static INT32 CninjaFrame()
 	SekOpen(0);
 	h6280Open(0);
 
-	deco16_vblank = 0;
+	deco16_vblank = 0x00;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -2221,7 +2221,7 @@ static INT32 CninjaFrame()
 			SekSetIRQLine((irq_mask & 0x10) ? 3 : 4, SEK_IRQSTATUS_ACK);
 			irq_timer = -1;
 		}
-		if (i == 248) deco16_vblank = 0x08;
+		if (i == 206) deco16_vblank = 0x08;
 		
 		INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);

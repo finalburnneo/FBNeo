@@ -1235,6 +1235,7 @@ inline static UINT32 CalcCol(INT32 offs)
 
 static void m92YM2151IRQHandler(INT32 nStatus)
 {
+	if (VezGetActive() == -1) return;
 	VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff/*default*/, nStatus ? VEZ_IRQSTATUS_ACK : VEZ_IRQSTATUS_NONE);
 	VezRun(100);
 }
@@ -2167,6 +2168,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		VezScan(nAction);
 
 		iremga20_scan(0, nAction, pnMin);
+		BurnYM2151Scan(nAction);
 
 		SCAN_VAR(PalBank);
 
@@ -2175,6 +2177,12 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(m92_sprite_list);
 		SCAN_VAR(m92_sprite_buffer_busy);
 		SCAN_VAR(m92_sprite_buffer_timer);
+
+		if (nAction & ACB_WRITE) {
+			VezOpen(1);
+			m92YM2151IRQHandler(0); // get fm sound going again on state load
+			VezClose();
+		}
 
 		if (m92_kludge == 3) { // ppan
 			MSM6295Scan(0, nAction);

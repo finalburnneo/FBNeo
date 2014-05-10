@@ -4,6 +4,7 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2203.h"
+#include "bitswap.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -959,13 +960,12 @@ struct BurnDriver BurnDrvBlktigerb1 = {
 };
 
 
-
 // Black Tiger (bootleg set 2)
 
 static struct BurnRomInfo blktigerb2RomDesc[] = {
-	{ "1.bin",		0x08000, 0x47E2B21E, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
+	{ "1.bin",			0x08000, 0x47E2B21E, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
 	{ "bdu-02a.6e",		0x10000, 0x7bef96e8, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "3.bin",		0x10000, 0x52c56ed1, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.bin",			0x10000, 0x52c56ed1, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "bd-04.9e",		0x10000, 0xed6af6ec, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "bd-05.10e",		0x10000, 0xae59b72e, 1 | BRF_PRG | BRF_ESS }, //  4
 
@@ -999,6 +999,75 @@ struct BurnDriver BurnDrvblktigerb2 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, blktigerb2RomInfo, blktigerb2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
+
+
+// Black Tiger / Black Dragon (mixed bootleg?)
+
+static struct BurnRomInfo blktigerb3RomDesc[] = {
+	{ "1.5e",			0x08000, 0x47e2b21e, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
+	{ "2.6e",			0x10000, 0x7bef96e8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.8e",			0x10000, 0x52c56ed1, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.9e",			0x10000, 0xed6af6ec, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "5.10e",			0x10000, 0xae59b72e, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "6.1l",			0x08000, 0x6dfab115, 2 | BRF_PRG | BRF_ESS }, //  5 - Z80 #0 Code
+
+	{ "15.2n",			0x08000, 0x3821ab29, 3 | BRF_GRA },           //  6 - Characters
+
+	{ "12.5b",			0x10000, 0xc4524993, 4 | BRF_GRA },           //  7 - Background Tiles
+	{ "11.4b",			0x10000, 0x7932c86f, 4 | BRF_GRA },           //  8
+	{ "14.9b",			0x10000, 0xdc49593a, 4 | BRF_GRA },           //  9
+	{ "13.8b",			0x10000, 0x7ed7a122, 4 | BRF_GRA },           // 10
+
+	{ "08.5a",			0x10000, 0xe2f17438, 5 | BRF_GRA },           // 11 - Sprites
+	{ "07.4a",			0x10000, 0x5fccbd27, 5 | BRF_GRA },           // 12
+	{ "10.9a",			0x10000, 0xfc33ccc6, 5 | BRF_GRA },           // 13
+	{ "09.8a",			0x10000, 0xf449de01, 5 | BRF_GRA },           // 14
+
+	{ "bd01.8j",		0x00100, 0x29b459e5, 6 | BRF_OPT },           // 15 - Proms (not used)
+	{ "bd02.9j",		0x00100, 0x8b741e66, 6 | BRF_OPT },           // 16
+	{ "bd03.11k",		0x00100, 0x27201c75, 6 | BRF_OPT },           // 17
+	{ "bd04.11l",		0x00100, 0xe5490b68, 6 | BRF_OPT },           // 18
+};
+
+STD_ROM_PICK(blktigerb3)
+STD_ROM_FN(blktigerb3)
+
+static void blktigerb3SoundDecode()
+{
+ UINT8 *buf = (UINT8*)BurnMalloc(0x8000);
+
+ memcpy (buf, DrvZ80ROM1, 0x8000);
+
+ for (INT32 i = 0; i < 0x8000; i++)
+ {
+  DrvZ80ROM1[i] = buf[BITSWAP16(i, 15,14,13,12,11,10,9,8, 3,4,5,6, 7,2,1,0)];
+ }
+
+ BurnFree(buf);
+}
+
+static INT32 blktigerb3Init()
+{
+ INT32 nRet = DrvInit();
+
+ if (nRet == 0)
+ {
+  blktigerb3SoundDecode();
+ }
+
+ return nRet;
+}
+
+struct BurnDriver BurnDrvBlktigerb3 = {
+	"blktigerb3", "blktiger", NULL, NULL, "1987",
+	"Black Tiger / Black Dragon (mixed bootleg?)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NULL, blktigerb3RomInfo, blktigerb3RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	blktigerb3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
 
@@ -1051,20 +1120,20 @@ struct BurnDriver BurnDrvBlkdrgon = {
 // Black Dragon (bootleg)
 
 static struct BurnRomInfo blkdrgonbRomDesc[] = {
-	{ "a1",			0x08000, 0x7caf2ba0, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
+	{ "a1",				0x08000, 0x7caf2ba0, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
 	{ "blkdrgon.6e",	0x10000, 0x7d39c26f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "a3",			0x10000, 0xf4cd0f39, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "a3",				0x10000, 0xf4cd0f39, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "blkdrgon.9e",	0x10000, 0x4d1d6680, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "blkdrgon.10e",	0x10000, 0xc8d0c45e, 1 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "bd-06.1l",		0x08000, 0x2cf54274, 2 | BRF_PRG | BRF_ESS }, //  5 - Z80 #0 Code
 
-	{ "b5",			0x08000, 0x852ad2b7, 3 | BRF_GRA },           //  6 - Characters
+	{ "b5",				0x08000, 0x852ad2b7, 3 | BRF_GRA },           //  6 - Characters
 
 	{ "blkdrgon.5b",	0x10000, 0x22d0a4b0, 4 | BRF_GRA },           //  7 - Background Tiles
-	{ "b1",			0x10000, 0x053ab15c, 4 | BRF_GRA },           //  8
+	{ "b1",				0x10000, 0x053ab15c, 4 | BRF_GRA },           //  8
 	{ "blkdrgon.9b",	0x10000, 0x9498c378, 4 | BRF_GRA },           //  9
-	{ "b3",			0x10000, 0x9dc6e943, 4 | BRF_GRA },           // 10
+	{ "b3",				0x10000, 0x9dc6e943, 4 | BRF_GRA },           // 10
 
 	{ "bd-08.5a",		0x10000, 0xe2f17438, 5 | BRF_GRA },           // 11 - Sprites
 	{ "bd-07.4a",		0x10000, 0x5fccbd27, 5 | BRF_GRA },           // 12

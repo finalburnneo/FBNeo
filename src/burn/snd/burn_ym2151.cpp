@@ -147,6 +147,7 @@ void BurnYM2151Reset()
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Reset called without init\n"));
 #endif
 
+	memset(&BurnYM2151Registers, 0, sizeof(BurnYM2151Registers));
 	YM2151ResetChip(0);
 }
 
@@ -201,6 +202,7 @@ INT32 BurnYM2151Init(INT32 nClockFrequency)
 	nFractionalPosition = 4 << 16;
 	nSamplesRendered = 0;
 	nBurnPosition = 0;
+	memset(&BurnYM2151Registers, 0, sizeof(BurnYM2151Registers));
 	
 	// default routes
 	YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_1] = 1.00;

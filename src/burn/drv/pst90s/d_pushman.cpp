@@ -943,15 +943,15 @@ static struct BurnRomInfo bballsRomDesc[] = {
 
 	{ "bb1.g20",		0x08000, 0xb62dbcb8, 4 | BRF_GRA },           //  4 Characters
 
-	{ "bb4.d1",		0x10000, 0xb77de5f8, 5 | BRF_GRA },           //  5 Sprites
-	{ "bb5.d2",		0x10000, 0xffffccbf, 5 | BRF_GRA },           //  6
-	{ "bb2.b1",		0x10000, 0xa5b13236, 5 | BRF_GRA },           //  7
-	{ "bb3.b2",		0x10000, 0xe35b383d, 5 | BRF_GRA },           //  8
+	{ "bb4.d1",			0x10000, 0xb77de5f8, 5 | BRF_GRA },           //  5 Sprites
+	{ "bb5.d2",			0x10000, 0xffffccbf, 5 | BRF_GRA },           //  6
+	{ "bb2.b1",			0x10000, 0xa5b13236, 5 | BRF_GRA },           //  7
+	{ "bb3.b2",			0x10000, 0xe35b383d, 5 | BRF_GRA },           //  8
 
-	{ "bb6.h1",		0x10000, 0x0cada9ce, 6 | BRF_GRA },           //  9 Tiles
-	{ "bb8.j1",		0x10000, 0xd55fe7c1, 6 | BRF_GRA },           // 10
-	{ "bb7.h2",		0x10000, 0xa352d53b, 6 | BRF_GRA },           // 11
-	{ "bb9.j2",		0x10000, 0x78d185ac, 6 | BRF_GRA },           // 12
+	{ "bb6.h1",			0x10000, 0x0cada9ce, 6 | BRF_GRA },           //  9 Tiles
+	{ "bb8.j1",			0x10000, 0xd55fe7c1, 6 | BRF_GRA },           // 10
+	{ "bb7.h2",			0x10000, 0xa352d53b, 6 | BRF_GRA },           // 11
+	{ "bb9.j2",			0x10000, 0x78d185ac, 6 | BRF_GRA },           // 12
 
 	{ "bb10.l6",		0x08000, 0xd06498f9, 7 | BRF_GRA },           // 13 Tilemap
 
@@ -974,6 +974,47 @@ struct BurnDriver BurnDrvBballs = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, bballsRomInfo, bballsRomName, NULL, NULL, BballsInputInfo, BballsDIPInfo,
+	bballsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
+	256, 224, 4, 3
+};
+
+
+// Bouncing Balls (Adult)
+
+static struct BurnRomInfo bballsaRomDesc[] = {
+	{ "12.ic212",		0x10000, 0x8917aedd, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "11.ic197",		0x10000, 0x430fca1b, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "13.ic216",		0x08000, 0x1ef78175, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "68705.uc",		0x01000, 0x00000000, 3 | BRF_PRG | BRF_NODUMP }, //  3 M68705 MCU Code
+
+	{ "1.ic130",		0x08000, 0x67672444, 4 | BRF_GRA },           //  4 Characters
+
+	{ "4.ic58",			0x10000, 0x144ca816, 5 | BRF_GRA },           //  5 Sprites
+	{ "5.ic59",			0x10000, 0x486c8385, 5 | BRF_GRA },           //  6
+	{ "2.ic56",			0x10000, 0x1d464915, 5 | BRF_GRA },           //  7
+	{ "3.ic57",			0x10000, 0x595439ec, 5 | BRF_GRA },           //  8
+
+	{ "6.ic131",		0x10000, 0x15d4975b, 6 | BRF_GRA },           //  9 Tiles
+	{ "8.ic148",		0x10000, 0xc1a21c75, 6 | BRF_GRA },           // 10
+	{ "7.ic132",		0x10000, 0x2289393a, 6 | BRF_GRA },           // 11
+	{ "9.ic149",		0x10000, 0x1fe3d172, 6 | BRF_GRA },           // 12
+
+	{ "10.ic189",		0x08000, 0x52e4ab27, 7 | BRF_GRA },           // 13 Tilemap
+
+	{ "bb_prom.e9",		0x00100, 0xec80ae36, 8 | BRF_OPT },           // 14 Priority
+};
+
+STD_ROM_PICK(bballsa)
+STD_ROM_FN(bballsa)
+
+struct BurnDriver BurnDrvBballsa = {
+	"bballsa", "bballs", NULL, NULL, "1991",
+	"Bouncing Balls (Adult)\0", NULL, "Comad", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, bballsaRomInfo, bballsaRomName, NULL, NULL, BballsInputInfo, BballsDIPInfo,
 	bballsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };

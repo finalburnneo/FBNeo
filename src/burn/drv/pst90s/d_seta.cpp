@@ -75,6 +75,7 @@ static INT32 usclssic_port_select = 0;
 static INT32 tndrcade_init_sim = 0;
 static INT32 gun_input_bit = 0;
 static INT32 gun_input_src = 0;
+static INT32 flipflop = 0;
 
 static INT32 watchdog_enable = 0;
 static INT32 watchdog = 0;
@@ -6739,14 +6740,13 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 
 	x1010_sound_init(16000000, 0x0000);
 	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
-        x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 
-        if (strstr(BurnDrvGetTextA(DRV_NAME), "madshark")) {
-            x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
-        }
-        if (strstr(BurnDrvGetTextA(DRV_NAME), "kamenrid")) {
-            x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
-        }
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "madshark"))
+		x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
+	
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "kamenrid"))
+		x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
 
 	BurnYM3812Init(4000000, NULL, DrvYM3812SynchroniseStream, 0);
 	BurnTimerAttachSekYM3812(16000000);
@@ -6762,6 +6762,8 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 	DrvSetDefaultColorTable();
 
 	bprintf (0, _T("%d\n"), nScreenHeight);
+
+	flipflop = 0;
 
 	VideoOffsets[2][0] = ((256 - nScreenHeight) / 2); // adjust for screen height
 	VideoOffsets[2][1] = VideoOffsets[2][0];
@@ -7366,8 +7368,6 @@ static void Drv68k_5IRQ_FrameCallback()
 	}
 }
 
-static int flipflop = 0;
-
 static void Drv68k_KM_FrameCallback() // kamenrid & madshark
 {
 	INT32 nInterleave = 10;
@@ -7383,12 +7383,12 @@ static void Drv68k_KM_FrameCallback() // kamenrid & madshark
 		if (i & 1 && i == 1) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
 	}
 
-        if (flipflop==0) { // IRQ4 is fired every other frame
-            SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-            flipflop=1;
-        } else {
-            flipflop=0;
-        }
+	if (flipflop==0) { // IRQ4 is fired every other frame
+		SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		flipflop=1;
+	} else {
+		flipflop=0;
+	}
 
 	SekClose();
 

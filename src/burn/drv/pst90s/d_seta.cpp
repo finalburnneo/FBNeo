@@ -6738,8 +6738,15 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 	buffer_sprites = spr_buffer;
 
 	x1010_sound_init(16000000, 0x0000);
-	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+        x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+
+        if (strstr(BurnDrvGetTextA(DRV_NAME), "madshark")) {
+            x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
+        }
+        if (strstr(BurnDrvGetTextA(DRV_NAME), "kamenrid")) {
+            x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
+        }
 
 	BurnYM3812Init(4000000, NULL, DrvYM3812SynchroniseStream, 0);
 	BurnTimerAttachSekYM3812(16000000);
@@ -7357,6 +7364,42 @@ static void Drv68k_5IRQ_FrameCallback()
 	if (pBurnSoundOut) {
 		x1010_sound_update();
 	}
+}
+
+static int flipflop = 0;
+
+static void Drv68k_KM_FrameCallback() // kamenrid & madshark
+{
+	INT32 nInterleave = 10;
+	INT32 nCyclesTotal[1] = { (cpuspeed * 100) / refresh_rate };
+	INT32 nCyclesDone[1]  = { 0 };
+
+	SekOpen(0);
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+
+		if (i & 1 && i == 1) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+	}
+
+        if (flipflop==0) { // IRQ4 is fired every other frame
+            SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+            flipflop=1;
+        } else {
+            flipflop=0;
+        }
+
+	SekClose();
+
+	if (pBurnSoundOut) {
+		x1010_sound_update();
+	}
+}
+
+static INT32 DrvKMFrame()
+{
+	return DrvCommonFrame(Drv68k_KM_FrameCallback);
 }
 
 static INT32 Drv5IRQFrame()
@@ -8317,7 +8360,7 @@ static INT32 kamenridInit()
 	DrvSetVideoOffsets(0, 0, -2, -2);
 	DrvSetColorOffsets(0, 0x400, 0x200);
 
-	return DrvInit(kamenrid68kInit, 16000000, SET_IRQLINES(2, NOIRQ2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 2, 2));
+	return DrvInit(kamenrid68kInit, 16000000, SET_IRQLINES(2, 4/*2, NOIRQ2*/), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 2, 2));
 }
 
 struct BurnDriver BurnDrvKamenrid = {
@@ -8326,7 +8369,7 @@ struct BurnDriver BurnDrvKamenrid = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA1, GBF_MISC, 0,
 	NULL, kamenridRomInfo, kamenridRomName, NULL, NULL, KamenridInputInfo, KamenridDIPInfo,
-	kamenridInit, DrvExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x600,
+	kamenridInit, DrvExit, DrvKMFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x600,
 	384, 240, 4, 3
 };
 
@@ -8353,7 +8396,7 @@ static INT32 madsharkInit()
 	DrvSetVideoOffsets(0, 0, 0, 0);
 	DrvSetColorOffsets(0, 0x200, 0xa00);
 
-	INT32 nRet = DrvInit(madshark68kInit, 16000000, SET_IRQLINES(2, NOIRQ2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 3, 3));
+	INT32 nRet = DrvInit(madshark68kInit, 16000000, SET_IRQLINES(4, 2/*2, NOIRQ2*/), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 3, 3));
 
 	if (nRet == 0) {
 		jjsquawkSetColorTable();
@@ -8375,7 +8418,7 @@ struct BurnDriver BurnDrvMadshark = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_MISC, 0,
 	NULL, madsharkRomInfo, madsharkRomName, NULL, NULL, MadsharkInputInfo, MadsharkDIPInfo,
-	madsharkInit, madsharkExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x1200,
+	madsharkInit, madsharkExit, DrvKMFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x1200,
 	224, 384, 3, 4
 };
 

@@ -1297,6 +1297,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		INT32 bank = nOkiBank;
 		nOkiBank = -1;
 		oki_bankswitch(bank);
+		DrvRecalc = 1;
 	}
 
 	return 0;

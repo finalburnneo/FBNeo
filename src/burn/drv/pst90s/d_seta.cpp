@@ -3915,16 +3915,17 @@ static void set_pcm_bank(INT32 data)
 	if (new_bank != seta_samples_bank)
 	{
 		INT32 samples_len = DrvROMLen[3];
-
+//		bprintf(0, _T("seta_samples_bank[%X] new_bank[%X]\n"), seta_samples_bank, new_bank);
 		seta_samples_bank = new_bank;
 
-		if (samples_len == 0x200000 || samples_len == 0x180000) // eightfrc, blandia
+		if (samples_len == 0x240000 || samples_len == 0x1c0000) // eightfrc, blandia
 		{
 			INT32 addr = 0x40000 * new_bank;
 			if (new_bank >= 3) addr += 0x40000;
 
-			if ((samples_len > 0x100000) && ((addr + 0x40000) <= samples_len))
+			if ((samples_len > 0x100000) && ((addr + 0x40000) <= samples_len)) {
 				memcpy(DrvSndROM + 0xc0000, DrvSndROM + addr, 0x40000);
+			}
 		}
 		else if (samples_len == 0x400000) // zombraid
 		{
@@ -6593,7 +6594,7 @@ static INT32 MemIndex()
 
 	MSM6295ROM		= Next;
 	X1010SNDROM		= Next;
-	DrvSndROM		= Next; Next += DrvROMLen[3] + 0x100000; // for banking
+	DrvSndROM		= Next; Next += DrvROMLen[3] + 0x200000; // for banking
 
 	Palette			= (UINT32*)Next; Next += BurnDrvGetPaletteEntries() * sizeof(UINT32);
 	DrvPalette		= (UINT32*)Next; Next += BurnDrvGetPaletteEntries() * sizeof(UINT32);
@@ -6742,7 +6743,7 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 
-	if (strstr(BurnDrvGetTextA(DRV_NAME), "madshark"))
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "madshark") || strstr(BurnDrvGetTextA(DRV_NAME), "gundhara"))
 		x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	if (strstr(BurnDrvGetTextA(DRV_NAME), "kamenrid") || strstr(BurnDrvGetTextA(DRV_NAME), "wrofaero"))
@@ -8102,7 +8103,18 @@ static INT32 eightfrcInit()
 	INT32 nRet = DrvInit(wrofaero68kInit, 16000000, SET_IRQLINES(1, 2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 2, 2));
 
 	if (nRet == 0) {
-		memcpy (DrvSndROM + 0x100000, DrvSndROM + 0x0c0000, 0x140000); // sound banks
+		// Update sample length to include the banked section that was skipped (0xc0000 - 0xfffff)
+		DrvROMLen[3] = 0x240000;
+
+            //memcpy (DrvSndROM + 0x100000, DrvSndROM + 0x0c0000, 0x140000); // sound banks
+            //this don't work, must do below (as ugly as it is)
+
+		char *pt = (char *)BurnMalloc(0x200000);
+		memset(pt, 0, 0x200000);
+		memcpy(pt, DrvSndROM + 0x0c0000, 0x140000);
+		memcpy(DrvSndROM + 0x100000, pt, 0x140000);
+		BurnFree(pt);
+
 	}
 
 	return nRet;
@@ -8633,8 +8645,11 @@ static void gundhara68kInit()
 {
 	wrofaero68kInit();
 
-	memmove (DrvSndROM + 0x100000, DrvSndROM + 0x080000, 0x080000);
-	memmove (DrvSndROM + 0x000000, DrvSndROM + 0x080000, 0x100000);
+	//memmove (DrvSndROM + 0x100000, DrvSndROM + 0x080000, 0x080000);
+	//memmove (DrvSndROM + 0x000000, DrvSndROM + 0x080000, 0x100000);
+	// swap halves of sound rom
+	memcpy (DrvSndROM + 0x100000, DrvSndROM + 0x000000, 0x080000);
+	memcpy (DrvSndROM + 0x000000, DrvSndROM + 0x080000, 0x100000);
 }
 
 static INT32 gundharaInit()
@@ -8695,6 +8710,8 @@ static INT32 blandiaInit()
 	INT32 nRet = DrvInit(blandia68kInit, 16000000, SET_IRQLINES(2, 4), SPRITE_BUFFER, SET_GFX_DECODE(0, 4, 4));
 
 	if (nRet == 0) {
+		// Update sample length to include the banked section that was skipped (0xc0000 - 0xfffff)
+		DrvROMLen[3] = 0x1c0000;
 		blandiaSetColorTable();
 	}
 

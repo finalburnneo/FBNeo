@@ -155,6 +155,7 @@ INT32 BurnStateLoadEmbed(FILE* fp, INT32 nOffset, INT32 bAll, INT32 (*pLoadGame)
 INT32 BurnStateLoad(TCHAR* szName, INT32 bAll, INT32 (*pLoadGame)());
 INT32 BurnStateSaveEmbed(FILE* fp, INT32 nOffset, INT32 bAll);
 INT32 BurnStateSave(TCHAR* szName, INT32 bAll);
+INT32 BurnStateUNDO(TCHAR* szName);
 
 // statec.cpp
 INT32 BurnStateCompress(UINT8** pDef, INT32* pnDefLen, INT32 bAll);

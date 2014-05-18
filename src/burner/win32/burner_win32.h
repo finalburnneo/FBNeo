@@ -373,6 +373,7 @@ int InpcCreate();
 extern int bDrvSaveAll;
 int StatedAuto(int bSave);
 int StatedLoad(int nSlot);
+void StatedUNDO(int nSlot);
 int StatedSave(int nSlot);
 
 // numdial.cpp

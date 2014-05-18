@@ -483,7 +483,15 @@ int RunMessageLoop()
 								}
 								break;
 							}
+							case VK_F8: {
+								if (bDrvOkay && (GetAsyncKeyState(VK_SHIFT) & 0x80000000)) {
+									TCHAR szString[256] = _T("state undo");
 
+									StatedUNDO(nSavestateSlot);
+									VidSNewShortMsg(szString);
+								}
+								break;
+							}
 							case VK_BACK: {
 								bShowFPS = !bShowFPS;
 								if (bShowFPS) {

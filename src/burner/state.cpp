@@ -284,13 +284,46 @@ INT32 BurnStateSaveEmbed(FILE* fp, INT32 nOffset, INT32 bAll)
 	return nDefLen;
 }
 
+#define MAX_STATEBACKUPS 10
+// SaveState Undo - restores the last savestate backup file. Windows-only at the moment.
+INT32 BurnStateUNDO(TCHAR* szName)
+{
+#ifdef _WIN32
+         /*
+         Savestate Undo
+         derp.fs.backup0 -> derp.fs
+         derp.fs.backup1 -> derp.fs.backup0
+         derp.fs.backup2 -> derpfs.backup1
+         derp.fs.backup3 -> derpfs.backup2
+         */
+
+    for (INT32 i = 0; i <= MAX_STATEBACKUPS; i++) {
+            TCHAR szBackupNameTo[1024] = _T("");
+            TCHAR szBackupNameFrom[1024] = _T("");
+
+            if (i == 0) {
+                _stprintf(szBackupNameTo, _T("%s.UNDO"), szName);// game.fs -> game.fs.UNDO
+                DeleteFileW(szBackupNameTo);
+                MoveFileW(szName, szBackupNameTo);
+
+                _stprintf(szBackupNameTo, _T("%s"), szName);// game.fs
+            } else {
+                _stprintf(szBackupNameTo, _T("%s.backup%d"), szName, i - 1); //game.fs.backup0
+            }
+            _stprintf(szBackupNameFrom, _T("%s.backup%d"), szName, i); //game.fs.backup1
+            //bprintf(0, _T("%s -> %s\n"), szBackupNameFrom, szBackupNameTo);
+            MoveFileW(szBackupNameFrom, szBackupNameTo);
+    }
+#endif
+    return 0;
+}
+
 // State save
 INT32 BurnStateSave(TCHAR* szName, INT32 bAll)
 {
 	const char szHeader[] = "FB1 ";						// File identifier
 	INT32 nLen = 0, nVer = 0;
         INT32 nRet = 0;
-        TCHAR szBackupName[1024] = _T("");
 
 	if (bAll) {											// Get amount of data
 		StateInfo(&nLen, &nVer, 1);
@@ -299,13 +332,40 @@ INT32 BurnStateSave(TCHAR* szName, INT32 bAll)
 	}
 	if (nLen <= 0) {									// No data, so exit without creating a savestate
 		return 0;										// Don't return an error code
-	}
+        }
+        /*
+         Save State backups - used in conjunction with BurnStateUNDO();
+         derp.fs -> derp.fs.backup
+         derp.fs.backup -> derp.fs.backup1
+         derp.fs.backup1 -> derpfs.backup2
+         derp.fs.backup3 -> derpfs.backup4
+         */
 #ifdef _WIN32
+        for (INT32 i=MAX_STATEBACKUPS;i>=0;i--) {
+            TCHAR szBackupNameTo[1024] = _T("");
+            TCHAR szBackupNameFrom[1024] = _T("");
+
+            _stprintf(szBackupNameTo, _T("%s.backup%d"), szName, i + 1);
+            _stprintf(szBackupNameFrom, _T("%s.backup%d"), szName, i);
+            if (i == MAX_STATEBACKUPS) {
+                DeleteFileW(szBackupNameFrom); // make sure there is only MAX_STATEBACKUPS :)
+            } else {
+                MoveFileW(szBackupNameFrom, szBackupNameTo); //derp.fs.backup0 -> derp.fs.backup1
+                if (i == 0) {
+                    MoveFileW(szName, szBackupNameFrom); //derp.fs -> derp.fs.backup0
+                }
+            }
+        }
+
+/* - old method, only 1 savestate backup -
+        TCHAR szBackupName[1024] = _T("");
         // backup last savestate just incase - dink
         _stprintf(szBackupName, _T("%s.backup"), szName);
         DeleteFileW(szBackupName);
         MoveFileW(szName, szBackupName);
+*/
 #endif
+
 	FILE* fp = _tfopen(szName, _T("wb"));
 	if (fp == NULL) {
 		return 1;

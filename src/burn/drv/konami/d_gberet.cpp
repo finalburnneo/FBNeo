@@ -16,6 +16,7 @@ static UINT16 gberetb_scroll;
 static UINT8 flipscreen;
 static UINT8 gberet_spritebank;
 static INT32 mrgoemon_bank;
+static UINT8 soundlatch;
 
 static INT32 game_type = 0; // 0 gberet / rushatck, 1 gberetb, 2 mrgoemon
 
@@ -387,11 +388,14 @@ void __fastcall gberet_write(UINT16 address, UINT8 data)
 			}
 		}
 		return;
-
-		case 0xf400:
-			SN76496Write(0, data);
+		case 0xf200:
+			SN76496Write(0, soundlatch);
 		return;
-
+		case 0xf400:
+			soundlatch = data;
+			if (game_type == 1) // gberetb
+				SN76496Write(0, data);
+		return;
 		case 0xf600:	// watchdog
 		return;
 
@@ -892,6 +896,7 @@ static INT32 DrvDraw()
 static INT32 DrvFrame()
 {
 	INT32 nInterleave = game_type ? 16 : 32;
+	INT32 nSoundBufferPos = 0;
 
 	if (DrvReset) {
 		DrvDoReset();
@@ -917,12 +922,22 @@ static INT32 DrvFrame()
 		if (nmi_enable && (i & 1)) {
 			ZetNmi();
 		}
+		INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		SN76496Update(0, pSoundBuf, nSegmentLength);
+		nSoundBufferPos += nSegmentLength;
 	}
 
 	ZetClose();
 
+// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+
+		if (nSegmentLength) {
+			SN76496Update(0, pSoundBuf, nSegmentLength);
+		}
 	}
 
 	if (pBurnDraw) {
@@ -956,6 +971,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(mrgoemon_bank);
 		SCAN_VAR(gberetb_scroll);
 		SCAN_VAR(gberet_spritebank);
+		SCAN_VAR(soundlatch);
+		SN76496Scan(nAction, pnMin);
 
 		ZetOpen(0);
 		mrgoemon_bankswitch(mrgoemon_bank);
@@ -964,7 +981,6 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 	return 0;
 }
-
 
 // Green Beret
 

@@ -119,8 +119,8 @@ void K007232Update(INT32 chip, INT16* pSoundBuf, INT32 nLength)
 		nLeftSample = BURN_SND_CLIP(nLeftSample);
 		nRightSample = BURN_SND_CLIP(nRightSample);
 		
-		pSoundBuf[0] += nLeftSample;
-		pSoundBuf[1] += nRightSample;
+		pSoundBuf[0] = BURN_SND_CLIP(pSoundBuf[0] + nLeftSample);
+		pSoundBuf[1] = BURN_SND_CLIP(pSoundBuf[1] + nRightSample);
 		pSoundBuf += 2;
 	}
 }
@@ -314,9 +314,6 @@ INT32 K007232Scan(INT32 nAction, INT32 *pnMin)
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232Scan called without init\n"));
 #endif
 
-	struct BurnArea ba;
-	char szName[32];
-
 	if ((nAction & ACB_DRIVER_DATA) == 0) {
 		return 1;
 	}
@@ -325,12 +322,7 @@ INT32 K007232Scan(INT32 nAction, INT32 *pnMin)
 		*pnMin = 0x029693;
 	}
 
-	sprintf(szName, "K007232 Chip # %d", 0);
-	ba.Data		= &Chip;
-	ba.nLen		= sizeof(struct kdacApcm);
-	ba.nAddress = 0;
-	ba.szName	= szName;
-	BurnAcb(&ba);
+	SCAN_VAR(Chips);
 
 	return 0;
 }
@@ -343,9 +335,10 @@ void K007232SetVolume(INT32 chip, INT32 channel,INT32 volumeA,INT32 volumeB)
 #endif
 
 	Chip = &Chips[chip];
-
-	Chip->vol[channel][0] = volumeA;
-	Chip->vol[channel][1] = volumeB;
+	if (volumeA)
+		Chip->vol[channel][0] = volumeA;
+	if (volumeB)
+		Chip->vol[channel][1] = volumeB;
 }
 
 void k007232_set_bank(INT32 chip, INT32 chABank, INT32 chBBank )

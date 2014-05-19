@@ -395,7 +395,7 @@ static void DrvK007232VolCallback0(INT32 v)
 
 static void DrvK007232VolCallback1(INT32 v)
 {
-	K007232SetVolume(1, 0, (v & 0x0f) * 0x11/2, (v & 0x0f) * 0x11/2);
+	K007232SetVolume(1, 1, (v & 0x0f) * 0x11/2, (v & 0x0f) * 0x11/2);
 }
 
 static INT32 DrvDoReset()
@@ -601,8 +601,8 @@ static INT32 DrvInit()
 
 	K007232Init(1, 3579545, DrvSndROM1, 0x80000);
 	K007232SetPortWriteHandler(1, DrvK007232VolCallback1);
-	K007232SetRoute(1, BURN_SND_K007232_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
-	K007232SetRoute(1, BURN_SND_K007232_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
+	K007232SetRoute(1, BURN_SND_K007232_ROUTE_1, 0.40, BURN_SND_ROUTE_BOTH);
+	K007232SetRoute(1, BURN_SND_K007232_ROUTE_2, 0.30, BURN_SND_ROUTE_BOTH);
 
 	K052109Init(DrvGfxROM0, 0x7ffff);
 	K052109SetCallback(K052109Callback);

@@ -240,7 +240,8 @@ UINT8 __fastcall silvmil_sound_read(UINT16 address)
 
 void silvmilYM2151IrqHandler(INT32 nStatus)
 {
-	ZetSetIRQLine(0, (nStatus) ? ZET_IRQSTATUS_ACK : ZET_IRQSTATUS_NONE);
+	if (ZetGetActive() != -1)
+		ZetSetIRQLine(0, (nStatus) ? ZET_IRQSTATUS_ACK : ZET_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
@@ -629,6 +630,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		BurnYM2151Scan(nAction);
 		MSM6295Scan(0, nAction);
+		DrvRecalc = 1;
 	}
 
 	return 0;

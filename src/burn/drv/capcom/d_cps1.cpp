@@ -1298,6 +1298,7 @@ static struct BurnInputInfo WofchInputList[] =
  	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
  	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
  	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
+ 	{"P1 Fire"          , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
 
  	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  },
  	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     },
@@ -1306,6 +1307,7 @@ static struct BurnInputInfo WofchInputList[] =
  	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
  	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
  	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
+ 	{"P2 Fire"          , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
 
  	{"P3 Start"         , BIT_DIGITAL  , CpsInpc001+7, "p3 start" },
  	{"P3 Up"            , BIT_DIGITAL  , CpsInpc001+3, "p3 up"    },
@@ -1314,6 +1316,7 @@ static struct BurnInputInfo WofchInputList[] =
  	{"P3 Right"         , BIT_DIGITAL  , CpsInpc001+0, "p3 right" },
  	{"P3 Attack"        , BIT_DIGITAL  , CpsInpc001+4, "p3 fire 1"},
  	{"P3 Jump"          , BIT_DIGITAL  , CpsInpc001+5, "p3 fire 2"},
+ 	{"P3 Fire"          , BIT_DIGITAL  , CpsInpc001+6, "p3 fire 3"},
 
  	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
 };
@@ -1330,6 +1333,7 @@ static struct BurnInputInfo WofhfhInputList[] =
  	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
  	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
  	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
+ 	{"P1 Fire"          , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
 
  	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018+1, "p2 coin"   },
  	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  },
@@ -1339,6 +1343,7 @@ static struct BurnInputInfo WofhfhInputList[] =
  	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
  	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
  	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
+ 	{"P2 Fire"          , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
 
  	{"P3 Coin"          , BIT_DIGITAL  , CpsInp177+6, "p3 coin"   },
  	{"P3 Start"         , BIT_DIGITAL  , CpsInp177+7, "p3 start"  },
@@ -1348,6 +1353,7 @@ static struct BurnInputInfo WofhfhInputList[] =
  	{"P3 Right"         , BIT_DIGITAL  , CpsInp177+0, "p3 right"  },
  	{"P3 Attack"        , BIT_DIGITAL  , CpsInp177+4, "p3 fire 1" },
  	{"P3 Jump"          , BIT_DIGITAL  , CpsInp177+5, "p3 fire 2" },
+ 	{"P3 Fire"          , BIT_DIGITAL  , CpsInp177+6, "p3 fire 3" },
 
  	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
  	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6, "diag"      },
@@ -1369,6 +1375,7 @@ static struct BurnInputInfo WofhInputList[] =
  	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
  	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
  	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
+ 	{"P1 Fire"          , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
 
  	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018+1, "p2 coin"   },
  	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  },
@@ -1378,6 +1385,7 @@ static struct BurnInputInfo WofhInputList[] =
  	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
  	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
  	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
+ 	{"P2 Fire"          , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
 
  	{"P3 Coin"          , BIT_DIGITAL  , CpsInp177+6, "p3 coin"   }, // doesn't work in some sets?
  	{"P3 Start"         , BIT_DIGITAL  , CpsInp177+7, "p3 start"  },
@@ -1387,6 +1395,7 @@ static struct BurnInputInfo WofhInputList[] =
  	{"P3 Right"         , BIT_DIGITAL  , CpsInp177+0, "p3 right"  },
  	{"P3 Attack"        , BIT_DIGITAL  , CpsInp177+4, "p3 fire 1" },
  	{"P3 Jump"          , BIT_DIGITAL  , CpsInp177+5, "p3 fire 2" },
+ 	{"P3 Fire"          , BIT_DIGITAL  , CpsInp177+6, "p3 fire 3" },
 
  	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
  	{"Service"          , BIT_DIGITAL  , CpsInp018+2, "service"   },
@@ -1449,6 +1458,7 @@ static struct BurnInputInfo WofsjbInputList[] =
  	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
  	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
  	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
+ 	{"P1 Fire"          , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
 
  	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018+1, "p2 coin"   },
  	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  },
@@ -1458,6 +1468,7 @@ static struct BurnInputInfo WofsjbInputList[] =
  	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
  	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
  	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
+ 	{"P2 Fire"          , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
 
  	{"P3 Coin"          , BIT_DIGITAL  , CpsInp01B+6, "p3 coin"  },
  	{"P3 Start"         , BIT_DIGITAL  , CpsInp01B+7, "p3 start" },
@@ -1467,6 +1478,7 @@ static struct BurnInputInfo WofsjbInputList[] =
  	{"P3 Right"         , BIT_DIGITAL  , CpsInp01B+0, "p3 right" },
  	{"P3 Attack"        , BIT_DIGITAL  , CpsInp01B+4, "p3 fire 1"},
  	{"P3 Jump"          , BIT_DIGITAL  , CpsInp01B+5, "p3 fire 2"},
+ 	{"P3 Fire"          , BIT_DIGITAL  , CpsInp01B+6, "p3 fire 3"},
 
  	{"Reset"            , BIT_DIGITAL  , &CpsReset,   "reset"     },
  	{"Diagnostic"       , BIT_DIGITAL  , CpsInp018+6, "diag"      },

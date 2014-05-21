@@ -3581,7 +3581,7 @@ void __fastcall tharrier_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xf500:
-			MSM6295Command(0, data);
+			MSM6295Command(1, data);
 		return;
 
 		case 0xf600:

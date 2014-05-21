@@ -316,12 +316,27 @@ INT32 iremga20_scan(INT32 device, INT32 nAction, INT32 *pnMin)
 		*pnMin = 0x029678;
 	}
 	
-	sprintf(szName, "DAC #%d", device);
-	ba.Data		= &chip;
-	ba.nLen		= sizeof(_ga20_state);
-	ba.nAddress	= 0;
-	ba.szName	= szName;
-	BurnAcb(&ba);
+
+	for (INT32 i = 0; i < MAX_GA20; i++)
+	{
+		sprintf(szName, "IREM GA20 #%d Regs", device);
+		ba.Data		= &chip->regs;
+		ba.nLen		= 0x40 * sizeof(UINT16);
+		ba.nAddress	= 0;
+		ba.szName	= szName;
+		BurnAcb(&ba);
+
+		sprintf(szName, "IREM GA20 #%d channels", device);
+		ba.Data		= &chip->channel;
+		ba.nLen		= 4 * sizeof(IremGA20_channel_def);
+		ba.nAddress	= 0;
+		ba.szName	= szName;
+		BurnAcb(&ba);
+
+		SCAN_VAR(chip->frequency);
+		SCAN_VAR(chip->gain);
+		SCAN_VAR(chip->output_dir);
+	}
 	
 	return 0;
 }

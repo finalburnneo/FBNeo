@@ -4860,7 +4860,8 @@ static void draw_macross_text_layer(INT32 scrollx, INT32 scrolly, INT32 wide, IN
 	if (nGraphicsMask[0] == 0) return;
 
 	scrolly = (scrolly + global_y_offset) & 0x1ff;
-	INT32 wmask = (0x100 << wide) - 1;
+	scrolly = (scrolly + global_y_offset) & 0x1ff;
+	INT32 pf_width = (0x100 << wide);
 	UINT16 *vram = (UINT16*)DrvTxRAM;
 
 	for (INT32 offs = 0; offs < 32 * (32 << wide); offs++)
@@ -4868,8 +4869,10 @@ static void draw_macross_text_layer(INT32 scrollx, INT32 scrolly, INT32 wide, IN
 		INT32 sx = (offs >> 5) << 3;
 		INT32 sy = (offs & 0x1f) << 3;
 
-		sx = (((sx - scrollx) + 8) & wmask) - 8;
-		sy = (((sy - scrolly) + 8) & 0xff) - 8;
+		sx -= scrollx;
+		if (sx < -7) sx += pf_width; // wrap
+		sy -= scrolly;
+		if (sy < -7) sy += 256; // wrap
 
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 

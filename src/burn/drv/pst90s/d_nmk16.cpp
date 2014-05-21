@@ -4718,7 +4718,7 @@ static void draw_sprites(INT32 flip, INT32 coloff, INT32 coland, INT32 priority)
 					x += delta * (flipx ? -1 : 1);
 
 				} while (--xx >= 0);
-				sy += delta * (flipx ? -1 : 1);
+				sy += delta * (flipy ? -1 : 1);
 
 			} while (--yy >= 0);
 		}

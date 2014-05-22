@@ -14,7 +14,7 @@
 	blkheart	-- good
 	mustang		-- good
 	acrobatm	-- good
-	manybloc	-- good	
+	manybloc	-- good
 	stagger1	-- good
 	tharrier	-- good
 	airattck	-- good
@@ -100,6 +100,8 @@ static INT32 MSM6295x1_only = 0;
 static INT32 MSM6295x2_only = 0;
 static INT32 no_z80 = 0;
 static INT32 AFEGA_SYS = 0;
+static INT32 Tharriermode = 0; // use macross1/tharrier text draw & joy inputs
+static INT32 Macrossmode = 0; // use macross1 text draw
 
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -4563,7 +4565,9 @@ static INT32 DrvExit()
 	MSM6295Exit(0);
 	MSM6295Exit(1);
 	MSM6295ROM = NULL;
-	
+	Tharriermode = 0;
+	Macrossmode = 0;
+
 	return CommonExit();
 }
 
@@ -4572,7 +4576,7 @@ static INT32 MSM6295x1Exit()
 	ZetExit();
 	MSM6295Exit(0);
 	MSM6295ROM = NULL;
-        MSM6295x1_only = 0;
+	MSM6295x1_only = 0;
 
 	return CommonExit();
 }
@@ -4601,7 +4605,7 @@ static INT32 AfegaExit()
 	MSM6295Exit(0);
 	MSM6295Exit(1);
 	MSM6295ROM = NULL;
-        AFEGA_SYS = 0;
+	AFEGA_SYS = 0;
 
 	return CommonExit();
 }
@@ -4611,8 +4615,8 @@ static INT32 BjtwinExit()
 	MSM6295Exit(0);
 	MSM6295Exit(1);
 	MSM6295ROM = NULL;
-        MSM6295x2_only = 0;
-        no_z80 = 0;
+	MSM6295x2_only = 0;
+	no_z80 = 0;
 
 	return CommonExit();
 }
@@ -4624,8 +4628,8 @@ static INT32 NMK004Exit()
 	MSM6295Exit(0);
 	MSM6295Exit(1);
 	MSM6295ROM = NULL;
-        no_z80 = 0;
-        NMK004_enabled = 0;
+	no_z80 = 0;
+	NMK004_enabled = 0;
         
 	return CommonExit();
 }
@@ -4855,11 +4859,10 @@ static void bioship_draw_background(INT32 scrollx, INT32 scrolly)
 	}
 }
 
-static void draw_macross_text_layer(INT32 scrollx, INT32 scrolly, INT32 wide, INT32 coloff)
+static void draw_tharriermacross1_text_layer(INT32 scrollx, INT32 scrolly, INT32 wide, INT32 coloff)
 {
 	if (nGraphicsMask[0] == 0) return;
 
-	scrolly = (scrolly + global_y_offset) & 0x1ff;
 	scrolly = (scrolly + global_y_offset) & 0x1ff;
 	INT32 pf_width = (0x100 << wide);
 	UINT16 *vram = (UINT16*)DrvTxRAM;
@@ -4873,6 +4876,30 @@ static void draw_macross_text_layer(INT32 scrollx, INT32 scrolly, INT32 wide, IN
 		if (sx < -7) sx += pf_width; // wrap
 		sy -= scrolly;
 		if (sy < -7) sy += 256; // wrap
+
+		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
+
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]);
+
+		Render8x8Tile_Mask_Clip(pTransDraw, code & 0xfff, sx, sy, code >> 12, 4, 15, coloff, DrvGfxROM0);
+	}
+}
+
+static void draw_macross_text_layer(INT32 scrollx, INT32 scrolly, INT32 wide, INT32 coloff)
+{
+	if (nGraphicsMask[0] == 0) return;
+
+	scrolly = (scrolly + global_y_offset) & 0x1ff;
+	INT32 wmask = (0x100 << wide) - 1;
+	UINT16 *vram = (UINT16*)DrvTxRAM;
+
+	for (INT32 offs = 0; offs < 32 * (32 << wide); offs++)
+	{
+		INT32 sx = (offs >> 5) << 3;
+		INT32 sy = (offs & 0x1f) << 3;
+
+		sx = (((sx - scrollx) + 8) & wmask) - 8;
+		sy = (((sy - scrolly) + 8) & 0xff) - 8;
 
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
@@ -4910,7 +4937,11 @@ static inline void common_draw(INT32 spriteflip, INT32 bgscrollx, INT32 bgscroll
 	draw_sprites(spriteflip, 0x100, 0x0f, 1);
 	draw_sprites(spriteflip, 0x100, 0x0f, 0);
 
-	draw_macross_text_layer(txscrollx, txscrolly, 0, tx_coloff);
+	if (Tharriermode || Macrossmode) { // Tharrier and Macross 1
+		draw_tharriermacross1_text_layer(txscrollx, txscrolly, 0, tx_coloff);
+	} else { // Macross 2 and all the rest...
+		draw_macross_text_layer(txscrollx, txscrolly, 0, tx_coloff);
+	}
 
 	draw_screen_yflip();
 	BurnTransferCopy(DrvPalette);
@@ -5206,7 +5237,7 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
-	if (strncmp(BurnDrvGetTextA(DRV_NAME), "tharrier", 8) == 0)
+	if (Tharriermode)
 	{
 		DrvInputs[0] = 0x8000;
 		DrvInputs[1] = 0x0000;
@@ -5897,6 +5928,7 @@ static INT32 TharrierInit()
 {
 	input_high[0] = 0x7fff;
 	input_high[1] = 0xffff;
+	Tharriermode = 1;
 
 	return DrvInit(TharrierLoadCallback);
 }
@@ -7226,6 +7258,7 @@ static INT32 Spec2kLoadCallback()
 
 static INT32 Spec2kInit()
 {
+	Macrossmode = 1; // use macross1 text draw
 	INT32 nRet = AfegaInit(Spec2kLoadCallback, pFirehawkZ80Callback, 1);
 
 	if (nRet == 0) {
@@ -8418,7 +8451,8 @@ static INT32 MacrossLoadCallback()
 
 static INT32 MacrossInit()
 {
-    	return NMK004Init(MacrossLoadCallback, 10000000, 0, 0);
+	Macrossmode = 1;
+	return NMK004Init(MacrossLoadCallback, 10000000, 0, 0);
 }
 
 struct BurnDriver BurnDrvMacross = {

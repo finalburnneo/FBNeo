@@ -3905,21 +3905,31 @@ static const UINT8 nightstr_stick[128]=
 	0x46,0x47,0x48,0x49,0xb8
 };
 
+UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
+	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
 static UINT8 NightstrStickRead(INT32 Offset)
 {
-	switch (Offset) {
+	switch (Offset) {      // p0: 3f - be  p1: bf - 40
 		case 0x00: {
 			UINT8 Temp = 0x7f + (TaitoAnalogPort0 >> 4);
+			UINT8 Temp2 = 0;
 			if (Temp < 0x01) Temp = 0x01;
 			if (Temp > 0xfe) Temp = 0xfe;
-			return nightstr_stick[(Temp * 0x64) / 0x100];
+			Temp2 = scalerange(Temp, 0x3f, 0xbe, 0x01, 0xfe);
+			//bprintf(0, _T("Port0-temp[%X] scaled[%X]\n"), Temp, Temp2);
+			return nightstr_stick[(Temp2 * 0x64) / 0x100];
 		}
 		
 		case 0x01: {
 			UINT8 Temp = 0x7f - (TaitoAnalogPort1 >> 4);
+			UINT8 Temp2 = 0;
 			if (Temp < 0x01) Temp = 0x01;
 			if (Temp > 0xfe) Temp = 0xfe;
-			return nightstr_stick[(Temp * 0x64) / 0x100];
+			Temp2 = scalerange(Temp, 0x40, 0xbf, 0x01, 0xfe);
+			//bprintf(0, _T("Port1-temp[%X]\n"), Temp);
+			return nightstr_stick[(Temp2 * 0x64) / 0x100];
 		}
 		
 		case 0x02: {

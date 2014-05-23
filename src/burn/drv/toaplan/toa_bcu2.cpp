@@ -439,3 +439,31 @@ INT32 ToaExitBCU2()
 	return 0;
 }
 
+INT32 ToaScanBCU2(INT32 nAction, INT32* pnMin)
+{
+    if (nAction & ACB_VOLATILE) {		// Scan volatile data
+        if (pnMin) {
+            *pnMin = 0x029496;
+        }
+
+        SCAN_VAR(BCU2Pointer);
+        SCAN_VAR(FCU2Pointer);
+        SCAN_VAR(BCU2Reg);
+        SCAN_VAR(ToaOpaquePriority);
+        SCAN_VAR(nLayer0XOffset);
+        SCAN_VAR(nLayer1XOffset);
+        SCAN_VAR(nLayer2XOffset);
+        SCAN_VAR(nLayer3XOffset);
+        SCAN_VAR(nLayer0YOffset);
+        SCAN_VAR(nLayer1YOffset);
+        SCAN_VAR(nLayer2YOffset);
+        SCAN_VAR(nLayer3YOffset);
+        SCAN_VAR(nBCU2TileXOffset);
+        SCAN_VAR(nBCU2TileYOffset);
+        SCAN_VAR(nSpriteXOffset);
+        SCAN_VAR(nSpriteYOffset);
+        SCAN_VAR(nSpritePriority);
+    }
+
+    return 0;
+}

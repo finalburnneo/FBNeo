@@ -996,6 +996,7 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 #endif
 
                 SCAN_VAR(nCyclesDone);
+		ToaScanBCU2(nAction, pnMin);
 
                 ToaRecalcPalette = 1;
                 bDrawScreen = true; // get background back ?

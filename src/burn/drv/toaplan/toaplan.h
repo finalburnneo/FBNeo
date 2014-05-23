@@ -100,6 +100,7 @@ INT32 ToaRenderGP9001();
 INT32 ToaInitGP9001(INT32 n = 1);
 INT32 ToaExitGP9001();
 INT32 ToaScanGP9001(INT32 nAction, INT32* pnMin);
+INT32 ToaScanBCU2(INT32 nAction, INT32* pnMin);
 
 inline static void ToaGP9001SetRAMPointer(UINT32 wordValue, const INT32 nController = 0)
 {

@@ -501,7 +501,7 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 	}
 	if (nAction & ACB_VOLATILE) {		// Scan volatile ram
 		memset(&ba, 0, sizeof(ba));
-    	ba.Data		= RamStart;
+                ba.Data		= RamStart;
 		ba.nLen		= RamEnd - RamStart;
 		ba.szName	= "RAM";
 		BurnAcb(&ba);
@@ -510,9 +510,16 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 		ZetScan(nAction);				// Scan Z80
 
 		BurnYM3812Scan(nAction, pnMin);
+		ToaScanBCU2(nAction, pnMin);
 
 		SCAN_VAR(DrvInput);
 		SCAN_VAR(nCyclesDone);
+		SCAN_VAR(DrvReset);
+		SCAN_VAR(bDrawScreen);
+		SCAN_VAR(bVBlank);
+		SCAN_VAR(bEnableInterrupts);
+		bDrawScreen = true;
+		ToaRecalcPalette = 1;
 	}
 
 	return 0;

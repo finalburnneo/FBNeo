@@ -2018,6 +2018,37 @@ static struct BurnRomInfo Altbeast2RomDesc[] = {
 STD_ROM_PICK(Altbeast2)
 STD_ROM_FN(Altbeast2)
 
+static struct BurnRomInfo Altbeastj1RomDesc[] = {
+	{ "epr-11670.a7",   0x20000, 0xb748eb07, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11669.a5",   0x20000, 0x005ecd11, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "opr-11674.a14",  0x20000, 0xa57a66d5, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-11675.a15",  0x20000, 0x2ef2f144, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-11676.a16",  0x20000, 0x0c04acac, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr-11677.b1",   0x20000, 0xa01425cd, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11681.b5",   0x20000, 0xd9e03363, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11678.b2",   0x20000, 0x17a9fc53, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11682.b6",   0x20000, 0xe3f77c5e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11679.b3",   0x20000, 0x14dcc245, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11683.b7",   0x20000, 0xf9a60f06, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11680.b4",   0x20000, 0xf43dcdec, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11684.b8",   0x20000, 0xb20c0edb, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "epr-11671.a10",  0x08000, 0x2b71343b, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "opr-11672.a11",  0x20000, 0xbbd7f460, SYS16_ROM_UPD7759DATA | BRF_SND },
+	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
+	
+	// reconstructed key; some of the RNG-independent bits could be incorrect
+	{ "317-0065.key",   0x02000, 0x9e0f619d, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Altbeastj1)
+STD_ROM_FN(Altbeastj1)
+
+
 static struct BurnRomInfo Altbeastj3RomDesc[] = {
 	{ "epr-11721.a7",   0x20000, 0x1c5d11de, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-11720.a5",   0x20000, 0x735350cf, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -8180,6 +8211,16 @@ struct BurnDriver BurnDrvAltbeast2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_MC8123_ENC, GBF_SCRFIGHT, 0,
 	NULL, Altbeast2RomInfo, Altbeast2RomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvAltbeastj1 = {
+	"altbeastj1", "altbeast", NULL, NULL, "1988",
+	"Juuouki (set 1, Japan, FD1094 317-0065)\0", NULL, "Sega", "System 16B",
+	L"Juuoki (set 1, Japan, FD1094 317-0065)\0\u7363\u738B\u8A18\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
+	NULL, Altbeastj1RomInfo, Altbeastj1RomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

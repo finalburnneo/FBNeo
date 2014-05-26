@@ -1610,7 +1610,7 @@ static INT32 DrvFrame()
 		DrvInputs[2] = (DrvDips[1] << 8) | (DrvDips[0] << 0);
 	}
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 232;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 14000000 / 58, 2685000 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -1627,7 +1627,7 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
-		if (i == 240) deco16_vblank = 0x08;
+		if (i == 206) deco16_vblank = 0x08;
 		
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;

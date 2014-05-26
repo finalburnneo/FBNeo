@@ -537,7 +537,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 232;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -554,7 +554,7 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
-		if (i == 248) deco16_vblank = 0x08;
+		if (i == 206) deco16_vblank = 0x08;
 		
 		INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
@@ -577,8 +577,8 @@ static INT32 DrvFrame()
 		}
 		
 		for (INT32 i = 0; i < nBurnSoundLen; i++) {
-			pBurnSoundOut[(i << 1) + 0] += SoundBuffer[(i << 1) + 0];
-			pBurnSoundOut[(i << 1) + 1] += SoundBuffer[(i << 1) + 1];
+			pBurnSoundOut[(i << 1) + 0] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 0] + SoundBuffer[(i << 1) + 0]);
+			pBurnSoundOut[(i << 1) + 1] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 1] + SoundBuffer[(i << 1) + 1]);
 		}
 	}
 

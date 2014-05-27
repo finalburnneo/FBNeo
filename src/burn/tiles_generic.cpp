@@ -2189,38 +2189,52 @@ void RenderZoomedTile(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 t
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderZoomedTile called without init\n"));
 #endif
 
-	INT32 h = ((zoomy << 4) + 0x8000) >> 16;
-	INT32 w = ((zoomx << 4) + 0x8000) >> 16;
+	// Based on MAME sources for tile zooming
+	UINT8 *gfx_base = gfx + (code * width * height);
+	int dh = (zoomy * height + 0x8000) / 0x10000;
+	int dw = (zoomx * width + 0x8000) / 0x10000;
 
-	if (!h || !w || sx + w < 0 || sy + h < 0 || sx >= nScreenWidth || sy >= nScreenHeight) return;
-
-	if (fy) fy  = (height-1)*width;
-	if (fx) fy |= (width-1);
-
-	INT32 hz = (height << 12) / h;
-	INT32 wz = (width << 12) / w;
-
-	INT32 starty = 0, startx = 0, endy = h, endx = w;
-	if (sy < 0) starty = 0 - sy;
-	if (sx < 0) startx = 0 - sx;
-	if (sy + h >= nScreenHeight) endy -= (h + sy) - nScreenHeight;
-	if (sx + w >= nScreenWidth ) endx -= (w + sx) - nScreenWidth;
-
-	UINT8  *src = gfx + (code * width * height);
-	UINT16 *dst = dest + (sy + starty) * nScreenWidth + sx;
-
-	for (INT32 y = starty; y < endy; y++)
+	if (dw && dh)
 	{
-		INT32 zy = ((y * hz) >> 12) * width;
+		int dx = (width * 0x10000) / dw;
+		int dy = (height * 0x10000) / dh;
+		int ex = sx + dw;
+		int ey = sy + dh;
+		int x_index_base = 0;
+		int y_index = 0;
 
-		for (INT32 x = startx; x < endx; x++)
-		{
-			INT32 pxl = src[(zy + ((x * wz) >> 12)) ^ fy];
-
-			if (pxl != t) dst[x] = pxl | color;
+		if (fx) {
+			x_index_base = (dw - 1) * dx;
+			dx = -dx;
 		}
 
-		dst += nScreenWidth;
+		if (fy) {
+			y_index = (dh - 1) * dy;
+			dy = -dy;
+		}
+
+		for (INT32 y = sy; y < ey; y++)
+		{
+			UINT8 *src = gfx_base + (y_index / 0x10000) * width;
+			UINT16 *dst = dest + y * nScreenWidth;
+
+			if (y >= 0 && y < nScreenHeight) 
+			{
+				for (INT32 x = sx, x_index = x_index_base; x < ex; x++)
+				{
+					if (x >= 0 && x < nScreenWidth) {
+						INT32 pxl = src[x_index>>16];
+
+						if (pxl != t)
+							dst[x] = pxl + color;
+					}
+	
+					x_index += dx;
+				}
+			}
+
+			y_index += dy;
+		}
 	}
 }
 

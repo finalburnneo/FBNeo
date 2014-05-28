@@ -1767,11 +1767,11 @@ static struct BurnRomInfo AceattacRomDesc[] = {
 	
 	{ "epr-11501.b1",   0x10000, 0x09179ead, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "epr-11505.b5",   0x10000, 0xb67f1ecf, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-11502.b2",   0x10000, 0xa3ee36b8, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11502.b2",   0x10000, 0x7464bae4, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "epr-11506.b6",   0x10000, 0xb0104def, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "epr-11503.b3",   0x10000, 0x344c0692, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "epr-11507.b7",   0x10000, 0xa2af710a, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-11504.b4",   0x10000, 0x7cae7920, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11504.b4",   0x10000, 0x42b4a5f8, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "epr-11508.b8",   0x10000, 0x5cbb833c, SYS16_ROM_SPRITES | BRF_GRA },
 	
 	{ "epr-11496.a7",   0x08000, 0x82cb40a9, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
@@ -1781,7 +1781,8 @@ static struct BurnRomInfo AceattacRomDesc[] = {
 	{ "epr-11499.a10",  0x08000, 0xea332866, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "epr-11500.a11",  0x08000, 0x2ddf1c31, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0059.key",   0x02000, 0x00000000, SYS16_ROM_KEY | BRF_ESS | BRF_PRG | BRF_NODUMP },
+	// reconstructed key; some of the RNG-independent bits could be incorrect
+	{ "317-0059.key",   0x02000, 0x14ce2a94, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 

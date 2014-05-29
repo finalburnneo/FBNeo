@@ -259,7 +259,7 @@ static void sound_bankswitch(INT32 data)
 {
 	INT32 bank_A=(data&0x3);
 	INT32 bank_B=((data>>2)&0x3);
-	bank_A=bank_B;
+
 	k007232_set_bank(0, bank_A, bank_B );
 }
 

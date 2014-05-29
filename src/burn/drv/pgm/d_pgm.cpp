@@ -5025,9 +5025,9 @@ static struct BurnRomInfo kovlsqhdRomDesc[] = {
 	{ "b0600.rom",	  		0x800000, 0x7d3cd059, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
 	{ "b601kof.rom",  		0x800000, 0x188406ee, 4 | BRF_GRA },			//  7
 
-	{ "m0600.rom",	   		0x400000, 0x3ada4fd6, 5 | BRF_SND },	        //  8 Samples
+	{ "m0600kof.rom",	   	0x400000, 0xeae5bf80, 5 | BRF_SND },	        //  8 Samples
 
-	{ "kovlsqhd_v203_china.asic",	0x004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS },  //  9 Internal ARM7 Rom
+	{ "kovsh_v100_china.asic",	0x004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS },  //  9 Internal ARM7 Rom
 };
 
 STDROMPICKEXT(kovlsqhd, kovlsqhd, pgm)
@@ -5039,6 +5039,39 @@ struct BurnDriverD BurnDrvkovlsqhd = {
 	L"Knights of Valour: Luan Shi Quan Huang\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u62F3\u7687 (ver. 203CN)\0", NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, kovlsqhdRomInfo, kovlsqhdRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
+	kovshxasInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+// Knights of Valour: Luan Shi Quan Huang / Sangoku Senki: Luan Shi Quan Huang II (ver. 200CN, alt)
+
+static struct BurnRomInfo kovlsqh2dRomDesc[] = {
+	{ "p0600kof2.rom",  	0x400000, 0x6c61f80f, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t0600.rom",     		0x800000, 0x4acc1ad6, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a0600.rom",	   		0x800000, 0xd8167834, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0601.rom",	   		0x800000, 0xff7a4373, 3 | BRF_GRA }, 	        //  3 
+	{ "a0602.rom",	   		0x800000, 0xe7a32959, 3 | BRF_GRA }, 	        //  4
+	{ "a603as.rom",  		0x800000, 0xeadc7955, 3 | BRF_GRA }, 	        //  5
+
+	{ "b0600.rom",	  		0x800000, 0x7d3cd059, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
+	{ "b601as.rom",  		0x800000, 0xbf30ea67, 4 | BRF_GRA },			//  7
+
+	{ "m0600kof.rom",	   	0x400000, 0xeae5bf80, 5 | BRF_SND },	        //  8 Samples
+
+	{ "kovsh_v100_china.asic",	0x004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS },  //  9 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(kovlsqh2d, kovlsqh2d, pgm)
+STD_ROM_FN(kovlsqh2d)
+
+struct BurnDriverD BurnDrvkovlsqh2d = {
+	"kovlsqh2d", "kovshp", "pgm", NULL, "2008",
+	"Knights of Valour: Luan Shi Quan Huang / Sangoku Senki: Luan Shi Quan Huang II (ver. 200CN, alt)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
+	L"Knights of Valour: Luan Shi Quan Huang\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u62F3\u7687II (ver. 200CN, alt )\0", NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
+	NULL, kovlsqh2dRomInfo, kovlsqh2dRomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
 	kovshxasInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

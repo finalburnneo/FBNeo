@@ -3321,13 +3321,13 @@ int Sh2Run(int cycles)
 	do
 	{
 
-		if ( pSh2Ext->suspend ) {
+		/*if ( pSh2Ext->suspend ) {
 			sh2->sh2_total_cycles += cycles;
 			sh2->sh2_icount = 0;
 			break;
-		}			
-
-		UINT16 opcode;
+		}*/
+            if (!pSh2Ext->suspend) {
+                UINT16 opcode;
 
 		if (sh2->delay) {
 			//opcode = cpu_readop16(WORD_XOR_BE((UINT32)(sh2->delay & AM)));
@@ -3361,7 +3361,7 @@ int Sh2Run(int cycles)
 		case 14<<12: op1110(opcode); break;
 		default: op1111(opcode); break;
 		}
-
+            }
 #endif
 
 		if(sh2->test_irq && !sh2->delay)

@@ -1782,7 +1782,7 @@ static struct BurnRomInfo AceattacRomDesc[] = {
 	{ "epr-11500.a11",  0x08000, 0x2ddf1c31, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
 	// reconstructed key; some of the RNG-independent bits could be incorrect
-	{ "317-0059.key",   0x02000, 0x14ce2a94, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0059.key",   0x02000, 0x4512e2fa, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 

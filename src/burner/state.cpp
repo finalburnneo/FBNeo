@@ -341,22 +341,23 @@ INT32 BurnStateSave(TCHAR* szName, INT32 bAll)
          derp.fs.backup3 -> derpfs.backup4
          */
 #ifdef _WIN32
-        for (INT32 i=MAX_STATEBACKUPS;i>=0;i--) {
-            TCHAR szBackupNameTo[1024] = _T("");
-            TCHAR szBackupNameFrom[1024] = _T("");
+        if (_tcsstr(szName, _T(" slot "))) {
+            for (INT32 i=MAX_STATEBACKUPS;i>=0;i--) {
+                TCHAR szBackupNameTo[1024] = _T("");
+                TCHAR szBackupNameFrom[1024] = _T("");
 
-            _stprintf(szBackupNameTo, _T("%s.backup%d"), szName, i + 1);
-            _stprintf(szBackupNameFrom, _T("%s.backup%d"), szName, i);
-            if (i == MAX_STATEBACKUPS) {
-                DeleteFileW(szBackupNameFrom); // make sure there is only MAX_STATEBACKUPS :)
-            } else {
-                MoveFileW(szBackupNameFrom, szBackupNameTo); //derp.fs.backup0 -> derp.fs.backup1
-                if (i == 0) {
-                    MoveFileW(szName, szBackupNameFrom); //derp.fs -> derp.fs.backup0
+                _stprintf(szBackupNameTo, _T("%s.backup%d"), szName, i + 1);
+                _stprintf(szBackupNameFrom, _T("%s.backup%d"), szName, i);
+                if (i == MAX_STATEBACKUPS) {
+                    DeleteFileW(szBackupNameFrom); // make sure there is only MAX_STATEBACKUPS :)
+                } else {
+                    MoveFileW(szBackupNameFrom, szBackupNameTo); //derp.fs.backup0 -> derp.fs.backup1
+                    if (i == 0) {
+                        MoveFileW(szName, szBackupNameFrom); //derp.fs -> derp.fs.backup0
+                    }
                 }
             }
         }
-
 /* - old method, only 1 savestate backup -
         TCHAR szBackupName[1024] = _T("");
         // backup last savestate just incase - dink

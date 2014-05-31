@@ -832,10 +832,10 @@ static struct BurnRomInfo twocrudeRomDesc[] = {
 
 	{ "mab-02.10a",		0x80000, 0x58b7231d, 5 | BRF_GRA },           //  9 Sprites
 	{ "mab-03.11a",		0x80000, 0x76053b9d, 5 | BRF_GRA },           // 10
-	{ "ft07-.4a",		0x10000, 0xca8d0bb3, 5 | BRF_GRA },           // 11
-	{ "ft08-.5a",		0x10000, 0xc6afc5c8, 5 | BRF_GRA },           // 12
-	{ "ft09-.7a",		0x10000, 0x526809ca, 5 | BRF_GRA },           // 13
-	{ "ft10-.8a",		0x10000, 0x6be6d50e, 5 | BRF_GRA },           // 14
+	{ "ft07-.4a",		0x10000, 0xe3465c25, 5 | BRF_GRA },           // 11
+	{ "ft08-.5a",		0x10000, 0xc7f1d565, 5 | BRF_GRA },           // 12
+	{ "ft09-.7a",		0x10000, 0x6e3657b9, 5 | BRF_GRA },           // 13
+	{ "ft10-.8a",		0x10000, 0xcdb83560, 5 | BRF_GRA },           // 14
 
 	{ "ft12-.16k",		0x20000, 0x2d1d65f2, 6 | BRF_SND },           // 15 OKI M6295 Samples 0
 
@@ -876,10 +876,10 @@ static struct BurnRomInfo twocrudeaRomDesc[] = {
 
 	{ "mab-02.10a",		0x80000, 0x58b7231d, 5 | BRF_GRA },           //  9 Sprites
 	{ "mab-03.11a",		0x80000, 0x76053b9d, 5 | BRF_GRA },           // 10
-	{ "ft07-.4a",		0x10000, 0xca8d0bb3, 5 | BRF_GRA },           // 11
-	{ "ft08-.5a",		0x10000, 0xc6afc5c8, 5 | BRF_GRA },           // 12
-	{ "ft09-.7a",		0x10000, 0x526809ca, 5 | BRF_GRA },           // 13
-	{ "ft10-.8a",		0x10000, 0x6be6d50e, 5 | BRF_GRA },           // 14
+	{ "ft07-.4a",		0x10000, 0xe3465c25, 5 | BRF_GRA },           // 11
+	{ "ft08-.5a",		0x10000, 0xc7f1d565, 5 | BRF_GRA },           // 12
+	{ "ft09-.7a",		0x10000, 0x6e3657b9, 5 | BRF_GRA },           // 13
+	{ "ft10-.8a",		0x10000, 0xcdb83560, 5 | BRF_GRA },           // 14
 
 	{ "ft12-.16k",		0x20000, 0x2d1d65f2, 6 | BRF_SND },           // 15 OKI M6295 Samples 0
 

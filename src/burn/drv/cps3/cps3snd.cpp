@@ -176,7 +176,8 @@ void cps3SndUpdate()
 					if (vptr->regs[5]) {
 						pos = loop - start;
 					} else {
-						chip->key &= ~(1 << i);
+					//	chip->key &= ~(1 << i);
+					//	don't force key off [hap 5/31/14]
 						break;
 					}
 				}

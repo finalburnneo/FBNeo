@@ -1,180 +1,46 @@
+// FB Alpha Super Kaneko Nova System driver module by iq_132, fixups by dink
+// Based on MAME driver by Sylvain Glaize and David Haywood
+
 #include "tiles_generic.h"
+#include "ymz280b.h"
 #include "sh2_intf.h"
 
-static UINT8 DrvInputPort0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-static UINT8 DrvInputPort1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-static UINT8 DrvInputPort2[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-static UINT8 DrvDip[1]        = {0};
-static UINT8 DrvInput[3]      = {0x00, 0x00, 0x00};
-static UINT8 DrvReset         = 0;
+static UINT8 *AllMem;
+static UINT8 *MemEnd;
+static UINT8 *AllRam;
+static UINT8 *RamEnd;
+static UINT8 *DrvSh2BIOS;
+static UINT8 *DrvSh2ROM;
+static UINT8 *DrvGfxROM0;
+static UINT8 *DrvGfxROM1;
+static UINT8 *DrvGfxROM2;
+static UINT8 *DrvNvRAM;
+static UINT8 *DrvSprRAM;
+static UINT8 *DrvVidRAM;
+static UINT8 *DrvLineRAM;
+static UINT8 *DrvPalRAM;
+static UINT8 *DrvGfxRAM;
+static UINT8 *DrvSh2RAM;
+static UINT8 *DrvCacheRAM;
+static UINT8 *DrvV3Regs;
+static UINT8 *DrvSprRegs;
+static UINT8 *DrvPalRegs;
 
-static UINT8 *Mem                 = NULL;
-static UINT8 *MemEnd              = NULL;
-static UINT8 *RamStart            = NULL;
-static UINT8 *RamEnd              = NULL;
-static UINT8 *DrvBiosRom          = NULL;
-static UINT8 *DrvPrgRom           = NULL;
-static UINT8 *DrvSpriteRom        = NULL;
-static UINT8 *DrvSampleRom        = NULL;
-static UINT8 *DrvPrgRam           = NULL;
-static UINT8 *DrvBackupRam        = NULL;
-static UINT8 *DrvSpriteRam        = NULL;
-static UINT8 *DrvSpriteRegs       = NULL;
-static UINT8 *DrvTileARam         = NULL;
-static UINT8 *DrvTileBRam         = NULL;
-static UINT8 *DrvTileBTilesRam    = NULL;
-static UINT8 *DrvTileRegs         = NULL;
-static UINT8 *DrvTileLineRam      = NULL;
-static UINT8 *DrvCacheRam         = NULL;
-static UINT8 *DrvPaletteRam       = NULL;
-static UINT8 *DrvPaletteRegs      = NULL;
-static UINT8 *DrvTempRom          = NULL;
-static UINT8 *DrvTilesA8Bpp       = NULL;
-static UINT8 *DrvTilesB8Bpp       = NULL;
-static UINT8 *DrvTilesA4Bpp       = NULL;
-static UINT8 *DrvTilesB4Bpp       = NULL;
-static UINT32 *DrvPalette          = NULL;
+static UINT32 *DrvPalette;
 
-static INT32 nCyclesDone[1], nCyclesTotal[1];
-static INT32 nCyclesSegment;
-
-static struct BurnInputInfo CyvernInputList[] =
-{
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort2 + 2, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 start"  },
-
-	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 up"     },
-	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 down"   },
-	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 left"   },
-	{"P1 Right"          , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 right"  },
-	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
-	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
-	
-	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 up"     },
-	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 down"   },
-	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 left"   },
-	{"P2 Right"          , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 right"  },
-	{"P2 Fire 1"         , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
-	{"P2 Fire 2"         , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
-
-	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
-	{"Service"           , BIT_DIGITAL  , DrvInputPort2 + 6, "service"   },
-	{"Tilt"              , BIT_DIGITAL  , DrvInputPort2 + 5, "tilt"      },
-	{"Dip 1"             , BIT_DIPSWITCH, DrvDip + 0       , "dip"       },
-};
-
-STDINPUTINFO(Cyvern)
-
-static inline void DrvClearOpposites(UINT8* nJoystickInputs)
-{
-	if ((*nJoystickInputs & 0x03) == 0x03) {
-		*nJoystickInputs &= ~0x03;
-	}
-	if ((*nJoystickInputs & 0x0c) == 0x0c) {
-		*nJoystickInputs &= ~0x0c;
-	}
-}
-
-static inline void DrvMakeInputs()
-{
-	// Reset Inputs
-	DrvInput[0] = DrvInput[1] = DrvInput[2] = 0x00;
-
-	// Compile Digital Inputs
-	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[0] |= (DrvInputPort0[i] & 1) << i;
-		DrvInput[1] |= (DrvInputPort1[i] & 1) << i;
-		DrvInput[2] |= (DrvInputPort2[i] & 1) << i;
-	}
-
-	// Clear Opposites
-	DrvClearOpposites(&DrvInput[0]);
-	DrvClearOpposites(&DrvInput[1]);
-}
-
-static struct BurnDIPInfo DrvDIPList[]=
-{
-	// Default Values
-	{0x13, 0xff, 0xff, 0xff, NULL                     },
-
-	// Dip 1
-	{0   , 0xfe, 0   , 2   , "Test Mode"              },
-	{0x13, 0x01, 0x01, 0x01, "Off"                    },
-	{0x13, 0x01, 0x01, 0x00, "On"                     },
-	
-	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x13, 0x01, 0x02, 0x02, "Off"                    },
-	{0x13, 0x01, 0x02, 0x00, "On"                     },
-	
-	{0   , 0xfe, 0   , 2   , "Use backup RAM"         },
-	{0x13, 0x01, 0x40, 0x00, "No"                     },
-	{0x13, 0x01, 0x40, 0x40, "Yes"                    },
-	
-	{0   , 0xfe, 0   , 2   , "Freeze"                 },
-	{0x13, 0x01, 0x80, 0x80, "Off"                    },
-	{0x13, 0x01, 0x80, 0x00, "On"                     },
-};
-
-STDDIPINFO(Drv)
-
-static struct BurnRomInfo CyvernRomDesc[] = {
-	{ "sknsj1.u10",    0x080000, 0x7e2b836c, BRF_ESS | BRF_PRG }, //  0	BIOS
-	
-	{ "cvj-even.u10",  0x100000, 0x802fadb4, BRF_ESS | BRF_PRG }, //  1	SH-2 Program
-	{ "cvj-odd.u8",    0x100000, 0xf8a0fbdd, BRF_ESS | BRF_PRG }, //  2
-	
-	{ "cv100-00.u24",  0x400000, 0xcd4ae88a, BRF_GRA },	     //   3	Sprites
-	{ "cv101-00.u20",  0x400000, 0xa6cb3f0b, BRF_GRA },	     //   4
-	
-	{ "cv200-00.u16",  0x400000, 0xddc8c67e, BRF_GRA },	     //   5	Tiles Plane A
-	{ "cv201-00.u13",  0x400000, 0x65863321, BRF_GRA },	     //   6
-	
-	{ "cv210-00.u18",  0x400000, 0x7486bf3a, BRF_GRA },	     //   7	Tiles Plane B
-
-	{ "cv300-00.u4",   0x400000, 0xfbeda465, BRF_SND },	     //   8	Samples
-};
-
-STD_ROM_PICK(Cyvern)
-STD_ROM_FN(Cyvern)
-
-static INT32 MemIndex()
-{
-	UINT8 *Next; Next = Mem;
-
-	DrvBiosRom             = Next; Next += 0x080000;
-	DrvPrgRom              = Next; Next += 0x200000;
-	DrvSpriteRom           = Next; Next += 0x800000;
-	DrvSampleRom           = Next; Next += 0x400000;
-
-	RamStart               = Next;
-
-	DrvPrgRam              = Next; Next += 0x100000;
-	DrvBackupRam           = Next; Next += 0x002000;
-	DrvSpriteRam           = Next; Next += 0x004000;
-	DrvSpriteRegs          = Next; Next += 0x000040;
-	DrvTileARam            = Next; Next += 0x004000;
-	DrvTileBRam            = Next; Next += 0x004000;
-	DrvTileBTilesRam       = Next; Next += 0x040000;
-	DrvTileRegs            = Next; Next += 0x000080;
-	DrvTileLineRam         = Next; Next += 0x008000;
-	DrvPaletteRam          = Next; Next += 0x020000;
-	DrvPaletteRegs         = Next; Next += 0x000020;
-	DrvCacheRam            = Next; Next += 0x001000;
-
-	RamEnd                 = Next;
-
-	DrvTilesA8Bpp          = Next; Next += 0x08000 * 16 * 16;
-	DrvTilesB8Bpp          = Next; Next += 0x08000 * 16 * 16;
-	DrvTilesA4Bpp          = Next; Next += 0x10000 * 16 * 16;
-	DrvTilesB4Bpp          = Next; Next += 0x10000 * 16 * 16;
-	DrvPalette             = (UINT32*)Next; Next += 0x08000 * sizeof(UINT32);
-
-	MemEnd                 = Next;
-
-	return 0;
-}
+static UINT8 *decodebuffer;
+static UINT8 *DrvTmpScreenBuf;
+static UINT16 *DrvTmpScreenA;
+static UINT16 *DrvTmpScreenB;
+static UINT16 *DrvTmpScreenA2;
+static UINT16 *DrvTmpScreenB2;
+static UINT16 *DrvTmpScreenC;
+static UINT8 *DrvTmpFlagA;
+static UINT8 *DrvTmpFlagB;
+static UINT8 *DrvTmpFlagA2;
+static UINT8 *DrvTmpFlagB2;
+static UINT32 *DrvTmpDraw; // main drawing surface
+static UINT32 *pDrvTmpDraw;
 
 static struct {
 	UINT16 x1p, y1p, z1p, x1s, y1s, z1s;
@@ -189,6 +55,152 @@ static struct {
 
 	UINT8 disconnect;
 } hit;
+
+static int sprite_kludge_x;
+static int sprite_kludge_y;
+
+static UINT8 DrvJoy1[32];
+static UINT8 DrvDips[2];
+static UINT32 DrvInputs[3];
+static UINT8 DrvReset;
+
+#define SCREEN_FLIP	BDF_ORIENTATION_FLIPPED
+
+static int nGfxLen0 = 0;
+
+static UINT32 speedhack_address = ~0;
+static UINT32 speedhack_pc[2] = { 0, 0 };
+static UINT8 biosskiponce = 0;
+static UINT8 m_region = 0; /* 0 Japan, 1 Europ, 2 Asia, 3 USA, 4 Korea */
+
+static struct BurnRomInfo emptyRomDesc[] = {
+	{ "",                    0,          0, 0 },
+};
+
+static struct BurnInputInfo SknsInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 24,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 25,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 26,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 27,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 28,	"p1 fire 1"},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 29,	"p1 fire 2"},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 30,	"p1 fire 3"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 16,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 17,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 18,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 19,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 20,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 21,	"p2 fire 2"},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 22,	"p2 fire 3"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"},
+	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 13,	"tilt"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+};
+
+STDINPUTINFO(Skns)
+
+static struct BurnDIPInfo SknsDIPList[]=
+{
+	{0x15, 0xff, 0xff, 0xff, NULL		},
+	{0x16, 0xff, 0xff, 0x00, NULL		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"	},
+	{0x15, 0x01, 0x01, 0x01, "Off"		},
+	{0x15, 0x01, 0x01, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"	},
+	{0x15, 0x01, 0x02, 0x02, "Off"		},
+	{0x15, 0x01, 0x02, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Use Backup Ram"},
+	{0x15, 0x01, 0x40, 0x00, "No"		},
+	{0x15, 0x01, 0x40, 0x40, "Yes"		},
+
+	{0   , 0xfe, 0   ,    2, "Freeze"	},
+	{0x15, 0x01, 0x80, 0x00, "Freezes the game"},
+	{0x15, 0x01, 0x80, 0x80, "Right value"	},
+
+	{0   , 0xfe, 0   ,    5, "Region"	},
+	{0x16, 0x01, 0x07, 0x01, "Europe"	},
+	{0x16, 0x01, 0x07, 0x00, "Japan"	},
+	{0x16, 0x01, 0x07, 0x04, "Korea"	},
+	{0x16, 0x01, 0x07, 0x02, "Asia"		},
+	{0x16, 0x01, 0x07, 0x03, "USA"		},
+};
+
+STDDIPINFO(Skns)
+
+static struct BurnInputInfo CyvernInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 24,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 25,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 26,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 27,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 28,	"p1 fire 1"},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 29,	"p1 fire 2"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 16,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 17,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 18,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 19,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 20,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 21,	"p2 fire 2"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"},
+	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 13,	"tilt"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+};
+
+STDINPUTINFO(Cyvern)
+
+
+static struct BurnDIPInfo CyvernDIPList[]=
+{
+	{0x13, 0xff, 0xff, 0xff, NULL		},
+	{0x14, 0xff, 0xff, 0x00, NULL		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode" },
+	{0x13, 0x01, 0x01, 0x01, "Off"		},
+	{0x13, 0x01, 0x01, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"	},
+	{0x13, 0x01, 0x02, 0x02, "Off"		},
+	{0x13, 0x01, 0x02, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Use Backup Ram"},
+	{0x13, 0x01, 0x40, 0x00, "No"		},
+	{0x13, 0x01, 0x40, 0x40, "Yes"		},
+
+	{0   , 0xfe, 0   ,    2, "Freeze"	},
+	{0x13, 0x01, 0x80, 0x00, "Freezes the game"},
+	{0x13, 0x01, 0x80, 0x80, "Right value"	},
+
+	{0   , 0xfe, 0   ,    5, "Region"	},
+	{0x14, 0x01, 0x07, 0x01, "Europe"	},
+	{0x14, 0x01, 0x07, 0x00, "Japan"	},
+	{0x14, 0x01, 0x07, 0x04, "Korea"	},
+	{0x14, 0x01, 0x07, 0x02, "Asia"		},
+	{0x14, 0x01, 0x07, 0x03, "USA"		},
+};
+
+STDDIPINFO(Cyvern)
+
+
+//#define DEBUG_PRINT
+
 
 static void hit_calc_orig(UINT16 p, UINT16 s, UINT16 org, UINT16 *l, UINT16 *r)
 {
@@ -228,7 +240,7 @@ static void hit_calc_axis(UINT16 x1p, UINT16 x1s, UINT16 x2p, UINT16 x2s, UINT16
 	*x_in = x1r-x2l;
 }
 
-static void hit_recalc(void)
+static void hit_recalc()
 {
 	hit_calc_axis(hit.x1p, hit.x1s, hit.x2p, hit.x2s, hit.org,
 		&hit.x1_p1, &hit.x1_p2, &hit.x2_p1, &hit.x2_p2,
@@ -253,11 +265,9 @@ static void hit_recalc(void)
 	hit.flag |= hit.x_in >= 0 && hit.y_in >= 0                  ? 1 : 0;
 }
 
-static void SknsHitWrite(UINT32 offset, UINT32 data)
+static void skns_hit_w(UINT32 adr, UINT32 data)
 {
-	INT32 adr = offset * 4;
-
-	switch(adr) {
+	switch(adr & ~3) {
 	case 0x00:
 	case 0x28:
 		hit.x1p = data;
@@ -310,30 +320,20 @@ static void SknsHitWrite(UINT32 offset, UINT32 data)
 		hit.org = data;
 	break;
 	default:
-//      log_write("HIT", adr, data, type);
 	break;
 	}
 	hit_recalc();
 }
 
-static void SknsHit2Write(UINT32 offset, UINT32 data)
+static UINT32 skns_hit_r(UINT32 adr)
 {
-//  log_event("HIT", "Set disconnect to %02x", data);
-	hit.disconnect = data;
-}
-
-UINT32 __fastcall SknsHitRead(UINT32 offset)
-{
-	INT32 adr = offset *4;
-
-//  log_read("HIT", adr, type);
-
 	if(hit.disconnect)
 		return 0x0000;
-	switch(adr) {
+
+	switch(adr & 0xfc) {
 	case 0x28:
 	case 0x2a:
-		return rand() & 0xffff;
+		return (Sh2TotalCycles() ^ (Sh2TotalCycles() >> 16)) & 0xffff; //mame_rand(space->machine);
 	case 0x00:
 	case 0x10:
 		return (UINT16)hit.x_in;
@@ -402,373 +402,1923 @@ UINT32 __fastcall SknsHitRead(UINT32 offset)
 	case 0xbc:
 		return hit.z2_p2;
 	default:
-//      log_read("HIT", adr, type);
-	return 0;
+		return 0;
 	}
 }
 
-static INT32 DrvDoReset()
-{
-	Sh2Open(0);
-	Sh2Reset(*(UINT32 *)(DrvBiosRom + 0), *(UINT32 *)(DrvBiosRom + 4));
-	Sh2Close();
-	
-	return 0;
-}
 
-UINT8 __fastcall CyvernReadByte(UINT32 a)
+static UINT32 skns_msm6242_r(UINT32 offset)
 {
-	switch (a) {
-		case 0x20400007: {
-			//???
-			return 0;
-		}
-		
-		default: {
-			bprintf(PRINT_NORMAL, _T("Read byte => %08X\n"), a);
-		}
+	time_t nLocalTime = time(NULL); // ripped from pgm_run.cpp
+	tm* tmLocalTime = localtime(&nLocalTime);
+
+	UINT32 value = 0;
+
+	switch ((offset >> 2) & 3)
+	{
+		case 0:
+			value  = (tmLocalTime->tm_sec % 10)<<24;
+			value |= (tmLocalTime->tm_sec / 10)<<16;
+			value |= (tmLocalTime->tm_min % 10)<<8;
+			value |= (tmLocalTime->tm_min / 10);
+			break;
+		case 1:
+			value  = (tmLocalTime->tm_hour % 10)<<24;
+			value |= (tmLocalTime->tm_hour / 10)<<16;
+			value |= (tmLocalTime->tm_mday % 10)<<8;
+			value |= (tmLocalTime->tm_mday / 10);
+			break;
+		case 2:
+			value  = ((tmLocalTime->tm_mon + 1) % 10) << 24;
+			value |= ((tmLocalTime->tm_mon + 1) / 10) << 16;
+			value |=  (tmLocalTime->tm_year % 10) << 8;
+			value |= ((tmLocalTime->tm_year / 10) % 10);
+			break;
+		case 3:
+			value  = (tmLocalTime->tm_wday)<<24;
+			value |= (1)<<16;
+			value |= (6)<<8;
+			value |= (4);
+			break;
 	}
-	
-	return 0;
+	return value;
 }
 
-void __fastcall CyvernWriteByte(UINT32 a, UINT8 d)
+UINT8 __fastcall suprnova_read_byte(UINT32 address)
 {
-	switch (a) {
-		case 0x0040000e: {
-			// unknown i/o write;
-			return;
-		}
-		
+	address &= 0xc7ffffff;
+
+//#ifdef DEBUG_PRINT
+//        bprintf (0, _T("%8.8x, rb:"), address);
+//#endif
+
+	if ((address & 0xfffffff0) == 0x01000000) {
+		return skns_msm6242_r(address) >> ((~address & 3) << 3);
+	}
+
+	if ((address & 0xffffff00) == 0x02f00000) {
+		return skns_hit_r(address) >> ((~address & 3) << 3);
+	}
+
+	switch (address)
+	{
+		case 0x00400000:
+		case 0x00400001:
+		case 0x00400002:
+		case 0x00400003:
+			return DrvInputs[0] >> ((~address & 3) << 3); // 400000
+
+		case 0x00400004:
+		case 0x00400005:
+		case 0x00400006:
+		case 0x00400007:
+			return DrvInputs[1] >> ((~address & 3) << 3); // 400004
+
+		case 0x0040000c:
+		case 0x0040000d:
+		case 0x0040000e:
+		case 0x0040000f:
+			return DrvInputs[2] >> ((~address & 3) << 3); // 40000c
+
 		case 0x00c00000:
-		case 0x00c00001: {
-			//sound write
-			return;
-		}
-		
-		case 0x01800000: {
-			SknsHit2Write(0, d);
-			return;
-		}
-		
-		case 0x2040000e: {
-			//???
-			return;
-		}
-		
-		default: {
-			bprintf(PRINT_NORMAL, _T("Write byte => %08X, %02X\n"), a, d);
-		}
+		case 0x00c00001:
+		case 0x00c00002:
+		case 0x00c00003:
+			return YMZ280BReadStatus();
 	}
-}
 
-UINT16 __fastcall CyvernReadWord(UINT32 a)
-{
-	if (a >= 0x06000000 && a <= 0x06ffffff) {
-		if (a >= 0x06000028 && a <= 0x0600002b) bprintf(PRINT_NORMAL, _T("Read Word Bios Skip %x, %x\n"), a, Sh2GetPC(0));
-		UINT32 Offset = (a - 0x06000000) / 2;
-		UINT16 *Ram = (UINT16*)DrvPrgRam;
-		
-		return Ram[Offset];
-	}
-	
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Read word => %08X\n"), a);
-		}
-	}
-	
+//#ifdef DEBUG_PRINT
+//	bprintf (0, _T("%8.8x, rb\n"), address);
+//#endif
+
 	return 0;
 }
 
-void __fastcall CyvernWriteWord(UINT32 a, UINT16 d)
+UINT16 __fastcall suprnova_read_word(UINT32 address)
 {
-	switch (a) {
-		case 0x05000000: {
-			// ???
-			return;
-		}
-		
-		default: {
-			bprintf(PRINT_NORMAL, _T("Write word => %08X, %04X\n"), a, d);
-		}
-	}
-}
+	address &= 0xc7fffffe;
 
-UINT32 __fastcall CyvernReadLong(UINT32 a)
-{
-	if (a >= 0x02f00000 && a <= 0x02f000ff) {
-		UINT32 Offset = (a - 0x02f00000) / 4;
-		
-		return SknsHitRead(Offset);
-	}
-	
-	if (a >= 0x06000000 && a <= 0x06ffffff) {
-		if (a >= 0x06000028 && a <= 0x0600002b) bprintf(PRINT_NORMAL, _T("Read Long Bios Skip %x, %x\n"), a, Sh2GetPC(0) / 4);
-		UINT32 Offset = (a - 0x06000000) / 4;
-		UINT32 *Ram = (UINT32*)DrvPrgRam;
-		
-		return Ram[Offset];
+//#ifdef DEBUG_PRINT
+//        bprintf (0, _T("%8.8x, rw\n"), address);
+//#endif
+
+	if ((address & 0xfffffff0) == 0x01000000) {
+		return skns_msm6242_r(address) >> ((~address & 2) << 3);
 	}
 
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Read long => %08X\n"), a);
-		}
+	if ((address & 0xffffff00) == 0x02f00000) {
+		return skns_hit_r(address) >> ((~address & 2) << 3); // skns_hit_r
 	}
-	
+
+	switch (address)
+	{
+		case 0x00400000:
+		case 0x00400001:
+			return DrvInputs[0] >> 16;
+
+		case 0x00400002:
+		case 0x00400003:
+			return DrvInputs[0]; // 400000
+
+		case 0x00400004:
+		case 0x00400005:
+			return DrvInputs[1] >> 16;
+
+		case 0x00400006:
+		case 0x00400007:
+			return DrvInputs[1]; // 400004
+
+		case 0x0040000c:
+		case 0x0040000d:
+			return DrvInputs[2] >> 16;
+
+		case 0x0040000e:
+		case 0x0040000f:
+			return DrvInputs[2]; // 40000c
+	}
+
+//#ifdef DEBUG_PRINT
+//	bprintf (0, _T("%8.8x, rw\n"), address);
+//#endif
+
 	return 0;
 }
 
-void __fastcall CyvernWriteLong(UINT32 a, UINT32 d)
+UINT32 __fastcall suprnova_read_long(UINT32 address)
 {
-	if (a >= 0x02f00000 && a <= 0x02f000ff) {
-		UINT32 Offset = (a - 0x02f00000) / 4;
-		
-		SknsHitWrite(Offset, d);
+	address &= 0xc7fffffc;
+
+//#ifdef DEBUG_PRINT
+//	bprintf (0, _T("%8.8x, rl\n"), address);
+//#endif
+
+	if ((address & 0xfffffff0) == 0x01000000) {
+		return skns_msm6242_r(address);
+	}
+
+	if ((address & 0xffffff00) == 0x02f00000) {
+		return skns_hit_r(address); // skns_hit_r
+	}
+
+	switch (address)
+	{
+		case 0x00400000:
+			return DrvInputs[0];
+
+		case 0x00400004:
+			return DrvInputs[1];
+
+		case 0x0040000c:
+			return DrvInputs[2];
+	}
+
+//#ifdef DEBUG_PRINT
+//	bprintf (0, _T("%8.8x, rl\n"), address);
+//#endif
+
+	return 0;
+}
+
+
+static int suprnova_alt_enable_sprites = 0;
+static int bright_spc_g_trans = 0;
+static int bright_spc_r_trans = 0;
+static int bright_spc_b_trans = 0;
+static int bright_spc_g = 0;
+static int bright_spc_r = 0;
+static int bright_spc_b = 0;
+static int suprnova_alt_enable_background = 0;
+static int bright_v3_g = 0;
+static int bright_v3_r = 0;
+static int bright_v3_b = 0;
+static int use_spc_bright = 0;
+static int use_v3_bright = 0;
+
+void skns_pal_regs_w(UINT32 offset)
+{
+	UINT32 data = *((UINT32*)(DrvPalRegs + (offset & 0x1c)));
+	offset = (offset >> 2) & 7;
+
+//bprintf (0, _T("%8.8x palreg write\n"), data);
+
+	switch ( offset )
+	{
+		case (0x00/4): // RWRA0
+			use_spc_bright = data&1;
+			suprnova_alt_enable_sprites = (data>>8)&1;
+			break;
+	
+		case (0x04/4): // RWRA1
+			bright_spc_g = data&0xff;
+			bright_spc_g_trans = (data>>8) &0xff;
+			break;
+	
+		case (0x08/4): // RWRA2
+			bright_spc_r = data&0xff;
+			bright_spc_r_trans = (data>>8) &0xff;
+			break;
+	
+		case (0x0C/4): // RWRA3
+			bright_spc_b = data&0xff;
+			bright_spc_b_trans = (data>>8)&0xff;
+			break;
+	
+		case (0x10/4): // RWRB0
+			use_v3_bright = data&1;
+			suprnova_alt_enable_background = (data>>8)&1;
+			break;
+	
+		case (0x14/4): // RWRB1
+			bright_v3_g = data&0xff;
+		//	bright_v3_g_trans = (data>>8)&0xff;
+			break;
+	
+		case (0x18/4): // RWRB2
+			bright_v3_r = data&0xff;
+		//	bright_v3_r_trans = (data>>8)&0xff;
+			break;
+	
+		case (0x1C/4): // RWRB3
+			bright_v3_b = data&0xff;
+		//	bright_v3_b_trans = (data>>8)&0xff;
+			break;
+	}
+}
+
+static void decode_graphics_ram(UINT32 offset)
+{
+	offset &= 0x3fffc;
+	UINT32 p = *((UINT32*)(DrvGfxRAM + offset));
+
+	DrvGfxROM2[offset + 0] = p >> 24;
+	DrvGfxROM2[offset + 1] = p >> 16;
+	DrvGfxROM2[offset + 2] = p >>  8;
+	DrvGfxROM2[offset + 3] = p >>  0;
+}
+
+
+// 	AM_RANGE(0x00400000, 0x0040000f) AM_WRITE(skns_io_w) /* I/O Write */
+
+
+void __fastcall suprnova_write_byte(UINT32 address, UINT8 data)
+{
+	address &= 0xc7ffffff;
+
+	if ((address & 0xfffc0000) == 0x4800000) {
+		DrvGfxRAM[(address & 0x3ffff) ^ 3] = data;
+		decode_graphics_ram(address);
+		return;
+
+	} //04800000, 0x0483ffff
+
+#ifdef DEBUG_PRINT
+	bprintf (0, _T("%8.8x, %8.8x wb\n"), address, data);
+#endif
+
+	switch (address)
+	{
+		case 0x00c00000:
+			YMZ280BSelectRegister(data);
+		return;
+
+		case 0x00c00001:
+			YMZ280BWriteRegister(data);
+		return;
+
+                case 0x01800000:
+                case 0x01800001:
+                case 0x01800002:
+                case 0x01800003:// sengeki writes here... puzzloop gets pissed (security...)
+                    {
+                        data>>= 24;
+                        hit.disconnect=1; /* hit2 stuff */
+                        switch (m_region) /* 0 Japan, 1 Europe, 2 Asia, 3 USA, 4 Korea */
+                        {
+                        case 0:
+                            if (data == 0) hit.disconnect= 0;
+                            break;
+                        case 3:
+                            if (data == 1) hit.disconnect= 0;
+                            break;
+                        case 4:
+                            if (data == 2) hit.disconnect= 0;
+                            break;
+                        case 1:
+                            if (data == 3) hit.disconnect= 0;
+                            break;
+                        case 2:
+                            if (data < 2) hit.disconnect= 0;
+                            break;
+                            // unknown country id, unlock per default
+                        default:
+                            hit.disconnect= 0;
+                            break;
+                        }
+                        //bprintf(0, _T("finish:hit.disconnect=[%X]"), hit.disconnect);
+                    }
+		return;
+
+		/*case 0x01800002:
+			hit.disconnect = data;
+		return;*/
+	}
+
+	if ((address & 0xffffffe0) == 0x02a00000) {
+		DrvPalRegs[(address & 0x1f) ^ 3] = data;
+		skns_pal_regs_w(address);
 		return;
 	}
-	
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Write long => %08X, %04X\n"), a, d);
-		}
+
+	// skns_msm6242_w -- not used
+	if ((address & ~0x0f)  == 0x1000000) return;
+
+	// skns io -- not used 
+	if ((address & ~0x0f) == 0x00400000) return;
+
+//#ifdef DEBUG_PRINT
+//	bprintf (0, _T("%8.8x, %8.8x wb\n"), address, data);
+//#endif
+}
+
+void __fastcall suprnova_write_word(UINT32 address, UINT16 data)
+{
+	address &= 0xc7fffffe;
+
+	if ((address & 0xfffc0000) == 0x4800000) {
+		*((UINT16*)(DrvGfxRAM + ((address & 0x3fffe) ^ 2))) = data;
+		decode_graphics_ram(address);
+		return;
+
+	} //04800000, 0x0483ffff
+
+#ifdef DEBUG_PRINT
+	bprintf (0, _T("%8.8x, %8.8x ww\n"), address, data);
+#endif
+}
+
+void __fastcall suprnova_write_long(UINT32 address, UINT32 data)
+{
+	address &= 0xc7fffffc;
+
+#ifdef DEBUG_PRINT
+	bprintf (0, _T("%8.8x, %8.8x wl\n"), address, data);
+#endif
+
+	if ((address & 0xfffc0000) == 0x4800000) {
+		*((UINT32*)(DrvGfxRAM + (address & 0x3fffc))) = data;
+		decode_graphics_ram(address);
+		return;
+
+	} //04800000, 0x0483ffff
+
+	if ((address & 0xffffffe0) == 0x02a00000) {
+		*((UINT32*)(DrvPalRegs + (address & 0x1c))) = data;
+		skns_pal_regs_w(address);
+		return;
+	}
+
+	if ((address & 0xffffff00) == 0x02f00000) {
+		skns_hit_w(address & 0xff, data);
+		return;
+	}
+
+	if (address == 0x05000000) return; // vsblock
+}
+
+static inline void suprnova_speedhack(UINT32 a)
+{
+	UINT32 b  = a & ~3;
+	UINT32 pc = Sh2GetPC(0);
+
+        /*if (b == 0x600028 && !biosskiponce) {
+		if (pc == 0x6f8 || pc == 0x6fa) {
+                    Sh2WriteByte(0x6000029, 1);   // zip past skns bios screen
+                    biosskiponce=1;               // update: maybe not??  hmm..
+                }                                 // update2: not needed
+        }*/
+
+        if (b == speedhack_address) {
+           // bprintf(0, _T("ad=[%X] pc=[%X]"), a, b);
+           // bprintf(0, _T("pc[%X] shpc[%X]"), pc, speedhack_pc[0]);
+            if (pc == speedhack_pc[0]) {
+                //bprintf(0, _T("S")); // handy debug code, keep
+                Sh2BurnUntilInt(0);
+            }
 	}
 }
 
-UINT8 __fastcall BiosSkipReadByte(UINT32 a)
+UINT32 __fastcall suprnova_hack_read_long(UINT32 a)
 {
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Read Bios Skip byte => %08X\n"), a);
-		}
+	suprnova_speedhack(a);
+
+        a &= 0xffffc;
+
+	return *((UINT32*)(DrvSh2RAM + a));
+}
+
+UINT16 __fastcall suprnova_hack_read_word(UINT32 a)
+{
+	suprnova_speedhack(a);
+
+	return *((UINT16 *)(DrvSh2RAM + ((a & 0xffffe) ^ 2)));
+}
+
+UINT8 __fastcall suprnova_hack_read_byte(UINT32 a)
+{
+	suprnova_speedhack(a);
+
+	return DrvSh2RAM[(a & 0xfffff) ^ 3];
+}
+
+static void BurnSwapEndian(UINT8 *src, int len)
+{
+	for (int i = 0; i < len; i+=4) {
+		int t = src[i + 0];
+		src[i + 0] = src[i+3];
+		src[i + 3] = t;
+		t = src[i + 1];
+		src[i + 1] = src[i + 2];
+		src[i + 2] = t;
 	}
-	
+}
+
+static int MemIndex(int gfxlen0)
+{
+	UINT8 *Next; Next = AllMem;
+
+	DrvSh2BIOS		= Next; Next += 0x0080000;
+	DrvSh2ROM		= Next; Next += 0x0400000;
+
+	YMZ280BROM		= Next; Next += 0x0500000;
+
+	DrvGfxROM0		= Next; Next += gfxlen0;
+	DrvGfxROM1		= Next; Next += 0x0800000;
+	DrvGfxROM2		= Next; Next += 0x0800000;
+
+	AllRam			= Next;
+
+	DrvVidRAM		= Next; Next += 0x020000;
+	DrvNvRAM		= Next; Next += 0x020000;
+	DrvSprRAM		= Next; Next += 0x020000;
+	DrvLineRAM		= Next; Next += 0x020000;
+	DrvPalRAM		= Next; Next += 0x040000;
+	DrvGfxRAM		= Next; Next += 0x060000;
+	DrvSh2RAM		= Next; Next += 0x200000;
+	DrvCacheRAM		= Next; Next += 0x020000;
+	DrvV3Regs		= Next; Next += 0x020000;
+	DrvSprRegs		= Next; Next += 0x020000;
+	DrvPalRegs		= Next; Next += 0x000020 + 0x20000;
+
+	RamEnd			= Next;
+
+	decodebuffer		= Next; Next += 0x08000;
+
+	DrvTmpScreenBuf		= Next; Next += 0x10000;
+
+	DrvTmpScreenA		= (UINT16*)Next; Next += 1024 * 1024 * sizeof(short);
+	DrvTmpScreenB		= (UINT16*)Next; Next += 1024 * 1024 * sizeof(short);
+	DrvTmpScreenC		= (UINT16*)Next; Next += 320 * 240 * sizeof(short);
+	DrvTmpScreenA2		= (UINT16*)Next; Next += 320 * 240 * sizeof(short);
+	DrvTmpScreenB2		= (UINT16*)Next; Next += 320 * 240 * sizeof(short);
+	pDrvTmpDraw		= (UINT32*)Next;
+	DrvTmpDraw		= (UINT32*)Next; Next += 320 * 240 * sizeof(int);
+
+	DrvTmpFlagA		= Next; Next += 1024 * 1024;
+	DrvTmpFlagB		= Next; Next += 1024 * 1024;
+
+	DrvTmpFlagA2		= Next; Next += 320 * 240;
+	DrvTmpFlagB2		= Next; Next += 320 * 240;
+
+	DrvPalette		= (UINT32*)Next; Next += 0x10000 * sizeof(int);
+
+	MemEnd			= Next;
+
 	return 0;
 }
 
-UINT16 __fastcall BiosSkipReadWord(UINT32 a)
+static int DrvDoReset()
 {
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Read Bios Skip word => %08X\n"), a);
+    Sh2Open(0);
+    Sh2Reset( *(UINT32 *)(DrvSh2ROM + 0), *(UINT32 *)(DrvSh2ROM + 4) );
+    Sh2SetVBR(0x4000000);
+    Sh2Close();
+
+    memset (AllRam, 0, RamEnd - AllRam);
+
+    memset (DrvTmpScreenBuf, 0xff, 0x8000);
+
+    YMZ280BReset();
+    biosskiponce = 0;
+    if (m_region != 2) // 2 Asia
+        hit.disconnect = 1;
+    else
+        hit.disconnect = 0;
+
+    return 0;
+}
+
+static int DrvInit(int (*LoadCallback)(), int bios, int gfx_len0)
+{
+	AllMem = NULL;
+	MemIndex(gfx_len0);
+	int nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex(gfx_len0);
+
+	nGfxLen0 = gfx_len0;
+
+	{
+		if (LoadCallback) {
+			if (LoadCallback()) return 1;
 		}
+
+		if (BurnLoadRom(DrvSh2BIOS, 0x00080 + bios, 1)) return 1;	// bios
+		m_region = bios;
+		BurnSwapEndian(DrvSh2BIOS, 0x80000);
+		BurnSwapEndian(DrvSh2ROM, 0x200000);
 	}
-	
-	return 0;
-}
 
-UINT32 __fastcall BiosSkipReadLong(UINT32 a)
-{
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Read Bios Skip long => %08X\n"), a);
-		}
-	}
-	
-	return 0;
-}
-
-static void be_to_le(UINT8 * p, INT32 size)
-{
-	UINT8 c;
-	for(INT32 i=0; i<size; i+=4, p+=4) {
-		c = *(p+0);	*(p+0) = *(p+3);	*(p+3) = c;
-		c = *(p+1);	*(p+1) = *(p+2);	*(p+2) = c;
-	}
-}
-
-static INT32 CyvernInit()
-{
-	INT32 nRet = 0, nLen;
-	
-	BurnSetRefreshRate(59.5971);
-
-	// Allocate and Blank all required memory
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
-
-	DrvTempRom = (UINT8 *)malloc(0x800000);
-
-	// Load BIOS Rom
-	nRet = BurnLoadRom(DrvBiosRom + 0x000000, 0, 1); if (nRet != 0) return 1;
-	be_to_le(DrvBiosRom, 0x00080000);
-	
-	// Load Program Rom
-	nRet = BurnLoadRom(DrvPrgRom  + 0x000000, 1, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvPrgRom  + 0x000001, 2, 2); if (nRet != 0) return 1;
-	be_to_le(DrvPrgRom, 0x00200000);
-	
-	if (DrvTempRom) {
-		free(DrvTempRom);
-		DrvTempRom = NULL;
-	}
-	
-	// Setup the 68000 emulation
 	Sh2Init(1);
 	Sh2Open(0);
-	Sh2MapMemory(DrvBiosRom           , 0x00000000, 0x0007ffff, SH2_ROM);
-	Sh2MapMemory(DrvSpriteRam         , 0x02000000, 0x02003fff, SH2_RAM);
-	Sh2MapMemory(DrvSpriteRegs        , 0x02100000, 0x0210003f, SH2_RAM);
-	Sh2MapMemory(DrvTileRegs          , 0x02400000, 0x0240007f, SH2_RAM);
-	Sh2MapMemory(DrvTileARam          , 0x02500000, 0x02503fff, SH2_RAM);
-	Sh2MapMemory(DrvTileBRam          , 0x02504000, 0x02507fff, SH2_RAM);
-	Sh2MapMemory(DrvTileLineRam       , 0x02600000, 0x02607fff, SH2_RAM);
-	Sh2MapMemory(DrvPaletteRegs       , 0x02a00000, 0x02a0001f, SH2_RAM);
-	Sh2MapMemory(DrvPaletteRam        , 0x02a40000, 0x02a5ffff, SH2_RAM);
-	Sh2MapMemory(DrvPrgRom            , 0x04000000, 0x041fffff, SH2_ROM);
-	Sh2MapMemory(DrvTileBTilesRam     , 0x04800000, 0x0483ffff, SH2_RAM);
-	Sh2MapMemory(DrvPrgRam            , 0x06000000, 0x06ffffff, SH2_RAM);
-//	Sh2MapMemory(DrvPrgRam            , 0x06000000, 0x06ffffff, SH2_WRITE);
-	Sh2MapMemory(DrvCacheRam          , 0xc0000000, 0xc0000fff, SH2_RAM);
-//	Sh2MapHandler(1                   , 0x06000028, 0x0600002b, SH2_READ);
-	Sh2SetReadByteHandler (0, CyvernReadByte);
-	Sh2SetReadWordHandler (0, CyvernReadWord);
-	Sh2SetReadLongHandler (0, CyvernReadLong);
-	Sh2SetWriteByteHandler(0, CyvernWriteByte);
-	Sh2SetWriteWordHandler(0, CyvernWriteWord);
-	Sh2SetWriteLongHandler(0, CyvernWriteLong);
-//	Sh2SetReadByteHandler (1, BiosSkipReadByte);
-//	Sh2SetReadWordHandler (1, BiosSkipReadWord);
-//	Sh2SetReadLongHandler (1, BiosSkipReadLong);
-	Sh2Close();
-	
+
+	Sh2MapMemory(DrvSh2BIOS,		0x00000000, 0x0007ffff, SH2_ROM);
+	Sh2MapMemory(DrvNvRAM,			0x00800000, 0x00801fff, SH2_RAM);
+	Sh2MapMemory(DrvSprRAM,			0x02000000, 0x02003fff, SH2_RAM);
+	Sh2MapMemory(DrvSprRegs,		0x02100000, 0x0210003f, SH2_RAM); // sprite regs
+	Sh2MapMemory(DrvV3Regs,			0x02400000, 0x0240007f, SH2_RAM);
+	Sh2MapMemory(DrvVidRAM,			0x02500000, 0x02507fff, SH2_RAM); //0-4000, 4000-7fff A, B
+	Sh2MapMemory(DrvLineRAM,		0x02600000, 0x02607fff, SH2_RAM);
+	Sh2MapMemory(DrvPalRegs,		0x02a00000, 0x02a0001f, SH2_ROM);
+	Sh2MapMemory(DrvPalRAM,			0x02a40000, 0x02a5ffff, SH2_RAM);
+	Sh2MapMemory(DrvSh2ROM,			0x04000000, 0x041fffff, SH2_ROM); // rom
+	Sh2MapMemory(DrvGfxRAM,			0x04800000, 0x0483ffff, SH2_ROM); // tilemap B, graphics tiles
+	Sh2MapMemory(DrvSh2RAM,			0x06000000, 0x060fffff, SH2_RAM);
+	Sh2MapMemory(DrvCacheRAM,		0xc0000000, 0xc0000fff, SH2_RAM); //
+
+	Sh2SetReadByteHandler (0,		suprnova_read_byte);
+	Sh2SetReadWordHandler (0,		suprnova_read_word);
+	Sh2SetReadLongHandler (0,		suprnova_read_long);
+	Sh2SetWriteByteHandler(0,		suprnova_write_byte);
+	Sh2SetWriteWordHandler(0,		suprnova_write_word);
+	Sh2SetWriteLongHandler(0,		suprnova_write_long);
+
+	Sh2MapHandler(1,			0x06000000, 0x060fffff, SH2_ROM);
+	Sh2SetReadByteHandler (1,		suprnova_hack_read_byte);
+	Sh2SetReadWordHandler (1,		suprnova_hack_read_word);
+	Sh2SetReadLongHandler (1,		suprnova_hack_read_long);
+
+	//BurnSetRefreshRate(59.5971); do not use - causes skips in music
+
+	YMZ280BInit(16666666, NULL);
+
 	GenericTilesInit();
 
-	// Reset the driver
 	DrvDoReset();
 
 	return 0;
 }
 
-static INT32 DrvExit()
+static int DrvExit()
 {
-	Sh2Exit();
-	
 	GenericTilesExit();
-	
-	BurnFree(Mem);
+
+	Sh2Exit();
+	YMZ280BExit();
+	YMZ280BROM = NULL;
+
+	free(AllMem);
+	AllMem = NULL;
+
+	speedhack_address = ~0;
+	memset (speedhack_pc, 0, 2 * sizeof(int));
+	biosskiponce = 0;
 
 	return 0;
 }
 
-static void DrvCalcPalette()
-{
-	UINT32 *PaletteRam = (UINT32*)DrvPaletteRam;
-	
-	for (INT32 Offset = 0; Offset <= 32768; Offset++) {
-		INT32 r = (PaletteRam[Offset] >>  0) & 0x1f;
-		INT32 g = (PaletteRam[Offset] >>  5) & 0x1f;
-		INT32 b = (PaletteRam[Offset] >> 10) & 0x1f;
-		
-		r <<= 3;
-		g <<= 3;
-		b <<= 3;
-		
-		DrvPalette[Offset] = BurnHighCol(r, g, b, 0);
-	}
-}
 
-static void DrvRenderTileALayer()
+static void draw_layer(UINT8 *source, UINT8 *previous, UINT16 *dest, UINT8 *prid, UINT8 *gfxbase, int layer)
 {
-	INT32 mx, my, Code, Colour, x, y, TileIndex = 0;
+	UINT32 *prev = (UINT32*)previous;
+	UINT32 *vram = (UINT32*)source;
+
+	UINT32 depth = *((UINT32*)(DrvV3Regs + 0x0c));
+	if (layer) depth >>= 8;
+	depth &= 1;
+
+	for (int offs = 0; offs < 64 * 64; offs++)
+	{
+		if (vram[offs] == prev[offs]) {
+			prev[offs] = vram[offs];
+			continue;
+		} else {
+			prev[offs] = vram[offs];
+		}
+
+		int sx = (offs & 0x3f) << 4;
+		int sy = (offs >> 6) << 4;
+
+		int attr  = vram[offs];
+		int code  = attr & 0x001fffff;
+		int color =((attr & 0x3f000000) >> 24) | 0x40;
+		int prio  =(attr & 0x00e00000) >> 21;
+
+		int flipx = (attr >> 31) & 1;
+		int flipy = (attr >> 30) & 1;
 	
-	UINT32 *VideoRam = (UINT32*)DrvTileARam;
-	
-	for (my = 0; my < 64; my++) {
-		for (mx = 0; mx < 64; mx++) {
-			Code = VideoRam[TileIndex] & 0x001fffff;
-			Colour = (VideoRam[TileIndex] & 0x3f000000) >> 24;
-			
-			if (Code) bprintf(PRINT_NORMAL, _T("%x, %x\n"), Code, Colour);
-			
-			x = 16 * mx;
-			y = 16 * my;
-			
-//			x -= DrvFgScrollX;
-//			y -= DrvFgScrollY;
-			if (x < -16) x += 1024;
-			if (y < -16) y += 1024;
-			
-			if (x > 16 && x < 304 && y > 16 && y < 224) {
-				Render16x16Tile_Mask(pTransDraw, Code, x, y, Colour, 8, 0, 0, DrvTilesA8Bpp);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 8, 0, 0, DrvTilesA8Bpp);
+		color <<= 8;
+		UINT8 *pri = prid + sy * 1024 + sx;
+		UINT16 *dst = dest + sy * 1024 + sx;
+
+		if (depth) {	// 4bpp
+
+			code &= 0x0FFFF;
+
+			if (flipy) flipy = 0x78;
+			if (flipx) flipy |=0x07;
+
+			UINT8 *gfx = gfxbase + (code << 7);
+
+			for (int y = 0; y < 16; y++) {
+				for (int x = 0; x < 16; x+=2) {
+					int c = gfx[((y << 3) | (x >> 1)) ^ flipy];
+
+					dst[x+0] = (c & 0x0f) | color;
+					dst[x+1] = (c >> 4) | color;
+					pri[x+0] = pri[x+1] = prio;
+				}
+
+				dst += 1024;
+				pri += 1024;
 			}
-			
-			TileIndex++;
+		} else {	// 8bpp
+			code &= 0x7FFF;
+
+			UINT8 *gfx = gfxbase + (code << 8);
+			if (flipy) gfx += 0xf0;
+			int inc = flipy ? -16 : 16;
+
+			for (int y = 0; y < 16 * 16; y+=16, gfx += inc) {
+				if (flipx) {
+					dst[ 0] = gfx[15] | color;
+					dst[ 1] = gfx[14] | color;
+					dst[ 2] = gfx[13] | color;
+					dst[ 3] = gfx[12] | color;
+					dst[ 4] = gfx[11] | color;
+					dst[ 5] = gfx[10] | color;
+					dst[ 6] = gfx[ 9] | color;
+					dst[ 7] = gfx[ 8] | color;
+					dst[ 8] = gfx[ 7] | color;
+					dst[ 9] = gfx[ 6] | color;
+					dst[10] = gfx[ 5] | color;
+					dst[11] = gfx[ 4] | color;
+					dst[12] = gfx[ 3] | color;
+					dst[13] = gfx[ 2] | color;
+					dst[14] = gfx[ 1] | color;
+					dst[15] = gfx[ 0] | color;
+				} else {
+					dst[ 0] = gfx[ 0] | color;
+					dst[ 1] = gfx[ 1] | color;
+					dst[ 2] = gfx[ 2] | color;
+					dst[ 3] = gfx[ 3] | color;
+					dst[ 4] = gfx[ 4] | color;
+					dst[ 5] = gfx[ 5] | color;
+					dst[ 6] = gfx[ 6] | color;
+					dst[ 7] = gfx[ 7] | color;
+					dst[ 8] = gfx[ 8] | color;
+					dst[ 9] = gfx[ 9] | color;
+					dst[10] = gfx[10] | color;
+					dst[11] = gfx[11] | color;
+					dst[12] = gfx[12] | color;
+					dst[13] = gfx[13] | color;
+					dst[14] = gfx[14] | color;
+					dst[15] = gfx[15] | color;
+				}
+
+				pri[ 0] = prio;
+				pri[ 1] = prio;
+				pri[ 2] = prio;
+				pri[ 3] = prio;
+				pri[ 4] = prio;
+				pri[ 5] = prio;
+				pri[ 6] = prio;
+				pri[ 7] = prio;
+				pri[ 8] = prio;
+				pri[ 9] = prio;
+				pri[10] = prio;
+				pri[11] = prio;
+				pri[12] = prio;
+				pri[13] = prio;
+				pri[14] = prio;
+				pri[15] = prio;
+
+				dst += 1024;
+				pri += 1024;
+			}
 		}
 	}
 }
 
-static void DrvDraw()
+
+static void suprnova_draw_roz(UINT16 *source, UINT8 *flags, UINT16 *ddest, UINT8 *dflags, UINT32 startx, UINT32 starty, int incxx, int incxy, int incyx, int incyy, int wraparound, int columnscroll, UINT32* scrollram)
 {
-	BurnTransferClear();
-	DrvCalcPalette();
-	
-	DrvRenderTileALayer();
-	BurnTransferCopy(DrvPalette);
+	const int xmask = 0x3ff;
+	const int ymask = 0x3ff;
+	const UINT32 widthshifted = 1024 << 16;
+	const UINT32 heightshifted = 1024 << 16;
+	UINT32 cx;
+	UINT32 cy;
+	int x;
+	int sx;
+	int sy;
+	int ex;
+	int ey;
+	UINT16 *dest;
+	UINT8* destflags;
+
+	/* pre-advance based on the cliprect */
+	startx += 0 * incxx + 0 * incyx;
+	starty += 0 * incxy + 0 * incyy;
+
+	/* extract start/end points */
+	sx = 0;
+	sy = 0;
+	ex = nScreenWidth-1;
+	ey = nScreenHeight-1;
+
+	{
+		/* loop over rows */
+		while (sy <= ey)
+		{
+
+			/* initialize X counters */
+			x = sx;
+			cx = startx;
+			cy = starty;
+
+			/* get dest and priority pointers */
+			dest = ddest + (sy * nScreenWidth) + sx;
+			destflags = dflags + (sy * nScreenWidth) + sx;
+
+			/* loop over columns */
+			while (x <= ex)
+			{
+				if ((wraparound) || (cx < widthshifted && cy < heightshifted)) // not sure how this will cope with no wraparound, but row/col scroll..
+				{
+					if (columnscroll)
+					{
+						int offset = (((cy >> 16) - scrollram[(cx>>16)&0x3ff]) & ymask) * 1024 + ((cx >> 16) & xmask);
+						offset &= 0xfffff;
+						dest[0]     = source[offset];
+						destflags[0] = flags[offset];
+					}
+					else
+					{
+						int offset = ((cy >> 16) & ymask) * 1024 + (((cx >> 16) - scrollram[(cy>>16)&0x3ff]) & xmask);
+						offset &= 0xfffff;
+;						dest[0] =     source[offset];
+						destflags[0] = flags[offset];
+					}
+				}
+
+				/* advance in X */
+				cx += incxx;
+				cy += incxy;
+				x++;
+				dest++;
+				destflags++;
+			}
+
+			/* advance in Y */
+			startx += incyx;
+			starty += incyy;
+			sy++;
+		}
+	}
 }
 
-static INT32 DrvFrame()
+
+#define clip_max_x (nScreenWidth << 6)
+#define clip_max_y (nScreenHeight << 6)
+
+static int skns_rle_decode (int romoffset, int size, UINT8*gfx_source, int gfx_length )
 {
-	INT32 nInterleave = 10;
-	INT32 nSoundBufferPos = 0;
+	UINT8 *src = gfx_source;
+	int srcsize = gfx_length;
+	UINT8 *dst = decodebuffer;
+	int decodeoffset = 0;
 
-	if (DrvReset) DrvDoReset();
-
-	DrvMakeInputs();
-
-	nCyclesTotal[0] = 28638000 / 60;
-	nCyclesDone[0] = 0;
-
-	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
-		nCurrentCPU = 0;
-		Sh2Open(0);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += Sh2Run(nCyclesSegment);
-		if (i == 5) Sh2SetIRQLine(1, SH2_IRQSTATUS_AUTO);
-		if (i == 9) Sh2SetIRQLine(5, SH2_IRQSTATUS_AUTO);
-		Sh2Close();
+	while(size>0) {
+		UINT8 code = src[(romoffset++)%srcsize];
+		size -= (code & 0x7f) + 1;
+		if(code & 0x80) { /* (code & 0x7f) normal values will follow */
+			code &= 0x7f;
+			do {
+				dst[(decodeoffset++) & 0x1fff] = src[(romoffset++)%srcsize];
+				code--;
+			} while(code != 0xff);
+		} else {  /* repeat next value (code & 0x7f) times */
+			UINT8 val = src[(romoffset++)%srcsize];
+			do {
+				dst[(decodeoffset++) & 0x1fff] = val;
+				code--;
+			} while(code != 0xff);
+		}
 	}
+	return &src[romoffset%srcsize]-gfx_source;
+}
+
+
+
+#define z_decls(step)				\
+	UINT16 zxs = 0x40-(zx>>10);			\
+	UINT16 zxd = 0x40-((zx>>2) & 0x3f);		\
+	UINT16 zys = 0x40-(zy>>10);			\
+	UINT16 zyd = 0x40-((zy>>2) & 0x3f);		\
+	int xs, ys, xd, yd, old, old2;		\
+	int step_spr = step;				\
+	int bxs = 0, bys = 0;				\
+	sx <<= 6;					\
+	sy <<= 6;					\
+	x <<= 6;					\
+	y <<= 6;
+
+#define z_clamp_x_min()			\
+	if(x < 0) {					\
+		do {					\
+			bxs += zxs;				\
+			x += zxd;					\
+		} while(x < 0);				\
+	}
+
+#define z_clamp_x_max()			\
+	if(x > clip_max_x) {				\
+		do {					\
+			bxs += zxs;				\
+			x -= zxd;					\
+		} while(x > clip_max_x);				\
+	}
+
+#define z_clamp_y_min()			\
+	if(y < 0) {					\
+		do {					\
+			bys += zys;				\
+			y += zyd;					\
+		} while(y < 0);				\
+		src += (bys>>6)*step_spr;			\
+	}
+
+#define z_clamp_y_max()			\
+	if(y > clip_max_y) {				\
+		do {					\
+			bys += zys;				\
+			y -= zyd;					\
+		} while(y > clip_max_y);				\
+		src += (bys>>6)*step_spr;			\
+	}
+
+#define z_loop_x()			\
+	xs = bxs;					\
+	xd = x;					\
+	while(xs < sx && xd <= clip_max_x)
+
+#define z_loop_x_flip()			\
+	xs = bxs;					\
+	xd = x;					\
+	while(xs < sx && xd >= 0)
+
+#define z_loop_y()			\
+	ys = bys;					\
+	yd = y;					\
+	while(ys < sy && yd <= clip_max_y)
+
+#define z_loop_y_flip()			\
+	ys = bys;					\
+	yd = y;					\
+	while(ys < sy && yd >= 0)
+
+#define z_draw_pixel()				\
+	UINT8 val = src[xs >> 6];			\
+	if(val)					\
+		DrvTmpScreenC[((yd>>6) * nScreenWidth) + (xd>>6)] = val + colour;
+
+	//	*BITMAP_ADDR16(bitmap, yd>>6, xd>>6) = val + colour;
+
+#define z_x_dst(op)			\
+	old = xd;					\
+	do {						\
+		xs += zxs;					\
+		xd op zxd;					\
+	} while(!((xd^old) & ~0x3f));
+
+#define z_y_dst(op)			\
+	old = yd;					\
+	old2 = ys;					\
+	do {						\
+		ys += zys;					\
+		yd op zyd;					\
+	} while(!((yd^old) & ~0x3f));			\
+	while((ys^old2) & ~0x3f) {			\
+		src += step_spr;				\
+		old2 += 0x40;				\
+	}
+
+static void blit_nf_z(const UINT8 *src, int x, int y, int sx, int sy, UINT16 zx, UINT16 zy, int colour)
+{
+	z_decls(sx);
+	z_clamp_x_min();
+	z_clamp_y_min();
+	z_loop_y() {
+		z_loop_x() {
+			z_draw_pixel();
+			z_x_dst(+=);
+		}
+		z_y_dst(+=);
+	}
+}
+
+static void blit_fy_z(const UINT8 *src, int x, int y, int sx, int sy, UINT16 zx, UINT16 zy, int colour)
+{
+	z_decls(sx);
+	z_clamp_x_min();
+	z_clamp_y_max();
+	z_loop_y_flip() {
+		z_loop_x() {
+			z_draw_pixel();
+			z_x_dst(+=);
+		}
+		z_y_dst(-=);
+	}
+}
+
+static void blit_fx_z(const UINT8 *src, int x, int y, int sx, int sy, UINT16 zx, UINT16 zy, int colour)
+{
+	z_decls(sx);
+	z_clamp_x_max();
+	z_clamp_y_min();
+	z_loop_y() {
+		z_loop_x_flip() {
+			z_draw_pixel();
+			z_x_dst(-=);
+		}
+		z_y_dst(+=);
+	}
+}
+
+static void blit_fxy_z(const UINT8 *src, int x, int y, int sx, int sy, UINT16 zx, UINT16 zy, int colour)
+{
+	z_decls(sx);
+	z_clamp_x_max();
+	z_clamp_y_max();
+	z_loop_y_flip() {
+		z_loop_x_flip() {
+			z_draw_pixel();
+			z_x_dst(-=);
+		}
+		z_y_dst(-=);
+	}
+}
+
+
+static void (*const blit_z[4])(const UINT8 *src, int x, int y, int sx, int sy, UINT16 zx, UINT16 zy, int colour) = {
+	blit_nf_z,
+	blit_fy_z,
+	blit_fx_z,
+	blit_fxy_z,
+};
+
+void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, int spriteram_size, UINT8* gfx_source, int gfx_length, UINT32* sprite_regs)
+{
+	UINT32 *source = spriteram_source;
+	UINT32 *finish = source + spriteram_size/4;
+
+	int group_x_offset[4];
+	int group_y_offset[4];
+	int group_enable;
+	int group_number;
+	int sprite_flip;
+	int sprite_x_scroll;
+	int sprite_y_scroll;
+	int disabled = sprite_regs[0x04/4] & 0x08; // RWR1
+	int xsize,ysize, size, xpos=0,ypos=0, pri=0, romoffset, colour=0, xflip,yflip, joint;
+	int sx,sy;
+	int endromoffs=0, gfxlen;
+	int grow;
+	UINT16 zoomx, zoomy;
+
+
+
+	if ((!disabled) && suprnova_alt_enable_sprites){
+
+		group_enable    = (sprite_regs[0x00/4] & 0x0040) >> 6; // RWR0
+
+		sprite_flip = (sprite_regs[0x04/4] & 0x03); // RWR1
+
+		sprite_y_scroll = ((sprite_regs[0x08/4] & 0x7fc0) >> 6); // RWR2
+		sprite_x_scroll = ((sprite_regs[0x10/4] & 0x7fc0) >> 6); // RWR4
+		if (sprite_y_scroll&0x100) sprite_y_scroll -= 0x200; // Signed
+		if (sprite_x_scroll&0x100) sprite_x_scroll -= 0x200; // Signed
+
+		group_x_offset[0] = (sprite_regs[0x18/4] & 0xffc0) >> 6; // RWR6
+		group_y_offset[0] = (sprite_regs[0x1c/4] & 0xffc0) >> 6; // RWR7
+		if (group_x_offset[0]&0x200) group_x_offset[0] -= 0x400; // Signed
+		if (group_y_offset[0]&0x200) group_y_offset[0] -= 0x400; // Signed
+
+		group_x_offset[1] = (sprite_regs[0x20/4] & 0xffc0) >> 6; // RWR8
+		group_y_offset[1] = (sprite_regs[0x24/4] & 0xffc0) >> 6; // RWR9
+		if (group_x_offset[1]&0x200) group_x_offset[1] -= 0x400; // Signed
+		if (group_y_offset[1]&0x200) group_y_offset[1] -= 0x400; // Signed
+
+		group_x_offset[2] = (sprite_regs[0x28/4] & 0xffc0) >> 6; // RWR10
+		group_y_offset[2] = (sprite_regs[0x2c/4] & 0xffc0) >> 6; // RWR11
+		if (group_x_offset[2]&0x200) group_x_offset[2] -= 0x400; // Signed
+		if (group_y_offset[2]&0x200) group_y_offset[2] -= 0x400; // Signed
+
+		group_x_offset[3] = (sprite_regs[0x30/4] & 0xffc0) >> 6; // RWR12
+		group_y_offset[3] = (sprite_regs[0x34/4] & 0xffc0) >> 6; // RWR13
+		if (group_x_offset[3]&0x200) group_x_offset[3] -= 0x400; // Signed
+		if (group_y_offset[3]&0x200) group_y_offset[3] -= 0x400; // Signed
+
+		sprite_x_scroll += sprite_kludge_x;
+		sprite_y_scroll += sprite_kludge_y;
+
+		gfxlen = gfx_length;
+		while( source<finish )
+		{
+			xflip = (source[0] & 0x00000200) >> 9;
+			yflip = (source[0] & 0x00000100) >> 8;
+
+			ysize = (source[0] & 0x30000000) >> 28;
+			xsize = (source[0] & 0x03000000) >> 24;
+			xsize ++;
+			ysize ++;
+
+			xsize *= 16;
+			ysize *= 16;
+
+			size = xsize * ysize;
+
+			joint = (source[0] & 0x0000e000) >> 13;
+
+			if (!(joint & 1))
+			{
+				xpos =  (source[2] & 0x0000ffc0) >> 6;
+				ypos =  (source[3] & 0x0000ffc0) >> 6;
+
+				xpos += sprite_x_scroll; // Global offset
+				ypos += sprite_y_scroll;
+
+				if (group_enable)
+				{
+					group_number = (source[0] & 0x00001800) >> 11;
+
+					xpos += group_x_offset[group_number];
+					ypos += group_y_offset[group_number];
+				}
+			}
+			else
+			{
+				xpos +=  (source[2] & 0x0000ffc0) >> 6;
+				ypos +=  (source[3] & 0x0000ffc0) >> 6;
+			}
+
+			if (xpos > 0x1ff) xpos -= 0x400;
+			if (ypos > 0x1ff) ypos -= 0x400;
+
+			/* Local sprite offset (for taking flip into account and drawing offset) */
+			sx = xpos;
+			sy = ypos;
+
+			/* Global Sprite Flip (sengekis) */
+			if (sprite_flip&2)
+			{
+				xflip ^= 1;
+				sx = nScreenWidth - sx;
+			}
+			if (sprite_flip&1)
+			{
+				yflip ^= 1;
+				sy = nScreenHeight - sy;
+			}
+
+			/* Palette linking */
+			if (!(joint & 2))
+			{
+				colour = (source[0] & 0x0000003f) >> 0;
+			}
+
+			/* Priority and Tile linking */
+			if (!(joint & 4))
+			{
+				romoffset = (source[1] & 0x07ffffff) >> 0;
+				pri = (source[0] & 0x000000c0) >> 6;
+			} else {
+				romoffset = endromoffs;
+			}
+
+			grow = (source[0]>>23) & 1;
+
+			if (!grow)
+			{
+				zoomx = (source[2] >> 16)&0xfcfc;
+				zoomy = (source[3] >> 16)&0xfcfc;
+			}
+			else
+			{
+				// the bad sprites in sengekis all have this not set..
+				// we need to handle sprite shrink properly
+				zoomx = 0;
+				zoomy = 0;
+			}
+
+
+			romoffset &= gfxlen-1;
+
+			endromoffs = skns_rle_decode (romoffset, size, gfx_source, gfx_length );
+
+			{
+				int NewColour = (colour<<8) | (pri << 14);
+
+				if(zoomx || zoomy)
+				{
+					blit_z[ (xflip<<1) | yflip ](decodebuffer, sx, sy, xsize, ysize, zoomx, zoomy, NewColour);
+				}
+				else
+				{
+					if (!xflip && !yflip) {
+						int xx,yy;
+
+						for (xx = 0; xx<xsize; xx++)
+						{
+							if ((sx+xx < nScreenWidth) && (sx+xx >= 0))
+							{
+								for (yy = 0; yy<ysize; yy++)
+								{
+									if ((sy+yy < nScreenHeight) && (sy+yy >= 0))
+									{
+										int pix;
+										pix = decodebuffer[xsize*yy+xx];
+										if (pix)
+											bitmap[(sy+yy) * nScreenWidth + (sx+xx)] = pix + NewColour;
+									//		*BITMAP_ADDR16(bitmap, sy+yy, sx+xx) = pix+ NewColour; // change later
+									}
+								}
+							}
+						}
+					} else if (!xflip && yflip) {
+						int xx,yy;
+						sy -= ysize;
+
+						for (xx = 0; xx<xsize; xx++)
+						{
+							if ((sx+xx < nScreenWidth) && (sx+xx >= 0))
+							{
+								for (yy = 0; yy<ysize; yy++)
+								{
+									if ((sy+(ysize-1-yy) < nScreenHeight) && (sy+(ysize-1-yy) >= 0))
+									{
+										int pix;
+										pix = decodebuffer[xsize*yy+xx];
+										if (pix)
+											bitmap[(sy+(ysize-1-yy)) * nScreenWidth + (sx+xx)] = pix + NewColour;
+										//	*BITMAP_ADDR16(bitmap, sy+(ysize-1-yy), sx+xx) = pix+ NewColour; // change later
+									}
+								}
+							}
+						}
+					} else if (xflip && !yflip) {
+						int xx,yy;
+						sx -= xsize;
+
+						for (xx = 0; xx<xsize; xx++)
+						{
+							if ( (sx+(xsize-1-xx) < nScreenWidth) && (sx+(xsize-1-xx) >= 0))
+							{
+								for (yy = 0; yy<ysize; yy++)
+								{
+									if ((sy+yy < nScreenHeight) && (sy+yy >= 0))
+									{
+										int pix;
+										pix = decodebuffer[xsize*yy+xx];
+										if (pix)
+											bitmap[(sy+yy) * nScreenWidth + (sx+(xsize-1-xx))] = pix + NewColour;
+										//	*BITMAP_ADDR16(bitmap, sy+yy, sx+(xsize-1-xx)) = pix+ NewColour; // change later
+									}
+								}
+							}
+						}
+					} else if (xflip && yflip) {
+						int xx,yy;
+						sx -= xsize;
+						sy -= ysize;
+
+						for (xx = 0; xx<xsize; xx++)
+						{
+							if ((sx+(xsize-1-xx) < nScreenWidth) && (sx+(xsize-1-xx) >= 0))
+							{
+								for (yy = 0; yy<ysize; yy++)
+								{
+									if ((sy+(ysize-1-yy) < nScreenHeight) && (sy+(ysize-1-yy) >= 0))
+									{
+										int pix;
+										pix = decodebuffer[xsize*yy+xx];
+										if (pix)
+											bitmap[(sy+(ysize-1-yy)) * nScreenWidth + (sx+(xsize-1-xx))] = pix + NewColour;
+										//	*BITMAP_ADDR16(bitmap, sy+(ysize-1-yy), sx+(xsize-1-xx)) = pix+ NewColour; // change later
+									}
+								}
+							}
+						}
+					}
+				}
+		}//End PriTest
+
+		source+=4;
+		}
+	}
+}
+
+
+static void supernova_draw(int *offs, UINT16 *bitmap, UINT8 *flags, UINT16 *dbitmap, UINT8 *dflags, int tran)
+{
+	UINT32 *vreg = (UINT32*)DrvV3Regs;
+	UINT32 *line = (UINT32*)DrvLineRAM;
+
+	int enable = (vreg[offs[0]] >> 0) & 0x0001;
+	int nowrap = (vreg[offs[0]] >> 0) & 0x0004;
+
+	UINT32 startx,starty;
+	int incxx,incxy,incyx,incyy;
+	int columnscroll;
+
+	tran = tran; //
+
+	if (enable && suprnova_alt_enable_background)
+	{
+		startx = vreg[offs[1]];
+		incyy  = vreg[offs[2]]; // was xx, changed for sarukani
+		incyx  = vreg[offs[3]];
+		starty = vreg[offs[4]];
+		incxy  = vreg[offs[5]];
+		incxx  = vreg[offs[6]]; // was yy, changed for sarukani
+
+		columnscroll = (vreg[0x0c/4] >> offs[7]) & 0x0001;
+
+		suprnova_draw_roz(bitmap,flags,dbitmap,dflags,startx << 8,starty << 8,	incxx << 8,incxy << 8,incyx << 8,incyy << 8, !nowrap, columnscroll, &line[offs[8]]);
+	}
+}
+
+static UINT32 black_pen = 0;
+
+static void DrvRecalcPalette()
+{
+	int use_bright, brightness_r, brightness_g, brightness_b;
+	int r,g,b;
+	UINT32 *p = (UINT32*)DrvPalRAM;
+	for (int i = 0; i < 0x20000 / 4; i++) {
+		r = (p[i] >> 10) & 0x1f;
+		g = (p[i] >>  5) & 0x1f;
+		b = (p[i] >>  0) & 0x1f;
+
+	//	int alpha = (p[i] >> 15) & 1;
+
+		if (i < 0x4000) { // 1st half is for Sprites
+			use_bright = use_spc_bright;
+			brightness_b = bright_spc_b;
+			brightness_g = bright_spc_g;
+			brightness_r = bright_spc_r;
+		} else { // V3 bg's
+			use_bright = use_v3_bright;
+			brightness_b = bright_v3_b;
+			brightness_g = bright_v3_g;
+			brightness_r = bright_v3_r;
+		}
+
+		if(use_bright) { // IQ_132!!
+			if(brightness_b) b = ((b<<3) * (brightness_b+1))>>8;
+			else b = 0;
+			if(brightness_g) g = ((g<<3) * (brightness_g+1))>>8;
+			else g = 0;
+			if(brightness_r) r = ((r<<3) * (brightness_r+1))>>8;
+			else r = 0;
 	
-	if (pBurnDraw) DrvDraw();
+			DrvPalette[i] = (r << 16) | (g << 8) | b; //BurnHighCol(r, g, b, 0);
+		} else {
+			DrvPalette[i] = (r << 19) | (g << 11) | (b << 3); //BurnHighCol(r << 3, g << 3, b << 3, 0);
+		}
+
+		if (!DrvPalette[i]) black_pen = i;
+	}
+}
+
+
+static void copy_layers()
+{
+	UINT32 *vreg = (UINT32*)DrvV3Regs;
+
+	int offs[2][9] = {
+		{ 0x10 / 4, 0x1c / 4, 0x30 / 4, 0x2c / 4, 0x20 / 4, 0x28 / 4, 0x24 / 4, 1, 0x0000 },
+		{ 0x34 / 4, 0x40 / 4, 0x54 / 4, 0x50 / 4, 0x44 / 4, 0x4c / 4, 0x48 / 4, 9, 0x1000 / 4 }
+	};
+
+	{
+		int supernova_pri_a;
+		int supernova_pri_b;
+		int tran = 0;
+
+		supernova_pri_a = (vreg[0x10/4] & 0x0002)>>1;
+		supernova_pri_b = (vreg[0x34/4] & 0x0002)>>1;
+
+		supernova_draw(offs[1], DrvTmpScreenB, DrvTmpFlagB, DrvTmpScreenB2, DrvTmpFlagB2, tran);
+		supernova_draw(offs[0], DrvTmpScreenA, DrvTmpFlagA, DrvTmpScreenA2, DrvTmpFlagA2, tran);
+
+		{
+			int x,y;
+			UINT8* srcflags, *src2flags;
+			UINT16* src, *src2, *src3;
+			UINT32* dst;
+			UINT16 pri, pri2, pri3;
+			UINT16 bgpri;
+
+			UINT32 *clut = DrvPalette;
+
+			for (y=0;y<240;y++)
+			{
+				src = DrvTmpScreenB2 + y * nScreenWidth; //BITMAP_ADDR16(tilemap_bitmap_lower, y, 0);
+				srcflags = DrvTmpFlagB2 + y * nScreenWidth; //BITMAP_ADDR8(tilemap_bitmapflags_lower, y, 0);
+
+				src2 = DrvTmpScreenA2 + y * nScreenWidth; //BITMAP_ADDR16(tilemap_bitmap_higher, y, 0);
+				src2flags = DrvTmpFlagA2 + y * nScreenWidth; //BITMAP_ADDR8(tilemap_bitmapflags_higher, y, 0);
+
+				src3 = DrvTmpScreenC + y * nScreenWidth; //BITMAP_ADDR16(sprite_bitmap, y, 0);
+
+				dst = DrvTmpDraw + y * nScreenWidth; //BITMAP_ADDR32(bitmap, y, 0);
+
+				for (x=0;x<320;x++)
+				{
+					UINT16 pendata  = src[x]&0x7fff;
+					UINT16 pendata2 = src2[x]&0x7fff;
+					UINT16 bgpendata;
+					UINT16 pendata3 = src3[x]&0x3fff;
+
+					UINT32 coldat;
+
+					pri = ((srcflags[x] & 0x07)<<1) | (supernova_pri_b);
+					pri2= ((src2flags[x] & 0x07)<<1) | (supernova_pri_a);
+					pri3 = ((src3[x]&0xc000)>>12)+3;
+
+					if (pri<=pri2) // <= is good for last level of cyvern.. < seem better for galpanis kaneko logo
+					{
+						if (pendata2&0xff)
+						{
+							bgpendata = pendata2;
+							bgpri = pri2;
+						}
+						else if (pendata&0xff)
+						{
+							bgpendata = pendata;
+							bgpri = pri;
+						}
+						else
+						{
+							bgpendata = pendata2;
+							bgpri = 0;
+						}
+					}
+					else
+					{
+						if (pendata&0xff)
+						{
+							bgpendata = pendata;
+							bgpri = pri;
+						}
+						else if (pendata2&0xff)
+						{
+							bgpendata = pendata2;
+							bgpri = pri2;
+						}
+						else
+						{
+							bgpendata = 0;
+							bgpri = 0;
+						}
+					}
+
+					// if the sprites are higher than the bg pixel
+					if (pri3 > bgpri)
+					{
+
+						if (pendata3&0xff)
+						{
+
+							UINT16 palvalue = *((UINT32*)(DrvPalRAM + (pendata3 * 4))); //skns_palette_ram[pendata3];
+
+							coldat = clut[pendata3];
+
+							if (palvalue&0x8000) // iq_132
+							{
+								UINT32 srccolour = clut[bgpendata&0x7fff];
+								UINT32 dstcolour = clut[pendata3&0x3fff];
+
+								int r,g,b;
+								int r2,g2,b2;
+
+								r = (srccolour & 0x000000ff)>> 0;
+								g = (srccolour & 0x0000ff00)>> 8;
+								b = (srccolour & 0x00ff0000)>> 16;
+
+								r2 = (dstcolour & 0x000000ff)>> 0;
+								g2 = (dstcolour & 0x0000ff00)>> 8;
+								b2 = (dstcolour & 0x00ff0000)>> 16;
+
+								r2 = (r2 * bright_spc_r_trans) >> 8;
+								g2 = (g2 * bright_spc_g_trans) >> 8;
+								b2 = (b2 * bright_spc_b_trans) >> 8;
+
+								r = (r+r2);
+								if (r>255) r = 255;
+
+								g = (g+g2);
+								if (g>255) g = 255;
+
+								b = (b+b2);
+								if (b>255) b = 255;
+
+								dst[x] = (r << 0) | (g << 8) | (b << 16);
+							}
+
+							else
+							{
+								coldat = clut[pendata3];
+								dst[x] = coldat;
+							}
+						}
+						else
+						{
+							coldat = clut[bgpendata];
+							dst[x] = coldat;
+						}
+					}
+					else
+					{
+						coldat = clut[bgpendata];
+						dst[x] = coldat;
+					}
+
+				}
+			}
+		}
+	}
+}
+
+
+static int DrvDraw()
+{
+	DrvRecalcPalette();
+
+	if (nBurnBpp == 4) {
+		DrvTmpDraw = (UINT32*)pBurnDraw;
+	} else {
+		DrvTmpDraw = pDrvTmpDraw;
+	}
+
+	memset (DrvTmpScreenA2, 0, nScreenWidth * nScreenHeight * 2);
+	memset (DrvTmpScreenB2, 0, nScreenWidth * nScreenHeight * 2);
+
+//	DrvDecodeRamGfx();
+
+	draw_layer(DrvVidRAM + 0x0000, DrvTmpScreenBuf + 0x0000, DrvTmpScreenA, DrvTmpFlagA, DrvGfxROM1, 0);
+	draw_layer(DrvVidRAM + 0x4000, DrvTmpScreenBuf + 0x4000, DrvTmpScreenB, DrvTmpFlagB, DrvGfxROM2, 1);
+
+	copy_layers();
+	memset (DrvTmpScreenC,  0, nScreenWidth * nScreenHeight * 2);
+	skns_draw_sprites(DrvTmpScreenC, (UINT32*)DrvSprRAM, 0x4000, DrvGfxROM0, nGfxLen0, (UINT32*)DrvSprRegs);
+
+	//if (nBurnBpp == 4) {
+	//	DrvTmpDraw = (UINT32*)pBurnDraw;
+	//} else {
+		for (int i = 0; i < nScreenWidth * nScreenHeight; i++) {
+			int d = DrvTmpDraw[i];
+			PutPix(pBurnDraw + i * nBurnBpp, BurnHighCol(d>>16, d>>8, d, 0));
+		}
+
+		//DrvTmpDraw = pDrvTmpDraw;
+	//}
+
+	//BurnTransferCopy(DrvPalette);
 
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+static int DrvFrame()
 {
-	struct BurnArea ba;
-	
-	if (pnMin != NULL) {			// Return minimum compatible version
-		*pnMin = 0x029693;
+	if (DrvReset) {
+		DrvDoReset();
 	}
 
+	{
+		DrvInputs[0] = ~0;
+		for (int i = 0; i < 32; i++) {
+			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+		}
+
+		DrvInputs[1] = 0xffffff00 | DrvDips[0];
+
+//	PORT_BIT( 0x0000ff00, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(paddle_r, "Paddle C")
+//	PORT_BIT( 0x00ff0000, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(paddle_r, "Paddle B")
+//	PORT_BIT( 0xff000000, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(paddle_r, "Paddle A")
+
+		DrvInputs[2] = 0xffffffff; 
+//	PORT_BIT( 0x000000ff, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(paddle_r, "Paddle D")
+//	PORT_BIT( 0xffffff00, IP_ACTIVE_LOW, IPT_UNUSED )
+
+	}
+
+	//int nSoundBufferPos = 0;
+	int nTotalCycles = 28638000 / 60;
+	int nInterleave = 16;
+
+	for (int i = 0; i < nInterleave; i++) {
+		int segment = nTotalCycles / nInterleave;
+
+		Sh2Run(segment);
+		if (i == 5) Sh2SetIRQLine(1, SH2_IRQSTATUS_AUTO);
+		if (i == 6) Sh2SetIRQLine(1, SH2_IRQSTATUS_NONE);
+		if (i == 2) Sh2SetIRQLine(15, SH2_IRQSTATUS_AUTO);
+		if (i == 3) Sh2SetIRQLine(15, SH2_IRQSTATUS_NONE);
+		if (i == 3) Sh2SetIRQLine(11, SH2_IRQSTATUS_AUTO);
+		if (i == 4) Sh2SetIRQLine(11, SH2_IRQSTATUS_NONE);
+		if (i == 9) Sh2SetIRQLine(5, SH2_IRQSTATUS_AUTO);
+		if (i == 10) Sh2SetIRQLine(5, SH2_IRQSTATUS_NONE);
+		if (i == 14) Sh2SetIRQLine(9, SH2_IRQSTATUS_AUTO);
+		if (i == 15) Sh2SetIRQLine(9, SH2_IRQSTATUS_NONE);
+		// irqs
+/*		if (i == 0) { // keep this - just incase
+			Sh2SetIRQLine(1, SH2_IRQSTATUS_AUTO);
+			Sh2Run(0);
+			Sh2SetIRQLine(1, SH2_IRQSTATUS_NONE);
+		} else if (i == 2) {
+			Sh2SetIRQLine(15, SH2_IRQSTATUS_AUTO);
+			Sh2Run(0);
+			Sh2SetIRQLine(15, SH2_IRQSTATUS_NONE);
+		} else if (i == 3) {
+			Sh2SetIRQLine(11, SH2_IRQSTATUS_AUTO);
+			Sh2Run(0);
+			Sh2SetIRQLine(11, SH2_IRQSTATUS_NONE);
+		} else if (i == 8) {
+			Sh2SetIRQLine(5, SH2_IRQSTATUS_AUTO);
+			Sh2Run(0);
+			Sh2SetIRQLine(5, SH2_IRQSTATUS_NONE);
+		} else if (i == 9) { // 28638000/1824 / 60
+			Sh2SetIRQLine(9, SH2_IRQSTATUS_AUTO);
+			Sh2Run(0);
+			Sh2SetIRQLine(9, SH2_IRQSTATUS_NONE);
+		}*//* else {
+			Sh2SetIRQLine(9, SH2_IRQSTATUS_AUTO);
+			Sh2Run(0);
+			Sh2SetIRQLine(9, SH2_IRQSTATUS_NONE);
+		}  */
+
+	   /*     if (pBurnSoundOut && (i & 1)) {
+			int nSegmentEnd = nBurnSoundLen * i / nInterleave;
+			short* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			YMZ280BRender(pSoundBuf, nSegmentEnd - nSoundBufferPos);
+			nSoundBufferPos = nSegmentEnd;
+		} */
+	}
+
+	if (pBurnSoundOut) {
+			YMZ280BRender(pBurnSoundOut, nBurnSoundLen);
+	      /*  int nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		short* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			YMZ280BRender(pSoundBuf, nSegmentLength);
+		} */
+	}
+
+	if (pBurnDraw) {
+		DrvDraw();
+	}
+
+	return 0;
+}
+
+
+static int DrvScan(int nAction, int *pnMin)
+{
+	struct BurnArea ba;
+
+	if (pnMin != NULL) {
+		*pnMin =  0x029707;
+	}
+	
 	if (nAction & ACB_MEMORY_RAM) {
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = RamStart;
-		ba.nLen	  = RamEnd-RamStart;
-		ba.szName = "All Ram";
+		ba.Data		= AllRam;
+		ba.nLen		= RamEnd - AllRam;
+		ba.nAddress = 0;
+		ba.szName	= "All RAM";
+		BurnAcb(&ba);
+	}
+	
+	if (nAction & ACB_DRIVER_DATA) {
+		Sh2Scan(nAction);
+		YMZ280BScan();
+	}
+
+	if (nAction & ACB_NVRAM) {
+		ba.Data		= DrvNvRAM;
+		ba.nLen		= 0x02000;
+		ba.nAddress	= 0;
+		ba.szName	= "NV RAM";
 		BurnAcb(&ba);
 	}
 
+	if (nAction & ACB_WRITE) {
+
+	}
+
 	return 0;
 }
 
-struct BurnDriver BurnDrvCyvern = {
-	"cyvern", NULL, NULL, NULL, "1998",
-	"Cyvern (Japan)\0", NULL, "Kaneko", "Super Kaneko Nova System",
+
+// Super Kaneko Nova System BIOS
+
+static struct BurnRomInfo sknsRomDesc[] = {
+	{ "sknsj1.u10",		0x80000, 0x7e2b836c, BRF_BIOS}, //  0 Japan BIOS
+	{ "sknse1.u10",		0x80000, 0xe2b9d7d1, BRF_BIOS}, //  1 Europ BIOS
+	{ "sknsa1.u10",		0x80000, 0x745e5212, BRF_BIOS}, //  2 Asia  BIOS
+	{ "sknsu1.u10",		0x80000, 0x384d21ec, BRF_BIOS}, //  3 USA   BIOS
+	{ "sknsk1.u10",		0x80000, 0xff1c9f79, BRF_BIOS}, //  4 Korea BIOS
+};
+
+STD_ROM_PICK(skns)
+STD_ROM_FN(skns)
+
+static int SknsInit() {
+	return 1;
+}
+
+struct BurnDriver BurnDrvSkns = {
+	"skns", NULL, NULL, NULL, "1996",
+	"Super Kaneko Nova System BIOS\0", "BIOS only", "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_KANEKO_MISC, GBF_VERSHOOT, 0,
-	NULL, CyvernRomInfo, CyvernRomName, NULL, NULL, CyvernInputInfo, DrvDIPInfo,
-	CyvernInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x8000, 240, 320, 3, 4
+	BDF_BOARDROM, 0, HARDWARE_MISC_POST90S, GBF_BIOS, 0,
+	NULL, sknsRomInfo, sknsRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
+	SknsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
+	320, 240, 4, 3
+};
+
+// Cyvern (US)
+
+static struct BurnRomInfo cyvernRomDesc[] = {
+	{ "cv-usa.u10",	        0x100000, 0x1023ddca, 1 | BRF_PRG | BRF_ESS }, //  0 user1
+	{ "cv-usa.u8",		0x100000, 0xf696f6be, 1 | BRF_PRG | BRF_ESS }, //  1
+
+        { "cv100-00.u24",	0x400000, 0xcd4ae88a, 2 | BRF_GRA}, //  2 gfx1
+	{ "cv101-00.u20",	0x400000, 0xa6cb3f0b, 3 | BRF_GRA}, //  3
+
+	{ "cv200-00.u16",	0x400000, 0xddc8c67e, 4 | BRF_GRA}, //  4 gfx2
+	{ "cv201-00.u13",	0x400000, 0x65863321, 4 | BRF_GRA}, //  5
+
+	{ "cv210-00.u18",	0x400000, 0x7486bf3a, 5 | BRF_GRA}, //  6 gfx3
+
+	{ "cv300-00.u4",	0x400000, 0xfbeda465, 6 | BRF_SND}, //  7 ymz
+};
+
+STDROMPICKEXT(cyvern, cyvern, skns)
+STD_ROM_FN(cyvern)
+
+// Cyvern (Japan)
+
+static struct BurnRomInfo cyvernjRomDesc[] = {
+	{ "cvj-even.u10",	0x100000, 0x802fadb4, 1 | BRF_PRG | BRF_ESS }, //  0 user1
+	{ "cvj-odd.u8",		0x100000, 0xf8a0fbdd, 1 | BRF_PRG | BRF_ESS }, //  1
+
+        { "cv100-00.u24",	0x400000, 0xcd4ae88a, 2 | BRF_GRA}, //  2 gfx1
+	{ "cv101-00.u20",	0x400000, 0xa6cb3f0b, 3 | BRF_GRA}, //  3
+
+	{ "cv200-00.u16",	0x400000, 0xddc8c67e, 4 | BRF_GRA}, //  4 gfx2
+	{ "cv201-00.u13",	0x400000, 0x65863321, 4 | BRF_GRA}, //  5
+
+	{ "cv210-00.u18",	0x400000, 0x7486bf3a, 5 | BRF_GRA}, //  6 gfx3
+
+	{ "cv300-00.u4",	0x400000, 0xfbeda465, 6 | BRF_SND}, //  7 ymz
+};
+
+STDROMPICKEXT(cyvernj, cyvernj, skns)
+STD_ROM_FN(cyvernj)
+
+static int CyvernLoadRoms()
+{
+	if (BurnLoadRom(DrvSh2ROM  + 0x000000,  0, 2)) return 1;
+	if (BurnLoadRom(DrvSh2ROM  + 0x000001,  1, 2)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM0 + 0x400000,  3, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM1 + 0x000000,  4, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x400000,  5, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM2 + 0x400000,  6, 1)) return 1;
+
+	if (BurnLoadRom(YMZ280BROM + 0x000000,  7, 1)) return 1;
+
+	return 0;
+}
+
+static int CyvernInit()
+{
+	sprite_kludge_x = 0;
+	sprite_kludge_y = 2;
+	speedhack_address = 0x604d3c8;
+	speedhack_pc[0] = 0x402ebd4;
+
+	return DrvInit(CyvernLoadRoms, 3, 0x800000);
+}
+
+static int CyvernJInit()
+{
+	sprite_kludge_x = 0;
+	sprite_kludge_y = 2;
+	speedhack_address = 0x604d3c8;
+	speedhack_pc[0] = 0x402ebd4;
+
+	return DrvInit(CyvernLoadRoms, 0, 0x800000);
+}
+
+struct BurnDriver BurnDrvCyvern = {
+	"cyvern", NULL, "skns", NULL, "1998",
+	"Cyvern (US)\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | SCREEN_FLIP, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, cyvernRomInfo, cyvernRomName, NULL, NULL, CyvernInputInfo, CyvernDIPInfo,
+	CyvernInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
+	240, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvCyvernJ = {
+	"cyvernj", "cyvern", "skns", NULL, "1998",
+	"Cyvern (Japan)\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | SCREEN_FLIP, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, cyvernjRomInfo, cyvernjRomName, NULL, NULL, CyvernInputInfo, CyvernDIPInfo,
+	CyvernJInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
+	240, 320, 3, 4
+};
+
+// Guts'n (Japan)
+
+static struct BurnRomInfo gutsnRomDesc[] = {
+	{ "gts000j0.u6",	0x080000, 0x8ee91310, 2 }, //  0 user1
+	{ "gts001j0.u4",	0x080000, 0x80b8ee66, 2 }, //  1
+
+	{ "gts10000.u24",	0x400000, 0x1959979e, 3 }, //  2 gfx1
+
+	{ "gts20000.u16",	0x400000, 0xc443aac3, 4 }, //  3 gfx2
+
+	{ "gts30000.u4",	0x400000, 0x8c169141, 5 }, //  4 ymz
+};
+
+STDROMPICKEXT(gutsn, gutsn, skns)
+STD_ROM_FN(gutsn)
+
+static int GutsnLoadRoms()
+{
+	if (BurnLoadRom(DrvSh2ROM  + 0x000000,  0, 2)) return 1;
+	if (BurnLoadRom(DrvSh2ROM  + 0x000001,  1, 2)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM1 + 0x000000,  3, 1)) return 1;
+
+	if (BurnLoadRom(YMZ280BROM  + 0x000000,  4, 1)) return 1;
+
+	return 0;
+}
+
+static int GutsnInit()
+{
+	sprite_kludge_x = 0;
+	sprite_kludge_y = 0;
+	speedhack_address = 0x600c780;
+	speedhack_pc[0] = 0x4022070; //number from mame + 0x02
+
+	return DrvInit(GutsnLoadRoms, 0 /*japan*/, 0x400000);
+}
+
+struct BurnDriver BurnDrvGutsn = {
+	"gutsn", NULL, "skns", NULL, "2000",
+	"Guts'n (Japan)\0", "Imperfect inputs", "Kaneko / Kouyousha", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, gutsnRomInfo, gutsnRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
+	GutsnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
+	320, 240, 4, 3
+};
+
+// Sengeki Striker (Asia)
+
+static struct BurnRomInfo sengekisRomDesc[] = {
+	{ "ss01a.u6",		0x080000, 0x962fe857, 1 | BRF_PRG | BRF_ESS }, //  0 user1
+	{ "ss01a.u4",		0x080000, 0xee853c23, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ss100-00.u21",	0x400000, 0xbc7b3dfa, 2 | BRF_GRA}, //  2 gfx1
+	{ "ss101-00.u20",	0x400000, 0xab2df280, 3 | BRF_GRA}, //  3
+	{ "ss102-00.u8",	0x400000, 0x0845eafe, 3 | BRF_GRA}, //  4
+	{ "ss103-00.u32",	0x400000, 0xee451ac9, 3 | BRF_GRA}, //  5
+
+	{ "ss200-00.u17",	0x400000, 0xcd773976, 4 | BRF_GRA}, //  6 gfx2
+	{ "ss201-00.u9",	0x400000, 0x301fad4c, 4 | BRF_GRA}, //  7
+
+	{ "ss210-00.u3",	0x200000, 0xc3697805, 5 | BRF_GRA}, //  8 gfx3
+
+	{ "ss300-00.u1",	0x400000, 0x35b04b18, 6 | BRF_SND},//  9 ymz
+};
+
+STDROMPICKEXT(sengekis, sengekis, skns)
+STD_ROM_FN(sengekis)
+
+static int SengekisLoadRoms()
+{
+	if (BurnLoadRom(DrvSh2ROM  + 0x000000,  0, 2)) return 1;
+	if (BurnLoadRom(DrvSh2ROM  + 0x000001,  1, 2)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM0 + 0x400000,  3, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM0 + 0x800000,  4, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM0 + 0xc00000,  5, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM1 + 0x000000,  6, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x400000,  7, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM2 + 0x400000,  8, 1)) return 1;
+
+	if (BurnLoadRom(YMZ280BROM  + 0x000000,  9, 1)) return 1;
+
+	return 0;
+}
+
+static int SengekisInit()
+{
+	sprite_kludge_x = -192;
+	sprite_kludge_y = -272;
+
+	speedhack_address = 0x60b74bc;
+	speedhack_pc[0] = 0x60006ec + 2;
+
+	return DrvInit(SengekisLoadRoms, 2 /*asia*/, 0x2000000);
+}
+
+struct BurnDriver BurnDrvSengekis = {
+	"sengekis", NULL, "skns", NULL, "1997",
+	"Sengeki Striker (Asia)\0", "Game crashes!", "Kaneko / Warashi", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+        BDF_ORIENTATION_VERTICAL | SCREEN_FLIP, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, sengekisRomInfo, sengekisRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
+	SengekisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
+	240, 320, 3, 4
+};
+
+// Sengeki Striker (Japan)
+
+static struct BurnRomInfo sengekisjRomDesc[] = {
+	{ "ss01j.u6",		0x080000, 0x9efdcd5a, 2 }, //  0 user1
+	{ "ss01j.u4",		0x080000, 0x92c3f45e, 2 }, //  1
+
+	{ "ss100-00.u21",	0x400000, 0xbc7b3dfa, 3 }, //  2 gfx1
+	{ "ss101-00.u20",	0x400000, 0xab2df280, 3 }, //  3
+	{ "ss102-00.u8",	0x400000, 0x0845eafe, 3 }, //  4
+	{ "ss103-00.u32",	0x400000, 0xee451ac9, 3 }, //  5
+
+	{ "ss200-00.u17",	0x400000, 0xcd773976, 4 }, //  6 gfx2
+	{ "ss201-00.u9",	0x400000, 0x301fad4c, 4 }, //  7
+
+	{ "ss210-00.u3",	0x200000, 0xc3697805, 5 }, //  8 gfx3
+
+	{ "ss300-00.u1",	0x400000, 0x35b04b18, 6 }, //  9 ymz
+};
+
+STDROMPICKEXT(sengekisj, sengekisj, skns)
+STD_ROM_FN(sengekisj)
+
+static int SengekisjInit()
+{
+	sprite_kludge_x = -192;
+	sprite_kludge_y = -272;
+
+	speedhack_address = 0x60b7380;
+	speedhack_pc[0] = 0x60006ec + 2;
+
+	return DrvInit(SengekisLoadRoms, 0 /*japan*/, 0x2000000);
+}
+
+struct BurnDriver BurnDrvSengekisj = {
+	"sengekisj", "sengekis", "skns", NULL, "1997",
+	"Sengeki Striker (Japan)\0", "Game crashes!", "Kaneko / Warashi", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL | SCREEN_FLIP, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, sengekisjRomInfo, sengekisjRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
+	SengekisjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
+	240, 320, 3, 4
 };

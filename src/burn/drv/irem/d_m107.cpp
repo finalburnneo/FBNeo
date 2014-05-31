@@ -1524,7 +1524,7 @@ STD_ROM_PICK(kftgoal)
 STD_ROM_FN(kftgoal)
 
 struct BurnDriver BurnDrvKftgoal = {
-	"(kftgoal", "wpksoc", NULL, NULL, "1995",
+	"kftgoal", "wpksoc", NULL, NULL, "1995",
 	"Kick for the Goal\0", NULL, "Jaleco", "M107",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 4, HARDWARE_IREM_MISC, GBF_SPORTSFOOTBALL, 0,

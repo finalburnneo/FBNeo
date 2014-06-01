@@ -64,14 +64,13 @@ static UINT16 *yscroll2;
 static UINT8 selected_ip;
 
 static INT32 watchdog;
-static UINT8 color_table[32];
 static void (*palette_write)(INT32) = NULL;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
 static UINT8 DrvJoy4[16];
-static UINT8 DrvDips[3];
+static UINT8 DrvDips[4];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[4];
 static INT32 DrvAnalogPort0 = 0;
@@ -113,6 +112,7 @@ static struct BurnInputInfo NemesisInputList[] = {
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Nemesis)
@@ -169,6 +169,7 @@ static struct BurnInputInfo TwinbeeInputList[] = {
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Twinbee)
@@ -199,6 +200,7 @@ static struct BurnInputInfo GradiusInputList[] = {
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Gradius)
@@ -229,6 +231,7 @@ static struct BurnInputInfo GwarriorInputList[] = {
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Gwarrior)
@@ -337,6 +340,7 @@ static struct BurnInputInfo KonamigtInputList[] = {
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Konamigt)
@@ -364,6 +368,7 @@ static struct BurnDIPInfo NemesisDIPList[]=
 	{0x14, 0xff, 0xff, 0xff, NULL			},
 	{0x15, 0xff, 0xff, 0x5b, NULL			},
 	{0x16, 0xff, 0xff, 0xff, NULL			},
+	{0x17, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,   16, "Coin A"		},
 	{0x14, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
@@ -438,6 +443,11 @@ static struct BurnDIPInfo NemesisDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x16, 0x01, 0x04, 0x04, "Off"			},
 	{0x16, 0x01, 0x04, 0x00, "On"			},
+
+	{0,    0xfe, 0,       2, "Color Settings"	},
+	{0x17, 0x01, 0x03, 0x00, "Proper Colors (Dark)"	},
+	{0x17, 0x01, 0x03, 0x01, "Light Colors"		},
+	{0x17, 0x01, 0x03, 0x02, "MAMEFx Colors (Mid)"	},
 };
 
 STDDIPINFO(Nemesis)
@@ -577,6 +587,7 @@ static struct BurnDIPInfo TwinbeeDIPList[]=
 	{0x12, 0xff, 0xff, 0xff, NULL			},
 	{0x13, 0xff, 0xff, 0x56, NULL			},
 	{0x14, 0xff, 0xff, 0xfd, NULL			},
+	{0x15, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,   16, "Coin A"		},
 	{0x12, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
@@ -647,6 +658,11 @@ static struct BurnDIPInfo TwinbeeDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x14, 0x01, 0x04, 0x04, "Off"			},
 	{0x14, 0x01, 0x04, 0x00, "On"			},
+
+	{0,    0xfe, 0,       3, "Color Settings"	},
+	{0x15, 0x01, 0x03, 0x00, "Proper Colors (Dark)"	},
+	{0x15, 0x01, 0x03, 0x01, "Light Colors"		},
+	{0x17, 0x01, 0x03, 0x02, "MAMEFx Colors (Mid)"	},
 };
 
 STDDIPINFO(Twinbee)
@@ -656,6 +672,7 @@ static struct BurnDIPInfo GradiusDIPList[]=
 	{0x14, 0xff, 0xff, 0xff, NULL			},
 	{0x15, 0xff, 0xff, 0x53, NULL			},
 	{0x16, 0xff, 0xff, 0xff, NULL			},
+	{0x17, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,   16, "Coin A"		},
 	{0x14, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
@@ -730,6 +747,11 @@ static struct BurnDIPInfo GradiusDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x16, 0x01, 0x04, 0x04, "Off"			},
 	{0x16, 0x01, 0x04, 0x00, "On"			},
+
+	{0,    0xfe, 0,       3, "Color Settings"	},
+	{0x17, 0x01, 0x03, 0x00, "Proper Colors (Dark)"	},
+	{0x17, 0x01, 0x03, 0x01, "Light Colors"		},
+	{0x17, 0x01, 0x03, 0x02, "MAMEFx Colors (Mid)"	},
 };
 
 STDDIPINFO(Gradius)
@@ -739,6 +761,7 @@ static struct BurnDIPInfo GwarriorDIPList[]=
 	{0x14, 0xff, 0xff, 0xff, NULL			},
 	{0x15, 0xff, 0xff, 0x5d, NULL			},
 	{0x16, 0xff, 0xff, 0xfd, NULL			},
+	{0x17, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,   16, "Coin A"		},
 	{0x14, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
@@ -809,6 +832,11 @@ static struct BurnDIPInfo GwarriorDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x16, 0x01, 0x04, 0x04, "Off"			},
 	{0x16, 0x01, 0x04, 0x00, "On"			},
+
+	{0,    0xfe, 0,       3, "Color Settings"	},
+	{0x17, 0x01, 0x03, 0x00, "Proper Colors (Dark)"	},
+	{0x17, 0x01, 0x03, 0x01, "Light Colors"		},
+	{0x17, 0x01, 0x03, 0x02, "MAMEFx Colors (Mid)"	},
 };
 
 STDDIPINFO(Gwarrior)
@@ -1053,6 +1081,7 @@ static struct BurnDIPInfo KonamigtDIPList[]=
 	{0x07, 0xff, 0xff, 0xff, NULL			},
 	{0x08, 0xff, 0xff, 0x20, NULL			},
 	{0x09, 0xff, 0xff, 0xff, NULL			},
+	{0x0a, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,   16, "Coin A"		},
 	{0x07, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
@@ -1107,6 +1136,11 @@ static struct BurnDIPInfo KonamigtDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x09, 0x01, 0x04, 0x04, "Off"			},
 	{0x09, 0x01, 0x04, 0x00, "On"			},
+
+	{0,    0xfe, 0,       3, "Color Settings"	},
+	{0x0a, 0x01, 0x03, 0x00, "Proper Colors (Dark)"	},
+	{0x0a, 0x01, 0x03, 0x01, "Light Colors"		},
+	{0x17, 0x01, 0x03, 0x02, "MAMEFx Colors (Mid)"	},
 };
 
 STDDIPINFO(Konamigt)
@@ -1947,13 +1981,29 @@ static void __fastcall nemesis_charram_write_byte(UINT32 address, UINT8 data)
 
 static void nemesis_palette_update(INT32 i)
 {
+	static const UINT8 color_table[3][32] =
+	{
+		{	// correct colors (calculated by resnet system in MAME)
+			0x00, 0x01, 0x02, 0x04, 0x05, 0x06, 0x08, 0x09, 0x0b, 0x0d, 0x0f, 0x12, 0x14, 0x16, 0x19, 0x1c, 
+			0x21, 0x24, 0x29, 0x2e, 0x33, 0x39, 0x40, 0x49, 0x50, 0x5b, 0x68, 0x78, 0x8e, 0xa8, 0xcc, 0xff
+		},
+		{	// previous, incorrect (lighter) colors
+			0x00, 0x08, 0x11, 0x19, 0x21, 0x29, 0x32, 0x3a, 0x40, 0x48, 0x51, 0x59, 0x61, 0x69, 0x72, 0x7a,
+			0x85, 0x8d, 0x96, 0x9e, 0xa6, 0xae, 0xb7, 0xbf, 0xc5, 0xcd, 0xd6, 0xde, 0xe6, 0xee, 0xf7, 0xff
+		},
+		{	// MAMEFX colors (mid)
+			0x00, 0x00, 0x01, 0x02, 0x04, 0x06, 0x09, 0x0d, 0x10, 0x14, 0x19, 0x1f, 0x24, 0x2b, 0x32, 0x3a,
+			0x45, 0x4d, 0x58, 0x61, 0x6c, 0x76, 0x83, 0x8f, 0x98, 0xa4, 0xb3, 0xc1, 0xcf, 0xde, 0xef, 0xff
+		}
+	};
+
 	i &= 0xffe;
 
 	INT32 p = (DrvPalRAM[i+1] << 8) | DrvPalRAM[i];
 
-	INT32 b = color_table[(p >> 10) & 0x1f];
-	INT32 g = color_table[(p >>  5) & 0x1f];
-	INT32 r = color_table[(p >>  0) & 0x1f];
+	INT32 b = color_table[DrvDips[3]&3][(p >> 10) & 0x1f];
+	INT32 g = color_table[DrvDips[3]&3][(p >>  5) & 0x1f];
+	INT32 r = color_table[DrvDips[3]&3][(p >>  0) & 0x1f];
 
 	DrvPalette[i/2] = BurnHighCol(r,g,b,0);
 }	
@@ -2042,26 +2092,6 @@ static INT32 MemIndex()
 	MemEnd			= Next;
 
 	return 0;
-}
-
-static void compute_color_table()
-{
-	for (INT32 i = 0; i < 32; i++)
-	{
-		INT32 c0 = ((i >> 4) & 1) * 4700;
-		INT32 c1 = ((i >> 3) & 1) * 2400;
-		INT32 c2 = ((i >> 2) & 1) * 1200;
-		INT32 c3 = ((i >> 1) & 1) * 620;
-		INT32 c4 = ((i >> 0) & 1) * 300;
-
-		color_table[i] = ((c0 + c1 + c2 + c3 + c4) * 255) / 9220;
-	}
-
-	double black = color_table[0];
-	double white = 255.0 / (color_table[31] - black);
-
-	for (INT32  i = 0; i < 32; i++)
-		color_table[i] = (color_table[i] - black) * white + 0.5;
 }
 
 static INT32 DrvDoReset()
@@ -2217,8 +2247,6 @@ static INT32 NemesisInit()
 
 		if (BurnLoadRom(K005289ROM + 0x00000,  9, 1)) return 1;
 		if (BurnLoadRom(K005289ROM + 0x00100, 10, 1)) return 1;
-
-		compute_color_table();
 	}
 
 	SekInit(0, 0x68000);
@@ -2283,8 +2311,6 @@ static INT32 KonamigtInit()
 
 		if (BurnLoadRom(K005289ROM + 0x00000,  9, 1)) return 1;
 		if (BurnLoadRom(K005289ROM + 0x00100, 10, 1)) return 1;
-
-		compute_color_table();
 	}
 
 	SekInit(0, 0x68000);
@@ -2527,8 +2553,6 @@ static INT32 Gx400Init()
 
 		if (BurnLoadRom(K005289ROM + 0x00000,  5, 1)) return 1;
 		if (BurnLoadRom(K005289ROM + 0x00100,  6, 1)) return 1;
-
-		compute_color_table();
 	}
 
 	SekInit(0, 0x68000);
@@ -2596,8 +2620,6 @@ static INT32 Rf2_gx400Init()
 
 		if (BurnLoadRom(K005289ROM + 0x00000,  5, 1)) return 1;
 		if (BurnLoadRom(K005289ROM + 0x00100,  6, 1)) return 1;
-
-		compute_color_table();
 	}
 
 	SekInit(0, 0x68000);
@@ -2818,6 +2840,8 @@ static void draw_layer(UINT8 *vidram, UINT8 *colram, UINT16 *scrollx, UINT16 *sc
 			INT32 dy = sy;
 			dy -= 16;
 			if (dy < 0 || dy >= nScreenHeight) continue;
+
+			if (*tilemap_flip_y) dy = (nScreenHeight - 1) - dy;
 
 			INT32 code  = vram[offs];
 			INT32 color = cram[offs];

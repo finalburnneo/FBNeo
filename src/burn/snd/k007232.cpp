@@ -314,8 +314,6 @@ INT32 K007232Scan(INT32 nAction, INT32 *pnMin)
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232Scan called without init\n"));
 #endif
 
-	struct BurnArea ba;
-
 	if (pnMin != NULL) {
 		*pnMin = 0x029693;
 	}

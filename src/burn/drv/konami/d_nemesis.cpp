@@ -1,5 +1,5 @@
 // FB Alpha Nemesis driver module
-// Based on MAME driver by Bryan McPhail w/additions by Hau, hap, and likely *many* othes
+// Based on MAME driver by Bryan McPhail w/additions by Hau, hap, and likely othes
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -70,9 +70,10 @@ static void (*palette_write)(INT32) = NULL;
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
+static UINT8 DrvJoy4[16];
 static UINT8 DrvDips[3];
 static UINT8 DrvReset;
-static UINT16 DrvInputs[3];
+static UINT16 DrvInputs[4];
 static INT32 DrvAnalogPort0 = 0;
 static INT32 DrvAnalogPort1 = 0;
 
@@ -83,7 +84,6 @@ static INT32 k005289_enable = 0;
 static INT32 k007232_enable = 0;
 static INT32 k051649_enable = 0;
 static INT32 vlm5030_enable = 0;
-
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 
@@ -302,7 +302,7 @@ static struct BurnInputInfo CitybombInputList[] = {
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"	},
 
-	A("Acceleration"      , BIT_ANALOG_REL, &DrvAnalogPort0 , "mouse x-axis"),
+	A("Accelerator"       , BIT_ANALOG_REL, &DrvAnalogPort0 , "mouse x-axis"),
 	A("Wheel    "         , BIT_ANALOG_REL, &DrvAnalogPort1 , "mouse y-axis"),
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
@@ -324,13 +324,48 @@ static struct BurnInputInfo CitybombInputList[] = {
 
 STDINPUTINFO(Citybomb)
 
+static struct BurnInputInfo KonamigtInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"Accelerator",		BIT_DIGITAL,	DrvJoy4 + 6,	"p1 fire 1"	},
+	{"Brake",		BIT_DIGITAL,	DrvJoy4 + 5,	"p1 fire 2"	},
+	{"Gear Shift",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 3"	},
+
+	A("Wheel"             , BIT_ANALOG_REL, &DrvAnalogPort0 , "mouse x-axis"),
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+};
+
+STDINPUTINFO(Konamigt)
+
+static struct BurnInputInfo HcrashInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"Accelerator",		BIT_DIGITAL,	DrvJoy4 + 6,	"p1 fire 1"	},
+	{"Brake",		BIT_DIGITAL,	DrvJoy4 + 5,	"p1 fire 2"	},
+	{"Gear Shift",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 3"	},
+
+	A("Wheel"             , BIT_ANALOG_REL, &DrvAnalogPort0 , "mouse x-axis"),
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+};
+
+STDINPUTINFO(Hcrash)
+
 static struct BurnDIPInfo NemesisDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0xff, NULL			},
 	{0x15, 0xff, 0xff, 0x5b, NULL			},
 	{0x16, 0xff, 0xff, 0xff, NULL			},
 
-	{0   , 0xfe, 0   ,    16, "Coin A"		},
+	{0   , 0xfe, 0   ,   16, "Coin A"		},
 	{0x14, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
 	{0x14, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
 	{0x14, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
@@ -348,7 +383,7 @@ static struct BurnDIPInfo NemesisDIPList[]=
 	{0x14, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
 	{0x14, 0x01, 0x0f, 0x00, "Free Play"		},
 
-	{0   , 0xfe, 0   ,    16, "Coin B"		},
+	{0   , 0xfe, 0   ,   16, "Coin B"		},
 	{0x14, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
 	{0x14, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
 	{0x14, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
@@ -413,7 +448,7 @@ static struct BurnDIPInfo SalamandDIPList[]=
 	{0x13, 0xff, 0xff, 0x42, NULL			},
 	{0x14, 0xff, 0xff, 0x0e, NULL			},
 
-	{0   , 0xfe, 0   ,    16, "Coinage"		},
+	{0   , 0xfe, 0   ,   16, "Coinage"		},
 	{0x12, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
 	{0x12, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
 	{0x12, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
@@ -622,7 +657,7 @@ static struct BurnDIPInfo GradiusDIPList[]=
 	{0x15, 0xff, 0xff, 0x53, NULL			},
 	{0x16, 0xff, 0xff, 0xff, NULL			},
 
-	{0   , 0xfe, 0   ,    16, "Coin A"		},
+	{0   , 0xfe, 0   ,   16, "Coin A"		},
 	{0x14, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
 	{0x14, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
 	{0x14, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
@@ -640,7 +675,7 @@ static struct BurnDIPInfo GradiusDIPList[]=
 	{0x14, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
 	{0x14, 0x01, 0x0f, 0x00, "Free Play"		},
 
-	{0   , 0xfe, 0   ,    16, "Coin B"		},
+	{0   , 0xfe, 0   ,   16, "Coin B"		},
 	{0x14, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
 	{0x14, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
 	{0x14, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
@@ -938,7 +973,7 @@ static struct BurnDIPInfo CitybombDIPList[]=
 	{0x17, 0xff, 0xff, 0x53, NULL			},
 	{0x18, 0xff, 0xff, 0x8c, NULL			},
 
-	{0   , 0xfe, 0   ,    16, "Coin A"		},
+	{0   , 0xfe, 0   ,   16, "Coin A"		},
 	{0x16, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
 	{0x16, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
 	{0x16, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
@@ -956,7 +991,7 @@ static struct BurnDIPInfo CitybombDIPList[]=
 	{0x16, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
 	{0x16, 0x01, 0x0f, 0x00, "Free Play"		},
 
-	{0   , 0xfe, 0   ,    16, "Coin B"		},
+	{0   , 0xfe, 0   ,   16, "Coin B"		},
 	{0x16, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
 	{0x16, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
 	{0x16, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
@@ -974,9 +1009,9 @@ static struct BurnDIPInfo CitybombDIPList[]=
 	{0x16, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
 	{0x16, 0x01, 0xf0, 0x00, "Invalid"		},
 
-	{0   , 0xfe, 0   ,    0, "Cabinet"		},
-	{0x17, 0x01, 0x04, 0x00, "Upright"		},
-	{0x17, 0x01, 0x04, 0x04, "Cocktail"		},
+//	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+//	{0x17, 0x01, 0x04, 0x00, "Upright"		},
+//	{0x17, 0x01, 0x04, 0x04, "Cocktail"		},
 
 	{0   , 0xfe, 0   ,    0, "Qualify"		},
 	{0x17, 0x01, 0x18, 0x18, "Long"			},
@@ -1012,6 +1047,158 @@ static struct BurnDIPInfo CitybombDIPList[]=
 };
 
 STDDIPINFO(Citybomb)
+
+static struct BurnDIPInfo KonamigtDIPList[]=
+{
+	{0x07, 0xff, 0xff, 0xff, NULL			},
+	{0x08, 0xff, 0xff, 0x20, NULL			},
+	{0x09, 0xff, 0xff, 0xff, NULL			},
+
+	{0   , 0xfe, 0   ,   16, "Coin A"		},
+	{0x07, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
+	{0x07, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
+	{0x07, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
+	{0x07, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
+	{0x07, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
+	{0x07, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"	},
+	{0x07, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
+	{0x07, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
+	{0x07, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
+	{0x07, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
+	{0x07, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
+	{0x07, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
+	{0x07, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
+	{0x07, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
+	{0x07, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
+	{0x07, 0x01, 0x0f, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,   16, "Coin B"		},
+	{0x07, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
+	{0x07, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
+	{0x07, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
+	{0x07, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
+	{0x07, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
+	{0x07, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"	},
+	{0x07, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
+	{0x07, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
+	{0x07, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
+	{0x07, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
+	{0x07, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
+	{0x07, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
+	{0x07, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
+	{0x07, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
+	{0x07, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
+	{0x07, 0x01, 0xf0, 0x00, "No Coin B"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x08, 0x01, 0x30, 0x30, "Easy"			},
+	{0x08, 0x01, 0x30, 0x20, "Normal"		},
+	{0x08, 0x01, 0x30, 0x10, "Hard"			},
+	{0x08, 0x01, 0x30, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x08, 0x01, 0x80, 0x80, "Off"			},
+	{0x08, 0x01, 0x80, 0x00, "On"			},
+
+//	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+//	{0x09, 0x01, 0x01, 0x01, "Off"			},
+//	{0x09, 0x01, 0x01, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x09, 0x01, 0x04, 0x04, "Off"			},
+	{0x09, 0x01, 0x04, 0x00, "On"			},
+};
+
+STDDIPINFO(Konamigt)
+
+static struct BurnDIPInfo HcrashDIPList[]=
+{
+	{0x08, 0xff, 0xff, 0xff, NULL			},
+	{0x09, 0xff, 0xff, 0x5e, NULL			},
+	{0x0a, 0xff, 0xff, 0xff, NULL			},
+
+	{0   , 0xfe, 0   ,   16, "Coin A"		},
+	{0x08, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"	},
+	{0x08, 0x01, 0x0f, 0x05, "3 Coins 1 Credits"	},
+	{0x08, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"	},
+	{0x08, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
+	{0x08, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
+	{0x08, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"	},
+	{0x08, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
+	{0x08, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
+	{0x08, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
+	{0x08, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
+	{0x08, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
+	{0x08, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
+	{0x08, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
+	{0x08, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
+	{0x08, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
+	{0x08, 0x01, 0x0f, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,   16, "Coin B"		},
+	{0x08, 0x01, 0xf0, 0x20, "4 Coins 1 Credits"	},
+	{0x08, 0x01, 0xf0, 0x50, "3 Coins 1 Credits"	},
+	{0x08, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"	},
+	{0x08, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
+	{0x08, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
+	{0x08, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"	},
+	{0x08, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
+	{0x08, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
+	{0x08, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
+	{0x08, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
+	{0x08, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
+	{0x08, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
+	{0x08, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
+	{0x08, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
+	{0x08, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
+	{0x08, 0x01, 0xf0, 0x00, "Invalid"		},
+
+	{0   , 0xfe, 0   ,    1, "Cabinet"		},
+	{0x09, 0x01, 0x03, 0x01, "Konami GT with brake"	},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x09, 0x01, 0x60, 0x60, "Easy"			},
+	{0x09, 0x01, 0x60, 0x40, "Normal"		},
+	{0x09, 0x01, 0x60, 0x20, "Hard"			},
+	{0x09, 0x01, 0x60, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x09, 0x01, 0x80, 0x80, "Off"			},
+	{0x09, 0x01, 0x80, 0x00, "On"			},
+
+//	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+//	{0x0a, 0x01, 0x01, 0x01, "Off"			},
+//	{0x0a, 0x01, 0x01, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Quantity of Initials"	},
+	{0x0a, 0x01, 0x02, 0x00, "3"			},
+	{0x0a, 0x01, 0x02, 0x02, "7"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x0a, 0x01, 0x04, 0x04, "Off"			},
+	{0x0a, 0x01, 0x04, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Speed Unit"		},
+	{0x0a, 0x01, 0x08, 0x08, "km/h"			},
+	{0x0a, 0x01, 0x08, 0x00, "M.P.H."		},
+};
+
+STDDIPINFO(Hcrash)
+
+static UINT16 konamigt_read_analog()
+{
+	UINT16 nRet = 0;
+
+	if (DrvInputs[3] & 0x20) nRet |= 0x0300;
+	if (DrvInputs[3] & 0x40) nRet |= 0xf000;
+
+	if (DrvAnalogPort0)
+	{
+		nRet |= 0x40; // analog wheel input here!!
+	}
+
+	return nRet;
+}
 
 static void __fastcall nemesis_main_write_byte(UINT32 address, UINT8 data)
 {
@@ -1084,8 +1271,10 @@ static UINT8 __fastcall nemesis_main_read_byte(UINT32 address)
 			return  DrvDips[2];
 
 		case 0x070000:
+			return konamigt_read_analog() >> 8;
+
 		case 0x070001:
-			return 0; // konamigt_input_word_r
+			return konamigt_read_analog() & 0xff;
 	}
 
 //	bprintf (0, _T("RB %5.5x\n"), address);
@@ -1095,14 +1284,14 @@ static UINT8 __fastcall nemesis_main_read_byte(UINT32 address)
 
 static UINT16 __fastcall nemesis_main_read_word(UINT32 address)
 {
-//	bprintf (0, _T("RW %5.5x\n"), address);
-
 	switch (address)
 	{
 		case 0x070000:
 		case 0x0c2000:
-			return 0;	// konamigt_input_word_r
+			return konamigt_read_analog();
 	}
+
+//	bprintf (0, _T("RW %5.5x\n"), address);
 
 	return 0;
 }
@@ -1201,8 +1390,6 @@ static UINT8 __fastcall salamand_main_read_byte(UINT32 address)
 
 static UINT8 __fastcall hcrash_main_read_byte(UINT32 address)
 {
-//	bprintf (0, _T("RB %5.5x\n"), address);
-
 	switch (address)
 	{
 		case 0x0c0003:
@@ -1217,22 +1404,20 @@ static UINT8 __fastcall hcrash_main_read_byte(UINT32 address)
 		case 0x0c000b:
 			return DrvInputs[0];
 
-		case 0x0c2001:	// konamigt_input_word_r
-			return 0;
+		case 0x0c2000:
+			return konamigt_read_analog() >> 8;
+
+		case 0x0c2001:
+			return konamigt_read_analog() & 0xff;
 
 		case 0x0c4001:
 			return DrvInputs[1];
 
-		case 0x0c4003: //selected_ip_word_r
-			switch (selected_ip)
-			{
-				case 0xc:  return 0; //ioport("ACCEL")->read();  // Accel - Schems: Accelevr
-				case 0:    return 0; //ioport("ACCEL")->read();
-				case 0xd:  return 0; //ioport("WHEEL")->read();  // Wheel - Schems: Handlevr
-				case 1:    return 0; //ioport("WHEEL")->read();
-			}
+		case 0x0c4003: // WEC Le Mans inputs..
 			return 0;
 	}
+
+//	bprintf (0, _T("RB %5.5x\n"), address);
 
 	return 0;
 }
@@ -1283,7 +1468,7 @@ static void __fastcall hcrash_main_write_byte(UINT32 address, UINT8 data)
 		return;
 	}
 
-	bprintf (0, _T("WB %5.5x, %2.2x\n"), address, data);
+//	bprintf (0, _T("WB %5.5x, %2.2x\n"), address, data);
 }
 
 static void __fastcall gx400_main_write_byte(UINT32 address, UINT8 data)
@@ -1370,8 +1555,10 @@ static UINT8 __fastcall gx400_main_read_byte(UINT32 address)
 			return DrvInputs[2];
 
 		case 0x070000:
+			return konamigt_read_analog() >> 8;
+
 		case 0x070001:
-			return 0; // konamigt_input_word_r
+			return konamigt_read_analog() & 0xff;
 	}
 
 //	bprintf (0, _T("RB %5.5x\n"), address);
@@ -1418,8 +1605,6 @@ static void __fastcall citybomb_main_write_byte(UINT32 address, UINT8 data)
 
 static void __fastcall citybomb_main_write_word(UINT32 address, UINT16 data)
 {
-//	bprintf (0, _T("WW %5.5x, %4.4x\n"), address, data);
-
 	switch (address)
 	{
 		case 0x078000:
@@ -1435,12 +1620,20 @@ static void __fastcall citybomb_main_write_word(UINT32 address, UINT16 data)
 		}
 		return;
 	}
+
+//	bprintf (0, _T("WW %5.5x, %4.4x\n"), address, data);
 }
 
 static UINT8 __fastcall citybomb_main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
+		case 0x0c2000:
+			return konamigt_read_analog() >> 8;
+
+		case 0x0c2001:
+			return konamigt_read_analog() & 0xff;
+
 		case 0x070001:
 		case 0x0f0001:
 			return DrvDips[1];
@@ -1461,16 +1654,7 @@ static UINT8 __fastcall citybomb_main_read_byte(UINT32 address)
 		case 0x0f0009:
 			return DrvDips[0];
 
-		case 0x0f0021:
-			switch (selected_ip & 0xf)
-			{								// From WEC Le Mans Schems:
-				case 0xc:  return 0; //ioport("ACCEL")->read();		// Accel - Schems: Accelevr
-				case 0:    return 0; //ioport("ACCEL")->read();
-				case 0xd:  return 0; //ioport("WHEEL")->read();		// Wheel - Schems: Handlevr
-				case 1:    return 0; //ioport("WHEEL")->read();
-		
-				default: return ~0;
-			}
+		case 0x0f0021: // WEC Le Mans inputs...
 			return 0;
 	}
 
@@ -1875,6 +2059,7 @@ static void compute_color_table()
 
 	double black = color_table[0];
 	double white = 255.0 / (color_table[31] - black);
+
 	for (INT32  i = 0; i < 32; i++)
 		color_table[i] = (color_table[i] - black) * white + 0.5;
 }
@@ -2780,11 +2965,12 @@ static INT32 NemesisFrame()
 	}
 
 	{
-		memset (DrvInputs, 0, 3 * sizeof(INT16));
+		memset (DrvInputs, 0, 4 * sizeof(INT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
 	}
 
@@ -2835,11 +3021,12 @@ static INT32 KonamigtFrame()
 	}
 
 	{
-		memset (DrvInputs, 0, 3 * sizeof(INT16));
+		memset (DrvInputs, 0, 4 * sizeof(INT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
 	}
 
@@ -2896,11 +3083,12 @@ static INT32 SalamandFrame()
 	ZetNewFrame();
 
 	{
-		memset (DrvInputs, 0, 3 * sizeof(INT16));
+		memset (DrvInputs, 0, 4 * sizeof(INT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
 
 		DrvInputs[0] |= (DrvDips[2] & 0x0a) << 4;
@@ -2971,11 +3159,12 @@ static INT32 HcrashFrame()
 	ZetNewFrame();
 
 	{
-		memset (DrvInputs, 0, 3 * sizeof(INT16));
+		memset (DrvInputs, 0, 4 * sizeof(INT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] |= 1 << i;
+			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
 	}
 
@@ -3046,11 +3235,12 @@ static INT32 BlkpnthrFrame()
 	ZetNewFrame();
 
 	{
-		memset (DrvInputs, 0, 3 * sizeof(INT16));
+		memset (DrvInputs, 0, 4 * sizeof(INT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
 
 		DrvInputs[0] |= (DrvDips[2] & 0xe0);
@@ -3121,10 +3311,12 @@ static INT32 Gx400Frame()
 
 	{
 		memset (DrvInputs, 0xff, 3 * sizeof(INT16));
+		DrvInputs[3] = 0;
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
 	}
 
@@ -3186,11 +3378,13 @@ static INT32 CitybombFrame()
 	ZetNewFrame();
 
 	{
-		memset (DrvInputs, 0xff, 3 * sizeof(INT16));
+		memset (DrvInputs, 0xff, 4 * sizeof(INT16));
+		DrvInputs[3] = 0;
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
 
 		DrvInputs[0] = (DrvInputs[0] & 0x1f) | ((DrvDips[2] & 0x0e)<<4);
@@ -3273,19 +3467,19 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Nemesis (ROM version)
 
 static struct BurnRomInfo nemesisRomDesc[] = {
-	{ "456-d01.12a",	0x8000, 0x35ff1aaa, 1 | BRF_PRG | BRF_ESS }, //  0 m68000 Code
-	{ "456-d05.12c",	0x8000, 0x23155faa, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "456-d02.13a",	0x8000, 0xac0cf163, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "456-d06.13c",	0x8000, 0x023f22a9, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "456-d03.14a",	0x8000, 0x8cefb25f, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "456-d07.14c",	0x8000, 0xd50b82cb, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "456-d04.15a",	0x8000, 0x9ca75592, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "456-d08.15c",	0x8000, 0x03c0b7f5, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "456-d01.12a",	0x08000, 0x35ff1aaa, 1 | BRF_PRG | BRF_ESS }, //  0 m68000 Code
+	{ "456-d05.12c",	0x08000, 0x23155faa, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "456-d02.13a",	0x08000, 0xac0cf163, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "456-d06.13c",	0x08000, 0x023f22a9, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "456-d03.14a",	0x08000, 0x8cefb25f, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "456-d07.14c",	0x08000, 0xd50b82cb, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "456-d04.15a",	0x08000, 0x9ca75592, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "456-d08.15c",	0x08000, 0x03c0b7f5, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "456-d09.9c",		0x4000, 0x26bf9636, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
+	{ "456-d09.9c",		0x04000, 0x26bf9636, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
 
-	{ "400-a01.fse",	0x0100, 0x5827b1e8, 3 | BRF_SND },           //  9 K005289 Samples
-	{ "400-a02.fse",	0x0100, 0x2f44f970, 3 | BRF_SND },           // 10
+	{ "400-a01.fse",	0x00100, 0x5827b1e8, 3 | BRF_SND },           //  9 K005289 Samples
+	{ "400-a02.fse",	0x00100, 0x2f44f970, 3 | BRF_SND },           // 10
 };
 
 STD_ROM_PICK(nemesis)
@@ -3305,19 +3499,19 @@ struct BurnDriver BurnDrvNemesis = {
 // Nemesis (World?, ROM version)
 
 static struct BurnRomInfo nemesisukRomDesc[] = {
-	{ "456-e01.12a",	0x8000, 0xe1993f91, 1 | BRF_PRG | BRF_ESS }, //  0 m68000 Code
-	{ "456-e05.12c",	0x8000, 0xc9761c78, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "456-e02.13a",	0x8000, 0xf6169c4b, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "456-e06.13c",	0x8000, 0xaf58c548, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "456-e03.14a",	0x8000, 0x8cefb25f, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "456-e07.14c",	0x8000, 0xd50b82cb, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "456-e04.15a",	0x8000, 0x322423d0, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "456-e08.15c",	0x8000, 0xeb656266, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "456-e01.12a",	0x08000, 0xe1993f91, 1 | BRF_PRG | BRF_ESS }, //  0 m68000 Code
+	{ "456-e05.12c",	0x08000, 0xc9761c78, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "456-e02.13a",	0x08000, 0xf6169c4b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "456-e06.13c",	0x08000, 0xaf58c548, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "456-e03.14a",	0x08000, 0x8cefb25f, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "456-e07.14c",	0x08000, 0xd50b82cb, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "456-e04.15a",	0x08000, 0x322423d0, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "456-e08.15c",	0x08000, 0xeb656266, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "456-b09.9c",		0x4000, 0x26bf9636, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
+	{ "456-b09.9c",		0x04000, 0x26bf9636, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
 
-	{ "400-a01.fse",	0x0100, 0x5827b1e8, 3 | BRF_SND },           //  9 K005289 Samples
-	{ "400-a02.fse",	0x0100, 0x2f44f970, 3 | BRF_SND },           // 10
+	{ "400-a01.fse",	0x00100, 0x5827b1e8, 3 | BRF_SND },           //  9 K005289 Samples
+	{ "400-a02.fse",	0x00100, 0x2f44f970, 3 | BRF_SND },           // 10
 };
 
 STD_ROM_PICK(nemesisuk)
@@ -3337,19 +3531,19 @@ struct BurnDriver BurnDrvNemesisuk = {
 // Konami GT
 
 static struct BurnRomInfo konamigtRomDesc[] = {
-	{ "561-c01.12a",	0x8000, 0x56245bfd, 1 | BRF_PRG | BRF_ESS }, //  0 m68000 Code
-	{ "561-c05.12c",	0x8000, 0x8d651f44, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "561-c02.13a",	0x8000, 0x3407b7cb, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "561-c06.13c",	0x8000, 0x209942d4, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "561-b03.14a",	0x8000, 0xaef7df48, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "561-b07.14c",	0x8000, 0xe9bd6250, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "561-b04.15a",	0x8000, 0x94bd4bd7, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "561-b08.15c",	0x8000, 0xb7236567, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "561-c01.12a",	0x08000, 0x56245bfd, 1 | BRF_PRG | BRF_ESS }, //  0 m68000 Code
+	{ "561-c05.12c",	0x08000, 0x8d651f44, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "561-c02.13a",	0x08000, 0x3407b7cb, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "561-c06.13c",	0x08000, 0x209942d4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "561-b03.14a",	0x08000, 0xaef7df48, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "561-b07.14c",	0x08000, 0xe9bd6250, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "561-b04.15a",	0x08000, 0x94bd4bd7, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "561-b08.15c",	0x08000, 0xb7236567, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "561-b09.9c",		0x4000, 0x539d0c49, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
+	{ "561-b09.9c",		0x04000, 0x539d0c49, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
 
-	{ "400-a01.fse",	0x0100, 0x5827b1e8, 3 | BRF_SND },           //  9 K005289 Samples
-	{ "400-a02.fse",	0x0100, 0x2f44f970, 3 | BRF_SND },           // 10
+	{ "400-a01.fse",	0x00100, 0x5827b1e8, 3 | BRF_SND },           //  9 K005289 Samples
+	{ "400-a02.fse",	0x00100, 0x2f44f970, 3 | BRF_SND },           // 10
 };
 
 STD_ROM_PICK(konamigt)
@@ -3360,7 +3554,7 @@ struct BurnDriver BurnDrvKonamigt = {
 	"Konami GT\0", NULL, "Konami", "GX561",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KONAMI_68K_Z80, GBF_RACING, 0,
-	NULL, konamigtRomInfo, konamigtRomName, NULL, NULL, NemesisInputInfo, NemesisDIPInfo, //KonamigtInputInfo, KonamigtDIPInfo,
+	NULL, konamigtRomInfo, konamigtRomName, NULL, NULL, KonamigtInputInfo, KonamigtDIPInfo,
 	KonamigtInit, DrvExit, KonamigtFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -3588,7 +3782,7 @@ struct BurnDriver BurnDrvRf2 = {
 	"Konami RF2 - Red Fighter\0", NULL, "Konami", "GX561",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_RACING, 0,
-	NULL, rf2RomInfo, rf2RomName, NULL, NULL, NemesisInputInfo, NemesisDIPInfo, //Rf2InputInfo, Rf2DIPInfo,
+	NULL, rf2RomInfo, rf2RomName, NULL, NULL, KonamigtInputInfo, KonamigtDIPInfo,
 	Rf2_gx400Init, DrvExit, Gx400Frame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -3760,7 +3954,7 @@ struct BurnDriver BurnDrvHcrash = {
 	"Hyper Crash (version D)\0", NULL, "Konami", "GX790",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KONAMI_68K_Z80, GBF_RACING, 0,
-	NULL, hcrashRomInfo, hcrashRomName, NULL, NULL, NemesisInputInfo, NemesisDIPInfo, //HcrashInputInfo, HcrashDIPInfo,
+	NULL, hcrashRomInfo, hcrashRomName, NULL, NULL, HcrashInputInfo, HcrashDIPInfo,
 	HcrashInit, DrvExit, HcrashFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -3789,7 +3983,7 @@ struct BurnDriver BurnDrvHcrashc = {
 	"Hyper Crash (version C)\0", NULL, "Konami", "GX790",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_RACING, 0,
-	NULL, hcrashcRomInfo, hcrashcRomName, NULL, NULL, NemesisInputInfo, NemesisDIPInfo, //HcrashInputInfo, HcrashDIPInfo,
+	NULL, hcrashcRomInfo, hcrashcRomName, NULL, NULL, HcrashInputInfo, HcrashDIPInfo,
 	HcrashInit, DrvExit, HcrashFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };

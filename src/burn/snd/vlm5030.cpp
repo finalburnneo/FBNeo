@@ -782,8 +782,8 @@ void vlm5030Update(INT32 nChip, INT16 *buf, INT32 samples)
 		nRightSample = BURN_SND_CLIP(nRightSample);
 			
 		if (nAdd) {
-			buf[LEFT] += nLeftSample;
-			buf[RIGHT] += nRightSample;
+			buf[LEFT] = BURN_SND_CLIP(buf[LEFT] + nLeftSample);
+			buf[RIGHT] = BURN_SND_CLIP(buf[RIGHT] + nRightSample);
 		} else {
 			buf[LEFT] = nLeftSample;
 			buf[RIGHT] = nRightSample;

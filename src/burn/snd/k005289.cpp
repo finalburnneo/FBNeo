@@ -189,8 +189,8 @@ void K005289Update(INT16 *buffer, int samples)
 		nLeftSample = BURN_SND_CLIP(nLeftSample);
 		nRightSample = BURN_SND_CLIP(nRightSample);
 
-		buffer[0] += nLeftSample;
-		buffer[1] += nRightSample;
+		buffer[0] = BURN_SND_CLIP(buffer[0] + nLeftSample);
+		buffer[1] = BURN_SND_CLIP(buffer[1] + nRightSample);
 		buffer+=2;
 	}
 }

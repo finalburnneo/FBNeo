@@ -314,15 +314,35 @@ INT32 K007232Scan(INT32 nAction, INT32 *pnMin)
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232Scan called without init\n"));
 #endif
 
-	if ((nAction & ACB_DRIVER_DATA) == 0) {
-		return 1;
-	}
-	
+	struct BurnArea ba;
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029693;
 	}
 
-	SCAN_VAR(Chips);
+	if ((nAction & ACB_DRIVER_DATA) == 0) {
+		return 1;
+	}
+
+	for (INT32 i = 0; i < 2; i++)
+	{
+		kdacApcm *ptr = &Chip[0];
+
+		for (INT32 j = 0; j < KDAC_A_PCM_MAX; j++)
+		{
+			SCAN_VAR(ptr->vol[j]);
+			SCAN_VAR(ptr->addr[j]);
+			SCAN_VAR(ptr->start[j]);
+			SCAN_VAR(ptr->step[j]);
+			SCAN_VAR(ptr->bank[j]);
+			SCAN_VAR(ptr->play[j]);
+		}
+		for (INT32 j = 0; j < 10; j++)
+		{
+			SCAN_VAR(ptr->wreg[i]);
+		}
+		SCAN_VAR(ptr->UpdateStep);
+	}
 
 	return 0;
 }

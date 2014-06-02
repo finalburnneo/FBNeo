@@ -6545,6 +6545,22 @@ static struct BurnRomInfo ZerotimeRomDesc[] = {
 STD_ROM_PICK(Zerotime)
 STD_ROM_FN(Zerotime)
 
+// Late-to-market bootleg with PCB mods to use a single program rom
+// Datamat is the old name of Datasat, a technical service and distributor of arcade PCB's from the 80's and 90's.
+// A lot of the bootleg PCB's around Spain have Datamat stickers on the roms. It was one of the most important PCB sellers/distributors in the country from the era.
+// Datamat still operate today as Datasat http://datasat.info/
+static struct BurnRomInfo ZerotimedRomDesc[] = {
+	{ "zerotime_datamat.bin",   0x04000, 0xbe60834b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+		
+	{ "ztc-2.016",     0x00800, 0x1b13ca05, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "ztc-1.016",     0x00800, 0x5cd7df03, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "6l.bpr",        0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Zerotimed)
+STD_ROM_FN(Zerotimed)
+
 static struct BurnRomInfo StarfghtRomDesc[] = {
 	{ "ja.1",          0x00400, 0xc6ab558b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "jb.2",          0x00400, 0x34b99fed, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -6796,6 +6812,16 @@ struct BurnDriver BurnDrvZerotime = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, ZerotimeRomInfo, ZerotimeRomName, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
+	GalInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvZerotimed = {
+	"zerotimed", "galaxian", NULL, NULL, "1979",
+	"Zero Time (Datamat)\0", NULL, "Datamat", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, ZerotimedRomInfo, ZerotimedRomName, NULL, NULL, GalaxianInputInfo, ZerotimeDIPInfo,
 	GalInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
@@ -7120,6 +7146,27 @@ static struct BurnRomInfo TazzmangRomDesc[] = {
 
 STD_ROM_PICK(Tazzmang)
 STD_ROM_FN(Tazzmang)
+
+static struct BurnRomInfo Tazzmang2RomDesc[] = {
+	{ "tazmania.1",    0x00800, 0x6ecc84a2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tazmania.2",    0x00800, 0xe27b09f6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tazmania.3",    0x00800, 0x954868f3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tazmania.4",    0x00800, 0x238520e6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tazmania.5",    0x00800, 0x0527e513, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tazmania.6",    0x00800, 0xaf2b92d8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tazmania.7",    0x00800, 0xbbdc41d3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tazmania.8",    0x00800, 0xeb35f49c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tazmania.a",    0x01000, 0x38f326f8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "tazmania.b",    0x01000, 0x2a22a9dc, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+		
+	{ "tazm8.1lk",     0x00800, 0x2c5b612b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "tazzm7.1jh",    0x00800, 0x3f5ff3ac, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "prom.6l",       0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Tazzmang2)
+STD_ROM_FN(Tazzmang2)
 
 static struct BurnRomInfo ScramblbRomDesc[] = {
 	{ "scramble.1k",   0x00800, 0x9e025c4a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -8094,10 +8141,20 @@ struct BurnDriver BurnDrvAzurian = {
 
 struct BurnDriver BurnDrvTazzmang = {
 	"tazzmang", "tazmania", NULL, NULL, "1982",
-	"Tazz-Mania (Galaxian hardware)\0", NULL, "bootleg", "Galaxian",
+	"Tazz-Mania (bootleg on Galaxian hardware)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, TazzmangRomInfo, TazzmangRomName, NULL, NULL, TazzmangInputInfo, TazzmangDIPInfo,
+	TazzmangInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvTazzmang2 = {
+	"tazzmang2", "tazmania", NULL, NULL, "1982",
+	"Tazz-Mania (bootleg on Galaxian hardware with Starfield)\0", NULL, "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	NULL, Tazzmang2RomInfo, Tazzmang2RomName, NULL, NULL, TazzmangInputInfo, TazzmangDIPInfo,
 	TazzmangInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

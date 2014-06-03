@@ -1102,7 +1102,7 @@ struct BurnDriver BurnDrvXsleena = {
 	"xsleena", NULL, NULL, NULL, "1986",
 	"Xain'd Sleena (World)\0", NULL, "Technos Japan (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_HORSHOOT, 0,
 	NULL, xsleenaRomInfo, xsleenaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 240, 4, 3
@@ -1159,7 +1159,7 @@ struct BurnDriver BurnDrvXsleenaj = {
 	"xsleenaj", "xsleena", NULL, NULL, "1986",
 	"Xain'd Sleena (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_HORSHOOT, 0,
 	NULL, xsleenajRomInfo, xsleenajRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 240, 4, 3
@@ -1216,7 +1216,7 @@ struct BurnDriver BurnDrvSolarwar = {
 	"solarwar", "xsleena", NULL, NULL, "1986",
 	"Solar-Warrior (US)\0", NULL, "Technos Japan (Taito / Memetron license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_HORSHOOT, 0,
 	NULL, solarwarRomInfo, solarwarRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 240, 4, 3
@@ -1267,11 +1267,11 @@ static struct BurnRomInfo xsleenabRomDesc[] = {
 STD_ROM_PICK(xsleenab)
 STD_ROM_FN(xsleenab)
 
-struct BurnDriver BurnDrvXsleenab = {
+struct BurnDriverD BurnDrvXsleenab = {
 	"xsleenab", "xsleena", NULL, NULL, "1986",
 	"Xain'd Sleena (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_HORSHOOT, 0,
 	NULL, xsleenabRomInfo, xsleenabRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 240, 4, 3

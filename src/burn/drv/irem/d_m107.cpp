@@ -1482,7 +1482,7 @@ static INT32 wpksocInit()
 	return DrvInit(wpksocRomLoad, leagueman_decryption_table, 1, 0x80, 0x200000, 0x400000);
 }
 
-struct BurnDriver BurnDrvWpksoc = {
+struct BurnDriverD BurnDrvWpksoc = {
 	"wpksoc", NULL, NULL, NULL, "1995",
 	"World PK Soccer\0", NULL, "Jaleco", "M107",
 	NULL, NULL, NULL, NULL,
@@ -1523,7 +1523,7 @@ static struct BurnRomInfo kftgoalRomDesc[] = {
 STD_ROM_PICK(kftgoal)
 STD_ROM_FN(kftgoal)
 
-struct BurnDriver BurnDrvKftgoal = {
+struct BurnDriverD BurnDrvKftgoal = {
 	"kftgoal", "wpksoc", NULL, NULL, "1995",
 	"Kick for the Goal\0", NULL, "Jaleco", "M107",
 	NULL, NULL, NULL, NULL,

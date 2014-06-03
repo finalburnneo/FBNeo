@@ -2063,7 +2063,7 @@ struct BurnDriver BurnDrvSkns = {
 	"skns", NULL, NULL, NULL, "1996",
 	"Super Kaneko Nova System BIOS\0", "BIOS only", "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_BOARDROM, 0, HARDWARE_MISC_POST90S, GBF_BIOS, 0,
+	BDF_BOARDROM, 0, HARDWARE_KANEKO_SKNS, GBF_BIOS, 0,
 	NULL, sknsRomInfo, sknsRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	SknsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
 	320, 240, 4, 3
@@ -2151,7 +2151,7 @@ struct BurnDriver BurnDrvCyvern = {
 	"cyvern", NULL, "skns", NULL, "1998",
 	"Cyvern (US)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | SCREEN_FLIP, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | SCREEN_FLIP, 2, HARDWARE_KANEKO_SKNS, GBF_VERSHOOT, 0,
 	NULL, cyvernRomInfo, cyvernRomName, NULL, NULL, CyvernInputInfo, CyvernDIPInfo,
 	CyvernInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
 	240, 320, 3, 4
@@ -2161,7 +2161,7 @@ struct BurnDriver BurnDrvCyvernJ = {
 	"cyvernj", "cyvern", "skns", NULL, "1998",
 	"Cyvern (Japan)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | SCREEN_FLIP, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | SCREEN_FLIP, 2, HARDWARE_KANEKO_SKNS, GBF_VERSHOOT, 0,
 	NULL, cyvernjRomInfo, cyvernjRomName, NULL, NULL, CyvernInputInfo, CyvernDIPInfo,
 	CyvernJInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
 	240, 320, 3, 4
@@ -2211,7 +2211,7 @@ struct BurnDriver BurnDrvGutsn = {
 	"gutsn", NULL, "skns", NULL, "2000",
 	"Guts'n (Japan)\0", "Imperfect inputs", "Kaneko / Kouyousha", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
 	NULL, gutsnRomInfo, gutsnRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	GutsnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
 	320, 240, 4, 3
@@ -2270,11 +2270,11 @@ static int SengekisInit()
 	return DrvInit(SengekisLoadRoms, 2 /*asia*/, 0x2000000);
 }
 
-struct BurnDriver BurnDrvSengekis = {
+struct BurnDriverD BurnDrvSengekis = {
 	"sengekis", NULL, "skns", NULL, "1997",
 	"Sengeki Striker (Asia)\0", "Game crashes!", "Kaneko / Warashi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-        BDF_ORIENTATION_VERTICAL | SCREEN_FLIP, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+        BDF_ORIENTATION_VERTICAL | SCREEN_FLIP, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
 	NULL, sengekisRomInfo, sengekisRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	SengekisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
 	240, 320, 3, 4
@@ -2313,11 +2313,11 @@ static int SengekisjInit()
 	return DrvInit(SengekisLoadRoms, 0 /*japan*/, 0x2000000);
 }
 
-struct BurnDriver BurnDrvSengekisj = {
+struct BurnDriverD BurnDrvSengekisj = {
 	"sengekisj", "sengekis", "skns", NULL, "1997",
 	"Sengeki Striker (Japan)\0", "Game crashes!", "Kaneko / Warashi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL | SCREEN_FLIP, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL | SCREEN_FLIP, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
 	NULL, sengekisjRomInfo, sengekisjRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	SengekisjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
 	240, 320, 3, 4

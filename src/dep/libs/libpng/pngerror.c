@@ -1,8 +1,8 @@
 
 /* pngerror.c - stub functions for i/o and memory allocation
  *
- * Last changed in libpng 1.6.8 [December 19, 2013]
- * Copyright (c) 1998-2013 Glenn Randers-Pehrson
+ * Last changed in libpng 1.6.10 [March 6, 2014]
+ * Copyright (c) 1998-2014 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
  *
@@ -761,7 +761,12 @@ png_longjmp,(png_const_structrp png_ptr, int val),PNG_NORETURN)
       png_ptr->longjmp_fn(*png_ptr->jmp_buf_ptr, val);
 #endif
 
-   /* Here if not setjmp support or if png_ptr is null. */
+   /* If control reaches this point, png_longjmp() must not return. The only
+    * choice is to terminate the whole process (or maybe the thread); to do
+    * this the ANSI-C abort() function is used unless a different method is 
+    * implemented by overriding the default configuration setting for
+    * PNG_ABORT().
+    */
    PNG_ABORT();
 }
 
@@ -871,8 +876,8 @@ png_set_strip_error_numbers(png_structrp png_ptr, png_uint_32 strip_mode)
     * possible to implement without setjmp support just so long as there is some
     * way to handle the error return here:
     */
-PNG_FUNCTION(void /* PRIVATE */,
-png_safe_error,(png_structp png_nonconst_ptr, png_const_charp error_message),
+PNG_FUNCTION(void /* PRIVATE */, (PNGCBAPI
+png_safe_error),(png_structp png_nonconst_ptr, png_const_charp error_message),
    PNG_NORETURN)
 {
    const png_const_structrp png_ptr = png_nonconst_ptr;
@@ -907,7 +912,7 @@ png_safe_error,(png_structp png_nonconst_ptr, png_const_charp error_message),
 }
 
 #ifdef PNG_WARNINGS_SUPPORTED
-void /* PRIVATE */
+void /* PRIVATE */ PNGCBAPI
 png_safe_warning(png_structp png_nonconst_ptr, png_const_charp warning_message)
 {
    const png_const_structrp png_ptr = png_nonconst_ptr;

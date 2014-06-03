@@ -1,8 +1,8 @@
 
 /* png.c - location for general purpose libpng functions
  *
- * Last changed in libpng 1.6.8 [December 19, 2013]
- * Copyright (c) 1998-2013 Glenn Randers-Pehrson
+ * Last changed in libpng 1.6.9 [February 6, 2014]
+ * Copyright (c) 1998-2014 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
  *
@@ -14,7 +14,7 @@
 #include "pngpriv.h"
 
 /* Generate a compiler error if there is an old png.h in the search path. */
-typedef png_libpng_version_1_6_8 Your_png_h_is_not_version_1_6_8;
+typedef png_libpng_version_1_6_10 Your_png_h_is_not_version_1_6_10;
 
 /* Tells libpng that we have already handled the first "num_bytes" bytes
  * of the PNG file signature.  If the PNG data is embedded into another
@@ -773,14 +773,14 @@ png_get_copyright(png_const_structrp png_ptr)
 #else
 #  ifdef __STDC__
    return PNG_STRING_NEWLINE \
-     "libpng version 1.6.8 - December 19, 2013" PNG_STRING_NEWLINE \
-     "Copyright (c) 1998-2013 Glenn Randers-Pehrson" PNG_STRING_NEWLINE \
+     "libpng version 1.6.10 - March 6, 2014" PNG_STRING_NEWLINE \
+     "Copyright (c) 1998-2014 Glenn Randers-Pehrson" PNG_STRING_NEWLINE \
      "Copyright (c) 1996-1997 Andreas Dilger" PNG_STRING_NEWLINE \
      "Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc." \
      PNG_STRING_NEWLINE;
 #  else
-      return "libpng version 1.6.8 - December 19, 2013\
-      Copyright (c) 1998-2013 Glenn Randers-Pehrson\
+      return "libpng version 1.6.10 - March 6, 2014\
+      Copyright (c) 1998-2014 Glenn Randers-Pehrson\
       Copyright (c) 1996-1997 Andreas Dilger\
       Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.";
 #  endif
@@ -825,6 +825,63 @@ png_get_header_version(png_const_structrp png_ptr)
    return PNG_HEADER_VERSION_STRING;
 #endif
 }
+
+#ifdef PNG_BUILD_GRAYSCALE_PALETTE_SUPPORTED
+/* NOTE: this routine is not used internally! */
+/* Build a grayscale palette.  Palette is assumed to be 1 << bit_depth
+ * large of png_color.  This lets grayscale images be treated as
+ * paletted.  Most useful for gamma correction and simplification
+ * of code.  This API is not used internally.
+ */
+void PNGAPI
+png_build_grayscale_palette(int bit_depth, png_colorp palette)
+{
+   int num_palette;
+   int color_inc;
+   int i;
+   int v;
+
+   png_debug(1, "in png_do_build_grayscale_palette");
+
+   if (palette == NULL)
+      return;
+
+   switch (bit_depth)
+   {
+      case 1:
+         num_palette = 2;
+         color_inc = 0xff;
+         break;
+
+      case 2:
+         num_palette = 4;
+         color_inc = 0x55;
+         break;
+
+      case 4:
+         num_palette = 16;
+         color_inc = 0x11;
+         break;
+
+      case 8:
+         num_palette = 256;
+         color_inc = 1;
+         break;
+
+      default:
+         num_palette = 0;
+         color_inc = 0;
+         break;
+   }
+
+   for (i = 0, v = 0; i < num_palette; i++, v += color_inc)
+   {
+      palette[i].red = (png_byte)v;
+      palette[i].green = (png_byte)v;
+      palette[i].blue = (png_byte)v;
+   }
+}
+#endif
 
 #ifdef PNG_SET_UNKNOWN_CHUNKS_SUPPORTED
 int PNGAPI
@@ -1685,7 +1742,8 @@ is_ICC_signature_char(png_alloc_size_t it)
       (it >= 97 && it <= 122);
 }
 
-static int is_ICC_signature(png_alloc_size_t it)
+static int
+is_ICC_signature(png_alloc_size_t it)
 {
    return is_ICC_signature_char(it >> 24) /* checks all the top bits */ &&
       is_ICC_signature_char((it >> 16) & 0xff) &&
@@ -2238,15 +2296,16 @@ png_compare_ICC_profile_with_sRGB(png_const_structrp png_ptr,
             }
          }
 
-#        if PNG_sRGB_PROFILE_CHECKS > 0
-            /* The signature matched, but the profile had been changed in some
-             * way.  This is an apparent violation of the ICC terms of use and,
-             * anyway, probably indicates a data error or uninformed hacking.
-             */
-            if (png_sRGB_checks[i].have_md5)
-               png_benign_error(png_ptr,
-                  "copyright violation: edited ICC profile ignored");
-#        endif
+# if PNG_sRGB_PROFILE_CHECKS > 0
+         /* The signature matched, but the profile had been changed in some
+          * way.  This probably indicates a data error or uninformed hacking.
+          * Fall through to "no match".
+          */
+         png_chunk_report(png_ptr,
+             "Not recognizing known sRGB profile that has been edited", 
+             PNG_CHUNK_WARNING);
+         break;
+# endif
       }
    }
 
@@ -2415,14 +2474,6 @@ png_check_IHDR(png_const_structrp png_ptr,
       png_warning(png_ptr, "Invalid image height in IHDR");
       error = 1;
    }
-
-   if (width > (PNG_UINT_32_MAX
-                 >> 3)      /* 8-byte RGBA pixels */
-                 - 48       /* bigrowbuf hack */
-                 - 1        /* filter byte */
-                 - 7*8      /* rounding of width to multiple of 8 pixels */
-                 - 8)       /* extra max_pixel_depth pad */
-      png_warning(png_ptr, "Width is too large for libpng to process pixels");
 
    /* Check other values */
    if (bit_depth != 1 && bit_depth != 2 && bit_depth != 4 &&

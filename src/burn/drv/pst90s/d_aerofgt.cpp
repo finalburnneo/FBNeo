@@ -1779,7 +1779,11 @@ static INT32 spinlbrkInit()
 	}
 	
 	turbofrc_sound_init();
-	
+
+	// Fix sprite glitches...
+	for (unsigned short i=0; i<0x2000;i++)
+		RamSpr1[i] = i;
+
 	GenericTilesInit();
 
 	DrvDoReset();

@@ -114,8 +114,8 @@ void SegaPCMUpdate(INT16* pSoundBuf, INT32 nLength)
 			nRightSample = BURN_SND_CLIP(nRightSample);
 		}
 		
-		pSoundBuf[0] += nLeftSample;
-		pSoundBuf[1] += nRightSample;
+		pSoundBuf[0] = BURN_SND_CLIP(pSoundBuf[0] + nLeftSample);
+		pSoundBuf[1] = BURN_SND_CLIP(pSoundBuf[1] + nRightSample);
 		pSoundBuf += 2;
 	}
 }

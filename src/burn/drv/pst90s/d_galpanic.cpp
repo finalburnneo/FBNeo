@@ -525,7 +525,7 @@ STD_ROM_FN(Newfanta)
 
 // Rom information
 static struct BurnRomInfo Fantsy95RomDesc[] = {
-	{ "prog2.12",   		0x080000, 0x1e684da7, BRF_ESS | BRF_PRG }, // 68000 code
+	{ "prog2(__fantsy95).12", 0x080000, 0x1e684da7, BRF_ESS | BRF_PRG }, // 68000 code
 	{ "prog1.7",    		0x080000, 0xdc4e4f6b, BRF_ESS | BRF_PRG },
 	{ "i-scr2.10",  		0x080000, 0xab8756ff, BRF_ESS | BRF_PRG },
 	{ "i-scr1.5",	  		0x080000, 0xd8e2ef77, BRF_ESS | BRF_PRG },

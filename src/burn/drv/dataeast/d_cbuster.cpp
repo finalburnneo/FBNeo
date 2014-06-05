@@ -795,7 +795,7 @@ static struct BurnRomInfo cbusterjRomDesc[] = {
 
 	{ "fu12-.16k",		0x20000, 0x2d1d65f2, 6 | BRF_SND },           // 15 OKI M6295 Samples 0
 
-	{ "fu13-.21a",		0x20000, 0xb8525622, 7 | BRF_SND },           // 16 OKI M6295 Samples 1
+	{ "fu13-.21e",		0x20000, 0xb8525622, 7 | BRF_SND },           // 16 OKI M6295 Samples 1
 
 	{ "mb7114h.18e",	0x00100, 0x3645b70f, 8 | BRF_OPT },           // 17 Unused PROMs
 };
@@ -822,7 +822,7 @@ static struct BurnRomInfo twocrudeRomDesc[] = {
 	{ "ft03.9l",		0x20000, 0x28002c99, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "ft02.6l",		0x20000, 0x37ea0626, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "fu11-.19h",		0x10000, 0x65f20f10, 2 | BRF_PRG | BRF_ESS }, //  4 Huc6280 Code
+	{ "ft11-.19h",		0x10000, 0x65f20f10, 2 | BRF_PRG | BRF_ESS }, //  4 Huc6280 Code
 
 	{ "mab-00.4c",		0x80000, 0x660eaabd, 3 | BRF_GRA },           //  5 Characters and Foreground Tiles
 	{ "ft05-1.6c",		0x10000, 0xb1f0d910, 3 | BRF_GRA },           //  6
@@ -866,7 +866,7 @@ static struct BurnRomInfo twocrudeaRomDesc[] = {
 	{ "ft03.9l",		0x20000, 0x28002c99, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "ft02.6l",		0x20000, 0x37ea0626, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "fu11-.19h",		0x10000, 0x65f20f10, 2 | BRF_PRG | BRF_ESS }, //  4 Huc6280 Code
+	{ "ft11-.19h",		0x10000, 0x65f20f10, 2 | BRF_PRG | BRF_ESS }, //  4 Huc6280 Code
 
 	{ "mab-00.4c",		0x80000, 0x660eaabd, 3 | BRF_GRA },           //  5 Characters and Foreground Tiles
 	{ "ft05-.6c",		0x10000, 0x8134d412, 3 | BRF_GRA },           //  6

@@ -2929,7 +2929,7 @@ static struct BurnRomInfo dmnfrntRomDesc[] = {
 
 	{ "dmnfrnt_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 
-	{ "v105_32m.u26",	 	0x400000, 0xc798c2ef, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
+	{ "chinese-v105.u62",	 	0x400000, 0xc798c2ef, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
 };
 
 STDROMPICKEXT(dmnfrnt, dmnfrnt, pgm)
@@ -4297,7 +4297,7 @@ struct BurnDriver BurnDrvThegladpcb = {
 // Demon Front (V107, Korea, PCB Version)
 
 static struct BurnRomInfo dmnfrntpcbRomDesc[] = {
-	{ "v107kr.u43",	    	0x200000, 0x671d8a31, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "demonfront_v107-u43.bin",	0x200000, 0x671d8a31, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "t04501.u29",			0x800000, 0x900eaaac, 2 | BRF_GRA },					//  1 Tile data
 
@@ -4312,7 +4312,7 @@ static struct BurnRomInfo dmnfrntpcbRomDesc[] = {
 
 	{ "dmnfrnt_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 
-	{ "v107kr.u62",			0x400000, 0xcb94772e, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
+	{ "demonfront_v107-u62.bin",	0x400000, 0xcb94772e, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
 };
 
 STDROMPICKEXT(dmnfrntpcb, dmnfrntpcb, dmnfrntBIOS) // custom bios

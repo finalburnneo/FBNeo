@@ -10303,10 +10303,10 @@ STD_ROM_PICK(Sf2mdta2)
 STD_ROM_FN(Sf2mdta2)
 
 static struct BurnRomInfo Sf2mdtbRomDesc[] = {
-    { "3.ic172",      0x0080000, 0x0bdb9da2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "1.ic171",      0x0080000, 0xd88abbce, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "4.ic176",      0x0020000, 0x74844192, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-    { "2.ic175",      0x0020000, 0xbd98ff15, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+    { "3(__sf2mdtb).ic172", 0x0080000, 0x0bdb9da2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "1(__sf2mdtb).ic171", 0x0080000, 0xd88abbce, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "4(__sf2mdtb).ic176", 0x0020000, 0x74844192, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+    { "2(__sf2mdtb).ic175", 0x0020000, 0xbd98ff15, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	{ "7.ic90",       0x0080000, 0x896eaf48, BRF_GRA | CPS1_TILES },
 	{ "13.ic89",      0x0080000, 0x305dd72a, BRF_GRA | CPS1_TILES },	
@@ -10655,17 +10655,17 @@ static struct BurnRomInfo Sf2ceuab7RomDesc[] = {
 	{ "prg28.bin",    0x0040000, 0xb7ad5214, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "prg33.bin",    0x0040000, 0x6340b914, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	
 
-    { "24.bin",       0x0040000, 0xa8b5633a, BRF_GRA | CPS1_TILES },
+    { "24(__sf2ceblp).bin", 0x0040000, 0xa8b5633a, BRF_GRA | CPS1_TILES },
     { "20.bin",       0x0040000, 0x8d5d0045, BRF_GRA | CPS1_TILES },
-    { "25.bin",       0x0040000, 0x72e923df, BRF_GRA | CPS1_TILES },
+    { "25(__sf2ceblp).bin", 0x0040000, 0x72e923df, BRF_GRA | CPS1_TILES },
     { "21.bin",       0x0040000, 0x55c2b455, BRF_GRA | CPS1_TILES },
     { "14.bin",       0x0040000, 0x5db24ca7, BRF_GRA | CPS1_TILES },
     { "10.bin",       0x0040000, 0xeb48f7f2, BRF_GRA | CPS1_TILES },
     { "15.bin",       0x0040000, 0x9a96be48, BRF_GRA | CPS1_TILES },
     { "11.bin",       0x0040000, 0xff36859e, BRF_GRA | CPS1_TILES },
-    { "26.bin",       0x0040000, 0x82e8e384, BRF_GRA | CPS1_TILES },
+    { "26(__sf2ceblp).bin", 0x0040000, 0x82e8e384, BRF_GRA | CPS1_TILES },
     { "22.bin",       0x0040000, 0x4109d637, BRF_GRA | CPS1_TILES },
-    { "27.bin",       0x0040000, 0x4a3a8d09, BRF_GRA | CPS1_TILES },
+    { "27(__sf2ceblp).bin", 0x0040000, 0x4a3a8d09, BRF_GRA | CPS1_TILES },
     { "23.bin",       0x0040000, 0xef9c2d4d, BRF_GRA | CPS1_TILES },
     { "16.bin",       0x0040000, 0x1fd98ad0, BRF_GRA | CPS1_TILES },
     { "12.bin",       0x0040000, 0x5d21d8b3, BRF_GRA | CPS1_TILES },
@@ -12358,7 +12358,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "mtwins"      , CPS_B_14    , mapper_CK24B , 0, NULL                },
 	{ "chikij"      , CPS_B_14    , mapper_CK24B , 0, NULL                },
 	{ "nemo"        , CPS_B_15    , mapper_NM24B , 0, NULL                },
-	{ "Nemor1"       , CPS_B_15    , mapper_NM24B , 0, NULL                },
+	{ "nemor1"      , CPS_B_15    , mapper_NM24B , 0, NULL                },
 	{ "nemoj"       , CPS_B_15    , mapper_NM24B , 0, NULL                },
 	{ "pang3"       , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
 	{ "pang3r1"     , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
@@ -17275,7 +17275,7 @@ struct BurnDriver BurnDrvCpsNemo = {
 };
 
 struct BurnDriver BurnDrvCpsNemor1 = {
-	"Nemor1", "nemo", NULL, NULL, "1990",
+	"nemor1", "nemo", NULL, NULL, "1990",
 	"Nemo (90 11 09 etc)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,

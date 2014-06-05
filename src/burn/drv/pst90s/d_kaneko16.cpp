@@ -740,8 +740,8 @@ ROM Descriptions
 ===============================================================================================*/
 
 static struct BurnRomInfo BerlwallRomDesc[] = {
-	{ "u23_01.u23",        0x020000, 0x76b526ce, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "u39_01.u39",        0x020000, 0x78fa7ef2, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "bw100e_u23-01.u23", 0x020000, 0x76b526ce, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "bw101e_u39-01.u39", 0x020000, 0x78fa7ef2, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 	
 	{ "bw001.u84",         0x080000, 0xbc927260, BRF_GRA },		  //  2	Sprites
 	{ "bw002.u83",         0x080000, 0x223f5465, BRF_GRA },		  //  3	Sprites
@@ -759,6 +759,10 @@ static struct BurnRomInfo BerlwallRomDesc[] = {
 	{ "bw00b.u68",         0x080000, 0xb0a48225, BRF_GRA },		  //  13 High colour background
 
 	{ "bw000.u46",         0x040000, 0xd8fe869d, BRF_SND },		  //  14 Samples
+	
+	{ "bw_u47.u47",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "bw_u48.u48",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "bw_u54.u54",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 
@@ -785,6 +789,10 @@ static struct BurnRomInfo BerlwalltRomDesc[] = {
 	{ "bw00b.u68",         0x080000, 0xb0a48225, BRF_GRA },		  //  13 High colour background
 
 	{ "bw000.u46",         0x040000, 0xd8fe869d, BRF_SND },		  //  14 Samples
+	
+	{ "bw_u47.u47",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "bw_u48.u48",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "bw_u54.u54",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 
@@ -811,6 +819,10 @@ static struct BurnRomInfo BerlwallkRomDesc[] = {
 	{ "bw00b.u68",         0x080000, 0xb0a48225, BRF_GRA },		  //  13 High colour background
 
 	{ "bw000k.u46",        0x040000, 0x52e81a50, BRF_SND },		  //  14 Samples
+	
+	{ "bw_u47.u47",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "bw_u48.u48",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "bw_u54.u54",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 

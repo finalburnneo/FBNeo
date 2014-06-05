@@ -1021,10 +1021,10 @@ static struct BurnRomInfo blktigerb3RomDesc[] = {
 	{ "14.9b",			0x10000, 0xdc49593a, 4 | BRF_GRA },           //  9
 	{ "13.8b",			0x10000, 0x7ed7a122, 4 | BRF_GRA },           // 10
 
-	{ "08.5a",			0x10000, 0xe2f17438, 5 | BRF_GRA },           // 11 - Sprites
-	{ "07.4a",			0x10000, 0x5fccbd27, 5 | BRF_GRA },           // 12
+	{ "8.5a",			0x10000, 0xe2f17438, 5 | BRF_GRA },           // 11 - Sprites
+	{ "7.4a",			0x10000, 0x5fccbd27, 5 | BRF_GRA },           // 12
 	{ "10.9a",			0x10000, 0xfc33ccc6, 5 | BRF_GRA },           // 13
-	{ "09.8a",			0x10000, 0xf449de01, 5 | BRF_GRA },           // 14
+	{ "9.8a",			0x10000, 0xf449de01, 5 | BRF_GRA },           // 14
 
 	{ "bd01.8j",		0x00100, 0x29b459e5, 6 | BRF_OPT },           // 15 - Proms (not used)
 	{ "bd02.9j",		0x00100, 0x8b741e66, 6 | BRF_OPT },           // 16

@@ -82,6 +82,7 @@ static UINT16 bg1scrolly, bg2scrolly;
 
 static INT32 nAerofgtZ80Bank;
 static UINT8 nSoundlatch;
+static UINT8 spinlbrkmode = 0;
 
 static struct BurnInputInfo aerofgtInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvButton + 0,	"p1 coin"},
@@ -1064,7 +1065,9 @@ static void aerofgtSndBankSwitch(UINT8 v)
 	v &= 0x03;
 
 	if (v != nAerofgtZ80Bank) {
-		UINT8* nStartAddress = RomZ80 + 0x10000 + (v << 15);
+                UINT8* nStartAddress = RomZ80 + 0x10000 + (v << 15);
+                if (spinlbrkmode)
+                    nStartAddress = RomZ80 + 0x08000 + (v << 15);
 		ZetMapArea(0x8000, 0xFFFF, 0, nStartAddress);
 		ZetMapArea(0x8000, 0xFFFF, 2, nStartAddress);
 		nAerofgtZ80Bank = v;
@@ -1777,7 +1780,9 @@ static INT32 spinlbrkInit()
 		SekSetWriteByteHandler(0, spinlbrkWriteByte);
 		SekClose();
 	}
-	
+
+	// different banking start address for Spinal Breakers
+	spinlbrkmode = 1;
 	turbofrc_sound_init();
 
 	// Fix sprite glitches...
@@ -1860,6 +1865,7 @@ static INT32 DrvExit()
 	SekExit();
 	
 	BurnFree(Mem);
+	spinlbrkmode = 0;
 	
 	return 0;
 }

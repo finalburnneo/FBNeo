@@ -94,11 +94,7 @@ static const eeprom_interface thndrx2_eeprom_interface =
 
 static struct BurnInputInfo TmntInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 coin"   },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 coin"   },
-	{"Coin 3"            , BIT_DIGITAL  , DrvInputPort0 + 2, "p3 coin"   },
-	{"Coin 4"            , BIT_DIGITAL  , DrvInputPort0 + 3, "p4 coin"   },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 coin"   },
 	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort1 + 2, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort1 + 3, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort1 + 0, "p1 left"   },
@@ -106,6 +102,7 @@ static struct BurnInputInfo TmntInputList[] =
 	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort1 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort1 + 5, "p1 fire 2" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 coin"   },
 	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort2 + 2, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort2 + 0, "p2 left"   },
@@ -113,6 +110,7 @@ static struct BurnInputInfo TmntInputList[] =
 	{"P2 Fire 1"         , BIT_DIGITAL  , DrvInputPort2 + 4, "p2 fire 1" },
 	{"P2 Fire 2"         , BIT_DIGITAL  , DrvInputPort2 + 5, "p2 fire 2" },
 	
+	{"P3 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 2, "p3 coin"   },
 	{"P3 Up"             , BIT_DIGITAL  , DrvInputPort3 + 2, "p3 up"     },
 	{"P3 Down"           , BIT_DIGITAL  , DrvInputPort3 + 3, "p3 down"   },
 	{"P3 Left"           , BIT_DIGITAL  , DrvInputPort3 + 0, "p3 left"   },
@@ -120,6 +118,7 @@ static struct BurnInputInfo TmntInputList[] =
 	{"P3 Fire 1"         , BIT_DIGITAL  , DrvInputPort3 + 4, "p3 fire 1" },
 	{"P3 Fire 2"         , BIT_DIGITAL  , DrvInputPort3 + 5, "p3 fire 2" },
 	
+	{"P4 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 3, "p4 coin"   },
 	{"P4 Up"             , BIT_DIGITAL  , DrvInputPort4 + 2, "p4 up"     },
 	{"P4 Down"           , BIT_DIGITAL  , DrvInputPort4 + 3, "p4 down"   },
 	{"P4 Left"           , BIT_DIGITAL  , DrvInputPort4 + 0, "p4 left"   },
@@ -141,11 +140,8 @@ STDINPUTINFO(Tmnt)
 
 static struct BurnInputInfo Tmnt2pInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort1 + 7, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort2 + 7, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort1 + 7, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort1 + 2, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort1 + 3, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort1 + 0, "p1 left"   },
@@ -153,6 +149,8 @@ static struct BurnInputInfo Tmnt2pInputList[] =
 	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort1 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort1 + 5, "p1 fire 2" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort2 + 7, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort2 + 2, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort2 + 0, "p2 left"   },
@@ -172,11 +170,8 @@ STDINPUTINFO(Tmnt2p)
 
 static struct BurnInputInfo MiaInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort0 + 4, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort1 + 2, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort1 + 3, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort1 + 0, "p1 left"   },
@@ -185,6 +180,8 @@ static struct BurnInputInfo MiaInputList[] =
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort1 + 5, "p1 fire 2" },
 	{"P1 Fire 3"         , BIT_DIGITAL  , DrvInputPort1 + 6, "p1 fire 3" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort0 + 4, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort2 + 2, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort2 + 0, "p2 left"   },
@@ -204,11 +201,8 @@ STDINPUTINFO(Mia)
 
 static struct BurnInputInfo BlswhstlInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort0 + 5, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort1 + 2, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort1 + 3, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort1 + 0, "p1 left"   },
@@ -216,6 +210,8 @@ static struct BurnInputInfo BlswhstlInputList[] =
 	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort1 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort1 + 5, "p1 fire 2" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort0 + 5, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort2 + 2, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort2 + 0, "p2 left"   },
@@ -232,11 +228,7 @@ STDINPUTINFO(Blswhstl)
 
 static struct BurnInputInfo Ssriders4pInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 coin"   },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 coin"   },
-	{"Coin 3"            , BIT_DIGITAL  , DrvInputPort0 + 2, "p3 coin"   },
-	{"Coin 4"            , BIT_DIGITAL  , DrvInputPort0 + 3, "p4 coin"   },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 coin"   },
 	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort1 + 2, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort1 + 3, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort1 + 0, "p1 left"   },
@@ -244,6 +236,7 @@ static struct BurnInputInfo Ssriders4pInputList[] =
 	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort1 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort1 + 5, "p1 fire 2" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 coin"   },
 	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort2 + 2, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort2 + 0, "p2 left"   },
@@ -251,6 +244,7 @@ static struct BurnInputInfo Ssriders4pInputList[] =
 	{"P2 Fire 1"         , BIT_DIGITAL  , DrvInputPort2 + 4, "p2 fire 1" },
 	{"P2 Fire 2"         , BIT_DIGITAL  , DrvInputPort2 + 5, "p2 fire 2" },
 	
+	{"P3 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 2, "p3 coin"   },
 	{"P3 Up"             , BIT_DIGITAL  , DrvInputPort3 + 2, "p3 up"     },
 	{"P3 Down"           , BIT_DIGITAL  , DrvInputPort3 + 3, "p3 down"   },
 	{"P3 Left"           , BIT_DIGITAL  , DrvInputPort3 + 0, "p3 left"   },
@@ -258,6 +252,7 @@ static struct BurnInputInfo Ssriders4pInputList[] =
 	{"P3 Fire 1"         , BIT_DIGITAL  , DrvInputPort3 + 4, "p3 fire 1" },
 	{"P3 Fire 2"         , BIT_DIGITAL  , DrvInputPort3 + 5, "p3 fire 2" },
 	
+	{"P4 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 3, "p4 coin"   },
 	{"P4 Up"             , BIT_DIGITAL  , DrvInputPort4 + 2, "p4 up"     },
 	{"P4 Down"           , BIT_DIGITAL  , DrvInputPort4 + 3, "p4 down"   },
 	{"P4 Left"           , BIT_DIGITAL  , DrvInputPort4 + 0, "p4 left"   },
@@ -277,11 +272,8 @@ STDINPUTINFO(Ssriders4p)
 
 static struct BurnInputInfo SsridersInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort1 + 7, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort2 + 7, "p2 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort1 + 7, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort1 + 2, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort1 + 3, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort1 + 0, "p1 left"   },
@@ -289,6 +281,8 @@ static struct BurnInputInfo SsridersInputList[] =
 	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort1 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort1 + 5, "p1 fire 2" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort2 + 7, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort2 + 2, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort2 + 0, "p2 left"   },
@@ -306,15 +300,8 @@ STDINPUTINFO(Ssriders)
 
 static struct BurnInputInfo Ssriders4psInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort1 + 7, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort2 + 7, "p2 start"  },
-	{"Coin 3"            , BIT_DIGITAL  , DrvInputPort0 + 2, "p3 coin"   },
-	{"Start 3"           , BIT_DIGITAL  , DrvInputPort3 + 7, "p3 start"  },
-	{"Coin 4"            , BIT_DIGITAL  , DrvInputPort0 + 3, "p4 coin"   },
-	{"Start 4"           , BIT_DIGITAL  , DrvInputPort4 + 7, "p4 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort1 + 7, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort1 + 2, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort1 + 3, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort1 + 0, "p1 left"   },
@@ -322,6 +309,8 @@ static struct BurnInputInfo Ssriders4psInputList[] =
 	{"P1 Fire 1"         , BIT_DIGITAL  , DrvInputPort1 + 4, "p1 fire 1" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort1 + 5, "p1 fire 2" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort2 + 7, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort2 + 2, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort2 + 0, "p2 left"   },
@@ -329,6 +318,8 @@ static struct BurnInputInfo Ssriders4psInputList[] =
 	{"P2 Fire 1"         , BIT_DIGITAL  , DrvInputPort2 + 4, "p2 fire 1" },
 	{"P2 Fire 2"         , BIT_DIGITAL  , DrvInputPort2 + 5, "p2 fire 2" },
 	
+	{"P3 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 2, "p3 coin"   },
+	{"P3 Start"          , BIT_DIGITAL  , DrvInputPort3 + 7, "p3 start"  },
 	{"P3 Up"             , BIT_DIGITAL  , DrvInputPort3 + 2, "p3 up"     },
 	{"P3 Down"           , BIT_DIGITAL  , DrvInputPort3 + 3, "p3 down"   },
 	{"P3 Left"           , BIT_DIGITAL  , DrvInputPort3 + 0, "p3 left"   },
@@ -336,6 +327,8 @@ static struct BurnInputInfo Ssriders4psInputList[] =
 	{"P3 Fire 1"         , BIT_DIGITAL  , DrvInputPort3 + 4, "p3 fire 1" },
 	{"P3 Fire 2"         , BIT_DIGITAL  , DrvInputPort3 + 5, "p3 fire 2" },
 	
+	{"P4 Coin"           , BIT_DIGITAL  , DrvInputPort0 + 3, "p4 coin"   },
+	{"P4 Start"          , BIT_DIGITAL  , DrvInputPort4 + 7, "p4 start"  },
 	{"P4 Up"             , BIT_DIGITAL  , DrvInputPort4 + 2, "p4 up"     },
 	{"P4 Down"           , BIT_DIGITAL  , DrvInputPort4 + 3, "p4 down"   },
 	{"P4 Left"           , BIT_DIGITAL  , DrvInputPort4 + 0, "p4 left"   },
@@ -4886,12 +4879,12 @@ static INT32 Thndrx2Init()
 
 	// Setup the YM2151 emulation
 	BurnYM2151Init(3579545);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	K053260Init(0, 3579545, DrvSoundRom, 0x80000);
-	K053260SetRoute(0, BURN_SND_K053260_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
-	K053260SetRoute(0, BURN_SND_K053260_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
+	K053260SetRoute(0, BURN_SND_K053260_ROUTE_1, 0.75, BURN_SND_ROUTE_BOTH);
+	K053260SetRoute(0, BURN_SND_K053260_ROUTE_2, 0.75, BURN_SND_ROUTE_BOTH);
 
 	EEPROMInit(&thndrx2_eeprom_interface);
 	

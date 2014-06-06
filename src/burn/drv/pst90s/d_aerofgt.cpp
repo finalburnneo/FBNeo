@@ -2016,7 +2016,7 @@ static INT32 spinlbrkInit()
 	
 	// Load Z80 ROM
 	if (BurnLoadRom(RomZ80+0x00000, 17, 1)) return 1;
-	if (BurnLoadRom(RomZ80+0x100, 18, 1)) return 1;
+	if (BurnLoadRom(RomZ80+0x10000, 18, 1)) return 1;
 	
 	BurnLoadRom(RomSnd2+0x00000, 19, 1);
 	BurnLoadRom(RomSnd2+0x80000, 20, 1);

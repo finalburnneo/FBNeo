@@ -193,6 +193,7 @@ extern UINT8 DebugSnd_ES8712Initted;
 extern UINT8 DebugSnd_FilterRCInitted;
 extern UINT8 DebugSnd_ICS2115Initted;
 extern UINT8 DebugSnd_IremGA20Initted;
+extern UINT8 DebugSnd_K005289Initted;
 extern UINT8 DebugSnd_K007232Initted;
 extern UINT8 DebugSnd_K051649Initted;
 extern UINT8 DebugSnd_K053260Initted;

@@ -57,11 +57,11 @@ static UINT16 waveform[2];
 static UINT8 volume[2];
 
 /* build a table to divide by the number of voices */
-static void make_mixer_table(int voices)
+static void make_mixer_table(INT32 voices)
 {
-	int count = voices * 128;
-	int i;
-	int ngain = 16;
+	INT32 count = voices * 128;
+	INT32 i;
+	INT32 ngain = 16;
 
 	/* allocate memory */
 	mixer_table = (INT16*)BurnMalloc(256 * voices * sizeof(INT16));
@@ -72,7 +72,7 @@ static void make_mixer_table(int voices)
 	/* fill in the table - 16 bit case */
 	for (i = 0; i < count; i++)
 	{
-		int val = i * ngain * 16 / voices;
+		INT32 val = i * ngain * 16 / voices;
 		if (val > 32767) val = 32767;
 		mixer_lookup[ i] = val;
 		mixer_lookup[-i] = -val;
@@ -81,8 +81,12 @@ static void make_mixer_table(int voices)
 
 void K005289Reset()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289Reset called without init\n"));
+#endif
+
 	/* reset all the voices */
-	for (int i = 0; i < 2; i++)
+	for (INT32 i = 0; i < 2; i++)
 	{
 		counter[i] = 0;
 		frequency[i] = 0;
@@ -104,24 +108,40 @@ void K005289Init(INT32 clock, UINT8 *prom)
 	make_mixer_table(2);
 
 	sound_prom = prom;
+	
+	DebugSnd_K005289Initted = 1;
 }
 
 void K005289SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289SetRoute called without init\n"));
+#endif
+
 	gain[nIndex] = nVolume;
 	output_dir[nIndex] = nRouteDir;
 }
 
 void K005289Exit()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289Exit called without init\n"));
+#endif
+
 	BurnFree (mixer_buffer);
 	BurnFree (mixer_table);
+	
+	DebugSnd_K005289Initted = 0;
 }
 
-void K005289Update(INT16 *buffer, int samples)
+void K005289Update(INT16 *buffer, INT32 samples)
 {
-	short *mix;
-	int i,v,f;
+#if defined FBA_DEBUG
+	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289Update called without init\n"));
+#endif
+
+	INT16 *mix;
+	INT32 i,v,f;
 
 	/* zap the contents of the mixer buffer */
 	memset(mixer_buffer, 0, rate * sizeof(INT16));
@@ -130,15 +150,15 @@ void K005289Update(INT16 *buffer, int samples)
 	f=frequency[0];
 	if (v && f)
 	{
-		const unsigned char *w = sound_prom + waveform[0];
-		int c = counter[0];
+		const UINT8 *w = sound_prom + waveform[0];
+		INT32 c = counter[0];
 
 		mix = mixer_buffer;
 
 		/* add our contribution */
 		for (i = 0; i < rate; i++)
 		{
-			int offs;
+			INT32 offs;
 
 			c += CLOCK_DIVIDER;
 			offs = (c / f) & 0x1f;
@@ -153,15 +173,15 @@ void K005289Update(INT16 *buffer, int samples)
 	f=frequency[1];
 	if (v && f)
 	{
-		const unsigned char *w = sound_prom + waveform[1];
-		int c = counter[1];
+		const UINT8 *w = sound_prom + waveform[1];
+		INT32 c = counter[1];
 
 		mix = mixer_buffer;
 
 		/* add our contribution */
 		for (i = 0; i < rate; i++)
 		{
-			int offs;
+			INT32 offs;
 
 			c += CLOCK_DIVIDER;
 			offs = (c / f) & 0x1f;
@@ -197,40 +217,68 @@ void K005289Update(INT16 *buffer, int samples)
 
 void K005289ControlAWrite(UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289ControlAWrite called without init\n"));
+#endif
+
 	volume[0] = data & 0xf;
 	waveform[0] = data & 0xe0;
 }
 
 void K005289ControlBWrite(UINT8 data)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289ControlBWrite called without init\n"));
+#endif
+
 	volume[1] = data & 0xf;
 	waveform[1] = (data & 0xe0) + 0x100;
 }
 
 void K005289Ld1Write(INT32 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289Ld1 called without init\n"));
+#endif
+
 	offset &= 0xfff;
 	freq_latch[0] = 0x1000 - offset;
 }
 
 void K005289Ld2Write(INT32 offset)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289Ld2 called without init\n"));
+#endif
+
 	offset &= 0xfff;
 	freq_latch[1] = 0x1000 - offset;
 }
 
 void K005289Tg1Write()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289Tg1 called without init\n"));
+#endif
+
 	frequency[0] = freq_latch[0];
 }
 
 void K005289Tg2Write()
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289Tg2 called without init\n"));
+#endif
+
 	frequency[1] = freq_latch[1];
 }
 
 INT32 K005289Scan(INT32 nAction, INT32 *)
 {
+#if defined FBA_DEBUG
+	if (!DebugSnd_K005289Initted) bprintf(PRINT_ERROR, _T("K005289Scan called without init\n"));
+#endif
+
 	if (nAction & ACB_DRIVER_DATA)
 	{
 		for (INT32 i = 0; i < 2; i++) {

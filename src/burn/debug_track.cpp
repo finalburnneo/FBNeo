@@ -39,6 +39,7 @@ UINT8 DebugSnd_ES8712Initted;
 UINT8 DebugSnd_FilterRCInitted;
 UINT8 DebugSnd_ICS2115Initted;
 UINT8 DebugSnd_IremGA20Initted;
+UINT8 DebugSnd_K005289Initted;
 UINT8 DebugSnd_K007232Initted;
 UINT8 DebugSnd_K051649Initted;
 UINT8 DebugSnd_K053260Initted;
@@ -114,6 +115,7 @@ void DebugTrackerExit()
 	if (DebugSnd_FilterRCInitted)		bprintf(PRINT_ERROR, _T("Sound Module Filter RC Not Exited\n"));
 	if (DebugSnd_ICS2115Initted) 		bprintf(PRINT_ERROR, _T("Sound Module ICS2115 Not Exited\n"));
 	if (DebugSnd_IremGA20Initted) 		bprintf(PRINT_ERROR, _T("Sound Module IremGA20 Not Exited\n"));
+	if (DebugSnd_K005289Initted) 		bprintf(PRINT_ERROR, _T("Sound Module K005289 Not Exited\n"));
 	if (DebugSnd_K007232Initted) 		bprintf(PRINT_ERROR, _T("Sound Module K007232 Not Exited\n"));
 	if (DebugSnd_K051649Initted) 		bprintf(PRINT_ERROR, _T("Sound Module K051649 Not Exited\n"));
 	if (DebugSnd_K053260Initted) 		bprintf(PRINT_ERROR, _T("Sound Module K053260 Not Exited\n"));

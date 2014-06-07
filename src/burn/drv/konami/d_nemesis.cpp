@@ -2132,14 +2132,14 @@ static void NemesisSoundInit()
 	ZetSetWriteHandler(nemesis_sound_write);
 	ZetSetReadHandler(nemesis_sound_read);
 	ZetClose();
+	
+	K005289Init(3579545, K005289ROM);
+	K005289SetRoute(BURN_SND_K005289_ROUTE_1, 0.35, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 14318180/8, nBurnSoundRate, &nemesis_AY8910_0_portA, NULL, NULL, NULL);
 	AY8910Init(1, 14318180/8, nBurnSoundRate, NULL, NULL, &k005289_control_A_write, &k005289_control_B_write);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 1.00, BURN_SND_ROUTE_BOTH);
-
-	K005289Init(3579545, K005289ROM);
-	K005289SetRoute(BURN_SND_K005289_ROUTE_1, 0.35, BURN_SND_ROUTE_BOTH);
 
 	ay8910_enable = 1;
 	k005289_enable = 1;

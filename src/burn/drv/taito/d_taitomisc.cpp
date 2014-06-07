@@ -4202,7 +4202,7 @@ static INT32 DariusInit()
 	}
 	
 	PC080SNInit(0, TaitoNumChar, -16, 0, 0, 1);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -4326,7 +4326,7 @@ static INT32 OpwolfInit()
 	
 	PC080SNInit(0, TaitoNumChar, 0, 8, 0, 0);
 	PC090OJInit(TaitoNumSpriteA, 0, 8, 0);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -4433,7 +4433,7 @@ static INT32 OpwolfbInit()
 	
 	PC080SNInit(0, TaitoNumChar, 0, 8, 0, 0);
 	PC090OJInit(TaitoNumSpriteA, 0, 8, 0);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -4548,7 +4548,7 @@ static INT32 RbislandInit()
 	
 	PC080SNInit(0, TaitoNumChar, 0, 16, 0, 0);
 	PC090OJInit(TaitoNumSpriteA, 0, 16, 0);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -4738,7 +4738,7 @@ static INT32 RastanInit()
 	
 	PC080SNInit(0, TaitoNumChar, 0, 8, 0, 0);
 	PC090OJInit(TaitoNumSpriteA, 0, 8, 0);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -4832,7 +4832,7 @@ static INT32 TopspeedInit()
 	
 	PC080SNInit(0, TaitoNumChar, 0, 8, 0, 0);
 	PC080SNInit(1, TaitoNumChar, 0, 8, 0, 0);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();
 	
 	// Setup the 68000 emulation
@@ -4934,7 +4934,7 @@ static INT32 VolfiedInit()
 	
 	PC090OJInit(TaitoNumSpriteA, 0, 8, 0);
 	PC090OJSetPaletteOffset(256);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);

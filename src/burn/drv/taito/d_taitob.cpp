@@ -1802,7 +1802,7 @@ static void common_ym2610_init()
 	ZetSetReadHandler(taitob_sound_read_ym2610);
 	ZetClose();
 
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 
 	INT32 len0 = TaitoYM2610ARomSize;
 	INT32 len1 = TaitoYM2610BRomSize;
@@ -1829,7 +1829,7 @@ static void common_ym2203_init()
 	ZetSetReadHandler(taitob_sound_read_ym2203);
 	ZetClose();
 
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 
 	BurnYM2203Init(1, 3000000, DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnYM2203SetPorts(0, NULL, NULL, &bankswitch, NULL);

@@ -1371,7 +1371,7 @@ static INT32 CommonInit(void (*Cpu68KSetup)(), void (*CpuZ80Setup)(), void (*Sou
 	TC0110PCRInit(1, 0x1000);
 	TC0220IOCInit();
 	TaitoMakeInputsFunction = DrvMakeInputs;
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 
 	Cpu68KSetup();
 	CpuZ80Setup();

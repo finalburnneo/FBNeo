@@ -4679,7 +4679,7 @@ static INT32 AquajackInit()
 	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, NULL);
 	TC0110PCRInit(1, 0x1000);
 	TC0150RODInit(TaitoRoadRomSize, 0);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();
 	
 	if (TaitoLoadRoms(1)) return 1;
@@ -4876,7 +4876,7 @@ static INT32 ChasehqInit()
 	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, NULL);
 	TC0110PCRInit(1, 0x1000);
 	TC0150RODInit(TaitoRoadRomSize, 0);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();
 	
 	if (TaitoLoadRoms(1)) return 1;
@@ -4971,7 +4971,7 @@ static INT32 ContcircInit()
 	TC0100SCNInit(0, TaitoNumChar, 0, 16, 0, NULL);
 	TC0110PCRInit(1, 0x1000);
 	TC0150RODInit(TaitoRoadRomSize, 0);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();
 	
 	if (TaitoLoadRoms(1)) return 1;
@@ -5065,7 +5065,7 @@ static INT32 DblaxleInit()
 	
 	TC0150RODInit(TaitoRoadRomSize, 0);
 	TC0480SCPInit(TaitoNumChar, 0, 0x21, 8, 4, 0, 0);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0510NIOInit();
 	
 	if (TaitoLoadRoms(1)) return 1;
@@ -5164,7 +5164,7 @@ static INT32 EnforceInit()
 	TC0100SCNInit(0, TaitoNumChar, 0, 16, 0, NULL);
 	TC0110PCRInit(1, 0x1000);
 	TC0150RODInit(TaitoRoadRomSize, 0);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();
 	
 	if (TaitoLoadRoms(1)) return 1;
@@ -5271,7 +5271,7 @@ static INT32 NightstrInit()
 	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, NULL);
 	TC0110PCRInit(1, 0x1000);
 	TC0150RODInit(TaitoRoadRomSize, 0);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();
 	
 	if (TaitoLoadRoms(1)) return 1;
@@ -5365,7 +5365,7 @@ static INT32 RacingbInit()
 	
 	TC0150RODInit(TaitoRoadRomSize, 0);
 	TC0480SCPInit(TaitoNumChar, 0, 0x1f, 8, 4, 0, 0);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0510NIOInit();
 	
 	if (TaitoLoadRoms(1)) return 1;
@@ -5464,7 +5464,7 @@ static INT32 SciInit()
 	
 	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, NULL);
 	TC0150RODInit(TaitoRoadRomSize, 0);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();
 	
 	if (TaitoLoadRoms(1)) return 1;

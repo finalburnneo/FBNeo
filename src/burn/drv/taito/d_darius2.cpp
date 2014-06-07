@@ -1375,7 +1375,7 @@ static INT32 Darius2Init()
 	TC0100SCNSetClipArea(2, 288, nScreenHeight, 576);
 	TC0100SCNSetPaletteOffset(2, 0x2000);
 	TC0110PCRInit(3, 0x3000);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();
 	
 	if (TaitoLoadRoms(1)) return 1;
@@ -1487,7 +1487,7 @@ static INT32 Darius2dInit()
 	TC0100SCNSetClipArea(1, 320, nScreenHeight, 320);
 	TC0100SCNSetPaletteOffset(1, 0x1000);
 	TC0110PCRInit(2, 0x2000);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();
 	
 	if (TaitoLoadRoms(1)) return 1;
@@ -1599,7 +1599,7 @@ static INT32 WarriorbInit()
 	TC0100SCNSetClipArea(1, 320, nScreenHeight, 320);
 	TC0100SCNSetPaletteOffset(1, 0x1000);
 	TC0110PCRInit(2, 0x2000);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0510NIOInit();
 	
 	if (TaitoLoadRoms(1)) return 1;

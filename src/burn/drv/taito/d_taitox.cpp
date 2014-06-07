@@ -1153,7 +1153,7 @@ static INT32 TaitoXInit(INT32 nSoundType)
 	
 	if (TaitoLoadRoms(1)) return 1;
 	
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);

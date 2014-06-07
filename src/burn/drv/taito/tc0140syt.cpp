@@ -20,6 +20,8 @@ typedef struct TC0140SYT
 	UINT8 NmiReq;
 } TC0140SYT;
 
+static INT32 TC0140SYT_Z80_SELECT = 0;
+
 static struct TC0140SYT tc0140syt;
 
 static void InterruptController(void)
@@ -97,7 +99,7 @@ void TC0140SYTCommWrite(UINT8 Data)
 		
 		case 0x04: {
 			if (Data) {
-				ZetOpen(0);
+				ZetOpen(TC0140SYT_Z80_SELECT);
 				ZetReset();
 				ZetClose();
 			}
@@ -205,9 +207,10 @@ void TC0140SYTReset()
 	tc0140syt.NmiReq = 0;
 }
 
-void TC0140SYTInit()
+void TC0140SYTInit(INT32 nCpu)
 {
 	TaitoIC_TC0140SYTInUse = 1;
+	TC0140SYT_Z80_SELECT = nCpu;
 }
 
 void TC0140SYTExit()
@@ -224,6 +227,7 @@ void TC0140SYTExit()
 	tc0140syt.Status = 0;
 	tc0140syt.NmiEnabled = 0;
 	tc0140syt.NmiReq = 0;
+	TC0140SYT_Z80_SELECT = 0;
 }
 
 void TC0140SYTScan(INT32 nAction)

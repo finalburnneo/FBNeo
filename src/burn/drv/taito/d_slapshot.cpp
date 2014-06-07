@@ -511,7 +511,7 @@ static INT32 MachineInit()
 	
 	TC0480SCPInit(TaitoNumChar, 3, 30, 9, -1, 1, -2);
 	TC0480SCPSetColourBase(256);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0360PRIInit();
 	TC0640FIOInit();
 	

@@ -7531,7 +7531,7 @@ static INT32 CameltryInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, NULL);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();
 	TC0280GRDInit(-16, -16, TaitoCharsPivot);
 	TC0360PRIInit();
@@ -7598,7 +7598,7 @@ static INT32 CamltryaInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, NULL);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();
 	TC0280GRDInit(-16, -16, TaitoCharsPivot);
 	TC0360PRIInit();
@@ -7695,7 +7695,7 @@ static INT32 DeadconxInit()
 		TC0480SCPInit(TaitoNumChar, 3, 0x1e, 8, -1, 0, 0);
 	}
 	
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0360PRIInit();
 	
 	SwitchToMusashi();
@@ -7747,7 +7747,7 @@ static INT32 DinorexInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, TaitoPriorityMap);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0360PRIInit();
 	TC0510NIOInit();
 	
@@ -7810,7 +7810,7 @@ static INT32 DondokodInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, TaitoPriorityMap);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();
 	TC0280GRDInit(-16, -16, TaitoCharsPivot);
 	TC0360PRIInit();
@@ -7873,7 +7873,7 @@ static INT32 DriftoutInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, NULL);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0360PRIInit();
 	TC0430GRWInit(-16, 0, TaitoCharsPivot);
 	TC0510NIOInit();
@@ -8031,7 +8031,7 @@ static INT32 FinalbInit()
 	
 	TC0110PCRInit(1, 0x1000);
 	TC0100SCNInit(0, TaitoNumChar, 1, 8, 0, NULL);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();
 	
 	// Load and decode Sprites
@@ -8129,7 +8129,7 @@ static INT32 FootchmpInit()
 	} else {
 		TC0480SCPInit(TaitoNumChar, 3, 0x1d, 8, -1, 0, 0);
 	}
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0360PRIInit();
 	
 	if (TaitoLoadRoms(1)) return 1;
@@ -8184,7 +8184,7 @@ static INT32 GrowlInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, TaitoPriorityMap);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0360PRIInit();
 	
 	SwitchToMusashi();
@@ -8235,7 +8235,7 @@ static INT32 GunfrontInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, TaitoPriorityMap);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0360PRIInit();
 	TC0510NIOInit();
 	
@@ -8287,7 +8287,7 @@ static INT32 KoshienInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 1, 8, 0, TaitoPriorityMap);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0360PRIInit();
 	TC0510NIOInit();
 	
@@ -8340,7 +8340,7 @@ static INT32 LiquidkInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, TaitoPriorityMap);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();
 	
 	SwitchToMusashi();
@@ -8392,7 +8392,7 @@ static INT32 MegablstInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, TaitoPriorityMap);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();
 	
 	SwitchToMusashi();
@@ -8455,7 +8455,7 @@ static INT32 MetalbInit()
 	
 	TC0480SCPInit(TaitoNumChar, 3, 0x32, -4, 1, 0, 24);
 	TC0480SCPSetColourBase(256);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0360PRIInit();
 	TC0510NIOInit();
 	
@@ -8523,7 +8523,7 @@ static INT32 MjnquestInit()
 	TC0110PCRInit(1, 0x1000);
 	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, NULL);
 	TC0100SCNSetGfxMask(0, 0x7fff);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	
 	SwitchToMusashi();
 
@@ -8573,7 +8573,7 @@ static INT32 NinjakInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, TaitoPriorityMap);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	
 	SwitchToMusashi();
 
@@ -8630,7 +8630,7 @@ static INT32 PulirulaInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, TaitoPriorityMap);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0360PRIInit();
 	TC0430GRWInit(-10, 0, TaitoCharsPivot);
 	TC0510NIOInit();
@@ -8687,7 +8687,7 @@ static INT32 QcrayonInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, TaitoPriorityMap);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0360PRIInit();
 	TC0510NIOInit();
 	
@@ -8742,7 +8742,7 @@ static INT32 Qcrayon2Init()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, TaitoPriorityMap);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0360PRIInit();
 	TC0510NIOInit();
 	
@@ -8797,7 +8797,7 @@ static INT32 QjinseiInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, TaitoPriorityMap);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0360PRIInit();
 	TC0510NIOInit();
 	
@@ -8852,7 +8852,7 @@ static INT32 QtorimonInit()
 	
 	TC0110PCRInit(1, 0x1000);
 	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, NULL);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();	
 	
 	SwitchToMusashi();
@@ -8908,7 +8908,7 @@ static INT32 QuizhqInit()
 	
 	TC0110PCRInit(1, 0x1000);
 	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, NULL);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	
 	SwitchToMusashi();
 
@@ -8958,7 +8958,7 @@ static INT32 QzchikyuInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, NULL);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0510NIOInit();
 	
 	SwitchToMusashi();
@@ -9011,7 +9011,7 @@ static INT32 QzquestInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, NULL);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0510NIOInit();
 	
 	SwitchToMusashi();
@@ -9064,7 +9064,7 @@ static INT32 SolfigtrInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, TaitoPriorityMap);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0360PRIInit();
 	
 	SwitchToMusashi();
@@ -9114,7 +9114,7 @@ static INT32 SsiInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 0, 0, 0, NULL);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0510NIOInit();
 	
 	SwitchToMusashi();
@@ -9180,7 +9180,7 @@ static INT32 ThundfoxInit()
 	TC0100SCNSetClipArea(0, nScreenWidth, nScreenHeight, 0);
 	TC0100SCNInit(1, TaitoNumCharB, 3, 16, 0, NULL);
 	TC0100SCNSetClipArea(1, nScreenWidth, nScreenHeight, 0);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0220IOCInit();
 	TC0360PRIInit();
 	
@@ -9243,7 +9243,7 @@ static INT32 YesnojInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, NULL);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	
 	SwitchToMusashi();
 
@@ -9302,7 +9302,7 @@ static INT32 YuyugogoInit()
 	if (TaitoLoadRoms(1)) return 1;
 	
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, NULL);
-	TC0140SYTInit();
+	TC0140SYTInit(0);
 	TC0510NIOInit();
 	
 	SwitchToMusashi();

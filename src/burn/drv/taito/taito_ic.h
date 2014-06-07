@@ -158,7 +158,7 @@ void TC0140SYTSlavePortWrite(UINT8 Data);
 UINT8 TC0140SYTSlaveCommRead();
 void TC0140SYTSlaveCommWrite(UINT8 Data);
 void TC0140SYTReset();
-void TC0140SYTInit();
+void TC0140SYTInit(INT32 nCpu);
 void TC0140SYTExit();
 void TC0140SYTScan(INT32 nAction);
 

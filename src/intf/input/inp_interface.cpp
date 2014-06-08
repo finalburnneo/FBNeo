@@ -1,5 +1,6 @@
 // Burner Input module
 #include "burner.h"
+#include <vector>
 
 UINT32 nInputSelect = 0;
 bool bInputOkay = false;
@@ -26,6 +27,14 @@ static struct InputInOut *pInputInOut[]=
 };
 
 #define INPUT_LEN (sizeof(pInputInOut) / sizeof(pInputInOut[0]))
+
+std::vector<const InputInOut *> InputGetInterfaces()
+{
+    std::vector<const InputInOut *> list;
+    for (int i = 0; i < INPUT_LEN; i++)
+        list.push_back(pInputInOut[i]);
+    return list;
+}
 
 static InterfaceInfo InpInfo = { NULL, NULL, NULL };
 

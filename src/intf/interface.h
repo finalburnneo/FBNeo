@@ -1,6 +1,8 @@
+#pragma once
 #ifdef FBA_DEBUG
  #define PRINT_DEBUG_INFO
 #endif
+#include <vector>
 
 // GameInp structure
 #include "gameinp.h"
@@ -47,6 +49,7 @@ INT32 InputMake(bool bCopy);
 INT32 InputFind(const INT32 nFlags);
 INT32 InputGetControlName(INT32 nCode, TCHAR* pszDeviceName, TCHAR* pszControlName);
 InterfaceInfo* InputGetInfo();
+std::vector<const InputInOut *> InputGetInterfaces();
 
 extern bool bInputOkay;
 extern UINT32 nInputSelect;

@@ -810,9 +810,9 @@ static UINT8 __fastcall ReadIoHandler(UINT16 a)
 	return SysIn(a);
 }
 
-static void __fastcall WriteIoHandler(UINT16 a, UINT8 v) 
+static void __fastcall WriteIoHandler(UINT16 a, UINT8 d) 
 { 
-	SysOut(a,v);
+	SysOut(a,d);
 }
 
 static UINT8 __fastcall ReadProgHandler(UINT16 a)
@@ -827,15 +827,15 @@ static UINT8 __fastcall ReadProgHandler(UINT16 a)
 	}
 }
 
-static void __fastcall WriteProgHandler(UINT16 a, UINT8 v)
+static void __fastcall WriteProgHandler(UINT16 a, UINT8 d)
 {
 	if (MemWrite[a >> 8])
 	{
-		MemWrite[a >> 8][a] = v;
+		MemWrite[a >> 8][a] = d;
 	}
 	else
 	{
-		SysWrite(a,v);
+		SysWrite(a,d);
 	}
 }
 

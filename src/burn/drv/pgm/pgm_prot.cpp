@@ -2426,10 +2426,10 @@ static int puzzli2_take_leveldata_value(UINT8 datvalue)
 					return 1;
 				}
 			}
-			else
-			{
-				int num = (1 << ((num > 8) ? 8 : num)) - 1;
-			}
+		//	else
+		//	{
+		//		int num = (1 << ((num > 8) ? 8 : num)) - 1;
+		//	}
 		}
 		else if (stage==3)
 		{

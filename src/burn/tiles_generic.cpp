@@ -45,6 +45,101 @@ INT32 GenericTilesExit()
 	return 0;
 }
 
+// ----------------------------------------------------------------------------
+// Colour-depth independant image transfer
+
+UINT16* pTransDraw = NULL;
+
+static INT32 nTransWidth, nTransHeight;
+
+void BurnTransferClear()
+{
+#if defined FBA_DEBUG
+	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnTransferClear called without init\n"));
+#endif
+
+	memset((void*)pTransDraw, 0, nTransWidth * nTransHeight * sizeof(UINT16));
+}
+
+INT32 BurnTransferCopy(UINT32* pPalette)
+{
+#if defined FBA_DEBUG
+	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnTransferCopy called without init\n"));
+#endif
+
+	UINT16* pSrc = pTransDraw;
+	UINT8* pDest = pBurnDraw;
+	
+	pBurnDrvPalette = pPalette;
+
+	switch (nBurnBpp) {
+		case 2: {
+			for (INT32 y = 0; y < nTransHeight; y++, pSrc += nTransWidth, pDest += nBurnPitch) {
+				for (INT32 x = 0; x < nTransWidth; x ++) {
+					((UINT16*)pDest)[x] = pPalette[pSrc[x]];
+				}
+			}
+			break;
+		}
+		case 3: {
+			for (INT32 y = 0; y < nTransHeight; y++, pSrc += nTransWidth, pDest += nBurnPitch) {
+				for (INT32 x = 0; x < nTransWidth; x++) {
+					UINT32 c = pPalette[pSrc[x]];
+					*(pDest + (x * 3) + 0) = c & 0xFF;
+					*(pDest + (x * 3) + 1) = (c >> 8) & 0xFF;
+					*(pDest + (x * 3) + 2) = c >> 16;
+
+				}
+			}
+			break;
+		}
+		case 4: {
+			for (INT32 y = 0; y < nTransHeight; y++, pSrc += nTransWidth, pDest += nBurnPitch) {
+				for (INT32 x = 0; x < nTransWidth; x++) {
+					((UINT32*)pDest)[x] = pPalette[pSrc[x]];
+				}
+			}
+			break;
+		}
+	}
+
+	return 0;
+}
+
+void BurnTransferExit()
+{
+#if defined FBA_DEBUG
+	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnTransferClear called without init\n"));
+#endif
+
+	if (pTransDraw) {
+		free(pTransDraw);
+		pTransDraw = NULL;
+	}
+	
+	Debug_BurnTransferInitted = 0;
+}
+
+INT32 BurnTransferInit()
+{
+	Debug_BurnTransferInitted = 1;
+	
+	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+		BurnDrvGetVisibleSize(&nTransHeight, &nTransWidth);
+	} else {
+		BurnDrvGetVisibleSize(&nTransWidth, &nTransHeight);
+	}
+
+	pTransDraw = (UINT16*)malloc(nTransWidth * nTransHeight * sizeof(UINT16));
+	if (pTransDraw == NULL) {
+		return 1;
+	}
+
+	BurnTransferClear();
+
+	return 0;
+}
+
 /*================================================================================================
 Graphics Decoding
 ================================================================================================*/

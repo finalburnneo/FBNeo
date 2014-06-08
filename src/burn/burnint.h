@@ -87,16 +87,6 @@ INT32 BurnXorRom(UINT8* Dest, INT32 i, INT32 nGap);
 INT32 BurnLoadBitField(UINT8* pDest, UINT8* pSrc, INT32 nField, INT32 nSrcLen);
 
 // ---------------------------------------------------------------------------
-// Colour-depth independant image transfer
-
-extern UINT16* pTransDraw;
-
-void BurnTransferClear();
-INT32 BurnTransferCopy(UINT32* pPalette);
-void BurnTransferExit();
-INT32 BurnTransferInit();
-
-// ---------------------------------------------------------------------------
 // Plotting pixels
 
 inline static void PutPix(UINT8* pPix, UINT32 c)

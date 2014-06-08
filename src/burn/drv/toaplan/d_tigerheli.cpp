@@ -1,6 +1,6 @@
 // Tiger Heli, Get Star / Guardian, & Slap Fight
 
-#include "burnint.h"
+#include "tiles_generic.h"
 #include "z80_intf.h"
 #include "taito_m68705.h"
 #include "bitswap.h"
@@ -302,7 +302,7 @@ static INT32 MemIndex()
 static INT32 nTigerHeliTileXPosLo, nTigerHeliTileXPosHi, nTigerHeliTileYPosLo;
 static INT32 nTigerHeliTileMask;
 
-static UINT8* pTileData;
+static UINT8* pGfxTileData;
 
 static INT32 nTileNumber;
 static INT32 nTilePalette;
@@ -380,16 +380,16 @@ static INT32 TigerHeliTextInit()
 	return 0;
 }
 
-#define PLOTPIXEL(x) if (pTileData[x]) { pPixel[x] = nPalette + pTileData[x]; }
+#define PLOTPIXEL(x) if (pGfxTileData[x]) { pPixel[x] = nPalette + pGfxTileData[x]; }
 
 static void TigerHeliRenderTextTile()
 {
 	UINT16 nPalette = nTilePalette << 2;
-	pTileData = TigerHeliTextROM + (nTileNumber << 6);
+	pGfxTileData = TigerHeliTextROM + (nTileNumber << 6);
 
 	UINT16* pPixel = pTile;
 
-	for (INT32 y = 0; y < 8; y++, pPixel += 280, pTileData += 8) {
+	for (INT32 y = 0; y < 8; y++, pPixel += 280, pGfxTileData += 8) {
 
 		if ((nTileYPos + y) >= 240) {
 			break;
@@ -455,17 +455,17 @@ static void TigerHeliTextRender()
 // ---------------------------------------------------------------------------
 // Tile layer
 
-#define PLOTPIXEL(x) pPixel[x] = nPalette + pTileData[x];
+#define PLOTPIXEL(x) pPixel[x] = nPalette + pGfxTileData[x];
 #define CLIPPIXEL(a,b) if ((nTileXPos + a) >= 0 && (nTileXPos + a) < 280) { b; }
 
 static void TigerHeliRenderTileNoClip()
 {
 	UINT8 nPalette = nTilePalette << 4;
-	pTileData = TigerHeliTileROM + (nTileNumber << 6);
+	pGfxTileData = TigerHeliTileROM + (nTileNumber << 6);
 
 	UINT16* pPixel = pTile;
 
-	for (INT32 y = 0; y < 8; y++, pPixel += 280, pTileData += 8) {
+	for (INT32 y = 0; y < 8; y++, pPixel += 280, pGfxTileData += 8) {
 		PLOTPIXEL(0);
 		PLOTPIXEL(1);
 		PLOTPIXEL(2);
@@ -480,11 +480,11 @@ static void TigerHeliRenderTileNoClip()
 static void TigerHeliRenderTileClip()
 {
 	UINT8 nPalette = nTilePalette << 4;
-	pTileData = TigerHeliTileROM + (nTileNumber << 6);
+	pGfxTileData = TigerHeliTileROM + (nTileNumber << 6);
 
 	UINT16* pPixel = pTile;
 
-	for (INT32 y = 0; y < 8; y++, pPixel += 280, pTileData += 8) {
+	for (INT32 y = 0; y < 8; y++, pPixel += 280, pGfxTileData += 8) {
 
 		if ((nTileYPos + y) >= 240) {
 			break;

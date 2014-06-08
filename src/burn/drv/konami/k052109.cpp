@@ -193,8 +193,8 @@ void K052109RenderLayerLineScroll(INT32 nLayer, INT32 Opaque, UINT8 *pSrc)
 			y -= (K052109ScrollY[nLayer] + K052109ScrollYOff[nLayer] + 16) & 0xff;
 			if (K052109EnableLine[nLayer]) x -= (104 + K052109ScrollRows[nLayer][my] + K052109ScrollXOff[nLayer]) & 0x1ff;
 
-			if (x < -8) x += 512;
-			if (y < -8) y += 256;
+			if (x < -7) x += 512;
+			if (y < -7) y += 256;
 
 			if (x >= nScreenWidth) continue;
 
@@ -277,8 +277,8 @@ void K052109RenderLayer(INT32 nLayer, INT32 Opaque, UINT8 *pSrc)
 			x -= (scrollx + 104) & 0x1ff;
 			y -= (scrolly +  16) & 0xff;
 
-			if (x < -8) x += 512;
-			if (y < -8) y += 256;
+			if (x < -7) x += 512;
+			if (y < -7) y += 256;
 
 			if (x >= nScreenWidth || y >= nScreenHeight) continue;
 

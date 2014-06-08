@@ -1202,6 +1202,7 @@ static UINT8 __fastcall pspikesReadByte(UINT32 sekAddress)
 
 static void aerofgtFMIRQHandler(INT32, INT32 nStatus)
 {
+	if (ZetGetActive() == -1) return;
 //	bprintf(PRINT_NORMAL, _T("  - IRQ -> %i.\n"), nStatus);
 	if (nStatus) {
 		ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
@@ -1212,11 +1213,13 @@ static void aerofgtFMIRQHandler(INT32, INT32 nStatus)
 
 static INT32 aerofgtSynchroniseStream(INT32 nSoundRate)
 {
+	if (ZetGetActive() == -1) return 0;
 	return (INT64)ZetTotalCycles() * nSoundRate / 5000000;
 }
 
 static double aerofgtGetTime()
 {
+	if (ZetGetActive() == -1) return 0;
 	return (double)ZetTotalCycles() / 5000000.0;
 }
 
@@ -2368,7 +2371,7 @@ static void karatblzTileBackground(UINT16 *bgram, UINT8 *gfx, INT32 transp, UINT
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
 		INT32 attr  = BURN_ENDIAN_SWAP_INT16(bgram[offs]);
-		INT32 code  = (attr & 0x1fff) + ((bankbase & 0x01) << 13);
+		INT32 code  = (attr & 0x1fff) + (bankbase << 13);
  		INT32 color = attr >> 13;
 
 		if (transp) {
@@ -2517,8 +2520,8 @@ static INT32 karatblzDraw()
 		DrvRecalc = 0;
 	}
 
-	karatblzTileBackground(RamBg1V, DeRomBg + 0x000000, 0, 0x000, bg1scrollx, bg1scrolly, RamGfxBank[0]);
-	karatblzTileBackground(RamBg2V, DeRomBg + 0x100000, 1, 0x100, bg2scrollx, bg2scrolly, RamGfxBank[1]);
+	karatblzTileBackground(RamBg1V, DeRomBg + 0x000000, 0, 0x000, bg1scrollx, bg1scrolly, RamGfxBank[0] & 1);
+	karatblzTileBackground(RamBg2V, DeRomBg + 0x100000, 1, 0x100, bg2scrollx, bg2scrolly, RamGfxBank[1] & 1);
 
 /* 	
 	turbofrc_drawsprites(1,-1); 
@@ -2545,7 +2548,7 @@ static INT32 spinlbrkDraw()
 	}
 
 	spinlbrkTileBackground();
-	karatblzTileBackground(RamBg2V, DeRomBg + 0x200000, 1, 0x100, bg2scrollx, bg2scrolly, RamGfxBank[1]);
+	karatblzTileBackground(RamBg2V, DeRomBg + 0x200000, 1, 0x100, bg2scrollx, bg2scrolly, RamGfxBank[1] & 0x07);
 
 	turbofrc_drawsprites(1,768,-1);	// enemy(near far)
 	turbofrc_drawsprites(1,768, 0);	// enemy(near) fense
@@ -2659,7 +2662,9 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(RamGfxBank);
 		SCAN_VAR(DrvInput);
 
+		ZetOpen(0);
 		BurnYM2610Scan(nAction, pnMin);
+		ZetClose();
 		SCAN_VAR(nSoundlatch);
 		SCAN_VAR(nAerofgtZ80Bank);
 

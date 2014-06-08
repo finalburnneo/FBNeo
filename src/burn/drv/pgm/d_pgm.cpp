@@ -1431,6 +1431,8 @@ struct BurnDriver BurnDrvKovplusa = {
 
 static struct BurnRomInfo kovshRomDesc[] = {
 	{ "p0600.322",	   		0x400000, 0x7c78e5f3, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+//	This is the same as above, but with the last 1mb 0-filled. 
+//	{ "p0600.322",			0x400000, 0x4e2ba39b, 1 | BRF_PRG | BRF_ESS },	//  0 68k Code
 
 	{ "t0600.rom",     		0x800000, 0x4acc1ad6, 2 | BRF_GRA },			//  1 Tile data
 

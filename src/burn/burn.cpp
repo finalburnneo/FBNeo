@@ -54,8 +54,6 @@ UINT8 nSpriteEnable = 0xFF;	// Can be used externally to select which layers to 
 
 INT32 nMaxPlayers;
 
-bool bSaveCRoms = 0;
-
 UINT32 *pBurnDrvPalette;
 
 bool BurnCheckMMXSupport()

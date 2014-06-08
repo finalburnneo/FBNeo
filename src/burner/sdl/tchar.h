@@ -1,4 +1,4 @@
-
+#include <stdint.h>
 #ifdef _UNICODE
 //TODO: bah
 #include <wchar.h>
@@ -38,6 +38,7 @@ typedef char	_TCHAR;
 #define _tcsicmp    strcasecmp
 #define _tcsnicmp   strncasecmp
 #define _tcstol     strtol
+#define _tcsstr     strstr
 
 #define _fgetts     fgets
 #define _fputts     fputs

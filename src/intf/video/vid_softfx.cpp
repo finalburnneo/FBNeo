@@ -9,7 +9,9 @@ typedef unsigned short uint16;
 typedef unsigned char uint8;
 
 #ifndef _WIN32
+#ifndef WITH_QTCREATOR
  typedef unsigned long DWORD;
+#endif
 #endif
 
 void _2xpm_lq(void *SrcPtr, void *DstPtr, unsigned long SrcPitch, unsigned long DstPitch, unsigned long SrcW, unsigned long SrcH, int nDepth);

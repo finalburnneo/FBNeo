@@ -1,4 +1,8 @@
 #include "SDL.h"
+#if defined __GNUC__
+typedef unsigned char BYTE;
+typedef unsigned int DWORD;
+#endif
 
 #ifndef _WIN32
 typedef struct tagRECT {

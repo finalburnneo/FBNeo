@@ -14,7 +14,27 @@ probably many other things.
 int nAppVirtualFps = 6000;			// App fps * 100
 bool bRunPause=0;
 bool bAlwaysProcessKeyboardInput=0;
+TCHAR szAppHiscorePath[MAX_PATH] = _T("support/hiscores/");
+TCHAR szAppSamplesPath[MAX_PATH] = _T("support/samples/");
+TCHAR szAppCheatsPath[MAX_PATH] = _T("support/cheats/");
+bool bDoIpsPatch;
 
+TCHAR *GetIsoPath()
+{
+    return NULL;
+}
+
+void Reinitialise(void)
+{
+}
+
+void IpsApplyPatches(UINT8 *, char *)
+{
+}
+
+void wav_pause(bool bResume)
+{
+}
 
 void init_emu(int gamenum)
 {
@@ -53,8 +73,9 @@ int main(int argc, char *argv[])
 	if (argc == 2)
 	{
 		for (i = 0; i < nBurnDrvCount; i++) {
-			nBurnDrvSelect[0] = i;
-			if (strcmp(BurnDrvGetTextA(0), argv[1]) == 0) {
+            //nBurnDrvSelect[0] = i;
+            nBurnDrvActive = i;
+            if (strcmp(BurnDrvGetTextA(0), argv[1]) == 0) {
 				break;
 			}
 		}

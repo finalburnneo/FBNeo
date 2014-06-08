@@ -47,7 +47,7 @@ static void DisplayFPS()
 	time_t temptime = clock();
 	float fps = static_cast<float>(nFramesRendered - nPreviousFrames) * CLOCKS_PER_SEC / (temptime - fpstimer);
 	sprintf(fpsstring, "%2.1f", fps);
-	VidSNewShortMsg(fpsstring, 0xDFDFFF, 480, 0);
+    //VidSNewShortMsg(fpsstring, 0xDFDFFF, 480, 0);
 
 	fpstimer = temptime;
 	nPreviousFrames = nFramesRendered;

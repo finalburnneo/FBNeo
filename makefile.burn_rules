@@ -75,7 +75,7 @@ depobj	:= 	$(drvobj) \
 			burn.o burn_gun.o burn_led.o burn_memory.o burn_sound.o burn_sound_c.o cheat.o debug_track.o hiscore.o load.o \
 			tiles_generic.o timer.o vector.o \
 			\
-			8255ppi.o 8257dma.o eeprom.o pandora.o seibusnd.o sknsspr.o slapstic.o t5182.o timekpr.o tms34061.o v3021.o vdc.o \
+			8255ppi.o 8257dma.o eeprom.o nmk004.o pandora.o seibusnd.o sknsspr.o slapstic.o t5182.o timekpr.o tms34061.o v3021.o vdc.o \
 			\
 			ay8910.o burn_y8950.o burn_ym2151.o burn_ym2203.o burn_ym2413.o burn_ym2608.o burn_ym2610.o burn_ym2612.o \
 			burn_ym3526.o burn_ym3812.o burn_ymf278b.o c6280.o dac.o es5506.o es8712.o flt_rc.o fm.o fmopl.o ics2115.o iremga20.o \
@@ -115,8 +115,6 @@ depobj	:= 	$(drvobj) \
 			tc0180vcu.o tc0220ioc.o tc0280grd.o tc0360pri.o tc0480scp.o tc0510nio.o tc0640fio.o tnzs_prot.o \
 			\
 			toa_bcu2.o toa_extratext.o toa_gp9001.o toa_palette.o toaplan1.o toaplan.o \
-			\
-			nmk004.o \
 			\
 			megadrive.o \
 			\

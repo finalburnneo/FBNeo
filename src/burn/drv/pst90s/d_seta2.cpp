@@ -1443,7 +1443,7 @@ void __fastcall grdiansWriteWord(UINT32 sekAddress, UINT16 wordValue)
 
 UINT8 __fastcall setaSoundRegReadByte(UINT32 sekAddress)
 {
-	bprintf(PRINT_NORMAL, _T("x1-010 to read byte value of location %x\n"), sekAddress);
+	//bprintf(PRINT_NORMAL, _T("x1-010 to read byte value of location %x\n"), sekAddress);
 	return 0;
 }
 

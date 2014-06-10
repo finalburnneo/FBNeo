@@ -55,13 +55,15 @@ static void UpdateStream(INT32 chip, INT32 length)
 
         if (rOut && lOut) {              
                 while (length--) {
-                        *lbuf++ = *lbuf + lOut;
-			*rbuf++ = *rbuf + rOut;
+//                      *lbuf++ = *lbuf + lOut;
+//			*rbuf++ = *rbuf + rOut;
+                        *lbuf++ = BURN_SND_CLIP(*lbuf + lOut);
+			*rbuf++ = BURN_SND_CLIP(*rbuf + rOut);
                 }
         } else if (lOut) {              
-                while (length--) *lbuf++ = *lbuf + lOut;
+                while (length--) *lbuf++ = BURN_SND_CLIP(*lbuf + lOut);
         } else if (rOut) {            
-                while (length--) *rbuf++ = *rbuf + rOut;
+                while (length--) *rbuf++ = BURN_SND_CLIP(*rbuf + rOut);
         }
 }
 

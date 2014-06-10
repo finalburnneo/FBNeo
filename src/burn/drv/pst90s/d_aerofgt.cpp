@@ -1487,14 +1487,14 @@ static INT32 spinlbrkMemIndex()
 	Rom01 		= Next; Next += 0x040000;			// 68000 ROM
 	RomZ80		= Next; Next += 0x030000;			// Z80 ROM
 	
-	RomBg		= Next; Next += 0x500040;			// Background, 2.5M 8x8x4bit
-	DeRomBg		= 	   RomBg +  0x000040;
+	RomBg		= Next; Next += 0x500050;			// Background, 2.5M 8x8x4bit
+	DeRomBg		=      RomBg +  0x000040;
 	
 	RomSpr1		= Next; Next += 0x200000;			// Sprite 1
-	RomSpr2		= Next; Next += 0x400100;			// Sprite 2
+	RomSpr2		= Next; Next += 0x400110;			// Sprite 2
 	
 	DeRomSpr1	= RomSpr1    +  0x000100;
-	DeRomSpr2	= RomSpr2    += 0x000100;
+	DeRomSpr2	= RomSpr2    +  0x000100;
 	
 	RomSnd2		= Next; Next += 0x100000;			// ADPCM data
 	RomSnd1		= RomSnd2;

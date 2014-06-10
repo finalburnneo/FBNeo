@@ -50,12 +50,8 @@ static INT32 nCyclesSegment;
 
 static struct BurnInputInfo DrvInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort1 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort2 + 7, "p2 start"  },
-	{"Start 3"           , BIT_DIGITAL  , DrvInputPort3 + 7, "p3 start"  },
-
+	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort1 + 0, "p1 coin"   },
+	{"P1 Start"          , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 start"  },
 	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 up"     },
 	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 down"   },
 	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 left"   },
@@ -64,6 +60,8 @@ static struct BurnInputInfo DrvInputList[] =
 	{"P1 Fire 2"         , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
 	{"P1 Fire 3"         , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 fire 3" },
 	
+	{"P2 Coin"           , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 coin"   },
+	{"P2 Start"          , BIT_DIGITAL  , DrvInputPort2 + 7, "p2 start"  },
 	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort2 + 2, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 down"   },
 	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 left"   },
@@ -72,6 +70,7 @@ static struct BurnInputInfo DrvInputList[] =
 	{"P2 Fire 2"         , BIT_DIGITAL  , DrvInputPort2 + 5, "p2 fire 2" },
 	{"P2 Fire 3"         , BIT_DIGITAL  , DrvInputPort2 + 6, "p2 fire 3" },
 	
+	{"P3 Start"          , BIT_DIGITAL  , DrvInputPort3 + 7, "p3 start"  },
 	{"P3 Up"             , BIT_DIGITAL  , DrvInputPort3 + 2, "p3 up"     },
 	{"P3 Down"           , BIT_DIGITAL  , DrvInputPort3 + 3, "p3 down"   },
 	{"P3 Left"           , BIT_DIGITAL  , DrvInputPort3 + 1, "p3 left"   },

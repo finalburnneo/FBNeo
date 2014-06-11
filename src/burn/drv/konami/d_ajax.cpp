@@ -651,6 +651,9 @@ static INT32 DrvDraw()
 	BurnTransferClear();
 
 	if (nBurnLayer & 1) K052109RenderLayer(2, 0, DrvGfxROMExp0);
+	
+	if (nSpriteEnable & 1) K051960SpritesRender(DrvGfxROMExp1, 3);
+	if (nSpriteEnable & 2) K051960SpritesRender(DrvGfxROMExp1, 2); 
 
 	if (ajax_priority)
 	{
@@ -663,9 +666,6 @@ static INT32 DrvDraw()
 		if (nBurnLayer & 2) K051316_zoom_draw(0, 4);
 	}
 
-// needs work...
-	if (nSpriteEnable & 1) K051960SpritesRender(DrvGfxROMExp1, 3);
-	if (nSpriteEnable & 2) K051960SpritesRender(DrvGfxROMExp1, 2); 
 	if (nSpriteEnable & 4) K051960SpritesRender(DrvGfxROMExp1, 1);
 	if (nSpriteEnable & 8) K051960SpritesRender(DrvGfxROMExp1, 0);
 

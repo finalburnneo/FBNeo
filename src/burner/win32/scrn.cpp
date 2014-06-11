@@ -741,6 +741,13 @@ int BurnerLoadDriver(TCHAR *szDriverName)
 	return 0;
 }
 
+static void PausedRedraw(void)
+{
+	if (bVidOkay && (bRunPause || !bDrvOkay)) { // Show the message even if paused. - dink
+		VidRedraw();
+		VidPaint(0);
+	}
+}
 
 static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 {
@@ -1037,6 +1044,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			_sntprintf(szString, 256, FBALoadStringEx(hAppInst, IDS_STATE_ACTIVESLOT, true), nSavestateSlot);
 			VidSNewShortMsg(szString);
+			PausedRedraw();
 			break;
 		}
 		case MENU_STATE_NEXTSLOT: {
@@ -1048,8 +1056,19 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			_sntprintf(szString, 256, FBALoadStringEx(hAppInst, IDS_STATE_ACTIVESLOT, true), nSavestateSlot);
 			VidSNewShortMsg(szString);
+			PausedRedraw();
 			break;
 		}
+		case MENU_STATE_UNDO: {
+			if (bDrvOkay) {
+				TCHAR szString[256] = _T("state undo");
+
+				StatedUNDO(nSavestateSlot);
+				VidSNewShortMsg(szString);
+				PausedRedraw();
+				}
+			break;
+			}
 		case MENU_STATE_LOAD_SLOT:
 			if (bDrvOkay && !kNetGame) {
 				if (StatedLoad(nSavestateSlot) == 0) {

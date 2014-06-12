@@ -1075,8 +1075,8 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STATE_LOADED, true));
 				} else {
 					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STATE_LOAD_ERROR, true), 0xFF3F3F);
-                                }
-                                PausedRedraw();
+				}
+				PausedRedraw();
 			}
 			break;
 		case MENU_STATE_SAVE_SLOT:
@@ -1087,7 +1087,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STATE_SAVE_ERROR, true), 0xFF3F3F);
 					SetPauseMode(1);
 				}
-                                PausedRedraw();
+				PausedRedraw();
 			}
 			break;
 

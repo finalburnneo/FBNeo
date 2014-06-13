@@ -82,10 +82,10 @@ void x1010_sound_update()
 				//			* freq * (1 << FREQ_BASE_BITS) / (float)x1_010->rate );
 				smp_step = (UINT32)((float)x1_010_chip->rate / (float)nBurnSoundRate / 8.0 * freq * (1 << FREQ_BASE_BITS) );
 
-				//if( smp_offs == 0 ) {
-				//	logerror( "Play sample %06X - %06X, channel %X volume %d freq %X step %X offset %X\n",
-				//		start, end, ch, vol, freq, smp_step, smp_offs );
-				//}
+//				if( smp_offs == 0 ) {
+//					bprintf(PRINT_ERROR, _T("Play sample %06X - %06X, channel %X volume %d freq %X step %X offset %X\n"),
+//							start, end, ch, volL, freq, smp_step, smp_offs);
+//				}
 
 				for( i = 0; i < nBurnSoundLen; i++ ) {
 					delta = smp_offs >> FREQ_BASE_BITS;
@@ -134,18 +134,19 @@ void x1010_sound_update()
 				//env_step = (unsigned int)((float)x1_010->base_clock / 128.0 / 1024.0 / 4.0 * reg->start * (1 << ENV_BASE_BITS) / (float)x1_010->rate);
 				env_step = (UINT32)((float)x1_010_chip->rate / (float)nBurnSoundRate / 128.0 / 4.0 * reg->start * (1 << ENV_BASE_BITS) );
 
-				//if( smp_offs == 0 ) {
-				//	logerror( "Play waveform %X, channel %X volume %X freq %4X step %X offset %X\n",
-				//		reg->volume, ch, reg->end, freq, smp_step, smp_offs );
-				//}
+//				if( smp_offs == 0 ) {
+//					bprintf(PRINT_ERROR, _T("Play waveform %X, channel %X volume %X freq %4X step %X offset %X dlta %X\n"),
+//       						reg->volume, ch, reg->end, freq, smp_step, smp_offs, env_offs>>ENV_BASE_BITS );
+//				}
 
 				for( i = 0; i < nBurnSoundLen; i++ ) {
 					INT32 vol;
 					delta = env_offs>>ENV_BASE_BITS;
 	 				// Envelope one shot mode
-					if( (reg->status&4) != 0 && delta >= 0x80 ) {
+					if( (reg->status&4) != 0 || delta >= 0x80 ) {
 						reg->status &= 0xfe;					// Key off
-						break;
+                                                bprintf(0, _T("--super debug!-- smp ended delta[%X]\n"), delta);
+                                                break;
 					}
 
 					vol = *(env + (delta & 0x7f));
@@ -178,6 +179,7 @@ void x1010_sound_update()
 					smp_offs += smp_step;
 					env_offs += env_step;
 				}
+                                //bprintf(0, _T("smp ended i[%X]\n"), i);
 				x1_010_chip->smp_offset[ch] = smp_offs;
 				x1_010_chip->env_offset[ch] = env_offs;
 			}

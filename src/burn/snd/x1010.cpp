@@ -115,8 +115,10 @@ void x1010_sound_update()
 					nLeftSample = BURN_SND_CLIP(nLeftSample);
 					nRightSample = BURN_SND_CLIP(nRightSample);
 					
-					*bufL += nLeftSample; bufL += 2;;
-					*bufR += nRightSample; bufR += 2;
+					//*bufL += nLeftSample; bufL += 2;;
+					//*bufR += nRightSample; bufR += 2;
+					*bufL = BURN_SND_CLIP(*bufL + nLeftSample); bufL += 2;;
+					*bufR = BURN_SND_CLIP(*bufR + nRightSample); bufR += 2;
 
 					smp_offs += smp_step;
 				}
@@ -173,8 +175,10 @@ void x1010_sound_update()
 					nLeftSample = BURN_SND_CLIP(nLeftSample);
 					nRightSample = BURN_SND_CLIP(nRightSample);
 					
-					*bufL += nLeftSample; bufL += 2;;
-					*bufR += nRightSample; bufR += 2;
+					//*bufL += nLeftSample; bufL += 2;;
+					//*bufR += nRightSample; bufR += 2;
+					*bufL = BURN_SND_CLIP(*bufL + nLeftSample); bufL += 2;;
+					*bufR = BURN_SND_CLIP(*bufR + nRightSample); bufR += 2;
 
 					smp_offs += smp_step;
 					env_offs += env_step;

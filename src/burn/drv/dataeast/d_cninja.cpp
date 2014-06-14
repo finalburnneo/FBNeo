@@ -1793,7 +1793,7 @@ static void cninja_draw_sprites()
 
 		x = x & 0x01ff;
 		y = y & 0x01ff;
-		if (x >= 512) x -= 512;
+		if (x >= nScreenWidth) x -= 512;
 		if (y >= 256) y -= 512;
 		x = 240 - x;
 		y = 240 - y;

@@ -261,13 +261,14 @@ STDDIPINFO(Drgnbstr)
 
 static inline void sync_HD63701(INT32 run)
 {
-	INT32 nNext = (INT32)((float)((102400.000 * nM6809CyclesTotal) / 25600));
+	INT32 nNext = nM6809CyclesTotal - nCyclesDone[1];
 
-	if (nNext > 0) {
+	if (nNext > 0)
+	{
 		if (run) {
-			nCyclesDone[1] += HD63701Run(nNext - nCyclesDone[1]);
+			nCyclesDone[1] += HD63701Run(nNext);
 		} else {
-			nCyclesDone[1] += nNext - nCyclesDone[1];
+			nCyclesDone[1] += nNext;
 		}
 	}
 }
@@ -809,9 +810,9 @@ static INT32 DrvFrame()
 	M6809NewFrame();
 	HD63701NewFrame();
 
-	INT32 nInterleave = 100;
+	INT32 nInterleave = 10;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 1536000 / 60, 6144000 / 60 };
+	INT32 nCyclesTotal[2] = { 1536000 / 60, 1536000 / 60 };
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)

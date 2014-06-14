@@ -57,6 +57,14 @@ void deco16_palette_recalculate(UINT32 *palette, UINT8 *pal);
 		return;						\
 	}
 
+#define deco16_write_control_byte(num, addr, a, d)		\
+	if ((addr & 0xfffffff0) == a) {				\
+		if ((addr) & 1)				\
+			deco16_pf_control[num][(addr & 0x0f)/2] = (deco16_pf_control[num][(addr & 0x0f)/2] & 0xff00) | d;	\
+		else														\
+			deco16_pf_control[num][(addr & 0x0f)/2] = (deco16_pf_control[num][(addr & 0x0f)/2] & 0x00ff) | (d << 8);\
+		return;						\
+	}
 
 #define deco16_read_control_word(num, addr, a)			\
 	if ((addr & 0xfffffff0) == a) {				\

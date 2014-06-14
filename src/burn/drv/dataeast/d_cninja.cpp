@@ -539,6 +539,10 @@ void __fastcall cninja_main_write_word(UINT32 address, UINT16 data)
 
 void __fastcall cninja_main_write_byte(UINT32 address, UINT8 data)
 {
+	// need for cliffhanger
+	deco16_write_control_byte(0, address, 0x140000, data)
+	deco16_write_control_byte(1, address, 0x150000, data)
+
 	switch (address)
 	{
 	//	case 0x190000:
@@ -1789,7 +1793,7 @@ static void cninja_draw_sprites()
 
 		x = x & 0x01ff;
 		y = y & 0x01ff;
-		if (x >= nScreenWidth) x -= 512;
+		if (x >= 512) x -= 512;
 		if (y >= 256) y -= 512;
 		x = 240 - x;
 		y = 240 - y;
@@ -2083,7 +2087,7 @@ static INT32 EdrandyDraw()
 	if (nSpriteEnable &  2) deco16_draw_layer(2, pTransDraw, DECO16_LAYER_PRIORITY(0x02));
 	if (nSpriteEnable &  4) deco16_draw_layer(1, pTransDraw, DECO16_LAYER_PRIORITY(0x04));
  
-	cninja_draw_sprites();
+	if (nBurnLayer & 1) cninja_draw_sprites();
 
 	if (nSpriteEnable &  8) deco16_draw_layer(0, pTransDraw, 0);
 

@@ -1932,7 +1932,7 @@ static void RotateLeft(int *v) {
 }
 
 static int HbarrelRotation(int addy) { // 0 - 11 (12 rotation points)
-    UINT8 player[2];
+    UINT8 player[2] = { 0, 0 };
                                        // addy == 0 player 1 addy == 8 player 2
     if ((addy != 0) && (addy != 8)) {
         bprintf(PRINT_NORMAL, _T("Strange Rotation address => %06X\n"), addy);
@@ -1963,7 +1963,7 @@ static int HbarrelRotation(int addy) { // 0 - 11 (12 rotation points)
 
 static int MidresRotation(int addy) {
     // p1 == 4 p2 == 6
-    UINT8 player[2];
+    UINT8 player[2] = { 0, 0 };
                                        // addy == 0 player 1 addy == 8 player 2
     if ((addy != 4) && (addy != 6)) {
         bprintf(PRINT_NORMAL, _T("Strange Rotation address => %06X\n"), addy);

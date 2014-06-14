@@ -243,9 +243,11 @@ void BurnYM2151Scan(INT32 nAction)
 	SCAN_VAR(nFractionalPosition);
 	SCAN_VAR(nSamplesRendered);
 
-	if (nAction & ACB_WRITE) {
+	BurnYM2151Scan_int(nAction); // Proper scan of YM2151's internal registers
+
+/*	if (nAction & ACB_WRITE) {
 		for (INT32 i = 0; i < 0x0100; i++) {
 			YM2151WriteReg(0, i, BurnYM2151Registers[i]);
 		}
-	}
+	}*/
 }

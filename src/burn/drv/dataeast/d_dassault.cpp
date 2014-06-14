@@ -787,7 +787,15 @@ static void draw_sprites(INT32 bpp)
 
 			while (multi >= 0)
 			{
-				if (!bpp) {
+				if (!bpp)
+				{
+					// hack around lack of alpha blending support for < 32bit color depths
+					// let's make these flicker rather than disabling them or drawing them solid
+					if (alpha != 0xff && (nCurrentFrame % 3) == 2) { // only draw every third frame
+						multi--;
+						continue;
+					}
+
 					deco16_draw_prio_sprite(pTransDraw, gfx, sprite - multi * inc, (color << 4) + coloff, x, y + mult * multi, flipx, flipy, pmask, 1 << bank);
 				} else {
 					deco16_draw_alphaprio_sprite(DrvPalette, gfx, sprite - multi * inc, (color << 4) + coloff, x, y + mult * multi, flipx, flipy, pmask, 1 << bank, alpha);	
@@ -837,9 +845,9 @@ static INT32 DrvDraw()
 		break;
 	}
 
-	if (nSpriteEnable & 1) draw_sprites(0);
-
 	if (nBurnLayer & 8) deco16_draw_layer(0, pTransDraw, DECO16_LAYER_PRIORITY(0xff));
+
+	if (nSpriteEnable & 1) draw_sprites(0);
 
 	BurnTransferCopy(DrvPalette);
 

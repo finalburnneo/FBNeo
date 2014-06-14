@@ -85,22 +85,19 @@ void deco16_draw_prio_sprite(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, 
 
 			if (!pxl) continue;
 
-			if (pri != -1) {
-				INT32 bpriority = deco16_prio_map[(sy * 512) + sx];
-	
-				if (spri == -1) {
-					if ((pri & (1 << (bpriority & 0x1f))) || (bpriority & 0x80)) continue;
-					deco16_prio_map[sy * 512 + sx] |= 0x80; // right?
-				} else {
-					if (pri <= bpriority || spri <= deco16_sprite_prio_map[sy * 512 + sx]) continue;
-					deco16_sprite_prio_map[sy * 512 + sx] = spri;
-					deco16_prio_map[sy * 512 + sx] = pri; // right?
-				}
+			INT32 bpriority = deco16_prio_map[(sy * 512) + sx];
+
+			if (spri == -1) {
+				if ((pri & (1 << (bpriority & 0x1f))) || (bpriority & 0x80)) continue;
+				deco16_prio_map[sy * 512 + sx] |= 0x80; // right?
+			} else {
+				if (pri <= bpriority || spri <= deco16_sprite_prio_map[sy * 512 + sx]) continue;
+				deco16_sprite_prio_map[sy * 512 + sx] = spri;
+				deco16_prio_map[sy * 512 + sx] = pri; // right?
 			}
 
+		
 			dest[sy * nScreenWidth + sx] = pxl | color;
-
-			deco16_prio_map[sy * 512 + sx] |= 0x80; // right?
 		}
 
 		sx -= 16;

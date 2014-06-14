@@ -300,20 +300,7 @@ static INT32 MemIndex()
 //	Graphics
 
 static INT32 nTigerHeliTileXPosLo, nTigerHeliTileXPosHi, nTigerHeliTileYPosLo;
-static INT32 nTigerHeliTileMask;
-
-static UINT8* pGfxTileData;
-
-static INT32 nTileNumber;
-static INT32 nTilePalette;
-
-static UINT16* pTileRow;
-static UINT16* pTile;
-
-static INT32 nTileXPos, nTileYPos;
-
-// ---------------------------------------------------------------------------
-//	Palette
+static INT32 nTigerHeliTileMask, nTigerHeliSpriteMask;
 
 static UINT8 tigerhRecalcPalette = 0;
 
@@ -335,356 +322,7 @@ static void TigerHeliPaletteInit()
 	return;
 }
 
-static void TigerHeliPaletteUpdate()
-{
-	if (tigerhRecalcPalette) {
-		tigerhRecalcPalette = 0;
-
-		TigerHeliPaletteInit();
-	}
-}
-
 // ---------------------------------------------------------------------------
-// Text layer
-
-static UINT8* TigerHeliTextAttrib = NULL;
-
-static void TigerHeliTextExit()
-{
-	BurnFree(TigerHeliTextAttrib);
-}
-
-static INT32 TigerHeliTextInit()
-{
-	if ((TigerHeliTextAttrib = (UINT8*)BurnMalloc(0x0400)) == NULL) {
-		return 1;
-	}
-
-	for (INT32 i = 0; i < 0x0400; i++) {
-		bool bEmpty = true;
-
-		for (INT32 j = 0; j < 64; j++) {
-			if (TigerHeliTextROM[(i << 6) + j]) {
-				bEmpty = false;
-				break;
-			}
-		}
-
-		if (bEmpty) {
-			TigerHeliTextAttrib[i] = 0;
-		} else {
-			TigerHeliTextAttrib[i] = 1;
-		}
-	}
-
-	return 0;
-}
-
-#define PLOTPIXEL(x) if (pGfxTileData[x]) { pPixel[x] = nPalette + pGfxTileData[x]; }
-
-static void TigerHeliRenderTextTile()
-{
-	UINT16 nPalette = nTilePalette << 2;
-	pGfxTileData = TigerHeliTextROM + (nTileNumber << 6);
-
-	UINT16* pPixel = pTile;
-
-	for (INT32 y = 0; y < 8; y++, pPixel += 280, pGfxTileData += 8) {
-
-		if ((nTileYPos + y) >= 240) {
-			break;
-		}
-		if ((nTileYPos + y) < 0) {
-			continue;
-		}
-
-		PLOTPIXEL(0);
-		PLOTPIXEL(1);
-		PLOTPIXEL(2);
-		PLOTPIXEL(3);
-		PLOTPIXEL(4);
-		PLOTPIXEL(5);
-		PLOTPIXEL(6);
-		PLOTPIXEL(7);
-	}
-}
-
-#undef PLOTPIXEL
-
-static void TigerHeliTextRender()
-{
-	UINT8* pTextRAM;
-
-	if ((nBurnLayer & 2) == 0) {
-		return;
-	}
-
-	switch (nWhichGame) {
-		case 0:										// Tiger Heli
-			nTileYPos = -15;
-			break;
-		case 1:										// Get Star
-			nTileYPos = -15;
-			break;
-		case 2:										// Slap Fight
-			nTileYPos = -16;
-			break;
-	}
-	pTileRow = pTransDraw + nTileYPos * 280;
-
-	for (INT32 y = 0; y < 32; y++, nTileYPos += 8, pTileRow += (280 << 3)) {
-		if (nTileYPos <= -8 || nTileYPos >= 240 ) {
-			continue;
-		}
-		pTextRAM = TigerHeliTextRAM + (y << 6);
-		pTile = pTileRow;
-		for (INT32 x = 1; x < 36; x++, pTile += 8) {
-			nTileNumber = pTextRAM[x] | (pTextRAM[0x0800 + x] << 8);
-			nTilePalette = nTileNumber >> 10;
-			nTileNumber &= 0x03FF;
-
-			if (TigerHeliTextAttrib[nTileNumber]) {
-				TigerHeliRenderTextTile();
-			}
-		}
-	}
-
-	return;
-}
-
-// ---------------------------------------------------------------------------
-// Tile layer
-
-#define PLOTPIXEL(x) pPixel[x] = nPalette + pGfxTileData[x];
-#define CLIPPIXEL(a,b) if ((nTileXPos + a) >= 0 && (nTileXPos + a) < 280) { b; }
-
-static void TigerHeliRenderTileNoClip()
-{
-	UINT8 nPalette = nTilePalette << 4;
-	pGfxTileData = TigerHeliTileROM + (nTileNumber << 6);
-
-	UINT16* pPixel = pTile;
-
-	for (INT32 y = 0; y < 8; y++, pPixel += 280, pGfxTileData += 8) {
-		PLOTPIXEL(0);
-		PLOTPIXEL(1);
-		PLOTPIXEL(2);
-		PLOTPIXEL(3);
-		PLOTPIXEL(4);
-		PLOTPIXEL(5);
-		PLOTPIXEL(6);
-		PLOTPIXEL(7);
-	}
-}
-
-static void TigerHeliRenderTileClip()
-{
-	UINT8 nPalette = nTilePalette << 4;
-	pGfxTileData = TigerHeliTileROM + (nTileNumber << 6);
-
-	UINT16* pPixel = pTile;
-
-	for (INT32 y = 0; y < 8; y++, pPixel += 280, pGfxTileData += 8) {
-
-		if ((nTileYPos + y) >= 240) {
-			break;
-		}
-		if ((nTileYPos + y) < 0) {
-			continue;
-		}
-
-		CLIPPIXEL(0, PLOTPIXEL(0));
-		CLIPPIXEL(1, PLOTPIXEL(1));
-		CLIPPIXEL(2, PLOTPIXEL(2));
-		CLIPPIXEL(3, PLOTPIXEL(3));
-		CLIPPIXEL(4, PLOTPIXEL(4));
-		CLIPPIXEL(5, PLOTPIXEL(5));
-		CLIPPIXEL(6, PLOTPIXEL(6));
-		CLIPPIXEL(7, PLOTPIXEL(7));
-	}
-}
-
-#undef CLIPPIXEL
-#undef PLOTPIXEL
-
-static void TigerHeliTileRender()
-{
-	UINT8* pTileRAM;
-
-	if ((nBurnLayer & 3) == 0) {
-		BurnTransferClear();
-		return;
-	}
-
-	INT32 nTigerHeliTileXPos = nTigerHeliTileXPosLo + (nTigerHeliTileXPosHi << 8);
-	INT32 nTigerHeliTileYPos = nTigerHeliTileYPosLo;
-
-	switch (nWhichGame) {
-		case 0:										// Tiger Heli
-			nTigerHeliTileYPos -= 1;
-			break;
-		case 1:										// Get Star
-			nTigerHeliTileYPos -= 1;
-			break;
-		case 2:										// Slap Fight
-			nTigerHeliTileYPos += 1;
-			break;
-	}
-
-	INT32 nXPos = -nTigerHeliTileXPos & 7;
-	nTileYPos = -nTigerHeliTileYPos & 7;
-
-	if (nTigerHeliTileXPos & 7) {
-		nXPos -= 8;
-	}
-	if (nTigerHeliTileYPos & 7) {
-		nTileYPos -= 8;
-	}
-
-	pTileRow = pTransDraw;
-	pTileRow -= (nTigerHeliTileXPos & 7);
-	pTileRow -= (nTigerHeliTileYPos & 7) * 280;
-
-	for (INT32 y = 2; y < 33; y++, nTileYPos += 8, pTileRow += (280 << 3)) {
-		pTileRAM = TigerHeliTileRAM + (((y + (nTigerHeliTileYPos >> 3)) << 6) & 0x07C0);
-		pTile = pTileRow;
-		nTileXPos = nXPos;
-		for (INT32 x = 1; x < 37; x++, nTileXPos += 8, pTile += 8) {
-			INT32 x2 = (x + ((nTigerHeliTileXPos >> 3) & 0x3F));
-			nTileNumber = pTileRAM[x2] | (pTileRAM[0x0800 + x2] << 8);
-			nTilePalette = nTileNumber >> 12;
-			nTileNumber &= nTigerHeliTileMask;
-
-			if (nTileXPos < 0 || nTileXPos > 272 || nTileYPos < 0 || nTileYPos > 232) {
-				TigerHeliRenderTileClip();
-			} else {
-				TigerHeliRenderTileNoClip();
-			}
-		}
-	}
-
-	return;
-}
-
-// ---------------------------------------------------------------------------
-// Sprites
-
-static INT32 nSpriteXPos, nSpriteYPos, nSpriteNumber, nSpritePalette;
-
-static INT32 nTigerHeliSpriteMask;
-
-#define PLOTPIXEL(a) if (pSpriteData[a]) { pPixel[a] = nPalette + pSpriteData[a]; }
-#define CLIPPIXEL(a,b) if ((nSpriteXPos + a) >= 0 && (nSpriteXPos + a) < 280) { b; }
-
-static void TigerHeliRenderSpriteNoClip()
-{
-	UINT8 nPalette = nSpritePalette << 4;
-	UINT8* pSpriteData = TigerHeliSpriteROM + (nSpriteNumber << 8);
-
-	UINT16* pPixel = pTransDraw + nSpriteXPos + nSpriteYPos * 280;
-
-	for (INT32 y = 0; y < 16; y++, pPixel += 280, pSpriteData += 16) {
-		PLOTPIXEL( 0);
-		PLOTPIXEL( 1);
-		PLOTPIXEL( 2);
-		PLOTPIXEL( 3);
-		PLOTPIXEL( 4);
-		PLOTPIXEL( 5);
-		PLOTPIXEL( 6);
-		PLOTPIXEL( 7);
-		PLOTPIXEL( 8);
-		PLOTPIXEL( 9);
-		PLOTPIXEL(10);
-		PLOTPIXEL(11);
-		PLOTPIXEL(12);
-		PLOTPIXEL(13);
-		PLOTPIXEL(14);
-		PLOTPIXEL(15);
-	}
-}
-
-static void TigerHeliRenderSpriteClip()
-{
-	UINT8 nPalette = nSpritePalette << 4;
-	UINT8* pSpriteData = TigerHeliSpriteROM + (nSpriteNumber << 8);
-
-	UINT16* pPixel = pTransDraw + nSpriteXPos + nSpriteYPos * 280;
-
-	for (INT32 y = 0; y < 16; y++, pPixel += 280, pSpriteData += 16) {
-
-		if ((nSpriteYPos + y) < 0 || (nSpriteYPos + y) >= 240) {
-			continue;
-		}
-
-		CLIPPIXEL( 0, PLOTPIXEL( 0));
-		CLIPPIXEL( 1, PLOTPIXEL( 1));
-		CLIPPIXEL( 2, PLOTPIXEL( 2));
-		CLIPPIXEL( 3, PLOTPIXEL( 3));
-		CLIPPIXEL( 4, PLOTPIXEL( 4));
-		CLIPPIXEL( 5, PLOTPIXEL( 5));
-		CLIPPIXEL( 6, PLOTPIXEL( 6));
-		CLIPPIXEL( 7, PLOTPIXEL( 7));
-		CLIPPIXEL( 8, PLOTPIXEL( 8));
-		CLIPPIXEL( 9, PLOTPIXEL( 9));
-		CLIPPIXEL(10, PLOTPIXEL(10));
-		CLIPPIXEL(11, PLOTPIXEL(11));
-		CLIPPIXEL(12, PLOTPIXEL(12));
-		CLIPPIXEL(13, PLOTPIXEL(13));
-		CLIPPIXEL(14, PLOTPIXEL(14));
-		CLIPPIXEL(15, PLOTPIXEL(15));
-	}
-}
-
-#undef CLIPPIXEL
-#undef PLOTPIXEL
-
-static void TigerHeliSpriteRender()
-{
-	UINT8* pSpriteRAM = TigerHeliSpriteBuf;
-	INT32 nSpriteYOffset = 0;
-
-	if ((nBurnLayer & 1) == 0) {
-		return;
-	}
-
-	switch (nWhichGame) {
-		case 0:										// Tiger Heli
-			nSpriteYOffset = -16;
-			break;
-		case 1:										// Get Star
-			nSpriteYOffset = -16;
-			break;
-		case 2:										// Slap Fight
-			nSpriteYOffset = -17;
-			break;
-	}
-
-	for (INT32 i = 0; i < 0x0800; i += 4) {
-		nSpriteNumber = pSpriteRAM[i + 0x00] | ((pSpriteRAM[i + 0x02] & 0xC0) << 2);
-		nSpriteNumber &= nTigerHeliSpriteMask;
-		nSpritePalette = (pSpriteRAM[i + 0x02] >> 1) & 0x0F;
-		nSpriteXPos = (pSpriteRAM[i + 0x01] | ((pSpriteRAM[i + 0x02] & 0x01) << 8)) - 21;
-		nSpriteYPos = pSpriteRAM[i + 0x03] + nSpriteYOffset;
-
-		if (nSpriteXPos > -16 && nSpriteXPos < 280 && nSpriteYPos > -16 && nSpriteYPos < 240) {
-			if (nSpriteXPos >= 0 && nSpriteXPos <= 264 && nSpriteYPos >= 0 && nSpriteYPos <= 224) {
-				TigerHeliRenderSpriteNoClip();
-			} else {
-				TigerHeliRenderSpriteClip();
-			}
-		}
-	}
-
-	return;
-}
-
-static void TigerHeliBufferSprites()
-{
-	memcpy(TigerHeliSpriteBuf, TigerHeliSpriteRAM, 0x0800);
-}
-
-// ---------------------------------------------------------------------------
-
 
 static inline void sync_mcu()
 {
@@ -1927,9 +1565,7 @@ static INT32 tigerhLoadROMs()
 
 static INT32 tigerhExit()
 {
-	BurnTransferExit();
-
-	TigerHeliTextExit();
+	GenericTilesExit();
 
 	ZetExit();
 	AY8910Exit(0);
@@ -2116,10 +1752,9 @@ static INT32 tigerhInit()
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 
-	TigerHeliTextInit();
 	TigerHeliPaletteInit();
 
-	BurnTransferInit();
+	GenericTilesInit();
 
 	tigerhDoReset();
 
@@ -2155,13 +1790,81 @@ static INT32 tigerhScan(INT32 nAction, INT32* pnMin)
 	return 0;
 }
 
+static void TigerHeliBufferSprites()
+{
+	memcpy(TigerHeliSpriteBuf, TigerHeliSpriteRAM, 0x0800);
+}
+
+static void draw_bg_layer()
+{
+	INT32 scrollx = (((nTigerHeliTileXPosHi * 256) + nTigerHeliTileXPosLo) + 8) & 0x1ff;
+	INT32 scrolly = (nTigerHeliTileYPosLo + 16) & 0xff;
+
+	for (INT32 offs = 0; offs < 64 * 32; offs++)
+	{
+		INT32 sx = (offs & 0x3f) * 8;
+		INT32 sy = (offs / 0x40) * 8;
+
+		sx -= scrollx;
+		if (sx < -7) sx += 512;
+		sy -= scrolly;
+		if (sy < -7) sy += 256;
+
+		if (sy >= nScreenHeight || sx >= nScreenWidth) continue;
+
+		INT32 attr  = TigerHeliTileRAM[offs] + (TigerHeliTileRAM[0x800 + offs] * 0x100);
+		INT32 code  = (attr & 0x0fff) & nTigerHeliTileMask;
+		INT32 color = (attr & 0xf000) >> 12;
+
+		Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0, TigerHeliTileROM);
+	}
+}
+
+static void draw_txt_layer()
+{
+	for (INT32 offs = 0; offs < 64 * 32; offs++)
+	{
+		INT32 sx = ((offs & 0x3f) * 8) - 12;
+		INT32 sy = ((offs / 0x40) * 8) - 16;
+
+		if (sy >= nScreenHeight || sx >= nScreenWidth) continue;
+
+		INT32 attr  = TigerHeliTextRAM[offs] + (TigerHeliTextRAM[0x800 + offs] * 0x100);
+		INT32 code  =  attr & 0x03ff;
+		INT32 color = (attr & 0xfc00) >> 10;
+
+		Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0, TigerHeliTextROM);
+	}
+}
+
+static void draw_sprites()
+{
+	UINT8 *ram = TigerHeliSpriteBuf;
+
+	for (INT32 offs = 0; offs < 0x800; offs += 4)
+	{
+		INT32 attr  =  ram[offs + 2];
+		INT32 code  = (ram[offs + 0] | ((attr & 0xc0) << 2)) & nTigerHeliSpriteMask;
+		INT32 sx    = (ram[offs + 1] | (attr << 8 & 0x100)) - (13 + 8);
+		INT32 sy    =  ram[offs + 3] - 16;
+		INT32 color =  attr >> 1 & 0xf;
+
+		Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, TigerHeliSpriteROM);
+	}
+}
+
 static void tigerhDraw()
 {
-	TigerHeliPaletteUpdate();
+	if (tigerhRecalcPalette) {
+		TigerHeliPaletteInit();
+		tigerhRecalcPalette = 0;
+	}
 
-	TigerHeliTileRender();
-	TigerHeliSpriteRender();
-	TigerHeliTextRender();
+	if (!(nBurnLayer & 1)) BurnTransferClear();
+
+	if (nBurnLayer & 1) draw_bg_layer();
+	if (nBurnLayer & 2) draw_sprites();
+	if (nBurnLayer & 4) draw_txt_layer();
 
 	BurnTransferCopy(TigerHeliPalette);
 

@@ -928,8 +928,8 @@ void AY8910Render(INT16** buffer, INT16* dest, INT32 length, INT32 bAddSignal)
 		nRightSample = BURN_SND_CLIP(nRightSample);
 			
 		if (bAddSignal) {
-			dest[(n << 1) + 0] += nLeftSample;
-			dest[(n << 1) + 1] += nRightSample;
+			dest[(n << 1) + 0] = BURN_SND_CLIP(dest[(n << 1) + 0] + nLeftSample);
+			dest[(n << 1) + 1] = BURN_SND_CLIP(dest[(n << 1) + 1] + nRightSample);
 		} else {
 			dest[(n << 1) + 0] = nLeftSample;
 			dest[(n << 1) + 1] = nRightSample;

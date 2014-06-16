@@ -2037,6 +2037,10 @@ static INT32 tigerhScan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(tigerhInput);
 		SCAN_VAR(nPalettebank);
 		SCAN_VAR(nFlipscreen);
+		SCAN_VAR(GSa);
+		SCAN_VAR(GSd);
+		SCAN_VAR(GSe);
+		SCAN_VAR(GSCommand);
 	}
 
 	return 0;

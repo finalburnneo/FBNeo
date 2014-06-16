@@ -40,8 +40,8 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_tnzs.o d_wyvernf0.o \
 			\
 			d_batrider.o d_batsugun.o d_battleg.o d_bbakraid.o d_demonwld.o d_dogyuun.o d_fixeight.o d_ghox.o d_hellfire.o \
-			d_kbash.o d_kbash2.o d_mahoudai.o d_outzone.o d_pipibibs.o d_rallybik.o d_samesame.o d_shippumd.o d_snowbro2.o \
-			d_tekipaki.o d_tigerheli.o d_truxton.o d_truxton2.o d_vfive.o d_vimana.o d_zerowing.o \
+			d_kbash.o d_kbash2.o d_mahoudai.o d_outzone.o d_pipibibs.o d_rallybik.o d_samesame.o d_shippumd.o d_slapfght.o \
+			d_snowbro2.o d_tekipaki.o d_truxton.o d_truxton2.o d_vfive.o d_vimana.o d_zerowing.o \
 			\
 			d_4enraya.o d_1942.o d_1943.o d_ambush.o d_arabian.o d_armedf.o d_atetris.o d_aztarac.o d_baraduke.o d_bionicc.o \
 			d_blktiger.o d_blockout.o d_blueprnt.o d_bombjack.o d_capbowl.o d_commando.o d_cybertnk.o d_ddragon.o d_dkong.o \

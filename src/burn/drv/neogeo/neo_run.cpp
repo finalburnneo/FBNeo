@@ -209,6 +209,7 @@ static bool bZ80BoardROMBankedIn;
 static INT32 nZ80Bank0, nZ80Bank1, nZ80Bank2, nZ80Bank3;
 
 static UINT8* NeoGraphicsRAMBank;
+static UINT32 NeoGraphicsRAMBank2; // for recalculation of the above variable.
 static UINT16 NeoGraphicsRAMPointer;
 static INT32 nNeoGraphicsModulo;
 
@@ -1436,8 +1437,18 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 			SCAN_VAR(nNeo68KROMBank);
 		}
 
-		SCAN_OFF(NeoGraphicsRAMBank, NeoGraphicsRAM, nAction);
+		// -- June 17, 2014 - dink
+		//SCAN_OFF(NeoGraphicsRAMBank, NeoGraphicsRAM, nAction); - SCAN_OFF(); sometimes returns a bad pointer, so its re-calculated below - dink
+		SCAN_VAR(NeoGraphicsRAMBank2);
+		SCAN_VAR(NeoGraphicsRAMPointer);
 
+		if (nAction & ACB_WRITE) {
+			NeoGraphicsRAMBank = NeoGraphicsRAM;
+			NeoGraphicsRAMBank += NeoGraphicsRAMBank2;
+		}
+
+		SCAN_VAR(nNeoGraphicsModulo);
+		// -- end
 		SCAN_VAR(nNeoSpriteFrame); SCAN_VAR(nSpriteFrameSpeed); SCAN_VAR(nSpriteFrameTimer);
 
 		SCAN_VAR(nNeoPaletteBank);
@@ -2140,8 +2151,11 @@ void __fastcall neogeoWriteWordVideo(UINT32 sekAddress, UINT16 wordValue)
 		case 0x00: {
 			NeoGraphicsRAMPointer = wordValue << 1;
 			NeoGraphicsRAMBank = NeoGraphicsRAM;
+			NeoGraphicsRAMBank2 = 0;
+
 			if (wordValue & 0x8000) {
 				NeoGraphicsRAMBank += 0x00010000;
+				NeoGraphicsRAMBank2 += 0x00010000;
 			}
 			break;
 		}

@@ -58,7 +58,8 @@ static void DisplayFPS()
 	time_t temptime = clock();
 	double fps = (double)(nFramesRendered - nPreviousFrames) * CLOCKS_PER_SEC / (temptime - fpstimer);
 	_sntprintf(fpsstring, 7, _T("%2.2lf"), fps);
-	VidSNewShortMsg(fpsstring, 0xDFDFFF, 480, 0);
+	if (temptime - fpstimer>0) // to avoid strange fps value from division by zero at start -dink
+		VidSNewShortMsg(fpsstring, 0xDFDFFF, 480, 0);
 
 	fpstimer = temptime;
 	nPreviousFrames = nFramesRendered;

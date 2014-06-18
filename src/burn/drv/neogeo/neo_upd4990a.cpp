@@ -141,6 +141,7 @@ void uPD4990AScan(INT32 nAction, INT32* pnMin)
 		}
 
 		SCAN_VAR(uPD4990A);
+		SCAN_VAR(nOneSecond);
 	}
 }
 

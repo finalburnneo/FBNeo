@@ -51,7 +51,7 @@ C_INLINE static void ScanVar(void* pv, INT32 nSize, char* szName)
 
 #define SCAN_VAR(x) ScanVar(&x, sizeof(x), #x)
 
-#define SCAN_OFF(x, y, a) { INT32 n = y - x; ScanVar(&n, sizeof(n), #x); if (a & ACB_WRITE) {	x = y + n; } }
+#define SCAN_OFF(x, y, a) { INT32 n = x - y; ScanVar(&n, sizeof(n), #x); if (a & ACB_WRITE) {	x = y + n; } }
 
 #ifdef OSD_CPU_H
  /* wrappers for the MAME savestate functions (used by the FM sound cores) */

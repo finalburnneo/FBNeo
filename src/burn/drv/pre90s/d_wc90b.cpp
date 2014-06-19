@@ -300,6 +300,42 @@ static struct BurnRomInfo Wc90b4RomDesc[] = {
 STD_ROM_PICK(Wc90b4)
 STD_ROM_FN(Wc90b4)
 
+static struct BurnRomInfo Wc90baRomDesc[] = {
+	{ "a02.bin",                0x10000, 0x192a03dd, BRF_ESS | BRF_PRG },		//  0	Z80 #1 Program Code
+	{ "a03.bin",                0x10000, 0xf54ff17a, BRF_ESS | BRF_PRG },		//  1	Z80 #1 Program Code
+
+	{ "a04.bin",                0x10000, 0x3d535e2f, BRF_ESS | BRF_PRG },		//  2	Z80 #2 Program Code
+	{ "el_ic98_27c512_05.bin",  0x10000, 0xc70d8c13, BRF_ESS | BRF_PRG },		//  3	Z80 #2 Program Code
+
+	{ "a01.bin",                0x10000, 0x3d317622, BRF_ESS | BRF_PRG },		//  4	Z80 #3 Program Code
+
+	{ "a06.bin",                0x04000, 0x3b5387b7, BRF_GRA },					//  5	Characters
+	{ "a08.bin",                0x04000, 0xc622a5a3, BRF_GRA },					//  6	Characters
+	{ "a10.bin",                0x04000, 0x0923d9f6, BRF_GRA },					//  7	Characters
+	{ "a20.bin",                0x04000, 0xb8dec83e, BRF_GRA },					//  8	Characters
+	{ "a07.bin",                0x20000, 0x38c31817, BRF_GRA },					//  9	Fg Tiles
+	{ "a09.bin",                0x20000, 0x32e39e29, BRF_GRA },					//  10	Fg Tiles
+	{ "a11.bin",                0x20000, 0x5ccec796, BRF_GRA },					//  11	Bg Tiles
+	{ "a21.bin",                0x20000, 0x0c54a091, BRF_GRA },					//  12	Bg Tiles
+	{ "146_a12.bin",            0x10000, 0xd5a60096, BRF_GRA },					//  13	Sprites
+	{ "147_a13.bin",            0x10000, 0x36bbf467, BRF_GRA },					//  14	Sprites
+	{ "148_a14.bin",            0x10000, 0x26371c18, BRF_GRA },					//  15	Sprites
+	{ "149_a15.bin",            0x10000, 0x75aa9b86, BRF_GRA },					//  16	Sprites
+	{ "150_a16.bin",            0x10000, 0x0da825f9, BRF_GRA },					//  17	Sprites
+	{ "151_a17.bin",            0x10000, 0x228429d8, BRF_GRA },					//  18	Sprites
+	{ "152_a18.bin",            0x10000, 0x516b6c09, BRF_GRA },					//  19	Sprites
+	{ "153_a19.bin",            0x10000, 0xf36390a9, BRF_GRA },					//  20	Sprites
+
+	{ "el_ic39_gal16v8_0.bin",  0x00117, 0x00000000, BRF_OPT | BRF_NODUMP },	//  21	PLDs
+	{ "el_ic44_gal16v8_1.bin",  0x00117, 0x00000000, BRF_OPT | BRF_NODUMP },	//  22	PLDs
+	{ "el_ic54_gal16v8_2.bin",  0x00117, 0x00000000, BRF_OPT | BRF_NODUMP },	//  23	PLDs
+	{ "el_ic100_gal16v8_3.bin", 0x00117, 0x00000000, BRF_OPT | BRF_NODUMP },	//  24	PLDs
+	{ "el_ic143_gal16v8_4.bin", 0x00117, 0x00000000, BRF_OPT | BRF_NODUMP },	//  25	PLDs
+};
+
+STD_ROM_PICK(Wc90ba)
+STD_ROM_FN(Wc90ba)
+
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = Mem;
@@ -1066,6 +1102,16 @@ struct BurnDriver BurnDrvWc90b4 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90b4RomInfo, Wc90b4RomName, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
+	Wc90b1Init, Wc90b1Exit, Wc90b1Frame, NULL, Wc90b1Scan,
+	NULL, 0x400, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWc90ba = {
+	"wc90ba", "wc90", NULL, NULL, "1989",
+	"Euro League (Italian hack of Tecmo World Cup '90 - alt version)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
+	NULL, Wc90baRomInfo, Wc90baRomName, NULL, NULL, Wc90b1InputInfo, Wc90b1DIPInfo,
 	Wc90b1Init, Wc90b1Exit, Wc90b1Frame, NULL, Wc90b1Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };

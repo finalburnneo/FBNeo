@@ -1436,7 +1436,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 			SCAN_VAR(nNeo68KROMBank);
 		}
 
-                // -- June 17-19, 2014; savestate crash fix - dink
+		// -- June 17-19, 2014; savestate crash fix - dink
 		SCAN_OFF(NeoGraphicsRAMBank, NeoGraphicsRAM, nAction);
 		SCAN_VAR(NeoGraphicsRAMPointer);
 		SCAN_VAR(nNeoGraphicsModulo);

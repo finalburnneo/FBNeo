@@ -5,6 +5,7 @@
 ******************************************************************************/
 
 #include <stdio.h>
+#include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -508,6 +509,30 @@ static FILE *sample[9];
 #endif
 #define PI 3.14159265358979323846
 
+/* // save for later debugging
+void dinklogerror(char* szFormat, ...)
+{
+	static char szLogMessage[1024];
+
+	va_list vaFormat;
+	va_start(vaFormat, szFormat);
+
+	_vsnprintf(szLogMessage, 1024, szFormat, vaFormat);
+
+	va_end(vaFormat);
+
+        //bprintf(PRINT_ERROR, _T("[%hs]!!!"), szLogMessage);
+        {
+            FILE *fp;
+            fp = fopen("damage.txt", "a");
+            if (fp) {
+                fputs(szLogMessage, fp);
+                fclose(fp);
+            }
+        }
+
+	return;
+} */
 
 
 static void init_tables(void)
@@ -1488,7 +1513,7 @@ void BurnYM2151Scan_int(INT32 nAction)
 	}
 
 	for (i=0; i<YMNumChips; i++)
-        {
+	{
 		/* save all 32 operators of chip #i */
 		for (j=0; j<32; j++)
 		{
@@ -1576,7 +1601,22 @@ void BurnYM2151Scan_int(INT32 nAction)
 		SCAN_VAR(YMPSG[i].timer_B_index_old);
 
 		SCAN_VAR(YMPSG[i].connect);
+		SCAN_VAR(YMPSG[i].tim_A);
+		SCAN_VAR(YMPSG[i].tim_B);
+		SCAN_VAR(YMPSG[i].tim_A_val);
+		SCAN_VAR(YMPSG[i].tim_B_val);
+		SCAN_VAR(YMPSG[i].tim_A_tab);
+		SCAN_VAR(YMPSG[i].tim_B_tab);
+		SCAN_VAR(YMPSG[i].freq);
+		SCAN_VAR(YMPSG[i].dt1_freq);
+		SCAN_VAR(YMPSG[i].noise_tab);
 	}
+	SCAN_VAR(chanout);
+	SCAN_VAR(m2);
+	SCAN_VAR(c1);
+	SCAN_VAR(c2); /* Phase Modulation input for operators 2,3,4 */
+	SCAN_VAR(mem);		/* one sample delay memory */
+
 	if (nAction & ACB_WRITE) {
 		// state_save_register_func_postload(ym2151_postload_refresh);
 		ym2151_postload_refresh();

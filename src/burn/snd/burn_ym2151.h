@@ -31,7 +31,10 @@ static inline void BurnYM2151WriteRegister(const UINT8 nValue)
 	extern UINT32 nBurnCurrentYM2151Register;
 	extern UINT8 BurnYM2151Registers[0x0100];
 
-	BurnYM2151Registers[nBurnCurrentYM2151Register] = nValue;
+        if (nBurnCurrentYM2151Register >= 0x20 &&
+            nBurnCurrentYM2151Register <= 0x3F) { // only(!) remember oper connections
+            BurnYM2151Registers[nBurnCurrentYM2151Register] = nValue;
+        }
 	YM2151WriteReg(0, nBurnCurrentYM2151Register, nValue);
 }
 

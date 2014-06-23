@@ -5,6 +5,7 @@
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
+#include "tlcs90_intf.h"
 #include "seibusnd.h"
 #include "bitswap.h"
 #include "nmk004.h"
@@ -3465,100 +3466,6 @@ void __fastcall hachamf_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-void __fastcall raphero_main_write_byte(UINT32 address, UINT8 data)
-{
-	switch (address)
-	{
-		case 0x100014:
-		case 0x100015:
-	//		*flipscreen = data & 1;
-		return;
-
-		case 0x100018:
-		case 0x100019:
-			if ((data & 0xff) != 0xff) {
-				*tilebank = data;
-			}
-		return;
-
-		case 0x10001e:
-		case 0x10001f:
-			*soundlatch = data;
-		return;
-	}
-}
-
-void __fastcall raphero_main_write_word(UINT32 address, UINT16 data)
-{
-	switch (address)
-	{
-		case 0x100014:
-	//		*flipscreen = data & 1;
-		return;
-
-		case 0x100018:
-			if ((data & 0xff) != 0xff) {
-				*tilebank = data;
-			}
-		return;
-
-		case 0x10001e:
-			*soundlatch = data & 0xff;
-		return;
-	}
-}
-
-UINT8 __fastcall raphero_main_read_byte(UINT32 address)
-{
-	switch (address)
-	{
-		case 0x100000:
-		case 0x100001:
-			return DrvInputs[0] >> ((~address & 1) << 3);
-
-		case 0x100002:
-		case 0x100003:
-			return DrvInputs[1] >> ((~address & 1) << 3);
-
-		case 0x100008:
-		case 0x100009:
-			return DrvDips[0];
-
-		case 0x10000a:
-		case 0x10000b:
-			return DrvDips[1];
-
-		case 0x10000e:
-		case 0x10000f:
-			return *soundlatch2;
-	}
-
-	return 0;
-}
-
-UINT16 __fastcall raphero_main_read_word(UINT32 address)
-{
-	switch (address)
-	{
-		case 0x100000:
-			return DrvInputs[0];
-
-		case 0x100002:
-			return DrvInputs[1];
-
-		case 0x100008:
-			return DrvDips[0];
-
-		case 0x10000a:
-			return DrvDips[1];
-
-		case 0x10000e:
-			return *soundlatch2;
-	}
-
-	return 0;
-}
-
 
 //-----------------------------------------------------------------------------------------------------
 
@@ -4040,10 +3947,15 @@ static INT32 MemIndex()
 	MSM6295ROM		= Next;
 
 	DrvSndROM0		= Next; Next += 0x300000;
+
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadian") == 0) {
+					Next += 0x140000;
+	}
+
 	DrvSndROM1		= Next; Next += 0x300000;
 
 	if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadian") == 0) {
-					Next += 0x600000;
+					Next += 0x140000;
 	}
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
@@ -9298,23 +9210,238 @@ static struct BurnRomInfo rapheroRomDesc[] = {
 	{ "rhp94099.9",		0x200000, 0xea2e47f0, 5 | BRF_GRA },           //  5
 	{ "rhp94099.10",	0x200000, 0x512cb839, 5 | BRF_GRA },           //  6
 
-	{ "rhp94099.7",		0x200000, 0x0d99547e, 6 | BRF_SND },           //  7 OKI1 Samples
+	{ "rhp94099.6",		0x200000, 0xf1a80e5a, 7 | BRF_SND },           //  7 OKI1 Samples
+	{ "rhp94099.7",		0x200000, 0x0d99547e, 7 | BRF_SND },           //  8
 
-	{ "rhp94099.5",		0x200000, 0x515eba93, 7 | BRF_SND },           //  8 OKI2 Samples
-	{ "rhp94099.6",		0x200000, 0xf1a80e5a, 7 | BRF_SND },           //  9
-	{ "rhp94099.7",		0x200000, 0x0d99547e, 7 | BRF_SND },           // 10
-	{ "rhp94099.7",		0x200000, 0x0d99547e, 7 | BRF_SND },           // 11
+	{ "rhp94099.5",		0x200000, 0x515eba93, 7 | BRF_SND },           //  9 OKI2 Samples
+	{ "rhp94099.6",		0x200000, 0xf1a80e5a, 7 | BRF_SND },           // 10
 
-	{ "prom1.u19",		0x000100, 0x4299776e, 0 | BRF_OPT },           // 12 Unused proms
-	{ "prom2.u53",		0x000100, 0xe6ead349, 0 | BRF_OPT },           // 13
-	{ "prom3.u60",		0x000100, 0x304f98c6, 0 | BRF_OPT },           // 14
+	{ "prom1.u19",		0x000100, 0x4299776e, 0 | BRF_OPT },           // 11 Unused proms
+	{ "prom2.u53",		0x000100, 0xe6ead349, 0 | BRF_OPT },           // 12
+	{ "prom3.u60",		0x000100, 0x304f98c6, 0 | BRF_OPT },           // 13
 };
 
 STD_ROM_PICK(raphero)
 STD_ROM_FN(raphero)
 
-static INT32 RapheroLoadCallback()
+
+void __fastcall raphero_main_write_byte(UINT32 address, UINT8 data)
 {
+	switch (address)
+	{
+		case 0x100014:
+		case 0x100015:
+	//		*flipscreen = data & 1;
+		return;
+
+		case 0x100018:
+		case 0x100019:
+			if ((data & 0xff) != 0xff) {
+				*tilebank = data;
+			}
+		return;
+
+		case 0x10001e:
+		case 0x10001f:
+		//	bprintf (0, _T("write soundlatch b\n"), address);
+			*soundlatch = data;
+		return;
+	}
+}
+
+void __fastcall raphero_main_write_word(UINT32 address, UINT16 data)
+{
+	switch (address)
+	{
+		case 0x100014:
+	//		*flipscreen = data & 1;
+		return;
+
+		case 0x100018:
+			if ((data & 0xff) != 0xff) {
+				*tilebank = data;
+			}
+		return;
+
+		case 0x10001e:
+		//	bprintf (0, _T("write soundlatch w\n"), address);
+			*soundlatch = data & 0xff;
+		return;
+	}
+}
+
+UINT8 __fastcall raphero_main_read_byte(UINT32 address)
+{
+	switch (address)
+	{
+		case 0x100000:
+		case 0x100001:
+			return DrvInputs[0] >> ((~address & 1) << 3);
+
+		case 0x100002:
+		case 0x100003:
+			return DrvInputs[1] >> ((~address & 1) << 3);
+
+		case 0x100008:
+		case 0x100009:
+			return DrvDips[0];
+
+		case 0x10000a:
+		case 0x10000b:
+			return DrvDips[1];
+
+		case 0x10000e:
+		case 0x10000f:
+		//	bprintf (0, _T("Read soundlatch2 b\n"), address);
+			return *soundlatch2;
+	}
+
+	return 0;
+}
+
+UINT16 __fastcall raphero_main_read_word(UINT32 address)
+{
+	switch (address)
+	{
+		case 0x100000:
+			return DrvInputs[0];
+
+		case 0x100002:
+			return DrvInputs[1];
+
+		case 0x100008:
+			return DrvDips[0];
+
+		case 0x10000a:
+			return DrvDips[1];
+
+		case 0x10000e:
+		//	bprintf (0, _T("Read soundlatch2 W\n"), address);
+			return *soundlatch2;
+	}
+
+	return 0;
+}
+
+
+
+static void raphero_sound_bankswitch(INT32 data)
+{
+	INT32 nBank = ((data & 0x07) * 0x4000) + 0x10000;
+
+	tlcs90MapMemory(DrvZ80ROM + nBank, 0x8000, 0xbfff, TLCS90_ROM);
+}
+
+static void __fastcall raphero_sound_write(UINT32 address, UINT8 data)
+{
+	switch (address)
+	{
+		case 0xc000:
+		case 0xc001:
+			BurnYM2203Write(0, address & 1, data);
+		return;
+
+		case 0xc800:
+			MSM6295Command(0, data);
+		return;
+
+		case 0xc808:
+			MSM6295Command(1, data);
+		return;
+
+		case 0xc810:
+		case 0xc811:
+		case 0xc812:
+		case 0xc813:
+		case 0xc814:
+		case 0xc815:
+		case 0xc816:
+		case 0xc817:
+			NMK112_okibank_write(address & 7, data);
+		return;
+
+		case 0xd000:
+			raphero_sound_bankswitch(data);
+		return;
+
+		case 0xd800:
+			*soundlatch2 = data;
+		return;
+	}
+}
+
+static UINT8 __fastcall raphero_sound_read(UINT32 address)
+{
+	switch (address)
+	{
+		case 0xc000:
+		case 0xc001:
+			return BurnYM2203Read(0, address & 1);
+
+		case 0xc800:
+			return MSM6295ReadStatus(0);
+
+		case 0xc808:
+			return MSM6295ReadStatus(1);
+
+		case 0xd800:
+			return *soundlatch;
+	}
+
+	return 0;
+}
+
+static void RapheroYM2203IrqHandler(INT32, INT32 nStatus)
+{
+	tlcs90SetIRQLine(0, (nStatus) ? TLCS90_IRQSTATUS_ACK : TLCS90_IRQSTATUS_NONE);
+}
+
+inline static double RapheroGetTime()
+{
+	return (double)tlcs90TotalCycles() / 8000000;
+}
+
+inline static INT32 RapheroSynchroniseStream(INT32 nSoundRate)
+{
+	return (INT64)(tlcs90TotalCycles() * nSoundRate / 8000000);
+}
+
+
+static INT32 RapheroDoReset()
+{
+	memset (AllRam, 0, RamEnd - AllRam);
+
+	SekOpen(0);
+	SekReset();
+	SekClose();
+
+	tlcs90Open(0);
+	tlcs90Reset();
+	tlcs90Close();
+
+	BurnYM2203Reset();
+
+	MSM6295Reset(0);
+	MSM6295Reset(1);
+
+	MSM6295SetInitialBanks(2);
+
+	NMK112Reset();
+
+	return 0;
+}
+
+static INT32 RapheroInit()
+{
+	BurnSetRefreshRate(56.00);
+
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000000,  0, 1)) return 1;
 
@@ -9330,13 +9457,10 @@ static INT32 RapheroLoadCallback()
 		BurnByteswap(DrvGfxROM2, 0x600000);
 
 		if (BurnLoadRom(DrvSndROM0 + 0x040000,  7, 1)) return 1;
-		memcpy (DrvSndROM0 + 0x00000, DrvSndROM0 + 0x40000, 0x20000);
+		if (BurnLoadRom(DrvSndROM0 + 0x240000,  8, 1)) return 1;
 
-		if (BurnLoadRom(DrvSndROM0 + 0x040000,  8, 1)) return 1;
-		if (BurnLoadRom(DrvSndROM0 + 0x240000,  9, 1)) return 1;
-		if (BurnLoadRom(DrvSndROM0 + 0x440000, 10, 1)) return 1;
-		if (BurnLoadRom(DrvSndROM0 + 0x640000, 11, 1)) return 1;
-		memcpy (DrvSndROM0 + 0x00000, DrvSndROM0 + 0x40000, 0x20000);
+		if (BurnLoadRom(DrvSndROM1 + 0x040000,  9, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM1 + 0x240000, 10, 1)) return 1;
 
 		DrvGfxDecode(0x20000, 0x200000, 0x600000);
 		memset (DrvGfxROM2 + 0xc00000, 0x0f, 0x400000);
@@ -9361,12 +9485,110 @@ static INT32 RapheroLoadCallback()
 	SekSetReadByteHandler(0,	raphero_main_read_byte);
 	SekClose();
 
+	tlcs90Init(0, 8000000);
+	tlcs90Open(0);
+	tlcs90MapMemory(DrvZ80ROM,	0x0000, 0x7fff, TLCS90_ROM);
+	tlcs90MapMemory(DrvZ80RAM,	0xe000, 0xffff, TLCS90_RAM);
+	tlcs90SetWriteHandler(raphero_sound_write);
+	tlcs90SetReadHandler(raphero_sound_read);
+	tlcs90Close();
+
+	BurnYM2203Init(1, 1500000, &RapheroYM2203IrqHandler, RapheroSynchroniseStream, RapheroGetTime, 0);
+	BurnTimerAttachTlcs90(8000000);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   0.70, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.70, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.70, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 1.00, BURN_SND_ROUTE_BOTH);
+
+	MSM6295Init(0, 4000000 / 165, 1);
+	MSM6295Init(1, 4000000 / 165, 1);
+	MSM6295SetRoute(0, 0.08, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.08, BURN_SND_ROUTE_BOTH);
+
+	NMK112_init(0, DrvSndROM0, DrvSndROM1, 0x440000, 0x440000);
+
+	no_z80 = 0;
+
+	GenericTilesInit();
+
+	RapheroDoReset();
+
 	return 0;
 }
 
-static INT32 RapheroInit()
+static INT32 RapheroExit()
 {
-	return NMK004Init(RapheroLoadCallback, 14000000, 0, 0); // NOT REALLY NMK004!!!
+	BurnYM2203Exit();
+	MSM6295Exit(0);
+	MSM6295Exit(1);
+	MSM6295ROM = NULL;
+
+	NMK004_enabled = 0;
+
+	tlcs90Exit();
+
+	return CommonExit();
+}
+
+static INT32 RapheroFrame()
+{
+	if (DrvReset) {
+		RapheroDoReset();
+	}
+
+	{
+		DrvInputs[0] = ~0;
+		DrvInputs[1] = ~0;
+		for (INT32 i = 0; i < 16; i++) {
+			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+		}
+	}
+
+	SekNewFrame();
+	tlcs90NewFrame();
+
+	INT32 nSegment;
+	INT32 nInterleave = 3000;
+	INT32 nTotalCycles[2] = { 14000000 / 56, 8000000 / 56 };
+
+	SekOpen(0);
+	tlcs90Open(0);
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		SekRun(nTotalCycles[0] / nInterleave);
+
+		if (i == (nInterleave-16) || i == (nInterleave/2)-16) { // ??
+			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		}
+
+		if (i == (nInterleave-1)) {
+			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		}
+
+		nSegment = (nTotalCycles[1] / nInterleave) * (i + 1);
+		BurnTimerUpdate(nSegment);
+	}
+
+	BurnTimerEndFrame(nTotalCycles[1]);
+
+	if (pBurnSoundOut) {
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+	}
+
+	tlcs90Close();
+	SekClose();
+
+	if (pBurnDraw) {
+		BurnDrvRedraw();
+	}
+
+	memcpy (DrvSprBuf2, Drv68KRAM + 0x8000, 0x1000);
+
+	return 0;
 }
 
 struct BurnDriver BurnDrvRaphero = {
@@ -9375,7 +9597,7 @@ struct BurnDriver BurnDrvRaphero = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rapheroRomInfo, rapheroRomName, NULL, NULL, Tdragon2InputInfo, RapheroDIPInfo,
-	RapheroInit, NMK004Exit, NMK004Frame, RapheroDraw, DrvScan, NULL, 0x400,
+	RapheroInit, RapheroExit, RapheroFrame, RapheroDraw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
 };
 
@@ -9394,16 +9616,15 @@ static struct BurnRomInfo arcadianRomDesc[] = {
 	{ "rhp94099.9",		0x200000, 0xea2e47f0, 5 | BRF_GRA },           //  5
 	{ "rhp94099.10",	0x200000, 0x512cb839, 5 | BRF_GRA },           //  6
 
-	{ "rhp94099.7",		0x200000, 0x0d99547e, 6 | BRF_SND },           //  7 OKI1 Samples
+	{ "rhp94099.6",		0x200000, 0xf1a80e5a, 7 | BRF_SND },           //  7 OKI1 Samples
+	{ "rhp94099.7",		0x200000, 0x0d99547e, 7 | BRF_SND },           //  8
 
-	{ "rhp94099.5",		0x200000, 0x515eba93, 7 | BRF_SND },           //  8 OKI2 Samples
-	{ "rhp94099.6",		0x200000, 0xf1a80e5a, 7 | BRF_SND },           //  9
-	{ "rhp94099.7",		0x200000, 0x0d99547e, 7 | BRF_SND },           // 10
-	{ "rhp94099.7",		0x200000, 0x0d99547e, 7 | BRF_SND },           // 11
+	{ "rhp94099.5",		0x200000, 0x515eba93, 7 | BRF_SND },           //  9 OKI2 Samples
+	{ "rhp94099.6",		0x200000, 0xf1a80e5a, 7 | BRF_SND },           // 10
 
-	{ "prom1.u19",		0x000100, 0x4299776e, 0 | BRF_OPT },           // 12 Unused proms
-	{ "prom2.u53",		0x000100, 0xe6ead349, 0 | BRF_OPT },           // 13
-	{ "prom3.u60",		0x000100, 0x304f98c6, 0 | BRF_OPT },           // 14
+	{ "prom1.u19",		0x000100, 0x4299776e, 0 | BRF_OPT },           // 11 Unused proms
+	{ "prom2.u53",		0x000100, 0xe6ead349, 0 | BRF_OPT },           // 12
+	{ "prom3.u60",		0x000100, 0x304f98c6, 0 | BRF_OPT },           // 13
 };
 
 STD_ROM_PICK(arcadian)
@@ -9415,6 +9636,6 @@ struct BurnDriver BurnDrvArcadian = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, arcadianRomInfo, arcadianRomName, NULL, NULL, Tdragon2InputInfo, RapheroDIPInfo,
-	RapheroInit, NMK004Exit, NMK004Frame, RapheroDraw, DrvScan, NULL, 0x400,
+	RapheroInit, RapheroExit, RapheroFrame, RapheroDraw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
 };

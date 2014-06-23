@@ -29,6 +29,7 @@ INT32 BurnTimerAttachHD63701(INT32 nClockspeed);
 INT32 BurnTimerAttachM6803(INT32 nClockspeed);
 INT32 BurnTimerAttachM6502(INT32 nClockspeed);
 INT32 BurnTimerAttachSh2(INT32 nClockspeed);
+INT32 BurnTimerAttachTlcs90(INT32 nClockspeed);
 INT32 BurnTimerAttachH6280(INT32 nClockspeed);
 void BurnTimerScan(INT32 nAction, INT32* pnMin);
 INT32 BurnTimerUpdate(INT32 nCycles);

@@ -9,6 +9,7 @@
 #include "m6502_intf.h"
 #include "sh2_intf.h"
 #include "h6280_intf.h"
+#include "tlcs90_intf.h"
 
 #define MAX_TIMER_VALUE ((1 << 30) - 65536)
 
@@ -430,3 +431,17 @@ INT32 BurnTimerAttachH6280(INT32 nClockspeed)
 
 	return 0;
 }
+INT32 BurnTimerAttachTlcs90(INT32 nClockspeed)
+{
+	nCPUClockspeed = nClockspeed;
+	pCPUTotalCycles = tlcs90TotalCycles;
+	pCPURun = tlcs90Run;
+	pCPURunEnd = tlcs90RunEnd;
+
+	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+
+//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, nCPUClockspeed));
+
+	return 0;
+}
+

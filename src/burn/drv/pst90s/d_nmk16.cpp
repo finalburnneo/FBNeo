@@ -5239,6 +5239,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
             if (!no_z80)
                 ZetScan(nAction);
             SekScan(nAction);
+            if (strcmp(BurnDrvGetTextA(DRV_NAME), "raphero") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "arcadian") == 0) {
+                tlcs90Scan(nAction);
+            }
 
             if (AFEGA_SYS) {
                 if (strstr(BurnDrvGetTextA(DRV_NAME), "ssmiss") ||
@@ -9507,7 +9510,7 @@ static INT32 RapheroInit()
 
 	NMK112_init(0, DrvSndROM0, DrvSndROM1, 0x440000, 0x440000);
 
-	no_z80 = 0;
+	no_z80 = 1;
 
 	GenericTilesInit();
 

@@ -244,12 +244,11 @@ void BurnYM2151Scan(INT32 nAction)
 	SCAN_VAR(nFractionalPosition);
 	SCAN_VAR(nSamplesRendered);
 
-	BurnYM2151Scan_int(nAction); // Scan the YM2151's internal registers
-        // BurnYM2151Scan_int() only links up the default connections -
-        // therefore the following is necessary to link up user(game)-defined operator connections:
-	if (nAction & ACB_WRITE) { // Restore the operator connections, see burn_ym2151.h BurnYM2151WriteRegister() for more info.
+	BurnYM2151Scan_int(nAction); // Properly scan the YM2151's internal registers
+
+        /*if (nAction & ACB_WRITE) { // Restore the operator connections, see burn_ym2151.h BurnYM2151WriteRegister() for more info.
 		for (INT32 i = 0; i < 0x0100; i++) {
 			YM2151WriteReg(0, i, BurnYM2151Registers[i]);
 		}
-	}
+	}*/
 }

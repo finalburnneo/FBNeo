@@ -29,12 +29,12 @@ static inline void BurnYM2151WriteRegister(const UINT8 nValue)
 #endif
 
 	extern UINT32 nBurnCurrentYM2151Register;
-	extern UINT8 BurnYM2151Registers[0x0100];
+	/*extern UINT8 BurnYM2151Registers[0x0100];
 
-        if (nBurnCurrentYM2151Register >= 0x20 &&
+        if (nBurnCurrentYM2151Register >= 0x20 && // this is no longer necessary. June 24, 2014 - dink
             nBurnCurrentYM2151Register <= 0x3F) { // only(!) remember oper connections
             BurnYM2151Registers[nBurnCurrentYM2151Register] = nValue;
-        }
+        }*/
 	YM2151WriteReg(0, nBurnCurrentYM2151Register, nValue);
 }
 

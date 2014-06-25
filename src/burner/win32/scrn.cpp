@@ -565,11 +565,20 @@ static void OnActivateApp(HWND hwnd, BOOL fActivate, DWORD /* dwThreadId */)
 	}
 }
 
+static void PausedRedraw(void)
+{
+	if (bVidOkay && (bRunPause || !bDrvOkay)) { // Show the message even if paused. - dink
+		VidRedraw();
+		VidPaint(0);
+	}
+}
+
 static void OnPaint(HWND hWnd)
 {
 	if (hWnd == hScrnWnd) 
 	{
 		VidPaint(1);
+		PausedRedraw(); // redraw game screen if paused and returning from hibernation - dink
 
 		// draw menu
 		if (!nVidFullscreen) {
@@ -739,14 +748,6 @@ int BurnerLoadDriver(TCHAR *szDriverName)
 	}
 	
 	return 0;
-}
-
-static void PausedRedraw(void)
-{
-	if (bVidOkay && (bRunPause || !bDrvOkay)) { // Show the message even if paused. - dink
-		VidRedraw();
-		VidPaint(0);
-	}
 }
 
 static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)

@@ -567,10 +567,15 @@ static void OnActivateApp(HWND hwnd, BOOL fActivate, DWORD /* dwThreadId */)
 
 static void PausedRedraw(void)
 {
-	if (bVidOkay && (bRunPause || !bDrvOkay)) { // Show the message even if paused. - dink
-		VidRedraw();
-		VidPaint(0);
-	}
+    if (bVidOkay && (bRunPause || !bDrvOkay)) { // Show the message even if paused. - dink
+        INT16 *pBtemp = pBurnSoundOut;
+        pBurnSoundOut = NULL; // Mute the sound as VidRedraw() draws the frame
+
+        VidRedraw();
+        VidPaint(0);
+
+        pBurnSoundOut = pBtemp;
+    }
 }
 
 static void OnPaint(HWND hWnd)

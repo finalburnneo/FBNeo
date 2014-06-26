@@ -1003,7 +1003,7 @@ static void ninjakd2_sample_player(INT16 *dest, INT32 len)
 			break;
 		}
 
-		INT32 sample = BURN_SND_CLIP(((DrvSndROM[ofst]<<7) * 80) / 100);
+		INT32 sample = BURN_SND_CLIP(((DrvSndROM[ofst]<<7) * 45) / 100);
 
 		dest[i*2+0] = BURN_SND_CLIP(dest[i*2+0]+sample);
 		dest[i*2+1] = BURN_SND_CLIP(dest[i*2+1]+sample);
@@ -1523,11 +1523,7 @@ static void DrvCalculatePalette()
 {
 	for (INT32 i = 0; i < 0x800; i+=2)
 	{
-		INT32 r = DrvPalRAM[i+0] >> 4;
-		INT32 g = DrvPalRAM[i+0] & 0x0f;
-		INT32 b = DrvPalRAM[i+1] >> 4;
-
-		DrvPalette[i/2] = BurnHighCol(r,g,b,0);
+		DrvPaletteUpdate(i);
 	}
 }
 

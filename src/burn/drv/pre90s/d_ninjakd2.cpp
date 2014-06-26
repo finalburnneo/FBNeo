@@ -724,7 +724,7 @@ static void robokid_rambank(INT32 sel, UINT8 data)
 
 	INT32 nBank = 0x400 * data;
 
-	nZ80RamBank[sel] = data;
+	nZ80RamBank[sel&3] = data;
 
 	ZetMapMemory(ram[sel&3] + nBank, off[sel>>2][sel&3], off[sel>>2][sel&3] | 0x3ff, ZET_RAM);
 }

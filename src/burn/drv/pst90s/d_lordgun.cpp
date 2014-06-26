@@ -33,7 +33,6 @@ static UINT8 *DrvVidRAM2	= NULL;
 static UINT8 *DrvVidRAM3	= NULL;
 static UINT8 *DrvScrRAM		= NULL;
 static UINT8 *DrvSprRAM		= NULL;
-static UINT8 *DrvProtRAM	= NULL;
 static UINT8 *DrvZ80RAM		= NULL;
 
 static UINT32 *DrvPalette	= NULL;
@@ -299,33 +298,116 @@ static void lordgun_update_gun(INT32 i)
 	}
 }
 
-static void lordgun_protection_w(UINT8 offset)
+static void lordgun_protection_write(UINT32 offset)
 {
-	switch (offset & 0xc0)
+	switch (offset & 0x60)
 	{
-		case 0x00:
+		case 0x00/2: // increment counter
+		{
 			lordgun_protection_data++;
-		return;
+			lordgun_protection_data &= 0x1f;
 
-		case 0xc0:
+			return;
+		}
+
+		case 0xc0/2: // reset protection device
+		{
 			lordgun_protection_data = 0;
-		return;
+
+			return;
+		}
 	}
 }
 
-static UINT8 lordgun_protection_r()
+static UINT8 lordgun_protection_read(INT32 offset)
 {
-	if ((lordgun_protection_data & 0x11) == 0x01) return 0x10;
-	if ((lordgun_protection_data & 0x06) == 0x02) return 0x10;
-	if ((lordgun_protection_data & 0x09) == 0x08) return 0x10;
+	switch (offset & 0x60)
+	{
+		case 0x40/2: // bitswap and xor counter
+		{
+			UINT8 x = lordgun_protection_data;
+
+			lordgun_protection_data  = ((( x >> 0) | ( x >> 1)) & 1) << 4;
+			lordgun_protection_data |=  ((~x >> 2) & 1) << 3;
+			lordgun_protection_data |= (((~x >> 4) | ( x >> 0)) & 1) << 2;
+			lordgun_protection_data |=  (( x >> 3) & 1) << 1;
+			lordgun_protection_data |= (((~x >> 0) | ( x >> 2)) & 1) << 0;
+
+			return 0;
+		}
+
+		case 0x80/2: // return value if conditions are met
+		{
+			if ((lordgun_protection_data & 0x11) == 0x01) return 0x10;
+			if ((lordgun_protection_data & 0x06) == 0x02) return 0x10;
+			if ((lordgun_protection_data & 0x09) == 0x08) return 0x10;
+
+			return 0;
+		}
+	}
 
 	return 0;
 }
 
+static void aliencha_protection_write(UINT32 offset)
+{
+	switch (offset & 0x60)
+	{
+		case 0xc0/2: // reset protection device
+		{
+			lordgun_protection_data = 0;
+
+			return;
+		}
+	}
+}
+
+static UINT8 aliencha_protection_read(INT32 offset)
+{
+	switch (offset & 0x60)
+	{
+		case 0x00/2: // de-increment counter
+		{
+			lordgun_protection_data--;
+			lordgun_protection_data &= 0x1f;
+
+			return 0;
+		}
+
+		case 0x40/2: // bitswap and xor counter
+		{
+			UINT8 x = lordgun_protection_data;
+
+			lordgun_protection_data  = (((x >> 3) ^ (x >> 2)) & 1) << 4;
+			lordgun_protection_data |= (((x >> 2) ^ (x >> 1)) & 1) << 3;
+			lordgun_protection_data |= (((x >> 1) ^ (x >> 0)) & 1) << 2;
+			lordgun_protection_data |= (((x >> 4) ^ (x >> 0)) & 1) << 1;
+			lordgun_protection_data |= (((x >> 4) ^ (x >> 3)) & 1) << 0;
+
+			return 0;
+		}
+
+		case 0x80/2: // return value if conditions are met
+		{
+			if ((lordgun_protection_data & 0x11) == 0x00) return 0x20;
+			if ((lordgun_protection_data & 0x06) != 0x06) return 0x20;
+			if ((lordgun_protection_data & 0x18) == 0x00) return 0x20;
+
+			return 0;
+		}
+	}
+
+	return 0;
+}
 void __fastcall lordgun_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff00) == 0x50a900) {
-		lordgun_protection_w(address);
+		lordgun_protection_write(address/2);
+		return;
+	}
+
+	if ((address & 0xfffff00) == 0x50b900) {
+		aliencha_protection_write(address/2);
 		return;
 	}
 
@@ -391,13 +473,17 @@ void __fastcall lordgun_write_word(UINT32 address, UINT16 data)
 
 void __fastcall lordgun_write_byte(UINT32 /*address*/, UINT8 /*data*/)
 {
-//	address = data; // kill warnings...
+
 }
 
 UINT16 __fastcall lordgun_read_word(UINT32 address)
 {
 	if ((address & 0xfffff00) == 0x50a900) {
-		return lordgun_protection_r();
+		return lordgun_protection_read(address/2);
+	}
+
+	if ((address & 0xfffff00) == 0x50b900) {
+		return aliencha_protection_read(address/2);
 	}
 
 	switch (address)
@@ -678,7 +764,6 @@ static INT32 MemIndex()
 	DrvVidRAM3	= Next; Next += 0x002000;
 	DrvScrRAM	= Next; Next += 0x000800;
 	DrvSprRAM	= Next; Next += 0x000800;
-	DrvProtRAM	= Next; Next += 0x000400;
 	DrvPalRAM	= Next; Next += 0x001000;
 
 	DrvZ80RAM	= Next; Next += 0x001000;
@@ -779,8 +864,6 @@ static INT32 DrvInit(INT32 (*pInitCallback)(), INT32 lordgun)
 	SekMapMemory(DrvScrRAM,		0x31c000, 0x31c7ff, SM_RAM);
 	SekMapMemory(DrvSprRAM,		0x400000, 0x4007ff, SM_RAM);
 	SekMapMemory(DrvPalRAM,		0x500000, 0x500fff, SM_RAM);
-//	SekMapMemory(DrvProtRAM,	0x50a800, 0x50abff, SM_RAM); // 900-9ff (lordgun)
-	SekMapMemory(DrvProtRAM,	0x50b800, 0x50bbff, SM_RAM); // 900-9ff (aliencha)
 	SekSetWriteWordHandler(0,	lordgun_write_word);
 	SekSetWriteByteHandler(0,	lordgun_write_byte);
 	SekSetReadWordHandler(0,	lordgun_read_word);
@@ -921,24 +1004,6 @@ static INT32 alienchaLoadRoms()
 
 	if (BurnLoadRom(DrvSndROM2 + 0x000000, 13, 1)) return 1;
 
-	UINT16 *rom = (UINT16*)Drv68KROM;
-
-	rom[0x0A558/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 0A558  beq.s   $A56C
-	rom[0x0A8DC/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 0A8DC  beq.s   $A8F0
-	rom[0x0AC92/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 0AC92  beq.s   $ACA6
-	rom[0x124CC/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 124CC  beq.s   $124E0
-	rom[0x12850/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 12850  beq.s   $12864
-	rom[0x12C06/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 12C06  beq.s   $12C1A
-	rom[0x1862A/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 1862A  beq.s   $1863E
-	rom[0x189AE/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 189AE  beq.s   $189C2
-	rom[0x18D64/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 18D64  beq.s   $18D78
-	rom[0x230FC/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 230FC  beq.s   $23110
-	rom[0x23480/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 23480  beq.s   $23494
-	rom[0x23836/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 23836  beq.s   $2384A
-	rom[0x2BD0E/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 2BD0E  beq.s   $2BD22
-	rom[0x2C092/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 2C092  beq.s   $2C0A6
-	rom[0x2C448/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 2C448  beq.s   $2C45C
-
 	return 0;
 }
 
@@ -968,24 +1033,6 @@ static INT32 alienchacLoadRoms()
 	if (BurnLoadRom(DrvSndROM1 + 0x000000, 14, 1)) return 1;
 
 	if (BurnLoadRom(DrvSndROM2 + 0x000000, 15, 1)) return 1;
-
-	UINT16 *rom = (UINT16*)Drv68KROM;
-
-	rom[0x0A550/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 0A558  beq.s   $A564
-	rom[0x0A8D4/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 0A8D4  beq.s   $A8E8
-	rom[0x0AC8A/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 0AC8A  beq.s   $AC9E
-	rom[0x124B8/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 124B8  beq.s   $124CC
-	rom[0x1283C/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 1283C  beq.s   $12850
-	rom[0x12BF2/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 12BF2  beq.s   $12C06
-	rom[0x18616/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 18616  beq.s   $1862A
-	rom[0x1899A/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 1899A  beq.s   $189AE
-	rom[0x18D50/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 18D50  beq.s   $18D64
-	rom[0x230E8/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 230E8  beq.s   $230FC
-	rom[0x2346C/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 2346C  beq.s   $23480
-	rom[0x23822/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 23822  beq.s   $23822
-	rom[0x2BCFA/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 2BCFA  beq.s   $2BD0E
-	rom[0x2C07E/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 2C07E  beq.s   $2C092
-	rom[0x2C434/2]	=	BURN_ENDIAN_SWAP_INT16(0x6012);		// 2C434  beq.s   $2C448
 
 	return 0;
 }

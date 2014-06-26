@@ -761,6 +761,43 @@ void __fastcall sunaq_sound0_write(UINT16 address, UINT8 data)
 //------------------
 // 68k
 
+static UINT8 uballoon_prot_read(UINT16 offset)
+{
+	UINT8 ret = 0;
+
+	switch (offset)
+	{
+		case 0x0011:
+			ret = ((bestofbest_prot & 0x03) == 0x03) ? 2 : 0;
+			ret |= ((bestofbest_prot & 0x30) == 0x30) ? 1 : 0;
+		break;
+
+		case 0x0311:
+			ret = 0x03;
+		break;
+
+		default:
+	//		bprintf (0, _T("uballoon_prot_read %04X\n"), offset);
+		break;
+	}
+
+	return ret;
+}
+
+static void uballoon_prot_write(UINT16 offset, UINT8 data)
+{
+	switch (offset)
+	{
+		case 0x0001:
+			bestofbest_prot = data;
+		break;
+
+		default:
+	//		bprintf (0, _T("uballoon_prot_write %04X=%02X\n"), offset, data);
+		break;
+	}
+}
+
 UINT16 __fastcall uballoon_read_word(UINT32 address)
 {
 	if ((address & 0xfff000) == 0x200000) {
@@ -792,6 +829,10 @@ UINT16 __fastcall uballoon_read_word(UINT32 address)
 
 UINT8 __fastcall uballoon_read_byte(UINT32 address)
 {
+	if ((address & 0xff0000) == 0xa00000) {
+		return uballoon_prot_read(address);
+	}
+
 	if ((address & 0xfff000) == 0x200000) {
 		if (address & 0x200) {
 			return DrvPalRAM2[address & 0xffe];
@@ -860,6 +901,11 @@ void __fastcall uballoon_write_byte(UINT32 address, UINT8 data)
 			DrvPalRAM[address & 0xfff] = data;
 			suna_palette_write(address & 0xffe);
 		}
+		return;
+	}
+
+	if ((address & 0xff0000) == 0xa00000) {
+		uballoon_prot_write(address, data);
 		return;
 	}
 
@@ -1594,14 +1640,6 @@ static INT32 UballoonInit()
 	ZetSetInHandler(uballoon_sound1_in);
 	ZetSetOutHandler(uballoon_sound1_out);
 	ZetClose();
-
-	// Patch out the protection checks
-	*((UINT16*)(Drv68KROM + 0x0113c)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(Drv68KROM + 0x0113e)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
-	*((UINT16*)(Drv68KROM + 0x01784)) = BURN_ENDIAN_SWAP_INT16(0x600c);
-	*((UINT16*)(Drv68KROM + 0x018e2)) = BURN_ENDIAN_SWAP_INT16(0x600c);
-	*((UINT16*)(Drv68KROM + 0x03c54)) = BURN_ENDIAN_SWAP_INT16(0x600c);
-	*((UINT16*)(Drv68KROM + 0x126a0)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
 
 	BurnYM2151Init(3579545);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);

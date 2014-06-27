@@ -2763,12 +2763,12 @@ static struct BurnRomInfo nspiritRomDesc[] = {
 
 	{ "nin_c-pr(__nodump).1c",	0x01000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 21 i8751 Code
 	
-	{ "m72_a-8l.8l",	0x00100, 0xb460c438, 0x00 | BRF_OPT },           // 20 Proms
-	{ "m72_a-9l.9l",	0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },           // 21
+	{ "m72_a-8l.8l",	0x00100, 0xb460c438, 0x00 | BRF_OPT },           // 22 Proms
+	{ "m72_a-9l.9l",	0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },           // 23
 
-	{ "nin_c-3f.3f",	0x00100, 0x5402fc07, 0x00 | BRF_OPT }, 			 // 22 PLDs
-	{ "m72_a-3d.3d",	0x00100, 0xde85dac3, 0x00 | BRF_OPT }, 			 // 23
-	{ "m72_a-4d.4d",	0x00100, 0x59676de1, 0x00 | BRF_OPT }, 			 // 24
+	{ "nin_c-3f.3f",	0x00100, 0x5402fc07, 0x00 | BRF_OPT }, 			 // 24 PLDs
+	{ "m72_a-3d.3d",	0x00100, 0xde85dac3, 0x00 | BRF_OPT }, 			 // 25
+	{ "m72_a-4d.4d",	0x00100, 0x59676de1, 0x00 | BRF_OPT }, 			 // 26
 };
 
 STD_ROM_PICK(nspirit)

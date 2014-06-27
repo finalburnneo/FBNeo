@@ -727,12 +727,12 @@ STD_ROM_FN(Drv2u)
 static struct BurnRomInfo Drv2bRomDesc[] = {
 	{ "dd2ub-3.3g",    0x08000, 0xf5bd19d2, BRF_ESS | BRF_PRG }, //  0	HD6309 Program Code
 	{ "dd2ub-4.4g",    0x08000, 0x78750947, BRF_ESS | BRF_PRG }, //  1
-	{ "26ab-0.bin",    0x08000, 0x49ddddcd, BRF_ESS | BRF_PRG }, //  2 MISSING FROM DUMP?
+	{ "26ab-0.bin",    0x08000, 0x49ddddcd, BRF_ESS | BRF_PRG }, //  2
 	{ "dd2ub-6.5g",    0x08000, 0x097eaf26, BRF_ESS | BRF_PRG }, //  3
 	
-	{ "26ae-0.bin",    0x10000, 0xea437867, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code MISSING FROM DUMP?
+	{ "26ae-0.bin",    0x10000, 0xea437867, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	
-	{ "26ad-0.bin",    0x08000, 0x75e36cd6, BRF_ESS | BRF_PRG }, //  5	Z80 #2 Program Code MISSING FROM DUMP?
+	{ "26ad-0.bin",    0x08000, 0x75e36cd6, BRF_ESS | BRF_PRG }, //  5	Z80 #2 Program Code
 	
 	//{ "dd2ub-1.2r",    0x10000, 0xadd7ffc6, BRF_GRA },	     //  6	Characters - BAD DUMP?
 	{ "26a8-0.bin",    0x10000, 0x3ad1049c, BRF_GRA },	     //  6	Characters - using US one due to Winners Don't Use Drugs screen

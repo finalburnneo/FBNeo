@@ -57,6 +57,8 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 previous_coin[2];
+
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
@@ -1120,6 +1122,8 @@ static INT32 DrvDoReset()
 
 	ninjakd2_sample_offset = -1;
 
+	previous_coin[0] = previous_coin[1] = 0;
+
 	return 0;
 }
 
@@ -1911,6 +1915,11 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
+
+		previous_coin[0] = (DrvInputs[0] & 0x40) ? 0 : (previous_coin[0] + 1);
+		previous_coin[1] = (DrvInputs[0] & 0x80) ? 0 : (previous_coin[1] + 1);
+		if (previous_coin[0] >= 4) DrvInputs[0] |= 0x40;
+		if (previous_coin[1] >= 4) DrvInputs[0] |= 0x80;
 	}
 
 	ZetNewFrame();

@@ -37,6 +37,7 @@
 
 #ifdef FBA															/* !!! FBA */
 #include "ymf278b.h"
+#include "state.h"
 typedef struct { int sample_rate; } MACHINE;
 MACHINE machine;
 MACHINE* Machine = &machine;
@@ -662,6 +663,29 @@ static void ymf278b_data_port_C_w(int num, UINT8 data)
 }
 
 #ifdef FBA															/* !!! FBA */
+void ymf278b_scan(INT32 nAction, INT32* pnMin)
+{
+    if (nAction & ACB_DRIVER_DATA) {
+		struct BurnArea ba;
+		char szName[] = "YMF278b Data";
+		const UINT8 *rom_save; void *irq_cb_save; void *timer_cb_save;
+
+		rom_save = YMF278B[0].rom;
+		irq_cb_save = YMF278B[0].irq_callback;
+		timer_cb_save = YMF278B[0].timer_callback;
+
+		ba.Data		= &YMF278B[0];
+		ba.nLen		= sizeof(YMF278BChip);
+		ba.nAddress = 0;
+		ba.szName	= szName;
+		BurnAcb(&ba);
+
+		YMF278B[0].rom = rom_save;
+		YMF278B[0].irq_callback = irq_cb_save;
+		YMF278B[0].timer_callback = timer_cb_save;
+    }
+}
+
 int ymf278b_start(INT8 num, UINT8 *rom, void (*irq_cb)(int, int), void (*timer_cb)(int, int, double), int clock, int rate)
 {
 	int i;

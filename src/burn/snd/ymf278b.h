@@ -18,6 +18,7 @@ struct YMF278B_interface {
 };
 
 #ifdef FBA															/* !!! FBA */
+void ymf278b_scan(INT32 nAction, INT32* pnMin);
 void ymf278b_pcm_update(int num, INT16 **outputs, int length);
 int ymf278b_timer_over(int num, int timer);
 int ymf278b_start(INT8 num, UINT8 *rom, void (*irq_cb)(int, int), void (*timer_cb)(int, int, double), int clock, int rate);

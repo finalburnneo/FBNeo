@@ -258,4 +258,5 @@ void BurnYMF278BScan(INT32 nAction, INT32* pnMin)
 #endif
 
 	BurnTimerScan(nAction, pnMin);
+	ymf278b_scan(nAction, pnMin);
 }

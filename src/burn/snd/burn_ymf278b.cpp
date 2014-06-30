@@ -189,6 +189,7 @@ void BurnYMF278BReset()
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BReset called without init\n"));
 #endif
 
+        ymf278b_reset();
 	BurnTimerReset();
 }
 

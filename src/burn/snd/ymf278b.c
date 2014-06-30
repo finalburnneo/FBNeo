@@ -74,7 +74,7 @@
 
 #define LOG(x) logerror x;
 
-        typedef struct
+	typedef struct
 	{
 		INT16 wave;     /* wavetable number */
 		INT16 F_NUMBER; /* frequency */
@@ -115,7 +115,7 @@
 		int num;        /* slot number (for debug only) */
 	} YMF278BSlot;
 
-        // internal state
+	// internal state
 	UINT8 m_pcmregs[256];
 	YMF278BSlot m_slots[24];
 	INT8 m_wavetblhdr;
@@ -250,7 +250,7 @@ static void compute_envelope(YMF278BSlot *slot)
 			slot->env_vol = 256U<<23;
 			slot->env_vol_lim = (256U<<23) - 1;
 
-                        if (rate==63)
+			if (rate==63)
 			{
 				// immediate
 				LOG(("YMF278B: Attack skipped - "));
@@ -515,7 +515,7 @@ static void A_w(int num, UINT8 reg, UINT8 data)
 			//if (data != m_timer_a_count) - this breaks FBA if uncommented
 			{
 				m_timer_a_count = data;
-                                ymf278b_timer_a_reset(num);
+				ymf278b_timer_a_reset(num);
 
 			}
 			break;
@@ -525,7 +525,7 @@ static void A_w(int num, UINT8 reg, UINT8 data)
 			//if (data != m_timer_b_count) - same here.
 			{
 				m_timer_b_count = data;
-                                ymf278b_timer_b_reset(num);
+				ymf278b_timer_b_reset(num);
 			}
 			break;
 
@@ -538,13 +538,12 @@ static void A_w(int num, UINT8 reg, UINT8 data)
 				// reset timers
 				if((m_enable ^ data) & 1)
 				{
-                                    ymf278b_timer_a_reset(num);
+					ymf278b_timer_a_reset(num);
 				}
 				if((m_enable ^ data) & 2)
 				{
-                                    ymf278b_timer_b_reset(num);
-
-                                }
+					ymf278b_timer_b_reset(num);
+				}
 
 				m_enable = data;
 				m_current_irq &= ~data;
@@ -966,8 +965,8 @@ void ymf278b_reset()
 
 	// clear registers
 	//for (i = 0; i <= 4; i++)
-        //	A_w(0, i, 0); // causes weird errors because the cpu not open
-                              // at the time its called and this accesses the timer.
+        //	A_w(0, i, 0);	// causes weird errors because the cpu is not open
+							// at the time ymf278b_reset() is called and A_w() accesses the timer.
 	B_w(0, 5, 0);
 	for (i = 0; i < 8; i++)
 		C_w(0, i, 0);
@@ -1002,16 +1001,16 @@ void ymf278b_reset()
 		compute_envelope(slot);
 	}
 
-//        ymf278b_timer_a_reset(0);
-//        ymf278b_timer_b_reset(0);
-        //m_timer_a->reset();
+//	ymf278b_timer_a_reset(0); - not necessary -dink
+//	ymf278b_timer_b_reset(0); ""
+	//m_timer_a->reset();
 	//m_timer_b->reset();
 	/*m_timer_busy->reset();*/  m_status_busy = 0;
 	/*m_timer_ld->reset();*/    m_status_ld = 0;
 
 	m_irq_line = 0;
 	m_current_irq = 0;
-//	if (m_irq_handler)
+//	if (m_irq_handler) - not necessary -dink
 //		m_irq_handler(0, 0);
 }
 
@@ -1110,7 +1109,6 @@ static void precompute_rate_tables()
 //  device_start - device-specific startup
 //-------------------------------------------------
 
-//void ymf278b_device::device_start()
 int ymf278b_start(int num, UINT8 *rom, void (*irq_cb)(int, int), void (*timer_cb)(int, int, double), int clock, int rate)
 {
 	int i;
@@ -1119,16 +1117,16 @@ int ymf278b_start(int num, UINT8 *rom, void (*irq_cb)(int, int), void (*timer_cb
 	m_romsize = 0xffffffff; //romsize;
 	m_clock = clock;
 	m_irq_handler = irq_cb;
-        timer_callback = timer_cb;
+	timer_callback = timer_cb;
 
-        /*m_timer_base = attotime::from_hz(m_clock) * (19*36);
+	/*m_timer_base = attotime::from_hz(m_clock) * (19*36); - we use different timers -dink
 	m_timer_a = timer_alloc(TIMER_A);
 	m_timer_b = timer_alloc(TIMER_B);
 	m_timer_busy = timer_alloc(TIMER_BUSY_CLEAR);
-        m_timer_ld = timer_alloc(TIMER_LD_CLEAR); */
+	m_timer_ld = timer_alloc(TIMER_LD_CLEAR); */
 
 	m_clock_ratio = (float)clock / (float)YMF278B_STD_CLOCK;
-        m_sample_rate = rate;
+	m_sample_rate = rate;
 
 	for (i = 0; i < 24; i++)
 	{
@@ -1136,7 +1134,7 @@ int ymf278b_start(int num, UINT8 *rom, void (*irq_cb)(int, int), void (*timer_cb
 	}
 
 	//m_stream = machine().sound().stream_alloc(*this, 0, 2, clock()/768);
-	m_mix_buffer = malloc(sizeof(INT32)*48000*2);
+	m_mix_buffer = malloc(sizeof(INT32)*48000*2); // this driver only supports 44100, but set the buffersize to 48000 just incase someone uses this in their FBA settings.
 
 	// rate tables
 	precompute_rate_tables();
@@ -1160,30 +1158,30 @@ int ymf278b_start(int num, UINT8 *rom, void (*irq_cb)(int, int), void (*timer_cb
 	m_mix_level[7] = 0;
 
 	// Register state for saving
-        //register_save_state();
-        return 0;
+	//register_save_state();
+	return 0;
 }
 
 void ymf278b_scan(INT32 nAction, INT32* pnMin)
 {
     if (nAction & ACB_DRIVER_DATA) {
-        // internal state
-	SCAN_VAR(m_pcmregs);
-	SCAN_VAR(m_slots);
-	SCAN_VAR(m_wavetblhdr);
-	SCAN_VAR(m_memmode);
-	SCAN_VAR(m_memadr);
-	SCAN_VAR(m_exp);
+		// internal state - make for happy savestates -dink
+		SCAN_VAR(m_pcmregs);
+		SCAN_VAR(m_slots);
+		SCAN_VAR(m_wavetblhdr);
+		SCAN_VAR(m_memmode);
+		SCAN_VAR(m_memadr);
+		SCAN_VAR(m_exp);
 
-	SCAN_VAR(m_fm_l); SCAN_VAR(m_fm_r);
-	SCAN_VAR(m_pcm_l); SCAN_VAR(m_pcm_r);
+		SCAN_VAR(m_fm_l); SCAN_VAR(m_fm_r);
+		SCAN_VAR(m_pcm_l); SCAN_VAR(m_pcm_r);
 
-	SCAN_VAR(m_timer_a_count); SCAN_VAR(m_timer_b_count);
-	SCAN_VAR(m_enable); SCAN_VAR(m_current_irq);
-	SCAN_VAR(m_irq_line);
+		SCAN_VAR(m_timer_a_count); SCAN_VAR(m_timer_b_count);
+		SCAN_VAR(m_enable); SCAN_VAR(m_current_irq);
+		SCAN_VAR(m_irq_line);
 
-	SCAN_VAR(m_port_C); SCAN_VAR(m_port_A); SCAN_VAR(m_port_B);
-    }
+		SCAN_VAR(m_port_C); SCAN_VAR(m_port_A); SCAN_VAR(m_port_B);
+	}
 }
 
 

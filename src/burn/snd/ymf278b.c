@@ -152,9 +152,10 @@
 	//sound_stream * m_stream;
 	INT32 *m_mix_buffer;
 	//devcb2_write_line m_irq_handler;
-	void (*m_irq_handler)(int, int);
-	void (*timer_callback)(int, int, double);
+	void (*m_irq_handler)(INT32, INT32);
+	void (*timer_callback)(INT32, INT32, double);
 	float m_clock_ratio;
+	static int ymf278b_chip_in_reset = 0;
 
 void write_memory(UINT32 offset, UINT8 data)
 {
@@ -419,13 +420,12 @@ static void irq_check()
 {
 	int prev_line = m_irq_line;
 	m_irq_line = m_current_irq ? 1 : 0;
-	if (m_irq_line != prev_line && m_irq_handler)
+	if (m_irq_line != prev_line && m_irq_handler && !ymf278b_chip_in_reset)
 		m_irq_handler(0, m_irq_line);
 }
 
 int ymf278b_timer_over(int num, int timer)
 {
-	//YMF278BChip *chip = &YMF278B[num];
 	if(!(m_enable & (0x20 << timer)))
 	{
 		m_current_irq |= (0x20 << timer);
@@ -515,7 +515,8 @@ static void A_w(int num, UINT8 reg, UINT8 data)
 			//if (data != m_timer_a_count) - this breaks FBA if uncommented
 			{
 				m_timer_a_count = data;
-				ymf278b_timer_a_reset(num);
+				if (!ymf278b_chip_in_reset)
+					ymf278b_timer_a_reset(num);
 
 			}
 			break;
@@ -525,7 +526,8 @@ static void A_w(int num, UINT8 reg, UINT8 data)
 			//if (data != m_timer_b_count) - same here.
 			{
 				m_timer_b_count = data;
-				ymf278b_timer_b_reset(num);
+				if (!ymf278b_chip_in_reset)
+					ymf278b_timer_b_reset(num);
 			}
 			break;
 
@@ -538,11 +540,13 @@ static void A_w(int num, UINT8 reg, UINT8 data)
 				// reset timers
 				if((m_enable ^ data) & 1)
 				{
-					ymf278b_timer_a_reset(num);
+					if (!ymf278b_chip_in_reset)
+						ymf278b_timer_a_reset(num);
 				}
 				if((m_enable ^ data) & 2)
 				{
-					ymf278b_timer_b_reset(num);
+					if (!ymf278b_chip_in_reset)
+						ymf278b_timer_b_reset(num);
 				}
 
 				m_enable = data;
@@ -718,7 +722,7 @@ static void C_w(int num, UINT8 reg, UINT8 data)
 					slot->env_step = 4;
 					compute_envelope(slot);
 				}
-                                slot->KEY_ON = (data&0x80)>>7;
+				slot->KEY_ON = (data&0x80)>>7;
 				break;
 
 			case 5:
@@ -951,8 +955,6 @@ static void ymf278b_data_port_C_w(int num, UINT8 data)
 	C_w(num, m_port_C, data);
 }
 
-
-
 /**************************************************************************/
 
 //-------------------------------------------------
@@ -963,10 +965,12 @@ void ymf278b_reset()
 {
 	int i;
 
+	ymf278b_chip_in_reset = 1;
+	m_enable = 0; // w/o this, loading tengai then strikers ii/iii causes a hang at boot (must be above the A_w() for-loop) -dink
 	// clear registers
-	//for (i = 0; i <= 4; i++)
-        //	A_w(0, i, 0);	// causes weird errors because the cpu is not open
-							// at the time ymf278b_reset() is called and A_w() accesses the timer.
+	for (i = 0; i <= 4; i++)
+		A_w(0, i, 0);
+
 	B_w(0, 5, 0);
 	for (i = 0; i < 8; i++)
 		C_w(0, i, 0);
@@ -1001,7 +1005,7 @@ void ymf278b_reset()
 		compute_envelope(slot);
 	}
 
-//	ymf278b_timer_a_reset(0); - not necessary -dink
+//	ymf278b_timer_a_reset(0); - these are reset in burn_ymf278b.cpp -dink
 //	ymf278b_timer_b_reset(0); ""
 	//m_timer_a->reset();
 	//m_timer_b->reset();
@@ -1010,8 +1014,9 @@ void ymf278b_reset()
 
 	m_irq_line = 0;
 	m_current_irq = 0;
-//	if (m_irq_handler) - not necessary -dink
-//		m_irq_handler(0, 0);
+	//if (m_irq_handler)
+	//    m_irq_handler(0, 0);
+	ymf278b_chip_in_reset = 0;
 }
 
 static void precompute_rate_tables()
@@ -1109,7 +1114,7 @@ static void precompute_rate_tables()
 //  device_start - device-specific startup
 //-------------------------------------------------
 
-int ymf278b_start(int num, UINT8 *rom, void (*irq_cb)(int, int), void (*timer_cb)(int, int, double), int clock, int rate)
+int ymf278b_start(int num, UINT8 *rom, void (*irq_cb)(INT32, INT32), void (*timer_cb)(INT32, INT32, double), int clock, int rate)
 {
 	int i;
 
@@ -1156,6 +1161,7 @@ int ymf278b_start(int num, UINT8 *rom, void (*irq_cb)(int, int), void (*timer_cb
 	for(i=0; i<7; i++)
 		m_mix_level[i] = m_volume[8*i+13];
 	m_mix_level[7] = 0;
+        ymf278b_chip_in_reset = 0;
 
 	// Register state for saving
 	//register_save_state();
@@ -1207,10 +1213,10 @@ void ymf278b_device::device_config_complete()
 */
 void YMF278B_sh_stop( void )
 {
-    if(m_mix_buffer) {
-        free(m_mix_buffer);
-        m_mix_buffer = NULL;
-    }
+	if(m_mix_buffer) {
+		free(m_mix_buffer);
+		m_mix_buffer = NULL;
+	}
 }
 
 READ8_HANDLER( YMF278B_status_port_0_r )

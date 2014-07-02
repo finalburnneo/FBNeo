@@ -567,7 +567,7 @@ static void OnActivateApp(HWND hwnd, BOOL fActivate, DWORD /* dwThreadId */)
 
 static void PausedRedraw(void)
 {
-    if (bVidOkay && (bRunPause || !bDrvOkay)) { // Show the message even if paused. - dink
+    if (bVidOkay && (bRunPause && bDrvOkay)) { // Show the message even if paused. - dink
         INT16 *pBtemp = pBurnSoundOut;
         pBurnSoundOut = NULL; // Mute the sound as VidRedraw() draws the frame
 

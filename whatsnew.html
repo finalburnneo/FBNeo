@@ -116,6 +116,9 @@
 <li>Ported VLM5030 sound core from MAME [iq_132]</li>
 <li>Added support for new modules to debug tracking [Barry]</li>
 <li>Fixed interpolation for the YM2203 interface [Barry, dink]</li>
+<li>Fixed a pointer overwrite issue in the M68K driver on savestate load [dink]</li>
+<li>Fixed blank game screen when the system returns from Hibernation [dink]</li>
+<li>Fixed loss of Music &amp; SFX on savestate load with games using the YM2151 sound chip [dink]</li>
 <li>Fixed savestates with multiple chips and fix for setting singular channel volume in K007232 core [dink, iq_132]</li>
 <li>Fixed savestates in Irem GA20 sound core [iq_132]</li>
 <li>Fixed bug in generic sprite zoom drawing routines [iq_132]</li>
@@ -132,6 +135,11 @@
 <li>Added driver for Wyvern F-0 [iq_132]</li>
 <li>Added driver for Xain'd Sleena/Solar Warrior [iq_132]</li>
 <li>Added driver for Exzisus (Taito) [iq_132]</li>
+<li>Added driver for Ninja-Kid II, Mutant Night, Ark Area, Atomic Robo-kid, Omega Fighter &amp; Omega Fighter Special on UPL Hardware [iq_132]</li>
+<li>Added TLCS90 CPU Core [iq_132]</li>
+<li>Hooked-up the TLCS90 audiocpu core to Arcadian/Rapid Hero enabling Music &amp; SFX [iq_132]</li>
+<li>Enable stereo Music &amp; SFX in Thunder Cross 2 by default (delete your old config/games/thndrx2.nv, if available) [iq_132 &amp; dink]</li>
+<li>Updated the protection emulation for Uballoon and Alien Challenge [iq_132]</li>
 <li>Added Crouching Poney Hidden Dragon (DEMO) (Le Cortex) to the Neo Geo driver [iq_132, JacKc]</li>
 <li>Added Dolem to the NMK16 driver [iq_132]</li>
 <li>Fixed PCB version of Spectral vs Generation [iq_132, rtw, David Haywood]</li>
@@ -216,11 +224,14 @@
 <li>Added clone of Racing Beat to the Taito Z driver [JacKc, ShouTime]</li>
 <li>Added two bootlegs of World Cup '90 to the driver [JacKc, any]</li>
 <li>Added clone of Zero Wing to the driver [JacKc, System11, The Dumping Union]</li>
+<li>Added clone of Double Dragon II - The Revenge (bootleg) to the Double Dragon driver [Barry]</li>
 <li>Fixed crash in Oriental Legends Super intro [iq_132]</li>
 <li>Updates to PGM protection routines [iq_132, rockywall, Creamy Mami, JackC, iq_132]</li>
 <li>Various PGM updates/fixes [iq_132]</li>
 <li>CPS-3 sound updates [iq_132, Captain CPS-X]</li>
 <li>Various sound clipping fixes [dink]</li>
+<li>Updated the YMF278b soundchip driver, notably improving the Music &amp; SFX in Tengai [dink]</li>
+<li>Small update to FM.C sine initialization table improves the clarity of some FM sound emulations [dink]</li>
 <li>Fixed clipping/distortion with PCM sample playback in Enduro Racer [dink]</li>
 <li>Moved the YM2608 internal ROM to an external file (ym2608.zip) [Barry]</li>
 <li>PC Engine update [iq_132]</li>
@@ -235,11 +246,11 @@
 <li>Fixed stuck noise at the end of short samples in games that use the Toaplan samples hack. FireShark, SameSameSame!, Ghox, Vimana and TekiPaki [dink]</li>
 <li>Fixed Toaplan samples hack and savestates, and added loading samples status [dink]</li>
 <li>SFX lost after savestate load in NMK004 games, Super Spacefortress Macross and possibly others [dink]</li>
-<li>Probable fix for Toaplans Fixeight hang on savestate load [dink]</li>
+<li>Probable fix for Toaplans FixEight hang on savestate load [dink]</li>
 <li>Various NMK16 fixes [dink]</li>
 <li>Fixed crash on savestate load for Visco/Taito Galmedes [dink]</li>
 <li>New gun rotation method for Heavy Barrel and Midnight Resistance &amp; fix for Heavy Barrel level transistion after level 2 [dink]</li>
-<li>Fixed SN76496 savestates [dink]</li>
+<li>Fixed savestates for games that use the SN76496 soundchip [dink]</li>
 <li>Fixed savestates for Pacman S2650 games [dink]</li>
 <li>Fixed savestate load crash and sound/music volume in The New Zealand Story new pcb [dink]</li>
 <li>Fixed speed issue in Contra [dink]</li>

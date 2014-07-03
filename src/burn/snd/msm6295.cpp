@@ -19,6 +19,7 @@ struct MSM6295ChannelInfo {
 	INT32 nDelta;
 
 	INT32 nBufPos;
+	INT32 nPlaying;
 };
 
 static struct {
@@ -63,6 +64,8 @@ void MSM6295Reset(INT32 nChip)
 	MSM6295[nChip].nFractionalPosition = 0;
 
 	for (INT32 nChannel = 0; nChannel < 4; nChannel++) {
+		MSM6295[nChip].ChannelInfo[nChannel].nPlaying = 0;
+
 		// Set initial bank information
 		MSM6295SampleInfo[nChip][nChannel] = MSM6295ROM + (nChip * 0x0100000) + (nChannel << 8);
 		MSM6295SampleData[nChip][nChannel] = MSM6295ROM + (nChip * 0x0100000) + (nChannel << 16);
@@ -86,6 +89,8 @@ INT32 MSM6295Scan(INT32 nChip, INT32 /*nAction*/)
 	SCAN_VAR(nMSM6295Status[nChip]);
 
 	for (INT32 i = 0; i < 4; i++) {
+		SCAN_VAR(MSM6295[nChip].ChannelInfo[i].nPlaying);
+
 		MSM6295SampleInfo[nChip][i] -= (uintptr_t)MSM6295ROM;
 		SCAN_VAR(MSM6295SampleInfo[nChip][i]);
 		MSM6295SampleInfo[nChip][i] += (uintptr_t)MSM6295ROM;
@@ -122,6 +127,7 @@ static void MSM6295Render_Linear(INT32 nChip, INT32* pLeftBuf, INT32 *pRightBuf,
 						// Check for end of sample
 						if (pChannelInfo->nSampleCount-- == 0) {
 							nMSM6295Status[nChip] &= ~(1 << nChannel);
+							MSM6295[nChip].ChannelInfo[nChannel].nPlaying = 0;
 							continue;
 						}
 
@@ -210,6 +216,7 @@ static void MSM6295Render_Cubic(INT32 nChip, INT32* pLeftBuf, INT32 *pRightBuf, 
 					if (pChannelInfo->nSampleCount-- <= 0) {
 						if (pChannelInfo->nSampleCount <= -2) {
 							nMSM6295Status[nChip] &= ~(1 << nChannel);
+							MSM6295[nChip].ChannelInfo[nChannel].nPlaying = 0;
 						}
 
 						MSM6295ChannelData[nChip][nChannel][pChannelInfo->nBufPos++] = pChannelInfo->nOutput / 16;
@@ -356,43 +363,46 @@ void MSM6295Command(INT32 nChip, UINT8 nCommand)
 
 		for (nChannel = 0; nChannel < 4; nChannel++) {
 			if (nCommand & (0x01 << nChannel)) {
-				INT32 nBank = (MSM6295[nChip].nSampleInfo & 0x0300) >> 8;
-				MSM6295[nChip].nSampleInfo &= 0xFF;
+				if (MSM6295[nChip].ChannelInfo[nChannel].nPlaying == 0) {
 
-				nSampleStart = MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 0];
-				nSampleStart <<= 8;
-				nSampleStart |= MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 1];
-				nSampleStart <<= 8;
-				nSampleStart |= MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 2];
-				nSampleStart <<= 1;
+					INT32 nBank = (MSM6295[nChip].nSampleInfo & 0x0300) >> 8;
+					MSM6295[nChip].nSampleInfo &= 0xFF;
 
-				nSampleCount = MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 3];
-				nSampleCount <<= 8;
-				nSampleCount |= MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 4];
-				nSampleCount <<= 8;
-				nSampleCount |= MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 5];
-				nSampleCount <<= 1;
+					nSampleStart = MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 0];
+					nSampleStart <<= 8;
+					nSampleStart |= MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 1];
+					nSampleStart <<= 8;
+					nSampleStart |= MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 2];
+					nSampleStart <<= 1;
 
-				if (nSampleCount < 0x80000) {
-					nSampleCount -= nSampleStart;
+					nSampleCount = MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 3];
+					nSampleCount <<= 8;
+					nSampleCount |= MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 4];
+					nSampleCount <<= 8;
+					nSampleCount |= MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 5];
+					nSampleCount <<= 1;
 
-					// Start playing channel
-					MSM6295[nChip].ChannelInfo[nChannel].nVolume = MSM6295VolumeTable[nVolume];
-					MSM6295[nChip].ChannelInfo[nChannel].nPosition = nSampleStart;
-					MSM6295[nChip].ChannelInfo[nChannel].nSampleCount = nSampleCount;
-					MSM6295[nChip].ChannelInfo[nChannel].nStep = 0;
-					MSM6295[nChip].ChannelInfo[nChannel].nSample = -1;
+					if (nSampleCount < 0x80000) {
+						nSampleCount -= nSampleStart;
 
-					MSM6295[nChip].ChannelInfo[nChannel].nOutput = 0;
+						// Start playing channel
+						MSM6295[nChip].ChannelInfo[nChannel].nVolume = MSM6295VolumeTable[nVolume];
+						MSM6295[nChip].ChannelInfo[nChannel].nPosition = nSampleStart;
+						MSM6295[nChip].ChannelInfo[nChannel].nSampleCount = nSampleCount;
+						MSM6295[nChip].ChannelInfo[nChannel].nStep = 0;
+						MSM6295[nChip].ChannelInfo[nChannel].nSample = -1;
+						MSM6295[nChip].ChannelInfo[nChannel].nPlaying = 1;
+						MSM6295[nChip].ChannelInfo[nChannel].nOutput = 0;
 
-					nMSM6295Status[nChip] |= nCommand;
+						nMSM6295Status[nChip] |= nCommand;
 
-					if (nInterpolation >= 3) {
-						MSM6295ChannelData[nChip][nChannel][0] = 0;
-						MSM6295ChannelData[nChip][nChannel][1] = 0;
-						MSM6295ChannelData[nChip][nChannel][2] = 0;
-						MSM6295ChannelData[nChip][nChannel][3] = 0;
-						MSM6295[nChip].ChannelInfo[nChannel].nBufPos = 4;
+						if (nInterpolation >= 3) {
+							MSM6295ChannelData[nChip][nChannel][0] = 0;
+							MSM6295ChannelData[nChip][nChannel][1] = 0;
+							MSM6295ChannelData[nChip][nChannel][2] = 0;
+							MSM6295ChannelData[nChip][nChannel][3] = 0;
+							MSM6295[nChip].ChannelInfo[nChannel].nBufPos = 4;
+						}
 					}
 				}
 			}
@@ -405,8 +415,15 @@ void MSM6295Command(INT32 nChip, UINT8 nCommand)
 			MSM6295[nChip].bIsCommand = true;
 		} else {
 			// Stop playing samples
+			INT32 nChannel;
 			nCommand >>= 3;
 			nMSM6295Status[nChip] &= ~nCommand;
+
+			for (nChannel = 0; nChannel < 4; nChannel++, nCommand>>=1) {
+				if (nCommand & 1) {
+					MSM6295[nChip].ChannelInfo[nChannel].nPlaying = 0;
+				}
+			}
 		}
 	}
 }

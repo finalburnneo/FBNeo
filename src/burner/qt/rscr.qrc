@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resource/splash.bmp</file>
+        <file>resource/tv-not-working.ico</file>
+        <file>resource/tv-not-found.ico</file>
+        <file>resource/tv-not-found-non-essential.ico</file>
+        <file>resource/misc.bmp</file>
+        <file>resource/about.bmp</file>
+        <file>resource/license.txt</file>
+    </qresource>
+</RCC>

@@ -1,6 +1,6 @@
 // FB Alpha - Emulator for MC68000/Z80 based arcade games
 //            Refer to the "license.txt" file for more info
-
+#pragma once
 #include <limits.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -17,7 +17,11 @@
 #define MAKE_STRING(s) MAKE_STRING_2(s)
 
 #define BZIP_MAX (20)								// Maximum zip files to search through
-#define DIRS_MAX (20)								// Maximum number of directories to search
+#if defined (BUILD_QT)
+ #define DIRS_MAX (4)								// Maximum number of directories to search
+#else
+ #define DIRS_MAX (20)								// Maximum number of directories to search
+#endif
 
 #include "title.h"
 #include "burn.h"
@@ -42,6 +46,8 @@ typedef struct tagIMAGE {
  #include "burner_xbox.h"
 #elif defined(__LIBRETRO__)
 #include "burner_libretro.h"
+#elif defined(BUILD_QT)
+ #include "burner_qt.h"
 #endif
 
 #if defined (INCLUDE_LIB_PNGH)

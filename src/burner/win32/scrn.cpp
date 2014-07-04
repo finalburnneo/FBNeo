@@ -565,9 +565,11 @@ static void OnActivateApp(HWND hwnd, BOOL fActivate, DWORD /* dwThreadId */)
 	}
 }
 
+extern HWND hSelDlg;
+
 static void PausedRedraw(void)
 {
-    if (bVidOkay && (bRunPause && bDrvOkay)) { // Show the message even if paused. - dink
+    if (bVidOkay && bRunPause && bDrvOkay && (hSelDlg == NULL)) { // Redraw the screen to show certain messages while paused. - dink
         INT16 *pBtemp = pBurnSoundOut;
         pBurnSoundOut = NULL; // Mute the sound as VidRedraw() draws the frame
 

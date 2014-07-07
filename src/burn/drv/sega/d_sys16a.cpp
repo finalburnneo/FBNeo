@@ -1617,12 +1617,40 @@ static struct BurnRomInfo SdiRomDesc[] = {
 
 	{ "epr-10759.12",  0x08000, 0xd7f9649f, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
-	{ "317-0027.key",  0x02000, 0x9a5307b2, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0027.key",  0x02000, 0x6f022730, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
 };
 
 
 STD_ROM_PICK(Sdi)
 STD_ROM_FN(Sdi)
+
+static struct BurnRomInfo SdiaRomDesc[] = {
+	{ "epr-10881.43",  0x08000, 0x3455a6a0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10879.26",  0x08000, 0x3ec416de, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10882.42",  0x08000, 0xf2ac1cec, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10880.25",  0x08000, 0x67e088a2, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10755.41",  0x08000, 0x405e3969, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10752.24",  0x08000, 0x77453740, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-10756.95",  0x10000, 0x44d8a506, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10757.94",  0x10000, 0x497e1740, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10758.93",  0x10000, 0x61d61486, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr-10760.10",  0x10000, 0x30e2c50a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10763.11",  0x10000, 0x794e3e8b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10761.17",  0x10000, 0x6a8b3fd0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10764.18",  0x10000, 0x602da5d5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10762.23",  0x10000, 0xb9de3aeb, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10765.24",  0x10000, 0x0a73a057, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-10759.12",  0x08000, 0xd7f9649f, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "317-0027.key",  0x02000, 0x6f022730, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Sdia)
+STD_ROM_FN(Sdia)
 
 static struct BurnRomInfo ShinobiRomDesc[] = {
 	{ "epr-12010.43",  0x10000, 0x7df7f4a2, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -3187,10 +3215,20 @@ struct BurnDriver BurnDrvQuartet2a = {
 
 struct BurnDriver BurnDrvSdi = {
 	"sdi", NULL, NULL, NULL, "1987",
-	"SDI - Strategic Defense Initiative (Japan, old, System 16A, FD1089B 317-0027)\0", NULL, "Sega", "System 16A",
+	"SDI - Strategic Defense Initiative (Japan, newer, System 16A, FD1089B 317-0027)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089B_ENC, GBF_SHOOT, 0,
 	NULL, SdiRomInfo, SdiRomName, NULL, NULL, SdiInputInfo, SdiDIPInfo,
+	SdiInit, SdiExit, System16AFrame, NULL, SdiScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvSdia = {
+	"sdia", "sdi", NULL, NULL, "1987",
+	"SDI - Strategic Defense Initiative (Japan, old, System 16A, FD1089B 317-0027)\0", NULL, "Sega", "System 16A",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089B_ENC, GBF_SHOOT, 0,
+	NULL, SdiaRomInfo, SdiaRomName, NULL, NULL, SdiInputInfo, SdiDIPInfo,
 	SdiInit, SdiExit, System16AFrame, NULL, SdiScan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

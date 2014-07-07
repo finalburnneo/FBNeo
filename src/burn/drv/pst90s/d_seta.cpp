@@ -8105,16 +8105,7 @@ static INT32 eightfrcInit()
 	if (nRet == 0) {
 		// Update sample length to include the banked section that was skipped (0xc0000 - 0xfffff)
 		DrvROMLen[3] = 0x240000;
-
-            //memcpy (DrvSndROM + 0x100000, DrvSndROM + 0x0c0000, 0x140000); // sound banks
-            //this don't work, must do below (as ugly as it is)
-
-		char *pt = (char *)BurnMalloc(0x200000);
-		memset(pt, 0, 0x200000);
-		memcpy(pt, DrvSndROM + 0x0c0000, 0x140000);
-		memcpy(DrvSndROM + 0x100000, pt, 0x140000);
-		BurnFree(pt);
-
+		memmove(DrvSndROM + 0x100000, DrvSndROM + 0x0c0000, 0x140000); // sound banks (memcpy fails because of overlap!)
 	}
 
 	return nRet;

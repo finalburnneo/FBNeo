@@ -2603,7 +2603,7 @@ STD_ROM_FN(dbreedm72)
 
 static INT32 dbreedm72RomLoadCallback()
 {
-	memcpy (DrvV30ROM + 0x60000, DrvV30ROM + 0x40000, 0x20000);
+	memmove(DrvV30ROM + 0x60000, DrvV30ROM + 0x40000, 0x20000);
 
 	return 0;
 }
@@ -2879,7 +2879,7 @@ STD_ROM_FN(imgfight)
 
 static INT32 imgfightRomLoadCallback()
 {
-	memcpy (DrvV30ROM + 0x40000, DrvV30ROM + 0x20000, 0x40000);
+	memmove(DrvV30ROM + 0x40000, DrvV30ROM + 0x20000, 0x40000);
 
 	return 0;
 }

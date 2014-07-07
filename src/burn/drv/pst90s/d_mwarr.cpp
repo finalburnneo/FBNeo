@@ -576,7 +576,7 @@ static INT32 MwarrInit()
 	return 0;
 }
 
-static INT32 CommonInit(INT32 select)
+static INT32 CommonInit(INT32 select, INT32 xoffset)
 {
 	game_select = select;
 
@@ -642,7 +642,7 @@ static INT32 CommonInit(INT32 select)
 
 	EEPROMInit(&eeprom_interface_93C46);
 
-	global_x_offset = 8;
+	global_x_offset = xoffset;
 
 	GenericTilesInit();
 
@@ -653,12 +653,12 @@ static INT32 CommonInit(INT32 select)
 
 static INT32 StlforceInit()
 {
-	return CommonInit(1);
+	return CommonInit(1, 8);
 }
 
 static INT32 TwinbratInit()
 {
-	return CommonInit(2);
+	return CommonInit(2, 24);
 }
 
 static INT32 DrvExit()

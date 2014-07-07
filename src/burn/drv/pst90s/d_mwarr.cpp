@@ -1198,7 +1198,7 @@ struct BurnDriverD BurnDrvTwinbrat = {
 
 // Twin Brats (set 2)
 
-static struct BurnRomInfo twinbrtaRomDesc[] = {
+static struct BurnRomInfo twinbrataRomDesc[] = {
 	{ "2.bin",		0x20000, 0x5e75f568, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "3.bin",		0x20000, 0x0e3fa9b0, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -1217,15 +1217,15 @@ static struct BurnRomInfo twinbrtaRomDesc[] = {
 	{ "eeprom-twinbrat.bin", 0x0080, 0x9366263d, 5 | BRF_PRG | BRF_ESS }, // 11 Default Eeprom
 };
 
-STD_ROM_PICK(twinbrta)
-STD_ROM_FN(twinbrta)
+STD_ROM_PICK(twinbrata)
+STD_ROM_FN(twinbrata)
 
-struct BurnDriverD BurnDrvTwinbrta = {
-	"twinbrta", "twinbrat", NULL, NULL, "1995",
+struct BurnDriverD BurnDrvTwinbrata = {
+	"twinbrata", "twinbrat", NULL, NULL, "1995",
 	"Twin Brats (set 2)\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, twinbrtaRomInfo, twinbrtaRomName, NULL, NULL, DrvInputInfo, NULL,
+	NULL, twinbrataRomInfo, twinbrataRomName, NULL, NULL, DrvInputInfo, NULL,
 	TwinbratInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	336, 240, 4, 3
 };

@@ -13520,7 +13520,13 @@ struct BurnDriver BurnDrvkof97xt = {
 // The King of Fighters '98 (Anniversary Edition, EGHT hack)
 
 static struct BurnRomInfo kof98aeRomDesc[] = {
-	{ "242-p1ae.bin", 0x100000, 0xc9188c66, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+// Rom information
+/* 
+242-p1ae.bin c9188c66 : original P1
+242-p1ae.bin 23a80b3e : kensou 2624+BD bug[by mhloveke520]
+*/
+//	{ "242-p1ae.bin", 0x100000, 0xc9188c66, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "242-p1ae.bin", 0x100000, 0x23a80b3e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
 	{ "242-p2ae.bin", 0x600000, 0x609fac6b, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "242-s1ae.bin", 0x020000, 0xf1fee5c0, 2 | BRF_GRA },           //  2 Text layer tiles

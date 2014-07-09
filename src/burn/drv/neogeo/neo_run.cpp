@@ -4842,7 +4842,9 @@ INT32 NeoFrame()
 	
 	nCycles68KSync = SekTotalCycles();
 	BurnTimerEndFrame(nCyclesTotal[1]);
-	BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) {
+		BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
+	}
 	
 	// Update the uPD4990 until the end of the frame
 	uPD4990AUpdate(SekTotalCycles() - nuPD4990ATicks);
@@ -4869,7 +4871,9 @@ INT32 NeoFrame()
 		}
 	}
 
-	CDEmuGetSoundBuffer(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) {
+		CDEmuGetSoundBuffer(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	return 0;
 }

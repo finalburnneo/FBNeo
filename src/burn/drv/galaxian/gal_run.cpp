@@ -1773,14 +1773,16 @@ INT32 GalFrame()
 		}
 		
 		if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_RACKNROLSN76496 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HEXPOOLASN76496) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_RACKNROLSN76496) {
-				SN76496Update(1, pSoundBuf, nSegmentLength);
-				SN76496Update(2, pSoundBuf, nSegmentLength);
+			if (pBurnSoundOut) {
+				INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+				SN76496Update(0, pSoundBuf, nSegmentLength);
+				if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_RACKNROLSN76496) {
+					SN76496Update(1, pSoundBuf, nSegmentLength);
+					SN76496Update(2, pSoundBuf, nSegmentLength);
+				}
+				nSoundBufferPos += nSegmentLength;
 			}
-			nSoundBufferPos += nSegmentLength;
 		}
 	}
 	
@@ -1845,14 +1847,16 @@ INT32 GalFrame()
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_RACKNROLSN76496 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HEXPOOLASN76496) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
-		if (nSegmentLength) {
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_RACKNROLSN76496) {
-				SN76496Update(1, pSoundBuf, nSegmentLength);
-				SN76496Update(2, pSoundBuf, nSegmentLength);
+			if (nSegmentLength) {
+				SN76496Update(0, pSoundBuf, nSegmentLength);
+				if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_RACKNROLSN76496) {
+					SN76496Update(1, pSoundBuf, nSegmentLength);
+					SN76496Update(2, pSoundBuf, nSegmentLength);
+				}
 			}
 		}
 	}

@@ -922,7 +922,9 @@ static INT32 DrvFrame()
 	Sh2SetIRQLine(4, SH2_IRQSTATUS_AUTO);
 	Sh2Run(0);
 	Sh2SetIRQLine(4, SH2_IRQSTATUS_NONE);
-	BurnYMF278BUpdate(nBurnSoundLen);
+	if (pBurnSoundOut) {
+		BurnYMF278BUpdate(nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		DrvDraw();

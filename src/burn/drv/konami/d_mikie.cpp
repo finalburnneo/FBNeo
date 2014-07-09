@@ -562,9 +562,11 @@ static INT32 DrvFrame()
 	ZetClose();
 	M6809Close();
 	
-	SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
-	SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
-
+	if (pBurnSoundOut) {
+		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
+		SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
+	}
+	
 	if (pBurnDraw) {
 		DrvDraw();
 	}

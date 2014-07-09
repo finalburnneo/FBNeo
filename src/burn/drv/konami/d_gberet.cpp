@@ -920,10 +920,12 @@ static INT32 DrvFrame()
 		if (nmi_enable && (i & 1)) {
 			ZetNmi();
 		}
-		INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		SN76496Update(0, pSoundBuf, nSegmentLength);
-		nSoundBufferPos += nSegmentLength;
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			SN76496Update(0, pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	ZetClose();

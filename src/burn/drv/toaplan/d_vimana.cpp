@@ -818,10 +818,12 @@ static INT32 DrvFrame()
 //	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 //	BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	
-	BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) {
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 #ifdef TOAPLAN_SOUND_SAMPLES_HACK
-	ESEFadeout();
+		ESEFadeout();
 #endif
+	}
 
 	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];
 

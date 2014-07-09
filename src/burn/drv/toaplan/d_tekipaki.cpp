@@ -716,7 +716,9 @@ static INT32 DrvFrame()
 
 	}
 	
-	BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) {
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	SekClose();
 

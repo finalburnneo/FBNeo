@@ -728,7 +728,9 @@ static INT32 DrvFrame()
 
 	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];
 	
-	BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) {
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+	}
 
 //	bprintf(PRINT_NORMAL, _T("    %i\n"), nCyclesDone[0]);
 

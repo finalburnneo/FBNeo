@@ -936,22 +936,23 @@ static INT32 DrvFrame()
 //	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 //	BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 
-	BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) {
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 #ifdef TOAPLAN_SOUND_SAMPLES_HACK
-	if (Start > 0) Wait++;
+		if (Start > 0) Wait++;
 	
-	if (Wait >= (108 + Start2)) {
-		StopSamplesChannel0();
-		SetVolumeSamplesChannel0(1.00);
-		BurnSamplePlay(0x07);
-		Start = 0;
-		Start2 = 1;
-		Wait = 0;
-	}
+		if (Wait >= (108 + Start2)) {
+			StopSamplesChannel0();
+			SetVolumeSamplesChannel0(1.00);
+			BurnSamplePlay(0x07);
+			Start = 0;
+			Start2 = 1;
+			Wait = 0;
+		}
 	
-	if (Start2 == 0) ESEFadeout2();
+		if (Start2 == 0) ESEFadeout2();
 #endif
-
+	}
 	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];
 
 //	bprintf(PRINT_NORMAL, _T("    %i\n"), nCyclesDone[0]);

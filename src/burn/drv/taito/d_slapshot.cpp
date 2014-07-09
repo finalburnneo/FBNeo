@@ -819,7 +819,9 @@ static INT32 SlapshotFrame()
 	
 	ZetOpen(0);
 	BurnTimerEndFrame(nTaitoCyclesTotal[1]);
-	BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) {
+		BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
+	}
 	ZetClose();
 	
 	TaitoF2HandleSpriteBuffering();

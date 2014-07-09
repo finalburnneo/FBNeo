@@ -1096,7 +1096,9 @@ static INT32 OthunderFrame()
 	
 	ZetOpen(0);
 	BurnTimerEndFrame(nTaitoCyclesTotal[1]);
-	BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) {
+		BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
+	}
 	ZetClose();
 	
 	if (pBurnDraw) TaitoDrawFunction();

@@ -891,7 +891,9 @@ static INT32 DrvFrame()
 	
 	ZetOpen(1);
 	BurnTimerEndFrame(nCyclesTotal[1]);
-	BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) {
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+	}
 	ZetClose();
 
 	if (pBurnDraw) {

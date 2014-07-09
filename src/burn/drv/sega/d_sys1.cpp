@@ -4984,11 +4984,13 @@ INT32 System1Frame()
 		if (i == 2 || i == 4 || i == 6 || i == 8) ZetRaiseIrq(0);
 		ZetClose();
 		
-		INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		SN76496Update(0, pSoundBuf, nSegmentLength);
-		SN76496Update(1, pSoundBuf, nSegmentLength);
-		nSoundBufferPos += nSegmentLength;
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			SN76496Update(0, pSoundBuf, nSegmentLength);
+			SN76496Update(1, pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 	
 	// Make sure the buffer is entirely filled.

@@ -30,6 +30,8 @@ HWND hRebar = NULL;										// Handle to the Rebar control containing the menu
 static bool bMaximised;
 static int nPrevWidth, nPrevHeight;
 
+static int bBackFromHibernation = 0;
+
 #define ID_NETCHAT 999
 HWND hwndChat = NULL;
 WNDPROC pOldWndProc = NULL;
@@ -368,7 +370,14 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 			}
 			break;
 		}
-
+		// - dink - handle return from Hibernation
+		case WM_POWERBROADCAST: {
+			if (wParam == PBT_APMRESUMESUSPEND || wParam == PBT_APMSUSPEND) {
+				bBackFromHibernation = 1;
+			}
+			break;
+		}
+		// - dink - end
 		HANDLE_MSG(hWnd, WM_SIZE,			OnSize);
 		HANDLE_MSG(hWnd, WM_ENTERSIZEMOVE,	OnEnterSizeMove);
 		HANDLE_MSG(hWnd, WM_EXITSIZEMOVE,	OnExitSizeMove);
@@ -585,7 +594,11 @@ static void OnPaint(HWND hWnd)
 	if (hWnd == hScrnWnd) 
 	{
 		VidPaint(1);
-		PausedRedraw(); // redraw game screen if paused and returning from hibernation - dink
+
+		if (bBackFromHibernation) {
+			PausedRedraw(); // redraw game screen if paused and returning from hibernation - dink
+			bBackFromHibernation = 0;
+		}
 
 		// draw menu
 		if (!nVidFullscreen) {

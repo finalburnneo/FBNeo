@@ -26,6 +26,7 @@ static UINT8 *System1SpriteRam       = NULL;
 static UINT8 *System1PaletteRam      = NULL;
 static UINT8 *System1BgRam           = NULL;
 static UINT8 *System1VideoRam        = NULL;
+static UINT8 *System1ScrollXRam      = NULL;
 static UINT8 *System1BgCollisionRam  = NULL;
 static UINT8 *System1SprCollisionRam = NULL;
 static UINT8 *System1deRam           = NULL;
@@ -40,7 +41,12 @@ static UINT8 *SpriteOnScreenMap      = NULL;
 static UINT8 *System1Fetch1          = NULL;
 static UINT8 *System1MC8123Key       = NULL;
 static UINT32 *System1TilesPenUsage  = NULL;
-
+// for vbt's choplifter driver
+static UINT8 choplifter_scroll_x_on  = 0;
+static INT32  System1BankSwitch;
+static UINT8  System1BgBankLatch;
+//static UINT8  System1BgBank;
+// end choplifter
 static UINT8  System1ScrollX[2];
 static UINT8  System1ScrollY;
 static INT32  System1BgScrollX;
@@ -271,6 +277,36 @@ static struct BurnInputInfo WmatchInputList[] = {
 };
 
 STDINPUTINFO(Wmatch)
+
+static struct BurnInputInfo ChplftbInputList[] = {
+	{"Coin 1"            , BIT_DIGITAL  , System1InputPort2 + 0, "p1 coin"   },
+	{"Start 1"           , BIT_DIGITAL  , System1InputPort2 + 4, "p1 start"  },
+	{"Coin 2"            , BIT_DIGITAL  , System1InputPort2 + 1, "p2 coin"   },
+	{"Start 2"           , BIT_DIGITAL  , System1InputPort2 + 5, "p2 start"  },
+
+	{"P1 Up"             , BIT_DIGITAL  , System1InputPort0 + 5, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL  , System1InputPort0 + 4, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL  , System1InputPort0 + 7, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL  , System1InputPort0 + 6, "p1 right"  },
+	{"P1 Fire 1"         , BIT_DIGITAL  , System1InputPort0 + 1, "p1 fire 1" },
+	{"P1 Fire 2"         , BIT_DIGITAL  , System1InputPort0 + 2, "p1 fire 2" },
+
+	{"P2 Up"             , BIT_DIGITAL  , System1InputPort1 + 5, "p2 up"     },
+	{"P2 Down"           , BIT_DIGITAL  , System1InputPort1 + 4, "p2 down"   },
+	{"P2 Left"           , BIT_DIGITAL  , System1InputPort1 + 7, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL  , System1InputPort1 + 6, "p2 right"  },
+	{"P2 Fire 1"         , BIT_DIGITAL  , System1InputPort1 + 1, "p2 fire 1" },
+	{"P2 Fire 2"         , BIT_DIGITAL  , System1InputPort1 + 2, "p2 fire 2" },
+
+	{"Reset"             , BIT_DIGITAL  , &System1Reset        , "reset"     },
+	{"Service"           , BIT_DIGITAL  , System1InputPort2 + 3, "service"   },
+	{"Test"              , BIT_DIGITAL  , System1InputPort2 + 2, "diag"      },
+	{"Dip 1"             , BIT_DIPSWITCH, System1Dip + 0       , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH, System1Dip + 1       , "dip"       },
+
+};
+
+STDINPUTINFO(Chplftb)
 
 inline void System1ClearOpposites(UINT8* nJoystickInputs)
 {
@@ -1419,6 +1455,50 @@ static struct BurnDIPInfo WmatchDIPList[]=
 };
 
 STDDIPINFO(Wmatch)
+
+static struct BurnDIPInfo ChplftbDIPList[]=
+{
+   // Default Values
+   {0x13, 0xff, 0xff, 0xbe, NULL                     },
+   {0x14, 0xff, 0xff, 0xff, NULL                     },
+
+   // Dip 1
+   {0   , 0xfe, 0   , 2   , "Cabinet"                },
+   {0x13, 0x01, 0x01, 0x00, "Upright"                },
+   {0x13, 0x01, 0x01, 0x01, "Cocktail"               },
+   
+   {0   , 0xfe, 0   , 4   , "Lives"                  },
+   {0x13, 0x01, 0x0c, 0x04, "3"                      },
+   {0x13, 0x01, 0x0c, 0x0c, "4"                      },
+   {0x13, 0x01, 0x06, 0x08, "5"                      },
+
+   {0   , 0xfe, 0   , 2   , "Demo Sounds"            },
+   {0x13, 0x01, 0x40, 0x40, "Off"                    },
+   {0x13, 0x01, 0x40, 0x00, "On"                     },
+   
+   // Dip 2
+   {0   , 0xfe, 0   , 8   , "Coinage"                },
+   {0x14, 0x01, 0x07, 0x04, "4 Coins 1 Credit"       },
+   {0x14, 0x01, 0x07, 0x05, "3 Coins 1 Credit"       },
+   {0x14, 0x01, 0x07, 0x00, "4 Coins 2 Credits"      },
+   {0x14, 0x01, 0x07, 0x06, "2 Coins 1 Credit"       },
+   {0x14, 0x01, 0x07, 0x01, "3 Coins 2 Credits"      },
+   {0x14, 0x01, 0x07, 0x02, "2 Coins 1 Credits"      },
+   {0x14, 0x01, 0x07, 0x07, "1 Coin  1 Credit"       },
+   {0x14, 0x01, 0x07, 0x03, "1 Coin  2 Credits"      },
+
+   {0   , 0xfe, 0   , 2   , "Allow Continue"         },
+   {0x14, 0x01, 0x10, 0x00, "Off"                    },
+   {0x14, 0x01, 0x10, 0x10, "On"                     },
+   
+   {0   , 0xfe, 0   , 4   , "Mode"                   },
+   {0x14, 0x01, 0xc0, 0xc0, "Normal Game"            },
+   {0x14, 0x01, 0xc0, 0x80, "Free Play"              },
+   {0x14, 0x01, 0xc0, 0x40, "Test Mode"              },
+   {0x14, 0x01, 0xc0, 0x00, "Endless Game"           },
+};
+
+STDDIPINFO(Chplftb)
 
 #undef SYSTEM1_COINAGE
 
@@ -2843,6 +2923,78 @@ static struct BurnRomInfo WmatchRomDesc[] = {
 STD_ROM_PICK(Wmatch)
 STD_ROM_FN(Wmatch)
 
+static struct BurnRomInfo ChopliftRomDesc[] = {
+	{ "epr-7124.ic90",       0x008000, 0x678d5c41, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "epr-7125.ic91",       0x008000, 0xf5283498, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "epr-7126.ic92",       0x008000, 0xdbd192ab, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+	
+	{ "epr-7130.ic126",      0x008000, 0x346af118, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
+	
+	{ "epr-7127.ic4",        0x008000, 0x1e708f6d, BRF_GRA },		  //  4 Tiles
+	{ "epr-7128.ic5",        0x008000, 0xb922e787, BRF_GRA },		  //  5 Tiles
+	{ "epr-7129.ic6",        0x008000, 0xbd3b6e6e, BRF_GRA },		  //  6 Tiles
+
+	{ "epr-7121.ic87",       0x008000, 0xf2b88f73, BRF_GRA },		  //  4 Sprites
+	{ "epr-7120.ic86",       0x008000, 0x517d7fd3, BRF_GRA },		  //  5 Sprites
+	{ "epr-7123.ic89",       0x008000, 0x8f16a303, BRF_GRA },		  //  6 Sprites
+	{ "epr-7122.ic88",       0x008000, 0x7c93f160, BRF_GRA },		  //  7 Sprites
+
+	{ "pr7119.ic20",         0x000100, 0xb2a8260f, BRF_OPT },		  //  8 Red PROM
+	{ "pr7118.ic14",         0x000100, 0x693e20c7, BRF_OPT },		  //  9 Green PROM
+	{ "pr7117.ic8",          0x000100, 0x4124307e, BRF_OPT },		  //  10 Blue PROM
+};
+
+STD_ROM_PICK(Choplift)
+STD_ROM_FN(Choplift)
+
+static struct BurnRomInfo ChopliftuRomDesc[] = {
+	{ "epr-7152.ic90",       0x008000, 0xfe49d83e, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "epr-7153.ic91",       0x008000, 0x48697666, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "epr-7154.ic92",       0x008000, 0x56d6222a, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+
+        { "epr-7130.ic126",      0x008000, 0x346af118, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
+	
+	{ "epr-7127.ic4",        0x008000, 0x1e708f6d, BRF_GRA },		  //  4 Tiles
+	{ "epr-7128.ic5",        0x008000, 0xb922e787, BRF_GRA },		  //  5 Tiles
+	{ "epr-7129.ic6",        0x008000, 0xbd3b6e6e, BRF_GRA },		  //  6 Tiles
+
+	{ "epr-7121.ic87",       0x008000, 0xf2b88f73, BRF_GRA },		  //  4 Sprites
+	{ "epr-7120.ic86",       0x008000, 0x517d7fd3, BRF_GRA },		  //  5 Sprites
+	{ "epr-7123.ic89",       0x008000, 0x8f16a303, BRF_GRA },		  //  6 Sprites
+	{ "epr-7122.ic88",       0x008000, 0x7c93f160, BRF_GRA },		  //  7 Sprites
+
+	{ "pr7119.ic20",         0x000100, 0xb2a8260f, BRF_OPT },		  //  8 Red PROM
+	{ "pr7118.ic14",         0x000100, 0x693e20c7, BRF_OPT },		  //  9 Green PROM
+	{ "pr7117.ic8",          0x000100, 0x4124307e, BRF_OPT },		  //  10 Blue PROM
+};
+
+STD_ROM_PICK(Chopliftu)
+STD_ROM_FN(Chopliftu)
+
+static struct BurnRomInfo ChopliftblRomDesc[] = {
+	{ "ep7124bl.90",         0x008000, 0x71a37932, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "epr-7125.ic91",       0x008000, 0xf5283498, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "epr-7126.ic92",       0x008000, 0xdbd192ab, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+	
+	{ "epr-7130.ic126",      0x008000, 0x346af118, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
+	
+	{ "epr-7127.ic4",        0x008000, 0x1e708f6d, BRF_GRA },		  //  4 Tiles
+	{ "epr-7128.ic5",        0x008000, 0xb922e787, BRF_GRA },		  //  5 Tiles
+	{ "epr-7129.ic6",        0x008000, 0xbd3b6e6e, BRF_GRA },		  //  6 Tiles
+
+	{ "epr-7121.ic87",       0x008000, 0xf2b88f73, BRF_GRA },		  //  4 Sprites
+	{ "epr-7120.ic86",       0x008000, 0x517d7fd3, BRF_GRA },		  //  5 Sprites
+	{ "epr-7123.ic89",       0x008000, 0x8f16a303, BRF_GRA },		  //  6 Sprites
+	{ "epr-7122.ic88",       0x008000, 0x7c93f160, BRF_GRA },		  //  7 Sprites
+
+	{ "pr7119.ic20",         0x000100, 0xb2a8260f, BRF_OPT },		  //  8 Red PROM
+	{ "pr7118.ic14",         0x000100, 0x693e20c7, BRF_OPT },		  //  9 Green PROM
+	{ "pr7117.ic8",          0x000100, 0x4124307e, BRF_OPT },		  //  10 Blue PROM
+};
+
+STD_ROM_PICK(Chopliftbl)
+STD_ROM_FN(Chopliftbl)
+
 /*==============================================================================================
 Decode Functions
 ===============================================================================================*/
@@ -3624,7 +3776,8 @@ static INT32 MemIndex()
 	System1SpriteRam       = Next; Next += 0x000200;
 	System1PaletteRam      = Next; Next += 0x000600;
 	System1BgRam           = Next; Next += 0x000800;
-	System1VideoRam        = Next; Next += 0x000700;
+	System1VideoRam        = Next; Next += 0x000800;
+	System1ScrollXRam      = System1VideoRam + 0x7C0;
 	System1BgCollisionRam  = Next; Next += 0x000400;
 	System1SprCollisionRam = Next; Next += 0x000400;
 	System1deRam           = Next; Next += 0x000200;
@@ -3853,6 +4006,52 @@ void __fastcall System1Z801PortWrite(UINT16 a, UINT8 d)
 	}
 	
 	bprintf(PRINT_NORMAL, _T("IO Write %x, %x\n"), a, d);
+}
+
+inline void __fastcall system1_soundport_w(UINT8 d)
+{
+	System1SoundLatch = d;
+	ZetClose();
+	ZetOpen(1);
+	ZetNmi();
+	ZetClose();
+	ZetOpen(0);
+	return;
+}
+
+inline void chplft_bankswitch_w (UINT8 d)
+{
+	System1RomBank = (((d & 0x0c)>>2) );
+	System1BankRom();
+	System1BankSwitch = d;
+}
+
+void __fastcall ChplftZ801PortWrite(UINT16 a, UINT8 d)
+{
+	a &= 0xff;
+	switch (a) 
+	{
+		case 0x14:{system1_soundport_w(d);	return;}
+		case 0x15:{chplft_bankswitch_w(d);	return;}
+	}
+}
+
+UINT8 __fastcall ChplftZ801PortRead(UINT16 a)
+{
+	a &= 0xff;
+	switch (a) 
+	{
+		case 0x00: return 0xff - System1Input[0];
+		case 0x04: return 0xff - System1Input[1];
+		case 0x08: return 0xff - System1Input[2];
+		case 0x0c: return System1Dip[0];
+		case 0x0d: return System1Dip[1];
+		case 0x10: return System1Dip[1];
+		case 0x15: return System1BankSwitch;
+		case 0x16: return System1BgBankLatch;
+		case 0x19: return System1BankSwitch;
+	}
+	return 0;
 }
 
 void __fastcall BrainZ801PortWrite(UINT16 a, UINT8 d)
@@ -4624,6 +4823,34 @@ static INT32 WmatchInit()
 	return System1Init(6, 0x2000, 1, 0x2000, 6, 0x2000, 2, 0x4000, 1);
 }
 
+static int ChplftbInit()
+{
+	int nRet;
+	System1ColourProms = 1;
+	System1BankedRom = 1;
+	nRet = System1Init(3, 0x8000, 1, 0x8000, 3, 0x8000, 4, 0x8000, 1);
+	choplifter_scroll_x_on = 1;
+	ZetOpen(0);
+
+	ZetMapArea(0xe7c0, 0xe7ff, 0, System1ScrollXRam);
+	ZetMapArea(0xe7c0, 0xe7ff, 1, System1ScrollXRam);
+	ZetMapArea(0xe7c0, 0xe7ff, 2, System1ScrollXRam);
+
+	ZetMapArea(0xe000, 0xe7ff, 0, System1VideoRam); //read
+	ZetMapArea(0xe000, 0xe7ff, 1, System1VideoRam);	//write
+	ZetMapArea(0xe000, 0xe7ff, 2, System1VideoRam); //fetch
+
+	ZetMapArea(0xe800, 0xeeff, 0, System1BgRam);
+	ZetMapArea(0xe800, 0xeeff, 1, System1BgRam);
+	ZetMapArea(0xe800, 0xeeff, 2, System1BgRam);
+
+	ZetSetInHandler(ChplftZ801PortRead);
+	ZetSetOutHandler(ChplftZ801PortWrite);
+	ZetClose();
+
+	return nRet;
+}
+
 static INT32 System1Exit()
 {
 	ZetExit();
@@ -4783,6 +5010,8 @@ static void System1DrawBgLayer(INT32 PriorityDraw)
 			sx = (Offs >> 1) % 32;
 			sy = (Offs >> 1) / 32;
 			
+			if (choplifter_scroll_x_on)
+				System1BgScrollX = (System1ScrollXRam[(Offs/32) & ~1] >> 1) + ((System1ScrollXRam[(Offs/32) | 1] & 1) << 7) ;
 			sx = 8 * sx + System1BgScrollX;
 			sy = 8 * sy + System1BgScrollY;
 			
@@ -4813,7 +5042,10 @@ static void System1DrawBgLayer(INT32 PriorityDraw)
 		
 				sx = (Offs >> 1) % 32;
 				sy = (Offs >> 1) / 32;
-			
+
+                                if(choplifter_scroll_x_on)
+					System1BgScrollX = (System1ScrollXRam[(Offs/32) & ~1] >> 1) + ((System1ScrollXRam[(Offs/32) | 1] & 1) << 7) ;
+
 				sx = 8 * sx + System1BgScrollX;
 				sy = 8 * sy + System1BgScrollY;
 				
@@ -5638,6 +5870,35 @@ struct BurnDriver BurnDrvWmatch = {
 	NULL, 0x600, 224, 240, 3, 4
 };
 
+struct BurnDriver BurnDrvChoplift = {
+	"choplift", NULL, NULL,  NULL, "1985",
+	"Choplifter (8751 315-5151)\0", NULL, "Sega", "System 1",
+	NULL, NULL, NULL, NULL,
+	0, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, ChopliftRomInfo, ChopliftRomName, NULL, NULL, ChplftbInputInfo, ChplftbDIPInfo,
+	ChplftbInit, System1Exit, System1Frame, NULL, System1Scan,
+	NULL, 0x600, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvChopliftu = {
+	"chopliftu", "choplift", NULL,  NULL, "1985",
+	"Choplifter (unprotected)\0", NULL, "Sega", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, ChopliftuRomInfo, ChopliftuRomName, NULL, NULL, ChplftbInputInfo, ChplftbDIPInfo,
+	ChplftbInit, System1Exit, System1Frame, NULL, System1Scan,
+	NULL, 0x600, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvChopliftbl = {
+	"chopliftbl", "choplift", NULL,  NULL, "1985",
+	"Choplifter (bootleg)\0", NULL, "Sega", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, ChopliftblRomInfo, ChopliftblRomName, NULL, NULL, ChplftbInputInfo, ChplftbDIPInfo,
+	ChplftbInit, System1Exit, System1Frame, NULL, System1Scan,
+	NULL, 0x600, 256, 224, 4, 3
+};
 
 
 // hvymetal

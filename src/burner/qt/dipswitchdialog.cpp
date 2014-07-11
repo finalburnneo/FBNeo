@@ -12,7 +12,9 @@ DipswitchDialog::DipswitchDialog(QWidget *parent) :
     connect(ui->tvSettings, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
             this, SLOT(dipChange(QTreeWidgetItem*,QTreeWidgetItem*)));
     connect(ui->cbValues, SIGNAL(currentIndexChanged(int)), this, SLOT(dipValueChange(int)));
+    connect(ui->btnDefault, SIGNAL(clicked()), this, SLOT(reset()));
     m_dipGroup = 0;
+    m_dipChanging = false;
 }
 
 DipswitchDialog::~DipswitchDialog()
@@ -23,7 +25,6 @@ DipswitchDialog::~DipswitchDialog()
 int DipswitchDialog::exec()
 {
     getDipOffset();
-    reset();
     makeList();
     int ret = QDialog::exec();
     return ret;
@@ -44,19 +45,23 @@ void DipswitchDialog::reset()
         }
         i++;
     }
+
+    makeList();
 }
 
 void DipswitchDialog::dipChange(QTreeWidgetItem *item, QTreeWidgetItem *prev)
 {
-    ui->cbValues->clear();
     if (item == nullptr)
         return;
 
-    qDebug() << "DIP Change";
     m_dipGroup = item->data(0, Qt::UserRole).toInt();
 
     BurnDIPInfo bdiGroup;
     BurnDrvGetDIPInfo(&bdiGroup, m_dipGroup);
+
+    qDebug() << "DIP Change" << bdiGroup.szText;
+    m_dipChanging = true;
+    ui->cbValues->clear();
 
     int nCurrentSetting = 0;
     for (int i = 0, j = 0; i < bdiGroup.nSetting; i++) {
@@ -79,17 +84,17 @@ void DipswitchDialog::dipChange(QTreeWidgetItem *item, QTreeWidgetItem *prev)
         }
     }
     ui->cbValues->setCurrentIndex(nCurrentSetting);
+    m_dipChanging = false;
 }
 
 void DipswitchDialog::dipValueChange(int index)
 {
-    if (ui->cbValues->count() <= 0)
+    if (ui->cbValues->count() <= 0 || m_dipChanging)
         return;
 
-    qDebug() <<"Value changed";
     BurnDIPInfo bdi = {0, 0, 0, 0, NULL};
     struct GameInp *pgi;
-    int j = 0;
+    int j = 0, k = 0;
     for (int i = 0; i <= index; i++) {
         do {
             BurnDrvGetDIPInfo(&bdi, m_dipGroup + 1 + j++);
@@ -107,6 +112,9 @@ void DipswitchDialog::dipValueChange(int index)
             }
         }
     }
+
+    QTreeWidgetItem *item = ui->tvSettings->currentItem();
+    item->setText(1, bdi.szText);
 }
 
 bool DipswitchDialog::checkSetting(int i)

@@ -29,6 +29,7 @@ private:
     Ui::DipswitchDialog *ui;
     unsigned m_dipOffset;
     unsigned m_dipGroup;
+    bool m_dipChanging;
 };
 
 #endif // DIPSWITCHDIALOG_H

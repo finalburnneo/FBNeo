@@ -42,7 +42,7 @@
      <item>
       <widget class="QPushButton" name="btnDefault">
        <property name="text">
-        <string>Default</string>
+        <string>Defaults</string>
        </property>
       </widget>
      </item>

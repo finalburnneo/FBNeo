@@ -39,6 +39,13 @@ int RomScanDialog::status(int drvNo)
     return m_status[drvNo];
 }
 
+void RomScanDialog::setStatus(int drvNo, char stat)
+{
+    if (drvNo < 0 && drvNo >= nBurnDrvCount)
+        return;
+    m_status[drvNo] = stat;
+}
+
 void RomScanDialog::cancel()
 {
     close();

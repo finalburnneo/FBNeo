@@ -44,6 +44,12 @@ SelectDialog::SelectDialog(QWidget *parent) :
     m_showUnavailable = true;
     m_showClones = true;
     m_showCount = 0;
+
+    QMenu *contextMenu = new QMenu(ui->tvDrivers);
+    m_actionScanThis = new QAction("Rescan this romset", contextMenu);
+    ui->tvDrivers->setContextMenuPolicy(Qt::ActionsContextMenu);
+    ui->tvDrivers->addAction(m_actionScanThis);
+    connect(m_actionScanThis, SIGNAL(triggered()), this, SLOT(rescanRomset()));
 }
 
 SelectDialog::~SelectDialog()
@@ -157,6 +163,28 @@ void SelectDialog::rescanRoms()
     if (m_romScanner->exec() == QDialog::Accepted) {
         filterDrivers();
     }
+}
+
+void SelectDialog::rescanRomset()
+{
+    int tmp = nBurnDrvActive;
+    nBurnDrvActive = m_selectedDriver;
+    int stat = BzipOpen(1);
+    switch (stat) {
+    case 0:
+        m_romScanner->setStatus(m_selectedDriver, 3);
+        break;
+    case 2:
+        m_romScanner->setStatus(m_selectedDriver, 1);
+        break;
+    case 1:
+    default:
+        m_romScanner->setStatus(m_selectedDriver, 0);
+        break;
+    }
+    BzipClose();
+    nBurnDrvActive = tmp;
+    filterDrivers();
 }
 
 void SelectDialog::editRomPaths()

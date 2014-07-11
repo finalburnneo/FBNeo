@@ -46,6 +46,7 @@ public:
 public slots:
     void openRomInfo();
     void rescanRoms();
+    void rescanRomset();
     void editRomPaths();
     void driverChange(QTreeWidgetItem * item, QTreeWidgetItem * prev);
     void driverSelect(QTreeWidgetItem * item, int column);
@@ -79,6 +80,7 @@ private:
     int m_showCount;
 
     QPixmap m_defaultImage;
+    QAction *m_actionScanThis;
 };
 
 #endif // SELECTDIALOG_H

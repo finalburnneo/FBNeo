@@ -32,6 +32,7 @@ public:
     explicit RomScanDialog(QWidget *parent = 0);
     ~RomScanDialog();
     int status(int drvNo);
+    void setStatus(int drvNo, char stat);
 public slots:
     void cancel();
 protected:

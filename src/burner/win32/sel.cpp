@@ -2112,6 +2112,7 @@ int SelDialog(int nMVSCartsOnly, HWND hParentWND)
 // Rom Info Dialog
 
 static HWND hTabControl = NULL;
+static int nRInBurnDrvActive = 0; // see comments in RomInfoDialog()
 
 static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
@@ -2241,7 +2242,7 @@ static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				char szBoardName[8] = "";
 				unsigned int nOldDrvSelect = nBurnDrvActive;
 				strcpy(szBoardName, BurnDrvGetTextA(DRV_BOARDROM));
-			
+
 				for (unsigned int i = 0; i < nBurnDrvCount; i++) {
 					nBurnDrvActive = i;
 					if (!strcmp(szBoardName, BurnDrvGetTextA(DRV_NAME))) break;
@@ -2302,7 +2303,7 @@ static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 			
 					RomPos++;
 				}
-		
+
 				nBurnDrvActive = nOldDrvSelect;
 			}
 			
@@ -2355,9 +2356,31 @@ static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 		case WM_COMMAND: {
 			int Id = LOWORD(wParam);
 			int Notify = HIWORD(wParam);
-		
+
 			if (Id == IDCANCEL && Notify == BN_CLICKED) {
 				SendMessage(hDlg, WM_CLOSE, 0, 0);
+				return 0;
+			}
+			if (Id == IDRESCAN && Notify == BN_CLICKED) {
+				nBurnDrvActive = nRInBurnDrvActive;
+				// use the nBurnDrvActive from when the Rom Info button was clicked, because it can/will change
+				// even though the selection list doesn't have focus. -dink
+				// for proof/symptoms - uncomment the line below and click the 'rescan' button after moving the window to different places on the screen.
+				//bprintf(0, _T("nBurnDrvActive %d nRInBurnDrvActive %d\n"), nBurnDrvActive, nRInBurnDrvActive);
+
+				switch (BzipOpen(TRUE)) {
+				case 0:
+					gameAv[nRInBurnDrvActive] = 3;
+					break;
+				case 2:
+					gameAv[nRInBurnDrvActive] = 1;
+					break;
+				case 1:
+					gameAv[nRInBurnDrvActive] = 0;
+					break;
+				}
+				BzipClose();
+				WriteGameAvb();
 				return 0;
 			}
 		}
@@ -2391,8 +2414,8 @@ static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 static int RomInfoDialog()
 {
+	nRInBurnDrvActive = nBurnDrvActive; // clicking a button on this dialog somehow also clicks through to the list below it, thus changing nBurnDrvActive.  Original value needed for rescan romset button. -dink
 	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_ROMINFO), hSelDlg, (DLGPROC)RomInfoDialogProc);
-	
 	SetFocus(hSelList);
 	
 	return 1;

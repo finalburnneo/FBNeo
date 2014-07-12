@@ -393,6 +393,7 @@ extern bool avOk;
 int RomsDirCreate(HWND hParentWND);
 int CreateROMInfo(HWND hParentWND);
 void FreeROMInfo();
+int WriteGameAvb();
 
 // support_paths.cpp
 int SupportDirCreate(HWND hParentWND);

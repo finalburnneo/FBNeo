@@ -2363,20 +2363,34 @@ static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 			}
 			if (Id == IDRESCAN && Notify == BN_CLICKED) {
 				nBurnDrvActive = nRInBurnDrvActive;
-				// use the nBurnDrvActive from when the Rom Info button was clicked, because it can/will change
-				// even though the selection list doesn't have focus. -dink
+				// use the nBurnDrvActive value from when the Rom Info button was clicked, because it can/will change
+				// even though the selection list [window below it] doesn't have focus. -dink
 				// for proof/symptoms - uncomment the line below and click the 'rescan' button after moving the window to different places on the screen.
 				//bprintf(0, _T("nBurnDrvActive %d nRInBurnDrvActive %d\n"), nBurnDrvActive, nRInBurnDrvActive);
 
-				switch (BzipOpen(TRUE)) {
+				switch (BzipOpen(1)) {
 				case 0:
 					gameAv[nRInBurnDrvActive] = 3;
+					{ // if the romset is OK, just say so in the rom info dialog (instead of popping up a window)
+						HWND hList = GetDlgItem(hDlg, IDC_LIST1);
+						LV_ITEM LvItem;
+						memset(&LvItem, 0, sizeof(LvItem));
+						LvItem.mask=  LVIF_TEXT;
+						LvItem.cchTextMax = 256;
+						LvItem.iSubItem = 4;
+						LvItem.pszText = _T("Romset OK!");
+						SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
+						UpdateWindow(hDlg);
+					}
 					break;
 				case 2:
 					gameAv[nRInBurnDrvActive] = 1;
 					break;
 				case 1:
 					gameAv[nRInBurnDrvActive] = 0;
+					BzipClose();
+					BzipOpen(0); // this time, get the missing roms/error message.
+					FBAPopupDisplay(PUF_TYPE_ERROR);
 					break;
 				}
 				BzipClose();

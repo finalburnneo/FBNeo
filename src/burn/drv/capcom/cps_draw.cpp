@@ -491,7 +491,7 @@ static void DoDraw(INT32 Recalc)
 {
 	CtvReady();								// Point to correct tile drawing functions
 
-	if (bCpsUpdatePalEveryFrame) GetPalette(0, 6);
+	if (CpsRecalcPal || bCpsUpdatePalEveryFrame) GetPalette(0, 6);
 	if (Recalc || bCpsUpdatePalEveryFrame) CpsPalUpdate(CpsSavePal);		// recalc whole palette if needed
 	
 	CpsClearScreen();

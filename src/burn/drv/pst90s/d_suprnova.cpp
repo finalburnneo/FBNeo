@@ -857,17 +857,17 @@ static int MemIndex(int gfxlen0)
 
 	AllRam			= Next;
 
-	DrvVidRAM		= Next; Next += 0x020000;
-	DrvNvRAM		= Next; Next += 0x020000;
-	DrvSprRAM		= Next; Next += 0x020000;
-	DrvLineRAM		= Next; Next += 0x020000;
-	DrvPalRAM		= Next; Next += 0x040000;
-	DrvGfxRAM		= Next; Next += 0x060000;
-	DrvSh2RAM		= Next; Next += 0x200000;
-	DrvCacheRAM		= Next; Next += 0x020000;
-	DrvV3Regs		= Next; Next += 0x020000;
-	DrvSprRegs		= Next; Next += 0x020000;
-	DrvPalRegs		= Next; Next += 0x000020 + 0x20000;
+	DrvVidRAM		= Next; Next += 0x008000; //0x020000;
+	DrvNvRAM		= Next; Next += 0x002000; //0x020000;
+	DrvSprRAM		= Next; Next += 0x004000; //0x020000;
+	DrvLineRAM		= Next; Next += 0x008000; //0x020000;
+	DrvPalRAM		= Next; Next += 0x020000; //0x040000;
+	DrvGfxRAM		= Next; Next += 0x040000; //0x060000;
+	DrvSh2RAM		= Next; Next += 0x100000; //0x200000;
+	DrvCacheRAM		= Next; Next += 0x001000; //0x020000;
+	DrvV3Regs		= Next; Next += 0x000100; //0x020000;
+	DrvSprRegs		= Next; Next += 0x000100; //0x020000;
+	DrvPalRegs		= Next; Next += 0x000020 + 0x000100; //0x20000;
 
 	RamEnd			= Next;
 

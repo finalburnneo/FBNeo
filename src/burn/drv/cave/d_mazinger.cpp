@@ -166,7 +166,9 @@ void __fastcall mazingerWriteWord(UINT32 sekAddress, UINT16 wordValue)
 //			CaveSpriteBuffer();
 			nCaveSpriteBank = wordValue;
 			return;
-			
+		case 0x300068:
+			// Watchdog reset(?)
+			return;
 		case 0x30006e:
 			SoundLatch = wordValue;
 			SoundLatchStatus |= 0x0C;

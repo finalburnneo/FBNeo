@@ -1270,6 +1270,45 @@ static struct BurnDIPInfo PassshtaDIPList[]=
 
 STDDIPINFO(Passshta)
 
+static struct BurnDIPInfo CencourtDIPList[]=
+{
+	// Default Values
+	{0x29, 0xff, 0xff, 0xf0, NULL                                 },
+	{0x2a, 0xff, 0xff, 0xff, NULL                                 },
+
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Debug Display"                      },
+	{0x29, 0x01, 0x01, 0x01, "Off"                                },
+	{0x29, 0x01, 0x01, 0x00, "On"                                 },
+	
+	{0   , 0xfe, 0   , 8   , "Initial Point"                      },
+	{0x29, 0x01, 0x0e, 0x06, "2000"                               },
+	{0x29, 0x01, 0x0e, 0x0a, "3000"                               },
+	{0x29, 0x01, 0x0e, 0x0c, "4000"                               },
+	{0x29, 0x01, 0x0e, 0x0e, "5000"                               },
+	{0x29, 0x01, 0x0e, 0x08, "6000"                               },
+	{0x29, 0x01, 0x0e, 0x04, "7000"                               },
+	{0x29, 0x01, 0x0e, 0x02, "8000"                               },
+	{0x29, 0x01, 0x0e, 0x00, "9000"                               },
+	
+	{0   , 0xfe, 0   , 4   , "Point Table"                        },
+	{0x29, 0x01, 0x30, 0x20, "Easy"                               },
+	{0x29, 0x01, 0x30, 0x30, "Normal"                             },
+	{0x29, 0x01, 0x30, 0x10, "Hard"                               },
+	{0x29, 0x01, 0x30, 0x00, "Hardest"                            },	
+	
+	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
+	{0x29, 0x01, 0xc0, 0x80, "Easy"                               },
+	{0x29, 0x01, 0xc0, 0xc0, "Normal"                             },
+	{0x29, 0x01, 0xc0, 0x40, "Hard"                               },
+	{0x29, 0x01, 0xc0, 0x00, "Hardest"                            },
+	
+	// Dip 2
+	SYSTEM16B_COINAGE(0x2a)
+};
+
+STDDIPINFO(Cencourt)
+
 static struct BurnDIPInfo RiotcityDIPList[]=
 {
 	// Default Values
@@ -3146,7 +3185,7 @@ static struct BurnRomInfo FpointbjRomDesc[] = {
 	{ "82s123.2",       0x00020, 0x58bcf8bd, BRF_OPT },
 	{ "fpointbj_gal16v8_1.bin", 0x00117, 0xba7f292c, BRF_OPT },
 	{ "fpointbj_gal16v8_3.bin", 0x00117, 0xce1ab1e1, BRF_OPT },
-	{ "fpointbj_gal20v8.bin", 0x00400, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "fpointbj_gal20v8.bin", 	0x00400, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 
@@ -3559,6 +3598,38 @@ static struct BurnRomInfo PassshtbRomDesc[] = {
 
 STD_ROM_PICK(Passshtb)
 STD_ROM_FN(Passshtb)
+
+static struct BurnRomInfo CencourtRomDesc[] = {
+	{ "a4_56f6.bin",    0x10000, 0x7116dce6, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "a1_478b.bin",    0x10000, 0x37beb770, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-b-9.bin",    0x10000, 0x9a55cd88, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-b-10.bin",   0x10000, 0xfc13ca35, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-b-11.bin",   0x10000, 0x1503c203, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr-b-1.bin",    0x10000, 0xb18bfccf, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-b-5.bin",    0x10000, 0x3481a8e8, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-b-2.bin",    0x10000, 0x61a996c0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-b-6.bin",    0x10000, 0x2116bcb1, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-b-3.bin",    0x10000, 0x69a2e109, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-b-7.bin",    0x10000, 0xccf6b09f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-b-4.bin",    0x10000, 0xbdf63cd2, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-b-8.bin",    0x10000, 0x88a90641, SYS16_ROM_SPRITES | BRF_GRA },
+
+//	{ "epr-a-7.bin",   	0x08000, 0x789edc06, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG }, // encrypted
+	{ "epr-11857.a7",   0x08000, 0x789edc06, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG }, // temporary (from parent until above is decrypted)
+	
+	{ "epr-a-8.bin",    0x08000, 0x08ab0018, SYS16_ROM_UPD7759DATA | BRF_SND }, // == epr-11858.a8
+	{ "epr-a-9.bin",    0x08000, 0x8673e01b, SYS16_ROM_UPD7759DATA | BRF_SND }, // == epr-11859.a9
+	{ "epr-a-10.bin",   0x08000, 0x10263746, SYS16_ROM_UPD7759DATA | BRF_SND }, // == epr-11860.a10
+	{ "epr-a-11.bin",   0x08000, 0x38b54a71, SYS16_ROM_UPD7759DATA | BRF_SND }, // == epr-11861.a11
+	
+	{ "cencourt_mc8123.key",   0x02000, 0x00000000, BRF_NODUMP },
+};
+
+
+STD_ROM_PICK(Cencourt)
+STD_ROM_FN(Cencourt)
 
 static struct BurnRomInfo RiotcityRomDesc[] = {
 	{ "epr-14612.bin",  0x20000, 0xa1b331ec, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -8733,6 +8804,16 @@ struct BurnDriverD BurnDrvPassshtb = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtbRomInfo, PassshtbRomName, NULL, NULL, PassshtInputInfo, PassshtDIPInfo,
 	PassshtbInit, System16Exit, System16BFrame, NULL, System16Scan,
+	NULL, 0x1800, 224, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvCencourt = {
+	"cencourt", "passsht", NULL, NULL, "1988",
+	"Center Court (prototype, MC-8123B)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
+	NULL, CencourtRomInfo, CencourtRomName, NULL, NULL, PassshtInputInfo, CencourtDIPInfo,
+	PassshtaInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 

@@ -2531,8 +2531,8 @@ static INT32 TokioFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 98) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == 99) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == 90) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		if (i == 91) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 		ZetClose();
 
 		// Run Z80 #2
@@ -2542,8 +2542,8 @@ static INT32 TokioFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 98) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == 99) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == 90) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		if (i == 91) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 		ZetClose();
 	
 		// Run Z80 #3

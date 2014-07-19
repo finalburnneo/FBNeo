@@ -2391,7 +2391,12 @@ static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					gameAv[nRInBurnDrvActive] = 0;
 					BzipClose();
 					BzipOpen(0); // this time, get the missing roms/error message.
-					FBAPopupDisplay(PUF_TYPE_ERROR);
+					{
+						HWND hScrnWndtmp = hScrnWnd; // Crash preventer: Make the rominfo dialog (this one) the parent modal for the popup message
+						hScrnWnd = hDlg;
+						FBAPopupDisplay(PUF_TYPE_ERROR);
+						hScrnWnd = hScrnWndtmp;
+					}
 					break;
 				}
 				BzipClose();

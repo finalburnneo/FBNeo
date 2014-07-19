@@ -1231,6 +1231,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					nBurnDrvActive	= nBurnDrv[i].nBurnDrvNo;
 					TreeView_EnsureVisible(hSelList, nBurnDrv[i].hTreeHandle);
 					TreeView_Select(hSelList, nBurnDrv[i].hTreeHandle, TVGN_CARET);
+					TreeView_SelectSetFirstVisible(hSelList, nBurnDrv[i].hTreeHandle);
 					break;
 				}
 			}

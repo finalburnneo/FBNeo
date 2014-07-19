@@ -186,6 +186,39 @@ char *utf8_from_wstring(const WCHAR *wstring)
  static bool bEchoLog = true; // false;
 #endif
 
+void tcharstrreplace(TCHAR *pszSRBuffer, const TCHAR *pszFind, const TCHAR *pszReplace)
+{
+	if (pszSRBuffer == NULL || pszFind == NULL || pszReplace == NULL)
+		return;
+
+	int lenFind = _tcslen(pszFind);
+	int lenReplace = _tcslen(pszReplace);
+	int lenSRBuffer = _tcslen(pszSRBuffer)+1;
+
+	for(int i = 0; (lenSRBuffer > lenFind) && (i < lenSRBuffer - lenFind); i++) {
+		if (!memcmp(pszFind, &pszSRBuffer[i], lenFind * sizeof(TCHAR))) {
+			if (lenFind == lenReplace) {
+				memcpy(&pszSRBuffer[i], pszReplace, lenReplace * sizeof(TCHAR));
+				i += lenReplace - 1;
+			} else if (lenFind > lenReplace) {
+				memcpy(&pszSRBuffer[i], pszReplace, lenReplace * sizeof(TCHAR));
+				i += lenReplace;
+				int delta = lenFind - lenReplace;
+				lenSRBuffer -= delta;
+				memmove(&pszSRBuffer[i], &pszSRBuffer[i + delta], (lenSRBuffer - i) * sizeof(TCHAR));
+				i--;
+			} else { /* this part only works on dynamic buffers - the replacement string length must be smaller or equal to the find string length if this is commented out!
+				int delta = lenReplace - lenFind;
+				pszSRBuffer = (TCHAR *)realloc(pszSRBuffer, (lenSRBuffer + delta) * sizeof(TCHAR));
+				memmove(&pszSRBuffer[i + lenReplace], &pszSRBuffer[i + lenFind], (lenSRBuffer - i - lenFind) * sizeof(TCHAR));
+				lenSRBuffer += delta;
+				memcpy(&pszSRBuffer[i], pszReplace, lenReplace * sizeof(TCHAR));
+				i += lenReplace - 1; */
+			}
+		}
+	}
+}
+
 #if defined (FBA_DEBUG)
 // Debug printf to a file
 static int __cdecl AppDebugPrintf(int nStatus, TCHAR* pszFormat, ...)
@@ -231,6 +264,7 @@ static int __cdecl AppDebugPrintf(int nStatus, TCHAR* pszFormat, ...)
 			}
 		}
 
+		tcharstrreplace(szConsoleBuffer, _T(SEPERATOR_1), _T(" * "));
 		WriteConsole(DebugBuffer, szConsoleBuffer, _tcslen(szConsoleBuffer), NULL, NULL);
 	}
 
@@ -262,6 +296,8 @@ int dprintf(TCHAR* pszFormat, ...)
 		_ftprintf(DebugLog, szConsoleBuffer);
 		fflush(DebugLog);
 	}
+
+	tcharstrreplace(szConsoleBuffer, _T(SEPERATOR_1), _T(" * "));
 	WriteConsole(DebugBuffer, szConsoleBuffer, _tcslen(szConsoleBuffer), NULL, NULL);
 	va_end(vaFormat);
 #else

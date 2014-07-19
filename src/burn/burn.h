@@ -46,7 +46,7 @@ extern TCHAR szAppSamplesPath[MAX_PATH];
 #endif
 
 #ifdef _UNICODE
- #define SEPERATOR_1 " * "
+ #define SEPERATOR_1 " \u2022 "
  #define SEPERATOR_2 " \u25E6 "
 #else
  #define SEPERATOR_1 " ~ "

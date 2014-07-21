@@ -64,13 +64,10 @@ static UINT8 DrvDips[2];
 static UINT32 DrvInputs[3];
 static UINT8 DrvReset;
 
-#define SCREEN_FLIP	BDF_ORIENTATION_FLIPPED
-
 static int nGfxLen0 = 0;
 
 static UINT32 speedhack_address = ~0;
 static UINT32 speedhack_pc[2] = { 0, 0 };
-static UINT8 biosskiponce = 0;
 static UINT8 m_region = 0; /* 0 Japan, 1 Europ, 2 Asia, 3 USA, 4 Korea */
 
 static struct BurnRomInfo emptyRomDesc[] = {
@@ -102,7 +99,6 @@ static struct BurnInputInfo SknsInputList[] = {
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"},
 	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 13,	"tilt"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Skns)
@@ -127,13 +123,6 @@ static struct BurnDIPInfo SknsDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Freeze"	},
 	{0x15, 0x01, 0x80, 0x00, "Freezes the game"},
 	{0x15, 0x01, 0x80, 0x80, "Right value"	},
-
-	{0   , 0xfe, 0   ,    5, "Region"	},
-	{0x16, 0x01, 0x07, 0x01, "Europe"	},
-	{0x16, 0x01, 0x07, 0x00, "Japan"	},
-	{0x16, 0x01, 0x07, 0x04, "Korea"	},
-	{0x16, 0x01, 0x07, 0x02, "Asia"		},
-	{0x16, 0x01, 0x07, 0x03, "USA"		},
 };
 
 STDDIPINFO(Skns)
@@ -161,7 +150,6 @@ static struct BurnInputInfo CyvernInputList[] = {
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"},
 	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 13,	"tilt"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Cyvern)
@@ -187,13 +175,6 @@ static struct BurnDIPInfo CyvernDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Freeze"	},
 	{0x13, 0x01, 0x80, 0x00, "Freezes the game"},
 	{0x13, 0x01, 0x80, 0x80, "Right value"	},
-
-	{0   , 0xfe, 0   ,    5, "Region"	},
-	{0x14, 0x01, 0x07, 0x01, "Europe"	},
-	{0x14, 0x01, 0x07, 0x00, "Japan"	},
-	{0x14, 0x01, 0x07, 0x04, "Korea"	},
-	{0x14, 0x01, 0x07, 0x02, "Asia"		},
-	{0x14, 0x01, 0x07, 0x03, "USA"		},
 };
 
 STDDIPINFO(Cyvern)
@@ -645,7 +626,7 @@ void skns_pal_regs_w(UINT32 offset)
 	}
 }
 
-static void decode_graphics_ram(UINT32 offset)
+static inline void decode_graphics_ram(UINT32 offset)
 {
 	offset &= 0x3fffc;
 	UINT32 p = *((UINT32*)(DrvGfxRAM + offset));
@@ -656,11 +637,7 @@ static void decode_graphics_ram(UINT32 offset)
 	DrvGfxROM2[offset + 3] = p >>  0;
 }
 
-
-// 	AM_RANGE(0x00400000, 0x0040000f) AM_WRITE(skns_io_w) /* I/O Write */
-
-
-void __fastcall suprnova_write_byte(UINT32 address, UINT8 data)
+static void __fastcall suprnova_write_byte(UINT32 address, UINT8 data)
 {
 	address &= 0xc7ffffff;
 
@@ -686,11 +663,10 @@ void __fastcall suprnova_write_byte(UINT32 address, UINT8 data)
 		return;
 
                 case 0x01800000:
-                case 0x01800001:
-                case 0x01800002:
-                case 0x01800003:// sengeki writes here... puzzloop gets pissed (security...)
+              //  case 0x01800001:
+              //  case 0x01800002:
+              //  case 0x01800003:// sengeki writes here... puzzloop complains (security...)
                     {
-                        data>>= 24;
                         hit.disconnect=1; /* hit2 stuff */
                         switch (m_region) /* 0 Japan, 1 Europe, 2 Asia, 3 USA, 4 Korea */
                         {
@@ -700,7 +676,7 @@ void __fastcall suprnova_write_byte(UINT32 address, UINT8 data)
                         case 3:
                             if (data == 1) hit.disconnect= 0;
                             break;
-                        case 4:
+                        case 4: // korea
                             if (data == 2) hit.disconnect= 0;
                             break;
                         case 1:
@@ -717,10 +693,6 @@ void __fastcall suprnova_write_byte(UINT32 address, UINT8 data)
                         //bprintf(0, _T("finish:hit.disconnect=[%X]"), hit.disconnect);
                     }
 		return;
-
-		/*case 0x01800002:
-			hit.disconnect = data;
-		return;*/
 	}
 
 	if ((address & 0xffffffe0) == 0x02a00000) {
@@ -740,7 +712,7 @@ void __fastcall suprnova_write_byte(UINT32 address, UINT8 data)
 //#endif
 }
 
-void __fastcall suprnova_write_word(UINT32 address, UINT16 data)
+static void __fastcall suprnova_write_word(UINT32 address, UINT16 data)
 {
 	address &= 0xc7fffffe;
 
@@ -756,7 +728,7 @@ void __fastcall suprnova_write_word(UINT32 address, UINT16 data)
 #endif
 }
 
-void __fastcall suprnova_write_long(UINT32 address, UINT32 data)
+static void __fastcall suprnova_write_long(UINT32 address, UINT32 data)
 {
 	address &= 0xc7fffffc;
 
@@ -790,13 +762,6 @@ static inline void suprnova_speedhack(UINT32 a)
 	UINT32 b  = a & ~3;
 	UINT32 pc = Sh2GetPC(0);
 
-        /*if (b == 0x600028 && !biosskiponce) {
-		if (pc == 0x6f8 || pc == 0x6fa) {
-                    Sh2WriteByte(0x6000029, 1);   // zip past skns bios screen
-                    biosskiponce=1;               // update: maybe not??  hmm..
-                }                                 // update2: not needed
-        }*/
-
         if (b == speedhack_address) {
            // bprintf(0, _T("ad=[%X] pc=[%X]"), a, b);
            // bprintf(0, _T("pc[%X] shpc[%X]"), pc, speedhack_pc[0]);
@@ -807,7 +772,7 @@ static inline void suprnova_speedhack(UINT32 a)
 	}
 }
 
-UINT32 __fastcall suprnova_hack_read_long(UINT32 a)
+static UINT32 __fastcall suprnova_hack_read_long(UINT32 a)
 {
 	suprnova_speedhack(a);
 
@@ -816,14 +781,14 @@ UINT32 __fastcall suprnova_hack_read_long(UINT32 a)
 	return *((UINT32*)(DrvSh2RAM + a));
 }
 
-UINT16 __fastcall suprnova_hack_read_word(UINT32 a)
+static UINT16 __fastcall suprnova_hack_read_word(UINT32 a)
 {
 	suprnova_speedhack(a);
 
 	return *((UINT16 *)(DrvSh2RAM + ((a & 0xffffe) ^ 2)));
 }
 
-UINT8 __fastcall suprnova_hack_read_byte(UINT32 a)
+static UINT8 __fastcall suprnova_hack_read_byte(UINT32 a)
 {
 	suprnova_speedhack(a);
 
@@ -898,40 +863,102 @@ static int MemIndex(int gfxlen0)
 
 static int DrvDoReset()
 {
-    Sh2Open(0);
-    Sh2Reset( *(UINT32 *)(DrvSh2ROM + 0), *(UINT32 *)(DrvSh2ROM + 4) );
-    Sh2SetVBR(0x4000000);
-    Sh2Close();
+	memset (AllRam, 0, RamEnd - AllRam);
+	memset (DrvTmpScreenBuf, 0xff, 0x8000);
 
-    memset (AllRam, 0, RamEnd - AllRam);
+	Sh2Open(0);
+	Sh2Reset( *(UINT32 *)(DrvSh2ROM + 0), *(UINT32 *)(DrvSh2ROM + 4) );
+	Sh2SetVBR(0x4000000);
+	Sh2Close();
 
-    memset (DrvTmpScreenBuf, 0xff, 0x8000);
+	YMZ280BReset();
 
-    YMZ280BReset();
-    biosskiponce = 0;
-    if (m_region != 2) // 2 Asia
-        hit.disconnect = 1;
-    else
-        hit.disconnect = 0;
+	hit.disconnect = (m_region != 2) ? 1 : 0;
 
-    return 0;
+ 	return 0;
 }
 
-static int DrvInit(int (*LoadCallback)(), int bios, int gfx_len0)
+static INT32 DrvLoad(INT32 nLoadRoms)
+{
+	char* pRomName;
+	struct BurnRomInfo ri;
+
+	UINT8 *LoadPr = DrvSh2ROM;
+	UINT8 *LoadSp = DrvGfxROM0;
+	UINT8 *LoadBg = DrvGfxROM1;
+	UINT8 *LoadFg = DrvGfxROM2 + 0x400000;
+	UINT8 *LoadYM = YMZ280BROM;
+
+	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++)
+	{
+		BurnDrvGetRomInfo(&ri, i);
+
+		if ((ri.nType & 7) == 1) {
+			if (nLoadRoms) {
+				if (BurnLoadRom(LoadPr + 0, i+0, 2)) return 1;
+				if (BurnLoadRom(LoadPr + 1, i+1, 2)) return 1;
+			}
+			LoadPr += ri.nLen * 2;
+			i++; 
+
+			continue;
+		}
+
+		if ((ri.nType & 7) == 2) {
+			if (nLoadRoms) {
+				if (BurnLoadRom(LoadSp, i, 1)) return 1;
+			}
+			LoadSp += ri.nLen;
+
+			continue;
+		}
+
+		if ((ri.nType & 7) == 3) {
+			if (nLoadRoms) {
+				if (BurnLoadRom(LoadBg, i, 1)) return 1;
+			}
+			LoadBg += ri.nLen;
+
+			continue;
+		}
+		
+		if ((ri.nType & 7) == 4) {
+			if (nLoadRoms) {
+				if (BurnLoadRom(LoadFg, i, 1)) return 1;
+			}
+			LoadFg += ri.nLen;
+
+			continue;
+		}
+
+		if ((ri.nType & 7) == 5) {
+			if (nLoadRoms) {
+				if (BurnLoadRom(LoadYM, i, 1)) return 1;
+			}
+			LoadYM += ri.nLen;
+			continue;
+		}
+	}
+
+	if (!nLoadRoms) {
+		for (nGfxLen0 = 1; nGfxLen0 < (LoadSp - DrvGfxROM0); nGfxLen0 <<= 1) {}
+	}
+
+	return 0;
+}
+
+static int DrvInit(INT32 bios)
 {
 	AllMem = NULL;
-	MemIndex(gfx_len0);
+	DrvLoad(0);
+	MemIndex(nGfxLen0);
 	int nLen = MemEnd - (UINT8 *)0;
 	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
-	MemIndex(gfx_len0);
-
-	nGfxLen0 = gfx_len0;
+	MemIndex(nGfxLen0);
 
 	{
-		if (LoadCallback) {
-			if (LoadCallback()) return 1;
-		}
+		if (DrvLoad(1)) return 1;
 
 		if (BurnLoadRom(DrvSh2BIOS, 0x00080 + bios, 1)) return 1;	// bios
 		m_region = bios;
@@ -951,10 +978,10 @@ static int DrvInit(int (*LoadCallback)(), int bios, int gfx_len0)
 	Sh2MapMemory(DrvLineRAM,		0x02600000, 0x02607fff, SH2_RAM);
 	Sh2MapMemory(DrvPalRegs,		0x02a00000, 0x02a0001f, SH2_ROM);
 	Sh2MapMemory(DrvPalRAM,			0x02a40000, 0x02a5ffff, SH2_RAM);
-	Sh2MapMemory(DrvSh2ROM,			0x04000000, 0x041fffff, SH2_ROM); // rom
+	Sh2MapMemory(DrvSh2ROM,			0x04000000, 0x041fffff, SH2_ROM);
 	Sh2MapMemory(DrvGfxRAM,			0x04800000, 0x0483ffff, SH2_ROM); // tilemap B, graphics tiles
 	Sh2MapMemory(DrvSh2RAM,			0x06000000, 0x060fffff, SH2_RAM);
-	Sh2MapMemory(DrvCacheRAM,		0xc0000000, 0xc0000fff, SH2_RAM); //
+	Sh2MapMemory(DrvCacheRAM,		0xc0000000, 0xc0000fff, SH2_RAM);
 
 	Sh2SetReadByteHandler (0,		suprnova_read_byte);
 	Sh2SetReadWordHandler (0,		suprnova_read_word);
@@ -992,7 +1019,6 @@ static int DrvExit()
 
 	speedhack_address = ~0;
 	memset (speedhack_pc, 0, 2 * sizeof(int));
-	biosskiponce = 0;
 
 	return 0;
 }
@@ -1406,8 +1432,6 @@ void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, int spriteram_s
 	int endromoffs=0, gfxlen;
 	int grow;
 	UINT16 zoomx, zoomy;
-
-
 
 	if ((!disabled) && suprnova_alt_enable_sprites){
 
@@ -1886,8 +1910,6 @@ static int DrvDraw()
 	memset (DrvTmpScreenA2, 0, nScreenWidth * nScreenHeight * 2);
 	memset (DrvTmpScreenB2, 0, nScreenWidth * nScreenHeight * 2);
 
-//	DrvDecodeRamGfx();
-
 	draw_layer(DrvVidRAM + 0x0000, DrvTmpScreenBuf + 0x0000, DrvTmpScreenA, DrvTmpFlagA, DrvGfxROM1, 0);
 	draw_layer(DrvVidRAM + 0x4000, DrvTmpScreenBuf + 0x4000, DrvTmpScreenB, DrvTmpFlagB, DrvGfxROM2, 1);
 
@@ -1924,15 +1946,7 @@ static int DrvFrame()
 		}
 
 		DrvInputs[1] = 0xffffff00 | DrvDips[0];
-
-//	PORT_BIT( 0x0000ff00, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(paddle_r, "Paddle C")
-//	PORT_BIT( 0x00ff0000, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(paddle_r, "Paddle B")
-//	PORT_BIT( 0xff000000, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(paddle_r, "Paddle A")
-
 		DrvInputs[2] = 0xffffffff; 
-//	PORT_BIT( 0x000000ff, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(paddle_r, "Paddle D")
-//	PORT_BIT( 0xffffff00, IP_ACTIVE_LOW, IPT_UNUSED )
-
 	}
 
 	//int nSoundBufferPos = 0;
@@ -1943,6 +1957,9 @@ static int DrvFrame()
 		int segment = nTotalCycles / nInterleave;
 
 		Sh2Run(segment);
+
+		// These are completely wrong!
+
 		if (i == 5) Sh2SetIRQLine(1, SH2_IRQSTATUS_AUTO);
 		if (i == 6) Sh2SetIRQLine(1, SH2_IRQSTATUS_NONE);
 		if (i == 2) Sh2SetIRQLine(15, SH2_IRQSTATUS_AUTO);
@@ -2045,11 +2062,11 @@ static int DrvScan(int nAction, int *pnMin)
 // Super Kaneko Nova System BIOS
 
 static struct BurnRomInfo sknsRomDesc[] = {
-	{ "sknsj1.u10",		0x80000, 0x7e2b836c, BRF_BIOS}, //  0 Japan BIOS
-	{ "sknse1.u10",		0x80000, 0xe2b9d7d1, BRF_BIOS}, //  1 Europ BIOS
-	{ "sknsa1.u10",		0x80000, 0x745e5212, BRF_BIOS}, //  2 Asia  BIOS
-	{ "sknsu1.u10",		0x80000, 0x384d21ec, BRF_BIOS}, //  3 USA   BIOS
-	{ "sknsk1.u10",		0x80000, 0xff1c9f79, BRF_BIOS}, //  4 Korea BIOS
+	{ "sknsj1.u10",		0x80000, 0x7e2b836c, BRF_BIOS}, //  0 Japan
+	{ "sknse1.u10",		0x80000, 0xe2b9d7d1, BRF_BIOS}, //  1 Europe
+	{ "sknsa1.u10",		0x80000, 0x745e5212, BRF_BIOS}, //  2 Asia
+	{ "sknsu1.u10",		0x80000, 0x384d21ec, BRF_BIOS}, //  3 USA
+	{ "sknsk1.u10",		0x80000, 0xff1c9f79, BRF_BIOS}, //  4 Korea
 };
 
 STD_ROM_PICK(skns)
@@ -2063,69 +2080,32 @@ struct BurnDriver BurnDrvSkns = {
 	"skns", NULL, NULL, NULL, "1996",
 	"Super Kaneko Nova System BIOS\0", "BIOS only", "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_BOARDROM, 0, HARDWARE_KANEKO_SKNS, GBF_BIOS, 0,
+	BDF_BOARDROM, 0, HARDWARE_MISC_POST90S, GBF_BIOS, 0,
 	NULL, sknsRomInfo, sknsRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	SknsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
 	320, 240, 4, 3
 };
 
+
 // Cyvern (US)
 
 static struct BurnRomInfo cyvernRomDesc[] = {
-	{ "cv-usa.u10",	        0x100000, 0x1023ddca, 1 | BRF_PRG | BRF_ESS }, //  0 user1
+	{ "cv-usa.u10",	        0x100000, 0x1023ddca, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
 	{ "cv-usa.u8",		0x100000, 0xf696f6be, 1 | BRF_PRG | BRF_ESS }, //  1
 
-        { "cv100-00.u24",	0x400000, 0xcd4ae88a, 2 | BRF_GRA}, //  2 gfx1
-	{ "cv101-00.u20",	0x400000, 0xa6cb3f0b, 3 | BRF_GRA}, //  3
+        { "cv100-00.u24",	0x400000, 0xcd4ae88a, 2 | BRF_GRA},            //  2 Sprites
+	{ "cv101-00.u20",	0x400000, 0xa6cb3f0b, 2 | BRF_GRA},            //  3
 
-	{ "cv200-00.u16",	0x400000, 0xddc8c67e, 4 | BRF_GRA}, //  4 gfx2
-	{ "cv201-00.u13",	0x400000, 0x65863321, 4 | BRF_GRA}, //  5
+	{ "cv200-00.u16",	0x400000, 0xddc8c67e, 3 | BRF_GRA},            //  4 Background Tiles
+	{ "cv201-00.u13",	0x400000, 0x65863321, 3 | BRF_GRA},            //  5
 
-	{ "cv210-00.u18",	0x400000, 0x7486bf3a, 5 | BRF_GRA}, //  6 gfx3
+	{ "cv210-00.u18",	0x400000, 0x7486bf3a, 4 | BRF_GRA},            //  6 Foreground Tiles
 
-	{ "cv300-00.u4",	0x400000, 0xfbeda465, 6 | BRF_SND}, //  7 ymz
+	{ "cv300-00.u4",	0x400000, 0xfbeda465, 5 | BRF_SND},            //  7 YMZ280b Samples
 };
 
 STDROMPICKEXT(cyvern, cyvern, skns)
 STD_ROM_FN(cyvern)
-
-// Cyvern (Japan)
-
-static struct BurnRomInfo cyvernjRomDesc[] = {
-	{ "cvj-even.u10",	0x100000, 0x802fadb4, 1 | BRF_PRG | BRF_ESS }, //  0 user1
-	{ "cvj-odd.u8",		0x100000, 0xf8a0fbdd, 1 | BRF_PRG | BRF_ESS }, //  1
-
-        { "cv100-00.u24",	0x400000, 0xcd4ae88a, 2 | BRF_GRA}, //  2 gfx1
-	{ "cv101-00.u20",	0x400000, 0xa6cb3f0b, 3 | BRF_GRA}, //  3
-
-	{ "cv200-00.u16",	0x400000, 0xddc8c67e, 4 | BRF_GRA}, //  4 gfx2
-	{ "cv201-00.u13",	0x400000, 0x65863321, 4 | BRF_GRA}, //  5
-
-	{ "cv210-00.u18",	0x400000, 0x7486bf3a, 5 | BRF_GRA}, //  6 gfx3
-
-	{ "cv300-00.u4",	0x400000, 0xfbeda465, 6 | BRF_SND}, //  7 ymz
-};
-
-STDROMPICKEXT(cyvernj, cyvernj, skns)
-STD_ROM_FN(cyvernj)
-
-static int CyvernLoadRoms()
-{
-	if (BurnLoadRom(DrvSh2ROM  + 0x000000,  0, 2)) return 1;
-	if (BurnLoadRom(DrvSh2ROM  + 0x000001,  1, 2)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x400000,  3, 1)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM1 + 0x000000,  4, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x400000,  5, 1)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM2 + 0x400000,  6, 1)) return 1;
-
-	if (BurnLoadRom(YMZ280BROM + 0x000000,  7, 1)) return 1;
-
-	return 0;
-}
 
 static int CyvernInit()
 {
@@ -2134,8 +2114,39 @@ static int CyvernInit()
 	speedhack_address = 0x604d3c8;
 	speedhack_pc[0] = 0x402ebd4;
 
-	return DrvInit(CyvernLoadRoms, 3, 0x800000);
+	return DrvInit(3 /* USA */);
 }
+
+struct BurnDriver BurnDrvCyvern = {
+	"cyvern", NULL, "skns", NULL, "1998",
+	"Cyvern (US)\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, cyvernRomInfo, cyvernRomName, NULL, NULL, CyvernInputInfo, CyvernDIPInfo,
+	CyvernInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
+	240, 320, 3, 4
+};
+
+
+// Cyvern (Japan)
+
+static struct BurnRomInfo cyvernjRomDesc[] = {
+	{ "cvj-even.u10",	0x100000, 0x802fadb4, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "cvj-odd.u8",		0x100000, 0xf8a0fbdd, 1 | BRF_PRG | BRF_ESS }, //  1
+
+        { "cv100-00.u24",	0x400000, 0xcd4ae88a, 2 | BRF_GRA},            //  2 Sprites
+	{ "cv101-00.u20",	0x400000, 0xa6cb3f0b, 2 | BRF_GRA},            //  3
+
+	{ "cv200-00.u16",	0x400000, 0xddc8c67e, 3 | BRF_GRA},            //  4 Background Tiles
+	{ "cv201-00.u13",	0x400000, 0x65863321, 3 | BRF_GRA},            //  5
+
+	{ "cv210-00.u18",	0x400000, 0x7486bf3a, 4 | BRF_GRA},            //  6 Foreground Tiles
+
+	{ "cv300-00.u4",	0x400000, 0xfbeda465, 5 | BRF_SND},            //  7 YMZ280b Samples
+};
+
+STDROMPICKEXT(cyvernj, cyvernj, skns)
+STD_ROM_FN(cyvernj)
 
 static int CyvernJInit()
 {
@@ -2144,24 +2155,14 @@ static int CyvernJInit()
 	speedhack_address = 0x604d3c8;
 	speedhack_pc[0] = 0x402ebd4;
 
-	return DrvInit(CyvernLoadRoms, 0, 0x800000);
+	return DrvInit(0 /* Japan */);
 }
-
-struct BurnDriver BurnDrvCyvern = {
-	"cyvern", NULL, "skns", NULL, "1998",
-	"Cyvern (US)\0", NULL, "Kaneko", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | SCREEN_FLIP, 2, HARDWARE_KANEKO_SKNS, GBF_VERSHOOT, 0,
-	NULL, cyvernRomInfo, cyvernRomName, NULL, NULL, CyvernInputInfo, CyvernDIPInfo,
-	CyvernInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
-	240, 320, 3, 4
-};
 
 struct BurnDriver BurnDrvCyvernJ = {
 	"cyvernj", "cyvern", "skns", NULL, "1998",
 	"Cyvern (Japan)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | SCREEN_FLIP, 2, HARDWARE_KANEKO_SKNS, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, cyvernjRomInfo, cyvernjRomName, NULL, NULL, CyvernInputInfo, CyvernDIPInfo,
 	CyvernJInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
 	240, 320, 3, 4
@@ -2170,32 +2171,18 @@ struct BurnDriver BurnDrvCyvernJ = {
 // Guts'n (Japan)
 
 static struct BurnRomInfo gutsnRomDesc[] = {
-	{ "gts000j0.u6",	0x080000, 0x8ee91310, 2 }, //  0 user1
-	{ "gts001j0.u4",	0x080000, 0x80b8ee66, 2 }, //  1
+	{ "gts000j0.u6",	0x080000, 0x8ee91310, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "gts001j0.u4",	0x080000, 0x80b8ee66, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "gts10000.u24",	0x400000, 0x1959979e, 3 }, //  2 gfx1
+	{ "gts10000.u24",	0x400000, 0x1959979e, 2 | BRF_GRA },           //  2 Sprites
 
-	{ "gts20000.u16",	0x400000, 0xc443aac3, 4 }, //  3 gfx2
+	{ "gts20000.u16",	0x400000, 0xc443aac3, 3 | BRF_GRA },           //  3 Background Tiles
 
-	{ "gts30000.u4",	0x400000, 0x8c169141, 5 }, //  4 ymz
+	{ "gts30000.u4",	0x400000, 0x8c169141, 5 | BRF_SND },           //  4 YMZ280b Samples
 };
 
 STDROMPICKEXT(gutsn, gutsn, skns)
 STD_ROM_FN(gutsn)
-
-static int GutsnLoadRoms()
-{
-	if (BurnLoadRom(DrvSh2ROM  + 0x000000,  0, 2)) return 1;
-	if (BurnLoadRom(DrvSh2ROM  + 0x000001,  1, 2)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 1)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM1 + 0x000000,  3, 1)) return 1;
-
-	if (BurnLoadRom(YMZ280BROM  + 0x000000,  4, 1)) return 1;
-
-	return 0;
-}
 
 static int GutsnInit()
 {
@@ -2204,60 +2191,41 @@ static int GutsnInit()
 	speedhack_address = 0x600c780;
 	speedhack_pc[0] = 0x4022070; //number from mame + 0x02
 
-	return DrvInit(GutsnLoadRoms, 0 /*japan*/, 0x400000);
+	return DrvInit(0 /*japan*/);
 }
 
-struct BurnDriver BurnDrvGutsn = {
+struct BurnDriverD BurnDrvGutsn = {
 	"gutsn", NULL, "skns", NULL, "2000",
 	"Guts'n (Japan)\0", "Imperfect inputs", "Kaneko / Kouyousha", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, gutsnRomInfo, gutsnRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	GutsnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
 	320, 240, 4, 3
 };
 
+
 // Sengeki Striker (Asia)
 
 static struct BurnRomInfo sengekisRomDesc[] = {
-	{ "ss01a.u6",		0x080000, 0x962fe857, 1 | BRF_PRG | BRF_ESS }, //  0 user1
+	{ "ss01a.u6",		0x080000, 0x962fe857, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
 	{ "ss01a.u4",		0x080000, 0xee853c23, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "ss100-00.u21",	0x400000, 0xbc7b3dfa, 2 | BRF_GRA}, //  2 gfx1
-	{ "ss101-00.u20",	0x400000, 0xab2df280, 3 | BRF_GRA}, //  3
-	{ "ss102-00.u8",	0x400000, 0x0845eafe, 3 | BRF_GRA}, //  4
-	{ "ss103-00.u32",	0x400000, 0xee451ac9, 3 | BRF_GRA}, //  5
+	{ "ss100-00.u21",	0x400000, 0xbc7b3dfa, 2 | BRF_GRA},            //  2 Sprites
+	{ "ss101-00.u20",	0x400000, 0xab2df280, 2 | BRF_GRA},            //  3
+	{ "ss102-00.u8",	0x400000, 0x0845eafe, 2 | BRF_GRA},            //  4
+	{ "ss103-00.u32",	0x400000, 0xee451ac9, 2 | BRF_GRA},            //  5
 
-	{ "ss200-00.u17",	0x400000, 0xcd773976, 4 | BRF_GRA}, //  6 gfx2
-	{ "ss201-00.u9",	0x400000, 0x301fad4c, 4 | BRF_GRA}, //  7
+	{ "ss200-00.u17",	0x400000, 0xcd773976, 3 | BRF_GRA},            //  6 Background Tiles
+	{ "ss201-00.u9",	0x400000, 0x301fad4c, 3 | BRF_GRA},            //  7
 
-	{ "ss210-00.u3",	0x200000, 0xc3697805, 5 | BRF_GRA}, //  8 gfx3
+	{ "ss210-00.u3",	0x200000, 0xc3697805, 4 | BRF_GRA},            //  8 Foreground Tiles
 
-	{ "ss300-00.u1",	0x400000, 0x35b04b18, 6 | BRF_SND},//  9 ymz
+	{ "ss300-00.u1",	0x400000, 0x35b04b18, 5 | BRF_SND},            //  9 YMZ280b Samples
 };
 
 STDROMPICKEXT(sengekis, sengekis, skns)
 STD_ROM_FN(sengekis)
-
-static int SengekisLoadRoms()
-{
-	if (BurnLoadRom(DrvSh2ROM  + 0x000000,  0, 2)) return 1;
-	if (BurnLoadRom(DrvSh2ROM  + 0x000001,  1, 2)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x400000,  3, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0x800000,  4, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM0 + 0xc00000,  5, 1)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM1 + 0x000000,  6, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x400000,  7, 1)) return 1;
-
-	if (BurnLoadRom(DrvGfxROM2 + 0x400000,  8, 1)) return 1;
-
-	if (BurnLoadRom(YMZ280BROM  + 0x000000,  9, 1)) return 1;
-
-	return 0;
-}
 
 static int SengekisInit()
 {
@@ -2267,14 +2235,14 @@ static int SengekisInit()
 	speedhack_address = 0x60b74bc;
 	speedhack_pc[0] = 0x60006ec + 2;
 
-	return DrvInit(SengekisLoadRoms, 2 /*asia*/, 0x2000000);
+	return DrvInit(2 /*asia*/);
 }
 
 struct BurnDriverD BurnDrvSengekis = {
 	"sengekis", NULL, "skns", NULL, "1997",
 	"Sengeki Striker (Asia)\0", "Game crashes!", "Kaneko / Warashi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-        BDF_ORIENTATION_VERTICAL | SCREEN_FLIP, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+        BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, sengekisRomInfo, sengekisRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	SengekisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
 	240, 320, 3, 4
@@ -2283,20 +2251,20 @@ struct BurnDriverD BurnDrvSengekis = {
 // Sengeki Striker (Japan)
 
 static struct BurnRomInfo sengekisjRomDesc[] = {
-	{ "ss01j.u6",		0x080000, 0x9efdcd5a, 2 }, //  0 user1
-	{ "ss01j.u4",		0x080000, 0x92c3f45e, 2 }, //  1
+	{ "ss01j.u6",		0x080000, 0x9efdcd5a, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "ss01j.u4",		0x080000, 0x92c3f45e, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "ss100-00.u21",	0x400000, 0xbc7b3dfa, 3 }, //  2 gfx1
-	{ "ss101-00.u20",	0x400000, 0xab2df280, 3 }, //  3
-	{ "ss102-00.u8",	0x400000, 0x0845eafe, 3 }, //  4
-	{ "ss103-00.u32",	0x400000, 0xee451ac9, 3 }, //  5
+	{ "ss100-00.u21",	0x400000, 0xbc7b3dfa, 2 | BRF_GRA },           //  2 Sprites
+	{ "ss101-00.u20",	0x400000, 0xab2df280, 2 | BRF_GRA },           //  3
+	{ "ss102-00.u8",	0x400000, 0x0845eafe, 2 | BRF_GRA },           //  4
+	{ "ss103-00.u32",	0x400000, 0xee451ac9, 2 | BRF_GRA },           //  5
 
-	{ "ss200-00.u17",	0x400000, 0xcd773976, 4 }, //  6 gfx2
-	{ "ss201-00.u9",	0x400000, 0x301fad4c, 4 }, //  7
+	{ "ss200-00.u17",	0x400000, 0xcd773976, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "ss201-00.u9",	0x400000, 0x301fad4c, 3 | BRF_GRA },           //  7
 
-	{ "ss210-00.u3",	0x200000, 0xc3697805, 5 }, //  8 gfx3
+	{ "ss210-00.u3",	0x200000, 0xc3697805, 4 | BRF_GRA },           //  8 Foreground Tiles
 
-	{ "ss300-00.u1",	0x400000, 0x35b04b18, 6 }, //  9 ymz
+	{ "ss300-00.u1",	0x400000, 0x35b04b18, 5 | BRF_SND },           //  9 YMZ280b Samples
 };
 
 STDROMPICKEXT(sengekisj, sengekisj, skns)
@@ -2310,15 +2278,915 @@ static int SengekisjInit()
 	speedhack_address = 0x60b7380;
 	speedhack_pc[0] = 0x60006ec + 2;
 
-	return DrvInit(SengekisLoadRoms, 0 /*japan*/, 0x2000000);
+	return DrvInit(0 /*japan*/);
 }
 
 struct BurnDriverD BurnDrvSengekisj = {
 	"sengekisj", "sengekis", "skns", NULL, "1997",
 	"Sengeki Striker (Japan)\0", "Game crashes!", "Kaneko / Warashi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL | SCREEN_FLIP, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, sengekisjRomInfo, sengekisjRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	SengekisjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
 	240, 320, 3, 4
+};
+
+
+// Puzz Loop (Europe, v0.93)
+
+static struct BurnRomInfo puzzloopRomDesc[] = {
+	{ "pl00e4.u6",		0x080000, 0x7d3131a5, 1 | BRF_PRG | BRF_ESS }, //  1 SH2 Code
+	{ "pl00e4.u4",		0x080000, 0x40dc3291, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "pzl10000.u24",	0x400000, 0x35bf6897, 2 | BRF_GRA },           //  3 Sprites
+
+	{ "pzl20000.u16",	0x400000, 0xff558e68, 3 | BRF_GRA },           //  4 Background Tiles
+
+	{ "pzl21000.u18",	0x400000, 0xc8b3be64, 4 | BRF_GRA },           //  5 Foreground Tiles
+
+	{ "pzl30000.u4",	0x400000, 0x38604b8d, 5 | BRF_SND },           //  6 YMZ280b Samples
+};
+
+STD_ROM_PICK(puzzloop)
+STD_ROM_FN(puzzloop)
+
+static int PuzzloopInit()
+{
+	sprite_kludge_x = -9;
+	sprite_kludge_y = -1;
+
+	speedhack_address = 0x6081d38;
+	speedhack_pc[0] = 0x401dab0 + 2;
+
+	return DrvInit(1 /*europe*/);
+}
+
+struct BurnDriverD BurnDrvPuzzloop = {
+	"puzzloop", NULL, "skns", NULL, "1998",
+	"Puzz Loop (Europe, v0.93)\0", NULL, "Mitchell", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, puzzloopRomInfo, puzzloopRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
+	PuzzloopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Puzz Loop (Europe, v0.93)
+
+static struct BurnRomInfo puzzloopeRomDesc[] = {
+	{ "pl00e1.u6",		0x080000, 0x273adc38, 1 | BRF_PRG | BRF_ESS }, //  1 SH2 Code
+	{ "pl00e1.u4",		0x080000, 0x14ac2870, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "pzl10000.u24",	0x400000, 0x35bf6897, 2 | BRF_GRA },           //  3 Sprites
+
+	{ "pzl20000.u16",	0x400000, 0xff558e68, 3 | BRF_GRA },           //  4 Background Tiles
+
+	{ "pzl21000.u18",	0x400000, 0xc8b3be64, 4 | BRF_GRA },           //  5 Foreground Tiles
+
+	{ "pzl30000.u4",	0x400000, 0x38604b8d, 5 | BRF_SND },           //  6 YMZ280b Samples
+};
+
+STD_ROM_PICK(puzzloope)
+STD_ROM_FN(puzzloope)
+
+struct BurnDriverD BurnDrvPuzzloope = {
+	"puzzloope", "puzzloop", "skns", NULL, "1998",
+	"Puzz Loop (Europe, v0.93)\0", NULL, "Mitchell", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, puzzloopeRomInfo, puzzloopeRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
+	PuzzloopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Puzz Loop (Japan)
+
+static struct BurnRomInfo puzzloopjRomDesc[] = {
+	{ "pl0j2.u6",		0x080000, 0x23c3bf97, 1 | BRF_PRG | BRF_ESS }, //  1 SH2 Code
+	{ "pl0j2.u4",		0x080000, 0x55b2a3cb, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "pzl10000.u24",	0x400000, 0x35bf6897, 2 | BRF_GRA },           //  3 Sprites
+
+	{ "pzl20000.u16",	0x400000, 0xff558e68, 3 | BRF_GRA },           //  4 Background Tiles
+
+	{ "pzl21000.u18",	0x400000, 0xc8b3be64, 4 | BRF_GRA },           //  5 Foreground Tiles
+
+	{ "pzl30000.u4",	0x400000, 0x38604b8d, 5 | BRF_SND },           //  6 YMZ280b Samples
+};
+
+STD_ROM_PICK(puzzloopj)
+STD_ROM_FN(puzzloopj)
+
+static int PuzzloopjInit()
+{
+	sprite_kludge_x = -9;
+	sprite_kludge_y = -1;
+
+	speedhack_address = 0x6086714;
+	speedhack_pc[0] = 0x401dca0 + 2;
+
+	return DrvInit(0 /*japan*/);
+}
+
+struct BurnDriverD BurnDrvPuzzloopj = {
+	"puzzloopj", "puzzloop", "skns", NULL, "1998",
+	"Puzz Loop (Japan)\0", NULL, "Mitchell", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, puzzloopjRomInfo, puzzloopjRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
+	PuzzloopjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Puzz Loop (Asia)
+
+static struct BurnRomInfo puzzloopaRomDesc[] = {
+	{ "pl0a3.u6",		0x080000, 0x4e8673b8, 1 | BRF_PRG | BRF_ESS }, //  1 SH2 Code
+	{ "pl0a3.u4",		0x080000, 0xe08a1a07, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "pzl10000.u24",	0x400000, 0x35bf6897, 2 | BRF_GRA },           //  3 Sprites
+
+	{ "pzl20000.u16",	0x400000, 0xff558e68, 3 | BRF_GRA },           //  4 Background Tiles
+
+	{ "pzl21000.u18",	0x400000, 0xc8b3be64, 4 | BRF_GRA },           //  5 Foreground Tiles
+
+	{ "pzl30000.u4",	0x400000, 0x38604b8d, 5 | BRF_SND },           //  6 YMZ280b Samples
+};
+
+STD_ROM_PICK(puzzloopa)
+STD_ROM_FN(puzzloopa)
+
+static int PuzzloopaInit()
+{
+	sprite_kludge_x = -9;
+	sprite_kludge_y = -1;
+
+	speedhack_address = 0x6085bcc;
+	speedhack_pc[0] = 0x401d9d4 + 2;
+
+	return DrvInit(2 /*asia*/);
+}
+
+struct BurnDriverD BurnDrvPuzzloopa = {
+	"puzzloopa", "puzzloop", "skns", NULL, "1998",
+	"Puzz Loop (Asia)\0", NULL, "Mitchell", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, puzzloopaRomInfo, puzzloopaRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
+	PuzzloopaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Puzz Loop (Korea)
+
+static struct BurnRomInfo puzzloopkRomDesc[] = {
+	{ "pl0k4.u6",		0x080000, 0x8d81f20c, 1 | BRF_PRG | BRF_ESS }, //  1 SH2 Code
+	{ "pl0k4.u4",		0x080000, 0x17c78e41, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "pzl10000.u24",	0x400000, 0x35bf6897, 2 | BRF_GRA },           //  3 Sprites
+
+	{ "pzl20000.u16",	0x400000, 0xff558e68, 3 | BRF_GRA },           //  4 Background Tiles
+
+	{ "pzl21000.u18",	0x400000, 0xc8b3be64, 4 | BRF_GRA },           //  5 Foreground Tiles
+
+	{ "pzl30000.u4",	0x400000, 0x38604b8d, 5 | BRF_SND },           //  6 YMZ280b Samples
+};
+
+STD_ROM_PICK(puzzloopk)
+STD_ROM_FN(puzzloopk)
+
+static int PuzzloopkInit()
+{
+	sprite_kludge_x = -9;
+	sprite_kludge_y = -1;
+
+//	speedhack_address = 0x6081d38;
+//	speedhack_pc[0] = 0x401dab0 + 2;
+
+	return DrvInit(4 /*korea*/);
+}
+
+struct BurnDriverD BurnDrvPuzzloopk = {
+	"puzzloopk", "puzzloop", "skns", NULL, "1998",
+	"Puzz Loop (Korea)\0", NULL, "Mitchell", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, puzzloopkRomInfo, puzzloopkRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
+	PuzzloopkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Puzz Loop (USA)
+
+static struct BurnRomInfo puzzloopuRomDesc[] = {
+	{ "plue5.u6",		0x080000, 0xe6f3f82f, 1 | BRF_PRG | BRF_ESS }, //  1 SH2 Code
+	{ "plue5.u4",		0x080000, 0x0d081d30, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "pzl10000.u24",	0x400000, 0x35bf6897, 2 | BRF_GRA },           //  3 Sprites
+
+	{ "pzl20000.u16",	0x400000, 0xff558e68, 3 | BRF_GRA },           //  4 Background Tiles
+
+	{ "pzl21000.u18",	0x400000, 0xc8b3be64, 4 | BRF_GRA },           //  5 Foreground Tiles
+
+	{ "pzl30000.u4",	0x400000, 0x38604b8d, 5 | BRF_SND },           //  6 YMZ280b Samples
+};
+
+STD_ROM_PICK(puzzloopu)
+STD_ROM_FN(puzzloopu)
+
+static int PuzzloopuInit()
+{
+	sprite_kludge_x = -9;
+	sprite_kludge_y = -1;
+
+	speedhack_address = 0x6085cec;
+	speedhack_pc[0] = 0x401dab0 + 2;
+
+	return DrvInit(3 /*usa*/);
+}
+
+struct BurnDriver BurnDrvPuzzloopu = {
+	"puzzloopu", "puzzloop", "skns", NULL, "1998",
+	"Puzz Loop (USA)\0", NULL, "Mitchell", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, puzzloopuRomInfo, puzzloopuRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
+	PuzzloopuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Tel Jan
+
+static struct BurnRomInfo teljanRomDesc[] = {
+	{ "tel1j.u10",		0x080000, 0x09b552fe, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "tel1j.u8",		0x080000, 0x070b4345, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "tj100-00.u24",	0x400000, 0x810144f1, 2 | BRF_GRA },           //  2 Sprites
+	{ "tj101-00.u20",	0x400000, 0x82f570e1, 2 | BRF_GRA },           //  3
+	{ "tj102-00.u17",	0x400000, 0xace875dc, 2 | BRF_GRA },           //  4
+
+	{ "tj200-00.u16",	0x400000, 0xbe0f90b2, 3 | BRF_GRA },           //  5 Background Tiles
+
+	{ "tj300-00.u4",	0x400000, 0x685495c4, 5 | BRF_SND },           //  6 YMZ280b Samples
+};
+
+STD_ROM_PICK(teljan)
+STD_ROM_FN(teljan)
+
+static int TeljanInit()
+{
+	sprite_kludge_x = 5;
+	sprite_kludge_y = 1;
+
+	speedhack_address = 0x6002fb4;
+	speedhack_pc[0] = 0x401ba32 + 2;
+
+	return DrvInit(0 /*japan*/);
+}
+
+struct BurnDriverD BurnDrvTeljan = {
+	"teljan",  NULL, "skns",NULL, "1999",
+	"Tel Jan\0", NULL, "Electro Design", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, teljanRomInfo, teljanRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //Skns_1pInputInfo, Skns_1pDIPInfo,
+	TeljanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Panic Street (Japan)
+
+static struct BurnRomInfo panicstrRomDesc[] = {
+	{ "ps1000j0.u10",	0x100000, 0x59645f89, 1 | BRF_PRG | BRF_ESS }, //  1 SH2 Code
+	{ "ps1001j0.u8",	0x100000, 0xc4722be9, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "ps-10000.u24",	0x400000, 0x294b2f14, 2 | BRF_GRA },           //  3 Sprites
+	{ "ps110100.u20",	0x400000, 0xe292f393, 2 | BRF_GRA },           //  4
+
+	{ "ps120000.u16",	0x400000, 0xd772ac15, 3 | BRF_GRA },           //  5 Background Tiles
+
+	{ "ps-30000.u4",	0x400000, 0x2262e263, 5 | BRF_SND },           //  6 YMZ280b Samples
+};
+
+STD_ROM_PICK(panicstr)
+STD_ROM_FN(panicstr)
+
+static int PanicstrInit()
+{
+	sprite_kludge_x = -1;
+	sprite_kludge_y = -1;
+
+	speedhack_address = 0x60f19e4;
+	speedhack_pc[0] = 0x404e68a + 2;
+
+	return DrvInit(0 /*japan*/);
+}
+
+struct BurnDriverD BurnDrvPanicstr = {
+	"panicstr", NULL, "skns", NULL, "1999",
+	"Panic Street (Japan)\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, panicstrRomInfo, panicstrRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
+	PanicstrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Gals Panic 4 (Japan)
+
+static struct BurnRomInfo galpani4RomDesc[] = {
+	{ "gp4j1.u10",		0x080000, 0x919a3893, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "gp4j1.u8",		0x080000, 0x94cb1fb7, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "gp4-100-00.u24",	0x200000, 0x1df61f01, 2 | BRF_GRA },           //  2 Sprites
+	{ "gp4-101-00.u20",	0x100000, 0x8e2c9349, 2 | BRF_GRA },           //  3
+
+	{ "gp4-200-00.u16",	0x200000, 0xf0781376, 3 | BRF_GRA },           //  4 Background Tiles
+	{ "gp4-201-00.u18",	0x200000, 0x10c4b183, 3 | BRF_GRA },           //  5
+
+	{ "gp4-300-00.u4",	0x200000, 0x8374663a, 5 | BRF_SND },           //  6 YMZ280b Samples
+};
+
+STD_ROM_PICK(galpani4)
+STD_ROM_FN(galpani4)
+
+static int Galpani4Init()
+{
+	sprite_kludge_x = -5;
+	sprite_kludge_y = -1;
+
+	return DrvInit(0 /*Japan*/);
+}
+
+struct BurnDriverD BurnDrvGalpani4 = {
+	"galpani4", NULL, "skns", NULL, "1996",
+	"Gals Panic 4 (Japan)\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, galpani4RomInfo, galpani4RomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //CyvernInputInfo, CyvernDIPInfo,
+	Galpani4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Gals Panic 4 (Korea)
+
+static struct BurnRomInfo galpani4kRomDesc[] = {
+	{ "gp4k1.u10",		0x080000, 0xcbd5c3a0, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "gp4k1.u8",		0x080000, 0x7a95bfe2, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "gp4-100-00.u24",	0x200000, 0x1df61f01, 2 | BRF_GRA },           //  2 Sprites
+	{ "gp4-101-00.u20",	0x100000, 0x8e2c9349, 2 | BRF_GRA },           //  3
+
+	{ "gp4-200-00.u16",	0x200000, 0xf0781376, 3 | BRF_GRA },           //  4 Background Tiles
+	{ "gp4-201-00.u18",	0x200000, 0x10c4b183, 3 | BRF_GRA },           //  5
+
+	{ "gp4-300-00.u4",	0x200000, 0x8374663a, 5 | BRF_SND },           //  6 YMZ280b Samples
+	{ "gp4-301-01.u7",	0x200000, 0x886ef77f, 5 | BRF_SND },           //  7
+};
+
+STD_ROM_PICK(galpani4k)
+STD_ROM_FN(galpani4k)
+
+static int Galpani4kInit()
+{
+	sprite_kludge_x = -5;
+	sprite_kludge_y = -1;
+
+	return DrvInit(4 /*Korea*/);
+}
+
+struct BurnDriverD BurnDrvGalpani4k = {
+	"galpani4k", "galpani4", "skns", NULL, "1996",
+	"Gals Panic 4 (Korea)\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, galpani4kRomInfo, galpani4kRomName, NULL, NULL, CyvernInputInfo, CyvernDIPInfo,
+	Galpani4kInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Gals Panic S - Extra Edition (Europe)
+
+static struct BurnRomInfo galpanisRomDesc[] = {
+	{ "gps-000-e1.u10",	0x100000, 0xb9ea3c44, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "gps-001-e1.u8",	0x100000, 0xded57bd0, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "gps10000.u24",	0x400000, 0xa1a7acf2, 2 | BRF_GRA },           //  2 Sprites
+	{ "gps10100.u20",	0x400000, 0x49f764b6, 2 | BRF_GRA },           //  3
+	{ "gps10200.u17",	0x400000, 0x51980272, 2 | BRF_GRA },           //  4
+
+	{ "gps20000.u16",	0x400000, 0xc146a09e, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "gps20100.u13",	0x400000, 0x9dfa2dc6, 3 | BRF_GRA },           //  6
+
+	{ "gps30000.u4",	0x400000, 0x9e4da8e3, 5 | BRF_SND },           //  7 YMZ280b Samples
+};
+
+STD_ROM_PICK(galpanis)
+STD_ROM_FN(galpanis)
+
+static int GalpanisInit()
+{
+	sprite_kludge_x = -5;
+	sprite_kludge_y = -1;
+
+	return DrvInit(1 /*Europe*/);
+}
+
+struct BurnDriverD BurnDrvGalpanis = {
+	"galpanis", NULL, "skns", NULL, "1997",
+	"Gals Panic S - Extra Edition (Europe)\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, galpanisRomInfo, galpanisRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
+	GalpanisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Gals Panic S - Extra Edition (Japan)
+
+static struct BurnRomInfo galpanisjRomDesc[] = {
+	{ "gps-000-j1.u10",	0x100000, 0xc6938c3f, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "gps-001-j1.u8",	0x100000, 0xe764177a, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "gps10000.u24",	0x400000, 0xa1a7acf2, 2 | BRF_GRA },           //  2 Sprites
+	{ "gps10100.u20",	0x400000, 0x49f764b6, 2 | BRF_GRA },           //  3
+	{ "gps10200.u17",	0x400000, 0x51980272, 2 | BRF_GRA },           //  4
+
+	{ "gps20000.u16",	0x400000, 0xc146a09e, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "gps20100.u13",	0x400000, 0x9dfa2dc6, 3 | BRF_GRA },           //  6
+
+	{ "gps30000.u4",	0x400000, 0x9e4da8e3, 5 | BRF_SND },           //  7 YMZ280b Samples
+};
+
+STD_ROM_PICK(galpanisj)
+STD_ROM_FN(galpanisj)
+
+static int GalpanisjInit()
+{
+	sprite_kludge_x = -5;
+	sprite_kludge_y = -1;
+
+	return DrvInit(0 /*Japan*/);
+}
+
+struct BurnDriverD BurnDrvGalpanisj = {
+	"galpanisj", "galpanis", "skns", NULL, "1997",
+	"Gals Panic S - Extra Edition (Japan)\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, galpanisjRomInfo, galpanisjRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
+	GalpanisjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Gals Panic S - Extra Edition (Korea)
+
+static struct BurnRomInfo galpaniskRomDesc[] = {
+	{ "gps-000-k1.u10",	0x100000, 0xc9ff3d8a, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "gps-001-k1.u8",	0x100000, 0x354e601d, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "gps10000.u24",	0x400000, 0xa1a7acf2, 2 | BRF_GRA },           //  2 Sprites
+	{ "gps10100.u20",	0x400000, 0x49f764b6, 2 | BRF_GRA },           //  3
+	{ "gps10200.u17",	0x400000, 0x51980272, 2 | BRF_GRA },           //  4
+
+	{ "gps20000.u16",	0x400000, 0xc146a09e, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "gps20100.u13",	0x400000, 0x9dfa2dc6, 3 | BRF_GRA },           //  6
+
+	{ "gps30000.u4",	0x400000, 0x9e4da8e3, 5 | BRF_SND },           //  7 YMZ280b Samples
+};
+
+STD_ROM_PICK(galpanisk)
+STD_ROM_FN(galpanisk)
+
+static int GalpaniskInit()
+{
+	sprite_kludge_x = -5;
+	sprite_kludge_y = -1;
+
+	return DrvInit(4 /*Korea*/);
+}
+
+struct BurnDriverD BurnDrvGalpanisk = {
+	"galpanisk", "galpanis", "skns", NULL, "1997",
+	"Gals Panic S - Extra Edition (Korea)\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, galpaniskRomInfo, galpaniskRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
+	GalpaniskInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Gals Panic S2 (Japan)
+
+static struct BurnRomInfo galpans2RomDesc[] = {
+	{ "gps2j.u6",		0x100000, 0x6e74005b, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "gps2j.u4",		0x100000, 0x9b4b2304, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "gs210000.u21",	0x400000, 0x294b2f14, 2 | BRF_GRA },           //  2 Sprites
+	{ "gs210100.u20",	0x400000, 0xf75c5a9a, 2 | BRF_GRA },           //  3
+	{ "gs210200.u8",	0x400000, 0x25b4f56b, 2 | BRF_GRA },           //  4
+	{ "gs210300.u32",	0x400000, 0xdb6d4424, 2 | BRF_GRA },           //  5
+
+	{ "gs220000.u17",	0x400000, 0x5caae1c0, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "gs220100.u9",	0x400000, 0x8d51f197, 3 | BRF_GRA },           //  7
+
+	{ "gs221000.u3",	0x400000, 0x58800a18, 4 | BRF_GRA },           //  8 Foreground Tiles
+
+	{ "gs230000.u1",	0x400000, 0x0348e8e1, 5 | BRF_SND },           //  9 YMZ280b Samples
+};
+
+STD_ROM_PICK(galpans2)
+STD_ROM_FN(galpans2)
+
+static int Galpans2Init()
+{
+	sprite_kludge_x = -1;
+	sprite_kludge_y = -1;
+
+	speedhack_address = 0x60fb6bc;
+	speedhack_pc[0] = 0x4049ae2 + 2;
+
+	return DrvInit(0 /*Japan*/);
+}
+
+struct BurnDriverD BurnDrvGalpans2 = {
+	"galpans2", NULL, "skns", NULL, "1999",
+	"Gals Panic S2 (Japan)\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, galpans2RomInfo, galpans2RomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
+	Galpans2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Gals Panic S2 (Asia)
+
+static struct BurnRomInfo galpans2aRomDesc[] = {
+	{ "gps2av11.u6",	0x100000, 0x61c05d5f, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "gps2av11.u4",	0x100000, 0x2e8c0ac2, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "gs210000.u21",	0x400000, 0x294b2f14, 2 | BRF_GRA },           //  2 Sprites
+	{ "gs210100.u20",	0x400000, 0xf75c5a9a, 2 | BRF_GRA },           //  3
+	{ "gs210200.u8",	0x400000, 0x25b4f56b, 2 | BRF_GRA },           //  4
+	{ "gs210300.u32",	0x400000, 0xdb6d4424, 2 | BRF_GRA },           //  5
+
+	{ "gs220000.u17",	0x400000, 0x5caae1c0, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "gs220100.u9",	0x400000, 0x8d51f197, 3 | BRF_GRA },           //  7
+
+	{ "gs221000.u3",	0x400000, 0x58800a18, 4 | BRF_GRA },           //  8 Foreground Tiles
+
+	{ "gs230000.u1",	0x400000, 0x0348e8e1, 5 | BRF_SND },           //  9 YMZ280b Samples
+};
+
+STD_ROM_PICK(galpans2a)
+STD_ROM_FN(galpans2a)
+
+static int Galpans2aInit()
+{
+	sprite_kludge_x = -1;
+	sprite_kludge_y = -1;
+
+	speedhack_address = 0x60fb6bc;
+	speedhack_pc[0] = 0x4049ae2 + 2;
+
+	return DrvInit(2 /*Asia*/);
+}
+
+struct BurnDriverD BurnDrvGalpans2a = {
+	"galpans2a", "galpans2", "skns", NULL, "1999",
+	"Gals Panic S2 (Asia)\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, galpans2aRomInfo, galpans2aRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
+	Galpans2aInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Gals Panic SU (Korea)
+
+static struct BurnRomInfo galpansuRomDesc[] = {
+	{ "su.u10",		0x100000, 0x5ae66218, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "su.u8",		0x100000, 0x10977a03, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "24",			0x400000, 0x294b2f14, 2 | BRF_GRA },           //  2 Sprites
+	{ "20",			0x400000, 0xf75c5a9a, 2 | BRF_GRA },           //  3
+	{ "17",			0x400000, 0x25b4f56b, 2 | BRF_GRA },           //  4
+	{ "32",			0x400000, 0xdb6d4424, 2 | BRF_GRA },           //  5
+
+	{ "16",			0x400000, 0x5caae1c0, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "13",			0x400000, 0x8d51f197, 3 | BRF_GRA },           //  7
+
+	{ "7",			0x400000, 0x58800a18, 4 | BRF_GRA },           //  8 Foreground Tiles
+
+	{ "4",			0x400000, 0x0348e8e1, 5 | BRF_SND },           //  9 YMZ280b Samples
+};
+
+STD_ROM_PICK(galpansu)
+STD_ROM_FN(galpansu)
+
+static int GalpansuInit()
+{
+	sprite_kludge_x = -1;
+	sprite_kludge_y = -1;
+
+	speedhack_address = 0x60fb6bc;
+	speedhack_pc[0] = 0x4049ae2 + 2;
+
+	return DrvInit(4 /*Korea*/);
+}
+
+struct BurnDriver BurnDrvGalpansu = {
+	"galpansu", "galpans2", "skns", NULL, "1999",
+	"Gals Panic SU (Korea)\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, galpansuRomInfo, galpansuRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
+	GalpansuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Gals Panic S3 (Japan)
+
+static struct BurnRomInfo galpans3RomDesc[] = {
+	{ "gpss3.u10",		0x100000, 0xc1449a72, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "gpss3.u8",		0x100000, 0x11eb44cf, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "u24.bin",		0x800000, 0x70613168, 2 | BRF_GRA },           //  2 Sprites
+
+	{ "u16.bin",		0x800000, 0xa96daf2a, 3 | BRF_GRA },           //  3 Background Tiles
+ 
+	{ "u4.bin",		0x400000, 0xbf5736c6, 5 | BRF_SND },           //  4 YMZ280b Samples
+};
+
+STD_ROM_PICK(galpans3)
+STD_ROM_FN(galpans3)
+
+static int Galpans3Init()
+{
+	sprite_kludge_x = -1;
+	sprite_kludge_y = -1;
+
+	return DrvInit(0 /*Japan*/);
+}
+
+struct BurnDriverD BurnDrvGalpans3 = {
+	"galpans3", NULL, "skns", NULL, "2002",
+	"Gals Panic S3 (Japan)\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, galpans3RomInfo, galpans3RomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
+	Galpans3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Jan Jan Paradise
+
+static struct BurnRomInfo jjparadsRomDesc[] = {
+	{ "jp1j1.u10",		0x080000, 0xde2fb669, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "jp1j1.u8",		0x080000, 0x7276efb1, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "jp100-00.u24",	0x400000, 0xf31b2e95, 2 | BRF_GRA },           //  2 Sprites
+	{ "jp101-00.u20",	0x400000, 0x70cc8c24, 2 | BRF_GRA },           //  3
+	{ "jp102-00.u17",	0x400000, 0x35401c1e, 2 | BRF_GRA },           //  4
+
+	{ "jp200-00.u16",	0x200000, 0x493d63db, 3 | BRF_GRA },           //  5 Background Tiles
+
+	{ "jp300-00.u4",	0x200000, 0x7023fe46, 5 | BRF_SND },           //  6 YMZ280b Samples
+};
+
+STD_ROM_PICK(jjparads)
+STD_ROM_FN(jjparads)
+
+static int JjparadsInit()
+{
+	sprite_kludge_x = 5;
+	sprite_kludge_y = 1;
+
+//	speedhack_address = 0x6000994;
+//	speedhack_pc[0] = 0x4015e84 + 2;
+
+	return DrvInit(0 /*Japan*/);
+}
+
+struct BurnDriverD BurnDrvJjparads = {
+	"jjparads", NULL, "skns", NULL, "1996",
+	"Jan Jan Paradise\0", NULL, "Electro Design", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, jjparadsRomInfo, jjparadsRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //Skns_1pInputInfo, Skns_1pDIPInfo,
+	JjparadsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Jan Jan Paradise 2
+
+static struct BurnRomInfo jjparad2RomDesc[] = {
+	{ "jp2000j1.u6",	0x080000, 0x5d75e765, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "jp2001j1.u4",	0x080000, 0x1771910a, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "jp210000.u21",	0x400000, 0x79a7e3d7, 2 | BRF_GRA },           //  2 Sprites
+	{ "jp210100.u20",	0x400000, 0x42415e0c, 2 | BRF_GRA },           //  3
+	{ "jp210200.u8",	0x400000, 0x26731745, 2 | BRF_GRA },           //  4
+
+	{ "jp220000.u17",	0x400000, 0xd0e71873, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "jp220100.u9",	0x400000, 0x4c7d964d, 3 | BRF_GRA },           //  6
+
+	{ "jp230000.u1",	0x400000, 0x73e30d7f, 5 | BRF_SND },           //  7 YMZ280b Samples
+};
+
+STD_ROM_PICK(jjparad2)
+STD_ROM_FN(jjparad2)
+
+static int Jjparad2Init()
+{
+	sprite_kludge_x = 5;
+	sprite_kludge_y = 1;
+
+//	speedhack_address = 0x6000994;
+//	speedhack_pc[0] = 0x401620a + 2;
+
+	return DrvInit(0 /*Japan*/);
+}
+
+struct BurnDriverD BurnDrvJjparad2 = {
+	"jjparad2", NULL, "skns", NULL, "1997",
+	"Jan Jan Paradise 2\0", NULL, "Electro Design", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, jjparad2RomInfo, jjparad2RomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //Skns_1pInputInfo, Skns_1pDIPInfo,
+	Jjparad2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Sen-Know (Japan)
+
+static struct BurnRomInfo senknowRomDesc[] = {
+	{ "snw000j1.u6",	0x080000, 0x0d6136f6, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "snw001j1.u4",	0x080000, 0x4a10ec3d, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "snw10000.u21",	0x400000, 0x5133c69c, 2 | BRF_GRA },           //  2 Sprites
+	{ "snw10100.u20",	0x400000, 0x9dafe03f, 2 | BRF_GRA },           //  3
+
+	{ "snw20000.u17",	0x400000, 0xd5fe5f8c, 3 | BRF_GRA },           //  4 Background Tiles
+	{ "snw20100.u9",	0x400000, 0xc0037846, 3 | BRF_GRA },           //  5
+
+	{ "snw21000.u3",	0x400000, 0xf5c23e79, 4 | BRF_GRA },           //  6 Foreground Tiles
+
+	{ "snw30000.u1",	0x400000, 0xec9eef40, 5 | BRF_SND },           //  7 YMZ280b Samples
+};
+
+STD_ROM_PICK(senknow)
+STD_ROM_FN(senknow)
+
+static int SenknowInit()
+{
+	sprite_kludge_x = 1;
+	sprite_kludge_y = 1;
+
+	speedhack_address = 0x60000dc;
+	speedhack_pc[0] = 0x4017dce + 2;
+
+	return DrvInit(0 /*Japan*/);
+}
+
+struct BurnDriverD BurnDrvSenknow = {
+	"senknow", NULL, "skns", NULL, "1999",
+	"Sen-Know (Japan)\0", NULL, "Kaneko / Kouyousha", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, senknowRomInfo, senknowRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //SknsInputInfo, SknsDIPInfo,
+	SenknowInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// VS Mahjong Otome Ryouran
+
+static struct BurnRomInfo ryouranRomDesc[] = {
+	{ "or000j1.u10",	0x080000, 0xd93aa491, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "or001j1.u8",		0x080000, 0xf466e5e9, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "or100-00.u24",	0x400000, 0xe9c7695b, 2 | BRF_GRA },           //  2 Sprites
+	{ "or101-00.u20",	0x400000, 0xfe06bf12, 2 | BRF_GRA },           //  3
+	{ "or102-00.u17",	0x400000, 0xf2a5237b, 2 | BRF_GRA },           //  4
+
+	{ "or200-00.u16",	0x400000, 0x4c4701a8, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "or201-00.u13",	0x400000, 0xa94064aa, 3 | BRF_GRA },           //  6
+
+	{ "or300-00.u4",	0x400000, 0xa3f64b79, 5 | BRF_SND },           //  7 YMZ280b Samples
+};
+
+STD_ROM_PICK(ryouran)
+STD_ROM_FN(ryouran)
+
+static int RyouranInit()
+{
+	sprite_kludge_x = 5;
+	sprite_kludge_y = 1;
+
+	speedhack_address = 0x6000a14;
+	speedhack_pc[0] = 0x40182ce + 2;
+
+	return DrvInit(0 /*Japan*/);
+}
+
+struct BurnDriverD BurnDrvRyouran = {
+	"ryouran", NULL, "skns", NULL, "1998",
+	"VS Mahjong Otome Ryouran\0", NULL, "Electro Design", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, ryouranRomInfo, ryouranRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //Skns_1pInputInfo, Skns_1pDIPInfo,
+	RyouranInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// VS Block Breaker (Asia)
+
+static struct BurnRomInfo vblokbrkRomDesc[] = {
+	{ "sk01a.u10",		0x080000, 0x4d1be53e, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "sk01a.u8",		0x080000, 0x461e0197, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "sk100-00.u24",	0x200000, 0x151dd88a, 2 | BRF_GRA },           //  2 Sprites
+	{ "sk-101.u20",		0x100000, 0x779cce23, 2 | BRF_GRA },           //  3
+
+	{ "sk200-00.u16",	0x200000, 0x2e297c61, 3 | BRF_GRA },           //  4 Background Tiles
+
+	{ "sk300-00.u4",	0x200000, 0xe6535c05, 5 | BRF_SND },           //  5 YMZ280b Samples
+};
+
+STD_ROM_PICK(vblokbrk)
+STD_ROM_FN(vblokbrk)
+
+static int VblokbrkInit()
+{
+	sprite_kludge_x = -1;
+	sprite_kludge_y = -1;
+
+	return DrvInit(2 /*Asia*/);
+}
+
+struct BurnDriverD BurnDrvVblokbrk = {
+	"vblokbrk", NULL, "skns", NULL, "1997",
+	"VS Block Breaker (Asia)\0", NULL, "Kaneko / Mediaworks", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, vblokbrkRomInfo, vblokbrkRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //VblokbrkInputInfo, VblokbrkDIPInfo,
+	VblokbrkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Saru-Kani-Hamu-Zou (Japan)
+
+static struct BurnRomInfo sarukaniRomDesc[] = {
+	{ "sk1j1.u10",		0x080000, 0xfcc131b6, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "sk1j1.u8",		0x080000, 0x3b6aa343, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "sk100-00.u24",	0x200000, 0x151dd88a, 2 | BRF_GRA },           //  2 Sprites
+	{ "sk-101.u20",		0x100000, 0x779cce23, 2 | BRF_GRA },           //  3
+
+	{ "sk200-00.u16",	0x200000, 0x2e297c61, 3 | BRF_GRA },           //  4 Background Tiles
+
+	{ "sk300-00.u4",	0x200000, 0xe6535c05, 5 | BRF_SND },           //  5 YMZ280b Samples
+};
+
+STD_ROM_PICK(sarukani)
+STD_ROM_FN(sarukani)
+
+static int SarukaniInit()
+{
+	sprite_kludge_x = -1;
+	sprite_kludge_y = -1;
+
+	return DrvInit(0 /*Japan*/);
+}
+
+struct BurnDriverD BurnDrvSarukani = {
+	"sarukani", "vblokbrk", "skns", NULL, "1997",
+	"Saru-Kani-Hamu-Zou (Japan)\0", NULL, "Kaneko / Mediaworks", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, sarukaniRomInfo, sarukaniRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //VblokbrkInputInfo, VblokbrkDIPInfo,
+	SarukaniInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
 };

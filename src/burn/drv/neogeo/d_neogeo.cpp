@@ -13260,7 +13260,7 @@ static struct BurnRomInfo kof96ae20RomDesc[] = {
 	{ "214ae-s1.s1",  0x020000, 0x0f902790, 2 | BRF_GRA },           //  2 Text layer tiles
 
 	{ "214ae-c1.c1",  0x400000, 0xb308c1f9, 3 | BRF_GRA },           //  3 Sprite data
-	{ "214ae-c2.c1",  0x400000, 0x220a92b2, 3 | BRF_GRA },           //  4 
+	{ "214ae-c2.c2",  0x400000, 0x220a92b2, 3 | BRF_GRA },           //  4 
 	{ "214-c3.bin",   0x400000, 0x64989a65, 3 | BRF_GRA },           //  5 
 	{ "214-c4.bin",   0x400000, 0xafbea515, 3 | BRF_GRA },           //  6 
 	{ "214ae-c5.c5",  0x400000, 0x41dbd677, 3 | BRF_GRA },           //  7 

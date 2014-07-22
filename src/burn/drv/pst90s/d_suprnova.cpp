@@ -2280,7 +2280,7 @@ struct BurnDriver BurnDrvSengekisj = {
 };
 
 
-// Puzz Loop (Europe, v0.93)
+// Puzz Loop (Europe, v0.94)
 
 static struct BurnRomInfo puzzloopRomDesc[] = {
 	{ "pl00e4.u6",		0x080000, 0x7d3131a5, 1 | BRF_PRG | BRF_ESS }, //  1 SH2 Code
@@ -2311,7 +2311,7 @@ static int PuzzloopInit()
 
 struct BurnDriver BurnDrvPuzzloop = {
 	"puzzloop", NULL, "skns", NULL, "1998",
-	"Puzz Loop (Europe, v0.93)\0", NULL, "Mitchell", "Miscellaneous",
+	"Puzz Loop (Europe, v0.94)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, puzzloopRomInfo, puzzloopRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,

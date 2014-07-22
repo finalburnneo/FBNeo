@@ -1273,7 +1273,7 @@ STDDIPINFO(Passshta)
 static struct BurnDIPInfo CencourtDIPList[]=
 {
 	// Default Values
-	{0x29, 0xff, 0xff, 0xf0, NULL                                 },
+	{0x29, 0xff, 0xff, 0xf1, NULL                                 },
 	{0x2a, 0xff, 0xff, 0xff, NULL                                 },
 
 	// Dip 1

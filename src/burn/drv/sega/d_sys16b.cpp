@@ -3600,31 +3600,30 @@ STD_ROM_PICK(Passshtb)
 STD_ROM_FN(Passshtb)
 
 static struct BurnRomInfo CencourtRomDesc[] = {
-	{ "a4_56f6.bin",    0x10000, 0x7116dce6, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "a1_478b.bin",    0x10000, 0x37beb770, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "a4_56f6.a4",    	0x10000, 0x7116dce6, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "a1_478b.a1",    	0x10000, 0x37beb770, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	
-	{ "epr-b-9.bin",    0x10000, 0x9a55cd88, SYS16_ROM_TILES | BRF_GRA },
-	{ "epr-b-10.bin",   0x10000, 0xfc13ca35, SYS16_ROM_TILES | BRF_GRA },
-	{ "epr-b-11.bin",   0x10000, 0x1503c203, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-b-9.b9",     0x10000, 0x9a55cd88, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-b-10.b10",   0x10000, 0xfc13ca35, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-b-11.b11",   0x10000, 0x1503c203, SYS16_ROM_TILES | BRF_GRA },
 	
-	{ "epr-b-1.bin",    0x10000, 0xb18bfccf, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-b-5.bin",    0x10000, 0x3481a8e8, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-b-2.bin",    0x10000, 0x61a996c0, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-b-6.bin",    0x10000, 0x2116bcb1, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-b-3.bin",    0x10000, 0x69a2e109, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-b-7.bin",    0x10000, 0xccf6b09f, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-b-4.bin",    0x10000, 0xbdf63cd2, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-b-8.bin",    0x10000, 0x88a90641, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-b-1.b1",     0x10000, 0xb18bfccf, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-b-5.b5",     0x10000, 0x3481a8e8, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-b-2.b2",     0x10000, 0x61a996c0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-b-6.b6",     0x10000, 0x2116bcb1, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-b-3.b3",     0x10000, 0x69a2e109, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-b-7.b7",     0x10000, 0xccf6b09f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-b-4.b4",     0x10000, 0xbdf63cd2, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-b-8.b8",     0x10000, 0x88a90641, SYS16_ROM_SPRITES | BRF_GRA },
 
-//	{ "epr-a-7.bin",   	0x08000, 0x789edc06, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG }, // encrypted
-	{ "epr-11857.a7",   0x08000, 0x789edc06, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG }, // temporary (from parent until above is decrypted)
+	{ "epr-a-7.a7",   	0x08000, 0x9e1b81c6, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG }, // encrypted
+		
+	{ "epr-a-8.a8",     0x08000, 0x08ab0018, SYS16_ROM_UPD7759DATA | BRF_SND }, // == epr-11858.a8
+	{ "epr-a-9.a9",     0x08000, 0x8673e01b, SYS16_ROM_UPD7759DATA | BRF_SND }, // == epr-11859.a9
+	{ "epr-a-10.a10",   0x08000, 0x10263746, SYS16_ROM_UPD7759DATA | BRF_SND }, // == epr-11860.a10
+	{ "epr-a-11.a11",   0x08000, 0x38b54a71, SYS16_ROM_UPD7759DATA | BRF_SND }, // == epr-11861.a11
 	
-	{ "epr-a-8.bin",    0x08000, 0x08ab0018, SYS16_ROM_UPD7759DATA | BRF_SND }, // == epr-11858.a8
-	{ "epr-a-9.bin",    0x08000, 0x8673e01b, SYS16_ROM_UPD7759DATA | BRF_SND }, // == epr-11859.a9
-	{ "epr-a-10.bin",   0x08000, 0x10263746, SYS16_ROM_UPD7759DATA | BRF_SND }, // == epr-11860.a10
-	{ "epr-a-11.bin",   0x08000, 0x38b54a71, SYS16_ROM_UPD7759DATA | BRF_SND }, // == epr-11861.a11
-	
-	{ "cencourt_mc8123.key",   0x02000, 0x00000000, BRF_NODUMP },
+	{ "mc-8123b_center_court.key",   0x02000, 0x2be5c90b, SYS16_ROM_KEY | BRF_ESS | BRF_PRG }, // No official 317-xxxx number
 };
 
 
@@ -8809,9 +8808,9 @@ struct BurnDriverD BurnDrvPassshtb = {
 
 struct BurnDriver BurnDrvCencourt = {
 	"cencourt", "passsht", NULL, NULL, "1988",
-	"Center Court (prototype, MC-8123B)\0", NULL, "Sega", "System 16B",
+	"Center Court (World, 4 Players, prototype, MC-8123B)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_MC8123_ENC, GBF_SPORTSMISC, 0,
 	NULL, CencourtRomInfo, CencourtRomName, NULL, NULL, PassshtInputInfo, CencourtDIPInfo,
 	PassshtaInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4

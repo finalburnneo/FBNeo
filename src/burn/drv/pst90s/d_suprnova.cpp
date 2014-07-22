@@ -2182,9 +2182,9 @@ static int GutsnInit()
 	return DrvInit(0 /*japan*/);
 }
 
-struct BurnDriverD BurnDrvGutsn = {
+struct BurnDriver BurnDrvGutsn = {
 	"gutsn", NULL, "skns", NULL, "2000",
-	"Guts'n (Japan)\0", "Imperfect inputs", "Kaneko / Kouyousha", "Miscellaneous",
+	"Guts'n (Japan)\0", NULL, "Kaneko / Kouyousha", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
 	NULL, gutsnRomInfo, gutsnRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
@@ -2226,11 +2226,11 @@ static int SengekisInit()
 	return DrvInit(2 /*asia*/);
 }
 
-struct BurnDriverD BurnDrvSengekis = {
+struct BurnDriver BurnDrvSengekis = {
 	"sengekis", NULL, "skns", NULL, "1997",
 	"Sengeki Striker (Asia)\0", NULL, "Kaneko / Warashi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-        BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+        BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO_SKNS, GBF_VERSHOOT, 0,
 	NULL, sengekisRomInfo, sengekisRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	SengekisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
 	240, 320, 3, 4
@@ -2269,11 +2269,11 @@ static int SengekisjInit()
 	return DrvInit(0 /*japan*/);
 }
 
-struct BurnDriverD BurnDrvSengekisj = {
+struct BurnDriver BurnDrvSengekisj = {
 	"sengekisj", "sengekis", "skns", NULL, "1997",
 	"Sengeki Striker (Japan)\0", NULL, "Kaneko / Warashi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO_SKNS, GBF_VERSHOOT, 0,
 	NULL, sengekisjRomInfo, sengekisjRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	SengekisjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
 	240, 320, 3, 4
@@ -2309,11 +2309,11 @@ static int PuzzloopInit()
 	return DrvInit(1 /*europe*/);
 }
 
-struct BurnDriverD BurnDrvPuzzloop = {
+struct BurnDriver BurnDrvPuzzloop = {
 	"puzzloop", NULL, "skns", NULL, "1998",
 	"Puzz Loop (Europe, v0.93)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, puzzloopRomInfo, puzzloopRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
 	PuzzloopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2338,11 +2338,11 @@ static struct BurnRomInfo puzzloopeRomDesc[] = {
 STD_ROM_PICK(puzzloope)
 STD_ROM_FN(puzzloope)
 
-struct BurnDriverD BurnDrvPuzzloope = {
+struct BurnDriver BurnDrvPuzzloope = {
 	"puzzloope", "puzzloop", "skns", NULL, "1998",
 	"Puzz Loop (Europe, v0.93)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, puzzloopeRomInfo, puzzloopeRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
 	PuzzloopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2378,11 +2378,11 @@ static int PuzzloopjInit()
 	return DrvInit(0 /*japan*/);
 }
 
-struct BurnDriverD BurnDrvPuzzloopj = {
+struct BurnDriver BurnDrvPuzzloopj = {
 	"puzzloopj", "puzzloop", "skns", NULL, "1998",
 	"Puzz Loop (Japan)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, puzzloopjRomInfo, puzzloopjRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
 	PuzzloopjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2418,11 +2418,11 @@ static int PuzzloopaInit()
 	return DrvInit(2 /*asia*/);
 }
 
-struct BurnDriverD BurnDrvPuzzloopa = {
+struct BurnDriver BurnDrvPuzzloopa = {
 	"puzzloopa", "puzzloop", "skns", NULL, "1998",
 	"Puzz Loop (Asia)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, puzzloopaRomInfo, puzzloopaRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
 	PuzzloopaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2458,11 +2458,11 @@ static int PuzzloopkInit()
 	return DrvInit(4 /*korea*/);
 }
 
-struct BurnDriverD BurnDrvPuzzloopk = {
+struct BurnDriver BurnDrvPuzzloopk = {
 	"puzzloopk", "puzzloop", "skns", NULL, "1998",
 	"Puzz Loop (Korea)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, puzzloopkRomInfo, puzzloopkRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
 	PuzzloopkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2502,7 +2502,7 @@ struct BurnDriver BurnDrvPuzzloopu = {
 	"puzzloopu", "puzzloop", "skns", NULL, "1998",
 	"Puzz Loop (USA)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, puzzloopuRomInfo, puzzloopuRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
 	PuzzloopuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2538,11 +2538,11 @@ static int TeljanInit()
 	return DrvInit(0 /*japan*/);
 }
 
-struct BurnDriverD BurnDrvTeljan = {
+struct BurnDriver BurnDrvTeljan = {
 	"teljan",  NULL, "skns",NULL, "1999",
 	"Tel Jan\0", NULL, "Electro Design", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MAHJONG, 0,
 	NULL, teljanRomInfo, teljanRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //Skns_1pInputInfo, Skns_1pDIPInfo,
 	TeljanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2581,7 +2581,7 @@ struct BurnDriverD BurnDrvPanicstr = {
 	"panicstr", NULL, "skns", NULL, "1999",
 	"Panic Street (Japan)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, panicstrRomInfo, panicstrRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
 	PanicstrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2618,7 +2618,7 @@ struct BurnDriverD BurnDrvGalpani4 = {
 	"galpani4", NULL, "skns", NULL, "1996",
 	"Gals Panic 4 (Japan)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpani4RomInfo, galpani4RomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //CyvernInputInfo, CyvernDIPInfo,
 	Galpani4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2656,7 +2656,7 @@ struct BurnDriverD BurnDrvGalpani4k = {
 	"galpani4k", "galpani4", "skns", NULL, "1996",
 	"Gals Panic 4 (Korea)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpani4kRomInfo, galpani4kRomName, NULL, NULL, CyvernInputInfo, CyvernDIPInfo,
 	Galpani4kInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2694,7 +2694,7 @@ struct BurnDriverD BurnDrvGalpanis = {
 	"galpanis", NULL, "skns", NULL, "1997",
 	"Gals Panic S - Extra Edition (Europe)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpanisRomInfo, galpanisRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
 	GalpanisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2732,7 +2732,7 @@ struct BurnDriverD BurnDrvGalpanisj = {
 	"galpanisj", "galpanis", "skns", NULL, "1997",
 	"Gals Panic S - Extra Edition (Japan)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpanisjRomInfo, galpanisjRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
 	GalpanisjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2770,7 +2770,7 @@ struct BurnDriverD BurnDrvGalpanisk = {
 	"galpanisk", "galpanis", "skns", NULL, "1997",
 	"Gals Panic S - Extra Edition (Korea)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpaniskRomInfo, galpaniskRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
 	GalpaniskInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2814,7 +2814,7 @@ struct BurnDriverD BurnDrvGalpans2 = {
 	"galpans2", NULL, "skns", NULL, "1999",
 	"Gals Panic S2 (Japan)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpans2RomInfo, galpans2RomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
 	Galpans2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2858,7 +2858,7 @@ struct BurnDriverD BurnDrvGalpans2a = {
 	"galpans2a", "galpans2", "skns", NULL, "1999",
 	"Gals Panic S2 (Asia)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpans2aRomInfo, galpans2aRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
 	Galpans2aInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2902,7 +2902,7 @@ struct BurnDriver BurnDrvGalpansu = {
 	"galpansu", "galpans2", "skns", NULL, "1999",
 	"Gals Panic SU (Korea)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpansuRomInfo, galpansuRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
 	GalpansuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2937,7 +2937,7 @@ struct BurnDriverD BurnDrvGalpans3 = {
 	"galpans3", NULL, "skns", NULL, "2002",
 	"Gals Panic S3 (Japan)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpans3RomInfo, galpans3RomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
 	Galpans3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2973,11 +2973,11 @@ static int JjparadsInit()
 	return DrvInit(0 /*Japan*/);
 }
 
-struct BurnDriverD BurnDrvJjparads = {
+struct BurnDriver BurnDrvJjparads = {
 	"jjparads", NULL, "skns", NULL, "1996",
 	"Jan Jan Paradise\0", NULL, "Electro Design", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MAHJONG, 0,
 	NULL, jjparadsRomInfo, jjparadsRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //Skns_1pInputInfo, Skns_1pDIPInfo,
 	JjparadsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -3014,11 +3014,11 @@ static int Jjparad2Init()
 	return DrvInit(0 /*Japan*/);
 }
 
-struct BurnDriverD BurnDrvJjparad2 = {
+struct BurnDriver BurnDrvJjparad2 = {
 	"jjparad2", NULL, "skns", NULL, "1997",
 	"Jan Jan Paradise 2\0", NULL, "Electro Design", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MAHJONG, 0,
 	NULL, jjparad2RomInfo, jjparad2RomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //Skns_1pInputInfo, Skns_1pDIPInfo,
 	Jjparad2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -3056,11 +3056,11 @@ static int SenknowInit()
 	return DrvInit(0 /*Japan*/);
 }
 
-struct BurnDriverD BurnDrvSenknow = {
+struct BurnDriver BurnDrvSenknow = {
 	"senknow", NULL, "skns", NULL, "1999",
 	"Sen-Know (Japan)\0", NULL, "Kaneko / Kouyousha", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, senknowRomInfo, senknowRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //SknsInputInfo, SknsDIPInfo,
 	SenknowInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -3097,11 +3097,11 @@ static int RyouranInit()
 	return DrvInit(0 /*Japan*/);
 }
 
-struct BurnDriverD BurnDrvRyouran = {
+struct BurnDriver BurnDrvRyouran = {
 	"ryouran", NULL, "skns", NULL, "1998",
 	"VS Mahjong Otome Ryouran\0", NULL, "Electro Design", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MAHJONG, 0,
 	NULL, ryouranRomInfo, ryouranRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //Skns_1pInputInfo, Skns_1pDIPInfo,
 	RyouranInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -3137,7 +3137,7 @@ struct BurnDriverD BurnDrvVblokbrk = {
 	"vblokbrk", NULL, "skns", NULL, "1997",
 	"VS Block Breaker (Asia)\0", NULL, "Kaneko / Mediaworks", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_BALLPADDLE, 0,
 	NULL, vblokbrkRomInfo, vblokbrkRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //VblokbrkInputInfo, VblokbrkDIPInfo,
 	VblokbrkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -3173,7 +3173,7 @@ struct BurnDriverD BurnDrvSarukani = {
 	"sarukani", "vblokbrk", "skns", NULL, "1997",
 	"Saru-Kani-Hamu-Zou (Japan)\0", NULL, "Kaneko / Mediaworks", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_BALLPADDLE, 0,
 	NULL, sarukaniRomInfo, sarukaniRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //VblokbrkInputInfo, VblokbrkDIPInfo,
 	SarukaniInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3

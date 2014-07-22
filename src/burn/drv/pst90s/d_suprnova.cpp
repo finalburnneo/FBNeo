@@ -2186,7 +2186,7 @@ struct BurnDriver BurnDrvGutsn = {
 	"gutsn", NULL, "skns", NULL, "2000",
 	"Guts'n (Japan)\0", NULL, "Kaneko / Kouyousha", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_SKNS, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, gutsnRomInfo, gutsnRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	GutsnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
 	320, 240, 4, 3

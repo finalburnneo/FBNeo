@@ -341,6 +341,7 @@ void __fastcall ps3v1_write_byte(UINT32 address, UINT8 data)
 
 	switch (address)
 	{
+		case 0x305ffdc:
 		case 0x305ffdd:
 			if (!(data & 0xc0)) Sh2SetIRQLine(4, SH2_IRQSTATUS_NONE);
 		return;
@@ -348,12 +349,14 @@ void __fastcall ps3v1_write_byte(UINT32 address, UINT8 data)
 		case 0x5000000:
 		case 0x5000002:
 		case 0x5000004:
+		case 0x5000006:
 			BurnYMF278BSelectRegister((address >> 1) & 3, data);
 		return;
 
 		case 0x5000001:
 		case 0x5000003:
 		case 0x5000005:
+		case 0x5000007:
 			BurnYMF278BWriteRegister((address >> 1) & 3, data);
 		return;
 
@@ -491,13 +494,13 @@ UINT32 __fastcall hack_read_long(UINT32 a)
 		UINT32 pc = Sh2GetPC(0);
 
 		if (pc == speedhack_pc[0]) {
-			Sh2StopRun();
+			Sh2BurnUntilInt(0);
 		} else if (pc == speedhack_pc[1]) {
-			Sh2StopRun();
+			Sh2BurnUntilInt(0);
 		} else if (pc == speedhack_pc[2]) {
-			Sh2StopRun();
+			Sh2BurnUntilInt(0);
 		} else if (pc == speedhack_pc[3]) {
-			Sh2StopRun();
+			Sh2BurnUntilInt(0);
 		}
 	}
 

@@ -1361,7 +1361,7 @@ static struct BurnRomInfo MwalkRomDesc[] = {
 STD_ROM_PICK(Mwalk)
 STD_ROM_FN(Mwalk)
 
-static struct BurnRomInfo MwalkblRomDesc[] = {
+static struct BurnRomInfo Mwalkbl2RomDesc[] = {
 	{ "mwalkbl.01",     0x10000, 0xf49cdb16, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "mwalkbl.05",     0x10000, 0xc483f29f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "mwalkbl.02",     0x10000, 0x0bde1896, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1392,8 +1392,8 @@ static struct BurnRomInfo MwalkblRomDesc[] = {
 };
 
 
-STD_ROM_PICK(Mwalkbl)
-STD_ROM_FN(Mwalkbl)
+STD_ROM_PICK(Mwalkbl2)
+STD_ROM_FN(Mwalkbl2)
 
 static struct BurnRomInfo ShdancerRomDesc[] = {
 	{ "shdancer.a6",    0x40000, 0x3d5b3fa9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1937,7 +1937,7 @@ void __fastcall LghostWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall MwalkblReadByte(UINT32 a)
+UINT8 __fastcall Mwalkbl2ReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0xc40001: {
@@ -1968,7 +1968,7 @@ UINT8 __fastcall MwalkblReadByte(UINT32 a)
 	return 0xff;
 }
 
-void __fastcall MwalkblWriteByte(UINT32 a, UINT8 d)
+void __fastcall Mwalkbl2WriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0xc40007: {
@@ -2010,7 +2010,7 @@ void __fastcall MwalkblWriteByte(UINT32 a, UINT8 d)
 #endif
 }
 
-void __fastcall MwalkblWriteWord(UINT32 a, UINT16 d)
+void __fastcall Mwalkbl2WriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0xc46000: {
@@ -2334,7 +2334,7 @@ static INT32 LghostInit()
 	return nRet;
 }
 
-static INT32 MwalkblPatchRom()
+static INT32 Mwalkbl2PatchRom()
 {
 	*((UINT16*)(System16Rom + 0x070212)) = 0x4e71;
 	*((UINT16*)(System16Rom + 0x070116)) = 0x4e71;
@@ -2370,9 +2370,9 @@ static INT32 MwalkblPatchRom()
 	return 0;
 }
 
-static INT32 MwalkblInit()
+static INT32 Mwalkbl2Init()
 {
-	System16CustomLoadRomDo = MwalkblPatchRom;
+	System16CustomLoadRomDo = Mwalkbl2PatchRom;
 	
 	System16SpriteXOffset = 128;
 
@@ -2381,10 +2381,10 @@ static INT32 MwalkblInit()
 	if (!nRet) {
 		SekOpen(0);
 		SekMapHandler(1, 0xc40000, 0xc41009, SM_READ);
-		SekSetReadByteHandler(1, MwalkblReadByte);
+		SekSetReadByteHandler(1, Mwalkbl2ReadByte);
 		SekMapHandler(2, 0xc40006, 0xc46801, SM_WRITE);
-		SekSetWriteByteHandler(2, MwalkblWriteByte);
-		SekSetWriteWordHandler(2, MwalkblWriteWord);
+		SekSetWriteByteHandler(2, Mwalkbl2WriteByte);
+		SekSetWriteWordHandler(2, Mwalkbl2WriteWord);
 		SekClose();
 	}
 
@@ -2685,13 +2685,13 @@ struct BurnDriver BurnDrvMWalk = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvMWalkbl = {
-	"mwalkbl", "mwalk", NULL, NULL, "1990",
+struct BurnDriver BurnDrvMWalkbl2 = {
+	"mwalkbl2", "mwalk", NULL, NULL, "1990",
 	"Michael Jackson's Moonwalker (bootleg)\0", NULL, "bootleg", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM18, GBF_PLATFORM, 0,
-	NULL, MwalkblRomInfo, MwalkblRomName, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
-	MwalkblInit, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, Mwalkbl2RomInfo, Mwalkbl2RomName, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
+	Mwalkbl2Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

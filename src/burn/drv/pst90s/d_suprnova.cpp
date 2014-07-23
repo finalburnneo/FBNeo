@@ -1868,7 +1868,7 @@ static struct BurnRomInfo puzzloopRomDesc[] = {
 	{ "pzl30000.u4",	0x400000, 0x38604b8d, 5 | BRF_SND },           //  6 YMZ280b Samples
 };
 
-STD_ROM_PICK(puzzloop)
+STDROMPICKEXT(puzzloop, puzzloop, skns)
 STD_ROM_FN(puzzloop)
 
 static int PuzzloopInit()
@@ -1908,7 +1908,7 @@ static struct BurnRomInfo puzzloopeRomDesc[] = {
 	{ "pzl30000.u4",	0x400000, 0x38604b8d, 5 | BRF_SND },           //  6 YMZ280b Samples
 };
 
-STD_ROM_PICK(puzzloope)
+STDROMPICKEXT(puzzloope, puzzloope, skns)
 STD_ROM_FN(puzzloope)
 
 struct BurnDriver BurnDrvPuzzloope = {
@@ -1937,7 +1937,7 @@ static struct BurnRomInfo puzzloopjRomDesc[] = {
 	{ "pzl30000.u4",	0x400000, 0x38604b8d, 5 | BRF_SND },           //  6 YMZ280b Samples
 };
 
-STD_ROM_PICK(puzzloopj)
+STDROMPICKEXT(puzzloopj, puzzloopj, skns)
 STD_ROM_FN(puzzloopj)
 
 static int PuzzloopjInit()
@@ -1977,7 +1977,7 @@ static struct BurnRomInfo puzzloopaRomDesc[] = {
 	{ "pzl30000.u4",	0x400000, 0x38604b8d, 5 | BRF_SND },           //  6 YMZ280b Samples
 };
 
-STD_ROM_PICK(puzzloopa)
+STDROMPICKEXT(puzzloopa, puzzloopa, skns)
 STD_ROM_FN(puzzloopa)
 
 static int PuzzloopaInit()
@@ -2017,7 +2017,7 @@ static struct BurnRomInfo puzzloopkRomDesc[] = {
 	{ "pzl30000.u4",	0x400000, 0x38604b8d, 5 | BRF_SND },           //  6 YMZ280b Samples
 };
 
-STD_ROM_PICK(puzzloopk)
+STDROMPICKEXT(puzzloopk, puzzloopk, skns)
 STD_ROM_FN(puzzloopk)
 
 static int PuzzloopkInit()
@@ -2057,7 +2057,7 @@ static struct BurnRomInfo puzzloopuRomDesc[] = {
 	{ "pzl30000.u4",	0x400000, 0x38604b8d, 5 | BRF_SND },           //  6 YMZ280b Samples
 };
 
-STD_ROM_PICK(puzzloopu)
+STDROMPICKEXT(puzzloopu, puzzloopu, skns)
 STD_ROM_FN(puzzloopu)
 
 static int PuzzloopuInit()
@@ -2097,7 +2097,7 @@ static struct BurnRomInfo teljanRomDesc[] = {
 	{ "tj300-00.u4",	0x400000, 0x685495c4, 5 | BRF_SND },           //  6 YMZ280b Samples
 };
 
-STD_ROM_PICK(teljan)
+STDROMPICKEXT(teljan, teljan, skns)
 STD_ROM_FN(teljan)
 
 static int TeljanInit()
@@ -2136,7 +2136,7 @@ static struct BurnRomInfo panicstrRomDesc[] = {
 	{ "ps-30000.u4",	0x400000, 0x2262e263, 5 | BRF_SND },           //  6 YMZ280b Samples
 };
 
-STD_ROM_PICK(panicstr)
+STDROMPICKEXT(panicstr, panicstr, skns)
 STD_ROM_FN(panicstr)
 
 static int PanicstrInit()
@@ -2176,7 +2176,7 @@ static struct BurnRomInfo galpani4RomDesc[] = {
 	{ "gp4-300-00.u4",	0x200000, 0x8374663a, 5 | BRF_SND },           //  6 YMZ280b Samples
 };
 
-STD_ROM_PICK(galpani4)
+STDROMPICKEXT(galpani4, galpani4, skns)
 STD_ROM_FN(galpani4)
 
 static int Galpani4Init()
@@ -2214,7 +2214,7 @@ static struct BurnRomInfo galpani4kRomDesc[] = {
 	{ "gp4-301-01.u7",	0x200000, 0x886ef77f, 5 | BRF_SND },           //  7
 };
 
-STD_ROM_PICK(galpani4k)
+STDROMPICKEXT(galpani4k, galpani4k, skns)
 STD_ROM_FN(galpani4k)
 
 static int Galpani4kInit()
@@ -2252,7 +2252,7 @@ static struct BurnRomInfo galpanisRomDesc[] = {
 	{ "gps30000.u4",	0x400000, 0x9e4da8e3, 5 | BRF_SND },           //  7 YMZ280b Samples
 };
 
-STD_ROM_PICK(galpanis)
+STDROMPICKEXT(galpanis, galpanis, skns)
 STD_ROM_FN(galpanis)
 
 static int GalpanisInit()
@@ -2290,7 +2290,7 @@ static struct BurnRomInfo galpanisjRomDesc[] = {
 	{ "gps30000.u4",	0x400000, 0x9e4da8e3, 5 | BRF_SND },           //  7 YMZ280b Samples
 };
 
-STD_ROM_PICK(galpanisj)
+STDROMPICKEXT(galpanisj, galpanisj, skns)
 STD_ROM_FN(galpanisj)
 
 static int GalpanisjInit()
@@ -2328,7 +2328,7 @@ static struct BurnRomInfo galpaniskRomDesc[] = {
 	{ "gps30000.u4",	0x400000, 0x9e4da8e3, 5 | BRF_SND },           //  7 YMZ280b Samples
 };
 
-STD_ROM_PICK(galpanisk)
+STDROMPICKEXT(galpanisk, galpanisk, skns)
 STD_ROM_FN(galpanisk)
 
 static int GalpaniskInit()
@@ -2369,7 +2369,7 @@ static struct BurnRomInfo galpans2RomDesc[] = {
 	{ "gs230000.u1",	0x400000, 0x0348e8e1, 5 | BRF_SND },           //  9 YMZ280b Samples
 };
 
-STD_ROM_PICK(galpans2)
+STDROMPICKEXT(galpans2, galpans2, skns)
 STD_ROM_FN(galpans2)
 
 static int Galpans2Init()
@@ -2413,7 +2413,7 @@ static struct BurnRomInfo galpans2aRomDesc[] = {
 	{ "gs230000.u1",	0x400000, 0x0348e8e1, 5 | BRF_SND },           //  9 YMZ280b Samples
 };
 
-STD_ROM_PICK(galpans2a)
+STDROMPICKEXT(galpans2a, galpans2a, skns)
 STD_ROM_FN(galpans2a)
 
 static int Galpans2aInit()
@@ -2457,7 +2457,7 @@ static struct BurnRomInfo galpansuRomDesc[] = {
 	{ "4",			0x400000, 0x0348e8e1, 5 | BRF_SND },           //  9 YMZ280b Samples
 };
 
-STD_ROM_PICK(galpansu)
+STDROMPICKEXT(galpansu, galpansu, skns)
 STD_ROM_FN(galpansu)
 
 static int GalpansuInit()
@@ -2495,7 +2495,7 @@ static struct BurnRomInfo galpans3RomDesc[] = {
 	{ "u4.bin",		0x400000, 0xbf5736c6, 5 | BRF_SND },           //  4 YMZ280b Samples
 };
 
-STD_ROM_PICK(galpans3)
+STDROMPICKEXT(galpans3, galpans3, skns)
 STD_ROM_FN(galpans3)
 
 static int Galpans3Init()
@@ -2532,7 +2532,7 @@ static struct BurnRomInfo jjparadsRomDesc[] = {
 	{ "jp300-00.u4",	0x200000, 0x7023fe46, 5 | BRF_SND },           //  6 YMZ280b Samples
 };
 
-STD_ROM_PICK(jjparads)
+STDROMPICKEXT(jjparads, jjparads, skns)
 STD_ROM_FN(jjparads)
 
 static int JjparadsInit()
@@ -2573,7 +2573,7 @@ static struct BurnRomInfo jjparad2RomDesc[] = {
 	{ "jp230000.u1",	0x400000, 0x73e30d7f, 5 | BRF_SND },           //  7 YMZ280b Samples
 };
 
-STD_ROM_PICK(jjparad2)
+STDROMPICKEXT(jjparad2, jjparad2, skns)
 STD_ROM_FN(jjparad2)
 
 static int Jjparad2Init()
@@ -2615,7 +2615,7 @@ static struct BurnRomInfo senknowRomDesc[] = {
 	{ "snw30000.u1",	0x400000, 0xec9eef40, 5 | BRF_SND },           //  7 YMZ280b Samples
 };
 
-STD_ROM_PICK(senknow)
+STDROMPICKEXT(senknow, senknow, skns)
 STD_ROM_FN(senknow)
 
 static int SenknowInit()
@@ -2656,7 +2656,7 @@ static struct BurnRomInfo ryouranRomDesc[] = {
 	{ "or300-00.u4",	0x400000, 0xa3f64b79, 5 | BRF_SND },           //  7 YMZ280b Samples
 };
 
-STD_ROM_PICK(ryouran)
+STDROMPICKEXT(ryouran, ryouran, skns)
 STD_ROM_FN(ryouran)
 
 static int RyouranInit()
@@ -2695,7 +2695,7 @@ static struct BurnRomInfo vblokbrkRomDesc[] = {
 	{ "sk300-00.u4",	0x200000, 0xe6535c05, 5 | BRF_SND },           //  5 YMZ280b Samples
 };
 
-STD_ROM_PICK(vblokbrk)
+STDROMPICKEXT(vblokbrk, vblokbrk, skns)
 STD_ROM_FN(vblokbrk)
 
 static int VblokbrkInit()
@@ -2731,7 +2731,7 @@ static struct BurnRomInfo sarukaniRomDesc[] = {
 	{ "sk300-00.u4",	0x200000, 0xe6535c05, 5 | BRF_SND },           //  5 YMZ280b Samples
 };
 
-STD_ROM_PICK(sarukani)
+STDROMPICKEXT(sarukani, sarukani, skns)
 STD_ROM_FN(sarukani)
 
 static int SarukaniInit()

@@ -122,8 +122,8 @@
 <li>Fixed savestates with multiple chips and fix for setting singular channel volume in K007232 core [dink, iq_132]</li>
 <li>Fixed savestates in Irem GA20 sound core [iq_132]</li>
 <li>Fixed bug in generic sprite zoom drawing routines [iq_132]</li>
-<li>Fixed idle skip in SH-2 CPU interface [dink]</li>
-<li>Added driver for Choplifter (Protection MCU needs to be emulated yet, not working), Choplifter (unprotected, working) and Choplifter (bootleg, working) to Sega System1 [vbt]</li>
+<li>Fixed idle skip (timers) &amp crash with FAST_OP_FETCH in SH-2 CPU core [dink]</li>
+<li>Added driver for Choplifter (unprotected, working) and Choplifter (bootleg, working) to Sega System1 (Parent ROM NW) [vbt]</li>
 <li>Added driver for Mighty Warrior, Steel Force &amp; Twin Brats on Elettronica Video-Games S.R.L hardware [iq_132]</li>
 <li>Added driver for Capcom Bowling [iq_132]</li>
 <li>Added driver for Fire Barrel/Air Assault, Dream Soccer '94, Kick for the Goal &amp; World PK Soccer on Irem M107 hardware [iq_132]</li>
@@ -132,7 +132,7 @@
 <li>Added driver for Mustache Boy [iq_132]</li>
 <li>Added driver for Nemesis/Gradius, Salamander/Lifeforce, Twinbee, Galactic Warriors, Konami GT, Red Fighter, Black Panther, City Bomber, Kitten Kaboodle/Nyan Nyan Panic & Hyper Crash on Konami GX400 hardware [iq_132]</li>
 <li>Added driver for Punch Out [iq_132]</li>
-<li>Added driver for Kaneko Super Nova hardware (Cyvern) [iq_132, dink]</li>
+<li>Added driver for Kaneko Super Nova hardware (Cyvern, Sengeki Striker, Puzzloop, Guts'N, Jan Jan Paradise 1 &amp; 2, Sen-Know, VS. Block Breaker) [iq_132, dink]</li>
 <li>Added driver for Tail 2 Nose [iq_132]</li>
 <li>Added driver for Wyvern F-0 [iq_132]</li>
 <li>Added driver for Xain'd Sleena/Solar Warrior [iq_132]</li>
@@ -228,8 +228,12 @@
 <li>Added two bootlegs of World Cup '90 to the driver [JacKc, any]</li>
 <li>Added clone of Zero Wing to the driver [JacKc, System11, The Dumping Union]</li>
 <li>Added clone of Double Dragon II - The Revenge (bootleg) to the Double Dragon driver [Barry]</li>
+<li>Added clone of Saulabi Spirits / Jin Saulabi Tu Hon (Korean release of Samurai Shodown II, set 2) from Winkawaks 1.63 [JacKc]</li>
+<li>Added clone of Passing shot: Center Court (prototype, MC-8123B) to the Sega 16B driver [Alan Meades, Porchy, JacKc]</li>
+<li>Added clone of The King of Fighters '96 (Anniversary Edition 2.0.0296, EGHT hack) to the Neo Geo driver [JacKc]</li>
+<li>Fixed Gauntlet by going back to the previous Slapstic implementation [Barry]</li>
 <li>Fixed crash in Oriental Legends Super intro [iq_132]</li>
-<li>Updates to PGM protection routines [iq_132, rockywall, Creamy Mami, JackC, iq_132]</li>
+<li>Updates to PGM protection routines [iq_132, rockywall, Creamy Mami, JacKc, iq_132]</li>
 <li>Various PGM updates/fixes [iq_132]</li>
 <li>CPS-3 sound updates [iq_132, Captain CPS-X]</li>
 <li>Small improvement to the MSM6295 core [iq_132]</li>
@@ -268,6 +272,7 @@
 <li>Fix savestates for YM2151, UPD7759 and clipping/distortion in UPD7759 [dink]</li>
 <li>Added savestate support to Toki driver [dink]</li>
 <li>Added savestate support to Donkey Kong driver [dink]</li>
+<li>Fixed missing music in Sol Divide [dink]</li>
 <li>Fixed sound effects and cutscene/music timing in Gun Smoke [dink]</li>
 <li>Fixed reset causes crash in Wonder Planet, Karnov and Chelnov - Atomic Runner [dink]</li>
 <li>Fixed reset in The Berlin Wall [dink]</li>

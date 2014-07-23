@@ -1590,7 +1590,7 @@ struct BurnDriver BurnDrvKovsh101 = {
 // Knights of Valour Superheroes / Sangoku Senki Superheroes (V100)
 
 static struct BurnRomInfo kovsh100RomDesc[] = {
-	{ "p0600.100",	   		0x400000, 0xd145c1ca, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "kovsh-v0100-u1.bin", 0x400000, 0xd145c1ca, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "t0600.rom",     		0x800000, 0x4acc1ad6, 2 | BRF_GRA },			//  1 Tile data
 

@@ -1628,6 +1628,7 @@ static struct BurnRomInfo sknsRomDesc[] = {
 	{ "sknsa1.u10",		0x80000, 0x745e5212, BRF_BIOS}, //  2 Asia
 	{ "sknsu1.u10",		0x80000, 0x384d21ec, BRF_BIOS}, //  3 USA
 	{ "sknsk1.u10",		0x80000, 0xff1c9f79, BRF_BIOS}, //  4 Korea
+	{ "bios.u10",		0x80000, 0x161fb79e, BRF_BIOS}, //  5 Korea
 };
 
 STD_ROM_PICK(skns)
@@ -2643,8 +2644,8 @@ struct BurnDriver BurnDrvSenknow = {
 // VS Mahjong Otome Ryouran
 
 static struct BurnRomInfo ryouranRomDesc[] = {
-	{ "or000j1.u10",	0x080000, 0xd93aa491, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
-	{ "or001j1.u8",		0x080000, 0xf466e5e9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "or-000-j2.u10",	0x080000, 0xcba8ca4e, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "or-001-j2.u8",	0x080000, 0x8e79c6b7, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "or100-00.u24",	0x400000, 0xe9c7695b, 2 | BRF_GRA },           //  2 Sprites
 	{ "or101-00.u20",	0x400000, 0xfe06bf12, 2 | BRF_GRA },           //  3

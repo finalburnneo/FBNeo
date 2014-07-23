@@ -435,7 +435,7 @@ static struct BurnRomInfo HotmindRomDesc[] = {
 	{ "21.u67",           0x20000, 0xe9000f7f, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "22.u66",           0x20000, 0x2c518ec5, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 	
-	{ "hotmind_pic16c57.hex", 0x02d4c, 0x9aa269bf, BRF_ESS | BRF_PRG }, //  2	PIC16C57 HEX
+	{ "hotmind_pic16c57.hex", 0x02d4c, 0x11957803, BRF_ESS | BRF_PRG }, //  2	PIC16C57 HEX
 
 	{ "23.u36",           0x20000, 0xddcf60b9, BRF_GRA },			//  3	Tiles
 	{ "27.u42",           0x20000, 0x413bbcf4, BRF_GRA },			//  4	Tiles

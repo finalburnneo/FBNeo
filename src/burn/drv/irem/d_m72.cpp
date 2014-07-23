@@ -2735,24 +2735,24 @@ struct BurnDriver BurnDrvMrheli = {
 // Ninja Spirit
 
 static struct BurnRomInfo nspiritRomDesc[] = {
-	{ "nin-c-h0.6h",	0x10000, 0x035692fa, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "nin-c-l0.6d",	0x10000, 0x9a405898, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "nin-c-h1.6j",	0x10000, 0xcbc10586, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "nin-c-l1.6c",	0x10000, 0xb75c9a4d, 0x01 | BRF_PRG | BRF_ESS }, //  3
-	{ "nin-c-h2.6l",	0x10000, 0x8ad818fa, 0x01 | BRF_PRG | BRF_ESS }, //  4
-	{ "nin-c-l2.6b",	0x10000, 0xc52ca78c, 0x01 | BRF_PRG | BRF_ESS }, //  5
-	{ "nin-c-h3.6m",	0x10000, 0x501104ef, 0x01 | BRF_PRG | BRF_ESS }, //  6
-	{ "nin-c-l3.6a",	0x10000, 0xfd7408b8, 0x01 | BRF_PRG | BRF_ESS }, //  7
+	{ "nin_c-h0.6h",	0x10000, 0x035692fa, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "nin_c-l0.6d",	0x10000, 0x9a405898, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "nin_c-h1.6j",	0x10000, 0xcbc10586, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "nin_c-l1.6c",	0x10000, 0xb75c9a4d, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "nin_c-h2.6l",	0x10000, 0x8ad818fa, 0x01 | BRF_PRG | BRF_ESS }, //  4
+	{ "nin_c-l2.6b",	0x10000, 0xc52ca78c, 0x01 | BRF_PRG | BRF_ESS }, //  5
+	{ "nin_c-h3.6m",	0x10000, 0x501104ef, 0x01 | BRF_PRG | BRF_ESS }, //  6
+	{ "nin_c-l3.6a",	0x10000, 0xfd7408b8, 0x01 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "nin-r00.7m",		0x20000, 0x5f61d30b, 0x02 | BRF_GRA },           //  8 Sprites
 	{ "nin-r10.7j",		0x20000, 0x0caad107, 0x02 | BRF_GRA },           //  9
 	{ "nin-r20.7f",		0x20000, 0xef3617d3, 0x02 | BRF_GRA },           // 10
 	{ "nin-r30.7d",		0x20000, 0x175d2a24, 0x02 | BRF_GRA },           // 11
 
-	{ "nin-b-a0.4c",	0x10000, 0x63f8f658, 0x03 | BRF_GRA },           // 12 Foreground Tiles
-	{ "nin-b-a1.4d",	0x10000, 0x75eb8306, 0x03 | BRF_GRA },           // 13
-	{ "nin-b-a2.4b",	0x10000, 0xdf532172, 0x03 | BRF_GRA },           // 14
-	{ "nin-b-a3.4e",	0x10000, 0x4dedd64c, 0x03 | BRF_GRA },           // 15
+	{ "nin_b-a0.4c",	0x10000, 0x63f8f658, 0x03 | BRF_GRA },           // 12 Foreground Tiles
+	{ "nin_b-a1.4d",	0x10000, 0x75eb8306, 0x03 | BRF_GRA },           // 13
+	{ "nin_b-a2.4b",	0x10000, 0xdf532172, 0x03 | BRF_GRA },           // 14
+	{ "nin_b-a3.4e",	0x10000, 0x4dedd64c, 0x03 | BRF_GRA },           // 15
 
 	{ "b0.4j",			0x10000, 0x1b0e08a6, 0x04 | BRF_GRA },           // 16 Background Tiles
 	{ "b1.4k",			0x10000, 0x728727f0, 0x04 | BRF_GRA },           // 17
@@ -2797,10 +2797,10 @@ struct BurnDriver BurnDrvNspirit = {
 static struct BurnRomInfo nspiritjRomDesc[] = {
 	{ "c-h0",			0x10000, 0x8603fab2, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
 	{ "c-l0",			0x10000, 0xe520fa35, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "nin-c-h1.6j",	0x10000, 0xcbc10586, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "nin-c-l1.6c",	0x10000, 0xb75c9a4d, 0x01 | BRF_PRG | BRF_ESS }, //  3
-	{ "nin-c-h2.6l",	0x10000, 0x8ad818fa, 0x01 | BRF_PRG | BRF_ESS }, //  4
-	{ "nin-c-l2.6b",	0x10000, 0xc52ca78c, 0x01 | BRF_PRG | BRF_ESS }, //  5
+	{ "nin_c-h1.6j",	0x10000, 0xcbc10586, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "nin_c-l1.6c",	0x10000, 0xb75c9a4d, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "nin_c-h2.6l",	0x10000, 0x8ad818fa, 0x01 | BRF_PRG | BRF_ESS }, //  4
+	{ "nin_c-l2.6b",	0x10000, 0xc52ca78c, 0x01 | BRF_PRG | BRF_ESS }, //  5
 	{ "c-h3",			0x10000, 0x95b63a61, 0x01 | BRF_PRG | BRF_ESS }, //  6
 	{ "c-l3",			0x10000, 0xe754a87a, 0x01 | BRF_PRG | BRF_ESS }, //  7
 
@@ -2809,10 +2809,10 @@ static struct BurnRomInfo nspiritjRomDesc[] = {
 	{ "nin-r20.7f",		0x20000, 0xef3617d3, 0x02 | BRF_GRA },           // 10
 	{ "nin-r30.7d",		0x20000, 0x175d2a24, 0x02 | BRF_GRA },           // 11
 
-	{ "nin-b-a0.4c",	0x10000, 0x63f8f658, 0x03 | BRF_GRA },           // 12 Foreground Tiles
-	{ "nin-b-a1.4d",	0x10000, 0x75eb8306, 0x03 | BRF_GRA },           // 13
-	{ "nin-b-a2.4b",	0x10000, 0xdf532172, 0x03 | BRF_GRA },           // 14
-	{ "nin-b-a3.4e",	0x10000, 0x4dedd64c, 0x03 | BRF_GRA },           // 15
+	{ "nin_b-a0.4c",	0x10000, 0x63f8f658, 0x03 | BRF_GRA },           // 12 Foreground Tiles
+	{ "nin_b-a1.4d",	0x10000, 0x75eb8306, 0x03 | BRF_GRA },           // 13
+	{ "nin_b-a2.4b",	0x10000, 0xdf532172, 0x03 | BRF_GRA },           // 14
+	{ "nin_b-a3.4e",	0x10000, 0x4dedd64c, 0x03 | BRF_GRA },           // 15
 
 	{ "b0.4j",			0x10000, 0x1b0e08a6, 0x04 | BRF_GRA },           // 16 Background Tiles
 	{ "b1.4k",			0x10000, 0x728727f0, 0x04 | BRF_GRA },           // 17

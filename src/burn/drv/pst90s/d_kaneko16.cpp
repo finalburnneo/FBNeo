@@ -745,7 +745,9 @@ static struct BurnRomInfo BerlwallRomDesc[] = {
 	
 	{ "bw001.u84",         0x080000, 0xbc927260, BRF_GRA },		  //  2	Sprites
 	{ "bw002.u83",         0x080000, 0x223f5465, BRF_GRA },		  //  3	Sprites
+#if !defined ROM_VERIFY
 	{ "bw300.u82",         0x020000, 0xb258737a, BRF_GRA },		  //  4	Sprites
+#endif
 	
 	{ "bw003.u77",         0x080000, 0xfbb4b72d, BRF_GRA },		  //  5 Tiles
 	

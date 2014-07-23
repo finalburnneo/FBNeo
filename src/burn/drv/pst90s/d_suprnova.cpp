@@ -74,8 +74,8 @@ static int nGfxLen0 = 0;
 static int nRedrawTiles = 0;
 static UINT32 speedhack_address = ~0;
 static UINT32 speedhack_pc[2] = { 0, 0 };
-static UINT8 m_region = 0; /* 0 Japan, 1 Europ, 2 Asia, 3 USA, 4 Korea */
-
+static UINT8 m_region = 0; /* 0 Japan, 1 Europe, 2 Asia, 3 USA, 4 Korea */
+static UINT32 draw_layer_speedhack = 0;
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },
 };
@@ -1011,6 +1011,13 @@ static int DrvInit(INT32 bios)
 
 	YMZ280BInit(16666666, NULL);
 
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "pan")) {
+		// Disable draw_layer() speed hack for Panic Street & Gals Panic 2,3,4etc
+		draw_layer_speedhack = 0;
+	} else {
+		draw_layer_speedhack = 1;
+	}
+
 	skns_init();
 	skns_sprite_kludge(sprite_kludge_x, sprite_kludge_y);
 
@@ -1052,9 +1059,9 @@ static void draw_layer(UINT8 *source, UINT8 *previous, UINT16 *dest, UINT8 *prid
 
 	for (int offs = 0; offs < 64 * 64; offs++)
 	{
-	//	speed hack, disabled for now. let's focus on accuracy first!
-		if (vram[offs] == prev[offs]) {
-	//		continue;
+	//	speed hack, disabled for gals panic* & panic street
+		if (vram[offs] == prev[offs] && draw_layer_speedhack) {
+			continue;
 		}
 		prev[offs] = vram[offs];
 

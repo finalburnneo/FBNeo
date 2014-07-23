@@ -3,7 +3,14 @@
 
 #include "tiles_generic.h"
 #include "ymz280b.h"
+#include "sknsspr.h"
 #include "sh2_intf.h"
+
+// I'm using an older FBA base atm.
+#ifndef HARDWARE_KANEKO_SKNS
+#define HARDWARE_KANEKO_SKNS	HARDWARE_KANEKO_MISC
+#endif
+
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -28,7 +35,6 @@ static UINT8 *DrvPalRegs;
 
 static UINT32 *DrvPalette;
 
-static UINT8 *decodebuffer;
 static UINT8 *DrvTmpScreenBuf;
 static UINT16 *DrvTmpScreenA;
 static UINT16 *DrvTmpScreenB;
@@ -65,7 +71,7 @@ static UINT32 DrvInputs[3];
 static UINT8 DrvReset;
 
 static int nGfxLen0 = 0;
-
+static int nRedrawTiles = 0;
 static UINT32 speedhack_address = ~0;
 static UINT32 speedhack_pc[2] = { 0, 0 };
 static UINT8 m_region = 0; /* 0 Japan, 1 Europ, 2 Asia, 3 USA, 4 Korea */
@@ -631,6 +637,8 @@ static inline void decode_graphics_ram(UINT32 offset)
 	offset &= 0x3fffc;
 	UINT32 p = *((UINT32*)(DrvGfxRAM + offset));
 
+	nRedrawTiles = 1;
+
 	DrvGfxROM2[offset + 0] = p >> 24;
 	DrvGfxROM2[offset + 1] = p >> 16;
 	DrvGfxROM2[offset + 2] = p >>  8;
@@ -822,21 +830,22 @@ static int MemIndex(int gfxlen0)
 
 	AllRam			= Next;
 
-	DrvVidRAM		= Next; Next += 0x008000; //0x020000;
-	DrvNvRAM		= Next; Next += 0x002000; //0x020000;
-	DrvSprRAM		= Next; Next += 0x004000; //0x020000;
-	DrvLineRAM		= Next; Next += 0x008000; //0x020000;
+	// allocate more ram for some of these. The page size for the sh2 core is (1<<16), so
+	// anything less gets mapped into areas it should not be.
+
+	DrvVidRAM		= Next; Next += 0x0080000; //0x020000;
+	DrvNvRAM		= Next; Next += 0x0020000; //0x020000;
+	DrvSprRAM		= Next; Next += 0x0040000; //0x020000;
+	DrvLineRAM		= Next; Next += 0x0080000; //0x020000;
 	DrvPalRAM		= Next; Next += 0x020000; //0x040000;
 	DrvGfxRAM		= Next; Next += 0x040000; //0x060000;
 	DrvSh2RAM		= Next; Next += 0x100000; //0x200000;
-	DrvCacheRAM		= Next; Next += 0x001000; //0x020000;
-	DrvV3Regs		= Next; Next += 0x000100; //0x020000;
-	DrvSprRegs		= Next; Next += 0x000100; //0x020000;
-	DrvPalRegs		= Next; Next += 0x000020 + 0x000100; //0x20000;
+	DrvCacheRAM		= Next; Next += 0x0010000; //0x020000;
+	DrvV3Regs		= Next; Next += 0x00010000; //0x020000;
+	DrvSprRegs		= Next; Next += 0x00010000; //0x020000;
+	DrvPalRegs		= Next; Next += 0x000020000 + 0x000100; //0x20000;
 
 	RamEnd			= Next;
-
-	decodebuffer		= Next; Next += 0x08000;
 
 	DrvTmpScreenBuf		= Next; Next += 0x10000;
 
@@ -876,6 +885,7 @@ static int DrvDoReset()
 	YMZ280BReset();
 
 	hit.disconnect = (m_region != 2) ? 1 : 0;
+	nRedrawTiles = 1;
 
  	return 0;
 }
@@ -1001,6 +1011,9 @@ static int DrvInit(INT32 bios)
 
 	YMZ280BInit(16666666, NULL);
 
+	skns_init();
+	skns_sprite_kludge(sprite_kludge_x, sprite_kludge_y);
+
 	GenericTilesInit();
 
 	DrvDoReset();
@@ -1011,6 +1024,8 @@ static int DrvInit(INT32 bios)
 static int DrvExit()
 {
 	GenericTilesExit();
+
+	skns_exit();
 
 	Sh2Exit();
 	YMZ280BExit();
@@ -1037,12 +1052,11 @@ static void draw_layer(UINT8 *source, UINT8 *previous, UINT16 *dest, UINT8 *prid
 
 	for (int offs = 0; offs < 64 * 64; offs++)
 	{
+	//	speed hack, disabled for now. let's focus on accuracy first!
 		if (vram[offs] == prev[offs]) {
-			prev[offs] = vram[offs];
-			continue;
-		} else {
-			prev[offs] = vram[offs];
+	//		continue;
 		}
+		prev[offs] = vram[offs];
 
 		int sx = (offs & 0x3f) << 4;
 		int sy = (offs >> 6) << 4;
@@ -1072,8 +1086,8 @@ static void draw_layer(UINT8 *source, UINT8 *previous, UINT16 *dest, UINT8 *prid
 				for (int x = 0; x < 16; x+=2) {
 					int c = gfx[((y << 3) | (x >> 1)) ^ flipy];
 
-					dst[x+0] = (c & 0x0f) | color;
-					dst[x+1] = (c >> 4) | color;
+					dst[x+0] = (c & 0x0f) + color;
+					dst[x+1] = (c >> 4) + color;
 					pri[x+0] = pri[x+1] = prio;
 				}
 
@@ -1089,39 +1103,39 @@ static void draw_layer(UINT8 *source, UINT8 *previous, UINT16 *dest, UINT8 *prid
 
 			for (int y = 0; y < 16 * 16; y+=16, gfx += inc) {
 				if (flipx) {
-					dst[ 0] = gfx[15] | color;
-					dst[ 1] = gfx[14] | color;
-					dst[ 2] = gfx[13] | color;
-					dst[ 3] = gfx[12] | color;
-					dst[ 4] = gfx[11] | color;
-					dst[ 5] = gfx[10] | color;
-					dst[ 6] = gfx[ 9] | color;
-					dst[ 7] = gfx[ 8] | color;
-					dst[ 8] = gfx[ 7] | color;
-					dst[ 9] = gfx[ 6] | color;
-					dst[10] = gfx[ 5] | color;
-					dst[11] = gfx[ 4] | color;
-					dst[12] = gfx[ 3] | color;
-					dst[13] = gfx[ 2] | color;
-					dst[14] = gfx[ 1] | color;
-					dst[15] = gfx[ 0] | color;
+					dst[ 0] = gfx[15] + color;
+					dst[ 1] = gfx[14] + color;
+					dst[ 2] = gfx[13] + color;
+					dst[ 3] = gfx[12] + color;
+					dst[ 4] = gfx[11] + color;
+					dst[ 5] = gfx[10] + color;
+					dst[ 6] = gfx[ 9] + color;
+					dst[ 7] = gfx[ 8] + color;
+					dst[ 8] = gfx[ 7] + color;
+					dst[ 9] = gfx[ 6] + color;
+					dst[10] = gfx[ 5] + color;
+					dst[11] = gfx[ 4] + color;
+					dst[12] = gfx[ 3] + color;
+					dst[13] = gfx[ 2] + color;
+					dst[14] = gfx[ 1] + color;
+					dst[15] = gfx[ 0] + color;
 				} else {
-					dst[ 0] = gfx[ 0] | color;
-					dst[ 1] = gfx[ 1] | color;
-					dst[ 2] = gfx[ 2] | color;
-					dst[ 3] = gfx[ 3] | color;
-					dst[ 4] = gfx[ 4] | color;
-					dst[ 5] = gfx[ 5] | color;
-					dst[ 6] = gfx[ 6] | color;
-					dst[ 7] = gfx[ 7] | color;
-					dst[ 8] = gfx[ 8] | color;
-					dst[ 9] = gfx[ 9] | color;
-					dst[10] = gfx[10] | color;
-					dst[11] = gfx[11] | color;
-					dst[12] = gfx[12] | color;
-					dst[13] = gfx[13] | color;
-					dst[14] = gfx[14] | color;
-					dst[15] = gfx[15] | color;
+					dst[ 0] = gfx[ 0] + color;
+					dst[ 1] = gfx[ 1] + color;
+					dst[ 2] = gfx[ 2] + color;
+					dst[ 3] = gfx[ 3] + color;
+					dst[ 4] = gfx[ 4] + color;
+					dst[ 5] = gfx[ 5] + color;
+					dst[ 6] = gfx[ 6] + color;
+					dst[ 7] = gfx[ 7] + color;
+					dst[ 8] = gfx[ 8] + color;
+					dst[ 9] = gfx[ 9] + color;
+					dst[10] = gfx[10] + color;
+					dst[11] = gfx[11] + color;
+					dst[12] = gfx[12] + color;
+					dst[13] = gfx[13] + color;
+					dst[14] = gfx[14] + color;
+					dst[15] = gfx[15] + color;
 				}
 
 				pri[ 0] = prio;
@@ -1226,447 +1240,7 @@ static void suprnova_draw_roz(UINT16 *source, UINT8 *flags, UINT16 *ddest, UINT8
 	}
 }
 
-
-#define clip_max_x (nScreenWidth << 6)
-#define clip_max_y (nScreenHeight << 6)
-
-static int skns_rle_decode (int romoffset, int size, UINT8*gfx_source, int gfx_length )
-{
-	UINT8 *src = gfx_source;
-	int srcsize = gfx_length;
-	UINT8 *dst = decodebuffer;
-	int decodeoffset = 0;
-
-	while(size>0) {
-		UINT8 code = src[(romoffset++)%srcsize];
-		size -= (code & 0x7f) + 1;
-		if(code & 0x80) { /* (code & 0x7f) normal values will follow */
-			code &= 0x7f;
-			do {
-				dst[(decodeoffset++) & 0x1fff] = src[(romoffset++)%srcsize];
-				code--;
-			} while(code != 0xff);
-		} else {  /* repeat next value (code & 0x7f) times */
-			UINT8 val = src[(romoffset++)%srcsize];
-			do {
-				dst[(decodeoffset++) & 0x1fff] = val;
-				code--;
-			} while(code != 0xff);
-		}
-	}
-	return &src[romoffset%srcsize]-gfx_source;
-}
-
-
-
-#define z_decls(step)				\
-	UINT16 zxs = 0x40-(zx>>10);			\
-	UINT16 zxd = 0x40-((zx>>2) & 0x3f);		\
-	UINT16 zys = 0x40-(zy>>10);			\
-	UINT16 zyd = 0x40-((zy>>2) & 0x3f);		\
-	int xs, ys, xd, yd, old, old2;		\
-	int step_spr = step;				\
-	int bxs = 0, bys = 0;				\
-	sx <<= 6;					\
-	sy <<= 6;					\
-	x <<= 6;					\
-	y <<= 6;
-
-#define z_clamp_x_min()			\
-	if(x < 0) {					\
-		do {					\
-			bxs += zxs;				\
-			x += zxd;					\
-		} while(x < 0);				\
-	}
-
-#define z_clamp_x_max()			\
-	if(x > clip_max_x) {				\
-		do {					\
-			bxs += zxs;				\
-			x -= zxd;					\
-		} while(x > clip_max_x);				\
-	}
-
-#define z_clamp_y_min()			\
-	if(y < 0) {					\
-		do {					\
-			bys += zys;				\
-			y += zyd;					\
-		} while(y < 0);				\
-		src += (bys>>6)*step_spr;			\
-	}
-
-#define z_clamp_y_max()			\
-	if(y > clip_max_y) {				\
-		do {					\
-			bys += zys;				\
-			y -= zyd;					\
-		} while(y > clip_max_y);				\
-		src += (bys>>6)*step_spr;			\
-	}
-
-#define z_loop_x()			\
-	xs = bxs;					\
-	xd = x;					\
-	while(xs < sx && xd <= clip_max_x)
-
-#define z_loop_x_flip()			\
-	xs = bxs;					\
-	xd = x;					\
-	while(xs < sx && xd >= 0)
-
-#define z_loop_y()			\
-	ys = bys;					\
-	yd = y;					\
-	while(ys < sy && yd <= clip_max_y)
-
-#define z_loop_y_flip()			\
-	ys = bys;					\
-	yd = y;					\
-	while(ys < sy && yd >= 0)
-
-#define z_draw_pixel()				\
-	UINT8 val = src[xs >> 6];			\
-	if(val)					\
-		DrvTmpScreenC[((yd>>6) * nScreenWidth) + (xd>>6)] = val + colour;
-
-	//	*BITMAP_ADDR16(bitmap, yd>>6, xd>>6) = val + colour;
-
-#define z_x_dst(op)			\
-	old = xd;					\
-	do {						\
-		xs += zxs;					\
-		xd op zxd;					\
-	} while(!((xd^old) & ~0x3f));
-
-#define z_y_dst(op)			\
-	old = yd;					\
-	old2 = ys;					\
-	do {						\
-		ys += zys;					\
-		yd op zyd;					\
-	} while(!((yd^old) & ~0x3f));			\
-	while((ys^old2) & ~0x3f) {			\
-		src += step_spr;				\
-		old2 += 0x40;				\
-	}
-
-static void blit_nf_z(const UINT8 *src, int x, int y, int sx, int sy, UINT16 zx, UINT16 zy, int colour)
-{
-	z_decls(sx);
-	z_clamp_x_min();
-	z_clamp_y_min();
-	z_loop_y() {
-		z_loop_x() {
-			z_draw_pixel();
-			z_x_dst(+=);
-		}
-		z_y_dst(+=);
-	}
-}
-
-static void blit_fy_z(const UINT8 *src, int x, int y, int sx, int sy, UINT16 zx, UINT16 zy, int colour)
-{
-	z_decls(sx);
-	z_clamp_x_min();
-	z_clamp_y_max();
-	z_loop_y_flip() {
-		z_loop_x() {
-			z_draw_pixel();
-			z_x_dst(+=);
-		}
-		z_y_dst(-=);
-	}
-}
-
-static void blit_fx_z(const UINT8 *src, int x, int y, int sx, int sy, UINT16 zx, UINT16 zy, int colour)
-{
-	z_decls(sx);
-	z_clamp_x_max();
-	z_clamp_y_min();
-	z_loop_y() {
-		z_loop_x_flip() {
-			z_draw_pixel();
-			z_x_dst(-=);
-		}
-		z_y_dst(+=);
-	}
-}
-
-static void blit_fxy_z(const UINT8 *src, int x, int y, int sx, int sy, UINT16 zx, UINT16 zy, int colour)
-{
-	z_decls(sx);
-	z_clamp_x_max();
-	z_clamp_y_max();
-	z_loop_y_flip() {
-		z_loop_x_flip() {
-			z_draw_pixel();
-			z_x_dst(-=);
-		}
-		z_y_dst(-=);
-	}
-}
-
-
-static void (*const blit_z[4])(const UINT8 *src, int x, int y, int sx, int sy, UINT16 zx, UINT16 zy, int colour) = {
-	blit_nf_z,
-	blit_fy_z,
-	blit_fx_z,
-	blit_fxy_z,
-};
-
-void skns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, int spriteram_size, UINT8* gfx_source, int gfx_length, UINT32* sprite_regs)
-{
-	UINT32 *source = spriteram_source;
-	UINT32 *finish = source + spriteram_size/4;
-
-	int group_x_offset[4];
-	int group_y_offset[4];
-	int group_enable;
-	int group_number;
-	int sprite_flip;
-	int sprite_x_scroll;
-	int sprite_y_scroll;
-	int disabled = sprite_regs[0x04/4] & 0x08; // RWR1
-	int xsize,ysize, size, xpos=0,ypos=0, pri=0, romoffset, colour=0, xflip,yflip, joint;
-	int sx,sy;
-	int endromoffs=0, gfxlen;
-	int grow;
-	UINT16 zoomx, zoomy;
-
-	if ((!disabled) && suprnova_alt_enable_sprites){
-
-		group_enable    = (sprite_regs[0x00/4] & 0x0040) >> 6; // RWR0
-
-		sprite_flip = (sprite_regs[0x04/4] & 0x03); // RWR1
-
-		sprite_y_scroll = ((sprite_regs[0x08/4] & 0x7fc0) >> 6); // RWR2
-		sprite_x_scroll = ((sprite_regs[0x10/4] & 0x7fc0) >> 6); // RWR4
-		if (sprite_y_scroll&0x100) sprite_y_scroll -= 0x200; // Signed
-		if (sprite_x_scroll&0x100) sprite_x_scroll -= 0x200; // Signed
-
-		group_x_offset[0] = (sprite_regs[0x18/4] & 0xffc0) >> 6; // RWR6
-		group_y_offset[0] = (sprite_regs[0x1c/4] & 0xffc0) >> 6; // RWR7
-		if (group_x_offset[0]&0x200) group_x_offset[0] -= 0x400; // Signed
-		if (group_y_offset[0]&0x200) group_y_offset[0] -= 0x400; // Signed
-
-		group_x_offset[1] = (sprite_regs[0x20/4] & 0xffc0) >> 6; // RWR8
-		group_y_offset[1] = (sprite_regs[0x24/4] & 0xffc0) >> 6; // RWR9
-		if (group_x_offset[1]&0x200) group_x_offset[1] -= 0x400; // Signed
-		if (group_y_offset[1]&0x200) group_y_offset[1] -= 0x400; // Signed
-
-		group_x_offset[2] = (sprite_regs[0x28/4] & 0xffc0) >> 6; // RWR10
-		group_y_offset[2] = (sprite_regs[0x2c/4] & 0xffc0) >> 6; // RWR11
-		if (group_x_offset[2]&0x200) group_x_offset[2] -= 0x400; // Signed
-		if (group_y_offset[2]&0x200) group_y_offset[2] -= 0x400; // Signed
-
-		group_x_offset[3] = (sprite_regs[0x30/4] & 0xffc0) >> 6; // RWR12
-		group_y_offset[3] = (sprite_regs[0x34/4] & 0xffc0) >> 6; // RWR13
-		if (group_x_offset[3]&0x200) group_x_offset[3] -= 0x400; // Signed
-		if (group_y_offset[3]&0x200) group_y_offset[3] -= 0x400; // Signed
-
-		sprite_x_scroll += sprite_kludge_x;
-		sprite_y_scroll += sprite_kludge_y;
-
-		gfxlen = gfx_length;
-		while( source<finish )
-		{
-			xflip = (source[0] & 0x00000200) >> 9;
-			yflip = (source[0] & 0x00000100) >> 8;
-
-			ysize = (source[0] & 0x30000000) >> 28;
-			xsize = (source[0] & 0x03000000) >> 24;
-			xsize ++;
-			ysize ++;
-
-			xsize *= 16;
-			ysize *= 16;
-
-			size = xsize * ysize;
-
-			joint = (source[0] & 0x0000e000) >> 13;
-
-			if (!(joint & 1))
-			{
-				xpos =  (source[2] & 0x0000ffc0) >> 6;
-				ypos =  (source[3] & 0x0000ffc0) >> 6;
-
-				xpos += sprite_x_scroll; // Global offset
-				ypos += sprite_y_scroll;
-
-				if (group_enable)
-				{
-					group_number = (source[0] & 0x00001800) >> 11;
-
-					xpos += group_x_offset[group_number];
-					ypos += group_y_offset[group_number];
-				}
-			}
-			else
-			{
-				xpos +=  (source[2] & 0x0000ffc0) >> 6;
-				ypos +=  (source[3] & 0x0000ffc0) >> 6;
-			}
-
-			if (xpos > 0x1ff) xpos -= 0x400;
-			if (ypos > 0x1ff) ypos -= 0x400;
-
-			/* Local sprite offset (for taking flip into account and drawing offset) */
-			sx = xpos;
-			sy = ypos;
-
-			/* Global Sprite Flip (sengekis) */
-			if (sprite_flip&2)
-			{
-				xflip ^= 1;
-				sx = nScreenWidth - sx;
-			}
-			if (sprite_flip&1)
-			{
-				yflip ^= 1;
-				sy = nScreenHeight - sy;
-			}
-
-			/* Palette linking */
-			if (!(joint & 2))
-			{
-				colour = (source[0] & 0x0000003f) >> 0;
-			}
-
-			/* Priority and Tile linking */
-			if (!(joint & 4))
-			{
-				romoffset = (source[1] & 0x07ffffff) >> 0;
-				pri = (source[0] & 0x000000c0) >> 6;
-			} else {
-				romoffset = endromoffs;
-			}
-
-			grow = (source[0]>>23) & 1;
-
-			if (!grow)
-			{
-				zoomx = (source[2] >> 16)&0xfcfc;
-				zoomy = (source[3] >> 16)&0xfcfc;
-			}
-			else
-			{
-				// the bad sprites in sengekis all have this not set..
-				// we need to handle sprite shrink properly
-				zoomx = 0;
-				zoomy = 0;
-			}
-
-
-			romoffset &= gfxlen-1;
-
-			endromoffs = skns_rle_decode (romoffset, size, gfx_source, gfx_length );
-
-			{
-				int NewColour = (colour<<8) | (pri << 14);
-
-				if(zoomx || zoomy)
-				{
-					blit_z[ (xflip<<1) | yflip ](decodebuffer, sx, sy, xsize, ysize, zoomx, zoomy, NewColour);
-				}
-				else
-				{
-					if (!xflip && !yflip) {
-						int xx,yy;
-
-						for (xx = 0; xx<xsize; xx++)
-						{
-							if ((sx+xx < nScreenWidth) && (sx+xx >= 0))
-							{
-								for (yy = 0; yy<ysize; yy++)
-								{
-									if ((sy+yy < nScreenHeight) && (sy+yy >= 0))
-									{
-										int pix;
-										pix = decodebuffer[xsize*yy+xx];
-										if (pix)
-											bitmap[(sy+yy) * nScreenWidth + (sx+xx)] = pix + NewColour;
-									//		*BITMAP_ADDR16(bitmap, sy+yy, sx+xx) = pix+ NewColour; // change later
-									}
-								}
-							}
-						}
-					} else if (!xflip && yflip) {
-						int xx,yy;
-						sy -= ysize;
-
-						for (xx = 0; xx<xsize; xx++)
-						{
-							if ((sx+xx < nScreenWidth) && (sx+xx >= 0))
-							{
-								for (yy = 0; yy<ysize; yy++)
-								{
-									if ((sy+(ysize-1-yy) < nScreenHeight) && (sy+(ysize-1-yy) >= 0))
-									{
-										int pix;
-										pix = decodebuffer[xsize*yy+xx];
-										if (pix)
-											bitmap[(sy+(ysize-1-yy)) * nScreenWidth + (sx+xx)] = pix + NewColour;
-										//	*BITMAP_ADDR16(bitmap, sy+(ysize-1-yy), sx+xx) = pix+ NewColour; // change later
-									}
-								}
-							}
-						}
-					} else if (xflip && !yflip) {
-						int xx,yy;
-						sx -= xsize;
-
-						for (xx = 0; xx<xsize; xx++)
-						{
-							if ( (sx+(xsize-1-xx) < nScreenWidth) && (sx+(xsize-1-xx) >= 0))
-							{
-								for (yy = 0; yy<ysize; yy++)
-								{
-									if ((sy+yy < nScreenHeight) && (sy+yy >= 0))
-									{
-										int pix;
-										pix = decodebuffer[xsize*yy+xx];
-										if (pix)
-											bitmap[(sy+yy) * nScreenWidth + (sx+(xsize-1-xx))] = pix + NewColour;
-										//	*BITMAP_ADDR16(bitmap, sy+yy, sx+(xsize-1-xx)) = pix+ NewColour; // change later
-									}
-								}
-							}
-						}
-					} else if (xflip && yflip) {
-						int xx,yy;
-						sx -= xsize;
-						sy -= ysize;
-
-						for (xx = 0; xx<xsize; xx++)
-						{
-							if ((sx+(xsize-1-xx) < nScreenWidth) && (sx+(xsize-1-xx) >= 0))
-							{
-								for (yy = 0; yy<ysize; yy++)
-								{
-									if ((sy+(ysize-1-yy) < nScreenHeight) && (sy+(ysize-1-yy) >= 0))
-									{
-										int pix;
-										pix = decodebuffer[xsize*yy+xx];
-										if (pix)
-											bitmap[(sy+(ysize-1-yy)) * nScreenWidth + (sx+(xsize-1-xx))] = pix + NewColour;
-										//	*BITMAP_ADDR16(bitmap, sy+(ysize-1-yy), sx+(xsize-1-xx)) = pix+ NewColour; // change later
-									}
-								}
-							}
-						}
-					}
-				}
-		}//End PriTest
-
-		source+=4;
-		}
-	}
-}
-
-
-static void supernova_draw(int *offs, UINT16 *bitmap, UINT8 *flags, UINT16 *dbitmap, UINT8 *dflags, int tran)
+static void supernova_draw(int *offs, UINT16 *bitmap, UINT8 *flags, UINT16 *dbitmap, UINT8 *dflags, int layer)
 {
 	UINT32 *vreg = (UINT32*)DrvV3Regs;
 	UINT32 *line = (UINT32*)DrvLineRAM;
@@ -1678,24 +1252,31 @@ static void supernova_draw(int *offs, UINT16 *bitmap, UINT8 *flags, UINT16 *dbit
 	int incxx,incxy,incyx,incyy;
 	int columnscroll;
 
-	tran = tran; //
-
 	if (enable && suprnova_alt_enable_background)
 	{
+		if (layer == 0) draw_layer(DrvVidRAM + 0x0000, DrvTmpScreenBuf + 0x0000, DrvTmpScreenA, DrvTmpFlagA, DrvGfxROM1, 0);
+		if (layer == 1) draw_layer(DrvVidRAM + 0x4000, DrvTmpScreenBuf + 0x4000, DrvTmpScreenB, DrvTmpFlagB, DrvGfxROM2, 1);
+
 		startx = vreg[offs[1]];
-		incyy  = vreg[offs[2]]; // was xx, changed for sarukani
+		incyy  = vreg[offs[2]]&0x7ffff;
+		if (incyy&0x40000) incyy = incyy-0x80000; // level 3 boss in sengekis
 		incyx  = vreg[offs[3]];
 		starty = vreg[offs[4]];
 		incxy  = vreg[offs[5]];
-		incxx  = vreg[offs[6]]; // was yy, changed for sarukani
+		incxx  = vreg[offs[6]]&0x7ffff;
+		if (incxx&0x40000) incxx = incxx-0x80000;
 
 		columnscroll = (vreg[0x0c/4] >> offs[7]) & 0x0001;
+
+		// iq_132 complete hack for now....
+		if ((incyy|incyx|incxy|incxx)==0) {
+			incyy=1<<8;
+			incxx=1<<8;
+		}
 
 		suprnova_draw_roz(bitmap,flags,dbitmap,dflags,startx << 8,starty << 8,	incxx << 8,incxy << 8,incyx << 8,incyy << 8, !nowrap, columnscroll, &line[offs[8]]);
 	}
 }
-
-static UINT32 black_pen = 0;
 
 static void DrvRecalcPalette()
 {
@@ -1706,8 +1287,6 @@ static void DrvRecalcPalette()
 		r = (p[i] >> 10) & 0x1f;
 		g = (p[i] >>  5) & 0x1f;
 		b = (p[i] >>  0) & 0x1f;
-
-	//	int alpha = (p[i] >> 15) & 1;
 
 		if (i < 0x4000) { // 1st half is for Sprites
 			use_bright = use_spc_bright;
@@ -1721,20 +1300,20 @@ static void DrvRecalcPalette()
 			brightness_r = bright_v3_r;
 		}
 
-		if(use_bright) { // IQ_132!!
+		if(use_bright) {
 			if(brightness_b) b = ((b<<3) * (brightness_b+1))>>8;
 			else b = 0;
 			if(brightness_g) g = ((g<<3) * (brightness_g+1))>>8;
 			else g = 0;
 			if(brightness_r) r = ((r<<3) * (brightness_r+1))>>8;
 			else r = 0;
-	
-			DrvPalette[i] = (r << 16) | (g << 8) | b; //BurnHighCol(r, g, b, 0);
 		} else {
-			DrvPalette[i] = (r << 19) | (g << 11) | (b << 3); //BurnHighCol(r << 3, g << 3, b << 3, 0);
+			r <<= 3;
+			g <<= 3;
+			b <<= 3;
 		}
 
-		if (!DrvPalette[i]) black_pen = i;
+		DrvPalette[i] = (r << 16) | (g << 8) | b;
 	}
 }
 
@@ -1751,13 +1330,12 @@ static void copy_layers()
 	{
 		int supernova_pri_a;
 		int supernova_pri_b;
-		int tran = 0;
 
 		supernova_pri_a = (vreg[0x10/4] & 0x0002)>>1;
 		supernova_pri_b = (vreg[0x34/4] & 0x0002)>>1;
 
-		supernova_draw(offs[1], DrvTmpScreenB, DrvTmpFlagB, DrvTmpScreenB2, DrvTmpFlagB2, tran);
-		supernova_draw(offs[0], DrvTmpScreenA, DrvTmpFlagA, DrvTmpScreenA2, DrvTmpFlagA2, tran);
+		supernova_draw(offs[1], DrvTmpScreenB, DrvTmpFlagB, DrvTmpScreenB2, DrvTmpFlagB2, 1);
+		supernova_draw(offs[0], DrvTmpScreenA, DrvTmpFlagA, DrvTmpScreenA2, DrvTmpFlagA2, 0);
 
 		{
 			int x,y;
@@ -1834,11 +1412,9 @@ static void copy_layers()
 					// if the sprites are higher than the bg pixel
 					if (pri3 > bgpri)
 					{
-
 						if (pendata3&0xff)
 						{
-
-							UINT16 palvalue = *((UINT32*)(DrvPalRAM + (pendata3 * 4))); //skns_palette_ram[pendata3];
+							UINT16 palvalue = *((UINT32*)(DrvPalRAM + (pendata3 * 4)));
 
 							coldat = clut[pendata3];
 
@@ -1871,7 +1447,7 @@ static void copy_layers()
 								b = (b+b2);
 								if (b>255) b = 255;
 
-								dst[x] = (r << 0) | (g << 8) | (b << 16);
+								dst[x] = (r << 16) | (g << 8) | (b << 0);
 							}
 
 							else
@@ -1912,12 +1488,9 @@ static int DrvDraw()
 	memset (DrvTmpScreenA2, 0, nScreenWidth * nScreenHeight * 2);
 	memset (DrvTmpScreenB2, 0, nScreenWidth * nScreenHeight * 2);
 
-	draw_layer(DrvVidRAM + 0x0000, DrvTmpScreenBuf + 0x0000, DrvTmpScreenA, DrvTmpFlagA, DrvGfxROM1, 0);
-	draw_layer(DrvVidRAM + 0x4000, DrvTmpScreenBuf + 0x4000, DrvTmpScreenB, DrvTmpFlagB, DrvGfxROM2, 1);
-
 	copy_layers();
 	memset (DrvTmpScreenC,  0, nScreenWidth * nScreenHeight * 2);
-	skns_draw_sprites(DrvTmpScreenC, (UINT32*)DrvSprRAM, 0x4000, DrvGfxROM0, nGfxLen0, (UINT32*)DrvSprRegs);
+	if (nBurnLayer & 4) skns_draw_sprites(DrvTmpScreenC, (UINT32*)DrvSprRAM, 0x4000, DrvGfxROM0, nGfxLen0, (UINT32*)DrvSprRegs, 0);
 
 	//if (nBurnBpp == 4) {
 	//	DrvTmpDraw = (UINT32*)pBurnDraw;

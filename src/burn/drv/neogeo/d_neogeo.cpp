@@ -1620,7 +1620,7 @@ struct BurnDriver BurnDrvNam1975 = {
 	"nam1975", NULL, "neogeo", NULL, "1990",
 	"NAM-1975 (NGM-001)(NGH-001)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SHOOT, 0,
 	NULL, nam1975RomInfo, nam1975RomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
@@ -1993,7 +1993,7 @@ struct BurnDriver BurnDrvSuperspy = {
 	"superspy", NULL, "neogeo", NULL, "1990",
 	"The Super Spy (NGM-011)(NGH-011)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, superspyRomInfo, superspyRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
@@ -4971,7 +4971,7 @@ struct BurnDriver BurnDrvIrrmaze = {
 	"irrmaze", NULL, "neogeo", NULL, "1997",
 	"The Irritating Maze / Ultra Denryu Iraira Bou\0", NULL, "SNK / Saurus", "Neo Geo MVS",
 	L"The Irritating Maze\0\u30A6\u30EB\u30C8\u30E9\u96FB\u6D41\u30A4\u30E9\u30A4\u30E9\u68D2\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING /*| BDF_TRACKBALL*/, 1, HARDWARE_SNK_NEOGEO | HARDWARE_SNK_TRACKBALL | HARDWARE_SNK_SWAPP, GBF_MISC, 0,
+	BDF_GAME_WORKING /*| BDF_TRACKBALL*/, 1, HARDWARE_SNK_NEOGEO | HARDWARE_SNK_TRACKBALL | HARDWARE_SNK_SWAPP, GBF_MAZE, 0,
 	NULL, irrmazeRomInfo, irrmazeRomName, NULL, NULL, neotrackballInputInfo, neotrackballDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3

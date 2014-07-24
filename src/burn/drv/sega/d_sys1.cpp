@@ -5787,7 +5787,7 @@ struct BurnDriver BurnDrvUpndown = {
 	"upndown", NULL, NULL, NULL, "1983",
 	"Up'n Down (315-5030)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM1, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM1, GBF_RACING, 0,
 	NULL, UpndownRomInfo, UpndownRomName, NULL, NULL, UpndownInputInfo, UpndownDIPInfo,
 	UpndownInit, System1Exit, System1Frame, NULL, System1Scan,
 	NULL, 0x600, 224, 256, 3, 4
@@ -5797,7 +5797,7 @@ struct BurnDriver BurnDrvUpndownu = {
 	"upndownu", "upndown", NULL, NULL, "1983",
 	"Up'n Down (not encrypted)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM1, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM1, GBF_RACING, 0,
 	NULL, UpndownuRomInfo, UpndownuRomName, NULL, NULL, UpndownInputInfo, UpndownDIPInfo,
 	UpndownuInit, System1Exit, System1Frame, NULL, System1Scan,
 	NULL, 0x600, 224, 256, 3, 4

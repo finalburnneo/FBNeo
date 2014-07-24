@@ -608,7 +608,7 @@ struct BurnDriver BurnDrvPorky = {
 	"porky", NULL, NULL, NULL, "1985",
 	"Porky\0", NULL, "Shinkai Inc. (Magic Eletronics Inc. license)", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_HORSHOOT, 0,
 	NULL, porkyRomInfo, porkyRomName, NULL, NULL, PorkyInputInfo, PorkyDIPInfo,
 	porkyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	224, 256, 3, 4

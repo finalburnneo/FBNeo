@@ -675,7 +675,7 @@ static INT32 MemIndex()
 	DrvGfxROM1	= Next; Next += 0x400000;
 	DrvGfxROM2	= Next; Next += 0x400000;
 	DrvGfxROM3	= Next; Next += 0x800000;
-	DrvGfxROM4	= Next; Next += 0x100000;
+	DrvGfxROM4	= Next; Next += 0x800000;
 
 	MSM6295ROM	= Next;
 	DrvSndROM0	= Next; Next += 0x100000;
@@ -907,7 +907,7 @@ static INT32 WizdfireInit()
 	SekSetReadByteHandler(0,		wizdfire_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.80, 1006875, 1.00, 2013750, 0.40);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.80, 1006875, 2.00, 2013750, 0.40);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
 

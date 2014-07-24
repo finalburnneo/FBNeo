@@ -797,7 +797,7 @@ struct BurnDriver BurnDrvMarineb = {
 	"marineb", NULL, NULL, NULL, "1982",
 	"Marine Boy\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, MarinebRomInfo, MarinebRomName, NULL, NULL, MarinebInputInfo, MarinebDIPInfo,
 	MarinebInit, DrvExit, DrvFrame, DrvDraw, DrvScan,	
 	&DrvRecalcPalette, 0x100, 256, 224, 4, 3
@@ -830,7 +830,7 @@ struct BurnDriver BurnDrvSpringer = {
 	"springer", NULL, NULL, NULL, "1982",
 	"Springer\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, SpringerRomInfo, SpringerRomName, NULL, NULL, MarinebInputInfo, MarinebDIPInfo,
 	SpringerInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPalette, 0x100, 224, 256, 3, 4

@@ -1320,7 +1320,7 @@ struct BurnDriver BurnDrvjack = {
 	"jack", NULL, NULL, NULL, "1982",
 	"Jack the Giantkiller (set 1)\0", NULL, "Cinematronics", "Jack the Giantkiller",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, jackRomInfo, jackRomName, NULL, NULL, JackInputInfo, JackDIPInfo,
 	jackInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x100,
 	224, 256, 3, 4
@@ -1354,7 +1354,7 @@ struct BurnDriver BurnDrvjack2 = {
 	"jack2", "jack", NULL, NULL, "1982",
 	"Jack the Giantkiller (set 2)\0", NULL, "Cinematronics", "Jack the Giantkiller",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, jack2RomInfo, jack2RomName, NULL, NULL, JackInputInfo, Jack2DIPInfo,
 	jackInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x100,
 	224, 256, 3, 4
@@ -1388,7 +1388,7 @@ struct BurnDriver BurnDrvjack3 = {
 	"jack3", "jack", NULL, NULL, "1982",
 	"Jack the Giantkiller (set 3)\0", NULL, "Cinematronics", "Jack the Giantkiller",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, jack3RomInfo, jack3RomName, NULL, NULL, JackInputInfo, Jack3DIPInfo,
 	jackInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x100,
 	224, 256, 3, 4
@@ -1454,7 +1454,7 @@ struct BurnDriver BurnDrvtreahunt = {
 	"treahunt", "jack", NULL, NULL, "1982",
 	"Treasure Hunt (bootleg?)\0", NULL, "Hara Industries", "Jack the Giantkiller",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, treahuntRomInfo, treahuntRomName, NULL, NULL, JackInputInfo, TreahuntDIPInfo,
 	treahuntInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x100,
 	224, 256, 3, 4
@@ -1600,7 +1600,7 @@ struct BurnDriver BurnDrvfreeze = {
 	"freeze", NULL, NULL, NULL, "1984",
 	"Freeze\0", NULL, "Cinematronics", "Jack the Giantkiller",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, freezeRomInfo, freezeRomName, NULL, NULL, FreezeInputInfo, FreezeDIPInfo,
 	jackInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x100,
 	224, 256, 3, 4

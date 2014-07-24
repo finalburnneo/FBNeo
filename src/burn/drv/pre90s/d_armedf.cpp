@@ -1392,7 +1392,7 @@ struct BurnDriver BurnDrvCclimbr2 = {
 	"cclimbr2", NULL, NULL, NULL, "1988",
 	"Crazy Climber 2 (Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, cclimbr2RomInfo, cclimbr2RomName, NULL, NULL, Cclimbr2InputInfo, Cclimbr2DIPInfo,
 	Cclimbr2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3
@@ -1435,7 +1435,7 @@ struct BurnDriver BurnDrvCclmbr2a = {
 	"cclimbr2a", "cclimbr2", NULL, NULL, "1988",
 	"Crazy Climber 2 (Japan, Harder)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, cclmbr2aRomInfo, cclmbr2aRomName, NULL, NULL, Cclimbr2InputInfo, Cclimbr2DIPInfo,
 	Cclimbr2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 224, 4, 3

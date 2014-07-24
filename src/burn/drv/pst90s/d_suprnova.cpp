@@ -830,20 +830,17 @@ static int MemIndex(int gfxlen0)
 
 	AllRam			= Next;
 
-	// allocate more ram for some of these. The page size for the sh2 core is (1<<16), so
-	// anything less gets mapped into areas it should not be.
-
-	DrvVidRAM		= Next; Next += 0x0080000; //0x020000;
-	DrvNvRAM		= Next; Next += 0x0020000; //0x020000;
-	DrvSprRAM		= Next; Next += 0x0040000; //0x020000;
-	DrvLineRAM		= Next; Next += 0x0080000; //0x020000;
-	DrvPalRAM		= Next; Next += 0x020000; //0x040000;
-	DrvGfxRAM		= Next; Next += 0x040000; //0x060000;
-	DrvSh2RAM		= Next; Next += 0x100000; //0x200000;
-	DrvCacheRAM		= Next; Next += 0x0010000; //0x020000;
-	DrvV3Regs		= Next; Next += 0x00010000; //0x020000;
-	DrvSprRegs		= Next; Next += 0x00010000; //0x020000;
-	DrvPalRegs		= Next; Next += 0x000020000 + 0x000100; //0x20000;
+	DrvVidRAM		= Next; Next += 0x010000;
+	DrvNvRAM		= Next; Next += 0x010000;
+	DrvSprRAM		= Next; Next += 0x010000;
+	DrvLineRAM		= Next; Next += 0x010000;
+	DrvPalRAM		= Next; Next += 0x020000;
+	DrvGfxRAM		= Next; Next += 0x040000;
+	DrvSh2RAM		= Next; Next += 0x100000;
+	DrvCacheRAM		= Next; Next += 0x010000;
+	DrvV3Regs		= Next; Next += 0x010100;
+	DrvSprRegs		= Next; Next += 0x010100;
+	DrvPalRegs		= Next; Next += 0x010020;
 
 	RamEnd			= Next;
 
@@ -1635,7 +1632,6 @@ static struct BurnRomInfo sknsRomDesc[] = {
 	{ "sknsa1.u10",		0x80000, 0x745e5212, BRF_BIOS}, //  2 Asia
 	{ "sknsu1.u10",		0x80000, 0x384d21ec, BRF_BIOS}, //  3 USA
 	{ "sknsk1.u10",		0x80000, 0xff1c9f79, BRF_BIOS}, //  4 Korea
-//	{ "bios.u10",		0x80000, 0x161fb79e, BRF_BIOS}, //  5 Korea
 };
 
 STD_ROM_PICK(skns)
@@ -2463,6 +2459,7 @@ static struct BurnRomInfo galpansuRomDesc[] = {
 	{ "7",			0x400000, 0x58800a18, 4 | BRF_GRA },           //  8 Foreground Tiles
 
 	{ "4",			0x400000, 0x0348e8e1, 5 | BRF_SND },           //  9 YMZ280b Samples
+        { "bios.u10",		0x80000, 0x161fb79e, BRF_BIOS | BRF_OPT},      //  10 Korea Bios
 };
 
 STDROMPICKEXT(galpansu, galpansu, skns)

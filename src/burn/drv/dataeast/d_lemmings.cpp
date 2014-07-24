@@ -771,7 +771,7 @@ struct BurnDriver BurnDrvLemmings = {
 	"lemmings", NULL, NULL, NULL, "1991",
 	"Lemmings (US prototype)\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PUZZLE, 0,
 	NULL, lemmingsRomInfo, lemmingsRomName, NULL, NULL, LemmingsInputInfo, LemmingsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 224, 4, 3

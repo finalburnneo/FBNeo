@@ -5747,7 +5747,7 @@ struct BurnDriver BurnDrvSwat = {
 	"swat", NULL, NULL, NULL, "1984",
 	"SWAT (315-5048)\0", NULL, "Coreland / Sega", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM1, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM1, GBF_SHOOT, 0,
 	NULL, SwatRomInfo, SwatRomName, NULL, NULL, MyheroInputInfo, SwatDIPInfo,
 	SwatInit, System1Exit, System1Frame, NULL, System1Scan,
 	NULL, 0x600, 224, 256, 3, 4

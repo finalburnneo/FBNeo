@@ -2837,7 +2837,7 @@ struct BurnDriver BurnDrvPerfrman = {
 	"perfrman", NULL, NULL, NULL, "1985",
 	"Performan (Japan)\0", NULL, "Toaplan / Data East Corporation", "Early Toaplan",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_SHOOT, 0,
 	NULL, perfrmanRomInfo, perfrmanRomName, NULL, NULL, performanInputInfo, PerfrmanDIPInfo,
 	perfrmanInit, tigerhExit, tigerhFrame, perfrmanDraw, tigerhScan, &tigerhRecalcPalette, 0x100,
 	240, 256, 3, 4
@@ -2847,7 +2847,7 @@ struct BurnDriver BurnDrvPerfrmanu = {
 	"perfrmanu", "perfrman", NULL, NULL, "1985",
 	"Performan (US)\0", NULL, "Toaplan / Data East USA", "Early Toaplan",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_SHOOT, 0,
 	NULL, perfrmanuRomInfo, perfrmanuRomName, NULL, NULL, getstarInputInfo, PerfrmanDIPInfo,
 	perfrmanInit, tigerhExit, tigerhFrame, perfrmanDraw, tigerhScan, &tigerhRecalcPalette, 0x100,
 	240, 256, 3, 4

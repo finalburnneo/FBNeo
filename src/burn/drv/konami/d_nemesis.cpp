@@ -3863,7 +3863,7 @@ struct BurnDriver BurnDrvCitybomb = {
 	"citybomb", NULL, NULL, NULL, "1987",
 	"City Bomber (World)\0", NULL, "Konami", "GX787",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_KONAMI_68K_Z80, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_KONAMI_68K_Z80, GBF_SHOOT, 0,
 	NULL, citybombRomInfo, citybombRomName, NULL, NULL, CitybombInputInfo, CitybombDIPInfo,
 	CitybombInit, DrvExit, CitybombFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
@@ -3894,7 +3894,7 @@ struct BurnDriver BurnDrvCitybombj = {
 	"citybombj", "citybomb", NULL, NULL, "1987",
 	"City Bomber (Japan)\0", NULL, "Konami", "GX787",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_KONAMI_68K_Z80, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_KONAMI_68K_Z80, GBF_SHOOT, 0,
 	NULL, citybombjRomInfo, citybombjRomName, NULL, NULL, CitybombInputInfo, CitybombDIPInfo,
 	CitybombInit, DrvExit, CitybombFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4

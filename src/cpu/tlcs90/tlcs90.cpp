@@ -13,10 +13,10 @@
 
 typedef void (*timer_callback)(INT32);
 
-extern UINT8 __fastcall tlcs90_program_read_byte(UINT32 address);
-extern void __fastcall tlcs90_program_write_byte(UINT32 address, UINT8 data);
-extern UINT8 __fastcall tlcs90_io_read_byte(UINT16 port);
-extern void __fastcall tlcs90_io_write_byte(UINT16 port, UINT8 data);
+extern UINT8 tlcs90_program_read_byte(UINT32 address);
+extern void tlcs90_program_write_byte(UINT32 address, UINT8 data);
+extern UINT8 tlcs90_io_read_byte(UINT16 port);
+extern void tlcs90_io_write_byte(UINT16 port, UINT8 data);
 
 enum e_ir
 {

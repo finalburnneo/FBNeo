@@ -1,10 +1,10 @@
 #include "burnint.h"
 #include "tlcs90_intf.h"
 
-static UINT8 __fastcall (*read)(UINT32) = NULL;
-static void __fastcall (*write)(UINT32, UINT8) = NULL;
-static UINT8 __fastcall (*readio)(UINT16) = NULL;
-static void __fastcall (*writeio)(UINT16, UINT8) = NULL;
+static UINT8 (*read)(UINT32) = NULL;
+static void (*write)(UINT32, UINT8) = NULL;
+static UINT8 (*readio)(UINT16) = NULL;
+static void (*writeio)(UINT16, UINT8) = NULL;
 
 static UINT8 *mem[2][0x1000]; // only read/fetch & write
 
@@ -12,7 +12,7 @@ extern void t90_internal_registers_w(UINT16 offset, UINT8 data);
 extern UINT8 t90_internal_registers_r(UINT16 offset);
 INT32 tlcs90_init(INT32 clock);
 
-UINT8 __fastcall tlcs90_program_read_byte(UINT32 address)
+UINT8 tlcs90_program_read_byte(UINT32 address)
 {
 	address &= 0xfffff;
 
@@ -32,7 +32,7 @@ UINT8 __fastcall tlcs90_program_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall tlcs90_program_write_byte(UINT32 address, UINT8 data)
+void tlcs90_program_write_byte(UINT32 address, UINT8 data)
 {
 	address &= 0xfffff;
 
@@ -53,7 +53,7 @@ void __fastcall tlcs90_program_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall tlcs90_io_read_byte(UINT16 port)
+UINT8 tlcs90_io_read_byte(UINT16 port)
 {
 	port &= 0xffff;
 
@@ -66,7 +66,7 @@ UINT8 __fastcall tlcs90_io_read_byte(UINT16 port)
 	return 0;
 }
 
-void __fastcall tlcs90_io_write_byte(UINT16 port, UINT8 data)
+void tlcs90_io_write_byte(UINT16 port, UINT8 data)
 {
 	port &= 0xffff;
 
@@ -78,22 +78,22 @@ void __fastcall tlcs90_io_write_byte(UINT16 port, UINT8 data)
 }
 
 
-void tlcs90SetReadHandler(UINT8 __fastcall (*pread)(UINT32))
+void tlcs90SetReadHandler(UINT8 (*pread)(UINT32))
 {
 	read = pread;
 }
 
-void tlcs90SetWriteHandler(void __fastcall (*pwrite)(UINT32, UINT8))
+void tlcs90SetWriteHandler(void (*pwrite)(UINT32, UINT8))
 {
 	write = pwrite;
 }
 
-void tlcs90SetReadPortHandler(UINT8 __fastcall (*pread)(UINT16))
+void tlcs90SetReadPortHandler(UINT8 (*pread)(UINT16))
 {
 	readio = pread;
 }
 
-void tlcs90SetWritePortHandler(void __fastcall (*pwrite)(UINT16, UINT8))
+void tlcs90SetWritePortHandler(void (*pwrite)(UINT16, UINT8))
 {
 	writeio = pwrite;
 }

@@ -1,8 +1,8 @@
 
-void tlcs90SetReadHandler(UINT8 __fastcall (*pread)(UINT32));
-void tlcs90SetWriteHandler(void __fastcall (*pwrite)(UINT32, UINT8));
-void tlcs90SetReadPortHandler(UINT8 __fastcall (*pread)(UINT16));
-void tlcs90SetWritePortHandler(void __fastcall (*pwrite)(UINT16, UINT8));
+void tlcs90SetReadHandler(UINT8 (*pread)(UINT32));
+void tlcs90SetWriteHandler(void (*pwrite)(UINT32, UINT8));
+void tlcs90SetReadPortHandler(UINT8 (*pread)(UINT16));
+void tlcs90SetWritePortHandler(void (*pwrite)(UINT16, UINT8));
 
 INT32 tlcs90Init(INT32 nCpu, INT32 clock);
 void tlcs90Open(INT32 nCpu);

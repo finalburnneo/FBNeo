@@ -9335,7 +9335,7 @@ static void raphero_sound_bankswitch(INT32 data)
 	tlcs90MapMemory(DrvZ80ROM + nBank, 0x8000, 0xbfff, TLCS90_ROM);
 }
 
-static void __fastcall raphero_sound_write(UINT32 address, UINT8 data)
+static void raphero_sound_write(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -9373,7 +9373,7 @@ static void __fastcall raphero_sound_write(UINT32 address, UINT8 data)
 	}
 }
 
-static UINT8 __fastcall raphero_sound_read(UINT32 address)
+static UINT8 raphero_sound_read(UINT32 address)
 {
 	switch (address)
 	{

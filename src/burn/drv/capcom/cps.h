@@ -54,6 +54,7 @@ INT32 CpsLoadTilesFcrash(INT32 nStart);
 INT32 CpsLoadTilesCawingbl(INT32 nStart);
 INT32 CpsLoadTilesCaptcommb(INT32 nStart);
 INT32 CpsLoadTilesDinopic(INT32 nStart);
+INT32 CpsLoadTilesDinopic4(INT32 nStart);
 INT32 CpsLoadTilesSlampic(INT32 nStart);
 INT32 CpsLoadTilesKodb(INT32 nStart);
 INT32 CpsLoadTilesWonder3b(INT32 nStart);

@@ -270,6 +270,34 @@ static INT32 CpsLoadOneBootleg(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShif
 	return 0;
 }
 
+static INT32 CpsLoadOneBootlegSmallSingle(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift)
+{
+	UINT8 *Rom = NULL; INT32 nRomLen=0;
+	UINT8 *pt = NULL, *pr = NULL;
+	INT32 i;
+
+	LoadUp(&Rom, &nRomLen, nNum);
+	if (Rom == NULL) {
+		return 1;
+	}
+	nRomLen &= ~1;								// make sure even
+
+	for (i = 0, pt = Tile, pr = Rom; i < 0x40000; pt += 8) {
+		UINT32 Pix;						// Eight pixels
+		UINT8 b;
+		b = *pr++; i++; Pix = SepTable[b];
+		if (nWord) {
+			b = *pr++; i++; Pix |= SepTable[b] << 1;
+		}
+
+		Pix <<= nShift;
+		*((UINT32 *)pt) |= Pix;
+	}
+
+	BurnFree(Rom);
+	return 0;
+}
+
 static INT32 CpsLoadOneBootlegType2(UINT8* Tile, INT32 nNum, INT32 nWord, INT32 nShift)
 {
 	UINT8 *Rom = NULL; INT32 nRomLen=0;
@@ -1209,6 +1237,28 @@ INT32 CpsLoadTilesDinopic(INT32 nStart)
 {
 	CpsLoadTilesBootleg(CpsGfx + 0x000000, nStart + 0);
 	CpsLoadTilesBootleg(CpsGfx + 0x200000, nStart + 4);
+	
+	return 0;
+}
+
+INT32 CpsLoadTilesDinopic4(INT32 nStart)
+{
+	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x000000, nStart +  0, 0, 0);
+	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x000004, nStart +  1, 0, 0);
+	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x000000, nStart +  2, 0, 1);
+	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x000004, nStart +  3, 0, 1);
+	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x000000, nStart +  4, 0, 2);
+	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x000004, nStart +  5, 0, 2);
+	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x000000, nStart +  6, 0, 3);
+	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x000004, nStart +  7, 0, 3);
+	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x200000, nStart +  8, 0, 0);
+	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x200004, nStart +  9, 0, 0);
+	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x200000, nStart + 10, 0, 1);
+	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x200004, nStart + 11, 0, 1);
+	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x200000, nStart + 12, 0, 2);
+	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x200004, nStart + 13, 0, 2);
+	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x200000, nStart + 14, 0, 3);
+	CpsLoadOneBootlegSmallSingle(CpsGfx + 0x200004, nStart + 15, 0, 3);
 	
 	return 0;
 }

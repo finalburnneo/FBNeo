@@ -1635,7 +1635,7 @@ static struct BurnRomInfo sknsRomDesc[] = {
 	{ "sknsa1.u10",		0x80000, 0x745e5212, BRF_BIOS}, //  2 Asia
 	{ "sknsu1.u10",		0x80000, 0x384d21ec, BRF_BIOS}, //  3 USA
 	{ "sknsk1.u10",		0x80000, 0xff1c9f79, BRF_BIOS}, //  4 Korea
-	{ "bios.u10",		0x80000, 0x161fb79e, BRF_BIOS}, //  5 Korea
+//	{ "bios.u10",		0x80000, 0x161fb79e, BRF_BIOS}, //  5 Korea
 };
 
 STD_ROM_PICK(skns)

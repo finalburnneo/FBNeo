@@ -2476,7 +2476,7 @@ static int GalpansuInit()
 	return DrvInit(4 /*Korea*/);
 }
 
-struct BurnDriver BurnDrvGalpansu = {
+struct BurnDriverD BurnDrvGalpansu = {
 	"galpansu", "galpans2", "skns", NULL, "1999",
 	"Gals Panic SU (Korea)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

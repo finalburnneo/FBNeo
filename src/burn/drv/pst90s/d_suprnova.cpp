@@ -2154,7 +2154,7 @@ static int PanicstrInit()
 	return DrvInit(0 /*japan*/);
 }
 
-struct BurnDriverD BurnDrvPanicstr = {
+struct BurnDriver BurnDrvPanicstr = {
 	"panicstr", NULL, "skns", NULL, "1999",
 	"Panic Street (Japan)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2191,7 +2191,7 @@ static int Galpani4Init()
 	return DrvInit(0 /*Japan*/);
 }
 
-struct BurnDriverD BurnDrvGalpani4 = {
+struct BurnDriver BurnDrvGalpani4 = {
 	"galpani4", NULL, "skns", NULL, "1996",
 	"Gals Panic 4 (Japan)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2229,7 +2229,7 @@ static int Galpani4kInit()
 	return DrvInit(4 /*Korea*/);
 }
 
-struct BurnDriverD BurnDrvGalpani4k = {
+struct BurnDriver BurnDrvGalpani4k = {
 	"galpani4k", "galpani4", "skns", NULL, "1996",
 	"Gals Panic 4 (Korea)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2267,7 +2267,7 @@ static int GalpanisInit()
 	return DrvInit(1 /*Europe*/);
 }
 
-struct BurnDriverD BurnDrvGalpanis = {
+struct BurnDriver BurnDrvGalpanis = {
 	"galpanis", NULL, "skns", NULL, "1997",
 	"Gals Panic S - Extra Edition (Europe)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2305,7 +2305,7 @@ static int GalpanisjInit()
 	return DrvInit(0 /*Japan*/);
 }
 
-struct BurnDriverD BurnDrvGalpanisj = {
+struct BurnDriver BurnDrvGalpanisj = {
 	"galpanisj", "galpanis", "skns", NULL, "1997",
 	"Gals Panic S - Extra Edition (Japan)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2343,7 +2343,7 @@ static int GalpaniskInit()
 	return DrvInit(4 /*Korea*/);
 }
 
-struct BurnDriverD BurnDrvGalpanisk = {
+struct BurnDriver BurnDrvGalpanisk = {
 	"galpanisk", "galpanis", "skns", NULL, "1997",
 	"Gals Panic S - Extra Edition (Korea)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2391,7 +2391,7 @@ struct BurnDriver BurnDrvGalpans2 = {
 	"galpans2", NULL, "skns", NULL, "1999",
 	"Gals Panic S2 (Japan)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpans2RomInfo, galpans2RomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
 	Galpans2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
@@ -2431,7 +2431,7 @@ static int Galpans2aInit()
 	return DrvInit(2 /*Asia*/);
 }
 
-struct BurnDriverD BurnDrvGalpans2a = {
+struct BurnDriver BurnDrvGalpans2a = {
 	"galpans2a", "galpans2", "skns", NULL, "1999",
 	"Gals Panic S2 (Asia)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2511,7 +2511,7 @@ static int Galpans3Init()
 	return DrvInit(0 /*Japan*/);
 }
 
-struct BurnDriverD BurnDrvGalpans3 = {
+struct BurnDriver BurnDrvGalpans3 = {
 	"galpans3", NULL, "skns", NULL, "2002",
 	"Gals Panic S3 (Japan)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2711,7 +2711,7 @@ static int VblokbrkInit()
 	return DrvInit(2 /*Asia*/);
 }
 
-struct BurnDriverD BurnDrvVblokbrk = {
+struct BurnDriver BurnDrvVblokbrk = {
 	"vblokbrk", NULL, "skns", NULL, "1997",
 	"VS Block Breaker (Asia)\0", NULL, "Kaneko / Mediaworks", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -2747,7 +2747,7 @@ static int SarukaniInit()
 	return DrvInit(0 /*Japan*/);
 }
 
-struct BurnDriverD BurnDrvSarukani = {
+struct BurnDriver BurnDrvSarukani = {
 	"sarukani", "vblokbrk", "skns", NULL, "1997",
 	"Saru-Kani-Hamu-Zou (Japan)\0", NULL, "Kaneko / Mediaworks", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

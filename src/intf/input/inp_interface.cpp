@@ -35,7 +35,7 @@ static struct InputInOut *pInputInOut[]=
 std::vector<const InputInOut *> InputGetInterfaces()
 {
     std::vector<const InputInOut *> list;
-    for (int i = 0; i < INPUT_LEN; i++)
+    for (unsigned int i = 0; i < INPUT_LEN; i++)
         list.push_back(pInputInOut[i]);
     return list;
 }

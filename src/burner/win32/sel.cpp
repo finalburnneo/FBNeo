@@ -2372,17 +2372,6 @@ static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				switch (BzipOpen(1)) {
 				case 0:
 					gameAv[nRInBurnDrvActive] = 3;
-					{ // if the romset is OK, just say so in the rom info dialog (instead of popping up a window)
-						HWND hList = GetDlgItem(hDlg, IDC_LIST1);
-						LV_ITEM LvItem;
-						memset(&LvItem, 0, sizeof(LvItem));
-						LvItem.mask=  LVIF_TEXT;
-						LvItem.cchTextMax = 256;
-						LvItem.iSubItem = 4;
-						LvItem.pszText = _T("Romset OK!");
-						SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
-						UpdateWindow(hDlg);
-					}
 					break;
 				case 2:
 					gameAv[nRInBurnDrvActive] = 1;
@@ -2398,6 +2387,18 @@ static INT_PTR CALLBACK RomInfoDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 						hScrnWnd = hScrnWndtmp;
 					}
 					break;
+				}
+				if (gameAv[nRInBurnDrvActive] > 0) {
+					// if the romset is OK, just say so in the rom info dialog (instead of popping up a window)
+					HWND hList = GetDlgItem(hDlg, IDC_LIST1);
+					LV_ITEM LvItem;
+					memset(&LvItem, 0, sizeof(LvItem));
+					LvItem.mask=  LVIF_TEXT;
+					LvItem.cchTextMax = 256;
+					LvItem.iSubItem = 4;
+					LvItem.pszText = _T("Romset OK!");
+					SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
+					UpdateWindow(hDlg);
 				}
 				BzipClose();
 				WriteGameAvb();

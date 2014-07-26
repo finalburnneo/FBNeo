@@ -68,6 +68,8 @@ static int sprite_kludge_y;
 static UINT8 DrvJoy1[32];
 static UINT8 DrvDips[2];
 static UINT32 DrvInputs[3];
+static INT32 DrvAnalogPort0 = 0;
+static INT32 DrvAnalogPort1 = 0;
 static UINT8 DrvReset;
 
 static int nGfxLen0 = 0;
@@ -79,6 +81,40 @@ static UINT32 draw_layer_speedhack = 0;
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },
 };
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+
+static struct BurnInputInfo VblokbrkInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 24,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 25,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 26,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 27,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 28,	"p1 fire 1"},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 29,	"p1 fire 2"},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 30,	"p1 fire 3"},
+	A("P1 Paddle",           BIT_ANALOG_REL, &DrvAnalogPort0,"p1 z-axis"),
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 16,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 17,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 18,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 19,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 20,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 21,	"p2 fire 2"},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 22,	"p2 fire 3"},
+	A("P2 Paddle",          BIT_ANALOG_REL, &DrvAnalogPort1,"p2 z-axis"),
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service",		BIT_DIGITAL,	DrvJoy1 + 14,	"service"},
+	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 13,	"tilt"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+};
+
+#undef A
+
+STDINPUTINFO(Vblokbrk)
 
 static struct BurnInputInfo SknsInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"},
@@ -1512,6 +1548,24 @@ static int DrvDraw()
 	return 0;
 }
 
+UINT32 scalerange_skns(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
+	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+static UINT8 Paddle_X = 0;
+
+static UINT8 Paddle_incdec(UINT32 PaddlePortnum) {
+	UINT8 Temp;
+
+	Temp = 0x7f + (PaddlePortnum >> 4);
+	if (Temp < 0x01) Temp = 0x01;
+	if (Temp > 0xfe) Temp = 0xfe;
+	Temp = scalerange_skns(Temp, 0x3f, 0xbe, 0x01, 0xfe);
+	if (Temp > 0x90) Paddle_X-=15;
+	if (Temp < 0x70) Paddle_X+=15;//maybe try incremental instead of relative value?
+	return Paddle_X;//~Temp;
+}
+
 static int DrvFrame()
 {
 	if (DrvReset) {
@@ -1524,7 +1578,10 @@ static int DrvFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		}
 
-		DrvInputs[1] = 0xffffff00 | DrvDips[0];
+		//DrvInputs[1] = 0xffffff00 | DrvDips[0];
+		DrvInputs[1] = 0x0000ff00 | DrvDips[0];
+		DrvInputs[1] |= Paddle_incdec(DrvAnalogPort0) << 24;
+		//DrvInputs[1] |= Paddle_incdec(DrvAnalogPort1) << 16;
 		DrvInputs[2] = 0xffffffff; 
 	}
 
@@ -1658,7 +1715,7 @@ static struct BurnRomInfo cyvernRomDesc[] = {
 	{ "cv-usa.u10",	        0x100000, 0x1023ddca, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
 	{ "cv-usa.u8",		0x100000, 0xf696f6be, 1 | BRF_PRG | BRF_ESS }, //  1
 
-        { "cv100-00.u24",	0x400000, 0xcd4ae88a, 2 | BRF_GRA},            //  2 Sprites
+	{ "cv100-00.u24",	0x400000, 0xcd4ae88a, 2 | BRF_GRA},            //  2 Sprites
 	{ "cv101-00.u20",	0x400000, 0xa6cb3f0b, 2 | BRF_GRA},            //  3
 
 	{ "cv200-00.u16",	0x400000, 0xddc8c67e, 3 | BRF_GRA},            //  4 Background Tiles
@@ -1699,7 +1756,7 @@ static struct BurnRomInfo cyvernjRomDesc[] = {
 	{ "cvj-even.u10",	0x100000, 0x802fadb4, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
 	{ "cvj-odd.u8",		0x100000, 0xf8a0fbdd, 1 | BRF_PRG | BRF_ESS }, //  1
 
-        { "cv100-00.u24",	0x400000, 0xcd4ae88a, 2 | BRF_GRA},            //  2 Sprites
+	{ "cv100-00.u24",	0x400000, 0xcd4ae88a, 2 | BRF_GRA},            //  2 Sprites
 	{ "cv101-00.u20",	0x400000, 0xa6cb3f0b, 2 | BRF_GRA},            //  3
 
 	{ "cv200-00.u16",	0x400000, 0xddc8c67e, 3 | BRF_GRA},            //  4 Background Tiles
@@ -1807,7 +1864,7 @@ struct BurnDriver BurnDrvSengekis = {
 	"sengekis", NULL, "skns", NULL, "1997",
 	"Sengeki Striker (Asia)\0", NULL, "Kaneko / Warashi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-        BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO_SKNS, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO_SKNS, GBF_VERSHOOT, 0,
 	NULL, sengekisRomInfo, sengekisRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	SengekisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,  0x8000,
 	240, 320, 3, 4
@@ -2716,7 +2773,7 @@ struct BurnDriver BurnDrvVblokbrk = {
 	"VS Block Breaker (Asia)\0", "imperfect inputs", "Kaneko / Mediaworks", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_SKNS, GBF_BALLPADDLE, 0,
-	NULL, vblokbrkRomInfo, vblokbrkRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //VblokbrkInputInfo, VblokbrkDIPInfo,
+	NULL, vblokbrkRomInfo, vblokbrkRomName, NULL, NULL, VblokbrkInputInfo, SknsDIPInfo, //VblokbrkInputInfo, VblokbrkDIPInfo,
 	VblokbrkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2752,7 +2809,7 @@ struct BurnDriver BurnDrvSarukani = {
 	"Saru-Kani-Hamu-Zou (Japan)\0", "imperfect inputs", "Kaneko / Mediaworks", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_BALLPADDLE, 0,
-	NULL, sarukaniRomInfo, sarukaniRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //VblokbrkInputInfo, VblokbrkDIPInfo,
+	NULL, sarukaniRomInfo, sarukaniRomName, NULL, NULL, VblokbrkInputInfo, SknsDIPInfo, //VblokbrkInputInfo, VblokbrkDIPInfo,
 	SarukaniInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };

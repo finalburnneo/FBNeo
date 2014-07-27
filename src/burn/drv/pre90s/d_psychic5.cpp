@@ -43,7 +43,7 @@ static UINT8 DrvSoundLatch         = 0;
 static UINT8 DrvFlipScreen         = 0;
 static UINT8 DrvRomBank            = 0;
 static UINT8 DrvVRamPage           = 0;
-static UINT8 DrvTitlePage          = 0;
+static UINT8 DrvTitleScreen        = 0;
 static UINT8 DrvBgStatus           = 0;
 static UINT16 DrvBgScrollX         = 0;
 static UINT16 DrvBgScrollY         = 0;
@@ -178,7 +178,7 @@ static struct BurnRomInfo DrvRomDesc[] = {
 	{ "p5f",           0x08000, 0x04d7e21c, BRF_GRA },	     //  7  FG Tiles
 	
 	{ "my10.7l",       0x00200, 0x6a7d13c0, BRF_OPT },	     //  8	PROMs
-	{ "my09.3t",       0x00200, 0x59e44236, BRF_OPT },	     //  9
+	{ "my09.3t",       0x00400, 0x59e44236, BRF_OPT },	     //  9
 };
 
 STD_ROM_PICK(Drv)
@@ -343,7 +343,7 @@ void __fastcall DrvZ80Write1(UINT16 a, UINT8 d)
 		}
 		
 		case 0xf005: {
-			DrvTitlePage = d;
+			DrvTitleScreen = d;
 			return;
 		}
 		
@@ -577,7 +577,7 @@ static INT32 DrvExit()
 	DrvFlipScreen = 0;
 	DrvRomBank = 0;
 	DrvVRamPage = 0;
-	DrvTitlePage = 0;
+	DrvTitleScreen = 0;
 	DrvBgScrollX = 0;
 	DrvBgScrollY = 0;
 	DrvBgStatus = 0;
@@ -787,7 +787,7 @@ static void DrvDraw()
 //	if (DrvBgStatus & 0x01) DrvRenderBg();
 
 	DrvRenderBgLayer();
-	DrvRenderSprites();
+	if (!(DrvTitleScreen & 0x01)) DrvRenderSprites();
 	DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 }
@@ -800,8 +800,8 @@ static INT32 DrvFrame()
 
 	DrvMakeInputs();
 
-	nCyclesTotal[0] = 6000000 / 60;
-	nCyclesTotal[1] = 6000000 / 60;
+	nCyclesTotal[0] = 6000000 / 54;
+	nCyclesTotal[1] = 6000000 / 54;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 	
 	ZetNewFrame();
@@ -873,7 +873,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvFlipScreen);
 		SCAN_VAR(DrvRomBank);
 		SCAN_VAR(DrvVRamPage);
-		SCAN_VAR(DrvTitlePage);
+		SCAN_VAR(DrvTitleScreen);
 		SCAN_VAR(DrvBgScrollX);
 		SCAN_VAR(DrvBgScrollY);
 		SCAN_VAR(DrvBgStatus);

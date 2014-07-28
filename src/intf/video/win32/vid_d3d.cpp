@@ -568,12 +568,11 @@ static int vidCreateGameSurfaces()
 
 	// Determine if we should use a texture format different from the screen format
 	bForceTextureFormat = false;
-	if (VidSoftFXCheckDepth(nPreScaleEffect, 16) != 32 && nVidScrnDepth > 16 &&
-            ((bDrvOkay && VidSoftFXCheckDepth(nPreScaleEffect, 32) != 32) ||
-             (bDrvOkay && (bVidForce16bit ||
-                           (bDoGamma && nVidFullscreen && bVidUseHardwareGamma) ||
-                           (bDoGamma && !nVidFullscreen && bHardwareGammaOnly))))
-           )
+	if ((VidSoftFXCheckDepth(nPreScaleEffect, 16) != 32 && nVidScrnDepth > 16 &&
+		(/*bDrvOkay &&*/ VidSoftFXCheckDepth(nPreScaleEffect, 32) != 32)) ||
+		(/*bDrvOkay &&*/ (bVidForce16bit ||
+						(bDoGamma && nVidFullscreen && bVidUseHardwareGamma) ||
+						(bDoGamma && !nVidFullscreen && bHardwareGammaOnly))))
 	{
 		memset(&ddpf, 0, sizeof(DDPIXELFORMAT));
 
@@ -583,24 +582,24 @@ static int vidCreateGameSurfaces()
 			bForceTextureFormat = true; // NOTE: this makes emulation=16bpp
 		}
 	}
-
-        /*        { // debug code for the above if-statement :)
-            int ii;
-            ii = VidSoftFXCheckDepth(nPreScaleEffect, 16) != 32 && nVidScrnDepth > 16;
-            bprintf(0, _T("Part1 %d "), ii);
-            ii = (bDrvOkay || VidSoftFXCheckDepth(nPreScaleEffect, 32) != 32);
-            bprintf(0, _T("Part2 %d \n"), ii);
-            ii = (bDoGamma && nVidFullscreen && bVidUseHardwareGamma);
-            bprintf(0, _T("(bDoGamma && nVidFullscreen && bVidUseHardwareGamma) == [%d]\n"), ii);
-            ii = (bDoGamma && !nVidFullscreen && bHardwareGammaOnly);
-            bprintf(0, _T("(bDoGamma && !nVidFullscreen && bHardwareGammaOnly) == [%d]\n"), ii);
-            bprintf(0, _T("nPreScaleEffect [%X]\n"), nPreScaleEffect);
-            bprintf(0, _T("VidSoftFXCheckDepth(nPreScaleEffect, 16) [%d]\n"), VidSoftFXCheckDepth(nPreScaleEffect, 16));
-            bprintf(0, _T("VidSoftFXCheckDepth(nPreScaleEffect, 32) [%d]\n"), VidSoftFXCheckDepth(nPreScaleEffect, 32));
-            bprintf(0, _T("nVidScrnDepth [%X] bDrvOkay [%X]\n"), nVidScrnDepth, bDrvOkay);
-            bprintf(0, _T("bVidForce16bit[%X] forcetexture[%X]\n"), bVidForce16bit, bForceTextureFormat);
-            bprintf(0, _T("bDoGamma [%X] nVidFullscreen [%X] bVidUseHardwareGamma [%X] bHardwareGammaOnly [%X]\n"), bDoGamma, nVidFullscreen, bVidUseHardwareGamma, bHardwareGammaOnly);
-        }
+/*
+	{ // debug code for the above if-statement *keep!* :)
+		int ii;
+		ii = VidSoftFXCheckDepth(nPreScaleEffect, 16) != 32 && nVidScrnDepth > 16;
+		bprintf(0, _T("Part1 %d "), ii);
+		ii = (bDrvOkay || VidSoftFXCheckDepth(nPreScaleEffect, 32) != 32);
+		bprintf(0, _T("Part2 %d \n"), ii);
+		ii = (bDoGamma && nVidFullscreen && bVidUseHardwareGamma);
+		bprintf(0, _T("(bDoGamma && nVidFullscreen && bVidUseHardwareGamma) == [%d]\n"), ii);
+		ii = (bDoGamma && !nVidFullscreen && bHardwareGammaOnly);
+		bprintf(0, _T("(bDoGamma && !nVidFullscreen && bHardwareGammaOnly) == [%d]\n"), ii);
+		bprintf(0, _T("nPreScaleEffect [%X]\n"), nPreScaleEffect);
+		bprintf(0, _T("VidSoftFXCheckDepth(nPreScaleEffect, 16) [%d]\n"), VidSoftFXCheckDepth(nPreScaleEffect, 16));
+		bprintf(0, _T("VidSoftFXCheckDepth(nPreScaleEffect, 32) [%d]\n"), VidSoftFXCheckDepth(nPreScaleEffect, 32));
+		bprintf(0, _T("nVidScrnDepth [%X] bDrvOkay [%X]\n"), nVidScrnDepth, bDrvOkay);
+		bprintf(0, _T("bVidForce16bit[%X] forcetexture[%X]\n"), bVidForce16bit, bForceTextureFormat);
+		bprintf(0, _T("bDoGamma [%X] nVidFullscreen [%X] bVidUseHardwareGamma [%X] bHardwareGammaOnly [%X]\n"), bDoGamma, nVidFullscreen, bVidUseHardwareGamma, bHardwareGammaOnly);
+	}
 */
 	// Create a secondary surface to render the game image onto for the feedback effect
 	memset(&ddsd, 0, sizeof(ddsd));

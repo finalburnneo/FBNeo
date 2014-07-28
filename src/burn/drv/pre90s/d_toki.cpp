@@ -1834,7 +1834,7 @@ struct BurnDriver BurnDrvTokia = {
 };
 
 
-// Toki (US)
+// Toki (US, set 1)
 
 static struct BurnRomInfo tokiuRomDesc[] = {
 	{ "6b.10m",				0x20000, 0x3674d9fe, 1 }, //  0 main
@@ -1863,10 +1863,48 @@ STD_ROM_FN(tokiu)
 
 struct BurnDriver BurnDrvTokiu = {
 	"tokiu", "toki", NULL, NULL, "1989",
-	"Toki (US)\0", NULL, "Tad (Fabtek license)", "Miscellaneous",
+	"Toki (US, set 1)\0", NULL, "Tad (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, tokiuRomInfo, tokiuRomName, NULL, NULL, TokiInputInfo, TokiDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x400,
+	256, 224, 4, 3
+};
+
+
+// Toki (US, set 2)
+
+static struct BurnRomInfo tokiuaRomDesc[] = {
+	{ "tokijp.006",		    0x20000, 0x03d726b1, 1 }, //  0 main
+	{ "4u.k10",				0x20000, 0xca2f50d9, 1 }, //  1
+	{ "tokijp.005",			0x10000, 0xd6a82808, 1 }, //  2
+	{ "tokijp.003",			0x10000, 0xa01a5b10, 1 }, //  3
+
+	{ "tokijp.008",			0x02000, 0x6c87c4c5, 2 }, //  4 audio
+	{ "tokijp.007",			0x10000, 0xa67969c4, 2 }, //  5
+
+	{ "tokijp.001",			0x10000, 0x8aa964a2, 3 }, //  6 gfx1
+	{ "tokijp.002",			0x10000, 0x86e87e48, 3 }, //  7
+
+	{ "toki.ob1",			0x80000, 0xa27a80ba, 4 }, //  8 gfx2
+	{ "toki.ob2",			0x80000, 0xfa687718, 4 }, //  9
+
+	{ "toki.bk1",			0x80000, 0xfdaa5f4b, 5 }, // 10 gfx3
+
+	{ "toki.bk2",			0x80000, 0xd86ac664, 6 }, // 11 gfx4
+
+	{ "tokijp.009",			0x20000, 0xae7a6b8b, 7 }, // 12 oki
+};
+
+STD_ROM_PICK(tokiua)
+STD_ROM_FN(tokiua)
+
+struct BurnDriver BurnDrvTokiua = {
+	"tokiua", "toki", NULL, NULL, "1989",
+	"Toki (US, set 2)\0", NULL, "Tad (Fabtek license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, tokiuaRomInfo, tokiuaRomName, NULL, NULL, TokiInputInfo, TokiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
 };

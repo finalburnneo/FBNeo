@@ -9644,7 +9644,7 @@ struct BurnDriver BurnDrvwh1 = {
 };
 
 
-// World Heroes (ALH-005
+// World Heroes (ALH-005)
 
 static struct BurnRomInfo wh1hRomDesc[] = {
 	{ "053-p1.p1",    0x080000, 0x95b574cb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -9668,7 +9668,7 @@ STD_ROM_FN(wh1h)
 
 struct BurnDriver BurnDrvwh1h = {
 	"wh1h", "wh1", "neogeo", NULL, "1992",
-	"World Heroes (ALH-005\0", NULL, "Alpha Denshi Co.", "Neo Geo MVS",
+	"World Heroes (ALH-005)\0", NULL, "Alpha Denshi Co.", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPC, GBF_VSFIGHT, 0,
 	NULL, wh1hRomInfo, wh1hRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -13251,7 +13251,7 @@ struct BurnDriver BurnDrvkof96ae = {
 	0x1000,	304, 224, 4, 3
 };
 
-// The King of Fighters '96 (Anniversary Edition 2.0.0296, EGHT hack)
+// The King of Fighters '96 (Anniversary Edition 2.0.0430, EGHT hack)
 
 static struct BurnRomInfo kof96ae20RomDesc[] = {
 	{ "214ae-p1.p1",  0x100000, 0xc038e932, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -13284,7 +13284,7 @@ STD_ROM_FN(kof96ae20)
 
 struct BurnDriver BurnDrvkof96ae20 = {
 	"kof96ae20", "kof96", "neogeo", NULL, "2009",
-	"The King of Fighters '96 (Anniversary Edition 2.0.0296, EGHT hack)\0", NULL, "hack", "Neo Geo MVS",
+	"The King of Fighters '96 (Anniversary Edition 2.0.0430, EGHT hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof96ae20RomInfo, kof96ae20RomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

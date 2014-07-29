@@ -2,12 +2,6 @@
 #include "z80_intf.h"
 #include "burn_ym2203.h"
 
-// TODO
-// sprite alpha-blending
-// sprite optimisation
-// background clipping
-// background palette intensity
-
 #define BG_SCROLLX_LSB      0x308
 #define BG_SCROLLX_MSB      0x309
 #define BG_SCROLLY_LSB      0x30a
@@ -37,6 +31,8 @@ static UINT8 *DrvChars             = NULL;
 static UINT8 *DrvBgTiles           = NULL;
 static UINT8 *DrvSprites           = NULL;
 static UINT8 *DrvTempRom           = NULL;
+static UINT8 *DrvBlendTable	   = NULL;
+static UINT16 *DrvTempDraw	   = NULL;
 static UINT32 *DrvPalette          = NULL;
 
 static UINT8 DrvSoundLatch         = 0;
@@ -47,6 +43,14 @@ static UINT8 DrvTitleScreen        = 0;
 static UINT8 DrvBgStatus           = 0;
 static UINT16 DrvBgScrollX         = 0;
 static UINT16 DrvBgScrollY         = 0;
+static INT32 DrvBgClipMode 	   = 0;
+static INT32 DrvBgClipMinX  	   = 0;
+static INT32 DrvBgClipMaxX  	   = 0;
+static INT32 DrvBgClipMinY  	   = 0;
+static INT32 DrvBgClipMaxY  	   = 0;
+static UINT8 DrvBgSx1  	    	   = 0;
+static UINT8 DrvBgSy1  	   	   = 0;
+static UINT8 DrvBgSy2  	    	   = 0;
 
 static INT32 nCyclesDone[2], nCyclesTotal[2];
 static INT32 nCyclesSegment;
@@ -184,6 +188,27 @@ static struct BurnRomInfo DrvRomDesc[] = {
 STD_ROM_PICK(Drv)
 STD_ROM_FN(Drv)
 
+static struct BurnRomInfo Psychic5aRomDesc[] = {
+	{ "myp5d",         0x08000, 0x1d40a8c7, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "myp5e",         0x10000, 0x2fa7e8c0, BRF_ESS | BRF_PRG }, //	 1
+	
+	{ "myp5a",         0x10000, 0x6efee094, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program
+	
+	{ "p5b",           0x10000, 0x7e3f87d4, BRF_GRA },	     //  3	Sprites
+	{ "p5c",           0x10000, 0x8710fedb, BRF_GRA },	     //  4
+
+	{ "myp5g",         0x10000, 0x617b074b, BRF_GRA },	     //  5	BG Tiles
+	{ "myp5h",         0x10000, 0xa9dfbe67, BRF_GRA },	     //  6
+	
+	{ "p5f",           0x08000, 0x04d7e21c, BRF_GRA },	     //  7  FG Tiles
+	
+	{ "my10.7l",       0x00200, 0x6a7d13c0, BRF_OPT },	     //  8	PROMs
+	{ "my09.3t",       0x00400, 0x59e44236, BRF_OPT },	     //  9
+};
+
+STD_ROM_PICK(Psychic5a)
+STD_ROM_FN(Psychic5a)
+
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = Mem;
@@ -197,13 +222,16 @@ static INT32 MemIndex()
 	DrvZ80Ram2             = Next; Next += 0x00800;
 	DrvPagedRam            = Next; Next += 0x04000;
 	DrvSpriteRam           = Next; Next += 0x00600;
+	DrvBlendTable	       = Next; Next += 0x00300;
 
 	RamEnd                 = Next;
 
 	DrvChars               = Next; Next += 1024 * 8 * 8;
 	DrvBgTiles             = Next; Next += 1024 * 16 * 16;
 	DrvSprites             = Next; Next += 1024 * 16 * 16;
-	DrvPalette             = (UINT32*)Next; Next += 0x300 * sizeof(UINT32);
+	DrvPalette             = (UINT32*)Next; Next += 0x301 * sizeof(UINT32);
+
+	DrvTempDraw	       = (UINT16*)Next; Next += 224 * 256 * sizeof(UINT16);
 
 	MemEnd                 = Next;
 
@@ -212,6 +240,8 @@ static INT32 MemIndex()
 
 static INT32 DrvDoReset()
 {
+	memset (RamStart, 0, RamEnd - RamStart);
+
 	ZetOpen(0);
 	ZetReset();
 	ZetClose();
@@ -220,7 +250,9 @@ static INT32 DrvDoReset()
 	ZetReset();
 	BurnYM2203Reset();
 	ZetClose();
-	
+
+	DrvBgClipMode = 0;
+
 	return 0;
 }
 
@@ -234,7 +266,8 @@ static void DrvChangePalette(INT32 color, UINT32 offset)
 {
 	UINT8 lo = DrvPagedRam[0x2400 + (offset & ~1)];
 	UINT8 hi = DrvPagedRam[0x2400 + (offset | 1)];
-//	jal_blend_set(color, hi & 0x0f);
+
+	DrvBlendTable[color] = hi & 0x0f;
 	
 	DrvPalette[color] = BurnHighCol(pal4bit(lo >> 4), pal4bit(lo), pal4bit(hi >> 4), 0);
 }
@@ -581,16 +614,132 @@ static INT32 DrvExit()
 	DrvBgScrollX = 0;
 	DrvBgScrollY = 0;
 	DrvBgStatus = 0;
-	
+	DrvBgClipMode = 0;
+
 	BurnFree(Mem);
 
 	return 0;
 }
 
+static inline UINT32 DrvBlendFunction(UINT32 dest, UINT32 addMe, UINT8 alpha)
+{
+	INT32 r = dest >> 16;
+	INT32 g = (dest >> 8) & 0xff;
+	INT32 b = dest & 0xff;
+
+	UINT8 ir = addMe >> 16;
+	UINT8 ig = addMe >> 8;
+	UINT8 ib = addMe;
+
+	if (alpha & 4) { r -= ir; if (r < 0) r = 0; } else { r += ir; if (r > 255) r = 255; }
+	if (alpha & 2) { g -= ig; if (g < 0) g = 0; } else { g += ig; if (g > 255) g = 255; }
+	if (alpha & 1) { b -= ib; if (b < 0) b = 0; } else { b += ib; if (b > 255) b = 255; }
+
+	return (r << 16) | (g << 8) | b;
+}
+
+static void DrvSetBgColourIntensity()
+{
+	UINT16 intensity = DrvPagedRam[0x25fe] | (DrvPagedRam[0x25ff]<<8);
+
+	UINT8 ir = pal4bit(intensity >> 12);
+	UINT8 ig = pal4bit(intensity >>  8);
+	UINT8 ib = pal4bit(intensity >>  4);
+	UINT8 ix = intensity & 0x0f;
+
+	UINT32 irgb = (ir << 16) + (ig << 8) + (ib);
+
+	for (INT32 i = 0; i < 0x100; i++)
+	{
+		UINT8 lo = DrvPagedRam[0x2800+i*2];
+		UINT8 hi = DrvPagedRam[0x2800+i*2+1];
+
+		UINT8 r = pal4bit(lo >> 4);
+		UINT8 g = pal4bit(lo);
+		UINT8 b = pal4bit(hi >> 4);
+
+		if (DrvBgStatus & 2)
+		{
+			UINT8 val = (r + g + b) / 3;
+			UINT32 c = DrvBlendFunction((val<<16)+(val<<8)+val,irgb,ix);
+			DrvPalette[0x100+i] = BurnHighCol(c>>16, (c>>8)&0xff, c&0xff, 0);
+		}
+		else
+		{
+			if (!(DrvTitleScreen & 1))
+			{
+				UINT32 c = DrvBlendFunction((r<<16)+(g<<8)+b,irgb,ix);
+				DrvPalette[0x100+i] = BurnHighCol(c>>16, (c>>8)&0xff, c&0xff, 0);
+			}
+		}
+	}
+}
+
+static void DrvEnableBgClipMode()
+{
+	if (!(DrvTitleScreen & 1))
+	{
+		DrvBgClipMode = 0;
+		DrvBgSx1 = DrvBgSy1 = DrvBgSy2 = 0;
+		DrvBgClipMinX = 0;
+		DrvBgClipMinY = 0;
+		DrvBgClipMaxX = nScreenWidth;
+		DrvBgClipMaxY = nScreenHeight;
+	}
+	else
+	{
+		INT32 sy1_old = DrvBgSy1;
+		INT32 sx1_old = DrvBgSx1;
+		INT32 sy2_old = DrvBgSy2;
+
+		DrvBgSy1 = DrvSpriteRam[11];
+		DrvBgSx1 = DrvSpriteRam[12];
+		DrvBgSy2 = DrvSpriteRam[11+128];
+
+		switch (DrvBgClipMode)
+		{
+			case  0: case  4: if (sy1_old != DrvBgSy1) DrvBgClipMode++; break;
+			case  2: case  6: if (sy2_old != DrvBgSy2) DrvBgClipMode++; break;
+			case  8: case 10:
+			case 12: case 14: if (sx1_old != DrvBgSx1) DrvBgClipMode++; break;
+			case  1: case  5: if (DrvBgSy1 == 0xf0) DrvBgClipMode++; break;
+			case  3: case  7: if (DrvBgSy2 == 0xf0) DrvBgClipMode++; break;
+			case  9: case 11: if (DrvBgSx1 == 0xf0) DrvBgClipMode++; break;
+			case 13: case 15: if (sx1_old == 0xf0) DrvBgClipMode++;
+			case 16: if (DrvBgSy1 != 0x00) DrvBgClipMode = 0; break;
+		}
+
+		switch (DrvBgClipMode)
+		{
+			case  0: case  4: case  8: case 12: case 16:
+				DrvBgClipMinX = 0;
+				DrvBgClipMinY = 0;
+				DrvBgClipMaxX = nScreenWidth;
+				DrvBgClipMaxY = nScreenHeight;
+			break;
+
+			case  1: DrvBgClipMinY = DrvBgSy1; break;
+			case  3: DrvBgClipMaxY = DrvBgSy2; break;
+			case  5: DrvBgClipMaxY = DrvBgSy1; break;
+			case  7: DrvBgClipMinY = DrvBgSy2; break;
+			case  9: case 15: DrvBgClipMinX = DrvBgSx1; break;
+			case 11: case 13: DrvBgClipMaxX = DrvBgSx1; break;
+		}
+
+		if (DrvBgClipMinY < 0) DrvBgClipMinY = 0;
+		if (DrvBgClipMaxY > nScreenHeight) DrvBgClipMaxY = nScreenHeight;
+		if (DrvBgClipMinX < 0) DrvBgClipMinX = 0;
+		if (DrvBgClipMaxX > nScreenWidth) DrvBgClipMaxX = nScreenWidth;
+	}
+}
+
 static void DrvRenderBgLayer()
 {
 	INT32 mx, my, Code, Colour, Attr, x, y, TileIndex = 0, Flip, xFlip, yFlip;
-	
+
+	DrvSetBgColourIntensity();
+	DrvEnableBgClipMode();
+
 	for (mx = 0; mx < 64; mx++) {
 		for (my = 0; my < 32; my++) {
 			INT32 offs = TileIndex << 1;
@@ -604,8 +753,8 @@ static void DrvRenderBgLayer()
 			x = 16 * mx;
 			y = 16 * my;
 			
-			x -= DrvBgScrollX;
-			y -= DrvBgScrollY;
+			x -= DrvBgScrollX & 0x3ff;
+			y -= DrvBgScrollY & 0x1ff;
 			
 			if (x < -16) x += 1024;
 			if (y < -16) y += 512;
@@ -618,7 +767,7 @@ static void DrvRenderBgLayer()
 				yFlip = !yFlip;
 			}
 
-			if (x > 16 && x < 240 && y > 16 && y < 208) {
+			if (x > DrvBgClipMinX && x < (DrvBgClipMaxX - 16) && y > DrvBgClipMinY && y < (DrvBgClipMaxY - 16)) {
 				if (xFlip) {
 					if (yFlip) {
 						Render16x16Tile_FlipXY(pTransDraw, Code, x, y, Colour, 4, 256, DrvBgTiles);
@@ -633,6 +782,21 @@ static void DrvRenderBgLayer()
 					}
 				}
 			} else {
+#if 1
+				UINT8 *gfx = DrvBgTiles + (Code * 0x100);
+				INT32 flip = ((xFlip) ? 0x0f : 0) + ((yFlip) ? 0xf0 : 0);
+				Colour = (Colour * 16) + 0x100;
+
+				for (INT32 sy = 0; sy < 16; sy++) {
+					if ((sy + y) >= DrvBgClipMinY && (sy + y) < DrvBgClipMaxY) {
+						for (INT32 sx = 0; sx < 16; sx++) {
+							if ((sx + x) >= DrvBgClipMinX && (sx + x) < DrvBgClipMaxX) {
+								pTransDraw[((sy+y)*nScreenWidth) + (sx+x)] = gfx[((sy*16)+sx)^flip] + Colour;
+							}
+						}
+					}
+				}
+#else
 				if (xFlip) {
 					if (yFlip) {
 						Render16x16Tile_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 4, 256, DrvBgTiles);
@@ -646,6 +810,7 @@ static void DrvRenderBgLayer()
 						Render16x16Tile_Clip(pTransDraw, Code, x, y, Colour, 4, 256, DrvBgTiles);
 					}
 				}
+#endif
 			}
 			
 			TileIndex++;
@@ -661,7 +826,7 @@ static void DrvRenderCharLayer()
 		for (my = 0; my < 32; my++) {
 			offs = TileIndex << 1;
 			Attr = DrvPagedRam[0x3000 + offs + 1];
-			Code = DrvPagedRam[0x3000 + offs + 0] | ((Attr & 0xc0) << 2);;
+			Code = DrvPagedRam[0x3000 + offs + 0] | ((Attr & 0xc0) << 2);
 			Colour = Attr & 0x0f;
 			Flip = (Attr & 0x30) >> 4;
 			xFlip = (Flip >> 0) & 0x01;
@@ -678,7 +843,8 @@ static void DrvRenderCharLayer()
 				yFlip = !yFlip;
 			}
 			
-			if (x > 0 && x < 248 && y > 0 && y < 216) {
+			if (x > 0 && x < 248 && y > 0 && y < 216)
+			{
 				if (xFlip) {
 					if (yFlip) {
 						Render8x8Tile_Mask_FlipXY(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0x200, DrvChars);
@@ -713,22 +879,78 @@ static void DrvRenderCharLayer()
 	}
 }
 
-//#define DRAW_SPRITE(code, sx, sy) jal_blend_drawgfx(m_palette, bitmap, cliprect, m_gfxdecode->gfx(0), code, color, flipx, flipy, sx, sy, 15);
+static void DrvDrawBlendGfx(UINT8 *gfxbase,UINT32 code,UINT32 color,INT32 flipx,INT32 flipy,INT32 offsx,INT32 offsy,INT32 transparent_color)
+{
+	color *= 16;
 
-#define DRAW_SPRITE(Code1, sx1, sy1) \
-	if (xFlip) { \
-		if (yFlip) { \
-			Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Code1, sx1, sy1 - 16, Colour, 4, 0x0f, 0, DrvSprites); \
-		} else { \
-			Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Code1, sx1, sy1 - 16, Colour, 4, 0x0f, 0, DrvSprites); \
-		} \
-	} else { \
-		if (yFlip) { \
-			Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Code1, sx1, sy1 - 16, Colour, 4, 0x0f, 0, DrvSprites); \
-		} else { \
-			Render16x16Tile_Mask_Clip(pTransDraw, Code1, sx1, sy1 - 16, Colour, 4, 0x0f, 0, DrvSprites); \
-		} \
+	const UINT8 *alpha = DrvBlendTable + color;
+	const UINT8 *source_base = gfxbase + (code * 16 * 16);
+
+	INT32 xinc = flipx ? -1 : 1;
+	INT32 yinc = flipy ? -1 : 1;
+
+	INT32 x_index_base = flipx ? 16-1 : 0;
+	INT32 y_index = flipy ? 16-1 : 0;
+
+	INT32 sx = offsx;
+	INT32 sy = offsy;
+	INT32 ex = sx + 16;
+	INT32 ey = sy + 16;
+
+	INT32 min_x = 0;
+	INT32 min_y = 0;
+	INT32 max_x = (nScreenWidth - 1);
+	INT32 max_y = (nScreenHeight - 1);
+
+	if (sx < min_x)
+	{
+		int pixels = min_x-sx;
+		sx += pixels;
+		x_index_base += xinc*pixels;
 	}
+
+	if (sy < min_y)
+	{
+		int pixels = min_y-sy;
+		sy += pixels;
+		y_index += yinc*pixels;
+	}
+
+	if (ex > max_x+1) ex = max_x+1;
+	if (ey > max_y+1) ey = max_y+1;
+
+	if (ex > sx)
+	{
+		for (INT32 y = sy; y < ey; y++)
+		{
+			const UINT8 *source = source_base + y_index*16;
+
+			UINT16 *dest = pTransDraw + (y * nScreenWidth);
+			UINT16 *dst2 = DrvTempDraw + (y * nScreenWidth);
+
+			INT32 x_index = x_index_base;
+
+			for (INT32 x = sx; x < ex; x++)
+			{
+				int c = source[x_index];
+				if (c != transparent_color)
+				{
+					if (alpha[c] & 8)
+					{
+						dest[x] += 0x8000;
+						dst2[x] = c + color + (alpha[c] * 0x0400);
+					}
+					else
+					{
+						dest[x] = c + color;
+					}
+				}
+				x_index += xinc;
+			}
+			y_index += yinc;
+		}
+	}
+}
 
 static void DrvRenderSprites()
 {
@@ -761,35 +983,81 @@ static void DrvRenderSprites()
 			if (yFlip) { y0 = 1; y1 = 0; }
 			else { y0 = 0; y1 = 1; }
 
-			DRAW_SPRITE(Code + x0 + y0, sx, sy)
-			DRAW_SPRITE(Code + x0 + y1, sx, sy + 16)
-			DRAW_SPRITE(Code + x1 + y0, sx + 16, sy)
-			DRAW_SPRITE(Code + x1 + y1, sx + 16, sy + 16)
+			DrvDrawBlendGfx(DrvSprites, Code + x0 + y0, Colour, xFlip, yFlip, sx, sy - 16, 15);
+			DrvDrawBlendGfx(DrvSprites, Code + x0 + y1, Colour, xFlip, yFlip, sx, sy, 15);
+			DrvDrawBlendGfx(DrvSprites, Code + x1 + y0, Colour, xFlip, yFlip, sx + 16, sy - 16, 15);
+			DrvDrawBlendGfx(DrvSprites, Code + x1 + y1, Colour, xFlip, yFlip, sx + 16, sy, 15);
 		} else {
 			if (DrvFlipScreen)
-				DRAW_SPRITE(Code, sx + 16, sy + 16)
+				DrvDrawBlendGfx(DrvSprites, Code, Colour, xFlip, yFlip, sx + 16, sy, 15);
 			else
-				DRAW_SPRITE(Code, sx, sy)
+				DrvDrawBlendGfx(DrvSprites, Code, Colour, xFlip, yFlip, sx, sy-16, 15);
 		}
 	}
 }
 
 static void DrvDraw()
 {
-	/*bitmap.fill(m_palette->black_pen(), cliprect);
-	if (m_bg_status & 1)
-		draw_background(screen, bitmap, cliprect);
-	if (!(m_title_screen & 1))
-		draw_sprites(bitmap, cliprect);
-	m_fg_tilemap->draw(screen, bitmap, cliprect, 0, 0);*/
-	
-	BurnTransferClear();
-//	if (DrvBgStatus & 0x01) DrvRenderBg();
+	DrvPalette[0x300] = 0; // black
+	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
+		pTransDraw[i] = 0x300; // black
+	}
 
-	DrvRenderBgLayer();
-	if (!(DrvTitleScreen & 0x01)) DrvRenderSprites();
+	if (DrvBgStatus & 0x01)
+		DrvRenderBgLayer();
+
+	if (!(DrvTitleScreen & 0x01))
+		DrvRenderSprites();
+
 	DrvRenderCharLayer();
-	BurnTransferCopy(DrvPalette);
+
+	if (nBurnBpp > 2)
+	{
+		UINT16* pSrc = pTransDraw;
+		UINT16* pAlp = DrvTempDraw;
+		UINT8* pDest = pBurnDraw;
+
+		if (nBurnBpp == 3) {
+			for (INT32 y = 0; y < nScreenHeight; y++, pSrc += nScreenWidth, pAlp += nScreenWidth, pDest += nBurnPitch) {
+				for (INT32 x = 0; x < nScreenWidth; x++)
+				{
+					UINT32 c = pSrc[x];
+
+					if (c & 0x8000) {
+						c = DrvBlendFunction(DrvPalette[c&0x3ff], DrvPalette[pAlp[x]&0x3ff], pAlp[x] / 0x0400);
+					} else {
+						c = DrvPalette[c];
+					}
+
+					*(pDest + (x * 3) + 0) = c & 0xFF;
+					*(pDest + (x * 3) + 1) = (c >> 8) & 0xFF;
+					*(pDest + (x * 3) + 2) = c >> 16;
+
+				}
+			}
+		} else { // nBurnBpp == 4
+			for (INT32 y = 0; y < nScreenHeight; y++, pSrc += nScreenWidth, pAlp += nScreenWidth, pDest += nBurnPitch) {
+				for (INT32 x = 0; x < nScreenWidth; x++)
+				{
+					if (pSrc[x] & 0x8000) {
+						((UINT32*)pDest)[x] = DrvBlendFunction(DrvPalette[pSrc[x]&0x3ff], DrvPalette[pAlp[x]&0x3ff], pAlp[x] / 0x0400);
+					} else {
+						((UINT32*)pDest)[x] = DrvPalette[pSrc[x]];
+					}
+				}
+			}
+		}
+	} else {			// skip alpha for now on anything less than 24-bit
+		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
+			if (pTransDraw[i] & 0x8000) {
+				pTransDraw[i] = DrvTempDraw[i] & 0x3ff;
+			} else {
+				pTransDraw[i] &= 0x3ff;
+			}
+		}
+	
+		BurnTransferCopy(DrvPalette);
+	}
 }
 
 static INT32 DrvFrame()
@@ -877,6 +1145,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvBgScrollX);
 		SCAN_VAR(DrvBgScrollY);
 		SCAN_VAR(DrvBgStatus);
+		SCAN_VAR(DrvBgClipMode);
+		SCAN_VAR(DrvBgClipMinX);
+		SCAN_VAR(DrvBgClipMaxX);
+		SCAN_VAR(DrvBgClipMinY);
+		SCAN_VAR(DrvBgClipMaxY);
+		SCAN_VAR(DrvBgSx1);
+		SCAN_VAR(DrvBgSy1);
+		SCAN_VAR(DrvBgSy2);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -889,12 +1165,23 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	return 0;
 }
 
-struct BurnDriverD BurnDrvPsychic5 = {
+struct BurnDriver BurnDrvPsychic5 = {
 	"psychic5", NULL, NULL, NULL, "1987",
-	"Psychic 5 (set 1)\0", NULL, "Capcom", "Miscellaneous",
+	"Psychic 5 (set 1)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x300, 224, 256, 3, 4
 };
+
+struct BurnDriver BurnDrvPsychic5a = {
+	"psychic5a", "psychic5", NULL, NULL, "1987",
+	"Psychic 5 (set 2)\0", NULL, "Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, Psychic5aRomInfo, Psychic5aRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x300, 224, 256, 3, 4
+};
+

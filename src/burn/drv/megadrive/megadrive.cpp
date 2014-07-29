@@ -4228,9 +4228,36 @@ INT32 MegadriveFrame()
 	return 0;
 }
 
-INT32 MegadriveScan(INT32 /*nAction*/, INT32 * /*pnMin*/)
+INT32 MegadriveScan(INT32 nAction, INT32 * pnMin)
 {
-	//BurnYM2612Scan(nAction, pnMin);	
-	
-	return 1;
+
+	if (pnMin) {						// Return minimum compatible version
+		*pnMin = 0x029730;
+	}
+
+	if (nAction & ACB_VOLATILE) {		// Scan volatile ram
+		struct BurnArea ba;
+		memset(&ba, 0, sizeof(ba));
+		ba.Data		= RamStart;
+		ba.nLen		= RamEnd - RamStart;
+		ba.szName	= "RAM";
+		BurnAcb(&ba);
+
+		SekScan(nAction);
+		ZetScan(nAction);
+		BurnYM2612Scan(nAction, pnMin);
+		SN76496Scan(nAction, pnMin);
+		SCAN_VAR(cycles_68k);
+		SCAN_VAR(cycles_z80);
+		SCAN_VAR(Scanline);
+		SCAN_VAR(Z80HasBus);
+		SCAN_VAR(MegadriveZ80Reset);
+		SCAN_VAR(SpriteBlocks);
+	}
+
+	if (nAction & ACB_WRITE) {
+		bMegadriveRecalcPalette = 1;
+	}
+
+	return 0;
 }

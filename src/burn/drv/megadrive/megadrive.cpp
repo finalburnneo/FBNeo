@@ -4253,6 +4253,9 @@ INT32 MegadriveScan(INT32 nAction, INT32 * pnMin)
 		SCAN_VAR(Z80HasBus);
 		SCAN_VAR(MegadriveZ80Reset);
 		SCAN_VAR(SpriteBlocks);
+		SCAN_VAR(rendstatus);
+		SCAN_VAR(Z80BankPartial);
+		SCAN_VAR(Z80BankPos);
 	}
 
 	if (nAction & ACB_WRITE) {

@@ -396,9 +396,8 @@ void BurnYM2612Scan(INT32 nAction, INT32* pnMin)
 	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("BurnYM2612Scan called without init\n"));
 #endif
 
-	BurnTimerScan(nAction, pnMin);
-
 	if (nAction & ACB_DRIVER_DATA) {
+		BurnTimerScan(nAction, pnMin);
 		SCAN_VAR(nYM2612Position);
 	}
 }

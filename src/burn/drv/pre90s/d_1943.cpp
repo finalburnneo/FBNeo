@@ -48,6 +48,7 @@ static UINT8 DrvBg2On;
 static UINT8 DrvBg1On;
 static UINT8 DrvSpritesOn;
 static UINT8 DrvCharsOn;
+static UINT8 DrvProtValue;
 
 static INT32 nCyclesDone[2], nCyclesTotal[2];
 static INT32 nCyclesSegment;
@@ -591,6 +592,48 @@ static INT32 DrvDoReset()
 	DrvBg1On = 0;
 	DrvSpritesOn = 0;
 	DrvCharsOn = 0;
+	DrvProtValue = 0;
+
+	return 0;
+}
+
+static UINT8 Drv1943ProtRead()
+{
+	// This data comes from a table at $21a containing 64 entries, even is "case", odd is return value.
+	switch (DrvProtValue) {
+		case 0x24: return 0x1d;
+		case 0x60: return 0xf7;
+		case 0x01: return 0xac;
+		case 0x55: return 0x50;
+		case 0x56: return 0xe2;
+		case 0x2a: return 0x58;
+		case 0xa8: return 0x13;
+		case 0x22: return 0x3e;
+		case 0x3b: return 0x5a;
+		case 0x1e: return 0x1b;
+		case 0xe9: return 0x41;
+		case 0x7d: return 0xd5;
+		case 0x43: return 0x54;
+		case 0x37: return 0x6f;
+		case 0x4c: return 0x59;
+		case 0x5f: return 0x56;
+		case 0x3f: return 0x2f;
+		case 0x3e: return 0x3d;
+		case 0xfb: return 0x36;
+		case 0x1d: return 0x3b;
+		case 0x27: return 0xae;
+		case 0x26: return 0x39;
+		case 0x58: return 0x3c;
+		case 0x32: return 0x51;
+		case 0x1a: return 0xa8;
+		case 0xbc: return 0x33;
+		case 0x30: return 0x4a;
+		case 0x64: return 0x12;
+		case 0x11: return 0x40;
+		case 0x33: return 0x35;
+		case 0x09: return 0x17;
+		case 0x25: return 0x04;
+	}
 
 	return 0;
 }
@@ -619,7 +662,7 @@ UINT8 __fastcall Drv1943Read1(UINT16 a)
 		}
 		
 		case 0xc007: {
-			return ZetBc(-1) >> 8;
+			return Drv1943ProtRead();
 		}
 	
 		default: {
@@ -653,7 +696,7 @@ UINT8 __fastcall Drvb1943Read1(UINT16 a)
 			return DrvDip[1];
 		}
 		
-		case 0xc007: {
+		case 0xc007: { // Always return 0 for protection reads
 			return 0x00;
 		}
 	
@@ -690,7 +733,7 @@ void __fastcall Drv1943Write1(UINT16 a, UINT8 d)
 		}
 		
 		case 0xc807: {
-			// NOP
+			DrvProtValue = d;
 			return;
 		}
 		
@@ -1275,6 +1318,7 @@ static INT32 DrvExit()
 	DrvBg1On = 0;
 	DrvSpritesOn = 0;
 	DrvCharsOn = 0;
+	DrvProtValue = 0;
 	
 	BurnFree(Mem);
 
@@ -1615,6 +1659,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvBg1On);
 		SCAN_VAR(DrvSpritesOn);
 		SCAN_VAR(DrvCharsOn);
+		SCAN_VAR(DrvProtValue);
 	}
 
 	if (nAction & ACB_WRITE) {

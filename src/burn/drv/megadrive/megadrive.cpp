@@ -4175,7 +4175,7 @@ INT32 MegadriveFrame()
 			// there must be a gap between H and V ints, also after vblank bit set (Mazin Saga, Bram Stoker's Dracula)
 			SekOpen(0);
 //			done_68k+=SekRun(128); 
-			BurnTimerUpdate((y * cycles_68k) + 128 - cycles_68k);
+			BurnTimerUpdate(((y + 1) * cycles_68k) + 128);
 			SekClose();
 
 			RamVReg->pending_ints |= 0x20;
@@ -4192,12 +4192,12 @@ INT32 MegadriveFrame()
 
 		// Run scanline
 		SekOpen(0);
-		BurnTimerUpdate(y * cycles_68k);
+		BurnTimerUpdate((y + 1) * cycles_68k);
 		SekClose();
 		
 		if (Z80HasBus && !MegadriveZ80Reset) {
 			ZetOpen(0);
-			done_z80 += ZetRun(cycles_z80);
+			done_z80 += ZetRun(((y + 1) * cycles_z80) - done_z80);
 			if (y == line_sample) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			if (y == line_sample + 1) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 			ZetClose();

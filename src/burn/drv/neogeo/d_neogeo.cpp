@@ -13637,9 +13637,9 @@ struct BurnDriver BurnDrvkof98ae = {
 // The King of Fighters '99 (Anniversary Edition, Yashional hack)
 
 static struct BurnRomInfo kof99aeRomDesc[] = {
-	{ "152ae-p1.p1",   	   0x100000, 0x924122bc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "152ae-p2.p2",   	   0x400000, 0x6ba36969, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "152ae-p3.p3",   	   0x400000, 0x99697d6e, 1 | BRF_ESS | BRF_PRG }, //  2 	
+	{ "152ae-p1.p1",   	   0x100000, 0x8cd9cbe8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "152ae-p2.p2",   	   0x400000, 0x84086ea5, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "152ae-p3.p3",   	   0x400000, 0x2ece2c91, 1 | BRF_ESS | BRF_PRG }, //  2 	
 
 	{ "251ae-s1.s1",       0x020000, 0x18c1562d, 2 | BRF_GRA },           //  3 Text layer tiles
 
@@ -13651,14 +13651,14 @@ static struct BurnRomInfo kof99aeRomDesc[] = {
 	{ "251-c6d.c6",   	   0x800000, 0x238b3e71, 3 | BRF_GRA },           //  8 
 	{ "251ae-c7.c7",   	   0x800000, 0xf22760ad, 3 | BRF_GRA },           //  9 
 	{ "251ae-c8.c8",   	   0x800000, 0x396c3a70, 3 | BRF_GRA },           // 10 
-	{ "251ae-c9.c9",   	   0x800000, 0x53d028c0, 3 | BRF_GRA },           // 10 
-	{ "251ae-c10.c10",     0x800000, 0x707ce1a7, 3 | BRF_GRA },           // 10 
+	{ "251ae-c9.c9",   	   0x800000, 0x7d7b0897, 3 | BRF_GRA },           // 10 
+	{ "251ae-c10.c10",     0x800000, 0xd38065a7, 3 | BRF_GRA },           // 10 
 	{ "251ae-c11.c11",     0x800000, 0x90016920, 3 | BRF_GRA },           // 10 
 	{ "251ae-c12.c12",     0x800000, 0x49cfed23, 3 | BRF_GRA },           // 10 
 
 	{ "251ae-m1.m1",       0x020000, 0xf847e188, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
-	{ "251ae-v1.v1",       0x400000, 0x4ae46226, 5 | BRF_SND },           // 12 Sound data
+	{ "251ae-v1.v1",       0x400000, 0xceaa3bae, 5 | BRF_SND },           // 12 Sound data
 	{ "251ae-v2.v2",       0x400000, 0x07d70650, 5 | BRF_SND },           // 13 
 	{ "251-v3.v3",         0x400000, 0x821901da, 5 | BRF_SND },           // 14 
 	{ "251-v4.v4",         0x200000, 0xb49e6178, 5 | BRF_SND },           // 15 

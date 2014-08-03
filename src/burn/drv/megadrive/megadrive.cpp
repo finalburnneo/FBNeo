@@ -3444,7 +3444,7 @@ static void DrawWindow(INT32 tstart, INT32 tend, INT32 prio, INT32 sh)
 	}
 
 	// Draw tiles across screen:
-	for (; tilex < tend; tilex++) {
+	for (; tilex <= tend; tilex++) {
 		INT32 addr=0, zero=0, pal;
 
 		code = BURN_ENDIAN_SWAP_INT16(RamVid[nametab + tilex]);

@@ -625,15 +625,20 @@ INT32 PCEFrame()
 	PCECompileInputs();
 
 	INT32 nCyclesTotal = (INT32)((INT64)7159090 * nBurnCPUSpeedAdjust / (0x0100 * 60));
-	
+	INT32 nCyclesDone = 0;
+	INT32 nCyclesSegment = 0;
+
 	h6280Open(0);
-	
+
 	for (INT32 i = 0; i < 262; i++)
 	{
-		h6280Run(nCyclesTotal / 262);
+		INT32 nNext;
+		nNext = (i + 1) * nCyclesTotal / 262;
+		nCyclesSegment = nNext - nCyclesDone;
+		nCyclesDone += h6280Run(nCyclesSegment);
 		interrupt();
 	}
-	
+
 	if (pBurnSoundOut) {
 		c6280_update(pBurnSoundOut, nBurnSoundLen);
 	}

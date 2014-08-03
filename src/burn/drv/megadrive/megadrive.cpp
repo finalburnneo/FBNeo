@@ -438,9 +438,7 @@ void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 
 		case 0xA11200: {
 			if (!(byteValue & 1)) {
-				ZetOpen(0);
 				ZetReset();
-				ZetClose();
 
 				BurnYM2612Reset();
 				MegadriveZ80Reset = 1;	
@@ -478,9 +476,7 @@ void __fastcall MegadriveWriteWord(UINT32 sekAddress, UINT16 wordValue)
 		
 		case 0xa11200: {
 			if (!(wordValue & 0x100)) {
-				ZetOpen(0);
 				ZetReset();
-				ZetClose();
 
 				BurnYM2612Reset();
 				MegadriveZ80Reset = 1;
@@ -1290,30 +1286,22 @@ void __fastcall MegadriveZ80ProgWrite(UINT16 a, UINT8 d)
 	
 	switch (a) {
 		case 0x4000: {
-			SekOpen(0);
 			BurnYM2612Write(0, 0, d);
-			SekClose();
 			return;
 		}
 		
 		case 0x4001: {
-			SekOpen(0);
 			BurnYM2612Write(0, 1, d);
-			SekClose();
 			return;
 		}
 		
 		case 0x4002: {
-			SekOpen(0);
 			BurnYM2612Write(0, 2, d);
-			SekClose();
 			return;
 		}
 		
 		case 0x4003: {
-			SekOpen(0);
 			BurnYM2612Write(0, 3, d);
-			SekClose();
 			return;
 		}
 		
@@ -4120,6 +4108,9 @@ INT32 MegadriveFrame()
 	SekNewFrame();
 	ZetNewFrame();
 	
+	SekOpen(0);
+	ZetOpen(0);
+	
 	HighCol = HighColFull;
 	PicoFrameStart();
 
@@ -4162,9 +4153,7 @@ INT32 MegadriveFrame()
 			hint = RamVReg->reg[10]; // Reload H-Int counter
 			RamVReg->pending_ints |= 0x10;
 			if (RamVReg->reg[0] & 0x10) {
-				SekOpen(0);
 				SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-				SekClose();
 			}
 		}
 
@@ -4174,16 +4163,12 @@ INT32 MegadriveFrame()
 			RamVReg->status |= 0x88; // V-Int happened, go into vblank
 			
 			// there must be a gap between H and V ints, also after vblank bit set (Mazin Saga, Bram Stoker's Dracula)
-			SekOpen(0);
 //			done_68k+=SekRun(128); 
 			BurnTimerUpdate(((y + 1) * cycles_68k) + 128);
-			SekClose();
 
 			RamVReg->pending_ints |= 0x20;
 			if(RamVReg->reg[1] & 0x20) {
-				SekOpen(0);
 				SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
-				SekClose();
 			}
 		}
 
@@ -4192,39 +4177,32 @@ INT32 MegadriveFrame()
 			PicoLine(y);
 
 		// Run scanline
-		SekOpen(0);
 		BurnTimerUpdate((y + 1) * cycles_68k);
-		SekClose();
 		
 		if (Z80HasBus && !MegadriveZ80Reset) {
-			ZetOpen(0);
 			done_z80 += ZetRun(((y + 1) * cycles_z80) - done_z80);
 			if (y == line_sample) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			if (y == line_sample + 1) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
-			ZetClose();
 		}
 	}
 	
 	if (pBurnDraw) MegadriveDraw();
 
-	SekOpen(0);
 	BurnTimerEndFrame(total_68k_cycles);
-	SekClose();
 	
 	if (Z80HasBus && !MegadriveZ80Reset) {
 		if (done_z80 < total_z80_cycles) {
-			ZetOpen(0);
 			ZetRun(total_z80_cycles - done_z80);
-			ZetClose();
 		}
 	}
 	
 	if (pBurnSoundOut) {
-		SekOpen(0);
 		BurnYM2612Update(pBurnSoundOut, nBurnSoundLen);
-		SekClose();
 		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
+	
+	SekClose();
+	ZetClose();
 	
 	return 0;
 }

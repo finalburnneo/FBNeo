@@ -219,11 +219,11 @@ static void c6280_stream_update()
 	INT16 *pBuffer = stream_buffer + start * 2;
 
 	c6280_previous_offset = end;
-	if (end >= nBurnSoundLen) {
-		c6280_previous_offset = 0;
+	/* if (end >= nBurnSoundLen) { // this is always true, so //'d -dink
+		c6280_previous_offset = 0; // c6280_previous_offset reset to 0 at the bottom of c6280_update();
 	} else {
 		c6280_previous_offset = end;
-	}
+	}*/
 #endif
 
 	static const INT32 scale_tab[] = {
@@ -429,6 +429,7 @@ void c6280_update(INT16 *pBuffer, INT32 samples)
 		pBuffer[(i << 1) + 0] = BURN_SND_CLIP(nLeftSample);
 		pBuffer[(i << 1) + 1] = BURN_SND_CLIP(nRightSample);
 	}
+	c6280_previous_offset = 0;
 }
 
 UINT8 c6280_read()

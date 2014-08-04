@@ -8568,6 +8568,24 @@ struct BurnDriver BurnDrvsgx_daimakai = {
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
 
+// Dai Makaimura (Alt)
+
+static struct BurnRomInfo sgx_daimakai1RomDesc[] = {
+	{ "daimakai mura (japan)[a].pce", 0x100200, 0x8e961f63, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sgx_daimakai1)
+STD_ROM_FN(sgx_daimakai1)
+
+struct BurnDriver BurnDrvsgx_daimakai1 = {
+	"sgx_daimakai1", NULL, NULL, NULL, "1990",
+	"Dai Makaimura (Alt)\0", NULL, "NEC Avenue", "SuperGrafx",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_SGX, GBF_MISC, 0,
+	SgxGetZipName, sgx_daimakai1RomInfo, sgx_daimakai1RomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	SGXInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};
 
 // Madou Ou Granzort
 

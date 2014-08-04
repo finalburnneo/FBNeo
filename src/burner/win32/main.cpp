@@ -834,14 +834,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 	AppDirectory();								// Set current directory to be the applications directory
 
 	// Make sure there are roms and cfg subdirectories
-	TCHAR szDirs[19][MAX_PATH] = {
+	TCHAR szDirs[23][MAX_PATH] = {
 		{_T("config")},
 		{_T("config/games")},
 		{_T("config/ips")},
 		{_T("config/localisation")},
 		{_T("config/presets")},
 		{_T("recordings")},
-		{_T("ROMs")},
+		{_T("roms")},
 		{_T("savestates")},
 		{_T("screenshots")},
 		{_T("support/")},
@@ -854,9 +854,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 		{_T("support/ips/")},
 		{_T("support/neocdz/")},
 		{_T("neocdiso/")},
+		// the below are named after the MESS software lists
+		{_T("megadriv/")},
+		{_T("pce/")},
+		{_T("sgx/")},
+		{_T("tg16/")},
 	};
 
-	for(int x = 0; x < 19; x++) {
+	for(int x = 0; x < 23; x++) {
 		CreateDirectory(szDirs[x], NULL);
 	}
 

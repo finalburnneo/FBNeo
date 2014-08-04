@@ -308,9 +308,13 @@ void BurnYM2612Exit()
 	DebugSnd_YM2612Initted = 0;
 }
 
+void BurnStateExit();
+
 INT32 BurnYM2612Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), double (*GetTimeCallback)(), INT32 bAddSignal)
 {
 	DebugSnd_YM2612Initted = 1;
+
+	BurnStateExit(); // prevent crash (in fm.c, bottom of YM2612Init()) if the postload function is double-called (e.g.after a reset) Aug 4, 2014 - dink
 	
 	if (num > MAX_YM2612) num = MAX_YM2612;
 

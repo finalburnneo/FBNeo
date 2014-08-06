@@ -844,7 +844,7 @@ static void MachineInit()
 	
 	NamcoSoundInit(18432000 / 6 / 32, 3);
 	NacmoSoundSetAllRoutes(0.90 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
-	BurnSampleInit(0);
+	BurnSampleInit(1);
 	BurnSampleSetAllRoutesAllSamples(0.80, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

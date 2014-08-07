@@ -270,10 +270,10 @@ void BurnSampleInit(INT32 bAdd /*add sample to stream?*/)
 	}
 #endif
 	
-	if (!nEnableSamples) return;
-
 	bAddToStream = bAdd;
 	nTotalSamples = 0;
+
+	if (!nEnableSamples) return;
 
 	struct BurnSampleInfo si;
 	INT32 nSampleOffset = -1;
@@ -281,7 +281,7 @@ void BurnSampleInit(INT32 bAdd /*add sample to stream?*/)
 		BurnDrvGetSampleInfo(&si, ++nSampleOffset);
 		if (si.nFlags) nTotalSamples++;
 	} while (si.nFlags);
-	
+
 	samples = (sample_format*)malloc(sizeof(sample_format) * nTotalSamples);
 	memset (samples, 0, sizeof(sample_format) * nTotalSamples);
 

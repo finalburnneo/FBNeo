@@ -3427,9 +3427,13 @@ static void DrawWindow(INT32 tstart, INT32 tend, INT32 prio, INT32 sh)
 	INT32 blank = -1; // The tile we know is blank
 
 	// Find name table line:
-	nametab  = (RamVReg->reg[3] & 0x3c)<<9;
-	if (RamVReg->reg[12] & 1) nametab += (Scanline>>3)<<6;	// 40-cell mode
-	else					  nametab += (Scanline>>3)<<5;	// 32-cell mode
+	if (RamVReg->reg[12] & 1) {
+		nametab  = (RamVReg->reg[3] & 0x3c)<<9;
+		nametab += (Scanline>>3)<<6;	// 40-cell mode
+	} else {
+		nametab  = (RamVReg->reg[3] & 0x3e)<<9;
+		nametab += (Scanline>>3)<<5;	// 32-cell mode
+	}
 
 	tilex = tstart<<1;
 	tend <<= 1;

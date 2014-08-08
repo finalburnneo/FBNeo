@@ -45,12 +45,13 @@ static void CreateStateName(int nSlot)
 	_stprintf(szChoice, _T("./savestates/%s slot %02x.fs"), BurnDrvGetText(DRV_NAME), nSlot);
 }
 
-void StatedUNDO(int nSlot)
+int StatedUNDO(int nSlot)
 {
-    if (nSlot) {
-        CreateStateName(nSlot);
-        BurnStateUNDO(szChoice);
-    }
+	if (nSlot) {
+		CreateStateName(nSlot);
+		return BurnStateUNDO(szChoice);
+	}
+	return 1;
 }
 
 int StatedLoad(int nSlot)

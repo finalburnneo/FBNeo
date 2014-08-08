@@ -1080,16 +1080,18 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			PausedRedraw();
 			break;
 		}
-		case MENU_STATE_UNDO: {
+		case MENU_STATE_UNDO:
 			if (bDrvOkay) {
 				TCHAR szString[256] = _T("state undo");
-
-				StatedUNDO(nSavestateSlot);
-				VidSNewShortMsg(szString);
-				PausedRedraw();
+				TCHAR szStringFailed[256] = _T("state: nothing to undo");
+				if (!StatedUNDO(nSavestateSlot)) {
+					VidSNewShortMsg(szString);
+				} else {
+					VidSNewShortMsg(szStringFailed);
 				}
-			break;
+				PausedRedraw();
 			}
+			break;
 		case MENU_STATE_LOAD_SLOT:
 			if (bDrvOkay && !kNetGame) {
 				if (StatedLoad(nSavestateSlot) == 0) {

@@ -8607,3 +8607,21 @@ struct BurnDriver BurnDrvsgx_granzort = {
 };
 
 
+// Aetherbyte Reflectron
+
+static struct BurnRomInfo pce_reflectronRomDesc[] = {
+	{ "reflectron.pce", 0x040000, 0x6a3727e2, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_reflectron)
+STD_ROM_FN(pce_reflectron)
+
+struct BurnDriver BurnDrvpce_reflectron = {
+	"pce_reflectron", NULL, NULL, NULL, "2013",
+	"Reflectron\0", NULL, "Aetherbyte", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	PceGetZipName, pce_reflectronRomInfo, pce_reflectronRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};

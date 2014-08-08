@@ -41097,3 +41097,20 @@ struct BurnDriver BurnDrvmd_sks3 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Uwol Quest for Money
+static struct BurnRomInfo md_uwolRomDesc[] = {
+	{ "uwol.bin", 0x010000, 0x6fa88172, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_uwol)
+STD_ROM_FN(md_uwol)
+
+struct BurnDriver BurnDrvmd_uwol = {
+	"md_uwol", NULL, NULL, NULL, "2006",
+	"UWOL Quest for Money\0", NULL, "Mojon Twins", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_uwolRomInfo, md_uwolRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

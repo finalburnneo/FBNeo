@@ -1372,6 +1372,13 @@ static INT32 MegadriveLoadRoms(bool bLoad)
 					break;
 				}
 				
+				case SEGA_MD_ROM_LOAD16_WORD_SWAP_CONTINUE_020000_080000: { // ghouls[1]
+					nRet = BurnLoadRom(RomMain + Offset, i, 1); if (nRet) return 1;
+					memmove(RomMain + 0x020000, RomMain + 0x100000, 0x60000); // tried memcpy & memmove just incase...
+					BurnByteswap(RomMain + Offset, 0x140000);
+					break;
+                                }
+
 				case SEGA_MD_ROM_LOAD16_WORD_SWAP_CONTINUE_040000_100000: {
 					nRet = BurnLoadRom(RomMain + Offset, i, 1); if (nRet) return 1;
 					memcpy(RomMain + 0x100000, RomMain + 0x040000, 0x40000);
@@ -2208,7 +2215,7 @@ static void SetupCustomCartridgeMappers()
 	}
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_KOF99 ||
-		BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_POKEMON) {
+		(BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_POKEMON) {
 		SekOpen(0);
 		SekMapHandler(7, 0xa13000, 0xa1303f, SM_READ);
 		SekSetReadByteHandler(7, Kof99A13000ReadByte);

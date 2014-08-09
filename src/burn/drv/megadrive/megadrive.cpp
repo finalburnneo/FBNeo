@@ -2966,7 +2966,12 @@ INT32 MegadriveInit()
 	
 	pBurnDrvPalette = (UINT32*)MegadriveCurPal;
 	
-	MegadriveResetDo();	
+	MegadriveResetDo();
+
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "puggsy")) {
+		bprintf(0, _T("Puggsy protection fix activated!\n"));
+		RamMisc->SRamActive = 0;
+	}
 
 	return 0;
 }

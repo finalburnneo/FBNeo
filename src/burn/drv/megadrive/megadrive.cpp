@@ -1374,7 +1374,7 @@ static INT32 MegadriveLoadRoms(bool bLoad)
 				
 				case SEGA_MD_ROM_LOAD16_WORD_SWAP_CONTINUE_020000_080000: { // ghouls[1]
 					nRet = BurnLoadRom(RomMain + Offset, i, 1); if (nRet) return 1;
-					memmove(RomMain + 0x020000, RomMain + 0x100000, 0x60000); // tried memcpy & memmove just incase...
+					memmove(RomMain + 0x020000, RomMain + 0xa0000, 0x60000); // tried memcpy & memmove just incase...
 					BurnByteswap(RomMain + Offset, 0x140000);
 					break;
                                 }

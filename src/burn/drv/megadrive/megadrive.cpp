@@ -2840,6 +2840,10 @@ static void MegadriveSetupSRAM()
 			RamMisc->SRamStart = (RomMain[0x1b5] << 24 | RomMain[0x1b4] << 16 | RomMain[0x1b7] << 8 | RomMain[0x1b6]);
 			RamMisc->SRamEnd = (RomMain[0x1b9] << 24 | RomMain[0x1b8] << 16 | RomMain[0x1bb] << 8 | RomMain[0x1ba]);
 
+			// The 68k only has 24 address bits.
+			RamMisc->SRamStart &= 0xffffff;
+			RamMisc->SRamEnd &= 0xffffff;
+
 			if ((RamMisc->SRamStart > RamMisc->SRamEnd) || ((RamMisc->SRamEnd - RamMisc->SRamStart) >= 0x10000)) {
 				RamMisc->SRamEnd = RamMisc->SRamStart + 0x0FFFF;
 			}

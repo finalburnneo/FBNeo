@@ -2126,7 +2126,10 @@ static void SetupCustomCartridgeMappers()
 		SekClose();
 	}
 	
-	if (((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_LIONK3) || ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SKINGKONG)) {
+	if (((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_LIONK3) ||
+	    ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SKINGKONG) ||
+	    ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_POKEMON2) ||
+	    ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_MULAN)) {
 		RamMisc->L3AltPDat = 0;
 		RamMisc->L3AltPCmd = 0;
 		
@@ -2204,7 +2207,8 @@ static void SetupCustomCartridgeMappers()
 		SekClose();
 	}
 	
-	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_KOF99) {
+	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_KOF99 ||
+		BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_POKEMON) {
 		SekOpen(0);
 		SekMapHandler(7, 0xa13000, 0xa1303f, SM_READ);
 		SekSetReadByteHandler(7, Kof99A13000ReadByte);
@@ -2428,34 +2432,6 @@ static void SetupCustomCartridgeMappers()
 		SekSetWriteWordHandler(8, TopfigWriteWord);
 		SekClose();
 	}
-	
-	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_POKEMON) {
-		UINT16 *ROM16 = (UINT16 *)RomMain;
-
-		ROM16[0x0dd19e/2] = 0x47F8;
-		ROM16[0x0dd1a0/2] = 0xFFF0;
-		ROM16[0x0dd1a2/2] = 0x4E63;
-		ROM16[0x0dd46e/2] = 0x4EF8;
-		ROM16[0x0dd470/2] = 0x0300;
-		ROM16[0x0dd49c/2] = 0x6002;
-	}
-	
-	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_POKEMON2) {
-		UINT16 *ROM16 = (UINT16 *)RomMain;
-
-		ROM16[0x06036/2] = 0xE000;
-		ROM16[0x02540/2] = 0x6026;
-		ROM16[0x01ED0/2] = 0x6026;
-		ROM16[0x02476/2] = 0x6022;
-
-		ROM16[0x7E300/2] = 0x60FE;
-	}
-	
-	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_MULAN) {
-		UINT16 *ROM16 = (UINT16 *)RomMain;
-
-		ROM16[0x06036/2] = 0xE000;
-	}	
 }
 
 // SRAM and EEPROM Handling

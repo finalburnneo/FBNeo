@@ -1,5 +1,5 @@
 // FB Alpha Sand Scorpion driver module
-// Based on MAME driver by 
+// Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -171,7 +171,7 @@ static inline void palette_update(UINT16 offset)
 	DrvPalette[offset/2] = BurnHighCol(r, g, b, 0);
 }
 
-static UINT16 galpanib_calc_read(UINT32 offset) /* Simulation of the CALC1 MCU */
+static UINT16 galpanib_calc_read(UINT32 offset) // Simulation of the CALC1 MCU
 {
 	calc1_hit_t &hit = m_hit;
 

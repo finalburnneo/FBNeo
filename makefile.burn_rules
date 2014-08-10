@@ -56,9 +56,9 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_deniam.o d_ddragon3.o d_diverboy.o d_drgnmst.o d_drtomy.o d_egghunt.o d_esd16.o d_f1gp.o d_fstarfrc.o d_funybubl.o \
 			d_fuukifg3.o d_gaelco.o d_gaiden.o d_galpanic.o d_galspnbl.o d_gotcha.o d_gumbo.o d_hyperpac.o d_jchan.o d_kaneko16.o \
 			d_lordgun.o d_mcatadv.o d_midas.o d_mugsmash.o d_mwarr.o d_news.o d_nmg5.o d_nmk16.o d_ohmygod.o d_pass.o d_pirates.o \
-			d_playmark.o d_powerins.o d_pushman.o d_raiden.o d_seta.o d_seta2.o d_shadfrce.o d_silkroad.o d_silvmil.o d_speedspn.o \
-			d_suna16.o d_taotaido.o d_tecmosys.o d_tumbleb.o d_unico.o d_vmetal.o d_welltris.o d_wwfwfest.o d_xorworld.o d_yunsun16.o \
-			d_zerozone.o \
+			d_playmark.o d_powerins.o d_pushman.o d_raiden.o d_sandscrp.o d_seta.o d_seta2.o d_shadfrce.o d_silkroad.o d_silvmil.o \
+			d_speedspn.o d_suna16.o d_taotaido.o d_tecmosys.o d_tumbleb.o d_unico.o d_vmetal.o d_welltris.o d_wwfwfest.o d_xorworld.o \
+			d_yunsun16.o d_zerozone.o \
 			\
 			d_parent.o \
 			\
@@ -75,7 +75,8 @@ depobj	:= 	$(drvobj) \
 			burn.o burn_gun.o burn_led.o burn_memory.o burn_sound.o burn_sound_c.o cheat.o debug_track.o hiscore.o load.o \
 			tiles_generic.o timer.o vector.o \
 			\
-			8255ppi.o 8257dma.o eeprom.o nmk004.o pandora.o seibusnd.o sknsspr.o slapstic.o t5182.o timekpr.o tms34061.o v3021.o vdc.o \
+			8255ppi.o 8257dma.o eeprom.o nmk004.o kaneko_tmap.o pandora.o seibusnd.o sknsspr.o slapstic.o t5182.o timekpr.o tms34061.o \
+			v3021.o vdc.o \
 			\
 			ay8910.o burn_y8950.o burn_ym2151.o burn_ym2203.o burn_ym2413.o burn_ym2608.o burn_ym2610.o burn_ym2612.o \
 			burn_ym3526.o burn_ym3812.o burn_ymf278b.o c6280.o dac.o es5506.o es8712.o flt_rc.o fm.o fmopl.o ics2115.o iremga20.o \

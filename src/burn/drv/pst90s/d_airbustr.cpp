@@ -393,12 +393,12 @@ UINT8 __fastcall airbustr_sound_in(UINT16 port)
 	return 0;
 }
 
-UINT8 DrvYM2203PortA(UINT32)
+static UINT8 DrvYM2203PortA(UINT32)
 {
 	return DrvDips[0];
 }
 
-UINT8 DrvYM2203PortB(UINT32)
+static UINT8 DrvYM2203PortB(UINT32)
 {
 	return DrvDips[1];
 }
@@ -637,7 +637,7 @@ static INT32 DrvInit()
 
 	GenericTilesInit();
 
-	pandora_init(DrvPandoraRAM, DrvGfxROM1, 0x200, 0, -16);
+	pandora_init(DrvPandoraRAM, DrvGfxROM1, (0x400000/0x100)-1, 0x200, 0, -16);
 
 	DrvDoReset(1);
 
@@ -849,7 +849,7 @@ struct BurnDriver BurnDrvAirbustr = {
 	"airbustr", NULL, NULL, NULL, "1990",
 	"Air Buster: Trouble Specialty Raid Unit (World)\0", NULL, "Kaneko (Namco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_MISC, GBF_MISC, 0,
 	NULL, airbustrRomInfo, airbustrRomName, NULL, NULL, AirbustrInputInfo, AirbustrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x0300,
 	256, 224, 4, 3
@@ -882,7 +882,7 @@ struct BurnDriver BurnDrvAirbustrj = {
 	"airbustrj", "airbustr", NULL, NULL, "1990",
 	"Air Buster: Trouble Specialty Raid Unit (Japan)\0", NULL, "Kaneko (Namco license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_MISC, GBF_MISC, 0,
 	NULL, airbustrjRomInfo, airbustrjRomName, NULL, NULL, AirbustrInputInfo, AirbustjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x0300,
 	256, 224, 4, 3
@@ -920,7 +920,7 @@ struct BurnDriver BurnDrvAirbustrb = {
 	"airbustrb", "airbustr", NULL, NULL, "1990",
 	"Air Buster: Trouble Specialty Raid Unit (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_KANEKO_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_KANEKO_MISC, GBF_MISC, 0,
 	NULL, airbustrbRomInfo, airbustrbRomName, NULL, NULL, AirbustrInputInfo, AirbustjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x0300,
 	256, 224, 4, 3

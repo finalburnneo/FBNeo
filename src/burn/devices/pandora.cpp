@@ -9,6 +9,7 @@ static INT32 pandora_clear;
 static INT32 pandora_xoffset;
 static INT32 pandora_yoffset;
 static INT32 pandora_color_offset;
+static INT32 pandora_code_max;
 INT32 pandora_flipscreen;
 
 void pandora_set_clear(INT32 clear)
@@ -67,6 +68,8 @@ void pandora_buffer_sprites()
 			y = dy;
 		}
 
+		code &= pandora_code_max;
+
 		if (pandora_flipscreen)
 		{
 			sx = 240 - x;
@@ -105,7 +108,7 @@ void pandora_buffer_sprites()
 }
 
 // must be called after GenericTilesInit()
-void pandora_init(UINT8 *ram, UINT8 *gfx, INT32 color_offset, INT32 x, INT32 y)
+void pandora_init(UINT8 *ram, UINT8 *gfx, INT32 gfx_mod, INT32 color_offset, INT32 x, INT32 y)
 {
 	DebugDev_PandoraInitted = 1;
 	
@@ -114,6 +117,7 @@ void pandora_init(UINT8 *ram, UINT8 *gfx, INT32 color_offset, INT32 x, INT32 y)
 	pandora_yoffset	= y;
 	pandora_gfx	= gfx;
 	pandora_color_offset	= color_offset;
+	pandora_code_max = gfx_mod;
 
 	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
 		BurnDrvGetVisibleSize(&nScreenHeight, &nScreenWidth);

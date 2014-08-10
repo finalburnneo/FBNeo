@@ -561,7 +561,7 @@ static INT32 DrvInit()
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	skns_init();
-	kaneko_view2_init(DrvVidRAM, DrvVidRegs, DrvGfxROM0, 0, DrvTransTab, 25, 0);
+	kaneko_view2_init(0, DrvVidRAM, DrvVidRegs, DrvGfxROM0, 0, DrvTransTab, 25, 0);
 
 	GenericTilesInit();
 
@@ -603,8 +603,8 @@ static INT32 DrvDraw()
 	}
 
 	for (INT32 i = 0; i < 8; i++) {
-		kaneko_view2_draw_layer(0, i);
-		kaneko_view2_draw_layer(1, i);
+		kaneko_view2_draw_layer(0, 0, i);
+		kaneko_view2_draw_layer(0, 1, i);
 	}
 
 	skns_draw_sprites(pTransDraw, (UINT32*)DrvSprRAM1, 0x4000, DrvGfxROM2, 0x1000000, (UINT32*)DrvSprReg1, 0x4000);

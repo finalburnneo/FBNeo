@@ -650,7 +650,7 @@ static INT32 DrvInit(INT32 type)
 
 	GenericTilesInit();
 
-	kaneko_view2_init(DrvVideoRAM, DrvVidRegs, DrvGfxROM0, 0x400, DrvTransTab, 91, 5);
+	kaneko_view2_init(0, DrvVideoRAM, DrvVidRegs, DrvGfxROM0, 0x400, DrvTransTab, 91, 5);
 	pandora_init(DrvPandoraRAM, DrvGfxROM1, (0x200000/0x100)-1, 0x000, 0, -16);
 
 	DrvDoReset(1);
@@ -692,8 +692,8 @@ static INT32 DrvDraw()
 	BurnTransferClear();
 
 	for (INT32 i = 0; i < 8; i++) {
-		kaneko_view2_draw_layer(0, i);
-		kaneko_view2_draw_layer(1, i);
+		kaneko_view2_draw_layer(0, 0, i);
+		kaneko_view2_draw_layer(0, 1, i);
 	}
 
 	pandora_update(pTransDraw);

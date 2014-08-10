@@ -1,42 +1,45 @@
 #include "tiles_generic.h"
+#include "kaneko_tmap.h"
 
-static INT32 kaneko_view2_xoff = 0;
-static INT32 kaneko_view2_yoff = 0;
-static UINT8 *kaneko_view2_vram = NULL;
-static UINT8 *kaneko_view2_regs = NULL;
-static UINT8 *kaneko_view2_gfx = NULL;
-static UINT8 *kaneko_view2_gfx_trans = NULL;
-static INT32 kaneko_color_offset = 0;
+static INT32 kaneko_view2_xoff[MAX_VIEW2_CHIPS] = { 0, 0 };
+static INT32 kaneko_view2_yoff[MAX_VIEW2_CHIPS] = { 0, 0 };
+static UINT8 *kaneko_view2_vram[MAX_VIEW2_CHIPS] = { NULL, NULL };
+static UINT8 *kaneko_view2_regs[MAX_VIEW2_CHIPS] = { NULL, NULL };
+static UINT8 *kaneko_view2_gfx[MAX_VIEW2_CHIPS] = { NULL, NULL };
+static UINT8 *kaneko_view2_gfx_trans[MAX_VIEW2_CHIPS] = { NULL, NULL };
+static INT32 kaneko_color_offset[MAX_VIEW2_CHIPS] = { 0, 0 };
 
-void kaneko_view2_init(UINT8 *video_ram, UINT8 *reg_ram, UINT8 *gfx_rom, INT32 color_offset, UINT8 *gfx_trans, INT32 global_x, INT32 global_y)
+void kaneko_view2_init(INT32 chip, UINT8 *video_ram, UINT8 *reg_ram, UINT8 *gfx_rom, INT32 color_offset, UINT8 *gfx_trans, INT32 global_x, INT32 global_y)
 {
-	kaneko_view2_vram = video_ram;
-	kaneko_view2_regs = reg_ram;
-	kaneko_view2_gfx = gfx_rom;
-	kaneko_color_offset = color_offset;
-	kaneko_view2_gfx_trans = gfx_trans;
+	kaneko_view2_vram[chip] = video_ram;
+	kaneko_view2_regs[chip] = reg_ram;
+	kaneko_view2_gfx[chip] = gfx_rom;
+	kaneko_color_offset[chip] = color_offset;
+	kaneko_view2_gfx_trans[chip] = gfx_trans;
 
-	kaneko_view2_xoff = global_x;
-	kaneko_view2_yoff = global_y;	
+	kaneko_view2_xoff[chip] = global_x;
+	kaneko_view2_yoff[chip] = global_y;	
 }
 
 void kaneko_view2_exit()
 {
-	kaneko_view2_vram = NULL;
-	kaneko_view2_regs = NULL;
-	kaneko_view2_gfx = NULL;
-	kaneko_color_offset = 0;
-	kaneko_view2_gfx_trans = NULL;
+	for (INT32 i = 0; i < MAX_VIEW2_CHIPS; i++) {
+		kaneko_view2_vram[i] = NULL;
+		kaneko_view2_regs[i] = NULL;
+		kaneko_view2_gfx[i] = NULL;
+		kaneko_color_offset[i] = 0;
+		kaneko_view2_gfx_trans[i] = NULL;
 
-	kaneko_view2_xoff = 0;
-	kaneko_view2_yoff = 0;	
+		kaneko_view2_xoff[i] = 0;
+		kaneko_view2_yoff[i] = 0;	
+	}
 }
 
-void kaneko_view2_draw_layer(INT32 layer, INT32 priority)
+void kaneko_view2_draw_layer(INT32 chip, INT32 layer, INT32 priority)
 {
-	UINT16 *vram = (UINT16*)(kaneko_view2_vram + (layer ? 0x0000 : 0x1000));
-	UINT16 *sram = (UINT16*)(kaneko_view2_vram + (layer ? 0x2000 : 0x3000));
-	UINT16 *regs = (UINT16*)kaneko_view2_regs;
+	UINT16 *vram = (UINT16*)(kaneko_view2_vram[chip] + (layer ? 0x0000 : 0x1000));
+	UINT16 *sram = (UINT16*)(kaneko_view2_vram[chip] + (layer ? 0x2000 : 0x3000));
+	UINT16 *regs = (UINT16*)kaneko_view2_regs[chip];
 
 	INT32 tmflip = BURN_ENDIAN_SWAP_INT16(regs[4]);
 
@@ -51,8 +54,8 @@ void kaneko_view2_draw_layer(INT32 layer, INT32 priority)
 	INT32 xscroll = BURN_ENDIAN_SWAP_INT16(regs[2 - (layer * 2)]);
 	INT32 yscroll = BURN_ENDIAN_SWAP_INT16(regs[3 - (layer * 2)]) >> 6;
 
-	xscroll += (tmflipx) ? -((344 + (layer * 2)) * 64) : ((kaneko_view2_xoff + (layer * 2)) * 64);
-	yscroll += ((tmflipy) ? -260 : 11) + kaneko_view2_yoff;
+	xscroll += (tmflipx) ? -((344 + (layer * 2)) * 64) : ((kaneko_view2_xoff[chip] + (layer * 2)) * 64);
+	yscroll += ((tmflipy) ? -260 : 11) + kaneko_view2_yoff[chip];
 	yscroll &= 0x1ff;
 
 	if (lsenable)
@@ -73,7 +76,7 @@ void kaneko_view2_draw_layer(INT32 layer, INT32 priority)
 
 				INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 0]);
 				INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 1]) & 0x1fff;
-				INT32 color = ((attr & 0x00fc) << 2) + kaneko_color_offset;
+				INT32 color = ((attr & 0x00fc) << 2) + kaneko_color_offset[chip];
 				INT32 flipx = (attr & 0x0002) ? 0x0f : 0;
 				INT32 flipy = (attr & 0x0001) ? 0xf0 : 0;
 				INT32 group = (attr & 0x0700) >> 8;
@@ -84,7 +87,7 @@ void kaneko_view2_draw_layer(INT32 layer, INT32 priority)
 
 				if (group != priority) continue;
 	
-				UINT8 *gfxsrc = kaneko_view2_gfx + (code << 8) + (((scrollyy & 0x0f) << 4) ^ flipy);
+				UINT8 *gfxsrc = kaneko_view2_gfx[chip] + (code << 8) + (((scrollyy & 0x0f) << 4) ^ flipy);
 	
 				for (INT32 dx = 0; dx < 16; dx++)
 				{
@@ -141,15 +144,15 @@ void kaneko_view2_draw_layer(INT32 layer, INT32 priority)
 			{
 				if (flipy) {
 					if (flipx) {
-						Render16x16Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 4, 0, 0, kaneko_view2_gfx);
+						Render16x16Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 4, 0, 0, kaneko_view2_gfx[chip]);
 					} else {
-						Render16x16Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 4, 0, 0, kaneko_view2_gfx);
+						Render16x16Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 4, 0, 0, kaneko_view2_gfx[chip]);
 					}
 				} else {
 					if (flipx) {
-						Render16x16Tile_Mask_FlipX(pTransDraw, code, sx, sy, color, 4, 0, 0, kaneko_view2_gfx);
+						Render16x16Tile_Mask_FlipX(pTransDraw, code, sx, sy, color, 4, 0, 0, kaneko_view2_gfx[chip]);
 					} else {
-						Render16x16Tile_Mask(pTransDraw, code, sx, sy, color, 4, 0, 0, kaneko_view2_gfx);
+						Render16x16Tile_Mask(pTransDraw, code, sx, sy, color, 4, 0, 0, kaneko_view2_gfx[chip]);
 					}
 				}
 			}
@@ -157,15 +160,15 @@ void kaneko_view2_draw_layer(INT32 layer, INT32 priority)
 			{
 				if (flipy) {
 					if (flipx) {
-						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, kaneko_view2_gfx);
+						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, kaneko_view2_gfx[chip]);
 					} else {
-						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, kaneko_view2_gfx);
+						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, kaneko_view2_gfx[chip]);
 					}
 				} else {
 					if (flipx) {
-						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, kaneko_view2_gfx);
+						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, kaneko_view2_gfx[chip]);
 					} else {
-						Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, kaneko_view2_gfx);
+						Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, kaneko_view2_gfx[chip]);
 					}
 				}
 			}

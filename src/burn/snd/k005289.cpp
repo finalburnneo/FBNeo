@@ -242,7 +242,7 @@ void K005289Ld1Write(INT32 offset)
 #endif
 
 	offset &= 0xfff;
-	freq_latch[0] = 0x1000 - offset;
+	freq_latch[0] = 0xfff - offset;
 }
 
 void K005289Ld2Write(INT32 offset)
@@ -252,7 +252,7 @@ void K005289Ld2Write(INT32 offset)
 #endif
 
 	offset &= 0xfff;
-	freq_latch[1] = 0x1000 - offset;
+	freq_latch[1] = 0xfff - offset;
 }
 
 void K005289Tg1Write()

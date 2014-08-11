@@ -263,6 +263,60 @@ static struct BurnDIPInfo SearcheyDIPList[]=
 	{0x11, 0x01, 0x02, 0x02, "Off"				},
 	{0x11, 0x01, 0x02, 0x00, "On"				},
 
+	{0x11, 0xfe,    0,    8, "Language"			},
+	{0x11, 0x01, 0x38, 0x00, "Korean Duplicate 1"	},
+	{0x11, 0x01, 0x38, 0x08, "Korean Duplicate 2"	},
+	{0x11, 0x01, 0x38, 0x10, "Korean Duplicate 3"	},
+	{0x11, 0x01, 0x38, 0x18, "Spanish"			},
+	{0x11, 0x01, 0x38, 0x20, "Korean"			},
+	{0x11, 0x01, 0x38, 0x28, "Japanese"			},
+	{0x11, 0x01, 0x38, 0x30, "English"			},
+	{0x11, 0x01, 0x38, 0x38, "Korean Duplicate 4"	},
+
+	{0x11, 0xfe,    0,    2, "Items to find"		},
+	{0x11, 0x01, 0x80, 0x00, "Less"				},
+	{0x11, 0x01, 0x80, 0x80, "More"				},
+};
+
+STDDIPINFO(Searchey)
+
+static struct BurnDIPInfo SearcheyaDIPList[]=
+{
+	{0x10, 0xff, 0xff, 0xff, NULL				},
+	{0x11, 0xff, 0xff, 0xdd, NULL				},
+
+	{0   , 0xfe,    0,    4, "Timer Speed"			},
+	{0x10, 0x01, 0x03, 0x03, "Slowest"			},
+	{0x10, 0x01, 0x03, 0x02, "Slow"				},
+	{0x10, 0x01, 0x03, 0x01, "Fast"				},
+	{0x10, 0x01, 0x03, 0x00, "Fastest"			},
+
+	{0x10, 0xfe,    0,    4, "Helps"			},
+	{0x10, 0x01, 0x0c, 0x0c, "1"				},
+	{0x10, 0x01, 0x0c, 0x08, "2"				},
+	{0x10, 0x01, 0x0c, 0x04, "3"				},
+	{0x10, 0x01, 0x0c, 0x00, "4"				},
+
+	{0x10, 0xfe,    0,    4, "Lives"			},
+	{0x10, 0x01, 0x30, 0x20, "3"				},
+	{0x10, 0x01, 0x30, 0x10, "4"				},
+	{0x10, 0x01, 0x30, 0x30, "5"				},
+	{0x10, 0x01, 0x30, 0x00, "6"				},
+
+	{0x10, 0xfe,    0,    4, "Coinage"			},
+	{0x10, 0x01, 0xc0, 0x00, "3C 1C"			},
+	{0x10, 0x01, 0xc0, 0x40, "2C 1C"			},
+	{0x10, 0x01, 0xc0, 0xc0, "1C 1C"			},
+	{0x10, 0x01, 0xc0, 0x80, "1C 2C"			},
+
+	{0x11, 0xfe,    0,    2, "Service Mode"			},
+	{0x11, 0x01, 0x01, 0x01, "Off"				},
+	{0x11, 0x01, 0x01, 0x00, "On"				},
+
+	{0x11, 0xfe,    0,    2, "Demo Sounds"			},
+	{0x11, 0x01, 0x02, 0x02, "Off"				},
+	{0x11, 0x01, 0x02, 0x00, "On"				},
+
 	{0x11, 0xfe,    0,    2, "Language"			},
 	{0x11, 0x01, 0x20, 0x00, "English"			},
 	{0x11, 0x01, 0x20, 0x20, "Korean"			},
@@ -272,7 +326,7 @@ static struct BurnDIPInfo SearcheyDIPList[]=
 	{0x11, 0x01, 0x80, 0x80, "More"				},
 };
 
-STDDIPINFO(Searchey)
+STDDIPINFO(Searcheya)
 
 static struct BurnDIPInfo Searchp2DIPList[]=
 {
@@ -1489,11 +1543,51 @@ struct BurnDriver BurnDrvNmg5e = {
 };
 
 
-// Search Eye
+// Search Eye (English / Korean / Japanese / Spanish)
 
 static struct BurnRomInfo searcheyRomDesc[] = {
-	{ "u7.bin",	0x40000, 0x287ce3dd, 1 | BRF_PRG | BRF_ESS }, //  0 - 68k Code
-	{ "u2.bin",	0x40000, 0xb574f033, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "se.u7",		0x40000, 0x332b0d83, 1 | BRF_PRG | BRF_ESS }, //  0 - 68k Code
+	{ "se.u2",		0x40000, 0xbd16114e, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "u128.bin",	0x10000, 0x85bae10c, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
+
+	{ "u63.bin",	0x80000, 0x1b0b7b7d, 3 | BRF_GRA },	      //  3 - Tiles
+	{ "u68.bin",	0x80000, 0xae18b2aa, 3 | BRF_GRA },	      //  4
+	{ "u73.bin",	0x80000, 0xab7f8716, 3 | BRF_GRA },	      //  5
+	{ "u79.bin",	0x80000, 0x7f2c8b83, 3 | BRF_GRA },	      //  6
+	{ "se.u64",		0x80000, 0x32b7e4f3, 3 | BRF_GRA },	      //  7
+	{ "u69.bin",	0x80000, 0xd546eaf8, 3 | BRF_GRA },	      //  8
+	{ "u74.bin",	0x80000, 0xe6134d84, 3 | BRF_GRA },	      //  9
+	{ "u80.bin",	0x80000, 0x9a160918, 3 | BRF_GRA },	      // 10
+
+	{ "u83.bin",	0x20000, 0xc5a1c647, 4 | BRF_GRA },	      // 11 - Sprites
+	{ "u82.bin",	0x20000, 0x25b2ae62, 4 | BRF_GRA },	      // 12
+	{ "u105.bin",	0x20000, 0xb4207ef0, 4 | BRF_GRA },	      // 13
+	{ "u96.bin",	0x20000, 0x8c40818a, 4 | BRF_GRA },	      // 14
+	{ "u97.bin",	0x20000, 0x5dc7f231, 4 | BRF_GRA },	      // 15
+
+	{ "u137.bin",	0x40000, 0x49105e23, 5 | BRF_SND },	      // 16 - Samples
+};
+
+STD_ROM_PICK(searchey)
+STD_ROM_FN(searchey)
+
+struct BurnDriver BurnDrvSearchey = {
+	"searchey", NULL, NULL, NULL, "1999",
+	"Search Eye (English / Korean / Japanese / Spanish)\0", NULL, "Yun Sung", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, searcheyRomInfo, searcheyRomName, NULL, NULL, SearcheyInputInfo, SearcheyDIPInfo,
+	Nmg5Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x400, 320, 240, 4, 3
+};
+
+
+// Search Eye (English / Korean)
+
+static struct BurnRomInfo searcheyaRomDesc[] = {
+	{ "u7.bin",		0x40000, 0x287ce3dd, 1 | BRF_PRG | BRF_ESS }, //  0 - 68k Code
+	{ "u2.bin",		0x40000, 0xb574f033, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "u128.bin",	0x10000, 0x85bae10c, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
 
@@ -1515,15 +1609,15 @@ static struct BurnRomInfo searcheyRomDesc[] = {
 	{ "u137.bin",	0x40000, 0x49105e23, 5 | BRF_SND },	      // 16 - Samples
 };
 
-STD_ROM_PICK(searchey)
-STD_ROM_FN(searchey)
+STD_ROM_PICK(searcheya)
+STD_ROM_FN(searcheya)
 
-struct BurnDriver BurnDrvSearchey = {
-	"searchey", NULL, NULL, NULL, "1999",
-	"Search Eye\0", NULL, "Yun Sung", "Miscellaneous",
+struct BurnDriver BurnDrvSearcheya = {
+	"searcheya", "searchey", NULL, NULL, "1999",
+	"Search Eye (English / Korean)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, searcheyRomInfo, searcheyRomName, NULL, NULL, SearcheyInputInfo, SearcheyDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, searcheyaRomInfo, searcheyaRomName, NULL, NULL, SearcheyInputInfo, SearcheyaDIPInfo,
 	Nmg5Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
 };
@@ -1532,23 +1626,23 @@ struct BurnDriver BurnDrvSearchey = {
 // Search Eye Plus V2.0
 
 static struct BurnRomInfo searchp2RomDesc[] = {
-	{ "u7",		0x080000, 0x37fe9e18, 1 | BRF_PRG | BRF_ESS }, //  0 - 68k Code
-	{ "u2",		0x080000, 0x8278513b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "u7",			0x080000, 0x37fe9e18, 1 | BRF_PRG | BRF_ESS }, //  0 - 68k Code
+	{ "u2",			0x080000, 0x8278513b, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "u128",	0x010000, 0x85bae10c, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
+	{ "u128",		0x010000, 0x85bae10c, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
 
-	{ "0.u1",	0x400000, 0x28a50dcf, 3 | BRF_GRA },	       //  3 - Tiles
-	{ "2.u3",	0x400000, 0x30d46e19, 3 | BRF_GRA },	       //  4
-	{ "1.u2",	0x400000, 0xf9c4e824, 3 | BRF_GRA },	       //  5
-	{ "3.u4",	0x400000, 0x619f142f, 3 | BRF_GRA },	       //  6
+	{ "0.u1",		0x400000, 0x28a50dcf, 3 | BRF_GRA },	       //  3 - Tiles
+	{ "2.u3",		0x400000, 0x30d46e19, 3 | BRF_GRA },	       //  4
+	{ "1.u2",		0x400000, 0xf9c4e824, 3 | BRF_GRA },	       //  5
+	{ "3.u4",		0x400000, 0x619f142f, 3 | BRF_GRA },	       //  6
 
-	{ "u83",	0x040000, 0x2bae34cb, 4 | BRF_GRA },	       //  7 - Sprites
-	{ "u82",	0x040000, 0x5cb773f0, 4 | BRF_GRA },	       //  8
-	{ "u105",	0x040000, 0xe8adb15e, 4 | BRF_GRA },	       //  9
-	{ "u96",	0x040000, 0x67efb536, 4 | BRF_GRA },	       // 10
-	{ "u97",	0x040000, 0xf7b63826, 4 | BRF_GRA },	       // 11
+	{ "u83",		0x040000, 0x2bae34cb, 4 | BRF_GRA },	       //  7 - Sprites
+	{ "u82",		0x040000, 0x5cb773f0, 4 | BRF_GRA },	       //  8
+	{ "u105",		0x040000, 0xe8adb15e, 4 | BRF_GRA },	       //  9
+	{ "u96",		0x040000, 0x67efb536, 4 | BRF_GRA },	       // 10
+	{ "u97",		0x040000, 0xf7b63826, 4 | BRF_GRA },	       // 11
 
-	{ "u137", 	0x040000, 0xcd037524, 5 | BRF_SND },	       // 12 - Samples
+	{ "u137", 		0x040000, 0xcd037524, 5 | BRF_SND },	       // 12 - Samples
 };
 
 STD_ROM_PICK(searchp2)

@@ -1387,47 +1387,47 @@ struct BurnDriver BurnDrvPunchoutj = {
 // Punch-Out!! (Italian bootleg)
 
 static struct BurnRomInfo punchitaRomDesc[] = {
-	{ "chp1-c(__ita).8l",	0x2000, 0x1d595ce2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "chp1-c(__ita).8k",	0x2000, 0xc062fa5c, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "chp1-c(__ita).8j",	0x2000, 0x48d453ef, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "chp1-c(__ita).8h",	0x2000, 0x67f5aedc, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "chp1-c(__ita).8f",	0x4000, 0x761de4f3, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "chp1-c.8l",		0x2000, 0x1d595ce2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "chp1-c.8k",		0x2000, 0xc062fa5c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "chp1-c.8j",		0x2000, 0x48d453ef, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "chp1-c.8h",		0x2000, 0x67f5aedc, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "chp1-c.8f",		0x4000, 0x761de4f3, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "chp1-c.4k",	0x2000, 0xcb6ef376, 2 | BRF_PRG | BRF_ESS }, //  5 N2A03 Code
+	{ "chp1-c.4k",		0x2000, 0xcb6ef376, 2 | BRF_PRG | BRF_ESS }, //  5 N2A03 Code
 
-	{ "chp1-b(__ita).4c",	0x2000, 0x9a9ff1d3, 3 | BRF_GRA },           //  6 Top Screen Background Characters
-	{ "chp1-b(__ita).4d",	0x2000, 0x4c23350f, 3 | BRF_GRA },           //  7
+	{ "chp1-b.4c",		0x2000, 0x9a9ff1d3, 3 | BRF_GRA },           //  6 Top Screen Background Characters
+	{ "chp1-b.4d",		0x2000, 0x4c23350f, 3 | BRF_GRA },           //  7
 
-	{ "chp1-b(__ita).4a",	0x2000, 0xc075f831, 4 | BRF_GRA },           //  8 Bottom Screen Background Characters
-	{ "chp1-b(__ita).4b",	0x2000, 0xc4cc2b5a, 4 | BRF_GRA },           //  9
+	{ "chp1-b.4a",		0x2000, 0xc075f831, 4 | BRF_GRA },           //  8 Bottom Screen Background Characters
+	{ "chp1-b.4b",		0x2000, 0xc4cc2b5a, 4 | BRF_GRA },           //  9
 
-	{ "chp1-v.2r",	0x4000, 0xbd1d4b2e, 5 | BRF_GRA },           // 10 Big Sprite Characters
-	{ "chp1-v.2t",	0x4000, 0xdd9a688a, 5 | BRF_GRA },           // 11
-	{ "chp1-v.2u",	0x2000, 0xda6a3c4b, 5 | BRF_GRA },           // 12
-	{ "chp1-v.2v",	0x2000, 0x8c734a67, 5 | BRF_GRA },           // 13
-	{ "chp1-v.3r",	0x4000, 0x2e74ad1d, 5 | BRF_GRA },           // 14
-	{ "chp1-v.3t",	0x4000, 0x630ba9fb, 5 | BRF_GRA },           // 15
-	{ "chp1-v.3u",	0x2000, 0x6440321d, 5 | BRF_GRA },           // 16
-	{ "chp1-v.3v",	0x2000, 0xbb7b7198, 5 | BRF_GRA },           // 17
-	{ "chp1-v.4r",	0x4000, 0x4e5b0fe9, 5 | BRF_GRA },           // 18
-	{ "chp1-v.4t",	0x4000, 0x37ffc940, 5 | BRF_GRA },           // 19
-	{ "chp1-v.4u",	0x2000, 0x1a7521d4, 5 | BRF_GRA },           // 20
+	{ "chp1-v.2r",		0x4000, 0xbd1d4b2e, 5 | BRF_GRA },           // 10 Big Sprite Characters
+	{ "chp1-v.2t",		0x4000, 0xdd9a688a, 5 | BRF_GRA },           // 11
+	{ "chp1-v.2u",		0x2000, 0xda6a3c4b, 5 | BRF_GRA },           // 12
+	{ "chp1-v.2v",		0x2000, 0x8c734a67, 5 | BRF_GRA },           // 13
+	{ "chp1-v.3r",		0x4000, 0x2e74ad1d, 5 | BRF_GRA },           // 14
+	{ "chp1-v.3t",		0x4000, 0x630ba9fb, 5 | BRF_GRA },           // 15
+	{ "chp1-v.3u",		0x2000, 0x6440321d, 5 | BRF_GRA },           // 16
+	{ "chp1-v.3v",		0x2000, 0xbb7b7198, 5 | BRF_GRA },           // 17
+	{ "chp1-v.4r",		0x4000, 0x4e5b0fe9, 5 | BRF_GRA },           // 18
+	{ "chp1-v.4t",		0x4000, 0x37ffc940, 5 | BRF_GRA },           // 19
+	{ "chp1-v.4u",		0x2000, 0x1a7521d4, 5 | BRF_GRA },           // 20
 
-	{ "chp1-v(__ita).6p",	0x2000, 0x75be7aae, 6 | BRF_GRA },           // 21 Bottom Screen Big Sprite Characters
-	{ "chp1-v(__ita).6n",	0x2000, 0xdaf74de0, 6 | BRF_GRA },           // 22
-	{ "chp1-v(__ita).8p",	0x2000, 0x4cb7ea82, 6 | BRF_GRA },           // 23
-	{ "chp1-v(__ita).8n",	0x2000, 0x1c0d09aa, 6 | BRF_GRA },           // 24
+	{ "chp1-v.6p",		0x2000, 0x75be7aae, 6 | BRF_GRA },           // 21 Bottom Screen Big Sprite Characters
+	{ "chp1-v.6n",		0x2000, 0xdaf74de0, 6 | BRF_GRA },           // 22
+	{ "chp1-v.8p",		0x2000, 0x4cb7ea82, 6 | BRF_GRA },           // 23
+	{ "chp1-v.8n",		0x2000, 0x1c0d09aa, 6 | BRF_GRA },           // 24
 
-	{ "chp1-b.6e",	0x0200, 0xe9ca3ac6, 7 | BRF_GRA },           // 25 Color PROMs
-	{ "chp1-b.6f",	0x0200, 0x02be56ab, 7 | BRF_GRA },           // 26
-	{ "chp1-b.7f",	0x0200, 0x11de55f1, 7 | BRF_GRA },           // 27
-	{ "chp1-b.7e",	0x0200, 0x47adf7a2, 7 | BRF_GRA },           // 28
-	{ "chp1-b.8e",	0x0200, 0xb0fc15a8, 7 | BRF_GRA },           // 29
-	{ "chp1-b.8f",	0x0200, 0x1ffd894a, 7 | BRF_GRA },           // 30
+	{ "chp1-b.6e",		0x0200, 0xe9ca3ac6, 7 | BRF_GRA },           // 25 Color PROMs
+	{ "chp1-b.6f",		0x0200, 0x02be56ab, 7 | BRF_GRA },           // 26
+	{ "chp1-b.7f",		0x0200, 0x11de55f1, 7 | BRF_GRA },           // 27
+	{ "chp1-b.7e",		0x0200, 0x47adf7a2, 7 | BRF_GRA },           // 28
+	{ "chp1-b.8e",		0x0200, 0xb0fc15a8, 7 | BRF_GRA },           // 29
+	{ "chp1-b.8f",		0x0200, 0x1ffd894a, 7 | BRF_GRA },           // 30
 
-	{ "chp1-v.2d",	0x0100, 0x71dc0d48, 0 | BRF_OPT },           // 31 Timing PROM
+	{ "chp1-v.2d",		0x0100, 0x71dc0d48, 0 | BRF_OPT },           // 31 Timing PROM
 
-	{ "chp1-c.6p",	0x4000, 0xea0bbb31, 8 | BRF_SND },           // 32 VLM5030 Samples
+	{ "chp1-c.6p",		0x4000, 0xea0bbb31, 8 | BRF_SND },           // 32 VLM5030 Samples
 };
 
 STD_ROM_PICK(punchita)
@@ -1452,47 +1452,47 @@ struct BurnDriver BurnDrvPunchita = {
 // Super Punch-Out!!
 
 static struct BurnRomInfo spnchoutRomDesc[] = {
-	{ "chs1-c.8l",	0x2000, 0x703b9780, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "chs1-c.8k",	0x2000, 0xe13719f6, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "chs1-c.8j",	0x2000, 0x1fa629e8, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "chs1-c.8h",	0x2000, 0x15a6c068, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "chs1-c.8f",	0x4000, 0x4ff3cdd9, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "chs1-c.8l",		0x2000, 0x703b9780, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "chs1-c.8k",		0x2000, 0xe13719f6, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "chs1-c.8j",		0x2000, 0x1fa629e8, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "chs1-c.8h",		0x2000, 0x15a6c068, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "chs1-c.8f",		0x4000, 0x4ff3cdd9, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "chp1-c.4k",	0x2000, 0xcb6ef376, 2 | BRF_PRG | BRF_ESS }, //  5 N2A03 Code
+	{ "chp1-c.4k",		0x2000, 0xcb6ef376, 2 | BRF_PRG | BRF_ESS }, //  5 N2A03 Code
 
-	{ "chs1-b.4c",	0x2000, 0x9f2ede2d, 3 | BRF_GRA },           //  6 Top Screen Background Characters
-	{ "chs1-b.4d",	0x2000, 0x143ae5c6, 3 | BRF_GRA },           //  7
+	{ "chs1-b.4c",		0x2000, 0x9f2ede2d, 3 | BRF_GRA },           //  6 Top Screen Background Characters
+	{ "chs1-b.4d",		0x2000, 0x143ae5c6, 3 | BRF_GRA },           //  7
 
-	{ "chp1-b.4a",	0x2000, 0xc075f831, 4 | BRF_GRA },           //  8 Bottom Screen Background Characters
-	{ "chp1-b.4b",	0x2000, 0xc4cc2b5a, 4 | BRF_GRA },           //  9
+	{ "chp1-b.4a",		0x2000, 0xc075f831, 4 | BRF_GRA },           //  8 Bottom Screen Background Characters
+	{ "chp1-b.4b",		0x2000, 0xc4cc2b5a, 4 | BRF_GRA },           //  9
 
-	{ "chs1-v.2r",	0x4000, 0xff33405d, 5 | BRF_GRA },           // 10 Big Sprite Characters
-	{ "chs1-v.2t",	0x4000, 0xf507818b, 5 | BRF_GRA },           // 11
-	{ "chs1-v.2u",	0x4000, 0x0995fc95, 5 | BRF_GRA },           // 12
-	{ "chs1-v.2v",	0x2000, 0xf44d9878, 5 | BRF_GRA },           // 13
-	{ "chs1-v.3r",	0x4000, 0x09570945, 5 | BRF_GRA },           // 14
-	{ "chs1-v.3t",	0x4000, 0x42c6861c, 5 | BRF_GRA },           // 15
-	{ "chs1-v.3u",	0x4000, 0xbf5d02dd, 5 | BRF_GRA },           // 16
-	{ "chs1-v.3v",	0x2000, 0x5673f4fc, 5 | BRF_GRA },           // 17
-	{ "chs1-v.4r",	0x4000, 0x8e155758, 5 | BRF_GRA },           // 18
-	{ "chs1-v.4t",	0x4000, 0xb4e43448, 5 | BRF_GRA },           // 19
-	{ "chs1-v.4u",	0x4000, 0x74e0d956, 5 | BRF_GRA },           // 20
+	{ "chs1-v.2r",		0x4000, 0xff33405d, 5 | BRF_GRA },           // 10 Big Sprite Characters
+	{ "chs1-v.2t",		0x4000, 0xf507818b, 5 | BRF_GRA },           // 11
+	{ "chs1-v.2u",		0x4000, 0x0995fc95, 5 | BRF_GRA },           // 12
+	{ "chs1-v.2v",		0x2000, 0xf44d9878, 5 | BRF_GRA },           // 13
+	{ "chs1-v.3r",		0x4000, 0x09570945, 5 | BRF_GRA },           // 14
+	{ "chs1-v.3t",		0x4000, 0x42c6861c, 5 | BRF_GRA },           // 15
+	{ "chs1-v.3u",		0x4000, 0xbf5d02dd, 5 | BRF_GRA },           // 16
+	{ "chs1-v.3v",		0x2000, 0x5673f4fc, 5 | BRF_GRA },           // 17
+	{ "chs1-v.4r",		0x4000, 0x8e155758, 5 | BRF_GRA },           // 18
+	{ "chs1-v.4t",		0x4000, 0xb4e43448, 5 | BRF_GRA },           // 19
+	{ "chs1-v.4u",		0x4000, 0x74e0d956, 5 | BRF_GRA },           // 20
 
-	{ "chp1-v.6p",	0x2000, 0x75be7aae, 6 | BRF_GRA },           // 21 Bottom Screen Big Sprite Characters
-	{ "chp1-v.6n",	0x2000, 0xdaf74de0, 6 | BRF_GRA },           // 22
-	{ "chp1-v.8p",	0x2000, 0x4cb7ea82, 6 | BRF_GRA },           // 23
-	{ "chp1-v.8n",	0x2000, 0x1c0d09aa, 6 | BRF_GRA },           // 24
+	{ "chp1-v.6p",		0x2000, 0x75be7aae, 6 | BRF_GRA },           // 21 Bottom Screen Big Sprite Characters
+	{ "chp1-v.6n",		0x2000, 0xdaf74de0, 6 | BRF_GRA },           // 22
+	{ "chp1-v.8p",		0x2000, 0x4cb7ea82, 6 | BRF_GRA },           // 23
+	{ "chp1-v.8n",		0x2000, 0x1c0d09aa, 6 | BRF_GRA },           // 24
 
-	{ "chs1-b.6e",	0x0200, 0x0ad4d727, 7 | BRF_GRA },           // 25 Color PROMs
-	{ "chs1-b.6f",	0x0200, 0x86f5cfdb, 7 | BRF_GRA },           // 26
-	{ "chs1-b.7f",	0x0200, 0x8bd406f8, 7 | BRF_GRA },           // 27
-	{ "chs1-b.7e",	0x0200, 0x9e170f64, 7 | BRF_GRA },           // 28
-	{ "chs1-b.8e",	0x0200, 0x3a2e333b, 7 | BRF_GRA },           // 29
-	{ "chs1-b.8f",	0x0200, 0x1663eed7, 7 | BRF_GRA },           // 30
+	{ "chs1-b.6e",		0x0200, 0x0ad4d727, 7 | BRF_GRA },           // 25 Color PROMs
+	{ "chs1-b.6f",		0x0200, 0x86f5cfdb, 7 | BRF_GRA },           // 26
+	{ "chs1-b.7f",		0x0200, 0x8bd406f8, 7 | BRF_GRA },           // 27
+	{ "chs1-b.7e",		0x0200, 0x9e170f64, 7 | BRF_GRA },           // 28
+	{ "chs1-b.8e",		0x0200, 0x3a2e333b, 7 | BRF_GRA },           // 29
+	{ "chs1-b.8f",		0x0200, 0x1663eed7, 7 | BRF_GRA },           // 30
 
-	{ "chs1-v.2d",	0x0100, 0x71dc0d48, 0 | BRF_GRA | BRF_OPT }, // 31 Timing PROM
+	{ "chs1-v.2d",		0x0100, 0x71dc0d48, 0 | BRF_GRA | BRF_OPT }, // 31 Timing PROM
 
-	{ "chs1-c.6p",	0x4000, 0xad8b64b8, 8 | BRF_SND },           // 32 VLM5030 Samples
+	{ "chs1-c.6p",		0x4000, 0xad8b64b8, 8 | BRF_SND },           // 32 VLM5030 Samples
 };
 
 STD_ROM_PICK(spnchout)
@@ -1577,44 +1577,44 @@ struct BurnDriver BurnDrvSpnchoutj = {
 // Arm Wrestling
 
 static struct BurnRomInfo armwrestRomDesc[] = {
-	{ "chv1-c.8l",	0x2000, 0xb09764c1, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "chv1-c.8k",	0x2000, 0x0e147ff7, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "chv1-c.8j",	0x2000, 0xe7365289, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "chv1-c.8h",	0x2000, 0xa2118eec, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "chpv-c.8f",	0x4000, 0x664a07c4, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "chv1-c.8l",		0x2000, 0xb09764c1, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "chv1-c.8k",		0x2000, 0x0e147ff7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "chv1-c.8j",		0x2000, 0xe7365289, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "chv1-c.8h",		0x2000, 0xa2118eec, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "chpv-c.8f",		0x4000, 0x664a07c4, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "chp1-c.4k",	0x2000, 0xcb6ef376, 2 | BRF_PRG | BRF_ESS }, //  5 N2A03 Code
+	{ "chp1-c.4k",		0x2000, 0xcb6ef376, 2 | BRF_PRG | BRF_ESS }, //  5 N2A03 Code
 
-	{ "chpv-b.2e",	0x4000, 0x8b45f365, 3 | BRF_GRA },           //  6 Background Characters
-	{ "chpv-b.2d",	0x4000, 0xb1a2850c, 3 | BRF_GRA },           //  7
+	{ "chpv-b.2e",		0x4000, 0x8b45f365, 3 | BRF_GRA },           //  6 Background Characters
+	{ "chpv-b.2d",		0x4000, 0xb1a2850c, 3 | BRF_GRA },           //  7
 
-	{ "chpv-b.2m",	0x4000, 0x19245b37, 4 | BRF_GRA },           //  8 Bottom Screen Foreground Characters
-	{ "chpv-b.2l",	0x4000, 0x46797941, 4 | BRF_GRA },           //  9
-	{ "chpv-b.2k",	0x2000, 0xde189b00, 4 | BRF_GRA },           // 10
+	{ "chpv-b.2m",		0x4000, 0x19245b37, 4 | BRF_GRA },           //  8 Bottom Screen Foreground Characters
+	{ "chpv-b.2l",		0x4000, 0x46797941, 4 | BRF_GRA },           //  9
+	{ "chpv-b.2k",		0x2000, 0xde189b00, 4 | BRF_GRA },           // 10
 
-	{ "chv1-v.2r",	0x4000, 0xd86056d9, 5 | BRF_GRA },           // 11 Big Sprite Characters
-	{ "chv1-v.2t",	0x4000, 0x5ad77059, 5 | BRF_GRA },           // 12
-	{ "chv1-v.2v",	0x4000, 0xa0fd7338, 5 | BRF_GRA },           // 13
-	{ "chv1-v.3r",	0x4000, 0x690e26fb, 5 | BRF_GRA },           // 14
-	{ "chv1-v.3t",	0x4000, 0xea5d7759, 5 | BRF_GRA },           // 15
-	{ "chv1-v.3v",	0x4000, 0xceb37c05, 5 | BRF_GRA },           // 16
-	{ "chv1-v.4r",	0x4000, 0xe291cba0, 5 | BRF_GRA },           // 17
-	{ "chv1-v.4t",	0x4000, 0xe01f3b59, 5 | BRF_GRA },           // 18
+	{ "chv1-v.2r",		0x4000, 0xd86056d9, 5 | BRF_GRA },           // 11 Big Sprite Characters
+	{ "chv1-v.2t",		0x4000, 0x5ad77059, 5 | BRF_GRA },           // 12
+	{ "chv1-v.2v",		0x4000, 0xa0fd7338, 5 | BRF_GRA },           // 13
+	{ "chv1-v.3r",		0x4000, 0x690e26fb, 5 | BRF_GRA },           // 14
+	{ "chv1-v.3t",		0x4000, 0xea5d7759, 5 | BRF_GRA },           // 15
+	{ "chv1-v.3v",		0x4000, 0xceb37c05, 5 | BRF_GRA },           // 16
+	{ "chv1-v.4r",		0x4000, 0xe291cba0, 5 | BRF_GRA },           // 17
+	{ "chv1-v.4t",		0x4000, 0xe01f3b59, 5 | BRF_GRA },           // 18
 
-	{ "chv1-v.6p",	0x2000, 0xd834e142, 6 | BRF_GRA },           // 19 Bottom Screen Big Sprite Characters
-	{ "chv1-v.8p",	0x2000, 0xa2f531db, 6 | BRF_GRA },           // 20
+	{ "chv1-v.6p",		0x2000, 0xd834e142, 6 | BRF_GRA },           // 19 Bottom Screen Big Sprite Characters
+	{ "chv1-v.8p",		0x2000, 0xa2f531db, 6 | BRF_GRA },           // 20
 
-	{ "chpv-b.7b",	0x0200, 0xdf6fdeb3, 7 | BRF_GRA },           // 21 Color PROMs
-	{ "chpv-b.7c",	0x0200, 0xb1da5f42, 7 | BRF_GRA },           // 22
-	{ "chpv-b.7d",	0x0200, 0x4ede813e, 7 | BRF_GRA },           // 23
-	{ "chpv-b.4b",	0x0200, 0x9d51416e, 7 | BRF_GRA },           // 24
-	{ "chpv-b.4c",	0x0200, 0xb8a25795, 7 | BRF_GRA },           // 25
-	{ "chpv-b.4d",	0x0200, 0x474fc3b1, 7 | BRF_GRA },           // 26
+	{ "chpv-b.7b",		0x0200, 0xdf6fdeb3, 7 | BRF_GRA },           // 21 Color PROMs
+	{ "chpv-b.7c",		0x0200, 0xb1da5f42, 7 | BRF_GRA },           // 22
+	{ "chpv-b.7d",		0x0200, 0x4ede813e, 7 | BRF_GRA },           // 23
+	{ "chpv-b.4b",		0x0200, 0x9d51416e, 7 | BRF_GRA },           // 24
+	{ "chpv-b.4c",		0x0200, 0xb8a25795, 7 | BRF_GRA },           // 25
+	{ "chpv-b.4d",		0x0200, 0x474fc3b1, 7 | BRF_GRA },           // 26
 
-	{ "chv1-b.3c",	0x0100, 0xc3f92ea2, 0 | BRF_OPT },           // 27 Priority PROM
-	{ "chpv-v.2d",	0x0100, 0x71dc0d48, 0 | BRF_OPT },           // 28 Timing PROM
+	{ "chv1-b.3c",		0x0100, 0xc3f92ea2, 0 | BRF_OPT },           // 27 Priority PROM
+	{ "chpv-v.2d",		0x0100, 0x71dc0d48, 0 | BRF_OPT },           // 28 Timing PROM
 
-	{ "chv1-c.6p",	0x4000, 0x31b52896, 8 | BRF_SND },           // 29 VLM5030 Samples
+	{ "chv1-c.6p",		0x4000, 0x31b52896, 8 | BRF_SND },           // 29 VLM5030 Samples
 };
 
 STD_ROM_PICK(armwrest)

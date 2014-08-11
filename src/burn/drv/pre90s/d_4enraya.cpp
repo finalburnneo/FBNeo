@@ -491,14 +491,14 @@ struct BurnDriver BurnDrvEnraya4 = {
 // 4 En Raya (set 2)
 
 static struct BurnRomInfo enrayaa4RomDesc[] = {
-	{ "(__4enrayaa)5.bin",   0x8000, 0x76e8656c, BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "4.bin",   			 0x4000, 0xf9ec1be7, BRF_ESS | BRF_PRG }, //  1
+	{ "5.bin",   0x8000, 0x76e8656c, BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "4.bin",   0x4000, 0xf9ec1be7, BRF_ESS | BRF_PRG }, //  1
 
-	{ "1.bin",               0x2000, 0x0e5072fd, BRF_GRA },	      //  2 Graphics
-	{ "2.bin",   			 0x2000, 0x2b0a3793, BRF_GRA },	      //  3
-	{ "3.bin",   			 0x2000, 0xf6940836, BRF_GRA },	      //  4
+	{ "1.bin",   0x2000, 0x0e5072fd, BRF_GRA },	      //  2 Graphics
+	{ "2.bin",   0x2000, 0x2b0a3793, BRF_GRA },	      //  3
+	{ "3.bin",   0x2000, 0xf6940836, BRF_GRA },	      //  4
 
-	{ "1.bpr",   			 0x0020, 0xdcbd2352, BRF_GRA },	      //  5 Address control prom - not used
+	{ "1.bpr",   0x0020, 0xdcbd2352, BRF_GRA },	      //  5 Address control prom - not used
 };
 
 STD_ROM_PICK(enrayaa4)

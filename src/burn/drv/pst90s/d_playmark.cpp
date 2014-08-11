@@ -406,8 +406,8 @@ STD_ROM_PICK(Excelsr)
 STD_ROM_FN(Excelsr)
 
 static struct BurnRomInfo ExcelsraRomDesc[] = {
-	{ "22(__excelsra).u301",      0x80000, 0x55dca2da, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "19(__excelsra).u302",      0x80000, 0xd13990a8, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "22.u301",      	  0x80000, 0x55dca2da, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "19.u302",      	  0x80000, 0xd13990a8, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 	{ "21.u303",          0x80000, 0xfdf9bd64, BRF_ESS | BRF_PRG }, //  2	68000 Program Code
 	{ "18.u304",          0x80000, 0xfe517e0e, BRF_ESS | BRF_PRG }, //  3	68000 Program Code
 	{ "20.u305",          0x80000, 0x8692afe9, BRF_ESS | BRF_PRG }, //  4	68000 Program Code

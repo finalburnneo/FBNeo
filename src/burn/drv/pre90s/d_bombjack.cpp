@@ -200,7 +200,7 @@ STD_ROM_FN(Bombjac2)
 static struct BurnRomInfo BombjacktRomDesc[] = {
 	{ "9.1j",           0x4000, 0x4b59a3bb, BRF_ESS | BRF_PRG },		//  0 Z80 code
 	{ "12.1n",          0x4000, 0x0a32506a, BRF_ESS | BRF_PRG },		//  1
-	{ "13(__bombjackt).1r", 0x2000, 0x964ac5c5, BRF_ESS | BRF_PRG },		//  2
+	{ "13.1r", 			0x2000, 0x964ac5c5, BRF_ESS | BRF_PRG },		//  2
 
 	// graphics 3 bit planes:
 	{ "3.1e",           0x2000, 0x54e1dac1, BRF_GRA },			 // chars

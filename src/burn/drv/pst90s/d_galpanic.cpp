@@ -470,7 +470,7 @@ static struct BurnRomInfo SupmodelRomDesc[] = {
 	{ "i-scr8.11", 			0x080000, 0x7c1813c8, BRF_ESS | BRF_PRG },
 	{ "i-scr7.6",	  		0x080000, 0x19c73268, BRF_ESS | BRF_PRG },
 
-	{ "(__1994)obj1.13",    0x080000, 0x832cd451, BRF_GRA },			  // graphics
+	{ "obj1.13",    		0x080000, 0x832cd451, BRF_GRA },			  // graphics
 
 	{ "music1.1",   		0x080000, 0x2b1f6655, BRF_SND },			  // PCM
 	{ "music2.2",   		0x080000, 0xcccae65a, BRF_SND },
@@ -492,7 +492,7 @@ static struct BurnRomInfo NewfantRomDesc[] = {
 	{ "iscr8.11", 			0x080000, 0xf4148528, BRF_ESS | BRF_PRG },
 	{ "iscr7.06",			0x080000, 0x2dee0c31, BRF_ESS | BRF_PRG },
 
-	{ "(__1995)nf95obj1.13",    	0x080000, 0xe6d1bc71, BRF_GRA },			  // graphics
+	{ "nf95obj1.13",    	0x080000, 0xe6d1bc71, BRF_GRA },			  // graphics
 
 	{ "musc1.01",   		0x080000, 0x10347fce, BRF_SND },			  // PCM
 	{ "musc2.02",   		0x080000, 0xb9646a8c, BRF_SND },
@@ -514,7 +514,7 @@ static struct BurnRomInfo NewfantaRomDesc[] = {
 	{ "iscr8.11", 			0x080000, 0xf4148528, BRF_ESS | BRF_PRG },
 	{ "iscr7.06",			0x080000, 0x2dee0c31, BRF_ESS | BRF_PRG },
 
-	{ "(__1994)obj1.13",    0x080000, 0x832cd451, BRF_GRA },			  // graphics
+	{ "obj1.13",    		0x080000, 0x832cd451, BRF_GRA },			  // graphics
 
 	{ "musc1.01",   		0x080000, 0x10347fce, BRF_SND },			  // PCM
 	{ "musc2.02",   		0x080000, 0xb9646a8c, BRF_SND },
@@ -525,7 +525,7 @@ STD_ROM_FN(Newfanta)
 
 // Rom information
 static struct BurnRomInfo Fantsy95RomDesc[] = {
-	{ "prog2(__fantsy95).12", 0x080000, 0x1e684da7, BRF_ESS | BRF_PRG }, // 68000 code
+	{ "prog2.12", 			0x080000, 0x1e684da7, BRF_ESS | BRF_PRG }, // 68000 code
 	{ "prog1.7",    		0x080000, 0xdc4e4f6b, BRF_ESS | BRF_PRG },
 	{ "i-scr2.10",  		0x080000, 0xab8756ff, BRF_ESS | BRF_PRG },
 	{ "i-scr1.5",	  		0x080000, 0xd8e2ef77, BRF_ESS | BRF_PRG },
@@ -536,7 +536,7 @@ static struct BurnRomInfo Fantsy95RomDesc[] = {
 	{ "i-scr8.11", 			0x080000, 0x33db8177, BRF_ESS | BRF_PRG },
 	{ "i-scr7.6",	  		0x080000, 0x8662dd01, BRF_ESS | BRF_PRG },
 
-	{ "(__1994)obj1.13",    0x080000, 0x832cd451, BRF_GRA },			  // graphics
+	{ "obj1.13",    		0x080000, 0x832cd451, BRF_GRA },			  // graphics
 
 	{ "music1.1",   		0x080000, 0x3117e2ef, BRF_SND },			  // PCM
 	{ "music2.2",   		0x080000, 0x0c1109f9, BRF_SND },

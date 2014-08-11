@@ -677,15 +677,15 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 static struct BurnRomInfo srumblerRomDesc[] = {
 	{ "rc04.14e",		0x8000, 0xa68ce89c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "rc03(__srumbler).13e", 0x8000, 0x87bda812, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "rc02(__srumbler).12e", 0x8000, 0xd8609cca, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "rc01(__srumbler).11e", 0x8000, 0x27ec4776, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "rc09(__srumbler).14f", 0x8000, 0x2146101d, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "rc08(__srumbler).13f", 0x8000, 0x838369a6, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "rc03.13e", 		0x8000, 0x87bda812, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rc02.12e", 		0x8000, 0xd8609cca, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "rc01.11e", 		0x8000, 0x27ec4776, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "rc09.14f", 		0x8000, 0x2146101d, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "rc08.13f", 		0x8000, 0x838369a6, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "rc07.12f",		0x8000, 0xde785076, 1 | BRF_PRG | BRF_ESS }, //  6
 	{ "rc06.11f",		0x8000, 0xa70f4fd4, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "rc05(__srumbler).2f", 0x8000, 0x0177cebe, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
+	{ "rc05.2f", 		0x8000, 0x0177cebe, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
 
 	{ "rc10.6g",		0x4000, 0xadabe271, 3 | BRF_GRA },           //  9 Characters
 
@@ -731,11 +731,11 @@ struct BurnDriver BurnDrvSrumbler = {
 
 static struct BurnRomInfo srumblr2RomDesc[] = {
 	{ "rc04.14e",		0x8000, 0xa68ce89c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "rc03(__srumbler2).13e", 0x8000, 0xe82f78d4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rc03.13e", 		0x8000, 0xe82f78d4, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "rc02.12e",		0x8000, 0x009a62d8, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "rc01.11e",		0x8000, 0x2ac48d1d, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "rc09.14f",		0x8000, 0x64f23e72, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "rc08(__srumbler2).13f", 0x8000, 0x74c71007, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "rc08.13f", 		0x8000, 0x74c71007, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "rc07.12f",		0x8000, 0xde785076, 1 | BRF_PRG | BRF_ESS }, //  6
 	{ "rc06.11f",		0x8000, 0xa70f4fd4, 1 | BRF_PRG | BRF_ESS }, //  7
 
@@ -785,11 +785,11 @@ struct BurnDriver BurnDrvSrumblr2 = {
 
 static struct BurnRomInfo srumblr3RomDesc[] = {
 	{ "rc04.14e",		0x8000, 0xa68ce89c, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "rc03(__srumbler3).13e", 0x8000, 0x0a21992b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rc03.13e", 		0x8000, 0x0a21992b, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "rc02.12e",		0x8000, 0x009a62d8, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "rc01.11e",		0x8000, 0x2ac48d1d, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "rc09.14f",		0x8000, 0x64f23e72, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "rc08(__srumbler3).13f", 0x8000, 0xe361b55c, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "rc08.13f", 		0x8000, 0xe361b55c, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "rc07.12f",		0x8000, 0xde785076, 1 | BRF_PRG | BRF_ESS }, //  6
 	{ "rc06.11f",		0x8000, 0xa70f4fd4, 1 | BRF_PRG | BRF_ESS }, //  7
 
@@ -849,7 +849,7 @@ static struct BurnRomInfo rushcrshRomDesc[] = {
 
 	{ "rc05.2f",		0x8000, 0xea04fa07, 2 | BRF_PRG | BRF_ESS }, //  8 Z80 Code
 
-	{ "rc10(__rushcrsh).6g", 0x4000, 0x0a3c0b0d, 3 | BRF_GRA },           //  9 Characters
+	{ "rc10.6g", 		0x4000, 0x0a3c0b0d, 3 | BRF_GRA },           //  9 Characters
 
 	{ "rc11.11a",		0x8000, 0x5fa042ba, 4 | BRF_GRA },           // 10 Tiles
 	{ "rc12.13a",		0x8000, 0xa2db64af, 4 | BRF_GRA },           // 11

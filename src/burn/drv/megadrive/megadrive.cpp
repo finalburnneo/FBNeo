@@ -1360,24 +1360,23 @@ static INT32 MegadriveLoadRoms(bool bLoad)
 					nRet = BurnLoadRom(RomMain + Offset, i, 1); if (nRet) return 1;
 					break;
 				}
-				
+
 				case SEGA_MD_ROM_LOAD16_WORD_SWAP: {
 					nRet = BurnLoadRom(RomMain + Offset, i, 1); if (nRet) return 1;
 					BurnByteswap(RomMain + Offset, ri.nLen);
 					break;
 				}
-				
+
 				case SEGA_MD_ROM_LOAD16_BYTE: {
 					nRet = BurnLoadRom(RomMain + Offset, i, 2); if (nRet) return 1;
 					break;
 				}
-				
-				case SEGA_MD_ROM_LOAD16_WORD_SWAP_CONTINUE_020000_080000: { // ghouls[1]
+
+				case SEGA_MD_ROM_LOAD_NORMAL_CONTINUE_020000_080000: { // ghouls[1] (Ghouls 'n Ghosts)
 					nRet = BurnLoadRom(RomMain + Offset, i, 1); if (nRet) return 1;
-					memmove(RomMain + 0x020000, RomMain + 0xa0000, 0x60000); // tried memcpy & memmove just incase...
-					BurnByteswap(RomMain + Offset, 0x140000);
+					memmove(RomMain + 0x020000, RomMain + 0xa0000, 0x60000);
 					break;
-                                }
+				}
 
 				case SEGA_MD_ROM_LOAD16_WORD_SWAP_CONTINUE_040000_100000: {
 					nRet = BurnLoadRom(RomMain + Offset, i, 1); if (nRet) return 1;

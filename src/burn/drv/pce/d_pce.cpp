@@ -7260,9 +7260,9 @@ STD_ROM_FN(tg_ghostman)
 
 struct BurnDriver BurnDrvtg_ghostman = {
 	"tg_ghostman", NULL, NULL, NULL, "1992",
-	"Ghost Manor\0", NULL, "TTI", "TurboGrafx 16",
+	"Ghost Manor\0", "game randomly locks up", "TTI", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
+	0, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
 	TgGetZipName, tg_ghostmanRomInfo, tg_ghostmanRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3

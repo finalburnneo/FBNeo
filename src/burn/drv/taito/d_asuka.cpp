@@ -2156,7 +2156,51 @@ struct BurnDriver BurnDrvBonzeadvu = {
 	BonzeInit, TaitoExit, BonzeFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 224, 4, 3
 };
-   
+
+
+// Bonze Adventure (World, prototype)
+
+static struct BurnRomInfo bonzeadvpRomDesc[] = {
+	{ "0l.ic17",			0x10000, 0x9e046e6f, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP }, 	//  0 68K Code
+	{ "0h.ic26",			0x10000, 0x3e2b2628, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP }, 	//  1
+	{ "1h.ic16",			0x10000, 0x52f31b98, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP }, 	//  2
+	{ "1l.ic25",			0x10000, 0xc7e79b98, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP }, 	//  3
+	{ "49eb.ic26",			0x20000, 0xc747650b, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP }, 	//  4
+	{ "fd65.ic20",			0x20000, 0xc32f3bd5, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP }, 	//  5
+	{ "no label.ic28",		0x20000, 0xdc1f9fd0, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP }, 	//  6
+	{ "a418.ic23",			0x20000, 0x51b02be6, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP }, 	//  7
+
+	{ "b41-13.20",			0x10000, 0x9e464254, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  8 Z80 Code
+
+	{ "abbe.ic9",			0x20000, 0x50e6581c, BRF_GRA | TAITO_CHARS_BYTESWAP }, 			//  9 Characters
+	{ "0ac8.ic15",			0x20000, 0x29002fc4, BRF_GRA | TAITO_CHARS_BYTESWAP }, 			// 10
+	{ "5ebf.ic5",			0x20000, 0xdac6f11f, BRF_GRA | TAITO_CHARS_BYTESWAP }, 			// 11
+	{ "77c8.ic12",			0x20000, 0xd8aaae12, BRF_GRA | TAITO_CHARS_BYTESWAP }, 			// 12
+
+	{ "9369.ic19",			0x20000, 0xa9dd7f90, BRF_GRA | TAITO_SPRITESA_BYTESWAP },               // 13 Sprites
+	{ "e3ed.ic25",			0x20000, 0x7cc66ee2, BRF_GRA | TAITO_SPRITESA_BYTESWAP },               // 14
+	{ "03eb.ic16",			0x20000, 0x39f32715, BRF_GRA | TAITO_SPRITESA_BYTESWAP },               // 15
+	{ "b8e1.ic22",			0x20000, 0x15b836cf, BRF_GRA | TAITO_SPRITESA_BYTESWAP },               // 16
+
+	{ "6089.ic17",			0x20000, 0xb092783c, BRF_SND | TAITO_YM2610A },				// 17 YM2610 Samples
+	{ "2e1f.ic14",			0x20000, 0xdf1f87c0, BRF_SND | TAITO_YM2610A },				// 18
+	{ "f66e.ic11",			0x20000, 0xc6df1b3e, BRF_SND | TAITO_YM2610A },				// 19
+	{ "49a7.ic7",			0x20000, 0x5584c02c, BRF_SND | TAITO_YM2610A },				// 20
+};
+
+STD_ROM_PICK(bonzeadvp)
+STD_ROM_FN(bonzeadvp)
+
+struct BurnDriver BurnDrvBonzeadvp = {
+	"bonzeadvp", "bonzeadv", NULL, NULL, "1988",
+	"Bonze Adventure (World, prototype)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, bonzeadvpRomInfo, bonzeadvpRomName, NULL, NULL, BonzeadvInputInfo, JigkmgriDIPInfo,
+	BonzeInit, TaitoExit, BonzeFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	320, 224, 4, 3
+};
+
 
 // Jigoku Meguri (Japan)
 

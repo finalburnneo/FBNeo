@@ -83,10 +83,8 @@ static void update_irq_lines(INT32 param)
 	if ((irq1 & irq2) == 0xff) {
 		ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 	} else	{
-		if (irq2 == 0xdf) {
-			ZetSetVector(irq1 & irq2);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		}
+		ZetSetVector(irq1 & irq2);
+		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 	}
 }
 

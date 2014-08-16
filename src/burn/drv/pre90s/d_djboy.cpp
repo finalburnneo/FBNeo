@@ -1047,31 +1047,33 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 1024;
 	INT32 nCyclesTotal[3] =  { (6000000 * 10) / 575, (6000000 * 10) / 575,(6000000 * 10) / 575 }; // 57.5 fps
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 
-		INT32 nSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
+		INT32 nSegment = (nCyclesTotal[0] / nInterleave);
 
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nSegment - nCyclesDone[0]);
-		if (i == 64 || i == 240) {
-			if (i ==  64) ZetSetVector(0xff);
-			if (i == 240) ZetSetVector(0xfd);
+		nCyclesDone[0] += ZetRun(nSegment);
+		if (i == 64*4 || i == 240*4) {
+			if (i ==  64*4) ZetSetVector(0xff);
+			if (i == 240*4) ZetSetVector(0xfd);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
 		}
+		nSegment = ZetTotalCycles();
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);
-		if (i == 255) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		nCyclesDone[1] += ZetRun(nSegment - ZetTotalCycles());
+		if (i == 1023) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		nSegment = ZetTotalCycles();
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdate(nCyclesDone[1] /*sync with sub cpu*/);
-		if (i == 255) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		BurnTimerUpdate(nSegment /*sync with sub cpu*/);
+		if (i == 1023) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
 		ZetClose();
 	}
 

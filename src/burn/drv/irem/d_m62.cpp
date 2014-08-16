@@ -1,3 +1,4 @@
+/* todo: figure out why successive savestate loads cause the sound to die */
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6800_intf.h"
@@ -14,6 +15,8 @@ static UINT8 M62InputPort2[8]       = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 M62Dip[2]              = {0, 0};
 static UINT8 M62Input[3]            = {0x00, 0x00, 0x00};
 static UINT8 M62Reset               = 0;
+static INT32 M62Z80BankAddress      = 0;
+static INT32 M62Z80BankAddress2     = 0;
 
 static UINT32  M62Z80RomSize          = 0;
 static UINT32  M62PromSize            = 0;
@@ -41,7 +44,7 @@ static UINT8 *M62Sprites            = NULL;
 static UINT8 *M62Chars              = NULL;
 static UINT8 *M62PromData           = NULL;
 static UINT8 *M62TempRom            = NULL;
-static UINT32  *M62Palette            = NULL;
+static UINT32 *M62Palette           = NULL;
 static INT16* pFMBuffer;
 static INT16* pAY8910Buffer[6];
 
@@ -1803,11 +1806,12 @@ static INT32 M62MemIndex()
 	RamStart               = Next;
 	
 	M62SpriteRam           = Next; Next += M62SpriteRamSize;
-	M62TileRam             = Next; Next += 0x02000;
+	M62TileRam             = Next; Next += 0x12000;
 	if (M62CharRamSize)   M62CharRam   = Next; Next += M62CharRamSize;
 	if (M62ScrollRamSize) M62ScrollRam = Next; Next += M62ScrollRamSize;
 	M62Z80Ram              = Next; Next += 0x01000;
 	M62M6803Ram            = Next; Next += 0x00080;
+	pFMBuffer              = (INT16*)Next; Next += nBurnSoundLen * 6 * sizeof(INT16);
 
 	RamEnd                 = Next;
 
@@ -1816,7 +1820,6 @@ static INT32 M62MemIndex()
 	if (M62NumChars) M62Chars = Next; Next += M62NumChars * M62CharxTileDim * M62CharyTileDim;
 	M62Palette             = (UINT32*)Next; Next += M62PaletteEntries * sizeof(UINT32);
 	M62PromData            = Next; Next += M62PromSize;
-	pFMBuffer              = (INT16*)Next; Next += nBurnSoundLen * 6 * sizeof(INT16);
 
 	MemEnd                 = Next;
 
@@ -1835,7 +1838,9 @@ static INT32 M62DoReset()
 	AY8910Reset(1);
 	
 	MSM5205Reset();
-	
+
+	M62Z80BankAddress = 0;
+	M62Z80BankAddress2 = 0;
 	M62BackgroundHScroll = 0;
 	M62BackgroundVScroll = 0;
 	M62CharHScroll = 0;
@@ -1941,9 +1946,9 @@ void __fastcall Ldrun4Z80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xc800: {
-			INT32 BankAddress = 0x8000 + ((d & 0x01) * 0x4000);
-			ZetMapArea(0x8000, 0xbfff, 0, M62Z80Rom + BankAddress);
-			ZetMapArea(0x8000, 0xbfff, 2, M62Z80Rom + BankAddress);
+			M62Z80BankAddress = 0x8000 + ((d & 0x01) * 0x4000);
+			ZetMapArea(0x8000, 0xbfff, 0, M62Z80Rom + M62Z80BankAddress);
+			ZetMapArea(0x8000, 0xbfff, 2, M62Z80Rom + M62Z80BankAddress);
 			return;
 		}
 			
@@ -1977,9 +1982,9 @@ void __fastcall SpelunkrZ80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0xd004: {
-			INT32 BankAddress = 0x8000 + ((d & 0x03) * 0x2000);
-			ZetMapArea(0x8000, 0x9fff, 0, M62Z80Rom + BankAddress);
-			ZetMapArea(0x8000, 0x9fff, 2, M62Z80Rom + BankAddress);
+			M62Z80BankAddress = 0x8000 + ((d & 0x03) * 0x2000);
+			ZetMapArea(0x8000, 0x9fff, 0, M62Z80Rom + M62Z80BankAddress);
+			ZetMapArea(0x8000, 0x9fff, 2, M62Z80Rom + M62Z80BankAddress);
 			return;
 		}
 		
@@ -2015,12 +2020,12 @@ void __fastcall Spelunk2Z80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0xd003: {
-			INT32 BankAddress1 = 0x18000 + (((d & 0xc0) >> 6) * 0x1000);
-			INT32 BankAddress2 = 0x08000 + (((d & 0x3c) >> 2) * 0x1000);
-			ZetMapArea(0x8000, 0x8fff, 0, M62Z80Rom + BankAddress1);
-			ZetMapArea(0x8000, 0x8fff, 2, M62Z80Rom + BankAddress1);
-			ZetMapArea(0x9000, 0x9fff, 0, M62Z80Rom + BankAddress2);
-			ZetMapArea(0x9000, 0x9fff, 2, M62Z80Rom + BankAddress2);
+			M62Z80BankAddress = 0x18000 + (((d & 0xc0) >> 6) * 0x1000);
+			M62Z80BankAddress2 = 0x08000 + (((d & 0x3c) >> 2) * 0x1000);
+			ZetMapArea(0x8000, 0x8fff, 0, M62Z80Rom + M62Z80BankAddress);
+			ZetMapArea(0x8000, 0x8fff, 2, M62Z80Rom + M62Z80BankAddress);
+			ZetMapArea(0x9000, 0x9fff, 0, M62Z80Rom + M62Z80BankAddress2);
+			ZetMapArea(0x9000, 0x9fff, 2, M62Z80Rom + M62Z80BankAddress2);
 			return;
 		}
 		
@@ -2115,9 +2120,9 @@ void __fastcall BattroadZ80PortWrite(UINT16 a, UINT8 d)
 		}
 		
 		case 0x83: {
-			INT32 BankAddress = 0x8000 + ((d & 0x0f) * 0x2000);
-			ZetMapArea(0xa000, 0xbfff, 0, M62Z80Rom + BankAddress);
-			ZetMapArea(0xa000, 0xbfff, 2, M62Z80Rom + BankAddress);
+			M62Z80BankAddress = 0x8000 + ((d & 0x0f) * 0x2000);
+			ZetMapArea(0xa000, 0xbfff, 0, M62Z80Rom + M62Z80BankAddress);
+			ZetMapArea(0xa000, 0xbfff, 2, M62Z80Rom + M62Z80BankAddress);
 			return;
 		}
 		
@@ -2172,9 +2177,9 @@ void __fastcall Ldrun2Z80PortWrite(UINT16 a, UINT8 d)
 			
 			if (Offset == 0x00) {
 				if (d >= 1 && d <= 30) {
-					INT32 BankAddress = 0x8000 + (Banks[d - 1] * 0x2000);
-					ZetMapArea(0x8000, 0x9fff, 0, M62Z80Rom + BankAddress);
-					ZetMapArea(0x8000, 0x9fff, 2, M62Z80Rom + BankAddress);
+					M62Z80BankAddress = 0x8000 + (Banks[d - 1] * 0x2000);
+					ZetMapArea(0x8000, 0x9fff, 0, M62Z80Rom + M62Z80BankAddress);
+					ZetMapArea(0x8000, 0x9fff, 2, M62Z80Rom + M62Z80BankAddress);
 				}
 			} else {
 				if (M62BankControl[0] == 0x01 && d == 0x0d) {
@@ -2305,9 +2310,9 @@ void __fastcall KidnikiZ80PortWrite(UINT16 a, UINT8 d)
 		}
 		
 		case 0x85: {
-			INT32 BankAddress = 0x8000 + ((d & 0x0f) * 0x2000);
-			ZetMapArea(0x8000, 0x9fff, 0, M62Z80Rom + BankAddress);
-			ZetMapArea(0x8000, 0x9fff, 2, M62Z80Rom + BankAddress);
+			M62Z80BankAddress = 0x8000 + ((d & 0x0f) * 0x2000);
+			ZetMapArea(0x8000, 0x9fff, 0, M62Z80Rom + M62Z80BankAddress);
+			ZetMapArea(0x8000, 0x9fff, 2, M62Z80Rom + M62Z80BankAddress);
 			return;
 		}
 		
@@ -2338,9 +2343,9 @@ void __fastcall YoujyudnZ80PortWrite(UINT16 a, UINT8 d)
 		}
 		
 		case 0x83: {
-			INT32 BankAddress = 0x8000 + ((d & 0x01) * 0x4000);
-			ZetMapArea(0x8000, 0xbfff, 0, M62Z80Rom + BankAddress);
-			ZetMapArea(0x8000, 0xbfff, 2, M62Z80Rom + BankAddress);
+			M62Z80BankAddress = 0x8000 + ((d & 0x01) * 0x4000);
+			ZetMapArea(0x8000, 0xbfff, 0, M62Z80Rom + M62Z80BankAddress);
+			ZetMapArea(0x8000, 0xbfff, 2, M62Z80Rom + M62Z80BankAddress);
 			return;
 		}
 		
@@ -4786,11 +4791,103 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
 		ba.nLen	  = RamEnd-RamStart;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
-	}
-	
-	if (nAction & ACB_DRIVER_DATA) {
+        }
 
+        if (nAction & ACB_DRIVER_DATA) {
+                ZetOpen(0);
+                M6803Scan(nAction);
+                ZetScan(nAction);
+                AY8910Scan(nAction, pnMin);
+                MSM5205Scan(nAction, pnMin);
+                ZetClose();
+
+                SCAN_VAR(M62BackgroundHScroll);
+                SCAN_VAR(M62BackgroundVScroll);
+                SCAN_VAR(M62CharHScroll);
+                SCAN_VAR(M62CharVScroll);
+                SCAN_VAR(M62FlipScreen);
+                SCAN_VAR(M62SpriteHeightPromOffset);
+
+                SCAN_VAR(M62PaletteEntries);
+                SCAN_VAR(M62Z80Clock);
+                SCAN_VAR(M62M6803Clock);
+                SCAN_VAR(M62BgxTileDim);
+                SCAN_VAR(M62BgyTileDim);
+                SCAN_VAR(M62CharxTileDim);
+                SCAN_VAR(M62CharyTileDim);
+
+                SCAN_VAR(M62RenderFunction);
+
+                SCAN_VAR(M62SoundLatch);
+                SCAN_VAR(M62Port1);
+                SCAN_VAR(M62Port2);
+                SCAN_VAR(M62SlaveMSM5205VClckReset);
+                SCAN_VAR(M62BankControl);
+                SCAN_VAR(Ldrun2BankSwap);
+                SCAN_VAR(Ldrun3TopBottomMask);
+                SCAN_VAR(KidnikiBackgroundBank);
+                SCAN_VAR(SpelunkrPaletteBank);
+                SCAN_VAR(M62Dip);
+                SCAN_VAR(M62Input);
+                SCAN_VAR(nCyclesDone);
+                SCAN_VAR(nCyclesTotal);
+                SCAN_VAR(nCyclesSegment);
+                SCAN_VAR(nBurnSoundLen);
+//                SCAN_VAR(pFMBuffer);
+//                SCAN_VAR(pAY8910Buffer);
 	}
+
+        if (nAction & ACB_WRITE) {
+            if (strstr(BurnDrvGetTextA(DRV_NAME), "spelunk")) {
+                if (strstr(BurnDrvGetTextA(DRV_NAME), "spelunk2")) {
+                    ZetOpen(0);
+                    ZetMapArea(0x8000, 0x8fff, 0, M62Z80Rom + M62Z80BankAddress);
+                    ZetMapArea(0x8000, 0x8fff, 2, M62Z80Rom + M62Z80BankAddress);
+                    ZetMapArea(0x9000, 0x9fff, 0, M62Z80Rom + M62Z80BankAddress2);
+                    ZetMapArea(0x9000, 0x9fff, 2, M62Z80Rom + M62Z80BankAddress2);
+                    ZetClose();
+                } else {
+                    ZetOpen(0);
+                    ZetMapArea(0x8000, 0x9fff, 0, M62Z80Rom + M62Z80BankAddress);
+                    ZetMapArea(0x8000, 0x9fff, 2, M62Z80Rom + M62Z80BankAddress);
+                    ZetClose();
+                }
+            }
+            if (strstr(BurnDrvGetTextA(DRV_NAME), "ldrun4")) {
+                ZetOpen(0);
+                ZetMapArea(0x8000, 0xbfff, 0, M62Z80Rom + M62Z80BankAddress);
+                ZetMapArea(0x8000, 0xbfff, 2, M62Z80Rom + M62Z80BankAddress);
+                ZetClose();
+            }
+            if (strstr(BurnDrvGetTextA(DRV_NAME), "ldrun2")) {
+                ZetOpen(0);
+                ZetMapArea(0x8000, 0x9fff, 0, M62Z80Rom + M62Z80BankAddress);
+                ZetMapArea(0x8000, 0x9fff, 2, M62Z80Rom + M62Z80BankAddress);
+                ZetClose();
+            }
+            if (strstr(BurnDrvGetTextA(DRV_NAME), "battroad")) {
+                ZetOpen(0);
+                ZetMapArea(0xa000, 0xbfff, 0, M62Z80Rom + M62Z80BankAddress);
+                ZetMapArea(0xa000, 0xbfff, 2, M62Z80Rom + M62Z80BankAddress);
+                ZetClose();
+            }
+            if (strstr(BurnDrvGetTextA(DRV_NAME), "youj")) {
+                ZetOpen(0);
+                ZetMapArea(0x8000, 0xbfff, 0, M62Z80Rom + M62Z80BankAddress);
+                ZetMapArea(0x8000, 0xbfff, 2, M62Z80Rom + M62Z80BankAddress);
+		ZetClose();
+            }
+            if (strstr(BurnDrvGetTextA(DRV_NAME), "kidnik") ||
+                strstr(BurnDrvGetTextA(DRV_NAME), "lithero") ||
+                strstr(BurnDrvGetTextA(DRV_NAME), "yanchamr")) {
+                ZetOpen(0);
+                ZetMapArea(0x8000, 0x9fff, 0, M62Z80Rom + M62Z80BankAddress);
+                ZetMapArea(0x8000, 0x9fff, 2, M62Z80Rom + M62Z80BankAddress);
+                ZetClose();
+            }
+//            M6803Reset(); // prevent sound-hang, but lose bgm temporarily [no other fix available] - dink
+
+        }
 
 	return 0;
 }

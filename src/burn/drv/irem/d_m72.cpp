@@ -1068,7 +1068,7 @@ void __fastcall m72_main_write_port(UINT32 port, UINT8 data)
 			if (enable_z80_reset) {
 				if (data & 0x10) {
 					z80_reset = 0;
-				} else {
+				} else if (!z80_reset) { // don't reset it if its already resetting - fixes BGM in airduel -dink
 					ZetReset();
 					setvector_callback(VECTOR_INIT);
 					z80_reset = 1;

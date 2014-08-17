@@ -2036,7 +2036,7 @@ struct BurnDriver BurnDrvGalmedes = {
 };
 
 
-// U.N. Defense Force: Earth Joker
+// U.N. Defense Force: Earth Joker (Japan)
 
 static struct BurnRomInfo earthjkrRomDesc[] = {
 	{ "ej_3b.rom",			0x20000, 0xbdd86fc2, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
@@ -2060,10 +2060,44 @@ STD_ROM_FN(earthjkr)
 
 struct BurnDriver BurnDrvEarthjkr = {
 	"earthjkr", NULL, NULL, NULL, "1993",
-	"U.N. Defense Force: Earth Joker\0", NULL, "Visco", "Taito Misc",
+	"U.N. Defense Force: Earth Joker (Japan)\0", NULL, "Visco", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, earthjkrRomInfo, earthjkrRomName, NULL, NULL, AsukaInputInfo, EarthjkrDIPInfo,
+	GalmedesInit, TaitoExit, EtoFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	240, 320, 3, 4
+};
+
+
+// U.N. Defense Force: Earth Joker (Japan, prototype?)
+// was production PCB complete with MASK rom, could just be an early revision, not proto
+
+static struct BurnRomInfo earthjkrpRomDesc[] = {
+	{ "3.bin",				0x20000, 0xbdd86fc2, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "4.bin",				0x20000, 0x9c8050c6, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "5.bin",				0x80000, 0x49d1f77f, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
+
+	{ "ej_2.rom",			0x10000, 0x42ba2566, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
+
+	{ "ej_chr.rom",			0x80000, 0xac675297, BRF_GRA | TAITO_CHARS },				//  4 Characters
+
+	{ "ej_obj.rom",			0x80000, 0x5f21ac47, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
+	{ "ej_1.rom",			0x10000, 0xcb4891db, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
+	{ "ej_0.rom",			0x10000, 0xb612086f, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
+	
+	{ "b68-04.bin",			0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
+	{ "b68-05.bin",			0x00104, 0xd6524ccc, BRF_OPT },						//  9
+};
+
+STD_ROM_PICK(earthjkrp)
+STD_ROM_FN(earthjkrp)
+
+struct BurnDriver BurnDrvEarthjkrp = {
+	"earthjkrp", "earthjkr", NULL, NULL, "1993",
+	"U.N. Defense Force: Earth Joker (Japan, prototype?)\0", NULL, "Visco", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	NULL, earthjkrpRomInfo, earthjkrpRomName, NULL, NULL, AsukaInputInfo, EarthjkrDIPInfo,
 	GalmedesInit, TaitoExit, EtoFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	240, 320, 3, 4
 };

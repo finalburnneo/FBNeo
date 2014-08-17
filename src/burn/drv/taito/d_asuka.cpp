@@ -1895,6 +1895,9 @@ static struct BurnRomInfo asukaRomDesc[] = {
 	{ "b68-06.bin",			0x10000, 0xf517e64d, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
 
 	{ "b68-10.bin",			0x10000, 0x387aaf40, BRF_SND | TAITO_MSM5205 },				//  8 MSM5205 Samples
+	
+	{ "b68-04.bin",			0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
+	{ "b68-05.bin",			0x00104, 0xd6524ccc, BRF_OPT },						//  9
 };
 
 STD_ROM_PICK(asuka)
@@ -1940,6 +1943,9 @@ static struct BurnRomInfo asukajRomDesc[] = {
 	{ "b68-06.bin",			0x10000, 0xf517e64d, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
 
 	{ "b68-10.bin",			0x10000, 0x387aaf40, BRF_SND | TAITO_MSM5205 },				//  8 MSM5205 Samples
+	
+	{ "b68-04.bin",			0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
+	{ "b68-05.bin",			0x00104, 0xd6524ccc, BRF_OPT },						//  9
 };
 
 STD_ROM_PICK(asukaj)
@@ -2000,6 +2006,9 @@ static struct BurnRomInfo galmedesRomDesc[] = {
 	{ "gm-scn.bin",			0x80000, 0x3bab0581, BRF_GRA | TAITO_CHARS },				//  4 Characters
 
 	{ "gm-obj.bin",			0x80000, 0x7a4a1315, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
+	
+	{ "b68-04.bin",			0x00144, 0x9be618d1, BRF_OPT },						//  6 plds
+	{ "b68-05.bin",			0x00104, 0xd6524ccc, BRF_OPT },						//  7
 };
 
 STD_ROM_PICK(galmedes)
@@ -2041,6 +2050,9 @@ static struct BurnRomInfo earthjkrRomDesc[] = {
 	{ "ej_obj.rom",			0x80000, 0x5f21ac47, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
 	{ "ej_1.rom",			0x10000, 0xcb4891db, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
 	{ "ej_0.rom",			0x10000, 0xb612086f, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
+	
+	{ "b68-04.bin",			0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
+	{ "b68-05.bin",			0x00104, 0xd6524ccc, BRF_OPT },						//  9
 };
 
 STD_ROM_PICK(earthjkr)
@@ -2167,7 +2179,7 @@ static struct BurnRomInfo bonzeadvpRomDesc[] = {
 	{ "1l.ic25",			0x10000, 0xc7e79b98, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP }, 	//  3
 	{ "49eb.ic26",			0x20000, 0xc747650b, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP }, 	//  4
 	{ "fd65.ic20",			0x20000, 0xc32f3bd5, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP }, 	//  5
-	{ "no label.ic28",		0x20000, 0xdc1f9fd0, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP }, 	//  6
+	{ "0e7e.ic28",			0x20000, 0xdc1f9fd0, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP }, 	//  6
 	{ "a418.ic23",			0x20000, 0x51b02be6, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP }, 	//  7
 
 	{ "b41-13.20",			0x10000, 0x9e464254, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  8 Z80 Code

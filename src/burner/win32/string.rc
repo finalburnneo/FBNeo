@@ -182,6 +182,8 @@ BEGIN
 	IDS_SEL_TECHNOS				"Technos"
 	IDS_SEL_PCE					"PC-Engine"
 	IDS_SEL_SMS					"Master System"
+	IDS_SEL_SG1000				"SG-1000"
+	IDS_SEL_COLECO				"ColecoVision"
 	
 	IDS_GENRE					"Genre"
 	IDS_GENRE_HORSHOOT			"Shooter - Horizontal"

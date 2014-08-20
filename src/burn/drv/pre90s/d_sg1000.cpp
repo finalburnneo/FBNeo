@@ -4,7 +4,6 @@
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
-
 #include "driver.h"
 #include "tms9928a.h"
 #include "8255ppi.h"
@@ -197,8 +196,6 @@ static int DrvInit()
 	PPI0PortReadC	= sg1000_ppi8255_portC_read;
 	PPI0PortWriteC	= sg1000_ppi8255_portC_write;
 
-	GenericTilesInit();
-
 	DrvDoReset();
 
 	return 0;
@@ -206,11 +203,9 @@ static int DrvInit()
 
 static int DrvExit()
 {
-	GenericTilesExit();
-
+	TMS9928AExit();
 	ZetExit();
 	SN76496Exit();
-	TMS9928AExit();
 	ppi8255_exit();
 
 	free (AllMem);

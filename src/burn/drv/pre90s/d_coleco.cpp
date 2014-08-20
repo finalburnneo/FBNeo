@@ -1,4 +1,5 @@
-// ColecoVision emulator by iq_132 (and dink)
+// FB Alpha ColecoVision arcade driver module
+// Code by iq_132, fixups & bring up-to-date by dink Aug 19, 2014
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -417,9 +418,7 @@ static int DrvInit()
 static int DrvExit()
 {
 	TMS9928AExit();
-
 	ZetExit();
-
 	SN76496Exit();
 
 	free (AllMem);

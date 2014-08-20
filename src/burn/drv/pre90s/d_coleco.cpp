@@ -2,7 +2,6 @@
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
-
 #include "driver.h"
 #include "sn76496.h"
 #include "tms9928a.h"
@@ -15,9 +14,9 @@ static UINT8 *DrvZ80BIOS;
 static UINT8 *DrvCartROM;
 static UINT8 *DrvZ80RAM;
 
-static int joy_mode;
-static int joy_status[2];
-static int last_state;
+static INT32 joy_mode;
+static INT32 joy_status[2];
+static INT32 last_state;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -44,13 +43,13 @@ static struct BurnInputInfo ColecoInputList[] = {
 	{"P1 9",		BIT_DIGITAL,	DrvJoy1 +  9,	"p1 9"		},
 	{"P1 #",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 #"		},
 	{"P1 .",		BIT_DIGITAL,	DrvJoy1 + 11,	"p1 ."		},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 14,	"p1 fire 2"	},
+	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 14,	"p1 fire 2"	},
 
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		}, // 13
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 left"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 1"	},
+	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 1"	},
 
 	{"P2 0",		BIT_DIGITAL,	DrvJoy3 +  0,	"p2 0"		}, // 18
 	{"P2 1",		BIT_DIGITAL,	DrvJoy3 +  1,	"p2 1"		},
@@ -64,17 +63,17 @@ static struct BurnInputInfo ColecoInputList[] = {
 	{"P2 9",		BIT_DIGITAL,	DrvJoy3 +  9,	"p2 9"		},
 	{"P2 #",		BIT_DIGITAL,	DrvJoy3 + 10,	"p2 #"		},
 	{"P2 .",		BIT_DIGITAL,	DrvJoy3 + 11,	"p2 ."		},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 14,	"p2 fire 2"	},
+	{"P2 Button 2",	BIT_DIGITAL,	DrvJoy3 + 14,	"p2 fire 2"	},
 
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 up"		}, // 31
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 right"	},
+	{"P2 Right",	BIT_DIGITAL,	DrvJoy4 + 1,	"p2 right"	},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 left"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 1"	},
+	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 1"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		}, // 36 - 0x24
 	{"Controller Select",	BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Bios Select",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Bios Select",	BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Coleco)
@@ -93,21 +92,21 @@ static struct BurnInputInfo Czz50InputList[] = {
 	{"P1 9",		BIT_DIGITAL,	DrvJoy1 +  9,	"p1 9"		},
 	{"P1 #",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 #"		},
 	{"P1 .",		BIT_DIGITAL,	DrvJoy1 + 11,	"p1 ."		},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 14,	"p1 fire 2"	},
+	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 14,	"p1 fire 2"	},
 
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 left"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 1"	},
+	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 1"	},
 
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 14,	"p2 fire 2"	},
+	{"P2 Button 2",	BIT_DIGITAL,	DrvJoy3 + 14,	"p2 fire 2"	},
 
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 up"		},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 right"	},
+	{"P2 Right",	BIT_DIGITAL,	DrvJoy4 + 1,	"p2 right"	},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 left"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 1"	},
+	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 1"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 };
@@ -325,12 +324,11 @@ static int DrvDoReset()
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	BurnLoadRom(DrvZ80BIOS, 0x80 + (DrvDips[1] & 3), 1);
-
-        CVFastLoadHack();
+	CVFastLoadHack();
 
 	ZetOpen(0);
 	ZetReset();
-	ZetSetVector(0xff); // ok here or need whenever irq line called?
+	ZetSetVector(0xff);
 	ZetClose();
 
 	TMS9928AReset();
@@ -358,8 +356,6 @@ static int MemIndex()
 
 	return 0;
 }
-
-//int ColecoLoadCart();
 
 static int DrvInit()
 {
@@ -486,7 +482,7 @@ static int DrvScan(int nAction,int *pnMin)
 		*pnMin = 0x029708;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -500,8 +496,7 @@ static int DrvScan(int nAction,int *pnMin)
 		TMS9928AScan(nAction, pnMin);
 
 		SCAN_VAR(joy_mode);
-		SCAN_VAR(joy_status[0]);
-		SCAN_VAR(joy_status[1]);
+		SCAN_VAR(joy_status);
 		SCAN_VAR(last_state);
 	}
 
@@ -520,7 +515,11 @@ INT32 CVGetZipName(char** pszName, UINT32 i)
 	if (i == 0) {
 		pszGameName = BurnDrvGetTextA(DRV_NAME);
 	} else {
-		pszGameName = BurnDrvGetTextA(DRV_PARENT);
+		if (i == 1 && BurnDrvGetTextA(DRV_BOARDROM)) {
+			pszGameName = BurnDrvGetTextA(DRV_BOARDROM);
+		} else {
+			pszGameName = BurnDrvGetTextA(DRV_PARENT);
+                }
 	}
 
 	if (pszGameName == NULL) {
@@ -532,8 +531,8 @@ INT32 CVGetZipName(char** pszName, UINT32 i)
 	for (UINT32 j = 0; j < strlen(pszGameName); j++) {
 		szFilename[j] = pszGameName[j + 3];
 	}
-        //bprintf(0, _T("zipname[%s]\n"), szFilename);
-        *pszName = szFilename;
+
+	*pszName = szFilename;
 
 	return 0;
 }
@@ -544,7 +543,7 @@ static struct BurnRomInfo cv_colecoRomDesc[] = {
     { "coleco.rom",     0x2000, 0x3aa93ef3, BRF_PRG | BRF_BIOS }, // 0x80 - Normal (Coleco, 1982)
     { "colecoa.rom",	0x2000, 0x39bb16fc, BRF_PRG | BRF_BIOS | BRF_OPT }, // 0x81 - Thick Characters (Coleco, 1982)
     { "svi603.rom", 	0x2000, 0x19e91b82, BRF_PRG | BRF_BIOS | BRF_OPT }, // 0x82 - SVI-603 Coleco Game Adapter (Spectravideo, 1983)
-    { "czz50.rom", 	0x4000, 0x4999abc6, BRF_PRG | BRF_BIOS | BRF_OPT }, // 0x83 - Chuang Zao Zhe 50 (Bit Corporation, 1986)
+    { "czz50.rom",		0x4000, 0x4999abc6, BRF_PRG | BRF_BIOS | BRF_OPT }, // 0x83 - Chuang Zao Zhe 50 (Bit Corporation, 1986)
 };
 
 STD_ROM_PICK(cv_coleco)
@@ -570,7 +569,7 @@ STDROMPICKEXT(cv_danslither, cv_danslither, cv_coleco)
 STD_ROM_FN(cv_danslither)
 
 struct BurnDriver BurnDrvcv_danslither = {
-	"cv_danslither", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_danslither", NULL, "cv_coleco", NULL, "1983",
 	"Slither (Joystick Version)\0", NULL, "Coleco*Daniel Bienvenu", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -591,7 +590,7 @@ STDROMPICKEXT(cv_castelo, cv_castelo, cv_coleco)
 STD_ROM_FN(cv_castelo)
 
 struct BurnDriver BurnDrvcv_castelo = {
-	"cv_castelo", "cv_coleco", "cv_coleco", NULL, "1985",
+	"cv_castelo", NULL, "cv_coleco", NULL, "1985",
 	"Castelo\0", NULL, "Splice Vision", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -611,7 +610,7 @@ STDROMPICKEXT(cv_qbert, cv_qbert, cv_coleco)
 STD_ROM_FN(cv_qbert)
 
 struct BurnDriver BurnDrvcv_qbert = {
-	"cv_qbert", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_qbert", NULL, "cv_coleco", NULL, "1983",
 	"Q*bert\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -631,7 +630,7 @@ STDROMPICKEXT(cv_qberta, cv_qberta, cv_coleco)
 STD_ROM_FN(cv_qberta)
 
 struct BurnDriver BurnDrvcv_qberta = {
-	"cv_qberta", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_qberta", NULL, "cv_coleco", NULL, "1983",
 	"Q*bert (Alt)\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -651,7 +650,7 @@ STDROMPICKEXT(cv_scobra, cv_scobra, cv_coleco)
 STD_ROM_FN(cv_scobra)
 
 struct BurnDriver BurnDrvcv_scobra = {
-	"cv_scobra", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_scobra", NULL, "cv_coleco", NULL, "1983",
 	"Super Cobra\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -671,7 +670,7 @@ STDROMPICKEXT(cv_scobraa, cv_scobraa, cv_coleco)
 STD_ROM_FN(cv_scobraa)
 
 struct BurnDriver BurnDrvcv_scobraa = {
-	"cv_scobraa", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_scobraa", NULL, "cv_coleco", NULL, "1983",
 	"Super Cobra (Alt)\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -691,7 +690,7 @@ STDROMPICKEXT(cv_ssketch, cv_ssketch, cv_coleco)
 STD_ROM_FN(cv_ssketch)
 
 struct BurnDriver BurnDrvcv_ssketch = {
-	"cv_ssketch", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_ssketch", NULL, "cv_coleco", NULL, "1984",
 	"Super Sketch\0", NULL, "Personal Peripherals", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -712,7 +711,7 @@ STDROMPICKEXT(cv_antarct, cv_antarct, cv_coleco)
 STD_ROM_FN(cv_antarct)
 
 struct BurnDriver BurnDrvcv_antarct = {
-	"cv_antarct", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_antarct", NULL, "cv_coleco", NULL, "1984",
 	"Antarctic Adventure\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -733,7 +732,7 @@ STDROMPICKEXT(cv_alphazoo, cv_alphazoo, cv_coleco)
 STD_ROM_FN(cv_alphazoo)
 
 struct BurnDriver BurnDrvcv_alphazoo = {
-	"cv_alphazoo", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_alphazoo", NULL, "cv_coleco", NULL, "1984",
 	"Alphabet Zoo\0", NULL, "Spinnaker Software", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -754,7 +753,7 @@ STDROMPICKEXT(cv_amazing, cv_amazing, cv_coleco)
 STD_ROM_FN(cv_amazing)
 
 struct BurnDriver BurnDrvcv_amazing = {
-	"cv_amazing", "cv_coleco", "cv_coleco", NULL, "1986",
+	"cv_amazing", NULL, "cv_coleco", NULL, "1986",
 	"Amazing Bumpman\0", NULL, "Telegames", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -775,7 +774,7 @@ STDROMPICKEXT(cv_numbump, cv_numbump, cv_coleco)
 STD_ROM_FN(cv_numbump)
 
 struct BurnDriver BurnDrvcv_numbump = {
-	"cv_numbump", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_numbump", NULL, "cv_coleco", NULL, "1984",
 	"Number Bumper\0", NULL, "Sunrise Software", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -796,7 +795,7 @@ STDROMPICKEXT(cv_aquatack, cv_aquatack, cv_coleco)
 STD_ROM_FN(cv_aquatack)
 
 struct BurnDriver BurnDrvcv_aquatack = {
-	"cv_aquatack", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_aquatack", NULL, "cv_coleco", NULL, "1984",
 	"Aquattack\0", NULL, "Interphase", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -817,7 +816,7 @@ STDROMPICKEXT(cv_aquatacka, cv_aquatacka, cv_coleco)
 STD_ROM_FN(cv_aquatacka)
 
 struct BurnDriver BurnDrvcv_aquatacka = {
-	"cv_aquatacka", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_aquatacka", NULL, "cv_coleco", NULL, "1984",
 	"Aquattack (Alt)\0", NULL, "Interphase", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -838,7 +837,7 @@ STDROMPICKEXT(cv_artduel, cv_artduel, cv_coleco)
 STD_ROM_FN(cv_artduel)
 
 struct BurnDriver BurnDrvcv_artduel = {
-	"cv_artduel", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_artduel", NULL, "cv_coleco", NULL, "1983",
 	"Artillery Duel\0", NULL, "Xonox", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -859,7 +858,7 @@ STDROMPICKEXT(cv_bcquest, cv_bcquest, cv_coleco)
 STD_ROM_FN(cv_bcquest)
 
 struct BurnDriver BurnDrvcv_bcquest = {
-	"cv_bcquest", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_bcquest", NULL, "cv_coleco", NULL, "1983",
 	"BC's Quest for Tires\0", NULL, "Sierra On-Line", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -880,7 +879,7 @@ STDROMPICKEXT(cv_beamridr, cv_beamridr, cv_coleco)
 STD_ROM_FN(cv_beamridr)
 
 struct BurnDriver BurnDrvcv_beamridr = {
-	"cv_beamridr", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_beamridr", NULL, "cv_coleco", NULL, "1983",
 	"Beamrider\0", NULL, "Activision", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -901,7 +900,7 @@ STDROMPICKEXT(cv_blockrun, cv_blockrun, cv_coleco)
 STD_ROM_FN(cv_blockrun)
 
 struct BurnDriver BurnDrvcv_blockrun = {
-	"cv_blockrun", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_blockrun", NULL, "cv_coleco", NULL, "1984",
 	"Blockade Runner\0", NULL, "Interphase", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -922,7 +921,7 @@ STDROMPICKEXT(cv_bdash, cv_bdash, cv_coleco)
 STD_ROM_FN(cv_bdash)
 
 struct BurnDriver BurnDrvcv_bdash = {
-	"cv_bdash", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_bdash", NULL, "cv_coleco", NULL, "1984",
 	"Boulder Dash\0", NULL, "Telegames", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -943,7 +942,7 @@ STDROMPICKEXT(cv_brainstr, cv_brainstr, cv_coleco)
 STD_ROM_FN(cv_brainstr)
 
 struct BurnDriver BurnDrvcv_brainstr = {
-	"cv_brainstr", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_brainstr", NULL, "cv_coleco", NULL, "1984",
 	"Brain Strainers\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -964,7 +963,7 @@ STDROMPICKEXT(cv_btime, cv_btime, cv_coleco)
 STD_ROM_FN(cv_btime)
 
 struct BurnDriver BurnDrvcv_btime = {
-	"cv_btime", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_btime", NULL, "cv_coleco", NULL, "1984",
 	"Burgertime\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -985,7 +984,7 @@ STDROMPICKEXT(cv_cabbage, cv_cabbage, cv_coleco)
 STD_ROM_FN(cv_cabbage)
 
 struct BurnDriver BurnDrvcv_cabbage = {
-	"cv_cabbage", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_cabbage", NULL, "cv_coleco", NULL, "1984",
 	"Cabbage Patch Kids: Adventure in the Park\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1006,7 +1005,7 @@ STDROMPICKEXT(cv_campaign, cv_campaign, cv_coleco)
 STD_ROM_FN(cv_campaign)
 
 struct BurnDriver BurnDrvcv_campaign = {
-	"cv_campaign", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_campaign", NULL, "cv_coleco", NULL, "1983",
 	"Campaign '84\0", NULL, "Sunrise Software", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1027,7 +1026,7 @@ STDROMPICKEXT(cv_carnival, cv_carnival, cv_coleco)
 STD_ROM_FN(cv_carnival)
 
 struct BurnDriver BurnDrvcv_carnival = {
-	"cv_carnival", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_carnival", NULL, "cv_coleco", NULL, "1982",
 	"Carnival\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1048,7 +1047,7 @@ STDROMPICKEXT(cv_cavenger, cv_cavenger, cv_coleco)
 STD_ROM_FN(cv_cavenger)
 
 struct BurnDriver BurnDrvcv_cavenger = {
-	"cv_cavenger", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_cavenger", NULL, "cv_coleco", NULL, "1982",
 	"Cosmic Avenger\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1069,7 +1068,7 @@ STDROMPICKEXT(cv_cavengera, cv_cavengera, cv_coleco)
 STD_ROM_FN(cv_cavengera)
 
 struct BurnDriver BurnDrvcv_cavengera = {
-	"cv_cavengera", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_cavengera", NULL, "cv_coleco", NULL, "1982",
 	"Cosmic Avenger (Alt)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1090,7 +1089,7 @@ STDROMPICKEXT(cv_ccrisis, cv_ccrisis, cv_coleco)
 STD_ROM_FN(cv_ccrisis)
 
 struct BurnDriver BurnDrvcv_ccrisis = {
-	"cv_ccrisis", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_ccrisis", NULL, "cv_coleco", NULL, "1983",
 	"Cosmic Crisis\0", NULL, "Telegames", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1111,7 +1110,7 @@ STDROMPICKEXT(cv_centiped, cv_centiped, cv_coleco)
 STD_ROM_FN(cv_centiped)
 
 struct BurnDriver BurnDrvcv_centiped = {
-	"cv_centiped", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_centiped", NULL, "cv_coleco", NULL, "1983",
 	"Centipede\0", NULL, "Atarisoft", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1132,7 +1131,7 @@ STDROMPICKEXT(cv_choplift, cv_choplift, cv_coleco)
 STD_ROM_FN(cv_choplift)
 
 struct BurnDriver BurnDrvcv_choplift = {
-	"cv_choplift", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_choplift", NULL, "cv_coleco", NULL, "1984",
 	"Choplifter!\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1153,7 +1152,7 @@ STDROMPICKEXT(cv_choplifta, cv_choplifta, cv_coleco)
 STD_ROM_FN(cv_choplifta)
 
 struct BurnDriver BurnDrvcv_choplifta = {
-	"cv_choplifta", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_choplifta", NULL, "cv_coleco", NULL, "1984",
 	"Choplifter! (Alt)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1174,7 +1173,7 @@ STDROMPICKEXT(cv_chucknor, cv_chucknor, cv_coleco)
 STD_ROM_FN(cv_chucknor)
 
 struct BurnDriver BurnDrvcv_chucknor = {
-	"cv_chucknor", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_chucknor", NULL, "cv_coleco", NULL, "1983",
 	"Chuck Norris Superkicks\0", NULL, "Xonox", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1195,7 +1194,7 @@ STDROMPICKEXT(cv_decathln, cv_decathln, cv_coleco)
 STD_ROM_FN(cv_decathln)
 
 struct BurnDriver BurnDrvcv_decathln = {
-	"cv_decathln", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_decathln", NULL, "cv_coleco", NULL, "1984",
 	"Decathlon\0", NULL, "Activision", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1216,7 +1215,7 @@ STDROMPICKEXT(cv_dkong, cv_dkong, cv_coleco)
 STD_ROM_FN(cv_dkong)
 
 struct BurnDriver BurnDrvcv_dkong = {
-	"cv_dkong", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_dkong", NULL, "cv_coleco", NULL, "1982",
 	"Donkey Kong\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1237,7 +1236,7 @@ STDROMPICKEXT(cv_dkongjr, cv_dkongjr, cv_coleco)
 STD_ROM_FN(cv_dkongjr)
 
 struct BurnDriver BurnDrvcv_dkongjr = {
-	"cv_dkongjr", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_dkongjr", NULL, "cv_coleco", NULL, "1983",
 	"Donkey Kong Junior\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1258,7 +1257,7 @@ STDROMPICKEXT(cv_docastle, cv_docastle, cv_coleco)
 STD_ROM_FN(cv_docastle)
 
 struct BurnDriver BurnDrvcv_docastle = {
-	"cv_docastle", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_docastle", NULL, "cv_coleco", NULL, "1983",
 	"Mr. Do!'s Castle\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1279,7 +1278,7 @@ STDROMPICKEXT(cv_drgnfire, cv_drgnfire, cv_coleco)
 STD_ROM_FN(cv_drgnfire)
 
 struct BurnDriver BurnDrvcv_drgnfire = {
-	"cv_drgnfire", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_drgnfire", NULL, "cv_coleco", NULL, "1984",
 	"DragonFire\0", NULL, "Imagic", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1300,7 +1299,7 @@ STDROMPICKEXT(cv_drseuss, cv_drseuss, cv_coleco)
 STD_ROM_FN(cv_drseuss)
 
 struct BurnDriver BurnDrvcv_drseuss = {
-	"cv_drseuss", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_drseuss", NULL, "cv_coleco", NULL, "1984",
 	"Dr. Seuss's Fix-Up the Mix-Up Puzzler\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1321,7 +1320,7 @@ STDROMPICKEXT(cv_evolutio, cv_evolutio, cv_coleco)
 STD_ROM_FN(cv_evolutio)
 
 struct BurnDriver BurnDrvcv_evolutio = {
-	"cv_evolutio", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_evolutio", NULL, "cv_coleco", NULL, "1983",
 	"Evolution\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1342,7 +1341,7 @@ STDROMPICKEXT(cv_fathom, cv_fathom, cv_coleco)
 STD_ROM_FN(cv_fathom)
 
 struct BurnDriver BurnDrvcv_fathom = {
-	"cv_fathom", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_fathom", NULL, "cv_coleco", NULL, "1983",
 	"Fathom\0", NULL, "Imagic", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1363,7 +1362,7 @@ STDROMPICKEXT(cv_flipslip, cv_flipslip, cv_coleco)
 STD_ROM_FN(cv_flipslip)
 
 struct BurnDriver BurnDrvcv_flipslip = {
-	"cv_flipslip", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_flipslip", NULL, "cv_coleco", NULL, "1983",
 	"Flipper Slipper\0", NULL, "Spectravideo", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1384,7 +1383,7 @@ STDROMPICKEXT(cv_ffreddy, cv_ffreddy, cv_coleco)
 STD_ROM_FN(cv_ffreddy)
 
 struct BurnDriver BurnDrvcv_ffreddy = {
-	"cv_ffreddy", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_ffreddy", NULL, "cv_coleco", NULL, "1983",
 	"Frantic Freddy\0", NULL, "Spectravideo", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1405,7 +1404,7 @@ STDROMPICKEXT(cv_frogger, cv_frogger, cv_coleco)
 STD_ROM_FN(cv_frogger)
 
 struct BurnDriver BurnDrvcv_frogger = {
-	"cv_frogger", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_frogger", NULL, "cv_coleco", NULL, "1983",
 	"Frogger\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1426,7 +1425,7 @@ STDROMPICKEXT(cv_frogger2, cv_frogger2, cv_coleco)
 STD_ROM_FN(cv_frogger2)
 
 struct BurnDriver BurnDrvcv_frogger2 = {
-	"cv_frogger2", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_frogger2", NULL, "cv_coleco", NULL, "1984",
 	"Frogger II: Threedeep!\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1447,7 +1446,7 @@ STDROMPICKEXT(cv_apshai, cv_apshai, cv_coleco)
 STD_ROM_FN(cv_apshai)
 
 struct BurnDriver BurnDrvcv_apshai = {
-	"cv_apshai", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_apshai", NULL, "cv_coleco", NULL, "1984",
 	"Gateway to Apshai\0", NULL, "Epyx", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1468,7 +1467,7 @@ STDROMPICKEXT(cv_gorf, cv_gorf, cv_coleco)
 STD_ROM_FN(cv_gorf)
 
 struct BurnDriver BurnDrvcv_gorf = {
-	"cv_gorf", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_gorf", NULL, "cv_coleco", NULL, "1983",
 	"Gorf\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1489,7 +1488,7 @@ STDROMPICKEXT(cv_gustbust, cv_gustbust, cv_coleco)
 STD_ROM_FN(cv_gustbust)
 
 struct BurnDriver BurnDrvcv_gustbust = {
-	"cv_gustbust", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_gustbust", NULL, "cv_coleco", NULL, "1983",
 	"Gust Buster\0", NULL, "Sunrise Software", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1510,7 +1509,7 @@ STDROMPICKEXT(cv_gyruss, cv_gyruss, cv_coleco)
 STD_ROM_FN(cv_gyruss)
 
 struct BurnDriver BurnDrvcv_gyruss = {
-	"cv_gyruss", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_gyruss", NULL, "cv_coleco", NULL, "1984",
 	"Gyruss\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1531,7 +1530,7 @@ STDROMPICKEXT(cv_hero, cv_hero, cv_coleco)
 STD_ROM_FN(cv_hero)
 
 struct BurnDriver BurnDrvcv_hero = {
-	"cv_hero", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_hero", NULL, "cv_coleco", NULL, "1984",
 	"H.E.R.O.\0", NULL, "Activision", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1552,7 +1551,7 @@ STDROMPICKEXT(cv_illusion, cv_illusion, cv_coleco)
 STD_ROM_FN(cv_illusion)
 
 struct BurnDriver BurnDrvcv_illusion = {
-	"cv_illusion", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_illusion", NULL, "cv_coleco", NULL, "1984",
 	"Illusions\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1573,7 +1572,7 @@ STDROMPICKEXT(cv_jbond, cv_jbond, cv_coleco)
 STD_ROM_FN(cv_jbond)
 
 struct BurnDriver BurnDrvcv_jbond = {
-	"cv_jbond", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_jbond", NULL, "cv_coleco", NULL, "1984",
 	"James Bond 007\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1594,7 +1593,7 @@ STDROMPICKEXT(cv_jmpmanjr, cv_jmpmanjr, cv_coleco)
 STD_ROM_FN(cv_jmpmanjr)
 
 struct BurnDriver BurnDrvcv_jmpmanjr = {
-	"cv_jmpmanjr", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_jmpmanjr", NULL, "cv_coleco", NULL, "1984",
 	"Jumpman Junior\0", NULL, "Epyx", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1615,7 +1614,7 @@ STDROMPICKEXT(cv_jmpmanjra, cv_jmpmanjra, cv_coleco)
 STD_ROM_FN(cv_jmpmanjra)
 
 struct BurnDriver BurnDrvcv_jmpmanjra = {
-	"cv_jmpmanjra", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_jmpmanjra", NULL, "cv_coleco", NULL, "1984",
 	"Jumpman Junior (Alt)\0", NULL, "Epyx", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1636,7 +1635,7 @@ STDROMPICKEXT(cv_kubjpok, cv_kubjpok, cv_coleco)
 STD_ROM_FN(cv_kubjpok)
 
 struct BurnDriver BurnDrvcv_kubjpok = {
-	"cv_kubjpok", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_kubjpok", NULL, "cv_coleco", NULL, "1983",
 	"Ken Uston Blackjack-Poker\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1657,7 +1656,7 @@ STDROMPICKEXT(cv_keykaper, cv_keykaper, cv_coleco)
 STD_ROM_FN(cv_keykaper)
 
 struct BurnDriver BurnDrvcv_keykaper = {
-	"cv_keykaper", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_keykaper", NULL, "cv_coleco", NULL, "1984",
 	"Keystone Kapers\0", NULL, "Activision", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1678,7 +1677,7 @@ STDROMPICKEXT(cv_ladybug, cv_ladybug, cv_coleco)
 STD_ROM_FN(cv_ladybug)
 
 struct BurnDriver BurnDrvcv_ladybug = {
-	"cv_ladybug", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_ladybug", NULL, "cv_coleco", NULL, "1982",
 	"Lady Bug\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1699,7 +1698,7 @@ STDROMPICKEXT(cv_lancelot, cv_lancelot, cv_coleco)
 STD_ROM_FN(cv_lancelot)
 
 struct BurnDriver BurnDrvcv_lancelot = {
-	"cv_lancelot", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_lancelot", NULL, "cv_coleco", NULL, "1983",
 	"Sir Lancelot\0", NULL, "Xonox", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1720,7 +1719,7 @@ STDROMPICKEXT(cv_leeper, cv_leeper, cv_coleco)
 STD_ROM_FN(cv_leeper)
 
 struct BurnDriver BurnDrvcv_leeper = {
-	"cv_leeper", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_leeper", NULL, "cv_coleco", NULL, "1983",
 	"Learning with Leeper\0", NULL, "Sierra On-Line", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1741,7 +1740,7 @@ STDROMPICKEXT(cv_logiclvl, cv_logiclvl, cv_coleco)
 STD_ROM_FN(cv_logiclvl)
 
 struct BurnDriver BurnDrvcv_logiclvl = {
-	"cv_logiclvl", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_logiclvl", NULL, "cv_coleco", NULL, "1984",
 	"Logic Levels\0", NULL, "Fisher-Price", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1762,7 +1761,7 @@ STDROMPICKEXT(cv_linklogc, cv_linklogc, cv_coleco)
 STD_ROM_FN(cv_linklogc)
 
 struct BurnDriver BurnDrvcv_linklogc = {
-	"cv_linklogc", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_linklogc", NULL, "cv_coleco", NULL, "1984",
 	"Linking Logic\0", NULL, "Fisher-Price", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1783,7 +1782,7 @@ STDROMPICKEXT(cv_looping, cv_looping, cv_coleco)
 STD_ROM_FN(cv_looping)
 
 struct BurnDriver BurnDrvcv_looping = {
-	"cv_looping", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_looping", NULL, "cv_coleco", NULL, "1983",
 	"Looping\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1804,7 +1803,7 @@ STDROMPICKEXT(cv_meteosho, cv_meteosho, cv_coleco)
 STD_ROM_FN(cv_meteosho)
 
 struct BurnDriver BurnDrvcv_meteosho = {
-	"cv_meteosho", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_meteosho", NULL, "cv_coleco", NULL, "1983",
 	"Meteoric Shower\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1825,7 +1824,7 @@ STDROMPICKEXT(cv_montezum, cv_montezum, cv_coleco)
 STD_ROM_FN(cv_montezum)
 
 struct BurnDriver BurnDrvcv_montezum = {
-	"cv_montezum", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_montezum", NULL, "cv_coleco", NULL, "1984",
 	"Montezuma's Revenge\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1846,7 +1845,7 @@ STDROMPICKEXT(cv_moonswpr, cv_moonswpr, cv_coleco)
 STD_ROM_FN(cv_moonswpr)
 
 struct BurnDriver BurnDrvcv_moonswpr = {
-	"cv_moonswpr", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_moonswpr", NULL, "cv_coleco", NULL, "1983",
 	"Moonsweeper\0", NULL, "Imagic", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1867,7 +1866,7 @@ STDROMPICKEXT(cv_moonswpra, cv_moonswpra, cv_coleco)
 STD_ROM_FN(cv_moonswpra)
 
 struct BurnDriver BurnDrvcv_moonswpra = {
-	"cv_moonswpra", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_moonswpra", NULL, "cv_coleco", NULL, "1983",
 	"Moonsweeper (Alt)\0", NULL, "Imagic", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1888,7 +1887,7 @@ STDROMPICKEXT(cv_mking, cv_mking, cv_coleco)
 STD_ROM_FN(cv_mking)
 
 struct BurnDriver BurnDrvcv_mking = {
-	"cv_mking", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_mking", NULL, "cv_coleco", NULL, "1984",
 	"Mountain King\0", NULL, "Sunrise Software", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1909,7 +1908,7 @@ STDROMPICKEXT(cv_mkinga, cv_mkinga, cv_coleco)
 STD_ROM_FN(cv_mkinga)
 
 struct BurnDriver BurnDrvcv_mkinga = {
-	"cv_mkinga", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_mkinga", NULL, "cv_coleco", NULL, "1984",
 	"Mountain King (Alt)\0", NULL, "Sunrise Software", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1930,7 +1929,7 @@ STDROMPICKEXT(cv_mtcracer, cv_mtcracer, cv_coleco)
 STD_ROM_FN(cv_mtcracer)
 
 struct BurnDriver BurnDrvcv_mtcracer = {
-	"cv_mtcracer", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_mtcracer", NULL, "cv_coleco", NULL, "1984",
 	"Motocross Racer\0", NULL, "Xonox", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1951,7 +1950,7 @@ STDROMPICKEXT(cv_mtcracera, cv_mtcracera, cv_coleco)
 STD_ROM_FN(cv_mtcracera)
 
 struct BurnDriver BurnDrvcv_mtcracera = {
-	"cv_mtcracera", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_mtcracera", NULL, "cv_coleco", NULL, "1984",
 	"Motocross Racer (Alt)\0", NULL, "Xonox", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1972,7 +1971,7 @@ STDROMPICKEXT(cv_mtrap, cv_mtrap, cv_coleco)
 STD_ROM_FN(cv_mtrap)
 
 struct BurnDriver BurnDrvcv_mtrap = {
-	"cv_mtrap", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_mtrap", NULL, "cv_coleco", NULL, "1982",
 	"Mousetrap\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -1993,7 +1992,7 @@ STDROMPICKEXT(cv_mtrapa, cv_mtrapa, cv_coleco)
 STD_ROM_FN(cv_mtrapa)
 
 struct BurnDriver BurnDrvcv_mtrapa = {
-	"cv_mtrapa", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_mtrapa", NULL, "cv_coleco", NULL, "1982",
 	"Mousetrap (Alt)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2014,7 +2013,7 @@ STDROMPICKEXT(cv_novablst, cv_novablst, cv_coleco)
 STD_ROM_FN(cv_novablst)
 
 struct BurnDriver BurnDrvcv_novablst = {
-	"cv_novablst", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_novablst", NULL, "cv_coleco", NULL, "1983",
 	"Nova Blast\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2035,7 +2034,7 @@ STDROMPICKEXT(cv_oilswell, cv_oilswell, cv_coleco)
 STD_ROM_FN(cv_oilswell)
 
 struct BurnDriver BurnDrvcv_oilswell = {
-	"cv_oilswell", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_oilswell", NULL, "cv_coleco", NULL, "1984",
 	"Oil's Well\0", NULL, "Sierra On-Line", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2056,7 +2055,7 @@ STDROMPICKEXT(cv_oilswella, cv_oilswella, cv_coleco)
 STD_ROM_FN(cv_oilswella)
 
 struct BurnDriver BurnDrvcv_oilswella = {
-	"cv_oilswella", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_oilswella", NULL, "cv_coleco", NULL, "1984",
 	"Oil's Well (Alt)\0", NULL, "Sierra On-Line", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2077,7 +2076,7 @@ STDROMPICKEXT(cv_omegrace, cv_omegrace, cv_coleco)
 STD_ROM_FN(cv_omegrace)
 
 struct BurnDriver BurnDrvcv_omegrace = {
-	"cv_omegrace", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_omegrace", NULL, "cv_coleco", NULL, "1983",
 	"Omega Race\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2098,7 +2097,7 @@ STDROMPICKEXT(cv_onlyrock, cv_onlyrock, cv_coleco)
 STD_ROM_FN(cv_onlyrock)
 
 struct BurnDriver BurnDrvcv_onlyrock = {
-	"cv_onlyrock", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_onlyrock", NULL, "cv_coleco", NULL, "1984",
 	"It's Only Rock 'n' Roll\0", NULL, "K-Tel", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2119,7 +2118,7 @@ STDROMPICKEXT(cv_panic, cv_panic, cv_coleco)
 STD_ROM_FN(cv_panic)
 
 struct BurnDriver BurnDrvcv_panic = {
-	"cv_panic", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_panic", NULL, "cv_coleco", NULL, "1983",
 	"Space Panic\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2140,7 +2139,7 @@ STDROMPICKEXT(cv_pepper2, cv_pepper2, cv_coleco)
 STD_ROM_FN(cv_pepper2)
 
 struct BurnDriver BurnDrvcv_pepper2 = {
-	"cv_pepper2", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_pepper2", NULL, "cv_coleco", NULL, "1983",
 	"Pepper II\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2161,7 +2160,7 @@ STDROMPICKEXT(cv_pitfall, cv_pitfall, cv_coleco)
 STD_ROM_FN(cv_pitfall)
 
 struct BurnDriver BurnDrvcv_pitfall = {
-	"cv_pitfall", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_pitfall", NULL, "cv_coleco", NULL, "1983",
 	"Pitfall!\0", NULL, "Activision", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2182,7 +2181,7 @@ STDROMPICKEXT(cv_pitfall2, cv_pitfall2, cv_coleco)
 STD_ROM_FN(cv_pitfall2)
 
 struct BurnDriver BurnDrvcv_pitfall2 = {
-	"cv_pitfall2", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_pitfall2", NULL, "cv_coleco", NULL, "1984",
 	"Pitfall II: Lost Caverns\0", NULL, "Activision", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2203,7 +2202,7 @@ STDROMPICKEXT(cv_pitstop, cv_pitstop, cv_coleco)
 STD_ROM_FN(cv_pitstop)
 
 struct BurnDriver BurnDrvcv_pitstop = {
-	"cv_pitstop", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_pitstop", NULL, "cv_coleco", NULL, "1983",
 	"Pitstop\0", NULL, "Epyx", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2224,7 +2223,7 @@ STDROMPICKEXT(cv_pitstopa, cv_pitstopa, cv_coleco)
 STD_ROM_FN(cv_pitstopa)
 
 struct BurnDriver BurnDrvcv_pitstopa = {
-	"cv_pitstopa", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_pitstopa", NULL, "cv_coleco", NULL, "1983",
 	"Pitstop (Alt)\0", NULL, "Epyx", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2245,7 +2244,7 @@ STDROMPICKEXT(cv_popeye, cv_popeye, cv_coleco)
 STD_ROM_FN(cv_popeye)
 
 struct BurnDriver BurnDrvcv_popeye = {
-	"cv_popeye", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_popeye", NULL, "cv_coleco", NULL, "1983",
 	"Popeye\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2266,7 +2265,7 @@ STDROMPICKEXT(cv_popeyea, cv_popeyea, cv_coleco)
 STD_ROM_FN(cv_popeyea)
 
 struct BurnDriver BurnDrvcv_popeyea = {
-	"cv_popeyea", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_popeyea", NULL, "cv_coleco", NULL, "1983",
 	"Popeye (Alt)\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2287,7 +2286,7 @@ STDROMPICKEXT(cv_qbertqub, cv_qbertqub, cv_coleco)
 STD_ROM_FN(cv_qbertqub)
 
 struct BurnDriver BurnDrvcv_qbertqub = {
-	"cv_qbertqub", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_qbertqub", NULL, "cv_coleco", NULL, "1984",
 	"Q*bert Qubes\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2308,7 +2307,7 @@ STDROMPICKEXT(cv_quintana, cv_quintana, cv_coleco)
 STD_ROM_FN(cv_quintana)
 
 struct BurnDriver BurnDrvcv_quintana = {
-	"cv_quintana", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_quintana", NULL, "cv_coleco", NULL, "1983",
 	"Quest for Quintana Roo\0", NULL, "Sunrise Software", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2329,7 +2328,7 @@ STDROMPICKEXT(cv_quintanaa, cv_quintanaa, cv_coleco)
 STD_ROM_FN(cv_quintanaa)
 
 struct BurnDriver BurnDrvcv_quintanaa = {
-	"cv_quintanaa", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_quintanaa", NULL, "cv_coleco", NULL, "1983",
 	"Quest for Quintana Roo (Alt)\0", NULL, "Sunrise Software", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2350,7 +2349,7 @@ STDROMPICKEXT(cv_riveraid, cv_riveraid, cv_coleco)
 STD_ROM_FN(cv_riveraid)
 
 struct BurnDriver BurnDrvcv_riveraid = {
-	"cv_riveraid", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_riveraid", NULL, "cv_coleco", NULL, "1984",
 	"River Raid\0", NULL, "Activision", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2371,7 +2370,7 @@ STDROMPICKEXT(cv_robinh, cv_robinh, cv_coleco)
 STD_ROM_FN(cv_robinh)
 
 struct BurnDriver BurnDrvcv_robinh = {
-	"cv_robinh", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_robinh", NULL, "cv_coleco", NULL, "1984",
 	"Robin Hood\0", NULL, "Xonox", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2392,7 +2391,7 @@ STDROMPICKEXT(cv_robinha, cv_robinha, cv_coleco)
 STD_ROM_FN(cv_robinha)
 
 struct BurnDriver BurnDrvcv_robinha = {
-	"cv_robinha", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_robinha", NULL, "cv_coleco", NULL, "1984",
 	"Robin Hood (Alt)\0", NULL, "Xonox", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2413,7 +2412,7 @@ STDROMPICKEXT(cv_rockbolt, cv_rockbolt, cv_coleco)
 STD_ROM_FN(cv_rockbolt)
 
 struct BurnDriver BurnDrvcv_rockbolt = {
-	"cv_rockbolt", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_rockbolt", NULL, "cv_coleco", NULL, "1984",
 	"Rock 'n Bolt\0", NULL, "Telegames", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2434,7 +2433,7 @@ STDROMPICKEXT(cv_rockbolta, cv_rockbolta, cv_coleco)
 STD_ROM_FN(cv_rockbolta)
 
 struct BurnDriver BurnDrvcv_rockbolta = {
-	"cv_rockbolta", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_rockbolta", NULL, "cv_coleco", NULL, "1984",
 	"Rock 'n Bolt (Alt)\0", NULL, "Telegames", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2455,7 +2454,7 @@ STDROMPICKEXT(cv_rollover, cv_rollover, cv_coleco)
 STD_ROM_FN(cv_rollover)
 
 struct BurnDriver BurnDrvcv_rollover = {
-	"cv_rollover", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_rollover", NULL, "cv_coleco", NULL, "1983",
 	"Rolloverture\0", NULL, "Sunrise Software", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2476,7 +2475,7 @@ STDROMPICKEXT(cv_sammylf, cv_sammylf, cv_coleco)
 STD_ROM_FN(cv_sammylf)
 
 struct BurnDriver BurnDrvcv_sammylf = {
-	"cv_sammylf", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_sammylf", NULL, "cv_coleco", NULL, "1983",
 	"Sammy Lightfoot\0", NULL, "Sierra On-Line", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2497,7 +2496,7 @@ STDROMPICKEXT(cv_sammylfa, cv_sammylfa, cv_coleco)
 STD_ROM_FN(cv_sammylfa)
 
 struct BurnDriver BurnDrvcv_sammylfa = {
-	"cv_sammylfa", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_sammylfa", NULL, "cv_coleco", NULL, "1983",
 	"Sammy Lightfoot (Alt)\0", NULL, "Sierra On-Line", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2518,7 +2517,7 @@ STDROMPICKEXT(cv_slither, cv_slither, cv_coleco)
 STD_ROM_FN(cv_slither)
 
 struct BurnDriver BurnDrvcv_slither = {
-	"cv_slither", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_slither", NULL, "cv_coleco", NULL, "1983",
 	"Slither\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2539,7 +2538,7 @@ STDROMPICKEXT(cv_slurpy, cv_slurpy, cv_coleco)
 STD_ROM_FN(cv_slurpy)
 
 struct BurnDriver BurnDrvcv_slurpy = {
-	"cv_slurpy", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_slurpy", NULL, "cv_coleco", NULL, "1984",
 	"Slurpy\0", NULL, "Xonox", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2560,7 +2559,7 @@ STDROMPICKEXT(cv_smurf, cv_smurf, cv_coleco)
 STD_ROM_FN(cv_smurf)
 
 struct BurnDriver BurnDrvcv_smurf = {
-	"cv_smurf", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_smurf", NULL, "cv_coleco", NULL, "1982",
 	"Smurf Rescue in Gargamel's Castle\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2581,7 +2580,7 @@ STDROMPICKEXT(cv_smurfa, cv_smurfa, cv_coleco)
 STD_ROM_FN(cv_smurfa)
 
 struct BurnDriver BurnDrvcv_smurfa = {
-	"cv_smurfa", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_smurfa", NULL, "cv_coleco", NULL, "1982",
 	"Smurf Rescue in Gargamel's Castle (Alt)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2602,7 +2601,7 @@ STDROMPICKEXT(cv_spacfury, cv_spacfury, cv_coleco)
 STD_ROM_FN(cv_spacfury)
 
 struct BurnDriver BurnDrvcv_spacfury = {
-	"cv_spacfury", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_spacfury", NULL, "cv_coleco", NULL, "1983",
 	"Space Fury\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2623,7 +2622,7 @@ STDROMPICKEXT(cv_spacfurya, cv_spacfurya, cv_coleco)
 STD_ROM_FN(cv_spacfurya)
 
 struct BurnDriver BurnDrvcv_spacfurya = {
-	"cv_spacfurya", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_spacfurya", NULL, "cv_coleco", NULL, "1983",
 	"Space Fury (Alt)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2644,7 +2643,7 @@ STDROMPICKEXT(cv_spectron, cv_spectron, cv_coleco)
 STD_ROM_FN(cv_spectron)
 
 struct BurnDriver BurnDrvcv_spectron = {
-	"cv_spectron", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_spectron", NULL, "cv_coleco", NULL, "1983",
 	"Spectron\0", NULL, "Spectravideo", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2665,7 +2664,7 @@ STDROMPICKEXT(cv_sprcross, cv_sprcross, cv_coleco)
 STD_ROM_FN(cv_sprcross)
 
 struct BurnDriver BurnDrvcv_sprcross = {
-	"cv_sprcross", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_sprcross", NULL, "cv_coleco", NULL, "1983",
 	"Super Cross Force\0", NULL, "Spectravideo", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2686,7 +2685,7 @@ STDROMPICKEXT(cv_sprcrossa, cv_sprcrossa, cv_coleco)
 STD_ROM_FN(cv_sprcrossa)
 
 struct BurnDriver BurnDrvcv_sprcrossa = {
-	"cv_sprcrossa", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_sprcrossa", NULL, "cv_coleco", NULL, "1983",
 	"Super Cross Force (Alt)\0", NULL, "Spectravideo", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2707,7 +2706,7 @@ STDROMPICKEXT(cv_squishem, cv_squishem, cv_coleco)
 STD_ROM_FN(cv_squishem)
 
 struct BurnDriver BurnDrvcv_squishem = {
-	"cv_squishem", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_squishem", NULL, "cv_coleco", NULL, "1984",
 	"Squish 'em Sam!\0", NULL, "Interphase", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2728,7 +2727,7 @@ STDROMPICKEXT(cv_starwars, cv_starwars, cv_coleco)
 STD_ROM_FN(cv_starwars)
 
 struct BurnDriver BurnDrvcv_starwars = {
-	"cv_starwars", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_starwars", NULL, "cv_coleco", NULL, "1984",
 	"Star Wars: The Arcade Game\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2749,7 +2748,7 @@ STDROMPICKEXT(cv_strikeit, cv_strikeit, cv_coleco)
 STD_ROM_FN(cv_strikeit)
 
 struct BurnDriver BurnDrvcv_strikeit = {
-	"cv_strikeit", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_strikeit", NULL, "cv_coleco", NULL, "1983",
 	"Strike It!\0", NULL, "Telegames", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2770,7 +2769,7 @@ STDROMPICKEXT(cv_tankwars, cv_tankwars, cv_coleco)
 STD_ROM_FN(cv_tankwars)
 
 struct BurnDriver BurnDrvcv_tankwars = {
-	"cv_tankwars", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_tankwars", NULL, "cv_coleco", NULL, "1983",
 	"Tank Wars\0", NULL, "Telegames", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2791,7 +2790,7 @@ STDROMPICKEXT(cv_telly, cv_telly, cv_coleco)
 STD_ROM_FN(cv_telly)
 
 struct BurnDriver BurnDrvcv_telly = {
-	"cv_telly", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_telly", NULL, "cv_coleco", NULL, "1984",
 	"Telly Turtle\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2812,7 +2811,7 @@ STDROMPICKEXT(cv_threshld, cv_threshld, cv_coleco)
 STD_ROM_FN(cv_threshld)
 
 struct BurnDriver BurnDrvcv_threshld = {
-	"cv_threshld", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_threshld", NULL, "cv_coleco", NULL, "1983",
 	"Threshold\0", NULL, "Sierra On-Line", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2833,7 +2832,7 @@ STDROMPICKEXT(cv_timeplt, cv_timeplt, cv_coleco)
 STD_ROM_FN(cv_timeplt)
 
 struct BurnDriver BurnDrvcv_timeplt = {
-	"cv_timeplt", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_timeplt", NULL, "cv_coleco", NULL, "1983",
 	"Time Pilot\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2854,7 +2853,7 @@ STDROMPICKEXT(cv_tomarc, cv_tomarc, cv_coleco)
 STD_ROM_FN(cv_tomarc)
 
 struct BurnDriver BurnDrvcv_tomarc = {
-	"cv_tomarc", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_tomarc", NULL, "cv_coleco", NULL, "1984",
 	"Tomarc the Barbarian\0", NULL, "Xonox", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2875,7 +2874,7 @@ STDROMPICKEXT(cv_turbo, cv_turbo, cv_coleco)
 STD_ROM_FN(cv_turbo)
 
 struct BurnDriver BurnDrvcv_turbo = {
-	"cv_turbo", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_turbo", NULL, "cv_coleco", NULL, "1982",
 	"Turbo\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2896,7 +2895,7 @@ STDROMPICKEXT(cv_tutankhm, cv_tutankhm, cv_coleco)
 STD_ROM_FN(cv_tutankhm)
 
 struct BurnDriver BurnDrvcv_tutankhm = {
-	"cv_tutankhm", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_tutankhm", NULL, "cv_coleco", NULL, "1983",
 	"Tutankham\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2917,7 +2916,7 @@ STDROMPICKEXT(cv_tutankhma, cv_tutankhma, cv_coleco)
 STD_ROM_FN(cv_tutankhma)
 
 struct BurnDriver BurnDrvcv_tutankhma = {
-	"cv_tutankhma", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_tutankhma", NULL, "cv_coleco", NULL, "1983",
 	"Tutankham (Alt)\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2938,7 +2937,7 @@ STDROMPICKEXT(cv_upndown, cv_upndown, cv_coleco)
 STD_ROM_FN(cv_upndown)
 
 struct BurnDriver BurnDrvcv_upndown = {
-	"cv_upndown", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_upndown", NULL, "cv_coleco", NULL, "1984",
 	"Up'n Down\0", NULL, "Sega", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2959,7 +2958,7 @@ STDROMPICKEXT(cv_venture, cv_venture, cv_coleco)
 STD_ROM_FN(cv_venture)
 
 struct BurnDriver BurnDrvcv_venture = {
-	"cv_venture", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_venture", NULL, "cv_coleco", NULL, "1982",
 	"Venture\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -2980,7 +2979,7 @@ STDROMPICKEXT(cv_wingwar, cv_wingwar, cv_coleco)
 STD_ROM_FN(cv_wingwar)
 
 struct BurnDriver BurnDrvcv_wingwar = {
-	"cv_wingwar", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_wingwar", NULL, "cv_coleco", NULL, "1983",
 	"Wing War\0", NULL, "Imagic", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3001,7 +3000,7 @@ STDROMPICKEXT(cv_wizmath, cv_wizmath, cv_coleco)
 STD_ROM_FN(cv_wizmath)
 
 struct BurnDriver BurnDrvcv_wizmath = {
-	"cv_wizmath", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_wizmath", NULL, "cv_coleco", NULL, "1984",
 	"Wizard of Id's Wizmath\0", NULL, "Sierra On-Line", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3022,7 +3021,7 @@ STDROMPICKEXT(cv_zenji, cv_zenji, cv_coleco)
 STD_ROM_FN(cv_zenji)
 
 struct BurnDriver BurnDrvcv_zenji = {
-	"cv_zenji", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_zenji", NULL, "cv_coleco", NULL, "1984",
 	"Zenji\0", NULL, "Activision", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3044,7 +3043,7 @@ STDROMPICKEXT(cv_1on1, cv_1on1, cv_coleco)
 STD_ROM_FN(cv_1on1)
 
 struct BurnDriver BurnDrvcv_1on1 = {
-	"cv_1on1", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_1on1", NULL, "cv_coleco", NULL, "1984",
 	"One on One\0", NULL, "Micro Lab", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3066,7 +3065,7 @@ STDROMPICKEXT(cv_bcquest2, cv_bcquest2, cv_coleco)
 STD_ROM_FN(cv_bcquest2)
 
 struct BurnDriver BurnDrvcv_bcquest2 = {
-	"cv_bcquest2", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_bcquest2", NULL, "cv_coleco", NULL, "1984",
 	"BC's Quest for Tires II: Grog's Revenge\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3088,7 +3087,7 @@ STDROMPICKEXT(cv_bcquest2ca, cv_bcquest2ca, cv_coleco)
 STD_ROM_FN(cv_bcquest2ca)
 
 struct BurnDriver BurnDrvcv_bcquest2ca = {
-	"cv_bcquest2ca", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_bcquest2ca", NULL, "cv_coleco", NULL, "1984",
 	"BC's Quest for Tires II: Grog's Revenge (Can)\0", NULL, "Coleco Canada", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3110,7 +3109,7 @@ STDROMPICKEXT(cv_bnj, cv_bnj, cv_coleco)
 STD_ROM_FN(cv_bnj)
 
 struct BurnDriver BurnDrvcv_bnj = {
-	"cv_bnj", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_bnj", NULL, "cv_coleco", NULL, "1984",
 	"Bump 'n' Jump\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3132,7 +3131,7 @@ STDROMPICKEXT(cv_buckrog, cv_buckrog, cv_coleco)
 STD_ROM_FN(cv_buckrog)
 
 struct BurnDriver BurnDrvcv_buckrog = {
-	"cv_buckrog", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_buckrog", NULL, "cv_coleco", NULL, "1983",
 	"Buck Rogers: Planet of Zoom\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3154,7 +3153,7 @@ STDROMPICKEXT(cv_congo, cv_congo, cv_coleco)
 STD_ROM_FN(cv_congo)
 
 struct BurnDriver BurnDrvcv_congo = {
-	"cv_congo", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_congo", NULL, "cv_coleco", NULL, "1984",
 	"Congo Bongo\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3176,7 +3175,7 @@ STDROMPICKEXT(cv_defender, cv_defender, cv_coleco)
 STD_ROM_FN(cv_defender)
 
 struct BurnDriver BurnDrvcv_defender = {
-	"cv_defender", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_defender", NULL, "cv_coleco", NULL, "1983",
 	"Defender\0", NULL, "Atarisoft", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3198,7 +3197,7 @@ STDROMPICKEXT(cv_dkonga, cv_dkonga, cv_coleco)
 STD_ROM_FN(cv_dkonga)
 
 struct BurnDriver BurnDrvcv_dkonga = {
-	"cv_dkonga", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_dkonga", NULL, "cv_coleco", NULL, "1982",
 	"Donkey Kong (Earlier Version)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3220,7 +3219,7 @@ STDROMPICKEXT(cv_frenzy, cv_frenzy, cv_coleco)
 STD_ROM_FN(cv_frenzy)
 
 struct BurnDriver BurnDrvcv_frenzy = {
-	"cv_frenzy", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_frenzy", NULL, "cv_coleco", NULL, "1983",
 	"Frenzy\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3242,7 +3241,7 @@ STDROMPICKEXT(cv_frenzya, cv_frenzya, cv_coleco)
 STD_ROM_FN(cv_frenzya)
 
 struct BurnDriver BurnDrvcv_frenzya = {
-	"cv_frenzya", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_frenzya", NULL, "cv_coleco", NULL, "1983",
 	"Frenzy (Alt 1)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3264,7 +3263,7 @@ STDROMPICKEXT(cv_frenzya2, cv_frenzya2, cv_coleco)
 STD_ROM_FN(cv_frenzya2)
 
 struct BurnDriver BurnDrvcv_frenzya2 = {
-	"cv_frenzya2", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_frenzya2", NULL, "cv_coleco", NULL, "1983",
 	"Frenzy (Alt 2)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3286,7 +3285,7 @@ STDROMPICKEXT(cv_frontlin, cv_frontlin, cv_coleco)
 STD_ROM_FN(cv_frontlin)
 
 struct BurnDriver BurnDrvcv_frontlin = {
-	"cv_frontlin", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_frontlin", NULL, "cv_coleco", NULL, "1983",
 	"Front Line\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3308,7 +3307,7 @@ STDROMPICKEXT(cv_frontlina, cv_frontlina, cv_coleco)
 STD_ROM_FN(cv_frontlina)
 
 struct BurnDriver BurnDrvcv_frontlina = {
-	"cv_frontlina", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_frontlina", NULL, "cv_coleco", NULL, "1983",
 	"Front Line (Alt)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3330,7 +3329,7 @@ STDROMPICKEXT(cv_heist, cv_heist, cv_coleco)
 STD_ROM_FN(cv_heist)
 
 struct BurnDriver BurnDrvcv_heist = {
-	"cv_heist", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_heist", NULL, "cv_coleco", NULL, "1983",
 	"The Heist\0", NULL, "Micro Fun", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3352,7 +3351,7 @@ STDROMPICKEXT(cv_heista, cv_heista, cv_coleco)
 STD_ROM_FN(cv_heista)
 
 struct BurnDriver BurnDrvcv_heista = {
-	"cv_heista", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_heista", NULL, "cv_coleco", NULL, "1983",
 	"The Heist (Alt)\0", NULL, "Micro Fun", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3374,7 +3373,7 @@ STDROMPICKEXT(cv_jungleh, cv_jungleh, cv_coleco)
 STD_ROM_FN(cv_jungleh)
 
 struct BurnDriver BurnDrvcv_jungleh = {
-	"cv_jungleh", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_jungleh", NULL, "cv_coleco", NULL, "1983",
 	"Jungle Hunt\0", NULL, "Atarisoft", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3396,7 +3395,7 @@ STDROMPICKEXT(cv_mine2049, cv_mine2049, cv_coleco)
 STD_ROM_FN(cv_mine2049)
 
 struct BurnDriver BurnDrvcv_mine2049 = {
-	"cv_mine2049", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_mine2049", NULL, "cv_coleco", NULL, "1983",
 	"Miner 2049er\0", NULL, "Micro Fun", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3418,7 +3417,7 @@ STDROMPICKEXT(cv_mine2049a, cv_mine2049a, cv_coleco)
 STD_ROM_FN(cv_mine2049a)
 
 struct BurnDriver BurnDrvcv_mine2049a = {
-	"cv_mine2049a", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_mine2049a", NULL, "cv_coleco", NULL, "1983",
 	"Miner 2049er (Alt)\0", NULL, "Micro Fun", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3440,7 +3439,7 @@ STDROMPICKEXT(cv_mrdo, cv_mrdo, cv_coleco)
 STD_ROM_FN(cv_mrdo)
 
 struct BurnDriver BurnDrvcv_mrdo = {
-	"cv_mrdo", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_mrdo", NULL, "cv_coleco", NULL, "1983",
 	"Mr. Do!\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3462,7 +3461,7 @@ STDROMPICKEXT(cv_mrdoa, cv_mrdoa, cv_coleco)
 STD_ROM_FN(cv_mrdoa)
 
 struct BurnDriver BurnDrvcv_mrdoa = {
-	"cv_mrdoa", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_mrdoa", NULL, "cv_coleco", NULL, "1983",
 	"Mr. Do! (Alt)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3484,7 +3483,7 @@ STDROMPICKEXT(cv_rocnrope, cv_rocnrope, cv_coleco)
 STD_ROM_FN(cv_rocnrope)
 
 struct BurnDriver BurnDrvcv_rocnrope = {
-	"cv_rocnrope", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_rocnrope", NULL, "cv_coleco", NULL, "1984",
 	"Roc 'n Rope\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3506,7 +3505,7 @@ STDROMPICKEXT(cv_rocky, cv_rocky, cv_coleco)
 STD_ROM_FN(cv_rocky)
 
 struct BurnDriver BurnDrvcv_rocky = {
-	"cv_rocky", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_rocky", NULL, "cv_coleco", NULL, "1983",
 	"Rocky: Super Action Boxing\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3528,7 +3527,7 @@ STDROMPICKEXT(cv_secalpha, cv_secalpha, cv_coleco)
 STD_ROM_FN(cv_secalpha)
 
 struct BurnDriver BurnDrvcv_secalpha = {
-	"cv_secalpha", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_secalpha", NULL, "cv_coleco", NULL, "1983",
 	"Sector Alpha\0", NULL, "Spectravideo", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3550,7 +3549,7 @@ STDROMPICKEXT(cv_secalphaa, cv_secalphaa, cv_coleco)
 STD_ROM_FN(cv_secalphaa)
 
 struct BurnDriver BurnDrvcv_secalphaa = {
-	"cv_secalphaa", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_secalphaa", NULL, "cv_coleco", NULL, "1983",
 	"Sector Alpha (Alt)\0", NULL, "Spectravideo", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3572,7 +3571,7 @@ STDROMPICKEXT(cv_sewersam, cv_sewersam, cv_coleco)
 STD_ROM_FN(cv_sewersam)
 
 struct BurnDriver BurnDrvcv_sewersam = {
-	"cv_sewersam", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_sewersam", NULL, "cv_coleco", NULL, "1984",
 	"Sewer Sam\0", NULL, "Interphase", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3594,7 +3593,7 @@ STDROMPICKEXT(cv_startrek, cv_startrek, cv_coleco)
 STD_ROM_FN(cv_startrek)
 
 struct BurnDriver BurnDrvcv_startrek = {
-	"cv_startrek", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_startrek", NULL, "cv_coleco", NULL, "1984",
 	"Star Trek: Strategic Operations Simulator \0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3616,7 +3615,7 @@ STDROMPICKEXT(cv_subroc, cv_subroc, cv_coleco)
 STD_ROM_FN(cv_subroc)
 
 struct BurnDriver BurnDrvcv_subroc = {
-	"cv_subroc", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_subroc", NULL, "cv_coleco", NULL, "1983",
 	"Subroc\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3638,7 +3637,7 @@ STDROMPICKEXT(cv_tarzan, cv_tarzan, cv_coleco)
 STD_ROM_FN(cv_tarzan)
 
 struct BurnDriver BurnDrvcv_tarzan = {
-	"cv_tarzan", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_tarzan", NULL, "cv_coleco", NULL, "1983",
 	"Tarzan: From out of the Jungle\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3660,7 +3659,7 @@ STDROMPICKEXT(cv_victory, cv_victory, cv_coleco)
 STD_ROM_FN(cv_victory)
 
 struct BurnDriver BurnDrvcv_victory = {
-	"cv_victory", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_victory", NULL, "cv_coleco", NULL, "1983",
 	"Victory\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3682,7 +3681,7 @@ STDROMPICKEXT(cv_wargames, cv_wargames, cv_coleco)
 STD_ROM_FN(cv_wargames)
 
 struct BurnDriver BurnDrvcv_wargames = {
-	"cv_wargames", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_wargames", NULL, "cv_coleco", NULL, "1984",
 	"War Games\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3704,7 +3703,7 @@ STDROMPICKEXT(cv_zaxxon, cv_zaxxon, cv_coleco)
 STD_ROM_FN(cv_zaxxon)
 
 struct BurnDriver BurnDrvcv_zaxxon = {
-	"cv_zaxxon", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_zaxxon", NULL, "cv_coleco", NULL, "1982",
 	"Zaxxon\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3727,7 +3726,7 @@ STDROMPICKEXT(cv_2010, cv_2010, cv_coleco)
 STD_ROM_FN(cv_2010)
 
 struct BurnDriver BurnDrvcv_2010 = {
-	"cv_2010", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_2010", NULL, "cv_coleco", NULL, "1984",
 	"2010: The Graphic Action Game\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3750,7 +3749,7 @@ STDROMPICKEXT(cv_dambust, cv_dambust, cv_coleco)
 STD_ROM_FN(cv_dambust)
 
 struct BurnDriver BurnDrvcv_dambust = {
-	"cv_dambust", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_dambust", NULL, "cv_coleco", NULL, "1984",
 	"The Dam Busters\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3773,7 +3772,7 @@ STDROMPICKEXT(cv_destruct, cv_destruct, cv_coleco)
 STD_ROM_FN(cv_destruct)
 
 struct BurnDriver BurnDrvcv_destruct = {
-	"cv_destruct", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_destruct", NULL, "cv_coleco", NULL, "1984",
 	"Destructor\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3796,7 +3795,7 @@ STDROMPICKEXT(cv_hazzard, cv_hazzard, cv_coleco)
 STD_ROM_FN(cv_hazzard)
 
 struct BurnDriver BurnDrvcv_hazzard = {
-	"cv_hazzard", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_hazzard", NULL, "cv_coleco", NULL, "1984",
 	"The Dukes of Hazzard\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3819,7 +3818,7 @@ STDROMPICKEXT(cv_fortune, cv_fortune, cv_coleco)
 STD_ROM_FN(cv_fortune)
 
 struct BurnDriver BurnDrvcv_fortune = {
-	"cv_fortune", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_fortune", NULL, "cv_coleco", NULL, "1984",
 	"Fortune Builder\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3842,7 +3841,7 @@ STDROMPICKEXT(cv_spyhunt, cv_spyhunt, cv_coleco)
 STD_ROM_FN(cv_spyhunt)
 
 struct BurnDriver BurnDrvcv_spyhunt = {
-	"cv_spyhunt", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_spyhunt", NULL, "cv_coleco", NULL, "1984",
 	"Spy Hunter\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3865,7 +3864,7 @@ STDROMPICKEXT(cv_safootb, cv_safootb, cv_coleco)
 STD_ROM_FN(cv_safootb)
 
 struct BurnDriver BurnDrvcv_safootb = {
-	"cv_safootb", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_safootb", NULL, "cv_coleco", NULL, "1984",
 	"Super Action Football\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3888,7 +3887,7 @@ STDROMPICKEXT(cv_saftsocc, cv_saftsocc, cv_coleco)
 STD_ROM_FN(cv_saftsocc)
 
 struct BurnDriver BurnDrvcv_saftsocc = {
-	"cv_saftsocc", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_saftsocc", NULL, "cv_coleco", NULL, "1984",
 	"Super Action Football (Super Action Soccer clone)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3911,7 +3910,7 @@ STDROMPICKEXT(cv_sasoccer, cv_sasoccer, cv_coleco)
 STD_ROM_FN(cv_sasoccer)
 
 struct BurnDriver BurnDrvcv_sasoccer = {
-	"cv_sasoccer", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_sasoccer", NULL, "cv_coleco", NULL, "1984",
 	"Super Action Soccer\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3934,7 +3933,7 @@ STDROMPICKEXT(cv_tapper, cv_tapper, cv_coleco)
 STD_ROM_FN(cv_tapper)
 
 struct BurnDriver BurnDrvcv_tapper = {
-	"cv_tapper", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_tapper", NULL, "cv_coleco", NULL, "1984",
 	"Tapper\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3957,7 +3956,7 @@ STDROMPICKEXT(cv_2010p, cv_2010p, cv_coleco)
 STD_ROM_FN(cv_2010p)
 
 struct BurnDriver BurnDrvcv_2010p = {
-	"cv_2010p", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_2010p", NULL, "cv_coleco", NULL, "1984",
 	"2010: The Graphic Action Game (Prototype v54)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -3980,7 +3979,7 @@ STDROMPICKEXT(cv_2010p1, cv_2010p1, cv_coleco)
 STD_ROM_FN(cv_2010p1)
 
 struct BurnDriver BurnDrvcv_2010p1 = {
-	"cv_2010p1", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_2010p1", NULL, "cv_coleco", NULL, "1984",
 	"2010: The Graphic Action Game (Prototype v44)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4000,7 +3999,7 @@ STDROMPICKEXT(cv_bbears, cv_bbears, cv_coleco)
 STD_ROM_FN(cv_bbears)
 
 struct BurnDriver BurnDrvcv_bbears = {
-	"cv_bbears", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_bbears", NULL, "cv_coleco", NULL, "1984",
 	"The Berenstain Bears (Prototype)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4021,7 +4020,7 @@ STDROMPICKEXT(cv_btimem, cv_btimem, cv_coleco)
 STD_ROM_FN(cv_btimem)
 
 struct BurnDriver BurnDrvcv_btimem = {
-	"cv_btimem", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_btimem", NULL, "cv_coleco", NULL, "1983",
 	"Burgertime (Prototype)\0", NULL, "Mattel", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4042,7 +4041,7 @@ STDROMPICKEXT(cv_cabbagep1, cv_cabbagep1, cv_coleco)
 STD_ROM_FN(cv_cabbagep1)
 
 struct BurnDriver BurnDrvcv_cabbagep1 = {
-	"cv_cabbagep1", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_cabbagep1", NULL, "cv_coleco", NULL, "1984",
 	"Cabbage Patch Kids: Adventure in the Park (Prototype)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4063,7 +4062,7 @@ STDROMPICKEXT(cv_cabbagep2, cv_cabbagep2, cv_coleco)
 STD_ROM_FN(cv_cabbagep2)
 
 struct BurnDriver BurnDrvcv_cabbagep2 = {
-	"cv_cabbagep2", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_cabbagep2", NULL, "cv_coleco", NULL, "1984",
 	"Cabbage Patch Kids: Adventure in the Park (Prototype, Alt)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4085,7 +4084,7 @@ STDROMPICKEXT(cv_digdug, cv_digdug, cv_coleco)
 STD_ROM_FN(cv_digdug)
 
 struct BurnDriver BurnDrvcv_digdug = {
-	"cv_digdug", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_digdug", NULL, "cv_coleco", NULL, "1984",
 	"Dig Dug (Prototype)\0", NULL, "Atarisoft", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4107,7 +4106,7 @@ STDROMPICKEXT(cv_dlair, cv_dlair, cv_coleco)
 STD_ROM_FN(cv_dlair)
 
 struct BurnDriver BurnDrvcv_dlair = {
-	"cv_dlair", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_dlair", NULL, "cv_coleco", NULL, "1984",
 	"Dragon's Lair (Prototype, 0416)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4128,7 +4127,7 @@ STDROMPICKEXT(cv_mindmstr, cv_mindmstr, cv_coleco)
 STD_ROM_FN(cv_mindmstr)
 
 struct BurnDriver BurnDrvcv_mindmstr = {
-	"cv_mindmstr", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_mindmstr", NULL, "cv_coleco", NULL, "1983",
 	"Escape from the Mindmaster (Prototype)\0", NULL, "Epyx", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4149,7 +4148,7 @@ STDROMPICKEXT(cv_fallguy, cv_fallguy, cv_coleco)
 STD_ROM_FN(cv_fallguy)
 
 struct BurnDriver BurnDrvcv_fallguy = {
-	"cv_fallguy", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_fallguy", NULL, "cv_coleco", NULL, "1983",
 	"Fall Guy (Prototype)\0", NULL, "Fox Video Games", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4171,7 +4170,7 @@ STDROMPICKEXT(cv_joust, cv_joust, cv_coleco)
 STD_ROM_FN(cv_joust)
 
 struct BurnDriver BurnDrvcv_joust = {
-	"cv_joust", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_joust", NULL, "cv_coleco", NULL, "1983",
 	"Joust (Prototype)\0", NULL, "Atarisoft", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4192,7 +4191,7 @@ STDROMPICKEXT(cv_mash, cv_mash, cv_coleco)
 STD_ROM_FN(cv_mash)
 
 struct BurnDriver BurnDrvcv_mash = {
-	"cv_mash", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_mash", NULL, "cv_coleco", NULL, "1983",
 	"M*A*S*H (Prototype)\0", NULL, "Fox Video Games", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4213,7 +4212,7 @@ STDROMPICKEXT(cv_monkeyp, cv_monkeyp, cv_coleco)
 STD_ROM_FN(cv_monkeyp)
 
 struct BurnDriver BurnDrvcv_monkeyp = {
-	"cv_monkeyp", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_monkeyp", NULL, "cv_coleco", NULL, "1984",
 	"Monkey Academy (Prototype)\0", NULL, "Konami", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4235,7 +4234,7 @@ STDROMPICKEXT(cv_monkeyp1, cv_monkeyp1, cv_coleco)
 STD_ROM_FN(cv_monkeyp1)
 
 struct BurnDriver BurnDrvcv_monkeyp1 = {
-	"cv_monkeyp1", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_monkeyp1", NULL, "cv_coleco", NULL, "1984",
 	"Monkey Academy (Prototype, 0511)\0", NULL, "Konami", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4255,7 +4254,7 @@ STDROMPICKEXT(cv_orbit, cv_orbit, cv_coleco)
 STD_ROM_FN(cv_orbit)
 
 struct BurnDriver BurnDrvcv_orbit = {
-	"cv_orbit", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_orbit", NULL, "cv_coleco", NULL, "1983",
 	"Orbit (Prototype)\0", NULL, "Parker Brothers", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4276,7 +4275,7 @@ STDROMPICKEXT(cv_pacman, cv_pacman, cv_coleco)
 STD_ROM_FN(cv_pacman)
 
 struct BurnDriver BurnDrvcv_pacman = {
-	"cv_pacman", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_pacman", NULL, "cv_coleco", NULL, "1983",
 	"Pac-Man (Prototype)\0", NULL, "Atarisoft", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4297,7 +4296,7 @@ STDROMPICKEXT(cv_porkys, cv_porkys, cv_coleco)
 STD_ROM_FN(cv_porkys)
 
 struct BurnDriver BurnDrvcv_porkys = {
-	"cv_porkys", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_porkys", NULL, "cv_coleco", NULL, "1983",
 	"Porky's (Prototype)\0", NULL, "Fox Video Games", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4320,7 +4319,7 @@ STDROMPICKEXT(cv_power, cv_power, cv_coleco)
 STD_ROM_FN(cv_power)
 
 struct BurnDriver BurnDrvcv_power = {
-	"cv_power", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_power", NULL, "cv_coleco", NULL, "1984",
 	"Power Lords: Quest for Volcan (Prototype)\0", NULL, "Probe 2000", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4341,7 +4340,7 @@ STDROMPICKEXT(cv_smurfply, cv_smurfply, cv_coleco)
 STD_ROM_FN(cv_smurfply)
 
 struct BurnDriver BurnDrvcv_smurfply = {
-	"cv_smurfply", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_smurfply", NULL, "cv_coleco", NULL, "1982",
 	"Smurf Play and Learn (Prototype)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4364,7 +4363,7 @@ STDROMPICKEXT(cv_spyhuntp, cv_spyhuntp, cv_coleco)
 STD_ROM_FN(cv_spyhuntp)
 
 struct BurnDriver BurnDrvcv_spyhuntp = {
-	"cv_spyhuntp", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_spyhuntp", NULL, "cv_coleco", NULL, "1984",
 	"Spy Hunter (Prototype, v22)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4387,7 +4386,7 @@ STDROMPICKEXT(cv_spyhuntp1, cv_spyhuntp1, cv_coleco)
 STD_ROM_FN(cv_spyhuntp1)
 
 struct BurnDriver BurnDrvcv_spyhuntp1 = {
-	"cv_spyhuntp1", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_spyhuntp1", NULL, "cv_coleco", NULL, "1984",
 	"Spy Hunter (Prototype, v13)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4408,7 +4407,7 @@ STDROMPICKEXT(cv_steam, cv_steam, cv_coleco)
 STD_ROM_FN(cv_steam)
 
 struct BurnDriver BurnDrvcv_steam = {
-	"cv_steam", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_steam", NULL, "cv_coleco", NULL, "1984",
 	"Steamroller (Prototype)\0", NULL, "Activision", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4431,7 +4430,7 @@ STDROMPICKEXT(cv_superdk, cv_superdk, cv_coleco)
 STD_ROM_FN(cv_superdk)
 
 struct BurnDriver BurnDrvcv_superdk = {
-	"cv_superdk", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_superdk", NULL, "cv_coleco", NULL, "1982",
 	"Super DK! (Prototype)\0", NULL, "Nintendo", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4452,7 +4451,7 @@ STDROMPICKEXT(cv_sword, cv_sword, cv_coleco)
 STD_ROM_FN(cv_sword)
 
 struct BurnDriver BurnDrvcv_sword = {
-	"cv_sword", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_sword", NULL, "cv_coleco", NULL, "1983",
 	"Sword and Sorcerer (Prototype)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4472,7 +4471,7 @@ STDROMPICKEXT(cv_hustler, cv_hustler, cv_coleco)
 STD_ROM_FN(cv_hustler)
 
 struct BurnDriver BurnDrvcv_hustler = {
-	"cv_hustler", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_hustler", NULL, "cv_coleco", NULL, "1984",
 	"Video Hustler (Prototype)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4492,7 +4491,7 @@ STDROMPICKEXT(cv_hustler1, cv_hustler1, cv_coleco)
 STD_ROM_FN(cv_hustler1)
 
 struct BurnDriver BurnDrvcv_hustler1 = {
-	"cv_hustler1", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_hustler1", NULL, "cv_coleco", NULL, "1984",
 	"Video Hustler (Prototype, 19840727)\0", NULL, "Konami", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4514,7 +4513,7 @@ STDROMPICKEXT(cv_wargamesp, cv_wargamesp, cv_coleco)
 STD_ROM_FN(cv_wargamesp)
 
 struct BurnDriver BurnDrvcv_wargamesp = {
-	"cv_wargamesp", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_wargamesp", NULL, "cv_coleco", NULL, "1984",
 	"War Games (Prototype, 0417)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4535,7 +4534,7 @@ STDROMPICKEXT(cv_yolk, cv_yolk, cv_coleco)
 STD_ROM_FN(cv_yolk)
 
 struct BurnDriver BurnDrvcv_yolk = {
-	"cv_yolk", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_yolk", NULL, "cv_coleco", NULL, "1983",
 	"The Yolks on You (Prototype)\0", NULL, "Fox Video Games", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4556,7 +4555,7 @@ STDROMPICKEXT(cv_cbsmon, cv_cbsmon, cv_coleco)
 STD_ROM_FN(cv_cbsmon)
 
 struct BurnDriver BurnDrvcv_cbsmon = {
-	"cv_cbsmon", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_cbsmon", NULL, "cv_coleco", NULL, "1982",
 	"CBS Colecovision Monitor Test\0", NULL, "CBS", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4576,7 +4575,7 @@ STDROMPICKEXT(cv_finaltst, cv_finaltst, cv_coleco)
 STD_ROM_FN(cv_finaltst)
 
 struct BurnDriver BurnDrvcv_finaltst = {
-	"cv_finaltst", "cv_coleco", "cv_coleco", NULL, "1982",
+	"cv_finaltst", NULL, "cv_coleco", NULL, "1982",
 	"Final Test Cartridge (Prototype)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4596,7 +4595,7 @@ STDROMPICKEXT(cv_suprtest, cv_suprtest, cv_coleco)
 STD_ROM_FN(cv_suprtest)
 
 struct BurnDriver BurnDrvcv_suprtest = {
-	"cv_suprtest", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_suprtest", NULL, "cv_coleco", NULL, "1983",
 	"Super Controller Test Cartridge\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4618,7 +4617,7 @@ STDROMPICKEXT(cv_musicbox, cv_musicbox, cv_coleco)
 STD_ROM_FN(cv_musicbox)
 
 struct BurnDriver BurnDrvcv_musicbox = {
-	"cv_musicbox", "cv_coleco", "cv_coleco", NULL, "1987",
+	"cv_musicbox", NULL, "cv_coleco", NULL, "1987",
 	"Music Box (Demo)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4639,7 +4638,7 @@ STDROMPICKEXT(cv_dncfntsy, cv_dncfntsy, cv_coleco)
 STD_ROM_FN(cv_dncfntsy)
 
 struct BurnDriver BurnDrvcv_dncfntsy = {
-	"cv_dncfntsy", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_dncfntsy", NULL, "cv_coleco", NULL, "1984",
 	"Dance Fantasy\0", NULL, "Fisher-Price", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4660,7 +4659,7 @@ STDROMPICKEXT(cv_facemakr, cv_facemakr, cv_coleco)
 STD_ROM_FN(cv_facemakr)
 
 struct BurnDriver BurnDrvcv_facemakr = {
-	"cv_facemakr", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_facemakr", NULL, "cv_coleco", NULL, "1983",
 	"Facemaker\0", NULL, "Spinnaker Software", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4681,7 +4680,7 @@ STDROMPICKEXT(cv_fracfevr, cv_fracfevr, cv_coleco)
 STD_ROM_FN(cv_fracfevr)
 
 struct BurnDriver BurnDrvcv_fracfevr = {
-	"cv_fracfevr", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_fracfevr", NULL, "cv_coleco", NULL, "1983",
 	"Fraction Fever\0", NULL, "Spinnaker Software", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4702,7 +4701,7 @@ STDROMPICKEXT(cv_jukebox, cv_jukebox, cv_coleco)
 STD_ROM_FN(cv_jukebox)
 
 struct BurnDriver BurnDrvcv_jukebox = {
-	"cv_jukebox", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_jukebox", NULL, "cv_coleco", NULL, "1984",
 	"Juke Box\0", NULL, "Spinnaker Software Corp", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4723,7 +4722,7 @@ STDROMPICKEXT(cv_memmanor, cv_memmanor, cv_coleco)
 STD_ROM_FN(cv_memmanor)
 
 struct BurnDriver BurnDrvcv_memmanor = {
-	"cv_memmanor", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_memmanor", NULL, "cv_coleco", NULL, "1984",
 	"Memory Manor\0", NULL, "Fisher-Price", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4744,7 +4743,7 @@ STDROMPICKEXT(cv_skiing, cv_skiing, cv_coleco)
 STD_ROM_FN(cv_skiing)
 
 struct BurnDriver BurnDrvcv_skiing = {
-	"cv_skiing", "cv_coleco", "cv_coleco", NULL, "1986",
+	"cv_skiing", NULL, "cv_coleco", NULL, "1986",
 	"Skiing\0", NULL, "Telegames", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4767,7 +4766,7 @@ STDROMPICKEXT(cv_alcazar, cv_alcazar, cv_coleco)
 STD_ROM_FN(cv_alcazar)
 
 struct BurnDriver BurnDrvcv_alcazar = {
-	"cv_alcazar", "cv_coleco", "cv_coleco", NULL, "1985",
+	"cv_alcazar", NULL, "cv_coleco", NULL, "1985",
 	"Alcazar: The Forgotten Fortress\0", NULL, "Telegames", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4790,7 +4789,7 @@ STDROMPICKEXT(cv_cabbshow, cv_cabbshow, cv_coleco)
 STD_ROM_FN(cv_cabbshow)
 
 struct BurnDriver BurnDrvcv_cabbshow = {
-	"cv_cabbshow", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_cabbshow", NULL, "cv_coleco", NULL, "1984",
 	"Cabbage Patch Kids Picture Show\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4813,7 +4812,7 @@ STDROMPICKEXT(cv_galaxian, cv_galaxian, cv_coleco)
 STD_ROM_FN(cv_galaxian)
 
 struct BurnDriver BurnDrvcv_galaxian = {
-	"cv_galaxian", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_galaxian", NULL, "cv_coleco", NULL, "1983",
 	"Galaxian\0", NULL, "Atarisoft", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4836,7 +4835,7 @@ STDROMPICKEXT(cv_galaxiana, cv_galaxiana, cv_coleco)
 STD_ROM_FN(cv_galaxiana)
 
 struct BurnDriver BurnDrvcv_galaxiana = {
-	"cv_galaxiana", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_galaxiana", NULL, "cv_coleco", NULL, "1983",
 	"Galaxian (Alt)\0", NULL, "Atarisoft", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4859,7 +4858,7 @@ STDROMPICKEXT(cv_monkey, cv_monkey, cv_coleco)
 STD_ROM_FN(cv_monkey)
 
 struct BurnDriver BurnDrvcv_monkey = {
-	"cv_monkey", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_monkey", NULL, "cv_coleco", NULL, "1984",
 	"Monkey Academy\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4882,7 +4881,7 @@ STDROMPICKEXT(cv_smurfpnt, cv_smurfpnt, cv_coleco)
 STD_ROM_FN(cv_smurfpnt)
 
 struct BurnDriver BurnDrvcv_smurfpnt = {
-	"cv_smurfpnt", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_smurfpnt", NULL, "cv_coleco", NULL, "1983",
 	"Smurf Paint 'n' Play Workshop\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4905,7 +4904,7 @@ STDROMPICKEXT(cv_sabaseb, cv_sabaseb, cv_coleco)
 STD_ROM_FN(cv_sabaseb)
 
 struct BurnDriver BurnDrvcv_sabaseb = {
-	"cv_sabaseb", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_sabaseb", NULL, "cv_coleco", NULL, "1983",
 	"Super Action Baseball\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4928,7 +4927,7 @@ STDROMPICKEXT(cv_suprdkjr, cv_suprdkjr, cv_coleco)
 STD_ROM_FN(cv_suprdkjr)
 
 struct BurnDriver BurnDrvcv_suprdkjr = {
-	"cv_suprdkjr", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_suprdkjr", NULL, "cv_coleco", NULL, "1983",
 	"Super DK! Junior (Prototype)\0", NULL, "Nintendo", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4951,8 +4950,8 @@ STDROMPICKEXT(cv_tunnels, cv_tunnels, cv_coleco)
 STD_ROM_FN(cv_tunnels)
 
 struct BurnDriver BurnDrvcv_tunnels = {
-	"cv_tunnels", "cv_coleco", "cv_coleco", NULL, "1983",
-	"Tunnels n Trolls (Demo)\0", NULL, "Coleco", "ColecoVision",
+	"cv_tunnels", NULL, "cv_coleco", NULL, "1983",
+	"Tunnels &amp; Trolls (Demo)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_tunnelsRomInfo, cv_tunnelsRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
@@ -4974,7 +4973,7 @@ STDROMPICKEXT(cv_warroom, cv_warroom, cv_coleco)
 STD_ROM_FN(cv_warroom)
 
 struct BurnDriver BurnDrvcv_warroom = {
-	"cv_warroom", "cv_coleco", "cv_coleco", NULL, "1983",
+	"cv_warroom", NULL, "cv_coleco", NULL, "1983",
 	"War Room\0", NULL, "Probe 2000", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4995,7 +4994,7 @@ STDROMPICKEXT(cv_wordfeud, cv_wordfeud, cv_coleco)
 STD_ROM_FN(cv_wordfeud)
 
 struct BurnDriver BurnDrvcv_wordfeud = {
-	"cv_wordfeud", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_wordfeud", NULL, "cv_coleco", NULL, "1984",
 	"Word Feud\0", NULL, "K-Tel", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -5018,7 +5017,7 @@ STDROMPICKEXT(cv_ttennis, cv_ttennis, cv_coleco)
 STD_ROM_FN(cv_ttennis)
 
 struct BurnDriver BurnDrvcv_ttennis = {
-	"cv_ttennis", "cv_coleco", "cv_coleco", NULL, "1984",
+	"cv_ttennis", NULL, "cv_coleco", NULL, "1984",
 	"Tournament Tennis\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,

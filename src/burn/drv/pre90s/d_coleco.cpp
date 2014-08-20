@@ -578,6 +578,7 @@ struct BurnDriver BurnDrvcv_danslither = {
 };
 
 // End of driver, the following driver info. has been synthesized from hash/coleco.xml of MESS
+// Note: when re-converting coleco.xml, make sure to change "&amp;" to "and"!
 
 // Castelo
 
@@ -1131,7 +1132,7 @@ STD_ROM_FN(cv_choplift)
 
 struct BurnDriver BurnDrvcv_choplift = {
 	"cv_choplift", NULL, "cv_coleco", NULL, "1984",
-	"Choplifter!\0", NULL, "Coleco", "ColecoVision",
+	"Choplifter!\0", "corrupted sprites, use (Alt) version!", "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_chopliftRomInfo, cv_chopliftRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
@@ -1151,7 +1152,7 @@ STDROMPICKEXT(cv_choplifta, cv_choplifta, cv_coleco)
 STD_ROM_FN(cv_choplifta)
 
 struct BurnDriver BurnDrvcv_choplifta = {
-	"cv_choplifta", NULL, "cv_coleco", NULL, "1984",
+	"cv_choplifta", "cv_choplift", "cv_coleco", NULL, "1984",
 	"Choplifter! (Alt)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
@@ -4950,7 +4951,7 @@ STD_ROM_FN(cv_tunnels)
 
 struct BurnDriver BurnDrvcv_tunnels = {
 	"cv_tunnels", NULL, "cv_coleco", NULL, "1983",
-	"Tunnels &amp; Trolls (Demo)\0", NULL, "Coleco", "ColecoVision",
+	"Tunnels and Trolls (Demo)\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_tunnelsRomInfo, cv_tunnelsRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,

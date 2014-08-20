@@ -2092,7 +2092,7 @@ static struct BurnRomInfo earthjkrpRomDesc[] = {
 STD_ROM_PICK(earthjkrp)
 STD_ROM_FN(earthjkrp)
 
-struct BurnDriverD BurnDrvEarthjkrp = {
+struct BurnDriver BurnDrvEarthjkrp = {
 	"earthjkrp", "earthjkr", NULL, NULL, "1993",
 	"U.N. Defense Force: Earth Joker (Japan, prototype?)\0", NULL, "Visco", "Taito Misc",
 	NULL, NULL, NULL, NULL,

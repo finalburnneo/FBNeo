@@ -32,6 +32,12 @@ static struct BurnRomInfo emptyRomDesc[] = {
 };
 
 static struct BurnInputInfo ColecoInputList[] = {
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		}, // 13
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 left"	},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
+	{"P1 Fire 1",	BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 1"	},
+	{"P1 Fire 2",	BIT_DIGITAL,	DrvJoy1 + 14,	"p1 fire 2"	},
 	{"P1 0",		BIT_DIGITAL,	DrvJoy1 +  0,	"p1 0"		}, //  0
 	{"P1 1",		BIT_DIGITAL,	DrvJoy1 +  1,	"p1 1"		},
 	{"P1 2",		BIT_DIGITAL,	DrvJoy1 +  2,	"p1 2"		},
@@ -43,15 +49,14 @@ static struct BurnInputInfo ColecoInputList[] = {
 	{"P1 8",		BIT_DIGITAL,	DrvJoy1 +  8,	"p1 8"		},
 	{"P1 9",		BIT_DIGITAL,	DrvJoy1 +  9,	"p1 9"		},
 	{"P1 #",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 #"		},
-	{"P1 .",		BIT_DIGITAL,	DrvJoy1 + 11,	"p1 ."		},
-	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 14,	"p1 fire 2"	},
+	{"P1 *",		BIT_DIGITAL,	DrvJoy1 + 11,	"p1 *"		},
 
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		}, // 13
-	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 left"	},
-	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 1"	},
-
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 up"		}, // 31
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 left"	},
+	{"P2 Right",	BIT_DIGITAL,	DrvJoy4 + 1,	"p2 right"	},
+	{"P2 Fire 1",	BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 1"	},
+	{"P2 Fire 2",	BIT_DIGITAL,	DrvJoy3 + 14,	"p2 fire 2"	},
 	{"P2 0",		BIT_DIGITAL,	DrvJoy3 +  0,	"p2 0"		}, // 18
 	{"P2 1",		BIT_DIGITAL,	DrvJoy3 +  1,	"p2 1"		},
 	{"P2 2",		BIT_DIGITAL,	DrvJoy3 +  2,	"p2 2"		},
@@ -63,14 +68,7 @@ static struct BurnInputInfo ColecoInputList[] = {
 	{"P2 8",		BIT_DIGITAL,	DrvJoy3 +  8,	"p2 8"		},
 	{"P2 9",		BIT_DIGITAL,	DrvJoy3 +  9,	"p2 9"		},
 	{"P2 #",		BIT_DIGITAL,	DrvJoy3 + 10,	"p2 #"		},
-	{"P2 .",		BIT_DIGITAL,	DrvJoy3 + 11,	"p2 ."		},
-	{"P2 Button 2",	BIT_DIGITAL,	DrvJoy3 + 14,	"p2 fire 2"	},
-
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 up"		}, // 31
-	{"P2 Right",	BIT_DIGITAL,	DrvJoy4 + 1,	"p2 right"	},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 left"	},
-	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 1"	},
+	{"P2 *",		BIT_DIGITAL,	DrvJoy3 + 11,	"p2 *"		},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		}, // 36 - 0x24
 	{"Controller Select",	BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},

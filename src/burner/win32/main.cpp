@@ -844,7 +844,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 	AppDirectory();								// Set current directory to be the applications directory
 
 	// Make sure there are roms and cfg subdirectories
-	TCHAR szDirs[23][MAX_PATH] = {
+	TCHAR szDirs[25][MAX_PATH] = {
 		{_T("config")},
 		{_T("config/games")},
 		{_T("config/ips")},
@@ -869,9 +869,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 		{_T("pce/")},
 		{_T("sgx/")},
 		{_T("tg16/")},
+		{_T("sg1000/")},
+		{_T("coleco/")},
 	};
 
-	for(int x = 0; x < 23; x++) {
+	for(int x = 0; x < 25; x++) {
 		CreateDirectory(szDirs[x], NULL);
 	}
 

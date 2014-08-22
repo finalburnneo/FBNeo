@@ -8972,8 +8972,8 @@ static struct BurnRomInfo keroppiRomDesc[] = {
 	{ "keroppi jr. code (u10) v1.0.u10", 0x40000, 0x1fc2e895, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "keroppi jr. code (u9) v1.0.u9",   0x40000, 0xe0599e7b, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "keroppi jr. chr(u12) v1.0.u12", 	0x80000, 0x6f4dae98, 0x03 | BRF_GRA },            //  2
-	{ "keroppi jr. chr(u11) v1.0.u11", 	0x80000, 0x74148c23, 0x03 | BRF_GRA },            //  3
+	{ "keroppi jr. chr(u11) v1.0.u11", 	0x80000, 0x74148c23, 0x03 | BRF_GRA },            //  2
+	{ "keroppi jr. chr(u12) v1.0.u12", 	0x80000, 0x6f4dae98, 0x03 | BRF_GRA },            //  3
 
 	{ "keroppi jr. snd (u15) v1.0.u15",	0x80000, 0xc98dacf0, 0x06 | BRF_SND },            //  4 x1-010 Samples
 	{ "keroppi jr. snd (u16) v1.0.u16",	0x80000, 0xd61e5a32, 0x06 | BRF_SND },            //  5
@@ -8982,13 +8982,21 @@ static struct BurnRomInfo keroppiRomDesc[] = {
 STD_ROM_PICK(keroppi)
 STD_ROM_FN(keroppi)
 
+static INT32 keroppiInit()
+{
+	DrvSetVideoOffsets(0, 0, 0, 0);
+	DrvSetColorOffsets(0, 0, 0);
+
+	return DrvInit(pairlove68kInit, 7159090, SET_IRQLINES(2, 1), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, -1, -1));
+}
+
 struct BurnDriver BurnDrvKeroppi = {
 	"keroppi", NULL, NULL, NULL, "1995",
 	"Kero Kero Keroppi's Let's Play Together (USA, Version 2.0)\0", NULL, "American Sammy", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SETA1, GBF_MINIGAMES, 0,
 	NULL, keroppiRomInfo, keroppiRomName, NULL, NULL, KeroppiInputInfo, KeroppiDIPInfo,
-	orbsInit, DrvExit, DrvFrame, setaNoLayersDraw, DrvScan, &DrvRecalc, 0x200,
+	keroppiInit, DrvExit, DrvFrame, setaNoLayersDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
 

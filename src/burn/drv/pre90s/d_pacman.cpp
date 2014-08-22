@@ -5541,6 +5541,42 @@ struct BurnDriver BurnDrvponpoko = {
 };
 
 
+// Candory (Bootleg)
+
+static struct BurnRomInfo CandoryRomDesc[] = {
+	{ "candory.1",    0x1000, 0xffa3c004, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "candory.2",    0x1000, 0x4a496866, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "candory.3",    0x1000, 0x17da6ca3, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "candory.4",    0x1000, 0x9d39a565, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "candory.5",    0x1000, 0x54ca3d7d, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "candory.6",    0x1000, 0x3055c7e0, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "candory.7",    0x1000, 0x3cbe47ca, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "candory.8",    0x1000, 0x04b63fc6, 1 | BRF_ESS | BRF_PRG },	//  7
+
+	{ "candory.v2",   0x1000, 0x7d16bdff, 2 | BRF_GRA },			//  8 Graphics
+	{ "candory.v1",   0x1000, 0xe08ac188, 2 | BRF_GRA },			//  9
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 10 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 11
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 12 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 13 Timing Prom (not used)
+};
+
+STD_ROM_PICK(Candory)
+STD_ROM_FN(Candory)
+
+struct BurnDriver BurnDrvCandory = {
+	"candory", "ponpoko", NULL, NULL, "1982",
+	"Candory (Bootleg)\0", NULL, "Bootleg", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PACMAN, GBF_PLATFORM, 0,
+	NULL, CandoryRomInfo, CandoryRomName, NULL, NULL, ponpokoInputInfo, ponpokoDIPInfo,
+	ponpokoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	288, 224, 4, 3
+};
+
+
 // Ponpoko (Venture Line)
 
 static struct BurnRomInfo ponpokovRomDesc[] = {

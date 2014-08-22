@@ -816,7 +816,7 @@ static const struct game_keys keys_table[] =
 	{ "ssf2tu",     { 0x94fa8902,0x4c77143f }, 0x400000 },	// 0838 0007 2000  btst    #7,$2000
 	{ "ssf2tur1",   { 0x94fa8902,0x4c77143f }, 0x400000 },	// 0838 0007 2000  btst    #7,$2000
 	{ "ssf2xj",     { 0x942a5702,0x05ac140e }, 0x400000 },	// 0838 0007 2000  btst    #7,$2000
-	{ "ssf2xjr",    { 0x943c2b02,0x7acd1422 }, 0x400000 },  // 0838 0007 2000 btst #7,$2000 // curious, not the usual Japan key on the rent version
+	{ "ssf2xjr",    { 0x943c2b02,0x7acd1422 }, 0x400000 },  // 0838 0007 2000  btst    #7,$2000 // curious, not the usual Japan key on the rent version
 	{ "xmcota",     { 0x3bc6eda4,0x97f80251 }, 0x100000 },	// 0C80 1972 0301  cmpi.l  #$19720301,D0
 	{ "xmcotar1",   { 0x3bc6eda4,0x97f80251 }, 0x100000 },	// 0C80 1972 0301  cmpi.l  #$19720301,D0
 	{ "xmcotau",    { 0x32a57ecd,0x98016f4b }, 0x100000 },	// 0C80 1972 0301  cmpi.l  #$19720301,D0
@@ -870,7 +870,7 @@ static const struct game_keys keys_table[] =
 	{ "nwarrb",     { 0x17c67109,0xb7362a20 }, 0x180000 },	// 0838 0000 6160  btst    #0,$6160
 	{ "nwarra",     { 0x4e940d0c,0x39b861a4 }, 0x180000 },	// 0838 0000 6160  btst    #0,$6160
 	{ "vhuntj",     { 0x1135b2c3,0xa4e9d7f2 }, 0x180000 },	// 0838 0000 6160  btst    #0,$6160
-	{ "vhuntjr1s",  { 0x1135b2c3,0xa4e9d7f2 }, 0x180000 },  // 0838 0000 6160 btst #0,$6160
+	{ "vhuntjr1s",  { 0x1135b2c3,0xa4e9d7f2 }, 0x180000 },  // 0838 0000 6160  btst    #0,$6160
 	{ "vhuntjr1",   { 0x1135b2c3,0xa4e9d7f2 }, 0x180000 },	// 0838 0000 6160  btst    #0,$6160
 	{ "vhuntjr2",   { 0x1135b2c3,0xa4e9d7f2 }, 0x180000 },	// 0838 0000 6160  btst    #0,$6160
 	{ "sfa",        { 0x0f895d6e,0xc4273a1b }, 0x080000 },	// 0C80 0564 2194  cmpi.l  #$05642194,D0
@@ -887,10 +887,11 @@ static const struct game_keys keys_table[] =
 	{ "sfzhr1",     { 0x876b0e39,0x5ca24fd1 }, 0x080000 },	// 0C80 0564 2194  cmpi.l  #$05642194,D0
 	{ "sfzb",       { 0xef415bd3,0x7a92c680 }, 0x080000 },	// 0C80 0564 2194  cmpi.l  #$05642194,D0
 	{ "sfzbr1",     { 0xef415bd3,0x7a92c680 }, 0x080000 },	// 0C80 0564 2194  cmpi.l  #$05642194,D0
-	{ "mmancp2u",   { 0x054893fa,0x94642525 }, 0x100000 },    // 0C80 0564 2194  cmpi.l  #$05642194,D0
+	{ "mmancp2u",   { 0x054893fa,0x94642525 }, 0x100000 },  // 0C80 0564 2194  cmpi.l  #$05642194,D0
 	{ "rmancp2j",   { 0x07215501,0x37fa32d0 }, 0x100000 },	// 0C80 0564 2194  cmpi.l  #$05642194,D0
 	{ "19xx",       { 0x0e07181f,0x5fd0f080 }, 0x200000 },	// 0C81 0095 1101  cmpi.l  #$00951101,D1
 	{ "19xxa",      { 0xcce74cf5,0xb7da3711 }, 0x200000 },	// 0C81 0095 1101  cmpi.l  #$00951101,D1
+	{ "19xxar1",    { 0xcce74cf5,0xb7da3711 }, 0x200000 },	// 0C81 0095 1101  cmpi.l  #$00951101,D1
 	{ "19xxj",      { 0x00115df8,0x000ff87e }, 0x200000 },	// 0C81 0095 1101  cmpi.l  #$00951101,D1
 	{ "19xxjr1",    { 0x00115df8,0x000ff87e }, 0x200000 },	// 0C81 0095 1101  cmpi.l  #$00951101,D1
 	{ "19xxjr2",    { 0x00115df8,0x000ff87e }, 0x200000 },	// 0C81 0095 1101  cmpi.l  #$00951101,D1

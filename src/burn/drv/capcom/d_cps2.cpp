@@ -854,6 +854,31 @@ STD_ROM_PICK(Ninexx)
 STD_ROM_FN(Ninexx)
 
 static struct BurnRomInfo NinexxaRomDesc[] = {
+	{ "09xa.03b",      0x080000, 0x2e994897, CPS2_PRG_68K | BRF_ESS | BRF_PRG },  /* Yes it's actually 09xa, that's not a typo */
+	{ "09xa.04b",      0x080000, 0x6364d001, CPS2_PRG_68K | BRF_ESS | BRF_PRG },  /* Yes it's actually 09xa, that's not a typo */
+	{ "09xa.05b",      0x080000, 0x00c1949b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },  /* Yes it's actually 09xa, that's not a typo */
+	{ "09xa.06b",      0x080000, 0x363c1f6e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },  /* Yes it's actually 09xa, that's not a typo */
+	{ "19xa.07",       0x080000, 0x61c0296c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },  /* This one was different, it actually was 19xa */
+
+	{ "19x.13m",       0x080000, 0x427aeb18, CPS2_GFX | BRF_GRA },
+	{ "19x.15m",       0x080000, 0x63bdbf54, CPS2_GFX | BRF_GRA },
+	{ "19x.17m",       0x080000, 0x2dfe18b5, CPS2_GFX | BRF_GRA },
+	{ "19x.19m",       0x080000, 0xcbef9579, CPS2_GFX | BRF_GRA },
+	{ "19x.14m",       0x200000, 0xe916967c, CPS2_GFX | BRF_GRA },
+	{ "19x.16m",       0x200000, 0x6e75f3db, CPS2_GFX | BRF_GRA },
+	{ "19x.18m",       0x200000, 0x2213e798, CPS2_GFX | BRF_GRA },
+	{ "19x.20m",       0x200000, 0xab9d5b96, CPS2_GFX | BRF_GRA },
+
+	{ "19x.01",        0x020000, 0xef55195e, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "19x.11m",       0x200000, 0xd38beef3, CPS2_QSND | BRF_SND },
+	{ "19x.12m",       0x200000, 0xd47c96e2, CPS2_QSND | BRF_SND },
+};
+
+STD_ROM_PICK(Ninexxa)
+STD_ROM_FN(Ninexxa)
+
+static struct BurnRomInfo Ninexxar1RomDesc[] = {
 	{ "19xa.03",       0x080000, 0x0c20fd50, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "19xa.04",       0x080000, 0x1fc37508, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "19xa.05",       0x080000, 0x6c9cc4ed, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -875,8 +900,8 @@ static struct BurnRomInfo NinexxaRomDesc[] = {
 	{ "19x.12m",       0x200000, 0xd47c96e2, CPS2_QSND | BRF_SND },
 };
 
-STD_ROM_PICK(Ninexxa)
-STD_ROM_FN(Ninexxa)
+STD_ROM_PICK(Ninexxar1)
+STD_ROM_FN(Ninexxar1)
 
 static struct BurnRomInfo NinexxbRomDesc[] = {
 	{ "19xb.03a",      0x080000, 0x341bdf4a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -7478,10 +7503,20 @@ struct BurnDriver BurnDrvCps19xx = {
 
 struct BurnDriver BurnDrvCps19xxa = {
 	"19xxa", "19xx", NULL, NULL, "1995",
-	"19XX - the war against destiny (951207 Asia)\0", NULL, "Capcom", "CPS2",
+	"19XX - the war against destiny (960104 Asia)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
 	NULL, NinexxaRomInfo, NinexxaRomName, NULL, NULL, NineXXInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
+};
+
+struct BurnDriver BurnDrvCps19xxar1 = {
+	"19xxar1", "19xx", NULL, NULL, "1995",
+	"19XX - the war against destiny (951207 Asia)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, FBF_19XX,
+	NULL, Ninexxar1RomInfo, Ninexxar1RomName, NULL, NULL, NineXXInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };

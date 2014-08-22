@@ -715,6 +715,16 @@ int ProcessCmdLine()
 			write_datfile(DAT_SGX_ONLY, stdout);
 			return 1;
 		}
+
+		if (_tcscmp(szName, _T("-listinfosg1000only")) == 0) {
+			write_datfile(DAT_SG1000_ONLY, stdout);
+			return 1;
+		}
+
+		if (_tcscmp(szName, _T("-listinfocolecoonly")) == 0) {
+			write_datfile(DAT_COLECO_ONLY, stdout);
+			return 1;
+		}
 		
 		if (_tcscmp(szName, _T("-listextrainfo")) == 0) {
 			int nWidth;

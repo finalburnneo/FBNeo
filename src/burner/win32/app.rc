@@ -923,6 +923,8 @@ BEGIN
 			MENUITEM "Generate dat (PC-Engine only)...",		MENU_CLRMAME_PRO_XML_PCE_ONLY
 			MENUITEM "Generate dat (TurboGrafx16 only)...",		MENU_CLRMAME_PRO_XML_TG16_ONLY
 			MENUITEM "Generate dat (SuprGrafx only)...",		MENU_CLRMAME_PRO_XML_SGX_ONLY
+			MENUITEM "Generate dat (Sega SG-1000 only)...",		MENU_CLRMAME_PRO_XML_SG1000_ONLY
+			MENUITEM "Generate dat (ColecoVision only)...",		MENU_CLRMAME_PRO_XML_COLECO_ONLY
 	END
         MENUITEM SEPARATOR
         MENUITEM "Configure ROM paths...",				MENU_ROMDIRS

@@ -295,7 +295,9 @@ int CreateDatfileWindows(int bType)
 	if (bType == DAT_PCENGINE_ONLY) _sntprintf(szConsoleString, 64, _T(", PC-Engine only"));
 	if (bType == DAT_TG16_ONLY) _sntprintf(szConsoleString, 64, _T(", TurboGrafx16 only"));
 	if (bType == DAT_SGX_ONLY) _sntprintf(szConsoleString, 64, _T(", SuprGrafx only"));
-	
+	if (bType == DAT_SG1000_ONLY) _sntprintf(szConsoleString, 64, _T(", Sega SG-1000 only"));
+	if (bType == DAT_COLECO_ONLY) _sntprintf(szConsoleString, 64, _T(", ColecoVision only"));
+
 	TCHAR szProgramString[25];	
 	_sntprintf(szProgramString, 25, _T("ClrMame Pro XML"));
 	
@@ -1949,6 +1951,18 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_CLRMAME_PRO_XML_SGX_ONLY:
 			if (UseDialogs()) {
 				CreateDatfileWindows(DAT_SGX_ONLY);
+			}
+                        break;
+
+		case MENU_CLRMAME_PRO_XML_SG1000_ONLY:
+			if (UseDialogs()) {
+				CreateDatfileWindows(DAT_SG1000_ONLY);
+			}
+                        break;
+
+		case MENU_CLRMAME_PRO_XML_COLECO_ONLY:
+			if (UseDialogs()) {
+				CreateDatfileWindows(DAT_COLECO_ONLY);
 			}
 			break;
 

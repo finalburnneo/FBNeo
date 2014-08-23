@@ -2,7 +2,7 @@
 #include "tiles_generic.h"
 #include "math.h"
 
-#define TABLE_SIZE	0x10000 // excessive?
+#define TABLE_SIZE  0x10000 // excessive?
 
 struct vector_line {
 	INT32 x;
@@ -30,64 +30,28 @@ void vector_add_point(INT32 x, INT32 y, INT32 color, INT32 intensity)
 
 static void lineSimple(INT32 x0, INT32 y0, INT32 x1, INT32 y1, INT32 color, INT32 intensity)
 {
- 	INT32 dx = x1 - x0;
-	INT32 dy = y1 - y0;
-
 	color = color * 256 + intensity;
 
-	if (!dx && dy) // vertical line
-	{
-		INT32 sy = (y1 < y0) ? y1 : y0;
-		INT32 y2 = (y1 < y0) ? (y0 - y1) : (y1 - y0);
+	// http://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm
 
-		if (x1 >= 0 && x1 < nScreenWidth)
-		{
-			UINT16 *dst = pTransDraw + x1;
+	INT32 dx = abs(x1 - x0);
+	INT32 dy = abs(y1 - y0);
+	INT32 sx = x0 < x1 ? 1 : -1;
+	INT32 sy = y0 < y1 ? 1 : -1;
+	INT32 err = (dx>dy ? dx : -dy)/2, e2;
 
-			for (INT32 y = 0; y < y2; y++, sy++) {
-				if (sy >= 0 && sy < nScreenHeight) {
-					dst[sy * nScreenWidth] = color;
-				}
-			}
-		}
-	}
-	else if (!dy && dx) // horizontal line
-	{
-		INT32 sx = (x1 < x0) ? x1 : x0;
-		INT32 x2 = (x1 < x0) ? (x0 - x1) : (x1 - x0);
-
-		if (y1 >= 0 && y1 < nScreenHeight)
-		{
-			UINT16 *dst = pTransDraw + y1 * nScreenWidth;
-
-			for (INT32 x = 0; x < x2; x++, sx++) {
-				if (sx >= 0 && sx < nScreenWidth) {
-					dst[sx] = color;
-				}
-			}
-		}
-	}
-	else if (dx && dy) // can we optimize further?
-	{
-		INT32 md = (dy << 16) / dx;
-		INT32 zd = (y0 << 16) - (md * x0) + 0x8000; // + 0x8000 for rounding!
-
-		dx = (x1 > x0) ? 1 : -1;
-
-		while (x0 != x1) {
-			x0 += dx;
-			y0 =  ((md * x0) + zd) >> 16;
-
-			if (x0 >= 0 && x0 < nScreenWidth && y0 >= 0 && y0 < nScreenHeight) {
-				pTransDraw[y0 * nScreenWidth + x0] = color;
-			}
-		}
-	}
-	else // point
+	while (1)
 	{
 		if (x0 >= 0 && x0 < nScreenWidth && y0 >= 0 && y0 < nScreenHeight) {
 			pTransDraw[y0 * nScreenWidth + x0] = color;
 		}
+
+		if (x0 == x1 && y0 == y1) break;
+
+		e2 = err;
+
+		if (e2 >-dx) { err -= dy; x0 += sx; }
+		if (e2 < dy) { err += dx; y0 += sy; }
 	}
 }
 
@@ -148,11 +112,11 @@ INT32 vector_scan(INT32 nAction)
 {
 	struct BurnArea ba;
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
-		ba.Data	  = (UINT8*)vector_table;
-		ba.nLen	  = TABLE_SIZE * sizeof(vector_line);
+		ba.Data   = (UINT8*)vector_table;
+		ba.nLen   = TABLE_SIZE * sizeof(vector_line);
 		ba.szName = "Vector Table";
 		BurnAcb(&ba);
 

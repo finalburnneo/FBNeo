@@ -568,6 +568,20 @@ INT32 ZetGetPC(INT32 n)
 	}
 }
 
+INT32 ZetGetPrevPC(INT32 n)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetGetPrvPC called without init\n"));
+	if (nOpenedCPU == -1 && n < 0) bprintf(PRINT_ERROR, _T("ZetGetPrevPC called when no CPU open\n"));
+#endif
+
+	if (n < 0) {
+		return ActiveZ80GetPrevPC();
+	} else {
+		return ZetCPUContext[n]->reg.prvpc.d;
+	}
+}
+
 INT32 ZetBc(INT32 n)
 {
 #if defined FBA_DEBUG

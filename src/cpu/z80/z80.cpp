@@ -3660,6 +3660,11 @@ int ActiveZ80GetHL()
 	return Z80.hl.w.l;
 }
 
+int ActiveZ80GetPrevPC()
+{
+	return Z80.prvpc.d;
+}
+
 #if 0
 /****************************************************************************
  * Processor initialization

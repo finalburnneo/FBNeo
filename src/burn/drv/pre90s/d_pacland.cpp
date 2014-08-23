@@ -38,7 +38,7 @@ static UINT8 *coin_lockout;
 static UINT8 *palette_bank;
 
 static INT32 watchdog;
-
+static INT32 pl_lastbank = 0;
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[3];
@@ -137,6 +137,7 @@ STDDIPINFO(Pacland)
 
 static void bankswitch(INT32 nBank)
 {
+	pl_lastbank = nBank;
 	palette_bank[0] = (nBank & 0x18) >> 3;
 
 	nBank = (nBank & 0x07) * 0x2000;
@@ -277,6 +278,7 @@ static void pacland_mcu_write_port(UINT16 port, UINT8 data)
 	{
 		case 0x100:
 			coin_lockout[0] = data & 0x01;
+			// bprintf(0, _T("coin lockout\n"));
 			// coin counters ~data & 2 -> 0, ~data & 4 -> 1
 		return;
 
@@ -756,14 +758,14 @@ static INT32 DrvFrame()
 		}
 
 		DrvInputs[0] = (DrvInputs[0] & 0x7f) | (DrvDips[0] & 0x80);
-	//	if (coin_lockout[0]) DrvInputs[0] |= 0x0c;
+		if (coin_lockout[0]) DrvInputs[0] |= 0x0c;
 	}
 
-	INT32 nInterleave = nBurnSoundLen;
+	INT32 nInterleave = 100; // nBurnSoundLen;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 49152000 / 32 / 60, 49152000 / 8 / 4 / 60 }; // refresh 60.606060
 	INT32 nCyclesDone[2]  = { 0, 0 };
-
+        //bprintf(0, _T("%d,"),nBurnSoundLen);
 	M6809Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -812,7 +814,7 @@ static INT32 DrvFrame()
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
-	return 1; // Broken :(
+//	return 1; // Broken :( - almost fixed!? - dink
 
 	struct BurnArea ba;
 
@@ -823,8 +825,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_VOLATILE) {		
 		memset(&ba, 0, sizeof(ba));
 
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
+		ba.Data	  = AllMem;
+		ba.nLen	  = RamEnd - AllMem;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
@@ -832,10 +834,17 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		HD63701Scan(nAction);
 
 		NamcoSoundScan(nAction, pnMin);
-
 		BurnLEDScan(nAction, pnMin);
 
+		SCAN_VAR(watchdog);
 		SCAN_VAR(mcu_reset);
+		DrvRecalc = 1;
+
+		if (nAction & ACB_WRITE) {
+			M6809Open(0);
+			bankswitch(pl_lastbank);
+			M6809Close();
+		}
 	}
 
 	return 0;

@@ -376,7 +376,7 @@ static int DrvInit()
             for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
                 BurnDrvGetRomInfo(&ri, i);
 
-		if ((ri.nType & BRF_PRG) && (ri.nLen == 0x2000) && (i<10))
+		if ((ri.nType & BRF_PRG) && (ri.nLen == 0x2000 || ri.nLen == 0x1000) && (i<10))
 		{
                     BurnLoadRom(DrvCartROM+(i * 0x2000), i, 1);
                     //bprintf(0, _T("cv romload #%d\n"), i);
@@ -3518,7 +3518,7 @@ struct BurnDriver BurnDrvcv_rocky = {
 static struct BurnRomInfo cv_secalphaRomDesc[] = {
 	{ "secalpha.1",	0x02000, 0x9299539b, BRF_PRG | BRF_ESS },
 	{ "secalpha.2",	0x02000, 0xc8d6e83d, BRF_PRG | BRF_ESS },
-	{ "secalpha.3",	0x02000, 0x381b8234, BRF_PRG | BRF_ESS },
+	{ "secalpha.3",	0x01000, 0x354a3b2f, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_secalpha, cv_secalpha, cv_coleco)
@@ -3530,28 +3530,6 @@ struct BurnDriver BurnDrvcv_secalpha = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_secalphaRomInfo, cv_secalphaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
-};
-
-
-// Sector Alpha (Alt)
-
-static struct BurnRomInfo cv_secalphaaRomDesc[] = {
-	{ "secalpha.1",	0x02000, 0x9299539b, BRF_PRG | BRF_ESS },
-	{ "secalpha.2",	0x02000, 0xc8d6e83d, BRF_PRG | BRF_ESS },
-	{ "secalphaa.3",	0x02000, 0xec61013a, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(cv_secalphaa, cv_secalphaa, cv_coleco)
-STD_ROM_FN(cv_secalphaa)
-
-struct BurnDriver BurnDrvcv_secalphaa = {
-	"cv_secalphaa", "cv_secalpha", "cv_coleco", NULL, "1983",
-	"Sector Alpha (Alt)\0", NULL, "Spectravideo", "ColecoVision",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
-	CVGetZipName, cv_secalphaaRomInfo, cv_secalphaaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
 };

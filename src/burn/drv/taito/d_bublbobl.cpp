@@ -54,6 +54,8 @@ static BublboblCallbackFunc BublboblCallbackFunction;
 
 static UINT8 DrvMCUInUse;
 
+static INT32 bublbobl2 = 0;
+
 static INT32 mcu_address, mcu_latch;
 static UINT8 ddr1, ddr2, ddr3, ddr4;
 static UINT8 port1_in, port2_in, port3_in, port4_in;
@@ -114,15 +116,21 @@ STDINPUTINFO(Boblbobl)
 static inline void BublboblMakeInputs()
 {
 	DrvInput[0] = 0xf3;
-	if (DrvInputPort0[0]) DrvInput[0] -= 0x01;
-	if (DrvInputPort0[1]) DrvInput[0] -= 0x02;
-	if (DrvInputPort0[2]) DrvInput[0] |= 0x04;
-	if (DrvInputPort0[3]) DrvInput[0] |= 0x08;
-	if (DrvInputPort0[4]) DrvInput[0] -= 0x10;
-	if (DrvInputPort0[5]) DrvInput[0] -= 0x20;
-	if (DrvInputPort0[6]) DrvInput[0] -= 0x40;
-	if (DrvInputPort0[7]) DrvInput[0] -= 0x80;
-	
+	if (DrvInputPort0[0]) DrvInput[0] ^= 0x01;
+	if (DrvInputPort0[1]) DrvInput[0] ^= 0x02;
+	if (DrvInputPort0[2]) DrvInput[0] ^= 0x04;
+	if (DrvInputPort0[3]) DrvInput[0] ^= 0x08;
+	if (DrvInputPort0[4]) DrvInput[0] ^= 0x10;
+	if (DrvInputPort0[5]) DrvInput[0] ^= 0x20;
+	if (DrvInputPort0[6]) DrvInput[0] ^= 0x40;
+	if (DrvInputPort0[7]) DrvInput[0] ^= 0x80;
+
+	if (bublbobl2) {
+		DrvInput[0] ^= 0x8c;
+		// Swap coins
+		DrvInput[0] = (DrvInput[0] & 0xf3) | ((DrvInput[0] & 0x04) << 1) | ((DrvInput[0] & 0x08) >> 1);
+	}
+
 	DrvInput[1] = 0xff;
 	DrvInput[2] = 0xff;
 	for (INT32 i = 0; i < 8; i++) {
@@ -643,13 +651,13 @@ static struct BurnRomInfo Boblbobl2RomDesc[] = {
 	{ "a78-08.37",     0x08000, 0xae11a07b, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
 	
 	{ "a78-07.46",     0x08000, 0x4f9a26e8, BRF_ESS | BRF_PRG }, //  4	Z80 #3 Program 
-	
-	{ "gfx7.bin",      0x10000, 0x702f61c0, BRF_GRA },	     //  5	Tiles
-	{ "gfx8.bin",      0x10000, 0x677840e8, BRF_GRA },	     //  6
+
+	{ "gfx11.bin",     0x10000, 0x76f2b367, BRF_GRA },	     //  5	Tiles
+	{ "gfx10.bin",     0x10000, 0xd370f499, BRF_GRA },	     //  6
 	{ "a78-13.16",     0x08000, 0xd0af35c5, BRF_GRA },	     //  7
 	{ "a78-14.17",     0x08000, 0x7b5369a8, BRF_GRA },	     //  8
-	{ "gfx10.bin",     0x10000, 0xd370f499, BRF_GRA },	     //  9
-	{ "gfx11.bin",     0x10000, 0x76f2b367, BRF_GRA },	     //  10
+	{ "gfx8.bin",      0x10000, 0x677840e8, BRF_GRA },	     //  9
+	{ "gfx7.bin",      0x10000, 0x702f61c0, BRF_GRA },	     //  10
 	{ "a78-19.34",     0x08000, 0x66e9438c, BRF_GRA },	     //  11
 	{ "a78-20.35",     0x08000, 0x9ef863ad, BRF_GRA },	     //  12
 
@@ -1958,6 +1966,8 @@ static INT32 BoblboblCallback()
 static INT32 Boblbobl2Callback()
 {
 	INT32 nRet = 0;
+
+	bublbobl2 = 1;
 	
 	DrvTempRom = (UINT8 *)BurnMalloc(0x80000);
 
@@ -2269,6 +2279,8 @@ static INT32 DrvExit()
 	DrvSoundNmiPending = 0;
 	DrvSoundLatch = 0;	
 	DrvMCUInUse = 0;
+
+	bublbobl2 = 0;
 
 	mcu_latch = 0;
 	mcu_address = 0;
@@ -2689,11 +2701,11 @@ struct BurnDriver BurnDrvBoblbobl = {
 	NULL, 0x100, 256, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvBoblbobl2 = {
+struct BurnDriver BurnDrvBoblbobl2 = {
 	"boblbobl2", "bublbobl", NULL, NULL, "1986",
 	"Bobble Bobble (set 2)\0", NULL, "bootleg", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, Boblbobl2RomInfo, Boblbobl2RomName, NULL, NULL, BoblboblInputInfo, BoblboblDIPInfo,
 	Boblbobl2Init, BublboblExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3

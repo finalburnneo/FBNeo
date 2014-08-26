@@ -1,6 +1,6 @@
-alldir	= 	burn burn/devices burn/snd burn/drv burn/drv/capcom burn/drv/cave burn/drv/cps3 burn/drv/dataeast \
+alldir	= 	burn burn/devices burn/snd burn/drv burn/drv/capcom burn/drv/cave burn/drv/coleco burn/drv/cps3 burn/drv/dataeast \
 			burn/drv/galaxian burn/drv/irem burn/drv/konami burn/drv/megadrive burn/drv/pce burn/drv/pst90s burn/drv/pre90s \
-			burn/drv/neogeo burn/drv/pgm burn/drv/psikyo burn/drv/sega burn/drv/sms burn/drv/snes burn/drv/taito \
+			burn/drv/neogeo burn/drv/pgm burn/drv/psikyo burn/drv/sega burn/drv/sg1000 burn/drv/sms burn/drv/snes burn/drv/taito \
 			burn/drv/toaplan cpu cpu/a68k cpu/arm cpu/arm7 cpu/h6280 cpu/hd6309 cpu/i8039 cpu/konami cpu/m68k cpu/m6502 cpu/m6800 \
 			cpu/m6805 cpu/m6809 cpu/nec cpu/pic16c5x cpu/s2650 cpu/tlcs90 cpu/sh2 cpu/z80
 
@@ -44,11 +44,11 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_snowbro2.o d_tekipaki.o d_truxton.o d_truxton2.o d_vfive.o d_vimana.o d_zerowing.o \
 			\
 			d_4enraya.o d_1942.o d_1943.o d_ambush.o d_arabian.o d_armedf.o d_atetris.o d_aztarac.o d_baraduke.o d_bionicc.o \
-			d_blktiger.o d_blockout.o d_blueprnt.o d_bombjack.o d_capbowl.o d_coleco.o d_commando.o d_cybertnk.o d_ddragon.o d_djboy.o d_dkong.o \
+			d_blktiger.o d_blockout.o d_blueprnt.o d_bombjack.o d_capbowl.o d_commando.o d_cybertnk.o d_ddragon.o d_djboy.o d_dkong.o \
 			d_dynduke.o d_epos.o d_exedexes.o d_funkybee.o d_galaga.o d_gauntlet.o d_ginganin.o d_gng.o d_gunsmoke.o d_higemaru.o \
 			d_ikki.o d_jack.o d_kangaroo.o d_kyugo.o d_ladybug.o d_lwings.o d_lastduel.o d_markham.o d_marineb.o d_meijinsn.o \
 			d_mitchell.o d_mole.o d_momoko.o d_mrdo.o d_mrflea.o d_mustache.o d_mystston.o d_ninjakd2.o d_pacland.o d_pacman.o d_pac2650.o \
-			d_pkunwar.o d_prehisle.o d_punchout.o d_psychic5.o d_quizo.o d_rallyx.o d_renegade.o d_rpunch.o d_route16.o d_scregg.o d_sf.o d_sg1000.o \
+			d_pkunwar.o d_prehisle.o d_punchout.o d_psychic5.o d_quizo.o d_rallyx.o d_renegade.o d_rpunch.o d_route16.o d_scregg.o d_sf.o \
 			d_skyfox.o d_skykid.o d_snk68.o d_solomon.o d_sonson.o d_srumbler.o d_tail2nose.o d_tecmo.o d_terracre.o d_tigeroad.o d_toki.o \
 			d_vulgus.o d_wallc.o d_wc90.o d_wc90b.o d_wwfsstar.o d_xain.o \
 			\
@@ -68,7 +68,11 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			\
 			d_sms.o \
 			\
-			d_snes.o
+			d_snes.o \
+			\
+			d_coleco.o \
+			\
+			d_sg1000.o
 
 depobj	:= 	$(drvobj) \
 			\

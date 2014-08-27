@@ -2047,6 +2047,9 @@ static INT32 DrvFrame()
 
 	compile_inputs();
 
+	INT32 multiplier=3;
+	nInterleave = 256*multiplier;
+
 	// overclocking...
 	INT32 nSoundBufferPos = 0;
 	nCyclesTotal[0] = (INT32)((INT64)(9000000 / 60) * nBurnCPUSpeedAdjust / 0x0100);
@@ -2064,7 +2067,8 @@ static INT32 DrvFrame()
 		INT32 prev = VezTotalCycles();
 
 		nCyclesDone[0] += VezRun(segment);
-		scanline_interrupts(prev, segment, i); // update at hblank?
+		if ((i%multiplier)==(multiplier-1))
+			scanline_interrupts(prev, segment, i/multiplier); // update at hblank?
 		VezClose();
 
 		VezOpen(1);
@@ -2073,15 +2077,19 @@ static INT32 DrvFrame()
 		while (VezTotalCycles() < segment) {
 			nCyclesDone[1] += VezRun(segment - VezTotalCycles());
 		}
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			iremga20_update(0, pSoundBuf, nSegmentLength);
-			
-			nSoundBufferPos += nSegmentLength;
+
+		if ((i%multiplier)==(multiplier-1)) {
+			if (pBurnSoundOut) {
+				INT32 nSegmentLength = nBurnSoundLen / (nInterleave / multiplier);
+				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+				
+				BurnYM2151Render(pSoundBuf, nSegmentLength);
+				iremga20_update(0, pSoundBuf, nSegmentLength);
+				
+				nSoundBufferPos += nSegmentLength;
+			}
 		}
+
 		VezClose();
 	}
 
@@ -3244,11 +3252,11 @@ static INT32 nbbatmanInit()
 	return nRet;
 }
 
-struct BurnDriverD BurnDrvNbbatman = {
+struct BurnDriver BurnDrvNbbatman = {
 	"nbbatman", NULL, NULL, NULL, "1993",
 	"Ninja Baseball Batman (World)\0", "Imperfect sound and graphics", "Irem", "M92",
 	NULL, NULL, NULL, NULL,
-	0, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
 	NULL, nbbatmanRomInfo, nbbatmanRomName, NULL, NULL, p4CommonInputInfo, NbbatmanDIPInfo,
 	nbbatmanInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3
@@ -3282,11 +3290,11 @@ static struct BurnRomInfo nbbatmanuRomDesc[] = {
 STD_ROM_PICK(nbbatmanu)
 STD_ROM_FN(nbbatmanu)
 
-struct BurnDriverD BurnDrvNbbatmanu = {
+struct BurnDriver BurnDrvNbbatmanu = {
 	"nbbatmanu", "nbbatman", NULL, NULL, "1993",
 	"Ninja Baseball Batman (US)\0", "Imperfect sound and graphics", "Irem America", "M92",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
 	NULL, nbbatmanuRomInfo, nbbatmanuRomName, NULL, NULL, p4CommonInputInfo, NbbatmanDIPInfo,
 	nbbatmanInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3
@@ -3320,11 +3328,11 @@ static struct BurnRomInfo leaguemnRomDesc[] = {
 STD_ROM_PICK(leaguemn)
 STD_ROM_FN(leaguemn)
 
-struct BurnDriverD BurnDrvLeaguemn = {
+struct BurnDriver BurnDrvLeaguemn = {
 	"leaguemn", "nbbatman", NULL, NULL, "1993",
 	"Yakyuu Kakutou League-Man (Japan)\0", "Imperfect sound and graphics", "Irem", "M92",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
 	NULL, leaguemnRomInfo, leaguemnRomName, NULL, NULL, p4CommonInputInfo, NbbatmanDIPInfo,
 	nbbatmanInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3

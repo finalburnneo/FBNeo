@@ -1991,7 +1991,7 @@ static inline void DrvClearOpposites(UINT8* nJoystickInputs)
 
 static void compile_inputs()
 {
-	memset (DrvInput, 0, sizeof(DrvInput));
+	memset (DrvInput, 0, 5);
 
 	for (INT32 i = 0; i < 8; i++) {
 		DrvInput[0] |= (DrvJoy1[i] & 1) << i;

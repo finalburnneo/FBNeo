@@ -753,6 +753,37 @@ static struct BurnRomInfo Bub68705RomDesc[] = {
 STD_ROM_PICK(Bub68705)
 STD_ROM_FN(Bub68705)
 
+static struct BurnRomInfo Bub68705aRomDesc[] = {
+	{ "2.bin",         0x08000, 0x32c8305b, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "3-1.bin",       0x08000, 0x980c2615, BRF_ESS | BRF_PRG }, //	 1
+	{ "3.bin",         0x08000, 0xe6c698f2, BRF_ESS | BRF_PRG }, //	 2
+	
+	{ "4.bin",         0x08000, 0xae11a07b, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
+	
+	{ "1.bin",         0x08000, 0x4f9a26e8, BRF_ESS | BRF_PRG }, //  4	Z80 #3 Program 
+	
+	{ "a78-09.12",     0x08000, 0x20358c22, BRF_GRA },	     //  5	Tiles
+	{ "a78-10.13",     0x08000, 0x930168a9, BRF_GRA },	     //  6
+	{ "a78-11.14",     0x08000, 0x9773e512, BRF_GRA },	     //  7
+	{ "a78-12.15",     0x08000, 0xd045549b, BRF_GRA },	     //  8
+	{ "a78-13.16",     0x08000, 0xd0af35c5, BRF_GRA },	     //  9
+	{ "a78-14.17",     0x08000, 0x7b5369a8, BRF_GRA },	     //  10
+	{ "a78-15.30",     0x08000, 0x6b61a413, BRF_GRA },	     //  11
+	{ "a78-16.31",     0x08000, 0xb5492d97, BRF_GRA },	     //  12
+	{ "a78-17.32",     0x08000, 0xd69762d5, BRF_GRA },	     //  13
+	{ "a78-18.33",     0x08000, 0x9f243b68, BRF_GRA },	     //  14
+	{ "a78-19.34",     0x08000, 0x66e9438c, BRF_GRA },	     //  15
+	{ "a78-20.35",     0x08000, 0x9ef863ad, BRF_GRA },	     //  16
+	
+	{ "a71-25.41",     0x00100, 0x2d0f8545, BRF_GRA },	     //  17	PROMs
+	
+	{ "cpu68705.bin",  0x00800, 0x32bffbf4, BRF_ESS | BRF_PRG }, //  18	68705 Program Code
+};
+
+STD_ROM_PICK(Bub68705a)
+STD_ROM_FN(Bub68705a)
+
+
 static struct BurnRomInfo DlandRomDesc[] = {
 	{ "dl_3.u69",	   0x08000, 0x01eb3e4f, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "dl_5.u67",	   0x08000, 0x75740b61, BRF_ESS | BRF_PRG }, //  1
@@ -2733,10 +2764,20 @@ struct BurnDriver BurnDrvSboblboblb = {
 
 struct BurnDriver BurnDrvBub68705 = {
 	"bub68705", "bublbobl", NULL, NULL, "1986",
-	"Bubble Bobble (boolteg with 68705)\0", NULL, "bootleg", "Taito Misc",
+	"Bubble Bobble (boolteg with 68705, set 1)\0", NULL, "bootleg", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, Bub68705RomInfo, Bub68705RomName, NULL, NULL, BublboblInputInfo, BublboblDIPInfo,
+	Bub68705Init, BublboblExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x100, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvBub68705a = {
+	"bub68705a", "bublbobl", NULL, NULL, "1986",
+	"Bubble Bobble (boolteg with 68705, set 2)\0", NULL, "bootleg", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, Bub68705aRomInfo, Bub68705aRomName, NULL, NULL, BublboblInputInfo, BublboblDIPInfo,
 	Bub68705Init, BublboblExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };

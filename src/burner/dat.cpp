@@ -59,6 +59,41 @@ static void ReplaceGreaterThan(char *szBuffer, char *szGameName)
 	}
 }
 
+#define remove_driver_leader(HARDWARE_CODE, NUM_CHARS, NORMAL_PASS)									\
+	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CODE) {						\
+			char Temp[NUM_CHARS + 32];																\
+			INT32 Length;																			\
+			if (sgName[0]) {																		\
+				Length = strlen(sgName);															\
+				memset(Temp, 0, NUM_CHARS + 32);													\
+				strcpy(Temp, sgName);																\
+				memset(sgName, 0, NUM_CHARS);														\
+				for (INT32 pos = 0; pos < Length; pos++) {											\
+					sgName[pos] = Temp[pos + NUM_CHARS];											\
+				}																					\
+			}																						\
+			if (NORMAL_PASS) {																		\
+				if (spName[0]) {																	\
+					Length = strlen(spName);														\
+					memset(Temp, 0, NUM_CHARS + 32);												\
+					strcpy(Temp, spName);															\
+					memset(spName, 0, NUM_CHARS);													\
+					for (INT32 pos = 0; pos < Length; pos++) {										\
+						spName[pos] = Temp[pos + NUM_CHARS];										\
+					}																				\
+				}																					\
+				if (sbName[0]) {																	\
+					Length = strlen(sbName);														\
+					memset(Temp, 0, NUM_CHARS + 32);												\
+					strcpy(Temp, sbName);															\
+					memset(sbName, 0, NUM_CHARS);													\
+					for (INT32 pos = 0; pos < Length; pos++) {										\
+						sbName[pos] = Temp[pos + NUM_CHARS];										\
+					}																				\
+				}																					\
+			}																						\
+		}
+
 INT32 write_datfile(INT32 bType, FILE* fDat)
 {
 	INT32 nRet=0;
@@ -197,83 +232,12 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 			strcpy(ssName, BurnDrvGetTextA(DRV_SAMPLENAME));
 		}
 		
-		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE)
-			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_TG16)
-			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_COLECO)
-			) {
-			// remove the md_ or tg_ or cv_
-			char Temp[35];
-			INT32 Length;
-			if (sgName[0]) {
-				Length = strlen(sgName);
-				memset(Temp, 0, 35);
-				strcpy(Temp, sgName);
-				memset(sgName, 0, 32);
-				for (INT32 pos = 0; pos < Length; pos++) {
-					sgName[pos] = Temp[pos + 3];
-				}
-			}
-			if (spName[0]) {
-				Length = strlen(spName);
-				memset(Temp, 0, 35);
-				strcpy(Temp, spName);
-				memset(spName, 0, 32);
-				for (INT32 pos = 0; pos < Length; pos++) {
-					spName[pos] = Temp[pos + 3];
-				}
-			}
-		}
-
-		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SG1000)
-			) {
-			// remove the sg1k_
-			char Temp[35];
-			INT32 Length;
-			if (sgName[0]) {
-				Length = strlen(sgName);
-				memset(Temp, 0, 35);
-				strcpy(Temp, sgName);
-				memset(sgName, 0, 32);
-				for (INT32 pos = 0; pos < Length; pos++) {
-					sgName[pos] = Temp[pos + 5];
-				}
-			}
-			if (spName[0]) {
-				Length = strlen(spName);
-				memset(Temp, 0, 35);
-				strcpy(Temp, spName);
-				memset(spName, 0, 32);
-				for (INT32 pos = 0; pos < Length; pos++) {
-					spName[pos] = Temp[pos + 5];
-				}
-			}
-		}
-
-		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCENGINE)
-			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_SGX)
-			) {
-			// remove the pce__ or sgx__
-			char Temp[36];
-			INT32 Length;
-			if (sgName[0]) {
-				Length = strlen(sgName);
-				memset(Temp, 0, 36);
-				strcpy(Temp, sgName);
-				memset(sgName, 0, 32);
-				for (INT32 pos = 0; pos < Length; pos++) {
-					sgName[pos] = Temp[pos + 4];
-				}
-			}
-			if (spName[0]) {
-				Length = strlen(spName);
-				memset(Temp, 0, 36);
-				strcpy(Temp, spName);
-				memset(spName, 0, 32);
-				for (INT32 pos = 0; pos < Length; pos++) {
-					spName[pos] = Temp[pos + 4];
-				}
-			}
-		}
+		remove_driver_leader(HARDWARE_SEGA_MEGADRIVE, 3, 1)
+		remove_driver_leader(HARDWARE_PCENGINE_TG16, 3, 1)
+		remove_driver_leader(HARDWARE_COLECO, 3, 1)
+		remove_driver_leader(HARDWARE_SEGA_SG1000, 5, 1)
+		remove_driver_leader(HARDWARE_PCENGINE_PCENGINE, 4, 1)
+		remove_driver_leader(HARDWARE_PCENGINE_SGX, 4, 1)
 
 		// Report problems
 		if (nParentSelect==-1U)
@@ -504,6 +468,9 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 	// Do another pass over each of the games to find boardROMs
 	for (nBurnDrvActive=0; nBurnDrvActive<nBurnDrvCount; nBurnDrvActive++)
 	{
+		char sgName[32];
+		char spName[32];
+		char sbName[32];
 		INT32 i, nPass;
 
 		if (!(BurnDrvGetFlags() & BDF_BOARDROM)) {
@@ -543,8 +510,17 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_COLECO) && (bType == DAT_COLECO_ONLY)) {
 			continue;
 		}
+		
+		strcpy(sgName, BurnDrvGetTextA(DRV_NAME));
+		
+		remove_driver_leader(HARDWARE_SEGA_MEGADRIVE, 3, 0)
+		remove_driver_leader(HARDWARE_PCENGINE_TG16, 3, 0)
+		remove_driver_leader(HARDWARE_COLECO, 3, 0)
+		remove_driver_leader(HARDWARE_SEGA_SG1000, 5, 0)
+		remove_driver_leader(HARDWARE_PCENGINE_PCENGINE, 4, 0)
+		remove_driver_leader(HARDWARE_PCENGINE_SGX, 4, 0)
 
-		fprintf(fDat, "\t<game isbios=\"yes\" name=\"%s\">\n", BurnDrvGetTextA(DRV_NAME));
+		fprintf(fDat, "\t<game isbios=\"yes\" name=\"%s\">\n", sgName);
 		fprintf(fDat, "\t\t<description>%s</description>\n", DecorateGameName(nBurnDrvActive));
 		fprintf(fDat, "\t\t<year>%s</year>\n", BurnDrvGetTextA(DRV_DATE));
 		fprintf(fDat, "\t\t<manufacturer>%s</manufacturer>\n", BurnDrvGetTextA(DRV_MANUFACTURER));		

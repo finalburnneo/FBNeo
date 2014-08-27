@@ -900,6 +900,7 @@ BEGIN
            MENUITEM "Display mode indicator",				MENU_DISPLAYINDICATOR
            MENUITEM "Modeless menu",					MENU_MODELESS
            MENUITEM "Don't change Num Lock status",			MENU_NOCHANGENUMLOCK
+		   MENUITEM "Create support folders at runtime",	MENU_CREATEDIRS
            MENUITEM SEPARATOR
            POPUP "Set application thread priority"
            BEGIN
@@ -914,7 +915,7 @@ BEGIN
            MENUITEM "Use assembly MC68000 core",				MENU_ASSEMBLYCORE
            MENUITEM SEPARATOR
            MENUITEM "Save High Scores when supported",				MENU_SAVEHISCORES
-        END
+		END
         MENUITEM SEPARATOR
         POPUP    "Generate dat file"
         BEGIN

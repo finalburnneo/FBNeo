@@ -221,6 +221,7 @@ int ConfigAppLoad()
 		STR(szNeoCDCoverDir);
 
 		VAR(bNoChangeNumLock);
+		VAR(bAlwaysCreateSupportFolders);
 		
 		VAR(EnableHiscores);
 		
@@ -575,6 +576,9 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// If non-zero, don't change the status of the Num Lock key.\n"));
 	VAR(bNoChangeNumLock);
+	
+	_ftprintf(h, _T("\n// If non-zero, create support folders at program start.\n"));
+	VAR(bAlwaysCreateSupportFolders);
 	
 	_ftprintf(h, _T("\n// If non-zero, enable high score saving support.\n"));
 	VAR(EnableHiscores);

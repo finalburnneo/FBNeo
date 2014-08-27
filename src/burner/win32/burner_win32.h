@@ -101,6 +101,7 @@ extern TCHAR szAppBurnVer[16];
 
 extern bool bCmdOptUsed;
 extern bool bAlwaysProcessKeyboardInput;
+extern bool bAlwaysCreateSupportFolders;
 
 extern bool bNoChangeNumLock;
 extern bool bMonitorAutoCheck;

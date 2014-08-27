@@ -39,6 +39,7 @@ TCHAR szAppExeName[EXE_NAME_SIZE + 1];
 
 bool bCmdOptUsed = 0;
 bool bAlwaysProcessKeyboardInput = false;
+bool bAlwaysCreateSupportFolders = true;
 
 bool bNoChangeNumLock = 1;
 static bool bNumlockStatus;
@@ -808,6 +809,33 @@ int ProcessCmdLine()
 	return 0;
 }
 
+static void CreateSupportFolders()
+{
+	TCHAR szSupportDirs[16][MAX_PATH] = {
+		{_T("support/")},
+		{_T("support/previews/")},
+		{_T("support/titles/")},
+		{_T("support/icons/")},
+		{_T("support/cheats/")},
+		{_T("support/hiscores/")},
+		{_T("support/samples/")},
+		{_T("support/ips/")},
+		{_T("support/neocdz/")},
+		{_T("neocdiso/")},
+		// the below are named after the MESS software lists
+		{_T("megadriv/")},
+		{_T("pce/")},
+		{_T("sgx/")},
+		{_T("tg16/")},
+		{_T("sg1000/")},
+		{_T("coleco/")},
+	};
+	
+	for(int x = 0; x < 16; x++) {
+		CreateDirectory(szSupportDirs[x], NULL);
+	}
+}
+
 // Main program entry point
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd)
 {
@@ -844,7 +872,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 	AppDirectory();								// Set current directory to be the applications directory
 
 	// Make sure there are roms and cfg subdirectories
-	TCHAR szDirs[25][MAX_PATH] = {
+	TCHAR szDirs[9][MAX_PATH] = {
 		{_T("config")},
 		{_T("config/games")},
 		{_T("config/ips")},
@@ -854,26 +882,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 		{_T("roms")},
 		{_T("savestates")},
 		{_T("screenshots")},
-		{_T("support/")},
-		{_T("support/previews/")},
-		{_T("support/titles/")},
-		{_T("support/icons/")},
-		{_T("support/cheats/")},
-		{_T("support/hiscores/")},
-		{_T("support/samples/")},
-		{_T("support/ips/")},
-		{_T("support/neocdz/")},
-		{_T("neocdiso/")},
-		// the below are named after the MESS software lists
-		{_T("megadriv/")},
-		{_T("pce/")},
-		{_T("sgx/")},
-		{_T("tg16/")},
-		{_T("sg1000/")},
-		{_T("coleco/")},
 	};
 
-	for(int x = 0; x < 25; x++) {
+	for(int x = 0; x < 9; x++) {
 		CreateDirectory(szDirs[x], NULL);
 	}
 
@@ -892,6 +903,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 	}
 
 	if (!(AppInit())) {							// Init the application
+		if (bAlwaysCreateSupportFolders) CreateSupportFolders();
 		if (!(ProcessCmdLine())) {
 			MediaInit();
 

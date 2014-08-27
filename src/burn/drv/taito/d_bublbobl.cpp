@@ -643,7 +643,7 @@ static struct BurnRomInfo BoblboblRomDesc[] = {
 STD_ROM_PICK(Boblbobl)
 STD_ROM_FN(Boblbobl)
 
-static struct BurnRomInfo Boblbobl2RomDesc[] = {
+static struct BurnRomInfo SboblboblRomDesc[] = {
 	{ "cpu2-3.bin",    0x08000, 0x2d9107b6, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "bb5",           0x08000, 0x13118eb1, BRF_ESS | BRF_PRG }, //	 1
 	{ "cpu2-4.bin",    0x08000, 0x3f9fed10, BRF_ESS | BRF_PRG }, //	 2
@@ -664,10 +664,10 @@ static struct BurnRomInfo Boblbobl2RomDesc[] = {
 	{ "a71-25.41",     0x00100, 0x2d0f8545, BRF_GRA },	     //  13	PROMs
 };
 
-STD_ROM_PICK(Boblbobl2)
-STD_ROM_FN(Boblbobl2)
+STD_ROM_PICK(Sboblbobl)
+STD_ROM_FN(Sboblbobl)
 
-static struct BurnRomInfo SboblboaRomDesc[] = {
+static struct BurnRomInfo SboblboblaRomDesc[] = {
 	{ "1c.bin",        0x08000, 0xf304152a, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "1a.bin",        0x08000, 0x0865209c, BRF_ESS | BRF_PRG }, //	 1
 	{ "1b.bin",        0x08000, 0x1f29b5c0, BRF_ESS | BRF_PRG }, //	 2
@@ -692,10 +692,10 @@ static struct BurnRomInfo SboblboaRomDesc[] = {
 	{ "a71-25.41",     0x00100, 0x2d0f8545, BRF_GRA },	     //  17	PROMs
 };
 
-STD_ROM_PICK(Sboblboa)
-STD_ROM_FN(Sboblboa)
+STD_ROM_PICK(Sboblbobla)
+STD_ROM_FN(Sboblbobla)
 
-static struct BurnRomInfo SboblbobRomDesc[] = {
+static struct BurnRomInfo SboblboblbRomDesc[] = {
 	{ "bbb-3.rom",     0x08000, 0xf304152a, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "bb5",           0x08000, 0x13118eb1, BRF_ESS | BRF_PRG }, //	 1
 	{ "bbb-4.rom",     0x08000, 0x94c75591, BRF_ESS | BRF_PRG }, //	 2
@@ -720,8 +720,8 @@ static struct BurnRomInfo SboblbobRomDesc[] = {
 	{ "a71-25.41",     0x00100, 0x2d0f8545, BRF_GRA },	     //  17	PROMs
 };
 
-STD_ROM_PICK(Sboblbob)
-STD_ROM_FN(Sboblbob)
+STD_ROM_PICK(Sboblboblb)
+STD_ROM_FN(Sboblboblb)
 
 static struct BurnRomInfo Bub68705RomDesc[] = {
 	{ "2.bin",         0x08000, 0x32c8305b, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
@@ -1963,7 +1963,7 @@ static INT32 BoblboblCallback()
 	return 0;
 }
 
-static INT32 Boblbobl2Callback()
+static INT32 SboblboblCallback()
 {
 	INT32 nRet = 0;
 
@@ -2017,9 +2017,9 @@ static INT32 BoblboblInit()
 	return MachineInit();
 }
 
-static INT32 Boblbobl2Init()
+static INT32 SboblboblInit()
 {
-	BublboblCallbackFunction = Boblbobl2Callback;
+	BublboblCallbackFunction = SboblboblCallback;
 	
 	return MachineInit();
 }
@@ -2693,7 +2693,7 @@ struct BurnDriver BurnDrvBubbobr1 = {
 
 struct BurnDriver BurnDrvBoblbobl = {
 	"boblbobl", "bublbobl", NULL, NULL, "1986",
-	"Bobble Bobble (set 1)\0", NULL, "bootleg", "Taito Misc",
+	"Bobble Bobble (bootleg of Bubble Bobble)\0", NULL, "bootleg", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, BoblboblRomInfo, BoblboblRomName, NULL, NULL, BoblboblInputInfo, BoblboblDIPInfo,
@@ -2701,32 +2701,32 @@ struct BurnDriver BurnDrvBoblbobl = {
 	NULL, 0x100, 256, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvBoblbobl2 = {
-	"boblbobl2", "bublbobl", NULL, NULL, "1986",
-	"Bobble Bobble (set 2)\0", NULL, "bootleg", "Taito Misc",
+struct BurnDriver BurnDrvSboblbobl = {
+	"sboblbobl", "bublbobl", NULL, NULL, "1986",
+	"Super Bobble Bobble (bootleg, set 1)\0", NULL, "bootleg (Datsu)", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, Boblbobl2RomInfo, Boblbobl2RomName, NULL, NULL, BoblboblInputInfo, BoblboblDIPInfo,
-	Boblbobl2Init, BublboblExit, DrvFrame, NULL, DrvScan,
+	NULL, SboblboblRomInfo, SboblboblRomName, NULL, NULL, BoblboblInputInfo, BoblboblDIPInfo,
+	SboblboblInit, BublboblExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvSboblboa = {
-	"sboblboa", "bublbobl", NULL, NULL, "1986",
-	"Super Bobble Bobble (set 1)\0", NULL, "bootleg", "Taito Misc",
+struct BurnDriver BurnDrvSboblbobla = {
+	"sboblbobla", "bublbobl", NULL, NULL, "1986",
+	"Super Bobble Bobble (bootleg, set 2)\0", NULL, "bootleg", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, SboblboaRomInfo, SboblboaRomName, NULL, NULL, BoblboblInputInfo, BoblboblDIPInfo,
+	NULL, SboblboblaRomInfo, SboblboblaRomName, NULL, NULL, BoblboblInputInfo, BoblboblDIPInfo,
 	BoblboblInit, BublboblExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvSboblbob = {
-	"sboblbob", "bublbobl", NULL, NULL, "1986",
-	"Super Bobble Bobble (set 2)\0", NULL, "bootleg", "Taito Misc",
+struct BurnDriver BurnDrvSboblboblb = {
+	"sboblboblb", "bublbobl", NULL, NULL, "1986",
+	"Super Bobble Bobble (bootleg, set 3)\0", NULL, "bootleg", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, SboblbobRomInfo, SboblbobRomName, NULL, NULL, BoblboblInputInfo, SboblbobDIPInfo,
+	NULL, SboblboblbRomInfo, SboblboblbRomName, NULL, NULL, BoblboblInputInfo, SboblbobDIPInfo,
 	BoblboblInit, BublboblExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };

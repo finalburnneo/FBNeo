@@ -1979,9 +1979,19 @@ static INT32 DrvReDraw()
 	return 0;
 }
 
+static inline void DrvClearOpposites(UINT8* nJoystickInputs)
+{
+	if ((*nJoystickInputs & 0x03) == 0x03) {
+		*nJoystickInputs &= ~0x03;
+	}
+	if ((*nJoystickInputs & 0x0c) == 0x0c) {
+		*nJoystickInputs &= ~0x0c;
+	}
+}
+
 static void compile_inputs()
 {
-	memset (DrvInput, 0, 5);
+	memset (DrvInput, 0, sizeof(DrvInput));
 
 	for (INT32 i = 0; i < 8; i++) {
 		DrvInput[0] |= (DrvJoy1[i] & 1) << i;
@@ -1990,6 +2000,10 @@ static void compile_inputs()
 		DrvInput[3] |= (DrvJoy4[i] & 1) << i;
 		DrvInput[4] |= (DrvButton[i] & 1) << i;
 	}
+
+	// Clear Opposites
+	DrvClearOpposites(&DrvInput[0]);
+	DrvClearOpposites(&DrvInput[1]);
 }
 
 static void scanline_interrupts(INT32 prev, INT32 segment, INT32 scanline)

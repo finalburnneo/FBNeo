@@ -1644,7 +1644,7 @@ static INT32 RomLoad(INT32 v33off, INT32 gfxlen0, INT32 gfxlen1, INT32 gfxtype1,
 	if (BurnLoadRom(DrvV30ROM + 0x000001, 4, 2)) return 1;
 	if (BurnLoadRom(DrvV30ROM + 0x000000, 5, 2)) return 1;
 
-	UINT8 *tmp = (UINT8 *)BurnMalloc(0x200000);
+	UINT8 *tmp = (UINT8 *)BurnMalloc(0x800000);
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -2010,12 +2010,12 @@ static void scanline_interrupts(INT32 prev, INT32 segment, INT32 scanline)
 {
 	if (m92_sprite_buffer_timer) {
 		memcpy (DrvSprBuf, DrvSprRAM, 0x800);
-		nCyclesDone[0] += VezRun(347);
+		if (m92_kludge != 4) nCyclesDone[0] += VezRun(347);
 		m92_sprite_buffer_busy = 0x80;
 		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 4)/4, VEZ_IRQSTATUS_ACK);
 		VezRun(10);
 		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 4)/4, VEZ_IRQSTATUS_NONE);
-		nCyclesDone[0] += VezRun(segment - (VezTotalCycles() - prev));
+		if (m92_kludge != 4) nCyclesDone[0] += VezRun(segment - (VezTotalCycles() - prev));
 
 		m92_sprite_buffer_timer = 0;
 	}
@@ -3257,6 +3257,7 @@ static INT32 nbbatmanInit()
 {
 	INT32 nRet;
 
+	m92_kludge = 4;
 	nRet = DrvInit(gunforc2RomLoad, leagueman_decryption_table, 1, 0x80, 0x200000, 0x400000);
 
 	if (nRet == 0) {

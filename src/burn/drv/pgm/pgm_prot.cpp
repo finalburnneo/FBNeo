@@ -2666,7 +2666,6 @@ static void py2k2_asic27a_sim_command(UINT8 command)
 
 		case 0x99: // Reset?
 			asic27a_sim_key = 0x100;
-			photoy2k_seqpos = 0;
 			asic27a_sim_response = 0x880000 | (PgmInput[7] << 8);
 		break;
 

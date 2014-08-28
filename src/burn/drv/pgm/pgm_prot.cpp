@@ -2647,13 +2647,27 @@ static void py2k2_asic27a_sim_command(UINT8 command)
 {
 	switch (command)
 	{
-		case 0x99: // Reset?
-			asic27a_sim_key = 0x100;
-			asic27a_sim_response = 0x880000 | (PgmInput[7] << 8);
+		case 0x30: // Sprite sequence, advance to next sprite
 		break;
 
-		case 0x38: // ?
-			asic27a_sim_response = 0x880000;
+		case 0x32: // Sprite sequence, decode offset
+		break;
+
+	//	case 0x33:
+	//	case 0x34:
+	//	case 0x35: // table?
+	//	case 0x38: // ?
+	//	break;
+
+		// "CCHANGE.C 285 ( TIME >= VALUE1 ) && TIME <= ALL_LEV_TIME )
+		case 0xba: // ??
+			asic27a_sim_response = asic27a_sim_value + 1; // gets us in-game
+		break;
+
+		case 0x99: // Reset?
+			asic27a_sim_key = 0x100;
+			photoy2k_seqpos = 0;
+			asic27a_sim_response = 0x880000 | (PgmInput[7] << 8);
 		break;
 
 		case 0xc0:
@@ -2688,15 +2702,9 @@ static void py2k2_asic27a_sim_command(UINT8 command)
 		}
 		break;
 
-	//	case 0x32: // ?
-	//	break;
-
-	//	case 0xba: // almost definitely a table...
-	//	break;
-
 		default:
 			asic27a_sim_response = 0x880000;
-			bprintf (0, _T("Uknown ASIC Command %2.2x Value: %4.4x\n"), command, asic27a_sim_value);
+			bprintf (0, _T("Unknown ASIC Command %2.2x Value: %4.4x\n"), command, asic27a_sim_value);
 		break;
 	}
 }

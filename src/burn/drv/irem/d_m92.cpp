@@ -1332,6 +1332,9 @@ static void set_pf_info(INT32 layer, INT32 data)
 		ptr->enable = 0;
 	} else {
 		ptr->enable = 1;
+		memset(pf_control[layer], 0, 8); // clear pf_control on enable, fixes skewed background problems (f. ex. inthunt)
+		ptr->scrollx=0;
+		ptr->scrolly=0;
 		ptr->wide = (data & 0x04) ? 128 : 64;
 	}
 
@@ -2470,7 +2473,7 @@ static INT32 inthuntInit()
 
 struct BurnDriver BurnDrvInthunt = {
 	"inthunt", NULL, NULL, NULL, "1993",
-	"In The Hunt (World)\0", "Imperfect sound and graphics", "Irem", "M92",
+	"In The Hunt (World)\0", NULL, "Irem", "M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M92, GBF_HORSHOOT, 0,
 	NULL, inthuntRomInfo, inthuntRomName, NULL, NULL, p2CommonInputInfo, InthuntDIPInfo,
@@ -2508,7 +2511,7 @@ STD_ROM_FN(inthuntu)
 
 struct BurnDriver BurnDrvInthuntu = {
 	"inthuntu", "inthunt", NULL, NULL, "1993",
-	"In The Hunt (US)\0", "Imperfect sound and graphics", "Irem America", "M92",
+	"In The Hunt (US)\0", NULL, "Irem America", "M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M92, GBF_HORSHOOT, 0,
 	NULL, inthuntuRomInfo, inthuntuRomName, NULL, NULL, p2CommonInputInfo, InthuntDIPInfo,
@@ -2546,7 +2549,7 @@ STD_ROM_FN(kaiteids)
 
 struct BurnDriver BurnDrvKaiteids = {
 	"kaiteids", "inthunt", NULL, NULL, "1993",
-	"Kaitei Daisensou (Japan)\0", "Imperfect sound and graphics", "Irem", "M92",
+	"Kaitei Daisensou (Japan)\0", NULL, "Irem", "M92",
 	L"Kaitei Daisensou (Japan)\0\u776D\u955E\u2759\u2662\u894E\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M92, GBF_HORSHOOT, 0,
 	NULL, kaiteidsRomInfo, kaiteidsRomName, NULL, NULL, p2CommonInputInfo, InthuntDIPInfo,
@@ -3269,7 +3272,7 @@ static INT32 nbbatmanInit()
 
 struct BurnDriver BurnDrvNbbatman = {
 	"nbbatman", NULL, NULL, NULL, "1993",
-	"Ninja Baseball Batman (World)\0", "Imperfect sound and graphics", "Irem", "M92",
+	"Ninja Baseball Batman (World)\0", NULL, "Irem", "M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
 	NULL, nbbatmanRomInfo, nbbatmanRomName, NULL, NULL, p4CommonInputInfo, NbbatmanDIPInfo,
@@ -3307,7 +3310,7 @@ STD_ROM_FN(nbbatmanu)
 
 struct BurnDriver BurnDrvNbbatmanu = {
 	"nbbatmanu", "nbbatman", NULL, NULL, "1993",
-	"Ninja Baseball Batman (US)\0", "Imperfect sound and graphics", "Irem America", "M92",
+	"Ninja Baseball Batman (US)\0", NULL, "Irem America", "M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
 	NULL, nbbatmanuRomInfo, nbbatmanuRomName, NULL, NULL, p4CommonInputInfo, NbbatmanDIPInfo,
@@ -3345,7 +3348,7 @@ STD_ROM_FN(leaguemn)
 
 struct BurnDriver BurnDrvLeaguemn = {
 	"leaguemn", "nbbatman", NULL, NULL, "1993",
-	"Yakyuu Kakutou League-Man (Japan)\0", "Imperfect sound and graphics", "Irem", "M92",
+	"Yakyuu Kakutou League-Man (Japan)\0", NULL, "Irem", "M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
 	NULL, leaguemnRomInfo, leaguemnRomName, NULL, NULL, p4CommonInputInfo, NbbatmanDIPInfo,

@@ -3,7 +3,6 @@
 // Original port from MAME by OopsWare
 
 /*
-	save state
 	ssoldier graphics
 	ym sound is slow...
 	background alignment (bmasters, inthunt)
@@ -43,7 +42,7 @@ static UINT8 *RamPrioBitmap;
 static UINT32 *DrvPalette;
 static UINT8 bRecalcPalette = 0;
 
-static UINT32  PalBank;
+static UINT32 PalBank;
 
 static INT32 sprite_extent = 0;
 static UINT8 m92_sprite_buffer_busy;
@@ -2010,7 +2009,7 @@ static void scanline_interrupts(INT32 prev, INT32 segment, INT32 scanline)
 {
 	if (m92_sprite_buffer_timer) {
 		memcpy (DrvSprBuf, DrvSprRAM, 0x800);
-		if (m92_kludge != 4) nCyclesDone[0] += VezRun(347);
+		if (m92_kludge != 4) nCyclesDone[0] += VezRun(347); // nbbatman: fix for random lockups during gameplay
 		m92_sprite_buffer_busy = 0x80;
 		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 4)/4, VEZ_IRQSTATUS_ACK);
 		nCyclesDone[0] += VezRun(10);
@@ -2029,7 +2028,7 @@ static void scanline_interrupts(INT32 prev, INT32 segment, INT32 scanline)
 		}
 
 		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 8)/4, VEZ_IRQSTATUS_ACK);
-		nCyclesDone[0] += VezRun((m92_kludge == 4) ? 20 : 10);
+		nCyclesDone[0] += VezRun((m92_kludge == 4) ? 20 : 10); // nbbatman: gets rid of flashes in intro sequence
 		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 8)/4, VEZ_IRQSTATUS_NONE);
 
 	}
@@ -2044,6 +2043,7 @@ static void scanline_interrupts(INT32 prev, INT32 segment, INT32 scanline)
 			DrvDraw();
 		}
 
+		if (m92_kludge == 4) nCyclesDone[0] += VezRun(1200); // nbbatman: gets rid of flash after IREM logo fades out
 		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 0)/4, VEZ_IRQSTATUS_ACK);
 		nCyclesDone[0] += VezRun(10);
 		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 0)/4, VEZ_IRQSTATUS_NONE);

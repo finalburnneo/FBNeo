@@ -1328,8 +1328,6 @@ static void set_pf_info(INT32 layer, INT32 data)
 	} else {
 		ptr->enable = 1;
 		memset(pf_control[layer], 0, 8); // clear pf_control on enable, fixes skewed background problems (f. ex. inthunt)
-		ptr->scrollx=0;
-		ptr->scrolly=0;
 		ptr->wide = (data & 0x04) ? 128 : 64;
 	}
 

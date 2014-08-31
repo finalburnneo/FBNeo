@@ -1319,6 +1319,14 @@ UINT8 __fastcall m92ReadPort(UINT32 port)
 	return 0;
 }
 
+static void clear_pf_scroll(INT32 layer)
+{
+	pf_control[layer][0] = 0; // scrolly
+	pf_control[layer][1] = 0; // "
+	pf_control[layer][4] = 0; // scrollx
+	pf_control[layer][5] = 0; // "
+}
+
 static void set_pf_info(INT32 layer, INT32 data)
 {
 	struct _m92_layer *ptr = m92_layers[layer];
@@ -1327,11 +1335,13 @@ static void set_pf_info(INT32 layer, INT32 data)
 		ptr->enable = 0;
 	} else {
 		ptr->enable = 1;
-		memset(pf_control[layer], 0, 8); // clear pf_control on enable, fixes skewed background problems (f. ex. inthunt)
 		ptr->wide = (data & 0x04) ? 128 : 64;
 	}
 
+	int oldrowscroll = ptr->enable_rowscroll;
 	ptr->enable_rowscroll = data & 0x40;
+	if (ptr->enable_rowscroll != oldrowscroll)
+		clear_pf_scroll(layer); //clear scrollx/scrolly on change, fixes skewed background problems (f. ex. inthunt)
 
 	ptr->vram = (UINT16*)(DrvVidRAM + ((data & 0x03) * 0x4000));
 }

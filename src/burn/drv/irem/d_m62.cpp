@@ -1798,28 +1798,28 @@ static INT32 M62MemIndex()
 	if (!M62BgyTileDim) M62BgyTileDim = 8;
 	if (!M62CharxTileDim) M62CharxTileDim = 8;
 	if (!M62CharyTileDim) M62CharyTileDim = 8;
-	if (!M62SpriteRamSize) M62SpriteRamSize = 0x100;
+	if (!M62SpriteRamSize) M62SpriteRamSize = 0x100 + 0x10000;
 
 	M62Z80Rom              = Next; Next += M62Z80RomSize;
-	M62M6803Rom            = Next; Next += 0x0c000;
+	M62M6803Rom            = Next; Next += 0x0c000 + 0x10000;
 
 	RamStart               = Next;
 	
-	M62SpriteRam           = Next; Next += M62SpriteRamSize;
-	M62TileRam             = Next; Next += 0x12000;
-	if (M62CharRamSize)   M62CharRam   = Next; Next += M62CharRamSize;
-	if (M62ScrollRamSize) M62ScrollRam = Next; Next += M62ScrollRamSize;
-	M62Z80Ram              = Next; Next += 0x01000;
-	M62M6803Ram            = Next; Next += 0x00080;
-	pFMBuffer              = (INT16*)Next; Next += nBurnSoundLen * 6 * sizeof(INT16);
+	M62SpriteRam           = Next; Next += M62SpriteRamSize + 0x10000;
+	M62TileRam             = Next; Next += 0x12000 + 0x10000;
+	if (M62CharRamSize)   M62CharRam   = Next; Next += M62CharRamSize + 0x10000;
+	if (M62ScrollRamSize) M62ScrollRam = Next; Next += M62ScrollRamSize + 0x10000;
+	M62Z80Ram              = Next; Next += 0x01000 + 0x10000;
+	M62M6803Ram            = Next; Next += 0x00080 + 0x10000;
+	pFMBuffer              = (INT16*)Next; Next += nBurnSoundLen * 6 * sizeof(INT16) + 0x10000;
 
 	RamEnd                 = Next;
 
-	M62Tiles               = Next; Next += M62NumTiles * M62BgxTileDim * M62BgyTileDim;
-	M62Sprites             = Next; Next += M62NumSprites * 16 * 16;
-	if (M62NumChars) M62Chars = Next; Next += M62NumChars * M62CharxTileDim * M62CharyTileDim;
-	M62Palette             = (UINT32*)Next; Next += M62PaletteEntries * sizeof(UINT32);
-	M62PromData            = Next; Next += M62PromSize;
+	M62Tiles               = Next; Next += M62NumTiles * M62BgxTileDim * M62BgyTileDim + 0x10000;
+	M62Sprites             = Next; Next += M62NumSprites * 16 * 16 + 0x10000;
+	if (M62NumChars) M62Chars = Next; Next += M62NumChars * M62CharxTileDim * M62CharyTileDim + 0x10000;
+	M62Palette             = (UINT32*)Next; Next += M62PaletteEntries * sizeof(UINT32) + 0x10000;
+	M62PromData            = Next; Next += M62PromSize + 0x10000;
 
 	MemEnd                 = Next;
 
@@ -3257,7 +3257,7 @@ static INT32 YoujyudnLoadRoms()
 {
 	INT32 nRet = 0;
 	
-	M62TempRom = (UINT8 *)BurnMalloc(0x18000);
+	M62TempRom = (UINT8 *)BurnMalloc(0x118000);
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(M62Z80Rom   + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -3270,7 +3270,7 @@ static INT32 YoujyudnLoadRoms()
 		
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x18000);
-	UINT8 *pTemp = (UINT8*)BurnMalloc(0x18000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x118000);
 	nRet = BurnLoadRom(pTemp  + 0x00000,  5, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(pTemp  + 0x08000,  6, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(pTemp  + 0x10000,  7, 1); if (nRet != 0) return 1;
@@ -4722,7 +4722,7 @@ static INT32 M62Frame()
 
 	ZetNewFrame();
 	M6803NewFrame();
-	
+
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
 
@@ -4794,30 +4794,16 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
         }
 
         if (nAction & ACB_DRIVER_DATA) {
-                ZetOpen(0);
                 M6803Scan(nAction);
                 ZetScan(nAction);
                 AY8910Scan(nAction, pnMin);
                 MSM5205Scan(nAction, pnMin);
-                ZetClose();
-
                 SCAN_VAR(M62BackgroundHScroll);
                 SCAN_VAR(M62BackgroundVScroll);
                 SCAN_VAR(M62CharHScroll);
                 SCAN_VAR(M62CharVScroll);
                 SCAN_VAR(M62FlipScreen);
                 SCAN_VAR(M62SpriteHeightPromOffset);
-
-                SCAN_VAR(M62PaletteEntries);
-                SCAN_VAR(M62Z80Clock);
-                SCAN_VAR(M62M6803Clock);
-                SCAN_VAR(M62BgxTileDim);
-                SCAN_VAR(M62BgyTileDim);
-                SCAN_VAR(M62CharxTileDim);
-                SCAN_VAR(M62CharyTileDim);
-
-                SCAN_VAR(M62RenderFunction);
-
                 SCAN_VAR(M62SoundLatch);
                 SCAN_VAR(M62Port1);
                 SCAN_VAR(M62Port2);
@@ -4827,14 +4813,6 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
                 SCAN_VAR(Ldrun3TopBottomMask);
                 SCAN_VAR(KidnikiBackgroundBank);
                 SCAN_VAR(SpelunkrPaletteBank);
-                SCAN_VAR(M62Dip);
-                SCAN_VAR(M62Input);
-                SCAN_VAR(nCyclesDone);
-                SCAN_VAR(nCyclesTotal);
-                SCAN_VAR(nCyclesSegment);
-                SCAN_VAR(nBurnSoundLen);
-//                SCAN_VAR(pFMBuffer);
-//                SCAN_VAR(pAY8910Buffer);
 	}
 
         if (nAction & ACB_WRITE) {
@@ -4885,8 +4863,6 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
                 ZetMapArea(0x8000, 0x9fff, 2, M62Z80Rom + M62Z80BankAddress);
                 ZetClose();
             }
-//            M6803Reset(); // prevent sound-hang, but lose bgm temporarily [no other fix available] - dink
-
         }
 
 	return 0;

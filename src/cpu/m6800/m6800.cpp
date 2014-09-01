@@ -82,7 +82,7 @@ enum {
 #endif
 
 /* 680x registers */
-static m6800_Regs m6800;
+static m6800_Regs m6800 = {0};
 
 #define m6801   m6800
 #define m6802   m6800
@@ -116,15 +116,16 @@ static m6800_Regs m6800;
 #define TOH		m6800.timer_over.w.l
 #define TOD		m6800.timer_over.d
 
-static PAIR ea; 		/* effective address */
-#define EAD ea.d
-#define EA	ea.w.l
+//static PAIR ea; 		/* effective address */
+#define ea		m6800.ea
+#define EAD		ea.d
+#define EA		ea.w.l
 
 /* public globals */
-static int m6800_ICount;
+#define m6800_ICount	m6800.m6800_ICount
 
 /* point of next timer event */
-static UINT32 timer_next;
+#define timer_next		m6800.timer_next
 
 /* DS -- THESE ARE RE-DEFINED IN m6800.h TO RAM, ROM or FUNCTIONS IN cpuintrf.c */
 #define RM				M6800_RDMEM
@@ -565,7 +566,7 @@ static void m6800_exit(void)
 void m6800_get_context(void *dst)
 {
 	if( dst )
-		*(m6800_Regs*)dst = m6800;
+		memmove(dst, (void *)&m6800, sizeof(m6800_Regs)); //*(m6800_Regs*)dst = m6800;
 }
 
 
@@ -575,9 +576,9 @@ void m6800_get_context(void *dst)
 void m6800_set_context(void *src)
 {
 	if( src )
-		m6800 = *(m6800_Regs*)src;
-	CHANGE_PC();
-	CHECK_IRQ_LINES(); /* HJB 990417 */
+		memmove((void *)&m6800, src, sizeof(m6800_Regs)); //m6800 = *(m6800_Regs*)src;
+	//CHANGE_PC();
+	//CHECK_IRQ_LINES(); /* HJB 990417 */
 }
 
 

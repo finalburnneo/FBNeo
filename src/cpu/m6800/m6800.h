@@ -16,6 +16,9 @@
 typedef struct
 {
 //  int     subtype;        /* CPU subtype */
+	PAIR ea;				/* effective address */
+	int m6800_ICount;
+	UINT32 timer_next;
 	PAIR	ppc;			/* Previous program counter */
 	PAIR	pc; 			/* Program counter */
 	PAIR	s;				/* Stack pointer */
@@ -28,9 +31,9 @@ typedef struct
 	UINT8	ic_eddge;		/* InputCapture eddge , b.0=fall,b.1=raise */
 
 //	int		(*irq_callback)(int irqline);
-	int 	extra_cycles;	/* cycles used for interrupts */
 	void	(* const * insn)(void);	/* instruction table */
 	const UINT8 *cycles;			/* clock cycle of instruction table */
+	int 	extra_cycles;	/* cycles used for interrupts */
 	/* internal registers */
 	UINT8	port1_ddr;
 	UINT8	port2_ddr;
@@ -49,7 +52,7 @@ typedef struct
 	UINT16	input_capture;	/* input capture        */
 
 	PAIR	timer_over;
-}   m6800_Regs;
+} m6800_Regs;
 
 enum {
 	M6800_PC=1, M6800_S, M6800_A, M6800_B, M6800_X, M6800_CC,

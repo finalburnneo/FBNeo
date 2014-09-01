@@ -330,8 +330,11 @@ INT32 BurnStateUNDO(TCHAR* szName)
             //bprintf(0, _T("%d: %s -> %s\n"), i, szBackupNameFrom, szBackupNameTo);
             MoveFileW(szBackupNameFrom, szBackupNameTo);
     }
-#endif
     return cantundo;
+#else
+    return 0;
+#endif
+
 }
 
 // State save

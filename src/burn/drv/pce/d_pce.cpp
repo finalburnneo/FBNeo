@@ -5125,7 +5125,7 @@ struct BurnDriver BurnDrvpce_sidearms = {
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_sidearmsRomInfo, pce_sidearmsRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
-	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+	&PCEPaletteRecalc, 0x400, 512, 242, 4, 3
 };
 
 
@@ -7905,7 +7905,7 @@ struct BurnDriver BurnDrvtg_sidearms = {
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
 	TgGetZipName, tg_sidearmsRomInfo, tg_sidearmsRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
-	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+	&PCEPaletteRecalc, 0x400, 512, 242, 4, 3
 };
 
 

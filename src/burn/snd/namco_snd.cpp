@@ -570,23 +570,23 @@ void NamcoSoundExit()
 void NamcoSoundScan(INT32 nAction,INT32 *pnMin)
 {
 	struct BurnArea ba;
-	char szName[16];
-	
+	char szName[18];
+
 	if ((nAction & ACB_DRIVER_DATA) == 0) {
 		return;
 	}
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029707;
 	}
-	
-/*	sprintf(szName, "NamcoSound");
-	ba.Data		= &chip;
-	ba.nLen		= sizeof(chip);
+
+	sprintf(szName, "NamcoSound");
+	ba.Data		= &chip->channel_list;
+	ba.nLen		= sizeof(chip->channel_list);
 	ba.nAddress = 0;
 	ba.szName	= szName;
-	BurnAcb(&ba);*/
-	
+	BurnAcb(&ba);
+
 	sprintf(szName, "NamcoSoundRegs");
 	ba.Data		= namco_soundregs;
 	ba.nLen		= 0x40;

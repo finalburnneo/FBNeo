@@ -758,14 +758,14 @@ static INT32 DrvFrame()
 		}
 
 		DrvInputs[0] = (DrvInputs[0] & 0x7f) | (DrvDips[0] & 0x80);
-		if (coin_lockout[0]) DrvInputs[0] |= 0x0c;
+	//	if (coin_lockout[0]) DrvInputs[0] |= 0x0c;
 	}
 
-	INT32 nInterleave = 100; // nBurnSoundLen;
+	INT32 nInterleave = nBurnSoundLen;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 49152000 / 32 / 60, 49152000 / 8 / 4 / 60 }; // refresh 60.606060
 	INT32 nCyclesDone[2]  = { 0, 0 };
-        //bprintf(0, _T("%d,"),nBurnSoundLen);
+
 	M6809Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -814,15 +814,13 @@ static INT32 DrvFrame()
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
-//	return 1; // Broken :( - almost fixed!? - dink
-
 	struct BurnArea ba;
 
 	if (pnMin) {
 		*pnMin = 0x029707;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllMem;

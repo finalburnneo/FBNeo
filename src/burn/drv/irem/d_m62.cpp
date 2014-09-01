@@ -1,4 +1,5 @@
-/* todo: figure out why successive savestate loads cause the sound to die */
+// FB Alpha Irem M62 system driver
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6800_intf.h"
@@ -1798,28 +1799,28 @@ static INT32 M62MemIndex()
 	if (!M62BgyTileDim) M62BgyTileDim = 8;
 	if (!M62CharxTileDim) M62CharxTileDim = 8;
 	if (!M62CharyTileDim) M62CharyTileDim = 8;
-	if (!M62SpriteRamSize) M62SpriteRamSize = 0x100 + 0x10000;
+	if (!M62SpriteRamSize) M62SpriteRamSize = 0x100;
 
 	M62Z80Rom              = Next; Next += M62Z80RomSize;
-	M62M6803Rom            = Next; Next += 0x0c000 + 0x10000;
+	M62M6803Rom            = Next; Next += 0x0c000;
 
 	RamStart               = Next;
 	
-	M62SpriteRam           = Next; Next += M62SpriteRamSize + 0x10000;
-	M62TileRam             = Next; Next += 0x12000 + 0x10000;
-	if (M62CharRamSize)   M62CharRam   = Next; Next += M62CharRamSize + 0x10000;
-	if (M62ScrollRamSize) M62ScrollRam = Next; Next += M62ScrollRamSize + 0x10000;
-	M62Z80Ram              = Next; Next += 0x01000 + 0x10000;
-	M62M6803Ram            = Next; Next += 0x00080 + 0x10000;
-	pFMBuffer              = (INT16*)Next; Next += nBurnSoundLen * 6 * sizeof(INT16) + 0x10000;
+	M62SpriteRam           = Next; Next += M62SpriteRamSize;
+	M62TileRam             = Next; Next += 0x12000;
+	if (M62CharRamSize)   M62CharRam   = Next; Next += M62CharRamSize;
+	if (M62ScrollRamSize) M62ScrollRam = Next; Next += M62ScrollRamSize;
+	M62Z80Ram              = Next; Next += 0x01000;
+	M62M6803Ram            = Next; Next += 0x00080;
+	pFMBuffer              = (INT16*)Next; Next += nBurnSoundLen * 6 * sizeof(INT16);
 
 	RamEnd                 = Next;
 
-	M62Tiles               = Next; Next += M62NumTiles * M62BgxTileDim * M62BgyTileDim + 0x10000;
-	M62Sprites             = Next; Next += M62NumSprites * 16 * 16 + 0x10000;
-	if (M62NumChars) M62Chars = Next; Next += M62NumChars * M62CharxTileDim * M62CharyTileDim + 0x10000;
-	M62Palette             = (UINT32*)Next; Next += M62PaletteEntries * sizeof(UINT32) + 0x10000;
-	M62PromData            = Next; Next += M62PromSize + 0x10000;
+	M62Tiles               = Next; Next += M62NumTiles * M62BgxTileDim * M62BgyTileDim;
+	M62Sprites             = Next; Next += M62NumSprites * 16 * 16;
+	if (M62NumChars) M62Chars = Next; Next += M62NumChars * M62CharxTileDim * M62CharyTileDim;
+	M62Palette             = (UINT32*)Next; Next += M62PaletteEntries * sizeof(UINT32);
+	M62PromData            = Next; Next += M62PromSize;
 
 	MemEnd                 = Next;
 
@@ -3257,7 +3258,7 @@ static INT32 YoujyudnLoadRoms()
 {
 	INT32 nRet = 0;
 	
-	M62TempRom = (UINT8 *)BurnMalloc(0x118000);
+	M62TempRom = (UINT8 *)BurnMalloc(0x18000);
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(M62Z80Rom   + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -3270,7 +3271,7 @@ static INT32 YoujyudnLoadRoms()
 		
 	// Load and decode the tiles
 	memset(M62TempRom, 0, 0x18000);
-	UINT8 *pTemp = (UINT8*)BurnMalloc(0x118000);
+	UINT8 *pTemp = (UINT8*)BurnMalloc(0x18000);
 	nRet = BurnLoadRom(pTemp  + 0x00000,  5, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(pTemp  + 0x08000,  6, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(pTemp  + 0x10000,  7, 1); if (nRet != 0) return 1;
@@ -4714,8 +4715,6 @@ static INT32 M62Frame()
 
 	M62MakeInputs();
 
-//	nCyclesTotal[0] = M62Z80Clock / 55;
-//	nCyclesTotal[1] = M62M6803Clock / 55;
 	nCyclesTotal[0] = M62Z80Clock / 60;
 	nCyclesTotal[1] = M62M6803Clock / 60;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
@@ -4803,7 +4802,6 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
                 SCAN_VAR(M62CharHScroll);
                 SCAN_VAR(M62CharVScroll);
                 SCAN_VAR(M62FlipScreen);
-                SCAN_VAR(M62SpriteHeightPromOffset);
                 SCAN_VAR(M62SoundLatch);
                 SCAN_VAR(M62Port1);
                 SCAN_VAR(M62Port2);
@@ -4853,7 +4851,7 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
                 ZetOpen(0);
                 ZetMapArea(0x8000, 0xbfff, 0, M62Z80Rom + M62Z80BankAddress);
                 ZetMapArea(0x8000, 0xbfff, 2, M62Z80Rom + M62Z80BankAddress);
-		ZetClose();
+                ZetClose();
             }
             if (strstr(BurnDrvGetTextA(DRV_NAME), "kidnik") ||
                 strstr(BurnDrvGetTextA(DRV_NAME), "lithero") ||

@@ -780,7 +780,7 @@ static INT32 DrvFrame()
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
-	return 1; // Broken :(
+//	return 1; // Broken :(
 
 	struct BurnArea ba;
 

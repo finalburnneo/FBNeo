@@ -849,6 +849,44 @@ struct BurnDriver BurnDrvSimpsons4pa = {
 };
 
 
+// The Simpsons (4 Players World, set 3)
+
+static struct BurnRomInfo simpsons4pa2RomDesc[] = {
+	{ "2.16c",			0x020000, 0x580ce1d6, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "1.17c",			0x020000, 0x07ceeaea, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "4.13c",			0x020000, 0xc3040e4f, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.15c",			0x020000, 0xeb4f5781, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "072-e03.6g",		0x020000, 0x866b7a35, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "072-b07.18h",	0x080000, 0xba1ec910, 3 | BRF_GRA },           //  5 K052109 Tiles
+	{ "072-b06.16h",	0x080000, 0xcf2bbcab, 3 | BRF_GRA },           //  6
+
+	{ "072-b08.3n",		0x100000, 0x7de500ad, 4 | BRF_GRA },           //  7 K053247 Tiles
+	{ "072-b09.8n",		0x100000, 0xaa085093, 4 | BRF_GRA },           //  8
+	{ "072-b10.12n",	0x100000, 0x577dbd53, 4 | BRF_GRA },           //  9
+	{ "072-b11.16l",	0x100000, 0x55fab05d, 4 | BRF_GRA },           // 10
+
+	{ "072-d05.1f",		0x100000, 0x1397a73b, 5 | BRF_SND },           // 11 K053260 Samples
+	{ "072-d04.1d",		0x040000, 0x78778013, 5 | BRF_SND },           // 12
+
+	{ "simpsons4pa2.12c.nv",  0x000080, 0xec3f0449, BRF_OPT },
+};
+
+STD_ROM_PICK(simpsons4pa2)
+STD_ROM_FN(simpsons4pa2)
+
+struct BurnDriver BurnDrvSimpsons4pa2 = {
+	"simpsons4pa2", "simpsons", NULL, NULL, "1991",
+	"The Simpsons (4 Players World, set 3)\0", NULL, "Konami", "GX072",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	NULL, simpsons4pa2RomInfo, simpsons4pa2RomName, NULL, NULL, SimpsonsInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	288, 224, 4, 3
+};
+
+
 // The Simpsons (2 Players World, set 1)
 
 static struct BurnRomInfo simpsons2pRomDesc[] = {

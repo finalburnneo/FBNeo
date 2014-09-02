@@ -740,7 +740,7 @@ static INT32 DrvFrame()
 	HD63701NewFrame();
 
 	INT32 nInterleave = 100; // 1000?
-	INT32 nCyclesTotal[2] = { 1536000 / 60, 6144000 / 60 };
+	INT32 nCyclesTotal[2] = { 1536000 / 60, 1536000 / 60 };
 	//INT32 nCyclesDone[2] = { 0, 0 };
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 
@@ -780,8 +780,6 @@ static INT32 DrvFrame()
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
-//	return 1; // Broken :(
-
 	struct BurnArea ba;
 
 	if (pnMin) {

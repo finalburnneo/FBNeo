@@ -1759,7 +1759,7 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static void cninja_draw_sprites()
+static void cninja_draw_sprites(int xoffset)
 {
 	UINT16 *buffered_spriteram = (UINT16*)DrvSprBuf;
 
@@ -1820,7 +1820,7 @@ static void cninja_draw_sprites()
 
 		while (multi >= 0)
 		{
-			deco16_draw_prio_sprite(pTransDraw, DrvGfxROM3, sprite - multi * inc, (color << 4) + 0x300, x, y + mult * multi, flipx, flipy, pri);
+			deco16_draw_prio_sprite(pTransDraw, DrvGfxROM3, sprite - multi * inc, (color << 4) + 0x300, x+xoffset, y + mult * multi, flipx, flipy, pri);
 
 			multi--;
 		}
@@ -2028,7 +2028,7 @@ static INT32 CninjaDraw()
 	if (nSpriteEnable &  4) deco16_draw_layer(1, pTransDraw, DECO16_LAYER_PRIORITY(0x02) | DECO16_LAYER_TRANSMASK1);
 	if (nSpriteEnable &  8) deco16_draw_layer(1, pTransDraw, DECO16_LAYER_PRIORITY(0x04) | DECO16_LAYER_TRANSMASK0);
  
-	cninja_draw_sprites();
+	cninja_draw_sprites(0);
 
 	if (nSpriteEnable & 16) deco16_draw_layer(0, pTransDraw, 0);
 
@@ -2087,7 +2087,7 @@ static INT32 EdrandyDraw()
 	if (nSpriteEnable &  2) deco16_draw_layer(2, pTransDraw, DECO16_LAYER_PRIORITY(0x02));
 	if (nSpriteEnable &  4) deco16_draw_layer(1, pTransDraw, DECO16_LAYER_PRIORITY(0x04));
  
-	if (nBurnLayer & 1) cninja_draw_sprites();
+	if (nBurnLayer & 1) cninja_draw_sprites(0);
 
 	if (nSpriteEnable &  8) deco16_draw_layer(0, pTransDraw, 0);
 
@@ -2138,7 +2138,7 @@ static INT32 Robocop2Draw()
 		if (nSpriteEnable &  4) deco16_draw_layer(1, pTransDraw, DECO16_LAYER_PRIORITY(0x04));
 	}
 
-	cninja_draw_sprites();
+	cninja_draw_sprites(64);
 
 	if (nSpriteEnable &  8) deco16_draw_layer(0, pTransDraw, 0);
 
@@ -2207,6 +2207,80 @@ static INT32 CninjaFrame()
 	INT32 nInterleave = 232; //58 * 4
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 58 };
+	INT32 nCyclesDone[2] = { 0, 0 };
+
+	h6280NewFrame();
+	
+	SekOpen(0);
+	h6280Open(0);
+
+	deco16_vblank = 0x00;
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
+
+		if (irq_timer == i) {
+			SekSetIRQLine((irq_mask & 0x10) ? 3 : 4, SEK_IRQSTATUS_ACK);
+			irq_timer = -1;
+		}
+		if (i == 206) deco16_vblank = 0x08;
+		
+		INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+		deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		nSoundBufferPos += nSegmentLength;
+	}
+
+	SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+	BurnTimerEndFrame(nCyclesTotal[1]);
+
+	if (pBurnSoundOut) {
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+
+		if (nSegmentLength) {
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		}
+		
+		for (INT32 i = 0; i < nBurnSoundLen; i++) {
+			pBurnSoundOut[(i << 1) + 0] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 0] + SoundBuffer[(i << 1) + 0]);
+			pBurnSoundOut[(i << 1) + 1] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 1] + SoundBuffer[(i << 1) + 1]);
+		}
+	}
+
+	h6280Close();
+	SekClose();
+
+	if (pBurnDraw) {
+		BurnDrvRedraw();
+	}
+
+	return 0;
+}
+
+static INT32 Robocop2Frame()
+{
+	if (DrvReset) {
+		DrvDoReset();
+	}
+
+	{
+		deco16_prot_inputs = DrvInputs;
+		memset (DrvInputs, 0xff, 2 * sizeof(INT16)); 
+		for (INT32 i = 0; i < 16; i++) {
+			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+		}
+		DrvInputs[2] = (DrvDips[1] << 8) | (DrvDips[0] << 0);
+	}
+
+	INT32 nInterleave = 232; //58 * 4
+	INT32 nSoundBufferPos = 0;
+	INT32 nCyclesTotal[2] = { 14000000 / 58, 8055000 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	h6280NewFrame();
@@ -3178,7 +3252,7 @@ struct BurnDriver BurnDrvRobocop2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, robocop2RomInfo, robocop2RomName, NULL, NULL, Robocop2InputInfo, Robocop2DIPInfo,
-	Robocop2Init, DrvExit, CninjaFrame, Robocop2Draw, DrvScan, &DrvRecalc, 0x800,
+	Robocop2Init, DrvExit, Robocop2Frame, Robocop2Draw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
@@ -3230,7 +3304,7 @@ struct BurnDriver BurnDrvRobocop2u = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, robocop2uRomInfo, robocop2uRomName, NULL, NULL, Robocop2InputInfo, Robocop2DIPInfo,
-	Robocop2Init, DrvExit, CninjaFrame, Robocop2Draw, DrvScan, &DrvRecalc, 0x800,
+	Robocop2Init, DrvExit, Robocop2Frame, Robocop2Draw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
@@ -3282,6 +3356,6 @@ struct BurnDriver BurnDrvRobocop2j = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, robocop2jRomInfo, robocop2jRomName, NULL, NULL, Robocop2InputInfo, Robocop2DIPInfo,
-	Robocop2Init, DrvExit, CninjaFrame, Robocop2Draw, DrvScan, &DrvRecalc, 0x800,
+	Robocop2Init, DrvExit, Robocop2Frame, Robocop2Draw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };

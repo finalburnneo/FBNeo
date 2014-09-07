@@ -298,13 +298,13 @@ ifeq ($(MAKELEVEL),1)
 ifdef DEPEND
 
 all:	init $(autdep) $(autobj)
-	@$(MAKE) -f makefile.mingw -s GCC471=1
+	@$(MAKE) -f makefile.mamemingw -s GCC471=1
 
 else
 
 all:	init $(autobj)
 
-	@$(MAKE) -f makefile.mingw -s GCC471=1
+	@$(MAKE) -f makefile.mamemingw -s GCC471=1
 
 
 endif

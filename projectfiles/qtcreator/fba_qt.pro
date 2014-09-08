@@ -6,6 +6,7 @@ TARGET = fbaqt
 
 linux:QT += x11extras
 
+
 #===============================================================================
 #                                DRIVERS
 #===============================================================================
@@ -20,7 +21,7 @@ DRV_SMS         = true
 DRV_MEGADRIVE   = true
 DRV_NEOGEO      = true
 DRV_PCE         = true
-DRV_PGM         = true
+DRV_PGM         = false
 DRV_PRE90S      = true
 DRV_PST90S      = true
 DRV_SEGA        = true
@@ -85,6 +86,9 @@ DEFINES += BUILD_QT \
     "_fastcall=" \
     WITH_QTCREATOR \
     INCLUDE_LIB_PNGH
+
+linux: DEFINES += BUILD_QT_LINUX
+macx: DEFINES += BUILD_QT_MACX
 
 # no warnings...
 QMAKE_CXXFLAGS += -w
@@ -352,6 +356,7 @@ PRE_TARGETDEPS +=                               \
     $$M68K_LIB.target                           \
 
 LIBS += -lSDL
+linux:LIBS += -lpulse-simple
 
 QMAKE_CLEAN += $$GEN/*
 #===============================================================================
@@ -754,7 +759,9 @@ SOURCES += \
     ../../src/dep/libs/zlib/zutil.c \
     ../../src/burn/devices/nmk004.cpp \
     ../../src/cpu/tlcs90/tlcs90.cpp \
-    ../../src/cpu/tlcs90_intf.cpp
+    ../../src/cpu/tlcs90_intf.cpp \
+    ../../src/burn/devices/kaneko_tmap.cpp \
+    ../../src/intf/audio/linux/aud_pulse_simple.cpp
 
 HEADERS += \
     ../../src/burn/devices/8255ppi.h \
@@ -923,7 +930,9 @@ HEADERS += \
     ../../src/dep/libs/zlib/zconf.h.in \
     ../../src/dep/libs/zlib/zlib.h \
     ../../src/dep/libs/zlib/zutil.h \
-    ../../src/burn/devices/nmk004.h
+    ../../src/burn/devices/nmk004.h \
+    ../../src/burn/devices/kaneko_tmap.h \
+    ../../src/intf/audio/linux/ringbuffer.h
 
 OTHER_FILES +=
 

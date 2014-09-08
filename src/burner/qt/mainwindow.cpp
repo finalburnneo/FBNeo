@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     show();
 
-    ruby::video.driver("X-Video");
+    ruby::video.driver("OpenGL");
     ruby::video.set(ruby::Video::Handle, m_viewport->id());
     ruby::video.set(ruby::Video::Depth, 24u);
 

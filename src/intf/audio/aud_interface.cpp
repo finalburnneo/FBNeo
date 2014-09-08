@@ -24,6 +24,9 @@ static UINT32 nAudActive = 0;
 #elif defined (_XBOX)
 	extern struct AudOut AudOutXAudio2;
 #elif defined (BUILD_QT)
+#ifdef BUILD_QT_LINUX
+    extern struct AudOut AudOutPulseSimple;
+#endif
     extern struct AudOut AudOutQtSound;
 #endif
 
@@ -37,6 +40,9 @@ static struct AudOut *pAudOut[]=
 #elif defined (_XBOX)
 	&AudOutXAudio2,
 #elif defined (BUILD_QT)
+#ifdef BUILD_QT_LINUX
+    &AudOutPulseSimple,
+#endif
     &AudOutQtSound,
 #endif
 };

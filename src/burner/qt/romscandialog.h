@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QThread>
-#include <QVector>
+#include <QByteArray>
 
 namespace Ui {
 class RomScanDialog;
@@ -19,6 +19,7 @@ public:
 signals:
     void setRange(int, int);
     void setValue(int);
+    void done();
 private:
     void run();
 };
@@ -35,14 +36,15 @@ public:
     void setStatus(int drvNo, char stat);
 public slots:
     void cancel();
+    bool load();
+    bool save();
 protected:
     virtual void showEvent(QShowEvent *event);
 private:
-    bool load();
-    bool save();
     Ui::RomScanDialog *ui;
-    QVector<char> m_status;
+    QByteArray m_status;
     RomAnalyzer m_analyzer;
+    const QString m_settingsName;
 };
 
 #endif // ROMSCANDIALOG_H

@@ -179,6 +179,9 @@ void MainWindow::createControls()
     m_supportPathDlg = new SupportDirsDialog(this);
     m_aboutDlg = new AboutDialog(this);
     m_dipSwitchDlg = new DipswitchDialog(this);
+
+    extern void ProgressSetParent(QWidget *);
+    ProgressSetParent(this);
 }
 
 void MainWindow::createActions()

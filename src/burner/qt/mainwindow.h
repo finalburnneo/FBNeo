@@ -9,6 +9,7 @@
 #include <QMenu>
 #include <QThread>
 #include <QVector>
+#include <QImage>
 #include "selectdialog.h"
 #include "qrubyviewport.h"
 #include "qaudiointerface.h"
@@ -36,6 +37,7 @@ public slots:
     void toogleMenu();
     void toogleFullscreen();
     void closeEvent(QCloseEvent *event);
+    void resizeEvent(QResizeEvent *event);
 private:
     void createDefaultDirs();
     void createMenus();
@@ -44,6 +46,7 @@ private:
     void connectActions();
     void enableInGame();
     void disableInGame();
+    void drawLogo();
     int m_game;
     bool m_isRunning;
     QRubyViewport *m_viewport;
@@ -68,6 +71,7 @@ private:
     QAction *m_actionDipswitch;
     QShortcut *m_scutToogleMenu;
     QShortcut *m_scutToogleFullscreen;
+    QImage m_logo;
 
     void setupInputInterfaces();
     QVector<const InputInOut *> m_inputInterfaces;

@@ -8,7 +8,7 @@
 #include "burner.h"
 #include "selectdialog.h"
 #include "ruby/ruby.hpp"
-
+#include "version.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -21,9 +21,15 @@ MainWindow::MainWindow(QWidget *parent) :
     createMenus();
     createControls();
 
-    setWindowTitle("FB Alpha Q");
+    setWindowTitle(QString("FBAlpha %1.%2.%3.%4")
+                   .arg(VER_MAJOR)
+                   .arg(VER_MINOR)
+                   .arg(VER_BETA)
+                   .arg(VER_ALPHA));
 
     connectActions();
+
+    m_logo = QImage(":/resource/splash.bmp");
 
     m_isRunning = false;
     InputInit();
@@ -89,8 +95,8 @@ void MainWindow::closeGame()
     if (bDrvOkay) {
         m_emulation->close();
         disableInGame();
-        ruby::video.clear();
-        ruby::video.refresh();
+        m_isRunning = false;
+        drawLogo();
     }
 }
 
@@ -107,6 +113,7 @@ void MainWindow::toogleMenu()
         menuBar()->show();
     }
     else menuBar()->hide();
+    drawLogo();
 }
 
 void MainWindow::toogleFullscreen()
@@ -120,6 +127,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
     m_closeApp = true;
     event->accept();
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    drawLogo();
 }
 
 void MainWindow::createDefaultDirs()
@@ -217,6 +229,15 @@ void MainWindow::disableInGame()
 {
     m_actionCloseGame->setEnabled(false);
     m_actionDipswitch->setEnabled(false);
+}
+
+void MainWindow::drawLogo()
+{
+    extern void RubyVidBlit(QImage &image);
+    if (!m_isRunning) {
+        QApplication::processEvents();
+        RubyVidBlit(m_logo);
+    }
 }
 
 void MainWindow::setupInputInterfaces()

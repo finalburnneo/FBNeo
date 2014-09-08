@@ -23,13 +23,41 @@ static inline unsigned c16to32(unsigned color)
     return 0xFF000000 | (r << 8) | (g << 5) | (b << 3);
 }
 
-void videoRefresh(const uint32_t* palette, const uint32_t* data, unsigned pitch,
-                  unsigned width, unsigned height) {
+void RubyVidBlit(QImage &image)
+{
+    uint32_t *output;
+    unsigned outputPitch;
+    unsigned pitch = image.bytesPerLine();
+    const int width = image.width();
+    const int height = image.height();
+
+    if (ruby::video.lock(output, outputPitch, width, height)) {
+        pitch >>= 2;
+        outputPitch >>= 2;
+
+        for (unsigned y = 0; y < height; y++) {
+            const uint32_t *psrc = (const uint32_t *)(image.scanLine(y));
+            uint32_t *pdst = output + y * outputPitch;
+
+            for (unsigned x = 0; x < width; x++) {
+                *pdst = *psrc;
+                ++pdst;
+                ++psrc;
+            }
+        }
+        ruby::video.unlock();
+        ruby::video.refresh();
+    }
+}
+
+void RubyVidCopy16(const uint32_t* data, unsigned pitch,
+                 unsigned width, unsigned height) {
     uint32_t *output;
     unsigned outputPitch;
 
     if (ruby::video.lock(output, outputPitch, width, height)) {
-        pitch >>= 2, outputPitch >>= 2;
+        pitch >>= 2;
+        outputPitch >>= 2;
 
         for (unsigned y = 0; y < height; y++) {
             const uint32_t *psrc = data + y * pitch;
@@ -44,7 +72,6 @@ void videoRefresh(const uint32_t* palette, const uint32_t* data, unsigned pitch,
         ruby::video.refresh();
     }
 }
-
 
 static INT32 RubyVidInit()
 {
@@ -76,7 +103,7 @@ static INT32 RubyVidExit()
 
 static INT32 RubyVidFrame(bool bRedraw)
 {
-    nBurnBpp=2;
+    nBurnBpp = 2;
 
     nBurnPitch = VidMemPitch;
     pBurnDraw = VidMem;
@@ -98,7 +125,7 @@ static INT32 RubyVidPaint(INT32 bValidate)
 {
     if (bValidate & 2) {
     }
-    videoRefresh(nullptr, (const uint32_t*) VidMem, VidMemPitch, sizex, sizey);
+    RubyVidCopy16((const uint32_t*) VidMem, VidMemPitch, sizex, sizey);
     return 0;
 }
 

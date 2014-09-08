@@ -579,7 +579,7 @@ static void draw_bg(INT32 type, INT32 layer)
 			sx = (offs & 0x3f);
 			sy = (offs >> 6);
 
-			ofst = (sx & 0x0f) + ((sy & 0x0f) << 4) + ((sx & 0x30) << 4) + ((sy & 0x70) << 7);
+			ofst = (sx & 0x0f) + ((sy & 0x0f) << 4) + ((sx & 0x30) << 4) + ((sy & 0x70) << 6);
 		}
 
 		sx = (sx * 16) - scrollx;

@@ -38,11 +38,14 @@ SelectDialog::SelectDialog(QWidget *parent) :
     connect(ui->ckbShowAvaliable, SIGNAL(toggled(bool)), this, SLOT(itemShowAvaliable(bool)));
     connect(ui->ckbShowUnavaliable, SIGNAL(toggled(bool)), this, SLOT(itemShowUnavaliable(bool)));
     connect(ui->ckbShowClones, SIGNAL(toggled(bool)), this, SLOT(itemShowClones(bool)));
+    connect(ui->ckbUseZipnames, SIGNAL(toggled(bool)), this, SLOT(itemShowZipNames(bool)));
+
     m_selectedDriver = 0;
 
     m_showAvailable = true;
     m_showUnavailable = true;
     m_showClones = true;
+    m_showZipNames = false;
     m_showCount = 0;
 
     QMenu *contextMenu = new QMenu(ui->tvDrivers);
@@ -50,6 +53,8 @@ SelectDialog::SelectDialog(QWidget *parent) :
     ui->tvDrivers->setContextMenuPolicy(Qt::ActionsContextMenu);
     ui->tvDrivers->addAction(m_actionScanThis);
     connect(m_actionScanThis, SIGNAL(triggered()), this, SLOT(rescanRomset()));
+
+    filterDrivers();
 }
 
 SelectDialog::~SelectDialog()
@@ -126,6 +131,22 @@ void SelectDialog::itemShowClones(bool state)
         return;
     m_showClones = state;
     filterDrivers();
+}
+
+void SelectDialog::itemShowZipNames(bool state)
+{
+    if (state == m_showZipNames)
+        return;
+    m_showZipNames = state;
+    foreach (TreeDriverItem *driver, m_parents.values()) {
+        // skip it
+        if (driver == nullptr)
+            continue;
+        if (m_showZipNames)
+            driver->setText(0, driver->romName());
+        else
+            driver->setText(0, driver->fullName());
+    }
 }
 
 void SelectDialog::updateTitleScreen()
@@ -208,7 +229,8 @@ void SelectDialog::buildDriverTree()
 
         TreeDriverItem *ditem = new TreeDriverItem();
         ditem->setIcon(0, m_icoNotFound);
-        ditem->setText(0, BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
+        ditem->setFullName(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
+        ditem->setText(0, ditem->fullName());
         ditem->setRomName(BurnDrvGetTextA(DRV_NAME));
         ditem->setDriverNo(i);
         ditem->setIsParent(true);
@@ -231,7 +253,8 @@ void SelectDialog::buildDriverTree()
         if (itemParent) {
             TreeDriverItem *ditem = new TreeDriverItem();
             ditem->setIcon(0, m_icoNotFound);
-            ditem->setText(0, BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
+            ditem->setFullName(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
+            ditem->setText(0, ditem->fullName());
             ditem->setRomName(BurnDrvGetTextA(DRV_NAME));
             ditem->setDriverNo(i);
             ditem->setIsParent(false);
@@ -292,6 +315,7 @@ void SelectDialog::filterDrivers()
                 if (!isFiltered(clone))
                     continue;
                 clone->setHidden(false);
+                m_showCount++;
             }
         }
         m_showCount++;
@@ -322,6 +346,16 @@ const char *TreeDriverItem::romName() const
 void TreeDriverItem::setRomName(const char *romName)
 {
     m_romName = romName;
+}
+
+const char *TreeDriverItem::fullName() const
+{
+    return m_fullName;
+}
+
+void TreeDriverItem::setFullName(const char *fullName)
+{
+    m_fullName = fullName;
 }
 
 bool TreeDriverItem::isParent() const

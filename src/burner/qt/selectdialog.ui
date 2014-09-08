@@ -247,6 +247,9 @@
             </item>
             <item>
              <widget class="QCheckBox" name="ckbLatinTextOnly">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>Latin text only</string>
               </property>
@@ -277,6 +280,9 @@
        </item>
        <item>
         <widget class="QTreeWidget" name="tvFilters">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <column>
           <property name="text">
            <string>Filters</string>
@@ -582,13 +588,20 @@
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
           <widget class="QLabel" name="label_6">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Search</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="leSearch"/>
+          <widget class="QLineEdit" name="leSearch">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

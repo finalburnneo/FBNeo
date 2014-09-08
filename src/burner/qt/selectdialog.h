@@ -59,6 +59,8 @@ public slots:
     void itemShowUnavaliable(bool state);
     void itemShowClones(bool state);
     void itemShowZipNames(bool state);
+    void doSearch();
+
 signals:
     void driverSelected(int no);
 private:

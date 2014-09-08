@@ -54,6 +54,8 @@ SelectDialog::SelectDialog(QWidget *parent) :
     ui->tvDrivers->addAction(m_actionScanThis);
     connect(m_actionScanThis, SIGNAL(triggered()), this, SLOT(rescanRomset()));
 
+    connect(ui->btnSearch, SIGNAL(clicked()), this, SLOT(doSearch()));
+
     filterDrivers();
 }
 
@@ -154,6 +156,36 @@ void SelectDialog::itemShowZipNames(bool state)
             else
                 clone->setText(0, clone->fullName());
         }
+    }
+}
+
+void SelectDialog::doSearch()
+{
+    const QString criteria(ui->leSearch->text());
+    if (criteria.isEmpty()) {
+        filterDrivers();
+        return;
+    }
+
+    QList<QTreeWidgetItem *> found =
+            ui->tvDrivers->findItems(criteria, Qt::MatchContains | Qt::MatchRecursive);
+
+    // hide all drivers
+    foreach (TreeDriverItem *driver, m_parents.values()) {
+        if (driver == nullptr)
+            continue;
+        driver->setHidden(true);
+        for (int idx = 0; idx < driver->childCount(); idx++) {
+            driver->child(idx)->setHidden(true);
+        }
+    }
+
+    foreach (QTreeWidgetItem *item, found) {
+        TreeDriverItem *driver = static_cast<TreeDriverItem *>(item);
+        if (!driver->isParent()) {
+            driver->parent()->setHidden(false);
+        }
+        driver->setHidden(false);
     }
 }
 

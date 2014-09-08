@@ -25,6 +25,8 @@ struct PathHandler {
 void fixPath(QString &path);
 QString loadText(const QString &fileName);
 
+extern const QString appConfigName;
+
 }
 
 #endif // QUTIL_H

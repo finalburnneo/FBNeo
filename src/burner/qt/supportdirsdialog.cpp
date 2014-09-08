@@ -1,3 +1,4 @@
+#include <QtWidgets>
 #include "supportdirsdialog.h"
 #include "ui_supportdirsdialog.h"
 #include "burner.h"
@@ -30,10 +31,13 @@ SupportDirsDialog::SupportDirsDialog(QWidget *parent) :
     m_group->addButton(ui->btnSamples, PATH_SAMPLES);
     m_group->addButton(ui->btnCheats, PATH_CHEATS);
     connect(m_group, SIGNAL(buttonClicked(int)), this, SLOT(editPath(int)));
+
+    load();
 }
 
 SupportDirsDialog::~SupportDirsDialog()
 {
+    save();
     delete ui;
 }
 
@@ -51,4 +55,48 @@ int SupportDirsDialog::exec()
         for (int i = 0; i < PATH_MAX_HANDLERS; i++)
             m_handlers[i].editorToString();
     }
+}
+
+bool SupportDirsDialog::load()
+{
+    QSettings settings(util::appConfigName, QSettings::IniFormat);
+    if (settings.status() == QSettings::AccessError)
+        return false;
+
+    settings.beginGroup("support_directories");
+
+    auto readPath = [&](const QString &name, int i) -> void {
+        QString path(settings.value(name).toString());
+        if (!path.isEmpty()) {
+            m_handlers[i].edit->setText(settings.value(path).toString());
+            m_handlers[i].editorToString();
+        }
+    };
+
+    readPath("previews", PATH_PREVIEWS);
+    readPath("titles", PATH_TITLES);
+    readPath("hiscores", PATH_HISCORES);
+    readPath("samples", PATH_SAMPLES);
+    readPath("cheats", PATH_CHEATS);
+
+    settings.endGroup();
+    return true;
+}
+
+bool SupportDirsDialog::save()
+{
+    QSettings settings(util::appConfigName, QSettings::IniFormat);
+    if (!settings.isWritable())
+        return false;
+
+    settings.beginGroup("support_directories");
+
+    settings.setValue("previews", m_handlers[PATH_PREVIEWS].edit->text());
+    settings.setValue("titles", m_handlers[PATH_TITLES].edit->text());
+    settings.setValue("hiscores", m_handlers[PATH_HISCORES].edit->text());
+    settings.setValue("samples", m_handlers[PATH_SAMPLES].edit->text());
+    settings.setValue("cheats", m_handlers[PATH_CHEATS].edit->text());
+
+    settings.endGroup();
+    settings.sync();
 }

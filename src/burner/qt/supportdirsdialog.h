@@ -21,6 +21,8 @@ public:
 public slots:
     void editPath(int no);
     int exec();
+    bool load();
+    bool save();
 
 private:
     Ui::SupportDirsDialog *ui;

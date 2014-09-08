@@ -4,6 +4,8 @@
 
 namespace util {
 
+const QString appConfigName("config/fbaqt.ini");
+
 void fixPath(QString &path)
 {
     if (!path.isEmpty()) {

@@ -36,13 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     show();
 
-    ruby::video.driver("OpenGL");
-    ruby::video.set(ruby::Video::Handle, m_viewport->id());
-    ruby::video.set(ruby::Video::Depth, 24u);
-
-    if (ruby::video.init()) {
-        qDebug() << "Ruby Succefully initialized";
-    }
+    setupRubyViewport();
 }
 
 MainWindow::~MainWindow()
@@ -237,6 +231,17 @@ void MainWindow::drawLogo()
     if (!m_isRunning) {
         QApplication::processEvents();
         RubyVidBlit(m_logo);
+    }
+}
+
+void MainWindow::setupRubyViewport()
+{
+    ruby::video.driver("OpenGL");
+    ruby::video.set(ruby::Video::Handle, m_viewport->id());
+    ruby::video.set(ruby::Video::Depth, 24u);
+
+    if (ruby::video.init()) {
+        qDebug() << "Ruby Succefully initialized";
     }
 }
 

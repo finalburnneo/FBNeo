@@ -20,6 +20,8 @@ public:
 public slots:
     int exec();
     void editPath(int no);
+    bool load();
+    bool save();
 private:
     Ui::RomDirsDialog *ui;
     int m_activePath;

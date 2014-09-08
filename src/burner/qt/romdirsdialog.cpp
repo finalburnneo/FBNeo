@@ -24,10 +24,13 @@ RomDirsDialog::RomDirsDialog(QWidget *parent) :
     m_handlers[3] = util::PathHandler(szAppRomPaths[3], ui->lePath4, 3);
 
     connect(m_group, SIGNAL(buttonClicked(int)), this, SLOT(editPath(int)));
+
+    load();
 }
 
 RomDirsDialog::~RomDirsDialog()
 {
+    save();
     delete ui;
 }
 
@@ -45,4 +48,41 @@ int RomDirsDialog::exec()
 void RomDirsDialog::editPath(int no)
 {
     m_handlers[no].browse(this);
+}
+
+bool RomDirsDialog::load()
+{
+    QSettings settings(util::appConfigName, QSettings::IniFormat);
+    if (settings.status() == QSettings::AccessError)
+        return false;
+
+    settings.beginReadArray("rom_directories");
+
+    for (int i = 0; i < DIRS_MAX; i++) {
+        settings.setArrayIndex(i);
+        QString path(settings.value("path").toString());
+        if (!path.isEmpty()) {
+            m_handlers[i].edit->setText(settings.value("path").toString());
+            m_handlers[i].editorToString();
+        }
+    }
+
+    settings.endArray();
+}
+
+bool RomDirsDialog::save()
+{
+    QSettings settings(util::appConfigName, QSettings::IniFormat);
+    if (!settings.isWritable())
+        return false;
+
+    settings.beginWriteArray("rom_directories");
+
+    for (int i = 0; i < DIRS_MAX; i++) {
+        settings.setArrayIndex(i);
+        settings.setValue("path", m_handlers[i].edit->text());
+    }
+
+    settings.endArray();
+    settings.sync();
 }

@@ -47,6 +47,7 @@ private:
     void enableInGame();
     void disableInGame();
     void drawLogo();
+    void setupRubyViewport();
     int m_game;
     bool m_isRunning;
     QRubyViewport *m_viewport;

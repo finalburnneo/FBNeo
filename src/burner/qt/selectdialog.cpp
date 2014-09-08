@@ -146,6 +146,14 @@ void SelectDialog::itemShowZipNames(bool state)
             driver->setText(0, driver->romName());
         else
             driver->setText(0, driver->fullName());
+
+        for (int idx = 0; idx < driver->childCount(); idx++) {
+            TreeDriverItem *clone = static_cast<TreeDriverItem *>(driver->child(idx));
+            if (m_showZipNames)
+                clone->setText(0, clone->romName());
+            else
+                clone->setText(0, clone->fullName());
+        }
     }
 }
 

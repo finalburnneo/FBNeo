@@ -21,7 +21,7 @@ DRV_SMS         = true
 DRV_MEGADRIVE   = true
 DRV_NEOGEO      = true
 DRV_PCE         = true
-DRV_PGM         = false
+DRV_PGM         = true
 DRV_PRE90S      = true
 DRV_PST90S      = true
 DRV_SEGA        = true
@@ -761,7 +761,7 @@ SOURCES += \
     ../../src/cpu/tlcs90/tlcs90.cpp \
     ../../src/cpu/tlcs90_intf.cpp \
     ../../src/burn/devices/kaneko_tmap.cpp \
-    ../../src/intf/audio/linux/aud_pulse_simple.cpp
+
 
 HEADERS += \
     ../../src/burn/devices/8255ppi.h \
@@ -932,7 +932,12 @@ HEADERS += \
     ../../src/dep/libs/zlib/zutil.h \
     ../../src/burn/devices/nmk004.h \
     ../../src/burn/devices/kaneko_tmap.h \
-    ../../src/intf/audio/linux/ringbuffer.h
+
+#-------------------------------------------------------------------------------
+# Linux only drivers
+#-------------------------------------------------------------------------------
+linux: HEADERS += ../../src/intf/audio/linux/ringbuffer.h
+linux: SOURCES += ../../src/intf/audio/linux/aud_pulse_simple.cpp
 
 OTHER_FILES +=
 

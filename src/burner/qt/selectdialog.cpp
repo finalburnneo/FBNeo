@@ -56,6 +56,8 @@ SelectDialog::SelectDialog(QWidget *parent) :
 
     connect(ui->btnSearch, SIGNAL(clicked()), this, SLOT(doSearch()));
 
+    // hide zip name column
+    ui->tvDrivers->setColumnHidden(1, true);
     filterDrivers();
 }
 
@@ -140,23 +142,11 @@ void SelectDialog::itemShowZipNames(bool state)
     if (state == m_showZipNames)
         return;
     m_showZipNames = state;
-    foreach (TreeDriverItem *driver, m_parents.values()) {
-        // skip it
-        if (driver == nullptr)
-            continue;
-        if (m_showZipNames)
-            driver->setText(0, driver->romName());
-        else
-            driver->setText(0, driver->fullName());
 
-        for (int idx = 0; idx < driver->childCount(); idx++) {
-            TreeDriverItem *clone = static_cast<TreeDriverItem *>(driver->child(idx));
-            if (m_showZipNames)
-                clone->setText(0, clone->romName());
-            else
-                clone->setText(0, clone->fullName());
-        }
-    }
+    if (m_showZipNames)
+        ui->tvDrivers->setColumnHidden(1, false);
+    else
+        ui->tvDrivers->setColumnHidden(1, true);
 }
 
 void SelectDialog::doSearch()
@@ -272,6 +262,7 @@ void SelectDialog::buildDriverTree()
         ditem->setFullName(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
         ditem->setText(0, ditem->fullName());
         ditem->setRomName(BurnDrvGetTextA(DRV_NAME));
+        ditem->setText(1, ditem->romName());
         ditem->setDriverNo(i);
         ditem->setIsParent(true);
         ui->tvDrivers->addTopLevelItem(ditem);
@@ -296,9 +287,11 @@ void SelectDialog::buildDriverTree()
             ditem->setFullName(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
             ditem->setText(0, ditem->fullName());
             ditem->setRomName(BurnDrvGetTextA(DRV_NAME));
+            ditem->setText(1, ditem->romName());
             ditem->setDriverNo(i);
             ditem->setIsParent(false);
-            ditem->setBackgroundColor(0, QColor(230, 230, 230));
+            ditem->setBackgroundColor(0, QColor(200, 230, 255));
+            ditem->setBackgroundColor(1, QColor(210, 240, 255));
             itemParent->addChild(ditem);
         }
     }

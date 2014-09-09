@@ -22,7 +22,12 @@
         <widget class="QTreeWidget" name="tvDrivers">
          <column>
           <property name="text">
-           <string>Select Game</string>
+           <string>Title</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Rom</string>
           </property>
          </column>
         </widget>

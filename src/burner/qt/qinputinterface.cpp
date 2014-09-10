@@ -98,11 +98,27 @@ int QtInputState(int nCode)
 
 int QtInputFind(bool CreateBaseline)
 {
+    if (!bKeyboardRead)
+        ReadKeyboard();
+
+    for (int i = 0; i < 256; i++)
+        if (qKeyboardState[i])
+            return i;
+
     return -1;
 }
 
 int QtInputGetControlName(int nCode, TCHAR* pszDeviceName, TCHAR* pszControlName)
 {
+    pszDeviceName[0] = '\0';
+    pszControlName[0] = '\0';
+
+    if (nCode < 256) {
+        strcpy(pszControlName, QString("Key %1").arg(nCode).toLatin1().data());
+        strcpy(pszDeviceName, "Keyboard");
+        return 0;
+    }
+
     return 0;
 }
 

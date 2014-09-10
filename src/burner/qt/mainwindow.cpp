@@ -156,6 +156,7 @@ void MainWindow::createMenus()
     setupInputInterfaces();
 
     m_menuInput->addAction(m_actionDipswitch);
+    m_menuInput->addAction(m_actionMapGameInputs);
 
     m_menuMisc = menuBar()->addMenu(tr("Misc"));
     m_menuMisc->addAction(m_actionConfigureRomPaths);
@@ -179,6 +180,7 @@ void MainWindow::createControls()
     m_supportPathDlg = new SupportDirsDialog(this);
     m_aboutDlg = new AboutDialog(this);
     m_dipSwitchDlg = new DipswitchDialog(this);
+    m_inputDlg = new InputDialog(this);
 
     extern void ProgressSetParent(QWidget *);
     ProgressSetParent(this);
@@ -200,6 +202,8 @@ void MainWindow::createActions()
     m_actionAbout = new QAction(tr("About FBA"), this);
     m_actionDipswitch = new QAction(tr("Configure DIPs"), this);
     m_actionDipswitch->setEnabled(false);
+    m_actionMapGameInputs = new QAction(tr("Map game inputs"), this);
+    m_actionMapGameInputs->setEnabled(false);
 }
 
 void MainWindow::connectActions()
@@ -214,18 +218,22 @@ void MainWindow::connectActions()
     connect(m_scutToogleMenu, SIGNAL(activated()), this, SLOT(toogleMenu()));
     connect(m_scutToogleFullscreen, SIGNAL(activated()), this, SLOT(toogleFullscreen()));
     connect(m_actionDipswitch, SIGNAL(triggered()), m_dipSwitchDlg, SLOT(exec()));
+    connect(m_actionMapGameInputs, SIGNAL(triggered()), m_inputDlg, SLOT(exec()));
 }
 
 void MainWindow::enableInGame()
 {
     m_actionCloseGame->setEnabled(true);
     m_actionDipswitch->setEnabled(true);
+    m_actionMapGameInputs->setEnabled(true);
 }
 
 void MainWindow::disableInGame()
 {
     m_actionCloseGame->setEnabled(false);
     m_actionDipswitch->setEnabled(false);
+    m_actionMapGameInputs->setEnabled(false);
+
 }
 
 void MainWindow::drawLogo()

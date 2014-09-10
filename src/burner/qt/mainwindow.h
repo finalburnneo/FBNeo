@@ -16,6 +16,7 @@
 #include "supportdirsdialog.h"
 #include "aboutdialog.h"
 #include "dipswitchdialog.h"
+#include "inputdialog.h"
 #include "emuworker.h"
 #include "burner.h"
 
@@ -57,6 +58,7 @@ private:
     SupportDirsDialog *m_supportPathDlg;
     AboutDialog *m_aboutDlg;
     DipswitchDialog *m_dipSwitchDlg;
+    InputDialog *m_inputDlg;
     QMenu *m_menuGame;
     QMenu *m_menuMisc;
     QMenu *m_menuHelp;
@@ -70,6 +72,7 @@ private:
     QAction *m_actionCloseGame;
     QAction *m_actionToogleMenu;
     QAction *m_actionDipswitch;
+    QAction *m_actionMapGameInputs;
     QShortcut *m_scutToogleMenu;
     QShortcut *m_scutToogleFullscreen;
     QImage m_logo;

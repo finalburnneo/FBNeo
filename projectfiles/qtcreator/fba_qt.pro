@@ -761,6 +761,7 @@ SOURCES += \
     ../../src/cpu/tlcs90/tlcs90.cpp \
     ../../src/cpu/tlcs90_intf.cpp \
     ../../src/burn/devices/kaneko_tmap.cpp \
+    ../../src/burner/qt/inputdialog.cpp
 
 
 HEADERS += \
@@ -932,6 +933,7 @@ HEADERS += \
     ../../src/dep/libs/zlib/zutil.h \
     ../../src/burn/devices/nmk004.h \
     ../../src/burn/devices/kaneko_tmap.h \
+    ../../src/burner/qt/inputdialog.h
 
 #-------------------------------------------------------------------------------
 # Linux only drivers
@@ -951,4 +953,5 @@ FORMS += \
     ../../src/burner/qt/rominfodialog.ui \
     ../../src/burner/qt/romscandialog.ui \
     ../../src/burner/qt/selectdialog.ui \
-    ../../src/burner/qt/supportdirsdialog.ui
+    ../../src/burner/qt/supportdirsdialog.ui \
+    ../../src/burner/qt/inputdialog.ui

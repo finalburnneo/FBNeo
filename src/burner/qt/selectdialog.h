@@ -66,6 +66,8 @@ signals:
 private:
     int m_selectedDriver;
     void updateTitleScreen();
+    void updatePreview();
+
     void updateLabelCounter();
     void buildDriverTree();
     bool isFiltered(TreeDriverItem *driver);

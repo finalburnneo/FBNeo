@@ -78,6 +78,7 @@ void SelectDialog::driverChange(QTreeWidgetItem *item, QTreeWidgetItem *prev)
     nBurnDrvActive = driver->driverNo();
     ui->leGameInfo->setText(BurnDrvGetText(flags | DRV_FULLNAME));
     updateTitleScreen();
+    updatePreview();
     {
         QString manufacturer = BurnDrvGetTextA(DRV_MANUFACTURER) ?
                     BurnDrvGetText(flags | DRV_MANUFACTURER) : tr("Unknown");
@@ -189,6 +190,19 @@ void SelectDialog::updateTitleScreen()
         ui->imgTitleScreen->setPixmap(p);
     } else {
         ui->imgTitleScreen->setPixmap(m_defaultImage);
+    }
+}
+
+void SelectDialog::updatePreview()
+{
+    QString drv = BurnDrvGetTextA(DRV_NAME);
+    QString path = QString(szAppPreviewsPath);
+    path += QString("%0.png").arg(drv);
+    if (QFile(path).exists()) {
+        QPixmap p(path);
+        ui->imgPreview->setPixmap(p);
+    } else {
+        ui->imgPreview->setPixmap(m_defaultImage);
     }
 }
 

@@ -761,7 +761,8 @@ SOURCES += \
     ../../src/cpu/tlcs90/tlcs90.cpp \
     ../../src/cpu/tlcs90_intf.cpp \
     ../../src/burn/devices/kaneko_tmap.cpp \
-    ../../src/burner/qt/inputdialog.cpp
+    ../../src/burner/qt/inputdialog.cpp \
+    ../../src/burner/qt/widgets/hexspinbox.cpp
 
 
 HEADERS += \
@@ -933,7 +934,8 @@ HEADERS += \
     ../../src/dep/libs/zlib/zutil.h \
     ../../src/burn/devices/nmk004.h \
     ../../src/burn/devices/kaneko_tmap.h \
-    ../../src/burner/qt/inputdialog.h
+    ../../src/burner/qt/inputdialog.h \
+    ../../src/burner/qt/widgets/hexspinbox.h
 
 #-------------------------------------------------------------------------------
 # Linux only drivers

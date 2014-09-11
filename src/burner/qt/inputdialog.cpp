@@ -13,9 +13,14 @@ InputDialog::InputDialog(QWidget *parent) :
 
     setWindowTitle("Map Game Inputs");
 
+    m_hexEditor = new HexSpinDialog(this);
+
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(updateInputs()));
     m_timer->setInterval(30);
+
+    connect(ui->tvInputs, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
+            this, SLOT(inputEdit(QTreeWidgetItem*,int)));
 }
 
 InputDialog::~InputDialog()
@@ -59,6 +64,29 @@ void InputDialog::updateInputs()
             break;
         }
         item->setData(2, Qt::UserRole, value);
+    }
+}
+
+void InputDialog::inputEdit(QTreeWidgetItem *item, int column)
+{
+    struct GameInp *pgi = GameInp;
+
+    pgi += item->data(0, Qt::UserRole).toInt();
+
+    switch (pgi->nType) {
+    case BIT_DIPSWITCH: {
+        if (pgi->nInput & BIT_GROUP_CONSTANT)
+            break;
+
+        m_hexEditor->setValue(pgi->Input.nVal);
+        m_hexEditor->exec();
+
+        pgi->nInput = GIT_CONSTANT;
+        pgi->Input.Constant.nConst = (m_hexEditor->value() & 0xFF);
+        auto value = InpToDesc(pgi);
+        item->setText(1, value);
+        break;
+    }
     }
 }
 

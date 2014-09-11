@@ -26,6 +26,8 @@ void fixPath(QString &path);
 QString loadText(const QString &fileName);
 
 extern const QString appConfigName;
+QString decorateGenre();
+QString decorateRomInfo();
 
 }
 

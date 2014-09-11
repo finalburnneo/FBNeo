@@ -5,6 +5,7 @@
 #include "ui_selectdialog.h"
 #include "burner.h"
 #include "rominfodialog.h"
+#include "qutil.h"
 
 SelectDialog::SelectDialog(QWidget *parent) :
     QDialog(parent),
@@ -93,6 +94,16 @@ void SelectDialog::driverChange(QTreeWidgetItem *item, QTreeWidgetItem *prev)
         ui->leReleasedBy->setText(releaseInfo);
     }
     ui->leRomName->setText(driver->romName());
+    ui->leGenre->setText(util::decorateGenre());
+    ui->leRomInfo->setText(util::decorateRomInfo());
+
+
+    QString comments(BurnDrvGetText(flags | DRV_COMMENT));
+    if (BurnDrvGetFlags() & BDF_HISCORE_SUPPORTED)
+        comments += tr(", hiscores supported");
+    ui->leNotes->setText(comments);
+
+
     nBurnDrvActive = tmp;
 }
 

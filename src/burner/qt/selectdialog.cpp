@@ -182,7 +182,8 @@ void SelectDialog::doSearch()
 void SelectDialog::updateTitleScreen()
 {
     QString drv = BurnDrvGetTextA(DRV_NAME);
-    QString path = (QString(tr("support/titles/%0.png").arg(drv)));
+    QString path = QString(szAppTitlesPath);
+    path += QString("%0.png").arg(drv);
     if (QFile(path).exists()) {
         QPixmap p(path);
         ui->imgTitleScreen->setPixmap(p);

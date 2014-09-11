@@ -65,19 +65,11 @@ bool SupportDirsDialog::load()
 
     settings.beginGroup("support_directories");
 
-    auto readPath = [&](const QString &name, int i) -> void {
-        QString path(settings.value(name).toString());
-        if (!path.isEmpty()) {
-            m_handlers[i].edit->setText(settings.value(path).toString());
-            m_handlers[i].editorToString();
-        }
-    };
-
-    readPath("previews", PATH_PREVIEWS);
-    readPath("titles", PATH_TITLES);
-    readPath("hiscores", PATH_HISCORES);
-    readPath("samples", PATH_SAMPLES);
-    readPath("cheats", PATH_CHEATS);
+    loadPath(settings, "previews", PATH_PREVIEWS);
+    loadPath(settings, "titles", PATH_TITLES);
+    loadPath(settings, "hiscores", PATH_HISCORES);
+    loadPath(settings, "samples", PATH_SAMPLES);
+    loadPath(settings, "cheats", PATH_CHEATS);
 
     settings.endGroup();
     return true;
@@ -99,4 +91,16 @@ bool SupportDirsDialog::save()
 
     settings.endGroup();
     settings.sync();
+}
+
+void SupportDirsDialog::loadPath(QSettings &settings, QString name, int i)
+{
+    if (i >= PATH_MAX_HANDLERS)
+        return;
+    QString path(settings.value(name).toString());
+
+    if (QFile(path).exists()) {
+        m_handlers[i].edit->setText(path);
+        m_handlers[i].editorToString();
+    }
 }

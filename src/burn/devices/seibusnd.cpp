@@ -34,6 +34,7 @@ static UINT8 sub2main[2];
 static INT32 main2sub_pending;
 static INT32 sub2main_pending;
 static INT32 SeibuSoundBank;
+static INT32 irq1,irq2;
 
 UINT8 *SeibuZ80DecROM;
 UINT8 *SeibuZ80ROM;
@@ -55,8 +56,6 @@ enum
 
 static void update_irq_lines(INT32 param)
 {
-	static INT32 irq1,irq2;
-
 	switch(param)
 	{
 		case VECTOR_INIT:
@@ -560,6 +559,8 @@ void seibu_sound_scan(INT32 *pnMin, INT32 nAction)
 		SCAN_VAR(main2sub_pending);
 		SCAN_VAR(sub2main_pending);
 		SCAN_VAR(SeibuSoundBank);
+		SCAN_VAR(irq1);
+		SCAN_VAR(irq2);
 	}
 
 	if (nAction & ACB_WRITE)

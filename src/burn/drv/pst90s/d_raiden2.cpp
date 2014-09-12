@@ -415,7 +415,7 @@ static void SeibuCopReset()
 
 static void SeibuCopScan(INT32 nAction)
 {
-	struct BurnArea ba;
+	//struct BurnArea ba;
 
 	if (nAction & ACB_DRIVER_DATA) {
 /*		memset(&ba, 0, sizeof(ba));

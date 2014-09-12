@@ -143,6 +143,80 @@ void cpu_writemem20(UINT32 a, UINT8 d)
 		VezCurrentCPU->WriteHandler(a, d);
 }
 
+void VezWriteByte(UINT32 a, UINT8 d)
+{
+	a &= 0xFFFFF;
+	
+	UINT8 * p = VezCurrentCPU->ppMemWrite[ a >> VEZ_MEM_SHIFT ];
+	if ( p )
+		*(p + a) = d;
+	else
+		VezCurrentCPU->WriteHandler(a, d);
+}
+
+void VezWriteWord(UINT32 a, UINT16 d)
+{
+	a &= 0xFFFFF;
+	
+	UINT16 * p = (UINT16*)VezCurrentCPU->ppMemWrite[ a >> VEZ_MEM_SHIFT ];
+	if ( p )
+		*(p + (a / 2)) = d;
+	else {
+		VezCurrentCPU->WriteHandler(a, d);
+		VezCurrentCPU->WriteHandler(a+1, d >> 8);
+	}
+}
+
+void VezWriteLong(UINT32 a, UINT32 d)
+{
+	a &= 0xFFFFF;
+	
+	UINT32 * p = (UINT32*)VezCurrentCPU->ppMemWrite[ a >> VEZ_MEM_SHIFT ];
+	if ( p )
+		*(p + (a / 4)) = d;
+	else {
+		VezCurrentCPU->WriteHandler(a, d);
+		VezCurrentCPU->WriteHandler(a+1, d >> 8);
+		VezCurrentCPU->WriteHandler(a+2, d >> 16);
+		VezCurrentCPU->WriteHandler(a+3, d >> 24);
+
+	}
+}
+
+UINT8 VezReadByte(UINT32 a)
+{
+	a &= 0xFFFFF;
+	
+	UINT8 * p = VezCurrentCPU->ppMemRead[ a >> VEZ_MEM_SHIFT ];
+	if ( p )
+		return *(p + a);
+	else
+		return VezCurrentCPU->ReadHandler(a);
+}
+
+UINT16 VezReadWord(UINT32 a)
+{
+	a &= 0xFFFFF;
+	
+	UINT16 * p = (UINT16*)VezCurrentCPU->ppMemRead[ a >> VEZ_MEM_SHIFT ];
+	if ( p )
+		return *(p + (a / 2));
+	else
+		return VezCurrentCPU->ReadHandler(a) + (VezCurrentCPU->ReadHandler(a+1) * 0x100);
+}
+
+UINT32 VezReadLong(UINT32 a)
+{
+	a &= 0xFFFFF;
+	
+	UINT32 * p = (UINT32*)VezCurrentCPU->ppMemRead[ a >> VEZ_MEM_SHIFT ];
+	if ( p )
+		return *(p + (a / 4));
+	else
+		return VezCurrentCPU->ReadHandler(a) + (VezCurrentCPU->ReadHandler(a+1) * 0x100) + 
+			(VezCurrentCPU->ReadHandler(a+2) * 0x10000) + (VezCurrentCPU->ReadHandler(a+3) * 0x1000000);
+}
+
 static void VezCheatWrite(UINT32 a, UINT8 d)
 {
 	a &= 0xfffff;

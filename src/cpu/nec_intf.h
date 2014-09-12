@@ -37,6 +37,13 @@ INT32 VezMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem1, UINT8 *Mem2
 void VezSetReadHandler(UINT8 (__fastcall*)(UINT32));
 void VezSetWriteHandler(void (__fastcall*)(UINT32, UINT8));
 
+void VezWriteByte(UINT32 a, UINT8 d);
+void VezWriteWord(UINT32 a, UINT16 d);
+void VezWriteLong(UINT32 a, UINT32 d);
+UINT8 VezReadByte(UINT32 a);
+UINT16 VezReadWord(UINT32 a);
+UINT32 VezReadLong(UINT32 a);
+
 #define V25_PORT_P0 0x10000
 #define V25_PORT_P1 0x10002
 #define V25_PORT_P2 0x10004

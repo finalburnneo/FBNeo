@@ -184,6 +184,7 @@ void __fastcall seibu_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x4007:
+		case 0x401a: // raiden2
 			seibu_z80_bank(data);
 		return;
 
@@ -269,7 +270,8 @@ UINT8 __fastcall seibu_sound_read(UINT16 address)
 			return 0;
 
 		case 0x4009: {
-			if (seibu_snd_type < 2) return 0;
+			if ((seibu_snd_type&3)==1) return BurnYM2151ReadStatus();		
+			if ((seibu_snd_type&3) < 2) return 0;
 			return BurnYM2203Read(0, 1);
 		}
 
@@ -529,6 +531,7 @@ void seibu_sound_scan(INT32 *pnMin, INT32 nAction)
 	{		
 		ZetScan(nAction);
 
+		ZetOpen(0);
 		switch (seibu_snd_type & 3)
 		{
 			case 0:
@@ -536,13 +539,14 @@ void seibu_sound_scan(INT32 *pnMin, INT32 nAction)
 			break;
 	
 			case 1:
-				BurnYM2203Scan(nAction, pnMin);
+				BurnYM2151Scan(nAction);
 			break;
 	
 			case 2:
-				BurnYM2151Scan(nAction);
+				BurnYM2203Scan(nAction, pnMin);
 			break;
 		}
+		ZetClose();
 		
 		MSM6295Scan(0, nAction);
 		if (seibu_snd_type & 4) {

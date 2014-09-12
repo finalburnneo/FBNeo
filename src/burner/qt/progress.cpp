@@ -41,7 +41,7 @@ static int ProgressUpdateBurn(double dProgress, const TCHAR *pszText, bool bAbs)
             dlgProgress->setValue(nProgressMin + nProgressPosBurn + nProgressPosBurner);
         }
     }
-
+    QApplication::processEvents();
     return 0;
 }
 
@@ -77,6 +77,8 @@ void ProgressCreate()
 void ProgressDestroy()
 {
     dlgProgress->setValue(nProgressMax);
+    dlgProgress->close();
+    QApplication::processEvents();
     BurnExtProgressRangeCallback = NULL;
     BurnExtProgressUpdateCallback = NULL;
 }

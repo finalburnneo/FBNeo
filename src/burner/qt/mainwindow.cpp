@@ -51,8 +51,13 @@ int MainWindow::main(QApplication &app)
 {
     m_closeApp = false;
     while (!m_closeApp) {
-        app.processEvents();
-        m_emulation->run();
+        if (m_isRunning) {
+            app.processEvents();
+            m_emulation->run();
+        } else {
+            app.processEvents();
+            QThread::msleep(10);
+        }
     }
     return 0;
 }
@@ -238,10 +243,10 @@ void MainWindow::disableInGame()
 
 void MainWindow::drawLogo()
 {
-    extern void RubyVidBlit(QImage &image);
+    extern void rubyBlitImage(QImage &image);
     if (!m_isRunning) {
         QApplication::processEvents();
-        RubyVidBlit(m_logo);
+        rubyBlitImage(m_logo);
     }
 }
 

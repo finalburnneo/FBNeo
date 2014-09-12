@@ -1456,7 +1456,7 @@ static INT32 MemIndex()
 	DrvSndROM0		= Next; Next += 0x100000;
 	DrvSndROM1		= Next; Next += 0x040000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x0801 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
 
 	bitmap32		= (UINT32*)Next; Next += 320 * 256 * sizeof(UINT32);
 	DrvAlphaTable		= Next; Next += 0x000800;
@@ -1487,8 +1487,8 @@ static INT32 MemIndex()
 
 static void DrvCreateAlphaTable()
 {
-	const UINT8 alpha_active[0x20] = {
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05, 0x3f, 0x73, 0xff, 0x7c, 0xff, 0xff, 0x4f
+	const UINT8 alpha_active[0x10] = {
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,	0x05, 0x3f, 0x73, 0xff, 0x7c, 0xff, 0xff, 0x4f
 	};
 
 	for(int val = 0; val < 0x800; val++) {
@@ -1497,6 +1497,11 @@ static void DrvCreateAlphaTable()
 		if ((val & 0x8) == 0x8 && (val & 0xf) != 0xf && (alpha_active[val >> 7] & (0x80 >> ((val >> 4) & 7)))) {
 			DrvAlphaTable[val] = 1;
 		}
+	}
+
+	if (game_select == 0 || game_select == 1) {
+		memset (DrvAlphaTable + 0x380, 1, 8); // thrusters in intro (after going vertical)
+		memset (DrvAlphaTable + 0x3d0, 1, 8); // thrusters in intro (before going vertical)
 	}
 }
 
@@ -2351,7 +2356,7 @@ static void draw_single_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT3
 
 static void draw_sprites(INT32 priority)
 {
-	if (layer_enable & 0x10) return;	// sprite disable
+	if (layer_enable & 0x10) return;
 
 	UINT16 *sprites = (UINT16*)DrvSprRAM;
 	UINT16 *source = sprites + sprites_cur_start/2;
@@ -2432,13 +2437,13 @@ static INT32 DrvDraw()
 		bitmap32[i] = 0; // black
 	}
 
-	draw_sprites(0);
+	if (nBurnLayer & 1) draw_sprites(0);
 	if (nSpriteEnable & 1) if (~layer_enable & 1) draw_layer(DrvBgRAM, 0, 0x400, bg_bank);
-	draw_sprites(1);
+	if (nBurnLayer & 2) draw_sprites(1);
 	if (nSpriteEnable & 2) if (~layer_enable & 2) draw_layer(DrvMgRAM, 1, 0x600, mg_bank);
-	draw_sprites(2);
+	if (nBurnLayer & 4) draw_sprites(2);
 	if (nSpriteEnable & 4) if (~layer_enable & 4) draw_layer(DrvFgRAM, 2, 0x500, fg_bank);
-	draw_sprites(3);
+	if (nBurnLayer & 8) draw_sprites(3);
 	if (nSpriteEnable & 8) if (~layer_enable & 8) draw_txt_layer();
 
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {

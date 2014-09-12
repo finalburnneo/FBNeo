@@ -515,9 +515,11 @@ void seibu_sound_update(INT16 *pbuf, INT32 nLen)
 		break;
 	}
 
+	MSM6295Render(0, pbuf, nLen);
+
 	if (seibu_snd_type & 4) 
 		MSM6295Render(1, pbuf, nLen);
-	MSM6295Render(0, pbuf, nLen);
+
 }
 
 void seibu_sound_scan(INT32 *pnMin, INT32 nAction)

@@ -288,7 +288,7 @@ UINT8 __fastcall seibu_sound_read(UINT16 address)
 			return MSM6295ReadStatus(0);
 
 		case 0x6002:
-			if (seibu_snd_type & 4) return MSM6295ReadStatus(0);
+			if (seibu_snd_type & 4) return MSM6295ReadStatus(1);
 	}
 
 	return 0;

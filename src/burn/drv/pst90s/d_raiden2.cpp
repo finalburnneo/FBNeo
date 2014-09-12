@@ -99,7 +99,7 @@ static struct BurnInputInfo RaidendxInputList[] = {
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 3"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 3,	"service"	},

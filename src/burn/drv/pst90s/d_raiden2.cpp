@@ -7,9 +7,6 @@
 #include "nec_intf.h"
 #include "bitswap.h"
 
-// define fast draw use the generic tile handing - much faster, but disables alpha blending!
-//#define FAST_DRAW
-
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
@@ -82,6 +79,36 @@ static struct BurnInputInfo Raiden2InputList[] = {
 };
 
 STDINPUTINFO(Raiden2)
+
+static struct BurnInputInfo RaidendxInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 3"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy3 + 3,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+};
+
+STDINPUTINFO(Raidendx)
 
 static struct BurnInputInfo ZeroteamInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
@@ -198,56 +225,57 @@ STDDIPINFO(Raiden2)
 
 static struct BurnDIPInfo RaidendxDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0xff, NULL			},
+	{0x14, 0xff, 0xff, 0xff, NULL			},
+	{0x15, 0xff, 0xff, 0xff, NULL			},
+	{0x16, 0xff, 0xff, 0xff, NULL			},
 
 	{0   , 0xfe, 0   ,    8, "Coin A"		},
-	{0x12, 0x01, 0x07, 0x01, "4 Coins 1 Credits"	},
-	{0x12, 0x01, 0x07, 0x02, "3 Coins 1 Credits"	},
-	{0x12, 0x01, 0x07, 0x04, "2 Coins 1 Credits"	},
-	{0x12, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
-	{0x12, 0x01, 0x07, 0x06, "1 Coin  2 Credits"	},
-	{0x12, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
-	{0x12, 0x01, 0x07, 0x03, "1 Coin  4 Credits"	},
-	{0x12, 0x01, 0x07, 0x00, "Free Play"		},
+	{0x14, 0x01, 0x07, 0x01, "4 Coins 1 Credits"	},
+	{0x14, 0x01, 0x07, 0x02, "3 Coins 1 Credits"	},
+	{0x14, 0x01, 0x07, 0x04, "2 Coins 1 Credits"	},
+	{0x14, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
+	{0x14, 0x01, 0x07, 0x06, "1 Coin  2 Credits"	},
+	{0x14, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
+	{0x14, 0x01, 0x07, 0x03, "1 Coin  4 Credits"	},
+	{0x14, 0x01, 0x07, 0x00, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    8, "Coin B"		},
-	{0x12, 0x01, 0x38, 0x08, "4 Coins 1 Credits"	},
-	{0x12, 0x01, 0x38, 0x10, "3 Coins 1 Credits"	},
-	{0x12, 0x01, 0x38, 0x20, "2 Coins 1 Credits"	},
-	{0x12, 0x01, 0x38, 0x38, "1 Coin  1 Credits"	},
-	{0x12, 0x01, 0x38, 0x30, "1 Coin  2 Credits"	},
-	{0x12, 0x01, 0x38, 0x28, "1 Coin  3 Credits"	},
-	{0x12, 0x01, 0x38, 0x18, "1 Coin  4 Credits"	},
-	{0x12, 0x01, 0x38, 0x00, "Free Play"		},
+	{0x14, 0x01, 0x38, 0x08, "4 Coins 1 Credits"	},
+	{0x14, 0x01, 0x38, 0x10, "3 Coins 1 Credits"	},
+	{0x14, 0x01, 0x38, 0x20, "2 Coins 1 Credits"	},
+	{0x14, 0x01, 0x38, 0x38, "1 Coin  1 Credits"	},
+	{0x14, 0x01, 0x38, 0x30, "1 Coin  2 Credits"	},
+	{0x14, 0x01, 0x38, 0x28, "1 Coin  3 Credits"	},
+	{0x14, 0x01, 0x38, 0x18, "1 Coin  4 Credits"	},
+	{0x14, 0x01, 0x38, 0x00, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    2, "Starting Coin"	},
-	{0x12, 0x01, 0x40, 0x40, "Normal"		},
-	{0x12, 0x01, 0x40, 0x00, "X 2"			},
+	{0x14, 0x01, 0x40, 0x40, "Normal"		},
+	{0x14, 0x01, 0x40, 0x00, "X 2"			},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x12, 0x01, 0x80, 0x80, "Off"			},
-	{0x12, 0x01, 0x80, 0x00, "On"			},
+	{0x14, 0x01, 0x80, 0x80, "Off"			},
+	{0x14, 0x01, 0x80, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x13, 0x01, 0x03, 0x03, "Normal"		},
-	{0x13, 0x01, 0x03, 0x02, "Easy"			},
-	{0x13, 0x01, 0x03, 0x01, "Hard"			},
-	{0x13, 0x01, 0x03, 0x00, "Very Hard"		},
+	{0x15, 0x01, 0x03, 0x03, "Normal"		},
+	{0x15, 0x01, 0x03, 0x02, "Easy"			},
+	{0x15, 0x01, 0x03, 0x01, "Hard"			},
+	{0x15, 0x01, 0x03, 0x00, "Very Hard"		},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x13, 0x01, 0x0c, 0x00, "1"			},
-	{0x13, 0x01, 0x0c, 0x04, "4"			},
-	{0x13, 0x01, 0x0c, 0x08, "2"			},
-	{0x13, 0x01, 0x0c, 0x0c, "3"			},
+	{0x15, 0x01, 0x0c, 0x00, "1"			},
+	{0x15, 0x01, 0x0c, 0x04, "4"			},
+	{0x15, 0x01, 0x0c, 0x08, "2"			},
+	{0x15, 0x01, 0x0c, 0x0c, "3"			},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sound"		},
-	{0x13, 0x01, 0x40, 0x00, "Off"			},
-	{0x13, 0x01, 0x40, 0x40, "On"			},
+	{0x15, 0x01, 0x40, 0x00, "Off"			},
+	{0x15, 0x01, 0x40, 0x40, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x13, 0x01, 0x80, 0x80, "Off"			},
-	{0x13, 0x01, 0x80, 0x00, "On"			},
+	{0x15, 0x01, 0x80, 0x80, "Off"			},
+	{0x15, 0x01, 0x80, 0x00, "On"			},
 };
 
 STDDIPINFO(Raidendx)
@@ -342,7 +370,6 @@ static struct BurnDIPInfo ZeroteamDIPList[]=
 
 STDDIPINFO(Zeroteam)
 
-
 static UINT32 cop_regs[8], cop_itoa;
 static UINT16 cop_status, cop_scale, cop_itoa_digit_count, cop_angle, cop_dist;
 static UINT8 cop_itoa_digits[10];
@@ -415,10 +442,10 @@ static void SeibuCopReset()
 
 static void SeibuCopScan(INT32 nAction)
 {
-	//struct BurnArea ba;
-
 	if (nAction & ACB_DRIVER_DATA) {
-/*		memset(&ba, 0, sizeof(ba));
+/*		struct BurnArea ba;
+
+		memset(&ba, 0, sizeof(ba));
 		ba.Data   = cop_regs;
 		ba.nLen   = 8 * sizeof(UINT32);
 		ba.szName = "cop_regs";
@@ -603,10 +630,6 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 		int npos = ppos + VezReadLong(cop_regs[0] + 0x10 + offset*4);
 		int delta = (npos >> 16) - (ppos >> 16);
 		VezWriteLong(cop_regs[0] + 4 + offset*4, npos);
-
-		/* TODO: check the following, makes Zero Team to crash as soon
-		   as this command is triggered (see above) --- or not, since
-		   it was just changed */
 		VezWriteWord(cop_regs[0] + 0x1e + offset*4, VezReadWord(cop_regs[0] + 0x1e + offset*4) + delta);
 		break;
 	}
@@ -1232,19 +1255,15 @@ static inline void palette_update_entry(INT32 entry)
 {
 	UINT16 p = *((UINT16*)(DrvPalRAM + entry));
 
-	INT32 r = (p >> 0) & 0x1f;
-	INT32 g = (p >> 5) & 0x1f;
-	INT32 b = (p >> 10) & 0x1f;
+	UINT8 r = (p >> 0) & 0x1f;
+	UINT8 g = (p >> 5) & 0x1f;
+	UINT8 b = (p >> 10) & 0x1f;
 
 	r = (r << 3) | (r >> 2);
 	g = (g << 3) | (g >> 2);
 	b = (b << 3) | (b >> 2);
 
-#ifdef FAST_DRAW
-	DrvPalette[entry/2] = BurnHighCol(r, g, b, 0);
-#else
-	DrvPalette[entry/2] = (r<<16)+(g<<8)+b;
-#endif
+	DrvPalette[entry/2] = (r*0x10000)+(g*0x100)+b;
 }
 
 static void __fastcall raiden2_main_write(UINT32 address, UINT8 data)
@@ -1468,17 +1487,14 @@ static INT32 MemIndex()
 
 static void DrvCreateAlphaTable()
 {
-	const UINT8 alpha_active[0x20] = { // MSB first
-		//00    08    10    18    20    28    30    38    40    48    50    58    60    68    70    78
+	const UINT8 alpha_active[0x20] = {
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05, 0x3f, 0x73, 0xff, 0x7c, 0xff, 0xff, 0x4f
 	};
 
-	for(int val = 0; val <= 0x7ff; val++) {
+	for(int val = 0; val < 0x800; val++) {
 		DrvAlphaTable[val] = 0;
 
-		if ((val & 0x00f) == 0x00f) continue;
-
-		if ((val & 0x8) == 0x8 && (alpha_active[val >> 7] & (0x80 >> ((val >> 4) & 7)))) {
+		if ((val & 0x8) == 0x8 && (val & 0xf) != 0xf && (alpha_active[val >> 7] & (0x80 >> ((val >> 4) & 7)))) {
 			DrvAlphaTable[val] = 1;
 		}
 	}
@@ -2186,7 +2202,6 @@ static INT32 DrvExit()
 	return 0;
 }
 
-#ifndef FAST_DRAW
 static inline UINT32 alpha_blend(UINT32 d, UINT32 s)
 {
 	INT32 a = 0x81;
@@ -2194,7 +2209,6 @@ static inline UINT32 alpha_blend(UINT32 d, UINT32 s)
 	return (((((s & 0xff00ff) * 0x7f) + ((d & 0xff00ff) * a)) & 0xff00ff00) |
 		((((s & 0x00ff00) * 0x7f) + ((d & 0x00ff00) * a)) & 0x00ff0000)) >> 8;
 }
-#endif
 
 static void draw_layer(UINT8 *ram, INT32 scr, UINT32 color_base, INT32 bank)
 {
@@ -2221,7 +2235,6 @@ static void draw_layer(UINT8 *ram, INT32 scr, UINT32 color_base, INT32 bank)
 
 		if (DrvTransTab[code]) continue;
 
-#ifndef FAST_DRAW
 		{
 			color *= 16;
 			color += color_base;
@@ -2251,9 +2264,6 @@ static void draw_layer(UINT8 *ram, INT32 scr, UINT32 color_base, INT32 bank)
 				dst += nScreenWidth;
 			}
 		}
-#else
-		Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0xf, color_base, DrvGfxROM1);
-#endif
 	}
 }
 
@@ -2274,7 +2284,6 @@ static void draw_txt_layer()
 
 		if (code <= 0x0020) continue;
 
-#ifndef FAST_DRAW
 		{
 			color *= 16;
 			color += 0x700;
@@ -2303,9 +2312,6 @@ static void draw_txt_layer()
 				dst += nScreenWidth;
 			}
 		}
-#else
-		Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0xf, 0x700, DrvGfxROM0);
-#endif
 	}
 }
 
@@ -2313,7 +2319,6 @@ static void draw_single_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT3
 {
 	if (sx < -15 || sy < -15 || sy >= nScreenHeight || sx >= nScreenWidth) return;
 
-#ifndef FAST_DRAW
 	{
 		INT32 flip = (flipy ? 0xf0 : 0) + (flipx ? 0x0f : 0);
 		color *= 16;
@@ -2342,26 +2347,11 @@ static void draw_single_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT3
 			dst += nScreenWidth;
 		}
 	}
-#else
-	if (flipy) {
-		if (flipx) {
-			Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0xf, 0, DrvGfxROM2);
-		} else {
-			Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0xf, 0, DrvGfxROM2);
-		}
-	} else {
-		if (flipx) {
-			Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0xf, 0, DrvGfxROM2);
-		} else {
-			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0xf, 0, DrvGfxROM2);
-		}
-	}
-#endif
 }
 
 static void draw_sprites(INT32 priority)
 {
-	//if (~layer_enable & 0x10) return;	// sprite disable
+	if (layer_enable & 0x10) return;	// sprite disable
 
 	UINT16 *sprites = (UINT16*)DrvSprRAM;
 	UINT16 *source = sprites + sprites_cur_start/2;
@@ -2387,8 +2377,7 @@ static void draw_sprites(INT32 priority)
 
 		pri = (source[0] >> 6) & 3;
 
-	//	colr |= pri << (14-4);
-		if (pri != priority) { // priority handling for now
+		if (pri != priority) {
 			source -= 4;
 			continue;
 		}
@@ -2452,13 +2441,9 @@ static INT32 DrvDraw()
 	draw_sprites(3);
 	if (nSpriteEnable & 8) if (~layer_enable & 8) draw_txt_layer();
 
-#ifndef FAST_DRAW
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 		PutPix(pBurnDraw + (i * nBurnBpp), BurnHighCol(bitmap32[i]>>16, (bitmap32[i]>>8)&0xff, bitmap32[i]&0xff, 0));
 	}
-#else
-	BurnTransferCopy(DrvPalette);
-#endif
 	return 0;
 }
 
@@ -2486,13 +2471,9 @@ static INT32 ZeroteamDraw() // sprite priorities different
 	if (nSpriteEnable & 8) if (~layer_enable & 8) draw_txt_layer();
 	if (nBurnLayer & 8) draw_sprites(3);
 
-#ifndef FAST_DRAW
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 		PutPix(pBurnDraw + (i * nBurnBpp), BurnHighCol(bitmap32[i]>>16, (bitmap32[i]>>8)&0xff, bitmap32[i]&0xff, 0));
 	}
-#else
-	BurnTransferCopy(DrvPalette);
-#endif
 
 	return 0;
 }
@@ -3032,7 +3013,7 @@ struct BurnDriver BurnDrvRaidendx = {
 	"Raiden DX (UK)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raidendxRomInfo, raidendxRomName, NULL, NULL, Raiden2InputInfo, RaidendxDIPInfo,
+	NULL, raidendxRomInfo, raidendxRomName, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
 	RaidendxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3073,7 +3054,7 @@ struct BurnDriver BurnDrvRaidendxa1 = {
 	"Raiden DX (Hong Kong, set 1)\0", NULL, "Seibu Kaihatsu (Metrotainment license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raidendxa1RomInfo, raidendxa1RomName, NULL, NULL, Raiden2InputInfo, RaidendxDIPInfo,
+	NULL, raidendxa1RomInfo, raidendxa1RomName, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
 	RaidendxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3114,7 +3095,7 @@ struct BurnDriver BurnDrvRaidendxa2 = {
 	"Raiden DX (Hong Kong, set 2)\0", NULL, "Seibu Kaihatsu (Metrotainment license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raidendxa2RomInfo, raidendxa2RomName, NULL, NULL, Raiden2InputInfo, RaidendxDIPInfo,
+	NULL, raidendxa2RomInfo, raidendxa2RomName, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
 	RaidendxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3155,7 +3136,7 @@ struct BurnDriver BurnDrvRaidendxk = {
 	"Raiden DX (Korea)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raidendxkRomInfo, raidendxkRomName, NULL, NULL, Raiden2InputInfo, RaidendxDIPInfo,
+	NULL, raidendxkRomInfo, raidendxkRomName, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
 	RaidendxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3196,7 +3177,7 @@ struct BurnDriver BurnDrvRaidendxu = {
 	"Raiden DX (US)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raidendxuRomInfo, raidendxuRomName, NULL, NULL, Raiden2InputInfo, RaidendxDIPInfo,
+	NULL, raidendxuRomInfo, raidendxuRomName, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
 	RaidendxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3237,7 +3218,7 @@ struct BurnDriver BurnDrvRaidendxg = {
 	"Raiden DX (Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raidendxgRomInfo, raidendxgRomName, NULL, NULL, Raiden2InputInfo, RaidendxDIPInfo,
+	NULL, raidendxgRomInfo, raidendxgRomName, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
 	RaidendxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
@@ -3278,7 +3259,7 @@ struct BurnDriver BurnDrvRaidendxnl = {
 	"Raiden DX (Holland)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, raidendxnlRomInfo, raidendxnlRomName, NULL, NULL, Raiden2InputInfo, RaidendxDIPInfo,
+	NULL, raidendxnlRomInfo, raidendxnlRomName, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
 	RaidendxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };

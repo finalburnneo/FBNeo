@@ -5,14 +5,16 @@
 #include "nall/traits.hpp"
 
 static QRubyViewport *viewport = nullptr;
-static int VidMemLen	= 0;
-static int VidMemPitch	= 0;
-static int VidBpp		= 0;
-static int clipx		= 0;
-static int clipy		= 0;
-static int sizex		= 0;
-static int sizey		= 0;
-static unsigned char* VidMem = NULL;
+static int videoLenght = 0;
+static int videoPitch = 0;
+static int videoBpp = 0;
+static int videoClipWidth = 0;
+static int videoClipHeight = 0;
+static int videoWidth = 0;
+static int videoHeight = 0;
+static unsigned char *videoMemory = nullptr;
+static bool rotateVideo = false;
+
 
 static inline unsigned c16to32(unsigned color)
 {
@@ -23,7 +25,7 @@ static inline unsigned c16to32(unsigned color)
     return 0xFF000000 | (r << 8) | (g << 5) | (b << 3);
 }
 
-void RubyVidBlit(QImage &image)
+void rubyBlitImage(QImage &image)
 {
     uint32_t *output;
     unsigned outputPitch;
@@ -50,7 +52,7 @@ void RubyVidBlit(QImage &image)
     }
 }
 
-void RubyVidCopy16(const uint32_t* data, unsigned pitch,
+static void render16(const uint32_t* data, unsigned pitch,
                  unsigned width, unsigned height) {
     uint32_t *output;
     unsigned outputPitch;
@@ -73,40 +75,86 @@ void RubyVidCopy16(const uint32_t* data, unsigned pitch,
     }
 }
 
-static INT32 RubyVidInit()
+static void renderRotate16(const unsigned short *data, unsigned pitch,
+                 unsigned width, unsigned height) {
+    uint32_t *output;
+    unsigned outputPitch;
+
+    if (ruby::video.lock(output, outputPitch, height, width)) {
+        pitch >>= 2;
+        outputPitch >>= 2;
+
+        for (unsigned y = 0; y < height; y++) {
+            auto dst = output + y;
+            for (unsigned x = 0; x < width; x++) {
+                *dst = c16to32(data[y * width + x]);
+                dst += outputPitch;
+            }
+        }
+        ruby::video.unlock();
+        ruby::video.refresh();
+    }
+}
+
+static void renderRotateVFlip16(const unsigned short *data, unsigned pitch,
+                 unsigned width, unsigned height) {
+    uint32_t *output;
+    unsigned outputPitch;
+
+    if (ruby::video.lock(output, outputPitch, height, width)) {
+        pitch >>= 2;
+        outputPitch >>= 2;
+
+        for (unsigned y = 0; y < height; y++) {
+            auto dst = output + outputPitch * (width - 1) + y;
+            for (unsigned x = 0; x < width; x++) {
+                *dst = c16to32(data[y * width + x]);
+                dst -= outputPitch;
+            }
+        }
+        ruby::video.unlock();
+        ruby::video.refresh();
+    }
+}
+
+static INT32 rubyInit()
 {
     qDebug() << __func__;
     viewport = QRubyViewport::get();
+    unsigned flags = BurnDrvGetFlags();
 
-    if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
-        BurnDrvGetVisibleSize(&clipy, &clipx);
-        BurnDrvGetFullSize(&sizex, &sizey);
+    if (flags & BDF_ORIENTATION_VERTICAL) {
+        BurnDrvGetVisibleSize(&videoClipHeight, &videoClipWidth);
+        BurnDrvGetFullSize(&videoWidth, &videoHeight);
+        rotateVideo = true;
     } else {
-        BurnDrvGetVisibleSize(&clipx, &clipy);
-        BurnDrvGetFullSize(&sizex, &sizey);
+        BurnDrvGetVisibleSize(&videoClipWidth, &videoClipHeight);
+        BurnDrvGetFullSize(&videoWidth, &videoHeight);
+        rotateVideo = false;
     }
-    VidBpp		= nBurnBpp = 2;
-    VidMemPitch	= sizex * VidBpp;
-    VidMemLen	= sizey * VidMemPitch;
-    VidMem = (unsigned char*)malloc(VidMemLen);
+
+    videoBpp = nBurnBpp = 2;
+    videoPitch = videoWidth * videoBpp;
+    videoLenght = videoHeight * videoPitch;
+    videoMemory = new unsigned char[videoLenght];
     SetBurnHighCol(16);
 
     return 0;
 }
 
-static INT32 RubyVidExit()
+static INT32 rubyExit()
 {
     qDebug() << __func__;
-    free(VidMem);
+    delete [] videoMemory;
     return 0;
 }
 
-static INT32 RubyVidFrame(bool bRedraw)
+static INT32 rubyFrame(bool bRedraw)
 {
     nBurnBpp = 2;
 
-    nBurnPitch = VidMemPitch;
-    pBurnDraw = VidMem;
+    nBurnPitch = videoPitch;
+    pBurnDraw = videoMemory;
 
     if (bDrvOkay) {
         pBurnSoundOut = nAudNextSound;
@@ -121,35 +169,37 @@ static INT32 RubyVidFrame(bool bRedraw)
     return 0;
 }
 
-static INT32 RubyVidPaint(INT32 bValidate)
+static INT32 rubyPaint(INT32 bValidate)
 {
-    if (bValidate & 2) {
-    }
-    RubyVidCopy16((const uint32_t*) VidMem, VidMemPitch, sizex, sizey);
+    if (rotateVideo)
+        renderRotateVFlip16((const unsigned short*) videoMemory, videoPitch, videoWidth, videoHeight);
+    else
+        render16((const uint32_t*) videoMemory, videoPitch, videoWidth, videoHeight);
     return 0;
 }
 
-static INT32 RubyVidImageSize(RECT* pRect, INT32 nGameWidth, INT32 nGameHeight)
+static INT32 rubyImageSize(RECT* pRect, INT32 nGameWidth, INT32 nGameHeight)
 {
     return 0;
 }
 
 // Get plugin info
-static INT32 RubyVidGetPluginSettings(InterfaceInfo* pInfo)
+static INT32 rubyGetPluginSettings(InterfaceInfo* pInfo)
 {
     return 0;
 }
 
-struct VidOut VidRuby = { RubyVidInit, RubyVidExit, RubyVidFrame, RubyVidPaint,
-                           RubyVidImageSize, RubyVidGetPluginSettings,
-                           ("ruby-video") };
+struct VidOut VidRuby = { rubyInit, rubyExit, rubyFrame, rubyPaint,
+                          rubyImageSize, rubyGetPluginSettings,
+                          ("ruby-video") };
 
 
 QRubyViewport *QRubyViewport::m_onlyInstance = nullptr;
 QRubyViewport::QRubyViewport(QWidget *parent) :
     QWidget(parent)
 {
-    setAutoFillBackground(false);
+    setAttribute(Qt::WA_PaintOnScreen, true);
+    setAttribute(Qt::WA_OpaquePaintEvent, true);
 }
 
 QRubyViewport::~QRubyViewport()
@@ -168,4 +218,14 @@ QRubyViewport *QRubyViewport::get(QWidget *parent)
 uintptr_t QRubyViewport::id()
 {
     return (uintptr_t)winId();
+}
+
+QPaintEngine *QRubyViewport::paintEngine() const
+{
+    return 0;
+}
+
+void QRubyViewport::paintEvent(QPaintEvent *)
+{
+
 }

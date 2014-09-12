@@ -13,6 +13,9 @@ public:
     ~QRubyViewport();
     static QRubyViewport *get(QWidget *parent = nullptr);
     uintptr_t id();
+protected:
+    virtual QPaintEngine *paintEngine() const;
+    virtual void paintEvent(QPaintEvent *);
 };
 
 #endif // QRUBYVIEWPORT_H

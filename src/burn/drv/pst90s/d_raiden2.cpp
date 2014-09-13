@@ -1908,6 +1908,7 @@ static INT32 Raiden2Init()
 	raiden2_common_map();
 
 	seibu_sound_init(1|4, 0, 3579545, 3579545, 1022727 / 132);
+	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1970,6 +1971,7 @@ static INT32 Raiden2aInit() // alternate rom layout
 	raiden2_common_map();
 
 	seibu_sound_init(1|4, 0, 3579545, 3579545, 1022727 / 132);
+	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -2067,6 +2069,7 @@ static INT32 RaidendxInit()
 	VezClose();
 
 	seibu_sound_init(1|4, 0, 3579545, 3579545, 1022727 / 132);
+	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

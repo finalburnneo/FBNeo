@@ -14768,7 +14768,7 @@ struct BurnDriver BurnDrvtimesupd = {
 	"Time's Up Demo\0", NULL, "NGF Dev. Inc.", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
-	NULL, timesupRomInfo, timesupRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, timesupdRomInfo, timesupdRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

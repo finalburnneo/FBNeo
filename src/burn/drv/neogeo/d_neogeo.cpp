@@ -14746,7 +14746,7 @@ struct BurnDriver BurnDrvneoww2 = {
 
 // Time's UP Demo
 
-static struct BurnRomInfo timesupRomDesc[] = {
+static struct BurnRomInfo timesupdRomDesc[] = {
 	{ "276-p1.bin",   0x200000, 0xbe86adb1, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
 
 	{ "276-s1.bin",   0x020000, 0xa545b593, 2 | BRF_GRA },		//  1 Text data
@@ -14760,11 +14760,11 @@ static struct BurnRomInfo timesupRomDesc[] = {
 	{ "276-v2.bin",   0x400000, 0x6fdd663d, 5 | BRF_SND },		//  6 Sound data
 }; 
 
-STDROMPICKEXT(timesup, timesup, neogeo)
-STD_ROM_FN(timesup)
+STDROMPICKEXT(timesupd, timesupd, neogeo)
+STD_ROM_FN(timesupd)
 
-struct BurnDriver BurnDrvtimesup = {
-	"timesup", NULL, "neogeo", NULL, "2012",
+struct BurnDriver BurnDrvtimesupd = {
+	"timesupd", NULL, "neogeo", NULL, "2012",
 	"Time's Up Demo\0", NULL, "NGF Dev. Inc.", "Neo Geo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,

@@ -2246,6 +2246,44 @@ struct BurnDriver BurnDrvDrtoppel = {
 };
 
 
+// Dr. Toppel's Adventure (World, alt?)
+// one byte different (db8f : 39 instead of 37) - possible of bad and/or hacked rom
+
+static struct BurnRomInfo drtoppelaRomDesc[] = {
+	{ "b19-09.bin",		0x10000, 0x6364a970, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b19-10.9c",		0x10000, 0x7e72fd25, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "b19-15.3e",		0x10000, 0x37a0d3fb, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "drt8742.3g",		0x00800, 0x00000000, 3 | BRF_NODUMP },        //  3 I8742 MCU
+
+	{ "b19-01.13a",		0x20000, 0xa7e8a0c1, 4 | BRF_GRA },	      //  4 Graphics
+	{ "b19-02.12a",		0x20000, 0x790ae654, 4 | BRF_GRA },	      //  5
+	{ "b19-03.10a",		0x20000, 0x495c4c5a, 4 | BRF_GRA },	      //  6
+	{ "b19-04.8a",		0x20000, 0x647007a0, 4 | BRF_GRA },	      //  7
+	{ "b19-05.7a",		0x20000, 0x49f2b1a5, 4 | BRF_GRA },	      //  8
+	{ "b19-06.5a",		0x20000, 0x2d39f1d0, 4 | BRF_GRA },	      //  9
+	{ "b19-07.4a",		0x20000, 0x8bb06f41, 4 | BRF_GRA },	      // 10
+	{ "b19-08.2a",		0x20000, 0x3584b491, 4 | BRF_GRA },	      // 11
+
+	{ "b19-13.15f",		0x00200, 0x6a547980, 5 | BRF_GRA },	      // 12 Color PROMs
+	{ "b19-12.16f",		0x00200, 0x5754e9d8, 5 | BRF_GRA },	      // 13
+};
+
+STD_ROM_PICK(drtoppela)
+STD_ROM_FN(drtoppela)
+
+struct BurnDriver BurnDrvDrtoppela = {
+	"drtoppela", "drtoppel", NULL, NULL, "1987",
+	"Dr. Toppel's Adventure (World, alt?)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	NULL, drtoppelaRomInfo, drtoppelaRomName, NULL, NULL, CommonInputInfo, DrtoppelDIPInfo,
+	DrtoppelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+
 // Dr. Toppel's Adventure (US)
 
 static struct BurnRomInfo drtoppluRomDesc[] = {

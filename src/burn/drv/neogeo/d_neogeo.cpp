@@ -14747,17 +14747,17 @@ struct BurnDriver BurnDrvneoww2 = {
 // Time's UP Demo
 
 static struct BurnRomInfo timesupRomDesc[] = {
-	{ "tup_p1.rom",   0x200000, 0xbe86adb1, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
+	{ "276-p1.bin",   0x200000, 0xbe86adb1, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
 
-	{ "tup_s1.rom",   0x020000, 0xa545b593, 2 | BRF_GRA },		//  1 Text data
+	{ "276-s1.bin",   0x020000, 0xa545b593, 2 | BRF_GRA },		//  1 Text data
 
-	{ "tup_c1.rom",   0x200000, 0xc19a300a, 3 | BRF_GRA },		//  2 Sprite data
-	{ "tup_c2.rom",   0x200000, 0xfdb3f7ed, 3 | BRF_GRA },		//  3
+	{ "276-c1.bin",   0x200000, 0xc19a300a, 3 | BRF_GRA },		//  2 Sprite data
+	{ "276-c2.bin",   0x200000, 0xfdb3f7ed, 3 | BRF_GRA },		//  3
 
-	{ "tup_m1.rom",   0x020000, 0xfe795d11, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code
+	{ "276-m1.bin",   0x020000, 0xfe795d11, 4 | BRF_ESS | BRF_PRG },	//  4 Z80 code
 
-	{ "tup_v1.rom",   0x400000, 0x13b8f47b, 5 | BRF_SND },		//  5 Sound data
-	{ "tup_v2.rom",   0x400000, 0x6fdd663d, 5 | BRF_SND },		//  6 Sound data
+	{ "276-v1.bin",   0x400000, 0x13b8f47b, 5 | BRF_SND },		//  5 Sound data
+	{ "276-v2.bin",   0x400000, 0x6fdd663d, 5 | BRF_SND },		//  6 Sound data
 }; 
 
 STDROMPICKEXT(timesup, timesup, neogeo)

@@ -99,7 +99,7 @@ static struct BurnInputInfo RaidendxInputList[] = {
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 3"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 3,	"service"	},
@@ -2209,10 +2209,8 @@ static INT32 DrvExit()
 
 static inline UINT32 alpha_blend(UINT32 d, UINT32 s)
 {
-	INT32 a = 0x81;
-
-	return (((((s & 0xff00ff) * 0x7f) + ((d & 0xff00ff) * a)) & 0xff00ff00) |
-		((((s & 0x00ff00) * 0x7f) + ((d & 0x00ff00) * a)) & 0x00ff0000)) >> 8;
+	return (((((s & 0xff00ff) * 0x7f) + ((d & 0xff00ff) * 0x81)) & 0xff00ff00) +
+		((((s & 0x00ff00) * 0x7f) + ((d & 0x00ff00) * 0x81)) & 0x00ff0000)) / 0x100;
 }
 
 static void draw_layer(UINT8 *ram, INT32 scr, UINT32 color_base, INT32 bank)

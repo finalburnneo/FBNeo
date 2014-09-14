@@ -1701,9 +1701,9 @@ INT32 GalFrame()
 			nGalCyclesDone[nCurrentCPU] += s2650Run(nGalCyclesSegment);
 			if (i == nIrqInterleaveFire) {
 				GalVBlank = 1;
-				s2650_set_irq_line(0, 1);
+				s2650SetIRQLine(0, S2650_IRQSTATUS_ACK);
 				s2650Run(0);
-				s2650_set_irq_line(0, 0);
+				s2650SetIRQLine(0, S2650_IRQSTATUS_NONE);
 				s2650Run(0);
 			}
 			s2650Close();
@@ -1885,7 +1885,7 @@ INT32 GalScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		if (GalZ80Rom1Size) ZetScan(nAction);
 		ppi8255_scan();
-		if (GalS2650Rom1Size) s2650Scan(nAction, pnMin);
+		if (GalS2650Rom1Size) s2650Scan(nAction);
 		
 		GalSoundScan(nAction, pnMin);
 		

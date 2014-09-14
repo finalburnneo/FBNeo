@@ -881,7 +881,7 @@ static void s2650_main_write(UINT16 address, UINT8 data)
 //	bprintf (0, _T("mw %4.4x, %2.2x\n"), address, data);
 
 	if (address >= 0x2000) { // mirrors
-		s2650_write(address & 0x1fff, data);
+		s2650Write(address & 0x1fff, data);
 		return;
 	}
 
@@ -948,7 +948,7 @@ static UINT8 s2650_main_read(UINT16 address)
 //	bprintf (0, _T("mr %4.4x\n"), address);
 
 	if (address >= 0x2000) { // mirrors
-		return s2650_read(address & 0x1fff);
+		return s2650Read(address & 0x1fff);
 	}
 
 	if ((address & 0xff80) == 0x1f00) {
@@ -1393,14 +1393,14 @@ static UINT8 hb_dma_read_byte(UINT16 offset)
 {
 	offset = ((DrvRevMap[(offset >> 10) & 0x1ff] << 7) & 0x7c00) | (offset & 0x3ff);
 
-	return s2650_read(offset);
+	return s2650Read(offset);
 }
 
 static void hb_dma_write_byte(UINT16 offset, UINT8 data)
 {
 	offset = ((DrvRevMap[(offset >> 10) & 0x1ff] << 7) & 0x7c00) | (offset & 0x3ff);
 
-	s2650_write(offset, data);
+	s2650Write(offset, data);
 }
 
 static INT32 s2650_irq_callback(INT32)
@@ -1711,9 +1711,9 @@ static INT32 s2650DkongFrame()
 		if (i == 30) {
 			vblank = 0x80;
 	
-			s2650_set_irq_line(0, 1);
+			s2650SetIRQLine(0, S2650_IRQSTATUS_ACK);
 			s2650Run(10);
-			s2650_set_irq_line(0, 0);
+			s2650SetIRQLine(0, S2650_IRQSTATUS_NONE);
 		}
 	}
 
@@ -1821,7 +1821,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 
             if (s2650_protection) {
-                s2650Scan(nAction, pnMin);
+                s2650Scan(nAction);
             } else {
                 ZetScan(nAction);
             }

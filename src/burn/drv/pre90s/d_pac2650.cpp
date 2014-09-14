@@ -207,7 +207,7 @@ static UINT8 s2650games_read_port(UINT16 port)
 
 		case 0x01:
 		{
-			switch (s2650GetPc())
+			switch (s2650GetPC(0))
 			{
 				case 0x0030: // drivfrcp & _8bpm
 				case 0x0034: // porky
@@ -479,14 +479,14 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < 32; i++) {
 		if (i == 31) {
 			vblank = 1;
-			s2650_set_irq_line(0x03, 1);
+			s2650SetIRQLine(0x03, S2650_IRQSTATUS_ACK);
 		}
 		INT32 nSegment = (1536000 / 60) / 32;
 
 		s2650Run(nSegment);
 
 		if (i == 31) {
-			s2650_set_irq_line(0x03, 0);
+			s2650SetIRQLine(0x03, S2650_IRQSTATUS_NONE);
 		}
 	}
 
@@ -520,7 +520,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		BurnAcb(&ba);
 
 		s2650Open(0);
-		s2650Scan(nAction, pnMin);
+		s2650Scan(nAction);
 		s2650Close();
                 SN76496Scan(nAction, pnMin);
 		SCAN_VAR(watchdog);

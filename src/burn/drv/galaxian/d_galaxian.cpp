@@ -22016,13 +22016,13 @@ UINT8 DrivfrcgS2650PortRead(UINT16 Port)
 {
 	switch (Port) {
 		case 0x00: {
-			switch (s2650GetPc()) {
+			switch (s2650GetPC(0)) {
 				case 0x02e:
 				case 0x297: {
 					return 0x01;
 				}
 			}
-			bprintf(PRINT_NORMAL, _T("%x\n"), s2650GetPc());			
+			bprintf(PRINT_NORMAL, _T("%x\n"), s2650GetPC(0));			
 			return 0x00;
 		}
 		
@@ -22187,7 +22187,7 @@ UINT8 HexpoolaS2650PortRead(UINT16 Port)
 		}
 		
 		case S2650_DATA_PORT: {
-			switch (s2650GetPc()) {
+			switch (s2650GetPC(0)) {
 				case 0x22: return 0x00;
 				case 0x31: return 0x01;
 			}
@@ -22423,7 +22423,7 @@ UINT8 HncholmsS2650PortRead(UINT16 Port)
 {
 	switch (Port) {
 		case 0x0000: {
-			switch (s2650GetPc()) {
+			switch (s2650GetPC(0)) {
 				case 0x02b: return 1;
 				case 0xa27: return 1;
 			}

@@ -28,6 +28,13 @@ struct s2650_handler *sPointer;
 
 s2650irqcallback s2650_irqcallback[MAX_S2650];
 
+extern void s2650_open(INT32 num);
+extern void s2650_close();
+extern void s2650_init(INT32 num);
+extern void s2650_exit();
+extern void s2650_reset(void);
+extern INT32 s2650_get_pc();
+
 void s2650MapMemory(UINT8 *ptr, INT32 nStart, INT32 nEnd, INT32 nType)
 {
 #if defined FBA_DEBUG
@@ -83,7 +90,7 @@ void s2650SetInHandler(UINT8 (*read)(UINT16))
 	sPointer->s2650ReadPort = read;
 }
 
-void s2650_write(UINT16 address, UINT8 data)
+void s2650Write(UINT16 address, UINT8 data)
 {
 	address &= ADDRESS_MASK;
 
@@ -100,7 +107,7 @@ void s2650_write(UINT16 address, UINT8 data)
 	return;
 }
 
-UINT8 s2650_read(UINT16 address)
+UINT8 s2650Read(UINT16 address)
 {
 	address &= ADDRESS_MASK;
 
@@ -115,7 +122,7 @@ UINT8 s2650_read(UINT16 address)
 	return 0;
 }
 
-UINT8 s2650_fetch(UINT16 address)
+UINT8 s2650Fetch(UINT16 address)
 {
 	address &= ADDRESS_MASK;
 
@@ -123,10 +130,10 @@ UINT8 s2650_fetch(UINT16 address)
 		return sPointer->mem[FETCH][address / PAGE][address & PAGE_MASK];
 	}
 
-	return s2650_read(address);
+	return s2650Read(address);
 }
 
-void s2650_write_port(UINT16 port, UINT8 data)
+void s2650WritePort(UINT16 port, UINT8 data)
 {
 	if (sPointer->s2650WritePort != NULL) {
 		sPointer->s2650WritePort(port, data);
@@ -136,7 +143,7 @@ void s2650_write_port(UINT16 port, UINT8 data)
 	return;
 }
 
-UINT8 s2650_read_port(UINT16 port)
+UINT8 s2650ReadPort(UINT16 port)
 {
 	if (sPointer->s2650ReadPort != NULL) {
 		return sPointer->s2650ReadPort(port);
@@ -145,11 +152,11 @@ UINT8 s2650_read_port(UINT16 port)
 	return 0;
 }
 
-void s2650_write_rom(UINT32 address, UINT8 data)
+static void s2650WriteROM(UINT32 address, UINT8 data)
 {
 #if defined FBA_DEBUG
-	if (!DebugCPU_S2650Initted) bprintf(PRINT_ERROR, _T("s2650_write_rom called without init\n"));
-	if (nActiveS2650 == -1) bprintf(PRINT_ERROR, _T("s2650_write_rom called when no CPU open\n"));
+	if (!DebugCPU_S2650Initted) bprintf(PRINT_ERROR, _T("s2650WriteRom called without init\n"));
+	if (nActiveS2650 == -1) bprintf(PRINT_ERROR, _T("s2650WriteRom called when no CPU open\n"));
 #endif
 
 	address &= ADDRESS_MASK;
@@ -184,9 +191,9 @@ void s2650SetIrqCallback(INT32 (*irqcallback)(INT32))
 	s2650_irqcallback[nActiveS2650] = irqcallback;
 }
 
-static UINT8 s2650CheatRead(UINT32 a)
+static UINT8 s2650ReadCheat(UINT32 a)
 {
-	return s2650_read(a);
+	return s2650Read(a);
 }
 
 INT32 s2650TotalCycles()
@@ -208,15 +215,15 @@ static cpu_core_config s2650CheatCpuConfig =
 {
 	s2650Open,
 	s2650Close,
-	s2650CheatRead,
-	s2650_write_rom,
+	s2650ReadCheat,
+	s2650WriteROM,
 	s2650GetActive,
 	s2650TotalCycles,
 	s2650NewFrame,
 	s2650Run,
 	s2650RunEnd,
-	s2650_reset,
-	1<<16,
+	s2650Reset,
+	ADDRESS_MAX,
 	0
 };
 
@@ -267,11 +274,11 @@ void s2650Close()
 	s2650_close();
 }
 
-INT32 s2650GetPc()
+INT32 s2650GetPC(INT32)
 {
 #if defined FBA_DEBUG
-	if (!DebugCPU_S2650Initted) bprintf(PRINT_ERROR, _T("s2650GetPc called without init\n"));
-	if (nActiveS2650 == -1) bprintf(PRINT_ERROR, _T("s2650GetPc called when no CPU open\n"));
+	if (!DebugCPU_S2650Initted) bprintf(PRINT_ERROR, _T("s2650GetPC called without init\n"));
+	if (nActiveS2650 == -1) bprintf(PRINT_ERROR, _T("s2650GetPC called when no CPU open\n"));
 #endif
 
 	return s2650_get_pc();
@@ -285,4 +292,14 @@ INT32 s2650GetActive()
 #endif
 
 	return nActiveS2650;
+}
+
+void s2650Reset()
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_S2650Initted) bprintf(PRINT_ERROR, _T("s2650Reset called without init\n"));
+	if (nActiveS2650 == -1) bprintf(PRINT_ERROR, _T("s2650Reset called when no CPU open\n"));
+#endif
+
+	 s2650_reset();
 }

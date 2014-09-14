@@ -233,7 +233,7 @@ static UINT8 cpu_read_byte(UINT32 a)
 			return M6800ReadByte(a);
 			
 		case 9:
-			return s2650_read(a);
+			return s2650Read(a);
 	}
 
 	return 0;
@@ -276,7 +276,7 @@ static void cpu_write_byte(UINT32 a, UINT8 d)
 		break;
 		
 		case 9:
-			s2650_write(a, d);
+			s2650Write(a, d);
 		break;
 	}
 }

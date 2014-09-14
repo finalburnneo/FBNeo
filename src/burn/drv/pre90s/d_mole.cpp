@@ -94,7 +94,7 @@ static UINT8 mole_protection_r(UINT8 offset)
 			return 0xb0;
 
 		case 0x26:
-			if (M6502GetPC() == 0x53d7)
+			if (M6502GetPC(0) == 0x53d7)
 			{
 				return 0x06;	// bonus round
 			}

@@ -999,7 +999,7 @@ static INT32 DrvDoReset()
 UINT8 DrvDdragonHD6309ReadByte(UINT16 Address)
 {
 	if (Address >= 0x2000 && Address <= 0x2fff) {
-		if (Address == 0x2049 && HD6309GetPC() == 0x6261 && DrvSpriteRam[0x0049] == 0x1f) return 0x01;
+		if (Address == 0x2049 && HD6309GetPC(0) == 0x6261 && DrvSpriteRam[0x0049] == 0x1f) return 0x01;
 		return DrvSpriteRam[Address - 0x2000];
 	}
 	
@@ -1160,7 +1160,7 @@ UINT8 DrvDdragonHD63701ReadByte(UINT16 Address)
 	}
 	
 	if (Address >= 0x8000 && Address <= 0x8fff) {
-		if (Address == 0x8049 && HD63701GetPC() == 0x6261 && DrvSpriteRam[0x0049] == 0x1f) return 0x01;
+		if (Address == 0x8049 && HD63701GetPC(0) == 0x6261 && DrvSpriteRam[0x0049] == 0x1f) return 0x01;
 		return DrvSpriteRam[Address - 0x8000];
 	}
 	

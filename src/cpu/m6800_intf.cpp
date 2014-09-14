@@ -361,7 +361,7 @@ void M6800RunEnd()
 #endif
 }
 
-INT32 M6800GetPC()
+UINT32 M6800GetPC(INT32)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800GetPC called without init\n"));

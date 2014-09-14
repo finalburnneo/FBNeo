@@ -1703,9 +1703,9 @@ INT32 SekSetWriteLongHandler(INT32 i, pSekWriteLongHandler pHandler)
 // Query register values
 
 #ifdef EMU_A68K
-INT32 SekGetPC(INT32 n)
+UINT32 SekGetPC(INT32 n)
 #else
-INT32 SekGetPC(INT32)
+UINT32 SekGetPC(INT32)
 #endif
 {
 #if defined FBA_DEBUG

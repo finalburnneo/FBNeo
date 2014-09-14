@@ -534,7 +534,7 @@ void M6502WriteRom(UINT32 Address, UINT8 Data)
 	}
 }
 
-UINT32 M6502GetPC()
+UINT32 M6502GetPC(INT32)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502GetPC called without init\n"));

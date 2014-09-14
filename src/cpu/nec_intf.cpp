@@ -579,7 +579,7 @@ INT32 VezRun(INT32 nCycles)
 	return VezCurrentCPU->cpu_execute(nCycles);
 }
 
-INT32 VezGetPc(INT32 n)
+UINT32 VezGetPC(INT32 n)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezGetPc called without init\n"));

@@ -228,6 +228,6 @@ INT32 SekSetIrqCallback(pSekIrqCallback pCallback);
 INT32 SekSetCmpCallback(pSekCmpCallback pCallback);
 
 // Get a CPU's PC
-INT32 SekGetPC(INT32 n);
+UINT32 SekGetPC(INT32 n);
 
 INT32 SekScan(INT32 nAction);

@@ -37,7 +37,7 @@ void s2650Close();
 void s2650Exit();
 void s2650Init(INT32 num);
 
-INT32 s2650GetPC(INT32);
+UINT32 s2650GetPC(INT32);
 
 INT32 s2650GetActive();
 

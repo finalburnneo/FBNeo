@@ -34,7 +34,7 @@ INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem);
 INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem01, UINT8 *Mem02);
 
 void ZetReset();
-INT32 ZetGetPC(INT32 n);
+UINT32 ZetGetPC(INT32 n);
 INT32 ZetGetPrevPC(INT32 n);
 INT32 ZetBc(INT32 n);
 INT32 ZetDe(INT32 n);

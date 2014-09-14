@@ -274,7 +274,7 @@ void s2650Close()
 	s2650_close();
 }
 
-INT32 s2650GetPC(INT32)
+UINT32 s2650GetPC(INT32)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_S2650Initted) bprintf(PRINT_ERROR, _T("s2650GetPC called without init\n"));

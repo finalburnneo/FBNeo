@@ -126,7 +126,7 @@ void M6800RunEnd();
 #define M6803RunEnd		M6800RunEnd
 #define M6801RunEnd		M6800RunEnd
 
-INT32 M6800GetPC();
+UINT32 M6800GetPC(INT32);
 #define HD63701GetPC		M6800GetPC
 #define M6803GetPC		M6800GetPC
 #define M6801GetPC		M6800GetPC

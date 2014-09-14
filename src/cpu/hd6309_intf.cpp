@@ -215,7 +215,7 @@ void HD6309RunEnd()
 #endif
 }
 
-INT32 HD6309GetPC()
+UINT32 HD6309GetPC(INT32)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_HD6309Initted) bprintf(PRINT_ERROR, _T("HD6309GetPC called without init\n"));

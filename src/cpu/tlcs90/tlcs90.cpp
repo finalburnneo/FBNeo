@@ -1328,16 +1328,22 @@ static void take_interrupt(t90_Regs *cpustate, e_irq irq)
 static void check_interrupts(t90_Regs *cpustate)
 {
 //	e_irq irq;
+	INT32 mask;
 
 	if (!(F & IF))
 		return;
 
-#define check_irq_state_mask(num)	\
-	if ( cpustate->irq_state & cpustate->irq_mask & (1 << (num)) ) {	\
-		take_interrupt( cpustate, (num) );				\
-		return;								\
+#define check_irq_state_mask(num)			\
+	mask = (1 << num);				\
+	if (num >= INT0) mask &= cpustate->irq_mask;	\
+	if ( cpustate->irq_state & mask) {		\
+		take_interrupt( cpustate, (num) );	\
+		return;					\
 	}
 
+	check_irq_state_mask(INTSWI)
+	check_irq_state_mask(INTNMI)
+	check_irq_state_mask(INTWD)
 	check_irq_state_mask(INT0)
 	check_irq_state_mask(INTT0)
 	check_irq_state_mask(INTT1)
@@ -1349,7 +1355,7 @@ static void check_interrupts(t90_Regs *cpustate)
 	check_irq_state_mask(INT2)
 	check_irq_state_mask(INTRX)
 	check_irq_state_mask(INTTX)
-	check_irq_state_mask(INTMAX)	// iq_132, include this one?
+//	check_irq_state_mask(INTMAX)	// include this one?
 
 //	for (irq = INT0; irq < INTMAX; irq++)
 //	{
@@ -2446,12 +2452,6 @@ static void t90_start_timer(t90_Regs *cpustate, int i)
 			// 8-bit mode
 			break;
 		case 1:
-			// 16-bit mode
-			if (i & 1)
-			{
-		//		logerror("%04X: CPU Timer %d clocked by Timer %d overflow signal\n", cpustate->pc.w.l, i,i-1);
-				return;
-			}
 			break;
 		case 2:
 		//	logerror("%04X: CPU Timer %d, unsupported PPG mode\n", cpustate->pc.w.l, i);
@@ -2474,8 +2474,6 @@ static void t90_start_timer(t90_Regs *cpustate, int i)
 
 
 	period = cpustate->timer_period * prescaler;
-
-	bprintf (0, _T("Timer enable\n"));
 
 	cpustate->timer_periods[i] = cpustate->timer_periods_full[i] = period;
 	cpustate->timer_enable[i] = 1;
@@ -2500,8 +2498,6 @@ static void t90_start_timer4(t90_Regs *cpustate)
 
 	period = cpustate->timer_period * prescaler;
 
-	bprintf (0, _T("Timer enable\n"));
-
 	cpustate->timer_periods[4]= cpustate->timer_periods_full[4]  = period;
 	cpustate->timer_enable[4] = 1;
 
@@ -2523,71 +2519,62 @@ static void t90_stop_timer4(t90_Regs *cpustate)
 
 void t90_timer_callback(INT32 param)
 {
-	t90_Regs *cpustate =  &tlcs90_data[0]; //(t90_Regs *)ptr;
-	int is16bit;
+	t90_Regs *cpustate =  &tlcs90_data[0];
+
+	int mode, timer_fired;
 	int i = param;
 
 	if ( (cpustate->internal_registers[ T90_TRUN - T90_IOBASE ] & (1 << i)) == 0 )
 		return;
 
-//	logerror("CPU Timer %d fired! value = %d\n", i,(unsigned)cpustate->timer_value[i]);
+	timer_fired = 0;
 
-	cpustate->timer_value[i]++;
-
-	is16bit = ((cpustate->internal_registers[ T90_TMOD - T90_IOBASE ] >> (i/2 * 2 + 2)) & 0x03) == 1;
-
+	mode = (cpustate->internal_registers[ T90_TMOD - T90_IOBASE ] >> ((i & ~1) + 2)) & 0x03;
 	// Match
-
-	if ( cpustate->timer_value[i] == cpustate->internal_registers[ T90_TREG0+i - T90_IOBASE ] )
+	switch (mode)
 	{
-//      	logerror("CPU Timer %d match\n", i);
+		case 0x02: // 8bit PPG
+		case 0x03: // 8bit PWM
+		// TODO: hmm...
+		case 0x00: // 8bit
+			cpustate->timer_value[i]++;
+			if ( cpustate->timer_value[i] == cpustate->internal_registers[ T90_TREG0+i - T90_IOBASE ] )
+				timer_fired = 1;
+		break;
 
-		if (is16bit)
-		{
-			if (i & 1)
-			{
-				if ( cpustate->timer_value[i-1] == cpustate->internal_registers[ T90_TREG0+i-1 - T90_IOBASE ] )
-				{
-					cpustate->timer_value[i]   = 0;
-					cpustate->timer_value[i-1] = 0;
-
-					tlcs90_set_irq_line(INTT0 + i, 1);
-				}
-			}
-			else
-				tlcs90_set_irq_line(INTT0 + i, 1);
-		}
-		else
-		{
-			cpustate->timer_value[i] = 0;
-			tlcs90_set_irq_line(INTT0 + i, 1);
-		}
-
-		switch (i)
-		{
-			case 0:
-			case 2:
-				if ( !is16bit )
-					if ( (cpustate->internal_registers[ T90_TCLK - T90_IOBASE ] & (0x03 << (i * 2 + 2))) == 0 ) // T0/T1 match signal clocks T1/T3
-						t90_timer_callback(i+1);
+		case 0x01: // 16bit
+			if(i & 1)
 				break;
-		}
+			cpustate->timer_value[i]++;
+			if(cpustate->timer_value[i] == 0) cpustate->timer_value[i+1]++;
+			if(cpustate->timer_value[i+1] == cpustate->internal_registers[ T90_TREG0+i+1 - T90_IOBASE ])
+			if(cpustate->timer_value[i] == cpustate->internal_registers[ T90_TREG0+i - T90_IOBASE ])
+			timer_fired = 1;
+		break;
 	}
 
-	// Overflow
-
-	if ( cpustate->timer_value[i] == 0 )
-	{
-//      	logerror("CPU Timer %d overflow\n", i);
-
-		switch (i)
-		{
-			case 0:
-			case 2:
-				if ( is16bit )  // T0/T1 overflow signal clocks T1/T3
+	if(timer_fired) {
+		// special stuff handling
+		switch(mode) {
+			case 0x02: // 8bit PPG
+			case 0x03: // 8bit PWM
+			// TODO: hmm...
+			case 0x00: // 8bit
+				if(i & 1)
+					break;
+  				if ( (cpustate->internal_registers[ T90_TCLK - T90_IOBASE ] & (0x0C << (i * 2))) == 0 ) // T0/T1 match signal clocks T1/T3
 					t90_timer_callback(i+1);
-				break;
+			break;
+
+			case 0x01: // 16bit, only can happen for i=0,2
+				cpustate->timer_value[i+1] = 0;
+				tlcs90_set_irq_line(INTT0 + i+1, 1);
+			break;
 		}
+
+		// regular handling
+		cpustate->timer_value[i] = 0;
+		tlcs90_set_irq_line(INTT0 + i, 1);
 	}
 }
 
@@ -2638,8 +2625,8 @@ void t90_internal_registers_w(UINT16 offset, UINT8 data)
 			{
 				if ( (old ^ data) & (0x20 | (1 << i)) ) // if timer bit or prescaler bit changed
 				{
-					if ( data == (0x20 | (1 << i)) )    t90_start_timer(cpustate, i);
-					else                                t90_stop_timer(cpustate, i);
+					if ( (data & (1 << i)) && (data & 0x20) )    t90_start_timer(cpustate, i);
+					else 					     t90_stop_timer(cpustate, i);
 				}
 			}
 			// Timer 4

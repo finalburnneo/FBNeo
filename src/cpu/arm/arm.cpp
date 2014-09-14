@@ -269,17 +269,17 @@ static void arm_check_irq_state(void);
 inline void cpu_write32( int addr, UINT32 data )
 {
 	/* Unaligned writes are treated as normal writes */
-	Arm_program_write_dword_32le(addr&ADDRESS_MASK,data);
+	ArmWriteLong(addr&ADDRESS_MASK,data);
 }
 
 inline void cpu_write8( int addr, UINT8 data )
 {
-	Arm_program_write_byte_32le(addr,data);
+	ArmWriteByte(addr,data);
 }
 
 inline UINT32 cpu_read32( int addr )
 {
-	UINT32 result = Arm_program_read_dword_32le(addr&ADDRESS_MASK);
+	UINT32 result = ArmReadLong(addr&ADDRESS_MASK);
 
 	/* Unaligned reads rotate the word, they never combine words */
 	if (addr&3) {
@@ -296,7 +296,7 @@ inline UINT32 cpu_read32( int addr )
 
 inline UINT8 cpu_read8( int addr )
 {
-	return Arm_program_read_byte_32le(addr);
+	return ArmReadByte(addr);
 }
 
 inline UINT32 GetRegister( int rIndex )
@@ -334,7 +334,7 @@ int ArmRun( int cycles )
 	{
 		/* load instruction */
 		pc = R15;
-		insn = Arm_program_opcode_dword_32le( pc & ADDRESS_MASK );
+		insn = ArmFetchLong( pc & ADDRESS_MASK );
 
 		switch (insn >> INSN_COND_SHIFT)
 		{
@@ -1312,10 +1312,10 @@ void ArmIdleCycles(int cycles)
 }
 
 // get the current position
-unsigned int ArmGetPc()
+unsigned int ArmGetPc(INT32)
 {
 #if defined FBA_DEBUG
-	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmGetPc called without init\n"));
+	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmGetPC called without init\n"));
 #endif
 
 	return arm.sArmRegister[15]&ADDRESS_MASK;
@@ -1363,7 +1363,7 @@ void ArmNewFrame()
 	arm.ArmLeftCycles = 0;
 }
 
-int ArmScan(int nAction, int *)
+int ArmScan(int nAction)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmScan called without init\n"));

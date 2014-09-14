@@ -547,7 +547,7 @@ static INT32 DrvFrame()
 	ArmOpen(0);
 	deco16_vblank = 0x00;
 	ArmRun(nTotalCycles - 12240);
-	ArmSetIRQLine(ARM_IRQ_LINE, ARM_HOLD_LINE);
+	ArmSetIRQLine(ARM_IRQ_LINE, ARM_IRQSTATUS_AUTO);
 	deco16_vblank = 0xf0;
 	ArmRun(12240);
 	ArmClose();
@@ -582,7 +582,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-		ArmScan(nAction, pnMin);
+		ArmScan(nAction);
 
 		MSM6295Scan(0, nAction);
 		MSM6295Scan(1, nAction);

@@ -135,20 +135,20 @@ void (*arm7_coproc_dt_w_callback)(UINT32 insn, UINT32 *prn, void (*write32)(UINT
  ***************************************************************************/
 ARM7_INLINE void arm7_cpu_write32(UINT32 addr, UINT32 data)
 {
-    addr &= ~3;
-   Arm7WriteLong(addr, data); // iq_132
+	addr &= ~3;
+	Arm7WriteLong(addr, data);
 }
 
 
 ARM7_INLINE void arm7_cpu_write16(UINT32 addr, UINT16 data)
 {
-    addr &= ~1;
-    Arm7WriteWord(addr, data); // iq_132
+	addr &= ~1;
+	Arm7WriteWord(addr, data);
 }
 
 ARM7_INLINE void arm7_cpu_write8(UINT32 addr, UINT8 data)
 {
-    Arm7WriteByte(addr, data); // iq_132
+	Arm7WriteByte(addr, data);
 }
 
 ARM7_INLINE UINT32 arm7_cpu_read32(UINT32 addr)
@@ -157,12 +157,12 @@ ARM7_INLINE UINT32 arm7_cpu_read32(UINT32 addr)
 
     if (addr & 3)
     {
-        result = Arm7ReadLong(addr & ~3); // iq_132
+	result = Arm7ReadLong(addr & ~3);
         result = (result >> (8 * (addr & 3))) | (result << (32 - (8 * (addr & 3))));
     }
     else
     {
-        result = Arm7ReadLong(addr); // iq_132
+        result = Arm7ReadLong(addr);
     }
 
     return result;
@@ -192,18 +192,16 @@ ARM7_INLINE UINT8 arm7_cpu_read8(UINT32 addr)
 
 ARM7_INLINE UINT32 cpu_readop32(UINT32 addr)
 {
-	// iq_132	
-
     UINT32 result;
 
     if (addr & 3)
     {
-        result = Arm7FetchLong(addr & ~3); // iq_132
+        result = Arm7FetchLong(addr & ~3);
         result = (result >> (8 * (addr & 3))) | (result << (32 - (8 * (addr & 3))));
     }
     else
     {
-        result = Arm7FetchLong(addr); // iq_132
+        result = Arm7FetchLong(addr);
     }
 
     return result;
@@ -213,7 +211,7 @@ ARM7_INLINE UINT32 cpu_readop16(UINT32 addr)
 {
     UINT16 result;
 
-    result = Arm7FetchWord(addr & ~1); // iq_132
+    result = Arm7FetchWord(addr & ~1);
 
     if (addr & 1)
     {
@@ -711,7 +709,7 @@ static void HandleCoProcDO(UINT32 insn)
 {
     // This instruction simply instructs the co-processor to do something, no data is returned to ARM7 core
     if (arm7_coproc_do_callback)
-        arm7_coproc_do_callback(0, insn);   // iq_132?? // simply pass entire opcode to callback - since data format is actually dependent on co-proc implementation
+        arm7_coproc_do_callback(0, insn);   // simply pass entire opcode to callback - since data format is actually dependent on co-proc implementation
     else
         LOG(("%08x: Co-Processor Data Operation executed, but no callback defined!\n", R15));
 }
@@ -737,7 +735,7 @@ static void HandleCoProcRT(UINT32 insn)
     else
     {
         if (arm7_coproc_rt_r_callback)
-         ; //  arm7_coproc_rt_w_callback(insn, GET_REGISTER((insn >> 12) & 0xf), 0); // iq_132
+         ; //  arm7_coproc_rt_w_callback(insn, GET_REGISTER((insn >> 12) & 0xf), 0);
         else
             LOG(("%08x: Co-Processor Register Transfer executed, but no RT Write callback defined!\n", R15));
     }
@@ -1267,7 +1265,7 @@ static void HandleALU(UINT32 insn)
 {
     UINT32 op2, sc = 0, rd, rn, opcode;
     UINT32 by, rdn;
- //   UINT32 oldR15 = R15; // iq_132
+ //   UINT32 oldR15 = R15;
 
     opcode = (insn & INSN_OPCODE) >> INSN_OPCODE_SHIFT;
 
@@ -1545,7 +1543,7 @@ static void HandleMemBlock(UINT32 insn)
 {
     UINT32 rb = (insn & INSN_RN) >> INSN_RN_SHIFT;
     UINT32 rbp = GET_REGISTER(rb);
-//    UINT32 oldR15 = R15; // iq_132 
+//    UINT32 oldR15 = R15;
     int result;
 
 #if ARM7_DEBUG_CORE

@@ -34,7 +34,7 @@
 #define MAX_CARTRIDGE_SIZE	0xc00000
 #define MAX_SRAM_SIZE		0x010000
 
-static INT32 cycles_68k, cycles_z80;
+static INT32 cycles_68k, cycles_z80, dma_xfers=0, video_status=0;
 
 typedef void (*MegadriveCb)();
 static MegadriveCb MegadriveCallback;
@@ -43,10 +43,12 @@ struct PicoVideo {
 	UINT8 reg[0x20];
 	UINT32 command;		// 32-bit Command
 	UINT8 pending;		// 1 if waiting for second half of 32-bit command
-	UINT8 type;			// Command type (v/c/vsram read/write)
+	UINT8 type;		// Command type (v/c/vsram read/write)
 	UINT16 addr;		// Read/Write address
-	INT32 status;					// Status bits
+	INT32 status;		// Status bits
 	UINT8 pending_ints;	// pending interrupts: ??VH????
+	INT8 lwrite_cnt;        // VDP write count during active display line
+	UINT16 v_counter;       // V-counter
 	UINT8 pad[0x13];	//
 };
 
@@ -525,6 +527,59 @@ static INT32 GetDmaLength()
   return len;
 }
 
+// dma2vram settings are just hacks to unglitch Legend of Galahad (needs <= 104 to work)
+// same for Outrunners (92-121, when active is set to 24)
+// 96 is VR hack
+static const int dma_timings[] = {
+  167, 167, 166,  83, // vblank: 32cell: dma2vram dma2[vs|c]ram vram_fill vram_copy
+  102, 205, 204, 102, // vblank: 40cell:
+  16,   16,  15,   8, // active: 32cell:
+  24,   18,  17,   9  // ...
+};
+
+static const int dma_bsycles[] = {
+  (488<<8)/167, (488<<8)/167, (488<<8)/166, (488<<8)/83,
+  (488<<8)/102, (488<<8)/233, (488<<8)/204, (488<<8)/102,
+  (488<<8)/16,  (488<<8)/16,  (488<<8)/15,  (488<<8)/8,
+  (488<<8)/24,  (488<<8)/18,  (488<<8)/17,  (488<<8)/9
+};
+
+static UINT32 CheckDMA(void)
+{
+  int burn = 0, xfers_can, dma_op = RamVReg->reg[0x17]>>6; // see gens for 00 and 01 modes
+  int xfers = dma_xfers;
+  int dma_op1;
+
+  if(!(dma_op&2)) dma_op = (/*Pico.video.type==1*/0) ? 0 : 1; // setting dma_timings offset here according to Gens
+  dma_op1 = dma_op;
+  if(RamVReg->reg[12] & 1) dma_op |= 4; // 40 cell mode?
+  if(!(video_status&8)&&(RamVReg->reg[1]&0x40)) dma_op|=8; // active display?
+  xfers_can = dma_timings[dma_op];
+  if(xfers <= xfers_can)
+  {
+    if(dma_op&2) video_status&=~2; // dma no longer busy
+    else {
+      burn = xfers * dma_bsycles[dma_op] >> 8; // have to be approximate because can't afford division..
+    }
+    dma_xfers = 0;
+  } else {
+    if(!(dma_op&2)) burn = 488;
+    dma_xfers -= xfers_can;
+  }
+
+  //elprintf(EL_VDPDMA, "~Dma %i op=%i can=%i burn=%i [%i]", Pico.m.dma_xfers, dma_op1, xfers_can, burn, SekCyclesDone());
+  //dprintf("~aim: %i, cnt: %i", SekCycleAim, SekCycleCnt);
+  //bprintf(0, _T("burn[%d]"), burn);
+  return burn;
+}
+
+static inline int DMABURN() { // add cycles to the 68k cpu
+    if (dma_xfers) {
+        return CheckDMA();
+        //SekRunAdjust( 0 - cycles_to_add );
+    } else return 0;
+}
+
 static void DmaSlow(INT32 len)
 {
 	UINT16 *pd=0, *pdend, *r;
@@ -554,10 +609,12 @@ static void DmaSlow(INT32 len)
 	} else burn = DmaSlowBurn(len);
 	
 	//SekCyclesBurn(burn);
-	SekRunAdjust( 0 - burn );
-	
-	if(!(RamVReg->status & 8))
-		SekRunEnd();
+	video_status |= 2; // dma busy
+	dma_xfers += len;
+	DMABURN();
+	//SekRunAdjust( 0 - burn );
+	//if(!(RamVReg->status & 8))
+    //    SekRunEnd();
 	//dprintf("DmaSlow burn: %i @ %06x", burn, SekPc);
 
 	switch ( RamVReg->type ) {
@@ -619,6 +676,9 @@ static void DmaCopy(INT32 len)
 	
 	//dprintf("DmaCopy len %i [%i|%i]", len, Pico.m.scanline, SekCyclesDone());
 
+	video_status |= 2; // dma busy
+	dma_xfers += len;
+
 	source  = RamVReg->reg[0x15];
 	source |= RamVReg->reg[0x16]<<8;
 	vrs = vr + source;
@@ -647,6 +707,8 @@ static void DmaFill(INT32 data)
 
 	// from Charles MacDonald's genvdp.txt:
 	// Write lower byte to address specified
+	video_status |= 2; // dma busy
+	dma_xfers += len;
 	vr[a] = (UINT8) data;
 	a = (UINT16)(a+inc);
 
@@ -4129,7 +4191,7 @@ INT32 MegadriveFrame()
 	
 	cycles_68k = total_68k_cycles / lines;
 	cycles_z80 = total_z80_cycles / lines;
-  
+
 	RamVReg->status &= ~0x88; // clear V-Int, come out of vblank
 	
 	for (INT32 y=0; y<lines; y++) {
@@ -4158,8 +4220,7 @@ INT32 MegadriveFrame()
 			RamVReg->status |= 0x88; // V-Int happened, go into vblank
 			
 			// there must be a gap between H and V ints, also after vblank bit set (Mazin Saga, Bram Stoker's Dracula)
-//			done_68k+=SekRun(128); 
-			BurnTimerUpdate(((y + 1) * cycles_68k) + 128);
+			BurnTimerUpdate(((y + 1) * cycles_68k) + /*CYCLES_M68K_VINT_LAG*/ 128 + DMABURN() - cycles_68k);
 
 			RamVReg->pending_ints |= 0x20;
 			if(RamVReg->reg[1] & 0x20) {
@@ -4172,8 +4233,8 @@ INT32 MegadriveFrame()
 			PicoLine(y);
 
 		// Run scanline
-		BurnTimerUpdate((y + 1) * cycles_68k);
-		
+		BurnTimerUpdate((y + 1) * cycles_68k + DMABURN());
+
 		if (Z80HasBus && !MegadriveZ80Reset) {
 			done_z80 += ZetRun(((y + 1) * cycles_z80) - done_z80);
 			if (y == line_sample) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
@@ -4190,7 +4251,7 @@ INT32 MegadriveFrame()
 			ZetRun(total_z80_cycles - done_z80);
 		}
 	}
-	
+
 	if (pBurnSoundOut) {
 		BurnYM2612Update(pBurnSoundOut, nBurnSoundLen);
 		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);

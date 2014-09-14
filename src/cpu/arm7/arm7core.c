@@ -136,19 +136,19 @@ void (*arm7_coproc_dt_w_callback)(UINT32 insn, UINT32 *prn, void (*write32)(UINT
 ARM7_INLINE void arm7_cpu_write32(UINT32 addr, UINT32 data)
 {
     addr &= ~3;
-   Arm7_program_write_dword_32le(addr, data); // iq_132
+   Arm7WriteLong(addr, data); // iq_132
 }
 
 
 ARM7_INLINE void arm7_cpu_write16(UINT32 addr, UINT16 data)
 {
     addr &= ~1;
-    Arm7_program_write_word_32le(addr, data); // iq_132
+    Arm7WriteWord(addr, data); // iq_132
 }
 
 ARM7_INLINE void arm7_cpu_write8(UINT32 addr, UINT8 data)
 {
-    Arm7_program_write_byte_32le(addr, data); // iq_132
+    Arm7WriteByte(addr, data); // iq_132
 }
 
 ARM7_INLINE UINT32 arm7_cpu_read32(UINT32 addr)
@@ -157,12 +157,12 @@ ARM7_INLINE UINT32 arm7_cpu_read32(UINT32 addr)
 
     if (addr & 3)
     {
-        result = Arm7_program_read_dword_32le(addr & ~3); // iq_132
+        result = Arm7ReadLong(addr & ~3); // iq_132
         result = (result >> (8 * (addr & 3))) | (result << (32 - (8 * (addr & 3))));
     }
     else
     {
-        result = Arm7_program_read_dword_32le(addr); // iq_132
+        result = Arm7ReadLong(addr); // iq_132
     }
 
     return result;
@@ -172,7 +172,7 @@ ARM7_INLINE UINT16 arm7_cpu_read16(UINT32 addr)
 {
     UINT16 result;
 
-    result = Arm7_program_read_word_32le(addr & ~1);
+    result = Arm7ReadWord(addr & ~1);
 
     if (addr & 1)
     {
@@ -184,7 +184,7 @@ ARM7_INLINE UINT16 arm7_cpu_read16(UINT32 addr)
 
 ARM7_INLINE UINT8 arm7_cpu_read8(UINT32 addr)
 {
-	UINT8 result = Arm7_program_read_byte_32le(addr);
+	UINT8 result = Arm7ReadByte(addr);
 
     // Handle through normal 8 bit handler (for 32 bit cpu)
     return result;
@@ -198,12 +198,12 @@ ARM7_INLINE UINT32 cpu_readop32(UINT32 addr)
 
     if (addr & 3)
     {
-        result = Arm7_program_opcode_dword_32le(addr & ~3); // iq_132
+        result = Arm7FetchLong(addr & ~3); // iq_132
         result = (result >> (8 * (addr & 3))) | (result << (32 - (8 * (addr & 3))));
     }
     else
     {
-        result = Arm7_program_opcode_dword_32le(addr); // iq_132
+        result = Arm7FetchLong(addr); // iq_132
     }
 
     return result;
@@ -213,7 +213,7 @@ ARM7_INLINE UINT32 cpu_readop16(UINT32 addr)
 {
     UINT16 result;
 
-    result = Arm7_program_opcode_word_32le(addr & ~1); // iq_132
+    result = Arm7FetchWord(addr & ~1); // iq_132
 
     if (addr & 1)
     {

@@ -28,7 +28,7 @@ static void __fastcall asic27a_write_byte(UINT32 address, UINT8 data)
 	if ((address & 0xfffffe) == 0xd10000) {	// ddp2
 		pgm_cpu_sync();
 		asic27a_to_arm = data;
-		Arm7SetIRQLine(ARM7_FIRQ_LINE, ARM7_ASSERT_LINE);
+		Arm7SetIRQLine(ARM7_FIRQ_LINE, ARM7_IRQSTATUS_ACK);
 		return;
 	}
 }
@@ -38,7 +38,7 @@ static void __fastcall asic27a_write_word(UINT32 address, UINT16 data)
 	if ((address & 0xfffffe) == 0xd10000) {
 		pgm_cpu_sync();
 		asic27a_to_arm = data & 0xff;
-		Arm7SetIRQLine(ARM7_FIRQ_LINE, ARM7_ASSERT_LINE);
+		Arm7SetIRQLine(ARM7_FIRQ_LINE, ARM7_IRQSTATUS_ACK);
 		return;
 	}
 }
@@ -78,7 +78,7 @@ static UINT8 asic27a_arm7_read_byte(UINT32 address)
 	switch (address)
 	{
 		case 0x38000000:
-			Arm7SetIRQLine(ARM7_FIRQ_LINE, ARM7_CLEAR_LINE);
+			Arm7SetIRQLine(ARM7_FIRQ_LINE, ARM7_IRQSTATUS_NONE);
 			return asic27a_to_arm;
 	}
 
@@ -422,7 +422,7 @@ static void __fastcall svg_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x5c0000:
 		case 0x5c0001:
-			Arm7SetIRQLine(ARM7_FIRQ_LINE, ARM7_HOLD_LINE);
+			Arm7SetIRQLine(ARM7_FIRQ_LINE, ARM7_IRQSTATUS_AUTO);
 		return;
 	}
 }
@@ -440,7 +440,7 @@ static void __fastcall svg_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x5c0000:
-			Arm7SetIRQLine(ARM7_FIRQ_LINE, ARM7_HOLD_LINE);
+			Arm7SetIRQLine(ARM7_FIRQ_LINE, ARM7_IRQSTATUS_AUTO);
 		return;
 
 		case 0x5c0300:

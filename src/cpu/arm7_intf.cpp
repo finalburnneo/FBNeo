@@ -28,36 +28,11 @@ static UINT8  (*pReadByteHandler)(UINT32) = NULL;
 
 static UINT32 Arm7IdleLoop = ~0;
 
+extern void arm7_set_irq_line(INT32 irqline, INT32 state);
+
 INT32 Arm7GetActive()
 {
 	return 0;
-}
-
-static cpu_core_config Arm7CheatCpuConfig =
-{
-	Arm7Open,
-	Arm7Close,
-	Arm7_program_read_byte_32le,
-	Arm7_write_rom_byte,
-	Arm7GetActive,
-	Arm7TotalCycles,
-	Arm7NewFrame,
-	Arm7Run,
-	Arm7RunEnd,
-	Arm7Reset,
-	MAX_MEMORY,
-	0
-};
-
-void Arm7Init( INT32 num ) // only one cpu supported
-{
-	DebugCPU_ARM7Initted = 1;
-	
-	for (INT32 i = 0; i < 3; i++) {
-		membase[i] = (UINT8**)malloc(PAGE_COUNT * sizeof(UINT8*));
-	}
-
-	CpuCheatRegister(num, &Arm7CheatCpuConfig);
 }
 
 void Arm7Exit() // only one cpu supported
@@ -150,10 +125,10 @@ void Arm7SetReadLongHandler(UINT32 (*read)(UINT32))
 	pReadLongHandler = read;
 }
 
-void Arm7_program_write_byte_32le(UINT32 addr, UINT8 data)
+void Arm7WriteByte(UINT32 addr, UINT8 data)
 {
 #if defined FBA_DEBUG
-	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_write_byte_32le called without init\n"));
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7WriteByte called without init\n"));
 #endif
 
 	addr &= MAX_MEMORY_AND;
@@ -172,10 +147,10 @@ void Arm7_program_write_byte_32le(UINT32 addr, UINT8 data)
 	}
 }
 
-void Arm7_program_write_word_32le(UINT32 addr, UINT16 data)
+void Arm7WriteWord(UINT32 addr, UINT16 data)
 {
 #if defined FBA_DEBUG
-	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_write_word_32le called without init\n"));
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7WriteWord called without init\n"));
 #endif
 
 	addr &= MAX_MEMORY_AND;
@@ -194,10 +169,10 @@ void Arm7_program_write_word_32le(UINT32 addr, UINT16 data)
 	}
 }
 
-void Arm7_program_write_dword_32le(UINT32 addr, UINT32 data)
+void Arm7WriteLong(UINT32 addr, UINT32 data)
 {
 #if defined FBA_DEBUG
-	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_write_dword_32le called without init\n"));
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7WriteLong called without init\n"));
 #endif
 
 	addr &= MAX_MEMORY_AND;
@@ -217,10 +192,10 @@ void Arm7_program_write_dword_32le(UINT32 addr, UINT32 data)
 }
 
 
-UINT8 Arm7_program_read_byte_32le(UINT32 addr)
+UINT8 Arm7ReadByte(UINT32 addr)
 {
 #if defined FBA_DEBUG
-	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_read_byte_32le called without init\n"));
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7ReadByte called without init\n"));
 #endif
 
 	addr &= MAX_MEMORY_AND;
@@ -240,10 +215,10 @@ UINT8 Arm7_program_read_byte_32le(UINT32 addr)
 	return 0;
 }
 
-UINT16 Arm7_program_read_word_32le(UINT32 addr)
+UINT16 Arm7ReadWord(UINT32 addr)
 {
 #if defined FBA_DEBUG
-	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_read_word_32le called without init\n"));
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7ReadWord called without init\n"));
 #endif
 
 	addr &= MAX_MEMORY_AND;
@@ -263,10 +238,10 @@ UINT16 Arm7_program_read_word_32le(UINT32 addr)
 	return 0;
 }
 
-UINT32 Arm7_program_read_dword_32le(UINT32 addr)
+UINT32 Arm7ReadLong(UINT32 addr)
 {
 #if defined FBA_DEBUG
-	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_read_dword_32le called without init\n"));
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7ReadLong called without init\n"));
 #endif
 
 	addr &= MAX_MEMORY_AND;
@@ -286,10 +261,10 @@ UINT32 Arm7_program_read_dword_32le(UINT32 addr)
 	return 0;
 }
 
-UINT16 Arm7_program_opcode_word_32le(UINT32 addr)
+UINT16 Arm7FetchWord(UINT32 addr)
 {
 #if defined FBA_DEBUG
-	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_opcode_word_32le called without init\n"));
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7FetchWord called without init\n"));
 #endif
 
 	addr &= MAX_MEMORY_AND;
@@ -315,10 +290,10 @@ UINT16 Arm7_program_opcode_word_32le(UINT32 addr)
 	return 0;
 }
 
-UINT32 Arm7_program_opcode_dword_32le(UINT32 addr)
+UINT32 Arm7FetchLong(UINT32 addr)
 {
 #if defined FBA_DEBUG
-	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_program_opcode_dword_32le called without init\n"));
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7FetchLong called without init\n"));
 #endif
 
 	addr &= MAX_MEMORY_AND;
@@ -350,13 +325,13 @@ void Arm7SetIRQLine(INT32 line, INT32 state)
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetIRQLine called without init\n"));
 #endif
 
-	if (state == ARM7_CLEAR_LINE || state == ARM7_ASSERT_LINE) {
+	if (state == ARM7_IRQSTATUS_NONE || state == ARM7_IRQSTATUS_ACK) {
 		arm7_set_irq_line(line, state);
 	}
-	else if (ARM7_HOLD_LINE) {
-		arm7_set_irq_line(line, ARM7_ASSERT_LINE);
+	else if (ARM7_IRQSTATUS_AUTO) {
+		arm7_set_irq_line(line, ARM7_IRQSTATUS_ACK);
 		Arm7Run(0);
-		arm7_set_irq_line(line, ARM7_CLEAR_LINE);
+		arm7_set_irq_line(line, ARM7_IRQSTATUS_NONE);
 	}
 }
 
@@ -373,7 +348,7 @@ void Arm7SetIdleLoopAddress(UINT32 address)
 
 // For cheats/etc
 
-void Arm7_write_rom_byte(UINT32 addr, UINT8 data)
+static void Arm7_write_rom_byte(UINT32 addr, UINT8 data)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_write_rom_byte called without init\n"));
@@ -392,4 +367,31 @@ void Arm7_write_rom_byte(UINT32 addr, UINT8 data)
 	if (pWriteByteHandler) {
 		pWriteByteHandler(addr, data);
 	}
+}
+
+static cpu_core_config Arm7CheatCpuConfig =
+{
+	Arm7Open,
+	Arm7Close,
+	Arm7ReadByte,
+	Arm7_write_rom_byte,
+	Arm7GetActive,
+	Arm7TotalCycles,
+	Arm7NewFrame,
+	Arm7Run,
+	Arm7RunEnd,
+	Arm7Reset,
+	MAX_MEMORY,
+	0
+};
+
+void Arm7Init( INT32 num ) // only one cpu supported
+{
+	DebugCPU_ARM7Initted = 1;
+	
+	for (INT32 i = 0; i < 3; i++) {
+		membase[i] = (UINT8**)malloc(PAGE_COUNT * sizeof(UINT8*));
+	}
+
+	CpuCheatRegister(num, &Arm7CheatCpuConfig);
 }

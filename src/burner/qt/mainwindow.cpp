@@ -168,6 +168,7 @@ void MainWindow::createMenus()
     m_menuMisc->addAction(m_actionConfigureSupportPaths);
     m_menuMisc->addSeparator();
     m_menuMisc->addAction(m_actionToogleMenu);
+    m_menuMisc->addAction(m_actionLogWindow);
 
     m_menuHelp = menuBar()->addMenu(tr("Help"));
     m_menuHelp->addAction(m_actionAbout);
@@ -186,6 +187,7 @@ void MainWindow::createControls()
     m_aboutDlg = new AboutDialog(this);
     m_dipSwitchDlg = new DipswitchDialog(this);
     m_inputDlg = new InputDialog(this);
+    m_logDlg = LogDialog::get(this);
 
     extern void ProgressSetParent(QWidget *);
     ProgressSetParent(this);
@@ -209,6 +211,7 @@ void MainWindow::createActions()
     m_actionDipswitch->setEnabled(false);
     m_actionMapGameInputs = new QAction(tr("Map game inputs"), this);
     m_actionMapGameInputs->setEnabled(false);
+    m_actionLogWindow = new QAction(tr("Log window"), this);
 }
 
 void MainWindow::connectActions()
@@ -224,6 +227,7 @@ void MainWindow::connectActions()
     connect(m_scutToogleFullscreen, SIGNAL(activated()), this, SLOT(toogleFullscreen()));
     connect(m_actionDipswitch, SIGNAL(triggered()), m_dipSwitchDlg, SLOT(exec()));
     connect(m_actionMapGameInputs, SIGNAL(triggered()), m_inputDlg, SLOT(exec()));
+    connect(m_actionLogWindow, SIGNAL(triggered()), m_logDlg, SLOT(show()));
 }
 
 void MainWindow::enableInGame()

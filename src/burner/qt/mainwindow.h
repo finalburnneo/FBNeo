@@ -17,6 +17,7 @@
 #include "aboutdialog.h"
 #include "dipswitchdialog.h"
 #include "inputdialog.h"
+#include "logdialog.h"
 #include "emuworker.h"
 #include "burner.h"
 
@@ -59,6 +60,7 @@ private:
     AboutDialog *m_aboutDlg;
     DipswitchDialog *m_dipSwitchDlg;
     InputDialog *m_inputDlg;
+    LogDialog *m_logDlg;
     QMenu *m_menuGame;
     QMenu *m_menuMisc;
     QMenu *m_menuHelp;
@@ -73,6 +75,7 @@ private:
     QAction *m_actionToogleMenu;
     QAction *m_actionDipswitch;
     QAction *m_actionMapGameInputs;
+    QAction *m_actionLogWindow;
     QShortcut *m_scutToogleMenu;
     QShortcut *m_scutToogleFullscreen;
     QImage m_logo;

@@ -6,7 +6,6 @@ TARGET = fbaqt
 
 linux:QT += x11extras
 
-
 #===============================================================================
 #                                DRIVERS
 #===============================================================================
@@ -43,6 +42,7 @@ GEN = $$SRC/dep/generated
 
 # We need ld
 FBA_LD = ld
+DEFINES += FBA_DEBUG
 
 #-------------------------------------------------------------------------------
 # Additional include paths
@@ -96,9 +96,15 @@ QMAKE_CFLAGS += -w
 
 
 #-------------------------------------------------------------------------------
-# C++11
+# C++11, OpenMP (software image flip/rotation)
 #-------------------------------------------------------------------------------
 CONFIG += c++11
+
+ENABLE_OPENMP = false
+$${ENABLE_OPENMP} {
+    QMAKE_CXXFLAGS += -fopenmp
+    QMAKE_LFLAGS += -fopenmp
+}
 
 #-------------------------------------------------------------------------------
 # src/dep/generated
@@ -762,7 +768,8 @@ SOURCES += \
     ../../src/cpu/tlcs90_intf.cpp \
     ../../src/burn/devices/kaneko_tmap.cpp \
     ../../src/burner/qt/inputdialog.cpp \
-    ../../src/burner/qt/widgets/hexspinbox.cpp
+    ../../src/burner/qt/widgets/hexspinbox.cpp \
+    ../../src/burner/qt/logdialog.cpp
 
 
 HEADERS += \
@@ -935,7 +942,8 @@ HEADERS += \
     ../../src/burn/devices/nmk004.h \
     ../../src/burn/devices/kaneko_tmap.h \
     ../../src/burner/qt/inputdialog.h \
-    ../../src/burner/qt/widgets/hexspinbox.h
+    ../../src/burner/qt/widgets/hexspinbox.h \
+    ../../src/burner/qt/logdialog.h
 
 #-------------------------------------------------------------------------------
 # Linux only drivers
@@ -956,4 +964,5 @@ FORMS += \
     ../../src/burner/qt/romscandialog.ui \
     ../../src/burner/qt/selectdialog.ui \
     ../../src/burner/qt/supportdirsdialog.ui \
-    ../../src/burner/qt/inputdialog.ui
+    ../../src/burner/qt/inputdialog.ui \
+    ../../src/burner/qt/logdialog.ui

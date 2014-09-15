@@ -1,8 +1,6 @@
 /*
 TO DO!
 
-// column scroll needs improved does 'size' (16/8) sized columns rather than 1pxl
-// this affects boogie wings
 // why is mutant fight's scrolling off in title?
 
 1   Double Wings                MBE     102     52              141             104
@@ -28,6 +26,9 @@ static INT32 deco16_pf_gfx_bank[4]; // (1/2) 8x8, 16x16, (2/3) 8x8, 16x16
 
 static UINT16 deco16_scroll_x[4][ 512]; // 512
 static UINT16 deco16_scroll_y[4][1024]; // 1024
+
+static INT32 deco16_scroll_rows[4];
+static INT32 deco16_scroll_cols[4];
 
 static INT32 deco16_enable_rowscroll[4];
 static INT32 deco16_enable_colscroll[4];
@@ -116,8 +117,8 @@ static inline UINT32 alpha_blend(UINT32 d, UINT32 s, UINT32 p)
 {
 	INT32 a = 256 - p;
 
-	return (((((s & 0xff00ff) * p) + ((d & 0xff00ff) * a)) & 0xff00ff00) |
-		((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) >> 8;
+	return (((((s & 0xff00ff) * p) + ((d & 0xff00ff) * a)) & 0xff00ff00) +
+		((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) / 256;
 }
 
 void deco16_draw_alphaprio_sprite(UINT32 *palette, UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 pri, INT32 spri, INT32 alpha)
@@ -226,8 +227,6 @@ void deco16_sprite_decode(UINT8 *gfx, INT32 len)
 	BurnFree (tmp);
 }
 
-#define BIT(x,n) (((x)>>(n))&1)
-
 void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UINT16 *dest, INT32 flags)
 {
 	INT32 size		= deco16_layer_size_select[tmap];
@@ -253,7 +252,7 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 	UINT16 *vram	= (UINT16 *)deco16_pf_ram[tmap];
 
 	UINT8 *tmask		= transmask[tmap][(flags & 0x00100) >> 8];
-	UINT8 t_mask = (flags & 0x10000) ? 0 : ~0;
+	UINT8 t_mask = (flags & 0x10000) ? 0 : 1; // enable using transparent pixels
 
 	INT32 priority		= flags & 0x000ff;
 
@@ -268,16 +267,11 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 
 	for (INT32 y = draw_start; y < draw_end; y++)
 	{
-		INT32 xoff = deco16_scroll_x[tmap][y] & wmask;
+		INT32 xoff = deco16_scroll_x[tmap][((y-deco16_global_y_offset)&0x1ff)/deco16_scroll_rows[tmap]] & wmask;
 
 		for (INT32 x = 0; x < nScreenWidth + size; x+=size)
 		{
-			INT32 yoff;
-			if (BIT(control, 5))
-				yoff = deco16_scroll_y[tmap][(x + deco16_scroll_x[tmap][y]) & wmask] & hmask;
-			else
-				yoff = deco16_scroll_y[tmap][x & wmask] & hmask;
-			
+			INT32 yoff = deco16_scroll_y[tmap][((x + xoff) & wmask)/deco16_scroll_cols[tmap]] & hmask;
 
 			INT32 yy = (y + yoff) & hmask;
 			INT32 xx = (x + xoff) & wmask;
@@ -324,7 +318,7 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 
 					INT32 pxl = src[xxx^flipx];
 
-					if (tmask[pxl] & t_mask) continue;
+					if (tmask[pxl] && t_mask) continue;
 
 					dest[y * nScreenWidth + xxx + sx] = pxl | color;
 					deco16_prio_map[y * 512 + xxx + sx] = priority;
@@ -553,12 +547,12 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 		}
 	}
 
+	if (deco16_layer_size_select[tmap] == -1) return; // don't bother
+
 	deco16_enable_rowscroll[tmap] = 0;
 	deco16_enable_colscroll[tmap] = 0;
 
-	if (rowscroll == NULL) return;
-
-	if ((control1 & 0x40) == 0x40) // row scroll
+	if ((control1 & 0x40) == 0x40 && rowscroll != NULL) // row scroll
 	{
 		INT32 size = deco16_layer_size_select[tmap] ? 16 : 8;
 
@@ -574,26 +568,25 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 			if (rows == 0) rows = 1;
 		}
 
-		if (rows != 1) deco16_enable_rowscroll[tmap] = 1;
+		if (rows != 1) deco16_enable_colscroll[tmap] = 1;
 
 		INT32 rsize = rownum / rows;
+
+		deco16_scroll_rows[tmap] = rsize;
 
 		INT32 xscroll = scrollx + deco16_global_x_offset + deco16_scroll_offset[tmap][size/16][0];
 
 		for (INT32 r = 0; r < rows; r++) {
-			for (INT32 p = rsize * r; p < (rsize * r) + rsize; p++) {
-				deco16_scroll_x[tmap][(p - deco16_global_y_offset) & 0x1ff] = xscroll + BURN_ENDIAN_SWAP_INT16(rowscroll[r]);
-			}
+			deco16_scroll_x[tmap][r & 0x1ff] = xscroll + BURN_ENDIAN_SWAP_INT16(rowscroll[r]);
 		}
 
 		if (~control1 & 0x20) {
-			for (INT32 r = 0; r < 1024; r++) {
-				deco16_scroll_y[tmap][r] = scrolly + deco16_global_y_offset;
-			}
+			deco16_scroll_cols[tmap] = 0x8000;
+			deco16_scroll_y[tmap][0] = (scrolly + deco16_global_y_offset) & 0x1ff;
 		}
 	}
 
-	if ((control1 & 0x20) == 0x20) // column scroll
+	if ((control1 & 0x20) == 0x20 && rowscroll != NULL) // column scroll
 	{
 		INT32 size = deco16_layer_size_select[tmap] ? 16 : 8;
 
@@ -614,18 +607,17 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 
 		INT32 rsize = colnum / cols;
 
+		deco16_scroll_cols[tmap] = rsize;
+
 		for (INT32 r = 0; r < cols; r++) {
-			for (INT32 p = rsize * r; p < (rsize * r) + rsize; p++) {
-				deco16_scroll_y[tmap][p] = scrolly + BURN_ENDIAN_SWAP_INT16(rowscroll[(r & mask) + 0x200]) + deco16_global_y_offset;
-			}
+			deco16_scroll_y[tmap][r] = (scrolly + BURN_ENDIAN_SWAP_INT16(rowscroll[(r & mask) + 0x200]) + deco16_global_y_offset) & 0x1ff;
 		}
 
 		if (~control1 & 0x40) {
 			INT32 xscroll = scrollx + deco16_global_x_offset + deco16_scroll_offset[tmap][size/16][0];
 
-			for (INT32 r = 0; r < 512; r++) {
-				deco16_scroll_x[tmap][(r - deco16_global_y_offset) & 0x1ff] = xscroll;
-			}
+			deco16_scroll_rows[tmap] = 0x8000;
+			deco16_scroll_x[tmap][0] = xscroll;
 		}
 	}
 
@@ -633,15 +625,14 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 	{
 		INT32 size = deco16_layer_size_select[tmap] ? 16 : 8;
 
-		for (INT32 r = 0; r < 1024; r++) {
-			deco16_scroll_y[tmap][r] = scrolly + deco16_global_y_offset;
-		}
+		deco16_scroll_rows[tmap] = 0x8000;
+		deco16_scroll_cols[tmap] = 0x8000;
+
+		deco16_scroll_y[tmap][0] = (scrolly + deco16_global_y_offset) & 0x1ff;
 
 		INT32 xscroll = scrollx + deco16_global_x_offset + deco16_scroll_offset[tmap][size/16][0];
 
-		for (INT32 r = 0; r < 512; r++) {
-			deco16_scroll_x[tmap][(r - deco16_global_y_offset) & 0x1ff] = xscroll;
-		}
+		deco16_scroll_x[tmap][0] = xscroll;
 	}	
 }
 

@@ -2126,8 +2126,8 @@ static INT32 Robocop2StartDraw()
 
 static INT32 Robocop2DrawScanline(INT32 line)
 {
-	if ((line & 0xf)==0) deco16_pf12_update(); // every 16 lines-speedup
-	deco16_pf34_update(); // only update the road's pf per scanline
+	deco16_pf12_update();
+	deco16_pf34_update();
 
 	INT32 layer_8bpp = 0;
 

@@ -32,6 +32,7 @@
 
 #include "burnint.h"
 #include "driver.h"
+#include "m6805.h"
 #include "m6805_intf.h"
 
 #define change_pc(x)	PC = x
@@ -809,7 +810,7 @@ int m6805TotalCycles()
 	return m6805.nTotalCycles;
 }
 
-int m6805Scan(int nAction, int *)
+int m6805Scan(int nAction)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805Scan called without init\n"));

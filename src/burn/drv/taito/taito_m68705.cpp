@@ -155,7 +155,7 @@ void m67805_taito_exit()
 INT32 m68705_taito_scan(INT32 nAction)
 {
 	if (nAction & ACB_VOLATILE) {		
-		m6805Scan(nAction, 0);
+		m6805Scan(nAction);
 
 		SCAN_VAR(portA_in);
 		SCAN_VAR(portB_in);

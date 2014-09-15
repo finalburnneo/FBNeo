@@ -47,23 +47,23 @@ enum { M6805_PC=1, M6805_S, M6805_CC, M6805_A, M6805_X, M6805_IRQ_STATE };
 /****************************************************************************/
 /* Read a byte from given memory location                                   */
 /****************************************************************************/
-#define M6805_RDMEM(Addr) (m6805_read(Addr))
+#define M6805_RDMEM(Addr) (m6805Read(Addr))
 
 /****************************************************************************/
 /* Write a byte to given memory location                                    */
 /****************************************************************************/
-#define M6805_WRMEM(Addr,Value) (m6805_write(Addr,Value))
+#define M6805_WRMEM(Addr,Value) (m6805Write(Addr,Value))
 
 /****************************************************************************/
 /* M6805_RDOP() is identical to M6805_RDMEM() except it is used for reading */
 /* opcodes. In case of system with memory mapped I/O, this function can be  */
 /* used to greatly speed up emulation                                       */
 /****************************************************************************/
-#define M6805_RDOP(Addr) (m6805_fetch(Addr))
+#define M6805_RDOP(Addr) (m6805Fetch(Addr))
 
 /****************************************************************************/
 /* M6805_RDOP_ARG() is identical to M6805_RDOP() but it's used for reading  */
 /* opcode arguments. This difference can be used to support systems that    */
 /* use different encoding mechanisms for opcodes and opcode arguments       */
 /****************************************************************************/
-#define M6805_RDOP_ARG(Addr) (m6805_read(Addr))
+#define M6805_RDOP_ARG(Addr) (m6805Read(Addr))

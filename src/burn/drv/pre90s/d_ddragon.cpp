@@ -2588,7 +2588,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (DrvSubCPUType == DD_CPU_TYPE_M6803) M6803Scan(nAction);
 		if (DrvSubCPUType == DD_CPU_TYPE_Z80 || DrvSoundCPUType == DD_CPU_TYPE_Z80) ZetScan(nAction);
 		if (DrvSoundCPUType == DD_CPU_TYPE_M6809) M6809Scan(nAction);
-		if (DrvGameType == DD_GAME_DARKTOWR) m68705Scan(nAction, pnMin);
+		if (DrvGameType == DD_GAME_DARKTOWR) m6805Scan(nAction); // m68705
 		
 		BurnYM2151Scan(nAction);
 		if (DrvSoundCPUType == DD_CPU_TYPE_Z80) MSM6295Scan(0, nAction);

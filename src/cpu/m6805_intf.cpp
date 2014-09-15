@@ -11,8 +11,8 @@ static INT32 PAGE_SHIFT;
 #define WRITE		1
 #define FETCH		2
 
-static UINT8 (*m6805Read)(UINT16 address);
-static void (*m6805Write)(UINT16 address, UINT8 data);
+static UINT8 (*m6805ReadFunction)(UINT16 address);
+static void (*m6805WriteFunction)(UINT16 address, UINT8 data);
 
 static UINT8 *mem[3][0x100];
 
@@ -36,7 +36,7 @@ void m6805SetWriteHandler(void (*write)(UINT16, UINT8))
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805SetWriteHandler called without init\n"));
 #endif
 
-	m6805Write = write;
+	m6805WriteFunction = write;
 }
 
 void m6805SetReadHandler(UINT8 (*read)(UINT16))
@@ -45,10 +45,10 @@ void m6805SetReadHandler(UINT8 (*read)(UINT16))
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805SetReadHandler called without init\n"));
 #endif
 
-	m6805Read = read;
+	m6805ReadFunction = read;
 }
 
-void m6805_write(UINT16 address, UINT8 data)
+void m6805Write(UINT16 address, UINT8 data)
 {
 	address &= ADDRESS_MASK;
 
@@ -57,15 +57,15 @@ void m6805_write(UINT16 address, UINT8 data)
 		return;
 	}
 
-	if (m6805Write != NULL) {
-		m6805Write(address, data);
+	if (m6805WriteFunction != NULL) {
+		m6805WriteFunction(address, data);
 		return;
 	}
 
 	return;
 }
 
-UINT8 m6805_read(UINT16 address)
+UINT8 m6805Read(UINT16 address)
 {
 	address &= ADDRESS_MASK;
 
@@ -73,14 +73,14 @@ UINT8 m6805_read(UINT16 address)
 		return mem[READ][address >> PAGE_SHIFT][address & PAGE_MASK];
 	}
 
-	if (m6805Read != NULL) {
-		return m6805Read(address);
+	if (m6805ReadFunction != NULL) {
+		return m6805ReadFunction(address);
 	}
 
 	return 0;
 }
 
-UINT8 m6805_fetch(UINT16 address)
+UINT8 m6805Fetch(UINT16 address)
 {
 	address &= ADDRESS_MASK;
 
@@ -88,10 +88,10 @@ UINT8 m6805_fetch(UINT16 address)
 		return mem[FETCH][address >> PAGE_SHIFT][address & PAGE_MASK];
 	}
 
-	return m6805_read(address);
+	return m6805Read(address);
 }
 
-void m6805_write_rom(UINT32 address, UINT8 data)
+static void m6805_write_rom(UINT32 address, UINT8 data)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6805Initted) bprintf(PRINT_ERROR, _T("m6805_write_rom called without init\n"));
@@ -111,8 +111,8 @@ void m6805_write_rom(UINT32 address, UINT8 data)
 		mem[FETCH][address >> PAGE_SHIFT][address & PAGE_MASK] = data;
 	}
 
-	if (m6805Write != NULL) {
-		m6805Write(address, data);
+	if (m6805WriteFunction != NULL) {
+		m6805WriteFunction(address, data);
 		return;
 	}
 
@@ -126,7 +126,7 @@ INT32 m6805GetActive()
 
 static UINT8 m6805CheatRead(UINT32 a)
 {
-	return m6805_read(a);
+	return m6805Read(a);
 }
 
 static cpu_core_config M6805CheatCpuConfig =

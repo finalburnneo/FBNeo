@@ -81,10 +81,6 @@ static struct BurnDIPInfo BackfireDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x1a, 0x01, 0x08, 0x08, "Off"			},
 	{0x1a, 0x01, 0x08, 0x00, "On"			},
-
-	{0   , 0xfe, 0   ,    2, "Single Screen (Hack)"	},
-	{0x1a, 0x01, 0x80, 0x00, "Off"			},
-	{0x1a, 0x01, 0x80, 0x80, "On"			},
 };
 
 STDDIPINFO(Backfire)
@@ -285,24 +281,6 @@ static INT32 backfire_bank_callback( INT32 bank )
 	return bank * 0x1000;
 }
 
-static void sprite_decode(UINT8 *gfx, INT32 len)
-{
-	INT32 Plane[4] = { 16, 0, 24, 8 };
-	INT32 XOffs[16] = { 512,513,514,515,516,517,518,519, 0, 1, 2, 3, 4, 5, 6, 7 };
-	INT32 YOffs[16] = { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,  8*32, 9*32,10*32,11*32,12*32,13*32,14*32,15*32};
-
-	UINT8 *tmp = (UINT8*)BurnMalloc(len);
-	if (tmp == NULL) {
-		return;
-	}
-
-	memcpy (tmp, gfx, len);
-
-	GfxDecode((len * 2) / 0x100, 4, 16, 16, Plane, XOffs, YOffs, 0x400, tmp, gfx);
-
-	BurnFree (tmp);
-}
-
 static void decode_samples()
 {
 	UINT8 *tmp = (UINT8*)BurnMalloc(0x200000);
@@ -319,7 +297,6 @@ static void decode_samples()
 static void pCommonSpeedhackCallback()
 {
 	ArmIdleCycles(1120);
-	//bprintf (0, _T("idle skip triggered!\n"));
 }
 
 static INT32 DrvInit(UINT32 speedhack)
@@ -349,11 +326,11 @@ static INT32 DrvInit(UINT32 speedhack)
 
 		if (BurnLoadRom(DrvGfxROM2 + 0x000000,  4, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM3 + 0x000001,  5, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM3 + 0x000000,  6, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x000000,  5, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x000001,  6, 2)) return 1;
 
-	//	if (BurnLoadRom(DrvGfxROM4 + 0x000001,  7, 2)) return 1;
-	//	if (BurnLoadRom(DrvGfxROM4 + 0x000000,  8, 2)) return 1;
+	//	if (BurnLoadRom(DrvGfxROM4 + 0x000000,  7, 2)) return 1;
+	//	if (BurnLoadRom(DrvGfxROM4 + 0x000001,  8, 2)) return 1;
 
 		memset (DrvSndROM, 0xff, 0x400000);
 		if (BurnLoadRom(DrvSndROM  + 0x000000,  9, 1)) return 1;
@@ -368,8 +345,8 @@ static INT32 DrvInit(UINT32 speedhack)
 		deco16_tile_decode(DrvGfxROM0, DrvGfxROM0, 0x400000, 1);
 		deco16_tile_decode(DrvGfxROM2, DrvGfxROM2, 0x100000, 0);
 
-		sprite_decode(DrvGfxROM3, 0x400000);
-	//	sprite_decode(DrvGfxROM4, 0x400000);
+		deco16_sprite_decode(DrvGfxROM3, 0x400000);
+	//	deco16_sprite_decode(DrvGfxROM4, 0x400000);
 
 		decode_samples();
 	}
@@ -522,18 +499,24 @@ static void draw_sprites(UINT16 *dest, UINT8 *ram, UINT8 *gfx, INT32 coloff)
 
 static INT32 DrvDraw()
 {
-	if ((DrvDips[0] & 0x80) && nPreviousDip == 0) { // single screen
+	if ((ArmReadByte(0x170784) & 0x20) && !nPreviousDip) { // single screen
 		DrvTmpBitmap0 = pTransDraw;
 		BurnDrvSetVisibleSize(320, 240);
 		BurnDrvSetAspect(4, 3);
 		Reinitialise();
-	} else if (!(DrvDips[0] & 0x80) && nPreviousDip == 0x80) { // two screens
+
+		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
+		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
+	} else if (!(ArmReadByte(0x170784) & 0x20) && nPreviousDip) { // two screens
 		DrvTmpBitmap0 = DrvTmpBitmap_p;
 		BurnDrvSetVisibleSize(640, 240);
 		BurnDrvSetAspect(8, 3);
 		Reinitialise();
+
+		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	}
-	nPreviousDip = DrvDips[0] & 0x80;
+	nPreviousDip = (ArmReadByte(0x170784) & 0x20);
 
 	simpl156_palette_recalc();
 

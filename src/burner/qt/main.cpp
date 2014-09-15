@@ -36,6 +36,11 @@ void wav_pause(bool bResume)
 
 }
 
+void wav_exit()
+{
+
+}
+
 bool AppProcessKeyboardInput()
 {
 	return true;

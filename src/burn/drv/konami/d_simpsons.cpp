@@ -686,7 +686,7 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += nCyclesSegment;
 
 		if (i == 1 && K053246Irq && simpsons_firq_enabled) {
-			konamiSetIrqLine(KONAMI_FIRQ_LINE, KONAMI_HOLD_LINE);
+			konamiSetIrqLine(KONAMI_FIRQ_LINE, KONAMI_IRQSTATUS_AUTO);
 		}
 
 		K053246Irq = K053246_is_IRQ_enabled();
@@ -706,7 +706,7 @@ static INT32 DrvFrame()
 	}
 
 	if (K053246Irq) simpsons_objdma();
-	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_HOLD_LINE);
+	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
@@ -743,7 +743,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
-		konamiCpuScan(nAction, pnMin);
+		konamiCpuScan(nAction);
 		ZetScan(nAction);
 
 		BurnYM2151Scan(nAction);

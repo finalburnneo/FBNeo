@@ -16,26 +16,26 @@ enum
 /****************************************************************************/
 /* Read a byte from given memory location                                   */
 /****************************************************************************/
-#define KONAMI_RDMEM(Addr) konami_read(Addr)
+#define KONAMI_RDMEM(Addr) konamiRead(Addr)
 
 /****************************************************************************/
 /* Write a byte to given memory location                                    */
 /****************************************************************************/
-#define KONAMI_WRMEM(Addr,Value) konami_write(Addr,Value)
+#define KONAMI_WRMEM(Addr,Value) konamiWrite(Addr,Value)
 
 /****************************************************************************/
 /* Z80_RDOP() is identical to Z80_RDMEM() except it is used for reading     */
 /* opcodes. In case of system with memory mapped I/O, this function can be  */
 /* used to greatly speed up emulation                                       */
 /****************************************************************************/
-#define KONAMI_RDOP(Addr) konami_fetch(Addr)
+#define KONAMI_RDOP(Addr) konamiFetch(Addr)
 
 /****************************************************************************/
 /* Z80_RDOP_ARG() is identical to Z80_RDOP() except it is used for reading  */
 /* opcode arguments. This difference can be used to support systems that    */
 /* use different encoding mechanisms for opcodes and opcode arguments       */
 /****************************************************************************/
-#define KONAMI_RDOP_ARG(Addr) konami_fetch(Addr)
+#define KONAMI_RDOP_ARG(Addr) konamiFetch(Addr)
 
 #ifndef FALSE
 #    define FALSE 0

@@ -116,10 +116,10 @@ static PAIR ea;         /* effective address */
 static int nCyclesToDo = 0;
 
 #define CHECK_IRQ_LINES 												\
-	if( konami.irq_state[KONAMI_IRQ_LINE] != KONAMI_CLEAR_LINE ||				\
-		konami.irq_state[KONAMI_FIRQ_LINE] != KONAMI_CLEAR_LINE )				\
+	if( konami.irq_state[KONAMI_IRQ_LINE] != KONAMI_IRQSTATUS_NONE ||				\
+		konami.irq_state[KONAMI_FIRQ_LINE] != KONAMI_IRQSTATUS_NONE )				\
 		konami.int_state &= ~KONAMI_SYNC; /* clear SYNC flag */			\
-	if( konami.irq_state[KONAMI_FIRQ_LINE]!=KONAMI_CLEAR_LINE && !(CC & CC_IF) ) \
+	if( konami.irq_state[KONAMI_FIRQ_LINE]!=KONAMI_IRQSTATUS_NONE && !(CC & CC_IF) ) \
 	{																	\
 		/* fast IRQ */													\
 		/* state already saved by CWAI? */								\
@@ -141,7 +141,7 @@ static int nCyclesToDo = 0;
 		(void)(*konami.irq_callback)(KONAMI_FIRQ_LINE);					\
 	}																	\
 	else																\
-	if( konami.irq_state[KONAMI_IRQ_LINE]!=KONAMI_CLEAR_LINE && !(CC & CC_II) )\
+	if( konami.irq_state[KONAMI_IRQ_LINE]!=KONAMI_IRQSTATUS_NONE && !(CC & CC_II) )\
 	{																	\
 		/* standard IRQ */												\
 		/* state already saved by CWAI? */								\
@@ -412,9 +412,9 @@ void konamiReset()
 
 	konami.nTotalCycles = 0;
 	konami.int_state = 0;
-	konami.nmi_state = KONAMI_CLEAR_LINE;
-	konami.irq_state[0] = KONAMI_CLEAR_LINE;
-	konami.irq_state[1] = KONAMI_CLEAR_LINE;
+	konami.nmi_state = KONAMI_IRQSTATUS_NONE;
+	konami.irq_state[0] = KONAMI_IRQSTATUS_NONE;
+	konami.irq_state[1] = KONAMI_IRQSTATUS_NONE;
 
 	DPD = 0;			/* Reset direct page register */
 
@@ -446,7 +446,7 @@ void konami_set_irq_line(int irqline, int state)
 		if (konami.nmi_state == state) return;
 		konami.nmi_state = state;
 	//	LOG(("KONAMI#%d set_nmi_line %d\n", cpu_getactivecpu(), state));
-		if( state == KONAMI_CLEAR_LINE ) return;
+		if( state == KONAMI_IRQSTATUS_NONE ) return;
 
 		/* if the stack was not yet initialized */
 	    if( !(konami.int_state & KONAMI_LDS) ) return;
@@ -479,7 +479,7 @@ void konami_set_irq_line(int irqline, int state)
 	{
 	//	LOG(("KONAMI#%d set_irq_line %d, %d\n", cpu_getactivecpu(), irqline, state));
 		konami.irq_state[irqline] = state;
-		if (state == KONAMI_CLEAR_LINE) return;
+		if (state == KONAMI_IRQSTATUS_NONE) return;
 		CHECK_IRQ_LINES;
 	}
 }
@@ -528,7 +528,7 @@ int konamiRun(int cycles)
 	return cycles - konami_ICount;
 }
 
-int konamiCpuScan(int nAction,int *)
+int konamiCpuScan(int nAction)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiCpuScan called without init\n"));

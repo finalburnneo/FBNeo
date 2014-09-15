@@ -1,8 +1,8 @@
-// konami.cpp
-void konami_set_irq_line(INT32 irqline, INT32 state);
-void konami_init(INT32 (*irqcallback)(INT32));
 
-// konami_intf.cpp
+void konamiWrite(UINT16 address, UINT8 data);
+UINT8 konamiRead(UINT16 address);
+UINT8 konamiFetch(UINT16 address);
+
 #define KON_READ		1
 #define KON_WRITE		2
 #define KON_FETCH		4
@@ -18,10 +18,6 @@ void konamiSetlinesCallback(void  (*setlines_callback)(INT32 lines));
 void konamiSetWriteHandler(void (*write)(UINT16, UINT8));
 void konamiSetReadHandler(UINT8 (*read)(UINT16));
 
-void konami_write(UINT16 address, UINT8 data);
-UINT8 konami_read(UINT16 address);
-UINT8 konami_fetch(UINT16 address);
-
 void konamiInit(INT32 );
 void konamiOpen(INT32 );
 void konamiReset();
@@ -33,18 +29,17 @@ extern INT32 nKonamiCpuCount;
 
 #define KONAMI_IRQ_LINE		0
 #define KONAMI_FIRQ_LINE	1
+#define KONAMI_INPUT_LINE_NMI	0x20
 
-#define KONAMI_CLEAR_LINE	0
-#define KONAMI_HOLD_LINE	1
-#define KONAMI_INPUT_LINE_NMI	2
+#define KONAMI_IRQSTATUS_NONE	0
+#define KONAMI_IRQSTATUS_ACK	1
+#define KONAMI_IRQSTATUS_AUTO	2
 
 void konamiSetIrqLine(INT32 line, INT32 state);
 
-INT32 konamiCpuScan(INT32 nAction, INT32 *);
+INT32 konamiCpuScan(INT32 nAction);
 
 INT32 konamiTotalCycles();
 void konamiNewFrame();
 
 INT32 konamiGetActive();
-
-void konami_write_rom(UINT16 address, UINT8 data);

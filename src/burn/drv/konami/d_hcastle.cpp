@@ -767,7 +767,7 @@ static INT32 DrvFrame()
 	konamiOpen(0);
 
 	konamiRun(nCyclesTotal[0]);
-	konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_HOLD_LINE);
+	konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_IRQSTATUS_AUTO);
 
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 
@@ -803,7 +803,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
-		konamiCpuScan(nAction, pnMin);
+		konamiCpuScan(nAction);
 		ZetScan(nAction);
 
 		BurnYM3812Scan(nAction, pnMin);

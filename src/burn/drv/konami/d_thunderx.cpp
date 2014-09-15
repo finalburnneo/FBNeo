@@ -313,7 +313,7 @@ static void thunderx_1f98_w(UINT8 data)
 
 		konamiRun(10);
 
-		konamiSetIrqLine(KONAMI_FIRQ_LINE, KONAMI_HOLD_LINE); // must be delayed
+		konamiSetIrqLine(KONAMI_FIRQ_LINE, KONAMI_IRQSTATUS_AUTO); // must be delayed
 	}
 
 	thunderx_1f98_data = data;
@@ -808,7 +808,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_HOLD_LINE);
+	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
@@ -845,7 +845,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
-		konamiCpuScan(nAction, pnMin);
+		konamiCpuScan(nAction);
 		ZetScan(nAction);
 
 		BurnYM2151Scan(nAction);

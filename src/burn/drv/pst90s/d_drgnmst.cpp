@@ -480,7 +480,9 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
+	pic16c5xOpen(0);
 	pic16c5xReset();
+	pic16c5xClose();
 
 	set_oki_bank0(0);
 	set_oki_bank1(0);
@@ -593,11 +595,13 @@ static INT32 DrvInit()
 	SekClose();
 
 	pic16c5xInit(0x16C55, DrvPicROM);
-	pPic16c5xReadPort = drgnmst_sound_readport;
-	pPic16c5xWritePort = drgnmst_sound_writeport;
+	pic16c5xOpen(0);
+	pic16c5xSetReadPortHandler(drgnmst_sound_readport);
+	pic16c5xSetWritePortHandler(drgnmst_sound_writeport);
+	pic16c5xClose();
 
 	MSM6295Init(0, 1000000 / 132, 0);
-	MSM6295Init(1, 1000000 / 132, 0);
+	MSM6295Init(1, 1000000 / 132, 1);
 	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 
@@ -912,11 +916,13 @@ static INT32 DrvFrame()
 	INT32 nCycleSegment;
 
 	SekOpen(0);
+	pic16c5xOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCycleSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
 		nCyclesDone[0] += SekRun(nCycleSegment);
+		if (i == (nInterleave - 1)) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
 
 		nCycleSegment = (nCyclesTotal[1] - nCyclesDone[1]) / (nInterleave - i);
 		nCyclesDone[1] += pic16c5xRun(nCycleSegment);
@@ -924,14 +930,13 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		//	memset (pSoundBuf, 0, nSegmentLength);
 			MSM6295Render(0, pSoundBuf, nSegmentLength);
 			MSM6295Render(1, pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
 
-	SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+	pic16c5xClose();
 	SekClose();
 
 	if (pBurnSoundOut) {
@@ -939,7 +944,6 @@ static INT32 DrvFrame()
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
 		if (nSegmentLength) {
-		//	memset (pSoundBuf, 0, nSegmentLength);
 			MSM6295Render(0, pSoundBuf, nSegmentLength);
 			MSM6295Render(1, pSoundBuf, nSegmentLength);
 		}
@@ -971,7 +975,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
-		pic16c5xScan(nAction, 0);
+		pic16c5xScan(nAction);
 
 		MSM6295Scan(0, nAction);
 		MSM6295Scan(1, nAction);

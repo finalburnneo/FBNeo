@@ -50,7 +50,7 @@ void pic16c5x_config(int data);
  */
 
 #define PIC16C5x_T0		0x10
-#define PIC16C5x_T0_In (pic16c5x_read_port((PIC16C5x_T0)))
+#define PIC16C5x_T0_In (pic16c5xReadPort((PIC16C5x_T0)))
 
 
 
@@ -58,7 +58,7 @@ void pic16c5x_config(int data);
  *  Input a word from given I/O port
  */
 
-#define PIC16C5x_In(Port) (pic16c5x_read_port((Port)))
+#define PIC16C5x_In(Port) (pic16c5xReadPort((Port)))
 
 
 
@@ -66,7 +66,7 @@ void pic16c5x_config(int data);
  *  Output a word to given I/O port
  */
 
-#define PIC16C5x_Out(Port,Value) (pic16c5x_write_port(Port, Value))
+#define PIC16C5x_Out(Port,Value) (pic16c5xWritePort(Port, Value))
 
 
 
@@ -74,7 +74,7 @@ void pic16c5x_config(int data);
  *  Read a word from given RAM memory location
  */
 
-#define PIC16C5x_RAM_RDMEM(A) (pic16c5x_read_byte(A))
+#define PIC16C5x_RAM_RDMEM(A) (pic16c5xRead(A))
 
 
 
@@ -82,7 +82,7 @@ void pic16c5x_config(int data);
  *  Write a word to given RAM memory location
  */
 
-#define PIC16C5x_RAM_WRMEM(A,V) (pic16c5x_write_byte(A, V))
+#define PIC16C5x_RAM_WRMEM(A,V) (pic16c5xWrite(A, V))
 
 
 
@@ -92,7 +92,7 @@ void pic16c5x_config(int data);
  *  can be used to greatly speed up emulation
  */
 
-#define PIC16C5x_RDOP(A) pic16c5x_read_op(A)
+#define PIC16C5x_RDOP(A) pic16c5xFetch(A)
 
 
 /****************************************************************************
@@ -101,7 +101,7 @@ void pic16c5x_config(int data);
  *  that use different encoding mechanisms for opcodes and opcode arguments
  */
 
-#define PIC16C5x_RDOP_ARG(A) (pic16c5x_read_op(A))
+#define PIC16C5x_RDOP_ARG(A) (pic16c5xFetch(A))
 
 
 

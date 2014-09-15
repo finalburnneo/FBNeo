@@ -37,7 +37,7 @@ static INT32 deco16_global_y_offset = 0;
 
 static INT32 deco16_scroll_offset[4][2][2]; // tmap, size, x, y
 
-static UINT16 transmask[4][2];
+static UINT8 transmask[4][2][0x100];
 
 INT32 deco16_graphics_mask[3];
 
@@ -252,8 +252,8 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 
 	UINT16 *vram	= (UINT16 *)deco16_pf_ram[tmap];
 
-	INT32 tmask		= transmask[tmap][(flags & 0x00100) >> 8];
-	if (flags & 0x10000) tmask = 0; // opaque!
+	UINT8 *tmask		= transmask[tmap][(flags & 0x00100) >> 8];
+	UINT8 t_mask = (flags & 0x10000) ? 0 : ~0;
 
 	INT32 priority		= flags & 0x000ff;
 
@@ -262,7 +262,7 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 	INT32 colbank		= deco16_pf_colorbank[tmap] >> bpp;
 
 	INT32 hmask = (32 * size) - 1;
-	INT32 wmask		= (deco16_layer_size[tmap] * size) - 1;
+	INT32 wmask = (deco16_layer_size[tmap] * size) - 1;
 	INT32 shift = (wmask & 0x100) ? 6 : 5;
 	INT32 smask = size - 1;
 
@@ -274,9 +274,9 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 		{
 			INT32 yoff;
 			if (BIT(control, 5))
-				yoff = deco16_scroll_y[tmap][x + deco16_scroll_x[tmap][y]] & hmask;
+				yoff = deco16_scroll_y[tmap][(x + deco16_scroll_x[tmap][y]) & wmask] & hmask;
 			else
-				yoff = deco16_scroll_y[tmap][x] & hmask;
+				yoff = deco16_scroll_y[tmap][x & wmask] & hmask;
 			
 
 			INT32 yy = (y + yoff) & hmask;
@@ -324,7 +324,7 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 
 					INT32 pxl = src[xxx^flipx];
 
-					if ((tmask & (1 << pxl))) continue;
+					if (tmask[pxl] & t_mask) continue;
 
 					dest[y * nScreenWidth + xxx + sx] = pxl | color;
 					deco16_prio_map[y * 512 + xxx + sx] = priority;
@@ -373,8 +373,15 @@ void deco16_set_global_offsets(INT32 x, INT32 y)
 
 static void set_transmask(INT32 tmap, INT32 tmask0, INT32 tmask1)
 {
-	transmask[tmap][0] = tmask0;
-	transmask[tmap][1] = tmask1;
+	for (INT32 i = 0; i < 16; i++) {
+		transmask[tmap][0][i] = (tmask0 & (1 << i)) ? 1 : 0;
+		transmask[tmap][1][i] = (tmask1 & (1 << i)) ? 1 : 0;
+	}
+
+	for (INT32 i = 16; i < 0x100; i++) {
+		transmask[tmap][0][i] = 0;
+		transmask[tmap][1][i] = 0;
+	}
 }	
 
 static void set_graphics_mask(INT32 gfx, INT32 len)

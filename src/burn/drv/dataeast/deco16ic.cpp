@@ -228,7 +228,7 @@ void deco16_sprite_decode(UINT8 *gfx, INT32 len)
 
 #define BIT(x,n) (((x)>>(n))&1)
 
-void deco16_draw_layer(INT32 tmap, UINT16 *dest, INT32 flags)
+void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UINT16 *dest, INT32 flags)
 {
 	INT32 size		= deco16_layer_size_select[tmap];
 	if (size == -1) return;
@@ -266,9 +266,8 @@ void deco16_draw_layer(INT32 tmap, UINT16 *dest, INT32 flags)
 	INT32 shift = (wmask & 0x100) ? 6 : 5;
 	INT32 smask = size - 1;
 
-	for (INT32 y = 0; y < nScreenHeight; y++)
+	for (INT32 y = draw_start; y < draw_end; y++)
 	{
-
 		INT32 xoff = deco16_scroll_x[tmap][y] & wmask;
 
 		for (INT32 x = 0; x < nScreenWidth + size; x+=size)
@@ -279,8 +278,6 @@ void deco16_draw_layer(INT32 tmap, UINT16 *dest, INT32 flags)
 			else
 				yoff = deco16_scroll_y[tmap][x] & hmask;
 			
-			//if (y==100 && yoff!=8 && tmap==2) // for debugging col scrolling
-			//	bprintf(PRINT_NORMAL, _T("(%d)[%d]"), x + deco16_scroll_x[tmap][y], yoff);
 
 			INT32 yy = (y + yoff) & hmask;
 			INT32 xx = (x + xoff) & wmask;
@@ -335,6 +332,11 @@ void deco16_draw_layer(INT32 tmap, UINT16 *dest, INT32 flags)
 			}
 		}
 	}
+}
+
+void deco16_draw_layer(INT32 tmap, UINT16 *dest, INT32 flags)
+{
+	deco16_draw_layer_by_line(0, nScreenHeight, tmap, dest, flags);
 }
 
 void deco16_set_bank_callback(INT32 tmap, INT32 (*callback)(const INT32 bank))

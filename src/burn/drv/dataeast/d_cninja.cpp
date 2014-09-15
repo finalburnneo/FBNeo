@@ -58,6 +58,8 @@ static INT32 DrvOkiBank;
 
 static INT32 has_z80 = 0;
 
+static INT32 global_scanline = 0;
+
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
@@ -494,12 +496,14 @@ void __fastcall cninja_main_write_word(UINT32 address, UINT16 data)
 			irq_mask = data & 0xff;
 		return;
 
-		case 0x190002:
+		case 0x190002:	// to do - get actual timing right, is this what's wrong with edrandy?
 		case 0x1a4002:
 		{
 			scanline = data & 0xff;
 
-			if ((!BIT(scanline,1)) && (scanline > 0) && (scanline < 240)) {
+		//	bprintf (0, _T("ACTUAL: %d, WRITTEN: %d\n"), global_scanline, scanline);
+
+			if ((!BIT(scanline,1))) {
 				irq_timer = scanline;
 			} else {
 				irq_timer = -1;
@@ -552,13 +556,16 @@ void __fastcall cninja_main_write_byte(UINT32 address, UINT8 data)
 			irq_mask = data & 0xff;
 		return;
 
-	//	case 0x190002:
+		case 0x190002:
 		case 0x190003:
-	//	case 0x1a4002:
+		case 0x1a4002:
 		case 0x1a4003:
 		{
 			scanline = data & 0xff;
-			if ((~irq_mask & 0x02) && (scanline > 0) && (scanline < 240)) {
+
+			//bprintf (0, _T("ACTUAL: %d, WRITTEN: %d\n"), global_scanline, scanline);
+
+			if ((~irq_mask & 0x02)) {
 				irq_timer = scanline;
 			} else {
 				irq_timer = -1;
@@ -596,7 +603,7 @@ void __fastcall cninja_main_write_byte(UINT32 address, UINT8 data)
 		return;
 	}
 	
-	bprintf(PRINT_NORMAL, _T("Write Byte %x, %x\n"), address, data);
+	//bprintf(PRINT_NORMAL, _T("Write Byte %x, %x\n"), address, data);
 }
 
 UINT16 __fastcall cninja_main_read_word(UINT32 address)
@@ -631,7 +638,7 @@ UINT16 __fastcall cninja_main_read_word(UINT32 address)
 		return deco16_60_prot_r(address);
 	}
 	
-	bprintf(PRINT_NORMAL, _T("Read Word %x, %x\n"), address);
+	//bprintf(PRINT_NORMAL, _T("Read Word %x, %x\n"), address);
 
 	return 0;
 }
@@ -679,7 +686,7 @@ UINT8 __fastcall cninja_main_read_byte(UINT32 address)
 		return deco16_104_cninja_prot_r(address) >> ((~address & 1) << 3);
 	}
 	
-	bprintf(PRINT_NORMAL, _T("Read Byte %x, %x\n"), address);
+	//bprintf(PRINT_NORMAL, _T("Read Byte %x, %x\n"), address);
 
 	return 0;
 }
@@ -2067,25 +2074,35 @@ static INT32 CninjablDraw()
 	return 0;
 }
 
+static INT32 EdrandyStartDraw()
+{
+	deco16_clear_prio_map();
+
+	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
+		pTransDraw[i] = 0;
+	}
+
+	return 0;
+}
+
+static INT32 EdrandyDrawScanline(INT32 line)
+{
+	deco16_pf12_update();
+	deco16_pf34_update();
+
+	if (nSpriteEnable &  1) deco16_draw_layer_by_line(line, line+1, 3, pTransDraw, DECO16_LAYER_PRIORITY(0x01) | DECO16_LAYER_OPAQUE);
+	if (nSpriteEnable &  2) deco16_draw_layer_by_line(line, line+1, 2, pTransDraw, DECO16_LAYER_PRIORITY(0x02));
+	if (nSpriteEnable &  4) deco16_draw_layer_by_line(line, line+1, 1, pTransDraw, DECO16_LAYER_PRIORITY(0x04));
+
+	return 0;
+}
+
 static INT32 EdrandyDraw()
 {
 //	if (DrvRecalc) {
 		deco16_palette_recalculate(DrvPalette, DrvPalRAM);
 		DrvRecalc = 0;
 //	}
-
-	deco16_pf12_update();
-	deco16_pf34_update();
-
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0;
-	}
-
-	deco16_clear_prio_map();
-
-	if (nSpriteEnable &  1) deco16_draw_layer(3, pTransDraw, DECO16_LAYER_PRIORITY(0x01) | DECO16_LAYER_OPAQUE);
-	if (nSpriteEnable &  2) deco16_draw_layer(2, pTransDraw, DECO16_LAYER_PRIORITY(0x02));
-	if (nSpriteEnable &  4) deco16_draw_layer(1, pTransDraw, DECO16_LAYER_PRIORITY(0x04));
  
 	if (nBurnLayer & 1) cninja_draw_sprites(0);
 
@@ -2096,21 +2113,21 @@ static INT32 EdrandyDraw()
 	return 0;
 }
 
-static INT32 Robocop2Draw()
+static INT32 Robocop2StartDraw()
 {
-//	if (DrvRecalc) {
-		deco16_palette_recalculate(DrvPalette, DrvPalRAM);
-		DrvRecalc = 0;
-//	}
-
-	deco16_pf12_update();
-	deco16_pf34_update();
+	deco16_clear_prio_map();
 
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 		pTransDraw[i] = 0x200;
 	}
 
-	deco16_clear_prio_map();
+	return 0;
+}
+
+static INT32 Robocop2DrawScanline(INT32 line)
+{
+	deco16_pf12_update();
+	deco16_pf34_update();
 
 	INT32 layer_8bpp = 0;
 
@@ -2127,16 +2144,29 @@ static INT32 Robocop2Draw()
 		deco16_set_color_mask(3, 0xf);
 		deco16_set_graphics(2, DrvGfxROM2, 0x300000, 16);
 
-		if (nSpriteEnable &  1) deco16_draw_layer(3, pTransDraw, DECO16_LAYER_OPAQUE | DECO16_LAYER_PRIORITY(0x01));
+		if (nSpriteEnable &  1) deco16_draw_layer_by_line(line, line+1, 3, pTransDraw, DECO16_LAYER_OPAQUE | DECO16_LAYER_PRIORITY(0x01));
 	}
 
 	if (deco16_priority & 8) {
-		if (nSpriteEnable &  2) deco16_draw_layer(1, pTransDraw, DECO16_LAYER_PRIORITY(0x02));
-		if (nSpriteEnable &  4) deco16_draw_layer(2, pTransDraw, DECO16_LAYER_PRIORITY(0x04) | layer_8bpp);
+		if (nSpriteEnable &  2) deco16_draw_layer_by_line(line, line+1, 1, pTransDraw, DECO16_LAYER_PRIORITY(0x02));
+		if (nSpriteEnable &  4) deco16_draw_layer_by_line(line, line+1, 2, pTransDraw, DECO16_LAYER_PRIORITY(0x04) | layer_8bpp);
 	} else {
-		if (nSpriteEnable &  2) deco16_draw_layer(2, pTransDraw, DECO16_LAYER_PRIORITY(0x02) | layer_8bpp);
-		if (nSpriteEnable &  4) deco16_draw_layer(1, pTransDraw, DECO16_LAYER_PRIORITY(0x04));
+		if (nSpriteEnable &  2) deco16_draw_layer_by_line(line, line+1, 2, pTransDraw, DECO16_LAYER_PRIORITY(0x02) | layer_8bpp);
+		if (nSpriteEnable &  4) deco16_draw_layer_by_line(line, line+1, 1, pTransDraw, DECO16_LAYER_PRIORITY(0x04));
 	}
+
+	return 0;
+}
+
+static INT32 Robocop2Draw()
+{
+//	if (DrvRecalc) {
+		deco16_palette_recalculate(DrvPalette, DrvPalRAM);
+		DrvRecalc = 0;
+//	}
+
+	deco16_pf12_update();
+	deco16_pf34_update();
 
 	cninja_draw_sprites(64);
 
@@ -2262,6 +2292,93 @@ static INT32 CninjaFrame()
 	return 0;
 }
 
+static INT32 EdrandyFrame()
+{
+	if (DrvReset) {
+		DrvDoReset();
+	}
+
+	{
+		deco16_prot_inputs = DrvInputs;
+		memset (DrvInputs, 0xff, 2 * sizeof(INT16)); 
+		for (INT32 i = 0; i < 16; i++) {
+			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+		}
+		DrvInputs[2] = (DrvDips[1] << 8) | (DrvDips[0] << 0);
+	}
+
+	INT32 nInterleave = 256; // scanlines
+	INT32 nSoundBufferPos = 0;
+	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 58 };
+	INT32 nCyclesDone[2] = { 0, 0 };
+
+	h6280NewFrame();
+	
+	SekOpen(0);
+	h6280Open(0);
+
+	deco16_vblank = 0x08;
+	EdrandyStartDraw();
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+	global_scanline = i;
+		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
+
+		if (irq_timer == i) {
+			SekSetIRQLine((irq_mask & 0x10) ? 3 : 4, SEK_IRQSTATUS_ACK);
+			irq_timer = -1;
+		}
+
+		if (i < 8) deco16_vblank = 0;
+
+		//if (i >= 8 && i < 248) {
+		if (i > 16) {
+			deco16_vblank = 8;
+			EdrandyDrawScanline(i-16);
+		}
+
+		if (i == 255) {
+			SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+		//	deco16_vblank = 0x00;
+		}
+
+		INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+		deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		nSoundBufferPos += nSegmentLength;
+	}
+
+	BurnTimerEndFrame(nCyclesTotal[1]);
+
+	if (pBurnSoundOut) {
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+
+		if (nSegmentLength) {
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+		}
+		
+		for (INT32 i = 0; i < nBurnSoundLen; i++) {
+			pBurnSoundOut[(i << 1) + 0] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 0] + SoundBuffer[(i << 1) + 0]);
+			pBurnSoundOut[(i << 1) + 1] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 1] + SoundBuffer[(i << 1) + 1]);
+		}
+	}
+
+	h6280Close();
+	SekClose();
+
+	if (pBurnDraw) {
+		BurnDrvRedraw();
+	}
+
+	return 0;
+}
+
 static INT32 Robocop2Frame()
 {
 	if (DrvReset) {
@@ -2278,7 +2395,7 @@ static INT32 Robocop2Frame()
 		DrvInputs[2] = (DrvDips[1] << 8) | (DrvDips[0] << 0);
 	}
 
-	INT32 nInterleave = 232; //58 * 4
+	INT32 nInterleave = 256;	// scanlines
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 14000000 / 58, 8055000 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -2288,7 +2405,9 @@ static INT32 Robocop2Frame()
 	SekOpen(0);
 	h6280Open(0);
 
-	deco16_vblank = 0x00;
+	deco16_vblank = 0x08;
+
+	Robocop2StartDraw();
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -2299,7 +2418,15 @@ static INT32 Robocop2Frame()
 			SekSetIRQLine((irq_mask & 0x10) ? 3 : 4, SEK_IRQSTATUS_ACK);
 			irq_timer = -1;
 		}
-		if (i == 206) deco16_vblank = 0x08;
+
+		if (i >= 8 && i < 248) {
+			deco16_vblank = 0;
+			Robocop2DrawScanline(i-8);
+		}
+
+		if (i == 248) {
+			deco16_vblank = 0x08;
+		}
 		
 		INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
@@ -3038,7 +3165,7 @@ struct BurnDriver BurnDrvEdrandy = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, edrandyRomInfo, edrandyRomName, NULL, NULL, DrvInputInfo, EdrandyDIPInfo,
-	EdrandyInit, DrvExit, CninjaFrame, EdrandyDraw, DrvScan, &DrvRecalc, 0x800,
+	EdrandyInit, DrvExit, EdrandyFrame, EdrandyDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
 };
 
@@ -3092,7 +3219,7 @@ struct BurnDriver BurnDrvEdrandy2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, edrandy2RomInfo, edrandy2RomName, NULL, NULL, DrvInputInfo, EdrandcDIPInfo,
-	EdrandyInit, DrvExit, CninjaFrame, EdrandyDraw, DrvScan, &DrvRecalc, 0x800,
+	EdrandyInit, DrvExit, EdrandyFrame, EdrandyDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
 };
 
@@ -3146,7 +3273,7 @@ struct BurnDriver BurnDrvEdrandy1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, edrandy1RomInfo, edrandy1RomName, NULL, NULL, DrvInputInfo, EdrandcDIPInfo,
-	EdrandyInit, DrvExit, CninjaFrame, EdrandyDraw, DrvScan, &DrvRecalc, 0x800,
+	EdrandyInit, DrvExit, EdrandyFrame, EdrandyDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
 };
 
@@ -3200,7 +3327,7 @@ struct BurnDriver BurnDrvEdrandyj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, edrandyjRomInfo, edrandyjRomName, NULL, NULL, DrvInputInfo, EdrandcDIPInfo,
-	EdrandyInit, DrvExit, CninjaFrame, EdrandyDraw, DrvScan, &DrvRecalc, 0x800,
+	EdrandyInit, DrvExit, EdrandyFrame, EdrandyDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 240, 4, 3
 };
 

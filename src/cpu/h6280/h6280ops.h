@@ -127,7 +127,7 @@
  ***************************************************************/
 H6280_INLINE UINT8 RDMEM(offs_t addr) {
 	CHECK_VDC_VCE_PENALTY(addr);
-	return h6280_read(TRANSLATED(addr));
+	return h6280Read(TRANSLATED(addr));
 }
 
 /***************************************************************
@@ -135,60 +135,60 @@ H6280_INLINE UINT8 RDMEM(offs_t addr) {
  ***************************************************************/
 H6280_INLINE void WRMEM(offs_t addr, UINT8 data) {
 	CHECK_VDC_VCE_PENALTY(addr);
-	h6280_write(TRANSLATED(addr),data);
+	h6280Write(TRANSLATED(addr),data);
 }
 
 /***************************************************************
  *  RDMEMZ   read memory - zero page
  ***************************************************************/
 #define RDMEMZ(addr) 											\
-	h6280_read( (h6280.mmr[1] << 13) | ((addr)&0x1fff));
+	h6280Read( (h6280.mmr[1] << 13) | ((addr)&0x1fff));
 
 /***************************************************************
  *  WRMEMZ   write memory - zero page
  ***************************************************************/
 #define WRMEMZ(addr,data) 										\
-	h6280_write( (h6280.mmr[1] << 13) | ((addr)&0x1fff),data);
+	h6280Write( (h6280.mmr[1] << 13) | ((addr)&0x1fff),data);
 
 /***************************************************************
  *  RDMEMW   read word from memory
  ***************************************************************/
 #define RDMEMW(addr)											\
-	h6280_read(TRANSLATED(addr)) \
-| ( h6280_read(TRANSLATED(addr+1)) << 8 )
+	h6280Read(TRANSLATED(addr)) \
+| ( h6280Read(TRANSLATED(addr+1)) << 8 )
 
 /***************************************************************
  *  RDZPWORD    read a word from a zero page address
  ***************************************************************/
 #define RDZPWORD(addr)											\
 	((addr&0xff)==0xff) ?										\
-		h6280_read( (h6280.mmr[1] << 13) | ((addr)&0x1fff))				\
-		+(h6280_read( (h6280.mmr[1] << 13) | ((addr-0xff)&0x1fff))<<8) : \
-		h6280_read( (h6280.mmr[1] << 13) | ((addr)&0x1fff))				\
-		+(h6280_read( (h6280.mmr[1] << 13) | ((addr+1)&0x1fff))<<8)
+		h6280Read( (h6280.mmr[1] << 13) | ((addr)&0x1fff))				\
+		+(h6280Read( (h6280.mmr[1] << 13) | ((addr-0xff)&0x1fff))<<8) : \
+		h6280Read( (h6280.mmr[1] << 13) | ((addr)&0x1fff))				\
+		+(h6280Read( (h6280.mmr[1] << 13) | ((addr+1)&0x1fff))<<8)
 
 
 /***************************************************************
  * push a register onto the stack
  ***************************************************************/
-#define PUSH(Rg) h6280_write( (h6280.mmr[1] << 13) | h6280.sp.d,Rg); S--
+#define PUSH(Rg) h6280Write( (h6280.mmr[1] << 13) | h6280.sp.d,Rg); S--
 
 /***************************************************************
  * pull a register from the stack
  ***************************************************************/
-#define PULL(Rg) S++; Rg = h6280_read( (h6280.mmr[1] << 13) | h6280.sp.d)
+#define PULL(Rg) S++; Rg = h6280Read( (h6280.mmr[1] << 13) | h6280.sp.d)
 
 /***************************************************************
  *  RDOP    read an opcode
  ***************************************************************/
 #define RDOP()													\
-	h6280_fetch(TRANSLATED(PCW))
+	h6280Fetch(TRANSLATED(PCW))
 
 /***************************************************************
  *  RDOPARG read an opcode argument
  ***************************************************************/
 #define RDOPARG()												\
-	h6280_fetch(TRANSLATED(PCW))
+	h6280Fetch(TRANSLATED(PCW))
 
 /***************************************************************
  *  BRA  branch relative
@@ -1118,21 +1118,21 @@ H6280_INLINE void WRMEM(offs_t addr, UINT8 data) {
  ***************************************************************/
 #define ST0                                                     \
 	CLEAR_T;													\
-    h6280_write_port(0x0000,tmp)
+    h6280WritePort(0x0000,tmp)
 
 /* 6280 ********************************************************
  *  ST1 Store at hardware address 2
  ***************************************************************/
 #define ST1                                                     \
 	CLEAR_T;													\
-    h6280_write_port(0x0002,tmp)
+    h6280WritePort(0x0002,tmp)
 
 /* 6280 ********************************************************
  *  ST2 Store at hardware address 3
  ***************************************************************/
 #define ST2                                                     \
 	CLEAR_T;													\
-    h6280_write_port(0x0003,tmp)
+    h6280WritePort(0x0003,tmp)
 
 /* 6280 ********************************************************
  *  STA Store accumulator

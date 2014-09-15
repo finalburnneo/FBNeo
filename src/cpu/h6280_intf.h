@@ -1,8 +1,9 @@
-// h6280.cpp
-void h6280_set_irq_line(INT32 irqline, INT32 state);
-void h6280_init(INT32 (*irqcallback)(INT32));
 
-// h6280_intf.cpp
+void h6280WritePort(UINT8 port, UINT8 data);
+void h6280Write(UINT32 address, UINT8 data);
+UINT8 h6280Read(UINT32 address);
+UINT8 h6280Fetch(UINT32 address);
+
 #define H6280_READ		1
 #define H6280_WRITE		2
 #define H6280_FETCH		4
@@ -18,11 +19,6 @@ void h6280SetlinesCallback(void  (*setlines_callback)(INT32 lines));
 void h6280SetWritePortHandler(void (*write)(UINT8, UINT8));
 void h6280SetWriteHandler(void (*write)(UINT32, UINT8));
 void h6280SetReadHandler(UINT8 (*read)(UINT32));
-
-void h6280_write_port(UINT8 port, UINT8 data);
-void h6280_write(UINT32 address, UINT8 data);
-UINT8 h6280_read(UINT32 address);
-UINT8 h6280_fetch(UINT32 address);
 
 void h6280Init(INT32);
 void h6280Open(INT32);
@@ -49,8 +45,6 @@ void h6280RunEnd();
 
 INT32 h6280GetActive();
 
-void h6280_write_rom(UINT32 address, UINT8 data);
-
 
 UINT8 h6280_irq_status_r(UINT32 offset);
 void h6280_irq_status_w(UINT32 offset, UINT8 data);
@@ -60,8 +54,3 @@ void h6280_timer_w(UINT32 offset, UINT8 data);
 // functions for use by the PSG and joypad port only!
 UINT8 h6280io_get_buffer(void);
 void h6280io_set_buffer(UINT8);
-
-
-// internal
-
-

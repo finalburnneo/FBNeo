@@ -130,7 +130,7 @@ static int 	h6280_ICount = 0;
 
 static h6280_Regs  h6280;
 
-//static void set_irq_line(int irqline, int state);
+void h6280_set_irq_line(INT32 irqline, INT32 state);
 #define set_irq_line h6280_set_irq_line
 
 /* include the macros */

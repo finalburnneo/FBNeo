@@ -35,7 +35,6 @@ static UINT8 DrvDips[2];
 static UINT16 DrvInps[3];
 
 static UINT32  *DrvPalette;
-static UINT32  *Palette;
 
 static UINT8 DrvRecalc;
 
@@ -49,8 +48,6 @@ static UINT8 drgnmst_snd_flag = 0;
 static UINT8 drgnmst_oki0_bank = 0;
 static UINT8 drgnmst_oki1_bank = 0;
 static UINT8 drgnmst_oki_command = 0;
-
-static INT32  nCyclesDone[2] = { 0, 0 };
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
@@ -90,7 +87,6 @@ STDINPUTINFO(Drv)
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
-	// Default Values
 	{0x1b, 0xff, 0xff, 0xa7, NULL			},
 	{0x1c, 0xff, 0xff, 0xfc, NULL			},
 
@@ -156,7 +152,7 @@ static struct BurnDIPInfo DrvDIPList[]=
 
 STDDIPINFO(Drv)
 
-static void palette_write(INT32 offset)
+static inline void palette_write(INT32 offset)
 {
 	UINT8 r, g, b;
 	UINT16 data = *((UINT16*)(DrvPalRAM + offset));	
@@ -170,13 +166,11 @@ static void palette_write(INT32 offset)
 	b = (data >> 0) & 0x0f;
 	b |= b << 4;
 
-	Palette[offset >> 1] = (r << 16) | (g << 8) | b;
 	DrvPalette[offset >> 1] = BurnHighCol(r, g, b, 0);
 }
 
-void __fastcall drgnmst_write_byte(UINT32 address, UINT8 data)
+static void __fastcall drgnmst_write_byte(UINT32 address, UINT8 data)
 {
-
 	if ((address & 0xffc000) == 0x900000) {
 		DrvPalRAM[(address & 0x3fff)] = data;
 
@@ -190,7 +184,6 @@ void __fastcall drgnmst_write_byte(UINT32 address, UINT8 data)
 		return;
 	}
 
-
 	switch (address)
 	{
 		case 0x800030:
@@ -200,16 +193,12 @@ void __fastcall drgnmst_write_byte(UINT32 address, UINT8 data)
 
 		case 0x800154:
 		case 0x800155:
-		// priority control
+			// priority control
 		return;
 
 		case 0x800181:
-	//bprintf (PRINT_NORMAL, _T("%5.5x %2.2x, wb\n"), address, data);
 			drgnmst_snd_command = data;
-		//	hack = 1;
-		//	pic16c5xRun(1000);
-			SekRunEnd();//?
-			// cpu_yield();
+		//	SekRunEnd();
 		return;
 
 		case 0x800188:
@@ -219,17 +208,13 @@ void __fastcall drgnmst_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-void __fastcall drgnmst_write_word(UINT32 address, UINT16 data)
+static void __fastcall drgnmst_write_word(UINT32 address, UINT16 data)
 {
-
 	if ((address & 0xffc000) == 0x900000) {
 		*((UINT16 *)(DrvPalRAM + (address & 0x3ffe))) = data;
-
 		palette_write(address & 0x3ffe);
-
 		return;
 	}
-
 
 	if (address >= 0x800100 && address <= 0x80011f) {
 		*((UINT16*)(DrvVidRegs + (address & 0x1e))) = data;
@@ -243,29 +228,20 @@ void __fastcall drgnmst_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x800180:
-		case 0x800181:
 		{
-	bprintf (PRINT_NORMAL, _T("%5.5x %4.4x, ww\n"), address, data);
-
-			drgnmst_snd_command = (data & 0xff);
-			INT32 cycles = (SekTotalCycles() / 3) - nCyclesDone[1];
-			nCyclesDone[1] += pic16c5xRun(cycles);
-			//SekRunEnd();
-			// cpu_yield();
+		//	drgnmst_snd_command = data & 0xff;
+		//	SekRunEnd();
 		}
 		return;
 
 		case 0x800188:
-		case 0x800189:
-			drgnmst_snd_flag = 1;
+		//	drgnmst_snd_flag = 1;
 		return;
 	}
 }
 
-UINT8 __fastcall drgnmst_read_byte(UINT32 address)
+static UINT8 __fastcall drgnmst_read_byte(UINT32 address)
 {
-//	bprintf (PRINT_NORMAL, _T("%5.5x rb\n"), address);
-
 	switch (address)
 	{
 		case 0x800000:
@@ -295,10 +271,8 @@ UINT8 __fastcall drgnmst_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall drgnmst_read_word(UINT32 address)
+static UINT16 __fastcall drgnmst_read_word(UINT32 address)
 {
-//	bprintf (PRINT_NORMAL, _T("%5.5x rw\n"), address);
-
 	switch (address)
 	{
 		case 0x800000:
@@ -322,7 +296,8 @@ UINT16 __fastcall drgnmst_read_word(UINT32 address)
 
 static void set_oki_bank0(INT32 bank)
 {
-	INT32 nBank = 0x40000 * (bank & 3);
+	bank %= 5; // ??
+	INT32 nBank = 0x40000 * bank;
 
 	memcpy (MSM6295ROM + 0x000000, DrvSndROM0 + nBank, 0x40000);
 }
@@ -340,8 +315,8 @@ static UINT8 drgnmst_snd_command_r()
 
 	switch (drgnmst_oki_control & 0x1f)
 	{
-		case 0x12:	data = MSM6295ReadStatus(1) & 0x0f; break;//(okim6295_status_1_r(machine, 0) & 0x0f); break;
-		case 0x16:	data = MSM6295ReadStatus(0) & 0x0f; break;//(okim6295_status_0_r(machine, 0) & 0x0f); break;
+		case 0x12:	data = MSM6295ReadStatus(1) & 0x0f; break;
+		case 0x16:	data = MSM6295ReadStatus(0) & 0x0f; break;
 		case 0x0b:
 		case 0x0f:      data = drgnmst_snd_command; break;
 		default:	break;
@@ -359,32 +334,29 @@ static void drgnmst_snd_control_w(INT32 data)
 	if (oki_new_bank != drgnmst_oki0_bank) {
 		drgnmst_oki0_bank = oki_new_bank;
 		if (drgnmst_oki0_bank) oki_new_bank--;
-			bprintf (PRINT_NORMAL, _T("bank0, %2.2x\n"), oki_new_bank);
+
 		set_oki_bank0(oki_new_bank);
 	}
 	oki_new_bank = ((pic16c5x_port0 & 0x3) >> 0) | ((drgnmst_oki_control & 0x20) >> 3);
 	if (oki_new_bank != drgnmst_oki1_bank) {
 		drgnmst_oki1_bank = oki_new_bank;
-			bprintf (PRINT_NORMAL, _T("bank1, %2.2x\n"), oki_new_bank);
+
 		set_oki_bank1(oki_new_bank);
 	}
 
 	switch (drgnmst_oki_control & 0x1f)
 	{
-		case 0x15:
-			bprintf (PRINT_NORMAL, _T("0, %2.2x\n"), drgnmst_oki_command);
-			MSM6295Command(0, drgnmst_oki_command);
-			break;
-
 		case 0x11:
-			bprintf (PRINT_NORMAL, _T("1, %2.2x\n"), drgnmst_oki_command);
 			MSM6295Command(1, drgnmst_oki_command);
-			break;
+		break;
+
+		case 0x15:
+			MSM6295Command(0, drgnmst_oki_command);
+		break;
 	}
 }
 
-
-UINT8 drgnmst_sound_readport(UINT16 port)
+static UINT8 drgnmst_sound_readport(UINT16 port)
 {
 //	if (port != 0x10)bprintf (PRINT_NORMAL, _T("%4.4x rp\n"), port);
 
@@ -411,7 +383,7 @@ UINT8 drgnmst_sound_readport(UINT16 port)
 	return 0;
 }
 
-void drgnmst_sound_writeport(UINT16 port, UINT8 data)
+static void drgnmst_sound_writeport(UINT16 port, UINT8 data)
 {
 //	bprintf (PRINT_NORMAL, _T("%4.4x %2.2x wp\n"), port, data);
 
@@ -499,10 +471,10 @@ static INT32 MemIndex()
 
 	Drv68KROM	= Next; Next += 0x100000;
 
-	DrvPicROM	= Next; Next += 0x000400;
+	DrvPicROM	= Next; Next += 0x004000;
 
 	MSM6295ROM	= Next; Next += 0x140000;
-	DrvSndROM0	= Next; Next += 0x100000;
+	DrvSndROM0	= Next; Next += 0x140000;
 	DrvSndROM1	= Next; Next += 0x200000;
 
 	DrvGfxROM0	= Next; Next += 0x1000000;
@@ -527,8 +499,6 @@ static INT32 MemIndex()
 	priority_control= (UINT16*)Next; Next += 0x0001 * sizeof(UINT16);
 
 	coin_lockout	= Next; Next += 0x000001;
-
-	Palette		= (UINT32*)Next; Next += 0x2000 * sizeof(UINT32);
 
 	RamEnd		= Next;
 
@@ -569,8 +539,23 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvGfxROM1 + 1,	 6, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0,	 7, 2)) return 1;
 
-		if (BurnLoadRom(DrvSndROM0,		 9, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM0,	 9, 1)) return 1;
 		if (BurnLoadRom(DrvSndROM1,	10, 1)) return 1;
+
+		UINT8 *drgnmst_PCM = DrvSndROM0;
+
+		for (INT32 offs = 0x1ffff; offs >= 0; offs--)
+		{
+			drgnmst_PCM[0x120000 + offs] = drgnmst_PCM[0xa0000 + offs];
+			drgnmst_PCM[0x100000 + offs] = drgnmst_PCM[0x00000 + offs];
+			drgnmst_PCM[0x0e0000 + offs] = drgnmst_PCM[0x80000 + offs];
+			drgnmst_PCM[0x0c0000 + offs] = drgnmst_PCM[0x00000 + offs];
+			drgnmst_PCM[0x0a0000 + offs] = drgnmst_PCM[0x60000 + offs];
+			drgnmst_PCM[0x080000 + offs] = drgnmst_PCM[0x00000 + offs];
+			drgnmst_PCM[0x060000 + offs] = drgnmst_PCM[0x40000 + offs];
+			drgnmst_PCM[0x040000 + offs] = drgnmst_PCM[0x00000 + offs];
+		}
+
 		BurnFree (tmp);
 
 		if (BurnLoadPicROM(DrvPicROM, 8, 0xb7b)) return 1;
@@ -600,7 +585,7 @@ static INT32 DrvInit()
 	pic16c5xSetWritePortHandler(drgnmst_sound_writeport);
 	pic16c5xClose();
 
-	MSM6295Init(0, 1000000 / 132, 0);
+	MSM6295Init(0, 1000000 / 132, 1);
 	MSM6295Init(1, 1000000 / 132, 1);
 	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
@@ -837,15 +822,14 @@ static void draw_sprites()
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x2000; i++) {
-			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
+		for (INT32 i = 0; i < 0x4000; i+=2) {
+			palette_write(i);
 		}
+		DrvRecalc = 0;
 	}
 
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 		pTransDraw[i] = 0x000f;
-
 	}
 
 	switch (*priority_control)
@@ -907,46 +891,29 @@ static INT32 DrvFrame()
 		DrvInps[1] |= *coin_lockout;
 	}
 
-	INT32 nInterleave = 10;
-	INT32 nSoundBufferPos = 0;
+	INT32 nInterleave = 100;
 	INT32 nCyclesTotal[2] = { 12000000 / 60, 4000000 / 60 };
-//	INT32 nCyclesDone[2] = { 0, 0 };
-	nCyclesDone[0] = 0;
-	nCyclesDone[1] = 0;
-	INT32 nCycleSegment;
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
 	pic16c5xOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCycleSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
-		nCyclesDone[0] += SekRun(nCycleSegment);
+		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+
 		if (i == (nInterleave - 1)) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
 
-		nCycleSegment = (nCyclesTotal[1] - nCyclesDone[1]) / (nInterleave - i);
-		nCyclesDone[1] += pic16c5xRun(nCycleSegment);
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			MSM6295Render(1, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		nCyclesDone[1] += pic16c5xRun(nCyclesTotal[1] / nInterleave);
 	}
 
 	pic16c5xClose();
 	SekClose();
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-
-		if (nSegmentLength) {
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			MSM6295Render(1, pSoundBuf, nSegmentLength);
-		}
+		memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
+		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

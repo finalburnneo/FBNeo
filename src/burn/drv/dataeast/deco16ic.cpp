@@ -656,6 +656,14 @@ void deco16_pf34_update()
 	pf_update(3, deco16_pf_control[1][3], deco16_pf_control[1][4], (UINT16 *)deco16_pf_rowscroll[3], deco16_pf_control[1][5] >> 8  , deco16_pf_control[1][6] >> 8);
 }
 
+void deco16_pf3_update()
+{
+	if (deco16_bank_callback[2]) deco16_pf_bank[2] = deco16_bank_callback[2](deco16_pf_control[1][7] & 0xff);
+	if (deco16_bank_callback[3]) deco16_pf_bank[3] = deco16_bank_callback[3](deco16_pf_control[1][7] >> 8);
+
+	pf_update(2, deco16_pf_control[1][1], deco16_pf_control[1][2], (UINT16 *)deco16_pf_rowscroll[2], deco16_pf_control[1][5] & 0xff, deco16_pf_control[1][6] & 0xff);
+}
+
 void deco16Scan()
 {
 	struct BurnArea ba;

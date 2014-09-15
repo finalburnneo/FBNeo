@@ -35,6 +35,7 @@ void deco16Scan();
 
 void deco16_pf12_update();
 void deco16_pf34_update();
+void deco16_pf3_update();
 
 #define DECO16_LAYER_OPAQUE		0x010000
 #define DECO16_LAYER_PRIORITY(x)	((x) & 0xff)

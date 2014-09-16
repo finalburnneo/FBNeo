@@ -1485,23 +1485,33 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static void DrvCreateAlphaTable()
+static void DrvCreateAlphaTable(INT32 raiden2_alpha)
 {
-	const UINT8 alpha_active[0x10] = {
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,	0x05, 0x3f, 0x73, 0xff, 0x7c, 0xff, 0xff, 0x4f
-	};
+	memset (DrvAlphaTable, 0, 0x800); 
 
-	for(int val = 0; val < 0x800; val++) {
-		DrvAlphaTable[val] = 0;
+	if (raiden2_alpha) {
+		DrvAlphaTable[0x380] = 1;
+		DrvAlphaTable[0x5de] = 1;
+		DrvAlphaTable[0x75c] = 1;
 
-		if ((val & 0x8) == 0x8 && (val & 0xf) != 0xf && (alpha_active[val >> 7] & (0x80 >> ((val >> 4) & 7)))) {
-			DrvAlphaTable[val] = 1;
-		}
-	}
+		memset (DrvAlphaTable + 0x3c0, 1, 0x30);
+		memset (DrvAlphaTable + 0x4f8, 1, 0x08);
+		memset (DrvAlphaTable + 0x5c8, 1, 0x08);
+		memset (DrvAlphaTable + 0x5f8, 1, 0x08);
 
-	if (game_select == 0 || game_select == 1) {
-		memset (DrvAlphaTable + 0x380, 1, 8); // thrusters in intro (after going vertical)
-		memset (DrvAlphaTable + 0x3d0, 1, 8); // thrusters in intro (before going vertical)
+		memset (DrvAlphaTable + 0x6c8, 1, 0x08);
+		memset (DrvAlphaTable + 0x6d8, 1, 0x08);
+		memset (DrvAlphaTable + 0x6e8, 1, 0x08);
+		memset (DrvAlphaTable + 0x6f8, 1, 0x08);
+
+		memset (DrvAlphaTable + 0x70d, 1, 0x02);
+		memset (DrvAlphaTable + 0x71c, 1, 0x03);
+		memset (DrvAlphaTable + 0x72d, 1, 0x02);
+		memset (DrvAlphaTable + 0x73d, 1, 0x02);
+		memset (DrvAlphaTable + 0x74d, 1, 0x02);
+		memset (DrvAlphaTable + 0x76c, 1, 0x03);
+		memset (DrvAlphaTable + 0x77d, 1, 0x02);
+		memset (DrvAlphaTable + 0x7c8, 1, 0x08);
 	}
 }
 
@@ -1902,7 +1912,7 @@ static INT32 Raiden2Init()
 		raiden2_decrypt_sprites();
 		DrvGfxDecode();
 		DrvCreateTransTab();
-		DrvCreateAlphaTable();
+		DrvCreateAlphaTable(1);
 	}
 
 	raiden2_common_map();
@@ -1965,7 +1975,7 @@ static INT32 Raiden2aInit() // alternate rom layout
 		raiden2_decrypt_sprites();
 		DrvGfxDecode();
 		DrvCreateTransTab();
-		DrvCreateAlphaTable();
+		DrvCreateAlphaTable(1);
 	}
 
 	raiden2_common_map();
@@ -2028,7 +2038,7 @@ static INT32 RaidendxInit()
 		raiden2_decrypt_sprites();
 		DrvGfxDecode();
 		DrvCreateTransTab();
-		DrvCreateAlphaTable();
+		DrvCreateAlphaTable(1);
 	}
 
 	VezInit(0, V30_TYPE);
@@ -2123,7 +2133,7 @@ static INT32 ZeroteamInit()
 		zeroteam_decrypt_sprites();
 		DrvGfxDecode();
 		DrvCreateTransTab();
-		DrvCreateAlphaTable();
+		DrvCreateAlphaTable(0);
 	}
 
 	zeroteam_common_map();
@@ -2183,7 +2193,7 @@ static INT32 XsedaeInit()
 
 		DrvGfxDecode();
 		DrvCreateTransTab();
-		DrvCreateAlphaTable();
+		DrvCreateAlphaTable(0);
 	}
 
 	zeroteam_common_map();

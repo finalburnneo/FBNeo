@@ -1894,13 +1894,8 @@ static INT32 DarktowrLoadRoms()
 static INT32 DrvMachineInit()
 {
 	BurnSetRefreshRate(57.444853);
-	
-	// Setup the HD6309 emulation
-	if (DrvSubCPUType == DD_CPU_TYPE_HD6309) {
-		HD6309Init(2);
-	} else {
-		HD6309Init(1);
-	}
+
+	HD6309Init(0);
 	HD6309Open(0);
 	HD6309MapMemory(DrvHD6309Ram         , 0x0000, 0x0fff, M6809_RAM);
 	HD6309MapMemory(DrvPaletteRam1       , 0x1000, 0x11ff, M6809_RAM);
@@ -1922,6 +1917,7 @@ static INT32 DrvMachineInit()
 	}
 	
 	if (DrvSubCPUType == DD_CPU_TYPE_HD6309) {
+		HD6309Init(1);
 		HD6309Open(1);
 		HD6309MapMemory(DrvSubCPURom        , 0xc000, 0xffff, HD6309_ROM);
 		HD6309SetReadHandler(DrvDdragonbSubHD6309ReadByte);
@@ -1979,7 +1975,7 @@ static INT32 DrvMachineInit()
 static INT32 Drv2MachineInit()
 {
 	// Setup the HD6309 emulation
-	HD6309Init(1);
+	HD6309Init(0);
 	HD6309Open(0);
 	HD6309MapMemory(DrvHD6309Ram         , 0x0000, 0x17ff, M6809_RAM);
 	HD6309MapMemory(DrvFgVideoRam        , 0x1800, 0x1fff, M6809_RAM);

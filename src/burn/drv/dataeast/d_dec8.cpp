@@ -1317,7 +1317,7 @@ static INT32 DrvInit()
 		DrvGfxDecode();
 	}
 
-	HD6309Init(1);
+	HD6309Init(0);
 	HD6309Open(0);
 	HD6309MapMemory(DrvMainRAM,		0x0000, 0x17ff, HD6309_RAM);
 	HD6309MapMemory(DrvVidRAM,		0x1800, 0x1fff, HD6309_RAM);
@@ -3398,7 +3398,7 @@ static INT32 GondoInit()
 		GondoGfxDecode();
 	}
 
-	HD6309Init(1);
+	HD6309Init(0);
 	HD6309Open(0);
 	HD6309MapMemory(DrvMainRAM,		 0x0000, 0x17ff, HD6309_RAM);
 	HD6309MapMemory(DrvVidRAM,		 0x1800, 0x1fff, HD6309_RAM);
@@ -4002,7 +4002,7 @@ static INT32 OscarInit()
 		OscarGfxDecode();
 	}
 
-	HD6309Init(2);
+	HD6309Init(0);
 	HD6309Open(0);
 	HD6309MapMemory(DrvMainRAM,		 0x0000, 0x1fff, HD6309_RAM); // all shared?
 	HD6309MapMemory(DrvVidRAM,		 0x2000, 0x28ff, HD6309_RAM);
@@ -4015,6 +4015,7 @@ static INT32 OscarInit()
 	HD6309SetReadHandler(oscar_main_read);
 	HD6309Close();
 
+	HD6309Init(1);
 	HD6309Open(1);
 	HD6309MapMemory(DrvMainRAM,		0x0000, 0x0eff, HD6309_RAM); // all shared? AM_RANGE(0x0f00, 0x0fff) AM_RAM not?
 	HD6309MapMemory(DrvPalRAM + 0x400,	0x0f00, 0x0fff, HD6309_RAM); // not really pal...

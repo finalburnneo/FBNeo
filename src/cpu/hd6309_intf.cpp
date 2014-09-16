@@ -78,39 +78,42 @@ static cpu_core_config HD6309CheatCpuConfig =
 	0
 };
 
-INT32 HD6309Init(INT32 num)
+INT32 HD6309Init(INT32 nCPU)
 {
 	DebugCPU_HD6309Initted = 1;
 	
 	nActiveCPU = -1;
-	nHD6309Count = num % MAX_CPU;
-	
-	HD6309CPUContext = (HD6309Ext*)malloc(num * sizeof(HD6309Ext));
+	if ((nCPU+1) > nHD6309Count) nHD6309Count = nCPU+1;
+
+#if defined FBA_DEBUG
+	if (nCPU >= MAX_CPU) bprintf(PRINT_ERROR, _T("HD6309Init called too many CPUs! %d, %d is MAX\n"), nCPU, MAX_CPU);
+#endif
+
 	if (HD6309CPUContext == NULL) {
-		return 1;
-	}
-
-	memset(HD6309CPUContext, 0, num * sizeof(HD6309Ext));
-	
-	for (INT32 i = 0; i < num; i++) {
-		HD6309CPUContext[i].ReadByte = HD6309ReadByteDummyHandler;
-		HD6309CPUContext[i].WriteByte = HD6309WriteByteDummyHandler;
-		HD6309CPUContext[i].ReadOp = HD6309ReadOpDummyHandler;
-		HD6309CPUContext[i].ReadOpArg = HD6309ReadOpArgDummyHandler;
-		
-		nHD6309CyclesDone[i] = 0;
-	
-		for (INT32 j = 0; j < (0x0100 * 3); j++) {
-			HD6309CPUContext[i].pMemMap[j] = NULL;
+		HD6309CPUContext = (HD6309Ext*)malloc(MAX_CPU * sizeof(HD6309Ext));
+		if (HD6309CPUContext == NULL) {
+			return 1;
 		}
-	}
-	
-	nHD6309CyclesTotal = 0;
-	
-	hd6309_init();
 
-	for (INT32 i = 0; i < num; i++)
-		CpuCheatRegister(i, &HD6309CheatCpuConfig);
+		memset(HD6309CPUContext, 0, MAX_CPU * sizeof(HD6309Ext));
+	}
+
+	HD6309CPUContext[nCPU].ReadByte = HD6309ReadByteDummyHandler;
+	HD6309CPUContext[nCPU].WriteByte = HD6309WriteByteDummyHandler;
+	HD6309CPUContext[nCPU].ReadOp = HD6309ReadOpDummyHandler;
+	HD6309CPUContext[nCPU].ReadOpArg = HD6309ReadOpArgDummyHandler;
+
+	nHD6309CyclesDone[nCPU] = 0;
+	
+	for (INT32 j = 0; j < (0x0100 * 3); j++) {
+		HD6309CPUContext[nCPU].pMemMap[j] = NULL;
+	}
+
+	nHD6309CyclesTotal = 0;	
+
+	//hd6309_init(); // does nothing.
+
+	CpuCheatRegister(nCPU, &HD6309CheatCpuConfig);
 
 	return 0;
 }

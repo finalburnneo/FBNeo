@@ -1053,8 +1053,8 @@ static INT32 DrvInit()
 	SekClose();
 	
 	pic16c5xInit(0, 0x16C57, DrvPicRom);
-	pPic16c5xReadPort = PlaymarkSoundReadPort;
-	pPic16c5xWritePort = PlaymarkSoundWritePort;
+	pic16c5xSetReadPortHandler(PlaymarkSoundReadPort);
+	pic16c5xSetWritePortHandler(PlaymarkSoundWritePort);
 	
 	MSM6295Init(0, 1000000 / 132, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -1144,8 +1144,8 @@ static INT32 ExcelsrInit()
 	SekClose();
 	
 	pic16c5xInit(0, 0x16C57, DrvPicRom);
-	pPic16c5xReadPort = PlaymarkSoundReadPort;
-	pPic16c5xWritePort = PlaymarkSoundWritePort;
+	pic16c5xSetReadPortHandler(PlaymarkSoundReadPort);
+	pic16c5xSetWritePortHandler(PlaymarkSoundWritePort);
 	
 	MSM6295Init(0, 1000000 / 132, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -1246,8 +1246,8 @@ static INT32 HotmindInit()
 	SekClose();
 	
 	pic16c5xInit(0, 0x16C57, DrvPicRom);
-	pPic16c5xReadPort = PlaymarkSoundReadPort;
-	pPic16c5xWritePort = PlaymarkSoundWritePort;
+	pic16c5xSetReadPortHandler(PlaymarkSoundReadPort);
+	pic16c5xSetWritePortHandler(PlaymarkSoundWritePort);
 	
 	MSM6295Init(0, 1000000 / 132, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);

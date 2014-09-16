@@ -11,10 +11,10 @@ INT32 nPic16c5xCpuType = -1;
 static UINT8 *pic16c5x_rom = NULL;
 static UINT8 *pic16c5x_ram = NULL;
 
-UINT8 (*pPic16c5xReadPort)(UINT16 port) = NULL;
-void (*pPic16c5xWritePort)(UINT16 port, UINT8 data) = NULL;
+static UINT8 (*pPic16c5xReadPort)(UINT16 port) = NULL;
+static void (*pPic16c5xWritePort)(UINT16 port, UINT8 data) = NULL;
 
-UINT16 pic16c5x_read_op(UINT16 address)
+UINT16 pic16c5xFetch(UINT16 address)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_read_op called without init\n"));
@@ -27,7 +27,7 @@ UINT16 pic16c5x_read_op(UINT16 address)
 	return ROM[address];
 }
 
-UINT8 pic16c5x_read_byte(UINT16 address)
+UINT8 pic16c5xRead(UINT16 address)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_read_byte called without init\n"));
@@ -44,7 +44,7 @@ UINT8 pic16c5x_read_byte(UINT16 address)
 	return pic16c5x_ram[address];
 }
 
-void pic16c5x_write_byte(UINT16 address, UINT8 data)
+void pic16c5xWrite(UINT16 address, UINT8 data)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_write_byte called without init\n"));
@@ -63,7 +63,7 @@ void pic16c5x_write_byte(UINT16 address, UINT8 data)
 	pic16c5x_ram[address] = data;
 }
 
-UINT8 pic16c5x_read_port(UINT16 port)
+UINT8 pic16c5xReadPort(UINT16 port)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_read_port called without init\n"));
@@ -76,7 +76,7 @@ UINT8 pic16c5x_read_port(UINT16 port)
 	return 0;
 }
 
-void pic16c5x_write_port(UINT16 port, UINT8 data)
+void pic16c5xWritePort(UINT16 port, UINT8 data)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5x_write_port called without init\n"));
@@ -86,6 +86,16 @@ void pic16c5x_write_port(UINT16 port, UINT8 data)
 		pPic16c5xWritePort(port, data);
 		return;
 	}
+}
+
+void pic16c5xSetReadPortHandler(UINT8 (*pReadPort)(UINT16 port))
+{
+	pPic16c5xReadPort = pReadPort;
+}
+
+void pic16c5xSetWritePortHandler(void (*pWritePort)(UINT16 port, UINT8 data))
+{
+	pPic16c5xWritePort = pWritePort;
 }
 
 void pic16c5xReset()
@@ -124,7 +134,21 @@ void pic16c5xExit()
 	DebugCPU_PIC16C5XInitted = 0;
 }
 
-INT32 pic16c5xScan(INT32 nAction,INT32 */*pnMin*/)
+void pic16c5xOpen(INT32)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5xOpen called without init\n"));
+#endif
+}
+
+void pic16c5xClose()
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5xClose called without init\n"));
+#endif
+}
+
+INT32 pic16c5xScan(INT32 nAction)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_PIC16C5XInitted) bprintf(PRINT_ERROR, _T("pic16c5xScan called without init\n"));

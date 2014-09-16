@@ -1,6 +1,8 @@
 #include "burnint.h"
 #include "konami_intf.h"
 
+#define MAX_CPU		1
+
 #define MEMORY_SPACE	0x10000
 #define PAGE_SIZE	0x100
 #define PAGE_MASK	0xff
@@ -16,12 +18,13 @@ static INT32 nKonamiCpuActive = -1;
 
 static UINT8 *mem[3][PAGE_COUNT];
 
-static UINT8 (*konamiReadFunction)(UINT16 address);
-static void (*konamiWriteFunction)(UINT16 address, UINT8 data);
+static UINT8 (*pkonamiRead)(UINT16 address);
+static void (*pkonamiWrite)(UINT16 address, UINT8 data);
+
 static INT32 (*irqcallback)(INT32);
 
-extern void konami_set_irq_line(INT32 irqline, INT32 state);
-extern void konami_init(INT32 (*irqcallback)(INT32));
+void konami_set_irq_line(INT32 irqline, INT32 state);
+void konami_init(INT32 (*irqcallback)(INT32));
 
 void konamiMapMemory(UINT8 *src, UINT16 start, UINT16 finish, INT32 type)
 {
@@ -60,7 +63,7 @@ void konamiSetWriteHandler(void (*write)(UINT16, UINT8))
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiSetWriteHandler called without init\n"));
 #endif
 
-	konamiWriteFunction = write;
+	pkonamiWrite = write;
 }
 
 void konamiSetReadHandler(UINT8 (*read)(UINT16))
@@ -69,7 +72,7 @@ void konamiSetReadHandler(UINT8 (*read)(UINT16))
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiSetReadHandler called without init\n"));
 #endif
 
-	konamiReadFunction = read;
+	pkonamiRead = read;
 }
 
 static void konami_write_rom(UINT32 address, UINT8 data)
@@ -92,8 +95,8 @@ static void konami_write_rom(UINT32 address, UINT8 data)
 		mem[WRITE][address >> PAGE_SHIFT][address & PAGE_MASK] = data;
 	}
 
-	if (konamiWrite != NULL) {
-		konamiWriteFunction(address, data);
+	if (pkonamiWrite != NULL) {
+		pkonamiWrite(address, data);
 	}
 }
 
@@ -104,8 +107,8 @@ void konamiWrite(UINT16 address, UINT8 data)
 		return;
 	}
 
-	if (konamiWrite != NULL) {
-		konamiWriteFunction(address, data);
+	if (pkonamiWrite != NULL) {
+		pkonamiWrite(address, data);
 		return;
 	}
 
@@ -118,8 +121,8 @@ UINT8 konamiRead(UINT16 address)
 		return mem[ READ][address >> PAGE_SHIFT][address & PAGE_MASK];
 	}
 
-	if (konamiRead != NULL) {
-		return konamiReadFunction(address);
+	if (pkonamiRead != NULL) {
+		return pkonamiRead(address);
 	}
 
 	return 0;
@@ -131,8 +134,8 @@ UINT8 konamiFetch(UINT16 address)
 		return mem[FETCH][address >> PAGE_SHIFT][address & PAGE_MASK];
 	}
 
-	if (konamiRead != NULL) {
-		return konamiReadFunction(address);
+	if (pkonamiRead != NULL) {
+		return pkonamiRead(address);
 	}
 
 	return 0;
@@ -148,7 +151,6 @@ void konamiSetIrqLine(INT32 line, INT32 state)
 		konami_set_irq_line(line, KONAMI_IRQSTATUS_ACK);
 		konamiRun(0);
 		konami_set_irq_line(line, KONAMI_IRQSTATUS_NONE);
-		konamiRun(0);
 	} else {
 		konami_set_irq_line(line, state);
 	}
@@ -180,9 +182,13 @@ static cpu_core_config konamiCheatCpuConfig =
 	0
 };
 
-void konamiInit(INT32 /*num*/) // only 1 cpu (No examples exist of multi-cpu konami games)
+void konamiInit(INT32 nCpu) // only 1 cpu (No examples exist of multi-cpu konami games)
 {
 	DebugCPU_KonamiInitted = 1;
+
+#if defined FBA_DEBUG
+	if (nCpu >= MAX_CPU) bprintf(PRINT_ERROR, _T("konamiInit nCpu is more than MAX_CPU (%d), MAX IS %d\n"), nCpu, MAX_CPU);
+#endif
 
 	nKonamiCpuCount = 1;
 	konami_init(konamiDummyIrqCallback);
@@ -203,8 +209,8 @@ void konamiExit()
 #endif
 
 	nKonamiCpuCount = 0;
-	konamiWriteFunction = NULL;
-	konamiReadFunction = NULL;
+	pkonamiWrite = NULL;
+	pkonamiRead = NULL;
 	
 	DebugCPU_KonamiInitted = 0;
 }

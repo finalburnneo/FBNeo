@@ -593,8 +593,8 @@ static INT32 DrvInit()
 	SekClose();
 
 	pic16c5xInit(0, 0x16C55, DrvPicROM);
-	pPic16c5xReadPort = drgnmst_sound_readport;
-	pPic16c5xWritePort = drgnmst_sound_writeport;
+	pic16c5xSetReadPortHandler(drgnmst_sound_readport);
+	pic16c5xSetWritePortHandler(drgnmst_sound_writeport);
 
 	MSM6295Init(0, 1000000 / 132, 0);
 	MSM6295Init(1, 1000000 / 132, 0);
@@ -971,7 +971,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
-		pic16c5xScan(nAction, 0);
+		pic16c5xScan(nAction);
 
 		MSM6295Scan(0, nAction);
 		MSM6295Scan(1, nAction);

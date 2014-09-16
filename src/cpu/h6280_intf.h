@@ -8,8 +8,8 @@ UINT8 h6280Fetch(UINT32 address);
 #define H6280_WRITE		2
 #define H6280_FETCH		4
 
-#define H6280_ROM			(H6280_READ | H6280_FETCH)
-#define H6280_RAM			(H6280_READ | H6280_FETCH | H6280_WRITE)
+#define H6280_ROM		(H6280_READ | H6280_FETCH)
+#define H6280_RAM		(H6280_READ | H6280_FETCH | H6280_WRITE)
 
 void h6280MapMemory(UINT8 *src, UINT32 start, UINT32 finish, INT32 type);
 
@@ -20,7 +20,7 @@ void h6280SetWritePortHandler(void (*write)(UINT8, UINT8));
 void h6280SetWriteHandler(void (*write)(UINT32, UINT8));
 void h6280SetReadHandler(UINT8 (*read)(UINT32));
 
-void h6280Init(INT32);
+void h6280Init(INT32 nCPU);
 void h6280Open(INT32);
 void h6280Reset();
 INT32 h6280Run(INT32 cycles);
@@ -44,7 +44,6 @@ void h6280NewFrame();
 void h6280RunEnd();
 
 INT32 h6280GetActive();
-
 
 UINT8 h6280_irq_status_r(UINT32 offset);
 void h6280_irq_status_w(UINT32 offset, UINT8 data);

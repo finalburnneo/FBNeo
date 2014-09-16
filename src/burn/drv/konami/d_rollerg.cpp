@@ -385,7 +385,7 @@ static INT32 DrvInit()
 		K053245GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x200000);
 	}
 
-	konamiInit(1);
+	konamiInit(0);
 	konamiOpen(0);
 	konamiMapMemory(DrvPalRAM,	    0x1800, 0x1fff, KON_RAM);
 	konamiMapMemory(DrvKonRAM,          0x2000, 0x3aff, KON_RAM);

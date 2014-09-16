@@ -13,7 +13,7 @@ void Arm7BurnCycles(INT32 cycles);
 INT32 Arm7TotalCycles();
 void Arm7NewFrame();
 
-void Arm7Init(INT32);
+void Arm7Init(INT32 nCPU);
 void Arm7Reset();
 INT32 Arm7Run(INT32 cycles);
 void Arm7Exit();

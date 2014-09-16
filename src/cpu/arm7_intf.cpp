@@ -385,7 +385,7 @@ static cpu_core_config Arm7CheatCpuConfig =
 	0
 };
 
-void Arm7Init( INT32 num ) // only one cpu supported
+void Arm7Init( INT32 nCPU ) // only one cpu supported
 {
 	DebugCPU_ARM7Initted = 1;
 	
@@ -393,5 +393,5 @@ void Arm7Init( INT32 num ) // only one cpu supported
 		membase[i] = (UINT8**)malloc(PAGE_COUNT * sizeof(UINT8*));
 	}
 
-	CpuCheatRegister(num, &Arm7CheatCpuConfig);
+	CpuCheatRegister(nCPU, &Arm7CheatCpuConfig);
 }

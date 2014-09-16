@@ -1497,6 +1497,7 @@ static void DrvCreateAlphaTable(INT32 raiden2_alpha)
 		memset (DrvAlphaTable + 0x3c0, 1, 0x30);
 		memset (DrvAlphaTable + 0x4f8, 1, 0x08);
 		memset (DrvAlphaTable + 0x5c8, 1, 0x08);
+		memset (DrvAlphaTable + 0x5e8, 1, 0x08);
 		memset (DrvAlphaTable + 0x5f8, 1, 0x08);
 
 		memset (DrvAlphaTable + 0x6c8, 1, 0x08);

@@ -251,7 +251,7 @@ static void common_map(INT32 ram, INT32 sfx, INT32 mus)
 	map_offsets[1] = sfx; // oki #0 (sfx)
 	map_offsets[2] = mus; // oki #1 (music)
 
-	ArmInit(1);
+	ArmInit(0);
 	ArmOpen(0);	
 	ArmMapMemory(DrvArmROM,		0x000000, 0x07ffff, ARM_ROM);
 	ArmMapMemory(DrvSysRAM,		0x201000, 0x201fff, ARM_RAM); // 32-bit

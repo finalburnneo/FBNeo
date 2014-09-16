@@ -351,7 +351,7 @@ static INT32 DrvInit(UINT32 speedhack)
 		decode_samples();
 	}
 
-	ArmInit(1);
+	ArmInit(0);
 	ArmOpen(0);
 	ArmMapMemory(DrvArmROM,		0x000000, 0x0fffff, ARM_ROM);
 	ArmMapMemory(DrvPalRAM,		0x160000, 0x161fff, ARM_RAM);

@@ -18,7 +18,7 @@ void ArmSetWriteLongHandler(void (*write)(UINT32, UINT32));
 void ArmSetReadByteHandler(UINT8 (*read)(UINT32));
 void ArmSetReadLongHandler(UINT32 (*read)(UINT32));
 
-void ArmInit(INT32);
+void ArmInit(INT32 nCPU);
 void ArmOpen(INT32);
 void ArmReset();
 INT32 ArmRun(INT32 cycles);

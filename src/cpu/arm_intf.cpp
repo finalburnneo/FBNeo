@@ -294,7 +294,7 @@ static cpu_core_config ArmCheatCpuConfig =
 	0
 };
 
-void ArmInit(INT32 /*num*/) // only one cpu supported
+void ArmInit(INT32 /*CPU*/) // only one cpu supported
 {
 	DebugCPU_ARMInitted = 1;
 	

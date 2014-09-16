@@ -548,16 +548,16 @@ static void sprite_prot_src_write(UINT16 data)
 	sprite_prot_src_addr[1] = data;
 	UINT32 src = (sprite_prot_src_addr[0]<<4)+sprite_prot_src_addr[1];
 
-	int x = ((VezReadLong(src+0x08) >> 16) - (sprite_prot_x)) & 0xffff;
-	int y = ((VezReadLong(src+0x04) >> 16) - (sprite_prot_y)) & 0xffff;
+	int x = INT16((VezReadLong(src+0x08) >> 16) - (sprite_prot_x));
+	int y = INT16((VezReadLong(src+0x04) >> 16) - (sprite_prot_y));
 
 	UINT16 head1 = VezReadWord(src+cop_spr_off);
 	UINT16 head2 = VezReadWord(src+cop_spr_off+2);
 
-	int w = (((head1 >> 8 ) & 7) + 1) << 3;
-	int h = (((head1 >> 12) & 7) + 1) << 3;
+	int w = (((head1 >> 8 ) & 7) + 1) << 4;
+	int h = (((head1 >> 12) & 7) + 1) << 4;
 
-	UINT16 flag = x-w > -w && x-w < cop_spr_maxx+w && y-h > -h && y-h < 240+h ? 1 : 0;
+	UINT16 flag = x-w/2 > -w && x-w/2 < cop_spr_maxx+w && y-h/2 > -h && y-h/2 < 256+h ? 1 : 0;
 	
 	flag = (VezReadWord(src) & 0xfffe) | flag;
 	VezWriteWord(src, flag);
@@ -566,8 +566,8 @@ static void sprite_prot_src_write(UINT16 data)
 	{
 		VezWriteWord(dst1,   head1);
 		VezWriteWord(dst1+2, head2);
-		VezWriteWord(dst1+4, x-w);
-		VezWriteWord(dst1+6, y-h);
+		VezWriteWord(dst1+4, x-w/2);
+		VezWriteWord(dst1+6, y-h/2);
 
 		dst1 += 8;
 	}

@@ -3153,6 +3153,43 @@ static struct BurnRomInfo Mmancp2uRomDesc[] = {
 STD_ROM_PICK(Mmancp2u)
 STD_ROM_FN(Mmancp2u)
 
+static struct BurnRomInfo Mmancp2ur1RomDesc[] = {
+	{ "rcmu.03a",      0x080000, 0xc6b75320, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "rcmu.04a",      0x080000, 0x47880111, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "rcmu.05a",      0x080000, 0x4376ea95, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "rcm.73",        0x080000, 0x774c6e04, CPS2_GFX | BRF_GRA },
+	{ "rcm.63",        0x080000, 0xacad7c62, CPS2_GFX | BRF_GRA },
+	{ "rcm.83",        0x080000, 0x6af30499, CPS2_GFX | BRF_GRA },
+	{ "rcm.93",        0x080000, 0x7a5a5166, CPS2_GFX | BRF_GRA },
+	{ "rcm.74",        0x080000, 0x004ec725, CPS2_GFX | BRF_GRA },
+	{ "rcm.64",        0x080000, 0x65c0464e, CPS2_GFX | BRF_GRA },
+	{ "rcm.84",        0x080000, 0xfb3097cc, CPS2_GFX | BRF_GRA },
+	{ "rcm.94",        0x080000, 0x2e16557a, CPS2_GFX | BRF_GRA },
+	{ "rcm.75",        0x080000, 0x70a73f99, CPS2_GFX | BRF_GRA },
+	{ "rcm.65",        0x080000, 0xecedad3d, CPS2_GFX | BRF_GRA },
+	{ "rcm.85",        0x080000, 0x3d6186d8, CPS2_GFX | BRF_GRA },
+	{ "rcm.95",        0x080000, 0x8c7700f1, CPS2_GFX | BRF_GRA },
+	{ "rcm.76",        0x080000, 0x89a889ad, CPS2_GFX | BRF_GRA },
+	{ "rcm.66",        0x080000, 0x1300eb7b, CPS2_GFX | BRF_GRA },
+	{ "rcm.86",        0x080000, 0x6d974ebd, CPS2_GFX | BRF_GRA },
+	{ "rcm.96",        0x080000, 0x7da4cd24, CPS2_GFX | BRF_GRA },
+
+	{ "rcm.01",        0x020000, 0xd60cf8a3, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "rcm.51",        0x080000, 0xb6d07080, CPS2_QSND | BRF_SND },
+	{ "rcm.52",        0x080000, 0xdfddc493, CPS2_QSND | BRF_SND },
+	{ "rcm.53",        0x080000, 0x6062ae3a, CPS2_QSND | BRF_SND },
+	{ "rcm.54",        0x080000, 0x08c6f3bf, CPS2_QSND | BRF_SND },
+	{ "rcm.55",        0x080000, 0xf97dfccc, CPS2_QSND | BRF_SND },
+	{ "rcm.56",        0x080000, 0xade475bc, CPS2_QSND | BRF_SND },
+	{ "rcm.57",        0x080000, 0x075effb3, CPS2_QSND | BRF_SND },
+	{ "rcm.58",        0x080000, 0xf6c1f87b, CPS2_QSND | BRF_SND },
+};
+
+STD_ROM_PICK(Mmancp2ur1)
+STD_ROM_FN(Mmancp2ur1)
+
 static struct BurnRomInfo Rmancp2jRomDesc[] = {
 	{ "rcmj.03a",      0x080000, 0x30559f60, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "rcmj.04a",      0x080000, 0x5efc9366, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -8382,11 +8419,21 @@ struct BurnDriver BurnDrvCpsRockman2j = {
 };
 
 struct BurnDriver BurnDrvCpsMmancp2u = {
-	"mmancp2u", "megaman", NULL, NULL, "1999",
+	"mmancp2u", "megaman", NULL, NULL, "1995",
 	"Mega Man - The Power Battle (951006 USA, SAMPLE Version)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
 	NULL, Mmancp2uRomInfo, Mmancp2uRomName, NULL, NULL, Mmancp2uInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsMmancp2ur1 = {
+	"mmancp2ur1", "megaman", NULL, NULL, "1995",
+	"Mega Man - The Power Battle (950926 USA, SAMPLE Version)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
+	NULL, Mmancp2ur1RomInfo, Mmancp2ur1RomName, NULL, NULL, Mmancp2uInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

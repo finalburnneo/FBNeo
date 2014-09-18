@@ -110,6 +110,10 @@ INT32 GameInpCustomRead(TCHAR* szVal, bool bOverWrite);
 extern INT32 nPlayerDefaultControls[4];
 extern TCHAR szPlayerDefaultIni[4][MAX_PATH];
 
+// mappable System Macros for the Input Dialogue
+extern UINT8 macroSystemPause;
+extern UINT8 macroSystemFFWD;
+
 // cong.cpp
 extern const INT32 nConfigMinVersion;					// Minimum version of application for which input files are valid
 extern bool bSaveInputs;

@@ -18,6 +18,10 @@ INT32 nFireButtons = 0;
 bool bStreetFighterLayout = false;
 bool bLeftAltkeyMapped = false;
 
+// These are mappable global macros for mapping Pause/FFWD etc to controls in the input mapping dialogue. -dink
+UINT8 macroSystemPause = 0;
+UINT8 macroSystemFFWD = 0;
+
 // ---------------------------------------------------------------------------
 
 // Check if the left alt (menu) key is mapped
@@ -241,6 +245,30 @@ static void GameInpInitMacros()
 	}
 
 	pgi = GameInp + nGameInpCount;
+
+	{
+        // Mappable system macros -dink
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			pgi->Macro.nSysMacro = 1;
+			sprintf(pgi->Macro.szName, "System Pause");
+			pgi->Macro.pVal[0] = &macroSystemPause;
+			pgi->Macro.nVal[0] = 1;
+			nMacroCount++;
+			pgi++;
+
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			pgi->Macro.nSysMacro = 1;
+			sprintf(pgi->Macro.szName, "System FFWD");
+			pgi->Macro.pVal[0] = &macroSystemFFWD;
+			pgi->Macro.nVal[0] = 1;
+			nMacroCount++;
+			pgi++;
+
+	}
 
 	for (INT32 nPlayer = 0; nPlayer < nMaxPlayers; nPlayer++) {
 		if (nPunchx3[nPlayer] == 7) {		// Create a 3x punch macro

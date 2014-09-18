@@ -326,12 +326,23 @@ INT32 InputMake(bool bCopy)
 	}
 
 	for (i = 0; i < nMacroCount; i++, pgi++) {
-		if (pgi->Macro.nMode) {						// Macro is defined
+		if (pgi->Macro.nMode == 1) {						// Macro is defined
 			if (bCopy && CinpState(pgi->Macro.Switch.nCode)) {
 				for (INT32 j = 0; j < 4; j++) {
 					if (pgi->Macro.pVal[j]) {
 						*(pgi->Macro.pVal[j]) = pgi->Macro.nVal[j];
 					}
+				}
+			}
+		}
+		if (pgi->Macro.nSysMacro) { // System-Macro is defined -dink
+			if (CinpState(pgi->Macro.Switch.nCode)) {
+				if (pgi->Macro.pVal[0]) {
+					*(pgi->Macro.pVal[0]) = pgi->Macro.nVal[0];
+				}
+			} else { //disable when key up
+				if (pgi->Macro.pVal[0]) {
+					*(pgi->Macro.pVal[0]) = 0;
 				}
 			}
 		}

@@ -63,6 +63,7 @@ struct giMacro {
 	struct giSwitch Switch;
 
 	char szName[33];					// Maximum name length 16 chars
+	UINT8 nSysMacro;			// mappable system macro -dink
 };
 
 #define GIT_CONSTANT		(0x01)

@@ -305,15 +305,21 @@ void konami_draw_16x16_prio_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 
 
 	priority |= 1 << 31; // always on!
 
-	for (INT32 y = 0; y < 16; y++, sy++) {
-		for (INT32 x = 0; x < 16; x++) {
-			if ((sx+x) >=0 && (sx+x) < nScreenWidth && sy >= 0 && sy < nScreenHeight) {
-				INT32 pxl = gfx[((y*16)+x)^flip];
+	for (INT32 y = 0; y < 16; y++, sy++)
+	{
+		if (sy >= 0 && sy < nScreenHeight)
+		{
+			for (INT32 x = 0; x < 16; x++)
+			{
+				if ((sx+x) >=0 && (sx+x) < nScreenWidth)
+				{
+					INT32 pxl = gfx[((y*16)+x)^flip];
 
-				if (pxl) {
-					if ((priority & (1 << (pri[x] & 0x1f)))==0) {
-						dst[x] = pal[pxl];
-						pri[x] = 0x1f;
+					if (pxl) {
+						if ((priority & (1 << (pri[x] & 0x1f)))==0) {
+							dst[x] = pal[pxl];
+							pri[x] = 0x1f;
+						}
 					}
 				}
 			}
@@ -335,13 +341,19 @@ void konami_draw_16x16_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 sx, I
 	UINT32 *pal = konami_palette32 + color;
 	UINT32 *dst = konami_temp_screen + (sy * nScreenWidth) + sx;
 
-	for (INT32 y = 0; y < 16; y++) {
-		for (INT32 x = 0; x < 16; x++) {
-			if ((sx+x)>=0 && (sx+x)<nScreenWidth && (sy+y)>=0 && (sy+y)<nScreenHeight) {
-				INT32 pxl = gfx[((y*16)+x)^flip];
+	for (INT32 y = 0; y < 16; y++, sy++)
+	{
+		if (sy >= 0 && sy < nScreenHeight)
+		{
+			for (INT32 x = 0; x < 16; x++)
+			{
+				if ((sx+x) >=0 && (sx+x) < nScreenWidth)
+				{
+					INT32 pxl = gfx[((y*16)+x)^flip];
 
-				if (pxl) {
-					dst[x] = pal[pxl];
+					if (pxl) {
+						dst[x] = pal[pxl];
+					}
 				}
 			}
 		}
@@ -392,19 +404,24 @@ void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT
 	{
 		for (INT32 y = starty; y < endy; y++)
 		{
-			INT32 zy = ((y * hz) >> 12) * width;
-	
-			for (INT32 x = startx; x < endx; x++)
+			if (y >= 0 && y < nScreenHeight)
 			{
-				INT32 pxl = src[(zy + ((x * wz) >> 12)) ^ fy];
-	
-				if (pxl) {
-					if (pxl == 0x0f) {
-						dst[x] = shadow_blend(dst[x]);
-					} else {
-						dst[x] = pal[pxl];
-					}
-				} 
+				INT32 zy = ((y * hz) >> 12) * width;
+		
+				for (INT32 x = startx; x < endx; x++)
+				{
+					if ((sx+x) < 0 || (sx+x) >= nScreenWidth) continue;
+
+					INT32 pxl = src[(zy + ((x * wz) >> 12)) ^ fy];
+		
+					if (pxl) {
+						if (pxl == 0x0f) {
+							dst[x] = shadow_blend(dst[x]);
+						} else {
+							dst[x] = pal[pxl];
+						}
+					} 
+				}
 			}
 
 			dst += nScreenWidth;
@@ -414,31 +431,36 @@ void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT
 
 		for (INT32 y = starty; y < endy; y++)
 		{
-			INT32 zy = ((y * hz) >> 12) * width;
-	
-			for (INT32 x = startx; x < endx; x++)
-			{
-				INT32 pxl = src[(zy + ((x * wz) >> 12)) ^ fy];
-	
-				if (pxl) {
-					if (pxl == 0x0f) {
-						if ((priority & (1 << (pri[x]&0x1f)))==0 && (pri[x] & 0x80) == 0) {
-							//if (highlight) {
-							//	dst[x] = highlight_blend(dst[x]);
-							//} else {
-								dst[x] = shadow_blend(dst[x]);
-							//}
-							pri[x] |= 0x80;
+			if (y >= 0 && y < nScreenHeight)
+			{	
+				INT32 zy = ((y * hz) >> 12) * width;
+
+				for (INT32 x = startx; x < endx; x++)
+				{
+					if ((sx+x) < 0 || (sx+x) >= nScreenWidth) continue;
+
+					INT32 pxl = src[(zy + ((x * wz) >> 12)) ^ fy];
+		
+					if (pxl) {
+						if (pxl == 0x0f) {
+							if ((priority & (1 << (pri[x]&0x1f)))==0 && (pri[x] & 0x80) == 0) {
+								//if (highlight) {
+								//	dst[x] = highlight_blend(dst[x]);
+								//} else {
+									dst[x] = shadow_blend(dst[x]);
+								//}
+								pri[x] |= 0x80;
+							}
+						} else {
+							if ((priority & (1 << (pri[x]&0x1f)))==0) {
+								dst[x] = pal[pxl];
+								pri[x] = 0x1f;
+							}
 						}
-					} else {
-						if ((priority & (1 << (pri[x]&0x1f)))==0) {
-							dst[x] = pal[pxl];
-							pri[x] = 0x1f;
-						}
-					}
-				} 
+					} 
+				}
 			}
-	
+
 			pri += nScreenWidth;
 			dst += nScreenWidth;
 		}

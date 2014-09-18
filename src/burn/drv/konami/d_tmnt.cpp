@@ -3326,8 +3326,7 @@ void __fastcall Ssriders68KWriteByte(UINT32 a, UINT8 d)
 		INT32 Offset = (a - 0x5a0000) >> 1;
 		Offset &= ~1;
 		
-		K053244Write(0, Offset + 1, d & 0xff);
-		K053244Write(0, Offset + 0, 0); // originally d >> 8, but that is effectively 0
+		K053244Write(0, Offset + (a&1), d);
 		return;
 	}
 	
@@ -3695,8 +3694,7 @@ void __fastcall Lgtnfght68KWriteByte(UINT32 a, UINT8 d)
 		INT32 Offset = (a - 0xc0000) >> 1;
 		Offset &= ~1;
 		
-		K053244Write(0, Offset + 1, d & 0xff);
-		K053244Write(0, Offset + 0, 0); // originally d >> 8, but that is effectively 0
+		K053244Write(0, Offset + (a&1), d);
 		return;
 	}
 
@@ -4759,7 +4757,7 @@ static INT32 SsridersInit()
 	K052109AdjustScroll(8, 0);
 
 	K053245Init(0, DrvSpriteRom, DrvSprites, 0x1fffff, K053245LgtnfghtCallback);
-	K053245SetSpriteOffset(0, -368, 528);
+	K053245SetSpriteOffset(0, -112, 16);
 	K05324xSetZRejection(0);
 
 	// Load 68000 Program Roms
@@ -4930,7 +4928,7 @@ static INT32 LgtnfghtInit()
 	K052109AdjustScroll(8, 0);
 
 	K053245Init(0, DrvSpriteRom, DrvSprites, 0x0fffff, K053245LgtnfghtCallback);
-	K053245SetSpriteOffset(0, -368, 528);
+	K053245SetSpriteOffset(0, -112, 16);
 	K05324xSetZRejection(0);
 
 	// Load 68000 Program Roms
@@ -5015,7 +5013,7 @@ static INT32 Tmnt2Init()
 	K052109AdjustScroll(8, 0);
 
 	K053245Init(0, DrvSpriteRom, DrvSprites, 0x3fffff, K053245SsridersCallback);
-	K053245SetSpriteOffset(0, -368, 272);
+	K053245SetSpriteOffset(0, -112, 16);
 	K05324xSetZRejection(0);
 
 	// Load 68000 Program Roms
@@ -5108,7 +5106,7 @@ static INT32 QgakumonInit()
 	K052109AdjustScroll(0, 0);
 
 	K053245Init(0, DrvSpriteRom, DrvSprites, 0x3fffff, K053245SsridersCallback);
-	K053245SetSpriteOffset(0, -360, 272);
+	K053245SetSpriteOffset(0, -112, 16);
 	K05324xSetZRejection(0);
 
 	// Load 68000 Program Roms

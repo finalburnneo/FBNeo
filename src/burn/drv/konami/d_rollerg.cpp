@@ -409,7 +409,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	K053245Init(0, DrvGfxROM0, DrvGfxROMExp0, 0x1fffff, K053245Callback);
-	K053245SetSpriteOffset(0, -112, 17);
+	K053245SetSpriteOffset(0, -112, 16);
 
 	K051316Init(0, DrvGfxROM1, DrvGfxROMExp1, 0x07ffff, K051316Callback, 4, 0);
 	K051316SetOffset(0, -90, -15);

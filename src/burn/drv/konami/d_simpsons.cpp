@@ -25,7 +25,6 @@ static UINT8 *DrvPalRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvZ80RAM;
 
-static UINT32 *Palette;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
@@ -330,10 +329,10 @@ static void K052109Callback(INT32 layer, INT32 bank, INT32 *code, INT32 *color, 
 static void K053247Callback(INT32 *code, INT32 *color, INT32 *priority)
 {
 	INT32 pri = (*color & 0x0f80) >> 6;
-	if (pri <= layerpri[2])					*priority = 0;
-	else if (pri > layerpri[2] && pri <= layerpri[1])	*priority = 1;
-	else if (pri > layerpri[1] && pri <= layerpri[0])	*priority = 2;
-	else 							*priority = 3;
+	if (pri <= layerpri[2])					*priority = 0x00;
+	else if (pri > layerpri[2] && pri <= layerpri[1])	*priority = 0xf0;
+	else if (pri > layerpri[1] && pri <= layerpri[0])	*priority = 0xfc;
+	else 							*priority = 0xfe;
 
 	*color = sprite_colorbase + (*color & 0x001f);
 
@@ -390,7 +389,7 @@ static INT32 MemIndex()
 
 	DrvSndROM		= Next; Next += 0x200000;
 
-	Palette			= (UINT32*)Next; Next += 0x800 * sizeof(UINT32);
+	konami_palette32	= (UINT32*)Next;
 	DrvPalette		= (UINT32*)Next; Next += 0x800 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -440,6 +439,8 @@ static const eeprom_interface simpsons_eeprom_intf =
 
 static INT32 DrvInit()
 {
+	GenericTilesInit();
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -495,11 +496,11 @@ static INT32 DrvInit()
 
 	EEPROMInit(&simpsons_eeprom_intf);
 
-	K052109Init(DrvGfxROM0, 0x0fffff);
+	K052109Init(DrvGfxROM0, DrvGfxROMExp0, 0x0fffff);
 	K052109SetCallback(K052109Callback);
 	K052109AdjustScroll(8, 0);
 
-	K053247Init(DrvGfxROM1, 0x3fffff, K053247Callback, 0x03 /* shadows & highlights */);
+	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, K053247Callback, 0x03 /* shadows & highlights */);
 	K053247SetSpriteOffset(-59, 39);
 
 	BurnYM2151Init(3579545);
@@ -509,8 +510,6 @@ static INT32 DrvInit()
 	K053260Init(0, 3579545, DrvSndROM, 0x140000);
 	K053260SetRoute(0, BURN_SND_K053260_ROUTE_1, 0.75, BURN_SND_ROUTE_RIGHT);
 	K053260SetRoute(0, BURN_SND_K053260_ROUTE_2, 0.75, BURN_SND_ROUTE_LEFT);
-
-	GenericTilesInit();
 
 	DrvDoReset();
 
@@ -561,26 +560,6 @@ static void simpsons_objdma()
 	if (num_inactive) do { *dst = 0; dst += 8; } while (--num_inactive);
 }
 
-static void DrvRecalcPal()
-{
-	UINT8 r,g,b;
-	UINT16 *p = (UINT16*)DrvPalRAM;
-	for (INT32 i = 0; i < 0x1000 / 2; i++) {
-		UINT16 d = BURN_ENDIAN_SWAP_INT16((p[i] << 8) | (p[i] >> 8));
-
-		b = (d >> 10) & 0x1f;
-		g = (d >>  5) & 0x1f;
-		r = (d >>  0) & 0x1f;
-
-		r = (r << 3) | (r >> 2);
-		g = (g << 3) | (g >> 2);
-		b = (b << 3) | (b >> 2);
-
-		DrvPalette[i] = BurnHighCol(r, g, b, 0);
-		Palette[i] = (r << 16) | (g << 8) | b;
-	}
-}
-
 static void sortlayers(INT32 *layer,INT32 *pri)
 {
 #define SWAP(a,b) \
@@ -599,7 +578,7 @@ static void sortlayers(INT32 *layer,INT32 *pri)
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		DrvRecalcPal();
+		KonamiRecalcPal(DrvPalRAM, DrvPalette, 0x1000);
 	}
 
 	K052109UpdateScroll();
@@ -621,19 +600,19 @@ static INT32 DrvDraw()
 
 	sortlayers(layer,layerpri);
 
+	memset (konami_priority_bitmap, 0, nScreenWidth * nScreenHeight * 2);
+
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 16 * bg_colorbase;
+		konami_temp_screen[i] = DrvPalette[16 * bg_colorbase];
 	}
 
-	if (nSpriteEnable & 8) K053247SpritesRender(DrvGfxROMExp1, 3);		// title (simpsons behind clouds)
-	if (nBurnLayer & 1)    K052109RenderLayer(layer[0], 0, DrvGfxROMExp0);	// title (back-most cloud)
-	if (nSpriteEnable & 4) K053247SpritesRender(DrvGfxROMExp1, 2);		// smithers' on first stage
-	if (nBurnLayer & 2)    K052109RenderLayer(layer[1], 0, DrvGfxROMExp0);	// main layer (buildings, stage 1)
-	if (nSpriteEnable & 2) K053247SpritesRender(DrvGfxROMExp1, 1);		// smithers' thugs on stage 1
-	if (nBurnLayer & 4)    K052109RenderLayer(layer[2], 0, DrvGfxROMExp0);	// game over text
-	if (nSpriteEnable & 1) K053247SpritesRender(DrvGfxROMExp1, 0);		// not used? seems to make sense here...
+	if (nBurnLayer & 1) K052109RenderLayer(layer[0], 0, 1);
+	if (nBurnLayer & 2) K052109RenderLayer(layer[1], 0, 2);
+	if (nBurnLayer & 4) K052109RenderLayer(layer[2], 0, 4);
 
-	KonamiBlendCopy(Palette, DrvPalette);
+	if (nSpriteEnable & 1) K053247SpritesRender();
+
+	KonamiBlendCopy(DrvPalette);
 
 	return 0;
 }

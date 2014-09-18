@@ -11,8 +11,10 @@ static UINT16 K053247Regs[16];
 
 static UINT8 *K053246Gfx;
 static UINT32   K053246Mask;
+static UINT8 *K053246GfxExp;
+static UINT32   K053246MaskExp;
 
-static UINT16 *K053247Temp = NULL;
+static UINT32 *K053247Temp = NULL;
 
 static INT32 K053247_dx;
 static INT32 K053247_dy;
@@ -57,12 +59,15 @@ void K053247Scan(INT32 nAction)
 	}
 }
 
-void K053247Init(UINT8 *gfxrom, INT32 gfxlen, void (*Callback)(INT32 *code, INT32 *color, INT32 *priority), INT32 flags)
+void K053247Init(UINT8 *gfxrom, UINT8 *gfxromexp, INT32 gfxlen, void (*Callback)(INT32 *code, INT32 *color, INT32 *priority), INT32 flags)
 {
 	K053247Ram = (UINT8*)BurnMalloc(0x1000);
 
 	K053246Gfx = gfxrom;
 	K053246Mask = gfxlen;
+
+	K053246GfxExp = gfxromexp;
+	K053246MaskExp = (gfxlen * 2) / (16 * 16);
 
 	K053247Callback = Callback;
 
@@ -70,11 +75,7 @@ void K053247Init(UINT8 *gfxrom, INT32 gfxlen, void (*Callback)(INT32 *code, INT3
 	K053247_dy = 0;
 	K053247_wraparound = 1;
 
-	if (konami_temp_screen == NULL) {
-		INT32 width, height;
-		BurnDrvGetVisibleSize(&width, &height);
-		konami_temp_screen = (UINT16*)BurnMalloc(width * height * 2);
-	}
+	konami_allocate_bitmaps();
 
 	K053247Temp = konami_temp_screen;
 
@@ -85,7 +86,7 @@ void K053247Init(UINT8 *gfxrom, INT32 gfxlen, void (*Callback)(INT32 *code, INT3
 
 void K053247Exit()
 {
-	K053247Temp = NULL;
+//	K053247Temp = NULL;
 
 	BurnFree (K053247Ram);
 
@@ -176,57 +177,10 @@ INT32 K053246_is_IRQ_enabled()
 	return K053246Regs[5] & 0x10;
 }
 
-static void RenderZoomedShadowTile(UINT8 *gfx, INT32 code, INT32 color, UINT8 *t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, INT32 highlight)
-{
-	INT32 h = ((zoomy << 4) + 0x8000) >> 16;
-	INT32 w = ((zoomx << 4) + 0x8000) >> 16;
-
-	if (!h || !w || sx + w < 0 || sy + h < 0 || sx >= nScreenWidth || sy >= nScreenHeight) return;
-
-	if (fy) fy  = (height-1)*width;
-	if (fx) fy |= (width-1);
-
-	INT32 hz = (height << 12) / h;
-	INT32 wz = (width << 12) / w;
-
-	INT32 starty = 0, startx = 0, endy = h, endx = w;
-	if (sy < 0) starty = 0 - sy;
-	if (sx < 0) startx = 0 - sx;
-	if (sy + h >= nScreenHeight) endy -= (h + sy) - nScreenHeight;
-	if (sx + w >= nScreenWidth ) endx -= (w + sx) - nScreenWidth;
-
-	UINT8  *src = gfx + (code * width * height);
-	UINT16 *dst = K053247Temp + (sy + starty) * nScreenWidth + sx;
-	UINT16 *pTemp = pTransDraw + (sy + starty) * nScreenWidth + sx;
-
-	INT32 or1 = 0x8000 >> highlight;
-
-	for (INT32 y = starty; y < endy; y++)
-	{
-		INT32 zy = ((y * hz) >> 12) * width;
-
-		for (INT32 x = startx; x < endx; x++)
-		{
-			INT32 pxl = src[(zy + ((x * wz) >> 12)) ^ fy];
-
-			if (pxl) {
-				if (t[pxl] == 2) {
-					dst[x] = color | pxl;
-					pTemp[x] |= or1;
-				} else {
-					pTemp[x] = color | pxl;
-				}
-			}
-		}
-
-		dst += nScreenWidth;
-		pTemp += nScreenWidth;
-	}
-}
-
-void K053247SpritesRender(UINT8 *gfxbase, INT32 priority)
+void K053247SpritesRender()
 {
 #define NUM_SPRITES 256
+
 
 	UINT8 dtable[256];
 	UINT8 stable[256];
@@ -251,6 +205,8 @@ void K053247SpritesRender(UINT8 *gfxbase, INT32 priority)
 	INT32 offy = (INT16)((K053246Regs[2] << 8) | K053246Regs[3]);
 
 	UINT16 *SprRam = (UINT16*)K053247Ram;
+
+	UINT8 *gfxbase = K053246GfxExp;
 
 	INT32 screen_width = nScreenWidth-1;
 
@@ -314,7 +270,7 @@ void K053247SpritesRender(UINT8 *gfxbase, INT32 priority)
 		}
 	}
 
-	for (INT32 i = 0; i <= count; i++)
+	for (INT32 i = count; i >= 0; i--)
 	{
 		offs = sortedlist[i];
 
@@ -323,8 +279,6 @@ void K053247SpritesRender(UINT8 *gfxbase, INT32 priority)
 		primask = 0;
 
 		(*K053247Callback)(&code,&color,&primask);
-
-		if (primask != priority) continue;	//--------------------------------------- fix me!
 
 		temp = BURN_ENDIAN_SWAP_INT16(SprRam[offs]);
 
@@ -384,12 +338,14 @@ void K053247SpritesRender(UINT8 *gfxbase, INT32 priority)
 		INT32 highlight = 0;
 
 		wtable = dtable;
+
 		if (color == -1)
 		{
 			// drop the entire sprite to shadow unconditionally
 			if (shdmask < 0) continue;
 			color = 0;
 			shadow = -1;
+
 			wtable = stable;
 		}
 		else
@@ -397,6 +353,7 @@ void K053247SpritesRender(UINT8 *gfxbase, INT32 priority)
 			if (shdmask >= 0)
 			{
 				shadow = (color & 0x20000000) ? (color >> 20) : (shadow >> 10);
+
 				if (shadow &= 3) {
 					if (((shadow-1) & shdmask) == 1) highlight = 1;
 				}
@@ -501,60 +458,30 @@ void K053247SpritesRender(UINT8 *gfxbase, INT32 priority)
 					fy = flipy;
 				}
 
+				c &= K053246MaskExp;
+
 				if (shadow || wtable == stable) {
 					if (mirrory && h == 1)
-						RenderZoomedShadowTile(gfxbase, c, color << 4, wtable, sx, sy, flipx, !flipy, 16, 16, zw << 12, zh << 12, highlight);
+						konami_render_zoom_shadow_tile(gfxbase, c, color * 16, sx, sy, flipx, !flipy, 16, 16, zw << 12, zh << 12, primask, highlight);
 
-					RenderZoomedShadowTile(gfxbase, c, color << 4, wtable, sx, sy, flipx,  flipy, 16, 16, zw << 12, zh << 12, highlight);
+					konami_render_zoom_shadow_tile(gfxbase, c, color * 16, sx, sy, flipx, flipy, 16, 16, zw << 12, zh << 12, primask, highlight);
 					continue;
 				}
 
 				if (mirrory && h == 1)
 				{
-					if (nozoom)
-					{
-						if (!flipy) {
-							if (flipx) {
-								Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, c, sx, sy, color, 4, 0, 0, gfxbase);
-							} else {
-								Render16x16Tile_Mask_FlipY_Clip(pTransDraw, c, sx, sy, color, 4, 0, 0, gfxbase);
-							}
-						} else {
-							if (flipx) {
-								Render16x16Tile_Mask_FlipX_Clip(pTransDraw, c, sx, sy, color, 4, 0, 0, gfxbase);
-							} else {
-								Render16x16Tile_Mask_Clip(pTransDraw, c, sx, sy, color, 4, 0, 0, gfxbase);
-							}
-						}
-					}
-					else
-					{
-						RenderZoomedTile(pTransDraw, gfxbase, c, color << 4, 0, sx, sy, fx, !fy, 16, 16, (zw << 16) >> 4, (zh << 16) >> 4);
-					}
-				}
-
-				if (nozoom)
-				{
-					if (flipy) {
-						if (flipx) {
-							Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, c, sx, sy, color, 4, 0, 0, gfxbase);
-						} else {
-							Render16x16Tile_Mask_FlipY_Clip(pTransDraw, c, sx, sy, color, 4, 0, 0, gfxbase);
-						}
+					if (nozoom) {
+						konami_draw_16x16_prio_tile(gfxbase, c, color * 16, sx, sy, flipx, !flipy, primask);
 					} else {
-						if (flipx) {
-							Render16x16Tile_Mask_FlipX_Clip(pTransDraw, c, sx, sy, color, 4, 0, 0, gfxbase);
-						} else {
-							Render16x16Tile_Mask_Clip(pTransDraw, c, sx, sy, color, 4, 0, 0, gfxbase);
-						}
+						konami_draw_16x16_priozoom_tile(gfxbase, c, color * 16, 0, sx, sy, fx, !fy, 16, 16, zw<<12, zh<<12, primask);
 					}
 				}
-				else
-				{
-					RenderZoomedTile(pTransDraw, gfxbase, c, color << 4, 0, sx, sy, fx, fy, 16, 16, (zw << 16) >> 4, (zh << 16) >> 4);
+
+				if (nozoom) {
+					konami_draw_16x16_prio_tile(gfxbase, c, color * 16, sx, sy, flipx, flipy, primask);
+				} else {
+					konami_draw_16x16_priozoom_tile(gfxbase, c, color * 16, 0, sx, sy, fx, fy, 16, 16, zw<<12, zh<<12, primask);
 				}
-
-
 			} // end of X loop
 		} // end of Y loop
 

@@ -49,6 +49,8 @@ void K053936Init(INT32 chip, UINT8 *ram, INT32 len, INT32 w, INT32 h, void (*pCa
 		pTileCallback1 = pCallback;
 	}
 
+	konami_allocate_bitmaps();
+
 	KonamiIC_K053936InUse = 1;
 }
 
@@ -115,7 +117,8 @@ void K053936PredrawTiles(INT32 chip, UINT8 *gfx, INT32 transparent, INT32 tcol)
 
 static inline void copy_roz(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT32 maxy, UINT32 startx, UINT32 starty, INT32 incxx, INT32 incxy, INT32 incyx, INT32 incyy, INT32 transp)
 {
-	UINT16 *dst = pTransDraw;
+	UINT32 *dst = konami_temp_screen;
+	UINT32 *pal = konami_palette32;
 	UINT16 *src = tscreen[chip];
 
 	INT32 hmask = nHeight[chip] - 1;
@@ -135,7 +138,7 @@ static inline void copy_roz(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT3
 					INT32 pxl = src[(((cy >> 16) & hmask) << 10) + ((cx >> 16) & wmask)];
 		
 					if (!(pxl & 0x8000)) {
-						*dst = pxl;
+						*dst = pal[pxl];
 					}
 				}
 			} else {
@@ -149,14 +152,14 @@ static inline void copy_roz(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT3
 					INT32 pxl = src[(yy << 10) + xx];
 
 					if (!(pxl & 0x8000)) {
-						*dst = pxl;
+						*dst = pal[pxl];
 					}
 				}
 			}
 		} else {
 			if (wrap) {
 				for (INT32 x = minx; x < maxx; x++, cx+=incxx, cy+=incxy, dst++) {
-					*dst = src[(((cy >> 16) & hmask) << 10) + ((cx >> 16) & wmask)] & 0x7fff;
+					*dst = pal[src[(((cy >> 16) & hmask) << 10) + ((cx >> 16) & wmask)] & 0x7fff];
 				}
 			} else {
 				for (INT32 x = minx; x < maxx; x++, cx+=incxx, cy+=incxy, dst++) {
@@ -165,7 +168,7 @@ static inline void copy_roz(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT3
 					INT32 xx = cx >> 16;
 					if (xx > wmask || xx < 0) continue;
 
-					*dst = src[(yy << 10) + xx] & 0x7fff;
+					*dst = pal[src[(yy << 10) + xx] & 0x7fff];
 				}
 			}
 		}

@@ -8,8 +8,12 @@ UINT32 KonamiIC_K053245InUse = 0;
 UINT32 KonamiIC_K053247InUse = 0;
 UINT32 KonamiIC_K053936InUse = 0;
 
-UINT16 *konami_temp_screen = NULL;
+UINT32 *konami_temp_screen = NULL;
 INT32 K05324xZRejection = -1;
+
+UINT32 *konami_palette32;
+
+UINT16 *konami_priority_bitmap = NULL;
 
 void K05324xSetZRejection(INT32 z)
 {
@@ -84,7 +88,7 @@ void KonamiRecalcPal(UINT8 *src, UINT32 *dst, INT32 len)
 		g = (g << 3) | (g >> 2);
 		b = (b << 3) | (b >> 2);
 
-		dst[i] = BurnHighCol(r, g, b, 0);
+		dst[i] = (r << 16) | (g << 8) | b; // 32-bit colors
 	}
 }
 
@@ -105,7 +109,15 @@ void KonamiICReset()
 
 void KonamiICExit()
 {
-	BurnFree (konami_temp_screen);
+	if (konami_temp_screen) {
+		BurnFree (konami_temp_screen);
+		konami_temp_screen = NULL;
+	}
+
+	if (konami_priority_bitmap) {
+		BurnFree(konami_priority_bitmap);
+		konami_priority_bitmap = NULL;
+	}
 
 	if (KonamiIC_K051960InUse) K051960Exit();
 	if (KonamiIC_K052109InUse) K052109Exit();
@@ -137,40 +149,299 @@ void KonamiICScan(INT32 nAction)
 	K051733Scan(nAction);
 }
 
-/*
-	Transfer and blend pixels
 
-	* highlights are right? where is this used?
-	* also, has a limitation of 0x4000 colors, some games may need more.
-*/
-void KonamiBlendCopy(UINT32 *palette /* 32-bit color */, UINT32 *drvpalette /* n-bit color */)
+void konami_allocate_bitmaps()
 {
-	UINT8 *dst = pBurnDraw;
+	INT32 width, height;
+	BurnDrvGetVisibleSize(&width, &height);
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++)
-	{
-		if (pTransDraw[i] >= 0x4000)		// shadow & highlight
-		{
-			UINT32 source = palette[pTransDraw[i] & 0x3fff];
-			UINT32 blend = palette[konami_temp_screen[i] & 0x3fff];
+	if (konami_temp_screen == NULL) {
+		konami_temp_screen = (UINT32*)BurnMalloc(width * height * sizeof(INT32));
+	}
 
-			INT32 a = 0x99; // shadow (255 * 0.60)
-			if (pTransDraw[i] & 0x4000) a = 0xa9; // highlight (255 * (1 / 0.60)) & 0xff; (0x1a9 otherwise) right?
-
-			INT32 ad = 256 - a;
-
-			// ripped from MAME...
-			UINT32 p = ((((source & 0x0000ff) * a + (blend & 0x0000ff) * ad) >> 8)) |
-		  			 ((((source & 0x00ff00) * a + (blend & 0x00ff00) * ad) >> 8) & 0x00ff00) |
-		  			 ((((source & 0xff0000) * a + (blend & 0xff0000) * ad) >> 8) & 0xff0000);
-
-			PutPix(dst, BurnHighCol(p >> 16, p >> 8, p, 0));
-		}
-		else		// normal
-		{
-			PutPix(dst, drvpalette[pTransDraw[i]]);
-		}
-
-		dst += nBurnBpp;
+	if (konami_priority_bitmap == NULL) {
+		konami_priority_bitmap = (UINT16*)BurnMalloc(width * height * sizeof(INT16));
 	}
 }
+
+
+void KonamiBlendCopy(UINT32 *pPalette)
+{
+	pBurnDrvPalette = pPalette;
+
+	UINT32 *bmp = konami_temp_screen;
+
+	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
+		PutPix(pBurnDraw + (i * nBurnBpp), BurnHighCol(bmp[i]>>16, (bmp[i]>>8)&0xff, bmp[i]&0xff, 0));
+	}
+}
+
+void konami_draw_16x16_priozoom_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority)
+{
+	// Based on MAME sources for tile zooming
+	UINT8 *gfx_base = gfx + (code * width * height);
+	int dh = (zoomy * height + 0x8000) / 0x10000;
+	int dw = (zoomx * width + 0x8000) / 0x10000;
+
+	priority |= 1<<31; // always on!
+
+	UINT32 *pal = konami_palette32 + color;
+
+	if (dw && dh)
+	{
+		int dx = (width * 0x10000) / dw;
+		int dy = (height * 0x10000) / dh;
+		int ex = sx + dw;
+		int ey = sy + dh;
+		int x_index_base = 0;
+		int y_index = 0;
+
+		if (fx) {
+			x_index_base = (dw - 1) * dx;
+			dx = -dx;
+		}
+
+		if (fy) {
+			y_index = (dh - 1) * dy;
+			dy = -dy;
+		}
+
+		for (INT32 y = sy; y < ey; y++)
+		{
+			UINT8 *src = gfx_base + (y_index / 0x10000) * width;
+			UINT32 *dst = konami_temp_screen + y * nScreenWidth;
+			UINT16 *prio = konami_priority_bitmap + y * nScreenWidth;
+
+			if (y >= 0 && y < nScreenHeight) 
+			{
+				for (INT32 x = sx, x_index = x_index_base; x < ex; x++)
+				{
+					if ((priority & (1 << (prio[x] & 0x1f)))==0) {
+
+						if (x >= 0 && x < nScreenWidth) {
+							INT32 pxl = src[x_index>>16];
+
+							if (pxl != t) {
+								dst[x] = pal[pxl];
+								prio[x] = 0x1f;
+							}
+						}
+					}
+
+					x_index += dx;
+				}
+			}
+
+			y_index += dy;
+		}
+	}
+}
+
+void konami_draw_16x16_zoom_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy)
+{
+	// Based on MAME sources for tile zooming
+	UINT8 *gfx_base = gfxbase + (code * width * height);
+	int dh = (zoomy * height + 0x8000) / 0x10000;
+	int dw = (zoomx * width + 0x8000) / 0x10000;
+
+	UINT32 *pal = konami_palette32 + color;
+
+	if (dw && dh)
+	{
+		int dx = (width * 0x10000) / dw;
+		int dy = (height * 0x10000) / dh;
+		int ex = sx + dw;
+		int ey = sy + dh;
+		int x_index_base = 0;
+		int y_index = 0;
+
+		if (fx) {
+			x_index_base = (dw - 1) * dx;
+			dx = -dx;
+		}
+
+		if (fy) {
+			y_index = (dh - 1) * dy;
+			dy = -dy;
+		}
+
+		for (INT32 y = sy; y < ey; y++)
+		{
+			UINT8 *src = gfx_base + (y_index / 0x10000) * width;
+			UINT32 *dst = konami_temp_screen + y * nScreenWidth;
+
+			if (y >= 0 && y < nScreenHeight) 
+			{
+				for (INT32 x = sx, x_index = x_index_base; x < ex; x++)
+				{
+					if (x >= 0 && x < nScreenWidth) {
+						INT32 pxl = src[x_index>>16];
+
+						if (pxl != t) {
+							dst[x] = pal[pxl];
+						}
+					}
+
+					x_index += dx;
+				}
+			}
+
+			y_index += dy;
+		}
+	}
+}
+
+void konami_draw_16x16_prio_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT32 priority)
+{
+	INT32 flip = 0;
+	if (flipx) flip |= 0x0f;
+	if (flipy) flip |= 0xf0;
+
+	UINT8 *gfx = gfxbase + code * 0x100;
+
+	UINT16 *pri = konami_priority_bitmap + (sy * nScreenWidth) + sx;
+	UINT32 *dst = konami_temp_screen + (sy * nScreenWidth) + sx;
+	UINT32 *pal = konami_palette32 + color;
+
+	priority |= 1 << 31; // always on!
+
+	for (INT32 y = 0; y < 16; y++, sy++) {
+		for (INT32 x = 0; x < 16; x++) {
+			if ((sx+x) >=0 && (sx+x) < nScreenWidth && sy >= 0 && sy < nScreenHeight) {
+				INT32 pxl = gfx[((y*16)+x)^flip];
+
+				if (pxl) {
+					if ((priority & (1 << (pri[x] & 0x1f)))==0) {
+						dst[x] = pal[pxl];
+						pri[x] = 0x1f;
+					}
+				}
+			}
+		}
+
+		pri += nScreenWidth;
+		dst += nScreenWidth;
+	}
+}
+
+void konami_draw_16x16_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy)
+{
+	INT32 flip = 0;
+	if (flipx) flip |= 0x0f;
+	if (flipy) flip |= 0xf0;
+
+	UINT8 *gfx = gfxbase + code * 0x100;
+
+	UINT32 *pal = konami_palette32 + color;
+	UINT32 *dst = konami_temp_screen + (sy * nScreenWidth) + sx;
+
+	for (INT32 y = 0; y < 16; y++) {
+		for (INT32 x = 0; x < 16; x++) {
+			if ((sx+x)>=0 && (sx+x)<nScreenWidth && (sy+y)>=0 && (sy+y)<nScreenHeight) {
+				INT32 pxl = gfx[((y*16)+x)^flip];
+
+				if (pxl) {
+					dst[x] = pal[pxl];
+				}
+			}
+		}
+
+		dst += nScreenWidth;
+	}
+}
+
+static inline UINT32 shadow_blend(UINT32 d)
+{
+	return ((((d & 0xff00ff) * 0x9d) & 0xff00ff00) + (((d & 0x00ff00) * 0x9d) & 0x00ff0000)) / 0x100;
+}
+
+
+/*
+// Correct?
+static inline UINT32 highlight_blend(UINT32 d)
+{
+	return (((0xA857A857 + ((d & 0xff00ff) * 0x56)) & 0xff00ff00) + ((0x00A85700 + ((d & 0x00ff00) * 0x56)) & 0x00ff0000)) / 0x100;
+}
+*/
+
+void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority, INT32 /*highlight*/)
+{
+	INT32 h = ((zoomy << 4) + 0x8000) >> 16;
+	INT32 w = ((zoomx << 4) + 0x8000) >> 16;
+
+	if (!h || !w || sx + w < 0 || sy + h < 0 || sx >= nScreenWidth || sy >= nScreenHeight) return;
+
+	if (fy) fy  = (height-1)*width;
+	if (fx) fy |= (width-1);
+
+	INT32 hz = (height << 12) / h;
+	INT32 wz = (width << 12) / w;
+
+	INT32 starty = 0, startx = 0, endy = h, endx = w;
+	if (sy < 0) starty = 0 - sy;
+	if (sx < 0) startx = 0 - sx;
+	if (sy + h >= nScreenHeight) endy -= (h + sy) - nScreenHeight;
+	if (sx + w >= nScreenWidth ) endx -= (w + sx) - nScreenWidth;
+
+	UINT8  *src = gfxbase + (code * width * height);
+	UINT32 *dst = konami_temp_screen + (sy + starty) * nScreenWidth + sx;
+	UINT16 *pri = konami_priority_bitmap + (sy + starty) * nScreenWidth + sx;
+	UINT32 *pal = konami_palette32 + color;
+
+	if (priority == 0xffffffff)
+	{
+		for (INT32 y = starty; y < endy; y++)
+		{
+			INT32 zy = ((y * hz) >> 12) * width;
+	
+			for (INT32 x = startx; x < endx; x++)
+			{
+				INT32 pxl = src[(zy + ((x * wz) >> 12)) ^ fy];
+	
+				if (pxl) {
+					if (pxl == 0x0f) {
+						dst[x] = shadow_blend(dst[x]);
+					} else {
+						dst[x] = pal[pxl];
+					}
+				} 
+			}
+
+			dst += nScreenWidth;
+		}
+	} else {
+		priority |= 1<<31; // always on!
+
+		for (INT32 y = starty; y < endy; y++)
+		{
+			INT32 zy = ((y * hz) >> 12) * width;
+	
+			for (INT32 x = startx; x < endx; x++)
+			{
+				INT32 pxl = src[(zy + ((x * wz) >> 12)) ^ fy];
+	
+				if (pxl) {
+					if (pxl == 0x0f) {
+						if ((priority & (1 << (pri[x]&0x1f)))==0 && (pri[x] & 0x80) == 0) {
+							//if (highlight) {
+							//	dst[x] = highlight_blend(dst[x]);
+							//} else {
+								dst[x] = shadow_blend(dst[x]);
+							//}
+							pri[x] |= 0x80;
+						}
+					} else {
+						if ((priority & (1 << (pri[x]&0x1f)))==0) {
+							dst[x] = pal[pxl];
+							pri[x] = 0x1f;
+						}
+					}
+				} 
+			}
+	
+			pri += nScreenWidth;
+			dst += nScreenWidth;
+		}
+	}
+}
+

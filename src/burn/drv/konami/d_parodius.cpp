@@ -24,8 +24,7 @@ static UINT8 *DrvKonRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvZ80RAM;
 
-static UINT32  *Palette;
-static UINT32  *DrvPalette;
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 *nDrvRomBank;
@@ -314,10 +313,10 @@ static void K052109Callback(INT32 layer, INT32 bank, INT32 *code, INT32 *color, 
 static void K053245Callback(INT32 *code, INT32 *color, INT32 *priority)
 {
 	INT32 pri = 0x20 | ((*color & 0x60) >> 2);
-	if (pri <= layerpri[2])                           *priority = 0;
-	else if (pri > layerpri[2] && pri <= layerpri[1]) *priority = 1;
-	else if (pri > layerpri[1] && pri <= layerpri[0]) *priority = 2;
-	else 	                                          *priority = 3;
+	if (pri <= layerpri[2])                           *priority = 0x00;
+	else if (pri > layerpri[2] && pri <= layerpri[1]) *priority = 0xf0;
+	else if (pri > layerpri[1] && pri <= layerpri[0]) *priority = 0xfc;
+	else 	                                          *priority = 0xfe;
 
 	*code &= 0x1fff;
 	*color = sprite_colorbase + (*color & 0x1f);
@@ -367,7 +366,7 @@ static INT32 MemIndex()
 
 	DrvSndROM		= Next; Next += 0x080000;
 
-	Palette			= (UINT32*)Next; Next += 0x800 * sizeof(UINT32);
+	konami_palette32	= (UINT32*)Next;
 	DrvPalette		= (UINT32*)Next; Next += 0x800 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -404,6 +403,8 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
+	GenericTilesInit();
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -450,11 +451,11 @@ static INT32 DrvInit()
 	ZetSetReadHandler(parodius_sound_read);
 	ZetClose();
 
-	K052109Init(DrvGfxROM0, 0xfffff);
+	K052109Init(DrvGfxROM0, DrvGfxROMExp0, 0xfffff);
 	K052109SetCallback(K052109Callback);
 	K052109AdjustScroll(8, 0);
 
-	K053245Init(0, DrvGfxROM1, 0xfffff, K053245Callback);
+	K053245Init(0, DrvGfxROM1, DrvGfxROMExp1, 0xfffff, K053245Callback);
 	K053245SetSpriteOffset(0, -112, -16);
 
 	BurnYM2151Init(3579545);
@@ -464,8 +465,6 @@ static INT32 DrvInit()
 	K053260Init(0, 3579545, DrvSndROM, 0x80000);
 	K053260SetRoute(0, BURN_SND_K053260_ROUTE_1, 0.70, BURN_SND_ROUTE_LEFT);
 	K053260SetRoute(0, BURN_SND_K053260_ROUTE_2, 0.70, BURN_SND_ROUTE_RIGHT);
-
-	GenericTilesInit();
 
 	DrvDoReset();
 
@@ -504,30 +503,10 @@ static void sortlayers(INT32 *layer,INT32 *pri)
 	SWAP(1,2)
 }
 
-static void DrvRecalcPal()
-{
-	UINT8 r,g,b;
-	UINT16 *p = (UINT16*)DrvPalRAM;
-	for (INT32 i = 0; i < 0x1000 / 2; i++) {
-		UINT16 d = (BURN_ENDIAN_SWAP_INT16(p[i]) << 8) | (BURN_ENDIAN_SWAP_INT16(p[i]) >> 8);
-
-		b = (d >> 10) & 0x1f;
-		g = (d >>  5) & 0x1f;
-		r = (d >>  0) & 0x1f;
-
-		r = (r << 3) | (r >> 2);
-		g = (g << 3) | (g >> 2);
-		b = (b << 3) | (b >> 2);
-
-		DrvPalette[i] = BurnHighCol(r, g, b, 0);
-		Palette[i] = (r << 16) | (g << 8) | b;
-	}
-}
-
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		DrvRecalcPal();
+		KonamiRecalcPal(DrvPalRAM, DrvPalette, 0x1000);
 	}
 
 	K052109UpdateScroll();
@@ -550,19 +529,17 @@ static INT32 DrvDraw()
 	sortlayers(layer,layerpri);
 
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 16 * bg_colorbase;
+		konami_temp_screen[i] = DrvPalette[16 * bg_colorbase];
+		konami_priority_bitmap[i] = 0;
 	}
 
-	if (nBurnLayer & 1) K052109RenderLayer(layer[0], 0, DrvGfxROMExp0);
-	if (nSpriteEnable & 4) K053245SpritesRender(0, DrvGfxROMExp1, 2); // right?
-	if (nSpriteEnable & 8) K053245SpritesRender(0, DrvGfxROMExp1, 3);
-	if (nBurnLayer & 2) K052109RenderLayer(layer[1], 0, DrvGfxROMExp0);
-	if (nSpriteEnable & 2) K053245SpritesRender(0, DrvGfxROMExp1, 1);
-	if (nBurnLayer & 4) K052109RenderLayer(layer[2], 0, DrvGfxROMExp0);
+	if (nBurnLayer & 1) K052109RenderLayer(layer[0], 0, 1);
+	if (nBurnLayer & 2) K052109RenderLayer(layer[1], 0, 2);
+	if (nBurnLayer & 4) K052109RenderLayer(layer[2], 0, 4);
 
-	if (nSpriteEnable & 1) K053245SpritesRender(0, DrvGfxROMExp1, 0); // used (back)?
+	if (nSpriteEnable & 1) K053245SpritesRender(0);
 
-	KonamiBlendCopy(Palette, DrvPalette);
+	KonamiBlendCopy(DrvPalette);
 
 	return 0;
 }

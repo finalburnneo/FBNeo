@@ -36,7 +36,6 @@ static UINT8 *DrvNvRam            = NULL;
 static UINT8 *DrvTiles            = NULL;
 static UINT8 *DrvSprites          = NULL;
 static UINT8 *DrvTempRom          = NULL;
-static UINT32 *Palette;
 static UINT32 *DrvPalette          = NULL;
 static INT16  *DrvTitleSample      = NULL;
 
@@ -2035,7 +2034,7 @@ static INT32 TmntMemIndex()
 
 	RamEnd                 = Next;
 
-	Palette                = (UINT32*)Next; Next += 0x00400 * sizeof(UINT32);
+	konami_palette32	= (UINT32*)Next;
 	DrvPalette             = (UINT32*)Next; Next += 0x00400 * sizeof(UINT32);
 	DrvTitleSample         = (INT16*)Next; Next += 0x40000 * sizeof(INT16);
 	DrvTiles               = Next; Next += 0x008000 * 8 * 8;
@@ -2064,7 +2063,7 @@ static INT32 MiaMemIndex()
 
 	RamEnd                 = Next;
 
-	Palette                = (UINT32*)Next; Next += 0x00400 * sizeof(UINT32);
+	konami_palette32       = (UINT32*)Next;
 	DrvPalette             = (UINT32*)Next; Next += 0x00400 * sizeof(UINT32);
 	DrvTiles               = Next; Next += 0x002000 * 8 * 8;
 	DrvSprites             = Next; Next += 0x002000 * 16 * 16;
@@ -2089,7 +2088,7 @@ static INT32 CuebrickMemIndex()
 	
 	RamEnd                 = Next;
 
-	Palette                = (UINT32*)Next; Next += 0x00400 * sizeof(UINT32);
+	konami_palette32       = (UINT32*)Next;
 	DrvPalette             = (UINT32*)Next; Next += 0x00400 * sizeof(UINT32);
 	DrvTiles               = Next; Next += 0x002000 * 8 * 8;
 	DrvSprites             = Next; Next += 0x001000 * 16 * 16;
@@ -2121,7 +2120,7 @@ static INT32 BlswhstlMemIndex()
 	
 	DrvTiles               = Next; Next += 0x008000 * 8 * 8;
 	DrvSprites             = Next; Next += 0x002000 * 16 * 16;
-	Palette                = (UINT32*)Next; Next += 0x00800 * sizeof(UINT32);
+	konami_palette32       = (UINT32*)Next;
 	DrvPalette             = (UINT32*)Next; Next += 0x00810 * sizeof(UINT32);
 
 	MemEnd                 = Next;
@@ -2148,7 +2147,7 @@ static INT32 SsridersMemIndex()
 
 	RamEnd                 = Next;
 
-	Palette                = (UINT32*)Next; Next += 0x00800 * sizeof(UINT32);
+	konami_palette32       = (UINT32*)Next;
 	DrvPalette             = (UINT32*)Next; Next += 0x00810 * sizeof(UINT32);
 	DrvTiles               = Next; Next += 0x008000 * 8 * 8;
 	DrvSprites             = Next; Next += 0x004000 * 16 * 16;
@@ -2177,7 +2176,7 @@ static INT32 Tmnt2MemIndex()
 
 	RamEnd                 = Next;
 
-	Palette                = (UINT32*)Next; Next += 0x00800 * sizeof(UINT32);
+	konami_palette32       = (UINT32*)Next;
 	DrvPalette             = (UINT32*)Next; Next += 0x00810 * sizeof(UINT32);
 	DrvTiles               = Next; Next += 0x008000 * 8 * 8;
 	DrvSprites             = Next; Next += 0x008000 * 16 * 16;
@@ -2205,7 +2204,7 @@ static INT32 Thndrx2MemIndex()
 	DrvTileRom             = Next; Next += 0x100000;
 	DrvSpriteRom           = Next; Next += 0x100000;
 	
-	Palette                = (UINT32*)Next; Next += 0x00800 * sizeof(UINT32);
+	konami_palette32       = (UINT32*)Next;
 	DrvPalette             = (UINT32*)Next; Next += 0x00810 * sizeof(UINT32);
 	DrvTiles               = Next; Next += 0x008000 * 8 * 8;
 	DrvSprites             = Next; Next += 0x002000 * 16 * 16;
@@ -2234,7 +2233,7 @@ static INT32 LgtnfghtMemIndex()
 	DrvTileRom             = Next; Next += 0x100000;
 	DrvSpriteRom           = Next; Next += 0x100000;
 
-	Palette                = (UINT32*)Next; Next += 0x00800 * sizeof(UINT32);
+	konami_palette32       = (UINT32*)Next;
 	DrvPalette             = (UINT32*)Next; Next += 0x00810 * sizeof(UINT32);
 	DrvTiles               = Next; Next += 0x008000 * 8 * 8;
 	DrvSprites             = Next; Next += 0x002000 * 16 * 16;
@@ -2262,7 +2261,7 @@ static INT32 PunkshotMemIndex()
 
 	RamEnd                 = Next;
 
-	Palette                = (UINT32*)Next; Next += 0x00800 * sizeof(UINT32);
+	konami_palette32       = (UINT32*)Next;
 	DrvPalette             = (UINT32*)Next; Next += 0x00810 * sizeof(UINT32);
 	DrvTiles               = Next; Next += 0x004000 * 8 * 8;
 	DrvSprites             = Next; Next += 0x004000 * 16 * 16;
@@ -4286,6 +4285,7 @@ static void K052109CuebrickCallback(INT32 Layer, INT32, INT32 *Code, INT32 *Colo
 	}
 }
 
+
 static void K052109BlswhstlCallback(INT32 Layer, INT32 Bank, INT32 *Code, INT32 *Colour, INT32 *, INT32 *)
 {
 	*Code |= ((*Colour & 0x01) << 8) | ((*Colour & 0x10) << 5) | ((*Colour & 0x0c) << 8) | (Bank << 12) | (BlswhstlTileRomBank << 14);
@@ -4312,10 +4312,10 @@ static void K051960CuebrickCallback(INT32* Code, INT32 *Colour, INT32*, INT32*)
 static void K051960Thndrx2Callback(INT32* code, INT32 *color, INT32* priority, INT32*)
 {
 	INT32 pri = 0x20 | ((*color & 0x60) >> 2);
-	if (pri <= LayerPri[2])					*priority = 0;
-	else if (pri > LayerPri[2] && pri <= LayerPri[1])	*priority = 1;
-	else if (pri > LayerPri[1] && pri <= LayerPri[0])	*priority = 2;
-	else 							*priority = 3;
+	if (pri <= LayerPri[2])					*priority = 0x00;
+	else if (pri > LayerPri[2] && pri <= LayerPri[1])	*priority = 0xf0;
+	else if (pri > LayerPri[1] && pri <= LayerPri[0])	*priority = 0xfc;
+	else 							*priority = 0xfe;
 
 	*code &= 0x1fff;
 	*color = SpriteColourBase + (*color & 0x0f);
@@ -4324,10 +4324,10 @@ static void K051960Thndrx2Callback(INT32* code, INT32 *color, INT32* priority, I
 static void K051960PunkshotCallback(INT32 *code, INT32 *color, INT32 *priority, INT32 *)
 {
 	INT32 pri = 0x20 | ((*color & 0x60) >> 2);
-	if (pri <= LayerPri[2])					*priority = 0;
-	else if (pri > LayerPri[2] && pri <= LayerPri[1])	*priority = 1;
-	else if (pri > LayerPri[1] && pri <= LayerPri[0])	*priority = 2;
-	else 							*priority = 3;
+	if (pri <= LayerPri[2])					*priority = 0x00;
+	else if (pri > LayerPri[2] && pri <= LayerPri[1])	*priority = 0xf0;
+	else if (pri > LayerPri[1] && pri <= LayerPri[0])	*priority = 0xfc;
+	else 							*priority = 0xfe;
 
 	*code |= (*color & 0x10) << 9;
 	*code &= 0x3fff;
@@ -4337,10 +4337,10 @@ static void K051960PunkshotCallback(INT32 *code, INT32 *color, INT32 *priority, 
 static void K053245BlswhstlCallback(INT32 *Code, INT32 *Colour, INT32 *Priority)
 {
 	INT32 Pri = 0x20 | ((*Colour & 0x60) >> 2);
-	if (Pri <= LayerPri[2])                           	*Priority = 0;
-	else if (Pri > LayerPri[2] && Pri <= LayerPri[1]) 	*Priority = 1;
-	else if (Pri > LayerPri[1] && Pri <= LayerPri[0]) 	*Priority = 2;
-	else 	                                          	*Priority = 3;
+	if (Pri <= LayerPri[2])                           	*Priority = 0x00;
+	else if (Pri > LayerPri[2] && Pri <= LayerPri[1]) 	*Priority = 0xf0;
+	else if (Pri > LayerPri[1] && Pri <= LayerPri[0]) 	*Priority = 0xfc;
+	else 	                                          	*Priority = 0xfe;
 
 	*Code &= 0x1fff;
 	*Colour = SpriteColourBase + (*Colour & 0x1f);
@@ -4349,10 +4349,10 @@ static void K053245BlswhstlCallback(INT32 *Code, INT32 *Colour, INT32 *Priority)
 static void K053245SsridersCallback(INT32 *, INT32 *Colour, INT32 *Priority)
 {
 	INT32 Pri = 0x20 | ((*Colour & 0x60) >> 2);
-	if (Pri <= LayerPri[2])                           	*Priority = 0;
-	else if (Pri > LayerPri[2] && Pri <= LayerPri[1]) 	*Priority = 1;
-	else if (Pri > LayerPri[1] && Pri <= LayerPri[0])	*Priority = 2;
-	else 	                                          	*Priority = 3;
+	if (Pri <= LayerPri[2])                           	*Priority = 0x00;
+	else if (Pri > LayerPri[2] && Pri <= LayerPri[1]) 	*Priority = 0xf0;
+	else if (Pri > LayerPri[1] && Pri <= LayerPri[0]) 	*Priority = 0xfc;
+	else 	                                          	*Priority = 0xfe;
 
 	*Colour = SpriteColourBase + (*Colour & 0x1f);
 }
@@ -4360,10 +4360,10 @@ static void K053245SsridersCallback(INT32 *, INT32 *Colour, INT32 *Priority)
 static void K053245LgtnfghtCallback(INT32 *code, INT32 *color, INT32 *priority)
 {
 	INT32 pri = 0x20 | ((*color & 0x60) >> 2);
-	if (pri <= LayerPri[2])					*priority = 0;
-	else if (pri > LayerPri[2] && pri <= LayerPri[1])	*priority = 1;
-	else if (pri > LayerPri[1] && pri <= LayerPri[0])	*priority = 2;
-	else 							*priority = 3;
+	if (pri <= LayerPri[2])					*priority = 0x00;
+	else if (pri > LayerPri[2] && pri <= LayerPri[1])	*priority = 0xf0;
+	else if (pri > LayerPri[1] && pri <= LayerPri[0])	*priority = 0xfc;
+	else 							*priority = 0xfe;
 
 	*color = SpriteColourBase + (*color & 0x1f);
 	*code &= 0x3fff;
@@ -4382,6 +4382,8 @@ static void CuebrickYM2151IrqHandler(INT32 Irq)
 
 static INT32 TmntInit()
 {
+	GenericTilesInit();
+
 	INT32 nRet = 0, nLen;
 	
 	// Allocate and Blank all required memory
@@ -4392,9 +4394,9 @@ static INT32 TmntInit()
 	memset(Mem, 0, nLen);
 	TmntMemIndex();
 	
-	K052109Init(DrvTileRom, 0x0fffff);
+	K052109Init(DrvTileRom, DrvTiles, 0x0fffff);
 	K052109SetCallback(K052109TmntCallback);
-	K051960Init(DrvSpriteRom, 0x1fffff);
+	K051960Init(DrvSpriteRom, DrvSprites, 0x1fffff);
 	K051960SetCallback(K051960TmntCallback);
 
 	// Load 68000 Program Roms
@@ -4476,8 +4478,6 @@ static INT32 TmntInit()
 	
 	TmntTitleSampleSetRoute(1.00, BURN_SND_ROUTE_BOTH);
 	
-	GenericTilesInit();
-	
 	LayerColourBase[0] = 0;
 	LayerColourBase[1] = 32;
 	LayerColourBase[2] = 40;
@@ -4491,6 +4491,8 @@ static INT32 TmntInit()
 
 static INT32 MiaInit()
 {
+	GenericTilesInit();
+
 	INT32 nRet = 0, nLen;
 	
 	// Allocate and Blank all required memory
@@ -4501,9 +4503,9 @@ static INT32 MiaInit()
 	memset(Mem, 0, nLen);
 	MiaMemIndex();
 	
-	K052109Init(DrvTileRom, 0x03ffff);
+	K052109Init(DrvTileRom, DrvTiles, 0x03ffff);
 	K052109SetCallback(K052109MiaCallback);
-	K051960Init(DrvSpriteRom, 0x0fffff);
+	K051960Init(DrvSpriteRom, DrvSprites, 0x0fffff);
 	K051960SetCallback(K051960MiaCallback);
 
 	// Load 68000 Program Roms
@@ -4571,8 +4573,6 @@ static INT32 MiaInit()
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
 	K007232PCMSetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	
-	GenericTilesInit();
-	
 	LayerColourBase[0] = 0;
 	LayerColourBase[1] = 32;
 	LayerColourBase[2] = 40;
@@ -4586,6 +4586,8 @@ static INT32 MiaInit()
 
 static INT32 CuebrickInit()
 {
+	GenericTilesInit();
+
 	INT32 nRet = 0, nLen;
 	
 	// Allocate and Blank all required memory
@@ -4596,10 +4598,10 @@ static INT32 CuebrickInit()
 	memset(Mem, 0, nLen);
 	CuebrickMemIndex();
 	
-	K052109Init(DrvTileRom, 0x03ffff);
+	K052109Init(DrvTileRom, DrvTiles, 0x03ffff);
 	K052109SetCallback(K052109CuebrickCallback);
 
-	K051960Init(DrvSpriteRom, 0x03ffff);
+	K051960Init(DrvSpriteRom, DrvSprites, 0x03ffff);
 	K051960SetCallback(K051960CuebrickCallback);
 
 	// Load 68000 Program Roms
@@ -4638,9 +4640,7 @@ static INT32 CuebrickInit()
 	BurnYM2151Init(3579545);
 	BurnYM2151SetIrqHandler(&CuebrickYM2151IrqHandler);
 	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
-	
-	GenericTilesInit();
-	
+
 	LayerColourBase[0] = 0;
 	LayerColourBase[1] = 32;
 	LayerColourBase[2] = 40;
@@ -4654,6 +4654,8 @@ static INT32 CuebrickInit()
 
 static INT32 BlswhstlInit()
 {
+	GenericTilesInit();
+
 	INT32 nRet = 0, nLen;
 	
 	// Allocate and Blank all required memory
@@ -4664,11 +4666,11 @@ static INT32 BlswhstlInit()
 	memset(Mem, 0, nLen);
 	BlswhstlMemIndex();
 	
-	K052109Init(DrvTileRom, 0x0fffff);
+	K052109Init(DrvTileRom, DrvTiles, 0x0fffff);
 	K052109SetCallback(K052109BlswhstlCallback);
 	K052109AdjustScroll(8, 0);
 
-	K053245Init(0, DrvSpriteRom, 0xfffff, K053245BlswhstlCallback);
+	K053245Init(0, DrvSpriteRom, DrvSprites, 0xfffff, K053245BlswhstlCallback);
 	K053245SetSpriteOffset(0, -112, 16);
 
 	// Load 68000 Program Roms
@@ -4732,8 +4734,6 @@ static INT32 BlswhstlInit()
 
 	EEPROMInit(&BlswhstlEEPROMInterface);
 	
-	GenericTilesInit();
-	
 	// Reset the driver
 	BlswhstlDoReset();
 
@@ -4742,6 +4742,8 @@ static INT32 BlswhstlInit()
 
 static INT32 SsridersInit()
 {
+	GenericTilesInit();
+
 	INT32 nRet = 0, nLen;
 	
 	// Allocate and Blank all required memory
@@ -4752,11 +4754,11 @@ static INT32 SsridersInit()
 	memset(Mem, 0, nLen);
 	SsridersMemIndex();
 	
-	K052109Init(DrvTileRom, 0x0fffff);
+	K052109Init(DrvTileRom, DrvTiles, 0x0fffff);
 	K052109SetCallback(K052109TmntCallback);
 	K052109AdjustScroll(8, 0);
 
-	K053245Init(0, DrvSpriteRom, 0x1fffff, K053245LgtnfghtCallback);
+	K053245Init(0, DrvSpriteRom, DrvSprites, 0x1fffff, K053245LgtnfghtCallback);
 	K053245SetSpriteOffset(0, -368, 528);
 	K05324xSetZRejection(0);
 
@@ -4819,8 +4821,6 @@ static INT32 SsridersInit()
 
 	EEPROMInit(&BlswhstlEEPROMInterface);
 	
-	GenericTilesInit();
-	
 	// Reset the driver
 	SsridersDoReset();
 
@@ -4829,6 +4829,8 @@ static INT32 SsridersInit()
 
 static INT32 Thndrx2Init()
 {
+	GenericTilesInit();
+
 	INT32 nRet = 0, nLen;
 	
 	// Allocate and Blank all required memory
@@ -4839,11 +4841,11 @@ static INT32 Thndrx2Init()
 	memset(Mem, 0, nLen);
 	Thndrx2MemIndex();
 	
-	K052109Init(DrvTileRom, 0x0fffff);
+	K052109Init(DrvTileRom, DrvTiles, 0x0fffff);
 	K052109SetCallback(K052109TmntCallback);
 	K052109AdjustScroll(8, 0);
 
-	K051960Init(DrvSpriteRom, 0x0fffff);
+	K051960Init(DrvSpriteRom, DrvSprites, 0x0fffff);
 	K051960SetCallback(K051960Thndrx2Callback);
 	K051960SetSpriteOffset(8, 0);
 
@@ -4903,8 +4905,6 @@ static INT32 Thndrx2Init()
 
 	EEPROMInit(&thndrx2_eeprom_interface);
 	
-	GenericTilesInit();
-	
 	// Reset the driver
 	SsridersDoReset();
 
@@ -4913,6 +4913,8 @@ static INT32 Thndrx2Init()
 
 static INT32 LgtnfghtInit()
 {
+	GenericTilesInit();
+
 	INT32 nRet = 0, nLen;
 	
 	// Allocate and Blank all required memory
@@ -4923,11 +4925,11 @@ static INT32 LgtnfghtInit()
 	memset(Mem, 0, nLen);
 	LgtnfghtMemIndex();
 	
-	K052109Init(DrvTileRom, 0x0fffff);
+	K052109Init(DrvTileRom, DrvTiles, 0x0fffff);
 	K052109SetCallback(K052109TmntCallback);
 	K052109AdjustScroll(8, 0);
 
-	K053245Init(0, DrvSpriteRom, 0x0fffff, K053245LgtnfghtCallback);
+	K053245Init(0, DrvSpriteRom, DrvSprites, 0x0fffff, K053245LgtnfghtCallback);
 	K053245SetSpriteOffset(0, -368, 528);
 	K05324xSetZRejection(0);
 
@@ -4988,8 +4990,6 @@ static INT32 LgtnfghtInit()
 
 	EEPROMInit(&thndrx2_eeprom_interface);
 	
-	GenericTilesInit();
-	
 	// Reset the driver
 	SsridersDoReset();
 
@@ -4998,6 +4998,8 @@ static INT32 LgtnfghtInit()
 
 static INT32 Tmnt2Init()
 {
+	GenericTilesInit();
+
 	INT32 nRet = 0, nLen;
 	
 	// Allocate and Blank all required memory
@@ -5008,11 +5010,11 @@ static INT32 Tmnt2Init()
 	memset(Mem, 0, nLen);
 	Tmnt2MemIndex();
 	
-	K052109Init(DrvTileRom, 0x0fffff);
+	K052109Init(DrvTileRom, DrvTiles, 0x0fffff);
 	K052109SetCallback(K052109TmntCallback);
 	K052109AdjustScroll(8, 0);
 
-	K053245Init(0, DrvSpriteRom, 0x3fffff, K053245SsridersCallback);
+	K053245Init(0, DrvSpriteRom, DrvSprites, 0x3fffff, K053245SsridersCallback);
 	K053245SetSpriteOffset(0, -368, 272);
 	K05324xSetZRejection(0);
 
@@ -5081,8 +5083,6 @@ static INT32 Tmnt2Init()
 
 	EEPROMInit(&BlswhstlEEPROMInterface);
 	
-	GenericTilesInit();
-	
 	// Reset the driver
 	SsridersDoReset();
 
@@ -5091,6 +5091,8 @@ static INT32 Tmnt2Init()
 
 static INT32 QgakumonInit()
 {
+	GenericTilesInit();
+
 	INT32 nRet = 0, nLen;
 	
 	// Allocate and Blank all required memory
@@ -5101,11 +5103,11 @@ static INT32 QgakumonInit()
 	memset(Mem, 0, nLen);
 	Tmnt2MemIndex();
 	
-	K052109Init(DrvTileRom, 0x0fffff);
+	K052109Init(DrvTileRom, DrvTiles, 0x0fffff);
 	K052109SetCallback(K052109TmntCallback);
 	K052109AdjustScroll(0, 0);
 
-	K053245Init(0, DrvSpriteRom, 0x3fffff, K053245SsridersCallback);
+	K053245Init(0, DrvSpriteRom, DrvSprites, 0x3fffff, K053245SsridersCallback);
 	K053245SetSpriteOffset(0, -360, 272);
 	K05324xSetZRejection(0);
 
@@ -5172,8 +5174,6 @@ static INT32 QgakumonInit()
 
 	EEPROMInit(&BlswhstlEEPROMInterface);
 	
-	GenericTilesInit();
-	
 	// Reset the driver
 	SsridersDoReset();
 
@@ -5182,6 +5182,8 @@ static INT32 QgakumonInit()
 
 static INT32 PunkshotInit()
 {
+	GenericTilesInit();
+
 	INT32 nRet = 0, nLen;
 	
 	// Allocate and Blank all required memory
@@ -5192,11 +5194,11 @@ static INT32 PunkshotInit()
 	memset(Mem, 0, nLen);
 	PunkshotMemIndex();
 	
-	K052109Init(DrvTileRom, 0x07ffff);
+	K052109Init(DrvTileRom, DrvTiles, 0x07ffff);
 	K052109SetCallback(K052109TmntCallback);
 	K052109AdjustScroll(8, 0); 
 
-	K051960Init(DrvSpriteRom, 0x1fffff);
+	K051960Init(DrvSpriteRom, DrvSprites, 0x1fffff);
 	K051960SetCallback(K051960PunkshotCallback);
 	K051960SetSpriteOffset(8, 0);
 
@@ -5251,8 +5253,6 @@ static INT32 PunkshotInit()
 	
 	K053260Init(0, 3579545, DrvSoundRom, 0x80000);
 	K053260PCMSetAllRoutes(0, 0.70, BURN_SND_ROUTE_BOTH);
-
-	GenericTilesInit();
 
 	srand ( time(NULL) );
 
@@ -5344,8 +5344,7 @@ static void DrvCalcPalette()
 		INT32 Offset = i & ~1;
 		UINT32 Data = (BURN_ENDIAN_SWAP_INT16(PaletteRam[Offset]) << 8) | BURN_ENDIAN_SWAP_INT16(PaletteRam[Offset + 1]);
 
-		Palette[Offset >> 1] = (pal5bit(Data >> 0) << 16) | (pal5bit(Data >> 5) << 8) | pal5bit(Data >> 10);
-		DrvPalette[Offset >> 1] = BurnHighCol(pal5bit(Data >> 0), pal5bit(Data >> 5), pal5bit(Data >> 10), 0);
+		DrvPalette[Offset >> 1] = (pal5bit(Data >> 0) << 16) | (pal5bit(Data >> 5) << 8) | pal5bit(Data >> 10);
 	}
 }
 
@@ -5356,23 +5355,8 @@ static void BlswhstlCalcPalette()
 	for (INT32 i = 0; i < 0x800; i++) {
 		UINT32 Data = BURN_ENDIAN_SWAP_INT16(PaletteRam[i]);
 
-		Palette[i] = (pal5bit(Data >> 0) << 16) | (pal5bit(Data >> 5) << 8) | pal5bit(Data >> 10);
-		DrvPalette[i] = BurnHighCol(pal5bit(Data >> 0), pal5bit(Data >> 5), pal5bit(Data >> 10), 0);
+		DrvPalette[i] = (pal5bit(Data >> 0) << 16) | (pal5bit(Data >> 5) << 8) | pal5bit(Data >> 10);
 	}
-}
-
-static void TmntDraw()
-{
-	DrvCalcPalette();
-	K052109UpdateScroll();
-	
-	K052109RenderLayer(2, 1, DrvTiles);
-	if ((PriorityFlag & 1) == 1) K051960SpritesRender(DrvSprites, -1);
-	K052109RenderLayer(1, 0, DrvTiles);
-	if ((PriorityFlag & 1) == 0) K051960SpritesRender(DrvSprites, -1);
-	K052109RenderLayer(0, 0, DrvTiles);
-	
-	BurnTransferCopy(DrvPalette);
 }
 
 static void sortlayers(INT32 *layer,INT32 *pri)
@@ -5405,7 +5389,7 @@ static inline void BlswhstlCalcPaletteWithContrast(INT32 i, INT32 brt)
 	g = (g * brt) / 100;
 	b = (b * brt) / 100;
 
-	DrvPalette[i] = BurnHighCol(r, g, b, 0);
+	DrvPalette[i] = (r<<16) | (g<<8) | b;
 }
 
 static void PaletteDim(INT32 dimslayer)
@@ -5435,6 +5419,20 @@ static void PaletteDim(INT32 dimslayer)
 	}
 }
 
+static void TmntDraw()
+{
+	DrvCalcPalette();
+	K052109UpdateScroll();
+	
+	K052109RenderLayer(2, K052109_OPAQUE, 0);
+	if ((PriorityFlag & 1) == 1) K051960SpritesRender(0, 0);
+	K052109RenderLayer(1, 0, 0);
+	if ((PriorityFlag & 1) == 0) K051960SpritesRender(0, 0);
+	K052109RenderLayer(0, 0, 0);
+
+	KonamiBlendCopy(DrvPalette);
+}
+
 static void BlswhstlDraw()
 {
 	INT32 Layer[3];
@@ -5455,22 +5453,21 @@ static void BlswhstlDraw()
 	Layer[2] = 2;
 	
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 16 * BGColourBase;
+		konami_temp_screen[i] = DrvPalette[16 * BGColourBase];
+		konami_priority_bitmap[i] = 0;
 	}
 
 	sortlayers(Layer, LayerPri);
 
 	PaletteDim(Layer[2]);
 
-	K053245SpritesRender(0, DrvSprites, 3);
-	if (nBurnLayer & 1) K052109RenderLayer(Layer[0], 0, DrvTiles);
-	K053245SpritesRender(0, DrvSprites, 2);
-	if (nBurnLayer & 2) K052109RenderLayer(Layer[1], 0, DrvTiles);
-	K053245SpritesRender(0, DrvSprites, 1);
-	K053245SpritesRender(0, DrvSprites, 0);
-	if (nBurnLayer & 4) K052109RenderLayer(Layer[2], 0, DrvTiles);	
+	if (nBurnLayer & 1) K052109RenderLayer(Layer[0], 0, 1);
+	if (nBurnLayer & 2) K052109RenderLayer(Layer[1], 0, 2);
+	if (nBurnLayer & 4) K052109RenderLayer(Layer[2], 0, 4);
 
-	KonamiBlendCopy(Palette, DrvPalette);
+	if (nSpriteEnable & 1) K053245SpritesRender(0);
+
+	KonamiBlendCopy(DrvPalette);
 }
 
 static INT32 Thndrx2Draw()
@@ -5494,20 +5491,19 @@ static INT32 Thndrx2Draw()
 	Layer[2] = 2;
 	
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 16 * BGColourBase;
+		konami_temp_screen[i] = DrvPalette[16 * BGColourBase];
+		konami_priority_bitmap[i] = 0;
 	}
 
 	sortlayers(Layer, LayerPri);
 
-	if (nSpriteEnable & 8) K051960SpritesRender(DrvSprites, 3);
-	if (nBurnLayer & 1) K052109RenderLayer(Layer[0], 0, DrvTiles);
-	if (nSpriteEnable & 4) K051960SpritesRender(DrvSprites, 2);	
-	if (nBurnLayer & 2) K052109RenderLayer(Layer[1], 0, DrvTiles);
-	if (nSpriteEnable & 2) K051960SpritesRender(DrvSprites, 1);
-	if (nSpriteEnable & 1) K051960SpritesRender(DrvSprites, 0);
-	if (nBurnLayer & 4) K052109RenderLayer(Layer[2], 0, DrvTiles);
+	if (nBurnLayer & 1) K052109RenderLayer(Layer[0], 0, 1);
+	if (nBurnLayer & 2) K052109RenderLayer(Layer[1], 0, 2);
+	if (nBurnLayer & 4) K052109RenderLayer(Layer[2], 0, 4);
 
-	BurnTransferCopy(DrvPalette);
+	if (nSpriteEnable & 1) K051960SpritesRender(-1, -1);
+
+	KonamiBlendCopy(DrvPalette);
 
 	return 0;
 }
@@ -5534,15 +5530,13 @@ static INT32 PunkshotDraw()
 
 	sortlayers(Layer, LayerPri);
 
-//	if (nSpriteEnable & 8) K051960SpritesRender(DrvSprites, 3); // not sure...
-	if (nBurnLayer & 1) K052109RenderLayer(Layer[0], 1, DrvTiles);
-	if (nSpriteEnable & 4) K051960SpritesRender(DrvSprites, 2);	
-	if (nBurnLayer & 2) K052109RenderLayer(Layer[1], 0, DrvTiles);
-	if (nSpriteEnable & 2) K051960SpritesRender(DrvSprites, 1);
-	if (nBurnLayer & 4) K052109RenderLayer(Layer[2], 0, DrvTiles);
-	if (nSpriteEnable & 1) K051960SpritesRender(DrvSprites, 0);
+	if (nBurnLayer & 1) K052109RenderLayer(Layer[0], K052109_OPAQUE, 1);
+	if (nBurnLayer & 2) K052109RenderLayer(Layer[1], 0, 2);
+	if (nBurnLayer & 4) K052109RenderLayer(Layer[2], 0, 4);
 
-	BurnTransferCopy(DrvPalette);
+	if (nSpriteEnable & 1) K051960SpritesRender(-1, -1);
+
+	KonamiBlendCopy(DrvPalette);
 
 	return 0;
 }

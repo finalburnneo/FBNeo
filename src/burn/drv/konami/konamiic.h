@@ -7,8 +7,19 @@ extern UINT32 KonamiIC_K053245InUse;
 extern UINT32 KonamiIC_K053247InUse;
 extern UINT32 KonamiIC_K053936InUse;
 
-extern UINT16 *konami_temp_screen;
-void KonamiBlendCopy(UINT32 *palette /* 32-bit color */, UINT32 *drvpalette /* n-bit color */);
+extern UINT16 *konami_priority_bitmap;
+
+extern UINT32 *konami_temp_screen;
+extern UINT32 *konami_palette32;
+void KonamiBlendCopy(UINT32 *palette);
+
+void konami_allocate_bitmaps();
+
+void konami_draw_16x16_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy);
+void konami_draw_16x16_prio_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT32 priority);
+void konami_draw_16x16_zoom_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy);
+void konami_draw_16x16_priozoom_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority);
+void konami_render_zoom_shadow_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority, INT32 shadow);
 
 extern INT32 K05324xZRejection;
 void K05324xSetZRejection(INT32 z);
@@ -30,14 +41,14 @@ UINT8 K052109_051960_r(INT32 offset);
 //---------------------------------------------------------------------------------------------------------------
 extern INT32 K051960ReadRoms;
 extern INT32 K052109_irq_enabled;
-void K051960SpritesRender(UINT8 *pSrc, INT32 priority);
+void K051960SpritesRender(INT32 min_priority, INT32 max_priority);
 UINT8 K0519060FetchRomData(UINT32 Offset);
 UINT8 K051960Read(UINT32 Offset);
 void K051960Write(UINT32 Offset, UINT8 Data);
 void K051960SetCallback(void (*Callback)(INT32 *Code, INT32 *Colour, INT32 *Priority, INT32 *Shadow));
 void K051960SetSpriteOffset(INT32 x, INT32 y);
 void K051960Reset();
-void K051960Init(UINT8* pRomSrc, UINT32 RomMask);
+void K051960Init(UINT8* pRomSrc, UINT8* pRomSrcExp, UINT32 RomMask);
 void K051960Exit();
 void K051960Scan(INT32 nAction);
 void K051937Write(UINT32 Offset, UINT8 Data);
@@ -52,12 +63,16 @@ extern INT32 K051960_spriteflip;
 
 void K052109UpdateScroll();
 void K052109AdjustScroll(INT32 x, INT32 y);
-void K052109RenderLayer(INT32 nLayer, INT32 Opaque, UINT8 *pSrc);
+
+#define K052109_OPAQUE		0x10000
+#define K052109_CATEGORY(x)	(x)
+
+void K052109RenderLayer(INT32 nLayer, INT32 Flags, INT32 Priority);
 UINT8 K052109Read(UINT32 Offset);
 void K052109Write(UINT32 Offset, UINT8 Data);
 void K052109SetCallback(void (*Callback)(INT32 Layer, INT32 Bank, INT32 *Code, INT32 *Colour, INT32 *xFlip, INT32 *priority));
 void K052109Reset();
-void K052109Init(UINT8 *pRomSrc, UINT32 RomMask);
+void K052109Init(UINT8 *pRomSrc, UINT8* pRomSrcExp, UINT32 RomMask);
 void K052109Exit();
 void K052109Scan(INT32 nAction);
 
@@ -152,10 +167,10 @@ void K051316Scan(INT32 nAction);
 //---------------------------------------------------------------------------------------------------------------
 INT32 K053245Reset();
 void K053245GfxDecode(UINT8 *src, UINT8 *dst, INT32 len);
-void K053245Init(INT32 chip, UINT8 *gfx, INT32 mask, void (*callback)(INT32 *code,INT32 *color,INT32 *priority));
+void K053245Init(INT32 chip, UINT8 *gfx, UINT8 *gfxexp, INT32 mask, void (*callback)(INT32 *code,INT32 *color,INT32 *priority));
 void K053245Exit();
 
-void K053245SpritesRender(INT32 chip, UINT8 *gfxdata, INT32 priority);
+void K053245SpritesRender(INT32 chip);
 
 void K053245SetSpriteOffset(INT32 chip,INT32 offsx, INT32 offsy);
 void K053245ClearBuffer(INT32 chip);
@@ -190,7 +205,7 @@ void K053251Scan(INT32 nAction);
 // K053247.cpp
 //---------------------------------------------------------------------------------------------------------------
 void K053247Reset();
-void K053247Init(UINT8 *gfxrom, INT32 gfxlen, void (*Callback)(INT32 *code, INT32 *color, INT32 *priority), INT32 flags);
+void K053247Init(UINT8 *gfxrom, UINT8 *gfxromexp, INT32 gfxlen, void (*Callback)(INT32 *code, INT32 *color, INT32 *priority), INT32 flags);
 void K053247Exit();
 void K053247Scan(INT32 nAction);
 
@@ -207,7 +222,7 @@ void K053247Write(INT32 offset, INT32 data);
 UINT8 K053246Read(INT32 offset);
 void K053246Write(INT32 offset, INT32 data);
 
-void K053247SpritesRender(UINT8 *gfxbase, INT32 priority);
+void K053247SpritesRender();
 
 // k054000.cpp
 //------------------------------------------------------------------------------------------

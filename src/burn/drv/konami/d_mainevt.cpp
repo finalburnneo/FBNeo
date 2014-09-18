@@ -1,6 +1,8 @@
 // FB Alpha The Main Event / Devastators driver module
 // Based on MAME driver by Bryan McPhail
 
+// Why is The Main Event messed up? Very strange...
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "hd6309_intf.h"
@@ -29,8 +31,8 @@ static UINT8 *nmi_enable;
 
 static UINT8 *nDrvBank;
 
-static UINT32  *DrvPalette;
-static UINT8  DrvRecalc;
+static UINT32 *DrvPalette;
+static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -581,12 +583,13 @@ UINT8 __fastcall mainevt_sound_read(UINT16 address)
 
 static void K052109Callback(INT32 layer, INT32 , INT32 *code, INT32 *color, INT32 *flipx, INT32 *priority)
 {
+	INT32 colorbase[3] = { 0, 8, 4 };
+
 	*flipx = *color & 0x02;
 
-	if (layer == 2) *priority = (*color >> 5) & 1;
-
+	*priority = (layer == 2) ? ((*color & 0x20) >> 5) : 0;
 	*code |= ((*color & 0x01) << 8) | ((*color & 0x1c) << 7);
-	*color = ((layer & 2) << 1) + ((layer & 1) << 2) + ((*color & 0xc0) >> 6);
+	*color = colorbase[layer] + ((*color & 0xc0) >> 6);
 }
 
 static void DvK052109Callback(INT32 layer, INT32, INT32 *code, INT32 *color, INT32 *, INT32 *)
@@ -597,9 +600,9 @@ static void DvK052109Callback(INT32 layer, INT32, INT32 *code, INT32 *color, INT
 
 static void K051960Callback(INT32 *, INT32 *color, INT32 *priority, INT32 *)
 {
-	if (*color & 0x20)	*priority = 0;
-	else if (*color & 0x40)	*priority = 1;
-	else			*priority = 2;
+	if (*color & 0x20)	*priority = 0xff00;
+	else if (*color & 0x40)	*priority = 0xfff0;
+	else			*priority = 0xfffc;
 
 	*color = 0x0c + (*color & 0x03);
 }
@@ -617,8 +620,6 @@ static void DrvK007232VolCallback(INT32 v)
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	HD6309Open(0);
@@ -646,13 +647,14 @@ static INT32 MemIndex()
 	DrvZ80ROM		= Next; Next += 0x010000;
 
 	DrvGfxROM0		= Next; Next += 0x040000;
-	DrvGfxROM1		= Next; Next += 0x100000;
 	DrvGfxROMExp0		= Next; Next += 0x080000;
+	DrvGfxROM1		= Next; Next += 0x100000;
 	DrvGfxROMExp1		= Next; Next += 0x200000;
 
 	DrvSndROM0		= Next; Next += 0x080000;
 	DrvSndROM1		= Next; Next += 0x0a0000;
 
+	konami_palette32	= (UINT32*)Next;
 	DrvPalette		= (UINT32*)Next; Next += 0x100 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -693,6 +695,8 @@ static INT32 DrvGfxDecode(INT32 gfxlen0)
 
 static INT32 DrvInit(INT32 type)
 {
+	GenericTilesInit();
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -746,11 +750,11 @@ static INT32 DrvInit(INT32 type)
 	ZetSetReadHandler(mainevt_sound_read);
 	ZetClose();
 
-	K052109Init(DrvGfxROM0, (gfx0_offset * 2) - 1);
+	K052109Init(DrvGfxROM0, DrvGfxROMExp0, (gfx0_offset * 2) - 1);
 	K052109SetCallback(nGame ? DvK052109Callback : K052109Callback);
 	K052109AdjustScroll(nGame ? 0 : 8, 0);
 
-	K051960Init(DrvGfxROM1, 0xfffff);
+	K051960Init(DrvGfxROM1, DrvGfxROMExp1, 0xfffff);
 	K051960SetCallback(nGame ? DvK051960Callback : K051960Callback);
 	K051960SetSpriteOffset(nGame ? 0 : 8, 0);
 
@@ -763,8 +767,6 @@ static INT32 DrvInit(INT32 type)
 
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSndROM1);
 	UPD7759SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-
-	GenericTilesInit();
 
 	DrvDoReset();
 
@@ -799,31 +801,26 @@ static INT32 DrvDraw()
 
 	if (nGame)
 	{
-		K052109RenderLayer(1, 1, DrvGfxROMExp0); 
-		K052109RenderLayer(2, 0, DrvGfxROMExp0);
-
-		K051960SpritesRender(DrvGfxROMExp1, 0);
-	
-		K052109RenderLayer(0, 0, DrvGfxROMExp0);
+		if (nBurnLayer & 1) K052109RenderLayer(1, K052109_OPAQUE, 0); 
+		if (nBurnLayer & 2) K052109RenderLayer(2, 0, 0);
+		if (nSpriteEnable & 1) K051960SpritesRender(0, 0);
+		if (nBurnLayer & 4) K052109RenderLayer(0, 0, 0);
 	}
 	else
 	{
-		if (nBurnLayer & 1) K052109RenderLayer(1, 1, DrvGfxROMExp0); 
+		memset (konami_temp_screen, 0, nScreenWidth * nScreenHeight * sizeof(INT32));
+		memset (konami_priority_bitmap, 0, nScreenWidth * nScreenHeight * sizeof(INT16));
 
-		if (nBurnLayer & 2) K052109RenderLayer(2 | 0x10, 0, DrvGfxROMExp0);
 
-		if (nSpriteEnable & 2) K051960SpritesRender(DrvGfxROMExp1, 1);
+		if (nBurnLayer & 1) K052109RenderLayer(1, K052109_OPAQUE, 1);
+		if (nBurnLayer & 2) K052109RenderLayer(2, K052109_CATEGORY(1), 2);
+		if (nBurnLayer & 4) K052109RenderLayer(2, 0, 4);
+		if (nBurnLayer & 8) K052109RenderLayer(0, 0, 8);
 
-		if (nBurnLayer & 4) K052109RenderLayer(2 | 0x00, 0, DrvGfxROMExp0);
-
-		if (nSpriteEnable & 4) K051960SpritesRender(DrvGfxROMExp1, 0); // makes sense...
-
-		if (nSpriteEnable & 1) K051960SpritesRender(DrvGfxROMExp1, 2);
-
-		if (nBurnLayer & 8) K052109RenderLayer(0, 0, DrvGfxROMExp0);
+		if (nSpriteEnable & 1) K051960SpritesRender(-1, -1);
 	}
 
-	BurnTransferCopy(DrvPalette);
+	KonamiBlendCopy(DrvPalette);
 
 	return 0;
 }
@@ -989,11 +986,11 @@ static INT32 mainevtInit()
 }
 
 
-struct BurnDriver BurnDrvMainevt = {
+struct BurnDriverD BurnDrvMainevt = {
 	"mainevt", NULL, NULL, NULL, "1988",
 	"The Main Event (4 Players ver. Y)\0", NULL, "Konami", "GX799",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
+	0, 4, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, mainevtRomInfo, mainevtRomName, NULL, NULL, MainevtInputInfo, MainevtDIPInfo,
 	mainevtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	288, 224, 4, 3
@@ -1025,11 +1022,11 @@ static struct BurnRomInfo mainevtoRomDesc[] = {
 STD_ROM_PICK(mainevto)
 STD_ROM_FN(mainevto)
 
-struct BurnDriver BurnDrvMainevto = {
+struct BurnDriverD BurnDrvMainevto = {
 	"mainevto", "mainevt", NULL, NULL, "1988",
 	"The Main Event (4 Players ver. F)\0", NULL, "Konami", "GX799",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
+	BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, mainevtoRomInfo, mainevtoRomName, NULL, NULL, MainevtInputInfo, MainevtDIPInfo,
 	mainevtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	288, 224, 4, 3
@@ -1061,11 +1058,11 @@ static struct BurnRomInfo mainevt2pRomDesc[] = {
 STD_ROM_PICK(mainevt2p)
 STD_ROM_FN(mainevt2p)
 
-struct BurnDriver BurnDrvMainevt2p = {
+struct BurnDriverD BurnDrvMainevt2p = {
 	"mainevt2p", "mainevt", NULL, NULL, "1988",
 	"The Main Event (2 Players ver. X)\0", NULL, "Konami", "GX799",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
+	BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, mainevt2pRomInfo, mainevt2pRomName, NULL, NULL, Mainevt2pInputInfo, Mainevt2pDIPInfo,
 	mainevtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	288, 224, 4, 3
@@ -1097,11 +1094,11 @@ static struct BurnRomInfo ringohjaRomDesc[] = {
 STD_ROM_PICK(ringohja)
 STD_ROM_FN(ringohja)
 
-struct BurnDriver BurnDrvRingohja = {
+struct BurnDriverD BurnDrvRingohja = {
 	"ringohja", "mainevt", NULL, NULL, "1988",
 	"Ring no Ohja (Japan 2 Players ver. N)\0", NULL, "Konami", "GX799",
 	L"\u30EA\u30F3\u30B0\u306E \u738B\u8005 (Japan 2 Players ver. N)\0Ring no Ohja\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
+	BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, ringohjaRomInfo, ringohjaRomName, NULL, NULL, Mainevt2pInputInfo, Mainevt2pDIPInfo,
 	mainevtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	288, 224, 4, 3

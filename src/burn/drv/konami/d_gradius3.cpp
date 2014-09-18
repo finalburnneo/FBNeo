@@ -158,6 +158,21 @@ static struct BurnDIPInfo Gradius3DIPList[]=
 
 STDDIPINFO(Gradius3)
 
+static void expand_graphics_single(INT32 offset)
+{
+	offset &= 0x1fffe;
+
+	INT32 t = DrvShareRAM2[offset+0];
+
+	DrvGfxROMExp0[offset * 2 + 2] = t >> 4;
+	DrvGfxROMExp0[offset * 2 + 3] = t & 0x0f;
+
+	t = DrvShareRAM2[offset+1];
+
+	DrvGfxROMExp0[offset * 2 + 0] = t >> 4;
+	DrvGfxROMExp0[offset * 2 + 1] = t & 0x0f;
+}
+
 void __fastcall gradius3_main_write_word(UINT32 address, UINT16 data)
 {
 	if (address >= 0x14c000 && address <= 0x153fff) {
@@ -165,10 +180,22 @@ void __fastcall gradius3_main_write_word(UINT32 address, UINT16 data)
 		K052109Write(address / 2, data);
 		return;
 	}
+
+	if ((address & 0xfe0000) == 0x180000) {
+		*((UINT16*)(DrvShareRAM2 + (address & 0x1fffe))) = data;
+		expand_graphics_single(address);
+		return;
+	}
 }
 
 void __fastcall gradius3_main_write_byte(UINT32 address, UINT8 data)
 {
+	if ((address & 0xfe0000) == 0x180000) {
+		DrvShareRAM2[(address & 0x1ffff)^1] = data;
+		expand_graphics_single(address);
+		return;
+	}
+
 	switch (address)
 	{
 		case 0x0c0000:
@@ -184,7 +211,7 @@ void __fastcall gradius3_main_write_byte(UINT32 address, UINT8 data)
 				SekOpen(0);
 			}					
 
-			gradius3_priority    = data & 0x04;
+			gradius3_priority    =(data & 0x04)>>2;
 			gradius3_cpub_enable = data & 0x08;
 			irqA_enable          = data & 0x20;
 		}
@@ -278,6 +305,12 @@ void __fastcall gradius3_sub_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
+	if ((address & 0xfe0000) == 0x280000) {
+		*((UINT16*)(DrvShareRAM2 + (address & 0x1fffe))) = data;
+		expand_graphics_single(address);
+		return;
+	}
+
 	if ((address & 0xffffff0) == 0x2c0000) {
 		address -= 0x2c0000;
 		K051937Write(address / 2, data);
@@ -301,6 +334,12 @@ void __fastcall gradius3_sub_write_byte(UINT32 address, UINT8 data)
 	if (address >= 0x24c000 && address <= 0x253fff) {
 		address -= 0x24c000;
 		K052109Write(address / 2, data);
+		return;
+	}
+
+	if ((address & 0xfe0000) == 0x280000) {
+		DrvShareRAM2[(address & 0x1ffff)^1] = data;
+		expand_graphics_single(address);
 		return;
 	}
 
@@ -424,7 +463,9 @@ static void K052109Callback(INT32 layer, INT32, INT32 *code, INT32 *color, INT32
 
 static void K051960Callback(INT32 *code, INT32 *color, INT32 *priority, INT32 *)
 {
-	*priority = (*color & 0x60) >> 5;
+	static INT32 primask[2][4] = { { 0xfa, 0xaa, 0xfa, 0xfe }, { 0xfc, 0xf0, 0x00, 0xfe } };
+
+	*priority = primask[gradius3_priority][((*color & 0x60) >> 5)];
 
 	*code |= (*color & 0x01) << 13;
 	*code &= 0x3fff;
@@ -475,6 +516,7 @@ static INT32 MemIndex()
 
 	DrvSndROM		= Next; Next += 0x080000;
 
+	konami_palette32	= (UINT32*)Next;
 	DrvPalette		= (UINT32*)Next; Next += 0x800 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -512,6 +554,8 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
+	GenericTilesInit();
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -558,7 +602,7 @@ static INT32 DrvInit()
 	SekMapMemory(Drv68KRAM0,		0x040000, 0x043fff, SM_RAM);
 	SekMapMemory(DrvPalRAM,			0x080000, 0x080fff, SM_RAM);
 	SekMapMemory(DrvShareRAM,		0x100000, 0x103fff, SM_RAM);
-	SekMapMemory(DrvShareRAM2,		0x180000, 0x19ffff, SM_RAM);
+	SekMapMemory(DrvShareRAM2,		0x180000, 0x19ffff, SM_ROM);
 	SekSetWriteWordHandler(0,		gradius3_main_write_word);
 	SekSetWriteByteHandler(0,		gradius3_main_write_byte);
 	SekSetReadWordHandler(0,		gradius3_main_read_word);
@@ -570,7 +614,7 @@ static INT32 DrvInit()
 	SekMapMemory(Drv68KROM1,		0x000000, 0x0fffff, SM_ROM);
 	SekMapMemory(Drv68KRAM1,		0x100000, 0x103fff, SM_RAM);
 	SekMapMemory(DrvShareRAM,		0x200000, 0x203fff, SM_RAM);
-	SekMapMemory(DrvShareRAM2,		0x280000, 0x29ffff, SM_RAM);
+	SekMapMemory(DrvShareRAM2,		0x280000, 0x29ffff, SM_ROM);
 	SekMapMemory(DrvGfxROM1,		0x400000, 0x5fffff, SM_ROM);
 	SekSetWriteWordHandler(0,		gradius3_sub_write_word);
 	SekSetWriteByteHandler(0,		gradius3_sub_write_byte);
@@ -597,15 +641,13 @@ static INT32 DrvInit()
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
 	K007232PCMSetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 
-	K052109Init(DrvShareRAM2, 0x1ffff);
+	K052109Init(DrvShareRAM2, DrvGfxROMExp0, 0x1ffff);
 	K052109SetCallback(K052109Callback);
 	K052109AdjustScroll(-8, 0);
 
-	K051960Init(DrvGfxROM1, 0x1fffff);
+	K051960Init(DrvGfxROM1, DrvGfxROMExp1, 0x1fffff);
 	K051960SetCallback(K051960Callback);
 	K051960SetSpriteOffset(-8, 0);
-
-	GenericTilesInit();
 
 	DrvDoReset();
 
@@ -668,40 +710,22 @@ static INT32 DrvDraw()
 
 	K052109UpdateScroll();
 
-	character_ram_decode();
-
 	if (gradius3_priority == 0)
 	{
-		if (nSpriteEnable & 1) K052109RenderLayer(1, 1, DrvGfxROMExp0);
-
-		if (nBurnLayer & 4) K051960SpritesRender(DrvGfxROMExp1, 3);
-
-		if (nBurnLayer & 2) K051960SpritesRender(DrvGfxROMExp1, 1);
-
-		if (nBurnLayer & 8) K051960SpritesRender(DrvGfxROMExp1, 0);
-
-		if (nSpriteEnable & 2) K052109RenderLayer(2, 0, DrvGfxROMExp0);
-
-		if (nSpriteEnable & 4) K052109RenderLayer(0, 0, DrvGfxROMExp0);
-
-		if (nBurnLayer & 1) K051960SpritesRender(DrvGfxROMExp1, 2);
+		if (nSpriteEnable & 1) K052109RenderLayer(1, K052109_OPAQUE, 2);
+		if (nSpriteEnable & 2) K052109RenderLayer(2, 0, 4);
+		if (nSpriteEnable & 4) K052109RenderLayer(0, 0, 1);
 	}
 	else
 	{
-
-		if (nSpriteEnable & 1) K052109RenderLayer(0, 1, DrvGfxROMExp0);
-		if (nSpriteEnable & 2) K052109RenderLayer(1, 0, DrvGfxROMExp0);
-		if (nSpriteEnable & 4) K052109RenderLayer(2, 0, DrvGfxROMExp0);
-#if 1
-	if (nBurnLayer & 1) K051960SpritesRender(DrvGfxROMExp1, 2); 
-	if (nBurnLayer & 2) K051960SpritesRender(DrvGfxROMExp1, 1);
-	if (nBurnLayer & 4) K051960SpritesRender(DrvGfxROMExp1, 3);
-	if (nBurnLayer & 8) K051960SpritesRender(DrvGfxROMExp1, 0);
-#endif
+		if (nSpriteEnable & 1) K052109RenderLayer(0, K052109_OPAQUE, 1);
+		if (nSpriteEnable & 2) K052109RenderLayer(1, 0, 2);
+		if (nSpriteEnable & 4) K052109RenderLayer(2, 0, 4);
 	}
 
+	if (nBurnLayer & 8) K051960SpritesRender(-1, -1);
 
-	BurnTransferCopy(DrvPalette);
+	KonamiBlendCopy(DrvPalette);
 
 	return 0;
 }

@@ -23,7 +23,7 @@ static UINT8 *DrvBankRAM;
 static UINT8 *DrvKonRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvZ80RAM;
-static UINT32  *DrvPalette;
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 *soundlatch;
@@ -273,18 +273,16 @@ static void K051960Callback(INT32 *code, INT32 *color,INT32 *priority, INT32 *sh
 {
 	switch (*color & 0x70)
 	{
-		case 0x10: *priority = 0x00; break;
-		case 0x00: *priority = 0x01; break;
-		case 0x40: *priority = 0x02; break;
-
+		case 0x10: *priority = 0x00; break; 
+		case 0x00: *priority = 0xf0; break;
+		case 0x40: *priority = 0xfc; break;
 		case 0x20:
-		case 0x60: *priority = 0x03; break;
-
-		// when are these used?
-		case 0x50: *priority = 0x04; break;
+		case 0x60: *priority = 0xfe; break;
+		case 0x50: *priority = 0xcc; break;
 		case 0x30:
-		case 0x70: *priority = 0x05; break;
+		case 0x70: *priority = 0xee; break;
 	}
+
 	*code |= (*color & 0x80) << 6;
 	*code &= 0x3fff;
 	*color = 16 + (*color & 0x0f);
@@ -326,6 +324,7 @@ static INT32 MemIndex()
 
 	DrvSndROM		= Next; Next += 0x040000;
 
+	konami_palette32	= (UINT32*)Next;
 	DrvPalette		= (UINT32*)Next; Next += 0x200 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -367,6 +366,8 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
+	GenericTilesInit();
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -418,11 +419,11 @@ static INT32 DrvInit()
 	ZetSetReadHandler(aliens_sound_read);
 	ZetClose();
 
-	K052109Init(DrvGfxROM0, 0x1fffff);
+	K052109Init(DrvGfxROM0, DrvGfxROMExp0, 0x1fffff);
 	K052109SetCallback(K052109Callback);
 	K052109AdjustScroll(8, 0);
 
-	K051960Init(DrvGfxROM1, 0x1fffff);
+	K051960Init(DrvGfxROM1, DrvGfxROMExp1, 0x1fffff);
 	K051960SetCallback(K051960Callback);
 	K051960SetSpriteOffset(8, 0);
 
@@ -433,8 +434,6 @@ static INT32 DrvInit()
 	K007232Init(0, 3579545, DrvSndROM, 0x40000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
 	K007232PCMSetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-
-	GenericTilesInit();
 
 	DrvDoReset();
 
@@ -467,21 +466,17 @@ static INT32 DrvDraw()
 	K052109UpdateScroll();
 
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x0040;
+		konami_temp_screen[i] = DrvPalette[0x0040];
+		konami_priority_bitmap[i] = 0;
 	}
 
-	K051960SpritesRender(DrvGfxROMExp1, 3);
-	K052109RenderLayer(1, 0, DrvGfxROMExp0);
-	K051960SpritesRender(DrvGfxROMExp1, 2); 
-	K052109RenderLayer(2, 0, DrvGfxROMExp0);
-	K051960SpritesRender(DrvGfxROMExp1, 1);
-	K052109RenderLayer(0, 0, DrvGfxROMExp0);
-	K051960SpritesRender(DrvGfxROMExp1, 0);
+	if (nBurnLayer & 1) K052109RenderLayer(1, 0, 1);
+	if (nBurnLayer & 2) K052109RenderLayer(2, 0, 2);
+	if (nBurnLayer & 4) K052109RenderLayer(0, 0, 4);
 
-	K051960SpritesRender(DrvGfxROMExp1, 4);
-	K051960SpritesRender(DrvGfxROMExp1, 5);
+	if (nSpriteEnable & 1) K051960SpritesRender(-1, -1);
 
-	BurnTransferCopy(DrvPalette);
+	KonamiBlendCopy(DrvPalette);
 
 	return 0;
 }

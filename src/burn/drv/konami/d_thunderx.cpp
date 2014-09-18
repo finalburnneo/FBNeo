@@ -23,7 +23,7 @@ static UINT8 *DrvBankRAM;
 static UINT8 *DrvKonRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvZ80RAM;
-static UINT32  *DrvPalette;
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 *soundlatch;
@@ -31,6 +31,7 @@ static UINT8 *nDrvKonamiBank;
 
 static UINT8 *pmcram;
 static UINT8 thunderx_1f98_data;
+static UINT8 layer_priority;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -322,6 +323,7 @@ static void thunderx_1f98_w(UINT8 data)
 static void scontra_bankswitch(INT32 data)
 {
 	nDrvKonamiBank[0] = data;
+	layer_priority = data & 0x80;
 
 	if (~data & 0x10) {
 		konamiMapMemory(DrvPalRAM,  0x5800, 0x5fff, KON_RAM);
@@ -337,6 +339,7 @@ static void scontra_bankswitch(INT32 data)
 static void thunderx_videobank(INT32 data)
 {
 	nDrvKonamiBank[0] = data;
+	layer_priority = data & 0x08;
 
 	if (data & 0x01) {
 		konamiMapMemory(DrvBankRAM, 0x5800, 0x5fff, KON_RAM);
@@ -482,11 +485,17 @@ static void K052109Callback(INT32 layer, INT32 bank, INT32 *code, INT32 *color, 
 	*color = layer_colorbase[layer] + ((*color & 0xe0) >> 5);
 }
 
-static void K051960Callback(INT32 *, INT32 *color,INT32 *priority, INT32 *shadow)
+static void K051960Callback(INT32 *, INT32 *color,INT32 *priority, INT32 *)
 {
-	*priority = (*color & 0x30) >> 4;
+	switch (*color & 0x30)
+	{
+		case 0x00: *priority = 0xf0; break;
+		case 0x10: *priority = 0xfe; break;
+		case 0x20: *priority = 0xfc; break;
+		case 0x30: *priority = 0xffff; break;
+	}
+
 	*color = 0x20 + (*color & 0x0f);
-	*shadow = 0;
 }
 
 static void thunderx_set_lines(INT32 lines)
@@ -517,6 +526,8 @@ static INT32 DrvDoReset()
 
 	KonamiICReset();
 
+	layer_priority = 0;
+
 	return 0;
 }
 
@@ -534,6 +545,7 @@ static INT32 MemIndex()
 
 	DrvSndROM		= Next; Next += 0x080000;
 
+	konami_palette32	= (UINT32*)Next;
 	DrvPalette		= (UINT32*)Next; Next += 0x400 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -576,6 +588,8 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
+	GenericTilesInit();
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -689,15 +703,13 @@ static INT32 DrvInit()
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
 	K007232PCMSetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 
-	K052109Init(DrvGfxROM0, 0x0fffff >> thunderx);
+	K052109Init(DrvGfxROM0, DrvGfxROMExp0, 0x0fffff >> thunderx);
 	K052109SetCallback(K052109Callback);
 	K052109AdjustScroll(8, 0);
 
-	K051960Init(DrvGfxROM1, 0x0fffff >> thunderx);
+	K051960Init(DrvGfxROM1, DrvGfxROMExp1, 0x0fffff >> thunderx);
 	K051960SetCallback(K051960Callback);
 	K051960SetSpriteOffset(8, 0);
-
-	GenericTilesInit();
 
 	DrvDoReset();
 
@@ -731,28 +743,22 @@ static INT32 DrvDraw()
 
 	K052109UpdateScroll();
 
-//	K051960SpritesRender(DrvGfxROMExp1, 3);
-
-	if (nDrvKonamiBank[0] & 0x08)
+	if (layer_priority)
 	{
-		if (nBurnLayer & 1) K052109RenderLayer(2, 1, DrvGfxROMExp0);
-		if (nBurnLayer & 2) K052109RenderLayer(1, 0, DrvGfxROMExp0);
+		if (nBurnLayer & 1) K052109RenderLayer(2, K052109_OPAQUE, 1);
+		if (nBurnLayer & 2) K052109RenderLayer(1, 0, 2);
 	}
 	else
 	{
-		if (nBurnLayer & 8) K052109RenderLayer(2, 1, DrvGfxROMExp0);
-		if (nBurnLayer & 4) K052109RenderLayer(1, 0, DrvGfxROMExp0);
+		if (nBurnLayer & 1) K052109RenderLayer(1, K052109_OPAQUE, 1);
+		if (nBurnLayer & 2) K052109RenderLayer(2, 0, 2);
 	}
 
-	K051960SpritesRender(DrvGfxROMExp1, 2);
+	if (nBurnLayer & 4) K052109RenderLayer(0, 0, 4);
 
-	K051960SpritesRender(DrvGfxROMExp1, 1);
-
-	K051960SpritesRender(DrvGfxROMExp1, 0); // mask?
-
-	K052109RenderLayer(0, 0, DrvGfxROMExp0);
+	if (nSpriteEnable & 1) K051960SpritesRender(-1, -1);
  
-	BurnTransferCopy(DrvPalette);
+	KonamiBlendCopy(DrvPalette);
 
 	return 0;
 }
@@ -856,6 +862,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(thunderx_1f98_data);
+
+		SCAN_VAR(layer_priority);
 	}
 
 	if (nAction & ACB_WRITE) {

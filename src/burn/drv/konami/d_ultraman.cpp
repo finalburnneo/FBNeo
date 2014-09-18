@@ -28,7 +28,7 @@ static UINT8 *soundlatch;
 static UINT8 *RamEnd;
 static UINT8 *MemEnd;
 
-static UINT32  *DrvPalette;
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static INT32 bank0;
@@ -369,6 +369,7 @@ static INT32 MemIndex()
 	MSM6295ROM	= Next;
 	DrvSndROM	= Next; Next += 0x040000;
 
+	konami_palette32= (UINT32*)Next;
 	DrvPalette	= (UINT32*)Next; Next += 0x2000 * sizeof(UINT32);
 
 	AllRam		= Next;
@@ -411,6 +412,8 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
+	GenericTilesInit();
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -467,7 +470,7 @@ static INT32 DrvInit()
 	ZetSetReadHandler(ultraman_sound_read);
 	ZetClose();
 
-	K051960Init(DrvGfxROM0, 0xfffff);
+	K051960Init(DrvGfxROM0, DrvGfxROMExp0, 0xfffff);
 	K051960SetCallback(K051960Callback);
 	K051960SetSpriteOffset(9, 0);
 
@@ -486,8 +489,6 @@ static INT32 DrvInit()
 
 	MSM6295Init(0, 1056000 / 132, 1);
 	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-
-	GenericTilesInit();
 
 	DrvDoReset();
 
@@ -524,7 +525,7 @@ static inline void DrvRecalcPalette()
 		g = (g << 3) | (g >> 2);
 		b = (b << 3) | (b >> 2);
 
-		DrvPalette[i] = BurnHighCol(r, g, b, 0);
+		DrvPalette[i] = (r << 16) + (g << 8) + b;
 	}
 }
 
@@ -534,15 +535,16 @@ static INT32 DrvDraw()
 		DrvRecalcPalette();
 	}
 
-	BurnTransferClear();
+	memset (konami_priority_bitmap, 0, nScreenWidth * nScreenHeight * sizeof(INT16));
+	memset (konami_temp_screen, 0, nScreenWidth * nScreenHeight * sizeof(INT32));
 
 	K051316_zoom_draw(2, 0);
 	K051316_zoom_draw(1, 0);
-	K051960SpritesRender(DrvGfxROMExp0, 0);
+	K051960SpritesRender(0, 0);
 	K051316_zoom_draw(0, 0);
-	K051960SpritesRender(DrvGfxROMExp0, 1);
+	K051960SpritesRender(1, 1);
 
-	BurnTransferCopy(DrvPalette);
+	KonamiBlendCopy(DrvPalette);
 
 	return 0;
 }

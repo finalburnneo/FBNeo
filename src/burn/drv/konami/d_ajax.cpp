@@ -27,7 +27,7 @@ static UINT8 *DrvShareRAM;
 static UINT8 *DrvKonRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvZ80RAM;
-static UINT32  *DrvPalette;
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 *soundlatch;
@@ -372,10 +372,10 @@ static void K052109Callback(INT32 layer, INT32 bank, INT32 *code, INT32 *color, 
 
 static void K051960Callback(INT32 *code, INT32 *color,INT32 *priority, INT32 *)
 {
-	*priority = 0;
-	if ( *color & 0x10) *priority = 1;
-	if (~*color & 0x40) *priority = 2;
-	if ( *color & 0x20) *priority = 3;
+	*priority = 0xff00;
+	if ( *color & 0x10) *priority |= 0xf0f0;
+	if (~*color & 0x40) *priority |= 0xcccc;
+	if ( *color & 0x20) *priority |= 0xaaaa;
 	*color = 16 + (*color & 0x0f);
 	*code &= 0x1fff;
 }
@@ -443,7 +443,8 @@ static INT32 MemIndex()
 	DrvSndROM0		= Next; Next += 0x040000;
 	DrvSndROM1		= Next; Next += 0x080000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x800 * sizeof(UINT32);
+	konami_palette32	= (UINT32*)Next;
+	DrvPalette		= (UINT32*)Next; Next += 0x801 * sizeof(UINT32);
 
 	AllRam			= Next;
 
@@ -482,6 +483,8 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
+	GenericTilesInit();
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -604,18 +607,16 @@ static INT32 DrvInit()
 	K007232SetRoute(1, BURN_SND_K007232_ROUTE_1, 0.40, BURN_SND_ROUTE_BOTH);
 	K007232SetRoute(1, BURN_SND_K007232_ROUTE_2, 0.30, BURN_SND_ROUTE_BOTH);
 
-	K052109Init(DrvGfxROM0, 0x7ffff);
+	K052109Init(DrvGfxROM0, DrvGfxROMExp0, 0x7ffff);
 	K052109SetCallback(K052109Callback);
 	K052109AdjustScroll(8, 0);
 
-	K051960Init(DrvGfxROM1, 0xfffff);
+	K051960Init(DrvGfxROM1, DrvGfxROMExp1, 0xfffff);
 	K051960SetCallback(K051960Callback);
 	K051960SetSpriteOffset(8, 0);
 
 	K051316Init(0, DrvGfxROM2, DrvGfxROM2, 0x7ffff, K051316Callback, 7, 0);
 	K051316SetOffset(0, -112, -16);
-
-	GenericTilesInit();
 
 	DrvDoReset();
 
@@ -644,34 +645,34 @@ static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
 		KonamiRecalcPal(DrvPalRAM, DrvPalette, 0x1000);
+		DrvPalette[0x800] = 0; // black
 	}
 
 	K052109UpdateScroll();
 
-	BurnTransferClear();
+	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
+		konami_temp_screen[i] = DrvPalette[0x800];
+		konami_priority_bitmap[i] = 0;
+	}
 
-	if (nBurnLayer & 1) K052109RenderLayer(2, 0, DrvGfxROMExp0);
-	
-	if (nSpriteEnable & 1) K051960SpritesRender(DrvGfxROMExp1, 3);
-	if (nSpriteEnable & 2) K051960SpritesRender(DrvGfxROMExp1, 2); 
+	if (nBurnLayer & 1) K052109RenderLayer(2, 0, 1);
 
 	if (ajax_priority)
 	{
 		if (nBurnLayer & 2) K051316_zoom_draw(0, 4);
-		if (nBurnLayer & 4) K052109RenderLayer(1, 0, DrvGfxROMExp0);
+		if (nBurnLayer & 4) K052109RenderLayer(1, 0, 2);
 	}
 	else
 	{
-		if (nBurnLayer & 4) K052109RenderLayer(1, 0, DrvGfxROMExp0);
+		if (nBurnLayer & 4) K052109RenderLayer(1, 0, 2);
 		if (nBurnLayer & 2) K051316_zoom_draw(0, 4);
 	}
 
-	if (nSpriteEnable & 4) K051960SpritesRender(DrvGfxROMExp1, 1);
-	if (nSpriteEnable & 8) K051960SpritesRender(DrvGfxROMExp1, 0);
+	if (nBurnLayer & 8) K052109RenderLayer(0, 0, 8);
 
-	if (nBurnLayer & 8) K052109RenderLayer(0, 0, DrvGfxROMExp0);
+	if (nSpriteEnable & 8) K051960SpritesRender(-1, -1);
 
-	BurnTransferCopy(DrvPalette);
+	KonamiBlendCopy(DrvPalette);
 
 	return 0;
 }

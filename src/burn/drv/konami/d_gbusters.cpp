@@ -23,7 +23,7 @@ static UINT8 *DrvBankRAM;
 static UINT8 *DrvKonRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvZ80RAM;
-static UINT32  *DrvPalette;
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 *soundlatch;
@@ -332,6 +332,7 @@ static INT32 MemIndex()
 
 	DrvSndROM		= Next; Next += 0x040000;
 
+	konami_palette32	= (UINT32*)Next;
 	DrvPalette		= (UINT32*)Next; Next += 0x400 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -373,6 +374,8 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
+	GenericTilesInit();
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -428,15 +431,13 @@ static INT32 DrvInit()
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
 	K007232PCMSetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 
-	K052109Init(DrvGfxROM0, 0x7ffff);
+	K052109Init(DrvGfxROM0, DrvGfxROMExp0, 0x7ffff);
 	K052109SetCallback(K052109Callback);
 	K052109AdjustScroll(8, 0);
 
-	K051960Init(DrvGfxROM1, 0x7ffff);
+	K051960Init(DrvGfxROM1, DrvGfxROMExp1, 0x7ffff);
 	K051960SetCallback(K051960Callback);
 	K051960SetSpriteOffset(8, 0);
-
-	GenericTilesInit();
 
 	DrvDoReset();
 
@@ -471,21 +472,23 @@ static INT32 DrvDraw()
 	if (nDrvRamBank[0] & 0x08)
 	{
 
-		if (nBurnLayer & 1) K052109RenderLayer(2, 1, DrvGfxROMExp0);
-		K051960SpritesRender(DrvGfxROMExp1, 2);
-		if (nBurnLayer & 2) K052109RenderLayer(1, 0, DrvGfxROMExp0);
+		if (nBurnLayer & 1) K052109RenderLayer(2, K052109_OPAQUE, 0);
+		if (nSpriteEnable & 1) K051960SpritesRender(2, 2);
+		if (nBurnLayer & 2) K052109RenderLayer(1, 0, 0);
+		if (nSpriteEnable & 2) K051960SpritesRender(0, 0);
+		if (nBurnLayer & 4) K052109RenderLayer(0, 0, 0);
+
 	}
 	else
 	{
-		if (nBurnLayer & 4) K052109RenderLayer(1, 1, DrvGfxROMExp0);
-		K051960SpritesRender(DrvGfxROMExp1, 2);
-		if (nBurnLayer & 8) K052109RenderLayer(2, 0, DrvGfxROMExp0);
+		if (nBurnLayer & 1) K052109RenderLayer(1, K052109_OPAQUE, 0);
+		if (nSpriteEnable & 1) K051960SpritesRender(2, 2);
+		if (nBurnLayer & 2) K052109RenderLayer(2, 0, 0);
+		if (nSpriteEnable & 2) K051960SpritesRender(0, 0);
+		if (nBurnLayer & 4) K052109RenderLayer(0, 0, 0);
 	}
 
-	K051960SpritesRender(DrvGfxROMExp1, 1);
-	K052109RenderLayer(0, 0, DrvGfxROMExp0);
-
-	BurnTransferCopy(DrvPalette);
+	KonamiBlendCopy(DrvPalette);
 
 	return 0;
 }

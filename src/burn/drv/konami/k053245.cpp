@@ -6,11 +6,13 @@ static void (*K053245Callback[2])(INT32 *code,INT32 *color,INT32 *priority);
 static UINT8 *K053245Ram[2];
 static UINT8 *K053245Buf[2];
 static UINT8 *K053245Gfx[2];
+static UINT8 *K053245GfxExp[2];
 static INT32 K053245Mask[2];
+static INT32 K053245MaskExp[2];
 static INT32 K053245_dx[2];
 static INT32 K053245_dy[2];
 
-static UINT16 *K053245Temp = NULL;
+static UINT32 *K053245Temp = NULL;
 
 static UINT8 K053244Regs[2][0x10];
 static INT32 K053244Bank[2];
@@ -41,14 +43,16 @@ void K053245GfxDecode(UINT8 *src, UINT8 *dst, INT32 len)
 	GfxDecode(len >> 7, 4, 16, 16, Plane, XOffs, YOffs, 0x400, src, dst);
 }
 
-void K053245Init(INT32 chip, UINT8 *gfx, INT32 mask, void (*callback)(INT32 *code,INT32 *color,INT32 *priority))
+void K053245Init(INT32 chip, UINT8 *gfx, UINT8 *gfxexp, INT32 mask, void (*callback)(INT32 *code,INT32 *color,INT32 *priority))
 {
 	K053245Ram[chip] = (UINT8*)BurnMalloc(0x800); // enough
 	K053245Buf[chip] = (UINT8*)BurnMalloc(0x800); // enough
 
 	K053245Mask[chip] = mask;
+	K053245MaskExp[chip] = (mask * 2) / (16 * 16);
 
 	K053245Gfx[chip] = gfx;
+	K053245GfxExp[chip] = gfxexp;
 
 	K053245Callback[chip] = callback;
 
@@ -56,11 +60,7 @@ void K053245Init(INT32 chip, UINT8 *gfx, INT32 mask, void (*callback)(INT32 *cod
 
 	KonamiIC_K053245InUse = 1;
 
-	if (konami_temp_screen == NULL) {
-		INT32 width, height;
-		BurnDrvGetVisibleSize(&width, &height);
-		konami_temp_screen = (UINT16*)BurnMalloc(width * height * 2);
-	}
+	konami_allocate_bitmaps();
 
 	K053245Temp = konami_temp_screen;
 
@@ -69,7 +69,7 @@ void K053245Init(INT32 chip, UINT8 *gfx, INT32 mask, void (*callback)(INT32 *cod
 
 void K053245Exit()
 {
-	K053245Temp = NULL;
+	//K053245Temp = NULL;
 
 	for (INT32 i = 0; i < K053245Active; i++) {
 		BurnFree (K053245Ram[i]);
@@ -173,55 +173,7 @@ void K053244Write(INT32 chip, INT32 offset, INT32 data)
 
 // Sprite Rendering
 
-static void RenderZoomedShadowTile(UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy)
-{
-	INT32 h = ((zoomy << 4) + 0x8000) >> 16;
-	INT32 w = ((zoomx << 4) + 0x8000) >> 16;
-
-	if (!h || !w || sx + w < 0 || sy + h < 0 || sx >= nScreenWidth || sy >= nScreenHeight) return;
-
-	if (fy) fy  = (height-1)*width;
-	if (fx) fy |= (width-1);
-
-	INT32 hz = (height << 12) / h;
-	INT32 wz = (width << 12) / w;
-
-	INT32 starty = 0, startx = 0, endy = h, endx = w;
-	if (sy < 0) starty = 0 - sy;
-	if (sx < 0) startx = 0 - sx;
-	if (sy + h >= nScreenHeight) endy -= (h + sy) - nScreenHeight;
-	if (sx + w >= nScreenWidth ) endx -= (w + sx) - nScreenWidth;
-
-	UINT8  *src = gfx + (code * width * height);
-	UINT16 *dst = konami_temp_screen + (sy + starty) * nScreenWidth + sx;
-	UINT16 *pTemp = pTransDraw + (sy + starty) * nScreenWidth + sx;
-
-	INT32 or1 = 0x8000;
-
-	for (INT32 y = starty; y < endy; y++)
-	{
-		INT32 zy = ((y * hz) >> 12) * width;
-
-		for (INT32 x = startx; x < endx; x++)
-		{
-			INT32 pxl = src[(zy + ((x * wz) >> 12)) ^ fy];
-
-			if (pxl) {
-				if (pxl == 15) {
-					dst[x] = color | pxl;
-					pTemp[x] |= or1;
-				} else {
-					pTemp[x] = color | pxl;
-				}
-			} 
-		}
-
-		dst += nScreenWidth;
-		pTemp += nScreenWidth;
-	}
-}
-
-void K053245SpritesRender(INT32 chip, UINT8 *gfxdata, INT32 priority)
+void K053245SpritesRender(INT32 chip)
 {
 #define NUM_SPRITES 128
 	INT32 offs,pri_code,i;
@@ -238,6 +190,8 @@ void K053245SpritesRender(INT32 chip, UINT8 *gfxdata, INT32 priority)
 
 	UINT16 *sprbuf = (UINT16*)K053245Buf[chip];
 
+	UINT8 *gfxdata = K053245GfxExp[chip];
+
 	/* prebuild a sorted table */
 	for (i=0x800/2, offs=0; offs<i; offs+=8)
 	{
@@ -252,7 +206,7 @@ void K053245SpritesRender(INT32 chip, UINT8 *gfxdata, INT32 priority)
 		}
 	}
 
-	for (pri_code = 0; pri_code < NUM_SPRITES; pri_code++)
+	for (pri_code = NUM_SPRITES - 1; pri_code >= 0; pri_code--)
 	{
 		INT32 ox,oy,color,code,size,w,h,x,y,flipx,flipy,mirrorx,mirrory,shadow,zoomx,zoomy,pri;
 
@@ -266,8 +220,6 @@ void K053245SpritesRender(INT32 chip, UINT8 *gfxdata, INT32 priority)
 		pri = 0;
 
 		(*K053245Callback[chip])(&code,&color,&pri);
-
-		if (pri != priority) continue;//------------------------------------------------------- OK??
 
 		size = (BURN_ENDIAN_SWAP_INT16(sprbuf[offs]) & 0x0f00) >> 8;
 
@@ -289,7 +241,7 @@ void K053245SpritesRender(INT32 chip, UINT8 *gfxdata, INT32 priority)
 			if (zoomx > 0x2000) continue;
 			if (zoomx) zoomx = (0x400000+zoomx/2) / zoomx;
 			else zoomx = 2 * 0x400000;
-//          else zoomx = zoomy; /* workaround for TMNT2 */
+//         		else zoomx = zoomy; /* workaround for TMNT2 */
 		}
 		else zoomx = zoomy;
 
@@ -381,32 +333,20 @@ void K053245SpritesRender(INT32 chip, UINT8 *gfxdata, INT32 priority)
 					fy = flipy;
 				}
 
-				c = (c & 0x3f) | (code & ~0x3f);
+				c = ((c & 0x3f) | (code & ~0x3f)) & K053245MaskExp[chip];
 
 				if (shadow) {
-					RenderZoomedShadowTile(gfxdata, c, color << 4, sx, sy, fx, fy, 16, 16, zw << 12, zh << 12);
+					konami_render_zoom_shadow_tile(gfxdata, c, color * 16, sx, sy, fx, fy, 16, 16, zw << 12, zh << 12, pri, 0);
 					continue;
 				}
 
 				if (zoomx == 0x10000 && zoomy == 0x10000)
 				{
-					if (fy) {
-						if (fx) {
-							Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, c, sx, sy, color, 4, 0, 0, gfxdata);
-						} else {
-							Render16x16Tile_Mask_FlipY_Clip(pTransDraw, c, sx, sy, color, 4, 0, 0, gfxdata);
-						}
-					} else {
-						if (fx) {
-							Render16x16Tile_Mask_FlipX_Clip(pTransDraw, c, sx, sy, color, 4, 0, 0, gfxdata);
-						} else {
-							Render16x16Tile_Mask_Clip(pTransDraw, c, sx, sy, color, 4, 0, 0, gfxdata);
-						}
-					}
+					konami_draw_16x16_prio_tile(gfxdata, c, color * 16, sx, sy, fx, fy, pri);
 				}
 				else
 				{
-					RenderZoomedTile(pTransDraw, gfxdata, c, color << 4, 0, sx, sy, fx, fy, 16, 16, zw << 12, zh << 12);
+					konami_draw_16x16_priozoom_tile(gfxdata, c, color * 16, 0, sx, sy, fx, fy, 16, 16, zw << 12, zh << 12, pri);
 				}
 			}
 		}

@@ -31,17 +31,13 @@ static int prevPause = 0;
 
 static void CheckSystemMacros() // These are the Pause / FFWD macros added to the input dialog
 {
-    // Pause
-    if (macroSystemPause && macroSystemPause != prevPause) {
-        if (bDrvOkay && !kNetGame) {
-            SetPauseMode(!bRunPause);
-        } else {
-            SetPauseMode(0);
-        }
-    }
-    prevPause = macroSystemPause;
-    // FFWD
-    if (!kNetGame) bAppDoFast = macroSystemFFWD;
+	// Pause
+	if (macroSystemPause && macroSystemPause != prevPause) {
+		PostMessage(hScrnWnd, WM_KEYDOWN, VK_PAUSE, 0);
+	}
+	prevPause = macroSystemPause;
+	// FFWD
+	if (!kNetGame) bAppDoFast = macroSystemFFWD;
 }
 
 static int GetInput(bool bCopy)

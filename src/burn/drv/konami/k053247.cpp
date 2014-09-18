@@ -388,11 +388,9 @@ void K053247SpritesRender()
 			ox =  ox - offx;
 			oy = -oy - offy;
 		}
+
 		ox += K053247_dx;
 		oy -= K053247_dy;
-
-		ox = ((ox+16) & 0x3ff) - 16;
-		oy = ((oy+16) & 0x3ff) - 16;
 
 		// apply global and display window offsets
 

@@ -27,7 +27,7 @@ static int nNormalFrac = 0;					// Extra fraction we did
 static bool bAppDoStep = 0;
 static bool bAppDoFast = 0;
 static int nFastSpeed = 6;
-static int prevPause = 0;
+static int prevPause = 0, prevSState = 0, prevLState = 0, prevUState = 0;
 
 static void CheckSystemMacros() // These are the Pause / FFWD macros added to the input dialog
 {
@@ -38,6 +38,21 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 	prevPause = macroSystemPause;
 	// FFWD
 	if (!kNetGame) bAppDoFast = macroSystemFFWD;
+	// Load State
+	if (macroSystemLoadState && macroSystemLoadState != prevLState) {
+		PostMessage(hScrnWnd, WM_KEYDOWN, VK_F9, 0);
+	}
+	prevLState = macroSystemLoadState;
+	// Save State
+	if (macroSystemSaveState && macroSystemSaveState != prevSState) {
+		PostMessage(hScrnWnd, WM_KEYDOWN, VK_F10, 0);
+	}
+	prevSState = macroSystemSaveState;
+	// UNDO State
+	if (macroSystemUNDOState && macroSystemUNDOState != prevUState) {
+		scrnSSUndo();
+	}
+	prevUState = macroSystemUNDOState;
 }
 
 static int GetInput(bool bCopy)

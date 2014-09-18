@@ -113,6 +113,12 @@ extern TCHAR szPlayerDefaultIni[4][MAX_PATH];
 // mappable System Macros for the Input Dialogue
 extern UINT8 macroSystemPause;
 extern UINT8 macroSystemFFWD;
+extern UINT8 macroSystemSaveState;
+extern UINT8 macroSystemLoadState;
+extern UINT8 macroSystemUNDOState;
+
+// scrn.cpp
+extern void scrnSSUndo();
 
 // cong.cpp
 extern const INT32 nConfigMinVersion;					// Minimum version of application for which input files are valid

@@ -772,6 +772,20 @@ int BurnerLoadDriver(TCHAR *szDriverName)
 	return 0;
 }
 
+void scrnSSUndo() // called from the menu (shift+F8) and CheckSystemMacros() in run.cpp
+{
+	if (bDrvOkay) {
+		TCHAR szString[256] = _T("state undo");
+		TCHAR szStringFailed[256] = _T("state: nothing to undo");
+		if (!StatedUNDO(nSavestateSlot)) {
+			VidSNewShortMsg(szString);
+		} else {
+			VidSNewShortMsg(szStringFailed);
+		}
+		PausedRedraw();
+	}
+}
+
 static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 {
 	//if(id >= ID_MDI_START_CHILD) {
@@ -1088,16 +1102,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			break;
 		}
 		case MENU_STATE_UNDO:
-			if (bDrvOkay) {
-				TCHAR szString[256] = _T("state undo");
-				TCHAR szStringFailed[256] = _T("state: nothing to undo");
-				if (!StatedUNDO(nSavestateSlot)) {
-					VidSNewShortMsg(szString);
-				} else {
-					VidSNewShortMsg(szStringFailed);
-				}
-				PausedRedraw();
-			}
+			scrnSSUndo();
 			break;
 		case MENU_STATE_LOAD_SLOT:
 			if (bDrvOkay && !kNetGame) {

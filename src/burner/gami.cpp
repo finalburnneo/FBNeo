@@ -21,6 +21,9 @@ bool bLeftAltkeyMapped = false;
 // These are mappable global macros for mapping Pause/FFWD etc to controls in the input mapping dialogue. -dink
 UINT8 macroSystemPause = 0;
 UINT8 macroSystemFFWD = 0;
+UINT8 macroSystemSaveState = 0;
+UINT8 macroSystemLoadState = 0;
+UINT8 macroSystemUNDOState = 0;
 
 // ---------------------------------------------------------------------------
 
@@ -268,6 +271,35 @@ static void GameInpInitMacros()
 			nMacroCount++;
 			pgi++;
 
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			pgi->Macro.nSysMacro = 1;
+			sprintf(pgi->Macro.szName, "System Load State");
+			pgi->Macro.pVal[0] = &macroSystemLoadState;
+			pgi->Macro.nVal[0] = 1;
+			nMacroCount++;
+			pgi++;
+
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			pgi->Macro.nSysMacro = 1;
+			sprintf(pgi->Macro.szName, "System Save State");
+			pgi->Macro.pVal[0] = &macroSystemSaveState;
+			pgi->Macro.nVal[0] = 1;
+			nMacroCount++;
+			pgi++;
+
+			pgi->nInput = GIT_MACRO_AUTO;
+			pgi->nType = BIT_DIGITAL;
+			pgi->Macro.nMode = 0;
+			pgi->Macro.nSysMacro = 1;
+			sprintf(pgi->Macro.szName, "System UNDO State");
+			pgi->Macro.pVal[0] = &macroSystemUNDOState;
+			pgi->Macro.nVal[0] = 1;
+			nMacroCount++;
+			pgi++;
 	}
 
 	for (INT32 nPlayer = 0; nPlayer < nMaxPlayers; nPlayer++) {

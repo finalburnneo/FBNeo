@@ -49,7 +49,7 @@ void K053936Init(INT32 chip, UINT8 *ram, INT32 len, INT32 w, INT32 h, void (*pCa
 		pTileCallback1 = pCallback;
 	}
 
-	konami_allocate_bitmaps();
+	KonamiAllocateBitmaps();
 
 	KonamiIC_K053936InUse = 1;
 }
@@ -117,7 +117,7 @@ void K053936PredrawTiles(INT32 chip, UINT8 *gfx, INT32 transparent, INT32 tcol)
 
 static inline void copy_roz(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT32 maxy, UINT32 startx, UINT32 starty, INT32 incxx, INT32 incxy, INT32 incyx, INT32 incyy, INT32 transp)
 {
-	UINT32 *dst = konami_temp_screen;
+	UINT32 *dst = konami_bitmap32;
 	UINT32 *pal = konami_palette32;
 	UINT16 *src = tscreen[chip];
 

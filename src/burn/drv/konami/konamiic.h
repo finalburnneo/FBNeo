@@ -7,33 +7,32 @@ extern UINT32 KonamiIC_K053245InUse;
 extern UINT32 KonamiIC_K053247InUse;
 extern UINT32 KonamiIC_K053936InUse;
 
-extern UINT16 *konami_priority_bitmap;
-
-extern UINT32 *konami_temp_screen;
+extern UINT8 *konami_priority_bitmap;
+extern UINT32 *konami_bitmap32;
 extern UINT32 *konami_palette32;
+
+void KonamiClearBitmaps(UINT32 color);
 void KonamiBlendCopy(UINT32 *palette);
 
-void konami_allocate_bitmaps();
+void KonamiICReset();
+void KonamiICExit();
+void KonamiICScan(INT32 nAction);
 
+void KonamiRecalcPalette(UINT8 *src, UINT32 *dst, INT32 len);
+
+void konami_rom_deinterleave_2(UINT8 *src, INT32 len);
+void konami_rom_deinterleave_4(UINT8 *src, INT32 len);
+
+// internal
+void KonamiAllocateBitmaps();
 void konami_draw_16x16_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy);
 void konami_draw_16x16_prio_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT32 priority);
 void konami_draw_16x16_zoom_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy);
 void konami_draw_16x16_priozoom_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority);
 void konami_render_zoom_shadow_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority, INT32 shadow);
 
-extern INT32 K05324xZRejection;
-void K05324xSetZRejection(INT32 z);
-
-void KonamiICReset();
-void KonamiICExit();
-void KonamiICScan(INT32 nAction);
-
-void konami_rom_deinterleave_2(UINT8 *src, INT32 len);
-void konami_rom_deinterleave_4(UINT8 *src, INT32 len);
-
-void KonamiRecalcPal(UINT8 *src, UINT32 *dst, INT32 len);
-
-
+// k051960 / k052109 shared
+//---------------------------------------------------------------------------------------------------------------
 void K052109_051960_w(INT32 offset, INT32 data);
 UINT8 K052109_051960_r(INT32 offset);
 
@@ -151,6 +150,8 @@ void K051316Init(INT32 chip, UINT8 *gfx, UINT8 *gfxexp, INT32 mask, void (*callb
 void K051316Reset();
 void K051316Exit();
 
+#define K051316_16BIT	(1<<8)
+
 void K051316RedrawTiles(INT32 chip);
 
 UINT8 K051316ReadRom(INT32 chip, INT32 offset);
@@ -162,6 +163,11 @@ void K051316WrapEnable(INT32 chip, INT32 status);
 void K051316SetOffset(INT32 chip, INT32 xoffs, INT32 yoffs);
 void K051316_zoom_draw(INT32 chip, INT32 flags);
 void K051316Scan(INT32 nAction);
+
+// K053245 / k053247 shared
+//---------------------------------------------------------------------------------------------------------------
+extern INT32 K05324xZRejection;
+void K05324xSetZRejection(INT32 z);
 
 // K053245.cpp
 //---------------------------------------------------------------------------------------------------------------
@@ -250,4 +256,3 @@ void K053936SetOffset(INT32 chip, INT32 xoffs, INT32 yoffs);
 
 void K053936PredrawTiles(INT32 chip, UINT8 *gfx, INT32 transparent, INT32 tcol /*transparent color*/);
 void K053936Draw(INT32 chip, UINT16 *ctrl, UINT16 *linectrl, INT32 transp);
-

@@ -578,7 +578,6 @@ static INT32 MemIndex()
 
 	DrvSndROM		= Next; Next += 0x100000;
 
-	konami_palette32	= (UINT32*)Next;
 	DrvPalette		= (UINT32*)Next; Next += 0x800 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -761,9 +760,7 @@ static void sortlayers(INT32 *layer,INT32 *pri)
 
 static INT32 DrvDraw()
 {
-	if (DrvRecalc) {
-		KonamiRecalcPal(DrvPalRAM, DrvPalette, 0x1000);
-	}
+	KonamiRecalcPalette(DrvPalRAM, DrvPalette, 0x1000);
 
 	K052109UpdateScroll();
 

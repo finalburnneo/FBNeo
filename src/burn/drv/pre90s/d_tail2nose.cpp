@@ -577,7 +577,7 @@ static INT32 DrvDraw()
 			redraw_zoom_tiles = 0;
 		}
 
-		K051316_zoom_draw(0, 0);
+		K051316_zoom_draw(0, 0 | K051316_16BIT);
 		draw_sprites();
 		draw_layer();
 	} else {

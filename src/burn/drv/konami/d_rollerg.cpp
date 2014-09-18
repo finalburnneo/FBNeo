@@ -338,7 +338,6 @@ static INT32 MemIndex()
 
 	DrvSndROM		= Next; Next += 0x080000;
 
-	konami_palette32	= (UINT32*)Next;
 	DrvPalette		= (UINT32*)Next; Next += 0x400 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -445,14 +444,9 @@ static INT32 DrvExit()
 
 static INT32 DrvDraw()
 {
-	if (DrvRecalc) {
-		KonamiRecalcPal(DrvPalRAM, DrvPalette, 0x800);
-	}
+	KonamiRecalcPalette(DrvPalRAM, DrvPalette, 0x800);
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		konami_temp_screen[i] = DrvPalette[0x100];
-		konami_priority_bitmap[i] = 0;
-	}
+	KonamiClearBitmaps(DrvPalette[0x100]);
 
 	K051316_zoom_draw(0, 1);
 	K053245SpritesRender(0);

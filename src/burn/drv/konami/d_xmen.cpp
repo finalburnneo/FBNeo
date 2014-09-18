@@ -508,7 +508,6 @@ static INT32 DrvExit()
 	return 0;
 }
 
-// not standard konami layout
 static inline void DrvRecalcPalette()
 {
 	UINT8 r,g,b;
@@ -568,10 +567,7 @@ static INT32 DrvDraw()
 
 	sortlayers(layer,layerpri);
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		konami_temp_screen[i] = DrvPalette[16 * bg_colorbase+1];
-		konami_priority_bitmap[i] = 0;
-	}
+	KonamiClearBitmaps(DrvPalette[16 * bg_colorbase+1]);
 
 	if (nBurnLayer & 1) K052109RenderLayer(layer[0], 0, 1);
 	if (nBurnLayer & 2) K052109RenderLayer(layer[1], 0, 2);

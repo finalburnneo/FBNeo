@@ -146,8 +146,8 @@ void K052109AdjustScroll(INT32 x, INT32 y)
 
 void K052109RenderLayerLineScroll(INT32 nLayer, INT32 Flags, INT32 Priority)
 {
-	UINT32 *dst = konami_temp_screen;
-	UINT16 *pdst = konami_priority_bitmap;
+	UINT32 *dst = konami_bitmap32;
+	UINT8 *pdst = konami_priority_bitmap;
 
 	INT32 Category = Flags & 0xff;
 	INT32 Opaque = (Flags >> 16) & 1;
@@ -291,6 +291,8 @@ void K052109RenderLayer(INT32 nLayer, INT32 Flags, INT32 Priority)
 			if (x >= nScreenWidth || y >= nScreenHeight) continue;
 
 			{
+				UINT32 *dst = konami_bitmap32 + y * nScreenWidth + x;
+				UINT8 *pri = konami_priority_bitmap + y * nScreenWidth + x;
 				UINT8 *gfx = K052109RomExp + (Code & K052109RomExpMask) * 0x40;
 
 				INT32 flip = 0;
@@ -300,16 +302,27 @@ void K052109RenderLayer(INT32 nLayer, INT32 Flags, INT32 Priority)
 				UINT32 *pal = konami_palette32 + (Colour * 16);
 				INT32 trans = (Opaque) ? 0xffff : 0;
 
-				for (INT32 yy = 0; yy < 8; yy++) {
-					for (INT32 xx = 0; xx < 8; xx++) {
-						if ((x+xx) >= 0 && (x+xx) < nScreenWidth && (y+yy) >= 0 && (y+yy) < nScreenHeight) {
-							INT32 pxl = gfx[((yy*8)+xx)^flip];
-							if (pxl != trans) {
-								konami_temp_screen[((yy+y)*nScreenWidth) + x + xx] = pal[pxl];
-								konami_priority_bitmap[((yy+y)*nScreenWidth) + x + xx] = Priority;
+				for (INT32 yy = 0; yy < 8; yy++, y++)
+				{
+					if (y >= 0 && y < nScreenHeight)
+					{
+						for (INT32 xx = 0; xx < 8; xx++)
+						{
+							if ((x+xx) >= 0 && (x+xx) < nScreenWidth)
+							{
+								INT32 pxl = gfx[((yy*8)+xx)^flip];
+	
+								if (pxl != trans)
+								{
+									dst[xx] = pal[pxl];
+									pri[xx] = Priority;
+								}
 							}
 						}
 					}
+
+					dst += nScreenWidth;
+					pri += nScreenWidth;
 				}
 			}
 		}
@@ -461,7 +474,7 @@ void K052109Init(UINT8 *pRomSrc, UINT8 *pRomSrcExp, UINT32 RomMask)
 		K052109ScrollYOff[i]=0;
 	}
 
-	konami_allocate_bitmaps();
+	KonamiAllocateBitmaps();
 
 	has_extra_video_ram = 0;
 }

@@ -8,41 +8,9 @@ UINT32 KonamiIC_K053245InUse = 0;
 UINT32 KonamiIC_K053247InUse = 0;
 UINT32 KonamiIC_K053936InUse = 0;
 
-UINT32 *konami_temp_screen = NULL;
-INT32 K05324xZRejection = -1;
-
+UINT32 *konami_bitmap32 = NULL;
+UINT8  *konami_priority_bitmap = NULL;
 UINT32 *konami_palette32;
-
-UINT16 *konami_priority_bitmap = NULL;
-
-void K05324xSetZRejection(INT32 z)
-{
-	K05324xZRejection = z;
-}
-
-UINT8 K052109_051960_r(INT32 offset)
-{
-	if (K052109RMRDLine == 0)
-	{
-		if (offset >= 0x3800 && offset < 0x3808)
-			return K051937Read(offset - 0x3800);
-		else if (offset < 0x3c00)
-			return K052109Read(offset);
-		else
-			return K051960Read(offset - 0x3c00);
-	}
-	else return K052109Read(offset);
-}
-
-void K052109_051960_w(INT32 offset, INT32 data)
-{
-	if (offset >= 0x3800 && offset < 0x3808)
-		K051937Write(offset - 0x3800,data);
-	else if (offset < 0x3c00)
-		K052109Write(offset,         data);
-	else
-		K051960Write(offset - 0x3c00,data);
-}
 
 static void shuffle(UINT16 *buf, INT32 len)
 {
@@ -72,17 +40,18 @@ void konami_rom_deinterleave_4(UINT8 *src, INT32 len)
 	konami_rom_deinterleave_2(src, len);
 }
 
-// xbbbbbgggggrrrrr (used mostly by Konami-custom cpu games)
-void KonamiRecalcPal(UINT8 *src, UINT32 *dst, INT32 len)
+void KonamiRecalcPalette(UINT8 *src, UINT32 *dst, INT32 len)
 {
+	konami_palette32 = dst;
+
 	UINT8 r,g,b;
 	UINT16 *p = (UINT16*)src;
 	for (INT32 i = 0; i < len / 2; i++) {
 		UINT16 d = BURN_ENDIAN_SWAP_INT16((p[i] << 8) | (p[i] >> 8));
 
-		b = (d >> 10) & 0x1f;
-		g = (d >>  5) & 0x1f;
 		r = (d >>  0) & 0x1f;
+		g = (d >>  5) & 0x1f;
+		b = (d >> 10) & 0x1f;
 
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (g >> 2);
@@ -101,7 +70,6 @@ void KonamiICReset()
 	if (KonamiIC_K053247InUse) K053247Reset();
 	if (KonamiIC_K053936InUse) K053936Reset();
 
-	// No init's, so always reset these
 	K053251Reset();
 	K054000Reset();
 	K051733Reset();
@@ -109,9 +77,9 @@ void KonamiICReset()
 
 void KonamiICExit()
 {
-	if (konami_temp_screen) {
-		BurnFree (konami_temp_screen);
-		konami_temp_screen = NULL;
+	if (konami_bitmap32) {
+		BurnFree (konami_bitmap32);
+		konami_bitmap32 = NULL;
 	}
 
 	if (konami_priority_bitmap) {
@@ -149,27 +117,38 @@ void KonamiICScan(INT32 nAction)
 	K051733Scan(nAction);
 }
 
-
-void konami_allocate_bitmaps()
+void KonamiAllocateBitmaps()
 {
 	INT32 width, height;
 	BurnDrvGetVisibleSize(&width, &height);
 
-	if (konami_temp_screen == NULL) {
-		konami_temp_screen = (UINT32*)BurnMalloc(width * height * sizeof(INT32));
+	if (konami_bitmap32 == NULL) {
+		konami_bitmap32 = (UINT32*)BurnMalloc(width * height * sizeof(INT32));
 	}
 
 	if (konami_priority_bitmap == NULL) {
-		konami_priority_bitmap = (UINT16*)BurnMalloc(width * height * sizeof(INT16));
+		konami_priority_bitmap = (UINT8*)BurnMalloc(width * height * sizeof(INT8));
 	}
 }
 
+void KonamiClearBitmaps(UINT32 color)
+{
+	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
+		konami_priority_bitmap[i] = 0;
+		konami_bitmap32[i] = color;
+	}
+}
 
 void KonamiBlendCopy(UINT32 *pPalette)
 {
 	pBurnDrvPalette = pPalette;
 
-	UINT32 *bmp = konami_temp_screen;
+	UINT32 *bmp = konami_bitmap32;
+
+	if (nBurnBpp == 4) {
+		memcpy (pBurnDraw, konami_bitmap32, nScreenWidth * nScreenHeight * sizeof(INT32));
+		return;
+	}
 
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 		PutPix(pBurnDraw + (i * nBurnBpp), BurnHighCol(bmp[i]>>16, (bmp[i]>>8)&0xff, bmp[i]&0xff, 0));
@@ -208,12 +187,12 @@ void konami_draw_16x16_priozoom_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 
 
 		for (INT32 y = sy; y < ey; y++)
 		{
-			UINT8 *src = gfx_base + (y_index / 0x10000) * width;
-			UINT32 *dst = konami_temp_screen + y * nScreenWidth;
-			UINT16 *prio = konami_priority_bitmap + y * nScreenWidth;
-
 			if (y >= 0 && y < nScreenHeight) 
 			{
+				UINT8 *src = gfx_base + (y_index / 0x10000) * width;
+				UINT32 *dst = konami_bitmap32 + y * nScreenWidth;
+				UINT8 *prio = konami_priority_bitmap + y * nScreenWidth;
+
 				for (INT32 x = sx, x_index = x_index_base; x < ex; x++)
 				{
 					if ((priority & (1 << (prio[x] & 0x1f)))==0) {
@@ -239,7 +218,6 @@ void konami_draw_16x16_priozoom_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 
 
 void konami_draw_16x16_zoom_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy)
 {
-	// Based on MAME sources for tile zooming
 	UINT8 *gfx_base = gfxbase + (code * width * height);
 	int dh = (zoomy * height + 0x8000) / 0x10000;
 	int dw = (zoomx * width + 0x8000) / 0x10000;
@@ -270,7 +248,7 @@ void konami_draw_16x16_zoom_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 
 			if (y >= 0 && y < nScreenHeight) 
 			{
 				UINT8 *src = gfx_base + (y_index / 0x10000) * width;
-				UINT32 *dst = konami_temp_screen + y * nScreenWidth;
+				UINT32 *dst = konami_bitmap32 + y * nScreenWidth;
 
 				for (INT32 x = sx, x_index = x_index_base; x < ex; x++)
 				{
@@ -299,8 +277,8 @@ void konami_draw_16x16_prio_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 
 
 	UINT8 *gfx = gfxbase + code * 0x100;
 
-	UINT16 *pri = konami_priority_bitmap + (sy * nScreenWidth) + sx;
-	UINT32 *dst = konami_temp_screen + (sy * nScreenWidth) + sx;
+	UINT8 *pri = konami_priority_bitmap + (sy * nScreenWidth) + sx;
+	UINT32 *dst = konami_bitmap32 + (sy * nScreenWidth) + sx;
 	UINT32 *pal = konami_palette32 + color;
 
 	priority |= 1 << 31; // always on!
@@ -339,7 +317,7 @@ void konami_draw_16x16_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 sx, I
 	UINT8 *gfx = gfxbase + code * 0x100;
 
 	UINT32 *pal = konami_palette32 + color;
-	UINT32 *dst = konami_temp_screen + (sy * nScreenWidth) + sx;
+	UINT32 *dst = konami_bitmap32 + (sy * nScreenWidth) + sx;
 
 	for (INT32 y = 0; y < 16; y++, sy++)
 	{
@@ -366,7 +344,6 @@ static inline UINT32 shadow_blend(UINT32 d)
 {
 	return ((((d & 0xff00ff) * 0x9d) & 0xff00ff00) + (((d & 0x00ff00) * 0x9d) & 0x00ff0000)) / 0x100;
 }
-
 
 /*
 // Correct?
@@ -411,7 +388,7 @@ void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT
 				if (y >= 0 && y < nScreenHeight) 
 				{
 					UINT8 *src = gfx_base + (y_index / 0x10000) * width;
-					UINT32 *dst = konami_temp_screen + y * nScreenWidth;
+					UINT32 *dst = konami_bitmap32 + y * nScreenWidth;
 	
 					for (INT32 x = sx, x_index = x_index_base; x < ex; x++)
 					{
@@ -441,8 +418,8 @@ void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT
 				if (y >= 0 && y < nScreenHeight) 
 				{
 					UINT8 *src = gfx_base + (y_index / 0x10000) * width;
-					UINT32 *dst = konami_temp_screen + y * nScreenWidth;
-					UINT16 *pri = konami_priority_bitmap + y * nScreenWidth;
+					UINT32 *dst = konami_bitmap32 + y * nScreenWidth;
+					UINT8 *pri = konami_priority_bitmap + y * nScreenWidth;
 	
 					for (INT32 x = sx, x_index = x_index_base; x < ex; x++)
 					{

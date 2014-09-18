@@ -5449,11 +5449,8 @@ static void BlswhstlDraw()
 	Layer[0] = 0;
 	Layer[1] = 1;
 	Layer[2] = 2;
-	
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		konami_temp_screen[i] = DrvPalette[16 * BGColourBase];
-		konami_priority_bitmap[i] = 0;
-	}
+
+	KonamiClearBitmaps(DrvPalette[16 * BGColourBase]);
 
 	sortlayers(Layer, LayerPri);
 
@@ -5488,10 +5485,7 @@ static INT32 Thndrx2Draw()
 	Layer[1] = 1;
 	Layer[2] = 2;
 	
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		konami_temp_screen[i] = DrvPalette[16 * BGColourBase];
-		konami_priority_bitmap[i] = 0;
-	}
+	KonamiClearBitmaps(DrvPalette[16 * BGColourBase]);
 
 	sortlayers(Layer, LayerPri);
 

@@ -14,8 +14,6 @@ static UINT32   K053246Mask;
 static UINT8 *K053246GfxExp;
 static UINT32   K053246MaskExp;
 
-static UINT32 *K053247Temp = NULL;
-
 static INT32 K053247_dx;
 static INT32 K053247_dy;
 static INT32 K053247_wraparound;
@@ -75,9 +73,7 @@ void K053247Init(UINT8 *gfxrom, UINT8 *gfxromexp, INT32 gfxlen, void (*Callback)
 	K053247_dy = 0;
 	K053247_wraparound = 1;
 
-	konami_allocate_bitmaps();
-
-	K053247Temp = konami_temp_screen;
+	KonamiAllocateBitmaps();
 
 	K053247Flags = flags; // 0x02 highlight, 0x01 shadow
 
@@ -86,8 +82,6 @@ void K053247Init(UINT8 *gfxrom, UINT8 *gfxromexp, INT32 gfxlen, void (*Callback)
 
 void K053247Exit()
 {
-//	K053247Temp = NULL;
-
 	BurnFree (K053247Ram);
 
 	K053247Flags = 0;

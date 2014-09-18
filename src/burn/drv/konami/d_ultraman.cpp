@@ -535,8 +535,7 @@ static INT32 DrvDraw()
 		DrvRecalcPalette();
 	}
 
-	memset (konami_priority_bitmap, 0, nScreenWidth * nScreenHeight * sizeof(INT16));
-	memset (konami_temp_screen, 0, nScreenWidth * nScreenHeight * sizeof(INT32));
+	KonamiClearBitmaps(0);
 
 	K051316_zoom_draw(2, 0);
 	K051316_zoom_draw(1, 0);

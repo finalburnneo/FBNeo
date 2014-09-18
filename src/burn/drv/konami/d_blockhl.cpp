@@ -275,7 +275,6 @@ static INT32 MemIndex()
 	DrvGfxROMExp0		= Next; Next += 0x040000;
 	DrvGfxROMExp1		= Next; Next += 0x040000;
 
-	konami_palette32	= (UINT32*)Next;
 	DrvPalette		= (UINT32*)Next; Next += 0x400 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -399,9 +398,7 @@ static INT32 DrvExit()
 
 static INT32 DrvDraw()
 {
-	if (DrvRecalc) {
-		KonamiRecalcPal(DrvPalRAM, DrvPalette, 0x800);
-	}
+	KonamiRecalcPalette(DrvPalRAM, DrvPalette, 0x800);
 
 	K052109UpdateScroll();
 

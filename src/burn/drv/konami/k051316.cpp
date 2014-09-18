@@ -41,7 +41,7 @@ void K051316Init(INT32 chip, UINT8 *gfx, UINT8 *gfxexp, INT32 mask, void (*callb
 		K051316GfxExpand(gfx, gfxexp, mask+1);
 	}
 
-	konami_allocate_bitmaps();
+	KonamiAllocateBitmaps();
 
 	KonamiIC_K051316InUse = 1;
 
@@ -161,57 +161,111 @@ void K051316WrapEnable(INT32 chip, INT32 status)
 
 static inline void copy_roz(INT32 chip, UINT32 startx, UINT32 starty, INT32 incxx, INT32 incxy, INT32 incyx, INT32 incyy, INT32 wrap, INT32 transp, INT32 flags)
 {
-	UINT32 *dst = konami_temp_screen;
-	UINT16 *pri = konami_priority_bitmap;
-	UINT16 *src = K051316TileMap[chip];
-	UINT32 *pal = konami_palette32;
-
 	UINT32 hshift = 512 << 16;
 	UINT32 wshift = 512 << 16;
 
-	for (INT32 sy = 0; sy < nScreenHeight; sy++, startx+=incyx, starty+=incyy)
-	{
-		UINT32 cx = startx;
-		UINT32 cy = starty;
+	INT32 priority = flags & 0xff;
 
-		if (wrap) {
-			if (transp) {
-				for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, cy+=incxy, dst++, pri++)
-				{
-					INT32 pxl = src[(((cy >> 16) & 0x1ff) << 9) | ((cx >> 16) & 0x1ff)];
-			
-					if (!(pxl & 0x8000)) {
-						*dst = pal[pxl];
-						*pri = flags;
-					}
-				}
-			} else {
-				for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, cy+=incxy, dst++, pri++) {
-					*dst = pal[src[(((cy >> 16) & 0x1ff) << 9) | ((cx >> 16) & 0x1ff)] & 0x7fff];
-					*pri = flags;
-				}
-			}
-		} else {
-			if (transp) {
-				for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, cy+=incxy, dst++, pri++)
-				{
-					if (cx < wshift && cy < hshift) {
+	if (flags & 0x100)	// indexed colors
+	{
+		UINT16 *dst = pTransDraw;
+		UINT16 *src = K051316TileMap[chip];
+
+		for (INT32 sy = 0; sy < nScreenHeight; sy++, startx+=incyx, starty+=incyy)
+		{
+			UINT32 cx = startx;
+			UINT32 cy = starty;
+	
+			if (wrap) {
+				if (transp) {
+					for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, cy+=incxy, dst++)
+					{
 						INT32 pxl = src[(((cy >> 16) & 0x1ff) << 9) | ((cx >> 16) & 0x1ff)];
+				
 						if (!(pxl & 0x8000)) {
-							*dst = pal[pxl];
-							*pri = flags;
+							*dst = pxl;
 						}
 					}
+				} else {
+					for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, cy+=incxy, dst++) {
+						*dst = src[(((cy >> 16) & 0x1ff) << 9) | ((cx >> 16) & 0x1ff)] & 0x7fff;
+					}
 				}
 			} else {
-				for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, cy+=incxy, dst++, pri++)
-				{
-					UINT32 pos = ((cy >> 16) << 9) | (cx >> 16);
+				if (transp) {
+					for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, cy+=incxy, dst++)
+					{
+						if (cx < wshift && cy < hshift) {
+							INT32 pxl = src[(((cy >> 16) & 0x1ff) << 9) | ((cx >> 16) & 0x1ff)];
+							if (!(pxl & 0x8000)) {
+								*dst = pxl;
+							}
+						}
+					}
+				} else {
+					for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, cy+=incxy, dst++)
+					{
+						UINT32 pos = ((cy >> 16) << 9) | (cx >> 16);
+	
+						if (pos >= 0x40000) continue;
+	
+						*dst = src[pos] & 0x7fff;
+					}
+				}
+			}
+		}
+	}
+	else	// 32-bit colors
+	{
+		UINT32 *dst = konami_bitmap32;
+		UINT8 *pri = konami_priority_bitmap;
+		UINT16 *src = K051316TileMap[chip];
+		UINT32 *pal = konami_palette32;
 
-					if (pos >= 0x40000) continue;
-
-					*dst = pal[src[pos] & 0x7fff];
-					*pri = flags;
+		for (INT32 sy = 0; sy < nScreenHeight; sy++, startx+=incyx, starty+=incyy)
+		{
+			UINT32 cx = startx;
+			UINT32 cy = starty;
+	
+			if (wrap) {
+				if (transp) {
+					for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, cy+=incxy, dst++, pri++)
+					{
+						INT32 pxl = src[(((cy >> 16) & 0x1ff) << 9) | ((cx >> 16) & 0x1ff)];
+				
+						if (!(pxl & 0x8000)) {
+							*dst = pal[pxl];
+							*pri = priority;
+						}
+					}
+				} else {
+					for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, cy+=incxy, dst++, pri++) {
+						*dst = pal[src[(((cy >> 16) & 0x1ff) << 9) | ((cx >> 16) & 0x1ff)] & 0x7fff];
+						*pri = priority;
+					}
+				}
+			} else {
+				if (transp) {
+					for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, cy+=incxy, dst++, pri++)
+					{
+						if (cx < wshift && cy < hshift) {
+							INT32 pxl = src[(((cy >> 16) & 0x1ff) << 9) | ((cx >> 16) & 0x1ff)];
+							if (!(pxl & 0x8000)) {
+								*dst = pal[pxl];
+								*pri = priority;
+							}
+						}
+					}
+				} else {
+					for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, cy+=incxy, dst++, pri++)
+					{
+						UINT32 pos = ((cy >> 16) << 9) | (cx >> 16);
+	
+						if (pos >= 0x40000) continue;
+	
+						*dst = pal[src[pos] & 0x7fff];
+						*pri = priority;
+					}
 				}
 			}
 		}

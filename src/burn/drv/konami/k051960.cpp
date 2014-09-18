@@ -193,6 +193,31 @@ void K051960Write(UINT32 Offset, UINT8 Data)
 	K051960Ram[Offset] = Data;
 }
 
+
+UINT8 K052109_051960_r(INT32 offset)
+{
+	if (K052109RMRDLine == 0)
+	{
+		if (offset >= 0x3800 && offset < 0x3808)
+			return K051937Read(offset - 0x3800);
+		else if (offset < 0x3c00)
+			return K052109Read(offset);
+		else
+			return K051960Read(offset - 0x3c00);
+	}
+	else return K052109Read(offset);
+}
+
+void K052109_051960_w(INT32 offset, INT32 data)
+{
+	if (offset >= 0x3800 && offset < 0x3808)
+		K051937Write(offset - 0x3800,data);
+	else if (offset < 0x3c00)
+		K052109Write(offset,         data);
+	else
+		K051960Write(offset - 0x3c00,data);
+}
+
 void K051960SetCallback(void (*Callback)(INT32 *Code, INT32 *Colour, INT32 *Priority, INT32 *Shadow))
 {
 	K051960Callback = Callback;
@@ -233,7 +258,7 @@ void K051960Init(UINT8* pRomSrc, UINT8* pRomSrcExp, UINT32 RomMask)
 
 	nSpriteXOffset = nSpriteYOffset = 0;
 
-	konami_allocate_bitmaps();
+	KonamiAllocateBitmaps();
 }
 
 void K051960Exit()

@@ -366,7 +366,6 @@ static INT32 MemIndex()
 
 	DrvSndROM		= Next; Next += 0x080000;
 
-	konami_palette32	= (UINT32*)Next;
 	DrvPalette		= (UINT32*)Next; Next += 0x800 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -505,9 +504,7 @@ static void sortlayers(INT32 *layer,INT32 *pri)
 
 static INT32 DrvDraw()
 {
-	if (DrvRecalc) {
-		KonamiRecalcPal(DrvPalRAM, DrvPalette, 0x1000);
-	}
+	KonamiRecalcPalette(DrvPalRAM, DrvPalette, 0x1000);
 
 	K052109UpdateScroll();
 
@@ -527,11 +524,8 @@ static INT32 DrvDraw()
 	layer[2] = 2;
 
 	sortlayers(layer,layerpri);
-
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		konami_temp_screen[i] = DrvPalette[16 * bg_colorbase];
-		konami_priority_bitmap[i] = 0;
-	}
+	
+	KonamiClearBitmaps(DrvPalette[16 * bg_colorbase]);
 
 	if (nBurnLayer & 1) K052109RenderLayer(layer[0], 0, 1);
 	if (nBurnLayer & 2) K052109RenderLayer(layer[1], 0, 2);

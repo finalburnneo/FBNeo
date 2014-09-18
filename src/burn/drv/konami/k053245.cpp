@@ -12,12 +12,12 @@ static INT32 K053245MaskExp[2];
 static INT32 K053245_dx[2];
 static INT32 K053245_dy[2];
 
-static UINT32 *K053245Temp = NULL;
-
 static UINT8 K053244Regs[2][0x10];
 static INT32 K053244Bank[2];
 
 static INT32 K053245Active = 0;
+
+INT32 K05324xZRejection = -1;
 
 // Init, Reset, Exit
 
@@ -60,17 +60,13 @@ void K053245Init(INT32 chip, UINT8 *gfx, UINT8 *gfxexp, INT32 mask, void (*callb
 
 	KonamiIC_K053245InUse = 1;
 
-	konami_allocate_bitmaps();
-
-	K053245Temp = konami_temp_screen;
+	KonamiAllocateBitmaps();
 
 	K053245Reset();
 }
 
 void K053245Exit()
 {
-	//K053245Temp = NULL;
-
 	for (INT32 i = 0; i < K053245Active; i++) {
 		BurnFree (K053245Ram[i]);
 		BurnFree (K053245Buf[i]);
@@ -169,6 +165,11 @@ void K053244Write(INT32 chip, INT32 offset, INT32 data)
 	if (offset == 0x06) {
 		K053245UpdateBuffer(chip);
 	}
+}
+
+void K05324xSetZRejection(INT32 z)
+{
+	K05324xZRejection = z;
 }
 
 // Sprite Rendering

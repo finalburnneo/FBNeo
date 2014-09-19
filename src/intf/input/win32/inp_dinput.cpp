@@ -85,7 +85,7 @@ static BOOL CALLBACK mouseEnumCallback(LPCDIDEVICEINSTANCE, LPVOID);
 		gamepad->dwPOVs = didcl.dwPOVs;
 		gamepad->dwButtons = didcl.dwButtons;
 
-		gamepad->lpdid->SetCooperativeLevel(hDinpWnd, DISCL_EXCLUSIVE | DISCL_BACKGROUND);
+		gamepad->lpdid->SetCooperativeLevel(hDinpWnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
 		gamepad->lpdid->EnumObjects(gamepadEnumAxesCallback, /*(void*)this*/ gamepad->lpdid, DIDFT_AXIS);
 		gamepad->lpdid->Acquire();
 

@@ -119,6 +119,7 @@ extern UINT8 macroSystemUNDOState;
 
 // scrn.cpp
 extern void scrnSSUndo();
+extern bool bHasFocus;
 
 // cong.cpp
 extern const INT32 nConfigMinVersion;					// Minimum version of application for which input files are valid

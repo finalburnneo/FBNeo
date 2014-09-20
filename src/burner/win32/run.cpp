@@ -33,7 +33,9 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 {
 	// Pause
 	if (macroSystemPause && macroSystemPause != prevPause) {
-		PostMessage(hScrnWnd, WM_KEYDOWN, VK_PAUSE, 0);
+		if (bHasFocus) {
+			PostMessage(hScrnWnd, WM_KEYDOWN, VK_PAUSE, 0);
+		}
 	}
 	prevPause = macroSystemPause;
 	// FFWD

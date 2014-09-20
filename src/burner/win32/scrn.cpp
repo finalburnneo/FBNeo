@@ -20,6 +20,7 @@ int nWindowPosX = -1, nWindowPosY = -1;					// Window position
 int bAutoPause = 1;
 
 bool bMenuEnabled = true;
+bool bHasFocus = false;
 
 int nSavestateSlot = 1;
 
@@ -557,6 +558,7 @@ static int OnCreate(HWND hWnd, LPCREATESTRUCT /*lpCreateStruct*/)	// HWND hwnd, 
 
 static void OnActivateApp(HWND hwnd, BOOL fActivate, DWORD /* dwThreadId */)
 {
+	bHasFocus = fActivate;
 	if (!kNetGame && bAutoPause && !bAltPause && hInpdDlg == NULL && hInpCheatDlg == NULL && hInpDIPSWDlg == NULL) {
 		bRunPause = fActivate? 0 : 1;
 	}

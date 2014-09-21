@@ -73,6 +73,7 @@ static INT32 no_z80 = 0;
 static INT32 AFEGA_SYS = 0;
 static INT32 Tharriermode = 0; // use macross1/tharrier text draw & joy inputs
 static INT32 Macrossmode = 0; // use macross1 text draw
+static INT32 Strahlmode = 0;
 
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -2999,6 +3000,19 @@ void __fastcall mustang_main_write_word(UINT32 address, UINT16 data)
 void __fastcall mustang_main_write_byte(UINT32 address, UINT8 data)
 {
 	STRANGE_RAM_WRITE_BYTE(0xf0000)
+	switch (address)
+	{
+		case 0x080016:
+		case 0x080017:
+			sync_nmk004();
+			NMK004NmiWrite(data);
+		return;
+		case 0x08001e:
+		case 0x08001f:
+			sync_nmk004();
+			NMK004Write(0, data);
+                        return;
+        }
 }
 
 UINT8 __fastcall acrobatm_main_read_byte(UINT32 address)
@@ -3973,12 +3987,10 @@ static INT32 NMK004DoReset()
 	SekOpen(0);
 	SekReset();
 	SekClose();
-	
+
 	NMK004_reset();
 
-	SekOpen(0);
-	NMK004_init();
-	SekClose();
+	MSM6295SetInitialBanks(2);
 
 	return 0;
 }
@@ -4489,10 +4501,11 @@ static INT32 NMK004Init(INT32 (*pLoadCallback)(), INT32 nCpuSpeed)
 
 	if (BurnLoadRom(NMK004PROGROM + 0x0000, 0x80, 1)) return 1; // load nmk004 rom ^^
 
+	Strahlmode = (strncmp(BurnDrvGetTextA(DRV_NAME), "strahl", 6) == 0);
 	NMK004_init();
 
-        no_z80 = 1;
-        NMK004_enabled = 1;
+	no_z80 = 1;
+	NMK004_enabled = 1;
 
 	GenericTilesInit();
 
@@ -5653,7 +5666,7 @@ static INT32 NMK004Frame()
 	SekNewFrame();
 	tlcs90NewFrame();
 
-#define multiplier	8
+#define multiplier      10
 
 	INT32 nSegment;
 	INT32 nInterleave = 256*multiplier; // extremely high interleave!
@@ -5670,7 +5683,7 @@ static INT32 NMK004Frame()
 		nCyclesDone[0] += SekRun(nSegment);
 
 		if (i == (241*multiplier)) {
-			if (strncmp(BurnDrvGetTextA(DRV_NAME), "strahl", 6) == 0) {
+			if (Strahlmode) {
 				memcpy (DrvSprBuf2, Drv68KRAM + 0xf000, 0x1000);
 			} else {
 				memcpy (DrvSprBuf2, Drv68KRAM + 0x8000, 0x1000);
@@ -5687,8 +5700,9 @@ static INT32 NMK004Frame()
 			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
 		}
 
-		nSegment = (SekTotalCycles() * 8) / (nNMK004CpuSpeed / 1000000); // sync to 68k?
-		BurnTimerUpdate(nSegment);
+		//nSegment = (SekTotalCycles() * 8) / (nNMK004CpuSpeed / 10000000); // sync to 68k?
+		nSegment = i * (nTotalCycles[1] / nInterleave); // I don't know whats right here.. -dink
+		BurnTimerUpdate(nSegment); // why should the multiplier change the speed of the music??? -dink
 	}
 
 	BurnTimerEndFrame(nTotalCycles[1]);
@@ -7886,11 +7900,11 @@ static INT32 MustangLoadCallback()
 		if (BurnLoadRom(DrvGfxROM2 + 0x00000,  5, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM2 + 0x00001,  6, 2)) return 1;
 
-		if (BurnLoadRom(DrvSndROM0 + 0x20000,  7, 1)) return 1;
-		memcpy (DrvSndROM0 + 0x000000, DrvSndROM0 + 0x20000, 0x20000);
+		if (BurnLoadRom(DrvSndROM0 + 0x00000,  7, 1)) return 1;
+		memmove (DrvSndROM0 + 0x040000, DrvSndROM0 + 0x20000, 0x60000);
 
-		if (BurnLoadRom(DrvSndROM1 + 0x20000,  8, 1)) return 1;
-		memcpy (DrvSndROM1 + 0x000000, DrvSndROM1 + 0x20000, 0x20000);
+		if (BurnLoadRom(DrvSndROM1 + 0x00000,  8, 1)) return 1;
+		memmove (DrvSndROM1 + 0x040000, DrvSndROM1 + 0x20000, 0x60000);
 
 		DrvGfxDecode(0x20000, 0x80000, 0x100000);
 	}

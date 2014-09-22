@@ -3309,8 +3309,8 @@ void __fastcall macross_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x080016:
-		case 0x080017:
-			NMK004NmiWrite(data^1);
+		//case 0x080017:
+			NMK004NmiWrite(data);
 		return;
 
 		case 0x080018:
@@ -3343,7 +3343,7 @@ void __fastcall macross_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x080016:
 		case 0x080017:
-			NMK004NmiWrite(data^1);
+			NMK004NmiWrite(data);
 		return;
 
 		case 0x080018:
@@ -8995,7 +8995,7 @@ static INT32 HachamfLoadCallback()
 	SekMapMemory(DrvScrollRAM,	0x08c000, 0x08c3ff, SM_WRITE);
 	SekMapMemory(DrvBgRAM0,		0x090000, 0x093fff, SM_RAM);
 	SekMapMemory(DrvTxRAM,		0x09c000, 0x09c7ff, SM_RAM);
-	SekMapMemory(Drv68KRAM,		0x0f0000, 0x0fffff, SM_ROM);
+	SekMapMemory(Drv68KRAM,		0x0f0000, 0x0fffff, SM_RAM);
 	SekSetWriteWordHandler(0,	hachamf_main_write_word);
 	SekSetWriteByteHandler(0,	hachamf_main_write_byte);
 	SekSetReadWordHandler(0,	hachamf_main_read_word);
@@ -9162,7 +9162,7 @@ static INT32 StrahlLoadCallback()
 	SekInit(0, 0x68000);	
 	SekOpen(0);
 	SekMapMemory(Drv68KROM,			0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(DrvScrollRAM,		0x084000, 0x0843ff, SM_RAM);
+	SekMapMemory(DrvScrollRAM,		0x084000, 0x0843ff, SM_WRITE);
 	SekMapMemory(DrvScrollRAM + 0x400,	0x088000, 0x0883ff, SM_RAM);
 	SekMapMemory(DrvPalRAM,			0x08c000, 0x08c7ff, SM_RAM);
 	SekMapMemory(DrvBgRAM0,			0x090000, 0x093fff, SM_RAM);

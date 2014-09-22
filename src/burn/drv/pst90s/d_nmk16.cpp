@@ -5666,7 +5666,7 @@ static INT32 NMK004Frame()
 	SekNewFrame();
 	tlcs90NewFrame();
 
-#define multiplier      10
+#define multiplier      12
 
 	INT32 nSegment;
 	INT32 nInterleave = 256*multiplier; // extremely high interleave!
@@ -5701,7 +5701,7 @@ static INT32 NMK004Frame()
 		}
 
 		//nSegment = (SekTotalCycles() * 8) / (nNMK004CpuSpeed / 10000000); // sync to 68k?
-		nSegment = i * (nTotalCycles[1] / nInterleave); // I don't know whats right here.. -dink
+		nSegment = i * (nTotalCycles[1] / nInterleave); // I don't know whats right here, this or that.. -dink
 		BurnTimerUpdate(nSegment); // why should the multiplier change the speed of the music??? -dink
 	}
 

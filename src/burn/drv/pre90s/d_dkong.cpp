@@ -2230,7 +2230,7 @@ STD_ROM_FN(dkongf)
 
 struct BurnDriver BurnDrvDkongf = {
 	"dkongf", "dkong", NULL, "dkong", "2004",
-	"Donkey Kong Foundry (hack)\0", NULL, "hack", "Miscellaneous",
+	"Donkey Kong Foundry (hack)\0", NULL, "hack (Jeff Kulczycki)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, dkongfRomInfo, dkongfRomName, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -2239,7 +2239,46 @@ struct BurnDriver BurnDrvDkongf = {
 };
 
 
-// Donkey Kong II - Jumpman Returns (V1.2) (hack)
+// Donkey Kong - Pauline Edition (hack, rev 5)
+// "Pauline Edition" hack, by Clay Cowgill based on Mike Mika's NES version
+
+static struct BurnRomInfo dkongpeRomDesc[] = {
+	{ "c_5et_g.bin",	0x1000, 0xba70b88b, 1 }, //  0 maincpu
+	{ "c_5ct_g.bin",	0x1000, 0x45af403e, 1 }, //  1
+	{ "c_5bt_g.bin",	0x1000, 0x3a9783b7, 1 }, //  2
+	{ "c_5at_g.bin",	0x1000, 0x32bc20ff, 1 }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
+
+	{ "v_5h_b.bin",		0x0800, 0x007aa348, 3 }, //  6 gfx1
+	{ "v_3pt.bin",		0x0800, 0xa967aff0, 3 }, //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x766ae006, 4 }, //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x39e7ca4b, 4 }, //  9
+	{ "l_4r_b.bin",		0x0800, 0x012f2f25, 4 }, // 10
+	{ "l_4s_b.bin",		0x0800, 0x84eb5bfb, 4 }, // 11
+
+	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
+	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13
+	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 }, // 14
+};
+
+STD_ROM_PICK(dkongpe)
+STD_ROM_FN(dkongpe)
+
+struct BurnDriver BurnDrvDkongpe = {
+	"dkongpe", "dkong", NULL, "dkong", "2004",
+	"Donkey Kong - Pauline Edition (hack, rev 5)\0", NULL, "hack (Clay Cowgill)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, dkongpeRomInfo, dkongpeRomName, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong II - Jumpman Returns (hack, V1.2)
 
 static struct BurnRomInfo dkongxRomDesc[] = {
 	{ "c_5et_g.bin",	0x01000, 0xba70b88b, 1 }, //  0 maincpu
@@ -2311,7 +2350,7 @@ static INT32 dkongxInit()
 
 struct BurnDriver BurnDrvDkongx = {
 	"dkongx", "dkong", NULL, "dkong", "2006",
-	"Donkey Kong II - Jumpman Returns (V1.2) (hack)\0", NULL, "hack", "Miscellaneous",
+	"Donkey Kong II - Jumpman Returns (hack, V1.2)\0", NULL, "hack (Braze Technologies)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, dkongxRomInfo, dkongxRomName, DkongSampleInfo, DkongSampleName, DkongInputInfo, NULL,
@@ -2320,7 +2359,7 @@ struct BurnDriver BurnDrvDkongx = {
 };
 
 
-// Donkey Kong II - Jumpman Returns (V1.1) (hack)
+// Donkey Kong II - Jumpman Returns (hack, V1.1)
 
 static struct BurnRomInfo dkongx11RomDesc[] = {
 	{ "c_5et_g.bin",	0x01000, 0xba70b88b, 1 }, //  0 maincpu
@@ -2351,7 +2390,7 @@ STD_ROM_FN(dkongx11)
 
 struct BurnDriver BurnDrvDkongx11 = {
 	"dkongx11", "dkong", NULL, "dkong", "2006",
-	"Donkey Kong II - Jumpman Returns (V1.1) (hack)\0", NULL, "hack", "Miscellaneous",
+	"Donkey Kong II - Jumpman Returns (hack, V1.1)\0", NULL, "hack (Braze Technologies)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, dkongx11RomInfo, dkongx11RomName, DkongSampleInfo, DkongSampleName, DkongInputInfo, NULL,

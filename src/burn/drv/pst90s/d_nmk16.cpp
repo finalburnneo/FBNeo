@@ -11,8 +11,7 @@
 #include "nmk004.h"
 
 #if 0
-	strahl		-- something is wrong with this game...
-	bioship		-- no music... sfx ok?
+	strahl 		-- only the text layer is missing, coin up, press start on blank screen
 	macross		-- bad sound in-game?
 
 	tdragonb	-- bad sound. Seibu sound needs hooked up properly
@@ -5666,7 +5665,7 @@ static INT32 NMK004Frame()
 	SekNewFrame();
 	tlcs90NewFrame();
 
-#define multiplier      12
+#define multiplier      1
 
 	INT32 nSegment;
 	INT32 nInterleave = 256*multiplier; // extremely high interleave!
@@ -5699,6 +5698,11 @@ static INT32 NMK004Frame()
 		if (i == (241*multiplier)) {
 			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
 		}
+
+                //FIXME!!!
+                for (INT32 j=0;j<12;j++) { //same effect as multiplier = 12
+                    tlcs90Run(28);
+                }
 
 		//nSegment = (SekTotalCycles() * 8) / (nNMK004CpuSpeed / 10000000); // sync to 68k?
 		nSegment = i * (nTotalCycles[1] / nInterleave); // I don't know whats right here, this or that.. -dink
@@ -9116,7 +9120,7 @@ static struct BurnRomInfo strahlRomDesc[] = {
 	{ "strl4-02.57",	0x080000, 0x2a38552b, 5 | BRF_GRA },           //  6
 	{ "strl5-03.58",	0x080000, 0xa0e7d210, 5 | BRF_GRA },           //  7
 
-	{ "str6b1w1.776",	0x080000, 0xbb1bb155, 9 | BRF_SND },           //  8 Foreground Tiles
+	{ "str6b1w1.776",	0x080000, 0xbb1bb155, 9 | BRF_GRA },           //  8 Foreground Tiles
 
 	{ "str8pmw1.540",	0x080000, 0x01d6bb6a, 6 | BRF_SND },           //  9 OKI1 Samples
 
@@ -9142,7 +9146,7 @@ static INT32 StrahlLoadCallback()
 		if (BurnLoadRom(DrvGfxROM2 + 0x080000,  6, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM2 + 0x100000,  7, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x080000,  8, 1)) return 1; 
+		if (BurnLoadRom(DrvGfxROM1 + 0x080000,  8, 1)) return 1;
 
 		if (BurnLoadRom(DrvSndROM0 + 0x100000,  9, 1)) return 1;
 		memcpy (DrvSndROM0 + 0x000000, DrvSndROM0 + 0x100000, 0x20000);

@@ -11,7 +11,6 @@
 #include "nmk004.h"
 
 #if 0
-	strahl 		-- only the text layer is missing, coin up, press start on blank screen
 	macross		-- bad sound in-game?
 
 	tdragonb	-- bad sound. Seibu sound needs hooked up properly
@@ -5020,7 +5019,7 @@ static INT32 StrahlDraw()
 	draw_sprites(0, 0x100, 0x0f, 1);
 	draw_sprites(0, 0x100, 0x0f, 0);
 
-	draw_macross_text_layer(0, 0, 0, 0x200);
+	draw_macross_text_layer(0, 0, 0, 0);
 
 	draw_screen_yflip();
 	BurnTransferCopy(DrvPalette);

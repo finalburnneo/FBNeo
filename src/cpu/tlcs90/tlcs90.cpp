@@ -1297,7 +1297,7 @@ INT2        P82         Rising Edge     -
 
 *************************************************************************************************************/
 
-enum e_irq {    INTSWI = 0, INTNMI, INTWD,  INT0,   INTT0,  INTT1,  INTT2,  INTT3,  INTT4,  INT1,   INTT5,  INT2,   INTRX,  INTTX,  INTMAX  };
+enum e_irq {    INTSWI = 0, INTNMI = 1, INTWD = 2,  INT0 = 3,   INTT0 = 4,  INTT1 = 5,  INTT2 = 6,  INTT3 = 7,  INTT4 = 8,  INT1 = 9,   INTT5 = 10,  INT2 = 11,   INTRX = 12,  INTTX = 13,  INTMAX = 14  };
 //DECLARE_ENUM_OPERATORS(e_irq)
 
 INLINE void leave_halt(t90_Regs *cpustate)
@@ -1327,44 +1327,22 @@ static void take_interrupt(t90_Regs *cpustate, e_irq irq)
 
 static void check_interrupts(t90_Regs *cpustate)
 {
-//	e_irq irq;
-	INT32 mask;
+	int irq;
+	int mask;
 
 	if (!(F & IF))
 		return;
 
-#define check_irq_state_mask(num)			\
-	mask = (1 << num);				\
-	if (num >= INT0) mask &= cpustate->irq_mask;	\
-	if ( cpustate->irq_state & mask) {		\
-		take_interrupt( cpustate, (num) );	\
-		return;					\
+	for (irq = INTSWI; irq < INTMAX; irq++)
+	{
+		mask = (1 << irq);
+		if(irq >= INT0) mask &= cpustate->irq_mask;
+		if ( cpustate->irq_state & mask )
+		{
+			take_interrupt( cpustate, (e_irq)irq );
+			return;
+		}
 	}
-
-	check_irq_state_mask(INTSWI)
-	check_irq_state_mask(INTNMI)
-	check_irq_state_mask(INTWD)
-	check_irq_state_mask(INT0)
-	check_irq_state_mask(INTT0)
-	check_irq_state_mask(INTT1)
-	check_irq_state_mask(INTT2)
-	check_irq_state_mask(INTT3)
-	check_irq_state_mask(INTT4)
-	check_irq_state_mask(INT1)
-	check_irq_state_mask(INTT5)
-	check_irq_state_mask(INT2)
-	check_irq_state_mask(INTRX)
-	check_irq_state_mask(INTTX)
-//	check_irq_state_mask(INTMAX)	// include this one?
-
-//	for (irq = INT0; irq < INTMAX; irq++)
-//	{
-//		if ( cpustate->irq_state & cpustate->irq_mask & (1 << irq) )
-//		{
-//			take_interrupt( cpustate, irq );
-//			return;
-//		}
-//	}
 }
 
 void tlcs90_set_irq_line(int irq, int state)
@@ -1419,14 +1397,16 @@ INT32 tlcs90Run(INT32 nCycles)
 	unsigned a32;
 	PAIR tmp;
 
-	cpustate->icount -= cpustate->extra_cycles;
+	cpustate->icount=nCycles;
+	cpustate->nCycles = nCycles + cpustate->extra_cycles;
+	if (cpustate->extra_cycles>0) {
+		cpustate->icount+=cpustate->extra_cycles;
+	}
 	cpustate->extra_cycles = 0;
-	cpustate->nCycles = nCycles;
 
 	do
 	{
 		INT32 prev_cycles = cpustate->icount; // for timers
-
 		cpustate->prvpc.d = cpustate->pc.d;
 	//	debugger_instruction_hook(device, cpustate->pc.d);
 
@@ -2053,11 +2033,9 @@ INT32 tlcs90Run(INT32 nCycles)
 		for (INT32 i = 0; i < 5; i++) {
 			if (cpustate->timer_enable[i]) {
 				cpustate->timer_periods[i] -= (prev_cycles - cpustate->icount);
-
 				if (cpustate->timer_periods[i] <= 0)
 				{
 					cpustate->timer_cb[i](i);
-					
 					cpustate->timer_periods[i] = cpustate->timer_periods_full[i]; // retrigger timer! 
 				}
 			}
@@ -2065,22 +2043,10 @@ INT32 tlcs90Run(INT32 nCycles)
 
 	} while( cpustate->icount > 0 && cpustate->run_end == 0 );
 
-//	bprintf (0, _T("RunEnd: %d\n"), cpustate->run_end);
-
 	cpustate->run_end = 0;
+	cpustate->total_cycles += nCycles;
 
-	cpustate->icount -= cpustate->extra_cycles;
-	cpustate->extra_cycles = 0;
-
-	cpustate->nCycles = 0;
-
-	INT32 ret = nCycles - cpustate->icount;
-
-	cpustate->total_cycles += ret;
-
-	cpustate->icount = 0;
-
-	return ret;
+	return nCycles;
 }
 
 void tlcs90NewFrame()
@@ -2106,7 +2072,7 @@ INT32 tlcs90TotalCycles()
 
 //	bprintf (0, _T("TotalCycles: %d\n"), cpustate->total_cycles + (cpustate->nCycles - cpustate->icount));
 
-	return cpustate->total_cycles + (cpustate->nCycles - cpustate->icount);
+	return cpustate->total_cycles;// + (cpustate->nCycles - cpustate->icount);
 }
 
 INT32 tlcs90Reset()
@@ -2527,55 +2493,54 @@ void t90_timer_callback(INT32 param)
 	if ( (cpustate->internal_registers[ T90_TRUN - T90_IOBASE ] & (1 << i)) == 0 )
 		return;
 
-	timer_fired = 0;
+  timer_fired = 0;
 
 	mode = (cpustate->internal_registers[ T90_TMOD - T90_IOBASE ] >> ((i & ~1) + 2)) & 0x03;
 	// Match
-	switch (mode)
-	{
-		case 0x02: // 8bit PPG
-		case 0x03: // 8bit PWM
-		// TODO: hmm...
-		case 0x00: // 8bit
-			cpustate->timer_value[i]++;
-			if ( cpustate->timer_value[i] == cpustate->internal_registers[ T90_TREG0+i - T90_IOBASE ] )
-				timer_fired = 1;
-		break;
+  switch (mode)
+  {
+    case 0x02: // 8bit PPG
+    case 0x03: // 8bit PWM
+      //logerror("CPU Timer %d expired with unhandled mode %d\n", i, mode);
+      // TODO: hmm...
+    case 0x00: // 8bit
+      cpustate->timer_value[i]++;
+      if ( cpustate->timer_value[i] == cpustate->internal_registers[ T90_TREG0+i - T90_IOBASE ] )
+        timer_fired = 1;
+      break;
 
-		case 0x01: // 16bit
-			if(i & 1)
-				break;
-			cpustate->timer_value[i]++;
-			if(cpustate->timer_value[i] == 0) cpustate->timer_value[i+1]++;
-			if(cpustate->timer_value[i+1] == cpustate->internal_registers[ T90_TREG0+i+1 - T90_IOBASE ])
-			if(cpustate->timer_value[i] == cpustate->internal_registers[ T90_TREG0+i - T90_IOBASE ])
-			timer_fired = 1;
-		break;
-	}
+    case 0x01: // 16bit
+      if(i & 1)
+        break;
+      cpustate->timer_value[i]++;
+      if(cpustate->timer_value[i] == 0) cpustate->timer_value[i+1]++;
+      if(cpustate->timer_value[i+1] == cpustate->internal_registers[ T90_TREG0+i+1 - T90_IOBASE ])
+        if(cpustate->timer_value[i] == cpustate->internal_registers[ T90_TREG0+i - T90_IOBASE ])
+          timer_fired = 1;
+      break;
+  }
 
-	if(timer_fired) {
-		// special stuff handling
-		switch(mode) {
-			case 0x02: // 8bit PPG
-			case 0x03: // 8bit PWM
-			// TODO: hmm...
-			case 0x00: // 8bit
-				if(i & 1)
-					break;
-  				if ( (cpustate->internal_registers[ T90_TCLK - T90_IOBASE ] & (0x0C << (i * 2))) == 0 ) // T0/T1 match signal clocks T1/T3
-					t90_timer_callback(i+1);
-			break;
-
-			case 0x01: // 16bit, only can happen for i=0,2
-				cpustate->timer_value[i+1] = 0;
-				tlcs90_set_irq_line(INTT0 + i+1, 1);
-			break;
-		}
-
-		// regular handling
-		cpustate->timer_value[i] = 0;
-		tlcs90_set_irq_line(INTT0 + i, 1);
-	}
+  if(timer_fired) {
+    // special stuff handling
+    switch(mode) {
+      case 0x02: // 8bit PPG
+      case 0x03: // 8bit PWM
+        // TODO: hmm...
+      case 0x00: // 8bit
+        if(i & 1)
+          break;
+        if ( (cpustate->internal_registers[ T90_TCLK - T90_IOBASE ] & (0x0C << (i * 2))) == 0 ) // T0/T1 match signal clocks T1/T3
+          t90_timer_callback(i+1);
+        break;
+      case 0x01: // 16bit, only can happen for i=0,2
+        cpustate->timer_value[i+1] = 0;
+        tlcs90_set_irq_line(INTT0 + i+1, 1);
+        break;
+    }
+    // regular handling
+    cpustate->timer_value[i] = 0;
+    tlcs90_set_irq_line(INTT0 + i, 1);
+  }
 }
 
 void t90_timer4_callback(INT32 )
@@ -2778,7 +2743,7 @@ INT32 tlcs90_init(INT32 clock)
 
 	memset(cpustate, 0, sizeof(t90_Regs));
 
-	cpustate->timer_period = (1.000000000 / clock) * 8;
+	cpustate->timer_period = 8; // changed to "8" -dink //(1.000000000 / clock) * 8;
 
 	// Reset registers to their initial values
 

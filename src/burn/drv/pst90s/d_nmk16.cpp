@@ -5699,14 +5699,9 @@ static INT32 NMK004Frame()
 			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
 		}
 
-                //FIXME!!!
-                for (INT32 j=0;j<12;j++) { //same effect as multiplier = 12
-                    tlcs90Run(28);
-                }
-
 		//nSegment = (SekTotalCycles() * 8) / (nNMK004CpuSpeed / 10000000); // sync to 68k?
-		nSegment = i * (nTotalCycles[1] / nInterleave); // I don't know whats right here, this or that.. -dink
-		BurnTimerUpdate(nSegment); // why should the multiplier change the speed of the music??? -dink
+		nSegment = i * (nTotalCycles[1] / nInterleave);
+		BurnTimerUpdate(nSegment);
 	}
 
 	BurnTimerEndFrame(nTotalCycles[1]);
@@ -9665,15 +9660,15 @@ static INT32 RapheroInit()
 
 	BurnYM2203Init(1, 1500000, &RapheroYM2203IrqHandler, RapheroSynchroniseStream, RapheroGetTime, 0);
 	BurnTimerAttachTlcs90(8000000);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   0.70, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.70, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.70, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   1.20, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.50, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.50, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.50, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 4000000 / 165, 1);
 	MSM6295Init(1, 4000000 / 165, 1);
-	MSM6295SetRoute(0, 0.08, BURN_SND_ROUTE_BOTH);
-	MSM6295SetRoute(1, 0.08, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.10, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.10, BURN_SND_ROUTE_BOTH);
 
 	NMK112_init(0, DrvSndROM0, DrvSndROM1, 0x440000, 0x440000);
 

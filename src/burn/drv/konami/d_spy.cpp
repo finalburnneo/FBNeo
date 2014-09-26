@@ -511,9 +511,6 @@ static INT32 DrvGfxDecode()
 	INT32 YOffs[16] = { 0x000, 0x020, 0x040, 0x060, 0x080, 0x0a0, 0x0c0, 0x0e0,
 			  0x200, 0x220, 0x240, 0x260, 0x280, 0x2a0, 0x2c0, 0x2e0 };
 
-	konami_rom_deinterleave_2(DrvGfxROM0, 0x080000);
-	konami_rom_deinterleave_2(DrvGfxROM1, 0x100000);
-
 	GfxDecode(0x04000, 4,  8,  8, Plane0, XOffs, YOffs, 0x100, DrvGfxROM0, DrvGfxROMExp0);
 	GfxDecode(0x02000, 4, 16, 16, Plane1, XOffs, YOffs, 0x400, DrvGfxROM1, DrvGfxROMExp1);
 
@@ -538,11 +535,11 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x040000,  4, 1)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  3, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x040000,  4, 4, 2)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  5, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x080000,  6, 1)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000000,  5, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x080000,  6, 4, 2)) return 1;
 
 		if (BurnLoadRom(DrvSndROM0 + 0x000000,  7, 1)) return 1;
 

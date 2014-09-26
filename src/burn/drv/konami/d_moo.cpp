@@ -843,20 +843,17 @@ static INT32 MooInit()
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  4, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  5, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x100000,  6, 1)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  5, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000002,  6, 4, 2)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  7, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x200000,  8, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x400000,  9, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x600000, 10, 1)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000000,  7, 8, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000002,  8, 8, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000004,  9, 8, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000006, 10, 8, 2)) return 1;
 
 		if (BurnLoadRom(DrvSndROM  + 0x000000, 11, 1)) return 1;
 
 		if (BurnLoadRom(DrvEeprom  + 0x000000, 12, 1)) return 1;
-
-		konami_rom_deinterleave_2(DrvGfxROM0, 0x200000);
-		konami_rom_deinterleave_4(DrvGfxROM1, 0x800000);
 
 		K053247GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x200000);
 		K053247GfxDecode(DrvGfxROM1, DrvGfxROMExp1, 0x800000);
@@ -931,21 +928,18 @@ static INT32 BuckyInit()
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  4, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  5, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x100000,  6, 1)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  5, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000002,  6, 4, 2)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  7, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x200000,  8, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x400000,  9, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x600000, 10, 1)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000000,  7, 8, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000002,  8, 8, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000004,  9, 8, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000006, 10, 8, 2)) return 1;
 
 		if (BurnLoadRom(DrvSndROM  + 0x000000, 11, 1)) return 1;
 		if (BurnLoadRom(DrvSndROM  + 0x200000, 12, 1)) return 1;
 
 		if (BurnLoadRom(DrvEeprom  + 0x000000, 13, 1)) return 1;
-
-		konami_rom_deinterleave_2(DrvGfxROM0, 0x200000);
-		konami_rom_deinterleave_4(DrvGfxROM1, 0x800000);
 
 		K053247GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x200000);
 		K053247GfxDecode(DrvGfxROM1, DrvGfxROMExp1, 0x800000);

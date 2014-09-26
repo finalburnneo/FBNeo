@@ -372,15 +372,13 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  1, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x100000,  3, 1)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  2, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000002,  3, 4, 2)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  4, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x040000,  5, 1)) return 1;
 
 		if (BurnLoadRom(DrvSndROM  + 0x000000,  6, 1)) return 1;
-
-		konami_rom_deinterleave_2(DrvGfxROM0, 0x200000);
 
 		K053245GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x200000);
 	}

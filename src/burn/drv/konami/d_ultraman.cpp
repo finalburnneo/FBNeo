@@ -400,8 +400,6 @@ static INT32 DrvGfxDecode()
 	INT32 YOffs1[16] = { 0x000, 0x040, 0x080, 0x0c0, 0x100, 0x140, 0x180, 0x1c0,
 			   0x200, 0x240, 0x280, 0x2c0, 0x300, 0x340, 0x380, 0x3c0 };
 
-	konami_rom_deinterleave_2(DrvGfxROM0, 0x100000);
-
 	GfxDecode(0x02000, 4, 16, 16, Plane0, XOffs0, YOffs0, 0x400, DrvGfxROM0, DrvGfxROMExp0);
 	GfxDecode(0x01000, 4, 16, 16, Plane1, XOffs1, YOffs1, 0x400, DrvGfxROM1, DrvGfxROMExp1);
 	GfxDecode(0x01000, 4, 16, 16, Plane1, XOffs1, YOffs1, 0x400, DrvGfxROM2, DrvGfxROMExp2);
@@ -427,8 +425,8 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x080000,  4, 1)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  3, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000002,  4, 4, 2)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  5, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x020000,  6, 1)) return 1;

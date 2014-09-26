@@ -474,22 +474,14 @@ static INT32 DrvInit(INT32 flipy)
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  1, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x000001,  2, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x200001,  4, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x200000,  5, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000002,  2, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  3, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x200002,  4, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x200000,  5, 4, 2)) return 1;
 
-		for (INT32 i = 0; i < 0x400000; i+=4) {
-			BurnByteswap(DrvGfxROM0 + i + 1, 2);
-		}
-
-		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  6, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x000001,  7, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x200000,  8, 2)) return 1;
-
-		for (INT32 i = 0; i < 0x400000; i+=4) {
-			BurnByteswap(DrvGfxROM1 + i + 1, 2);
-		}
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000000,  6, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000002,  7, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x200000,  8, 4, 2)) return 1;
 
 		if (BurnLoadRom(DrvSndROM  + 0x000000,  9, 1)) return 1;
 

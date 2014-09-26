@@ -572,30 +572,6 @@ static void DrvExpandGfx(UINT8 *dst, UINT8 *src, INT32 len, INT32 bs)
 	}
 }
 
-static INT32 DrvGfxDecode()
-{
-	{
-		UINT8 tmp[8];
-		for (INT32 i = 0; i < 0x800000; i+=8) {
-			for (INT32 j = 0; j < 8; j++) {
-				tmp[j] = DrvGfxROM1[i + ((j&1)<<2) + ((j&6)>>1)];
-			}
-			memcpy (DrvGfxROM1 + i, tmp, 8);
-		}
-
-		for (INT32 i = 0; i < 0x400000; i+=4) {
-			BurnByteswap(DrvGfxROM0 + i + 1, 2);
-		}
-	}
-
-	DrvExpandGfx(DrvGfxROMExp0, DrvGfxROM0, 0x400000, 1);
-	DrvExpandGfx(DrvGfxROMExp1, DrvGfxROM1, 0x800000, 1);
-	DrvExpandGfx(DrvGfxROMExp2, DrvGfxROM2, 0x400000, 0);
-	DrvExpandGfx(DrvGfxROMExp3, DrvGfxROM3, 0x400000, 0);
-
-	return 0;
-}
-
 static void dbz_patch()
 {
 	UINT16 *ROM = (UINT16 *)Drv68KROM;
@@ -700,13 +676,13 @@ static INT32 DrvInit(INT32 nGame)
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x000001,  4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  3, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000002,  4, 4, 2)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  5, 4)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x000001,  6, 4)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x000002,  7, 4)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x000003,  8, 4)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000000,  5, 8, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000002,  6, 8, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000004,  7, 8, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000006,  8, 8, 2)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM2 + 0x000000,  9, 1)) return 1;
 
@@ -726,7 +702,10 @@ static INT32 DrvInit(INT32 nGame)
 			if (BurnLoadRom(DrvSndROM  + 0x000000, 13, 1)) return 1;
 		}
 
-		DrvGfxDecode();
+		DrvExpandGfx(DrvGfxROMExp0, DrvGfxROM0, 0x400000, 1);
+		DrvExpandGfx(DrvGfxROMExp1, DrvGfxROM1, 0x800000, 1);
+		DrvExpandGfx(DrvGfxROMExp2, DrvGfxROM2, 0x400000, 0);
+		DrvExpandGfx(DrvGfxROMExp3, DrvGfxROM3, 0x400000, 0);
 
 		if (nGame == 0) dbz_patch();
 		if (nGame == 1) dbza_patch();

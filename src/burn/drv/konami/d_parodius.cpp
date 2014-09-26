@@ -487,21 +487,6 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static void sortlayers(INT32 *layer,INT32 *pri)
-{
-#define SWAP(a,b) \
-	if (pri[a] < pri[b]) \
-	{ \
-		INT32 t; \
-		t = pri[a]; pri[a] = pri[b]; pri[b] = t; \
-		t = layer[a]; layer[a] = layer[b]; layer[b] = t; \
-	}
-
-	SWAP(0,1)
-	SWAP(0,2)
-	SWAP(1,2)
-}
-
 static INT32 DrvDraw()
 {
 	KonamiRecalcPalette(DrvPalRAM, DrvPalette, 0x1000);
@@ -523,7 +508,7 @@ static INT32 DrvDraw()
 	layer[1] = 1;
 	layer[2] = 2;
 
-	sortlayers(layer,layerpri);
+	konami_sortlayers3(layer,layerpri);
 	
 	KonamiClearBitmaps(DrvPalette[16 * bg_colorbase]);
 

@@ -7,10 +7,72 @@ UINT32 KonamiIC_K051316InUse = 0;
 UINT32 KonamiIC_K053245InUse = 0;
 UINT32 KonamiIC_K053247InUse = 0;
 UINT32 KonamiIC_K053936InUse = 0;
+UINT32 KonamiIC_K053250InUse = 0;
+UINT32 KonamiIC_K055555InUse = 0;
+UINT32 KonamiIC_K054338InUse = 0;
+UINT32 KonamiIC_K056832InUse = 0;
 
 UINT32 *konami_bitmap32 = NULL;
 UINT8  *konami_priority_bitmap = NULL;
 UINT32 *konami_palette32;
+
+void konami_sortlayers3( int *layer, int *pri )
+{
+#define SWAP(a,b) \
+	if (pri[a] < pri[b]) \
+	{ \
+		int t; \
+		t = pri[a]; pri[a] = pri[b]; pri[b] = t; \
+		t = layer[a]; layer[a] = layer[b]; layer[b] = t; \
+	}
+
+	SWAP(0,1)
+	SWAP(0,2)
+	SWAP(1,2)
+#undef  SWAP
+}
+
+void konami_sortlayers4( int *layer, int *pri )
+{
+#define SWAP(a,b) \
+	if (pri[a] <= pri[b]) \
+	{ \
+		int t; \
+		t = pri[a]; pri[a] = pri[b]; pri[b] = t; \
+		t = layer[a]; layer[a] = layer[b]; layer[b] = t; \
+	}
+
+	SWAP(0, 1)
+	SWAP(0, 2)
+	SWAP(0, 3)
+	SWAP(1, 2)
+	SWAP(1, 3)
+	SWAP(2, 3)
+#undef  SWAP
+}
+
+void konami_sortlayers5( int *layer, int *pri )
+{
+#define SWAP(a,b) \
+	if (pri[a] <= pri[b]) \
+	{ \
+		int t; \
+		t = pri[a]; pri[a] = pri[b]; pri[b] = t; \
+		t = layer[a]; layer[a] = layer[b]; layer[b] = t; \
+	}
+
+	SWAP(0, 1)
+	SWAP(0, 2)
+	SWAP(0, 3)
+	SWAP(0, 4)
+	SWAP(1, 2)
+	SWAP(1, 3)
+	SWAP(1, 4)
+	SWAP(2, 3)
+	SWAP(2, 4)
+	SWAP(3, 4)
+#undef  SWAP
+}
 
 static void shuffle(UINT16 *buf, INT32 len)
 {
@@ -69,6 +131,10 @@ void KonamiICReset()
 	if (KonamiIC_K053245InUse) K053245Reset();
 	if (KonamiIC_K053247InUse) K053247Reset();
 	if (KonamiIC_K053936InUse) K053936Reset();
+	if (KonamiIC_K053250InUse) K053250Reset();
+	if (KonamiIC_K055555InUse) K055555Reset();
+	if (KonamiIC_K054338InUse) K054338Reset();
+	if (KonamiIC_K056832InUse) K056832Reset();
 
 	K053251Reset();
 	K054000Reset();
@@ -93,12 +159,20 @@ void KonamiICExit()
 	if (KonamiIC_K053245InUse) K053245Exit();
 	if (KonamiIC_K053247InUse) K053247Exit();
 	if (KonamiIC_K053936InUse) K053936Exit();
+	if (KonamiIC_K053250InUse) K053250Exit();
+	if (KonamiIC_K055555InUse) K055555Exit();
+	if (KonamiIC_K054338InUse) K054338Exit();
+	if (KonamiIC_K056832InUse) K056832Exit();
 
 	KonamiIC_K051960InUse = 0;
 	KonamiIC_K052109InUse = 0;
 	KonamiIC_K051316InUse = 0;
 	KonamiIC_K053245InUse = 0;
 	KonamiIC_K053247InUse = 0;
+	KonamiIC_K053250InUse = 0;
+	KonamiIC_K055555InUse = 0;
+	KonamiIC_K054338InUse = 0;
+	KonamiIC_K056832InUse = 0;
 
 	K05324xZRejection = -1;
 }
@@ -111,6 +185,10 @@ void KonamiICScan(INT32 nAction)
 	if (KonamiIC_K053245InUse) K053245Scan(nAction);
 	if (KonamiIC_K053247InUse) K053247Scan(nAction);
 	if (KonamiIC_K053936InUse) K053936Scan(nAction);
+	if (KonamiIC_K053250InUse) K053250Scan(nAction);
+	if (KonamiIC_K055555InUse) K055555Scan(nAction);
+	if (KonamiIC_K054338InUse) K054338Scan(nAction);
+	if (KonamiIC_K056832InUse) K056832Scan(nAction);
 
 	K053251Scan(nAction);
 	K054000Scan(nAction);
@@ -133,9 +211,11 @@ void KonamiAllocateBitmaps()
 
 void KonamiClearBitmaps(UINT32 color)
 {
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		konami_priority_bitmap[i] = 0;
-		konami_bitmap32[i] = color;
+	if (konami_priority_bitmap && konami_bitmap32) {
+		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
+			konami_priority_bitmap[i] = 0;
+			konami_bitmap32[i] = color;
+		}
 	}
 }
 
@@ -145,17 +225,12 @@ void KonamiBlendCopy(UINT32 *pPalette)
 
 	UINT32 *bmp = konami_bitmap32;
 
-	if (nBurnBpp == 4) {
-		memcpy (pBurnDraw, konami_bitmap32, nScreenWidth * nScreenHeight * sizeof(INT32));
-		return;
-	}
-
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 		PutPix(pBurnDraw + (i * nBurnBpp), BurnHighCol(bmp[i]>>16, (bmp[i]>>8)&0xff, bmp[i]&0xff, 0));
 	}
 }
 
-void konami_draw_16x16_priozoom_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority)
+void konami_draw_16x16_priozoom_tile(UINT8 *gfx, INT32 code, INT32 bpp, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority)
 {
 	// Based on MAME sources for tile zooming
 	UINT8 *gfx_base = gfx + (code * width * height);
@@ -164,7 +239,7 @@ void konami_draw_16x16_priozoom_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 
 
 	priority |= 1<<31; // always on!
 
-	UINT32 *pal = konami_palette32 + color;
+	UINT32 *pal = konami_palette32 + (color << bpp);
 
 	if (dw && dh)
 	{
@@ -216,13 +291,13 @@ void konami_draw_16x16_priozoom_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 
 	}
 }
 
-void konami_draw_16x16_zoom_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy)
+void konami_draw_16x16_zoom_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy)
 {
 	UINT8 *gfx_base = gfxbase + (code * width * height);
 	int dh = (zoomy * height + 0x8000) / 0x10000;
 	int dw = (zoomx * width + 0x8000) / 0x10000;
 
-	UINT32 *pal = konami_palette32 + color;
+	UINT32 *pal = konami_palette32 + (color << bpp);
 
 	if (dw && dh)
 	{
@@ -269,7 +344,7 @@ void konami_draw_16x16_zoom_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 
 	}
 }
 
-void konami_draw_16x16_prio_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT32 priority)
+void konami_draw_16x16_prio_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT32 priority)
 {
 	INT32 flip = 0;
 	if (flipx) flip |= 0x0f;
@@ -279,7 +354,7 @@ void konami_draw_16x16_prio_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 
 
 	UINT8 *pri = konami_priority_bitmap + (sy * nScreenWidth) + sx;
 	UINT32 *dst = konami_bitmap32 + (sy * nScreenWidth) + sx;
-	UINT32 *pal = konami_palette32 + color;
+	UINT32 *pal = konami_palette32 + (color << bpp);
 
 	priority |= 1 << 31; // always on!
 
@@ -308,7 +383,7 @@ void konami_draw_16x16_prio_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 
 	}
 }
 
-void konami_draw_16x16_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy)
+void konami_draw_16x16_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy)
 {
 	INT32 flip = 0;
 	if (flipx) flip |= 0x0f;
@@ -316,7 +391,7 @@ void konami_draw_16x16_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 sx, I
 
 	UINT8 *gfx = gfxbase + code * 0x100;
 
-	UINT32 *pal = konami_palette32 + color;
+	UINT32 *pal = konami_palette32 + (color << bpp);
 	UINT32 *dst = konami_bitmap32 + (sy * nScreenWidth) + sx;
 
 	for (INT32 y = 0; y < 16; y++, sy++)
@@ -353,14 +428,16 @@ static inline UINT32 highlight_blend(UINT32 d)
 }
 */
 
-void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority, INT32 /*highlight*/)
+void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32 color, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority, INT32 /*highlight*/)
 {
 	// Based on MAME sources for tile zooming
 	UINT8 *gfx_base = gfxbase + (code * width * height);
 	int dh = (zoomy * height + 0x8000) / 0x10000;
 	int dw = (zoomx * width + 0x8000) / 0x10000;
 
-	UINT32 *pal = konami_palette32 + color;
+	INT32 shadow_color = (1 << bpp) - 1;
+
+	UINT32 *pal = konami_palette32 + (color << bpp);
 
 	if (dw && dh)
 	{
@@ -396,7 +473,7 @@ void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT
 							INT32 pxl = src[x_index>>16];
 	
 							if (pxl) {
-								if (pxl == 0x0f) {
+								if (pxl == shadow_color) {
 									dst[x] = shadow_blend(dst[x]);
 								} else {
 									dst[x] = pal[pxl];
@@ -427,7 +504,7 @@ void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 color, INT
 							INT32 pxl = src[x_index>>16];
 	
 							if (pxl) {
-								if (pxl == 0x0f) {
+								if (pxl == shadow_color) {
 									if ((priority & (1 << (pri[x]&0x1f)))==0 && (pri[x] & 0x80) == 0) {
 										dst[x] = shadow_blend(dst[x]);
 										pri[x] |= 0x80;

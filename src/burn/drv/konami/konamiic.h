@@ -6,6 +6,10 @@ extern UINT32 KonamiIC_K051316InUse;
 extern UINT32 KonamiIC_K053245InUse;
 extern UINT32 KonamiIC_K053247InUse;
 extern UINT32 KonamiIC_K053936InUse;
+extern UINT32 KonamiIC_K053250InUse;
+extern UINT32 KonamiIC_K055555InUse;
+extern UINT32 KonamiIC_K054338InUse;
+extern UINT32 KonamiIC_K056832InUse;
 
 extern UINT8 *konami_priority_bitmap;
 extern UINT32 *konami_bitmap32;
@@ -18,6 +22,10 @@ void KonamiICReset();
 void KonamiICExit();
 void KonamiICScan(INT32 nAction);
 
+void konami_sortlayers3( int *layer, int *pri );
+void konami_sortlayers4( int *layer, int *pri );
+void konami_sortlayers5( int *layer, int *pri );
+
 void KonamiRecalcPalette(UINT8 *src, UINT32 *dst, INT32 len);
 
 void konami_rom_deinterleave_2(UINT8 *src, INT32 len);
@@ -25,11 +33,11 @@ void konami_rom_deinterleave_4(UINT8 *src, INT32 len);
 
 // internal
 void KonamiAllocateBitmaps();
-void konami_draw_16x16_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy);
-void konami_draw_16x16_prio_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT32 priority);
-void konami_draw_16x16_zoom_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy);
-void konami_draw_16x16_priozoom_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority);
-void konami_render_zoom_shadow_tile(UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority, INT32 shadow);
+void konami_draw_16x16_tile(UINT8 *gfx, INT32 code, INT32 bpp, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy);
+void konami_draw_16x16_prio_tile(UINT8 *gfx, INT32 code, INT32 bpp, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT32 priority);
+void konami_draw_16x16_zoom_tile(UINT8 *gfx, INT32 code, INT32 bpp, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy);
+void konami_draw_16x16_priozoom_tile(UINT8 *gfx, INT32 code, INT32 bpp, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority);
+void konami_render_zoom_shadow_tile(UINT8 *gfx, INT32 code, INT32 bpp, INT32 color, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority, INT32 shadow);
 
 // k051960 / k052109 shared
 //---------------------------------------------------------------------------------------------------------------
@@ -50,6 +58,8 @@ void K051960Reset();
 void K051960Init(UINT8* pRomSrc, UINT8* pRomSrcExp, UINT32 RomMask);
 void K051960Exit();
 void K051960Scan(INT32 nAction);
+void K051960SetBpp(INT32 bpp);
+
 void K051937Write(UINT32 Offset, UINT8 Data);
 UINT8 K051937Read(UINT32 Offset);
 
@@ -144,6 +154,47 @@ if (a >= nStartAddress && a <= nStartAddress + 0x7fff) {			\
 	return;									\
 }
 
+
+// K056832.cpp
+//---------------------------------------------------------------------------------------------------------------
+#define K056832_LAYER_ALPHA			0x00100000
+#define K056832_LAYER_OPAQUE			0x00400000
+#define K056832_DRAW_FLAG_MIRROR     		0x00800000
+
+#define K056832_SET_ALPHA(x)			(K056832_LAYER_ALPHA | ((x)<<8))
+
+void K056832Reset();
+void K056832Init(UINT8 *rom, UINT8 *romexp, INT32 rom_size, void (*cb)(INT32 layer, INT32 *code, INT32 *color, INT32 *flags));
+void K056832Exit();
+void K056832Scan(INT32 nAction);
+void K056832SetLayerAssociation(INT32 status);
+void K056832SetGlobalOffsets(INT32 minx, INT32 miny);
+void K056832SetLayerOffsets(INT32 layer, INT32 xoffs, INT32 yoffs);
+void K056832SetExtLinescroll();
+INT32 K056832IsIrqEnabled();
+void K056832ReadAvac(INT32 *mode, INT32 *data);
+UINT16 K056832ReadRegister(int reg);
+INT32 K056832GetLookup(INT32 bits);
+void K056832SetTileBank(int bank);
+void K056832WordWrite(INT32 offset, UINT16 data);
+void K056832ByteWrite(INT32 offset, UINT8 data);
+UINT16 K056832RomWordRead(UINT16 offset);
+void K056832HalfRamWriteWord(UINT32 offset, UINT16 data);
+void K056832HalfRamWriteByte(UINT32 offset, UINT8 data);
+UINT16 K056832HalfRamReadWord(UINT32 offset);
+UINT8 K056832HalfRamReadByte(UINT32 offset);
+void K056832RamWriteWord(UINT32 offset, UINT16 data);
+void K056832RamWriteByte(UINT32 offset, UINT8 data);
+UINT16 K056832RamReadWord(UINT32 offset);
+UINT8 K056832RamReadByte(UINT32 offset);
+UINT16 K056832RomWord8000Read(INT32 offset);
+void K056832WritebRegsWord(INT32 offset, UINT16 data);
+void K056832WritebRegsByte(INT32 offset, UINT8 data);
+UINT16 K056832mwRomWordRead(INT32 address);
+void K056832Draw(INT32 layer, UINT32 flags, UINT32 priority);
+INT32 K056832GetLayerAssociation();
+
+
 // K051316.cpp
 //---------------------------------------------------------------------------------------------------------------
 void K051316Init(INT32 chip, UINT8 *gfx, UINT8 *gfxexp, INT32 mask, void (*callback)(INT32 *code,INT32 *color,INT32 *flags), INT32 bpp, INT32 transp);
@@ -175,6 +226,7 @@ INT32 K053245Reset();
 void K053245GfxDecode(UINT8 *src, UINT8 *dst, INT32 len);
 void K053245Init(INT32 chip, UINT8 *gfx, UINT8 *gfxexp, INT32 mask, void (*callback)(INT32 *code,INT32 *color,INT32 *priority));
 void K053245Exit();
+void K053245SetBpp(INT32 chip, INT32 bpp);
 
 void K053245SpritesRender(INT32 chip);
 
@@ -193,6 +245,8 @@ void K053244Write(INT32 chip, INT32 offset, INT32 data);
 
 void K053245Scan(INT32 nAction);
 
+extern UINT8 *K053245Ram[2];
+
 // K053251.cpp
 //---------------------------------------------------------------------------------------------------------------
 void K053251Reset();
@@ -203,8 +257,6 @@ INT32 K053251GetPriority(INT32 idx);
 INT32 K053251GetPaletteIndex(INT32 idx);
 
 void K053251Write(INT32 offset, INT32 data);
-INT32 K053251GetPriority(INT32 idx);
-INT32 K053251GetPaletteIndex(INT32 idx);
 
 void K053251Scan(INT32 nAction);
 
@@ -214,6 +266,10 @@ void K053247Reset();
 void K053247Init(UINT8 *gfxrom, UINT8 *gfxromexp, INT32 gfxlen, void (*Callback)(INT32 *code, INT32 *color, INT32 *priority), INT32 flags);
 void K053247Exit();
 void K053247Scan(INT32 nAction);
+
+void K053247SetBpp(INT32 bpp);
+
+extern UINT8 *K053247Ram;
 
 void K053247Export(UINT8 **ram, UINT8 **gfx, void (**callback)(INT32 *, INT32 *, INT32 *), INT32 *dx, INT32 *dy);
 void K053247GfxDecode(UINT8 *src, UINT8 *dst, INT32 len); // 16x16
@@ -227,6 +283,9 @@ UINT8 K053247Read(INT32 offset);
 void K053247Write(INT32 offset, INT32 data);
 UINT8 K053246Read(INT32 offset);
 void K053246Write(INT32 offset, INT32 data);
+
+void K053247WriteRegsByte(INT32 offset, UINT8 data);
+void K053247WriteRegsWord(INT32 offset, UINT16 data);
 
 void K053247SpritesRender();
 
@@ -246,13 +305,140 @@ void K051733Scan(INT32 nAction);
 
 // K053936.cpp
 //------------------------------------------------------------------------------------------
+
 void K053936Init(INT32 chip, UINT8 *ram, INT32 len, INT32 w, INT32 h, void (*pCallback)(INT32 offset, UINT16 *ram, INT32 *code, INT32 *color, INT32 *sx, INT32 *sy, INT32 *fx, INT32 *fy));
+
 void K053936Reset();
 void K053936Exit();
 void K053936Scan(INT32 nAction);
 
 void K053936EnableWrap(INT32 chip, INT32 status);
 void K053936SetOffset(INT32 chip, INT32 xoffs, INT32 yoffs);
-
+void K053936PredrawTiles2(INT32 chip, UINT8 *gfx);
 void K053936PredrawTiles(INT32 chip, UINT8 *gfx, INT32 transparent, INT32 tcol /*transparent color*/);
 void K053936Draw(INT32 chip, UINT16 *ctrl, UINT16 *linectrl, INT32 transp);
+
+// k053250.cpp
+//------------------------------------------------------------------------------------------
+
+extern UINT16 *K053250Ram; // allocated in k053250Init
+
+void K053250Init(INT32 chip, UINT8 *rom, UINT8 *romexp, INT32 size);
+void K053250SetOffsets(INT32 chip, int offx, int offy);
+void K053250Reset();
+void K053250Scan(INT32 nAction);
+void K053250Exit();
+
+void K053250Draw(INT32 chip, int colorbase, int flags, int priority);
+
+UINT16 K053250RegRead(INT32 chip, INT32 offset);
+void K053250RegWrite(INT32 chip, INT32 offset, UINT8 data);
+UINT16 K053250RomRead(INT32 chip, INT32 offset);
+
+
+// k054388.cpp
+//------------------------------------------------------------------------------------------
+
+#define K338_REG_BGC_R      0
+#define K338_REG_BGC_GB     1
+#define K338_REG_SHAD1R     2
+#define K338_REG_BRI3       11
+#define K338_REG_PBLEND     13
+#define K338_REG_CONTROL    15
+
+#define K338_CTL_KILL       0x01    /* 0 = no video output, 1 = enable */
+#define K338_CTL_MIXPRI     0x02
+#define K338_CTL_SHDPRI     0x04
+#define K338_CTL_BRTPRI     0x08
+#define K338_CTL_WAILSL     0x10
+#define K338_CTL_CLIPSL     0x20
+
+void K054338Init();
+void K054338Reset();
+void K054338Exit();
+void K054338Scan(INT32 nAction);
+void K054338WriteWord(INT32 offset, UINT16 data);
+void K054338WriteByte(INT32 offset, UINT8 data);
+INT32 K054338_read_register(int reg);
+void K054338_fill_solid_bg();
+void K054338_fill_backcolor(int mode);
+INT32 K054338_set_alpha_level(int pblend);
+void K054338_invert_alpha(int invert);
+
+// k055555.cpp
+//------------------------------------------------------------------------------------------
+
+#define K55_PALBASE_BG      0   // background palette
+#define K55_CONTROL         1   // control register
+#define K55_COLSEL_0        2   // layer A, B color depth
+#define K55_COLSEL_1        3   // layer C, D color depth
+#define K55_COLSEL_2        4   // object, S1 color depth
+#define K55_COLSEL_3        5   // S2, S3 color depth
+
+#define K55_PRIINP_0        7   // layer A pri 0
+#define K55_PRIINP_1        8   // layer A pri 1
+#define K55_PRIINP_2        9   // layer A "COLPRI"
+#define K55_PRIINP_3        10  // layer B pri 0
+#define K55_PRIINP_4        11  // layer B pri 1
+#define K55_PRIINP_5        12  // layer B "COLPRI"
+#define K55_PRIINP_6        13  // layer C pri
+#define K55_PRIINP_7        14  // layer D pri
+#define K55_PRIINP_8        15  // OBJ pri
+#define K55_PRIINP_9        16  // sub 1 (GP:PSAC) pri
+#define K55_PRIINP_10       17  // sub 2 (GX:PSAC) pri
+#define K55_PRIINP_11       18  // sub 3 pri
+
+#define K55_OINPRI_ON       19  // object priority bits selector
+
+#define K55_PALBASE_A       23  // layer A palette
+#define K55_PALBASE_B       24  // layer B palette
+#define K55_PALBASE_C       25  // layer C palette
+#define K55_PALBASE_D       26  // layer D palette
+#define K55_PALBASE_OBJ     27  // OBJ palette
+#define K55_PALBASE_SUB1    28  // SUB1 palette
+#define K55_PALBASE_SUB2    29  // SUB2 palette
+#define K55_PALBASE_SUB3    30  // SUB3 palette
+
+#define K55_BLEND_ENABLES   33  // blend enables for tilemaps
+#define K55_VINMIX_ON       34  // additional blend enables for tilemaps
+#define K55_OSBLEND_ENABLES 35  // obj/sub blend enables
+#define K55_OSBLEND_ON      36  // not sure, related to obj/sub blend
+
+#define K55_SHAD1_PRI       37  // shadow/highlight 1 priority
+#define K55_SHAD2_PRI       38  // shadow/highlight 2 priority
+#define K55_SHAD3_PRI       39  // shadow/highlight 3 priority
+#define K55_SHD_ON          40  // shadow/highlight
+#define K55_SHD_PRI_SEL     41  // shadow/highlight
+
+#define K55_VBRI            42  // VRAM layer brightness enable
+#define K55_OSBRI           43  // obj/sub brightness enable, part 1
+#define K55_OSBRI_ON        44  // obj/sub brightness enable, part 2
+#define K55_INPUT_ENABLES   45  // input enables
+
+/* bit masks for the control register */
+#define K55_CTL_GRADDIR     0x01    // 0=vertical, 1=horizontal
+#define K55_CTL_GRADENABLE  0x02    // 0=BG is base color only, 1=gradient
+#define K55_CTL_FLIPPRI     0x04    // 0=standard Konami priority, 1=reverse
+#define K55_CTL_SDSEL       0x08    // 0=normal shadow timing, 1=(not used by GX)
+
+/* bit masks for the input enables */
+#define K55_INP_VRAM_A      0x01
+#define K55_INP_VRAM_B      0x02
+#define K55_INP_VRAM_C      0x04
+#define K55_INP_VRAM_D      0x08
+#define K55_INP_OBJ         0x10
+#define K55_INP_SUB1        0x20
+#define K55_INP_SUB2        0x40
+#define K55_INP_SUB3        0x80
+
+extern INT32 K055555_enabled;
+void K055555WriteReg(UINT8 regnum, UINT8 regdat);
+void K055555LongWrite(INT32 offset, UINT32 data); // not implimented
+void K055555WordWrite(INT32 offset, UINT16 data);
+void K055555ByteWrite(INT32 offset, UINT8 data);
+INT32 K055555ReadRegister(INT32 regnum);
+INT32 K055555GetPaletteIndex(INT32 idx);
+void K055555Reset();
+void K055555Init();
+void K055555Exit();
+void K055555Scan(INT32 nAction);

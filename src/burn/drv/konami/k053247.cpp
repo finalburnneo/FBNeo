@@ -1,3 +1,5 @@
+// k053247
+
 #include "tiles_generic.h"
 #include "konamiic.h"
 
@@ -6,7 +8,7 @@
 
 static UINT8  K053246Regs[8];
 static UINT8  K053246_OBJCHA_line;
-static UINT8 *K053247Ram;
+UINT8 *K053247Ram;
 static UINT16 K053247Regs[16];
 
 static UINT8 *K053246Gfx;
@@ -17,6 +19,8 @@ static UINT32   K053246MaskExp;
 static INT32 K053247_dx;
 static INT32 K053247_dy;
 static INT32 K053247_wraparound;
+
+static INT32 nBpp = 4;
 
 static INT32 K053247Flags;
 
@@ -65,7 +69,7 @@ void K053247Init(UINT8 *gfxrom, UINT8 *gfxromexp, INT32 gfxlen, void (*Callback)
 	K053246Mask = gfxlen;
 
 	K053246GfxExp = gfxromexp;
-	K053246MaskExp = (gfxlen * 2) / (16 * 16);
+	K053246MaskExp = ((gfxlen * 2) + 1) / 0x100;
 
 	K053247Callback = Callback;
 
@@ -78,6 +82,13 @@ void K053247Init(UINT8 *gfxrom, UINT8 *gfxromexp, INT32 gfxlen, void (*Callback)
 	K053247Flags = flags; // 0x02 highlight, 0x01 shadow
 
 	KonamiIC_K053247InUse = 1;
+
+	nBpp = 4;
+}
+
+void K053247SetBpp(INT32 bpp)
+{
+	nBpp = bpp;
 }
 
 void K053247Exit()
@@ -133,6 +144,18 @@ void K053247Write(INT32 offset, INT32 data)
 	} else {
 		K053247Ram[offset & 0xfff] = data;
 	}
+}
+
+void K053247WriteRegsByte(INT32 offset, UINT8 data)
+{
+	UINT8 *regs = (UINT8*)K053247Regs;
+
+	regs[(offset & 0x1f)^1] = data;
+}
+
+void K053247WriteRegsWord(INT32 offset, UINT16 data)
+{
+	K053247Regs[(offset & 0x1e) / 2] = data;
 }
 
 UINT8 K053246Read(INT32 offset)
@@ -295,6 +318,9 @@ void K053247SpritesRender()
 		oy = (INT16)BURN_ENDIAN_SWAP_INT16(SprRam[offs+2]);
 		ox = (INT16)BURN_ENDIAN_SWAP_INT16(SprRam[offs+3]);
 
+		ox += K053247_dx;
+		oy -= K053247_dy;
+
 		if (K053247_wraparound)
 		{
 			offx &= 0x3ff;
@@ -383,9 +409,6 @@ void K053247SpritesRender()
 			oy = -oy - offy;
 		}
 
-		ox += K053247_dx;
-		oy -= K053247_dy;
-
 		// apply global and display window offsets
 
 		/* the coordinates given are for the *center* of the sprite */
@@ -454,25 +477,25 @@ void K053247SpritesRender()
 
 				if (shadow || wtable == stable) {
 					if (mirrory && h == 1)
-						konami_render_zoom_shadow_tile(gfxbase, c, color * 16, sx, sy, flipx, !flipy, 16, 16, zw << 12, zh << 12, primask, highlight);
+						konami_render_zoom_shadow_tile(gfxbase, c, nBpp, color, sx, sy, flipx, !flipy, 16, 16, zw << 12, zh << 12, primask, highlight);
 
-					konami_render_zoom_shadow_tile(gfxbase, c, color * 16, sx, sy, flipx, flipy, 16, 16, zw << 12, zh << 12, primask, highlight);
+					konami_render_zoom_shadow_tile(gfxbase, c, nBpp, color, sx, sy, flipx, flipy, 16, 16, zw << 12, zh << 12, primask, highlight);
 					continue;
 				}
 
 				if (mirrory && h == 1)
 				{
 					if (nozoom) {
-						konami_draw_16x16_prio_tile(gfxbase, c, color * 16, sx, sy, flipx, !flipy, primask);
+						konami_draw_16x16_prio_tile(gfxbase, c, nBpp, color, sx, sy, flipx, !flipy, primask);
 					} else {
-						konami_draw_16x16_priozoom_tile(gfxbase, c, color * 16, 0, sx, sy, fx, !fy, 16, 16, zw<<12, zh<<12, primask);
+						konami_draw_16x16_priozoom_tile(gfxbase, c, nBpp, color, 0, sx, sy, fx, !fy, 16, 16, zw<<12, zh<<12, primask);
 					}
 				}
 
 				if (nozoom) {
-					konami_draw_16x16_prio_tile(gfxbase, c, color * 16, sx, sy, flipx, flipy, primask);
+					konami_draw_16x16_prio_tile(gfxbase, c, nBpp, color, sx, sy, flipx, flipy, primask);
 				} else {
-					konami_draw_16x16_priozoom_tile(gfxbase, c, color * 16, 0, sx, sy, fx, fy, 16, 16, zw<<12, zh<<12, primask);
+					konami_draw_16x16_priozoom_tile(gfxbase, c, nBpp, color, 0, sx, sy, fx, fy, 16, 16, zw<<12, zh<<12, primask);
 				}
 			} // end of X loop
 		} // end of Y loop

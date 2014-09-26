@@ -1,9 +1,11 @@
+// k053245
+
 #include "tiles_generic.h"
 #include "konamiic.h"
 
 static void (*K053245Callback[2])(INT32 *code,INT32 *color,INT32 *priority);
 
-static UINT8 *K053245Ram[2];
+UINT8 *K053245Ram[2];
 static UINT8 *K053245Buf[2];
 static UINT8 *K053245Gfx[2];
 static UINT8 *K053245GfxExp[2];
@@ -12,14 +14,13 @@ static INT32 K053245MaskExp[2];
 static INT32 K053245_dx[2];
 static INT32 K053245_dy[2];
 
+static INT32 nBpp[2];
 static UINT8 K053244Regs[2][0x10];
 static INT32 K053244Bank[2];
 
 static INT32 K053245Active = 0;
 
 INT32 K05324xZRejection = -1;
-
-// Init, Reset, Exit
 
 INT32 K053245Reset()
 {
@@ -63,6 +64,13 @@ void K053245Init(INT32 chip, UINT8 *gfx, UINT8 *gfxexp, INT32 mask, void (*callb
 	KonamiAllocateBitmaps();
 
 	K053245Reset();
+
+	nBpp[chip] = 4;
+}
+
+void K053245SetBpp(INT32 chip, INT32 bpp)
+{
+	nBpp[chip] = bpp;
 }
 
 void K053245Exit()
@@ -337,17 +345,17 @@ void K053245SpritesRender(INT32 chip)
 				c = ((c & 0x3f) | (code & ~0x3f)) & K053245MaskExp[chip];
 
 				if (shadow) {
-					konami_render_zoom_shadow_tile(gfxdata, c, color * 16, sx, sy, fx, fy, 16, 16, zw << 12, zh << 12, pri, 0);
+					konami_render_zoom_shadow_tile(gfxdata, c, nBpp[chip], color, sx, sy, fx, fy, 16, 16, zw << 12, zh << 12, pri, 0);
 					continue;
 				}
 
 				if (zoomx == 0x10000 && zoomy == 0x10000)
 				{
-					konami_draw_16x16_prio_tile(gfxdata, c, color * 16, sx, sy, fx, fy, pri);
+					konami_draw_16x16_prio_tile(gfxdata, c, nBpp[chip], color, sx, sy, fx, fy, pri);
 				}
 				else
 				{
-					konami_draw_16x16_priozoom_tile(gfxdata, c, color * 16, 0, sx, sy, fx, fy, 16, 16, zw << 12, zh << 12, pri);
+					konami_draw_16x16_priozoom_tile(gfxdata, c, nBpp[chip], color, 0, sx, sy, fx, fy, 16, 16, zw << 12, zh << 12, pri);
 				}
 			}
 		}

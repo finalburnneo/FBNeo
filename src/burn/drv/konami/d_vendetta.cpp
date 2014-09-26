@@ -672,7 +672,7 @@ static INT32 DrvInit(INT32 nGame)
 		K052109AdjustScroll(8, -8);
 
 		K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, K053247Callback, 1);
-		K053247SetSpriteOffset(-11, 14);
+		K053247SetSpriteOffset(-11, -14);
 
 		bankoffset = 0x6000;
 	} else {
@@ -693,7 +693,7 @@ static INT32 DrvInit(INT32 nGame)
 		K052109AdjustScroll(0, 0);
 
 		K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, K053247Callback, 1);
-		K053247SetSpriteOffset(-53, 22);
+		K053247SetSpriteOffset(-53, -22);
 
 		bankoffset = 0;
 	}
@@ -743,21 +743,6 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static void sortlayers(INT32 *layer,INT32 *pri)
-{
-#define SWAP(a,b) \
-	if (pri[a] < pri[b]) \
-	{ \
-		INT32 t; \
-		t = pri[a]; pri[a] = pri[b]; pri[b] = t; \
-		t = layer[a]; layer[a] = layer[b]; layer[b] = t; \
-	}
-
-	SWAP(0,1)
-	SWAP(0,2)
-	SWAP(1,2)
-}
-
 static INT32 DrvDraw()
 {
 	KonamiRecalcPalette(DrvPalRAM, DrvPalette, 0x1000);
@@ -779,7 +764,7 @@ static INT32 DrvDraw()
 	layer[1] = 1;
 	layer[2] = 2;
 
-	sortlayers(layer,layerpri);
+	konami_sortlayers3(layer,layerpri);
 
 	if (nBurnLayer & 1) K052109RenderLayer(layer[0], K052109_OPAQUE, 1);
 	if (nBurnLayer & 2) K052109RenderLayer(layer[1], 0, 2);

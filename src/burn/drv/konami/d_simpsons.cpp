@@ -500,7 +500,7 @@ static INT32 DrvInit()
 	K052109AdjustScroll(8, 0);
 
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, K053247Callback, 0x03 /* shadows & highlights */);
-	K053247SetSpriteOffset(-59, 39);
+	K053247SetSpriteOffset(-59, -39);
 
 	BurnYM2151Init(3579545);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
@@ -559,21 +559,6 @@ static void simpsons_objdma()
 	if (num_inactive) do { *dst = 0; dst += 8; } while (--num_inactive);
 }
 
-static void sortlayers(INT32 *layer,INT32 *pri)
-{
-#define SWAP(a,b) \
-	if (pri[a] < pri[b]) \
-	{ \
-		INT32 t; \
-		t = pri[a]; pri[a] = pri[b]; pri[b] = t; \
-		t = layer[a]; layer[a] = layer[b]; layer[b] = t; \
-	}
-
-	SWAP(0,1)
-	SWAP(0,2)
-	SWAP(1,2)
-}
-
 static INT32 DrvDraw()
 {
 	KonamiRecalcPalette(DrvPalRAM, DrvPalette, 0x1000);
@@ -595,7 +580,7 @@ static INT32 DrvDraw()
 	layer[1] = 1;
 	layer[2] = 2;
 
-	sortlayers(layer,layerpri);
+	konami_sortlayers3(layer,layerpri);
 
 	KonamiClearBitmaps(DrvPalette[16 * bg_colorbase]);
 

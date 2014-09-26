@@ -68,6 +68,52 @@ void K053936Exit()
 	}
 }
 
+void K053936PredrawTiles2(INT32 chip, UINT8 *gfx)
+{
+	UINT16 *ram = (UINT16*)ramptr[chip];
+	UINT16 *buf = (UINT16*)rambuf[chip];
+
+	for (INT32 i = 0; i < (nWidth[chip] / 16) * (nHeight[chip] / 16); i++)
+	{
+		if (ram[(i*2)+0] != buf[(i*2)+0] || ram[(i*2)+1] != buf[(i*2)+1]) 
+		{
+			INT32 sx = (i % (nWidth[chip]/16)) * 16;
+			INT32 sy = i / (nWidth[chip]/16) * 16;
+			INT32 code = 0;
+			INT32 color = 0;
+			INT32 flipx = 0;
+			INT32 flipy = 0;
+
+			if (chip) {
+				pTileCallback1(i, ram, &code, &color, &sx, &sy, &flipx, &flipy);
+			} else {
+				pTileCallback0(i, ram, &code, &color, &sx, &sy, &flipx, &flipy);
+			}
+
+			// draw tile
+			{
+				INT32 flip = 0;
+				if (flipx) flip  = 0x0f;
+				if (flipy) flip |= 0xf0;
+			
+				UINT8 *src = gfx + (code * 16 * 16);
+				UINT16 *dst = tscreen[chip] + (sy * nWidth[chip]) + sx;
+	
+				for (INT32 y = 0; y < 16; y++) {
+					for (INT32 x = 0; x < 16; x++) {
+						INT32 pxl = src[((y << 4) | x) ^ flip];
+						if (pxl == 0) pxl |= 0x8000;
+						dst[x] = (pxl | color);
+					}
+					dst += nWidth[chip];
+				}
+			}
+		}
+		buf[(i*2)+0] = ram[(i*2)+0];
+		buf[(i*2)+1] = ram[(i*2)+1];
+	}
+}
+
 void K053936PredrawTiles(INT32 chip, UINT8 *gfx, INT32 transparent, INT32 tcol)
 {
 	INT32 twidth = nWidth[chip];
@@ -77,18 +123,20 @@ void K053936PredrawTiles(INT32 chip, UINT8 *gfx, INT32 transparent, INT32 tcol)
 	for (INT32 i = 0; i < nRamLen[chip] / 2; i++)
 	{
 		if (ram[i] != buf[i]) {
-			INT32 sx;
-			INT32 sy;
-			INT32 code;
-			INT32 color;
-			INT32 fx;
-			INT32 fy;
+			INT32 sx = 0;
+			INT32 sy = 0;
+			INT32 code = 0;
+			INT32 color = 0;
+			INT32 fx = 0;
+			INT32 fy = 0;
 		
 			if (chip) {
 				pTileCallback1(i, ram, &code, &color, &sx, &sy, &fx, &fy);
 			} else {
 				pTileCallback0(i, ram, &code, &color, &sx, &sy, &fx, &fy);
 			}
+
+			if (code == -1) continue;
 		
 			// draw tile
 			{
@@ -115,8 +163,30 @@ void K053936PredrawTiles(INT32 chip, UINT8 *gfx, INT32 transparent, INT32 tcol)
 	}
 }
 
-static inline void copy_roz(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT32 maxy, UINT32 startx, UINT32 starty, INT32 incxx, INT32 incxy, INT32 incyx, INT32 incyy, INT32 transp)
+static inline void copy_roz(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT32 maxy, UINT32 startx, UINT32 starty, INT32 incxx, INT32 incxy, INT32 incyx, INT32 incyy, INT32 transp, INT32 priority)
 {
+	if (incxx == (1 << 16) && incxy == 0 && incyx == 0 && incyy == (1 << 16) && K053936Wrap[chip])
+	{
+		INT32 scrollx = startx >> 16;
+		INT32 scrolly = starty >> 16;
+
+		for (INT32 sy = 0; sy < nScreenHeight; sy++) {
+			UINT8  *pri = konami_priority_bitmap + (sy * nScreenWidth);
+			UINT16 *src = tscreen[chip] + (((scrolly + sy) % nHeight[chip]) * nWidth[chip]);
+			UINT32 *dst = konami_bitmap32 + (sy * nScreenWidth);
+
+			for (INT32 sx = 0; sx < nScreenWidth; sx++) {
+				INT32 pxl = src[(scrollx+sx)%nWidth[chip]];
+				if ((pxl & 0x8000)!=0 && transp) continue;
+
+				dst[sx] = konami_palette32[pxl & 0x7fff];
+				pri[sx] = priority;
+			}
+		}
+		return;
+	}
+
+	UINT8  *pri = konami_priority_bitmap;
 	UINT32 *dst = konami_bitmap32;
 	UINT32 *pal = konami_palette32;
 	UINT16 *src = tscreen[chip];
@@ -133,16 +203,17 @@ static inline void copy_roz(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT3
 
 		if (transp) {
 			if (wrap) {
-				for (INT32 x = minx; x < maxx; x++, cx+=incxx, cy+=incxy, dst++)
+				for (INT32 x = minx; x < maxx; x++, cx+=incxx, cy+=incxy, dst++, pri++)
 				{
 					INT32 pxl = src[(((cy >> 16) & hmask) << 10) + ((cx >> 16) & wmask)];
 		
 					if (!(pxl & 0x8000)) {
 						*dst = pal[pxl];
+						*pri = priority;
 					}
 				}
 			} else {
-				for (INT32 x = minx; x < maxx; x++, cx+=incxx, cy+=incxy, dst++)
+				for (INT32 x = minx; x < maxx; x++, cx+=incxx, cy+=incxy, dst++, pri++)
 				{
 					INT32 yy = cy >> 16;
 					if (yy > hmask || yy < 0) continue;
@@ -153,30 +224,36 @@ static inline void copy_roz(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT3
 
 					if (!(pxl & 0x8000)) {
 						*dst = pal[pxl];
+						*pri = priority;
 					}
 				}
 			}
 		} else {
 			if (wrap) {
-				for (INT32 x = minx; x < maxx; x++, cx+=incxx, cy+=incxy, dst++) {
+				for (INT32 x = minx; x < maxx; x++, cx+=incxx, cy+=incxy, dst++, pri++) {
 					*dst = pal[src[(((cy >> 16) & hmask) << 10) + ((cx >> 16) & wmask)] & 0x7fff];
+					*pri = priority;
 				}
 			} else {
-				for (INT32 x = minx; x < maxx; x++, cx+=incxx, cy+=incxy, dst++) {
+				for (INT32 x = minx; x < maxx; x++, cx+=incxx, cy+=incxy, dst++, pri++) {
 					INT32 yy = cy >> 16;
 					if (yy > hmask || yy < 0) continue;
 					INT32 xx = cx >> 16;
 					if (xx > wmask || xx < 0) continue;
 
 					*dst = pal[src[(yy << 10) + xx] & 0x7fff];
+					*pri = priority;
 				}
 			}
 		}
 	}
 }
 
-void K053936Draw(INT32 chip, UINT16 *ctrl, UINT16 *linectrl, INT32 transp)
+void K053936Draw(INT32 chip, UINT16 *ctrl, UINT16 *linectrl, INT32 flags)
 {
+	INT32 transp = flags & 0xff;
+	INT32 priority = (flags >> 8) & 0xff;
+
 	if (ctrl[0x07] & 0x0040 && linectrl)	// Super!
 	{
 		UINT32 startx,starty;
@@ -221,15 +298,15 @@ void K053936Draw(INT32 chip, UINT16 *ctrl, UINT16 *linectrl, INT32 transp)
 			startx -= K053936Offset[chip][0] * incxx;
 			starty -= K053936Offset[chip][0] * incxy;
 
-			copy_roz(chip, minx, maxx, miny, maxy, startx << 5, starty << 5, incxx << 5, incxy << 5, 0, 0, transp);
+			copy_roz(chip, minx, maxx, miny, maxy, startx << 5, starty << 5, incxx << 5, incxy << 5, 0, 0, transp, priority);
 
 			y++;
 		}
 	}
 	else	// simple
 	{
-		UINT32 startx,starty;
-		INT32 incxx,incxy,incyx,incyy;
+		UINT32 startx, starty;
+		INT32 incxx, incxy, incyx, incyy;
 
 		startx = 256 * (INT16)(ctrl[0x00]);
 		starty = 256 * (INT16)(ctrl[0x01]);
@@ -238,8 +315,17 @@ void K053936Draw(INT32 chip, UINT16 *ctrl, UINT16 *linectrl, INT32 transp)
 		incxx  =       (INT16)(ctrl[0x04]);
 		incxy  =       (INT16)(ctrl[0x05]);
 
-		if (ctrl[0x06] & 0x4000) { incyx *= 256; incyy *= 256; }
-		if (ctrl[0x06] & 0x0040) { incxx *= 256; incxy *= 256; }
+		if (ctrl[0x06] & 0x4000)
+		{
+			incyx *= 256;
+			incyy *= 256;
+		}
+
+		if (ctrl[0x06] & 0x0040)
+		{
+			incxx *= 256;
+			incxy *= 256;
+		}
 
 		startx -= K053936Offset[chip][1] * incyx;
 		starty -= K053936Offset[chip][1] * incyy;
@@ -247,7 +333,7 @@ void K053936Draw(INT32 chip, UINT16 *ctrl, UINT16 *linectrl, INT32 transp)
 		startx -= K053936Offset[chip][0] * incxx;
 		starty -= K053936Offset[chip][0] * incxy;
 
-		copy_roz(chip, 0, nScreenWidth, 0, nScreenHeight, startx << 5, starty << 5, incxx << 5, incxy << 5, incyx << 5, incyy << 5, transp);
+		copy_roz(chip, 0, nScreenWidth, 0, nScreenHeight, startx << 5, starty << 5, incxx << 5, incxy << 5, incyx << 5, incyy << 5, transp, priority);
 	}
 }
 

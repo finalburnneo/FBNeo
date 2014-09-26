@@ -181,8 +181,7 @@ void __fastcall xmen_main_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xfffff8) == 0x108020) {
-		K053246Write((address & 0x006) | 0, data & 0xff);
-		K053246Write((address & 0x006) | 1, data >> 8);
+		K053246Write((address & 0x006), 0x10000|data);
 		return;
 	}
 }
@@ -474,7 +473,7 @@ static INT32 DrvInit()
 	K052109AdjustScroll(8, 0);
 
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, K053247Callback, 1);
-	K053247SetSpriteOffset(-510, 158);
+	K053247SetSpriteOffset(510, -158);
 
 	BurnYM2151Init(4000000);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.20, BURN_SND_ROUTE_LEFT);
@@ -527,21 +526,6 @@ static inline void DrvRecalcPalette()
 	}
 }
 
-static void sortlayers(INT32 *layer,INT32 *pri)
-{
-#define SWAP(a,b) \
-	if (pri[a] < pri[b]) \
-	{ \
-		INT32 t; \
-		t = pri[a]; pri[a] = pri[b]; pri[b] = t; \
-		t = layer[a]; layer[a] = layer[b]; layer[b] = t; \
-	}
-
-	SWAP(0,1)
-	SWAP(0,2)
-	SWAP(1,2)
-}
-
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
@@ -565,7 +549,7 @@ static INT32 DrvDraw()
 	layer[1] = 1;
 	layer[2] = 2;
 
-	sortlayers(layer,layerpri);
+	konami_sortlayers3(layer,layerpri);
 
 	KonamiClearBitmaps(DrvPalette[16 * bg_colorbase+1]);
 

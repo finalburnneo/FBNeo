@@ -16,6 +16,7 @@ static UINT32 K051960RomMask;
 static UINT8 *K051960RomExp;
 static UINT32 K051960RomExpMask;
 static UINT8 blank_tile[0x100];
+static INT32 nBpp = 0;
 
 static INT32 nSpriteXOffset;
 static INT32 nSpriteYOffset;
@@ -110,12 +111,12 @@ void K051960SpritesRender(INT32 min_priority, INT32 max_priority)
 					c &= K051960RomExpMask;
 
 					if (Shadow) {
-						konami_render_zoom_shadow_tile(K051960RomExp, c, Colour * 16, sx, sy, xFlip, yFlip, 16, 16, 0x10000, 0x10000, (max_priority ==-1) ? Pri:0xffffffff, 0);
+						konami_render_zoom_shadow_tile(K051960RomExp, c, nBpp, Colour, sx, sy, xFlip, yFlip, 16, 16, 0x10000, 0x10000, (max_priority ==-1) ? Pri:0xffffffff, 0);
 					} else {
 						if (max_priority == -1) {
-							konami_draw_16x16_prio_tile(K051960RomExp, c, Colour * 16, sx, sy, xFlip, yFlip, Pri);
+							konami_draw_16x16_prio_tile(K051960RomExp, c, nBpp, Colour, sx, sy, xFlip, yFlip, Pri);
 						} else {
-							konami_draw_16x16_tile(K051960RomExp, c, Colour * 16, sx, sy, xFlip, yFlip);
+							konami_draw_16x16_tile(K051960RomExp, c, nBpp, Colour, sx, sy, xFlip, yFlip);
 						}
 					}
 				}
@@ -146,12 +147,12 @@ void K051960SpritesRender(INT32 min_priority, INT32 max_priority)
 					c &= K051960RomExpMask;
 
 					if (Shadow) {
-						konami_render_zoom_shadow_tile(K051960RomExp, c, Colour * 16, sx, sy, xFlip, yFlip, 16, 16, zw << 12, zh << 12, (max_priority ==-1) ? Pri:0xffffffff, 0);
+						konami_render_zoom_shadow_tile(K051960RomExp, c, nBpp, Colour, sx, sy, xFlip, yFlip, 16, 16, zw << 12, zh << 12, (max_priority ==-1) ? Pri:0xffffffff, 0);
 					} else {
 						if (max_priority == -1) {
-							konami_draw_16x16_priozoom_tile(K051960RomExp, c, Colour * 16, 0, sx, sy, xFlip, yFlip, 16, 16, zw << 12, zh << 12, Pri);
+							konami_draw_16x16_priozoom_tile(K051960RomExp, c, nBpp, Colour, 0, sx, sy, xFlip, yFlip, 16, 16, zw << 12, zh << 12, Pri);
 						} else {
-							konami_draw_16x16_zoom_tile(K051960RomExp, c, Colour * 16, 0, sx, sy, xFlip, yFlip, 16, 16, zw << 12, zh << 12);
+							konami_draw_16x16_zoom_tile(K051960RomExp, c, nBpp, Colour, 0, sx, sy, xFlip, yFlip, 16, 16, zw << 12, zh << 12);
 						}
 					}
 				}
@@ -259,6 +260,13 @@ void K051960Init(UINT8* pRomSrc, UINT8* pRomSrcExp, UINT32 RomMask)
 	nSpriteXOffset = nSpriteYOffset = 0;
 
 	KonamiAllocateBitmaps();
+
+	nBpp = 4;
+}
+
+void K051960SetBpp(INT32 bpp)
+{
+	nBpp = bpp;
 }
 
 void K051960Exit()

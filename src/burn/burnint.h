@@ -82,8 +82,25 @@ INT32 BurnByteswap(UINT8* pm,INT32 nLen);
 INT32 BurnClearScreen();
 
 // load.cpp
+
+/*
+	Flags for use with BurnLoadRomExt
+
+	LD_GROUP(x)		load this many bytes, then skip by nGap (flag is optional)
+	REVERSE			load the bytes in a group in reverse order (0,1,2,3 -> 3,2,1,0)
+	INVERT			^=0xff the data
+	BYTESWAP		change order of bytes from 0,1,2,3 to 1,0,3,2
+	NIBBLES			load half of each byte into Dest (Dest[0] = (byte & 15); Dest[1] = (byte >> 4); )
+*/
+
+#define LD_GROUP(x)	((x) & 0xff) // 256 - plenty
+#define LD_REVERSE	(1<<8)
+#define LD_INVERT	(1<<9)
+#define LD_BYTESWAP	(1<<10)
+#define LD_NIBBLES	(1<<11)
+
+INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 bFlags);
 INT32 BurnLoadRom(UINT8* Dest, INT32 i, INT32 nGap);
-INT32 BurnXorRom(UINT8* Dest, INT32 i, INT32 nGap);
 INT32 BurnLoadBitField(UINT8* pDest, UINT8* pSrc, INT32 nField, INT32 nSrcLen);
 
 // ---------------------------------------------------------------------------

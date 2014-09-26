@@ -5144,7 +5144,7 @@ static INT32 BioshipDraw()
 	draw_sprites(0, 0x200, 0x0f, 1);
 	draw_sprites(0, 0x200, 0x0f, 0);
 
-	draw_macross_text_layer(0, 0, 0, 0x300);
+	draw_macross_text_layer(0, 0, 1, 0x300);
 
 	draw_screen_yflip();
 	BurnTransferCopy(DrvPalette);

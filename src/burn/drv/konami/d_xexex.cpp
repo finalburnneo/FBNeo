@@ -34,7 +34,7 @@ static UINT8 *soundlatch3;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT32 layerpri[3];
+static INT32 layerpri[4];
 static INT32 layer_colorbase[4];
 static INT32 sprite_colorbase;
 
@@ -42,7 +42,7 @@ static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
 static UINT8 DrvReset;
-static UINT16 DrvInputs[3];
+static UINT16 DrvInputs[4];
 static UINT8 DrvDips[2];
 
 static INT32 z80_bank;

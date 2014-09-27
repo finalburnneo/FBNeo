@@ -31,7 +31,7 @@ static UINT8 *soundlatch2;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT32 layerpri[3];
+static INT32 layerpri[4];
 static INT32 layer_colorbase[4];
 static INT32 sprite_colorbase;
 
@@ -41,7 +41,7 @@ static UINT8 DrvJoy3[16];
 static UINT8 DrvJoy4[16];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[4];
-static UINT8 DrvDips[2];
+static UINT8 DrvDips[4];
 
 static INT32 avac_bits[4];
 static INT32 avac_occupancy[4];
@@ -593,7 +593,7 @@ static INT32 DrvDraw()
 {
 	DrvPaletteRecalc();
 
-	int layers[3], dirty, mask, vrc_mode, vrc_new;
+	int layers[4], dirty, mask, vrc_mode, vrc_new;
 
 	K056832ReadAvac(&vrc_mode, &vrc_new);
 

@@ -19,7 +19,7 @@ static UINT8 *MemEnd;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT32 layerpri[3];
+static INT32 layerpri[4];
 static INT32 layer_colorbase[4];
 
 static UINT8 DrvJoy1[16];

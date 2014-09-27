@@ -38,7 +38,7 @@ static UINT8 *soundlatch3;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT32 layerpri[3];
+static INT32 layerpri[4];
 static INT32 layer_colorbase[4];
 static INT32 sprite_colorbase = 0;
 

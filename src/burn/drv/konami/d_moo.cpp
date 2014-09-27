@@ -96,10 +96,10 @@ static struct BurnInputInfo MooInputList[] = {
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 13,	"p4 fire 2"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
+	{"Service 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
+	{"Service 4",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
@@ -147,10 +147,10 @@ static struct BurnInputInfo BuckyInputList[] = {
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy4 + 14,	"p4 fire 3"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
+	{"Service 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
+	{"Service 4",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 

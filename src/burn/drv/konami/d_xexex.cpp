@@ -71,8 +71,8 @@ static struct BurnInputInfo XexexInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 };
 

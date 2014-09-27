@@ -1380,8 +1380,8 @@ static struct BurnRomInfo moomesablRomDesc[] = {
 	{ "151a12",		0x200000, 0x4978555f, 4 | BRF_GRA },           // 10
 	{ "151a13",		0x200000, 0x4771f525, 4 | BRF_GRA },           // 11
 
-	{ "moo01.rom",		0x080000, 0x3311338a, 5 | BRF_SND },           // 12 MSM6295 Samples
-	{ "moo02.rom",		0x0a0000, 0x2cf3a7c6, 5 | BRF_SND },           // 13
+	{ "moo01.rom",	0x080000, 0x3311338a, 5 | BRF_SND },           // 12 MSM6295 Samples
+	{ "moo02.rom",	0x080000, 0x2cf3a7c6, 5 | BRF_SND },           // 13
 
 	{ "moo.nv",		0x000080, 0x7bd904a8, 6 | BRF_OPT },           // 14 eeprom data
 };

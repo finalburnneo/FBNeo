@@ -3,7 +3,7 @@
 
 // Load a rom and separate out the bytes by nGap
 // Dest is the memory block to insert the rom into
-INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 bFlags)
+INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 {
 	INT32 nRet = 0, nLen = 0;
 	if (BurnExtLoadRom == NULL) return 1; // Load function was not defined by the application
@@ -23,14 +23,10 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 bFlags)
 
 	if (nLen <= 0) return 1;
 
-	if ((nGap>1) || (bFlags & LD_NIBBLES))
+	if ((nGap>1) || (nFlags & LD_NIBBLES) || (nFlags & LD_XOR))
 	{
-		UINT8 *Load=NULL;
-		UINT8 *pd=NULL,*pl=NULL,*LoadEnd=NULL;
 		INT32 nLoadLen=0;
-
-		// Allocate space for the file
-		Load=(UINT8 *)malloc(nLen);
+		UINT8 *Load=(UINT8 *)malloc(nLen);
 		if (Load==NULL) return 1;
 		memset(Load,0,nLen);
 
@@ -42,30 +38,32 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 bFlags)
 		if (nLoadLen<0) nLoadLen=0;
 		if (nLoadLen>nLen) nLoadLen=nLen;
 
-		// Loaded rom okay. Now insert into Dest
- 		LoadEnd=Load+nLoadLen;
-
-		pd=Dest; pl=Load;
-
-		INT32 Group = (LD_GROUP(bFlags) > 0) ? LD_GROUP(bFlags) : 1;
-		INT32 Invert = (bFlags & LD_INVERT) ? 0xff : 0;
-		INT32 Byteswap = (bFlags & LD_BYTESWAP) ? 1 : 0;
+		INT32 nGroup = (LD_GROUP(nFlags) > 0) ? LD_GROUP(nFlags) : 1;
+		INT32 nInvert = (nFlags & LD_INVERT) ? 0xff : 0;
+		INT32 nByteswap = (nFlags & LD_BYTESWAP) ? 1 : 0;
+		INT32 nReverse = (nGroup > 1) ? (nFlags & LD_REVERSE) : 0;
+		INT32 nXor = (nFlags & LD_XOR) ? 1 : 0;
+		INT32 nNibbles = (nFlags & LD_NIBBLES) ? 1 : 0;
 		UINT8 *Src = Load;
 
-		if ((bFlags & LD_NIBBLES)) { Group = 1; nGap = 2; }
+		if (nNibbles) { nGroup = 1; nGap = 2; }
 
-		for (INT32 n = 0, z = 0; n < nLen; n += Group, z += nGap) {
-			if (bFlags & LD_NIBBLES) {
-				Dest[z+0] = (Src[n^Byteswap] ^ Invert) & 0xf;
-				Dest[z+1] = (Src[n^Byteswap] ^ Invert) >> 4;
+		for (INT32 n = 0, z = 0; n < nLoadLen; n += nGroup, z += nGap) {
+			if (nNibbles) {
+				Dest[z+0] = (Src[n^nByteswap] ^ nInvert) & 0xf;
+				Dest[z+1] = (Src[n^nByteswap] ^ nInvert) >> 4;
 			} else {
-				if (bFlags & LD_REVERSE) {
-					for (INT32 j = 0; j < Group; j++) {
-						Dest[z + j] = Src[(n + ((Group - 1) - j)) ^ Byteswap] ^ Invert;
+				if (nReverse) {
+					for (INT32 j = 0; j < nGroup; j++) {
+						INT32 nXorData = nInvert;
+						if (nXor) nXorData ^= Dest[z + j];
+						Dest[z + j] = Src[(n + ((nGroup - 1) - j)) ^ nByteswap] ^ nXorData;
 					}
 				} else {
-					for (INT32 j = 0; j < Group; j++) {
-						Dest[z + j] = Src[(n + j) ^ Byteswap] ^ Invert;
+					for (INT32 j = 0; j < nGroup; j++) {
+						INT32 nXorData = nInvert;
+						if (nXor) nXorData ^= Dest[z + j];
+						Dest[z + j] = Src[(n + j) ^ nByteswap] ^ nXorData;
 					}
 				}
 			}
@@ -83,13 +81,13 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 bFlags)
 		if (bDoIpsPatch) IpsApplyPatches(Dest, RomName);
 		if (nRet!=0) return 1;
 
-		if (bFlags & LD_INVERT) {
+		if (nFlags & LD_INVERT) {
 			for (INT32 n = 0; n < nLen; n++) {
 				Dest[i] ^= 0xff;
 			}
 		}
 
-		if (bFlags & LD_BYTESWAP) {
+		if (nFlags & LD_BYTESWAP) {
 			BurnByteswap(Dest, nLen);
 		}
 	}
@@ -102,6 +100,10 @@ INT32 BurnLoadRom(UINT8 *Dest, INT32 i, INT32 nGap)
 	return BurnLoadRomExt(Dest,i,nGap,0);
 }
 
+INT32 BurnXorRom(UINT8 *Dest, INT32 i, INT32 nGap)
+{
+	return BurnLoadRomExt(Dest,i,nGap,LD_XOR);
+}
 
 // Separate out a bitfield into Bit number 'nField' of each nibble in pDest
 // (end result: each dword in memory carries the 8 pixels of a tile line).

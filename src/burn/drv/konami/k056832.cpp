@@ -496,7 +496,7 @@ static void draw_layer_internal(INT32 layer, INT32 pageIndex, INT32 *clip, INT32
 
 		m_callback(layer, &code, &color, &g_flags);
 
-		code &= K056832RomExpMask;
+	//	code &= K056832RomExpMask; // mask in callback if necessary
 
 		if (!opaque) {
 			if (K056832TransTab[code]) continue;
@@ -506,55 +506,85 @@ static void draw_layer_internal(INT32 layer, INT32 pageIndex, INT32 *clip, INT32
 			if (tilemap_flip & 1) g_flags ^= 1;
 			if (tilemap_flip & 2) g_flags ^= 2;
 
-			color *= 16; // iq_132
 			UINT8 *rom = K056832RomExp + (code * 0x40);
-			UINT32 *pal = konami_palette32 + color;
+			UINT32 *pal = konami_palette32 + (color * 16); // if > 4 bit, adjust in tilemap callback
 
 			INT32 flip_tile = 0;
 			if (g_flags & 0x01) flip_tile |= 0x07;
 			if (g_flags & 0x02) flip_tile |= 0x38;
 
-			if (alpha_enable) {
-				for (INT32 iy = 0; iy < 8; iy++) {
-					INT32 yy = sy+iy;
-	
-					if (yy < miny || yy > maxy) continue;
-	
-					UINT8 *pri = konami_priority_bitmap + (yy -  CLIP_MINY) * nScreenWidth;
-					UINT32 *dst = konami_bitmap32 + (yy -  CLIP_MINY) * nScreenWidth;
-	
-					for (INT32 ix = 0; ix < 8; ix++) {
-						INT32 xx = sx+ix;
-	
-						if (xx < minx || xx > maxx) continue;
-	
-						INT32 pxl = rom[((iy*8)+ix)^flip_tile];
-	
-						if (pxl || opaque) {
-							dst[xx -  CLIP_MINX] = alpha_blend(dst[xx - CLIP_MINX], pal[pxl], alpha);
-							pri[xx -  CLIP_MINX] = priority;
+			UINT8 *pri = konami_priority_bitmap + ((sy -  CLIP_MINY) * nScreenWidth) - CLIP_MINX;
+			UINT32 *dst = konami_bitmap32 + ((sy -  CLIP_MINY) * nScreenWidth) - CLIP_MINX;
+
+			// not clipped
+			if (sy >= CLIP_MINY && sy < ((nScreenHeight - 7) + CLIP_MINY) && sx >= CLIP_MINX && sx < ((nScreenWidth - 7) + CLIP_MINX))
+			{
+				if (alpha_enable) {
+					for (INT32 iy = 0; iy < 8; iy++, dst += nScreenWidth, pri += nScreenWidth) {
+						for (INT32 ix = 0; ix < 8; ix++) {
+							INT32 xx = sx+ix;
+
+							INT32 pxl = rom[((iy*8)+ix)^flip_tile];
+		
+							if (pxl || opaque) {
+								dst[xx] = alpha_blend(dst[xx], pal[pxl], alpha);
+								pri[xx] = priority;
+							}
+						}
+					}
+				} else {
+					for (INT32 iy = 0; iy < 8; iy++, dst += nScreenWidth, pri += nScreenWidth) {
+						for (INT32 ix = 0; ix < 8; ix++) {
+							INT32 xx = sx+ix;
+				
+							INT32 pxl = rom[((iy*8)+ix)^flip_tile];
+		
+							if (pxl || opaque) {
+								dst[xx] = pal[pxl];
+								pri[xx] = priority;
+							}
 						}
 					}
 				}
-			} else {
-				for (INT32 iy = 0; iy < 8; iy++) {
-					INT32 yy = sy+iy;
+			}
+			else	// clipped
+			{
+				if (alpha_enable) {
+					for (INT32 iy = 0; iy < 8; iy++, dst += nScreenWidth, pri += nScreenWidth) {
+						INT32 yy = sy+iy;
+		
+						if (yy < miny || yy > maxy) continue;
 	
-					if (yy < miny || yy > maxy) continue;
-	
-					UINT8 *pri = konami_priority_bitmap + (yy -  CLIP_MINY) * nScreenWidth;
-					UINT32 *dst = konami_bitmap32 + (yy -  CLIP_MINY) * nScreenWidth;
-	
-					for (INT32 ix = 0; ix < 8; ix++) {
-						INT32 xx = sx+ix;
-	
-						if (xx < minx || xx > maxx) continue;
-	
-						INT32 pxl = rom[((iy*8)+ix)^flip_tile];
-	
-						if (pxl || opaque) {
-							dst[xx -  CLIP_MINX] = pal[pxl];
-							pri[xx -  CLIP_MINX] = priority;
+						for (INT32 ix = 0; ix < 8; ix++) {
+							INT32 xx = sx+ix;
+		
+							if (xx < minx || xx > maxx) continue;
+		
+							INT32 pxl = rom[((iy*8)+ix)^flip_tile];
+		
+							if (pxl || opaque) {
+								dst[xx] = alpha_blend(dst[xx], pal[pxl], alpha);
+								pri[xx] = priority;
+							}
+						}
+					}
+				} else {
+					for (INT32 iy = 0; iy < 8; iy++, dst += nScreenWidth, pri += nScreenWidth) {
+						INT32 yy = sy+iy;
+		
+						if (yy < miny || yy > maxy) continue;
+			
+						for (INT32 ix = 0; ix < 8; ix++) {
+							INT32 xx = sx+ix;
+		
+							if (xx < minx || xx > maxx) continue;
+		
+							INT32 pxl = rom[((iy*8)+ix)^flip_tile];
+		
+							if (pxl || opaque) {
+								dst[xx] = pal[pxl];
+								pri[xx] = priority;
+							}
 						}
 					}
 				}
@@ -612,11 +642,6 @@ void K056832Draw(int layer, UINT32 flags, UINT32 priority)
 	cmaxx = CLIP_MAXX - 1;
 	cminy = CLIP_MINY;
 	cmaxy = CLIP_MAXY - 1;
-
-//	cminx = 0;
-//	cmaxx = nScreenWidth - 1;
-//	cminy = 0;
-//	cmaxy = (nScreenHeight - 1);
 
 	// flip correction registers
 	flipy = m_regs[0] & 0x20;

@@ -9757,7 +9757,7 @@ static INT32 RapheroFrame()
 
 struct BurnDriver BurnDrvRaphero = {
 	"raphero", "arcadian", NULL, NULL, "1994",
-	"Rapid Hero\0", "Incomplete sound", "Media Trading Corp", "NMK16",
+	"Rapid Hero\0", NULL, "Media Trading Corp", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, rapheroRomInfo, rapheroRomName, NULL, NULL, Tdragon2InputInfo, RapheroDIPInfo,
@@ -9796,7 +9796,7 @@ STD_ROM_FN(arcadian)
 
 struct BurnDriver BurnDrvArcadian = {
 	"arcadian", NULL, NULL, NULL, "1994",
-	"Arcadia (NMK)\0", "Incomplete sound", "NMK", "NMK16",
+	"Arcadia (NMK)\0", NULL, "NMK", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, arcadianRomInfo, arcadianRomName, NULL, NULL, Tdragon2InputInfo, RapheroDIPInfo,

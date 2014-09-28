@@ -891,7 +891,7 @@ struct BurnDriver BurnDrvXexexa = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, xexexaRomInfo, xexexaRomName, NULL, NULL, XexexInputInfo, XexexDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	512, 256, 2, 1
+	384, 256, 4, 3
 };
 
 
@@ -931,5 +931,5 @@ struct BurnDriver BurnDrvXexexj = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, xexexjRomInfo, xexexjRomName, NULL, NULL, XexexInputInfo, XexexDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	512, 256, 2, 1
+	384, 256, 4, 3
 };

@@ -676,7 +676,7 @@ INT32 GameInpInit()
 	// Count the number of inputs
 	nGameInpCount = 0;
 	nMacroCount = 0;
-	nMaxMacro = nMaxPlayers * 22;
+	nMaxMacro = nMaxPlayers * 32;
 
 	for (UINT32 i = 0; i < 0x1000; i++) {
 		nRet = BurnDrvGetInputInfo(NULL,i);

@@ -683,8 +683,8 @@ static INT32 DrvFrame()
 
 struct BurnDriver BurnDrvShippuMD = {
 	"shippumd", "kingdmgp", NULL, NULL, "1994",
-	"Shippu Mahou Daisakusen - kingdom grandprix\0", NULL, "Raizing / 8ing", "Toaplan GP9001 based",
-	L"\u75BE\u98A8\u9B54\u6CD5\u5927\u4F5C\u6226 - kingdom grandprix (Japan)\0Shippu Mahou Daisakusen (Japan)\0", NULL, NULL, NULL,
+	"Shippu Mahou Daisakusen - Kingdom Grandprix\0", NULL, "Raizing / 8ing", "Toaplan GP9001 based",
+	L"\u75BE\u98A8\u9B54\u6CD5\u5927\u4F5C\u6226 (Shippu Mahou Daisakusen - Kingdom Grandprix Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, shippumdRomInfo, shippumdRomName, NULL, NULL, shippumdInputInfo, shippumdDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,

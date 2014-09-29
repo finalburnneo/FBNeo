@@ -516,38 +516,6 @@ static void draw_layer_internal(INT32 layer, INT32 pageIndex, INT32 *clip, INT32
 			UINT8 *pri = konami_priority_bitmap + ((sy -  CLIP_MINY) * nScreenWidth) - CLIP_MINX;
 			UINT32 *dst = konami_bitmap32 + ((sy -  CLIP_MINY) * nScreenWidth) - CLIP_MINX;
 
-			// not clipped
-			if (sy >= CLIP_MINY && sy < ((nScreenHeight - 7) + CLIP_MINY) && sx >= CLIP_MINX && sx < ((nScreenWidth - 7) + CLIP_MINX))
-			{
-				if (alpha_enable) {
-					for (INT32 iy = 0; iy < 8; iy++, dst += nScreenWidth, pri += nScreenWidth) {
-						for (INT32 ix = 0; ix < 8; ix++) {
-							INT32 xx = sx+ix;
-
-							INT32 pxl = rom[((iy*8)+ix)^flip_tile];
-		
-							if (pxl || opaque) {
-								dst[xx] = alpha_blend(dst[xx], pal[pxl], alpha);
-								pri[xx] = priority;
-							}
-						}
-					}
-				} else {
-					for (INT32 iy = 0; iy < 8; iy++, dst += nScreenWidth, pri += nScreenWidth) {
-						for (INT32 ix = 0; ix < 8; ix++) {
-							INT32 xx = sx+ix;
-				
-							INT32 pxl = rom[((iy*8)+ix)^flip_tile];
-		
-							if (pxl || opaque) {
-								dst[xx] = pal[pxl];
-								pri[xx] = priority;
-							}
-						}
-					}
-				}
-			}
-			else	// clipped
 			{
 				if (alpha_enable) {
 					for (INT32 iy = 0; iy < 8; iy++, dst += nScreenWidth, pri += nScreenWidth) {

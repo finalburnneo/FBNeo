@@ -477,23 +477,23 @@ void K053247SpritesRender()
 
 				if (shadow || wtable == stable) {
 					if (mirrory && h == 1)
-						konami_render_zoom_shadow_tile(gfxbase, c, nBpp, color, sx, sy, flipx, !flipy, 16, 16, zw << 12, zh << 12, primask, highlight);
+						konami_render_zoom_shadow_tile(gfxbase, c, nBpp, color, sx, sy, fx, !fy, 16, 16, zw << 12, zh << 12, primask, highlight);
 
-					konami_render_zoom_shadow_tile(gfxbase, c, nBpp, color, sx, sy, flipx, flipy, 16, 16, zw << 12, zh << 12, primask, highlight);
+					konami_render_zoom_shadow_tile(gfxbase, c, nBpp, color, sx, sy, fx, fy, 16, 16, zw << 12, zh << 12, primask, highlight);
 					continue;
 				}
 
 				if (mirrory && h == 1)
 				{
 					if (nozoom) {
-						konami_draw_16x16_prio_tile(gfxbase, c, nBpp, color, sx, sy, flipx, !flipy, primask);
+						konami_draw_16x16_prio_tile(gfxbase, c, nBpp, color, sx, sy, fx, !fy, primask);
 					} else {
 						konami_draw_16x16_priozoom_tile(gfxbase, c, nBpp, color, 0, sx, sy, fx, !fy, 16, 16, zw<<12, zh<<12, primask);
 					}
 				}
 
 				if (nozoom) {
-					konami_draw_16x16_prio_tile(gfxbase, c, nBpp, color, sx, sy, flipx, flipy, primask);
+					konami_draw_16x16_prio_tile(gfxbase, c, nBpp, color, sx, sy, fx, fy, primask);
 				} else {
 					konami_draw_16x16_priozoom_tile(gfxbase, c, nBpp, color, 0, sx, sy, fx, fy, 16, 16, zw<<12, zh<<12, primask);
 				}

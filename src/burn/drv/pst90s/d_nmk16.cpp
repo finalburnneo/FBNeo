@@ -11,8 +11,6 @@
 #include "nmk004.h"
 
 #if 0
-	macross		-- bad sound in-game?
-
 	tdragonb	-- bad sound. Seibu sound needs hooked up properly
 	mustangb	-- bad sound. Seibu sound needs hooked up properly
 #endif
@@ -4895,7 +4893,7 @@ static void draw_screen_yflip()
 	}
 }
 
-static inline void common_draw(INT32 spriteflip, INT32 bgscrollx, INT32 bgscrolly, INT32 txscrollx, INT32 txscrolly, INT32 tx_coloff)
+static inline void common_draw(INT32 spriteflip, INT32 bgscrollx, INT32 bgscrolly, INT32 txscrollx, INT32 txscrolly, INT32 tx_coloff, INT32 wide)
 {
 	DrvPaletteRecalc();
 
@@ -4907,9 +4905,9 @@ static inline void common_draw(INT32 spriteflip, INT32 bgscrollx, INT32 bgscroll
 	draw_sprites(spriteflip, 0x100, 0x0f, 0);
 
 	if (Tharriermode || Macrossmode) { // Tharrier and Macross 1
-		draw_tharriermacross1_text_layer(txscrollx, txscrolly, 0, tx_coloff);
+		draw_tharriermacross1_text_layer(txscrollx, txscrolly, wide, tx_coloff);
 	} else { // Macross 2 and all the rest...
-		draw_macross_text_layer(txscrollx, txscrolly, 0, tx_coloff);
+		draw_macross_text_layer(txscrollx, txscrolly, wide, tx_coloff);
 	}
 
 	draw_screen_yflip();
@@ -4920,7 +4918,7 @@ static INT32 TharrierDraw()
 {
 	INT32 scrollx = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(Drv68KRAM + 0x9f00))) & 0xfff;
 
-	common_draw(1, scrollx, 0, 0, 0, 0);
+	common_draw(1, scrollx, 0, 0, 0, 0, 0);
 
 	return 0;
 }
@@ -4931,7 +4929,7 @@ static INT32 ManyblocDraw()
 	INT32 scrollx = BURN_ENDIAN_SWAP_INT16(scroll[0x82 / 2]) & 0xfff;
 	INT32 scrolly = BURN_ENDIAN_SWAP_INT16(scroll[0xc2 / 2]) & 0x1ff;
 
-	common_draw(1, scrollx, scrolly, 0, 0, 0);
+	common_draw(1, scrollx, scrolly, 0, 0, 0, 0);
 
 	return 0;
 }
@@ -4942,7 +4940,7 @@ static INT32 MacrossDraw()
 	INT32 scrollx = ((BURN_ENDIAN_SWAP_INT16(scroll[0]) & 0x0f) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[1]) & 0xff);
 	INT32 scrolly = ((BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x01) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0xff);
 
-	common_draw(0, scrollx, scrolly, 0, 0, 0x200);
+	common_draw(0, scrollx, scrolly, 0, 0, 0x200, 0);
 
 	return 0;
 }
@@ -4953,7 +4951,7 @@ static INT32 VandykeDraw()
 	INT32 scrollx = ((BURN_ENDIAN_SWAP_INT16(scroll[0]) & 0x0f) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[1]) >> 8);
 	INT32 scrolly = ((BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x01) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[3]) >> 8);
 
-	common_draw(0, scrollx, scrolly, 0, 0, 0x200);
+	common_draw(0, scrollx, scrolly, 0, 0, 0x200, 1);
 
 	return 0;
 }
@@ -4964,7 +4962,7 @@ static INT32 RedhawkiDraw()
 	INT32 scrollx = BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0xff;
 	INT32 scrolly = BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0xff;
 
-	common_draw(0, scrollx, scrolly, 0, 0, 0x300);
+	common_draw(0, scrollx, scrolly, 0, 0, 0x300, 0);
 
 	return 0;
 }
@@ -4975,7 +4973,7 @@ static INT32 FirehawkDraw()
 	INT32 scrolly = (BURN_ENDIAN_SWAP_INT16(scroll[3]) + 0x100) & 0x1ff;
 	INT32 scrollx = (BURN_ENDIAN_SWAP_INT16(scroll[1]) - 0x100) & 0xfff;
 
-	common_draw(1, scrollx, scrolly, 0, 0, 0x200);
+	common_draw(1, scrollx, scrolly, 0, 0, 0x200, 0);
 
 	return 0;
 }
@@ -4992,7 +4990,7 @@ static INT32 HachamfDraw()
 	INT32 scrollx = ((BURN_ENDIAN_SWAP_INT16(scroll[0]) & 0x0f) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[1]) & 0xff);
 	INT32 scrolly = ((BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x01) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0xff);
 
-	common_draw(0, scrollx, scrolly, 0, 0, 0x200);
+	common_draw(0, scrollx, scrolly, 0, 0, 0x200, 1);
 
 	return 0;
 }
@@ -5019,7 +5017,7 @@ static INT32 StrahlDraw()
 	draw_sprites(0, 0x100, 0x0f, 1);
 	draw_sprites(0, 0x100, 0x0f, 0);
 
-	draw_macross_text_layer(0, 0, 0, 0);
+	draw_macross_text_layer(0, 0, 1, 0);
 
 	draw_screen_yflip();
 	BurnTransferCopy(DrvPalette);
@@ -5179,7 +5177,7 @@ static void AfegaCommonDraw(INT32 , INT32 xoffset, INT32 yoffset)
 	INT32 txscrollx = (BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0xff);
 	INT32 txscrolly = (BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0xff);
 
-	common_draw(1, bgscrollx, bgscrolly, txscrollx, txscrolly, 0x200);
+	common_draw(1, bgscrollx, bgscrolly, txscrollx, txscrolly, 0x200, 0);
 }
 
 static INT32 AfegaDraw()
@@ -8193,7 +8191,7 @@ static INT32 TdragonInit()
 
 struct BurnDriver BurnDrvTdragon = {
 	"tdragon", NULL, "nmk004", NULL, "1991",
-	"Thunder Dragon (9th Jan. 1992)\0", "No sound", "NMK (Tecmo license)", "NMK16",
+	"Thunder Dragon (9th Jan. 1992)\0", NULL, "NMK (Tecmo license)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, tdragonRomInfo, tdragonRomName, NULL, NULL, CommonInputInfo, TdragonDIPInfo,

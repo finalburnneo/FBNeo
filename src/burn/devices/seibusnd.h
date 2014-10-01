@@ -11,7 +11,7 @@ extern INT32 seibu_coin_input;
 
 unsigned char seibu_main_word_read(INT32 offset);
 void seibu_main_word_write(INT32 offset, UINT8 data);
-void seibu_sound_mustb_write_word(INT32 offset, UINT8 data);
+void seibu_sound_mustb_write_word(INT32 offset, UINT16 data);
 
 void seibu_sound_reset();
 

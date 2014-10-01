@@ -137,14 +137,14 @@ void seibu_main_word_write(INT32 offset, UINT8 data)
 	}
 }
 
-void seibu_sound_mustb_write_word(INT32 /*offset*/, UINT8 data)
+void seibu_sound_mustb_write_word(INT32 /*offset*/, UINT16 data)
 {
 #if defined FBA_DEBUG
 	if (!DebugDev_SeibuSndInitted) bprintf(PRINT_ERROR, _T("seibu_sound_mustb_write_word called without init\n"));
 #endif
 
 	main2sub[0] = data & 0xff;
-	main2sub[1] = 0; // originally data >> 8 which is effectively 0
+	main2sub[1] = data >> 8;
 	
 	update_irq_lines(RST18_ASSERT);
 }

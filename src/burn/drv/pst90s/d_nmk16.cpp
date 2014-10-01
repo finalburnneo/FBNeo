@@ -11,8 +11,7 @@
 #include "nmk004.h"
 
 #if 0
-	tdragonb	-- bad sound. Seibu sound needs hooked up properly
-	mustangb	-- bad sound. Seibu sound needs hooked up properly
+	hachamf - needs some protection work
 #endif
 
 static UINT8 *AllMem;
@@ -2862,6 +2861,9 @@ UINT16 __fastcall mustangb_main_read_word(UINT32 address)
 {
 	switch (address)
 	{
+		case 0x044022:
+			return 0x0003;
+
 		case 0x080000:
 		case 0x0c0000:
 			return DrvInputs[0];
@@ -2885,6 +2887,9 @@ UINT8 __fastcall mustangb_main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
+		case 0x044023: // tdragonb sprite fix
+			return 0x03;
+
 		case 0x080000:
 		case 0x0c0000:
 			return DrvInputs[0] >> 8;
@@ -8026,7 +8031,7 @@ static INT32 MustangbInit()
 
 struct BurnDriver BurnDrvMustangb = {
 	"mustangb", "mustang", NULL, NULL, "1990",
-	"US AAF Mustang (bootleg)\0", "No sound", "bootleg", "NMK16",
+	"US AAF Mustang (bootleg)\0", NULL, "bootleg", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, mustangbRomInfo, mustangbRomName, NULL, NULL, CommonInputInfo, MustangDIPInfo,
@@ -8104,7 +8109,7 @@ static INT32 Mustangb2Init()
 
 struct BurnDriver BurnDrvMustangb2 = {
 	"mustangb2", "mustang", NULL, NULL, "1990",
-	"US AAF Mustang (TAB Austria bootleg)\0", "No sound", "bootleg", "NMK16",
+	"US AAF Mustang (TAB Austria bootleg)\0", NULL, "bootleg", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, mustangb2RomInfo, mustangb2RomName, NULL, NULL, CommonInputInfo, MustangDIPInfo,
@@ -8280,8 +8285,6 @@ static INT32 TdragonbLoadCallback()
 	decode_tdragonb();
 	DrvGfxDecode(0x20000, 0x100000, 0x100000);
 
-	*((UINT16 *)(Drv68KROM + 0x00308)) = BURN_ENDIAN_SWAP_INT16(0x4e71); // fix intro sprites
-
 	return 0;
 }
 
@@ -8292,7 +8295,7 @@ static INT32 TdragonbInit()
 
 struct BurnDriver BurnDrvTdragonb = {
 	"tdragonb", "tdragon", NULL, NULL, "1991",
-	"Thunder Dragon (bootleg)\0", "No sound", "bootleg", "NMK16",
+	"Thunder Dragon (bootleg)\0", NULL, "bootleg", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, tdragonbRomInfo, tdragonbRomName, NULL, NULL, CommonInputInfo, TdragonbDIPInfo,

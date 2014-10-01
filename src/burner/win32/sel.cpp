@@ -509,15 +509,26 @@ static int SelListMake()
 		if (szSearchString[0]) {
 			TCHAR *StringFound = NULL;
 			TCHAR *StringFound2 = NULL;
+			TCHAR *StringFound3 = NULL;
+			TCHAR *StringFound4 = NULL;
 			TCHAR szDriverName[256] = { _T("") };
+			TCHAR szManufacturerName[256] = { _T("") };
+			TCHAR szSystemName[256] = { _T("") };
 			wcscpy(szDriverName, BurnDrvGetText(DRV_FULLNAME));
+			wcscpy(szManufacturerName, BurnDrvGetText(DRV_MANUFACTURER));
+			wcscpy(szSystemName, BurnDrvGetText(DRV_SYSTEM));
 			for (int k =0; k < 256; k++) {
 				szSearchString[k] = _totlower(szSearchString[k]);
 				szDriverName[k] = _totlower(szDriverName[k]);
+				szManufacturerName[k] = _totlower(szManufacturerName[k]);
+				szSystemName[k] = _totlower(szSystemName[k]);
 			}
 			StringFound = wcsstr(szDriverName, szSearchString);
 			StringFound2 = wcsstr(BurnDrvGetText(DRV_NAME), szSearchString);
-			if (!StringFound && !StringFound2) continue;
+			StringFound3 = wcsstr(szManufacturerName, szSearchString);
+			StringFound4 = wcsstr(szSystemName, szSearchString);
+
+			if (!StringFound && !StringFound2 && !StringFound3 && !StringFound4) continue;
 		}
 
 		if (avOk && (!(nLoadMenuShowX & UNAVAILABLE)) && !gameAv[i])	{						// Skip non-available games if needed
@@ -568,15 +579,26 @@ static int SelListMake()
 		if (szSearchString[0]) {
 			TCHAR *StringFound = NULL;
 			TCHAR *StringFound2 = NULL;
+			TCHAR *StringFound3 = NULL;
+			TCHAR *StringFound4 = NULL;
 			TCHAR szDriverName[256];
+			TCHAR szManufacturerName[256] = { _T("") };
+			TCHAR szSystemName[256] = { _T("") };
 			wcscpy(szDriverName, BurnDrvGetText(DRV_FULLNAME));
+			wcscpy(szManufacturerName, BurnDrvGetText(DRV_MANUFACTURER));
+			wcscpy(szSystemName, BurnDrvGetText(DRV_SYSTEM));
 			for (int k =0; k < 256; k++) {
 				szSearchString[k] = _totlower(szSearchString[k]);
 				szDriverName[k] = _totlower(szDriverName[k]);
+				szManufacturerName[k] = _totlower(szManufacturerName[k]);
+				szSystemName[k] = _totlower(szSystemName[k]);
 			}
 			StringFound = wcsstr(szDriverName, szSearchString);
 			StringFound2 = wcsstr(BurnDrvGetText(DRV_NAME), szSearchString);
-			if (!StringFound && !StringFound2) continue;
+			StringFound3 = wcsstr(szManufacturerName, szSearchString);
+			StringFound4 = wcsstr(szSystemName, szSearchString);
+
+			if (!StringFound && !StringFound2 && !StringFound3 && !StringFound4) continue;
 		}
 
 		if (avOk && (!(nLoadMenuShowX & UNAVAILABLE)) && !gameAv[i])	{						// Skip non-available games if needed

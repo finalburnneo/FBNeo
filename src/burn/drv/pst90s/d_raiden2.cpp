@@ -7,6 +7,11 @@
 #include "nec_intf.h"
 #include "bitswap.h"
 
+#if defined _MSC_VER
+ #define _USE_MATH_DEFINES
+ #include <cmath>
+#endif
+
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;

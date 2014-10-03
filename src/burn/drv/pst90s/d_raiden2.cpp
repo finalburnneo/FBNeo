@@ -390,17 +390,12 @@ static UINT16 sprite_prot_x,sprite_prot_y,dst1,cop_spr_maxx,cop_spr_off;
 static UINT16 sprite_prot_src_addr[2];
 
 static struct {
-	INT16 pos[3];
-	INT8 dx[3];
-	UINT8 size[3];
-	bool allow_swap;
-	UINT16 flags_swap;
-	UINT32 spradr;
+	int x, y, z;
+	int min_x, min_y, min_z, max_x, max_y, max_z;
 } cop_collision_info[2];
 
 static UINT16 cop_hit_status, cop_hit_baseadr;
-static INT16 cop_hit_val[3];
-static UINT16 cop_hit_val_stat;
+static INT16 cop_hit_val_x, cop_hit_val_y, cop_hit_val_z, cop_hit_val_unk;
 static UINT32 cop_sort_ram_addr, cop_sort_lookup;
 static UINT16 cop_sort_param;
 
@@ -441,9 +436,13 @@ static void SeibuCopReset()
 
 	cop_hit_status = 0;
 	cop_hit_baseadr = 0;
-
-	memset (cop_hit_val, 0, 3 * sizeof(INT16));
-	cop_hit_val_stat = 0;
+	cop_hit_val_x = 0;
+	cop_hit_val_y = 0;
+	cop_hit_val_z = 0;
+	cop_hit_val_unk = 0;;
+	cop_sort_ram_addr = 0;
+	cop_sort_lookup = 0;
+	cop_sort_param = 0;
 }
 
 static void SeibuCopScan(INT32 nAction)
@@ -522,11 +521,13 @@ static void SeibuCopScan(INT32 nAction)
 		SCAN_VAR(cop_collision_info);
 		SCAN_VAR(cop_hit_status);
 		SCAN_VAR(cop_hit_baseadr);
-
-		SCAN_VAR(cop_hit_val[0]);
-		SCAN_VAR(cop_hit_val[1]);
-		SCAN_VAR(cop_hit_val[2]);
-		SCAN_VAR(cop_hit_val_stat);
+		SCAN_VAR(cop_hit_val_x);
+		SCAN_VAR(cop_hit_val_y);
+		SCAN_VAR(cop_hit_val_z);
+		SCAN_VAR(cop_hit_val_unk);;
+		SCAN_VAR(cop_sort_ram_addr);
+		SCAN_VAR(cop_sort_lookup);
+		SCAN_VAR(cop_sort_param);
 	}
 }
 
@@ -577,43 +578,50 @@ static void sprite_prot_src_write(UINT16 data)
 	}
 }
 
-static void cop_collision_read_pos(int slot, UINT32 spradr, bool allow_swap)
+static void cop_collision_read_xy(int slot, UINT32 spradr)
 {
-	cop_collision_info[slot].allow_swap = allow_swap;
-	cop_collision_info[slot].flags_swap = VezReadLong(spradr+2);
-	cop_collision_info[slot].spradr = spradr;
-	for(int i=0; i<3; i++)
-		cop_collision_info[slot].pos[i] = VezReadLong(spradr+6+4*i);
+	cop_collision_info[slot].x = VezReadLong(spradr+4);
+	cop_collision_info[slot].y = VezReadLong(spradr+8);
+	cop_collision_info[slot].z = VezReadLong(spradr+12);
 }
 
 static void cop_collision_update_hitbox(int slot, UINT32 hitadr)
 {
 	UINT32 hitadr2 = VezReadWord(hitadr) + (cop_hit_baseadr << 16);
+	
+	INT8 hx = VezReadByte(hitadr2++);
+	UINT8 hw = VezReadByte(hitadr2++);
+	INT8 hy = VezReadByte(hitadr2++);
+	UINT8 hh = VezReadByte(hitadr2++);
+	INT8 hz = VezReadByte(hitadr2++);
+	UINT8 hd = VezReadByte(hitadr2++);
 
-	for(int i=0; i<3; i++) {
-		cop_collision_info[slot].dx[i] = VezReadByte(hitadr2++);
-		cop_collision_info[slot].size[i] = VezReadByte(hitadr2++);
-	}
+	cop_collision_info[slot].min_x = (cop_collision_info[slot].x >> 16) + hx;
+	cop_collision_info[slot].min_y = (cop_collision_info[slot].y >> 16) + hy;
+	cop_collision_info[slot].min_z = (cop_collision_info[slot].z >> 16) + hz;
+	cop_collision_info[slot].max_x = cop_collision_info[slot].min_x + hw;
+	cop_collision_info[slot].max_y = cop_collision_info[slot].min_y + hh;
+	cop_collision_info[slot].max_z = cop_collision_info[slot].min_z + hd;
 
 	cop_hit_status = 7;
 
-	for(int i=0; i<3; i++) {
-		int min[2], max[2];
-		for(int j=0; j<2; j++) {
-			if(cop_collision_info[j].allow_swap && (cop_collision_info[j].flags_swap & (1 << i))) {
-				max[j] = cop_collision_info[j].pos[i] - cop_collision_info[j].dx[i];
-				min[j] = max[j] - cop_collision_info[j].size[i];
-			} else {
-				min[j] = cop_collision_info[j].pos[i] + cop_collision_info[j].dx[i];
-				max[j] = min[j] + cop_collision_info[j].size[i];
-			}
-		}
-		if(max[0] > min[1] && min[0] < max[1])
-			cop_hit_status &= ~(1 << i);
-		cop_hit_val[i] = cop_collision_info[0].pos[i] - cop_collision_info[1].pos[i];
-	}
+	/* outbound X check */
+	if(cop_collision_info[0].max_x >= cop_collision_info[1].min_x && cop_collision_info[0].min_x <= cop_collision_info[1].max_x)
+		cop_hit_status &= ~1;
 
-	cop_hit_val_stat = cop_hit_status ? 0xffff : 0x0000;
+	/* outbound Y check */
+	if(cop_collision_info[0].max_y >= cop_collision_info[1].min_y && cop_collision_info[0].min_y <= cop_collision_info[1].max_y)
+		cop_hit_status &= ~2;
+
+	/* outbound Z check */
+	if(cop_collision_info[0].max_z >= cop_collision_info[1].min_z && cop_collision_info[0].min_z <= cop_collision_info[1].max_z)
+		cop_hit_status &= ~4;
+
+	cop_hit_val_x = (cop_collision_info[0].x - cop_collision_info[1].x) >> 16;
+	cop_hit_val_y = (cop_collision_info[0].y - cop_collision_info[1].y) >> 16;
+	cop_hit_val_z = (cop_collision_info[0].z - cop_collision_info[1].z) >> 16;
+	
+	cop_hit_val_unk = cop_hit_status; // TODO: there's also bit 2 and 3 triggered in the tests, no known meaning
 }
 
 static void cop_cmd_write(INT32 offset, UINT16 data)
@@ -806,12 +814,12 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 
 	case 0xa100:
 	case 0xa180:
-		cop_collision_read_pos(0, cop_regs[0], data & 0x0080);
+		cop_collision_read_xy(0, cop_regs[0]);
 		break;
 
 	case 0xa900:
 	case 0xa980:
-		cop_collision_read_pos(1, cop_regs[1], data & 0x0080);
+		cop_collision_read_xy(1, cop_regs[1]);
 		break;
 
 	case 0xb100:
@@ -1193,13 +1201,19 @@ static UINT8 rd2_cop_read(UINT16 offset)
 		break;
 
 		case 0x582:
+			ret = cop_hit_val_y;
+		break;
+
 		case 0x584:
+			ret = cop_hit_val_x;
+		break;
+
 		case 0x586:
-			ret = cop_hit_val[(offset-0x582)/2];
+			ret = cop_hit_val_z;
 		break;
 
 		case 0x588:
-			ret = cop_hit_val_stat;
+			ret = cop_hit_val_unk;
 		break;
 
 		case 0x590:
@@ -3372,7 +3386,7 @@ static struct BurnRomInfo raidendxjRomDesc[] = {
 	{ "rdxj_7.u0724",		0x020000, 0xec31fa10, 4 | BRF_GRA },           //  6 Characters
 
 	{ "dx_back-1.u075",		0x200000, 0x90970355, 5 | BRF_GRA },           //  7 Tiles
-	{ "dx_back-2.u0714",		0x200000, 0x5799af3e, 5 | BRF_GRA },           //  8
+	{ "dx_back-2.u0714",	0x200000, 0x5799af3e, 5 | BRF_GRA },           //  8
 
 	{ "raiden_2_seibu_obj-1.u0811",	0x200000, 0xff08ef0b, 6 | BRF_GRA },   //  9 Sprites (Encrypted)
 	{ "raiden_2_seibu_obj-2.u082",	0x200000, 0x638eb771, 6 | BRF_GRA },   // 10
@@ -3733,3 +3747,4 @@ struct BurnDriverD BurnDrvXsedae = {
 	XsedaeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
+

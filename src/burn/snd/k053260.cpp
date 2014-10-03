@@ -111,22 +111,23 @@ void K053260Update(INT32 chip, INT16 *pBuf, INT32 length)
 	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K053260Update called with invalid chip %x\n"), chip);
 #endif
 
-	static const INT32 dpcmcnv[] = { 0,1,2,4,8,16,32,64, -128, -64, -32, -16, -8, -4, -2, -1};
+	static const INT8 dpcmcnv[] = { 0,1,2,4,8,16,32,64, -128, -64, -32, -16, -8, -4, -2, -1};
 
-	INT32 i, j, lvol[4], rvol[4], play[4], loop[4], ppcm_data[4], ppcm[4];
+	INT32 lvol[4], rvol[4], play[4], loop[4], ppcm[4];
 	UINT8 *rom[4];
 	UINT32 delta[4], end[4], pos[4];
 	INT32 dataL, dataR;
+	INT8 ppcm_data[4];
 	INT8 d;
 	ic = &Chips[chip];
 
 	/* precache some values */
-	for ( i = 0; i < 4; i++ ) {
-		rom[i]= &ic->rom[ic->channels[i].start + ( ic->channels[i].bank << 16 )];
+	for ( int i = 0; i < 4; i++ ) {
+		rom[i]= &ic->rom[ic->channels[i].start + ( ic->channels[i].bank << 16 ) + 1];
 		delta[i] = (ic->delta_table[ic->channels[i].rate] * nUpdateStep) >> 15;
 		lvol[i] = ic->channels[i].volume * ic->channels[i].pan;
 		rvol[i] = ic->channels[i].volume * ( 8 - ic->channels[i].pan );
-		end[i] = ic->channels[i].size;
+		end[i] = ic->channels[i].size - 1;
 		pos[i] = ic->channels[i].pos;
 		play[i] = ic->channels[i].play;
 		loop[i] = ic->channels[i].loop;
@@ -136,11 +137,11 @@ void K053260Update(INT32 chip, INT16 *pBuf, INT32 length)
 			delta[i] /= 2;
 	}
 
-		for ( j = 0; j < length; j++ ) {
+		for ( int j = 0; j < length; j++ ) {
 
 			dataL = dataR = 0;
 
-			for ( i = 0; i < 4; i++ ) {
+			for ( int i = 0; i < 4; i++ ) {
 				/* see if the voice is on */
 				if ( play[i] ) {
 					/* see if we're done */
@@ -170,13 +171,7 @@ void K053260Update(INT32 chip, INT16 *pBuf, INT32 length)
 								newdata = ( ( rom[i][pos[i] >> BASE_SHIFT] ) ) & 0x0f; /*low nybble*/
 							}
 
-							ppcm_data[i] = (( ( ppcm_data[i] * 62 ) >> 6 ) + dpcmcnv[newdata]);
-
-							if ( ppcm_data[i] > 127 )
-								ppcm_data[i] = 127;
-							else
-								if ( ppcm_data[i] < -128 )
-									ppcm_data[i] = -128;
+							ppcm_data[i] += dpcmcnv[newdata];
 						}
 
 						d = ppcm_data[i];
@@ -225,7 +220,7 @@ void K053260Update(INT32 chip, INT16 *pBuf, INT32 length)
 		}
 
 	/* update the regs now */
-	for ( i = 0; i < 4; i++ ) {
+	for ( int i = 0; i < 4; i++ ) {
 		ic->channels[i].pos = pos[i];
 		ic->channels[i].play = play[i];
 		ic->channels[i].ppcm_data = ppcm_data[i];

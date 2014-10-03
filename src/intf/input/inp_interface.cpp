@@ -167,6 +167,18 @@ INT32 InputSetCooperativeLevel(const bool bExclusive, const bool bForeground)
 	return pInputInOut[nInputSelect]->SetCooperativeLevel(bExclusive, bForeground);
 }
 
+static INT32 nAutoFireCounter = 0;
+static bool bLastAF[1000];
+INT32 nAutoFireRate = 12;
+
+static inline int AutofirePick() {
+    int c = nAutoFireCounter % nAutoFireRate;
+    if (nAutoFireCounter <= 2)
+        return 1;
+    else
+	return (c>nAutoFireRate-4);
+}
+
 // This will process all PC-side inputs and optionally update the emulated game side.
 INT32 InputMake(bool bCopy)
 {
@@ -325,8 +337,10 @@ INT32 InputMake(bool bCopy)
 		}
 	}
 
+        nAutoFireCounter++;
+
 	for (i = 0; i < nMacroCount; i++, pgi++) {
-		if (pgi->Macro.nMode == 1) {						// Macro is defined
+		if (pgi->Macro.nMode == 1 && pgi->Macro.nSysMacro == 0) { // Macro is defined
 			if (bCopy && CinpState(pgi->Macro.Switch.nCode)) {
 				for (INT32 j = 0; j < 4; j++) {
 					if (pgi->Macro.pVal[j]) {
@@ -339,11 +353,21 @@ INT32 InputMake(bool bCopy)
 			if (CinpState(pgi->Macro.Switch.nCode)) {
 				if (pgi->Macro.pVal[0]) {
 					*(pgi->Macro.pVal[0]) = pgi->Macro.nVal[0];
+                                        if (pgi->Macro.nSysMacro==15) { //Auto-Fire mode!
+						if (AutofirePick() || bLastAF[i]==0)
+							*(pgi->Macro.pVal[0]) = pgi->Macro.nVal[0];
+						else
+                                                    	*(pgi->Macro.pVal[0]) = 0;
+                                                bLastAF[i] = 1;
+					}
 				}
-			} else { //disable when key up
-				if (pgi->Macro.pVal[0]) {
+			} else { // Disable System-Macro when key up
+				if (pgi->Macro.pVal[0] && pgi->Macro.nSysMacro == 1) {
 					*(pgi->Macro.pVal[0]) = 0;
-				}
+                                } else {
+                                    if (pgi->Macro.nSysMacro == 15)
+                                        bLastAF[i] = 0;
+                                }
 			}
 		}
 	}

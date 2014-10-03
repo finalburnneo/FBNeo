@@ -168,12 +168,15 @@ static void GameInpInitMacros()
 	INT32 nKickInputs[4][3];
 
 	INT32 nNeogeoButtons[4][4];
-	INT32 nPgmButtons[4][4];
+	INT32 nPgmButtons[10][4];
 
 	bStreetFighterLayout = false;
 	nMacroCount = 0;
 
 	nFireButtons = 0;
+
+	memset(&nNeogeoButtons, 0, sizeof(nNeogeoButtons));
+	memset(&nPgmButtons, 0, sizeof(nPgmButtons));
 
 	for (UINT32 i = 0; i < nGameInpCount; i++) {
 		bii.szName = NULL;
@@ -229,19 +232,26 @@ static void GameInpInitMacros()
 					nNeogeoButtons[nPlayer][3] = i;
 				}
 			}
-			
-			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_IGS_PGM) {
-				if (_stricmp(" Button 1", bii.szName + 2) == 0) {
+
+			//if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_IGS_PGM) {
+			{ // Use nPgmButtons for Autofire too -dink
+				if ((_stricmp(" Button 1", bii.szName + 2) == 0) || (_stricmp(" fire 1", bii.szInfo + 2) == 0)) {
 					nPgmButtons[nPlayer][0] = i;
 				}
-				if (_stricmp(" Button 2", bii.szName + 2) == 0) {
+				if ((_stricmp(" Button 2", bii.szName + 2) == 0) || (_stricmp(" fire 2", bii.szInfo + 2) == 0)) {
 					nPgmButtons[nPlayer][1] = i;
 				}
-				if (_stricmp(" Button 3", bii.szName + 2) == 0) {
+				if ((_stricmp(" Button 3", bii.szName + 2) == 0) || (_stricmp(" fire 3", bii.szInfo + 2) == 0)) {
 					nPgmButtons[nPlayer][2] = i;
 				}
-				if (_stricmp(" Button 4", bii.szName + 2) == 0) {
+				if ((_stricmp(" Button 4", bii.szName + 2) == 0) || (_stricmp(" fire 4", bii.szInfo + 2) == 0)) {
 					nPgmButtons[nPlayer][3] = i;
+				}
+				if ((_stricmp(" Button 5", bii.szName + 2) == 0) || (_stricmp(" fire 5", bii.szInfo + 2) == 0)) {
+					nPgmButtons[nPlayer][4] = i;
+				}
+				if ((_stricmp(" Button 6", bii.szName + 2) == 0) || (_stricmp(" fire 6", bii.szInfo + 2) == 0)) {
+					nPgmButtons[nPlayer][5] = i;
 				}
 			}
 		}
@@ -249,8 +259,7 @@ static void GameInpInitMacros()
 
 	pgi = GameInp + nGameInpCount;
 
-	{
-        // Mappable system macros -dink
+	{ // Mappable system macros -dink
 			pgi->nInput = GIT_MACRO_AUTO;
 			pgi->nType = BIT_DIGITAL;
 			pgi->Macro.nMode = 0;
@@ -300,6 +309,26 @@ static void GameInpInitMacros()
 			pgi->Macro.nVal[0] = 1;
 			nMacroCount++;
 			pgi++;
+	}
+	{ // Autofire!!!
+			for (INT32 nPlayer = 0; nPlayer < nMaxPlayers; nPlayer++) {
+				for (INT32 i = 0; i < nFireButtons; i++) {
+					pgi->nInput = GIT_MACRO_AUTO;
+					pgi->nType = BIT_DIGITAL;
+					pgi->Macro.nMode = 0;
+					pgi->Macro.nSysMacro = 15; // 15 = Auto-Fire mode
+					sprintf(pgi->Macro.szName, "P%d Auto-Fire Button %d", nPlayer+1, i+1);
+					if ((BurnDrvGetHardwareCode() & (HARDWARE_PUBLIC_MASK - HARDWARE_PREFIX_CARTRIDGE)) == HARDWARE_SNK_NEOGEO) {
+						BurnDrvGetInputInfo(&bii, nNeogeoButtons[nPlayer][i]);
+					} else {
+						BurnDrvGetInputInfo(&bii, nPgmButtons[nPlayer][i]);
+					}
+					pgi->Macro.pVal[0] = bii.pVal;
+					pgi->Macro.nVal[0] = 1;
+					nMacroCount++;
+					pgi++;
+				}
+			}
 	}
 
 	for (INT32 nPlayer = 0; nPlayer < nMaxPlayers; nPlayer++) {
@@ -676,7 +705,7 @@ INT32 GameInpInit()
 	// Count the number of inputs
 	nGameInpCount = 0;
 	nMacroCount = 0;
-	nMaxMacro = nMaxPlayers * 32;
+	nMaxMacro = nMaxPlayers * 52;
 
 	for (UINT32 i = 0; i < 0x1000; i++) {
 		nRet = BurnDrvGetInputInfo(NULL,i);

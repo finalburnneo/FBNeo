@@ -890,6 +890,14 @@ BEGIN
     	MENUITEM SEPARATOR
         MENUITEM "Map game inputs...\tF5",				MENU_INPUT, GRAYED
         MENUITEM "Set dipswitches...\tCtrl+F5",				MENU_DIPSW, GRAYED
+    	MENUITEM SEPARATOR
+    	POPUP "&Auto-Fire Rate"
+    	BEGIN
+    	    MENUITEM "Slow",						MENU_INPUT_AUTOFIRE_RATE_1
+    	    MENUITEM "Medium",						MENU_INPUT_AUTOFIRE_RATE_2
+    	    MENUITEM "Fast",						MENU_INPUT_AUTOFIRE_RATE_3
+    	    MENUITEM "Very Fast",					MENU_INPUT_AUTOFIRE_RATE_4
+    	END
     END
     POPUP "Misc"
     BEGIN

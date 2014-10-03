@@ -219,9 +219,11 @@ int ConfigAppLoad()
 		STR(szAppIpsPath);
 		STR(szAppIconsPath);
 		STR(szNeoCDCoverDir);
-
+		
 		VAR(bNoChangeNumLock);
 		VAR(bAlwaysCreateSupportFolders);
+		
+		VAR(nAutoFireRate);
 		
 		VAR(EnableHiscores);
 		
@@ -579,6 +581,9 @@ int ConfigAppSave()
 	
 	_ftprintf(h, _T("\n// If non-zero, create support folders at program start.\n"));
 	VAR(bAlwaysCreateSupportFolders);
+	
+	_ftprintf(h, _T("\n// Auto-Fire Rate, non-linear - use the GUI to change this setting!\n"));
+	VAR(nAutoFireRate);
 	
 	_ftprintf(h, _T("\n// If non-zero, enable high score saving support.\n"));
 	VAR(EnableHiscores);

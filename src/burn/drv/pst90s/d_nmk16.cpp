@@ -5667,10 +5667,8 @@ static INT32 NMK004Frame()
 	SekNewFrame();
 	tlcs90NewFrame();
 
-#define multiplier      1
-
 	INT32 nSegment;
-	INT32 nInterleave = 256*multiplier; // extremely high interleave!
+	INT32 nInterleave = 256;
 	INT32 nTotalCycles[2] = { nNMK004CpuSpeed / 56, 8000000 / 56 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -5683,7 +5681,7 @@ static INT32 NMK004Frame()
 
 		nCyclesDone[0] += SekRun(nSegment);
 
-		if (i == (241*multiplier)) {
+		if (i == 238) { // 241 in MAME (see i == 235 comment)
 			if (Strahlmode) {
 				memcpy (DrvSprBuf2, Drv68KRAM + 0xf000, 0x1000);
 			} else {
@@ -5691,17 +5689,16 @@ static INT32 NMK004Frame()
 			}
 		}
 
-		if (i == (25*multiplier) || i == (153*multiplier)) {
+		if (i == 25 || i == 148) { // 25, 153 in MAME
 			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
 		}
 		if (i == 0) {
 			SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
 		}
-		if (i == (241*multiplier)) {
+		if (i == 235) { // 240 in MAME, but causes a missing life-bar in VanDyke.  236 causes a little flicker in the life-bar, 235 = perfect.
 			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
 		}
 
-		//nSegment = (SekTotalCycles() * 8) / (nNMK004CpuSpeed / 10000000); // sync to 68k?
 		nSegment = i * (nTotalCycles[1] / nInterleave);
 		BurnTimerUpdate(nSegment);
 	}
@@ -8733,8 +8730,9 @@ static INT32 VandykeLoadCallback()
 	SekOpen(0);
 	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, SM_ROM);
 	SekMapMemory(DrvPalRAM,		0x088000, 0x0887ff, SM_RAM);
-	SekMapMemory(DrvScrollRAM,	0x08c000, 0x08c3ff, SM_RAM);
+	SekMapMemory(DrvScrollRAM,	0x08c000, 0x08c007, SM_RAM);
 	SekMapMemory(DrvBgRAM0,		0x090000, 0x093fff, SM_RAM);
+	SekMapMemory(DrvBgRAM1,		0x094000, 0x097fff, SM_RAM);
 	SekMapMemory(DrvTxRAM,		0x09d000, 0x09d7ff, SM_RAM);
 	SekMapMemory(Drv68KRAM,		0x0f0000, 0x0fffff, SM_RAM);
 	SekSetWriteWordHandler(0,	macross_main_write_word);

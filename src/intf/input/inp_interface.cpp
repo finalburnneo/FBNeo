@@ -353,21 +353,21 @@ INT32 InputMake(bool bCopy)
 			if (CinpState(pgi->Macro.Switch.nCode)) {
 				if (pgi->Macro.pVal[0]) {
 					*(pgi->Macro.pVal[0]) = pgi->Macro.nVal[0];
-                                        if (pgi->Macro.nSysMacro==15) { //Auto-Fire mode!
+					if (pgi->Macro.nSysMacro==15) { //Auto-Fire mode!
 						if (AutofirePick() || bLastAF[i]==0)
 							*(pgi->Macro.pVal[0]) = pgi->Macro.nVal[0];
 						else
-                                                    	*(pgi->Macro.pVal[0]) = 0;
-                                                bLastAF[i] = 1;
+							*(pgi->Macro.pVal[0]) = 0;
+						bLastAF[i] = 1;
 					}
 				}
 			} else { // Disable System-Macro when key up
 				if (pgi->Macro.pVal[0] && pgi->Macro.nSysMacro == 1) {
 					*(pgi->Macro.pVal[0]) = 0;
-                                } else {
-                                    if (pgi->Macro.nSysMacro == 15)
-                                        bLastAF[i] = 0;
-                                }
+				} else {
+					if (pgi->Macro.nSysMacro == 15)
+						bLastAF[i] = 0;
+				}
 			}
 		}
 	}

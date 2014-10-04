@@ -41114,3 +41114,21 @@ struct BurnDriver BurnDrvmd_uwol = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Super Mario Bros. 4 MegaDrive (SMB4MD) 1.4.2
+static struct BurnRomInfo md_smb4mdRomDesc[] = {
+	{ "muls_1.4.2.bin", 0x010000, 0x87a8c533, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_smb4md)
+STD_ROM_FN(md_smb4md)
+
+struct BurnDriver BurnDrvmd_smb4md = {
+	"md_smb4md", NULL, NULL, NULL, "2010",
+	"Super Mario Bros. 4 MD\0", NULL, "Mairtrus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_smb4mdRomInfo, md_smb4mdRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

@@ -1169,6 +1169,8 @@ inline static double MegadriveGetTimePAL()
 
 static INT32 MegadriveResetDo()
 {
+	memset (RamStart, 0, RamEnd - RamStart);
+
 	SekOpen(0);
 	SekReset();
 	SekClose();
@@ -1223,7 +1225,7 @@ static INT32 MegadriveResetDo()
 	}
 
 	// other reset
-//	memset(RamMisc, 0, sizeof(struct PicoMisc));
+	//memset(RamMisc, 0, sizeof(struct PicoMisc)); // do not clear because Mappers are set up in here when the driver inits
 	memset(JoyPad, 0, sizeof(struct MegadriveJoyPad));
 	
 	// default VDP register values (based on Fusion)
@@ -1234,7 +1236,12 @@ static INT32 MegadriveResetDo()
 	RamVReg->reg[0x0f] = 0x02;
 	
 	RamVReg->status = 0x3408 | ((MegadriveDIP[0] & 0x40) >> 6);
-	
+	video_status = 0;
+	dma_xfers = 0;
+	Scanline = 0;
+	rendstatus = 0;
+	bMegadriveRecalcPalette = 1;
+
 	return 0;
 }
 

@@ -27,14 +27,18 @@ static int nNormalFrac = 0;					// Extra fraction we did
 static bool bAppDoStep = 0;
 static bool bAppDoFast = 0;
 static int nFastSpeed = 6;
+
+// For System Macros (below)
 static int prevPause = 0, prevSState = 0, prevLState = 0, prevUState = 0;
+UINT32 prevPause_debounce = 0;
 
 static void CheckSystemMacros() // These are the Pause / FFWD macros added to the input dialog
 {
 	// Pause
-	if (macroSystemPause && macroSystemPause != prevPause) {
+	if (macroSystemPause && macroSystemPause != prevPause && timeGetTime() > prevPause_debounce+90) {
 		if (bHasFocus) {
 			PostMessage(hScrnWnd, WM_KEYDOWN, VK_PAUSE, 0);
+			prevPause_debounce = timeGetTime();
 		}
 	}
 	prevPause = macroSystemPause;

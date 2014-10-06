@@ -13648,6 +13648,44 @@ struct BurnDriver BurnDrvkof98ae = {
 	0x1000,	304, 224, 4, 3
 };
 
+// The King of Fighters '98 (Combo, Ivex hack)
+// 2014/10/03 version 
+static struct BurnRomInfo kof98coRomDesc[] = {
+	{ "kof98c-p1.bin", 	0x100000, 0xd1085e45, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "kof98c-p2.bin", 	0x400000, 0x80511be2, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "kof98c-s1.bin", 	0x020000, 0x7333d8b0, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "kof98c-c1.bin", 	0x800000, 0x066db0a6, 3 | BRF_GRA },           //  3 Sprite data
+	{ "kof98c-c2.bin", 	0x800000, 0x99d0b0fa, 3 | BRF_GRA },           //  4 
+	{ "kof98c-c3.bin", 	0x800000, 0xea84bdae, 3 | BRF_GRA },           //  5 
+	{ "kof98c-c4.bin",  0x800000, 0x2c17ac8e, 3 | BRF_GRA },           //  6 
+	{ "242-c5.c5", 		0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7 
+	{ "242-c6.c6", 		0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8 
+	{ "242-c7.c7", 		0x800000, 0xf6d7a38a, 3 | BRF_GRA },           //  9 
+	{ "242-c8.c8", 		0x800000, 0xc823e045, 3 | BRF_GRA },           // 10 
+	
+	{ "kof98c-m1.bin", 	0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "242-v1.v1",   	0x400000, 0xb9ea8051, 5 | BRF_SND },           // 16 Sound data
+	{ "242-v2.v2",   	0x400000, 0xcc11106e, 5 | BRF_SND },           // 17 
+	{ "242-v3.v3",   	0x400000, 0x044ea4e1, 5 | BRF_SND },           // 18 
+	{ "242-v4.v4",   	0x400000, 0x7985ea30, 5 | BRF_SND },           // 19 
+};
+
+STDROMPICKEXT(kof98co, kof98co, neogeo)
+STD_ROM_FN(kof98co)
+
+struct BurnDriver BurnDrvkof98co = {
+	"kof98co", "kof98", "neogeo", NULL, "2014",
+	"The King of Fighters '98 (Combo, Ivex hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof98coRomInfo, kof98coRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // The King of Fighters '99 (Anniversary Edition, Yashional hack)
 
 static struct BurnRomInfo kof99aeRomDesc[] = {

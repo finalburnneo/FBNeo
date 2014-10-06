@@ -24388,24 +24388,6 @@ struct BurnDriver BurnDrvmd_proyakyu = {
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
 };
 
-// Probotector (Euro)
-static struct BurnRomInfo md_probotRomDesc[] = {
-	{ "probotector (euro).bin", 0x200000, 0xbc597d48, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_probot)
-STD_ROM_FN(md_probot)
-
-struct BurnDriver BurnDrvmd_probot = {
-	"md_probot", NULL, NULL, NULL, "1994",
-	"Probotector (Euro)\0", NULL, "Konami", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_probotRomInfo, md_probotRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
-};
-
 // Contra - Hard Corps (USA, Kor)
 static struct BurnRomInfo md_contraRomDesc[] = {
 	{ "contra - hard corps (usa, kor).bin", 0x200000, 0xc579f45e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -24415,10 +24397,10 @@ STD_ROM_PICK(md_contra)
 STD_ROM_FN(md_contra)
 
 struct BurnDriver BurnDrvmd_contra = {
-	"md_contra", "md_probot", NULL, NULL, "1994",
+	"md_contra", NULL, NULL, NULL, "1994",
 	"Contra - Hard Corps (USA, Kor)\0", NULL, "Konami", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_contraRomInfo, md_contraRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
@@ -24433,11 +24415,29 @@ STD_ROM_PICK(md_contraj)
 STD_ROM_FN(md_contraj)
 
 struct BurnDriver BurnDrvmd_contraj = {
-	"md_contraj", "md_probot", NULL, NULL, "1994",
+	"md_contraj", "md_contra", NULL, NULL, "1994",
 	"Contra - The Hard Corps (Jpn)\0", NULL, "Konami", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_contrajRomInfo, md_contrajRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
+};
+
+// Probotector (Euro)
+static struct BurnRomInfo md_probotRomDesc[] = {
+	{ "probotector (euro).bin", 0x200000, 0xbc597d48, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_probot)
+STD_ROM_FN(md_probot)
+
+struct BurnDriver BurnDrvmd_probot = {
+	"md_probot", "md_contra", NULL, NULL, "1994",
+	"Probotector (Euro)\0", NULL, "Konami", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_probotRomInfo, md_probotRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
 };

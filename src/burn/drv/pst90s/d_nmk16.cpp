@@ -9020,9 +9020,9 @@ static INT32 HachamfInit()
 
 struct BurnDriver BurnDrvHachamf = {
 	"hachamf", NULL, "nmk004", NULL, "1991",
-	"Hacha Mecha Fighter (19th Sep. 1991)\0", NULL, "NMK", "NMK16",
+	"Hacha Mecha Fighter (19th Sep. 1991)\0", "Use the unprotected bootleg, instead!", "NMK", "NMK16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	0, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, hachamfRomInfo, hachamfRomName, NULL, NULL, CommonInputInfo, HachamfDIPInfo,
 	HachamfInit, NMK004Exit, NMK004Frame, HachamfDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3

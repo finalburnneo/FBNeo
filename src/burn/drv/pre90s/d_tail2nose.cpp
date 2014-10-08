@@ -286,7 +286,7 @@ static void __fastcall tail2nose_sound_out(UINT16 port, UINT8 data)
 	}
 }
 
-static UINT8 _fastcall tail2nose_sound_in(UINT16 port)
+static UINT8 __fastcall tail2nose_sound_in(UINT16 port)
 {
 	switch (port & 0xff)
 	{

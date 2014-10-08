@@ -1122,7 +1122,7 @@ struct BurnDriver BurnDrvcv_centiped = {
 
 static struct BurnRomInfo cv_chopliftRomDesc[] = {
 	{ "choplift.1",	0x02000, 0x78564c16, BRF_PRG | BRF_ESS },
-	{ "choplift.2",	0x02000, 0x550403f2, BRF_PRG | BRF_ESS },
+	{ "choplift.2",	0x02000, 0xb1abf125, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(cv_choplift, cv_choplift, cv_coleco)
@@ -1130,31 +1130,10 @@ STD_ROM_FN(cv_choplift)
 
 struct BurnDriver BurnDrvcv_choplift = {
 	"cv_choplift", NULL, "cv_coleco", NULL, "1984",
-	"Choplifter!\0", "Corrupted sprites. Use (Alt) version!", "Coleco", "ColecoVision",
+	"Choplifter!\0", NULL, "Coleco", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_chopliftRomInfo, cv_chopliftRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
-};
-
-
-// Choplifter! (Alt)
-
-static struct BurnRomInfo cv_chopliftaRomDesc[] = {
-	{ "choplift.1",	0x02000, 0x78564c16, BRF_PRG | BRF_ESS },
-	{ "choplifta.2",	0x02000, 0xb1abf125, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(cv_choplifta, cv_choplifta, cv_coleco)
-STD_ROM_FN(cv_choplifta)
-
-struct BurnDriver BurnDrvcv_choplifta = {
-	"cv_choplifta", "cv_choplift", "cv_coleco", NULL, "1984",
-	"Choplifter! (Alt)\0", NULL, "Coleco", "ColecoVision",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
-	CVGetZipName, cv_chopliftaRomInfo, cv_chopliftaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
 };

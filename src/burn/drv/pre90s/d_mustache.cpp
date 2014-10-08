@@ -551,7 +551,7 @@ static INT32 DrvFrame()
 			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
 		}
 
-		if (i == 15) {
+		if (i == 12) {
 			ZetSetVector(0x10);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
 		}

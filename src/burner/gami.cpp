@@ -184,8 +184,17 @@ static void GameInpInitMacros()
 		if (bii.szName == NULL) {
 			bii.szName = "";
 		}
-		if (bii.szName[0] == 'P' && bii.szName[1] >= '1' && bii.szName[1] <= '4') {
-			INT32 nPlayer = bii.szName[1] - '1';
+
+		bool bPlayerInInfo = (toupper(bii.szInfo[0]) == 'P' && bii.szInfo[1] >= '1' && bii.szInfo[1] <= '4'); // Because some of the older drivers don't use the standard input naming.
+		bool bPlayerInName = (bii.szName[0] == 'P' && bii.szName[1] >= '1' && bii.szName[1] <= '4');
+
+		if (bPlayerInInfo || bPlayerInName) {
+			INT32 nPlayer = 0;
+
+			if (bPlayerInName)
+				nPlayer = bii.szName[1] - '1';
+			if (bPlayerInInfo && nPlayer == 0)
+				nPlayer = bii.szInfo[1] - '1';
 
 			if (nPlayer == 0) {
 				if (strncmp(" fire", bii.szInfo + 2, 5) == 0) {
@@ -317,7 +326,15 @@ static void GameInpInitMacros()
 					pgi->nType = BIT_DIGITAL;
 					pgi->Macro.nMode = 0;
 					pgi->Macro.nSysMacro = 15; // 15 = Auto-Fire mode
-					sprintf(pgi->Macro.szName, "P%d Auto-Fire Button %d", nPlayer+1, i+1);
+					if ((BurnDrvGetHardwareCode() & (HARDWARE_PUBLIC_MASK - HARDWARE_PREFIX_CARTRIDGE)) == HARDWARE_SEGA_MEGADRIVE) {
+						if (i < 3) {
+							sprintf(pgi->Macro.szName, "P%d Auto-Fire Button %c", nPlayer+1, i+'A'); // A,B,C
+						} else {
+							sprintf(pgi->Macro.szName, "P%d Auto-Fire Button %c", nPlayer+1, i+'X'-3); // X,Y,Z
+						}
+					} else {
+						sprintf(pgi->Macro.szName, "P%d Auto-Fire Button %d", nPlayer+1, i+1);
+					}
 					if ((BurnDrvGetHardwareCode() & (HARDWARE_PUBLIC_MASK - HARDWARE_PREFIX_CARTRIDGE)) == HARDWARE_SNK_NEOGEO) {
 						BurnDrvGetInputInfo(&bii, nNeogeoButtons[nPlayer][i]);
 					} else {

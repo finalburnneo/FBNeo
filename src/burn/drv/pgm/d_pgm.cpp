@@ -147,6 +147,10 @@ static struct BurnDIPInfo orld111cDIPList[] = {
 	{0x2E,	0x01, 0x03,	0x02, "China"				},
 };
 
+static struct BurnDIPInfo orld111tDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x04, NULL				},
+};
+
 static struct BurnDIPInfo orld105kDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x02, NULL				},
 };
@@ -339,6 +343,7 @@ static struct BurnDIPInfo svgDIPList[] = {
 
 STDDIPINFOEXT(orlegend,		pgm,	orlegend		)
 STDDIPINFOEXT(orld111c, 	pgm,	orld111c		)
+STDDIPINFOEXT(orld111t, 	pgm,	orld111t		)
 STDDIPINFOEXT(orld105k, 	pgm,	orld105k		)
 STDDIPINFOEXT(kov,       	pgm,	kov		    	)
 STDDIPINFOEXT(kovshxas,    	pgm,	kovshxas		)
@@ -664,8 +669,8 @@ struct BurnDriver BurnDrvOrlegend111t = {
 	"orlegend111t", "orlegend", "pgm", NULL, "1997",
 	"Oriental Legend - Xi Yo Gi Shi Re Zuang (V111, Taiwan)\0", NULL, "IGS", "PolyGameMaster",
 	L"Oriental Legend\0\u897F\u6E38\u91CA\u5384\u4F20 (V111, Taiwan)\0", NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, orlegend111tRomInfo, orlegend111tRomName, NULL, NULL, pgmInputInfo, orld111cDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
+	NULL, orlegend111tRomInfo, orlegend111tRomName, NULL, NULL, pgmInputInfo, orld111tDIPInfo,
 	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

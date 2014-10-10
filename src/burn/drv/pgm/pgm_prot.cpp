@@ -669,8 +669,8 @@ static UINT32 bt(UINT32 v, INT32 bit)
 static void asic3_compute_hold()
 {
 	// The mode is dependant on the region
-	static INT32 modes[4] = { 1, 1, 3, 2 };
-	INT32 mode = modes[PgmInput[7] & 3];
+	static INT32 modes[8] = { 1, 1, 3, 2, 4, 4, 4, 4 };
+	INT32 mode = modes[PgmInput[7] & 7];
 
 	switch(mode) {
 	case 1:
@@ -696,6 +696,15 @@ static void asic3_compute_hold()
 			^bt(asic3_hold, 15)^bt(asic3_hold, 10)^bt(asic3_hold, 8)^bt(asic3_hold, 5)
 			^bt(asic3_z, asic3_y)
 			^(bt(asic3_x, 0) << 4)^(bt(asic3_x, 1) << 6)^(bt(asic3_x, 2) << 10)^(bt(asic3_x, 3) << 12);
+		break;
+
+	case 4:		// orlegend111t
+		asic3_hold =
+			(asic3_hold << 1)
+			^0x2bad
+			^bt(asic3_hold, 15)^bt(asic3_hold,  7)^bt(asic3_hold, 6)^bt(asic3_hold, 5)
+			^bt(asic3_z, asic3_y)
+			^(bt(asic3_x, 0) << 3)^(bt(asic3_x, 1) << 8)^(bt(asic3_x, 2) << 10)^(bt(asic3_x, 3) << 14);
 		break;
 	}
 }

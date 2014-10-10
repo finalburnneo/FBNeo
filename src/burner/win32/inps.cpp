@@ -114,10 +114,12 @@ static int SetInput(int nCode)
 			}
 		} else {
 			pgi->nInput = GIT_SWITCH;
+			if (nCode == 0) pgi->nInput = 0;							// Clear Input mode
 			pgi->Input.Switch.nCode = (unsigned short)nCode;
 		}
 	} else {
 		pgi->Macro.nMode = 0x01;										// Mark macro as in use
+		if (nCode == 0) pgi->Macro.nMode = 0;							// Clear Input mode
 		pgi->Macro.Switch.nCode = (unsigned short)nCode;				// Assign switch
 	}
 
@@ -306,7 +308,12 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 	if (Msg == WM_COMMAND) {
 		int Id = LOWORD(wParam);
 		int Notify = HIWORD(wParam);
-		if (Id == IDCANCEL && Notify == BN_CLICKED) {
+		if (Id == IDCANCEL && Notify == BN_CLICKED) { // Cancel button pressed
+			SendMessage(hDlg, WM_CLOSE, 0, 0);
+			return 0;
+		}
+		if (Id == IDCANCEL+1 && Notify == BN_CLICKED) { // Clear Input button pressed
+			SetInput(0);
 			SendMessage(hDlg, WM_CLOSE, 0, 0);
 			return 0;
 		}

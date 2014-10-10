@@ -14,6 +14,7 @@ static struct GameInp OldInp;				// Old GameInp
 static int bOldPush = 0;					// 1 if the push button was pressed last time
 
 static bool bGrabMouse = false;
+static bool bClearLock = false;				// ClearLock checkbox
 
 static bool bOldLeftAltkeyMapped;
 
@@ -39,6 +40,7 @@ static int InpsInit()
 	bOldPush = 0;
 
 	bGrabMouse = false;
+	bClearLock = false;
 
 	bOldLeftAltkeyMapped = bLeftAltkeyMapped;
 	bLeftAltkeyMapped = true;
@@ -114,12 +116,12 @@ static int SetInput(int nCode)
 			}
 		} else {
 			pgi->nInput = GIT_SWITCH;
-			if (nCode == 0) pgi->nInput = 0;							// Clear Input mode
+			if (nCode == 0 && !bClearLock) pgi->nInput = 0;				// Clear Input button pressed
 			pgi->Input.Switch.nCode = (unsigned short)nCode;
 		}
 	} else {
 		pgi->Macro.nMode = 0x01;										// Mark macro as in use
-		if (nCode == 0) pgi->Macro.nMode = 0;							// Clear Input mode
+		if (nCode == 0 && !bClearLock) pgi->Macro.nMode = 0;			// Clear Input button pressed
 		pgi->Macro.Switch.nCode = (unsigned short)nCode;				// Assign switch
 	}
 
@@ -200,6 +202,9 @@ int InpsUpdate()
 	if (InpsPushUpdate()) {
 		return 0;
 	}
+
+	nButtonState = SendDlgItemMessage(hInpsDlg, IDC_INPS_CLEARLOCK, BM_GETSTATE, 0, 0); // Lock Input = If checked: clear an input, and don't let a default value or default preset re-fill it in.
+	bClearLock = (nButtonState & BST_CHECKED);
 
 	nButtonState = SendDlgItemMessage(hInpsDlg, IDC_INPS_GRABMOUSE, BM_GETSTATE, 0, 0);
 	if (bGrabMouse) {

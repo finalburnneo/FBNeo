@@ -28,6 +28,9 @@ static int InpdUseUpdate()
 
 		pszVal = InpToDesc(pgi);
 
+		if (_tcscmp(pszVal, _T("code 0x00")) == 0)
+			pszVal = _T("Unassigned (locked)");
+
 		memset(&LvItem, 0, sizeof(LvItem));
 		LvItem.mask = LVIF_TEXT;
 		LvItem.iItem = j;
@@ -45,6 +48,9 @@ static int InpdUseUpdate()
 
 		if (pgi->nInput & GIT_GROUP_MACRO) {
 			pszVal = InpMacroToDesc(pgi);
+
+			if (_tcscmp(pszVal, _T("code 0x00")) == 0)
+				pszVal = _T("Unassigned (locked)");
 
 			memset(&LvItem, 0, sizeof(LvItem));
 			LvItem.mask = LVIF_TEXT;

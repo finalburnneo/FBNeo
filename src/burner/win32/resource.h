@@ -73,6 +73,7 @@
 #define IDC_INPD_USE						20005
 #define IDC_INPD_DEFAULT                	20006
 #define IDC_INPS_GRABMOUSE              	20007
+#define IDC_INPS_CLEARLOCK                	20021
 #define IDC_INPS_CONTROL                	20008
 #define IDC_INPS_CONTROL_NAME           	20009
 #define IDC_INPC_VALUE                  	20010
@@ -86,6 +87,7 @@
 #define IDC_WAIT_LABEL_B2              		20018
 #define ID_VALUE_CLOSE                  	20019
 #define IDC_VALUE_EDIT                  	20020
+                                       // 	20021 is used by IDC_INPS_CLEARLOCK.
 
 #define IDC_FBA_VER                     	20050
 #define IDC_SPECIALSTRING               	20051

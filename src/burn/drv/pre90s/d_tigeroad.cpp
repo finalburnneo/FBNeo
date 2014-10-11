@@ -1492,7 +1492,7 @@ struct BurnDriver BurnDrvF1dream = {
 };
 
 
-// F-1 Dream (bootleg)
+// F-1 Dream (bootleg, set 1)
 
 static struct BurnRomInfo f1dreambRomDesc[] = {
 	{ "f1d_04.bin",	0x10000, 0x903febad, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1556,10 +1556,53 @@ static INT32 F1dreambInit()
 
 struct BurnDriver BurnDrvF1dreamb = {
 	"f1dreamb", "f1dream", NULL, NULL, "1988",
-	"F-1 Dream (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"F-1 Dream (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
 	NULL, f1dreambRomInfo, f1dreambRomName, NULL, NULL, TigeroadInputInfo, F1dreamDIPInfo,
+	F1dreambInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
+	256, 224, 4, 3
+};
+
+
+// F-1 Dream (bootleg, set 2)
+
+static struct BurnRomInfo f1dreambaRomDesc[] = {
+	{ "3.bin",		0x10000, 0xbdfbbbec, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "5.bin",		0x10000, 0xcc47cfb2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.bin",		0x10000, 0xa34f63fb, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.bin",		0x10000, 0xf98db083, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "12k_04.bin",	0x08000, 0x4b9a7524, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "10d_01.bin",	0x08000, 0x361caf00, 3 | BRF_GRA },           //  5 Character Tiles
+
+	{ "03f_12.bin",	0x10000, 0xbc13e43c, 4 | BRF_GRA },           //  6 Background Tiles
+	{ "01f_10.bin",	0x10000, 0xf7617ad9, 4 | BRF_GRA },           //  7
+	{ "03h_14.bin",	0x10000, 0xe33cd438, 4 | BRF_GRA },           //  8
+	{ "02f_11.bin",	0x10000, 0x4aa49cd7, 4 | BRF_GRA },           //  9
+	{ "17f_09.bin",	0x10000, 0xca622155, 4 | BRF_GRA },           // 10
+	{ "02h_13.bin",	0x10000, 0x2a63961e, 4 | BRF_GRA },           // 11
+
+	{ "03b_06.bin",	0x10000, 0x5e54e391, 5 | BRF_GRA },           // 12 Sprites
+	{ "02b_05.bin",	0x10000, 0xcdd119fd, 5 | BRF_GRA },           // 13
+	{ "03d_08.bin",	0x10000, 0x811f2e22, 5 | BRF_GRA },           // 14
+	{ "02d_07.bin",	0x10000, 0xaa9a1233, 5 | BRF_GRA },           // 15
+
+	{ "07l_15.bin",	0x08000, 0x978758b7, 6 | BRF_GRA },           // 16 Background Tilemaps
+
+	{ "09e_tr.bin",	0x00100, 0xec80ae36, 7 | BRF_GRA | BRF_OPT }, // 17 Priority Proms (unused)
+};
+
+STD_ROM_PICK(f1dreamba)
+STD_ROM_FN(f1dreamba)
+
+struct BurnDriver BurnDrvF1dreamba = {
+	"f1dreamba", "f1dream", NULL, NULL, "1988",
+	"F-1 Dream (bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
+	NULL, f1dreambaRomInfo, f1dreambaRomName, NULL, NULL, TigeroadInputInfo, F1dreamDIPInfo,
 	F1dreambInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3
 };

@@ -38,12 +38,13 @@ static UINT8 *DrvSprBuf2;
 static UINT8 *DrvZ80RAM;
 static UINT8 *DrvScrollRAM;
 
-static UINT32  *DrvPalette;
+static UINT32 *DrvPalette;
 
 static UINT8 *soundlatch;
 static UINT8 *soundlatch2;
 static UINT8 *flipscreen;
 static UINT8 *tilebank;
+static UINT8 *okibank;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -3639,6 +3640,7 @@ UINT8 __fastcall tharrier_sound_in(UINT16 port)
 
 static void ssmissin_okibank(INT32 bank)
 {
+	*okibank = bank & 3;
 	memcpy(DrvSndROM0 + 0x20000, DrvSndROM0 + 0x40000 + (bank & 3) * 0x20000, 0x20000);
 }
 
@@ -4048,6 +4050,7 @@ static INT32 MemIndex()
 	soundlatch2		= Next; Next += 0x000001;
 	flipscreen		= Next; Next += 0x000001;
 	tilebank		= Next; Next += 0x000001;
+	okibank			= Next; Next += 0x000001;
 
 	RamEnd			= Next;
 
@@ -4365,7 +4368,7 @@ static INT32 MSM6295x1Init(INT32  (*pLoadCallback)())
 
 	BurnSetRefreshRate(56.00);
 
-	MSM6295Init(0, 1000000 / 165, 0);
+	MSM6295Init(0, 1000000 / 132, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
         MSM6295x1_only = 1;
@@ -5295,7 +5298,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 	
 	if (pnMin != NULL) {			// Return minimum compatible version
-		*pnMin = 0x029705;
+		*pnMin = 0x029732;
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {
@@ -5341,13 +5344,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
         }
 	
-	if (nAction & ACB_WRITE) {
-/*		ZetOpen(0);
-		ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
-		ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
-                ZetClose();
-*/
-	}
+        if (nAction & ACB_WRITE) {
+            if (strstr(BurnDrvGetTextA(DRV_NAME), "ssmiss"))
+                ssmissin_okibank(*okibank);
+        }
 
 	return 0;
 }

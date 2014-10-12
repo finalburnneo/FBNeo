@@ -5349,7 +5349,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
         }
 	
         if (nAction & ACB_WRITE) {
-            if (strstr(BurnDrvGetTextA(DRV_NAME), "ssmiss"))
+            if (MSM6295x1_only) // S.S. Mission, Dolmen & Twin Action
                 ssmissin_okibank(*okibank);
         }
 

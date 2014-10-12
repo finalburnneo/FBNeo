@@ -3641,7 +3641,11 @@ UINT8 __fastcall tharrier_sound_in(UINT16 port)
 static void ssmissin_okibank(INT32 bank)
 {
 	*okibank = bank & 3;
-	memcpy(DrvSndROM0 + 0x20000, DrvSndROM0 + 0x40000 + (bank & 3) * 0x20000, 0x20000);
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "ssmiss")) {
+		memcpy(DrvSndROM0 + 0x20000, DrvSndROM0 + 0x40000 + (bank & 3) * 0x20000, 0x20000);
+	} else { // twin action & dolmen weird banking (m_oki1->set_bank_base((data & 3) * 0x40000);)
+		memcpy(DrvSndROM0, DrvSndROM1 + (bank & 3) * 0x40000, 0x40000);
+	}
 }
 
 void __fastcall ssmissin_sound_write(UINT16 address, UINT8 data)
@@ -5370,7 +5374,7 @@ static INT32 SsmissinFrame()
 	ZetNewFrame();
 
 	INT32 nSegment;
-	INT32 nInterleave = 10;
+	INT32 nInterleave = 256;
 	INT32 nTotalCycles[2] = { 8000000 / 56, 4000000 / 56 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -5383,7 +5387,7 @@ static INT32 SsmissinFrame()
 
 		nCyclesDone[0] += SekRun(nSegment);
 
-		if (i == (nInterleave-1) || i == ((nInterleave / 2) - 1)) {
+/*		if (i == (nInterleave-1) || i == ((nInterleave / 2) - 1)) {
 			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
 			SekRun(0);
 		}
@@ -5391,6 +5395,17 @@ static INT32 SsmissinFrame()
 			SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
 		if (i == (nInterleave-1))
 			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+*/
+
+		if (i == 25 || i == 148) { // 25, 153 in MAME
+			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		}
+		if (i == 0) {
+			SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		}
+		if (i == 235) { // 240 in MAME, but causes a missing life-bar in VanDyke.  236 causes a little flicker in the life-bar, 235 = perfect.
+			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		}
 
 		ZetRun(nTotalCycles[1] / nInterleave);
 	}
@@ -7456,12 +7471,17 @@ static INT32 TwinactnLoadCallback()
 	
 		if (BurnLoadRom(DrvGfxROM2 + 0x000000,  5, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM2 + 0x000001,  6, 2)) return 1;
-	
-		if (BurnLoadRom(DrvSndROM0 + 0x000000,  7, 1)) return 1;
-		memcpy (DrvSndROM0 + 0x40000, DrvSndROM0 + 0x00000, 0x20000);
-		memcpy (DrvSndROM0 + 0x60000, DrvSndROM0 + 0x00000, 0x20000);
-		if (BurnLoadRom(DrvSndROM0 + 0x080000,  8, 1)) return 1;
-	
+
+		if (BurnLoadRom(DrvSndROM1 + 0x0a0000,  8, 1)) return 1;
+		memcpy (DrvSndROM1 + 0xe0000, DrvSndROM1 + 0xc0000, 0x20000);
+
+		if (BurnLoadRom(DrvSndROM1 + 0x000000,  7, 1)) return 1;
+		memcpy (DrvSndROM1 + 0x40000, DrvSndROM1 + 0x00000, 0x20000);
+		memcpy (DrvSndROM1 + 0x80000, DrvSndROM1 + 0x00000, 0x20000);
+		memcpy (DrvSndROM1 + 0xc0000, DrvSndROM1 + 0x00000, 0x20000);
+		memcpy (DrvSndROM1 + 0x20000, DrvSndROM1 + 0x00000, 0x20000);
+		memcpy (DrvSndROM1 + 0x60000, DrvSndROM1 + 0x00000, 0x20000);
+
 		DrvGfxDecode(0x20000, 0x80000, 0x100000);
 	}
 
@@ -7526,15 +7546,17 @@ static INT32 DolmenLoadCallback()
 	
 		if (BurnLoadRom(DrvGfxROM2 + 0x000000,  5, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM2 + 0x000001,  6, 2)) return 1;
-	
-		if (BurnLoadRom(DrvSndROM0 + 0x000000,  7, 1)) return 1;
-		memcpy (DrvSndROM0 + 0x40000, DrvSndROM0 + 0x00000, 0x20000);
-		memcpy (DrvSndROM0 + 0x60000, DrvSndROM0 + 0x00000, 0x20000);
-		memcpy (DrvSndROM0 + 0x80000, DrvSndROM0 + 0x00000, 0x20000);
-		memcpy (DrvSndROM0 + 0xc0000, DrvSndROM0 + 0x00000, 0x20000);
-		if (BurnLoadRom(DrvSndROM0 + 0x0a0000,  8, 1)) return 1;
-		memcpy (DrvSndROM0 + 0xe0000, DrvSndROM0 + 0xa0000, 0x20000);
-	
+
+		if (BurnLoadRom(DrvSndROM1 + 0x0a0000,  8, 1)) return 1;
+		memcpy (DrvSndROM1 + 0xe0000, DrvSndROM1 + 0xc0000, 0x20000);
+
+		if (BurnLoadRom(DrvSndROM1 + 0x000000,  7, 1)) return 1;
+		memcpy (DrvSndROM1 + 0x40000, DrvSndROM1 + 0x00000, 0x20000);
+		memcpy (DrvSndROM1 + 0x80000, DrvSndROM1 + 0x00000, 0x20000);
+		memcpy (DrvSndROM1 + 0xc0000, DrvSndROM1 + 0x00000, 0x20000);
+		memcpy (DrvSndROM1 + 0x20000, DrvSndROM1 + 0x00000, 0x20000);
+		memcpy (DrvSndROM1 + 0x60000, DrvSndROM1 + 0x00000, 0x20000);
+
 		DrvGfxDecode(0x20000, 0x80000, 0x100000);
 	}
 

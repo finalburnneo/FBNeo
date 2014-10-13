@@ -19,6 +19,7 @@
 
 extern TCHAR szAppHiscorePath[MAX_PATH];
 extern TCHAR szAppSamplesPath[MAX_PATH];
+extern TCHAR szAppBlendPath[MAX_PATH];
 
 // Enable the MAME logerror() function in debug builds
 // #define MAME_USE_LOGERROR
@@ -178,6 +179,7 @@ extern UINT32 nFramesRendered;
 extern clock_t starttime;					// system time when emulation started and after roms loaded
 
 extern bool bForce60Hz;
+extern bool bBurnUseBlend;
 
 extern INT32 nBurnFPS;
 extern INT32 nBurnCPUSpeedAdjust;

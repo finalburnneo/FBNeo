@@ -38,16 +38,16 @@ static void CpsBlendInit()
 {
 	blendtable = NULL;
 
-	char filename[256];
+	TCHAR filename[MAX_PATH];
 
-	sprintf (filename, "support/blend/%s.bld", BurnDrvGetTextA(DRV_NAME));
-
-	FILE *fa = fopen(filename, "rt");
+	_stprintf(filename, _T("%s%s.bld"), szAppBlendPath, BurnDrvGetText(DRV_NAME));
+	
+	FILE *fa = _tfopen(filename, _T("rt"));
 
 	if (fa == NULL) {
-		sprintf (filename, "support/blend/%s.bld", BurnDrvGetTextA(DRV_PARENT));
+		_stprintf(filename, _T("%s%s.bld"), szAppBlendPath, BurnDrvGetText(DRV_PARENT));
 
-		fa = fopen(filename, "rt");
+		fa = _tfopen(filename, _T("rt"));
 
 		if (fa == NULL) {
 			return;
@@ -94,7 +94,7 @@ static void CpsBlendInit()
 
 INT32 CpsObjInit()
 {
-	CpsBlendInit();
+	if (bBurnUseBlend) CpsBlendInit();
 
 	nMax = 0x100;				// CPS1 has 256 sprites
 

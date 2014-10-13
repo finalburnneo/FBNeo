@@ -1806,6 +1806,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			EnableHiscores = !EnableHiscores;
 			break;
 			
+		case MENU_USEBLEND:
+			bBurnUseBlend = !bBurnUseBlend;
+			break;
+			
 		case MENU_ROMDIRS:
 			RomsDirCreate(hScrnWnd);
 			break;

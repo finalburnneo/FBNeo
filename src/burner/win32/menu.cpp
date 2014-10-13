@@ -974,6 +974,7 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_NOCHANGENUMLOCK, bNoChangeNumLock ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_CREATEDIRS, bAlwaysCreateSupportFolders ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_SAVEHISCORES, EnableHiscores ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_USEBLEND, bBurnUseBlend ? MF_CHECKED : MF_UNCHECKED);
 
 	if (nAppThreadPriority == THREAD_PRIORITY_TIME_CRITICAL) {
 		var = MENU_PRIORITY_REALTIME;
@@ -1237,6 +1238,7 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_SAVEGAMEINPUTNOW,	MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_ASSEMBLYCORE,		MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_SAVEHISCORES,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_USEBLEND,			MF_GRAYED  | MF_BYCOMMAND);
 		
 		EnableMenuItem(hMenu, MENU_CDIMAGE,				MF_GRAYED | MF_BYCOMMAND);
 		
@@ -1372,6 +1374,7 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_DEBUG,				MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_ASSEMBLYCORE,		MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_SAVEHISCORES,		MF_ENABLED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_USEBLEND,			MF_ENABLED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_STATE_LOAD_SLOT,		MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_STATE_LOAD_DIALOG,	MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_STATE_SAVE_SLOT,		MF_GRAYED  | MF_BYCOMMAND);

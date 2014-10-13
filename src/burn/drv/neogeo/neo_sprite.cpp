@@ -148,16 +148,16 @@ void NeoSetSpriteSlot(INT32 nSlot)
 
 static void NeoBlendInit(INT32 nSlot)
 {
-	char filename[256];
+	TCHAR filename[MAX_PATH];
 
-	sprintf (filename, "support/blend/%s.bld", BurnDrvGetTextA(DRV_NAME));
-
-	FILE *fa = fopen(filename, "rt");
+	_stprintf(filename, _T("%s%s.bld"), szAppBlendPath, BurnDrvGetText(DRV_NAME));
+	
+	FILE *fa = _tfopen(filename, _T("rt"));
 
 	if (fa == NULL) {
-		sprintf (filename, "support/blend/%s.bld", BurnDrvGetTextA(DRV_PARENT));
+		_stprintf(filename, _T("%s%s.bld"), szAppBlendPath, BurnDrvGetText(DRV_PARENT));
 
-		fa = fopen(filename, "rt");
+		fa = _tfopen(filename, _T("rt"));
 
 		if (fa == NULL) {
 			return;
@@ -223,7 +223,7 @@ INT32 NeoInitSprites(INT32 nSlot)
 		NeoTileAttrib[nSlot][i] = 1;
 	}
 
-	NeoBlendInit(nSlot);
+	if (bBurnUseBlend) NeoBlendInit(nSlot);
 
 	NeoTileAttribActive = NeoTileAttrib[nSlot];
 	NeoSpriteROMActive  = NeoSpriteROM[nSlot];

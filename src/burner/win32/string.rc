@@ -111,6 +111,7 @@ BEGIN
 	IDS_SPATH_IPS				"IPS"
 	IDS_SPATH_NGCD_ISOS			"Neo Geo CDZ Games"
 	IDS_SPATH_NGCD_COVERS		"Neo Geo CDZ Covers"
+	IDS_SPATH_BLEND				"Blend Files"
 	
 	IDS_ROMPATH_1				"Path #1"
 	IDS_ROMPATH_2				"Path #2"

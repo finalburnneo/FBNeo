@@ -34,6 +34,7 @@ UINT32 nCurrentFrame;			// Framecount for emulated game
 UINT32 nFramesEmulated;		// Counters for FPS	display
 UINT32 nFramesRendered;		//
 bool bForce60Hz = false;
+bool bBurnUseBlend = true;
 INT32 nBurnFPS = 6000;
 INT32 nBurnCPUSpeedAdjust = 0x0100;	// CPU speed adjustment (clock * nBurnCPUSpeedAdjust / 0x0100)
 

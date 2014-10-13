@@ -54,6 +54,8 @@ static void CpsBlendInit()
 		}
 	}
 
+	bprintf (PRINT_IMPORTANT, _T("Using sprite blending (.bld) table!\n"));
+
 	blendtable = (UINT8*)BurnMalloc(0x40000); // maximum number of sprites
 	memset (blendtable, 0, 0x40000); // no blend
 

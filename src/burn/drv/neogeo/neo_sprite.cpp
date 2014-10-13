@@ -164,6 +164,8 @@ static void NeoBlendInit(INT32 nSlot)
 		}
 	}
 
+	bprintf (PRINT_IMPORTANT, _T("Using sprite blending (.bld) table!\n"));
+
 	char szLine[64];
 
 	INT32 table[4] = { 0, 0xff-0x3f, 0xff-0x7f, 0xff-0x7f }; // last one 7f?

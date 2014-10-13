@@ -34,6 +34,13 @@ static RenderBankFunction* RenderBank;
 
 static 	UINT16 BankAttrib01, BankAttrib02, BankAttrib03;
 
+static inline UINT32 alpha_blend(UINT32 d, UINT32 s, UINT32 p)
+{
+	INT32 a = 255 - p;
+
+	return (((((s & 0xff00ff) * p) + ((d & 0xff00ff) * a)) & 0xff00ff00) +
+		((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) >> 8;
+}
 
 // Include the tile rendering functions
 #include "neo_sprite_func.h"
@@ -93,7 +100,6 @@ INT32 NeoRenderSprites()
 		}
 
 		if (nBankSize) {
-
 			nBankXZoom = (BankAttrib01 >> 8) & 0x0F;
 			if (nBankXPos >= 0x01E0) {
 				nBankXPos -= 0x200;
@@ -140,6 +146,58 @@ void NeoSetSpriteSlot(INT32 nSlot)
 	nNeoMaxTileActive   = nNeoMaxTile[nSlot];
 }
 
+static void NeoBlendInit(INT32 nSlot)
+{
+	char filename[256];
+
+	sprintf (filename, "support/blend/%s.bld", BurnDrvGetTextA(DRV_NAME));
+
+	FILE *fa = fopen(filename, "rt");
+
+	if (fa == NULL) {
+		sprintf (filename, "support/blend/%s.bld", BurnDrvGetTextA(DRV_PARENT));
+
+		fa = fopen(filename, "rt");
+
+		if (fa == NULL) {
+			return;
+		}
+	}
+
+	char szLine[64];
+
+	INT32 table[4] = { 0, 0xff-0x3f, 0xff-0x7f, 0xff-0x7f }; // last one 7f?
+
+	while (1)
+	{
+		if (fgets (szLine, 64, fa) == NULL) break;
+
+		if (strncmp ("Game", szLine, 4) == 0) continue; 	// don't care
+		if (strncmp ("Name", szLine, 4) == 0) continue; 	// don't care
+		if (szLine[0] == ';') continue;				// comment (also don't care)
+
+		int type;
+		unsigned int min,max,k, single_entry = -1;
+
+		for (k = 0; k < strlen(szLine); k++) {
+			if (szLine[k] == '-') { single_entry = k+1; break; }
+		}
+
+		if (single_entry < 0) {
+			sscanf(szLine,"%x %d",&max,&type);
+			min = max;
+		} else {
+			sscanf(szLine,"%x",&min);
+			sscanf(szLine+single_entry,"%x %d",&max,&type);
+		}
+
+		for (k = min; k <= max; k++) {
+			if (NeoTileAttrib[nSlot][k] != 1) 	// ?
+				NeoTileAttrib[nSlot][k] = table[type&3];
+		}
+	}
+}
+
 INT32 NeoInitSprites(INT32 nSlot)
 {
 	// Create a table that indicates if a tile is transparent
@@ -162,6 +220,8 @@ INT32 NeoInitSprites(INT32 nSlot)
 	for (UINT32 i = nNeoMaxTile[nSlot]; i < nNeoTileMask[nSlot] + 1; i++) {
 		NeoTileAttrib[nSlot][i] = 1;
 	}
+
+	NeoBlendInit(nSlot);
 
 	NeoTileAttribActive = NeoTileAttrib[nSlot];
 	NeoSpriteROMActive  = NeoSpriteROM[nSlot];

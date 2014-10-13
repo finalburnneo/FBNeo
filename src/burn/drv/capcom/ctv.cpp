@@ -10,6 +10,14 @@ UINT8 *pCtvTile=NULL; // Pointer to tile data
 INT32 nCtvTileAdd=0; // Amount to add after each tile line
 UINT8 *pCtvLine=NULL; // Pointer to output bitmap
 
+static inline UINT32 alpha_blend(UINT32 d, UINT32 s, UINT32 p)
+{
+	INT32 a = 255 - p;
+
+	return (((((s & 0xff00ff) * p) + ((d & 0xff00ff) * a)) & 0xff00ff00) +
+		((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) >> 8;
+}
+
 // Include all tile variants:
 #include "ctv.h"
 

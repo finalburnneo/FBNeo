@@ -99,18 +99,18 @@ for (y = 0; y < CU_SIZE; y++, pCtvLine += nBurnPitch, pCtvTile += nCtvTileAdd
  #endif
 #elif CU_BPP==3
  #if   CU_MASK==1
-  #define PLOT { if(*pPixZ < ZValue) { pPix[0]=(UINT8)c; pPix[1]=(UINT8)(c>>8); pPix[2]=(UINT8)(c>>16); } }
+  #define PLOT { if(*pPixZ < ZValue) { if (nCpsBlend) { c = alpha_blend(pPix[0]|(pPix[1]<<8)|(pPix[2]<<16), c, nCpsBlend); } pPix[0]=(UINT8)c; pPix[1]=(UINT8)(c>>8); pPix[2]=(UINT8)(c>>16); } }
   #define ADV { pPix+=3; pPixZ++; }
  #else
-  #define PLOT { pPix[0]=(UINT8)c; pPix[1]=(UINT8)(c>>8); pPix[2]=(UINT8)(c>>16); }
+  #define PLOT { if (nCpsBlend) { c = alpha_blend(pPix[0]|(pPix[1]<<8)|(pPix[2]<<16), c, nCpsBlend); } pPix[0]=(UINT8)c; pPix[1]=(UINT8)(c>>8); pPix[2]=(UINT8)(c>>16); }
   #define ADV pPix+=3
  #endif
 #elif CU_BPP==4
  #if   CU_MASK==1
-  #define PLOT { if(*pPixZ < ZValue) { *((UINT32 *)pPix)=c; *pPixZ=ZValue; } }
+  #define PLOT { if(*pPixZ < ZValue) { if (nCpsBlend) { c = alpha_blend(*((UINT32 *)pPix), c, nCpsBlend); } *((UINT32 *)pPix)=c; *pPixZ=ZValue; } }
   #define ADV { pPix+=4; pPixZ++; }
  #else
-  #define PLOT { *((UINT32 *)pPix)=c; }
+  #define PLOT { if (nCpsBlend) { c = alpha_blend(*((UINT32 *)pPix), c, nCpsBlend); } *((UINT32 *)pPix)=c; }
   #define ADV pPix+=4
  #endif
 #else

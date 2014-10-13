@@ -7,6 +7,7 @@ UINT32 *CpstPal=NULL;
 UINT32 nCpstType = 0;
 INT32 nCpstX = 0, nCpstY = 0;
 UINT32 nCpstTile = 0;
+UINT32 nCpsBlend = 0;
 INT32 nCpstFlip = 0;
 INT16 *CpstRowShift = NULL;
 UINT32 CpstPmsk = 0;		// Pixel mask

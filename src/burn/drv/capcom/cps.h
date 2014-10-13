@@ -321,6 +321,7 @@ INT32 QscUpdate(INT32 nEnd);
 extern UINT32* CpstPal;
 extern UINT32 nCpstType; extern INT32 nCpstX,nCpstY;
 extern UINT32 nCpstTile; extern INT32 nCpstFlip;
+extern UINT32 nCpsBlend;
 extern short* CpstRowShift;
 extern UINT32 CpstPmsk; // Pixel mask
 

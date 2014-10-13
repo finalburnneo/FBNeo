@@ -26,13 +26,15 @@
 #elif BPP == 24
  #define PLOTPIXEL(a,b) if (TESTCOLOUR(b) && TESTCLIP(a)) {			\
 	UINT32 nRGB = pTilePalette[b];							\
+	if (nTransparent) nRGB = alpha_blend((pPixel[2]<<16)+(pPixel[1]<<8)+pPixel[0], nRGB, nTransparent);	\
 	pPixel[0] = (UINT8)nRGB;								\
 	pPixel[1] = (UINT8)(nRGB >> 8);							\
 	pPixel[2] = (UINT8)(nRGB >> 16);						\
  }
 #elif BPP == 32
  #define PLOTPIXEL(a,b) if (TESTCOLOUR(b) && TESTCLIP(a)) {			\
-	 *((UINT32*)pPixel) = (UINT32)pTilePalette[b];		\
+	if (nTransparent) *((UINT32*)pPixel) = alpha_blend(*((UINT32*)pPixel), (UINT32)pTilePalette[b], nTransparent);	\
+	else *((UINT32*)pPixel) = (UINT32)pTilePalette[b];		\
  }
 #else
  #error unsupported bitdepth specified.
@@ -619,13 +621,13 @@ static void FUNCTIONNAME(BPP,XZOOM,CLIP,OPACITY)()
 
 					nTransparent = NeoTileAttribActive[nTileNumber];
 
-					if (nTransparent == 0) {
+					if (nTransparent != 1) {
 						pTileData = (UINT32*)(NeoSpriteROMActive + (nTileNumber << 7));
 						pTilePalette = &NeoPalette[(nTileAttrib & 0xFF00) >> 4];
 					}
 				}
 
-				if (nTransparent == 0) {
+				if (nTransparent != 1) {
 					nLine = (pZoomValue[nThisLine] & 0x0F) << 1;
 					if (nTileAttrib & 2) {							// Flip Y
 						nLine ^= 0x1E;

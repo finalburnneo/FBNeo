@@ -811,7 +811,7 @@ int ProcessCmdLine()
 
 static void CreateSupportFolders()
 {
-	TCHAR szSupportDirs[16][MAX_PATH] = {
+	TCHAR szSupportDirs[17][MAX_PATH] = {
 		{_T("support/")},
 		{_T("support/previews/")},
 		{_T("support/titles/")},
@@ -821,6 +821,7 @@ static void CreateSupportFolders()
 		{_T("support/samples/")},
 		{_T("support/ips/")},
 		{_T("support/neocdz/")},
+		{_T("support/blend/")},
 		{_T("neocdiso/")},
 		// the below are named after the MESS software lists
 		{_T("megadriv/")},
@@ -831,7 +832,7 @@ static void CreateSupportFolders()
 		{_T("coleco/")},
 	};
 	
-	for(int x = 0; x < 16; x++) {
+	for(int x = 0; x < 17; x++) {
 		CreateDirectory(szSupportDirs[x], NULL);
 	}
 }

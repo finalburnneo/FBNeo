@@ -372,7 +372,8 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)		//
 		case WM_INITDIALOG:
 			hRomsDlg = hDlg;
 			nOldSelect = nBurnDrvActive;
-			memset(gameAv, 0, sizeof(gameAv));
+			//memset(gameAv, 0, sizeof(gameAv)); // sizeof(gameAv) is 4!! -dink
+			memset(gameAv, 0, nBurnDrvCount);
 			SendDlgItemMessage(hDlg, IDC_WAIT_PROG, PBM_SETRANGE, 0, MAKELPARAM(0, nBurnDrvCount));
 			SendDlgItemMessage(hDlg, IDC_WAIT_PROG, PBM_SETSTEP, (WPARAM)1, 0);
 

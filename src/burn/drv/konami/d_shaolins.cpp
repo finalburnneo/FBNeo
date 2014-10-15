@@ -515,7 +515,6 @@ static INT32 DrvFrame()
 
 static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 {
-return 0;
 	struct BurnArea ba;
 
 	if (pnMin) {

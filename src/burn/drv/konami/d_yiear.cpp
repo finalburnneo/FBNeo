@@ -273,6 +273,8 @@ static void DrvGfxDecode()
 	memcpy (tmp, DrvGfxROM1, 0x10000);
 
 	GfxDecode(0x200, 4, 16, 16, Plane1, XOffs, YOffs, 0x200, tmp, DrvGfxROM1);
+
+	BurnFree(tmp);
 }
 
 static void DrvPaletteInit()
@@ -359,8 +361,7 @@ static INT32 DrvExit()
 	vlm5030Exit();
 	SN76496Exit();
 
-	free (AllMem);
-	AllMem = NULL;
+	BurnFree (AllMem);
 
 	return 0;
 }
@@ -470,9 +471,8 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
 
-		// irq timing is a bit funky...
-		if (*nmi_enable && (i & 0x3f) == 0x30)
-			M6809SetIRQLine(0x20, M6809_IRQSTATUS_AUTO); // 480x/second (~8x/frame)
+		if (*nmi_enable && (i & 0x3f) == 0) // copy shao-lin's road
+			M6809SetIRQLine(0x20, M6809_IRQSTATUS_AUTO); // 480x/second (8x/frame)
 	}
 
 	if (*irq_enable) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);

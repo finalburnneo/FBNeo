@@ -1033,6 +1033,9 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 1500000, nBurnSoundRate, &soundlatch_r, &timer_r, NULL, NULL);
 	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
+	if (loverb) {
+		AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	}
 
 	GenericTilesInit();
 
@@ -1816,7 +1819,7 @@ static INT32 loverboyInit()
 
 struct BurnDriver BurnDrvloverboy = {
 	"loverboy", NULL, NULL, NULL, "1983",
-	"Lover Boy\0", "No sound", "G.T Enterprise Inc", "Jack the Giantkiller",
+	"Lover Boy\0", NULL, "G.T Enterprise Inc", "Jack the Giantkiller",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, loverboyRomInfo, loverboyRomName, NULL, NULL, LoverboyInputInfo, LoverboyDIPInfo,

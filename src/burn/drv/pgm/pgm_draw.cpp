@@ -1,6 +1,10 @@
 #include "pgm.h"
 #include "pgm_sprite.h"
 
+
+//#define DUMP_SPRITE_BITMAPS
+//#define DRAW_SPRITE_NUMBER
+
 static INT32 nTileMask = 0;
 static UINT8 sprmsktab[0x100];
 static UINT8  *SpritePrio;	// sprite priorities
@@ -8,6 +12,236 @@ static UINT16 *pTempScreen;	// sprites
 static UINT16 *pTempDraw;	// pre-zoomed sprites
 static UINT8  *tiletrans;	// tile transparency table
 static UINT8  *texttrans;	// text transparency table
+
+#ifdef DUMP_SPRITE_BITMAPS
+static UINT32 *pTempDraw32;
+#endif
+
+#ifdef DRAW_SPRITE_NUMBER
+
+static UINT8 font_pixels[16][7*5] =
+{
+ { // 0
+   0,0,0,0,0,
+   0,1,1,1,0,
+   0,1,0,1,0,
+   0,1,0,1,0,
+   0,1,0,1,0,
+   0,1,1,1,0,
+   0,0,0,0,0,
+ },
+ { // 1
+   0,0,0,0,0,
+   0,0,1,0,0,
+   0,0,1,0,0,
+   0,0,1,0,0,
+   0,0,1,0,0,
+   0,0,1,0,0,
+   0,0,0,0,0,
+ },
+ { // 1
+   0,0,0,0,0,
+   0,0,1,1,0,
+   0,1,0,1,0,
+   0,0,0,1,0,
+   0,0,1,0,0,
+   0,1,1,1,0,
+   0,0,0,0,0,
+ },
+ { // 3
+   0,0,0,0,0,
+   0,1,1,1,0,
+   0,0,0,1,0,
+   0,1,1,1,0,
+   0,0,0,1,0,
+   0,1,1,1,0,
+   0,0,0,0,0,
+ },
+ { // 4
+   0,0,0,0,0,
+   0,1,0,1,0,
+   0,1,0,1,0,
+   0,1,1,1,0,
+   0,0,0,1,0,
+   0,0,0,1,0,
+   0,0,0,0,0,
+ },
+ { // 5
+   0,0,0,0,0,
+   0,1,1,1,0,
+   0,1,0,0,0,
+   0,1,1,0,0,
+   0,0,0,1,0,
+   0,1,1,1,0,
+   0,0,0,0,0,
+ },
+ { // 6
+   0,0,0,0,0,
+   0,0,1,0,0,
+   0,1,0,0,0,
+   0,1,1,1,0,
+   0,1,0,1,0,
+   0,1,1,1,0,
+   0,0,0,0,0,
+ },
+ { // 7
+   0,0,0,0,0,
+   0,1,1,1,0,
+   0,0,0,1,0,
+   0,0,0,1,0,
+   0,0,1,0,0,
+   0,0,1,0,0,
+   0,0,0,0,0,
+ },
+ { // 8
+   0,0,0,0,0,
+   0,1,1,1,0,
+   0,1,0,1,0,
+   0,1,1,1,0,
+   0,1,0,1,0,
+   0,1,1,1,0,
+   0,0,0,0,0,
+ },
+ { // 9
+   0,0,0,0,0,
+   0,1,1,1,0,
+   0,1,0,1,0,
+   0,1,1,1,0,
+   0,0,1,0,0,
+   0,1,0,0,0,
+   0,0,0,0,0,
+ },
+ { // a
+   0,0,0,0,0,
+   0,1,1,1,0,
+   0,1,0,1,0,
+   0,1,1,1,0,
+   0,1,0,1,0,
+   0,1,0,1,0,
+   0,0,0,0,0,
+ },
+ { // b
+#if 0
+   0,0,0,0,0,
+   0,1,1,1,0,
+   0,1,0,1,0,
+   0,1,1,0,0,
+   0,1,0,1,0,
+   0,1,1,1,0,
+   0,0,0,0,0,
+#else	// this one looks a lot like an '8'
+   0,0,0,0,0,
+   0,1,0,0,0,
+   0,1,0,0,0,
+   0,1,1,1,0,
+   0,1,0,1,0,
+   0,1,1,1,0,
+   0,0,0,0,0,
+#endif
+ },
+ { // c
+   0,0,0,0,0,
+   0,1,1,1,0,
+   0,1,0,0,0,
+   0,1,0,0,0,
+   0,1,0,0,0,
+   0,1,1,1,0,
+   0,0,0,0,0,
+ },
+ { // d
+#if 0
+   0,0,0,0,0,
+   0,1,1,0,0,
+   0,1,0,1,0,
+   0,1,0,1,0,
+   0,1,0,1,0,
+   0,1,1,0,0,
+   0,0,0,0,0,
+#else // this one looks a lot like a '0'
+   0,0,0,0,0,
+   0,0,0,1,0,
+   0,0,0,1,0,
+   0,1,1,1,0,
+   0,1,0,1,0,
+   0,1,1,1,0,
+   0,0,0,0,0,
+#endif
+ },
+ { // e
+   0,0,0,0,0,
+   0,1,1,1,0,
+   0,1,0,0,0,
+   0,1,1,1,0,
+   0,1,0,0,0,
+   0,1,1,1,0,
+   0,0,0,0,0,
+ },
+ { // f
+   0,0,0,0,0,
+   0,1,1,1,0,
+   0,1,0,0,0,
+   0,1,1,0,0,
+   0,1,0,0,0,
+   0,1,0,0,0,
+   0,0,0,0,0,
+ }
+};
+
+static void draw_font(INT32 sx, INT32 sy, UINT32 code)
+{
+	INT32 enable1 = 0;
+
+	for (INT32 z = 7; z >= 0; z--)
+	{
+		INT32 chr = (code >> (z*4))&0xf;
+
+		if (enable1 == 0 && chr == 0) continue; // skip leading 0's
+		enable1 = 1;
+
+		UINT8 *gfx = font_pixels[chr];
+
+		for (INT32 y = 0; y < 7; y++) {
+			if ((sy+y)<0 || (sy+y)>=nScreenHeight) continue; // clip
+
+			UINT16 *dst = pTransDraw + (sy + y) * nScreenWidth;
+
+			for (INT32 x = 0; x < 5; x++) {
+				if ((sx+x)<0 || (sx+x)>=nScreenWidth) continue; // clip
+
+				INT32 pxl = gfx[(y*5)+x];
+				if (pxl) {
+					dst[(sx+x)] = 0x901;
+				} else {
+					dst[(sx+x)] = 0x900;
+				}
+			}
+		}
+
+		sx += 5;
+	}
+}
+
+static void pgm_drawsprites_fonts(INT32 priority)
+{
+	UINT16 *source = PGMSprBuf;
+	UINT16 *finish = PGMSprBuf + 0xa00/2;
+
+	while (finish > source)
+	{
+		if (source[4] == 0) break;
+
+		INT32 xpos =  BURN_ENDIAN_SWAP_INT16(source[0]) & 0x07ff;
+		INT32 ypos =  BURN_ENDIAN_SWAP_INT16(source[1]) & 0x03ff;
+		INT32 prio = (BURN_ENDIAN_SWAP_INT16(source[2]) & 0x0080) >> 7;
+		INT32 boff =((BURN_ENDIAN_SWAP_INT16(source[2]) & 0x007f) << 16) | (BURN_ENDIAN_SWAP_INT16(source[3]) & 0xffff);
+
+		if (priority==prio)
+			draw_font(xpos, ypos, boff);
+
+		source += 5;
+	}
+}
+#endif
 
 inline static UINT32 CalcCol(UINT16 nColour)
 {
@@ -232,9 +466,186 @@ static void pgm_draw_sprite_nozoom(INT32 wide, INT32 high, INT32 palt, INT32 bof
 	}
 }
 
+#ifdef DUMP_SPRITE_BITMAPS
+static void pgm_dump_sprite(INT32 wide, INT32 high, INT32 palt, INT32 boffset, INT32 xpos, INT32 ypos, INT32 flipx, INT32 flipy, INT32 prio)
+{
+	if (nBurnBPP < 3) return;
+
+	UINT32 *dest = pTempDraw32;
+	UINT8 * bdata = PGMSPRMaskROM;
+	UINT8 * adata = PGMSPRColROM;
+	INT32 bdatasize = nPGMSPRMaskMaskLen;
+	INT32 adatasize = nPGMSPRColMaskLen;
+	INT32 yoff, xoff;
+
+	UINT16 msk;
+
+	UINT32 boffset_initial = boffset/2;
+
+	UINT32 aoffset = (bdata[(boffset+3) & bdatasize] << 24) | (bdata[(boffset+2) & bdatasize] << 16) | (bdata[(boffset+1) & bdatasize] << 8) | (bdata[boffset & bdatasize]);
+	aoffset = (aoffset >> 2) * 3;
+	aoffset &= adatasize;
+
+	xpos = 0;
+	ypos = 0;
+
+	boffset += 4;
+	wide <<= 4;
+
+	palt <<= 5;
+
+	UINT32 tcolor = BurnHighCol(0xff,0,0xff,0);
+
+	for (INT32 y = 0; y < high; y++) {
+		for (INT32 x = 0; x < wide; x++) {
+			dest[y*1024+x] = tcolor;
+		}
+	}
+
+	for (INT32 ycnt = 0; ycnt < high; ycnt++) {
+		if (flipy) {
+			yoff = ypos + ((high-1) - ycnt);
+			if (yoff < 0) break;
+			if (yoff < 512) {
+				dest = pTempDraw32 + (yoff * 1024);
+			}
+		} else {
+			yoff = ypos + ycnt;
+			if (yoff >= 512) break;
+			if (yoff >= 0)  {
+				dest = pTempDraw32 + (yoff * 1024);
+			}
+		}
+
+		{
+			for (INT32 xcnt = 0; xcnt < wide; xcnt+=8)
+			{
+				msk = bdata[boffset & bdatasize] ^ 0xff;
+				boffset++;
+				aoffset &= adatasize;
+
+				if (yoff < 0 || yoff >= 512 || msk == 0) {
+					aoffset += sprmsktab[msk];
+
+					continue;
+				}
+
+				if (flipx) {
+					xoff = xpos + (wide - xcnt) - 1;
+
+					if (xoff < -7 || xoff >= 1024+8) {
+						aoffset += sprmsktab[msk];
+						continue;
+					}
+
+					for (INT32 x = 0; x < 8; x++, xoff--)
+					{
+						if (msk & 0x0001)
+						{
+							if (xoff >= 0 && xoff < 1024) {
+								dest[xoff] = RamCurPal[adata[aoffset] | palt];
+							}
+		
+							aoffset++;
+						}
+		
+						msk >>= 1;
+						if (!msk) break;
+					}
+				} else {
+					xoff = xpos + xcnt;
+
+					if (xoff < -7 || xoff >= 1024) {
+						aoffset += sprmsktab[msk];
+						continue;
+					}
+
+					for (INT32 x = 0; x < 8; x++, xoff++)
+					{
+						if (msk & 0x0001)
+						{
+							if (xoff >= 0 && xoff < 1024) {
+								dest[xoff] = RamCurPal[adata[aoffset] | palt];
+							}
+		
+							aoffset++;
+						}
+		
+						msk >>= 1;
+						if (!msk) break;
+					}
+				}
+			}
+		}
+	}
+
+#define SET_FILE_SIZE(x)	\
+	bmp_data[2] = (x);	\
+	bmp_data[3] = (x)>>8;	\
+	bmp_data[4] = (x)>>16
+
+#define SET_BITMAP_SIZE(x)	\
+	bmp_data[0x22] = (x);	\
+	bmp_data[0x23] = (x)>>8;	\
+	bmp_data[0x24] = (x)>>16
+
+#define SET_BITMAP_WIDTH(x)	\
+	bmp_data[0x12] = (x);	\
+	bmp_data[0x13] = (x)>>8;	\
+	bmp_data[0x14] = (x)>>16
+
+#define SET_BITMAP_HEIGHT(x)	\
+	bmp_data[0x16] = (x);	\
+	bmp_data[0x17] = (x)>>8;	\
+	bmp_data[0x18] = (x)>>16
+
+	UINT8 bmp_data[0x36] = {
+		0x42, 0x4D, 		// 'BM' (leave alone)
+		0x00, 0x00, 0x00, 0x00, // file size
+		0x00, 0x00, 0x00, 0x00, // padding
+		0x36, 0x00, 0x00, 0x00, // offset to data (leave alone)
+		0x28, 0x00, 0x00, 0x00, // windows mode (leave alone)
+		0x00, 0x00, 0x00, 0x00, // bitmap width
+		0x00, 0x00, 0x00, 0x00, // bitmap height
+		0x01, 0x00,		// planes (1) always!
+		0x20, 0x00, 		// bits per pixel (let's do 32 so no conversion!)
+		0x00, 0x00, 0x00, 0x00, // compression (none)
+		0x00, 0x00, 0x00, 0x00, // size of bitmap data
+		0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00
+	};
+
+	SET_FILE_SIZE((wide*high*4)+54);
+	SET_BITMAP_SIZE(wide*high*4);
+	SET_BITMAP_WIDTH(wide);
+	SET_BITMAP_HEIGHT(high);
+
+	char output[256];
+	sprintf (output, "blendbmp/%8.8x_%dx%d.bmp", boffset_initial,wide,high);
+	FILE *fa;
+	fa = fopen(output, "rb");
+	if (fa) {
+		fclose (fa);
+		return;
+	}
+	fa = fopen(output, "wb");
+	fwrite (bmp_data,0x36,1,fa);
+	for (INT32 y = high-1; y >= 0; y--) { // bitmap format is flipped
+		fwrite (pTempDraw32 + 1024 * y,wide*4,1,fa);
+	}
+	fclose (fa);
+}
+#endif
+
 static void draw_sprite_new_zoomed(INT32 wide, INT32 high, INT32 xpos, INT32 ypos, INT32 palt, INT32 boffset, INT32 flip, UINT32 xzoom, INT32 xgrow, UINT32 yzoom, INT32 ygrow, INT32 prio )
 {
 	if (!wide) return;
+
+#ifdef DUMP_SPRITE_BITMAPS
+	pgm_dump_sprite(wide, high, palt, boffset, xpos, ypos, flip & 1, flip & 2, prio);
+#endif
 
 	if (yzoom == 0 && xzoom == 0) {
 		pgm_draw_sprite_nozoom(wide, high, palt, boffset, xpos, ypos, flip & 1, flip & 2, prio);
@@ -630,6 +1041,7 @@ INT32 pgmDraw()
 	{
 		// black / magenta
 		RamCurPal[0x1200/2] = (nBurnLayer & 1) ? RamCurPal[0x3ff] : BurnHighCol(0xff, 0, 0xff, 0);
+		RamCurPal[0x1202/2] = BurnHighCol(0xff,0x00,0xff,0);
 	}
 
 	// Fill in background color (0x1200/2)
@@ -644,10 +1056,15 @@ INT32 pgmDraw()
 
 	pgm_drawsprites();
 	if (nSpriteEnable & 1) copy_sprite_priority(1);
+#ifdef DRAW_SPRITE_NUMBER
+	pgm_drawsprites_fonts(1);
+#endif
 	if (nBurnLayer & 1) draw_background();
 	if (nSpriteEnable & 2) copy_sprite_priority(0);
+#ifdef DRAW_SPRITE_NUMBER
+	pgm_drawsprites_fonts(0);
+#endif
 	if (nBurnLayer & 2) draw_text();
-
 	BurnTransferCopy(RamCurPal);
 
 	return 0;
@@ -656,6 +1073,10 @@ INT32 pgmDraw()
 void pgmInitDraw() // preprocess some things...
 {
 	GenericTilesInit();
+
+#ifdef DUMP_SPRITE_BITMAPS
+	pTempDraw32 = (UINT32*)BurnMalloc(0x400 * 0x200 * 4);
+#endif
 
 	pTempDraw = (UINT16*)BurnMalloc(0x400 * 0x200 * sizeof(INT16));
 	SpritePrio = (UINT8*)BurnMalloc(nScreenWidth * nScreenHeight);
@@ -717,7 +1138,10 @@ void pgmInitDraw() // preprocess some things...
 void pgmExitDraw()
 {
 	nTileMask = 0;
-	
+
+#ifdef DUMP_SPRITE_BITMAPS
+	BurnFree (pTempDraw32);
+#endif
 	BurnFree (pTempDraw);
 	BurnFree (tiletrans);
 	BurnFree (texttrans);

@@ -98,7 +98,7 @@ static INT32 pgmMemIndex()
 
 	RamEnd		= Next;
 
-	RamCurPal	= (UINT32 *) Next; Next += (0x0001202 / 2) * sizeof(UINT32);
+	RamCurPal	= (UINT32 *) Next; Next += (0x0001204 / 2) * sizeof(UINT32);
 
 	MemEnd		= Next;
 

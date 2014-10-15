@@ -471,7 +471,7 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
 
-		if (*nmi_enable && (i & 0x3f) == 0) // copy shao-lin's road
+		if (*nmi_enable && (i & 0x1f) == 0) // copy shao-lin's road
 			M6809SetIRQLine(0x20, M6809_IRQSTATUS_AUTO); // 480x/second (8x/frame)
 	}
 

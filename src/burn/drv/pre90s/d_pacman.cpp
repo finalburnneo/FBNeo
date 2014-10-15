@@ -5572,14 +5572,14 @@ struct BurnDriver BurnDrvponpoko = {
 // Candory (Bootleg)
 
 static struct BurnRomInfo CandoryRomDesc[] = {
-	{ "candory.1",    0x1000, 0xffa3c004, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "candory.2",    0x1000, 0x4a496866, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "candory.3",    0x1000, 0x17da6ca3, 1 | BRF_ESS | BRF_PRG },	//  2
-	{ "candory.4",    0x1000, 0x9d39a565, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "candory.5",    0x1000, 0x54ca3d7d, 1 | BRF_ESS | BRF_PRG },	//  4
-	{ "candory.6",    0x1000, 0x3055c7e0, 1 | BRF_ESS | BRF_PRG },	//  5
-	{ "candory.7",    0x1000, 0x3cbe47ca, 1 | BRF_ESS | BRF_PRG },	//  6
-	{ "candory.8",    0x1000, 0x04b63fc6, 1 | BRF_ESS | BRF_PRG },	//  7
+	{ "ppokoj1.bin",    0x1000, 0xffa3c004, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "ppokoj2.bin",    0x1000, 0x4a496866, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "ppokoj3.bin",    0x1000, 0x17da6ca3, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "ppokoj4.bin",    0x1000, 0x9d39a565, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "ppoko5.bin",     0x1000, 0x54ca3d7d, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "ppoko6.bin",     0x1000, 0x3055c7e0, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "ppoko7.bin",     0x1000, 0x3cbe47ca, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "ppokoj8.bin",    0x1000, 0x04b63fc6, 1 | BRF_ESS | BRF_PRG },	//  7
 
 	{ "candory.v2",   0x1000, 0x7d16bdff, 2 | BRF_GRA },			//  8 Graphics
 	{ "candory.v1",   0x1000, 0xe08ac188, 2 | BRF_GRA },			//  9

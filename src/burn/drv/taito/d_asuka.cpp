@@ -2231,7 +2231,7 @@ static struct BurnRomInfo bonzeadvpRomDesc[] = {
 	{ "6089.ic17",			0x20000, 0xb092783c, BRF_SND | TAITO_YM2610A },				// 17 YM2610 Samples
 	{ "2e1f.ic14",			0x20000, 0xdf1f87c0, BRF_SND | TAITO_YM2610A },				// 18
 	{ "f66e.ic11",			0x20000, 0xc6df1b3e, BRF_SND | TAITO_YM2610A },				// 19
-	{ "49a7.ic7",			0x20000, 0x5584c02c, BRF_SND | TAITO_YM2610A },				// 20
+	{ "49d7.ic7",			0x20000, 0x5584c02c, BRF_SND | TAITO_YM2610A },				// 20
 };
 
 STD_ROM_PICK(bonzeadvp)

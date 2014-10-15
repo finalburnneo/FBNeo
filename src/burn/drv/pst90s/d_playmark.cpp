@@ -361,7 +361,7 @@ static struct BurnRomInfo BigtwinRomDesc[] = {
 	{ "2.302",            0x80000, 0xe6767f60, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "3.301",            0x80000, 0x5aba6990, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 	
-	{ "16c57hs.015",      0x02d4c, 0xc07e9375, BRF_ESS | BRF_PRG }, //  2	PIC16C57 HEX
+	{ "pic16c57-hs_bigtwin_015.hex", 0x02d4c, 0xc07e9375, BRF_ESS | BRF_PRG }, //  2	PIC16C57 HEX
 
 	{ "4.311",            0x40000, 0x6f628fbc, BRF_GRA },			//  3	Tiles
 	{ "5.312",            0x40000, 0x6a9b1752, BRF_GRA },			//  4	Tiles
@@ -387,7 +387,7 @@ static struct BurnRomInfo ExcelsrRomDesc[] = {
 	{ "20.u305",          0x80000, 0x8692afe9, BRF_ESS | BRF_PRG }, //  4	68000 Program Code
 	{ "17.u306",          0x80000, 0x978f9a6b, BRF_ESS | BRF_PRG }, //  5	68000 Program Code
 	
-	{ "pic16c57-hs.i015", 0x02d4c, 0x022c6941, BRF_ESS | BRF_PRG }, //  6	PIC16C57 HEX
+	{ "pic16c57-hs_excelsior_i015.hex", 0x02d4c, 0x022c6941, BRF_ESS | BRF_PRG }, //  6	PIC16C57 HEX
 
 	{ "26.u311",          0x80000, 0xc171c059, BRF_GRA },			//  7	Tiles
 	{ "30.u312",          0x80000, 0xb4a4c510, BRF_GRA },			//  8	Tiles
@@ -406,14 +406,14 @@ STD_ROM_PICK(Excelsr)
 STD_ROM_FN(Excelsr)
 
 static struct BurnRomInfo ExcelsraRomDesc[] = {
-	{ "22(__excelsra).u301",      0x80000, 0x55dca2da, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "19(__excelsra).u302",      0x80000, 0xd13990a8, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "22.u301",          0x80000, 0x55dca2da, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "19.u302",          0x80000, 0xd13990a8, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 	{ "21.u303",          0x80000, 0xfdf9bd64, BRF_ESS | BRF_PRG }, //  2	68000 Program Code
 	{ "18.u304",          0x80000, 0xfe517e0e, BRF_ESS | BRF_PRG }, //  3	68000 Program Code
 	{ "20.u305",          0x80000, 0x8692afe9, BRF_ESS | BRF_PRG }, //  4	68000 Program Code
 	{ "17.u306",          0x80000, 0x978f9a6b, BRF_ESS | BRF_PRG }, //  5	68000 Program Code
 	
-	{ "pic16c57-hs.i015", 0x02d4c, 0x022c6941, BRF_ESS | BRF_PRG }, //  6	PIC16C57 HEX
+	{ "pic16c57-hs_excelsior_i015.hex", 0x02d4c, 0x022c6941, BRF_ESS | BRF_PRG }, //  6	PIC16C57 HEX
 
 	{ "26.u311",          0x80000, 0xc171c059, BRF_GRA },			//  7	Tiles
 	{ "30.u312",          0x80000, 0xb4a4c510, BRF_GRA },			//  8	Tiles
@@ -432,22 +432,30 @@ STD_ROM_PICK(Excelsra)
 STD_ROM_FN(Excelsra)
 
 static struct BurnRomInfo HotmindRomDesc[] = {
-	{ "21.u87",           0x20000, 0xe9000f7f, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "22.u68",           0x20000, 0x2c518ec5, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "21.u67",           0x20000, 0xe9000f7f, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "22.u66",           0x20000, 0x2c518ec5, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 	
-	{ "pic16c57-hs.i015", 0x02d4c, 0x022c6941, BRF_ESS | BRF_PRG }, //  2	PIC16C57 HEX
+	{ "hotmind_pic16c57.hex", 0x02d4c, 0x11957803, BRF_ESS | BRF_PRG }, //  2	PIC16C57 HEX
 
 	{ "23.u36",           0x20000, 0xddcf60b9, BRF_GRA },			//  3	Tiles
 	{ "27.u42",           0x20000, 0x413bbcf4, BRF_GRA },			//  4	Tiles
 	{ "24.u39",           0x20000, 0x4baa5b4c, BRF_GRA },			//  5	Tiles
-	{ "28.u49",           0x20000, 0x8df34d6a, BRF_GRA },			//  6	Tiles
+	{ "28.u45",           0x20000, 0x8df34d6a, BRF_GRA },			//  6	Tiles
 	
-	{ "26.u34",           0x20000, 0xff8d3b75, BRF_GRA },			//  7	Sprites
+	{ "26.u86",           0x20000, 0xff8d3b75, BRF_GRA },			//  7	Sprites
 	{ "30.u85",           0x20000, 0x87a640c7, BRF_GRA },			//  8	Sprites
-	{ "25.u35",           0x20000, 0xc4fd4445, BRF_GRA },			//  9	Sprites
+	{ "25.u84",           0x20000, 0xc4fd4445, BRF_GRA },			//  9	Sprites
 	{ "29.u83",           0x20000, 0x0bebfb53, BRF_GRA },			//  10	Sprites
 	
 	{ "20.io13",          0x40000, 0x0bf3a3e5, BRF_SND },			//  11	Samples
+	
+	{ "hotmind_pic16c57-hs_io15.hex", 0x02d4c, 0xf3300d13, BRF_OPT },
+	{ "palce16v8h-25-pc4_u58.jed",    0x00b89, 0xba88c1da, BRF_OPT },
+	{ "palce16v8h-25-pc4_u182.jed",   0x00b89, 0xba88c1da, BRF_OPT },
+	{ "palce16v8h-25-pc4_jamma.jed",  0x00b89, 0xba88c1da, BRF_OPT },
+	{ "tibpal22v10acnt_u113.jed",     0x01e84, 0x94106c63, BRF_OPT },
+	{ "tibpal22v10acnt_u183.jed",     0x01e84, 0x95a446b6, BRF_OPT },
+	{ "tibpal22v10acnt_u211.jed",     0x01e84, 0x94106c63, BRF_OPT },
 };
 
 STD_ROM_PICK(Hotmind)

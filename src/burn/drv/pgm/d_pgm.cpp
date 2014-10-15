@@ -644,7 +644,7 @@ static struct BurnRomInfo orlegend111tRomDesc[] = {
 	{ "olv111tw.u6",		0x080000, 0xb205a733, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 	{ "olv111tw.u8",		0x080000, 0x6d9d29b4, 1 | BRF_PRG | BRF_ESS },	//  1
 	{ "olv111tw.u7",		0x080000, 0x27628e87, 1 | BRF_PRG | BRF_ESS },	//  2
-	{ "olv111tw.u11",		0x080000, 0x23f33bc9, 1 | BRF_PRG | BRF_ESS },	//  3
+	{ "olv111tw.u9",		0x080000, 0x23f33bc9, 1 | BRF_PRG | BRF_ESS },	//  3
 
 	{ "t0100.rom",			0x400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
 

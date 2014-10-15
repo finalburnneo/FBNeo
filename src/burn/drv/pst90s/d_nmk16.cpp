@@ -9054,8 +9054,8 @@ struct BurnDriver BurnDrvHachamf = {
 // Hacha Mecha Fighter (19th Sep. 1991, unprotected, bootleg Thunder Dragon conversion)
 
 static struct BurnRomInfo hachamfbRomDesc[] = {
-	{ "8",			0x020000, 0x14845B65, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "7",			0x020000, 0x069CA579, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "8.bin",		0x020000, 0x14845B65, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "7.bin",		0x020000, 0x069CA579, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "1.70",		0x010000, 0x9e6f48fc, 2 | BRF_PRG | BRF_ESS }, //  2 NMK004 data
 

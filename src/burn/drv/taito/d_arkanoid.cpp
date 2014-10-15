@@ -1427,8 +1427,8 @@ struct BurnDriver BurnDrvarkatour = {
 // Arkanoid (Japan)
 
 static struct BurnRomInfo arkanoidjRomDesc[] = {
-	{ "a75-24.ic17",  0x8000, 0x3f2b27e9, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "a75-25.ic16",  0x8000, 0xc13b2038, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "a75_24.ic17",  0x8000, 0x3f2b27e9, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "a75_25.ic16",  0x8000, 0xc13b2038, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "a75-26.ic14",  0x0800, 0x962960d4, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 

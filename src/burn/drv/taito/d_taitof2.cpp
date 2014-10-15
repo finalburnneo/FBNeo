@@ -4011,8 +4011,8 @@ STD_ROM_PICK(Euroch92)
 STD_ROM_FN(Euroch92)
 
 static struct BurnRomInfo GrowlRomDesc[] = {
-	{ "c74-10.ic59",        0x040000, 0xca81a20b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "c74-08.ic61",        0x040000, 0xaa35dd9e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c74-10-1.ic59",      0x040000, 0x8bf17a85, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c74-08-1.ic61",      0x040000, 0xbc70396f, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c74-11.ic58",        0x040000, 0xee3bd6d5, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c74-14.ic60",        0x040000, 0xb6c24ec7, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	
@@ -4029,6 +4029,26 @@ static struct BurnRomInfo GrowlRomDesc[] = {
 
 STD_ROM_PICK(Growl)
 STD_ROM_FN(Growl)
+
+static struct BurnRomInfo GrowlaRomDesc[] = {
+	{ "c74-10.ic59",        0x040000, 0xca81a20b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c74-08.ic61",        0x040000, 0xaa35dd9e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c74-11.ic58",        0x040000, 0xee3bd6d5, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "c74-14.ic60",        0x040000, 0xb6c24ec7, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	
+	{ "c74-12.ic62",        0x010000, 0xbb6ed668, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	
+	{ "c74-01.ic34",        0x100000, 0x3434ce80, BRF_GRA | TAITO_CHARS },
+	
+	{ "c74-03.ic12",        0x100000, 0x1a0d8951, BRF_GRA | TAITO_SPRITESA },
+	{ "c74-02.ic11",        0x100000, 0x15a21506, BRF_GRA | TAITO_SPRITESA },
+	
+	{ "c74-04.ic28",        0x100000, 0x2d97edf2, BRF_SND | TAITO_YM2610A },
+	{ "c74-05.ic29",        0x080000, 0xe29c0828, BRF_SND | TAITO_YM2610B },
+};
+
+STD_ROM_PICK(Growla)
+STD_ROM_FN(Growla)
 
 static struct BurnRomInfo GrowluRomDesc[] = {
 	{ "c74-10.ic59",        0x040000, 0xca81a20b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -10899,10 +10919,20 @@ struct BurnDriver BurnDrvEuroch92 = {
 
 struct BurnDriver BurnDrvGrowl = {
 	"growl", NULL, NULL, NULL, "1990",
-	"Growl (World)\0", NULL, "Taito Corporation Japan", "Taito-F2",
+	"Growl (World, Rev 1)\0", NULL, "Taito Corporation Japan", "Taito-F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, GrowlRomInfo, GrowlRomName, NULL, NULL, GrowlInputInfo, GrowlDIPInfo,
+	GrowlInit, TaitoF2Exit, TaitoF2Frame, NULL, TaitoF2Scan,
+	NULL, 0x2000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvGrowla = {
+	"growla", "growl", NULL, NULL, "1990",
+	"Growl (World)\0", NULL, "Taito America Japan", "Taito-F2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
+	NULL, GrowlaRomInfo, GrowlaRomName, NULL, NULL, GrowlInputInfo, GrowluDIPInfo,
 	GrowlInit, TaitoF2Exit, TaitoF2Frame, NULL, TaitoF2Scan,
 	NULL, 0x2000, 320, 224, 4, 3
 };

@@ -1720,24 +1720,26 @@ STD_ROM_PICK(Rbislande)
 STD_ROM_FN(Rbislande)
 
 static struct BurnRomInfo JumpingRomDesc[] = {
-	{ "jb1_h4",        0x10000, 0x3fab6b31, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "jb1_h8",        0x10000, 0x8c878827, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "jb1_i4",        0x10000, 0x443492cf, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "jb1_i8",        0x10000, 0xed33bae1, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "b22-03.23",     0x20000, 0x3ebb0fb8, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "b22-04.24",     0x20000, 0x91625e7f, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "jb1_f89",       0x10000, 0x0810d327, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP_JUMPING },
+	{ "6.h4",          0x10000, 0x3fab6b31, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "10.h8",         0x10000, 0x8c878827, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "5.i4",          0x10000, 0x443492cf, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "9.i8",          0x10000, 0xed33bae1, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "4.bin",         0x10000, 0x00bf8a91, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "8.bin",         0x10000, 0xe3d7a844, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "3.bin",         0x10000, 0xa3ab61c6, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "7.bin",         0x10000, 0xc1c4c701, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "2.f89",         0x10000, 0x0810d327, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP_JUMPING },
 
 	{ "jb1_cd67",      0x10000, 0x8527c00e, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 
-	{ "jb2_ic8",       0x10000, 0x65b76309, BRF_GRA | TAITO_CHARS },
-	{ "jb2_ic7",       0x10000, 0x43a94283, BRF_GRA | TAITO_CHARS },
-	{ "jb2_ic10",      0x10000, 0xe61933fb, BRF_GRA | TAITO_CHARS },
-	{ "jb2_ic9",       0x10000, 0xed031eb2, BRF_GRA | TAITO_CHARS },
-	{ "jb2_ic12",      0x10000, 0x312700ca, BRF_GRA | TAITO_CHARS },
-	{ "jb2_ic11",      0x10000, 0xde3b0b88, BRF_GRA | TAITO_CHARS },
-	{ "jb2_ic14",      0x10000, 0x9fdc6c8e, BRF_GRA | TAITO_CHARS },
-	{ "jb2_ic13",      0x10000, 0x06226492, BRF_GRA | TAITO_CHARS },
+	{ "17.ic8",        0x10000, 0x65b76309, BRF_GRA | TAITO_CHARS },
+	{ "18.ic7",        0x10000, 0x43a94283, BRF_GRA | TAITO_CHARS },
+	{ "15.ic10",       0x10000, 0xe61933fb, BRF_GRA | TAITO_CHARS },
+	{ "16.ic9",        0x10000, 0xed031eb2, BRF_GRA | TAITO_CHARS },
+	{ "13.ic12",       0x10000, 0x312700ca, BRF_GRA | TAITO_CHARS },
+	{ "14.ic11",       0x10000, 0xde3b0b88, BRF_GRA | TAITO_CHARS },
+	{ "11.ic14",       0x10000, 0x9fdc6c8e, BRF_GRA | TAITO_CHARS },
+	{ "12.ic13",       0x10000, 0x06226492, BRF_GRA | TAITO_CHARS },
 
 	{ "jb2_ic62",      0x10000, 0x8548db6c, BRF_GRA | TAITO_SPRITESA },
 	{ "jb2_ic61",      0x10000, 0x37c5923b, BRF_GRA | TAITO_SPRITESA },
@@ -1751,10 +1753,55 @@ static struct BurnRomInfo JumpingRomDesc[] = {
 	{ "jb2_i121",      0x10000, 0x93df1e4d, BRF_GRA | TAITO_SPRITESA },
 	{ "jb2_i120",      0x10000, 0x7c4e893b, BRF_GRA | TAITO_SPRITESA },
 	{ "jb2_i119",      0x08000, 0x7e1d58d8, BRF_GRA | TAITO_SPRITESA },
+	
+	{ "jumping-pal16r6.bin", 0x00104, 0x12e9a7b8, BRF_OPT },
+	{ "jumping-pal20l8.bin", 0x00144, 0x76944f81, BRF_OPT },
 };
 
 STD_ROM_PICK(Jumping)
 STD_ROM_FN(Jumping)
+
+static struct BurnRomInfo JumpingaRomDesc[] = {
+	{ "6.h4",          0x10000, 0x3fab6b31, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "10.h8",         0x10000, 0x8c878827, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "seyutu_5.i4",   0x10000, 0x25f19b71, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "seyutu_9.i8",   0x10000, 0x9c94f260, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "4.bin",         0x10000, 0x00bf8a91, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "8.bin",         0x10000, 0xe3d7a844, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "3.bin",         0x10000, 0xa3ab61c6, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "7.bin",         0x10000, 0xc1c4c701, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "2.f89",         0x10000, 0x0810d327, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP_JUMPING },
+
+	{ "jb1_cd67",      0x10000, 0x8527c00e, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+
+	{ "17.ic8",        0x10000, 0x65b76309, BRF_GRA | TAITO_CHARS },
+	{ "18.ic7",        0x10000, 0x43a94283, BRF_GRA | TAITO_CHARS },
+	{ "15.ic10",       0x10000, 0xe61933fb, BRF_GRA | TAITO_CHARS },
+	{ "16.ic9",        0x10000, 0xed031eb2, BRF_GRA | TAITO_CHARS },
+	{ "13.ic12",       0x10000, 0x312700ca, BRF_GRA | TAITO_CHARS },
+	{ "14.ic11",       0x10000, 0xde3b0b88, BRF_GRA | TAITO_CHARS },
+	{ "11.ic14",       0x10000, 0x9fdc6c8e, BRF_GRA | TAITO_CHARS },
+	{ "12.ic13",       0x10000, 0x06226492, BRF_GRA | TAITO_CHARS },
+
+	{ "jb2_ic62",      0x10000, 0x8548db6c, BRF_GRA | TAITO_SPRITESA },
+	{ "jb2_ic61",      0x10000, 0x37c5923b, BRF_GRA | TAITO_SPRITESA },
+	{ "jb2_ic60",      0x08000, 0x662a2f1e, BRF_GRA | TAITO_SPRITESA },
+	{ "jb2_ic78",      0x10000, 0x925865e1, BRF_GRA | TAITO_SPRITESA },
+	{ "jb2_ic77",      0x10000, 0xb09695d1, BRF_GRA | TAITO_SPRITESA },
+	{ "jb2_ic76",      0x08000, 0x41937743, BRF_GRA | TAITO_SPRITESA },
+	{ "jb2_ic93",      0x10000, 0xf644eeab, BRF_GRA | TAITO_SPRITESA },
+	{ "jb2_ic92",      0x10000, 0x3fbccd33, BRF_GRA | TAITO_SPRITESA },
+	{ "jb2_ic91",      0x08000, 0xd886c014, BRF_GRA | TAITO_SPRITESA },
+	{ "jb2_i121",      0x10000, 0x93df1e4d, BRF_GRA | TAITO_SPRITESA },
+	{ "jb2_i120",      0x10000, 0x7c4e893b, BRF_GRA | TAITO_SPRITESA },
+	{ "jb2_i119",      0x08000, 0x7e1d58d8, BRF_GRA | TAITO_SPRITESA },
+	
+	{ "jumping-pal16r6.bin", 0x00104, 0x12e9a7b8, BRF_OPT },
+	{ "jumping-pal20l8.bin", 0x00144, 0x76944f81, BRF_OPT },
+};
+
+STD_ROM_PICK(Jumpinga)
+STD_ROM_FN(Jumpinga)
 
 static struct BurnRomInfo RastanRomDesc[] = {
 	{ "b04-38.19",   0x10000, 0x1c91dbb1, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -5970,10 +6017,20 @@ struct BurnDriver BurnDrvRbislande = {
 
 struct BurnDriver BurnDrvJumping = {
 	"jumping", "rbisland", NULL, NULL, "1989",
-	"Jumping\0", NULL, "bootleg", "Taito Misc",
+	"Jumping (set 1)\0", NULL, "bootleg", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, JumpingRomInfo, JumpingRomName, NULL, NULL, JumpingInputInfo, JumpingDIPInfo,
+	JumpingInit, TaitoMiscExit, JumpingFrame, NULL, TaitoMiscScan,
+	NULL, 0x2000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvJumpinga = {
+	"jumpinga", "rbisland", NULL, NULL, "1989",
+	"Jumping (set 2)\0", NULL, "bootleg (Seyutu)", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, JumpingaRomInfo, JumpingaRomName, NULL, NULL, JumpingInputInfo, JumpingDIPInfo,
 	JumpingInit, TaitoMiscExit, JumpingFrame, NULL, TaitoMiscScan,
 	NULL, 0x2000, 320, 224, 4, 3
 };

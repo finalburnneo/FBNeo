@@ -4,8 +4,6 @@
 #define K056832_FLIPY	0x00002
 #define K056832_FLIPX	0x00001
 
-static void (*m_callback)(int layer, int *code, int *color, int *flags);
-
 static UINT16 k056832Regs[0x20];
 static UINT16 k056832Regsb[0x20];
 static UINT16 *K056832VideoRAM;
@@ -39,6 +37,8 @@ static INT32 m_rom_half;
 #define CLIP_MAXX	global_clip[1]
 #define CLIP_MINY	global_clip[2]
 #define CLIP_MAXY	global_clip[3]
+
+static void (*m_callback)(int layer, int *code, int *color, int *flags);
 
 void K056832Reset()
 {
@@ -216,10 +216,10 @@ static void k056832_update_page_layout()
 {
 	m_layer_association = m_default_layer_association;
 
-	INT32 m_y[4];
-	INT32 m_x[4];
-	INT32 m_h[4];
-	INT32 m_w[4];
+	INT32 m_y[4] = { 0, 0, 0, 0 };	// not sure why initializing these is necessary
+	INT32 m_x[4] = { 0, 0, 0, 0 };	// as they should be all set below, but it causes
+	INT32 m_h[4] = { 0, 0, 0, 0 };	// a hang in monster maulers otherswise. -iq
+	INT32 m_w[4] = { 0, 0, 0, 0 };
 
 	for (int layer = 0; layer < 4; layer++)
 	{
@@ -347,7 +347,6 @@ UINT8 K056832HalfRamReadByte(UINT32 offset)
 	UINT8 *ram = (UINT8*)(K056832VideoRAM + m_selected_page_x4096 + ((offset & 0xffe) + (((offset >> 12) ^ 1) & 1)));
 	return ram[(offset & 1) ^ 1];
 }
-
 
 void K056832RamWriteWord(UINT32 offset, UINT16 data)
 {

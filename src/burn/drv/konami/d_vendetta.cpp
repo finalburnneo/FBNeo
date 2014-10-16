@@ -515,7 +515,7 @@ static void EsckidsK052109Callback(INT32 layer, INT32 bank, INT32 *code, INT32 *
 	*color = layer_colorbase[layer] + ((*color & 0xe0) >>  5);
 }
 
-static void K053247Callback(INT32 *code, INT32 *color, INT32 *priority)
+static void VendettaK053247Callback(INT32 *code, INT32 *color, INT32 *priority)
 {
 	INT32 pri = (*color & 0x03e0) >> 4;
 	if (pri <= layerpri[2])					*priority = 0;
@@ -689,7 +689,7 @@ static INT32 DrvInit(INT32 nGame)
 		K052109SetCallback(K052109Callback);
 		K052109AdjustScroll(0, 0);
 
-		K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, K053247Callback, 1);
+		K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, VendettaK053247Callback, 1);
 		K053247SetSpriteOffset(-53, -22);
 
 		bankoffset = 0;

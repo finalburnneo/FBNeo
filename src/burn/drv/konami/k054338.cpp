@@ -5,17 +5,19 @@
 #include "konamiic.h"
 
 static UINT16 k54338_regs[32];
+static INT32 m_shd_rgb[9];
 
-static int k054338_alphainverted;
+static INT32 k054338_alphainverted;
 
 void K054338Reset()
 {
 	memset(k54338_regs, 0, sizeof(UINT16)*32);
+	memset (m_shd_rgb, 0, sizeof(INT32)*9);
 }
 
 void K054338Exit()
 {
-	
+
 }
 
 void K054338Scan(INT32 nAction)
@@ -29,6 +31,8 @@ void K054338Scan(INT32 nAction)
 		ba.szName = "K054338 Regs";
 		BurnAcb(&ba);
 	}
+
+//	SCAN_VARS(m_shd_rgb);
 }
 
 void K054338Init()
@@ -58,6 +62,24 @@ INT32 K054338_read_register(int reg)
 	return k54338_regs[reg];
 }
 
+void K054338_update_all_shadows()
+{
+	int i, d;
+
+	for (i = 0; i < 9; i++)
+	{
+		d = k54338_regs[K338_REG_SHAD1R + i] & 0x1ff;
+		if (d >= 0x100)
+			d -= 0x200;
+		m_shd_rgb[i] = d;
+	}
+}
+
+void K054338_export_config(int **shd_rgb)
+{
+	*shd_rgb = m_shd_rgb;
+}
+
 // k054338 BG color fill
 void K054338_fill_solid_bg()
 {
@@ -79,7 +101,7 @@ void K054338_fill_solid_bg()
 }
 
 // Unified k054338/K055555 BG color fill
-void K054338_fill_backcolor(int mode) // (see p.67)
+void K054338_fill_backcolor(int palette_offset, int mode) // (see p.67)
 {
 	int clipx, clipy, clipw, cliph, i, dst_pitch;
 	int BGC_CBLK, BGC_SET;
@@ -91,7 +113,7 @@ void K054338_fill_backcolor(int mode) // (see p.67)
 	clipw = ((nScreenWidth - 1) + 4) & ~3;
 	cliph = (nScreenHeight-1) + 1;
 
-	dst_ptr = konami_bitmap32 + 0;
+	dst_ptr = konami_bitmap32 + palette_offset;
 	dst_pitch = nScreenWidth;
 	dst_ptr += 0;
 

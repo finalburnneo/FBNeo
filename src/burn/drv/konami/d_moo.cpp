@@ -481,8 +481,10 @@ static void __fastcall bucky_main_write_word(UINT32 address, UINT16 data)
 		moo_prot_write(address);
 		return;
 	}
+
 	if ((address & 0xffff00) == 0x0d2000) {
 		K054000Write((address/2)&0xff, data);
+		return;
 	}
 
 	if ((address & 0xfffff8) == 0x0d8000) {
@@ -528,6 +530,7 @@ static void __fastcall bucky_main_write_byte(UINT32 address, UINT8 data)
 
 	if ((address & 0xffff00) == 0x0d2000) {
 		K054000Write((address/2)&0xff, data);
+		return;
 	}
 
 	if ((address & 0xfffff8) == 0x0d8000) {

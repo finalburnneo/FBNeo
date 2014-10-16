@@ -39,16 +39,7 @@ void K055555LongWrite(INT32 offset, UINT32 data)
 
 void K055555WordWrite(INT32 offset, UINT16 data)
 {
-	offset = (offset / 2) & 0x7f;
-
-	if ((offset & 1) == 0)
-	{
-		K055555WriteReg(offset/2, data&0xff);
-	}
-	else
-	{
-		K055555WriteReg(offset/2, data>>8);
-	}
+	K055555WriteReg((offset / 2) & 0x7f, data&0xff);
 }
 
 void K055555ByteWrite(INT32 offset, UINT8 data)

@@ -5813,7 +5813,7 @@ static INT32 SsridersFrame()
 	SsridersMakeInputs();
 
 	nCyclesTotal[0] = 16000000 / 60;
-	nCyclesTotal[1] = 8000000 / 60;
+	nCyclesTotal[1] = 4000000 / 60;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 
 	SekNewFrame();
@@ -5829,8 +5829,8 @@ static INT32 SsridersFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 		if (i == 19) DrvVBlank = 0;
-		if (i == 235) DrvVBlank = 1;
-		if (i == 235 && K052109_irq_enabled) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		if (i == 243) DrvVBlank = 1;
+		if (i == 243 && K052109_irq_enabled) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
 		SekClose();
 		
 		// Run Z80

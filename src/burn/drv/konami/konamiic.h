@@ -160,6 +160,7 @@ if (a >= nStartAddress && a <= nStartAddress + 0x7fff) {			\
 #define K056832_LAYER_ALPHA			0x00100000
 #define K056832_LAYER_OPAQUE			0x00400000
 #define K056832_DRAW_FLAG_MIRROR     		0x00800000
+#define K056382_DRAW_FLAG_FORCE_XYSCROLL	0x00800000 // same as flag mirror
 
 #define K056832_SET_ALPHA(x)			(K056832_LAYER_ALPHA | ((x)<<8))
 
@@ -270,6 +271,7 @@ void K053247Scan(INT32 nAction);
 void K053247SetBpp(INT32 bpp);
 
 extern UINT8 *K053247Ram;
+extern void (*K053247Callback)(INT32 *code, INT32 *color, INT32 *priority);
 
 void K053247Export(UINT8 **ram, UINT8 **gfx, void (**callback)(INT32 *, INT32 *, INT32 *), INT32 *dx, INT32 *dy);
 void K053247GfxDecode(UINT8 *src, UINT8 *dst, INT32 len); // 16x16
@@ -286,8 +288,13 @@ void K053246Write(INT32 offset, INT32 data);
 
 void K053247WriteRegsByte(INT32 offset, UINT8 data);
 void K053247WriteRegsWord(INT32 offset, UINT16 data);
+UINT16 K053247ReadRegs(INT32 offset);
+UINT16 K053246ReadRegs(INT32 offset);
 
 void K053247SpritesRender();
+
+UINT16 K053247ReadWord(INT32 offset);
+void K053247WriteWord(INT32 offset, UINT16 data);
 
 // k054000.cpp
 //------------------------------------------------------------------------------------------
@@ -318,6 +325,21 @@ void K053936PredrawTiles2(INT32 chip, UINT8 *gfx);
 void K053936PredrawTiles(INT32 chip, UINT8 *gfx, INT32 transparent, INT32 tcol /*transparent color*/);
 void K053936Draw(INT32 chip, UINT16 *ctrl, UINT16 *linectrl, INT32 transp);
 
+extern UINT16 *m_k053936_0_ctrl_16;
+extern UINT16 *m_k053936_0_linectrl_16;
+extern UINT16 *m_k053936_0_ctrl;
+extern UINT16 *m_k053936_0_linectrl;
+extern UINT16 *K053936_external_bitmap;
+
+void K053936GP_set_colorbase(INT32 chip, INT32 color_base);
+void K053936GP_enable(int chip, int enable);
+void K053936GP_set_offset(int chip, int xoffs, int yoffs);
+void K053936GP_clip_enable(int chip, int status);
+void K053936GP_set_cliprect(int chip, int minx, int maxx, int miny, int maxy);
+void K053936GP_0_zoom_draw(UINT16 *bitmap, int tilebpp, int blend, int alpha, int pixeldouble_output, UINT16* temp_m_k053936_0_ctrl_16, UINT16* temp_m_k053936_0_linectrl_16,UINT16* temp_m_k053936_0_ctrl, UINT16* temp_m_k053936_0_linectrl);
+void K053936GpInit();
+void K053936GPExit();
+
 // k053250.cpp
 //------------------------------------------------------------------------------------------
 
@@ -336,7 +358,7 @@ void K053250RegWrite(INT32 chip, INT32 offset, UINT8 data);
 UINT16 K053250RomRead(INT32 chip, INT32 offset);
 
 
-// k054388.cpp
+// k054338.cpp
 //------------------------------------------------------------------------------------------
 
 #define K338_REG_BGC_R      0
@@ -361,9 +383,12 @@ void K054338WriteWord(INT32 offset, UINT16 data);
 void K054338WriteByte(INT32 offset, UINT8 data);
 INT32 K054338_read_register(int reg);
 void K054338_fill_solid_bg();
-void K054338_fill_backcolor(int mode);
+void K054338_fill_backcolor(int palette_offset, int mode);
 INT32 K054338_set_alpha_level(int pblend);
 void K054338_invert_alpha(int invert);
+void K054338_update_all_shadows();
+void K054338_export_config(int **shdRGB);
+
 
 // k055555.cpp
 //------------------------------------------------------------------------------------------
@@ -431,6 +456,12 @@ void K054338_invert_alpha(int invert);
 #define K55_INP_SUB2        0x40
 #define K55_INP_SUB3        0x80
 
+#define K055555_COLORMASK   0x0000ffff
+#define K055555_MIXSHIFT    16
+#define K055555_BRTSHIFT    18
+#define K055555_SKIPSHADOW  0x40000000
+#define K055555_FULLSHADOW  0x80000000
+
 extern INT32 K055555_enabled;
 void K055555WriteReg(UINT8 regnum, UINT8 regdat);
 void K055555LongWrite(INT32 offset, UINT32 data); // not implimented
@@ -442,3 +473,24 @@ void K055555Reset();
 void K055555Init();
 void K055555Exit();
 void K055555Scan(INT32 nAction);
+
+
+// konamigx.cpp
+#define GXMIX_BLEND_AUTO    0           // emulate all blend effects
+#define GXMIX_BLEND_NONE    1           // disable all blend effects
+#define GXMIX_BLEND_FAST    2           // simulate translucency
+#define GXMIX_BLEND_FORCE   3           // force mix code on selected layer(s)
+#define GXMIX_NOLINESCROLL  0x1000      // disable linescroll on selected layer(s)
+#define GXMIX_NOSHADOW      0x10000000  // disable all shadows (shadow pens will be skipped)
+#define GXMIX_NOZBUF        0x20000000  // disable z-buffering (shadow pens will be drawn as solid)
+
+// Sub Layer Flags
+#define GXSUB_K053250   0x10    // chip type: 0=K053936 ROZ+, 1=K053250 LVC
+#define GXSUB_4BPP      0x04    //  16 colors
+#define GXSUB_5BPP      0x05    //  32 colors
+#define GXSUB_8BPP      0x08    // 256 colors
+
+void konamigx_mixer_init(int objdma);
+void konamigx_mixer_exit();
+void konamigx_mixer_primode(int mode);
+void konamigx_mixer(int sub1 /*extra tilemap 1*/, int sub1flags, int sub2 /*extra tilemap 2*/, int sub2flags, int mixerflags, int extra_bitmap /*extra tilemap 3*/, int rushingheroes_hack);

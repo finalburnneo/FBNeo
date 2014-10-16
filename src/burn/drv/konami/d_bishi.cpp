@@ -656,7 +656,7 @@ static struct BurnRomInfo bishiRomDesc[] = {
 	{ "575jaa07.14n",	0x80000, 0x37bbf387, 2 | BRF_GRA },           //  2 K056832 Characters
 	{ "575jaa08.17n",	0x80000, 0x47ecd559, 2 | BRF_GRA },           //  3
 	{ "575jaa09.19n",	0x80000, 0xc1db6e68, 2 | BRF_GRA },           //  4
-	{ "575jaa10.22n",	0x80000, 0xc8b145d6, 2 | BRF_GRA },           //  5
+	{ "575jaa10.22n",	0x80000, 0xc8b145d6, 2 | BRF_GRA | BRF_NODUMP },           //  5
 
 	{ "575jaa01.2f",	0x80000, 0xe1e9f7b2, 3 | BRF_SND },           //  6 YMZ280b Samples
 	{ "575jaa02.4f",	0x80000, 0xd228eb06, 3 | BRF_SND },           //  7

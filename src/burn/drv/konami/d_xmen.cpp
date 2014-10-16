@@ -300,7 +300,7 @@ static void K052109Callback(INT32 layer, INT32 , INT32 *, INT32 *color, INT32 *,
 		*color = layer_colorbase[layer] + ((*color & 0x7c) >> 2);
 }
 
-static void K053247Callback(INT32 *code, INT32 *color, INT32 *priority_mask)
+static void XmenK053247Callback(INT32 *code, INT32 *color, INT32 *priority_mask)
 {
 	INT32 pri = (*color & 0x00e0) >> 4;
 	if (pri <= layerpri[2])					*priority_mask = 0x00;
@@ -469,7 +469,7 @@ static INT32 DrvInit()
 	K052109SetCallback(K052109Callback);
 	K052109AdjustScroll(8, 0);
 
-	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, K053247Callback, 1);
+	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, XmenK053247Callback, 1);
 	K053247SetSpriteOffset(510, -158);
 
 	BurnYM2151Init(4000000);

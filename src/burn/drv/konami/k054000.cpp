@@ -10,7 +10,9 @@ void K054000Reset()
 
 void K054000Write(INT32 offset, INT32 data)
 {
-	K054000Ram[offset & 0x1f] = data;
+	if (offset >= 0x20) return; //?
+
+	K054000Ram[offset] = data;
 }
 
 UINT8 K054000Read(INT32 offset)

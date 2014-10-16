@@ -930,7 +930,8 @@ static struct BurnRomInfo topsecrtRomDesc[] = {
 
 	{ "63s141.18f",		0x00100, 0xb58d0023, 0 | BRF_OPT },		// 24 Priority (not used)
 	
-	{ "c8751h-88",          0x01000, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+//	{ "c8751h-88",          0x01000, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "d8751h.bin",         0x01000, 0x3ed7f0be, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(topsecrt)

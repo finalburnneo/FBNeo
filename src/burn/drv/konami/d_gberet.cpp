@@ -387,12 +387,14 @@ void __fastcall gberet_write(UINT16 address, UINT8 data)
 		}
 		return;
 		case 0xf200:
-			SN76496Write(0, soundlatch);
+			soundlatch = data;
 		return;
 		case 0xf400:
-			soundlatch = data;
-			if (game_type == 1) // gberetb
+			if (game_type == 1) {// gberetb
 				SN76496Write(0, data);
+			} else { // gberet
+				SN76496Write(0, soundlatch);
+			}
 		return;
 		case 0xf600:	// watchdog
 		return;

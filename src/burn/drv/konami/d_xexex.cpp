@@ -878,7 +878,7 @@ static struct BurnRomInfo xexexaRomDesc[] = {
 	{ "067b06.3e",		0x200000, 0x3b12fce4, 6 | BRF_SND },           // 12 K054539 Samples
 	{ "067b07.1e",		0x100000, 0xec87fe1b, 6 | BRF_SND },           // 13
 
-	{ "er5911(__xexexa).19b",	0x000080, 0x051c14c6, 7 | BRF_PRG | BRF_ESS }, // 14 eeprom data
+	{ "er5911.19b",	0x000080, 0x051c14c6, 7 | BRF_PRG | BRF_ESS }, // 14 eeprom data
 };
 
 STD_ROM_PICK(xexexa)
@@ -918,7 +918,7 @@ static struct BurnRomInfo xexexjRomDesc[] = {
 	{ "067b06.3e",		0x200000, 0x3b12fce4, 6 | BRF_SND },           // 12 K054539 Samples
 	{ "067b07.1e",		0x100000, 0xec87fe1b, 6 | BRF_SND },           // 13
 
-	{ "er5911(__xexexj).19b",	0x000080, 0x79a79c7b, 7 | BRF_PRG | BRF_ESS }, // 14 eeprom data
+	{ "er5911.19b",	0x000080, 0x79a79c7b, 7 | BRF_PRG | BRF_ESS }, // 14 eeprom data
 };
 
 STD_ROM_PICK(xexexj)

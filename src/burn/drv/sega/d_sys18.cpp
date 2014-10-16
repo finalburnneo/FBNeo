@@ -1501,11 +1501,11 @@ static struct BurnRomInfo ShdancblRomDesc[] = {
 	
 	{ "ic77",           0x10000, 0xf93470b7, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "ic62",           0x10000, 0x50ca8065, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "sdbl.78",        0x10000, 0xe533be5d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "ic78",           0x10000, 0xe533be5d, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "ic63",           0x10000, 0xd1866aa9, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "ic95",           0x10000, 0x828b8294, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "ic90",           0x10000, 0x3602b758, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "sdbl.94",        0x10000, 0xe2fa2b41, SYS16_ROM_SPRITES | BRF_GRA },	
+	{ "ic94",           0x10000, 0xe2fa2b41, SYS16_ROM_SPRITES | BRF_GRA },	
 	{ "ic89",           0x10000, 0x1ba4be93, SYS16_ROM_SPRITES | BRF_GRA },
 	
 	{ "ic79",           0x10000, 0xf22548ee, SYS16_ROM_SPRITES | BRF_GRA },

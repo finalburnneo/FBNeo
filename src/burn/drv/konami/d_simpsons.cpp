@@ -887,7 +887,7 @@ static struct BurnRomInfo simpsons2p3RomDesc[] = {
 	{ "4.13c",          0x020000, 0xc3040e4f, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "3.15c",          0x020000, 0xeb4f5781, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "072-e03.6g",        0x020000, 0x866b7a35, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "072-g03.6g",        0x020000, 0x76c1850c, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
 	{ "072-b07.18h",    0x080000, 0xba1ec910, 3 | BRF_GRA },           //  5 K052109 Tiles
 	{ "072-b06.16h",    0x080000, 0xcf2bbcab, 3 | BRF_GRA },           //  6

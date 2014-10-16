@@ -1504,16 +1504,23 @@ static struct BurnRomInfo spnchoutRomDesc[] = {
 	{ "chp1-v.8p",		0x2000, 0x4cb7ea82, 6 | BRF_GRA },           // 23
 	{ "chp1-v.8n",		0x2000, 0x1c0d09aa, 6 | BRF_GRA },           // 24
 
-	{ "chs1-b.6e",		0x0200, 0x0ad4d727, 7 | BRF_GRA },           // 25 Color PROMs
-	{ "chs1-b.6f",		0x0200, 0x86f5cfdb, 7 | BRF_GRA },           // 26
-	{ "chs1-b.7f",		0x0200, 0x8bd406f8, 7 | BRF_GRA },           // 27
-	{ "chs1-b.7e",		0x0200, 0x9e170f64, 7 | BRF_GRA },           // 28
-	{ "chs1-b.8e",		0x0200, 0x3a2e333b, 7 | BRF_GRA },           // 29
-	{ "chs1-b.8f",		0x0200, 0x1663eed7, 7 | BRF_GRA },           // 30
+	{ "chs1-b-6e_pink.6e",	0x0200, 0x0ad4d727, 7 | BRF_GRA },           // 25 Color PROMs
+	{ "chs1-b-6f_pink.6f",	0x0200, 0x86f5cfdb, 7 | BRF_GRA },           // 26
+	{ "chs1-b-7f_pink.7f",	0x0200, 0x8bd406f8, 7 | BRF_GRA },           // 27
+	{ "chs1-b-7e_white.7e",	0x0200, 0x9e170f64, 7 | BRF_GRA },           // 28
+	{ "chs1-b-8e_white.8e",	0x0200, 0x3a2e333b, 7 | BRF_GRA },           // 29
+	{ "chs1-b-8f_white.8f",	0x0200, 0x1663eed7, 7 | BRF_GRA },           // 30
 
 	{ "chs1-v.2d",		0x0100, 0x71dc0d48, 0 | BRF_GRA | BRF_OPT }, // 31 Timing PROM
 
 	{ "chs1-c.6p",		0x4000, 0xad8b64b8, 8 | BRF_SND },           // 32 VLM5030 Samples
+	
+	{ "chs1-b-6e_white.6e",	0x0200, 0x8efd867f, 0 | BRF_OPT },           //
+	{ "chs1-b-6f_white.6f",	0x0200, 0x279d6cbc, 0 | BRF_OPT },           //
+	{ "chs1-b-7f_white.7f",	0x0200, 0xcad6b7ad, 0 | BRF_OPT },           //
+	{ "chs1-b-7e_pink.7e",	0x0200, 0x4c7e3a67, 0 | BRF_OPT },           //
+	{ "chs1-b-8e_pink.8e",	0x0200, 0xec659313, 0 | BRF_OPT },           //
+	{ "chs1-b-8f_pink.8f",	0x0200, 0x8b493c09, 0 | BRF_OPT },           //
 };
 
 STD_ROM_PICK(spnchout)
@@ -1564,16 +1571,23 @@ static struct BurnRomInfo spnchoutjRomDesc[] = {
 	{ "chp1-v.8p",		0x2000, 0x4cb7ea82, 6 | BRF_GRA },           // 23
 	{ "chp1-v.8n",		0x2000, 0x1c0d09aa, 6 | BRF_GRA },           // 24
 
-	{ "chs1b_6e.bpr",	0x0200, 0x8efd867f, 7 | BRF_GRA },           // 25 Color PROMs
-	{ "chs1b_6f.bpr",	0x0200, 0x279d6cbc, 7 | BRF_GRA },           // 26
-	{ "chs1b_7f.bpr",	0x0200, 0xcad6b7ad, 7 | BRF_GRA },           // 27
-	{ "chs1-b.7e",		0x0200, 0x9e170f64, 7 | BRF_GRA },           // 28
-	{ "chs1-b.8e",		0x0200, 0x3a2e333b, 7 | BRF_GRA },           // 29
-	{ "chs1-b.8f",		0x0200, 0x1663eed7, 7 | BRF_GRA },           // 30
+	{ "chs1-b-6e_pink.6e",	0x0200, 0x0ad4d727, 7 | BRF_GRA },           // 25 Color PROMs
+	{ "chs1-b-6f_pink.6f",	0x0200, 0x86f5cfdb, 7 | BRF_GRA },           // 26
+	{ "chs1-b-7f_pink.7f",	0x0200, 0x8bd406f8, 7 | BRF_GRA },           // 27
+	{ "chs1-b-7e_white.7e",	0x0200, 0x9e170f64, 7 | BRF_GRA },           // 28
+	{ "chs1-b-8e_white.8e",	0x0200, 0x3a2e333b, 7 | BRF_GRA },           // 29
+	{ "chs1-b-8f_white.8f",	0x0200, 0x1663eed7, 7 | BRF_GRA },           // 30
 
 	{ "chs1-v.2d",		0x0100, 0x71dc0d48, 0 | BRF_OPT },           // 31 Timing PROM
 
 	{ "chs1c6pa.bin",	0x4000, 0xd05fb730, 8 | BRF_SND },           // 32 VLM5030 Samples
+	
+	{ "chs1-b-6e_white.6e",	0x0200, 0x8efd867f, 0 | BRF_OPT },           //
+	{ "chs1-b-6f_white.6f",	0x0200, 0x279d6cbc, 0 | BRF_OPT },           //
+	{ "chs1-b-7f_white.7f",	0x0200, 0xcad6b7ad, 0 | BRF_OPT },           //
+	{ "chs1-b-7e_pink.7e",	0x0200, 0x4c7e3a67, 0 | BRF_OPT },           //
+	{ "chs1-b-8e_pink.8e",	0x0200, 0xec659313, 0 | BRF_OPT },           //
+	{ "chs1-b-8f_pink.8f",	0x0200, 0x8b493c09, 0 | BRF_OPT },           //
 };
 
 STD_ROM_PICK(spnchoutj)

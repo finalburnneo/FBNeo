@@ -1346,86 +1346,9 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Street Fighter (World, pneumatic buttons)
-
-static struct BurnRomInfo sfRomDesc[] = {
-	{ "sfe-19",     0x10000, 0x8346c3ca, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "sfe-22",     0x10000, 0x3a4bfaa8, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "sfe-20",     0x10000, 0xb40e67ee, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "sfe-23",     0x10000, 0x477c3d5b, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "sfe-21",     0x10000, 0x2547192b, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "sfe-24",     0x10000, 0x79680f4e, 1 | BRF_PRG | BRF_ESS }, //  5
-
-	{ "sf-02.bin",  0x08000, 0x4a9ac534, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 #0 Code
-
-	{ "sfu-00",     0x20000, 0xa7cce903, 3 | BRF_PRG | BRF_ESS }, //  7 Z80 #1 Code
-	{ "sf-01.bin",  0x20000, 0x86e0f0d5, 3 | BRF_PRG | BRF_ESS }, //  8
-
-	{ "sf-39.bin",  0x20000, 0xcee3d292, 4 | BRF_GRA },           //  9 Background Tiles
-	{ "sf-38.bin",  0x20000, 0x2ea99676, 4 | BRF_GRA },           // 10
-	{ "sf-41.bin",  0x20000, 0xe0280495, 4 | BRF_GRA },           // 11
-	{ "sf-40.bin",  0x20000, 0xc70b30de, 4 | BRF_GRA },           // 12
-
-	{ "sf-25.bin",  0x20000, 0x7f23042e, 5 | BRF_GRA },           // 13 More tiles?
-	{ "sf-28.bin",  0x20000, 0x92f8b91c, 5 | BRF_GRA },           // 14
-	{ "sf-30.bin",  0x20000, 0xb1399856, 5 | BRF_GRA },           // 15
-	{ "sf-34.bin",  0x20000, 0x96b6ae2e, 5 | BRF_GRA },           // 16
-	{ "sf-26.bin",  0x20000, 0x54ede9f5, 5 | BRF_GRA },           // 17
-	{ "sf-29.bin",  0x20000, 0xf0649a67, 5 | BRF_GRA },           // 18
-	{ "sf-31.bin",  0x20000, 0x8f4dd71a, 5 | BRF_GRA },           // 19
-	{ "sf-35.bin",  0x20000, 0x70c00fb4, 5 | BRF_GRA },           // 20
-
-	{ "sf-15.bin",  0x20000, 0xfc0113db, 6 | BRF_GRA },           // 21 Sprites
-	{ "sf-16.bin",  0x20000, 0x82e4a6d3, 6 | BRF_GRA },           // 22
-	{ "sf-11.bin",  0x20000, 0xe112df1b, 6 | BRF_GRA },           // 23
-	{ "sf-12.bin",  0x20000, 0x42d52299, 6 | BRF_GRA },           // 24
-	{ "sf-07.bin",  0x20000, 0x49f340d9, 6 | BRF_GRA },           // 25
-	{ "sf-08.bin",  0x20000, 0x95ece9b1, 6 | BRF_GRA },           // 26
-	{ "sf-03.bin",  0x20000, 0x5ca05781, 6 | BRF_GRA },           // 27
-	{ "sf-17.bin",  0x20000, 0x69fac48e, 6 | BRF_GRA },           // 28
-	{ "sf-18.bin",  0x20000, 0x71cfd18d, 6 | BRF_GRA },           // 29
-	{ "sf-13.bin",  0x20000, 0xfa2eb24b, 6 | BRF_GRA },           // 30
-	{ "sf-14.bin",  0x20000, 0xad955c95, 6 | BRF_GRA },           // 31
-	{ "sf-09.bin",  0x20000, 0x41b73a31, 6 | BRF_GRA },           // 32
-	{ "sf-10.bin",  0x20000, 0x91c41c50, 6 | BRF_GRA },           // 33
-	{ "sf-05.bin",  0x20000, 0x538c7cbe, 6 | BRF_GRA },           // 34
-
-	{ "sf-27.bin",  0x04000, 0x2b09b36d, 7 | BRF_GRA },           // 35 Characters
-
-	{ "sf-37.bin",  0x10000, 0x23d09d3d, 8 | BRF_GRA },           // 36 Tilemaps
-	{ "sf-36.bin",  0x10000, 0xea16df6c, 8 | BRF_GRA },           // 37
-	{ "sf-32.bin",  0x10000, 0x72df2bd9, 8 | BRF_GRA },           // 38
-	{ "sf-33.bin",  0x10000, 0x3e99d3d5, 8 | BRF_GRA },           // 39
-
-	{ "sfb05(__sf).mb7114h.12k", 0x0100, 0x75af3553, 0 | BRF_OPT },           // 40 Proms
-	{ "sfb10(__sf).mb7114h.11h", 0x0100, 0xc0e56586, 0 | BRF_OPT },           // 41
-	{ "sfb04(__sf).mb7114h.12j", 0x0100, 0x4c734b64, 0 | BRF_OPT },           // 42
-	{ "sfb00(__sf).mb7051.13h",0x0020, 0x06bcda53, 0 | BRF_OPT },           // 43
-};
-
-STD_ROM_PICK(sf)
-STD_ROM_FN(sf)
-
-static INT32 SfInit()
-{
-	return DrvInit(1);
-}
-
-struct BurnDriver BurnDrvsf = {
-	"sf", NULL, NULL, NULL, "1987",
-	"Street Fighter (World, pneumatic buttons)\0", NULL, "Capcom", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARWARE_CAPCOM_MISC, GBF_VSFIGHT, FBF_SF,
-	NULL, sfRomInfo, sfRomName, NULL, NULL, SfInputInfo, SfDIPInfo,
-	SfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
-	&DrvRecalc, 0x401, 384, 224, 4, 3
-};
-
-
-
 // Street Fighter (US set 1)
 
-static struct BurnRomInfo sfuRomDesc[] = {
+static struct BurnRomInfo sfRomDesc[] = {
 	{ "sfd-19",     0x10000, 0xfaaf6255, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "sfd-22",     0x10000, 0xe1fe3519, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "sfd-20",     0x10000, 0x44b915bd, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1480,21 +1403,97 @@ static struct BurnRomInfo sfuRomDesc[] = {
 	{ "mmi-7603.13h",0x0020, 0x06bcda53, 0 | BRF_OPT },           // 43
 };
 
-STD_ROM_PICK(sfu)
-STD_ROM_FN(sfu)
+STD_ROM_PICK(sf)
+STD_ROM_FN(sf)
 
 static INT32 SfusInit()
 {
 	return DrvInit(2);
 }
 
-struct BurnDriver BurnDrvsfu = {
-	"sfu", "sf", NULL, NULL, "1987",
+struct BurnDriver BurnDrvsf = {
+	"sf", NULL, NULL, NULL, "1987",
 	"Street Fighter (US set 1)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARWARE_CAPCOM_MISC, GBF_VSFIGHT, FBF_SF,
-	NULL, sfuRomInfo, sfuRomName, NULL, NULL, SfusInputInfo, SfusDIPInfo,
+	BDF_GAME_WORKING, 2, HARWARE_CAPCOM_MISC, GBF_VSFIGHT, FBF_SF,
+	NULL, sfRomInfo, sfRomName, NULL, NULL, SfusInputInfo, SfusDIPInfo,
 	SfusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
+	&DrvRecalc, 0x401, 384, 224, 4, 3
+};
+
+
+// Street Fighter (World, pneumatic buttons)
+
+static struct BurnRomInfo sfanRomDesc[] = {
+	{ "sfe-19",     0x10000, 0x8346c3ca, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "sfe-22",     0x10000, 0x3a4bfaa8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sfe-20",     0x10000, 0xb40e67ee, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sfe-23",     0x10000, 0x477c3d5b, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sfe-21",     0x10000, 0x2547192b, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sfe-24",     0x10000, 0x79680f4e, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "sf-02.bin",  0x08000, 0x4a9ac534, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 #0 Code
+
+	{ "sfu-00",     0x20000, 0xa7cce903, 3 | BRF_PRG | BRF_ESS }, //  7 Z80 #1 Code
+	{ "sf-01.bin",  0x20000, 0x86e0f0d5, 3 | BRF_PRG | BRF_ESS }, //  8
+
+	{ "sf-39.bin",  0x20000, 0xcee3d292, 4 | BRF_GRA },           //  9 Background Tiles
+	{ "sf-38.bin",  0x20000, 0x2ea99676, 4 | BRF_GRA },           // 10
+	{ "sf-41.bin",  0x20000, 0xe0280495, 4 | BRF_GRA },           // 11
+	{ "sf-40.bin",  0x20000, 0xc70b30de, 4 | BRF_GRA },           // 12
+
+	{ "sf-25.bin",  0x20000, 0x7f23042e, 5 | BRF_GRA },           // 13 More tiles?
+	{ "sf-28.bin",  0x20000, 0x92f8b91c, 5 | BRF_GRA },           // 14
+	{ "sf-30.bin",  0x20000, 0xb1399856, 5 | BRF_GRA },           // 15
+	{ "sf-34.bin",  0x20000, 0x96b6ae2e, 5 | BRF_GRA },           // 16
+	{ "sf-26.bin",  0x20000, 0x54ede9f5, 5 | BRF_GRA },           // 17
+	{ "sf-29.bin",  0x20000, 0xf0649a67, 5 | BRF_GRA },           // 18
+	{ "sf-31.bin",  0x20000, 0x8f4dd71a, 5 | BRF_GRA },           // 19
+	{ "sf-35.bin",  0x20000, 0x70c00fb4, 5 | BRF_GRA },           // 20
+
+	{ "sf-15.bin",  0x20000, 0xfc0113db, 6 | BRF_GRA },           // 21 Sprites
+	{ "sf-16.bin",  0x20000, 0x82e4a6d3, 6 | BRF_GRA },           // 22
+	{ "sf-11.bin",  0x20000, 0xe112df1b, 6 | BRF_GRA },           // 23
+	{ "sf-12.bin",  0x20000, 0x42d52299, 6 | BRF_GRA },           // 24
+	{ "sf-07.bin",  0x20000, 0x49f340d9, 6 | BRF_GRA },           // 25
+	{ "sf-08.bin",  0x20000, 0x95ece9b1, 6 | BRF_GRA },           // 26
+	{ "sf-03.bin",  0x20000, 0x5ca05781, 6 | BRF_GRA },           // 27
+	{ "sf-17.bin",  0x20000, 0x69fac48e, 6 | BRF_GRA },           // 28
+	{ "sf-18.bin",  0x20000, 0x71cfd18d, 6 | BRF_GRA },           // 29
+	{ "sf-13.bin",  0x20000, 0xfa2eb24b, 6 | BRF_GRA },           // 30
+	{ "sf-14.bin",  0x20000, 0xad955c95, 6 | BRF_GRA },           // 31
+	{ "sf-09.bin",  0x20000, 0x41b73a31, 6 | BRF_GRA },           // 32
+	{ "sf-10.bin",  0x20000, 0x91c41c50, 6 | BRF_GRA },           // 33
+	{ "sf-05.bin",  0x20000, 0x538c7cbe, 6 | BRF_GRA },           // 34
+
+	{ "sf-27.bin",  0x04000, 0x2b09b36d, 7 | BRF_GRA },           // 35 Characters
+
+	{ "sf-37.bin",  0x10000, 0x23d09d3d, 8 | BRF_GRA },           // 36 Tilemaps
+	{ "sf-36.bin",  0x10000, 0xea16df6c, 8 | BRF_GRA },           // 37
+	{ "sf-32.bin",  0x10000, 0x72df2bd9, 8 | BRF_GRA },           // 38
+	{ "sf-33.bin",  0x10000, 0x3e99d3d5, 8 | BRF_GRA },           // 39
+
+	{ "sfb05.mb7114h.12k", 0x0100, 0x75af3553, 0 | BRF_OPT },           // 40 Proms
+	{ "sfb10.mb7114h.11h", 0x0100, 0xc0e56586, 0 | BRF_OPT },           // 41
+	{ "sfb04.mb7114h.12j", 0x0100, 0x4c734b64, 0 | BRF_OPT },           // 42
+	{ "sfb00.mb7051.13h",0x0020, 0x06bcda53, 0 | BRF_OPT },           // 43
+};
+
+STD_ROM_PICK(sfan)
+STD_ROM_FN(sfan)
+
+static INT32 SfanInit()
+{
+	return DrvInit(1);
+}
+
+struct BurnDriver BurnDrvsfan = {
+	"sfan", "sf", NULL, NULL, "1987",
+	"Street Fighter (World, pneumatic buttons)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARWARE_CAPCOM_MISC, GBF_VSFIGHT, FBF_SF,
+	NULL, sfanRomInfo, sfanRomName, NULL, NULL, SfInputInfo, SfDIPInfo,
+	SfanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
 	&DrvRecalc, 0x401, 384, 224, 4, 3
 };
 

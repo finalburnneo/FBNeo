@@ -120,6 +120,8 @@ void BurnTransferExit()
 	Debug_BurnTransferInitted = 0;
 }
 
+#define nTransOverflow 10 // 10 lines of overflow, some games spill past the end of the allocated height causing heap corruption.
+
 INT32 BurnTransferInit()
 {
 	Debug_BurnTransferInitted = 1;
@@ -130,7 +132,7 @@ INT32 BurnTransferInit()
 		BurnDrvGetVisibleSize(&nTransWidth, &nTransHeight);
 	}
 
-	pTransDraw = (UINT16*)malloc(nTransWidth * nTransHeight * sizeof(UINT16));
+	pTransDraw = (UINT16*)malloc(nTransWidth * (nTransHeight + nTransOverflow) * sizeof(UINT16));
 	if (pTransDraw == NULL) {
 		return 1;
 	}

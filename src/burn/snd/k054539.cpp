@@ -481,6 +481,9 @@ else
 						cur_pos += (pdelta * nUpdateStep) >> 15;
 
 						cur_pval = cur_val;
+						if (cur_pos > info->rom_size) {
+							continue;
+						}
 						cur_val = (INT16)(samples[cur_pos] << 8);
 						if(cur_val == (INT16)0x8000) {
 							if(base2[1] & 1) {
@@ -509,6 +512,9 @@ else
 						cur_pos += (pdelta * nUpdateStep) >> 15;
 
 						cur_pval = cur_val;
+						if (cur_pos+1 > info->rom_size) {
+							continue;
+						}
 						cur_val = (INT16)(samples[cur_pos] | samples[cur_pos+1]<<8);
 						if(cur_val == (INT16)0x8000) {
 							if(base2[1] & 1) {

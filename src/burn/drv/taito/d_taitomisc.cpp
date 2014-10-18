@@ -518,6 +518,10 @@ static struct BurnDIPInfo DariusDIPList[]=
 	{0x14, 0xff, 0xff, 0xff, NULL                             },
 	
 	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Unknown"                        },
+	{0x13, 0x01, 0x01, 0x01, "Off"                         	  },
+	{0x13, 0x01, 0x01, 0x00, "On"                             },
+	
 	{0   , 0xfe, 0   , 2   , "Auto Fire"                      },
 	{0x13, 0x01, 0x02, 0x02, "Normal"                         },
 	{0x13, 0x01, 0x02, 0x00, "Fast"                           },
@@ -561,20 +565,28 @@ static struct BurnDIPInfo DariusDIPList[]=
 	{0x14, 0x01, 0x30, 0x10, "5"                              },
 	{0x14, 0x01, 0x30, 0x00, "6"                              },
 	
+	{0   , 0xfe, 0   , 2   , "Unknown"                 		  },
+	{0x14, 0x01, 0x40, 0x40, "Off"                            },
+	{0x14, 0x01, 0x40, 0x00, "On"                             },
+	
 	{0   , 0xfe, 0   , 2   , "Allow Continue"                 },
-	{0x14, 0x01, 0x80, 0x00, "Off"                            },
-	{0x14, 0x01, 0x80, 0x80, "On"                             },
+	{0x14, 0x01, 0x80, 0x00, "No"                             },
+	{0x14, 0x01, 0x80, 0x80, "Yes"                            },
 };
 
 STDDIPINFO(Darius)
 
-static struct BurnDIPInfo DariuseDIPList[]=
+static struct BurnDIPInfo DariusuDIPList[]=
 {
 	// Default Values
 	{0x13, 0xff, 0xff, 0xff, NULL                             },
 	{0x14, 0xff, 0xff, 0xff, NULL                             },
 	
 	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Unknown"                        },
+	{0x13, 0x01, 0x01, 0x01, "Off"                         	  },
+	{0x13, 0x01, 0x01, 0x00, "On"                             },
+	
 	{0   , 0xfe, 0   , 2   , "Auto Fire"                      },
 	{0x13, 0x01, 0x02, 0x02, "Normal"                         },
 	{0x13, 0x01, 0x02, 0x00, "Fast"                           },
@@ -618,12 +630,16 @@ static struct BurnDIPInfo DariuseDIPList[]=
 	{0x14, 0x01, 0x30, 0x10, "5"                              },
 	{0x14, 0x01, 0x30, 0x00, "6"                              },
 	
+	{0   , 0xfe, 0   , 2   , "Unknown"                 		  },
+	{0x14, 0x01, 0x40, 0x40, "Off"                            },
+	{0x14, 0x01, 0x40, 0x00, "On"                             },
+	
 	{0   , 0xfe, 0   , 2   , "Allow Continue"                 },
-	{0x14, 0x01, 0x80, 0x00, "Off"                            },
-	{0x14, 0x01, 0x80, 0x80, "On"                             },
+	{0x14, 0x01, 0x80, 0x00, "No"                             },
+	{0x14, 0x01, 0x80, 0x80, "yes"                            },
 };
 
-STDDIPINFO(Dariuse)
+STDDIPINFO(Dariusu)
 
 static struct BurnDIPInfo DariusjDIPList[]=
 {
@@ -674,6 +690,10 @@ static struct BurnDIPInfo DariusjDIPList[]=
 	{0x14, 0x01, 0x30, 0x20, "4"                              },
 	{0x14, 0x01, 0x30, 0x10, "5"                              },
 	{0x14, 0x01, 0x30, 0x00, "6"                              },
+	
+	{0   , 0xfe, 0   , 2   , "Unknown"                 		  },
+	{0x14, 0x01, 0x80, 0x80, "Off"                            },
+	{0x14, 0x01, 0x80, 0x00, "On"                             },
 };
 
 STDDIPINFO(Dariusj)
@@ -1354,11 +1374,11 @@ static struct BurnDIPInfo VolfieduDIPList[]=
 STDDIPINFO(Volfiedu)
 
 static struct BurnRomInfo DariusRomDesc[] = {
-	{ "da-59.bin",     0x10000, 0x11aab4eb, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "da-58.bin",     0x10000, 0x5f71e697, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "da-61.bin",     0x10000, 0x4736aa9b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "da-66.bin",     0x10000, 0x4ede5f56, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "a96_31.187",    0x10000, 0xe9bb5d89, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "a96_59-1.186",  0x10000, 0x11aab4eb, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "a96_58-1.152",  0x10000, 0x5f71e697, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "a96_61-2.187",  0x10000, 0x4736aa9b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "a96_99-2.153",  0x10000, 0x4ede5f56, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "a96_31.188",    0x10000, 0xe9bb5d89, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "a96_30.154",    0x10000, 0x9eb5e127, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	
 	{ "a96_33-1.190",  0x10000, 0xff186048, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
@@ -1388,10 +1408,10 @@ static struct BurnRomInfo DariusRomDesc[] = {
 	{ "a96_41.198",    0x10000, 0x97128a3a, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	{ "a96_42.178",    0x10000, 0x7f55ee0f, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	{ "a96_43.199",    0x10000, 0xc7cad469, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
-	{ "da-62.bin",     0x10000, 0x9179862c, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
-	{ "da-63.bin",     0x10000, 0xfa19cfff, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
-	{ "da-64.bin",     0x10000, 0x814c676f, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
-	{ "da-65.bin",     0x10000, 0x14eee326, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "a96_62.175",    0x10000, 0x9179862c, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "a96_63.196",    0x10000, 0xfa19cfff, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "a96_64.176",    0x10000, 0x814c676f, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "a96_65.197",    0x10000, 0x14eee326, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
 	
 	{ "a96-24.163",    0x00400, 0x0fa8be7f, BRF_OPT },
 	{ "a96-25.164",    0x00400, 0x265508a6, BRF_OPT },
@@ -1400,6 +1420,54 @@ static struct BurnRomInfo DariusRomDesc[] = {
 
 STD_ROM_PICK(Darius)
 STD_ROM_FN(Darius)
+
+static struct BurnRomInfo DariusuRomDesc[] = {
+	{ "a96_59-1.186",  0x10000, 0x11aab4eb, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "a96_58-1.152",  0x10000, 0x5f71e697, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "a96_61-2.187",  0x10000, 0x4736aa9b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "a96_60-2.153",  0x10000, 0x9bf58617, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "a96_31.188",    0x10000, 0xe9bb5d89, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "a96_30.154",    0x10000, 0x9eb5e127, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	
+	{ "a96_33-1.190",  0x10000, 0xff186048, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "a96_32-1.157",  0x10000, 0xd9719de8, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "a96_35-1.191",  0x10000, 0xb3280193, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "a96_34-1.158",  0x10000, 0xca3b2573, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+
+	{ "a96_57.33",     0x10000, 0x33ceb730, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	
+	{ "a96_56.18",     0x10000, 0x292ef55c, BRF_ESS | BRF_PRG | TAITO_Z80ROM2 },
+	
+	{ "a96_48.24",     0x10000, 0x39c9b3aa, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "a96_51.47",     0x10000, 0x1bf8f0d3, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "a96_49.25",     0x10000, 0x37a7d88a, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "a96_52.48",     0x10000, 0x2d9b2128, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	{ "a96_50.26",     0x10000, 0x75d738e4, BRF_GRA | TAITO_CHARS_BYTESWAP },	
+	{ "a96_53.49",     0x10000, 0x0173484c, BRF_GRA | TAITO_CHARS_BYTESWAP },
+	
+	{ "a96_54.143",    0x04000, 0x51c02ae2, BRF_GRA | TAITO_CHARSB_BYTESWAP },
+	{ "a96_55.144",    0x04000, 0x771e4d98, BRF_GRA | TAITO_CHARSB_BYTESWAP },
+	
+	{ "a96_44.179",    0x10000, 0xbbc18878, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "a96_45.200",    0x10000, 0x616cdd8b, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "a96_46.180",    0x10000, 0xfec35418, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "a96_47.201",    0x10000, 0x8df9286a, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "a96_40.177",    0x10000, 0xb699a51e, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "a96_41.198",    0x10000, 0x97128a3a, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "a96_42.178",    0x10000, 0x7f55ee0f, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "a96_43.199",    0x10000, 0xc7cad469, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "a96_62.175",    0x10000, 0x9179862c, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "a96_63.196",    0x10000, 0xfa19cfff, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "a96_64.176",    0x10000, 0x814c676f, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "a96_65.197",    0x10000, 0x14eee326, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	
+	{ "a96-24.163",    0x00400, 0x0fa8be7f, BRF_OPT },
+	{ "a96-25.164",    0x00400, 0x265508a6, BRF_OPT },
+	{ "a96-26.165",    0x00400, 0x4891b9c0, BRF_OPT },
+};
+
+STD_ROM_PICK(Dariusu)
+STD_ROM_FN(Dariusu)
 
 static struct BurnRomInfo DariusjRomDesc[] = {
 	{ "a96_29-1.185",  0x10000, 0x75486f62, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -1494,15 +1562,15 @@ STD_ROM_PICK(Dariuso)
 STD_ROM_FN(Dariuso)
 
 static struct BurnRomInfo DariuseRomDesc[] = {
-	{ "dae-68.bin",    0x10000, 0xed721127, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "dae-67.bin",    0x10000, 0xb99aea8c, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "dae-70.bin",    0x10000, 0x54590b31, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "a96_30.154",    0x10000, 0x9eb5e127, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "a96_68.185",    0x10000, 0xed721127, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "a96_67.152",    0x10000, 0xb99aea8c, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "a96_70.187",    0x10000, 0x54590b31, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "a96_69.154",    0x10000, 0x9eb5e127, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP }, // == a96_30.154
 	
-	{ "dae-72.bin",    0x10000, 0x248ca2cc, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
-	{ "dae-71.bin",    0x10000, 0x65dd0403, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
-	{ "dae-74.bin",    0x10000, 0x0ea31f60, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
-	{ "dae-73.bin",    0x10000, 0x27036a4d, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "a96_72.190",    0x10000, 0x248ca2cc, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "a96_71.157",    0x10000, 0x65dd0403, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "a96_74.191",    0x10000, 0x0ea31f60, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "a96_73.158",    0x10000, 0x27036a4d, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
 
 	{ "a96_57.33",     0x10000, 0x33ceb730, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
 	
@@ -5905,6 +5973,16 @@ struct BurnDriver BurnDrvDarius = {
 	NULL, 0x2000, 864, 224, 12, 3
 };
 
+struct BurnDriver BurnDrvDariusu = {
+	"dariusu", "darius", "main check sum error", NULL, "1986",
+	"Darius (US)\0", NULL, "Taito America Corporation", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	NULL, DariusuRomInfo, DariusuRomName, NULL, NULL, DariusInputInfo, DariusuDIPInfo,
+	DariusInit, TaitoMiscExit, DariusFrame, NULL, TaitoMiscScan,
+	NULL, 0x2000, 864, 224, 12, 3
+};
+
 struct BurnDriver BurnDrvDariusj = {
 	"dariusj", "darius", NULL, NULL, "1986",
 	"Darius (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
@@ -5930,7 +6008,7 @@ struct BurnDriver BurnDrvDariuse = {
 	"Darius (Extra) (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
-	NULL, DariuseRomInfo, DariuseRomName, NULL, NULL, DariusInputInfo, DariuseDIPInfo,
+	NULL, DariuseRomInfo, DariuseRomName, NULL, NULL, DariusInputInfo, DariusuDIPInfo,
 	DariusInit, TaitoMiscExit, DariusFrame, NULL, TaitoMiscScan,
 	NULL, 0x2000, 864, 224, 12, 3
 };

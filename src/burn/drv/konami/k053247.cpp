@@ -996,8 +996,8 @@ void k053247_draw_yxloop_gx(
 		int zcode, int alpha, int drawmode,
 		UINT8* gx_objzbuf, UINT8* gx_shdzbuf,
 		/* non-gx specifics */
-		int primask,
-		UINT8* whichtable
+		int /*primask*/,
+		UINT8* /*whichtable*/
 		)
 	{
 		static const int xoffset[8] = { 0, 1, 4, 5, 16, 17, 20, 21 };
@@ -1081,7 +1081,7 @@ void k053247_draw_yxloop_gx(
 
 void k053247_draw_single_sprite_gxcore(UINT8 *gx_objzbuf, UINT8 *gx_shdzbuf, int code, unsigned short *gx_spriteram, int offs,
 		int color, int alpha, int drawmode, int zcode, int pri,
-		int primask, int shadow, unsigned char *drawmode_table, unsigned char *shadowmode_table, int shdmask)
+		int /*primask*/, int /*shadow*/, unsigned char */*drawmode_table*/, unsigned char */*shadowmode_table*/, int /*shdmask*/)
 	{
 		int xa,ya,ox,oy,flipx,flipy,mirrorx,mirrory,zoomx,zoomy,scalex,scaley,nozoom;
 		int temp, temp4;

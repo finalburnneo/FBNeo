@@ -445,7 +445,7 @@ void K054539UpdateNEWBUTCRACKLES(INT32 chip, INT16 *pBuf, INT32 length)
 				}
 
 				int cur_pfrac, cur_val, cur_pval;
-				if(cur_pos != chan->pos) {
+				if(cur_pos != (INT32)chan->pos) {
 					chan->pos = cur_pos;
 					cur_pfrac = 0;
 					cur_val = 0;
@@ -713,7 +713,7 @@ void K054539Update(INT32 chip, INT16 *pBuf, INT32 length)
 						cur_pos += pdelta; //dink (pdelta * nUpdateStep) >> 15;
 
 						cur_pval = cur_val;
-						if (cur_pos > info->rom_size) {
+						if (cur_pos > (INT32)info->rom_size) {
 							continue;
 						}
 						cur_val = (INT16)(samples[cur_pos] << 8);
@@ -744,7 +744,7 @@ void K054539Update(INT32 chip, INT16 *pBuf, INT32 length)
 						cur_pos += pdelta; //dink (pdelta * nUpdateStep) >> 15;
 
 						cur_pval = cur_val;
-						if (cur_pos+1 > info->rom_size) {
+						if (cur_pos+1 > (INT32)info->rom_size) {
 							continue;
 						}
 						cur_val = (INT16)(samples[cur_pos] | samples[cur_pos+1]<<8);
@@ -780,7 +780,7 @@ void K054539Update(INT32 chip, INT16 *pBuf, INT32 length)
 						cur_pos += pdelta; //dink (pdelta * nUpdateStep) >> 15;
 
 						cur_pval = cur_val;
-						if (cur_pos > info->rom_size) {
+						if (cur_pos > (INT32)info->rom_size) {
 							continue;
 						}
 						cur_val = samples[cur_pos>>1];

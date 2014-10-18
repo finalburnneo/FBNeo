@@ -657,7 +657,7 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 			cop_status |= 0x8000;
 			cop_angle = 0;
 		} else {
-			cop_angle = atan(double(dx)/double(dy)) * 128 / M_PI;
+			cop_angle = (UINT16)(atan(double(dx)/double(dy)) * 128 / M_PI);
 			if(dy<0)
 				cop_angle += 0x80;
 		}
@@ -677,7 +677,7 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 			cop_status |= 0x8000;
 			cop_angle = 0;
 		} else {
-			cop_angle = atan(double(dx)/double(dy)) * 128 / M_PI;
+			cop_angle = (UINT16)(atan(double(dx)/double(dy)) * 128 / M_PI);
 			if(dy<0)
 				cop_angle += 0x80;
 		}
@@ -706,7 +706,7 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 		
 		dx = dx >> 16;
 		dy = dy >> 16;
-		cop_dist = sqrt((double)(dx*dx+dy*dy));
+		cop_dist = (UINT16)sqrt((double)(dx*dx+dy*dy));
 		
 		if(data & 0x0080)
 			VezWriteWord(cop_regs[0]+(data & 0x200 ? 0x3a : 0x38), cop_dist);

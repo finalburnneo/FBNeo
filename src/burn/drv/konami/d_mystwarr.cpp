@@ -29,6 +29,11 @@
 #include "k054539.h"
 #include "eeprom.h"
 
+#if defined _MSC_VER
+ #define _USE_MATH_DEFINES
+ #include <cmath>
+#endif
+
 static UINT8 *AllMem;
 static UINT8 *Drv68KROM;
 static UINT8 *DrvZ80ROM;
@@ -649,8 +654,8 @@ static void K055550_word_write(INT32 offset, UINT16 data, UINT16 mask)
 	offset = (offset & 0x3e) / 2;
 
 	UINT32 adr, bsize, count, i, lim;
-	int src, tgt, srcend, tgtend, skip, cx1, sx1, wx1, cy1, sy1, wy1, cz1, sz1, wz1, c2, s2, w2;
-	int dx, dy, angle;
+	INT32 src, tgt, srcend, tgtend, skip, cx1, sx1, wx1, cy1, sy1, wy1, cz1, sz1, wz1, c2, s2, w2;
+	INT32 dx, dy, angle;
 
 	if (offset == 0 && (mask & 0x00ff))
 	{
@@ -698,17 +703,17 @@ static void K055550_word_write(INT32 offset, UINT16 data, UINT16 mask)
 				// let's hope GCC will inline the mem24bew calls
 				for (src=adr; src<srcend; src+=bsize)
 				{
-					cx1 = (short)SekReadWord(src);
-					sx1 = (short)SekReadWord(src + 2);
-					wx1 = (short)SekReadWord(src + 4);
+					cx1 = (INT16)SekReadWord(src);
+					sx1 = (INT16)SekReadWord(src + 2);
+					wx1 = (INT16)SekReadWord(src + 4);
 
-					cy1 = (short)SekReadWord(src + 6);
-					sy1 = (short)SekReadWord(src + 8);
-					wy1 = (short)SekReadWord(src +10);
+					cy1 = (INT16)SekReadWord(src + 6);
+					sy1 = (INT16)SekReadWord(src + 8);
+					wy1 = (INT16)SekReadWord(src +10);
 
-					cz1 = (short)SekReadWord(src +12);
-					sz1 = (short)SekReadWord(src +14);
-					wz1 = (short)SekReadWord(src +16);
+					cz1 = (INT16)SekReadWord(src +12);
+					sz1 = (INT16)SekReadWord(src +14);
+					wz1 = (INT16)SekReadWord(src +16);
 
 					count = i = src + skip;
 					tgt = src + bsize;
@@ -717,19 +722,19 @@ static void K055550_word_write(INT32 offset, UINT16 data, UINT16 mask)
 
 					for (; tgt<tgtend; i++, tgt+=bsize)
 					{
-						c2 = (short)SekReadWord(tgt);
-						s2 = (short)SekReadWord(tgt + 2);
-						w2 = (short)SekReadWord(tgt + 4);
+						c2 = (INT16)SekReadWord(tgt);
+						s2 = (INT16)SekReadWord(tgt + 2);
+						w2 = (INT16)SekReadWord(tgt + 4);
 						if (abs((cx1+sx1)-(c2+s2))>=wx1+w2) continue; // X rejection
 
-						c2 = (short)SekReadWord(tgt + 6);
-						s2 = (short)SekReadWord(tgt + 8);
-						w2 = (short)SekReadWord(tgt +10);
+						c2 = (INT16)SekReadWord(tgt + 6);
+						s2 = (INT16)SekReadWord(tgt + 8);
+						w2 = (INT16)SekReadWord(tgt +10);
 						if (abs((cy1+sy1)-(c2+s2))>=wy1+w2) continue; // Y rejection
 
-						c2 = (short)SekReadWord(tgt +12);
-						s2 = (short)SekReadWord(tgt +14);
-						w2 = (short)SekReadWord(tgt +16);
+						c2 = (INT16)SekReadWord(tgt +12);
+						s2 = (INT16)SekReadWord(tgt +14);
+						w2 = (INT16)SekReadWord(tgt +16);
 						if (abs((cz1+sz1)-(c2+s2))>=wz1+w2) continue; // Z rejection
 
 						SekWriteByte(i, 0x80); // collision confirmed
@@ -738,8 +743,8 @@ static void K055550_word_write(INT32 offset, UINT16 data, UINT16 mask)
 			break;
 
 			case 0xc0: // calculate object "homes-in" vector (Violent Storm at 0x03da9e)
-				dx = (short)prot_data[0xc];
-				dy = (short)prot_data[0xd];
+				dx = (INT16)prot_data[0xc];
+				dy = (INT16)prot_data[0xd];
 
 				// it's not necessary to use lookup tables because Violent Storm
 				// only calls the service once per enemy per frame.
@@ -747,7 +752,7 @@ static void K055550_word_write(INT32 offset, UINT16 data, UINT16 mask)
 				{
 					if (dy)
 					{
-						angle = (atan((double)dy / dx) * 128.0) / M_PI;
+						angle = (INT32)((atan((double)dy / dx) * 128.0) / M_PI);
 						if (dx < 0) angle += 128;
 						i = (angle - 0x40) & 0xff;
 					}
@@ -1055,14 +1060,14 @@ static UINT8 __fastcall metamrph_main_read_byte(UINT32 address)
 
 //--------------------------------------------------------------------------------------------------------------
 
-static void K053990_word_write(INT32 offset, UINT16 data, UINT16 mask)
+static void K053990_word_write(INT32 offset, UINT16 /*data*/, UINT16 mask)
 {
 	offset = (offset & 0x3e) / 2;
 
-	int src_addr, src_count, src_skip;
-	int dst_addr, /*dst_count,*/ dst_skip;
-	int mod_addr, mod_count, mod_skip, mod_offs;
-	int mode, i, element_size = 1;
+	INT32 src_addr, src_count, src_skip;
+	INT32 dst_addr, /*dst_count,*/ dst_skip;
+	INT32 mod_addr, mod_count, mod_skip, mod_offs;
+	INT32 mode, i, element_size = 1;
 	UINT16 mod_val, mod_data;
 
 	if (offset == 0x0c && (mask & 0x00ff))

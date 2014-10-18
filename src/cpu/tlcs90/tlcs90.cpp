@@ -2712,7 +2712,7 @@ void t90_internal_registers_w(UINT16 offset, UINT8 data)
 	cpustate->internal_registers[offset] = data;
 }
 
-INT32 tlcs90_init(INT32 clock)
+INT32 tlcs90_init(INT32 /*clock*/)
 {
 	t90_Regs *cpustate = &tlcs90_data[0];
 	int i, p;

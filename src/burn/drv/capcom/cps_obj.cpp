@@ -71,8 +71,8 @@ static void CpsBlendInit()
 		if (strncmp ("Name", szLine, 4) == 0) continue; 	// don't care
 		if (szLine[0] == ';') continue;				// comment (also don't care)
 
-		int type;
-		unsigned int min,max,k, single_entry = -1;
+		INT32 type, single_entry = -1;
+		UINT32 min,max,k;
 
 		for (k = 0; k < strlen(szLine); k++) {
 			if (szLine[k] == '-') { single_entry = k+1; break; }

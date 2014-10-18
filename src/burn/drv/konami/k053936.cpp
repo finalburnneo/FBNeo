@@ -494,7 +494,7 @@ static inline void K053936GP_copyroz32clip(INT32 chip, UINT16 *src_bitmap, INT32
 				int srcx = (cx >> 16) & 0x1fff;
 				int srcy = (cy >> 16) & 0x1fff;
 				int pixel;
-				UINT32 offs;
+				INT32 offs;
 				offs = srcy * src_pitch + srcx;
 
 				cx += incxx;
@@ -563,7 +563,7 @@ static inline void K053936GP_copyroz32clip(INT32 chip, UINT16 *src_bitmap, INT32
 				int srcx = (cx >> 16) & 0x1fff;
 				int srcy = (cy >> 16) & 0x1fff;
 				int pixel;
-				UINT32 offs;
+				INT32 offs;
 
 				offs = srcy * src_pitch + srcx;
 

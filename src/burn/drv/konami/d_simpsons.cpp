@@ -326,7 +326,7 @@ static void K052109Callback(INT32 layer, INT32 bank, INT32 *code, INT32 *color, 
 	*code &= 0x7fff;
 }
 
-static void K053247Callback(INT32 *code, INT32 *color, INT32 *priority)
+static void DrvK053247Callback(INT32 *code, INT32 *color, INT32 *priority)
 {
 	INT32 pri = (*color & 0x0f80) >> 6;
 	if (pri <= layerpri[2])					*priority = 0x00;
@@ -496,7 +496,7 @@ static INT32 DrvInit()
 	K052109SetCallback(K052109Callback);
 	K052109AdjustScroll(8, 0);
 
-	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, K053247Callback, 0x03 /* shadows & highlights */);
+	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, DrvK053247Callback, 0x03 /* shadows & highlights */);
 	K053247SetSpriteOffset(-59, -39);
 
 	BurnYM2151Init(3579545);

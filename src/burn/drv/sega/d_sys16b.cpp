@@ -4116,7 +4116,7 @@ static struct BurnRomInfo TturfRomDesc[] = {
 	{ "12276.b4",       0x10000, 0x838bd71f, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "12280.b8",       0x10000, 0x639a57cb, SYS16_ROM_SPRITES | BRF_GRA },
 
-	{ "12328.a10",      0x08000, 0x00000000, SYS16_ROM_Z80PROG | BRF_NODUMP | BRF_PRG },
+	{ "epr-12328.a10",  0x08000, 0x13a346de, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "12329.a11",      0x10000, 0xed9a686d, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "12330.a12",      0x10000, 0xfb762bca, SYS16_ROM_UPD7759DATA | BRF_SND },
@@ -8998,7 +8998,7 @@ struct BurnDriver BurnDrvToryumon = {
 
 struct BurnDriver BurnDrvTturf = {
 	"tturf", NULL, NULL, NULL, "1989",
-	"Tough Turf (set 2, Japan, 8751 317-0104)\0", "No Sound, Missing Z80 Program", "Sega / Sunsoft", "System 16B",
+	"Tough Turf (set 2, Japan, 8751 317-0104)\0", NULL, "Sega / Sunsoft", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, TturfRomInfo, TturfRomName, NULL, NULL, System16bfire3InputInfo, TturfDIPInfo,

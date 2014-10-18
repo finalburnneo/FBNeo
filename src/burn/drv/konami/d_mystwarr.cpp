@@ -51,7 +51,7 @@ static UINT8 *DrvK053936RAM;
 static UINT8 *RamEnd;
 static UINT8 *MemEnd;
 
-static UINT16 *pMystwarrRozBitmap;
+static UINT16 *pMystwarrRozBitmap = NULL;
 
 static UINT8 *soundlatch;
 static UINT8 *soundlatch2;
@@ -1514,7 +1514,7 @@ static void __fastcall dadandrn_main_write_byte(UINT32 address, UINT8 data)
 	switch (address)
 	{
 		case 0x484002:
-			bprintf (0, _T("clipb enable %2.2x\n"), data);
+			//bprintf (0, _T("clipb enable %2.2x\n"), data);
 			K053936GP_clip_enable(0, data & 0x01);
 		return;
 
@@ -1886,6 +1886,8 @@ static void decode_gfx1(UINT8 *src, UINT8 *d, INT32 len)
 	memcpy (tmp, DrvGfxROMExp0, nLen);
 
 	GfxDecode(((nLen * 8) / 5) / 0x40, 5, 8, 8, Plane, XOffs, YOffs, 8*8*5, tmp, DrvGfxROMExp0);
+
+	BurnFree (tmp);
 }
 
 static void DecodeSprites(UINT8 *rom, UINT8 *exprom, INT32 len)
@@ -2482,7 +2484,7 @@ static INT32 GaiapolisInit()
 
 	{
 		DrvGfxExpand(DrvGfxROM2	, 0x180000);
-		pMystwarrRozBitmap = (UINT16*)BurnMalloc(((512 * 16) * 2) * (512 * 16));
+		pMystwarrRozBitmap = (UINT16*)BurnMalloc(((512 * 16) * 2) * (512 * 16) * 2);
 		GaiapolisRozTilemapdraw();
 
 		m_k053936_0_ctrl = (UINT16*)DrvK053936Ctrl;
@@ -2639,7 +2641,7 @@ static INT32 DadandrnInit()
 	EEPROMInit(&mystwarr_eeprom_interface);
 
 	{
-		pMystwarrRozBitmap = (UINT16*)BurnMalloc(((512 * 16) * 2) * (512 * 16));
+		pMystwarrRozBitmap = (UINT16*)BurnMalloc(((512 * 16) * 2) * (512 * 16) * 2);
 		DadandrnRozTilemapdraw();
 
 		m_k053936_0_ctrl = (UINT16*)DrvK053936Ctrl;
@@ -2692,7 +2694,9 @@ static INT32 DrvExit()
 	K054539Exit();
 
 	BurnFree (AllMem);
-
+	if (pMystwarrRozBitmap) {
+		BurnFree (pMystwarrRozBitmap);
+	}
 	return 0;
 }
 
@@ -2787,7 +2791,7 @@ static INT32 DrvFrame()
 	SekNewFrame();
 	ZetNewFrame();
 
-	INT32 nInterleave = nBurnSoundLen;
+	INT32 nInterleave = nBurnSoundLen / 4;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -2900,9 +2904,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SekScan(nAction);
 		ZetScan(nAction);
 
-		BurnYM2151Scan(nAction);
 		K054539Scan(nAction);
-
 		KonamiICScan(nAction);
 
 		SCAN_VAR(sound_nmi_enable);

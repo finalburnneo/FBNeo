@@ -380,8 +380,8 @@ void K053936GPExit()
 	K053936_clip_enabled[0] = K053936_clip_enabled[1] = 0;
 	K053936_enable[0] = K053936_enable[1] = 0;
 	K053936_color[0] = K053936_color[1] = 0;
-	memset (K053936_cliprect,0,2*4*sizeof(INT32));
-	memset(K053936_offset,0,2*2*sizeof(INT32));
+	memset(K053936_cliprect,0,sizeof(K053936_cliprect)); //2*4*sizeof(INT32));
+	memset(K053936_offset,0,sizeof(K053936_offset)); //2*2*sizeof(INT32));
 	m_k053936_0_ctrl_16 = NULL;
 	m_k053936_0_linectrl_16 = NULL;
 	m_k053936_0_ctrl = NULL;
@@ -509,13 +509,13 @@ static inline void K053936GP_copyroz32clip(INT32 chip, UINT16 *src_bitmap, INT32
 				pixel = src_base[offs]|color_base;
 				if (!(pixel & cmask))
 					continue;
-
-				if ((dst_ptr+ecx+dst_base2)<dst_size) dst_base[dst_ptr+ecx+dst_base2] = alpha_blend(pal_base[pixel], dst_base[dst_ptr+ecx+dst_base2], alpha);
+// this one below is fucked.
+				if ((dst_ptr+ecx+dst_base2+dst_pitch)<dst_size) dst_base[dst_ptr+ecx+dst_base2] = alpha_blend(pal_base[pixel], dst_base[dst_ptr+ecx+dst_base2], alpha);
 
 				if (pixeldouble_output)
 				{
 					ecx++;
-					if ((dst_ptr+ecx+dst_base2)<dst_size) dst_base[dst_ptr+ecx+dst_base2] = alpha_blend(pal_base[pixel], dst_base[dst_ptr+ecx+dst_base2], alpha);
+					if ((dst_ptr+ecx+dst_base2+dst_pitch)<dst_size) dst_base[dst_ptr+ecx+dst_base2] = alpha_blend(pal_base[pixel], dst_base[dst_ptr+ecx+dst_base2], alpha);
 				}
 			}
 			while (++ecx < 0);

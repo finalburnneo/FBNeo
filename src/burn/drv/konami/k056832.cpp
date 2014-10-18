@@ -586,7 +586,7 @@ void K056832Draw(int layer, UINT32 flags, UINT32 priority)
 
 	INT32 tmap_scrollx=0,tmap_scrolly=0;
 
-	INT32 clip_data[4]; // minx, maxx, miny, maxy
+	INT32 clip_data[4] = {0, 0, 0, 0}; // minx, maxx, miny, maxy
 
 	int rowstart = (m_regs[0x08|layer] & 0x18) >> 3;
 	int colstart = (m_regs[0x0c|layer] & 0x18) >> 3;

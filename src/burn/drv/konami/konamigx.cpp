@@ -429,7 +429,7 @@ void konamigx_mixer(INT32 sub1 /*extra tilemap 1*/, INT32 sub1flags, INT32 sub2 
 	layerpri[4] = K055555ReadRegister(K55_PRIINP_9);
 	layerpri[5] = K055555ReadRegister(K55_PRIINP_10);
 
-	int shdprisel;
+	INT32 shdprisel;
 
 	if (m_gx_primode == -1)
 	{

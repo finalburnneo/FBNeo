@@ -459,7 +459,7 @@ static UINT8 __fastcall dbz_sound_read(UINT16 address)
 
 static void dbz_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
 {
-	int pri = (*color & 0x3c0) >> 5;
+	INT32 pri = (*color & 0x3c0) >> 5;
 
 	if (pri <= layerpri[3])					*priority = 0xff00;
 	else if (pri > layerpri[3] && pri <= layerpri[2])	*priority = 0xfff0;
@@ -469,7 +469,7 @@ static void dbz_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
 	*color = (sprite_colorbase << 1) + (*color & 0x1f);
 }
 
-static void dbz_tile_callback(int layer, int */*code*/, int *color, int */*flags*/)
+static void dbz_tile_callback(INT32 layer, INT32 */*code*/, INT32 *color, INT32 */*flags*/)
 {
 	*color = (layer_colorbase[layer] << 1) + ((*color & 0x3c) >> 2);
 }
@@ -823,11 +823,11 @@ static void DrvPaletteRecalc()
 
 static INT32 DrvDraw()
 {
-	static const int K053251_CI[6] = { 3, 4, 4, 4, 2, 1 };
+	static const INT32 K053251_CI[6] = { 3, 4, 4, 4, 2, 1 };
 	DrvPaletteRecalc();
 	KonamiClearBitmaps(0);
 
-	int layer[5], plane;
+	INT32 layer[5], plane;
 
 	sprite_colorbase = K053251GetPaletteIndex(0);
 
@@ -854,7 +854,7 @@ static INT32 DrvDraw()
 
 	for (plane = 0; plane < 5; plane++)
 	{
-		int flag, pri;
+		INT32 flag, pri;
 
 		if (plane == 0)
 		{

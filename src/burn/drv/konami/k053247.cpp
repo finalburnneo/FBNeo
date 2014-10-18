@@ -537,8 +537,8 @@ static inline UINT32 alpha_blend_r32(UINT32 d, UINT32 s, UINT32 p)
 	#define GX_ZBUFW     512
 	#define GX_ZBUFH     256
 
-void zdrawgfxzoom32GP(UINT32 code, UINT32 color, int flipx, int flipy, int sx, int sy,
-		int scalex, int scaley, int alpha, int drawmode, int zcode, int pri, UINT8* gx_objzbuf, UINT8* gx_shdzbuf)
+void zdrawgfxzoom32GP(UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32 sx, INT32 sy,
+		INT32 scalex, INT32 scaley, INT32 alpha, INT32 drawmode, INT32 zcode, INT32 pri, UINT8* gx_objzbuf, UINT8* gx_shdzbuf)
 {
 #define FP     19
 #define FPONE  (1<<FP)
@@ -547,10 +547,10 @@ void zdrawgfxzoom32GP(UINT32 code, UINT32 color, int flipx, int flipy, int sx, i
 
 	// inner loop
 	const UINT8  *src_ptr;
-	int src_x;
-	int eax, ecx;
-	int src_fx, src_fdx;
-	int shdpen;
+	INT32 src_x;
+	INT32 eax, ecx;
+	INT32 src_fx, src_fdx;
+	INT32 shdpen;
 	UINT8  z8 = 0, p8 = 0;
 	UINT8  *ozbuf_ptr;
 	UINT8  *szbuf_ptr;
@@ -559,16 +559,16 @@ void zdrawgfxzoom32GP(UINT32 code, UINT32 color, int flipx, int flipy, int sx, i
 	UINT32 *dst_ptr;
 
 	// outter loop
-	int src_fby, src_fdy, src_fbx;
+	INT32 src_fby, src_fdy, src_fbx;
 	const UINT8 *src_base;
-	int dst_w, dst_h;
+	INT32 dst_w, dst_h;
 
 	// one-time
-	int nozoom, granularity;
-	int src_fw, src_fh;
-	int dst_minx, dst_maxx, dst_miny, dst_maxy;
-	int dst_skipx, dst_skipy, dst_x, dst_y, dst_lastx, dst_lasty;
-	int src_pitch, dst_pitch;
+	INT32 nozoom, granularity;
+	INT32 src_fw, src_fh;
+	INT32 dst_minx, dst_maxx, dst_miny, dst_maxy;
+	INT32 dst_skipx, dst_skipy, dst_x, dst_y, dst_lastx, dst_lasty;
+	INT32 src_pitch, dst_pitch;
 
 
 	// cull illegal and transparent objects
@@ -983,35 +983,35 @@ void zdrawgfxzoom32GP(UINT32 code, UINT32 color, int flipx, int flipy, int sx, i
 
 
 void k053247_draw_yxloop_gx(
-		int code,
-		int color,
-		int height, int width,
-		int zoomx, int zoomy, int flipx, int flipy,
-		int ox, int oy,
-		int xa, int ya,
-		int mirrorx, int mirrory,
-		int nozoom,
+		INT32 code,
+		INT32 color,
+		INT32 height, INT32 width,
+		INT32 zoomx, INT32 zoomy, INT32 flipx, INT32 flipy,
+		INT32 ox, INT32 oy,
+		INT32 xa, INT32 ya,
+		INT32 mirrorx, INT32 mirrory,
+		INT32 nozoom,
 		/* gx specifics */
-		int pri,
-		int zcode, int alpha, int drawmode,
+		INT32 pri,
+		INT32 zcode, INT32 alpha, INT32 drawmode,
 		UINT8* gx_objzbuf, UINT8* gx_shdzbuf,
 		/* non-gx specifics */
-		int /*primask*/,
+		INT32 /*primask*/,
 		UINT8* /*whichtable*/
 		)
 	{
-		static const int xoffset[8] = { 0, 1, 4, 5, 16, 17, 20, 21 };
-		static const int yoffset[8] = { 0, 2, 8, 10, 32, 34, 40, 42 };
-		int zw,zh;
-		int  fx, fy, sx, sy;
-		int tempcode;
+		static const INT32 xoffset[8] = { 0, 1, 4, 5, 16, 17, 20, 21 };
+		static const INT32 yoffset[8] = { 0, 2, 8, 10, 32, 34, 40, 42 };
+		INT32 zw,zh;
+		INT32  fx, fy, sx, sy;
+		INT32 tempcode;
 
-		for (int y=0; y<height; y++)
+		for (INT32 y=0; y<height; y++)
 		{
 			sy = oy + ((zoomy * y + (1<<11)) >> 12);
 			zh = (oy + ((zoomy * (y+1) + (1<<11)) >> 12)) - sy;
 
-			for (int x=0; x<width; x++)
+			for (INT32 x=0; x<width; x++)
 			{
 				sx = ox + ((zoomx * x + (1<<11)) >> 12);
 				zw = (ox + ((zoomx * (x+1) + (1<<11)) >> 12)) - sx;
@@ -1079,14 +1079,14 @@ void k053247_draw_yxloop_gx(
 
 
 
-void k053247_draw_single_sprite_gxcore(UINT8 *gx_objzbuf, UINT8 *gx_shdzbuf, int code, unsigned short *gx_spriteram, int offs,
-		int color, int alpha, int drawmode, int zcode, int pri,
-		int /*primask*/, int /*shadow*/, unsigned char */*drawmode_table*/, unsigned char */*shadowmode_table*/, int /*shdmask*/)
+void k053247_draw_single_sprite_gxcore(UINT8 *gx_objzbuf, UINT8 *gx_shdzbuf, INT32 code, UINT16 *gx_spriteram, INT32 offs,
+		INT32 color, INT32 alpha, INT32 drawmode, INT32 zcode, INT32 pri,
+		INT32 /*primask*/, INT32 /*shadow*/, UINT8 */*drawmode_table*/, UINT8 */*shadowmode_table*/, INT32 /*shdmask*/)
 	{
-		int xa,ya,ox,oy,flipx,flipy,mirrorx,mirrory,zoomx,zoomy,scalex,scaley,nozoom;
-		int temp, temp4;
-		int flipscreenx = K053246Regs[5] & 0x01;
-		int flipscreeny = K053246Regs[5] & 0x02;
+		INT32 xa,ya,ox,oy,flipx,flipy,mirrorx,mirrory,zoomx,zoomy,scalex,scaley,nozoom;
+		INT32 temp, temp4;
+		INT32 flipscreenx = K053246Regs[5] & 0x01;
+		INT32 flipscreeny = K053246Regs[5] & 0x02;
 
 		xa = ya = 0;
 		if (code & 0x01) xa += 1;
@@ -1124,11 +1124,11 @@ void k053247_draw_single_sprite_gxcore(UINT8 *gx_objzbuf, UINT8 *gx_shdzbuf, int
 		if (mirrorx) flipx = 0; // only applies to x mirror, proven
 		mirrory = temp & 0x8000;
 
-		int objset1 = K053247ReadRegs(5);
+		INT32 objset1 = K053247ReadRegs(5);
 		// for Escape Kids (GX975)
 		if ( objset1 & 8 ) // Check only "Bit #3 is '1'?"
 		{
-			int screenwidth = nScreenWidth-1;
+			INT32 screenwidth = nScreenWidth-1;
 
 			zoomx = zoomx>>1; // Fix sprite width to HALF size
 			ox = (ox>>1) + 1; // Fix sprite draw position
@@ -1140,8 +1140,8 @@ void k053247_draw_single_sprite_gxcore(UINT8 *gx_objzbuf, UINT8 *gx_shdzbuf, int
 		if (flipscreenx) { ox = -ox; if (!mirrorx) flipx = !flipx; }
 		if (flipscreeny) { oy = -oy; if (!mirrory) flipy = !flipy; }
 
-		int k053247_opset = K053247ReadRegs(0xc/2);
-		int wrapsize, xwraplim, ywraplim;
+		INT32 k053247_opset = K053247ReadRegs(0xc/2);
+		INT32 wrapsize, xwraplim, ywraplim;
 		if (k053247_opset & 0x40)
 		{
 			wrapsize = 512;
@@ -1156,8 +1156,8 @@ void k053247_draw_single_sprite_gxcore(UINT8 *gx_objzbuf, UINT8 *gx_shdzbuf, int
 		}
 
 		// get "display window" offsets
-		int offx = (short)((K053246Regs[0] << 8) | K053246Regs[1]);
-		int offy = (short)((K053246Regs[2] << 8) | K053246Regs[3]);
+		INT32 offx = (INT16)((K053246Regs[0] << 8) | K053246Regs[1]);
+		INT32 offy = (INT16)((K053246Regs[2] << 8) | K053246Regs[3]);
 
 		// apply wrapping and global offsets
 		temp = wrapsize-1;
@@ -1171,8 +1171,8 @@ void k053247_draw_single_sprite_gxcore(UINT8 *gx_objzbuf, UINT8 *gx_shdzbuf, int
 		if (oy >= ywraplim) oy -= wrapsize;
 
 		temp = temp4>>8 & 0x0f;
-		int width = 1 << (temp & 3);
-		int height = 1 << (temp>>2 & 3);
+		INT32 width = 1 << (temp & 3);
+		INT32 height = 1 << (temp>>2 & 3);
 
 		ox -= (zoomx * width) >> 13;
 		oy -= (zoomy * height) >> 13;

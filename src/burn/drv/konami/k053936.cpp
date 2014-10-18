@@ -404,16 +404,16 @@ void K053936GP_set_colorbase(INT32 chip, INT32 color_base)
 	K053936_color[chip] = color_base;
 }
 
-void K053936GP_enable(int chip, int enable)
+void K053936GP_enable(INT32 chip, INT32 enable)
 {
 	K053936_enable[chip] = enable;
 }
 
-void K053936GP_set_offset(int chip, int xoffs, int yoffs) { K053936_offset[chip][0] = xoffs; K053936_offset[chip][1] = yoffs; }
+void K053936GP_set_offset(INT32 chip, INT32 xoffs, INT32 yoffs) { K053936_offset[chip][0] = xoffs; K053936_offset[chip][1] = yoffs; }
 
-void K053936GP_clip_enable(int chip, int status) { K053936_clip_enabled[chip] = status; }
+void K053936GP_clip_enable(INT32 chip, INT32 status) { K053936_clip_enabled[chip] = status; }
 
-void K053936GP_set_cliprect(int chip, int minx, int maxx, int miny, int maxy)
+void K053936GP_set_cliprect(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT32 maxy)
 {
 	K053936_cliprect[chip][0] = minx;
 	K053936_cliprect[chip][1] = maxx;
@@ -421,25 +421,25 @@ void K053936GP_set_cliprect(int chip, int minx, int maxx, int miny, int maxy)
 	K053936_cliprect[chip][3] = maxy;	
 }
 
-static inline void K053936GP_copyroz32clip(INT32 chip, UINT16 *src_bitmap, INT32 *my_clip, UINT32 _startx,UINT32 _starty,int _incxx,int _incxy,int _incyx,int _incyy,
-		int tilebpp, int blend, int alpha, int clip, int pixeldouble_output)
+static inline void K053936GP_copyroz32clip(INT32 chip, UINT16 *src_bitmap, INT32 *my_clip, UINT32 _startx,UINT32 _starty,INT32 _incxx,INT32 _incxy,INT32 _incyx,INT32 _incyy,
+		INT32 tilebpp, INT32 blend, INT32 alpha, INT32 clip, INT32 pixeldouble_output)
 {
-	static const int colormask[8]={1,3,7,0xf,0x1f,0x3f,0x7f,0xff};
-	int cy, cx;
-	int ecx;
-	int src_pitch, incxy, incxx;
-	int src_minx, src_maxx, src_miny, src_maxy, cmask;
+	static const INT32 colormask[8]={1,3,7,0xf,0x1f,0x3f,0x7f,0xff};
+	INT32 cy, cx;
+	INT32 ecx;
+	INT32 src_pitch, incxy, incxx;
+	INT32 src_minx, src_maxx, src_miny, src_maxy, cmask;
 	UINT16 *src_base;
 	INT32 src_size;
 
 	const UINT32 *pal_base;
-	int dst_ptr;
-	int dst_size;
-	int dst_base2;
+	INT32 dst_ptr;
+	INT32 dst_size;
+	INT32 dst_base2;
 
-	int tx, dst_pitch;
+	INT32 tx, dst_pitch;
 	UINT32 *dst_base;
-	int starty, incyy, startx, incyx, ty, sx, sy;
+	INT32 starty, incyy, startx, incyx, ty, sx, sy;
 
 	incxy = _incxy; incxx = _incxx; incyy = _incyy; incyx = _incyx;
 	starty = _starty; startx = _startx;
@@ -491,9 +491,9 @@ static inline void K053936GP_copyroz32clip(INT32 chip, UINT16 *src_bitmap, INT32
 
 		do {
 			do {
-				int srcx = (cx >> 16) & 0x1fff;
-				int srcy = (cy >> 16) & 0x1fff;
-				int pixel;
+				INT32 srcx = (cx >> 16) & 0x1fff;
+				INT32 srcy = (cy >> 16) & 0x1fff;
+				INT32 pixel;
 				INT32 offs;
 				offs = srcy * src_pitch + srcx;
 
@@ -560,9 +560,9 @@ static inline void K053936GP_copyroz32clip(INT32 chip, UINT16 *src_bitmap, INT32
 
 		do {
 			do {
-				int srcx = (cx >> 16) & 0x1fff;
-				int srcy = (cy >> 16) & 0x1fff;
-				int pixel;
+				INT32 srcx = (cx >> 16) & 0x1fff;
+				INT32 srcy = (cy >> 16) & 0x1fff;
+				INT32 pixel;
 				INT32 offs;
 
 				offs = srcy * src_pitch + srcx;
@@ -598,13 +598,13 @@ static inline void K053936GP_copyroz32clip(INT32 chip, UINT16 *src_bitmap, INT32
 	}
 }
 
-static void K053936GP_zoom_draw(int chip, UINT16 *ctrl, UINT16 *linectrl, UINT16 *src_bitmap,
-		int tilebpp, int blend, int alpha, int pixeldouble_output)
+static void K053936GP_zoom_draw(INT32 chip, UINT16 *ctrl, UINT16 *linectrl, UINT16 *src_bitmap,
+		INT32 tilebpp, INT32 blend, INT32 alpha, INT32 pixeldouble_output)
 {
 	UINT16 *lineaddr;
 
 	UINT32 startx, starty;
-	int incxx, incxy, incyx, incyy, y, maxy, clip;
+	INT32 incxx, incxy, incyx, incyy, y, maxy, clip;
 
 	clip = K053936_clip_enabled[chip];
 
@@ -665,7 +665,7 @@ static void K053936GP_zoom_draw(int chip, UINT16 *ctrl, UINT16 *linectrl, UINT16
 	}
 }
 
-void K053936GP_0_zoom_draw(UINT16 *bitmap, int tilebpp, int blend, int alpha, int pixeldouble_output, UINT16* temp_m_k053936_0_ctrl_16, UINT16* temp_m_k053936_0_linectrl_16,UINT16* temp_m_k053936_0_ctrl, UINT16* temp_m_k053936_0_linectrl)
+void K053936GP_0_zoom_draw(UINT16 *bitmap, INT32 tilebpp, INT32 blend, INT32 alpha, INT32 pixeldouble_output, UINT16* temp_m_k053936_0_ctrl_16, UINT16* temp_m_k053936_0_linectrl_16,UINT16* temp_m_k053936_0_ctrl, UINT16* temp_m_k053936_0_linectrl)
 {
 	if (K053936_enable[0] == 0) return;
 

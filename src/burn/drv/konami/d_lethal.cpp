@@ -351,7 +351,7 @@ static const eeprom_interface lethalen_eeprom_interface =
 
 static void lethal_sprite_callback(INT32 *code, INT32 *color, INT32 *priority)
 {
-	int pri = (*color & 0xfff0);
+	INT32 pri = (*color & 0xfff0);
 	*color = *color & 0x000f;
 	*color += 0x400 / 64;
 
@@ -367,7 +367,7 @@ static void lethal_sprite_callback(INT32 *code, INT32 *color, INT32 *priority)
 	*code = (*code & 0x3fff);
 }
 
-static void lethal_tile_callback(int layer, int *code, int *color, int */*flags*/)
+static void lethal_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 */*flags*/)
 {
 	*color = layer_colorbase[layer] + ((*color & 0x3c) << 2);
 	*code &= 0xffff;

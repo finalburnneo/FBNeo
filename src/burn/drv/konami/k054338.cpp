@@ -57,14 +57,14 @@ void K054338WriteByte(INT32 offset, UINT8 data)
 }
 
 // returns a 16-bit '338 register
-INT32 K054338_read_register(int reg)
+INT32 K054338_read_register(INT32 reg)
 {
 	return k54338_regs[reg];
 }
 
 void K054338_update_all_shadows()
 {
-	int i, d;
+	INT32 i, d;
 
 	for (i = 0; i < 9; i++)
 	{
@@ -75,7 +75,7 @@ void K054338_update_all_shadows()
 	}
 }
 
-void K054338_export_config(int **shd_rgb)
+void K054338_export_config(INT32 **shd_rgb)
 {
 	*shd_rgb = m_shd_rgb;
 }
@@ -85,7 +85,7 @@ void K054338_fill_solid_bg()
 {
 	UINT32 bgcolor;
 	UINT32 *pLine;
-	int x, y;
+	INT32 x, y;
 
 	bgcolor = (K054338_read_register(K338_REG_BGC_R)&0xff)<<16;
 	bgcolor |= K054338_read_register(K338_REG_BGC_GB);
@@ -101,12 +101,12 @@ void K054338_fill_solid_bg()
 }
 
 // Unified k054338/K055555 BG color fill
-void K054338_fill_backcolor(int palette_offset, int mode) // (see p.67)
+void K054338_fill_backcolor(INT32 palette_offset, INT32 mode) // (see p.67)
 {
-	int clipx, clipy, clipw, cliph, i, dst_pitch;
-	int BGC_CBLK, BGC_SET;
+	INT32 clipx, clipy, clipw, cliph, i, dst_pitch;
+	INT32 BGC_CBLK, BGC_SET;
 	UINT32 *dst_ptr, *pal_ptr;
-	int bgcolor;
+	INT32 bgcolor;
 
 	clipx = 0 & ~3;
 	clipy = 0;
@@ -182,10 +182,10 @@ void K054338_fill_backcolor(int palette_offset, int mode) // (see p.67)
 }
 
 // addition blending unimplemented (requires major changes to drawgfx and tilemap.c)
-INT32 K054338_set_alpha_level(int pblend)
+INT32 K054338_set_alpha_level(INT32 pblend)
 {
 	UINT16 *regs;
-	int ctrl, mixpri, mixset, mixlv;
+	INT32 ctrl, mixpri, mixset, mixlv;
 
 	if (pblend <= 0 || pblend > 3)
 	{
@@ -226,7 +226,7 @@ INT32 K054338_set_alpha_level(int pblend)
 	return(mixlv);
 }
 
-void K054338_invert_alpha(int invert)
+void K054338_invert_alpha(INT32 invert)
 {
 	k054338_alphainverted = invert;
 }

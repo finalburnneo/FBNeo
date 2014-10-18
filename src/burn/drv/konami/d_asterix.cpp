@@ -349,9 +349,9 @@ static UINT8 __fastcall asterix_sound_read(UINT16 address)
 
 	return 0;
 }
-static void asterix_sprite_callback(int *code, int *color, int *priority)
+static void asterix_sprite_callback(INT32 *code, INT32 *color, INT32 *priority)
 {
-	int pri = (*color & 0x00e0) >> 2;
+	INT32 pri = (*color & 0x00e0) >> 2;
 	if (pri <= layerpri[2])					*priority = 0;
 	else if (pri > layerpri[2] && pri <= layerpri[1])	*priority = 0xf0;
 	else if (pri > layerpri[1] && pri <= layerpri[0])	*priority = 0xfc;
@@ -360,7 +360,7 @@ static void asterix_sprite_callback(int *code, int *color, int *priority)
 	*code = (*code & 0xfff) | spritebanks[(*code >> 12) & 3];
 }
 
-static void asterix_tile_callback(int layer, int *code, int *color, int *flags)
+static void asterix_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 *flags)
 {
 	*flags = (*code & 0x1000) ? 1 : 0;
 
@@ -569,7 +569,7 @@ static INT32 DrvDraw()
 {
 	DrvPaletteRecalc();
 
-	int layer[3];
+	INT32 layer[3];
 
 	tilebanks[0] = (K056832GetLookup(0) << 10);
 	tilebanks[1] = (K056832GetLookup(1) << 10);

@@ -256,7 +256,7 @@ static void decode_gfx()
 {
 	INT32 i;
 	INT32 G1 = 0xc000/3;
-	int G2 = 0x20000/2;
+	INT32 G2 = 0x20000/2;
 	UINT8 *gfx1 = DrvGfxROM0;
 	UINT8 *gfx2 = DrvGfxROM1;
 	UINT8 *buf = (UINT8*)BurnMalloc(0x20000);
@@ -327,9 +327,9 @@ static INT32 DrvGfxDecode()
 
 static void DrvPaletteInit()
 {
-	for (int i = 0;i < 256;i++)
+	for (INT32 i = 0;i < 256;i++)
 	{
-		int bit0,bit1,bit2,bit3,r,g,b;
+		INT32 bit0,bit1,bit2,bit3,r,g,b;
 
 		/* red component */
 		bit0 = (DrvColPROM[i] >> 0) & 0x01;
@@ -426,7 +426,7 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static void draw_layer(int rows_start, int rows_end)
+static void draw_layer(INT32 rows_start, INT32 rows_end)
 {
 	INT32 scrollx[4] = { 0x100 - scroll, 0x100 - scroll, 0x100 - scroll, 0x100 };
 

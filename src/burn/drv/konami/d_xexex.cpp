@@ -394,7 +394,7 @@ static UINT8 __fastcall xexex_sound_read(UINT16 address)
 
 static void xexex_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
 {
-	int pri = (*color & 0x3e0) >> 4;
+	INT32 pri = (*color & 0x3e0) >> 4;
 
 	if (pri <= layerpri[3])					*priority = 0x0000;
 	else if (pri > layerpri[3] && pri <= layerpri[2])	*priority = 0xff00;
@@ -405,7 +405,7 @@ static void xexex_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority
 	*color = sprite_colorbase | (*color & 0x001f);
 }
 
-static void xexex_tile_callback(int layer, int */*code*/, int *color, int */*flags*/)
+static void xexex_tile_callback(INT32 layer, INT32 */*code*/, INT32 *color, INT32 */*flags*/)
 {
 	*color = layer_colorbase[layer] | (*color >> 2 & 0x0f);
 }

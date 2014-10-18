@@ -398,12 +398,12 @@ static void draw_sprites()
 {
 	for (INT32 offs = 0x30 - 2; offs >= 0; offs -= 2)
 	{
-		int attr = DrvSprRAM0[offs + 0];
-		int code = DrvSprRAM1[offs + 1] + 256 * (attr & 0x01);
-		int flipx = ~attr & 0x40;
-		int flipy =  attr & 0x80;
-		int sy = 240 - DrvSprRAM0[offs + 1];
-		int sx = DrvSprRAM1 [offs + 0];
+		INT32 attr = DrvSprRAM0[offs + 0];
+		INT32 code = DrvSprRAM1[offs + 1] + 256 * (attr & 0x01);
+		INT32 flipx = ~attr & 0x40;
+		INT32 flipy =  attr & 0x80;
+		INT32 sy = 240 - DrvSprRAM0[offs + 1];
+		INT32 sx = DrvSprRAM1 [offs + 0];
 
 		if (0) // if (*flipscreen)
 		{

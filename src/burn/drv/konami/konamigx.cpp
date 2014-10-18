@@ -3,20 +3,20 @@
 
 static INT32 konamigx_wrport1_0 = 0;
 
-UINT8 m_sound_ctrl;
-UINT8 m_sound_intck;
-UINT32 m_fantjour_dma[8];
-int m_konamigx_current_frame;
-int m_gx_objdma, m_gx_primode;
+//static UINT8 m_sound_ctrl;
+//static UINT8 m_sound_intck;
+//static UINT32 m_fantjour_dma[8];
+//static INT32 m_konamigx_current_frame;
+static INT32 m_gx_objdma, m_gx_primode;
 
 #define GX_MAX_SPRITES 512
 #define GX_MAX_LAYERS  6
 #define GX_MAX_OBJECTS (GX_MAX_SPRITES + GX_MAX_LAYERS)
 
-static struct GX_OBJ { int order, offs, code, color; } *gx_objpool;
+static struct GX_OBJ { INT32 order, offs, code, color; } *gx_objpool;
 static UINT16 *gx_spriteram;
 
-static int *K054338_shdRGB;
+static INT32 *K054338_shdRGB;
 
 static UINT8 *gx_shdzbuf, *gx_objzbuf;
 
@@ -37,9 +37,9 @@ static INT32 osmixon;
 void konamigx_precache_registers()
 {
 	// (see sprite color coding scheme on p.46 & 47)
-	static const int coregmasks[5] = {0xf,0xe,0xc,0x8,0x0};
-	static const int coregshifts[5]= {4,5,6,7,8};
-	int i;
+	static const INT32 coregmasks[5] = {0xf,0xe,0xc,0x8,0x0};
+	static const INT32 coregshifts[5]= {4,5,6,7,8};
+	INT32 i;
 
 	i = K053247ReadRegs(0x8/2);
 	k053247_vrcbk[0] = (i & 0x000f) << 14;
@@ -73,7 +73,7 @@ void konamigx_precache_registers()
 	osmixon  = K055555ReadRegister(K55_OSBLEND_ON);
 }
 
-void konamigx_mixer_init(int objdma)
+void konamigx_mixer_init(INT32 objdma)
 {
 	m_gx_objdma = 0;
 	m_gx_primode = 0;
@@ -110,15 +110,15 @@ void konamigx_mixer_exit()
 	m_gx_objdma = 0;
 }
 
-static void gx_wipezbuf(int noshadow)
+static void gx_wipezbuf(INT32 noshadow)
 {
 #define GX_ZBUFW	512
 
-	int w = (nScreenWidth - 1);
-	int h = (nScreenHeight - 1);
+	INT32 w = (nScreenWidth - 1);
+	INT32 h = (nScreenHeight - 1);
 
 	UINT8 *zptr = gx_objzbuf;
-	int ecx = h;
+	INT32 ecx = h;
 
 	do { memset(zptr, -1, w); zptr += GX_ZBUFW; } while (--ecx);
 
@@ -131,19 +131,19 @@ static void gx_wipezbuf(int noshadow)
 	}
 }
 
-void konamigx_mixer_primode(int mode)
+void konamigx_mixer_primode(INT32 mode)
 {
 	m_gx_primode = mode;
 }
 
-static void gx_draw_basic_tilemaps(int mixerflags, int code)
+static void gx_draw_basic_tilemaps(INT32 mixerflags, INT32 code)
 {
-	int temp1,temp2,temp3,temp4;
-	int i = code<<1;
-	int j = mixerflags>>i & 3;
-	int k = 0;
+	INT32 temp1,temp2,temp3,temp4;
+	INT32 i = code<<1;
+	INT32 j = mixerflags>>i & 3;
+	INT32 k = 0;
 
-	int disp = K055555ReadRegister(K55_INPUT_ENABLES);
+	INT32 disp = K055555ReadRegister(K55_INPUT_ENABLES);
 	if (disp & (1<<code))
 	{
 		if (j == GXMIX_BLEND_NONE)  { temp1 = 0xff; temp2 = temp3 = 0; } else
@@ -175,21 +175,21 @@ static void gx_draw_basic_tilemaps(int mixerflags, int code)
 	}
 }
 
-static void gx_draw_basic_extended_tilemaps_1(int mixerflags, int code, int sub1, int sub1flags, int rushingheroes_hack, int offs)
+static void gx_draw_basic_extended_tilemaps_1(INT32 mixerflags, INT32 code, INT32 sub1, INT32 sub1flags, INT32 rushingheroes_hack, INT32 offs)
 {
-	int temp1,temp2,temp3,temp4;
-	int i = code<<1;
-	int j = mixerflags>>i & 3;
-	int k = 0;
-	static int parity = 0;
+	INT32 temp1,temp2,temp3,temp4;
+	INT32 i = code<<1;
+	INT32 j = mixerflags>>i & 3;
+	INT32 k = 0;
+	static INT32 parity = 0;
 	parity ^= 1;
 
 	sub1 ^= 0; // kill warnings
 
-	int disp = K055555ReadRegister(K55_INPUT_ENABLES);
+	INT32 disp = K055555ReadRegister(K55_INPUT_ENABLES);
 	if ((disp & K55_INP_SUB1) || (rushingheroes_hack))
 	{
-		int alpha = 255;
+		INT32 alpha = 255;
 
 		if (j == GXMIX_BLEND_NONE)  { temp1 = 0xff; temp2 = temp3 = 0; } else
 		if (j == GXMIX_BLEND_FORCE) { temp1 = 0x00; temp2 = mixerflags>>24; temp3 = 3; }
@@ -208,14 +208,14 @@ static void gx_draw_basic_extended_tilemaps_1(int mixerflags, int code, int sub1
 			if (temp4 < 255) k = (j == GXMIX_BLEND_FAST) ? ~parity : 1;
 		}
 
-		int l = sub1flags & 0xf;
+		INT32 l = sub1flags & 0xf;
 
 		if (offs == -2)
 		{
 
-			int pixeldouble_output = 0;
+			INT32 pixeldouble_output = 0;
 
-			int width = nScreenWidth;
+			INT32 width = nScreenWidth;
 
 			if (width>512) // vsnetscr case
 				pixeldouble_output = 1;
@@ -231,21 +231,21 @@ static void gx_draw_basic_extended_tilemaps_1(int mixerflags, int code, int sub1
 	}
 }
 
-static void gx_draw_basic_extended_tilemaps_2(int mixerflags, int code, int sub2, int sub2flags, INT32 extra_bitmap, int offs)
+static void gx_draw_basic_extended_tilemaps_2(INT32 mixerflags, INT32 code, INT32 sub2, INT32 sub2flags, INT32 extra_bitmap, INT32 offs)
 {
-	int temp1,temp2,temp3,temp4;
-	int i = code<<1;
-	int j = mixerflags>>i & 3;
-//  int k = 0;
-//  static int parity = 0;
+	INT32 temp1,temp2,temp3,temp4;
+	INT32 i = code<<1;
+	INT32 j = mixerflags>>i & 3;
+//  INT32 k = 0;
+//  static INT32 parity = 0;
 //  parity ^= 1;
 
 	sub2 ^= 0; // kill warnings
 
-	int disp = K055555ReadRegister(K55_INPUT_ENABLES);
+	INT32 disp = K055555ReadRegister(K55_INPUT_ENABLES);
 	if (disp & K55_INP_SUB2)
 	{
-		//int alpha = 255;
+		//INT32 alpha = 255;
 		if (j == GXMIX_BLEND_NONE)  { temp1 = 0xff; temp2 = temp3 = 0; } else
 		if (j == GXMIX_BLEND_FORCE) { temp1 = 0x00; temp2 = mixerflags>>26; temp3 = 3; }
 		else
@@ -264,16 +264,16 @@ static void gx_draw_basic_extended_tilemaps_2(int mixerflags, int code, int sub2
 			//if (temp4 < 255) k = (j == GXMIX_BLEND_FAST) ? ~parity : 1;
 		}
 
-		int l = sub2flags & 0xf;
+		INT32 l = sub2flags & 0xf;
 
 		if (offs == -3)
 		{
 			if (extra_bitmap) // soccer superstars roz layer
 			{
 #if 0 // iq_132
-				int xx,yy;
-				int width = screen.width();
-				int height = screen.height();
+				INT32 xx,yy;
+				INT32 width = screen.width();
+				INT32 height = screen.height();
 				const pen_t *paldata = m_palette->pens();
 
 				// the output size of the roz layer has to be doubled horizontally
@@ -285,7 +285,7 @@ static void gx_draw_basic_extended_tilemaps_2(int mixerflags, int code, int sub2
 				{
 					UINT16* src = &extra_bitmap->pix16(yy);
 					UINT32* dst = &bitmap.pix32(yy);
-					int shiftpos = 0;
+					INT32 shiftpos = 0;
 					for (xx=0;xx<width;xx+=2)
 					{
 						UINT16 dat = src[(((xx/2)+shiftpos))%width];
@@ -297,7 +297,7 @@ static void gx_draw_basic_extended_tilemaps_2(int mixerflags, int code, int sub2
 			}
 			else
 			{
-			//  int pixeldouble_output = 0;
+			//  INT32 pixeldouble_output = 0;
 			//  K053936GP_1_zoom_draw(machine, bitmap, cliprect, sub2, l, k, alpha, pixeldouble_output);
 			l = 0; // kill warning
 			}
@@ -308,34 +308,34 @@ static void gx_draw_basic_extended_tilemaps_2(int mixerflags, int code, int sub2
 	}
 }
 
-extern void k053247_draw_single_sprite_gxcore(UINT8 *,UINT8 *gx_shdzbuf, int code, unsigned short *gx_spriteram, int offs,
-		int color, int alpha, int drawmode, int zcode, int pri,
-		int primask, int shadow, unsigned char *drawmode_table, unsigned char *shadowmode_table, int shdmask);
+extern void k053247_draw_single_sprite_gxcore(UINT8 *,UINT8 *gx_shdzbuf, INT32 code, UINT16 *gx_spriteram, INT32 offs,
+		INT32 color, INT32 alpha, INT32 drawmode, INT32 zcode, INT32 pri,
+		INT32 primask, INT32 shadow, UINT8 *drawmode_table, UINT8 *shadowmode_table, INT32 shdmask);
 
 
-static void konamigx_mixer_draw(int sub1, int sub1flags,int sub2, int sub2flags,int mixerflags,  int extra_bitmap, int rushingheroes_hack,struct GX_OBJ *objpool,int *objbuf,int nobj)
+static void konamigx_mixer_draw(INT32 sub1, INT32 sub1flags,INT32 sub2, INT32 sub2flags,INT32 mixerflags,  INT32 extra_bitmap, INT32 rushingheroes_hack,struct GX_OBJ *objpool,INT32 *objbuf,INT32 nobj)
 {
 	// traverse draw list
-	int disp = K055555ReadRegister(K55_INPUT_ENABLES);
+	INT32 disp = K055555ReadRegister(K55_INPUT_ENABLES);
 
-	for (int count=0; count<nobj; count++)
+	for (INT32 count=0; count<nobj; count++)
 	{
 		struct GX_OBJ *objptr = objpool + objbuf[count];
-		int order  = objptr->order;
-		int offs   = objptr->offs;
-		int code   = objptr->code;
-		int color  = objptr->color;
+		INT32 order  = objptr->order;
+		INT32 offs   = objptr->offs;
+		INT32 code   = objptr->code;
+		INT32 color  = objptr->color;
 
 		/* entries >=0 in our list are sprites */
 		if (offs >= 0)
 		{
 			if (!(disp & K55_INP_OBJ)) continue;
 
-			int drawmode = order>>4 & 0xf;
+			INT32 drawmode = order>>4 & 0xf;
 
-			int alpha = 255;
-			int pri = 0;
-			int zcode = -1; // negative zcode values turn off z-buffering
+			INT32 alpha = 255;
+			INT32 pri = 0;
+			INT32 zcode = -1; // negative zcode values turn off z-buffering
 
 			if (drawmode & 2)
 			{
@@ -377,13 +377,13 @@ static void konamigx_mixer_draw(int sub1, int sub1flags,int sub2, int sub2flags,
 	}
 }
 
-void konamigx_mixer(int sub1 /*extra tilemap 1*/, int sub1flags, int sub2 /*extra tilemap 2*/, int sub2flags, int mixerflags, int extra_bitmap /*extra tilemap 3*/, int rushingheroes_hack)
+void konamigx_mixer(INT32 sub1 /*extra tilemap 1*/, INT32 sub1flags, INT32 sub2 /*extra tilemap 2*/, INT32 sub2flags, INT32 mixerflags, INT32 extra_bitmap /*extra tilemap 3*/, INT32 rushingheroes_hack)
 {
-	int objbuf[GX_MAX_OBJECTS];
-	int shadowon[3], shdpri[3], layerid[6], layerpri[6];
+	INT32 objbuf[GX_MAX_OBJECTS];
+	INT32 shadowon[3], shdpri[3], layerid[6], layerpri[6];
 
 	struct GX_OBJ *objpool, *objptr;
-	int cltc_shdpri, /*prflp,*/ disp;
+	INT32 cltc_shdpri, /*prflp,*/ disp;
 
 	// abort if object database failed to initialize
 	objpool = gx_objpool;
@@ -452,14 +452,14 @@ void konamigx_mixer(int sub1 /*extra tilemap 1*/, int sub1flags, int sub2 /*extr
 	shdpri[1]   = K055555ReadRegister(K55_SHAD2_PRI);
 	shdpri[2]   = K055555ReadRegister(K55_SHAD3_PRI);
 
-	int spri_min = 0;
+	INT32 spri_min = 0;
 
 	shadowon[2] = shadowon[1] = shadowon[0] = 0;
 
-	int k = 0;
+	INT32 k = 0;
 	if (!(mixerflags & GXMIX_NOSHADOW))
 	{
-		int i,j;
+		INT32 i,j;
 		// only enable shadows beyond a +/-7 RGB threshold
 		for (j=0,i=0; i<3; j+=3,i++)
 		{
@@ -469,7 +469,7 @@ void konamigx_mixer(int sub1 /*extra tilemap 1*/, int sub1flags, int sub2 /*extr
 		}
 
 		// SHDON specifies layers on which shadows can be projected (see detail on p.65 7.2.8)
-		int temp = K055555ReadRegister(K55_SHD_ON);
+		INT32 temp = K055555ReadRegister(K55_SHD_ON);
 		for (i=0; i<4; i++) if (!(temp>>i & 1) && spri_min < layerpri[i]) spri_min = layerpri[i]; // HACK
 
 		// update shadows status
@@ -477,12 +477,12 @@ void konamigx_mixer(int sub1 /*extra tilemap 1*/, int sub1flags, int sub2 /*extr
 	}
 
 	// pre-sort layers
-	for (int j=0; j<5; j++)
+	for (INT32 j=0; j<5; j++)
 	{
-		int temp1 = layerpri[j];
-		for (int i=j+1; i<6; i++)
+		INT32 temp1 = layerpri[j];
+		for (INT32 i=j+1; i<6; i++)
 		{
-			int temp2 = layerpri[i];
+			INT32 temp2 = layerpri[i];
 			if ((UINT32)temp1 <= (UINT32)temp2)
 			{
 				layerpri[i] = temp1; layerpri[j] = temp1 = temp2;
@@ -493,13 +493,13 @@ void konamigx_mixer(int sub1 /*extra tilemap 1*/, int sub1flags, int sub2 /*extr
 
 	// build object database and create indices
 	objptr = objpool;
-	int nobj = 0;
+	INT32 nobj = 0;
 
-	for (int i=5; i>=0; i--)
+	for (INT32 i=5; i>=0; i--)
 	{
-		int offs;
+		INT32 offs;
 
-		int code = layerid[i];
+		INT32 code = layerid[i];
 		switch (code)
 		{
 			/*
@@ -537,21 +537,21 @@ void konamigx_mixer(int sub1 /*extra tilemap 1*/, int sub1flags, int sub2 /*extr
 	}
 
 //  i = j = 0xff;
-	int l = 0;
+	INT32 l = 0;
 
-	for (int offs=0; offs<0x800; offs+=8)
+	for (INT32 offs=0; offs<0x800; offs+=8)
 	{
-		int pri = 0;
+		INT32 pri = 0;
 
 		if (!(gx_spriteram[offs] & 0x8000)) continue;
 
-		int zcode = gx_spriteram[offs] & 0xff;
+		INT32 zcode = gx_spriteram[offs] & 0xff;
 
 		// invert z-order when opset_pri is set (see p.51 OPSET PRI)
 		if (k053247_opset & 0x10) zcode = 0xff - zcode;
 
-		int code  = gx_spriteram[offs+1];
-		int color = k = gx_spriteram[offs+6];
+		INT32 code  = gx_spriteram[offs+1];
+		INT32 color = k = gx_spriteram[offs+6];
 		l     = gx_spriteram[offs+7];
 
 		K053247Callback(&code, &color, &pri);
@@ -564,12 +564,12 @@ void konamigx_mixer(int sub1 /*extra tilemap 1*/, int sub1flags, int sub2 /*extr
 		    temp3  = add shadow object
 		    temp4  = shadow pens draw mode
 		*/
-		int temp4 = 0;
-		int temp3 = 0;
-		int temp2 = 0;
-		int temp1 = 0;
-		int spri = 0;
-		int shadow = 0;
+		INT32 temp4 = 0;
+		INT32 temp3 = 0;
+		INT32 temp2 = 0;
+		INT32 temp1 = 0;
+		INT32 spri = 0;
+		INT32 shadow = 0;
 
 		if (color & K055555_FULLSHADOW)
 		{
@@ -583,7 +583,7 @@ void konamigx_mixer(int sub1 /*extra tilemap 1*/, int sub1flags, int sub2 /*extr
 			shadow = k>>10 & 3;
 			if (shadow) // object has shadow?
 			{
-				int k053246_objset1 = K053246ReadRegs(5);
+				INT32 k053246_objset1 = K053246ReadRegs(5);
 
 				if (shadow != 1 || k053246_objset1 & 0x20)
 				{
@@ -654,7 +654,7 @@ void konamigx_mixer(int sub1 /*extra tilemap 1*/, int sub1flags, int sub2 /*extr
 		{
 
 			// add objects with solid or alpha pens
-			int order = pri<<24 | zcode<<16 | offs<<(8-3) | temp2<<4;
+			INT32 order = pri<<24 | zcode<<16 | offs<<(8-3) | temp2<<4;
 			objptr->order = order;
 			objptr->offs  = offs;
 			objptr->code  = code;
@@ -668,7 +668,7 @@ void konamigx_mixer(int sub1 /*extra tilemap 1*/, int sub1flags, int sub2 /*extr
 		if (temp3 && !(color & K055555_SKIPSHADOW) && !(mixerflags & GXMIX_NOSHADOW))
 		{
 			// add objects with shadows if enabled
-			int order = spri<<24 | zcode<<16 | offs<<(8-3) | temp4<<4 | shadow;
+			INT32 order = spri<<24 | zcode<<16 | offs<<(8-3) | temp4<<4 | shadow;
 			objptr->order = order;
 			objptr->offs  = offs;
 			objptr->code  = code;
@@ -684,14 +684,14 @@ void konamigx_mixer(int sub1 /*extra tilemap 1*/, int sub1flags, int sub2 /*extr
 	k = nobj;
 	l = nobj - 1;
 
-	for (int j=0; j<l; j++)
+	for (INT32 j=0; j<l; j++)
 	{
-		int temp1 = objbuf[j];
-		int temp2 = objpool[temp1].order;
-		for (int i=j+1; i<k; i++)
+		INT32 temp1 = objbuf[j];
+		INT32 temp2 = objpool[temp1].order;
+		for (INT32 i=j+1; i<k; i++)
 		{
-			int temp3 = objbuf[i];
-			int temp4 = objpool[temp3].order;
+			INT32 temp3 = objbuf[i];
+			INT32 temp4 = objpool[temp3].order;
 			if ((UINT32)temp2 <= (UINT32)temp4) { temp2 = temp4; objbuf[i] = temp1; objbuf[j] = temp1 = temp3; }
 		}
 	}

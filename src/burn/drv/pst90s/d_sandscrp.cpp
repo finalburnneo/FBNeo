@@ -242,7 +242,7 @@ static void galpanib_calc_write(INT32 offset, UINT16 data)
 
 static void update_irq_state()
 {
-	int irq = (vblank_irq || sprite_irq || unknown_irq) ? 1 : 0;
+	INT32 irq = (vblank_irq || sprite_irq || unknown_irq) ? 1 : 0;
 
 	SekSetIRQLine(1, irq ? SEK_IRQSTATUS_ACK : SEK_IRQSTATUS_NONE);
 }

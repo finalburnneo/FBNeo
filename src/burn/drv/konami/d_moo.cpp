@@ -206,11 +206,11 @@ STDDIPINFO(Bucky)
 
 static void moo_objdma()
 {
-	int num_inactive;
+	INT32 num_inactive;
 	UINT16 *dst = (UINT16*)K053247Ram;
 	UINT16 *src = (UINT16*)DrvSprRAM;
 
-	int counter = 23;
+	INT32 counter = 23;
 
 	num_inactive = counter = 256;
 
@@ -732,7 +732,7 @@ static const eeprom_interface moo_eeprom_interface =
 
 static void moo_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
 {
-	int pri = (*color & 0x03e0) >> 4;
+	INT32 pri = (*color & 0x03e0) >> 4;
 
 	if (pri <= layerpri[2])		*priority = 0x00;
 	else if (pri <= layerpri[1])	*priority = 0xf0;
@@ -742,7 +742,7 @@ static void moo_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
 	*color = sprite_colorbase | (*color & 0x001f);
 }
 
-static void moo_tile_callback(int layer, int */*code*/, int *color, int */*flags*/)
+static void moo_tile_callback(INT32 layer, INT32 */*code*/, INT32 *color, INT32 */*flags*/)
 {
 	*color = layer_colorbase[layer] | (*color >> 2 & 0x0f);
 }
@@ -1039,9 +1039,9 @@ static INT32 DrvDraw()
 
 	KonamiClearBitmaps(0);
 
-	static const int K053251_CI[4] = { 1, 2, 3, 4 };
-	int layers[3];
-	int plane, alpha = 0xff;
+	static const INT32 K053251_CI[4] = { 1, 2, 3, 4 };
+	INT32 layers[3];
+	INT32 plane, alpha = 0xff;
 
 	sprite_colorbase = K053251GetPaletteIndex(0);
 	layer_colorbase[0] = 0x70;

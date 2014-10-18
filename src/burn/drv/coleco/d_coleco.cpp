@@ -144,9 +144,9 @@ static struct BurnDIPInfo ColecoDIPList[]=
 
 STDDIPINFO(Coleco)
 
-static UINT8 paddle_r(int paddle)
+static UINT8 paddle_r(INT32 paddle)
 {
-	int ctrl_select = (DrvDips[0] >> (paddle ? 4 : 0)) & 0x07;
+	INT32 ctrl_select = (DrvDips[0] >> (paddle ? 4 : 0)) & 0x07;
 
 	UINT8 data = 0x0f;
 
@@ -302,7 +302,7 @@ UINT8 __fastcall coleco_read_port(UINT16 port)
 	return 0;
 }
 
-static void coleco_vdp_interrupt(int state)
+static void coleco_vdp_interrupt(INT32 state)
 {
 	if (state && !last_state)
 		ZetNmi();
@@ -318,7 +318,7 @@ static void CVFastLoadHack() {
     }
 }
 
-static int DrvDoReset()
+static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
@@ -339,7 +339,7 @@ static int DrvDoReset()
 	return 0;
 }
 
-static int MemIndex()
+static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
@@ -356,13 +356,13 @@ static int MemIndex()
 	return 0;
 }
 
-static int DrvInit()
+static INT32 DrvInit()
 {
 	// refresh rate 59.92hz
 
 	AllMem = NULL;
 	MemIndex();
-	int nLen = MemEnd - (UINT8 *)0;
+	INT32 nLen = MemEnd - (UINT8 *)0;
 	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
@@ -392,7 +392,7 @@ static int DrvInit()
 	ZetMapArea(0x0000, 0x1fff, 0, DrvZ80BIOS);
 	ZetMapArea(0x0000, 0x1fff, 2, DrvZ80BIOS);
 
-	for (int i = 0x6000; i < 0x8000; i+=0x0400) {
+	for (INT32 i = 0x6000; i < 0x8000; i+=0x0400) {
 		ZetMapArea(i + 0x0000, i + 0x03ff, 0, DrvZ80RAM);
 		ZetMapArea(i + 0x0000, i + 0x03ff, 1, DrvZ80RAM);
 		ZetMapArea(i + 0x0000, i + 0x03ff, 2, DrvZ80RAM);
@@ -413,7 +413,7 @@ static int DrvInit()
 	return 0;
 }
 
-static int DrvExit()
+static INT32 DrvExit()
 {
 	TMS9928AExit();
 	ZetExit();
@@ -425,7 +425,7 @@ static int DrvExit()
 	return 0;
 }
 
-static int DrvFrame()
+static INT32 DrvFrame()
 {
 	if (DrvReset) {
 		DrvDoReset();
@@ -433,7 +433,7 @@ static int DrvFrame()
 
 	{
 		memset (DrvInputs, 0xff, 4 * sizeof(short));
-		for (int i = 0; i < 16; i++) {
+		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
@@ -441,15 +441,15 @@ static int DrvFrame()
 		}
 	}
 
-	int nInterleave = 50;
-	int nCyclesTotal = 3579545 / 60;
-	int nCyclesDone  = 0;
+	INT32 nInterleave = 50;
+	INT32 nCyclesTotal = 3579545 / 60;
+	INT32 nCyclesDone  = 0;
 
 	ZetOpen(0);
 
-	for (int i = 0; i < nInterleave; i++)
+	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		int nSegment = nCyclesTotal / nInterleave;
+		INT32 nSegment = nCyclesTotal / nInterleave;
 
 		nCyclesDone += ZetRun(nSegment);
 
@@ -471,7 +471,7 @@ static int DrvFrame()
 	return 0;
 }
 
-static int DrvScan(int nAction,int *pnMin)
+static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 {
 	struct BurnArea ba;
 

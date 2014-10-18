@@ -1685,25 +1685,25 @@ static UINT8 __fastcall mystwarr_sound_read(UINT16 address)
 
 //--------------------------------------------------------------------------------------------------------------
 
-static void mystwarr_tile_callback(int layer, int *code, int *color, int */*flags*/)
+static void mystwarr_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 */*flags*/)
 {
 	if (layer == 1) {if ((*code & 0xff00) + (*color) == 0x4101) cbparam++; else cbparam--;} //* water hack (TEMPORARY)
 
 	*color = layer_colorbase[layer] | ((*color >> 1) & 0x1e);
 }
 
-static void metamrph_tile_callback(int layer, int */*code*/, int *color, int */*flags*/)
+static void metamrph_tile_callback(INT32 layer, INT32 */*code*/, INT32 *color, INT32 */*flags*/)
 {
 	*color = layer_colorbase[layer] | (*color >> 2 & 0x0f);
 }
 
-static void game5bpp_tile_callback(int layer, int */*code*/, int *color, int */*flags*/)
+static void game5bpp_tile_callback(INT32 layer, INT32 */*code*/, INT32 *color, INT32 */*flags*/)
 {
 	*color = layer_colorbase[layer] | ((*color >> 1) & 0x1e);
 }
 static void mystwarr_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
 {
-	int c = *color;
+	INT32 c = *color;
 	*color = sprite_colorbase | (c & 0x001f);
 	*priority = c & 0x00f0;
 }
@@ -1729,7 +1729,7 @@ static void metamrph_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *prior
 
 static void martchmp_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
 {
-	int c = *color;
+	INT32 c = *color;
 
 	if ((c & 0x3ff) == 0x11f)
 		*color = K055555_FULLSHADOW;
@@ -1744,7 +1744,7 @@ static void martchmp_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *prior
 
 static void gaiapolis_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
 {
-	int c = *color;
+	INT32 c = *color;
 
 	*color = sprite_colorbase | (c>>4 & 0x20) | (c & 0x001f);
 	*priority = c & 0x00e0;
@@ -1866,10 +1866,10 @@ static void decode_gfx1(UINT8 *src, UINT8 *d, INT32 len)
 
 	while (s < pFinish)
 	{
-		int d0 = ((s[0]&0x80)<<0)|((s[0]&0x08)<<3)|((s[1]&0x80)>>2)|((s[1]&0x08)<<1)|((s[2]&0x80)>>4)|((s[2]&0x08)>>1)|((s[3]&0x80)>>6)|((s[3]&0x08)>>3);
-		int d1 = ((s[0]&0x40)<<1)|((s[0]&0x04)<<4)|((s[1]&0x40)>>1)|((s[1]&0x04)<<2)|((s[2]&0x40)>>3)|((s[2]&0x04)>>0)|((s[3]&0x40)>>5)|((s[3]&0x04)>>2);
-		int d2 = ((s[0]&0x20)<<2)|((s[0]&0x02)<<5)|((s[1]&0x20)<<0)|((s[1]&0x02)<<3)|((s[2]&0x20)>>2)|((s[2]&0x02)<<1)|((s[3]&0x20)>>4)|((s[3]&0x02)>>1);
-		int d3 = ((s[0]&0x10)<<3)|((s[0]&0x01)<<6)|((s[1]&0x10)<<1)|((s[1]&0x01)<<4)|((s[2]&0x10)>>1)|((s[2]&0x01)<<2)|((s[3]&0x10)>>3)|((s[3]&0x01)>>0);
+		INT32 d0 = ((s[0]&0x80)<<0)|((s[0]&0x08)<<3)|((s[1]&0x80)>>2)|((s[1]&0x08)<<1)|((s[2]&0x80)>>4)|((s[2]&0x08)>>1)|((s[3]&0x80)>>6)|((s[3]&0x08)>>3);
+		INT32 d1 = ((s[0]&0x40)<<1)|((s[0]&0x04)<<4)|((s[1]&0x40)>>1)|((s[1]&0x04)<<2)|((s[2]&0x40)>>3)|((s[2]&0x04)>>0)|((s[3]&0x40)>>5)|((s[3]&0x04)>>2);
+		INT32 d2 = ((s[0]&0x20)<<2)|((s[0]&0x02)<<5)|((s[1]&0x20)<<0)|((s[1]&0x02)<<3)|((s[2]&0x20)>>2)|((s[2]&0x02)<<1)|((s[3]&0x20)>>4)|((s[3]&0x02)>>1);
+		INT32 d3 = ((s[0]&0x10)<<3)|((s[0]&0x01)<<6)|((s[1]&0x10)<<1)|((s[1]&0x01)<<4)|((s[2]&0x10)>>1)|((s[2]&0x01)<<2)|((s[3]&0x10)>>3)|((s[3]&0x01)>>0);
 
 		d[0] = d3;
 		d[1] = d1;

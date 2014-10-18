@@ -390,8 +390,8 @@ static UINT16 sprite_prot_x,sprite_prot_y,dst1,cop_spr_maxx,cop_spr_off;
 static UINT16 sprite_prot_src_addr[2];
 
 static struct {
-	int x, y, z;
-	int min_x, min_y, min_z, max_x, max_y, max_z;
+	INT32 x, y, z;
+	INT32 min_x, min_y, min_z, max_x, max_y, max_z;
 } cop_collision_info[2];
 
 static UINT16 cop_hit_status, cop_hit_baseadr;
@@ -533,12 +533,12 @@ static void SeibuCopScan(INT32 nAction)
 
 static void itoa_compute()
 {
-	int digits = 1 << cop_itoa_digit_count*2;
+	INT32 digits = 1 << cop_itoa_digit_count*2;
 	UINT32 val = cop_itoa;
 
 	if(digits > 9)
 		digits = 9;
-	for(int i=0; i<digits; i++)
+	for(INT32 i=0; i<digits; i++)
 		if(!val && i)
 			cop_itoa_digits[i] = 0x20;
 		else {
@@ -553,14 +553,14 @@ static void sprite_prot_src_write(UINT16 data)
 	sprite_prot_src_addr[1] = data;
 	UINT32 src = (sprite_prot_src_addr[0]<<4)+sprite_prot_src_addr[1];
 
-	int x = INT16((VezReadLong(src+0x08) >> 16) - (sprite_prot_x));
-	int y = INT16((VezReadLong(src+0x04) >> 16) - (sprite_prot_y));
+	INT32 x = INT16((VezReadLong(src+0x08) >> 16) - (sprite_prot_x));
+	INT32 y = INT16((VezReadLong(src+0x04) >> 16) - (sprite_prot_y));
 
 	UINT16 head1 = VezReadWord(src+cop_spr_off);
 	UINT16 head2 = VezReadWord(src+cop_spr_off+2);
 
-	int w = (((head1 >> 8 ) & 7) + 1) << 4;
-	int h = (((head1 >> 12) & 7) + 1) << 4;
+	INT32 w = (((head1 >> 8 ) & 7) + 1) << 4;
+	INT32 h = (((head1 >> 12) & 7) + 1) << 4;
 
 	UINT16 flag = x-w/2 > -w && x-w/2 < cop_spr_maxx+w && y-h/2 > -h && y-h/2 < 256+h ? 1 : 0;
 	
@@ -578,14 +578,14 @@ static void sprite_prot_src_write(UINT16 data)
 	}
 }
 
-static void cop_collision_read_xy(int slot, UINT32 spradr)
+static void cop_collision_read_xy(INT32 slot, UINT32 spradr)
 {
 	cop_collision_info[slot].x = VezReadLong(spradr+4);
 	cop_collision_info[slot].y = VezReadLong(spradr+8);
 	cop_collision_info[slot].z = VezReadLong(spradr+12);
 }
 
-static void cop_collision_update_hitbox(int slot, UINT32 hitadr)
+static void cop_collision_update_hitbox(INT32 slot, UINT32 hitadr)
 {
 	UINT32 hitadr2 = VezReadWord(hitadr) + (cop_hit_baseadr << 16);
 	
@@ -631,9 +631,9 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 
 	switch(data) {
 	case 0x0205: {  // 0205 0006 ffeb 0000 - 0188 0282 0082 0b8e 098e 0000 0000 0000
-		int ppos = VezReadLong(cop_regs[0] + 4 + offset*4);
-		int npos = ppos + VezReadLong(cop_regs[0] + 0x10 + offset*4);
-		int delta = (npos >> 16) - (ppos >> 16);
+		INT32 ppos = VezReadLong(cop_regs[0] + 4 + offset*4);
+		INT32 npos = ppos + VezReadLong(cop_regs[0] + 0x10 + offset*4);
+		INT32 delta = (npos >> 16) - (ppos >> 16);
 		VezWriteLong(cop_regs[0] + 4 + offset*4, npos);
 		VezWriteWord(cop_regs[0] + 0x1e + offset*4, VezReadWord(cop_regs[0] + 0x1e + offset*4) + delta);
 		break;
@@ -650,8 +650,8 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 	case 0x130e:   // 130e 0005 bf7f 0010 - 0984 0aa4 0d82 0aa2 039b 0b9a 0b9a 0a9a
 	case 0x138e:
 	case 0x338e: { // 338e 0005 bf7f 0030 - 0984 0aa4 0d82 0aa2 039c 0b9c 0b9c 0a9a
-		int dx = VezReadLong(cop_regs[1]+4) - VezReadLong(cop_regs[0]+4);
-		int dy = VezReadLong(cop_regs[1]+8) - VezReadLong(cop_regs[0]+8);
+		INT32 dx = VezReadLong(cop_regs[1]+4) - VezReadLong(cop_regs[0]+4);
+		INT32 dy = VezReadLong(cop_regs[1]+8) - VezReadLong(cop_regs[0]+8);
 
 		if(!dy) {
 			cop_status |= 0x8000;
@@ -670,8 +670,8 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 
 	case 0x2208:
 	case 0x2288: { // 2208 0005 f5df 0020 - 0f8a 0b8a 0388 0b9a 0b9a 0a9a 0000 0000
-		int dx = VezReadWord(cop_regs[0]+0x12);
-		int dy = VezReadWord(cop_regs[0]+0x16);
+		INT32 dx = VezReadWord(cop_regs[0]+0x12);
+		INT32 dy = VezReadWord(cop_regs[0]+0x16);
 
 		if(!dy) {
 			cop_status |= 0x8000;
@@ -689,7 +689,7 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 	}
 
 	case 0x2a05: { // 2a05 0006 ebeb 0028 - 09af 0a82 0082 0a8f 018e 0000 0000 0000
-		int delta = VezReadWord(cop_regs[1] + 0x1e + offset*4);
+		INT32 delta = VezReadWord(cop_regs[1] + 0x1e + offset*4);
 		VezWriteLong(cop_regs[0] + 4+2  + offset*4, VezReadWord(cop_regs[0] + 4+2  + offset*4) + delta);
 		VezWriteLong(cop_regs[0] + 0x1e + offset*4, VezReadWord(cop_regs[0] + 0x1e + offset*4) + delta);
 		break;
@@ -699,7 +699,7 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 	case 0x3b30:
 	case 0x3bb0: { // 3bb0 0004 007f 0038 - 0f9c 0b9c 0b9c 0b9c 0b9c 0b9c 0b9c 099c
 		/* TODO: these are actually internally loaded via 0x130e command */
-		int dx,dy;
+		INT32 dx,dy;
 
 		dx = VezReadLong(cop_regs[1]+4) - VezReadLong(cop_regs[0]+4);
 		dy = VezReadLong(cop_regs[1]+8) - VezReadLong(cop_regs[0]+8);
@@ -714,7 +714,7 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 	}
 
 	case 0x42c2: { // 42c2 0005 fcdd 0040 - 0f9a 0b9a 0b9c 0b9c 0b9c 029c 0000 0000
-		int div = VezReadWord(cop_regs[0]+(0x36));
+		INT32 div = VezReadWord(cop_regs[0]+(0x36));
 		if(!div)
 			div = 1;
 
@@ -726,7 +726,7 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 	}
 
 	case 0x4aa0: { // 4aa0 0005 fcdd 0048 - 0f9a 0b9a 0b9c 0b9c 0b9c 099b 0000 0000
-		int div = VezReadWord(cop_regs[0]+(0x38));
+		INT32 div = VezReadWord(cop_regs[0]+(0x38));
 		if(!div)
 			div = 1;
 
@@ -743,7 +743,7 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 		cop_angle_target &= 0xff;
 		cop_angle_step &= 0xff;
 		flags &= ~0x0004;
-		int delta = angle - cop_angle_target;
+		INT32 delta = angle - cop_angle_target;
 		if(delta >= 128)
 			delta -= 256;
 		else if(delta < -128)
@@ -767,27 +767,27 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 	}
 
 	case 0x8100: { // 8100 0007 fdfb 0080 - 0b9a 0b88 0888 0000 0000 0000 0000 0000
-		int raw_angle = (VezReadWord(cop_regs[0]+(0x34)) & 0xff);
+		INT32 raw_angle = (VezReadWord(cop_regs[0]+(0x34)) & 0xff);
 		double angle = raw_angle * M_PI / 128;
 		double amp = (65536 >> 5)*(VezReadWord(cop_regs[0]+(0x36)) & 0xff);
-		int res;
+		INT32 res;
 		/* TODO: up direction, why? (check machine/seicop.c) */
 		if(raw_angle == 0xc0)
 			amp*=2;
-		res = int(amp*sin(angle)) << cop_scale;
+		res = INT32(amp*sin(angle)) << cop_scale;
 		VezWriteLong(cop_regs[0] + 16, res);
 		break;
 	}
 
 	case 0x8900: { // 8900 0007 fdfb 0088 - 0b9a 0b8a 088a 0000 0000 0000 0000 0000
-		int raw_angle = (VezReadWord(cop_regs[0]+(0x34)) & 0xff);
+		INT32 raw_angle = (VezReadWord(cop_regs[0]+(0x34)) & 0xff);
 		double angle = raw_angle * M_PI / 128;
 		double amp = (65536 >> 5)*(VezReadWord(cop_regs[0]+(0x36)) & 0xff);
-		int res;
+		INT32 res;
 		/* TODO: left direction, why? (check machine/seicop.c) */
 		if(raw_angle == 0x80)
 			amp*=2;
-		res = int(amp*cos(angle)) << cop_scale;
+		res = INT32(amp*cos(angle)) << cop_scale;
 		VezWriteLong(cop_regs[0] + 20, res);
 		break;
 	}
@@ -835,10 +835,10 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 	}
 }
 
-static UINT8 fade_table(int v)
+static UINT8 fade_table(INT32 v)
 {
-	int low  = v & 0x001f;
-	int high = v & 0x03e0;
+	INT32 low  = v & 0x001f;
+	INT32 high = v & 0x03e0;
 
 	return (low * (high | (high >> 5)) + 0x210) >> 10;
 }
@@ -852,13 +852,13 @@ static void cop_dma_trigger_write(UINT16)
 		   Raiden 2 uses this DMA with cop_dma_dst == 0xfffe, effectively changing the order of the uploaded VRAMs.
 		   Also the size is used for doing a sprite limit trickery.
 		*/
-		static int rsize = ((0x80 - cop_dma_size[cop_dma_mode]) & 0x7f) +1;
+		static INT32 rsize = ((0x80 - cop_dma_size[cop_dma_mode]) & 0x7f) +1;
 
 		sprites_cur_start = 0x1000 - (rsize << 5);
 		#if 0
-		int rsize = 32*(0x7f-cop_dma_size);
-		int radr = 64*cop_dma_adr - rsize;
-		for(int i=0; i<rsize; i+=2)
+		INT32 rsize = 32*(0x7f-cop_dma_size);
+		INT32 radr = 64*cop_dma_adr - rsize;
+		for(INT32 i=0; i<rsize; i+=2)
 			sprites[i/2] = VezReadWord(radr+i);
 		sprites_cur_start = rsize;
 		#endif
@@ -877,8 +877,8 @@ static void cop_dma_trigger_write(UINT16)
 		for(i = 0;i < size;i++)
 		{
 			UINT16 pal_val;
-			int r,g,b;
-			int rt,gt,bt;
+			INT32 r,g,b;
+			INT32 rt,gt,bt;
 
 			bt = (VezReadWord(src + (cop_dma_adr_rel * 0x400)) & 0x7c00) >> 5;
 			bt = fade_table(bt|(pal_brightness_val ^ 0));
@@ -949,7 +949,7 @@ static void cop_sort_dma_trig_write(UINT16 data)
 	sort_size = data;
 
 	{
-		int i,j;
+		INT32 i,j;
 		UINT8 xchg_flag;
 		UINT32 addri,addrj;
 		UINT16 vali,valj;
@@ -1713,15 +1713,15 @@ static const UINT16 x11_zt[512] = {
 	0x30e, 0x0d8, 0x0d8, 0x55c, 0x55c, 0x31c, 0x31c, 0x30e, 0x351, 0x3dc, 0x3dc, 0x6c1, 0x6c1, 0x651, 0x651, 0x351,
 };
 
-static UINT32 partial_carry_sum(UINT32 add1,UINT32 add2,UINT32 carry_mask,int bits)
+static UINT32 partial_carry_sum(UINT32 add1,UINT32 add2,UINT32 carry_mask,INT32 bits)
 {
-	int i,res,carry;
+	INT32 i,res,carry;
 
 	res = 0;
 	carry = 0;
 	for (i = 0;i < bits;i++)
 	{
-		int bit = BIT(add1,i) + BIT(add2,i) + carry;
+		INT32 bit = BIT(add1,i) + BIT(add2,i) + carry;
 
 		res += (bit & 1) << i;
 
@@ -1744,16 +1744,16 @@ static UINT32 partial_carry_sum32(UINT32 add1,UINT32 add2,UINT32 carry_mask)
 	return partial_carry_sum(add1,add2,carry_mask,32);
 }
 
-static UINT32 yrot(UINT32 v, int r)
+static UINT32 yrot(UINT32 v, INT32 r)
 {
 	return (v << r) | (v >> (32-r));
 }
 
-static UINT16 gm(int i4)
+static UINT16 gm(INT32 i4)
 {
 	UINT16 x=0;
 
-	for (int i=0; i<4; ++i)
+	for (INT32 i=0; i<4; ++i)
 	{
 		if (BIT(i4,i))
 			x ^= 0xf << (i<<2);
@@ -1762,7 +1762,7 @@ static UINT16 gm(int i4)
 	return x;
 }
 
-static UINT32 core_decrypt(UINT32 ciphertext, int i1, int i2, int i3, int i4,
+static UINT32 core_decrypt(UINT32 ciphertext, INT32 i1, INT32 i2, INT32 i3, INT32 i4,
 			const UINT8 *rotate, const UINT8 *x5, const UINT16 *x11, UINT32 preXor, UINT32 carryMask, UINT32 postXor)
 {
 	UINT32 v1 = BITSWAP32(yrot(ciphertext, rotate[i1]), 25,28,15,19, 6,0,3,24, 11,1,2,30, 16,7,22,17, 31,14,23,9, 27,18,4,10, 13,20,5,12, 8,29,26,21);
@@ -1777,7 +1777,7 @@ static void raiden2_decrypt_sprites()
 {
 	UINT32 *data = (UINT32 *)DrvGfxROM2;
 
-	for(int i=0; i<0x800000/4; i++)
+	for(INT32 i=0; i<0x800000/4; i++)
 	{
 		data[i] = core_decrypt(data[i],	(i&0xff) ^ BIT(i,15) ^ (BIT(i,20)<<8), (i&0xff) ^ BIT(i,15),
 			(i>>8) & 0xff, (i>>16) & 0xf, rotate_r2, x5_r2, x11_r2, 0x60860000, 0x176c91a8, 0x0f488000);
@@ -1788,7 +1788,7 @@ static void zeroteam_decrypt_sprites()
 {
 	UINT32 *data = (UINT32 *)DrvGfxROM2;
 
-	for(int i=0; i<0x400000/4; i++)
+	for(INT32 i=0; i<0x400000/4; i++)
 	{
 		data[i] = core_decrypt(data[i], i & 0xff, i & 0xff, (i>>7) & 0x1ff, (i>>16) & 0xf,
 			rotate_zt, x5_zt, x11_zt, 0xa5800000, 0x7b67b7b9, 0xf1412ea8
@@ -2379,15 +2379,15 @@ static void draw_sprites(INT32 priority)
 	UINT16 *source = sprites + sprites_cur_start/2;
 
 	while( source >= sprites ){
-		int tile_number = source[1];
-		int sx = source[2];
-		int sy = source[3];
-		int colr;
-		int xtiles, ytiles;
-		int ytlim, xtlim;
-		int xflip, yflip;
-		int xstep, ystep;
-		int pri;
+		INT32 tile_number = source[1];
+		INT32 sx = source[2];
+		INT32 sy = source[3];
+		INT32 colr;
+		INT32 xtiles, ytiles;
+		INT32 ytlim, xtlim;
+		INT32 xflip, yflip;
+		INT32 xstep, ystep;
+		INT32 pri;
 
 		ytlim = (source[0] >> 12) & 0x7;
 		xtlim = (source[0] >> 8 ) & 0x7;

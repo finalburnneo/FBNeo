@@ -715,9 +715,9 @@ static inline INT32 scanline_to_vcount(INT32 scanline) // ripped directly from M
 
 static void xain_scanline(INT32 scanline) // ripped directly from MAME
 {
-	int screen_height = 240;
-	int vcount_old = scanline_to_vcount((scanline == 0) ? screen_height - 1 : scanline - 1);
-	int vcount = scanline_to_vcount(scanline);
+	INT32 screen_height = 240;
+	INT32 vcount_old = scanline_to_vcount((scanline == 0) ? screen_height - 1 : scanline - 1);
+	INT32 vcount = scanline_to_vcount(scanline);
 
 	if (!(vcount_old & 8) && (vcount & 8))
 	{
@@ -794,16 +794,16 @@ static void draw_sprites()
 {
 	for (INT32 offs = 0; offs < 0x180; offs += 4)
 	{
-		int attr = DrvSprRAM[offs+1];
-		int code = DrvSprRAM[offs+2] | ((attr & 7) << 8);
-		int color = (attr & 0x38) >> 3;
+		INT32 attr = DrvSprRAM[offs+1];
+		INT32 code = DrvSprRAM[offs+2] | ((attr & 7) << 8);
+		INT32 color = (attr & 0x38) >> 3;
 
-		int sx = 238 - DrvSprRAM[offs+3];
+		INT32 sx = 238 - DrvSprRAM[offs+3];
 		if (sx <= -7) sx += 256;
-		int sy = 240 - DrvSprRAM[offs];
+		INT32 sy = 240 - DrvSprRAM[offs];
 		if (sy <= -7) sy += 256;
-		int flipx = attr & 0x40;
-		int flipy = 0;
+		INT32 flipx = attr & 0x40;
+		INT32 flipy = 0;
 
 		if (attr & 0x80)
 		{

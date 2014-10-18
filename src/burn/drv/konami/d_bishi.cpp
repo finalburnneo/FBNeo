@@ -385,7 +385,7 @@ static UINT8 __fastcall bishi_read_byte(UINT32 address)
 	return 0;
 }
 
-static void bishi_tile_callback(int layer, int *code, int *color, int */*flags*/)
+static void bishi_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 */*flags*/)
 {
 	*color = layer_colorbase[layer] + ((*color & 0xf0));
 	*code &= 0x7fff;
@@ -545,8 +545,8 @@ static INT32 DrvDraw()
 	DrvPaletteRecalc();
 
 	INT32 layers[4];
-	static const int pris[4] = { K55_PRIINP_0, K55_PRIINP_3, K55_PRIINP_6, K55_PRIINP_7 };
-	static const int enables[4] = { K55_INP_VRAM_A, K55_INP_VRAM_B, K55_INP_VRAM_C, K55_INP_VRAM_D };
+	static const INT32 pris[4] = { K55_PRIINP_0, K55_PRIINP_3, K55_PRIINP_6, K55_PRIINP_7 };
+	static const INT32 enables[4] = { K55_INP_VRAM_A, K55_INP_VRAM_B, K55_INP_VRAM_C, K55_INP_VRAM_D };
 
 	KonamiClearBitmaps(0);
 

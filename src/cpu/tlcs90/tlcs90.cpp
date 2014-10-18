@@ -51,8 +51,8 @@ struct t90_Regs
 	UINT8       halt, after_EI;
 	UINT16      irq_state, irq_mask;
 
-	int     icount;
-	int         extra_cycles;       // extra cycles for interrupts
+	INT32     icount;
+	INT32         extra_cycles;       // extra cycles for interrupts
 	UINT8       internal_registers[48];
 	UINT32      ixbase,iybase;
 
@@ -75,7 +75,7 @@ struct t90_Regs
 	e_mode  mode2;
 	e_r     r2,r2b;
 
-	int cyc_t,cyc_f;
+	INT32 cyc_t,cyc_f;
 
 	UINT32  addr;
 
@@ -980,12 +980,12 @@ static const char *const ir_names[] =   {
 
 static const char *internal_registers_names(UINT16 x)
 {
-	int ir = x - T90_IOBASE;
+	INT32 ir = x - T90_IOBASE;
 	if ( ir >= 0 && ir < sizeof(ir_names)/sizeof(ir_names[0]) )
 		return ir_names[ir];
 	return NULL;
 }
-static int sprint_arg(char *buffer, UINT32 pc, const char *pre, const e_mode mode, const e_r r, const e_r rb)
+static INT32 sprint_arg(char *buffer, UINT32 pc, const char *pre, const e_mode mode, const e_r r, const e_r rb)
 {
 	const char *reg_name;
 	switch ( mode )
@@ -1023,7 +1023,7 @@ static int sprint_arg(char *buffer, UINT32 pc, const char *pre, const e_mode mod
 CPU_DISASSEMBLE( t90 )
 {
 	t90_Regs *cpustate = get_safe_token(device);
-	int len;
+	INT32 len;
 
 	cpustate->addr = pc;
 
@@ -1224,9 +1224,9 @@ READ_FN(2)
 WRITE_FN(1)
 WRITE_FN(2)
 
-INLINE int Test( t90_Regs *cpustate, UINT8 cond )
+INLINE INT32 Test( t90_Regs *cpustate, UINT8 cond )
 {
-	int s,v;
+	INT32 s,v;
 	switch ( cond )
 	{
 		case FLS:   return 0;
@@ -1327,8 +1327,8 @@ static void take_interrupt(t90_Regs *cpustate, e_irq irq)
 
 static void check_interrupts(t90_Regs *cpustate)
 {
-	int irq;
-	int mask;
+	INT32 irq;
+	INT32 mask;
 
 	if (!(F & IF))
 		return;
@@ -1345,7 +1345,7 @@ static void check_interrupts(t90_Regs *cpustate)
 	}
 }
 
-void tlcs90_set_irq_line(int irq, int state)
+void tlcs90_set_irq_line(INT32 irq, INT32 state)
 {
 	t90_Regs *cpustate = &tlcs90_data[0];
 
@@ -1394,7 +1394,7 @@ INT32 tlcs90Run(INT32 nCycles)
 	t90_Regs *cpustate = &tlcs90_data[0]; //get_safe_token(device);
 	UINT8    a8,b8;
 	UINT16   a16,b16;
-	unsigned a32;
+	UINT32 a32;
 	PAIR tmp;
 
 	cpustate->icount=nCycles;
@@ -2405,9 +2405,9 @@ UINT8 t90_internal_registers_r(UINT16 offset)
 	return data;
 }
 
-static void t90_start_timer(t90_Regs *cpustate, int i)
+static void t90_start_timer(t90_Regs *cpustate, INT32 i)
 {
-	int prescaler;
+	INT32 prescaler;
 	double period;
 
 	cpustate->timer_value[i] = 0;
@@ -2449,7 +2449,7 @@ static void t90_start_timer(t90_Regs *cpustate, int i)
 
 static void t90_start_timer4(t90_Regs *cpustate)
 {
-	int prescaler;
+	INT32 prescaler;
 	double period;
 
 	cpustate->timer4_value = 0;
@@ -2471,7 +2471,7 @@ static void t90_start_timer4(t90_Regs *cpustate)
 }
 
 
-static void t90_stop_timer(t90_Regs *cpustate, int i)
+static void t90_stop_timer(t90_Regs *cpustate, INT32 i)
 {
 	cpustate->timer_enable[i] = 0;
 
@@ -2487,8 +2487,8 @@ void t90_timer_callback(INT32 param)
 {
 	t90_Regs *cpustate =  &tlcs90_data[0];
 
-	int mode, timer_fired;
-	int i = param;
+	INT32 mode, timer_fired;
+	INT32 i = param;
 
 	if ( (cpustate->internal_registers[ T90_TRUN - T90_IOBASE ] & (1 << i)) == 0 )
 		return;
@@ -2715,7 +2715,7 @@ void t90_internal_registers_w(UINT16 offset, UINT8 data)
 INT32 tlcs90_init(INT32 /*clock*/)
 {
 	t90_Regs *cpustate = &tlcs90_data[0];
-	int i, p;
+	INT32 i, p;
 
 	for (i = 0; i < 256; i++)
 	{

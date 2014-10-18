@@ -361,7 +361,7 @@ void K054539Exit()
 }
 
 // ------------ NEW NEW NEW!!!
-void K054539UpdateNEWBUTCRACKLES(INT32 chip, INT16 *pBuf, INT32 length)
+void K054539Update(INT32 chip, INT16 *pBuf, INT32 length)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Update called without init\n"));
@@ -386,9 +386,9 @@ void K054539UpdateNEWBUTCRACKLES(INT32 chip, INT16 *pBuf, INT32 length)
 
 	for(int sample = 0; sample < length; sample++) {
 		double lval, rval;
-		if(!(info->k054539_flags & K054539_DISABLE_REVERB))
+		/*if(!(info->k054539_flags & K054539_DISABLE_REVERB))
 			lval = rval = rbase[reverb_pos];
-		else
+		else reverb broke, didn't work anyways. :dink:WILLFIX*/
 			lval = rval = 0;
 		rbase[reverb_pos] = 0;
 
@@ -591,7 +591,7 @@ void K054539UpdateNEWBUTCRACKLES(INT32 chip, INT16 *pBuf, INT32 length)
 }
 
 // OLD version.
-void K054539Update(INT32 chip, INT16 *pBuf, INT32 length)
+void K054539UpdateOLD(INT32 chip, INT16 *pBuf, INT32 length)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Update called without init\n"));

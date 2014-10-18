@@ -7992,8 +7992,8 @@ STD_ROM_PICK(Sf2ebbl2)
 STD_ROM_FN(Sf2ebbl2)
 
 static struct BurnRomInfo Sf2ebbl3RomDesc[] = {
-	{ "ce91e-b.bin",   0x080000, 0x963200d2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "ce91e-a.bin",   0x080000, 0x02e88ec7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ce91e-b.bin",        0x080000, 0x963200d2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "ce91e-a.bin",        0x080000, 0x02e88ec7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	
 	{ "1-b-yf197.07",  		0x080000, 0x22c9cc8e, BRF_GRA | CPS1_TILES },
 	{ "1-d-yf207.12",  		0x080000, 0x57213be8, BRF_GRA | CPS1_TILES },
@@ -14517,6 +14517,13 @@ static INT32 Sf2ebbl2Init()
 	return nRet;
 }
 
+static INT32 Sf2ebbl3Init()
+{
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2ebbl3;
+	
+	return Sf2ebblInit();
+}
+
 static INT32 Sf2sttInit()
 {
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2stt;
@@ -17815,7 +17822,7 @@ struct BurnDriver BurnDrvCpsSf2ebbl3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ebbl3RomInfo, Sf2ebbl3RomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
-	Sf2ebblInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	Sf2ebbl3Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

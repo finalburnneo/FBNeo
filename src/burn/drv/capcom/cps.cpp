@@ -1206,6 +1206,28 @@ INT32 CpsLoadTilesSf2ceuab7(INT32 nStart)
 	return 0;
 }
 
+INT32 CpsLoadTilesSf2ebbl3(INT32 nStart)
+{
+	CpsLoadOne(CpsGfx + 0x000000, nStart     , 1, 0);
+	CpsLoadOne(CpsGfx + 0x000000, nStart +  1, 1, 2);
+	CpsLoadOne(CpsGfx + 0x000004, nStart +  2, 0, 0);
+	CpsLoadOne(CpsGfx + 0x000004, nStart +  3, 0, 1);
+	CpsLoadOne(CpsGfx + 0x000004, nStart +  4, 0, 2);
+	CpsLoadOne(CpsGfx + 0x000004, nStart +  5, 0, 3);	
+	CpsLoadOne(CpsGfx + 0x200000, nStart +  6, 0, 0);
+	CpsLoadOne(CpsGfx + 0x200000, nStart +  7, 0, 1);
+	CpsLoadOne(CpsGfx + 0x200000, nStart +  8, 1, 2);
+	CpsLoadOne(CpsGfx + 0x200004, nStart +  9, 1, 0);
+	CpsLoadOne(CpsGfx + 0x200004, nStart + 10, 0, 2);
+	CpsLoadOne(CpsGfx + 0x200004, nStart + 11, 0, 3);	
+	CpsLoadOne(CpsGfx + 0x400000, nStart + 12, 1, 0);
+	CpsLoadOne(CpsGfx + 0x400000, nStart + 13, 1, 2);
+	CpsLoadOne(CpsGfx + 0x400004, nStart + 14, 1, 0);
+	CpsLoadOne(CpsGfx + 0x400004, nStart + 15, 1, 2);
+	
+	return 0;
+}
+
 INT32 CpsLoadTilesFcrash(INT32 nStart)
 {
 	CpsLoadTilesBootlegType3(CpsGfx + 0x000000, nStart +  0);

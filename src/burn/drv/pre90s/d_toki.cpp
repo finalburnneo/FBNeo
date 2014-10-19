@@ -1239,7 +1239,7 @@ static INT32 DrvFrame()
 	// we have to overclock the cpu here, otherwise the game will take too long to write
 	// all of the scroll registers for the title and overflows into the next frame! This
 	// breaks the title animation!
-	INT32 nCyclesTotal[2] = { (12000000 * 100) / 5961, 3579545 / 60 }; // 59.61 fps, overclock from 10mhz to 12mhz
+	INT32 nCyclesTotal[2] = { (13100000 * 100) / 5961, 3579545 / 60 }; // 59.61 fps, overclock from 10mhz to 12mhz
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -1259,7 +1259,7 @@ static INT32 DrvFrame()
 		}
 
 		// when the line clears, the timer starts counting for the scroll regs to be written!
-		if (i == 224) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		if (i == 250) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
 	}
 	
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);

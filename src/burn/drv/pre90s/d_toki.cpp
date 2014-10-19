@@ -708,6 +708,13 @@ static INT32 DrvInit()
 	SekSetReadWordHandler(0,	toki_read_word);
 	SekClose();
 
+	UINT8 *Temp = (UINT8*)BurnMalloc(0x20000);
+	memcpy(Temp, DrvSndROM, 0x20000);
+	for (INT32 i = 0; i < 0x20000; i++ ) {
+		DrvSndROM[i] = Temp[BITSWAP24(i, 23, 22, 21, 20, 19, 18, 17, 16, 13, 14, 15, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)];
+	}
+	BurnFree(Temp);
+
 	seibu_sound_init(0, 0x2000, 3579545, 3579545, 1000000 / 132);
 
 	GenericTilesInit();

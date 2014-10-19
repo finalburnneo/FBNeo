@@ -21,6 +21,8 @@ void FcrashSoundCommand(UINT16 d)
 {
 	INT32 nCyclesToDo = ((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles) - ZetTotalCycles();
 	INT32 nEnd = FcrashSoundPos + (INT64)FcrashMSM5205Interleave * nCyclesToDo / nCpsZ80Cycles;
+	
+	if (nEnd == FcrashSoundPos) nEnd += 1;
 		
 	for (INT32 i = FcrashSoundPos; i < nEnd; i++) {
 		BurnTimerUpdate((i + 1) * FcrashCyclesPerSegment);

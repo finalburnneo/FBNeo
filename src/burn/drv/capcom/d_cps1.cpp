@@ -18008,7 +18008,7 @@ struct BurnDriver BurnDrvCpsSf2thndr = {
 
 struct BurnDriver BurnDrvCpsSf2b = {
 	"sf2b", "sf2", NULL, NULL, "1992",
-	"Street Fighter II - The World Warrior (bootleg, 910214 etc, set 1)\0", "row scroll issues and missing sounds", "bootleg", "CPS1",
+	"Street Fighter II - The World Warrior (bootleg, 910214 etc, set 1  (with YM2151 + 2xMSM5205))\0", "row scroll issues", "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2bRomInfo, Sf2bRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,

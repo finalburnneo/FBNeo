@@ -1556,6 +1556,76 @@ static struct BurnRomInfo Robocopb2RomDesc[] = {
 STD_ROM_PICK(Robocopb2)
 STD_ROM_FN(Robocopb2)
 
+static struct BurnRomInfo SecretagRomDesc[] = {
+	{ "fb14-3.17l",         0x10000, 0x9be6ac90, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "fb12-3.9l",          0x10000, 0x28904b6b, BRF_ESS | BRF_PRG },	//  1
+	{ "fb15.19l",           0x10000, 0x106bb26c, BRF_ESS | BRF_PRG },	//  2
+	{ "fb13.11l",           0x10000, 0x90523413, BRF_ESS | BRF_PRG },	//  3
+	
+	{ "fb10.5h",            0x10000, 0xdfd2ff25, BRF_ESS | BRF_PRG },	//  4	HuC6280 Program
+	
+	{ "fb05.11a",           0x08000, 0x09802924, BRF_GRA },			//  5	Characters
+	{ "fb04.9a",            0x08000, 0xec25b895, BRF_GRA },			//  6
+
+	{ "fb07.17a",           0x10000, 0xe932268b, BRF_GRA },			//  7	Tiles 1
+	{ "fb06.15a",           0x10000, 0xc4dd38c0, BRF_GRA },			//  8
+	
+	{ "fb09.22a",           0x20000, 0x1395e9be, BRF_GRA },			//  9	Tiles 2
+	{ "fb08.21a",           0x20000, 0x4d7464db, BRF_GRA },			// 10
+
+	{ "fb01.4a",            0x20000, 0x99b0cd92, BRF_GRA },			// 11	Sprites
+	{ "fb03.7a",            0x20000, 0x0e7ea74d, BRF_GRA },			// 12
+	{ "fb00.2a",            0x20000, 0xf7df3fd7, BRF_GRA },			// 13
+	{ "fb02.5a",            0x20000, 0x84e8da9d, BRF_GRA },			// 14
+	
+	{ "fa11.11k",           0x20000, 0x4e547bad, BRF_SND },			// 15	Samples
+	
+	{ "mb7114h.21k",        0x00100, 0xad26e8d4, BRF_OPT},			// 16	PROMs
+	
+	{ "pal16l8b-ta-1.15k",  0x00104, 0x79a87527, BRF_OPT},			// 17	PLDs
+	{ "pal16r4a-ta-2.16k",  0x00104, 0xeca31311, BRF_OPT},			// 18
+	{ "pal16l8a-ta-3.17k",  0x00104, 0x6c324919, BRF_OPT},			// 19
+	{ "pal16l8a-ta-4.11m",  0x00104, 0x116177fa, BRF_OPT},			// 20
+};
+
+STD_ROM_PICK(Secretag)
+STD_ROM_FN(Secretag)
+
+static struct BurnRomInfo SecretagjRomDesc[] = {
+	{ "fc14-2.17l",         0x10000, 0xe4cc767d, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "fc12-2.9l",          0x10000, 0x8a589c90, BRF_ESS | BRF_PRG },	//  1
+	{ "fc15.19l",           0x10000, 0x106bb26c, BRF_ESS | BRF_PRG },	//  2
+	{ "fc13.11l",           0x10000, 0x90523413, BRF_ESS | BRF_PRG },	//  3
+	
+	{ "fc10.5h",            0x10000, 0xdfd2ff25, BRF_ESS | BRF_PRG },	//  4	HuC6280 Program
+	
+	{ "fc05.11a",           0x08000, 0x09802924, BRF_GRA },			//  5	Characters
+	{ "fc04.9a",            0x08000, 0xec25b895, BRF_GRA },			//  6
+
+	{ "fc07.17a",           0x10000, 0xe932268b, BRF_GRA },			//  7	Tiles 1
+	{ "fc06.15a",           0x10000, 0xc4dd38c0, BRF_GRA },			//  8
+	
+	{ "fc09.22a",           0x20000, 0x1395e9be, BRF_GRA },			//  9	Tiles 2
+	{ "fc08.21a",           0x20000, 0x4d7464db, BRF_GRA },			// 10
+
+	{ "fc01.4a",            0x20000, 0x99b0cd92, BRF_GRA },			// 11	Sprites
+	{ "fc03.7a",            0x20000, 0x0e7ea74d, BRF_GRA },			// 12
+	{ "fc00.2a",            0x20000, 0xf7df3fd7, BRF_GRA },			// 13
+	{ "fc02.5a",            0x20000, 0x84e8da9d, BRF_GRA },			// 14
+	
+	{ "fc11.11k",           0x20000, 0x4e547bad, BRF_SND },			// 15	Samples
+	
+	{ "mb7114h.21k",        0x00100, 0xad26e8d4, BRF_OPT},			// 16	PROMs
+	
+	{ "pal16l8b-ta-1.15k",  0x00104, 0x79a87527, BRF_OPT},			// 17	PLDs
+	{ "pal16r4a-ta-2.16k",  0x00104, 0xeca31311, BRF_OPT},			// 18
+	{ "pal16l8a-ta-3.17k",  0x00104, 0x6c324919, BRF_OPT},			// 19
+	{ "pal16l8a-ta-4.11m",  0x00104, 0x116177fa, BRF_OPT},			// 20
+};
+
+STD_ROM_PICK(Secretagj)
+STD_ROM_FN(Secretagj)
+
 static struct BurnRomInfo SlyspyRomDesc[] = {
 	{ "fa14-3.17l",         0x10000, 0x54353a84, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "fa12-2.9l",          0x10000, 0x1b534294, BRF_ESS | BRF_PRG },	//  1
@@ -1582,10 +1652,10 @@ static struct BurnRomInfo SlyspyRomDesc[] = {
 	
 	{ "mb7114h.21k",        0x00100, 0xad26e8d4, BRF_OPT},			// 16	PROMs
 	
-	{ "pal16l8b-ta-1.bin",  0x00104, 0x79a87527, BRF_OPT},			// 17	PLDs
-	{ "pal16r4a-ta-2.bin",  0x00104, 0xeca31311, BRF_OPT},			// 18
-	{ "pal16l8a-ta-3.bin",  0x00104, 0x6c324919, BRF_OPT},			// 19
-	{ "pal16l8a-ta-4.bin",  0x00104, 0x116177fa, BRF_OPT},			// 20
+	{ "pal16l8b-ta-1.15k",  0x00104, 0x79a87527, BRF_OPT},			// 17	PLDs
+	{ "pal16r4a-ta-2.16k",  0x00104, 0xeca31311, BRF_OPT},			// 18
+	{ "pal16l8a-ta-3.17k",  0x00104, 0x6c324919, BRF_OPT},			// 19
+	{ "pal16l8a-ta-4.11m",  0x00104, 0x116177fa, BRF_OPT},			// 20
 };
 
 STD_ROM_PICK(Slyspy)
@@ -1617,44 +1687,14 @@ static struct BurnRomInfo Slyspy2RomDesc[] = {
 	
 	{ "mb7114h.21k",        0x00100, 0xad26e8d4, BRF_OPT},			// 16	PROMs
 	
-	{ "pal16l8b-ta-1.bin",  0x00104, 0x79a87527, BRF_OPT},			// 17	PLDs
-	{ "pal16r4a-ta-2.bin",  0x00104, 0xeca31311, BRF_OPT},			// 18
-	{ "pal16l8a-ta-3.bin",  0x00104, 0x6c324919, BRF_OPT},			// 19
-	{ "pal16l8a-ta-4.bin",  0x00104, 0x116177fa, BRF_OPT},			// 20
+	{ "pal16l8b-ta-1.15k",  0x00104, 0x79a87527, BRF_OPT},			// 17	PLDs
+	{ "pal16r4a-ta-2.16k",  0x00104, 0xeca31311, BRF_OPT},			// 18
+	{ "pal16l8a-ta-3.17k",  0x00104, 0x6c324919, BRF_OPT},			// 19
+	{ "pal16l8a-ta-4.11m",  0x00104, 0x116177fa, BRF_OPT},			// 20
 };
 
 STD_ROM_PICK(Slyspy2)
 STD_ROM_FN(Slyspy2)
-
-static struct BurnRomInfo SecretagRomDesc[] = {
-	{ "fb14-3.17l",         0x10000, 0x9be6ac90, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
-	{ "fb12-3.9l",          0x10000, 0x28904b6b, BRF_ESS | BRF_PRG },	//  1
-	{ "fb15.19l",           0x10000, 0x106bb26c, BRF_ESS | BRF_PRG },	//  2
-	{ "fb13.11l",           0x10000, 0x90523413, BRF_ESS | BRF_PRG },	//  3
-	
-	{ "fa10.5h",            0x10000, 0xdfd2ff25, BRF_ESS | BRF_PRG },	//  4	HuC6280 Program
-	
-	{ "fa05.11a",           0x08000, 0x09802924, BRF_GRA },			//  5	Characters
-	{ "fa04.9a",            0x08000, 0xec25b895, BRF_GRA },			//  6
-
-	{ "fa07.17a",           0x10000, 0xe932268b, BRF_GRA },			//  7	Tiles 1
-	{ "fa06.15a",           0x10000, 0xc4dd38c0, BRF_GRA },			//  8
-	
-	{ "fa09.22a",           0x20000, 0x1395e9be, BRF_GRA },			//  9	Tiles 2
-	{ "fa08.21a",           0x20000, 0x4d7464db, BRF_GRA },			// 10
-
-	{ "fa01.4a",            0x20000, 0x99b0cd92, BRF_GRA },			// 11	Sprites
-	{ "fa03.7a",            0x20000, 0x0e7ea74d, BRF_GRA },			// 12
-	{ "fa00.2a",            0x20000, 0xf7df3fd7, BRF_GRA },			// 13
-	{ "fa02.5a",            0x20000, 0x84e8da9d, BRF_GRA },			// 14
-	
-	{ "fa11.11k",           0x20000, 0x4e547bad, BRF_SND },			// 15	Samples
-	
-	{ "mb7114h.21k",        0x00100, 0xad26e8d4, BRF_OPT},			// 16	PROMs
-};
-
-STD_ROM_PICK(Secretag)
-STD_ROM_FN(Secretag)
 
 static INT32 MemIndex()
 {
@@ -5207,32 +5247,42 @@ struct BurnDriver BurnDrvRobocopb2 = {
 	NULL, 0x400, 256, 240, 4, 3
 };
 
-struct BurnDriver BurnDrvSlyspy = {
-	"slyspy", NULL, NULL, NULL, "1989",
-	"Sly Spy (US revision 3)\0", NULL, "Data East USA", "DEC0",
+struct BurnDriver BurnDrvSecretag = {
+	"secretag", NULL, NULL, NULL, "1989",
+	"Secret Agent (World revision 3)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	NULL, SecretagRomInfo, SecretagRomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
+	SlyspyInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
+	NULL, 0x400, 256, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvSecretagj = {
+	"secretagj", "secretag", NULL, NULL, "1989",
+	"Secret Agent (Japan revision 2)\0", NULL, "Data East Corporation", "DEC0",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	NULL, SecretagjRomInfo, SecretagjRomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
+	SlyspyInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
+	NULL, 0x400, 256, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvSlyspy = {
+	"slyspy", "secretag", NULL, NULL, "1989",
+	"Sly Spy (US revision 3)\0", NULL, "Data East USA", "DEC0",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, SlyspyRomInfo, SlyspyRomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
 	SlyspyInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
 struct BurnDriver BurnDrvSlyspy2 = {
-	"slyspy2", "slyspy", NULL, NULL, "1989",
+	"slyspy2", "secretag", NULL, NULL, "1989",
 	"Sly Spy (US revision 2)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, Slyspy2RomInfo, Slyspy2RomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
-	SlyspyInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
-	NULL, 0x400, 256, 240, 4, 3
-};
-
-struct BurnDriver BurnDrvSecretag = {
-	"secretag", "slyspy", NULL, NULL, "1989",
-	"Secret Agent (World)\0", NULL, "Data East Corporation", "DEC0",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, SecretagRomInfo, SecretagRomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
 	SlyspyInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };

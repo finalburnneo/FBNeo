@@ -11,6 +11,9 @@
 		martial champ
 			why are the sprite positions messed up? protection?
 
+		mystic warriors
+			level 3, sub headlights need to be highlights, not shadows!
+
 	unkown bugs.
 		probably a lot! go ahead and fix it!
 
@@ -1685,9 +1688,9 @@ static UINT8 __fastcall mystwarr_sound_read(UINT16 address)
 
 //--------------------------------------------------------------------------------------------------------------
 
-static void mystwarr_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 */*flags*/)
+static void mystwarr_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 *flags)
 {
-	if (layer == 1) {if ((*code & 0xff00) + (*color) == 0x4101) cbparam++; else cbparam--;} //* water hack (TEMPORARY)
+	if (layer == 1 && (*code & 0xff00) + (*color) == 0x4101) *flags = (*flags)|(0x808000); //* water hack
 
 	*color = layer_colorbase[layer] | ((*color >> 1) & 0x1e);
 }
@@ -2733,6 +2736,7 @@ static INT32 DrvDraw()
 
 	if (nGame == 1) { // mystwarr
 		blendmode = 0;
+		cbparam = 0; // ?
 		sprite_colorbase = K055555GetPaletteIndex(4)<<5;
 	}
 

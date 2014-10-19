@@ -495,6 +495,12 @@ static void draw_layer_internal(INT32 layer, INT32 pageIndex, INT32 *clip, INT32
 
 		m_callback(layer, &code, &color, &g_flags);
 
+		// hack - mystic warriors' water level - iq
+		if (g_flags & 0x8000) {
+			alpha_enable = 1;
+			alpha = (g_flags >> 16) & 0xff;
+		}
+
 	//	code &= K056832RomExpMask; // mask in callback if necessary
 
 		if (!opaque) {

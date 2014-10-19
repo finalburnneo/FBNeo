@@ -341,6 +341,20 @@ static struct BurnDIPInfo svgDIPList[] = {
 	{0x2E,  0x01, 0x07, 0x06, "World"				},
 };
 
+static struct BurnDIPInfo svgtwDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x01, NULL				},
+
+	{0,	0xFE, 0,	8,    "Region (Fake)"			},
+	{0x2E,	0x01, 0x07,	0x00, "China"				},
+	{0x2E,	0x01, 0x07,	0x01, "Taiwan"				},
+	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
+	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
+	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
+	{0x2E,  0x01, 0x07, 0x06, "World"				},
+	{0x2E,  0x01, 0x07, 0xff, "Don't Change"		},
+};
+
 STDDIPINFOEXT(orlegend,		pgm,	orlegend		)
 STDDIPINFOEXT(orld111c, 	pgm,	orld111c		)
 STDDIPINFOEXT(orld111t, 	pgm,	orld111t		)
@@ -363,6 +377,7 @@ STDDIPINFOEXT(theglad,	 	pgm,	theglad 		)
 STDDIPINFOEXT(theglad100,	pgm,	theglad100 		)
 STDDIPINFOEXT(happy6,		pgm,	happy6	 		)
 STDDIPINFOEXT(svg,			pgm,	svg	 			)
+STDDIPINFOEXT(svgtw,		pgm,	svgtw	 		)
 STDDIPINFOEXT(dmnfrntpcb,   jamma,	kov		    	)
 STDDIPINFOEXT(thegladpcb,   jamma,	thegladpcb		)
 
@@ -3824,7 +3839,7 @@ struct BurnDriver BurnDrvSvg = {
 
 // S.V.G. - Spectral vs Generation (V100, Taiwan)
 
-static struct BurnRomInfo svg100tRomDesc[] = {
+static struct BurnRomInfo svgtwRomDesc[] = {
 	{ "v101tw.u30",			0x080000, 0x8d0405e4, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t05601w016.bin",		0x200000, 0x03e110dc, 2 | BRF_GRA },		//  1 Tile data
@@ -3842,22 +3857,42 @@ static struct BurnRomInfo svg100tRomDesc[] = {
 
 //	{ "svg_igs027a.bin",			    0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 10 Internal ARM7 Rom
 	{ "svg_igs027a_execute_only_area", 	0x000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 10 Internal ARM7 Rom
-	{ "svg_igs027a_v100_taiwan.bin", 	0x003e78, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },		// 11 Internal ARM7 Rom
+	{ "svgpcb_igs027a_v100_japan.bin", 	0x003e78, 0x7a59da5d, 7 | BRF_PRG | BRF_ESS },		// 11 Internal ARM7 Rom
 
 	{ "v101tw.u26",			0x400000, 0xcc24f542, 8 | BRF_PRG | BRF_ESS },	// 12 External ARM7 Rom
 	{ "v101tw.u36",			0x400000, 0xf18283e2, 8 | BRF_PRG | BRF_ESS },	// 13
 };
 
-STDROMPICKEXT(svg100t, svg100t, pgm)
-STD_ROM_FN(svg100t)
+STDROMPICKEXT(svgtw, svgtw, pgm)
+STD_ROM_FN(svgtw)
 
-struct BurnDriverD BurnDrvSvg100t = {
-	"svg100t", "svg", "pgm", NULL, "2005",
+static void svgtwPatch()
+{
+	pgm_decrypt_svgpcb();
+	pgm_create_theglad_EO_data();
+}
+
+static INT32 svgtwInit()
+{
+	pPgmInitCallback = svgtwPatch;
+	pPgmProtCallback = install_protection_asic27a_svg;
+
+	nPgmAsicRegionHackAddress = 0x3a8e;
+
+	INT32 nRet = pgmInit();
+	
+	Arm7SetIdleLoopAddress(0x00009e0);
+
+	return nRet;
+}
+
+struct BurnDriverD BurnDrvSvgtw = {
+	"svgtw", "svg", "pgm", NULL, "2005",
 	"S.V.G. - Spectral vs Generation (V100, Taiwan)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
 	L"S.V.G. - Spectral vs Generation\0\u5723\u9B54\u4E16\u7EAA (V100, Taiwan)\0", NULL, NULL, NULL,
 	BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, svg100tRomInfo, svg100tRomName, NULL, NULL, pgmInputInfo, svgDIPInfo,
-	svgInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	NULL, svgtwRomInfo, svgtwRomName, NULL, NULL, pgmInputInfo, svgtwDIPInfo,
+	svgtwInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 

@@ -29,7 +29,7 @@ static bool bAppDoFast = 0;
 static int nFastSpeed = 6;
 
 // For System Macros (below)
-static int prevPause = 0, prevSState = 0, prevLState = 0, prevUState = 0;
+static int prevPause = 0, prevFFWD = 0, prevSState = 0, prevLState = 0, prevUState = 0;
 UINT32 prevPause_debounce = 0;
 
 static void CheckSystemMacros() // These are the Pause / FFWD macros added to the input dialog
@@ -43,7 +43,13 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 	}
 	prevPause = macroSystemPause;
 	// FFWD
-	if (!kNetGame) bAppDoFast = macroSystemFFWD;
+	if (!kNetGame) {
+		if (macroSystemFFWD) {
+			bAppDoFast = 1; prevFFWD = 1;
+		} else if (prevFFWD) {
+			bAppDoFast = 0; prevFFWD = 0;
+		}
+	}
 	// Load State
 	if (macroSystemLoadState && macroSystemLoadState != prevLState) {
 		PostMessage(hScrnWnd, WM_KEYDOWN, VK_F9, 0);

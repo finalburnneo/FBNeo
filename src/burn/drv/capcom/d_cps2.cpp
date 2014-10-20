@@ -8453,7 +8453,7 @@ struct BurnDriver BurnDrvCpsMmancp2u = {
 	"mmancp2u", "megaman", NULL, NULL, "1995",
 	"Mega Man - The Power Battle (951006 USA, SAMPLE Version)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
 	NULL, Mmancp2uRomInfo, Mmancp2uRomName, NULL, NULL, Mmancp2uInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
@@ -8470,7 +8470,7 @@ struct BurnDriver BurnDrvCpsMmancp2ur1 = {
 };
 
 struct BurnDriver BurnDrvCpsRmancp2j = {
-	"rmancp2j", "mmancp2u", NULL, NULL, "1999",
+	"rmancp2j", "megaman", NULL, NULL, "1999",
 	"Rockman: The Power Battle (950922 Japan)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,

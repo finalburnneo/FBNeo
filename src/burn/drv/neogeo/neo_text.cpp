@@ -19,6 +19,7 @@ static INT32 nBankLookupShift[40];
 static UINT8* pTile;
 static UINT8* pTileData;
 static UINT32* pTilePalette;
+static UINT32 nTransparent;
 
 typedef void (*RenderTileFunction)();
 static RenderTileFunction RenderTile;
@@ -26,6 +27,14 @@ static RenderTileFunction RenderTile;
 static INT32 nLastBPP = 0;
 
 static INT32 nMinX, nMaxX;
+
+static inline UINT32 alpha_blend(UINT32 d, UINT32 s, UINT32 p)
+{
+	INT32 a = 255 - p;
+
+	return (((((s & 0xff00ff) * p) + ((d & 0xff00ff) * a)) & 0xff00ff00) +
+		((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) >> 8;
+}
 
 #define BPP 16
  #include "neo_text_render.h"
@@ -103,7 +112,8 @@ INT32 NeoRenderText()
 					UINT32 nTile = pTileRow[x << 5];
 					INT32 nPalette = nTile & 0xF000;
 					nTile &= 0x0FFF;
-					if (pTileAttrib[nTile] == 0) {
+					nTransparent = (UINT8)pTileAttrib[nTile];
+					if (nTransparent != 1) {
 						pTileData = pTextROM + (nTile << 5);
 						pTilePalette = &pTextPalette[nPalette >> 8];
 						RenderTile();
@@ -124,7 +134,8 @@ INT32 NeoRenderText()
 					INT32 nPalette = nTile & 0xF000;
 					nTile &= 0x0FFF;
 					nTile += (((pBankInfo[nBankLookupAddress[x]] >> nBankLookupShift[x]) & 3) ^ 3) << 12;
-					if (pTileAttrib[nTile] == 0) {
+					nTransparent = (UINT8)pTileAttrib[nTile];
+					if (nTransparent != 1) {
 						pTileData = pTextROM + (nTile << 5);
 						pTilePalette = &pTextPalette[nPalette >> 8];
 						RenderTile();
@@ -149,7 +160,8 @@ INT32 NeoRenderText()
 				UINT32 nTile = pTileRow[x << 5];
 				INT32 nPalette = nTile & 0xF000;
 				nTile &= 0xFFF;
-				if (pTileAttrib[nTile] == 0) {
+				nTransparent = (UINT8)pTileAttrib[nTile];
+				if (nTransparent != 1) {
 					pTileData = pTextROM + (nTile << 5);
 					pTilePalette = &pTextPalette[nPalette >> 8];
 					RenderTile();
@@ -269,6 +281,60 @@ void NeoSetTextSlot(INT32 nSlot)
 	NeoTextTileAttribActive = NeoTextTileAttrib[nSlot];
 }
 
+static void NeoTextBlendInit(INT32 nSlot)
+{
+	char filename[256];
+
+	sprintf (filename, "support/blend/%s.blde", BurnDrvGetTextA(DRV_NAME));
+
+	FILE *fa = fopen(filename, "rt");
+
+	if (fa == NULL) {
+		sprintf (filename, "support/blend/%s.blde", BurnDrvGetTextA(DRV_PARENT));
+
+		fa = fopen(filename, "rt");
+
+		if (fa == NULL) {
+			return;
+		}
+	}
+
+	bprintf (PRINT_IMPORTANT, _T("Using text blending (.bld) table!\n"));
+
+	char szLine[64];
+
+	INT32 table[4] = { 0, 0xff-0x3f, 0xff-0x7f, 0xff-0x7f }; // last one 7f?
+
+	while (1)
+	{
+		if (fgets (szLine, 64, fa) == NULL) break;
+
+		if (strncmp ("Game", szLine, 4) == 0) continue; 	// don't care
+		if (strncmp ("Name", szLine, 4) == 0) continue; 	// don't care
+		if (szLine[0] == ';') continue;				// comment (also don't care)
+
+		int type;
+		unsigned int min,max,k, single_entry = -1;
+
+		for (k = 0; k < strlen(szLine); k++) {
+			if (szLine[k] == '-') { single_entry = k+1; break; }
+		}
+
+		if (single_entry < 0) {
+			sscanf(szLine,"%x %d",&max,&type);
+			min = max;
+		} else {
+			sscanf(szLine,"%x",&min);
+			sscanf(szLine+single_entry,"%x %d",&max,&type);
+		}
+
+		for (k = min; k <= max && k < (nNeoTextROMSize[nSlot]/0x20); k++) {
+			if (NeoTextTileAttrib[nSlot][k] != 1) 	// ?
+				NeoTextTileAttrib[nSlot][k] = table[type&3];
+		}
+	}
+}
+
 INT32 NeoInitText(INT32 nSlot)
 {
 	if (nSlot < 0) {
@@ -303,6 +369,8 @@ INT32 NeoInitText(INT32 nSlot)
 		NeoTextTileAttribActive[i] = 1;
 	}
 	NeoUpdateTextAttrib(0, nNeoTextROMSize[nSlot]);
+
+	NeoTextBlendInit(nSlot);
 
 	// Set up tile bankswitching
 

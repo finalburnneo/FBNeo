@@ -318,7 +318,7 @@ static INT32 DrvInit()
 	ZetMapArea(0xe000, 0xefff, 2, Rom + 0xe000);
 	ZetClose();
 
-	BurnSetRefreshRate(5000000.0/312/262);
+//	BurnSetRefreshRate(5000000.0/312/262);
 
 	SN76489Init(0, 4000000, 0);
 	SN76489Init(1, 4000000, 1);
@@ -463,7 +463,7 @@ static void draw_8x8_tiles(UINT8 *vram, UINT8 *gfx_base, INT32 scrollx, INT32 sc
 
 static INT32 DrvDraw()
 {
-	memset (pBurnDraw, 0, 240 * 191 * nBurnBpp);
+	BurnClearScreen();
 
 	draw_8x8_tiles(Rom + 0x8000, Gfx1, scroll_x, scroll_y);
 	draw_8x8_tiles(Rom + 0x8800, Gfx0, 0, 0);

@@ -11621,6 +11621,33 @@ static struct BurnRomInfo VarthuRomDesc[] = {
 STD_ROM_PICK(Varthu)
 STD_ROM_FN(Varthu)
 
+static struct BurnRomInfo VarthbRomDesc[] = {
+	{ "2",             0x080000, 0x2f010023, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "1",             0x080000, 0x0861dff3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "4",             0x010000, 0xaa51e43b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "3",             0x010000, 0xf7e4f2f0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "14",            0x040000, 0x7ca73780, BRF_GRA | CPS1_TILES },
+	{ "13",            0x040000, 0x9fb11869, BRF_GRA | CPS1_TILES },
+	{ "12",            0x040000, 0xafeba416, BRF_GRA | CPS1_TILES },
+	{ "11",            0x040000, 0x9eef3507, BRF_GRA | CPS1_TILES },
+	{ "10",            0x040000, 0xeeec6183, BRF_GRA | CPS1_TILES },
+	{ "9",             0x040000, 0x0e94f718, BRF_GRA | CPS1_TILES },
+	{ "8",             0x040000, 0xc4ddc5b4, BRF_GRA | CPS1_TILES },
+	{ "7",             0x040000, 0x8941ca12, BRF_GRA | CPS1_TILES },
+
+	{ "6",             0x010000, 0x7a99446e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "5",             0x040000, 0x1547e595, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "varth1.bin",    0x000157, 0x4c6a0d99, BRF_OPT },	// unknown
+};
+
+STD_ROM_PICK(Varthb)
+STD_ROM_FN(Varthb)
+
 static struct BurnRomInfo WillowRomDesc[] = {
 	{ "wlu_30.11f",    0x020000, 0xd604dbb1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "35.11h",        0x020000, 0x7a791e77, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -12562,6 +12589,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "varthr1"     , CPS_B_04    , mapper_VA63B , 0, NULL                },
 	{ "varthu"      , CPS_B_04    , mapper_VA63B , 0, NULL                },
 	{ "varthj"      , CPS_B_21_BT5, mapper_VA22B , 0, NULL                },
+	{ "varthb"      , CPS_B_04    , mapper_VA63B , 0, NULL                },
 	{ "willow"      , CPS_B_03    , mapper_WL24B , 0, NULL                },
 	{ "willowj"     , CPS_B_03    , mapper_WL24B , 0, NULL                },
 	{ "willowo"     , CPS_B_03    , mapper_WL24B , 0, NULL                },
@@ -15990,6 +16018,74 @@ static INT32 StriderjInit()
 	return nRet;
 }
 
+void __fastcall VarthbScrollWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x980000: {
+			// scroll1 y
+			*((UINT16*)(CpsReg + 0x0e)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x980002: {
+			// scroll1 x
+			*((UINT16*)(CpsReg + 0x0c)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
+			return;
+		}
+		
+		case 0x980004: {
+			// scroll2 y
+			*((UINT16*)(CpsReg + 0x12)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x980006: {
+			// scroll2 x
+			*((UINT16*)(CpsReg + 0x10)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
+			return;
+		}
+		
+		case 0x980008: {
+			// scroll3 y
+			*((UINT16*)(CpsReg + 0x16)) = BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
+		
+		case 0x98000a: {
+			// scroll3 x
+			*((UINT16*)(CpsReg + 0x14)) = BURN_ENDIAN_SWAP_INT16(d - 0x40);
+			return;
+		}
+		
+		default: {
+			bprintf(PRINT_NORMAL, _T("Write Word %x, %x\n"), a, d);
+		}
+	}
+}
+
+static INT32 VarthbInit()
+{
+	INT32 nRet = 0;
+	
+	Cps1ObjGetCallbackFunction = DinopicObjGet;
+	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
+	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;
+	
+	nRet = TwelveMhzInit();
+	
+	CpsBootlegSpriteRam = (UINT8*)BurnMalloc(0x4000);
+	
+	SekOpen(0);
+	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, SM_RAM);
+	SekMapHandler(1, 0x980000, 0x980fff, SM_WRITE);
+	SekSetWriteWordHandler(1, VarthbScrollWriteWord);
+	SekClose();
+	
+	*((UINT16*)(CpsReg + 0x06)) = BURN_ENDIAN_SWAP_INT16(0x9140); // scroll 3 ram offset
+	
+	return nRet;
+}
+
 static INT32 WofchInit()
 {
 	INT32 nRet = 0;
@@ -18873,6 +18969,16 @@ struct BurnDriver BurnDrvCpsVarthu = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAPCOM_CPS1, GBF_VERSHOOT, 0,
 	NULL, VarthuRomInfo, VarthuRomName, NULL, NULL, VarthInputInfo, VarthDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
+};
+
+struct BurnDriver BurnDrvCpsVarthb = {
+	"varthb", "varth", NULL, NULL, "1992",
+	"Varth - operation thunderstorm (bootleg, 920612 etc)\0", NULL, "bootlg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VERSHOOT, 0,
+	NULL, VarthbRomInfo, VarthbRomName, NULL, NULL, VarthInputInfo, VarthDIPInfo,
+	VarthbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };
 

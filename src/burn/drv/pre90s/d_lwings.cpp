@@ -19,8 +19,6 @@ static UINT8 *DrvGfxROM2;
 static UINT8 *DrvGfxROM3;
 static UINT8 *DrvTileMap;
 static UINT8 *DrvGfxMask;
-static UINT32 *DrvPalette;
-static UINT32 *Palette;
 static UINT8 *DrvZ80RAM0;
 static UINT8 *DrvZ80RAM1;
 static UINT8 *DrvPalRAM;
@@ -30,6 +28,8 @@ static UINT8 *DrvSprRAM;
 static UINT8 *DrvSprBuf;
 static UINT8 *ScrollX;
 static UINT8 *ScrollY;
+
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 DrvReset;
@@ -425,8 +425,6 @@ static struct BurnDIPInfo AvengersDIPList[]=
 
 STDDIPINFO(Avengers)
 
-
-
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
@@ -455,8 +453,6 @@ static INT32 MemIndex()
 	DrvBgRAM	= Next; Next += 0x000800;
 	DrvSprRAM	= Next; Next += 0x000200;
 	DrvSprBuf	= Next; Next += 0x000200;
-
-	Palette		= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
 
 	ScrollX		= Next; Next += 0x000002;
 	ScrollY		= Next; Next += 0x000002;
@@ -646,25 +642,22 @@ static void lwings_bankswitch_w(UINT8 data)
 	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80ROM0 + bankaddress);
 }
 
+static inline void palette_update(INT32 entry)
+{
+	UINT16 p = DrvPalRAM[entry | 0x400] | (DrvPalRAM[entry] << 8);
+
+	UINT8 r = (p >> 12) & 0xf;
+	UINT8 g = (p >>  8) & 0xf;
+	UINT8 b = (p >>  4) & 0xf;
+
+	DrvPalette[entry] = BurnHighCol((r*16)+r, (g*16)+g, (b*16)+b, 0);
+}
+
 void __fastcall lwings_main_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xf800) == 0xf000) {
 		DrvPalRAM[address & 0x7ff] = data;
-
-		UINT8 r, g, b;
-		UINT16 coldata = DrvPalRAM[(address & 0x3ff) | 0x400] | (DrvPalRAM[address & 0x3ff] << 8);
-
-		r = (coldata >> 8) & 0xf0;
-		g = (coldata >> 4) & 0xf0;
-		b = (coldata >> 0) & 0xf0;
-
-		r |= r >> 4;
-		g |= g >> 4;
-		b |= b >> 4;
-
-		Palette[address & 0x3ff] = (r << 16) | (g << 8) | b;
-		DrvPalette[address & 0x3ff] = BurnHighCol(r, g, b, 0);
-
+		palette_update(address & 0x3ff);
 		return;
 	}
 
@@ -1423,9 +1416,9 @@ static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x400; i++) {
-			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
+			palette_update(i);
 		}
+		DrvRecalc = 0;
 	}
 
 	if (DrvTileMap == NULL) {

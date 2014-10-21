@@ -6,7 +6,7 @@
 #include "sn76496.h"
 
 static UINT8 *Mem, *MemEnd, *Rom, *Gfx0, *Gfx1, *Prom;
-static UINT32 *Palette, *DrvPalette;
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalcPal;
 
 static UINT8 DrvJoy1[8], DrvJoy2[8], DrvJoy3[8], DrvDips[4], DrvReset;
@@ -507,7 +507,6 @@ static INT32 MemIndex()
 
 	Prom           = Next; Next += 0x00220;
 
-	Palette	       = (UINT32*)Next; Next += 0x00200 * sizeof(UINT32);
 	DrvPalette     = (UINT32*)Next; Next += 0x00200 * sizeof(UINT32);
 
 	MemEnd         = Next;
@@ -515,7 +514,7 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static void DrvCreatePalette()
+static void DrvPaletteInit()
 {
 	UINT32 tmp[0x20];
 
@@ -542,17 +541,15 @@ static void DrvCreatePalette()
 		tmp[i] = (r << 16) | (g << 8) | b;
 	}
 
-	Prom += 0x20;
-
 	for (INT32 i = 0; i < 0x100; i++)
 	{
 		UINT8 ctabentry;
 
-		ctabentry = (Prom[0x000 + i] & 0x0f) | 0x10;
-		Palette[0x000 + i] = tmp[ctabentry];
+		ctabentry = (Prom[0x020 + i] & 0x0f) | 0x10;
+		DrvPalette[0x000 + i] = BurnHighCol((tmp[ctabentry]>>16)&0xff,(tmp[ctabentry]>>8)&0xff,(tmp[ctabentry]>>0)&0xff,0);
 
-		ctabentry = (Prom[0x100 + i] & 0x0f);
-		Palette[0x100 + i] = tmp[ctabentry];
+		ctabentry = (Prom[0x120 + i] & 0x0f);
+		DrvPalette[0x100 + i] = BurnHighCol((tmp[ctabentry]>>16)&0xff,(tmp[ctabentry]>>8)&0xff,(tmp[ctabentry]>>0)&0xff,0);
 	}
 }
 
@@ -663,7 +660,7 @@ static INT32 DrvInit()
 	} else {
 		DrvGfxDecode();
 	}
-	DrvCreatePalette();
+	DrvPaletteInit();
 
 	ZetInit(0);
 	ZetOpen(0);
@@ -826,9 +823,8 @@ static void gberetb_draw_sprites()
 static INT32 DrvDraw()
 {
 	if (DrvRecalcPal) {
-		for (INT32 i = 0; i < 0x200; i++) {
-			DrvPalette[i] = BurnHighCol(Palette[i] >> 16, Palette[i] >> 8, Palette[i], 0);
-		}	
+		DrvPaletteInit();
+		DrvRecalcPal = 0;	
 	}
 
 	for (INT32 offs = 0x40; offs < 0x7c0; offs++)
@@ -932,7 +928,6 @@ static INT32 DrvFrame()
 
 	ZetClose();
 
-// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);

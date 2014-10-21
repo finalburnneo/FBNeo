@@ -551,9 +551,9 @@ static INT32 DrvDraw()
 			}
 
 			if (flipscreen)
-				PutPix(pBurnDraw + ((x << 8) | (y ^ 0xff)) * nBurnBpp, BurnHighCol(pen>>16, pen>>8, pen, 0));
+				PutPix(pBurnDraw + ((x << 8) | (y ^ 0xff)) * nBurnBpp, BurnHighCol((pen>>16)&0xff, (pen>>8)&0xff, (pen)&0xff, 0));
 			else
-				PutPix(pBurnDraw + (((x ^ 0xff) << 8) | y) * nBurnBpp, BurnHighCol(pen>>16, pen>>8, pen, 0));
+				PutPix(pBurnDraw + (((x ^ 0xff) << 8) | y) * nBurnBpp, BurnHighCol((pen>>16)&0xff, (pen>>8)&0xff, (pen)&0xff, 0));
 
 			x += 1;
 			d1 >>= 1;

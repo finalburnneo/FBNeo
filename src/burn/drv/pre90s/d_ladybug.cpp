@@ -25,7 +25,6 @@ static UINT8 *DrvVidRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvGridRAM;
 
-static UINT32 *Palette;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
@@ -546,7 +545,6 @@ static INT32 MemIndex()
 
 	DrvColPROM	= Next; Next += 0x000040;
 
-	Palette		= (UINT32*)Next; Next += 0x0082 * sizeof(UINT32);
 	DrvPalette	= (UINT32*)Next; Next += 0x0082 * sizeof(UINT32);
 
 	AllRam		= Next;
@@ -608,6 +606,8 @@ static INT32 DrvGfxDecode()
 
 static void DrvPaletteInit(INT32 sh0, INT32 sh1, INT32 sh2, INT32 sh3, INT32 sh4, INT32 sh5)
 {
+	UINT32 tmp[0x20];
+
 	for (INT32 i = 0; i < 0x20; i++)
 	{
 		INT32 bit0 = (~DrvColPROM[i] >> sh0) & 0x01;
@@ -622,14 +622,14 @@ static void DrvPaletteInit(INT32 sh0, INT32 sh1, INT32 sh2, INT32 sh3, INT32 sh4
 		bit1 = (~DrvColPROM[i] >> sh5) & 0x01;
 		INT32 b = bit0 * 82 + bit1 * 173;
 
-		DrvPalette[i] = (r << 16) | (g << 8) | b;
+		tmp[i] = BurnHighCol(r,g,b,0);
 	}
 
 	for (INT32 i = 0; i < 0x20; i++)
 	{
-		Palette[i + 0x00] = DrvPalette[((i << 3) & 0x18) | ((i >> 2) & 0x07)];
-		Palette[i + 0x20] = DrvPalette[BITSWAP08(DrvColPROM[i + 0x20] & 0x0f, 7,6,5,4,0,1,2,3)];
-		Palette[i + 0x40] = DrvPalette[BITSWAP08(DrvColPROM[i + 0x20] >> 4,   7,6,5,4,0,1,2,3)];
+		DrvPalette[i + 0x00] = tmp[((i << 3) & 0x18) | ((i >> 2) & 0x07)];
+		DrvPalette[i + 0x20] = tmp[BITSWAP08(DrvColPROM[i + 0x20] & 0x0f, 7,6,5,4,0,1,2,3)];
+		DrvPalette[i + 0x40] = tmp[BITSWAP08(DrvColPROM[i + 0x20] >> 4,   7,6,5,4,0,1,2,3)];
 	}
 
 	DrvRecalc = 1;
@@ -652,7 +652,7 @@ static void SraiderPaletteInit()
 		bit0 = (i >> 0) & 0x01;
 		INT32 r = 0x47 * bit0;
 
-		Palette[i + 0x60] = (r << 16) | (g << 8) | b;
+		DrvPalette[i + 0x60] = BurnHighCol(r,g,b,0);
 	}
 }
 
@@ -1070,10 +1070,7 @@ static void redclash_draw_stars(INT32 palette_offset, INT32 sraider, INT32 first
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x60; i++) {
-			INT32 d = Palette[i];
-			DrvPalette[i] = BurnHighCol(d >> 16, d >> 8, d, 0);
-		}
+		DrvPaletteInit(0, 5, 2, 6, 4, 7);
 		DrvRecalc = 0;
 	}
 
@@ -1091,10 +1088,7 @@ static INT32 DrvDraw()
 static INT32 SraiderDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x80; i++) {
-			INT32 d = Palette[i];
-			DrvPalette[i] = BurnHighCol(d >> 16, d >> 8, d, 0);
-		}
+		SraiderPaletteInit();
 		DrvRecalc = 0;
 	}
 

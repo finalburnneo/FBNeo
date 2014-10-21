@@ -38,7 +38,6 @@ static UINT8 *DrvGfx0Trans;
 static UINT8 *DrvGfx1;
 static UINT8 *DrvSnd0;
 
-static UINT32 *Palette;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
@@ -507,7 +506,6 @@ void pow_paletteram16_word_w(UINT32 address)
 	g = (g << 3) | (g >> 2);
 	b = (b << 3) | (b >> 2);
 
-	Palette[(address >> 1) & 0x7ff] = (r << 16) | (g << 8) | b;
 	DrvPalette[(address >> 1) & 0x7ff] = BurnHighCol(r, g, b, 0);
 }
 
@@ -803,8 +801,6 @@ static INT32 MemIndex()
 	DrvPalRam	= Next; Next += 0x001000;
 
 	DrvZ80Ram	= Next; Next += 0x000800;
-
-	Palette		= (UINT32*)Next; Next += 0x00800 * sizeof(UINT32);
 
 	RamEnd		= Next;
 
@@ -1204,10 +1200,10 @@ static void sar_foreground()
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x800; i++) {
-			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
+		for (INT32 i = 0; i < 0x1000; i+=2) {
+			pow_paletteram16_word_w(i);
 		}
+		DrvRecalc = 0;
 	}
 
 	for (INT32 offs = 0; offs < nScreenHeight * nScreenWidth; offs++) {

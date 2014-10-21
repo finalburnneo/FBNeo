@@ -18,7 +18,7 @@ static UINT8 *DrvZ80RAM;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvBlitRAM;
 static UINT8 *DrvTempBmp;
-static UINT32 *Palette;
+
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
@@ -379,7 +379,6 @@ static INT32 MemIndex()
 
 	DrvGfxROM		= Next; Next += 0x010000;
 
-	Palette			= (UINT32*)Next; Next += 0x2000 * sizeof(UINT32);
 	DrvPalette		= (UINT32*)Next; Next += 0x2000 * sizeof(UINT32);
 
 	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
@@ -413,7 +412,7 @@ static void DrvPaletteInit()
 		r = ((i >> 5) & 1) * (153*192/255) + ((i >> 4) & 1) * (102*192/255) + ((i & 0x30) ? 63 : 0);
 		g = ((i >> 3) & 1) * (156*192/255) + ((i >> 2) & 1) * (99*192/255) + ((i & 0x0c) ? 63 : 0);
 		b = ((i >> 1) & 1) * 192 + ((i >> 0) & 1) * 63;
-		tpal[i] = (r << 16) | (g << 8) | b;
+		tpal[i] = BurnHighCol(r,g,b,0);
 	}
 
 	for (INT32 i = 0; i < (1 << 13); i++)
@@ -445,7 +444,7 @@ static void DrvPaletteInit()
 
 		INT32 t = (rhi << 5) | (rlo << 4) | (ghi << 3) | (glo << 2) | (bhi << 1) | bbase;
 
-		Palette[i] = tpal[t];
+		DrvPalette[i] = tpal[t];
 	}
 }
 
@@ -536,10 +535,8 @@ static inline void update_flip_state()
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x2000; i++) {
-			INT32 d = Palette[i];
-			DrvPalette[i] = BurnHighCol(d >> 16, (d >> 8) & 0xff, d & 0xff, 0);
-		}
+		DrvPaletteInit();
+		DrvRecalc = 0;
 	}
 
 	update_flip_state();

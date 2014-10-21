@@ -23,7 +23,6 @@ static UINT8 *DrvVidRAM;
 static UINT8 *DrvTxtRAM;
 static UINT8 *DrvSprRAM;
 
-static UINT32 *Palette;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
@@ -453,11 +452,11 @@ static void DrvPaletteInit()
 		INT32 g = DrvColPROM[i + 0x100] & 0x0f;
 		INT32 b = DrvColPROM[i + 0x200] & 0x0f;
 
-		Palette[i] = (r << 20) | (r << 16) | (g << 12) | (g << 8) | (b << 4) | (b << 0);
+		DrvPalette[i] = BurnHighCol((r*16)+r, (g*16)+g, (b*16)+b, 0);
 	}
 
 	for (INT32 i = 0; i < 0x400; i++) {
-		Palette[i + 0x100] = Palette[DrvColPROM[0x300 + i]];
+		DrvPalette[i + 0x100] = DrvPalette[DrvColPROM[0x300 + i]];
 	}
 }
 
@@ -536,7 +535,6 @@ static INT32 MemIndex()
 
 	DrvColPROM		= Next; Next += 0x000700;
 
-	Palette			= (UINT32*)Next; Next += 0x0500 * sizeof(UINT32);
 	DrvPalette		= (UINT32*)Next; Next += 0x0500 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -759,10 +757,7 @@ static void draw_sprites()
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x500; i++) {
-			INT32 p = Palette[i];
-			DrvPalette[i] = BurnHighCol(p >> 16, p >> 8, p, 0);
-		}
+		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
 
@@ -865,8 +860,6 @@ static INT32 DrvFrame()
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
-//	return 1; // Broken :(
-
 	struct BurnArea ba;
 
 	if (pnMin) {

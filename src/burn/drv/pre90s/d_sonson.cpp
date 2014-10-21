@@ -24,7 +24,6 @@ static UINT8 *DrvColRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvScrollX;
 static UINT32 *DrvPalette;
-static UINT32 *Palette;
 static UINT8 DrvRecalc;
 
 static INT16 *pAY8910Buffer[6];
@@ -71,7 +70,6 @@ STDINPUTINFO(Sonson)
 
 static struct BurnDIPInfo SonsonDIPList[]=
 {
-	// Default Values
 	{0x0f, 0xff, 0xff, 0xdf, NULL			},
 	{0x10, 0xff, 0xff, 0xeb, NULL			},
 
@@ -280,11 +278,11 @@ static INT32 DrvPaletteInit()
 		bit3 = (DrvColPROM[i + 0x000] >> 3) & 0x01;
 		b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 
-		tmp[i] = (r << 16) | (g << 8) | b;
+		tmp[i] = BurnHighCol(r,g,b,0);
 	}
 
 	for (INT32 i = 0; i < 0x200; i++) {
-		Palette[i] = tmp[(DrvColPROM[0x200 + i] & 0x0f) | ((i >> 4) & 0x10)];
+		DrvPalette[i] = tmp[(DrvColPROM[0x200 + i] & 0x0f) | ((i >> 4) & 0x10)];
 	}
 
 	BurnFree (tmp);
@@ -304,7 +302,6 @@ static INT32 MemIndex()
 
 	DrvColPROM	= Next; Next += 0x000400;
 
-	Palette		= (UINT32*)Next; Next += 0x00200 * sizeof(UINT32);
 	DrvPalette	= (UINT32*)Next; Next += 0x00200 * sizeof(UINT32);
 
 	AllRam		= Next;
@@ -350,7 +347,6 @@ static INT32 DrvDoReset()
 
 	return 0;
 }
-
 
 static INT32 DrvInit()
 {
@@ -524,14 +520,11 @@ static void draw_sprites()
 	}
 }
 
-
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x200; i++) {
-			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
-		}
+		DrvPaletteInit();
+		DrvRecalc = 0;
 	}
 
 	draw_background();

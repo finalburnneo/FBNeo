@@ -1073,7 +1073,7 @@ static INT32 DrvDraw()
 	{
 		for (INT32 i = 0; i < 0x100; i++) {
 			UINT32 col = Palette[i];
-			DrvPal[i] = BurnHighCol(col >> 16, col >> 8, col, 0);
+			DrvPal[i] = BurnHighCol((col >> 16) & 0xff, (col >> 8) & 0xff, col & 0xff, 0);
 		}
 		DrvCalcPal = 0;
 	}
@@ -1900,6 +1900,9 @@ struct BurnDriver BurnDrvstriv = {
 	strivInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x100,
 	224, 256, 3, 4
 };
+
+
+// Super Triv (set 2)
 
 static struct BurnRomInfo striv2RomDesc[] = {
 	{ "s.triv_p1.2f",     0x1000, 0xdcf5da6e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code

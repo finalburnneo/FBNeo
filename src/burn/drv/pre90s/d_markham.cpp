@@ -19,7 +19,6 @@ static UINT8 *DrvVidRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvShareRAM;
 
-static UINT32 *Palette;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
@@ -207,7 +206,6 @@ static INT32 MemIndex()
 
 	DrvColPROM		= Next; Next += 0x000700;
 
-	Palette			= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
 	DrvPalette		= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -251,20 +249,20 @@ static INT32 DrvGfxDecode()
 
 static void DrvPaletteInit()
 {
+	UINT32 tmp[0x100];
+
 	for (INT32 i = 0; i < 0x100; i++)
 	{
 		INT32 r = DrvColPROM[i + 0x000] & 0x0f;
 		INT32 g = DrvColPROM[i + 0x100] & 0x0f;
 		INT32 b = DrvColPROM[i + 0x200] & 0x0f;
 
-		DrvPalette[i] = (r << 20) | (r << 16) | (g << 12) | (g << 8) | (b << 4) | (b << 0);
+		tmp[i] = BurnHighCol((r*16)+r, (g*16)+g, (b*16)+b, 0);
 	}
 
 	for (INT32 i = 0; i < 0x400; i++) {
-		Palette[i] = DrvPalette[DrvColPROM[0x300 + i]];
+		DrvPalette[i] = tmp[DrvColPROM[0x300 + i]];
 	}
-
-	DrvRecalc = 1;
 }
 
 static INT32 DrvInit()
@@ -406,10 +404,7 @@ static void draw_sprites()
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x400; i++) {
-			INT32 d = Palette[i];
-			DrvPalette[i] = BurnHighCol(d >> 16, (d >> 8) & 0xff, d & 0xff, 0);
-		}
+		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
 

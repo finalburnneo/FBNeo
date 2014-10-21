@@ -13,7 +13,6 @@ static UINT8 *DrvZ80RAM0;
 static UINT8 *DrvZ80RAM1;
 static UINT8 *DrvGfxROM;
 static UINT32 *DrvPalette;
-static UINT32 *Palette;
 static UINT8 DrvRecalc;
 
 static UINT32 *DrvVidRAM32;
@@ -111,7 +110,6 @@ static struct BurnDIPInfo DrvDIPList[]=
 };
 
 STDDIPINFO(Drv)
-
 
 static void videoram_write(UINT16 offset, UINT8 data, UINT8 mask)
 {
@@ -211,13 +209,7 @@ void __fastcall kangaroo_main_write(UINT16 address, UINT8 data)
 		case 0xed00:
 			// coin counter
 		return;
-	}
-	
-	
-	
-	if (address > 0x5fff) bprintf (PRINT_NORMAL, _T("%4.4x, %2.2x wm\n"), address, data);
-
-	return;
+	}	
 }
 
 UINT8 __fastcall kangaroo_main_read(UINT16 address)
@@ -268,8 +260,6 @@ UINT8 __fastcall kangaroo_main_read(UINT16 address)
 		case 0xef00:
 			return ++kangaroo_clock & 0x0f;
 	}
-	
-	bprintf (PRINT_NORMAL, _T("%4.4x, rm\n"), address);
 
 	return 0;
 }
@@ -282,8 +272,6 @@ UINT8 __fastcall kangaroo_sound_read(UINT16 address)
 			return soundlatch;
 	}
 	
-	bprintf (PRINT_NORMAL, _T("%4.4x, rs\n"), address);
-
 	return 0;
 }
 
@@ -299,10 +287,6 @@ void __fastcall kangaroo_sound_write(UINT16 address, UINT8 data)
 			AY8910Write(0, 0, data);
 			return;
 	}
-	
-	bprintf (PRINT_NORMAL, _T("%4.4x, %2.2x ws\n"), address, data);
-
-	return;
 }
 
 static INT32 MemIndex()
@@ -315,7 +299,6 @@ static INT32 MemIndex()
 	DrvZ80ROM1	= Next; Next += 0x01000;
 	DrvGfxROM	= Next; Next += 0x04000;
 
-	Palette		= (UINT32*)Next; Next += 0x00008 * sizeof(UINT32);
 	DrvPalette	= (UINT32*)Next; Next += 0x00008 * sizeof(UINT32);
 
 	AllRAM		= Next;
@@ -334,6 +317,13 @@ static INT32 MemIndex()
 	MemEnd		= Next;
 
 	return 0;
+}
+
+static void DrvPaletteInit()
+{
+	for (INT32 i = 0; i < 8; i++) {
+		DrvPalette[i] = BurnHighCol((i & 4) ? 0xff : 0,  (i & 2) ? 0xff : 0, (i & 1) ? 0xff : 0, 0);
+	}
 }
 
 static INT32 DrvDoReset()
@@ -395,9 +385,7 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvZ80ROM1, 4, 0)) return 1;
 	}
 
-	for (INT32 i = 0; i < 8; i++)
-		Palette[i] = ((i & 4 ? 0xff : 0) << 16) | ((i & 2 ? 0xff : 0) << 8) | (i & 1 ? 0xff : 0);
-
+	DrvPaletteInit();
 
 	ZetInit(0);
 	ZetOpen(0);
@@ -467,10 +455,8 @@ static INT32 DrvDraw()
 	INT32 x, y;
 
 	if (DrvRecalc) {
-		for (x = 0; x < 8; x++) {
-			UINT32 col = Palette[x];
-			DrvPalette[x] = BurnHighCol(col >> 16, col >> 8, col, 0);
-		}
+		DrvPaletteInit();
+		DrvRecalc = 0;
 	}
 
 	// iterate over pixels

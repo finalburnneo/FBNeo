@@ -420,7 +420,7 @@ static INT32 DrvDraw()
 			{
 				INT32 pxl = Palette[*src];
 
-				PutPix(pBurnDraw + ((y << 8) | x) * nBurnBpp, BurnHighCol(pxl >> 16, pxl >> 8, pxl, 0));
+				PutPix(pBurnDraw + ((y << 8) | x) * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
 			}
 		}
 	}
@@ -442,7 +442,7 @@ static INT32 DrvDraw()
 
 				INT32 pxl = Palette[0x10|*src];
 
-				PutPix(pBurnDraw + ((y << 8) | x) * nBurnBpp, BurnHighCol(pxl >> 16, pxl >> 8, pxl, 0));
+				PutPix(pBurnDraw + ((y << 8) | x) * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
 			}
 		}
 	}

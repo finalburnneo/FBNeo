@@ -18,7 +18,7 @@ static UINT8 *DrvZ80ROM;
 static UINT8 *DrvColPROM;
 static UINT8 *DrvZ80RAM;
 static UINT8 *DrvVidRAM;
-static UINT32  *Palette;
+
 static UINT32  *DrvPalette;
 
 static INT16* pAY8910Buffer[3];
@@ -404,7 +404,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 	return 0;
 }
 
-static void DrvPaletteInit(INT32 num)
+static void DrvColPromInit(INT32 num)
 {
 	UINT8 prom[32] = { // in case the set lacks a prom dump
 		0x00, 0xE1, 0xC3, 0xFC, 0xEC, 0xF8, 0x34, 0xFF,
@@ -416,9 +416,13 @@ static void DrvPaletteInit(INT32 num)
 	memcpy (DrvColPROM, prom, 32);		
 
 	BurnLoadRom(DrvColPROM, num, 1);
-	
+}
+
+static void DrvPaletteInit()
+{	
 	for (INT32 i = 0; i < 0x20; i++) {
-		Palette[i] = BITSWAP24(DrvColPROM[i], 7,6,5,7,6,6,7,5,4,3,2,4,3,3,4,2,1,0,1,0,1,1,0,1);
+		UINT32 p = BITSWAP24(DrvColPROM[i], 7,6,5,7,6,6,7,5,4,3,2,4,3,3,4,2,1,0,1,0,1,1,0,1);
+		DrvPalette[i] = BurnHighCol((p >> 16) & 0xff, (p >> 8) & 0xff, p & 0xff, 0);
 	}
 }
 
@@ -445,7 +449,6 @@ static INT32 MemIndex()
 
 	DrvColPROM	 = Next; Next += 0x000020;
 
-	Palette	 	 = (UINT32*)Next; Next += 0x0020 * sizeof(UINT32);
 	DrvPalette	 = (UINT32*)Next; Next += 0x0020 * sizeof(UINT32);
 
 	pAY8910Buffer[0] = (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
@@ -487,7 +490,8 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvZ80ROM + 0x6000, 6, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM + 0x7000, 7, 1)) return 1;
 
-		DrvPaletteInit(8);
+		DrvColPromInit(8);
+		DrvPaletteInit();
 	}
 
 	ZetInit(0);
@@ -529,7 +533,8 @@ static INT32 DealerInit()
 		if (BurnLoadRom(DrvZ80ROM + 0x4000, 2, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM + 0x6000, 3, 1)) return 1;
 
-		DrvPaletteInit(4);
+		DrvColPromInit(4);
+		DrvPaletteInit();
 		DealerDecode();
 	}
 
@@ -580,16 +585,7 @@ static INT32 DrvExit()
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		UINT8 r,g,b;
-		for (INT32 i = 0; i < 0x20; i++) {
-			INT32 rgb = Palette[i];
-			r = (rgb >> 16) & 0xff;
-			g = (rgb >>  8) & 0xff;
-			b = (rgb >>  0) & 0xff;
-	
-			DrvPalette[i] = BurnHighCol(r, g, b, 0);
-		}
-
+		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
 

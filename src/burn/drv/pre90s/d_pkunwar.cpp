@@ -373,7 +373,7 @@ static INT32 DrawChars(INT32 priority)
 					else
 						pos = (y << 8) | (x & 0xff);
 	
-					PutPix(pBurnDraw + pos * nBurnBpp, BurnHighCol(pxl >> 16, pxl >> 8, pxl, 0));
+					PutPix(pBurnDraw + pos * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, (pxl)&0xff, 0));
 	 			}
 			}
 		}
@@ -423,7 +423,7 @@ static INT32 DrvDraw()
 						else
 							pos = (y << 8) | (x & 0xff);
 
-						PutPix(pBurnDraw + pos * nBurnBpp, BurnHighCol(pxl >> 16, pxl >> 8, pxl, 0));
+						PutPix(pBurnDraw + pos * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
 		 			}
 				} else {
 					for (INT32 x = sx; x < sx + 16; x++, src++)
@@ -437,7 +437,7 @@ static INT32 DrvDraw()
 						else
 							pos = (y << 8) | (x & 0xff);
 		
-						PutPix(pBurnDraw + pos * nBurnBpp, BurnHighCol(pxl >> 16, pxl >> 8, pxl, 0));
+						PutPix(pBurnDraw + pos * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
 		 			}
 				}
 			}
@@ -457,7 +457,7 @@ static INT32 DrvDraw()
 						else
 							pos = (y << 8) | (x & 0xff);
 		
-						PutPix(pBurnDraw + pos * nBurnBpp, BurnHighCol(pxl >> 16, pxl >> 8, pxl, 0));
+						PutPix(pBurnDraw + pos * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
 		 			}
 				} else {
 					for (INT32 x = sx; x < sx + 16; x++, src++)
@@ -471,7 +471,7 @@ static INT32 DrvDraw()
 						else
 							pos = (y << 8) | (x & 0xff);
 		
-						PutPix(pBurnDraw + pos * nBurnBpp, BurnHighCol(pxl >> 16, pxl >> 8, pxl, 0));
+						PutPix(pBurnDraw + pos * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
 		 			}
 				}
 			}

@@ -10,7 +10,7 @@ extern "C" {
 
 static UINT8 *Mem, *MemEnd, *Rom, *Gfx0, *Gfx1, *Prom;
 static INT16 *pAY8910Buffer[6], *pFMBuffer = NULL;
-static UINT32 *DrvPalette, *Palette;
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc = 0;
 
 static UINT8 DrvJoy1[8], DrvJoy2[8], DrvJoy3[8], DrvDips[3], DrvReset;
@@ -189,7 +189,6 @@ static INT32 MemIndex()
 	Gfx1           = Next; Next += 0x08000;
 	Prom           = Next; Next += 0x00300;
 
-	Palette	       = (UINT32*)Next; Next += 0x00180 * sizeof(UINT32);
 	DrvPalette     = (UINT32*)Next; Next += 0x00180 * sizeof(UINT32);
 
 	pFMBuffer      = (INT16*)Next; Next += (nBurnSoundLen * 6 * sizeof(INT16));
@@ -237,17 +236,15 @@ static void DrvPaletteInit()
 		bit2 = (Prom[i] >> 7) & 1;
 		INT32 b = 0x47 * bit1 + 0x97 * bit2;
 
-		tmp[i] = (r << 16) | (g << 8) | b;
+		tmp[i] = BurnHighCol(r,g,b,0);
 	}
 
-	Prom += 0x100;
-
 	for (INT32 i = 0; i < 0x80; i++) {
-		Palette[i] = tmp[Prom[i] & 0x0f];
+		DrvPalette[i] = tmp[Prom[i+0x100] & 0x0f];
 	}
 
 	for (INT32 i = 0x80; i < 0x180; i++) {
-		Palette[i] = tmp[(Prom[i + 0x80] & 0x0f) | 0x10];
+		DrvPalette[i] = tmp[(Prom[i + 0x180] & 0x0f) | 0x10];
 	}
 }
 
@@ -344,7 +341,7 @@ static INT32 DrvExit()
 	BurnFree (Mem);
 
 	Mem = MemEnd = Rom = Gfx0 = Gfx1 = Prom = NULL;
-	DrvPalette = Palette = NULL;
+	DrvPalette = NULL;
 	pFMBuffer = NULL;
 
 	for (INT32 i = 0; i < 6; i++) {
@@ -361,10 +358,8 @@ static INT32 DrvExit()
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x100; i++) {
-			INT32 color = Palette[i];
-			DrvPalette[i] = BurnHighCol(color >> 16, color >> 8, color, 0);
-		}
+		DrvPaletteInit();
+		DrvRecalc = 0;
 	}
 
 	for (INT32 offs = 0x40; offs < 0x3c0; offs++)

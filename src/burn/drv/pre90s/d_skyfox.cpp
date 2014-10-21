@@ -18,9 +18,8 @@ static UINT8 *DrvSprRAM;
 static UINT8 *DrvZ80RAM0;
 static UINT8 *DrvZ80RAM1;
 static UINT8 *DrvVidRegs;
-static UINT32 *DrvPalette;
-static UINT32 *Palette;
 
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[8];
@@ -178,7 +177,6 @@ static INT32 MemIndex()
 	DrvColPROM	= Next; Next += 0x000300;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
-	Palette		= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
 
 	AllRam		= Next;
 
@@ -236,12 +234,12 @@ static void DrvPaletteInit()
 		bit3 = (DrvColPROM[i + 2*256] >> 3) & 0x01;
 		b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 
-		Palette[i] = (r << 16) | (g << 8) | b;
+		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
 
 	for (INT32 i = 0; i < 256; i++)
 	{
-		Palette[i | 0x100] = (i << 16) | (i << 8) | i;
+		DrvPalette[i | 0x100] = BurnHighCol(i,i,i,0);
 	}
 }
 
@@ -460,10 +458,8 @@ static void draw_background()
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x200; i++) {
-			INT32 p = Palette[i];
-			DrvPalette[i] =  BurnHighCol(p >> 16, p >> 8, p, 0);
-		}
+		DrvPaletteInit();
+		DrvRecalc = 0;
 	}
 
 	for (INT32 offs = 0; offs < nScreenWidth * nScreenHeight; offs++) {

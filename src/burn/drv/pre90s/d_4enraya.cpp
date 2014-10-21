@@ -17,7 +17,7 @@ static UINT8 *DrvGfxROM;
 static UINT8 *DrvZ80RAM;
 static UINT8 *DrvNVRAM;
 static UINT8 *DrvVidRAM;
-static UINT32 *Palette;
+
 static UINT32 *DrvPalette;
 
 static INT16 *pAY8910Buffer[3];
@@ -228,7 +228,6 @@ static INT32 MemIndex()
 
 	DrvGfxROM		= Next; Next += 0x010000;
 
-	Palette			= (UINT32*)Next; Next += 0x0008 * sizeof(UINT32);
 	DrvPalette		= (UINT32*)Next; Next += 0x0008 * sizeof(UINT32);
 
 	DrvNVRAM		= Next; Next += 0x001000;

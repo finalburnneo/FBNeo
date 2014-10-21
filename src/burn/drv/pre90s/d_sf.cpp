@@ -22,7 +22,7 @@ static UINT8 *Gfx3;
 static UINT8 *Gfx4;
 static UINT8 *Gfx1Trans;
 static UINT8 *Gfx3Trans;
-static UINT32 *Palette;
+
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
@@ -410,18 +410,15 @@ static void protection_w()
 	}
 }
 
-static inline void write_palette(UINT16 data, INT32 offset)
+static inline void palette_update(INT32 offset)
 {
+	UINT16 data = *((UINT16*)(Drv68kPalRam + (offset & 0x7fe)));
+
 	INT32 r = (data >> 8) & 0x0f;
 	INT32 g = (data >> 4) & 0x0f;
 	INT32 b = (data >> 0) & 0x0f;
 
-	r |= r << 4;
-	g |= g << 4;
-	b |= b << 4;
-
-	Palette[offset] = (r << 16) | (g << 8) | b;
-	DrvPalette[offset] = BurnHighCol(r, g, b, 0);
+	DrvPalette[(offset & 0x7fe)/2] = BurnHighCol((r*16)+r, (g*16)+g, (b*16)+b, 0);
 }
 
 void __fastcall sf_write_word(UINT32 address, UINT16 data)
@@ -431,7 +428,7 @@ void __fastcall sf_write_word(UINT32 address, UINT16 data)
 
 		*pal = data;
 
-		write_palette(*pal, (address >> 1) & 0x3ff);
+		palette_update(address);
 
 		return;
 	}
@@ -736,8 +733,6 @@ static INT32 MemIndex()
 
 	DrvZ80Ram0	= Next; Next += 0x000800;
 
-	Palette		= (UINT32*)Next; Next += 0x00401 * sizeof(UINT32);
-
 	RamEnd          = Next;
 
 	MemEnd		= Next;
@@ -868,8 +863,6 @@ static INT32 DrvInit(INT32 initver)
 	DrvDoReset();
 
 	version = initver;
-
-	Palette[0x400] = 0xff00ff;
 
 	return 0;
 }
@@ -1147,14 +1140,14 @@ static void draw_sprites()
 	}
 }
 
-
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x401; i++) {
-			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
+		for (INT32 i = 0; i < 0x800; i+=2) {
+			palette_update(i);
 		}
+		DrvPalette[0x400] = BurnHighCol(0xff,0,0xff,0);
+		DrvRecalc = 0;
 	}
 
 	if (nBurnLayer & 8) {

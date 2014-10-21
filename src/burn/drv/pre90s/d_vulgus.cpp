@@ -14,7 +14,7 @@ extern "C" {
 static UINT8 *Mem, *MemEnd, *Rom0, *Rom1, *Gfx0, *Gfx1, *Gfx2, *Prom;
 static UINT8 DrvJoy1[8], DrvJoy2[8], DrvJoy3[8], DrvDips[2], DrvReset;
 static INT16 *pAY8910Buffer[6], *pFMBuffer = NULL;
-static UINT32 *DrvPalette, *Palette;
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static INT32 vulgus_soundlatch;
@@ -246,7 +246,6 @@ static INT32 MemIndex()
 	Gfx2		= Next; Next += 0x10000;
 	Prom		= Next; Next += 0x00600;
 
-	Palette		= (UINT32*)Next; Next += 0x00800 * sizeof(UINT32);
 	DrvPalette	= (UINT32*)Next; Next += 0x00800 * sizeof(UINT32);
 
 	pFMBuffer	= (INT16*)Next; Next += (nBurnSoundLen * 6 * sizeof(INT16));
@@ -258,10 +257,7 @@ static INT32 MemIndex()
 
 static INT32 DrvPaletteInit()
 {
-	UINT32 *tmp = (UINT32*)BurnMalloc(0x100 * sizeof(UINT32));
-	if (tmp == NULL) { 
-		return 1;
-	}
+	UINT32 tmp[0x100];
 
 	for (INT32 i = 0; i < 256; i++)
 	{
@@ -285,25 +281,23 @@ static INT32 DrvPaletteInit()
 		bit3 = (Prom[512 + i] >> 3) & 0x01;
 		b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 
-		tmp[i] = (r << 16) | (g << 8) | b;
+		tmp[i] = BurnHighCol(r,g,b,0);
 	}
 
 	for (INT32 i = 0; i < 0x100; i++) {
-		Palette[i] = tmp[32 + Prom[0x300 + i]];
+		DrvPalette[i] = tmp[32 + Prom[0x300 + i]];
 	}
 
 	for (INT32 i = 0; i < 0x100; i++) {
-		Palette[0x100 + i] = tmp[16 + Prom[0x400 + i]];
+		DrvPalette[0x100 + i] = tmp[16 + Prom[0x400 + i]];
 	}
 
 	for (INT32 i = 0; i < 0x100; i++)	{
-		Palette[0x400 + i] = tmp[Prom[0x500 + i] + 0x00];
-		Palette[0x500 + i] = tmp[Prom[0x500 + i] + 0x40];
-		Palette[0x600 + i] = tmp[Prom[0x500 + i] + 0x80];
-		Palette[0x700 + i] = tmp[Prom[0x500 + i] + 0xc0];
+		DrvPalette[0x400 + i] = tmp[Prom[0x500 + i] + 0x00];
+		DrvPalette[0x500 + i] = tmp[Prom[0x500 + i] + 0x40];
+		DrvPalette[0x600 + i] = tmp[Prom[0x500 + i] + 0x80];
+		DrvPalette[0x700 + i] = tmp[Prom[0x500 + i] + 0xc0];
 	}
-
-	BurnFree (tmp);
 
 	return 0;
 }
@@ -438,7 +432,7 @@ static INT32 DrvExit()
 		pAY8910Buffer[i] = NULL;
 	}
 
-	DrvPalette = Palette = NULL;
+	DrvPalette = NULL;
 
 	DrvRecalc = 0;
 
@@ -453,10 +447,8 @@ static INT32 DrvExit()
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x800; i++) {
-			INT32 color = Palette[i];
-			DrvPalette[i] = BurnHighCol(color >> 16, color >> 8, color, 0);
-		}
+		DrvPaletteInit();
+		DrvRecalc = 0;
 	}
 
 	for (INT32 offs = 0; offs < 0x400; offs++)

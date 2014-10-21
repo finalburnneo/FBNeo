@@ -12,7 +12,7 @@ extern "C" {
 static UINT8 *Mem, *MemEnd;
 static UINT8 *Rom0, *Rom1, *Gfx0, *Gfx1, *Gfx2, *Gfx3, *Gfx4, *Prom;
 static INT16 *pAY8910Buffer[3], *pFMBuffer = NULL;
-static UINT32 *Palette, *DrvPalette;
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 *fg_tile_transp;
@@ -273,7 +273,6 @@ static INT32 MemIndex()
 
 	fg_tile_transp = Next; Next += 0x00100;
 
-	Palette	       = (UINT32*)Next; Next += 0x00400 * sizeof(UINT32);
 	DrvPalette     = (UINT32*)Next; Next += 0x00400 * sizeof(UINT32);
 
 	pFMBuffer      = (INT16*)Next; Next += (nBurnSoundLen * 3 * sizeof(INT16));
@@ -283,42 +282,26 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static INT32 PaletteInit()
+static INT32 DrvPaletteInit()
 {
-	UINT32 *tmp = (UINT32*)BurnMalloc(0x100 * sizeof(UINT32));
-	if (tmp == NULL) {
-		return 1;
+	UINT32 tmp[0x100];
+
+	for (INT32 i = 0; i < 0x100; i++)
+	{
+		int r = Prom[i + 0x000] & 0xf;
+		int g = Prom[i + 0x100] & 0xf;
+		int b = Prom[i + 0x200] & 0xf;
+
+		tmp[i] = BurnHighCol((r*16)+r,(g*16)+g,(b*16)+b, 0);
 	}
 
 	for (INT32 i = 0; i < 0x100; i++)
 	{
-		INT32 r = Prom[i + 0x000];
-		INT32 g = Prom[i + 0x100];
-		INT32 b = Prom[i + 0x200];
-
-		tmp[i] = (r << 20) | (r << 16) | (g << 12) | (g << 8) | (b << 4) | b;
+		DrvPalette[i + 0x000] = tmp[Prom[i + 0x300] | 0xc0];
+		DrvPalette[i + 0x100] = tmp[Prom[i + 0x400]];
+		DrvPalette[i + 0x200] = tmp[Prom[i + 0x500] | 0x40];
+		DrvPalette[i + 0x300] = tmp[Prom[i + 0x600] | (Prom[i + 0x700] << 4) | 0x80];
 	}
-
-	Prom += 0x300;
-
-	for (INT32 i = 0; i < 0x100; i++) {
-		Palette[i] = tmp[Prom[i] | 0xc0];
-	}
-
-	for (INT32 i = 0x100; i < 0x200; i++) {
-		Palette[i] = tmp[Prom[i] | 0x00];
-	}
-
-	for (INT32 i = 0x200; i < 0x300; i++) {
-		Palette[i] = tmp[Prom[i] | 0x40];
-	}
-
-	for (INT32 i = 0x300; i < 0x400; i++) {
-		INT32 entry = Prom[i] | (Prom[i + 0x100] << 4) | 0x80;
-		Palette[i] = tmp[entry];
-	}
-
-	BurnFree (tmp);
 
 	return 0;
 }
@@ -403,7 +386,7 @@ static INT32 DrvInit()
 		}
 
 		if (GraphicsDecode()) return 1;
-		if (PaletteInit()) return 1;
+		if (DrvPaletteInit()) return 1;
 	}
 
 	ZetInit(0);
@@ -459,7 +442,7 @@ static INT32 DrvExit()
 	Mem = MemEnd = Rom0 = Rom1 = NULL;
 	Gfx0 = Gfx1 = Gfx2 = Gfx3 = Gfx4 = Prom = NULL;
 	for (INT32 i = 0; i < 3; i++) pAY8910Buffer[i] = NULL;
-	Palette = DrvPalette = NULL;
+	DrvPalette = NULL;
 	fg_tile_transp = NULL;
 	pFMBuffer = NULL;
 	DrvRecalc = 0;
@@ -510,7 +493,7 @@ static inline void draw_8x8(INT32 sx, INT32 sy, INT32 code, INT32 color)
 			if (y < 0 || x < 0 || y >= nScreenHeight || x >= nScreenWidth) continue;
 
 			INT32 pxl = color | *src;
-			if (Prom[pxl] == 0x0f) continue;
+			if (Prom[pxl+0x300] == 0x0f) continue;
 
 			pTransDraw[(y * nScreenWidth) + x] = pxl;
 		}
@@ -520,10 +503,8 @@ static inline void draw_8x8(INT32 sx, INT32 sy, INT32 code, INT32 color)
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x400; i++) {
-			INT32 col = Palette[i];
-			DrvPalette[i] = BurnHighCol(col >> 16, col >> 8, col, 0);
-		}
+		DrvPaletteInit();
+		DrvRecalc = 0;
 	}
 
 	if (exedexes_bg_enable)

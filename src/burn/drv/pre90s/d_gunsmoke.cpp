@@ -8,7 +8,7 @@
 static UINT8 *Mem, *MemEnd, *Rom0, *Rom1, *Ram;
 static UINT8 *Gfx0, *Gfx1, *Gfx2, *Gfx3, *Prom;
 static UINT8 DrvJoy1[8], DrvJoy2[8], DrvJoy3[8], DrvDips[2], DrvReset;
-static UINT32 *Palette, *DrvPal;
+static UINT32 *DrvPalette;
 static UINT8 DrvCalcPal;
 static UINT8 *SprTrnsp;
 
@@ -19,7 +19,6 @@ static INT32 nGunsmokeBank;
 static UINT8 sprite3bank;
 static UINT8 chon, bgon, objon;
 static UINT8 gunsmoke_scrollx[2], gunsmoke_scrolly;
-
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy1 + 6,	"p1 coin"  },
@@ -293,35 +292,24 @@ static INT32 DrvDoReset()
 	return 0;
 }
 
-static INT32 gunsmoke_palette_init()
+static INT32 DrvPaletteInit()
 {
-	INT32 i, ctabentry;
 	UINT32 tmp[0x100];
 
-	for (i = 0; i < 0x100; i++)
+	for (INT32 i = 0; i < 0x100; i++)
 	{
-		UINT8 r, g, b;
+		UINT8 r  = Prom[i + 0x000] & 0x0f;
+		UINT8 g  = Prom[i + 0x100] & 0x0f;
+		UINT8 b  = Prom[i + 0x200] & 0x0f;
 
-		r  = Prom[i + 0x000] & 0x0f;
-		r |= r << 4;
-		g  = Prom[i + 0x100] & 0x0f;
-		g |= g << 4;
-		b  = Prom[i + 0x200] & 0x0f;
- 		b |= b << 4;
-
-		tmp[i] = (r << 16) | (g << 8) | b;
+		tmp[i] = BurnHighCol((r*16)+r,(g*16)+g,(b*16)+b,0);
 	}
 
-	for (i = 0; i < 0x100; i++)
+	for (INT32 i = 0; i < 0x100; i++)
 	{
-		ctabentry = Prom[0x300 + i] | 0x40;
-		Palette[0x000 + i] = tmp[ctabentry];
-
-		ctabentry = Prom[0x400 + i] | ((Prom[0x500 + i] & 0x03) << 4);
-		Palette[0x100 + i] = tmp[ctabentry];
-
-		ctabentry = Prom[0x600 + i] | ((Prom[0x700 + i] & 0x07) << 4) | 0x80;
-		Palette[0x200 + i] = tmp[ctabentry];
+		DrvPalette[0x000 + i] = tmp[Prom[0x300 + i] | 0x40];
+		DrvPalette[0x100 + i] = tmp[Prom[0x400 + i] | ((Prom[0x500 + i] & 0x03) << 4)];
+		DrvPalette[0x200 + i] = tmp[Prom[0x600 + i] | ((Prom[0x700 + i] & 0x07) << 4) | 0x80];
 	}
 
 	return 0;
@@ -381,7 +369,6 @@ static double gunsmokeGetTime()
 	return (double)ZetTotalCycles() / 3000000;
 }
 
-
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = Mem;
@@ -397,10 +384,9 @@ static INT32 MemIndex()
 
 	SprTrnsp       = Next; Next += 0x00800;
 
-	Palette	       = (UINT32*)Next; Next += 0x00300 * sizeof(UINT32);
-	DrvPal	       = (UINT32*)Next; Next += 0x00300 * sizeof(UINT32);
+	DrvPalette     = (UINT32*)Next; Next += 0x00300 * sizeof(UINT32);
 
-	MemEnd                 = Next;
+	MemEnd         = Next;
 
 	return 0;
 }
@@ -434,7 +420,7 @@ static INT32 DrvInit()
 		}
 
 		gunsmoke_gfx_decode();
-		gunsmoke_palette_init();
+		DrvPaletteInit();
 	}
 
 	ZetInit(0);
@@ -495,7 +481,7 @@ static INT32 DrvExit()
 	Mem = MemEnd = Rom0 = Rom1 = Ram = NULL;
 	Gfx0 = Gfx1 = Gfx2 = Gfx3 = Prom = NULL;
 	SprTrnsp = NULL;
-	Palette = DrvPal = NULL;
+	DrvPalette = NULL;
 
 	soundlatch = flipscreen = nGunsmokeBank = 0;
 
@@ -581,7 +567,7 @@ static void draw_fg_layer()
 				for (INT32 x = sx + 7; x >= sx; x--, src++)
 				{
 					if (y < 0 || x < 0 || y > 223 || x > 255) continue;
-					if (!Palette[color|*src]) continue;
+					if (!DrvPalette[color|*src]) continue;
 
 					pTransDraw[(y << 8) | x] = color | *src;
 				}
@@ -594,7 +580,7 @@ static void draw_fg_layer()
 				for (INT32 x = sx; x < sx + 8; x++, src++)
 				{
 					if (y < 0 || x < 0 || y > 223 || x > 255) continue;
-					if (!Palette[color|*src]) continue;
+					if (!DrvPalette[color|*src]) continue;
 
 					pTransDraw[(y << 8) | x] = color | *src;
 				}
@@ -651,12 +637,8 @@ static void draw_sprites()
 
 static INT32 DrvDraw()
 {
-	// Recalculate palette
 	if (DrvCalcPal) {
-		for (INT32 i = 0; i < 0x300; i++) {
-			UINT32 col = Palette[i];
-			DrvPal[i] = BurnHighCol(col >> 16, col >> 8, col, 0);
-		}
+		DrvPaletteInit();
 		DrvCalcPal = 0;
 	}
 
@@ -666,7 +648,7 @@ static INT32 DrvDraw()
 	if (objon) draw_sprites();
 	if (chon)  draw_fg_layer();
 
-	BurnTransferCopy(DrvPal);
+	BurnTransferCopy(DrvPalette);
 
 	return 0;
 }

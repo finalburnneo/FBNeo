@@ -18,12 +18,11 @@ static UINT8 *DrvGfxROM;
 static UINT8 *DrvColPROM;
 static UINT8 *DrvZ80RAM;
 static UINT8 *DrvVidRAM;
-static UINT32 *Palette;
+
 static UINT32 *DrvPalette;
+static UINT8 DrvRecalc;
 
 static INT16 *pAY8910Buffer[3];
-
-static UINT8 DrvRecalc;
 
 static UINT8  DrvJoy1[8];
 static UINT8  DrvDips[2];
@@ -193,7 +192,7 @@ static void DrvPaletteInit()
 		bit7 = (DrvColPROM[i] >> 7) & 0x01;
 		b = ((54 * bit7) + (84 * bit1) + (115 * bit0));
 
-		Palette[i-8] = (r << 16) | (g << 8) | b;
+		DrvPalette[i-8] = BurnHighCol(r,g,b,0);
 	}
 }
 
@@ -207,7 +206,6 @@ static INT32 MemIndex()
 
 	DrvColPROM		= Next; Next += 0x000020; 
 
-	Palette			= (UINT32*)Next; Next += 0x0008 * sizeof(UINT32);
 	DrvPalette		= (UINT32*)Next; Next += 0x0008 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -296,10 +294,8 @@ static INT32 DrvExit()
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 8; i++) {
-			INT32 d = Palette[i];
-			DrvPalette[i] = BurnHighCol(d >> 16, (d >> 8) & 0xff, d & 0xff, 0);
-		}
+		DrvPaletteInit();
+		DrvRecalc = 0;
 	}
 
 	for (INT32 offs = 0; offs < 0x400; offs ++)

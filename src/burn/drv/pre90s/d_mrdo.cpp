@@ -219,7 +219,7 @@ static void mrdo_palette_init()
 		bits2 = (Prom[a2] >> 4) & 0x03;
 		b = weight[bits0 + (bits2 << 2)];
 
-		Palette[i] = (r << 16) | (g << 8) | b;
+		Palette[i] = BurnHighCol(r,g,b,0);
 	}
 
 	for (INT32 i = 0; i < 0x40; i++)
@@ -361,7 +361,7 @@ static void draw_sprites()
 
 							INT32 pxl = Palette[color | *src];
 
-							PutPix(pBurnDraw + ((y * 240) + x) * nBurnBpp, BurnHighCol(pxl >> 16, pxl >> 8, pxl, 0));
+							PutPix(pBurnDraw + ((y * 240) + x) * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
 						}
 					} else {
 						for (INT32 x = sx; x < sx + 16; x++, src++)
@@ -371,7 +371,7 @@ static void draw_sprites()
 
 							INT32 pxl = Palette[color | *src];
 
-							PutPix(pBurnDraw + ((y * 240) + x) * nBurnBpp, BurnHighCol(pxl >> 16, pxl >> 8, pxl, 0));
+							PutPix(pBurnDraw + ((y * 240) + x) * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
 						}
 					}
 				}
@@ -387,7 +387,7 @@ static void draw_sprites()
 
 							INT32 pxl = Palette[color | *src];
 
-							PutPix(pBurnDraw + ((y * 240) + x) * nBurnBpp, BurnHighCol(pxl >> 16, pxl >> 8, pxl, 0));
+							PutPix(pBurnDraw + ((y * 240) + x) * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
 						}
 					} else {
 						for (INT32 x = sx; x < sx + 16; x++, src++)
@@ -397,7 +397,7 @@ static void draw_sprites()
 
 							INT32 pxl = Palette[color | *src];
 
-							PutPix(pBurnDraw + ((y * 240) + x) * nBurnBpp, BurnHighCol(pxl >> 16, pxl >> 8, pxl, 0));
+							PutPix(pBurnDraw + ((y * 240) + x) * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
 						}
 					}
 				}
@@ -437,7 +437,7 @@ static void draw_8x8_tiles(UINT8 *vram, UINT8 *gfx_base, INT32 scrollx, INT32 sc
 				INT32 pos = y * 240 + x;
 				if (flipscreen) pos = (192 - y) * 240 + (240 - x);
 
-				PutPix(pBurnDraw + pos * nBurnBpp, BurnHighCol(pxl >> 16, pxl >> 8, pxl, 0));
+				PutPix(pBurnDraw + pos * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
 			}
 		}
 	}

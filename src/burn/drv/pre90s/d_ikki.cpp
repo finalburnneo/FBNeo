@@ -19,9 +19,10 @@ static UINT8 *DrvZ80RAM0;
 static UINT8 *DrvShareRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvVidRAM;
-static UINT32 *DrvPalette;
-static UINT32 *Palette;
+
 static UINT8 *DrvTransMask;
+
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 DrvReset;
@@ -193,38 +194,29 @@ static INT32 DrvDoReset()
 
 static void DrvPaletteInit()
 {
-	UINT32 *tmp = (UINT32*)BurnMalloc(0x100 * sizeof(UINT32));
+	UINT32 tmp[0x100];
 
 	for (INT32 i = 0; i < 0x100; i++)
 	{
-		UINT8 r, g, b;
+		UINT8 r = DrvColPROM[i + 0x000] & 0x0f;
+		UINT8 g = DrvColPROM[i + 0x100] & 0x0f;
+		UINT8 b = DrvColPROM[i + 0x200] & 0x0f;
 
-		r = DrvColPROM[i + 0x000] & 0x0f;
-		g = DrvColPROM[i + 0x100] & 0x0f;
-		b = DrvColPROM[i + 0x200] & 0x0f;
-
-		tmp[i] = (r << 20) | (r << 16) | (g << 12) | (g << 8) | (b << 4) | b;
+		tmp[i] = BurnHighCol((r*16)+r, (g*16)+g, (b*16)+b, 0);
 	}
-
-	DrvColPROM += 0x300;
 
 	memset (DrvTransMask, 1, 0x200);
 
 	for (INT32 i = 0; i < 0x200; i++)
 	{
-		UINT16 ctabentry = DrvColPROM[i] ^ 0xff;
+		UINT16 ctabentry = DrvColPROM[i+0x300] ^ 0xff;
 
 		if ((i & 0x07) == 0x07 && ctabentry == 0) DrvTransMask[i] = 0;
 		if ((i & 0x07) == 0x00) DrvTransMask[i] = 0; // Seems to work...
 
-		Palette[i] = tmp[ctabentry];
+		DrvPalette[i+0x000] = tmp[ctabentry];
+		DrvPalette[i+0x200] = tmp[DrvColPROM[i+0x500]];
 	}
-
-	for (INT32 i = 0x200; i < 0x400; i++) {
-		Palette[i] = tmp[DrvColPROM[i]];
-	}
-	
-	BurnFree(tmp);
 }
 
 static INT32 DrvGfxDecode()
@@ -265,7 +257,6 @@ static INT32 MemIndex()
 	DrvVidAttr	= Next; Next += 0x000100;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
-	Palette		= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
 
 	DrvGfxROM0	= Next; Next += 0x020000;
 	DrvGfxROM1	= Next; Next += 0x020000;
@@ -480,10 +471,8 @@ static void draw_bg_layer(INT32 prio)
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x400; i++) {
-			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
-		}
+		DrvPaletteInit();
+		DrvRecalc = 0;
 	}
 
 	draw_bg_layer(0);

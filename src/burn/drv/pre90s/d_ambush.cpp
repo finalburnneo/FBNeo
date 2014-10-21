@@ -23,7 +23,6 @@ static UINT8 *DrvColRAM;
 static UINT8 *DrvScrRAM;
 static INT16 *pAY8910Buffer[6];
 static UINT32 *DrvPalette;
-static UINT32 *Palette;
 
 static UINT8 DrvRecalc;
 
@@ -201,7 +200,7 @@ static void DrvPaletteInit()
 		bit2 = (DrvColPROM[i] >> 7) & 0x01;
 		b = 0x47 * bit1 + 0x97 * bit2;
 
-		Palette[i] = (r << 16) | (g << 8) | b;
+		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
 }
 
@@ -237,7 +236,6 @@ static INT32 MemIndex()
 	DrvColPROM	= Next; Next += 0x000100;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0100 * sizeof(UINT32);
-	Palette		= (UINT32*)Next; Next += 0x0100 * sizeof(UINT32);
 
 	AllRam		= Next;
 
@@ -450,10 +448,8 @@ static void draw_sprites()
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x100; i++) {
-			INT32 p = Palette[i];
-			DrvPalette[i] =  BurnHighCol(p >> 16, (p >> 8) & 0xff, p & 0xff, 0);
-		}
+		DrvPaletteInit();
+		DrvRecalc = 0;
 	}
 
 	BurnTransferClear();

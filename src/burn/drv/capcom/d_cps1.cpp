@@ -16063,6 +16063,24 @@ void __fastcall VarthbScrollWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
+void __fastcall VarthbRegWriteByte(UINT32 a, UINT8 d)
+{
+	CpsWritePort(a & 0x1ff, d);
+}
+
+void __fastcall VarthbRegWriteWord(UINT32 a, UINT16 d)
+{
+	if (a == 0x800188) {
+		if (d > 0x9000) {
+			// scroll 3 ram offset
+			*((UINT16*)(CpsReg + 0x06)) = d;
+			return;
+		} // sound fade command written through CpsWritePort
+	}
+	
+	SEK_DEF_WRITE_WORD(2, a, d);
+}
+
 static INT32 VarthbInit()
 {
 	INT32 nRet = 0;
@@ -16080,9 +16098,10 @@ static INT32 VarthbInit()
 	SekMapMemory(CpsBootlegSpriteRam, 0x990000, 0x993fff, SM_RAM);
 	SekMapHandler(1, 0x980000, 0x980fff, SM_WRITE);
 	SekSetWriteWordHandler(1, VarthbScrollWriteWord);
+	SekMapHandler(2, 0x800000, 0x807fff, SM_WRITE);
+	SekSetWriteByteHandler(2, VarthbRegWriteByte);
+	SekSetWriteWordHandler(2, VarthbRegWriteWord);
 	SekClose();
-	
-	*((UINT16*)(CpsReg + 0x06)) = BURN_ENDIAN_SWAP_INT16(0x9140); // scroll 3 ram offset
 	
 	return nRet;
 }

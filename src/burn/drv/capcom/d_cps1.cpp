@@ -16067,6 +16067,7 @@ static INT32 VarthbInit()
 {
 	INT32 nRet = 0;
 	
+	Port6SoundWrite = 1;
 	Cps1ObjGetCallbackFunction = DinopicObjGet;
 	Cps1ObjDrawCallbackFunction = FcrashObjDraw;
 	CpsMemScanCallbackFunction = CpsBootlegSpriteRamScanCallback;

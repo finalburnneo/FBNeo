@@ -178,55 +178,73 @@ static INT32 DrvDoReset()
 
 static void mrdo_palette_init()
 {
-	INT32 weight[16];
+	const UINT8 *color_prom = Prom;
+	int i;
 
-	for (INT32 i = 0x0f; i >= 0; i--)
+	const int R1 = 150;
+	const int R2 = 120;
+	const int R3 = 100;
+	const int R4 = 75;
+	const int pull = 220;
+	float pot[16];
+	int weight[16];
+	const float potadjust = 0.7f;
+
+	for (i = 0x0f; i >= 0; i--)
 	{
-		float par = 0, pot = 0;
+		float par = 0;
 
-		if (i & 1) par += 1.0/150;
-		if (i & 2) par += 1.0/120;
-		if (i & 4) par += 1.0/100;
-		if (i & 8) par += 1.0/75;
+		if (i & 1) par += 1.0f/(float)R1;
+		if (i & 2) par += 1.0f/(float)R2;
+		if (i & 4) par += 1.0f/(float)R3;
+		if (i & 8) par += 1.0f/(float)R4;
 		if (par)
 		{
-			par = 1 / par;
-			pot = 200 / (200 + par) - 0.2f;
+			par = 1/par;
+			pot[i] = pull/(pull+par) - potadjust;
 		}
-		else pot = 0;
+		else pot[i] = 0;
 
-		weight[i] = (INT32)(0xff * pot / 0.684615);
+		weight[i] = 0xff * pot[i] / pot[0x0f];
+		if (weight[i] < 0) weight[i] = 0;
 	}
 
-	for (INT32 i = 0; i < 0x100; i++)
+	for (i = 0; i < 0x100; i++)
 	{
-		INT32 a1,a2;
-		INT32 bits0, bits2;
-		INT32 r, g, b;
+		int a1,a2;
+		int bits0, bits2;
+		int r, g, b;
 
-		a1 = ((i >> 3) & 0x1c) + (i & 0x03) + 32;
+		a1 = ((i >> 3) & 0x1c) + (i & 0x03) + 0x20;
 		a2 = ((i >> 0) & 0x1c) + (i & 0x03);
 
-		bits0 = (Prom[a1] >> 0) & 0x03;
-		bits2 = (Prom[a2] >> 0) & 0x03;
+		bits0 = (color_prom[a1] >> 0) & 0x03;
+		bits2 = (color_prom[a2] >> 0) & 0x03;
 		r = weight[bits0 + (bits2 << 2)];
 
-		bits0 = (Prom[a1] >> 2) & 0x03;
-		bits2 = (Prom[a2] >> 2) & 0x03;
+		bits0 = (color_prom[a1] >> 2) & 0x03;
+		bits2 = (color_prom[a2] >> 2) & 0x03;
 		g = weight[bits0 + (bits2 << 2)];
 
-		bits0 = (Prom[a1] >> 4) & 0x03;
-		bits2 = (Prom[a2] >> 4) & 0x03;
+		bits0 = (color_prom[a1] >> 4) & 0x03;
+		bits2 = (color_prom[a2] >> 4) & 0x03;
 		b = weight[bits0 + (bits2 << 2)];
 
-		Palette[i] = BurnHighCol(r,g,b,0);
+		Palette[i] = (r<<16)|(g<<8)|b;
 	}
 
-	for (INT32 i = 0; i < 0x40; i++)
-	{
-		UINT8 ctbl = Prom[0x40 + (i & 0x1f)] >> ((i & 0x20) >> 3);
+	color_prom += 0x40;
 
-		Palette[0x100 + i] = Palette[ctbl & 0x0f];
+	for (i = 0x100; i < 0x140; i++)
+	{
+		UINT8 ctabentry = color_prom[(i - 0x100) & 0x1f];
+
+		if ((i - 0x100) & 0x20)
+			ctabentry >>= 4; 
+		else
+			ctabentry &= 0x0f;
+
+		Palette[i] = Palette[ctabentry + ((ctabentry & 0x0c) << 3)];
 	}
 }
 

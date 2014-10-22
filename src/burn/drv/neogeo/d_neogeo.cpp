@@ -8604,7 +8604,7 @@ struct BurnDriver BurnDrvsamsho5b = {
 	0x1000,	304, 224, 4, 3
 };
 
-// The King of Fighters 2003 (dedicated PCB version)
+// The King of Fighters 2003 (Japan, JAMMA PCB)
 
 static struct BurnRomInfo kf2k3pcbRomDesc[] = {
 	{ "271-p1.p1",    0x0400000, 0xb9da070c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -8732,7 +8732,7 @@ static INT32 kf2k3pcbInit()
 
 struct BurnDriver BurnDrvkf2k3pcb = {
 	"kf2k3pcb", NULL, NULL, NULL, "2003",
-	"The King of Fighters 2003\0", "dedicated PCB version, Japan region", "Playmore / Capcom", "dedicated Neo Geo PCB",
+	"The King of Fighters 2003 (Japan, JAMMA PCB)\0", NULL, "Playmore / Capcom", "dedicated Neo Geo PCB",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNK_DEDICATED_PCB | HARDWARE_SNK_CMC50 | HARDWARE_SNK_KOF2K3 | HARDWARE_SNK_ALTERNATE_TEXT | HARDWARE_SNK_P32 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
 	NULL, kf2k3pcbRomInfo, kf2k3pcbRomName, NULL, NULL, neogeoInputInfo, kf2k3pcbDIPInfo,

@@ -1,10 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<html>
 
 <head>
 <title>FB Alpha - What's New</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta charset="UTF-8" />
 <style type="text/css">
 	body {
 		font-family: verdana, lucida, sans-serif;
@@ -237,7 +237,7 @@
 <li>Fixed savestates with multiple chips and fix for setting singular channel volume in K007232 core [dink, iq_132]</li>
 <li>Fixed savestates in Irem GA20 sound core [iq_132]</li>
 <li>Fixed bug in generic sprite zoom drawing routines [iq_132]</li>
-<li>Fixed idle skip (timers) &amp crash with FAST_OP_FETCH in SH-2 CPU core [dink]</li>
+<li>Fixed idle skip (timers) &amp; crash with FAST_OP_FETCH in SH-2 CPU core [dink]</li>
 <li>Added driver for Choplifter (unprotected, working) and Choplifter (bootleg, working) to Sega System1 (Parent ROM NW) [vbt]</li>
 <li>Added driver for Mighty Warrior, Steel Force &amp; Twin Brats on Elettronica Video-Games S.R.L hardware [iq_132]</li>
 <li>Added driver for Capcom Bowling [iq_132]</li>
@@ -581,7 +581,7 @@
 
 <h3>v0.2.97.27</h3>
 <ul>
-<li>Sound Improvements</li>
+<li>Sound Improvements
 <ul>
 <li>Tidied sound chip interfaces, adding support for volume and left/right selection for individual routes. Updated all drivers to support. Many drivers sound much better with these updates [Barry]</li>
 <li>Fixed an issue with multiple YM2203 chips that resulted in static noise in the sound output [Barry]</li>
@@ -595,7 +595,7 @@
 <li>Added support for the MSM6585 chip to the MSM5205 core [iq_132]</li>
 <li>Added multiple chip support to the Y8950 interface, and hooked up in the Cybertank driver [Barry]</li>
 <li>Small speedup in the DAC core [iq_132]</li>
-</ul>
+</ul></li>
 <li>Standardised some CPU interfaces [iq_132]</li>
 <li>Improved Atari slapstic emulation, and updated the Gauntlet driver to support it [iq_132]</li>
 <li>Added driver for Atari Tetris [iq_132]</li>
@@ -684,7 +684,7 @@
 
 <h3>v0.2.97.25</h3>
 <ul>
-<li>CPS-1 Updates, most of the bootlegs now work well and without patches to hack them to work like the originals (brief, incomplete summary below) [Barry, JacKc, bonky_0013, f205v]</li>
+<li>CPS-1 Updates, most of the bootlegs now work well and without patches to hack them to work like the originals (brief, incomplete summary below) [Barry, JacKc, bonky_0013, f205v]
 <ul>
 <li>Added some Street Fighter II M bootlegs</li>
 <li>Street Fighter II - Champion Edition (Turbo Hack) now works</li>
@@ -710,7 +710,7 @@
 <li>All the PIC sets now work, without sound obviously due to no good dump of the PIC data being available</li>
 <li>Tidied the driver</li>
 <li>Removed the CPS Changer region hacks</li>
-</ul>
+</ul></li>
 <li>Updated the ARM7 core to avoid out of page range accesses [iq_132]</li>
 <li>Added driver for Silver Millenium [iq_132]</li>
 <li>Added bootleg of Dragon Ninja to the DEC-0 driver [Barry]</li>
@@ -1209,7 +1209,7 @@
 <p>The game shortnames are prepended by <i>md_</i> to differentiate them from the arcade games where conflicts occur. FB Alpha will look for your roms in the normal zip names, you do <b>not</b> need to create a new copy of the games and prepend <i>md_</i>. It is advisable to have the Megadrive roms in the seventh or eighth rom paths to avoid conflicts with arcade games. Support files will need to retain the <i>md_</i> in order to avoid conflicts, however.</p>
 <p>All Megadrive games are now enabled (except for Virtua Racing because the SVP isn't emulated), most should work, however, some may not.</p>
 <ul>
-<li>Megadrive Changes</li>
+<li>Megadrive Changes
 <ul>
 <li>Updated Megadrive driver based on MESS 0.143u7 software list [Barry]</li>
 <li>Made the seventh rom path special like the eighth one so that Megadrive roms can be stored in one of the last two paths and still allow supplementary FB Alpha roms to be in a seperate path [Barry]</li>
@@ -1218,7 +1218,7 @@
 <li>Added better SRAM support and support for custom mappers as per MESS [Barry]</li>
 <li>Removed menu option for making a datfile with both arcade games and Megadrive games, the two would conflict, and arcade and Megadrive dats need to be handled seperately [Barry]</li>
 <li>Updated the dat file creation module to remove the <i>md_</i> from the Megadrive shortnames [Barry]</li>
-</ul>
+</ul></li>
 <li>Added clone of Aquajack to the Taito-Z driver [Barry]</li>
 <li>Added clone of Vigilante to the Vigilante driver [Barry]</li>
 <li>Fixed music tempo and continuity in Item M90 and M92 drivers [iq_132]</li>
@@ -2709,7 +2709,7 @@ is from memory and some stuff is sure to be missing. Here's what's new anyway;</
 <div class="note">From this point forward, all releases are handled by Barry and each external contribution is labelled.<br /><br />The releases below were available on the old FBA site.</div>
 
 <h3>v0.2.95.23</h3>
-<p>Time for another FinalBurn Alpha release, bringing with it an assortment of fixes and additions. Grab it while it’s hot, from our files page. Any bugs / issues should be reported to the FBA official forums.</p>
+<p>Time for another FinalBurn Alpha release, bringing with it an assortment of fixes and additions. Grab it while it's hot, from our files page. Any bugs / issues should be reported to the FBA official forums.</p>
 <ul>
 <li>This is still an alpha release!</li>
 <li>Note that, if compiled with GCC, you will need to use version 3.3.x, and the experimental DirectX 9 blitter is not built</li>
@@ -2737,7 +2737,7 @@ is from memory and some stuff is sure to be missing. Here's what's new anyway;</
 </ul>
 
 <h3>v0.2.95.21</h3>
-<p>At long last it’s time for a new version of FBA! On offer are the standard build, the source code and an optimised binary for use on Win9x / Pentium machines. You can download the latest version, from our Files page.</p>
+<p>At long last its time for a new version of FBA! On offer are the standard build, the source code and an optimised binary for use on Win9x / Pentium machines. You can download the latest version, from our Files page.</p>
 <p>This is still an alpha release!</p>
 <p>Note that this version CANNOT be compiled with GCC!</p>
 <ul>
@@ -2755,25 +2755,25 @@ is from memory and some stuff is sure to be missing. Here's what's new anyway;</
 <ul>
 <li>Fixed all the new bugs introduced in the previous version</li>
 <li>Fixed the raster effects in Samurai Shodown 3</li>
-<li>Preview images can be any png file upto 1024×0124 pixels</li>
+<li>Preview images can be any png file upto 1024Ã—0124 pixels</li>
 <li>Added descriptive text to screenshot png files</li>
-<li>Added a system information dialog that’s used when FB Alpha crashes</li>
+<li>Added a system information dialog that's used when FB Alpha crashes</li>
 <li>Added the english language versions of mahoudai and shippumd</li>
 </ul>
 
 <h3>v0.2.94.97</h3>
 <p>There is a new version of FBA available from our downloads page. At present an upgrade .msi is unavailable. Any users wishing to upgrade, should download the standard fba_029497.exe and extract the contents to their installation directory.</p>
-<p>This is an alpha release! Again, although we expect very few problems, there still might be some we’ve not seen.</p>
+<p>This is an alpha release! Again, although we expect very few problems, there still might be some we've not seen.</p>
 <ul>
 <li>Fixed most of the remaining problems in v0.2.94.96</li>
 <li>Shortcut keys have changed</li>
 <li>Directories used by FB Alpha have changed</li>
-<li>Readme updated (read it completely even if you’ve read the earlier versions)</li>
+<li>Readme updated (read it completely even if you've read the earlier versions)</li>
 <li>The Neo Geo driver now always uses a real AES BIOS in AES mode, more differences between AES and MVS are emulated now as well</li>
 </ul>
 
 <h3>v0.2.94.96</h3>
-<p>All the files are now back online. If you downloaded the previous installer, then you only have to download the smaller upgrade installer this time around. There is also an optimised build for K6 users; as after all, they are people too… Please remember to delete the contents of you cfg/ folder before you start FBA, as the old cfg files will not be fully compatible with the new release.</p>
+<p>All the files are now back online. If you downloaded the previous installer, then you only have to download the smaller upgrade installer this time around. There is also an optimised build for K6 users; as after all, they are people too; Please remember to delete the contents of you cfg/ folder before you start FBA, as the old cfg files will not be fully compatible with the new release.</p>
 
 <h3>v0.2.94.95</h3>
 <p>A new version of FBA has been released. This version fixes most of the problems in v0.2.94.56. If you downloaded the fba.msi last time, we recommend that you wait for the fba_029495_update.msi that should be released later this evening. For all the K6 people out there, an optimized K6 version will be available shortly as well. Please note that certain CPS1 games still lack sound. Downloads are currently available from the torrents page. Direct downloads will be available in a little while. If you are using FB Alpha v0.2.94.56, please upgrade. Delete all files in the FB Alpha cfg directory.</p>

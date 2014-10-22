@@ -9,7 +9,7 @@
 #include "kaneko_tmap.h"
 #include "pandora.h"
 
-#define SOUND_BYPASS_HACK
+//#define SOUND_BYPASS_HACK
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

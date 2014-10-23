@@ -3869,7 +3869,7 @@ struct BurnDriver BurnDrvZeroteamsr = {
 	"zeroteamsr", "zeroteam", NULL, NULL, "1993",
 	"Zero Team Suicide Revival Kit\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamsrRomInfo, zeroteamsrRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3

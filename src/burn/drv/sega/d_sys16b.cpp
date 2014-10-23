@@ -9060,7 +9060,7 @@ struct BurnDriverD BurnDrvWb3bbl = {
 	"wb3bbl", "wb3", NULL, NULL, "1988",
 	"Wonder Boy III - Monster Lair (bootleg)\0", NULL, "bootleg", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_INVERT_TILES, GBF_PLATFORM, 0,
+	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_INVERT_TILES, GBF_PLATFORM, 0,
 	NULL, Wb3bblRomInfo, Wb3bblRomName, NULL, NULL, System16bInputInfo, Wb3DIPInfo,
 	Wb3bblInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3

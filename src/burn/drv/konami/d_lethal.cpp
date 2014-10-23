@@ -757,7 +757,7 @@ STD_ROM_FN(lethalen)
 
 struct BurnDriver BurnDrvLethalen = {
 	"lethalen", NULL, NULL, NULL, "1992",
-	"Lethal Enforcers (ver UAE, 11/19/92 15:04)\0", NULL, "Konami", "GX191",
+	"Lethal Enforcers (ver UAE, 11/19/92 15:04)\0", "needs analog inputs hooked up", "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, lethalenRomInfo, lethalenRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
@@ -792,7 +792,7 @@ STD_ROM_FN(lethalenub)
 
 struct BurnDriver BurnDrvLethalenub = {
 	"lethalenub", "lethalen", NULL, NULL, "1992",
-	"Lethal Enforcers (ver UAB, 09/01/92 11:12)\0", NULL, "Konami", "GX191",
+	"Lethal Enforcers (ver UAB, 09/01/92 11:12)\0", "needs analog inputs hooked up", "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, lethalenubRomInfo, lethalenubRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
@@ -827,7 +827,7 @@ STD_ROM_FN(lethalenua)
 
 struct BurnDriver BurnDrvLethalenua = {
 	"lethalenua", "lethalen", NULL, NULL, "1992",
-	"Lethal Enforcers (ver UAA, 08/17/92 21:38)\0", NULL, "Konami", "GX191",
+	"Lethal Enforcers (ver UAA, 08/17/92 21:38)\0", "needs analog inputs hooked up", "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, lethalenuaRomInfo, lethalenuaRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
@@ -862,7 +862,7 @@ STD_ROM_FN(lethalenux)
 
 struct BurnDriver BurnDrvLethalenux = {
 	"lethalenux", "lethalen", NULL, NULL, "1992",
-	"Lethal Enforcers (ver unknown, US, 08/06/92 15:11, hacked/proto?)\0", NULL, "Konami", "GX191",
+	"Lethal Enforcers (ver unknown, US, 08/06/92 15:11, hacked/proto?)\0", "needs analog inputs hooked up", "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, lethalenuxRomInfo, lethalenuxRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
@@ -897,7 +897,7 @@ STD_ROM_FN(lethaleneab)
 
 struct BurnDriver BurnDrvLethaleneab = {
 	"lethaleneab", "lethalen", NULL, NULL, "1992",
-	"Lethal Enforcers (ver EAB, 10/14/92 19:53)\0", NULL, "Konami", "GX191",
+	"Lethal Enforcers (ver EAB, 10/14/92 19:53)\0", "needs analog inputs hooked up", "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, lethaleneabRomInfo, lethaleneabRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
@@ -932,7 +932,7 @@ STD_ROM_FN(lethaleneae)
 
 struct BurnDriver BurnDrvLethaleneae = {
 	"lethaleneae", "lethalen", NULL, NULL, "1992",
-	"Lethal Enforcers (ver EAE, 11/19/92 16:24)\0", NULL, "Konami", "GX191",
+	"Lethal Enforcers (ver EAE, 11/19/92 16:24)\0", "needs analog inputs hooked up", "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, lethaleneaeRomInfo, lethaleneaeRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
@@ -967,7 +967,7 @@ STD_ROM_FN(lethalenj)
 
 struct BurnDriver BurnDrvLethalenj = {
 	"lethalenj", "lethalen", NULL, NULL, "1992",
-	"Lethal Enforcers (ver JAD, 12/04/92 17:16)\0", NULL, "Konami", "GX191",
+	"Lethal Enforcers (ver JAD, 12/04/92 17:16)\0", "needs analog inputs hooked up", "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, lethalenjRomInfo, lethalenjRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,

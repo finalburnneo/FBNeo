@@ -360,10 +360,10 @@ static INT32 DrvInit()
 	M6809SetReadHandler(shaolins_read);
 	M6809Close();
 
-	SN76489Init(0, 1536000, 0);
+	SN76489AInit(0, 1536000, 0);
 	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
-	SN76489Init(1, 3072000, 1);
+	SN76489AInit(1, 3072000, 1);
 	SN76496SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

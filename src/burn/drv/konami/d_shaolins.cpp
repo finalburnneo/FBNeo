@@ -392,8 +392,9 @@ static void draw_layer()
 		INT32 sx = (offs & 0x1f) * 8;
 		INT32 sy = ((offs / 0x20) * 8);
 
-		if (sx >= 32) sy -= (scroll[0] + 16) & 0xff;
+		if (sx >= 32) sy -= scroll[0] & 0xff;
 		if (sy < -7) sy += 256;
+		sy -= 16;
 
 		INT32 attr  = DrvColRAM[offs];
 		INT32 code  = DrvVidRAM[offs] | ((attr & 0x40) << 2);

@@ -3609,7 +3609,7 @@ STD_ROM_FN(zeroteam)
 
 struct BurnDriver BurnDrvZeroteam = {
 	"zeroteam", NULL, NULL, NULL, "1993",
-	"Zero Team USA (set 1, US, Fabtek license)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team USA (set 1, US, Fabtek license)\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamRomInfo, zeroteamRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
@@ -3652,7 +3652,7 @@ STD_ROM_FN(zeroteama)
 
 struct BurnDriver BurnDrvZeroteama = {
 	"zeroteama", "zeroteam", NULL, NULL, "1993",
-	"Zero Team (set 2, Japan? (earlier?))\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team (set 2, Japan? (earlier?))\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamaRomInfo, zeroteamaRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
@@ -3695,7 +3695,7 @@ STD_ROM_FN(zeroteamb)
 
 struct BurnDriver BurnDrvZeroteamb = {
 	"zeroteamb", "zeroteam", NULL, NULL, "1993",
-	"Zero Team (set 3, Japan? (later batteryless))\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team (set 3, Japan? (later batteryless))\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteambRomInfo, zeroteambRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
@@ -3738,7 +3738,7 @@ STD_ROM_FN(zeroteamc)
 
 struct BurnDriver BurnDrvZeroteamc = {
 	"zeroteamc", "zeroteam", NULL, NULL, "1993",
-	"Zero Team (set 4, Taiwan, Liang Hwa license)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team (set 4, Taiwan, Liang Hwa license)\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamcRomInfo, zeroteamcRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
@@ -3781,7 +3781,7 @@ STD_ROM_FN(zeroteamd)
 
 struct BurnDriver BurnDrvZeroteamd = {
 	"zeroteamd", "zeroteam", NULL, NULL, "1993",
-	"Zero Team (set 5, Korea, Dream Soft license)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team (set 5, Korea, Dream Soft license)\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamdRomInfo, zeroteamdRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
@@ -3824,7 +3824,7 @@ STD_ROM_FN(zeroteams)
 
 struct BurnDriver BurnDrvZeroteams = {
 	"zeroteams", "zeroteam", NULL, NULL, "1993",
-	"Zero Team Selection\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team Selection\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamsRomInfo, zeroteamsRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
@@ -3867,7 +3867,7 @@ STD_ROM_FN(zeroteamsr)
 
 struct BurnDriver BurnDrvZeroteamsr = {
 	"zeroteamsr", "zeroteam", NULL, NULL, "1993",
-	"Zero Team Suicide Revival Kit\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Zero Team Suicide Revival Kit\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamsrRomInfo, zeroteamsrRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,

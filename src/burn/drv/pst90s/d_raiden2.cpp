@@ -3607,11 +3607,11 @@ static struct BurnRomInfo zeroteamRomDesc[] = {
 STD_ROM_PICK(zeroteam)
 STD_ROM_FN(zeroteam)
 
-struct BurnDriverD BurnDrvZeroteam = {
+struct BurnDriver BurnDrvZeroteam = {
 	"zeroteam", NULL, NULL, NULL, "1993",
 	"Zero Team USA (set 1, US, Fabtek license)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamRomInfo, zeroteamRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
@@ -3650,11 +3650,11 @@ static struct BurnRomInfo zeroteamaRomDesc[] = {
 STD_ROM_PICK(zeroteama)
 STD_ROM_FN(zeroteama)
 
-struct BurnDriverD BurnDrvZeroteama = {
+struct BurnDriver BurnDrvZeroteama = {
 	"zeroteama", "zeroteam", NULL, NULL, "1993",
 	"Zero Team (set 2, Japan? (earlier?))\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamaRomInfo, zeroteamaRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
@@ -3693,11 +3693,11 @@ static struct BurnRomInfo zeroteambRomDesc[] = {
 STD_ROM_PICK(zeroteamb)
 STD_ROM_FN(zeroteamb)
 
-struct BurnDriverD BurnDrvZeroteamb = {
+struct BurnDriver BurnDrvZeroteamb = {
 	"zeroteamb", "zeroteam", NULL, NULL, "1993",
 	"Zero Team (set 3, Japan? (later batteryless))\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteambRomInfo, zeroteambRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
@@ -3736,11 +3736,11 @@ static struct BurnRomInfo zeroteamcRomDesc[] = {
 STD_ROM_PICK(zeroteamc)
 STD_ROM_FN(zeroteamc)
 
-struct BurnDriverD BurnDrvZeroteamc = {
+struct BurnDriver BurnDrvZeroteamc = {
 	"zeroteamc", "zeroteam", NULL, NULL, "1993",
 	"Zero Team (set 4, Taiwan, Liang Hwa license)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamcRomInfo, zeroteamcRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
@@ -3779,11 +3779,11 @@ static struct BurnRomInfo zeroteamdRomDesc[] = {
 STD_ROM_PICK(zeroteamd)
 STD_ROM_FN(zeroteamd)
 
-struct BurnDriverD BurnDrvZeroteamd = {
+struct BurnDriver BurnDrvZeroteamd = {
 	"zeroteamd", "zeroteam", NULL, NULL, "1993",
 	"Zero Team (set 5, Korea, Dream Soft license)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamdRomInfo, zeroteamdRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
@@ -3822,11 +3822,11 @@ static struct BurnRomInfo zeroteamsRomDesc[] = {
 STD_ROM_PICK(zeroteams)
 STD_ROM_FN(zeroteams)
 
-struct BurnDriverD BurnDrvZeroteams = {
+struct BurnDriver BurnDrvZeroteams = {
 	"zeroteams", "zeroteam", NULL, NULL, "1993",
 	"Zero Team Selection\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamsRomInfo, zeroteamsRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
@@ -3865,11 +3865,11 @@ static struct BurnRomInfo zeroteamsrRomDesc[] = {
 STD_ROM_PICK(zeroteamsr)
 STD_ROM_FN(zeroteamsr)
 
-struct BurnDriverD BurnDrvZeroteamsr = {
+struct BurnDriver BurnDrvZeroteamsr = {
 	"zeroteamsr", "zeroteam", NULL, NULL, "1993",
 	"Zero Team Suicide Revival Kit\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamsrRomInfo, zeroteamsrRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3

@@ -390,12 +390,18 @@ static UINT16 sprite_prot_x,sprite_prot_y,dst1,cop_spr_maxx,cop_spr_off;
 static UINT16 sprite_prot_src_addr[2];
 
 static struct {
-	INT32 x, y, z;
-	INT32 min_x, min_y, min_z, max_x, max_y, max_z;
+	INT16 pos[3];
+	INT8 dx[3];
+	UINT8 size[3];
+	bool allow_swap;
+	UINT16 flags_swap;
+	UINT32 spradr;
+	INT16 min[3], max[3];
 } cop_collision_info[2];
 
 static UINT16 cop_hit_status, cop_hit_baseadr;
-static INT16 cop_hit_val_x, cop_hit_val_y, cop_hit_val_z, cop_hit_val_unk;
+INT16 cop_hit_val[3];
+UINT16 cop_hit_val_stat;
 static UINT32 cop_sort_ram_addr, cop_sort_lookup;
 static UINT16 cop_sort_param;
 
@@ -436,10 +442,8 @@ static void SeibuCopReset()
 
 	cop_hit_status = 0;
 	cop_hit_baseadr = 0;
-	cop_hit_val_x = 0;
-	cop_hit_val_y = 0;
-	cop_hit_val_z = 0;
-	cop_hit_val_unk = 0;;
+	memset(&cop_hit_val, 0, sizeof(cop_hit_val));
+	cop_hit_val_stat = 0;
 	cop_sort_ram_addr = 0;
 	cop_sort_lookup = 0;
 	cop_sort_param = 0;
@@ -521,10 +525,8 @@ static void SeibuCopScan(INT32 nAction)
 		SCAN_VAR(cop_collision_info);
 		SCAN_VAR(cop_hit_status);
 		SCAN_VAR(cop_hit_baseadr);
-		SCAN_VAR(cop_hit_val_x);
-		SCAN_VAR(cop_hit_val_y);
-		SCAN_VAR(cop_hit_val_z);
-		SCAN_VAR(cop_hit_val_unk);;
+		SCAN_VAR(cop_hit_val);
+        SCAN_VAR(cop_hit_val_stat);
 		SCAN_VAR(cop_sort_ram_addr);
 		SCAN_VAR(cop_sort_lookup);
 		SCAN_VAR(cop_sort_param);
@@ -553,16 +555,16 @@ static void sprite_prot_src_write(UINT16 data)
 	sprite_prot_src_addr[1] = data;
 	UINT32 src = (sprite_prot_src_addr[0]<<4)+sprite_prot_src_addr[1];
 
-	INT32 x = INT16((VezReadLong(src+0x08) >> 16) - (sprite_prot_x));
-	INT32 y = INT16((VezReadLong(src+0x04) >> 16) - (sprite_prot_y));
+	INT32 x = INT16((VezReadLong(src+0x08) >> 16) - (sprite_prot_x)) & 0xffff;
+	INT32 y = INT16((VezReadLong(src+0x04) >> 16) - (sprite_prot_y)) & 0xffff;
 
 	UINT16 head1 = VezReadWord(src+cop_spr_off);
 	UINT16 head2 = VezReadWord(src+cop_spr_off+2);
 
-	INT32 w = (((head1 >> 8 ) & 7) + 1) << 4;
-	INT32 h = (((head1 >> 12) & 7) + 1) << 4;
+	INT32 w = (((head1 >> 8 ) & 7) + 1) << 3;
+	INT32 h = (((head1 >> 12) & 7) + 1) << 3;
 
-	UINT16 flag = x-w/2 > -w && x-w/2 < cop_spr_maxx+w && y-h/2 > -h && y-h/2 < 256+h ? 1 : 0;
+	UINT16 flag = x-w > -w && x-w < cop_spr_maxx+w && y-h > -h && y-h < 240+h ? 1 : 0;
 	
 	flag = (VezReadWord(src) & 0xfffe) | flag;
 	VezWriteWord(src, flag);
@@ -571,57 +573,88 @@ static void sprite_prot_src_write(UINT16 data)
 	{
 		VezWriteWord(dst1,   head1);
 		VezWriteWord(dst1+2, head2);
-		VezWriteWord(dst1+4, x-w/2);
-		VezWriteWord(dst1+6, y-h/2);
+		VezWriteWord(dst1+4, x-w);
+		VezWriteWord(dst1+6, y-h);
 
 		dst1 += 8;
 	}
 }
 
-static void cop_collision_read_xy(INT32 slot, UINT32 spradr)
+static void cop_collision_read_pos(int slot, UINT32 spradr, bool allow_swap)
 {
-	cop_collision_info[slot].x = VezReadLong(spradr+4);
-	cop_collision_info[slot].y = VezReadLong(spradr+8);
-	cop_collision_info[slot].z = VezReadLong(spradr+12);
+
+	cop_collision_info[slot].allow_swap = (allow_swap);
+    cop_collision_info[slot].flags_swap = VezReadWord(spradr+2);
+    cop_collision_info[slot].spradr = (spradr);
+	
+    for(int i=0; i<3; i++)
+		cop_collision_info[slot].pos[i] = VezReadWord(spradr+6+4*i);
 }
 
-static void cop_collision_update_hitbox(INT32 slot, UINT32 hitadr)
+static void cop_collision_update_hitbox(INT16 slot, UINT32 hitadr, UINT16 data)
 {
-	UINT32 hitadr2 = VezReadWord(hitadr) + (cop_hit_baseadr << 16);
-	
-	INT8 hx = VezReadByte(hitadr2++);
-	UINT8 hw = VezReadByte(hitadr2++);
-	INT8 hy = VezReadByte(hitadr2++);
-	UINT8 hh = VezReadByte(hitadr2++);
-	INT8 hz = VezReadByte(hitadr2++);
-	UINT8 hd = VezReadByte(hitadr2++);
+	UINT32 hitadr2 = VezReadWord(hitadr) | (cop_hit_baseadr << 16);
+	INT32 num_axis = 2;
+	INT32 extraxor = 0;
+	if (/*m_cpu_is_68k*/1) extraxor = 1;
 
-	cop_collision_info[slot].min_x = (cop_collision_info[slot].x >> 16) + hx;
-	cop_collision_info[slot].min_y = (cop_collision_info[slot].y >> 16) + hy;
-	cop_collision_info[slot].min_z = (cop_collision_info[slot].z >> 16) + hz;
-	cop_collision_info[slot].max_x = cop_collision_info[slot].min_x + hw;
-	cop_collision_info[slot].max_y = cop_collision_info[slot].min_y + hh;
-	cop_collision_info[slot].max_z = cop_collision_info[slot].min_z + hd;
+	// guess, heatbrl doesn't have this set and clearly only wants 2 axis to be checked (otherwise it reads bad params into the 3rd)
+	// everything else has it set, and legionna clearly wants 3 axis for jumping attacks to work
+	if (data & 0x0100) num_axis = 3;
+
+	INT16 i;
+
+	for(i = 0; i<3; i++) {
+		cop_collision_info[slot].dx[i] = 0;
+		cop_collision_info[slot].size[i] = 0;
+	}
+	
+	for(i = 0; i<num_axis; i++) {
+		cop_collision_info[slot].dx[i] = VezReadByte(hitadr2++);
+		cop_collision_info[slot].size[i] = VezReadByte(hitadr2++);
+	}
 
 	cop_hit_status = 7;
+	INT16 dx[3],size[3];
 
-	/* outbound X check */
-	if(cop_collision_info[0].max_x > cop_collision_info[1].min_x && cop_collision_info[0].min_x < cop_collision_info[1].max_x)
-		cop_hit_status &= ~1;
+	for (i = 0; i < num_axis; i++)
+	{
+		size[i] = UINT8(cop_collision_info[slot].size[i]);
+		dx[i] = INT8(cop_collision_info[slot].dx[i]);
+	}
 
-	/* outbound Y check */
-	if(cop_collision_info[0].max_y > cop_collision_info[1].min_y && cop_collision_info[0].min_y < cop_collision_info[1].max_y)
-		cop_hit_status &= ~2;
+	INT16 j = slot;
 
-	/* outbound Z check */
-	if(cop_collision_info[0].max_z > cop_collision_info[1].min_z && cop_collision_info[0].min_z < cop_collision_info[1].max_z)
-		cop_hit_status &= ~4;
+	UINT8 res;
 
-	cop_hit_val_x = (cop_collision_info[0].x - cop_collision_info[1].x) >> 16;
-	cop_hit_val_y = (cop_collision_info[0].y - cop_collision_info[1].y) >> 16;
-	cop_hit_val_z = (cop_collision_info[0].z - cop_collision_info[1].z) >> 16;
-	
-	cop_hit_val_unk = cop_hit_status; // TODO: there's also bit 2 and 3 triggered in the tests, no known meaning
+	if (num_axis==3) res = 7;
+	else res = 3;
+
+	for (i = 0; i < num_axis;i++)
+	{
+		if (cop_collision_info[j].allow_swap && (cop_collision_info[j].flags_swap & (1 << i)))
+		{
+			cop_collision_info[j].max[i] = (cop_collision_info[j].pos[i]) - dx[i];
+			cop_collision_info[j].min[i] = cop_collision_info[j].max[i] - size[i];
+		}
+		else
+		{
+			cop_collision_info[j].min[i] = (cop_collision_info[j].pos[i]) + dx[i];
+			cop_collision_info[j].max[i] = cop_collision_info[j].min[i] + size[i];
+		}
+
+		if(cop_collision_info[0].max[i] > cop_collision_info[1].min[i] && cop_collision_info[0].min[i] < cop_collision_info[1].max[i])
+			res &= ~(1 << i);
+
+		if(cop_collision_info[1].max[i] > cop_collision_info[0].min[i] && cop_collision_info[1].min[i] < cop_collision_info[0].max[i])
+			res &= ~(1 << i);
+
+		cop_hit_val[i] = (cop_collision_info[0].pos[i] - cop_collision_info[1].pos[i]);
+	}
+
+	cop_hit_val_stat = res; // TODO: there's also bit 2 and 3 triggered in the tests, no known meaning
+	cop_hit_status = res;
+
 }
 
 static void cop_cmd_write(INT32 offset, UINT16 data)
@@ -814,20 +847,20 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 
 	case 0xa100:
 	case 0xa180:
-		cop_collision_read_xy(0, cop_regs[0]);
+		cop_collision_read_pos(0, cop_regs[0], data & 0x0080);
 		break;
 
 	case 0xa900:
 	case 0xa980:
-		cop_collision_read_xy(1, cop_regs[1]);
+		cop_collision_read_pos(1, cop_regs[1], data & 0x0080);
 		break;
 
 	case 0xb100:
-		cop_collision_update_hitbox(0, cop_regs[2]);
+		cop_collision_update_hitbox(0, cop_regs[2], data);
 		break;
 
 	case 0xb900:
-		cop_collision_update_hitbox(1, cop_regs[3]);
+		cop_collision_update_hitbox(1, cop_regs[3], data);
 		break;
 
 	//default:
@@ -1200,20 +1233,21 @@ static UINT8 rd2_cop_read(UINT16 offset)
 			ret = cop_hit_status;
 		break;
 
-		case 0x582:
+/*		case 0x582:
 			ret = cop_hit_val_y;
 		break;
 
 		case 0x584:
 			ret = cop_hit_val_x;
-		break;
-
-		case 0x586:
-			ret = cop_hit_val_z;
+		break;*/
+		case 0x582:
+		case 0x584:
+		case 0x586: //bprintf(0, _T("offset[%X]"), offset);
+			ret = cop_hit_val[(offset-0x582)/2];
 		break;
 
 		case 0x588:
-			ret = cop_hit_val_unk;
+			ret = cop_hit_val_stat;
 		break;
 
 		case 0x590:

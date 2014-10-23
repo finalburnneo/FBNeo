@@ -234,11 +234,6 @@ void MegadriveCheckHardware()
 			bprintf(PRINT_IMPORTANT, _T("Japan NTSC supported\n"));
 		}
 
-		if (strstr(BurnDrvGetTextA(DRV_NAME), "aliensol")) {
-			// HACK! alien soldier detected as USA/NTSC, but is really PAL (won't boot in NTSC mode)
-			support = 0x08;
-		}
-
 		if (support & 0x08) {
 			Hardware = 0xc0; // Europe PAL
 			bprintf(PRINT_IMPORTANT, _T("Europe PAL supported\n"));

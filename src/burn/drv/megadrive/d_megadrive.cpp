@@ -121,6 +121,10 @@ static struct BurnDIPInfo AutoDetectRegionDIPList[] = {
 	{0x19,	0xff,  0xff,	0x21,   NULL},
 };
 
+static struct BurnDIPInfo PALRegionDIPList[] = {
+	{0x19,	0xff,  0xff,	0xe0,   NULL},
+};
+
 static struct BurnDIPInfo Megadrive4pDIPList[] = {
 	{0x32,	0xff, 0xff, 0x01,  NULL               },
 
@@ -141,11 +145,12 @@ static struct BurnDIPInfo Megadrive4pDIPList[] = {
 	{0x32,	0x01, 0x03, 0x02, "Inner Zoom"        },
 };
 
-	static struct BurnDIPInfo AutoDetectRegion4pDIPList[] = {
+static struct BurnDIPInfo AutoDetectRegion4pDIPList[] = {
 	{0x31,	0xff,  0xff,	0x21,   NULL},
 };
 
 STDDIPINFOEXT(Megadrive, AutoDetectRegion, Megadrive)
+STDDIPINFOEXT(MegadrivePAL, PALRegion, Megadrive)
 STDDIPINFOEXT(Megadrive4p, AutoDetectRegion4p, Megadrive4p)
 
 INT32 MegadriveGetZipName(char** pszName, UINT32 i)
@@ -2834,7 +2839,7 @@ struct BurnDriver BurnDrvmd_aliensol = {
 	"Alien Soldier (Euro)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_aliensolRomInfo, md_aliensolRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_aliensolRomInfo, md_aliensolRomName, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
 };

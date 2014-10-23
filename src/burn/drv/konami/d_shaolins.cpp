@@ -501,7 +501,7 @@ static INT32 DrvFrame()
 
 		// Render Sound Segment
 		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+			INT32 nSegmentLength = nBurnSoundLen / nSoundBufferPos;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			SN76496Update(0, pSoundBuf, nSegmentLength);
 			SN76496Update(1, pSoundBuf, nSegmentLength);

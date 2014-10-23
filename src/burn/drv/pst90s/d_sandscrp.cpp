@@ -1,5 +1,6 @@
 // FB Alpha Sand Scorpion driver module
 // Based on MAME driver by Luca Elia
+// Note: oc'd from 12 to 15mhz to make this game playable - dink
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -727,7 +728,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] =  { 12000000 / 60, 4000000 / 60 };
+	INT32 nCyclesTotal[2] =  { 15000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);

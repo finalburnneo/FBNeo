@@ -13959,7 +13959,7 @@ static struct BurnRomInfo samsho5xRomDesc[] = {
 STDROMPICKEXT(samsho5x, samsho5x, neogeo)
 STD_ROM_FN(samsho5x)
 
-struct BurnDriverD BurnDrvsamsho5x = {
+struct BurnDriver BurnDrvsamsho5x = {
 	"samsho5x", "samsho5", "neogeo", NULL, "2003",
 	"Samurai Shodown V / Samurai Spirits Zero (bootleg, XBOX version)\0", NULL, "bootleg", "Neo Geo MVS",
 	L"Samurai Shodown V\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4\u96F6 (bootleg, XBOX version)\0", NULL, NULL, NULL,

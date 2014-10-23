@@ -2695,7 +2695,7 @@ STD_ROM_FN(raiden2)
 
 struct BurnDriver BurnDrvRaiden2 = {
 	"raiden2", NULL, NULL, NULL, "1993",
-	"Raiden II (US, set 1)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+	"Raiden II (US, set 1)\0", "Coin inputs require holding down", "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2RomInfo, raiden2RomName, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -2737,7 +2737,7 @@ STD_ROM_FN(raiden2u)
 
 struct BurnDriver BurnDrvRaiden2u = {
 	"raiden2u", "raiden2", NULL, NULL, "1993",
-	"Raiden II (US, set 2)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+	"Raiden II (US, set 2)\0", "Coin inputs require holding down", "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2uRomInfo, raiden2uRomName, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -2779,7 +2779,7 @@ STD_ROM_FN(raiden2hk)
 
 struct BurnDriver BurnDrvRaiden2hk = {
 	"raiden2hk", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Hong Kong)\0", NULL, "Seibu Kaihatsu (Metrotainment license)", "Miscellaneous",
+	"Raiden II (Hong Kong)\0", "Coin inputs require holding down", "Seibu Kaihatsu (Metrotainment license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2hkRomInfo, raiden2hkRomName, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -2821,7 +2821,7 @@ STD_ROM_FN(raiden2j)
 
 struct BurnDriver BurnDrvRaiden2j = {
 	"raiden2j", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Japan)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden II (Japan)\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2jRomInfo, raiden2jRomName, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -2863,7 +2863,7 @@ STD_ROM_FN(raiden2i)
 
 struct BurnDriver BurnDrvRaiden2i = {
 	"raiden2i", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Italy)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden II (Italy)\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2iRomInfo, raiden2iRomName, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -2905,7 +2905,7 @@ STD_ROM_FN(raiden2nl)
 
 struct BurnDriver BurnDrvRaiden2nl = {
 	"raiden2nl", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Holland)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden II (Holland)\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2nlRomInfo, raiden2nlRomName, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -2947,7 +2947,7 @@ STD_ROM_FN(raiden2e)
 
 struct BurnDriver BurnDrvRaiden2e = {
 	"raiden2e", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Easy Version, Korea?)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden II (Easy Version, Korea?)\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2eRomInfo, raiden2eRomName, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -2989,7 +2989,7 @@ STD_ROM_FN(raiden2ea)
 
 struct BurnDriver BurnDrvRaiden2ea = {
 	"raiden2ea", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Easy Version, Japan?)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden II (Easy Version, Japan?)\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2eaRomInfo, raiden2eaRomName, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -3031,7 +3031,7 @@ STD_ROM_FN(raiden2eu)
 
 struct BurnDriver BurnDrvRaiden2eu = {
 	"raiden2eu", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Easy Version, US set 2)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+	"Raiden II (Easy Version, US set 2)\0", "Coin inputs require holding down", "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2euRomInfo, raiden2euRomName, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -3075,7 +3075,7 @@ STD_ROM_FN(raiden2eua)
 
 struct BurnDriver BurnDrvRaiden2eua = {
 	"raiden2eua", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Easy Version, US set 1)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+	"Raiden II (Easy Version, US set 1)\0", "Coin inputs require holding down", "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2euaRomInfo, raiden2euaRomName, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -3120,7 +3120,7 @@ STD_ROM_FN(raiden2g)
 
 struct BurnDriver BurnDrvRaiden2g = {
 	"raiden2g", "raiden2", NULL, NULL, "1993",
-	"Raiden II (Easy Version, Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
+	"Raiden II (Easy Version, Germany)\0", "Coin inputs require holding down", "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2gRomInfo, raiden2gRomName, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -3162,7 +3162,7 @@ STD_ROM_FN(raiden2dx)
 
 struct BurnDriver BurnDrvRaiden2dx = {
 	"raiden2dx", "raiden2", NULL, NULL, "1993",
-	"Raiden II (harder, Raiden DX Hardware)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden II (harder, Raiden DX Hardware)\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raiden2dxRomInfo, raiden2dxRomName, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
@@ -3203,7 +3203,7 @@ STD_ROM_FN(raidendx)
 
 struct BurnDriver BurnDrvRaidendx = {
 	"raidendx", NULL, NULL, NULL, "1994",
-	"Raiden DX (UK)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden DX (UK)\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raidendxRomInfo, raidendxRomName, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
@@ -3244,7 +3244,7 @@ STD_ROM_FN(raidendxa1)
 
 struct BurnDriver BurnDrvRaidendxa1 = {
 	"raidendxa1", "raidendx", NULL, NULL, "1994",
-	"Raiden DX (Hong Kong, set 1)\0", NULL, "Seibu Kaihatsu (Metrotainment license)", "Miscellaneous",
+	"Raiden DX (Hong Kong, set 1)\0", "Coin inputs require holding down", "Seibu Kaihatsu (Metrotainment license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raidendxa1RomInfo, raidendxa1RomName, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
@@ -3285,7 +3285,7 @@ STD_ROM_FN(raidendxa2)
 
 struct BurnDriver BurnDrvRaidendxa2 = {
 	"raidendxa2", "raidendx", NULL, NULL, "1994",
-	"Raiden DX (Hong Kong, set 2)\0", NULL, "Seibu Kaihatsu (Metrotainment license)", "Miscellaneous",
+	"Raiden DX (Hong Kong, set 2)\0", "Coin inputs require holding down", "Seibu Kaihatsu (Metrotainment license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raidendxa2RomInfo, raidendxa2RomName, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
@@ -3326,7 +3326,7 @@ STD_ROM_FN(raidendxk)
 
 struct BurnDriver BurnDrvRaidendxk = {
 	"raidendxk", "raidendx", NULL, NULL, "1994",
-	"Raiden DX (Korea)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden DX (Korea)\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raidendxkRomInfo, raidendxkRomName, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
@@ -3367,7 +3367,7 @@ STD_ROM_FN(raidendxu)
 
 struct BurnDriver BurnDrvRaidendxu = {
 	"raidendxu", "raidendx", NULL, NULL, "1994",
-	"Raiden DX (US)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+	"Raiden DX (US)\0", "Coin inputs require holding down", "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raidendxuRomInfo, raidendxuRomName, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
@@ -3408,7 +3408,7 @@ STD_ROM_FN(raidendxg)
 
 struct BurnDriver BurnDrvRaidendxg = {
 	"raidendxg", "raidendx", NULL, NULL, "1994",
-	"Raiden DX (Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
+	"Raiden DX (Germany)\0", "Coin inputs require holding down", "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raidendxgRomInfo, raidendxgRomName, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
@@ -3449,7 +3449,7 @@ STD_ROM_FN(raidendxnl)
 
 struct BurnDriver BurnDrvRaidendxnl = {
 	"raidendxnl", "raidendx", NULL, NULL, "1994",
-	"Raiden DX (Holland)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden DX (Holland)\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raidendxnlRomInfo, raidendxnlRomName, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
@@ -3490,7 +3490,7 @@ STD_ROM_FN(raidendxj)
 
 struct BurnDriver BurnDrvRaidendxj = {
 	"raidendxj", "raidendx", NULL, NULL, "1994",
-	"Raiden DX (Japan)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden DX (Japan)\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raidendxjRomInfo, raidendxjRomName, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
@@ -3532,7 +3532,7 @@ STD_ROM_FN(raidendxch)
 
 struct BurnDriver BurnDrvRaidendxch = {
 	"raidendxch", "raidendx", NULL, NULL, "1994",
-	"Raiden DX (China)\0", NULL, "Seibu Kaihatsu (Ideal International Development Corp license)", "Miscellaneous",
+	"Raiden DX (China)\0", "Coin inputs require holding down", "Seibu Kaihatsu (Ideal International Development Corp license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, raidendxchRomInfo, raidendxchRomName, NULL, NULL, RaidendxInputInfo, RaidendxDIPInfo,
@@ -3577,7 +3577,7 @@ struct BurnDriverD BurnDrvZeroteam = {
 	"zeroteam", NULL, NULL, NULL, "1993",
 	"Zero Team USA (set 1, US, Fabtek license)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	0, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamRomInfo, zeroteamRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
@@ -3620,7 +3620,7 @@ struct BurnDriverD BurnDrvZeroteama = {
 	"zeroteama", "zeroteam", NULL, NULL, "1993",
 	"Zero Team (set 2, Japan? (earlier?))\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamaRomInfo, zeroteamaRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
@@ -3663,7 +3663,7 @@ struct BurnDriverD BurnDrvZeroteamb = {
 	"zeroteamb", "zeroteam", NULL, NULL, "1993",
 	"Zero Team (set 3, Japan? (later batteryless))\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteambRomInfo, zeroteambRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
@@ -3706,7 +3706,7 @@ struct BurnDriverD BurnDrvZeroteamc = {
 	"zeroteamc", "zeroteam", NULL, NULL, "1993",
 	"Zero Team (set 4, Taiwan, Liang Hwa license)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamcRomInfo, zeroteamcRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
@@ -3749,7 +3749,7 @@ struct BurnDriverD BurnDrvZeroteamd = {
 	"zeroteamd", "zeroteam", NULL, NULL, "1993",
 	"Zero Team (set 5, Korea, Dream Soft license)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamdRomInfo, zeroteamdRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
@@ -3792,7 +3792,7 @@ struct BurnDriverD BurnDrvZeroteams = {
 	"zeroteams", "zeroteam", NULL, NULL, "1993",
 	"Zero Team Selection\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamsRomInfo, zeroteamsRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
@@ -3835,7 +3835,7 @@ struct BurnDriverD BurnDrvZeroteamsr = {
 	"zeroteamsr", "zeroteam", NULL, NULL, "1993",
 	"Zero Team Suicide Revival Kit\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamsrRomInfo, zeroteamsrRomName, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
@@ -3871,7 +3871,7 @@ struct BurnDriverD BurnDrvXsedae = {
 	"xsedae", NULL, NULL, NULL, "1993",
 	"X Se Dae Quiz (Korea)\0", NULL, "Dream Island", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	0, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, xsedaeRomInfo, xsedaeRomName, NULL, NULL, Raiden2InputInfo, XsedaeDIPInfo,
 	XsedaeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3

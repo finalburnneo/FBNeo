@@ -3509,7 +3509,7 @@ struct BurnDriver BurnDrvMtlchamp = {
 	"mtlchamp", NULL, NULL, NULL, "1993",
 	"Martial Champion (ver EAB)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	0, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampRomInfo, mtlchampRomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
 	MartchmpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -3550,7 +3550,7 @@ struct BurnDriver BurnDrvMtlchamp1 = {
 	"mtlchamp1", "mtlchamp", NULL, NULL, "1993",
 	"Martial Champion (ver EAA)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchamp1RomInfo, mtlchamp1RomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
 	MartchmpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -3591,7 +3591,7 @@ struct BurnDriver BurnDrvMtlchampa = {
 	"mtlchampa", "mtlchamp", NULL, NULL, "1993",
 	"Martial Champion (ver AAA)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampaRomInfo, mtlchampaRomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
 	MartchmpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -3632,7 +3632,7 @@ struct BurnDriver BurnDrvMtlchampj = {
 	"mtlchampj", "mtlchamp", NULL, NULL, "1993",
 	"Martial Champion (ver JAA)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampjRomInfo, mtlchampjRomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
 	MartchmpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -3673,7 +3673,7 @@ struct BurnDriver BurnDrvMtlchampu = {
 	"mtlchampu", "mtlchamp", NULL, NULL, "1993",
 	"Martial Champion (ver UAE)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampuRomInfo, mtlchampuRomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
 	MartchmpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -3714,7 +3714,7 @@ struct BurnDriver BurnDrvMtlchampu1 = {
 	"mtlchampu1", "mtlchamp", NULL, NULL, "1993",
 	"Martial Champion (ver UAD)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampu1RomInfo, mtlchampu1RomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
 	MartchmpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3

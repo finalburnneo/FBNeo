@@ -3505,7 +3505,7 @@ static struct BurnRomInfo mtlchampRomDesc[] = {
 STD_ROM_PICK(mtlchamp)
 STD_ROM_FN(mtlchamp)
 
-struct BurnDriver BurnDrvMtlchamp = {
+struct BurnDriverD BurnDrvMtlchamp = {
 	"mtlchamp", NULL, NULL, NULL, "1993",
 	"Martial Champion (ver EAB)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
@@ -3546,7 +3546,7 @@ static struct BurnRomInfo mtlchamp1RomDesc[] = {
 STD_ROM_PICK(mtlchamp1)
 STD_ROM_FN(mtlchamp1)
 
-struct BurnDriver BurnDrvMtlchamp1 = {
+struct BurnDriverD BurnDrvMtlchamp1 = {
 	"mtlchamp1", "mtlchamp", NULL, NULL, "1993",
 	"Martial Champion (ver EAA)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
@@ -3587,7 +3587,7 @@ static struct BurnRomInfo mtlchampaRomDesc[] = {
 STD_ROM_PICK(mtlchampa)
 STD_ROM_FN(mtlchampa)
 
-struct BurnDriver BurnDrvMtlchampa = {
+struct BurnDriverD BurnDrvMtlchampa = {
 	"mtlchampa", "mtlchamp", NULL, NULL, "1993",
 	"Martial Champion (ver AAA)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
@@ -3628,7 +3628,7 @@ static struct BurnRomInfo mtlchampjRomDesc[] = {
 STD_ROM_PICK(mtlchampj)
 STD_ROM_FN(mtlchampj)
 
-struct BurnDriver BurnDrvMtlchampj = {
+struct BurnDriverD BurnDrvMtlchampj = {
 	"mtlchampj", "mtlchamp", NULL, NULL, "1993",
 	"Martial Champion (ver JAA)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
@@ -3669,7 +3669,7 @@ static struct BurnRomInfo mtlchampuRomDesc[] = {
 STD_ROM_PICK(mtlchampu)
 STD_ROM_FN(mtlchampu)
 
-struct BurnDriver BurnDrvMtlchampu = {
+struct BurnDriverD BurnDrvMtlchampu = {
 	"mtlchampu", "mtlchamp", NULL, NULL, "1993",
 	"Martial Champion (ver UAE)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
@@ -3710,7 +3710,7 @@ static struct BurnRomInfo mtlchampu1RomDesc[] = {
 STD_ROM_PICK(mtlchampu1)
 STD_ROM_FN(mtlchampu1)
 
-struct BurnDriver BurnDrvMtlchampu1 = {
+struct BurnDriverD BurnDrvMtlchampu1 = {
 	"mtlchampu1", "mtlchamp", NULL, NULL, "1993",
 	"Martial Champion (ver UAD)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,

@@ -13934,7 +13934,8 @@ struct BurnDriver BurnDrvsamsho2k2 = {
 	0x1000, 320, 224, 4, 3
 };
 
-// Samurai Shodown V / Samurai Spirits Zero (bootleg, XBOX version)
+
+// Samurai Shodown V / Samurai Spirits Zero (hack of XBOX version)
 
 static struct BurnRomInfo samsho5xRomDesc[] = {
 	{ "ssvx_p1.rom",  0x800000, 0x16983af9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -13961,13 +13962,14 @@ STD_ROM_FN(samsho5x)
 
 struct BurnDriver BurnDrvsamsho5x = {
 	"samsho5x", "samsho5", "neogeo", NULL, "2003",
-	"Samurai Shodown V / Samurai Spirits Zero (bootleg, XBOX version)\0", NULL, "bootleg", "Neo Geo MVS",
-	L"Samurai Shodown V\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4\u96F6 (bootleg, XBOX version)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
+	"Samurai Shodown V / Samurai Spirits Zero (hack of XBOX version)\0", NULL, "hack", "Neo Geo MVS",
+	L"Samurai Shodown V\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4\u96F6 (hack of XBOX version)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samsho5xRomInfo, samsho5xRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
 
 // Zintrick / Oshidashi Zentrix (Neo CD conversion)
 

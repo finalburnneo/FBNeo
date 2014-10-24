@@ -935,7 +935,6 @@ static void __fastcall metamrph_main_write_byte(UINT32 address, UINT8 data)
 			*soundlatch2 = data;
 		return;
 
-		case 0x27c000:
 		case 0x27c001:
 			EEPROMWrite((data & 0x04), (data & 0x02), (data & 0x01));
 		return;
@@ -1413,14 +1412,10 @@ static void __fastcall dadandrn_main_write_word(UINT32 address, UINT16 data)
 		clip[1] <<= 7;
 
 		K053936GP_set_cliprect(0, clip[0], clip[2], clip[1], clip[3]);
-
-		// 053939_clip
-		//bprintf (0, _T("ClipW: %2.2x, %4.4x\n"), address & 3, data);
 		return;
 	}
 
 	if ((address & 0xfffffe) == 0x484002) {
-		//bprintf (0, _T("clipw enable %2.2x\n"), data);
 		K053936GP_clip_enable(0, (data >> 8) & 1);
 		return;
 	}
@@ -1440,8 +1435,8 @@ static void __fastcall dadandrn_main_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
-	if ((address & 0xffff00) == 0x660000) {
-		K054000Write((address/2)&0xff, data);
+	if ((address & 0xffffc0) == 0x660000) {
+		K054000Write((address/2)&0x1f, data);
 		return;
 	}
 
@@ -1507,8 +1502,8 @@ static void __fastcall dadandrn_main_write_byte(UINT32 address, UINT8 data)
 		return;
 	}
 
-	if ((address & 0xffff00) == 0x660000) {
-		K054000Write((address/2)&0xff, data);
+	if ((address & 0xffffc0) == 0x660000) {
+		K054000Write((address/2)&0x1f, data);
 		return;
 	}
 
@@ -1565,7 +1560,7 @@ static UINT16 __fastcall dadandrn_main_read_word(UINT32 address)
 	}
 
 	if ((address & 0xffff00) == 0x660000) {
-		return K054000Read((address / 2) & 0xff);
+		return K054000Read((address / 2) & 0x1f);
 	}
 
 	switch (address)
@@ -1594,8 +1589,8 @@ static UINT8 __fastcall dadandrn_main_read_byte(UINT32 address)
 		return K055550_word_read(address) >> ((~address & 1) * 8);
 	}
 
-	if ((address & 0xffff00) == 0x660000) {
-		return K054000Read((address / 2) & 0xff);
+	if ((address & 0xffffc0) == 0x660000) {
+		return K054000Read((address / 2) & 0x1f);
 	}
 
 	switch (address)
@@ -2830,6 +2825,9 @@ static INT32 DrvFrame()
 
 		if (nGame == 2 || nGame == 3)
 		{
+			if (i == 0) // otherwise service mode doesn't work!
+				SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+
 			if (i == ((nInterleave *  24) / 256))
 				SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
 

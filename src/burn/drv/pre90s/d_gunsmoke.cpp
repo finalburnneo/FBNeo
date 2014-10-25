@@ -663,7 +663,6 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	INT32 nInterleave = 278;
-	INT32 nSoundBufferPos = 0;
 
 	INT32 nCyclesSegment;
 	INT32 nCyclesDone[2], nCyclesTotal[2];
@@ -698,32 +697,16 @@ static INT32 DrvFrame()
 		// execute ZET_IRQSTATUS_NONE 1 interleave past the last one
 		if ((i-1)%69 == 0 && i>1) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 		ZetClose();
-		
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			ZetOpen(1);
-			BurnYM2203Update(pSoundBuf, nSegmentLength);
-			ZetClose();
-			nSoundBufferPos += nSegmentLength;
-		}
-
 	}
 	
 	ZetOpen(1);
 	BurnTimerEndFrame(nCyclesTotal[1]);
 	ZetClose();
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			ZetOpen(1);
-			BurnYM2203Update(pSoundBuf, nSegmentLength);
-			ZetClose();
-		}
+		ZetOpen(1);
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		ZetClose();
 	}
 	
 	if (pBurnDraw) {

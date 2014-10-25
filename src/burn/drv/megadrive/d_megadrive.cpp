@@ -9386,7 +9386,7 @@ static struct BurnRomInfo md_dinodiniRomDesc[] = {
 STD_ROM_PICK(md_dinodini)
 STD_ROM_FN(md_dinodini)
 
-struct BurnDriver BurnDrvmd_dinodini = {
+struct BurnDriverD BurnDrvmd_dinodini = {
 	"md_dinodini", NULL, NULL, NULL, "1994",
 	"Dino Dini's Soccer (Euro)\0", NULL, "Virgin Interactive", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
@@ -9679,7 +9679,7 @@ struct BurnDriver BurnDrvmd_mauimall = {
 	"Donald in Maui Mallard (Euro)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_mauimallRomInfo, md_mauimallRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_mauimallRomInfo, md_mauimallRomName, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
 };
@@ -9782,7 +9782,7 @@ static struct BurnRomInfo md_ddragon2RomDesc[] = {
 STD_ROM_PICK(md_ddragon2)
 STD_ROM_FN(md_ddragon2)
 
-struct BurnDriver BurnDrvmd_ddragon2 = {
+struct BurnDriverD BurnDrvmd_ddragon2 = {
 	"md_ddragon2", NULL, NULL, NULL, "1991",
 	"Double Dragon II - The Revenge (Jpn)\0", NULL, "Palsoft", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
@@ -9980,7 +9980,7 @@ static struct BurnRomInfo md_dslayedRomDesc[] = {
 STD_ROM_PICK(md_dslayed)
 STD_ROM_FN(md_dslayed)
 
-struct BurnDriver BurnDrvmd_dslayed = {
+struct BurnDriverD BurnDrvmd_dslayed = {
 	"md_dslayed", NULL, NULL, NULL, "1994",
 	"Dragon Slayer - Eiyuu Densetsu (Jpn)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
@@ -9998,7 +9998,7 @@ static struct BurnRomInfo md_dslayed2RomDesc[] = {
 STD_ROM_PICK(md_dslayed2)
 STD_ROM_FN(md_dslayed2)
 
-struct BurnDriver BurnDrvmd_dslayed2 = {
+struct BurnDriverD BurnDrvmd_dslayed2 = {
 	"md_dslayed2", NULL, NULL, NULL, "1995",
 	"Dragon Slayer - Eiyuu Densetsu II (Jpn)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
@@ -11479,7 +11479,7 @@ struct BurnDriver BurnDrvmd_exosquad = {
 	"Exo Squad (Euro)\0", NULL, "Virgin Interactive", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_exosquadRomInfo, md_exosquadRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_exosquadRomInfo, md_exosquadRomName, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
 };
@@ -39180,7 +39180,7 @@ static struct BurnRomInfo md_dukenk3daRomDesc[] = {
 STD_ROM_PICK(md_dukenk3da)
 STD_ROM_FN(md_dukenk3da)
 
-struct BurnDriver BurnDrvmd_dukenk3da = {
+struct BurnDriverD BurnDrvmd_dukenk3da = {
 	"md_dukenk3da", "md_dukenk3d", NULL, NULL, "199?",
 	"Duke Nukem 3D (Pirate)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,

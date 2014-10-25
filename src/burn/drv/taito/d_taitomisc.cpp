@@ -1792,10 +1792,10 @@ static struct BurnRomInfo JumpingRomDesc[] = {
 	{ "10.h8",         0x10000, 0x8c878827, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "5.i4",          0x10000, 0x443492cf, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "9.i8",          0x10000, 0xed33bae1, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "4.bin",         0x10000, 0x00bf8a91, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "8.bin",         0x10000, 0xe3d7a844, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "3.bin",         0x10000, 0xa3ab61c6, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "7.bin",         0x10000, 0xc1c4c701, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "4.bin",         0x10000, 0x00bf8a91, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP }, // 4+3 == b22-03.23
+	{ "8.bin",         0x10000, 0xe3d7a844, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP }, // 8+7 == b22-04.24
+	{ "3.bin",         0x10000, 0xa3ab61c6, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP }, // 4+3 == b22-03.23
+	{ "7.bin",         0x10000, 0xc1c4c701, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP }, // 8+7 == b22-04.24
 	{ "2.f89",         0x10000, 0x0810d327, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP_JUMPING },
 
 	{ "jb1_cd67",      0x10000, 0x8527c00e, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
@@ -1822,8 +1822,9 @@ static struct BurnRomInfo JumpingRomDesc[] = {
 	{ "jb2_i120",      0x10000, 0x7c4e893b, BRF_GRA | TAITO_SPRITESA },
 	{ "jb2_i119",      0x08000, 0x7e1d58d8, BRF_GRA | TAITO_SPRITESA },
 	
-	{ "jumping-pal16r6.bin", 0x00104, 0x12e9a7b8, BRF_OPT },
-	{ "jumping-pal20l8.bin", 0x00144, 0x76944f81, BRF_OPT },
+	{ "jumping-pal16r6.bin", 	0x00104, 0x12e9a7b8, BRF_OPT },
+	{ "jumping-pal20l8.bin", 	0x00144, 0x76944f81, BRF_OPT },
+	{ "pal16l8a.ic51.bin.bin", 	0x00104, 0xc1e6cb8f, BRF_OPT },	
 };
 
 STD_ROM_PICK(Jumping)
@@ -1834,10 +1835,10 @@ static struct BurnRomInfo JumpingaRomDesc[] = {
 	{ "10.h8",         0x10000, 0x8c878827, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "seyutu_5.i4",   0x10000, 0x25f19b71, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "seyutu_9.i8",   0x10000, 0x9c94f260, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "4.bin",         0x10000, 0x00bf8a91, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "8.bin",         0x10000, 0xe3d7a844, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "3.bin",         0x10000, 0xa3ab61c6, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
-	{ "7.bin",         0x10000, 0xc1c4c701, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "4.bin",         0x10000, 0x00bf8a91, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP }, // 4+3 == b22-03.23
+	{ "8.bin",         0x10000, 0xe3d7a844, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP }, // 8+7 == b22-04.24
+	{ "3.bin",         0x10000, 0xa3ab61c6, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP }, // 4+3 == b22-03.23
+	{ "7.bin",         0x10000, 0xc1c4c701, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP }, // 8+7 == b22-04.24
 	{ "2.f89",         0x10000, 0x0810d327, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP_JUMPING },
 
 	{ "jb1_cd67",      0x10000, 0x8527c00e, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
@@ -1852,7 +1853,7 @@ static struct BurnRomInfo JumpingaRomDesc[] = {
 	{ "12.ic13",       0x10000, 0x06226492, BRF_GRA | TAITO_CHARS },
 
 	{ "jb2_ic62",      0x10000, 0x8548db6c, BRF_GRA | TAITO_SPRITESA },
-	{ "jb2_ic61",      0x10000, 0x37c5923b, BRF_GRA | TAITO_SPRITESA },
+	{ "20.bin",        0x10000, 0x89b3d8ee, BRF_GRA | TAITO_SPRITESA }, // dumped multiple times, always the same
 	{ "jb2_ic60",      0x08000, 0x662a2f1e, BRF_GRA | TAITO_SPRITESA },
 	{ "jb2_ic78",      0x10000, 0x925865e1, BRF_GRA | TAITO_SPRITESA },
 	{ "jb2_ic77",      0x10000, 0xb09695d1, BRF_GRA | TAITO_SPRITESA },
@@ -1864,8 +1865,9 @@ static struct BurnRomInfo JumpingaRomDesc[] = {
 	{ "jb2_i120",      0x10000, 0x7c4e893b, BRF_GRA | TAITO_SPRITESA },
 	{ "jb2_i119",      0x08000, 0x7e1d58d8, BRF_GRA | TAITO_SPRITESA },
 	
-	{ "jumping-pal16r6.bin", 0x00104, 0x12e9a7b8, BRF_OPT },
-	{ "jumping-pal20l8.bin", 0x00144, 0x76944f81, BRF_OPT },
+	{ "jumping-pal16r6.bin", 	0x00104, 0x12e9a7b8, BRF_OPT },
+	{ "jumping-pal20l8.bin", 	0x00144, 0x76944f81, BRF_OPT },
+	{ "pal16l8a.ic51.bin.bin", 	0x00104, 0xc1e6cb8f, BRF_OPT },
 };
 
 STD_ROM_PICK(Jumpinga)

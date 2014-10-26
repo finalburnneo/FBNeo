@@ -813,6 +813,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ZetOpen(0);
 		bankswitch(nDrvZ80Bank);
 		ZetClose();
+
+		DrvRecalc = 1;
 	}
 
 	return 0;

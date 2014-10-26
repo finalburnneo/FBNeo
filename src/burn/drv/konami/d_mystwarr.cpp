@@ -5,7 +5,6 @@
 			background layer #2 on intro (bad guy on motorcycle), bottom clipped??
 
 		metamorphic force
-			(possible) rotation/zoom layer offsets ok? circle stuff on second area part of zoom/rot? offset wrong?
 			background in lava level is too fast. (irq?)
 
 		martial champ
@@ -2087,15 +2086,15 @@ static INT32 MetamrphInit()
 	K056832Init(DrvGfxROM0, DrvGfxROMExp0, 0x200000, metamrph_tile_callback);
 	K056832SetGlobalOffsets(24, 15);
 	K056832SetLayerOffsets(0, -2+4, 2);
-	K056832SetLayerOffsets(1,  0+4, 0);
+	K056832SetLayerOffsets(1,  0+4, 2);
 	K056832SetLayerOffsets(2,  2+4, 2);
-	K056832SetLayerOffsets(3,  3+4, 0);
+	K056832SetLayerOffsets(3,  3+4, 2);
 
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x7fffff, metamrph_sprite_callback, 1);
-	K053247SetSpriteOffset(-51-24, -24-15);
+	K053247SetSpriteOffset(-51-24, -24-15+0);
 
 	K053250Init(0, DrvGfxROM2, DrvGfxROMExp2, 0x40000);
-	K053250SetOffsets(0, -7, 0); // verify
+	K053250SetOffsets(0, -60+29, -16); // verify
 
 	konamigx_mixer_init(0);
 

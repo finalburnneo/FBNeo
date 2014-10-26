@@ -183,7 +183,11 @@ INT32 BurnStateLoad(TCHAR* szName, INT32 bAll, INT32 (*pLoadGame)())
 	if (memcmp(szReadHeader, szHeader, 4) == 0) {		// Check filetype
 		nRet = BurnStateLoadEmbed(fp, -1, bAll, pLoadGame);
 	}
-    fclose(fp);
+	fclose(fp);
+
+	if (nRet) { // Force the palette to recalculate on state load
+		BurnRecalcPal();
+	}
 
 	if (nRet < 0) {
 		return -nRet;

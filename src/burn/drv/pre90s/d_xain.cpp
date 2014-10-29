@@ -1168,7 +1168,7 @@ struct BurnDriver BurnDrvXsleenaj = {
 
 // Solar-Warrior (US)
 
-static struct BurnRomInfo solarwarRomDesc[] = {
+static struct BurnRomInfo solrwarrRomDesc[] = {
 	{ "p9-02.ic66",		0x8000, 0x8ff372a8, 1 | BRF_PRG | BRF_ESS }, //  0 Master M6809 code
 	{ "pa-03.ic65",		0x8000, 0x154f946f, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -1209,15 +1209,15 @@ static struct BurnRomInfo solarwarRomDesc[] = {
 	{ "pz-0.113",		0x0800, 0xa432a907, 9 | BRF_PRG | BRF_ESS }, // 29 M68705 Code
 };
 
-STD_ROM_PICK(solarwar)
-STD_ROM_FN(solarwar)
+STD_ROM_PICK(solrwarr)
+STD_ROM_FN(solrwarr)
 
-struct BurnDriver BurnDrvSolarwar = {
-	"solarwar", "xsleena", NULL, NULL, "1986",
+struct BurnDriver BurnDrvSolrwarr = {
+	"solrwarr", "xsleena", NULL, NULL, "1986",
 	"Solar-Warrior (US)\0", NULL, "Technos Japan (Taito / Memetron license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_HORSHOOT, 0,
-	NULL, solarwarRomInfo, solarwarRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, solrwarrRomInfo, solrwarrRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 240, 4, 3
 };

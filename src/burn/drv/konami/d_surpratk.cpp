@@ -457,7 +457,7 @@ static INT32 DrvFrame()
 	}
 	
 	INT32 nSoundBufferPos = 0;
-	INT32 nInterleave = 10;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal = (((3000000 / 60) * 133) / 100); // 33% overclock
 	INT32 nCyclesDone = 0;
 
@@ -467,7 +467,11 @@ static INT32 DrvFrame()
 		INT32 nSegment = (nCyclesTotal / nInterleave) * (i + 1);
 
 		nCyclesDone += konamiRun(nSegment - nCyclesDone);
-		
+
+		if (i == 235) {
+			if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_IRQSTATUS_AUTO);
+		}
+
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -475,8 +479,6 @@ static INT32 DrvFrame()
 			nSoundBufferPos += nSegmentLength;
 		}	
 	}
-
-	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

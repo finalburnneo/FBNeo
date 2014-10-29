@@ -4146,6 +4146,9 @@ static void MegadriveDraw()
 #define TOTAL_Z80_CYCLES	((double)OSC_NTSC / 15) / 60
 #define TOTAL_68K_CYCLES_PAL	((double)OSC_PAL / 7) / 50
 #define TOTAL_Z80_CYCLES_PAL	((double)OSC_PAL / 15) / 50
+#define CYCLES_M68K_LINE     488 // suitable for both PAL/NTSC
+#define CYCLES_M68K_VINT_LAG  68
+#define CYCLES_M68K_ASD      148
 
 INT32 MegadriveFrame()
 {
@@ -4200,7 +4203,9 @@ INT32 MegadriveFrame()
 	cycles_z80 = total_z80_cycles / lines;
 
 	RamVReg->status &= ~0x88; // clear V-Int, come out of vblank
-	
+
+	BurnTimerUpdate(CYCLES_M68K_ASD); // needed for Double Dragon II
+
 	for (INT32 y=0; y<lines; y++) {
 
 		Scanline = y;
@@ -4227,7 +4232,7 @@ INT32 MegadriveFrame()
 			RamVReg->status |= 0x88; // V-Int happened, go into vblank
 			
 			// there must be a gap between H and V ints, also after vblank bit set (Mazin Saga, Bram Stoker's Dracula)
-			BurnTimerUpdate(((y + 1) * cycles_68k) + /*CYCLES_M68K_VINT_LAG*/ 128 + DMABURN() - cycles_68k);
+			BurnTimerUpdate(((y + 1) * cycles_68k) + CYCLES_M68K_VINT_LAG + DMABURN() - cycles_68k);
 
 			RamVReg->pending_ints |= 0x20;
 			if(RamVReg->reg[1] & 0x20) {
@@ -4240,7 +4245,7 @@ INT32 MegadriveFrame()
 			PicoLine(y);
 
 		// Run scanline
-		BurnTimerUpdate((y + 1) * cycles_68k + DMABURN());
+		BurnTimerUpdate((y + 1) * cycles_68k - CYCLES_M68K_ASD - CYCLES_M68K_VINT_LAG + DMABURN());
 
 		if (Z80HasBus && !MegadriveZ80Reset) {
 			done_z80 += ZetRun(((y + 1) * cycles_z80) - done_z80);

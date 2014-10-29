@@ -5805,7 +5805,7 @@ static INT32 BlswhstlFrame()
 
 static INT32 SsridersFrame()
 {
-	INT32 nInterleave = 262;
+	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
 
 	if (DrvReset) SsridersDoReset();
@@ -5818,7 +5818,7 @@ static INT32 SsridersFrame()
 
 	SekNewFrame();
 	ZetNewFrame();
-	
+
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
 
@@ -5829,10 +5829,9 @@ static INT32 SsridersFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 		if (i == 19) DrvVBlank = 0;
-		if (i == 235) DrvVBlank = 1;
-		if (i == 235 && K052109_irq_enabled) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		if (i == 240) DrvVBlank = 1;
 		SekClose();
-		
+
 		// Run Z80
 		nCurrentCPU = 1;
 		ZetOpen(0);
@@ -5841,7 +5840,7 @@ static INT32 SsridersFrame()
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
 		ZetClose();
-		
+
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -5850,7 +5849,11 @@ static INT32 SsridersFrame()
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
-	
+
+	SekOpen(0);
+	if (K052109_irq_enabled) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekClose();
+
 	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
@@ -5861,7 +5864,7 @@ static INT32 SsridersFrame()
 			K053260Update(0, pSoundBuf, nSegmentLength);
 		}
 	}
-	
+
 	if (pBurnDraw) BlswhstlDraw();
 
 	return 0;

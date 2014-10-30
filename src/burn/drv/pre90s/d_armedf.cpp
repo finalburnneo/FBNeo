@@ -559,11 +559,11 @@ void __fastcall armedf_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x02:
-			if (data!=0x7f && data!=0x77) DACSignedWrite(0, data);
+			if (data!=0x7f && data!=0x77 && data!=0x80) DACSignedWrite(0, data);
 		return;
 
 		case 0x03:
-			if (data!=0x7f && data!=0x77) DACSignedWrite(1, data);
+			if (data!=0x7f && data!=0x77 && data!=0x80) DACSignedWrite(1, data);
 		return;
 	}
 }

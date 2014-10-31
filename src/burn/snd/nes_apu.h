@@ -2,6 +2,7 @@ void nesapuInit(INT32 chip, INT32 clock, UINT32 (*pSyncCallback)(INT32 samples_p
 void nesapuUpdate(INT32 chip, INT16 *buffer, INT32 samples);
 void nesapuSetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir);
 void nesapuExit();
+void nesapuReset();
 
 INT32 nesapuScan(INT32 nAction);
 

@@ -33,6 +33,8 @@ static double DariusMSM5205RouteMasterVol;
 static UINT16 VolfiedVidCtrl;
 static UINT16 VolfiedVidMask;
 
+static INT32 RainbowCChipVer = 0;
+
 static UINT16 *pTopspeedTempDraw = NULL;
 
 static void DariusDraw();
@@ -4295,7 +4297,7 @@ static INT32 DariusInit()
 		
 	TaitoLoadRoms(0);
 	
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "darius") != 0)  Taito68KRom1Size = 0x60000;	
+	if (Taito68KRom1Size < 0x60000) Taito68KRom1Size = 0x60000;	
 	TaitoZ80Rom1Size = 0x30000;
 	
 	// Allocate and Blank all required memory
@@ -4308,7 +4310,7 @@ static INT32 DariusInit()
 	
 	if (TaitoLoadRoms(1)) return 1;
 	
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "darius") != 0)  {
+	if (Taito68KRom1Num == 4)  {
 		memcpy(Taito68KRom1 + 0x40000, Taito68KRom1 + 0x20000, 0x20000);
 		memset(Taito68KRom1 + 0x20000, 0xff, 0x20000);
 	}
@@ -4710,15 +4712,20 @@ static INT32 RbislandInit()
 	nTaitoCyclesTotal[0] = (16000000 / 2) / 60;
 	nTaitoCyclesTotal[1] = (16000000 / 4) / 60;
 	
-	INT32 CChipVer = 0;
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "rbislande")) CChipVer = 1;
-	RainbowCChipInit(CChipVer);
+	RainbowCChipInit(RainbowCChipVer);
 		
 	// Reset the driver
 	TaitoResetFunction = RbislandDoReset;
 	TaitoResetFunction();
 
 	return 0;
+}
+
+static INT32 RbislandeInit()
+{
+	RainbowCChipVer = 1;
+	
+	return RbislandInit();
 }
 
 static INT32 JumpingInit()
@@ -5125,6 +5132,8 @@ static INT32 TaitoMiscExit()
 	
 	VolfiedVidCtrl = 0;
 	VolfiedVidMask = 0;
+	
+	RainbowCChipVer = 0;
 	
 	BurnFree(pTopspeedTempDraw);
 	
@@ -5976,10 +5985,10 @@ struct BurnDriver BurnDrvDarius = {
 };
 
 struct BurnDriver BurnDrvDariusu = {
-	"dariusu", "darius", "main check sum error", NULL, "1986",
+	"dariusu", "darius", NULL, NULL, "1986",
 	"Darius (US)\0", NULL, "Taito America Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, DariusuRomInfo, DariusuRomName, NULL, NULL, DariusInputInfo, DariusuDIPInfo,
 	DariusInit, TaitoMiscExit, DariusFrame, NULL, TaitoMiscScan,
 	NULL, 0x2000, 864, 224, 12, 3
@@ -6091,7 +6100,7 @@ struct BurnDriver BurnDrvRbislande = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, RbislandeRomInfo, RbislandeRomName, NULL, NULL, RbislandInputInfo, RbislandDIPInfo,
-	RbislandInit, TaitoMiscExit, TaitoMiscFrame, NULL, TaitoMiscScan,
+	RbislandeInit, TaitoMiscExit, TaitoMiscFrame, NULL, TaitoMiscScan,
 	NULL, 0x2000, 320, 224, 4, 3
 };
 

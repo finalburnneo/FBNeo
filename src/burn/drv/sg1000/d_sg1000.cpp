@@ -186,7 +186,8 @@ static int DrvInit()
 	ZetSetInHandler(sg1000_read_port);
 	ZetClose();
 
-	SN76489Init(0, 3579545, 0);
+	SN76489AInit(0, 3579545, 0);
+	SN76496SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
 
 	TMS9928AInit(TMS99x8A, 0x4000, 0, 0, vdp_interrupt);
 
@@ -220,24 +221,47 @@ static int DrvFrame()
 		DrvDoReset();
 	}
 
-	{
+	{ // Compile Inputs
 		memset (DrvInputs, 0xff, 2);
 		for (int i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
-                        if (i==6 || i==7)
-                            DrvInputs[1] ^= (DrvJoy1[i] & 1) << i;
-                        else
-                            DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+			if (i==6 || i==7)
+				DrvInputs[1] ^= (DrvJoy1[i] & 1) << i;
+			else
+				DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
 	}
 
-	ZetOpen(0);
-	ZetRun(3579545 / 60);
+	INT32 nInterleave = 16;
+	INT32 nCyclesTotal[1] = { 3579545 / 60 };
+	INT32 nCyclesDone[1] = { 0 };
+	INT32 nSoundBufferPos = 0;
+
+    ZetOpen(0);
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+
+		// Render Sound Segment
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			SN76496Update(0, pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
+	}
+
 	TMS9928AInterrupt();
 	ZetClose();
 
+	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			SN76496Update(0, pSoundBuf, nSegmentLength);
+		}
 	}
 
 	if (pBurnDraw) {

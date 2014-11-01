@@ -87,7 +87,8 @@ static void CpsBlendInit()
 		}
 
 		for (k = min; k <= max; k++) {
-			blendtable[k] = table[type&3];
+			if (k < 0x40000)
+				blendtable[k] = table[type&3];
 		}
 	}
 }

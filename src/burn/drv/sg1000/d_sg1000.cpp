@@ -2418,9 +2418,9 @@ STD_ROM_FN(sg1k_magtree)
 
 struct BurnDriver BurnDrvsg1k_magtree = {
 	"sg1k_magtree", NULL, NULL, NULL, "198?",
-	"Magical Tree (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
+	"Magical Tree (Tw)\0", "Game crashes shortly after starting.", "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	0, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_magtreeRomInfo, sg1k_magtreeRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3

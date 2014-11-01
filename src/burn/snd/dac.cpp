@@ -38,33 +38,33 @@ static void UpdateStream(INT32 chip, INT32 length)
 		memset (rBuffer, 0, nBurnSoundLen * sizeof(INT16));
 	}
 
-        ptr = &dac_table[chip];
-        if (ptr->Initialized == 0) return;
+	ptr = &dac_table[chip];
+	if (ptr->Initialized == 0) return;
 
-        if (length > nBurnSoundLen) length = nBurnSoundLen;
-        length -= ptr->nCurrentPosition;
-        if (length <= 0) return;
+	if (length > nBurnSoundLen) length = nBurnSoundLen;
+	length -= ptr->nCurrentPosition;
+	if (length <= 0) return;
 
-        INT16 *lbuf = lBuffer + ptr->nCurrentPosition;
+	INT16 *lbuf = lBuffer + ptr->nCurrentPosition;
 	INT16 *rbuf = rBuffer + ptr->nCurrentPosition;
 
 	INT16 lOut = ((ptr->OutputDir & BURN_SND_ROUTE_LEFT ) == BURN_SND_ROUTE_LEFT ) ? ptr->Output : 0;
-        INT16 rOut = ((ptr->OutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) ? ptr->Output : 0;
+	INT16 rOut = ((ptr->OutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) ? ptr->Output : 0;
 
-        ptr->nCurrentPosition += length;
+	ptr->nCurrentPosition += length;
 
-        if (rOut && lOut) {              
-                while (length--) {
-//                      *lbuf++ = *lbuf + lOut;
-//			*rbuf++ = *rbuf + rOut;
-                        *lbuf++ = BURN_SND_CLIP(*lbuf + lOut);
+	if (rOut && lOut) {
+		while (length--) {
+			*lbuf++ = BURN_SND_CLIP(*lbuf + lOut);
 			*rbuf++ = BURN_SND_CLIP(*rbuf + rOut);
-                }
-        } else if (lOut) {              
-                while (length--) *lbuf++ = BURN_SND_CLIP(*lbuf + lOut);
-        } else if (rOut) {            
-                while (length--) *rbuf++ = BURN_SND_CLIP(*rbuf + rOut);
-        }
+		}
+	} else if (lOut) {
+		while (length--)
+			*lbuf++ = BURN_SND_CLIP(*lbuf + lOut);
+	} else if (rOut) {
+		while (length--)
+			*rbuf++ = BURN_SND_CLIP(*rbuf + rOut);
+	}
 }
 
 void DACUpdate(INT16* Buffer, INT32 Length)
@@ -132,6 +132,9 @@ void DACSignedWrite(INT32 Chip, UINT8 Data)
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACSignedWrite called without init\n"));
 	if (Chip > NumChips) bprintf(PRINT_ERROR, _T("DACSignedWrite called with invalid chip number %x\n"), Chip);
 #endif
+
+	if (Data == 0x77 || Data == 0x7f || Data == 0x80)
+		return; // HACK: buzzing fix (armed formation, terra cresta, Soldier Girl Amazon, & possibly others.)
 
 	struct dac_info *ptr;
 

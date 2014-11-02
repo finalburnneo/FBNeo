@@ -3495,6 +3495,8 @@ void Z80Reset()
 	Z80.irq_state = Z80_CLEAR_LINE;
 	Z80.after_ei = FALSE;
 
+	Z80Vector = 0xff;
+
 	if (Z80.daisy)
 		z80daisy_reset(Z80.daisy);
 

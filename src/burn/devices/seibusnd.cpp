@@ -481,6 +481,8 @@ void seibu_sound_exit()
 	MSM6295Exit(0);
 	if (seibu_snd_type & 4) MSM6295Exit(1);
 
+	ZetOpen(0);
+	ZetSetVector(0xff); // Set back the default z80 vector of 0xff, some games depend on this. FIXME: shouldn't the zet core do this on init?
 	ZetExit();
 
 	MSM6295ROM = NULL;

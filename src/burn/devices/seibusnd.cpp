@@ -477,7 +477,9 @@ void seibu_sound_exit()
 			BurnYM2203Exit();
 		break;
 	}
-	
+
+	ZetExit();
+
 	MSM6295Exit(0);
 	if (seibu_snd_type & 4) MSM6295Exit(1);
 

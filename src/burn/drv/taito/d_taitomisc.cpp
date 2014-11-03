@@ -1826,7 +1826,7 @@ static struct BurnRomInfo JumpingRomDesc[] = {
 	
 	{ "jumping-pal16r6.bin", 	0x00104, 0x12e9a7b8, BRF_OPT },
 	{ "jumping-pal20l8.bin", 	0x00144, 0x76944f81, BRF_OPT },
-	{ "pal16l8a.ic51.bin.bin", 	0x00104, 0xc1e6cb8f, BRF_OPT },	
+	{ "pal16l8a.ic51.bin", 		0x00104, 0xc1e6cb8f, BRF_OPT },	
 };
 
 STD_ROM_PICK(Jumping)
@@ -1869,7 +1869,7 @@ static struct BurnRomInfo JumpingaRomDesc[] = {
 	
 	{ "jumping-pal16r6.bin", 	0x00104, 0x12e9a7b8, BRF_OPT },
 	{ "jumping-pal20l8.bin", 	0x00144, 0x76944f81, BRF_OPT },
-	{ "pal16l8a.ic51.bin.bin", 	0x00104, 0xc1e6cb8f, BRF_OPT },
+	{ "pal16l8a.ic51.bin", 		0x00104, 0xc1e6cb8f, BRF_OPT },
 };
 
 STD_ROM_PICK(Jumpinga)

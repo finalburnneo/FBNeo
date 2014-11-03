@@ -3,7 +3,7 @@
 
 
 //#define DUMP_SPRITE_BITMAPS
-#define DRAW_SPRITE_NUMBER
+//#define DRAW_SPRITE_NUMBER
 
 static INT32 enable_blending = 0;
 

@@ -636,7 +636,6 @@ static INT32 DrvInit(INT32 type)
 	ZetMapMemory(DrvZ80RAM,	0xc000, 0xdfff, ZET_RAM);
 	ZetSetOutHandler(sandscrp_sound_write_port);
 	ZetSetInHandler(sandscrp_sound_read_port);
-	ZetSetVector(0xff); // Bootfix
 	ZetClose();
 
 	BurnYM2203Init(1, 4000000, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);

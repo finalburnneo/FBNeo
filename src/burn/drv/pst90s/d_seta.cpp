@@ -8106,6 +8106,8 @@ static INT32 eightfrcInit()
 		// Update sample length to include the banked section that was skipped (0xc0000 - 0xfffff)
 		DrvROMLen[3] = 0x240000;
 		memmove(DrvSndROM + 0x100000, DrvSndROM + 0x0c0000, 0x140000); // sound banks (memcpy fails because of overlap!)
+		x1010_set_route(BURN_SND_X1010_ROUTE_2, 2.00, BURN_SND_ROUTE_RIGHT);
+		x1010_set_route(BURN_SND_X1010_ROUTE_1, 2.00, BURN_SND_ROUTE_LEFT);
 	}
 
 	return nRet;

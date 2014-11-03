@@ -901,6 +901,50 @@ struct BurnDriver BurnDrvDrgw2x = {
 };
 
 
+// Dragon World II (V100H, Hong Kong)
+// the IGS025 has a "DRAGON-II 0004-1" sticker, the IGS012 has no per-game marking
+
+static struct BurnRomInfo drgw2hkRomDesc[] = {
+	{ "dragon_ii_v-100-h.u2",	0x080000, 0xc6e2e6ec, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "pgmt0200.u7",		0x400000, 0xb0f6534d, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "pgma0200.u5",		0x400000, 0x13b95069, 3 | BRF_GRA },			//  2 Sprite Color Data
+
+	{ "pgmb0200.u9",		0x400000, 0x932d0f13, 4 | BRF_GRA },			//  3 Sprite Masks & Color Indexes
+};
+
+STDROMPICKEXT(drgw2hk, drgw2hk, pgm)
+STD_ROM_FN(drgw2hk)
+
+static void drgw2100h_patch()
+{
+	pgm_decrypt_dw2();
+
+	*((UINT16*)(PGM68KROM + 0x0302C0)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
+	*((UINT16*)(PGM68KROM + 0x030366)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
+	*((UINT16*)(PGM68KROM + 0x0303F6)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
+}
+
+static INT32 drgw2100hInit()
+{
+	pPgmInitCallback = drgw2100h_patch;
+	pPgmProtCallback = install_protection_asic25_asic12_dw2;
+
+	return pgmInit();
+}
+
+struct BurnDriver BurnDrvDrgw2hk = {
+	"drgw2hk", "drgw2", "pgm", NULL, "1997",
+	"Dragon World II (V100H, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
+	NULL, drgw2hkRomInfo, drgw2hkRomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	drgw2100hInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
 // The Killing Blade (V109, China)
 
 static struct BurnRomInfo killbldRomDesc[] = {

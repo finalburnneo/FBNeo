@@ -333,6 +333,8 @@ static void NeoTextBlendInit(INT32 nSlot)
 				NeoTextTileAttrib[nSlot][k] = table[type&3];
 		}
 	}
+
+	fclose (fa);
 }
 
 INT32 NeoInitText(INT32 nSlot)

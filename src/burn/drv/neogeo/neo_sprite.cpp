@@ -198,6 +198,8 @@ static void NeoBlendInit(INT32 nSlot)
 				NeoTileAttrib[nSlot][k] = table[type&3];
 		}
 	}
+
+	fclose (fa);
 }
 
 INT32 NeoInitSprites(INT32 nSlot)

@@ -91,6 +91,8 @@ static void CpsBlendInit()
 				blendtable[k] = table[type&3];
 		}
 	}
+
+	fclose (fa);
 }
 
 INT32 CpsObjInit()

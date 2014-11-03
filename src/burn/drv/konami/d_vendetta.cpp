@@ -668,7 +668,7 @@ static INT32 DrvInit(INT32 nGame)
 		K052109SetCallback(EsckidsK052109Callback);
 		K052109AdjustScroll(8, -8);
 
-		K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, K053247Callback, 1);
+		K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, VendettaK053247Callback, 1);
 		K053247SetSpriteOffset(-11, -14);
 
 		bankoffset = 0x6000;

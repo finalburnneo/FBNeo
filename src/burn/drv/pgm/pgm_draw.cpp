@@ -3,7 +3,9 @@
 
 
 //#define DUMP_SPRITE_BITMAPS
-//#define DRAW_SPRITE_NUMBER
+#define DRAW_SPRITE_NUMBER
+
+static INT32 enable_blending = 0;
 
 static INT32 nTileMask = 0;
 static UINT8 sprmsktab[0x100];
@@ -12,10 +14,16 @@ static UINT16 *pTempScreen;	// sprites
 static UINT16 *pTempDraw;	// pre-zoomed sprites
 static UINT8  *tiletrans;	// tile transparency table
 static UINT8  *texttrans;	// text transparency table
+static UINT32 *pTempDraw32;	// 32 bit temporary bitmap (blending!)
+static UINT8 *pSpriteBlendTable;// if blending is available, allocate this.
 
-#ifdef DUMP_SPRITE_BITMAPS
-static UINT32 *pTempDraw32;
-#endif
+static inline UINT32 alpha_blend(UINT32 d, UINT32 s, UINT32 p)
+{
+	INT32 a = 255 - p;
+
+	return (((((s & 0xff00ff) * p) + ((d & 0xff00ff) * a)) & 0xff00ff00) +
+		((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) >> 8;
+}
 
 #ifdef DRAW_SPRITE_NUMBER
 
@@ -200,19 +208,38 @@ static void draw_font(INT32 sx, INT32 sy, UINT32 code)
 
 		UINT8 *gfx = font_pixels[chr];
 
-		for (INT32 y = 0; y < 7; y++) {
-			if ((sy+y)<0 || (sy+y)>=nScreenHeight) continue; // clip
-
-			UINT16 *dst = pTransDraw + (sy + y) * nScreenWidth;
-
-			for (INT32 x = 0; x < 5; x++) {
-				if ((sx+x)<0 || (sx+x)>=nScreenWidth) continue; // clip
-
-				INT32 pxl = gfx[(y*5)+x];
-				if (pxl) {
-					dst[(sx+x)] = 0x901;
-				} else {
-					dst[(sx+x)] = 0x900;
+		if (enable_blending) {
+			for (INT32 y = 0; y < 7; y++) {
+				if ((sy+y)<0 || (sy+y)>=nScreenHeight) continue; // clip
+	
+				UINT32 *dst = pTempDraw32 + (sy + y) * nScreenWidth;
+	
+				for (INT32 x = 0; x < 5; x++) {
+					if ((sx+x)<0 || (sx+x)>=nScreenWidth) continue; // clip
+	
+					INT32 pxl = gfx[(y*5)+x];
+					if (pxl) {
+						dst[(sx+x)] = 0xffffff;
+					} else {
+						dst[(sx+x)] = 0x000000;
+					}
+				}
+			}
+		} else {
+			for (INT32 y = 0; y < 7; y++) {
+				if ((sy+y)<0 || (sy+y)>=nScreenHeight) continue; // clip
+	
+				UINT16 *dst = pTransDraw + (sy + y) * nScreenWidth;
+	
+				for (INT32 x = 0; x < 5; x++) {
+					if ((sx+x)<0 || (sx+x)>=nScreenWidth) continue; // clip
+	
+					INT32 pxl = gfx[(y*5)+x];
+					if (pxl) {
+						dst[(sx+x)] = 0x901;
+					} else {
+						dst[(sx+x)] = 0x900;
+					}
 				}
 			}
 		}
@@ -253,6 +280,8 @@ inline static UINT32 CalcCol(UINT16 nColour)
 	g |= g >> 5;
 	b = (nColour & 0x001F) << 3;	// Blue
 	b |= b >> 5;
+
+	if (enable_blending) return (r<<16)|(g<<8)|(b<<0);
 
 	return BurnHighCol(r, g, b, 0);
 }
@@ -753,6 +782,10 @@ static void pgm_drawsprites()
 		if (xpos > 0x3ff) xpos -=0x800;
 		if (ypos > 0x1ff) ypos -=0x400;
 
+		if (enable_blending) {
+			palt|= pSpriteBlendTable[boff] << 7;
+		}
+
 		draw_sprite_new_zoomed(wide, high, xpos, ypos, palt, boff * 2, flip, xzoom, xgrow, yzoom, ygrow, prio);
 
 		source += 5;
@@ -761,13 +794,30 @@ static void pgm_drawsprites()
 
 static void copy_sprite_priority(INT32 prio)
 {
-	UINT16 *dest = pTransDraw;
 	UINT16 *src = pTempScreen;
 	UINT8 *pri = SpritePrio;
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++)
-	{
-		if (pri[i] == prio) {
-			dest[i] = src[i];
+
+	if (enable_blending) {
+		UINT32 *dest = pTempDraw32;
+		INT32 blend_levels[16] = { 0x00, 0x1f, 0x2f, 0x3f, 0x4f, 0x5f, 0x6f, 0x7f, 0x8f, 0x9f, 0xaf, 0xbf, 0xcf, 0xdf, 0xef, 0xff };
+
+		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++)
+		{
+			if (pri[i] == prio) {
+				if (src[i]&0xf000) {
+					dest[i] = alpha_blend(dest[i], RamCurPal[src[i]&0xfff], blend_levels[src[i]/0x1000]);
+				} else {
+					dest[i] = RamCurPal[src[i]];
+				}
+			}
+		}
+	} else {
+		UINT16 *dest = pTransDraw;
+		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++)
+		{
+			if (pri[i] == prio) {
+				dest[i] = src[i];
+			}
 		}
 	}
 }
@@ -799,66 +849,90 @@ static void draw_text()
 		INT32 flipx =  (attr & 0x40);
 		INT32 flipy =  (attr & 0x80);
 
-		if (sx < 0 || sy < 0 || sx >= nScreenWidth - 8 || sy >= nScreenHeight - 8)
+		if (enable_blending) 
 		{
-			if (texttrans[code] & 2) { // opaque
-				if (flipy) {
-					if (flipx) {
-						Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, PGMTileROM);
-					} else {
-						Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, PGMTileROM);
-					}
-				} else {
-					if (flipx) {
-						Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, PGMTileROM);
-					} else {
-						Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0, PGMTileROM);
-					}
-				}
-			} else {
-				if (flipy) {
-					if (flipx) {
-						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0, PGMTileROM);
-					} else {
-						Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0, PGMTileROM);
-					}
-				} else {
-					if (flipx) {
-						Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0, PGMTileROM);
-					} else {
-						Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0, PGMTileROM);
+			UINT8 *gfx = PGMTileROM + (code * 0x40);
+			INT32 flip = (flipx ? 0x07 : 0) | (flipy ? 0x38 : 0);
+			UINT32 *pal = RamCurPal + color * 0x10;
+			UINT32 *dst = pTempDraw32 + (sy * nScreenWidth) + sx;
+
+			for (INT32 y = 0; y < 8; y++, dst += nScreenWidth) {
+				if ((sy+y) >= 0 && (sy+y)<nScreenHeight) {
+					for (INT32 x = 0; x < 8; x++) {
+						INT32 pxl = gfx[((y*8)+x)^flip];
+
+						if (pxl != 0xf) {
+							if ((sx+x)>=0 && (sx+x)<nScreenWidth) {
+								dst[x] = pal[pxl];
+							}
+						}
 					}
 				}
 			}
 		}
 		else
 		{
-			if (texttrans[code] & 2) { // opaque
-				if (flipy) {
-					if (flipx) {
-						Render8x8Tile_FlipXY(pTransDraw, code, sx, sy, color, 4, 0, PGMTileROM);
+			if (sx < 0 || sy < 0 || sx >= nScreenWidth - 8 || sy >= nScreenHeight - 8)
+			{
+				if (texttrans[code] & 2) { // opaque
+					if (flipy) {
+						if (flipx) {
+							Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, PGMTileROM);
+						} else {
+							Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, PGMTileROM);
+						}
 					} else {
-						Render8x8Tile_FlipY(pTransDraw, code, sx, sy, color, 4, 0, PGMTileROM);
+						if (flipx) {
+							Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, PGMTileROM);
+						} else {
+							Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0, PGMTileROM);
+						}
 					}
 				} else {
-					if (flipx) {
-						Render8x8Tile_FlipX(pTransDraw, code, sx, sy, color, 4, 0, PGMTileROM);
+					if (flipy) {
+						if (flipx) {
+							Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0, PGMTileROM);
+						} else {
+							Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0, PGMTileROM);
+						}
 					} else {
-						Render8x8Tile(pTransDraw, code, sx, sy, color, 4, 0, PGMTileROM);
+						if (flipx) {
+							Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0, PGMTileROM);
+						} else {
+							Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0, PGMTileROM);
+						}
 					}
 				}
-			} else {
-				if (flipy) {
-					if (flipx) {
-						Render8x8Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 4, 15, 0, PGMTileROM);
+			}
+			else
+			{
+				if (texttrans[code] & 2) { // opaque
+					if (flipy) {
+						if (flipx) {
+							Render8x8Tile_FlipXY(pTransDraw, code, sx, sy, color, 4, 0, PGMTileROM);
+						} else {
+							Render8x8Tile_FlipY(pTransDraw, code, sx, sy, color, 4, 0, PGMTileROM);
+						}
 					} else {
-						Render8x8Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 4, 15, 0, PGMTileROM);
+						if (flipx) {
+							Render8x8Tile_FlipX(pTransDraw, code, sx, sy, color, 4, 0, PGMTileROM);
+						} else {
+							Render8x8Tile(pTransDraw, code, sx, sy, color, 4, 0, PGMTileROM);
+						}
 					}
 				} else {
-					if (flipx) {
-						Render8x8Tile_Mask_FlipX(pTransDraw, code, sx, sy, color, 4, 15, 0, PGMTileROM);
+					if (flipy) {
+						if (flipx) {
+							Render8x8Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 4, 15, 0, PGMTileROM);
+						} else {
+							Render8x8Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 4, 15, 0, PGMTileROM);
+						}
 					} else {
-						Render8x8Tile_Mask(pTransDraw, code, sx, sy, color, 4, 15, 0, PGMTileROM);
+						if (flipx) {
+							Render8x8Tile_Mask_FlipX(pTransDraw, code, sx, sy, color, 4, 15, 0, PGMTileROM);
+						} else {
+							Render8x8Tile_Mask(pTransDraw, code, sx, sy, color, 4, 15, 0, PGMTileROM);
+						}
 					}
 				}
 			}
@@ -869,7 +943,6 @@ static void draw_text()
 static void draw_background()
 {
 	UINT16 *vram = (UINT16*)PGMBgRAM;
-	UINT16 *dst   = pTransDraw;
 
 	UINT16 *rowscroll = PGMRowRAM;
 	INT32 yscroll = (INT16)BURN_ENDIAN_SWAP_INT16(PGMVidReg[0x2000 / 2]);
@@ -912,66 +985,90 @@ static void draw_background()
 			INT32 flipy = BURN_ENDIAN_SWAP_INT16(vram[offs*2+1]) & 0x80;
 			INT32 flipx = BURN_ENDIAN_SWAP_INT16(vram[offs*2+1]) & 0x40;
 
-			if (sx < 0 || sy < 0 || sx >= nScreenWidth - 32 || sy >= nScreenHeight - 32)
+			if (enable_blending) 
 			{
-				if (tiletrans[code] & 2) { // opaque
-					if (flipy) {
-						if (flipx) {
-							Render32x32Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 5, 0, PGMTileROMExp);
-						} else {
-							Render32x32Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 5, 0, PGMTileROMExp);
-						}
-					} else {
-						if (flipx) {
-							Render32x32Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 5, 0, PGMTileROMExp);
-						} else {
-							Render32x32Tile_Clip(pTransDraw, code, sx, sy, color, 5, 0, PGMTileROMExp);
-						}
-					}
-				} else {
-					if (flipy) {
-						if (flipx) {
-							Render32x32Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 5, 0x1f, 0, PGMTileROMExp);
-						} else {
-							Render32x32Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 5, 0x1f, 0, PGMTileROMExp);
-						}
-					} else {
-						if (flipx) {
-							Render32x32Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 5, 0x1f, 0, PGMTileROMExp);
-						} else {
-							Render32x32Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 5, 0x1f, 0, PGMTileROMExp);
+				UINT8 *gfx = PGMTileROMExp + (code * 0x400);
+				INT32 flip = (flipx ? 0x1f : 0) | (flipy ? 0x3e0 : 0);
+				UINT32 *pal = RamCurPal + color * 0x20;
+				UINT32 *dst = pTempDraw32 + (sy * nScreenWidth) + sx;
+	
+				for (INT32 y = 0; y < 32; y++, dst += nScreenWidth) {
+					if ((sy+y) >= 0 && (sy+y)<nScreenHeight) {
+						for (INT32 x = 0; x < 32; x++) {
+							INT32 pxl = gfx[((y*32)+x)^flip];
+	
+							if (pxl != 0x1f) {
+								if ((sx+x)>=0 && (sx+x)<nScreenWidth) {
+									dst[x] = pal[pxl];
+								}
+							}
 						}
 					}
 				}
 			}
 			else
 			{
-				if (tiletrans[code] & 2) { // opaque
-					if (flipy) {
-						if (flipx) {
-							Render32x32Tile_FlipXY(pTransDraw, code, sx, sy, color, 5, 0, PGMTileROMExp);
+				if (sx < 0 || sy < 0 || sx >= nScreenWidth - 32 || sy >= nScreenHeight - 32)
+				{
+					if (tiletrans[code] & 2) { // opaque
+						if (flipy) {
+							if (flipx) {
+								Render32x32Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 5, 0, PGMTileROMExp);
+							} else {
+								Render32x32Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 5, 0, PGMTileROMExp);
+							}
 						} else {
-							Render32x32Tile_FlipY(pTransDraw, code, sx, sy, color, 5, 0, PGMTileROMExp);
+							if (flipx) {
+								Render32x32Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 5, 0, PGMTileROMExp);
+							} else {
+								Render32x32Tile_Clip(pTransDraw, code, sx, sy, color, 5, 0, PGMTileROMExp);
+							}
 						}
 					} else {
-						if (flipx) {
-							Render32x32Tile_FlipX(pTransDraw, code, sx, sy, color, 5, 0, PGMTileROMExp);
+						if (flipy) {
+							if (flipx) {
+								Render32x32Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 5, 0x1f, 0, PGMTileROMExp);
+							} else {
+								Render32x32Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 5, 0x1f, 0, PGMTileROMExp);
+							}
 						} else {
-							Render32x32Tile(pTransDraw, code, sx, sy, color, 5, 0, PGMTileROMExp);
+							if (flipx) {
+								Render32x32Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 5, 0x1f, 0, PGMTileROMExp);
+							} else {
+								Render32x32Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 5, 0x1f, 0, PGMTileROMExp);
+							}
 						}
 					}
-				} else {
-					if (flipy) {
-						if (flipx) {
-							Render32x32Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 5, 0x1f, 0, PGMTileROMExp);
+				}
+				else
+				{
+					if (tiletrans[code] & 2) { // opaque
+						if (flipy) {
+							if (flipx) {
+								Render32x32Tile_FlipXY(pTransDraw, code, sx, sy, color, 5, 0, PGMTileROMExp);
+							} else {
+								Render32x32Tile_FlipY(pTransDraw, code, sx, sy, color, 5, 0, PGMTileROMExp);
+							}
 						} else {
-							Render32x32Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 5, 0x1f, 0, PGMTileROMExp);
+							if (flipx) {
+								Render32x32Tile_FlipX(pTransDraw, code, sx, sy, color, 5, 0, PGMTileROMExp);
+							} else {
+								Render32x32Tile(pTransDraw, code, sx, sy, color, 5, 0, PGMTileROMExp);
+							}
 						}
 					} else {
-						if (flipx) {
-							Render32x32Tile_Mask_FlipX(pTransDraw, code, sx, sy, color, 5, 0x1f, 0, PGMTileROMExp);
+						if (flipy) {
+							if (flipx) {
+								Render32x32Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 5, 0x1f, 0, PGMTileROMExp);
+							} else {
+								Render32x32Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 5, 0x1f, 0, PGMTileROMExp);
+							}
 						} else {
-							Render32x32Tile_Mask(pTransDraw, code, sx, sy, color, 5, 0x1f, 0, PGMTileROMExp);
+							if (flipx) {
+								Render32x32Tile_Mask_FlipX(pTransDraw, code, sx, sy, color, 5, 0x1f, 0, PGMTileROMExp);
+							} else {
+								Render32x32Tile_Mask(pTransDraw, code, sx, sy, color, 5, 0x1f, 0, PGMTileROMExp);
+							}
 						}
 					}
 				}
@@ -982,7 +1079,7 @@ static void draw_background()
 	}
 
 	// do line scroll (slow)
-	for (INT32 y = 0; y < 224; y++, dst += nScreenWidth)
+	for (INT32 y = 0; y < 224; y++)
 	{
 		INT32 scrollx = (xscroll + BURN_ENDIAN_SWAP_INT16(rowscroll[y])) & 0x7ff;
 		INT32 scrolly = (yscroll + y) & 0x7ff;
@@ -1005,23 +1102,52 @@ static void draw_background()
 
 			UINT8 *src = PGMTileROMExp + (code * 1024) + (((scrolly ^ flipy) & 0x1f) << 5);
 
-			if (sx >= 0 && sx <= 415) {
-				for (INT32 xx = 0; xx < 32; xx++, sx++) {
-					INT32 pxl = src[xx^flipx];
+			if (enable_blending)
+			{
+				UINT32 *dst = pTempDraw32 + (y * nScreenWidth);
+				UINT32 *pal = RamCurPal + color;
 	
-					if (pxl != 0x1f) {
-						dst[sx] = pxl | color;
+				if (sx >= 0 && sx <= 415) {
+					for (INT32 xx = 0; xx < 32; xx++, sx++) {
+						INT32 pxl = src[xx^flipx];
+		
+						if (pxl != 0x1f) {
+							dst[sx] = pal[pxl];
+						}
+					}
+				} else {
+					for (INT32 xx = 0; xx < 32; xx++, sx++) {
+						if (sx < 0) continue;
+						if (sx >= nScreenWidth) break;
+		
+						INT32 pxl = src[xx^flipx];
+		
+						if (pxl != 0x1f) {
+							dst[sx] = pal[pxl];
+						}
 					}
 				}
 			} else {
-				for (INT32 xx = 0; xx < 32; xx++, sx++) {
-					if (sx < 0) continue;
-					if (sx >= nScreenWidth) break;
-	
-					INT32 pxl = src[xx^flipx];
-	
-					if (pxl != 0x1f) {
-						dst[sx] = pxl | color;
+				UINT16 *dst = pTransDraw + (y * nScreenWidth);
+
+				if (sx >= 0 && sx <= 415) {
+					for (INT32 xx = 0; xx < 32; xx++, sx++) {
+						INT32 pxl = src[xx^flipx];
+		
+						if (pxl != 0x1f) {
+							dst[sx] = pxl | color;
+						}
+					}
+				} else {
+					for (INT32 xx = 0; xx < 32; xx++, sx++) {
+						if (sx < 0) continue;
+						if (sx >= nScreenWidth) break;
+		
+						INT32 pxl = src[xx^flipx];
+		
+						if (pxl != 0x1f) {
+							dst[sx] = pxl | color;
+						}
 					}
 				}
 			}
@@ -1029,8 +1155,21 @@ static void draw_background()
 	}
 }
 
+static void pgmBlendCopy()
+{
+	pBurnDrvPalette = RamCurPal;
+
+	UINT32 *bmp = pTempDraw32;
+
+	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
+		PutPix(pBurnDraw + (i * nBurnBpp), BurnHighCol(bmp[i]>>16, (bmp[i]>>8)&0xff, bmp[i]&0xff, 0));
+	}
+}
+
 INT32 pgmDraw()
 {
+	if (enable_blending) nPgmPalRecalc = 1; // force recalc.
+
 	if (nPgmPalRecalc) {
 		for (INT32 i = 0; i < 0x1200 / 2; i++) {
 			RamCurPal[i] = CalcCol(BURN_ENDIAN_SWAP_INT16(PGMPalRAM[i]));
@@ -1047,7 +1186,9 @@ INT32 pgmDraw()
 	// Fill in background color (0x1200/2)
 	// also, clear buffers
 	{
+
 		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
+			pTempDraw32[i] = RamCurPal[0x900];
 			pTransDraw[i] = 0x900;
 			pTempScreen[i] = 0;
 			SpritePrio[i] = 0xff;
@@ -1065,22 +1206,93 @@ INT32 pgmDraw()
 	pgm_drawsprites_fonts(0);
 #endif
 	if (nBurnLayer & 2) draw_text();
-	BurnTransferCopy(RamCurPal);
+
+	if (enable_blending) {
+		pgmBlendCopy();
+	} else {
+		BurnTransferCopy(RamCurPal);
+	}
 
 	return 0;
+}
+
+static void pgmBlendInit()
+{
+	enable_blending = 0;
+
+	TCHAR filename[MAX_PATH];
+
+	_stprintf(filename, _T("%s%s.bld"), szAppBlendPath, BurnDrvGetText(DRV_NAME));
+	
+	FILE *fa = _tfopen(filename, _T("rt"));
+
+	if (fa == NULL) {
+		bprintf (0, _T("can't find: %s\n"), filename);
+		_stprintf(filename, _T("%s%s.bld"), szAppBlendPath, BurnDrvGetText(DRV_PARENT));
+
+		fa = _tfopen(filename, _T("rt"));
+
+		if (fa == NULL) {
+			bprintf (0, _T("can't find: %s\n"), filename);
+			return;
+		}
+	}
+
+	if (pSpriteBlendTable == NULL) {
+		pSpriteBlendTable = (UINT8*)BurnMalloc(0x800000);
+		if (pSpriteBlendTable == NULL) {
+		bprintf (0, _T("can't allocate blend table\n"));
+			return;
+		}
+	}
+
+	bprintf (PRINT_IMPORTANT, _T("Using sprite blending (.bld) table!\n"));
+
+	char szLine[64];
+
+	while (1)
+	{
+		if (fgets (szLine, 64, fa) == NULL) break;
+
+		if (strncmp ("Game", szLine, 4) == 0) continue; 	// don't care
+		if (strncmp ("Name", szLine, 4) == 0) continue; 	// don't care
+		if (szLine[0] == ';') continue;				// comment (also don't care)
+
+		INT32 single_entry = -1;
+		UINT32 type,min,max,k;
+
+		for (k = 0; k < strlen(szLine); k++) {
+			if (szLine[k] == '-') { single_entry = k+1; break; }
+		}
+
+		if (single_entry < 0) {
+			sscanf(szLine,"%x %x",&max,&type);
+			min = max;
+		} else {
+			sscanf(szLine,"%x",&min);
+			sscanf(szLine+single_entry,"%x %x",&max,&type);
+		}
+
+		for (k = min; k <= max && k < 0x800000; k++) {
+			pSpriteBlendTable[k] = type&0xf;
+		}
+	}
+
+	fclose (fa);
+
+	enable_blending = 1;
 }
 
 void pgmInitDraw() // preprocess some things...
 {
 	GenericTilesInit();
 
-#ifdef DUMP_SPRITE_BITMAPS
-	pTempDraw32 = (UINT32*)BurnMalloc(0x400 * 0x200 * 4);
-#endif
-
+	pTempDraw32 = (UINT32*)BurnMalloc(0x448 * 0x224 * 4);
 	pTempDraw = (UINT16*)BurnMalloc(0x400 * 0x200 * sizeof(INT16));
 	SpritePrio = (UINT8*)BurnMalloc(nScreenWidth * nScreenHeight);
 	pTempScreen = (UINT16*)BurnMalloc(nScreenWidth * nScreenHeight * sizeof(INT16));
+
+	if (bBurnUseBlend) pgmBlendInit();
 
 	// Find transparent tiles so we can skip them
 	{
@@ -1139,14 +1351,18 @@ void pgmExitDraw()
 {
 	nTileMask = 0;
 
-#ifdef DUMP_SPRITE_BITMAPS
 	BurnFree (pTempDraw32);
-#endif
 	BurnFree (pTempDraw);
 	BurnFree (tiletrans);
 	BurnFree (texttrans);
 	BurnFree (pTempScreen);
 	BurnFree (SpritePrio);
+
+	if (pSpriteBlendTable) {
+		BurnFree(pSpriteBlendTable);
+	}
+
+	enable_blending = 0;
 
 	GenericTilesExit();
 }

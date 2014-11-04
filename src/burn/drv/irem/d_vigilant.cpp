@@ -2261,7 +2261,7 @@ struct BurnDriver BurnDrvVigilantu2 = {
 
 struct BurnDriver BurnDrvVigilantj = {
 	"vigilantj", "vigilant", NULL, NULL, "1988",
-	"Vigilante (Japan)\0", NULL, "Irem", "Miscellaneous",
+	"Vigilante (Japan, Rev D)\0", NULL, "Irem", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,

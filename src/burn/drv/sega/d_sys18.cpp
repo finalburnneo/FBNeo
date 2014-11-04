@@ -1938,21 +1938,15 @@ UINT8 __fastcall HamawayReadByte(UINT32 a)
 		return io_chip_r((a - 0xa00000) >> 1);
 	}
 	
-	switch (a) {
-	
-	}
-	
-	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
 	return 0xff;
 }
 
 UINT16 __fastcall HamawayReadWord(UINT32 a)
 {
-	switch (a) {
-	
+	if (a >= 0xc00000 && a <= 0xc0000f) {
+		return GenesisVDPRead((a - 0xc00000) >> 1);
 	}
 	
-	bprintf(PRINT_NORMAL, _T("68000 Read Word -> 0x%06X\n"), a);
 	return 0xffff;
 }
 
@@ -1996,8 +1990,6 @@ void __fastcall HamawayWriteByte(UINT32 a, UINT8 d)
 			return;
 		}
 	}
-
-	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 }
 
 void __fastcall HamawayWriteWord(UINT32 a, UINT16 d)
@@ -2018,45 +2010,6 @@ void __fastcall HamawayWriteWord(UINT32 a, UINT16 d)
 			return;
 		}
 	}
-
-	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X\n"), a, d);
-}
-
-void HamawayMap68K()
-{
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x07ffff, SM_READ);
-	SekMapMemory(System16Code          , 0x000000, 0x07ffff, SM_FETCH);
-	SekMapMemory(System16Rom + 0x80000 , 0x200000, 0x27ffff, SM_READ);
-	SekMapMemory(System16Code + 0x80000, 0x200000, 0x27ffff, SM_FETCH);
-	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, SM_READ);
-	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, SM_RAM);
-	SekMapMemory(System16SpriteRam     , 0x500000, 0x5007ff, SM_RAM);
-	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, SM_RAM);
-	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, SM_RAM);
-	SekSetReadByteHandler(0, HamawayReadByte);
-	SekSetReadWordHandler(0, HamawayReadWord);
-	SekSetWriteByteHandler(0, HamawayWriteByte);
-	SekSetWriteWordHandler(0, HamawayWriteWord);
-	SekClose();
-}
-
-static INT32 HamawayInit()
-{
-	System16Map68KDo = HamawayMap68K;
-	
-	INT32 nRet = System16Init();
-	
-/*	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0xa43000, 0xa4300e, SM_RAM);
-		SekSetReadByteHandler(1, WwallyReadByte);
-		SekSetWriteWordHandler(1, WwallyWriteWord);
-		SekClose();
-	}*/
-	
-	return nRet;
 }
 
 UINT8 LghostValue;
@@ -2487,6 +2440,33 @@ static INT32 DdcrewuInit()
 	return nRet;
 }
 
+static void HamawayMap68K()
+{
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(System16Rom           , 0x000000, 0x07ffff, SM_READ);
+	SekMapMemory(System16Code          , 0x000000, 0x07ffff, SM_FETCH);
+	SekMapMemory(System16Rom + 0x80000 , 0x200000, 0x27ffff, SM_READ);
+	SekMapMemory(System16Code + 0x80000, 0x200000, 0x27ffff, SM_FETCH);
+	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, SM_READ);
+	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, SM_RAM);
+	SekMapMemory(System16SpriteRam     , 0x500000, 0x5007ff, SM_RAM);
+	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, SM_RAM);
+	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, SM_RAM);
+	SekSetReadByteHandler(0, HamawayReadByte);
+	SekSetReadWordHandler(0, HamawayReadWord);
+	SekSetWriteByteHandler(0, HamawayWriteByte);
+	SekSetWriteWordHandler(0, HamawayWriteWord);
+	SekClose();
+}
+
+static INT32 HamawayInit()
+{
+	System16Map68KDo = HamawayMap68K;
+	
+	return System16Init();
+}
+
 static INT32 LghostInit()
 {
 	BurnGunInit(3, true);
@@ -2825,11 +2805,11 @@ struct BurnDriver BurnDrvDesertbrj = {
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
-struct BurnDriverD BurnDrvHamaway = {
+struct BurnDriver BurnDrvHamaway = {
 	"hamaway", NULL, NULL, NULL, "1992",
 	"Hammer Away (prototype)\0", NULL, "Sega / Santos", "System 18",
 	NULL, NULL, NULL, NULL,
-	BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_SYSTEM18, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_SYSTEM18, GBF_PUZZLE, 0,
 	NULL, HamawayRomInfo, HamawayRomName, NULL, NULL, System18InputInfo, HamawayDIPInfo,
 	HamawayInit, WwallyExit, System18Frame, NULL, WwallyScan,
 	NULL, 0x1800, 224, 320, 3, 4

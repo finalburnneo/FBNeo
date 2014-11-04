@@ -1428,7 +1428,7 @@ static void System16BRenderTextLayer(INT32 PriorityDraw)
 				Colour = (Code >> 9) & 0x07;
 				Code &= 0x1ff;
 			
-				Code += System16TileBanks[0] * 0x1000;
+				Code += System16TileBanks[0] * System16TileBankSize;
 				
 				Code &= (System16NumTiles - 1);
 			
@@ -1462,7 +1462,7 @@ static void System16BAltRenderTextLayer(INT32 PriorityDraw)
 				Colour = (Code >> 8) & 0x07;
 				Code &= 0xff;
 			
-				Code += System16TileBanks[0] * 0x1000;
+				Code += System16TileBanks[0] * System16TileBankSize;
 				
 				Code &= (System16NumTiles - 1);
 			

@@ -1029,54 +1029,7 @@ struct BurnDriver BurnDrvContra1 = {
 };
 
 
-// Contra (bootleg)
-
-static struct BurnRomInfo contrabRomDesc[] = {
-	{ "3.ic20",		0x10000, 0xd045e1da, 1 | BRF_PRG  | BRF_ESS }, //  0 m6809 #0 Code
-	{ "1.ic19",		0x10000, 0xb2f7bd9a, 1 | BRF_PRG  | BRF_ESS }, //  1
-
-	{ "3.ic63",		0x08000, 0xd1549255, 2 | BRF_PRG  | BRF_ESS }, //  2 m6809 #1 Code
-
-	{ "7.rom",		0x10000, 0x57f467d2, 3 | BRF_GRA },            //  3 Chip 0 Tiles
-	{ "10.rom",		0x10000, 0xe6db9685, 3 | BRF_GRA },            //  4
-	{ "9.rom",		0x10000, 0x875c61de, 3 | BRF_GRA },            //  5
-	{ "8.rom",		0x10000, 0x642765d6, 3 | BRF_GRA },            //  6
-	{ "15.rom",		0x10000, 0xdaa2324b, 3 | BRF_GRA },            //  7
-	{ "16.rom",		0x10000, 0xe27cc835, 3 | BRF_GRA },            //  8
-	{ "17.rom",		0x10000, 0xce4330b9, 3 | BRF_GRA },            //  9
-	{ "18.rom",		0x10000, 0x1571ce42, 3 | BRF_GRA },            // 10
-
-	{ "4.rom",		0x10000, 0x2cc7e52c, 4 | BRF_GRA },            // 11 Chip 1 Tiles
-	{ "5.rom",		0x10000, 0xe01a5b9c, 4 | BRF_GRA },            // 12
-	{ "6.rom",		0x10000, 0xaeea6744, 4 | BRF_GRA },            // 13
-	{ "14.rom",		0x10000, 0x765afdc7, 4 | BRF_GRA },            // 14
-	{ "11.rom",		0x10000, 0xbd9ba92c, 4 | BRF_GRA },            // 15
-	{ "12.rom",		0x10000, 0xd0be7ec2, 4 | BRF_GRA },            // 16
-	{ "13.rom",		0x10000, 0x2b513d12, 4 | BRF_GRA },            // 17
-
-	{ "633e08.10g",	0x00100, 0x9f0949fa, 5 | BRF_GRA },            // 18 Color Proms
-	{ "633e09.12g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 19
-	{ "633f10.18g",	0x00100, 0x2b244d84, 5 | BRF_GRA },            // 20
-	{ "633f11.20g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 21
-
-	{ "conprom.53",	0x00100, 0x05a1da7e, 0 | BRF_OPT },            // 22
-};
-
-STD_ROM_PICK(contrab)
-STD_ROM_FN(contrab)
-
-struct BurnDriver BurnDrvContrab = {
-	"contrab", "contra", NULL, NULL, "1987",
-	"Contra (bootleg)\0", NULL, "Konami", "GX633",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
-	NULL, contrabRomInfo, contrabRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
-	224, 280, 3, 4
-};
-
-
-// Contra (Japan)
+// Contra (Japan, set 1)
 
 static struct BurnRomInfo contrajRomDesc[] = {
 	{ "633n03.18a",	0x10000, 0xfedab568, 1 | BRF_PRG  | BRF_ESS }, //  0 m6809 #0 Code
@@ -1103,8 +1056,8 @@ STD_ROM_FN(contraj)
 
 struct BurnDriver BurnDrvContraj = {
 	"contraj", "contra", NULL, NULL, "1987",
-	"Contra (Japan)\0", NULL, "Konami", "GX633",
-	L"\u9B42\u6597\u7F85 \u30B3\u30F3\u30C8\u30E9 (Japan)\0Contra\0", NULL, NULL, NULL,
+	"Contra (Japan, set 1)\0", NULL, "Konami", "GX633",
+	L"\u9B42\u6597\u7F85 \u30B3\u30F3\u30C8\u30E9 (Japan, set 1)\0Contra\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, contrajRomInfo, contrajRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
@@ -1112,46 +1065,37 @@ struct BurnDriver BurnDrvContraj = {
 };
 
 
-// Contra (Japan bootleg, set 2)
+// Contra (Japan, set 2)
 
-static struct BurnRomInfo contrabj1RomDesc[] = {
-	{ "2__(contrabtj2).2k",	0x10000, 0xbdb9196d, 1 | BRF_PRG  | BRF_ESS }, //  0 m6809 #0 Code
-	{ "1.2h",		0x10000, 0x5d5f7438, 1 | BRF_PRG  | BRF_ESS }, //  1
+static struct BurnRomInfo contraj1RomDesc[] = {
+	{ "633k03.18a",	0x10000, 0xbdb9196d, 1 | BRF_PRG  | BRF_ESS }, //  0 m6809 #0 Code
+	{ "633k02.17a",	0x10000, 0x5d5f7438, 1 | BRF_PRG  | BRF_ESS }, //  1
 
-	{ "a3.4p",		0x08000, 0xd1549255, 2 | BRF_PRG  | BRF_ESS }, //  2 m6809 #1 Code
+	{ "633e01.12a",	0x08000, 0xd1549255, 2 | BRF_PRG  | BRF_ESS }, //  2 m6809 #1 Code
 
-	{ "a7.14f",		0x10000, 0x57f467d2, 3 | BRF_GRA },            //  3 Chip 0 Tiles
-	{ "a10.14l",	0x10000, 0xe6db9685, 3 | BRF_GRA },            //  4
-	{ "a9.14k",		0x10000, 0x875c61de, 3 | BRF_GRA },            //  5
-	{ "a8.14h",		0x10000, 0x642765d6, 3 | BRF_GRA },            //  6
-	{ "a15.14r",	0x10000, 0xdaa2324b, 3 | BRF_GRA },            //  7
-	{ "a16.14t",	0x10000, 0xe27cc835, 3 | BRF_GRA },            //  8
-	{ "a17.14v",	0x10000, 0xce4330b9, 3 | BRF_GRA },            //  9
-	{ "a18.14w",	0x10000, 0x1571ce42, 3 | BRF_GRA },            // 10
+	{ "633e04.7d",	0x40000, 0x14ddc542, 3 | BRF_GRA },            //  3 Chip 0 Tiles
+	{ "633e05.7f",	0x40000, 0x42185044, 3 | BRF_GRA },            //  4
 
-	{ "a4.14a",		0x10000, 0x2cc7e52c, 4 | BRF_GRA },            // 11 Chip 1 Tiles
-	{ "a5.14c",		0x10000, 0xe01a5b9c, 4 | BRF_GRA },            // 12
-	{ "e6.14d",		0x10000, 0xaeea6744, 4 | BRF_GRA },            // 13
-	{ "a14.14q",	0x10000, 0x765afdc7, 4 | BRF_GRA },            // 14
-	{ "a11.14m",	0x10000, 0xbd9ba92c, 4 | BRF_GRA },            // 15
-	{ "a12.14n",	0x10000, 0xd0be7ec2, 4 | BRF_GRA },            // 16
-	{ "a13.14p",	0x10000, 0x2b513d12, 4 | BRF_GRA },            // 17
+	{ "633e06.16d",	0x40000, 0x9cf6faae, 4 | BRF_GRA },            //  5 Chip 1 Tiles
+	{ "633e07.16f",	0x40000, 0xf2d06638, 4 | BRF_GRA },            //  6
 
-	{ "633e08.10g",	0x00100, 0x9f0949fa, 5 | BRF_GRA },            // 18 Color Proms
-	{ "633e09.12g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 19
-	{ "633f10.18g",	0x00100, 0x2b244d84, 5 | BRF_GRA },            // 20
-	{ "633f11.20g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 21
+	{ "633e08.10g",	0x00100, 0x9f0949fa, 5 | BRF_GRA },            //  7 Color Proms
+	{ "633e09.12g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            //  8
+	{ "633f10.18g",	0x00100, 0x2b244d84, 5 | BRF_GRA },            //  9
+	{ "633f11.20g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 10
+	
+	{ "007766.20d.bin", 0x1, 0x00000000, 0 | BRF_NODUMP },
 };
 
-STD_ROM_PICK(contrabj1)
-STD_ROM_FN(contrabj1)
+STD_ROM_PICK(contraj1)
+STD_ROM_FN(contraj1)
 
-struct BurnDriver BurnDrvContrabj1 = {
-	"contrabj1", "contra", NULL, NULL, "1987",
-	"Contra (Japan bootleg, set 2)\0", NULL, "Konami", "GX633",
-	L"\u9B42\u6597\u7F85 \u30B3\u30F3\u30C8\u30E9 (Japan bootleg)\0Contra\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
-	NULL, contrabj1RomInfo, contrabj1RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+struct BurnDriver BurnDrvContraj1 = {
+	"contraj1", "contra", NULL, NULL, "1987",
+	"Contra (Japan, set 2)\0", NULL, "Konami", "GX633",
+	L"\u9B42\u6597\u7F85 \u30B3\u30F3\u30C8\u30E9 (Japan, set 2)\0Contra\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
+	NULL, contraj1RomInfo, contraj1RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 280, 3, 4
 };
@@ -1224,6 +1168,143 @@ struct BurnDriver BurnDrvGryzor1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, gryzor1RomInfo, gryzor1RomName, NULL, NULL, DrvInputInfo, GryzorDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	224, 280, 3, 4
+};
+
+
+// Contra (bootleg)
+
+static struct BurnRomInfo contrabRomDesc[] = {
+	{ "3.ic20",		0x10000, 0xd045e1da, 1 | BRF_PRG  | BRF_ESS }, //  0 m6809 #0 Code
+	{ "1.ic19",		0x10000, 0xb2f7bd9a, 1 | BRF_PRG  | BRF_ESS }, //  1
+
+	{ "3.ic63",		0x08000, 0xd1549255, 2 | BRF_PRG  | BRF_ESS }, //  2 m6809 #1 Code
+
+	{ "7.rom",		0x10000, 0x57f467d2, 3 | BRF_GRA },            //  3 Chip 0 Tiles
+	{ "10.rom",		0x10000, 0xe6db9685, 3 | BRF_GRA },            //  4
+	{ "9.rom",		0x10000, 0x875c61de, 3 | BRF_GRA },            //  5
+	{ "8.rom",		0x10000, 0x642765d6, 3 | BRF_GRA },            //  6
+	{ "15.rom",		0x10000, 0xdaa2324b, 3 | BRF_GRA },            //  7
+	{ "16.rom",		0x10000, 0xe27cc835, 3 | BRF_GRA },            //  8
+	{ "17.rom",		0x10000, 0xce4330b9, 3 | BRF_GRA },            //  9
+	{ "18.rom",		0x10000, 0x1571ce42, 3 | BRF_GRA },            // 10
+
+	{ "4.rom",		0x10000, 0x2cc7e52c, 4 | BRF_GRA },            // 11 Chip 1 Tiles
+	{ "5.rom",		0x10000, 0xe01a5b9c, 4 | BRF_GRA },            // 12
+	{ "6.rom",		0x10000, 0xaeea6744, 4 | BRF_GRA },            // 13
+	{ "14.rom",		0x10000, 0x765afdc7, 4 | BRF_GRA },            // 14
+	{ "11.rom",		0x10000, 0xbd9ba92c, 4 | BRF_GRA },            // 15
+	{ "12.rom",		0x10000, 0xd0be7ec2, 4 | BRF_GRA },            // 16
+	{ "13.rom",		0x10000, 0x2b513d12, 4 | BRF_GRA },            // 17
+
+	{ "633e08.10g",	0x00100, 0x9f0949fa, 5 | BRF_GRA },            // 18 Color Proms
+	{ "633e09.12g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 19
+	{ "633f10.18g",	0x00100, 0x2b244d84, 5 | BRF_GRA },            // 20
+	{ "633f11.20g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 21
+
+	{ "conprom.53",	0x00100, 0x05a1da7e, 0 | BRF_OPT },            // 22
+};
+
+STD_ROM_PICK(contrab)
+STD_ROM_FN(contrab)
+
+struct BurnDriver BurnDrvContrab = {
+	"contrab", "contra", NULL, NULL, "1987",
+	"Contra (bootleg)\0", NULL, "Konami", "GX633",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
+	NULL, contrabRomInfo, contrabRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	224, 280, 3, 4
+};
+
+
+// Contra (Japan bootleg, set 1)
+
+static struct BurnRomInfo contrabjRomDesc[] = {
+	{ "2.2k",		0x10000, 0xfedab568, 1 | BRF_PRG  | BRF_ESS }, //  0 m6809 #0 Code
+	{ "1.2h",		0x10000, 0x5d5f7438, 1 | BRF_PRG  | BRF_ESS }, //  1
+
+	{ "a3.4p",		0x08000, 0xd1549255, 2 | BRF_PRG  | BRF_ESS }, //  2 m6809 #1 Code
+
+	{ "a7.14f",		0x10000, 0x57f467d2, 3 | BRF_GRA },            //  3 Chip 0 Tiles
+	{ "a10.14l",	0x10000, 0xe6db9685, 3 | BRF_GRA },            //  4
+	{ "a9.14k",		0x10000, 0x875c61de, 3 | BRF_GRA },            //  5
+	{ "a8.14h",		0x10000, 0x642765d6, 3 | BRF_GRA },            //  6
+	{ "a15.14r",	0x10000, 0xdaa2324b, 3 | BRF_GRA },            //  7
+	{ "a16.14t",	0x10000, 0xe27cc835, 3 | BRF_GRA },            //  8
+	{ "a17.14v",	0x10000, 0xce4330b9, 3 | BRF_GRA },            //  9
+	{ "a18.14w",	0x10000, 0x1571ce42, 3 | BRF_GRA },            // 10
+
+	{ "a4.14a",		0x10000, 0x2cc7e52c, 4 | BRF_GRA },            // 11 Chip 1 Tiles
+	{ "a5.14c",		0x10000, 0xe01a5b9c, 4 | BRF_GRA },            // 12
+	{ "e6.14d",		0x10000, 0xaeea6744, 4 | BRF_GRA },            // 13
+	{ "a14.14q",	0x10000, 0x765afdc7, 4 | BRF_GRA },            // 14
+	{ "a11.14m",	0x10000, 0xbd9ba92c, 4 | BRF_GRA },            // 15
+	{ "a12.14n",	0x10000, 0xd0be7ec2, 4 | BRF_GRA },            // 16
+	{ "a13.14p",	0x10000, 0x2b513d12, 4 | BRF_GRA },            // 17
+
+	{ "633e08.10g",	0x00100, 0x9f0949fa, 5 | BRF_GRA },            // 18 Color Proms
+	{ "633e09.12g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 19
+	{ "633f10.18g",	0x00100, 0x2b244d84, 5 | BRF_GRA },            // 20
+	{ "633f11.20g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 21
+};
+
+STD_ROM_PICK(contrabj)
+STD_ROM_FN(contrabj)
+
+struct BurnDriver BurnDrvContrabj = {
+	"contrabj", "contra", NULL, NULL, "1987",
+	"Contra (Japan bootleg, set 1)\0", NULL, "Konami", "GX633",
+	L"\u9B42\u6597\u7F85 \u30B3\u30F3\u30C8\u30E9 (Japan bootleg, set 1)\0Contra\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
+	NULL, contrabjRomInfo, contrabjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	224, 280, 3, 4
+};
+
+
+// Contra (Japan bootleg, set 2)
+
+static struct BurnRomInfo contrabj1RomDesc[] = {
+	{ "2__(contrabtj2).2k",	0x10000, 0xbdb9196d, 1 | BRF_PRG  | BRF_ESS }, //  0 m6809 #0 Code
+	{ "1.2h",		0x10000, 0x5d5f7438, 1 | BRF_PRG  | BRF_ESS }, //  1
+
+	{ "a3.4p",		0x08000, 0xd1549255, 2 | BRF_PRG  | BRF_ESS }, //  2 m6809 #1 Code
+
+	{ "a7.14f",		0x10000, 0x57f467d2, 3 | BRF_GRA },            //  3 Chip 0 Tiles
+	{ "a10.14l",	0x10000, 0xe6db9685, 3 | BRF_GRA },            //  4
+	{ "a9.14k",		0x10000, 0x875c61de, 3 | BRF_GRA },            //  5
+	{ "a8.14h",		0x10000, 0x642765d6, 3 | BRF_GRA },            //  6
+	{ "a15.14r",	0x10000, 0xdaa2324b, 3 | BRF_GRA },            //  7
+	{ "a16.14t",	0x10000, 0xe27cc835, 3 | BRF_GRA },            //  8
+	{ "a17.14v",	0x10000, 0xce4330b9, 3 | BRF_GRA },            //  9
+	{ "a18.14w",	0x10000, 0x1571ce42, 3 | BRF_GRA },            // 10
+
+	{ "a4.14a",		0x10000, 0x2cc7e52c, 4 | BRF_GRA },            // 11 Chip 1 Tiles
+	{ "a5.14c",		0x10000, 0xe01a5b9c, 4 | BRF_GRA },            // 12
+	{ "e6.14d",		0x10000, 0xaeea6744, 4 | BRF_GRA },            // 13
+	{ "a14.14q",	0x10000, 0x765afdc7, 4 | BRF_GRA },            // 14
+	{ "a11.14m",	0x10000, 0xbd9ba92c, 4 | BRF_GRA },            // 15
+	{ "a12.14n",	0x10000, 0xd0be7ec2, 4 | BRF_GRA },            // 16
+	{ "a13.14p",	0x10000, 0x2b513d12, 4 | BRF_GRA },            // 17
+
+	{ "633e08.10g",	0x00100, 0x9f0949fa, 5 | BRF_GRA },            // 18 Color Proms
+	{ "633e09.12g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 19
+	{ "633f10.18g",	0x00100, 0x2b244d84, 5 | BRF_GRA },            // 20
+	{ "633f11.20g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 21
+};
+
+STD_ROM_PICK(contrabj1)
+STD_ROM_FN(contrabj1)
+
+struct BurnDriver BurnDrvContrabj1 = {
+	"contrabj1", "contra", NULL, NULL, "1987",
+	"Contra (Japan bootleg, set 2)\0", NULL, "Konami", "GX633",
+	L"\u9B42\u6597\u7F85 \u30B3\u30F3\u30C8\u30E9 (Japan bootleg, set 2)\0Contra\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
+	NULL, contrabj1RomInfo, contrabj1RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 280, 3, 4
 };

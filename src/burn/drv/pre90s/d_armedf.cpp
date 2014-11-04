@@ -1207,16 +1207,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Armed Formation
 
 static struct BurnRomInfo armedfRomDesc[] = {
-	{ "06.3d",	0x10000, 0x0f9015e2, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "01.3f",	0x10000, 0x816ff7c5, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "07.5d",	0x10000, 0x5b3144a5, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "02.4f",	0x10000, 0xfa10c29d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "06.3d",		0x10000, 0x0f9015e2, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "01.3f",		0x10000, 0x816ff7c5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "07.5d",		0x10000, 0x5b3144a5, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "02.4f",		0x10000, 0xfa10c29d, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "af_08.rom",	0x10000, 0xd1d43600, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "af_03.rom",	0x10000, 0xbbe1fe2d, 1 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "af_10.rom",	0x10000, 0xc5eacb87, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 code
 
-	{ "09.11c",	0x08000, 0x5c6993d5, 3 | BRF_GRA },           //  7 Characters
+	{ "09.11c",		0x08000, 0x5c6993d5, 3 | BRF_GRA },           //  7 Characters
 
 	{ "af_04.rom",	0x10000, 0x44d3af4f, 4 | BRF_GRA },           //  8 Foreground Tiles
 	{ "af_05.rom",	0x10000, 0x92076cab, 4 | BRF_GRA },           //  9
@@ -1307,7 +1307,7 @@ struct BurnDriver BurnDrvArmedf = {
 
 struct BurnDriver BurnDrvArmedff = {
 	"armedff", "armedf", NULL, NULL, "1988",
-	"Armed Formation (Fillmore license)\0", NULL, "Nichibutsu", "Miscellaneous",
+	"Armed Formation (Fillmore license)\0", NULL, "Nichibutsu (Fillmore license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, armedffRomInfo, armedffRomName, NULL, NULL, ArmedfInputInfo, ArmedfDIPInfo,
@@ -1516,7 +1516,7 @@ struct BurnDriver BurnDrvKozure = {
 };
 
 
-// Chouji Meikyuu Legion (ver 2.03)
+// Legion - Spinner-87 (World ver 2.03)
 
 static struct BurnRomInfo legionRomDesc[] = {
 	{ "lg3.bin",	0x10000, 0x777e4935, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1585,7 +1585,7 @@ static INT32 LegionInit()
 
 struct BurnDriver BurnDrvLegion = {
 	"legion", NULL, NULL, NULL, "1987",
-	"Chouji Meikyuu Legion (ver 2.03)\0", "Imperfect Graphics", "Nichibutsu", "Miscellaneous",
+	"Legion - Spinner-87 (World ver 2.03)\0", "Imperfect Graphics", "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, legionRomInfo, legionRomName, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
@@ -1594,7 +1594,7 @@ struct BurnDriver BurnDrvLegion = {
 };
 
 
-// Chouji Meikyuu Legion (ver 1.05)
+// Chouji Meikyuu Legion (Japan bootleg ver 1.05)
 
 static struct BurnRomInfo legionoRomDesc[] = {
 	{ "legion.1c",	0x10000, 0x21226660, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1660,7 +1660,7 @@ static INT32 LegionoInit()
 
 struct BurnDriver BurnDrvLegiono = {
 	"legiono", "legion", NULL, NULL, "1987",
-	"Chouji Meikyuu Legion (ver 1.05)\0", "Imperfect Graphics", "Nichibutsu", "Miscellaneous",
+	"Chouji Meikyuu Legion (Japan bootleg ver 1.05)\0", "Imperfect Graphics", "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, legionoRomInfo, legionoRomName, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
@@ -1669,7 +1669,7 @@ struct BurnDriver BurnDrvLegiono = {
 };
 
 
-// Terra Force (set 1)
+// Terra Force 
 
 static struct BurnRomInfo terrafRomDesc[] = {
 	{ "8.6e",		0x10000, 0xfd58fa06, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1728,14 +1728,14 @@ struct BurnDriver BurnDrvTerraf = {
 // Terra Force (US)
 
 static struct BurnRomInfo terrafuRomDesc[] = {
-	{ "tf-8.6e",		0x10000, 0xfea6dd64, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "tf-3.6h",		0x10000, 0x02f9d05a, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "tf-7.4e",		0x10000, 0xfde8de7e, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "tf-2.4h",		0x10000, 0xdb987414, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "tf-6.3e",		0x08000, 0xb91e9ba3, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "tf-1.3h",		0x08000, 0xd6e22375, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "tf-8.6e",	0x10000, 0xfea6dd64, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tf-3.6h",	0x10000, 0x02f9d05a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tf-7.4e",	0x10000, 0xfde8de7e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "tf-2.4h",	0x10000, 0xdb987414, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "tf-6.3e",	0x08000, 0xb91e9ba3, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "tf-1.3h",	0x08000, 0xd6e22375, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "tf-001.17k",		0x10000, 0xeb6b4138, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 code
+	{ "tf-001.17k",	0x10000, 0xeb6b4138, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 code
 
 	{ "9.11e",		0x08000, 0xbc6f7cbc, 3 | BRF_GRA },           //  7 Characters
 
@@ -1745,8 +1745,8 @@ static struct BurnRomInfo terrafuRomDesc[] = {
 	{ "15.8a",		0x10000, 0x2144d8e0, 5 | BRF_GRA },           // 10 Background Tiles
 	{ "14.6a",		0x10000, 0x744f5c9e, 5 | BRF_GRA },           // 11
 
-	{ "tf-003.7d",		0x10000, 0xd74085a1, 6 | BRF_GRA },           // 12 Sprites
-	{ "tf-002.9d",		0x10000, 0x148aa0c5, 6 | BRF_GRA },           // 13
+	{ "tf-003.7d",	0x10000, 0xd74085a1, 6 | BRF_GRA },           // 12 Sprites
+	{ "tf-002.9d",	0x10000, 0x148aa0c5, 6 | BRF_GRA },           // 13
 
 	{ "10.11c",		0x04000, 0xac705812, 7 | BRF_GRA | BRF_OPT }, // 14 MCU data
 
@@ -1780,7 +1780,50 @@ struct BurnDriver BurnDrvTerrafu = {
 	320, 240, 4, 3
 };
 
-// Terra Force (bootleg with additional Z80)
+
+// Terra Force (Japan)
+
+static struct BurnRomInfo terrafjRomDesc[] = {
+	{ "tfj-8.bin",	0x10000, 0xb11a6fa7, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tfj-3.bin",	0x10000, 0x6c6aa7ed, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tfj-7.bin",	0x10000, 0xfde8de7e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "tfj-2.bin",	0x10000, 0xdb987414, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "tfj-6.bin",	0x10000, 0x4911dfbf, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "tfj-1.bin",	0x10000, 0x93063d9a, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "11.17k",		0x10000, 0x4407d475, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 code
+
+	{ "9.11e",		0x08000, 0xbc6f7cbc, 3 | BRF_GRA },           //  7 Characters
+
+	{ "5.15h",		0x10000, 0x25d23dfd, 4 | BRF_GRA },           //  8 Foreground Tiles
+	{ "4.13h",		0x10000, 0xb9b0fe27, 4 | BRF_GRA },           //  9
+
+	{ "15.8a",		0x10000, 0x2144d8e0, 5 | BRF_GRA },           // 10 Background Tiles
+	{ "14.6a",		0x10000, 0x744f5c9e, 5 | BRF_GRA },           // 11
+
+	{ "tfj-12.7d",	0x10000, 0xd74085a1, 6 | BRF_GRA },           // 12 Sprites
+	{ "tfj-13.9d",	0x10000, 0x148aa0c5, 6 | BRF_GRA },           // 13
+
+	{ "10.11c",		0x04000, 0xac705812, 7 | BRF_GRA | BRF_OPT }, // 14 MCU data
+
+	{ "n82s129an.11j",	0x00100, 0x81244757, 8 | BRF_OPT },           // 15 Proms
+};
+
+STD_ROM_PICK(terrafj)
+STD_ROM_FN(terrafj)
+
+struct BurnDriver BurnDrvTerrafj = {
+	"terrafj", "terraf", NULL, NULL, "1987",
+	"Terra Force (Japan)\0", "imperfect graphics", "Nichibutsu Japan", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, terrafjRomInfo, terrafjRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
+	TerrafuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Terra Force (Japan bootleg with additional Z80)
 
 static struct BurnRomInfo terrafjbRomDesc[] = {
 	{ "tfj-8.bin",		0x10000, 0xb11a6fa7, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1856,7 +1899,7 @@ static INT32 TerrafjbInit()
 
 struct BurnDriver BurnDrvTerrafjb = {
 	"terrafjb", "terraf", NULL, NULL, "1987",
-	"Terra Force (Japan bootleg set 1, with additional Z80)\0", "imperfect graphics", "bootleg", "Miscellaneous",
+	"Terra Force (Japan bootleg with additional Z80)\0", "imperfect graphics", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, terrafjbRomInfo, terrafjbRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
@@ -1864,7 +1907,7 @@ struct BurnDriver BurnDrvTerrafjb = {
 	320, 240, 4, 3
 };
 
-// Terra Force (set 2)
+// Terra Force (Japan bootleg set 2)
 
 static struct BurnRomInfo terrafbRomDesc[] = {
 	{ "f-14.4s",		0x10000, 0x8e5f557f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1893,7 +1936,7 @@ STD_ROM_FN(terrafb)
 
 struct BurnDriver BurnDrvTerrafb = {
 	"terrafb", "terraf", NULL, NULL, "1987",
-	"Terra Force (bootleg set 2)\0", "imperfect graphics", "Nichibutsu", "Miscellaneous",
+	"Terra Force (Japan bootleg set 2)\0", "imperfect graphics", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, terrafbRomInfo, terrafbRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,

@@ -902,7 +902,6 @@ struct BurnDriver BurnDrvDrgw2x = {
 
 
 // Dragon World II (V100H, Hong Kong)
-// the IGS025 has a "DRAGON-II 0004-1" sticker, the IGS012 has no per-game marking
 
 static struct BurnRomInfo drgw2hkRomDesc[] = {
 	{ "dragon_ii_v-100-h.u2",	0x080000, 0xc6e2e6ec, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
@@ -921,9 +920,9 @@ static void drgw2100h_patch()
 {
 	pgm_decrypt_dw2();
 
-	*((UINT16*)(PGM68KROM + 0x0302C0)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
-	*((UINT16*)(PGM68KROM + 0x030366)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
-	*((UINT16*)(PGM68KROM + 0x0303F6)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
+	*((UINT16*)(PGM68KROM + 0x02f520)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
+	*((UINT16*)(PGM68KROM + 0x02f5c6)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
+	*((UINT16*)(PGM68KROM + 0x02f656)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
 }
 
 static INT32 drgw2100hInit()

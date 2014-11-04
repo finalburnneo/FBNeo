@@ -475,7 +475,7 @@ static INT32 DrvFrame()
 		if (*nmi_enable && (i & 0x1f) == 0) // copy shao-lin's road
 			M6809SetIRQLine(0x20, M6809_IRQSTATUS_AUTO); // 480x/second (8x/frame)
 
-		if (i == 240) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+		if (i == 240 && *irq_enable) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
 
 		// Render Sound Segment
 		if (pBurnSoundOut) {

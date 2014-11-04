@@ -35,21 +35,21 @@ static bool bUseAsm68KCoreOldValue = false;
 
 // Rom information
 static struct BurnRomInfo bkraiduRomDesc[] = {
-	{ "prg0u022_usa.bin", 0x080000, 0x95fb2ffd, BRF_ESS | BRF_PRG }, //  0 CPU #0 code (even)
-	{ "prg2u021.bin", 0x080000, 0xFFBA8656, BRF_ESS | BRF_PRG }, //  1
-	{ "prg1u023.new", 0x080000, 0x4ae9aa64, BRF_ESS | BRF_PRG }, //  2				(odd)
-	{ "prg3u024.bin", 0x080000, 0x834B8AD6, BRF_ESS | BRF_PRG }, //  3
+	{ "prg0u022_usa.bin", 	0x080000, 0x95fb2ffd, BRF_ESS | BRF_PRG }, 	//  0 CPU #0 code (even)
+	{ "prg2u021.bin", 		0x080000, 0xffba8656, BRF_ESS | BRF_PRG }, 	//  1
+	{ "prg1u023.new", 		0x080000, 0x4ae9aa64, BRF_ESS | BRF_PRG }, 	//  2			  (odd)
+	{ "prg3u024.bin", 		0x080000, 0x834b8ad6, BRF_ESS | BRF_PRG }, 	//  3
 
-	{ "gfxu0510.bin", 0x400000, 0x9CCA3446, BRF_GRA },			 //  4 GP9001 Tile data
-	{ "gfxu0512.bin", 0x400000, 0xA2A281D5, BRF_GRA },			 //  5
-	{ "gfxu0511.bin", 0x400000, 0xE16472C0, BRF_GRA },			 //  6
-	{ "gfxu0513.bin", 0x400000, 0x8BB635A0, BRF_GRA },			 //  7
+	{ "gfxu0510.bin", 		0x400000, 0x9cca3446, BRF_GRA },			//  4 GP9001 Tile data
+	{ "gfxu0512.bin", 		0x400000, 0xa2a281d5, BRF_GRA },			//  5
+	{ "gfxu0511.bin", 		0x400000, 0xe16472c0, BRF_GRA },			//  6
+	{ "gfxu0513.bin", 		0x400000, 0x8bb635a0, BRF_GRA },			//  7
 
-	{ "sndu0720.bin", 0x020000, 0xE62AB246, BRF_ESS | BRF_PRG }, //  8 Z80 program
+	{ "sndu0720.bin", 		0x020000, 0xe62ab246, BRF_ESS | BRF_PRG }, 	//  8 Z80 program
 
-	{ "rom6.829",     0x400000, 0x8848B4A0, BRF_SND },			 //  9 YMZ280B (AD)PCM data
-	{ "rom7.830",     0x400000, 0xD6224267, BRF_SND },			 // 10
-	{ "rom8.831",     0x400000, 0xA101DFB0, BRF_SND },			 // 11
+	{ "rom6.829",     		0x400000, 0x8848b4a0, BRF_SND },			//  9 YMZ280B (AD)PCM data
+	{ "rom7.830",     		0x400000, 0xd6224267, BRF_SND },			// 10
+	{ "rom8.831",     		0x400000, 0xa101dfb0, BRF_SND },			// 11
 	
 	{ "eeprom-bbakraid-new.bin", 0x00200, 0x35c9275a, BRF_PRG },
 };
@@ -59,21 +59,21 @@ STD_ROM_PICK(bkraidu)
 STD_ROM_FN(bkraidu)
 
 static struct BurnRomInfo bkraidjRomDesc[] = {
-	{ "prg0u022.bin", 0x080000, 0x0DD59512, BRF_ESS | BRF_PRG }, //  0 CPU #0 code (even)
-	{ "prg2u021.bin", 0x080000, 0xFFBA8656, BRF_ESS | BRF_PRG }, //  1
-	{ "prg1u023.bin", 0x080000, 0xFECDE223, BRF_ESS | BRF_PRG }, //  2				(odd)
-	{ "prg3u024.bin", 0x080000, 0x834B8AD6, BRF_ESS | BRF_PRG }, //  3
+	{ "prg0u022.bin", 		0x080000, 0x0dd59512, BRF_ESS | BRF_PRG }, 	//  0 CPU #0 code (even)
+	{ "prg2u021.bin", 		0x080000, 0xffba8656, BRF_ESS | BRF_PRG }, 	//  1
+	{ "prg1u023.bin", 		0x080000, 0xfecde223, BRF_ESS | BRF_PRG }, 	//  2				(odd)
+	{ "prg3u024.bin", 		0x080000, 0x834b8ad6, BRF_ESS | BRF_PRG }, 	//  3
 
-	{ "gfxu0510.bin", 0x400000, 0x9CCA3446, BRF_GRA },			 //  4 GP9001 Tile data
-	{ "gfxu0512.bin", 0x400000, 0xA2A281D5, BRF_GRA },			 //  5
-	{ "gfxu0511.bin", 0x400000, 0xE16472C0, BRF_GRA },			 //  6
-	{ "gfxu0513.bin", 0x400000, 0x8BB635A0, BRF_GRA },			 //  7
+	{ "gfxu0510.bin", 		0x400000, 0x9cca3446, BRF_GRA },			//  4 GP9001 Tile data
+	{ "gfxu0512.bin", 		0x400000, 0xa2a281d5, BRF_GRA },			//  5
+	{ "gfxu0511.bin", 		0x400000, 0xe16472c0, BRF_GRA },			//  6
+	{ "gfxu0513.bin", 		0x400000, 0x8bb635a0, BRF_GRA },			//  7
 
-	{ "sndu0720.bin", 0x020000, 0xE62AB246, BRF_ESS | BRF_PRG }, //  8 Z80 program
+	{ "sndu0720.bin", 		0x020000, 0xe62ab246, BRF_ESS | BRF_PRG }, 	//  8 Z80 program
 
-	{ "rom6.829",     0x400000, 0x8848B4A0, BRF_SND },			 //  9 YMZ280B (AD)PCM data
-	{ "rom7.830",     0x400000, 0xD6224267, BRF_SND },			 // 10
-	{ "rom8.831",     0x400000, 0xA101DFB0, BRF_SND },			 // 11
+	{ "rom6.829",     		0x400000, 0x8848b4a0, BRF_SND },			//  9 YMZ280B (AD)PCM data
+	{ "rom7.830",     		0x400000, 0xd6224267, BRF_SND },			// 10
+	{ "rom8.831",     		0x400000, 0xa101dfb0, BRF_SND },			// 11
 	
 	{ "eeprom-bbakraid.bin", 0x00200, 0x7f97d347, BRF_PRG },
 };
@@ -82,22 +82,46 @@ static struct BurnRomInfo bkraidjRomDesc[] = {
 STD_ROM_PICK(bkraidj)
 STD_ROM_FN(bkraidj)
 
+static struct BurnRomInfo bkraidcRomDesc[] = {
+	{ "prg0u022_china.bin", 0x080000, 0x760be084, BRF_ESS | BRF_PRG }, 	//  0 CPU #0 code (even)
+	{ "prg2u021.bin", 		0x080000, 0xffba8656, BRF_ESS | BRF_PRG }, 	//  1
+	{ "prg1u023.new", 		0x080000, 0x4ae9aa64, BRF_ESS | BRF_PRG }, 	//  2				(odd)
+	{ "prg3u024.bin", 		0x080000, 0x834b8ad6, BRF_ESS | BRF_PRG }, 	//  3
+
+	{ "gfxu0510.bin", 		0x400000, 0x9cca3446, BRF_GRA },			//  4 GP9001 Tile data
+	{ "gfxu0512.bin", 		0x400000, 0xa2a281d5, BRF_GRA },			//  5
+	{ "gfxu0511.bin", 		0x400000, 0xe16472c0, BRF_GRA },			//  6
+	{ "gfxu0513.bin", 		0x400000, 0x8bb635a0, BRF_GRA },			//  7
+
+	{ "sndu0720.bin", 		0x020000, 0xe62ab246, BRF_ESS | BRF_PRG }, 	//  8 Z80 program
+
+	{ "rom6.829",     		0x400000, 0x8848b4a0, BRF_SND },			//  9 YMZ280B (AD)PCM data
+	{ "rom7.830",     		0x400000, 0xd6224267, BRF_SND },			// 10
+	{ "rom8.831",     		0x400000, 0xa101dfb0, BRF_SND },			// 11
+	
+	{ "eeprom-bbakraid-new.bin", 0x00200, 0x35c9275a, BRF_PRG },
+};
+
+
+STD_ROM_PICK(bkraidc)
+STD_ROM_FN(bkraidc)
+
 static struct BurnRomInfo bkraidujRomDesc[] = {
-	{ "prg0u022.new", 0x080000, 0xFA8D38D3, BRF_ESS | BRF_PRG }, //  0 CPU #0 code (even)
-	{ "prg2u021.bin", 0x080000, 0xFFBA8656, BRF_ESS | BRF_PRG }, //  1
-	{ "prg1u023.new", 0x080000, 0x4AE9AA64, BRF_ESS | BRF_PRG }, //  2				(odd)
-	{ "prg3u024.bin", 0x080000, 0x834B8AD6, BRF_ESS | BRF_PRG }, //  3
+	{ "prg0u022.new", 		0x080000, 0xfa8d38d3, BRF_ESS | BRF_PRG }, 	//  0 CPU #0 code (even)
+	{ "prg2u021.bin", 		0x080000, 0xffba8656, BRF_ESS | BRF_PRG }, 	//  1
+	{ "prg1u023.new", 		0x080000, 0x4ae9aa64, BRF_ESS | BRF_PRG }, 	//  2				(odd)
+	{ "prg3u024.bin", 		0x080000, 0x834b8ad6, BRF_ESS | BRF_PRG }, 	//  3
 
-	{ "gfxu0510.bin", 0x400000, 0x9CCA3446, BRF_GRA },			 //  4 GP9001 Tile data
-	{ "gfxu0512.bin", 0x400000, 0xA2A281D5, BRF_GRA },			 //  5
-	{ "gfxu0511.bin", 0x400000, 0xE16472C0, BRF_GRA },			 //  6
-	{ "gfxu0513.bin", 0x400000, 0x8BB635A0, BRF_GRA },			 //  7
+	{ "gfxu0510.bin", 		0x400000, 0x9cca3446, BRF_GRA },			//  4 GP9001 Tile data
+	{ "gfxu0512.bin", 		0x400000, 0xa2a281d5, BRF_GRA },			//  5
+	{ "gfxu0511.bin", 		0x400000, 0xe16472c0, BRF_GRA },			//  6
+	{ "gfxu0513.bin", 		0x400000, 0x8bb635a0, BRF_GRA },			//  7
 
-	{ "sndu0720.bin", 0x020000, 0xE62AB246, BRF_ESS | BRF_PRG }, //  8 Z80 program
+	{ "sndu0720.bin", 		0x020000, 0xe62ab246, BRF_ESS | BRF_PRG }, 	//  8 Z80 program
 
-	{ "rom6.829",     0x400000, 0x8848B4A0, BRF_SND },			 //  9 YMZ280B (AD)PCM data
-	{ "rom7.830",     0x400000, 0xD6224267, BRF_SND },			 // 10
-	{ "rom8.831",     0x400000, 0xA101DFB0, BRF_SND },			 // 11
+	{ "rom6.829",     		0x400000, 0x8848b4a0, BRF_SND },			//  9 YMZ280B (AD)PCM data
+	{ "rom7.830",     		0x400000, 0xd6224267, BRF_SND },			// 10
+	{ "rom8.831",     		0x400000, 0xa101dfb0, BRF_SND },			// 11
 	
 	{ "eeprom-bbakraid-new.bin", 0x00200, 0x35c9275a, BRF_PRG },
 };
@@ -1042,6 +1066,16 @@ struct BurnDriver BurnDrvBattleBkraidu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bkraiduRomInfo, bkraiduRomName, NULL, NULL, bbakraidInputInfo, bkraiduDIPInfo,
+	bbakraidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	240, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvBattleBkraidc = {
+	"bbakraidc", "bbakraid", NULL, NULL, "1999",
+	"Battle Bakraid - Unlimited Version (China) (Tue Jun 8 1999)\0", NULL, "Eighting", "Toaplan GP9001 based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	NULL, bkraidcRomInfo, bkraidcRomName, NULL, NULL, bbakraidInputInfo, bbakraidDIPInfo,
 	bbakraidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

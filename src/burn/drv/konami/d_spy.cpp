@@ -504,12 +504,10 @@ static INT32 MemIndex()
 
 static INT32 DrvGfxDecode()
 {
-	INT32 Plane0[4] = { 0x018, 0x010, 0x008, 0x000 };
-	INT32 Plane1[4] = { 0x000, 0x008, 0x010, 0x018 };
-	INT32 XOffs[16] = { 0x000, 0x001, 0x002, 0x003, 0x004, 0x005, 0x006, 0x007,
-			  0x100, 0x101, 0x102, 0x103, 0x104, 0x105, 0x106, 0x107 };
-	INT32 YOffs[16] = { 0x000, 0x020, 0x040, 0x060, 0x080, 0x0a0, 0x0c0, 0x0e0,
-			  0x200, 0x220, 0x240, 0x260, 0x280, 0x2a0, 0x2c0, 0x2e0 };
+	INT32 Plane0[4] = { STEP4(24, -8) };
+	INT32 Plane1[4] = { STEP4(0, 8) };
+	INT32 XOffs[16] = { STEP8(0,1), STEP8(256, 1) };
+	INT32 YOffs[16] = { STEP8(0,32), STEP8(512,32) };
 
 	GfxDecode(0x04000, 4,  8,  8, Plane0, XOffs, YOffs, 0x100, DrvGfxROM0, DrvGfxROMExp0);
 	GfxDecode(0x02000, 4, 16, 16, Plane1, XOffs, YOffs, 0x400, DrvGfxROM1, DrvGfxROMExp1);
@@ -536,10 +534,10 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
 
 		if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  3, 4, 2)) return 1;
-		if (BurnLoadRomExt(DrvGfxROM0 + 0x040000,  4, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000002,  4, 4, 2)) return 1;
 
 		if (BurnLoadRomExt(DrvGfxROM1 + 0x000000,  5, 4, 2)) return 1;
-		if (BurnLoadRomExt(DrvGfxROM1 + 0x080000,  6, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000002,  6, 4, 2)) return 1;
 
 		if (BurnLoadRom(DrvSndROM0 + 0x000000,  7, 1)) return 1;
 

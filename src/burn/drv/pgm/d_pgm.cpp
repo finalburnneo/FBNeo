@@ -748,9 +748,14 @@ static void drgw2_patch()
 {
 	pgm_decrypt_dw2();
 
-	*((UINT16*)(PGM68KROM + 0x031098)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
-	*((UINT16*)(PGM68KROM + 0x03113e)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
-	*((UINT16*)(PGM68KROM + 0x0311ce)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
+	UINT16 *mem16 = (UINT16*)PGM68KROM;
+
+	// This is not a hack! The protection chip actually applies patches at three specific locations.
+	for (INT32 i = 0; i < 0x80000/2; i++) {
+		if (mem16[i] == 0x4e90 && mem16[i+1] == 0x207c && (mem16[i+2] & 0xfff8) == 0x0010) {
+			mem16[i] = 0x4e93;
+		}
+	}
 }
 
 static INT32 drgw2Init()
@@ -787,30 +792,13 @@ static struct BurnRomInfo drgw2cRomDesc[] = {
 STDROMPICKEXT(drgw2c, drgw2c, pgm)
 STD_ROM_FN(drgw2c)
 
-static void drgw2100c_patch()
-{
-	pgm_decrypt_dw2();
-
-	*((UINT16*)(PGM68KROM + 0x0303bc)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
-	*((UINT16*)(PGM68KROM + 0x030462)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
-	*((UINT16*)(PGM68KROM + 0x0304F2)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
-}
-
-static INT32 drgw2100cInit()
-{
-	pPgmInitCallback = drgw2100c_patch;
-	pPgmProtCallback = install_protection_asic25_asic12_dw2;
-
-	return pgmInit();
-}
-
 struct BurnDriver BurnDrvDrgw2c = {
 	"drgw2c", "drgw2", "pgm", NULL, "1997",
 	"Zhong Guo Long II (V100C, China)\0", NULL, "IGS", "PolyGameMaster",
 	L"\u4E2D\u570B\u9F8D II (V100C, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw2cRomInfo, drgw2cRomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
-	drgw2100cInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	drgw2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 
@@ -830,30 +818,13 @@ static struct BurnRomInfo drgw2jRomDesc[] = {
 STDROMPICKEXT(drgw2j, drgw2j, pgm)
 STD_ROM_FN(drgw2j)
 
-static void drgw2100j_patch()
-{
-	pgm_decrypt_dw2();
-
-	*((UINT16*)(PGM68KROM + 0x0302C0)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
-	*((UINT16*)(PGM68KROM + 0x030366)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
-	*((UINT16*)(PGM68KROM + 0x0303F6)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
-}
-
-static INT32 drgw2100jInit()
-{
-	pPgmInitCallback = drgw2100j_patch;
-	pPgmProtCallback = install_protection_asic25_asic12_dw2;
-
-	return pgmInit();
-}
-
 struct BurnDriver BurnDrvDrgw2j = {
 	"drgw2j", "drgw2", "pgm", NULL, "1997",
 	"Chuugokuryuu II (V100J, Japan)\0", NULL, "IGS", "PolyGameMaster",
 	L"\u4E2D\u570B\u9F8D II (V100J, Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw2jRomInfo, drgw2jRomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
-	drgw2100jInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	drgw2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 
@@ -873,30 +844,13 @@ static struct BurnRomInfo drgw2xRomDesc[] = {
 STDROMPICKEXT(drgw2x, drgw2x, pgm)
 STD_ROM_FN(drgw2x)
 
-static void drgw2100x_patch()
-{
-	pgm_decrypt_dw2();
-
-	*((UINT16*)(PGM68KROM + 0x031084)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
-	*((UINT16*)(PGM68KROM + 0x03112A)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
-	*((UINT16*)(PGM68KROM + 0x0311BA)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
-}
-
-static INT32 drgw2100xInit()
-{
-	pPgmInitCallback = drgw2100x_patch;
-	pPgmProtCallback = install_protection_asic25_asic12_dw2;
-
-	return pgmInit();
-}
-
 struct BurnDriver BurnDrvDrgw2x = {
 	"dw2v100x", "drgw2", "pgm", NULL, "1997",
 	"Dragon World II (V100X, World)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw2xRomInfo, drgw2xRomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
-	drgw2100xInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	drgw2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 
@@ -916,30 +870,13 @@ static struct BurnRomInfo drgw2hkRomDesc[] = {
 STDROMPICKEXT(drgw2hk, drgw2hk, pgm)
 STD_ROM_FN(drgw2hk)
 
-static void drgw2100h_patch()
-{
-	pgm_decrypt_dw2();
-
-	*((UINT16*)(PGM68KROM + 0x02f520)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
-	*((UINT16*)(PGM68KROM + 0x02f5c6)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
-	*((UINT16*)(PGM68KROM + 0x02f656)) = BURN_ENDIAN_SWAP_INT16(0x4e93);
-}
-
-static INT32 drgw2100hInit()
-{
-	pPgmInitCallback = drgw2100h_patch;
-	pPgmProtCallback = install_protection_asic25_asic12_dw2;
-
-	return pgmInit();
-}
-
 struct BurnDriver BurnDrvDrgw2hk = {
 	"drgw2hk", "drgw2", "pgm", NULL, "1997",
 	"Dragon World II (V100H, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw2hkRomInfo, drgw2hkRomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
-	drgw2100hInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	drgw2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
 

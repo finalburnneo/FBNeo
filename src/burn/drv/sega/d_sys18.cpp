@@ -654,12 +654,31 @@ static struct BurnDIPInfo HamawayDIPList[]=
 {
 	// Default Values
 	{0x16, 0xff, 0xff, 0xff, NULL                                 },
-	{0x17, 0xff, 0xff, 0xff, NULL                                 },
+	{0x17, 0xff, 0xff, 0xbf, NULL                                 },
 
 	// Dip 1
 	SYSTEM18_COINAGE(0x16)
 	
 	// Dip 2
+	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
+	{0x17, 0x01, 0x03, 0x02, "Easy"                               },
+	{0x17, 0x01, 0x03, 0x03, "Normal"                             },
+	{0x17, 0x01, 0x03, 0x01, "Hard"                               },
+	{0x17, 0x01, 0x03, 0x00, "Hardest"                            },
+	
+	{0   , 0xfe, 0   , 4   , "Number of Players"                  },
+	{0x17, 0x01, 0x0c, 0x08, "1"                                  },
+	{0x17, 0x01, 0x0c, 0x04, "2"                                  },
+	{0x17, 0x01, 0x0c, 0x0c, "3"                                  },
+	{0x17, 0x01, 0x0c, 0x00, "5"                                  },
+	
+	{0   , 0xfe, 0   , 2   , "Advertise Sound"                    },
+	{0x17, 0x01, 0x40, 0x40, "Off"                                },
+	{0x17, 0x01, 0x40, 0x00, "On"                                 },
+	
+	{0   , 0xfe, 0   , 2   , "Credit to Start"                    },
+	{0x17, 0x01, 0x80, 0x80, "1"                                  },
+	{0x17, 0x01, 0x80, 0x00, "2"                                  },
 };
 
 STDDIPINFO(Hamaway)

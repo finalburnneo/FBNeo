@@ -1468,6 +1468,15 @@ inline static void System16YM2203IRQHandler(INT32, INT32 nStatus)
 	}
 }
 
+inline static void System18YM3438IRQHandler(INT32, INT32 nStatus)
+{
+	if (nStatus & 1) {
+		ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
+	} else {
+		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+	}
+}
+
 inline static INT32 System16SynchroniseStream(INT32 nSoundRate)
 {
 	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
@@ -2030,7 +2039,7 @@ INT32 System16Init()
 			ZetClose();
 		}
 		
-		BurnYM3438Init(2, 8000000, NULL, System18SynchroniseStream, System18GetTime, 1);
+		BurnYM3438Init(2, 8000000, &System18YM3438IRQHandler, System18SynchroniseStream, System18GetTime, 1);
 		BurnTimerAttachZet(8000000);
 		BurnYM3438SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 		BurnYM3438SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);

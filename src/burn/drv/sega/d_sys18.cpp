@@ -650,6 +650,20 @@ static struct BurnDIPInfo DesertbrDIPList[]=
 
 STDDIPINFO(Desertbr)
 
+static struct BurnDIPInfo HamawayDIPList[]=
+{
+	// Default Values
+	{0x16, 0xff, 0xff, 0xff, NULL                                 },
+	{0x17, 0xff, 0xff, 0xff, NULL                                 },
+
+	// Dip 1
+	SYSTEM18_COINAGE(0x16)
+	
+	// Dip 2
+};
+
+STDDIPINFO(Hamaway)
+
 static struct BurnDIPInfo LghostDIPList[]=
 {
 	// Default Values
@@ -1264,6 +1278,35 @@ static struct BurnRomInfo DesertbrjRomDesc[] = {
 
 STD_ROM_PICK(Desertbrj)
 STD_ROM_FN(Desertbrj)
+
+static struct BurnRomInfo HamawayRomDesc[] = {
+	{ "4.bin",          0x040000, 0xcc0981e1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "6.bin",          0x040000, 0xe8599ee6, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "5.bin",          0x040000, 0xfdb247fd, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "7.bin",          0x040000, 0x63711470, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "c10.bin",        0x040000, 0xc55cb5cf, SYS16_ROM_TILES | BRF_GRA },
+	{ "1.bin",          0x040000, 0x33be003f, SYS16_ROM_TILES | BRF_GRA },
+	{ "c11.bin",        0x040000, 0x37787915, SYS16_ROM_TILES | BRF_GRA },
+	{ "2.bin",          0x040000, 0x60ca5c9f, SYS16_ROM_TILES | BRF_GRA },
+	{ "c12.bin",        0x040000, 0xf12f1cf3, SYS16_ROM_TILES | BRF_GRA },
+	{ "3.bin",          0x040000, 0x520aa7ae, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "c17.bin",        0x040000, 0xaa28d7aa, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10.bin",         0x040000, 0xc4c95161, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "c18.bin",        0x040000, 0x0f8fe8bb, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "11.bin",         0x040000, 0x2b5eacbc, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "c19.bin",        0x040000, 0x3c616caa, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "12.bin",         0x040000, 0xc7bbd579, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "c16.bin",        0x040000, 0x913cc18c, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "c15.bin",        0x040000, 0xb53694fc, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Hamaway)
+STD_ROM_FN(Hamaway)
 
 static struct BurnRomInfo LghostRomDesc[] = {
 	{ "epr-13429.a4",   0x40000, 0x09bd65c0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1887,6 +1930,133 @@ UINT8 __fastcall DdcrewuReadByte(UINT32 a)
 	}
 	
 	return 0xff;
+}
+
+UINT8 __fastcall HamawayReadByte(UINT32 a)
+{
+	if (a >= 0xa00000 && a <= 0xa0001f) {
+		return io_chip_r((a - 0xa00000) >> 1);
+	}
+	
+	switch (a) {
+	
+	}
+	
+	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
+	return 0xff;
+}
+
+UINT16 __fastcall HamawayReadWord(UINT32 a)
+{
+	switch (a) {
+	
+	}
+	
+	bprintf(PRINT_NORMAL, _T("68000 Read Word -> 0x%06X\n"), a);
+	return 0xffff;
+}
+
+void __fastcall HamawayWriteByte(UINT32 a, UINT8 d)
+{
+	if (a >= 0x3e0000 && a <= 0x3e001f) {
+		// Tile Banking
+		INT32 offset = (a - 0x3e0000) >> 1;
+		if (offset < 8) {
+			d &= 0x9f;
+			if (d & 0x80) d += 0x20;
+			d &= 0x3f;
+			if (System16TileBanks[offset] != d) {
+				System16TileBanks[offset] = d;
+				System16RecalcBgTileMap = 1;
+				System16RecalcBgAltTileMap = 1;
+				System16RecalcFgTileMap = 1;
+				System16RecalcFgAltTileMap = 1;
+			}
+		}
+		
+		return;
+	}
+	
+	if (a >= 0x400000 && a <= 0x40ffff) {
+		System16BTileByteWrite((a - 0x400000) ^ 1, d);
+		return;
+	}
+	
+	if (a >= 0xa00000 && a <= 0xa03fff) {
+		io_chip_w((a - 0xa00000) >> 1, d);
+		return;
+	}
+	
+	switch (a) {
+		case 0xfe0007: {
+			System16SoundLatch = d;
+			ZetOpen(0);
+			ZetNmi();
+			ZetClose();
+			return;
+		}
+	}
+
+	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
+}
+
+void __fastcall HamawayWriteWord(UINT32 a, UINT16 d)
+{
+	if (a >= 0x400000 && a <= 0x40ffff) {
+		System16BTileWordWrite(a - 0x400000, d);
+		return;
+	}
+	
+	if (a >= 0xc00000 && a <= 0xc0000f) {
+		GenesisVDPWrite((a - 0xc00000) >> 1, d);
+		return;
+	}
+	
+	switch (a) {
+		case 0xa02000: {
+			System18VdpMixing = d & 0xff;
+			return;
+		}
+	}
+
+	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X\n"), a, d);
+}
+
+void HamawayMap68K()
+{
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(System16Rom           , 0x000000, 0x07ffff, SM_READ);
+	SekMapMemory(System16Code          , 0x000000, 0x07ffff, SM_FETCH);
+	SekMapMemory(System16Rom + 0x80000 , 0x200000, 0x27ffff, SM_READ);
+	SekMapMemory(System16Code + 0x80000, 0x200000, 0x27ffff, SM_FETCH);
+	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, SM_READ);
+	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, SM_RAM);
+	SekMapMemory(System16SpriteRam     , 0x500000, 0x5007ff, SM_RAM);
+	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, SM_RAM);
+	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, SM_RAM);
+	SekSetReadByteHandler(0, HamawayReadByte);
+	SekSetReadWordHandler(0, HamawayReadWord);
+	SekSetWriteByteHandler(0, HamawayWriteByte);
+	SekSetWriteWordHandler(0, HamawayWriteWord);
+	SekClose();
+}
+
+static INT32 HamawayInit()
+{
+	System16Map68KDo = HamawayMap68K;
+	
+	INT32 nRet = System16Init();
+	
+/*	if (!nRet) {
+		SekOpen(0);
+		SekMapHandler(1, 0xa43000, 0xa4300e, SM_RAM);
+		SekSetReadByteHandler(1, WwallyReadByte);
+		SekSetWriteWordHandler(1, WwallyWriteWord);
+		SekClose();
+	}*/
+	
+	return nRet;
 }
 
 UINT8 LghostValue;
@@ -2652,6 +2822,16 @@ struct BurnDriver BurnDrvDesertbrj = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC, GBF_VERSHOOT, 0,
 	NULL, DesertbrjRomInfo, DesertbrjRomName, NULL, NULL, DesertbrInputInfo, DesertbrDIPInfo,
 	System18Bank80000Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 224, 320, 3, 4
+};
+
+struct BurnDriverD BurnDrvHamaway = {
+	"hamaway", NULL, NULL, NULL, "1992",
+	"Hammer Away (prototype)\0", NULL, "Sega / Santos", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_SYSTEM18, GBF_PUZZLE, 0,
+	NULL, HamawayRomInfo, HamawayRomName, NULL, NULL, System18InputInfo, HamawayDIPInfo,
+	HamawayInit, WwallyExit, System18Frame, NULL, WwallyScan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 

@@ -2483,7 +2483,14 @@ static INT32 HamawayInit()
 {
 	System16Map68KDo = HamawayMap68K;
 	
-	return System16Init();
+	INT32 nRet = System16Init();
+	
+	// game is loud - bring the volumes down
+	BurnYM3438SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	BurnYM3438SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	RF5C68PCMSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
+	
+	return nRet;
 }
 
 static INT32 LghostInit()

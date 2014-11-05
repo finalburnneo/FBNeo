@@ -359,6 +359,18 @@ void K007232SetVolume(INT32 chip, INT32 channel,INT32 volumeA,INT32 volumeB)
 		Chip->vol[channel][1] = volumeB;
 }
 
+void K007232SetVolumeF(INT32 chip, INT32 channel,INT32 volumeA,INT32 volumeB)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232SetVolumeF called without init\n"));
+	if (chip >nNumChips) bprintf(PRINT_ERROR, _T("K007232SetVolumeF called with invalid chip %x\n"), chip);
+#endif
+
+	Chip = &Chips[chip];
+	Chip->vol[channel][0] = volumeA;
+	Chip->vol[channel][1] = volumeB;
+}
+
 void k007232_set_bank(INT32 chip, INT32 chABank, INT32 chBBank )
 {
 #if defined FBA_DEBUG

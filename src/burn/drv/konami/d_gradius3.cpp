@@ -448,8 +448,8 @@ UINT8 __fastcall gradius3_sound_read(UINT16 address)
 
 static void DrvK007232VolCallback(INT32 v)
 {
-	K007232SetVolume(0, 0, (v >> 0x4) * 0x11, 0);
-	K007232SetVolume(0, 1, 0, (v & 0x0f) * 0x11);
+	K007232SetVolumeF(0, 0, (v >> 0x4) * 0x11, 0);
+	K007232SetVolumeF(0, 1, 0, (v & 0x0f) * 0x11);
 }
 
 static void K052109Callback(INT32 layer, INT32, INT32 *code, INT32 *color, INT32 *, INT32 *)

@@ -7,6 +7,7 @@ void K007232SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir);
 void K007232Exit();
 INT32 K007232Scan(INT32 nAction, INT32 *pnMin);
 void K007232SetVolume(INT32 chip, INT32 channel,INT32 volumeA,INT32 volumeB);
+void K007232SetVolumeF(INT32 chip, INT32 channel,INT32 volumeA,INT32 volumeB);
 void k007232_set_bank( INT32 chip, INT32 chABank, INT32 chBBank );
 
 #define BURN_SND_K007232_ROUTE_1		0

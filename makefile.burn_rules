@@ -49,8 +49,8 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_ikki.o d_jack.o d_kangaroo.o d_kyugo.o d_ladybug.o d_lwings.o d_lastduel.o d_markham.o d_marineb.o d_meijinsn.o \
 			d_mitchell.o d_mole.o d_momoko.o d_mrdo.o d_mrflea.o d_mustache.o d_mystston.o d_ninjakd2.o d_pacland.o d_pacman.o d_pac2650.o \
 			d_pkunwar.o d_prehisle.o d_punchout.o d_psychic5.o d_quizo.o d_rallyx.o d_renegade.o d_rpunch.o d_route16.o d_scregg.o d_sf.o \
-			d_skyfox.o d_skykid.o d_snk68.o d_solomon.o d_sonson.o d_srumbler.o d_tail2nose.o d_tecmo.o d_terracre.o d_tigeroad.o d_toki.o \
-			d_vulgus.o d_wallc.o d_wc90.o d_wc90b.o d_wwfsstar.o d_xain.o \
+			d_skyfox.o d_skykid.o d_snk68.o d_solomon.o d_sonson.o d_srumbler.o d_tail2nose.o d_tecmo.o d_terracre.o d_tigeroad.o d_timelimt.o \
+			d_toki.o d_vulgus.o d_wallc.o d_wc90.o d_wc90b.o d_wwfsstar.o d_xain.o \
 			\
 			d_1945kiii.o d_aerofgt.o d_airbustr.o d_aquarium.o d_blmbycar.o d_bloodbro.o d_crospang.o d_crshrace.o d_dcon.o \
 			d_deniam.o d_ddragon3.o d_diverboy.o d_drgnmst.o d_drtomy.o d_egghunt.o d_esd16.o d_f1gp.o d_fstarfrc.o d_funybubl.o \

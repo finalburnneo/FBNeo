@@ -416,11 +416,11 @@ void __fastcall magicbub_sound_out(UINT16 port, UINT8 data)
 	switch (port & 0xff)
 	{
 		case 0x10:
-			BurnYM3812Write(0, data);
+			BurnYM3812Write(0, 0, data);
 		return;
 
 		case 0x11:
-			BurnYM3812Write(1, data);
+			BurnYM3812Write(0, 1, data);
 		return;
 
 		case 0x1c:
@@ -434,10 +434,10 @@ UINT8 __fastcall magicbub_sound_in(UINT16 port)
 	switch (port & 0xff)
 	{
 		case 0x10:
-			return BurnYM3812Read(0);
+			return BurnYM3812Read(0, 0);
 
 		case 0x11:
-			return BurnYM3812Read(1);
+			return BurnYM3812Read(0, 1);
 
 		case 0x18:
 			Z80SetIrqLine(Z80_INPUT_LINE_NMI, 0);
@@ -665,9 +665,9 @@ static INT32 DrvInit(INT32 game_select)
 	ZetSetInHandler(magicbub_sound_in);
 	ZetClose();
 
-	BurnYM3812Init(4000000, &DrvYM3812IrqHandler, &DrvSynchroniseStream, 0);
+	BurnYM3812Init(1, 4000000, &DrvYM3812IrqHandler, &DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(3000000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, (is_magicbub ? 1056000 : 1000000) / 132, is_magicbub);
 	MSM6295SetRoute(0, (is_magicbub ? 0.80 : 1.00), BURN_SND_ROUTE_BOTH);

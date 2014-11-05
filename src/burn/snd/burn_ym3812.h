@@ -19,8 +19,8 @@ INT32 BurnTimerAttachH6280YM3812(INT32 nClockspeed);
 
 extern "C" void BurnYM3812UpdateRequest();
 
-INT32 BurnYM3812Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), INT32 bAddSignal);
-void BurnYM3812SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
+INT32 BurnYM3812Init(INT32 num, INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), INT32 bAddSignal);
+void BurnYM3812SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir);
 void BurnYM3812Reset();
 void BurnYM3812Exit();
 extern void (*BurnYM3812Update)(INT16* pSoundBuf, INT32 nSegmentEnd);
@@ -28,10 +28,10 @@ void BurnYM3812Scan(INT32 nAction, INT32* pnMin);
 
 #define BURN_SND_YM3812_ROUTE			0
 
-#define BurnYM3812Read(a) YM3812Read(0, a)
+#define BurnYM3812Read(i, a) YM3812Read(i, a)
 
 #if defined FBA_DEBUG
-	#define BurnYM3812Write(a, n) if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("BurnYM3812Write called without init\n")); YM3812Write(0, a, n)
+	#define BurnYM3812Write(i, a, n) if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("BurnYM3812Write called without init\n")); YM3812Write(i, a, n)
 #else
-	#define BurnYM3812Write(a, n) YM3812Write(0, a, n)
+	#define BurnYM3812Write(i, a, n) YM3812Write(i, a, n)
 #endif

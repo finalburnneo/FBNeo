@@ -299,7 +299,7 @@ void __fastcall hcastle_sound_write(UINT16 address, UINT8 data)
 	{
 		case 0xa000:
 		case 0xa001:
-			BurnYM3812Write(address & 1, data);
+			BurnYM3812Write(0, address & 1, data);
 		return;
 
 		case 0xc000:
@@ -318,7 +318,7 @@ UINT8 __fastcall hcastle_sound_read(UINT16 address)
 	{
 		case 0xa000:
 		case 0xa001:
-			return BurnYM3812Read(address & 1);
+			return BurnYM3812Read(0, address & 1);
 
 		case 0xd000:
 			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
@@ -510,9 +510,9 @@ static INT32 DrvInit()
 	ZetSetReadHandler(hcastle_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(3579545, NULL, DrvSynchroniseStream, 0);
+	BurnYM3812Init(1, 3579545, NULL, DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(3579545);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	K007232Init(0, 3579545, DrvSndROM, 0x80000); // no idea...
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);

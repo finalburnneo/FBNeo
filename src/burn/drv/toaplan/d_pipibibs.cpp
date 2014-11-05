@@ -296,11 +296,11 @@ void __fastcall pipibibs_sound_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0xe000:
-			BurnYM3812Write(0, data);
+			BurnYM3812Write(0, 0, data);
 		return;
 
 		case 0xe001:
-			BurnYM3812Write(1, data);
+			BurnYM3812Write(0, 1, data);
 		return;
 	}
 }
@@ -311,7 +311,7 @@ UINT8 __fastcall pipibibs_sound_read(UINT16 address)
 	{
 		case 0xe000:
 		case 0xe001:
-			return BurnYM3812Read(0);
+			return BurnYM3812Read(0, 0);
 	}
 
 	return 0;
@@ -395,9 +395,9 @@ static INT32 DrvInit()
 	}
 
 	nToa1Cycles68KSync = 0;
-	BurnYM3812Init(3375000, &toaplan1FMIRQHandler, pipibibsSynchroniseStream, 0);
+	BurnYM3812Init(1, 3375000, &toaplan1FMIRQHandler, pipibibsSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(3375000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	nSpriteYOffset =  0x0001;
 

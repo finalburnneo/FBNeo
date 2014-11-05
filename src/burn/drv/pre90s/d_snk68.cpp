@@ -667,7 +667,7 @@ void __fastcall pow_sound_out(UINT16 address, UINT8 data)
 	{
 		case 0x00:
 		case 0x20:
-			BurnYM3812Write((address >> 5) & 1, data);
+			BurnYM3812Write(0, (address >> 5) & 1, data);
 		return;
 
 		case 0x40:
@@ -694,7 +694,7 @@ UINT8 __fastcall pow_sound_in(UINT16 address)
 {
 	address &= 0xff;
 
-	if (address == 0x0000) return BurnYM3812Read(0);
+	if (address == 0x0000) return BurnYM3812Read(0, 0);
 
 	return 0;
 }
@@ -945,9 +945,9 @@ static INT32 DrvInit(INT32 game)
 	ZetSetOutHandler(pow_sound_out);
 	ZetClose();
 
-	BurnYM3812Init(4000000, &powFMIRQHandler, &powSynchroniseStream, 0);
+	BurnYM3812Init(1, 4000000, &powFMIRQHandler, &powSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(4000000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSnd0);
 	UPD7759SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);

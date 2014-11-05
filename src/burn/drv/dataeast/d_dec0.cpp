@@ -2367,12 +2367,12 @@ void Dec0SoundWriteByte(UINT16 a, UINT8 d)
 		}
 		
 		case 0x1000: {
-			BurnYM3812Write(0, d);
+			BurnYM3812Write(0, 0, d);
 			return;
 		}
 		
 		case 0x1001: {
-			BurnYM3812Write(1, d);
+			BurnYM3812Write(0, 1, d);
 			return;
 		}
 		
@@ -2926,12 +2926,12 @@ void SlyspyH6280WriteProg(UINT32 Address, UINT8 Data)
 {
 	switch (Address) {
 		case 0x090000: {
-			BurnYM3812Write(0, Data);
+			BurnYM3812Write(0, 0, Data);
 			return;
 		}
 		
 		case 0x090001: {
-			BurnYM3812Write(1, Data);
+			BurnYM3812Write(0, 1, Data);
 			return;
 		}
 		
@@ -3254,12 +3254,12 @@ void MidresH6280WriteProg(UINT32 Address, UINT8 Data)
 {
 	switch (Address) {
 		case 0x0108000: {
-			BurnYM3812Write(0, Data);
+			BurnYM3812Write(0, 0, Data);
 			return;
 		}
 		
 		case 0x108001: {
-			BurnYM3812Write(1, Data);
+			BurnYM3812Write(0, 1, Data);
 			return;
 		}
 		
@@ -3380,9 +3380,9 @@ static INT32 Dec0MachineInit()
 	
 	GenericTilesInit();
 	
-	BurnYM3812Init(3000000, &Dec0YM3812IRQHandler, &Dec0YM3812SynchroniseStream, 1);
+	BurnYM3812Init(1, 3000000, &Dec0YM3812IRQHandler, &Dec0YM3812SynchroniseStream, 1);
 	BurnTimerAttachM6502YM3812(1500000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, Dec0YM2203SynchroniseStream, Dec0YM2203GetTime, 0);
 	BurnTimerAttachSek(10000000);
@@ -3821,9 +3821,9 @@ static INT32 SlyspyDrvInit()
 	
 	GenericTilesInit();
 	
-	BurnYM3812Init(3000000, &Dec1YM3812IRQHandler, &Dec1YM3812SynchroniseStream, 1);
+	BurnYM3812Init(1, 3000000, &Dec1YM3812IRQHandler, &Dec1YM3812SynchroniseStream, 1);
 	BurnTimerAttachH6280YM3812(2000000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, Dec0YM2203SynchroniseStream, Dec0YM2203GetTime, 0);
 	BurnTimerAttachSek(10000000);
@@ -4030,9 +4030,9 @@ static INT32 MidresInit()
 	
 	GenericTilesInit();
 	
-	BurnYM3812Init(3000000, &Dec1YM3812IRQHandler, &Dec1YM3812SynchroniseStream, 1);
+	BurnYM3812Init(1, 3000000, &Dec1YM3812IRQHandler, &Dec1YM3812SynchroniseStream, 1);
 	BurnTimerAttachH6280YM3812(2000000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, Dec0YM2203SynchroniseStream, Dec0YM2203GetTime, 0);
 	BurnTimerAttachSek(10000000);

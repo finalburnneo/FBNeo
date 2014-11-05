@@ -383,7 +383,7 @@ UINT8 __fastcall PrehisleZ80PortRead(UINT16 a)
 	a &= 0xff;
 	switch (a) {
 		case 0x00: {
-			return BurnYM3812Read(0);
+			return BurnYM3812Read(0, 0);
 		}
 	}
 
@@ -395,12 +395,12 @@ void __fastcall PrehisleZ80PortWrite(UINT16 a, UINT8 d)
 	a &= 0xff;
 	switch (a) {
 		case 0x00: {
-			BurnYM3812Write(0, d);
+			BurnYM3812Write(0, 0, d);
 			return;
 		}
 
 		case 0x20: {
-			BurnYM3812Write(1, d);
+			BurnYM3812Write(0, 1, d);
 			return;
 		}
 
@@ -544,9 +544,9 @@ INT32 PrehisleInit()
 	ZetSetOutHandler(PrehisleZ80PortWrite);
 	ZetClose();
 
-	BurnYM3812Init(4000000, &prehisleFMIRQHandler, &prehisleSynchroniseStream, 0);
+	BurnYM3812Init(1, 4000000, &prehisleFMIRQHandler, &prehisleSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(4000000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, PrehisleADPCMSamples);
 	UPD7759SetRoute(0, 0.90, BURN_SND_ROUTE_BOTH);

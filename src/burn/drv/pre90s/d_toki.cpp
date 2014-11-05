@@ -424,12 +424,12 @@ static void __fastcall tokib_sound_write(UINT16 address, UINT8 data)
 
 		case 0xec00:
 		case 0xec08:
-			BurnYM3812Write(0, data);
+			BurnYM3812Write(0, 0, data);
 		return;
 
 		case 0xec01:
 		case 0xec09:
-			BurnYM3812Write(1, data);
+			BurnYM3812Write(0, 1, data);
 		return;
 	}
 }
@@ -439,7 +439,7 @@ static UINT8 __fastcall tokib_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xec00:
-			return BurnYM3812Read(0);
+			return BurnYM3812Read(0, 0);
 
 		case 0xf800:
 			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
@@ -891,9 +891,9 @@ static INT32 TokibInit()
 	ZetSetReadHandler(tokib_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(3579545, NULL, &TokibSynchroniseStream, 0);
+	BurnYM3812Init(1, 3579545, NULL, &TokibSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(3579545);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	MSM5205Init(0, TokibSynchroniseStream, 384000, toki_adpcm_int, MSM5205_S96_4B, 1);
 	MSM5205SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);

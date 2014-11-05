@@ -330,12 +330,12 @@ void __fastcall demonwld_sound_write_port(UINT16 p, UINT8 d)
 	switch (p & 0xff)
 	{
 		case 0x00: {
-			BurnYM3812Write(0, d);
+			BurnYM3812Write(0, 0, d);
 			return;
 		}
 
 		case 0x01: {
-			BurnYM3812Write(1, d);
+			BurnYM3812Write(0, 1, d);
 			return;
 		}
 
@@ -350,7 +350,7 @@ UINT8 __fastcall demonwld_sound_read_port(UINT16 p)
 	{
 		case 0x00:
 		case 0x01:
-			return BurnYM3812Read(p & 1);
+			return BurnYM3812Read(0, p & 1);
 
 		case 0x20:
 			return DrvDips[2];
@@ -498,9 +498,9 @@ static INT32 DrvInit()
 
 	ToaOpaquePriority = 2;
 
-	BurnYM3812Init(28000000 / 8, &toaplan1FMIRQHandler, &toaplan1SynchroniseStream, 0);
+	BurnYM3812Init(1, 28000000 / 8, &toaplan1FMIRQHandler, &toaplan1SynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(28000000 / 8);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	bDrawScreen = true;
 

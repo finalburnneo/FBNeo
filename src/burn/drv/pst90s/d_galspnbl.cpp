@@ -187,7 +187,7 @@ void __fastcall galspnbl_sound_write(UINT16 address, UINT8 data)
 
 		case 0xf810:
 		case 0xf811:
-			BurnYM3812Write(address & 1, data);
+			BurnYM3812Write(0, address & 1, data);
 		return;
 	}
 }
@@ -201,7 +201,7 @@ UINT8 __fastcall galspnbl_sound_read(UINT16 address)
 
 		case 0xf810:
 		case 0xf811:
-			return BurnYM3812Read(address & 1);
+			return BurnYM3812Read(0, address & 1);
 
 		case 0xfc20:
 			return *soundlatch;
@@ -368,9 +368,9 @@ static INT32 DrvInit(INT32 select)
 	ZetSetReadHandler(galspnbl_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(3579545, &DrvYM3812IrqHandler, &DrvSynchroniseStream, 0);
+	BurnYM3812Init(1, 3579545, &DrvYM3812IrqHandler, &DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(4000000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1056000 / 132, 1);
 	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);

@@ -2309,12 +2309,12 @@ void __fastcall JumppopZ80PortWrite(UINT16 a, UINT8 d)
 	
 	switch (a) {
 		case 0x00: {
-			BurnYM3812Write(0, d);
+			BurnYM3812Write(0, 0, d);
 			return;
 		}
 		
 		case 0x01: {
-			BurnYM3812Write(1, d);
+			BurnYM3812Write(0, 1, d);
 			return;
 		}
 		
@@ -3514,9 +3514,9 @@ static INT32 JumppopInit()
 	ZetMapArea(0xf800, 0xffff, 2, DrvZ80Ram                );
 	ZetClose();
 	
-	BurnYM3812Init(3500000, NULL, JumppopSynchroniseStream, 0);
+	BurnYM3812Init(1, 3500000, NULL, JumppopSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(3500000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, 875000 / 132, 1);

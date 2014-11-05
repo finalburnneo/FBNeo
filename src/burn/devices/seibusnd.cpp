@@ -191,7 +191,7 @@ void __fastcall seibu_sound_write(UINT16 address, UINT8 data)
 			switch (seibu_snd_type & 3)
 			{
 				case 0:
-					BurnYM3812Write(0, data);
+					BurnYM3812Write(0, 0, data);
 				return;
 
 				case 1:
@@ -208,7 +208,7 @@ void __fastcall seibu_sound_write(UINT16 address, UINT8 data)
 			switch (seibu_snd_type & 3)
 			{
 				case 0:
-					BurnYM3812Write(1, data);
+					BurnYM3812Write(0, 1, data);
 				return;
 
 				case 1:
@@ -258,7 +258,7 @@ UINT8 __fastcall seibu_sound_read(UINT16 address)
 			switch (seibu_snd_type & 3)
 			{
 				case 0:
-					return BurnYM3812Read(0);
+					return BurnYM3812Read(0, 0);
 
 				case 1:
 					return BurnYM2151ReadStatus();
@@ -428,7 +428,7 @@ void seibu_sound_init(INT32 type, INT32 len, INT32 freq0 /*cpu*/, INT32 freq1 /*
 	switch (seibu_snd_type & 3)
 	{
 		case 0:
-			BurnYM3812Init(freq1, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
+			BurnYM3812Init(1, freq1, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
 			BurnTimerAttachZetYM3812(freq0);
 		break;
 

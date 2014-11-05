@@ -232,11 +232,11 @@ void __fastcall crospang_sound_out(UINT16 port, UINT8 data)
 	switch (port & 0xff)
 	{
 		case 0x00:
-			BurnYM3812Write(0, data);
+			BurnYM3812Write(0, 0, data);
 		return;
 
 		case 0x01:
-			BurnYM3812Write(1, data);
+			BurnYM3812Write(0, 1, data);
 		return;
 
 		case 0x02:
@@ -250,7 +250,7 @@ UINT8 __fastcall crospang_sound_in(UINT16 port)
 	switch (port & 0xff)
 	{
 		case 0x00:
-			return BurnYM3812Read(0);
+			return BurnYM3812Read(0, 0);
 
 		case 0x02:
 			return MSM6295ReadStatus(0);
@@ -457,9 +457,9 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)())
 	ZetSetInHandler(crospang_sound_in);
 	ZetClose();
 
-	BurnYM3812Init(3579545, &crospangYM3812IrqHandler, crospangSynchroniseStream, 0);
+	BurnYM3812Init(1, 3579545, &crospangYM3812IrqHandler, crospangSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(3579545);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1056000 / 132, 1);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);

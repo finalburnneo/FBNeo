@@ -239,7 +239,7 @@ void __fastcall rollerg_sound_write(UINT16 address, UINT8 data)
 	{
 		case 0xc000:
 		case 0xc001:
-			BurnYM3812Write(address & 1, data);
+			BurnYM3812Write(0, address & 1, data);
 		return;
 
 		case 0xfc00:
@@ -260,7 +260,7 @@ UINT8 __fastcall rollerg_sound_read(UINT16 address)
 	{
 		case 0xc000:
 		case 0xc001:
-			return BurnYM3812Read(address & 1);
+			return BurnYM3812Read(0, address & 1);
 	}
 
 	if (address >= 0xa000 && address <= 0xa02f) {
@@ -411,9 +411,9 @@ static INT32 DrvInit()
 	K051316Init(0, DrvGfxROM1, DrvGfxROMExp1, 0x07ffff, K051316Callback, 4, 0);
 	K051316SetOffset(0, -90, -15);
 
-	BurnYM3812Init(3579545, NULL, DrvSynchroniseStream, 0);
+	BurnYM3812Init(1, 3579545, NULL, DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(3579545);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	K053260Init(0, 3579545, DrvSndROM, 0x80000);
 	K053260PCMSetAllRoutes(0, 0.70, BURN_SND_ROUTE_BOTH);

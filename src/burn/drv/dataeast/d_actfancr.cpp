@@ -355,7 +355,7 @@ static void Dec0_sound_write(UINT16 address, UINT8 data)
 
 		case 0x1000:
 		case 0x1001:
-			BurnYM3812Write(address & 1, data);
+			BurnYM3812Write(0, address & 1, data);
 		return;
 
 		case 0x3800:
@@ -515,9 +515,9 @@ static void Dec0SoundInit()
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.90, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.90, BURN_SND_ROUTE_BOTH);
 
-	BurnYM3812Init(3000000, &Dec0YM3812IRQHandler, &Dec0YM3812SynchroniseStream, 1);
+	BurnYM3812Init(1, 3000000, &Dec0YM3812IRQHandler, &Dec0YM3812SynchroniseStream, 1);
 	BurnTimerAttachM6502YM3812(1500000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.90, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.90, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1024188 / 132, 1);
 	MSM6295SetRoute(0, 0.85, BURN_SND_ROUTE_BOTH);

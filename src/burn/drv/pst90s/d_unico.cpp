@@ -557,7 +557,7 @@ UINT8 __fastcall Burglarx68KReadByte(UINT32 a)
 		}
 		
 		case 0x80018c: {
-			return BurnYM3812Read(0);
+			return BurnYM3812Read(0, 0);
 		}
 		
 		default: {
@@ -577,12 +577,12 @@ void __fastcall Burglarx68KWriteByte(UINT32 a, UINT8 d)
 		}
 		
 		case 0x80018a: {
-			BurnYM3812Write(1, d);
+			BurnYM3812Write(0, 1, d);
 			return;
 		}
 		
 		case 0x80018c: {
-			BurnYM3812Write(0, d);
+			BurnYM3812Write(0, 0, d);
 			return;
 		}
 		
@@ -725,7 +725,7 @@ UINT8 __fastcall Zeropnt68KReadByte(UINT32 a)
 		}
 		
 		case 0x80018c: {
-			return BurnYM3812Read(0);
+			return BurnYM3812Read(0, 0);
 		}
 		
 		default: {
@@ -745,12 +745,12 @@ void __fastcall Zeropnt68KWriteByte(UINT32 a, UINT8 d)
 		}
 		
 		case 0x80018a: {
-			BurnYM3812Write(1, d);
+			BurnYM3812Write(0, 1, d);
 			return;
 		}
 		
 		case 0x80018c: {
-			BurnYM3812Write(0, d);
+			BurnYM3812Write(0, 0, d);
 			return;
 		}
 		
@@ -1117,9 +1117,9 @@ static INT32 BurglarxInit()
 	SekSetWriteByteHandler(0, Burglarx68KWriteByte);
 	SekClose();
 	
-	BurnYM3812Init(3579545, NULL, &BurglarxSynchroniseStream, 0);
+	BurnYM3812Init(1, 3579545, NULL, &BurglarxSynchroniseStream, 0);
 	BurnTimerAttachSekYM3812(16000000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.40, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.40, BURN_SND_ROUTE_BOTH);
 	
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, 1056000 / 132, 1);
@@ -1200,9 +1200,9 @@ static INT32 ZeropntInit()
 	SekSetWriteByteHandler(0, Zeropnt68KWriteByte);
 	SekClose();
 	
-	BurnYM3812Init(3579545, NULL, &BurglarxSynchroniseStream, 0);
+	BurnYM3812Init(1, 3579545, NULL, &BurglarxSynchroniseStream, 0);
 	BurnTimerAttachSekYM3812(16000000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.40, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.40, BURN_SND_ROUTE_BOTH);
 	
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, 1056000 / 132, 1);

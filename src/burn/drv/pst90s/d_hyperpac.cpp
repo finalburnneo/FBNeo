@@ -1881,7 +1881,7 @@ UINT8 __fastcall SnowbrosZ80PortRead(UINT16 a)
 
 	switch (a) {
 		case 0x02:
-			return BurnYM3812Read(0);
+			return BurnYM3812Read(0, 0);
 		case 0x04: {
 			if (ZetTotalCycles() > nCycles68KSync) {
 				BurnTimerUpdateEndYM3812();
@@ -1899,12 +1899,12 @@ void __fastcall SnowbrosZ80PortWrite(UINT16 a, UINT8 d)
 
 	switch (a) {
 		case 0x02: {
-			BurnYM3812Write(0, d);
+			BurnYM3812Write(0, 0, d);
 			return;
 		}
 
 		case 0x03: {
-			BurnYM3812Write(1, d);
+			BurnYM3812Write(0, 1, d);
 			return;
 		}
 
@@ -2614,9 +2614,9 @@ static INT32 HoneydolInit()
 	ZetSetWriteHandler(HoneydolZ80Write);
 	ZetClose();
 
-	BurnYM3812Init(3000000, &snowbrosFMIRQHandler, &HoneydolSynchroniseStream, 0);
+	BurnYM3812Init(1, 3000000, &snowbrosFMIRQHandler, &HoneydolSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(4000000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, 999900 / 132, 1);
@@ -2708,9 +2708,9 @@ static INT32 SnowbrosInit()
 	ZetSetOutHandler(SnowbrosZ80PortWrite);
 	ZetClose();
 
-	BurnYM3812Init(3000000, &snowbrosFMIRQHandler, &snowbrosSynchroniseStream, 0);
+	BurnYM3812Init(1, 3000000, &snowbrosFMIRQHandler, &snowbrosSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(6000000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

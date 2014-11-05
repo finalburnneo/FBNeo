@@ -5508,7 +5508,7 @@ void __fastcall crazyfgt_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x650000:
 		case 0x650001:
-			BurnYM3812Write(0, data);
+			BurnYM3812Write(0, 0, data);
 		return;
 
 		case 0x658000:
@@ -5527,7 +5527,7 @@ void __fastcall crazyfgt_write_word(UINT32 address, UINT16 data)
 	{
 		case 0x650000:
 		case 0x650001:
-			BurnYM3812Write(0, data);
+			BurnYM3812Write(0, 0, data);
 		return;
 
 		case 0x658000:
@@ -6749,9 +6749,9 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 	if (strstr(BurnDrvGetTextA(DRV_NAME), "kamenrid") || strstr(BurnDrvGetTextA(DRV_NAME), "wrofaero"))
 		x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
 
-	BurnYM3812Init(4000000, NULL, DrvYM3812SynchroniseStream, 0);
+	BurnYM3812Init(1, 4000000, NULL, DrvYM3812SynchroniseStream, 0);
 	BurnTimerAttachSekYM3812(16000000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	BurnYM3438Init(1, 16000000/4, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 1);
 	BurnTimerAttachZet(4000000);

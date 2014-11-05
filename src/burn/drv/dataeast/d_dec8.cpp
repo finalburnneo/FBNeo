@@ -1032,7 +1032,7 @@ void ghostb_sound_write(UINT16 address, UINT8 data)
 
 		case 0x4000:
 		case 0x4001:
-			BurnYM3812Write(address & 1, data);
+			BurnYM3812Write(0, address & 1, data);
 		return;
 	}
 }
@@ -1341,9 +1341,9 @@ static INT32 DrvInit()
 
 	BurnSetRefreshRate(58.00);
 
-	BurnYM3812Init(3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStream, 0);
+	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStream, 0);
 	BurnTimerAttachM6502YM3812(1500000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, DrvYM2203SynchroniseStream, DrvYM2203GetTime, 1);
 	BurnTimerAttachHD6309(12000000);
@@ -2149,9 +2149,9 @@ static INT32 CobraInit()
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.53, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.53, BURN_SND_ROUTE_BOTH);
 	
-	BurnYM3812Init(3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStream, 1);
+	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStream, 1);
 	BurnTimerAttachM6502YM3812(1500000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -2744,9 +2744,9 @@ static INT32 SrdarwinInit()
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.23, BURN_SND_ROUTE_BOTH);
 	
-	BurnYM3812Init(3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStream, 1);
+	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStream, 1);
 	BurnTimerAttachM6502YM3812(1500000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

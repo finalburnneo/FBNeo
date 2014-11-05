@@ -551,7 +551,7 @@ void __fastcall lordgun_sound_write_port(UINT16 port, UINT8 data)
 	{
 		case 0x1000:	// lordgun
 		case 0x1001:
-			BurnYM3812Write(port & 1, data);
+			BurnYM3812Write(0, port & 1, data);
 		return;
 
 		case 0x2000:	// lordgun
@@ -887,9 +887,9 @@ static INT32 DrvInit(INT32 (*pInitCallback)(), INT32 lordgun)
 	BurnTimerAttachZet(5000000);
 
 	// lordgun
-	BurnYM3812Init(3579545, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
+	BurnYM3812Init(1, 3579545, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(5000000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1000000 / 132, 1);
 	MSM6295Init(1, 1000000 / 132, 1); // aliencha

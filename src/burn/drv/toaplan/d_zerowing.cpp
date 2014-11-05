@@ -329,7 +329,7 @@ UINT8 __fastcall zerowingZ80In(UINT16 nAddress)
 
 	switch (nAddress) {
 		case 0xa8:
-			return BurnYM3812Read(0);
+			return BurnYM3812Read(0, 0);
 		case 0x20:					// DIP A
 			return DrvInput[2];
 		case 0x28:					// DIP B
@@ -356,10 +356,10 @@ void __fastcall zerowingZ80Out(UINT16 nAddress, UINT8 nValue)
 
 	switch (nAddress) {
 		case 0xa8:
-			BurnYM3812Write(0, nValue);
+			BurnYM3812Write(0, 0, nValue);
 			break;
 		case 0xa9:
-			BurnYM3812Write(1, nValue);
+			BurnYM3812Write(0, 1, nValue);
 			break;
 
 		case 0xa0:				// Coin counter
@@ -624,9 +624,9 @@ static INT32 DrvInit()
 	ToaPalSrc2 = RamPal2;
 	ToaPalInit();
 
-	BurnYM3812Init(28000000 / 8, &toaplan1FMIRQHandler, &toaplan1SynchroniseStream, 0);
+	BurnYM3812Init(1, 28000000 / 8, &toaplan1FMIRQHandler, &toaplan1SynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(28000000 / 8);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	bDrawScreen = true;
 

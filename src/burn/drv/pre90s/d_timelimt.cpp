@@ -632,10 +632,10 @@ struct BurnDriver BurnDrvTimelimt = {
 	"timelimt", NULL, NULL, NULL, "1983",
 	"Time Limit\0", NULL, "Chuo Co. Ltd", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, timelimtRomInfo, timelimtRomName, NULL, NULL, TimelimtInputInfo, TimelimtDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
-	256, 224, 4, 3
+	224, 256, 3, 4
 };
 
 

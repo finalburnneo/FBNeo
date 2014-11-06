@@ -579,13 +579,13 @@ static INT32 DrvInit()
 
 	EEPROMInit(&xexex_eeprom_interface);
 
-	BurnYM2151Init(4000000);
+	BurnYM2151Init(3700000); // 4mhz on pcb, but 3.7mhz here to match the tuning of the k054539, otherwise the music sounds horrible! - dink Nov.6.2014
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_BOTH);
 
 	K054539Init(0, 48000, DrvSndROM, 0x300000);
-	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
-	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
+	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	DrvDoReset();
 
@@ -698,7 +698,7 @@ static INT32 DrvFrame()
 		DrvInputs[3] = DrvDips[0] & 0x08;
 	}
 
-	INT32 nInterleave = nBurnSoundLen;
+	INT32 nInterleave = 120;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };

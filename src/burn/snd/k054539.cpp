@@ -885,7 +885,7 @@ INT32 K054539Scan(INT32 nAction)
 		return 1;
 	}
 
-	for (INT32 i = 0; i < 2; i++) {
+	for (INT32 i = 0; i < nNumChips+1; i++) {
 		info = &Chips[i];
 
 		sprintf(szName, "K054539 Latch %d", 0);

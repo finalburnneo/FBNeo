@@ -2712,7 +2712,7 @@ void t90_internal_registers_w(UINT16 offset, UINT8 data)
 	cpustate->internal_registers[offset] = data;
 }
 
-INT32 tlcs90_init(INT32 /*clock*/)
+INT32 tlcs90_init(INT32 clock)
 {
 	t90_Regs *cpustate = &tlcs90_data[0];
 	INT32 i, p;
@@ -2743,7 +2743,7 @@ INT32 tlcs90_init(INT32 /*clock*/)
 
 	memset(cpustate, 0, sizeof(t90_Regs));
 
-	cpustate->timer_period = 8; // changed to "8" -dink //(1.000000000 / clock) * 8;
+	cpustate->timer_period = clock / 1000000;
 
 	// Reset registers to their initial values
 

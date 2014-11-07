@@ -138,8 +138,9 @@ void DACSignedWrite(INT32 Chip, UINT8 Data)
 	if (Chip > NumChips) bprintf(PRINT_ERROR, _T("DACSignedWrite called with invalid chip number %x\n"), Chip);
 #endif
 
-	if (Data == 0x77 || Data == 0x7f || Data == 0x80)
-		return; // HACK: buzzing fix (armed formation, terra cresta, Soldier Girl Amazon, & possibly others.)
+	//as of nov.7 2014 no longer needed, keeping just in-case :)
+	//if (Data == 0x77 || Data == 0x7f || Data == 0x80)
+	//	return; // HACK: buzzing fix (armed formation, terra cresta, Soldier Girl Amazon, & possibly others.)
 
 	struct dac_info *ptr;
 

@@ -1013,8 +1013,8 @@ static INT32 m660Init()
 		if (BurnLoadRom(DrvGfxROM0 + 0x08000,  8, 1)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM1 + 0x00000,  9, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x01000, 10, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x02000, 11, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x02000, 10, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x04000, 11, 1)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM2 + 0x00000, 12, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM2 + 0x04000, 13, 1)) return 1;
@@ -1024,7 +1024,7 @@ static INT32 m660Init()
 		if (BurnLoadRom(DrvColPROM + 0x00100, 16, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x00200, 17, 1)) return 1;
 
-		DrvGfxDecode(0xc000, 0x3000, 0xc000);
+		DrvGfxDecode(0xc000, 0x6000, 0xc000);
 		DrvPaletteInit();
 	}
 

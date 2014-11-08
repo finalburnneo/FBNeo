@@ -986,7 +986,7 @@ static INT32 DrvInit(INT32 game)
 	return 0;
 }
 
-static INT32 m660Init()
+static INT32 m660CommonInit(INT32 game)
 {
 	game_select = 2;
 
@@ -997,65 +997,67 @@ static INT32 m660Init()
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "m660"))
 	{
-		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  1, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  2, 1)) return 1;
+		if (game == 0)
+		{
+			if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  1, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  2, 1)) return 1;
 
-		if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  3, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  3, 1)) return 1;
 
-		if (BurnLoadRom(DrvZ80ROM2 + 0x00000,  4, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM2 + 0x00000,  4, 1)) return 1;
 
-		if (BurnLoadRom(DrvZ80ROM3 + 0x00000,  5, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM3 + 0x00000,  5, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  6, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x04000,  7, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x08000,  8, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x00000,  6, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x04000,  7, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x08000,  8, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x00000,  9, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x02000, 10, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x04000, 11, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x00000,  9, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x02000, 10, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x04000, 11, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM2 + 0x00000, 12, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x04000, 13, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x08000, 14, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x00000, 12, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x04000, 13, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x08000, 14, 1)) return 1;
 
-		if (BurnLoadRom(DrvColPROM + 0x00000, 15, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x00100, 16, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x00200, 17, 1)) return 1;
+			if (BurnLoadRom(DrvColPROM + 0x00000, 15, 1)) return 1;
+			if (BurnLoadRom(DrvColPROM + 0x00100, 16, 1)) return 1;
+			if (BurnLoadRom(DrvColPROM + 0x00200, 17, 1)) return 1;
 	} else { // m660j
-		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  1, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  2, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  1, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  2, 1)) return 1;
 
-		if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  3, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  3, 1)) return 1;
 
-		if (BurnLoadRom(DrvZ80ROM2 + 0x00000,  4, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM2 + 0x00000,  4, 1)) return 1;
 
-		if (BurnLoadRom(DrvZ80ROM3 + 0x00000,  5, 1)) return 1;
-		if (BurnLoadRom(DrvZ80ROM3 + 0x04000,  6, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM3 + 0x00000,  5, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM3 + 0x04000,  6, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  7, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x04000,  8, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x08000,  9, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x00000,  7, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x04000,  8, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x08000,  9, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x00000, 10, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x02000, 11, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x04000, 12, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x00000, 10, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x02000, 11, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM1 + 0x04000, 12, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM2 + 0x00000, 13, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x04000, 14, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x08000, 15, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x00000, 13, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x04000, 14, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM2 + 0x08000, 15, 1)) return 1;
 
-		if (BurnLoadRom(DrvColPROM + 0x00000, 16, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x00100, 17, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x00200, 18, 1)) return 1;
-	}
+			if (BurnLoadRom(DrvColPROM + 0x00000, 16, 1)) return 1;
+			if (BurnLoadRom(DrvColPROM + 0x00100, 17, 1)) return 1;
+			if (BurnLoadRom(DrvColPROM + 0x00200, 18, 1)) return 1;
+		}
 
 	DrvGfxDecode(0xc000, 0x6000, 0xc000);
 	DrvPaletteInit();
-
+	}
+	
 	ZetInit(0);
 	ZetOpen(0);
 	ZetMapMemory(DrvZ80ROM0,	0x0000, 0xbfff, ZET_ROM);
@@ -1745,6 +1747,11 @@ static struct BurnRomInfo m660RomDesc[] = {
 STD_ROM_PICK(m660)
 STD_ROM_FN(m660)
 
+static INT32 m660Init()
+{
+	return m660CommonInit(0);
+}
+
 struct BurnDriver BurnDrvM660 = {
 	"m660", NULL, NULL, NULL, "1986",
 	"Mission 660 (US)\0", NULL, "Wood Place Inc. (Taito America Corporation license)", "Miscellaneous",
@@ -1790,13 +1797,18 @@ static struct BurnRomInfo m660jRomDesc[] = {
 STD_ROM_PICK(m660j)
 STD_ROM_FN(m660j)
 
+static INT32 m660jInit()
+{
+	return m660CommonInit(1);
+}
+
 struct BurnDriver BurnDrvM660j = {
 	"m660j", "m660", NULL, NULL, "1986",
 	"Mission 660 (Japan)\0", NULL, "Wood Place Inc. (Taito Corporation license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, m660jRomInfo, m660jRomName, NULL, NULL, TsamuraiInputInfo, M660DIPInfo,
-	m660Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	m660jInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
 

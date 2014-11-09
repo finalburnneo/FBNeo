@@ -755,7 +755,7 @@ static INT32 DrvFrame()
 
 	INT32 nCycleSegment;
 	INT32 nSoundBufferPos = 0;
-	INT32 nInterleave = 100;
+	INT32 nInterleave = 150;
 	INT32 nCyclesTotal[3] = { 10000000 / 60, 10000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 

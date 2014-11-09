@@ -10,23 +10,24 @@
 /* ======================================================================== */
 /*
  *                                  MUSASHI
- *                                Version 3.3
+ *                                Version 3.32
  *
  * A portable Motorola M680x0 processor emulation engine.
- * Copyright 1998-2001 Karl Stenerud.  All rights reserved.
+ * Copyright Karl Stenerud.  All rights reserved.
  *
  * This code may be freely used for non-commercial purposes as long as this
  * copyright notice remains unaltered in the source code and any binary files
  * containing this code in compiled form.
  *
- * All other lisencing terms must be negotiated with the author
+ * All other licensing terms must be negotiated with the author
  * (Karl Stenerud).
  *
  * The latest version of this code can be obtained at:
  * http://kstenerud.cjb.net
  */
 
-/* ======================================================================== */
+
+
 /* ============================ GENERAL DEFINES =========================== */
 
 /* ======================================================================== */
@@ -76,7 +77,7 @@ enum
 };
 
 /* Registers used by m68k_get_reg() and m68k_set_reg() */
-typedef enum
+enum _m68k_register_t
 {
 	/* Real registers */
 	M68K_REG_D0,		/* Data registers */
@@ -109,8 +110,8 @@ typedef enum
 
 	/* Assumed registers */
 	/* These are cheat registers which emulate the 1-longword prefetch
-	 * present in the 68000 and 68010.
-	 */
+     * present in the 68000 and 68010.
+     */
 	M68K_REG_PREF_ADDR,	/* Last prefetch address */
 	M68K_REG_PREF_DATA,	/* Last prefetch data */
 
@@ -118,7 +119,10 @@ typedef enum
 	M68K_REG_PPC,		/* Previous value in the program counter */
 	M68K_REG_IR,		/* Instruction register */
 	M68K_REG_CPU_TYPE	/* Type of CPU being run */
-} m68k_register_t;
+};
+typedef enum _m68k_register_t m68k_register_t;
+
+
 
 /* ======================================================================== */
 /* ====================== FUNCTIONS CALLED BY THE CPU ===================== */
@@ -236,6 +240,14 @@ void m68k_set_cmpild_instr_callback(void  (*callback)(unsigned int val, int reg)
  */
 void m68k_set_rte_instr_callback(void  (*callback)(void));
 
+/* Set the callback for the TAS instruction.
+ * You must enable M68K_TAS_HAS_CALLBACK in m68kconf.h.
+ * The CPU calls this callback every time it encounters a TAS instruction.
+ * Default behavior: return 1, allow writeback.
+ */
+void m68k_set_tas_instr_callback(int  (*callback)(void));
+
+
 
 /* Set the callback for informing of a large PC change.
  * You must enable M68K_MONITOR_PC in m68kconf.h.
@@ -262,7 +274,7 @@ void m68k_set_fc_callback(void  (*callback)(unsigned int new_fc));
  * instruction cycle.
  * Default behavior: do nothing.
  */
-void m68k_set_instr_hook_callback(void  (*callback)(void));
+void m68k_set_instr_hook_callback(void  (*callback)(unsigned int pc));
 
 
 
@@ -308,6 +320,12 @@ void m68k_end_timeslice(void);          /* End timeslice now */
  */
 void m68k_set_irq(unsigned int int_level);
 
+/* Set the virtual irq lines, where the highest level
+ * active line is automatically selected.  If you use this function,
+ * do not use m68k_set_irq.
+ */
+void m68k_set_virq(unsigned int level, unsigned int active);
+unsigned int m68k_get_virq(unsigned int level);
 
 /* Halt the CPU as if you pulsed the HALT pin. */
 void m68k_pulse_halt(void);
@@ -325,7 +343,7 @@ unsigned int m68k_get_context(void* dst);
 void m68k_set_context(void* dst);
 
 /* Register the CPU state information */
-void m68k_state_register(const char *type);
+void m68k_state_register(const char *type, int index);
 
 
 /* Peek at the internals of a CPU context.  This can either be a context
@@ -344,6 +362,11 @@ unsigned int m68k_is_valid_instruction(unsigned int instruction, unsigned int cp
  * disassembly in str_buff and returns the size of the instruction in bytes.
  */
 unsigned int m68k_disassemble(char* str_buff, unsigned int pc, unsigned int cpu_type);
+
+/* Same as above but accepts raw opcode data directly rather than fetching
+ * via the read/write interfaces.
+ */
+unsigned int m68k_disassemble_raw(char* str_buff, unsigned int pc, const unsigned char* opdata, const unsigned char* argdata, unsigned int cpu_type);
 
 
 /* ======================================================================== */

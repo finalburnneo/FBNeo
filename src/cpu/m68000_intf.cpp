@@ -107,7 +107,7 @@ inline static void CheckBreakpoint_W(UINT32 a, const UINT32 m)
 	}
 }
 
-inline static void CheckBreakpoint_PC()
+inline static void CheckBreakpoint_PC(unsigned int /*pc*/)
 {
 	for (INT32 i = 0; BreakpointFetch[i].address; i++) {
 		if (BreakpointFetch[i].address == (UINT32)SekGetPC(-1)) {
@@ -122,7 +122,7 @@ inline static void CheckBreakpoint_PC()
 	}
 }
 
-inline static void SingleStep_PC()
+inline static void SingleStep_PC(unsigned int /*pc*/)
 {
 #ifdef EMU_A68K
 	UpdateA68KContext();
@@ -512,7 +512,7 @@ struct A68KContext* SekRegs[SEK_MAX] = { NULL, };
 #endif
 
 struct A68KInter {
-	void (__fastcall *DebugCallback) ();
+	void (__fastcall *DebugCallback) (unsigned int pc);
 	UINT8  (__fastcall *Read8) (UINT32 a);
 	UINT16 (__fastcall *Read16)(UINT32 a);
 	UINT32   (__fastcall *Read32)(UINT32 a);
@@ -556,8 +556,8 @@ void __fastcall A68KWrite16(UINT32 a,UINT16 d) { WriteWord(a,d);}
 void __fastcall A68KWrite32(UINT32 a,UINT32 d)   { WriteLong(a,d);}
 
 #if defined (FBA_DEBUG)
-void __fastcall A68KCheckBreakpoint() { CheckBreakpoint_PC(); }
-void __fastcall A68KSingleStep() { SingleStep_PC(); }
+void __fastcall A68KCheckBreakpoint(unsigned int pc) { CheckBreakpoint_PC(pc); }
+void __fastcall A68KSingleStep(unsigned int pc) { SingleStep_PC(pc); }
 #endif
 
 #ifdef EMU_A68K
@@ -592,8 +592,8 @@ void __fastcall M68KWriteByteBP(UINT32 a, UINT32 d) { WriteByteBP(a, d); }
 void __fastcall M68KWriteWordBP(UINT32 a, UINT32 d) { WriteWordBP(a, d); }
 void __fastcall M68KWriteLongBP(UINT32 a, UINT32 d) { WriteLongBP(a, d); }
 
-void M68KCheckBreakpoint() { CheckBreakpoint_PC(); }
-void M68KSingleStep() { SingleStep_PC(); }
+void M68KCheckBreakpoint(unsigned int pc) { CheckBreakpoint_PC(pc); }
+void M68KSingleStep(unsigned int pc) { SingleStep_PC(pc); }
 
 UINT32 (__fastcall *M68KReadByteDebug)(UINT32);
 UINT32 (__fastcall *M68KReadWordDebug)(UINT32);

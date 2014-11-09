@@ -128,7 +128,7 @@ psikyo_tile_func.h = $(srcdir)dep/generated/psikyo_tile_func.h
 pgm_sprite.h = $(srcdir)dep/generated/pgm_sprite.h
 build_details.h = $(srcdir)dep/generated/build_details.h
 
-allobj	= $(objdir)cpu/m68k/m68kcpu.o $(objdir)cpu/m68k/m68kopnz.o $(objdir)cpu/m68k/m68kopdm.o $(objdir)cpu/m68k/m68kopac.o $(objdir)cpu/m68k/m68kops.o $(objdir)burner/win32/resource.res \
+allobj	= $(objdir)cpu/m68k/m68kcpu.o $(objdir)cpu/m68k/m68kops.o $(objdir)burner/win32/resource.res \
 	  $(foreach file,$(autobj:.o=.c), \
 		$(foreach dir,$(alldir),$(subst $(srcdir),$(objdir), \
 		$(firstword $(subst .c,.o,$(wildcard $(srcdir)$(dir)/$(file))))))) \

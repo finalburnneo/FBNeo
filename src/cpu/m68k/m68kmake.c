@@ -3,16 +3,16 @@
 /* ======================================================================== */
 /*
  *                                  MUSASHI
- *                                Version 3.3
+ *                                Version 3.32
  *
  * A portable Motorola M680x0 processor emulation engine.
- * Copyright 1998-2001 Karl Stenerud.  All rights reserved.
+ * Copyright Karl Stenerud.  All rights reserved.
  *
  * This code may be freely used for non-commercial purposes as long as this
  * copyright notice remains unaltered in the source code and any binary files
  * containing this code in compiled form.
  *
- * All other lisencing terms must be negotiated with the author
+ * All other licensing terms must be negotiated with the author
  * (Karl Stenerud).
  *
  * The latest version of this code can be obtained at:
@@ -52,7 +52,7 @@
  */
 
 
-const char* g_version = "3.3";
+static const char g_version[] = "3.32";
 
 /* ======================================================================== */
 /* =============================== INCLUDES =============================== */
@@ -88,9 +88,6 @@ const char* g_version = "3.3";
 #define FILENAME_INPUT      "m68k_in.c"
 #define FILENAME_PROTOTYPE  "m68kops.h"
 #define FILENAME_TABLE      "m68kops.c"
-#define FILENAME_OPS_AC     "m68kopac.c"
-#define FILENAME_OPS_DM     "m68kopdm.c"
-#define FILENAME_OPS_NZ     "m68kopnz.c"
 
 
 /* Identifier sequences recognized by this program */
@@ -130,10 +127,12 @@ const char* g_version = "3.3";
 /* ============================== PROTOTYPES ============================== */
 /* ======================================================================== */
 
-enum {
+enum
+{
 	CPU_TYPE_000 = 0,
 	CPU_TYPE_010,
 	CPU_TYPE_020,
+	CPU_TYPE_040,
 	NUM_CPUS
 };
 
@@ -229,7 +228,6 @@ int extract_opcode_info(char* src, char* name, int* size, char* spec_proc, char*
 void add_replace_string(replace_struct* replace, const char* search_str, const char* replace_str);
 void write_body(FILE* filep, body_struct* body, replace_struct* replace);
 void get_base_name(char* base_name, opcode_struct* op);
-void write_prototype(FILE* filep, char* base_name);
 void write_function_name(FILE* filep, char* base_name);
 void add_opcode_output_table_entry(opcode_struct* op, char* name);
 static int DECL_SPEC compare_nof_true_bits(const void* aptr, const void* bptr);
@@ -239,7 +237,7 @@ void set_opcode_struct(opcode_struct* src, opcode_struct* dst, int ea_mode);
 void generate_opcode_handler(FILE* filep, body_struct* body, replace_struct* replace, opcode_struct* opinfo, int ea_mode);
 void generate_opcode_ea_variants(FILE* filep, body_struct* body, replace_struct* replace, opcode_struct* op);
 void generate_opcode_cc_variants(FILE* filep, body_struct* body, replace_struct* replace, opcode_struct* op_in, int offset);
-void process_opcode_handlers(void);
+void process_opcode_handlers(FILE* filep);
 void populate_table(void);
 void read_insert(char* insert);
 
@@ -256,9 +254,6 @@ char g_input_filename[M68K_MAX_PATH] = FILENAME_INPUT;
 FILE* g_input_file = NULL;
 FILE* g_prototype_file = NULL;
 FILE* g_table_file = NULL;
-FILE* g_ops_ac_file = NULL;
-FILE* g_ops_dm_file = NULL;
-FILE* g_ops_nz_file = NULL;
 
 int g_num_functions = 0;  /* Number of functions processed */
 int g_num_primitives = 0; /* Number of function primitives read */
@@ -270,7 +265,7 @@ opcode_struct g_opcode_input_table[MAX_OPCODE_INPUT_TABLE_LENGTH];
 opcode_struct g_opcode_output_table[MAX_OPCODE_OUTPUT_TABLE_LENGTH];
 int g_opcode_output_table_length = 0;
 
-ea_info_struct g_ea_info_table[13] =
+const ea_info_struct g_ea_info_table[13] =
 {/* fname    ea        mask  match */
 	{"",     "",       0x00, 0x00}, /* EA_MODE_NONE */
 	{"ai",   "AY_AI",  0x38, 0x10}, /* EA_MODE_AI   */
@@ -288,7 +283,7 @@ ea_info_struct g_ea_info_table[13] =
 };
 
 
-const char* g_cc_table[16][2] =
+const char *const g_cc_table[16][2] =
 {
 	{ "t",  "T"}, /* 0000 */
 	{ "f",  "F"}, /* 0001 */
@@ -309,7 +304,7 @@ const char* g_cc_table[16][2] =
 };
 
 /* size to index translator (0 -> 0, 8 and 16 -> 1, 32 -> 2) */
-int g_size_select_table[33] =
+const int g_size_select_table[33] =
 {
 	0,												/* unsized */
 	0, 0, 0, 0, 0, 0, 0, 1,							/*    8    */
@@ -318,25 +313,26 @@ int g_size_select_table[33] =
 };
 
 /* Extra cycles required for certain EA modes */
-int g_ea_cycle_table[13][NUM_CPUS][3] =
-{/*       000           010           020   */
-	{{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}}, /* EA_MODE_NONE */
-	{{ 0,  4,  8}, { 0,  4,  8}, { 0,  4,  4}}, /* EA_MODE_AI   */
-	{{ 0,  4,  8}, { 0,  4,  8}, { 0,  4,  4}}, /* EA_MODE_PI   */
-	{{ 0,  4,  8}, { 0,  4,  8}, { 0,  4,  4}}, /* EA_MODE_PI7  */
-	{{ 0,  6, 10}, { 0,  6, 10}, { 0,  5,  5}}, /* EA_MODE_PD   */
-	{{ 0,  6, 10}, { 0,  6, 10}, { 0,  5,  5}}, /* EA_MODE_PD7  */
-	{{ 0,  8, 12}, { 0,  8, 12}, { 0,  5,  5}}, /* EA_MODE_DI   */
-	{{ 0, 10, 14}, { 0, 10, 14}, { 0,  7,  7}}, /* EA_MODE_IX   */
-	{{ 0,  8, 12}, { 0,  8, 12}, { 0,  4,  4}}, /* EA_MODE_AW   */
-	{{ 0, 12, 16}, { 0, 12, 16}, { 0,  4,  4}}, /* EA_MODE_AL   */
-	{{ 0,  8, 12}, { 0,  8, 12}, { 0,  5,  5}}, /* EA_MODE_PCDI */
-	{{ 0, 10, 14}, { 0, 10, 14}, { 0,  7,  7}}, /* EA_MODE_PCIX */
-	{{ 0,  4,  8}, { 0,  4,  8}, { 0,  2,  4}}, /* EA_MODE_I    */
+/* TODO: correct timings for 040 */
+const int g_ea_cycle_table[13][NUM_CPUS][3] =
+{/*       000           010           020           040  */
+	{{ 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}, { 0,  0,  0}}, /* EA_MODE_NONE */
+	{{ 0,  4,  8}, { 0,  4,  8}, { 0,  4,  4}, { 0,  4,  4}}, /* EA_MODE_AI   */
+	{{ 0,  4,  8}, { 0,  4,  8}, { 0,  4,  4}, { 0,  4,  4}}, /* EA_MODE_PI   */
+	{{ 0,  4,  8}, { 0,  4,  8}, { 0,  4,  4}, { 0,  4,  4}}, /* EA_MODE_PI7  */
+	{{ 0,  6, 10}, { 0,  6, 10}, { 0,  5,  5}, { 0,  5,  5}}, /* EA_MODE_PD   */
+	{{ 0,  6, 10}, { 0,  6, 10}, { 0,  5,  5}, { 0,  5,  5}}, /* EA_MODE_PD7  */
+	{{ 0,  8, 12}, { 0,  8, 12}, { 0,  5,  5}, { 0,  5,  5}}, /* EA_MODE_DI   */
+	{{ 0, 10, 14}, { 0, 10, 14}, { 0,  7,  7}, { 0,  7,  7}}, /* EA_MODE_IX   */
+	{{ 0,  8, 12}, { 0,  8, 12}, { 0,  4,  4}, { 0,  4,  4}}, /* EA_MODE_AW   */
+	{{ 0, 12, 16}, { 0, 12, 16}, { 0,  4,  4}, { 0,  4,  4}}, /* EA_MODE_AL   */
+	{{ 0,  8, 12}, { 0,  8, 12}, { 0,  5,  5}, { 0,  5,  5}}, /* EA_MODE_PCDI */
+	{{ 0, 10, 14}, { 0, 10, 14}, { 0,  7,  7}, { 0,  7,  7}}, /* EA_MODE_PCIX */
+	{{ 0,  4,  8}, { 0,  4,  8}, { 0,  2,  4}, { 0,  2,  4}}, /* EA_MODE_I    */
 };
 
 /* Extra cycles for JMP instruction (000, 010) */
-int g_jmp_cycle_table[13] =
+const int g_jmp_cycle_table[13] =
 {
 	 0, /* EA_MODE_NONE */
 	 4, /* EA_MODE_AI   */
@@ -354,7 +350,7 @@ int g_jmp_cycle_table[13] =
 };
 
 /* Extra cycles for JSR instruction (000, 010) */
-int g_jsr_cycle_table[13] =
+const int g_jsr_cycle_table[13] =
 {
 	 0, /* EA_MODE_NONE */
 	 4, /* EA_MODE_AI   */
@@ -372,7 +368,7 @@ int g_jsr_cycle_table[13] =
 };
 
 /* Extra cycles for LEA instruction (000, 010) */
-int g_lea_cycle_table[13] =
+const int g_lea_cycle_table[13] =
 {
 	 0, /* EA_MODE_NONE */
 	 4, /* EA_MODE_AI   */
@@ -390,7 +386,7 @@ int g_lea_cycle_table[13] =
 };
 
 /* Extra cycles for PEA instruction (000, 010) */
-int g_pea_cycle_table[13] =
+const int g_pea_cycle_table[13] =
 {
 	 0, /* EA_MODE_NONE */
 	 6, /* EA_MODE_AI   */
@@ -408,7 +404,7 @@ int g_pea_cycle_table[13] =
 };
 
 /* Extra cycles for MOVEM instruction (000, 010) */
-int g_movem_cycle_table[13] =
+const int g_movem_cycle_table[13] =
 {
 	 0, /* EA_MODE_NONE */
 	 0, /* EA_MODE_AI   */
@@ -426,7 +422,7 @@ int g_movem_cycle_table[13] =
 };
 
 /* Extra cycles for MOVES instruction (010) */
-int g_moves_cycle_table[13][3] =
+const int g_moves_cycle_table[13][3] =
 {
 	{ 0,  0,  0}, /* EA_MODE_NONE */
 	{ 0,  4,  6}, /* EA_MODE_AI   */
@@ -444,7 +440,7 @@ int g_moves_cycle_table[13][3] =
 };
 
 /* Extra cycles for CLR instruction (010) */
-int g_clr_cycle_table[13][3] =
+const int g_clr_cycle_table[13][3] =
 {
 	{ 0,  0,  0}, /* EA_MODE_NONE */
 	{ 0,  4,  6}, /* EA_MODE_AI   */
@@ -479,9 +475,6 @@ void error_exit(const char* fmt, ...)
 
 	if(g_prototype_file) fclose(g_prototype_file);
 	if(g_table_file) fclose(g_table_file);
-	if(g_ops_ac_file) fclose(g_ops_ac_file);
-	if(g_ops_dm_file) fclose(g_ops_dm_file);
-	if(g_ops_nz_file) fclose(g_ops_nz_file);
 	if(g_input_file) fclose(g_input_file);
 
 	exit(EXIT_FAILURE);
@@ -498,9 +491,6 @@ void perror_exit(const char* fmt, ...)
 
 	if(g_prototype_file) fclose(g_prototype_file);
 	if(g_table_file) fclose(g_table_file);
-	if(g_ops_ac_file) fclose(g_ops_ac_file);
-	if(g_ops_dm_file) fclose(g_ops_dm_file);
-	if(g_ops_nz_file) fclose(g_ops_nz_file);
 	if(g_input_file) fclose(g_input_file);
 
 	exit(EXIT_FAILURE);
@@ -788,16 +778,10 @@ void get_base_name(char* base_name, opcode_struct* op)
 		sprintf(base_name+strlen(base_name), "_%s", op->spec_ea);
 }
 
-/* Write the prototype of an opcode handler function */
-void write_prototype(FILE* filep, char* base_name)
-{
-	fprintf(filep, "void %s(void);\n", base_name);
-}
-
 /* Write the name of an opcode handler function */
 void write_function_name(FILE* filep, char* base_name)
 {
-	fprintf(filep, "void %s(void)\n", base_name);
+	fprintf(filep, "static void %s(void)\n", base_name);
 }
 
 void add_opcode_output_table_entry(opcode_struct* op, char* name)
@@ -880,7 +864,6 @@ void generate_opcode_handler(FILE* filep, body_struct* body, replace_struct* rep
 	/* Set the opcode structure and write the tables, prototypes, etc */
 	set_opcode_struct(opinfo, op, ea_mode);
 	get_base_name(str, op);
-	write_prototype(g_prototype_file, str);
 	add_opcode_output_table_entry(op, str);
 	write_function_name(filep, str);
 
@@ -999,10 +982,9 @@ void generate_opcode_cc_variants(FILE* filep, body_struct* body, replace_struct*
 }
 
 /* Process the opcode handlers section of the input file */
-void process_opcode_handlers(void)
+void process_opcode_handlers(FILE* filep)
 {
 	FILE* input_file = g_input_file;
-	FILE* output_file;
 	char func_name[MAX_LINE_LENGTH+1];
 	char oper_name[MAX_LINE_LENGTH+1];
 	int  oper_size;
@@ -1011,9 +993,6 @@ void process_opcode_handlers(void)
 	opcode_struct* opinfo;
 	replace_struct* replace = malloc(sizeof(replace_struct));
 	body_struct* body = malloc(sizeof(body_struct));
-
-
-	output_file = g_ops_ac_file;
 
 	for(;;)
 	{
@@ -1057,23 +1036,17 @@ void process_opcode_handlers(void)
 		if(opinfo == NULL)
 			error_exit("Unable to find matching table entry for %s", func_name);
 
-        /* Change output files if we pass 'c' or 'n' */
-		if(output_file == g_ops_ac_file && oper_name[0] > 'c')
-			output_file = g_ops_dm_file;
-		else if(output_file == g_ops_dm_file && oper_name[0] > 'm')
-			output_file = g_ops_nz_file;
-
 		replace->length = 0;
 
 		/* Generate opcode variants */
 		if(strcmp(opinfo->name, "bcc") == 0 || strcmp(opinfo->name, "scc") == 0)
-			generate_opcode_cc_variants(output_file, body, replace, opinfo, 1);
+			generate_opcode_cc_variants(filep, body, replace, opinfo, 1);
 		else if(strcmp(opinfo->name, "dbcc") == 0)
-			generate_opcode_cc_variants(output_file, body, replace, opinfo, 2);
+			generate_opcode_cc_variants(filep, body, replace, opinfo, 2);
 		else if(strcmp(opinfo->name, "trapcc") == 0)
-			generate_opcode_cc_variants(output_file, body, replace, opinfo, 4);
+			generate_opcode_cc_variants(filep, body, replace, opinfo, 4);
 		else
-			generate_opcode_ea_variants(output_file, body, replace, opinfo);
+			generate_opcode_ea_variants(filep, body, replace, opinfo);
 	}
 
 	free(replace);
@@ -1246,7 +1219,9 @@ int main(int argc, char **argv)
 	/* Inserts */
 	char temp_insert[MAX_INSERT_LENGTH+1];
 	char prototype_footer_insert[MAX_INSERT_LENGTH+1];
+	char table_header_insert[MAX_INSERT_LENGTH+1];
 	char table_footer_insert[MAX_INSERT_LENGTH+1];
+	char ophandler_header_insert[MAX_INSERT_LENGTH+1];
 	char ophandler_footer_insert[MAX_INSERT_LENGTH+1];
 	/* Flags if we've processed certain parts already */
 	int prototype_header_read = 0;
@@ -1258,8 +1233,8 @@ int main(int argc, char **argv)
 	int table_body_read = 0;
 	int ophandler_body_read = 0;
 
-	printf("\n\t\tMusashi v%s 68000, 68008, 68010, 68EC020, 68020 emulator\n", g_version);
-	printf("\t\tCopyright 1998-2000 Karl Stenerud (karl@mame.net)\n\n");
+	printf("\n\tMusashi v%s 68000, 68008, 68010, 68EC020, 68020, 68040 emulator\n", g_version);
+	printf("\tCopyright Karl Stenerud (karl@mame.net)\n\n");
 
 	/* Check if output path and source for the input file are given */
     if(argc > 1)
@@ -1291,18 +1266,6 @@ int main(int argc, char **argv)
 	if((g_table_file = fopen(filename, "w")) == NULL)
 		perror_exit("Unable to create table file (%s)\n", filename);
 
-	sprintf(filename, "%s%s", output_path, FILENAME_OPS_AC);
-	if((g_ops_ac_file = fopen(filename, "w")) == NULL)
-		perror_exit("Unable to create ops ac file (%s)\n", filename);
-
-	sprintf(filename, "%s%s", output_path, FILENAME_OPS_DM);
-	if((g_ops_dm_file = fopen(filename, "w")) == NULL)
-		perror_exit("Unable to create ops dm file (%s)\n", filename);
-
-	sprintf(filename, "%s%s", output_path, FILENAME_OPS_NZ);
-	if((g_ops_nz_file = fopen(filename, "w")) == NULL)
-		perror_exit("Unable to create ops nz file (%s)\n", filename);
-
 	if((g_input_file=fopen(g_input_filename, "r")) == NULL)
 		perror_exit("can't open %s for input", g_input_filename);
 
@@ -1317,18 +1280,6 @@ int main(int argc, char **argv)
 	sprintf(filename, "%s%s", output_path, FILENAME_TABLE);
 	if((g_table_file = fopen(filename, "wt")) == NULL)
 		perror_exit("Unable to create table file (%s)\n", filename);
-
-	sprintf(filename, "%s%s", output_path, FILENAME_OPS_AC);
-	if((g_ops_ac_file = fopen(filename, "wt")) == NULL)
-		perror_exit("Unable to create ops ac file (%s)\n", filename);
-
-	sprintf(filename, "%s%s", output_path, FILENAME_OPS_DM);
-	if((g_ops_dm_file = fopen(filename, "wt")) == NULL)
-		perror_exit("Unable to create ops dm file (%s)\n", filename);
-
-	sprintf(filename, "%s%s", output_path, FILENAME_OPS_NZ);
-	if((g_ops_nz_file = fopen(filename, "wt")) == NULL)
-		perror_exit("Unable to create ops nz file (%s)\n", filename);
 
 	if((g_input_file=fopen(g_input_filename, "rt")) == NULL)
 		perror_exit("can't open %s for input", g_input_filename);
@@ -1358,18 +1309,14 @@ int main(int argc, char **argv)
 		{
 			if(table_header_read)
 				error_exit("Duplicate table header");
-			read_insert(temp_insert);
-			fprintf(g_table_file, "%s", temp_insert);
+			read_insert(table_header_insert);
 			table_header_read = 1;
 		}
 		else if(strcmp(section_id, ID_OPHANDLER_HEADER) == 0)
 		{
 			if(ophandler_header_read)
 				error_exit("Duplicate opcode handler header");
-			read_insert(temp_insert);
-			fprintf(g_ops_ac_file, "%s\n\n", temp_insert);
-			fprintf(g_ops_dm_file, "%s\n\n", temp_insert);
-			fprintf(g_ops_nz_file, "%s\n\n", temp_insert);
+			read_insert(ophandler_header_insert);
 			ophandler_header_read = 1;
 		}
 		else if(strcmp(section_id, ID_PROTOTYPE_FOOTER) == 0)
@@ -1422,7 +1369,9 @@ int main(int argc, char **argv)
 			if(ophandler_body_read)
 				error_exit("Duplicate opcode handler section");
 
-			process_opcode_handlers();
+			fprintf(g_table_file, "%s\n\n", ophandler_header_insert);
+			process_opcode_handlers(g_table_file);
+			fprintf(g_table_file, "%s\n\n", ophandler_footer_insert);
 
 			ophandler_body_read = 1;
 		}
@@ -1446,13 +1395,11 @@ int main(int argc, char **argv)
 			if(!ophandler_body_read)
 				error_exit("Missing opcode handler body");
 
+			fprintf(g_table_file, "%s\n\n", table_header_insert);
 			print_opcode_output_table(g_table_file);
+			fprintf(g_table_file, "%s\n\n", table_footer_insert);
 
 			fprintf(g_prototype_file, "%s\n\n", prototype_footer_insert);
-			fprintf(g_table_file, "%s\n\n", table_footer_insert);
-			fprintf(g_ops_ac_file, "%s\n\n", ophandler_footer_insert);
-			fprintf(g_ops_dm_file, "%s\n\n", ophandler_footer_insert);
-			fprintf(g_ops_nz_file, "%s\n\n", ophandler_footer_insert);
 
 			break;
 		}
@@ -1465,9 +1412,6 @@ int main(int argc, char **argv)
 	/* Close all files and exit */
 	fclose(g_prototype_file);
 	fclose(g_table_file);
-	fclose(g_ops_ac_file);
-	fclose(g_ops_dm_file);
-	fclose(g_ops_nz_file);
 	fclose(g_input_file);
 
 	printf("Generated %d opcode handlers from %d primitives\n", g_num_functions, g_num_primitives);

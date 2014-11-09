@@ -1236,10 +1236,7 @@ static INT32 DrvFrame()
 	assemble_inputs(0xffff, 0xffff);
 
 	INT32 nInterleave = 256;
-	// we have to overclock the cpu here, otherwise the game will take too long to write
-	// all of the scroll registers for the title and overflows into the next frame! This
-	// breaks the title animation!
-	INT32 nCyclesTotal[2] = { (13100000 * 100) / 5961, 3579545 / 60 }; // 59.61 fps, overclock from 10mhz to 12mhz
+	INT32 nCyclesTotal[2] = { (10000000 * 100) / 5961, 3579545 / 60 }; // 59.61 fps, overclock from 10mhz to 12mhz
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);

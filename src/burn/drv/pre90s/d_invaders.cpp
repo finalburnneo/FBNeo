@@ -527,7 +527,7 @@ struct BurnDriver BurnDrvSisv3 = {
 };
 
 
-// Space Invaders (SV Version rev 1)
+// Space Invaders (SV Version rev 4)
 
 static struct BurnRomInfo sisvRomDesc[] = {
 	{ "sv0h.36",		0x0400, 0x86bb8cb6, 1 | BRF_ESS | BRF_PRG }, //  0 i8080 Code
@@ -543,7 +543,7 @@ STD_ROM_FN(sisv)
 
 struct BurnDriver BurnDrvSisv = {
 	"sisv", "invaders", NULL, "invaders", "1978",
-	"Space Invaders (SV Version rev 1)\0", NULL, "Taito", "Miscellaneous",
+	"Space Invaders (SV Version rev 4)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, sisvRomInfo, sisvRomName, InvadersSampleInfo, InvadersSampleName, InvadersInputInfo, InvadersDIPInfo,

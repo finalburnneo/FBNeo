@@ -114,7 +114,8 @@ void __fastcall mrdo_write(UINT16 address, UINT8 data)
 
 		case 0x9801: 
 			SN76496Write(0, data);
-		
+		break;
+
 		case 0x9802:		
 			SN76496Write(1, data);
 		break;

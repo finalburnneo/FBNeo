@@ -126,8 +126,8 @@
 /* If ON, CPU will call the callback when it encounters a tas
  * instruction.
  */
-#define M68K_TAS_HAS_CALLBACK       OPT_ON
-#define M68K_TAS_CALLBACK()         your_tas_handler_function()
+#define M68K_TAS_HAS_CALLBACK       OPT_SPECIFY_HANDLER
+#define M68K_TAS_CALLBACK()         M68KTASCallback()
 
 
 /* If ON, CPU will call the set fc callback on every memory access to
@@ -217,6 +217,7 @@ void M68KResetCallback(void);
 int M68KIRQAcknowledge(int nIRQ);
 void M68KRTECallback(void);
 void M68KcmpildCallback(unsigned int val, int reg);
+int M68KTASCallback(void);
 
 unsigned int __fastcall M68KFetchByte(unsigned int a);
 unsigned int __fastcall M68KFetchWord(unsigned int a);

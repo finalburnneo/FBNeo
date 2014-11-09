@@ -2941,6 +2941,11 @@ static void MegadriveSetupSRAM()
 	}
 }
 
+static INT32 __fastcall MegadriveTAScallback(void)
+{
+	return 0; // disable
+}
+
 INT32 MegadriveInit()
 {
 	Mem = NULL;
@@ -2992,6 +2997,7 @@ INT32 MegadriveInit()
 		SekSetWriteWordHandler(4, MegadriveIOWriteWord);
 
 		SekSetIrqCallback( MegadriveIrqCallback );
+		SekSetTASCallback(MegadriveTAScallback);
 		SekClose();
 	}
 	

@@ -761,6 +761,15 @@ extern "C" void M68KcmpildCallback(UINT32 val, INT32 reg)
 		pSekExt->CmpCallback(val, reg);
 	}
 }
+
+extern "C" INT32 M68KTASCallback()
+{
+	if (pSekExt->TASCallback) {
+		return pSekExt->TASCallback();
+	}
+	
+	return 1; // enable by default
+}
 #endif
 
 // ----------------------------------------------------------------------------
@@ -1602,6 +1611,18 @@ INT32 SekSetCmpCallback(pSekCmpCallback pCallback)
 	return 0;
 }
 
+INT32 SekSetTASCallback(pSekTASCallback pCallback)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekSetTASCallback called without init\n"));
+	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekSetTASCallback called when no CPU open\n"));
+#endif
+
+	pSekExt->TASCallback = pCallback;
+
+	return 0;
+}
+
 // Set handlers
 INT32 SekSetReadByteHandler(INT32 i, pSekReadByteHandler pHandler)
 {
@@ -1981,6 +2002,7 @@ struct m68ki_cpu_core_pointerblock
 	void (*pc_changed_callback)(unsigned int new_pc); /* Called when the PC changes by a large amount */
 	void (*set_fc_callback)(unsigned int new_fc);     /* Called when the CPU function code changes */
 	void (*instr_hook_callback)(void);                /* Called every instruction cycle prior to execution */
+	int  (*tas_instr_callback)(void);                 /* Called when a TAS instruction is encountered */
 };
 
 

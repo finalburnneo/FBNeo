@@ -123,8 +123,8 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 	fprintf(fDat, "\t\t<category>Standard DatFile</category>\n");
 	_ftprintf(fDat, _T("\t\t<version>%s</version>\n"), szAppBurnVer);
 	fprintf(fDat, "\t\t<author>" APP_TITLE "</author>\n");
-	fprintf(fDat, "\t\t<homepage>http://www.barryharris.me.uk/</homepage>\n");
-	fprintf(fDat, "\t\t<url>http://www.barryharris.me.uk/</url>\n");
+	fprintf(fDat, "\t\t<homepage>http://www.fbalpha.com/</homepage>\n");
+	fprintf(fDat, "\t\t<url>http://www.fbalpha.com/</url>\n");
 	fprintf(fDat, "\t\t<clrmamepro forcenodump=\"ignore\"/>\n");		
 	fprintf(fDat, "\t</header>\n");
 

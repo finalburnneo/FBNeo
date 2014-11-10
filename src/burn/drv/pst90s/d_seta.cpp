@@ -9831,10 +9831,16 @@ STD_ROM_FN(arbalest)
 
 static INT32 arbalestInit()
 {
+	INT32 rc = 0;
 	DrvSetVideoOffsets(0, 1, -2, -1);
 	DrvSetColorOffsets(0, 0, 0);
+	rc = DrvInit(metafox68kInit, 8000000, SET_IRQLINES(3, NOIRQ2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 1, -1));
 
-	return DrvInit(metafox68kInit, 8000000, SET_IRQLINES(3, NOIRQ2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 1, -1));
+	if (!rc) {
+		X1010_Arbalester_Mode = 1;
+	}
+
+	return rc;
 }
 
 struct BurnDriver BurnDrvArbalest = {

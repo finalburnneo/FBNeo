@@ -32,6 +32,7 @@ typedef struct {
 } X1_010_CHANNEL;
 
 extern UINT8 *X1010SNDROM;
+extern INT32 X1010_Arbalester_Mode;
 
 extern struct x1_010_info * x1_010_chip;
 

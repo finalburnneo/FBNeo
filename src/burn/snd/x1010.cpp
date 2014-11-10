@@ -4,6 +4,7 @@
 #include "x1010.h"
 
 UINT8 *X1010SNDROM;
+INT32 X1010_Arbalester_Mode = 0;
 
 struct x1_010_info * x1_010_chip = NULL;
 
@@ -77,6 +78,7 @@ void x1010_sound_update()
 				freq     = reg->frequency & 0x1f;
 				// Meta Fox does not write the frequency register. Ever
 				if( freq == 0 ) freq = 4;
+				if(X1010_Arbalester_Mode && ch==0x0f) freq = 8;
 
 				//smp_step = (unsigned int)((float)x1_010->base_clock / 8192.0
 				//			* freq * (1 << FREQ_BASE_BITS) / (float)x1_010->rate );
@@ -205,6 +207,7 @@ void x1010_sound_init(UINT32 base_clock, INT32 address)
 	x1_010_chip->gain[BURN_SND_X1010_ROUTE_2] = 1.00;
 	x1_010_chip->output_dir[BURN_SND_X1010_ROUTE_1] = BURN_SND_ROUTE_BOTH;
 	x1_010_chip->output_dir[BURN_SND_X1010_ROUTE_2] = BURN_SND_ROUTE_BOTH;
+	X1010_Arbalester_Mode = 0;
 }
 
 void x1010_set_route(INT32 nIndex, double nVolume, INT32 nRouteDir)

@@ -155,8 +155,29 @@ static struct BurnDIPInfo orld105kDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x02, NULL				},
 };
 
+static struct BurnDIPInfo orld112cDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x03, NULL				},
+
+	{0,	0xFE, 0,	3,    "Region (Fake)"			},
+	{0x2E,	0x01, 0x03,	0x00, "World"				},
+	{0x2E,	0x01, 0x03,	0x02, "Korea"				},
+	{0x2E,	0x01, 0x03,	0x03, "China"				},
+};
+
 static struct BurnDIPInfo killbldDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x17, NULL				},
+
+	{0,	0xFE, 0,	6,    "Region (Fake)"			},
+	{0x2E,	0x01, 0xFF,	0x16, "Taiwan"				},
+	{0x2E,	0x01, 0xFF,	0x17, "China"				},
+	{0x2E,	0x01, 0xFF,	0x18, "Hong Kong"			},
+	{0x2E,	0x01, 0xFF,	0x19, "Japan"				},
+	{0x2E,	0x01, 0xFF,	0x20, "Korea"				},
+	{0x2E,	0x01, 0xFF,	0x21, "World"				},
+};
+
+static struct BurnDIPInfo killbld104DIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x21, NULL				},
 
 	{0,	0xFE, 0,	6,    "Region (Fake)"			},
 	{0x2E,	0x01, 0xFF,	0x16, "Taiwan"				},
@@ -192,6 +213,22 @@ static struct BurnDIPInfo oldsDIPList[] = {
 	{0x2E,	0x01, 0x0F,	0x06, "World"				},
 };
 
+static struct BurnDIPInfo olds100DIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x06, NULL				},
+
+	{0,	0xFE, 0,	6,    "Region (Fake)"			},
+	{0x2E,	0x01, 0x0F,	0x01, "Taiwan"				},
+	{0x2E,	0x01, 0x0F,	0x02, "China"				},
+	{0x2E,	0x01, 0x0F,	0x03, "Japan"				},
+	{0x2E,	0x01, 0x0F,	0x04, "Korea"				},
+	{0x2E,	0x01, 0x0F,	0x05, "Hong Kong"			},
+	{0x2E,	0x01, 0x0F,	0x06, "World"				},
+};
+
+static struct BurnDIPInfo olds103tDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x02, NULL				},
+};
+
 static struct BurnDIPInfo puzzli2DIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x05, NULL				},
 
@@ -206,6 +243,30 @@ static struct BurnDIPInfo puzzli2DIPList[] = {
 
 static struct BurnDIPInfo kovDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x05, NULL				},
+
+	{0,	0xFE, 0,	6,    "Region (Fake)"			},
+	{0x2E,	0x01, 0x0F,	0x00, "China"				},
+	{0x2E,	0x01, 0x0F,	0x01, "Taiwan"				},
+	{0x2E,	0x01, 0x0F,	0x02, "Japan"				},
+	{0x2E,	0x01, 0x0F,	0x03, "Korea"				},
+	{0x2E,	0x01, 0x0F,	0x04, "Hong Kong"			},
+	{0x2E,	0x01, 0x0F,	0x05, "World"				},
+};
+
+static struct BurnDIPInfo kov100DIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x02, NULL				},
+
+	{0,	0xFE, 0,	6,    "Region (Fake)"			},
+	{0x2E,	0x01, 0x0F,	0x00, "China"				},
+	{0x2E,	0x01, 0x0F,	0x01, "Taiwan"				},
+	{0x2E,	0x01, 0x0F,	0x02, "Japan"				},
+	{0x2E,	0x01, 0x0F,	0x03, "Korea"				},
+	{0x2E,	0x01, 0x0F,	0x04, "Hong Kong"			},
+	{0x2E,	0x01, 0x0F,	0x05, "World"				},
+};
+
+static struct BurnDIPInfo kov2DIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x04, NULL				},
 
 	{0,	0xFE, 0,	6,    "Region (Fake)"			},
 	{0x2E,	0x01, 0x0F,	0x00, "China"				},
@@ -279,6 +340,18 @@ static struct BurnDIPInfo thegladpcbDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
 	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
 	{0x2E,  0x01, 0x07, 0x06, "World"				},
+};
+
+static struct BurnDIPInfo dmnfrntpcbDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x03, NULL				},
+
+	{0,	0xFE, 0,	6,    "Region (Fake)"			},
+	{0x2E,	0x01, 0x0F,	0x00, "China"				},
+	{0x2E,	0x01, 0x0F,	0x01, "Taiwan"				},
+	{0x2E,	0x01, 0x0F,	0x02, "Japan"				},
+	{0x2E,	0x01, 0x0F,	0x03, "Korea"				},
+	{0x2E,	0x01, 0x0F,	0x04, "Hong Kong"			},
+	{0x2E,	0x01, 0x0F,	0x05, "World"				},
 };
 
 static struct BurnDIPInfo ddp2DIPList[] = {
@@ -359,14 +432,20 @@ STDDIPINFOEXT(orlegend,		pgm,	orlegend		)
 STDDIPINFOEXT(orld111c, 	pgm,	orld111c		)
 STDDIPINFOEXT(orld111t, 	pgm,	orld111t		)
 STDDIPINFOEXT(orld105k, 	pgm,	orld105k		)
+STDDIPINFOEXT(orld112c, 	pgm,	orld112c		)
 STDDIPINFOEXT(kov,       	pgm,	kov		    	)
+STDDIPINFOEXT(kov100,       pgm,	kov100		    )
+STDDIPINFOEXT(kov2,       	pgm,	kov2		    )
 STDDIPINFOEXT(kovshxas,    	pgm,	kovshxas		)
 STDDIPINFOEXT(killbld,	 	pgm,	killbld			)
+STDDIPINFOEXT(killbld104,	pgm,	killbld104		)
 STDDIPINFOEXT(photoy2k, 	pgm,	photoy2k		)
 STDDIPINFOEXT(puzzli2,  	pgm,	puzzli2			)
 STDDIPINFOEXT(martmast, 	pgm,	martmast		)
 STDDIPINFOEXT(martmastc102, pgm,	martmastc102	)
 STDDIPINFOEXT(olds,     	pgm,	olds			)
+STDDIPINFOEXT(olds100,     	pgm,	olds100			)
+STDDIPINFOEXT(olds103t,     pgm,	olds103t		)
 STDDIPINFOEXT(ddp2,     	pgm,	ddp2			)
 STDDIPINFOEXT(ddp2hk,     	pgm,	ddp2hk			)
 STDDIPINFOEXT(ddp2k,     	pgm,	ddp2k			)
@@ -378,7 +457,7 @@ STDDIPINFOEXT(theglad100,	pgm,	theglad100 		)
 STDDIPINFOEXT(happy6,		pgm,	happy6	 		)
 STDDIPINFOEXT(svg,			pgm,	svg	 			)
 STDDIPINFOEXT(svgtw,		pgm,	svgtw	 		)
-STDDIPINFOEXT(dmnfrntpcb,   jamma,	kov		    	)
+STDDIPINFOEXT(dmnfrntpcb,   jamma,	dmnfrntpcb		)
 STDDIPINFOEXT(thegladpcb,   jamma,	thegladpcb		)
 
 // -----------------------------------------------------------------------------
@@ -574,7 +653,7 @@ struct BurnDriver BurnDrvOrlegend112c = {
 	"Oriental Legend - Xi Yo Gi Shi Re Zuang (V112, China)\0", NULL, "IGS", "PolyGameMaster",
 	L"Oriental Legend\0\u897F\u6E38\u91CA\u5384\u4F20 (V112, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, orlegend112cRomInfo, orlegend112cRomName, NULL, NULL, pgmInputInfo, orlegendDIPInfo,
+	NULL, orlegend112cRomInfo, orlegend112cRomName, NULL, NULL, pgmInputInfo, orld112cDIPInfo,
 	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -609,7 +688,7 @@ struct BurnDriver BurnDrvOrlegend112ca = {
 	"Oriental Legend - Xi Yo Gi Shi Re Zuang (V112 alt, China)\0", NULL, "IGS", "PolyGameMaster",
 	L"Oriental Legend\0\u897F\u6E38\u91CA\u5384\u4F20 (V112 alt, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, orlegend112caRomInfo, orlegend112caRomName, NULL, NULL, pgmInputInfo, orlegendDIPInfo,
+	NULL, orlegend112caRomInfo, orlegend112caRomName, NULL, NULL, pgmInputInfo, orld111cDIPInfo,
 	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -958,7 +1037,7 @@ struct BurnDriver BurnDrvKillbld104 = {
 	"The Killing Blade (V104)\0", NULL, "IGS", "PolyGameMaster",
 	L"The Killing Blade\0\u50B2\u5251\u72C2\u5200 (V104)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_VSFIGHT, 0,
-	NULL, killbld104RomInfo, killbld104RomName, NULL, NULL, pgmInputInfo, killbldDIPInfo,
+	NULL, killbld104RomInfo, killbld104RomName, NULL, NULL, pgmInputInfo, killbld104DIPInfo,
 	killbldInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1193,7 +1272,7 @@ struct BurnDriver BurnDrvOlds100 = {
 	"Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V100)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
 	L"Oriental Legend Super\0\u897F\u6E38\u91CA\u5384\u4F20 Super (V100)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, olds100RomInfo, olds100RomName, NULL, NULL, pgmInputInfo, oldsDIPInfo,
+	NULL, olds100RomInfo, olds100RomName, NULL, NULL, pgmInputInfo, olds100DIPInfo,
 	oldsInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1235,7 +1314,7 @@ struct BurnDriver BurnDrvOlds100a = {
 	"Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V100 alt)\0", "Imperfect Protection Emulation", "IGS", "PolyGameMaster",
 	L"Oriental Legend Super\0\u897F\u6E38\u91CA\u5384\u4F20 Super (V100 alt)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, olds100aRomInfo, olds100aRomName, NULL, NULL, pgmInputInfo, oldsDIPInfo,
+	NULL, olds100aRomInfo, olds100aRomName, NULL, NULL, pgmInputInfo, olds100DIPInfo,
 	oldsInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1273,7 +1352,7 @@ struct BurnDriver BurnDrvOlds103t = {
 	"Oriental Legend Special - Xi Yo Gi Shi Re Zuang Super (V103, China, Tencent) (unprotected)\0", NULL, "IGS", "PolyGameMaster",
 	L"Oriental Legend Super\0\u897F\u6E38\u91CA\u5384\u4F20 Super (V103, China, Tencent) (unprotected)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
-	NULL, olds103tRomInfo, olds103tRomName, NULL, NULL, pgmInputInfo, oldsDIPInfo,
+	NULL, olds103tRomInfo, olds103tRomName, NULL, NULL, pgmInputInfo, olds103tDIPInfo,
 	pgmInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1387,7 +1466,7 @@ struct BurnDriver BurnDrvKov100 = {
 	"Knights of Valour - Sangoku Senki (V100, Japan)\0", NULL, "IGS (Alta Co., LTD License)", "PolyGameMaster",
 	L"Knights of Valour\0\u4E09\u56FD\u6226\u7D00\0\u4E09\u56FD\u6218\u7EAA (V100, Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
-	NULL, kov100RomInfo, kov100RomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kov100RomInfo, kov100RomName, NULL, NULL, pgmInputInfo, kov100DIPInfo,
 	kovInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -1511,7 +1590,7 @@ struct BurnDriver BurnDrvKovsh = {
 	"Knights of Valour Superheroes / Sangoku Senki Superheroes (V104, China)\0", NULL, "IGS", "PolyGameMaster",
 	L"Knights of Valour Superheroes\0\u4E09\u56FD\u6218\u7EAA\0\u98CE\u4E91\u518D\u8D77 (V104, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kovshRomInfo, kovshRomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kovshRomInfo, kovshRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
 	kovshInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -2125,7 +2204,7 @@ struct BurnDriver BurnDrvKov2 = {
 	"Knights of Valour 2 (V107, 102, 100, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
 	L"Knights of Valour 2\0\u4e09\u56fd\u6218\u7eaa 2 (V107, 102, 100, Hong Kong)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kov2RomInfo, kov2RomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kov2RomInfo, kov2RomName, NULL, NULL, pgmInputInfo, kov2DIPInfo,
 	kov2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -2162,7 +2241,7 @@ struct BurnDriver BurnDrvKov2106 = {
 	"Knights of Valour 2 (V106, 102, 100 Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
 	L"Knights of Valour 2\0\u4e09\u56fd\u6218\u7eaa 2 (V106, 102, 100 Hong Kong)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kov2106RomInfo, kov2106RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, kov2106RomInfo, kov2106RomName, NULL, NULL, pgmInputInfo, kov2DIPInfo,
 	kov2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -2199,7 +2278,7 @@ struct BurnDriver BurnDrvKov2103 = {
 	"Knights of Valour 2 (V103, 101, 100, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
 	L"Knights of Valour 2\0\u4e09\u56fd\u6218\u7eaa 2 (V103, 101, 100, Hong Kong)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kov2103RomInfo, kov2103RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, kov2103RomInfo, kov2103RomName, NULL, NULL, pgmInputInfo, kov2DIPInfo,
 	kov2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -2236,7 +2315,7 @@ struct BurnDriver BurnDrvKov2102 = {
 	"Knights of Valour 2 (V102, 101, 100, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
 	L"Knights of Valour 2\0\u4e09\u56fd\u6218\u7eaa 2 (V102, 101, 100, Hong Kong)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kov2102RomInfo, kov2102RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, kov2102RomInfo, kov2102RomName, NULL, NULL, pgmInputInfo, kov2DIPInfo,
 	kov2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -2273,7 +2352,7 @@ struct BurnDriver BurnDrvKov2101 = {
 	"Knights of Valour 2 (V101, 101, 100, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
 	L"Knights of Valour 2\0\u4e09\u56fd\u6218\u7eaa 2 (V101, 101, 100, Hong Kong)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kov2101RomInfo, kov2101RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, kov2101RomInfo, kov2101RomName, NULL, NULL, pgmInputInfo, kov2DIPInfo,
 	kov2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -2310,7 +2389,7 @@ struct BurnDriver BurnDrvKov2100 = {
 	"Knights of Valour 2 (V100, 100, 100, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
 	L"Knights of Valour 2\0\u4e09\u56fd\u6218\u7eaa 2 (V100, 100, 100, Hong Kong)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kov2100RomInfo, kov2100RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, kov2100RomInfo, kov2100RomName, NULL, NULL, pgmInputInfo, kov2DIPInfo,
 	kov2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -2361,7 +2440,7 @@ struct BurnDriver BurnDrvKov2p = {
 	"Knights of Valour 2 Plus - Nine Dragons (VM205XX, China)\0", NULL, "IGS", "PolyGameMaster",
 	L"Knights of Valour 2 Plus\0\u4e09\u56fd\u6218\u7eaa 2 - \u7fa4\u96c4\u4e89\u9738 (VM205XX, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kov2pRomInfo, kov2pRomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kov2pRomInfo, kov2pRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
 	kov2pInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -3123,7 +3202,7 @@ struct BurnDriver BurnDrvdmnfrnta = {
 	"Demon Front (V102, China)\0", NULL, "IGS", "PolyGameMaster",
 	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (V102, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PLATFORM, 0,
-	NULL, dmnfrntaRomInfo, dmnfrntaRomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, dmnfrntaRomInfo, dmnfrntaRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
 	dmnfrntInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -4458,7 +4537,7 @@ struct BurnDriver BurnDrvDmnfrntpcb = {
 	"dmnfrntpcb", "dmnfrnt", NULL, NULL, "2002",
 	"Demon Front (V107, Korea, Single PCB Version)\0", "Insert coin to get past ERROR", "IGS", "PolyGameMaster",
 	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (V107, Korea, Single PCB Version)\0", NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PLATFORM, 0,
 	NULL, dmnfrntpcbRomInfo, dmnfrntpcbRomName, NULL, NULL, pgmInputInfo, dmnfrntpcbDIPInfo,
 	dmnfrntInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
@@ -4657,7 +4736,7 @@ struct BurnDriver BurnDrvkovqhsgs = {
 	"Knights of Valour: Quan Huang San Guo Special / Sangoku Senki: Quan Huang San Guo Special (ver. 303CN)\0", NULL, "IGS", "PolyGameMaster",
 	L"Knights of Valour: Quan Huang San Guo Special\0\u4E09\u56FD\u6218\u7EAA\0\u62F3\u7687\u4E09\u56FD\u7279\u522B\u7248 (ver. 303CN)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kovqhsgsRomInfo, kovqhsgsRomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kovqhsgsRomInfo, kovqhsgsRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
 	kovqhsgsInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -4689,7 +4768,7 @@ struct BurnDriver BurnDrvkovqhsgsa = {
 	"Knights of Valour: Quan Huang San Guo Special / Sangoku Senki: Quan Huang San Guo Special (alt ver. 303CN)\0", NULL, "IGS", "PolyGameMaster",
 	L"Knights of Valour: Quan Huang San Guo Special\0\u4E09\u56FD\u6218\u7EAA\0\u62F3\u7687\u4E09\u56FD\u7279\u522B\u7248 (alt ver. 303CN)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
-	NULL, kovqhsgsaRomInfo, kovqhsgsaRomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kovqhsgsaRomInfo, kovqhsgsaRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
 	kovqhsgsInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -4737,7 +4816,7 @@ struct BurnDriverD BurnDrvkovlsqh2 = {
 	"Knights of Valour: Luan Shi Quan Huang II / Sangoku Senki: Luan Shi Quan Huang II (ver. 200CN)\0", "Incomplete dump", "IGS", "PolyGameMaster",
 	L"Knights of Valour: Luan Shi Quan Huang II\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u62F3\u7687II (ver. 200CN)\0", NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU */, GBF_SCRFIGHT, 0,
-	NULL, kovlsqh2RomInfo, kovlsqh2RomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kovlsqh2RomInfo, kovlsqh2RomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
 	kovlsqh2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -4785,7 +4864,7 @@ struct BurnDriverD BurnDrvkovlsqh = {
 	"Knights of Valour: Luan Shi Quan Huang / Sangoku Senki: Luan Shi Quan Huang (ver. 200CN)\0", "Incomplete dump", "IGS", "PolyGameMaster",
 	L"Knights of Valour: Luan Shi Quan Huang\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u62F3\u7687 (ver. 200CN)\0", NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU */, GBF_SCRFIGHT, 0,
-	NULL, kovlsqhRomInfo, kovlsqhRomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kovlsqhRomInfo, kovlsqhRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
 	kovlsqhInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -4821,7 +4900,7 @@ struct BurnDriverD BurnDrvkovlsjb = {
 	"Knights of Valour: Luan Shi Jie Ba / Sangoku Senki: Luan Shi Jie Ba (ver. 200CN)\0", NULL, "IGS", "PolyGameMaster",
 	L"Knights of Valour: Luan Shi Jie Ba\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u8857\u9738 (ver. 200CN)\0", NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
-	NULL, kovlsjbRomInfo, kovlsjbRomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kovlsjbRomInfo, kovlsjbRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
 	kovlsqh2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -4857,7 +4936,7 @@ struct BurnDriverD BurnDrvkovlsjba = {
 	"Knights of Valour: Luan Shi Jie Ba / Sangoku Senki: Luan Shi Jie Ba (alt ver. 200CN)\0", "Incomplete dump", "IGS", "PolyGameMaster",
 	L"Knights of Valour: Luan Shi Jie Ba\0\u4E09\u56FD\u6218\u7EAA\0\u4E71\u4E16\u8857\u9738 (alt ver. 200CN)\0", NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
-	NULL, kovlsjbaRomInfo, kovlsjbaRomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kovlsjbaRomInfo, kovlsjbaRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
 	kovlsqh2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
@@ -4901,7 +4980,7 @@ struct BurnDriverD BurnDrvkovassg = {
 	"Knights of Valour: Ao Shi San Guo / Sangoku Senki: Ao Shi San Guo (ver. 315CN)\0", "Incomplete dump", "IGS", "PolyGameMaster",
 	L"Knights of Valour: Ao Shi San Guo\0\u4E09\u56FD\u6218\u7EAA\0\u50B2\u4E16\u4E09\u56FD (ver. 315CN)\0", NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM /* | HARDWARE_IGS_USE_ARM_CPU */, GBF_SCRFIGHT, 0,
-	NULL, kovassgRomInfo, kovassgRomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
+	NULL, kovassgRomInfo, kovassgRomName, NULL, NULL, pgmInputInfo, kovshxasDIPInfo,
 	kovassgInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

@@ -8561,7 +8561,7 @@ struct BurnDriver BurnDrvBlockcar = {
 };
 
 
-// Zombie Raid (US)
+// Zombie Raid (9/28/95, US)
 
 static struct BurnRomInfo zombraidRomDesc[] = {
 	{ "fy001003.3",		0x080000, 0x0b34b8f7, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -8575,7 +8575,7 @@ static struct BurnRomInfo zombraidRomDesc[] = {
 	{ "fy001007.65",	0x100000, 0xb2fc2c81, 0x1c | BRF_GRA },           //  6
 
 	{ "fy001010.68",	0x200000, 0x8b40ed7a, 0x05 | BRF_GRA },           //  7 Layer 2 tiles
-	{ "fy001009.67",	0x100000, 0x6bcca641, 0x1d | BRF_GRA },		  //  8
+	{ "fy001009.67",	0x100000, 0x6bcca641, 0x1d | BRF_GRA },		  	  //  8
 
 	{ "fy001012.b",		0x200000, 0xfd30e102, 0x06 | BRF_SND },           //  9 x1-010 Samples
 	{ "fy001011.a",		0x200000, 0xe3c431de, 0x06 | BRF_SND },           // 10
@@ -8600,10 +8600,122 @@ static INT32 zombraidInit()
 
 struct BurnDriver BurnDrvZombraid = {
 	"zombraid", NULL, NULL, NULL, "1995",
-	"Zombie Raid (US)\0", NULL, "American Sammy", "Seta",
+	"Zombie Raid (9/28/95, US)\0", NULL, "American Sammy", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA1, GBF_SHOOT, 0,
 	NULL, zombraidRomInfo, zombraidRomName, NULL, NULL, ZombraidInputInfo, ZombraidDIPInfo,
+	zombraidInit, DrvExit, DrvFrame, zombraidDraw, DrvScan, &DrvRecalc, 0x1200,
+	384, 240, 4, 3
+};
+
+
+// Zombie Raid (9/28/95, US, prototype PCB)
+/* Prototype or test board version.  Data matches released MASK rom version */
+
+static struct BurnRomInfo zombraidpRomDesc[] = {
+	{ "u3_master_usa_prg_e_l_dd28.u3",		0x080000, 0x0b34b8f7, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "u4_master_usa_prg_o_l_5e2b.u4",		0x080000, 0x71bfeb1a, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "u103_master_usa_prg_e_h_789e.u103",	0x080000, 0x313fd68f, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "u102_master_usa_prg_o_h_1f25.u102",	0x080000, 0xa0f61f13, 0x01 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "u142_master_obj_00_1bb3.u142",	0x040000, 0xed6c8541, 0x0b | BRF_GRA },           //  4 Sprites
+	{ "obj_01",							0x040000, 0xa423620e, 0x0b | BRF_GRA },           //  5 
+	{ "u143_master_obj_04_b5aa.u143",	0x040000, 0x1242670d, 0x0b | BRF_GRA },           //  6 
+	{ "obj_05",							0x040000, 0x57fe3e97, 0x0b | BRF_GRA },           //  7 
+	{ "u146_master_obj_02_6cc6.u146",	0x040000, 0x7562ee1b, 0x0b | BRF_GRA },           //  8 
+	{ "u144_master_obj_03_1cb5.u144",	0x040000, 0xa83040f1, 0x0b | BRF_GRA },           //  9 
+	{ "u147_master_obj_06_c3d8.u147",	0x040000, 0xa32c3da8, 0x0b | BRF_GRA },           // 10 
+	{ "u145_master_obj_07_8ad4.u145",	0x040000, 0x8071f0b6, 0x0b | BRF_GRA },           // 11 
+
+	{ "u148_master_scn_1-0_3ef8.u148",	0x080000, 0x7d722f2a, 0x1c | BRF_GRA },           // 12 Layer 1 tiles
+	{ "u150_master_scn_1-1_89a6.u150",	0x080000, 0x3c62a8af, 0x1c | BRF_GRA },           // 13 
+	{ "u149_master_scn_1-3_71bb.u149",	0x080000, 0x70d6af7f, 0x1c | BRF_GRA },           // 14 
+	{ "u151_master_scn_1-4_872e.u151",	0x080000, 0x83ef4d5f, 0x1c | BRF_GRA },           // 15 
+	{ "u154_master_scn_1-2_0f4b.u154",	0x080000, 0x0a1d647c, 0x1c | BRF_GRA },           // 16 
+	{ "u155_master_scn_1-5_daef.u155",	0x080000, 0x2508f67f, 0x1c | BRF_GRA },           // 17 
+	
+	{ "u164_master_scn_2-0_e79c.u164",	0x080000, 0xf8c89062, 0x1d | BRF_GRA },           // 18 Layer 2 tiles
+	{ "u166_master_scn_2-1_0b75.u166",	0x080000, 0x4d7a72d5, 0x1d | BRF_GRA },           // 19
+	{ "u165_master_scn_2-3_be68.u165",	0x080000, 0x8aaaef08, 0x1d | BRF_GRA },           // 20 
+	{ "u167_master_scn_2-4_c515.u167",	0x080000, 0xd22ff5c1, 0x1d | BRF_GRA },           // 21
+	{ "u152_master_scn_2-2_c00e.u152",	0x080000, 0x0870ad58, 0x1d | BRF_GRA },           // 22 
+	{ "u153_master_scn_2-5_e1da.u153",	0x080000, 0x814ac66a, 0x1d | BRF_GRA },           // 23 	
+	
+	{ "u156_master_snd_0_f630.u156",	0x080000, 0xbfc467bd, 0x06 | BRF_SND },           // 24 x1-010 Samples
+	{ "u157_master_snd_1_c20a.u157",	0x080000, 0xb449a8ba, 0x06 | BRF_SND },           // 25
+	{ "u158_master_snd_2_5c69.u158",	0x080000, 0xed6de791, 0x06 | BRF_SND },           // 26
+	{ "u159_master_snd_3_0727.u159",	0x080000, 0x794cec21, 0x06 | BRF_SND },           // 27
+	{ "u160_master_snd_4_5a70.u160",	0x080000, 0xe81ace66, 0x06 | BRF_SND },           // 28
+	{ "u161_master_snd_5_599c.u161",	0x080000, 0x1793dd13, 0x06 | BRF_SND },           // 29
+	{ "u162_master_snd_6_6d2e.u162",	0x080000, 0x2ece241f, 0x06 | BRF_SND },           // 30
+	{ "u163_master_snd_7_c733.u163",	0x080000, 0xd90f78b2, 0x06 | BRF_SND },           // 31
+};
+
+STD_ROM_PICK(zombraidp)
+STD_ROM_FN(zombraidp)
+
+struct BurnDriver BurnDrvZombraidp = {
+	"zombraidp", "zombraid", NULL, NULL, "1995",
+	"Zombie Raid (9/28/95, US, prototype PCB)\0", NULL, "American Sammy", "Seta",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA1, GBF_SHOOT, 0,
+	NULL, zombraidpRomInfo, zombraidpRomName, NULL, NULL, ZombraidInputInfo, ZombraidDIPInfo,
+	zombraidInit, DrvExit, DrvFrame, zombraidDraw, DrvScan, &DrvRecalc, 0x1200,
+	384, 240, 4, 3
+};
+
+
+// Zombie Raid (9/28/95, Japan, prototype PCB)
+/* Prototype or test board version.  Data matches released MASK rom version */
+
+static struct BurnRomInfo zombraidpjRomDesc[] = {
+	{ "u3_master_usa_prg_e_l_dd28.u3",		0x080000, 0x0b34b8f7, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "u4_master_jpn_prg_o_l_5e2c.u4",		0x080000, 0x3cb6bdf0, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "u103_master_usa_prg_e_h_789e.u103",	0x080000, 0x313fd68f, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "u102_master_usa_prg_o_h_1f25.u102",	0x080000, 0xa0f61f13, 0x01 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "u142_master_obj_00_1bb3.u142",	0x040000, 0xed6c8541, 0x0b | BRF_GRA },           //  4 Sprites
+	{ "obj_01",							0x040000, 0xa423620e, 0x0b | BRF_GRA },           //  5 
+	{ "u143_master_obj_04_b5aa.u143",	0x040000, 0x1242670d, 0x0b | BRF_GRA },           //  6 
+	{ "obj_05",							0x040000, 0x57fe3e97, 0x0b | BRF_GRA },           //  7 
+	{ "u146_master_obj_02_6cc6.u146",	0x040000, 0x7562ee1b, 0x0b | BRF_GRA },           //  8 
+	{ "u144_master_obj_03_1cb5.u144",	0x040000, 0xa83040f1, 0x0b | BRF_GRA },           //  9 
+	{ "u147_master_obj_06_c3d8.u147",	0x040000, 0xa32c3da8, 0x0b | BRF_GRA },           // 10 
+	{ "u145_master_obj_07_8ad4.u145",	0x040000, 0x8071f0b6, 0x0b | BRF_GRA },           // 11 
+	
+	{ "u148_master_scn_1-0_3ef8.u148",	0x080000, 0x7d722f2a, 0x1c | BRF_GRA },           // 12 Layer 1 tiles
+	{ "u150_master_scn_1-1_89a6.u150",	0x080000, 0x3c62a8af, 0x1c | BRF_GRA },           // 13 
+	{ "u149_master_scn_1-3_71bb.u149",	0x080000, 0x70d6af7f, 0x1c | BRF_GRA },           // 14 
+	{ "u151_master_scn_1-4_872e.u151",	0x080000, 0x83ef4d5f, 0x1c | BRF_GRA },           // 15 
+	{ "u154_master_scn_1-2_0f4b.u154",	0x080000, 0x0a1d647c, 0x1c | BRF_GRA },           // 16 
+	{ "u155_master_scn_1-5_daef.u155",	0x080000, 0x2508f67f, 0x1c | BRF_GRA },           // 17 
+	
+	{ "u164_master_scn_2-0_e79c.u164",	0x080000, 0xf8c89062, 0x1d | BRF_GRA },           // 18 Layer 2 tiles
+	{ "u166_master_scn_2-1_0b75.u166",	0x080000, 0x4d7a72d5, 0x1d | BRF_GRA },           // 19
+	{ "u165_master_scn_2-3_be68.u165",	0x080000, 0x8aaaef08, 0x1d | BRF_GRA },           // 20 
+	{ "u167_master_scn_2-4_c515.u167",	0x080000, 0xd22ff5c1, 0x1d | BRF_GRA },           // 21
+	{ "u152_master_scn_2-2_c00e.u152",	0x080000, 0x0870ad58, 0x1d | BRF_GRA },           // 22 
+	{ "u153_master_scn_2-5_e1da.u153",	0x080000, 0x814ac66a, 0x1d | BRF_GRA },           // 23 	
+	
+	{ "u156_master_snd_0_f630.u156",	0x080000, 0xbfc467bd, 0x06 | BRF_SND },           // 24 x1-010 Samples
+	{ "u157_master_snd_1_c20a.u157",	0x080000, 0xb449a8ba, 0x06 | BRF_SND },           // 25
+	{ "u158_master_snd_2_5c69.u158",	0x080000, 0xed6de791, 0x06 | BRF_SND },           // 26
+	{ "u159_master_snd_3_0727.u159",	0x080000, 0x794cec21, 0x06 | BRF_SND },           // 27
+	{ "u160_master_snd_4_5a70.u160",	0x080000, 0xe81ace66, 0x06 | BRF_SND },           // 28
+	{ "u161_master_snd_5_599c.u161",	0x080000, 0x1793dd13, 0x06 | BRF_SND },           // 29
+	{ "u162_master_snd_6_6d2e.u162",	0x080000, 0x2ece241f, 0x06 | BRF_SND },           // 30
+	{ "u163_master_snd_7_c733.u163",	0x080000, 0xd90f78b2, 0x06 | BRF_SND },           // 31
+};
+
+STD_ROM_PICK(zombraidpj)
+STD_ROM_FN(zombraidpj)
+
+struct BurnDriver BurnDrvZombraidpj = {
+	"zombraidpj", "zombraid", NULL, NULL, "1995",
+	"Zombie Raid (9/28/95, Japan, prototype PCB)\0", NULL, "Sammy Industries Co.,Ltd.", "Seta",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA1, GBF_SHOOT, 0,
+	NULL, zombraidpjRomInfo, zombraidpjRomName, NULL, NULL, ZombraidInputInfo, ZombraidDIPInfo,
 	zombraidInit, DrvExit, DrvFrame, zombraidDraw, DrvScan, &DrvRecalc, 0x1200,
 	384, 240, 4, 3
 };

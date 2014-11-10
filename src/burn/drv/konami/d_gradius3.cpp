@@ -755,7 +755,7 @@ static INT32 DrvFrame()
 
 	INT32 nCycleSegment;
 	INT32 nSoundBufferPos = 0;
-	INT32 nInterleave = 150;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 10000000 / 60, 10000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
@@ -774,9 +774,9 @@ static INT32 DrvFrame()
 			nCycleSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
 			nCyclesDone[1] += SekRun(nCycleSegment - SekTotalCycles());
 			if (interrupt_triggered) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-			if (i == (nInterleave - 1)  && (irqB_mask & 1))
+			if (i == 240  && (irqB_mask & 1))
 				SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
-			if (i == ((nInterleave / 2) - 1) && (irqB_mask & 2))
+			if (i == 16 && (irqB_mask & 2))
 				SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
 			SekClose();
 		}
@@ -788,7 +788,7 @@ static INT32 DrvFrame()
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K007232Update(0, pSoundBuf, nSegmentLength);
+			//K007232Update(0, pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 
@@ -800,8 +800,9 @@ static INT32 DrvFrame()
 		if (nSegmentLength) {
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K007232Update(0, pSoundBuf, nSegmentLength);
+			//K007232Update(0, pSoundBuf, nSegmentLength);
 		}
+		K007232Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();

@@ -1236,7 +1236,7 @@ static INT32 DrvFrame()
 	assemble_inputs(0xffff, 0xffff);
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { (10000000 * 100) / 5961, 3579545 / 60 }; // 59.61 fps, overclock from 10mhz to 12mhz
+	INT32 nCyclesTotal[2] = { (10000000 * 100) / 5961, 3579545 / 60 }; // 59.61 fps
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);

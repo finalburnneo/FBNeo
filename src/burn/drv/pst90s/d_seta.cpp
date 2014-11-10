@@ -50,12 +50,15 @@ static UINT8 *DrvVIDCTRLRAM1	= NULL;
 static UINT8 *DrvVideoRegs	= NULL;
 
 static UINT32 *Palette		= NULL;
-static UINT32 *DrvPalette		= NULL;
+static UINT32 *DrvPalette	= NULL;
 static UINT8 DrvRecalc;
 
 static UINT8 *soundlatch	= NULL;
 static UINT8 *tilebank		= NULL;
 static UINT32  *tile_offset	= NULL;
+
+// allow us to override generic rom loading
+static INT32 (*pRomLoadCallback)(INT32 bLoad) = NULL;
 
 static INT32 cpuspeed = 0;
 static INT32 irqtype = 0;
@@ -4698,7 +4701,6 @@ UINT16 __fastcall kiwame_read_word(UINT32 address)
 		return kiwame_inputs_read(address & 0x0e);
 	}
 	if ((address & 0xfffc00) == 0xfffc00) {
-	//	bprintf (0, _T("%5.5x, rw\n"), address);
 		return DrvNVRAM[(address & 0x3fe)];
 	}
 
@@ -6548,8 +6550,6 @@ static INT32 DrvLoadRoms(INT32 bload)
 		DrvROMLen[2] = LoadGfx[2] - DrvGfxROM2;
 		DrvROMLen[3] = LoadGfx[3] - DrvSndROM;
 		DrvROMLen[4] = LoadGfx[4] - DrvColPROM;
-
-	//	bprintf (0, _T("%x, %x, %x, %x %x\n"), DrvROMLen[0], DrvROMLen[1], DrvROMLen[2], DrvROMLen[3], DrvROMLen[4]);
 	}
 
 	return 0;
@@ -6711,7 +6711,11 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 {
 	BurnSetRefreshRate((1.00 * refresh_rate)/100);
 
-	DrvLoadRoms(0);
+	if (pRomLoadCallback) {
+		pRomLoadCallback(0);
+	} else {
+		DrvLoadRoms(0);
+	}
 
 	AllMem = NULL;
 	MemIndex();
@@ -6720,7 +6724,11 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
-	if (DrvLoadRoms(1)) return 1;
+	if (pRomLoadCallback) {
+		if (pRomLoadCallback(1)) return 1;
+	} else {
+		if (DrvLoadRoms(1)) return 1;
+	}
 
 	// make sure these are initialized so that we can use common routines
 	ZetInit(0);
@@ -6762,8 +6770,6 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 
 	DrvSetDefaultColorTable();
 
-	bprintf (0, _T("%d\n"), nScreenHeight);
-
 	flipflop = 0;
 
 	VideoOffsets[2][0] = ((256 - nScreenHeight) / 2); // adjust for screen height
@@ -6778,9 +6784,7 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 
 static INT32 DrvExit()
 {
-//	FILE *fa = fopen("nvram", "wb");
-//	fwrite (DrvNVRAM, 0x400, 1, fa);
-//	fclose (fa);
+	pRomLoadCallback = NULL;
 
 	GenericTilesExit();
 
@@ -8613,15 +8617,15 @@ struct BurnDriver BurnDrvZombraid = {
 /* Prototype or test board version.  Data matches released MASK rom version */
 
 static struct BurnRomInfo zombraidpRomDesc[] = {
-	{ "u3_master_usa_prg_e_l_dd28.u3",		0x080000, 0x0b34b8f7, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "u4_master_usa_prg_o_l_5e2b.u4",		0x080000, 0x71bfeb1a, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "u3_master_usa_prg_e_l_dd28.u3",	0x080000, 0x0b34b8f7, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "u4_master_usa_prg_o_l_5e2b.u4",	0x080000, 0x71bfeb1a, 0x01 | BRF_PRG | BRF_ESS }, //  1
 	{ "u103_master_usa_prg_e_h_789e.u103",	0x080000, 0x313fd68f, 0x01 | BRF_PRG | BRF_ESS }, //  2
 	{ "u102_master_usa_prg_o_h_1f25.u102",	0x080000, 0xa0f61f13, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "u142_master_obj_00_1bb3.u142",	0x040000, 0xed6c8541, 0x0b | BRF_GRA },           //  4 Sprites
-	{ "obj_01",							0x040000, 0xa423620e, 0x0b | BRF_GRA },           //  5 
+	{ "obj_01",				0x040000, 0xa423620e, 0x0b | BRF_GRA },           //  5 
 	{ "u143_master_obj_04_b5aa.u143",	0x040000, 0x1242670d, 0x0b | BRF_GRA },           //  6 
-	{ "obj_05",							0x040000, 0x57fe3e97, 0x0b | BRF_GRA },           //  7 
+	{ "obj_05",				0x040000, 0x57fe3e97, 0x0b | BRF_GRA },           //  7 
 	{ "u146_master_obj_02_6cc6.u146",	0x040000, 0x7562ee1b, 0x0b | BRF_GRA },           //  8 
 	{ "u144_master_obj_03_1cb5.u144",	0x040000, 0xa83040f1, 0x0b | BRF_GRA },           //  9 
 	{ "u147_master_obj_06_c3d8.u147",	0x040000, 0xa32c3da8, 0x0b | BRF_GRA },           // 10 
@@ -8654,13 +8658,81 @@ static struct BurnRomInfo zombraidpRomDesc[] = {
 STD_ROM_PICK(zombraidp)
 STD_ROM_FN(zombraidp)
 
+static INT32 zombraidpRomCallback(INT32 bLoad)
+{
+	if (!bLoad)
+	{
+		DrvROMLen[0] = 0x200000; // gfx0
+		DrvROMLen[1] = 0x400000; // gfx1
+		DrvROMLen[2] = 0x400000; // gfx2
+		DrvROMLen[3] = 0x480000; // sound rom
+	}
+	else
+	{
+		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x100001,  2, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x100000,  3, 2)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM0 + 0x000001,  4, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  5, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x080001,  6, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x080000,  7, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x100001,  8, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x100000,  9, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x180001, 10, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x180000, 11, 2)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM1 + 0x000000, 12, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x000001, 13, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x100000, 14, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x100001, 15, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x200000, 16, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x300000, 17, 2)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM2 + 0x000000, 18, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x000001, 19, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x100000, 20, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x100001, 21, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x200000, 22, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x300000, 23, 2)) return 1;
+
+		if (BurnLoadRom(DrvSndROM  + 0x000000, 24, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x080000, 25, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x100000, 26, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x180000, 27, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x200000, 28, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x280000, 29, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x300000, 30, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x380000, 31, 1)) return 1;
+	}
+
+	return 0;
+}
+
+static INT32 zombraidpInit()
+{
+	DrvSetVideoOffsets(0, 0, -2, -2);
+	DrvSetColorOffsets(0, 0x200, 0xa00);
+
+	pRomLoadCallback = zombraidpRomCallback;
+
+	INT32 nRet = DrvInit(zombraid68kInit, 16000000, SET_IRQLINES(2, 4), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 3, 3));
+
+	if (nRet == 0) {
+		gundharaSetColorTable();
+	}
+
+	return nRet;
+}
+
 struct BurnDriver BurnDrvZombraidp = {
 	"zombraidp", "zombraid", NULL, NULL, "1995",
 	"Zombie Raid (9/28/95, US, prototype PCB)\0", NULL, "American Sammy", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA1, GBF_SHOOT, 0,
 	NULL, zombraidpRomInfo, zombraidpRomName, NULL, NULL, ZombraidInputInfo, ZombraidDIPInfo,
-	zombraidInit, DrvExit, DrvFrame, zombraidDraw, DrvScan, &DrvRecalc, 0x1200,
+	zombraidpInit, DrvExit, DrvFrame, zombraidDraw, DrvScan, &DrvRecalc, 0x1200,
 	384, 240, 4, 3
 };
 
@@ -8716,7 +8788,7 @@ struct BurnDriver BurnDrvZombraidpj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA1, GBF_SHOOT, 0,
 	NULL, zombraidpjRomInfo, zombraidpjRomName, NULL, NULL, ZombraidInputInfo, ZombraidDIPInfo,
-	zombraidInit, DrvExit, DrvFrame, zombraidDraw, DrvScan, &DrvRecalc, 0x1200,
+	zombraidpInit, DrvExit, DrvFrame, zombraidDraw, DrvScan, &DrvRecalc, 0x1200,
 	384, 240, 4, 3
 };
 
@@ -9304,7 +9376,6 @@ static INT32 extdwnhlInit()
 		zingzapSetColorTable();
 		if (DrvGfxTransMask[2] == NULL) {
 			DrvGfxTransMask[2] = DrvGfxTransMask[1]; // sokonuke fix
-			bprintf (0, _T("null\n"));
 		}
 	}
 

@@ -78,7 +78,9 @@ void x1010_sound_update()
 				freq     = reg->frequency & 0x1f;
 				// Meta Fox does not write the frequency register. Ever
 				if( freq == 0 ) freq = 4;
-				if(X1010_Arbalester_Mode && ch==0x0f) freq = 8;
+				// Special handling for Arbalester -dink
+				if( X1010_Arbalester_Mode && ch==0x0f && reg->start != 0xc0 && reg->start != 0xc8 )
+					freq = 8;
 
 				//smp_step = (unsigned int)((float)x1_010->base_clock / 8192.0
 				//			* freq * (1 << FREQ_BASE_BITS) / (float)x1_010->rate );
@@ -86,7 +88,7 @@ void x1010_sound_update()
 
 //				if( smp_offs == 0 ) {
 //					bprintf(PRINT_ERROR, _T("Play sample %06X - %06X, channel %X volume %d freq %X step %X offset %X\n"),
-//							start, end, ch, volL, freq, smp_step, smp_offs);
+//							reg->start, reg->end, ch, volL, freq, smp_step, smp_offs);
 //				}
 
 				for( i = 0; i < nBurnSoundLen; i++ ) {

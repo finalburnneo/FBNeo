@@ -624,6 +624,20 @@ INT32 ZetHL(INT32 n)
 	}
 }
 
+INT32 ZetI(INT32 n)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetI called without init\n"));
+	if (nOpenedCPU == -1 && n < 0) bprintf(PRINT_ERROR, _T("ZetI called when no CPU open\n"));
+#endif
+
+	if (n < 0) {
+		return ActiveZ80GetI();
+	} else {
+		return ZetCPUContext[n]->reg.i;
+	}
+}
+
 INT32 ZetScan(INT32 nAction)
 {
 #if defined FBA_DEBUG

@@ -3662,6 +3662,11 @@ int ActiveZ80GetHL()
 	return Z80.hl.w.l;
 }
 
+int ActiveZ80GetI()
+{
+	return Z80.i;
+}
+
 int ActiveZ80GetPrevPC()
 {
 	return Z80.prvpc.d;

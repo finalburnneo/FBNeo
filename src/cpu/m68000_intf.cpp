@@ -1992,18 +1992,18 @@ bool SekDbgSetRegister(SekRegister nRegister, UINT32 nValue)
 // specific to a certain system.
 struct m68ki_cpu_core_pointerblock
 {
-	UINT8* cyc_instruction;
-	UINT8* cyc_exception;
+	const UINT8* cyc_instruction;
+	const UINT8* cyc_exception;
 
 	int  (*int_ack_callback)(int int_line);           /* Interrupt Acknowledge */
 	void (*bkpt_ack_callback)(unsigned int data);     /* Breakpoint Acknowledge */
 	void (*reset_instr_callback)(void);               /* Called when a RESET instruction is encountered */
 	void (*cmpild_instr_callback)(unsigned int, int); /* Called when a CMPI.L #v, Dn instruction is encountered */
 	void (*rte_instr_callback)(void);                 /* Called when a RTE instruction is encountered */
+	int  (*tas_instr_callback)(void);                 /* Called when a TAS instruction is encountered */
 	void (*pc_changed_callback)(unsigned int new_pc); /* Called when the PC changes by a large amount */
 	void (*set_fc_callback)(unsigned int new_fc);     /* Called when the CPU function code changes */
 	void (*instr_hook_callback)(unsigned int pc);     /* Called every instruction cycle prior to execution */
-	int  (*tas_instr_callback)(void);                 /* Called when a TAS instruction is encountered */
 };
 
 
@@ -2079,16 +2079,11 @@ INT32 SekScan(INT32 nAction)
 
 #ifdef EMU_M68K
 			if (nSekCPUType[i] != 0) {
-			// memmove notes: for savestate portability: preserve our cpu's pointers, they are set up in DrvInit() and can be specific to different systems.
-					memmove(&m68kpointerblock, SekM68KContext[i]+(nSekM68KContextSize[i]-sizeof(m68kpointerblock)), sizeof(m68kpointerblock));
-
-					ba.Data = SekM68KContext[i];
-					ba.nLen = nSekM68KContextSize[i];
-					ba.szName = szName;
-					BurnAcb(&ba);
-
-			// Put our saved pointers back :)
-					memmove(SekM68KContext[i]+(nSekM68KContextSize[i]-sizeof(m68kpointerblock)), &m68kpointerblock, sizeof(m68kpointerblock));
+				ba.Data = SekM68KContext[i];
+				// for savestate portability: preserve our cpu's pointers, they are set up in DrvInit() and can be specific to different systems.
+				ba.nLen = nSekM68KContextSize[i] - sizeof(m68kpointerblock);
+				ba.szName = szName;
+				BurnAcb(&ba);
 			}
 #endif
 

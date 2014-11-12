@@ -356,7 +356,7 @@ void __fastcall magicbub_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x800188:
 		case 0x800189:
-			if (is_magicbub) {
+			if (is_magicbub==1) {
 				if (data != 0x3a) {
 					*soundlatch = data;
 //					ZetNmi();
@@ -617,7 +617,7 @@ static INT32 DrvInit(INT32 game_select)
 				if (BurnLoadRom(DrvGfxROM0 + 0x200003,  9, 4)) return 1;
 				offset = 10;
 
-				is_magicbub = 1;
+				is_magicbub = 2; // this set has no z80 like sets below!
 			}
 			break;
 			
@@ -685,7 +685,7 @@ static INT32 DrvInit(INT32 game_select)
 	BurnTimerAttachZetYM3812(3000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 
-	MSM6295Init(0, (is_magicbub ? 1056000 : 1000000) / 132, is_magicbub);
+	MSM6295Init(0, ((is_magicbub==1) ? 1056000 : 1000000) / 132, (is_magicbub==1)?1:0);
 	MSM6295SetRoute(0, (is_magicbub ? 0.80 : 1.00), BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -874,13 +874,13 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += SekRun(nSegment);
 		if (i == (nInterleave - 1)) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
 
-		if (is_magicbub == 0) continue;
+		if (is_magicbub != 1) continue;
 
 		nSegment = nCyclesTotal[1] / nInterleave;
 		BurnTimerUpdateYM3812((1 + i) * nSegment);
 	}
 
-	if (is_magicbub) {
+	if (is_magicbub == 1) {
 		BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 	}
 
@@ -1021,8 +1021,8 @@ struct BurnDriver BurnDrvMagicbuba = {
 // Magic Bubble (Adult version, YS-0211 PCB)
 
 static struct BurnRomInfo magicbubbRomDesc[] = {
-	{ "u33",			0x40000, 0xdb651555, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "u32",			0x40000, 0xc9cb4d88, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "u33",		0x40000, 0xdb651555, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "u32",		0x40000, 0xc9cb4d88, 1 | BRF_PRG | BRF_ESS }, //  1
 	
 	{ "u67.bin",		0x80000, 0x89523dcd, 2 | BRF_GRA },           //  2 Background Tiles
 	{ "u68.bin",		0x80000, 0x30e01a70, 2 | BRF_GRA },           //  3
@@ -1033,12 +1033,12 @@ static struct BurnRomInfo magicbubbRomDesc[] = {
 	{ "u73.bin",		0x80000, 0xcb4f3c3c, 2 | BRF_GRA },           //  8
 	{ "u74.bin",		0x80000, 0x81ff4910, 2 | BRF_GRA },           //  9
 
-	{ "u20.bin",		0x20000, 0xf70e3b8c, 3 | BRF_GRA },           // 11 Sprites
-	{ "u21.bin",		0x20000, 0xad082cf3, 3 | BRF_GRA },           // 12
-	{ "u22.bin",		0x20000, 0x7c68df7a, 3 | BRF_GRA },           // 13
-	{ "u23.bin",		0x20000, 0xc7763fc1, 3 | BRF_GRA },           // 14
+	{ "u20.bin",		0x20000, 0xf70e3b8c, 3 | BRF_GRA },           // 10 Sprites
+	{ "u21.bin",		0x20000, 0xad082cf3, 3 | BRF_GRA },           // 11
+	{ "u22.bin",		0x20000, 0x7c68df7a, 3 | BRF_GRA },           // 12
+	{ "u23.bin",		0x20000, 0xc7763fc1, 3 | BRF_GRA },           // 13
 
-	{ "u131",			0x40000, 0x9bdb08e4, 4 | BRF_SND },           // 15 Samples
+	{ "u131",		0x40000, 0x9bdb08e4, 4 | BRF_SND },           // 14 Samples
 };
 
 STD_ROM_PICK(magicbubb)

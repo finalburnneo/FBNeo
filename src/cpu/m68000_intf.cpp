@@ -1994,6 +1994,7 @@ struct m68ki_cpu_core_pointerblock
 {
 	UINT8* cyc_instruction;
 	UINT8* cyc_exception;
+
 	int  (*int_ack_callback)(int int_line);           /* Interrupt Acknowledge */
 	void (*bkpt_ack_callback)(unsigned int data);     /* Breakpoint Acknowledge */
 	void (*reset_instr_callback)(void);               /* Called when a RESET instruction is encountered */
@@ -2001,7 +2002,7 @@ struct m68ki_cpu_core_pointerblock
 	void (*rte_instr_callback)(void);                 /* Called when a RTE instruction is encountered */
 	void (*pc_changed_callback)(unsigned int new_pc); /* Called when the PC changes by a large amount */
 	void (*set_fc_callback)(unsigned int new_fc);     /* Called when the CPU function code changes */
-	void (*instr_hook_callback)(void);                /* Called every instruction cycle prior to execution */
+	void (*instr_hook_callback)(unsigned int pc);     /* Called every instruction cycle prior to execution */
 	int  (*tas_instr_callback)(void);                 /* Called when a TAS instruction is encountered */
 };
 

@@ -8371,7 +8371,7 @@ struct BurnDriver BurnDrvCpsGigawingj = {
 
 struct BurnDriver BurnDrvCpsHsf2 = {
 	"hsf2", NULL, NULL, NULL, "2004",
-	"Hyper Street Fighter 2: The Anniversary Edition (040202 USA)\0", NULL, "Capcom", "CPS2",
+	"Hyper Street Fighter II: The Anniversary Edition (040202 USA)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Hsf2RomInfo, Hsf2RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
@@ -8381,7 +8381,7 @@ struct BurnDriver BurnDrvCpsHsf2 = {
 
 struct BurnDriver BurnDrvCpsHsf2a = {
 	"hsf2a", "hsf2", NULL, NULL, "2004",
-	"Hyper Street Fighter 2: The Anniversary Edition (040202 Asia)\0", NULL, "Capcom", "CPS2",
+	"Hyper Street Fighter II: The Anniversary Edition (040202 Asia)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Hsf2aRomInfo, Hsf2aRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
@@ -8391,7 +8391,7 @@ struct BurnDriver BurnDrvCpsHsf2a = {
 
 struct BurnDriver BurnDrvCpsHsf2j = {
 	"hsf2j", "hsf2", NULL, NULL, "2004",
-	"Hyper Street Fighter 2: The Anniversary Edition (031222 Japan)\0", NULL, "Capcom", "CPS2",
+	"Hyper Street Fighter II: The Anniversary Edition (031222 Japan)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Hsf2jRomInfo, Hsf2jRomName, NULL, NULL, Cps2FightingInputInfo, NULL,

@@ -101,7 +101,7 @@ STDDIPINFO(pgm)
 
 static struct BurnDIPInfo jammaDIPList[] = {
 	{0x2D,	0xFF, 0xFF,	0x00, NULL				},
-	{0x2F,  0xFF, 0x01,     0x00, NULL				},
+	{0x2F,  0xFF, 0x01, 0x00, NULL				},
 
 	{0,	0xFE, 0,	2,    "Test mode"			},
 	{0x2D,	0x01, 0x01,	0x00, "Off"				},
@@ -190,6 +190,19 @@ static struct BurnDIPInfo killbld104DIPList[] = {
 
 static struct BurnDIPInfo photoy2kDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x03, NULL				},
+
+	{0,	0xFE, 0,	7,    "Region (Fake)"			},
+	{0x2E,	0x01, 0x0F,	0x00, "Taiwan"				},
+	{0x2E,	0x01, 0x0F,	0x01, "China"				},
+	{0x2E,	0x01, 0x0F,	0x02, "Japan"				},
+	{0x2E,	0x01, 0x0F,	0x03, "World"				},
+	{0x2E,	0x01, 0x0F,	0x04, "Korea"				},
+	{0x2E,	0x01, 0x0F,	0x05, "Hong Kong"			},
+	{0x2E,	0x01, 0x0F,	0x06, "Singapore / Malaysia"	},
+};
+
+static struct BurnDIPInfo py2k2DIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x00, NULL				},
 
 	{0,	0xFE, 0,	7,    "Region (Fake)"			},
 	{0x2E,	0x01, 0x0F,	0x00, "Taiwan"				},
@@ -440,6 +453,7 @@ STDDIPINFOEXT(kovshxas,    	pgm,	kovshxas		)
 STDDIPINFOEXT(killbld,	 	pgm,	killbld			)
 STDDIPINFOEXT(killbld104,	pgm,	killbld104		)
 STDDIPINFOEXT(photoy2k, 	pgm,	photoy2k		)
+STDDIPINFOEXT(py2k2, 		pgm,	py2k2			)
 STDDIPINFOEXT(puzzli2,  	pgm,	puzzli2			)
 STDDIPINFOEXT(martmast, 	pgm,	martmast		)
 STDDIPINFOEXT(martmastc102, pgm,	martmastc102	)
@@ -2153,7 +2167,7 @@ struct BurnDriverD BurnDrvPy2k2 = {
 	"Photo Y2K 2 (VM101XX, Taiwan)\0", "Incomplete dump", "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_PUZZLE, 0,
-	NULL, py2k2RomInfo, py2k2RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	NULL, py2k2RomInfo, py2k2RomName, NULL, NULL, pgmInputInfo, py2k2DIPInfo,
 	py2k2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };

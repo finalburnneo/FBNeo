@@ -13723,11 +13723,11 @@ struct BurnDriver BurnDrvkof98co = {
 };
 
 // The King of Fighters '99 (Anniversary Edition, Yashional hack)
-
+// 2014/11/11 version
 static struct BurnRomInfo kof99aeRomDesc[] = {
-	{ "152ae-p1.p1",   	   0x100000, 0x8cd9cbe8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "152ae-p2.p2",   	   0x400000, 0x84086ea5, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "152ae-p3.p3",   	   0x400000, 0x2ece2c91, 1 | BRF_ESS | BRF_PRG }, //  2 	
+	{ "152ae-p1.p1",   	   0x100000, 0x6b187829, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "152ae-p2.p2",   	   0x400000, 0x3697eff6, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "152ae-p3.p3",   	   0x400000, 0x56c53cd7, 1 | BRF_ESS | BRF_PRG }, //  2 	
 
 	{ "251ae-s1.s1",       0x020000, 0x18c1562d, 2 | BRF_GRA },           //  3 Text layer tiles
 
@@ -13739,10 +13739,10 @@ static struct BurnRomInfo kof99aeRomDesc[] = {
 	{ "251-c6d.c6",   	   0x800000, 0x238b3e71, 3 | BRF_GRA },           //  8 
 	{ "251ae-c7.c7",   	   0x800000, 0xf22760ad, 3 | BRF_GRA },           //  9 
 	{ "251ae-c8.c8",   	   0x800000, 0x396c3a70, 3 | BRF_GRA },           // 10 
-	{ "251ae-c9.c9",   	   0x800000, 0x7d7b0897, 3 | BRF_GRA },           // 10 
-	{ "251ae-c10.c10",     0x800000, 0xd38065a7, 3 | BRF_GRA },           // 10 
-	{ "251ae-c11.c11",     0x800000, 0x90016920, 3 | BRF_GRA },           // 10 
-	{ "251ae-c12.c12",     0x800000, 0x49cfed23, 3 | BRF_GRA },           // 10 
+	{ "251ae-c9.c9",   	   0x800000, 0x9594e401, 3 | BRF_GRA },           // 10 
+	{ "251ae-c10.c10",     0x800000, 0xa778cdd6, 3 | BRF_GRA },           // 10 
+	{ "251ae-c11.c11",     0x800000, 0x7fe785c2, 3 | BRF_GRA },           // 10 
+	{ "251ae-c12.c12",     0x800000, 0xa7541483, 3 | BRF_GRA },           // 10 
 
 	{ "251ae-m1.m1",       0x020000, 0xf847e188, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 

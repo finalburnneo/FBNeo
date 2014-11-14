@@ -1094,16 +1094,6 @@ static void ninjakd2_sound_init()
 	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.50, BURN_SND_ROUTE_BOTH);
 }
 
-static void lower_psg_volume(double voll)
-{
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, voll, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_1, voll, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, voll, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, voll, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, voll, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, voll, BURN_SND_ROUTE_BOTH);
-}
-
 static INT32 DrvDoReset()
 {
 	memset(AllRam, 0, RamEnd - AllRam);
@@ -1373,7 +1363,8 @@ static INT32 MnightInit()
 	ZetClose();
 
 	ninjakd2_sound_init();
-	lower_psg_volume(0.05);
+	BurnYM2203SetPSGVolume(0, 0.05);
+	BurnYM2203SetPSGVolume(1, 0.05);
 
 	GenericTilesInit();
 
@@ -1455,7 +1446,8 @@ static INT32 RobokidInit()
 	ZetClose();
 
 	ninjakd2_sound_init();
-	lower_psg_volume(0.03);
+	BurnYM2203SetPSGVolume(0, 0.03);
+	BurnYM2203SetPSGVolume(1, 0.03);
 
 	GenericTilesInit();
 
@@ -1514,7 +1506,8 @@ static INT32 OmegafInit()
 	ZetClose();
 
 	ninjakd2_sound_init();
-	lower_psg_volume(0.03);
+	BurnYM2203SetPSGVolume(0, 0.03);
+	BurnYM2203SetPSGVolume(1, 0.03);
 
 	GenericTilesInit();
 

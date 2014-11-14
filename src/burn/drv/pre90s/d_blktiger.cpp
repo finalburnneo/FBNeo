@@ -535,6 +535,8 @@ static INT32 DrvInit()
 	BurnTimerAttachZet(3579545);
 	BurnYM2203SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetPSGVolume(0, 0.05);
+	BurnYM2203SetPSGVolume(1, 0.05);
 
 	DrvDoReset(1);
 

@@ -30,6 +30,11 @@ extern INT32 bYM2203UseSeperateVolumes;
 	BurnYM2203SetRoute(i, BURN_SND_YM2203_AY8910_ROUTE_2, v, d);	\
 	BurnYM2203SetRoute(i, BURN_SND_YM2203_AY8910_ROUTE_3, v, d)
 
+#define BurnYM2203SetPSGVolume(i, v) \
+	BurnYM2203SetRoute(i, BURN_SND_YM2203_AY8910_ROUTE_1, v, BURN_SND_ROUTE_BOTH); \
+	BurnYM2203SetRoute(i, BURN_SND_YM2203_AY8910_ROUTE_2, v, BURN_SND_ROUTE_BOTH); \
+	BurnYM2203SetRoute(i, BURN_SND_YM2203_AY8910_ROUTE_3, v, BURN_SND_ROUTE_BOTH);
+
 #define BurnYM2203Read(i, a) YM2203Read(i, a)
 
 #if defined FBA_DEBUG

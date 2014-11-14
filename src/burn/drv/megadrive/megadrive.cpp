@@ -1260,7 +1260,7 @@ UINT8 __fastcall MegadriveZ80PortRead(UINT16 a)
 	switch (a) {
 		case 0xbf: break; // some games read this, case added just to prevent massive debug scroll
 		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 Port Read %02x\n"), a);
+			//bprintf(PRINT_NORMAL, _T("Z80 Port Read %02x\n"), a);
 		}
 	}
 
@@ -1289,7 +1289,7 @@ UINT8 __fastcall MegadriveZ80ProgRead(UINT16 a)
 		addr68k += a & 0x7fff;
 		if (addr68k <= 0x3fffff) return RomMain[addr68k ^ 1];
 		
-		bprintf(PRINT_NORMAL, _T("%Z80 trying to read 68k address %06X\n"), addr68k);
+		//bprintf(PRINT_NORMAL, _T("Z80 trying to read 68k address %06X\n"), addr68k);
 		return 0;
 	}
 	
@@ -1301,7 +1301,7 @@ UINT8 __fastcall MegadriveZ80ProgRead(UINT16 a)
 		}
 		
 		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 Read %04x\n"), a);
+			//bprintf(PRINT_NORMAL, _T("Z80 Read %04x\n"), a);
 		}
 	}
 	

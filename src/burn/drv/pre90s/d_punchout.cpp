@@ -1259,7 +1259,7 @@ static INT32 SpunchoutjLoadRoms()
 	return 0;
 }
 
-// Punch-Out!!
+// Punch-Out (Rev B)!!
 
 static struct BurnRomInfo punchoutRomDesc[] = {
 	{ "chp1-c.8l",	0x2000, 0xa4003adc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1317,16 +1317,88 @@ STD_ROM_FN(punchout)
 
 static INT32 PunchoutInit()
 {
-	return CommonInit(PunchoutLoadRoms, 1, 0xff00, 0xff00ffff);
+	return CommonInit(SpunchoutLoadRoms, 1, 0xff00, 0x00000000);
 }
 
 struct BurnDriver BurnDrvPunchout = {
 	"punchout", NULL, NULL, NULL, "1984",
-	"Punch-Out!!\0", NULL, "Nintendo", "Miscellaneous",
+	"Punch-Out!! (Rev B)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, punchoutRomInfo, punchoutRomName, NULL, NULL, PunchoutInputInfo, PunchoutDIPInfo,
 	PunchoutInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 448, 4, 6
+};
+
+
+// Punch-Out (Rev A)!!
+
+static struct BurnRomInfo punchoutaRomDesc[] = {
+	{ "chp1-c.8l",	0x2000, 0xa4003adc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "chp1-c.8k",	0x2000, 0x745ecf40, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "chp1-c.8j",	0x2000, 0x7a7f870e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "chp1-c.8h",	0x2000, 0x5d8123d7, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "chp1-c.8f",	0x4000, 0xc8a55ddb, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "chp1-c.4k",	0x2000, 0xcb6ef376, 2 | BRF_PRG | BRF_ESS }, //  5 N2A03 Code
+
+	{ "chp1-b.4c",	0x2000, 0xe26dc8b3, 3 | BRF_GRA },           //  6 Top Screen Background Characters
+	{ "chp1-b.4d",	0x2000, 0xdd1310ca, 3 | BRF_GRA },           //  7
+
+	{ "chp1-b.4a",	0x2000, 0x20fb4829, 4 | BRF_GRA },           //  8 Bottom Screen Background Characters
+	{ "chp1-b.4b",	0x2000, 0xedc34594, 4 | BRF_GRA },           //  9
+
+	{ "chp1-v.2r",	0x4000, 0xbd1d4b2e, 5 | BRF_GRA },           // 10 Big Sprite Characters
+	{ "chp1-v.2t",	0x4000, 0xdd9a688a, 5 | BRF_GRA },           // 11
+	{ "chp1-v.2u",	0x2000, 0xda6a3c4b, 5 | BRF_GRA },           // 12
+	{ "chp1-v.2v",	0x2000, 0x8c734a67, 5 | BRF_GRA },           // 13
+	{ "chp1-v.3r",	0x4000, 0x2e74ad1d, 5 | BRF_GRA },           // 14
+	{ "chp1-v.3t",	0x4000, 0x630ba9fb, 5 | BRF_GRA },           // 15
+	{ "chp1-v.3u",	0x2000, 0x6440321d, 5 | BRF_GRA },           // 16
+	{ "chp1-v.3v",	0x2000, 0xbb7b7198, 5 | BRF_GRA },           // 17
+	{ "chp1-v.4r",	0x4000, 0x4e5b0fe9, 5 | BRF_GRA },           // 18
+	{ "chp1-v.4t",	0x4000, 0x37ffc940, 5 | BRF_GRA },           // 19
+	{ "chp1-v.4u",	0x2000, 0x1a7521d4, 5 | BRF_GRA },           // 20
+
+	{ "chp1-v.6p",	0x2000, 0x16588f7a, 6 | BRF_GRA },           // 21 Bottom Screen Big Sprite Characters
+	{ "chp1-v.6n",	0x2000, 0xdc743674, 6 | BRF_GRA },           // 22
+	{ "chp1-v.8p",	0x2000, 0xc2db5b4e, 6 | BRF_GRA },           // 23
+	{ "chp1-v.8n",	0x2000, 0xe6af390e, 6 | BRF_GRA },           // 24
+
+	{ "chp1-b-6e_pink.6e",	0x0200, 0xe9ca3ac6, 7 | BRF_GRA },       // 25 Color PROMs
+	{ "chp1-b-6f_pink.6f",	0x0200, 0x02be56ab, 7 | BRF_GRA },       // 26
+	{ "chp1-b-7f_pink.7f",	0x0200, 0x11de55f1, 7 | BRF_GRA },       // 27
+	{ "chp1-b-7e_white.7e",	0x0200, 0x47adf7a2, 7 | BRF_GRA },       // 28
+	{ "chp1-b-8e_white.8e",	0x0200, 0xb0fc15a8, 7 | BRF_GRA },       // 29
+	{ "chp1-b-8f_white.8f",	0x0200, 0x1ffd894a, 7 | BRF_GRA },       // 30
+	
+	{ "chp1-v-2d.2d",		0x0100, 0x71dc0d48, 0 | BRF_GRA },   // 31 Timing PROM
+
+	{ "chp1-c.6p",	0x4000, 0xea0bbb31, 8 | BRF_SND },           // 32 VLM5030 Samples
+	
+	{ "chp1-b-6e_white.6e",	0x0200, 0xddac5f0e, 0 | BRF_OPT },
+	{ "chp1-b-6f_white.6f",	0x0200, 0x846c6261, 0 | BRF_OPT },
+	{ "chp1-b-7f_white.7f",	0x0200, 0x1682dd30, 0 | BRF_OPT },
+	{ "chp1-b-7e_pink.7e",	0x0200, 0xfddaa777, 0 | BRF_OPT },
+	{ "chp1-b-8e_pink.8e",	0x0200, 0xc3d5d71f, 0 | BRF_OPT },
+	{ "chp1-b-8f_pink.8f",	0x0200, 0xa3037155, 0 | BRF_OPT },   
+};
+
+STD_ROM_PICK(punchouta)
+STD_ROM_FN(punchouta)
+
+static INT32 PunchoutaInit()
+{
+	return CommonInit(PunchoutLoadRoms, 1, 0xff00, 0xff00ffff);
+}
+
+struct BurnDriver BurnDrvPunchouta = {
+	"punchouta", "punchout", NULL, NULL, "1984",
+	"Punch-Out!! (Rev A)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	NULL, punchoutaRomInfo, punchoutaRomName, NULL, NULL, PunchoutInputInfo, PunchoutDIPInfo,
+	PunchoutaInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
 };
 
@@ -1393,7 +1465,7 @@ struct BurnDriver BurnDrvPunchoutj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, punchoutjRomInfo, punchoutjRomName, NULL, NULL, PunchoutInputInfo, PunchoutDIPInfo,
-	PunchoutInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
+	PunchoutaInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
 };
 
@@ -1470,7 +1542,7 @@ struct BurnDriver BurnDrvPunchita = {
 };
 
 
-// Super Punch-Out!!
+// Super Punch-Out!! (Rev B)
 
 static struct BurnRomInfo spnchoutRomDesc[] = {
 	{ "chs1-c.8l",		0x2000, 0x703b9780, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1528,11 +1600,78 @@ STD_ROM_FN(spnchout)
 
 struct BurnDriver BurnDrvSpnchout = {
 	"spnchout", NULL, NULL, NULL, "1984",
-	"Super Punch-Out!!\0", NULL, "Nintendo", "Miscellaneous",
+	"Super Punch-Out!! (Rev B)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, spnchoutRomInfo, spnchoutRomName, NULL, NULL, SpnchoutInputInfo, SpnchoutDIPInfo,
 	SpnchoutInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 448, 4, 6
+};
+
+
+// Super Punch-Out!! (Rev A)
+
+static struct BurnRomInfo spnchoutaRomDesc[] = {
+	{ "chs1-c.8l",		0x2000, 0x703b9780, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "chs1-c.8k",		0x2000, 0xe13719f6, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "chs1-c.8j",		0x2000, 0x1fa629e8, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "chs1-c.8h",		0x2000, 0x15a6c068, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "chs1-c.8f",		0x4000, 0x4ff3cdd9, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "chp1-c.4k",		0x2000, 0xcb6ef376, 2 | BRF_PRG | BRF_ESS }, //  5 N2A03 Code
+
+	{ "chs1-b.4c",		0x2000, 0xb017e1e9, 3 | BRF_GRA },           //  6 Top Screen Background Characters
+	{ "chs1-b.4d",		0x2000, 0xe3de9d18, 3 | BRF_GRA },           //  7
+
+	{ "chp1-b.4a",		0x2000, 0x20fb4829, 4 | BRF_GRA },           //  8 Bottom Screen Background Characters
+	{ "chp1-b.4b",		0x2000, 0xedc34594, 4 | BRF_GRA },           //  9
+
+	{ "chs1-v.2r",		0x4000, 0xff33405d, 5 | BRF_GRA },           // 10 Big Sprite Characters
+	{ "chs1-v.2t",		0x4000, 0xf507818b, 5 | BRF_GRA },           // 11
+	{ "chs1-v.2u",		0x4000, 0x0995fc95, 5 | BRF_GRA },           // 12
+	{ "chs1-v.2v",		0x2000, 0xf44d9878, 5 | BRF_GRA },           // 13
+	{ "chs1-v.3r",		0x4000, 0x09570945, 5 | BRF_GRA },           // 14
+	{ "chs1-v.3t",		0x4000, 0x42c6861c, 5 | BRF_GRA },           // 15
+	{ "chs1-v.3u",		0x4000, 0xbf5d02dd, 5 | BRF_GRA },           // 16
+	{ "chs1-v.3v",		0x2000, 0x5673f4fc, 5 | BRF_GRA },           // 17
+	{ "chs1-v.4r",		0x4000, 0x8e155758, 5 | BRF_GRA },           // 18
+	{ "chs1-v.4t",		0x4000, 0xb4e43448, 5 | BRF_GRA },           // 19
+	{ "chs1-v.4u",		0x4000, 0x74e0d956, 5 | BRF_GRA },           // 20
+
+	{ "chp1-v.6p",		0x2000, 0x16588f7a, 6 | BRF_GRA },           // 21 Bottom Screen Big Sprite Characters
+	{ "chp1-v.6n",		0x2000, 0xdc743674, 6 | BRF_GRA },           // 22
+	{ "chp1-v.8p",		0x2000, 0xc2db5b4e, 6 | BRF_GRA },           // 23
+	{ "chp1-v.8n",		0x2000, 0xe6af390e, 6 | BRF_GRA },           // 24
+
+	{ "chs1-b-6e_pink.6e",	0x0200, 0x0ad4d727, 7 | BRF_GRA },           // 25 Color PROMs
+	{ "chs1-b-6f_pink.6f",	0x0200, 0x86f5cfdb, 7 | BRF_GRA },           // 26
+	{ "chs1-b-7f_pink.7f",	0x0200, 0x8bd406f8, 7 | BRF_GRA },           // 27
+	{ "chs1-b-7e_white.7e",	0x0200, 0x9e170f64, 7 | BRF_GRA },           // 28
+	{ "chs1-b-8e_white.8e",	0x0200, 0x3a2e333b, 7 | BRF_GRA },           // 29
+	{ "chs1-b-8f_white.8f",	0x0200, 0x1663eed7, 7 | BRF_GRA },           // 30
+
+	{ "chs1-v.2d",		0x0100, 0x71dc0d48, 0 | BRF_GRA | BRF_OPT }, // 31 Timing PROM
+
+	{ "chs1-c.6p",		0x4000, 0xad8b64b8, 8 | BRF_SND },           // 32 VLM5030 Samples
+	
+	{ "chs1-b-6e_white.6e",	0x0200, 0x8efd867f, 0 | BRF_OPT },           //
+	{ "chs1-b-6f_white.6f",	0x0200, 0x279d6cbc, 0 | BRF_OPT },           //
+	{ "chs1-b-7f_white.7f",	0x0200, 0xcad6b7ad, 0 | BRF_OPT },           //
+	{ "chs1-b-7e_pink.7e",	0x0200, 0x4c7e3a67, 0 | BRF_OPT },           //
+	{ "chs1-b-8e_pink.8e",	0x0200, 0xec659313, 0 | BRF_OPT },           //
+	{ "chs1-b-8f_pink.8f",	0x0200, 0x8b493c09, 0 | BRF_OPT },           //
+};
+
+STD_ROM_PICK(spnchouta)
+STD_ROM_FN(spnchouta)
+
+struct BurnDriver BurnDrvSpnchouta = {
+	"spnchouta", "spnchout", NULL, NULL, "1984",
+	"Super Punch-Out!! (Rev A)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	NULL, spnchoutaRomInfo, spnchoutaRomName, NULL, NULL, SpnchoutInputInfo, SpnchoutDIPInfo,
+	PunchoutaInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
 };
 

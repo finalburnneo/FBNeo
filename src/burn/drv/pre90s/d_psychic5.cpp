@@ -113,7 +113,7 @@ static inline void DrvMakeInputs()
 static struct BurnDIPInfo DrvDIPList[]=
 {
 	// Default Values
-	{0x11, 0xff, 0xff, 0xf0, NULL                     },
+	{0x11, 0xff, 0xff, 0xe9, NULL                     },
 	{0x12, 0xff, 0xff, 0xff, NULL                     },
 
 	// Dip 1

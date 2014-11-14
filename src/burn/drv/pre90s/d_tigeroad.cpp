@@ -675,6 +675,16 @@ static INT32 DrvGfxDecode()
 	return 0;
 }
 
+static void lower_psg_volume(double voll)
+{
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, voll, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_1, voll, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, voll, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, voll, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, voll, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, voll, BURN_SND_ROUTE_BOTH);
+}
+
 static INT32 DrvInit(INT32 (*pInitCallback)())
 {
 	AllMem = NULL;
@@ -730,7 +740,10 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 	BurnTimerAttachZet(3579545);
 	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
-	
+
+	if (nF1dream)
+		lower_psg_volume(0.11);
+
 	if (toramich) {
 		MSM5205Init(0, DrvMSM5205SynchroniseStream, 384000, NULL, MSM5205_SEX_4B, 1);
 		MSM5205SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);

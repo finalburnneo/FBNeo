@@ -538,19 +538,13 @@ static void A_w(int num, UINT8 reg, UINT8 data)
 			else
 			{
 				// reset timers
-				if((m_enable ^ data) & 1)
-				{
-					if (!ymf278b_chip_in_reset)
-						ymf278b_timer_a_reset(num);
-				}
-				if((m_enable ^ data) & 2)
-				{
-					if (!ymf278b_chip_in_reset)
-						ymf278b_timer_b_reset(num);
-				}
-
+				UINT8 old_enable = m_enable;
 				m_enable = data;
 				m_current_irq &= ~data;
+				if((old_enable ^ data) & 1 && !ymf278b_chip_in_reset)
+					ymf278b_timer_a_reset(num);
+				if((old_enable ^ data) & 2 && !ymf278b_chip_in_reset)
+					ymf278b_timer_b_reset(num);
 			}
 			irq_check();
 			break;

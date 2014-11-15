@@ -10,6 +10,7 @@
 static INT32 Sci;
 static INT32 OldSteer; // Hack to centre the steering in SCI
 static INT32 SciSpriteFrame;
+static INT32 BsharkINT6timer = 0;
 
 static double TaitoZYM2610Route1MasterVol;
 static double TaitoZYM2610Route2MasterVol;
@@ -3484,8 +3485,7 @@ void __fastcall Bshark68K1WriteWord(UINT32 a, UINT16 d)
 		case 0x800002:
 		case 0x800004:
 		case 0x800006: {
-			nTaitoCyclesDone[0] += SekRun(10000);
-			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			BsharkINT6timer = nTaitoCyclesDone[0];
 			return;
 		}
 		
@@ -5787,6 +5787,7 @@ static INT32 TaitoZExit()
 	SciSpriteFrame = 0;
 	OldSteer = 0;
 	Sci = 0;
+	BsharkINT6timer = 0;
 	
 	// Switch back CPU core if needed
 	if (bUseAsm68KCoreOldValue) {
@@ -6610,6 +6611,10 @@ static INT32 TaitoZFrame()
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
 		if (i == 10 && Sci && ((GetCurrentFrame() & 1) == 0)) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+		if (BsharkINT6timer && nTaitoCyclesDone[nCurrentCPU] >= BsharkINT6timer+10000) {
+			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			BsharkINT6timer = 0;
+		}
 		if (i == nVBlankIRQFire) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
 		SekClose();
 		

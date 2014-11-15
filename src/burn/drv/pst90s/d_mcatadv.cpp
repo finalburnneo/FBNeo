@@ -863,8 +863,11 @@ static INT32 DrvFrame()
 		DrvInputs[0] ^= (nGame << 11); // nostradamus wants bit 11 off
 	}
 
-
-	nCyclesTotal[0] = 16000000 / 60;
+	if (nGame == 1) { // Nostradamus 4mhz boost -dink
+		nCyclesTotal[0] = 20000000 / 60;
+	} else {
+		nCyclesTotal[0] = 16000000 / 60;
+	}
 	nCyclesTotal[1] = 4000000 / 60;
 	nCyclesDone[1 ] = 0;
 

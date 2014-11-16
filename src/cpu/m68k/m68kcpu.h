@@ -898,6 +898,9 @@ struct _m68ki_cpu_core
 	uint virq_state;
 	uint nmi_pending;
 
+	/* Designates the end of the CPU context variables and beginning of system-specific pointers */
+	uint8 pointer_block_divider;                      /* Used to calculate the context-size for savestates */
+
 	const uint8* cyc_instruction;
 	const uint8* cyc_exception;
 

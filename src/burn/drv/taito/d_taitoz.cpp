@@ -4211,8 +4211,7 @@ void __fastcall Nightstr68K1WriteWord(UINT32 a, UINT16 d)
 		case 0xe4000a:
 		case 0xe4000c:
 		case 0xe4000e: {
-			nTaitoCyclesDone[0] += SekRun(10000);
-			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			BsharkINT6timer = nTaitoCyclesDone[0];
 			return;
 		}
 		
@@ -4766,12 +4765,12 @@ static double TaitoZGetTime()
 
 static INT32 TaitoZ68KSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)SekTotalCycles() * nSoundRate / (nTaitoCyclesTotal[0] * 60);
+	return (INT64)SekTotalCycles() * nSoundRate / (nTaitoCyclesTotal[1] * 60);
 }
 
 static double TaitoZ68KGetTime()
 {
-	return (double)SekTotalCycles() / (nTaitoCyclesTotal[0] * 60);
+	return (double)SekTotalCycles() / (nTaitoCyclesTotal[1] * 60);
 }
 
 static void TaitoZZ80Init()
@@ -6607,13 +6606,9 @@ static INT32 TaitoZFrame()
 		// Run 68000 #1
 		nCurrentCPU = 0;
 		SekOpen(0);
-		if (TaitoNumZ80s) {
-			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-			nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		} else {
-			BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[nCurrentCPU] / nInterleave));
-		}
+		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
+		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
+		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
 		if (i == 10 && Sci && ((GetCurrentFrame() & 1) == 0)) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
 		if (BsharkINT6timer && nTaitoCyclesDone[nCurrentCPU] >= BsharkINT6timer+10000) {
 			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
@@ -6623,19 +6618,27 @@ static INT32 TaitoZFrame()
 		SekClose();
 		
 		// Run 68000 #2
-		if (TaitoCpuACtrl & 0x01) {
+		if (TaitoNumZ80s) {
+			if (TaitoCpuACtrl & 0x01) {
+				nCurrentCPU = 1;
+				SekOpen(1);
+				nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
+				nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
+				nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
+				if (i == nVBlankIRQFire) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
+				SekClose();
+			}
+		} else {
 			nCurrentCPU = 1;
 			SekOpen(1);
-			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-			nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
+			BurnTimerUpdate(i * (nTaitoCyclesTotal[nCurrentCPU] / nInterleave));
 			if (i == nVBlankIRQFire) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
 			SekClose();
 		}
 		
 		if (TaitoNumZ80s) {
 			ZetOpen(0);
-			BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[2] / nInterleave));
+			BurnTimerUpdate(i * (nTaitoCyclesTotal[2] / nInterleave));
 			ZetClose();
 		}
 	}
@@ -6646,8 +6649,8 @@ static INT32 TaitoZFrame()
 		if (pBurnSoundOut) BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
 		ZetClose();
 	} else {
-		SekOpen(0);
-		BurnTimerEndFrame(nTaitoCyclesTotal[0]);
+		SekOpen(1);
+		if (TaitoCpuACtrl & 0x01) BurnTimerEndFrame(nTaitoCyclesTotal[1]);
 		if (pBurnSoundOut) BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
 		SekClose();
 	}

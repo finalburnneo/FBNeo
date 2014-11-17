@@ -12753,7 +12753,7 @@ struct BurnDriver BurnDrvcthd2k3a = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Idol Mahjong - final romance 2 (CD to MVS Conversion)
+// Idol Mahjong - final romance 2 (Neo CD Conversion)
 
 static struct BurnRomInfo fr2chRomDesc[] = {
 	{ "098-p1ch.bin", 0x080000, 0x09675541, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -12773,7 +12773,7 @@ STD_ROM_FN(fr2ch)
 
 struct BurnDriver BurnDrvfr2ch = {
 	"fr2ch", NULL, "neogeo", NULL, "1995",
-	"Idol Mahjong - final romance 2 (CD to MVS Conversion)\0", NULL, "hack", "Neo Geo MVS",
+	"Idol Mahjong - final romance 2 (Neo CD Conversion)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNK_NEOGEO, GBF_MAHJONG, 0,
 	NULL, fr2chRomInfo, fr2chRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -12871,7 +12871,7 @@ struct BurnDriver BurnDrvb2buster = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Treasure of the Carribean (Prototype)
+// Treasure of the Carribean 
 
 static struct BurnRomInfo totcaribRomDesc[] = {
 	{ "totc-p1.bin",    0x100000, 0x99604539, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -12893,8 +12893,8 @@ STDROMPICKEXT(totcarib, totcarib, neogeo)
 STD_ROM_FN(totcarib)
 
 struct BurnDriver BurnDrvtotcarib = {
-	"totcarib", NULL, "neogeo", NULL, "1994",
-	"Treasure of the Carribean (Prototype)\0", NULL, "FACE Corporation", "Neo Geo MVS",
+	"totcarib", NULL, "neogeo", NULL, "2011",
+	"Treasure of the Carribean\0", NULL, "FACE Corporation / N.C.I - Le Cortex", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
 	NULL, totcaribRomInfo, totcaribRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

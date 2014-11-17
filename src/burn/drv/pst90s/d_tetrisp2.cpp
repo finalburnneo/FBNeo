@@ -6,6 +6,7 @@
 		save states
 		clean ups
 		Stepping Stage
+		priority fixes
 		Rock'n MegaSession (Japan)
 */
 

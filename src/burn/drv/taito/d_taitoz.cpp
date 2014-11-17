@@ -4607,7 +4607,6 @@ void __fastcall Spacegun68K2WriteWord(UINT32 a, UINT16 d)
 		case 0xf00002:
 		case 0xf00004:
 		case 0xf00006: {
-			nTaitoCyclesDone[1] += SekRun(10000);
 			SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
 			return;
 		}

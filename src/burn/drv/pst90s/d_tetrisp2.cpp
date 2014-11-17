@@ -3,8 +3,8 @@
 
 /*
 	To do:
-		save states
 		clean ups
+		nndmseal screen upside-down
 		Stepping Stage
 		priority fixes
 		Rock'n MegaSession (Japan)
@@ -1453,8 +1453,51 @@ static int RocknFrame()
 
 // save states
 
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+{
+	struct BurnArea ba;
+	
+	if (pnMin != NULL) {			// Return minimum compatible version
+		*pnMin = 0x029732;
+	}
 
+	if (nAction & ACB_MEMORY_RAM) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = AllRam;
+		ba.nLen	  = MemEnd-AllRam;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+	}
 
+	if (nAction & ACB_DRIVER_DATA) {
+		SekScan(nAction);
+
+		if (game == 3) {
+			MSM6295Scan(0, nAction);
+		} else {
+			YMZ280BScan();
+		}
+
+		SCAN_VAR(nndmseal_bank_lo);
+		SCAN_VAR(nndmseal_bank_hi);
+		SCAN_VAR(rockn_adpcmbank);
+		SCAN_VAR(rockn_soundvolume);
+		SCAN_VAR(rockn_14_timer);
+		SCAN_VAR(rockn_14_timer_countdown);
+
+	}
+
+	if (nAction & ACB_WRITE) {
+		if (game == 2) rockn2_adpcmbankswitch(rockn_adpcmbank);
+		if (game == 1) rockn_adpcmbankswitch(rockn_adpcmbank);
+		if (game == 3) {
+			nndmseal_sound_bankswitch(nndmseal_bank_lo | 0x04);
+			nndmseal_sound_bankswitch(nndmseal_bank_hi);
+		}
+	}
+
+	return 0;
+}
 
 // Tetris Plus 2 (World)
 
@@ -1482,7 +1525,7 @@ struct BurnDriver BurnDrvTetrisp2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, tetrisp2RomInfo, tetrisp2RomName, NULL, NULL, Tetrisp2InputInfo, Tetrisp2DIPInfo,
-	Tetrisp2Init, DrvExit, Tetrisp2Frame, Tetrisp2Draw, NULL, &DrvRecalc, 0x8000,
+	Tetrisp2Init, DrvExit, Tetrisp2Frame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
 };
 
@@ -1513,7 +1556,7 @@ struct BurnDriver BurnDrvTetrisp2j = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, tetrisp2jRomInfo, tetrisp2jRomName, NULL, NULL, Tetrisp2InputInfo, Tetrisp2jDIPInfo,
-	Tetrisp2Init, DrvExit, Tetrisp2Frame, Tetrisp2Draw, NULL, &DrvRecalc, 0x8000,
+	Tetrisp2Init, DrvExit, Tetrisp2Frame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
 };
 
@@ -1544,7 +1587,7 @@ struct BurnDriver BurnDrvTetrisp2ja = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, tetrisp2jaRomInfo, tetrisp2jaRomName, NULL, NULL, Tetrisp2InputInfo, Tetrisp2jDIPInfo,
-	Tetrisp2Init, DrvExit, Tetrisp2Frame, Tetrisp2Draw, NULL, &DrvRecalc, 0x8000,
+	Tetrisp2Init, DrvExit, Tetrisp2Frame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
 };
 
@@ -1589,7 +1632,7 @@ struct BurnDriver BurnDrvRockn = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, rocknRomInfo, rocknRomName, NULL, NULL, RocknInputInfo, RocknDIPInfo,
-	RocknInit, DrvExit, RocknFrame, RocknDraw, NULL, &DrvRecalc, 0x8000,
+	RocknInit, DrvExit, RocknFrame, RocknDraw, DrvScan, &DrvRecalc, 0x8000,
 	224, 320, 3, 4
 };
 
@@ -1634,7 +1677,7 @@ struct BurnDriver BurnDrvRockna = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, rocknaRomInfo, rocknaRomName, NULL, NULL, RocknInputInfo, RocknDIPInfo,
-	RocknInit, DrvExit, RocknFrame, RocknDraw, NULL, &DrvRecalc, 0x8000,
+	RocknInit, DrvExit, RocknFrame, RocknDraw, DrvScan, &DrvRecalc, 0x8000,
 	224, 320, 3, 4
 };
 
@@ -1686,7 +1729,7 @@ struct BurnDriver BurnDrvRockn2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, rockn2RomInfo, rockn2RomName, NULL, NULL, RocknInputInfo, RocknDIPInfo,
-	Rockn2Init, DrvExit, RocknFrame, RocknDraw, NULL, &DrvRecalc, 0x8000,
+	Rockn2Init, DrvExit, RocknFrame, RocknDraw, DrvScan, &DrvRecalc, 0x8000,
 	224, 320, 3, 4
 };
 
@@ -1737,7 +1780,7 @@ struct BurnDriver BurnDrvRockn3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, rockn3RomInfo, rockn3RomName, NULL, NULL, RocknInputInfo, RocknDIPInfo,
-	Rockn3Init, DrvExit, RocknFrame, RocknDraw, NULL, &DrvRecalc, 0x8000,
+	Rockn3Init, DrvExit, RocknFrame, RocknDraw, DrvScan, &DrvRecalc, 0x8000,
 	224, 320, 3, 4
 };
 
@@ -1777,7 +1820,7 @@ struct BurnDriver BurnDrvRockn4 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, rockn4RomInfo, rockn4RomName, NULL, NULL, RocknInputInfo, RocknDIPInfo,
-	Rockn4Init, DrvExit, RocknFrame, RocknDraw, NULL, &DrvRecalc, 0x8000,
+	Rockn4Init, DrvExit, RocknFrame, RocknDraw, DrvScan, &DrvRecalc, 0x8000,
 	224, 320, 3, 4
 };
 
@@ -1806,7 +1849,7 @@ struct BurnDriver BurnDrvNndmseal = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, nndmsealRomInfo, nndmsealRomName, NULL, NULL, NndmsealInputInfo, NndmsealDIPInfo,
-	NndmsealInit, DrvExit, RocknFrame, Tetrisp2Draw, NULL, &DrvRecalc, 0x8000,
+	NndmsealInit, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -1834,7 +1877,7 @@ struct BurnDriver BurnDrvNndmseala = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, nndmsealaRomInfo, nndmsealaRomName, NULL, NULL, NndmsealInputInfo, NndmsealDIPInfo,
-	NndmsealaInit, DrvExit, RocknFrame, Tetrisp2Draw, NULL, &DrvRecalc, 0x8000,
+	NndmsealaInit, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
 };
 

@@ -1,109 +1,15 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
 <title>FB Alpha - What's New</title>
-<meta charset="UTF-8" />
-<style type="text/css">
-	body {
-		font-family: verdana, lucida, sans-serif;
-		font-size: 0.8em;
-		color: #333333;
-		background-color: #CE6A57;
-		margin: 0em;
-		text-align: center;
-	}
-
-	a:link {
-		color: #C03029;
-		text-decoration: none;
-	}
-
-	a:visited {
-		color: #C03029;
-		text-decoration: none;
-	}
-
-	a:hover {
-		color: #333333;
-		text-decoration: underline;
-	}
-
-	a:active {
-		color: #C03029;
-		text-decoration: underline;
-	}
-
-	a.active:link {
-		color: #C03029;
-		text-decoration: none;
-		font-weight:bold;
-		font-style: italic;
-	}
-
-	a.active:visited {
-		color: #C03029;
-		text-decoration: none;
-		font-weight:bold;
-		font-style: italic;
-	}
-
-	a.active:hover {
-		color: #333333;
-		text-decoration: underline;
-		font-weight:bold;
-		font-style: italic;
-	}
-
-	a.active:active {
-		color: #C03029;
-		text-decoration: underline;
-		font-weight:bold;
-		font-style: italic;
-	}
-
-	h2 {
-		color: #C03029;
-		font-size: 1.4em;
-		margin-top: 1em;
-	}
-
-	h3 {
-		color: #C03029;
-		font-size: 1.0em;
-	}
-
-	li {
-		padding: 0.1em;
-	}
-
-	.outer {
-		width: 78em;
-		margin: 0em auto;
-		text-align: left;
-		padding: 0.7em 0.7em 0.7em 0.7em;
-		background-color: #FFFFFF;
-		border: 0.08em solid #808080;
-		margin-top: 1em;
-		margin-bottom: 1em;
-	}
-
-	.note {
-		color: #C03029;
-		padding: 1em;
-		background-color: #DDD9D9;
-		font-style: italic;
-	}
-</style>
+<meta charset="UTF-8"/>
+<style type="text/css">body{font-family:verdana,lucida,sans-serif;font-size:0.8em;color:#333333;background-color:#CE6A57;margin:0em;text-align:center;}a:link{color:#C03029;text-decoration:none;}a:visited{color:#C03029;text-decoration:none;}a:hover{color:#333333;text-decoration:underline;}a:active{color:#C03029;text-decoration:underline;}a.active:link{color:#C03029;text-decoration:none;font-weight:bold;font-style:italic;}a.active:visited{color:#C03029;text-decoration:none;font-weight:bold;font-style:italic;}a.active:hover{color:#333333;text-decoration:underline;font-weight:bold;font-style:italic;}a.active:active{color:#C03029;text-decoration:underline;font-weight:bold;font-style:italic;}h2{color:#C03029;font-size:1.4em;margin-top:1em;}h3{color:#C03029;font-size:1.0em;}li{padding:0.1em;}.outer{width:78em;margin:0em auto;text-align:left;padding:0.7em 0.7em 0.7em 0.7em;background-color:#FFFFFF;border:0.08em solid #808080;margin-top:1em;margin-bottom:1em;}.note{color:#C03029;padding:1em;background-color:#DDD9D9;font-style:italic;}</style>
 </head>
-
 <body>
 <div class="outer">
 <h2>FB Alpha - What's New</h2>
-<p><a href="http://www.fbalpha.com">http://www.fbalpha.com</a><br />
+<p><a href="http://www.fbalpha.com">http://www.fbalpha.com</a><br/>
 <a href="http://neosource.1emu.net/forums">http://neosource.1emu.net/forums</a></p>
-
 <h3>v0.2.97.34</h3>
 <ul>
 <li>Fixed Double Dragon II on Megadrive [dink]</li>
@@ -148,8 +54,9 @@
 <li>Fix misc. timing issues with Gradius 3 that appeared after the introduction of the new Musashi 68k core [barry, dink]</li>
 <li>Added Zombie Raid 9/28/95 Prototypes (US, JP) [JacKc, iq_132]</li>
 <li>Fix music playback speed in Arbalester [dink]</li>
-<li>Magic Bubble (Adult version, YS-0211 PCB) [caius, The Dumping Union]</li>
-<li>Added clone of Dunk Shot (Rev C, FD1089 317-0022) [ShinobiZ & COY]</li>
+<li>Magic Bubble (Adult version, YS-0211 PCB) [iq_132, JacKc, caius, The Dumping Union]</li>
+<li>Added clone of Dunk Shot (Rev C, FD1089 317-0022) [JacKc, ShinobiZ & COY]</li>
+<li>Fixed GFX Loading routine for Punch-Out!! and added correct color PROMs set for Super Ouch-Out (Japan)!! [JacKc]
 <li>Fixed ymf278b sound in Asura Buster/Asura Blade [dink]</li>
 <li>Add Oh Mummy and Lego Batman to Megadrive, fix crash on Z80 <-> 68k communications [dink]</li>
 <li>Black Tiger and F1 Dream: Lower SFX volume so the music can be heard better, add BurnYM2203SetPSGVolume macro to burn_ym2203.h [dink]</li>
@@ -160,6 +67,8 @@
 <li>Add driver for Tetris Pro. 2 [iq_132]</li>
 <li>Add driver for Capcom's Side-Arms, Turtle Ship, Dyger, Twin Falcons and Whizz [iq_132]</li>
 <li>Fix crash in Soko Nuke [dink]</li>
+<li>Added clone of Cobra Command (Japan, bootleg) to the Data East Dec8 driver [JacKc, f205v]</li>
+<li>Synced some drivers with MAME 0.155 (armedf, contra, punchout) [barry, JacKc]</li>
 </ul>
 
 

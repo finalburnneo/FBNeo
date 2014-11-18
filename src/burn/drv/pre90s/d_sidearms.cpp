@@ -1895,3 +1895,4 @@ struct BurnDriver BurnDrvWhizz = {
 	WhizzInit, DrvExit, DrvFrame, DygerDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
+

@@ -7,6 +7,7 @@ bool bAlwaysProcessKeyboardInput;
 bool bDoIpsPatch;
 
 TCHAR szAppBurnVer[16];
+TCHAR szAppBlendPath[MAX_PATH];
 
 int nAppVirtualFps = 6000;
 

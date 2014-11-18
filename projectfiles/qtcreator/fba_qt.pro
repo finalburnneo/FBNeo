@@ -192,33 +192,16 @@ M68K_MAKE.target = $$GEN/m68kmake
 M68K_MAKE.depends = $$SRC/cpu/m68k/m68kmake.c GENERATED
 M68K_MAKE.commands = \
     @echo "Compiling Musashi MC680x0 core: m68kmake.c...";     \
-    $$QMAKE_CC $$SRC/cpu/m68k/m68kmake.c -o $$M68K_MAKE.target; \
+    $$QMAKE_CC $$SRC/cpu/m68k/m68kmake.c -I$$SRC/burn -o $$M68K_MAKE.target; \
     $$M68K_MAKE.target $$GEN/ $$SRC/cpu/m68k/m68k_in.c;
 
 # objects
-M68K_OPAC.target = $$GEN/m68kopac.o
-M68K_OPAC.depends = M68K_MAKE
-M68K_OPAC.commands = \
-    @echo "Compiling Musashi MC680x0 core: m68kopac.c...";     \
-    $$QMAKE_CC $$QMAKE_CFLAGS -I$$SRC/cpu/m68k $$GEN/m68kopac.c -c -o $$M68K_OPAC.target;
-
-M68K_OPDM.target = $$GEN/m68kopdm.o
-M68K_OPDM.depends = M68K_MAKE
-M68K_OPDM.commands = \
-    @echo "Compiling Musashi MC680x0 core: m68kopdm.c...";     \
-    $$QMAKE_CC $$QMAKE_CFLAGS -I$$SRC/cpu/m68k $$GEN/m68kopdm.c -c -o $$M68K_OPDM.target;
-
-M68K_OPNZ.target = $$GEN/m68kopnz.o
-M68K_OPNZ.depends = M68K_MAKE
-M68K_OPNZ.commands = \
-    @echo "Compiling Musashi MC680x0 core: m68kopnz.c...";     \
-    $$QMAKE_CC $$QMAKE_CFLAGS -I$$SRC/cpu/m68k $$GEN/m68kopnz.c -c -o $$M68K_OPNZ.target;
 
 M68K_OPS.target = $$GEN/m68kops.o
 M68K_OPS.depends = M68K_MAKE
 M68K_OPS.commands = \
     @echo "Compiling Musashi MC680x0 core: m68kops.c...";     \
-    $$QMAKE_CC $$QMAKE_CFLAGS -I$$SRC/cpu/m68k $$GEN/m68kops.c -c -o $$M68K_OPS.target;
+    $$QMAKE_CC $$QMAKE_CFLAGS -I$$SRC/cpu/m68k -I$$SRC/burn $$GEN/m68kops.c -c -o $$M68K_OPS.target;
 
 M68K_OPS_HEADER.target = $$GEN/m68kops.h
 M68K_OPS_HEADER.depends = M68K_MAKE
@@ -226,11 +209,10 @@ M68K_OPS_HEADER.commands = \
     $$M68K_MAKE.target $$GEN/ $$SRC/cpu/m68k/m68k_in.c;
 
 M68K_LIB.target = $$GEN/libm68kops.o
-M68K_LIB.depends = M68K_MAKE M68K_OPAC M68K_OPDM M68K_OPNZ M68K_OPS M68K_OPS_HEADER
+M68K_LIB.depends = M68K_MAKE M68K_OPS M68K_OPS_HEADER
 M68K_LIB.commands = \
     @echo "Partially linking Musashi MC680x0 core: libm68kops.o...";  \
-    $$FBA_LD -r $$M68K_OPAC.target $$M68K_OPDM.target \
-                $$M68K_OPNZ.target $$M68K_OPS.target -o $$M68K_LIB.target
+    $$FBA_LD -r $$M68K_OPS.target -o $$M68K_LIB.target
 
 
 OBJECTS += $$M68K_LIB.target

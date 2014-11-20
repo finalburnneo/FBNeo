@@ -426,10 +426,10 @@ static INT32 DrvInit()
 	ZetSetReadHandler(xxmission_read);
 	ZetClose();
 
-	BurnYM2203Init(2,  3000000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2,  1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnYM2203SetPorts(0, &DrvYM2203ReadPortA, &DrvYM2203ReadPortB, NULL, NULL);
 	BurnYM2203SetPorts(1, NULL, NULL, &DrvYM2203WritePortA, &DrvYM2203WritePortB);
-	BurnTimerAttachZet(3000000);
+	BurnTimerAttachZet(1500000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
@@ -582,7 +582,7 @@ static INT32 DrvFrame()
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nSegment);
 		nSegment = ZetTotalCycles();
-		if (i == (nInterleave - 4)) {
+		if (i == 240) {
 			vblank = 1;
 			cpu_status &= ~0x20;
 			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);

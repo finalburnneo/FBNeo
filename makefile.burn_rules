@@ -58,7 +58,7 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_lordgun.o d_mcatadv.o d_midas.o d_mugsmash.o d_mwarr.o d_news.o d_nmg5.o d_nmk16.o d_ohmygod.o d_pass.o d_pirates.o \
 			d_playmark.o d_powerins.o d_pushman.o d_raiden.o d_raiden2.o d_sandscrp.o d_seta.o d_seta2.o d_shadfrce.o d_silkroad.o \
 			d_silvmil.o d_speedspn.o d_suna16.o d_taotaido.o d_tecmosys.o d_tetrisp2.o d_tumbleb.o d_unico.o d_vmetal.o d_welltris.o \
-			d_wwfwfest.o d_xorworld.o d_yunsun16.o d_zerozone.o \
+			d_wwfwfest.o d_xorworld.o d_xxmissio.o d_yunsun16.o d_zerozone.o \
 			\
 			d_parent.o \
 			\

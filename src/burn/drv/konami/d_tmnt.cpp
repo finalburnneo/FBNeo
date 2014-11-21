@@ -4305,13 +4305,13 @@ static void K052109CuebrickCallback(INT32 Layer, INT32, INT32 *Code, INT32 *Colo
 {
 	if (K052109RMRDLine == 0 && Layer == 0) {
 		*Code |= ((*Colour & 0x01) << 8);
-		*Colour = LayerColourBase[Layer] + ((*Colour & 0x80) >> 5) + ((*Colour & 0x10) >> 1);
+		*Colour = LayerColourBase[Layer] + ((*Colour & 0x0e) >> 1);
+
 	} else {
 		*Code |= ((*Colour & 0x0f) << 8);
 		*Colour = LayerColourBase[Layer] + ((*Colour & 0xe0) >> 5);
 	}
 }
-
 
 static void K052109BlswhstlCallback(INT32 Layer, INT32 Bank, INT32 *Code, INT32 *Colour, INT32 *, INT32 *)
 {

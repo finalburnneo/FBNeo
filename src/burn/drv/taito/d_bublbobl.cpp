@@ -2684,7 +2684,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvBublbobl = {
 	"bublbobl", NULL, NULL, NULL, "1986",
-	"Bubble Bobble\0", NULL, "Taito Corporation", "Taito Misc",
+	"Bubble Bobble (Japan, Ver 0.1)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, BublboblRomInfo, BublboblRomName, NULL, NULL, BublboblInputInfo, BublboblDIPInfo,
@@ -2694,7 +2694,7 @@ struct BurnDriver BurnDrvBublbobl = {
 
 struct BurnDriver BurnDrvBublbob1 = {
 	"bublbobl1", "bublbobl", NULL, NULL, "1986",
-	"Bubble Bobble (older)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Bubble Bobble (Japan, Ver 0.0)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, Bublbob1RomInfo, Bublbob1RomName, NULL, NULL, BublboblInputInfo, BublboblDIPInfo,
@@ -2704,7 +2704,7 @@ struct BurnDriver BurnDrvBublbob1 = {
 
 struct BurnDriver BurnDrvBublbobr = {
 	"bublboblr", "bublbobl", NULL, NULL, "1986",
-	"Bubble Bobble (US with mode select)\0", NULL, "Taito America Corporation (Romstar license)", "Taito Misc",
+	"Bubble Bobble (US, Ver 5.1)\0", NULL, "Taito America Corporation (Romstar license)", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, BublbobrRomInfo, BublbobrRomName, NULL, NULL, BublboblInputInfo, BublboblDIPInfo,
@@ -2714,7 +2714,7 @@ struct BurnDriver BurnDrvBublbobr = {
 
 struct BurnDriver BurnDrvBubbobr1 = {
 	"bublboblr1", "bublbobl", NULL, NULL, "1986",
-	"Bubble Bobble (US)\0", NULL, "Taito America Corporation (Romstar license)", "Taito Misc",
+	"Bubble Bobble (US, Ver 1.0)\0", NULL, "Taito America Corporation (Romstar license)", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, Bubbobr1RomInfo, Bubbobr1RomName, NULL, NULL, BublboblInputInfo, BublboblDIPInfo,

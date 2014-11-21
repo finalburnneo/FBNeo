@@ -582,7 +582,7 @@ static INT32 DrvFrame()
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nSegment);
 		nSegment = ZetTotalCycles();
-		if (i == 240) {
+		if (i == 243) {
 			vblank = 1;
 			cpu_status &= ~0x20;
 			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
@@ -591,7 +591,7 @@ static INT32 DrvFrame()
 
 		ZetOpen(1);
 		BurnTimerUpdate(nSegment);
-		if (i == ((nInterleave / 2) - 4) || i == (nInterleave - 4)) { // 120hz
+		if (i == ((nInterleave / 2) - 1) || i == (nInterleave - 1)) { // 120hz
 			cpu_status &= ~0x10;
 			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
 		}

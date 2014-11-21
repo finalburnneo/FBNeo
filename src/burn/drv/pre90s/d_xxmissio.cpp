@@ -582,7 +582,7 @@ static INT32 DrvFrame()
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nSegment);
 		nSegment = ZetTotalCycles();
-		if (i == 243) {
+		if (i == 241) {
 			vblank = 1;
 			cpu_status &= ~0x20;
 			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);

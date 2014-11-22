@@ -1318,10 +1318,13 @@ UINT8 __fastcall MitchellZ80PortRead(UINT16 a)
 		
 		case 0x05: {
 			INT32 Bit = DrvHasEEPROM ? (EEPROMRead() & 0x01) << 7 : 0x80;
+			Bit |= 0x01;
+			Bit |= 0x08;
 			if (DrvInput5Toggle) {
-				Bit |= 0x01;
+				//Bit |= 0x01;
 			} else {
-				Bit |= 0x08;
+				Bit ^= 0x08;
+				Bit ^= 0x01;
 			}
 			
 			if (DrvPort5Kludge) Bit ^= 0x08;
@@ -1644,6 +1647,7 @@ static void MitchellMachineInit()
 	
 	DrvTileMask = 0x7fff;
 	DrvNumColours = 0x800;
+	DrvInput5Toggle = 0;
 }
 
 static void MahjongMachineInit()
@@ -1924,7 +1928,7 @@ static INT32 PangInit()
 	pang_decode();
 	
 	MitchellMachineInit();
-	
+	BurnSetRefreshRate(57);
 	DrvDoReset();
 
 	return 0;
@@ -2862,38 +2866,33 @@ static void DrvDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 10;
+	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
 
 	if (DrvReset) DrvDoReset();
 
 	DrvMakeInputs();
 
-	nCyclesTotal[0] = 8000000 / 60;
+	nCyclesTotal[0] = 8000000 / 57;
 	nCyclesDone[0] = 0;
 	
-	DrvInput5Toggle = 0;
+	//DrvInput5Toggle = 0;
 	
 	ZetNewFrame();
 	
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
+		INT32 nCurrentCPU;
 
 		// Run Z80 #1
 		nCurrentCPU = 0;
 		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
+		nCyclesSegment = nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 4) {
+		if (i == 0 || i == 237) { // Needs to be ACK'd for one full scanline twice per frame. -dink
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-			nCyclesDone[nCurrentCPU] += ZetRun(500);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			DrvInput5Toggle = (i == 237);
 		}
-		if (i == 7) DrvInput5Toggle = 1;
-		if (i == 9) {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-			nCyclesDone[nCurrentCPU] += ZetRun(500);
+		if (i == 1 || i == 238) {
 			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 		}
 		ZetClose();

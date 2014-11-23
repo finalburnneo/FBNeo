@@ -1,7 +1,6 @@
 // FB Alpha Lethal Enforcers driver module
 // Based on MAME driver by R. Belmont and Nicola Salmoria
 
-// needs analog inputs hooked up.
 // japan version needs sprites fixed (x flipped not y flipped)
 
 #include "tiles_generic.h"
@@ -11,6 +10,7 @@
 #include "burn_ym2151.h"
 #include "k054539.h"
 #include "eeprom.h"
+#include "burn_gun.h"
 
 static UINT8 *AllMem;
 static UINT8 *DrvMainROM;
@@ -45,30 +45,35 @@ static UINT8 DrvReset;
 static UINT8 DrvInputs[1];
 static UINT8 DrvDips[1];
 
+static INT32 LethalGun0 = 0;
+static INT32 LethalGun1 = 0;
+static INT32 LethalGun2 = 0;
+static INT32 LethalGun3 = 0;
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo LethalenInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	A("P1 Gun X",    BIT_ANALOG_REL, &LethalGun0   ,    "mouse x-axis" ),
+	A("P1 Gun Y",    BIT_ANALOG_REL, &LethalGun1   ,    "mouse y-axis" ),
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 start"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 fire 1"	},
+	A("P2 Gun X",    BIT_ANALOG_REL, &LethalGun2   ,    "p2 x-axis" ),
+	A("P2 Gun Y",    BIT_ANALOG_REL, &LethalGun3   ,    "p2 y-axis" ),
 
-	{"x",			BIT_DIGITAL,	DrvJoy1 + 6,	"p2 fire 3"	},
-	{"x",			BIT_DIGITAL,	DrvJoy1 + 6,	"p2 fire 4"	},
-	{"x",			BIT_DIGITAL,	DrvJoy1 + 6,	"p2 fire 5"	},
-	{"x",			BIT_DIGITAL,	DrvJoy1 + 6,	"p2 fire 6"	},
-
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
-	{"Dips",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset  ,	"reset"		},
+	{"Service",		    BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dips",		  BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Lethalen)
 
 static struct BurnDIPInfo LethalenDIPList[]=
 {
-	{0x0c, 0xff, 0xff, 0xdc, NULL			},
+	{0x0c, 0xff, 0xff, 0xd8, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x0c, 0x01, 0x08, 0x08, "Off"			},
@@ -93,16 +98,30 @@ static struct BurnDIPInfo LethalenDIPList[]=
 
 STDDIPINFO(Lethalen)
 
-#if 0
-static const char *const gunnames[] = { "LIGHT0_X", "LIGHT0_Y", "LIGHT1_X", "LIGHT1_Y" };
+#define GUNX(a) (( ( BurnGunReturnX(a - 1) * 287 ) / 0xff ) + 16)
+#define GUNY(a) (( ( BurnGunReturnY(a - 1) * 223 ) / 0xff ) + 10)
 
-/* a = 1, 2 = player # */
-#define GUNX( a ) (( ( ioport(gunnames[2 * (a - 1)])->read() * 287 ) / 0xff ) + 16)
-#define GUNY( a ) (( ( ioport(gunnames[2 * (a - 1) + 1])->read() * 223 ) / 0xff ) + 10)
+static UINT32 GunTargetTimer[2]  = {0, 0};
+static UINT32 GunTargetLastX[2]  = {0, 0};
+static UINT32 GunTargetLastY[2]  = {0, 0};
 
-READ8_MEMBER(lethal_state::guns_r)
+static void GunTargetUpdate(UINT16 player)
 {
-	switch (offset)
+	if (GunTargetLastX[player] != GUNX(player + 1) || GunTargetLastY[player] != GUNY(player + 1)) {
+		GunTargetLastX[player] = GUNX(player + 1);
+		GunTargetLastY[player] = GUNY(player + 1);
+		GunTargetTimer[player] = nCurrentFrame;
+	}
+}
+
+static UINT8 GunTargetShouldDraw(UINT16 player)
+{
+	return (nCurrentFrame < GunTargetTimer[player] + 60 * 2 /* two secs */);
+}
+
+static UINT8 guns_r(UINT16 address)
+{
+	switch (address)
 	{
 		case 0:
 			return GUNX(1) >> 1;
@@ -123,7 +142,7 @@ READ8_MEMBER(lethal_state::guns_r)
 	return 0;
 }
 
-READ8_MEMBER(lethal_state::gunsaux_r)
+static UINT8 gunsaux_r()
 {
 	int res = 0;
 
@@ -132,7 +151,6 @@ READ8_MEMBER(lethal_state::gunsaux_r)
 
 	return res;
 }
-#endif
 
 static void bankswitch(INT32 bank)
 {
@@ -250,7 +268,7 @@ static UINT8 lethal_main_read(UINT16 address)
 		case 0x40d5:
 		case 0x40d6:
 		case 0x40d7:
-			return 0; // guns_r
+			return guns_r(address-0x40d4);
 
 		case 0x40d8:
 			return (DrvDips[0] & 0xfc) | 2 | (EEPROMRead() ? 0x01 : 0);
@@ -262,7 +280,7 @@ static UINT8 lethal_main_read(UINT16 address)
 		case 0x40dc:
 		case 0x40de:
 		case 0x40dd:
-			return 0; // gunsaux_r
+			return gunsaux_r();
 	}
 
 	if (address < 0x4800 || address >= 0x8000) return 0;
@@ -523,6 +541,8 @@ static INT32 DrvInit(INT32 flipy)
 
 	DrvDoReset();
 
+	BurnGunInit(2, true);	
+
 	return 0;
 }
 
@@ -626,6 +646,11 @@ static INT32 DrvDraw()
 	}
 #endif
 	KonamiBlendCopy(DrvPalette);
+	for (INT32 i = 0; i < nBurnGunNumPlayers; i++) {
+		if (GunTargetShouldDraw(i)) {
+			BurnGunDrawTarget(i, BurnGunX[i] >> 8, BurnGunY[i] >> 8);
+		}
+	}
 
 	return 0;
 }
@@ -642,6 +667,11 @@ static INT32 DrvFrame()
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		}
+
+		BurnGunMakeInputs(0, (INT16)LethalGun0, (INT16)LethalGun1);
+		BurnGunMakeInputs(1, (INT16)LethalGun2, (INT16)LethalGun3);
+		GunTargetUpdate(0);
+		GunTargetUpdate(1);
 	}
 
 	INT32 nInterleave = nBurnSoundLen;
@@ -757,7 +787,7 @@ STD_ROM_FN(lethalen)
 
 struct BurnDriver BurnDrvLethalen = {
 	"lethalen", NULL, NULL, NULL, "1992",
-	"Lethal Enforcers (ver UAE, 11/19/92 15:04)\0", "needs analog inputs hooked up", "Konami", "GX191",
+	"Lethal Enforcers (ver UAE, 11/19/92 15:04)\0", NULL, "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, lethalenRomInfo, lethalenRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
@@ -792,7 +822,7 @@ STD_ROM_FN(lethalenub)
 
 struct BurnDriver BurnDrvLethalenub = {
 	"lethalenub", "lethalen", NULL, NULL, "1992",
-	"Lethal Enforcers (ver UAB, 09/01/92 11:12)\0", "needs analog inputs hooked up", "Konami", "GX191",
+	"Lethal Enforcers (ver UAB, 09/01/92 11:12)\0", NULL, "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, lethalenubRomInfo, lethalenubRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
@@ -827,7 +857,7 @@ STD_ROM_FN(lethalenua)
 
 struct BurnDriver BurnDrvLethalenua = {
 	"lethalenua", "lethalen", NULL, NULL, "1992",
-	"Lethal Enforcers (ver UAA, 08/17/92 21:38)\0", "needs analog inputs hooked up", "Konami", "GX191",
+	"Lethal Enforcers (ver UAA, 08/17/92 21:38)\0", NULL, "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, lethalenuaRomInfo, lethalenuaRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
@@ -862,7 +892,7 @@ STD_ROM_FN(lethalenux)
 
 struct BurnDriver BurnDrvLethalenux = {
 	"lethalenux", "lethalen", NULL, NULL, "1992",
-	"Lethal Enforcers (ver unknown, US, 08/06/92 15:11, hacked/proto?)\0", "needs analog inputs hooked up", "Konami", "GX191",
+	"Lethal Enforcers (ver unknown, US, 08/06/92 15:11, hacked/proto?)\0", NULL, "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, lethalenuxRomInfo, lethalenuxRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
@@ -897,7 +927,7 @@ STD_ROM_FN(lethaleneab)
 
 struct BurnDriver BurnDrvLethaleneab = {
 	"lethaleneab", "lethalen", NULL, NULL, "1992",
-	"Lethal Enforcers (ver EAB, 10/14/92 19:53)\0", "needs analog inputs hooked up", "Konami", "GX191",
+	"Lethal Enforcers (ver EAB, 10/14/92 19:53)\0", NULL, "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, lethaleneabRomInfo, lethaleneabRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
@@ -932,7 +962,7 @@ STD_ROM_FN(lethaleneae)
 
 struct BurnDriver BurnDrvLethaleneae = {
 	"lethaleneae", "lethalen", NULL, NULL, "1992",
-	"Lethal Enforcers (ver EAE, 11/19/92 16:24)\0", "needs analog inputs hooked up", "Konami", "GX191",
+	"Lethal Enforcers (ver EAE, 11/19/92 16:24)\0", NULL, "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, lethaleneaeRomInfo, lethaleneaeRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
@@ -967,7 +997,7 @@ STD_ROM_FN(lethalenj)
 
 struct BurnDriver BurnDrvLethalenj = {
 	"lethalenj", "lethalen", NULL, NULL, "1992",
-	"Lethal Enforcers (ver JAD, 12/04/92 17:16)\0", "needs analog inputs hooked up", "Konami", "GX191",
+	"Lethal Enforcers (ver JAD, 12/04/92 17:16)\0", NULL, "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, lethalenjRomInfo, lethalenjRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,

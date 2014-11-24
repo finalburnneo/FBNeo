@@ -3712,20 +3712,22 @@ struct BurnDriver BurnDrvSavagere = {
 static struct BurnRomInfo ssideki2RomDesc[] = {
 	{ "061-p1.p1",      0x100000, 0x5969e0dc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	/* also found MVS set with EP1 / EP2 on eprom on board NEO-MVS PROGTOP
-	{ "061-epr.ep1",    0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  0 68K code / M27C4002
-	{ "061-epr.ep2",    0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  0 68K code / 27C240 */
+	/ rom data below need to be confirmed
+	{ "061-epr.ep1",    0x080000, 0x8112718d, 1 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  0 68K code / M27C4002
+	{ "061-epr.ep2",    0x080000, 0xcf9826de, 1 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  0 68K code / 27C240 */
 	
 	{ "061-s1.s1",      0x020000, 0x226d1b68, 2 | BRF_GRA },           //  1 Text layer tiles
 	
 	/* Different layout with 8xC (8 mbit) also exists on board NEO-MVS CHA256 ; naming sheme 061-Cx
-	{ "061-c1.c1",   	0x100000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP }, //  2 Sprite data / mask rom J410 05B
-	{ "061-c2.c2",   	0x100000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP},  //  3 / mask rom J410 02B
-	{ "061-c3.c3",   	0x100000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP},  //  4 / mask rom J410 34B
-	{ "061-c4.c4",   	0x100000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP},  //  5 / mask rom J410 16B
-	{ "061-c5.c5",   	0x100000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP},  //  6 / mask rom J410 17B
-	{ "061-c6.c6",   	0x100000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP},  //  7 / mask rom J410 37B
-	{ "061-c7.c7",   	0x100000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP},  //  8 / mask rom J410 57B
-	{ "061-c8.c8",   	0x100000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP},  //  9 / mask rom J410 46B */
+	/ rom data below need to be confirmed
+	{ "061-c1.c1",   	0x100000, 0x990cf26a, 3 | BRF_GRA | BRF_NODUMP }, //  2 Sprite data / mask rom J410 05B
+	{ "061-c2.c2",   	0x100000, 0xf493cbcf, 3 | BRF_GRA | BRF_NODUMP},  //  3 / mask rom J410 02B
+	{ "061-c3.c3",   	0x100000, 0x7484e35d, 3 | BRF_GRA | BRF_NODUMP},  //  4 / mask rom J410 34B
+	{ "061-c4.c4",   	0x100000, 0x3ce13c3e, 3 | BRF_GRA | BRF_NODUMP},  //  5 / mask rom J410 16B
+	{ "061-c5.c5",   	0x100000, 0xea91bcd4, 3 | BRF_GRA | BRF_NODUMP},  //  6 / mask rom J410 17B
+	{ "061-c6.c6",   	0x100000, 0x0f8b5d58, 3 | BRF_GRA | BRF_NODUMP},  //  7 / mask rom J410 37B
+	{ "061-c7.c7",   	0x100000, 0xea167b32, 3 | BRF_GRA | BRF_NODUMP},  //  8 / mask rom J410 57B
+	{ "061-c8.c8",   	0x100000, 0x959c8567, 3 | BRF_GRA | BRF_NODUMP},  //  9 / mask rom J410 46B */
 	{ "061-c1-16.c1",   0x200000, 0xa626474f, 3 | BRF_GRA },           //  2 Sprite data
 	{ "061-c2-16.c2",   0x200000, 0xc3be42ae, 3 | BRF_GRA },           //  3 
 	{ "061-c3-16.c3",   0x200000, 0x2a7b98b9, 3 | BRF_GRA },           //  4 
@@ -3754,7 +3756,8 @@ struct BurnDriver BurnDrvSsideki2 = {
 
 static struct BurnRomInfo samsho2RomDesc[] = {
 	{ "063-p1.p1",    0x200000, 0x22368892, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	/* also found MVS set with EP1 / EP2 / P1 / SP2 on eprom won board NEO-MVS PROGTOP; same rom data as samsho2?
+	/* also found MVS set with EP1 / EP2 / P1 / SP2 on eprom on board NEO-MVS PROGTOP; same rom data as samsho2?
+	/ rom data below need to be confirmed 
 	{ "063-epr.p1",   0x080000, 0x9131aaa5, 1 | BRF_ESS | BRF_PRG }, //  0 68k code / D27C4000
 	{ "063-epr.sp2",  0x080000, 0xf307b92d, 1 | BRF_ESS | BRF_PRG }, //  1 / D27C4000 
 	{ "063-epr.ep1",  0x080000, 0x8952c5f7, 1 | BRF_ESS | BRF_PRG }, //  2 / M27C4002
@@ -5175,6 +5178,7 @@ static struct BurnRomInfo mslug2RomDesc[] = {
 
 	/* Different layout with 8xC (mask rom) also exists on NEO-MVS CHA256; 
 	/ chip labels are 241-C1, 241-C2, 241-C3, 241-C4, 241-C5, 241-C6, 241-C7 and 241-C8; same rom data as mslug2? 
+	/ rom data below need to be confirmed
 	{ "241-c1.c1",    0x400000, 0xe2260f99, 3 | BRF_GRA | BRF_NODUMP },  //  3 Sprite data / mask rom
 	{ "241-c2.c2",    0x400000, 0x92f07036, 3 | BRF_GRA | BRF_NODUMP },  //  4 / mask rom
 	{ "241-c3.c3",    0x400000, 0xd6bd7d81, 3 | BRF_GRA | BRF_NODUMP },  //  5 / mask rom
@@ -11719,6 +11723,7 @@ struct BurnDriver BurnDrvfightfev = {
 static struct BurnRomInfo fightfevaRomDesc[] = {
 	{ "060-p1.p1",    0x100000, 0x2a104b50, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	/* also found sets with p1/ p2 4mbit on eprom with Viccom sticker labels on board NEO-MVS PROGGSC
+	/ rom data below need to be confirmed
 	{ "viccom_1.ep1",    0x080000, 0x30d91197, 1 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  0 68K code / M27C4002
 	{ "viccom_2.ep2",    0x080000, 0xafa53058, 1 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  0 / M27C4002 */
 	

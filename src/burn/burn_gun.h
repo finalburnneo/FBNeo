@@ -1,6 +1,7 @@
 #define MAX_GUNS	4
 
 extern INT32 nBurnGunNumPlayers;
+extern bool bBurnGunAutoHide;
 
 extern INT32 BurnGunX[MAX_GUNS];
 extern INT32 BurnGunY[MAX_GUNS];

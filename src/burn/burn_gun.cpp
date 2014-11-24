@@ -5,6 +5,7 @@
 // written by Barry Harris (Treble Winner) based on the code in Kev's opwolf driver
 
 INT32 nBurnGunNumPlayers = 0;
+bool bBurnGunAutoHide = 1;
 static bool bBurnGunDrawTargets = true;
 
 static INT32 nBurnGunMaxX = 0;
@@ -38,6 +39,26 @@ UINT8 BurnGunTargetData[18][18] = {
 };
 #undef b
 #undef a
+
+#define GunTargetHideTime 60 * 4 /* 4 seconds @ 60 fps */
+static INT32 GunTargetTimer[MAX_GUNS]  = {0, 0, 0, 0};
+static INT32 GunTargetLastX[MAX_GUNS]  = {0, 0, 0, 0};
+static INT32 GunTargetLastY[MAX_GUNS]  = {0, 0, 0, 0};
+
+static void GunTargetUpdate(INT32 player)
+{
+	if (GunTargetLastX[player] != BurnGunReturnX(player) || GunTargetLastY[player] != BurnGunReturnY(player)) {
+		GunTargetLastX[player] = BurnGunReturnX(player);
+		GunTargetLastY[player] = BurnGunReturnY(player);
+		GunTargetTimer[player] = nCurrentFrame;
+	}
+}
+
+static UINT8 GunTargetShouldDraw(INT32 player)
+{
+	return (nCurrentFrame < GunTargetTimer[player] + GunTargetHideTime);
+}
+#undef GunTargetHideTime
 
 UINT8 BurnGunReturnX(INT32 num)
 {
@@ -76,7 +97,9 @@ void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y)
 	
 	const INT32 MinX = -8 * 0x100;
 	const INT32 MinY = -8 * 0x100;
-	
+
+	if (y == 1 || y == -1 || x == 1 || x == -1) return; // prevent walking crosshair
+
 	BurnGunX[num] += x;
 	BurnGunY[num] += y;
 	
@@ -84,6 +107,9 @@ void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y)
 	if (BurnGunX[num] > MinX + nBurnGunMaxX * 0x100) BurnGunX[num] = MinX + nBurnGunMaxX * 0x100;
 	if (BurnGunY[num] < MinY) BurnGunY[num] = MinY;
 	if (BurnGunY[num] > MinY + nBurnGunMaxY * 0x100) BurnGunY[num] = MinY + nBurnGunMaxY * 0x100;
+
+	for (INT32 i = 0; i < nBurnGunNumPlayers; i++)
+		GunTargetUpdate(i);
 }
 	
 void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
@@ -146,7 +172,9 @@ void BurnGunDrawTarget(INT32 num, INT32 x, INT32 y)
 	if (bBurnGunDrawTargets == false) return;
 	
 	if (num > MAX_GUNS - 1) return;
-	
+
+	if (bBurnGunAutoHide && !GunTargetShouldDraw(num)) return;
+
 	UINT8* pTile = pBurnDraw + nBurnGunMaxX * nBurnBpp * (y - 1) + nBurnBpp * x;
 	
 	UINT32 nTargetCol = 0;

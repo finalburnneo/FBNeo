@@ -101,24 +101,6 @@ STDDIPINFO(Lethalen)
 #define GUNX(a) (( ( BurnGunReturnX(a - 1) * 287 ) / 0xff ) + 16)
 #define GUNY(a) (( ( BurnGunReturnY(a - 1) * 223 ) / 0xff ) + 10)
 
-static UINT32 GunTargetTimer[2]  = {0, 0};
-static UINT32 GunTargetLastX[2]  = {0, 0};
-static UINT32 GunTargetLastY[2]  = {0, 0};
-
-static void GunTargetUpdate(UINT16 player)
-{
-	if (GunTargetLastX[player] != GUNX(player + 1) || GunTargetLastY[player] != GUNY(player + 1)) {
-		GunTargetLastX[player] = GUNX(player + 1);
-		GunTargetLastY[player] = GUNY(player + 1);
-		GunTargetTimer[player] = nCurrentFrame;
-	}
-}
-
-static UINT8 GunTargetShouldDraw(UINT16 player)
-{
-	return (nCurrentFrame < GunTargetTimer[player] + 60 * 2 /* two secs */);
-}
-
 static UINT8 guns_r(UINT16 address)
 {
 	switch (address)
@@ -151,6 +133,9 @@ static UINT8 gunsaux_r()
 
 	return res;
 }
+
+#undef GUNX
+#undef GUNY
 
 static void bankswitch(INT32 bank)
 {
@@ -569,6 +554,8 @@ static INT32 DrvExit()
 
 	K054539Exit();
 
+	BurnGunExit();
+
 	BurnFree (AllMem);
 
 	return 0;
@@ -647,9 +634,7 @@ static INT32 DrvDraw()
 #endif
 	KonamiBlendCopy(DrvPalette);
 	for (INT32 i = 0; i < nBurnGunNumPlayers; i++) {
-		if (GunTargetShouldDraw(i)) {
-			BurnGunDrawTarget(i, BurnGunX[i] >> 8, BurnGunY[i] >> 8);
-		}
+		BurnGunDrawTarget(i, BurnGunX[i] >> 8, BurnGunY[i] >> 8);
 	}
 
 	return 0;
@@ -670,8 +655,6 @@ static INT32 DrvFrame()
 
 		BurnGunMakeInputs(0, (INT16)LethalGun0, (INT16)LethalGun1);
 		BurnGunMakeInputs(1, (INT16)LethalGun2, (INT16)LethalGun3);
-		GunTargetUpdate(0);
-		GunTargetUpdate(1);
 	}
 
 	INT32 nInterleave = nBurnSoundLen;
@@ -738,7 +721,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029732;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -752,6 +735,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		K054539Scan(nAction);
 
 		KonamiICScan(nAction);
+		BurnGunScan();
 
 		SCAN_VAR(current_4800_bank);
 		SCAN_VAR(sound_nmi_enable);

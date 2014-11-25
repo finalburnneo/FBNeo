@@ -5,6 +5,7 @@
 #include "burn_sound.h"
 
 static INT32 nYMZ280BSampleRate;
+bool bESPRaDeMixerKludge = false;
 
 UINT8* YMZ280BROM;
 void (*pYMZ280BRAMWrite)(INT32 offset, INT32 nValue) = NULL;
@@ -190,7 +191,8 @@ void YMZ280BExit()
 	YMZ280BIRQCallback = NULL;
 	pYMZ280BRAMWrite = NULL;
 	pYMZ280BRAMRead = NULL;
-	
+	bESPRaDeMixerKludge = false;
+
 	DebugSnd_YMZ280BInitted = 0;
 }
 
@@ -600,6 +602,16 @@ void YMZ280BWriteRegister(UINT8 nValue)
 				break;
 			}
 			case 2:																	// Volume
+			    if (bESPRaDeMixerKludge) {
+					if (nWriteChannel != 7) nValue -= 25;
+					if (nWriteChannel == 7) {
+						if (nValue + 15 > 255)
+							nValue = 255;
+						else
+							nValue += 15;
+					}
+				}
+				//bprintf(0,_T("Ch: %d Volume %d Sample Start: %08X - Stop: %08X.\n"),nWriteChannel,nValue,YMZ280BChannelInfo[nWriteChannel].nSampleStart, YMZ280BChannelInfo[nWriteChannel].nSampleStop);
 				YMZ280BChannelInfo[nWriteChannel].nVolume = nValue;
 				ComputeVolume(&YMZ280BChannelInfo[nWriteChannel]);
 				break;

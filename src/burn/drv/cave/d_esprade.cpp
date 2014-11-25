@@ -254,6 +254,7 @@ static void TriggerSoundIRQ(INT32 nStatus)
 static INT32 DrvExit()
 {
 	YMZ280BExit();
+	bESPRaDeMixerKludge = false;
 
 	EEPROMExit();
 
@@ -581,6 +582,7 @@ static INT32 DrvInit()
 	YMZ280BInit(16934400, &TriggerSoundIRQ);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	bESPRaDeMixerKludge = true;
 
 	bDrawScreen = true;
 

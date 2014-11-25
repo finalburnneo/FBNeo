@@ -3503,7 +3503,8 @@ static struct BurnRomInfo aof2RomDesc[] = {
 
 	{ "056-s1.s1",    0x020000, 0x8b02638e, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	/* Different layout with 4xC (32mbit) also exists; chip labels are 056-C13, 056-C24, 056-C57 and 056-C68 
+	/* Different layout with 4xC (32mbit) also exists on board NEO-MVS CHA256;
+	/ chip labels are 056-C13, 056-C24, 056-C57 and 056-C68 
 	{ "056-c13.c1",   0x400000, 0xbd3aa959, 3 | BRF_GRA },           //  2 Sprite data / mask rom
 	{ "056-c24.c2",   0x400000, 0xe58297c2, 3 | BRF_GRA },           //  3 / mask rom
 	{ "056-c57.c3",   0x400000, 0xb4ad87e5, 3 | BRF_GRA },           //  4 / mask rom
@@ -9860,11 +9861,12 @@ static struct BurnRomInfo wh2jRomDesc[] = {
 
 	{ "064-s1.s1",    0x020000, 0x2a03998a, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	/* Different layout with 4xC (32mbit) also exists; chip labels are 064-C13, 064-C24, 064-C57 and 064-C68 
-	{ "064-c13.c1",   0x400000, 0x771a6365, 3 | BRF_GRA },           //  2 Sprite data
-	{ "064-c24.c2",   0x400000, 0xe7863a05, 3 | BRF_GRA },           //  3 
-	{ "064-c57.c3",   0x400000, 0x64594ed4, 3 | BRF_GRA },           //  4 
-	{ "064-c68.c4",   0x400000, 0x6e385398, 3 | BRF_GRA },           //  5 */
+	/* Different layout with 4xC (32mbit) on mask rom also exists on board NEO-MVS CHA256; 
+	/ chip labels are 064-C13, 064-C24, 064-C57 and 064-C68 
+	{ "064-c13.c1",   0x400000, 0x771a6365, 3 | BRF_GRA },           //  2 Sprite data / mask rom
+	{ "064-c24.c2",   0x400000, 0xe7863a05, 3 | BRF_GRA },           //  3 / mask rom
+	{ "064-c57.c3",   0x400000, 0x64594ed4, 3 | BRF_GRA },           //  4 / mask rom
+	{ "064-c68.c4",   0x400000, 0x6e385398, 3 | BRF_GRA },           //  5 / mask rom */
 	{ "064-c1.c1",    0x200000, 0x2ec87cea, 3 | BRF_GRA },           //  2 Sprite data
 	{ "064-c2.c2",    0x200000, 0x526b81ab, 3 | BRF_GRA },           //  3 
 	{ "064-c3.c3",    0x200000, 0x436d1b31, 3 | BRF_GRA },           //  4 
@@ -11689,7 +11691,7 @@ struct BurnDriver BurnDrvtws96 = {
 // Fight Fever (set 1)
 
 static struct BurnRomInfo fightfevRomDesc[] = {
-	{ "060-p1.p1",    0x100000, 0x2a104b50, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "060-p1.p1",    0x100000, 0x2a104b50, 1 | BRF_ESS | BRF_PRG }, //  0 68K code / BAD DUMP
 
 	{ "060-s1.s1",    0x020000, 0x7f012104, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -11721,11 +11723,10 @@ struct BurnDriver BurnDrvfightfev = {
 // Fight Fever (set 2)
 
 static struct BurnRomInfo fightfevaRomDesc[] = {
-	{ "060-p1.p1",    0x100000, 0x2a104b50, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "060-p1.p1",    0x100000, 0x2a104b50, 1 | BRF_ESS | BRF_PRG }, //  0 68K code / BAD DUMP
 	/* also found sets with p1/ p2 4mbit on eprom with Viccom sticker labels on board NEO-MVS PROGGSC
-	/ rom data below need to be confirmed
-	{ "viccom_1.ep1",    0x080000, 0x30d91197, 1 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  0 68K code / M27C4002
-	{ "viccom_2.ep2",    0x080000, 0xafa53058, 1 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  0 / M27C4002 */
+	{ "viccom_1.ep1",    0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  0 68K code / M27C4002
+	{ "viccom_2.ep2",    0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  0 / M27C4002 */
 	
 	{ "060-s1.s1",    0x020000, 0x7f012104, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -11740,7 +11741,9 @@ static struct BurnRomInfo fightfevaRomDesc[] = {
 	{ "060-v2.v2",    0x100000, 0xefcff7cf, 5 | BRF_SND },           //  8 
 	
 	{ "060-epr.sp2",  0x080000, 0x3032041b, 0 | BRF_ESS | BRF_PRG }, //  9 68K code
-	/* P is on eprom, correct chip label unknown */
+	/* P is on eprom, correct chip label unknown 
+	/* also found MVS set with P1 on mask rom (060-P1 VIC940800-101) and SP2 on eprom with Viccom sticker on board NEO-MVS PROGGSC
+	{ "viccom_1.sp2",  0x080000, 0x00000000, 0 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  9 68K code / TC574200 */
 };
 
 STDROMPICKEXT(fightfeva, fightfeva, neogeo)

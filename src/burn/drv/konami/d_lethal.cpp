@@ -994,11 +994,11 @@ static struct BurnRomInfo lethalenjRomDesc[] = {
 STD_ROM_PICK(lethalenj)
 STD_ROM_FN(lethalenj)
 
-struct BurnDriver BurnDrvLethalenj = {
+struct BurnDriverD BurnDrvLethalenj = {
 	"lethalenj", "lethalen", NULL, NULL, "1992",
-	"Lethal Enforcers (ver JAD, 12/04/92 17:16)\0", NULL, "Konami", "GX191",
+	"Lethal Enforcers (ver JAD, 12/04/92 17:16)\0", "no sprites!", "Konami", "GX191",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
+	BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, lethalenjRomInfo, lethalenjRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
 	LethalenjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3

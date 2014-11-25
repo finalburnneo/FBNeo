@@ -49,18 +49,22 @@ static INT32 LethalGun0 = 0;
 static INT32 LethalGun1 = 0;
 static INT32 LethalGun2 = 0;
 static INT32 LethalGun3 = 0;
+static UINT8 ReloadGun0 = 0;
+static UINT8 ReloadGun1 = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo LethalenInputList[] = {
 	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"mouse button 1" },
+	{"P1 Button 2",		BIT_DIGITAL,   &ReloadGun0 ,	"mouse button 2" },
 	A("P1 Gun X",    BIT_ANALOG_REL, &LethalGun0   ,    "mouse x-axis" ),
 	A("P1 Gun Y",    BIT_ANALOG_REL, &LethalGun1   ,    "mouse y-axis" ),
 
 	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 start"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,   &ReloadGun1 ,	"p2 fire 2"	},
 	A("P2 Gun X",    BIT_ANALOG_REL, &LethalGun2   ,    "p2 x-axis" ),
 	A("P2 Gun Y",    BIT_ANALOG_REL, &LethalGun3   ,    "p2 y-axis" ),
 
@@ -106,19 +110,19 @@ static UINT8 guns_r(UINT16 address)
 	switch (address)
 	{
 		case 0:
-			return GUNX(1) >> 1;
+			return (ReloadGun0) ? 16 >> 1: GUNX(1) >> 1;
 		case 1:
 			if ((GUNY(1)<=0x0b) || (GUNY(1)>=0xe8))
 				return 0;
 			else
-				return (232 - GUNY(1));
+				return (ReloadGun0) ? 0 : (232 - GUNY(1));
 		case 2:
-			return GUNX(2) >> 1;
+			return (ReloadGun1) ? 16 >> 1: GUNX(2) >> 1;
 		case 3:
 			if ((GUNY(2)<=0x0b) || (GUNY(2)>=0xe8))
 				return 0;
 			else
-				return (232 - GUNY(2));
+				return (ReloadGun1) ? 0 : (232 - GUNY(2));
 	}
 
 	return 0;
@@ -127,6 +131,8 @@ static UINT8 guns_r(UINT16 address)
 static UINT8 gunsaux_r()
 {
 	int res = 0;
+
+	if (ReloadGun0) return 0;
 
 	if (GUNX(1) & 1) res |= 0x80;
 	if (GUNX(2) & 1) res |= 0x40;
@@ -649,12 +655,21 @@ static INT32 DrvFrame()
 	{
 		DrvInputs[0] = 0xff;
 
+		if (ReloadGun0) { // for simulated reload-gun button
+			DrvJoy1[4] = 1;
+		}
+		if (ReloadGun1) {
+			DrvJoy1[5] = 1;
+		}
+
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		}
 
-		BurnGunMakeInputs(0, (INT16)LethalGun0, (INT16)LethalGun1);
-		BurnGunMakeInputs(1, (INT16)LethalGun2, (INT16)LethalGun3);
+		if (!ReloadGun0)
+			BurnGunMakeInputs(0, (INT16)LethalGun0, (INT16)LethalGun1);
+		if (!ReloadGun1)
+			BurnGunMakeInputs(1, (INT16)LethalGun2, (INT16)LethalGun3);
 	}
 
 	INT32 nInterleave = nBurnSoundLen;

@@ -6663,7 +6663,7 @@ struct BurnDriver BurnDrvZupapa = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Sengoku 3 / Sengoku Densho 2001
+// Sengoku 3 / Sengoku Densho 2001 (NGH-261?)
 
 static struct BurnRomInfo sengoku3RomDesc[] = {
 	/* also found AES set with 261-PH1 on mask rom on board NEO-AEG PROGBK1F; is this set is (NGH-261)? */
@@ -11742,7 +11742,7 @@ static struct BurnRomInfo fightfevaRomDesc[] = {
 	
 	{ "060-epr.sp2",  0x080000, 0x3032041b, 0 | BRF_ESS | BRF_PRG }, //  9 68K code
 	/* P is on eprom, correct chip label unknown 
-	/* also found MVS set with P1 on mask rom (060-P1 VIC940800-101) and SP2 on eprom with Viccom sticker on board NEO-MVS PROGGSC
+	/ also found MVS set with P1 on mask rom (060-P1 VIC940800-101) and SP2 on eprom with Viccom sticker on board NEO-MVS PROGGSC
 	{ "viccom_1.sp2",  0x080000, 0x00000000, 0 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  9 68K code / TC574200 */
 };
 

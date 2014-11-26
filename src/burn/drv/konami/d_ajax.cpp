@@ -820,8 +820,8 @@ static struct BurnRomInfo ajaxRomDesc[] = {
 	{ "770c08-d.c10",	0x10000, 0x91591777, 5 | BRF_GRA },           // 27
 	{ "770c08-h.c11",	0x10000, 0xd97d4b15, 5 | BRF_GRA },           // 28
 
-	{ "770c06",		0x40000, 0xd0c592ee, 6 | BRF_GRA },           // 29 K051960 Tiles
-	{ "770c07",		0x40000, 0x0b399fb1, 6 | BRF_GRA },           // 30
+	{ "770c06.f4",		0x40000, 0xd0c592ee, 6 | BRF_GRA },           // 29 K051960 Tiles
+	{ "770c07.h4",		0x40000, 0x0b399fb1, 6 | BRF_GRA },           // 30
 
 	{ "770c10-a.a7",	0x10000, 0xe45ec094, 7 | BRF_SND },           // 31 K007232 #0 Samples
 	{ "770c10-b.a6",	0x10000, 0x349db7d3, 7 | BRF_SND },           // 32
@@ -865,14 +865,14 @@ static struct BurnRomInfo typhoonRomDesc[] = {
 
 	{ "770_h03.f16",	0x08000, 0x2ffd2afc, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
-	{ "770c13",		0x40000, 0xb859ca4e, 4 | BRF_GRA },           //  5 K052109 Tiles
-	{ "770c12",		0x40000, 0x50d14b72, 4 | BRF_GRA },           //  6
+	{ "770c13.n22",		0x40000, 0xb859ca4e, 4 | BRF_GRA },           //  5 K052109 Tiles
+	{ "770c12.k22",		0x40000, 0x50d14b72, 4 | BRF_GRA },           //  6
 
-	{ "770c09",		0x80000, 0x1ab4a7ff, 5 | BRF_GRA },           //  7 K051960 Tiles
-	{ "770c08",		0x80000, 0xa8e80586, 5 | BRF_GRA },           //  8
+	{ "770c09.n4",		0x80000, 0x1ab4a7ff, 5 | BRF_GRA },           //  7 K051960 Tiles
+	{ "770c08.k4",		0x80000, 0xa8e80586, 5 | BRF_GRA },           //  8
 
-	{ "770c06",		0x40000, 0xd0c592ee, 6 | BRF_GRA },           //  9 K051960 Tiles
-	{ "770c07",		0x40000, 0x0b399fb1, 6 | BRF_GRA },           // 10
+	{ "770c06.f4",		0x40000, 0xd0c592ee, 6 | BRF_GRA },           //  9 K051960 Tiles
+	{ "770c07.h4",		0x40000, 0x0b399fb1, 6 | BRF_GRA },           // 10
 
 	{ "770c10",		0x40000, 0x7fac825f, 7 | BRF_SND },           // 11 K007232 #0 Samples
 
@@ -906,14 +906,14 @@ static struct BurnRomInfo ajaxjRomDesc[] = {
 
 	{ "770_f03.f16",	0x08000, 0x3fe914fd, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
-	{ "770c13",		0x40000, 0xb859ca4e, 4 | BRF_GRA },           //  5 K052109 Tiles
-	{ "770c12",		0x40000, 0x50d14b72, 4 | BRF_GRA },           //  6
+	{ "770c13.n22",		0x40000, 0xb859ca4e, 4 | BRF_GRA },           //  5 K052109 Tiles
+	{ "770c12.k22",		0x40000, 0x50d14b72, 4 | BRF_GRA },           //  6
 
-	{ "770c09",		0x80000, 0x1ab4a7ff, 5 | BRF_GRA },           //  7 K051960 Tiles
-	{ "770c08",		0x80000, 0xa8e80586, 5 | BRF_GRA },           //  8
+	{ "770c09.n4",		0x80000, 0x1ab4a7ff, 5 | BRF_GRA },           //  7 K051960 Tiles
+	{ "770c08.k4",		0x80000, 0xa8e80586, 5 | BRF_GRA },           //  8
 
-	{ "770c06",		0x40000, 0xd0c592ee, 6 | BRF_GRA },           //  9 K051960 Tiles
-	{ "770c07",		0x40000, 0x0b399fb1, 6 | BRF_GRA },           // 10
+	{ "770c06.f4",		0x40000, 0xd0c592ee, 6 | BRF_GRA },           //  9 K051960 Tiles
+	{ "770c07.h4",		0x40000, 0x0b399fb1, 6 | BRF_GRA },           // 10
 
 	{ "770c10",		0x40000, 0x7fac825f, 7 | BRF_SND },           // 11 K007232 #0 Samples
 

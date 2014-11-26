@@ -1662,7 +1662,7 @@ STD_ROM_PICK(Slyspy)
 STD_ROM_FN(Slyspy)
 
 static struct BurnRomInfo Slyspy2RomDesc[] = {
-	{ "fa14-2.bin",         0x10000, 0x0e431e39, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "fa14-2.17l",         0x10000, 0x0e431e39, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "fa12-2.9l",          0x10000, 0x1b534294, BRF_ESS | BRF_PRG },	//  1
 	{ "fa15.19l",           0x10000, 0x04a79266, BRF_ESS | BRF_PRG },	//  2
 	{ "fa13.11l",           0x10000, 0x641cc4b3, BRF_ESS | BRF_PRG },	//  3

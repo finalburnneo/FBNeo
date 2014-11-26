@@ -1765,10 +1765,10 @@ struct BurnDriver BurnDrvCadashjo = {
 // Cadash (US, version 2)
 
 static struct BurnRomInfo cadashuRomDesc[] = {
-	{ "c21_14-2.11",		0x20000, 0xf823d418, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "c21_16-2.15",		0x20000, 0x90165577, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "c21_13-2.10",		0x20000, 0x92dcc3ae, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
-	{ "c21_15-2.14",		0x20000, 0xf915d26a, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
+	{ "c21_14-2.ic11",		0x20000, 0xf823d418, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "c21_16-2.ic15",		0x20000, 0x90165577, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "c21_13-2.ic10",		0x20000, 0x92dcc3ae, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
+	{ "c21_15-2.ic14",		0x20000, 0xf915d26a, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
 
 	{ "c21-08.38",			0x10000, 0xdca495a0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  4 Z80 Code
 

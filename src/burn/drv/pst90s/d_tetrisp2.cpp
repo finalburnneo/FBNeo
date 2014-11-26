@@ -1502,8 +1502,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Tetris Plus 2 (World)
 
 static struct BurnRomInfo tetrisp2RomDesc[] = {
-	{ "t2p_04.rom",			0x080000, 0xe67f9c51, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "t2p_01.rom",			0x080000, 0x5020a4ed, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "tet2_4_ver2.8.ic59",	0x080000, 0xe67f9c51, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tet2_1_ver2.8.ic65",	0x080000, 0x5020a4ed, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "96019-01.9",			0x400000, 0x06f7dc64, 0x02 | BRF_GRA },           //  2 Sprites
 	{ "96019-02.8",			0x400000, 0x3e613bed, 0x02 | BRF_GRA },           //  3
@@ -1511,7 +1511,7 @@ static struct BurnRomInfo tetrisp2RomDesc[] = {
 	{ "96019-06.13",		0x400000, 0x16f7093c, 0x03 | BRF_GRA },           //  4 Background and Rotation tiles
 	{ "96019-04.6",			0x100000, 0xb849dec9, 0x03 | BRF_GRA },           //  5
 
-	{ "tetp2-10.bin",		0x080000, 0x34dd1bad, 0x04 | BRF_GRA },           //  6 Foreground Tiles
+	{ "tetp2-10.ic27",		0x080000, 0x34dd1bad, 0x04 | BRF_GRA },           //  6 Foreground Tiles
 
 	{ "96019-07.7",			0x400000, 0xa8a61954, 0x05 | BRF_SND },           //  7 YMZ280b Samples
 };

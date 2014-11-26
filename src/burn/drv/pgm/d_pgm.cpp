@@ -3929,8 +3929,8 @@ static struct BurnRomInfo svgtwRomDesc[] = {
 	{ "w05602b032.bin",		0x400000, 0x0685166d, 5 | BRF_SND },		//  9
 
 //	{ "svg_igs027a.bin",			    0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 10 Internal ARM7 Rom
-	{ "svg_igs027a_execute_only_area", 	0x000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 10 Internal ARM7 Rom
-	{ "svgpcb_igs027a_v100_japan.bin", 	0x003e78, 0x7a59da5d, 7 | BRF_PRG | BRF_ESS },		// 11 Internal ARM7 Rom
+	{ "svgpcb_igs027a_execute_only_area", 	0x000188, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },	// 10 Internal ARM7 Rom
+	{ "svgcpb_igs027a_v100_japan.bin", 	0x003e78, 0x7a59da5d, 7 | BRF_PRG | BRF_ESS },		// 11 Internal ARM7 Rom
 
 	{ "v101tw.u26",			0x400000, 0xcc24f542, 8 | BRF_PRG | BRF_ESS },	// 12 External ARM7 Rom
 	{ "v101tw.u36",			0x400000, 0xf18283e2, 8 | BRF_PRG | BRF_ESS },	// 13

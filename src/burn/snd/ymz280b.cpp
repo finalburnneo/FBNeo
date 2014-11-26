@@ -603,7 +603,7 @@ void YMZ280BWriteRegister(UINT8 nValue)
 			}
 			case 2:																	// Volume
 			    if (bESPRaDeMixerKludge) {
-					if (nWriteChannel != 7) nValue -= 25;
+					if (nWriteChannel != 7 && nWriteChannel != 6) nValue -= 25;
 					if (nWriteChannel == 7) {
 						if (nValue + 15 > 255)
 							nValue = 255;

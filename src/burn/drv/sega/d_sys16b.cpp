@@ -6455,6 +6455,7 @@ static INT32 AliensynInit()
 		SekMapHandler(1, 0xc00006, 0xc00007, SM_WRITE);
 		SekSetWriteByteHandler(1, AliensynWriteByte);
 		SekClose();
+		AlienSyndrome = true;
 	}
 	
 	return nRet;
@@ -6469,6 +6470,7 @@ static INT32 Aliensyn3Init()
 		SekMapHandler(1, 0xc00006, 0xc00007, SM_WRITE);
 		SekSetWriteByteHandler(1, AliensynWriteByte);
 		SekClose();
+		AlienSyndrome = true;
 	}
 	
 	return nRet;

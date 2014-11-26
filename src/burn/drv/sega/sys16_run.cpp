@@ -127,6 +127,7 @@ INT32 System16SoundLatch;
 bool System16BTileAlt = false;
 bool Shangon = false;
 bool Hangon = false;
+bool AlienSyndrome = false;
 bool System16Z80Enable = true;
 
 INT32 nSystem16CyclesDone[4];
@@ -2544,6 +2545,8 @@ INT32 System16Exit()
 	System16BTileAlt = false;
 	Shangon = false;
 	Hangon = false;
+	AlienSyndrome = false;
+
 	bSystem16BootlegRender = false;
  	
  	System16YM2413IRQInterval = 0;
@@ -2714,6 +2717,10 @@ INT32 System16BFrame()
 	if (System16Reset) System16DoReset();
 	
 	System16MakeInputs();
+	if (AlienSyndrome) {
+		System16ClearOpposites(&System16Input[1]); // P1
+		System16ClearOpposites(&System16Input[2]); // P2
+	}
 	
 	nCyclesTotal[0] = (INT32)((INT64)System16ClockSpeed * nBurnCPUSpeedAdjust / (0x0100 * 60));
 	nCyclesTotal[1] = 5000000 / 60;

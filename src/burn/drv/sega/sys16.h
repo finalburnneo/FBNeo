@@ -102,6 +102,7 @@ extern INT32 System16SoundLatch;
 extern bool System16BTileAlt;
 extern bool Shangon;
 extern bool Hangon;
+extern bool AlienSyndrome;
 extern bool System16Z80Enable;
 
 extern INT32 System16YM2413IRQInterval;

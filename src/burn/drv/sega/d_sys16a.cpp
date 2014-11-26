@@ -2550,6 +2550,7 @@ static INT32 AliensynjoInit()
 			memcpy(System16Sprites + 0x50000, pTemp + 0x30000, 0x10000);
 			memcpy(System16Sprites + 0x60000, pTemp + 0x50000, 0x10000);
 			memcpy(System16Sprites + 0x70000, pTemp + 0x70000, 0x10000);
+			AlienSyndrome = true;
 		} else {
 			nRet = 1;
 		}
@@ -2576,6 +2577,7 @@ static INT32 Aliensyn5Init()
 			memcpy(System16Sprites + 0x50000, pTemp + 0x30000, 0x10000);
 			memcpy(System16Sprites + 0x60000, pTemp + 0x50000, 0x10000);
 			memcpy(System16Sprites + 0x70000, pTemp + 0x70000, 0x10000);
+			AlienSyndrome = true;
 		} else {
 			nRet = 1;
 		}

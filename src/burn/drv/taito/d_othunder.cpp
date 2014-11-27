@@ -664,6 +664,7 @@ void __fastcall OthunderZ80Write(UINT16 a, UINT8 d)
 
 			rVol = OthunderPan[0] * 100 / 0x1f;
 			lVol = OthunderPan[1] * 100 / 0x1f;
+			if (rVol == 0) rVol = 100; // Fixes player gunshot can only be heard through the left speaker.
 			BurnYM2610SetLeftVolume(BURN_SND_YM2610_YM2610_ROUTE_1, OthunderYM2610Route1MasterVol * lVol / 100.0);
 			BurnYM2610SetRightVolume(BURN_SND_YM2610_YM2610_ROUTE_1, OthunderYM2610Route1MasterVol * rVol / 100.0);
 

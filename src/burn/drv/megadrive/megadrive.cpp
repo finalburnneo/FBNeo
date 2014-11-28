@@ -15,6 +15,10 @@
  alt_renderer, 6button_gamepad, accurate_timing, accurate_sprites,
  draw_no_32col_border, external_ym2612
 
+ tofix:
+ Burning Force - background doesn't scroll
+ Battle Squadron - loses sound after weapon upgrade [x] pickup
+
  ********************************************************************************
  Port by OopsWare
  ********************************************************************************/

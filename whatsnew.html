@@ -106,82 +106,80 @@
 
 <h3>v0.2.97.34</h3>
 <ul>
-<li>Fixed Double Dragon II on Megadrive [dink]</li>
-<li>Fixed choppiness in Gaiapolis on older pc's [dink]</li>
-<li>Fixed the ear-piercing sounds in Nostradomus and Magical Cat Adventure [dink]</li>
-<li>Fixed Layer alignment in Metamorphic Force, it improves the intro and first boss graphical effects [iq_132]</li>
-<li>Fixed crash in Samurai Showdown 5 and Garou with Alpha blend effects enabled [dink]</li>
-<li>Fixed Surprise Attack by Konami now runs at the right speed [dink]</li>
-<li>Fixed flickering status for players 2, 3 and 4 in Sunset Riders [dink]</li>
-<li>Fixed occasional loud weird buzzing noise (DAC) in Armed Formation [dink]</li>
-<li>Added clone of Ninja Kid 2 - JT-104 [JacKc]</li>
-<li>Fixed dariusu due to incorrect 68K rom length [Barry]</li>
-<li>WIP: Get sound working in Donkey Kong 3 - hook up the NES APU [iq_132]</li>
-<li>Add handcrafted PAL's to Jumping, Area 88 and Strider [JacKc, Palindrome]</li>
-<li>Fixed missing notes on some games in the Sega SG-1000 driver [dink]</li>
-<li>Fixed more Megadrive games where PAL auto-detection fails, if you already have settings saved for these games, then set dips to default in the dialog [JacKc]</li>
-<li>Added Alpha Blending/Transparency support to PGM - supports Nebula/Kawaks-style blend (.bld) files [iq_132]</li>
-<li>Added clone of Teenage Mutant Hero Turtles (UK 4 Players, set 3) [JacKc, caius]</li>
-<li>Added clone of Dragon World II (V100H, Hong Kong) to the PGM driver [iq_132, JacKc, rtw]</li>
-<li>Added clone of Battle Bakraid - Unlimited Version (China) (Tue Jun 8 1999) to the Topalan driver [JacKc, Bill D, The Dumping Union]</li>
-<li>Fixed buzzing sounds in the DAC [iq_132]</li>
-<li>Fixed Sand Scorpion won't boot after Raiden II/DX [dink]</li>
+<li>Ported Musashi 3.32 from MAME 0.128 [barry]</li>
+<li>Minor fixes to new Musashi port [dink]</li>
+<li>Fixed TLCS90 core, calculate the timer period based on the clock [dink]</li>
 <li>Fixed: the Z80 Vector should be reset to default on every reset Z80 Core [iq_132]</li>
-<li>Add 8x8 .blde support to Neo-Geo [iq_132]</li>
-<li>Fixed Escape Kids Crashes during the boot sequence [dink]</li>
-<li>Add protection routines to Dragon World II (V100H, Hong Kong) and mark as working [iq_132]</li>
-<li>Fixed graphical issues/corruption in Konami's Special Project Y (spy) [iq_132]</li>
-<li>Fixed the sounds in Konami's Yie Ar Kung-Fu and Mikie - some sn76489a soundchip commands were getting skipped because the chip updates needed to be interlaced. [dink]</li>
-<li>Added Hammer Away to the Sega System 18 driver [barry, haze, ( Atro - from Neo-geo.com aka Rui Baptista ) ( _rm_ - from Neo-geo.com aka Ricardo Marques) ( 1up - from Neo-geo.com aka Daniel "casebres" )]
-<li>Added Vigilante (World, Rev E) [iq_132, JacKc, system11]</li>
-<li>Fix Gradius 3 in 16-bit color modes. [Gamez Fan, iq_132]</li>
+<li>Fixed buzzing sounds in the DAC [iq_132]</li>
 <li>Added multiple chip support to the YM3812 interface [barry]</li>
-<li>Fixed Drumroll fade-in in Gradius 3 [dink]</li>
-<li>Fixed Moo Mesa and Xexex music out-of-key at 44100hz sample rate [dink]</li>
-<li>Add driver for Samurai Nihon-Ichi, VS Gong Fight, Mission 660, Go Go Mr. Yamaguchi, Nunchackun, and Lady Master of Kung Fu [iq_132]</li>
-<li>Port Musashi m68k 3.32 from MAME 0.128 [barry] and some minor fixes [dink]</li>
-<li>TLCS90 core, calculate the timer period based on the clock [dink]</li>
-<li>Add driver for Space Invaders [iq_132]</li>
-<li>Add driver for Mario Bros. [iq_132]</li>
-<li>Add driver for Knuckle Joe [iq_132]</li>
-<li>Fixed Gargoyles and Ex-Mutants in Megadrive (TAS Callback) [barry]</li>
-<li>Fix misc. timing issues with Gradius 3 that appeared after the introduction of the new Musashi 68k core [barry, dink]</li>
-<li>Added Zombie Raid 9/28/95 Prototypes (US, JP) [JacKc, iq_132]</li>
-<li>Fix music playback speed in Arbalester [dink]</li>
-<li>Magic Bubble (Adult version, YS-0211 PCB) [iq_132, JacKc, caius, The Dumping Union]</li>
-<li>Added clone of Dunk Shot (Rev C, FD1089 317-0022) [JacKc, ShinobiZ & COY]</li>
-<li>Fixed FB Alpha GFX Loading routine for Punch-Out!! and added correct color PROMs set for Super Punch-Out (Japan)!! [JacKc]
+<li>Added driver for Alien Invader [iq_132]</li>
+<li>Added driver for Knuckle Joe [iq_132]</li>
+<li>Added driver for Mario Bros. [iq_132]</li>
+<li>Added driver for Samurai Nihon-Ichi, VS Gong Fight, Mission 660, Go Go Mr. Yamaguchi, Nunchackun, and Lady Master of Kung Fu [iq_132]</li>
+<li>Added driver for Capcom's Side-Arms, Turtle Ship, Dyger, Twin Falcons and Whizz [iq_132, dink]</li>
+<li>Added driver for Space Invaders [iq_132]</li>
+<li>Added driver for Tetris Pro. 2 [iq_132]</li>
+<li>Added driver for XX Mission by UPL [iq_132]</li>
+<li>Added Hammer Away to the Sega System 18 driver [barry, haze, Atro, _rm_ aka Ricardo Marques, 1up aka Daniel "casebres"]</li>
+<li>Added clone of Darius to the Darius driver [barry, JacKc]</li>
+<li>Added clone of Cobra Command (Japan, bootleg) to the Data East DEC8 driver [f205v, JacKc]</li>
+<li>Added clone of Ninja Kid 2 - JT-104 to the Ninja Kid II driver [JacKc]</li>
+<li>Added clone of Dragon World II (V100H, Hong Kong) to the PGM driver [iq_132, JacKc, rtw]</li>
+<li>Added protection routines to Dragon World II (V100H, Hong Kong) in the PGM driver and marked as working [iq_132]</li>
+<li>Added clone of Raiden II to the driver [rtw, Smitdogg, Kranser, Mucci, Dullaron, B2K24, The Dumping Union, JacKc]</li>
+<li>Added clone of Dunk Shot to the Sega System 16B driver [JacKc, ShinobiZ & COY]</li>
+<li>Added clones of Cadash to the Taito Asuka driver  [ShouTime, JacKc]
+<li>Added clone of Teenage Mutant Hero Turtles to the Teenage Mutant Ninja Turtles driver [JacKc, caius]</li>
+<li>Added clone of Battle Bakraid - Unlimited Version (China) (Tue Jun 8 1999) to the Topalan-2 driver [JacKc, Bill D, The Dumping Union]</li>
+<li>Added clone of Vigilante to the Vigilate driver [iq_132, JacKc, system11]</li>
+<li>Added clone of Xain'd Sleena to the driver[f205v, JacKc]</li>
+<li>Added clone of Magic Bubble to the Yun Sung 16 driver [iq_132, JacKc, caius, The Dumping Union]</li>
+<li>Added prototypes of Zombie Raid to the Zombie Raid driver [JacKc, iq_132]</li>
+<li>WIP: Get sound working in Donkey Kong 3 - hook up the NES APU [iq_132]</li>
+<li>Fixed sprite corruption in Alien Syndrome when playing with the keyboard and up+down or left+right is pressed at the same time [dink]</li>
+<li>Fixed music playback speed in Arbalester [dink]</li>
+<li>Fixed occasional loud weird buzzing noise (DAC) in Armed Formation [dink]</li>
 <li>Fixed ymf278b sound in Asura Buster/Asura Blade [dink]</li>
-<li>Add Oh Mummy and Lego Batman to Megadrive, fix crash on Z80 <-> 68k communications [dink]</li>
+<li>Fixed Battle Shark, Space Gun and Night Striker - hang on level 2+ [dink]</li>
 <li>Black Tiger and F1 Dream: Lower SFX volume so the music can be heard better, add BurnYM2203SetPSGVolume macro to burn_ym2203.h [dink]</li>
-<li>Fix Psychic 5 default DIP settings [dink]</li>
-<li>Fix too much slowdown in Nostradamus, needs a little helping boost [dink]</li>
-<li>Fix Battle Shark, Space Gun and Night Striker - hang on level 2+ [dink]</li>
-<li>Add driver for Alien Invader [iq_132]</li>
-<li>Add driver for Tetris Pro. 2 [iq_132]</li>
-<li>Add driver for Capcom's Side-Arms, Turtle Ship, Dyger, Twin Falcons and Whizz [iq_132, dink]</li>
-<li>Fix crash in Soko Nuke [dink]</li>
-<li>Added clone of Cobra Command (Japan, bootleg) to the Data East Dec8 driver [f205v, JacKc]</li>
-<li>Synced some drivers with MAME 0.155 (armedf, contra, punchout) [barry, JacKc]</li>
-<li>Added Cadash (Japan, version 2) and Cadash (Japan, oldest version) to the Taito Asuka driver  [ShouTime, JacKc]
-<li>Add driver for XX Mission by UPL [iq_132]</li>
-<li>Fix colors in Cuebrick [Alex Jackson]</li>
-<li>Added clone of Xain'd Sleena (bootleg, bugfix) [f205v, JacKc]</li>
-<li>Fix music tempo/warped-record effect in Pang [dink]</li>
-<li>Fix music tempo/warped record effect in Trojan, Avengers, Section-Z, fix PCM/MSM5205 samples in Trojan [dink]</li>
-<li>Fix gun inputs in Konami's Lethal Enforcers, add a hack/gun-reload button [dink]</li>
-<li>New feature: auto-hide crosshair after 4 seconds for lightgun games [dink]</li>
-<li>Added clone of Raiden II (Switzerland) [rtw, Smitdogg, Kranser, Mucci, Dullaron, B2K24, The Dumping Union, JacKc]</li>
-<li>Misc. documentation updates to Neo-Geo driver [JacKc]</li>
+<li>Fixed colors in Cuebrick [Alex Jackson]</li>
+<li>Fixed Escape Kids Crashes during the boot sequence [dink]</li>
 <li>Small music mixing improvement in ESP Ra.De [the shmup kings, dink]</li>
-<li>Fix Operation Thunderbolt: gunshot sfx can only be heard in the left speaker [dink]</li>
-<li>Fix sprite corruption in Alien Syndrome when playing with the keyboard and up+down or left+right is pressed at the same time [dink]</li>
+<li>Fixed choppiness in Gaiapolis on older pc's [dink]</li>
+<li>Fixed Gradius 3 in 16-bit color modes [Gamez Fan, iq_132]</li>
+<li>Fix misc. timing issues with Gradius 3 that appeared after the introduction of the new Musashi 68k core [barry, dink]</li>
+<li>Fixed Drumroll fade-in in Gradius 3 [dink]</li>
+<li>Fixed gun inputs in Konami's Lethal Enforcers, add a hack/gun-reload button [dink]</li>
+<li>Fixed Layer alignment in Metamorphic Force, it improves the intro and first boss graphical effects [iq_132]</li>
+<li>Fixed Moo Mesa and Xexex music out-of-key at 44100hz sample rate [dink]</li>
+<li>Fixed the ear-piercing sounds in Nostradomus and Magical Cat Adventure [dink]</li>
+<li>Fixed too much slowdown in Nostradamus, needs a little helping boost [dink]</li>
+<li>Fixed Operation Thunderbolt: gunshot sfx can only be heard in the left speaker [dink]</li>
+<li>Fixed music tempo/warped-record effect in Pang [dink]</li>
+<li>Fix Psychic 5 default DIP settings [dink]</li>
+<li>Fixed FB Alpha GFX Loading routine for Punch-Out!! and added correct color PROMs set for Super Punch-Out (Japan)!! [JacKc]
+<li>Fixed Sand Scorpion won't boot after Raiden II/DX [dink]</li>
+<li>Fixed crash in Soko Nuke [dink]</li>
+<li>Fixed graphical issues/corruption in Konami's Special Project Y (spy) [iq_132]</li>
+<li>Fixed flickering status for players 2, 3 and 4 in Sunset Riders [dink]</li>
+<li>Fixed Surprise Attack by Konami now runs at the right speed [dink]</li>
+<li>Fixed music tempo/warped record effect in Trojan, Avengers, Section-Z, fix PCM/MSM5205 samples in Trojan [dink]</li>
+<li>Fixed the sounds in Konami's Yie Ar Kung-Fu and Mikie - some SN76489A soundchip commands were getting skipped because the chip updates needed to be interlaced [dink]</li>
+<li>Fixed Double Dragon II on Megadrive [dink]</li>
+<li>Fixed Gargoyles and Ex-Mutants in Megadrive (TAS Callback with new Musashi) [barry]</li>
+<li>Add Oh Mummy and Lego Batman to Megadrive, fix crash on Z80 &lt;-&gt; 68K communications [dink]</li>
+<li>Fixed more Megadrive games where PAL auto-detection fails, if you already have settings saved for these games, then set dips to default in the dialog [JacKc]</li>
+<li>Fixed crash in Samurai Showdown 5 and Garou with Alpha blend effects enabled [dink]</li>
+<li>New feature: auto-hide crosshair after 4 seconds for lightgun games [dink]</li>
+<li>Added 8x8 .blde support to Neo-Geo [iq_132]</li>
+<li>Added Alpha Blending/Transparency support to PGM - supports Nebula/Kawaks-style blend (.bld) files [iq_132]</li>
+<li>Misc. documentation updates to Neo-Geo driver [JacKc]
 <ul>
 <li>Identified and documented more sets (MVS and AES version) with different Cx and/or Px layout</li>
 <li>Added redumped p1/p2 to fightfeva [DsNo]</li>
 <li>s1 redump by DsNO has one byte diff at 0: 00 11 compared to MAME dump (probably a bitrot)</li>
-</ul>
-<li>Updated the libpng library to v1.6.15 [Barry]</li>
+</ul></li>
+<li>Updated the libpng library to v1.6.15 [barry]</li>
 <li>Synced sets with MAME 0.156 [barry, JacKc]</li>
 </ul>
 

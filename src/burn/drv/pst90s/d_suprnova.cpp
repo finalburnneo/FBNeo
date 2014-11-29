@@ -169,6 +169,30 @@ static struct BurnDIPInfo SknsDIPList[]=
 
 STDDIPINFO(Skns)
 
+static struct BurnDIPInfo VblokbrkDIPList[]=
+{
+	{0x17, 0xff, 0xff, 0xff, NULL		},
+	{0x18, 0xff, 0xff, 0x00, NULL		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"	},
+	{0x17, 0x01, 0x01, 0x01, "Off"		},
+	{0x17, 0x01, 0x01, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"	},
+	{0x17, 0x01, 0x02, 0x02, "Off"		},
+	{0x17, 0x01, 0x02, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Use Backup Ram"},
+	{0x17, 0x01, 0x40, 0x00, "No"		},
+	{0x17, 0x01, 0x40, 0x40, "Yes"		},
+
+	{0   , 0xfe, 0   ,    2, "Freeze"	},
+	{0x17, 0x01, 0x80, 0x00, "Freezes the game"},
+	{0x17, 0x01, 0x80, 0x80, "Right value"	},
+};
+
+STDDIPINFO(Vblokbrk)
+
 static struct BurnInputInfo CyvernInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"},
@@ -1044,12 +1068,13 @@ static int DrvInit(INT32 bios)
 
 	YMZ280BInit(16666666, NULL);
 
-	if (strstr(BurnDrvGetTextA(DRV_NAME), "pan")) {
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "pan") || strstr(BurnDrvGetTextA(DRV_NAME), "saruk") || strstr(BurnDrvGetTextA(DRV_NAME), "vblok")) {
 		// Disable draw_layer() speed hack for Panic Street & Gals Panic 2,3,4etc
 		draw_layer_speedhack = 0;
 	} else {
 		draw_layer_speedhack = 1;
 	}
+	bprintf(0, _T("vram speedhack is %d!\n"), draw_layer_speedhack);
 
 	skns_init();
 	skns_sprite_kludge(sprite_kludge_x, sprite_kludge_y);
@@ -2773,7 +2798,7 @@ struct BurnDriver BurnDrvVblokbrk = {
 	"VS Block Breaker (Asia)\0", "imperfect inputs", "Kaneko / Mediaworks", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_SKNS, GBF_BALLPADDLE, 0,
-	NULL, vblokbrkRomInfo, vblokbrkRomName, NULL, NULL, VblokbrkInputInfo, SknsDIPInfo, //VblokbrkInputInfo, VblokbrkDIPInfo,
+	NULL, vblokbrkRomInfo, vblokbrkRomName, NULL, NULL, VblokbrkInputInfo, VblokbrkDIPInfo, //VblokbrkInputInfo, VblokbrkDIPInfo,
 	VblokbrkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2809,7 +2834,7 @@ struct BurnDriver BurnDrvSarukani = {
 	"Saru-Kani-Hamu-Zou (Japan)\0", "imperfect inputs", "Kaneko / Mediaworks", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_SKNS, GBF_BALLPADDLE, 0,
-	NULL, sarukaniRomInfo, sarukaniRomName, NULL, NULL, VblokbrkInputInfo, SknsDIPInfo, //VblokbrkInputInfo, VblokbrkDIPInfo,
+	NULL, sarukaniRomInfo, sarukaniRomName, NULL, NULL, VblokbrkInputInfo, VblokbrkDIPInfo, //VblokbrkInputInfo, VblokbrkDIPInfo,
 	SarukaniInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };

@@ -1068,13 +1068,12 @@ static int DrvInit(INT32 bios)
 
 	YMZ280BInit(16666666, NULL);
 
-	if (strstr(BurnDrvGetTextA(DRV_NAME), "pan") || strstr(BurnDrvGetTextA(DRV_NAME), "saruk") || strstr(BurnDrvGetTextA(DRV_NAME), "vblok")) {
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "pan")) {
 		// Disable draw_layer() speed hack for Panic Street & Gals Panic 2,3,4etc
 		draw_layer_speedhack = 0;
 	} else {
 		draw_layer_speedhack = 1;
 	}
-	bprintf(0, _T("vram speedhack is %d!\n"), draw_layer_speedhack);
 
 	skns_init();
 	skns_sprite_kludge(sprite_kludge_x, sprite_kludge_y);
@@ -1098,6 +1097,8 @@ static int DrvExit()
 
 	free(AllMem);
 	AllMem = NULL;
+
+	suprnova_alt_enable_background = 0;
 
 	speedhack_address = ~0;
 	memset (speedhack_pc, 0, 2 * sizeof(int));
@@ -2789,6 +2790,7 @@ static int VblokbrkInit()
 {
 	sprite_kludge_x = -1;
 	sprite_kludge_y = -1;
+	suprnova_alt_enable_background = 1;
 
 	return DrvInit(2 /*Asia*/);
 }
@@ -2825,6 +2827,7 @@ static int SarukaniInit()
 {
 	sprite_kludge_x = -1;
 	sprite_kludge_y = -1;
+	suprnova_alt_enable_background = 1;
 
 	return DrvInit(0 /*Japan*/);
 }

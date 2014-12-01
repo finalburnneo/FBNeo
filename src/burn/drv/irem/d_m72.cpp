@@ -4,7 +4,6 @@
 /*
 	to do:
 		clean
-		fix/improve sound
 		poundfor inputs
 */
 
@@ -67,6 +66,8 @@ static INT32 nCurrentCycles;
 static INT32 nCyclesDone[2];
 static INT32 nCyclesTotal[2];
 
+static INT32 Clock_16mhz = 0;
+static INT32 Kengo = 0;
 static INT32 m72_video_type = 0;
 static INT32 z80_nmi_enable = 0;
 static INT32 enable_z80_reset = 0; // only if z80 is not rom-based!
@@ -948,7 +949,7 @@ static void setvector_callback(INT32 param)
 	} else {
 		ZetSetVector(irqvector);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		nCyclesDone[1] += ZetRun(1000);
+		//nCyclesDone[1] += ZetRun(1000); // rem'd because it causes crackleys in the DAC! -dink
 	}
 }
 
@@ -1047,8 +1048,6 @@ void __fastcall m72_main_write_port(UINT32 port, UINT8 data)
 	switch (port)
 	{
 		case 0x00:
-			bprintf (0, _T("%2.2x, %2.2x mwp\n"), port, data);
-		//	sync_cpus();
 			*soundlatch = data;
 			setvector_callback(Z80_ASSERT);
 		return;
@@ -1094,7 +1093,6 @@ void __fastcall m72_main_write_port(UINT32 port, UINT8 data)
 		case 0x41:
 		case 0x42:
 		case 0x43: // nop
-			bprintf (0, _T("%2.2x, %2.2x\n"), port, data);
 		return;
 
 		case 0x80:
@@ -1180,7 +1178,9 @@ UINT8 __fastcall m72_main_read_port(UINT32 port)
 
 void __fastcall m72_sound_write_port(UINT16 port, UINT8 data)
 {
-//	bprintf (0, _T("%2.2x, %2.2x wp\n"), port & 0xff, data);
+	//port &= 0xff;
+	//if (port != 0x00 && port != 0x01)
+	//	bprintf (0, _T("%2.2x, %2.2x wp\n"), port & 0xff, data);
 
 	switch (port & 0xff)
 	{
@@ -1263,8 +1263,8 @@ static void m72YM2151IRQHandler(INT32 nStatus)
 }
 
 static INT32 m72SyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3579545.000 / (nBurnFPS / 100.000))));
+{   // Note: the FPS is 55, but when calculating the sync, we use 2 less FPS - this gets rid of clicks in the sample output. -dink dec. 1, 2014
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3579545.000 / 53/*(nBurnFPS / 100.000)*/)));
 }
 
 static INT32 DrvDoReset()
@@ -1374,7 +1374,7 @@ static void rtype2_main_cpu_map()
 
 static void hharryu_main_cpu_map()
 {
-	VezInit(0, V30_TYPE);
+	VezInit(0, V35_TYPE);
 
 	VezOpen(0);
 	VezMapArea(0x00000, 0x7ffff, 0, DrvV30ROM + 0x000000);
@@ -1747,6 +1747,8 @@ static INT32 DrvExit()
 	m72_video_type = 0;
 	enable_z80_reset = 0;
 	z80_nmi_enable = 0;
+	Kengo = 0;
+	Clock_16mhz = 0;
 
 	m72_install_protection(NULL,NULL,NULL);
 
@@ -2056,8 +2058,10 @@ static void scanline_interrupts(INT32 scanline)
 			dodrawline(nPreviousLine, scanline+1);
 			nPreviousLine = scanline + 1;
 		}
-
-		VezSetIRQLineAndVector(0, (m72_irq_base + 8)/4, VEZ_IRQSTATUS_AUTO);
+		if (Kengo)
+			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP2, (m72_irq_base + 8)/4, VEZ_IRQSTATUS_AUTO);
+		else
+			VezSetIRQLineAndVector(0, (m72_irq_base + 8)/4, VEZ_IRQSTATUS_AUTO);
 	}
 	else if (scanline == 256) // vblank
 	{
@@ -2065,8 +2069,10 @@ static void scanline_interrupts(INT32 scanline)
 			dodrawline(nPreviousLine, nScreenHeight);
 			nPreviousLine = 0;
 		}
-
-		VezSetIRQLineAndVector(0, (m72_irq_base + 0)/4, VEZ_IRQSTATUS_AUTO);
+		if (Kengo)
+			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0, VEZ_IRQSTATUS_AUTO);
+		else
+			VezSetIRQLineAndVector(0, (m72_irq_base + 0)/4, VEZ_IRQSTATUS_AUTO);
 	}
 
 	if (nPreviousLine >= nScreenHeight) nPreviousLine = 0;
@@ -2085,8 +2091,10 @@ static INT32 DrvFrame()
 
 	compile_inputs();
 	
-	// overclocking...
-	nCyclesTotal[0] = (INT32)((INT64)(8000000 / 55) * nBurnCPUSpeedAdjust / 0x0100);
+	if (Clock_16mhz) // Ken-go, Cosmic Cop
+		nCyclesTotal[0] = (INT32)((INT64)(16000000 / 55) * nBurnCPUSpeedAdjust / 0x0100);
+	else
+		nCyclesTotal[0] = (INT32)((INT64)(8000000 / 55) * nBurnCPUSpeedAdjust / 0x0100);
 	nCyclesTotal[1] = (INT32)((INT64)(3579545 / 55) * nBurnCPUSpeedAdjust / 0x0100);
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 
@@ -3321,8 +3329,10 @@ static INT32 kengoInit()
 	INT32 nRet = DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, 0x60, Z80_REAL_NMI, 1);
 
 	if (nRet == 0) {
+		Kengo = 1;
+		Clock_16mhz = 1;
 		VezOpen(0);
-		VezSetDecode((UINT8*)gunforce_decryption_table);
+		VezSetDecode((UINT8 *)&gunforce_decryption_table);
 		VezClose();
 	}
 
@@ -3333,7 +3343,7 @@ struct BurnDriverD BurnDrvKengo = {
 	"kengo", NULL, NULL, NULL, "1991",
 	"Ken-Go\0", NULL, "Irem", "M84?",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, kengoRomInfo, kengoRomName, NULL, NULL, CommonInputInfo, KengoDIPInfo,
 	kengoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
@@ -3366,6 +3376,8 @@ STD_ROM_FN(cosmccop)
 
 static INT32 cosmccopInit()
 {
+	Clock_16mhz = 1;
+
 	return DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, 0x60, Z80_REAL_NMI, 1);
 }
 

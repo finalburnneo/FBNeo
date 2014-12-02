@@ -121,7 +121,7 @@ static void YM2610UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 	pYM2610Buffer[5] = pBuffer + 5 * 4096 + 4;
 
 	for (INT32 i = (nFractionalPosition >> 16) - 4; i < nSamplesNeeded; i++) {
-		pYM2610Buffer[5][i] = pYM2610Buffer[2][i] + pYM2610Buffer[3][i] + pYM2610Buffer[4][i];
+		pYM2610Buffer[5][i] = BURN_SND_CLIP(pYM2610Buffer[2][i] + pYM2610Buffer[3][i] + pYM2610Buffer[4][i]);
 	}
 
 	for (INT32 i = (nFractionalPosition & 0xFFFF0000) >> 15; i < nSegmentLength; i += 2, nFractionalPosition += nSampleSize) {

@@ -948,7 +948,6 @@ static void setvector_callback(INT32 param)
 	} else {
 		ZetSetVector(irqvector);
 		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		//nCyclesDone[1] += ZetRun(1000); // rem'd because it causes crackleys in the DAC! -dink
 	}
 }
 
@@ -2058,7 +2057,7 @@ static void scanline_interrupts(INT32 scanline)
 			nPreviousLine = scanline + 1;
 		}
 		if (Kengo)
-			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP2, (m72_irq_base + 8)/4, VEZ_IRQSTATUS_AUTO);
+			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP2, 0xff, VEZ_IRQSTATUS_AUTO);
 		else
 			VezSetIRQLineAndVector(0, (m72_irq_base + 8)/4, VEZ_IRQSTATUS_AUTO);
 	}
@@ -2069,7 +2068,7 @@ static void scanline_interrupts(INT32 scanline)
 			nPreviousLine = 0;
 		}
 		if (Kengo)
-			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0, VEZ_IRQSTATUS_AUTO);
+			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff, VEZ_IRQSTATUS_AUTO);
 		else
 			VezSetIRQLineAndVector(0, (m72_irq_base + 0)/4, VEZ_IRQSTATUS_AUTO);
 	}
@@ -2105,21 +2104,11 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCurrentCycles = nCyclesTotal[0] / nInterleave; //((nCyclesTotal[0] / nInterleave) * 1) / 8; // scanline is 87.5% of scanline time
-
-		//for (INT32 j = 0; j < 7; j++) { // increase cpu sync
-		//	nCyclesDone[0] += VezRun(nCurrentCycles);
-		//}
+		nCurrentCycles = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += VezRun(nCurrentCycles);
 
 		if ((i%multiplier)==(multiplier-1))
-			scanline_interrupts(i/multiplier); // update at hblank?
-		//scanline_interrupts(i);	// run at hblank?
-
-//		nCurrentCycles = ((nCyclesTotal[0] / nInterleave) * 1) / 8; // horizontal blank is 12.5% of scanline
-
-//		nCyclesDone[0] += VezRun(nCurrentCycles);
-		// vertical lines are ~90% of video time, vblank is ~10%
+			scanline_interrupts(i/multiplier);
 
 		if (z80_reset == 0) {
 			nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
@@ -2138,14 +2127,13 @@ static INT32 DrvFrame()
 			ZetIdle(nCyclesTotal[1] / nInterleave);
 		}
 		
-		if ((i%multiplier)==(multiplier-1)) {
+		if ((i%multiplier)==0) {
 			if (pBurnSoundOut) {
 				INT32 nSegmentLength = nBurnSoundLen / (nInterleave / multiplier);
 				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-				
+
 				BurnYM2151Render(pSoundBuf, nSegmentLength);
-				//iremga20_update(0, pSoundBuf, nSegmentLength);
-				
+
 				nSoundBufferPos += nSegmentLength;
 			}
 		}

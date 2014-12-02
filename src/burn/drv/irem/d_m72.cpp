@@ -61,7 +61,6 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[5];
 static UINT8 DrvReset;
 
-const static INT32 nInterleave = 284;
 static INT32 nCurrentCycles;
 static INT32 nCyclesDone[2];
 static INT32 nCyclesTotal[2];
@@ -1263,8 +1262,8 @@ static void m72YM2151IRQHandler(INT32 nStatus)
 }
 
 static INT32 m72SyncDAC()
-{   // Note: the FPS is 55, but when calculating the sync, we use 2 less FPS - this gets rid of clicks in the sample output. -dink dec. 1, 2014
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3579545.000 / 53/*(nBurnFPS / 100.000)*/)));
+{   // Note: the FPS is 55, but when calculating the sync, we use 4 less FPS - this gets rid of clicks in the sample output. -dink dec. 2, 2014
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3579545.000 / 51/*(nBurnFPS / 100.000)*/)));
 }
 
 static INT32 DrvDoReset()
@@ -2063,7 +2062,7 @@ static void scanline_interrupts(INT32 scanline)
 		else
 			VezSetIRQLineAndVector(0, (m72_irq_base + 8)/4, VEZ_IRQSTATUS_AUTO);
 	}
-	else if (scanline == 256) // vblank
+	else if (scanline == 248) // vblank
 	{
 		if (nPreviousLine < nScreenHeight) {
 			dodrawline(nPreviousLine, nScreenHeight);
@@ -2091,6 +2090,9 @@ static INT32 DrvFrame()
 
 	compile_inputs();
 	
+	INT32 multiplier=3;
+	INT32 nInterleave = 256 * multiplier;
+
 	if (Clock_16mhz) // Ken-go, Cosmic Cop
 		nCyclesTotal[0] = (INT32)((INT64)(16000000 / 55) * nBurnCPUSpeedAdjust / 0x0100);
 	else
@@ -2101,27 +2103,28 @@ static INT32 DrvFrame()
 	VezOpen(0);
 	ZetOpen(0);
 
-//	memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
-
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCurrentCycles = ((nCyclesTotal[0] / nInterleave) * 1) / 8; // scanline is 87.5% of scanline time
+		nCurrentCycles = nCyclesTotal[0] / nInterleave; //((nCyclesTotal[0] / nInterleave) * 1) / 8; // scanline is 87.5% of scanline time
 
-		for (INT32 j = 0; j < 7; j++) { // increase cpu sync
-			nCyclesDone[0] += VezRun(nCurrentCycles);
-		}
-
-		scanline_interrupts(i);	// run at hblank?
-
-		nCurrentCycles = ((nCyclesTotal[0] / nInterleave) * 1) / 8; // horizontal blank is 12.5% of scanline
-
+		//for (INT32 j = 0; j < 7; j++) { // increase cpu sync
+		//	nCyclesDone[0] += VezRun(nCurrentCycles);
+		//}
 		nCyclesDone[0] += VezRun(nCurrentCycles);
+
+		if ((i%multiplier)==(multiplier-1))
+			scanline_interrupts(i/multiplier); // update at hblank?
+		//scanline_interrupts(i);	// run at hblank?
+
+//		nCurrentCycles = ((nCyclesTotal[0] / nInterleave) * 1) / 8; // horizontal blank is 12.5% of scanline
+
+//		nCyclesDone[0] += VezRun(nCurrentCycles);
 		// vertical lines are ~90% of video time, vblank is ~10%
 
 		if (z80_reset == 0) {
 			nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
 
-			if (i & 1) {
+			if (i%multiplier==0 && i/multiplier & 1) {
 				if (z80_nmi_enable == Z80_FAKE_NMI) {
 					if (DrvSndROM[sample_address]) {
 						DACSignedWrite(0, DrvSndROM[sample_address]);
@@ -2135,11 +2138,16 @@ static INT32 DrvFrame()
 			ZetIdle(nCyclesTotal[1] / nInterleave);
 		}
 		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
+		if ((i%multiplier)==(multiplier-1)) {
+			if (pBurnSoundOut) {
+				INT32 nSegmentLength = nBurnSoundLen / (nInterleave / multiplier);
+				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+				
+				BurnYM2151Render(pSoundBuf, nSegmentLength);
+				//iremga20_update(0, pSoundBuf, nSegmentLength);
+				
+				nSoundBufferPos += nSegmentLength;
+			}
 		}
 	}
 

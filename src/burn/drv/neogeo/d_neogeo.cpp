@@ -1828,7 +1828,8 @@ static struct BurnRomInfo ridheroRomDesc[] = {
 	{ "006-v23.v23",  0x080000, 0x069c71ed, 6 | BRF_SND },           // 11 					/ MB834000
 	{ "006-v24.v24",  0x080000, 0x89fbb825, 6 | BRF_SND },           // 12 					/ MB834000
 	
-	{ "hd6301v1p.com", 0x001000, 0x00000000, BRF_OPT | BRF_NODUMP }, // Hitachi HD6301V1 MCU
+	{ "rhcom.bin", 	  0x002000, 0xe5cd6306, BRF_OPT }, 
+	/* dumped from a prototype with external ROM, not 100% confirmed as being the same on a final, or other games (lbowling, trally) */
 };
 
 STDROMPICKEXT(ridhero, ridhero, neogeo)
@@ -1849,7 +1850,7 @@ struct BurnDriver BurnDrvRidhero = {
 static struct BurnRomInfo ridherohRomDesc[] = {
 	{ "006-pg1.p1",   0x080000, 0x52445646, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ MB834200
 	/* Chip label p1h does not exist, renamed temporarly to pg1, marked BAD_DUMP. 
-	   This needs to be verified. */
+	This needs to be verified. */
 	{ "006-s1.s1",    0x020000, 0xeb5189f0, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
 	{ "006-c1.c1",    0x080000, 0x4a5c7f78, 3 | BRF_GRA },           //  2 Sprite data 		/ CXK384000
@@ -1866,7 +1867,8 @@ static struct BurnRomInfo ridherohRomDesc[] = {
 	{ "006-v23.v23",  0x080000, 0x069c71ed, 6 | BRF_SND },           // 11 					/ MB834000
 	{ "006-v24.v24",  0x080000, 0x89fbb825, 6 | BRF_SND },           // 12 					/ MB834000
 	
-	{ "hd6301v1p.com", 0x001000, 0x00000000, BRF_OPT | BRF_NODUMP }, // Hitachi HD6301V1 MCU
+	{ "rhcom.bin", 	  0x002000, 0xe5cd6306, BRF_OPT }, 
+	/* dumped from a prototype with external ROM, not 100% confirmed as being the same on a final, or other games (lbowling, trally) */
 };
 
 STDROMPICKEXT(ridheroh, ridheroh, neogeo)
@@ -1970,7 +1972,8 @@ struct BurnDriver BurnDrvAlpham2p = {
 // Cyber-Lip (NGM-010)
 
 static struct BurnRomInfo cyberlipRomDesc[] = {
-	/* also found AES set on board NEO-AEG PROG-B / NEO-AEG CHA-32; same chip labels */
+	/* also found AES set on PROG board NEO-AEG PROG-B and CHA board NEO-AEG CHA-32; 
+	same chip labels */
 	{ "010-p1.p1",    0x080000, 0x69a6b42d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC534200
 
 	{ "010-s1.s1",    0x020000, 0x79a35264, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
@@ -2604,8 +2607,7 @@ struct BurnDriver BurnDrvLegendos = {
 static struct BurnRomInfo bb2020RomDesc[] = {
 	{ "030-p1.p1",    0x080000, 0xd396c9cb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC534200
 	/* also found AES set with p1 on TC534200 on board NEO-AEG PROG42G; chip label is 030-p1
-	   and m1 on TC531001 on board NEO-AEG CHA42G; chip label is 030-M1
-	   rest of chip labels are the same */
+	and m1 on TC531001 on board NEO-AEG CHA42G; chip label is 030-M1. Other chip labels are the same */
 
 	{ "030-s1.s1",    0x020000, 0x7015b8fc, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
@@ -2950,7 +2952,8 @@ struct BurnDriver BurnDrvKotm2p = {
 // Sengoku 2 / Sengoku Denshou 2
 
 static struct BurnRomInfo sengoku2RomDesc[] = {
-	/* also found AES set on board NEO-AEG PROG16 / NEO-AEG CHA42G-1; same chip labels */
+	/* also found AES set with PROG board NEO-AEG PROG16 and CHA board NEO-AEG CHA42G-1; 
+	same chip labels */
 	{ "040-p1.p1",    0x100000, 0x6dde02c2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC538200
 
 	{ "040-s1.s1",    0x020000, 0xcd9802a3, 2 | BRF_GRA },           //  1 Text layer tiles / TC531001
@@ -2963,9 +2966,9 @@ static struct BurnRomInfo sengoku2RomDesc[] = {
 	{ "040-m1.m1",    0x020000, 0xd4de4bca, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code 		/ TC531001
 
 	{ "040-v1.v1",    0x200000, 0x71cb4b5d, 5 | BRF_SND },           //  7 Sound data 		/ TC5316200
-	/* AES has different chip location, data is the same: 040-v1.v2  						/ TC5316200 */
+	// AES has different chip location, data is the same: 040-v1.v2  						/ TC5316200 
 	{ "040-v2.v2",    0x100000, 0xc5cece01, 5 | BRF_SND },           //  8 					/ TC538200
-	/* AES has different chip location, data is the same: 040-v2.v4  						/ TC538200 */
+	// AES has different chip location, data is the same: 040-v2.v4  						/ TC538200 
 };
 
 STDROMPICKEXT(sengoku2, sengoku2, neogeo)
@@ -2984,7 +2987,8 @@ struct BurnDriver BurnDrvSengoku2 = {
 // Baseball Stars 2
 
 static struct BurnRomInfo bstars2RomDesc[] = {
-	/* also found AES set on board NEO-AEG PROG42G-1 / NEO-AEG CHA42G-1; same chip labels  */
+	/* also found AES set with PROG board NEO-AEG PROG42G-1 and CHA board NEO-AEG CHA42G-1; 
+	same chip labels  */
 	{ "041-p1.p1",    0x080000, 0x523567fd, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC534200
 
 	{ "041-s1.s1",    0x020000, 0x015c5c94, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
@@ -3066,8 +3070,8 @@ static struct BurnRomInfo countb3RomDesc[] = {
 
 	{ "043-v1.v1",    0x200000, 0x63688ce8, 5 | BRF_SND },           //  7 Sound data 		/ TC5316200
 	{ "043-v2.v2",    0x200000, 0xc69a827b, 5 | BRF_SND },           //  8 					/ TC5316200
-	/* also found AES set with p1 on TC538200 on board NEO-AEG PROG16; chip label is 043-P1
-	   and v1 / v2 on different chip location on board NEO-AEG CHA42G-1; 
+	/* also found AES set with p1 on TC538200 on PROG board NEO-AEG PROG16; chip label is 043-P1
+	and v1 / v2 on different chip location on CHA board NEO-AEG CHA42G-1; 
 	{ "043-v1.v2",    0x200000, 0x63688ce8, 5 | BRF_SND },           //  7 Sound data 		/ TC5316200
 	{ "043-v2.v4",    0x200000, 0xc69a827b, 5 | BRF_SND },           //  8 					/ TC5316200 */
 };
@@ -3102,8 +3106,8 @@ static struct BurnRomInfo aofRomDesc[] = {
 
 	{ "044-v2.v2",    0x200000, 0x3ec632ea, 5 | BRF_SND },           //  7 Sound data 		/ TC5316200
 	{ "044-v4.v4",    0x200000, 0x4b0f8e23, 5 | BRF_SND },           //  8 					/ TC5316200
-	/* also found MVS set with EP1 on M27C4002 eprom on board NEO-MVS PROG4096; correct chip label unknown
-	   and v1 / v2 with different chip location on board NEO-MVS CHA42G-1.
+	/* also found MVS set with EP1 on M27C4002 eprom on PROG board NEO-MVS PROG4096; correct chip label unknown
+	and v1 / v2 with different chip location on CHA board NEO-MVS CHA42G-1.
 	{ "044-v2.v1",    0x200000, 0x3ec632ea, 5 | BRF_SND },           //  7 Sound data 		/ TC5316200
 	{ "044-v4.v2",    0x200000, 0x4b0f8e23, 5 | BRF_SND },           //  8 					/ TC5316200 */
 };
@@ -3133,8 +3137,8 @@ static struct BurnRomInfo samshoRomDesc[] = {
 	
 	{ "045-s1.s1",    0x020000, 0x9142a4d3, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 
-	/* It also exists MVS set with different 6xC layout on board NEO-MVS CHA42G-3
-	/ chip labels are 045-C1; 045-C2; 045-C3; 045-C4; 045-C5 and 045-C6 
+	/* It also exists MVS set with different 6xC layout on board NEO-MVS CHA42G-3;
+	chip labels are 045-C1; 045-C2; 045-C3; 045-C4; 045-C5 and 045-C6 
 	{ "045-c1.c1",    0x200000, 0x2e5873a4, 3 | BRF_GRA },           //  3 Sprite data 		/ TC5316200
 	{ "045-c2.c2",    0x200000, 0x04febb10, 3 | BRF_GRA },           //  4 					/ TC5316200
 	{ "045-c3.c3",    0x200000, 0xf3dabd1e, 3 | BRF_GRA },           //  5 					/ TC5316200
@@ -3176,8 +3180,8 @@ static struct BurnRomInfo samshohRomDesc[] = {
 
 	{ "045-s1.s1",    0x020000, 0x9142a4d3, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 
-	/* It also exists AES set with different 6xC layout on board NEO-AEG CHA42G-4
-	/ chip labels are 045-C1; 045-C2; 045-C3; 045-C4; 045-C5 and 045-C61 
+	/* It also exists AES set with different 6xC layout on board NEO-AEG CHA42G-4;
+	chip labels are 045-C1; 045-C2; 045-C3; 045-C4; 045-C5 and 045-C61 
 	{ "045-c1.c1",    0x200000, 0x2e5873a4, 3 | BRF_GRA },           //  3 Sprite data 		/ TC5316200
 	{ "045-c2.c2",    0x200000, 0x04febb10, 3 | BRF_GRA },           //  4 					/ TC5316200
 	{ "045-c3.c3",    0x200000, 0xf3dabd1e, 3 | BRF_GRA },           //  5 					/ TC5316200
@@ -3293,10 +3297,11 @@ struct BurnDriver BurnDrvtophntrh = {
 
 static struct BurnRomInfo fatfury2RomDesc[] = {
 	{ "047-p1.p1",    0x100000, 0xecfdbb69, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC538200
-	/* The original p1 is 8mbit; also found MVS set with p1 / p2 4mbit on eprom on board NEO-MVS PROG-G2 (SNK-9201)
+	/* The original p1 is 8mbit; also found MVS set with p1 / p2 4mbit on eprom 
+	on PROG board NEO-MVS PROG-G2 (SNK-9201)
 	{ "047-epr.ep1",   0x080000, 0xbe40ea92, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ M27C4002
-	{ "047-epr.ep2",   0x080000, 0x2a9beac5, 1 | BRF_ESS | BRF_PRG }, //  1 				/ M27C4002 
-	/ also found AES set with P1 / P3 on emprom on board NEO-AEG PROG-G2 (SNK-9201); 
+	{ "047-epr.ep2",   0x080000, 0x2a9beac5, 1 | BRF_ESS | BRF_PRG }, //  1 				/ M27C4002 */
+	/* also found AES set with P1 / P3 on emprom on PROG board NEO-AEG PROG-G2 (SNK-9201); 
 	{ "047-epr.p1",    0x080000, 0xbe40ea92, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC574200
 	{ "047-epr.p3",    0x080000, 0x2a9beac5, 1 | BRF_ESS | BRF_PRG }, //  1 				/ M27C4002 */
 	
@@ -3495,7 +3500,8 @@ struct BurnDriver BurnDrvFatfury2 = {
 // Super Sidekicks / Tokuten Ou
 
 static struct BurnRomInfo ssidekiRomDesc[] = {
-	/* also found AES set on board NEO-AEG PROG-G2 (SNK-9201) / NEO-AEG CHA42G-2; same chip labels */
+	/* also found AES set on PROG board NEO-AEG PROG-G2 (SNK-9201) and CHA board NEO-AEG CHA42G-2; 
+	same chip labels */
 	{ "052-p1.p1",    0x080000, 0x9cd97256, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC534200
 
 	{ "052-s1.s1",    0x020000, 0x97689804, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
@@ -3565,15 +3571,15 @@ struct BurnDriver BurnDrvKof94 = {
 
 static struct BurnRomInfo aof2RomDesc[] = {
 	{ "056-p1.p1",    0x100000, 0xa3b1d021, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC538200
-	/* also found MVS set with EP1 / EP2 on eprom on board NEO-MVS PROGGSC; 
-	   correct chip labels unknown.
+	/* also found MVS set with EP1 / EP2 on eprom on PROG board NEO-MVS PROGGSC; correct chip labels unknown
+	and CHA board NEO-MVS CHA256 with 8xC; chip labels are the same
 	{ "056-epr.ep1",  0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ 27C240-12
 	{ "056-epr.ep2",  0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  1 					/ M27C4002 */
 
 	{ "056-s1.s1",    0x020000, 0x8b02638e, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
 	/* Different layout with 4xC (32mbit) also exists on board NEO-MVS CHA256;
-	   chip labels are 056-C13, 056-C24, 056-C57 and 056-C68 
+	chip labels are 056-C13, 056-C24, 056-C57 and 056-C68 
 	{ "056-c13.c1",   0x400000, 0xbd3aa959, 3 | BRF_GRA },           //  2 Sprite data 	
 	{ "056-c24.c2",   0x400000, 0xe58297c2, 3 | BRF_GRA },           //  3 			   	
 	{ "056-c57.c3",   0x400000, 0xb4ad87e5, 3 | BRF_GRA },           //  4 				
@@ -3659,25 +3665,26 @@ struct BurnDriver BurnDrvAof2a = {
 };
 
 // Fatal Fury Special / Garou Densetsu Special (set 1)(NGM-058)(NGH-058)
+/* MVS AND AES VERSION */
 
 static struct BurnRomInfo fatfurspRomDesc[] = {
-	{ "058-p1.p1",    0x100000, 0x2f585ba2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "058-p2.sp2",   0x080000, 0xd7c71a6b, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "058-p1.p1",    0x100000, 0x2f585ba2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC538200
+	{ "058-p2.sp2",   0x080000, 0xd7c71a6b, 1 | BRF_ESS | BRF_PRG }, //  1 					/ mask rom TC534200
 
-	{ "058-s1.s1",    0x020000, 0x2df03197, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "058-s1.s1",    0x020000, 0x2df03197, 2 | BRF_GRA },           //  2 Text layer tiles / mask rom TC531000
 
-	{ "058-c1.c1",    0x200000, 0x044ab13c, 3 | BRF_GRA },           //  3 Sprite data
-	{ "058-c2.c2",    0x200000, 0x11e6bf96, 3 | BRF_GRA },           //  4 
-	{ "058-c3.c3",    0x200000, 0x6f7938d5, 3 | BRF_GRA },           //  5 
-	{ "058-c4.c4",    0x200000, 0x4ad066ff, 3 | BRF_GRA },           //  6 
-	{ "058-c5.c5",    0x200000, 0x49c5e0bf, 3 | BRF_GRA },           //  7 
-	{ "058-c6.c6",    0x200000, 0x8ff1f43d, 3 | BRF_GRA },           //  8 
+	{ "058-c1.c1",    0x200000, 0x044ab13c, 3 | BRF_GRA },           //  3 Sprite data		/ mask rom TC5316200
+	{ "058-c2.c2",    0x200000, 0x11e6bf96, 3 | BRF_GRA },           //  4 					/ mask rom TC5316200
+	{ "058-c3.c3",    0x200000, 0x6f7938d5, 3 | BRF_GRA },           //  5 					/ mask rom TC5316200
+	{ "058-c4.c4",    0x200000, 0x4ad066ff, 3 | BRF_GRA },           //  6 					/ mask rom TC5316200
+	{ "058-c5.c5",    0x200000, 0x49c5e0bf, 3 | BRF_GRA },           //  7 					/ mask rom TC5316200
+	{ "058-c6.c6",    0x200000, 0x8ff1f43d, 3 | BRF_GRA },           //  8 					/ mask rom TC5316200
 
-	{ "058-m1.m1",    0x020000, 0xccc5186e, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "058-m1.m1",    0x020000, 0xccc5186e, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code			/ mask rom TC531001
 
-	{ "058-v1.v1",    0x200000, 0x55d7ce84, 5 | BRF_SND },           // 10 Sound data
-	{ "058-v2.v2",    0x200000, 0xee080b10, 5 | BRF_SND },           // 11 
-	{ "058-v3.v3",    0x100000, 0xf9eb3d4a, 5 | BRF_SND },           // 12 
+	{ "058-v1.v1",    0x200000, 0x55d7ce84, 5 | BRF_SND },           // 10 Sound data		/ mask rom TC5316200
+	{ "058-v2.v2",    0x200000, 0xee080b10, 5 | BRF_SND },           // 11 					/ mask rom TC5316200					
+	{ "058-v3.v3",    0x100000, 0xf9eb3d4a, 5 | BRF_SND },           // 12 					/ mask rom TC538200
 };
 
 STDROMPICKEXT(fatfursp, fatfursp, neogeo)
@@ -3694,27 +3701,30 @@ struct BurnDriver BurnDrvFatfursp = {
 };
 
 // Fatal Fury Special / Garou Densetsu Special (set 2)(NGM-058)(NGH-058)
+/* MVS AND AES VERSION */
 
 static struct BurnRomInfo fatfurspaRomDesc[] = {
-	{ "058-p1.p1",    0x100000, 0x2f585ba2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "058-p2.sp2",   0x080000, 0xd7c71a6b, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "058-p1.p1",    0x100000, 0x2f585ba2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC538200
+	{ "058-p2.sp2",   0x080000, 0xd7c71a6b, 1 | BRF_ESS | BRF_PRG }, //  1					/ mask rom TC534200
 
-	{ "058-s1.s1",    0x020000, 0x2df03197, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "058-s1.s1",    0x020000, 0x2df03197, 2 | BRF_GRA },           //  2 Text layer tiles / mask rom TC531000
 
-	{ "058-c1.c1",    0x200000, 0x044ab13c, 3 | BRF_GRA },           //  3 Sprite data
-	{ "058-c2.c2",    0x200000, 0x11e6bf96, 3 | BRF_GRA },           //  4 
-	{ "058-c3.c3",    0x200000, 0x6f7938d5, 3 | BRF_GRA },           //  5 
-	{ "058-c4.c4",    0x200000, 0x4ad066ff, 3 | BRF_GRA },           //  6 
-	{ "058-c5.c5",    0x200000, 0x49c5e0bf, 3 | BRF_GRA },           //  7 
-	{ "058-c6.c6",    0x200000, 0x8ff1f43d, 3 | BRF_GRA },           //  8 
+	{ "058-c1.c1",    0x200000, 0x044ab13c, 3 | BRF_GRA },           //  3 Sprite data		/ mask rom TC5316200
+	{ "058-c2.c2",    0x200000, 0x11e6bf96, 3 | BRF_GRA },           //  4 					/ mask rom TC5316200
+	{ "058-c3.c3",    0x200000, 0x6f7938d5, 3 | BRF_GRA },           //  5 					/ mask rom TC5316200
+	{ "058-c4.c4",    0x200000, 0x4ad066ff, 3 | BRF_GRA },           //  6 					/ mask rom TC5316200
+	{ "058-c5.c5",    0x200000, 0x49c5e0bf, 3 | BRF_GRA },           //  7 					/ mask rom TC5316200
+	{ "058-c6.c6",    0x200000, 0x8ff1f43d, 3 | BRF_GRA },           //  8 					/ mask rom TC5316200
 
-	{ "058-m1.m1",    0x020000, 0xccc5186e, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "058-m1.m1",    0x020000, 0xccc5186e, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code			/ mask rom TC531001
 
-	{ "058-v1.v1",    0x200000, 0x55d7ce84, 5 | BRF_SND },           // 10 Sound data
-	{ "058-v2.v2",    0x200000, 0xee080b10, 5 | BRF_SND },           // 11 
-	{ "058-v3.v3",    0x100000, 0xf9eb3d4a, 5 | BRF_SND },           // 12 
+	{ "058-v1.v1",    0x200000, 0x55d7ce84, 5 | BRF_SND },           // 10 Sound data		/ mask rom TC5316200
+	{ "058-v2.v2",    0x200000, 0xee080b10, 5 | BRF_SND },           // 11 					/ mask rom TC5316200
+	{ "058-v3.v3",    0x100000, 0xf9eb3d4a, 5 | BRF_SND },           // 12 					/ mask rom TC538200
 		
-	{ "058-epr.ep1",  0x080000, 0x9f0c1e1a, 0 | BRF_ESS | BRF_PRG }, // 13
+	/* the rom below acts as a patch to the program rom in the cart, replacing the first 512kb */	
+	{ "058-epr.ep1",  0x080000, 0x9f0c1e1a, 0 | BRF_ESS | BRF_PRG }, // 13					/ M27C4002
+	/* P is on eprom, correct chip label unknown */
 };
 
 STDROMPICKEXT(fatfurspa, fatfurspa, neogeo)
@@ -3743,26 +3753,29 @@ struct BurnDriver BurnDrvFatfurspa = {
 };
 
 // Savage Reign / Fu'un Mokushiroku - kakutou sousei
+/* MVS AND AES VERSION? */
 
 static struct BurnRomInfo savagereRomDesc[] = {
-	{ "059-p1.p1",    0x200000, 0x01d4e9c0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	/* also found MVS set with PROG board NEO-MVS PROG 4096 B and CHA board NEO-MVS CHA 42G-3;
+	same layouts and chip labels */
+	{ "059-p1.p1",    0x200000, 0x01d4e9c0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
 
-	{ "059-s1.s1",    0x020000, 0xe08978ca, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "059-s1.s1",    0x020000, 0xe08978ca, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "059-c1.c1",    0x200000, 0x763ba611, 3 | BRF_GRA },           //  2 Sprite data
-	{ "059-c2.c2",    0x200000, 0xe05e8ca6, 3 | BRF_GRA },           //  3 
-	{ "059-c3.c3",    0x200000, 0x3e4eba4b, 3 | BRF_GRA },           //  4 
-	{ "059-c4.c4",    0x200000, 0x3c2a3808, 3 | BRF_GRA },           //  5 
-	{ "059-c5.c5",    0x200000, 0x59013f9e, 3 | BRF_GRA },           //  6 
-	{ "059-c6.c6",    0x200000, 0x1c8d5def, 3 | BRF_GRA },           //  7 
-	{ "059-c7.c7",    0x200000, 0xc88f7035, 3 | BRF_GRA },           //  8 
-	{ "059-c8.c8",    0x200000, 0x484ce3ba, 3 | BRF_GRA },           //  9 
+	{ "059-c1.c1",    0x200000, 0x763ba611, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "059-c2.c2",    0x200000, 0xe05e8ca6, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "059-c3.c3",    0x200000, 0x3e4eba4b, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "059-c4.c4",    0x200000, 0x3c2a3808, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "059-c5.c5",    0x200000, 0x59013f9e, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "059-c6.c6",    0x200000, 0x1c8d5def, 3 | BRF_GRA },           //  7 					/ TC5316200
+	{ "059-c7.c7",    0x200000, 0xc88f7035, 3 | BRF_GRA },           //  8 					/ TC5316200
+	{ "059-c8.c8",    0x200000, 0x484ce3ba, 3 | BRF_GRA },           //  9 					/ TC5316200
 
-	{ "059-m1.m1",    0x020000, 0x29992eba, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "059-m1.m1",    0x020000, 0x29992eba, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code			/ TC531001
 
-	{ "059-v1.v1",    0x200000, 0x530c50fd, 5 | BRF_SND },           // 11 Sound data
-	{ "059-v2.v2",    0x200000, 0xeb6f1cdb, 5 | BRF_SND },           // 12 
-	{ "059-v3.v3",    0x200000, 0x7038c2f9, 5 | BRF_SND },           // 13 
+	{ "059-v1.v1",    0x200000, 0x530c50fd, 5 | BRF_SND },           // 11 Sound data		/ TC5316200
+	{ "059-v2.v2",    0x200000, 0xeb6f1cdb, 5 | BRF_SND },           // 12 					/ TC5316200
+	{ "059-v3.v3",    0x200000, 0x7038c2f9, 5 | BRF_SND },           // 13 					/ TC5316200
 };
 
 STDROMPICKEXT(savagere, savagere, neogeo)
@@ -3782,33 +3795,35 @@ struct BurnDriver BurnDrvSavagere = {
 /* MVS AND AES VERSION */
 
 static struct BurnRomInfo ssideki2RomDesc[] = {
-	{ "061-p1.p1",      0x100000, 0x5969e0dc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC538200
-	/* also found MVS set with EP1 / EP2 on eprom on board NEO-MVS PROGTOP; correct chip labels unknown.
-	   rom data below need to be confirmed
-	{ "061-epr.ep1",    0x080000, 0x8112718d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		  	/ M27C4002
-	{ "061-epr.ep2",    0x080000, 0xcf9826de, 1 | BRF_ESS | BRF_PRG }, //  1 				  	/ 27C240 */
+	{ "061-p1.p1",      0x100000, 0x5969e0dc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code		  / mask rom TC538200
+	/* also found MVS set with EP1 / EP2 on eprom on PROG board NEO-MVS PROGTOP; correct chip labels unknown.
+	and CHA board NEO-MVS CHA256 with 8xC; same rom data as ssideki2? This needs to be confirmed.
+	{ "061-epr.ep1",    0x080000, 0x8112718d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		  / M27C4002
+	{ "061-epr.ep2",    0x080000, 0xcf9826de, 1 | BRF_ESS | BRF_PRG }, //  1 				  / 27C240 */ 
+	/* It also exists MVS set with p1 on mask rom TC538200 on PROG board NEO-MVS PROGGSC; chip label is 061-P1
+	and layout with 8xC (8 mbit) on CHA board NEO-MVS CHA256; naming scheme 061-Cx */
 	
-	{ "061-s1.s1",      0x020000, 0x226d1b68, 2 | BRF_GRA },           //  1 Text layer tiles 	/ mask rom TC531000
+	{ "061-s1.s1",      0x020000, 0x226d1b68, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 	
-	/* Different layout with 8xC (8 mbit) also exists on board NEO-MVS CHA256 ; naming sheme 061-Cx
-	   rom data below need to be confirmed
-	{ "061-c1.c1",   	0x100000, 0x990cf26a, 3 | BRF_GRA | BRF_NODUMP }, //  2 Sprite data 	/ mask rom J410 05B
-	{ "061-c2.c2",   	0x100000, 0xf493cbcf, 3 | BRF_GRA | BRF_NODUMP},  //  3 				/ mask rom J410 02B
-	{ "061-c3.c3",   	0x100000, 0x7484e35d, 3 | BRF_GRA | BRF_NODUMP},  //  4 				/ mask rom J410 34B
-	{ "061-c4.c4",   	0x100000, 0x3ce13c3e, 3 | BRF_GRA | BRF_NODUMP},  //  5 				/ mask rom J410 16B
-	{ "061-c5.c5",   	0x100000, 0xea91bcd4, 3 | BRF_GRA | BRF_NODUMP},  //  6 				/ mask rom J410 17B
-	{ "061-c6.c6",   	0x100000, 0x0f8b5d58, 3 | BRF_GRA | BRF_NODUMP},  //  7 				/ mask rom J410 37B
-	{ "061-c7.c7",   	0x100000, 0xea167b32, 3 | BRF_GRA | BRF_NODUMP},  //  8 				/ mask rom J410 57B
-	{ "061-c8.c8",   	0x100000, 0x959c8567, 3 | BRF_GRA | BRF_NODUMP},  //  9 				/ mask rom J410 46B */
-	{ "061-c1-16.c1",   0x200000, 0xa626474f, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC5316200
-	{ "061-c2-16.c2",   0x200000, 0xc3be42ae, 3 | BRF_GRA },           //  3 					/ mask rom TC5316200
-	{ "061-c3-16.c3",   0x200000, 0x2a7b98b9, 3 | BRF_GRA },           //  4 					/ mask rom TC5316200
-	{ "061-c4-16.c4",   0x200000, 0xc0be9a1f, 3 | BRF_GRA },           //  5 					/ mask rom TC5316200
+	/* Different layout with 8xC (8 mbit) also exists on board NEO-MVS CHA256 ; naming scheme 061-Cx
+	same rom data as ssideki2? This needs to be confirmed
+	{ "061-c1.c1",   	0x100000, 0x990cf26a, 3 | BRF_GRA }, 		   //  2 Sprite data 	  / mask rom TC538200 J410 05B
+	{ "061-c2.c2",   	0x100000, 0xf493cbcf, 3 | BRF_GRA }, 		   //  3 				  / mask rom TC538200 J410 02B
+	{ "061-c3.c3",   	0x100000, 0x7484e35d, 3 | BRF_GRA }, 		   //  4 				  / mask rom TC538200 J410 34B
+	{ "061-c4.c4",   	0x100000, 0x3ce13c3e, 3 | BRF_GRA }, 		   //  5 				  / mask rom TC538200 J410 16B
+	{ "061-c5.c5",   	0x100000, 0xea91bcd4, 3 | BRF_GRA }, 		   //  6 				  / mask rom TC538200 J410 17B
+	{ "061-c6.c6",   	0x100000, 0x0f8b5d58, 3 | BRF_GRA }, 		   //  7 				  / mask rom TC538200 J410 37B
+	{ "061-c7.c7",   	0x100000, 0xea167b32, 3 | BRF_GRA },  		   //  8 				  / mask rom TC538200 J410 57B
+	{ "061-c8.c8",   	0x100000, 0x959c8567, 3 | BRF_GRA },  		   //  9 				  / mask rom TC538200 J410 46B */
+	{ "061-c1-16.c1",   0x200000, 0xa626474f, 3 | BRF_GRA },           //  2 Sprite data	  / mask rom TC5316200
+	{ "061-c2-16.c2",   0x200000, 0xc3be42ae, 3 | BRF_GRA },           //  3 				  / mask rom TC5316200
+	{ "061-c3-16.c3",   0x200000, 0x2a7b98b9, 3 | BRF_GRA },           //  4 				  / mask rom TC5316200
+	{ "061-c4-16.c4",   0x200000, 0xc0be9a1f, 3 | BRF_GRA },           //  5 				  / mask rom TC5316200
 
-	{ "061-m1.m1",      0x020000, 0x156f6951, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ mask rom TC531001
+	{ "061-m1.m1",      0x020000, 0x156f6951, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code		  / mask rom TC531001
 
-	{ "061-v1.v1",      0x200000, 0xf081c8d3, 5 | BRF_SND },           //  7 Sound data			/ mask rom TC5316200
-	{ "061-v2.v2",      0x200000, 0x7cd63302, 5 | BRF_SND },           //  8 					/ mask rom TC5316200
+	{ "061-v1.v1",      0x200000, 0xf081c8d3, 5 | BRF_SND },           //  7 Sound data		  / mask rom TC5316200
+	{ "061-v2.v2",      0x200000, 0x7cd63302, 5 | BRF_SND },           //  8 				  / mask rom TC5316200
 };
 
 STDROMPICKEXT(ssideki2, ssideki2, neogeo)
@@ -3829,10 +3844,10 @@ struct BurnDriver BurnDrvSsideki2 = {
 
 static struct BurnRomInfo samsho2RomDesc[] = {
 	{ "063-p1.p1",    0x200000, 0x22368892, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
-	/* also found MVS set with EP1 / EP2 / P1 / SP2 on eprom on board NEO-MVS PROGTOP; 
-	   rom data below need to be confirmed 
-	{ "063-epr.p1",   0x080000, 0x9131aaa5, 1 | BRF_ESS | BRF_PRG }, //  0 68k code 		/ D27C4000
-	{ "063-epr.sp2",  0x080000, 0xf307b92d, 1 | BRF_ESS | BRF_PRG }, //  1 					/ D27C4000 
+	/* also found MVS set with EP1 / EP2 / P1 / SP2 on eprom on PROG board NEO-MVS PROGTOP; 
+	and CHA board NEO-MVS CHA256 (same layout and chip labels); rom data below needs to be confirmed 
+	{ "063-epr.p1",   0x080000, 0x9131aaa5, 1 | BRF_ESS | BRF_PRG }, //  0 68k code 		/ D27C4000 NEC JAPAN
+	{ "063-epr.sp2",  0x080000, 0xf307b92d, 1 | BRF_ESS | BRF_PRG }, //  1 					/ D27C4000 NEC JAPAN
 	{ "063-epr.ep1",  0x080000, 0x8952c5f7, 1 | BRF_ESS | BRF_PRG }, //  2 					/ M27C4002
 	{ "063-epr.ep2",  0x080000, 0x70b1a4d9, 1 | BRF_ESS | BRF_PRG }, //  3 					/ M27C4002 */
 
@@ -3869,28 +3884,31 @@ struct BurnDriver BurnDrvSamSho2 = {
 };
 
 // Saulabi Spirits / Jin Saulabi Tu Hon (Korean release of Samurai Shodown II)
+/* KOREAN VERSION */
+// This has corrupt text if used with the Japan bios due to the replacement of the s1 rom to contain the new logo
 
 static struct BurnRomInfo samsho2kRomDesc[] = {
 	{ "063-p1-kan.p1",0x200000, 0x147cc6d7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "063-s1-kan.s1",0x020000, 0xff08f80b, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "063-s1-kan.s1",0x020000, 0xff08f80b, 2 | BRF_GRA },           //  1 Text layer tiles /
 
-	{ "063-c1.c1",    0x200000, 0x86cd307c, 3 | BRF_GRA },           //  2 Sprite data
-	{ "063-c2.c2",    0x200000, 0xcdfcc4ca, 3 | BRF_GRA },           //  3 
-	{ "063-c3.c3",    0x200000, 0x7a63ccc7, 3 | BRF_GRA },           //  4 
-	{ "063-c4.c4",    0x200000, 0x751025ce, 3 | BRF_GRA },           //  5 
-	{ "063-c5.c5",    0x200000, 0x20d3a475, 3 | BRF_GRA },           //  6 
-	{ "063-c6.c6",    0x200000, 0xae4c0a88, 3 | BRF_GRA },           //  7 
-	{ "063-c7.c7",    0x200000, 0x2df3cbcf, 3 | BRF_GRA },           //  8 
-	{ "063-c8.c8",    0x200000, 0x1ffc6dfa, 3 | BRF_GRA },           //  9 
+	{ "063-c1.c1",    0x200000, 0x86cd307c, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "063-c2.c2",    0x200000, 0xcdfcc4ca, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "063-c3.c3",    0x200000, 0x7a63ccc7, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "063-c4.c4",    0x200000, 0x751025ce, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "063-c5.c5",    0x200000, 0x20d3a475, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "063-c6.c6",    0x200000, 0xae4c0a88, 3 | BRF_GRA },           //  7 					/ TC5316200
+	{ "063-c7.c7",    0x200000, 0x2df3cbcf, 3 | BRF_GRA },           //  8 					/ TC5316200
+	{ "063-c8.c8",    0x200000, 0x1ffc6dfa, 3 | BRF_GRA },           //  9 					/ TC5316200
 
-	{ "063-m1.m1",    0x020000, 0x56675098, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "063-m1.m1",    0x020000, 0x56675098, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code			/ TC531001
 
-	{ "063-v1.v1",    0x200000, 0x37703f91, 5 | BRF_SND },           // 11 Sound data
-	{ "063-v2.v2",    0x200000, 0x0142bde8, 5 | BRF_SND },           // 12 
-	{ "063-v3.v3",    0x200000, 0xd07fa5ca, 5 | BRF_SND },           // 13 
-	{ "063-v4.v4",    0x100000, 0x24aab4bb, 5 | BRF_SND },           // 14 
+	{ "063-v1.v1",    0x200000, 0x37703f91, 5 | BRF_SND },           // 11 Sound data		/ TC5316200
+	{ "063-v2.v2",    0x200000, 0x0142bde8, 5 | BRF_SND },           // 12 					/ TC5316200
+	{ "063-v3.v3",    0x200000, 0xd07fa5ca, 5 | BRF_SND },           // 13 					/ TC5316200	
+	{ "063-v4.v4",    0x100000, 0x24aab4bb, 5 | BRF_SND },           // 14 					/ TC538200
 	
+	// the roms below apply as patch over the main program 
 	{ "063-ep1-kan.ep1", 0x080000, 0xfa32e2d8, 0 | BRF_ESS | BRF_PRG }, // 15
 	{ "063-ep2-kan.ep2", 0x080000, 0x70b1a4d9, 0 | BRF_ESS | BRF_PRG }, // 16
 };
@@ -3922,25 +3940,26 @@ struct BurnDriver BurnDrvsamsho2k = {
 };
 
 // Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - haruka-naru tatakai (NGM-069)(NGH-069)
+/* MVS AND AES VERSION */
 
 static struct BurnRomInfo fatfury3RomDesc[] = {
-	{ "069-p1.p1",    0x100000, 0xa8bcfbbc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "069-sp2.sp2",  0x200000, 0xdbe963ed, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "069-p1.p1",    0x100000, 0xa8bcfbbc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
+	{ "069-sp2.sp2",  0x200000, 0xdbe963ed, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC5316200
 
-	{ "069-s1.s1",    0x020000, 0x0b33a800, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "069-s1.s1",    0x020000, 0x0b33a800, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 
-	{ "069-c1.c1",    0x400000, 0xe302f93c, 3 | BRF_GRA },           //  3 Sprite data
-	{ "069-c2.c2",    0x400000, 0x1053a455, 3 | BRF_GRA },           //  4 
-	{ "069-c3.c3",    0x400000, 0x1c0fde2f, 3 | BRF_GRA },           //  5 
-	{ "069-c4.c4",    0x400000, 0xa25fc3d0, 3 | BRF_GRA },           //  6 
-	{ "069-c5.c5",    0x200000, 0xb3ec6fa6, 3 | BRF_GRA },           //  7 
-	{ "069-c6.c6",    0x200000, 0x69210441, 3 | BRF_GRA },           //  8 
+	{ "069-c1.c1",    0x400000, 0xe302f93c, 3 | BRF_GRA },           //  3 Sprite data		/ TC5332205
+	{ "069-c2.c2",    0x400000, 0x1053a455, 3 | BRF_GRA },           //  4 					/ TC5332205
+	{ "069-c3.c3",    0x400000, 0x1c0fde2f, 3 | BRF_GRA },           //  5 					/ TC5332205
+	{ "069-c4.c4",    0x400000, 0xa25fc3d0, 3 | BRF_GRA },           //  6 					/ TC5332205
+	{ "069-c5.c5",    0x200000, 0xb3ec6fa6, 3 | BRF_GRA },           //  7 					/ TC5332205
+	{ "069-c6.c6",    0x200000, 0x69210441, 3 | BRF_GRA },           //  8 					/ TC5332205
 
-	{ "069-m1.m1",    0x020000, 0xfce72926, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "069-m1.m1",    0x020000, 0xfce72926, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code			/ TC531001
 
-	{ "069-v1.v1",    0x400000, 0x2bdbd4db, 5 | BRF_SND },           // 10 Sound data
-	{ "069-v2.v2",    0x400000, 0xa698a487, 5 | BRF_SND },           // 11 
-	{ "069-v3.v3",    0x200000, 0x581c5304, 5 | BRF_SND },           // 12 
+	{ "069-v1.v1",    0x400000, 0x2bdbd4db, 5 | BRF_SND },           // 10 Sound data		/ TC5332204
+	{ "069-v2.v2",    0x400000, 0xa698a487, 5 | BRF_SND },           // 11 					/ TC5332204
+	{ "069-v3.v3",    0x200000, 0x581c5304, 5 | BRF_SND },           // 12 					/ TC5316200
 };
 
 STDROMPICKEXT(fatfury3, fatfury3, neogeo)
@@ -3957,24 +3976,28 @@ struct BurnDriver BurnDrvFatfury3 = {
 };
 
 // Super Sidekicks 3 - The Next Glory / Tokuten Ou 3 - eikou e no michi
+/* MVS ANS AES VERSION? */
 
 static struct BurnRomInfo ssideki3RomDesc[] = {
-	{ "081-p1.p1",    0x200000, 0x6bc27a3d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	/* It also exists MVS Sets with PROG board NEO-MVS PROG 4096 B and CHA board NEO-MVS CHA 42G-3,
+	and with PROG board NEO-MVS PROGBK1 and CHA board NEO-MVS CHA256B; same chip labels. */
+	/* also found AES set with PROG board NEO-AEG PROGTOP2 and CHA board NEO-AEG CHA256B; same chip labels */   
+	{ "081-p1.p1",    0x200000, 0x6bc27a3d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
 
-	{ "081-s1.s1",    0x020000, 0x7626da34, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "081-s1.s1",    0x020000, 0x7626da34, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "081-c1.c1",    0x200000, 0x1fb68ebe, 3 | BRF_GRA },           //  2 Sprite data
-	{ "081-c2.c2",    0x200000, 0xb28d928f, 3 | BRF_GRA },           //  3 
-	{ "081-c3.c3",    0x200000, 0x3b2572e8, 3 | BRF_GRA },           //  4 
-	{ "081-c4.c4",    0x200000, 0x47d26a7c, 3 | BRF_GRA },           //  5 
-	{ "081-c5.c5",    0x200000, 0x17d42f0d, 3 | BRF_GRA },           //  6 
-	{ "081-c6.c6",    0x200000, 0x6b53fb75, 3 | BRF_GRA },           //  7 
+	{ "081-c1.c1",    0x200000, 0x1fb68ebe, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "081-c2.c2",    0x200000, 0xb28d928f, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "081-c3.c3",    0x200000, 0x3b2572e8, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "081-c4.c4",    0x200000, 0x47d26a7c, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "081-c5.c5",    0x200000, 0x17d42f0d, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "081-c6.c6",    0x200000, 0x6b53fb75, 3 | BRF_GRA },           //  7 					/ TC5316200
 
-	{ "081-m1.m1",    0x020000, 0x82fcd863, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+	{ "081-m1.m1",    0x020000, 0x82fcd863, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code			/ TC531001
 
-	{ "081-v1.v1",    0x200000, 0x201fa1e1, 5 | BRF_SND },           //  9 Sound data
-	{ "081-v2.v2",    0x200000, 0xacf29d96, 5 | BRF_SND },           // 10 
-	{ "081-v3.v3",    0x200000, 0xe524e415, 5 | BRF_SND },           // 11 
+	{ "081-v1.v1",    0x200000, 0x201fa1e1, 5 | BRF_SND },           //  9 Sound data 		/ TC5316200
+	{ "081-v2.v2",    0x200000, 0xacf29d96, 5 | BRF_SND },           // 10 					/ TC5316200
+	{ "081-v3.v3",    0x200000, 0xe524e415, 5 | BRF_SND },           // 11 					/ TC5316200
 };
 
 STDROMPICKEXT(ssideki3, ssideki3, neogeo)
@@ -3991,26 +4014,27 @@ struct BurnDriver BurnDrvSsideki3 = {
 };
 
 // The King of Fighters '95 (NGM-084)
+/* MVS VERSION */
 
 static struct BurnRomInfo kof95RomDesc[] = {
-	{ "084-p1.p1",    0x200000, 0x2cba2716, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "084-p1.p1",    0x200000, 0x2cba2716, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
 
-	{ "084-s1.s1",    0x020000, 0xde716f8a, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "084-s1.s1",    0x020000, 0xde716f8a, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "084-c1.c1",    0x400000, 0xfe087e32, 3 | BRF_GRA },           //  2 Sprite data
-	{ "084-c2.c2",    0x400000, 0x07864e09, 3 | BRF_GRA },           //  3 
-	{ "084-c3.c3",    0x400000, 0xa4e65d1b, 3 | BRF_GRA },           //  4 
-	{ "084-c4.c4",    0x400000, 0xc1ace468, 3 | BRF_GRA },           //  5 
-	{ "084-c5.c5",    0x200000, 0x8a2c1edc, 3 | BRF_GRA },           //  6 
-	{ "084-c6.c6",    0x200000, 0xf593ac35, 3 | BRF_GRA },           //  7 
-	{ "084-c7.c7",    0x100000, 0x9904025f, 3 | BRF_GRA },           //  8 
-	{ "084-c8.c8",    0x100000, 0x78eb0f9b, 3 | BRF_GRA },           //  9 
+	{ "084-c1.c1",    0x400000, 0xfe087e32, 3 | BRF_GRA },           //  2 Sprite data		/ TC5332202
+	{ "084-c2.c2",    0x400000, 0x07864e09, 3 | BRF_GRA },           //  3 					/ TC5332202
+	{ "084-c3.c3",    0x400000, 0xa4e65d1b, 3 | BRF_GRA },           //  4 					/ TC5332202
+	{ "084-c4.c4",    0x400000, 0xc1ace468, 3 | BRF_GRA },           //  5 					/ TC5332202
+	{ "084-c5.c5",    0x200000, 0x8a2c1edc, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "084-c6.c6",    0x200000, 0xf593ac35, 3 | BRF_GRA },           //  7 					/ TC5316200
+	{ "084-c7.c7",    0x100000, 0x9904025f, 3 | BRF_GRA },           //  8 					/ TC538200
+	{ "084-c8.c8",    0x100000, 0x78eb0f9b, 3 | BRF_GRA },           //  9 					/ TC538200
 
-	{ "084-m1.m1",    0x020000, 0x6f2d7429, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "084-m1.m1",    0x020000, 0x6f2d7429, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code			/ TC531001
 
-	{ "084-v1.v1",    0x400000, 0x84861b56, 5 | BRF_SND },           // 11 Sound data
-	{ "084-v2.v2",    0x200000, 0xb38a2803, 5 | BRF_SND },           // 12 
-	{ "084-v3.v3",    0x100000, 0xd683a338, 5 | BRF_SND },           // 13 
+	{ "084-v1.v1",    0x400000, 0x84861b56, 5 | BRF_SND },           // 11 Sound data		/ TC5332201
+	{ "084-v2.v2",    0x200000, 0xb38a2803, 5 | BRF_SND },           // 12 					/ TC5316200
+	{ "084-v3.v3",    0x100000, 0xd683a338, 5 | BRF_SND },           // 13 					/ TC538200
 };
 
 STDROMPICKEXT(kof95, kof95, neogeo)
@@ -4027,30 +4051,32 @@ struct BurnDriver BurnDrvKof95 = {
 };
 
 // The King of Fighters '95 (NGH-084, alternate board)
+/* MVS VERSION */
 
 static struct BurnRomInfo kof95aRomDesc[] = {
 	/* This set uses NEO-MVS PROGSM board; same rom data as in kof95h is used */
-	{ "084-epr.ep1",  0x080000, 0x577ca1bb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "084-epr.ep2",  0x080000, 0x30802a5d, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "084-epr.ep3",  0x080000, 0x21ae248a, 1 | BRF_ESS | BRF_PRG }, //  2
-	{ "084-epr.ep4",  0x080000, 0x19d3fbee, 1 | BRF_ESS | BRF_PRG }, //  3
+	{ "084-epr.ep1",  0x080000, 0x577ca1bb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ M27C4002
+	{ "084-epr.ep2",  0x080000, 0x30802a5d, 1 | BRF_ESS | BRF_PRG }, //  1					/ M27C4002
+	{ "084-epr.ep3",  0x080000, 0x21ae248a, 1 | BRF_ESS | BRF_PRG }, //  2					/ M27C4002
+	{ "084-epr.ep4",  0x080000, 0x19d3fbee, 1 | BRF_ESS | BRF_PRG }, //  3					/ M27C4002
+	/* P's on eprom, correct chip label unknown */
 
-	{ "084-s1.s1",    0x020000, 0xde716f8a, 2 | BRF_GRA },           //  4 Text layer tiles
+	{ "084-s1.s1",    0x020000, 0xde716f8a, 2 | BRF_GRA },           //  4 Text layer tiles / TC531000
 
-	{ "084-c1.c1",    0x400000, 0xfe087e32, 3 | BRF_GRA },           //  5 Sprite data
-	{ "084-c2.c2",    0x400000, 0x07864e09, 3 | BRF_GRA },           //  6 
-	{ "084-c3.c3",    0x400000, 0xa4e65d1b, 3 | BRF_GRA },           //  7
-	{ "084-c4.c4",    0x400000, 0xc1ace468, 3 | BRF_GRA },           //  5 
-	{ "084-c5.c5",    0x200000, 0x8a2c1edc, 3 | BRF_GRA },           //  6 
-	{ "084-c6.c6",    0x200000, 0xf593ac35, 3 | BRF_GRA },           //  7 
-	{ "084-c7.c7",    0x100000, 0x9904025f, 3 | BRF_GRA },           //  8 
-	{ "084-c8.c8",    0x100000, 0x78eb0f9b, 3 | BRF_GRA },           //  9 
+	{ "084-c1.c1",    0x400000, 0xfe087e32, 3 | BRF_GRA },           //  2 Sprite data		/ TC5332202
+	{ "084-c2.c2",    0x400000, 0x07864e09, 3 | BRF_GRA },           //  3 					/ TC5332202
+	{ "084-c3.c3",    0x400000, 0xa4e65d1b, 3 | BRF_GRA },           //  4 					/ TC5332202
+	{ "084-c4.c4",    0x400000, 0xc1ace468, 3 | BRF_GRA },           //  5 					/ TC5332202
+	{ "084-c5.c5",    0x200000, 0x8a2c1edc, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "084-c6.c6",    0x200000, 0xf593ac35, 3 | BRF_GRA },           //  7 					/ TC5316200
+	{ "084-c7.c7",    0x100000, 0x9904025f, 3 | BRF_GRA },           //  8 					/ TC538200
+	{ "084-c8.c8",    0x100000, 0x78eb0f9b, 3 | BRF_GRA },           //  9 					/ TC538200
 
-	{ "084-m1.m1",    0x020000, 0x6f2d7429, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "084-m1.m1",    0x020000, 0x6f2d7429, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code			/ TC531001
 
-	{ "084-v1.v1",    0x400000, 0x84861b56, 5 | BRF_SND },           // 11 Sound data
-	{ "084-v2.v2",    0x200000, 0xb38a2803, 5 | BRF_SND },           // 12 
-	{ "084-v3.v3",    0x100000, 0xd683a338, 5 | BRF_SND },           // 13 
+	{ "084-v1.v1",    0x400000, 0x84861b56, 5 | BRF_SND },           // 11 Sound data		/ TC5332201
+	{ "084-v2.v2",    0x200000, 0xb38a2803, 5 | BRF_SND },           // 12 					/ TC5316200
+	{ "084-v3.v3",    0x100000, 0xd683a338, 5 | BRF_SND },           // 13 					/ TC538200 
 };
 
 STDROMPICKEXT(kof95a, kof95a, neogeo)
@@ -4067,26 +4093,27 @@ struct BurnDriver BurnDrvKof95a = {
 };
 
 // The King of Fighters '95 (NGH-084)
+/* MVS AND AES VERSION */
 
 static struct BurnRomInfo kof95hRomDesc[] = {
-	{ "084-pg1.p1",   0x200000, 0x5e54cf95, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "084-pg1.p1",   0x200000, 0x5e54cf95, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
 
-	{ "084-s1.s1",    0x020000, 0xde716f8a, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "084-s1.s1",    0x020000, 0xde716f8a, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "084-c1.c1",    0x400000, 0xfe087e32, 3 | BRF_GRA },           //  2 Sprite data
-	{ "084-c2.c2",    0x400000, 0x07864e09, 3 | BRF_GRA },           //  3 
-	{ "084-c3.c3",    0x400000, 0xa4e65d1b, 3 | BRF_GRA },           //  4
-	{ "084-c4.c4",    0x400000, 0xc1ace468, 3 | BRF_GRA },           //  5 
-	{ "084-c5.c5",    0x200000, 0x8a2c1edc, 3 | BRF_GRA },           //  6 
-	{ "084-c6.c6",    0x200000, 0xf593ac35, 3 | BRF_GRA },           //  7 
-	{ "084-c7.c7",    0x100000, 0x9904025f, 3 | BRF_GRA },           //  8 
-	{ "084-c8.c8",    0x100000, 0x78eb0f9b, 3 | BRF_GRA },           //  9 
+	{ "084-c1.c1",    0x400000, 0xfe087e32, 3 | BRF_GRA },           //  2 Sprite data		/ TC5332202
+	{ "084-c2.c2",    0x400000, 0x07864e09, 3 | BRF_GRA },           //  3 					/ TC5332202
+	{ "084-c3.c3",    0x400000, 0xa4e65d1b, 3 | BRF_GRA },           //  4					/ TC5332202
+	{ "084-c4.c4",    0x400000, 0xc1ace468, 3 | BRF_GRA },           //  5 					/ TC5332202
+	{ "084-c5.c5",    0x200000, 0x8a2c1edc, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "084-c6.c6",    0x200000, 0xf593ac35, 3 | BRF_GRA },           //  7 					/ TC5316200
+	{ "084-c7.c7",    0x100000, 0x9904025f, 3 | BRF_GRA },           //  8 					/ TC538200
+	{ "084-c8.c8",    0x100000, 0x78eb0f9b, 3 | BRF_GRA },           //  9 					/ TC538200
 
-	{ "084-m1.m1",    0x020000, 0x6f2d7429, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "084-m1.m1",    0x020000, 0x6f2d7429, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code			/ TC531001
 
-	{ "084-v1.v1",    0x400000, 0x84861b56, 5 | BRF_SND },           // 11 Sound data
-	{ "084-v2.v2",    0x200000, 0xb38a2803, 5 | BRF_SND },           // 12 
-	{ "084-v3.v3",    0x100000, 0xd683a338, 5 | BRF_SND },           // 13 
+	{ "084-v1.v1",    0x400000, 0x84861b56, 5 | BRF_SND },           // 11 Sound data		/ TC5332201
+	{ "084-v2.v2",    0x200000, 0xb38a2803, 5 | BRF_SND },           // 12 					/ TC5316200
+	{ "084-v3.v3",    0x100000, 0xd683a338, 5 | BRF_SND },           // 13 					/ TC538200
 };
 
 STDROMPICKEXT(kof95h, kof95h, neogeo)
@@ -4103,29 +4130,33 @@ struct BurnDriver BurnDrvKof95h = {
 };
 
 // Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGM-087)
+/* MVS VERSION */
 
 static struct BurnRomInfo samsho3RomDesc[] = {
-	{ "087-epr.ep1",  0x080000, 0x23e09bb8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "087-epr.ep2",  0x080000, 0x256f5302, 1 | BRF_ESS | BRF_PRG }, //  1 
-	{ "087-epr.ep3",  0x080000, 0xbf2db5dd, 1 | BRF_ESS | BRF_PRG }, //  2 
-	{ "087-epr.ep4",  0x080000, 0x53e60c58, 1 | BRF_ESS | BRF_PRG }, //  3 
-	{ "087-p5.p5",    0x100000, 0xe86ca4af, 1 | BRF_ESS | BRF_PRG }, //  4 
+	{ "087-epr.ep1",  0x080000, 0x23e09bb8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ M27C4002
+	{ "087-epr.ep2",  0x080000, 0x256f5302, 1 | BRF_ESS | BRF_PRG }, //  1 					/ M27C4002
+	{ "087-epr.ep3",  0x080000, 0xbf2db5dd, 1 | BRF_ESS | BRF_PRG }, //  2 					/ M27C4002
+	{ "087-epr.ep4",  0x080000, 0x53e60c58, 1 | BRF_ESS | BRF_PRG }, //  3 					/ M27C4002
+	/* P's on eprom, correct chip label unknown */
+	{ "087-p5.p5",    0x100000, 0xe86ca4af, 1 | BRF_ESS | BRF_PRG }, //  4 					/ TC538200
+	/* also found MVS set with p1 / sp2 on mask rom on PROG board NEO-MVS PROGBK1; 
+	chip label are 087-PG1 and 087-P2 */
 
-	{ "087-s1.s1",    0x020000, 0x74ec7d9f, 2 | BRF_GRA },           //  5 Text layer tiles
+	{ "087-s1.s1",    0x020000, 0x74ec7d9f, 2 | BRF_GRA },           //  5 Text layer tiles / TC531000
 
-	{ "087-c1.c1",    0x400000, 0x07a233bc, 3 | BRF_GRA },           //  6 Sprite data
-	{ "087-c2.c2",    0x400000, 0x7a413592, 3 | BRF_GRA },           //  7 
-	{ "087-c3.c3",    0x400000, 0x8b793796, 3 | BRF_GRA },           //  8 
-	{ "087-c4.c4",    0x400000, 0x728fbf11, 3 | BRF_GRA },           //  9 
-	{ "087-c5.c5",    0x400000, 0x172ab180, 3 | BRF_GRA },           // 10 
-	{ "087-c6.c6",    0x400000, 0x002ff8f3, 3 | BRF_GRA },           // 11 
-	{ "087-c7.c7",    0x100000, 0xae450e3d, 3 | BRF_GRA },           // 12 
-	{ "087-c8.c8",    0x100000, 0xa9e82717, 3 | BRF_GRA },           // 13 
+	{ "087-c1.c1",    0x400000, 0x07a233bc, 3 | BRF_GRA },           //  6 Sprite data		/ TC5332202
+	{ "087-c2.c2",    0x400000, 0x7a413592, 3 | BRF_GRA },           //  7 					/ TC5332202
+	{ "087-c3.c3",    0x400000, 0x8b793796, 3 | BRF_GRA },           //  8 					/ TC533202
+	{ "087-c4.c4",    0x400000, 0x728fbf11, 3 | BRF_GRA },           //  9 					/ TC533202
+	{ "087-c5.c5",    0x400000, 0x172ab180, 3 | BRF_GRA },           // 10 					/ TC5332202
+	{ "087-c6.c6",    0x400000, 0x002ff8f3, 3 | BRF_GRA },           // 11 					/ TC5332202
+	{ "087-c7.c7",    0x100000, 0xae450e3d, 3 | BRF_GRA },           // 12 					/ TC538200
+	{ "087-c8.c8",    0x100000, 0xa9e82717, 3 | BRF_GRA },           // 13 					/ TC538200
 
-	{ "087-m1.m1",    0x020000, 0x8e6440eb, 4 | BRF_ESS | BRF_PRG }, // 14 Z80 code
+	{ "087-m1.m1",    0x020000, 0x8e6440eb, 4 | BRF_ESS | BRF_PRG }, // 14 Z80 code			/ TC531001
 
-	{ "087-v1.v1",    0x400000, 0x84bdd9a0, 5 | BRF_SND },           // 15 Sound data
-	{ "087-v2.v2",    0x200000, 0xac0f261a, 5 | BRF_SND },           // 16
+	{ "087-v1.v1",    0x400000, 0x84bdd9a0, 5 | BRF_SND },           // 15 Sound data		/ TC5332201
+	{ "087-v2.v2",    0x200000, 0xac0f261a, 5 | BRF_SND },           // 16					/ TC5316200
 };
 
 STDROMPICKEXT(samsho3, samsho3, neogeo)
@@ -4142,26 +4173,27 @@ struct BurnDriver BurnDrvSamSho3 = {
 };
 
 // Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGH-087)
+/* AES VERSION */
 
 static struct BurnRomInfo samsho3hRomDesc[] = {
-	{ "087-pg1.p1",   0x100000, 0x282a336e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "087-p2.sp2",   0x200000, 0x9bbe27e0, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "087-pg1.p1",   0x100000, 0x282a336e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC538200
+	{ "087-p2.sp2",   0x200000, 0x9bbe27e0, 1 | BRF_ESS | BRF_PRG }, //  1 					/ mask rom TC5316200
 
-	{ "087-s1.s1",    0x020000, 0x74ec7d9f, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "087-s1.s1",    0x020000, 0x74ec7d9f, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 
-	{ "087-c1.c1",    0x400000, 0x07a233bc, 3 | BRF_GRA },           //  3 Sprite data
-	{ "087-c2.c2",    0x400000, 0x7a413592, 3 | BRF_GRA },           //  4 
-	{ "087-c3.c3",    0x400000, 0x8b793796, 3 | BRF_GRA },           //  5 
-	{ "087-c4.c4",    0x400000, 0x728fbf11, 3 | BRF_GRA },           //  6 
-	{ "087-c5.c5",    0x400000, 0x172ab180, 3 | BRF_GRA },           //  7 
-	{ "087-c6.c6",    0x400000, 0x002ff8f3, 3 | BRF_GRA },           //  8 
-	{ "087-c7.c7",    0x100000, 0xae450e3d, 3 | BRF_GRA },           //  9 
-	{ "087-c8.c8",    0x100000, 0xa9e82717, 3 | BRF_GRA },           // 10 
+	{ "087-c1.c1",    0x400000, 0x07a233bc, 3 | BRF_GRA },           //  3 Sprite data		/ TC5332202
+	{ "087-c2.c2",    0x400000, 0x7a413592, 3 | BRF_GRA },           //  4 					/ TC5332202
+	{ "087-c3.c3",    0x400000, 0x8b793796, 3 | BRF_GRA },           //  5 					/ TC5332202
+	{ "087-c4.c4",    0x400000, 0x728fbf11, 3 | BRF_GRA },           //  6 					/ TC5332202
+	{ "087-c5.c5",    0x400000, 0x172ab180, 3 | BRF_GRA },           //  7 					/ TC5332202
+	{ "087-c6.c6",    0x400000, 0x002ff8f3, 3 | BRF_GRA },           //  8 					/ TC5332202
+	{ "087-c7.c7",    0x100000, 0xae450e3d, 3 | BRF_GRA },           //  9 					/ TC538200
+	{ "087-c8.c8",    0x100000, 0xa9e82717, 3 | BRF_GRA },           // 10 					/ TC538200
 
-	{ "087-m1.m1",    0x020000, 0x8e6440eb, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "087-m1.m1",    0x020000, 0x8e6440eb, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ TC531001
 
-	{ "087-v1.v1",    0x400000, 0x84bdd9a0, 5 | BRF_SND },           // 12 Sound data
-	{ "087-v2.v2",    0x200000, 0xac0f261a, 5 | BRF_SND },           // 13 
+	{ "087-v1.v1",    0x400000, 0x84bdd9a0, 5 | BRF_SND },           // 12 Sound data		/ TC5332201
+	{ "087-v2.v2",    0x200000, 0xac0f261a, 5 | BRF_SND },           // 13 					/ TC5316200
 };
 
 STDROMPICKEXT(samsho3h, samsho3h, neogeo)
@@ -4178,26 +4210,27 @@ struct BurnDriver BurnDrvSamSho3h = {
 };
 
 // Fighters Swords (Korean release of Samurai Shodown III)
+/* KOREAN VERSION */
 
 static struct BurnRomInfo fswordsRomDesc[] = {
-	{ "187-p1k.p1",   0x100000, 0xc8e7c075, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "187-p1k.p1",   0x100000, 0xc8e7c075, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC5316200
 	{ "087-p2.sp2",   0x200000, 0x9bbe27e0, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "087-s1.s1",    0x020000, 0x74ec7d9f, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "087-s1.s1",    0x020000, 0x74ec7d9f, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 
-	{ "087-c1.c1",    0x400000, 0x07a233bc, 3 | BRF_GRA },           //  3 Sprite data
-	{ "087-c2.c2",    0x400000, 0x7a413592, 3 | BRF_GRA },           //  4 
-	{ "087-c3.c3",    0x400000, 0x8b793796, 3 | BRF_GRA },           //  5 
-	{ "087-c4.c4",    0x400000, 0x728fbf11, 3 | BRF_GRA },           //  6 
-	{ "087-c5.c5",    0x400000, 0x172ab180, 3 | BRF_GRA },           //  7 
-	{ "087-c6.c6",    0x400000, 0x002ff8f3, 3 | BRF_GRA },           //  8 
-	{ "087-c7.c7",    0x100000, 0xae450e3d, 3 | BRF_GRA },           //  9 
-	{ "087-c8.c8",    0x100000, 0xa9e82717, 3 | BRF_GRA },           // 10 
+	{ "087-c1.c1",    0x400000, 0x07a233bc, 3 | BRF_GRA },           //  3 Sprite data		/ TC5332202
+	{ "087-c2.c2",    0x400000, 0x7a413592, 3 | BRF_GRA },           //  4 					/ TC5332202
+	{ "087-c3.c3",    0x400000, 0x8b793796, 3 | BRF_GRA },           //  5 					/ TC5332202
+	{ "087-c4.c4",    0x400000, 0x728fbf11, 3 | BRF_GRA },           //  6 					/ TC5332202
+	{ "087-c5.c5",    0x400000, 0x172ab180, 3 | BRF_GRA },           //  7 					/ TC5332202
+	{ "087-c6.c6",    0x400000, 0x002ff8f3, 3 | BRF_GRA },           //  8 					/ TC5332202
+	{ "087-c7.c7",    0x100000, 0xae450e3d, 3 | BRF_GRA },           //  9 					/ TC538200
+	{ "087-c8.c8",    0x100000, 0xa9e82717, 3 | BRF_GRA },           // 10 					/ TC538200
 
-	{ "087-m1.m1",    0x020000, 0x8e6440eb, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "087-m1.m1",    0x020000, 0x8e6440eb, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ TC531001
 
-	{ "087-v1.v1",    0x400000, 0x84bdd9a0, 5 | BRF_SND },           // 12 Sound data
-	{ "087-v2.v2",    0x200000, 0xac0f261a, 5 | BRF_SND },           // 13 
+	{ "087-v1.v1",    0x400000, 0x84bdd9a0, 5 | BRF_SND },           // 12 Sound data		/ TC5332201
+	{ "087-v2.v2",    0x200000, 0xac0f261a, 5 | BRF_SND },           // 13 					/ TC5316200
 };
 
 STDROMPICKEXT(fswords, fswords, neogeo)
@@ -4214,27 +4247,28 @@ struct BurnDriver BurnDrvfswords = {
 };
 
 // Real Bout Fatal Fury / Real Bout Garou Densetsu (NGM-095)(NGH-095)
+/* MVS AND AES VERSION */
 
 static struct BurnRomInfo rbff1RomDesc[] = {
-	{ "095-p1.p1",    0x100000, 0x63b4d8ae, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "095-p2.sp2",   0x200000, 0xcc15826e, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "095-p1.p1",    0x100000, 0x63b4d8ae, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
+	{ "095-p2.sp2",   0x200000, 0xcc15826e, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC5316200
 
-	{ "095-s1.s1",    0x020000, 0xb6bf5e08, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "095-s1.s1",    0x020000, 0xb6bf5e08, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 
-	{ "069-c1.c1",    0x400000, 0xe302f93c, 3 | BRF_GRA },           //  3 Sprite data
-	{ "069-c2.c2",    0x400000, 0x1053a455, 3 | BRF_GRA },           //  4 
-	{ "069-c3.c3",    0x400000, 0x1c0fde2f, 3 | BRF_GRA },           //  5 
-	{ "069-c4.c4",    0x400000, 0xa25fc3d0, 3 | BRF_GRA },           //  6 
-	{ "095-c5.c5",    0x400000, 0x8b9b65df, 3 | BRF_GRA },           //  7 
-	{ "095-c6.c6",    0x400000, 0x3e164718, 3 | BRF_GRA },           //  8 
-	{ "095-c7.c7",    0x200000, 0xca605e12, 3 | BRF_GRA },           //  9 
-	{ "095-c8.c8",    0x200000, 0x4e6beb6c, 3 | BRF_GRA },           // 10 
+	{ "069-c1.c1",    0x400000, 0xe302f93c, 3 | BRF_GRA },           //  3 Sprite data		/ TC5332205
+	{ "069-c2.c2",    0x400000, 0x1053a455, 3 | BRF_GRA },           //  4 					/ TC5332205
+	{ "069-c3.c3",    0x400000, 0x1c0fde2f, 3 | BRF_GRA },           //  5 					/ TC5332205
+	{ "069-c4.c4",    0x400000, 0xa25fc3d0, 3 | BRF_GRA },           //  6 					/ TC5332205
+	{ "095-c5.c5",    0x400000, 0x8b9b65df, 3 | BRF_GRA },           //  7 					/ TC5332202
+	{ "095-c6.c6",    0x400000, 0x3e164718, 3 | BRF_GRA },           //  8 					/ TC5332202
+	{ "095-c7.c7",    0x200000, 0xca605e12, 3 | BRF_GRA },           //  9 					/ TC5316200
+	{ "095-c8.c8",    0x200000, 0x4e6beb6c, 3 | BRF_GRA },           // 10 					/ TC5316200
 
-	{ "095-m1.m1",    0x020000, 0x653492a7, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "095-m1.m1",    0x020000, 0x653492a7, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ TC531001
 
-	{ "069-v1.v1",    0x400000, 0x2bdbd4db, 5 | BRF_SND },           // 12 Sound data
-	{ "069-v2.v2",    0x400000, 0xa698a487, 5 | BRF_SND },           // 13 
-	{ "095-v3.v3",    0x400000, 0x189d1c6c, 5 | BRF_SND },           // 14 
+	{ "069-v1.v1",    0x400000, 0x2bdbd4db, 5 | BRF_SND },           // 12 Sound data		/ TC5332204	
+	{ "069-v2.v2",    0x400000, 0xa698a487, 5 | BRF_SND },           // 13 					/ TC5332204
+	{ "095-v3.v3",    0x400000, 0x189d1c6c, 5 | BRF_SND },           // 14 					/ TC5332201
 };
 
 STDROMPICKEXT(rbff1, rbff1, neogeo)
@@ -4251,31 +4285,34 @@ struct BurnDriver BurnDrvrbff1 = {
 };
 
 // Real Bout Fatal Fury / Real Bout Garou Densetsu (bug fix revision)
+/* MVS VERSION */
 
 static struct BurnRomInfo rbff1aRomDesc[] = {
 	/* This is a bug fixed revision applied over the original cart. The original P1 and P2 stayed in the cart and this */
 	/* 512k ROM was added to replace the first 512k of P1. */
-	{ "095-p1.p1",    0x100000, 0x63b4d8ae, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "095-p2.sp2",   0x200000, 0xcc15826e, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "095-p1.p1",    0x100000, 0x63b4d8ae, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
+	{ "095-p2.sp2",   0x200000, 0xcc15826e, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC5316200
 
-	{ "095-s1.s1",    0x020000, 0xb6bf5e08, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "095-s1.s1",    0x020000, 0xb6bf5e08, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 
-	{ "069-c1.c1",    0x400000, 0xe302f93c, 3 | BRF_GRA },           //  3 Sprite data
-	{ "069-c2.c2",    0x400000, 0x1053a455, 3 | BRF_GRA },           //  4 
-	{ "069-c3.c3",    0x400000, 0x1c0fde2f, 3 | BRF_GRA },           //  5 
-	{ "069-c4.c4",    0x400000, 0xa25fc3d0, 3 | BRF_GRA },           //  6 
-	{ "095-c5.c5",    0x400000, 0x8b9b65df, 3 | BRF_GRA },           //  7 
-	{ "095-c6.c6",    0x400000, 0x3e164718, 3 | BRF_GRA },           //  8 
-	{ "095-c7.c7",    0x200000, 0xca605e12, 3 | BRF_GRA },           //  9 
-	{ "095-c8.c8",    0x200000, 0x4e6beb6c, 3 | BRF_GRA },           // 10 
+	{ "069-c1.c1",    0x400000, 0xe302f93c, 3 | BRF_GRA },           //  3 Sprite data		/ TC5332205
+	{ "069-c2.c2",    0x400000, 0x1053a455, 3 | BRF_GRA },           //  4 					/ TC5332205
+	{ "069-c3.c3",    0x400000, 0x1c0fde2f, 3 | BRF_GRA },           //  5 					/ TC5332205
+	{ "069-c4.c4",    0x400000, 0xa25fc3d0, 3 | BRF_GRA },           //  6 					/ TC5332205
+	{ "095-c5.c5",    0x400000, 0x8b9b65df, 3 | BRF_GRA },           //  7 					/ TC5332202
+	{ "095-c6.c6",    0x400000, 0x3e164718, 3 | BRF_GRA },           //  8 					/ TC5332202
+	{ "095-c7.c7",    0x200000, 0xca605e12, 3 | BRF_GRA },           //  9 					/ TC5316200
+	{ "095-c8.c8",    0x200000, 0x4e6beb6c, 3 | BRF_GRA },           // 10 					/ TC5316200
 
-	{ "095-m1.m1",    0x020000, 0x653492a7, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "095-m1.m1",    0x020000, 0x653492a7, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ TC531001
 
-	{ "069-v1.v1",    0x400000, 0x2bdbd4db, 5 | BRF_SND },           // 12 Sound data
-	{ "069-v2.v2",    0x400000, 0xa698a487, 5 | BRF_SND },           // 13 
-	{ "095-v3.v3",    0x400000, 0x189d1c6c, 5 | BRF_SND },           // 14
+	{ "069-v1.v1",    0x400000, 0x2bdbd4db, 5 | BRF_SND },           // 12 Sound data		/ TC5332204	
+	{ "069-v2.v2",    0x400000, 0xa698a487, 5 | BRF_SND },           // 13 					/ TC5332204
+	{ "095-v3.v3",    0x400000, 0x189d1c6c, 5 | BRF_SND },           // 14 					/ TC5332201
 
-	{ "095-epr.ep1",  0x080000, 0xbe0060a3, 0 | BRF_ESS | BRF_PRG }, // 15 68k code 
+	/* the rom below acts as a patch to the program rom in the cart, replacing the first 512kb */
+	{ "095-epr.ep1",  0x080000, 0xbe0060a3, 0 | BRF_ESS | BRF_PRG }, // 15 68k code 		/ M27C4002
+	/* P is on eprom, correct chip label unknown */
 };
 
 STDROMPICKEXT(rbff1a, rbff1a, neogeo)
@@ -4306,25 +4343,25 @@ struct BurnDriver BurnDrvrbff1a = {
 // Art of Fighting 3 - The Path of the Warrior / Art of Fighting - Ryuuko no Ken Gaiden
 
 static struct BurnRomInfo aof3RomDesc[] = {
-	{ "096-p1.p1",    0x100000, 0x9edb420d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "096-p2.sp2",   0x200000, 0x4d5a2602, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "096-p1.p1",    0x100000, 0x9edb420d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
+	{ "096-p2.sp2",   0x200000, 0x4d5a2602, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC5316200
 
-	{ "096-s1.s1",    0x020000, 0xcc7fd344, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "096-s1.s1",    0x020000, 0xcc7fd344, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 
-	{ "096-c1.c1",    0x400000, 0xf17b8d89, 3 | BRF_GRA },           //  3 Sprite data
-	{ "096-c2.c2",    0x400000, 0x3840c508, 3 | BRF_GRA },           //  4 
-	{ "096-c3.c3",    0x400000, 0x55f9ee1e, 3 | BRF_GRA },           //  5 
-	{ "096-c4.c4",    0x400000, 0x585b7e47, 3 | BRF_GRA },           //  6 
-	{ "096-c5.c5",    0x400000, 0xc75a753c, 3 | BRF_GRA },           //  7 
-	{ "096-c6.c6",    0x400000, 0x9a9d2f7a, 3 | BRF_GRA },           //  8 
-	{ "096-c7.c7",    0x200000, 0x51bd8ab2, 3 | BRF_GRA },           //  9 
-	{ "096-c8.c8",    0x200000, 0x9a34f99c, 3 | BRF_GRA },           // 10 
+	{ "096-c1.c1",    0x400000, 0xf17b8d89, 3 | BRF_GRA },           //  3 Sprite data		/ TC5332205
+	{ "096-c2.c2",    0x400000, 0x3840c508, 3 | BRF_GRA },           //  4 					/ TC5332205
+	{ "096-c3.c3",    0x400000, 0x55f9ee1e, 3 | BRF_GRA },           //  5 					/ TC5332205
+	{ "096-c4.c4",    0x400000, 0x585b7e47, 3 | BRF_GRA },           //  6 					/ TC5332205
+	{ "096-c5.c5",    0x400000, 0xc75a753c, 3 | BRF_GRA },           //  7 					/ TC5332205
+	{ "096-c6.c6",    0x400000, 0x9a9d2f7a, 3 | BRF_GRA },           //  8 					/ TC5332205
+	{ "096-c7.c7",    0x200000, 0x51bd8ab2, 3 | BRF_GRA },           //  9 					/ TC5316200
+	{ "096-c8.c8",    0x200000, 0x9a34f99c, 3 | BRF_GRA },           // 10 					/ TC5316200
 
-	{ "096-m1.m1",    0x020000, 0xcb07b659, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "096-m1.m1",    0x020000, 0xcb07b659, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ TC531001
 
-	{ "096-v1.v1",    0x200000, 0xe2c32074, 5 | BRF_SND },           // 12 Sound data
-	{ "096-v2.v2",    0x200000, 0xa290eee7, 5 | BRF_SND },           // 13 
-	{ "096-v3.v3",    0x200000, 0x199d12ea, 5 | BRF_SND },           // 14 
+	{ "096-v1.v1",    0x200000, 0xe2c32074, 5 | BRF_SND },           // 12 Sound data		/ TC5316200
+	{ "096-v2.v2",    0x200000, 0xa290eee7, 5 | BRF_SND },           // 13 					/ TC5316200
+	{ "096-v3.v3",    0x200000, 0x199d12ea, 5 | BRF_SND },           // 14 					/ TC5316200
 };
 
 STDROMPICKEXT(aof3, aof3, neogeo)
@@ -4341,27 +4378,28 @@ struct BurnDriver BurnDrvAof3 = {
 };
 
 // Art of Fighting 3 - The Path of the Warrior (Korean release)
+/* KOREAN VERSION */
 
 static struct BurnRomInfo aof3kRomDesc[] = {
 	{ "196-p1k.p1",   0x100000, 0xa0780789, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "096-p2.sp2",   0x200000, 0x4d5a2602, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "096-p2.sp2",   0x200000, 0x4d5a2602, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC5316200
 
-	{ "096-s1.s1",    0x020000, 0xcc7fd344, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "096-s1.s1",    0x020000, 0xcc7fd344, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 
-	{ "096-c1.c1",    0x400000, 0xf17b8d89, 3 | BRF_GRA },           //  3 Sprite data
-	{ "096-c2.c2",    0x400000, 0x3840c508, 3 | BRF_GRA },           //  4 
-	{ "096-c3.c3",    0x400000, 0x55f9ee1e, 3 | BRF_GRA },           //  5 
-	{ "096-c4.c4",    0x400000, 0x585b7e47, 3 | BRF_GRA },           //  6 
-	{ "096-c5.c5",    0x400000, 0xc75a753c, 3 | BRF_GRA },           //  7 
-	{ "096-c6.c6",    0x400000, 0x9a9d2f7a, 3 | BRF_GRA },           //  8 
-	{ "096-c7.c7",    0x200000, 0x51bd8ab2, 3 | BRF_GRA },           //  9 
-	{ "096-c8.c8",    0x200000, 0x9a34f99c, 3 | BRF_GRA },           // 10 
+	{ "096-c1.c1",    0x400000, 0xf17b8d89, 3 | BRF_GRA },           //  3 Sprite data		/ TC5332205
+	{ "096-c2.c2",    0x400000, 0x3840c508, 3 | BRF_GRA },           //  4 					/ TC5332205
+	{ "096-c3.c3",    0x400000, 0x55f9ee1e, 3 | BRF_GRA },           //  5 					/ TC5332205
+	{ "096-c4.c4",    0x400000, 0x585b7e47, 3 | BRF_GRA },           //  6 					/ TC5332205
+	{ "096-c5.c5",    0x400000, 0xc75a753c, 3 | BRF_GRA },           //  7 					/ TC5332205
+	{ "096-c6.c6",    0x400000, 0x9a9d2f7a, 3 | BRF_GRA },           //  8 					/ TC5332205
+	{ "096-c7.c7",    0x200000, 0x51bd8ab2, 3 | BRF_GRA },           //  9 					/ TC5316200
+	{ "096-c8.c8",    0x200000, 0x9a34f99c, 3 | BRF_GRA },           // 10 					/ TC5316200
 
-	{ "096-m1.m1",    0x020000, 0xcb07b659, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "096-m1.m1",    0x020000, 0xcb07b659, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ TC531001
 
-	{ "096-v1.v1",    0x200000, 0xe2c32074, 5 | BRF_SND },           // 12 Sound data
-	{ "096-v2.v2",    0x200000, 0xa290eee7, 5 | BRF_SND },           // 13 
-	{ "096-v3.v3",    0x200000, 0x199d12ea, 5 | BRF_SND },           // 14 
+	{ "096-v1.v1",    0x200000, 0xe2c32074, 5 | BRF_SND },           // 12 Sound data		/ TC5316200
+	{ "096-v2.v2",    0x200000, 0xa290eee7, 5 | BRF_SND },           // 13 					/ TC5316200
+	{ "096-v3.v3",    0x200000, 0x199d12ea, 5 | BRF_SND },           // 14 					/ TC5316200 
 };
 
 STDROMPICKEXT(aof3k, aof3k, neogeo)
@@ -4384,11 +4422,11 @@ static struct BurnRomInfo kof96RomDesc[] = {
 	{ "214-p1.p1",    0x100000, 0x52755d74, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
 	{ "214-p2.sp2",   0x200000, 0x002ccb73, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC5316200
 	/* also found MVS sets with EP1 / EP2 / EP3 and EP4 on eprom and P5 on TC53162000CP 
-	   on board NEO-MVS PROGSS3; same rom data as in kof96h?
-	{ "214-epr.ep1",  0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ 27C240-12 / MX 27C4096DC-15
-	{ "214-epr.ep2",  0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  1 					/ MX 27C4096DC-12 / MX 27C4096DC-15
-	{ "214-epr.ep3",  0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  2 					/ 27C240-15 / MX 27C4096DC-15
-	{ "214-epr.ep4",  0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  3 					/ 27C240-12 / MX 27C4096DC-15
+	on PROG board NEO-MVS PROGSS3; same rom data as in kof96h?
+	{ "214-epr.ep1",  0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ 27C240  / 27C4096
+	{ "214-epr.ep2",  0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  1 					/ 27C4096 / 27C4096
+	{ "214-epr.ep3",  0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  2 					/ 27C240  / 27C4096
+	{ "214-epr.ep4",  0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  3 					/ 27C240  / 27C4096
 	{ "214-p5.p5",    0x200000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  4 					/ TC5316200CP */
 
 	{ "214-s1.s1",    0x020000, 0x1254cbdb, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
@@ -5212,8 +5250,8 @@ static struct BurnRomInfo mslug2RomDesc[] = {
 	{ "241-s1.s1",    0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
 
 	/* Different layout with 8xC (mask rom) also exists on NEO-MVS CHA256; 
-	   chip labels are 241-C1, 241-C2, 241-C3, 241-C4, 241-C5, 241-C6, 241-C7 and 241-C8;  
-	   rom data below need to be confirmed
+	chip labels are 241-C1, 241-C2, 241-C3, 241-C4, 241-C5, 241-C6, 241-C7 and 241-C8;  
+	rom data below need to be confirmed
 	{ "241-c1.c1",    0x400000, 0xe2260f99, 3 | BRF_GRA | BRF_NODUMP },  //  3 Sprite data 	/ mask rom
 	{ "241-c2.c2",    0x400000, 0x92f07036, 3 | BRF_GRA | BRF_NODUMP },  //  4 				/ mask rom
 	{ "241-c3.c3",    0x400000, 0xd6bd7d81, 3 | BRF_GRA | BRF_NODUMP },  //  5 				/ mask rom
@@ -6324,33 +6362,29 @@ struct BurnDriver BurnDrvgaroubl = {
 };
 
 // Metal Slug 3 (NGM-2560)
+/* Original Version - Encrypted Code & GFX */ /* revision 2000.4.1 */ /* MVS VERSION */
 
 static struct BurnRomInfo mslug3RomDesc[] = {
-	{ "neo-sma",      0x040000, 0x9cd55736, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
-	/* The SMA for this release has a green colour marking;
-	/ also found another MVS set on NEO-MVS PROGLBA (1999.4.12) with white colour marking 
-	{ "neo-sma",      0x040000, 0x00000000, 9 | BRF_ESS | BRF_PRG | BRF_NODUMP }, //  0 68K code / NEO-SMA F99370109 */
-	
-	{ "256-pg1.p1",   0x400000, 0xb07edfd5, 1 | BRF_ESS | BRF_PRG }, //  1 
-	{ "256-pg2.p2",   0x400000, 0x6097c26b, 1 | BRF_ESS | BRF_PRG }, //  2 
+	{ "neo-sma",      0x040000, 0x9cd55736, 9 | BRF_ESS | BRF_PRG }, //  0 68K code		/ stored in the custom chip
+	/* The SMA for this release has a green colour marking; the older revision has a white colour marking */
+	{ "256-pg1.p1",   0x400000, 0xb07edfd5, 1 | BRF_ESS | BRF_PRG }, //  1 				/ TC5332202
+	{ "256-pg2.p2",   0x400000, 0x6097c26b, 1 | BRF_ESS | BRF_PRG }, //  2 				/ TC5332202
 
-	{ "256-c1.c1",    0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  3 Sprite data
-	{ "256-c2.c2",    0x800000, 0x944c362c, 3 | BRF_GRA },           //  4 
-	{ "256-c3.c3",    0x800000, 0x6e69d36f, 3 | BRF_GRA },           //  5 
-	{ "256-c4.c4",    0x800000, 0xb755b4eb, 3 | BRF_GRA },           //  6 
-	{ "256-c5.c5",    0x800000, 0x7aacab47, 3 | BRF_GRA },           //  7 
-	{ "256-c6.c6",    0x800000, 0xc698fd5d, 3 | BRF_GRA },           //  8 
-	{ "256-c7.c7",    0x800000, 0xcfceddd2, 3 | BRF_GRA },           //  9 
-	{ "256-c8.c8",    0x800000, 0x4d9be34c, 3 | BRF_GRA },           // 10 
+	{ "256-c1.c1",    0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  3 Sprite data	/ TC5364202
+	{ "256-c2.c2",    0x800000, 0x944c362c, 3 | BRF_GRA },           //  4 				/ TC5364202
+	{ "256-c3.c3",    0x800000, 0x6e69d36f, 3 | BRF_GRA },           //  5 				/ TC5364202		
+	{ "256-c4.c4",    0x800000, 0xb755b4eb, 3 | BRF_GRA },           //  6 				/ TC5364202
+	{ "256-c5.c5",    0x800000, 0x7aacab47, 3 | BRF_GRA },           //  7 				/ TC5364202
+	{ "256-c6.c6",    0x800000, 0xc698fd5d, 3 | BRF_GRA },           //  8 				/ TC5364202	
+	{ "256-c7.c7",    0x800000, 0xcfceddd2, 3 | BRF_GRA },           //  9 				/ TC5364202
+	{ "256-c8.c8",    0x800000, 0x4d9be34c, 3 | BRF_GRA },           // 10 				/ TC5364202
 	
-	{ "256-m1.m1",    0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
-	/* also found M1 on NEO-MVS CHAFIO (1999.6.14) (NEO-CMC 7042) with label sticker 8A06 on eprom
-	{ "8a06.m1",      0x080000, 0x00000000, 4 | BRF_ESS | BRF_PRG | BRF_NODUMP }, // 11 Z80 code / */
-	
-	{ "256-v1.v1",    0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data
-	{ "256-v2.v2",    0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13 
-	{ "256-v3.v3",    0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14 
-	{ "256-v4.v4",    0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15 
+	{ "256-m1.m1",    0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code		/ mask rom TC534000
+		
+	{ "256-v1.v1",    0x400000, 0xf2690241, 5 | BRF_SND },           // 12 Sound data 	/ TC5332204
+	{ "256-v2.v2",    0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 13 				/ TC5332204
+	{ "256-v3.v3",    0x400000, 0x0eaec17c, 5 | BRF_SND },           // 14 				/ TC5332204
+	{ "256-v4.v4",    0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 15 				/ TC5332204
 };
 
 STDROMPICKEXT(mslug3, mslug3, neogeo)
@@ -6432,26 +6466,27 @@ struct BurnDriver BurnDrvmslug3 = {
 };
 
 // Metal Slug 3 (NGH-2560)
+/* Original Version - Encrypted GFX */ /* revision 2000.3.17 */ /* AES VERSION */
 
 static struct BurnRomInfo mslug3hRomDesc[] = {
 	{ "256-ph1.p1",   0x100000, 0x9c42ca85, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "256-ph2.sp2",  0x400000, 0x1f3d8ce8, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "256-c1.c1",    0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  2 Sprite data
-	{ "256-c2.c2",    0x800000, 0x944c362c, 3 | BRF_GRA },           //  3 
-	{ "256-c3.c3",    0x800000, 0x6e69d36f, 3 | BRF_GRA },           //  4 
-	{ "256-c4.c4",    0x800000, 0xb755b4eb, 3 | BRF_GRA },           //  5 
-	{ "256-c5.c5",    0x800000, 0x7aacab47, 3 | BRF_GRA },           //  6 
-	{ "256-c6.c6",    0x800000, 0xc698fd5d, 3 | BRF_GRA },           //  7 
-	{ "256-c7.c7",    0x800000, 0xcfceddd2, 3 | BRF_GRA },           //  8 
-	{ "256-c8.c8",    0x800000, 0x4d9be34c, 3 | BRF_GRA },           //  9 
+	{ "256-c1.c1",    0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  2 Sprite data 	/ TC5364202
+	{ "256-c2.c2",    0x800000, 0x944c362c, 3 | BRF_GRA },           //  3 				/ TC5364202
+	{ "256-c3.c3",    0x800000, 0x6e69d36f, 3 | BRF_GRA },           //  4 				/ TC5364202
+	{ "256-c4.c4",    0x800000, 0xb755b4eb, 3 | BRF_GRA },           //  5 				/ TC5364202
+	{ "256-c5.c5",    0x800000, 0x7aacab47, 3 | BRF_GRA },           //  6 				/ TC5364202
+	{ "256-c6.c6",    0x800000, 0xc698fd5d, 3 | BRF_GRA },           //  7 				/ TC5364202
+	{ "256-c7.c7",    0x800000, 0xcfceddd2, 3 | BRF_GRA },           //  8 				/ TC5364202
+	{ "256-c8.c8",    0x800000, 0x4d9be34c, 3 | BRF_GRA },           //  9 				/ TC5364202
 
-	{ "256-m1.m1",    0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "256-m1.m1",    0x080000, 0xeaeec116, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code		/ mask rom TC534000
 
-	{ "256-v1.v1",    0x400000, 0xf2690241, 5 | BRF_SND },           // 11 Sound data
-	{ "256-v2.v2",    0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 12 
-	{ "256-v3.v3",    0x400000, 0x0eaec17c, 5 | BRF_SND },           // 13 
-	{ "256-v4.v4",    0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 14 
+	{ "256-v1.v1",    0x400000, 0xf2690241, 5 | BRF_SND },           // 11 Sound data	/ TC5332204
+	{ "256-v2.v2",    0x400000, 0x7e2a10bd, 5 | BRF_SND },           // 12 				/ TC5332204
+	{ "256-v3.v3",    0x400000, 0x0eaec17c, 5 | BRF_SND },           // 13 				/ TC5332204
+	{ "256-v4.v4",    0x400000, 0x9b4b22d4, 5 | BRF_SND },           // 14 				/ TC5332204
 };
 
 STDROMPICKEXT(mslug3h, mslug3h, neogeo)
@@ -6665,17 +6700,19 @@ struct BurnDriver BurnDrvkof2000n = {
 };
 
 // Zupapa!
+/* Original Version - Encrypted GFX */ /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo zupapaRomDesc[] = {
-	{ "070-p1.p1",    0x100000, 0x5a96203e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "070-p1.p1",    0x100000, 0x5a96203e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 	/ mask rom TC538200
 
-	{ "070-c1.c1",    0x800000, 0xf8ad02d8, 3 | BRF_GRA },           //  1 Sprite data
-	{ "070-c2.c2",    0x800000, 0x70156dde, 3 | BRF_GRA },           //  2 
+	/* The Encrypted Boards do _not_ have an s1 rom, data for it comes from the Cx ROMs */
+	{ "070-c1.c1",    0x800000, 0xf8ad02d8, 3 | BRF_GRA },           //  1 Sprite data 	/ mask rom TC5364205
+	{ "070-c2.c2",    0x800000, 0x70156dde, 3 | BRF_GRA },           //  2 				/ mask rom TC5364205
 
-	{ "070-epr.m1",   0x020000, 0x5a3b3191, 4 | BRF_ESS | BRF_PRG }, //  3 Z80 code
+	{ "070-epr.m1",   0x020000, 0x5a3b3191, 4 | BRF_ESS | BRF_PRG }, //  3 Z80 code		/ M27C1001
 	/* M1 on eprom, correct chip label unknown */
 
-	{ "070-v1.v1",    0x200000, 0xd3a7e1ff, 5 | BRF_SND },           //  4 Sound data
+	{ "070-v1.v1",    0x200000, 0xd3a7e1ff, 5 | BRF_SND },           //  4 Sound data	/ mask rom TC5316200
 };
 
 STDROMPICKEXT(zupapa, zupapa, neogeo)
@@ -6697,14 +6734,16 @@ struct BurnDriver BurnDrvZupapa = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Sengoku 3 / Sengoku Densho 2001 (NGH-261?)
+// Sengoku 3 / Sengoku Densho 2001 
+/* Original Version - Encrypted GFX */
 
 static struct BurnRomInfo sengoku3RomDesc[] = {
-	/* also found AES set with 261-PH1 on mask rom on board NEO-AEG PROGBK1F; is this set is (NGH-261)? */
+	/* also found AES set with P1 on mask rom on PROG board NEO-AEG PROGBK1F; chip label is 261-PH1
+	and CHA board NEO-AEG CHAFIO (1999.8.10) (NEO-CMC 7042)	*/
 	{ "261-ph1.p1",   0x200000, 0xe0d4bc0a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	/* also found MVS set with mask rom 261-PG1.P1 on board NEO-MVS PROGBK1; This set seems undumped (NGM-261)?
-	{ "261-pg1.p1",   0x200000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  0 68K code / mask rom */
-	
+	/* also found MVS set with P1 on mask rom on PROG board NEO-MVS PROGBK1; chip label is 261-PG1
+	and CHA board NEO-MVS CHAFIO (1999.6.14) (NEO-CMC 7042) */
+		
 	{ "261-c1.c1",    0x800000, 0xded84d9c, 3 | BRF_GRA },           //  1 Sprite data
 	{ "261-c2.c2",    0x800000, 0xb8eb4348, 3 | BRF_GRA },           //  2 
 	{ "261-c3.c3",    0x800000, 0x84e2034a, 3 | BRF_GRA },           //  3 
@@ -7920,15 +7959,14 @@ struct BurnDriver BurnDrvmslug5 = {
 
 
 // Metal Slug 5 (NGH-2680)
+/* Encrypted Set */ /* AES release of the game but is also found in later MVS carts */
 
 static struct BurnRomInfo mslug5hRomDesc[] = {
-	/* also found AES set with P1 / P2 with different chip labels on mask rom on board NEO-AEG PROGBK3S (2003.6.10); 
-	   and M1 on eprom with label sticker 268-M1 on board NEO-MVS CHAFIO (2003.7.24) (NEO-CMC 7050) 
-	{ "268-p1cr2.p1",  0x400000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "268-p2cr2.p2",  0x400000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  1 
-	{ "268-m1.m1",     0x080000, 0x4a5a6e0e, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code / M27C4001 */
 	{ "268-p1c.p1",    0x400000, 0x3636690a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "268-p2c.p2",    0x400000, 0x8dfc47a2, 1 | BRF_ESS | BRF_PRG }, //  1 
+	/* also found AES set with P1 / P2 on mask rom on PROG board NEO-AEG PROGBK3S (2003.6.10); 
+	chip labels are 268-P1CR2 and 268-P2CR2
+	and M1 on eprom M27C4001 with label sticker 268-M1 on CHA board NEO-MVS CHAFIO (2003.7.24) (NEO-CMC 7050) */
 
 	{ "268-c1c.c1",    0x800000, 0xab7c389a, 3 | BRF_GRA },           //  2 Sprite data
 	{ "268-c2c.c2",    0x800000, 0x3560881b, 3 | BRF_GRA },           //  3 
@@ -8892,9 +8930,7 @@ static struct BurnRomInfo kof2003RomDesc[] = {
 	{ "271-c8c.c8",   0x800000, 0x20ec4fdc, 3 | BRF_GRA },           // 10 
 
 	{ "271-m1c.m1",   0x080000, 0xf5515629, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
-	/* also found M1 with label 271M1 on sticker on a board NEO-MVS CHAFIO (2003.7.24) 
-	{ "271m1.m1",     0x080000, 0x00000000, 4 | BRF_ESS | BRF_PRG | BRF_NODUMP }, // 11 Z80 code / M24C4001-10F1 */
-
+	
 	{ "271-v1c.v1",   0x800000, 0xffa3f8c7, 5 | BRF_SND },           // 12 Sound data
 	{ "271-v2c.v2",   0x800000, 0x5382c7d1, 5 | BRF_SND },           // 13 
 };
@@ -9767,19 +9803,19 @@ struct BurnDriver BurnDrvncommand = {
 
 static struct BurnRomInfo wh1RomDesc[] = {
 	{ "053-epr.p1",   0x080000, 0xd42e1e9a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code / D27C400
-	{ "053-epr.p2",   0x080000, 0x0e33e8a3, 1 | BRF_ESS | BRF_PRG }, //  1 / D27C400
-	/* P's on eprom, correct chip label unknown 
-	/ also found MVS set with p1 / p2 on TC534200 on board NEO-MVS PROG16; 	
-	  chip labels are 053-P1 and 053-P2 */
+	{ "053-epr.p2",   0x080000, 0x0e33e8a3, 1 | BRF_ESS | BRF_PRG }, //  1 			/ D27C400
+	/* P's on eprom, correct chip label unknown */
+	/* also found MVS set with p1 / p2 on TC534200 on PROG board NEO-MVS PROG16; chip labels are 053-P1 and 053-P2 
+	and M1 on TC541000 on CHA board NEO-MVS CHA42G-1; 53 is hand written on the chip */
 	
-	{ "053-s1.s1",    0x020000, 0x8c2c2d6b, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "053-s1.s1",    0x020000, 0x8c2c2d6b, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 
 	{ "053-c1.c1",    0x200000, 0x85eb5bce, 3 | BRF_GRA },           //  3 Sprite data
 	{ "053-c2.c2",    0x200000, 0xec93b048, 3 | BRF_GRA },           //  4 
 	{ "053-c3.c3",    0x100000, 0x0dd64965, 3 | BRF_GRA },           //  5 
 	{ "053-c4.c4",    0x100000, 0x9270d954, 3 | BRF_GRA },           //  6 
 
-	{ "053-m1.m1",    0x020000, 0x1bd9d04b, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
+	{ "053-m1.m1",    0x020000, 0x1bd9d04b, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code / TC54H1000
 
 	{ "053-v2.v2",    0x200000, 0xa68df485, 5 | BRF_SND },           //  8 Sound data
 	{ "053-v4.v4",    0x100000, 0x7bea8f66, 5 | BRF_SND },           //  9 
@@ -9800,22 +9836,27 @@ struct BurnDriver BurnDrvwh1 = {
 
 
 // World Heroes (ALH-005)
+/* AES VERSION */
 
 static struct BurnRomInfo wh1hRomDesc[] = {
-	{ "053-p1.p1",    0x080000, 0x95b574cb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "053-p2.p2",    0x080000, 0xf198ed45, 1 | BRF_ESS | BRF_PRG }, //  1 
+	/* also found AES set with p1 / p2 on eprom; correct chip label unknown
+	and v1 / v2 on PROG board NEO-AEG PROG-G2; chip labels are 053-V2 and  053-V4
+	also M1 on TC541000 on CHA board NEO-AEG CHA42G-2C; 53 is hand written on the chip */
+	
+	{ "053-p1.p1",    0x080000, 0x95b574cb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC534200
+	{ "053-p2.p2",    0x080000, 0xf198ed45, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC534200
+	
+	{ "053-s1.s1",    0x020000, 0x8c2c2d6b, 2 | BRF_GRA },           //  2 Text layer tiles	/ TC531000
 
-	{ "053-s1.s1",    0x020000, 0x8c2c2d6b, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "053-c1.c1",    0x200000, 0x85eb5bce, 3 | BRF_GRA },           //  3 Sprite data		/ TC5316200
+	{ "053-c2.c2",    0x200000, 0xec93b048, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "053-c3.c3",    0x100000, 0x0dd64965, 3 | BRF_GRA },           //  5 					/ TC538200
+	{ "053-c4.c4",    0x100000, 0x9270d954, 3 | BRF_GRA },           //  6 					/ TC538200
 
-	{ "053-c1.c1",    0x200000, 0x85eb5bce, 3 | BRF_GRA },           //  3 Sprite data
-	{ "053-c2.c2",    0x200000, 0xec93b048, 3 | BRF_GRA },           //  4 
-	{ "053-c3.c3",    0x100000, 0x0dd64965, 3 | BRF_GRA },           //  5 
-	{ "053-c4.c4",    0x100000, 0x9270d954, 3 | BRF_GRA },           //  6 
+	{ "053-m1.m1",    0x020000, 0x1bd9d04b, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code			/ TC531001
 
-	{ "053-m1.m1",    0x020000, 0x1bd9d04b, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
-
-	{ "053-v2.v2",    0x200000, 0xa68df485, 5 | BRF_SND },           //  8 Sound data
-	{ "053-v4.v4",    0x100000, 0x7bea8f66, 5 | BRF_SND },           //  9 
+	{ "053-v2.v2",    0x200000, 0xa68df485, 5 | BRF_SND },           //  8 Sound data		/ TC5316200
+	{ "053-v4.v4",    0x100000, 0x7bea8f66, 5 | BRF_SND },           //  9 					/ TC538200
 };
 
 STDROMPICKEXT(wh1h, wh1h, neogeo)
@@ -9839,17 +9880,17 @@ static struct BurnRomInfo wh1haRomDesc[] = {
 	{ "053-p2_a.p2",  0x080000, 0x98f2b158, 1 | BRF_ESS | BRF_PRG }, //  1 
 	/* Correct chip labels for p1 and p2 unknown */
 
-	{ "053-s1.s1",    0x020000, 0x8c2c2d6b, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "053-s1.s1",    0x020000, 0x8c2c2d6b, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 
-	{ "053-c1.c1",    0x200000, 0x85eb5bce, 3 | BRF_GRA },           //  3 Sprite data
-	{ "053-c2.c2",    0x200000, 0xec93b048, 3 | BRF_GRA },           //  4 
-	{ "053-c3.c3",    0x100000, 0x0dd64965, 3 | BRF_GRA },           //  5 
-	{ "053-c4.c4",    0x100000, 0x9270d954, 3 | BRF_GRA },           //  6 
+	{ "053-c1.c1",    0x200000, 0x85eb5bce, 3 | BRF_GRA },           //  3 Sprite data		/ TC5316200
+	{ "053-c2.c2",    0x200000, 0xec93b048, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "053-c3.c3",    0x100000, 0x0dd64965, 3 | BRF_GRA },           //  5 					/ TC538200
+	{ "053-c4.c4",    0x100000, 0x9270d954, 3 | BRF_GRA },           //  6 					/ TC538200
 
-	{ "053-m1.m1",    0x020000, 0x1bd9d04b, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code
+	{ "053-m1.m1",    0x020000, 0x1bd9d04b, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code			/ TC531001
 
-	{ "053-v2.v2",    0x200000, 0xa68df485, 5 | BRF_SND },           //  8 Sound data
-	{ "053-v4.v4",    0x100000, 0x7bea8f66, 5 | BRF_SND },           //  9 
+	{ "053-v2.v2",    0x200000, 0xa68df485, 5 | BRF_SND },           //  8 Sound data		/ TC5316200
+	{ "053-v4.v4",    0x100000, 0x7bea8f66, 5 | BRF_SND },           //  9 					/ TC538200
 };
 
 STDROMPICKEXT(wh1ha, wh1ha, neogeo)
@@ -9866,23 +9907,24 @@ struct BurnDriver BurnDrvwh1ha = {
 };
 
 // World Heroes 2 (ALM-006)(ALH-006)
+/* MVS AND AES VERSION */
 
 static struct BurnRomInfo wh2RomDesc[] = {
-	{ "057-p1.p1",    0x200000, 0x65a891d9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "057-p1.p1",    0x200000, 0x65a891d9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC5316200
 
-	{ "057-s1.s1",    0x020000, 0xfcaeb3a4, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "057-s1.s1",    0x020000, 0xfcaeb3a4, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "057-c1.c1",    0x200000, 0x21c6bb91, 3 | BRF_GRA },           //  2 Sprite data
-	{ "057-c2.c2",    0x200000, 0xa3999925, 3 | BRF_GRA },           //  3 
-	{ "057-c3.c3",    0x200000, 0xb725a219, 3 | BRF_GRA },           //  4 
-	{ "057-c4.c4",    0x200000, 0x8d96425e, 3 | BRF_GRA },           //  5 
-	{ "057-c5.c5",    0x200000, 0xb20354af, 3 | BRF_GRA },           //  6 
-	{ "057-c6.c6",    0x200000, 0xb13d1de3, 3 | BRF_GRA },           //  7 
+	{ "057-c1.c1",    0x200000, 0x21c6bb91, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "057-c2.c2",    0x200000, 0xa3999925, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "057-c3.c3",    0x200000, 0xb725a219, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "057-c4.c4",    0x200000, 0x8d96425e, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "057-c5.c5",    0x200000, 0xb20354af, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "057-c6.c6",    0x200000, 0xb13d1de3, 3 | BRF_GRA },           //  7 					/ TC5316200
 
-	{ "057-m1.m1",    0x020000, 0x8fa3bc77, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+	{ "057-m1.m1",    0x020000, 0x8fa3bc77, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code			/ TC531001
 
-	{ "057-v1.v1",    0x200000, 0x8877e301, 5 | BRF_SND },           //  9 Sound data
-	{ "057-v2.v2",    0x200000, 0xc1317ff4, 5 | BRF_SND },           // 10 
+	{ "057-v1.v1",    0x200000, 0x8877e301, 5 | BRF_SND },           //  9 Sound data		/ TC5316200
+	{ "057-v2.v2",    0x200000, 0xc1317ff4, 5 | BRF_SND },           // 10 					/ TC5316200
 };
 
 STDROMPICKEXT(wh2, wh2, neogeo)
@@ -9899,31 +9941,34 @@ struct BurnDriver BurnDrvwh2 = {
 };
 
 // World Heroes 2 Jet (ADM-007)(ADH-007)
+/* MVS AND AES VERSION */
 
 static struct BurnRomInfo wh2jRomDesc[] = {
-	{ "064-p1.p1",    0x200000, 0x385a2e86, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	/* also found AES set with PROG board NEO-AEG PROGRKB and CHA board NEO-AEG CHA256[B];
+	   same layouts and chip labels (on mask roms) */
+	{ "064-p1.p1",    0x200000, 0x385a2e86, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
 
-	{ "064-s1.s1",    0x020000, 0x2a03998a, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "064-s1.s1",    0x020000, 0x2a03998a, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
 	/* Different layout with 4xC (32mbit) on mask rom also exists on board NEO-MVS CHA256; 
 	/ chip labels are 064-C13, 064-C24, 064-C57 and 064-C68 
-	{ "064-c13.c1",   0x400000, 0x771a6365, 3 | BRF_GRA },           //  2 Sprite data 	/ mask rom
-	{ "064-c24.c2",   0x400000, 0xe7863a05, 3 | BRF_GRA },           //  3 				/ mask rom
-	{ "064-c57.c3",   0x400000, 0x64594ed4, 3 | BRF_GRA },           //  4 				/ mask rom
-	{ "064-c68.c4",   0x400000, 0x6e385398, 3 | BRF_GRA },           //  5 				/ mask rom */
-	{ "064-c1.c1",    0x200000, 0x2ec87cea, 3 | BRF_GRA },           //  2 Sprite data
-	{ "064-c2.c2",    0x200000, 0x526b81ab, 3 | BRF_GRA },           //  3 
-	{ "064-c3.c3",    0x200000, 0x436d1b31, 3 | BRF_GRA },           //  4 
-	{ "064-c4.c4",    0x200000, 0xf9c8dd26, 3 | BRF_GRA },           //  5 
-	{ "064-c5.c5",    0x200000, 0x8e34a9f4, 3 | BRF_GRA },           //  6 
-	{ "064-c6.c6",    0x200000, 0xa43e4766, 3 | BRF_GRA },           //  7 
-	{ "064-c7.c7",    0x200000, 0x59d97215, 3 | BRF_GRA },           //  8 
-	{ "064-c8.c8",    0x200000, 0xfc092367, 3 | BRF_GRA },           //  9 
+	{ "064-c13.c1",   0x400000, 0x771a6365, 3 | BRF_GRA },           //  2 Sprite data 		/ mask rom TC5332205
+	{ "064-c24.c2",   0x400000, 0xe7863a05, 3 | BRF_GRA },           //  3 					/ mask rom TC5332205
+	{ "064-c57.c3",   0x400000, 0x64594ed4, 3 | BRF_GRA },           //  4 					/ mask rom TC5332205
+	{ "064-c68.c4",   0x400000, 0x6e385398, 3 | BRF_GRA },           //  5 					/ mask rom TC5332205 */
+	{ "064-c1.c1",    0x200000, 0x2ec87cea, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "064-c2.c2",    0x200000, 0x526b81ab, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "064-c3.c3",    0x200000, 0x436d1b31, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "064-c4.c4",    0x200000, 0xf9c8dd26, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "064-c5.c5",    0x200000, 0x8e34a9f4, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "064-c6.c6",    0x200000, 0xa43e4766, 3 | BRF_GRA },           //  7 					/ TC5316200
+	{ "064-c7.c7",    0x200000, 0x59d97215, 3 | BRF_GRA },           //  8 					/ TC5316200
+	{ "064-c8.c8",    0x200000, 0xfc092367, 3 | BRF_GRA },           //  9 					/ TC5316200
 
-	{ "064-m1.m1",    0x020000, 0xd2eec9d3, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "064-m1.m1",    0x020000, 0xd2eec9d3, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ TC531001
 
-	{ "064-v1.v1",    0x200000, 0xaa277109, 5 | BRF_SND },           //  7 Sound data
-	{ "064-v2.v2",    0x200000, 0xb6527edd, 5 | BRF_SND },           //  8 
+	{ "064-v1.v1",    0x200000, 0xaa277109, 5 | BRF_SND },           //  7 Sound data		/ TC5316200
+	{ "064-v2.v2",    0x200000, 0xb6527edd, 5 | BRF_SND },           //  8 					/ TC5316200
 };
 
 STDROMPICKEXT(wh2j, wh2j, neogeo)
@@ -9940,25 +9985,26 @@ struct BurnDriver BurnDrvwh2j = {
 };
 
 // Aggressors of Dark Kombat / Tsuukai GANGAN Koushinkyoku (ADM-008)(ADH-008)
+/* MVS AND AES VERSION */
 
 static struct BurnRomInfo aodkRomDesc[] = {
-	{ "074-p1.p1",    0x200000, 0x62369553, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "074-p1.p1",    0x200000, 0x62369553, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
 
-	{ "074-s1.s1",    0x020000, 0x96148d2b, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "074-s1.s1",    0x020000, 0x96148d2b, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "074-c1.c1",    0x200000, 0xa0b39344, 3 | BRF_GRA },           //  2 Sprite data
-	{ "074-c2.c2",    0x200000, 0x203f6074, 3 | BRF_GRA },           //  3 
-	{ "074-c3.c3",    0x200000, 0x7fff4d41, 3 | BRF_GRA },           //  4 
-	{ "074-c4.c4",    0x200000, 0x48db3e0a, 3 | BRF_GRA },           //  5 
-	{ "074-c5.c5",    0x200000, 0xc74c5e51, 3 | BRF_GRA },           //  6 
-	{ "074-c6.c6",    0x200000, 0x73e8e7e0, 3 | BRF_GRA },           //  7 
-	{ "074-c7.c7",    0x200000, 0xac7daa01, 3 | BRF_GRA },           //  8 
-	{ "074-c8.c8",    0x200000, 0x14e7ad71, 3 | BRF_GRA },           //  9 
+	{ "074-c1.c1",    0x200000, 0xa0b39344, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "074-c2.c2",    0x200000, 0x203f6074, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "074-c3.c3",    0x200000, 0x7fff4d41, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "074-c4.c4",    0x200000, 0x48db3e0a, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "074-c5.c5",    0x200000, 0xc74c5e51, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "074-c6.c6",    0x200000, 0x73e8e7e0, 3 | BRF_GRA },           //  7 					/ TC5316200
+	{ "074-c7.c7",    0x200000, 0xac7daa01, 3 | BRF_GRA },           //  8 					/ TC5316200
+	{ "074-c8.c8",    0x200000, 0x14e7ad71, 3 | BRF_GRA },           //  9 					/ TC5316200
 
-	{ "074-m1.m1",    0x020000, 0x5a52a9d1, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "074-m1.m1",    0x020000, 0x5a52a9d1, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code			/ TC531001
 
-	{ "074-v1.v1",    0x200000, 0x7675b8fa, 5 | BRF_SND },           // 11 Sound data
-	{ "074-v2.v2",    0x200000, 0xa9da86e9, 5 | BRF_SND },           // 12 
+	{ "074-v1.v1",    0x200000, 0x7675b8fa, 5 | BRF_SND },           // 11 Sound data		/ TC5316200
+	{ "074-v2.v2",    0x200000, 0xa9da86e9, 5 | BRF_SND },           // 12 					/ TC5316200
 };
 
 STDROMPICKEXT(aodk, aodk, neogeo)
@@ -9977,24 +10023,27 @@ struct BurnDriver BurnDrvaodk = {
 // World Heroes Perfect
 
 static struct BurnRomInfo whpRomDesc[] = {
-	{ "090-p1.p1",    0x200000, 0xafaa4702, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	/* It also exists MVS sets with PROG board NEO-MVS PROGGSC and CHA board NEO-MVS CHA256, 
+	PROG board NEO-MVS PROGGSC and CHA board NEO-MVS CHA256B, PROG board NEO-MVS PROGBK1
+	and NEO-MVS CHA256B; same chip labels */
+	{ "090-p1.p1",    0x200000, 0xafaa4702, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC5316200
 
-	{ "090-s1.s1",    0x020000, 0x174a880f, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "090-s1.s1",    0x020000, 0x174a880f, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "090-c1.c1",    0x400000, 0xcd30ed9b, 3 | BRF_GRA },           //  2 Sprite data
-	{ "090-c2.c2",    0x400000, 0x10eed5ee, 3 | BRF_GRA },           //  3 
-	{ "064-c3.c3",    0x200000, 0x436d1b31, 3 | BRF_GRA },           //  4 
-	{ "064-c4.c4",    0x200000, 0xf9c8dd26, 3 | BRF_GRA },           //  5 
-	{ "064-c5.c5",    0x200000, 0x8e34a9f4, 3 | BRF_GRA },           //  6 
-	{ "064-c6.c6",    0x200000, 0xa43e4766, 3 | BRF_GRA },           //  7 
-	{ "064-c7.c7",    0x200000, 0x59d97215, 3 | BRF_GRA },           //  8 
-	{ "064-c8.c8",    0x200000, 0xfc092367, 3 | BRF_GRA },           //  9 
+	{ "090-c1.c1",    0x400000, 0xcd30ed9b, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC5332205
+	{ "090-c2.c2",    0x400000, 0x10eed5ee, 3 | BRF_GRA },           //  3 					/ mask rom TC5332205
+	{ "064-c3.c3",    0x200000, 0x436d1b31, 3 | BRF_GRA },           //  4 					/ mask rom TC5316200
+	{ "064-c4.c4",    0x200000, 0xf9c8dd26, 3 | BRF_GRA },           //  5 					/ mask rom TC5316200
+	{ "064-c5.c5",    0x200000, 0x8e34a9f4, 3 | BRF_GRA },           //  6 					/ mask rom TC5316200
+	{ "064-c6.c6",    0x200000, 0xa43e4766, 3 | BRF_GRA },           //  7 					/ mask rom TC5316200
+	{ "064-c7.c7",    0x200000, 0x59d97215, 3 | BRF_GRA },           //  8 					/ mask rom TC5316200
+	{ "064-c8.c8",    0x200000, 0xfc092367, 3 | BRF_GRA },           //  9 					/ mask rom TC5316200
 
-	{ "090-m1.m1",    0x020000, 0x28065668, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "090-m1.m1",    0x020000, 0x28065668, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code			/ mask rom TC531001
 
-	{ "090-v1.v1",    0x200000, 0x30cf2709, 5 | BRF_SND },           // 11 Sound data
-	{ "064-v2.v2",    0x200000, 0xb6527edd, 5 | BRF_SND },           // 12 
-	{ "090-v3.v3",    0x200000, 0x1908a7ce, 5 | BRF_SND },           // 13 
+	{ "090-v1.v1",    0x200000, 0x30cf2709, 5 | BRF_SND },           // 11 Sound data		/ mask rom TC5316200
+	{ "064-v2.v2",    0x200000, 0xb6527edd, 5 | BRF_SND },           // 12 					/ mask rom TC5316200
+	{ "090-v3.v3",    0x200000, 0x1908a7ce, 5 | BRF_SND },           // 13 					/ mask rom TC5316200
 };
 
 STDROMPICKEXT(whp, whp, neogeo)
@@ -10013,16 +10062,16 @@ struct BurnDriver BurnDrvwhp = {
 // Syougi No Tatsujin - Master of Syougi
 
 static struct BurnRomInfo mosyougiRomDesc[] = {
-	{ "203-p1.p1",    0x100000, 0x7ba70e2d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "203-p1.p1",    0x100000, 0x7ba70e2d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
 
-	{ "203-s1.s1",    0x020000, 0xbfdc8309, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "203-s1.s1",    0x020000, 0xbfdc8309, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "203-c1.c1",    0x200000, 0xbba9e8c0, 3 | BRF_GRA },           //  2 Sprite data
-	{ "203-c2.c2",    0x200000, 0x2574be03, 3 | BRF_GRA },           //  3 
+	{ "203-c1.c1",    0x200000, 0xbba9e8c0, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "203-c2.c2",    0x200000, 0x2574be03, 3 | BRF_GRA },           //  3 					/ TC5316200
 
-	{ "203-m1.m1",    0x020000, 0xa602c2c2, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "203-m1.m1",    0x020000, 0xa602c2c2, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code			/ TC531001
 
-	{ "203-v1.v1",    0x200000, 0xbaa2b9a5, 5 | BRF_SND },           //  5 Sound data
+	{ "203-v1.v1",    0x200000, 0xbaa2b9a5, 5 | BRF_SND },           //  5 Sound data		/ TC5316200
 };
 
 STDROMPICKEXT(mosyougi, mosyougi, neogeo)
@@ -10071,26 +10120,29 @@ struct BurnDriver BurnDrvovertop = {
 };
 
 // Ninja Master's - haoh-ninpo-cho
+/* MVS AND AES VERSION? */
 
 static struct BurnRomInfo ninjamasRomDesc[] = {
-	{ "217-p1.p1",    0x100000, 0x3e97ed69, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "217-p2.sp2",   0x200000, 0x191fca88, 1 | BRF_ESS | BRF_PRG }, //  1 
+	/* also found AES set with PROG board NEO-AEG PROGBK1Y and CHA board NEO-AEG CHA256RY
+	   same layouts and chip labels (on mask roms) */
+	{ "217-p1.p1",    0x100000, 0x3e97ed69, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC538200
+	{ "217-p2.sp2",   0x200000, 0x191fca88, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC5316200
 
-	{ "217-s1.s1",    0x020000, 0x8ff782f0, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "217-s1.s1",    0x020000, 0x8ff782f0, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 
-	{ "217-c1.c1",    0x400000, 0x5fe97bc4, 3 | BRF_GRA },           //  3 Sprite data
-	{ "217-c2.c2",    0x400000, 0x886e0d66, 3 | BRF_GRA },           //  4 
-	{ "217-c3.c3",    0x400000, 0x59e8525f, 3 | BRF_GRA },           //  5 
-	{ "217-c4.c4",    0x400000, 0x8521add2, 3 | BRF_GRA },           //  6 
-	{ "217-c5.c5",    0x400000, 0xfb1896e5, 3 | BRF_GRA },           //  7 
-	{ "217-c6.c6",    0x400000, 0x1c98c54b, 3 | BRF_GRA },           //  8 
-	{ "217-c7.c7",    0x400000, 0x8b0ede2e, 3 | BRF_GRA },           //  9 
-	{ "217-c8.c8",    0x400000, 0xa085bb61, 3 | BRF_GRA },           // 10 
+	{ "217-c1.c1",    0x400000, 0x5fe97bc4, 3 | BRF_GRA },           //  3 Sprite data 		/ TC5332205
+	{ "217-c2.c2",    0x400000, 0x886e0d66, 3 | BRF_GRA },           //  4 					/ TC5332205
+	{ "217-c3.c3",    0x400000, 0x59e8525f, 3 | BRF_GRA },           //  5 					/ TC5332205
+	{ "217-c4.c4",    0x400000, 0x8521add2, 3 | BRF_GRA },           //  6 					/ TC5332205
+	{ "217-c5.c5",    0x400000, 0xfb1896e5, 3 | BRF_GRA },           //  7 					/ TC5332205
+	{ "217-c6.c6",    0x400000, 0x1c98c54b, 3 | BRF_GRA },           //  8 					/ TC5332205
+	{ "217-c7.c7",    0x400000, 0x8b0ede2e, 3 | BRF_GRA },           //  9 					/ TC5332205
+	{ "217-c8.c8",    0x400000, 0xa085bb61, 3 | BRF_GRA },           // 10 					/ TC5332205
 
-	{ "217-m1.m1",    0x020000, 0xd00fb2af, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "217-m1.m1",    0x020000, 0xd00fb2af, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ TC531001
 
-	{ "217-v1.v1",    0x400000, 0x1c34e013, 5 | BRF_SND },           // 12 Sound data
-	{ "217-v2.v2",    0x200000, 0x22f1c681, 5 | BRF_SND },           // 13 
+	{ "217-v1.v1",    0x400000, 0x1c34e013, 5 | BRF_SND },           // 12 Sound data 		/ TC5332204
+	{ "217-v2.v2",    0x200000, 0x22f1c681, 5 | BRF_SND },           // 13 					/ TC5316200
 };
 
 STDROMPICKEXT(ninjamas, ninjamas, neogeo)
@@ -10227,24 +10279,24 @@ struct BurnDriver BurnDrvjanshin = {
 // Pulstar
 
 static struct BurnRomInfo pulstarRomDesc[] = {
-	{ "089-p1.p1",    0x100000, 0x5e5847a2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "089-p2.sp2",   0x200000, 0x028b774c, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "089-p1.p1",    0x100000, 0x5e5847a2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC538200
+	{ "089-p2.sp2",   0x200000, 0x028b774c, 1 | BRF_ESS | BRF_PRG }, //  1 					/ mask rom TC5316200
 
-	{ "089-s1.s1",    0x020000, 0xc79fc2c8, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "089-s1.s1",    0x020000, 0xc79fc2c8, 2 | BRF_GRA },           //  2 Text layer tiles / mask rom TC531000
 
-	{ "089-c1.c1",    0x400000, 0xf4e97332, 3 | BRF_GRA },           //  3 Sprite data
-	{ "089-c2.c2",    0x400000, 0x836d14da, 3 | BRF_GRA },           //  4 
-	{ "089-c3.c3",    0x400000, 0x913611c4, 3 | BRF_GRA },           //  5 
-	{ "089-c4.c4",    0x400000, 0x44cef0e3, 3 | BRF_GRA },           //  6 
-	{ "089-c5.c5",    0x400000, 0x89baa1d7, 3 | BRF_GRA },           //  7 
-	{ "089-c6.c6",    0x400000, 0xb2594d56, 3 | BRF_GRA },           //  8 
-	{ "089-c7.c7",    0x200000, 0x6a5618ca, 3 | BRF_GRA },           //  9 
-	{ "089-c8.c8",    0x200000, 0xa223572d, 3 | BRF_GRA },           // 10 
+	{ "089-c1.c1",    0x400000, 0xf4e97332, 3 | BRF_GRA },           //  3 Sprite data		/ mask rom TC5332205
+	{ "089-c2.c2",    0x400000, 0x836d14da, 3 | BRF_GRA },           //  4 					/ mask rom TC5332205
+	{ "089-c3.c3",    0x400000, 0x913611c4, 3 | BRF_GRA },           //  5 					/ mask rom TC5332205
+	{ "089-c4.c4",    0x400000, 0x44cef0e3, 3 | BRF_GRA },           //  6 					/ mask rom TC5332205
+	{ "089-c5.c5",    0x400000, 0x89baa1d7, 3 | BRF_GRA },           //  7 					/ mask rom TC5332205
+	{ "089-c6.c6",    0x400000, 0xb2594d56, 3 | BRF_GRA },           //  8 					/ mask rom TC5332205
+	{ "089-c7.c7",    0x200000, 0x6a5618ca, 3 | BRF_GRA },           //  9 					/ mask rom TC5316200
+	{ "089-c8.c8",    0x200000, 0xa223572d, 3 | BRF_GRA },           // 10 					/ mask rom TC5316200
 
-	{ "089-m1.m1",    0x020000, 0xff3df7c7, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "089-m1.m1",    0x020000, 0xff3df7c7, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ mask rom TC531001
 
-	{ "089-v1.v1",    0x400000, 0x6f726ecb, 5 | BRF_SND },           // 12 Sound data
-	{ "089-v2.v2",    0x400000, 0x9d2db551, 5 | BRF_SND },           // 13 
+	{ "089-v1.v1",    0x400000, 0x6f726ecb, 5 | BRF_SND },           // 12 Sound data		/ mask rom TC5332204
+	{ "089-v2.v2",    0x400000, 0x9d2db551, 5 | BRF_SND },           // 13 					/ mask rom TC5332204
 };
 
 STDROMPICKEXT(pulstar, pulstar, neogeo)
@@ -10337,23 +10389,23 @@ struct BurnDriver BurnDrvpreisle2 = {
 // Spin Master / Miracle Adventure
 
 static struct BurnRomInfo spinmastRomDesc[] = {
-	{ "062-p1.p1",    0x100000, 0x37aba1aa, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "062-p2.sp2",   0x100000, 0xf025ab77, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "062-p1.p1",    0x100000, 0x37aba1aa, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ mask rom TC538200
+	{ "062-p2.sp2",   0x100000, 0xf025ab77, 1 | BRF_ESS | BRF_PRG }, //  1 					/ mask rom TC538200
 
-	{ "062-s1.s1",    0x020000, 0x289e2bbe, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "062-s1.s1",    0x020000, 0x289e2bbe, 2 | BRF_GRA },           //  2 Text layer tiles / mask rom TC531000
 
-	{ "062-c1.c1",    0x100000, 0xa9375aa2, 3 | BRF_GRA },           //  3 Sprite data
-	{ "062-c2.c2",    0x100000, 0x0e73b758, 3 | BRF_GRA },           //  4 
-	{ "062-c3.c3",    0x100000, 0xdf51e465, 3 | BRF_GRA },           //  5 
-	{ "062-c4.c4",    0x100000, 0x38517e90, 3 | BRF_GRA },           //  6 
-	{ "062-c5.c5",    0x100000, 0x7babd692, 3 | BRF_GRA },           //  7 
-	{ "062-c6.c6",    0x100000, 0xcde5ade5, 3 | BRF_GRA },           //  8 
-	{ "062-c7.c7",    0x100000, 0xbb2fd7c0, 3 | BRF_GRA },           //  9 
-	{ "062-c8.c8",    0x100000, 0x8d7be933, 3 | BRF_GRA },           // 10 
+	{ "062-c1.c1",    0x100000, 0xa9375aa2, 3 | BRF_GRA },           //  3 Sprite data		/ mask rom TC538200
+	{ "062-c2.c2",    0x100000, 0x0e73b758, 3 | BRF_GRA },           //  4 					/ mask rom TC538200
+	{ "062-c3.c3",    0x100000, 0xdf51e465, 3 | BRF_GRA },           //  5 					/ mask rom TC538200
+	{ "062-c4.c4",    0x100000, 0x38517e90, 3 | BRF_GRA },           //  6 					/ mask rom TC538200
+	{ "062-c5.c5",    0x100000, 0x7babd692, 3 | BRF_GRA },           //  7 					/ mask rom TC538200
+	{ "062-c6.c6",    0x100000, 0xcde5ade5, 3 | BRF_GRA },           //  8 					/ mask rom TC538200
+	{ "062-c7.c7",    0x100000, 0xbb2fd7c0, 3 | BRF_GRA },           //  9 					/ mask rom TC538200
+	{ "062-c8.c8",    0x100000, 0x8d7be933, 3 | BRF_GRA },           // 10 					/ mask rom TC538200
 
-	{ "062-m1.m1",    0x020000, 0x76108b2f, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "062-m1.m1",    0x020000, 0x76108b2f, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ mask rom TC531001
 
-	{ "062-v1.v1",    0x100000, 0xcc281aef, 5 | BRF_SND },           // 12 Sound data
+	{ "062-v1.v1",    0x100000, 0xcc281aef, 5 | BRF_SND },           // 12 Sound data		/ mask rom TC538200
 };
 
 STDROMPICKEXT(spinmast, spinmast, neogeo)
@@ -10370,23 +10422,26 @@ struct BurnDriver BurnDrvspinmast = {
 };
 
 // Windjammers / Flying Power Disc
+/* MVS AND AES VERSION? */
 
 static struct BurnRomInfo wjammersRomDesc[] = {
-	{ "065-p1.p1",    0x100000, 0x6692c140, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	/* also found AES set with PROG board NEO-AEG PROG42G-1 and CHA board NEO-AEG CHA42G-1
+	   same layouts and chip labels */
+	{ "065-p1.p1",    0x100000, 0x6692c140, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ mask rom TC538200
 
-	{ "065-s1.s1",    0x020000, 0x074b5723, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "065-s1.s1",    0x020000, 0x074b5723, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "065-c1.c1",    0x100000, 0xc7650204, 3 | BRF_GRA },           //  2 Sprite data
-	{ "065-c2.c2",    0x100000, 0xd9f3e71d, 3 | BRF_GRA },           //  3 
-	{ "065-c3.c3",    0x100000, 0x40986386, 3 | BRF_GRA },           //  4 
-	{ "065-c4.c4",    0x100000, 0x715e15ff, 3 | BRF_GRA },           //  5 
+	{ "065-c1.c1",    0x100000, 0xc7650204, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC538200
+	{ "065-c2.c2",    0x100000, 0xd9f3e71d, 3 | BRF_GRA },           //  3 					/ mask rom TC538200
+	{ "065-c3.c3",    0x100000, 0x40986386, 3 | BRF_GRA },           //  4 					/ mask rom TC538200
+	{ "065-c4.c4",    0x100000, 0x715e15ff, 3 | BRF_GRA },           //  5 					/ mask rom TC538200
 
-	{ "065-m1.m1",    0x020000, 0x52c23cfc, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "065-m1.m1",    0x020000, 0x52c23cfc, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ mask rom TC531001
 
-	{ "065-v1.v1",    0x100000, 0xce8b3698, 5 | BRF_SND },           //  7 Sound data
-	{ "065-v2.v2",    0x100000, 0x659f9b96, 5 | BRF_SND },           //  8 
-	{ "065-v3.v3",    0x100000, 0x39f73061, 5 | BRF_SND },           //  9 
-	{ "065-v4.v4",    0x100000, 0x5dee7963, 5 | BRF_SND },           // 10 
+	{ "065-v1.v1",    0x100000, 0xce8b3698, 5 | BRF_SND },           //  7 Sound data		/ mask rom TC538200
+	{ "065-v2.v2",    0x100000, 0x659f9b96, 5 | BRF_SND },           //  8 					/ mask rom TC538200
+	{ "065-v3.v3",    0x100000, 0x39f73061, 5 | BRF_SND },           //  9 					/ mask rom TC538200
+	{ "065-v4.v4",    0x100000, 0x5dee7963, 5 | BRF_SND },           // 10 					/ mask rom TC538200
 };
 
 STDROMPICKEXT(wjammers, wjammers, neogeo)
@@ -10405,20 +10460,20 @@ struct BurnDriver BurnDrvwjammers = {
 // Karnov's Revenge / Fighter's History Dynamite
 
 static struct BurnRomInfo karnovrRomDesc[] = {
-	{ "066-p1.p1",    0x100000, 0x8c86fd22, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "066-p1.p1",    0x100000, 0x8c86fd22, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
 
-	{ "066-s1.s1",    0x020000, 0xbae5d5e5, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "066-s1.s1",    0x020000, 0xbae5d5e5, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "066-c1.c1",    0x200000, 0x09dfe061, 3 | BRF_GRA },           //  2 Sprite data
-	{ "066-c2.c2",    0x200000, 0xe0f6682a, 3 | BRF_GRA },           //  3 
-	{ "066-c3.c3",    0x200000, 0xa673b4f7, 3 | BRF_GRA },           //  4 
-	{ "066-c4.c4",    0x200000, 0xcb3dc5f4, 3 | BRF_GRA },           //  5 
-	{ "066-c5.c5",    0x200000, 0x9a28785d, 3 | BRF_GRA },           //  6 
-	{ "066-c6.c6",    0x200000, 0xc15c01ed, 3 | BRF_GRA },           //  7 
+	{ "066-c1.c1",    0x200000, 0x09dfe061, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "066-c2.c2",    0x200000, 0xe0f6682a, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "066-c3.c3",    0x200000, 0xa673b4f7, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "066-c4.c4",    0x200000, 0xcb3dc5f4, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "066-c5.c5",    0x200000, 0x9a28785d, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "066-c6.c6",    0x200000, 0xc15c01ed, 3 | BRF_GRA },           //  7 					/ TC5316200
 
-	{ "066-m1.m1",    0x020000, 0x030beae4, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+	{ "066-m1.m1",    0x020000, 0x030beae4, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code			/ TC531001
 
-	{ "066-v1.v1",    0x200000, 0x0b7ea37a, 5 | BRF_SND },           //  9 Sound data
+	{ "066-v1.v1",    0x200000, 0x0b7ea37a, 5 | BRF_SND },           //  9 Sound data		/ TC5316200
 };
 
 STDROMPICKEXT(karnovr, karnovr, neogeo)
@@ -10435,23 +10490,24 @@ struct BurnDriver BurnDrvkarnovr = {
 };
 
 // Street Hoop / Street Slam / Dunk Dream (DEM-004) (DEH-004)
+/* MVS AND AES VERSION */
 
 static struct BurnRomInfo strhoopRomDesc[] = {
-	{ "079-p1.p1",    0x100000, 0x5e78328e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "079-p1.p1",    0x100000, 0x5e78328e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
 
-	{ "079-s1.s1",    0x020000, 0x3ac06665, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "079-s1.s1",    0x020000, 0x3ac06665, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "079-c1.c1",    0x200000, 0x0581c72a, 3 | BRF_GRA },           //  2 Sprite data
-	{ "079-c2.c2",    0x200000, 0x5b9b8fb6, 3 | BRF_GRA },           //  3 
-	{ "079-c3.c3",    0x200000, 0xcd65bb62, 3 | BRF_GRA },           //  4 
-	{ "079-c4.c4",    0x200000, 0xa4c90213, 3 | BRF_GRA },           //  5 
+	{ "079-c1.c1",    0x200000, 0x0581c72a, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "079-c2.c2",    0x200000, 0x5b9b8fb6, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "079-c3.c3",    0x200000, 0xcd65bb62, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "079-c4.c4",    0x200000, 0xa4c90213, 3 | BRF_GRA },           //  5 					/ TC5316200
 
-	{ "079-m1.m1",    0x020000, 0xbee3455a, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "079-m1.m1",    0x020000, 0xbee3455a, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ TC531001
 
-	{ "079-v1.v1",    0x200000, 0x718a2400, 5 | BRF_SND },           //  7 Sound data
-	{ "079-v2.v2",    0x100000, 0x720774eb, 5 | BRF_SND },           //  8 
+	{ "079-v1.v1",    0x200000, 0x718a2400, 5 | BRF_SND },           //  7 Sound data		/ TC5316200
+	{ "079-v2.v2",    0x100000, 0x720774eb, 5 | BRF_SND },           //  8 					/ TC538200
 	/* AES 079-v2 is only 4 mbit (TC534200), data is the same 
-	{ "079-v2.v2",    0x080000, 0xb19884f8, 5 | BRF_SND },           //  8 */
+	{ "079-v2.v2",    0x080000, 0xb19884f8, 5 | BRF_SND },           //  8 					/ TC534200 */
 };
 
 STDROMPICKEXT(strhoop, strhoop, neogeo)
@@ -10619,18 +10675,20 @@ struct BurnDriver BurnDrvnitdbl = {
 };
 
 // Gururin
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo gururinRomDesc[] = {
-	{ "067-p1.p1",    0x080000, 0x4cea8a49, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	/* It also exist MVS set with PROG board NEO-MVS PROG16 and CHA board NEO-MVS CHA256; same chip labels */
+	{ "067-p1.p1",    0x080000, 0x4cea8a49, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ UM8303B
 
-	{ "067-s1.s1",    0x020000, 0xb119e1eb, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "067-s1.s1",    0x020000, 0xb119e1eb, 2 | BRF_GRA },           //  1 Text layer tiles / UMK300
 
-	{ "067-c1.c1",    0x200000, 0x35866126, 3 | BRF_GRA },           //  2 Sprite data
-	{ "067-c2.c2",    0x200000, 0x9db64084, 3 | BRF_GRA },           //  3 
+	{ "067-c1.c1",    0x200000, 0x35866126, 3 | BRF_GRA },           //  2 Sprite data		/ UMT301B
+	{ "067-c2.c2",    0x200000, 0x9db64084, 3 | BRF_GRA },           //  3 					/ UMT302B
 
-	{ "067-m1.m1",    0x020000, 0x9e3c6328, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "067-m1.m1",    0x020000, 0x9e3c6328, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code			/ UML359
 
-	{ "067-v1.v1",    0x080000, 0xcf23afd0, 5 | BRF_SND },           //  5 Sound data
+	{ "067-v1.v1",    0x080000, 0xcf23afd0, 5 | BRF_SND },           //  5 Sound data		/ UM8302
 };
 
 STDROMPICKEXT(gururin, gururin, neogeo)
@@ -10677,19 +10735,20 @@ struct BurnDriver BurnDrvmiexchng = {
 };
 
 // Panic Bomber
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo panicbomRomDesc[] = {
-	{ "073-p1.p1",    0x080000, 0xadc356ad, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "073-p1.p1",    0x080000, 0xadc356ad, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC534200
 
-	{ "073-s1.s1",    0x020000, 0xb876de7e, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "073-s1.s1",    0x020000, 0xb876de7e, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "073-c1.c1",    0x100000, 0x8582e1b5, 3 | BRF_GRA },           //  2 Sprite data
-	{ "073-c2.c2",    0x100000, 0xe15a093b, 3 | BRF_GRA },           //  3 
+	{ "073-c1.c1",    0x100000, 0x8582e1b5, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC538200
+	{ "073-c2.c2",    0x100000, 0xe15a093b, 3 | BRF_GRA },           //  3 					/ mask rom TC538200
 
-	{ "073-m1.m1",    0x020000, 0x3cdf5d88, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "073-m1.m1",    0x020000, 0x3cdf5d88, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code			/ mask rom TC531001
 
-	{ "073-v1.v1",    0x200000, 0x7fc86d2f, 5 | BRF_SND },           //  5 Sound data
-	{ "073-v2.v2",    0x100000, 0x082adfc7, 5 | BRF_SND },           //  6 
+	{ "073-v1.v1",    0x200000, 0x7fc86d2f, 5 | BRF_SND },           //  5 Sound data		/ mask rom TC5316200
+	{ "073-v2.v2",    0x100000, 0x082adfc7, 5 | BRF_SND },           //  6 					/ mask rom TC538200
 };
 
 STDROMPICKEXT(panicbom, panicbom, neogeo)
@@ -10708,21 +10767,22 @@ struct BurnDriver BurnDrvpanicbom = {
 // Far East of Eden - Kabuki Klash / Tengai Makyou - Shin Den
 
 static struct BurnRomInfo kabukiklRomDesc[] = {
-	{ "092-p1.p1",    0x200000, 0x28ec9b77, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	/* also find MVS set with PROG board NEO-MVS PROGTOP and CHA board NOE-MVS CHA256; same chip labels */
+	{ "092-p1.p1",    0x200000, 0x28ec9b77, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ mask rom TC5316200
 
-	{ "092-s1.s1",    0x020000, 0xa3d68ee2, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "092-s1.s1",    0x020000, 0xa3d68ee2, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "092-c1.c1",    0x400000, 0x2a9fab01, 3 | BRF_GRA },           //  2 Sprite data
-	{ "092-c2.c2",    0x400000, 0x6d2bac02, 3 | BRF_GRA },           //  3 
-	{ "092-c3.c3",    0x400000, 0x5da735d6, 3 | BRF_GRA },           //  4 
-	{ "092-c4.c4",    0x400000, 0xde07f997, 3 | BRF_GRA },           //  5 
+	{ "092-c1.c1",    0x400000, 0x2a9fab01, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC5332205
+	{ "092-c2.c2",    0x400000, 0x6d2bac02, 3 | BRF_GRA },           //  3 					/ mask rom TC5332205
+	{ "092-c3.c3",    0x400000, 0x5da735d6, 3 | BRF_GRA },           //  4 					/ mask rom TC5332205
+	{ "092-c4.c4",    0x400000, 0xde07f997, 3 | BRF_GRA },           //  5 					/ mask rom TC5332205
 
-	{ "092-m1.m1",    0x020000, 0x91957ef6, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "092-m1.m1",    0x020000, 0x91957ef6, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ mask rom TC531001
 
-	{ "092-v1.v1",    0x200000, 0x69e90596, 5 | BRF_SND },           //  7 Sound data
-	{ "092-v2.v2",    0x200000, 0x7abdb75d, 5 | BRF_SND },           //  8 
-	{ "092-v3.v3",    0x200000, 0xeccc98d3, 5 | BRF_SND },           //  9 
-	{ "092-v4.v4",    0x100000, 0xa7c9c949, 5 | BRF_SND },           // 10 
+	{ "092-v1.v1",    0x200000, 0x69e90596, 5 | BRF_SND },           //  7 Sound data		/ mask rom TC5316200
+	{ "092-v2.v2",    0x200000, 0x7abdb75d, 5 | BRF_SND },           //  8 					/ mask rom TC5316200
+	{ "092-v3.v3",    0x200000, 0xeccc98d3, 5 | BRF_SND },           //  9 					/ mask rom TC5316200
+	{ "092-v4.v4",    0x100000, 0xa7c9c949, 5 | BRF_SND },           // 10 					/ mask rom TC538200
 };
 
 STDROMPICKEXT(kabukikl, kabukikl, neogeo)
@@ -10739,21 +10799,22 @@ struct BurnDriver BurnDrvkabukikl = {
 };
 
 // Neo Bomberman
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo neobombeRomDesc[] = {
-	{ "093-p1.p1",    0x100000, 0xa1a71d0d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "093-p1.p1",    0x100000, 0xa1a71d0d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
 
-	{ "093-s1.s1",    0x020000, 0x4b3fa119, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "093-s1.s1",    0x020000, 0x4b3fa119, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "093-c1.c1",    0x400000, 0xd1f328f8, 3 | BRF_GRA },           //  2 Sprite data
-	{ "093-c2.c2",    0x400000, 0x82c49540, 3 | BRF_GRA },           //  3 
-	{ "093-c3.c3",    0x080000, 0xe37578c5, 3 | BRF_GRA },           //  4 
-	{ "093-c4.c4",    0x080000, 0x59826783, 3 | BRF_GRA },           //  5 
+	{ "093-c1.c1",    0x400000, 0xd1f328f8, 3 | BRF_GRA },           //  2 Sprite data		/ TC5332205
+	{ "093-c2.c2",    0x400000, 0x82c49540, 3 | BRF_GRA },           //  3 					/ TC5332205
+	{ "093-c3.c3",    0x080000, 0xe37578c5, 3 | BRF_GRA },           //  4 					/ TC534200
+	{ "093-c4.c4",    0x080000, 0x59826783, 3 | BRF_GRA },           //  5 					/ TC534200
 
-	{ "093-m1.m1",    0x020000, 0xe81e780b, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "093-m1.m1",    0x020000, 0xe81e780b, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ TC531001
 
-	{ "093-v1.v1",    0x400000, 0x02abd4b0, 5 | BRF_SND },           //  7 Sound data
-	{ "093-v2.v2",    0x200000, 0xa92b8b3d, 5 | BRF_SND },           //  8 
+	{ "093-v1.v1",    0x400000, 0x02abd4b0, 5 | BRF_SND },           //  7 Sound data		/ TC5332204
+	{ "093-v2.v2",    0x200000, 0xa92b8b3d, 5 | BRF_SND },           //  8 					/ TC5316200
 };
 
 STDROMPICKEXT(neobombe, neobombe, neogeo)
@@ -10836,19 +10897,19 @@ struct BurnDriver BurnDrvbakatono = {
 // Neo Turf Masters / Big Tournament Golf
 
 static struct BurnRomInfo turfmastRomDesc[] = {
-	{ "200-p1.p1",    0x200000, 0x28c83048, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "200-p1.p1",    0x200000, 0x28c83048, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC5316200
 
-	{ "200-s1.s1",    0x020000, 0x9a5402b2, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "200-s1.s1",    0x020000, 0x9a5402b2, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "200-c1.c1",    0x400000, 0x8e7bf41a, 3 | BRF_GRA },           //  2 Sprite data
-	{ "200-c2.c2",    0x400000, 0x5a65a8ce, 3 | BRF_GRA },           //  3 
+	{ "200-c1.c1",    0x400000, 0x8e7bf41a, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC5332205
+	{ "200-c2.c2",    0x400000, 0x5a65a8ce, 3 | BRF_GRA },           //  3 					/ mask rom TC5332205
 
-	{ "200-m1.m1",    0x020000, 0x9994ac00, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "200-m1.m1",    0x020000, 0x9994ac00, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code			/ mask rom TC531001
 
-	{ "200-v1.v1",    0x200000, 0x00fd48d2, 5 | BRF_SND },           //  5 Sound data
-	{ "200-v2.v2",    0x200000, 0x082acb31, 5 | BRF_SND },           //  6 
-	{ "200-v3.v3",    0x200000, 0x7abca053, 5 | BRF_SND },           //  7 
-	{ "200-v4.v4",    0x200000, 0x6c7b4902, 5 | BRF_SND },           //  8 
+	{ "200-v1.v1",    0x200000, 0x00fd48d2, 5 | BRF_SND },           //  5 Sound data		/ mask rom TC5316200
+	{ "200-v2.v2",    0x200000, 0x082acb31, 5 | BRF_SND },           //  6 					/ mask rom TC5316200
+	{ "200-v3.v3",    0x200000, 0x7abca053, 5 | BRF_SND },           //  7 					/ mask rom TC5316200
+	{ "200-v4.v4",    0x200000, 0x6c7b4902, 5 | BRF_SND },           //  8 					/ mask rom TC5316200
 };
 
 STDROMPICKEXT(turfmast, turfmast, neogeo)
@@ -10867,19 +10928,19 @@ struct BurnDriver BurnDrvturfmast = {
 // Metal Slug - Super Vehicle-001
 
 static struct BurnRomInfo mslugRomDesc[] = {
-	{ "201-p1.p1",    0x200000, 0x08d8daa5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "201-p1.p1",    0x200000, 0x08d8daa5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
 
-	{ "201-s1.s1",    0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "201-s1.s1",    0x020000, 0x2f55958d, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "201-c1.c1",    0x400000, 0x72813676, 3 | BRF_GRA },           //  2 Sprite data
-	{ "201-c2.c2",    0x400000, 0x96f62574, 3 | BRF_GRA },           //  3 
-	{ "201-c3.c3",    0x400000, 0x5121456a, 3 | BRF_GRA },           //  4 
-	{ "201-c4.c4",    0x400000, 0xf4ad59a3, 3 | BRF_GRA },           //  5 
+	{ "201-c1.c1",    0x400000, 0x72813676, 3 | BRF_GRA },           //  2 Sprite data		/ TC5332205
+	{ "201-c2.c2",    0x400000, 0x96f62574, 3 | BRF_GRA },           //  3 					/ TC5332205
+	{ "201-c3.c3",    0x400000, 0x5121456a, 3 | BRF_GRA },           //  4 					/ TC5332205
+	{ "201-c4.c4",    0x400000, 0xf4ad59a3, 3 | BRF_GRA },           //  5 					/ TC5332205
 
-	{ "201-m1.m1",    0x020000, 0xc28b3253, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "201-m1.m1",    0x020000, 0xc28b3253, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ TC531001
 
-	{ "201-v1.v1",    0x400000, 0x23d22ed1, 5 | BRF_SND },           //  7 Sound data
-	{ "201-v2.v2",    0x400000, 0x472cf9db, 5 | BRF_SND },           //  8 
+	{ "201-v1.v1",    0x400000, 0x23d22ed1, 5 | BRF_SND },           //  7 Sound data		/ TC5332204
+	{ "201-v2.v2",    0x400000, 0x472cf9db, 5 | BRF_SND },           //  8 					/ TC5332204
 };
 
 STDROMPICKEXT(mslug, mslug, neogeo)
@@ -10896,22 +10957,23 @@ struct BurnDriver BurnDrvmslug = {
 };
 
 // Zed Blade / Operation Ragnarok
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo zedbladeRomDesc[] = {
-	{ "076-p1.p1",    0x080000, 0xd7c1effd, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "076-p1.p1",    0x080000, 0xd7c1effd, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ mask rom TC538200
 
-	{ "076-s1.s1",    0x020000, 0xf4c25dd5, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "076-s1.s1",    0x020000, 0xf4c25dd5, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "076-c1.c1",    0x200000, 0x4d9cb038, 3 | BRF_GRA },           //  2 Sprite data
-	{ "076-c2.c2",    0x200000, 0x09233884, 3 | BRF_GRA },           //  3 
-	{ "076-c3.c3",    0x200000, 0xd06431e3, 3 | BRF_GRA },           //  4 
-	{ "076-c4.c4",    0x200000, 0x4b1c089b, 3 | BRF_GRA },           //  5 
+	{ "076-c1.c1",    0x200000, 0x4d9cb038, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC5316200
+	{ "076-c2.c2",    0x200000, 0x09233884, 3 | BRF_GRA },           //  3 					/ mask rom TC5316200
+	{ "076-c3.c3",    0x200000, 0xd06431e3, 3 | BRF_GRA },           //  4 					/ mask rom TC5316200
+	{ "076-c4.c4",    0x200000, 0x4b1c089b, 3 | BRF_GRA },           //  5 					/ mask rom TC5316200
 
-	{ "076-m1.m1",    0x020000, 0x7b5f3d0a, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "076-m1.m1",    0x020000, 0x7b5f3d0a, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ mask rom TC531001
 
-	{ "076-v1.v1",    0x200000, 0x1a21d90c, 5 | BRF_SND },           //  7 Sound data
-	{ "076-v2.v2",    0x200000, 0xb61686c3, 5 | BRF_SND },           //  8 
-	{ "076-v3.v3",    0x100000, 0xb90658fa, 5 | BRF_SND },           //  9 
+	{ "076-v1.v1",    0x200000, 0x1a21d90c, 5 | BRF_SND },           //  7 Sound data		/ mask rom TC5316200
+	{ "076-v2.v2",    0x200000, 0xb61686c3, 5 | BRF_SND },           //  8 					/ mask rom TC5316200
+	{ "076-v3.v3",    0x100000, 0xb90658fa, 5 | BRF_SND },           //  9 					/ mask rom TC538200
 };
 
 STDROMPICKEXT(zedblade, zedblade, neogeo)
@@ -10970,22 +11032,23 @@ struct BurnDriver BurnDrvs1945p = {
 };
 
 // Quiz King of Fighters (SAM-080)(SAH-080)
+/* MVS AND AES VERSION */
 
 static struct BurnRomInfo quizkofRomDesc[] = {
-	{ "080-p1.p1",    0x100000, 0x4440315e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "080-p1.p1",    0x100000, 0x4440315e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC538200
 
-	{ "080-s1.s1",    0x020000, 0xd7b86102, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "080-s1.s1",    0x020000, 0xd7b86102, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "080-c1.c1",    0x200000, 0xea1d764a, 3 | BRF_GRA },           //  2 Sprite data
-	{ "080-c2.c2",    0x200000, 0xd331d4a4, 3 | BRF_GRA },           //  3 
-	{ "080-c3.c3",    0x200000, 0xb4851bfe, 3 | BRF_GRA },           //  4 
-	{ "080-c4.c4",    0x200000, 0xca6f5460, 3 | BRF_GRA },           //  5 
+	{ "080-c1.c1",    0x200000, 0xea1d764a, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC5316200
+	{ "080-c2.c2",    0x200000, 0xd331d4a4, 3 | BRF_GRA },           //  3 					/ mask rom TC5316200
+	{ "080-c3.c3",    0x200000, 0xb4851bfe, 3 | BRF_GRA },           //  4 					/ mask rom TC5316200
+	{ "080-c4.c4",    0x200000, 0xca6f5460, 3 | BRF_GRA },           //  5 					/ mask rom TC5316200
 
-	{ "080-m1.m1",    0x020000, 0xf5f44172, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "080-m1.m1",    0x020000, 0xf5f44172, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ mask rom TC531001
 
-	{ "080-v1.v1",    0x200000, 0x0be18f60, 5 | BRF_SND },           //  7 Sound data
-	{ "080-v2.v2",    0x200000, 0x4abde3ff, 5 | BRF_SND },           //  8 
-	{ "080-v3.v3",    0x200000, 0xf02844e2, 5 | BRF_SND },           //  9 
+	{ "080-v1.v1",    0x200000, 0x0be18f60, 5 | BRF_SND },           //  7 Sound data		/ mask rom TC5316200
+	{ "080-v2.v2",    0x200000, 0x4abde3ff, 5 | BRF_SND },           //  8 					/ mask rom TC5316200
+	{ "080-v3.v3",    0x200000, 0xf02844e2, 5 | BRF_SND },           //  9 					/ mask rom TC5316200
 };
 
 STDROMPICKEXT(quizkof, quizkof, neogeo)
@@ -11003,8 +11066,11 @@ struct BurnDriver BurnDrvquizkof = {
 
 
 // Quiz King of Fighters (Korean release)
+/* KOREAN VERSION */
 
 static struct BurnRomInfo quizkofkRomDesc[] = {
+	/* Made by Viccom Corp.; proms have manufacturer stamp VICxxxxxx-xxx, chip labels same as quizkof; Cart ID 0080 */
+	/* Due to parent set naming limitations, roms have been named vic-xxx */
 	{ "vic-080-p1.p1", 0x100000, 0x2589488e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "vic-080-s1.s1", 0x020000, 0xaf72c30f, 2 | BRF_GRA },           //  1 Text layer tiles
@@ -11016,7 +11082,7 @@ static struct BurnRomInfo quizkofkRomDesc[] = {
 
 	{ "vic-080-m1.m1", 0x020000, 0x4f157e9a, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
 
-	{ "080-v1.v1",     0x200000, 0x0be18f60, 5 | BRF_SND },           //  7 Sound data
+	{ "080-v1.v1",     0x200000, 0x0be18f60, 5 | BRF_SND },           //  7 Sound data			/ mask rom TC5316200
 	{ "vic-080-v2.v2", 0x200000, 0x719fee5b, 5 | BRF_SND },           //  8 
 	{ "vic-080-v3.v3", 0x200000, 0x64b7efde, 5 | BRF_SND },           //  9 
 };
@@ -11037,18 +11103,18 @@ struct BurnDriver BurnDrvquizkofk = {
 // Stakes Winner / Stakes Winner - GI kinzen seiha e no michi
 
 static struct BurnRomInfo stakwinRomDesc[] = {
-	{ "088-p1.p1",    0x200000, 0xbd5814f6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "088-p1.p1",    0x200000, 0xbd5814f6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
 
-	{ "088-s1.s1",    0x020000, 0x073cb208, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "088-s1.s1",    0x020000, 0x073cb208, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "088-c1.c1",    0x200000, 0x6e733421, 3 | BRF_GRA },           //  2 Sprite data
-	{ "088-c2.c2",    0x200000, 0x4d865347, 3 | BRF_GRA },           //  3 
-	{ "088-c3.c3",    0x200000, 0x8fa5a9eb, 3 | BRF_GRA },           //  4 
-	{ "088-c4.c4",    0x200000, 0x4604f0dc, 3 | BRF_GRA },           //  5 
+	{ "088-c1.c1",    0x200000, 0x6e733421, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "088-c2.c2",    0x200000, 0x4d865347, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "088-c3.c3",    0x200000, 0x8fa5a9eb, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "088-c4.c4",    0x200000, 0x4604f0dc, 3 | BRF_GRA },           //  5 					/ TC5316200
 
-	{ "088-m1.m1",    0x020000, 0x2fe1f499, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "088-m1.m1",    0x020000, 0x2fe1f499, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ TC531001
 
-	{ "088-v1.v1",    0x200000, 0xb7785023, 5 | BRF_SND },           //  7 Sound data
+	{ "088-v1.v1",    0x200000, 0xb7785023, 5 | BRF_SND },           //  7 Sound data		/ TC5316200
 };
 
 STDROMPICKEXT(stakwin, stakwin, neogeo)
@@ -11426,24 +11492,24 @@ struct BurnDriver BurnDrvlans2004 = {
 // Galaxy Fight - Universal Warriors
 
 static struct BurnRomInfo galaxyfgRomDesc[] = {
-	{ "078-p1.p1",    0x200000, 0x45906309, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "078-p1.p1",    0x200000, 0x45906309, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC5316200
 
-	{ "078-s1.s1",    0x020000, 0x72f8923e, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "078-s1.s1",    0x020000, 0x72f8923e, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "078-c1.c1",    0x200000, 0xc890c7c0, 3 | BRF_GRA },           //  2 Sprite data
-	{ "078-c2.c2",    0x200000, 0xb6d25419, 3 | BRF_GRA },           //  3 
-	{ "078-c3.c3",    0x200000, 0x9d87e761, 3 | BRF_GRA },           //  4 
-	{ "078-c4.c4",    0x200000, 0x765d7cb8, 3 | BRF_GRA },           //  5 
-	{ "078-c5.c5",    0x200000, 0xe6b77e6a, 3 | BRF_GRA },           //  6 
-	{ "078-c6.c6",    0x200000, 0xd779a181, 3 | BRF_GRA },           //  7 
-	{ "078-c7.c7",    0x100000, 0x4f27d580, 3 | BRF_GRA },           //  8 
-	{ "078-c8.c8",    0x100000, 0x0a7cc0d8, 3 | BRF_GRA },           //  9 
+	{ "078-c1.c1",    0x200000, 0xc890c7c0, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC5316200
+	{ "078-c2.c2",    0x200000, 0xb6d25419, 3 | BRF_GRA },           //  3 					/ mask rom TC5316200
+	{ "078-c3.c3",    0x200000, 0x9d87e761, 3 | BRF_GRA },           //  4 					/ mask rom TC5316200
+	{ "078-c4.c4",    0x200000, 0x765d7cb8, 3 | BRF_GRA },           //  5 					/ mask rom TC5316200
+	{ "078-c5.c5",    0x200000, 0xe6b77e6a, 3 | BRF_GRA },           //  6 					/ mask rom TC5316200
+	{ "078-c6.c6",    0x200000, 0xd779a181, 3 | BRF_GRA },           //  7 					/ mask rom TC5316200
+	{ "078-c7.c7",    0x100000, 0x4f27d580, 3 | BRF_GRA },           //  8 					/ mask rom TC5316200
+	{ "078-c8.c8",    0x100000, 0x0a7cc0d8, 3 | BRF_GRA },           //  9 					/ mask rom TC5316200
 
-	{ "078-m1.m1",    0x020000, 0x8e9e3b10, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "078-m1.m1",    0x020000, 0x8e9e3b10, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code			/ mask rom TC531001
 
-	{ "078-v1.v1",    0x200000, 0xe3b735ac, 5 | BRF_SND },           // 11 Sound data
-	{ "078-v2.v2",    0x200000, 0x6a8e78c2, 5 | BRF_SND },           // 12 
-	{ "078-v3.v3",    0x100000, 0x70bca656, 5 | BRF_SND },           // 13 
+	{ "078-v1.v1",    0x200000, 0xe3b735ac, 5 | BRF_SND },           // 11 Sound data		/ mask rom TC5316200
+	{ "078-v2.v2",    0x200000, 0x6a8e78c2, 5 | BRF_SND },           // 12 					/ mask rom TC5316200
+	{ "078-v3.v3",    0x100000, 0x70bca656, 5 | BRF_SND },           // 13 					/ mask rom TC538200
 };
 
 STDROMPICKEXT(galaxyfg, galaxyfg, neogeo)
@@ -11494,25 +11560,28 @@ struct BurnDriver BurnDrvwakuwak7 = {
 };
 
 // Puzzle Bobble / Bust-A-Move (Neo-Geo) (NGM-083)
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo pbobblenRomDesc[] = {
-	{ "d96-07.ep1",   0x080000, 0x6102ca14, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	/* This set uses CHA and PROG board from Power Spikes II. Six Power Spikes II prom's are replaced with
+	Puzzle Bobble prom's. Confirmed on several original carts. Do other layouts also exist? */
+	{ "d96-07.ep1",   0x080000, 0x6102ca14, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ 27C240
 
-	{ "d96-04.s1",    0x020000, 0x9caae538, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "d96-04.s1",    0x020000, 0x9caae538, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "068-c1.c1",    0x100000, 0x7f250f76, 3 | BRF_GRA },           //  2 Sprite data
-	{ "068-c2.c2",    0x100000, 0x20912873, 3 | BRF_GRA },           //  3 
-	{ "068-c3.c3",    0x100000, 0x4b641ba1, 3 | BRF_GRA },           //  4 
-	{ "068-c4.c4",    0x100000, 0x35072596, 3 | BRF_GRA },           //  5 
-	{ "d96-02.c5",    0x080000, 0xe89ad494, 3 | BRF_GRA },           //  6 Sprite data
-	{ "d96-03.c6",    0x080000, 0x4b42d7eb, 3 | BRF_GRA },           //  7 
+	{ "068-c1.c1",    0x100000, 0x7f250f76, 3 | BRF_GRA },           //  2 Sprite data		/ unused / mask rom TC538200
+	{ "068-c2.c2",    0x100000, 0x20912873, 3 | BRF_GRA },           //  3 					/ unused / mask rom TC538200
+	{ "068-c3.c3",    0x100000, 0x4b641ba1, 3 | BRF_GRA },           //  4 					/ unused / mask rom TC538200
+	{ "068-c4.c4",    0x100000, 0x35072596, 3 | BRF_GRA },           //  5 					/ unused / mask rom TC538200
+	{ "d96-02.c5",    0x080000, 0xe89ad494, 3 | BRF_GRA },           //  6 Sprite data		/ mask rom TC534200
+	{ "d96-03.c6",    0x080000, 0x4b42d7eb, 3 | BRF_GRA },           //  7 					/ mask rom TC534200
 
-	{ "d96-06.m1",    0x020000, 0xf424368a, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+	{ "d96-06.m1",    0x020000, 0xf424368a, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code			/ mask rom TC531001
 
-	{ "068-v1.v1",    0x100000, 0x2ced86df, 5 | BRF_SND },           //  9 Sound data
-	{ "068-v2.v2",    0x100000, 0x970851ab, 5 | BRF_SND },           // 10 
-	{ "d96-01.v3",    0x100000, 0x0840cbc4, 5 | BRF_SND },           // 11
-	{ "d96-05.v4",    0x080000, 0x0a548948, 5 | BRF_SND },           // 12 
+	{ "068-v1.v1",    0x100000, 0x2ced86df, 5 | BRF_SND },           //  9 Sound data		/ unused / mask rom TC538200
+	{ "068-v2.v2",    0x100000, 0x970851ab, 5 | BRF_SND },           // 10 					/ unused / mask rom TC538200
+	{ "d96-01.v3",    0x100000, 0x0840cbc4, 5 | BRF_SND },           // 11					/ mask rom TC538200
+	{ "d96-05.v4",    0x080000, 0x0a548948, 5 | BRF_SND },           // 12 					/ mask rom TC534200
 };
 
 STDROMPICKEXT(pbobblen, pbobblen, neogeo)
@@ -11639,19 +11708,19 @@ struct BurnDriver BurnDrvpnyaa = {
 // Chibi Marukochan Deluxe Quiz
 
 static struct BurnRomInfo marukodqRomDesc[] = {
-	{ "206-p1.p1",    0x100000, 0xc33ed21e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "206-p1.p1",    0x100000, 0xc33ed21e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC538200
 
-	{ "206-s1.s1",    0x020000, 0xf0b68780, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "206-s1.s1",    0x020000, 0xf0b68780, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "206-c1.c1",    0x400000, 0x846e4e8e, 3 | BRF_GRA },           //  2 Sprite data
-	{ "206-c2.c2",    0x400000, 0x1cba876d, 3 | BRF_GRA },           //  3 
-	{ "206-c3.c3",    0x100000, 0x79aa2b48, 3 | BRF_GRA },           //  4 
-	{ "206-c4.c4",    0x100000, 0x55e1314d, 3 | BRF_GRA },           //  5 
+	{ "206-c1.c1",    0x400000, 0x846e4e8e, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC5332205
+	{ "206-c2.c2",    0x400000, 0x1cba876d, 3 | BRF_GRA },           //  3 					/ mask rom TC5332205
+	{ "206-c3.c3",    0x100000, 0x79aa2b48, 3 | BRF_GRA },           //  4 					/ mask rom TC538200
+	{ "206-c4.c4",    0x100000, 0x55e1314d, 3 | BRF_GRA },           //  5 					/ mask rom TC538200
 
-	{ "206-m1.m1",    0x020000, 0x0e22902e, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "206-m1.m1",    0x020000, 0x0e22902e, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ mask rom TC531001
 
-	{ "206-v1.v1",    0x200000, 0x5385eca8, 5 | BRF_SND },           //  7 Sound data
-	{ "206-v2.v2",    0x200000, 0xf8c55404, 5 | BRF_SND },           //  8 
+	{ "206-v1.v1",    0x200000, 0x5385eca8, 5 | BRF_SND },           //  7 Sound data		/ mask rom TC5316200
+	{ "206-v2.v2",    0x200000, 0xf8c55404, 5 | BRF_SND },           //  8 					/ mask rom TC5316200
 };
 
 STDROMPICKEXT(marukodq, marukodq, neogeo)
@@ -11670,23 +11739,24 @@ struct BurnDriver BurnDrvmarukodq = {
 // Double Dragon (Neo-Geo)
 
 static struct BurnRomInfo doubledrRomDesc[] = {
-	{ "082-p1.p1",    0x200000, 0x34ab832a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	/* also found MVS set with PROG board NEO-MVS PROG 4096 B and CHA board NEO-MVS CHA 42G-3; same chip labels */
+	{ "082-p1.p1",    0x200000, 0x34ab832a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
 
-	{ "082-s1.s1",    0x020000, 0xbef995c5, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "082-s1.s1",    0x020000, 0xbef995c5, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "082-c1.c1",    0x200000, 0xb478c725, 3 | BRF_GRA },           //  2 Sprite data
-	{ "082-c2.c2",    0x200000, 0x2857da32, 3 | BRF_GRA },           //  3 
-	{ "082-c3.c3",    0x200000, 0x8b0d378e, 3 | BRF_GRA },           //  4 
-	{ "082-c4.c4",    0x200000, 0xc7d2f596, 3 | BRF_GRA },           //  5 
-	{ "082-c5.c5",    0x200000, 0xec87bff6, 3 | BRF_GRA },           //  6 
-	{ "082-c6.c6",    0x200000, 0x844a8a11, 3 | BRF_GRA },           //  7 
-	{ "082-c7.c7",    0x100000, 0x727c4d02, 3 | BRF_GRA },           //  8 
-	{ "082-c8.c8",    0x100000, 0x69a5fa37, 3 | BRF_GRA },           //  9 
+	{ "082-c1.c1",    0x200000, 0xb478c725, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "082-c2.c2",    0x200000, 0x2857da32, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "082-c3.c3",    0x200000, 0x8b0d378e, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "082-c4.c4",    0x200000, 0xc7d2f596, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "082-c5.c5",    0x200000, 0xec87bff6, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "082-c6.c6",    0x200000, 0x844a8a11, 3 | BRF_GRA },           //  7 					/ TC5316200
+	{ "082-c7.c7",    0x100000, 0x727c4d02, 3 | BRF_GRA },           //  8 					/ TC538200
+	{ "082-c8.c8",    0x100000, 0x69a5fa37, 3 | BRF_GRA },           //  9 					/ TC538200
 
-	{ "082-m1.m1",    0x020000, 0x10b144de, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "082-m1.m1",    0x020000, 0x10b144de, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code			/ TC531001
 
-	{ "082-v1.v1",    0x200000, 0xcc1128e4, 5 | BRF_SND },           // 11 Sound data
-	{ "082-v2.v2",    0x200000, 0xc3ff5554, 5 | BRF_SND },           // 12 
+	{ "082-v1.v1",    0x200000, 0xcc1128e4, 5 | BRF_SND },           // 11 Sound data		/ TC5316200
+	{ "082-v2.v2",    0x200000, 0xc3ff5554, 5 | BRF_SND },           // 12 					/ TC5316200
 };
 
 STDROMPICKEXT(doubledr, doubledr, neogeo)
@@ -11705,24 +11775,24 @@ struct BurnDriver BurnDrvdoubledr = {
 // Voltage Fighter - Gowcaizer / Choujin Gakuen Gowcaizer
 
 static struct BurnRomInfo gowcaizrRomDesc[] = {
-	{ "094-p1.p1",    0x200000, 0x33019545, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "094-p1.p1",    0x200000, 0x33019545, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
 
-	{ "094-s1.s1",    0x020000, 0x2f8748a2, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "094-s1.s1",    0x020000, 0x2f8748a2, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "094-c1.c1",    0x200000, 0x042f6af5, 3 | BRF_GRA },           //  2 Sprite data
-	{ "094-c2.c2",    0x200000, 0x0fbcd046, 3 | BRF_GRA },           //  3 
-	{ "094-c3.c3",    0x200000, 0x58bfbaa1, 3 | BRF_GRA },           //  4 
-	{ "094-c4.c4",    0x200000, 0x9451ee73, 3 | BRF_GRA },           //  5 
-	{ "094-c5.c5",    0x200000, 0xff9cf48c, 3 | BRF_GRA },           //  6 
-	{ "094-c6.c6",    0x200000, 0x31bbd918, 3 | BRF_GRA },           //  7 
-	{ "094-c7.c7",    0x200000, 0x2091ec04, 3 | BRF_GRA },           //  8 
-	{ "094-c8.c8",    0x200000, 0xd80dd241, 3 | BRF_GRA },           //  9 
+	{ "094-c1.c1",    0x200000, 0x042f6af5, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "094-c2.c2",    0x200000, 0x0fbcd046, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "094-c3.c3",    0x200000, 0x58bfbaa1, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "094-c4.c4",    0x200000, 0x9451ee73, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "094-c5.c5",    0x200000, 0xff9cf48c, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "094-c6.c6",    0x200000, 0x31bbd918, 3 | BRF_GRA },           //  7 					/ TC5316200
+	{ "094-c7.c7",    0x200000, 0x2091ec04, 3 | BRF_GRA },           //  8 					/ TC5316200
+	{ "094-c8.c8",    0x200000, 0xd80dd241, 3 | BRF_GRA },           //  9 					/ TC5316200
 
-	{ "094-m1.m1",    0x020000, 0x78c851cb, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "094-m1.m1",    0x020000, 0x78c851cb, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code			/ TC531001
 
-	{ "094-v1.v1",    0x200000, 0x6c31223c, 5 | BRF_SND },           // 11 Sound data
-	{ "094-v2.v2",    0x200000, 0x8edb776c, 5 | BRF_SND },           // 12 
-	{ "094-v3.v3",    0x100000, 0xc63b9285, 5 | BRF_SND },           // 13 
+	{ "094-v1.v1",    0x200000, 0x6c31223c, 5 | BRF_SND },           // 11 Sound data		/ TC5316200
+	{ "094-v2.v2",    0x200000, 0x8edb776c, 5 | BRF_SND },           // 12 					/ TC5316200
+	{ "094-v3.v3",    0x100000, 0xc63b9285, 5 | BRF_SND },           // 13 					/ TC538200
 };
 
 STDROMPICKEXT(gowcaizr, gowcaizr, neogeo)
@@ -11739,20 +11809,21 @@ struct BurnDriver BurnDrvgowcaizr = {
 };
 
 // Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo sdodgebRomDesc[] = {
-	{ "208-p1.p1",    0x200000, 0x127f3d32, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "208-p1.p1",    0x200000, 0x127f3d32, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
 
-	{ "208-s1.s1",    0x020000, 0x64abd6b3, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "208-s1.s1",    0x020000, 0x64abd6b3, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "208-c1.c1",    0x400000, 0x93d8619b, 3 | BRF_GRA },           //  2 Sprite data
-	{ "208-c2.c2",    0x400000, 0x1c737bb6, 3 | BRF_GRA },           //  3 
-	{ "208-c3.c3",    0x200000, 0x14cb1703, 3 | BRF_GRA },           //  4 
-	{ "208-c4.c4",    0x200000, 0xc7165f19, 3 | BRF_GRA },           //  5 
+	{ "208-c1.c1",    0x400000, 0x93d8619b, 3 | BRF_GRA },           //  2 Sprite data		/ TC5332205
+	{ "208-c2.c2",    0x400000, 0x1c737bb6, 3 | BRF_GRA },           //  3 					/ TC5332205
+	{ "208-c3.c3",    0x200000, 0x14cb1703, 3 | BRF_GRA },           //  4 					/ TC5332205
+	{ "208-c4.c4",    0x200000, 0xc7165f19, 3 | BRF_GRA },           //  5 					/ TC5332205
 
-	{ "208-m1.m1",    0x020000, 0x0a5f3325, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "208-m1.m1",    0x020000, 0x0a5f3325, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ TC531001
 
-	{ "208-v1.v1",    0x400000, 0xe7899a24, 5 | BRF_SND },           //  7 Sound data
+	{ "208-v1.v1",    0x400000, 0xe7899a24, 5 | BRF_SND },           //  7 Sound data		/ TC5332204
 };
 
 STDROMPICKEXT(sdodgeb, sdodgeb, neogeo)
@@ -11769,21 +11840,22 @@ struct BurnDriver BurnDrvsdodgeb = {
 };
 
 // Tecmo World Soccer '96
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo tws96RomDesc[] = {
-	{ "086-p1.p1",    0x100000, 0x03e20ab6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "086-p1.p1",    0x100000, 0x03e20ab6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC538200
 
-	{ "086-s1.s1",    0x020000, 0x6f5e2b3a, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "086-s1.s1",    0x020000, 0x6f5e2b3a, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "086-c1.c1",    0x400000, 0x2611bc2a, 3 | BRF_GRA },           //  2 Sprite data
-	{ "086-c2.c2",    0x400000, 0x6b0d6827, 3 | BRF_GRA },           //  3 
-	{ "086-c3.c3",    0x100000, 0x750ddc0c, 3 | BRF_GRA },           //  4 
-	{ "086-c4.c4",    0x100000, 0x7a6e7d82, 3 | BRF_GRA },           //  5 
+	{ "086-c1.c1",    0x400000, 0x2611bc2a, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC5332205
+	{ "086-c2.c2",    0x400000, 0x6b0d6827, 3 | BRF_GRA },           //  3 					/ mask rom TC5332205
+	{ "086-c3.c3",    0x100000, 0x750ddc0c, 3 | BRF_GRA },           //  4 					/ mask rom TC538200
+	{ "086-c4.c4",    0x100000, 0x7a6e7d82, 3 | BRF_GRA },           //  5 					/ mask rom TC538200
 
-	{ "086-m1.m1",    0x020000, 0xcb82bc5d, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "086-m1.m1",    0x020000, 0xcb82bc5d, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ mask rom TC531001
 
-	{ "086-v1.v1",    0x200000, 0x97bf1986, 5 | BRF_SND },           //  7 Sound data
-	{ "086-v2.v2",    0x200000, 0xb7eb05df, 5 | BRF_SND },           //  8 
+	{ "086-v1.v1",    0x200000, 0x97bf1986, 5 | BRF_SND },           //  7 Sound data		/ mask rom TC5316200
+	{ "086-v2.v2",    0x200000, 0xb7eb05df, 5 | BRF_SND },           //  8 					/ mask rom TC5316200
 };
 
 STDROMPICKEXT(tws96, tws96, neogeo)
@@ -11842,7 +11914,8 @@ static struct BurnRomInfo fightfevaRomDesc[] = {
 	{ "viccom_2.ep2",    0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  1 				/ M27C4002 */
 	
 	{ "060-s1.s1",    0x020000, 0x7f012104, 2 | BRF_GRA },           //  2 Text layer tiles / VIC930100
-
+//	{ "060-s1.s1",    0x020000, 0xd62a72e9, 2 | BRF_GRA },           //  2 Text layer tiles / VIC930100
+	/* 1 byte diff at offset 0 : 11 ; 00 */
 	{ "060-c1.c1",    0x200000, 0x8908fff9, 3 | BRF_GRA },           //  2 Sprite data 		/ VIC931600
 	{ "060-c2.c2",    0x200000, 0xc6649492, 3 | BRF_GRA },           //  3 					/ VIC931600
 	{ "060-c3.c3",    0x200000, 0x0956b437, 3 | BRF_GRA },           //  4 					/ VIC931600 
@@ -11853,12 +11926,8 @@ static struct BurnRomInfo fightfevaRomDesc[] = {
 	{ "060-v1.v1",    0x200000, 0xf417c215, 5 | BRF_SND },           //  7 Sound data 		/ VIC930800
 	{ "060-v2.v2",    0x100000, 0xefcff7cf, 5 | BRF_SND },           //  8 					/ VIC931600
 	
-	{ "060-epr.sp2",  0x080000, 0x3032041b, 0 | BRF_ESS | BRF_PRG }, //  9 68K code 		/ TC574200
-	/* P is on eprom, correct chip label unknown 
-	/ also found MVS set with P1 on mask rom (060-P1 VIC940800-101) and SP2 on eprom with Viccom sticker on board NEO-MVS PROGGSC
-	/ same rom data as fighfeva
-	{ "060-p1.p1",    	0x100000, 0x2a104b50, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ VIC940800 
-	{ "viccom_1.sp2",  	0x080000, 0x3032041b, 0 | BRF_ESS | BRF_PRG }, //  9 68K code 		/ TC574200 */
+	{ "1.sp2",  	  0x080000, 0x3032041b, 0 | BRF_ESS | BRF_PRG }, //  9 68K code 		/ TC574200
+	/* P is on eprom, has a Viccom logo at the top of the label with a circled '1' in the center */
 };
 
 STDROMPICKEXT(fightfeva, fightfeva, neogeo)
@@ -11887,24 +11956,25 @@ struct BurnDriver BurnDrvfightfeva = {
 };
 
 // Power Spikes II (NGM-068)
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo pspikes2RomDesc[] = {
-	{ "068-pg1.p1",   0x100000, 0x105a408f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "068-pg1.p1",   0x100000, 0x105a408f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ mask rom TC538200
 
-	{ "068-sg1.s1",   0x020000, 0x18082299, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "068-sg1.s1",   0x020000, 0x18082299, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "068-c1.c1",    0x100000, 0x7f250f76, 3 | BRF_GRA },           //  2 Sprite data
-	{ "068-c2.c2",    0x100000, 0x20912873, 3 | BRF_GRA },           //  3 
-	{ "068-c3.c3",    0x100000, 0x4b641ba1, 3 | BRF_GRA },           //  4 
-	{ "068-c4.c4",    0x100000, 0x35072596, 3 | BRF_GRA },           //  5 
-	{ "068-c5.c5",    0x100000, 0x151dd624, 3 | BRF_GRA },           //  6 
-	{ "068-c6.c6",    0x100000, 0xa6722604, 3 | BRF_GRA },           //  7 
+	{ "068-c1.c1",    0x100000, 0x7f250f76, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC538200
+	{ "068-c2.c2",    0x100000, 0x20912873, 3 | BRF_GRA },           //  3 					/ mask rom TC538200
+	{ "068-c3.c3",    0x100000, 0x4b641ba1, 3 | BRF_GRA },           //  4 					/ mask rom TC538200
+	{ "068-c4.c4",    0x100000, 0x35072596, 3 | BRF_GRA },           //  5 					/ mask rom TC538200
+	{ "068-c5.c5",    0x100000, 0x151dd624, 3 | BRF_GRA },           //  6 					/ mask rom TC538200	
+	{ "068-c6.c6",    0x100000, 0xa6722604, 3 | BRF_GRA },           //  7 					/ mask rom TC538200
 
-	{ "068-mg1.m1",   0x020000, 0xb1c7911e, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+	{ "068-mg1.m1",   0x020000, 0xb1c7911e, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code			/ mask rom TC531001
 
-	{ "068-v1.v1",    0x100000, 0x2ced86df, 5 | BRF_SND },           //  9 Sound data
-	{ "068-v2.v2",    0x100000, 0x970851ab, 5 | BRF_SND },           // 10 
-	{ "068-v3.v3",    0x100000, 0x81ff05aa, 5 | BRF_SND },           // 11 
+	{ "068-v1.v1",    0x100000, 0x2ced86df, 5 | BRF_SND },           //  9 Sound data		/ mask rom TC538200
+	{ "068-v2.v2",    0x100000, 0x970851ab, 5 | BRF_SND },           // 10 					/ mask rom TC538200
+	{ "068-v3.v3",    0x100000, 0x81ff05aa, 5 | BRF_SND },           // 11 					/ mask rom TC538200
 };
 
 STDROMPICKEXT(pspikes2, pspikes2, neogeo)
@@ -11923,19 +11993,19 @@ struct BurnDriver BurnDrvpspikes2 = {
 // Aero Fighters 2 / Sonic Wings 2
 
 static struct BurnRomInfo sonicwi2RomDesc[] = {
-	{ "075-p1.p1",    0x200000, 0x92871738, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "075-p1.p1",    0x200000, 0x92871738, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC5316200
 
-	{ "075-s1.s1",    0x020000, 0xc9eec367, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "075-s1.s1",    0x020000, 0xc9eec367, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "075-c1.c1",    0x200000, 0x3278e73e, 3 | BRF_GRA },           //  2 Sprite data
-	{ "075-c2.c2",    0x200000, 0xfe6355d6, 3 | BRF_GRA },           //  3 
-	{ "075-c3.c3",    0x200000, 0xc1b438f1, 3 | BRF_GRA },           //  4 
-	{ "075-c4.c4",    0x200000, 0x1f777206, 3 | BRF_GRA },           //  5 
+	{ "075-c1.c1",    0x200000, 0x3278e73e, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC5316200
+	{ "075-c2.c2",    0x200000, 0xfe6355d6, 3 | BRF_GRA },           //  3 					/ mask rom TC5316200
+	{ "075-c3.c3",    0x200000, 0xc1b438f1, 3 | BRF_GRA },           //  4 					/ mask rom TC5316200
+	{ "075-c4.c4",    0x200000, 0x1f777206, 3 | BRF_GRA },           //  5 					/ mask rom TC5316200
 
-	{ "075-m1.m1",    0x020000, 0xbb828df1, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "075-m1.m1",    0x020000, 0xbb828df1, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ mask rom TC531001
 
-	{ "075-v1.v1",    0x200000, 0x7577e949, 5 | BRF_SND },           //  7 Sound data
-	{ "075-v2.v2",    0x100000, 0x021760cd, 5 | BRF_SND },           //  8 
+	{ "075-v1.v1",    0x200000, 0x7577e949, 5 | BRF_SND },           //  7 Sound data		/ mask rom TC5316200
+	{ "075-v2.v2",    0x100000, 0x021760cd, 5 | BRF_SND },           //  8 					/ mask rom TC538200
 };
 
 STDROMPICKEXT(sonicwi2, sonicwi2, neogeo)
@@ -11954,19 +12024,19 @@ struct BurnDriver BurnDrvsonicwi2 = {
 // Aero Fighters 3 / Sonic Wings 3
 
 static struct BurnRomInfo sonicwi3RomDesc[] = {
-	{ "097-p1.p1",    0x200000, 0x0547121d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "097-p1.p1",    0x200000, 0x0547121d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
 
-	{ "097-s1.s1",    0x020000, 0x8dd66743, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "097-s1.s1",    0x020000, 0x8dd66743, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "097-c1.c1",    0x400000, 0x33d0d589, 3 | BRF_GRA },           //  2 Sprite data
-	{ "097-c2.c2",    0x400000, 0x186f8b43, 3 | BRF_GRA },           //  3 
-	{ "097-c3.c3",    0x200000, 0xc339fff5, 3 | BRF_GRA },           //  4 
-	{ "097-c4.c4",    0x200000, 0x84a40c6e, 3 | BRF_GRA },           //  5 
+	{ "097-c1.c1",    0x400000, 0x33d0d589, 3 | BRF_GRA },           //  2 Sprite data		/ TC5332205
+	{ "097-c2.c2",    0x400000, 0x186f8b43, 3 | BRF_GRA },           //  3 					/ TC5332205
+	{ "097-c3.c3",    0x200000, 0xc339fff5, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "097-c4.c4",    0x200000, 0x84a40c6e, 3 | BRF_GRA },           //  5 					/ TC5316200
 
-	{ "097-m1.m1",    0x020000, 0xb20e4291, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "097-m1.m1",    0x020000, 0xb20e4291, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ TC531001
 
-	{ "097-v1.v1",    0x400000, 0x6f885152, 5 | BRF_SND },           //  7 Sound data
-	{ "097-v2.v2",    0x200000, 0x3359e868, 5 | BRF_SND },           //  8 
+	{ "097-v1.v1",    0x400000, 0x6f885152, 5 | BRF_SND },           //  7 Sound data		/ TC5332201
+	{ "097-v2.v2",    0x200000, 0x3359e868, 5 | BRF_SND },           //  8 					/ TC5316200
 };
 
 STDROMPICKEXT(sonicwi3, sonicwi3, neogeo)
@@ -12041,18 +12111,19 @@ struct BurnDriver BurnDrvandrodun = {
 };
 
 // Puzzle De Pon!
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo puzzledpRomDesc[] = {
-	{ "202-p1.p1",    0x080000, 0x2b61415b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "202-p1.p1",    0x080000, 0x2b61415b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC534200
 
-	{ "202-s1.s1",    0x020000, 0xcd19264f, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "202-s1.s1",    0x020000, 0xcd19264f, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "202-c1.c1",    0x100000, 0xcc0095ef, 3 | BRF_GRA },           //  2 Sprite data
-	{ "202-c2.c2",    0x100000, 0x42371307, 3 | BRF_GRA },           //  3 
+	{ "202-c1.c1",    0x100000, 0xcc0095ef, 3 | BRF_GRA },           //  2 Sprite data		/ TC538200
+	{ "202-c2.c2",    0x100000, 0x42371307, 3 | BRF_GRA },           //  3 					/ TC538200
 
-	{ "202-m1.m1",    0x020000, 0x9c0291ea, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "202-m1.m1",    0x020000, 0x9c0291ea, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code			/ TC531001
 
-	{ "202-v1.v1",    0x080000, 0xdebeb8fb, 5 | BRF_SND },           //  5 Sound data
+	{ "202-v1.v1",    0x080000, 0xdebeb8fb, 5 | BRF_SND },           //  5 Sound data		/ TC534200
 };
 
 STDROMPICKEXT(puzzledp, puzzledp, neogeo)
@@ -12069,18 +12140,20 @@ struct BurnDriver BurnDrvpuzzledp = {
 };
 
 // Neo Mr. Do!
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo neomrdoRomDesc[] = {
-	{ "207-p1.p1",    0x100000, 0x334ea51e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	/* also found MVS set with PROG Board NEO-MVS PROG 4096 and CHA board NEO-MVS CHA42G-3B; same chip labels */
+	{ "207-p1.p1",    0x100000, 0x334ea51e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
 
-	{ "207-s1.s1",    0x020000, 0x6aebafce, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "207-s1.s1",    0x020000, 0x6aebafce, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
-	{ "207-c1.c1",    0x200000, 0xc7541b9d, 3 | BRF_GRA },           //  2 Sprite data
-	{ "207-c2.c2",    0x200000, 0xf57166d2, 3 | BRF_GRA },           //  3 
+	{ "207-c1.c1",    0x200000, 0xc7541b9d, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "207-c2.c2",    0x200000, 0xf57166d2, 3 | BRF_GRA },           //  3 					/ TC5316200
 
-	{ "207-m1.m1",    0x020000, 0xb5b74a95, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "207-m1.m1",    0x020000, 0xb5b74a95, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code			/ TC531001
 
-	{ "207-v1.v1",    0x200000, 0x4143c052, 5 | BRF_SND },           //  5 Sound data
+	{ "207-v1.v1",    0x200000, 0x4143c052, 5 | BRF_SND },           //  5 Sound data		/ TC5316200
 };
 
 STDROMPICKEXT(neomrdo, neomrdo, neogeo)
@@ -12097,20 +12170,21 @@ struct BurnDriver BurnDrvneomrdo = {
 };
 
 // Goal! Goal! Goal!
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo goalx3RomDesc[] = {
-	{ "209-p1.p1",    0x200000, 0x2a019a79, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "209-p1.p1",    0x200000, 0x2a019a79, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC5316200
 
-	{ "209-s1.s1",    0x020000, 0xc0eaad86, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "209-s1.s1",    0x020000, 0xc0eaad86, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "209-c1.c1",    0x400000, 0xb49d980e, 3 | BRF_GRA },           //  2 Sprite data
-	{ "209-c2.c2",    0x400000, 0x5649b015, 3 | BRF_GRA },           //  3 
-	{ "209-c3.c3",    0x100000, 0x5f91bace, 3 | BRF_GRA },           //  4 
-	{ "209-c4.c4",    0x100000, 0x1e9f76f2, 3 | BRF_GRA },           //  5 
+	{ "209-c1.c1",    0x400000, 0xb49d980e, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC5332205
+	{ "209-c2.c2",    0x400000, 0x5649b015, 3 | BRF_GRA },           //  3 					/ mask rom TC5332205
+	{ "209-c3.c3",    0x100000, 0x5f91bace, 3 | BRF_GRA },           //  4 					/ mask rom TC538200
+	{ "209-c4.c4",    0x100000, 0x1e9f76f2, 3 | BRF_GRA },           //  5 					/ mask rom TC538200
 
-	{ "209-m1.m1",    0x020000, 0xcd758325, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "209-m1.m1",    0x020000, 0xcd758325, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ mask rom TC531001
 
-	{ "209-v1.v1",    0x200000, 0xef214212, 5 | BRF_SND },           //  7 Sound data
+	{ "209-v1.v1",    0x200000, 0xef214212, 5 | BRF_SND },           //  7 Sound data		/ mask rom TC5316200
 };
 
 STDROMPICKEXT(goalx3, goalx3, neogeo)
@@ -12489,7 +12563,8 @@ struct BurnDriver BurnDrvms4plus = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Rage of the Dragons (NGM-264?)
+// Rage of the Dragons (NGM-2640)
+/* Encrypted Set */ /* MVS VERSION */
 
 static struct BurnRomInfo rotdRomDesc[] = {
 	{ "264-p1.p1",    0x800000, 0xb8cc969d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -12536,6 +12611,46 @@ struct BurnDriver BurnDrvrotd = {
 	rotdInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	320, 224, 4, 3
 };
+
+// Rage of the Dragons (NGH-2640)
+/* Encrypted Set */ /* AES VERSION */
+
+/* ID-0264
+  . NGH-2640
+  NEO-AEG PROGBK2 (NEO-PCM2 SNK) / NEO-AEG CHAFIO (1999.8.10) (NEO-CMC 7050)
+
+ static struct BurnRomInfo rotdhRomDesc[] = {
+	{ "264-pk1.p1",   0x100000, 0xff2fa719, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 	/ mask rom TC538200
+	{ "264-pk2.sp2",  0x200000, 0x0df2e112, 1 | BRF_ESS | BRF_PRG }, //  1 				/ mask rom TC5316200
+
+	{ "264-c1.c1",    0x800000, 0x4f148fee, 3 | BRF_GRA },           //  1 Sprite data 	/ mask rom TC5364205
+	{ "264-c2.c2",    0x800000, 0x7cf5ff72, 3 | BRF_GRA },           //  2 				/ mask rom TC5364205
+	{ "264-c3.c3",    0x800000, 0x64d84c98, 3 | BRF_GRA },           //  3 				/ mask rom TC5364205
+	{ "264-c4.c4",    0x800000, 0x2f394a95, 3 | BRF_GRA },           //  4 				/ mask rom TC5364205
+	{ "264-c5.c5",    0x800000, 0x6b99b978, 3 | BRF_GRA },           //  5 				/ mask rom TC5364205
+	{ "264-c6.c6",    0x800000, 0x847d5c7d, 3 | BRF_GRA },           //  6 				/ mask rom TC5364205
+	{ "264-c7.c7",    0x800000, 0x231d681e, 3 | BRF_GRA },           //  7 				/ mask rom TC5364205
+	{ "264-c8.c8",    0x800000, 0xc5edb5c4, 3 | BRF_GRA },           //  8 				/ mask rom TC5364205
+
+	{ "264-m1.m1",    0x020000, 0x4dbd7b43, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code 	/ mask rom 27c010
+
+	{ "264-v1.v1",    0x800000, 0xfa005812, 5 | BRF_SND },           // 10 Sound data 	/ mask rom TC5364205
+	{ "264-v2.v2",    0x800000, 0xc3dc8bf0, 5 | BRF_SND },           // 11 				/ mask rom TC5364205
+};
+
+STDROMPICKEXT(rotdh, rotdh, neogeo)
+STD_ROM_FN(rotdh)
+
+struct BurnDriver BurnDrvrotdh = {
+	"rotdh", NULL, "neogeo", NULL, "2002",
+	"Rage of the Dragons (NGH-2640)\0", NULL, "Evoga / Playmore", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, 0,
+	NULL, rotdhRomInfo, rotdhRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	rotdInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+*/
 
 // Matrimelee / Shin Gouketsuji Ichizoku Toukon (NGM-2660) (NGH-2660)
 

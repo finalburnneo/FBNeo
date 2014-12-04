@@ -4327,17 +4327,23 @@ static INT32 Macross2Init()
 
 	BurnYM2203Init(1, 1500000, &DrvYM2203IrqHandler, Macross2SynchroniseStream, Macross2GetTime, 0);
 	BurnTimerAttachZet(4000000);
-	BurnYM2203SetAllRoutes(0, 0.90, BURN_SND_ROUTE_BOTH);
+
+	if (Tdragon2mode) {
+		BurnYM2203SetAllRoutes(0, 3.00, BURN_SND_ROUTE_BOTH);
+		BurnYM2203SetPSGVolume(0, 0.50);
+	} else {
+		BurnYM2203SetAllRoutes(0, 0.90, BURN_SND_ROUTE_BOTH);
+	}
 
 	MSM6295Init(0, 4000000 / 165, 1);
 	MSM6295Init(1, 4000000 / 165, 1);
 	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
 
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "macross2") == 0) {
-		NMK112_init(0, DrvSndROM0, DrvSndROM1, 0x240000, 0x140000);
+	if (Tdragon2mode) {
+		NMK112_init(0, DrvSndROM0, DrvSndROM1, 0x200000, 0x200000);
 	} else {
-		NMK112_init(0, DrvSndROM0, DrvSndROM1, 0x240000, 0x240000);
+		NMK112_init(0, DrvSndROM0, DrvSndROM1, 0x240000, 0x140000);
 	}
 
 	GenericTilesInit();
@@ -4722,7 +4728,7 @@ static void draw_sprites_tdragon2(INT32 flip, INT32 coloff, INT32 coland)
 	for (INT32 i = 0; i < 0x100; i++)
 	{
 		INT32 spr = BITSWAP08(i, bittbl[0], bittbl[1], bittbl[2], bittbl[3], bittbl[4], bittbl[5], bittbl[6], bittbl[7]);
-		sprram = (UINT16*)DrvSprBuf2 + (spr * 16/2);
+		sprram = (UINT16*)DrvSprBuf2 + ((spr << 4) >> 1);
 
 		if (BURN_ENDIAN_SWAP_INT16(sprram[0]) & 0x0001)
 		{
@@ -5558,8 +5564,8 @@ static INT32 Macross2Frame()
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();

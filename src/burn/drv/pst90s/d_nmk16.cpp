@@ -70,6 +70,7 @@ static INT32 AFEGA_SYS = 0;
 static INT32 Tharriermode = 0; // use macross1/tharrier text draw & joy inputs
 static INT32 Macrossmode = 0; // use macross1 text draw
 static INT32 Strahlmode = 0;
+static INT32 Tdragon2mode = 0; // use draw_sprites_tdragon2()
 
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -4548,6 +4549,8 @@ static INT32 DrvExit()
 	MSM6295ROM = NULL;
 	Tharriermode = 0;
 	Macrossmode = 0;
+	Strahlmode = 0;
+	Tdragon2mode = 0;
 
 	return CommonExit();
 }
@@ -4660,6 +4663,83 @@ static void draw_sprites(INT32 flip, INT32 coloff, INT32 coland, INT32 priority)
 
 			if (pri != priority)
 				continue;
+
+			if (*flipscreen)
+			{
+				sx = 368 - sx;
+				sy = 240 - sy;
+				delta = -16;
+
+				flipx ^= *flipscreen;
+				flipy ^= *flipscreen;
+			}
+
+			INT32 yy = h;
+			sy += flipy ? (delta * h) : 0;
+
+			do
+			{
+				INT32 x = sx + (flipx ? (delta * w) : 0);
+				INT32 xx = w;
+
+				do
+				{
+					INT32 xxx = ((x + 16) & 0x1ff) - 16;
+					INT32 yyy = (sy & 0x1ff) - global_y_offset;
+
+					if (flipy) {
+						if (flipx) {
+							Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, xxx, yyy, color, 0, 15, 0, DrvGfxROM2);
+						} else {
+							Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, xxx, yyy, color, 0, 15, 0, DrvGfxROM2);
+						}
+					} else {
+						if (flipx) {
+							Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, xxx, yyy, color, 0, 15, 0, DrvGfxROM2);
+						} else {
+							Render16x16Tile_Mask_Clip(pTransDraw, code, xxx, yyy, color, 0, 15, 0, DrvGfxROM2);
+						}
+					}
+					code = (code + 1) & nGraphicsMask[2];
+					x += delta * (flipx ? -1 : 1);
+
+				} while (--xx >= 0);
+				sy += delta * (flipy ? -1 : 1);
+
+			} while (--yy >= 0);
+		}
+	}
+}
+
+static void draw_sprites_tdragon2(INT32 flip, INT32 coloff, INT32 coland)
+{
+	UINT16 *sprram;
+
+	static INT32 bittbl[8] = {
+		4, 6, 5, 7, 3, 2, 1, 0
+	};
+
+	for (INT32 i = 0; i < 0x100; i++)
+	{
+		INT32 spr = BITSWAP08(i, bittbl[0], bittbl[1], bittbl[2], bittbl[3], bittbl[4], bittbl[5], bittbl[6], bittbl[7]);
+		sprram = (UINT16*)DrvSprBuf2 + (spr * 16/2);
+
+		if (BURN_ENDIAN_SWAP_INT16(sprram[0]) & 0x0001)
+		{
+			INT32 sx    =  (BURN_ENDIAN_SWAP_INT16(sprram[4]) & 0x01ff) + videoshift;
+			INT32 sy    =  (BURN_ENDIAN_SWAP_INT16(sprram[6]) & 0x01ff);
+			INT32 code  =   BURN_ENDIAN_SWAP_INT16(sprram[3]) & nGraphicsMask[2];
+			INT32 color =   BURN_ENDIAN_SWAP_INT16(sprram[7]) & coland;
+			INT32 w     =  (BURN_ENDIAN_SWAP_INT16(sprram[1]) & 0x000f);
+			INT32 h     = ((BURN_ENDIAN_SWAP_INT16(sprram[1]) & 0x00f0) >> 4);
+			INT32 flipy = ((BURN_ENDIAN_SWAP_INT16(sprram[1]) & 0x0200) >> 9);
+			INT32 flipx = ((BURN_ENDIAN_SWAP_INT16(sprram[1]) & 0x0100) >> 8);
+
+			if (!flip) flipy = flipx = 0;
+
+			color = (color << 4) + coloff;
+
+			INT32 delta = 16;
 
 			if (*flipscreen)
 			{
@@ -5048,7 +5128,7 @@ static INT32 StrahlDraw()
 	return 0;
 }
 
-static INT32 Macross2Draw() 
+static INT32 Macross2Draw()
 {
 	videoshift = 64;
 	DrvPaletteRecalc();
@@ -5066,10 +5146,14 @@ static INT32 Macross2Draw()
 		case 0x30: draw_macross_background(DrvBgRAM3, (scrollx - 64) & 0xfff, scrolly, 0, 0); break;
 	}	
 
-	draw_sprites(0, 0x100, 0x1f, 3);
-	draw_sprites(0, 0x100, 0x1f, 2);
-	draw_sprites(0, 0x100, 0x1f, 1);
-	draw_sprites(0, 0x100, 0x1f, 0);
+	if (Tdragon2mode) {
+		draw_sprites_tdragon2(0, 0x100, 0x1f);
+	} else {
+		draw_sprites(0, 0x100, 0x1f, 3);
+		draw_sprites(0, 0x100, 0x1f, 2);
+		draw_sprites(0, 0x100, 0x1f, 1);
+		draw_sprites(0, 0x100, 0x1f, 0);
+	}
 
 	draw_macross_text_layer(-64, 0, 1, 0x300);
 
@@ -6300,6 +6384,11 @@ struct BurnDriver BurnDrvMacross2 = {
 	384, 224, 4, 3
 };
 
+static INT32 Tdragon2Init()
+{
+	Tdragon2mode = 1;
+	return Macross2Init();
+}
 
 // Thunder Dragon 2 (9th Nov. 1993)
 
@@ -6332,7 +6421,7 @@ struct BurnDriver BurnDrvTdragon2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, tdragon2RomInfo, tdragon2RomName, NULL, NULL, Tdragon2InputInfo, Tdragon2DIPInfo,
-	Macross2Init, DrvExit, Macross2Frame, Macross2Draw, DrvScan, NULL, 0x400,
+	Tdragon2Init, DrvExit, Macross2Frame, Macross2Draw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
 };
 
@@ -6368,7 +6457,7 @@ struct BurnDriver BurnDrvTdragon2a = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, tdragon2aRomInfo, tdragon2aRomName, NULL, NULL, Tdragon2InputInfo, Tdragon2DIPInfo,
-	Macross2Init, DrvExit, Macross2Frame, Macross2Draw, DrvScan, NULL, 0x400,
+	Tdragon2Init, DrvExit, Macross2Frame, Macross2Draw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
 };
 
@@ -6404,7 +6493,7 @@ struct BurnDriver BurnDrvBigbang = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, bigbangRomInfo, bigbangRomName, NULL, NULL, Tdragon2InputInfo, Tdragon2DIPInfo,
-	Macross2Init, DrvExit, Macross2Frame, Macross2Draw, DrvScan, NULL, 0x400,
+	Tdragon2Init, DrvExit, Macross2Frame, Macross2Draw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
 };
 

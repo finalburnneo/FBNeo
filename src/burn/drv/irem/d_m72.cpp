@@ -3420,6 +3420,7 @@ STD_ROM_FN(gallop)
 static INT32 gallopInit()
 {
 	protection_sample_offsets = gallop_sample_offsets;
+	Clock_16mhz = 1;
 
 	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, 0x80, Z80_FAKE_NMI, 0);
 }

@@ -852,7 +852,10 @@ static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 
 static void DrvMSM5205Int()
 {
-	if (!DrvADPCMPlaying) return;
+	if (!DrvADPCMPlaying) {
+		MSM5205ResetWrite(0, 1);
+		return;
+	}
 
 	if (DrvADPCMPos >= DrvADPCMEnd) {
 		MSM5205ResetWrite(0, 1);

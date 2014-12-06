@@ -1715,6 +1715,11 @@ static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32
 			video_offsets[0] = video_offsets[1] = -6;
 			m72_video_type = 1; // rtype
 		break;
+		case 5: // kengo
+			video_offsets[0] = -3;
+			video_offsets[1] = -6;
+			m72_video_type = 1; // rtype
+		break;
 	}
 
 	BurnYM2151Init(3579545);
@@ -2089,7 +2094,7 @@ static INT32 DrvFrame()
 
 	compile_inputs();
 	
-	INT32 multiplier=3;
+	INT32 multiplier = 3;
 	INT32 nInterleave = 256 * multiplier;
 
 	if (Clock_16mhz) // Ken-go, Cosmic Cop
@@ -2107,7 +2112,7 @@ static INT32 DrvFrame()
 		nCurrentCycles = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += VezRun(nCurrentCycles);
 
-		if ((i%multiplier)==(multiplier-1))
+		if ((i%multiplier)==0)
 			scanline_interrupts(i/multiplier);
 
 		if (z80_reset == 0) {
@@ -3322,7 +3327,7 @@ STD_ROM_FN(kengo)
 
 static INT32 kengoInit()
 {
-	INT32 nRet = DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, 0x60, Z80_REAL_NMI, 1);
+	INT32 nRet = DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, 0x60, Z80_REAL_NMI, 5);
 
 	if (nRet == 0) {
 		Kengo = 1;
@@ -3374,7 +3379,7 @@ static INT32 cosmccopInit()
 {
 	Clock_16mhz = 1;
 
-	return DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, 0x60, Z80_REAL_NMI, 1);
+	return DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, 0x60, Z80_REAL_NMI, 2);
 }
 
 struct BurnDriver BurnDrvCosmccop = {

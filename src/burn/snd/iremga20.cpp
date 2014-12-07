@@ -303,40 +303,19 @@ INT32 iremga20_scan(INT32 device, INT32 nAction, INT32 *pnMin)
 	if (device > nNumChips) bprintf(PRINT_ERROR, _T("iremga20_scan called with invalid chip %x\n"), device);
 #endif
 
-	chip = &chips[device];
-
-	struct BurnArea ba;
-	char szName[16];
-	
-	if ((nAction & ACB_DRIVER_DATA) == 0) {
-		return 1;
-	}
-	
 	if (pnMin != NULL) {
 		*pnMin = 0x029678;
 	}
 	
+	chip = &chips[device];
 
-	for (INT32 i = 0; i < MAX_GA20; i++)
-	{
-		sprintf(szName, "IREM GA20 #%d Regs", device);
-		ba.Data		= &chip->regs;
-		ba.nLen		= 0x40 * sizeof(UINT16);
-		ba.nAddress	= 0;
-		ba.szName	= szName;
-		BurnAcb(&ba);
-
-		sprintf(szName, "IREM GA20 #%d channels", device);
-		ba.Data		= &chip->channel;
-		ba.nLen		= 4 * sizeof(IremGA20_channel_def);
-		ba.nAddress	= 0;
-		ba.szName	= szName;
-		BurnAcb(&ba);
-
+	if ((nAction & ACB_DRIVER_DATA)) {
+		SCAN_VAR(chip->channel);
+		SCAN_VAR(chip->regs);
 		SCAN_VAR(chip->frequency);
 		SCAN_VAR(chip->gain);
 		SCAN_VAR(chip->output_dir);
 	}
-	
+
 	return 0;
 }

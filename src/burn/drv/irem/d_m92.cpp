@@ -1435,7 +1435,6 @@ void __fastcall m92WritePort(UINT32 port, UINT8 data)
 		case 0x9c: pf_control[3][4] = data; set_pf_info(2, data); return;
 		case 0x9d: pf_control[3][5] = data; return;
 		case 0x9e: pf_control[3][6] = data;
-			m92_raster_irq_position = ((pf_control[3][7]<<8) | pf_control[3][6]) - 128;
 			return;
 		case 0x9f: pf_control[3][7] = data;
 			m92_raster_irq_position = ((pf_control[3][7]<<8) | pf_control[3][6]) - 128;
@@ -1784,6 +1783,7 @@ static INT32 DrvExit()
 	
 	nPrevScreenPos = 0;
 	m92_kludge = 0;
+	m92_raster_irq_position = 0;
 	nScreenOffsets[0] = nScreenOffsets[1] = 0;
 
 	return 0;
@@ -2053,7 +2053,6 @@ static void scanline_interrupts(INT32 prev, INT32 segment, INT32 scanline)
 		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 0)/4, VEZ_IRQSTATUS_ACK);
 		nCyclesDone[0] += VezRun(10);
 		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 0)/4, VEZ_IRQSTATUS_NONE);
-
 	}
 }
 
@@ -2067,7 +2066,7 @@ static INT32 DrvFrame()
 
 	compile_inputs();
 
-	INT32 multiplier=3;
+	INT32 multiplier=8;
 	nInterleave = 256*multiplier;
 
 	// overclocking...
@@ -2075,10 +2074,6 @@ static INT32 DrvFrame()
 	nCyclesTotal[0] = (INT32)((INT64)(9000000 / 60) * nBurnCPUSpeedAdjust / 0x0100);
 	nCyclesTotal[1] = (INT32)((INT64)(7159090 / 60) * nBurnCPUSpeedAdjust / 0x0100);
 	nCyclesDone[0] = nCyclesDone[1] = 0;
-
-	if (pBurnSoundOut) {
-		memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
-	}
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{

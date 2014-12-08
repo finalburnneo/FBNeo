@@ -1156,7 +1156,7 @@ STD_ROM_FN(plegendsj)
 
 struct BurnDriver BurnDrvPwrinst2 = {
 	"pwrinst2", NULL, NULL, NULL, "1994",
-	"Power Instinct 2 (USA, ver. 94/04/08)\0", "Bad Music from first MSM6295", "Atlus", "Cave",
+	"Power Instinct 2 (USA, ver. 94/04/08)\0", NULL, "Atlus", "Cave",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, pwrinst2RomInfo, pwrinst2RomName, NULL, NULL, pwrinst2InputInfo, NULL,

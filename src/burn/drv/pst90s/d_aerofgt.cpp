@@ -4,6 +4,10 @@
  * http://oopsware.googlepages.com
  * http://oopsware.ys168.com
  *
+ *
+ * 12.08.2014
+ *   Add sprite priority bitmap for Turbo Force - see notes in turbofrcDraw();
+ *
  * 6.04.2014
  *   Overhaul graphics routines, now supports multiple color depths and sprite zooming
  *   Clean and merge routines
@@ -68,6 +72,7 @@ static UINT8 DrvRecalc;
 static UINT8 *DeRomBg;
 static UINT8 *DeRomSpr1;
 static UINT8 *DeRomSpr2;
+static UINT8 *RamPrioBitmap;
 
 static UINT32 RamSpr1SizeMask;
 static UINT32 RamSpr2SizeMask;
@@ -1431,6 +1436,7 @@ static INT32 turbofrcMemIndex()
 
 	RamEnd		= Next;
 
+	RamPrioBitmap	= Next; Next += 352 * 240 * 2; // For turbofrc
 	RamCurPal	= (UINT32 *)Next; Next += 0x000400 * sizeof(UINT32);
 
 	MemEnd		= Next;
@@ -2249,7 +2255,73 @@ static void aerofgt_drawsprites(INT32 priority)
 	}
 }
 
-static void turbofrc_drawsprites(INT32 chip,INT32 paloffset, INT32 chip_disabled_pri)
+void RenderZoomedTilePrio(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT8 *pri, INT32 prio, INT32 turbofrc_layer)
+{
+	// Based on MAME sources for tile zooming
+	UINT8 *gfx_base = gfx + (code * width * height);
+	int dh = (zoomy * height + 0x8000) / 0x10000;
+	int dw = (zoomx * width + 0x8000) / 0x10000;
+
+	if (dw && dh)
+	{
+		int dx = (width * 0x10000) / dw;
+		int dy = (height * 0x10000) / dh;
+		int ex = sx + dw;
+		int ey = sy + dh;
+		int x_index_base = 0;
+		int y_index = 0;
+
+		if (fx) {
+			x_index_base = (dw - 1) * dx;
+			dx = -dx;
+		}
+
+		if (fy) {
+			y_index = (dh - 1) * dy;
+			dy = -dy;
+		}
+
+		for (INT32 y = sy; y < ey; y++)
+		{
+			UINT8 *src = gfx_base + (y_index / 0x10000) * width;
+			UINT16 *dst = dest + y * nScreenWidth;
+
+			if (y >= 0 && y < nScreenHeight) 
+			{
+				for (INT32 x = sx, x_index = x_index_base; x < ex; x++)
+				{
+					if (x >= 0 && x < nScreenWidth) {
+						INT32 pxl = src[x_index>>16];
+						
+						// new!
+						// notes: the first layer is going to load the bitmap
+						// - the second layer is going to use it
+
+						if (turbofrc_layer == 1) {
+							if (pxl != t) {
+								pri[y * nScreenWidth + x] |= 0x80;
+								dst[x] = pxl + color;
+							}
+						} else {
+							if ((prio & (1 << pri[y * nScreenWidth + x])) == 0 && pri[y * nScreenWidth + x] < 0x80) {
+								if (pxl != t) {
+									dst[x] = pxl + color;
+								}
+							}
+						}
+						// !new
+					}
+	
+					x_index += dx;
+				}
+			}
+
+			y_index += dy;
+		}
+	}
+}
+
+static void turbofrc_drawsprites(INT32 chip, INT32 turbofrc_layer, INT32 paloffset, INT32 chip_disabled_pri)
 {
 	INT32 attr_start,base,first;
 
@@ -2303,7 +2375,11 @@ static void turbofrc_drawsprites(INT32 chip,INT32 paloffset, INT32 chip_disabled
 				if (chip == 0)	code = BURN_ENDIAN_SWAP_INT16(RamSpr1[map_start & RamSpr1SizeMask]) & RomSpr1SizeMask;
 				else			code = BURN_ENDIAN_SWAP_INT16(RamSpr2[map_start & RamSpr2SizeMask]) & RomSpr2SizeMask;
 
-				RenderZoomedTile(pTransDraw, gfxbase, code, color, 0xf, sx, sy, flipx, flipy, 16, 16, zoomx<<11, zoomy<<11);
+				if (turbofrc_layer)
+					RenderZoomedTilePrio(pTransDraw, gfxbase, code, color, 0xf, sx, sy, flipx, flipy, 16, 16, zoomx<<11, zoomy<<11, RamPrioBitmap, pri, turbofrc_layer);
+				else
+					RenderZoomedTile(pTransDraw, gfxbase, code, color, 0xf, sx, sy, flipx, flipy, 16, 16, zoomx<<11, zoomy<<11);
+
 
 				map_start++;
 			}
@@ -2493,20 +2569,13 @@ static INT32 turbofrcDraw()
 	TileBackground(RamBg1V, DeRomBg + 0x000000, 0, 0x000, scrollx0, bg1scrolly, RamGfxBank + 0);
 	TileBackground(RamBg2V, DeRomBg + 0x140000, 1, 0x100, scrollx1, bg2scrolly, RamGfxBank + 4);
 
-/* 
-	// we use the priority buffer so sprites are drawn front to back 
-	turbofrc_drawsprites(0,-1); //enemy
-	turbofrc_drawsprites(0, 0); //enemy
-	turbofrc_drawsprites(1,-1); //ship
-	turbofrc_drawsprites(1, 0); //intro
-*/
-	// in MAME it use a pri-buf control render to draw sprites from front to back
-	// i'm not use it, is right ???
-	
-	turbofrc_drawsprites(0, 512,  0); 
- 	turbofrc_drawsprites(0, 512, -1); 
-	turbofrc_drawsprites(1, 768,  0); 
-	turbofrc_drawsprites(1, 768, -1); 
+	memset(RamPrioBitmap, 0, 352 * 240); // clear priority
+	// sprite priority-bitmap is only used between the first 2 calls to turbofrc_drawsprites()
+	// it probably could have been implemented better, but it works. -dink
+	turbofrc_drawsprites(0, 1, 512,  0); // big alien (level 3)
+ 	turbofrc_drawsprites(0, 2, 512, -1); // enemies
+	turbofrc_drawsprites(1, 0, 768,  0); // nothing?
+	turbofrc_drawsprites(1, 0, 768, -1); // player
 
 	BurnTransferCopy(RamCurPal);
 
@@ -2529,10 +2598,10 @@ static INT32 karatblzDraw()
  	turbofrc_drawsprites(0,-1); 
 	turbofrc_drawsprites(0, 0); 
 */
-	turbofrc_drawsprites(0, 512,  0); 
- 	turbofrc_drawsprites(0, 512, -1); 
-	turbofrc_drawsprites(1, 768,  0); 
-	turbofrc_drawsprites(1, 768, -1); 
+	turbofrc_drawsprites(0, 0, 512,  0);
+ 	turbofrc_drawsprites(0, 0, 512, -1); 
+	turbofrc_drawsprites(1, 0, 768,  0); 
+	turbofrc_drawsprites(1, 0, 768, -1); 
 
 
 	BurnTransferCopy(RamCurPal);
@@ -2550,10 +2619,10 @@ static INT32 spinlbrkDraw()
 	spinlbrkTileBackground();
 	karatblzTileBackground(RamBg2V, DeRomBg + 0x200000, 1, 0x100, bg2scrollx, bg2scrolly, RamGfxBank[1] & 0x07);
 
-	turbofrc_drawsprites(1,768,-1);	// enemy(near far)
-	turbofrc_drawsprites(1,768, 0);	// enemy(near) fense
- 	turbofrc_drawsprites(0,512, 0); // avatar , post , bullet
-	turbofrc_drawsprites(0,512,-1); 
+	turbofrc_drawsprites(1, 0, 768, -1);	// enemy(near far)
+	turbofrc_drawsprites(1, 0, 768,  0);	// enemy(near) fense
+ 	turbofrc_drawsprites(0, 0, 512,  0); // avatar , post , bullet
+	turbofrc_drawsprites(0, 0, 512, -1);
 
 	BurnTransferCopy(RamCurPal);
 
@@ -2568,10 +2637,10 @@ static INT32 aerofgtbDraw()
 	TileBackground(RamBg1V, DeRomBg + 0x000000, 0, 0x000, scrollx0, bg1scrolly + 2, RamGfxBank + 0);
 	TileBackground(RamBg2V, DeRomBg + 0x100000, 1, 0x100, scrollx1, bg2scrolly + 2, RamGfxBank + 4);
 
-	turbofrc_drawsprites(0,512, 0); 
- 	turbofrc_drawsprites(0,512,-1); 
-	turbofrc_drawsprites(1,768, 0); 
-	turbofrc_drawsprites(1,768,-1);
+	turbofrc_drawsprites(0, 0, 512,  0);
+ 	turbofrc_drawsprites(0, 0, 512, -1);
+	turbofrc_drawsprites(1, 0, 768,  0);
+	turbofrc_drawsprites(1, 0, 768, -1);
 
 	BurnTransferCopy(RamCurPal);
 
@@ -2582,8 +2651,8 @@ static INT32 pspikesDraw()
 {
 	pspikesTileBackground();
 
-	turbofrc_drawsprites(0,1024, 0); 
- 	turbofrc_drawsprites(0,1024,-1); 
+	turbofrc_drawsprites(0, 0, 1024,  0);
+ 	turbofrc_drawsprites(0, 0, 1024, -1);
 
 	BurnTransferCopy(RamCurPal);
 

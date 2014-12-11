@@ -3642,7 +3642,7 @@ UINT8 __fastcall tharrier_sound_in(UINT16 port)
 static void ssmissin_okibank(INT32 bank)
 {
 	*okibank = bank & 3;
-	if (strstr(BurnDrvGetTextA(DRV_NAME), "ssmiss")) {
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "ssmiss") || strstr(BurnDrvGetTextA(DRV_NAME), "airatt")) {
 		memcpy(DrvSndROM0 + 0x20000, DrvSndROM0 + 0x40000 + (bank & 3) * 0x20000, 0x20000);
 	} else { // twin action & dolmen weird banking (m_oki1->set_bank_base((data & 3) * 0x40000);)
 		memcpy(DrvSndROM0, DrvSndROM1 + (bank & 3) * 0x40000, 0x40000);

@@ -1505,7 +1505,7 @@ struct BurnDriver BurnDrvmd_landstlkf = {
 	"md_landstlkf", "md_landstlk", NULL, NULL, "1993",
 	"Landstalker - Le Tresor du Roi Nole (Fra)\0", NULL, "Sega", "Sega Megadrive",
 	L"Landstalker - Le Tr\u00e9sor du Roi Nole (Fra)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_10000, GBF_MISC, 0,
 	MegadriveGetZipName, md_landstlkfRomInfo, md_landstlkfRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
@@ -16554,7 +16554,7 @@ struct BurnDriver BurnDrvmd_landstlk = {
 	"md_landstlk", NULL, NULL, NULL, "1993",
 	"Landstalker - The Treasures of King Nole (Euro)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_10000, GBF_MISC, 0,
 	MegadriveGetZipName, md_landstlkRomInfo, md_landstlkRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
@@ -16572,7 +16572,7 @@ struct BurnDriver BurnDrvmd_landstlkg = {
 	"md_landstlkg", "md_landstlk", NULL, NULL, "1993",
 	"Landstalker - Die Schätze von König Nolo (Ger)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_10000, GBF_MISC, 0,
 	MegadriveGetZipName, md_landstlkgRomInfo, md_landstlkgRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
@@ -16590,7 +16590,7 @@ struct BurnDriver BurnDrvmd_landstlkj = {
 	"md_landstlkj", "md_landstlk", NULL, NULL, "1992",
 	"Landstalker - Koutei no Zaihou (Jpn)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_10000, GBF_MISC, 0,
 	MegadriveGetZipName, md_landstlkjRomInfo, md_landstlkjRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
@@ -16608,7 +16608,7 @@ struct BurnDriver BurnDrvmd_landstlku = {
 	"md_landstlku", "md_landstlk", NULL, NULL, "1992",
 	"Landstalker - The Treasures of King Nole (USA)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_10000, GBF_MISC, 0,
 	MegadriveGetZipName, md_landstlkuRomInfo, md_landstlkuRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
@@ -16626,7 +16626,7 @@ struct BurnDriver BurnDrvmd_landstlkup = {
 	"md_landstlkup", "md_landstlk", NULL, NULL, "1992",
 	"Landstalker - Treasure of King Nole (USA, Prototype)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_10000, GBF_MISC, 0,
 	MegadriveGetZipName, md_landstlkupRomInfo, md_landstlkupRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3

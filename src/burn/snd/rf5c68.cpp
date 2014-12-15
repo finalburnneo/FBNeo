@@ -103,8 +103,9 @@ void RF5C68PCMUpdate(INT16* pSoundBuf, INT32 length)
 		nLeftSample = BURN_SND_CLIP(nLeftSample);
 		nRightSample = BURN_SND_CLIP(nRightSample);
 		
-		pSoundBuf[i + 0] = nLeftSample;
-		pSoundBuf[i + 1] = nRightSample;
+		pSoundBuf[0] = nLeftSample;
+		pSoundBuf[1] = nRightSample;
+		pSoundBuf += 2;
 	}
 }
 

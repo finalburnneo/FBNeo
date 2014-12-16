@@ -128,6 +128,7 @@ bool System16BTileAlt = false;
 bool Shangon = false;
 bool Hangon = false;
 bool AlienSyndrome = false;
+bool HammerAway = false;
 bool System16Z80Enable = true;
 
 INT32 nSystem16CyclesDone[4];
@@ -2812,6 +2813,8 @@ INT32 System16BFrame()
 INT32 System18Frame()
 {
 	INT32 nInterleave = nBurnSoundLen;
+
+	if (HammerAway) nInterleave = 100;
 
 	if (System16Reset) System16DoReset();
 

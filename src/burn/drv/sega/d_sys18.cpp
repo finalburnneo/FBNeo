@@ -2484,7 +2484,8 @@ static INT32 HamawayInit()
 	System16Map68KDo = HamawayMap68K;
 	
 	INT32 nRet = System16Init();
-	
+
+	HammerAway = true;
 	// game is loud - bring the volumes down
 	BurnYM3438SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM3438SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
@@ -2605,7 +2606,8 @@ static INT32 WwallyInit()
 static INT32 System18Exit()
 {
 	memset(misc_io_data, 0, sizeof(misc_io_data));
-	
+	HammerAway = false;
+
 	GenesisVDPExit();
 	
 	return System16Exit();

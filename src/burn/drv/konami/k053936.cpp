@@ -485,7 +485,7 @@ static inline void K053936GP_copyroz32clip(INT32 chip, UINT16 *src_bitmap, INT32
 
 	if (blend > 0)
 	{
-		dst_base += dst_pitch;      // draw blended
+		dst_ptr += dst_pitch;      // draw blended
 		starty += incyy;
 		startx += incyx;
 
@@ -510,12 +510,12 @@ static inline void K053936GP_copyroz32clip(INT32 chip, UINT16 *src_bitmap, INT32
 				if (!(pixel & cmask))
 					continue;
 // this one below is fucked.
-				if ((dst_ptr+ecx+dst_base2+dst_pitch)<dst_size) dst_base[dst_ptr+ecx+dst_base2] = alpha_blend(pal_base[pixel], dst_base[dst_ptr+ecx+dst_base2], alpha);
+				if ((dst_ptr+ecx+dst_base2)<dst_size) dst_base[dst_ptr+ecx+dst_base2] = alpha_blend(pal_base[pixel], dst_base[dst_ptr+ecx+dst_base2], alpha);
 
 				if (pixeldouble_output)
 				{
 					ecx++;
-					if ((dst_ptr+ecx+dst_base2+dst_pitch)<dst_size) dst_base[dst_ptr+ecx+dst_base2] = alpha_blend(pal_base[pixel], dst_base[dst_ptr+ecx+dst_base2], alpha);
+					if ((dst_ptr+ecx+dst_base2)<dst_size) dst_base[dst_ptr+ecx+dst_base2] = alpha_blend(pal_base[pixel], dst_base[dst_ptr+ecx+dst_base2], alpha);
 				}
 			}
 			while (++ecx < 0);
@@ -528,35 +528,9 @@ static inline void K053936GP_copyroz32clip(INT32 chip, UINT16 *src_bitmap, INT32
 	}
 	else    //  draw solid
 	{
-		if (blend == 0)
-		{
-			dst_ptr += dst_pitch;
-			starty += incyy;
-			startx += incyx;
-		}
-		else
-		{
-			if ((sy & 1) ^ (blend & 1))
-			{
-				if (ty <= 1) return;
-
-				dst_ptr += dst_pitch;
-				cy += incyy;
-				cx += incyx;
-			}
-
-			if (ty > 1)
-			{
-				ty >>= 1;
-				dst_pitch <<= 1;
-				incyy <<= 1;
-				incyx <<= 1;
-
-				dst_ptr += dst_pitch;
-				starty = cy + incyy;
-				startx = cx + incyx;
-			}
-		}
+		dst_ptr += dst_pitch;
+		starty += incyy;
+		startx += incyx;
 
 		do {
 			do {

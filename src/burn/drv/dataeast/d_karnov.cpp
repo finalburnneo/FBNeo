@@ -956,7 +956,9 @@ static void draw_txt_layer(INT32 swap)
 			sx ^= 0xf8;
 		}
 
-		sy -= 8;
+		if (microcontroller_id == WNDRPLNT) {
+			sy -= 8;
+		}
 
 		INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs]) & 0x0fff;
 		INT32 color = BURN_ENDIAN_SWAP_INT16(vram[offs]) >> 14;
@@ -1092,7 +1094,7 @@ static INT32 DrvDraw()
 
 static void DrvInterrupt()
 {
-	static INT32 latch;
+	static INT32 latch = 0;
 
 	if (DrvInput[2] == coin_mask) latch=1;
 	if (DrvInput[2] != coin_mask && latch)
@@ -1105,6 +1107,7 @@ static void DrvInterrupt()
 		{
 			i8751_return = DrvInput[2] | 0x8000;
 			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			SekRun(100);
 			i8751_needs_ack=1;
 		}
 		latch=0;
@@ -1148,16 +1151,16 @@ static INT32 DrvFrame()
 			DrvInterrupt();
 		}
 
-		BurnTimerUpdate(i * (nCyclesTotal[0] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
 		
-		BurnTimerUpdateYM3526(i * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[0]);
 	BurnTimerEndFrameYM3526(nCyclesTotal[1]);
 	
 	if (pBurnSoundOut) {
-		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);	
+		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 

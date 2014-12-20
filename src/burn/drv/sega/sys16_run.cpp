@@ -3225,6 +3225,105 @@ INT32 XBoardFrame()
 	return 0;
 }
 
+INT32 XBoardFrameGPRider()
+{
+	INT32 nInterleave = 100, i;
+
+	if (System16Reset) System16DoReset();
+
+	System16MakeInputs();
+	
+	if (nBurnGunNumPlayers) System16GunMakeInputs();
+	
+	nCyclesTotal[0] = (INT32)((INT64)(50000000 / 4) * nBurnCPUSpeedAdjust / (0x0100 * 60));
+	nCyclesTotal[1] = (INT32)((INT64)(50000000 / 4) * nBurnCPUSpeedAdjust / (0x0100 * 60));
+	nCyclesTotal[2] = (16000000 / 4) / 60;
+	nCyclesTotal[3] = (16000000 / 4) / 60;
+	nSystem16CyclesDone[0] = nSystem16CyclesDone[1] = nSystem16CyclesDone[2] = nSystem16CyclesDone[3] = 0;
+
+	INT32 nSoundBufferPos = 0;
+	
+	SekNewFrame();
+	ZetNewFrame();
+	
+	for (i = 0; i < nInterleave; i++) {
+		INT32 nCurrentCPU, nNext;
+
+		// Run 68000 #1
+		nCurrentCPU = 0;
+		SekOpen(nCurrentCPU);
+		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
+		nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+		// ACK for 1 interleave cycle to make gprider happy
+		if (i == 20 || i == 40 || i == 60 || i == 80) SekSetIRQLine(2, SEK_IRQSTATUS_ACK);
+		if (i == 21 || i == 41 || i == 61 || i == 81) SekSetIRQLine(2, SEK_IRQSTATUS_NONE);
+		if (i == 98) SekSetIRQLine(4, SEK_IRQSTATUS_ACK);
+		if (i == 99) SekSetIRQLine(4, SEK_IRQSTATUS_NONE);
+		SekClose();
+		
+		// Run 68000 #2
+		nCurrentCPU = 1;
+		SekOpen(nCurrentCPU);
+		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
+		nCyclesSegment = SekRun(nCyclesSegment);
+		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
+		if (i == 99) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		SekClose();
+
+		// Run Z80
+		nCurrentCPU = 2;
+		ZetOpen(0);
+		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
+		nCyclesSegment = ZetRun(nCyclesSegment);
+		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
+		ZetClose();
+		
+		// Run Z80 #2
+		if (System16Z80Rom2Num) {
+			nCurrentCPU = 3;
+			ZetOpen(1);
+			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+			nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
+			nCyclesSegment = ZetRun(nCyclesSegment);
+			nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
+			ZetClose();
+		}
+
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+
+			ZetOpen(0);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			ZetClose();
+			if (System16PCMDataSize) SegaPCMUpdate(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
+	}
+
+	// Make sure the buffer is entirely filled.
+	if (pBurnSoundOut) {
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+
+		if (nSegmentLength) {
+			ZetOpen(0);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			ZetClose();
+			if (System16PCMDataSize) SegaPCMUpdate(pSoundBuf, nSegmentLength);
+		}
+	}
+
+	if (pBurnDraw) {
+		XBoardRender();
+	}
+
+	return 0;
+}
+
 INT32 YBoardFrame()
 {
 	INT32 nInterleave = 262, i;

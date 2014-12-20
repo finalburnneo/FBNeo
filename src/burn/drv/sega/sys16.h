@@ -158,6 +158,7 @@ INT32 HangonFrame();
 INT32 HangonYM2203Frame();
 INT32 OutrunFrame();
 INT32 XBoardFrame();
+INT32 XBoardFrameGPRider();
 INT32 YBoardFrame();
 INT32 System16Scan(INT32 nAction, INT32 *pnMin);
 

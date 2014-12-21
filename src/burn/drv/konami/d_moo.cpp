@@ -1,8 +1,6 @@
 // FB Alpha Wild West C.O.W.-Boys of Moo Mesa / Bucky O'Hare driver module
 // Based on MAME driver by 
 
-// music sounds bad in bucky?
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -263,6 +261,14 @@ static void moo_prot_write(INT32 offset)
 	}
 }
 
+static inline void sync_sound()
+{
+	INT32 cycles = (SekTotalCycles() / 2) - ZetTotalCycles();
+	if (cycles > 0) {
+		ZetRun(cycles);
+	}
+}
+
 static void __fastcall moo_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffc000) == 0x1a0000) {
@@ -345,11 +351,13 @@ static void __fastcall moo_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x0d600c:
 		case 0x0d600d:
+			sync_sound();
 			*soundlatch = data;
 		return;
 
 		case 0x0d600e:
 		case 0x0d600f:
+			sync_sound();
 			*soundlatch2 = data;
 		return;
 
@@ -379,6 +387,7 @@ static UINT16 __fastcall moo_main_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0x0c4000:
+			sync_sound();
 			return K053246Read(1) + (K053246Read(0) << 8);
 
 		case 0x0da000:
@@ -416,6 +425,7 @@ static UINT8 __fastcall moo_main_read_byte(UINT32 address)
 	{
 		case 0x0c4000:
 		case 0x0c4001:
+			sync_sound();
 			return K053246Read(address & 1);
 
 		case 0x0da000:
@@ -546,11 +556,13 @@ static void __fastcall bucky_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x0d600c:
 		case 0x0d600d:
+			sync_sound();
 			*soundlatch = data;
 		return;
 
 		case 0x0d600e:
 		case 0x0d600f:
+			sync_sound();
 			*soundlatch2 = data;
 		return;
 
@@ -584,6 +596,7 @@ static UINT16 __fastcall bucky_main_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0x0c4000:
+			sync_sound();
 			return K053246Read(1) + (K053246Read(0) << 8);
 
 		case 0x0da000:
@@ -625,6 +638,7 @@ static UINT8 __fastcall bucky_main_read_byte(UINT32 address)
 	{
 		case 0x0c4000:
 		case 0x0c4001:
+			sync_sound();
 			return K053246Read(address & 1);
 
 		case 0x0da000:
@@ -1105,7 +1119,7 @@ static INT32 DrvFrame()
 	SekNewFrame();
 	ZetNewFrame();
 
-	INT32 nInterleave = 120;
+	INT32 nInterleave = ((pBurnSoundOut == NULL) ? 120 : nBurnSoundLen);
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -1142,10 +1156,8 @@ static INT32 DrvFrame()
 			} 
 		}
 
-		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[1];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[1] += nCyclesSegment;
+		nCyclesSegment = (SekTotalCycles() / 2) - ZetTotalCycles();
+		if (nCyclesSegment > 0) nCyclesDone[1] += ZetRun(nCyclesSegment); // sync sound cpu to main cpu
 
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;

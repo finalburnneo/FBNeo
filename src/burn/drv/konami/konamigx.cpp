@@ -345,7 +345,10 @@ static void konamigx_mixer_draw(INT32 sub1, INT32 sub1flags,INT32 sub2, INT32 su
 			}
 			color &= K055555_COLORMASK;
 
-		//	if (drawmode >= 4) m_palette->set_shadow_mode(order & 0x0f);	// iq_132
+			if (drawmode >= 4) {
+			//	m_palette->set_shadow_mode(order & 0x0f);
+				drawmode |= (order & 0x0f)<<4;
+			}
 
 			if (!(mixerflags & GXMIX_NOZBUF))
 			{

@@ -534,8 +534,18 @@ static inline UINT32 alpha_blend_r32(UINT32 d, UINT32 s, UINT32 p)
 		((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) >> 8;
 }
 
-	#define GX_ZBUFW     512
-	#define GX_ZBUFH     256
+static inline UINT32 shadow_blend(UINT32 d)
+{
+	return ((((d & 0xff00ff) * 0x9d) & 0xff00ff00) + (((d & 0x00ff00) * 0x9d) & 0x00ff0000)) / 0x100;
+}
+
+static inline UINT32 highlight_blend(UINT32 d)
+{
+	return (((0xA857A857 + ((d & 0xff00ff) * 0x56)) & 0xff00ff00) + ((0x00A85700 + ((d & 0x00ff00) * 0x56)) & 0x00ff0000)) / 0x100;
+}
+
+#define GX_ZBUFW     512
+#define GX_ZBUFH     256
 
 void zdrawgfxzoom32GP(UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32 sx, INT32 sy,
 		INT32 scalex, INT32 scaley, INT32 alpha, INT32 drawmode, INT32 zcode, INT32 pri, UINT8* gx_objzbuf, UINT8* gx_shdzbuf)
@@ -570,6 +580,8 @@ void zdrawgfxzoom32GP(UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32
 	INT32 dst_skipx, dst_skipy, dst_x, dst_y, dst_lastx, dst_lasty;
 	INT32 src_pitch, dst_pitch;
 
+	INT32 highlight_enable = drawmode >> 4;// for fba
+	drawmode &= 0xf;
 
 	// cull illegal and transparent objects
 	if (!scalex || !scaley) return;
@@ -821,7 +833,11 @@ void zdrawgfxzoom32GP(UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32
 							szbuf_ptr[ecx*2+1] = p8;
 
 							// the shadow tables are 15-bit lookup tables which accept RGB15... lossy, nasty, yuck!
-							dst_ptr[ecx] = alpha_blend_r32(dst_ptr[ecx], 0, 0x7f); //shd_base[pix.as_rgb15()];
+							if (highlight_enable) {
+								dst_ptr[ecx] = highlight_blend(dst_ptr[ecx]); 
+							} else {
+								dst_ptr[ecx] = shadow_blend(dst_ptr[ecx]); //shd_base[pix.as_rgb15()];
+							}
 							//dst_ptr[ecx] =(eax>>3&0x001f);lend_r32( eax, 0x00000000, 128);
 						}
 						while (++ecx);
@@ -958,7 +974,11 @@ void zdrawgfxzoom32GP(UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32
 							szbuf_ptr[ecx*2+1] = p8;
 
 							// the shadow tables are 15-bit lookup tables which accept RGB15... lossy, nasty, yuck!
-							dst_ptr[ecx] = alpha_blend_r32(dst_ptr[ecx], 0, 0x7f); //shd_base[pix.as_rgb15()];
+							if (highlight_enable) {
+								dst_ptr[ecx] = highlight_blend(dst_ptr[ecx]); 
+							} else {
+								dst_ptr[ecx] = shadow_blend(dst_ptr[ecx]); //shd_base[pix.as_rgb15()];
+							}
 						}
 						while (++ecx);
 
@@ -1177,8 +1197,6 @@ void k053247_draw_single_sprite_gxcore(UINT8 *gx_objzbuf, UINT8 *gx_shdzbuf, INT
 		ox -= (zoomx * width) >> 13;
 		oy -= (zoomy * height) >> 13;
 
-#if 1
-		
 			k053247_draw_yxloop_gx(	code,
 				color,
 				height, width,
@@ -1192,6 +1210,4 @@ void k053247_draw_single_sprite_gxcore(UINT8 *gx_objzbuf, UINT8 *gx_shdzbuf, INT
 				gx_objzbuf, gx_shdzbuf,
 				0,NULL
 				);
-		
-#endif
 	}

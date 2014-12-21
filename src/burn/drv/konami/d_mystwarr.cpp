@@ -10,9 +10,6 @@
 		martial champ
 			why are the sprite positions messed up? protection?
 
-		mystic warriors
-			level 3, sub headlights need to be highlights, not shadows!
-
 	unkown bugs.
 		probably a lot! go ahead and fix it!
 
@@ -20,7 +17,6 @@
 		fix bugs
 		clean up
 		optimize
-		save states - done(dink)
 */
 
 #include "tiles_generic.h"

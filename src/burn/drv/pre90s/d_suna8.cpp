@@ -841,7 +841,7 @@ static void __fastcall hardhead_sound_write(UINT16 address, UINT8 data)
 	{
 		case 0xa000:
 		case 0xa001:
-			BurnYM3812Write(address & 1, data);
+			BurnYM3812Write(0, address & 1, data);
 		return;
 
 		case 0xa002:
@@ -861,14 +861,14 @@ static UINT8 __fastcall hardhead_sound_read(UINT16 address)
 	{
 		case 0xa000:
 		case 0xa001:
-			return BurnYM3812Read(address & 1);
+			return BurnYM3812Read(0, address & 1);
 
 		case 0xa002:
 		case 0xa003:
 			return AY8910Read(0);
 
 		case 0xc800:
-			return BurnYM3812Read(address & 1); // 3812 status_port ???????????????????????????
+			return BurnYM3812Read(0, address & 1); // 3812 status_port ???????????????????????????
 
 		case 0xd800:
 			return *soundlatch;
@@ -914,7 +914,7 @@ static void __fastcall hardhea2_sound_write(UINT16 address, UINT8 data)
 	{
 		case 0xc000:
 		case 0xc001:
-			BurnYM3812Write(address & 1, data);
+			BurnYM3812Write(0, address & 1, data);
 		return;
 
 		case 0xc002:
@@ -934,7 +934,7 @@ static UINT8 __fastcall hardhea2_sound_read(UINT16 address)
 	{
 		case 0xc000:
 		case 0xc001:
-			return BurnYM3812Read(address & 1);
+			return BurnYM3812Read(0, address & 1);
 
 		case 0xc002:
 		case 0xc003:
@@ -1342,9 +1342,9 @@ static INT32 HardheadInit()
 	ZetSetReadHandler(hardhead_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(3000000, (0 ? &sound_type1_fm_irq_handler : NULL), hardhead_fm_syncronize, 0);
+	BurnYM3812Init(1, 3000000, (0 ? &sound_type1_fm_irq_handler : NULL), hardhead_fm_syncronize, 0);
 	BurnTimerAttachZetYM3812(3000000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, &hardhead_ay8910_write_A, &hardhead_ay8910_write_B);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
@@ -1425,9 +1425,9 @@ static INT32 SparkmanInit()
 	ZetSetReadHandler(hardhead_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(3000000, NULL, rranger_fm_syncronize, 0);
+	BurnYM3812Init(1, 3000000, NULL, rranger_fm_syncronize, 0);
 	BurnTimerAttachZetYM3812(6000000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, &hardhead_ay8910_write_A, &hardhead_ay8910_write_B);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
@@ -1579,9 +1579,9 @@ static INT32 StarfighInit()
 	ZetSetReadHandler(hardhead_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(3000000, NULL, rranger_fm_syncronize, 0);
+	BurnYM3812Init(1, 3000000, NULL, rranger_fm_syncronize, 0);
 	BurnTimerAttachZetYM3812(6000000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, &hardhead_ay8910_write_A, &hardhead_ay8910_write_B);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
@@ -1777,9 +1777,9 @@ static INT32 Hardhea2Init()
 	ZetSetInHandler(hardhea2_pcm_read_port);
 	ZetClose();
 
-	BurnYM3812Init(3000000, sound_type1_fm_irq_handler, rranger_fm_syncronize, 0);
+	BurnYM3812Init(1, 3000000, sound_type1_fm_irq_handler, rranger_fm_syncronize, 0);
 	BurnTimerAttachZetYM3812(6000000);
-	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.33, BURN_SND_ROUTE_BOTH);
@@ -2331,6 +2331,47 @@ static INT32 SparkmanFrame() // & starfigh
 	return 0;
 }
 
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+{
+	struct BurnArea ba;
+	
+	if (pnMin != NULL) {			// Return minimum compatible version
+		*pnMin = 0x029672;
+	}
+
+	if (nAction & ACB_MEMORY_RAM) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd-AllRam;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+	}
+
+	if (nAction & ACB_DRIVER_DATA) {
+		ZetScan(nAction);			// Scan Z80
+
+		AY8910Scan(nAction, pnMin);
+		DACScan(nAction, pnMin);
+		BurnYM3812Scan(nAction, pnMin);
+		BurnYM2203Scan(nAction, pnMin);
+
+		// Scan critical driver variables
+		//		SCAN_VAR();
+		SCAN_VAR(m_gfxbank);
+		SCAN_VAR(m_palettebank);
+		SCAN_VAR(m_spritebank);
+		SCAN_VAR(m_spritebank_latch);
+		SCAN_VAR(m_rombank_latch);
+		SCAN_VAR(disable_mainram_write);
+		SCAN_VAR(protection_val);
+		SCAN_VAR(hardhead_ip);
+	}
+	
+	if (nAction & ACB_WRITE) {
+	}
+
+	return 0;
+}
 
 
 // Hard Head
@@ -2364,7 +2405,7 @@ struct BurnDriver BurnDrvHardhead = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, hardheadRomInfo, hardheadRomName, NULL, NULL, DrvInputInfo, HardheadDIPInfo,
-	HardheadInit, HardheadExit, HardheadFrame, HardheadDraw, NULL, &DrvRecalc, 0x100,
+	HardheadInit, HardheadExit, HardheadFrame, HardheadDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
@@ -2401,7 +2442,7 @@ struct BurnDriver BurnDrvSranger = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, srangerRomInfo, srangerRomName, NULL, NULL, DrvInputInfo, RrangerDIPInfo,
-	RrangerInit, RrangerExit, RrangerFrame, RrangerDraw, NULL, &DrvRecalc, 0x100,
+	RrangerInit, RrangerExit, RrangerFrame, RrangerDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
@@ -2438,7 +2479,7 @@ struct BurnDriver BurnDrvHardhea2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, hardhea2RomInfo, hardhea2RomName, NULL, NULL, DrvInputInfo, Hardhea2DIPInfo,
-	Hardhea2Init, Hardhea2Exit, Hardhea2Frame, Hardhea2Draw, NULL, &DrvRecalc, 0x100,
+	Hardhea2Init, Hardhea2Exit, Hardhea2Frame, Hardhea2Draw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
@@ -2477,7 +2518,7 @@ struct BurnDriver BurnDrvSparkman = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, sparkmanRomInfo, sparkmanRomName, NULL, NULL, SparkmanInputInfo, SparkmanDIPInfo,
-	SparkmanInit, HardheadExit, SparkmanFrame, SparkmanDraw, NULL, &DrvRecalc, 0x100,
+	SparkmanInit, HardheadExit, SparkmanFrame, SparkmanDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
 };
 
@@ -2514,6 +2555,6 @@ struct BurnDriver BurnDrvStarfigh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, starfighRomInfo, starfighRomName, NULL, NULL, DrvInputInfo, StarfighDIPInfo,
-	StarfighInit, HardheadExit, SparkmanFrame, StarfighDraw, NULL, &DrvRecalc, 0x100,
+	StarfighInit, HardheadExit, SparkmanFrame, StarfighDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

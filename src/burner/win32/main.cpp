@@ -811,7 +811,7 @@ int ProcessCmdLine()
 
 static void CreateSupportFolders()
 {
-	TCHAR szSupportDirs[17][MAX_PATH] = {
+	TCHAR szSupportDirs[29][MAX_PATH] = {
 		{_T("support/")},
 		{_T("support/previews/")},
 		{_T("support/titles/")},
@@ -822,6 +822,18 @@ static void CreateSupportFolders()
 		{_T("support/ips/")},
 		{_T("support/neocdz/")},
 		{_T("support/blend/")},
+		{_T("support/select/")},
+		{_T("support/versus/")},
+		{_T("support/howto/")},
+		{_T("support/scores/")},
+		{_T("support/bosses/")},
+		{_T("support/gameover/")},
+		{_T("support/flyers/")},
+		{_T("support/marquees/")},
+		{_T("support/controls/")},
+		{_T("support/cabinets/")},
+		{_T("support/pcbs/")},
+		{_T("support/history/")},
 		{_T("neocdiso/")},
 		// the below are named after the MESS software lists
 		{_T("megadriv/")},
@@ -832,7 +844,7 @@ static void CreateSupportFolders()
 		{_T("coleco/")},
 	};
 	
-	for(int x = 0; x < 17; x++) {
+	for(int x = 0; x < 29; x++) {
 		CreateDirectory(szSupportDirs[x], NULL);
 	}
 }

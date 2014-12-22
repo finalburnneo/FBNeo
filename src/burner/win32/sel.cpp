@@ -39,6 +39,7 @@ bool bIconsLoaded				= 0;
 int nIconsXDiff;
 int nIconsYDiff;
 static HICON hDrvIcon[9999];
+bool bGameInfoOpen				= false;
 
 static int RomInfoDialog();
 
@@ -346,7 +347,7 @@ static void GetInitialPositions()
 	GetInititalControlPos(IDC_TEXTGENRE, nDlgGenreTxtInitialPos);
 	GetInititalControlPos(IDC_TEXTNOTES, nDlgNotesTxtInitialPos);
 	GetInititalControlPos(IDC_DRVCOUNT, nDlgDrvCountTxtInitialPos);
-	GetInititalControlPos(IDROMINFO, nDlgDrvRomInfoBtnInitialPos);
+	GetInititalControlPos(IDGAMEINFO, nDlgDrvRomInfoBtnInitialPos);
 	GetInititalControlPos(IDC_STATIC1, nDlgSelectGameGrpInitialPos);
 	GetInititalControlPos(IDC_TREE1, nDlgSelectGameLstInitialPos);
 }
@@ -1597,9 +1598,10 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					nLoadMenuShowX ^= ASCIIONLY;
 					RebuildEverything();
 					break;
-				case IDROMINFO:
+				case IDGAMEINFO:
 					if (bDrvSelected) {
-						RomInfoDialog();
+						//RomInfoDialog();
+						GameInfoDialogCreate(hSelDlg, nBurnDrvActive);
 					} else {
 						MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 					}
@@ -1705,7 +1707,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		SetControlPosAlignBottomLeftResizeHor(IDC_TEXTGENRE, nDlgGenreTxtInitialPos);
 		SetControlPosAlignBottomLeftResizeHor(IDC_TEXTNOTES, nDlgNotesTxtInitialPos);
 		SetControlPosAlignBottomLeftResizeHor(IDC_DRVCOUNT, nDlgDrvCountTxtInitialPos);
-		SetControlPosAlignBottomRight(IDROMINFO, nDlgDrvRomInfoBtnInitialPos);
+		SetControlPosAlignBottomRight(IDGAMEINFO, nDlgDrvRomInfoBtnInitialPos);
 		
 		SetControlPosAlignTopLeftResizeHorVert(IDC_STATIC1, nDlgSelectGameGrpInitialPos);
 		SetControlPosAlignTopLeftResizeHorVert(IDC_TREE1, nDlgSelectGameLstInitialPos);

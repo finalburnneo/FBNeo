@@ -3,6 +3,8 @@
 
 #define PNG_SIG_CHECK_BYTES (8)
 
+int bPngImageOrientation = 0;
+
 void img_free(IMAGE* img)
 {
 	free(img->rowptr);
@@ -517,6 +519,9 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 		img_free(&temp_img);
 		return 1;
 	}
+	
+	bPngImageOrientation = 0;
+	if (height > width) bPngImageOrientation = 1;
 	
 	memcpy(img, &temp_img, sizeof(IMAGE));
 

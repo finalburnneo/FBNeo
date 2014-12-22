@@ -220,6 +220,17 @@ int ConfigAppLoad()
 		STR(szAppIconsPath);
 		STR(szNeoCDCoverDir);
 		STR(szAppBlendPath);
+		STR(szAppSelectPath);
+		STR(szAppVersusPath);
+		STR(szAppScoresPath);
+		STR(szAppBossesPath);
+		STR(szAppGameoverPath);
+		STR(szAppFlyersPath);
+		STR(szAppMarqueesPath);
+		STR(szAppControlsPath);
+		STR(szAppCabinetsPath);
+		STR(szAppPCBsPath);
+		STR(szAppHistoryPath);
 		
 		VAR(bNoChangeNumLock);
 		VAR(bAlwaysCreateSupportFolders);
@@ -563,6 +574,17 @@ int ConfigAppSave()
 	STR(szAppIconsPath);
 	STR(szNeoCDCoverDir);
 	STR(szAppBlendPath);
+	STR(szAppSelectPath);
+	STR(szAppVersusPath);
+	STR(szAppScoresPath);
+	STR(szAppBossesPath);
+	STR(szAppGameoverPath);
+	STR(szAppFlyersPath);
+	STR(szAppMarqueesPath);
+	STR(szAppControlsPath);
+	STR(szAppCabinetsPath);
+	STR(szAppPCBsPath);
+	STR(szAppHistoryPath);
 	
 	_ftprintf(h, _T("\n// The cartridges to use for emulation of an MVS system\n"));
 	DRV(nBurnDrvSelect[0]);

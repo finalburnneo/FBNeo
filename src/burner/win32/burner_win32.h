@@ -306,6 +306,7 @@ void UnloadDrvIcons();
 extern bool bEnableIcons;
 extern bool bIconsLoaded;
 extern int nIconsSize, nIconsSizeXY, nIconsYDiff;
+extern bool bGameInfoOpen;
 
 // neocdsel.cpp
 extern int NeoCDList_Init();
@@ -428,6 +429,9 @@ int	MemCardToggle();
 int ProgressUpdateBurner(double dProgress, const TCHAR* pszText, bool bAbs);
 int ProgressCreate();
 int ProgressDestroy();
+
+// gameinfo.cpp
+int GameInfoDialogCreate(HWND hParentWND, int nDrvSel);
 
 // ---------------------------------------------------------------------------
 // Debugger

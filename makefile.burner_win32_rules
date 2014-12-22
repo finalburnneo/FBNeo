@@ -2,10 +2,10 @@ alldir	+= 	burner burner/win32 dep/kaillera/client dep/libs/libpng dep/libs/lib7
 			intf/video/scalers 	intf/video/win32 intf/audio intf/audio/win32 intf/input intf/input/win32 intf/cd intf/cd/win32 \
 			intf/perfcount intf/perfcount/win32 dep/generated
 
-depobj	+= 	about.o bzip.o cona.o debugger.o drv.o dwmapi_core.o dynhuff.o fba_kaillera.o image_win32.o inpc.o inpcheat.o inpd.o \
-			inpdipsw.o inps.o ips_manager.o localise.o localise_gamelist.o main.o mdi.o media.o memcard.o menu.o misc_win32.o \
-			neocdlist.o neocdsel.o numdial.o numpluscommas.o paletteviewer.o popup_win32.o progress.o replay.o res.o roms.o run.o \
-			scrn.o sel.o sfactd.o splash.o stated.o support_paths.o systeminfo.o wave.o \
+depobj	+= 	about.o bzip.o cona.o debugger.o drv.o dwmapi_core.o dynhuff.o fba_kaillera.o gameinfo.o image_win32.o inpc.o \
+			inpcheat.o inpd.o inpdipsw.o inps.o ips_manager.o localise.o localise_gamelist.o main.o mdi.o media.o memcard.o \
+			menu.o misc_win32.o neocdlist.o neocdsel.o numdial.o numpluscommas.o paletteviewer.o popup_win32.o progress.o \
+			replay.o res.o roms.o run.o scrn.o sel.o sfactd.o splash.o stated.o support_paths.o systeminfo.o wave.o \
 			\
 			conc.o cong.o dat.o gamc.o gami.o image.o ioapi.o misc.o sshot.o state.o statec.o unzip.o zipfn.o \
 			\

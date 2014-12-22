@@ -454,7 +454,7 @@ STDDIPINFO(Starfigh)
 
 static void play_sample(INT32 sample)
 {
-	bprintf (0, _T("Play sample: %d\n"), sample);
+	//bprintf (0, _T("Play sample: %d\n"), sample);
 	sample_start = sample * 0x1000;
 	sample_offset = 0;
 }
@@ -469,7 +469,7 @@ static void sample_render(INT16 *buffer, INT32 nLen)
 
 	while (pos < nLen)
 	{
-		INT32 sample = rom[(sample_offset >> 16)];
+		INT32 sample = rom[(sample_offset >> 16)] * 0.2;
 
 		buffer[0] = BURN_SND_CLIP((INT32)(buffer[0] + sample));
 		buffer[1] = BURN_SND_CLIP((INT32)(buffer[1] + sample));
@@ -780,7 +780,7 @@ static UINT8 __fastcall sparkman_read(UINT16 address)
 			return DrvDips[address & 1];
 
 		case 0xc080:
-			return (DrvInputs[2] & ~0x40) | (vblank ? 0x40 : 0);
+			return (DrvInputs[2] & 0x3) | (vblank ? 0x40 : 0);
 
 		case 0xc0a3:
 			return (nCurrentFrame & 1) ? 0x80 : 0;
@@ -1425,7 +1425,7 @@ static INT32 SparkmanInit()
 	ZetSetReadHandler(hardhead_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(1, 3000000, NULL, rranger_fm_syncronize, 0);
+	BurnYM3812Init(1, 4000000, NULL, rranger_fm_syncronize, 0);
 	BurnTimerAttachZetYM3812(6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -1579,7 +1579,7 @@ static INT32 StarfighInit()
 	ZetSetReadHandler(hardhead_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(1, 3000000, NULL, rranger_fm_syncronize, 0);
+	BurnYM3812Init(1, 4000000, NULL, rranger_fm_syncronize, 0);
 	BurnTimerAttachZetYM3812(6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -2128,7 +2128,11 @@ static INT32 HardheadFrame()
 		ZetOpen(1);
 		nCyclesSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
 		BurnTimerUpdateYM3812(nCyclesSegment);
-		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
+			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetRun(100);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		}
 		ZetClose();
 	}
 
@@ -2187,7 +2191,11 @@ static INT32 RrangerFrame()
 		ZetOpen(1);
 		nCyclesSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
 		BurnTimerUpdate(nCyclesSegment);
-		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
+			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetRun(100);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		}
 		ZetClose();
 	}
 
@@ -2243,7 +2251,11 @@ static INT32 Hardhea2Frame()
 		ZetOpen(1);
 		nCyclesSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
 		BurnTimerUpdateYM3812(nCyclesSegment);
-		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
+			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetRun(100);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		}
 		ZetClose();
 
 		ZetOpen(2);
@@ -2290,13 +2302,15 @@ static INT32 SparkmanFrame() // & starfigh
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
-		DrvInputs[2] = (DrvInputs[2] & ~0x03) | (DrvDips[2] & 0xbc);
+		DrvInputs[2] = (DrvInputs[2] & 0x03) | (DrvDips[2] & 0xbc);
 	}
 
 	INT32 nCyclesSegment;
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 6000000 / 60, 6000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
+
+	vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -2310,7 +2324,11 @@ static INT32 SparkmanFrame() // & starfigh
 		ZetOpen(1);
 		nCyclesSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
 		BurnTimerUpdateYM3812(nCyclesSegment);
-		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
+			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetRun(100);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		}
 		ZetClose();
 	}
 
@@ -2350,13 +2368,18 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);			// Scan Z80
 
-		AY8910Scan(nAction, pnMin);
-		DACScan(nAction, pnMin);
-		BurnYM3812Scan(nAction, pnMin);
-		BurnYM2203Scan(nAction, pnMin);
+		if (strstr(BurnDrvGetTextA(DRV_NAME), "hardhea2")) {
+			DACScan(nAction, pnMin);
+		}
+
+		if (strstr(BurnDrvGetTextA(DRV_NAME), "ranger")) {
+			BurnYM2203Scan(nAction, pnMin);
+		} else {
+			AY8910Scan(nAction, pnMin);
+			BurnYM3812Scan(nAction, pnMin);
+		}
 
 		// Scan critical driver variables
-		//		SCAN_VAR();
 		SCAN_VAR(m_gfxbank);
 		SCAN_VAR(m_palettebank);
 		SCAN_VAR(m_spritebank);
@@ -2368,6 +2391,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 	
 	if (nAction & ACB_WRITE) {
+		// todo: set banks here.
 	}
 
 	return 0;

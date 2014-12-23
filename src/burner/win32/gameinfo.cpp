@@ -131,7 +131,7 @@ static int GameInfoInit()
     TC_ITEM TCI; 
     TCI.mask = TCIF_TEXT; 
 
-	UINT idsString[16] = {IDS_GAMEINFO_INGAME, IDS_GAMEINFO_TITLE, IDS_GAMEINFO_SELECT, IDS_GAMEINFO_VERSUS, IDS_GAMEINFO_HOWTO, IDS_GAMEINFO_SCORES, IDS_GAMEINFO_BOSSES, IDS_GAMEINFO_GAMEOVER, IDS_GAMEINFO_FLYER, IDS_GAMEINFO_CABINET, IDS_GAMEINFO_MARQUEE, IDS_GAMEINFO_CONTROLS, IDS_GAMEINFO_PCB , IDS_GAMEINFO_ROMINFO, IDS_GAMEINFO_SAMPLES, IDS_GAMEINFO_HISTORY };
+	UINT idsString[16] = {  IDS_GAMEINFO_ROMINFO, IDS_GAMEINFO_SAMPLES, IDS_GAMEINFO_HISTORY, IDS_GAMEINFO_INGAME, IDS_GAMEINFO_TITLE, IDS_GAMEINFO_SELECT, IDS_GAMEINFO_VERSUS, IDS_GAMEINFO_HOWTO, IDS_GAMEINFO_SCORES, IDS_GAMEINFO_BOSSES, IDS_GAMEINFO_GAMEOVER, IDS_GAMEINFO_FLYER, IDS_GAMEINFO_CABINET, IDS_GAMEINFO_MARQUEE, IDS_GAMEINFO_CONTROLS, IDS_GAMEINFO_PCB };
 	
 	for(int i = 0; i < 16; i++) {
 		TCI.pszText = FBALoadStringEx(hAppInst, idsString[i], true);
@@ -153,7 +153,7 @@ static int GameInfoInit()
 	UpdateWindow(hGameInfoDlg);
 
 	nBurnDrvActive = nGiDriverSelected;
-	SetPreview(szAppPreviewsPath);
+	DisplayRomInfo();
 	
 	// Display the game title
 	TCHAR szItemText[1024];
@@ -202,29 +202,31 @@ static int GameInfoInit()
 	szItemText[0] = _T('\0');
 	hInfoControl = GetDlgItem(hGameInfoDlg, IDC_TEXTROMINFO);
 	if (BurnDrvGetFlags() & BDF_PROTOTYPE) {
-		_stprintf(szItemText + _tcslen(szItemText), _T("prototype"));
+		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_PROTOTYPE, true));
 		bUseInfo = true;
 	}
 	if (BurnDrvGetFlags() & BDF_BOOTLEG) {
-		_stprintf(szItemText + _tcslen(szItemText), _T("%sbootleg"), bUseInfo ? _T(", ") : _T(""));
+		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_BOOTLEG, true), bUseInfo ? _T(", ") : _T(""));
 		bUseInfo = true;
 	}
 	if (BurnDrvGetFlags() & BDF_HACK) {
-		_stprintf(szItemText + _tcslen(szItemText), _T("%shack"), bUseInfo ? _T(", ") : _T(""));
+		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_HACK, true), bUseInfo ? _T(", ") : _T(""));
 		bUseInfo = true;
 	}
 	if (BurnDrvGetFlags() & BDF_HOMEBREW) {
-		_stprintf(szItemText + _tcslen(szItemText), _T("%shomebrew"), bUseInfo ? _T(", ") : _T(""));
+		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_HOMEBREW, true), bUseInfo ? _T(", ") : _T(""));
 		bUseInfo = true;
-	}
+	}						
 	if (BurnDrvGetFlags() & BDF_DEMO) {
-		_stprintf(szItemText + _tcslen(szItemText), _T("%sdemo"), bUseInfo ? _T(", ") : _T(""));
+		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_SEL_DEMO, true), bUseInfo ? _T(", ") : _T(""));
 		bUseInfo = true;
 	}
-	_stprintf(szItemText + _tcslen(szItemText), _T("%s%i player%s"), bUseInfo ? _T(", ") : _T(""), BurnDrvGetMaxPlayers(), (BurnDrvGetMaxPlayers() != 1) ? _T("s max") : _T(""));
+	TCHAR szPlayersMax[100];
+	_stprintf(szPlayersMax, FBALoadStringEx(hAppInst, IDS_NUM_PLAYERS_MAX, true));
+	_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_NUM_PLAYERS, true), bUseInfo ? _T(", ") : _T(""), BurnDrvGetMaxPlayers(), (BurnDrvGetMaxPlayers() != 1) ? szPlayersMax : _T(""));
 	bUseInfo = true;
 	if (BurnDrvGetText(DRV_BOARDROM)) {
-		_stprintf(szItemText + _tcslen(szItemText), _T("%suses board-ROMs from %s"), bUseInfo ? _T(", ") : _T(""), BurnDrvGetText(DRV_BOARDROM));
+		_stprintf(szItemText + _tcslen(szItemText), FBALoadStringEx(hAppInst, IDS_BOARD_ROMS_FROM, true), bUseInfo ? _T(", ") : _T(""), BurnDrvGetText(DRV_BOARDROM));
 		SendMessage(hInfoControl, WM_SETTEXT, (WPARAM)0, (LPARAM)szItemText);
 		bUseInfo = true;
 	}
@@ -233,7 +235,11 @@ static int GameInfoInit()
 	// Display the release info
 	szItemText[0] = _T('\0');
 	hInfoControl = GetDlgItem(hGameInfoDlg, IDC_TEXTSYSTEM);
-//	_stprintf(szItemText, _T("%s (%s, %s hardware)"), BurnDrvGetTextA(DRV_MANUFACTURER) ? BurnDrvGetText(DRV_MANUFACTURER) : _T("unknown"), BurnDrvGetText(DRV_DATE), ((BurnDrvGetHardwareCode() & HARDWARE_SNK_MVSCARTRIDGE) == HARDWARE_SNK_MVSCARTRIDGE) ? _T("Neo Geo MVS Cartidge") : BurnDrvGetText(DRV_SYSTEM));
+	TCHAR szUnknown[100];
+	TCHAR szCartridge[100];
+	_stprintf(szUnknown, FBALoadStringEx(hAppInst, IDS_ERR_UNKNOWN, true));
+	_stprintf(szCartridge, FBALoadStringEx(hAppInst, IDS_MVS_CARTRIDGE, true));
+	_stprintf(szItemText, FBALoadStringEx(hAppInst, IDS_HARDWARE_DESC, true), BurnDrvGetTextA(DRV_MANUFACTURER) ? BurnDrvGetText(DRV_MANUFACTURER) : szUnknown, BurnDrvGetText(DRV_DATE), (((BurnDrvGetHardwareCode() & HARDWARE_SNK_MVS) == HARDWARE_SNK_MVS) && ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK)) == HARDWARE_SNK_NEOGEO)? szCartridge : BurnDrvGetText(DRV_SYSTEM));
 	SendMessage(hInfoControl, WM_SETTEXT, (WPARAM)0, (LPARAM)szItemText);
 	
 	// Display any comments
@@ -477,11 +483,11 @@ static int GameInfoInit()
 					fgets(Temp, 1000, fp);
 
 					if (!strncmp("$", Temp, 1)) continue;
-					if (!strncmp("\n", Temp, 1)) _stprintf(szBuffer, _T("%s\\par"), szBuffer);
 						
 					if (!nTitleWrote) {
 						_stprintf(szBuffer, _T("%s{\\b\\f0\\fs28\\cf1 %s}"), szBuffer, ANSIToTCHAR(Temp, NULL, 0));
 					} else {
+						_stprintf(szBuffer, _T("%s\\line"), szBuffer);	
 						if (!strncmp("- ", Temp, 2)) {
 							_stprintf(szBuffer, _T("%s{\\b\\f0\\fs16\\cf1 %s}"), szBuffer, ANSIToTCHAR(Temp, NULL, 0));
 						} else {
@@ -627,22 +633,22 @@ static BOOL CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPara
 			
 			nBurnDrvActive = nGiDriverSelected;
 
-			if (TabPage == 0)  { SetPreview(szAppPreviewsPath);	}
-			if (TabPage == 1)  { SetPreview(szAppTitlesPath);	}
-			if (TabPage == 2)  { SetPreview(szAppSelectPath);	}
-			if (TabPage == 3)  { SetPreview(szAppVersusPath);	}
-			if (TabPage == 4)  { SetPreview(szAppHowtoPath);	}
-			if (TabPage == 5)  { SetPreview(szAppScoresPath);	}
-			if (TabPage == 6)  { SetPreview(szAppBossesPath);	}
-			if (TabPage == 7)  { SetPreview(szAppGameoverPath);	}
-			if (TabPage == 8)  { SetPreview(szAppFlyersPath);	}
-			if (TabPage == 9)  { SetPreview(szAppCabinetsPath);	}
-			if (TabPage == 10) { SetPreview(szAppMarqueesPath);	}
-			if (TabPage == 11) { SetPreview(szAppControlsPath);	}
-			if (TabPage == 12) { SetPreview(szAppPCBsPath);		}
-			if (TabPage == 13) DisplayRomInfo();
-			if (TabPage == 14) DisplaySampleInfo();
-			if (TabPage == 15) DisplayHistory();
+			if (TabPage == 0) DisplayRomInfo();
+			if (TabPage == 1) DisplaySampleInfo();
+			if (TabPage == 2) DisplayHistory();
+			if (TabPage == 3) SetPreview(szAppPreviewsPath);
+			if (TabPage == 4) SetPreview(szAppTitlesPath);
+			if (TabPage == 5) SetPreview(szAppSelectPath);
+			if (TabPage == 6) SetPreview(szAppVersusPath);
+			if (TabPage == 7) SetPreview(szAppHowtoPath);
+			if (TabPage == 8) SetPreview(szAppScoresPath);
+			if (TabPage == 9) SetPreview(szAppBossesPath);
+			if (TabPage == 10) SetPreview(szAppGameoverPath);
+			if (TabPage == 11) SetPreview(szAppFlyersPath);
+			if (TabPage == 12) SetPreview(szAppCabinetsPath);
+			if (TabPage == 13) SetPreview(szAppMarqueesPath);
+			if (TabPage == 14) SetPreview(szAppControlsPath);
+			if (TabPage == 15) SetPreview(szAppPCBsPath);
 
 			return FALSE;
 		}

@@ -772,12 +772,12 @@ static void draw_sprites()
 
 	for (INT32 offs = (0x500 - 8) / 2; offs >= 0; offs -=4)
 	{
-		INT32 tile_number = source[offs + 0];
+		INT32 tile_number = BURN_ENDIAN_SWAP_INT16(source[offs + 0]);
 
 		if (tile_number != 0xfff) {
-			INT32 attr = source[offs + 1];
-			INT32 sy = source[offs + 2] & 0x1ff;
-			INT32 sx = source[offs + 3] & 0x1ff;
+			INT32 attr = BURN_ENDIAN_SWAP_INT16(source[offs + 1]);
+			INT32 sy = BURN_ENDIAN_SWAP_INT16(source[offs + 2]) & 0x1ff;
+			INT32 sx = BURN_ENDIAN_SWAP_INT16(source[offs + 3]) & 0x1ff;
 
 			INT32 flipx = attr & 0x02;
 			INT32 flipy = attr & 0x01;
@@ -922,7 +922,7 @@ static void draw_text_layer()
 		INT32 sx = (offs & 0x1f) << 3;
 		INT32 sy = (offs >> 5) << 3;
 
-		INT32 data = vram[offs];
+		INT32 data = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		INT32 attr = data >> 8;
 		INT32 code = (data & 0xff) + ((attr & 0xc0) << 2) + ((attr & 0x20) << 5);
 		if (code == 0x400) continue;

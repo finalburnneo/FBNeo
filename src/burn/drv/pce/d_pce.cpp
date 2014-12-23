@@ -8625,3 +8625,22 @@ struct BurnDriver BurnDrvpce_reflectron = {
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
+
+// Aetherbyte Santatlantean
+
+static struct BurnRomInfo pce_santatlanteanRomDesc[] = {
+	{ "Santatlantean.pce", 0x080200, 0xe6b38af1, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_santatlantean)
+STD_ROM_FN(pce_santatlantean)
+
+struct BurnDriver BurnDrvpce_santatlantean = {
+	"pce_santatlantean", NULL, NULL, NULL, "2014",
+	"Santatlantean\0", NULL, "Aetherbyte", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	PceGetZipName, pce_santatlanteanRomInfo, pce_santatlanteanRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};

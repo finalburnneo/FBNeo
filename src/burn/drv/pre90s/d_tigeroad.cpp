@@ -731,7 +731,7 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 
-	if (nF1dream) {
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "f1dream")) { // all versions
 		BurnYM2203SetPSGVolume(0, 0.11);
 		BurnYM2203SetPSGVolume(1, 0.11);
 	}
@@ -1488,9 +1488,9 @@ static INT32 F1dreamInit()
 
 struct BurnDriver BurnDrvF1dream = {
 	"f1dream", NULL, NULL, NULL, "1988",
-	"F-1 Dream\0", NULL, "Capcom (Romstar license)", "Miscellaneous",
+	"F-1 Dream\0", "Game is bugged, use the bootleg instead.", "Capcom (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
+	0, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
 	NULL, f1dreamRomInfo, f1dreamRomName, NULL, NULL, TigeroadInputInfo, F1dreamDIPInfo,
 	F1dreamInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x240,
 	256, 224, 4, 3

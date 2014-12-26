@@ -851,7 +851,7 @@ static INT32 DrvFrame()
 //	INT32 nCyclesTotal[2] =  { 1500000 / 60, 2000000 / 60 };
 	INT32 nCyclesTotal[2] =  { 12000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2] =  { 0, 0 };
-bprintf (0, _T("A\n"));
+
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
 		
@@ -884,7 +884,6 @@ bprintf (0, _T("A\n"));
 
 		M6809Close();
 	}
-bprintf (0, _T("B\n"));
 	
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
@@ -896,12 +895,10 @@ bprintf (0, _T("B\n"));
 			M6809Close();
 		}
 	}
-bprintf (0, _T("C\n"));
 
 	if (pBurnDraw) {
 		DrvDraw();
 	}
-bprintf (0, _T("D\n"));
 
 	return 0;
 }

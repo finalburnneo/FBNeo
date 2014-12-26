@@ -502,19 +502,6 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static INT32 DrvGfxDecode()
-{
-	INT32 Plane0[4] = { STEP4(24, -8) };
-	INT32 Plane1[4] = { STEP4(0, 8) };
-	INT32 XOffs[16] = { STEP8(0,1), STEP8(256, 1) };
-	INT32 YOffs[16] = { STEP8(0,32), STEP8(512,32) };
-
-	GfxDecode(0x04000, 4,  8,  8, Plane0, XOffs, YOffs, 0x100, DrvGfxROM0, DrvGfxROMExp0);
-	GfxDecode(0x02000, 4, 16, 16, Plane1, XOffs, YOffs, 0x400, DrvGfxROM1, DrvGfxROMExp1);
-
-	return 0;
-}
-
 static INT32 DrvInit()
 {
 	GenericTilesInit();
@@ -543,7 +530,8 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvSndROM1 + 0x000000,  8, 1)) return 1;
 
-		DrvGfxDecode();
+		K052109GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x080000);
+		K051960GfxDecode(DrvGfxROM1, DrvGfxROMExp1, 0x100000);
 	}
 
 	M6809Init(1);

@@ -478,24 +478,6 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static INT32 DrvGfxDecode()
-{
-	INT32 Plane0[4]  = { 0x018, 0x010, 0x008, 0x000 };
-	INT32 Plane1[4]  = { 0x000, 0x008, 0x010, 0x018 };
-	INT32 XOffs0[16] = { 0x000, 0x001, 0x002, 0x003, 0x004, 0x005, 0x006, 0x007,
-			   0x100, 0x101, 0x102, 0x103, 0x104, 0x105, 0x106, 0x107 };
-	INT32 YOffs0[16] = { 0x000, 0x020, 0x040, 0x060, 0x080, 0x0a0, 0x0c0, 0x0e0,
-			   0x200, 0x220, 0x240, 0x260, 0x280, 0x2a0, 0x2c0, 0x2e0 };
-
-	konami_rom_deinterleave_2(DrvGfxROM0, 0x080000);
-	konami_rom_deinterleave_2(DrvGfxROM1, 0x100000);
-
-	GfxDecode(0x04000, 4,  8,  8, Plane0, XOffs0, YOffs0, 0x100, DrvGfxROM0, DrvGfxROMExp0);
-	GfxDecode(0x02000, 4, 16, 16, Plane1, XOffs0, YOffs0, 0x400, DrvGfxROM1, DrvGfxROMExp1);
-
-	return 0;
-}
-
 static INT32 DrvInit()
 {
 	GenericTilesInit();
@@ -515,31 +497,31 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x000001,  4, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x020000,  5, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x020001,  6, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x040000,  7, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x040001,  8, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x060000,  9, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x060001, 10, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x000001,  4, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x000002,  5, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x000003,  6, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x040000,  7, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x040001,  8, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x040002,  9, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x040003, 10, 4)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x000000, 11, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x000001, 12, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x020000, 13, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x020001, 14, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x040000, 15, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x040001, 16, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x060000, 17, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x060001, 18, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x080000, 19, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x080001, 20, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x0a0000, 21, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x0a0001, 22, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x0c0000, 23, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x0c0001, 24, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x0e0000, 25, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x0e0001, 26, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x000000, 11, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x000001, 12, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x000002, 13, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x000003, 14, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x040000, 15, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x040001, 16, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x040002, 17, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x040003, 18, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x080000, 19, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x080001, 20, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x080002, 21, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x080003, 22, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x0c0000, 23, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x0c0001, 24, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x0c0002, 25, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x0c0003, 26, 4)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM2 + 0x000000, 27, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM2 + 0x010000, 28, 1)) return 1;
@@ -554,7 +536,8 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvSndROM1 + 0x020000, 35, 1)) return 1;
 		if (BurnLoadRom(DrvSndROM1 + 0x030000, 36, 1)) return 1;
 
-		DrvGfxDecode();
+		K052109GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x080000);
+		K051960GfxDecode(DrvGfxROM1, DrvGfxROMExp1, 0x100000);
 	}
 
 	M6809Init(1);
@@ -743,27 +726,27 @@ static struct BurnRomInfo bottom9RomDesc[] = {
 
 	{ "891e10c",		0x10000, 0x209b0431, 3 | BRF_GRA },           //  3 K052109 Tiles
 	{ "891e10a",		0x10000, 0x8020a9e8, 3 | BRF_GRA },           //  4
-	{ "891e10d",		0x10000, 0x16d5fd7a, 3 | BRF_GRA },           //  5
-	{ "891e10b",		0x10000, 0x30121cc0, 3 | BRF_GRA },           //  6
-	{ "891e09c",		0x10000, 0x9dcaefbf, 3 | BRF_GRA },           //  7
-	{ "891e09a",		0x10000, 0x56b0ead9, 3 | BRF_GRA },           //  8
+	{ "891e09c",		0x10000, 0x9dcaefbf, 3 | BRF_GRA },           //  5
+	{ "891e09a",		0x10000, 0x56b0ead9, 3 | BRF_GRA },           //  6
+	{ "891e10d",		0x10000, 0x16d5fd7a, 3 | BRF_GRA },           //  7
+	{ "891e10b",		0x10000, 0x30121cc0, 3 | BRF_GRA },           //  8
 	{ "891e09d",		0x10000, 0x4e1335e6, 3 | BRF_GRA },           //  9
 	{ "891e09b",		0x10000, 0xb6f914fb, 3 | BRF_GRA },           // 10
 
 	{ "891e06e",		0x10000, 0x0b04db1c, 4 | BRF_GRA },           // 11 K051960 Tiles
 	{ "891e06a",		0x10000, 0x5ee37327, 4 | BRF_GRA },           // 12
-	{ "891e06f",		0x10000, 0xf9ada524, 4 | BRF_GRA },           // 13
-	{ "891e06b",		0x10000, 0x2295dfaa, 4 | BRF_GRA },           // 14
-	{ "891e06g",		0x10000, 0x04abf78f, 4 | BRF_GRA },           // 15
-	{ "891e06c",		0x10000, 0xdbdb0d55, 4 | BRF_GRA },           // 16
-	{ "891e06h",		0x10000, 0x5d5ded8c, 4 | BRF_GRA },           // 17
-	{ "891e06d",		0x10000, 0xf9ecbd71, 4 | BRF_GRA },           // 18
-	{ "891e05e",		0x10000, 0xb356e729, 4 | BRF_GRA },           // 19
-	{ "891e05a",		0x10000, 0xbfd5487e, 4 | BRF_GRA },           // 20
-	{ "891e05f",		0x10000, 0xecdd11c5, 4 | BRF_GRA },           // 21
-	{ "891e05b",		0x10000, 0xaba18d24, 4 | BRF_GRA },           // 22
-	{ "891e05g",		0x10000, 0xc315f9ae, 4 | BRF_GRA },           // 23
-	{ "891e05c",		0x10000, 0x21fcbc6f, 4 | BRF_GRA },           // 24
+	{ "891e05e",		0x10000, 0xb356e729, 4 | BRF_GRA },           // 13
+	{ "891e05a",		0x10000, 0xbfd5487e, 4 | BRF_GRA },           // 14
+	{ "891e06f",		0x10000, 0xf9ada524, 4 | BRF_GRA },           // 15
+	{ "891e06b",		0x10000, 0x2295dfaa, 4 | BRF_GRA },           // 16
+	{ "891e05f",		0x10000, 0xecdd11c5, 4 | BRF_GRA },           // 17
+	{ "891e05b",		0x10000, 0xaba18d24, 4 | BRF_GRA },           // 18
+	{ "891e06g",		0x10000, 0x04abf78f, 4 | BRF_GRA },           // 19
+	{ "891e06c",		0x10000, 0xdbdb0d55, 4 | BRF_GRA },           // 20
+	{ "891e05g",		0x10000, 0xc315f9ae, 4 | BRF_GRA },           // 21
+	{ "891e05c",		0x10000, 0x21fcbc6f, 4 | BRF_GRA },           // 22
+	{ "891e06h",		0x10000, 0x5d5ded8c, 4 | BRF_GRA },           // 23
+	{ "891e06d",		0x10000, 0xf9ecbd71, 4 | BRF_GRA },           // 24
 	{ "891e05h",		0x10000, 0xb0aba53b, 4 | BRF_GRA },           // 25
 	{ "891e05d",		0x10000, 0xf6d3f886, 4 | BRF_GRA },           // 26
 
@@ -807,27 +790,27 @@ static struct BurnRomInfo bottom9nRomDesc[] = {
 
 	{ "891e10c",		0x10000, 0x209b0431, 3 | BRF_GRA },           //  3 K052109 Tiles
 	{ "891e10a",		0x10000, 0x8020a9e8, 3 | BRF_GRA },           //  4
-	{ "891e10d",		0x10000, 0x16d5fd7a, 3 | BRF_GRA },           //  5
-	{ "891e10b",		0x10000, 0x30121cc0, 3 | BRF_GRA },           //  6
-	{ "891e09c",		0x10000, 0x9dcaefbf, 3 | BRF_GRA },           //  7
-	{ "891e09a",		0x10000, 0x56b0ead9, 3 | BRF_GRA },           //  8
+	{ "891e09c",		0x10000, 0x9dcaefbf, 3 | BRF_GRA },           //  5
+	{ "891e09a",		0x10000, 0x56b0ead9, 3 | BRF_GRA },           //  6
+	{ "891e10d",		0x10000, 0x16d5fd7a, 3 | BRF_GRA },           //  7
+	{ "891e10b",		0x10000, 0x30121cc0, 3 | BRF_GRA },           //  8
 	{ "891e09d",		0x10000, 0x4e1335e6, 3 | BRF_GRA },           //  9
 	{ "891e09b",		0x10000, 0xb6f914fb, 3 | BRF_GRA },           // 10
 
 	{ "891e06e",		0x10000, 0x0b04db1c, 4 | BRF_GRA },           // 11 K051960 Tiles
 	{ "891e06a",		0x10000, 0x5ee37327, 4 | BRF_GRA },           // 12
-	{ "891e06f",		0x10000, 0xf9ada524, 4 | BRF_GRA },           // 13
-	{ "891e06b",		0x10000, 0x2295dfaa, 4 | BRF_GRA },           // 14
-	{ "891e06g",		0x10000, 0x04abf78f, 4 | BRF_GRA },           // 15
-	{ "891e06c",		0x10000, 0xdbdb0d55, 4 | BRF_GRA },           // 16
-	{ "891e06h",		0x10000, 0x5d5ded8c, 4 | BRF_GRA },           // 17
-	{ "891e06d",		0x10000, 0xf9ecbd71, 4 | BRF_GRA },           // 18
-	{ "891e05e",		0x10000, 0xb356e729, 4 | BRF_GRA },           // 19
-	{ "891e05a",		0x10000, 0xbfd5487e, 4 | BRF_GRA },           // 20
-	{ "891e05f",		0x10000, 0xecdd11c5, 4 | BRF_GRA },           // 21
-	{ "891e05b",		0x10000, 0xaba18d24, 4 | BRF_GRA },           // 22
-	{ "891e05g",		0x10000, 0xc315f9ae, 4 | BRF_GRA },           // 23
-	{ "891e05c",		0x10000, 0x21fcbc6f, 4 | BRF_GRA },           // 24
+	{ "891e05e",		0x10000, 0xb356e729, 4 | BRF_GRA },           // 13
+	{ "891e05a",		0x10000, 0xbfd5487e, 4 | BRF_GRA },           // 14
+	{ "891e06f",		0x10000, 0xf9ada524, 4 | BRF_GRA },           // 15
+	{ "891e06b",		0x10000, 0x2295dfaa, 4 | BRF_GRA },           // 16
+	{ "891e05f",		0x10000, 0xecdd11c5, 4 | BRF_GRA },           // 17
+	{ "891e05b",		0x10000, 0xaba18d24, 4 | BRF_GRA },           // 18
+	{ "891e06g",		0x10000, 0x04abf78f, 4 | BRF_GRA },           // 19
+	{ "891e06c",		0x10000, 0xdbdb0d55, 4 | BRF_GRA },           // 20
+	{ "891e05g",		0x10000, 0xc315f9ae, 4 | BRF_GRA },           // 21
+	{ "891e05c",		0x10000, 0x21fcbc6f, 4 | BRF_GRA },           // 22
+	{ "891e06h",		0x10000, 0x5d5ded8c, 4 | BRF_GRA },           // 23
+	{ "891e06d",		0x10000, 0xf9ecbd71, 4 | BRF_GRA },           // 24
 	{ "891e05h",		0x10000, 0xb0aba53b, 4 | BRF_GRA },           // 25
 	{ "891e05d",		0x10000, 0xf6d3f886, 4 | BRF_GRA },           // 26
 
@@ -871,27 +854,27 @@ static struct BurnRomInfo mstadiumRomDesc[] = {
 
 	{ "891e10c",		0x10000, 0x209b0431, 3 | BRF_GRA },           //  3 K052109 Tiles
 	{ "891e10a",		0x10000, 0x8020a9e8, 3 | BRF_GRA },           //  4
-	{ "891e10d",		0x10000, 0x16d5fd7a, 3 | BRF_GRA },           //  5
-	{ "891e10b",		0x10000, 0x30121cc0, 3 | BRF_GRA },           //  6
-	{ "891e09c",		0x10000, 0x9dcaefbf, 3 | BRF_GRA },           //  7
-	{ "891e09a",		0x10000, 0x56b0ead9, 3 | BRF_GRA },           //  8
+	{ "891e09c",		0x10000, 0x9dcaefbf, 3 | BRF_GRA },           //  5
+	{ "891e09a",		0x10000, 0x56b0ead9, 3 | BRF_GRA },           //  6
+	{ "891e10d",		0x10000, 0x16d5fd7a, 3 | BRF_GRA },           //  7
+	{ "891e10b",		0x10000, 0x30121cc0, 3 | BRF_GRA },           //  8
 	{ "891e09d",		0x10000, 0x4e1335e6, 3 | BRF_GRA },           //  9
 	{ "891e09b",		0x10000, 0xb6f914fb, 3 | BRF_GRA },           // 10
 
 	{ "891e06e",		0x10000, 0x0b04db1c, 4 | BRF_GRA },           // 11 K051960 Tiles
 	{ "891e06a",		0x10000, 0x5ee37327, 4 | BRF_GRA },           // 12
-	{ "891e06f",		0x10000, 0xf9ada524, 4 | BRF_GRA },           // 13
-	{ "891e06b",		0x10000, 0x2295dfaa, 4 | BRF_GRA },           // 14
-	{ "891e06g",		0x10000, 0x04abf78f, 4 | BRF_GRA },           // 15
-	{ "891e06c",		0x10000, 0xdbdb0d55, 4 | BRF_GRA },           // 16
-	{ "891e06h",		0x10000, 0x5d5ded8c, 4 | BRF_GRA },           // 17
-	{ "891e06d",		0x10000, 0xf9ecbd71, 4 | BRF_GRA },           // 18
-	{ "891e05e",		0x10000, 0xb356e729, 4 | BRF_GRA },           // 19
-	{ "891e05a",		0x10000, 0xbfd5487e, 4 | BRF_GRA },           // 20
-	{ "891e05f",		0x10000, 0xecdd11c5, 4 | BRF_GRA },           // 21
-	{ "891e05b",		0x10000, 0xaba18d24, 4 | BRF_GRA },           // 22
-	{ "891e05g",		0x10000, 0xc315f9ae, 4 | BRF_GRA },           // 23
-	{ "891e05c",		0x10000, 0x21fcbc6f, 4 | BRF_GRA },           // 24
+	{ "891e05e",		0x10000, 0xb356e729, 4 | BRF_GRA },           // 13
+	{ "891e05a",		0x10000, 0xbfd5487e, 4 | BRF_GRA },           // 14
+	{ "891e06f",		0x10000, 0xf9ada524, 4 | BRF_GRA },           // 15
+	{ "891e06b",		0x10000, 0x2295dfaa, 4 | BRF_GRA },           // 16
+	{ "891e05f",		0x10000, 0xecdd11c5, 4 | BRF_GRA },           // 17
+	{ "891e05b",		0x10000, 0xaba18d24, 4 | BRF_GRA },           // 18
+	{ "891e06g",		0x10000, 0x04abf78f, 4 | BRF_GRA },           // 19
+	{ "891e06c",		0x10000, 0xdbdb0d55, 4 | BRF_GRA },           // 20
+	{ "891e05g",		0x10000, 0xc315f9ae, 4 | BRF_GRA },           // 21
+	{ "891e05c",		0x10000, 0x21fcbc6f, 4 | BRF_GRA },           // 22
+	{ "891e06h",		0x10000, 0x5d5ded8c, 4 | BRF_GRA },           // 23
+	{ "891e06d",		0x10000, 0xf9ecbd71, 4 | BRF_GRA },           // 24
 	{ "891e05h",		0x10000, 0xb0aba53b, 4 | BRF_GRA },           // 25
 	{ "891e05d",		0x10000, 0xf6d3f886, 4 | BRF_GRA },           // 26
 

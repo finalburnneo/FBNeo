@@ -37,9 +37,9 @@ INT32 K053245Reset()
 
 void K053245GfxDecode(UINT8 *src, UINT8 *dst, INT32 len)
 {
-	INT32 Plane[4]  = { 24, 16, 8, 0 };
-	INT32 XOffs[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 8*32+0, 8*32+1, 8*32+2, 8*32+3, 8*32+4, 8*32+5, 8*32+6, 8*32+7 };
-	INT32 YOffs[16] = { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,16*32, 17*32, 18*32, 19*32, 20*32, 21*32, 22*32, 23*32 };
+	INT32 Plane[4]  = { STEP4(24, -8) };
+	INT32 XOffs[16] = { STEP8(0, 1), STEP8(256, 1) };
+	INT32 YOffs[16] = { STEP8(0,32), STEP8(512,32) };
 
 	GfxDecode(len >> 7, 4, 16, 16, Plane, XOffs, YOffs, 0x400, src, dst);
 }

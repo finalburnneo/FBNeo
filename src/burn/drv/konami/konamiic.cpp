@@ -271,12 +271,12 @@ void konami_draw_16x16_priozoom_tile(UINT8 *gfx, INT32 code, INT32 bpp, INT32 co
 				for (INT32 x = sx, x_index = x_index_base; x < ex; x++)
 				{
 					if (x >= 0 && x < nScreenWidth) {
-						if ((priority & (1 << (prio[x] & 0x1f)))==0) {
+						if ((priority & (1 << prio[x]))==0 && (prio[x]&0x80)==0) {
 							INT32 pxl = src[x_index>>16];
 
 							if (pxl != t) {
 								dst[x] = pal[pxl];
-								prio[x] = 0x1f;
+								prio[x] |= 0x80;
 							}
 						}
 					}
@@ -368,9 +368,9 @@ void konami_draw_16x16_prio_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32 co
 					INT32 pxl = gfx[((y*16)+x)^flip];
 
 					if (pxl) {
-						if ((priority & (1 << (pri[x] & 0x1f)))==0) {
+						if ((priority & (1 << pri[x]))==0 && (pri[x]&0x80)==0) {
 							dst[x] = pal[pxl];
-							pri[x] = 0x1f;
+							pri[x] |= 0x80;
 						}
 					}
 				}

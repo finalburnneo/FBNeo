@@ -204,7 +204,7 @@ static void lethal_main_write(UINT16 address, UINT8 data)
 
 		case 0x47fe:
 		case 0x47ff:
-			DrvPalette[0x3800 + (~address & 1)] = data;
+			DrvPalRAM[0x3800 + (address & 1)] = data;
 		return;
 	}
 

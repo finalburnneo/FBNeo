@@ -241,6 +241,15 @@ void K051960Reset()
 	K051960_spriteflip = 0;
 }
 
+void K051960GfxDecode(UINT8 *src, UINT8 *dst, INT32 len)
+{
+	INT32 Plane[4]  = { STEP4(0, 8) };
+	INT32 XOffs[16] = { STEP8(0, 1), STEP8(256, 1) };
+	INT32 YOffs[16] = { STEP8(0,32), STEP8(512,32) };
+
+	GfxDecode(len >> 7, 4, 16, 16, Plane, XOffs, YOffs, 0x400, src, dst);
+}
+
 void K051960Init(UINT8* pRomSrc, UINT8* pRomSrcExp, UINT32 RomMask)
 {
 	nSpriteXOffset = nSpriteYOffset = 0;

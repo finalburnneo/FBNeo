@@ -371,22 +371,12 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static INT32 DrvGfxDecode(UINT8 *src)
+static INT32 DrvGfxExpand(UINT8 *src)
 {
-	INT32 Plane[4] = { 0,  1,  2,  3 };
-	INT32 XOffs[8] = { 0,  4,  8, 12, 16, 20, 24, 28 };
-	INT32 YOffs[8] = { 0, 32, 64, 96, 128, 160, 192, 224 };
-
-	UINT8 *tmp = (UINT8*)BurnMalloc(0x80000);
-	if (tmp == NULL) {
-		return 1;
+	for (INT32 i = 0x80000-1; i>=0; i--) {
+		src[i*2+1] = src[i] & 0xf;
+		src[i*2+0] = src[i] >> 4;
 	}
-
-	memcpy (tmp, src, 0x80000);
-
-	GfxDecode(0x4000, 4, 8, 8, Plane, XOffs, YOffs, 0x100, tmp, src);
-
-	BurnFree (tmp);
 
 	return 0;
 }
@@ -487,8 +477,8 @@ static INT32 DrvInit()
 			}
 		}
 
-		DrvGfxDecode(DrvGfxROM0);
-		DrvGfxDecode(DrvGfxROM1);
+		DrvGfxExpand(DrvGfxROM0);
+		DrvGfxExpand(DrvGfxROM1);
 
 		DrvColorTableInit();
 	}
@@ -813,7 +803,7 @@ static INT32 DrvDraw()
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x1000; i++) {
 			INT32 rgb = Palette[DrvColTable[i]];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
+			DrvPalette[i] = BurnHighCol((rgb >> 16)&0xff, (rgb >> 8)&0xff, rgb&0xff, 0);
 		}
 		DrvRecalc = 0;
 	}
@@ -861,7 +851,7 @@ static INT32 DrvFrame()
 //	INT32 nCyclesTotal[2] =  { 1500000 / 60, 2000000 / 60 };
 	INT32 nCyclesTotal[2] =  { 12000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2] =  { 0, 0 };
-
+bprintf (0, _T("A\n"));
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
 		
@@ -894,7 +884,8 @@ static INT32 DrvFrame()
 
 		M6809Close();
 	}
-		
+bprintf (0, _T("B\n"));
+	
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -905,10 +896,12 @@ static INT32 DrvFrame()
 			M6809Close();
 		}
 	}
-	
+bprintf (0, _T("C\n"));
+
 	if (pBurnDraw) {
 		DrvDraw();
 	}
+bprintf (0, _T("D\n"));
 
 	return 0;
 }

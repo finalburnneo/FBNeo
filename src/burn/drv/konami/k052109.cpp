@@ -234,6 +234,7 @@ void K052109RenderLayer(INT32 nLayer, INT32 Flags, INT32 Priority)
 		return;
 	}
 
+	INT32 EnableCategory = Flags & 0x100;
 	INT32 Category = Flags & 0xff;
 	INT32 Opaque = (Flags >> 16) & 1;
 
@@ -268,7 +269,7 @@ void K052109RenderLayer(INT32 nLayer, INT32 Flags, INT32 Priority)
 
 			K052109Callback(nLayer, Bank, &Code, &Colour, &xFlip, &Prio);
 
-			if (Prio != Category && Category) continue;
+			if (Prio != Category && EnableCategory) continue;
 
 			if (xFlip && !(K052109FlipEnable & 1)) xFlip = 0;
 			if (yFlip && !(K052109FlipEnable & 2)) yFlip = 0;
@@ -455,6 +456,15 @@ void K052109Reset()
 	memset (K052109ScrollRows, 0, 256 * 3 * sizeof(INT32));
 	memset (K052109EnableCols, 0, 3 * sizeof(INT32));
 	memset (K052109ScrollCols, 0, 64 * 3 * sizeof(INT32));
+}
+
+void K052109GfxDecode(UINT8 *src, UINT8 *dst, INT32 nLen)
+{
+	INT32 Plane[4] = { STEP4(24, -8) };
+	INT32 XOffs[8] = { STEP8(0, 1) };
+	INT32 YOffs[8] = { STEP8(0, 32) };
+
+	GfxDecode((nLen * 2) / (8 * 8), 4, 8, 8, Plane, XOffs, YOffs, 0x100, src, dst);
 }
 
 void K052109Init(UINT8 *pRomSrc, UINT8 *pRomSrcExp, UINT32 RomMask)

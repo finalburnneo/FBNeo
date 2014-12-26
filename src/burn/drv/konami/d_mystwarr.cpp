@@ -1149,7 +1149,7 @@ static void __fastcall martchmp_main_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xfffff0) == 0x402010) {
-		K053247WriteRegsWord(address, data);
+		K053247WriteRegsWord(address&0xf, data);
 		return;
 	}
 
@@ -1207,7 +1207,7 @@ static void __fastcall martchmp_main_write_byte(UINT32 address, UINT8 data)
 	}
 
 	if ((address & 0xfffff0) == 0x402010) {
-		K053247WriteRegsByte(address, data);
+		K053247WriteRegsByte(address&0xf, data);
 		return;
 	}
 

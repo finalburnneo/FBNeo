@@ -384,19 +384,6 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static INT32 DrvGfxDecode()
-{
-	INT32 Plane[4] = { 0x018, 0x010, 0x008, 0x000 };
-	INT32 XOffs[8] = { 0x000, 0x001, 0x002, 0x003, 0x004, 0x005, 0x006, 0x007 };
-	INT32 YOffs[8] = { 0x000, 0x020, 0x040, 0x060, 0x080, 0x0a0, 0x0c0, 0x0e0 };
-
-	GfxDecode(0x8000, 4, 8, 8, Plane, XOffs, YOffs, 0x100, DrvGfxROM0, DrvGfxROMExp0);
-
-	K053245GfxDecode(DrvGfxROM1, DrvGfxROMExp1, 0x100000);
-
-	return 0;
-}
-
 static INT32 DrvInit()
 {
 	GenericTilesInit();
@@ -423,7 +410,8 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvSndROM  + 0x000000,  7, 1)) return 1;
 
-		DrvGfxDecode();
+		K052109GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x100000);
+		K053245GfxDecode(DrvGfxROM1, DrvGfxROMExp1, 0x100000);
 	}
 
 	konamiInit(0);

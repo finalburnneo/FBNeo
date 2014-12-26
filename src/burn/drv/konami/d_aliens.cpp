@@ -345,24 +345,6 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static INT32 DrvGfxDecode()
-{
-	INT32 Plane0[4] = { 0x018, 0x010, 0x008, 0x000 };
-	INT32 Plane1[4] = { 0x000, 0x008, 0x010, 0x018 };
-	INT32 XOffs[16] = { 0x000, 0x001, 0x002, 0x003, 0x004, 0x005, 0x006, 0x007,
-			  0x100, 0x101, 0x102, 0x103, 0x104, 0x105, 0x106, 0x107 };
-	INT32 YOffs[16] = { 0x000, 0x020, 0x040, 0x060, 0x080, 0x0a0, 0x0c0, 0x0e0,
-			  0x200, 0x220, 0x240, 0x260, 0x280, 0x2a0, 0x2c0, 0x2e0 };
-
-	konami_rom_deinterleave_2(DrvGfxROM0, 0x200000);
-	konami_rom_deinterleave_2(DrvGfxROM1, 0x200000);
-
-	GfxDecode(0x10000, 4,  8,  8, Plane0, XOffs, YOffs, 0x100, DrvGfxROM0, DrvGfxROMExp0);
-	GfxDecode(0x04000, 4, 16, 16, Plane1, XOffs, YOffs, 0x400, DrvGfxROM1, DrvGfxROMExp1);
-
-	return 0;
-}
-
 static INT32 DrvInit()
 {
 	GenericTilesInit();
@@ -381,19 +363,20 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x080000,  4, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x100000,  5, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x180000,  6, 1)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  3, 4, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000002,  4, 4, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x100000,  5, 4, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x100002,  6, 4, LD_GROUP(2))) return 1;
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  7, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x080000,  8, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x100000,  9, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x180000, 10, 1)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000000,  7, 4, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000002,  8, 4, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x100000,  9, 4, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x100002, 10, 4, LD_GROUP(2))) return 1;
 
 		if (BurnLoadRom(DrvSndROM  + 0x000000, 11, 1)) return 1;
 
-		DrvGfxDecode();
+		K052109GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x200000);
+		K051960GfxDecode(DrvGfxROM1, DrvGfxROMExp1, 0x200000);
 	}
 
 	konamiInit(0);
@@ -594,13 +577,13 @@ static struct BurnRomInfo aliensRomDesc[] = {
 	{ "875_b03.g04",	0x08000, 0x1ac4d283, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "875b11.k13",		0x80000, 0x89c5c885, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "875b07.j13",		0x40000, 0xe9c56d66, 3 | BRF_GRA },           //  4
-	{ "875b12.k19",		0x80000, 0xea6bdc17, 3 | BRF_GRA },           //  5
+	{ "875b12.k19",		0x80000, 0xea6bdc17, 3 | BRF_GRA },           //  4
+	{ "875b07.j13",		0x40000, 0xe9c56d66, 3 | BRF_GRA },           //  5
 	{ "875b08.j19",		0x40000, 0xf9387966, 3 | BRF_GRA },           //  6
 
 	{ "875b10.k08",		0x80000, 0x0b1035b1, 4 | BRF_GRA },           //  7 Sprites
-	{ "875b06.j08",		0x40000, 0x081a0566, 4 | BRF_GRA },           //  8
-	{ "875b09.k02",		0x80000, 0xe76b3c19, 4 | BRF_GRA },           //  9
+	{ "875b09.k02",		0x80000, 0xe76b3c19, 4 | BRF_GRA },           //  8
+	{ "875b06.j08",		0x40000, 0x081a0566, 4 | BRF_GRA },           //  9
 	{ "875b05.j02",		0x40000, 0x19a261f2, 4 | BRF_GRA },           // 10
 
 	{ "875b04.e05",		0x40000, 0x4e209ac8, 5 | BRF_SND },           // 11 K007232 Samples
@@ -631,13 +614,13 @@ static struct BurnRomInfo aliens2RomDesc[] = {
 	{ "875_b03.g04",	0x08000, 0x1ac4d283, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "875b11.k13",		0x80000, 0x89c5c885, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "875b07.j13",		0x40000, 0xe9c56d66, 3 | BRF_GRA },           //  4
-	{ "875b12.k19",		0x80000, 0xea6bdc17, 3 | BRF_GRA },           //  5
+	{ "875b12.k19",		0x80000, 0xea6bdc17, 3 | BRF_GRA },           //  4
+	{ "875b07.j13",		0x40000, 0xe9c56d66, 3 | BRF_GRA },           //  5
 	{ "875b08.j19",		0x40000, 0xf9387966, 3 | BRF_GRA },           //  6
 
 	{ "875b10.k08",		0x80000, 0x0b1035b1, 4 | BRF_GRA },           //  7 Sprites
-	{ "875b06.j08",		0x40000, 0x081a0566, 4 | BRF_GRA },           //  8
-	{ "875b09.k02",		0x80000, 0xe76b3c19, 4 | BRF_GRA },           //  9
+	{ "875b09.k02",		0x80000, 0xe76b3c19, 4 | BRF_GRA },           //  8
+	{ "875b06.j08",		0x40000, 0x081a0566, 4 | BRF_GRA },           //  9
 	{ "875b05.j02",		0x40000, 0x19a261f2, 4 | BRF_GRA },           // 10
 
 	{ "875b04.e05",		0x40000, 0x4e209ac8, 5 | BRF_SND },           // 11 K007232 Samples
@@ -668,13 +651,13 @@ static struct BurnRomInfo aliens3RomDesc[] = {
 	{ "875_b03.g04",	0x08000, 0x1ac4d283, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "875b11.k13",		0x80000, 0x89c5c885, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "875b07.j13",		0x40000, 0xe9c56d66, 3 | BRF_GRA },           //  4
-	{ "875b12.k19",		0x80000, 0xea6bdc17, 3 | BRF_GRA },           //  5
+	{ "875b12.k19",		0x80000, 0xea6bdc17, 3 | BRF_GRA },           //  4
+	{ "875b07.j13",		0x40000, 0xe9c56d66, 3 | BRF_GRA },           //  5
 	{ "875b08.j19",		0x40000, 0xf9387966, 3 | BRF_GRA },           //  6
 
 	{ "875b10.k08",		0x80000, 0x0b1035b1, 4 | BRF_GRA },           //  7 Sprites
-	{ "875b06.j08",		0x40000, 0x081a0566, 4 | BRF_GRA },           //  8
-	{ "875b09.k02",		0x80000, 0xe76b3c19, 4 | BRF_GRA },           //  9
+	{ "875b09.k02",		0x80000, 0xe76b3c19, 4 | BRF_GRA },           //  8
+	{ "875b06.j08",		0x40000, 0x081a0566, 4 | BRF_GRA },           //  9
 	{ "875b05.j02",		0x40000, 0x19a261f2, 4 | BRF_GRA },           // 10
 
 	{ "875b04.e05",		0x40000, 0x4e209ac8, 5 | BRF_SND },           // 11 K007232 Samples
@@ -705,13 +688,13 @@ static struct BurnRomInfo aliensuRomDesc[] = {
 	{ "875_b03.g04",	0x08000, 0x1ac4d283, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "875b11.k13",		0x80000, 0x89c5c885, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "875b07.j13",		0x40000, 0xe9c56d66, 3 | BRF_GRA },           //  4
-	{ "875b12.k19",		0x80000, 0xea6bdc17, 3 | BRF_GRA },           //  5
+	{ "875b12.k19",		0x80000, 0xea6bdc17, 3 | BRF_GRA },           //  4
+	{ "875b07.j13",		0x40000, 0xe9c56d66, 3 | BRF_GRA },           //  5
 	{ "875b08.j19",		0x40000, 0xf9387966, 3 | BRF_GRA },           //  6
 
 	{ "875b10.k08",		0x80000, 0x0b1035b1, 4 | BRF_GRA },           //  7 Sprites
-	{ "875b06.j08",		0x40000, 0x081a0566, 4 | BRF_GRA },           //  8
-	{ "875b09.k02",		0x80000, 0xe76b3c19, 4 | BRF_GRA },           //  9
+	{ "875b09.k02",		0x80000, 0xe76b3c19, 4 | BRF_GRA },           //  8
+	{ "875b06.j08",		0x40000, 0x081a0566, 4 | BRF_GRA },           //  9
 	{ "875b05.j02",		0x40000, 0x19a261f2, 4 | BRF_GRA },           // 10
 
 	{ "875b04.e05",		0x40000, 0x4e209ac8, 5 | BRF_SND },           // 11 K007232 Samples
@@ -742,13 +725,13 @@ static struct BurnRomInfo aliensjRomDesc[] = {
 	{ "875_k03.g04",	0x08000, 0xbd86264d, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "875b11.k13",		0x80000, 0x89c5c885, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "875b07.j13",		0x40000, 0xe9c56d66, 3 | BRF_GRA },           //  4
-	{ "875b12.k19",		0x80000, 0xea6bdc17, 3 | BRF_GRA },           //  5
+	{ "875b12.k19",		0x80000, 0xea6bdc17, 3 | BRF_GRA },           //  4
+	{ "875b07.j13",		0x40000, 0xe9c56d66, 3 | BRF_GRA },           //  5
 	{ "875b08.j19",		0x40000, 0xf9387966, 3 | BRF_GRA },           //  6
 
 	{ "875b10.k08",		0x80000, 0x0b1035b1, 4 | BRF_GRA },           //  7 Sprites
-	{ "875b06.j08",		0x40000, 0x081a0566, 4 | BRF_GRA },           //  8
-	{ "875b09.k02",		0x80000, 0xe76b3c19, 4 | BRF_GRA },           //  9
+	{ "875b09.k02",		0x80000, 0xe76b3c19, 4 | BRF_GRA },           //  8
+	{ "875b06.j08",		0x40000, 0x081a0566, 4 | BRF_GRA },           //  9
 	{ "875b05.j02",		0x40000, 0x19a261f2, 4 | BRF_GRA },           // 10
 
 	{ "875b04.e05",		0x40000, 0x4e209ac8, 5 | BRF_SND },           // 11 K007232 Samples
@@ -779,13 +762,13 @@ static struct BurnRomInfo aliensj2RomDesc[] = {
 	{ "875_k03.g04",	0x08000, 0xbd86264d, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "875b11.k13",		0x80000, 0x89c5c885, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "875b07.j13",		0x40000, 0xe9c56d66, 3 | BRF_GRA },           //  4
-	{ "875b12.k19",		0x80000, 0xea6bdc17, 3 | BRF_GRA },           //  5
+	{ "875b12.k19",		0x80000, 0xea6bdc17, 3 | BRF_GRA },           //  4
+	{ "875b07.j13",		0x40000, 0xe9c56d66, 3 | BRF_GRA },           //  5
 	{ "875b08.j19",		0x40000, 0xf9387966, 3 | BRF_GRA },           //  6
 
 	{ "875b10.k08",		0x80000, 0x0b1035b1, 4 | BRF_GRA },           //  7 Sprites
-	{ "875b06.j08",		0x40000, 0x081a0566, 4 | BRF_GRA },           //  8
-	{ "875b09.k02",		0x80000, 0xe76b3c19, 4 | BRF_GRA },           //  9
+	{ "875b09.k02",		0x80000, 0xe76b3c19, 4 | BRF_GRA },           //  8
+	{ "875b06.j08",		0x40000, 0x081a0566, 4 | BRF_GRA },           //  9
 	{ "875b05.j02",		0x40000, 0x19a261f2, 4 | BRF_GRA },           // 10
 
 	{ "875b04.e05",		0x40000, 0x4e209ac8, 5 | BRF_SND },           // 11 K007232 Samples
@@ -816,13 +799,13 @@ static struct BurnRomInfo aliensaRomDesc[] = {
 	{ "875_k03.g04",	0x08000, 0xbd86264d, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "875b11.k13",		0x80000, 0x89c5c885, 3 | BRF_GRA },           //  3 Background Tiles
-	{ "875b07.j13",		0x40000, 0xe9c56d66, 3 | BRF_GRA },           //  4
-	{ "875b12.k19",		0x80000, 0xea6bdc17, 3 | BRF_GRA },           //  5
+	{ "875b12.k19",		0x80000, 0xea6bdc17, 3 | BRF_GRA },           //  4
+	{ "875b07.j13",		0x40000, 0xe9c56d66, 3 | BRF_GRA },           //  5
 	{ "875b08.j19",		0x40000, 0xf9387966, 3 | BRF_GRA },           //  6
 
 	{ "875b10.k08",		0x80000, 0x0b1035b1, 4 | BRF_GRA },           //  7 Sprites
-	{ "875b06.j08",		0x40000, 0x081a0566, 4 | BRF_GRA },           //  8
-	{ "875b09.k02",		0x80000, 0xe76b3c19, 4 | BRF_GRA },           //  9
+	{ "875b09.k02",		0x80000, 0xe76b3c19, 4 | BRF_GRA },           //  8
+	{ "875b06.j08",		0x40000, 0x081a0566, 4 | BRF_GRA },           //  9
 	{ "875b05.j02",		0x40000, 0x19a261f2, 4 | BRF_GRA },           // 10
 
 	{ "875b04.e05",		0x40000, 0x4e209ac8, 5 | BRF_SND },           // 11 K007232 Samples

@@ -173,7 +173,7 @@ static void expand_graphics_single(INT32 offset)
 	DrvGfxROMExp0[offset * 2 + 1] = t & 0x0f;
 }
 
-void __fastcall gradius3_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall gradius3_main_write_word(UINT32 address, UINT16 data)
 {
 	if (address >= 0x14c000 && address <= 0x153fff) {
 		address -= 0x14c000;
@@ -188,7 +188,7 @@ void __fastcall gradius3_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall gradius3_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall gradius3_main_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xfe0000) == 0x180000) {
 		DrvShareRAM2[(address & 0x1ffff)^1] = data;
@@ -245,7 +245,7 @@ void __fastcall gradius3_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT16 __fastcall gradius3_main_read_word(UINT32 address)
+static UINT16 __fastcall gradius3_main_read_word(UINT32 address)
 {
 	if (address >= 0x14c000 && address <= 0x153fff) {
 		address -= 0x14c000;
@@ -255,7 +255,7 @@ UINT16 __fastcall gradius3_main_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall gradius3_main_read_byte(UINT32 address)
+static UINT8 __fastcall gradius3_main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -292,7 +292,7 @@ UINT8 __fastcall gradius3_main_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall gradius3_sub_write_word(UINT32 address, UINT16 data)
+static void __fastcall gradius3_sub_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffffe) == 0x140000) {
 		irqB_mask = (data >> 8) & 0x07;
@@ -324,7 +324,7 @@ void __fastcall gradius3_sub_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall gradius3_sub_write_byte(UINT32 address, UINT8 data)
+static void __fastcall gradius3_sub_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xfffffe) == 0x140000) {
 		irqB_mask = data & 0x07;
@@ -356,7 +356,7 @@ void __fastcall gradius3_sub_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT16 __fastcall gradius3_sub_read_word(UINT32 address)
+static UINT16 __fastcall gradius3_sub_read_word(UINT32 address)
 {
 	if (address >= 0x24c000 && address <= 0x253fff) {
 		address -= 0x24c000;
@@ -376,7 +376,7 @@ UINT16 __fastcall gradius3_sub_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall gradius3_sub_read_byte(UINT32 address)
+static UINT8 __fastcall gradius3_sub_read_byte(UINT32 address)
 {
 	if (address >= 0x24c000 && address <= 0x253fff) {
 		address -= 0x24c000;
@@ -404,7 +404,7 @@ static void k007232_bank(INT32 , INT32 data)
 	k007232_set_bank(0, bank_A, bank_B);
 }
 
-void __fastcall gradius3_sound_write(UINT16 address, UINT8 data)
+static void __fastcall gradius3_sound_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xfff0) == 0xf020) {
 		K007232WriteReg(0, address & 0x0f, data);
@@ -427,7 +427,7 @@ void __fastcall gradius3_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall gradius3_sound_read(UINT16 address)
+static UINT8 __fastcall gradius3_sound_read(UINT16 address)
 {
 	if ((address & 0xfff0) == 0xf020) {
 		return K007232ReadReg(0, address & 0x0f);
@@ -545,8 +545,6 @@ static INT32 DrvGfxDecode()
 	INT32 YOffs[16] = { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
 			64*8+0*32, 64*8+1*32, 64*8+2*32, 64*8+3*32, 64*8+4*32, 64*8+5*32, 64*8+6*32, 64*8+7*32 };
 
-	konami_rom_deinterleave_2(DrvGfxROM1, 0x200000);
-
 	GfxDecode(0x04000, 4, 16, 16, Plane, XOffs, YOffs, 0x400, DrvGfxROM1, DrvGfxROMExp1);
 
 	return 0;
@@ -578,16 +576,16 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x000000, 10, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x000000, 11, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x080000, 12, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x080001, 13, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x0c0000, 14, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x0c0001, 15, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x100000, 16, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x180000, 17, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x180001, 18, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x1c0000, 19, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x1c0001, 20, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000000, 11, 4, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000002, 12, 4, LD_GROUP(2))) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x100000, 12, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x100001, 13, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x100002, 14, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x100003, 15, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x180000, 17, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x180001, 18, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x180002, 19, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x180003, 20, 4)) return 1;
 
 		if (BurnLoadRom(DrvSndROM  + 0x000000, 21, 1)) return 1;
 		if (BurnLoadRom(DrvSndROM  + 0x040000, 22, 1)) return 1;
@@ -673,8 +671,8 @@ static INT32 DrvExit()
 
 static inline void character_ram_decode()
 {
-	for (INT32 i = 0; i < 0x20000; i++)
-	{
+	for (INT32 i = 0; i < 0x20000; i++) {
+
 		INT32 t = DrvShareRAM2[i ^ 1];
 
 		DrvGfxROMExp0[i * 2 + 0] = t >> 4;
@@ -870,13 +868,13 @@ static struct BurnRomInfo grdius3RomDesc[] = {
 	{ "945_r05.d9",		0x10000, 0xc8c45365, 3 | BRF_PRG | BRF_ESS }, // 10 Z80 Code
 
 	{ "945_a02.l3",		0x80000, 0x4dfffd74, 4 | BRF_GRA },           // 11 Sprites
-	{ "945_l04a.k6",	0x20000, 0x884e21ee, 4 | BRF_GRA },           // 12
-	{ "945_l04c.m6",	0x20000, 0x45bcd921, 4 | BRF_GRA },           // 13
-	{ "945_l04b.k8",	0x20000, 0x843bc67d, 4 | BRF_GRA },           // 14
-	{ "945_l04d.m8",	0x20000, 0x0a98d08e, 4 | BRF_GRA },           // 15
-	{ "945_a01.h3",		0x80000, 0x339d6dd2, 4 | BRF_GRA },           // 16
-	{ "945_l03a.e6",	0x20000, 0xa67ef087, 4 | BRF_GRA },           // 17
-	{ "945_l03c.h6",	0x20000, 0xa56be17a, 4 | BRF_GRA },           // 18
+	{ "945_a01.h3",		0x80000, 0x339d6dd2, 4 | BRF_GRA },           // 12
+	{ "945_l04a.k6",	0x20000, 0x884e21ee, 4 | BRF_GRA },           // 13
+	{ "945_l04c.m6",	0x20000, 0x45bcd921, 4 | BRF_GRA },           // 14
+	{ "945_l03a.e6",	0x20000, 0xa67ef087, 4 | BRF_GRA },           // 15
+	{ "945_l03c.h6",	0x20000, 0xa56be17a, 4 | BRF_GRA },           // 16
+	{ "945_l04b.k8",	0x20000, 0x843bc67d, 4 | BRF_GRA },           // 17
+	{ "945_l04d.m8",	0x20000, 0x0a98d08e, 4 | BRF_GRA },           // 18
 	{ "945_l03b.e8",	0x20000, 0x933e68b9, 4 | BRF_GRA },           // 19
 	{ "945_l03d.h8",	0x20000, 0xf375e87b, 4 | BRF_GRA },           // 20
 
@@ -919,13 +917,13 @@ static struct BurnRomInfo gradius3jRomDesc[] = {
 	{ "945_m05.d9",		0x10000, 0xc8c45365, 3 | BRF_PRG | BRF_ESS }, // 10 Z80 Code
 
 	{ "945_a02.l3",		0x80000, 0x4dfffd74, 4 | BRF_GRA },           // 11 Sprites
-	{ "945_l04a.k6",	0x20000, 0x884e21ee, 4 | BRF_GRA },           // 12
-	{ "945_l04c.m6",	0x20000, 0x45bcd921, 4 | BRF_GRA },           // 13
-	{ "945_l04b.k8",	0x20000, 0x843bc67d, 4 | BRF_GRA },           // 14
-	{ "945_l04d.m8",	0x20000, 0x0a98d08e, 4 | BRF_GRA },           // 15
-	{ "945_a01.h3",		0x80000, 0x339d6dd2, 4 | BRF_GRA },           // 16
-	{ "945_l03a.e6",	0x20000, 0xa67ef087, 4 | BRF_GRA },           // 17
-	{ "945_l03c.h6",	0x20000, 0xa56be17a, 4 | BRF_GRA },           // 18
+	{ "945_a01.h3",		0x80000, 0x339d6dd2, 4 | BRF_GRA },           // 12
+	{ "945_l04a.k6",	0x20000, 0x884e21ee, 4 | BRF_GRA },           // 13
+	{ "945_l04c.m6",	0x20000, 0x45bcd921, 4 | BRF_GRA },           // 14
+	{ "945_l03a.e6",	0x20000, 0xa67ef087, 4 | BRF_GRA },           // 15
+	{ "945_l03c.h6",	0x20000, 0xa56be17a, 4 | BRF_GRA },           // 16
+	{ "945_l04b.k8",	0x20000, 0x843bc67d, 4 | BRF_GRA },           // 17
+	{ "945_l04d.m8",	0x20000, 0x0a98d08e, 4 | BRF_GRA },           // 18
 	{ "945_l03b.e8",	0x20000, 0x933e68b9, 4 | BRF_GRA },           // 19
 	{ "945_l03d.h8",	0x20000, 0xf375e87b, 4 | BRF_GRA },           // 20
 
@@ -968,13 +966,13 @@ static struct BurnRomInfo grdius3aRomDesc[] = {
 	{ "945_m05.d9",		0x10000, 0xc8c45365, 3 | BRF_PRG | BRF_ESS }, // 10 Z80 Code
 
 	{ "945_a02.l3",		0x80000, 0x4dfffd74, 4 | BRF_GRA },           // 11 Sprites
-	{ "945_l04a.k6",	0x20000, 0x884e21ee, 4 | BRF_GRA },           // 12
-	{ "945_l04c.m6",	0x20000, 0x45bcd921, 4 | BRF_GRA },           // 13
-	{ "945_l04b.k8",	0x20000, 0x843bc67d, 4 | BRF_GRA },           // 14
-	{ "945_l04d.m8",	0x20000, 0x0a98d08e, 4 | BRF_GRA },           // 15
-	{ "945_a01.h3",		0x80000, 0x339d6dd2, 4 | BRF_GRA },           // 16
-	{ "945_l03a.e6",	0x20000, 0xa67ef087, 4 | BRF_GRA },           // 17
-	{ "945_l03c.h6",	0x20000, 0xa56be17a, 4 | BRF_GRA },           // 18
+	{ "945_a01.h3",		0x80000, 0x339d6dd2, 4 | BRF_GRA },           // 12
+	{ "945_l04a.k6",	0x20000, 0x884e21ee, 4 | BRF_GRA },           // 13
+	{ "945_l04c.m6",	0x20000, 0x45bcd921, 4 | BRF_GRA },           // 14
+	{ "945_l03a.e6",	0x20000, 0xa67ef087, 4 | BRF_GRA },           // 15
+	{ "945_l03c.h6",	0x20000, 0xa56be17a, 4 | BRF_GRA },           // 16
+	{ "945_l04b.k8",	0x20000, 0x843bc67d, 4 | BRF_GRA },           // 17
+	{ "945_l04d.m8",	0x20000, 0x0a98d08e, 4 | BRF_GRA },           // 18
 	{ "945_l03b.e8",	0x20000, 0x933e68b9, 4 | BRF_GRA },           // 19
 	{ "945_l03d.h8",	0x20000, 0xf375e87b, 4 | BRF_GRA },           // 20
 

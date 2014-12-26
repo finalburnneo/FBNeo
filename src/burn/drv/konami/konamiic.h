@@ -55,6 +55,7 @@ void K051960Write(UINT32 Offset, UINT8 Data);
 void K051960SetCallback(void (*Callback)(INT32 *Code, INT32 *Colour, INT32 *Priority, INT32 *Shadow));
 void K051960SetSpriteOffset(INT32 x, INT32 y);
 void K051960Reset();
+void K051960GfxDecode(UINT8 *src, UINT8 *dst, INT32 len);
 void K051960Init(UINT8* pRomSrc, UINT8* pRomSrcExp, UINT32 RomMask);
 void K051960Exit();
 void K051960Scan(INT32 nAction);
@@ -74,13 +75,14 @@ void K052109UpdateScroll();
 void K052109AdjustScroll(INT32 x, INT32 y);
 
 #define K052109_OPAQUE		0x10000
-#define K052109_CATEGORY(x)	(x)
+#define K052109_CATEGORY(x)	(0x100|((x)&0xff))
 
 void K052109RenderLayer(INT32 nLayer, INT32 Flags, INT32 Priority);
 UINT8 K052109Read(UINT32 Offset);
 void K052109Write(UINT32 Offset, UINT8 Data);
 void K052109SetCallback(void (*Callback)(INT32 Layer, INT32 Bank, INT32 *Code, INT32 *Colour, INT32 *xFlip, INT32 *priority));
 void K052109Reset();
+void K052109GfxDecode(UINT8 *src, UINT8 *dst, INT32 nLen);
 void K052109Init(UINT8 *pRomSrc, UINT8* pRomSrcExp, UINT32 RomMask);
 void K052109Exit();
 void K052109Scan(INT32 nAction);

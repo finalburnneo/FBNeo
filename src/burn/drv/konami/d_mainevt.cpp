@@ -587,7 +587,8 @@ static void K052109Callback(INT32 layer, INT32 , INT32 *code, INT32 *color, INT3
 
 	*flipx = *color & 0x02;
 
-	*priority = (layer == 2) ? ((*color & 0x20) >> 5) : 0;
+	*priority = ((layer == 2) ? ((*color & 0x20) >> 5) : 0);
+
 	*code |= ((*color & 0x01) << 8) | ((*color & 0x1c) << 7);
 	*color = colorbase[layer] + ((*color & 0xc0) >> 6);
 }
@@ -674,24 +675,6 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static INT32 DrvGfxDecode(INT32 gfxlen0)
-{
-	INT32 Plane0[4] = { 0x018, 0x010, 0x008, 0x000 };
-	INT32 Plane1[4] = { 0x000, 0x008, 0x010, 0x018 };
-	INT32 XOffs[16] = { 0x000, 0x001, 0x002, 0x003, 0x004, 0x005, 0x006, 0x007,
-			  0x100, 0x101, 0x102, 0x103, 0x104, 0x105, 0x106, 0x107 };
-	INT32 YOffs[16] = { 0x000, 0x020, 0x040, 0x060, 0x080, 0x0a0, 0x0c0, 0x0e0,
-			  0x200, 0x220, 0x240, 0x260, 0x280, 0x2a0, 0x2c0, 0x2e0 };
-
-	konami_rom_deinterleave_2(DrvGfxROM0, gfxlen0);
-	konami_rom_deinterleave_2(DrvGfxROM1, 0x100000);
-
-	GfxDecode(gfxlen0/0x20, 4,  8,  8, Plane0, XOffs, YOffs, 0x100, DrvGfxROM0, DrvGfxROMExp0);
-	GfxDecode(0x02000,      4, 16, 16, Plane1, XOffs, YOffs, 0x400, DrvGfxROM1, DrvGfxROMExp1);
-
-	return 0;
-}
-
 static INT32 DrvInit(INT32 type)
 {
 	GenericTilesInit();
@@ -705,28 +688,27 @@ static INT32 DrvInit(INT32 type)
 
 	nGame = type;
 
-	INT32 gfx0_offset = 0x10000 << nGame;
-
 	{
 		if (BurnLoadRom(DrvHD6309ROM  + 0x010000,  0, 1)) return 1;
 		memcpy (DrvHD6309ROM + 0x08000, DrvHD6309ROM + 0x18000, 0x8000);
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  1, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x000001,  3, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + gfx0_offset + 0, 4, 2)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + gfx0_offset + 1, 5, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x000001,  3, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x000002,  4, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x000003,  5, 4)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  6, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x080000,  7, 1)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000000,  6, 4, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000002,  7, 4, LD_GROUP(2))) return 1;
 
 		if (BurnLoadRom(DrvSndROM0 + 0x000000,  8, 1)) return 1;
 
 		if (BurnLoadRom(DrvSndROM1 + 0x020000,  9, 1)) return 1;
 		memcpy (DrvSndROM1, DrvSndROM1 + 0x20000, 0x20000);
 
-		DrvGfxDecode(gfx0_offset * 2);
+		K052109GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x040000);
+		K051960GfxDecode(DrvGfxROM1, DrvGfxROMExp1, 0x080000);
 	}
 
 	HD6309Init(0);
@@ -749,7 +731,7 @@ static INT32 DrvInit(INT32 type)
 	ZetSetReadHandler(mainevt_sound_read);
 	ZetClose();
 
-	K052109Init(DrvGfxROM0, DrvGfxROMExp0, (gfx0_offset * 2) - 1);
+	K052109Init(DrvGfxROM0, DrvGfxROMExp0, (0x40000 << type) - 1);
 	K052109SetCallback(nGame ? DvK052109Callback : K052109Callback);
 	K052109AdjustScroll(nGame ? 0 : 8, 0);
 
@@ -805,11 +787,11 @@ static INT32 DrvDraw()
 	}
 	else
 	{
-	//	KonamiClearBitmaps(0);
+		KonamiClearBitmaps(0);
 
 		if (nBurnLayer & 1) K052109RenderLayer(1, K052109_OPAQUE, 1);
-		if (nBurnLayer & 2) K052109RenderLayer(2, K052109_CATEGORY(1), 2);
-		if (nBurnLayer & 4) K052109RenderLayer(2, 0, 4);
+		if (nBurnLayer & 4) K052109RenderLayer(2, K052109_CATEGORY(1), 2);
+		if (nBurnLayer & 2) K052109RenderLayer(2, K052109_CATEGORY(0), 4);
 		if (nBurnLayer & 8) K052109RenderLayer(0, 0, 8);
 
 		if (nSpriteEnable & 1) K051960SpritesRender(-1, -1);
@@ -979,7 +961,6 @@ static INT32 mainevtInit()
 {
 	return DrvInit(0);
 }
-
 
 struct BurnDriverD BurnDrvMainevt = {
 	"mainevt", NULL, NULL, NULL, "1988",

@@ -462,7 +462,7 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static INT32 DrvInit()
+static INT32 DrvInit(INT32 type)
 {
 	GenericTilesInit();
 
@@ -484,7 +484,7 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  4, 1)) return 1;
 
-		if (strcmp(BurnDrvGetTextA(DRV_NAME), "ajax") == 0) {
+		if (type) {
 			if (BurnLoadRom(DrvGfxROM0 + 0x000000,  5, 4)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x000001,  6, 4)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x000002,  7, 4)) return 1;
@@ -826,13 +826,18 @@ static struct BurnRomInfo ajaxRomDesc[] = {
 STD_ROM_PICK(ajax)
 STD_ROM_FN(ajax)
 
+static INT32 ajaxInit()
+{
+	return DrvInit(1);
+}
+
 struct BurnDriver BurnDrvAjax = {
 	"ajax", NULL, NULL, NULL, "1987",
 	"Ajax\0", NULL, "Konami", "GX770",
 	L"Ajax\0\u30A8\u30FC\u30B8\u30E3\u30C3\u30AF\u30B9\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, ajaxRomInfo, ajaxRomName, NULL, NULL, AjaxInputInfo, AjaxDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	ajaxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 288, 3, 4
 };
 
@@ -867,13 +872,18 @@ static struct BurnRomInfo typhoonRomDesc[] = {
 STD_ROM_PICK(typhoon)
 STD_ROM_FN(typhoon)
 
+static INT32 typhoonInit()
+{
+	return DrvInit(0);
+}
+
 struct BurnDriver BurnDrvTyphoon = {
 	"typhoon", "ajax", NULL, NULL, "1987",
 	"Typhoon\0", NULL, "Konami", "GX770",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, typhoonRomInfo, typhoonRomName, NULL, NULL, AjaxInputInfo, AjaxDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	typhoonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 288, 3, 4
 };
 
@@ -914,6 +924,6 @@ struct BurnDriver BurnDrvAjaxj = {
 	L"Ajax\0\u30A8\u30FC\u30B8\u30E3\u30C3\u30AF\u30B9 (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, ajaxjRomInfo, ajaxjRomName, NULL, NULL, AjaxInputInfo, AjaxDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	typhoonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 288, 3, 4
 };

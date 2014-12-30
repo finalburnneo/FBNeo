@@ -647,8 +647,6 @@ void TC0180VCUScan(INT32 nAction)
 
 	if (nAction & ACB_VOLATILE)
 	{
-	bprintf (0, _T("yup\n"));
-
 		ba.Data	  = (UINT8*)TC0180VCUFramebuffer[0];
 		ba.nLen	  = 512 * 256 * sizeof(UINT16);
 		ba.szName = "Framebuffer 0";

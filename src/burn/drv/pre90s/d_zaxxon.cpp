@@ -1,11 +1,18 @@
 /*
    Games supported:
-        * Zaxxon				ok
-        * Super Zaxxon		ok
-        * Future Spy			no
-        * Razmatazz			no sound+bad controls sega_universal_sound_board_rom ?
-        * Ixion					no
-        * Congo Bongo		ok
+        * Zaxxon		yes
+        * Super Zaxxon		yes
+        * Future Spy		yes
+        * Razmatazz		no sound+bad controls sega_universal_sound_board_rom ?
+        * Ixion			no
+        * Congo Bongo		yes
+
+   To do:
+	Dips are wrong. Very wrong! Needs a re-write badly.
+	Need to add Sega USB support.
+	Analog inputs for Raxmatazz and Ixion
+	Move to sega directory, use sega misc. hardware flag
+	Clean up video code
 */
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -61,88 +68,115 @@ static UINT8 *zaxxon_bg_pixmap;
 
 static UINT8 *soundlatch;
 
+static UINT8 *sound_state;
+
 static INT32 futspy_sprite = 0;
 static INT32 hardware_type = 0;
 static UINT8 no_flip = 0;
 
 static struct BurnInputInfo ZaxxonInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"}	,
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy4 + 2,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy4 + 2,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Zaxxon)
 
 static struct BurnInputInfo CongoBongoInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(CongoBongo)
 
+static struct BurnInputInfo FutspyInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy4 + 2,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+};
+
+STDINPUTINFO(Futspy)
 
 static struct BurnDIPInfo CongoBongoDIPList[]=
 {
-	{0x03, 0xff, 0xff, 0xc0, NULL		},
-	{0x04, 0xff, 0xff, 0xc0, NULL		},
-	{0x05, 0xff, 0xff, 0x04, NULL		},
-	{0x10, 0xff, 0xff, 0x7f, NULL		},
-	{0x11, 0xff, 0xff, 0x33, NULL		},
+	{0x0f, 0xff, 0xff, 0xc0, NULL			},
+	{0x04, 0xff, 0xff, 0xc0, NULL			},
+	{0x05, 0xff, 0xff, 0x04, NULL			},
+	{0x10, 0xff, 0xff, 0x7f, NULL			},
+	{0x11, 0xff, 0xff, 0x33, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Test Back and Target"		},
-	{0x03, 0x01, 0x20, 0x20, "No"		},
-	{0x03, 0x01, 0x20, 0x00, "Yes"		},
+	{0x03, 0x01, 0x20, 0x20, "No"			},
+	{0x03, 0x01, 0x20, 0x00, "Yes"			},
 
 	{0   , 0xfe, 0   ,    0, "Test I/O and Dip SW"		},
-	{0x03, 0x01, 0x20, 0x20, "No"		},
-	{0x03, 0x01, 0x20, 0x00, "Yes"		},
+	{0x03, 0x01, 0x20, 0x20, "No"			},
+	{0x03, 0x01, 0x20, 0x00, "Yes"			},
 
 	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x04, 0x01, 0x0c, 0x0c, "Easy"		},
+	{0x04, 0x01, 0x0c, 0x0c, "Easy"			},
 	{0x04, 0x01, 0x0c, 0x04, "Medium"		},
-	{0x04, 0x01, 0x0c, 0x08, "Hard"		},
+	{0x04, 0x01, 0x0c, 0x08, "Hard"			},
 	{0x04, 0x01, 0x0c, 0x00, "Hardest"		},
 
-	{0x10, 0xff, 0xff, 0x7f, NULL		},
+	{0x10, 0xff, 0xff, 0x7f, NULL			},
 	{0x11, 0xff, 0xff, 0x33, NULL		},
 
-	{0   , 0xfe, 0   ,    1, "Service Mode (No Toggle)"		},
+	{0   , 0xfe, 0   ,    1, "Service Mode"		},
 	{0x10, 0x01, 0x01, 0x00, "Off"		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
@@ -211,8 +245,6 @@ static struct BurnDIPInfo CongoBongoDIPList[]=
 };
 
 STDDIPINFO(CongoBongo)
-
-
 
 static struct BurnDIPInfo ZaxxonDIPList[]=
 {
@@ -288,7 +320,6 @@ static struct BurnDIPInfo ZaxxonDIPList[]=
 };
 
 STDDIPINFO(Zaxxon)
-
 
 static struct BurnDIPInfo SzaxxonDIPList[]=
 {
@@ -371,37 +402,6 @@ static struct BurnDIPInfo SzaxxonDIPList[]=
 
 STDDIPINFO(Szaxxon)
 
-
-static struct BurnInputInfo FutspyInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-//	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"},
-//	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
-
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
-
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy4 + 2,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
-};
-
-STDINPUTINFO(Futspy)
-
-
 static struct BurnDIPInfo FutspyDIPList[]=
 {
 	{0x05, 0xff, 0xff, 0x00, NULL		},
@@ -472,128 +472,7 @@ static struct BurnDIPInfo FutspyDIPList[]=
 
 STDDIPINFO(Futspy)
 
-UINT8 __fastcall zaxxon_read(UINT16 address)
-{
-//	bprintf (PRINT_NORMAL, _T("%4.4x Inp[0] %02d Inp[1] %02d Inp[2] %02d Joy4[0] %02d Joy3[2] %02d Joy4[1] %02d Joy3[3] %02d \n"), 
-//		address,DrvInputs[0],DrvInputs[1],DrvInputs[2],DrvJoy4[0],DrvJoy3[2],DrvJoy4[1],DrvJoy3[3]);
-	// set up mirroring
-/*
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"},
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"},
-*/
-	// video ram
-	if (address >= 0x8000 && address <= 0x9fff) {
-		return DrvVidRAM[address & 0x3ff];
-	}
-
-	if (address >= 0xa000 && address <= 0xafff) {
-		return DrvSprRAM[address & 0xff];
-	}
-/*
-	if ((address & 0xe100) == 0xc000)
-		address &= 0xe703;
-
-	if ((address & 0xe100) == 0xc100)
-		address &= 0xe100;
-*/
-	if (address >= (0xc000+0x18fc) && address <= (0xc003+0x18fc)) 
-	{
-/*		AM_RANGE(0xc000, 0xc000) AM_MIRROR(0x18fc) AM_READ_PORT("SW00")
-	AM_RANGE(0xc001, 0xc001) AM_MIRROR(0x18fc) AM_READ_PORT("SW01")
-	AM_RANGE(0xc002, 0xc002) AM_MIRROR(0x18fc) AM_READ_PORT("DSW02")
-	AM_RANGE(0xc003, 0xc003) AM_MIRROR(0x18fc) AM_READ_PORT("DSW03")		*/
-		address-= 0x18fc;
-
-	}
-
-	if (address >= (0xc100+0x18fc) && address <= (0xc100+0x18ff)) 
-	{
-/* 	AM_RANGE(0xc100, 0xc100) AM_MIRROR(0x18ff) AM_READ_PORT("SW100") */
-		address-= 0x18ff;
-	}
-
-	if (address >= (0xe03c+0x1f00) && address <= (0xe03f+0x1f00)) 
-	{
-/*  AM_RANGE(0xe03c, 0xe03f) AM_MIRROR(0x1f00) AM_DEVREADWRITE(PPI8255, "ppi8255", ppi8255_r, ppi8255_w) */
-		address-= 0x1f00;
-	}
-	
-	if (address >= 0xe03c && address <= 0xe03f) 
-	{
-/*  AM_RANGE(0xe03c, 0xe03f) AM_MIRROR(0x1f00) AM_DEVREADWRITE(PPI8255, "ppi8255", ppi8255_r, ppi8255_w) */
-	//bprintf (PRINT_NORMAL, _T("ppi8255_r %02x\n"),address);
-		return ppi8255_r(0, address  & 0x03);
-	}
-
-	switch (address)
-	{
-		case 0xc000:
-			// sw00
-		return DrvInputs[0];
-
-		case 0xc001:
-			// sw01 
-		return DrvInputs[1];
-
-		case 0xc002:
-			// dsw02
-		return DrvDips[0];
-
-		case 0xc003:
-			// dsw03
-		return DrvDips[1];
-
-		case 0xc100:
-		{
-
-//			UINT8 ret = 0;
-
-
-
-
-/*
- * IN2 (bits NOT inverted)
- * bit 7 : CREDIT
- * bit 6 : COIN 2
- * bit 5 : COIN 1
- * bit 4 : ?
- * bit 3 : START 2
- * bit 2 : START 1
-
-*/
-
-/*
-//			ret |= zaxxon_coin_enable[0] << 5;
-//			ret |= zaxxon_coin_enable[1] << 6;
-//			ret |= zaxxon_coin_enable[2] << 7;
-
-#define IN2_COIN (1<<7)
-
-			static int coin;
-			UINT8 res = zaxxon_coin_enable[2];
-	//bprintf (PRINT_NORMAL, _T("zaxxon_coin_enable %02d\n"), res);
-
-
-			if (res & IN2_COIN)
-			{
-				if (coin) res &= ~IN2_COIN;
-				else coin = 1;
-			}
-			else coin = 0;
-*/
-//DrvInputs[2];
-			return DrvInputs[2];// sw100
-		}
-	}
-
-	return 0;
-}
-
-static UINT8 sound_state[3];
-
-void ZaxxonPPIWriteA(UINT8 data)
+static void ZaxxonPPIWriteA(UINT8 data)
 {
 	UINT8 diff = data ^ sound_state[0];
 	sound_state[0] = data;
@@ -627,7 +506,7 @@ void ZaxxonPPIWriteA(UINT8 data)
 	if ((diff & 0x80) &&  (data & 0x80)) BurnSampleStop(3);
 }
 
-void ZaxxonPPIWriteB(UINT8 data)
+static void ZaxxonPPIWriteB(UINT8 data)
 {
 	UINT8 diff = data ^ sound_state[1];
 	sound_state[1] = data;
@@ -642,7 +521,7 @@ void ZaxxonPPIWriteB(UINT8 data)
 	if ((diff & 0x80) && !(data & 0x80)) BurnSamplePlay(6);
 }
 
-void ZaxxonPPIWriteC(UINT8 data)
+static void ZaxxonPPIWriteC(UINT8 data)
 {
 	UINT8 diff = data ^ sound_state[2];
 	sound_state[2] = data;
@@ -662,116 +541,81 @@ static UINT8 CongoPPIReadA()
 	return *soundlatch;
 }
 
-void CongoPPIWriteB(UINT8 data)
+static void CongoPPIWriteB(UINT8 data)
 {
-	//bprintf (PRINT_NORMAL, _T("CongoPPIWriteB %02x most be 2: %d\n"),data,(data & 0x02));
 	UINT8 diff = data ^ sound_state[1];
 	sound_state[1] = data;
 
-	if(1)
-	{
-		/* GORILLA: channel 0 */
-		if ((diff & 0x02) && !(data & 0x02) && !BurnSampleGetStatus(0)) BurnSamplePlay(0);
-	}
+	if ((diff & 0x02) && !(data & 0x02) && !BurnSampleGetStatus(0)) BurnSamplePlay(0);
 }
 
-void CongoPPIWriteC(UINT8 data)
+static void CongoPPIWriteC(UINT8 data)
 {
-	//bprintf (PRINT_NORMAL, _T("CongoPPIWriteC %02x\n"),data);
 	UINT8 diff = data ^ sound_state[2];
 	sound_state[2] = data;
 
-	if(1)
-	{
-		/* BASS DRUM: channel 1 */
-		if ((diff & 0x01) && !(data & 0x01)) BurnSamplePlay(1);
-		if ((diff & 0x01) &&  (data & 0x01)) BurnSampleStop(1);
+	/* BASS DRUM: channel 1 */
+	if ((diff & 0x01) && !(data & 0x01)) BurnSamplePlay(1);
+	if ((diff & 0x01) &&  (data & 0x01)) BurnSampleStop(1);
 
-		/* CONGA (LOW): channel 2 */
-		if ((diff & 0x02) && !(data & 0x02)) BurnSamplePlay(2);
-		if ((diff & 0x02) &&  (data & 0x02)) BurnSampleStop(2);
+	/* CONGA (LOW): channel 2 */
+	if ((diff & 0x02) && !(data & 0x02)) BurnSamplePlay(2);
+	if ((diff & 0x02) &&  (data & 0x02)) BurnSampleStop(2);
 	
-		/* CONGA (HIGH): channel 3 */
-		if ((diff & 0x04) && !(data & 0x04)) BurnSamplePlay(3);
-		if ((diff & 0x04) &&  (data & 0x04)) BurnSampleStop(3);
+	/* CONGA (HIGH): channel 3 */
+	if ((diff & 0x04) && !(data & 0x04)) BurnSamplePlay(3);
+	if ((diff & 0x04) &&  (data & 0x04)) BurnSampleStop(3);
 	
-		/* RIM: channel 4 */
-		if ((diff & 0x08) && !(data & 0x08)) BurnSamplePlay(4);
-		if ((diff & 0x08) &&  (data & 0x08)) BurnSampleStop(4);
-	}
+	/* RIM: channel 4 */
+	if ((diff & 0x08) && !(data & 0x08)) BurnSamplePlay(4);
+	if ((diff & 0x08) &&  (data & 0x08)) BurnSampleStop(4);
 }
 
-void __fastcall zaxxon_write(UINT16 address, UINT8 data)
+static UINT8 __fastcall zaxxon_read(UINT16 address)
 {
-//	//bprintf (PRINT_NORMAL, _T("write %4.4x %2.2x\n"), address, data);
+	// address mirroring
+	if ((address & 0xe700) == 0xc000) address &= ~0x18f8;
+	if ((address & 0xe700) == 0xc100) address &= ~0x18ff;
+	if ((address & 0xe000) == 0xe000) address &= ~0x1f00;
 
-	// set up mirroring
-
-	// video ram
-	if (address >= 0x8000 && address <= 0x9fff) {
-		DrvVidRAM[address & 0x3ff] = data;
-		return;
-	}
-
-	if (address >= 0xa000 && address <= 0xafff) {
-		DrvSprRAM[address & 0xff] = data;
-		return;
-	}
-/*
-	if (address >= 0xff3c && address <= 0xff3e) {
-		//bprintf (PRINT_NORMAL, _T("1 zaxxon_sound_write %4.4x %2.2x\n"), address, data);
-//		zaxxon_sound_write(address & 0x0c);
-		ppi8255_w(0, address  & 0x3, data);
-		return;
-	}
-*/
-	if (address >= 0xff3c && address <= 0xff3f) 
+	switch (address)
 	{
-/*	AM_RANGE(0xe03c, 0xe03f) AM_MIRROR(0x1f00) AM_DEVREADWRITE(PPI8255, "ppi8255", ppi8255_r, ppi8255_w)		*/
-		address-= 0x1f00;
+		case 0xc000:
+			return DrvInputs[0];
+
+		case 0xc001:
+			return DrvInputs[1];
+
+		case 0xc002:
+			return DrvDips[0];
+
+		case 0xc003:
+			return DrvDips[1];
+
+		case 0xc100:
+			return DrvInputs[2];
+
+		case 0xe03c:
+		case 0xe03d:
+		case 0xe03e:
+		case 0xe03f:
+			return ppi8255_r(0, address & 0x03);
 	}
 
-	if ((address >= 0xc000+0x18f8) && address <= (0xc006+0x18f8)) 
-	{
-/*	AM_RANGE(0xc000, 0xc002) AM_MIRROR(0x18f8) AM_WRITE(zaxxon_coin_enable_w)
-	AM_RANGE(0xc003, 0xc004) AM_MIRROR(0x18f8) AM_WRITE(zaxxon_coin_counter_w)
-	AM_RANGE(0xc006, 0xc006) AM_MIRROR(0x18f8) AM_WRITE(zaxxon_flipscreen_w)*/
-		address-= 0x18f8;
-	}
+	return 0;
+}
 
-	if ((address >= 0xe0f0+0x1f00) && address <= (0xe0fb+0x1f00)) 
-	{
-/*	AM_RANGE(0xe0f0, 0xe0f0) AM_MIRROR(0x1f00) AM_WRITE(int_enable_w)
-	AM_RANGE(0xe0f1, 0xe0f1) AM_MIRROR(0x1f00) AM_WRITE(zaxxon_fg_color_w)
-	AM_RANGE(0xe0f8, 0xe0f9) AM_MIRROR(0x1f00) AM_WRITE(zaxxon_bg_position_w)
-	AM_RANGE(0xe0fa, 0xe0fa) AM_MIRROR(0x1f00) AM_WRITE(zaxxon_bg_color_w)
-	AM_RANGE(0xe0fb, 0xe0fb) AM_MIRROR(0x1f00) AM_WRITE(zaxxon_bg_enable_w)	*/
-		address-= 0x1f00;
-	}
-
-	if (address >= 0xe03c && address <= 0xe03f) {
-		//bprintf (PRINT_NORMAL, _T("2 zaxxon_sound_write %4.4x %2.2x\n"), address, data);
-//		zaxxon_sound_write(address & 0x0c);
-		ppi8255_w(0, address  & 0x03, data);
-//bprintf (PRINT_NORMAL, _T("2 ppi8255_w done\n"));
-		return;
-	}
-/*
-	if ((address & 0xe000) == 0xc000)
-		address &= 0xe707;
-
-	if ((address & 0xe000) == 0xe000)
-		address &= 0xe0ff;
-*/
-//	//bprintf (PRINT_NORMAL, _T("%4.4x %2.2x mirrored\n"), address, data);
-
+static void __fastcall zaxxon_write(UINT16 address, UINT8 data)
+{
+	// address mirroring
+	if ((address & 0xe700) == 0xc000) address &= ~0x18f8;
+	if ((address & 0xe000) == 0xe000) address &= ~0x1f00;
 
 	switch (address)
 	{
 		case 0xc000:
 		case 0xc001:
 		case 0xc002:
-			//bprintf (PRINT_NORMAL, _T("write coins %02d\n"), data & 1);
 			zaxxon_coin_enable[address & 3] = data & 1;
 		return;
 
@@ -784,6 +628,12 @@ void __fastcall zaxxon_write(UINT16 address, UINT8 data)
 			*zaxxon_flipscreen = ~data & 1;
 		return;
 
+		case 0xe03c:
+		case 0xe03d:
+		case 0xe03e:
+		case 0xe03f:
+			ppi8255_w(0, address  & 0x03, data);
+		return;
 
 		case 0xe0f0:
 			*interrupt_enable = data & 1;
@@ -791,7 +641,7 @@ void __fastcall zaxxon_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xe0f1:
-			*zaxxon_fg_color = data << 7;
+			*zaxxon_fg_color = (data & 1) << 7;
 		return;
 
 		case 0xe0f8:
@@ -814,22 +664,11 @@ void __fastcall zaxxon_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall congo_read(UINT16 address)
+static UINT8 __fastcall congo_read(UINT16 address)
 {
-	//bprintf (PRINT_NORMAL, _T("%4.4x DrvInputs[0] %02d DrvInputs[1] %02d DrvInputs[2] %02d\n"), address,DrvInputs[0],DrvInputs[1],DrvInputs[2]);
-
-	// set up mirrors
-	if ((address & 0xe000) == 0xa000) {
-		if (address & 0x400) {
-			return DrvVidRAM[address & 0x3ff];
-		} else {
-			return DrvColRAM[address & 0x3ff];
-		}
-	}
-
-//	if ((address & 0xe000) == 0xc000) {
-//		address &= 0xe03b;
-//	}
+	// address mirroring
+	if ((address & 0xe008) == 0xc000) address &= ~0x1fc4;
+	if ((address & 0xe008) == 0xc008) address &= ~0x1fc7;
 
 	switch (address)
 	{
@@ -844,10 +683,7 @@ UINT8 __fastcall congo_read(UINT16 address)
 	return 0;
 }
 
-// zet.cpp
-void ZetRunAdjust(int nCycles);
-
-static void congo_sprite_custom_w(int offset, UINT8 data)
+static void congo_sprite_custom_w(INT32 offset, UINT8 data)
 {
 	congo_custom[offset] = data;
 
@@ -855,10 +691,10 @@ static void congo_sprite_custom_w(int offset, UINT8 data)
 	if (offset == 3 && data == 0x01)
 	{
 		UINT16 saddr = congo_custom[0] | (congo_custom[1] << 8);
-		int count = congo_custom[2];
+		INT32 count = congo_custom[2];
 
 		/* count cycles (just a guess) */
-		ZetRunAdjust(-(count * 5));
+		ZetIdle(-count * 5);
 
 		/* this is just a guess; the chip is hardwired to the spriteram */
 		while (count-- >= 0)
@@ -873,29 +709,10 @@ static void congo_sprite_custom_w(int offset, UINT8 data)
 	}
 }
 
-
-void __fastcall congo_write(UINT16 address, UINT8 data)
+static void __fastcall congo_write(UINT16 address, UINT8 data)
 {
-	// set up mirroring
-	if ((address & 0xe000) == 0xa000) {
-		if (address & 0x400) {
-			DrvVidRAM[address & 0x3ff] = data;
-		} else {
-			DrvColRAM[address & 0x3ff] = data;
-		}
-		return;
-	}
-
-	if ((address >= 0xc038+0x1fc0) && address <= (0xc03f+0x1fc0))
-	{
-		// AM_RANGE(0xc038, 0xc03f) AM_MIRROR(0x1fc0) AM_WRITE(soundlatch_byte_w)
-		address-= 0x1fc0;
-	}
-
-
-	if ((address & 0xe000) == 0xc000) {
-		address &= 0xe03f;
-	}
+	// address mirroring
+	if ((address & 0xe000) == 0xc000) address &= ~0x1fc0;
 
 	switch (address)
 	{
@@ -971,28 +788,12 @@ void __fastcall congo_write(UINT16 address, UINT8 data)
 	}
 }
 
-void __fastcall congo_sound_write(UINT16 address, UINT8 data)
+static void __fastcall congo_sound_write(UINT16 address, UINT8 data)
 {
-		//bprintf (PRINT_NORMAL, _T("???? congo_sound_write %4.4x %2.2x\n"), address, data);
-	
-	if ((address >= 0x6000+0x1fff) && address <= (0x6000+0x1fff)) 
-	{
-//	AM_RANGE(0x6000, 0x6000) AM_MIRROR(0x1fff) AM_DEVWRITE("sn1", sn76496_device, write)
-		address-= 0x1fff;
-	}
-
-	if ((address >= 0x8000+0x1ffc) && address <= (0x8003+0x1ffc)) 
-	{
-//AM_RANGE(0x8000, 0x8003) AM_MIRROR(0x1ffc) AM_DEVREADWRITE("ppi8255", i8255_device, read, write)
-		address-= 0x1ffc;
-	}
-
-	if ((address >= 0xa000+0x1ffc) && address <= (0xa000+0x1ffc)) 
-	{
-//AM_RANGE(0xa000, 0xa000) AM_MIRROR(0x1fff) AM_DEVWRITE("sn2", sn76496_device, write)
-		address-= 0x1ffc;
-	}
-//	address &= 0xe003;
+	// address mirroring
+	if ((address & 0xe000) == 0x6000) address &= ~0x1fff;
+	if ((address & 0xe000) == 0x8000) address &= ~0x1ffc;
+	if ((address & 0xe000) == 0xa000) address &= ~0x1fff;
 
 	switch (address)
 	{
@@ -1011,27 +812,12 @@ void __fastcall congo_sound_write(UINT16 address, UINT8 data)
 			SN76496Write(1, data);
 		return;
 	}
-
-	// set up mirroring
-        if ((address & 0xc000) == 0x4000) {
-		DrvZ80RAM2[address & 0x7ff] = data;
-		return;
-	}
 }
 
-UINT8 __fastcall congo_sound_read(UINT16 address)
+static UINT8 __fastcall congo_sound_read(UINT16 address)
 {
-	// set up mirroring
-	if ((address & 0xc000) == 0x4000) {
-		return DrvZ80RAM2[address & 0x7ff];
-	}
-
-	/*if ((address >= 0x8000+0x1ffc) && address <= (0x8003+0x1ffc))
-	{ //  AM_RANGE(0x8000, 0x8003) AM_MIRROR(0x1ffc) AM_DEVREADWRITE("ppi8255", i8255_device, read, write)
-		address-= 0x1ffc;
-	}*/
-
-	address &= 0xe003; // this takes care of AM_MIRROR(0x1ffc)
+	// address mirroring
+	if ((address & 0xe000) == 0x8000) address &= ~0x1ffc;
 
 	switch (address)
 	{
@@ -1045,19 +831,13 @@ UINT8 __fastcall congo_sound_read(UINT16 address)
 	return 0;
 }
 
-static int DrvGfxDecode()
+static INT32 DrvGfxDecode()
 {
-	int CharPlane[2] = { 0x4000 * 1, 0x4000 * 0 };
-	int TilePlane[3] = { 0x10000 * 2, 0x10000 * 1, 0x10000 * 0 };
-	int SpritePlane[3] = { 0x20000 * 2, 0x20000 * 1, 0x20000 * 0 };
-	int SpriteXOffs[32] = { 0, 1, 2, 3, 4, 5, 6, 7,
-			8*8+0, 8*8+1, 8*8+2, 8*8+3, 8*8+4, 8*8+5, 8*8+6, 8*8+7,
-			16*8+0, 16*8+1, 16*8+2, 16*8+3, 16*8+4, 16*8+5, 16*8+6, 16*8+7,
-			24*8+0, 24*8+1, 24*8+2, 24*8+3, 24*8+4, 24*8+5, 24*8+6, 24*8+7 };
-	int SpriteYOffs[32] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
-			32*8, 33*8, 34*8, 35*8, 36*8, 37*8, 38*8, 39*8,
-			64*8, 65*8, 66*8, 67*8, 68*8, 69*8, 70*8, 71*8,
-			96*8, 97*8, 98*8, 99*8, 100*8, 101*8, 102*8, 103*8 };
+	INT32 CharPlane[2] = { 0x4000 * 1, 0x4000 * 0 };
+	INT32 TilePlane[3] = { 0x10000 * 2, 0x10000 * 1, 0x10000 * 0 };
+	INT32 SpritePlane[3] = { 0x20000 * 2, 0x20000 * 1, 0x20000 * 0 };
+	INT32 SpriteXOffs[32] = { STEP8(0, 1), STEP8(64, 1), STEP8(128, 1), STEP8(192, 1) };
+	INT32 SpriteYOffs[32] = { STEP8(0, 8), STEP8(256, 8), STEP8(512, 8), STEP8(768, 8) };
 
 	UINT8 *tmp = (UINT8*)malloc(0xc000);
 	if (tmp == NULL) {
@@ -1081,11 +861,11 @@ static int DrvGfxDecode()
 	return 0;
 }
 
-static void DrvPaletteInit(int len)
+static void DrvPaletteInit(INT32 len)
 {
-	for (int i = 0; i < len; i++)
+	for (INT32 i = 0; i < len; i++)
 	{
-		int bit0, bit1, bit2, r, g, b;
+		INT32 bit0, bit1, bit2, r, g, b;
 
 		bit0 = (DrvColPROM[i] >> 0) & 0x01;
 		bit1 = (DrvColPROM[i] >> 1) & 0x01;
@@ -1102,11 +882,7 @@ static void DrvPaletteInit(int len)
 		b = bit0 * 78 + bit1 * 168;
 
 		Palette[i] = (r << 16) | (g << 8) | b;
-		int rgb = Palette[i];
-//		DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
-		DrvPalette[i] = rgb;//BurnHighCol(r, g, b, 0);
-		//bprintf (PRINT_NORMAL, _T("DrvPalette %04x %04x\n"),DrvPalette[i],rgb);
-//		DrvPalette[i] = BurnHighCol(r, g, b, 0);
+		DrvPalette[i] = Palette[i];
 	}
 
 	DrvColPROM += 0x100;
@@ -1114,65 +890,31 @@ static void DrvPaletteInit(int len)
 
 static void bg_layer_init()
 {
-#ifdef dump_bitmap
-	FILE *fz = fopen("bglayer.bmp", "wb");
+	INT32 len = (hardware_type == 2) ? 0x2000 : 0x4000;
+	INT32 mask = len-1;
 
-	UINT8 data[54] = {
-		0x42, 0x4D, 0x36, 0x00, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x36, 0x00, 0x00, 0x00, 0x28, 0x00, 
-		0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x01, 0x00, 0x18, 0x00, 0x00, 0x00, 
-		0x00, 0x00, 0x00, 0x00, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	};
-
-	fwrite (data, 54, 1, fz);
-#endif
-
-	int len = (hardware_type == 2) ? 0x2000 : 0x4000;
-	int mask = len-1;
-
-	for (int offs = 0; offs < 32 * 512; offs++)
+	for (INT32 offs = 0; offs < 32 * 512; offs++)
 	{
-		int sx = (offs & 0x1f) << 3;
-		int sy = (offs >> 5) << 3;
+		INT32 sx = (offs & 0x1f) << 3;
+		INT32 sy = (offs >> 5) << 3;
 
-		int moffs = offs & mask;
+		INT32 moffs = offs & mask;
 
-		int code = (DrvGfxROM3[moffs]) | ((DrvGfxROM3[moffs | len] & 3) << 8);
-		int color = (DrvGfxROM3[moffs | len] & 0xf0) >> 1;
+		INT32 code = (DrvGfxROM3[moffs]) | ((DrvGfxROM3[moffs | len] & 3) << 8);
+		INT32 color = (DrvGfxROM3[moffs | len] & 0xf0) >> 1;
 
 		UINT8 *src = DrvGfxROM1 + (code << 6);
 
-		for (int y = 0; y < 8; y++, sy++) {
-			for (int x = 0; x < 8; x++) {
+		for (INT32 y = 0; y < 8; y++, sy++) {
+			for (INT32 x = 0; x < 8; x++) {
 				zaxxon_bg_pixmap[sy * 256 + sx + x] = src[(y << 3) | x] | color;
 			}
 		}
 	}
-#ifdef dump_bitmap
-	UINT8 tmp[3];
-
-	for (int i = 0; i < 1048576; i++) {
-		int t =	Palette[zaxxon_bg_pixmap[i]];
-		UINT8 r, g, b;
-		r = (t >> 24) & 0xff;
-		g = (t >> 16) & 0xff;
-		b = (t >>  8) & 0xff;
-
-		tmp[0] = r;
-		tmp[1] = g;
-		tmp[2] = b;
-
-		fwrite (tmp, 3, 1, fz);
-	}
-
-	fclose (fz);
-#endif
 }
 
-static int DrvDoReset()
+static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	ZetOpen(0);
@@ -1190,7 +932,7 @@ static int DrvDoReset()
 	return 0;
 }
 
-static int MemIndex()
+static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
@@ -1205,8 +947,8 @@ static int MemIndex()
 
 	DrvColPROM		= Next; Next += 0x000200;
 
-	Palette			= (UINT32*)Next; Next += 0x0200 * sizeof(int);
-	DrvPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(int);
+	Palette			= (UINT32*)Next; Next += 0x0200 * sizeof(INT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(INT32);
 
 	zaxxon_bg_pixmap	= Next; Next += 0x100000;
 
@@ -1229,9 +971,11 @@ static int MemIndex()
 	zaxxon_flipscreen	= Next; Next += 0x000001;
 	zaxxon_coin_enable	= Next; Next += 0x000004;
 
-	zaxxon_bg_scroll	= (UINT32*)Next; Next += 0x000001 * sizeof(int);
+	zaxxon_bg_scroll	= (UINT32*)Next; Next += 0x000001 * sizeof(INT32);
 
 	soundlatch		= Next; Next += 0x000001;
+
+	sound_state		= Next; Next += 0x000003;
 
 	RamEnd		= Next;
 
@@ -1240,29 +984,38 @@ static int MemIndex()
 	return 0;
 }
 
-static int DrvInit()
+static INT32 DrvInit()
 {
 	AllMem = NULL;
 	MemIndex();
-	int nLen = MemEnd - (UINT8 *)0;
+	INT32 nLen = MemEnd - (UINT8 *)0;
 	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
 	{
-		for (int i = 0; i < 3; i++) {
-			if (BurnLoadRom(DrvZ80ROM  + i * 0x2000,  0 + i, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM1 + i * 0x2000,  5 + i, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM2 + i * 0x4000,  8 + i, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM3 + i * 0x2000, 11 + i, 1)) return 1;
-		}
-
-		for (int i = 0; i < 2; i++) {
-			if (BurnLoadRom(DrvGfxROM0 + i * 0x0800,  3 + i, 1)) return 1;
-			if (BurnLoadRom(DrvColPROM + i * 0x0100, 15 + i, 1)) return 1;
-		}
-
-		if (BurnLoadRom(DrvGfxROM3 + 0x6000,  14, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x2000,  1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x4000,  2, 1)) return 1;
+	
+		if (BurnLoadRom(DrvGfxROM0 + 0x0000,  3, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x0800,  4, 1)) return 1;
+	
+		if (BurnLoadRom(DrvGfxROM1 + 0x0000,  5, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x2000,  6, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x4000,  7, 1)) return 1;
+	
+		if (BurnLoadRom(DrvGfxROM2 + 0x0000,  8, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x4000,  9, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x8000, 10, 1)) return 1;
+	
+		if (BurnLoadRom(DrvGfxROM3 + 0x0000, 11, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x2000, 12, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x4000, 13, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x6000, 14, 1)) return 1;
+	
+		if (BurnLoadRom(DrvColPROM + 0x0000, 15, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM + 0x0100, 16, 1)) return 1;
 
 		DrvGfxDecode();
 		DrvPaletteInit(0x100);
@@ -1271,15 +1024,18 @@ static int DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x5fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x5fff, 2, DrvZ80ROM);
-	ZetMapArea(0x6000, 0x6fff, 0, DrvZ80RAM);
-	ZetMapArea(0x6000, 0x6fff, 1, DrvZ80RAM);
-	ZetMapArea(0x6000, 0x6fff, 2, DrvZ80RAM);
-	ZetMapArea(0x8000, 0x83ff, 0, DrvVidRAM);
-	ZetMapArea(0x8000, 0x83ff, 1, DrvVidRAM);
-	ZetMapArea(0xa000, 0xa0ff, 0, DrvSprRAM);
-	ZetMapArea(0xa000, 0xa0ff, 1, DrvSprRAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0x5fff, ZET_ROM);
+	ZetMapMemory(DrvZ80RAM, 0x6000, 0x6fff, ZET_RAM);
+
+	// address mirroring
+	for (INT32 i = 0; i < 0x2000; i+= 0x400) {
+		ZetMapMemory(DrvVidRAM, 0x8000 + i, 0x83ff + i, ZET_RAM);
+	}
+
+	for (INT32 i = 0; i < 0x1000; i+= 0x100) {
+		ZetMapMemory(DrvSprRAM, 0xa000 + i, 0xa0ff + i, ZET_RAM);
+	}
+
 	ZetSetWriteHandler(zaxxon_write);
 	ZetSetReadHandler(zaxxon_read);
 	ZetClose();
@@ -1289,34 +1045,124 @@ static int DrvInit()
 	PPI0PortWriteB = ZaxxonPPIWriteB;
 	PPI0PortWriteC = ZaxxonPPIWriteC;
 
-	GenericTilesInit();
-
 	BurnSampleInit(0);
 
 	BurnSampleSetAllRoutesAllSamples(0.50, BURN_SND_ROUTE_BOTH);
 
 	// for Zaxxon:
 	// Homing Missile
-			BurnSampleSetRoute(0, BURN_SND_SAMPLE_ROUTE_1, 0.61, BURN_SND_ROUTE_BOTH);
-			BurnSampleSetRoute(0, BURN_SND_SAMPLE_ROUTE_2, 0.61, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(0, BURN_SND_SAMPLE_ROUTE_1, 0.61, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(0, BURN_SND_SAMPLE_ROUTE_2, 0.61, BURN_SND_ROUTE_BOTH);
 	// Ground Missile take-off
-			BurnSampleSetRoute(1, BURN_SND_SAMPLE_ROUTE_1, 0.30, BURN_SND_ROUTE_BOTH);
-			BurnSampleSetRoute(1, BURN_SND_SAMPLE_ROUTE_2, 0.30, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(1, BURN_SND_SAMPLE_ROUTE_1, 0.30, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(1, BURN_SND_SAMPLE_ROUTE_2, 0.30, BURN_SND_ROUTE_BOTH);
 	// Pew! Pew!
-			BurnSampleSetRoute(6, BURN_SND_SAMPLE_ROUTE_1, 0.50, BURN_SND_ROUTE_BOTH);
-			BurnSampleSetRoute(6, BURN_SND_SAMPLE_ROUTE_2, 0.50, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(6, BURN_SND_SAMPLE_ROUTE_1, 0.50, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(6, BURN_SND_SAMPLE_ROUTE_2, 0.50, BURN_SND_ROUTE_BOTH);
 
-			BurnSampleSetRoute(10, BURN_SND_SAMPLE_ROUTE_1, 0.01 * 3, BURN_SND_ROUTE_BOTH);
-			BurnSampleSetRoute(10, BURN_SND_SAMPLE_ROUTE_2, 0.01 * 3, BURN_SND_ROUTE_BOTH);
-			BurnSampleSetRoute(11, BURN_SND_SAMPLE_ROUTE_1, 0.01 * 3, BURN_SND_ROUTE_BOTH);
-			BurnSampleSetRoute(11, BURN_SND_SAMPLE_ROUTE_2, 0.01 * 3, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(10, BURN_SND_SAMPLE_ROUTE_1, 0.01 * 3, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(10, BURN_SND_SAMPLE_ROUTE_2, 0.01 * 3, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(11, BURN_SND_SAMPLE_ROUTE_1, 0.01 * 3, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(11, BURN_SND_SAMPLE_ROUTE_2, 0.01 * 3, BURN_SND_ROUTE_BOTH);
+
+	GenericTilesInit();
 
 	DrvDoReset();
 
 	return 0;
 }
 
-static int DrvExit()
+static INT32 CongoInit()
+{
+	hardware_type = 2;
+	futspy_sprite = 1;
+
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x2000,  1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x4000,  2, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x6000,  3, 1)) return 1;
+	
+		if (BurnLoadRom(DrvGfxROM0 + 0x0000,  4, 1)) return 1;
+	
+		if (BurnLoadRom(DrvGfxROM1 + 0x0000,  5, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x2000,  6, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x4000,  7, 1)) return 1;
+	
+		if (BurnLoadRom(DrvGfxROM2 + 0x0000,  8, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x2000,  9, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x4000, 10, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x6000, 11, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x8000, 12, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0xa000, 13, 1)) return 1;
+	
+		if (BurnLoadRom(DrvGfxROM3 + 0x0000, 14, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x2000, 15, 1)) return 1;
+	
+		if (BurnLoadRom(DrvColPROM + 0x0000, 16, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM + 0x0100, 16, 1)) return 1; // reload
+
+		if (BurnLoadRom(DrvZ80ROM2 + 0x0000, 17, 1)) return 1;
+
+		DrvGfxDecode();
+		DrvPaletteInit(0x200);
+		bg_layer_init();
+	}
+
+	ZetInit(0);
+	ZetOpen(0);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0x7fff, ZET_ROM);
+	ZetMapMemory(DrvZ80RAM, 0x8000, 0x8fff, ZET_RAM);
+
+	// address mirroring
+	for (INT32 i = 0; i < 0x2000; i+= 0x800) {
+		ZetMapMemory(DrvVidRAM, 0xa000, 0xa3ff, ZET_RAM);
+		ZetMapMemory(DrvColRAM, 0xa400, 0xa7ff, ZET_RAM);
+	}
+
+	ZetSetWriteHandler(congo_write);
+	ZetSetReadHandler(congo_read);
+	ZetClose();
+
+	ZetInit(1);
+	ZetOpen(1);
+	ZetMapMemory(DrvZ80ROM2, 0x0000, 0x1fff, ZET_ROM);
+
+	for (INT32 i = 0; i < 0x2000; i+= 0x800) {
+		ZetMapMemory(DrvZ80RAM2, 0x4000 + i, 0x47ff + i, ZET_RAM);
+	}
+
+	ZetSetWriteHandler(congo_sound_write);
+	ZetSetReadHandler(congo_sound_read);
+	ZetClose();
+
+	ppi8255_init(1);
+	PPI0PortReadA = CongoPPIReadA;
+	PPI0PortWriteA = NULL;
+	PPI0PortWriteB = CongoPPIWriteB;
+	PPI0PortWriteC = CongoPPIWriteC;
+
+	BurnSampleInit(1);
+	BurnSampleSetAllRoutesAllSamples(0.10, BURN_SND_ROUTE_BOTH);
+
+	SN76496Init(0, 4000000,     0);
+	SN76496Init(1, 4000000 / 4, 1);
+
+	GenericTilesInit();
+
+	DrvDoReset();
+
+	return 0;
+}
+
+static INT32 DrvExit()
 {
 	MemEnd = AllRam = RamEnd = DrvZ80ROM = DrvZ80DecROM = DrvZ80ROM2 = NULL;
 	DrvSndROM = DrvGfxROM0 = DrvGfxROM1 = DrvGfxROM2 = DrvGfxROM3 = NULL;
@@ -1340,144 +1186,114 @@ static int DrvExit()
 	return 0;
 }
 
-static void draw_fg_layer(int type)
+static void draw_fg_layer(INT32 type)
 {
-	for (int offs = 0x40; offs < 0x3c0; offs++)
+	for (INT32 offs = 0x40; offs < 0x3c0; offs++)
 	{
-		int color;
+		INT32 color;
 
-		int sx = (offs & 0x1f);
-		int sy = (offs >> 5);
+		INT32 sx = offs & 0x1f;
+		INT32 sy = offs >> 5;
 
-		int code = DrvVidRAM[offs] + (*congo_fg_bank << 8);
-		if (type != 2) {
-			int colpromoffs = type ? code : (sx | ((sy >> 2) << 5));
-			color = DrvColPROM[colpromoffs] & 0x0f;
+		INT32 code = DrvVidRAM[offs] + (*congo_fg_bank << 8);
+
+		switch (type)
+		{
+			case 0:
+				color = DrvColPROM[(sx | ((sy >> 2) << 5))] & 0x0f;
+			break;
+
+			case 2:
+				color = (DrvColRAM[offs] & 0x1f) + (*congo_color_bank << 8);
+			break;
+
+			default:
+				color = DrvColPROM[offs] & 0x0f;
+			break;
+		}
+
+		if (no_flip) {
+			Render8x8Tile_Mask_Clip(pTransDraw, code, sx * 8, (sy * 8) - 16, color, 3, 0, 0, DrvGfxROM0);
 		} else {
-			color = (DrvColRAM[offs] & 0x1f) + (*congo_color_bank << 8);
-		}
-		sx <<= 3;
-		sy <<= 3;
-
-		/*if (*zaxxon_flipscreen) {
-			sx ^= 0xf8;
-			sy ^= 0xf8;
-		}*/
-
-		if(no_flip)
-		{
-			Render8x8Tile_Mask_Clip(pTransDraw, color, sx, sy-16, color, 3 /*actually 2*/, 0, 0, DrvGfxROM0);
-		}
-		else
-		{
-			Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, 248-sx, 232-sy, color, 3 /*actually 2*/, 0, 0, DrvGfxROM0);
+			Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, 248 - (sx * 8), 232 - (sy * 8), color, 3, 0, 0, DrvGfxROM0);
 		}
 	}
 }
 
-static void draw_background(int skew)
+static void draw_background(INT32 skew)
 {
-	/* only draw if enabled */
 	if (*zaxxon_bg_enable)
 	{
 		UINT8 *pixmap = zaxxon_bg_pixmap;
-		int colorbase = *zaxxon_bg_color + (*congo_color_bank << 8);
-		int xmask = 255;
-		int ymask = 4095;
-		int flipmask = *zaxxon_flipscreen ? 0xff : 0x00;
-		int flipoffs = *zaxxon_flipscreen ? 0x38 : 0x40;
-		int x, y;
+		INT32 colorbase = *zaxxon_bg_color + (*congo_color_bank << 8);
+		INT32 xmask = 255;
+		INT32 ymask = 4095;
+		INT32 flipmask = *zaxxon_flipscreen ? 0xff : 0x00;
+		INT32 flipoffs = *zaxxon_flipscreen ? 0x38 : 0x40;
+		INT32 x, y;
 
-		/* the starting X value is offset by 1 pixel (normal) or 7 pixels */
-		/* (flipped) due to a delay in the loading */
 		if (*zaxxon_flipscreen)
 			flipoffs += 7;
 		else
 			flipoffs -= 1;
 
-		/* loop over visible rows */
-		for (y = 16; y < 240; y++)
+		for (y = 0; y < 224; y++)
 		{
-			UINT16 *dst = pTransDraw + (240-y) * 0x100;
-			int srcx, srcy, vf;
+			UINT16 *dst = pTransDraw + (223-y) * 0x100;
+			INT32 srcx, srcy, vf;
 			UINT8 *src;
 
-			/* VF = flipped V signals */
-			vf = y ^ flipmask;
-
-			/* base of the source row comes from VF plus the scroll value */
-			/* this is done by the 3 4-bit adders at U56, U74, U75 */
+			vf = (y + 16) ^ flipmask;
 			srcy = vf + ((*zaxxon_bg_scroll << 1) ^ 0xfff) + 1;
 			src = pixmap + (srcy & ymask) * 0x100;
 
-			/* loop over visible colums */
 			for (x = 0; x < 256; x++)
 			{
-				/* start with HF = flipped H signals */
 				srcx = x ^ flipmask;
 				if (skew)
 				{
-					/* position within source row is a two-stage addition */
-					/* first stage is HF plus half the VF, done by the 2 4-bit */
-					/* adders at U53, U54 */
 					srcx += ((vf >> 1) ^ 0xff) + 1;
-
-					/* second stage is first stage plus a constant based on the flip */
-					/* value is 0x40 for non-flipped, or 0x38 for flipped */
 					srcx += flipoffs;
 				}
 
-				/* store the pixel, offset by the color offset */
-				dst[256-x] = src[srcx & xmask] + colorbase;
+				dst[255-x] = src[srcx & xmask] + colorbase;
 			}
 		}
 	}
-
-	/* if not enabled, fill the background with black */
 	else
 		memset (pTransDraw, 0, nScreenWidth * nScreenHeight * 2);
 }
 
-
-
-int find_minimum_y(UINT8 value)
+static INT32 find_minimum_y(UINT8 value)
 {
-	int flipmask = *zaxxon_flipscreen ? 0xff : 0x00;
-	int flipconst = *zaxxon_flipscreen ? 0xef : 0xf1;
-	int y;
+	INT32 flipmask = *zaxxon_flipscreen ? 0xff : 0x00;
+	INT32 flipconst = *zaxxon_flipscreen ? 0xef : 0xf1;
+	INT32 y;
 
-	/* the sum of the Y position plus a constant based on the flip state */
-	/* is added to the current flipped VF; if the top 3 bits are 1, we hit */
-
-	/* first find a 16-pixel bucket where we hit */
 	for (y = 0; y < 256; y += 16)
 	{
-		int sum = (value + flipconst + 1) + (y ^ flipmask);
+		INT32 sum = (value + flipconst + 1) + (y ^ flipmask);
 		if ((sum & 0xe0) == 0xe0)
 			break;
 	}
 
-	/* then scan backwards until we no longer match */
 	while (1)
 	{
-		int sum = (value + flipconst + 1) + ((y - 1) ^ flipmask);
+		INT32 sum = (value + flipconst + 1) + ((y - 1) ^ flipmask);
 		if ((sum & 0xe0) != 0xe0)
 			break;
 		y--;
 	}
 
-	/* add one line since we draw sprites on the previous line */
 	return (y + 1) & 0xff;
 }
 
 
-inline int find_minimum_x(UINT8 value)
+static inline INT32 find_minimum_x(UINT8 value)
 {
-	int flipmask = *zaxxon_flipscreen ? 0xff : 0x00;
-	int x;
+	INT32 flipmask = *zaxxon_flipscreen ? 0xff : 0x00;
+	INT32 x;
 
-	/* the sum of the X position plus a constant specifies the address within */
-	/* the line bufer; if we're flipped, we will write backwards */
 	x = (value + 0xef + 1) ^ flipmask;
 	if (flipmask)
 		x -= 31;
@@ -1486,21 +1302,18 @@ inline int find_minimum_x(UINT8 value)
 
 static void draw_sprites(UINT16 flipxmask, UINT16 flipymask)
 {
-	int flipmask = *zaxxon_flipscreen ? 0xff : 0x00;
-	int offs;
+	INT32 flipmask = *zaxxon_flipscreen ? 0xff : 0x00;
 
-	/* only the lower half of sprite RAM is read during rendering */
-	for (offs = 0x7c; offs >= 0; offs -= 4)
+	for (INT32 offs = 0x7c; offs >= 0; offs -= 4)
 	{
-		int sy = find_minimum_y(DrvSprRAM[offs]);
-		int flipy = (DrvSprRAM[offs + (flipymask >> 8)] ^ flipmask) & flipymask;
-		int flipx = (DrvSprRAM[offs + (flipxmask >> 8)] ^ flipmask) & flipxmask;
-		int code = DrvSprRAM[offs + 1] & (0x3f | (futspy_sprite * 0x40));
-		int color = (DrvSprRAM[offs + 2] & 0x1f) + (*congo_color_bank << 5);
-		int sx = find_minimum_x(DrvSprRAM[offs + 3]);
+		INT32 sy = find_minimum_y(DrvSprRAM[offs]);
+		INT32 flipy = (DrvSprRAM[offs + (flipymask >> 8)] ^ flipmask) & flipymask;
+		INT32 flipx = (DrvSprRAM[offs + (flipxmask >> 8)] ^ flipmask) & flipxmask;
 
-		//bprintf (PRINT_NORMAL, _T("flipy %d\n"),flipy);
-		//bprintf (PRINT_NORMAL, _T("flipx %d\n"),flipx);
+		INT32 code = DrvSprRAM[offs + 1] & (0x3f | (futspy_sprite * 0x40));
+
+		INT32 color = (DrvSprRAM[offs + 2] & 0x1f) + (*congo_color_bank << 5);
+		INT32 sx = find_minimum_x(DrvSprRAM[offs + 3]);
 
 		sx = (240 - sx) - 16;
 		if (sx < -15) sx += 256;
@@ -1509,15 +1322,12 @@ static void draw_sprites(UINT16 flipxmask, UINT16 flipymask)
 
 		if (flipy) {
 			if (flipx) {
-				// future spy
-				//bprintf (PRINT_NORMAL, _T("flipxy\n"));
 				Render32x32Tile_Mask_Clip(pTransDraw, code, sx,       sy,       color, 3, 0, 0, DrvGfxROM2);
 				Render32x32Tile_Mask_Clip(pTransDraw, code, sx - 256, sy,       color, 3, 0, 0, DrvGfxROM2);
 				Render32x32Tile_Mask_Clip(pTransDraw, code, sx,       sy - 256, color, 3, 0, 0, DrvGfxROM2);
 				Render32x32Tile_Mask_Clip(pTransDraw, code, sx - 256, sy - 256, color, 3, 0, 0, DrvGfxROM2);
 
 			} else {
-				//bprintf (PRINT_NORMAL, _T("flipy\n"));
 				Render32x32Tile_Mask_FlipX_Clip(pTransDraw, code, sx,       sy,       color, 3, 0, 0, DrvGfxROM2);
 				Render32x32Tile_Mask_FlipX_Clip(pTransDraw, code, sx - 256, sy,       color, 3, 0, 0, DrvGfxROM2);
 				Render32x32Tile_Mask_FlipX_Clip(pTransDraw, code, sx,       sy - 256, color, 3, 0, 0, DrvGfxROM2);
@@ -1525,11 +1335,8 @@ static void draw_sprites(UINT16 flipxmask, UINT16 flipymask)
 			}
 		} else {
 			if (flipx) {
-				//bprintf (PRINT_NORMAL, _T("flipx\n"));
 				Render32x32Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM2);
 			} else {
-				//bprintf (PRINT_NORMAL, _T("noflip\n"));
-				// zaxxon & szaxxon
 				if (sx > 31 && sx < (nScreenWidth - 31) && sy > 31 && sy < (nScreenHeight-31)) {
 					Render32x32Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM2);
 				} else {
@@ -1544,34 +1351,30 @@ static void draw_sprites(UINT16 flipxmask, UINT16 flipymask)
 }
 
 
-static int DrvDraw()
+static INT32 DrvDraw()
 {
-	/*if (DrvRecalc) {
-		for (int i = 0; i < 0x200; i++) {
-			int rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
-		}
-	}*/
+	if (~nBurnLayer & 1) BurnTransferClear();
 
 	if (hardware_type == 1) {
-		draw_background(0);
+		if (nBurnLayer & 1) draw_background(0);
 	} else {
-		draw_background(1);
+		if (nBurnLayer & 1) draw_background(1);
 	}
 
-	int flipx_mask = 0x140;
+	INT32 flipx_mask = 0x140;
 	if (futspy_sprite) flipx_mask += 0x040;
 	if (hardware_type == 2) flipx_mask += 0x100;
 
-	draw_sprites(flipx_mask, 0x180);
+	if (nBurnLayer & 2) draw_sprites(flipx_mask, 0x180);
 
-	draw_fg_layer(hardware_type);
+	if (nBurnLayer & 4) draw_fg_layer(hardware_type);
 
 	BurnTransferCopy(DrvPalette);
+
 	return 0;
 }
 
-static int DrvFrame()
+static INT32 DrvFrame()
 {
 	if (DrvReset) {
 		DrvDoReset();
@@ -1593,33 +1396,10 @@ static int DrvFrame()
 		// DrvInputs[2] ^= (DrvJoy4[0] & 1) << 7;   //  credits
 	}
 
-	INT32 nInterleave = 1;
-	INT32 nCyclesDone, nCyclesTotal;
-
-	nCyclesDone = 0;
-	nCyclesTotal = 3041250 / 60;
-
 	ZetOpen(0);
-
-	for (INT32 i = 0; i < nInterleave; i++)	{
-		INT32 nCyclesSegment = (nCyclesTotal - nCyclesDone) / (nInterleave - i);
-
-		nCyclesDone = ZetRun(nCyclesSegment);
-		//	nCyclesDone = ZetRun(nCyclesTotal);
-		if (*interrupt_enable) ZetRaiseIrq(0);
-	}
-
+	ZetRun(3041250 / 60);
+	if (*interrupt_enable) ZetRaiseIrq(0);
 	ZetClose();
-
-	if (hardware_type == 2) {
-		ZetOpen(1);
-		ZetRun(4000000 / 60);
-		if (*interrupt_enable) ZetRaiseIrq(0);
-		ZetClose();
-	}
-//	SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
-//	SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
-
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -1632,8 +1412,7 @@ static int DrvFrame()
 	return 0;
 }
 
-
-static int CongoFrame()
+static INT32 CongoFrame()
 {
 	if (DrvReset) {
 		DrvDoReset();
@@ -1667,10 +1446,9 @@ static int CongoFrame()
 		ZetOpen(1);
 		nCyclesSegment = nCyclesTotal[1] / nInterleave;
 		nCyclesDone[1] += ZetRun(nCyclesSegment);
-		if (i%7==0) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if ((i%7)==0) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
 		ZetClose();
 
-		// Render Sound Segment
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -1679,7 +1457,7 @@ static int CongoFrame()
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
-	// Make sure the buffer is entirely filled.
+
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -1722,9 +1500,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		}
 	}
 
-	if (nAction & ACB_WRITE) {
-	}
-
 	return 0;
 }
 
@@ -1765,31 +1540,32 @@ static struct BurnSampleInfo congoSampleDesc[] = {
 STD_SAMPLE_PICK(congo)
 STD_SAMPLE_FN(congo)
 
+
 // Zaxxon (set 1)
 
 static struct BurnRomInfo zaxxonRomDesc[] = {
-	{ "zaxxon3.u27",	0x2000, 0x6e2b4a30, 1 }, //  0 main
-	{ "zaxxon2.u28",	0x2000, 0x1c9ea398, 1 }, //  1
-	{ "zaxxon1.u29",	0x1000, 0x1c123ef9, 1 }, //  2
+	{ "zaxxon3.u27",	0x2000, 0x6e2b4a30, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "zaxxon2.u28",	0x2000, 0x1c9ea398, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "zaxxon1.u29",	0x1000, 0x1c123ef9, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "zaxxon14.u68",	0x0800, 0x07bf8c52, 2 }, //  3 gfx1
-	{ "zaxxon15.u69",	0x0800, 0xc215edcb, 2 }, //  4
+	{ "zaxxon14.u68",	0x0800, 0x07bf8c52, 2 | BRF_GRA },           //  3 Characters
+	{ "zaxxon15.u69",	0x0800, 0xc215edcb, 2 | BRF_GRA },           //  4
 
-	{ "zaxxon6.u113",	0x2000, 0x6e07bb68, 3 }, //  5 gfx2
-	{ "zaxxon5.u112",	0x2000, 0x0a5bce6a, 3 }, //  6
-	{ "zaxxon4.u111",	0x2000, 0xa5bf1465, 3 }, //  7
+	{ "zaxxon6.u113",	0x2000, 0x6e07bb68, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "zaxxon5.u112",	0x2000, 0x0a5bce6a, 3 | BRF_GRA },           //  6
+	{ "zaxxon4.u111",	0x2000, 0xa5bf1465, 3 | BRF_GRA },           //  7
 
-	{ "zaxxon11.u77",	0x2000, 0xeaf0dd4b, 4 }, //  8 gfx3
-	{ "zaxxon12.u78",	0x2000, 0x1c5369c7, 4 }, //  9
-	{ "zaxxon13.u79",	0x2000, 0xab4e8a9a, 4 }, // 10
+	{ "zaxxon11.u77",	0x2000, 0xeaf0dd4b, 4 | BRF_GRA },           //  8 Sprites
+	{ "zaxxon12.u78",	0x2000, 0x1c5369c7, 4 | BRF_GRA },           //  9
+	{ "zaxxon13.u79",	0x2000, 0xab4e8a9a, 4 | BRF_GRA },           // 10
 
-	{ "zaxxon8.u91",	0x2000, 0x28d65063, 5 }, // 11 gfx4
-	{ "zaxxon7.u90",	0x2000, 0x6284c200, 5 }, // 12
-	{ "zaxxon10.u93",	0x2000, 0xa95e61fd, 5 }, // 13
-	{ "zaxxon9.u92",	0x2000, 0x7e42691f, 5 }, // 14
+	{ "zaxxon8.u91",	0x2000, 0x28d65063, 5 | BRF_GRA },           // 11 Tilemaps
+	{ "zaxxon7.u90",	0x2000, 0x6284c200, 5 | BRF_GRA },           // 12
+	{ "zaxxon10.u93",	0x2000, 0xa95e61fd, 5 | BRF_GRA },           // 13
+	{ "zaxxon9.u92",	0x2000, 0x7e42691f, 5 | BRF_GRA },           // 14
 
-	{ "zaxxon.u98",		0x0100, 0x6cc6695b, 6 }, // 15 proms
-	{ "zaxxon.u72",		0x0100, 0xdeaa21f7, 6 }, // 16
+	{ "zaxxon.u98",		0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
+	{ "zaxxon.u72",		0x0100, 0xdeaa21f7, 6 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(zaxxon)
@@ -1797,11 +1573,11 @@ STD_ROM_FN(zaxxon)
 
 struct BurnDriver BurnDrvZaxxon = {
 	"zaxxon", "zaxxon", NULL, "zaxxon", "1982",
-	"Zaxxon (set 1)\0", NULL, "Sega", "hardware",
+	"Zaxxon (set 1)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, zaxxonRomInfo, zaxxonRomName, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, ZaxxonDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
 
@@ -1809,28 +1585,28 @@ struct BurnDriver BurnDrvZaxxon = {
 // Zaxxon (set 2)
 
 static struct BurnRomInfo zaxxon2RomDesc[] = {
-	{ "zaxxon3a.u27",	0x2000, 0xb18e428a, 1 }, //  0 main
-	{ "zaxxon2.u28",	0x2000, 0x1c9ea398, 1 }, //  1
-	{ "zaxxon1a.u29",	0x1000, 0x1977d933, 1 }, //  2
+	{ "zaxxon3a.u27",	0x2000, 0xb18e428a, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "zaxxon2.u28",	0x2000, 0x1c9ea398, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "zaxxon1a.u29",	0x1000, 0x1977d933, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "zaxxon14.u68",	0x0800, 0x07bf8c52, 2 }, //  3 gfx1
-	{ "zaxxon15.u69",	0x0800, 0xc215edcb, 2 }, //  4
+	{ "zaxxon14.u68",	0x0800, 0x07bf8c52, 2 | BRF_GRA },           //  3 Characters
+	{ "zaxxon15.u69",	0x0800, 0xc215edcb, 2 | BRF_GRA },           //  4
 
-	{ "zaxxon6.u113",	0x2000, 0x6e07bb68, 3 }, //  5 gfx2
-	{ "zaxxon5.u112",	0x2000, 0x0a5bce6a, 3 }, //  6
-	{ "zaxxon4.u111",	0x2000, 0xa5bf1465, 3 }, //  7
+	{ "zaxxon6.u113",	0x2000, 0x6e07bb68, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "zaxxon5.u112",	0x2000, 0x0a5bce6a, 3 | BRF_GRA },           //  6
+	{ "zaxxon4.u111",	0x2000, 0xa5bf1465, 3 | BRF_GRA },           //  7
 
-	{ "zaxxon11.u77",	0x2000, 0xeaf0dd4b, 4 }, //  8 gfx3
-	{ "zaxxon12.u78",	0x2000, 0x1c5369c7, 4 }, //  9
-	{ "zaxxon13.u79",	0x2000, 0xab4e8a9a, 4 }, // 10
+	{ "zaxxon11.u77",	0x2000, 0xeaf0dd4b, 4 | BRF_GRA },           //  8 Sprites
+	{ "zaxxon12.u78",	0x2000, 0x1c5369c7, 4 | BRF_GRA },           //  9
+	{ "zaxxon13.u79",	0x2000, 0xab4e8a9a, 4 | BRF_GRA },           // 10
 
-	{ "zaxxon8.u91",	0x2000, 0x28d65063, 5 }, // 11 gfx4
-	{ "zaxxon7.u90",	0x2000, 0x6284c200, 5 }, // 12
-	{ "zaxxon10.u93",	0x2000, 0xa95e61fd, 5 }, // 13
-	{ "zaxxon9.u92",	0x2000, 0x7e42691f, 5 }, // 14
+	{ "zaxxon8.u91",	0x2000, 0x28d65063, 5 | BRF_GRA },           // 11 Tilemaps
+	{ "zaxxon7.u90",	0x2000, 0x6284c200, 5 | BRF_GRA },           // 12
+	{ "zaxxon10.u93",	0x2000, 0xa95e61fd, 5 | BRF_GRA },           // 13
+	{ "zaxxon9.u92",	0x2000, 0x7e42691f, 5 | BRF_GRA },           // 14
 
-	{ "zaxxon.u98",		0x0100, 0x6cc6695b, 6 }, // 15 proms
-	{ "j214a2.72",		0x0100, 0xa9e1fb43, 6 }, // 16
+	{ "zaxxon.u98",		0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
+	{ "j214a2.72",		0x0100, 0xa9e1fb43, 6 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(zaxxon2)
@@ -1838,45 +1614,87 @@ STD_ROM_FN(zaxxon2)
 
 struct BurnDriver BurnDrvZaxxon2 = {
 	"zaxxon2", "zaxxon", NULL, "zaxxon", "1982",
-	"Zaxxon (set 2)\0", NULL, "Sega", "hardware",
+	"Zaxxon (set 2)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, zaxxon2RomInfo, zaxxon2RomName, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, ZaxxonDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
 
-// Jackson
 
-static struct BurnRomInfo zaxxonbRomDesc[] = {
-	{ "zaxxonb3.u27",	0x2000, 0x125bca1c, 1 }, //  0 main
-	{ "zaxxonb2.u28",	0x2000, 0xc088df92, 1 }, //  1
-	{ "zaxxonb1.u29",	0x1000, 0xe7bdc417, 1 }, //  2
+// Zaxxon (set 3)
 
-	{ "zaxxon14.u68",	0x0800, 0x07bf8c52, 2 }, //  3 gfx1
-	{ "zaxxon15.u69",	0x0800, 0xc215edcb, 2 }, //  4
+static struct BurnRomInfo zaxxon3RomDesc[] = {
+	{ "zaxxon3_alt.u27",	0x2000, 0x2f2f2b7c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "zaxxon2_alt.u28",	0x2000, 0xae7e1c38, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "zaxxon1_alt.u29",	0x1000, 0xcc67c097, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "zaxxon6.u113",	0x2000, 0x6e07bb68, 3 }, //  5 gfx2
-	{ "zaxxon5.u112",	0x2000, 0x0a5bce6a, 3 }, //  6
-	{ "zaxxon4.u111",	0x2000, 0xa5bf1465, 3 }, //  7
+	{ "zaxxon14.u68",	0x0800, 0x07bf8c52, 2 | BRF_GRA },           //  3 Characters
+	{ "zaxxon15.u69",	0x0800, 0xc215edcb, 2 | BRF_GRA },           //  4
 
-	{ "zaxxon11.u77",	0x2000, 0xeaf0dd4b, 4 }, //  8 gfx3
-	{ "zaxxon12.u78",	0x2000, 0x1c5369c7, 4 }, //  9
-	{ "zaxxon13.u79",	0x2000, 0xab4e8a9a, 4 }, // 10
+	{ "zaxxon6.u113",	0x2000, 0x6e07bb68, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "zaxxon5.u112",	0x2000, 0x0a5bce6a, 3 | BRF_GRA },           //  6
+	{ "zaxxon4.u111",	0x2000, 0xa5bf1465, 3 | BRF_GRA },           //  7
 
-	{ "zaxxon8.u91",	0x2000, 0x28d65063, 5 }, // 11 gfx4
-	{ "zaxxon7.u90",	0x2000, 0x6284c200, 5 }, // 12
-	{ "zaxxon10.u93",	0x2000, 0xa95e61fd, 5 }, // 13
-	{ "zaxxon9.u92",	0x2000, 0x7e42691f, 5 }, // 14
+	{ "zaxxon11.u77",	0x2000, 0xeaf0dd4b, 4 | BRF_GRA },           //  8 Sprites
+	{ "zaxxon12.u78",	0x2000, 0x1c5369c7, 4 | BRF_GRA },           //  9
+	{ "zaxxon13.u79",	0x2000, 0xab4e8a9a, 4 | BRF_GRA },           // 10
 
-	{ "zaxxon.u98",		0x0100, 0x6cc6695b, 6 }, // 15 proms
-	{ "zaxxon.u72",		0x0100, 0xdeaa21f7, 6 }, // 16
+	{ "zaxxon8.u91",	0x2000, 0x28d65063, 5 | BRF_GRA },           // 11 Tilemaps
+	{ "zaxxon7.u90",	0x2000, 0x6284c200, 5 | BRF_GRA },           // 12
+	{ "zaxxon10.u93",	0x2000, 0xa95e61fd, 5 | BRF_GRA },           // 13
+	{ "zaxxon9.u92",	0x2000, 0x7e42691f, 5 | BRF_GRA },           // 14
+
+	{ "zaxxon.u98",		0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
+	{ "j214a2.72",		0x0100, 0xa9e1fb43, 6 | BRF_GRA },           // 16
 };
 
-STD_ROM_PICK(zaxxonb)
-STD_ROM_FN(zaxxonb)
+STD_ROM_PICK(zaxxon3)
+STD_ROM_FN(zaxxon3)
 
-static void zaxxonb_decode()
+struct BurnDriver BurnDrvZaxxon3 = {
+	"zaxxon3", "zaxxon", NULL, "zaxxon", "1982",
+	"Zaxxon (set 3)\0", NULL, "Sega", "Zaxxon",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, zaxxon3RomInfo, zaxxon3RomName, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, ZaxxonDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+
+// Zaxxon (Japan)
+
+static struct BurnRomInfo zaxxonjRomDesc[] = {
+	{ "zaxxon_rom3.u13",	0x2000, 0x925168c7, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "zaxxon_rom2.u12",	0x2000, 0xc088df92, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "zaxxon_rom1.u11",	0x1000, 0xf832dd79, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "zaxxon_rom14.u54",	0x0800, 0x07bf8c52, 2 | BRF_GRA },           //  3 Characters
+	{ "zaxxon_rom15.u55",	0x0800, 0xc215edcb, 2 | BRF_GRA },           //  4
+
+	{ "zaxxon_rom6.u70",	0x2000, 0x6e07bb68, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "zaxxon_rom5.u69",	0x2000, 0x0a5bce6a, 3 | BRF_GRA },           //  6
+	{ "zaxxon_rom4.u68",	0x2000, 0xa5bf1465, 3 | BRF_GRA },           //  7
+
+	{ "zaxxon_rom11.u59",	0x2000, 0xeaf0dd4b, 4 | BRF_GRA },           //  8 Sprites
+	{ "zaxxon_rom12.u60",	0x2000, 0x1c5369c7, 4 | BRF_GRA },           //  9
+	{ "zaxxon_rom13.u61",	0x2000, 0xab4e8a9a, 4 | BRF_GRA },           // 10
+
+	{ "zaxxon_rom8.u58",	0x2000, 0x28d65063, 5 | BRF_GRA },           // 11 Tilemaps
+	{ "zaxxon_rom7.u57",	0x2000, 0x6284c200, 5 | BRF_GRA },           // 12
+	{ "zaxxon_rom10.u60",	0x2000, 0xa95e61fd, 5 | BRF_GRA },           // 13
+	{ "zaxxon_rom9.u59",	0x2000, 0x7e42691f, 5 | BRF_GRA },           // 14
+
+	{ "mro_16.u76",		0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
+	{ "mro_17.u41",		0x0100, 0xa9e1fb43, 6 | BRF_GRA },           // 16
+};
+
+STD_ROM_PICK(zaxxonj)
+STD_ROM_FN(zaxxonj)
+
+static void zaxxonj_decode()
 {
 	static const UINT8 data_xortable[2][8] =
 	{
@@ -1896,9 +1714,9 @@ static void zaxxonb_decode()
 		{ 0x02,0x08,0x2a,0x20,0x20,0x2a,0x08,0x02 } 	/* .......1...1...1 */
 	};
 
-	int A;
+	INT32 A;
 	UINT8 *rom = DrvZ80ROM;
-	int size = 0x6000;
+	INT32 size = 0x6000;
 	UINT8 *decrypt = DrvZ80DecROM;
 
 	ZetOpen(0);
@@ -1907,7 +1725,7 @@ static void zaxxonb_decode()
 
 	for (A = 0x0000; A < size; A++)
 	{
-		int i,j;
+		INT32 i,j;
 		UINT8 src;
 
 		src = rom[A];
@@ -1930,54 +1748,94 @@ static void zaxxonb_decode()
 	}
 }
 
-static int ZaxxonbInit()
+static INT32 ZaxxonjInit()
 {
-	int nRet;
-
-	nRet = DrvInit();
+	INT32 nRet = DrvInit();
 
 	if (nRet == 0) {
-		zaxxonb_decode();
+		zaxxonj_decode();
 	}
 
 	return nRet;
 }
 
-struct BurnDriver BurnDrvZaxxonb = {
-	"zaxxonb", "zaxxon", NULL, "zaxxon", "1982",
-	"Jackson\0", NULL, "bootleg", "hardware",
+struct BurnDriver BurnDrvZaxxonj = {
+	"zaxxonj", "zaxxon", NULL, "zaxxon", "1982",
+	"Zaxxon (Japan)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, zaxxonbRomInfo, zaxxonbRomName, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, ZaxxonDIPInfo,
-	ZaxxonbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, zaxxonjRomInfo, zaxxonjRomName, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, ZaxxonDIPInfo,
+	ZaxxonjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
+
+
+// Jackson
+
+static struct BurnRomInfo zaxxonbRomDesc[] = {
+	{ "zaxxonb3.u27",	0x2000, 0x125bca1c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "zaxxonb2.u28",	0x2000, 0xc088df92, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "zaxxonb1.u29",	0x1000, 0xe7bdc417, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "zaxxon14.u68",	0x0800, 0x07bf8c52, 2 | BRF_GRA },           //  3 Characters
+	{ "zaxxon15.u69",	0x0800, 0xc215edcb, 2 | BRF_GRA },           //  4
+
+	{ "zaxxon6.u113",	0x2000, 0x6e07bb68, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "zaxxon5.u112",	0x2000, 0x0a5bce6a, 3 | BRF_GRA },           //  6
+	{ "zaxxon4.u111",	0x2000, 0xa5bf1465, 3 | BRF_GRA },           //  7
+
+	{ "zaxxon11.u77",	0x2000, 0xeaf0dd4b, 4 | BRF_GRA },           //  8 Sprites
+	{ "zaxxon12.u78",	0x2000, 0x1c5369c7, 4 | BRF_GRA },           //  9
+	{ "zaxxon13.u79",	0x2000, 0xab4e8a9a, 4 | BRF_GRA },           // 10
+
+	{ "zaxxon8.u91",	0x2000, 0x28d65063, 5 | BRF_GRA },           // 11 Tilemaps
+	{ "zaxxon7.u90",	0x2000, 0x6284c200, 5 | BRF_GRA },           // 12
+	{ "zaxxon10.u93",	0x2000, 0xa95e61fd, 5 | BRF_GRA },           // 13
+	{ "zaxxon9.u92",	0x2000, 0x7e42691f, 5 | BRF_GRA },           // 14
+
+	{ "zaxxon.u98",		0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
+	{ "zaxxon.u72",		0x0100, 0xdeaa21f7, 6 | BRF_GRA },           // 16
+};
+
+STD_ROM_PICK(zaxxonb)
+STD_ROM_FN(zaxxonb)
+
+struct BurnDriver BurnDrvZaxxonb = {
+	"zaxxonb", "zaxxon", NULL, "zaxxon", "1982",
+	"Jackson\0", NULL, "bootleg", "Zaxxon",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, zaxxonbRomInfo, zaxxonbRomName, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, ZaxxonDIPInfo,
+	ZaxxonjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
 
 // Super Zaxxon
 
 static struct BurnRomInfo szaxxonRomDesc[] = {
-	{ "suzaxxon.3",	0x2000, 0xaf7221da, 1 }, //  0 main
-	{ "suzaxxon.2",	0x2000, 0x1b90fb2a, 1 }, //  1
-	{ "suzaxxon.1",	0x1000, 0x07258b4a, 1 }, //  2
+	{ "suzaxxon.3",		0x2000, 0xaf7221da, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "suzaxxon.2",		0x2000, 0x1b90fb2a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "suzaxxon.1",		0x1000, 0x07258b4a, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "suzaxxon.14",	0x0800, 0xbccf560c, 2 }, //  3 gfx1
-	{ "suzaxxon.15",	0x0800, 0xd28c628b, 2 }, //  4
+	{ "suzaxxon.14",	0x0800, 0xbccf560c, 2 | BRF_GRA },           //  3 Characters
+	{ "suzaxxon.15",	0x0800, 0xd28c628b, 2 | BRF_GRA },           //  4
 
-	{ "suzaxxon.6",	0x2000, 0xf51af375, 3 }, //  5 gfx2
-	{ "suzaxxon.5",	0x2000, 0xa7de021d, 3 }, //  6
-	{ "suzaxxon.4",	0x2000, 0x5bfb3b04, 3 }, //  7
+	{ "suzaxxon.6",		0x2000, 0xf51af375, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "suzaxxon.5",		0x2000, 0xa7de021d, 3 | BRF_GRA },           //  6
+	{ "suzaxxon.4",		0x2000, 0x5bfb3b04, 3 | BRF_GRA },           //  7
 
-	{ "suzaxxon.11",	0x2000, 0x1503ae41, 4 }, //  8 gfx3
-	{ "suzaxxon.12",	0x2000, 0x3b53d83f, 4 }, //  9
-	{ "suzaxxon.13",	0x2000, 0x581e8793, 4 }, // 10
+	{ "suzaxxon.11",	0x2000, 0x1503ae41, 4 | BRF_GRA },           //  8 Sprites
+	{ "suzaxxon.12",	0x2000, 0x3b53d83f, 4 | BRF_GRA },           //  9
+	{ "suzaxxon.13",	0x2000, 0x581e8793, 4 | BRF_GRA },           // 10
 
-	{ "suzaxxon.8",	0x2000, 0xdd1b52df, 5 }, // 11 gfx4
-	{ "suzaxxon.7",	0x2000, 0xb5bc07f0, 5 }, // 12
-	{ "suzaxxon.10",	0x2000, 0x68e84174, 5 }, // 13
-	{ "suzaxxon.9",	0x2000, 0xa509994b, 5 }, // 14
+	{ "suzaxxon.8",		0x2000, 0xdd1b52df, 5 | BRF_GRA },           // 11 Tilemaps
+	{ "suzaxxon.7",		0x2000, 0xb5bc07f0, 5 | BRF_GRA },           // 12
+	{ "suzaxxon.10",	0x2000, 0x68e84174, 5 | BRF_GRA },           // 13
+	{ "suzaxxon.9",		0x2000, 0xa509994b, 5 | BRF_GRA },           // 14
 
-	{ "suzaxxon.u98",	0x0100, 0x15727a9f, 6 }, // 15 proms
-	{ "suzaxxon.u72",	0x0100, 0xdeaa21f7, 6 }, // 16
+	{ "suzaxxon.u98",	0x0100, 0x15727a9f, 6 | BRF_GRA },           // 15 Color Proms
+	{ "suzaxxon.u72",	0x0100, 0xdeaa21f7, 6 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(szaxxon)
@@ -1985,11 +1843,13 @@ STD_ROM_FN(szaxxon)
 
 static void sega_decode(const UINT8 convtable[32][4])
 {
-	int A;
-	int length = 0x6000;
-	int cryptlen = length;
+	INT32 A;
+	INT32 length = 0x6000;
+	INT32 cryptlen = length;
 	UINT8 *rom = DrvZ80ROM;
 	UINT8 *decrypted = DrvZ80DecROM;
+
+	memcpy (DrvZ80DecROM, DrvZ80ROM, 0x6000);
 
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x5fff, 2, DrvZ80DecROM, DrvZ80ROM);
@@ -1997,12 +1857,12 @@ static void sega_decode(const UINT8 convtable[32][4])
 
 	for (A = 0x0000;A < cryptlen;A++)
 	{
-		int xorval = 0;
+		INT32 xorval = 0;
 		UINT8 src = rom[A];
 		/* pick the translation table from bits 0, 4, 8 and 12 of the address */
-		int row = (A & 1) + (((A >> 4) & 1) << 1) + (((A >> 8) & 1) << 2) + (((A >> 12) & 1) << 3);
+		INT32 row = (A & 1) + (((A >> 4) & 1) << 1) + (((A >> 8) & 1) << 2) + (((A >> 12) & 1) << 3);
 		/* pick the offset in the table from bits 3 and 5 of the source data */
-		int col = ((src >> 3) & 1) + (((src >> 5) & 1) << 1);
+		INT32 col = ((src >> 3) & 1) + (((src >> 5) & 1) << 1);
 		/* the bottom half of the translation table is the mirror image of the top */
 		if (src & 0x80)
 		{
@@ -2021,18 +1881,9 @@ static void sega_decode(const UINT8 convtable[32][4])
 		if (convtable[2*row+1][col] == 0xff)	/* table incomplete! (for development) */
 			rom[A] = 0xee;
 	}
-#if 0
-	/* this is a kludge to catch anyone who has code that crosses the encrypted/ */
-	/* decrypted boundary. ssanchan does it */
-	if (length > 0x8000)
-	{
-		int bytes = MIN(length - 0x8000, 0x4000);
-		memcpy(&decrypted[0x8000], &rom[0x8000], bytes);
-	}
-#endif
 }
 
-void szaxxon_decode()
+static void szaxxon_decode()
 {
 	static const UINT8 convtable[32][4] =
 	{
@@ -2059,10 +1910,9 @@ void szaxxon_decode()
 	sega_decode(convtable);
 }
 
-static int sZaxxonInit()
+static INT32 sZaxxonInit()
 {
-	int nRet;
-	nRet = DrvInit();
+	INT32 nRet = DrvInit();
 
 	if (nRet == 0) {
 		szaxxon_decode();
@@ -2073,45 +1923,46 @@ static int sZaxxonInit()
 
 struct BurnDriver BurnDrvSzaxxon = {
 	"szaxxon", NULL, NULL, "zaxxon", "1982",
-	"Super Zaxxon\0", NULL, "Sega", "hardware",
+	"Super Zaxxon\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, szaxxonRomInfo, szaxxonRomName, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, SzaxxonDIPInfo,
-	sZaxxonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	sZaxxonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
+
 
 // Future Spy
 
 static struct BurnRomInfo futspyRomDesc[] = {
-	{ "fs_snd.u27",		0x2000, 0x7578fe7f, 1 }, //  0 main
-	{ "fs_snd.u28",		0x2000, 0x8ade203c, 1 }, //  1
-	{ "fs_snd.u29",		0x1000, 0x734299c3, 1 }, //  2
+	{ "fs_snd.u27",		0x2000, 0x7578fe7f, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "fs_snd.u28",		0x2000, 0x8ade203c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "fs_snd.u29",		0x1000, 0x734299c3, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "fs_snd.u68",		0x0800, 0x305fae2d, 2 }, //  3 gfx1
-	{ "fs_snd.u69",		0x0800, 0x3c5658c0, 2 }, //  4
+	{ "fs_snd.u68",		0x0800, 0x305fae2d, 2 | BRF_GRA },           //  3 Characters
+	{ "fs_snd.u69",		0x0800, 0x3c5658c0, 2 | BRF_GRA },           //  4
 
-	{ "fs_vid.u113",	0x2000, 0x36d2bdf6, 3 }, //  5 gfx2
-	{ "fs_vid.u112",	0x2000, 0x3740946a, 3 }, //  6
-	{ "fs_vid.u111",	0x2000, 0x4cd4df98, 3 }, //  7
+	{ "fs_vid.u113",	0x2000, 0x36d2bdf6, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "fs_vid.u112",	0x2000, 0x3740946a, 3 | BRF_GRA },           //  6
+	{ "fs_vid.u111",	0x2000, 0x4cd4df98, 3 | BRF_GRA },           //  7
 
-	{ "fs_vid.u77",		0x4000, 0x1b93c9ec, 4 }, //  8 gfx3
-	{ "fs_vid.u78",		0x4000, 0x50e55262, 4 }, //  9
-	{ "fs_vid.u79",		0x4000, 0xbfb02e3e, 4 }, // 10
+	{ "fs_vid.u77",		0x4000, 0x1b93c9ec, 4 | BRF_GRA },           //  8 Sprites
+	{ "fs_vid.u78",		0x4000, 0x50e55262, 4 | BRF_GRA },           //  9
+	{ "fs_vid.u79",		0x4000, 0xbfb02e3e, 4 | BRF_GRA },           // 10
 
-	{ "fs_vid.u91",		0x2000, 0x86da01f4, 5 }, // 11 gfx4
-	{ "fs_vid.u90",		0x2000, 0x2bd41d2d, 5 }, // 12
-	{ "fs_vid.u93",		0x2000, 0xb82b4997, 5 }, // 13
-	{ "fs_vid.u92",		0x2000, 0xaf4015af, 5 }, // 14
+	{ "fs_vid.u91",		0x2000, 0x86da01f4, 5 | BRF_GRA },           // 11 Tilemaps
+	{ "fs_vid.u90",		0x2000, 0x2bd41d2d, 5 | BRF_GRA },           // 12
+	{ "fs_vid.u93",		0x2000, 0xb82b4997, 5 | BRF_GRA },           // 13
+	{ "fs_vid.u92",		0x2000, 0xaf4015af, 5 | BRF_GRA },           // 14
 
-	{ "futrprom.u98",	0x0100, 0x9ba2acaa, 6 }, // 15 proms
-	{ "futrprom.u72",	0x0100, 0xf9e26790, 6 }, // 16
+	{ "futrprom.u98",	0x0100, 0x9ba2acaa, 6 | BRF_GRA },           // 15 Color Proms
+	{ "futrprom.u72",	0x0100, 0xf9e26790, 6 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(futspy)
 STD_ROM_FN(futspy)
 
-void futspy_decode()
+static void futspy_decode()
 {
 	static const UINT8 convtable[32][4] =
 	{
@@ -2135,18 +1986,15 @@ void futspy_decode()
 		{ 0x20,0x28,0xa0,0xa8 }, { 0xa0,0x80,0x20,0x00 }	/* ...1...1...1...1 */
 	};
 
-
 	sega_decode(convtable);
 }
 
-
-static int futspyInit()
+static INT32 futspyInit()
 {
-	int nRet;
-
 	futspy_sprite = 1;
 	no_flip = 1;
-	nRet = DrvInit();
+
+	INT32 nRet = DrvInit();
 
 	if (nRet == 0) {
 		futspy_decode();
@@ -2157,48 +2005,49 @@ static int futspyInit()
 
 struct BurnDriver BurnDrvFutspy = {
 	"futspy", NULL, NULL, "zaxxon", "1984",
-	"Future Spy\0", NULL, "Sega", "hardware",
+	"Future Spy\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	0 | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, futspyRomInfo, futspyRomName, zaxxonSampleInfo, zaxxonSampleName, FutspyInputInfo, FutspyDIPInfo, //FutspyInputInfo, FutspyDIPInfo,
-	futspyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, futspyRomInfo, futspyRomName, zaxxonSampleInfo, zaxxonSampleName, FutspyInputInfo, FutspyDIPInfo,
+	futspyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
+
 
 // Razzmatazz
 
 static struct BurnRomInfo razmatazRomDesc[] = {
-	{ "u27",	0x2000, 0x254f350f, 1 }, //  0 main
-	{ "u28",	0x2000, 0x3a1eaa99, 1 }, //  1
-	{ "u29",	0x2000, 0x0ee67e78, 1 }, //  2
+	{ "u27",		0x2000, 0x254f350f, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "u28",		0x2000, 0x3a1eaa99, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "u29",		0x2000, 0x0ee67e78, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "1921.u68",	0x0800, 0x77f8ff5a, 3 }, //  3 gfx1
-	{ "1922.u69",	0x0800, 0xcf63621e, 3 }, //  4
+	{ "1921.u68",		0x0800, 0x77f8ff5a, 2 | BRF_GRA },           //  3 Characters
+	{ "1922.u69",		0x0800, 0xcf63621e, 2 | BRF_GRA },           //  4
 
-	{ "1934.u113",	0x2000, 0x39bb679c, 4 }, //  5 gfx2
-	{ "1933.u112",	0x2000, 0x1022185e, 4 }, //  6
-	{ "1932.u111",	0x2000, 0xc7a715eb, 4 }, //  7
+	{ "1934.u113",		0x2000, 0x39bb679c, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "1933.u112",		0x2000, 0x1022185e, 3 | BRF_GRA },           //  6
+	{ "1932.u111",		0x2000, 0xc7a715eb, 3 | BRF_GRA },           //  7
 
-	{ "1925.u77",	0x2000, 0xa7965437, 5 }, //  8 gfx3
-	{ "1926.u78",	0x2000, 0x9a3af434, 5 }, //  9
-	{ "1927.u79",	0x2000, 0x0323de2b, 5 }, // 10
+	{ "1925.u77",		0x2000, 0xa7965437, 4 | BRF_GRA },           //  8 Sprites
+	{ "1926.u78",		0x2000, 0x9a3af434, 4 | BRF_GRA },           //  9
+	{ "1927.u79",		0x2000, 0x0323de2b, 4 | BRF_GRA },           // 10
 
-	{ "1929.u91",	0x2000, 0x55c7c757, 6 }, // 11 gfx4
-	{ "1928.u90",	0x2000, 0xe58b155b, 6 }, // 12
-	{ "1931.u93",	0x2000, 0x55fe0f82, 6 }, // 13
-	{ "1930.u92",	0x2000, 0xf355f105, 6 }, // 14
+	{ "1929.u91",		0x2000, 0x55c7c757, 6 | BRF_GRA },           // 11 Tilemaps
+	{ "1928.u90",		0x2000, 0xe58b155b, 6 | BRF_GRA },           // 12
+	{ "1931.u93",		0x2000, 0x55fe0f82, 6 | BRF_GRA },           // 13
+	{ "1930.u92",		0x2000, 0xf355f105, 6 | BRF_GRA },           // 14
 
-	{ "clr.u98",	0x0100, 0x0fd671af, 7 }, // 15 proms
-	{ "clr.u72",	0x0100, 0x03233bc5, 7 }, // 16
+	{ "clr.u98",		0x0100, 0x0fd671af, 5 | BRF_GRA },           // 15 Color Proms
+	{ "clr.u72",		0x0100, 0x03233bc5, 5 | BRF_GRA },           // 16
 
-	{ "1924.u51",	0x0800, 0xa75e0011, 2 }, // 17 usb
-	{ "1923.u50",	0x0800, 0x59994a51, 2 }, // 18
+	{ "1924.u51",		0x0800, 0xa75e0011, 7 | BRF_PRG | BRF_ESS }, // 17 Universal Sound Board Code
+	{ "1923.u50",		0x0800, 0x59994a51, 7 | BRF_PRG | BRF_ESS }, // 18
 };
 
 STD_ROM_PICK(razmataz)
 STD_ROM_FN(razmataz)
 
-void nprinces_decode()
+static void nprinces_decode()
 {
 	static const UINT8 convtable[32][4] =
 	{
@@ -2226,14 +2075,12 @@ void nprinces_decode()
 	sega_decode(convtable);
 }
 
-static int razmatazInit()
+static INT32 razmatazInit()
 {
-	int nRet;
-
 	hardware_type = 1;
 	no_flip = 1;
 
-	nRet = DrvInit();
+	INT32 nRet = DrvInit();
 
 	if (nRet == 0) {
 		nprinces_decode();
@@ -2244,11 +2091,11 @@ static int razmatazInit()
 
 struct BurnDriver BurnDrvRazmataz = {
 	"razmataz", NULL, NULL, NULL, "1983",
-	"Razzmatazz\0", NULL, "Sega", "hardware",
+	"Razzmatazz\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
 	0 | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, razmatazRomInfo, razmatazRomName, NULL, NULL, ZaxxonInputInfo, ZaxxonDIPInfo, //RazmatazInputInfo, RazmatazDIPInfo,
-	razmatazInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	razmatazInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
 
@@ -2256,43 +2103,41 @@ struct BurnDriver BurnDrvRazmataz = {
 // Ixion (prototype)
 
 static struct BurnRomInfo ixionRomDesc[] = {
-	{ "1937d.u27",	0x2000, 0xf447aac5, 1 }, //  0 main
-	{ "1938b.u28",	0x2000, 0x17f48640, 1 }, //  1
-	{ "1955b.u29",	0x1000, 0x78636ec6, 1 }, //  2
+	{ "1937d.u27",		0x2000, 0xf447aac5, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "1938b.u28",		0x2000, 0x17f48640, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "1955b.u29",		0x1000, 0x78636ec6, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "1939a.u68",	0x0800, 0xc717ddc7, 3 }, //  5 gfx1
-	{ "1940a.u69",	0x0800, 0xec4bb3ad, 3 }, //  6
+	{ "1939a.u68",		0x0800, 0xc717ddc7, 1 | BRF_GRA },           //  3 Characters
+	{ "1940a.u69",		0x0800, 0xec4bb3ad, 1 | BRF_GRA },           //  4
 
-	{ "1952a.u113",	0x2000, 0xffb9b03d, 4 }, //  7 gfx2
-	{ "1951a.u112",	0x2000, 0xdb743f1b, 4 }, //  8
-	{ "1950a.u111",	0x2000, 0xc2de178a, 4 }, //  9
+	{ "1952a.u113",		0x2000, 0xffb9b03d, 2 | BRF_GRA },           //  5 Background Tiles
+	{ "1951a.u112",		0x2000, 0xdb743f1b, 2 | BRF_GRA },           //  6
+	{ "1950a.u111",		0x2000, 0xc2de178a, 2 | BRF_GRA },           //  7
 
-	{ "1945a.u77",	0x2000, 0x3a3fbfe7, 5 }, // 10 gfx3
-	{ "1946a.u78",	0x2000, 0xf2cb1b53, 5 }, // 11
-	{ "1947a.u79",	0x2000, 0xd2421e92, 5 }, // 12
+	{ "1945a.u77",		0x2000, 0x3a3fbfe7, 3 | BRF_GRA },           //  8 Sprites
+	{ "1946a.u78",		0x2000, 0xf2cb1b53, 3 | BRF_GRA },           //  9
+	{ "1947a.u79",		0x2000, 0xd2421e92, 3 | BRF_GRA },           // 10
 
-	{ "1948a.u91",	0x2000, 0x7a7fcbbe, 6 }, // 13 gfx4
-	{ "1953a.u90",	0x2000, 0x6b626ea7, 6 }, // 14
-	{ "1949a.u93",	0x2000, 0xe7722d09, 6 }, // 15
-	{ "1954a.u92",	0x2000, 0xa970f5ff, 6 }, // 16
+	{ "1948a.u91",		0x2000, 0x7a7fcbbe, 4 | BRF_GRA },           // 11 Tilemaps
+	{ "1953a.u90",		0x2000, 0x6b626ea7, 4 | BRF_GRA },           // 12
+	{ "1949a.u93",		0x2000, 0xe7722d09, 4 | BRF_GRA },           // 13
+	{ "1954a.u92",		0x2000, 0xa970f5ff, 4 | BRF_GRA },           // 14
 
-	{ "1942a.u98",	0x0100, 0x3a8e6f74, 7 }, // 17 proms
-	{ "1941a.u72",	0x0100, 0xa5d0d97e, 7 }, // 18
+	{ "1942a.u98",		0x0100, 0x3a8e6f74, 5 | BRF_GRA },           // 15 proms
+	{ "1941a.u72",		0x0100, 0xa5d0d97e, 5 | BRF_GRA },           // 16
 
-	{ "1944a.u51",	0x0800, 0x88215098, 2 }, //  3 usb
-	{ "1943a.u50",	0x0800, 0x77e5a1f0, 2 }, //  4
+	{ "1944a.u51",		0x0800, 0x88215098, 7 | BRF_PRG | BRF_ESS }, // 17 Univesal Sound Board Code
+	{ "1943a.u50",		0x0800, 0x77e5a1f0, 7 | BRF_PRG | BRF_ESS }, // 18
 };
 
 STD_ROM_PICK(ixion)
 STD_ROM_FN(ixion)
 
-static int ixionInit()
+static INT32 ixionInit()
 {
-	int nRet;
-
 	hardware_type = 1;
 
-	nRet = DrvInit();
+	INT32 nRet = DrvInit();
 
 	if (nRet == 0) {
 		szaxxon_decode();
@@ -2303,125 +2148,42 @@ static int ixionInit()
 
 struct BurnDriver BurnDrvIxion = {
 	"ixion", NULL, NULL, NULL, "1983",
-	"Ixion (prototype)\0", NULL, "Sega", "hardware",
+	"Ixion (prototype)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
 	0 | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, ixionRomInfo, ixionRomName, NULL, NULL, ZaxxonInputInfo, ZaxxonDIPInfo, //RazmatazInputInfo, RazmatazDIPInfo,
-	ixionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	ixionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
-
-static int CongoInit()
-{
-	hardware_type = 2;
-	futspy_sprite = 1;
-
-	AllMem = NULL;
-	MemIndex();
-	int nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
-
-	{
-		for (int i = 0; i < 4; i++) {
-			if (BurnLoadRom(DrvZ80ROM  + i * 0x2000,  0 + i, 1)) return 1;
-		}
-
-		for (int i = 0; i < 3; i++) {
-			if (BurnLoadRom(DrvGfxROM1 + i * 0x2000,  6 + i, 1)) return 1;
-		}
-
-		for (int i = 0; i < 6; i++) {
-			if (BurnLoadRom(DrvGfxROM2 + i * 0x2000,  9 + i, 1)) return 1;
-		}
-
-		for (int i = 0; i < 2; i++) {
-			if (BurnLoadRom(DrvGfxROM3 + i * 0x2000, 15 + i, 1)) return 1;
-		}
-
-		if (BurnLoadRom(DrvZ80ROM2,  4, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0,  5, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM, 17, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x100, 17, 1)) return 1;
-
-		DrvGfxDecode();
-		DrvPaletteInit(0x200);
-		bg_layer_init();
-	}
-
-	ZetInit(0);
-	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);
-	ZetMapArea(0x8000, 0x8fff, 0, DrvZ80RAM);
-	ZetMapArea(0x8000, 0x8fff, 1, DrvZ80RAM);
-	ZetMapArea(0x8000, 0x8fff, 2, DrvZ80RAM);
-	ZetMapArea(0xa000, 0xa3ff, 0, DrvVidRAM);
-	ZetMapArea(0xa000, 0xa3ff, 1, DrvVidRAM);
-	ZetMapArea(0xa400, 0xa7ff, 0, DrvColRAM);
-	ZetMapArea(0xa400, 0xa7ff, 1, DrvColRAM);
-	ZetSetWriteHandler(congo_write);
-	ZetSetReadHandler(congo_read);
-	ZetClose();
-
-	ZetInit(1);
-	ZetOpen(1);
-	ZetMapArea(0x0000, 0x1fff, 0, DrvZ80ROM2);
-	ZetMapArea(0x0000, 0x1fff, 2, DrvZ80ROM2);
-	ZetMapArea(0x4000, 0x47ff, 0, DrvZ80RAM2);
-	ZetMapArea(0x4000, 0x47ff, 1, DrvZ80RAM2);
-	ZetMapArea(0x4000, 0x47ff, 2, DrvZ80RAM2);
-	ZetSetWriteHandler(congo_sound_write);
-	ZetSetReadHandler(congo_sound_read);
-	ZetClose();
-	GenericTilesInit();
-
-	ppi8255_init(1);
-	PPI0PortReadA = CongoPPIReadA;
-	PPI0PortWriteA = NULL;
-	PPI0PortWriteB = CongoPPIWriteB;
-	PPI0PortWriteC = CongoPPIWriteC;
-
-	BurnSampleInit(1);
-	BurnSampleSetAllRoutesAllSamples(0.10, BURN_SND_ROUTE_BOTH);
-
-    SN76496Init(0, 4000000, 0);
-	SN76496Init(1, 4000000 / 4, 1);
-
-	DrvDoReset();
-
-	return 0;
-}
 
 
 // Congo Bongo
 
 static struct BurnRomInfo congoRomDesc[] = {
-	{ "congo1.u35",		0x2000, 0x09355b5b, 1 }, //  0 main
-	{ "congo2.u34",		0x2000, 0x1c5e30ae, 1 }, //  1
-	{ "congo3.u33",		0x2000, 0x5ee1132c, 1 }, //  2
-	{ "congo4.u32",		0x2000, 0x5332b9bf, 1 }, //  3
+	{ "congo1.u35",			0x2000, 0x09355b5b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "congo2.u34",			0x2000, 0x1c5e30ae, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "congo3.u33",			0x2000, 0x5ee1132c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "congo4.u32",			0x2000, 0x5332b9bf, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "congo17.u11",	0x2000, 0x5024e673, 2 }, //  4 audio
+	{ "congo5.u76",			0x1000, 0x7bf6ba2b, 1 | BRF_GRA },           //  4 Characters
 
-	{ "congo5.u76",		0x1000, 0x7bf6ba2b, 3 }, //  5 gfx1
+	{ "congo8.u93",			0x2000, 0xdb99a619, 2 | BRF_GRA },           //  5 Background Tiles
+	{ "congo9.u94",			0x2000, 0x93e2309e, 2 | BRF_GRA },           //  6
+	{ "congo10.u95",		0x2000, 0xf27a9407, 2 | BRF_GRA },           //  7
 
-	{ "congo8.u93",		0x2000, 0xdb99a619, 4 }, //  6 gfx2
-	{ "congo9.u94",		0x2000, 0x93e2309e, 4 }, //  7
-	{ "congo10.u95",	0x2000, 0xf27a9407, 4 }, //  8
+	{ "congo12.u78",		0x2000, 0x15e3377a, 3 | BRF_GRA },           //  8 Sprites
+	{ "congo13.u79",		0x2000, 0x1d1321c8, 3 | BRF_GRA },           //  9
+	{ "congo11.u77",		0x2000, 0x73e2709f, 3 | BRF_GRA },           // 10
+	{ "congo14.u104",		0x2000, 0xbf9169fe, 3 | BRF_GRA },           // 11
+	{ "congo16.u106",		0x2000, 0xcb6d5775, 3 | BRF_GRA },           // 12
+	{ "congo15.u105",		0x2000, 0x7b15a7a4, 3 | BRF_GRA },           // 13
 
-	{ "congo12.u78",	0x2000, 0x15e3377a, 5 }, //  9 gfx3
-	{ "congo13.u79",	0x2000, 0x1d1321c8, 5 }, // 10
-	{ "congo11.u77",	0x2000, 0x73e2709f, 5 }, // 11
-	{ "congo14.u104",	0x2000, 0xbf9169fe, 5 }, // 12
-	{ "congo16.u106",	0x2000, 0xcb6d5775, 5 }, // 13
-	{ "congo15.u105",	0x2000, 0x7b15a7a4, 5 }, // 14
+	{ "congo6.u57",			0x2000, 0xd637f02b, 4 | BRF_GRA },           // 14 Tilemaps
+	{ "congo7.u58",			0x2000, 0x80927943, 4 | BRF_GRA },           // 15
 
-	{ "congo6.u57",		0x2000, 0xd637f02b, 6 }, // 15 gfx4
-	{ "congo7.u58",		0x2000, 0x80927943, 6 }, // 16
+	{ "congo.u68",			0x0100, 0xb788d8ae, 5 | BRF_GRA },           // 16 Color Proms
 
-	{ "congo.u68",		0x0100, 0xb788d8ae, 7 }, // 17 proms
+	{ "congo17.u11",		0x2000, 0x5024e673, 6 | BRF_PRG | BRF_ESS }, // 17 Sound Z80 Code
 };
 
 STD_ROM_PICK(congo)
@@ -2429,43 +2191,85 @@ STD_ROM_FN(congo)
 
 struct BurnDriver BurnDrvCongo = {
 	"congo", NULL, NULL, "congo", "1983",
-	"Congo Bongo\0", NULL, "Sega", "hardware",
+	"Congo Bongo\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, congoRomInfo, congoRomName, congoSampleInfo, congoSampleName, CongoBongoInputInfo, CongoBongoDIPInfo, //CongoInputInfo, CongoDIPInfo,
-	CongoInit, DrvExit, CongoFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, congoRomInfo, congoRomName, congoSampleInfo, congoSampleName, CongoBongoInputInfo, CongoBongoDIPInfo,
+	CongoInit, DrvExit, CongoFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
 
+
+// Congo Bongo (Rev C, 3 board stack)
+
+static struct BurnRomInfo congoaRomDesc[] = {
+	{ "congo_rev_c_rom1.u35",	0x2000, 0x09355b5b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "congo_rev_c_rom2a.u34",	0x2000, 0x1c5e30ae, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "congo_rev_c_rom3.u33",	0x2000, 0x5ee1132c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "congo_rev_c_rom4.u32",	0x2000, 0x5332b9bf, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "tip_top_rom_5.u76",		0x1000, 0x7bf6ba2b, 1 | BRF_GRA },           //  4 Characters
+
+	{ "tip_top_rom_8.u93",		0x2000, 0xdb99a619, 2 | BRF_GRA },           //  5 Background Tiles
+	{ "tip_top_rom_9.u94",		0x2000, 0x93e2309e, 2 | BRF_GRA },           //  6
+	{ "tip_top_rom_10.u95",		0x2000, 0xf27a9407, 2 | BRF_GRA },           //  7
+
+	{ "tip_top_rom_12.u78",		0x2000, 0x15e3377a, 3 | BRF_GRA },           //  8 Sprites
+	{ "tip_top_rom_13.u79",		0x2000, 0x1d1321c8, 3 | BRF_GRA },           //  9
+	{ "tip_top_rom_11.u77",		0x2000, 0x73e2709f, 3 | BRF_GRA },           // 10
+	{ "tip_top_rom_14.u104",	0x2000, 0xbf9169fe, 3 | BRF_GRA },           // 11
+	{ "tip_top_rom_16.u106",	0x2000, 0xcb6d5775, 3 | BRF_GRA },           // 12
+	{ "tip_top_rom_15.u105",	0x2000, 0x7b15a7a4, 3 | BRF_GRA },           // 13
+
+	{ "tip_top_rom_6.u57",		0x2000, 0xd637f02b, 4 | BRF_GRA },           // 14 Tilemaps
+	{ "tip_top_rom_7.u58",		0x2000, 0x80927943, 4 | BRF_GRA },           // 15
+
+	{ "mr018.u68",			0x0200, 0x56b9f1ba, 5 | BRF_GRA },           // 16 Color Proms
+
+	{ "tip_top_rom_17.u11",		0x2000, 0x5024e673, 6 | BRF_PRG | BRF_ESS }, // 17 Sound Z80 Code
+};
+
+STD_ROM_PICK(congoa)
+STD_ROM_FN(congoa)
+
+struct BurnDriver BurnDrvCongoa = {
+	"congoa", "congo", NULL, "congo", "1983",
+	"Congo Bongo (Rev C, 3 board stack)\0", NULL, "Sega", "Zaxxon",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, congoaRomInfo, congoaRomName, congoSampleInfo, congoSampleName, CongoBongoInputInfo, CongoBongoDIPInfo,
+	CongoInit, DrvExit, CongoFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
 
 
 // Tip Top
 
 static struct BurnRomInfo tiptopRomDesc[] = {
-	{ "tiptop1.u35",	0x2000, 0xe19dc77b, 1 }, //  0 main
-	{ "tiptop2.u34",	0x2000, 0x3fcd3b6e, 1 }, //  1
-	{ "tiptop3.u33",	0x2000, 0x1c94250b, 1 }, //  2
-	{ "tiptop4.u32",	0x2000, 0x577b501b, 1 }, //  3
+	{ "tiptop1.u35",	0x2000, 0xe19dc77b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "tiptop2.u34",	0x2000, 0x3fcd3b6e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tiptop3.u33",	0x2000, 0x1c94250b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "tiptop4.u32",	0x2000, 0x577b501b, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "congo17.u11",	0x2000, 0x5024e673, 2 }, //  4 audio
+	{ "congo5.u76",		0x1000, 0x7bf6ba2b, 1 | BRF_GRA },           //  4 Characters
 
-	{ "congo5.u76",		0x1000, 0x7bf6ba2b, 3 }, //  5 gfx1
+	{ "congo8.u93",		0x2000, 0xdb99a619, 2 | BRF_GRA },           //  5 Background Tiles
+	{ "congo9.u94",		0x2000, 0x93e2309e, 2 | BRF_GRA },           //  6
+	{ "congo10.u95",	0x2000, 0xf27a9407, 2 | BRF_GRA },           //  7
 
-	{ "congo8.u93",		0x2000, 0xdb99a619, 4 }, //  6 gfx2
-	{ "congo9.u94",		0x2000, 0x93e2309e, 4 }, //  7
-	{ "congo10.u95",	0x2000, 0xf27a9407, 4 }, //  8
+	{ "congo12.u78",	0x2000, 0x15e3377a, 3 | BRF_GRA },           //  8 Sprites
+	{ "congo13.u79",	0x2000, 0x1d1321c8, 3 | BRF_GRA },           //  9
+	{ "congo11.u77",	0x2000, 0x73e2709f, 3 | BRF_GRA },           // 10
+	{ "congo14.u104",	0x2000, 0xbf9169fe, 3 | BRF_GRA },           // 11
+	{ "congo16.u106",	0x2000, 0xcb6d5775, 3 | BRF_GRA },           // 12
+	{ "congo15.u105",	0x2000, 0x7b15a7a4, 3 | BRF_GRA },           // 13
 
-	{ "congo12.u78",	0x2000, 0x15e3377a, 5 }, //  9 gfx3
-	{ "congo13.u79",	0x2000, 0x1d1321c8, 5 }, // 10
-	{ "congo11.u77",	0x2000, 0x73e2709f, 5 }, // 11
-	{ "congo14.u104",	0x2000, 0xbf9169fe, 5 }, // 12
-	{ "congo16.u106",	0x2000, 0xcb6d5775, 5 }, // 13
-	{ "congo15.u105",	0x2000, 0x7b15a7a4, 5 }, // 14
+	{ "congo6.u57",		0x2000, 0xd637f02b, 4 | BRF_GRA },           // 14 Tilemaps
+	{ "congo7.u58",		0x2000, 0x80927943, 4 | BRF_GRA },           // 15
 
-	{ "congo6.u57",		0x2000, 0xd637f02b, 6 }, // 15 gfx4
-	{ "congo7.u58",		0x2000, 0x80927943, 6 }, // 16
+	{ "congo.u68",		0x0100, 0xb788d8ae, 5 | BRF_GRA },           // 16 Color Proms
 
-	{ "congo.u68",		0x0100, 0xb788d8ae, 7 }, // 17 proms
+	{ "congo17.u11",	0x2000, 0x5024e673, 6 | BRF_PRG | BRF_ESS }, // 17 Sound Z80 Code
 };
 
 STD_ROM_PICK(tiptop)
@@ -2473,10 +2277,10 @@ STD_ROM_FN(tiptop)
 
 struct BurnDriver BurnDrvTiptop = {
 	"tiptop", "congo", NULL, "congo", "1983",
-	"Tip Top\0", NULL, "Sega", "hardware",
+	"Tip Top\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, tiptopRomInfo, tiptopRomName, congoSampleInfo, congoSampleName, ZaxxonInputInfo, ZaxxonDIPInfo, //CongoInputInfo, CongoDIPInfo,
-	CongoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, tiptopRomInfo, tiptopRomName, congoSampleInfo, congoSampleName, CongoBongoInputInfo, CongoBongoDIPInfo,
+	CongoInit, DrvExit, CongoFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };

@@ -1504,7 +1504,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 
 static struct BurnSampleInfo zaxxonSampleDesc[] = {
-#if !defined (ROM_VERIFY)
 	{"03.wav",   SAMPLE_AUTOLOOP },	/* 0 - Homing Missile */
 	{"02.wav",   SAMPLE_NOLOOP },	/* 1 - Base Missile */
 	{"01.wav",   SAMPLE_AUTOLOOP },	/* 2 - Laser (force field) */
@@ -1517,7 +1516,6 @@ static struct BurnSampleInfo zaxxonSampleDesc[] = {
 	{"20.wav",   SAMPLE_NOLOOP },	/* 9 - Alarm 3 (low fuel) */
 	{"05.wav",   SAMPLE_AUTOLOOP },	/* 10 - initial background noise */
 	{"04.wav",   SAMPLE_AUTOLOOP },	/* 11 - looped asteroid noise */
-#endif
 	{ "",            0             }
 };
 
@@ -1526,13 +1524,11 @@ STD_SAMPLE_FN(zaxxon)
 
 
 static struct BurnSampleInfo congoSampleDesc[] = {
-#if !defined (ROM_VERIFY)
 		{"gorilla.wav",   SAMPLE_NOLOOP },  /* 0 */
 		{"bass.wav",   SAMPLE_NOLOOP },     /* 1 */
 		{"congal.wav",   SAMPLE_NOLOOP },   /* 2 */
 		{"congah.wav",   SAMPLE_NOLOOP },   /* 3 */
 		{"rim.wav",   SAMPLE_NOLOOP },      /* 4 */
-#endif
 		{ "",            0             }
 };
 

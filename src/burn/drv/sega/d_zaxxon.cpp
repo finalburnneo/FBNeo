@@ -1571,7 +1571,7 @@ STD_ROM_PICK(zaxxon)
 STD_ROM_FN(zaxxon)
 
 struct BurnDriver BurnDrvZaxxon = {
-	"zaxxon", "zaxxon", NULL, "zaxxon", "1982",
+	"zaxxon", NULL, NULL, "zaxxon", "1982",
 	"Zaxxon (set 1)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,

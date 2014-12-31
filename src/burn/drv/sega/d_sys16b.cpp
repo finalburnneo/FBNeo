@@ -1028,6 +1028,45 @@ static struct BurnDIPInfo ExctleagDIPList[]=
 
 STDDIPINFO(Exctleag)
 
+static struct BurnDIPInfo FantzonetaDIPList[]=
+{
+	// Default Values
+	{0x13, 0xff, 0xff, 0xff, NULL                                 },
+	{0x14, 0xff, 0xff, 0xfc, NULL                                 },
+	
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Cabinet"                            },
+	{0x14, 0x01, 0x01, 0x00, "Upright"                            },
+	{0x14, 0x01, 0x01, 0x01, "Cocktail"                           },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
+	{0x14, 0x01, 0x02, 0x02, "Off"                                },
+	{0x14, 0x01, 0x02, 0x00, "On"                                 },
+	
+	{0   , 0xfe, 0   , 4   , "Lives"                              },
+	{0x14, 0x01, 0x0c, 0x08, "2"                                  },
+	{0x14, 0x01, 0x0c, 0x0c, "3"                                  },
+	{0x14, 0x01, 0x0c, 0x04, "4"                                  },
+	{0x14, 0x01, 0x0c, 0x00, "240"                                },
+	
+	{0   , 0xfe, 0   , 4   , "Extra Ship Cost"                    },
+	{0x14, 0x01, 0x30, 0x30, "5000"                               },
+	{0x14, 0x01, 0x30, 0x20, "10000"                              },
+	{0x14, 0x01, 0x30, 0x10, "15000"                              },
+	{0x14, 0x01, 0x30, 0x00, "20000"                              },
+	
+	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
+	{0x14, 0x01, 0xc0, 0x80, "Easy"                               },
+	{0x14, 0x01, 0xc0, 0xc0, "Normal"                             },
+	{0x14, 0x01, 0xc0, 0x40, "Hard"                               },
+	{0x14, 0x01, 0xc0, 0x00, "Hardest"                            },
+	
+	// Dip 2
+	SYSTEM16B_COINAGE(0x14)
+};
+
+STDDIPINFO(Fantzoneta)
+
 static struct BurnDIPInfo Fantzn2xDIPList[]=
 {
 	// Default Values
@@ -3052,6 +3091,26 @@ static struct BurnRomInfo ExctleagRomDesc[] = {
 
 STD_ROM_PICK(Exctleag)
 STD_ROM_FN(Exctleag)
+
+static struct BurnRomInfo FantzonetaRomDesc[] = {
+	{ "fzta__a07.bin",  0x020000, 0xad07d1fd, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "fzta__a05.bin",  0x020000, 0x47dbe11b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "fzta__a14.bin",  0x010000, 0x9468ab33, SYS16_ROM_TILES | BRF_GRA },
+	{ "fzta__a15.bin",  0x010000, 0x22a3cf75, SYS16_ROM_TILES | BRF_GRA },
+	{ "fzta__a16.bin",  0x010000, 0x25cba87f, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "fzta__b01.bin",  0x020000, 0x0beb4a22, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "fzta__b05.bin",  0x020000, 0x7f676c69, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "fzta__a01.bin",  0x020000, 0x40e1db9a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "fzta__b10.bin",  0x020000, 0xacbb5cff, SYS16_ROM_SPRITES | BRF_GRA },
+			
+	{ "fzta__a10.bin",  0x008000, 0xdab6fcd0, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Fantzoneta)
+STD_ROM_FN(Fantzoneta)
 
 static struct BurnRomInfo Fantzn2xRomDesc[] = {
 	{ "fz2.a7",         0x020000, 0x94c05f0b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -7222,6 +7281,17 @@ static INT32 ExctleagScan(INT32 nAction,INT32 *pnMin)
 	return System16Scan(nAction, pnMin);;
 }
 
+static INT32 FantzonetaInit()
+{
+	// Start off with some sprite rom and let the load routine add on the rest
+	System16SpriteRomSize = 0x180000 - 0x80000;
+
+	INT32 nRet = System16Init();
+	memcpy(System16Sprites + 0x100000, System16Sprites + 0x040000, 0x40000);
+	
+	return nRet;
+}
+
 void Fantzn2xMap68K()
 {
 	SekInit(0, 0x68000);
@@ -8629,6 +8699,16 @@ struct BurnDriver BurnDrvExctleag = {
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, ExctleagRomInfo, ExctleagRomName, NULL, NULL, ExctleagInputInfo, ExctleagDIPInfo,
 	ExctleagInit, ExctleagExit, System16BFrame, NULL, ExctleagScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvFantzoneta = {
+	"fantzoneta", "fantzone", NULL, NULL, "2008",
+	"Fantasy Zone (Time Attack, bootleg)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B, GBF_HORSHOOT, 0,
+	NULL, FantzonetaRomInfo, FantzonetaRomName, NULL, NULL, System16bInputInfo, FantzonetaDIPInfo,
+	FantzonetaInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

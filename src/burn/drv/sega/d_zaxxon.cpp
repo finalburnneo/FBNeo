@@ -11,7 +11,6 @@
 	Dips are wrong. Very wrong! Needs a re-write badly.
 	Need to add Sega USB support.
 	Analog inputs for Raxmatazz and Ixion
-	Move to sega directory, use sega misc. hardware flag
 	Clean up video code
 */
 #include "tiles_generic.h"
@@ -1575,7 +1574,7 @@ struct BurnDriver BurnDrvZaxxon = {
 	"zaxxon", "zaxxon", NULL, "zaxxon", "1982",
 	"Zaxxon (set 1)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, zaxxonRomInfo, zaxxonRomName, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, ZaxxonDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1616,7 +1615,7 @@ struct BurnDriver BurnDrvZaxxon2 = {
 	"zaxxon2", "zaxxon", NULL, "zaxxon", "1982",
 	"Zaxxon (set 2)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, zaxxon2RomInfo, zaxxon2RomName, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, ZaxxonDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1657,7 +1656,7 @@ struct BurnDriver BurnDrvZaxxon3 = {
 	"zaxxon3", "zaxxon", NULL, "zaxxon", "1982",
 	"Zaxxon (set 3)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, zaxxon3RomInfo, zaxxon3RomName, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, ZaxxonDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1763,7 +1762,7 @@ struct BurnDriver BurnDrvZaxxonj = {
 	"zaxxonj", "zaxxon", NULL, "zaxxon", "1982",
 	"Zaxxon (Japan)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, zaxxonjRomInfo, zaxxonjRomName, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, ZaxxonDIPInfo,
 	ZaxxonjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1804,7 +1803,7 @@ struct BurnDriver BurnDrvZaxxonb = {
 	"zaxxonb", "zaxxon", NULL, "zaxxon", "1982",
 	"Jackson\0", NULL, "bootleg", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, zaxxonbRomInfo, zaxxonbRomName, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, ZaxxonDIPInfo,
 	ZaxxonjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1925,7 +1924,7 @@ struct BurnDriver BurnDrvSzaxxon = {
 	"szaxxon", NULL, NULL, "zaxxon", "1982",
 	"Super Zaxxon\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, szaxxonRomInfo, szaxxonRomName, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, SzaxxonDIPInfo,
 	sZaxxonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2007,7 +2006,7 @@ struct BurnDriver BurnDrvFutspy = {
 	"futspy", NULL, NULL, "zaxxon", "1984",
 	"Future Spy\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, futspyRomInfo, futspyRomName, zaxxonSampleInfo, zaxxonSampleName, FutspyInputInfo, FutspyDIPInfo,
 	futspyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2093,7 +2092,7 @@ struct BurnDriver BurnDrvRazmataz = {
 	"razmataz", NULL, NULL, NULL, "1983",
 	"Razzmatazz\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	0 | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	0 | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, razmatazRomInfo, razmatazRomName, NULL, NULL, ZaxxonInputInfo, ZaxxonDIPInfo, //RazmatazInputInfo, RazmatazDIPInfo,
 	razmatazInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2150,7 +2149,7 @@ struct BurnDriver BurnDrvIxion = {
 	"ixion", NULL, NULL, NULL, "1983",
 	"Ixion (prototype)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	0 | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	0 | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, ixionRomInfo, ixionRomName, NULL, NULL, ZaxxonInputInfo, ZaxxonDIPInfo, //RazmatazInputInfo, RazmatazDIPInfo,
 	ixionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2193,7 +2192,7 @@ struct BurnDriver BurnDrvCongo = {
 	"congo", NULL, NULL, "congo", "1983",
 	"Congo Bongo\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_PLATFORM, 0,
 	NULL, congoRomInfo, congoRomName, congoSampleInfo, congoSampleName, CongoBongoInputInfo, CongoBongoDIPInfo,
 	CongoInit, DrvExit, CongoFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2236,7 +2235,7 @@ struct BurnDriver BurnDrvCongoa = {
 	"congoa", "congo", NULL, "congo", "1983",
 	"Congo Bongo (Rev C, 3 board stack)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_PLATFORM, 0,
 	NULL, congoaRomInfo, congoaRomName, congoSampleInfo, congoSampleName, CongoBongoInputInfo, CongoBongoDIPInfo,
 	CongoInit, DrvExit, CongoFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2279,7 +2278,7 @@ struct BurnDriver BurnDrvTiptop = {
 	"tiptop", "congo", NULL, "congo", "1983",
 	"Tip Top\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_PLATFORM, 0,
 	NULL, tiptopRomInfo, tiptopRomName, congoSampleInfo, congoSampleName, CongoBongoInputInfo, CongoBongoDIPInfo,
 	CongoInit, DrvExit, CongoFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

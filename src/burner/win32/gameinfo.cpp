@@ -57,7 +57,6 @@ static void SetPreview(TCHAR* szPreviewDir, int nAspectFlag)
 	FILE *fp = OpenPreview(szPreviewDir);
 	if (fp) {
 		PNGGetInfo(&img, fp);
-		bprintf(PRINT_NORMAL, _T("%i, %i\n"), img.width, img.height);
 		
 		// vertical 3:4
 		if (img.height > img.width) {

@@ -532,7 +532,7 @@ static void MyEndDialog()
 	EndDialog(hGameInfoDlg, 0);
 }
 
-static BOOL CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
+static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	if (Msg == WM_INITDIALOG) {
 		hGameInfoDlg = hDlg;
@@ -656,7 +656,7 @@ static BOOL CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPara
 	
 	if (Msg == WM_CTLCOLORSTATIC) {
 		if ((HWND)lParam == GetDlgItem(hGameInfoDlg, IDC_LABELCOMMENT) || (HWND)lParam == GetDlgItem(hGameInfoDlg, IDC_LABELROMNAME) || (HWND)lParam == GetDlgItem(hGameInfoDlg, IDC_LABELROMINFO) || (HWND)lParam == GetDlgItem(hGameInfoDlg, IDC_LABELSYSTEM) || (HWND)lParam == GetDlgItem(hGameInfoDlg, IDC_LABELNOTES) || (HWND)lParam == GetDlgItem(hGameInfoDlg, IDC_LABELGENRE) || (HWND)lParam == GetDlgItem(hGameInfoDlg, IDC_TEXTCOMMENT) || (HWND)lParam == GetDlgItem(hGameInfoDlg, IDC_TEXTROMNAME) || (HWND)lParam == GetDlgItem(hGameInfoDlg, IDC_TEXTROMINFO) || (HWND)lParam == GetDlgItem(hGameInfoDlg, IDC_TEXTSYSTEM) || (HWND)lParam == GetDlgItem(hGameInfoDlg, IDC_TEXTNOTES) || (HWND)lParam == GetDlgItem(hGameInfoDlg, IDC_TEXTGENRE)) {
-			return (BOOL)hWhiteBGBrush;
+			return (INT_PTR)hWhiteBGBrush;
 		}
 	}
 
@@ -676,7 +676,7 @@ int GameInfoDialogCreate(HWND hParentWND, int nDrvSel)
 
 	if (hRiched) {
 		hParent = hParentWND;
-		FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_GAMEINFO), hParent, DialogProc);
+		FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_GAMEINFO), hParent, (DLGPROC)DialogProc);
 	}
 
 	bGameInfoOpen = false;

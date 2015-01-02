@@ -446,7 +446,8 @@ static INT32 LoadRoms()
 	NibbleSwap2(CaveTileROM[1], 0x200000);
 
 	BurnLoadRom(YMZ280BROM, 6, 1);
-	
+	YMZ280BROMSIZE = 0x400000;
+
 	BurnLoadRom(DefaultEEPROM, 7, 1);
 
 	return 0;

@@ -504,7 +504,8 @@ static INT32 LoadRoms()
 
 	// Load YMZ280B data
 	BurnLoadRom(YMZ280BROM, 9, 1);
-	
+	YMZ280BROMSIZE = 0x400000;
+
 	BurnLoadRom(DefaultEEPROM, 14, 1);
 
 	return 0;

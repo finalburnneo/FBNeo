@@ -431,7 +431,8 @@ static INT32 LoadRoms()
 	BurnLoadRom(YMZ280BROM + 0x000000, 9, 1);
 	BurnLoadRom(YMZ280BROM + 0x400000, 10, 1);
 	BurnLoadRom(YMZ280BROM + 0x800000, 11, 1);
-	
+	YMZ280BROMSIZE = 0xc00000;
+
 	BurnLoadRom(DefaultEEPROM, 12, 1);
 	
 	return 0;

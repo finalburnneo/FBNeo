@@ -11,6 +11,7 @@ UINT32 YMZ280BReadStatus();
 UINT32 YMZ280BReadRAM();
 
 extern UINT8* YMZ280BROM;
+extern UINT32 YMZ280BROMSIZE;
 extern bool bESPRaDeMixerKludge;
 
 // external memory handlers

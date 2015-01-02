@@ -441,7 +441,6 @@ static INT32 LoadRoms()
 
 	// Load YMZ280B data
 	BurnLoadRom(YMZ280BROM, 4, 1);
-	YMZ280BROMSIZE = 0x200000;
 
 	BurnLoadRom(DefaultEEPROM, 5, 1);
 
@@ -539,7 +538,7 @@ static INT32 DrvInit()
 	CaveSpriteInit(1, 0x800000);
 	CaveTileInitLayer(0, 0x400000, 8, 0x4000);
 
-	YMZ280BInit(16934400, &TriggerSoundIRQ);
+	YMZ280BInit(16934400, &TriggerSoundIRQ, 0x200000);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 

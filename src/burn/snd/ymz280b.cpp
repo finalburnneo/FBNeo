@@ -167,6 +167,13 @@ INT32 YMZ280BInit(INT32 nClock, void (*IRQCallback)(INT32))
 	return 0;
 }
 
+INT32 YMZ280BInit(INT32 nClock, void (*IRQCallback)(INT32), INT32 rom_len)
+{
+	YMZ280BROMSIZE = rom_len;
+
+	return YMZ280BInit(nClock, IRQCallback);
+}
+
 void YMZ280BSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
 #if defined FBA_DEBUG
@@ -260,6 +267,8 @@ UINT8 ymz280b_read_memory(UINT32 offset)
 	if (offset < YMZ280BROMSIZE) {
 		return YMZ280BROM[offset];
 	} else {
+		// Battle Bakraid, rom length 0xC00000 tries to read from 0xFFFF00 twice in level 5 at the first mid-boss.
+		// Possile protection?  Or just a bug?  Hmmm..
 		bprintf(0, _T("ymz280b bad offset: %d!! (max. size: %d)\n"), offset, YMZ280BROMSIZE);
 		return 0;
 	}

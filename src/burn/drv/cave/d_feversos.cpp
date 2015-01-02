@@ -446,7 +446,6 @@ static INT32 LoadRoms()
 	NibbleSwap2(CaveTileROM[1], 0x200000);
 
 	BurnLoadRom(YMZ280BROM, 6, 1);
-	YMZ280BROMSIZE = 0x400000;
 
 	BurnLoadRom(DefaultEEPROM, 7, 1);
 
@@ -547,7 +546,7 @@ static INT32 DrvInit()
 	CaveTileInitLayer(0, 0x400000, 8, 0x4000);
 	CaveTileInitLayer(1, 0x400000, 8, 0x4000);
 
-	YMZ280BInit(16934400, &TriggerSoundIRQ);
+	YMZ280BInit(16934400, &TriggerSoundIRQ, 0x400000);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 

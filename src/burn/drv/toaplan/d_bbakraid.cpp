@@ -431,7 +431,6 @@ static INT32 LoadRoms()
 	BurnLoadRom(YMZ280BROM + 0x000000, 9, 1);
 	BurnLoadRom(YMZ280BROM + 0x400000, 10, 1);
 	BurnLoadRom(YMZ280BROM + 0x800000, 11, 1);
-	YMZ280BROMSIZE = 0xc00000;
 
 	BurnLoadRom(DefaultEEPROM, 12, 1);
 	
@@ -882,7 +881,7 @@ static INT32 bbakraidInit()
 
 	DrvZ80Init();				// Initialize Z80
 
-	YMZ280BInit(16934400, NULL);
+	YMZ280BInit(16934400, NULL, 0xC00000);
 	YMZ280BSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 
 	BurnTimerInit(bbakraidTimerOver, NULL);

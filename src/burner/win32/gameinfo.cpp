@@ -492,15 +492,15 @@ static int GameInfoInit()
 	sprintf(szFileName, "%shistory.dat", TCHARToANSI(szAppHistoryPath, NULL, 0));
 	
 	FILE *fp = fopen(szFileName, "rt");	
-	char Temp[1000];
+	char Temp[10000];
 	int inGame = 0;
-	TCHAR szBuffer[50000] = _T("{\\rtf1\\ansi{\\fonttbl(\\f0\\fswiss\\fprq2 Tahoma;)}{\\colortbl;\\red0\\green0\\blue0;\\red110\\green107\\blue106;}");
+	TCHAR szBuffer[50000] = _T("{\\rtf1\\ansi{\\fonttbl(\\f0 Verdana;)}{\\colortbl;\\red220\\green0\\blue0;\\red0\\green0\\blue0;}");
 	
 	if (fp) {		
 		while (!feof(fp)) {
 			char *Tokens;
 			
-			fgets(Temp, 1000, fp);
+			fgets(Temp, 10000, fp);
 			if (!strncmp("$info=", Temp, 6)) {
 				Tokens = strtok(Temp, "=,");
 				while (Tokens != NULL) {
@@ -516,7 +516,7 @@ static int GameInfoInit()
 			if (inGame) {
 				int nTitleWrote = 0;
 				while (strncmp("$end", Temp, 4)) {
-					fgets(Temp, 1000, fp);
+					fgets(Temp, 10000, fp);
 
 					if (!strncmp("$", Temp, 1)) continue;
 						

@@ -75,6 +75,7 @@ INT32 img_alloc(IMAGE* img);
 
 bool PNGIsImage(FILE* fp);
 INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset);
+INT32 PNGGetInfo(IMAGE* img, FILE *fp);
 
 // gami.cpp
 extern struct GameInp* GameInp;

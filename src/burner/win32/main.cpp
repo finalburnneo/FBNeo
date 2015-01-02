@@ -830,7 +830,7 @@ static void CreateSupportFolders()
 		{_T("support/gameover/")},
 		{_T("support/flyers/")},
 		{_T("support/marquees/")},
-		{_T("support/controls/")},
+		{_T("support/cpanel/")},
 		{_T("support/cabinets/")},
 		{_T("support/pcbs/")},
 		{_T("support/history/")},

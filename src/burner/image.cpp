@@ -527,3 +527,56 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 
 	return 0;
 }
+
+INT32 PNGGetInfo(IMAGE* img, FILE *fp)
+{
+	IMAGE temp_img;
+	png_uint_32 width, height;
+	INT32 bit_depth, color_type;
+	
+	if (fp) {
+		// check signature
+		UINT8 pngsig[PNG_SIG_CHECK_BYTES];
+		fread(pngsig, 1, PNG_SIG_CHECK_BYTES, fp);
+		if (png_sig_cmp(pngsig, 0, PNG_SIG_CHECK_BYTES)) {
+			return 1;
+		}
+		
+		png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+		if (!png_ptr) {
+			return 1;
+		}
+	
+		png_infop info_ptr = png_create_info_struct(png_ptr);
+		if (!info_ptr) {
+			png_destroy_read_struct(&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
+			return 1;
+		}
+		
+		memset(&temp_img, 0, sizeof(IMAGE));
+		png_init_io(png_ptr, fp);
+		png_set_sig_bytes(png_ptr, PNG_SIG_CHECK_BYTES);
+		png_read_info(png_ptr, info_ptr);
+		png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, NULL, NULL, NULL);
+		
+		if (setjmp(png_jmpbuf(png_ptr))) {
+			png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
+			return 1;
+		}
+		
+		temp_img.width = width;
+		temp_img.height = height;
+		
+		if (setjmp(png_jmpbuf(png_ptr))) {
+			png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
+			return 1;
+		}
+		
+		png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
+	}
+	
+	memcpy(img, &temp_img, sizeof(IMAGE));
+	img_free(&temp_img);
+	
+	return 0;
+}

@@ -31,8 +31,15 @@ static FILE* OpenPreview(TCHAR *szPath)
 	return fp;
 }
 
-static void SetPreview(TCHAR* szPreviewDir) {
+#define IMG_MAX_HEIGHT			380
+#define IMG_MAX_WIDTH			700
+#define IMG_DEFAULT_WIDTH		506
+#define IMG_DEFAULT_WIDTH_V		285
+#define IMG_ASPECT_4_3			1
+#define IMG_ASPECT_PRESERVE		2
 
+static void SetPreview(TCHAR* szPreviewDir, int nAspectFlag)
+{
 	HWND hDlg = hGameInfoDlg;
 
 	HBITMAP hNewImage	= NULL;
@@ -42,9 +49,39 @@ static void SetPreview(TCHAR* szPreviewDir) {
 		hGiBmp = NULL;
 	}
 	
+	// get image dimensions and work out what to resize to (default to 4:3)
+	IMAGE img = { 0, 0, 0, 0, NULL, NULL, 0};
+	int img_width = IMG_DEFAULT_WIDTH;
+	int img_height = IMG_MAX_HEIGHT;
+	
 	FILE *fp = OpenPreview(szPreviewDir);
 	if (fp) {
-		hNewImage = PNGLoadBitmap(hDlg, fp, 500, 380, 3);
+		PNGGetInfo(&img, fp);
+		bprintf(PRINT_NORMAL, _T("%i, %i\n"), img.width, img.height);
+		
+		// vertical 3:4
+		if (img.height > img.width) {
+			img_width = IMG_DEFAULT_WIDTH_V;
+		}
+		
+		// preserve aspect support
+		if (nAspectFlag == IMG_ASPECT_PRESERVE) {
+			double nAspect = (double)img.width / img.height;
+			img_width = (int)((double)IMG_MAX_HEIGHT * nAspect);
+			
+			if (img_width > IMG_MAX_WIDTH) {
+				img_width = IMG_MAX_WIDTH;
+				img_height = (int)((double)IMG_MAX_WIDTH / nAspect);
+			}
+		}
+		
+		img_free(&img);
+		fclose(fp);
+	}
+	
+	fp = OpenPreview(szPreviewDir);
+	if (fp) {
+		hNewImage = PNGLoadBitmap(hDlg, fp, img_width, img_height, 3);
 		fclose(fp);
 	}
 
@@ -636,19 +673,19 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			if (TabPage == 0) DisplayRomInfo();
 			if (TabPage == 1) DisplaySampleInfo();
 			if (TabPage == 2) DisplayHistory();
-			if (TabPage == 3) SetPreview(szAppPreviewsPath);
-			if (TabPage == 4) SetPreview(szAppTitlesPath);
-			if (TabPage == 5) SetPreview(szAppSelectPath);
-			if (TabPage == 6) SetPreview(szAppVersusPath);
-			if (TabPage == 7) SetPreview(szAppHowtoPath);
-			if (TabPage == 8) SetPreview(szAppScoresPath);
-			if (TabPage == 9) SetPreview(szAppBossesPath);
-			if (TabPage == 10) SetPreview(szAppGameoverPath);
-			if (TabPage == 11) SetPreview(szAppFlyersPath);
-			if (TabPage == 12) SetPreview(szAppCabinetsPath);
-			if (TabPage == 13) SetPreview(szAppMarqueesPath);
-			if (TabPage == 14) SetPreview(szAppControlsPath);
-			if (TabPage == 15) SetPreview(szAppPCBsPath);
+			if (TabPage == 3) SetPreview(szAppPreviewsPath, IMG_ASPECT_4_3);
+			if (TabPage == 4) SetPreview(szAppTitlesPath, IMG_ASPECT_4_3);
+			if (TabPage == 5) SetPreview(szAppSelectPath, IMG_ASPECT_4_3);
+			if (TabPage == 6) SetPreview(szAppVersusPath, IMG_ASPECT_4_3);
+			if (TabPage == 7) SetPreview(szAppHowtoPath, IMG_ASPECT_4_3);
+			if (TabPage == 8) SetPreview(szAppScoresPath, IMG_ASPECT_4_3);
+			if (TabPage == 9) SetPreview(szAppBossesPath, IMG_ASPECT_4_3);
+			if (TabPage == 10) SetPreview(szAppGameoverPath, IMG_ASPECT_4_3);
+			if (TabPage == 11) SetPreview(szAppFlyersPath, IMG_ASPECT_PRESERVE);
+			if (TabPage == 12) SetPreview(szAppCabinetsPath, IMG_ASPECT_PRESERVE);
+			if (TabPage == 13) SetPreview(szAppMarqueesPath, IMG_ASPECT_PRESERVE);
+			if (TabPage == 14) SetPreview(szAppControlsPath, IMG_ASPECT_PRESERVE);
+			if (TabPage == 15) SetPreview(szAppPCBsPath, IMG_ASPECT_PRESERVE);
 
 			return FALSE;
 		}

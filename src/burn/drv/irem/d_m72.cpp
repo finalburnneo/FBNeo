@@ -2066,7 +2066,7 @@ static void scanline_interrupts(INT32 scanline)
 		else
 			VezSetIRQLineAndVector(0, (m72_irq_base + 8)/4, VEZ_IRQSTATUS_AUTO);
 	}
-	else if (scanline == 248) // vblank
+	else if (scanline == 255) // vblank
 	{
 		if (nPreviousLine < nScreenHeight) {
 			dodrawline(nPreviousLine, nScreenHeight);

@@ -40,6 +40,26 @@ static struct BurnRomInfo bgareggaRomDesc[] = {
 STD_ROM_PICK(bgaregga)
 STD_ROM_FN(bgaregga)
 
+static struct BurnRomInfo bgareggazRomDesc[] = {
+	{ "prg0.bin",     0x080000, 0x6F4AF466, BRF_ESS | BRF_PRG }, //  0 CPU #0 code (even)
+	{ "prg1.bin",     0x080000, 0xB4DC9A48, BRF_ESS | BRF_PRG }, //  1				(odd)
+
+	{ "rom4.bin",     0x200000, 0xB333D81F, BRF_GRA },			 //  2 GP9001 Tile data
+	{ "rom3.bin",     0x200000, 0x51B9EBFB, BRF_GRA },			 //  3
+	{ "rom2.bin",     0x200000, 0xB330E5E2, BRF_GRA },			 //  4
+	{ "rom1.bin",     0x200000, 0x7EAFDD70, BRF_GRA },			 //  5
+
+	{ "text.u81",     0x008000, 0xE67FD534, BRF_GRA },			 //  6 Extra text layer tile data
+
+	{ "snd.bin",      0x020000, 0x68632952, BRF_ESS | BRF_PRG }, //  7 Z80 program
+
+	{ "rom5.bin",     0x100000, 0xF6D49863, BRF_SND },			 //  8 MSM6295 ADPCM data
+};
+
+
+STD_ROM_PICK(bgareggaz)
+STD_ROM_FN(bgareggaz)
+
 static struct BurnRomInfo bgareghkRomDesc[] = {
 	{ "prg_0.rom",    0x080000, 0x26E0019E, BRF_ESS | BRF_PRG }, //  0 CPU #0 code (even)
 	{ "prg_1.rom",    0x080000, 0x2CCFDD1E, BRF_ESS | BRF_PRG }, //  1				(odd)
@@ -953,6 +973,16 @@ struct BurnDriver BurnDrvBgaregga = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bgareggaRomInfo, bgareggaRomName, NULL, NULL, battlegInputInfo, bgareggaDIPInfo,
+	battlegInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	240, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvBgareggaz = {
+	"bgareggaz", "bgaregga", NULL, NULL, "2008",
+	"Battle Garegga Zakk (World) (Thu June 26 2008)\0", NULL, "Raizing / 8ing", "Toaplan GP9001 based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	NULL, bgareggazRomInfo, bgareggazRomName, NULL, NULL, battlegInputInfo, bgareggaDIPInfo,
 	battlegInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

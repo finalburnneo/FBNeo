@@ -2179,7 +2179,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_MEMORY_RAM) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = AllRam;
-		ba.nLen	  = MemEnd-AllRam; // MemEnd to get palette too - dink
+		ba.nLen	  = MemEnd-AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}
@@ -2194,11 +2194,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 	
 	if (nAction & ACB_WRITE) {
-/*		ZetOpen(0);
-		ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
-		ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
-                ZetClose();
-*/
+		ZetOpen(0); // Kick-start the ym2151 after state load.
+		m72YM2151IRQHandler(1);
+		ZetClose();
 	}
 
 	return 0;

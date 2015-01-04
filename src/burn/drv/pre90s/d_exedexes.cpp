@@ -638,7 +638,9 @@ static INT32 DrvFrame()
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
 		if ((i & 3) == 3) {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			nCyclesDone[nCurrentCPU] += ZetRun(100);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 		}
 		ZetClose();
 	}

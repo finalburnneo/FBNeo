@@ -1909,10 +1909,10 @@ static struct BurnRomInfo DdsomaRomDesc[] = {
 	{ "dd2a.04g",      0x080000, 0x055b7019, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dd2.05g",       0x080000, 0x5eb1991c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dd2.06g",       0x080000, 0xc26b5e55, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "dd2a.07",       0x080000, 0x909a0b8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "dd2a.08",       0x080000, 0xe53c4d01, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "dd2a.09",       0x080000, 0x5f86279f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "dd2a.10",       0x080000, 0xad954c26, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.07",        0x080000, 0x909a0b8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.08",        0x080000, 0xe53c4d01, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.09",        0x080000, 0x5f86279f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.10",        0x080000, 0xad954c26, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
 	{ "dd2.13m",       0x400000, 0xa46b4e6e, CPS2_GFX | BRF_GRA },
 	{ "dd2.15m",       0x400000, 0xd5fc50fc, CPS2_GFX | BRF_GRA },
@@ -1938,10 +1938,10 @@ static struct BurnRomInfo Ddsomar1RomDesc[] = {
 	{ "dd2a.04c",      0x080000, 0x950bec38, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dd2a.05c",      0x080000, 0xfa298eba, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "dd2a.06c",      0x080000, 0x28f75b35, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "dd2a.07",       0x080000, 0x909a0b8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "dd2a.08",       0x080000, 0xe53c4d01, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "dd2a.09",       0x080000, 0x5f86279f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "dd2a.10",       0x080000, 0xad954c26, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "dd2.07",        0x080000, 0x909a0b8b, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, // dd2a.07 on sticker
+	{ "dd2.08",        0x080000, 0xe53c4d01, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, // dd2a.08 on sticker
+	{ "dd2.09",        0x080000, 0x5f86279f, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, // dd2a.09 on sticker
+	{ "dd2.10",        0x080000, 0xad954c26, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, // dd2a.10 on sticker
 
 	{ "dd2.13m",       0x400000, 0xa46b4e6e, CPS2_GFX | BRF_GRA },
 	{ "dd2.15m",       0x400000, 0xd5fc50fc, CPS2_GFX | BRF_GRA },
@@ -1952,8 +1952,8 @@ static struct BurnRomInfo Ddsomar1RomDesc[] = {
 	{ "dd2.18m",       0x200000, 0xacddd149, CPS2_GFX | BRF_GRA },
 	{ "dd2.20m",       0x200000, 0x117fb0c0, CPS2_GFX | BRF_GRA },
 
-	{ "dd2.01",       0x020000, 0x99d657e5, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "dd2.02",       0x020000, 0x117a3824, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "dd2.01",       0x020000, 0x99d657e5, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG }, // dd2a.01 on sticker
+	{ "dd2.02",       0x020000, 0x117a3824, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG }, // dd2a.02 on sticker
 
 	{ "dd2.11m",       0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
 	{ "dd2.12m",       0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },

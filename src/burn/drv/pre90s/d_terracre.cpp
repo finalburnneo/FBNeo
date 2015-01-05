@@ -1080,8 +1080,8 @@ static INT32 DrvInit()
 	
 	DACInit(0, 0, 1, TerracreSyncDAC);
 	DACInit(1, 0, 1, TerracreSyncDAC);
-	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-	DACSetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(1, 0.40, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
 	
@@ -1707,17 +1707,11 @@ static INT32 DrvFrame()
 {
 	INT32 nCyclesTotal[2] = { 8000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	
-	INT32 nInterleave = 100;
+	INT32 nInterleave = 17*8; // 136
 	
 	if (DrvReset) DrvDoReset();
 
 	DrvMakeInputs();
-	
-	INT32 Z80IRQSlice[9];
-	for (INT32 i = 0; i < 9; i++) {
-		Z80IRQSlice[i] = (INT32)((double)((nInterleave * (i + 1)) / 10));
-	}
 	
 	SekNewFrame();
 	ZetNewFrame();
@@ -1736,19 +1730,14 @@ static INT32 DrvFrame()
 		nCurrentCPU = 1;
 		ZetOpen(0);
 		if (DrvUseYM2203) {
-#if 0
-			// The sound cpu fails to read the latches if we run this here
-			BurnTimerUpdate(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
-#endif
+			BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 		} else {
-			BurnTimerUpdateYM3526(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
+			BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 		}
-		for (INT32 j = 0; j < 9; j++) {
-			if (i == Z80IRQSlice[j]) {
-				ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-				nCyclesDone[1] += ZetRun(4000);
-				ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
-			}
+		{ // 136 times per frame.
+			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			nCyclesDone[1] += ZetRun(100);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 		}
 		ZetClose();
 	}

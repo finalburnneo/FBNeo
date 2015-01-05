@@ -42,7 +42,6 @@
 #define IDD_POPUP							73
 #define IDD_SUPPORTDIR						74
 #define IDD_PALETTEVIEWER					75
-#define IDD_ROMINFO							76
 #define IDD_IPS_MANAGER						77
 #define IDD_MVS_SELECT_CARTS            	78
 #define IDD_NCD_DLG							79

@@ -562,7 +562,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 8;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCycles[2] = { 4000000 / 60, 3000000 / 60 };
+	INT32 nCycles[2] = { 3000000 / 60, 3000000 / 60 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -570,17 +570,23 @@ static INT32 DrvFrame()
 		nCycles[0] -= ZetRun(nCycles[0] / (nInterleave - i));
 		if (i == ((nInterleave / 2) - 1)) {
 			ZetSetVector(0xd7);
-			ZetRaiseIrq(0);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetRun(100);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 		}
 		if (i == ( nInterleave      - 1)) {
 			ZetSetVector(0xcf);
-			ZetRaiseIrq(0);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetRun(100);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 		}
 		ZetClose();
 
 		ZetOpen(1);
 		nCycles[1] -= ZetRun(nCycles[1] / (nInterleave - i));
-		ZetRaiseIrq(0);
+		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		ZetRun(100);
+		ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 		ZetClose();
 
 		if (pBurnSoundOut) {

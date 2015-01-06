@@ -757,7 +757,7 @@ void __fastcall Terracre68KWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x026000: {
-			DrvFlipScreen = d;
+			DrvFlipScreen = d & 0x04;
 			return;
 		}
 		
@@ -878,7 +878,7 @@ void __fastcall Amazon68KWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x046000: {
-			DrvFlipScreen = d;
+			DrvFlipScreen = d & 0x04;
 			return;
 		}
 		

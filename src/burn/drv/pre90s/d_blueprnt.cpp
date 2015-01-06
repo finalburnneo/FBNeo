@@ -31,6 +31,8 @@ static UINT8 *soundlatch;
 static UINT8 *flipscreen;
 static UINT8 *gfx_bank;
 
+static UINT8 Grasspin;
+
 static UINT8 DrvReset;
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -163,6 +165,65 @@ static struct BurnDIPInfo SaturnDIPList[]=
 
 STDDIPINFO(Saturn)
 
+static struct BurnInputInfo GrasspinInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 2"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+};
+
+STDINPUTINFO(Grasspin)
+
+
+static struct BurnDIPInfo GrasspinDIPList[]=
+{
+	{0x11, 0xff, 0xff, 0x61, NULL		},
+	{0x12, 0xff, 0xff, 0x83, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Coinage"		},
+	{0x11, 0x01, 0x60, 0x00, "2 Coins 1 Credits"		},
+	{0x11, 0x01, 0x60, 0x40, "2 Coins 3 Credits"		},
+	{0x11, 0x01, 0x60, 0x60, "1 Coin  1 Credits"		},
+	{0x11, 0x01, 0x60, 0x20, "1 Coin  2 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "Freeze"		},
+	{0x11, 0x01, 0x80, 0x00, "Off"		},
+	{0x11, 0x01, 0x80, 0x80, "On"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x12, 0x01, 0x03, 0x00, "2"		},
+	{0x12, 0x01, 0x03, 0x03, "3"		},
+	{0x12, 0x01, 0x03, 0x02, "4"		},
+	{0x12, 0x01, 0x03, 0x01, "5"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x12, 0x01, 0x20, 0x00, "Upright"		},
+	{0x12, 0x01, 0x20, 0x20, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    2, "Freeze"		},
+	{0x12, 0x01, 0x40, 0x00, "Off"		},
+	{0x12, 0x01, 0x40, 0x40, "On"		},
+};
+
+STDDIPINFO(Grasspin)
+
 void __fastcall blueprint_write(UINT16 address, UINT8 data)
 {
 	switch (address)
@@ -181,7 +242,7 @@ void __fastcall blueprint_write(UINT16 address, UINT8 data)
 		case 0xe000:
 		{
 			*flipscreen = ~data & 2;
-			*gfx_bank   = (data >> 2) & 1;
+			*gfx_bank   = ((data & 0x04) >> 2); //(data >> 2) & 1;
 		}
 
 		return;
@@ -197,7 +258,7 @@ UINT8 __fastcall blueprint_read(UINT16 address)
 			return DrvInputs[address & 1];
 
 		case 0xc003:
-			return *dipsw;
+			return (Grasspin) ? (*dipsw & 0x7f) | 0x80 : *dipsw;
 
 		case 0xe000:
 			*watchdog = 0;
@@ -442,7 +503,7 @@ static INT32 DrvInit()
 	ZetSetReadHandler(blueprint_sound_read);
 	ZetClose();
 
-	AY8910Init(0, 625000, nBurnSoundRate, NULL, &ay8910_0_read_port_1, &ay8910_0_write_port_0, NULL);
+	AY8910Init(0, 1250000, nBurnSoundRate, NULL, &ay8910_0_read_port_1, &ay8910_0_write_port_0, NULL);
 	AY8910Init(1, 625000, nBurnSoundRate, &ay8910_1_read_port_0, &ay8910_1_read_port_1, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
@@ -464,6 +525,7 @@ static INT32 DrvExit()
 	AY8910Exit(1);
 
 	BurnFree (AllMem);
+	Grasspin = 0;
 
 	return 0;
 }
@@ -474,8 +536,9 @@ static void draw_layer(INT32 prio)
 	{
 		INT32 attr = DrvColRAM[offs];
 		if ((attr >> 7) != prio) continue;
-
-		INT32 code = DrvVidRAM[offs] | (*gfx_bank << 8);
+		INT32 bank = (*flipscreen) ? DrvColRAM[(offs+32)&0x3ff] & 0x40 : DrvColRAM[(offs-32)&0x3ff] & 0x40;
+		INT32 code = DrvVidRAM[offs];
+		if (bank) code += *gfx_bank << 8;
 		INT32 color = attr & 0x7f;
 
 		INT32 sx = (~offs & 0x3e0) >> 2;
@@ -538,6 +601,7 @@ static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
 		palette_init();
+		DrvRecalc = 0;
 	}
 
 	memset (pTransDraw, 0, nScreenWidth * nScreenHeight * 2);
@@ -575,7 +639,7 @@ static INT32 DrvFrame()
 
 	INT32 nSegment;
 	INT32 nInterleave = 256;
-	INT32 nTotalCycles[2] = { 3500000 / 60, 625000 / 60 };
+	INT32 nTotalCycles[2] = { 3500000 / 60, 1250000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -633,7 +697,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Blue Print (Midway)
 
 static struct BurnRomInfo blueprntRomDesc[] = {
-	{ "bp-1.1m",	0x1000, 0xb20069a6, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "bp-1.1m",	0x1000, 0xb20069a6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 	{ "bp-2.1n",	0x1000, 0x4a30302e, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "bp-3.1p",	0x1000, 0x6866ca07, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "bp-4.1r",	0x1000, 0x5d3cfac3, 1 | BRF_PRG | BRF_ESS }, //  3
@@ -667,7 +731,7 @@ struct BurnDriver BurnDrvBlueprnt = {
 // Blue Print (Jaleco)
 
 static struct BurnRomInfo blueprnjRomDesc[] = {
-	{ "bp-1j.1m",	0x1000, 0x2e746693, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "bp-1j.1m",	0x1000, 0x2e746693, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 	{ "bp-2j.1n",	0x1000, 0xa0eb0b8e, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "bp-3j.1p",	0x1000, 0xc34981bb, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "bp-4j.1r",	0x1000, 0x525e77b5, 1 | BRF_PRG | BRF_ESS }, //  3
@@ -701,7 +765,7 @@ struct BurnDriver BurnDrvBlueprnj = {
 // Saturn
 
 static struct BurnRomInfo saturnziRomDesc[] = {
-	{ "r1",		0x1000, 0x18a6d68e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "r1",		0x1000, 0x18a6d68e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 	{ "r2",		0x1000, 0xa7dd2665, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "r3",		0x1000, 0xb9cfa791, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "r4",		0x1000, 0xc5a997e7, 1 | BRF_PRG | BRF_ESS }, //  3
@@ -731,3 +795,44 @@ struct BurnDriver BurnDrvSaturnzi = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x208,
 	224, 256, 3, 4
 };
+
+
+// Grasspin
+
+static struct BurnRomInfo grasspinRomDesc[] = {
+	{ "prom_1.4b",		0x1000, 0x6fd50509, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code (maincpu)
+	{ "jaleco-2.4c",	0x1000, 0xcd319007, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "jaleco-3.4d",	0x1000, 0xac73ccc2, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "jaleco-4.4f",	0x1000, 0x41f6279d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "jaleco-5.4h",	0x1000, 0xd20aead9, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "jaleco-6.4j",	0x1000, 0xf58bf3b0, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 Code (audiocpu)
+	{ "jaleco-7.4l",	0x1000, 0x2d587653, 2 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "jaleco-9.4p",	0x1000, 0xbccca24c, 3 | BRF_GRA }, //  7 Background Tiles
+	{ "jaleco-8.3p",	0x1000, 0x9d6185ca, 3 | BRF_GRA }, //  8
+
+	{ "jaleco-10.5p",	0x1000, 0x3a0765c6, 4 | BRF_GRA }, //  9 Sprites
+	{ "jaleco-11.6p",	0x1000, 0xcccfbeb4, 4 | BRF_GRA }, // 10
+	{ "jaleco-12.7p",	0x1000, 0x615b3299, 4 | BRF_GRA }, // 11
+};
+
+STD_ROM_PICK(grasspin)
+STD_ROM_FN(grasspin)
+
+static INT32 GrasspinInit()
+{
+	Grasspin = 1;
+	return DrvInit();
+}
+
+struct BurnDriver BurnDrvGrasspin = {
+	"grasspin", NULL, NULL, NULL, "1983",
+	"Grasspin\0", NULL, "[Zilec Electronics] Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, grasspinRomInfo, grasspinRomName, NULL, NULL, GrasspinInputInfo, GrasspinDIPInfo,
+	GrasspinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+

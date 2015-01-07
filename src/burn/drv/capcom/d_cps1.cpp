@@ -4699,6 +4699,30 @@ static struct BurnRomInfo Cworld2jRomDesc[] = {
 STD_ROM_PICK(Cworld2j)
 STD_ROM_FN(Cworld2j)
 
+static struct BurnRomInfo Cworld2jaRomDesc[] = {
+	{ "q5-34.8f",      0x080000, 0xde54487f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "q5-33.6f",      0x080000, 0x93248458, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "q5-06.8a",      0x080000, 0x09d0e7ce, BRF_GRA | CPS1_TILES },
+	{ "q5-08.10a",     0x080000, 0x22e4ce9a, BRF_GRA | CPS1_TILES },
+	{ "q5-05.7a",      0x080000, 0xf7b3aed6, BRF_GRA | CPS1_TILES },
+	{ "q5-07.9a",      0x080000, 0x520c6c88, BRF_GRA | CPS1_TILES },
+
+	{ "q5-09.12a",     0x010000, 0xe14dc524, BRF_PRG | CPS1_Z80_PROGRAM }, // == q5_23.13b
+
+	{ "q5-18.11c",     0x020000, 0xd10c1b68, BRF_SND | CPS1_OKIM6295_SAMPLES }, // == q5_30.12c
+	{ "q5-19.12c",     0x020000, 0x7d17e496, BRF_SND | CPS1_OKIM6295_SAMPLES }, // == q5_31.13c
+	
+	A_BOARD_PLDS
+	
+	{ "q529b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP},	// b-board PLDs
+	{ "lwio.12e",      0x000117, 0xad52b90c, BRF_OPT },	
+	{ "ioc1.ic1",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
+};
+
+STD_ROM_PICK(Cworld2ja)
+STD_ROM_FN(Cworld2ja)
+
 static struct BurnRomInfo DinoRomDesc[] = {
 	{ "cde_23a.8f",    0x080000, 0x8f4e585e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "cde_22a.7f",    0x080000, 0x9278aa12, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -12381,6 +12405,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "cawingbl"    , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cawingb2"    , CPS_B_16    , mapper_CA24B , 0, NULL                },
 	{ "cworld2j"    , CPS_B_21_BT6, mapper_Q522B , 0, NULL                },
+	{ "cworld2ja"   , CPS_B_21_DEF, mapper_Q522B , 0, NULL                },
 	{ "dino"        , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinou"       , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
 	{ "dinoj"       , CPS_B_21_QS2, mapper_CD63B , 0, dino_decode         },
@@ -16898,6 +16923,16 @@ struct BurnDriver BurnDrvCpsCworld2j = {
 	L"Capcom World 2 (\u30AF\u30A4\u30BA\uFF15 \u3042\u3069\u3079\u3093\u3061\u3083\u30FC\u304F\u3044\u305A \u304B\u3077\u3053\u3093\u308F\u30FC\u308B\u3069\uFF12 920611 Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS1, GBF_PUZZLE, 0,
 	NULL, Cworld2jRomInfo, Cworld2jRomName, NULL, NULL, Cworld2jInputInfo, Cworld2jDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsCworld2ja = {
+	"cworld2ja", "cworld2j", NULL, NULL, "1992",
+	"Capcom World 2 (920611 Japan, alt)\0", NULL, "Capcom", "CPS1",
+	L"Capcom World 2 (\u30AF\u30A4\u30BA\uFF15 \u3042\u3069\u3079\u3093\u3061\u3083\u30FC\u304F\u3044\u305A \u304B\u3077\u3053\u3093\u308F\u30FC\u308B\u3069\uFF12 920611 Japan, alt)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_PUZZLE, 0,
+	NULL, Cworld2jaRomInfo, Cworld2jaRomName, NULL, NULL, Cworld2jInputInfo, Cworld2jDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

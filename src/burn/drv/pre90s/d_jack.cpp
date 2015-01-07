@@ -17,6 +17,7 @@ static INT32 tri_fix, joinem, loverb, suprtriv, unclepoo;
 static INT32 timer_rate, flip_screen;
 static UINT32 *Palette, *DrvPal;
 static UINT8 DrvCalcPal;
+static UINT8 joinem_palette_bank = 0;
 
 static UINT8 soundlatch;
 static INT32 question_address, question_rom, remap_address[16];
@@ -850,6 +851,7 @@ void __fastcall jack_cpu0_write(UINT16 address, UINT8 data)
 		case 0xb700:
 			flip_screen = data >> 7;
 			joinem_snd_bit = data & 1;
+			joinem_palette_bank = data & (0x0100 - 1) >> 3 & 0x18;
 		break;
 	}
 }
@@ -899,7 +901,8 @@ static INT32 DrvDoReset()
 	}
 
 	memset (Rom0 + 0xb000, 0, 0x1000);
-	memset (Rom1 + 0x4000, 0, 0x0400);
+	if (!unclepoo)
+		memset (Rom1 + 0x4000, 0, 0x0400);
 	memset ((UINT8*)remap_address, 0, 0x40); 
 
 	question_address = question_rom = 0;
@@ -992,7 +995,7 @@ static INT32 GetRoms()
 	}
 
 	// sucasino, tripool, tripoola
-	if (gCount == 2) {
+	if (gCount == 2 && !unclepoo) {
 		memcpy (Gfx + 0x4000, Gfx + 0x3000, 0x1000);
 		memset (Gfx + 0x3000, 0, 0x1000);
 	} 
@@ -1050,14 +1053,15 @@ static INT32 DrvInit()
 		ZetMapArea(0x0000, 0x8fff, 0, Rom0 + 0x0000);
 		ZetMapArea(0x0000, 0x8fff, 2, Rom0 + 0x0000);
 
-		ZetMapArea(0x8000, 0x8fff, 0, Rom0 + 0x8000);
 		ZetMapArea(0x8000, 0x8fff, 1, Rom0 + 0x8000);
 		ZetMapArea(0x8000, 0x8fff, 2, Rom0 + 0x8000);
+
 		ZetMapArea(0x9000, 0x97ff, 0, Rom0 + 0x9000); // unclepoo
 		ZetMapArea(0x9000, 0x97ff, 1, Rom0 + 0x9000); // unclepoo
 		ZetMapArea(0x9000, 0x97ff, 2, Rom0 + 0x9000); // unclepoo
 
-		ZetMapArea(0xb500, 0xb5ff, 0, Rom0 + 0xb500); // controls hack
+		if (!unclepoo)
+			ZetMapArea(0xb500, 0xb5ff, 0, Rom0 + 0xb500); // controls hack
 	} else {
 		ZetMapArea(0x0000, 0x3fff, 0, Rom0 + 0x0000);
 		ZetMapArea(0x0000, 0x3fff, 2, Rom0 + 0x0000);
@@ -1080,7 +1084,7 @@ static INT32 DrvInit()
 	{
 		ZetMapArea(0xd000, 0xffff, 0, Rom0 + 0xc000);
 		ZetMapArea(0xd000, 0xffff, 2, Rom0 + 0xc000);
-	} else {
+	} else if (!unclepoo) {
 		ZetMapArea(0xc000, 0xffff, 0, Rom0 + 0xc000);
 		ZetMapArea(0xc000, 0xffff, 2, Rom0 + 0xc000);
 	}
@@ -1162,7 +1166,8 @@ static INT32 DrvDraw()
 
 		if (joinem || loverb) {
 			num = vram[offs] + ((cram[offs] & 0x03) << 8);
-			color = (cram[offs] & 0x38) >> 2;
+//			color = (cram[offs] & 0x38) >> 2;
+			color = (cram[offs] & 0x38) >> 2 | joinem_palette_bank;
 		} else {
 			num = vram[offs] + ((cram[offs] & 0x18) << 5);
 			color = (cram[offs] & 0x07);
@@ -1182,8 +1187,8 @@ static INT32 DrvDraw()
 		sy = sram[offs + 1];
 
 		if (joinem || loverb) {
-			num   = sram[offs + 2] + ((sram[offs + 3] & 0x01) << 8);
-			color = (sram[offs + 3] & 0x38) >> 2;
+			num   = sram[offs + 2] + ((sram[offs + 3] & 0x03) << 8);
+			color = (sram[offs + 3] & 0x38) >> 2 | joinem_palette_bank;;
 		} else {
 			num   = sram[offs + 2] + ((sram[offs + 3] & 0x08) << 5);
 			color = (sram[offs + 3] & 0x07);

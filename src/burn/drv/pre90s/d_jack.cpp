@@ -1227,7 +1227,7 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
-	if (joinem || loverb) { // this causes Unclepoo to not boot
+	if ((joinem || loverb) && !unclepoo) { // this causes Unclepoo to not boot
 		for (INT32 i = 0; i < 6; i++)
 			Rom0[0xb500 + i] = jack_cpu0_read(0xb500 + i);
 	}
@@ -1855,7 +1855,7 @@ static INT32 unclepooInit()
 {
 	joinem = 1;
 	unclepoo = 1;
-	timer_rate = 32;
+	timer_rate = 16; //32 in mame?
 
 	INT32 nRet = DrvInit();
 

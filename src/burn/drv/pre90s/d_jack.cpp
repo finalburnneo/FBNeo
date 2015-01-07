@@ -13,7 +13,7 @@ extern "C" {
 static UINT8 *Mem, *Rom0, *Rom1, *Gfx, *Prom, *User;
 static UINT8 DrvJoy1[8], DrvJoy2[8], DrvJoy3[8], DrvJoy4[8], DrvReset, DrvDips[2];
 static INT16 *pAY8910Buffer[3], *pFMBuffer = NULL;
-static INT32 tri_fix, joinem, loverb, suprtriv;
+static INT32 tri_fix, joinem, loverb, suprtriv, unclepoo;
 static INT32 timer_rate, flip_screen;
 static UINT32 *Palette, *DrvPal;
 static UINT8 DrvCalcPal;
@@ -153,6 +153,32 @@ static struct BurnInputInfo JoinemInputList[] = {
 };
 
 STDINPUTINFO(Joinem)
+
+static struct BurnInputInfo UnclepooInputList[] = {
+	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy3 + 0,	"p1 coin"  },
+	{"P1 start"  ,    BIT_DIGITAL  , DrvJoy3 + 2,	"p1 start" },
+	{"P1 Up",	  BIT_DIGITAL,   DrvJoy1 + 0,   "p1 up",   },
+	{"P1 Down",	  BIT_DIGITAL,   DrvJoy1 + 1,   "p1 down", },
+	{"P1 Right"     , BIT_DIGITAL  , DrvJoy1 + 2, 	"p1 right" },
+	{"P1 Left"      , BIT_DIGITAL  , DrvJoy1 + 3, 	"p1 left"  },
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
+
+	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy3 + 1,	"p2 coin"  },
+	{"P2 start"  ,    BIT_DIGITAL  , DrvJoy3 + 3,	"p2 start" },
+	{"P2 Up",	  BIT_DIGITAL,   DrvJoy2 + 0,   "p2 up",   },
+	{"P2 Down",	  BIT_DIGITAL,   DrvJoy2 + 1,   "p2 down", },
+	{"P2 Right"     , BIT_DIGITAL  , DrvJoy2 + 2, 	"p2 right" },
+	{"P2 Left"      , BIT_DIGITAL  , DrvJoy2 + 3, 	"p2 left"  },
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
+
+	{"Reset",	  BIT_DIGITAL  , &DrvReset,	"reset"    },
+	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,	"dip"	   },
+	{"Dip 2",	  BIT_DIPSWITCH, DrvDips + 1,	"dip"	   },
+};
+
+STDINPUTINFO(Unclepoo)
 
 static struct BurnInputInfo LoverboyInputList[] = {
 	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy3 + 0,	"p1 coin"  },
@@ -561,6 +587,45 @@ static struct BurnDIPInfo JoinemDIPList[]=
 
 STDDIPINFO(Joinem)
 
+static struct BurnDIPInfo UnclepooDIPList[]=
+{
+	// Default Values
+	{0x11, 0xff, 0xff, 0x00, NULL},
+	{0x12, 0xff, 0xff, 0x01, NULL},
+
+	// DSW1
+	{0   , 0xfe, 0   , 4   , "Coin A"},
+	{0x11, 0x01, 0x03, 0x01, "2 coins 1 credit"},
+	{0x11, 0x01, 0x03, 0x03, "4 coins 3 credits"},
+	{0x11, 0x01, 0x03, 0x00, "1 coin 1 credit"},
+	{0x11, 0x01, 0x03, 0x02, "1 coin 3 credits"},
+
+	{0   , 0xfe, 0   , 4   , "Coin B"},
+	{0x11, 0x01, 0x0c, 0x08, "3 coins 1 credit"},
+	{0x11, 0x01, 0x0c, 0x04, "2 coins 1 credit"},
+	{0x11, 0x01, 0x0c, 0x0c, "4 coins 3 credits"},
+	{0x11, 0x01, 0x0c, 0x00, "1 coin 1 credit"},
+
+	{0   , 0xfe, 0   , 2   , "Lives"},
+	{0x11, 0x01, 0x10, 0x00, "2"},
+	{0x11, 0x01, 0x10, 0x10, "5"},
+
+	// DSW2
+	{0   , 0xfe, 0   , 2   , "Cabinet"},
+	{0x12, 0x01, 0x01, 0x01, "Upright"},
+	{0x12, 0x01, 0x01, 0x00, "Cocktail"},
+
+	{0   , 0xfe, 0   , 2   , "Sound Check"},
+	{0x12, 0x01, 0x20, 0x00, "Off"},
+	{0x12, 0x01, 0x20, 0x20, "On"},
+
+	{0   , 0xfe, 0   , 2   , "Infinite Lives"},
+	{0x12, 0x01, 0x80, 0x00, "2"},
+	{0x12, 0x01, 0x80, 0x80, "3"},
+};
+
+STDDIPINFO(Unclepoo)
+
 static struct BurnDIPInfo LoverboyDIPList[]=
 {
 	// Default Values
@@ -734,7 +799,7 @@ UINT8 __fastcall jack_cpu0_read(UINT16 address)
 		case 0xb504:
 		{
 			for (INT32 i = 0; i < 8; i++) ret |= DrvJoy3[i] << i;
-			if (joinem || loverb) ret |= 0x40;
+			if (joinem || loverb) ret |= 0x40; // boot-freeze thing?
 
 			return ret;
 		}
@@ -827,6 +892,7 @@ static INT32 DrvDoReset()
 
 	if (loverb || joinem) {
 		memset (Rom0 + 0x8000, 0, 0x1000);
+		memset (Rom0 + 0x9000, 0, 0x07ff);
 	} else {
 		memset ((UINT8*)Palette, 0, 0x400);
 		memset (Rom0 + 0x4000, 0, 0x1000);
@@ -984,7 +1050,12 @@ static INT32 DrvInit()
 		ZetMapArea(0x0000, 0x8fff, 0, Rom0 + 0x0000);
 		ZetMapArea(0x0000, 0x8fff, 2, Rom0 + 0x0000);
 
+		ZetMapArea(0x8000, 0x8fff, 0, Rom0 + 0x8000);
 		ZetMapArea(0x8000, 0x8fff, 1, Rom0 + 0x8000);
+		ZetMapArea(0x8000, 0x8fff, 2, Rom0 + 0x8000);
+		ZetMapArea(0x9000, 0x97ff, 0, Rom0 + 0x9000); // unclepoo
+		ZetMapArea(0x9000, 0x97ff, 1, Rom0 + 0x9000); // unclepoo
+		ZetMapArea(0x9000, 0x97ff, 2, Rom0 + 0x9000); // unclepoo
 
 		ZetMapArea(0xb500, 0xb5ff, 0, Rom0 + 0xb500); // controls hack
 	} else {
@@ -1062,6 +1133,7 @@ static INT32 DrvExit()
 	joinem = 0;
 	loverb = 0;
 	suprtriv = 0;
+	unclepoo = 0;
 
 	return 0;
 }
@@ -1155,7 +1227,7 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
-	if (joinem || loverb) {
+	if (joinem || loverb) { // this causes Unclepoo to not boot
 		for (INT32 i = 0; i < 6; i++)
 			Rom0[0xb500 + i] = jack_cpu0_read(0xb500 + i);
 	}
@@ -1779,6 +1851,49 @@ struct BurnDriver BurnDrvjoinem = {
 	224, 240, 3, 4
 };
 
+static INT32 unclepooInit()
+{
+	joinem = 1;
+	unclepoo = 1;
+	timer_rate = 32;
+
+	INT32 nRet = DrvInit();
+
+	joinem_palette_init();
+
+	return nRet;
+}
+
+// Uncle Poo
+
+static struct BurnRomInfo unclepooRomDesc[] = {
+	{ "01.f17",		0x2000, 0x92fb238c, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "02.f14",		0x2000, 0xb99214ef, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "03.f11",		0x2000, 0xa136af97, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "04.f09",		0x2000, 0xc4bcd414, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "08.c15",		0x1000, 0xfd84106b, 2 | BRF_PRG | BRF_ESS }, //  4 audiocpu
+
+	{ "07.h04",		0x2000, 0xe2f73e99, 3 | BRF_GRA }, //  5 gfx1
+	{ "06.j04",		0x2000, 0x94b5f676, 3 | BRF_GRA }, //  6
+	{ "05.k04",		0x2000, 0x64026934, 3 | BRF_GRA }, //  7
+
+	{ "diatec_l.bin",	0x0100, 0xb04d466a, 4 | BRF_GRA }, //  8 proms
+	{ "diatec_h.bin",	0x0100, 0x938601b1, 4 | BRF_GRA }, //  9
+};
+
+STD_ROM_PICK(unclepoo)
+STD_ROM_FN(unclepoo)
+
+struct BurnDriver BurnDrvUnclepoo = {
+	"unclepoo", NULL, NULL, NULL, "1983",
+	"Uncle Poo\0", NULL, "Diatec", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, unclepooRomInfo, unclepooRomName, NULL, NULL, UnclepooInputInfo, UnclepooDIPInfo,
+	unclepooInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x100,
+	224, 240, 3, 4
+};
 
 // Lover Boy
 

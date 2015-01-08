@@ -2615,7 +2615,7 @@ static INT32 PolluxDraw()
 	draw_sprites(0,1|2);
 	if (nBurnLayer & 2) DrawLayer(DrvTMapROM1, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, 0x0f, 4, 2);
 	draw_sprites(1,1|2);
-	if (nBurnLayer & 4) DrawTextLayer(0, 4, 8);
+	if (nBurnLayer & 4) DrawTextLayer(0, 4, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -2650,7 +2650,7 @@ static INT32 FlytigerDraw()
 
 	draw_sprites(1,1|2|8);
 
-	if (nBurnLayer & 4) DrawTextLayer(0, 4, 8);
+	if (nBurnLayer & 4) DrawTextLayer(0, 4, 0);
 
 	BurnTransferCopy(DrvPalette);
 

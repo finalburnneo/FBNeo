@@ -114,7 +114,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					
 					szText[0] = _T('\0');
 					_stprintf(szText, _T("Selected colour: #%05X RGB #%02X%02X%02X"), i + nPalettePosition, r, g, b);
-					SendMessage(GetDlgItem(hPaletteViewerDlg, IDC_LABELCOMMENT), WM_SETTEXT, (WPARAM)0, (LPARAM)szText);					
+					SendMessage(GetDlgItem(hPaletteViewerDlg, IDC_GFX_VIEWER_SEL_COL), WM_SETTEXT, (WPARAM)0, (LPARAM)szText);					
 					return 0;
 				}
 			}

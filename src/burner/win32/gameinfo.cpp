@@ -613,7 +613,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			return 0;
 		}
 		
-		if (Id == IDRESCAN && Notify == BN_CLICKED) {
+		if (Id == IDRESCANSET && Notify == BN_CLICKED) {
 			nBurnDrvActive = nGiDriverSelected;
 			// use the nBurnDrvActive value from when the Rom Info button was clicked, because it can/will change
 			// even though the selection list [window below it] doesn't have focus. -dink

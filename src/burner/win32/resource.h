@@ -177,6 +177,7 @@
 #define IDC_SEL_SEARCHGROUP					20135
 #define IDC_RESOLUTION						20136
 #define IDC_CHECKUNAVAILABLE              	20137
+#define IDC_SYSINFO_LOG_SAVE                20138
 
 #define IDC_DRVCOUNT						20200
 #define IDC_TREE2							20201
@@ -232,6 +233,7 @@
 #define IDC_GFX_VIEWER_VERT_16				20431
 #define IDC_GFX_VIEWER_PREV					20432
 #define IDC_GFX_VIEWER_NEXT					20433
+#define IDC_GFX_VIEWER_SEL_COL              20434
 
 #define IDC_TAB1							20500
 #define IDC_SPATH_TAB						20501
@@ -240,6 +242,7 @@
 #define IDROM                           	20600
 #define IDRESCAN                        	20601
 #define IDGAMEINFO                       	20602
+#define IDRESCANSET                        	20603
 
 #define IDC_MVS_CART1                 		20700
 #define IDC_MVS_CART2                   	20701

@@ -999,7 +999,7 @@ static INT_PTR CALLBACK SysInfoProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM l
 
 					WndInMid(hDlg, hScrnWnd);
 				}
-				if (LOWORD(wParam) == IDC_SYSINFO_LOG) {
+				if (LOWORD(wParam) == IDC_SYSINFO_LOG_SAVE) {
 					FILE* fp = NULL;
 
 					SendMessage(hDlg, WM_NEXTDLGCTL, (WPARAM)GetDlgItem(hDlg, IDOK), TRUE);
@@ -1009,7 +1009,7 @@ static INT_PTR CALLBACK SysInfoProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM l
 						_stprintf(szLogName, _T("config/%s.error.log"), szAppExeName);
 						fp = _tfopen(szLogName, _T("ab"));
 
-						EnableWindow(GetDlgItem(hDlg, IDC_SYSINFO_LOG), FALSE);
+						EnableWindow(GetDlgItem(hDlg, IDC_SYSINFO_LOG_SAVE), FALSE);
 					} else {
 						TCHAR szFilter[1024];
 

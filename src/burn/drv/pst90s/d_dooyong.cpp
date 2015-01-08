@@ -57,6 +57,7 @@ static UINT8 soundlatch;
 static UINT8 priority_select;
 static UINT8 text_layer_enable;
 static UINT8 gulf_storm = 0;
+static UINT8 vblank = 0;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -876,7 +877,7 @@ static UINT8 __fastcall gulfstrm_main_read(UINT16 address)
 			return DrvInputs[1];
 
 		case 0xf004:
-			return (DrvInputs[0] & ~0x10) | ((ZetTotalCycles() >= 125000) ? 0x10 : 0); // vblank
+			return (DrvInputs[0] & ~0x10) | (vblank ? 0 : 0x10); // vblank
 	}
 
 	return 0;
@@ -1747,7 +1748,7 @@ static INT32 PolluxInit()
 	ZetSetReadHandler(lastday_sound_read);
 	ZetClose();
 
-	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream8Mhz, DrvGetTime8Mhz, 0);
 	BurnTimerAttachZet(8000000);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
@@ -2211,6 +2212,7 @@ static INT32 Z80YM2203Exit()
 
 	global_y = 8;
 	main_cpu_clock = 8000000;
+	vblank = 0;
 
 	return 0;
 }
@@ -2774,13 +2776,15 @@ static INT32 LastdayFrame()
 	INT32 nCyclesTotal[2] = { 8000000 / 60, 8000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
+	vblank = 0;
+
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
 		if (gulf_storm) {
-			if (i == 91) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-			if (i == 93) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			if (i == 90) { ZetSetIRQLine(0, ZET_IRQSTATUS_ACK); vblank = 1; }
+			if (i == 93) { ZetSetIRQLine(0, ZET_IRQSTATUS_NONE); vblank = 0; }
 		} else {
 			if (i == (nInterleave - 2)) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			if (i == (nInterleave - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);

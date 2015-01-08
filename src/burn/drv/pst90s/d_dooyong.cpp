@@ -56,6 +56,7 @@ static UINT8 sprite_enable;
 static UINT8 soundlatch;
 static UINT8 priority_select;
 static UINT8 text_layer_enable;
+static UINT8 gulf_storm = 0;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -1300,9 +1301,19 @@ inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
 }
 
+inline static INT32 DrvSynchroniseStream8Mhz(INT32 nSoundRate)
+{
+	return (INT64)ZetTotalCycles() * nSoundRate / 8000000;
+}
+
 inline static double DrvGetTime()
 {
 	return (double)ZetTotalCycles() / 4000000.0;
+}
+
+inline static double DrvGetTime8Mhz()
+{
+	return (double)ZetTotalCycles() / 8000000.0;
 }
 
 static INT32 Z80YM2203DoReset()
@@ -1318,6 +1329,7 @@ static INT32 Z80YM2203DoReset()
 	BurnYM2203Reset();
 	ZetClose();
 
+	sound_irq_line[0] = sound_irq_line[1] = 0;
 	sprite_enable = 0;
 	soundlatch = 0;
 	priority_select = 0;
@@ -1376,8 +1388,8 @@ static INT32 DrvZ80MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvZ80ROM0	= Next; Next += 0x020000;
-	DrvZ80ROM1	= Next; Next += 0x010000;
+	DrvZ80ROM0	= Next; Next += 0x120000;
+	DrvZ80ROM1	= Next; Next += 0x110000;
 
 	DrvGfxROM0	= Next; Next += 0x040000;
 	DrvGfxROM1	= Next; Next += 0x100000;
@@ -1395,8 +1407,8 @@ static INT32 DrvZ80MemIndex()
 
 	AllRam		= Next;
 
-	DrvZ80RAM0	= Next; Next += 0x01400;
-	DrvZ80RAM1	= Next; Next += 0x00800;
+	DrvZ80RAM0	= Next; Next += 0x11400;
+	DrvZ80RAM1	= Next; Next += 0x10800;
 
 	DrvSprRAM	= Next; Next += 0x01000;
 	DrvSprBuf	= Next; Next += 0x01000;
@@ -1591,7 +1603,7 @@ static INT32 LastdayInit()
 	ZetClose();
 
 	BurnYM2203Init(2, 4000000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
-	BurnTimerAttachZet(4000000);
+	BurnTimerAttachZet(8000000);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
 
@@ -1657,20 +1669,22 @@ static INT32 GulfstrmInit()
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,	0x0000, 0xefff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,	0xf000, 0xf7ff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM1,	0x0000, 0x7fff, ZET_ROM);
+	ZetMapMemory(DrvZ80RAM1,	0xc000, 0xc7ff, ZET_RAM);
 	ZetSetWriteHandler(lastday_sound_write);
 	ZetSetReadHandler(lastday_sound_read);
 	ZetClose();
 
-	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
-	BurnTimerAttachZet(4000000);
+	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream8Mhz, DrvGetTime8Mhz, 0);
+	BurnTimerAttachZet(8000000);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
 	Z80YM2203DoReset();
+
+	gulf_storm = 1;
 
 	return 0;
 }
@@ -1734,7 +1748,7 @@ static INT32 PolluxInit()
 	ZetClose();
 
 	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
-	BurnTimerAttachZet(4000000);
+	BurnTimerAttachZet(8000000);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
 
@@ -2757,19 +2771,24 @@ static INT32 LastdayFrame()
 	}
 
 	INT32 nInterleave = 100;
-	INT32 nCyclesTotal[2] = { 8000000 / 60, 4000000 / 60 };
+	INT32 nCyclesTotal[2] = { 8000000 / 60, 8000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		if (i == (nInterleave - 10)) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (gulf_storm) {
+			if (i == 91) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			if (i == 93) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		} else {
+			if (i == (nInterleave - 2)) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			if (i == (nInterleave - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		}
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdate(nCyclesTotal[1] / nInterleave);
+		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
 		ZetClose();
 	}
 
@@ -2820,7 +2839,7 @@ static INT32 FlytigerFrame()
 	{
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		if (i == (nInterleave - 10)) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		if (i == (nInterleave - 2)) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 		ZetClose();
 

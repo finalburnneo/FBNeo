@@ -1127,7 +1127,7 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 1500000, nBurnSoundRate, &soundlatch_r, &timer_r, NULL, NULL);
 	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
-	if (loverb) {
+	if (loverb || joinem) {
 		AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	}
 

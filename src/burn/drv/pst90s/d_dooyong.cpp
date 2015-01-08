@@ -1388,8 +1388,8 @@ static INT32 DrvZ80MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvZ80ROM0	= Next; Next += 0x120000;
-	DrvZ80ROM1	= Next; Next += 0x110000;
+	DrvZ80ROM0	= Next; Next += 0x020000;
+	DrvZ80ROM1	= Next; Next += 0x010000;
 
 	DrvGfxROM0	= Next; Next += 0x040000;
 	DrvGfxROM1	= Next; Next += 0x100000;
@@ -1407,8 +1407,8 @@ static INT32 DrvZ80MemIndex()
 
 	AllRam		= Next;
 
-	DrvZ80RAM0	= Next; Next += 0x11400;
-	DrvZ80RAM1	= Next; Next += 0x10800;
+	DrvZ80RAM0	= Next; Next += 0x01400;
+	DrvZ80RAM1	= Next; Next += 0x00800;
 
 	DrvSprRAM	= Next; Next += 0x01000;
 	DrvSprBuf	= Next; Next += 0x01000;

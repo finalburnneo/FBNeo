@@ -2,13 +2,15 @@
 // Based on MAME driver by Nicola Salmoria
 
 /*
-   To do::
+   To do:
 	Super-x priorities not 100% correct?
 	if speed is too slow, switch palettes to be calculated per write rather than per frame
 	also possibly add transparency tables to skip clear tiles.
 
    Bugs:
 	Sound still not right for a few other games?
+	- Gulf Storm has sfx, no music
+	- Pollux has music, no sfx
 */
 
 #include "tiles_generic.h"
@@ -2783,7 +2785,7 @@ static INT32 LastdayFrame()
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
 		if (gulf_storm) {
-			if (i == 90) { ZetSetIRQLine(0, ZET_IRQSTATUS_ACK); vblank = 1; }
+			if (i == 92) { ZetSetIRQLine(0, ZET_IRQSTATUS_ACK); vblank = 1; }
 			if (i == 93) { ZetSetIRQLine(0, ZET_IRQSTATUS_NONE); vblank = 0; }
 		} else {
 			if (i == (nInterleave - 2)) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);

@@ -8,9 +8,8 @@
 	also possibly add transparency tables to skip clear tiles.
 
    Bugs:
-	Sound still not right for a few other games?
-	- Gulf Storm has sfx, no music
-	- Pollux has music, no sfx
+    A seriously ugly hack has been used to get sound+music in Pollux and Gulf Storm
+	After 2 days of hacking, I couldn't find a better way.
 */
 
 #include "tiles_generic.h"
@@ -60,6 +59,7 @@ static UINT8 priority_select;
 static UINT8 text_layer_enable;
 static UINT8 gulf_storm = 0;
 static UINT8 vblank = 0;
+static UINT8 pollux_gulfstrm_irq_kicker_hack = 0;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -1211,6 +1211,33 @@ static UINT8 __fastcall superx_main_read_byte(UINT32 address)
 	return 0;
 }
 
+static void __fastcall pollux_sound_write(UINT16 address, UINT8 data)
+{
+	switch (address)
+	{
+		case 0xf802: BurnYM2203Write(0, 0, data); return;
+		case 0xf803: BurnYM2203Write(0, 1, data); return;
+		case 0xf804: BurnYM2203Write(1, 0, data); return;
+		case 0xf805: BurnYM2203Write(1, 1, data); return;
+	}
+}
+
+static UINT8 __fastcall pollux_sound_read(UINT16 address)
+{
+	switch (address)
+	{
+		case 0xf800:
+			 return soundlatch;
+
+		case 0xf802: return BurnYM2203Read(0, 0);
+		case 0xf803: return BurnYM2203Read(0, 1);
+		case 0xf804: return BurnYM2203Read(1, 0);
+		case 0xf805: return BurnYM2203Read(1, 1);
+	}
+
+	return 0;
+}
+
 
 static void __fastcall lastday_sound_write(UINT16 address, UINT8 data)
 {
@@ -1605,7 +1632,7 @@ static INT32 LastdayInit()
 	ZetSetReadHandler(lastday_sound_read);
 	ZetClose();
 
-	BurnYM2203Init(2, 4000000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 4000000, &DrvYM2203IRQHandler, DrvSynchroniseStream8Mhz, DrvGetTime8Mhz, 0);
 	BurnTimerAttachZet(8000000);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
@@ -1682,6 +1709,7 @@ static INT32 GulfstrmInit()
 	BurnTimerAttachZet(8000000);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
+	pollux_gulfstrm_irq_kicker_hack = 1;
 
 	GenericTilesInit();
 
@@ -1746,14 +1774,15 @@ static INT32 PolluxInit()
 	ZetOpen(1);
 	ZetMapMemory(DrvZ80ROM1,	0x0000, 0xefff, ZET_ROM);
 	ZetMapMemory(DrvZ80RAM1,	0xf000, 0xf7ff, ZET_RAM);
-	ZetSetWriteHandler(lastday_sound_write);
-	ZetSetReadHandler(lastday_sound_read);
+	ZetSetWriteHandler(pollux_sound_write);
+	ZetSetReadHandler(pollux_sound_read);
 	ZetClose();
 
 	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream8Mhz, DrvGetTime8Mhz, 0);
 	BurnTimerAttachZet(8000000);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
+	pollux_gulfstrm_irq_kicker_hack = 1;
 
 	GenericTilesInit();
 
@@ -2215,6 +2244,7 @@ static INT32 Z80YM2203Exit()
 	global_y = 8;
 	main_cpu_clock = 8000000;
 	vblank = 0;
+	pollux_gulfstrm_irq_kicker_hack = 0;
 
 	return 0;
 }
@@ -2795,6 +2825,11 @@ static INT32 LastdayFrame()
 
 		ZetOpen(1);
 		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
+		if (pollux_gulfstrm_irq_kicker_hack && (i % 10) == 0) { // ugly hack for pollux musix+sfx
+			if (!(sound_irq_line[0] | sound_irq_line[1])) {
+				ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+			}
+		}
 		ZetClose();
 	}
 

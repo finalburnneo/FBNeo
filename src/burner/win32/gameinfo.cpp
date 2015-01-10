@@ -646,7 +646,22 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			}
 			
 			if (gameAv[nGiDriverSelected] > 0) {
-				MessageBox(hGameInfoDlg, FBALoadStringEx(hAppInst, IDS_ERR_LOAD_OK, true), FBALoadStringEx(hAppInst, IDS_ERR_INFORMATION, true), MB_OK);
+				int TabPage = TabCtrl_GetCurSel(hTabControl);
+				if (TabPage != 0) {
+					MessageBox(hGameInfoDlg, FBALoadStringEx(hAppInst, IDS_ERR_LOAD_OK, true), FBALoadStringEx(hAppInst, IDS_ERR_INFORMATION, true), MB_OK);
+				}
+				if (TabPage == 0) {
+					// if the romset is OK, just say so in the rom info dialog (instead of popping up a window)
+					HWND hList = GetDlgItem(hGameInfoDlg, IDC_LIST1);
+					LV_ITEM LvItem;
+					memset(&LvItem, 0, sizeof(LvItem));
+					LvItem.mask=  LVIF_TEXT;
+					LvItem.cchTextMax = 256;
+					LvItem.iSubItem = 4;
+					LvItem.pszText = _T("Romset OK!");
+					SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
+					UpdateWindow(hGameInfoDlg);
+				}
 			}
 			BzipClose();
 			WriteGameAvb();

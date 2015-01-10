@@ -2945,7 +2945,7 @@ static INT32 RsharkFrame()
 	}
 
 	INT32 nSegment = 0;
-	INT32 nInterleave = 32;
+	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { main_cpu_clock / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -2956,8 +2956,8 @@ static INT32 RsharkFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		if (i == 30) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
-		if (i == 15) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+		if (i == 248) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+		if (i == 120) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
 
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
 

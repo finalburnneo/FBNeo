@@ -1708,8 +1708,10 @@ static INT32 GulfstrmInit()
 	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream8Mhz, DrvGetTime8Mhz, 0);
 	BurnTimerAttachZet(8000000);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetPSGVolume(0, 0.20);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
-	pollux_gulfstrm_irq_kicker_hack = 1;
+	BurnYM2203SetPSGVolume(1, 0.20);
+	pollux_gulfstrm_irq_kicker_hack = 10;
 
 	GenericTilesInit();
 
@@ -1782,7 +1784,8 @@ static INT32 PolluxInit()
 	BurnTimerAttachZet(8000000);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
-	pollux_gulfstrm_irq_kicker_hack = 1;
+	pollux_gulfstrm_irq_kicker_hack = 13;
+	main_cpu_clock = 12000000; // +4Mhz hack so the video scrolls better.
 
 	GenericTilesInit();
 
@@ -2244,6 +2247,7 @@ static INT32 Z80YM2203Exit()
 	global_y = 8;
 	main_cpu_clock = 8000000;
 	vblank = 0;
+	gulf_storm = 0;
 	pollux_gulfstrm_irq_kicker_hack = 0;
 
 	return 0;
@@ -2805,7 +2809,7 @@ static INT32 LastdayFrame()
 	}
 
 	INT32 nInterleave = 100;
-	INT32 nCyclesTotal[2] = { 8000000 / 60, 8000000 / 60 };
+	INT32 nCyclesTotal[2] = { main_cpu_clock / 60, 8000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	vblank = 0;
@@ -2825,9 +2829,11 @@ static INT32 LastdayFrame()
 
 		ZetOpen(1);
 		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
-		if (pollux_gulfstrm_irq_kicker_hack && (i % 10) == 0) { // ugly hack for pollux musix+sfx
+		if (pollux_gulfstrm_irq_kicker_hack && (i % pollux_gulfstrm_irq_kicker_hack) == 0) { // ugly hack for pollux musix+sfx
 			if (!(sound_irq_line[0] | sound_irq_line[1])) {
-				ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+				ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+				ZetRun(60);
+				ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 			}
 		}
 		ZetClose();

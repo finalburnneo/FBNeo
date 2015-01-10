@@ -2979,7 +2979,7 @@ static INT32 RsharkFrame()
 	}
 
 	INT32 nSegment = 0;
-	INT32 nInterleave = 32;
+	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { main_cpu_clock / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };

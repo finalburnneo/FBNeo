@@ -1599,6 +1599,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				case IDGAMEINFO:
 					if (bDrvSelected) {
 						GameInfoDialogCreate(hSelDlg, nBurnDrvActive);
+						SetFocus(hSelList); // Update list for Rescan Romset button
 					} else {
 						MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 					}

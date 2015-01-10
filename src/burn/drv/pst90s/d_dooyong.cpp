@@ -2,14 +2,9 @@
 // Based on MAME driver by Nicola Salmoria
 
 /*
-   To do:
-	Super-x priorities not 100% correct?
-	if speed is too slow, switch palettes to be calculated per write rather than per frame
-	also possibly add transparency tables to skip clear tiles.
-
-   Bugs:
+   Notes:
     A seriously ugly hack has been used to get sound+music in Pollux and Gulf Storm
-	After 2 days of hacking, I couldn't find a better way.
+	After 2 days of hacking, I couldn't find a better way. - Jan 9, 2015 Dink
 */
 
 #include "tiles_generic.h"
@@ -70,7 +65,10 @@ static UINT16 DrvInputs[3];
 
 static INT32 global_y = 8;
 static INT32 main_cpu_clock = 8000000;
+
 static INT32 gfxmask[6] = { 0, 0, 0, 0, 0, 0 };
+static UINT8 *DrvTransTab[6] = { NULL, NULL, NULL, NULL, NULL, NULL };
+
 
 static struct BurnInputInfo LastdayInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
@@ -774,6 +772,32 @@ static struct BurnDIPInfo PopbingoDIPList[]=
 
 STDDIPINFO(Popbingo)
 
+static inline void palette_write_4bgr(INT32 offset)
+{
+	UINT16 p = *((UINT16*)(DrvPalRAM + offset));
+
+	INT32 r = p & 0x0f;
+	INT32 g = (p >> 4) & 0x0f;
+	INT32 b = (p >> 8) & 0x0f;
+
+	DrvPalette[offset/2] = BurnHighCol(r+(r*16),g+(g*16),b+(b*16),0);
+}
+
+static inline void palette_write_5rgb(INT32 offset)
+{
+	UINT16 p = *((UINT16*)(DrvPalRAM + offset));
+
+	INT32 b = (p >> 0) & 0x1f;
+	INT32 g = (p >> 5) & 0x1f;
+	INT32 r = (p >> 10) & 0x1f;
+
+	r = (r << 3) | (r >> 2);
+	g = (g << 3) | (g >> 2);
+	b = (b << 3) | (b >> 2);
+
+	DrvPalette[offset/2] = BurnHighCol(r,g,b,0);
+}
+
 static void bankswitch(INT32 data)
 {
 	z80_bank_select[0] = data;
@@ -783,6 +807,12 @@ static void bankswitch(INT32 data)
 
 static void __fastcall lastday_main_write(UINT16 address, UINT8 data)
 {
+	if ((address & 0xf800) == 0xc800) {
+		DrvPalRAM[address & 0x7ff] = data;
+		palette_write_4bgr(address & 0x7fe);
+		return;
+	}
+
 	if ((address & 0xfff8) == 0xc000) {
 		scrollregs[0][address & 7] = data;
 		return;
@@ -836,6 +866,12 @@ static UINT8 __fastcall lastday_main_read(UINT16 address)
 
 static void __fastcall gulfstrm_main_write(UINT16 address, UINT8 data)
 {
+	if ((address & 0xf800) == 0xf800) {
+		DrvPalRAM[address & 0x7ff] = data;
+		palette_write_5rgb(address & 0x7fe);
+		return;
+	}
+
 	if ((address & 0xfff8) == 0xf018) {
 		scrollregs[0][address & 7] = data;
 		return;
@@ -913,6 +949,7 @@ static void __fastcall flytiger_main_write(UINT16 address, UINT8 data)
 	if ((address & 0xf800) == 0xe800) {
 		if (z80_bank_select[1]) {
 			DrvPalRAM[address & 0x7ff] = data;
+			palette_write_5rgb(address & 0x7fe);
 		}
 		return;
 	}
@@ -970,6 +1007,12 @@ static UINT8 __fastcall flytiger_main_read(UINT16 address)
 
 static void __fastcall bluehawk_main_write(UINT16 address, UINT8 data)
 {
+	if ((address & 0xf800) == 0xc800) {
+		DrvPalRAM[address & 0x7ff] = data;
+		palette_write_5rgb(address & 0x7fe);
+		return;
+	}
+
 	if ((address & 0xfff8) == 0xc018) {
 		scrollregs[2][address & 7] = data;
 		return;
@@ -1026,6 +1069,12 @@ static UINT8 __fastcall bluehawk_main_read(UINT16 address)
 
 static void __fastcall primella_main_write(UINT16 address, UINT8 data)
 {
+	if ((address & 0xf800) == 0xf000) {
+		DrvPalRAM[address & 0x7ff] = data;
+		palette_write_5rgb(address & 0x7fe);
+		return;
+	}
+
 	if ((address & 0xfff8) == 0xfc00) {
 		scrollregs[0][address & 7] = data;
 		return;
@@ -1075,12 +1124,18 @@ static UINT8 __fastcall primella_main_read(UINT16 address)
 
 static void __fastcall superx_main_write_word(UINT32 address, UINT16 data)
 {
-	if (address & 0xff00000) {
+	if (address & 0xff00000) { // Mirror top address bits.
 		SekWriteWord(address & 0xfffff, data);
 		return;
 	}
 
-	if ((address & 0x0f0000) == 0x0c0000) address = (address & 0xffff) | 0x80000;
+	if ((address & 0x0f0000) == 0x0c0000) address = (address & 0xffff) | 0x80000; // fix address for rshark
+
+	if ((address & 0x0ff000) == 0x088000) {
+		*((UINT16*)(DrvPalRAM + (address & 0xffe))) = data;
+		palette_write_5rgb(address & 0xffe);
+		return;
+	}
 
 	if ((address & 0x0ffff0) == 0x084000) {
 		scrollregs[0][(address & 0x0e) / 2] = data;
@@ -1118,12 +1173,18 @@ static void __fastcall superx_main_write_word(UINT32 address, UINT16 data)
 
 static void __fastcall superx_main_write_byte(UINT32 address, UINT8 data)
 {
-	if (address & 0xff00000) {
+	if (address & 0xff00000) { // Mirror top address bits.
 		SekWriteByte(address & 0xfffff, data);
 		return;
 	}
 
-	if ((address & 0x0f0000) == 0x0c0000) address = (address & 0xffff) | 0x80000;
+	if ((address & 0x0f0000) == 0x0c0000) address = (address & 0xffff) | 0x80000; // fix address for rshark
+
+	if ((address & 0x0ff000) == 0x088000) {
+		DrvPalRAM[(address & 0xfff)^1] = data;
+		palette_write_5rgb(address & 0xffe);
+		return;
+	}
 
 	if ((address & 0x0ffff1) == 0x084001) {
 		scrollregs[0][(address & 0x0e) / 2] = data;
@@ -1161,11 +1222,11 @@ static void __fastcall superx_main_write_byte(UINT32 address, UINT8 data)
 	
 static UINT16 __fastcall superx_main_read_word(UINT32 address)
 {
-	if (address & 0xff00000) {
+	if (address & 0xff00000) { // Mirror top address bits.
 		return SekReadWord(address & 0xfffff);
 	}
 
-	if ((address & 0x0f0000) == 0x0c0000) address = (address & 0xffff) | 0x80000;
+	if ((address & 0x0f0000) == 0x0c0000) address = (address & 0xffff) | 0x80000; // fix address for rshark
 
 	switch (address)
 	{
@@ -1187,11 +1248,11 @@ static UINT16 __fastcall superx_main_read_word(UINT32 address)
 	
 static UINT8 __fastcall superx_main_read_byte(UINT32 address)
 {
-	if (address & 0xff00000) {
+	if (address & 0xff00000) { // Mirror top address bits.
 		return SekReadByte(address & 0xfffff);
 	}
 
-	if ((address & 0x0f0000) == 0x0c0000) address = (address & 0xffff) | 0x80000;
+	if ((address & 0x0f0000) == 0x0c0000) address = (address & 0xffff) | 0x80000; // fix address for rshark
 
 	switch (address)
 	{
@@ -1211,35 +1272,7 @@ static UINT8 __fastcall superx_main_read_byte(UINT32 address)
 	return 0;
 }
 
-static void __fastcall pollux_sound_write(UINT16 address, UINT8 data)
-{
-	switch (address)
-	{
-		case 0xf802: BurnYM2203Write(0, 0, data); return;
-		case 0xf803: BurnYM2203Write(0, 1, data); return;
-		case 0xf804: BurnYM2203Write(1, 0, data); return;
-		case 0xf805: BurnYM2203Write(1, 1, data); return;
-	}
-}
-
-static UINT8 __fastcall pollux_sound_read(UINT16 address)
-{
-	switch (address)
-	{
-		case 0xf800:
-			 return soundlatch;
-
-		case 0xf802: return BurnYM2203Read(0, 0);
-		case 0xf803: return BurnYM2203Read(0, 1);
-		case 0xf804: return BurnYM2203Read(1, 0);
-		case 0xf805: return BurnYM2203Read(1, 1);
-	}
-
-	return 0;
-}
-
-
-static void __fastcall lastday_sound_write(UINT16 address, UINT8 data)
+static void __fastcall sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -1247,41 +1280,18 @@ static void __fastcall lastday_sound_write(UINT16 address, UINT8 data)
 		case 0xf001:
 		case 0xf002:
 		case 0xf003:
-		case 0xf802:
-		case 0xf803:
-		case 0xf804:
-		case 0xf805:
 			BurnYM2203Write((address & 2) / 2, address & 1, data);
 		return;
-	}
-}
 
-static UINT8 __fastcall lastday_sound_read(UINT16 address)
-{
-	switch (address)
-	{
-		case 0xc800:
-		case 0xf800:
-			return soundlatch;
-
-		case 0xf000:
-		case 0xf001:
-		case 0xf002:
-		case 0xf003:
+	// pollux
 		case 0xf802:
 		case 0xf803:
 		case 0xf804:
 		case 0xf805:
-			return BurnYM2203Read((address & 2) / 2, address & 1);
-	}
+			BurnYM2203Write((address & 4) / 4, address & 1, data);
+		return;
 
-	return 0;
-}
-
-static void __fastcall flytiger_sound_write(UINT16 address, UINT8 data)
-{
-	switch (address)
-	{
+	// flytiger
 		case 0xf808:
 			BurnYM2151SelectRegister(data);
 		return;
@@ -1296,13 +1306,28 @@ static void __fastcall flytiger_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-static UINT8 __fastcall flytiger_sound_read(UINT16 address)
+static UINT8 __fastcall sound_read(UINT16 address)
 {
 	switch (address)
 	{
+		case 0xc800:
 		case 0xf800:
 			return soundlatch;
 
+		case 0xf000:
+		case 0xf001:
+		case 0xf002:
+		case 0xf003:
+			return BurnYM2203Read((address & 2) / 2, address & 1);
+
+	// pollux
+		case 0xf802:
+		case 0xf803:
+		case 0xf804:
+		case 0xf805:
+			return BurnYM2203Read((address & 4) / 4, address & 1);
+
+	// flytiger
 		case 0xf808:
 		case 0xf809:
 			return BurnYM2151ReadStatus();
@@ -1528,6 +1553,12 @@ static void DrvGfxDecode(INT32 gfx, UINT8 *src, INT32 nLen, INT32 nType)
 
 	INT32 Plane5[8] = { STEP4(0,4), STEP4((nLen/2)*8, 4) };
 
+	INT32 TileSizes[6] = { 8, 32, 16, 8, 16, 32 };
+	INT32 TileDepths[6] = { 4, 4, 4, 4, 4, 8 };
+
+	INT32 tilesize = TileSizes[nType];
+	INT32 tilebpp = TileDepths[nType];
+
 	UINT8 *tmp = (UINT8*)BurnMalloc(nLen);
 	if (tmp == NULL) {
 		return;
@@ -1535,41 +1566,77 @@ static void DrvGfxDecode(INT32 gfx, UINT8 *src, INT32 nLen, INT32 nType)
 
 	memcpy (tmp, src, nLen);
 
+	gfxmask[gfx] = (((nLen * 8) / tilebpp) / (tilesize * tilesize)) - 1;
+
 	switch (nType)
 	{
 		case 0: // lastday characters
-			GfxDecode((nLen*2)/(8*8), 4, 8, 8, Plane0, XOffs0, YOffs0, 0x080, tmp, src);
-			gfxmask[gfx] = ((nLen * 2) - 1) / 0x40;
+			GfxDecode(gfxmask[gfx]+1, tilebpp, tilesize, tilesize, Plane0, XOffs0, YOffs0, 0x0080, tmp, src);
 		break;
 
 		case 1: // tiles
-			GfxDecode((nLen*2)/(32*32), 4, 32, 32, Plane1, XOffs1, YOffs1, 0x1000, tmp, src);
-			gfxmask[gfx] = ((nLen * 2) - 1) / 0x400;
+			GfxDecode(gfxmask[gfx]+1, tilebpp, tilesize, tilesize, Plane1, XOffs1, YOffs1, 0x1000, tmp, src);
 		break;
 
 		case 2: // sprites
-			GfxDecode((nLen*2)/(16*16), 4, 16, 16, Plane2, XOffs2, YOffs2, 0x0400, tmp, src);
-			gfxmask[gfx] = ((nLen * 2) - 1) / 0x100;
+			GfxDecode(gfxmask[gfx]+1, tilebpp, tilesize, tilesize, Plane2, XOffs2, YOffs2, 0x0400, tmp, src);
 		break;
 
 		case 3: // bluehawk characters
-			GfxDecode((nLen*2)/(8*8), 4, 8, 8, Plane3, XOffs3, YOffs3, 0x0100, tmp, src);
-			gfxmask[gfx] = ((nLen * 2) - 1) / 0x40;
+			GfxDecode(gfxmask[gfx]+1, tilebpp, tilesize, tilesize, Plane3, XOffs3, YOffs3, 0x0100, tmp, src);
 		break;
 
 		case 4: // rshark sprites
-			GfxDecode((nLen*2)/(16*16), 4, 16, 16, Plane4, XOffs4, YOffs4, 0x0400, tmp, src);
-			gfxmask[gfx] = ((nLen * 2) - 1) / 0x100;
+			GfxDecode(gfxmask[gfx]+1, tilebpp, tilesize, tilesize, Plane4, XOffs4, YOffs4, 0x0400, tmp, src);
 		break;
 
 		case 5: // popbingo tiles
-			GfxDecode(nLen/(32*32), 8, 32, 32, Plane5, XOffs1, YOffs1, 0x1000, tmp, src);
-			gfxmask[gfx] = (nLen - 1) / 0x400;
+			GfxDecode(gfxmask[gfx]+1, tilebpp, tilesize, tilesize, Plane5, XOffs1, YOffs1, 0x1000, tmp, src);
 		break;
+	}
+
+	// Calculate transparency tables
+	{
+		INT32 count = 0;
+
+		DrvTransTab[gfx] = (UINT8*)BurnMalloc(gfxmask[gfx]+1);
+
+		memset (DrvTransTab[gfx], 1, gfxmask[gfx]+1);
+
+		for (INT32 i = 0; i < (gfxmask[gfx]+1)*tilesize*tilesize; i+=tilesize*tilesize) {
+
+			int advcnt = 1;
+
+			for (INT32 j = 0; j < tilesize*tilesize; j++) {
+				if (src[i+j] != ((1<<tilebpp)-1)) {
+					DrvTransTab[gfx][i/(tilesize*tilesize)] = 0;
+					advcnt=0;
+					break;
+				}
+			}
+
+			count+=advcnt;
+		}
+
+#ifdef FBA_DEBUG
+		bprintf (0, _T("%d, mask: %x, transpcnt: %x\n"), gfx, gfxmask[gfx], count);
+#endif
 	}
 
 	BurnFree (tmp);
 }
+
+static void DrvSoundCPUInit(INT32 cpuno, INT32 type)
+{
+	ZetInit(cpuno);
+	ZetOpen(cpuno);
+	ZetMapMemory(DrvZ80ROM1,	((type) ? 0x0000 : 0x0000), ((type) ? 0xefff : 0x7fff), ZET_ROM);
+	ZetMapMemory(DrvZ80RAM1,	((type) ? 0xf000 : 0xc000), ((type) ? 0xf7ff : 0xc7ff), ZET_RAM);
+	ZetSetWriteHandler(sound_write);
+	ZetSetReadHandler(sound_read);
+	ZetClose();
+}
+
 
 static INT32 LastdayInit()
 {
@@ -1616,7 +1683,7 @@ static INT32 LastdayInit()
 	ZetInit(0);
 	ZetOpen(0);
 	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvPalRAM,		0xc800, 0xcfff, ZET_RAM);
+	ZetMapMemory(DrvPalRAM,		0xc800, 0xcfff, ZET_ROM);
 	ZetMapMemory(DrvTxtRAM,		0xd000, 0xdfff, ZET_RAM);
 	ZetMapMemory(DrvZ80RAM0,	0xe000, 0xefff, ZET_RAM);
 	ZetMapMemory(DrvSprRAM,		0xf000, 0xffff, ZET_RAM);
@@ -1624,13 +1691,7 @@ static INT32 LastdayInit()
 	ZetSetReadHandler(lastday_main_read);
 	ZetClose();
 
-	ZetInit(1);
-	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,	0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,	0xc000, 0xc7ff, ZET_RAM);
-	ZetSetWriteHandler(lastday_sound_write);
-	ZetSetReadHandler(lastday_sound_read);
-	ZetClose();
+	DrvSoundCPUInit(1,0);
 
 	BurnYM2203Init(2, 4000000, &DrvYM2203IRQHandler, DrvSynchroniseStream8Mhz, DrvGetTime8Mhz, 0);
 	BurnTimerAttachZet(8000000);
@@ -1692,18 +1753,12 @@ static INT32 GulfstrmInit()
 	ZetMapMemory(DrvZ80RAM0,	0xc000, 0xcfff, ZET_RAM);
 	ZetMapMemory(DrvSprRAM,		0xd000, 0xdfff, ZET_RAM);
 	ZetMapMemory(DrvTxtRAM,		0xe000, 0xefff, ZET_RAM);
-	ZetMapMemory(DrvPalRAM,		0xf800, 0xffff, ZET_RAM);
+	ZetMapMemory(DrvPalRAM,		0xf800, 0xffff, ZET_ROM);
 	ZetSetWriteHandler(gulfstrm_main_write);
 	ZetSetReadHandler(gulfstrm_main_read);
 	ZetClose();
 
-	ZetInit(1);
-	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,	0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,	0xc000, 0xc7ff, ZET_RAM);
-	ZetSetWriteHandler(lastday_sound_write);
-	ZetSetReadHandler(lastday_sound_read);
-	ZetClose();
+	DrvSoundCPUInit(1,0);
 
 	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream8Mhz, DrvGetTime8Mhz, 0);
 	BurnTimerAttachZet(8000000);
@@ -1711,6 +1766,7 @@ static INT32 GulfstrmInit()
 	BurnYM2203SetPSGVolume(0, 0.20);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetPSGVolume(1, 0.20);
+
 	pollux_gulfstrm_irq_kicker_hack = 10;
 
 	GenericTilesInit();
@@ -1767,23 +1823,18 @@ static INT32 PolluxInit()
 	ZetMapMemory(DrvZ80RAM0,	0xc000, 0xcfff, ZET_RAM);
 	ZetMapMemory(DrvSprRAM,		0xd000, 0xdfff, ZET_RAM);
 	ZetMapMemory(DrvTxtRAM,		0xe000, 0xefff, ZET_RAM);
-	ZetMapMemory(DrvPalRAM,		0xf800, 0xffff, ZET_RAM);
+	ZetMapMemory(DrvPalRAM,		0xf800, 0xffff, ZET_ROM);
 	ZetSetWriteHandler(gulfstrm_main_write);
 	ZetSetReadHandler(pollux_main_read);
 	ZetClose();
 
-	ZetInit(1);
-	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,	0x0000, 0xefff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,	0xf000, 0xf7ff, ZET_RAM);
-	ZetSetWriteHandler(pollux_sound_write);
-	ZetSetReadHandler(pollux_sound_read);
-	ZetClose();
+	DrvSoundCPUInit(1,1);
 
 	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream8Mhz, DrvGetTime8Mhz, 0);
 	BurnTimerAttachZet(8000000);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
+
 	pollux_gulfstrm_irq_kicker_hack = 13;
 	main_cpu_clock = 12000000; // +4Mhz hack so the video scrolls better.
 
@@ -1876,13 +1927,7 @@ static INT32 FlytigerCommonInit(INT32 game_select)
 	ZetSetReadHandler(flytiger_main_read);
 	ZetClose();
 
-	ZetInit(1);
-	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,	0x0000, 0xefff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,	0xf000, 0xf7ff, ZET_RAM);
-	ZetSetWriteHandler(flytiger_sound_write);
-	ZetSetReadHandler(flytiger_sound_read);
-	ZetClose();
+	DrvSoundCPUInit(1,1);
 
 	BurnYM2151Init(3579545);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
@@ -1943,7 +1988,7 @@ static INT32 BluehawkInit()
 	ZetInit(0);
 	ZetOpen(0);
 	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvPalRAM,		0xc800, 0xcfff, ZET_RAM);
+	ZetMapMemory(DrvPalRAM,		0xc800, 0xcfff, ZET_ROM);
 	ZetMapMemory(DrvTxtRAM,		0xd000, 0xdfff, ZET_RAM);
 	ZetMapMemory(DrvSprRAM,		0xe000, 0xefff, ZET_RAM);
 	ZetMapMemory(DrvZ80RAM0,	0xf000, 0xffff, ZET_RAM);
@@ -1951,13 +1996,7 @@ static INT32 BluehawkInit()
 	ZetSetReadHandler(bluehawk_main_read);
 	ZetClose();
 
-	ZetInit(1);
-	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,	0x0000, 0xefff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,	0xf000, 0xf7ff, ZET_RAM);
-	ZetSetWriteHandler(flytiger_sound_write);
-	ZetSetReadHandler(flytiger_sound_read);
-	ZetClose();
+	DrvSoundCPUInit(1,1);
 
 	BurnYM2151Init(3579545);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
@@ -2039,18 +2078,12 @@ static INT32 PrimellaCommonInit(INT32 game_select)
 	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, ZET_ROM);
 	ZetMapMemory(DrvZ80RAM0,	0xc000, 0xd3ff, ZET_RAM);
 	ZetMapMemory(DrvTxtRAM,		0xe000, 0xefff, ZET_RAM);
-	ZetMapMemory(DrvPalRAM,		0xf000, 0xf7ff, ZET_RAM);
+	ZetMapMemory(DrvPalRAM,		0xf000, 0xf7ff, ZET_ROM);
 	ZetSetWriteHandler(primella_main_write);
 	ZetSetReadHandler(primella_main_read);
 	ZetClose();
 
-	ZetInit(1);
-	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,	0x0000, 0xefff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,	0xf000, 0xf7ff, ZET_RAM);
-	ZetSetWriteHandler(flytiger_sound_write);
-	ZetSetReadHandler(flytiger_sound_read);
-	ZetClose();
+	DrvSoundCPUInit(1,1);
 
 	BurnYM2151Init(4000000);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
@@ -2058,6 +2091,7 @@ static INT32 PrimellaCommonInit(INT32 game_select)
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
 
 	MSM6295Init(0, 1000000 / 132, 1);
+
 	MSM6295SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
 
 	global_y = 0;
@@ -2195,12 +2229,12 @@ static INT32 RsharkCommonInit(INT32 game_select)
 		SekMapMemory(Drv68KRAM0,	0x040000, 0x04cfff, SM_RAM);
 		SekMapMemory(DrvSprRAM,		0x04d000, 0x04dfff, SM_RAM);
 		SekMapMemory(Drv68KRAM1,	0x04e000, 0x04ffff, SM_RAM);
-		SekMapMemory(DrvPalRAM,		0x0c8000, 0x0c8fff, SM_RAM);
+		SekMapMemory(DrvPalRAM,		0x0c8000, 0x0c8fff, SM_ROM);
 	} else {
 		SekMapMemory(DrvPalRAM,		0x088000, 0x088fff, SM_RAM);
 		SekMapMemory(Drv68KRAM0,	0x0d0000, 0x0dcfff, SM_RAM);
 		SekMapMemory(DrvSprRAM,		0x0dd000, 0x0ddfff, SM_RAM);
-		SekMapMemory(Drv68KRAM1,	0x0de000, 0x0dffff, SM_RAM);
+		SekMapMemory(Drv68KRAM1,	0x0de000, 0x0dffff, SM_ROM);
 	}
 
 	SekSetWriteWordHandler(0,	superx_main_write_word);
@@ -2209,13 +2243,7 @@ static INT32 RsharkCommonInit(INT32 game_select)
 	SekSetReadByteHandler(0,	superx_main_read_byte);
 	SekClose();
 
-	ZetInit(0);
-	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM1,	0x0000, 0xefff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,	0xf000, 0xf7ff, ZET_RAM);
-	ZetSetWriteHandler(flytiger_sound_write);
-	ZetSetReadHandler(flytiger_sound_read);
-	ZetClose();
+	DrvSoundCPUInit(0,1);
 
 	BurnYM2151Init(4000000);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
@@ -2232,6 +2260,15 @@ static INT32 RsharkCommonInit(INT32 game_select)
 	return 0;
 }
 
+static void DrvFreeTransTab()
+{
+	for (INT32 i = 0; i < 6; i++) {
+		if (DrvTransTab[i]) {
+			BurnFree(DrvTransTab[i]);
+		}
+	}
+}
+
 static INT32 Z80YM2203Exit()
 {
 	GenericTilesExit();
@@ -2241,6 +2278,8 @@ static INT32 Z80YM2203Exit()
 	BurnYM2203Exit();
 
 	BurnFree (AllMem);
+
+	DrvFreeTransTab();
 
 	memset (gfxmask, 0, 6 * sizeof(INT32));
 
@@ -2265,6 +2304,8 @@ static INT32 Z80YM2151Exit()
 
 	BurnFree (AllMem);
 
+	DrvFreeTransTab();
+
 	memset (gfxmask, 0, 6 * sizeof(INT32));
 
 	global_y = 8;
@@ -2288,13 +2329,15 @@ static INT32 Drv68KExit()
 
 	BurnFree (AllMem);
 
+	DrvFreeTransTab();
+
 	global_y = 8;
 	main_cpu_clock = 8000000;
 
 	return 0;
 }
 
-static void DrawLayer(UINT8 *rom, UINT8 *scroll, UINT8 *gfxbase, INT32 gfxlenmask, INT32 colorbase, INT32 transp, INT32 depth, INT32 pri)
+static void DrawLayer(UINT8 *rom, UINT8 *scroll, UINT8 *gfxbase, INT32 gfxlenmask, INT32 colorbase, UINT8 *transtab, INT32 transp, INT32 depth, INT32 pri)
 {
 	if (scroll[6] & 0x10) return;
 
@@ -2343,6 +2386,7 @@ static void DrawLayer(UINT8 *rom, UINT8 *scroll, UINT8 *gfxbase, INT32 gfxlenmas
 		}
 
 		code &= gfxlenmask;
+		if (transtab[code] && transp != -1) continue; // let's skip transparent tiles
 
 		if (flipy) {
 			if (flipx) {
@@ -2376,7 +2420,7 @@ static void DrawLayer(UINT8 *rom, UINT8 *scroll, UINT8 *gfxbase, INT32 gfxlenmas
 	}
 }
 
-static void draw_layer_rshark(UINT8 *tmaprom0, UINT8 *tmaprom1, UINT8 *scroll, UINT8 *gfxbase, INT32 gfxlenmask, INT32 colorbase, INT32 transp, INT32 pri)
+static void draw_layer_rshark(UINT8 *tmaprom0, UINT8 *tmaprom1, UINT8 *scroll, UINT8 *gfxbase, INT32 gfxlenmask, INT32 colorbase, UINT8 *transtab, INT32 transp, INT32 pri)
 {
 	INT32 scrollx = scroll[0] + 64;
 	INT32 scrolly = (scroll[3] + (scroll[4] * 256) + global_y) & 0x1ff;
@@ -2397,6 +2441,9 @@ static void draw_layer_rshark(UINT8 *tmaprom0, UINT8 *tmaprom1, UINT8 *scroll, U
 		INT32 color = tmaprom1[ofst/2] & 0x0f;
 		INT32 flipy = attr & 0x80;
 		INT32 flipx = attr & 0x40;
+
+		code &= gfxlenmask;
+		if (transtab[code] && transp != -1) continue; // let's skip transparent tiles
 
 		if (flipy) {
 			if (flipx) {
@@ -2450,6 +2497,8 @@ static void DrawTextLayer(INT32 mode, INT32 pri, INT32 scroll_adj)
 			code = DrvTxtRAM[offs] + (DrvTxtRAM[offs | 0x800] << 8);
 		}
 
+		if (DrvTransTab[0][code & gfxmask[0]]) continue;
+
 		Render8x8Tile_Mask_Clip(pTransDraw, code & gfxmask[0], sx, sy, (code >> 12) & 0xf, 4, 0x0f, 0, DrvGfxROM0);
 	}
 }
@@ -2500,6 +2549,8 @@ static void draw_sprites(INT32 priority, UINT8 extensions)
 
 		for (INT32 y = 0; y <= height; y++)
 		{
+			if (DrvTransTab[1][(code + y)&gfxmask[1]]) continue; // skip transparent tiles
+
 			if (flipy) {
 				if (flipx) {
 					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, (code + y)&gfxmask[1], sx - 64, sy + (16 * (flipy ? (height - y) : y)), color, 4, 0xf, 0x100, DrvGfxROM1);
@@ -2545,7 +2596,8 @@ static void draw_sprites_rshark(INT32 priority)
 				{
 					INT32 _x = sx + (16 * x);
 
-					Render16x16Tile_Mask_Clip(pTransDraw, code & gfxmask[1], _x - 64, _y - global_y, color, 4, 0xf, 0, DrvGfxROM1);
+					if (DrvTransTab[1][code & gfxmask[1]] == 0) // skip transparent tiles
+						Render16x16Tile_Mask_Clip(pTransDraw, code & gfxmask[1], _x - 64, _y - global_y, color, 4, 0xf, 0, DrvGfxROM1);
 
 					code++;
 				}
@@ -2553,36 +2605,19 @@ static void draw_sprites_rshark(INT32 priority)
 		}
 	}
 }
-
-static void DrvPaletteRecalc4BGR()
+static inline void DrvPaletteRecalc4BGR()
 {
-	UINT16 *p = (UINT16*)DrvPalRAM;
-
-	for (INT32 i = 0; i < BurnDrvGetPaletteEntries(); i++) {
-		INT32 r = p[i] & 0x0f;
-		INT32 g = (p[i] >> 4) & 0x0f;
-		INT32 b = (p[i] >> 8) & 0x0f;
-
-		DrvPalette[i] = BurnHighCol(r+(r*16),g+(g*16),b+(b*16),0);
+	for (INT32 i = 0; i < BurnDrvGetPaletteEntries()*2; i+=2) {
+		palette_write_4bgr(i);
 	}
 
 	DrvPalette[BurnDrvGetPaletteEntries()] = 0; // black
 }
 
-static void DrvPaletteRecalc5RGB()
+static inline void DrvPaletteRecalc5RGB()
 {
-	UINT16 *p = (UINT16*)DrvPalRAM;
-
-	for (INT32 i = 0; i < BurnDrvGetPaletteEntries(); i++) {
-		INT32 b = (p[i] >> 0) & 0x1f;
-		INT32 g = (p[i] >> 5) & 0x1f;
-		INT32 r = (p[i] >> 10) & 0x1f;
-
-		r = (r << 3) | (r >> 2);
-		g = (g << 3) | (g >> 2);
-		b = (b << 3) | (b >> 2);
-
-		DrvPalette[i] = BurnHighCol(r,g,b,0);
+	for (INT32 i = 0; i < BurnDrvGetPaletteEntries()*2; i+=2) {
+		palette_write_5rgb(i);
 	}
 
 	DrvPalette[BurnDrvGetPaletteEntries()] = 0; // black
@@ -2590,7 +2625,7 @@ static void DrvPaletteRecalc5RGB()
 
 static INT32 LastdayDraw()
 {
-	if (1) { //DrvRecalc) {
+	if (DrvRecalc) {
 		DrvPaletteRecalc4BGR();
 		DrvRecalc = 0;
 	}
@@ -2601,9 +2636,9 @@ static INT32 LastdayDraw()
 		pTransDraw[i] = black;
 	}
 
-	if (nBurnLayer & 1) DrawLayer(DrvTMapROM0, scrollregs[0], DrvGfxROM2, gfxmask[2], 0x300, -1,   4, 1);
+	if (nBurnLayer & 1) DrawLayer(DrvTMapROM0, scrollregs[0], DrvGfxROM2, gfxmask[2], 0x300, DrvTransTab[2], -1,   4, 1);
 	if (!sprite_enable) draw_sprites(0,0);
-	if (nBurnLayer & 2) DrawLayer(DrvTMapROM1, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, 0x0f, 4, 2);
+	if (nBurnLayer & 2) DrawLayer(DrvTMapROM1, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, DrvTransTab[3], 0x0f, 4, 2);
 	if (!sprite_enable) draw_sprites(1,0);
 	if (nBurnLayer & 4) DrawTextLayer(0, 4, 8);
 
@@ -2614,7 +2649,7 @@ static INT32 LastdayDraw()
 
 static INT32 GulfstrmDraw()
 {
-	if (1) { //DrvRecalc) {
+	if (DrvRecalc) {
 		DrvPaletteRecalc5RGB();
 		DrvRecalc = 0;
 	}
@@ -2625,9 +2660,9 @@ static INT32 GulfstrmDraw()
 		pTransDraw[i] = black;
 	}
 
-	if (nBurnLayer & 1) DrawLayer(DrvTMapROM0, scrollregs[0], DrvGfxROM2, gfxmask[2], 0x300, -1,   4, 1);
+	if (nBurnLayer & 1) DrawLayer(DrvTMapROM0, scrollregs[0], DrvGfxROM2, gfxmask[2], 0x300, DrvTransTab[2], -1,   4, 1);
 	draw_sprites(0,1);
-	if (nBurnLayer & 2) DrawLayer(DrvTMapROM1, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, 0x0f, 4, 2);
+	if (nBurnLayer & 2) DrawLayer(DrvTMapROM1, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, DrvTransTab[3], 0x0f, 4, 2);
 	draw_sprites(1,1);
 	if (nBurnLayer & 4) DrawTextLayer(0, 4, 8);
 
@@ -2638,7 +2673,7 @@ static INT32 GulfstrmDraw()
 
 static INT32 PolluxDraw()
 {
-	if (1) { //DrvRecalc) {
+	if (DrvRecalc) {
 		DrvPaletteRecalc5RGB();
 		DrvRecalc = 0;
 	}
@@ -2649,9 +2684,9 @@ static INT32 PolluxDraw()
 		pTransDraw[i] = black;
 	}
 
-	if (nBurnLayer & 1) DrawLayer(DrvTMapROM0, scrollregs[0], DrvGfxROM2, gfxmask[2], 0x300, -1,   4, 1);
+	if (nBurnLayer & 1) DrawLayer(DrvTMapROM0, scrollregs[0], DrvGfxROM2, gfxmask[2], 0x300, DrvTransTab[2], -1,   4, 1);
 	draw_sprites(0,1|2);
-	if (nBurnLayer & 2) DrawLayer(DrvTMapROM1, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, 0x0f, 4, 2);
+	if (nBurnLayer & 2) DrawLayer(DrvTMapROM1, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, DrvTransTab[3], 0x0f, 4, 2);
 	draw_sprites(1,1|2);
 	if (nBurnLayer & 4) DrawTextLayer(0, 4, 0);
 
@@ -2662,7 +2697,7 @@ static INT32 PolluxDraw()
 
 static INT32 FlytigerDraw()
 {
-	if (1) { //DrvRecalc) {
+	if (DrvRecalc) {
 		DrvPaletteRecalc5RGB();
 		DrvRecalc = 0;
 	}
@@ -2675,15 +2710,15 @@ static INT32 FlytigerDraw()
 
 	if (priority_select)
 	{
-		if (nBurnLayer & 2) DrawLayer(DrvTMapROM1, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, 0x0f, 4, 1);
+		if (nBurnLayer & 2) DrawLayer(DrvTMapROM1, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, DrvTransTab[3], 0x0f, 4, 1);
 		draw_sprites(0,1|2|8);
-		if (nBurnLayer & 1) DrawLayer(DrvTMapROM0, scrollregs[0], DrvGfxROM2, gfxmask[2], 0x300, 0x0f, 4, 2);
+		if (nBurnLayer & 1) DrawLayer(DrvTMapROM0, scrollregs[0], DrvGfxROM2, gfxmask[2], 0x300, DrvTransTab[2], 0x0f, 4, 2);
 	}
 	else
 	{
-		if (nBurnLayer & 1) DrawLayer(DrvTMapROM0, scrollregs[0], DrvGfxROM2, gfxmask[2], 0x300, 0x0f, 4, 1);
+		if (nBurnLayer & 1) DrawLayer(DrvTMapROM0, scrollregs[0], DrvGfxROM2, gfxmask[2], 0x300, DrvTransTab[2], 0x0f, 4, 1);
 		draw_sprites(0,1|2|8);
-		if (nBurnLayer & 2) DrawLayer(DrvTMapROM1, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, 0x0f, 4, 2);
+		if (nBurnLayer & 2) DrawLayer(DrvTMapROM1, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, DrvTransTab[3], 0x0f, 4, 2);
 	}
 
 	draw_sprites(1,1|2|8);
@@ -2697,7 +2732,7 @@ static INT32 FlytigerDraw()
 
 static INT32 BluehawkDraw()
 {
-	if (1) { //DrvRecalc) {
+	if (DrvRecalc) {
 		DrvPaletteRecalc5RGB();
 		DrvRecalc = 0;
 	}
@@ -2708,11 +2743,11 @@ static INT32 BluehawkDraw()
 		pTransDraw[i] = black;
 	}
 
-	if (nBurnLayer & 1) DrawLayer(DrvTMapROM0, scrollregs[0], DrvGfxROM2, gfxmask[2], 0x300, -1,   4, 1);
+	if (nBurnLayer & 1) DrawLayer(DrvTMapROM0, scrollregs[0], DrvGfxROM2, gfxmask[2], 0x300, DrvTransTab[2], -1,   4, 1);
 	draw_sprites(0,1|2|4);
-	if (nBurnLayer & 2) DrawLayer(DrvTMapROM1, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, 0x0f, 4, 2);
+	if (nBurnLayer & 2) DrawLayer(DrvTMapROM1, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, DrvTransTab[3], 0x0f, 4, 2);
 	draw_sprites(1,1|2|4);
-	if (nBurnLayer & 2) DrawLayer(DrvTMapROM2, scrollregs[2], DrvGfxROM4, gfxmask[4], 0x000, 0x0f, 4, 4);
+	if (nBurnLayer & 2) DrawLayer(DrvTMapROM2, scrollregs[2], DrvGfxROM4, gfxmask[4], 0x000, DrvTransTab[4], 0x0f, 4, 4);
 	if (nBurnLayer & 4) DrawTextLayer(1, 4, 0);
 
 	BurnTransferCopy(DrvPalette);
@@ -2722,7 +2757,7 @@ static INT32 BluehawkDraw()
 
 static INT32 PrimellaDraw()
 {
-	if (1) { //DrvRecalc) {
+	if (DrvRecalc) {
 		DrvPaletteRecalc5RGB();
 		DrvRecalc = 0;
 	}
@@ -2733,9 +2768,9 @@ static INT32 PrimellaDraw()
 		pTransDraw[i] = black;
 	}
 
-	if (nBurnLayer & 1) DrawLayer(DrvTMapROM0, scrollregs[0], DrvGfxROM2, gfxmask[2], 0x300, -1,   4, 0);
+	if (nBurnLayer & 1) DrawLayer(DrvTMapROM0, scrollregs[0], DrvGfxROM2, gfxmask[2], 0x300, DrvTransTab[2], -1,   4, 0);
  	if (nBurnLayer & 4) if (!text_layer_enable) DrawTextLayer(1, 0, 0);
-	if (nBurnLayer & 2) DrawLayer(DrvTMapROM1, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, 0x0f, 4, 0);
+	if (nBurnLayer & 2) DrawLayer(DrvTMapROM1, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, DrvTransTab[3], 0x0f, 4, 0);
 	if (nBurnLayer & 4) if ( text_layer_enable) DrawTextLayer(1, 0, 0);
 
 	BurnTransferCopy(DrvPalette);
@@ -2745,7 +2780,7 @@ static INT32 PrimellaDraw()
 
 static INT32 RsharkDraw()
 {
-	if (1) { //DrvRecalc) {
+	if (DrvRecalc) {
 		DrvPaletteRecalc5RGB();
 		DrvRecalc = 0;
 	}
@@ -2756,12 +2791,12 @@ static INT32 RsharkDraw()
 		pTransDraw[i] = black;
 	}
 
-	if (nBurnLayer & 1) draw_layer_rshark(DrvTMapROM3, DrvTMapROM4 + 0x60000, scrollregs[0], DrvGfxROM5, gfxmask[5], 0x400, -1, 1);
+	if (nBurnLayer & 1) draw_layer_rshark(DrvTMapROM3, DrvTMapROM4 + 0x60000, scrollregs[0], DrvGfxROM5, gfxmask[5], 0x400, DrvTransTab[5], -1, 1);
 	if ((nSpriteEnable & 1) && (priority_select == 0)) draw_sprites_rshark(0);
-	if (nBurnLayer & 2) draw_layer_rshark(DrvTMapROM2, DrvTMapROM4 + 0x40000, scrollregs[2], DrvGfxROM4, gfxmask[4], 0x300, 0x0f, (priority_select) ? 2 : 1);
+	if (nBurnLayer & 2) draw_layer_rshark(DrvTMapROM2, DrvTMapROM4 + 0x40000, scrollregs[2], DrvGfxROM4, gfxmask[4], 0x300, DrvTransTab[4], 0x0f, (priority_select) ? 2 : 1);
 	if ((nSpriteEnable & 1) && (priority_select != 0)) draw_sprites_rshark(0);
-	if (nBurnLayer & 4) draw_layer_rshark(DrvTMapROM1, DrvTMapROM4 + 0x20000, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, 0x0f, 2);
-	if (nBurnLayer & 8) draw_layer_rshark(DrvTMapROM0, DrvTMapROM4 + 0x00000, scrollregs[3], DrvGfxROM2, gfxmask[2], 0x100, 0x0f, 2);
+	if (nBurnLayer & 4) draw_layer_rshark(DrvTMapROM1, DrvTMapROM4 + 0x20000, scrollregs[1], DrvGfxROM3, gfxmask[3], 0x200, DrvTransTab[3], 0x0f, 2);
+	if (nBurnLayer & 8) draw_layer_rshark(DrvTMapROM0, DrvTMapROM4 + 0x00000, scrollregs[3], DrvGfxROM2, gfxmask[2], 0x100, DrvTransTab[2], 0x0f, 2);
 	if (nSpriteEnable & 2) draw_sprites_rshark(1);
 
 	BurnTransferCopy(DrvPalette);
@@ -2771,7 +2806,7 @@ static INT32 RsharkDraw()
 
 static INT32 PopbingoDraw()
 {
-	if (1) { //DrvRecalc) {
+	if (DrvRecalc) {
 		DrvPaletteRecalc5RGB();
 		DrvRecalc = 0;
 	}
@@ -2782,7 +2817,7 @@ static INT32 PopbingoDraw()
 		pTransDraw[i] = black;
 	}
 
-	if (nBurnLayer & 1) DrawLayer(DrvTMapROM0, scrollregs[0], DrvGfxROM2, gfxmask[2], 0x100, -1, 8, 1);
+	if (nBurnLayer & 1) DrawLayer(DrvTMapROM0, scrollregs[0], DrvGfxROM2, gfxmask[2], 0x100, DrvTransTab[2], -1, 8, 1);
 	if (nSpriteEnable & 1) draw_sprites_rshark(0);
 	if (nSpriteEnable & 2) draw_sprites_rshark(1);
 
@@ -2857,7 +2892,6 @@ static INT32 LastdayFrame()
 
 	return 0;
 }
-
 
 static INT32 FlytigerFrame()
 {
@@ -2945,7 +2979,7 @@ static INT32 RsharkFrame()
 	}
 
 	INT32 nSegment = 0;
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 32;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { main_cpu_clock / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };

@@ -36,6 +36,7 @@ static UINT8 *soundlatch;
 static UINT8 *soundlatch2;
 static UINT8 *flipscreen;
 static UINT8 *nmi_enable;
+static UINT8 *mainbank;
 
 static INT16 *DrvSamplesExp;
 static INT16 *pAY8910Buffer[3];
@@ -490,6 +491,7 @@ static void sample_render(INT16 *buffer, INT32 nLen)
 static void bankswitch(INT32 bank)
 {
 	bank &= 0x0f;
+	*mainbank = bank;
 
 	ZetMapMemory(DrvZ80ROM0 + 0x10000 + (bank * 0x4000), 0x8000, 0xbfff, ZET_ROM); // bank
 }
@@ -1059,6 +1061,7 @@ static INT32 MemIndex()
 	soundlatch2		= Next; Next += 0x000001;
 	flipscreen		= Next; Next += 0x000001;
 	nmi_enable		= Next; Next += 0x000001;
+	mainbank		= Next; Next += 0x000001;
 
 	RamEnd			= Next;
 
@@ -2391,7 +2394,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 	
 	if (nAction & ACB_WRITE) {
-		// todo: set banks here.
+		// todo: set banks here. (hardhead2, sparkman)
+		ZetOpen(0);
+		bankswitch(*mainbank);
+		ZetClose();
 	}
 
 	return 0;
@@ -2499,7 +2505,7 @@ STD_ROM_FN(hardhea2)
 
 struct BurnDriver BurnDrvHardhea2 = {
 	"hardhea2", NULL, NULL, NULL, "1991",
-	"Hard Head 2 (v2.0)\0", NULL, "SunA", "Miscellaneous",
+	"Hard Head 2 (v2.0)\0", "Savestates may fail.", "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, hardhea2RomInfo, hardhea2RomName, NULL, NULL, DrvInputInfo, Hardhea2DIPInfo,
@@ -2538,7 +2544,7 @@ STD_ROM_FN(sparkman)
 
 struct BurnDriver BurnDrvSparkman = {
 	"sparkman", NULL, NULL, NULL, "1989",
-	"Spark Man (v2.0, set 1)\0", NULL, "SunA", "Miscellaneous",
+	"Spark Man (v2.0, set 1)\0", "Savestates may fail.", "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, sparkmanRomInfo, sparkmanRomName, NULL, NULL, SparkmanInputInfo, SparkmanDIPInfo,

@@ -2990,7 +2990,7 @@ static INT32 RsharkFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		if (i == 248) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+		if (i == 250) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
 		if (i == 120) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
 
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);

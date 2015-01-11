@@ -14,6 +14,8 @@ extern "C" {
 
 	Needs cleaned. Badly.
 	Missing Brick Zone
+	Bugs:
+	  Star Fighter (v1) - the first boss has some broken tiles
 */
 
 static UINT8 *AllMem;
@@ -57,9 +59,11 @@ static UINT8 m_palettebank = 0;
 static UINT8 m_spritebank = 0;
 static UINT8 m_spritebank_latch = 0;
 static UINT8 m_rombank_latch = 0;
+static UINT8 m_rambank = 0;
 static UINT8 disable_mainram_write = 0;
 static UINT8 protection_val = 0;
 static UINT8 hardhead_ip = 0;
+static UINT8 Sparkman = 0, Hardhead2 = 0;
 
 static UINT8  DrvJoy1[8];
 static UINT8  DrvJoy2[8];
@@ -640,7 +644,8 @@ static void __fastcall hardhea2_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0xc200:
-			ZetMapMemory(DrvSprRAM + ((data & 0x02) ? 0x2000 : 0), 0xe000, 0xffff, ZET_RAM);
+			m_spritebank = ((data & 0x02) ? 1 : 0);
+			ZetMapMemory(DrvSprRAM + (m_spritebank * 0x2000), 0xe000, 0xffff, ZET_RAM);
 		return;
 
 		case 0xc280:
@@ -669,22 +674,26 @@ static void __fastcall hardhea2_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xc508:
+			m_spritebank = 0;
 			ZetMapMemory(DrvSprRAM + 0x0000, 0xe000, 0xffff, ZET_RAM);
 		return;
 
 		case 0xc50f:
+			m_spritebank = 1;
 			ZetMapMemory(DrvSprRAM + 0x2000, 0xe000, 0xffff, ZET_RAM);
 		return;
 
 		case 0xc507:
 		case 0xc556:
 		case 0xc560:
+			m_rambank = 1;
 			ZetMapMemory(DrvZ80RAM0 + 0x1800, 0xc800, 0xdfff, ZET_RAM);
 		return;
 
 		case 0xc522:
 		case 0xc528:
 		case 0xc533:
+			m_rambank = 0;
 			ZetMapMemory(DrvZ80RAM0 + 0x0000, 0xc800, 0xdfff, ZET_RAM);
 		return;	
 	}
@@ -1274,6 +1283,7 @@ static void CommonDoReset(INT32 clear_ram)
 	m_spritebank = 0;
 	m_spritebank_latch = 0;
 	m_rombank_latch = 0;
+	m_rambank = 0;
 	disable_mainram_write = 0;
 	protection_val = 0;
 	hardhead_ip = 0;
@@ -1438,6 +1448,8 @@ static INT32 SparkmanInit()
 	GenericTilesInit();
 
 	HardheadDoReset();
+
+	Sparkman = 1;
 
 	return 0;
 }
@@ -1605,6 +1617,8 @@ static INT32 HardheadExit()
 
 	BurnFree(AllMem);
 
+	Sparkman = 0;
+
 	return 0;
 }
 
@@ -1758,6 +1772,7 @@ static INT32 Hardhea2Init()
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Decrypted, DrvZ80ROM0);
 	bankswitch(0); // ?
+	m_rambank = 0;
 	ZetMapMemory(DrvPalRAM,			0xc600, 0xc7ff, ZET_ROM);
 	ZetMapMemory(DrvZ80RAM0,		0xc800, 0xdfff, ZET_RAM);
 	ZetMapMemory(DrvSprRAM,			0xe000, 0xffff, ZET_RAM);
@@ -1800,6 +1815,8 @@ static INT32 Hardhea2Init()
 
 	Hardhea2DoReset();
 
+	Hardhead2 = 1;
+
 	return 0;
 }
 
@@ -1812,6 +1829,8 @@ static INT32 Hardhea2Exit()
 	DACExit();
 
 	BurnFree(AllMem);
+
+	Hardhead2 = 0;
 
 	return 0;
 }
@@ -2310,7 +2329,7 @@ static INT32 SparkmanFrame() // & starfigh
 
 	INT32 nCyclesSegment;
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 6000000 / 60, 6000000 / 60 };
+	INT32 nCyclesTotal[2] = { (Sparkman ? 6000000 : 9000000) / 60, 6000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	vblank = 0;
@@ -2321,7 +2340,12 @@ static INT32 SparkmanFrame() // & starfigh
 		nCyclesSegment = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += ZetRun(nCyclesSegment);
 		if (i == 112 && *nmi_enable) ZetNmi();
-		if (i == 240) { vblank = 1; ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO); }
+		if (i == (Sparkman ? 250 : 255)) { // any other value and the sprites glitch (MAME uses 240 here, hmmm)
+			vblank = 1;
+			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetRun(100);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		}
 		ZetClose();
 
 		ZetOpen(1);
@@ -2371,7 +2395,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);			// Scan Z80
 
-		if (strstr(BurnDrvGetTextA(DRV_NAME), "hardhea2")) {
+		if (Hardhead2) {
 			DACScan(nAction, pnMin);
 		}
 
@@ -2388,15 +2412,26 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(m_spritebank);
 		SCAN_VAR(m_spritebank_latch);
 		SCAN_VAR(m_rombank_latch);
+		SCAN_VAR(m_rambank);
 		SCAN_VAR(disable_mainram_write);
 		SCAN_VAR(protection_val);
 		SCAN_VAR(hardhead_ip);
 	}
 	
 	if (nAction & ACB_WRITE) {
-		// todo: set banks here. (hardhead2, sparkman)
 		ZetOpen(0);
 		bankswitch(*mainbank);
+		ZetMapMemory(DrvSprRAM + (m_spritebank * 0x2000), 0xe000, 0xffff, ZET_RAM);
+		if (Sparkman) {
+			if (disable_mainram_write) {
+				ZetUnmapMemory(0xc800,0xdfff, ZET_WRITE);
+			} else {
+				ZetMapMemory(DrvZ80RAM0,0xc800,0xdfff, ZET_WRITE);
+			}
+		}
+		if (Hardhead2) {
+			ZetMapMemory(DrvZ80RAM0 + (m_rambank * 0x1800), 0xc800, 0xdfff, ZET_RAM);
+		}
 		ZetClose();
 	}
 
@@ -2505,7 +2540,7 @@ STD_ROM_FN(hardhea2)
 
 struct BurnDriver BurnDrvHardhea2 = {
 	"hardhea2", NULL, NULL, NULL, "1991",
-	"Hard Head 2 (v2.0)\0", "Savestates may fail.", "SunA", "Miscellaneous",
+	"Hard Head 2 (v2.0)\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, hardhea2RomInfo, hardhea2RomName, NULL, NULL, DrvInputInfo, Hardhea2DIPInfo,
@@ -2544,7 +2579,7 @@ STD_ROM_FN(sparkman)
 
 struct BurnDriver BurnDrvSparkman = {
 	"sparkman", NULL, NULL, NULL, "1989",
-	"Spark Man (v2.0, set 1)\0", "Savestates may fail.", "SunA", "Miscellaneous",
+	"Spark Man (v2.0, set 1)\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, sparkmanRomInfo, sparkmanRomName, NULL, NULL, SparkmanInputInfo, SparkmanDIPInfo,

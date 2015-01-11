@@ -2231,10 +2231,10 @@ static INT32 RsharkCommonInit(INT32 game_select)
 		SekMapMemory(Drv68KRAM1,	0x04e000, 0x04ffff, SM_RAM);
 		SekMapMemory(DrvPalRAM,		0x0c8000, 0x0c8fff, SM_ROM);
 	} else {
-		SekMapMemory(DrvPalRAM,		0x088000, 0x088fff, SM_RAM);
+		SekMapMemory(DrvPalRAM,		0x088000, 0x088fff, SM_ROM);
 		SekMapMemory(Drv68KRAM0,	0x0d0000, 0x0dcfff, SM_RAM);
 		SekMapMemory(DrvSprRAM,		0x0dd000, 0x0ddfff, SM_RAM);
-		SekMapMemory(Drv68KRAM1,	0x0de000, 0x0dffff, SM_ROM);
+		SekMapMemory(Drv68KRAM1,	0x0de000, 0x0dffff, SM_RAM);
 	}
 
 	SekSetWriteWordHandler(0,	superx_main_write_word);

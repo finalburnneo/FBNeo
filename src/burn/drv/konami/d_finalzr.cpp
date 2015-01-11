@@ -708,7 +708,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 3072000 / 60, 9216000 / 60 };
+	INT32 nCyclesTotal[2] = { 3072000 / 60, 9216000 / 15 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	M6809Open(0);

@@ -168,27 +168,7 @@ static struct BurnDIPInfo DrvDIPList[]=
 STDDIPINFO(Drv)
 
 static struct BurnRomInfo DrvRomDesc[] = {
-	{ "p5d",           0x08000, 0x90259249, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "p5e",           0x10000, 0x72298f34, BRF_ESS | BRF_PRG }, //	 1
-	
-	{ "p5a",           0x08000, 0x50060ecd, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program
-	
-	{ "p5b",           0x10000, 0x7e3f87d4, BRF_GRA },	     //  3	Sprites
-	{ "p5c",           0x10000, 0x8710fedb, BRF_GRA },	     //  4
-
-	{ "p5g",           0x10000, 0xf9262f32, BRF_GRA },	     //  5	BG Tiles
-	{ "p5h",           0x10000, 0xc411171a, BRF_GRA },	     //  6
-	
-	{ "p5f",           0x08000, 0x04d7e21c, BRF_GRA },	     //  7  FG Tiles
-	
-	{ "my10.7l",       0x00200, 0x6a7d13c0, BRF_OPT },	     //  8	PROMs
-	{ "my09.3t",       0x00400, 0x59e44236, BRF_OPT },	     //  9
-};
-
-STD_ROM_PICK(Drv)
-STD_ROM_FN(Drv)
-
-static struct BurnRomInfo Psychic5aRomDesc[] = {
+// "Oversea's version V2.00 CHANGED BY TAMIO NAKASATO" text present in ROM, various modifications (English names, more complete attract demo etc.)
 	{ "myp5d",         0x08000, 0x1d40a8c7, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "myp5e",         0x10000, 0x2fa7e8c0, BRF_ESS | BRF_PRG }, //	 1
 	
@@ -206,8 +186,29 @@ static struct BurnRomInfo Psychic5aRomDesc[] = {
 	{ "my09.3t",       0x00400, 0x59e44236, BRF_OPT },	     //  9
 };
 
-STD_ROM_PICK(Psychic5a)
-STD_ROM_FN(Psychic5a)
+STD_ROM_PICK(Drv)
+STD_ROM_FN(Drv)
+
+static struct BurnRomInfo Psychic5jRomDesc[] = {
+	{ "p5d",           0x08000, 0x90259249, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "p5e",           0x10000, 0x72298f34, BRF_ESS | BRF_PRG }, //	 1
+	
+	{ "p5a",           0x08000, 0x50060ecd, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program
+	
+	{ "p5b",           0x10000, 0x7e3f87d4, BRF_GRA },	     //  3	Sprites
+	{ "p5c",           0x10000, 0x8710fedb, BRF_GRA },	     //  4
+
+	{ "p5g",           0x10000, 0xf9262f32, BRF_GRA },	     //  5	BG Tiles
+	{ "p5h",           0x10000, 0xc411171a, BRF_GRA },	     //  6
+	
+	{ "p5f",           0x08000, 0x04d7e21c, BRF_GRA },	     //  7  FG Tiles
+	
+	{ "my10.7l",       0x00200, 0x6a7d13c0, BRF_OPT },	     //  8	PROMs
+	{ "my09.3t",       0x00400, 0x59e44236, BRF_OPT },	     //  9
+};
+
+STD_ROM_PICK(Psychic5j)
+STD_ROM_FN(Psychic5j)
 
 static INT32 MemIndex()
 {
@@ -1167,7 +1168,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvPsychic5 = {
 	"psychic5", NULL, NULL, NULL, "1987",
-	"Psychic 5 (set 1)\0", NULL, "Jaleco", "Miscellaneous",
+	"Psychic 5 (World)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -1175,12 +1176,12 @@ struct BurnDriver BurnDrvPsychic5 = {
 	NULL, 0x300, 224, 256, 3, 4
 };
 
-struct BurnDriver BurnDrvPsychic5a = {
-	"psychic5a", "psychic5", NULL, NULL, "1987",
-	"Psychic 5 (set 2)\0", NULL, "Jaleco", "Miscellaneous",
+struct BurnDriver BurnDrvPsychic5j = {
+	"psychic5j", "psychic5", NULL, NULL, "1987",
+	"Psychic 5 (Japan)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, Psychic5aRomInfo, Psychic5aRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, Psychic5jRomInfo, Psychic5jRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x300, 224, 256, 3, 4
 };

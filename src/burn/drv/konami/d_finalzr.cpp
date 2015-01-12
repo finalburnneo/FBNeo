@@ -461,7 +461,7 @@ static INT32 DrvInit()
 	SN76496SetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, DrvSyncDAC);
-	DACSetRoute(0, 0.65, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -708,7 +708,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 3072000 / 60, 9216000 / 15 / 60 };
+	INT32 nCyclesTotal[2] = { 3072000 / 60, 9216000 / 13 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	M6809Open(0);
@@ -719,7 +719,7 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
 		if (i == 240 && irq_enable) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
-		if ((i & 0x1f) == 0 && nmi_enable) M6809SetIRQLine(0x20, M6809_IRQSTATUS_AUTO);
+		if ((i % 0x1f) == 0 && nmi_enable) M6809SetIRQLine(0x20, M6809_IRQSTATUS_AUTO);
 
 		if (i == 240) vblank = 1; // ?
 
@@ -809,7 +809,7 @@ struct BurnDriver BurnDrvFinalizr = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, finalizrRomInfo, finalizrRomName, NULL, NULL, FinalizrInputInfo, FinalizrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	224, 256, 3, 4
+	224, 280, 3, 4
 };
 
 
@@ -844,5 +844,5 @@ struct BurnDriver BurnDrvFinalizrb = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, finalizrbRomInfo, finalizrbRomName, NULL, NULL, FinalizrInputInfo, FinalizrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	224, 256, 3, 4
+	224, 280, 3, 4
 };

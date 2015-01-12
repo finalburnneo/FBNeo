@@ -1640,7 +1640,7 @@ static INT32 DrvInit()
 
 		bPsikyoClearBackground = false;
 	}
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "gunbird") || !strcmp(BurnDrvGetTextA(DRV_NAME), "gunbirdj") || !strcmp(BurnDrvGetTextA(DRV_NAME), "gunbirdk") || !strcmp(BurnDrvGetTextA(DRV_NAME), "btlkroad") || !strcmp(BurnDrvGetTextA(DRV_NAME), "s1945jn")) {
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "gunbird") || !strcmp(BurnDrvGetTextA(DRV_NAME), "gunbirdj") || !strcmp(BurnDrvGetTextA(DRV_NAME), "gunbirdk") || !strcmp(BurnDrvGetTextA(DRV_NAME), "btlkroad") || !strcmp(BurnDrvGetTextA(DRV_NAME), "btlkroadk") || !strcmp(BurnDrvGetTextA(DRV_NAME), "s1945jn")) {
 		PsikyoHardwareVersion = PSIKYO_HW_GUNBIRD;
 
 		CheckSleep = psikyoCheckSleep;
@@ -1659,7 +1659,7 @@ static INT32 DrvInit()
 		}
 
 		PsikyoTileROMSize = 0x0400000;
-		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "btlkroad")) {
+		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "btlkroad") || !strcmp(BurnDrvGetTextA(DRV_NAME), "btlkroadk")) {
 			PsikyoSpriteROMSize = 0x0C00000;
 		} else {
 			PsikyoSpriteROMSize = 0x1000000;
@@ -2211,6 +2211,43 @@ struct BurnDriver BurnDrvBtlKRoad = {
 	L"Battle K-Road\0Battle K-Road \u30D0\u30C8\u30EB\u30AF\u30ED\u30FC\u30C9\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_PSIKYO, GBF_VSFIGHT, 0,
 	NULL, btlkroadRomInfo, btlkroadRomName, NULL, NULL, btlkroadInputInfo, btlkroadDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
+	320, 224, 4, 3
+};
+
+// Battle K-Road (alternate sound)
+// f205v id 1266
+static struct BurnRomInfo btlkroadkRomDesc[] = {
+	{ "4-u46.bin",    0x040000, 0x8a7a28b4, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "5-u39.bin",    0x040000, 0x933561fa, BRF_ESS | BRF_PRG }, //  1
+
+	{ "u14.bin",      0x200000, 0x282D89C3, BRF_GRA },			 //  2 Sprite data
+	{ "u24.bin",      0x200000, 0xBBE9D3D1, BRF_GRA },			 //  3
+	{ "u15.bin",      0x200000, 0xD4D1B07C, BRF_GRA },			 //  4
+	{ "",                    0,          0, 0 }, //  5
+
+	{ "u3.bin",       0x040000, 0x30D541ED, BRF_GRA },			 //  6 Sprite LUT
+
+	{ "u33.bin",      0x200000, 0x4C8577F1, BRF_GRA },			 //  7 Tile data
+
+	{ "3k.u71",    	  0x020000, 0xE0F0C597, BRF_ESS | BRF_PRG }, //  8 CPU #1 code
+
+	{ "u64.bin",      0x080000, 0x0F33049F, BRF_SND },			 //  9 YM2610 ADPCM (delta-t) data
+	{ "u56.bin",      0x100000, 0x51D73682, BRF_SND },			 // 10 YM2610 ADPCM data
+	
+	{ "tibpal16l8.u69", 260, 0x00000000, BRF_NODUMP },	// NO DUMP
+	{ "tibpal16l8.u19", 260, 0x00000000, BRF_NODUMP },	// NO DUMP
+};
+
+STD_ROM_PICK(btlkroadk)
+STD_ROM_FN(btlkroadk)
+
+struct BurnDriver BurnDrvBtlKRoadk = {
+	"btlkroadk", "btlkroad", NULL, NULL, "1994",
+	"Battle K-Road (alternate sound)\0", NULL, "Psikyo", "Psikyo 68EC020",
+	L"Battle K-Road\0Battle K-Road \u30D0\u30C8\u30EB\u30AF\u30ED\u30FC\u30C9 (alternate sound)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY, 2, HARDWARE_PSIKYO, GBF_VSFIGHT, 0,
+	NULL, btlkroadkRomInfo, btlkroadkRomName, NULL, NULL, btlkroadInputInfo, btlkroadDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	320, 224, 4, 3
 };

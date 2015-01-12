@@ -291,6 +291,14 @@ static void __fastcall wyvernf0_sound_write(UINT16 address, UINT8 data)
 		case 0xc802:
 		case 0xc803:
 			AY8910Write((address/2) & 1, address & 1, data);
+			if (data==0x88) { // end of sound command, turn off all channels to get rid of unwanted high pitched noises
+				AY8910Write((address/2) & 1, 0, 0x08);
+				AY8910Write((address/2) & 1, 1, 0x00);
+				AY8910Write((address/2) & 1, 0, 0x09);
+				AY8910Write((address/2) & 1, 1, 0x00);
+				AY8910Write((address/2) & 1, 0, 0x0A);
+				AY8910Write((address/2) & 1, 1, 0x00);
+			}
 		return;
 
 		case 0xd000:
@@ -472,21 +480,21 @@ static INT32 DrvInit()
 	ZetClose();
 
 	AY8910Init(0, 3000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.14, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(1, 3000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.14, BURN_SND_ROUTE_BOTH);
 
 	MSM5232Init(2000000, 1);
 	MSM5232SetCapacitors(0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6, 0.39e-6);
-	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_0);
-	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_1);
-	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_2);
-	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_3);
-	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_4);
-	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_5);
-	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_6);
-	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_7);
+	MSM5232SetRoute(0.50, BURN_SND_MSM5232_ROUTE_0);
+	MSM5232SetRoute(0.50, BURN_SND_MSM5232_ROUTE_1);
+	MSM5232SetRoute(0.50, BURN_SND_MSM5232_ROUTE_2);
+	MSM5232SetRoute(0.50, BURN_SND_MSM5232_ROUTE_3);
+	MSM5232SetRoute(0.50, BURN_SND_MSM5232_ROUTE_4);
+	MSM5232SetRoute(0.50, BURN_SND_MSM5232_ROUTE_5);
+	MSM5232SetRoute(0.50, BURN_SND_MSM5232_ROUTE_6);
+	MSM5232SetRoute(0.50, BURN_SND_MSM5232_ROUTE_7);
 
 	GenericTilesInit();
 
@@ -682,7 +690,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

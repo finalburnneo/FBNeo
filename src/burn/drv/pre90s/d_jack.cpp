@@ -869,7 +869,9 @@ void __fastcall jack_cpu0_write(UINT16 address, UINT8 data)
 		case 0xb700:
 			flip_screen = data >> 7;
 			joinem_snd_bit = data & 1;
-			joinem_palette_bank = data & (0x0100 - 1) >> 2 & 0x18;
+			joinem_palette_bank = (data & 0x18) << 1;
+			//from MAME: palette_bank = data & (m_palette->entries() - 1) >> 3 & 0x18;
+			//Why do we do it differently? :/  - dink
 			//bprintf(0, _T("pbank[%X] data[%X],"), joinem_palette_bank, data);
 		break;
 	}
@@ -1069,43 +1071,28 @@ static INT32 DrvInit()
 
 	if (joinem || loverb)
 	{
-		ZetMapArea(0x0000, 0x8fff, 0, Rom0 + 0x0000);
-		ZetMapArea(0x0000, 0x8fff, 2, Rom0 + 0x0000);
-
-		ZetMapArea(0x8000, 0x8fff, 1, Rom0 + 0x8000);
-		ZetMapArea(0x8000, 0x8fff, 2, Rom0 + 0x8000);
-
-		ZetMapArea(0x9000, 0x97ff, 0, Rom0 + 0x9000); // unclepoo
-		ZetMapArea(0x9000, 0x97ff, 1, Rom0 + 0x9000); // unclepoo
-		ZetMapArea(0x9000, 0x97ff, 2, Rom0 + 0x9000); // unclepoo
+		ZetMapMemory(Rom0 + 0x0000,	0x0000, 0x7fff, ZET_ROM);
+		ZetMapMemory(Rom0 + 0x8000,	0x8000, 0x8fff, ZET_RAM);
+		ZetMapMemory(Rom0 + 0x9000,	0x9000, 0x97ff, ZET_RAM);
 
 		if (!unclepoo)
 			ZetMapArea(0xb500, 0xb5ff, 0, Rom0 + 0xb500); // controls hack
 	} else {
-		ZetMapArea(0x0000, 0x3fff, 0, Rom0 + 0x0000);
-		ZetMapArea(0x0000, 0x3fff, 2, Rom0 + 0x0000);
-
-		ZetMapArea(0x4000, 0x5fff, 0, Rom0 + 0x4000);
-		ZetMapArea(0x4000, 0x5fff, 1, Rom0 + 0x4000);
-		ZetMapArea(0x4000, 0x5fff, 2, Rom0 + 0x4000);
+		ZetMapMemory(Rom0 + 0x0000,	0x0000, 0x3fff, ZET_ROM);
+		ZetMapMemory(Rom0 + 0x4000,	0x4000, 0x5fff, ZET_RAM);
 	}
 
 	//ZetMapArea(0xb000, 0xb07f, 0, Rom0 + 0xb000); // move to cpu0_read/write
 	//ZetMapArea(0xb000, 0xb07f, 1, Rom0 + 0xb000);
 
-	ZetMapArea(0xb800, 0xbbff, 0, Rom0 + 0xb800);
-	ZetMapArea(0xb800, 0xbbff, 1, Rom0 + 0xb800);	
-
-	ZetMapArea(0xbc00, 0xbfff, 0, Rom0 + 0xbc00);
-	ZetMapArea(0xbc00, 0xbfff, 1, Rom0 + 0xbc00);
+	ZetMapMemory(Rom0 + 0xb800,	0xb800, 0xbbff, ZET_RAM);
+	ZetMapMemory(Rom0 + 0xbc00,	0xbc00, 0xbfff, ZET_RAM);
 
 	if (suprtriv)
 	{
-		ZetMapArea(0xd000, 0xffff, 0, Rom0 + 0xc000);
-		ZetMapArea(0xd000, 0xffff, 2, Rom0 + 0xc000);
+		ZetMapMemory(Rom0 + 0xc000,	0xd000, 0xffff, ZET_RAM); // + 0xc000, really?
 	} else if (!unclepoo) {
-		ZetMapArea(0xc000, 0xffff, 0, Rom0 + 0xc000);
-		ZetMapArea(0xc000, 0xffff, 2, Rom0 + 0xc000);
+		ZetMapMemory(Rom0 + 0xc000,	0xc000, 0xffff, ZET_RAM);
 	}
 
 	ZetClose();
@@ -1165,7 +1152,7 @@ static INT32 DrvExit()
 
 static INT32 DrvDraw()
 {
-	if (DrvCalcPal)
+	if (1) //DrvCalcPal)
 	{
 		for (INT32 i = 0; i < 0x100; i++) {
 			UINT32 col = Palette[i];
@@ -1351,17 +1338,18 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		memset(&ba, 0, sizeof(ba));
 		if (joinem || loverb) {
 			ba.Data	  = Rom0 + 0x8000;
+			ba.nLen	  = 0xbfff - 0x8000;
 		} else {
 			ba.Data	  = Rom0 + 0x4000;
+			ba.nLen	  = 0xbfff - 0x4000;
 		}
-		ba.nLen	  = 0x01000;
 		ba.szName = "Main Ram";
 		BurnAcb(&ba);
-	
+
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = Rom0 + 0xb000;
-		ba.nLen	  = 0x01000;
-		ba.szName = "Video Ram";
+		ba.Data	  = Rom1 + 0x4000;
+		ba.nLen	  = 0x003ff;
+		ba.szName = "Soundcpu Ram";
 		BurnAcb(&ba);
 
 		memset(&ba, 0, sizeof(ba));
@@ -1384,6 +1372,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(question_rom);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(joinem_snd_bit);
+		SCAN_VAR(joinem_palette_bank);
+		SCAN_VAR(joinem_scroll_w);
 	}
 
 	return 0;

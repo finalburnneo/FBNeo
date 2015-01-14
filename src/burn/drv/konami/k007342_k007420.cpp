@@ -181,7 +181,7 @@ void K007342DrawLayer(INT32 layer, INT32 baseflags, INT32 priority)
 INT32 K007342Scan(INT32 nAction)
 {
 	if (nAction & ACB_DRIVER_DATA) {
-		SCAN_VAR(K007342Regs[1]);
+		SCAN_VAR(K007342Regs);
 	}
 
 	return 0;

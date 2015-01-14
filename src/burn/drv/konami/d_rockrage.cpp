@@ -404,7 +404,7 @@ static INT32 DrvInit()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
 
 	vlm5030Init(0, 3579545, DrvVLM5030Sync, DrvVLMROM, 0x8000, 1);
-	vlm5030SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
+	vlm5030SetAllRoutes(0, 1.20, BURN_SND_ROUTE_BOTH);
 
 	K007342Init(DrvGfxROM0, rockrage_tile_callback);
 	K007342SetOffsets(0, 16);

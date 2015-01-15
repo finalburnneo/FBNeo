@@ -450,6 +450,7 @@ static INT32 DrvInit()
 	BurnYM2203SetPorts(0, NULL, NULL, &bladestl_ym2203_write_portA, &bladestl_ym2203_write_portB);
 	BurnTimerAttachM6809(2000000);
 	BurnYM2203SetAllRoutes(0, 0.45, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetPSGVolume(0, 0.35); // when filters get hooked up, remove this line.
 
 	// needs filters hooked up
 
@@ -545,7 +546,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] =  { 2000000 / 60, 2000000 / 60 };
+	INT32 nCyclesTotal[2] =  { 6000000 / 60, 2000000 / 60 };
 
 	HD6309Open(0);
 	M6809Open(0);
@@ -558,7 +559,7 @@ static INT32 DrvFrame()
 
 		if (i == 240 && K007342_irq_enabled()) HD6309SetIRQLine(1, HD6309_IRQSTATUS_AUTO); // firq
 
-		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[1]);

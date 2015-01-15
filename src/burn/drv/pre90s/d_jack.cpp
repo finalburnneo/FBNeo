@@ -13,11 +13,11 @@ extern "C" {
 static UINT8 *Mem, *Rom0, *Rom1, *Gfx, *Prom, *User;
 static UINT8 DrvJoy1[8], DrvJoy2[8], DrvJoy3[8], DrvJoy4[8], DrvReset, DrvDips[2];
 static INT16 *pAY8910Buffer[3], *pFMBuffer = NULL;
-static INT32 tri_fix = 0, joinem = 0, loverb = 0, suprtriv = 0, unclepoo = 0;
+static INT32 tri_fix = 0, joinem = 0, loverb = 0, suprtriv = 0, unclepoo = 0, zzyzzyxx = 0;
 static INT32 timer_rate, flip_screen;
 static UINT32 *Palette, *DrvPal;
 static UINT8 DrvCalcPal;
-static UINT8 joinem_palette_bank = 0;
+static UINT8 joinem_palette_bank = 0, joinem_nmi_enable = 0;
 static INT32 joinem_scroll_w[300];
 
 static UINT8 soundlatch;
@@ -713,7 +713,7 @@ static UINT8 timer_r(UINT32)
 
 static UINT8 soundlatch_r(UINT32)
 {
-	ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+	//ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 	return soundlatch;
 }
 
@@ -858,6 +858,8 @@ void __fastcall jack_cpu0_write(UINT16 address, UINT8 data)
 			ZetClose();
 			ZetOpen(1);
 			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetRun(100);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 			ZetClose();
 			ZetOpen(0);
 		break;
@@ -870,6 +872,8 @@ void __fastcall jack_cpu0_write(UINT16 address, UINT8 data)
 			flip_screen = data >> 7;
 			joinem_snd_bit = data & 1;
 			joinem_palette_bank = (data & 0x18) << 1;
+			joinem_nmi_enable = data & 0x20;
+
 			//from MAME: palette_bank = data & (m_palette->entries() - 1) >> 3 & 0x18;
 			//Why do we do it differently? :/  - dink
 			//bprintf(0, _T("pbank[%X] data[%X],"), joinem_palette_bank, data);
@@ -928,6 +932,9 @@ static INT32 DrvDoReset()
 
 	question_address = question_rom = 0;
 	joinem_snd_bit = 0;
+	joinem_nmi_enable = 0;
+	joinem_palette_bank = 0;
+	memset(&joinem_scroll_w, 0, sizeof(joinem_scroll_w));
 	soundlatch = 0;
 
 	for (INT32 i = 0; i < 2; i++) {
@@ -1114,7 +1121,7 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 1500000, nBurnSoundRate, &soundlatch_r, &timer_r, NULL, NULL);
 	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
-	if (loverb || joinem) {
+	if (loverb || joinem || zzyzzyxx) {
 		AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	}
 
@@ -1144,6 +1151,8 @@ static INT32 DrvExit()
 	loverb = 0;
 	suprtriv = 0;
 	unclepoo = 0;
+	zzyzzyxx = 0;
+
 	memset(joinem_scroll_w, 0, sizeof(joinem_scroll_w));
 
 	return 0;
@@ -1152,7 +1161,7 @@ static INT32 DrvExit()
 
 static INT32 DrvDraw()
 {
-	if (1) //DrvCalcPal)
+	if (DrvCalcPal)
 	{
 		for (INT32 i = 0; i < 0x100; i++) {
 			UINT32 col = Palette[i];
@@ -1252,7 +1261,7 @@ static INT32 DrvFrame()
 	INT32 nSoundBufferPos = 0;
 
 	nCyclesTotal[0] = 3000000 / 60;
-	nCyclesTotal[1] = 1500000 / 60;
+	nCyclesTotal[1] = 3000000 / 60;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 	
 	ZetNewFrame();
@@ -1267,16 +1276,18 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 
-		if (joinem)
-			if (i == (nInterleave / 3) || i == ((nInterleave / 3) * 2))
-				ZetRaiseIrq(0);
+		//if (joinem)
+			//if (i == (nInterleave / 3) || i == ((nInterleave / 3) * 2))
+		if (joinem && (i % 249) == 0)
+			ZetRaiseIrq(0); // game speed (joinem, uncle poo)
 
 		if (tri_fix && i == (nInterleave / 2)) ZetRaiseIrq(0);
 
-		if (i == (nInterleave - 1))
+		if (i == (nInterleave - 1)) // vblank
 		{
-			if (joinem) {					// joinem
-				if (!DrvJoy3[7]) ZetNmi();
+			if (joinem) {					// joinem, uncle poo
+				if (joinem_nmi_enable)
+					ZetNmi();
 			} else if (loverb) {				// loverboy
 				ZetNmi();
 
@@ -1373,6 +1384,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(joinem_snd_bit);
 		SCAN_VAR(joinem_palette_bank);
+		SCAN_VAR(joinem_nmi_enable);
 		SCAN_VAR(joinem_scroll_w);
 	}
 
@@ -1405,7 +1417,7 @@ STD_ROM_FN(jack)
 
 static INT32 jackInit()
 {
-	timer_rate = 128;
+	timer_rate = 256;
 
 	return DrvInit();
 }
@@ -1581,7 +1593,8 @@ STD_ROM_FN(zzyzzyxx)
 
 static INT32 zzyzzyxxInit()
 {
-	timer_rate = 16;
+	timer_rate = 32;
+	zzyzzyxx = 1;
 
 	return DrvInit();
 }
@@ -1851,7 +1864,7 @@ static void joinem_palette_init()
 static INT32 joinemInit()
 {
 	joinem = 1;
-	timer_rate = 16;
+	timer_rate = 32;
 
 	INT32 nRet = DrvInit();
 
@@ -1874,7 +1887,7 @@ static INT32 unclepooInit()
 {
 	joinem = 1;
 	unclepoo = 1;
-	timer_rate = 16; //32 in mame?
+	timer_rate = 32;
 
 	INT32 nRet = DrvInit();
 

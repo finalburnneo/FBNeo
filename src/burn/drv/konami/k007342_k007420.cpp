@@ -126,7 +126,64 @@ void K007342DrawLayer(INT32 layer, INT32 baseflags, INT32 priority)
 	}
 	else if (scroll_ctrl == 0x0c) // 32 columns
 	{
-		bprintf (0, _T("Column scroll! layer %d\n"), layer);
+		for (INT32 y = 0; y < nScreenHeight + 8; y+=8)
+		{
+			for (INT32 x = 0; x < nScreenWidth + 8; x+=8)
+			{
+				INT32 sxx = (scrollx + x) & 0x1ff;
+
+				INT32 yscroll = (K007342ScrRAM[0][((sxx/8)&0x1f) * 2] + (K007342ScrRAM[0][((sxx/8)&0x1f) * 2 + 1] * 256) + GlobalYOffsets) & 0xff;
+
+				INT32 syy = (yscroll + y) & 0xff;
+
+				INT32 ofst = ((sxx / 8) & 0x1f) + (((syy / 8) + ((sxx / 8) & 0x20)) * 0x20);
+
+				INT32 code  = VideoRAM[layer][ofst];
+				INT32 color = ColorRAM[layer][ofst];
+	
+				INT32 flags = (color >> 4) & 3;
+				INT32 category = color >> 7;
+	
+				if (category_select != category) continue; // right?
+	
+				if (pCallback) {
+					pCallback(layer, K007342Regs[0][1], &code, &color, &flags);
+				}
+	
+				INT32 flipx = (flags & 1) * 0x07;
+				INT32 flipy = (flags & 2) * 0x38;
+
+				if (opaque) {
+					if (flipy) {
+						if (flipx) {
+							Render8x8Tile_FlipXY_Clip(pTransDraw, code, x - (scrollx & 7), y - (yscroll & 7), color, 4, 0, GfxBase);
+						} else {
+							Render8x8Tile_FlipY_Clip(pTransDraw, code, x - (scrollx & 7), y - (yscroll & 7), color, 4, 0, GfxBase);
+						}		
+					} else {
+						if (flipx) {
+							Render8x8Tile_FlipX_Clip(pTransDraw, code, x - (scrollx & 7), y - (yscroll & 7), color, 4, 0, GfxBase);
+						} else {
+							Render8x8Tile_Clip(pTransDraw, code, x - (scrollx & 7), y - (yscroll & 7), color, 4, 0, GfxBase);
+						}
+					}
+				} else {
+					if (flipy) {
+						if (flipx) {
+							Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, x - (scrollx & 7), y - (yscroll & 7), color, 4, 0, 0, GfxBase);
+						} else {
+							Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, x - (scrollx & 7), y - (yscroll & 7), color, 4, 0, 0, GfxBase);
+						}		
+					} else {
+						if (flipx) {
+							Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, x - (scrollx & 7), y - (yscroll & 7), color, 4, 0, 0, GfxBase);
+						} else {
+							Render8x8Tile_Mask_Clip(pTransDraw, code, x - (scrollx & 7), y - (yscroll & 7), color, 4, 0, 0, GfxBase);
+						}
+					}
+				}
+			}
+		}
 	}
 	else if (scroll_ctrl == 0x14) // 256 rows
 	{
@@ -140,7 +197,10 @@ void K007342DrawLayer(INT32 layer, INT32 baseflags, INT32 priority)
 			for (INT32 x = 0; x < nScreenWidth + 8; x += 8)
 			{
 				INT32 sxx = (xscroll + x) & 0x1ff;
-				INT32 ofst = ((syy / 8) * 0x20) + ((sxx / 0x100) * 0x20) + ((sxx / 8) & 0x1f);
+				INT32 ofst = ((sxx / 8) & 0x1f) + (((syy / 8) + ((sxx / 8) & 0x20)) * 0x20);
+
+//				return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5);
+
 				INT32 code  = VideoRAM[layer][ofst];
 				INT32 color = ColorRAM[layer][ofst];
 	
@@ -210,16 +270,16 @@ void K007420SetOffsets(INT32 x, INT32 y)
 
 void K007420DrawSprites(UINT8 *gfxbase)
 {
-	int codemask = K007420_banklimit;
-	int bankmask = ~K007420_banklimit;
+	INT32 codemask = K007420_banklimit;
+	INT32 bankmask = ~K007420_banklimit;
 
 	UINT8 *m_ram = K007420RAM[0];
 
 	for (INT32 offs = 0x200 - 8; offs >= 0; offs -= 8)
 	{
-		int ox, oy, code, color, flipx, flipy, zoom, w, h, x, y, bank;
-		static const int xoffset[4] = { 0, 1, 4, 5 };
-		static const int yoffset[4] = { 0, 2, 8, 10 };
+		INT32 ox, oy, code, color, flipx, flipy, zoom, w, h, x, y, bank;
+		static const INT32 xoffset[4] = { 0, 1, 4, 5 };
+		static const INT32 yoffset[4] = { 0, 2, 8, 10 };
 
 		code = m_ram[offs + 1];
 		color = m_ram[offs + 2];
@@ -258,7 +318,7 @@ void K007420DrawSprites(UINT8 *gfxbase)
 
 		if (zoom == 0x10000)
 		{
-			int sx, sy;
+			INT32 sx, sy;
 
 			for (y = 0; y < h; y++)
 			{
@@ -266,7 +326,7 @@ void K007420DrawSprites(UINT8 *gfxbase)
 
 				for (x = 0; x < w; x++)
 				{
-					int c = code;
+					INT32 c = code;
 
 					sx = ox + 8 * x;
 					if (flipx)
@@ -318,7 +378,7 @@ void K007420DrawSprites(UINT8 *gfxbase)
 		}
 		else
 		{
-			int sx, sy, zw, zh;
+			INT32 sx, sy, zw, zh;
 			for (y = 0; y < h; y++)
 			{
 				sy = oy + ((zoom * y + (1 << 12)) >> 13);
@@ -326,7 +386,7 @@ void K007420DrawSprites(UINT8 *gfxbase)
 
 				for (x = 0; x < w; x++)
 				{
-					int c = code;
+					INT32 c = code;
 
 					sx = ox + ((zoom * x + (1<<12)) >> 13);
 					zw = (ox + ((zoom * (x + 1) + (1 << 12)) >> 13)) - sx;

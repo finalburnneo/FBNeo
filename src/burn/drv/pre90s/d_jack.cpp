@@ -1099,7 +1099,7 @@ static INT32 DrvInit()
 	{
 		ZetMapMemory(Rom0 + 0xc000,	0xd000, 0xffff, ZET_RAM); // + 0xc000, really?
 	} else if (!unclepoo) {
-		ZetMapMemory(Rom0 + 0xc000,	0xc000, 0xffff, ZET_RAM);
+		ZetMapMemory(Rom0 + 0xc000,	0xc000, 0xffff, ZET_ROM);
 	}
 
 	ZetClose();

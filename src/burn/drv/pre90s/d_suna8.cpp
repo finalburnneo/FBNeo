@@ -834,6 +834,7 @@ static void __fastcall starfigh_write(UINT16 address, UINT8 data)
 		case 0xc400:
 			// leds -> 0,1, 0x01, 0x02
 			// coin counter 0x04
+			m_gfxbank = (data & 0x08) ? 4 : 0;
 			bankswitch(m_rombank_latch & 0x0f);
 		return;
 

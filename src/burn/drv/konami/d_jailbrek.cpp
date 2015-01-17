@@ -467,7 +467,8 @@ static void draw_sprites()
 
 		sy -= 16;
 		sx -= 8;
-		if (sx < -7 || sy < -7 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
+
+		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
 		if (flipy) {
 			if (flipx) {
@@ -537,8 +538,9 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 9;
-	INT32 nCyclesTotal[1] = { 1536000 / 60};
+	INT32 nCyclesTotal[1] = { 1536000 / 60 };
 	INT32 nCyclesDone[1] = { 0 };
+	INT32 nSoundBufferPos = 0;
 
 	M6809Open(0);
 
@@ -549,10 +551,21 @@ static INT32 DrvFrame()
 		if (i < 8 && nmi_enable) M6809SetIRQLine(0x20, M6809_IRQSTATUS_AUTO);
 
 		if (i == 8 && irq_enable) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			SN76496Update(0, pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	if (pBurnSoundOut) {
-		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		if (nSegmentLength) {
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			SN76496Update(0, pSoundBuf, nSegmentLength);
+		}
 		vlm5030Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 

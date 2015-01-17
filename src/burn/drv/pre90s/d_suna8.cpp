@@ -468,6 +468,13 @@ static void sample_render(INT16 *buffer, INT32 nLen)
 {
 	if (sample_start < 0) return; // stopped
 
+	if (sample_start + (sample_offset >> 16) >= 0x20000 ) {
+		bprintf(0, _T("Bad sample start!\n"));
+		sample_start = -1; // stop
+		sample_offset = 0;
+		return;
+	}
+
 	INT32 step = (8000 << 16) / nBurnSoundRate; // 8khz
 	INT32 pos = 0;
 	INT16 *rom = DrvSamplesExp + sample_start;
@@ -2400,12 +2407,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			DACScan(nAction, pnMin);
 		}
 
+		ZetOpen(1);
 		if (strstr(BurnDrvGetTextA(DRV_NAME), "ranger")) {
 			BurnYM2203Scan(nAction, pnMin);
 		} else {
 			AY8910Scan(nAction, pnMin);
 			BurnYM3812Scan(nAction, pnMin);
 		}
+		ZetClose();
 
 		// Scan critical driver variables
 		SCAN_VAR(m_gfxbank);

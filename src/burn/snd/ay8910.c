@@ -819,6 +819,11 @@ INT32 AY8910Scan(INT32 nAction, INT32* pnMin)
 	}
 
 	for (i = 0; i < num; i++) {
+		struct AY8910 *PSG = &AYPSG[i];
+		read8_handler tempPortAread = PSG->PortAread; // preserve the port handler pointers!
+		read8_handler tempPortBread = PSG->PortBread;
+		write8_handler tempPortAwrite = PSG->PortAwrite;
+		write8_handler tempPortBwrite = PSG->PortBwrite;
 		char szName[16];
 
 		sprintf(szName, "AY8910 #%d", i);
@@ -828,6 +833,12 @@ INT32 AY8910Scan(INT32 nAction, INT32* pnMin)
 		ba.nAddress = 0;
 		ba.szName	= szName;
 		BurnAcb(&ba);
+
+		PSG->PortAread = tempPortAread;
+		PSG->PortBread = tempPortBread;
+		PSG->PortAwrite = tempPortAwrite;
+		PSG->PortBwrite = tempPortBwrite;
+
 	}
 
 	return 0;

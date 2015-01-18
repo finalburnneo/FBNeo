@@ -1,7 +1,7 @@
 #===============================================================================
 #                           FINAL BURN ALPHA QT
 #===============================================================================
-QT += widgets multimedia
+QT += widgets multimedia opengl
 TARGET = fbaqt
 
 linux:QT += x11extras
@@ -42,7 +42,7 @@ GEN = $$SRC/dep/generated
 
 # We need ld
 FBA_LD = ld
-DEFINES += FBA_DEBUG
+#DEFINES += FBA_DEBUG
 
 #-------------------------------------------------------------------------------
 # Additional include paths
@@ -96,15 +96,9 @@ QMAKE_CFLAGS += -w
 
 
 #-------------------------------------------------------------------------------
-# C++11, OpenMP (software image flip/rotation)
+# C++11
 #-------------------------------------------------------------------------------
 CONFIG += c++11
-
-ENABLE_OPENMP = false
-$${ENABLE_OPENMP} {
-    QMAKE_CXXFLAGS += -fopenmp
-    QMAKE_LFLAGS += -fopenmp
-}
 
 #-------------------------------------------------------------------------------
 # src/dep/generated
@@ -249,67 +243,22 @@ DRIVERLIST.commands = \
     perl $$SCRIPTS/gamelist.pl -o $$DRIVERLIST.target $$DRIVERLIST_PATHS;
 
 #===============================================================================
-#                              RUBY CONFIG
+#                              OPENGL DEPS
 #===============================================================================
-LINUX_VIDEO_XV = true
-LINUX_VIDEO_SDL = true
-LINUX_VIDEO_XSHM = true
-LINUX_VIDEO_GLX = true
 
+LINUX_VIDEO_GLX = true
 MACX_VIDEO_CGL = true
-MACX_VIDEO_SDL = true
 
 linux {
-    DEFINES += PLATFORM_X
-
-    $${LINUX_VIDEO_XV} {
-        DEFINES += VIDEO_XV
-        SOURCES += $$SRC/burner/qt/ruby/video/xv.cpp
-        LIBS += -lX11 -lXext -lXv
-    }
-
-    $${LINUX_VIDEO_SDL} {
-        DEFINES += VIDEO_SDL
-        SOURCES += $$SRC/burner/qt/ruby/video/sdl.cpp
-        LIBS *= -lSDL
-    }
-
-    $${LINUX_VIDEO_XSHM} {
-        DEFINES += VIDEO_XSHM
-        SOURCES += $$SRC/burner/qt/ruby/video/xshm.cpp
-        LIBS += -lX11 -lXext
-    }
 
     $${LINUX_VIDEO_GLX} {
-        DEFINES += VIDEO_GLX
-        SOURCES +=  $$SRC/burner/qt/ruby/video/glx.cpp
-        LIBS += -lX11 -lXext -lGL
+        LIBS += -lX11 -lXext -lGLEW -lGL
     }
 }
 
 macx {
-    DEFINES += PLATFORM_MACOSX
-    $${MACX_VIDEO_CGL} {
-        SOURCES +=  $$SRC/burner/qt/ruby/video/cgl.cpp
-        # LIBS +=
-    }
-
-    $${MACX_VIDEO_SDL} {
-        DEFINES += VIDEO_SDL
-        SOURCES += $$SRC/burner/qt/ruby/video/sdl.cpp
-    }
 }
 
-$${LINUX_VIDEO_GLX} | $${MACX_VIDEO_CGL} {
-        HEADERS +=  $$SRC/burner/qt/ruby/video/opengl/bind.hpp \
-                    $$SRC/burner/qt/ruby/video/opengl/main.hpp \
-                    $$SRC/burner/qt/ruby/video/opengl/opengl.hpp \
-                    $$SRC/burner/qt/ruby/video/opengl/program.hpp \
-                    $$SRC/burner/qt/ruby/video/opengl/shaders.hpp \
-                    $$SRC/burner/qt/ruby/video/opengl/surface.hpp \
-                    $$SRC/burner/qt/ruby/video/opengl/texture.hpp \
-                    $$SRC/burner/qt/ruby/video/opengl/utility.hpp
-}
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -720,7 +669,6 @@ SOURCES += \
     ../../src/burner/qt/progress.cpp \
     ../../src/burner/qt/qaudiointerface.cpp \
     ../../src/burner/qt/qinputinterface.cpp \
-    ../../src/burner/qt/qrubyviewport.cpp \
     ../../src/burner/qt/qutil.cpp \
     ../../src/burner/qt/romdirsdialog.cpp \
     ../../src/burner/qt/rominfodialog.cpp \
@@ -728,8 +676,6 @@ SOURCES += \
     ../../src/burner/qt/selectdialog.cpp \
     ../../src/burner/qt/stringset.cpp \
     ../../src/burner/qt/supportdirsdialog.cpp \
-    ../../src/burner/qt/ruby/implementation.cpp \
-    ../../src/burner/qt/ruby/ruby.cpp \
     ../../src/dep/libs/zlib/adler32.c \
     ../../src/dep/libs/zlib/compress.c \
     ../../src/dep/libs/zlib/crc32.c \
@@ -751,7 +697,10 @@ SOURCES += \
     ../../src/burn/devices/kaneko_tmap.cpp \
     ../../src/burner/qt/inputdialog.cpp \
     ../../src/burner/qt/widgets/hexspinbox.cpp \
-    ../../src/burner/qt/logdialog.cpp
+    ../../src/burner/qt/logdialog.cpp \
+    ../../src/burner/qt/oglviewport.cpp \
+    ../../src/intf/video/opengl/vid_opengl.cpp \
+    ../../src/intf/video/opengl/shader.cpp
 
 
 HEADERS += \
@@ -897,7 +846,6 @@ HEADERS += \
     ../../src/burner/qt/mainwindow.h \
     ../../src/burner/qt/qaudiointerface.h \
     ../../src/burner/qt/qinputinterface.h \
-    ../../src/burner/qt/qrubyviewport.h \
     ../../src/burner/qt/qutil.h \
     ../../src/burner/qt/romdirsdialog.h \
     ../../src/burner/qt/rominfodialog.h \
@@ -905,10 +853,6 @@ HEADERS += \
     ../../src/burner/qt/selectdialog.h \
     ../../src/burner/qt/supportdirsdialog.h \
     ../../src/burner/qt/tchar.h \
-    ../../src/burner/qt/ruby/audio.hpp \
-    ../../src/burner/qt/ruby/input.hpp \
-    ../../src/burner/qt/ruby/ruby.hpp \
-    ../../src/burner/qt/ruby/video.hpp \
     ../../src/dep/libs/zlib/crc32.h \
     ../../src/dep/libs/zlib/deflate.h \
     ../../src/dep/libs/zlib/gzguts.h \
@@ -925,7 +869,10 @@ HEADERS += \
     ../../src/burn/devices/kaneko_tmap.h \
     ../../src/burner/qt/inputdialog.h \
     ../../src/burner/qt/widgets/hexspinbox.h \
-    ../../src/burner/qt/logdialog.h
+    ../../src/burner/qt/logdialog.h \
+    ../../src/burner/qt/oglviewport.h \
+    ../../src/intf/video/opengl/shader.h
+
 
 #-------------------------------------------------------------------------------
 # Linux only drivers

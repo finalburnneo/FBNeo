@@ -18,7 +18,7 @@
 #elif defined (_XBOX)
 	extern struct VidOut VidOutD3D;
 #elif defined (BUILD_QT)
-    extern struct VidOut VidRuby;
+    extern struct VidOut VidOutOGL;
 #endif
 
 static struct VidOut *pVidOut[] = {
@@ -34,7 +34,7 @@ static struct VidOut *pVidOut[] = {
 #elif defined (_XBOX)
 	&VidOutD3D,
 #elif defined (BUILD_QT)
-    &VidRuby,
+    &VidOutOGL,
 #endif
 };
 

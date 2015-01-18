@@ -7,7 +7,6 @@
 #include "mainwindow.h"
 #include "burner.h"
 #include "selectdialog.h"
-#include "ruby/ruby.hpp"
 #include "version.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -36,7 +35,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     show();
 
-    setupRubyViewport();
 }
 
 MainWindow::~MainWindow()
@@ -44,7 +42,6 @@ MainWindow::~MainWindow()
     BurnLibExit();
     AudSoundStop();
     AudSoundExit();
-    ruby::video.term();
 }
 
 int MainWindow::main(QApplication &app)
@@ -177,7 +174,7 @@ void MainWindow::createMenus()
 void MainWindow::createControls()
 {
     m_audio = QAudioInterface::get(this);
-    m_viewport = QRubyViewport::get();
+    m_viewport = new OGLViewport(nullptr);
     setCentralWidget(m_viewport);
     resize(640, 480);
 
@@ -247,23 +244,8 @@ void MainWindow::disableInGame()
 
 void MainWindow::drawLogo()
 {
-    extern void rubyBlitImage(QImage &image);
-    if (!m_isRunning) {
-        QApplication::processEvents();
-        rubyBlitImage(m_logo);
-    }
 }
 
-void MainWindow::setupRubyViewport()
-{
-    ruby::video.driver("OpenGL");
-    ruby::video.set(ruby::Video::Handle, m_viewport->id());
-    ruby::video.set(ruby::Video::Depth, 24u);
-
-    if (ruby::video.init()) {
-        qDebug() << "Ruby Succefully initialized";
-    }
-}
 
 void MainWindow::setupInputInterfaces()
 {

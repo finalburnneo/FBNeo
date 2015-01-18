@@ -11,7 +11,7 @@
 #include <QVector>
 #include <QImage>
 #include "selectdialog.h"
-#include "qrubyviewport.h"
+#include "oglviewport.h"
 #include "qaudiointerface.h"
 #include "supportdirsdialog.h"
 #include "aboutdialog.h"
@@ -49,10 +49,9 @@ private:
     void enableInGame();
     void disableInGame();
     void drawLogo();
-    void setupRubyViewport();
     int m_game;
     bool m_isRunning;
-    QRubyViewport *m_viewport;
+    OGLViewport *m_viewport;
     QAudioInterface *m_audio;
     EmuWorker *m_emulation;
     SelectDialog *m_selectDlg;

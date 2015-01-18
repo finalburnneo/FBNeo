@@ -5151,7 +5151,7 @@ struct BurnDriver BurnDrvShackled = {
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, shackledRomInfo, shackledRomName, NULL, NULL, ShackledInputInfo, ShackledDIPInfo,
 	LastmissInit, LastmissExit, LastmissFrame, ShackledDraw, LastmissScan, &DrvRecalc, 0x400,
-	240, 256, 3, 4
+	256, 240, 4, 3
 };
 
 
@@ -5199,7 +5199,7 @@ struct BurnDriver BurnDrvBreywood = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, breywoodRomInfo, breywoodRomName, NULL, NULL, ShackledInputInfo, ShackledDIPInfo,
 	LastmissInit, LastmissExit, LastmissFrame, ShackledDraw, LastmissScan, &DrvRecalc, 0x400,
-	240, 256, 3, 4
+	256, 240, 4, 3
 };
 
 

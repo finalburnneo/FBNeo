@@ -40,6 +40,7 @@ static INT32 Twinadv = 0;
 static INT32 Honeydol = 0;
 static INT32 Wintbob = 0;
 static INT32 Snowbro3 = 0;
+static INT32 Toto = 0;
 
 static INT32 HyperpacNumTiles = 0;
 static INT32 HyperpacNumTiles8bpp = 0;
@@ -693,6 +694,23 @@ static struct BurnRomInfo HyperpacRomDesc[] = {
 
 STD_ROM_PICK(Hyperpac)
 STD_ROM_FN(Hyperpac)
+
+
+static struct BurnRomInfo TotoRomDesc[] = {
+	{ "u60.5j",        0x20000, 0x39203792, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "u51.4j",        0x20000, 0x7b846cd4, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+
+	{ "u107.8k",       0x20000, 0x4486153b, BRF_GRA },			 //  2	Sprites
+	{ "u108.8l",       0x20000, 0x3286cf5f, BRF_GRA },			 //  3	Sprites
+	{ "u109.8m",       0x20000, 0x464d7251, BRF_GRA },			 //  4	Sprites
+	{ "u110.8n",       0x20000, 0x7dea56df, BRF_GRA },			 //  5	Sprites
+
+	{ "u46.4c",        0x08000, 0x77b1ef42, BRF_SND },			 //  6  Z80 Program Code
+};
+
+
+STD_ROM_PICK(Toto)
+STD_ROM_FN(Toto)
 
 static struct BurnRomInfo HyperpacbRomDesc[] = {
 	{ "hpacuh12.bin",  0x20000, 0x633ab2c6, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
@@ -1708,6 +1726,9 @@ UINT16 __fastcall SnowbrosReadWord(UINT32 a)
 		case 0x500004: {
 			SEK_DEF_READ_WORD(0, a);
 		}
+		case 0x500006: { // Toto Protection
+			return 0x07;
+		}
 	}
 
 	return 0;
@@ -1739,6 +1760,10 @@ UINT8 __fastcall SnowbrosReadByte(UINT32 a)
 
 		case 0x500004: {
 			return 0xff - HyperpacInput[2];
+		}
+		case 0x500006: // Toto Protection
+		case 0x500007: {
+			return 0x07;
 		}
 	}
 
@@ -2630,6 +2655,35 @@ static INT32 HoneydolInit()
 	return 0;
 }
 
+static void DrvTotoRomDecode()
+{
+	// every single rom has bits 0x10 and 0x08 swapped
+	UINT8 *src = HyperpacRom;
+	int len = 0x40000;
+
+	for (int i = 0; i < len; i++)
+	{
+		src[i] = BITSWAP08(src[i], 7, 6, 5, 3, 4, 2, 1, 0);
+	}
+
+	src = HyperpacTempGfx;
+	len = 0x80000;
+
+	for (int i = 0; i < len; i++)
+	{
+		src[i] = BITSWAP08(src[i], 7, 6, 5, 3, 4, 2, 1, 0);
+	}
+
+	src = HyperpacZ80Rom;
+	len = 0x08000;
+
+	for (int i = 0; i < len; i++)
+	{
+		src[i] = BITSWAP08(src[i], 7, 6, 5, 3, 4, 2, 1, 0);
+	}
+}
+
+
 static INT32 SnowbrosInit()
 {
 	INT32 nRet = 0, nLen;
@@ -2648,6 +2702,23 @@ static INT32 SnowbrosInit()
 
 	HyperpacTempGfx = (UINT8*)BurnMalloc(0x80000);
 
+	if (Toto) {
+		// Load and byte-swap 68000 Program roms
+		nRet = BurnLoadRom(HyperpacRom + 0x00001, 0, 2); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(HyperpacRom + 0x00000, 1, 2); if (nRet != 0) return 1;
+
+		// Load Z80 Program Rom
+		nRet = BurnLoadRom(HyperpacZ80Rom, 6, 1); if (nRet != 0) return 1;
+
+		// Load and Decode Sprite Roms
+		nRet = BurnLoadRom(HyperpacTempGfx + 0x00000, 2, 1); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(HyperpacTempGfx + 0x20000, 3, 1); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(HyperpacTempGfx + 0x40000, 4, 1); if (nRet != 0) return 1;
+		nRet = BurnLoadRom(HyperpacTempGfx + 0x60000, 5, 1); if (nRet != 0) return 1;
+		DrvTotoRomDecode();
+		GfxDecode(HyperpacNumTiles, 4, 16, 16, SnowbrosSpritePlaneOffsets, SnowbrosSpriteXOffsets, SnowbrosSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);
+		BurnFree(HyperpacTempGfx);
+	} else
 	if (Wintbob) {
 		// Load and byte-swap 68000 Program roms
 		nRet = BurnLoadRom(HyperpacRom + 0x00001, 0, 2); if (nRet != 0) return 1;
@@ -2723,6 +2794,13 @@ static INT32 SnowbrosInit()
 static INT32 WintbobInit()
 {
 	Wintbob = 1;
+	
+	return SnowbrosInit();
+}
+
+static INT32 TotoInit()
+{
+	Toto = 1;
 	
 	return SnowbrosInit();
 }
@@ -2845,7 +2923,8 @@ static INT32 SnowbrosExit()
 	HyperpacNumTiles = 0;
 	HyperpacNumTiles8bpp = 0;
 	Wintbob = 0;
-	
+	Toto = 0;
+
 	Snowbro3Music = 0;
 	Snowbro3MusicPlaying = 0;
 	Snowbro3 = 0;
@@ -4173,4 +4252,14 @@ struct BurnDriver BurnDrvBallboy = {
 	NULL, BallboyRomInfo, BallboyRomName, NULL, NULL, SnowbrosInputInfo, SnowbrojDIPInfo,
 	Snowbro3Init, SnowbrosExit, Snowbro3Frame, NULL, Snowbro3Scan,
 	NULL, 0x400, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvToto = {
+	"toto", NULL, NULL, NULL, "1996",
+	"Come Back Toto\0", NULL, "SoftClub", "Kaneko Pandora based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, TotoRomInfo, TotoRomName, NULL, NULL, SnowbrosInputInfo, SnowbrosDIPInfo,
+	TotoInit, SnowbrosExit, SnowbrosFrame, NULL, SnowbrosScan,
+	NULL, 0x200, 256, 224, 4, 3
 };

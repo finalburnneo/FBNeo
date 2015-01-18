@@ -296,7 +296,8 @@ static void __fastcall tbowl_sound_write(UINT16 address, UINT8 data)
 
 		case 0xe004:
 		case 0xe005:
-			MSM5205SetRoute(address & 1, (data & 0x7f) * 100 / 0x7f, BURN_SND_ROUTE_BOTH);
+			data &= 0x7f;
+			MSM5205SetRoute(address & 1, (double)data / 0x7f, BURN_SND_ROUTE_BOTH);
 		return;
 	}
 }
@@ -720,7 +721,7 @@ static INT32 DrvFrame()
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdateYM3812(i * (nTotalCycles[1] / nInterleave));
+		BurnTimerUpdateYM3812((i + 1) * (nTotalCycles[2] / nInterleave));
 		MSM5205Update();
 		ZetClose();
 	}

@@ -8,7 +8,7 @@
         * Congo Bongo		yes
 
    To do:
-	Dips are wrong. Very wrong! Needs a re-write badly.
+    Dips are wrong. Very wrong! Needs a re-write badly. (done Congo Bongo Jan.19.2015)
 	Need to add Sega USB support.
 	Analog inputs for Raxmatazz and Ixion
 	Clean up video code
@@ -58,6 +58,7 @@ static UINT8 *zaxxon_bg_enable;
 static UINT32 *zaxxon_bg_scroll;
 static UINT8 *zaxxon_flipscreen;
 static UINT8 *zaxxon_coin_enable;
+static UINT8 *zaxxon_coin_status;
 
 static UINT8 *congo_color_bank;
 static UINT8 *congo_fg_bank;
@@ -99,16 +100,16 @@ static struct BurnInputInfo ZaxxonInputList[] = {
 STDINPUTINFO(Zaxxon)
 
 static struct BurnInputInfo CongoBongoInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 start"	},
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 start"	},
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
@@ -116,9 +117,9 @@ static struct BurnInputInfo CongoBongoInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy4 + 2,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(CongoBongo)
@@ -152,30 +153,10 @@ STDINPUTINFO(Futspy)
 
 static struct BurnDIPInfo CongoBongoDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0xc0, NULL			},
-	{0x04, 0xff, 0xff, 0xc0, NULL			},
-	{0x05, 0xff, 0xff, 0x04, NULL			},
-	{0x10, 0xff, 0xff, 0x7f, NULL			},
-	{0x11, 0xff, 0xff, 0x33, NULL			},
-
-	{0   , 0xfe, 0   ,    2, "Test Back and Target"		},
-	{0x03, 0x01, 0x20, 0x20, "No"			},
-	{0x03, 0x01, 0x20, 0x00, "Yes"			},
-
-	{0   , 0xfe, 0   ,    0, "Test I/O and Dip SW"		},
-	{0x03, 0x01, 0x20, 0x20, "No"			},
-	{0x03, 0x01, 0x20, 0x00, "Yes"			},
-
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x04, 0x01, 0x0c, 0x0c, "Easy"			},
-	{0x04, 0x01, 0x0c, 0x04, "Medium"		},
-	{0x04, 0x01, 0x0c, 0x08, "Hard"			},
-	{0x04, 0x01, 0x0c, 0x00, "Hardest"		},
-
-	{0x10, 0xff, 0xff, 0x7f, NULL			},
+	{0x10, 0xff, 0xff, 0x7f, NULL		},
 	{0x11, 0xff, 0xff, 0x33, NULL		},
 
-	{0   , 0xfe, 0   ,    1, "Service Mode"		},
+	{0   , 0xfe, 0   ,    1, "Service Mode (No Toggle)"		},
 	{0x10, 0x01, 0x01, 0x00, "Off"		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
@@ -183,14 +164,6 @@ static struct BurnDIPInfo CongoBongoDIPList[]=
 	{0x10, 0x01, 0x03, 0x01, "20000"		},
 	{0x10, 0x01, 0x03, 0x02, "30000"		},
 	{0x10, 0x01, 0x03, 0x00, "40000"		},
-
-	{0   , 0xfe, 0   ,    2, "Unused"		},
-	{0x10, 0x01, 0x04, 0x00, "Off"		},
-	{0x10, 0x01, 0x04, 0x04, "On"		},
-
-	{0   , 0xfe, 0   ,    2, "Unused"		},
-	{0x10, 0x01, 0x08, 0x00, "Off"		},
-	{0x10, 0x01, 0x08, 0x08, "On"		},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
 	{0x10, 0x01, 0x30, 0x30, "3"		},
@@ -206,41 +179,19 @@ static struct BurnDIPInfo CongoBongoDIPList[]=
 	{0x10, 0x01, 0x80, 0x00, "Upright"		},
 	{0x10, 0x01, 0x80, 0x80, "Cocktail"		},
 
-	{0   , 0xfe, 0   ,    16, "SW2:!1,!2,!3,!4"		},
-	{0x11, 0x01, 0x0f, 0x0f, "SW2:!1,!2,!3,!4"		},
-	{0x11, 0x01, 0x0f, 0x07, "SW2:!1,!2,!3,!4"		},
-	{0x11, 0x01, 0x0f, 0x0b, "SW2:!1,!2,!3,!4"		},
-	{0x11, 0x01, 0x0f, 0x06, "2C/1C 5C/3C 6C/4C"		},
-	{0x11, 0x01, 0x0f, 0x0a, "2C/1C 3C/2C 4C/3C"		},
-	{0x11, 0x01, 0x0f, 0x03, "SW2:!1,!2,!3,!4"		},
-	{0x11, 0x01, 0x0f, 0x02, "1C/1C 5C/6C"		},
-	{0x11, 0x01, 0x0f, 0x0c, "1C/1C 4C/5C"		},
-	{0x11, 0x01, 0x0f, 0x04, "1C/1C 2C/3C"		},
-	{0x11, 0x01, 0x0f, 0x0d, "SW2:!1,!2,!3,!4"		},
-	{0x11, 0x01, 0x0f, 0x08, "1C/2C 5C/11C"		},
-	{0x11, 0x01, 0x0f, 0x00, "1C/2C 4C/9C"		},
-	{0x11, 0x01, 0x0f, 0x05, "SW2:!1,!2,!3,!4"		},
-	{0x11, 0x01, 0x0f, 0x09, "SW2:!1,!2,!3,!4"		},
-	{0x11, 0x01, 0x0f, 0x01, "SW2:!1,!2,!3,!4"		},
-	{0x11, 0x01, 0x0f, 0x0e, "SW2:!1,!2,!3,!4"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x10, 0x01, 0x0c, 0x0c, "Easy"		},
+	{0x10, 0x01, 0x0c, 0x04, "Medium"		},
+	{0x10, 0x01, 0x0c, 0x08, "Hard"		},
+	{0x10, 0x01, 0x0c, 0x00, "Hardest"		},
 
-	{0   , 0xfe, 0   ,    16, "SW2:!5,!6,!7,!8"		},
-	{0x11, 0x01, 0xf0, 0xf0, "SW2:!5,!6,!7,!8"		},
-	{0x11, 0x01, 0xf0, 0x70, "SW2:!5,!6,!7,!8"		},
-	{0x11, 0x01, 0xf0, 0xb0, "SW2:!5,!6,!7,!8"		},
-	{0x11, 0x01, 0xf0, 0x60, "2C/1C 5C/3C 6C/4C"		},
-	{0x11, 0x01, 0xf0, 0xa0, "2C/1C 3C/2C 4C/3C"		},
-	{0x11, 0x01, 0xf0, 0x30, "SW2:!5,!6,!7,!8"		},
-	{0x11, 0x01, 0xf0, 0x20, "1C/1C 5C/6C"		},
-	{0x11, 0x01, 0xf0, 0xc0, "1C/1C 4C/5C"		},
-	{0x11, 0x01, 0xf0, 0x40, "1C/1C 2C/3C"		},
-	{0x11, 0x01, 0xf0, 0xd0, "SW2:!5,!6,!7,!8"		},
-	{0x11, 0x01, 0xf0, 0x80, "1C/2C 5C/11C"		},
-	{0x11, 0x01, 0xf0, 0x00, "1C/2C 4C/9C"		},
-	{0x11, 0x01, 0xf0, 0x50, "SW2:!5,!6,!7,!8"		},
-	{0x11, 0x01, 0xf0, 0x90, "SW2:!5,!6,!7,!8"		},
-	{0x11, 0x01, 0xf0, 0x10, "SW2:!5,!6,!7,!8"		},
-	{0x11, 0x01, 0xf0, 0xe0, "SW2:!5,!6,!7,!8"		},
+	{0   , 0xfe, 0   ,    2, "Coin B"		},
+	{0x11, 0x01, 0x0f, 0x03, "1 Coin 1 Credit"		},
+	{0x11, 0x01, 0x0f, 0x0d, "1 Coin 2 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "Coin A"		},
+	{0x11, 0x01, 0xf0, 0x30, "1 Coin 1 Credit"		},
+	{0x11, 0x01, 0xf0, 0xd0, "1 Coin 2 Credits"		},
 };
 
 STDDIPINFO(CongoBongo)
@@ -604,6 +555,28 @@ static UINT8 __fastcall zaxxon_read(UINT16 address)
 	return 0;
 }
 
+static UINT8 zaxxon_coin_last[4] = { 0, 0, 0, 0 };
+
+static void zaxxon_coin_inserted(UINT8 param)
+{
+	if (zaxxon_coin_last[param] != DrvJoy4[param-1])
+	{
+		zaxxon_coin_status[param] = zaxxon_coin_enable[param];
+	}
+}
+
+static UINT8 zaxxon_coin_r(UINT8 param)
+{
+	return zaxxon_coin_status[param];
+}
+
+static void zaxxon_coin_enable_w(UINT8 offset, UINT8 data)
+{
+	zaxxon_coin_enable[offset] = data;
+	if (!zaxxon_coin_enable[offset])
+		zaxxon_coin_status[offset] = 0;
+}
+
 static void __fastcall zaxxon_write(UINT16 address, UINT8 data)
 {
 	// address mirroring
@@ -615,7 +588,7 @@ static void __fastcall zaxxon_write(UINT16 address, UINT8 data)
 		case 0xc000:
 		case 0xc001:
 		case 0xc002:
-			zaxxon_coin_enable[address & 3] = data & 1;
+			zaxxon_coin_enable_w(address & 3, data & 1);
 		return;
 
 		case 0xc003:
@@ -671,12 +644,16 @@ static UINT8 __fastcall congo_read(UINT16 address)
 
 	switch (address)
 	{
-		case 0xc000: return DrvInputs[0];        // in0
-		case 0xc001: return DrvInputs[1];        // in1
-		case 0xc002: // dsw02                    // dsw1
-		case 0xc003: // dsw03                    // dsw2
-		case 0xc008: return DrvInputs[2];        // in2
-			return 0;
+		case 0xc000:
+			return DrvInputs[0];        // in0
+		case 0xc001:
+			return DrvInputs[1];        // in1
+		case 0xc002:
+			return DrvDips[0]; // dsw02                    // dsw1
+		case 0xc003:
+			return DrvDips[1]; // dsw03                    // dsw2
+		case 0xc008:
+			return DrvInputs[2];
 	}
 
 	return 0;
@@ -718,7 +695,7 @@ static void __fastcall congo_write(UINT16 address, UINT8 data)
 		case 0xc018:
 		case 0xc019:
 		case 0xc01a:
-			// zaxxon_coin_enable_w
+			zaxxon_coin_enable_w(address & 3, data & 1);
 		return;
 
 		case 0xc01b:
@@ -838,7 +815,7 @@ static INT32 DrvGfxDecode()
 	INT32 SpriteXOffs[32] = { STEP8(0, 1), STEP8(64, 1), STEP8(128, 1), STEP8(192, 1) };
 	INT32 SpriteYOffs[32] = { STEP8(0, 8), STEP8(256, 8), STEP8(512, 8), STEP8(768, 8) };
 
-	UINT8 *tmp = (UINT8*)malloc(0xc000);
+	UINT8 *tmp = (UINT8*)BurnMalloc(0xc000);
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -969,6 +946,7 @@ static INT32 MemIndex()
 	congo_custom		= Next; Next += 0x000004;
 	zaxxon_flipscreen	= Next; Next += 0x000001;
 	zaxxon_coin_enable	= Next; Next += 0x000004;
+	zaxxon_coin_status	= Next; Next += 0x000004;
 
 	zaxxon_bg_scroll	= (UINT32*)Next; Next += 0x000001 * sizeof(INT32);
 
@@ -988,7 +966,7 @@ static INT32 DrvInit()
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -1079,7 +1057,7 @@ static INT32 CongoInit()
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -1373,6 +1351,24 @@ static INT32 DrvDraw()
 	return 0;
 }
 
+static void zaxxon_coin_lockout()
+{
+	// soft-coin lockout - prevents 30 coins per 1 insert-coin keypress.
+	if (DrvJoy4[2]) // service pressed
+		zaxxon_coin_inserted(0);
+	if (DrvJoy4[0]) // coin pressed
+		zaxxon_coin_inserted(1);
+	if (DrvJoy4[1]) // coin pressed
+		zaxxon_coin_inserted(2);
+	DrvInputs[2] += (zaxxon_coin_r(0)) ? 0x20 : 0;
+	DrvInputs[2] += (zaxxon_coin_r(1)) ? 0x40 : 0;
+	DrvInputs[2] += (zaxxon_coin_r(2)) ? 0x80 : 0;
+	zaxxon_coin_last[0] = DrvJoy4[2];
+	zaxxon_coin_last[1] = DrvJoy4[0];
+	zaxxon_coin_last[2] = DrvJoy4[1];
+	// end soft-coin lockout
+}
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -1390,9 +1386,7 @@ static INT32 DrvFrame()
 		}
 		DrvInputs[2] ^= (DrvJoy3[2] & 1) << 2;   //  start 1
 		DrvInputs[2] ^= (DrvJoy3[3] & 1) << 3;   //  start 2
-		DrvInputs[2] ^= (DrvJoy4[0] & 1) << 5;   //  coins 1
-		DrvInputs[2] ^= (DrvJoy4[1] & 1) << 6;	 //  coins 2
-		// DrvInputs[2] ^= (DrvJoy4[0] & 1) << 7;   //  credits
+		zaxxon_coin_lockout();
 	}
 
 	ZetOpen(0);
@@ -1426,6 +1420,7 @@ static INT32 CongoFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
+		zaxxon_coin_lockout();
 	}
 
 	INT32 nCyclesSegment;

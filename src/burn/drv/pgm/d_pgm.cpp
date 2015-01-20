@@ -61,14 +61,14 @@ static struct BurnInputInfo pgmInputList[] = {
 
 	{"Dip A",		BIT_DIPSWITCH,	PgmInput + 6,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	PgmInput + 7,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,  PgmInput + 8,   "dip"       },
+	{"Dip C",		BIT_DIPSWITCH,  PgmInput + 8,   "dip"		},
 };
 
 STDINPUTINFO(pgm)
 
 static struct BurnDIPInfo pgmDIPList[] = {
 	{0x2D,	0xFF, 0xFF,	0x00, NULL				},
-	{0x2F,  0xFF, 0x01, 0x01, NULL				},
+	{0x2F,  0xFF, 0x01, 0x01, NULL					},
 
 	{0,	0xFE, 0,	2,    "Test mode"			},
 	{0x2D,	0x01, 0x01,	0x00, "Off"				},
@@ -101,7 +101,7 @@ STDDIPINFO(pgm)
 
 static struct BurnDIPInfo jammaDIPList[] = {
 	{0x2D,	0xFF, 0xFF,	0x00, NULL				},
-	{0x2F,  0xFF, 0x01, 0x00, NULL				},
+	{0x2F,  0xFF, 0x01, 0x00, NULL					},
 
 	{0,	0xFE, 0,	2,    "Test mode"			},
 	{0x2D,	0x01, 0x01,	0x00, "Off"				},
@@ -198,7 +198,7 @@ static struct BurnDIPInfo photoy2kDIPList[] = {
 	{0x2E,	0x01, 0x0F,	0x03, "World"				},
 	{0x2E,	0x01, 0x0F,	0x04, "Korea"				},
 	{0x2E,	0x01, 0x0F,	0x05, "Hong Kong"			},
-	{0x2E,	0x01, 0x0F,	0x06, "Singapore / Malaysia"	},
+	{0x2E,	0x01, 0x0F,	0x06, "Singapore / Malaysia"		},
 };
 
 static struct BurnDIPInfo py2k2DIPList[] = {
@@ -211,7 +211,7 @@ static struct BurnDIPInfo py2k2DIPList[] = {
 	{0x2E,	0x01, 0x0F,	0x03, "World"				},
 	{0x2E,	0x01, 0x0F,	0x04, "Korea"				},
 	{0x2E,	0x01, 0x0F,	0x05, "Hong Kong"			},
-	{0x2E,	0x01, 0x0F,	0x06, "Singapore / Malaysia"	},
+	{0x2E,	0x01, 0x0F,	0x06, "Singapore / Malaysia"		},
 };
 
 static struct BurnDIPInfo oldsDIPList[] = {
@@ -300,7 +300,7 @@ static struct BurnDIPInfo martmastDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
 	{0x2E,	0x01, 0x07,	0x05, "World"				},
-	{0x2E,	0x01, 0x07,	0x06, "USA"					},
+	{0x2E,	0x01, 0x07,	0x06, "USA"				},
 };
 
 static struct BurnDIPInfo martmastc102DIPList[] = {
@@ -325,7 +325,7 @@ static struct BurnDIPInfo thegladDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
 	{0x2E,  0x01, 0x07, 0x06, "World"				},
 };
 
@@ -338,7 +338,7 @@ static struct BurnDIPInfo theglad100DIPList[] = {
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
 	{0x2E,  0x01, 0x07, 0x06, "World"				},
 };
 
@@ -351,7 +351,7 @@ static struct BurnDIPInfo thegladpcbDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
 	{0x2E,  0x01, 0x07, 0x06, "World"				},
 };
 
@@ -423,8 +423,8 @@ static struct BurnDIPInfo svgDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
-	{0x2E,  0x01, 0x07, 0x06, "World"				},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
+	{0x2E,  0x01, 0x07,     0x06, "World"				},
 };
 
 static struct BurnDIPInfo svgtwDIPList[] = {
@@ -436,9 +436,9 @@ static struct BurnDIPInfo svgtwDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
-	{0x2E,  0x01, 0x07, 0x06, "World"				},
-	{0x2E,  0x01, 0x07, 0xff, "Don't Change"		},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
+	{0x2E,  0x01, 0x07,     0x06, "World"				},
+	{0x2E,  0x01, 0x07,     0xff, "Don't Change"			},
 };
 
 STDDIPINFOEXT(orlegend,		pgm,	orlegend		)
@@ -447,8 +447,8 @@ STDDIPINFOEXT(orld111t, 	pgm,	orld111t		)
 STDDIPINFOEXT(orld105k, 	pgm,	orld105k		)
 STDDIPINFOEXT(orld112c, 	pgm,	orld112c		)
 STDDIPINFOEXT(kov,       	pgm,	kov		    	)
-STDDIPINFOEXT(kov100,       pgm,	kov100		    )
-STDDIPINFOEXT(kov2,       	pgm,	kov2		    )
+STDDIPINFOEXT(kov100,           pgm,	kov100			)
+STDDIPINFOEXT(kov2,       	pgm,	kov2			)
 STDDIPINFOEXT(kovshxas,    	pgm,	kovshxas		)
 STDDIPINFOEXT(killbld,	 	pgm,	killbld			)
 STDDIPINFOEXT(killbld104,	pgm,	killbld104		)
@@ -456,10 +456,10 @@ STDDIPINFOEXT(photoy2k, 	pgm,	photoy2k		)
 STDDIPINFOEXT(py2k2, 		pgm,	py2k2			)
 STDDIPINFOEXT(puzzli2,  	pgm,	puzzli2			)
 STDDIPINFOEXT(martmast, 	pgm,	martmast		)
-STDDIPINFOEXT(martmastc102, pgm,	martmastc102	)
+STDDIPINFOEXT(martmastc102,     pgm,	martmastc102		)
 STDDIPINFOEXT(olds,     	pgm,	olds			)
 STDDIPINFOEXT(olds100,     	pgm,	olds100			)
-STDDIPINFOEXT(olds103t,     pgm,	olds103t		)
+STDDIPINFOEXT(olds103t,         pgm,	olds103t		)
 STDDIPINFOEXT(ddp2,     	pgm,	ddp2			)
 STDDIPINFOEXT(ddp2hk,     	pgm,	ddp2hk			)
 STDDIPINFOEXT(ddp2k,     	pgm,	ddp2k			)
@@ -469,10 +469,10 @@ STDDIPINFOEXT(ddp2c,     	pgm,	ddp2c			)
 STDDIPINFOEXT(theglad,	 	pgm,	theglad 		)
 STDDIPINFOEXT(theglad100,	pgm,	theglad100 		)
 STDDIPINFOEXT(happy6,		pgm,	happy6	 		)
-STDDIPINFOEXT(svg,			pgm,	svg	 			)
+STDDIPINFOEXT(svg,		pgm,	svg	 		)
 STDDIPINFOEXT(svgtw,		pgm,	svgtw	 		)
-STDDIPINFOEXT(dmnfrntpcb,   jamma,	dmnfrntpcb		)
-STDDIPINFOEXT(thegladpcb,   jamma,	thegladpcb		)
+STDDIPINFOEXT(dmnfrntpcb,       jamma,	dmnfrntpcb		)
+STDDIPINFOEXT(thegladpcb,       jamma,	thegladpcb		)
 
 // -----------------------------------------------------------------------------
 // BIOS
@@ -993,7 +993,7 @@ static struct BurnRomInfo killbldRomDesc[] = {
 
 	{ "m0300.u1",			0x400000, 0x93159695, 5 | BRF_SND },			// 10 Samples
 
-	{ "kb_u2.rom",			0x010000, 0xde3eae63, 0 | BRF_PRG | BRF_ESS },	// 11 Protection Data
+	{ "kb_u2.rom",			0x010000, 0xde3eae63, 9 | BRF_PRG | BRF_ESS },	// 11 Protection Data
 };
 
 STDROMPICKEXT(killbld, killbld, pgm)
@@ -1040,7 +1040,7 @@ static struct BurnRomInfo killbld104RomDesc[] = {
 
 	{ "m0300.u1",			0x400000, 0x93159695, 5 | BRF_SND },			// 13 Samples
 
-	{ "kb_u2_v104.u2",		0x010000, 0xc970f6d5, 0 | BRF_PRG | BRF_ESS },	// 14 Protection Data
+	{ "kb_u2_v104.u2",		0x010000, 0xc970f6d5, 9 | BRF_PRG | BRF_ESS },	// 14 Protection Data
 };
 
 STDROMPICKEXT(killbld104, killbld104, pgm)
@@ -1072,7 +1072,7 @@ static struct BurnRomInfo drgw3RomDesc[] = {
 
 	{ "dw3m0400.u1",   		0x400000, 0x031eb9ce, 5 | BRF_SND },	        //  6 Samples
 
-	{ "dw3_v100.u15",  		0x010000, 0x03dc4fdf, 0 | BRF_PRG | BRF_ESS },  //  7 Protection data
+	{ "dw3_v100.u15",  		0x010000, 0x03dc4fdf, 9 | BRF_PRG | BRF_ESS },  //  7 Protection data
 };
 
 STDROMPICKEXT(drgw3, drgw3, pgm)
@@ -1112,7 +1112,7 @@ static struct BurnRomInfo drgw3105RomDesc[] = {
 
 	{ "dw3m0400.u1",   		0x400000, 0x031eb9ce, 5 | BRF_SND },	        //  6 Samples
 
-	{ "dw3_v100.u15",  		0x010000, 0x03dc4fdf, 0 | BRF_PRG | BRF_ESS },  //  7 Protection data
+	{ "dw3_v100.u15",  		0x010000, 0x03dc4fdf, 9 | BRF_PRG | BRF_ESS },  //  7 Protection data
 };
 
 STDROMPICKEXT(drgw3105, drgw3105, pgm)
@@ -1144,7 +1144,7 @@ static struct BurnRomInfo drgw3100RomDesc[] = {
 
 	{ "dw3m0400.u1",   		0x400000, 0x031eb9ce, 5 | BRF_SND },	        //  6 Samples
 
-	{ "dw3_v100.u15",  		0x010000, 0x03dc4fdf, 0 | BRF_PRG | BRF_ESS },  //  7 Protection data
+	{ "dw3_v100.u15",  		0x010000, 0x03dc4fdf, 9 | BRF_PRG | BRF_ESS },  //  7 Protection data
 };
 
 STDROMPICKEXT(drgw3100, drgw3100, pgm)
@@ -1176,7 +1176,7 @@ static struct BurnRomInfo dwexRomDesc[] = {
 
 	{ "ex_m0400.u1",   		0x200000, 0x42d54fd5, 5 | BRF_SND },	        //  6 Samples
 
-	{ "ex_data.u15",   		0x010000, 0x03dc4fdf, 0 | BRF_PRG | BRF_ESS },  //  7 Protection data
+	{ "ex_data.u15",   		0x010000, 0x03dc4fdf, 9 | BRF_PRG | BRF_ESS },  //  7 Protection data
 };
 
 STDROMPICKEXT(dwex, dwex, pgm)
@@ -1220,9 +1220,7 @@ static struct BurnRomInfo oldsRomDesc[] = {
 
 	{ "m0500.rom",	   		0x200000, 0x37928cdd, 5 | BRF_SND },	        // 18 Samples
 
-	{ "sp_v101.u6",	   		0x010000, 0x097046bc, 0 | BRF_PRG | BRF_ESS },  // 19 Protection Rom
-
-//	{ "ram_dump", 	   		0x004000, 0x280cfb4e, 0 | BRF_PRG | BRF_ESS },  // 20 ram dump
+	{ "sp_v101.u6",	   		0x010000, 0x097046bc, 9 | BRF_PRG | BRF_ESS },  // 19 Protection Rom
 };
 
 STDROMPICKEXT(olds, olds, pgm)
@@ -1273,9 +1271,7 @@ static struct BurnRomInfo olds100RomDesc[] = {
 
 	{ "m0500.rom",	   		0x200000, 0x37928cdd, 5 | BRF_SND },			// 18 Samples
 
-	{ "kd-u6.512",	   		0x010000, 0xe7613dda, 0 | BRF_PRG | BRF_ESS },  // 19 Protection Rom
-
-//	{ "ram_dump", 	   		0x004000, 0x280cfb4e, 0 | BRF_PRG | BRF_ESS },  // 20 ram dump
+	{ "kd-u6.512",	   		0x010000, 0xe7613dda, 9 | BRF_PRG | BRF_ESS },  // 19 Protection Rom
 };
 
 STDROMPICKEXT(olds100, olds100, pgm)
@@ -1315,9 +1311,7 @@ static struct BurnRomInfo olds100aRomDesc[] = {
 
 	{ "m0500.rom",	   		0x200000, 0x37928cdd, 5 | BRF_SND },			// 14 Samples
 	
-	{ "kd-u6.512",	   		0x010000, 0xe7613dda, 0 | BRF_PRG | BRF_ESS },  // 15 Protection Rom
-
-//	{ "ram_dump", 	   		0x004000, 0x280cfb4e, 0 | BRF_PRG | BRF_ESS },  // 16 ram dump
+	{ "kd-u6.512",	   		0x010000, 0xe7613dda, 9 | BRF_PRG | BRF_ESS },  // 15 Protection Rom
 };
 
 STDROMPICKEXT(olds100a, olds100a, pgm)
@@ -3764,16 +3758,16 @@ struct BurnDriver BurnDrvoldsplus = {
 // The Killing Blade Plus (V300)
 
 static struct BurnRomInfo killbldpRomDesc[] = {
-	{ "v300x.u6",       	0x080000, 0xb7fb8ec9, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "v300x.u6",       		0x080000, 0xb7fb8ec9, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 	
-	{ "t05701w032.bin", 	0x400000, 0x567c714f, 2 | BRF_GRA },			//  1 Tile data
+	{ "t05701w032.bin", 		0x400000, 0x567c714f, 2 | BRF_GRA },			//  1 Tile data
 
 	{ "a05701w064.bin",		0x800000, 0x8c0c992c, 3 | BRF_GRA },			//  3 Sprite Color Data
 	{ "a05702w064.bin",		0x800000, 0x7e5b0f27, 3 | BRF_GRA },			//  4
 	{ "a05703w064.bin",		0x800000, 0xaccbdb44, 3 | BRF_GRA },			//  5
 	
 	{ "b05701w064.bin",		0x800000, 0xa20cdcef, 4 | BRF_GRA },			//  6 Sprite Masks & Color Indexes
-	{ "b05702w016.bin", 	0x200000, 0xfe7457df, 4 | BRF_GRA },			//  7
+	{ "b05702w016.bin", 		0x200000, 0xfe7457df, 4 | BRF_GRA },			//  7
 	
 	{ "w05701b032.bin",		0x400000, 0x2d3ae593, 5 | BRF_SND },			//  8 Samples
 
@@ -3802,7 +3796,7 @@ INT32 killbldpInit()
 
 struct BurnDriver BurnDrvKillbldp = {
 	"killbldp", NULL, "pgm", NULL, "2005",
-	"The Killing Blade Plus (V300)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	"The Killing Blade Plus (V300)\0", NULL, "IGS", "PolyGameMaster",
 	L"The Killing Blade Plus \0\u50B2\u5251\u72C2\u5200\u00A0\u52A0\u5F3A\u7248 (V300)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VSFIGHT, 0,
 	NULL, killbldpRomInfo, killbldpRomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
@@ -3901,7 +3895,7 @@ static INT32 svgInit()
 
 struct BurnDriver BurnDrvSvg = {
 	"svg", NULL, "pgm", NULL, "2005",
-	"S.V.G. - Spectral vs Generation (V200, China)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	"S.V.G. - Spectral vs Generation (V200, China)\0", NULL, "IGS", "PolyGameMaster",
 	L"S.V.G. - Spectral vs Generation\0\u5723\u9B54\u4E16\u7EAA (V200, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, svgRomInfo, svgRomName, NULL, NULL, pgmInputInfo, svgDIPInfo,
@@ -3961,7 +3955,7 @@ static INT32 svgtwInit()
 
 struct BurnDriverD BurnDrvSvgtw = {
 	"svgtw", "svg", "pgm", NULL, "2005",
-	"S.V.G. - Spectral vs Generation (V100, Taiwan)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	"S.V.G. - Spectral vs Generation (V100, Taiwan)\0", "Incomplete dump", "IGS", "PolyGameMaster",
 	L"S.V.G. - Spectral vs Generation\0\u5723\u9B54\u4E16\u7EAA (V100, Taiwan)\0", NULL, NULL, NULL,
 	BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, svgtwRomInfo, svgtwRomName, NULL, NULL, pgmInputInfo, svgtwDIPInfo,
@@ -3971,7 +3965,7 @@ struct BurnDriverD BurnDrvSvgtw = {
 
 
 // -----------------------------------------------------------------------------
-// PCB Versions!
+// PCB Versions
 
 
 // DoDonPachi Dai-Ou-Jou (V101, Japan)
@@ -4514,7 +4508,7 @@ STD_ROM_FN(thegladpcb)
 
 struct BurnDriver BurnDrvThegladpcb = {
 	"thegladpcb", "theglad", NULL, NULL, "2003",
-	"The Gladiator - Road Of The Sword / Shen Jian (V100, Japan, Single PCB Version)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	"The Gladiator - Road Of The Sword / Shen Jian (V100, Japan, Single PCB Version)\0", NULL, "IGS", "PolyGameMaster",
 	L"The Gladiator - Road Of The Sword\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2 (V100, Japan, PCB Version)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, thegladpcbRomInfo, thegladpcbRomName, NULL, NULL, pgmInputInfo, thegladpcbDIPInfo,
@@ -4609,7 +4603,7 @@ static INT32 svgpcbInit()
 
 struct BurnDriver BurnDrvSvgpcb = {
 	"svgpcb", "svg", NULL, NULL, "2005",
-	"S.V.G. - Spectral vs Generation (V100, Japan, Single PCB Version)\0", "Incomplete Dump", "IGS", "PolyGameMaster",
+	"S.V.G. - Spectral vs Generation (V100, Japan, Single PCB Version)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
 	NULL, svgpcbRomInfo, svgpcbRomName, NULL, NULL, pgmInputInfo, thegladpcbDIPInfo,
@@ -5239,6 +5233,7 @@ struct BurnDriver BurnDrvKovshb = {
 	448, 224, 4, 3
 };
 
+
 // Knights of Valour: Luan Shi Quan Huang / Sangoku Senki: Luan Shi Quan Huang (ver. 203CN)
 
 static struct BurnRomInfo kovlsqhdRomDesc[] = {
@@ -5271,6 +5266,7 @@ struct BurnDriverD BurnDrvkovlsqhd = {
 	kovshxasInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
+
 
 // Knights of Valour: Luan Shi Quan Huang / Sangoku Senki: Luan Shi Quan Huang II (ver. 200CN, alt)
 

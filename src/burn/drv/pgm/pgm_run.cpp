@@ -35,7 +35,7 @@ static UINT8 *Mem = NULL, *MemEnd = NULL;
 static UINT8 *RamStart, *RamEnd;
 
 UINT8 *PGM68KBIOS, *PGM68KROM, *PGMTileROM, *PGMTileROMExp, *PGMSPRColROM, *PGMSPRMaskROM, *PGMARMROM;
-UINT8 *PGMARMRAM0, *PGMUSER0, *PGMARMRAM1, *PGMARMRAM2, *PGMARMShareRAM, *PGMARMShareRAM2;
+UINT8 *PGMARMRAM0, *PGMUSER0, *PGMARMRAM1, *PGMARMRAM2, *PGMARMShareRAM, *PGMARMShareRAM2, *PGMProtROM;
 
 UINT8 nPgmPalRecalc = 0;
 static UINT8 nPgmZ80Work = 0;
@@ -70,6 +70,8 @@ static INT32 pgmMemIndex()
 	PGM68KROM	= Next; Next += nPGM68KROMLen;
 
 	PGMUSER0	= Next; Next += nPGMExternalARMLen;
+
+	PGMProtROM	= PGMUSER0 + 0x10000; // Olds, Killbld, drgw3
 
 	if (BurnDrvGetHardwareCode() & HARDWARE_IGS_USE_ARM_CPU) {
 		PGMARMROM	= Next; Next += 0x0004000;
@@ -219,6 +221,13 @@ static INT32 pgmGetRoms(bool bLoad)
 				}
 			}
 			continue;
+		}
+
+		if ((ri.nType & BRF_PRG) && (ri.nType & 0x0f) == 9)
+		{
+			if (bLoad) {
+				BurnLoadRom(PGMProtROM, i, 1);
+			}
 		}
 	}
 

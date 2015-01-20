@@ -112,7 +112,7 @@ depobj	:= 	$(drvobj) \
 			\
 			neo_decrypt.o neo_palette.o neo_run.o neo_sprite.o neo_text.o neo_upd4990a.o neogeo.o \
 			\
-			pgm_crypt.o pgm_draw.o pgm_prot.o pgm_run.o \
+			pgm_crypt.o pgm_draw.o pgm_run.o pgm_asic3.o pgm_asic27a_type1.o pgm_asic27a_type2.o pgm_asic27a_type3.o pgm_asic25.o \
 			\
 			psikyo_palette.o psikyo_sprite.o psikyo_tile.o psikyosh_render.o \
 			\

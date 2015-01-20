@@ -520,7 +520,6 @@ static void CongoPPIWriteC(UINT8 data)
 
 static UINT8 __fastcall zaxxon_read(UINT16 address)
 {
-	UINT16 oa = address;
 	// address mirroring
 	if ((address & 0xe700) == 0xc000) address &= ~0x18f8;
 	if ((address & 0xe700) == 0xc100) address &= ~0x18ff;
@@ -634,7 +633,6 @@ static void __fastcall zaxxon_write(UINT16 address, UINT8 data)
 
 static UINT8 __fastcall congo_read(UINT16 address)
 {
-	UINT16 oa = address;
 	// address mirroring
 	if ((address & 0xe008) == 0xc000) address &= ~0x1fc4;
 	if ((address & 0xe008) == 0xc008) address &= ~0x1fc7;

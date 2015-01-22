@@ -1,12 +1,17 @@
 #include <QtWidgets>
+#include <QVector>
+#include "SDL.h"
 #include "qinputinterface.h"
 #include "burner.h"
 
 QInputInterface *qInput = nullptr;
 
+static QVector<SDL_Joystick*> qJoysticks;
+
 int QtKToFBAK(int key);
 static char qKeyboardState[QINPUT_MAX_KEYS] = { 0 };
 static bool bKeyboardRead = false;
+static bool bJoystickRead = false;
 
 int QtInputSetCooperativeLevel(bool bExclusive, bool)
 {
@@ -21,6 +26,7 @@ int QtInputExit()
         delete qInput;
         qInput = nullptr;
     }
+
     return 0;
 }
 
@@ -31,23 +37,29 @@ int QtInputInit()
     qInput->install();
     memset(qKeyboardState, 0, QINPUT_MAX_KEYS);
     bKeyboardRead = false;
+
     return 0;
 }
 
 int QtInputStart()
 {
     bKeyboardRead = false;
+    bJoystickRead = false;
     return 0;
 }
 
 static int ReadJoystick()
 {
+    if (bJoystickRead)
+        return 0;
+    qInput->joystickUpdate();
+    bJoystickRead = true;
     return 0;
 }
 
 int QtInputJoyAxis(int i, int nAxis)
 {
-    return 0;
+    return qInput->joystickAxis(i, nAxis);
 }
 
 static int ReadKeyboard()
@@ -71,7 +83,37 @@ int QtInputMouseAxis(int i, int nAxis)
 
 static int JoystickState(int i, int nSubCode)
 {
-    return 0;
+    if (i >= qInput->joystickCount() || nSubCode < 0)
+        return 0;
+
+    if (nSubCode < 0x10) {
+        const int deadZone = 0x4000;
+
+        int axis = nSubCode / 2;
+        int value = qInput->joystickAxis(i, axis);
+
+        if (nSubCode % 2)
+            return value > deadZone;
+
+        return value < -deadZone;
+    }
+
+    if (nSubCode < 0x20) {
+        const static unsigned mask[4] = { SDL_HAT_LEFT,
+                                          SDL_HAT_RIGHT,
+                                          SDL_HAT_UP,
+                                          SDL_HAT_DOWN };
+
+        int hat = (nSubCode & 0x0F) >> 2;
+        return qInput->joystickHat(i, hat) & mask[nSubCode & 3];
+    }
+
+    if (nSubCode < 0x80)
+        return 0;
+
+    int button = nSubCode - 0x80;
+
+    return qInput->joystickButton(i, button);
 }
 
 static int CheckMouseState(unsigned int nSubCode)
@@ -84,15 +126,23 @@ int QtInputState(int nCode)
     if (nCode < 0)
         return 0;
 
-    if (nCode < 256) {
-#if 1
+    if (nCode < 0x100) {
         if (!bKeyboardRead)
             ReadKeyboard();
         return qKeyboardState[nCode & 0xFF];
-#else
-        return qInput->state(nCode);
-#endif
     }
+
+    if (nCode < 0x4000)
+        return 0;
+
+    if (nCode < 0x8000) {
+        if (!bJoystickRead)
+            ReadJoystick();
+
+        int joystick = (nCode - 0x4000) >> 8;
+        return JoystickState(joystick, nCode & 0xFF);
+    }
+
     return 0;
 }
 
@@ -135,6 +185,89 @@ QInputInterface::QInputInterface(QObject *parent) :
 {
     memset(m_keys, 0, QINPUT_MAX_KEYS);
     m_isInitialized = false;
+    joystickInit();
+}
+
+bool QInputInterface::joystickInit()
+{
+    if (SDL_InitSubSystem(SDL_INIT_JOYSTICK) < 0) {
+        qDebug() << "SDL Joystick initialization error!" << SDL_GetError();
+        return false;
+    }
+
+    int nJoys = SDL_NumJoysticks();
+
+    m_joysticks.clear();
+    m_joysticks.resize(nJoys);
+
+    for (int i = 0; i < nJoys; i++) {
+        SDL_Joystick *joystick = SDL_JoystickOpen(i);
+        if (joystick == nullptr)
+            qDebug() << "joystick error:" << i;
+        else
+            m_joysticks[i] = joystick;
+    }
+
+    SDL_JoystickEventState(SDL_IGNORE);
+
+    return true;
+}
+
+void QInputInterface::joystickExit()
+{
+    foreach (SDL_Joystick *joystick, m_joysticks)
+        SDL_JoystickClose(joystick);
+
+    m_joysticks.clear();
+
+    SDL_QuitSubSystem(SDL_INIT_JOYSTICK);
+}
+
+void QInputInterface::joystickUpdate()
+{
+    SDL_JoystickUpdate();
+}
+
+int QInputInterface::joystickHat(int joy, int hat)
+{
+    if (m_joysticks.empty())
+        return 0;
+
+    if (joy >= m_joysticks.size() || joy < 0)
+        return 0;
+
+    if (hat > SDL_JoystickNumHats(m_joysticks[joy]))
+        return 0;
+
+    return SDL_JoystickGetHat(m_joysticks[joy], hat);
+}
+
+int QInputInterface::joystickAxis(int joy, int axis)
+{
+    if (m_joysticks.empty())
+        return 0;
+
+    if (joy >= m_joysticks.size() || joy < 0)
+        return 0;
+
+    if (axis > SDL_JoystickNumAxes(m_joysticks[joy]))
+        return 0;
+
+    return SDL_JoystickGetAxis(m_joysticks[joy], axis);
+}
+
+int QInputInterface::joystickButton(int joy, int button)
+{
+    if (m_joysticks.empty())
+        return 0;
+
+    if (joy >= m_joysticks.size() || joy < 0)
+        return 0;
+
+    if (button > SDL_JoystickNumButtons(m_joysticks[joy]))
+        return 0;
+
+    return SDL_JoystickGetButton(m_joysticks[joy], button);
 }
 
 QInputInterface::~QInputInterface()
@@ -142,6 +275,7 @@ QInputInterface::~QInputInterface()
     if (m_isInitialized)
         uninstall();
     m_onlyInstance = nullptr;
+    joystickExit();
 }
 
 QInputInterface *QInputInterface::get(QObject *parent)
@@ -164,6 +298,11 @@ void QInputInterface::uninstall()
     m_isInitialized = false;
 }
 
+int QInputInterface::joystickCount()
+{
+    return m_joysticks.size();
+}
+
 void QInputInterface::snapshot(char *buffer, int keys)
 {
     if (keys >= QINPUT_MAX_KEYS)
@@ -182,13 +321,11 @@ bool QInputInterface::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        //qDebug() << m_timer.elapsed() << "pressed";
         int fbak = QtKToFBAK(keyEvent->key());
         if (fbak < QINPUT_MAX_KEYS)
             m_keys[fbak] = 1;
     }
     if (event->type() == QEvent::KeyRelease) {
-        //qDebug() << m_timer.elapsed() << "released";
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
         int fbak = QtKToFBAK(keyEvent->key());
         if (fbak < QINPUT_MAX_KEYS)

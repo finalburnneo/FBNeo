@@ -1645,7 +1645,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 32;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 12000000 / 58, 1500000 / 58 };
 //	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -1656,8 +1656,8 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		if (i == 1) vblank = 0;
-		if (i == 31) {
+		if (i == 8) vblank = 0;
+		if (i == 254) {
 			vblank = 8;
 			ghostb_interrupt();
 		}
@@ -3708,7 +3708,7 @@ static INT32 GondoScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(RomBank);
 		
 		if (nAction & ACB_WRITE) {
-			HD6309Open(0); bprintf(0, _T("bank [%d],"), RomBank);
+			HD6309Open(0);
 			HD6309MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, HD6309_ROM);
 			HD6309Close();
 		}

@@ -499,25 +499,14 @@ static void draw_sprites(UINT16 *dest, UINT8 *ram, UINT8 *gfx, INT32 coloff)
 
 static INT32 DrvDraw()
 {
-	if (nScreenWidth == 320) {
-		DrvTmpBitmap0 = pTransDraw;
-		bprintf(0, _T("320!"));
-	} else {
-		DrvTmpBitmap0 = DrvTmpBitmap_p;
-		bprintf(0, _T("640!"));
-	}
-
 	if ((ArmReadByte(0x170784) & 0x20) && !nPreviousDip) { // single screen
+		DrvTmpBitmap0 = pTransDraw;
 		BurnDrvSetVisibleSize(320, 240);
 		BurnDrvSetAspect(4, 3);
 		Reinitialise();
-		DrvTmpBitmap0 = pTransDraw;
 
 		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
 		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
-		nPreviousDip = (ArmReadByte(0x170784) & 0x20);
-		bprintf(0, _T("Changed: w[%d]h[%d],\n"), nScreenWidth, nScreenHeight);
-		return 0;
 	} else if (!(ArmReadByte(0x170784) & 0x20) && nPreviousDip) { // two screens
 		DrvTmpBitmap0 = DrvTmpBitmap_p;
 		BurnDrvSetVisibleSize(640, 240);
@@ -526,19 +515,15 @@ static INT32 DrvDraw()
 
 		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
-		nPreviousDip = (ArmReadByte(0x170784) & 0x20);
-		bprintf(0, _T("Changed: w[%d]h[%d],\n"), nScreenWidth, nScreenHeight);
-
-		return 0;
 	}
 	nPreviousDip = (ArmReadByte(0x170784) & 0x20);
-	bprintf(0, _T("npd[%X],"), nPreviousDip);
+
 	simpl156_palette_recalc();
 
 	deco16_pf12_update();
 	deco16_pf34_update();
 
-	//if (nPreviousDip == 0) nScreenWidth = 320;
+	if (nPreviousDip == 0) nScreenWidth = 320;
 
 	// left
 	{
@@ -560,8 +545,7 @@ static INT32 DrvDraw()
 	}
 
 	// right
-	//if (nPreviousDip == 0 && 0) { // perma-disabled for now
-	if (nScreenWidth == 640 && 0) {
+	if (nPreviousDip == 0) {
 		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 			DrvTmpBitmap1[i] = 0x500;
 		}

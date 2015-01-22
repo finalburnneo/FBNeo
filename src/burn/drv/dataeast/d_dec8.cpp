@@ -1,6 +1,7 @@
- 
+
 // To do:
 //	gondo needs rotary inputs hooked up and doesn't read the i8751 value at all - so coins don't work
+//  csilver - one of the fm chips isn't working (insert coin sound missing etc) btw: background "whine" noise is normal - clicking noise isn't!
 
 #include "tiles_generic.h"
 #include "m6502_intf.h"
@@ -1058,12 +1059,12 @@ static INT32 DrvYM3812SynchroniseStream(INT32 nSoundRate)
 
 static INT32 DrvYM2203SynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)HD6309TotalCycles() * nSoundRate / 1200000;
+	return (INT64)HD6309TotalCycles() * nSoundRate / 12000000;
 }
 
 static double DrvYM2203GetTime()
 {
-	return (double)HD6309TotalCycles() / 1200000;
+	return (double)HD6309TotalCycles() / 12000000;
 }
 
 static INT32 DrvYM2203SynchroniseStream6000000(INT32 nSoundRate)
@@ -1137,10 +1138,10 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvMainROM		= Next; Next += 0x050000;
-	DrvSubROM		= Next; Next += 0x020000;
-	DrvM6502ROM		= Next; Next += 0x020000;
-	DrvM6502OPS		= Next; Next += 0x010000;
+	DrvMainROM		= Next; Next += 0x060000;
+	DrvSubROM		= Next; Next += 0x030000;
+	DrvM6502ROM		= Next; Next += 0x030000;
+	DrvM6502OPS		= Next; Next += 0x020000;
 
 	DrvGfxROM0		= Next; Next += 0x020000;
 	DrvGfxROM1		= Next; Next += 0x100000;
@@ -1154,18 +1155,18 @@ static INT32 MemIndex()
 
 	AllRam			= Next;
 
-	DrvMainRAM		= Next; Next += 0x002000;
-	DrvVidRAM		= Next; Next += 0x000800;
-	DrvPf0RAM		= Next; Next += 0x001000;
-	DrvPf1RAM		= Next; Next += 0x001000;
-	DrvPf0Ctrl		= Next; Next += 0x000020;
-	DrvPf1Ctrl		= Next; Next += 0x000020;
-	DrvRowRAM		= Next; Next += 0x000400;
+	DrvMainRAM		= Next; Next += 0x008000;
+	DrvVidRAM		= Next; Next += 0x001800;
+	DrvPf0RAM		= Next; Next += 0x002000;
+	DrvPf1RAM		= Next; Next += 0x002000;
+	DrvPf0Ctrl		= Next; Next += 0x000040;
+	DrvPf1Ctrl		= Next; Next += 0x000040;
+	DrvRowRAM		= Next; Next += 0x001400;
 	DrvSprRAM		= Next; Next += 0x000800;
 	DrvSprBuf		= Next; Next += 0x000800;
 	DrvPalRAM		= Next; Next += 0x000800;
 
-	DrvM6502RAM		= Next; Next += 0x000800;
+	DrvM6502RAM		= Next; Next += 0x002800;
 
 	soundlatch		= Next; Next += 0x000001;
 	nmi_enable		= Next; Next += 0x000001;
@@ -1661,8 +1662,8 @@ static INT32 DrvFrame()
 			ghostb_interrupt();
 		}
 
-		BurnTimerUpdate(i * (nCyclesTotal[0] / nInterleave));
-		BurnTimerUpdateYM3812(i * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[0]);
@@ -1709,7 +1710,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(i8751_value);
 		SCAN_VAR(vblank);
 		SCAN_VAR(RomBank);
-		DrvRecalc = 1;
 	}
 
 	return 0;
@@ -1763,6 +1763,7 @@ static INT32 GhostbScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		HD6309Scan(nAction);
 		BurnYM3812Scan(nAction, pnMin);
+		SCAN_VAR(RomBank);
 		
 		if (nAction & ACB_WRITE) {
 			HD6309Open(0);
@@ -2348,8 +2349,8 @@ static INT32 CobraFrame()
 			M6809SetIRQLine(0x20 /*NMI*/, M6809_IRQSTATUS_AUTO);
 		}
 
-		BurnTimerUpdate(i * (nCyclesTotal[0] / nInterleave));
-		BurnTimerUpdateYM3812(i * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[0]);
@@ -2410,6 +2411,7 @@ static INT32 CobraScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		M6809Scan(nAction);
 		BurnYM3812Scan(nAction, pnMin);
+		SCAN_VAR(RomBank);
 		
 		if (nAction & ACB_WRITE) {
 			M6809Open(0);
@@ -3018,8 +3020,8 @@ static INT32 SrdarwinFrame()
 			M6809SetIRQLine(0x20 /*NMI*/, M6809_IRQSTATUS_AUTO);
 		}
 		
-		BurnTimerUpdate(i * (nCyclesTotal[0] / nInterleave));
-		BurnTimerUpdateYM3812(i * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[0]);
@@ -3213,7 +3215,6 @@ void gondo_main_write(UINT16 address, UINT8 data)
 
 		case 0x3830:
 			bankswitch(data >> 4);
-
 			*interrupt_enable = data & 1;
 			*nmi_enable	  = data & 2;
 			*flipscreen	  = data & 8;
@@ -3494,7 +3495,7 @@ static INT32 GondoInit()
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, DrvYM2203SynchroniseStream, DrvYM2203GetTime, 1);
-	BurnTimerAttachHD6309(1200000);
+	BurnTimerAttachHD6309(12000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.23, BURN_SND_ROUTE_BOTH);
@@ -3658,25 +3659,25 @@ static INT32 GondoFrame()
 		}
 	}
 
-	INT32 nInterleave = 32;
+	INT32 nInterleave = 272;
 	INT32 nCyclesTotal[2] = { 12000000 / 58, 1500000 / 58 };
-//	INT32 nCyclesDone[2] = { 0, 0 };
 
 	M6502Open(0);
 	HD6309Open(0);
 
-	vblank = 0x80;
+	//vblank = 0x00;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		if (i == 1) vblank = 0;
-		if (i == 31) {
+		if (i == 7) vblank = 0;
+
+		if (i == 270) {
 			vblank = 0x80;
 			if (*nmi_enable) HD6309SetIRQLine(0x20, HD6309_IRQSTATUS_AUTO);
 		}
 		
-		BurnTimerUpdate(i * (nCyclesTotal[0] / nInterleave));
-		BurnTimerUpdateYM3526(i * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[0]);
@@ -3704,9 +3705,10 @@ static INT32 GondoScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		HD6309Scan(nAction);
 		BurnYM3526Scan(nAction, pnMin);
+		SCAN_VAR(RomBank);
 		
 		if (nAction & ACB_WRITE) {
-			HD6309Open(0);
+			HD6309Open(0); bprintf(0, _T("bank [%d],"), RomBank);
 			HD6309MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, HD6309_ROM);
 			HD6309Close();
 		}
@@ -4211,9 +4213,9 @@ static INT32 OscarFrame()
 		HD6309Close();
 
 		HD6309Open(1);
-		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 		HD6309Close();
-		BurnTimerUpdateYM3526(i * (nCyclesTotal[2] / nInterleave));
+		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[2] / nInterleave));
 	}
 
 	HD6309Open(1);
@@ -4927,11 +4929,11 @@ static INT32 LastmissFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		if (i == 8 * 10) vblank = 0x80;
-		if (i == 248 * 10) vblank = 0;
+		if (i == 8 * 10) vblank = 0x00;
+		if (i == 248 * 10) vblank = 0x80;
 
 		M6809Open(0);
-		BurnTimerUpdate(i * (nCyclesTotal[0] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
 		M6809Close();
 
 		M6809Open(1);
@@ -4943,7 +4945,7 @@ static INT32 LastmissFrame()
 		}
 		M6809Close();
 		
-		BurnTimerUpdateYM3526(i * (nCyclesTotal[2] / nInterleave));
+		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[2] / nInterleave));
 	}
 
 	M6809Open(0);
@@ -4972,6 +4974,7 @@ static INT32 LastmissScan(INT32 nAction, INT32 *pnMin)
 		BurnYM3526Scan(nAction, pnMin);
 		
 		SCAN_VAR(stopsubcpu);
+		SCAN_VAR(RomBank);
 		
 		if (nAction & ACB_WRITE) {
 			M6809Open(0);
@@ -5368,7 +5371,7 @@ UINT8 csilver_sound_read(UINT16 address)
 		case 0x3000:
 			return *soundlatch;
 
-		case 0x3400:
+		case 0x3400: 
 			MSM5205ResetWrite(0, 0);
 			return 0;
 	}
@@ -5527,7 +5530,7 @@ static INT32 CsilverFrame()
 		if (i == DrvVBlankSlices[0]) vblank = 0x80;
 
 		M6809Open(0);
-		BurnTimerUpdate(i * (nCyclesTotal[0] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
 		M6809Close();
 
 		M6809Open(1);
@@ -5540,7 +5543,7 @@ static INT32 CsilverFrame()
 		MSM5205Update();
 		M6809Close();
 		
-		BurnTimerUpdateYM3526(i * (nCyclesTotal[2] / nInterleave));
+		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[2] / nInterleave));
 	}
 
 	M6809Open(0);
@@ -5573,6 +5576,7 @@ static INT32 CsilverScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(MSM5205Next);
 		SCAN_VAR(Toggle);
 		SCAN_VAR(SndRomBank);
+		SCAN_VAR(RomBank);
 		
 		if (nAction & ACB_WRITE) {
 			M6809Open(0);
@@ -5630,7 +5634,7 @@ static INT32 CsilverExit()
 
 struct BurnDriver BurnDrvCsilver = {
 	"csilver", NULL, NULL, NULL, "1987",
-	"Captain Silver (World)\0", NULL, "Data East Corporation", "DEC8",
+	"Captain Silver (World)\0", "imperfect sound", "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, csilverRomInfo, csilverRomName, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,
@@ -5671,7 +5675,7 @@ STD_ROM_FN(csilverj)
 
 struct BurnDriver BurnDrvCsilverj = {
 	"csilverj", "csilver", NULL, NULL, "1987",
-	"Captain Silver (Japan)\0", NULL, "Data East Corporation", "DEC8",
+	"Captain Silver (Japan)\0", "imperfect sound", "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, csilverjRomInfo, csilverjRomName, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,

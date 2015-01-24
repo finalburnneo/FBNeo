@@ -707,17 +707,16 @@ static INT32 DrvDoReset()
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	SekOpen(0);
-	SekReset();
-	SekClose();
-
 	M6502Open(0);
+
+	SekReset();
+	M6502Reset();
+
 	BurnYM3526Reset();
 	BurnYM2203Reset();
-	M6502Close();
 
-	M6502Open(0);
-	M6502Reset();
 	M6502Close();
+	SekClose();
 
 	i8751_return = 0;
 	i8751_needs_ack = 0;
@@ -1193,8 +1192,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 		M6502Scan(nAction);
 
+		SekOpen(0);
+		M6502Open(0);
 		BurnYM3526Scan(nAction, pnMin);
 		BurnYM2203Scan(nAction, pnMin);
+		M6502Close();
+		SekClose();
+
 		if (nAction & ACB_WRITE) {
 			BurnYM2203Reset(); // Prevent hung sounds on savestate load (weird!) - dink
 		}

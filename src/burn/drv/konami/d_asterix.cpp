@@ -443,9 +443,9 @@ static INT32 MemIndex()
 
 static INT32 DrvGfxDecode()
 {
-	INT32 Plane1[4]  = { STEP4(24, - 8) };
+	INT32 Plane1[4]  = { STEP4(24, -8) };
 	INT32 XOffs1[16] = { STEP8(0,1), STEP8(256,1) };
-	INT32 YOffs1[16] = { STEP8(0,32, STEP8(512,32) };
+	INT32 YOffs1[16] = { STEP8(0,32), STEP8(512,32) };
 
 	K053247GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x100000);
 

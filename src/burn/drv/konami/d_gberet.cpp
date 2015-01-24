@@ -578,7 +578,7 @@ static void DrvGfxDecode()
 {
 	static INT32 Planes[4] = { STEP4(0,1) };
 	static INT32 XOffs[16] = { STEP8(0,4), STEP8(256,4) };
-	static INT32 YOffs[16] = { STEP8(0,32) STEP8(512,32) };
+	static INT32 YOffs[16] = { STEP8(0,32), STEP8(512,32) };
 
 	Graphics_Decode(Planes, XOffs, YOffs, Planes, XOffs, YOffs, 0x400);
 }

@@ -456,7 +456,7 @@ static INT32 DrvGfxDecode()
 	INT32 YOffs0[8] = { STEP8(0,32) };
 
 	INT32 Plane1[6] = { (0x200000*8)+8, (0x200000*8)+0, STEP4(24, -8) };
-	INT32 XOffs1[16] = { STEP8(0,7) STEP8(256, 1) };
+	INT32 XOffs1[16] = { STEP8(0,7), STEP8(256, 1) };
 	INT32 YOffs1[16] = { STEP8(0,32), STEP8(512,32) };
 
 	GfxDecode(0x10000, 8,  8,  8, Plane0, XOffs0, YOffs0, 8*8*4, DrvGfxROM0, DrvGfxROMExp0);

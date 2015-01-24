@@ -1063,7 +1063,7 @@ static void draw_sprites()
 
 		sprite_routine(sprite, x, y, color, flipy, flipx);
 
-    		if (extra) sprite_routine(sprite2, x, y + 16, color, flipy, flipx);
+		if (extra) sprite_routine(sprite2, x, y + 16, color, flipy, flipx);
 	}
 }
 
@@ -1135,7 +1135,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 32;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 10000000 / 60, 1500000 / 60 };
 
 	M6502Open(0);
@@ -1145,9 +1145,8 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		if (i == 1) vblank = 0x80;
-		if (i == 31) {
-			vblank = 0;
+		if (i == 240) {
+			vblank = 0x00;
 			DrvInterrupt();
 		}
 
@@ -1163,7 +1162,6 @@ static INT32 DrvFrame()
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
 
 	SekClose();
 	M6502Close();
@@ -1197,6 +1195,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM3526Scan(nAction, pnMin);
 		BurnYM2203Scan(nAction, pnMin);
+		if (nAction & ACB_WRITE) {
+			BurnYM2203Reset(); // Prevent hung sounds on savestate load (weird!) - dink
+		}
 
 		SCAN_VAR(i8751_return);
 		SCAN_VAR(i8751_needs_ack);
@@ -1261,7 +1262,7 @@ struct BurnDriver BurnDrvKarnov = {
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_HORSHOOT, 0,
 	NULL, karnovRomInfo, karnovRomName, NULL, NULL, KarnovInputInfo, KarnovDIPInfo,
 	KarnovInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
-	&DrvRecalc, 0x300, 256, 240, 4, 3
+	&DrvRecalc, 0x300, 256, 248, 4, 3
 };
 
 
@@ -1309,7 +1310,7 @@ struct BurnDriver BurnDrvKarnova = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_HORSHOOT, 0,
 	NULL, karnovaRomInfo, karnovaRomName, NULL, NULL, KarnovInputInfo, KarnovDIPInfo,
 	KarnovInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
-	&DrvRecalc, 0x300, 256, 240, 4, 3
+	&DrvRecalc, 0x300, 256, 248, 4, 3
 };
 
 
@@ -1365,7 +1366,7 @@ struct BurnDriver BurnDrvKarnovj = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_HORSHOOT, 0,
 	NULL, karnovjRomInfo, karnovjRomName, NULL, NULL, KarnovInputInfo, KarnovDIPInfo,
 	KarnovjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
-	&DrvRecalc, 0x300, 256, 240, 4, 3
+	&DrvRecalc, 0x300, 256, 248, 4, 3
 };
 
 
@@ -1421,7 +1422,7 @@ struct BurnDriver BurnDrvWndrplnt = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, wndrplntRomInfo, wndrplntRomName, NULL, NULL, KarnovInputInfo, WndrplntDIPInfo,
 	WndrplntInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
-	&DrvRecalc, 0x300, 240, 256, 3, 4
+	&DrvRecalc, 0x300, 248, 256, 3, 4
 };
 
 
@@ -1480,7 +1481,7 @@ struct BurnDriver BurnDrvChelnov = {
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_HORSHOOT, 0,
 	NULL, chelnovRomInfo, chelnovRomName, NULL, NULL, ChelnovInputInfo, ChelnovDIPInfo,
 	ChelnovInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
-	&DrvRecalc, 0x300, 256, 240, 4, 3
+	&DrvRecalc, 0x300, 256, 248, 4, 3
 };
 
 
@@ -1539,7 +1540,7 @@ struct BurnDriver BurnDrvChelnovu = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_HORSHOOT, 0,
 	NULL, chelnovuRomInfo, chelnovuRomName, NULL, NULL, ChelnovInputInfo, ChelnovuDIPInfo,
 	ChelnovuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
-	&DrvRecalc, 0x300, 256, 240, 4, 3
+	&DrvRecalc, 0x300, 256, 248, 4, 3
 };
 
 
@@ -1598,5 +1599,5 @@ struct BurnDriver BurnDrvChelnovj = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_PLATFORM | GBF_HORSHOOT, 0,
 	NULL, chelnovjRomInfo, chelnovjRomName, NULL, NULL, ChelnovInputInfo, ChelnovuDIPInfo,
 	ChelnovjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
-	&DrvRecalc, 0x300, 256, 240, 4, 3
+	&DrvRecalc, 0x300, 256, 248, 4, 3
 };

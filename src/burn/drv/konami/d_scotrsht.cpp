@@ -318,11 +318,9 @@ static void DrvPaletteInit()
 
 static INT32 DrvGfxDecode()
 {
-	INT32 Plane[4]  = { 0x000, 0x001, 0x002, 0x003 };
-	INT32 XOffs[16] = { 0x000, 0x004, 0x008, 0x00c, 0x010, 0x014, 0x018, 0x01c,
-			  0x100, 0x104, 0x108, 0x10c, 0x110, 0x114, 0x118, 0x11c };
-	INT32 YOffs[16] = { 0x000, 0x020, 0x040, 0x060, 0x080, 0x0a0, 0x0c0, 0x0e0,
-			  0x200, 0x220, 0x240, 0x260, 0x280, 0x2a0, 0x2c0, 0x2e0 };
+	INT32 Plane[4]  = { STEP4(0,1) };
+	INT32 XOffs[16] = { STEP8(0,4), STEP8(256,4) };
+	INT32 YOffs[16] = { STEP8(0,32), STEP8(512,32) };
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(0x10000);
 	if (tmp == NULL) {
@@ -520,8 +518,8 @@ static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x1000; i++) {
-			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
+			UINT32 rgb = Palette[i];
+			DrvPalette[i] = BurnHighCol((rgb >> 16)&0xff, (rgb >> 8)&0xff, rgb&0xff, 0);
 		}
 	}
 

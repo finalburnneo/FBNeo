@@ -314,9 +314,9 @@ static INT32 MemIndex()
 
 static INT32 DrvGfxDecode()
 {
-	INT32 Plane[4] = { 0x000000, 0x000001, 0x000002, 0x000003 };
+	INT32 Plane[4] = { STEP4(0,1) };
 	INT32 XOffs[8] = { 0x200000, 0x200004, 0x000000, 0x000004, 0x200008, 0x20000c, 0x000008, 0x00000c };
-	INT32 YOffs[8] = { 0x000000, 0x000010, 0x000020, 0x000030, 0x000040, 0x000050, 0x000060, 0x000070 };
+	INT32 YOffs[8] = { STEP8(0,16) };
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(0x80000);
 	if (tmp == NULL) {

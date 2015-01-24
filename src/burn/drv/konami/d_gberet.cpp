@@ -576,21 +576,21 @@ static void Graphics_Decode(INT32 *CharPlanes, INT32 *CharXOffs, INT32 *CharYOff
 
 static void DrvGfxDecode()
 {
-	static INT32 Planes[4] = { 0, 1, 2, 3 };
-	static INT32 XOffs[16] = { 0, 4, 8, 12, 16, 20, 24, 28, 256, 260, 264, 268, 272, 276, 280, 284 };
-	static INT32 YOffs[16] = { 0, 32, 64, 96, 128, 160, 192, 224, 512, 544, 576, 608, 640, 672, 704, 736 };
+	static INT32 Planes[4] = { STEP4(0,1) };
+	static INT32 XOffs[16] = { STEP8(0,4), STEP8(256,4) };
+	static INT32 YOffs[16] = { STEP8(0,32) STEP8(512,32) };
 
 	Graphics_Decode(Planes, XOffs, YOffs, Planes, XOffs, YOffs, 0x400);
 }
 
 static void BootGfxDecode()
 {
-	static INT32 CharPlanes[4] = { 0, 1, 2, 3 };
+	static INT32 CharPlanes[4] = { STEP4(0,1) };
 	static INT32 CharXOffs[8]  = { 24, 28, 0, 4, 8, 12, 16, 20 };
-	static INT32 CharYOffs[8]  = { 0, 32, 64, 96, 128, 160, 192, 224 };
+	static INT32 CharYOffs[8]  = { STEP8(0, 32) };
 	static INT32 SpriPlanes[4] = { 0, 0x20000, 0x40000, 0x60000 };
-	static INT32 SpriXOffs[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 128, 129, 130, 131, 132, 133, 134, 135 };
-	static INT32 SpriYOffs[16] = { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120 };
+	static INT32 SpriXOffs[16] = { STEP8(0, 1), STEP8(128, 1) };
+	static INT32 SpriYOffs[16] = { STEP16(0, 8) };
 
 	Graphics_Decode(CharPlanes, CharXOffs, CharYOffs, SpriPlanes, SpriXOffs, SpriYOffs, 0x100);
 }

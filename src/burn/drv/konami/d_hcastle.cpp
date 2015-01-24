@@ -405,28 +405,12 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static INT32 DrvGfxDecode()
+static void DrvGfxExpand(UINT8 *src, INT32 len)
 {
-	INT32 Plane[4] = { 0x000, 0x001, 0x002, 0x003 };
-	INT32 XOffs[8] = { 0x008, 0x00c, 0x000, 0x004, 0x018, 0x01c, 0x010, 0x014 };
-	INT32 YOffs[8] = { 0x000, 0x020, 0x040, 0x060, 0x080, 0x0a0, 0x0c0, 0x0e0 };
-
-	UINT8 *tmp = (UINT8*)BurnMalloc(0x100000);
-	if (tmp == NULL) {
-		return 1;
+	for (INT32 i = (len - 1) * 2; i >= 0; i-=2) {
+		src[i+0] = src[i/2] >> 4;
+		src[i+1] = src[i/2] & 0xf;
 	}
-
-	memcpy (tmp, DrvGfxROM0, 0x100000);
-
-	GfxDecode(0x8000, 4, 8, 8, Plane, XOffs, YOffs, 0x100, tmp, DrvGfxROM0);
-
-	memcpy (tmp, DrvGfxROM1, 0x100000);
-
-	GfxDecode(0x8000, 4, 8, 8, Plane, XOffs, YOffs, 0x100, tmp, DrvGfxROM1);
-
-	BurnFree (tmp);
-
-	return 0;
 }
 
 static void DrvPaletteInit()
@@ -469,9 +453,11 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  3, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x80000,  4, 1)) return 1;
+		BurnByteswap(DrvGfxROM0, 0x100000);
 
 		if (BurnLoadRom(DrvGfxROM1 + 0x00000,  5, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x80000,  6, 1)) return 1;
+		BurnByteswap(DrvGfxROM1, 0x100000);
 
 		if (BurnLoadRom(DrvSndROM  + 0x00000,  7, 1)) return 1;
 
@@ -481,7 +467,8 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvPalROM  + 0x00300, 11, 1)) return 1;
 
 		DrvPaletteInit();
-		DrvGfxDecode();
+		DrvGfxExpand(DrvGfxROM0, 0x100000);
+		DrvGfxExpand(DrvGfxROM1, 0x100000);
 	}
 
 	konamiInit(0);

@@ -404,7 +404,7 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static void DrvGfxExpand(UINT8 *src, INT32 len) // 0, 0x40
+static void DrvGfxExpand(UINT8 *src, INT32 len)
 {
 	for (INT32 i = (len - 1) * 2; i >= 0; i-=2) {
 		src[i+0] = src[i/2] >> 4;

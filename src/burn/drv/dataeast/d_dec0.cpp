@@ -70,6 +70,7 @@ static UINT8 DrvSlyspyProtValue;
 typedef void (*Dec0Render)();
 static Dec0Render Dec0DrawFunction;
 static void BaddudesDraw();
+static void BirdtryDraw();
 static void HbarrelDraw();
 static void HippodrmDraw();
 static void MidresDraw();
@@ -204,6 +205,51 @@ static struct BurnInputInfo HbarrelInputList[] =
 
 STDINPUTINFO(Hbarrel)
 
+static struct BurnDIPInfo BirdtryDIPList[]=
+{
+	{0x18, 0xff, 0xff, 0xf0, NULL		},
+	{0x19, 0xff, 0xff, 0x3f, NULL		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x18, 0x01, 0x10, 0x10, "Off"		},
+	{0x18, 0x01, 0x10, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x18, 0x01, 0x20, 0x00, "Off"		},
+	{0x18, 0x01, 0x20, 0x20, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x18, 0x01, 0x40, 0x40, "Off"		},
+	{0x18, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    0, "Difficulty (Extend)"		},
+	{0x19, 0x01, 0x03, 0x02, "Easy"		},
+	{0x19, 0x01, 0x03, 0x03, "Normal"		},
+	{0x19, 0x01, 0x03, 0x01, "Hard"		},
+	{0x19, 0x01, 0x03, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty (Course)"		},
+	{0x19, 0x01, 0x0c, 0x08, "Easy"		},
+	{0x19, 0x01, 0x0c, 0x0c, "Normal"		},
+	{0x19, 0x01, 0x0c, 0x04, "Hard"		},
+	{0x19, 0x01, 0x0c, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    4, "Allow Continue"		},
+	{0x19, 0x01, 0x10, 0x10, "Off"		},
+	{0x19, 0x01, 0x10, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Timer"		},
+	{0x19, 0x01, 0x20, 0x20, "Normal"		},
+	{0x19, 0x01, 0x20, 0x00, "Fast"		},
+
+	{0   , 0xfe, 0   ,    2, "Control Panel Type"		},
+	{0x19, 0x01, 0xc0, 0xc0, "Type A - Cocktail"		},
+	{0x19, 0x01, 0xc0, 0x80, "Type B - Cocktail 2"		},
+	{0x19, 0x01, 0xc0, 0x40, "Unused"		},
+	{0x19, 0x01, 0xc0, 0x00, "Type C - Upright"		},
+};
+
+STDDIPINFO(Birdtry)
 
 static struct BurnInputInfo MidresInputList[] =
 {
@@ -792,6 +838,47 @@ static struct BurnRomInfo BaddudesRomDesc[] = {
 
 STD_ROM_PICK(Baddudes)
 STD_ROM_FN(Baddudes)
+
+// Birdie Try (Japan)
+
+static struct BurnRomInfo birdtryRomDesc[] = {
+	{ "ek-04.bin",	0x10000, 0x5f0f4686, 1 }, //  0 maincpu
+	{ "ek-01.bin",	0x10000, 0x47f470db, 1 }, //  1
+	{ "ek-05.bin",	0x10000, 0xb508cffd, 1 }, //  2
+	{ "ek-02.bin",	0x10000, 0x0195d989, 1 }, //  3
+	{ "ek-06.bin",	0x10000, 0x301d57d8, 1 }, //  4
+	{ "ek-03.bin",	0x10000, 0x73b0acc5, 1 }, //  5
+
+	{ "ek-07.bin",	0x08000, 0x236549bc, 2 }, //  6 audiocpu
+
+	{ "i8751",	0x01000, 0x00000000, 3 | BRF_NODUMP }, //  7 mcu
+
+	{ "ek-25.bin",	0x08000, 0x4df134ad, 4 }, //  8 gfx1
+	{ "ek-26.bin",	0x08000, 0xa00d3e8e, 4 }, //  9
+
+	{ "ek-18.bin",	0x10000, 0x9886fb70, 5 }, // 10 gfx2
+	{ "ek-17.bin",	0x10000, 0xbed91bf7, 5 }, // 11
+	{ "ek-20.bin",	0x10000, 0x45d53965, 5 }, // 12
+	{ "ek-19.bin",	0x10000, 0xc2949dd2, 5 }, // 13
+	{ "ek-22.bin",	0x10000, 0x7f2cc80a, 5 }, // 14
+	{ "ek-21.bin",	0x10000, 0x281bc793, 5 }, // 15
+	{ "ek-24.bin",	0x10000, 0x2244cc75, 5 }, // 16
+	{ "ek-23.bin",	0x10000, 0xd0ed0116, 5 }, // 17
+
+	{ "ek-15.bin",	0x10000, 0xa6a041a3, 6 }, // 18 gfx4
+	{ "ek-16.bin",	0x08000, 0x784f62b0, 6 }, // 19
+	{ "ek-11.bin",	0x10000, 0x9224a6b9, 6 }, // 20
+	{ "ek-12.bin",	0x08000, 0x12deecfa, 6 }, // 21
+	{ "ek-13.bin",	0x10000, 0x1f023459, 6 }, // 22
+	{ "ek-14.bin",	0x08000, 0x57d54943, 6 }, // 23
+	{ "ek-09.bin",	0x10000, 0x6d2d488a, 6 }, // 24
+	{ "ek-10.bin",	0x08000, 0x580ba206, 6 }, // 25
+
+	{ "ek-08.bin",	0x10000, 0xbe3db6cb, 7 }, // 26 oki
+};
+
+STD_ROM_PICK(birdtry)
+STD_ROM_FN(birdtry)
 
 static struct BurnRomInfo BouldashRomDesc[] = {
 	{ "fw-15-2.17l",        0x10000, 0xca19a967, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -3507,6 +3594,67 @@ static INT32 Drgninjab2Init()
 	return 0;
 }
 
+static INT32 BirdtryInit()
+{
+	INT32 nRet = 0;
+
+	Dec0MachineInit();
+
+	nRet = BurnLoadRom(Drv68KRom + 0x00001, 0, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x00000, 1, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x20001, 2, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x20000, 3, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x40001, 4, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x40000, 5, 2); if (nRet != 0) return 1;
+	
+	nRet = BurnLoadRom(DrvM6502Rom, 6, 1); if (nRet != 0) return 1;
+	
+	nRet = BurnLoadRom(DrvTempRom + 0x00000,  8, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x08000,  9, 1); if (nRet != 0) return 1;
+	GfxDecode(0x800, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvChars);
+	
+	memset(DrvTempRom, 0, 0x80000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000, 10, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x10000, 11, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x20000, 12, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x30000, 13, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x40000, 14, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x50000, 15, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x60000, 16, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x70000, 17, 1); if (nRet != 0) return 1;
+	GfxDecode(0x1000, 4, 16, 16, Tile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
+	
+	memset(DrvTempRom, 0, 0x80000);
+	/*nRet = BurnLoadRom(DrvTempRom + 0x20000, 11, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x30000, 12, 1); if (nRet != 0) return 1;
+	memcpy(DrvTempRom + 0x08000, DrvTempRom + 0x20000, 0x8000);
+	memcpy(DrvTempRom + 0x00000, DrvTempRom + 0x28000, 0x8000);
+	memcpy(DrvTempRom + 0x18000, DrvTempRom + 0x30000, 0x8000);
+	memcpy(DrvTempRom + 0x10000, DrvTempRom + 0x38000, 0x8000);	
+	GfxDecode(0x400, 4, 16, 16, Tile2PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
+	*/
+	memset(DrvTempRom, 0, 0x80000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000, 18, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x10000, 19, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x20000, 20, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x30000, 21, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x40000, 22, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x50000, 23, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x60000, 24, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x70000, 25, 1); if (nRet != 0) return 1;
+	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvSprites);
+	
+	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 26, 1); if (nRet != 0) return 1;
+	
+	BurnFree(DrvTempRom);
+	
+	Dec0DrawFunction = BirdtryDraw;
+
+	BaddudesDoReset();
+
+	return 0;
+}
+
 static INT32 HbarrelInit()
 {
 	INT32 nRet = 0;
@@ -4799,6 +4947,24 @@ static void SlyspyDraw()
 	BurnTransferCopy(DrvPalette);
 }
 
+static void BirdtryDraw()
+{
+	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
+	DrvFlipScreen = Control0[0] & 0x80;
+	
+	BurnTransferClear();
+	DrvCalcPalette();
+
+	DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+	DrvRenderSprites(0x00, 0x00);
+	DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+	DrvRenderSprites(0x00, 0x00);
+		
+	DrvRenderCharLayer();
+	BurnTransferCopy(DrvPalette);
+
+}
+
 #undef TILEMAP_BOTH_LAYERS
 #undef TILEMAP_LAYER0
 #undef TILEMAP_LAYER1
@@ -5144,6 +5310,16 @@ struct BurnDriver BurnDrvFfantasya = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, FfantasyaRomInfo, FfantasyaRomName, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
 	HippodrmInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
+	NULL, 0x400, 256, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvBirdtry = {
+	"birdtry", NULL, NULL, NULL, "1988",
+	"Birdie Try (Japan)\0", NULL, "Data East Corporation", "DEC0",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	NULL, birdtryRomInfo, birdtryRomName, NULL, NULL, MidresInputInfo, BirdtryDIPInfo,
+	BirdtryInit, BaddudesExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 

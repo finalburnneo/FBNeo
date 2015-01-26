@@ -205,65 +205,6 @@ static struct BurnInputInfo HbarrelInputList[] =
 
 STDINPUTINFO(Hbarrel)
 
-static struct BurnDIPInfo BirdtryDIPList[]=
-{
-	{0x18, 0xff, 0xff, 0xff, NULL		},
-	{0x19, 0xff, 0xff, 0x3f, NULL		},
-
-	// Dip 1
-	{0   , 0xfe, 0   , 4   , "Coin A"                 },
-	{0x18, 0x01, 0x03, 0x00, "2 Coins 1 Play"         },
-	{0x18, 0x01, 0x03, 0x03, "1 Coin  1 Play"         },
-	{0x18, 0x01, 0x03, 0x02, "1 Coin  2 Plays"        },
-	{0x18, 0x01, 0x03, 0x01, "1 Coin  3 Plays"        },
-	
-	{0   , 0xfe, 0   , 4   , "Coin B"                 },
-	{0x18, 0x01, 0x0c, 0x00, "2 Coins 1 Play"         },
-	{0x18, 0x01, 0x0c, 0x0c, "1 Coin  1 Play"         },
-	{0x18, 0x01, 0x0c, 0x08, "1 Coin  2 Plays"        },
-	{0x18, 0x01, 0x0c, 0x04, "1 Coin  3 Plays"        },
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x18, 0x01, 0x10, 0x10, "Off"		},
-	{0x18, 0x01, 0x10, 0x00, "On"		},
-
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x18, 0x01, 0x20, 0x00, "Off"		},
-	{0x18, 0x01, 0x20, 0x20, "On"		},
-
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x18, 0x01, 0x40, 0x40, "Off"		},
-	{0x18, 0x01, 0x40, 0x00, "On"		},
-
-	{0   , 0xfe, 0   ,    4, "Difficulty (Extend)"		},
-	{0x19, 0x01, 0x03, 0x02, "Easy"		},
-	{0x19, 0x01, 0x03, 0x03, "Normal"		},
-	{0x19, 0x01, 0x03, 0x01, "Hard"		},
-	{0x19, 0x01, 0x03, 0x00, "Hardest"		},
-
-	{0   , 0xfe, 0   ,    4, "Difficulty (Course)"		},
-	{0x19, 0x01, 0x0c, 0x08, "Easy"		},
-	{0x19, 0x01, 0x0c, 0x0c, "Normal"		},
-	{0x19, 0x01, 0x0c, 0x04, "Hard"		},
-	{0x19, 0x01, 0x0c, 0x00, "Hardest"		},
-
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x19, 0x01, 0x10, 0x10, "Off"		},
-	{0x19, 0x01, 0x10, 0x00, "On"		},
-
-	{0   , 0xfe, 0   ,    2, "Timer"		},
-	{0x19, 0x01, 0x20, 0x20, "Normal"		},
-	{0x19, 0x01, 0x20, 0x00, "Fast"		},
-
-	{0   , 0xfe, 0   ,    4, "Control Panel Type"		},
-	{0x19, 0x01, 0xc0, 0xc0, "Type A - Cocktail"		},
-	{0x19, 0x01, 0xc0, 0x80, "Type B - Cocktail 2"		},
-	{0x19, 0x01, 0xc0, 0x40, "Unused"		},
-	{0x19, 0x01, 0xc0, 0x00, "Type C - Upright"		},
-};
-
-STDDIPINFO(Birdtry)
-
 static struct BurnInputInfo MidresInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 coin"   },
@@ -373,6 +314,65 @@ static struct BurnDIPInfo BaddudesDIPList[]=
 };
 
 STDDIPINFO(Baddudes)
+
+static struct BurnDIPInfo BirdtryDIPList[]=
+{
+	{0x18, 0xff, 0xff, 0xff, NULL		},
+	{0x19, 0xff, 0xff, 0x3f, NULL		},
+
+	// Dip 1
+	{0   , 0xfe, 0   , 4   , "Coin A"                 },
+	{0x18, 0x01, 0x03, 0x00, "2 Coins 1 Play"         },
+	{0x18, 0x01, 0x03, 0x03, "1 Coin  1 Play"         },
+	{0x18, 0x01, 0x03, 0x02, "1 Coin  2 Plays"        },
+	{0x18, 0x01, 0x03, 0x01, "1 Coin  3 Plays"        },
+	
+	{0   , 0xfe, 0   , 4   , "Coin B"                 },
+	{0x18, 0x01, 0x0c, 0x00, "2 Coins 1 Play"         },
+	{0x18, 0x01, 0x0c, 0x0c, "1 Coin  1 Play"         },
+	{0x18, 0x01, 0x0c, 0x08, "1 Coin  2 Plays"        },
+	{0x18, 0x01, 0x0c, 0x04, "1 Coin  3 Plays"        },
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x18, 0x01, 0x10, 0x10, "Off"		},
+	{0x18, 0x01, 0x10, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x18, 0x01, 0x20, 0x00, "Off"		},
+	{0x18, 0x01, 0x20, 0x20, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x18, 0x01, 0x40, 0x40, "Off"		},
+	{0x18, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty (Extend)"		},
+	{0x19, 0x01, 0x03, 0x02, "Easy"		},
+	{0x19, 0x01, 0x03, 0x03, "Normal"		},
+	{0x19, 0x01, 0x03, 0x01, "Hard"		},
+	{0x19, 0x01, 0x03, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty (Course)"		},
+	{0x19, 0x01, 0x0c, 0x08, "Easy"		},
+	{0x19, 0x01, 0x0c, 0x0c, "Normal"		},
+	{0x19, 0x01, 0x0c, 0x04, "Hard"		},
+	{0x19, 0x01, 0x0c, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x19, 0x01, 0x10, 0x10, "Off"		},
+	{0x19, 0x01, 0x10, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Timer"		},
+	{0x19, 0x01, 0x20, 0x20, "Normal"		},
+	{0x19, 0x01, 0x20, 0x00, "Fast"		},
+
+	{0   , 0xfe, 0   ,    4, "Control Panel Type"		},
+	{0x19, 0x01, 0xc0, 0xc0, "Type A - Cocktail"		},
+	{0x19, 0x01, 0xc0, 0x80, "Type B - Cocktail 2"		},
+	{0x19, 0x01, 0xc0, 0x40, "Unused"		},
+	{0x19, 0x01, 0xc0, 0x00, "Type C - Upright"		},
+};
+
+STDDIPINFO(Birdtry)
 
 static struct BurnDIPInfo BouldashDIPList[]=
 {
@@ -1877,9 +1877,8 @@ static INT32 DrvDoReset()
 
 static INT32 BaddudesDoReset()
 {
+	M6502Open(0); // prevent crash while resetting the sound cores in DrvDoReset(); w/Bird Try
 	INT32 nRet = DrvDoReset();
-	
-	M6502Open(0);
 	M6502Reset();
 	M6502Close();
 	
@@ -3623,6 +3622,60 @@ static INT32 BaddudesInit()
 	return 0;
 }
 
+static INT32 BirdtryInit()
+{
+	INT32 nRet = 0;
+
+	Dec0MachineInit();
+
+	nRet = BurnLoadRom(Drv68KRom + 0x00001, 0, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x00000, 1, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x20001, 2, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x20000, 3, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x40001, 4, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Drv68KRom + 0x40000, 5, 2); if (nRet != 0) return 1;
+	
+	nRet = BurnLoadRom(DrvM6502Rom, 6, 1); if (nRet != 0) return 1;
+	
+	nRet = BurnLoadRom(DrvTempRom + 0x00000,  8, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x08000,  9, 1); if (nRet != 0) return 1;
+	GfxDecode(0x800, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvChars);
+	
+	memset(DrvTempRom, 0, 0x80000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000, 10, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x10000, 11, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x20000, 12, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x30000, 13, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x40000, 14, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x50000, 15, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x60000, 16, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x70000, 17, 1); if (nRet != 0) return 1;
+	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
+	
+	memset(DrvTempRom, 0, 0x80000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000, 18, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x10000, 19, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x20000, 20, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x30000, 21, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x40000, 22, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x50000, 23, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x60000, 24, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x70000, 25, 1); if (nRet != 0) return 1;
+	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvSprites);
+	
+	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 26, 1); if (nRet != 0) return 1;
+	
+	BurnFree(DrvTempRom);
+	
+	Dec0DrawFunction = BirdtryDraw;
+	Dec0Game = DEC0_GAME_BIRDTRY;
+
+	BaddudesDoReset();
+
+	return 0;
+
+}
+
 static INT32 Drgninjab2Init()
 {
 	INT32 nRet = 0;
@@ -3671,69 +3724,6 @@ static INT32 Drgninjab2Init()
 	
 	Dec0DrawFunction = BaddudesDraw;
 	Dec0Game = DEC0_GAME_BADDUDES;
-
-	BaddudesDoReset();
-
-	return 0;
-}
-
-static INT32 BirdtryInit()
-{
-	INT32 nRet = 0;
-
-	Dec0MachineInit();
-
-	nRet = BurnLoadRom(Drv68KRom + 0x00001, 0, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Drv68KRom + 0x00000, 1, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Drv68KRom + 0x20001, 2, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Drv68KRom + 0x20000, 3, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Drv68KRom + 0x40001, 4, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Drv68KRom + 0x40000, 5, 2); if (nRet != 0) return 1;
-	
-	nRet = BurnLoadRom(DrvM6502Rom, 6, 1); if (nRet != 0) return 1;
-	
-	nRet = BurnLoadRom(DrvTempRom + 0x00000,  8, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x08000,  9, 1); if (nRet != 0) return 1;
-	GfxDecode(0x800, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvChars);
-	
-	memset(DrvTempRom, 0, 0x80000);
-	nRet = BurnLoadRom(DrvTempRom + 0x00000, 10, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x10000, 11, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x20000, 12, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x30000, 13, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x40000, 14, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x50000, 15, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x60000, 16, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x70000, 17, 1); if (nRet != 0) return 1;
-	GfxDecode(0x1000, 4, 16, 16, Tile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
-	
-	memset(DrvTempRom, 0xff, 0x80000);
-	GfxDecode(0x400, 4, 16, 16, Tile2PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
-	/*nRet = BurnLoadRom(DrvTempRom + 0x20000, 11, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x30000, 12, 1); if (nRet != 0) return 1;
-	memcpy(DrvTempRom + 0x08000, DrvTempRom + 0x20000, 0x8000);
-	memcpy(DrvTempRom + 0x00000, DrvTempRom + 0x28000, 0x8000);
-	memcpy(DrvTempRom + 0x18000, DrvTempRom + 0x30000, 0x8000);
-	memcpy(DrvTempRom + 0x10000, DrvTempRom + 0x38000, 0x8000);	
-	GfxDecode(0x400, 4, 16, 16, Tile2PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
-	*/
-	memset(DrvTempRom, 0, 0x80000);
-	nRet = BurnLoadRom(DrvTempRom + 0x00000, 18, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x10000, 19, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x20000, 20, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x30000, 21, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x40000, 22, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x50000, 23, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x60000, 24, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(DrvTempRom + 0x70000, 25, 1); if (nRet != 0) return 1;
-	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvSprites);
-	
-	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 26, 1); if (nRet != 0) return 1;
-	
-	BurnFree(DrvTempRom);
-	
-	Dec0DrawFunction = BirdtryDraw;
-	Dec0Game = DEC0_GAME_BIRDTRY;
 
 	BaddudesDoReset();
 
@@ -4799,85 +4789,90 @@ static void DrvRenderCharLayer()
 static void DrvRenderSprites(INT32 PriorityMask, INT32 PriorityVal)
 {
 	UINT16 *SpriteRam = (UINT16*)DrvSpriteDMABufferRam;
-	
-	for (UINT32 Offset = 0; Offset < 0x400; Offset += 4) {
-		INT32 x, y, Code, Colour, Multi, xFlip, yFlip, Inc, Flash, Mult, yPlot, CodePlot;
 
-		y = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 0]);
-		if ((y & 0x8000) == 0) continue;
+	INT32 offs = 0;
 
-		x = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
-		Colour = x >> 12;
-		if ((Colour & PriorityMask) != PriorityVal) continue;
+	while (offs < 0x800 / 2)
+	{
+		INT32 sy = BURN_ENDIAN_SWAP_INT16(SpriteRam[offs]);
+		INT32 sx = BURN_ENDIAN_SWAP_INT16(SpriteRam[offs + 2]);
+		INT32 color = sx >> 12;
+        INT32 incy;
+		INT32 mult;
+		INT32 flash = sx & 0x0800;
 
-		Flash= x & 0x800;
-		if (Flash && (GetCurrentFrame() & 1)) continue;
+		INT32 flipx = sy & 0x2000;
+		INT32 flipy = sy & 0x4000;
+		INT32 h = (1 << ((sy & 0x1800) >> 11));
+		INT32 w = (1 << ((sy & 0x0600) >>  9));
 
-		xFlip = y & 0x2000;
-		yFlip = y & 0x4000;
-		Multi = (1 << ((y & 0x1800) >> 11)) - 1;
+		sx = sx & 0x01ff;
+		sy = sy & 0x01ff;
+		if (sx >= 256) sx -= 512;
+		if (sy >= 256) sy -= 512;
+		sx = 240 - sx;
+		sy = 240 - sy;
 
-		Code = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]) & 0xfff;
-
-		x = x & 0x01ff;
-		y = y & 0x01ff;
-		if (x >= 256) x -= 512;
-		if (y >= 256) y -= 512;
-		x = 240 - x;
-		y = 240 - y;
-		
-		Code &= ~Multi;
-		if (yFlip) {
-			Inc = -1;
-		} else {
-			Code += Multi;
-			Inc = 1;
+		if (DrvFlipScreen)
+		{
+			sy = 240 - sy;
+			sx = 240 - sx;
+			if (flipx) flipx = 0; else flipx = 1;
+			if (flipy) flipy = 0; else flipy = 1;
+			mult = 16;
 		}
+		else
+			mult = -16;
 
-		if (DrvFlipScreen) {
-			y = 240 - y;
-			x = 240 - x;
-			xFlip = !xFlip;
-			yFlip = !yFlip;
-			Mult = 16;
-		} else {
-			Mult = -16;
-		}
+		for (INT32 x = 0; x < w; x++)
+		{
+			INT32 code = BURN_ENDIAN_SWAP_INT16(SpriteRam[offs + 1]) & 0x1fff;
 
-		while (Multi >= 0) {
-			yPlot = y + (Mult * Multi) - 8;
-			CodePlot = Code - (Multi * Inc);
-			if (x > 16 && x < (nScreenWidth - 16) && yPlot > 16 && yPlot < (nScreenHeight - 16)) {
-				if (xFlip) {
-					if (yFlip) {
-						Render16x16Tile_Mask_FlipXY(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, DrvSpritePalOffset, DrvSprites);
-					} else {
-						Render16x16Tile_Mask_FlipX(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, DrvSpritePalOffset, DrvSprites);
+			code &= ~(h-1);
+
+			if (flipy)
+				incy = -1;
+			else
+			{
+				code += h-1;
+				incy = 1;
+			}
+
+			for (INT32 y = 0; y < h; y++)
+			{
+				if (BURN_ENDIAN_SWAP_INT16(SpriteRam[offs]) & 0x8000)
+				{
+					INT32 draw = 0;
+					if (!flash || (GetCurrentFrame() & 1))
+					{
+						if ((color & PriorityMask) == PriorityVal)
+						{
+							draw = 1;
+						}
 					}
-				} else {
-					if (yFlip) {
-						Render16x16Tile_Mask_FlipY(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, DrvSpritePalOffset, DrvSprites);
-					} else {
-						Render16x16Tile_Mask(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, DrvSpritePalOffset, DrvSprites);
-					}
-				}
-			} else {
-				if (xFlip) {
-					if (yFlip) {
-						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, DrvSpritePalOffset, DrvSprites);
-					} else {
-						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, DrvSpritePalOffset, DrvSprites);
-					}
-				} else {
-					if (yFlip) {
-						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, DrvSpritePalOffset, DrvSprites);
-					} else {
-						Render16x16Tile_Mask_Clip(pTransDraw, CodePlot, x, yPlot, Colour, 4, 0, DrvSpritePalOffset, DrvSprites);
+
+					if (draw)
+					{
+						if (flipx) {
+							if (flipy) {
+								Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code - y * incy, sx + (mult * x),sy + (mult * y) - 8, color & 0xf, 4, 0, DrvSpritePalOffset, DrvSprites);
+							} else {
+								Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code - y * incy, sx + (mult * x),sy + (mult * y) - 8, color & 0xf, 4, 0, DrvSpritePalOffset, DrvSprites);
+							}
+						} else {
+							if (flipy) {
+								Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code - y * incy, sx + (mult * x),sy + (mult * y) - 8, color & 0xf, 4, 0, DrvSpritePalOffset, DrvSprites);
+							} else {
+								Render16x16Tile_Mask_Clip(pTransDraw, code - y * incy, sx + (mult * x),sy + (mult * y) - 8, color & 0xf, 4, 0, DrvSpritePalOffset, DrvSprites);
+							}
+						}
 					}
 				}
 			}
-			
-			Multi--;
+
+			offs += 4;
+			if (offs >= 0x800 / 2)
+				return;
 		}
 	}
 }
@@ -4904,6 +4899,23 @@ static void BaddudesDraw()
 		if (DrvPriority & 0x04) DrvRenderTile1Layer(0, TILEMAP_LAYER0);
 	}	
 	
+	DrvRenderCharLayer();
+	BurnTransferCopy(DrvPalette);
+}
+
+static void BirdtryDraw()
+{
+	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
+	DrvFlipScreen = Control0[0] & 0x80;
+	
+	BurnTransferClear();
+	DrvCalcPalette();
+
+	DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
+	DrvRenderSprites(0x00, 0x00);
+	DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
+	DrvRenderSprites(0x00, 0x00);
+		
 	DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 }
@@ -5030,24 +5042,6 @@ static void SlyspyDraw()
 	if (DrvPriority & 0x80) DrvRenderTile1Layer(0, TILEMAP_LAYER0);
 	DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
-}
-
-static void BirdtryDraw()
-{
-	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-	DrvFlipScreen = Control0[0] & 0x80;
-	
-	BurnTransferClear();
-	DrvCalcPalette();
-
-	DrvRenderTile2Layer(1, TILEMAP_BOTH_LAYERS);
-	DrvRenderSprites(0x00, 0x00);
-	DrvRenderTile1Layer(0, TILEMAP_BOTH_LAYERS);
-	DrvRenderSprites(0x00, 0x00);
-		
-	DrvRenderCharLayer();
-	BurnTransferCopy(DrvPalette);
-
 }
 
 #undef TILEMAP_BOTH_LAYERS
@@ -5298,6 +5292,16 @@ struct BurnDriver BurnDrvBaddudes = {
 	NULL, 0x400, 256, 240, 4, 3
 };
 
+struct BurnDriver BurnDrvBirdtry = {
+	"birdtry", NULL, NULL, NULL, "1988",
+	"Birdie Try (Japan)\0", NULL, "Data East Corporation", "DEC0",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	NULL, birdtryRomInfo, birdtryRomName, NULL, NULL, HbarrelInputInfo, BirdtryDIPInfo,
+	BirdtryInit, BaddudesExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x400, 240, 256, 3, 4
+};
+
 struct BurnDriver BurnDrvDrgninja = {
 	"drgninja", "baddudes", NULL, NULL, "1988",
 	"Dragonninja (Japan)\0", NULL, "Data East Corporation", "DEC0",
@@ -5395,16 +5399,6 @@ struct BurnDriver BurnDrvFfantasya = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, FfantasyaRomInfo, FfantasyaRomName, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
 	HippodrmInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
-	NULL, 0x400, 256, 240, 4, 3
-};
-
-struct BurnDriver BurnDrvBirdtry = {
-	"birdtry", NULL, NULL, NULL, "1988",
-	"Birdie Try (Japan)\0", NULL, "Data East Corporation", "DEC0",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
-	NULL, birdtryRomInfo, birdtryRomName, NULL, NULL, HbarrelInputInfo, BirdtryDIPInfo,
-	BirdtryInit, BaddudesExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 

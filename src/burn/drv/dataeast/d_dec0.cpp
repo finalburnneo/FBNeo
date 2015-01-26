@@ -207,8 +207,21 @@ STDINPUTINFO(Hbarrel)
 
 static struct BurnDIPInfo BirdtryDIPList[]=
 {
-	{0x18, 0xff, 0xff, 0xf0, NULL		},
+	{0x18, 0xff, 0xff, 0xff, NULL		},
 	{0x19, 0xff, 0xff, 0x3f, NULL		},
+
+	// Dip 1
+	{0   , 0xfe, 0   , 4   , "Coin A"                 },
+	{0x18, 0x01, 0x03, 0x00, "2 Coins 1 Play"         },
+	{0x18, 0x01, 0x03, 0x03, "1 Coin  1 Play"         },
+	{0x18, 0x01, 0x03, 0x02, "1 Coin  2 Plays"        },
+	{0x18, 0x01, 0x03, 0x01, "1 Coin  3 Plays"        },
+	
+	{0   , 0xfe, 0   , 4   , "Coin B"                 },
+	{0x18, 0x01, 0x0c, 0x00, "2 Coins 1 Play"         },
+	{0x18, 0x01, 0x0c, 0x0c, "1 Coin  1 Play"         },
+	{0x18, 0x01, 0x0c, 0x08, "1 Coin  2 Plays"        },
+	{0x18, 0x01, 0x0c, 0x04, "1 Coin  3 Plays"        },
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x18, 0x01, 0x10, 0x10, "Off"		},
@@ -222,7 +235,7 @@ static struct BurnDIPInfo BirdtryDIPList[]=
 	{0x18, 0x01, 0x40, 0x40, "Off"		},
 	{0x18, 0x01, 0x40, 0x00, "On"		},
 
-	{0   , 0xfe, 0   ,    0, "Difficulty (Extend)"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty (Extend)"		},
 	{0x19, 0x01, 0x03, 0x02, "Easy"		},
 	{0x19, 0x01, 0x03, 0x03, "Normal"		},
 	{0x19, 0x01, 0x03, 0x01, "Hard"		},
@@ -234,7 +247,7 @@ static struct BurnDIPInfo BirdtryDIPList[]=
 	{0x19, 0x01, 0x0c, 0x04, "Hard"		},
 	{0x19, 0x01, 0x0c, 0x00, "Hardest"		},
 
-	{0   , 0xfe, 0   ,    4, "Allow Continue"		},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
 	{0x19, 0x01, 0x10, 0x10, "Off"		},
 	{0x19, 0x01, 0x10, 0x00, "On"		},
 
@@ -242,7 +255,7 @@ static struct BurnDIPInfo BirdtryDIPList[]=
 	{0x19, 0x01, 0x20, 0x20, "Normal"		},
 	{0x19, 0x01, 0x20, 0x00, "Fast"		},
 
-	{0   , 0xfe, 0   ,    2, "Control Panel Type"		},
+	{0   , 0xfe, 0   ,    4, "Control Panel Type"		},
 	{0x19, 0x01, 0xc0, 0xc0, "Type A - Cocktail"		},
 	{0x19, 0x01, 0xc0, 0x80, "Type B - Cocktail 2"		},
 	{0x19, 0x01, 0xc0, 0x40, "Unused"		},
@@ -2007,6 +2020,75 @@ static void HbarrelI8751Write(UINT16 Data)
 	}
 }
 
+static void BirdtryI8751Write(UINT16 Data)
+{
+	static INT32 pwr, hgt;
+
+	i8751RetVal = 0;
+
+	switch(Data&0xffff) {
+		/*"Sprite control"*/
+		case 0x22a:	i8751RetVal = 0x200;	  break;
+
+		/* Gives an O.B. otherwise (it must be > 0xb0 )*/
+		case 0x3c7:	i8751RetVal = 0x7ff;	  break;
+
+		/*Enables shot checks*/
+		case 0x33c: i8751RetVal  = 0x200;     break;
+
+		/*Used on the title screen only(???)*/
+		case 0x31e: i8751RetVal  = 0x200;     break;
+
+/*  0x100-0x10d values are for club power meters(1W=0x100<<-->>PT=0x10d).    *
+ *  Returned value to i8751 doesn't matter,but send the result to 0x481.     *
+ *  Lower the value,stronger is the power.                                   */
+		case 0x100: pwr = 0x30; 			break; /*1W*/
+		case 0x101: pwr = 0x34; 			break; /*3W*/
+		case 0x102: pwr = 0x38; 			break; /*4W*/
+		case 0x103: pwr = 0x3c; 			break; /*1I*/
+		case 0x104: pwr = 0x40; 			break; /*3I*/
+		case 0x105: pwr = 0x44; 			break; /*4I*/
+		case 0x106: pwr = 0x48; 			break; /*5I*/
+		case 0x107: pwr = 0x4c; 			break; /*6I*/
+		case 0x108: pwr = 0x50; 			break; /*7I*/
+		case 0x109: pwr = 0x54; 			break; /*8I*/
+		case 0x10a: pwr = 0x58; 			break; /*9I*/
+		case 0x10b: pwr = 0x5c; 			break; /*PW*/
+		case 0x10c: pwr = 0x60; 			break; /*SW*/
+		case 0x10d: pwr = 0x80; 			break; /*PT*/
+		case 0x481: i8751RetVal  = pwr;     break; /*Power meter*/
+
+/*  0x200-0x20f values are for shot height(STRONG=0x200<<-->>WEAK=0x20f).    *
+ *  Returned value to i8751 doesn't matter,but send the result to 0x534.     *
+ *  Higher the value,stronger is the height.                                 */
+		case 0x200: hgt = 0x5c0;  			break; /*H*/
+		case 0x201: hgt = 0x580; 			break; /*|*/
+		case 0x202: hgt = 0x540; 			break; /*|*/
+		case 0x203: hgt = 0x500; 			break; /*|*/
+		case 0x204: hgt = 0x4c0; 			break; /*|*/
+		case 0x205: hgt = 0x480; 			break; /*|*/
+		case 0x206: hgt = 0x440; 			break; /*|*/
+		case 0x207: hgt = 0x400; 			break; /*M*/
+		case 0x208: hgt = 0x3c0; 			break; /*|*/
+		case 0x209: hgt = 0x380; 			break; /*|*/
+		case 0x20a: hgt = 0x340; 			break; /*|*/
+		case 0x20b: hgt = 0x300; 			break; /*|*/
+		case 0x20c: hgt = 0x2c0; 			break; /*|*/
+		case 0x20d: hgt = 0x280; 			break; /*|*/
+		case 0x20e: hgt = 0x240; 			break; /*|*/
+		case 0x20f: hgt = 0x200; 			break; /*L*/
+		case 0x534: i8751RetVal = hgt; 	break; /*Shot height*/
+
+		/*At the ending screen(???)*/
+		//case 0x3b4: i8751_return = 0;		  break;
+
+		/*These are activated after a shot (???)*/
+		case 0x6ca: i8751RetVal  = 0xff;      break;
+		case 0x7ff: i8751RetVal  = 0x200;     break;
+		//default: logerror("%04x: warning - write unknown command %02x to 8571\n",activecpu_get_pc(),data);
+	}
+}
+
 // Video write functions
 
 static void deco_bac06_pf_control_0_w(INT32 Layer, UINT16 *Control0, INT32 Offset, UINT16 Data, UINT16 Mask)
@@ -2399,6 +2481,7 @@ void __fastcall Dec068KWriteWord(UINT32 a, UINT16 d)
 		case 0x30c016: {
 			if (Dec0Game == DEC0_GAME_BADDUDES) BaddudesI8751Write(d);
 			if (Dec0Game == DEC0_GAME_HBARREL) HbarrelI8751Write(d);
+			if (Dec0Game == DEC0_GAME_BIRDTRY) BirdtryI8751Write(d);
 			
 			SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
 			
@@ -3624,7 +3707,8 @@ static INT32 BirdtryInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x70000, 17, 1); if (nRet != 0) return 1;
 	GfxDecode(0x1000, 4, 16, 16, Tile1PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles1);
 	
-	memset(DrvTempRom, 0, 0x80000);
+	memset(DrvTempRom, 0xff, 0x80000);
+	GfxDecode(0x400, 4, 16, 16, Tile2PlaneOffsets, TileXOffsets, TileYOffsets, 0x100, DrvTempRom, DrvTiles2);
 	/*nRet = BurnLoadRom(DrvTempRom + 0x20000, 11, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x30000, 12, 1); if (nRet != 0) return 1;
 	memcpy(DrvTempRom + 0x08000, DrvTempRom + 0x20000, 0x8000);
@@ -3649,6 +3733,7 @@ static INT32 BirdtryInit()
 	BurnFree(DrvTempRom);
 	
 	Dec0DrawFunction = BirdtryDraw;
+	Dec0Game = DEC0_GAME_BIRDTRY;
 
 	BaddudesDoReset();
 
@@ -5278,7 +5363,7 @@ struct BurnDriver BurnDrvHbarrelw = {
 	"Heavy Barrel (World)\0", NULL, "Data East USA", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
-	NULL, HbarrelwRomInfo, HbarrelwRomName, NULL, NULL, Dec0InputInfo, HbarrelDIPInfo,
+	NULL, HbarrelwRomInfo, HbarrelwRomName, NULL, NULL, HbarrelInputInfo, HbarrelDIPInfo,
 	HbarrelInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
 	NULL, 0x400, 240, 256, 3, 4
 };
@@ -5318,7 +5403,7 @@ struct BurnDriver BurnDrvBirdtry = {
 	"Birdie Try (Japan)\0", NULL, "Data East Corporation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
-	NULL, birdtryRomInfo, birdtryRomName, NULL, NULL, MidresInputInfo, BirdtryDIPInfo,
+	NULL, birdtryRomInfo, birdtryRomName, NULL, NULL, HbarrelInputInfo, BirdtryDIPInfo,
 	BirdtryInit, BaddudesExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 256, 240, 4, 3
 };

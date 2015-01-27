@@ -136,7 +136,24 @@ void __fastcall cbuster_main_write_word(UINT32 address, UINT16 data)
 
 		case 0xbc002:
 			deco16_soundlatch = data & 0xff;
-			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+			//h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+
+			// tempo fluctuation hack
+		    static UINT8 last_latch = 0;
+			static INT32 latch_repeat = 0;
+			if (deco16_soundlatch == 0x1b && last_latch == 0x1b) {
+				latch_repeat++;
+			} else latch_repeat = 0;
+			last_latch = deco16_soundlatch;
+
+			if (latch_repeat) {
+				if (latch_repeat%8 == 0) {
+					h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+				}
+			} else {
+				h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+			}
+			// end tempo fluctuation hack
 		return;
 	}
 }
@@ -429,7 +446,7 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(0,		cbuster_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, NULL, 0.45, 1006875, 0.75, 2013750, 0.60);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000 / 3, 1, NULL, 0.45, 1006875, 0.75, 2013750, 0.60);
 	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -602,7 +619,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 232;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 58 };
+	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 3 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	h6280NewFrame();

@@ -251,6 +251,7 @@ static INT32 DrvDoReset()
 	deco16SoundReset();
 
 	deco16Reset();
+	deco16_y_skew = 8; // HACK! the background is skewed by 8, causing sprite:layer misalignment (spider mini-boss/level 2, etc.)
 
 	return 0;
 }
@@ -401,6 +402,7 @@ static INT32 DrvExit()
 {
 	GenericTilesExit();
 	deco16Exit();
+	deco16_y_skew = 0;
 
 	SekExit();
 	

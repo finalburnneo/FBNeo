@@ -227,10 +227,13 @@ void deco16_sprite_decode(UINT8 *gfx, INT32 len)
 	BurnFree (tmp);
 }
 
+INT32 deco16_y_skew = 0;
+
 void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UINT16 *dest, INT32 flags)
 {
 	INT32 size		= deco16_layer_size_select[tmap];
 	if (size == -1) return;
+	if (deco16_y_skew) draw_end += deco16_y_skew;
 
 	INT32 control		= deco16_pf_control[tmap / 2][6];
 	if (tmap & 1) control >>= 8; 
@@ -319,8 +322,8 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 					INT32 pxl = src[xxx^flipx];
 
 					if (tmask[pxl] && t_mask) continue;
-
-					dest[y * nScreenWidth + xxx + sx] = pxl | color;
+					if (y - deco16_y_skew >= 0)
+						dest[(y - deco16_y_skew) * nScreenWidth + xxx + sx] = pxl | color;
 					deco16_prio_map[y * 512 + xxx + sx] = priority;
 				}
 			}

@@ -6,6 +6,7 @@ extern UINT8 *deco16_pf_ram[4];
 extern UINT8 *deco16_pf_rowscroll[4];
 
 extern UINT16 deco16_priority;
+extern INT32 deco16_y_skew; // used in vaportrail
 
 void deco16_set_bank_callback(INT32 tmap, INT32 (*callback)(const INT32 bank));
 void deco16_set_color_base(INT32 tmap, INT32 base);

@@ -40,7 +40,7 @@ static UINT8 DrvReset;
 static UINT16 DrvAxis[2];
 static UINT32 nAnalogAxis[2] = {0,0};
 
-static INT32 arkanoid_bootleg_id;
+static INT32 arkanoid_bootleg_id = 0;
 static INT32 use_mcu;
 
 static UINT8 arkanoid_bootleg_cmd;
@@ -1102,8 +1102,10 @@ static INT32 DrvInit()
 	m67805_taito_init(DrvMcuROM, DrvMcuRAM, &arkanoid_m68705_interface);
 
 	AY8910Init(0, 1500000, nBurnSoundRate, &ay8910_read_port_5, &ay8910_read_port_4, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.33, BURN_SND_ROUTE_BOTH);
-	if (arkanoid_bootleg_id == HEXA) AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	if (arkanoid_bootleg_id == HEXA) {
+		AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+	}
 
 	GenericTilesInit();
 

@@ -1,5 +1,8 @@
 // FB Alpha Air Buster: Trouble Specialty Raid Unit driver module
 // Based on MAME driver by Luca Elia
+//
+// Todo: fix slowdowns (starts @ 3 green machine-gun sub-bosses in first level)
+//       -without- fudging cpu speed in DrvFrame
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -744,7 +747,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 100;
-	INT32 nCyclesTotal[3] =  { 6000000 / 60, 6000000 / 60, 6000000 / 60 };
+	INT32 nCyclesTotal[3] =  { 6000000 * 2 / 60, 6000000 * 2 / 60, 6000000 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
@@ -817,6 +820,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		BurnYM2203Scan(nAction, pnMin);
 		MSM6295Scan(0, nAction);
+
+		SCAN_VAR(interrupt_vectors);
 	}
 
 	return 0;

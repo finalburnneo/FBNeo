@@ -119,6 +119,18 @@ static struct BurnDIPInfo PktgaldxDIPList[]=
 
 STDDIPINFO(Pktgaldx)
 
+static void MSM6295SetInitialBanks(INT32 chips)
+{
+	INT32 len = DrvSndROM1 - DrvSndROM0;
+
+	for (INT32 i = 0; i < chips; i++) {
+		for (INT32 nChannel = 0; nChannel < 4; nChannel++) {
+			MSM6295SampleInfo[i][nChannel] = MSM6295ROM + (i * len) + (nChannel << 8);
+			MSM6295SampleData[i][nChannel] = MSM6295ROM + (i * len) + (nChannel << 16);
+		}
+	}
+}
+
 void __fastcall pktgaldx_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff0) == 0x140000) {
@@ -126,15 +138,15 @@ void __fastcall pktgaldx_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
-	if ((address & 0xfffff0) == 0x160000) {
+	if ((address & 0xfffff0) == 0x150000) {
 		MSM6295Command(1, data);
 		return;
 	}
 
-	deco16_write_control_word(0, address, 0x161800, data)
+	deco16_write_control_word(0, address, 0x161800, data);
 
 	if ((address & 0xfffff0) == 0x164800) {
-		memcpy (DrvSndROM0 + 0x100000, DrvSndROM1 + (data & 3) * 0x40000, 0x40000);
+		memcpy (DrvSndROM1 + 0x000000, DrvSndROM1 + 0x40000 + ((data & 3) * 0x40000), 0x40000);
 		return;
 	}
 }
@@ -146,15 +158,15 @@ void __fastcall pktgaldx_write_byte(UINT32 address, UINT8 data)
 		return;
 	}
 
-	if ((address & 0xfffff0) == 0x160000) {
+	if ((address & 0xfffff0) == 0x150000) {
 		MSM6295Command(1, data);
 		return;
 	}
 
-	deco16_write_control_word(0, address, 0x161800, data)
+	deco16_write_control_word(0, address, 0x161800, data);
 
 	if ((address & 0xfffff0) == 0x164800) {
-		memcpy (DrvSndROM0 + 0x100000, DrvSndROM1 + (data & 3) * 0x40000, 0x40000);
+		memcpy (DrvSndROM1 + 0x000000, DrvSndROM1 + 0x40000 + ((data & 3) * 0x40000), 0x40000);
 		return;
 	}
 }
@@ -244,6 +256,7 @@ static INT32 DrvDoReset()
 
 	MSM6295Reset(0);
 	MSM6295Reset(1);
+	MSM6295SetInitialBanks(2);
 
 	deco16Reset();
 
@@ -263,7 +276,7 @@ static INT32 MemIndex()
 
 	MSM6295ROM	= Next;
 	DrvSndROM0	= Next; Next += 0x140000;
-	DrvSndROM1	= Next; Next += 0x100000;
+	DrvSndROM1	= Next; Next += 0x140000;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
 
@@ -304,7 +317,7 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvSndROM0 + 0x000000,  4, 1)) return 1;
 
-		if (BurnLoadRom(DrvSndROM1 + 0x000000,  5, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM1 + 0x040000,  5, 1)) return 1;
 
 		deco102_decrypt_cpu(Drv68KROM, Drv68KCode, 0x80000, 0x42ba, 0x00, 0x00);
 
@@ -338,7 +351,7 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(0,		pktgaldx_read_byte);
 	SekClose();
 
-	MSM6295Init(0, 1006875 / 132, 1);
+	MSM6295Init(0, 1006875 / 132, 0);
 	MSM6295Init(1, 2013750 / 132, 1);
 	MSM6295SetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 0.60, BURN_SND_ROUTE_BOTH);
@@ -497,8 +510,8 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

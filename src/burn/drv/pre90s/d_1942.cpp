@@ -626,8 +626,8 @@ static void MachineInit()
 
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910Init(1, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH); // Plane Noise/Bass/Shot
+	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH); // Whistle/Snare
 
 	GenericTilesInit();
 	
@@ -943,7 +943,7 @@ static void DrvDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 4;
+	INT32 nInterleave = 8;
 	INT32 nSoundBufferPos = 0;
 
 	if (DrvReset) DrvDoReset();
@@ -954,8 +954,6 @@ static INT32 DrvFrame()
 	nCyclesTotal[1] = 3000000 / 60;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 	
-//	ZetNewFrame();
-
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
 
@@ -965,13 +963,9 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 1) {
-			ZetSetVector(0xcf);
-			ZetRaiseIrq(0);
-		}
-		if (i == 3) {
-			ZetSetVector(0xd7);
-			ZetRaiseIrq(0);
+		if (i == 0 || i == 7) {
+			ZetSetVector((i == 0) ? 0xcf : 0xd7);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
 		}
 		ZetClose();
 
@@ -982,7 +976,11 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		ZetRaiseIrq(0);
+		if (i & 1) { // 4 times per frame
+			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetRun(100); // needs long ack
+			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		}
 		ZetClose();
 		
 		// Render Sound Segment

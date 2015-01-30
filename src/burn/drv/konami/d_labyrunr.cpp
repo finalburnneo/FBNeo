@@ -684,7 +684,8 @@ static void DrvPaletteInit()
 
 static INT32 DrvDraw()
 {
-	if (DrvPalWritten) {
+	if (DrvPalWritten || DrvRecalc) {
+		DrvRecalc = 0;
 		DrvPalWritten = 0;
 		DrvPaletteInit();
 	}
@@ -745,7 +746,7 @@ static INT32 DrvFrame()
 		// the timings of these is extremely important.. and currently wrong.
 		if ((i & 0x3f) == 0x3f && (K007121CtrlRAM[7] & 0x01)) HD6309SetIRQLine(0x20, HD6309_IRQSTATUS_AUTO);
 
-		if (i == 248 && (K007121CtrlRAM[7] & 0x02)) HD6309SetIRQLine(0x00, HD6309_IRQSTATUS_AUTO);
+		if (i == 253 && (K007121CtrlRAM[7] & 0x02)) HD6309SetIRQLine(0x00, HD6309_IRQSTATUS_AUTO);
 	}
 
 	BurnTimerEndFrame(nCyclesTotal);

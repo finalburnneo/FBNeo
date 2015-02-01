@@ -926,7 +926,7 @@ struct BurnDriver BurnDrvScontra = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_HORSHOOT, 0,
 	NULL, scontraRomInfo, scontraRomName, NULL, NULL, ThunderxInputInfo, ScontraDIPInfo,
 	scontraInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
-	224, 288, 3, 4
+	224, 304, 3, 4
 };
 
 
@@ -990,7 +990,7 @@ struct BurnDriver BurnDrvScontraj = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_HORSHOOT, 0,
 	NULL, scontrajRomInfo, scontrajRomName, NULL, NULL, ThunderxInputInfo, ScontraDIPInfo,
 	scontraInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
-	224, 288, 3, 4
+	224, 304, 3, 4
 };
 
 

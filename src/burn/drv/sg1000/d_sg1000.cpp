@@ -87,6 +87,7 @@ static void __fastcall sg1000_write_port(unsigned short port, UINT8 data)
 			ppi8255_w(0, port & 3, data);
 		return;
 	}
+	//bprintf(0, _T("port[%X] data[%X],"), port, data);
 }
 
 static UINT8 __fastcall sg1000_read_port(unsigned short port)
@@ -114,6 +115,7 @@ static UINT8 __fastcall sg1000_read_port(unsigned short port)
 			return 0x80;
 
 	}
+	//bprintf(0, _T("port[%X],"), port);
 
 	return 0;
 }
@@ -152,11 +154,22 @@ static int MemIndex()
 
 	AllRam			= Next;
 
-	DrvZ80RAM		= Next; Next += 0x000400;
+	DrvZ80RAM		= Next; Next += 0x010400;
 
 	RamEnd			= Next;
 	MemEnd			= Next;
 
+	return 0;
+}
+
+static void __fastcall sg1000_write(UINT16 address, UINT8 data)
+{
+	//bprintf(0, _T("a[%X] d[%X],"), address, data);
+}
+
+static UINT8 __fastcall sg1000_read(UINT16 address)
+{
+	//bprintf(0, _T("a[%X],"), address);
 	return 0;
 }
 
@@ -165,7 +178,7 @@ static int DrvInit()
 	AllMem = NULL;
 	MemIndex();
 	int nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -177,13 +190,16 @@ static int DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0xbfff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM);
-	ZetMapArea(0xc000, 0xc3ff, 0, DrvZ80RAM);
-	ZetMapArea(0xc000, 0xc3ff, 1, DrvZ80RAM);
-	ZetMapArea(0xc000, 0xc3ff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0xbfff, ZET_RAM);
+	ZetMapMemory(DrvZ80RAM, 0xc000, 0xffff, ZET_RAM);
+	//todo: mirror memory properly, allow carts to disable it(how??)
+	//-only- if it causes problems with some games.
+	//ZetMapMemory(DrvZ80RAM, 0xc000, 0xc3ff, ZET_RAM);
+	//ZetMapMemory(DrvZ80RAM, 0xf800, 0xfbff, ZET_RAM); // mirror
 	ZetSetOutHandler(sg1000_write_port);
 	ZetSetInHandler(sg1000_read_port);
+	ZetSetWriteHandler(sg1000_write);
+	ZetSetReadHandler(sg1000_read);
 	ZetClose();
 
 	SN76489AInit(0, 3579545, 0);
@@ -209,7 +225,7 @@ static int DrvExit()
 	SN76496Exit();
 	ppi8255_exit();
 
-	free (AllMem);
+	BurnFree (AllMem);
 	AllMem = NULL;
 
 	return 0;
@@ -282,8 +298,8 @@ static int DrvScan(int nAction,int *pnMin)
 	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
+		ba.Data	  = AllMem;
+		ba.nLen	  = MemEnd - AllMem; // some games use romspace as ram.
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
@@ -337,10 +353,10 @@ STD_ROM_PICK(sg1k_3ninmj)
 STD_ROM_FN(sg1k_3ninmj)
 
 struct BurnDriver BurnDrvsg1k_3ninmj = {
-	"sg1k_3ninmj", NULL, NULL, NULL, "1984",
+	"sg1k_3ninmj", "sg1k_mahjong", NULL, NULL, "1984",
 	"San-nin Mahjong (Jpn, OMV)\0", NULL, "Tsukuda Original", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_3ninmjRomInfo, sg1k_3ninmjRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -357,10 +373,10 @@ STD_ROM_PICK(sg1k_3ninmjt)
 STD_ROM_FN(sg1k_3ninmjt)
 
 struct BurnDriver BurnDrvsg1k_3ninmjt = {
-	"sg1k_3ninmjt", NULL, NULL, NULL, "1984?",
+	"sg1k_3ninmjt", "sg1k_mahjong", NULL, NULL, "1984?",
 	"San-nin Mahjong (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_3ninmjtRomInfo, sg1k_3ninmjtRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -397,10 +413,10 @@ STD_ROM_PICK(sg1k_bilidada)
 STD_ROM_FN(sg1k_bilidada)
 
 struct BurnDriver BurnDrvsg1k_bilidada = {
-	"sg1k_bilidada", NULL, NULL, NULL, "1985?",
+	"sg1k_bilidada", "sg1k_bankp", NULL, NULL, "1985?",
 	"Bi Li Da Dao (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_bilidadaRomInfo, sg1k_bilidadaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -437,7 +453,7 @@ STD_ROM_PICK(sg1k_bombjack)
 STD_ROM_FN(sg1k_bombjack)
 
 struct BurnDriver BurnDrvsg1k_bombjack = {
-	"sg1k_bombjack", NULL, NULL, NULL, "1985",
+	"sg1k_bombjack", "sg1k_bombjack", NULL, NULL, "1985",
 	"Bomb Jack (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
@@ -457,10 +473,10 @@ STD_ROM_PICK(sg1k_bombjackk1)
 STD_ROM_FN(sg1k_bombjackk1)
 
 struct BurnDriver BurnDrvsg1k_bombjackk1 = {
-	"sg1k_bombjackk1", NULL, NULL, NULL, "1985?",
+	"sg1k_bombjackk1", "sg1k_bombjack", NULL, NULL, "1985?",
 	"Bomb Jack (Kor)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_bombjackk1RomInfo, sg1k_bombjackk1RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -477,10 +493,10 @@ STD_ROM_PICK(sg1k_bombjackk2)
 STD_ROM_FN(sg1k_bombjackk2)
 
 struct BurnDriver BurnDrvsg1k_bombjackk2 = {
-	"sg1k_bombjackk2", NULL, NULL, NULL, "1985?",
+	"sg1k_bombjackk2", "sg1k_bombjack", NULL, NULL, "1985?",
 	"Beom Jjaek (Kor)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_bombjackk2RomInfo, sg1k_bombjackk2RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -497,10 +513,10 @@ STD_ROM_PICK(sg1k_bombjackt1)
 STD_ROM_FN(sg1k_bombjackt1)
 
 struct BurnDriver BurnDrvsg1k_bombjackt1 = {
-	"sg1k_bombjackt1", NULL, NULL, NULL, "1985?",
+	"sg1k_bombjackt1", "sg1k_bombjack", NULL, NULL, "1985?",
 	"Bomb Jack (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_bombjackt1RomInfo, sg1k_bombjackt1RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -557,10 +573,10 @@ STD_ROM_PICK(sg1k_bombjackt2)
 STD_ROM_FN(sg1k_bombjackt2)
 
 struct BurnDriver BurnDrvsg1k_bombjackt2 = {
-	"sg1k_bombjackt2", NULL, NULL, NULL, "1985?",
+	"sg1k_bombjackt2", "sg1k_bombjack", NULL, NULL, "1985?",
 	"Chaoren (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_bombjackt2RomInfo, sg1k_bombjackt2RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -637,10 +653,10 @@ STD_ROM_PICK(sg1k_castlet)
 STD_ROM_FN(sg1k_castlet)
 
 struct BurnDriver BurnDrvsg1k_castlet = {
-	"sg1k_castlet", NULL, NULL, NULL, "1986?",
+	"sg1k_castlet", "sg1k_castle", NULL, NULL, "1986?",
 	"Mowang migong ~ The Castle (Tw)\0", NULL, "DahJee", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_castletRomInfo, sg1k_castletRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -677,10 +693,10 @@ STD_ROM_PICK(sg1k_dayu)
 STD_ROM_FN(sg1k_dayu)
 
 struct BurnDriver BurnDrvsg1k_dayu = {
-	"sg1k_dayu", NULL, NULL, NULL, "1985?",
+	"sg1k_dayu", "sg1k_chackn", NULL, NULL, "1985?",
 	"Da Yu (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_dayuRomInfo, sg1k_dayuRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -717,10 +733,10 @@ STD_ROM_PICK(sg1k_chaldrbya)
 STD_ROM_FN(sg1k_chaldrbya)
 
 struct BurnDriver BurnDrvsg1k_chaldrbya = {
-	"sg1k_chaldrbya", NULL, NULL, NULL, "1984",
+	"sg1k_chaldrbya", "sg1k_chaldrby", NULL, NULL, "1984",
 	"Challenge Derby (Jpn, OMV, Alt)\0", NULL, "Tsukuda Original", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_chaldrbyaRomInfo, sg1k_chaldrbyaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -737,10 +753,10 @@ STD_ROM_PICK(sg1k_chaldrbyb)
 STD_ROM_FN(sg1k_chaldrbyb)
 
 struct BurnDriver BurnDrvsg1k_chaldrbyb = {
-	"sg1k_chaldrbyb", NULL, NULL, NULL, "1984",
+	"sg1k_chaldrbyb", "sg1k_chaldrby", NULL, NULL, "1984",
 	"Challenge Derby (Jpn, OMV, Hacked)\0", NULL, "Tsukuda Original", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_chaldrbybRomInfo, sg1k_chaldrbybRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -777,10 +793,10 @@ STD_ROM_PICK(sg1k_champbasa)
 STD_ROM_FN(sg1k_champbasa)
 
 struct BurnDriver BurnDrvsg1k_champbasa = {
-	"sg1k_champbasa", NULL, NULL, NULL, "1983",
+	"sg1k_champbasa", "sg1k_champbas", NULL, NULL, "1983",
 	"Champion Baseball (Jpn, Older)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_champbasaRomInfo, sg1k_champbasaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -797,10 +813,10 @@ STD_ROM_PICK(sg1k_champbast)
 STD_ROM_FN(sg1k_champbast)
 
 struct BurnDriver BurnDrvsg1k_champbast = {
-	"sg1k_champbast", NULL, NULL, NULL, "1985?",
+	"sg1k_champbast", "sg1k_champbas", NULL, NULL, "1985?",
 	"Champion Baseball (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_champbastRomInfo, sg1k_champbastRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -837,10 +853,10 @@ STD_ROM_PICK(sg1k_champbilt)
 STD_ROM_FN(sg1k_champbilt)
 
 struct BurnDriver BurnDrvsg1k_champbilt = {
-	"sg1k_champbilt", NULL, NULL, NULL, "1986?",
+	"sg1k_champbilt", "sg1k_champbil", NULL, NULL, "1986?",
 	"Hua Shi Zhuangqiu (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_champbiltRomInfo, sg1k_champbiltRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -877,11 +893,31 @@ STD_ROM_PICK(sg1k_champboxt)
 STD_ROM_FN(sg1k_champboxt)
 
 struct BurnDriver BurnDrvsg1k_champboxt = {
-	"sg1k_champboxt", NULL, NULL, NULL, "1984?",
+	"sg1k_champboxt", "sg1k_champbox", NULL, NULL, "1984?",
 	"Champion Boxing (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_champboxtRomInfo, sg1k_champboxtRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	285, 243, 4, 3
+};
+
+
+// Champion Boxing (Jpn, MyCard)
+
+static struct BurnRomInfo sg1k_champbox1RomDesc[] = {
+	{ "champion boxing (japan) (mycard).bin",	0x08000, 0xf8b2ac1d, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_champbox1)
+STD_ROM_FN(sg1k_champbox1)
+
+struct BurnDriver BurnDrvsg1k_champbox1 = {
+	"sg1k_champbox1", "sg1k_champbox", NULL, NULL, "1984",
+	"Champion Boxing (Jpn, MyCard)\0", NULL, "Sega", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	SG1KGetZipName, sg1k_champbox1RomInfo, sg1k_champbox1RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
 };
@@ -917,11 +953,31 @@ STD_ROM_PICK(sg1k_champglfk)
 STD_ROM_FN(sg1k_champglfk)
 
 struct BurnDriver BurnDrvsg1k_champglfk = {
-	"sg1k_champglfk", NULL, NULL, NULL, "198?",
+	"sg1k_champglfk", "sg1k_champglf", NULL, NULL, "198?",
 	"Champion Golf (Kor)\0", NULL, "Samsung", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_champglfkRomInfo, sg1k_champglfkRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	285, 243, 4, 3
+};
+
+
+// Champion Golf (Jpn, MyCard)
+
+static struct BurnRomInfo sg1k_champglf1RomDesc[] = {
+	{ "champion golf [card].bin",	0x08000, 0x5a904122, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_champglf1)
+STD_ROM_FN(sg1k_champglf1)
+
+struct BurnDriver BurnDrvsg1k_champglf1 = {
+	"sg1k_champglf1", "sg1k_champglf", NULL, NULL, "1983",
+	"Champion Golf (Jpn, MyCard)\0", NULL, "Sega", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	SG1KGetZipName, sg1k_champglf1RomInfo, sg1k_champglf1RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
 };
@@ -957,10 +1013,10 @@ STD_ROM_PICK(sg1k_champicek)
 STD_ROM_FN(sg1k_champicek)
 
 struct BurnDriver BurnDrvsg1k_champicek = {
-	"sg1k_champicek", NULL, NULL, NULL, "198?",
+	"sg1k_champicek", "sg1k_champice", NULL, NULL, "198?",
 	"Champion Ice Hockey (Kor)\0", NULL, "Samsung", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_champicekRomInfo, sg1k_champicekRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -977,10 +1033,10 @@ STD_ROM_PICK(sg1k_champicet)
 STD_ROM_FN(sg1k_champicet)
 
 struct BurnDriver BurnDrvsg1k_champicet = {
-	"sg1k_champicet", NULL, NULL, NULL, "1985?",
+	"sg1k_champicet", "sg1k_champice", NULL, NULL, "1985?",
 	"Qugunqiu (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_champicetRomInfo, sg1k_champicetRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1017,10 +1073,10 @@ STD_ROM_PICK(sg1k_champkent)
 STD_ROM_FN(sg1k_champkent)
 
 struct BurnDriver BurnDrvsg1k_champkent = {
-	"sg1k_champkent", NULL, NULL, NULL, "1986?",
+	"sg1k_champkent", "sg1k_champken", NULL, NULL, "1986?",
 	"Jiandao (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_champkentRomInfo, sg1k_champkentRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1077,10 +1133,10 @@ STD_ROM_PICK(sg1k_champscrt)
 STD_ROM_FN(sg1k_champscrt)
 
 struct BurnDriver BurnDrvsg1k_champscrt = {
-	"sg1k_champscrt", NULL, NULL, NULL, "1984?",
+	"sg1k_champscrt", "sg1k_champscr", NULL, NULL, "1984?",
 	"Champion Soccer (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_champscrtRomInfo, sg1k_champscrtRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1137,10 +1193,10 @@ STD_ROM_PICK(sg1k_chopliftp)
 STD_ROM_FN(sg1k_chopliftp)
 
 struct BurnDriver BurnDrvsg1k_chopliftp = {
-	"sg1k_chopliftp", NULL, NULL, NULL, "1985",
+	"sg1k_chopliftp", "sg1k_choplift", NULL, NULL, "1985",
 	"Choplifter (Jpn, Prototype)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_chopliftpRomInfo, sg1k_chopliftpRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1157,10 +1213,10 @@ STD_ROM_PICK(sg1k_chopliftk)
 STD_ROM_FN(sg1k_chopliftk)
 
 struct BurnDriver BurnDrvsg1k_chopliftk = {
-	"sg1k_chopliftk", NULL, NULL, NULL, "1985?",
+	"sg1k_chopliftk", "sg1k_choplift", NULL, NULL, "1985?",
 	"Choplifter (Kor)\0", NULL, "Sega?", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_chopliftkRomInfo, sg1k_chopliftkRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1177,10 +1233,10 @@ STD_ROM_PICK(sg1k_feilang)
 STD_ROM_FN(sg1k_feilang)
 
 struct BurnDriver BurnDrvsg1k_feilang = {
-	"sg1k_feilang", NULL, NULL, NULL, "1985?",
+	"sg1k_feilang", "sg1k_choplift", NULL, NULL, "1985?",
 	"Fei Lang (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_feilangRomInfo, sg1k_feilangRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1197,10 +1253,10 @@ STD_ROM_PICK(sg1k_feilanga)
 STD_ROM_FN(sg1k_feilanga)
 
 struct BurnDriver BurnDrvsg1k_feilanga = {
-	"sg1k_feilanga", NULL, NULL, NULL, "1985?",
+	"sg1k_feilanga", "sg1k_choplift", NULL, NULL, "1985?",
 	"Fei Lang ~ Choplifter (Tw, Alt)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_feilangaRomInfo, sg1k_feilangaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1217,10 +1273,10 @@ STD_ROM_PICK(sg1k_chopliftt)
 STD_ROM_FN(sg1k_chopliftt)
 
 struct BurnDriver BurnDrvsg1k_chopliftt = {
-	"sg1k_chopliftt", NULL, NULL, NULL, "1985?",
+	"sg1k_chopliftt", "sg1k_choplift", NULL, NULL, "1985?",
 	"Choplifter (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_choplifttRomInfo, sg1k_choplifttRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1257,10 +1313,10 @@ STD_ROM_PICK(sg1k_cloderunt)
 STD_ROM_FN(sg1k_cloderunt)
 
 struct BurnDriver BurnDrvsg1k_cloderunt = {
-	"sg1k_cloderunt", NULL, NULL, NULL, "1985?",
+	"sg1k_cloderunt", "sg1k_cloderun", NULL, NULL, "1985?",
 	"Xun Bao Er Dai (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_cloderuntRomInfo, sg1k_cloderuntRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1297,10 +1353,10 @@ STD_ROM_PICK(sg1k_circusck)
 STD_ROM_FN(sg1k_circusck)
 
 struct BurnDriver BurnDrvsg1k_circusck = {
-	"sg1k_circusck", NULL, NULL, NULL, "198?",
+	"sg1k_circusck", "sg1k_circusc", NULL, NULL, "198?",
 	"Circus Charlie (Kor)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_circusckRomInfo, sg1k_circusckRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1337,10 +1393,10 @@ STD_ROM_PICK(sg1k_congoa)
 STD_ROM_FN(sg1k_congoa)
 
 struct BurnDriver BurnDrvsg1k_congoa = {
-	"sg1k_congoa", NULL, NULL, NULL, "1983",
+	"sg1k_congoa", "sg1k_congo", NULL, NULL, "1983",
 	"Congo Bongo (Euro, Jpn, v1 Alt)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_congoaRomInfo, sg1k_congoaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1357,10 +1413,10 @@ STD_ROM_PICK(sg1k_congob)
 STD_ROM_FN(sg1k_congob)
 
 struct BurnDriver BurnDrvsg1k_congob = {
-	"sg1k_congob", NULL, NULL, NULL, "1983",
+	"sg1k_congob", "sg1k_congo", NULL, NULL, "1983",
 	"Congo Bongo (Jpn, v0)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_congobRomInfo, sg1k_congobRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1377,10 +1433,10 @@ STD_ROM_PICK(sg1k_congot)
 STD_ROM_FN(sg1k_congot)
 
 struct BurnDriver BurnDrvsg1k_congot = {
-	"sg1k_congot", NULL, NULL, NULL, "19??",
+	"sg1k_congot", "sg1k_congo", NULL, NULL, "19??",
 	"Congo Bongo (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_congotRomInfo, sg1k_congotRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1417,10 +1473,10 @@ STD_ROM_PICK(sg1k_csot)
 STD_ROM_FN(sg1k_csot)
 
 struct BurnDriver BurnDrvsg1k_csot = {
-	"sg1k_csot", NULL, NULL, NULL, "1985?",
+	"sg1k_csot", "sg1k_cso", NULL, NULL, "1985?",
 	"Wanpi Gui (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_csotRomInfo, sg1k_csotRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1438,7 +1494,7 @@ STD_ROM_FN(sg1k_dacike)
 
 struct BurnDriver BurnDrvsg1k_dacike = {
 	"sg1k_dacike", NULL, NULL, NULL, "1986?",
-	"Da Cike (Tw)\0", NULL, "DahJee", "Sega SG-1000",
+	"Yie Ar Kung-Fu II, Da Cike (Tw)\0", NULL, "DahJee", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_dacikeRomInfo, sg1k_dacikeRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -1477,10 +1533,10 @@ STD_ROM_PICK(sg1k_qie)
 STD_ROM_FN(sg1k_qie)
 
 struct BurnDriver BurnDrvsg1k_qie = {
-	"sg1k_qie", NULL, NULL, NULL, "1985?",
+	"sg1k_qie", "sg1k_dokidoki", NULL, NULL, "1985?",
 	"Qi E (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_qieRomInfo, sg1k_qieRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1517,10 +1573,10 @@ STD_ROM_PICK(sg1k_jingwumn)
 STD_ROM_FN(sg1k_jingwumn)
 
 struct BurnDriver BurnDrvsg1k_jingwumn = {
-	"sg1k_jingwumn", NULL, NULL, NULL, "1985?",
+	"sg1k_jingwumn", "sg1k_dragwang", NULL, NULL, "1985?",
 	"Jing Wu Men (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_jingwumnRomInfo, sg1k_jingwumnRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1537,10 +1593,10 @@ STD_ROM_PICK(sg1k_jingwumna)
 STD_ROM_FN(sg1k_jingwumna)
 
 struct BurnDriver BurnDrvsg1k_jingwumna = {
-	"sg1k_jingwumna", NULL, NULL, NULL, "1985?",
+	"sg1k_jingwumna", "sg1k_dragwang", NULL, NULL, "1985?",
 	"Jing Wu Men (Tw, Alt)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_jingwumnaRomInfo, sg1k_jingwumnaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1557,10 +1613,10 @@ STD_ROM_PICK(sg1k_dragwang1)
 STD_ROM_FN(sg1k_dragwang1)
 
 struct BurnDriver BurnDrvsg1k_dragwang1 = {
-	"sg1k_dragwang1", NULL, NULL, NULL, "1985",
+	"sg1k_dragwang1", "sg1k_dragwang", NULL, NULL, "1985",
 	"Dragon Wang (Jpn, v0)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_dragwang1RomInfo, sg1k_dragwang1RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1597,10 +1653,10 @@ STD_ROM_PICK(sg1k_drolt)
 STD_ROM_FN(sg1k_drolt)
 
 struct BurnDriver BurnDrvsg1k_drolt = {
-	"sg1k_drolt", NULL, NULL, NULL, "1985?",
+	"sg1k_drolt", "sg1k_drol", NULL, NULL, "1985?",
 	"Drol (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_droltRomInfo, sg1k_droltRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1617,10 +1673,10 @@ STD_ROM_PICK(sg1k_drolk)
 STD_ROM_FN(sg1k_drolk)
 
 struct BurnDriver BurnDrvsg1k_drolk = {
-	"sg1k_drolk", NULL, NULL, NULL, "198?",
+	"sg1k_drolk", "sg1k_drol", NULL, NULL, "198?",
 	"Drol (Kor)\0", NULL, "Samsung", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_drolkRomInfo, sg1k_drolkRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1657,10 +1713,10 @@ STD_ROM_PICK(sg1k_elevatort)
 STD_ROM_FN(sg1k_elevatort)
 
 struct BurnDriver BurnDrvsg1k_elevatort = {
-	"sg1k_elevatort", NULL, NULL, NULL, "1985?",
+	"sg1k_elevatort", "sg1k_elevator", NULL, NULL, "1985?",
 	"Die Dui Die (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_elevatortRomInfo, sg1k_elevatortRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1697,10 +1753,10 @@ STD_ROM_PICK(sg1k_exeriont)
 STD_ROM_FN(sg1k_exeriont)
 
 struct BurnDriver BurnDrvsg1k_exeriont = {
-	"sg1k_exeriont", NULL, NULL, NULL, "1983?",
+	"sg1k_exeriont", "sg1k_exerion", NULL, NULL, "1983?",
 	"Exerion (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_exeriontRomInfo, sg1k_exeriontRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1717,10 +1773,10 @@ STD_ROM_PICK(sg1k_exerionk)
 STD_ROM_FN(sg1k_exerionk)
 
 struct BurnDriver BurnDrvsg1k_exerionk = {
-	"sg1k_exerionk", NULL, NULL, NULL, "198?",
+	"sg1k_exerionk", "sg1k_exerion", NULL, NULL, "198?",
 	"Exerion (Kor)\0", NULL, "Samsung", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_exerionkRomInfo, sg1k_exerionkRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1757,10 +1813,10 @@ STD_ROM_PICK(sg1k_flickya)
 STD_ROM_FN(sg1k_flickya)
 
 struct BurnDriver BurnDrvsg1k_flickya = {
-	"sg1k_flickya", NULL, NULL, NULL, "1984",
+	"sg1k_flickya", "sg1k_flicky", NULL, NULL, "1984",
 	"Flicky (Jpn, v0)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_flickyaRomInfo, sg1k_flickyaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1777,10 +1833,10 @@ STD_ROM_PICK(sg1k_flickyt)
 STD_ROM_FN(sg1k_flickyt)
 
 struct BurnDriver BurnDrvsg1k_flickyt = {
-	"sg1k_flickyt", NULL, NULL, NULL, "1984?",
+	"sg1k_flickyt", "sg1k_flicky", NULL, NULL, "1984?",
 	"Flicky (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_flickytRomInfo, sg1k_flickytRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1817,10 +1873,10 @@ STD_ROM_PICK(sg1k_girlgardt)
 STD_ROM_FN(sg1k_girlgardt)
 
 struct BurnDriver BurnDrvsg1k_girlgardt = {
-	"sg1k_girlgardt", NULL, NULL, NULL, "1984?",
+	"sg1k_girlgardt", "sg1k_girlgard", NULL, NULL, "1984?",
 	"Girl's Garden (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_girlgardtRomInfo, sg1k_girlgardtRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1877,10 +1933,10 @@ STD_ROM_PICK(sg1k_gpworlda)
 STD_ROM_FN(sg1k_gpworlda)
 
 struct BurnDriver BurnDrvsg1k_gpworlda = {
-	"sg1k_gpworlda", NULL, NULL, NULL, "1985",
+	"sg1k_gpworlda", "sg1k_gpworld", NULL, NULL, "1985",
 	"GP World (Jpn, v0)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_gpworldaRomInfo, sg1k_gpworldaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1897,10 +1953,10 @@ STD_ROM_PICK(sg1k_gpworldt)
 STD_ROM_FN(sg1k_gpworldt)
 
 struct BurnDriver BurnDrvsg1k_gpworldt = {
-	"sg1k_gpworldt", NULL, NULL, NULL, "1985?",
+	"sg1k_gpworldt", "sg1k_gpworld", NULL, NULL, "1985?",
 	"GP World (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_gpworldtRomInfo, sg1k_gpworldtRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1937,10 +1993,10 @@ STD_ROM_PICK(sg1k_gulkavek)
 STD_ROM_FN(sg1k_gulkavek)
 
 struct BurnDriver BurnDrvsg1k_gulkavek = {
-	"sg1k_gulkavek", NULL, NULL, NULL, "198?",
+	"sg1k_gulkavek", "sg1k_gulkave", NULL, NULL, "198?",
 	"Gulkave (Kor)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_gulkavekRomInfo, sg1k_gulkavekRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -1977,10 +2033,10 @@ STD_ROM_PICK(sg1k_guzzlert)
 STD_ROM_FN(sg1k_guzzlert)
 
 struct BurnDriver BurnDrvsg1k_guzzlert = {
-	"sg1k_guzzlert", NULL, NULL, NULL, "1983?",
+	"sg1k_guzzlert", "sg1k_guzzler", NULL, NULL, "1983?",
 	"Guzzler (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_guzzlertRomInfo, sg1k_guzzlertRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2017,10 +2073,10 @@ STD_ROM_PICK(sg1k_hangon2t1)
 STD_ROM_FN(sg1k_hangon2t1)
 
 struct BurnDriver BurnDrvsg1k_hangon2t1 = {
-	"sg1k_hangon2t1", NULL, NULL, NULL, "1985?",
+	"sg1k_hangon2t1", "sg1k_hangon2", NULL, NULL, "1985?",
 	"Hang-On II (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_hangon2t1RomInfo, sg1k_hangon2t1RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2037,10 +2093,10 @@ STD_ROM_PICK(sg1k_hangon2t2)
 STD_ROM_FN(sg1k_hangon2t2)
 
 struct BurnDriver BurnDrvsg1k_hangon2t2 = {
-	"sg1k_hangon2t2", NULL, NULL, NULL, "1985?",
+	"sg1k_hangon2t2", "sg1k_hangon2", NULL, NULL, "1985?",
 	"Motuo Feiche (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_hangon2t2RomInfo, sg1k_hangon2t2RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2077,10 +2133,10 @@ STD_ROM_PICK(sg1k_herot)
 STD_ROM_FN(sg1k_herot)
 
 struct BurnDriver BurnDrvsg1k_herot = {
-	"sg1k_herot", NULL, NULL, NULL, "1985?",
+	"sg1k_herot", "sg1k_hero", NULL, NULL, "1985?",
 	"Qing Feng Xia (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_herotRomInfo, sg1k_herotRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2097,10 +2153,10 @@ STD_ROM_PICK(sg1k_homemj)
 STD_ROM_FN(sg1k_homemj)
 
 struct BurnDriver BurnDrvsg1k_homemj = {
-	"sg1k_homemj", NULL, NULL, NULL, "1984",
+	"sg1k_homemj", "sg1k_mahjong", NULL, NULL, "1984",
 	"Home Mahjong (Jpn, v1)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_homemjRomInfo, sg1k_homemjRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2117,10 +2173,10 @@ STD_ROM_PICK(sg1k_homemj1)
 STD_ROM_FN(sg1k_homemj1)
 
 struct BurnDriver BurnDrvsg1k_homemj1 = {
-	"sg1k_homemj1", NULL, NULL, NULL, "1984",
+	"sg1k_homemj1", "sg1k_mahjong", NULL, NULL, "1984",
 	"Home Mahjong (Jpn, v0)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_homemj1RomInfo, sg1k_homemj1RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2137,10 +2193,10 @@ STD_ROM_PICK(sg1k_homemjt)
 STD_ROM_FN(sg1k_homemjt)
 
 struct BurnDriver BurnDrvsg1k_homemjt = {
-	"sg1k_homemjt", NULL, NULL, NULL, "1984?",
+	"sg1k_homemjt", "sg1k_mahjong", NULL, NULL, "1984?",
 	"Yon-nin Mahjong (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_homemjtRomInfo, sg1k_homemjtRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2197,10 +2253,10 @@ STD_ROM_PICK(sg1k_hypersptt)
 STD_ROM_FN(sg1k_hypersptt)
 
 struct BurnDriver BurnDrvsg1k_hypersptt = {
-	"sg1k_hypersptt", NULL, NULL, NULL, "1985?",
+	"sg1k_hypersptt", "sg1k_hyperspt", NULL, NULL, "1985?",
 	"Hyper Sports (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_hyperspttRomInfo, sg1k_hyperspttRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2217,10 +2273,10 @@ STD_ROM_PICK(sg1k_hypersptk)
 STD_ROM_FN(sg1k_hypersptk)
 
 struct BurnDriver BurnDrvsg1k_hypersptk = {
-	"sg1k_hypersptk", NULL, NULL, NULL, "198?",
+	"sg1k_hypersptk", "sg1k_hyperspt", NULL, NULL, "198?",
 	"Hyper Sports (Kor)\0", NULL, "Samsung", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_hypersptkRomInfo, sg1k_hypersptkRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2277,10 +2333,10 @@ STD_ROM_PICK(sg1k_jb007a)
 STD_ROM_FN(sg1k_jb007a)
 
 struct BurnDriver BurnDrvsg1k_jb007a = {
-	"sg1k_jb007a", NULL, NULL, NULL, "1984",
+	"sg1k_jb007a", "sg1k_jb007", NULL, NULL, "1984",
 	"007 James Bond (Jpn, v2.6, OMV)\0", NULL, "Tsukuda Original", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_jb007aRomInfo, sg1k_jb007aRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2297,10 +2353,10 @@ STD_ROM_PICK(sg1k_jb007t)
 STD_ROM_FN(sg1k_jb007t)
 
 struct BurnDriver BurnDrvsg1k_jb007t = {
-	"sg1k_jb007t", NULL, NULL, NULL, "1984?",
+	"sg1k_jb007t", "sg1k_jb007", NULL, NULL, "1984?",
 	"007 James Bond (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_jb007tRomInfo, sg1k_jb007tRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2318,7 +2374,7 @@ STD_ROM_FN(sg1k_jinzita)
 
 struct BurnDriver BurnDrvsg1k_jinzita = {
 	"sg1k_jinzita", NULL, NULL, NULL, "198?",
-	"Jinzita (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
+	"King's Valley, Jinzita (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_jinzitaRomInfo, sg1k_jinzitaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -2357,10 +2413,10 @@ STD_ROM_PICK(sg1k_ldrunk)
 STD_ROM_FN(sg1k_ldrunk)
 
 struct BurnDriver BurnDrvsg1k_ldrunk = {
-	"sg1k_ldrunk", NULL, NULL, NULL, "1984?",
+	"sg1k_ldrunk", "sg1k_ldrun", NULL, NULL, "1984?",
 	"Lode Runner (Kor)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_ldrunkRomInfo, sg1k_ldrunkRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2377,10 +2433,10 @@ STD_ROM_PICK(sg1k_ldrunt)
 STD_ROM_FN(sg1k_ldrunt)
 
 struct BurnDriver BurnDrvsg1k_ldrunt = {
-	"sg1k_ldrunt", NULL, NULL, NULL, "1984?",
+	"sg1k_ldrunt", "sg1k_ldrun", NULL, NULL, "1984?",
 	"Lode Runner (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_ldruntRomInfo, sg1k_ldruntRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2477,10 +2533,10 @@ STD_ROM_PICK(sg1k_mahjonga)
 STD_ROM_FN(sg1k_mahjonga)
 
 struct BurnDriver BurnDrvsg1k_mahjonga = {
-	"sg1k_mahjonga", NULL, NULL, NULL, "1983",
+	"sg1k_mahjonga", "sg1k_mahjong", NULL, NULL, "1983",
 	"Mahjong (Jpn, Alt)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_mahjongaRomInfo, sg1k_mahjongaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2497,10 +2553,10 @@ STD_ROM_PICK(sg1k_mahjongt)
 STD_ROM_FN(sg1k_mahjongt)
 
 struct BurnDriver BurnDrvsg1k_mahjongt = {
-	"sg1k_mahjongt", NULL, NULL, NULL, "1983?",
+	"sg1k_mahjongt", "sg1k_mahjong", NULL, NULL, "1983?",
 	"Mahjong (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_mahjongtRomInfo, sg1k_mahjongtRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2537,10 +2593,10 @@ STD_ROM_PICK(sg1k_monacogpa)
 STD_ROM_FN(sg1k_monacogpa)
 
 struct BurnDriver BurnDrvsg1k_monacogpa = {
-	"sg1k_monacogpa", NULL, NULL, NULL, "1983",
+	"sg1k_monacogpa", "sg1k_monacogp", NULL, NULL, "1983",
 	"Monaco GP (Jpn, v1)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_monacogpaRomInfo, sg1k_monacogpaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2557,10 +2613,10 @@ STD_ROM_PICK(sg1k_monacogpb)
 STD_ROM_FN(sg1k_monacogpb)
 
 struct BurnDriver BurnDrvsg1k_monacogpb = {
-	"sg1k_monacogpb", NULL, NULL, NULL, "1983",
+	"sg1k_monacogpb", "sg1k_monacogp", NULL, NULL, "1983",
 	"Monaco GP (Jpn, v0)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_monacogpbRomInfo, sg1k_monacogpbRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2577,10 +2633,10 @@ STD_ROM_PICK(sg1k_monacogpt)
 STD_ROM_FN(sg1k_monacogpt)
 
 struct BurnDriver BurnDrvsg1k_monacogpt = {
-	"sg1k_monacogpt", NULL, NULL, NULL, "1983?",
+	"sg1k_monacogpt", "sg1k_monacogp", NULL, NULL, "1983?",
 	"Monaco GP (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_monacogptRomInfo, sg1k_monacogptRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2598,7 +2654,7 @@ STD_ROM_FN(sg1k_moyuchua)
 
 struct BurnDriver BurnDrvsg1k_moyuchua = {
 	"sg1k_moyuchua", NULL, NULL, NULL, "1986?",
-	"Moyu Chuanqi (Tw)\0", NULL, "Jumbo", "Sega SG-1000",
+	"Knightmare, Moyu Chuanqi (Tw)\0", NULL, "Jumbo", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_moyuchuaRomInfo, sg1k_moyuchuaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -2637,10 +2693,10 @@ STD_ROM_PICK(sg1k_ninjaprit)
 STD_ROM_FN(sg1k_ninjaprit)
 
 struct BurnDriver BurnDrvsg1k_ninjaprit = {
-	"sg1k_ninjaprit", NULL, NULL, NULL, "1986?",
+	"sg1k_ninjaprit", "sg1k_ninjapri", NULL, NULL, "1986?",
 	"Renzhe Gongzhu (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_ninjapritRomInfo, sg1k_ninjapritRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2677,10 +2733,10 @@ STD_ROM_PICK(sg1k_nsuba)
 STD_ROM_FN(sg1k_nsuba)
 
 struct BurnDriver BurnDrvsg1k_nsuba = {
-	"sg1k_nsuba", NULL, NULL, NULL, "1983",
+	"sg1k_nsuba", "sg1k_nsub", NULL, NULL, "1983",
 	"N-Sub (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_nsubaRomInfo, sg1k_nsubaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2697,10 +2753,10 @@ STD_ROM_PICK(sg1k_nsubb)
 STD_ROM_FN(sg1k_nsubb)
 
 struct BurnDriver BurnDrvsg1k_nsubb = {
-	"sg1k_nsubb", NULL, NULL, NULL, "1983",
+	"sg1k_nsubb", "sg1k_nsub", NULL, NULL, "1983",
 	"N-Sub (Jpn, Alt)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_nsubbRomInfo, sg1k_nsubbRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2717,10 +2773,10 @@ STD_ROM_PICK(sg1k_nsubt)
 STD_ROM_FN(sg1k_nsubt)
 
 struct BurnDriver BurnDrvsg1k_nsubt = {
-	"sg1k_nsubt", NULL, NULL, NULL, "1983?",
+	"sg1k_nsubt", "sg1k_nsub", NULL, NULL, "1983?",
 	"N-Sub (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_nsubtRomInfo, sg1k_nsubtRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2757,10 +2813,10 @@ STD_ROM_PICK(sg1k_matchpga)
 STD_ROM_FN(sg1k_matchpga)
 
 struct BurnDriver BurnDrvsg1k_matchpga = {
-	"sg1k_matchpga", NULL, NULL, NULL, "1984?",
+	"sg1k_matchpga", "sg1k_matchpg", NULL, NULL, "1984?",
 	"Okamoto Ayako no Match Play Golf (Jpn, OMV, Alt)\0", NULL, "Tsukuda Original", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_matchpgaRomInfo, sg1k_matchpgaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2777,10 +2833,10 @@ STD_ROM_PICK(sg1k_matchpgt)
 STD_ROM_FN(sg1k_matchpgt)
 
 struct BurnDriver BurnDrvsg1k_matchpgt = {
-	"sg1k_matchpgt", NULL, NULL, NULL, "1984?",
+	"sg1k_matchpgt", "sg1k_matchpg", NULL, NULL, "1984?",
 	"Okamoto Ayako no Match Play Golf (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_matchpgtRomInfo, sg1k_matchpgtRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2837,10 +2893,10 @@ STD_ROM_PICK(sg1k_heibaiqi)
 STD_ROM_FN(sg1k_heibaiqi)
 
 struct BurnDriver BurnDrvsg1k_heibaiqi = {
-	"sg1k_heibaiqi", NULL, NULL, NULL, "1985?",
+	"sg1k_heibaiqi", "sg1k_othello", NULL, NULL, "1985?",
 	"Hei Bai Qi (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_heibaiqiRomInfo, sg1k_heibaiqiRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2877,10 +2933,10 @@ STD_ROM_PICK(sg1k_pacara)
 STD_ROM_FN(sg1k_pacara)
 
 struct BurnDriver BurnDrvsg1k_pacara = {
-	"sg1k_pacara", NULL, NULL, NULL, "1983",
+	"sg1k_pacara", "sg1k_pacar", NULL, NULL, "1983",
 	"Pacar (Jpn, Alt)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_pacaraRomInfo, sg1k_pacaraRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2897,10 +2953,10 @@ STD_ROM_PICK(sg1k_pacart)
 STD_ROM_FN(sg1k_pacart)
 
 struct BurnDriver BurnDrvsg1k_pacart = {
-	"sg1k_pacart", NULL, NULL, NULL, "1983?",
+	"sg1k_pacart", "sg1k_pacar", NULL, NULL, "1983?",
 	"Pacar (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_pacartRomInfo, sg1k_pacartRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2937,10 +2993,10 @@ STD_ROM_PICK(sg1k_pachink2t)
 STD_ROM_FN(sg1k_pachink2t)
 
 struct BurnDriver BurnDrvsg1k_pachink2t = {
-	"sg1k_pachink2t", NULL, NULL, NULL, "1984?",
+	"sg1k_pachink2t", "sg1k_pachink2", NULL, NULL, "1984?",
 	"Pachinko II (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_pachink2tRomInfo, sg1k_pachink2tRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -2997,10 +3053,10 @@ STD_ROM_PICK(sg1k_pitfall2a)
 STD_ROM_FN(sg1k_pitfall2a)
 
 struct BurnDriver BurnDrvsg1k_pitfall2a = {
-	"sg1k_pitfall2a", NULL, NULL, NULL, "1985",
+	"sg1k_pitfall2a", "sg1k_pitfall2", NULL, NULL, "1985",
 	"Pitfall II - The Lost Caverns (Jpn, v0)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_pitfall2aRomInfo, sg1k_pitfall2aRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3037,10 +3093,10 @@ STD_ROM_PICK(sg1k_faguiqib)
 STD_ROM_FN(sg1k_faguiqib)
 
 struct BurnDriver BurnDrvsg1k_faguiqib = {
-	"sg1k_faguiqib", NULL, NULL, NULL, "1985?",
+	"sg1k_faguiqib", "sg1k_pitfall2", NULL, NULL, "1985?",
 	"Fa Gui Qibing (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_faguiqibRomInfo, sg1k_faguiqibRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3057,10 +3113,10 @@ STD_ROM_PICK(sg1k_faguiqiba)
 STD_ROM_FN(sg1k_faguiqiba)
 
 struct BurnDriver BurnDrvsg1k_faguiqiba = {
-	"sg1k_faguiqiba", NULL, NULL, NULL, "1985?",
+	"sg1k_faguiqiba", "sg1k_pitfall2", NULL, NULL, "1985?",
 	"Fa Gui Qibing (Tw, Alt)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_faguiqibaRomInfo, sg1k_faguiqibaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3097,10 +3153,10 @@ STD_ROM_PICK(sg1k_popflamet)
 STD_ROM_FN(sg1k_popflamet)
 
 struct BurnDriver BurnDrvsg1k_popflamet = {
-	"sg1k_popflamet", NULL, NULL, NULL, "1983?",
+	"sg1k_popflamet", "sg1k_popflame", NULL, NULL, "1983?",
 	"Pop Flamer (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_popflametRomInfo, sg1k_popflametRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3157,10 +3213,10 @@ STD_ROM_PICK(sg1k_duduche)
 STD_ROM_FN(sg1k_duduche)
 
 struct BurnDriver BurnDrvsg1k_duduche = {
-	"sg1k_duduche", NULL, NULL, NULL, "1986?",
+	"sg1k_duduche", "sg1k_rallyx", NULL, NULL, "1986?",
 	"Du Du Che (Tw)\0", NULL, "DahJee", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_duducheRomInfo, sg1k_duducheRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3197,10 +3253,10 @@ STD_ROM_PICK(sg1k_huojiche)
 STD_ROM_FN(sg1k_huojiche)
 
 struct BurnDriver BurnDrvsg1k_huojiche = {
-	"sg1k_huojiche", NULL, NULL, NULL, "1986?",
+	"sg1k_huojiche", "sg1k_roadfght", NULL, NULL, "1986?",
 	"Huojian Che (Tw)\0", NULL, "Jumbo", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_huojicheRomInfo, sg1k_huojicheRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3237,10 +3293,10 @@ STD_ROM_PICK(sg1k_motianda)
 STD_ROM_FN(sg1k_motianda)
 
 struct BurnDriver BurnDrvsg1k_motianda = {
-	"sg1k_motianda", NULL, NULL, NULL, "1985?",
+	"sg1k_motianda", "sg1k_rocknbol", NULL, NULL, "1985?",
 	"Mo Tian Da Lou (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_motiandaRomInfo, sg1k_motiandaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3277,10 +3333,10 @@ STD_ROM_PICK(sg1k_safarihut)
 STD_ROM_FN(sg1k_safarihut)
 
 struct BurnDriver BurnDrvsg1k_safarihut = {
-	"sg1k_safarihut", NULL, NULL, NULL, "1983?",
+	"sg1k_safarihut", "sg1k_safarihu", NULL, NULL, "1983?",
 	"Safari Hunting (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_safarihutRomInfo, sg1k_safarihutRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3317,10 +3373,10 @@ STD_ROM_PICK(sg1k_safarircj)
 STD_ROM_FN(sg1k_safarircj)
 
 struct BurnDriver BurnDrvsg1k_safarircj = {
-	"sg1k_safarircj", NULL, NULL, NULL, "1984",
+	"sg1k_safarircj", "sg1k_safarirc", NULL, NULL, "1984",
 	"Safari Race (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_safarircjRomInfo, sg1k_safarircjRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3337,10 +3393,10 @@ STD_ROM_PICK(sg1k_safarirct)
 STD_ROM_FN(sg1k_safarirct)
 
 struct BurnDriver BurnDrvsg1k_safarirct = {
-	"sg1k_safarirct", NULL, NULL, NULL, "1984?",
+	"sg1k_safarirct", "sg1k_safarirc", NULL, NULL, "1984?",
 	"Safari Race (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_safarirctRomInfo, sg1k_safarirctRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3377,10 +3433,10 @@ STD_ROM_PICK(sg1k_segaflipa)
 STD_ROM_FN(sg1k_segaflipa)
 
 struct BurnDriver BurnDrvsg1k_segaflipa = {
-	"sg1k_segaflipa", NULL, NULL, NULL, "1983",
+	"sg1k_segaflipa", "sg1k_segaflip", NULL, NULL, "1983",
 	"Sega Flipper (Jpn, Alt)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_segaflipaRomInfo, sg1k_segaflipaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3397,10 +3453,10 @@ STD_ROM_PICK(sg1k_segaflipt)
 STD_ROM_FN(sg1k_segaflipt)
 
 struct BurnDriver BurnDrvsg1k_segaflipt = {
-	"sg1k_segaflipt", NULL, NULL, NULL, "1984?",
+	"sg1k_segaflipt", "sg1k_segaflip", NULL, NULL, "1984?",
 	"Flipper (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_segafliptRomInfo, sg1k_segafliptRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3437,10 +3493,10 @@ STD_ROM_PICK(sg1k_segagala1)
 STD_ROM_FN(sg1k_segagala1)
 
 struct BurnDriver BurnDrvsg1k_segagala1 = {
-	"sg1k_segagala1", NULL, NULL, NULL, "1983",
+	"sg1k_segagala1", "sg1k_segagala", NULL, NULL, "1983",
 	"Sega-Galaga (Jpn, Alt)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_segagala1RomInfo, sg1k_segagala1RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3457,10 +3513,10 @@ STD_ROM_PICK(sg1k_galaga)
 STD_ROM_FN(sg1k_galaga)
 
 struct BurnDriver BurnDrvsg1k_galaga = {
-	"sg1k_galaga", NULL, NULL, NULL, "1983?",
+	"sg1k_galaga", "sg1k_segagala", NULL, NULL, "1983?",
 	"Galaga (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_galagaRomInfo, sg1k_galagaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3517,10 +3573,10 @@ STD_ROM_PICK(sg1k_shinnyust)
 STD_ROM_FN(sg1k_shinnyust)
 
 struct BurnDriver BurnDrvsg1k_shinnyust = {
-	"sg1k_shinnyust", NULL, NULL, NULL, "19??",
+	"sg1k_shinnyust", "sg1k_shinnyus", NULL, NULL, "19??",
 	"Shinnyushain Tooru Kun (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_shinnyustRomInfo, sg1k_shinnyustRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3538,7 +3594,7 @@ STD_ROM_FN(sg1k_sxpao)
 
 struct BurnDriver BurnDrvsg1k_sxpao = {
 	"sg1k_sxpao", NULL, NULL, NULL, "1986?",
-	"Shuangxiang Pao (Tw)\0", NULL, "Jumbo", "Sega SG-1000",
+	"Twinbee (Tw)\0", NULL, "Jumbo", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_sxpaoRomInfo, sg1k_sxpaoRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
@@ -3577,10 +3633,10 @@ STD_ROM_PICK(sg1k_sindbadmt)
 STD_ROM_FN(sg1k_sindbadmt)
 
 struct BurnDriver BurnDrvsg1k_sindbadmt = {
-	"sg1k_sindbadmt", NULL, NULL, NULL, "1983?",
+	"sg1k_sindbadmt", "sg1k_sindbadm", NULL, NULL, "1983?",
 	"Sindbad Mystery (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_sindbadmtRomInfo, sg1k_sindbadmtRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3617,10 +3673,10 @@ STD_ROM_PICK(sg1k_sokobant)
 STD_ROM_FN(sg1k_sokobant)
 
 struct BurnDriver BurnDrvsg1k_sokobant = {
-	"sg1k_sokobant", NULL, NULL, NULL, "1985?",
+	"sg1k_sokobant", "sg1k_sokoban", NULL, NULL, "1985?",
 	"Soukoban (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_sokobantRomInfo, sg1k_sokobantRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3637,10 +3693,10 @@ STD_ROM_PICK(sg1k_sokobank)
 STD_ROM_FN(sg1k_sokobank)
 
 struct BurnDriver BurnDrvsg1k_sokobank = {
-	"sg1k_sokobank", NULL, NULL, NULL, "1985?",
+	"sg1k_sokobank", "sg1k_sokoban", NULL, NULL, "1985?",
 	"Soukoban (Kor)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_sokobankRomInfo, sg1k_sokobankRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3657,10 +3713,10 @@ STD_ROM_PICK(sg1k_iq)
 STD_ROM_FN(sg1k_iq)
 
 struct BurnDriver BurnDrvsg1k_iq = {
-	"sg1k_iq", NULL, NULL, NULL, "1985?",
+	"sg1k_iq", "sg1k_sokoban", NULL, NULL, "1985?",
 	"I.Q. (Kor)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_iqRomInfo, sg1k_iqRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3697,10 +3753,10 @@ STD_ROM_PICK(sg1k_spacearma)
 STD_ROM_FN(sg1k_spacearma)
 
 struct BurnDriver BurnDrvsg1k_spacearma = {
-	"sg1k_spacearma", NULL, NULL, NULL, "1984",
+	"sg1k_spacearma", "sg1k_spacearm", NULL, NULL, "1984",
 	"Space Armor (Jpn, v20, OMV, Alt)\0", NULL, "Tsukuda Original", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_spacearmaRomInfo, sg1k_spacearmaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3717,10 +3773,10 @@ STD_ROM_PICK(sg1k_spacearmb)
 STD_ROM_FN(sg1k_spacearmb)
 
 struct BurnDriver BurnDrvsg1k_spacearmb = {
-	"sg1k_spacearmb", NULL, NULL, NULL, "1984",
+	"sg1k_spacearmb", "sg1k_spacearm", NULL, NULL, "1984",
 	"Space Armor (Jpn, v10, OMV)\0", NULL, "Tsukuda Original", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_spacearmbRomInfo, sg1k_spacearmbRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3757,10 +3813,10 @@ STD_ROM_PICK(sg1k_spaceinvt)
 STD_ROM_FN(sg1k_spaceinvt)
 
 struct BurnDriver BurnDrvsg1k_spaceinvt = {
-	"sg1k_spaceinvt", NULL, NULL, NULL, "1985?",
+	"sg1k_spaceinvt", "sg1k_spaceinv", NULL, NULL, "1985?",
 	"Space Invaders (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_spaceinvtRomInfo, sg1k_spaceinvtRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3837,10 +3893,10 @@ STD_ROM_PICK(sg1k_starfrcet)
 STD_ROM_FN(sg1k_starfrcet)
 
 struct BurnDriver BurnDrvsg1k_starfrcet = {
-	"sg1k_starfrcet", NULL, NULL, NULL, "1985?",
+	"sg1k_starfrcet", "sg1k_starfrce", NULL, NULL, "1985?",
 	"Star Force (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_starfrcetRomInfo, sg1k_starfrcetRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3857,10 +3913,10 @@ STD_ROM_PICK(sg1k_starfrceta)
 STD_ROM_FN(sg1k_starfrceta)
 
 struct BurnDriver BurnDrvsg1k_starfrceta = {
-	"sg1k_starfrceta", NULL, NULL, NULL, "1985?",
+	"sg1k_starfrceta", "sg1k_starfrce", NULL, NULL, "1985?",
 	"Star Force (Tw, Alt)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_starfrcetaRomInfo, sg1k_starfrcetaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3897,10 +3953,10 @@ STD_ROM_PICK(sg1k_starjack1)
 STD_ROM_FN(sg1k_starjack1)
 
 struct BurnDriver BurnDrvsg1k_starjack1 = {
-	"sg1k_starjack1", NULL, NULL, NULL, "1983",
+	"sg1k_starjack1", "sg1k_starjack", NULL, NULL, "1983",
 	"Star Jacker (Euro, Jpn, v1.1)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_starjack1RomInfo, sg1k_starjack1RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3917,10 +3973,10 @@ STD_ROM_PICK(sg1k_starjack2)
 STD_ROM_FN(sg1k_starjack2)
 
 struct BurnDriver BurnDrvsg1k_starjack2 = {
-	"sg1k_starjack2", NULL, NULL, NULL, "1983",
+	"sg1k_starjack2", "sg1k_starjack", NULL, NULL, "1983",
 	"Star Jacker (Jpn, v1.0)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_starjack2RomInfo, sg1k_starjack2RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3937,10 +3993,10 @@ STD_ROM_PICK(sg1k_starjackt)
 STD_ROM_FN(sg1k_starjackt)
 
 struct BurnDriver BurnDrvsg1k_starjackt = {
-	"sg1k_starjackt", NULL, NULL, NULL, "1983?",
+	"sg1k_starjackt", "sg1k_starjack", NULL, NULL, "1983?",
 	"Star Jacker (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_starjacktRomInfo, sg1k_starjacktRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3977,10 +4033,10 @@ STD_ROM_PICK(sg1k_supertnkk)
 STD_ROM_FN(sg1k_supertnkk)
 
 struct BurnDriver BurnDrvsg1k_supertnkk = {
-	"sg1k_supertnkk", NULL, NULL, NULL, "1986?",
+	"sg1k_supertnkk", "sg1k_supertnk", NULL, NULL, "1986?",
 	"Super Tank (Kor)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_supertnkkRomInfo, sg1k_supertnkkRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -3997,10 +4053,10 @@ STD_ROM_PICK(sg1k_supertnkt)
 STD_ROM_FN(sg1k_supertnkt)
 
 struct BurnDriver BurnDrvsg1k_supertnkt = {
-	"sg1k_supertnkt", NULL, NULL, NULL, "1986?",
+	"sg1k_supertnkt", "sg1k_supertnk", NULL, NULL, "1986?",
 	"Chaoji Tanke (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_supertnktRomInfo, sg1k_supertnktRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4077,10 +4133,10 @@ STD_ROM_PICK(sg1k_wboya)
 STD_ROM_FN(sg1k_wboya)
 
 struct BurnDriver BurnDrvsg1k_wboya = {
-	"sg1k_wboya", NULL, NULL, NULL, "1986",
+	"sg1k_wboya", "sg1k_wboy", NULL, NULL, "1986",
 	"Wonder Boy (Jpn, v0)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_wboyaRomInfo, sg1k_wboyaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4097,10 +4153,10 @@ STD_ROM_PICK(sg1k_wboyt)
 STD_ROM_FN(sg1k_wboyt)
 
 struct BurnDriver BurnDrvsg1k_wboyt = {
-	"sg1k_wboyt", NULL, NULL, NULL, "1986?",
+	"sg1k_wboyt", "sg1k_wboy", NULL, NULL, "1986?",
 	"Taotailang (Tw)\0", NULL, "Unknown", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_wboytRomInfo, sg1k_wboytRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4137,10 +4193,10 @@ STD_ROM_PICK(sg1k_yamatoa)
 STD_ROM_FN(sg1k_yamatoa)
 
 struct BurnDriver BurnDrvsg1k_yamatoa = {
-	"sg1k_yamatoa", NULL, NULL, NULL, "1983",
+	"sg1k_yamatoa", "sg1k_yamato", NULL, NULL, "1983",
 	"Yamato (Euro, Jpn, Alt)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_yamatoaRomInfo, sg1k_yamatoaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4157,10 +4213,10 @@ STD_ROM_PICK(sg1k_yamatot)
 STD_ROM_FN(sg1k_yamatot)
 
 struct BurnDriver BurnDrvsg1k_yamatot = {
-	"sg1k_yamatot", NULL, NULL, NULL, "1983?",
+	"sg1k_yamatot", "sg1k_yamato", NULL, NULL, "1983?",
 	"Yamato (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_yamatotRomInfo, sg1k_yamatotRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4237,10 +4293,10 @@ STD_ROM_PICK(sg1k_zaxxont)
 STD_ROM_FN(sg1k_zaxxont)
 
 struct BurnDriver BurnDrvsg1k_zaxxont = {
-	"sg1k_zaxxont", NULL, NULL, NULL, "1985?",
+	"sg1k_zaxxont", "sg1k_zaxxon", NULL, NULL, "1985?",
 	"Zaxxon (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_zaxxontRomInfo, sg1k_zaxxontRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4277,10 +4333,10 @@ STD_ROM_PICK(sg1k_zippyract)
 STD_ROM_FN(sg1k_zippyract)
 
 struct BurnDriver BurnDrvsg1k_zippyract = {
-	"sg1k_zippyract", NULL, NULL, NULL, "1983?",
+	"sg1k_zippyract", "sg1k_zippyrac", NULL, NULL, "1983?",
 	"Zippy Race (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_zippyractRomInfo, sg1k_zippyractRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4317,10 +4373,10 @@ STD_ROM_PICK(sg1k_huohuli)
 STD_ROM_FN(sg1k_huohuli)
 
 struct BurnDriver BurnDrvsg1k_huohuli = {
-	"sg1k_huohuli", NULL, NULL, NULL, "1985?",
+	"sg1k_huohuli", "sg1k_zoom909", NULL, NULL, "1985?",
 	"Huo Hu Li (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_huohuliRomInfo, sg1k_huohuliRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4397,10 +4453,10 @@ STD_ROM_PICK(sg1k_basic3)
 STD_ROM_FN(sg1k_basic3)
 
 struct BurnDriver BurnDrvsg1k_basic3 = {
-	"sg1k_basic3", NULL, NULL, NULL, "1985",
+	"sg1k_basic3", "sg1k_homebas", NULL, NULL, "1985",
 	"BASIC Level III (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_basic3RomInfo, sg1k_basic3RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4417,10 +4473,10 @@ STD_ROM_PICK(sg1k_basic3e)
 STD_ROM_FN(sg1k_basic3e)
 
 struct BurnDriver BurnDrvsg1k_basic3e = {
-	"sg1k_basic3e", NULL, NULL, NULL, "1985",
+	"sg1k_basic3e", "sg1k_homebas", NULL, NULL, "1985",
 	"BASIC Level III (Export)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_basic3eRomInfo, sg1k_basic3eRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4437,10 +4493,10 @@ STD_ROM_PICK(sg1k_basic2)
 STD_ROM_FN(sg1k_basic2)
 
 struct BurnDriver BurnDrvsg1k_basic2 = {
-	"sg1k_basic2", NULL, NULL, NULL, "1985",
+	"sg1k_basic2", "sg1k_homebas", NULL, NULL, "1985",
 	"BASIC Level 2 (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_basic2RomInfo, sg1k_basic2RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4517,10 +4573,10 @@ STD_ROM_PICK(sg1k_chueis1n)
 STD_ROM_FN(sg1k_chueis1n)
 
 struct BurnDriver BurnDrvsg1k_chueis1n = {
-	"sg1k_chueis1n", NULL, NULL, NULL, "1983",
+	"sg1k_chueis1n", "sg1k_chueit1n", NULL, NULL, "1983",
 	"Chuugaku Hisshuu Eisakubun ~ Chuugaku 1-Nen (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_chueis1nRomInfo, sg1k_chueis1nRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4537,10 +4593,10 @@ STD_ROM_PICK(sg1k_chueis1na)
 STD_ROM_FN(sg1k_chueis1na)
 
 struct BurnDriver BurnDrvsg1k_chueis1na = {
-	"sg1k_chueis1na", NULL, NULL, NULL, "1983",
+	"sg1k_chueis1na", "sg1k_chueit1n", NULL, NULL, "1983",
 	"Chuugaku Hisshuu Eisakubun ~ Chuugaku 1-Nen (Jpn, Alt)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_chueis1naRomInfo, sg1k_chueis1naRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4557,10 +4613,10 @@ STD_ROM_PICK(sg1k_chueib1n)
 STD_ROM_FN(sg1k_chueib1n)
 
 struct BurnDriver BurnDrvsg1k_chueib1n = {
-	"sg1k_chueib1n", NULL, NULL, NULL, "1983",
+	"sg1k_chueib1n", "sg1k_chueit1n", NULL, NULL, "1983",
 	"Chuugaku Hisshuu Eibunpou ~ Chuugaku 1-Nen (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_chueib1nRomInfo, sg1k_chueib1nRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4577,10 +4633,10 @@ STD_ROM_PICK(sg1k_tansan4j)
 STD_ROM_FN(sg1k_tansan4j)
 
 struct BurnDriver BurnDrvsg1k_tansan4j = {
-	"sg1k_tansan4j", NULL, NULL, NULL, "1983",
+	"sg1k_tansan4j", "sg1k_tansan4g", NULL, NULL, "1983",
 	"Tanoshii Sansu ~ Shougaku 4-Nen Jou (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_tansan4jRomInfo, sg1k_tansan4jRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4597,10 +4653,10 @@ STD_ROM_PICK(sg1k_tansan4ja)
 STD_ROM_FN(sg1k_tansan4ja)
 
 struct BurnDriver BurnDrvsg1k_tansan4ja = {
-	"sg1k_tansan4ja", NULL, NULL, NULL, "1983",
+	"sg1k_tansan4ja", "sg1k_tansan4g", NULL, NULL, "1983",
 	"Tanoshii Sansu ~ Shougaku 4-Nen Jou (Jpn, Alt)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_tansan4jaRomInfo, sg1k_tansan4jaRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4677,10 +4733,10 @@ STD_ROM_PICK(sg1k_chueit2n)
 STD_ROM_FN(sg1k_chueit2n)
 
 struct BurnDriver BurnDrvsg1k_chueit2n = {
-	"sg1k_chueit2n", NULL, NULL, NULL, "1983",
+	"sg1k_chueit2n", "sg1k_chueit1n", NULL, NULL, "1983",
 	"Chuugaku Hisshuu Eitango ~ Chuugaku 2-Nen (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_chueit2nRomInfo, sg1k_chueit2nRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4697,10 +4753,10 @@ STD_ROM_PICK(sg1k_chueit2na)
 STD_ROM_FN(sg1k_chueit2na)
 
 struct BurnDriver BurnDrvsg1k_chueit2na = {
-	"sg1k_chueit2na", NULL, NULL, NULL, "1983",
+	"sg1k_chueit2na", "sg1k_chueit1n", NULL, NULL, "1983",
 	"Chuugaku Hisshuu Eitango ~ Chuugaku 2-Nen (Jpn, Alt)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_chueit2naRomInfo, sg1k_chueit2naRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4717,10 +4773,10 @@ STD_ROM_PICK(sg1k_chueis2n)
 STD_ROM_FN(sg1k_chueis2n)
 
 struct BurnDriver BurnDrvsg1k_chueis2n = {
-	"sg1k_chueis2n", NULL, NULL, NULL, "1983",
+	"sg1k_chueis2n", "sg1k_chueit1n", NULL, NULL, "1983",
 	"Chuugaku Hisshuu Eisakubun ~ Chuugaku 2-Nen (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_chueis2nRomInfo, sg1k_chueis2nRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4737,10 +4793,10 @@ STD_ROM_PICK(sg1k_chueis2na)
 STD_ROM_FN(sg1k_chueis2na)
 
 struct BurnDriver BurnDrvsg1k_chueis2na = {
-	"sg1k_chueis2na", NULL, NULL, NULL, "1983",
+	"sg1k_chueis2na", "sg1k_chueit1n", NULL, NULL, "1983",
 	"Chuugaku Hisshuu Eisakubun ~ Chuugaku 2-Nen (Jpn, Alt)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_chueis2naRomInfo, sg1k_chueis2naRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4757,10 +4813,10 @@ STD_ROM_PICK(sg1k_chueib2n)
 STD_ROM_FN(sg1k_chueib2n)
 
 struct BurnDriver BurnDrvsg1k_chueib2n = {
-	"sg1k_chueib2n", NULL, NULL, NULL, "1983",
+	"sg1k_chueib2n", "sg1k_chueit1n", NULL, NULL, "1983",
 	"Chuugaku Hisshuu Eibunpou ~ Chuugaku 2-Nen (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_chueib2nRomInfo, sg1k_chueib2nRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4797,10 +4853,10 @@ STD_ROM_PICK(sg1k_tansan5g)
 STD_ROM_FN(sg1k_tansan5g)
 
 struct BurnDriver BurnDrvsg1k_tansan5g = {
-	"sg1k_tansan5g", NULL, NULL, NULL, "1983",
+	"sg1k_tansan5g", "sg1k_tansan4g", NULL, NULL, "1983",
 	"Tanoshii Sansu ~ Shougaku 5-Nen Ge (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_tansan5gRomInfo, sg1k_tansan5gRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4817,10 +4873,10 @@ STD_ROM_PICK(sg1k_tansan6g)
 STD_ROM_FN(sg1k_tansan6g)
 
 struct BurnDriver BurnDrvsg1k_tansan6g = {
-	"sg1k_tansan6g", NULL, NULL, NULL, "1983",
+	"sg1k_tansan6g", "sg1k_tansan4g", NULL, NULL, "1983",
 	"Tanoshii Sansu ~ Shougaku 6-Nen Ge (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_tansan6gRomInfo, sg1k_tansan6gRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4837,10 +4893,10 @@ STD_ROM_PICK(sg1k_tansan5j)
 STD_ROM_FN(sg1k_tansan5j)
 
 struct BurnDriver BurnDrvsg1k_tansan5j = {
-	"sg1k_tansan5j", NULL, NULL, NULL, "1983",
+	"sg1k_tansan5j", "sg1k_tansan4g", NULL, NULL, "1983",
 	"Tanoshii Sansuu ~ Shougaku 5-Nen Jou (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_tansan5jRomInfo, sg1k_tansan5jRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4857,10 +4913,10 @@ STD_ROM_PICK(sg1k_tansan6j)
 STD_ROM_FN(sg1k_tansan6j)
 
 struct BurnDriver BurnDrvsg1k_tansan6j = {
-	"sg1k_tansan6j", NULL, NULL, NULL, "1983",
+	"sg1k_tansan6j", "sg1k_tansan4g", NULL, NULL, "1983",
 	"Tanoshii Sansuu ~ Shougaku 6-Nen Jou (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_tansan6jRomInfo, sg1k_tansan6jRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	285, 243, 4, 3
@@ -4886,43 +4942,4 @@ struct BurnDriver BurnDrvsg1k_cardctch = {
 	285, 243, 4, 3
 };
 
-
-// Champion Boxing (Jpn, MyCard)
-
-static struct BurnRomInfo sg1k_champbox1RomDesc[] = {
-	{ "champion boxing (japan) (mycard).bin",	0x08000, 0xf8b2ac1d, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(sg1k_champbox1)
-STD_ROM_FN(sg1k_champbox1)
-
-struct BurnDriver BurnDrvsg1k_champbox1 = {
-	"sg1k_champbox1", NULL, NULL, NULL, "1984",
-	"Champion Boxing (Jpn, MyCard)\0", NULL, "Sega", "Sega SG-1000",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
-	SG1KGetZipName, sg1k_champbox1RomInfo, sg1k_champbox1RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
-};
-
-
-// Champion Golf (Jpn, MyCard)
-
-static struct BurnRomInfo sg1k_champglf1RomDesc[] = {
-	{ "champion golf [card].bin",	0x08000, 0x5a904122, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(sg1k_champglf1)
-STD_ROM_FN(sg1k_champglf1)
-
-struct BurnDriver BurnDrvsg1k_champglf1 = {
-	"sg1k_champglf1", NULL, NULL, NULL, "1983",
-	"Champion Golf (Jpn, MyCard)\0", NULL, "Sega", "Sega SG-1000",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
-	SG1KGetZipName, sg1k_champglf1RomInfo, sg1k_champglf1RomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
-};
 

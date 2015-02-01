@@ -598,9 +598,9 @@ static struct BurnRomInfo rockrageRomDesc[] = {
 	{ "620k11.rom",		0x20000, 0x70449239, 4 | BRF_GRA },           //  5 Sprites
 	{ "620l10.8g",		0x20000, 0x06d108e0, 4 | BRF_GRA },           //  6
 
-	{ "620k09.11g",		0x00100, 0x9f0e0608, 5 | BRF_GRA },           //  7 Color Lookup Tables
+	{ "620k07.13g",		0x00100, 0xb6135ee0, 5 | BRF_GRA },           //  7 Color Lookup Tables
 	{ "620k08.12g",		0x00100, 0xb499800c, 5 | BRF_GRA },           //  8
-	{ "620k07.13g",		0x00100, 0xb6135ee0, 5 | BRF_GRA },           //  9
+	{ "620k09.11g",		0x00100, 0x9f0e0608, 5 | BRF_GRA },           //  9
 
 	{ "620k04.6e",		0x08000, 0x8be969f3, 6 | BRF_GRA },           // 10 VLM5030 Samples
 };
@@ -637,9 +637,9 @@ static struct BurnRomInfo rockrageaRomDesc[] = {
 	{ "620d10a.8g",		0x10000, 0x4789ae7b, 4 | BRF_GRA },           //  9
 	{ "620g10b.8f",		0x10000, 0x1618854a, 4 | BRF_GRA },           // 10
 
-	{ "620k09.11g",		0x00100, 0x9f0e0608, 5 | BRF_GRA },           // 11 Color Lookup Tables
+	{ "620k07.13g",		0x00100, 0xb6135ee0, 5 | BRF_GRA },           // 11 Color Lookup Tables
 	{ "620k08.12g",		0x00100, 0xb499800c, 5 | BRF_GRA },           // 12
-	{ "620k07.13g",		0x00100, 0xb6135ee0, 5 | BRF_GRA },           // 13
+	{ "620k09.11g",		0x00100, 0x9f0e0608, 5 | BRF_GRA },           // 13
 
 	{ "620k04.6e",		0x08000, 0x8be969f3, 6 | BRF_GRA },           // 14 VLM5030 Samples
 };
@@ -672,9 +672,9 @@ static struct BurnRomInfo rockragejRomDesc[] = {
 	{ "620k11.7g",		0x20000, 0x7430f6e9, 4 | BRF_GRA },           //  5 Sprites
 	{ "620k10.8g",		0x20000, 0x0d1a95ab, 4 | BRF_GRA },           //  6
 
-	{ "620k09.11g",		0x00100, 0x9f0e0608, 5 | BRF_GRA },           //  7 Color Lookup Tables
+	{ "620k07.13g",		0x00100, 0xb6135ee0, 5 | BRF_GRA },           //  7 Color Lookup Tables
 	{ "620k08.12g",		0x00100, 0xb499800c, 5 | BRF_GRA },           //  8
-	{ "620k07.13g",		0x00100, 0xb6135ee0, 5 | BRF_GRA },           //  9
+	{ "620k09.11g",		0x00100, 0x9f0e0608, 5 | BRF_GRA },           //  9
 
 	{ "620k04.6e",		0x08000, 0x8be969f3, 6 | BRF_GRA },           // 10 VLM5030 Samples
 };

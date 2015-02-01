@@ -2172,15 +2172,42 @@ static void Gx400SoundInit(INT32 rf2mode)
 	ZetClose();
 
 	K005289Init(3579545, K005289ROM);
-	K005289SetRoute(BURN_SND_K005289_ROUTE_1, 0.60, BURN_SND_ROUTE_BOTH);
+	K005289SetRoute(BURN_SND_K005289_ROUTE_1, (rf2mode) ? 0.60 : 0.35, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 14318180/8, nBurnSoundRate, &nemesis_AY8910_0_portA, NULL, NULL, NULL);
 	AY8910Init(1, 14318180/8, nBurnSoundRate, NULL, NULL, &k005289_control_A_write, &k005289_control_B_write);
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, (rf2mode) ? 0.20 : 1.00, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, (rf2mode) ? 0.80 : 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, (rf2mode) ? 0.40 : 1.00, BURN_SND_ROUTE_BOTH);
 
 	vlm5030Init(0,  3579545, salamand_vlm_sync, DrvVLMROM, 0x0800, 1);
 	vlm5030SetAllRoutes(0, 0.70, BURN_SND_ROUTE_BOTH);
+
+	ay8910_enable = 1;
+	k005289_enable = 1;
+	vlm5030_enable = 1;
+}
+
+static void TwinbeeGx400SoundInit()
+{
+	ZetInit(0);
+	ZetOpen(0);
+	ZetMapMemory(DrvZ80ROM,			0x0000, 0x1fff, ZET_ROM);
+	ZetMapMemory(DrvShareRAM,		0x4000, 0x7fff, ZET_RAM);
+	ZetMapMemory(DrvVLMROM,			0x8000, 0x87ff, ZET_RAM);
+	ZetSetWriteHandler(nemesis_sound_write);
+	ZetSetReadHandler(nemesis_sound_read);
+	ZetClose();
+
+	K005289Init(3579545, K005289ROM);
+	K005289SetRoute(BURN_SND_K005289_ROUTE_1, 0.20, BURN_SND_ROUTE_BOTH);
+
+	AY8910Init(0, 14318180/8, nBurnSoundRate, &nemesis_AY8910_0_portA, NULL, NULL, NULL);
+	AY8910Init(1, 14318180/8, nBurnSoundRate, NULL, NULL, &k005289_control_A_write, &k005289_control_B_write);
+	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH); // melody & hat
+	AY8910SetAllRoutes(1, 1.00, BURN_SND_ROUTE_BOTH); // drums, explosions
+
+	vlm5030Init(0,  3579545, salamand_vlm_sync, DrvVLMROM, 0x0800, 1);
+	vlm5030SetAllRoutes(0, 3.10, BURN_SND_ROUTE_BOTH);
 
 	ay8910_enable = 1;
 	k005289_enable = 1;
@@ -2601,8 +2628,11 @@ static INT32 Gx400Init()
 	SekSetWriteWordHandler(2, 		nemesis_palette_write_word);
 	SekSetWriteByteHandler(2, 		nemesis_palette_write_byte);
 	SekClose();
-
-	Gx400SoundInit(0);
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "twin")) {
+		TwinbeeGx400SoundInit();
+	} else {
+		Gx400SoundInit((strstr(BurnDrvGetTextA(DRV_NAME), "gwarr")) ? 1 : 0);
+	}
 
 	palette_write = nemesis_palette_update;
 

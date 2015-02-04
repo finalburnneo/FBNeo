@@ -40,6 +40,8 @@ static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[3];
 
+static INT32 puzzlove = 0;
+
 static struct BurnInputInfo SilvmilInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 8,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
@@ -102,6 +104,43 @@ static struct BurnDIPInfo SilvmilDIPList[]=
 };
 
 STDDIPINFO(Silvmil)
+
+
+static struct BurnDIPInfo PuzzloveDIPList[]=
+{
+	{0x13, 0xff, 0xff, 0xff, NULL			},
+	{0x14, 0xff, 0xff, 0xff, NULL			},
+
+	{0   , 0xfe, 0   ,    4, "Game Level"		},
+	{0x14, 0x01, 0x03, 0x03, "1"			},
+	{0x14, 0x01, 0x03, 0x02, "2"			},
+	{0x14, 0x01, 0x03, 0x01, "3"			},
+	{0x14, 0x01, 0x03, 0x00, "4"			},
+
+	{0   , 0xfe, 0   ,    8, "Coinage"		},
+	{0x14, 0x01, 0x1c, 0x10, "4 Coins 1 Credits"	},
+	{0x14, 0x01, 0x1c, 0x14, "3 Coins 1 Credits"	},
+	{0x14, 0x01, 0x1c, 0x00, "4 Coins 2 Credits"	},
+	{0x14, 0x01, 0x1c, 0x18, "2 Coins 1 Credits"	},
+	{0x14, 0x01, 0x1c, 0x04, "3 Coins 2 Credits"	},
+	{0x14, 0x01, 0x1c, 0x08, "2 Coins 2 Credits"	},
+	{0x14, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"	},
+	{0x14, 0x01, 0x1c, 0x0c, "1 Coin  2 Credits"	},
+
+	{0   , 0xfe, 0   ,    2, "Coin Box"		},
+	{0x14, 0x01, 0x20, 0x20, "1"			},
+	{0x14, 0x01, 0x20, 0x00, "2"			},
+
+	{0   , 0xfe, 0   ,    2, "Lives"		},
+	{0x14, 0x01, 0x40, 0x00, "2"			},
+	{0x14, 0x01, 0x40, 0x40, "3"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x14, 0x01, 0x80, 0x80, "Off"			},
+	{0x14, 0x01, 0x80, 0x00, "On"			},
+};
+
+STDDIPINFO(Puzzlove)
 
 static inline void DrvPaletteUpdate(INT32 offset)
 {
@@ -275,7 +314,7 @@ static INT32 MemIndex()
 	MSM6295ROM	= Next;
 	DrvSndROM	= Next; Next += 0x040000;
 
-	DrvPalette	= (UINT32*)Next; Next += 0x0300 * sizeof(UINT32);
+	DrvPalette	= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
 
 	AllRam		= Next;
 
@@ -324,7 +363,7 @@ static INT32 DrvGfxDecode(UINT8 *gfx, INT32 gfxlen)
 	return 0;
 }
 
-static INT32 DrvInit()
+static INT32 DrvInit(INT32 game_select)
 {
 	AllMem = NULL;
 	MemIndex();
@@ -333,6 +372,35 @@ static INT32 DrvInit()
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
+	puzzlove = game_select; // 1 puzzlove, 0 silmil
+
+	if (puzzlove)
+	{
+		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
+
+		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  2, 1)) return 1;
+
+		if (BurnLoadRom(DrvSndROM  + 0x000000,  3, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  4, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x000001,  5, 2)) return 1;
+
+		for (INT32 i = 0; i < 0x400000; i++) {
+			DrvGfxROM0[((i & 0x03ffff) ^ 0x20) | ((~i & 0x040000) << 3) | ((i & 0x380000) >> 1)] = DrvGfxROM1[i&0xfffff];
+		}
+
+		memset (DrvGfxROM1, 0, 0x200000);
+
+		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  6, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x000001,  7, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x100000,  8, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x100001,  9, 2)) return 1;
+
+		DrvGfxDecode(DrvGfxROM0, 0x400000);
+		DrvGfxDecode(DrvGfxROM1, 0x200000);
+	}
+	else
 	{
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
 		if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
@@ -368,7 +436,7 @@ static INT32 DrvInit()
 	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, SM_ROM);
 	SekMapMemory(DrvFgRAM,		0x120000, 0x120fff, SM_RAM);
 	SekMapMemory(DrvBgRAM,		0x122000, 0x122fff, SM_RAM);
-	SekMapMemory(DrvPalRAM,		0x200000, 0x2005ff, SM_ROM);
+	SekMapMemory(DrvPalRAM,		0x200000, 0x2007ff, SM_ROM);
 	SekMapMemory(DrvSprRAM,		0x210000, 0x2107ff, SM_RAM);
 	SekMapMemory(Drv68KRAM,		0x300000, 0x30ffff, SM_RAM);
 	SekSetWriteByteHandler(0,	silvmil_write_byte);
@@ -376,7 +444,7 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(0,	silvmil_read_byte);
 	SekSetReadWordHandler(0,	silvmil_read_word);
 
-	SekMapHandler(1,		0x200000, 0x2005ff, SM_WRITE);
+	SekMapHandler(1,		0x200000, 0x2007ff, SM_WRITE);
 	SekSetWriteByteHandler(1,	silvmil_palette_write_byte);
 	SekSetWriteWordHandler(1,	silvmil_palette_write_word);
 	SekClose();
@@ -462,14 +530,23 @@ static void draw_sprites()
 		if (!sprite) continue;
 
 		INT32 y = BURN_ENDIAN_SWAP_INT16(ram[offs]);
-		if ((y & 0x1000) && (GetCurrentFrame() & 1)) continue; // flash
+		INT32 flash = (y & ((puzzlove) ? 0x0400 : 0x1000));
+		if (flash && (GetCurrentFrame() & 1)) continue;
 
 		INT32 x = BURN_ENDIAN_SWAP_INT16(ram[offs + 2]);
-		INT32 color = (x >>9) & 0xf;
+		INT32 color = ((x >> 9) & 0x7f) | ((y & 0x8000) >> 8);
 
 		INT32 fx = y & 0x2000;
 		INT32 fy = y & 0x4000;
-		INT32 multi = (1 << ((y & 0x0600) >> 9)) - 1;
+		INT32 multi;
+
+		if (puzzlove) {
+			multi = ((y & 0x1000) >> 12) | ((y & 0x0200) >> 8);
+		} else {
+			multi = ((y & 0x0600) >>  9);
+		}
+
+		multi = (1 << multi) - 1;
 
 		x &= 0x01ff;
 		y &= 0x01ff;
@@ -490,15 +567,15 @@ static void draw_sprites()
 		{
 			if (fy) {
 				if (fx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, sprite - multi * inc, x, y - 16 * multi, color, 4, 0, 0, DrvGfxROM1);
+					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, sprite - multi * inc, x, y - 16 * multi, color & 0x3f, 4, 0, 0, DrvGfxROM1);
 				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, sprite - multi * inc, x, y - 16 * multi, color, 4, 0, 0, DrvGfxROM1);
+					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, sprite - multi * inc, x, y - 16 * multi, color & 0x3f, 4, 0, 0, DrvGfxROM1);
 				}
 			} else {
 				if (fx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, sprite - multi * inc, x, y - 16 * multi, color, 4, 0, 0, DrvGfxROM1);
+					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, sprite - multi * inc, x, y - 16 * multi, color & 0x3f, 4, 0, 0, DrvGfxROM1);
 				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, sprite - multi * inc, x, y - 16 * multi, color, 4, 0, 0, DrvGfxROM1);
+					Render16x16Tile_Mask_Clip(pTransDraw, sprite - multi * inc, x, y - 16 * multi, color & 0x3f, 4, 0, 0, DrvGfxROM1);
 				}
 			}
 
@@ -630,11 +707,48 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		BurnYM2151Scan(nAction);
 		MSM6295Scan(0, nAction);
-		DrvRecalc = 1;
 	}
 
 	return 0;
 }
+
+
+// PuzzLove
+
+static struct BurnRomInfo puzzloveRomDesc[] = {
+	{ "3.u3",		0x40000, 0x826c8472, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "4.u2",		0x40000, 0x64ddc708, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "1.uz02",		0x20000, 0x3077e7f3, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "2.uz11",		0x40000, 0x4c06ec68, 3 | BRF_SND },           //  3 MSM6295 Samples
+
+	{ "10.u41",		0x80000, 0x7200f878, 4 | BRF_GRA },           //  4 Background Tiles
+	{ "9.u42",		0x80000, 0x21b1b297, 4 | BRF_GRA },           //  5
+
+	{ "5.u53",		0x80000, 0x8707d5a0, 5 | BRF_GRA },           //  6 Sprites
+	{ "6.u54",		0x80000, 0x60a6d614, 5 | BRF_GRA },           //  7
+	{ "7.u55",		0x80000, 0x0f2ea5c4, 5 | BRF_GRA },           //  8
+	{ "8.u56",		0x80000, 0x037dcd3d, 5 | BRF_GRA },           //  9
+};
+
+STD_ROM_PICK(puzzlove)
+STD_ROM_FN(puzzlove)
+
+static INT32 puzzloveInit()
+{
+	return DrvInit(1);
+}
+
+struct BurnDriver BurnDrvPuzzlove = {
+	"puzzlove", NULL, NULL, NULL, "1994",
+	"PuzzLove\0", NULL, "Para", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, puzzloveRomInfo, puzzloveRomName, NULL, NULL, SilvmilInputInfo, PuzzloveDIPInfo,
+	puzzloveInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	320, 240, 4, 3
+};
 
 
 // Silver Millennium
@@ -665,12 +779,19 @@ static struct BurnRomInfo silvmilRomDesc[] = {
 STD_ROM_PICK(silvmil)
 STD_ROM_FN(silvmil)
 
+static INT32 silmilInit()
+{
+	return DrvInit(0);
+}
+
 struct BurnDriver BurnDrvSilvmil = {
 	"silvmil", NULL, NULL, NULL, "1995",
 	"Silver Millennium\0", NULL, "Para", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, silvmilRomInfo, silvmilRomName, NULL, NULL, SilvmilInputInfo, SilvmilDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	silmilInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	240, 320, 3, 4
 };
+
+

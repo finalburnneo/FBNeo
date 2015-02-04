@@ -6660,15 +6660,15 @@ static struct BurnRomInfo KodhRomDesc[] = {
 	{ "2.096",         0x080000, 0xbc121ff2, BRF_GRA | CPS1_TILES },
 	{ "3.096",         0x080000, 0xf463ae22, BRF_GRA | CPS1_TILES },
 	{ "4.096",         0x080000, 0x01308733, BRF_GRA | CPS1_TILES },
-	{ "kod11.rom",     0x080000, 0x113358f3, BRF_GRA | CPS1_TILES },
-	{ "kod13.rom",     0x080000, 0x38853c44, BRF_GRA | CPS1_TILES },
+	{ "5.096",     	   0x080000, 0x113358f3, BRF_GRA | CPS1_TILES },
+	{ "6.096",         0x080000, 0x38853c44, BRF_GRA | CPS1_TILES },
 	{ "7.096",         0x080000, 0xc7ab4704, BRF_GRA | CPS1_TILES },
-	{ "kod12.rom",     0x080000, 0x402b9b4f, BRF_GRA | CPS1_TILES },
+	{ "8.096",     	   0x080000, 0x402b9b4f, BRF_GRA | CPS1_TILES },
 
-	{ "kd09.bin",      0x010000, 0xbac6ec26, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "9.096",         0x010000, 0xf5514510, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "kd18.bin",      0x020000, 0x4c63181d, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "kd19.bin",      0x020000, 0x92941b80, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "18.096",        0x020000, 0x69ecb2c8, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "19.096",        0x020000, 0x02d851c1, BRF_SND | CPS1_OKIM6295_SAMPLES },
 };
 
 STD_ROM_PICK(Kodh)

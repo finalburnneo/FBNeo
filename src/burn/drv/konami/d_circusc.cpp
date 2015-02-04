@@ -535,9 +535,10 @@ static INT32 DrvFrame()
 		if ((DrvInputs[2] & 0x03) == 0) DrvInputs[2] |= 0x03;
 	}
 
-	INT32 nInterleave = 10;
-	INT32 nCyclesTotal[2] = { 2048000 / 60, 1789772 / 60 };
+	INT32 nInterleave = 32;
+	INT32 nCyclesTotal[2] = { 2048000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	M6809Open(0);
 	ZetOpen(0);
@@ -547,14 +548,29 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
 
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+
+		// Render Sound Segment
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			SN76496Update(0, pSoundBuf, nSegmentLength);
+			SN76496Update(1, pSoundBuf, nSegmentLength);
+			DACUpdate(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	if (irqmask) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
 
+	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
-		SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
-		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			SN76496Update(0, pSoundBuf, nSegmentLength);
+			SN76496Update(1, pSoundBuf, nSegmentLength);
+			DACUpdate(pSoundBuf, nSegmentLength);
+		}
 	}
 
 	ZetClose();

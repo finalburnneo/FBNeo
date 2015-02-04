@@ -1481,7 +1481,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	if (nAction & ACB_MEMORY_RAM) {	
 		ba.Data		= AllRam;
 		ba.nLen		= RamEnd - AllRam;
-		ba.nAddress 	= 0x000000;
+		ba.nAddress	= 0x000000;
 		ba.szName	= "All RAM";
 		BurnAcb(&ba);
 	}
@@ -1500,7 +1500,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		UPD7759Scan(0, nAction, pnMin);
 		BurnYM2151Scan(nAction);
-	//	K007232Scan(nAction, pnMin); // crash...
+		K007232Scan(nAction, pnMin);
 
 		SCAN_VAR(gfx_bank);
 		SCAN_VAR(video_register);

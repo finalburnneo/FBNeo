@@ -2759,9 +2759,28 @@ static INT32 dkongjrRomLoad()
 	return 0;
 }
 
+static void dkongjrsamplevol(INT32 sam, double vol)
+{
+	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_1, vol, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetRoute(sam, BURN_SND_SAMPLE_ROUTE_2, vol, BURN_SND_ROUTE_BOTH);
+}
+
 static INT32 dkongjrInit()
 {
-	return DrvInit(dkongjrRomLoad, dkongPaletteInit, 0);
+	INT32 rc = DrvInit(dkongjrRomLoad, dkongPaletteInit, 0);
+	if (!rc) {
+		dkongjrsamplevol(1, 0.35); // land
+		dkongjrsamplevol(2, 0.35); // roar
+		dkongjrsamplevol(3, 0.25); // climb
+		dkongjrsamplevol(4, 0.25);
+		dkongjrsamplevol(5, 0.25);
+		dkongjrsamplevol(6, 0.25); // death
+		dkongjrsamplevol(7, 0.35); // fall
+		dkongjrsamplevol(8, 0.20); // walk
+		dkongjrsamplevol(9, 0.20);
+		dkongjrsamplevol(10, 0.20);
+	}
+	return rc;
 }
 
 struct BurnDriver BurnDrvDkongjr = {

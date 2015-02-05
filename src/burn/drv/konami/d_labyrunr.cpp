@@ -363,6 +363,7 @@ static void DrvGfxExpand(UINT8 *src, INT32 len)
 
 static void DrvExpandLookupTable()
 {
+	// Calculate color lookup tables
 	for (INT32 pal = 0; pal < 8; pal+=2)
 	{
 		for (INT32 i = 0; i < 0x100; i++)
@@ -370,6 +371,11 @@ static void DrvExpandLookupTable()
 			DrvLookUpTable[((pal+1) << 8) | i] = ((pal+1) << 4) | (i & 0xf);
 			DrvLookUpTable[((pal+0) << 8) | i] = ((DrvLutPROM[i] == 0) ? 0 : ((pal << 4) | (DrvLutPROM[i] & 0x0f)));
 		}
+	}
+
+	// Calculate sprite transparency lookups
+	for (INT32 i = 0; i < 0x800; i++) {
+		DrvSprTranspLut[i] = DrvLookUpTable[i] & 0xf;
 	}
 }
 
@@ -672,11 +678,6 @@ static void DrvPaletteInit()
 
 	for (INT32 i = 0; i < 0x800; i++) {
 		DrvPalette[i] = pens[DrvLookUpTable[i]];
-
-		if (DrvPalette[i])
-			DrvSprTranspLut[i] = 1; 
-		else
-			DrvSprTranspLut[i] = 0;
 	}
 
 	DrvPalette[0x800] = BurnHighCol(0,0,0,0); // black

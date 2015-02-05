@@ -1460,7 +1460,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Side Arms - Hyper Dyne (World)
+// Side Arms - Hyper Dyne (World, 861129)
 
 static struct BurnRomInfo sidearmsRomDesc[] = {
 	{ "sa03.bin",		0x8000, 0xe10fe6a0, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU
@@ -1504,7 +1504,7 @@ STD_ROM_FN(sidearms)
 
 struct BurnDriver BurnDrvSidearms = {
 	"sidearms", NULL, NULL, NULL, "1986",
-	"Side Arms - Hyper Dyne (World)\0", NULL, "Capcom", "Miscellaneous",
+	"Side Arms - Hyper Dyne (World, 861129)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, sidearmsRomInfo, sidearmsRomName, NULL, NULL, SidearmsInputInfo, SidearmsDIPInfo,
@@ -1513,10 +1513,10 @@ struct BurnDriver BurnDrvSidearms = {
 };
 
 
-// Side Arms - Hyper Dyne (US)
+// Side Arms - Hyper Dyne (US, 861202)
 
-static struct BurnRomInfo sidearmsrRomDesc[] = {
-	{ "03",			0x8000, 0x9a799c45, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU
+static struct BurnRomInfo sidearmsuRomDesc[] = {
+	{ "SAA_03.15E",		0x8000, 0x32ef2739, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU
 	{ "a_14e.rom",		0x8000, 0x4925ed03, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "a_12e.rom",		0x8000, 0x81d0ece7, 1 | BRF_PRG | BRF_ESS }, //  2
 
@@ -1552,21 +1552,74 @@ static struct BurnRomInfo sidearmsrRomDesc[] = {
 	{ "63s081.3j",		0x0020, 0xc5817816, 8 | BRF_OPT },           // 26
 };
 
-STD_ROM_PICK(sidearmsr)
-STD_ROM_FN(sidearmsr)
+STD_ROM_PICK(sidearmsu)
+STD_ROM_FN(sidearmsu)
 
-struct BurnDriver BurnDrvSidearmsr = {
-	"sidearmsr", "sidearms", NULL, NULL, "1986",
-	"Side Arms - Hyper Dyne (US)\0", NULL, "Capcom (Romstar license)", "Miscellaneous",
+struct BurnDriver BurnDrvSidearmsu = {
+	"sidearmsu", "sidearms", NULL, NULL, "1986",
+	"Side Arms - Hyper Dyne (US, 861202)\0", NULL, "Capcom (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
-	NULL, sidearmsrRomInfo, sidearmsrRomName, NULL, NULL, SidearmsInputInfo, SidearmsDIPInfo,
+	NULL, sidearmsuRomInfo, sidearmsuRomName, NULL, NULL, SidearmsInputInfo, SidearmsDIPInfo,
 	SidearmsInit, DrvExit, DrvFrame, SidearmsDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
 
 
-// Side Arms - Hyper Dyne (Japan)
+// Side Arms - Hyper Dyne (US, 861128)
+
+static struct BurnRomInfo sidearmsur1RomDesc[] = {
+	{ "03",				0x8000, 0x9a799c45, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU
+	{ "a_14e.rom",		0x8000, 0x4925ed03, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a_12e.rom",		0x8000, 0x81d0ece7, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "a_04k.rom",		0x8000, 0x34efe2d2, 2 | BRF_PRG | BRF_ESS }, //  3 Sound CPU
+
+	{ "b_11j.rom",		0x8000, 0x134dc35b, 7 | BRF_GRA },           //  4 Starfield Data
+
+	{ "a_10j.rom",		0x4000, 0x651fef75, 3 | BRF_GRA },           //  5 Characters
+
+	{ "b_13d.rom",		0x8000, 0x3c59afe1, 4 | BRF_GRA },           //  6 Tiles
+	{ "b_13e.rom",		0x8000, 0x64bc3b77, 4 | BRF_GRA },           //  7
+	{ "b_13f.rom",		0x8000, 0xe6bcea6f, 4 | BRF_GRA },           //  8
+	{ "b_13g.rom",		0x8000, 0xc71a3053, 4 | BRF_GRA },           //  9
+	{ "b_14d.rom",		0x8000, 0x826e8a97, 4 | BRF_GRA },           // 10
+	{ "b_14e.rom",		0x8000, 0x6cfc02a4, 4 | BRF_GRA },           // 11
+	{ "b_14f.rom",		0x8000, 0x9b9f6730, 4 | BRF_GRA },           // 12
+	{ "b_14g.rom",		0x8000, 0xef6af630, 4 | BRF_GRA },           // 13
+
+	{ "b_11b.rom",		0x8000, 0xeb6f278c, 5 | BRF_GRA },           // 14 Sprites
+	{ "b_13b.rom",		0x8000, 0xe91b4014, 5 | BRF_GRA },           // 15
+	{ "b_11a.rom",		0x8000, 0x2822c522, 5 | BRF_GRA },           // 16
+	{ "b_13a.rom",		0x8000, 0x3e8a9f75, 5 | BRF_GRA },           // 17
+	{ "b_12b.rom",		0x8000, 0x86e43eda, 5 | BRF_GRA },           // 18
+	{ "b_14b.rom",		0x8000, 0x076e92d1, 5 | BRF_GRA },           // 19
+	{ "b_12a.rom",		0x8000, 0xce107f3c, 5 | BRF_GRA },           // 20
+	{ "b_14a.rom",		0x8000, 0xdba06076, 5 | BRF_GRA },           // 21
+
+	{ "b_03d.rom",		0x8000, 0x6f348008, 6 | BRF_GRA },           // 22 Tilemap
+
+	{ "63s141.16h",		0x0100, 0x75af3553, 8 | BRF_OPT },           // 23 Proms
+	{ "63s141.11h",		0x0100, 0xa6e4d68f, 8 | BRF_OPT },           // 24
+	{ "63s141.15h",		0x0100, 0xc47c182a, 8 | BRF_OPT },           // 25
+	{ "63s081.3j",		0x0020, 0xc5817816, 8 | BRF_OPT },           // 26
+};
+
+STD_ROM_PICK(sidearmsur1)
+STD_ROM_FN(sidearmsur1)
+
+struct BurnDriver BurnDrvSidearmsur1 = {
+	"sidearmsur1", "sidearms", NULL, NULL, "1986",
+	"Side Arms - Hyper Dyne (US, 861128)\0", NULL, "Capcom (Romstar license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, sidearmsur1RomInfo, sidearmsur1RomName, NULL, NULL, SidearmsInputInfo, SidearmsDIPInfo,
+	SidearmsInit, DrvExit, DrvFrame, SidearmsDraw, DrvScan, &DrvRecalc, 0x800,
+	384, 224, 4, 3
+};
+
+
+// Side Arms - Hyper Dyne (Japan, 861128)
 
 static struct BurnRomInfo sidearmsjRomDesc[] = {
 	{ "a_15e.rom",		0x8000, 0x61ceb0cc, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU
@@ -1610,7 +1663,7 @@ STD_ROM_FN(sidearmsj)
 
 struct BurnDriver BurnDrvSidearmsj = {
 	"sidearmsj", "sidearms", NULL, NULL, "1986",
-	"Side Arms - Hyper Dyne (Japan)\0", NULL, "Capcom", "Miscellaneous",
+	"Side Arms - Hyper Dyne (Japan, 861128)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, sidearmsjRomInfo, sidearmsjRomName, NULL, NULL, SidearmsInputInfo, SidearmsDIPInfo,

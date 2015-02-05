@@ -2023,7 +2023,7 @@ static struct BurnRomInfo AltbeastRomDesc[] = {
 	{ "opr-11672.a11",  0x20000, 0xbbd7f460, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0078.mcu",   0x01000, 0x00000000, BRF_NODUMP },
+	{ "317-0078.c2",    0x01000, 0x00000000, BRF_NODUMP },
 };
 
 
@@ -2061,7 +2061,7 @@ static struct BurnRomInfo AltbeastjRomDesc[] = {
 	{ "opr-11672.a11",  0x20000, 0xbbd7f460, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0077.mcu",   0x01000, 0x00000000, BRF_NODUMP },
+	{ "317-0077.c2",    0x01000, 0x00000000, BRF_NODUMP },
 };
 
 
@@ -2273,7 +2273,7 @@ static struct BurnRomInfo Altbeast6RomDesc[] = {
 	{ "opr-11672.a11",  0x20000, 0xbbd7f460, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0076.mcu",   0x01000, 0x00000000, BRF_NODUMP },
+	{ "317-0076.c2",    0x01000, 0x00000000, BRF_NODUMP },
 };
 
 
@@ -2788,7 +2788,7 @@ static struct BurnRomInfo Ddux1RomDesc[] = {
 
 	{ "epr-11916.a10",  0x08000, 0x7ab541cf, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
-	{ "317-0095.bin",   0x01000, 0x00000000, BRF_NODUMP },
+	{ "317-0095.c2",    0x01000, 0x00000000, BRF_NODUMP }, // Intel i8751 protection MCU
 };
 
 
@@ -3058,30 +3058,30 @@ STD_ROM_PICK(Eswatbl)
 STD_ROM_FN(Eswatbl)
 
 static struct BurnRomInfo ExctleagRomDesc[] = {
-	{ "epr-11939.a04",   0x10000, 0x117dd98f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-11936.a01",   0x10000, 0x0863de60, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-11940.a05",   0x10000, 0xdec83274, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-11937.a02",   0x10000, 0x4ebda367, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-11941.a06",   0x10000, 0x4df2d451, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-11938.a03",   0x10000, 0x07c08d47, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11939.a4",    0x10000, 0x117dd98f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11936.a1",    0x10000, 0x0863de60, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11940.a5",    0x10000, 0xdec83274, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11937.a2",    0x10000, 0x4ebda367, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11941.a6",    0x10000, 0x4df2d451, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11938.a3",    0x10000, 0x07c08d47, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
 	{ "epr-11942.b09",   0x10000, 0xeb70e827, SYS16_ROM_TILES | BRF_GRA },
 	{ "epr-11943.b10",   0x10000, 0xd97c8982, SYS16_ROM_TILES | BRF_GRA },
 	{ "epr-11944.b11",   0x10000, 0xa75cae80, SYS16_ROM_TILES | BRF_GRA },
 	
-	{ "epr-11950.b01",   0x10000, 0xaf497849, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-11954.b05",   0x10000, 0x5fa2106c, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-11951.b02",   0x10000, 0xc04fa974, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-11955.b06",   0x10000, 0x86a0c368, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-11952.b03",   0x10000, 0xe64a9761, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-11956.b07",   0x10000, 0xaff5c2fa, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-11953.b04",   0x10000, 0x4cae3999, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-11957.b08",   0x10000, 0x218f835b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11950.b1",    0x10000, 0xaf497849, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11954.b5",    0x10000, 0x5fa2106c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11951.b2",    0x10000, 0xc04fa974, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11955.b6",    0x10000, 0x86a0c368, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11952.b3",    0x10000, 0xe64a9761, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11956.b7",    0x10000, 0xaff5c2fa, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11953.b4",    0x10000, 0x4cae3999, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11957.b8",    0x10000, 0x218f835b, SYS16_ROM_SPRITES | BRF_GRA },
 
-	{ "epr-11945.a07",   0x08000, 0xc2a83012, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11945.a7",    0x08000, 0xc2a83012, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
-	{ "epr-11140.a08",   0x08000, 0xb297371b, SYS16_ROM_UPD7759DATA | BRF_SND },
-	{ "epr-11141.a09",   0x08000, 0x19756aa6, SYS16_ROM_UPD7759DATA | BRF_SND },
+	{ "epr-11140.a8",    0x08000, 0xb297371b, SYS16_ROM_UPD7759DATA | BRF_SND },
+	{ "epr-11141.a9",    0x08000, 0x19756aa6, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "epr-11142.a10",   0x08000, 0x25d26c66, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "epr-11143.a11",   0x08000, 0x848b7b77, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
@@ -3304,7 +3304,7 @@ static struct BurnRomInfo GoldnaxeRomDesc[] = {
 	
 	{ "mpr-12384.ic6",  0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0123a.bin",  0x01000, 0x00000000, BRF_NODUMP },
+	{ "317-0123a.c2",   0x01000, 0x00000000, BRF_NODUMP }, // Intel i8751 protection MCU
 };
 
 
@@ -3358,7 +3358,7 @@ static struct BurnRomInfo Goldnaxe2RomDesc[] = {
 	
 	{ "mpr-12384.a11",  0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0112.bin",   0x01000, 0x00000000, BRF_NODUMP },
+	{ "317-0112.c2",    0x01000, 0x00000000, BRF_NODUMP }, // Intel i8751 protection MCU
 };
 
 
@@ -4044,30 +4044,30 @@ STD_ROM_PICK(Sonicbom)
 STD_ROM_FN(Sonicbom)
 
 static struct BurnRomInfo SuprleagRomDesc[] = {
-	{ "epr-11133.a04",   0x10000, 0xeed72f37, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-11130.a01",   0x10000, 0xe2451676, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-11134.a05",   0x10000, 0xccd857f5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-11131.a02",   0x10000, 0x9b78c2cc, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-11135.a06",   0x10000, 0x3735e0e1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-11132.a03",   0x10000, 0xff199325, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11133.a4",    0x10000, 0xeed72f37, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11130.a1",    0x10000, 0xe2451676, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11134.a5",    0x10000, 0xccd857f5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11131.a2",    0x10000, 0x9b78c2cc, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11135.a6",    0x10000, 0x3735e0e1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11132.a3",    0x10000, 0xff199325, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
-	{ "epr-11136.b09",   0x10000, 0xc3860ce4, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-11136.b9",    0x10000, 0xc3860ce4, SYS16_ROM_TILES | BRF_GRA },
 	{ "epr-11137.b10",   0x10000, 0x92d96187, SYS16_ROM_TILES | BRF_GRA },
 	{ "epr-11138.b11",   0x10000, 0xc01dc773, SYS16_ROM_TILES | BRF_GRA },
 	
-	{ "epr-11144.b01",   0x10000, 0xb31de51c, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-11148.b05",   0x10000, 0x126e1309, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-11145.b02",   0x10000, 0x4223d2c3, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-11149.b06",   0x10000, 0x694d3765, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-11146.b03",   0x10000, 0xbf0359b6, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-11150.b07",   0x10000, 0x9fc0aded, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-11147.b04",   0x10000, 0x3e592772, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-11151.b08",   0x10000, 0x9de95169, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11144.b1",    0x10000, 0xb31de51c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11148.b5",    0x10000, 0x126e1309, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11145.b2",    0x10000, 0x4223d2c3, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11149.b6",    0x10000, 0x694d3765, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11146.b3",    0x10000, 0xbf0359b6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11150.b7",    0x10000, 0x9fc0aded, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11147.b4",    0x10000, 0x3e592772, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11151.b8",    0x10000, 0x9de95169, SYS16_ROM_SPRITES | BRF_GRA },
 
-	{ "epr-11139.a07",   0x08000, 0x9cbd99da, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11139.a7",    0x08000, 0x9cbd99da, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
-	{ "epr-11140.a08",   0x08000, 0xb297371b, SYS16_ROM_UPD7759DATA | BRF_SND },
-	{ "epr-11141.a09",   0x08000, 0x19756aa6, SYS16_ROM_UPD7759DATA | BRF_SND },
+	{ "epr-11140.a8",    0x08000, 0xb297371b, SYS16_ROM_UPD7759DATA | BRF_SND },
+	{ "epr-11141.a9",    0x08000, 0x19756aa6, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "epr-11142.a10",   0x08000, 0x25d26c66, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "epr-11143.a11",   0x08000, 0x848b7b77, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
@@ -4214,7 +4214,7 @@ static struct BurnRomInfo TturfRomDesc[] = {
 	{ "opr-12329.a11",  0x10000, 0xed9a686d, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "opr-12330.a12",  0x10000, 0xfb762bca, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0104.bin",   0x01000, 0x00000000, BRF_NODUMP },
+	{ "317-0104.c2",    0x01000, 0x00000000, BRF_NODUMP }, // Intel i8751 protection MCU
 };
 
 
@@ -4222,10 +4222,10 @@ STD_ROM_PICK(Tturf)
 STD_ROM_FN(Tturf)
 
 static struct BurnRomInfo TturfuRomDesc[] = {
-	{ "epr-12266.bin",  0x10000, 0xf549def8, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-12264.bin",  0x10000, 0xf7cdb289, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-12267.bin",  0x10000, 0x3c3ce191, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-12265.bin",  0x10000, 0x8cdadd9a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12266.a1",   0x10000, 0xf549def8, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12264.a4",   0x10000, 0xf7cdb289, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12267.a2",   0x10000, 0x3c3ce191, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12265.a5",   0x10000, 0x8cdadd9a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
 	{ "epr-12268.a14",  0x10000, 0xe0dac07f, SYS16_ROM_TILES | BRF_GRA },
 	{ "epr-12269.a15",  0x10000, 0x457a8790, SYS16_ROM_TILES | BRF_GRA },
@@ -4247,7 +4247,7 @@ static struct BurnRomInfo TturfuRomDesc[] = {
 	{ "epr-12274.a10",  0x08000, 0x8207f0c4, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "epr-12275.a11",  0x08000, 0x182f3c3d, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0099.bin",   0x01000, 0xf676e3e4, BRF_OPT },
+	{ "317-0099.c2",    0x01000, 0xf676e3e4, BRF_OPT }, // Intel i8751 protection MCU
 };
 
 
@@ -4273,7 +4273,7 @@ static struct BurnRomInfo Wb3RomDesc[] = {
 
 	{ "epr-12127.a10",  0x08000, 0x0bb901bb, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
-	{ "317-0098.bin",   0x01000, 0x00000000, BRF_NODUMP },
+	{ "317-0098.c2",    0x01000, 0x00000000, BRF_NODUMP }, // Intel i8751 protection MCU
 };
 
 
@@ -4281,7 +4281,7 @@ STD_ROM_PICK(Wb3)
 STD_ROM_FN(Wb3)
 
 static struct BurnRomInfo Wb32RomDesc[] = {
-	{ "epr-12100.a6",   0x10000, 0xf5ca4abc, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12100.a4",   0x10000, 0xf5ca4abc, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-12098.a1",   0x10000, 0xd998e5e5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-12101.a5",   0x10000, 0x6146492b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-12099.a2",   0x10000, 0x3e243b45, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -4414,7 +4414,7 @@ static struct BurnRomInfo WrestwarRomDesc[] = {
 	{ "mpr-12148.a11",  0x20000, 0xfb9a7f29, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "mpr-12149.a12",  0x20000, 0xd6617b19, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0103.bin",   0x01000, 0xaa0710f5, BRF_OPT }
+	{ "317-0103.c2",   0x01000, 0xaa0710f5, BRF_OPT } // Intel i8751 protection MCU
 };
 
 

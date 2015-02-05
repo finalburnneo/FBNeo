@@ -417,16 +417,16 @@ static void DrvPaletteInit()
 		INT32 bit0 = (DrvColPROM[i] >> 0) & 0x01;
 		INT32 bit1 = (DrvColPROM[i] >> 1) & 0x01;
 		INT32 bit2 = (DrvColPROM[i] >> 2) & 0x01;
-		INT32 r = bit2 * 33 + bit1 * 71 + bit0 * 151;
+		INT32 r = bit2 * 151 + bit1 * 71 + bit0 * 33;
 
 		bit0 = (DrvColPROM[i] >> 3) & 0x01;
 		bit1 = (DrvColPROM[i] >> 4) & 0x01;
 		bit2 = (DrvColPROM[i] >> 5) & 0x01;
-		INT32 g = bit2 * 33 + bit1 * 71 + bit0 * 151;
+		INT32 g = bit2 * 151 + bit1 * 71 + bit0 * 33;
 
 		bit0 = (DrvColPROM[i] >> 6) & 0x01;
 		bit1 = (DrvColPROM[i] >> 7) & 0x01;
-		INT32 b = bit2 * 33 + bit1 * 71 + bit0 * 151;
+		INT32 b = bit1 * 174 + bit0 * 81;
 
 		pens[i] = BurnHighCol(r,g,b,0);
 	}

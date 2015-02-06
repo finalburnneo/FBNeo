@@ -673,7 +673,7 @@ void ZetSetIRQLine(const INT32 line, const INT32 status)
 
 	switch ( status ) {
 		case ZET_IRQSTATUS_NONE:
-			Z80SetIrqLine(0, 0);
+			Z80SetIrqLine(line, 0);
 			break;
 		case ZET_IRQSTATUS_ACK: 	
 			Z80SetIrqLine(line, 1);

@@ -218,6 +218,7 @@ static void __fastcall circusc_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xa004:
+		case 0xa07c:
 			// discrete
 		return;
 	}
@@ -240,7 +241,7 @@ static UINT8 __fastcall circusc_sound_read(UINT16 address)
 
 static INT32 DrvDACSync()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (1789772.0000 / (nBurnFPS / 100.0000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3579545.0000 / (nBurnFPS / 100.0000))));
 }
 
 static INT32 DrvDoReset(INT32 clear_ram)
@@ -555,7 +556,6 @@ static INT32 DrvFrame()
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			SN76496Update(0, pSoundBuf, nSegmentLength);
 			SN76496Update(1, pSoundBuf, nSegmentLength);
-			DACUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -569,8 +569,8 @@ static INT32 DrvFrame()
 		if (nSegmentLength) {
 			SN76496Update(0, pSoundBuf, nSegmentLength);
 			SN76496Update(1, pSoundBuf, nSegmentLength);
-			DACUpdate(pSoundBuf, nSegmentLength);
 		}
+		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();

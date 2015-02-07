@@ -427,14 +427,15 @@ static void RenderMarinebBg()
 			INT32 code = DrvVidRAM[TileIndex];			
 		    INT32 color = DrvColRAM[TileIndex];
 			
+			INT32 flipx = 0; //code & 0x02;//(code >> 4) & 0x02; // there is no tilemap flipping -dink
+			INT32 flipy = 0; //!(code & 0x01);//(code >> 4) & 0x01;
+
 			code |= ((color & 0xc0) << 2);
 			
 			color &= 0x0f;
 			color |= DrvPaletteBank << 4;
 			
-			INT32 flipx = (color >> 4) & 0x02; 
-			INT32 flipy = (color >> 4) & 0x01;					
-			
+
 			INT32 x = mx << 3;
 			INT32 y = my << 3;		
 			
@@ -481,8 +482,8 @@ static void RenderSpringerBg()
 			color &= 0x0f;
 			color |= DrvPaletteBank << 4;
 			
-			INT32 flipx = (color >> 4) & 0x02; 
-			INT32 flipy = (color >> 4) & 0x01;					
+			INT32 flipx = 0; //(color >> 4) & 0x02; // there is no tilemap flipping
+			INT32 flipy = 0; //(color >> 4) & 0x01;
 			
 			INT32 x = mx << 3;				
 			INT32 y = my << 3;

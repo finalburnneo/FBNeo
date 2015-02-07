@@ -3,8 +3,8 @@
 
 /*
 	To do:
-		tc8830f sound core
-		sprites have gaps sometimes due to scanline drawing
+		Hook up filters
+	    tc8830f sound core (only for chkun - *very* low priority)
 */
 
 
@@ -624,8 +624,8 @@ static INT32 DrvInit(INT32 game)
 
 	AY8910Init(0, 1789772, nBurnSoundRate, &AY8910_0_portA, &AY8910_0_portB, NULL, NULL);
 	AY8910Init(1, 1789772, nBurnSoundRate,NULL, NULL, &AY8910_1_portA_w, NULL);
-	AY8910SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.60, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.45, BURN_SND_ROUTE_BOTH); // melody, sfx, explosion - change both to 0.60 when filters are hooked up.
+	AY8910SetAllRoutes(1, 0.45, BURN_SND_ROUTE_BOTH); // bass, sfx, explosion
 
 //	tc8830fInit(512000, DrvSndROM, 0x20000, 1);
 //	tc8830fSetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
@@ -817,23 +817,25 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 3072000 / 60, 1789772 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 scanline = 0;
 
-	for (INT32 scanline = 0; scanline < nInterleave; scanline++)
+	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		INT32 nSegment = (nCyclesTotal[0] * (scanline + 1)) / nInterleave;
+		INT32 nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
 		nCyclesDone[0] += ZetRun(nSegment - nCyclesDone[0]);
-		if (scanline == (nInterleave - 1) && nmi_enable) ZetSetIRQLine(0x20, ZET_IRQSTATUS_ACK);
-		if (scanline == (nInterleave - 1) && game_select == 2) ZetNmi();
+		if (i == (nInterleave - 1) && nmi_enable) ZetSetIRQLine(0x20, ZET_IRQSTATUS_ACK);
+		if (i == (nInterleave - 1) && game_select == 2) ZetNmi();
 		ZetClose();
 
+		scanline = i + 5;
 		if (scanline >= 16 && scanline < 240) {
 			memcpy (DrvSprTmp + scanline * 0x60 + 0x00, DrvSprRAM + 0x010, 0x30);
 			memcpy (DrvSprTmp + scanline * 0x60 + 0x30, DrvSprRAM + 0x110, 0x30);
 		}
 
 		ZetOpen(1);
-		nSegment = (nCyclesTotal[1] * scanline) / nInterleave;
+		nSegment = (nCyclesTotal[1] * i) / nInterleave;
 		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);
 		ZetClose();
 	}

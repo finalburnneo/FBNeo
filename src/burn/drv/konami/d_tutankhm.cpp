@@ -423,7 +423,7 @@ static INT32 DrvFrame()
 		if ((DrvInputs[2] & 0x30) == 0) DrvInputs[2] |= 0x30;
 	}
 
-	INT32 nInterleave = 10;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 1536000 / 60, 1789772 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 	INT32 nSoundBufferPos = 0;

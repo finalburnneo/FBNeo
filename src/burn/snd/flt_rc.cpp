@@ -4,7 +4,7 @@
 
 #include <math.h>
 
-#define FLT_RC_NUM		6
+#define FLT_RC_NUM      8
 
 struct flt_rc_info
 {

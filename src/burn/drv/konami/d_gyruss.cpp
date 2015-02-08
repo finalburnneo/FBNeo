@@ -245,7 +245,8 @@ void __fastcall gyruss_main_write(UINT16 address, UINT8 data)
 		case 0xc080:
 			ZetClose();
 			ZetOpen(1);
-			ZetRaiseIrq(0xff);
+			ZetSetVector(0xff);
+			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(0);
 		return;
@@ -316,6 +317,7 @@ UINT8 __fastcall gyruss_sound0_read(UINT16 address)
 	switch (address)
 	{
 		case 0x8000:
+			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -824,13 +826,14 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[4] = { 3072000 / 60, 2000000 / 60, 3579545 / 60, 8000000 / 60 };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	DrvDraw();
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		INT32 nNext;
-		scanline = i;
+		scanline = i + 5;
 
 		ZetOpen(0);
 		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
@@ -856,11 +859,27 @@ static INT32 DrvFrame()
 		nCyclesDone[2] += ZetRun(nCyclesSegment);
 		ZetClose();
 
-		draw_sprites(scanline);
+		if (scanline >= 16 && scanline < 240) {
+			draw_sprites(scanline);
+		}
+
+		// Render Sound Segment
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			//AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
+			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+		}
+
 	}
 
+	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+		}
 	}
 
 	if (pBurnDraw) {

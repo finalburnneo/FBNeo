@@ -607,36 +607,36 @@ STD_ROM_PICK(Dokaben)
 STD_ROM_FN(Dokaben)
 
 static struct BurnRomInfo PangRomDesc[] = {
-	{ "pang6.bin",     0x08000, 0x68be52cd, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "pang7.bin",     0x20000, 0x4a2e70f6, BRF_ESS | BRF_PRG }, //	 1
+	{ "pwe_06.11h",    0x08000, 0x68be52cd, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "pwe_07.13h",    0x20000, 0x4a2e70f6, BRF_ESS | BRF_PRG }, //	 1
 	
-	{ "pang_09.bin",   0x20000, 0x3a5883f5, BRF_GRA },	     //  2	Characters
-	{ "bb3.bin",       0x20000, 0x79a8ed08, BRF_GRA },	     //  3
-	{ "pang_11.bin",   0x20000, 0x166a16ae, BRF_GRA },	     //  4
-	{ "bb5.bin",       0x20000, 0x2fb3db6c, BRF_GRA },	     //  5
+	{ "pwe_02.1e",     0x20000, 0x3a5883f5, BRF_GRA },	     //  2	Characters
+	{ "pw_03.2e",      0x20000, 0x79a8ed08, BRF_GRA },	     //  3
+	{ "pwe_04.1g",     0x20000, 0x166a16ae, BRF_GRA },	     //  4
+	{ "pw_05.2g",      0x20000, 0x2fb3db6c, BRF_GRA },	     //  5
 	
-	{ "bb10.bin",      0x20000, 0xfdba4f6e, BRF_GRA },	     //  6	Sprites
-	{ "bb9.bin",       0x20000, 0x39f47a63, BRF_GRA },	     //  7
+	{ "pw_10.2k",      0x20000, 0xfdba4f6e, BRF_GRA },	     //  6	Sprites
+	{ "pw_05.2g",      0x20000, 0x39f47a63, BRF_GRA },	     //  7
 	
-	{ "bb1.bin",       0x20000, 0xc52e5b8e, BRF_SND },	     //  8	Samples
+	{ "pw_01.1d",       0x20000, 0xc52e5b8e, BRF_SND },	     //  8	Samples
 };
 
 STD_ROM_PICK(Pang)
 STD_ROM_FN(Pang)
 
 static struct BurnRomInfo BbrosRomDesc[] = {
-	{ "bb6.bin",       0x08000, 0xa3041ca4, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "bb7.bin",       0x20000, 0x09231c68, BRF_ESS | BRF_PRG }, //	 1
+	{ "pwu_06.11h",    0x08000, 0xa3041ca4, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "pwu_07.13h",    0x20000, 0x09231c68, BRF_ESS | BRF_PRG }, //	 1
 	
-	{ "bb2.bin",       0x20000, 0x62f29992, BRF_GRA },	     //  2	Characters
-	{ "bb3.bin",       0x20000, 0x79a8ed08, BRF_GRA },	     //  3
-	{ "bb4.bin",       0x20000, 0xf705aa89, BRF_GRA },	     //  4
-	{ "bb5.bin",       0x20000, 0x2fb3db6c, BRF_GRA },	     //  5
+	{ "pwu_02.1e",     0x20000, 0x62f29992, BRF_GRA },	     //  2	Characters
+	{ "pw_03.2e",      0x20000, 0x79a8ed08, BRF_GRA },	     //  3
+	{ "pwu_04.1g",     0x20000, 0xf705aa89, BRF_GRA },	     //  4
+	{ "pw_05.2g",      0x20000, 0x2fb3db6c, BRF_GRA },	     //  5
 	
-	{ "bb10.bin",      0x20000, 0xfdba4f6e, BRF_GRA },	     //  6	Sprites
-	{ "bb9.bin",       0x20000, 0x39f47a63, BRF_GRA },	     //  7
+	{ "pw_10.2k",      0x20000, 0xfdba4f6e, BRF_GRA },	     //  6	Sprites
+	{ "pw_9.1k",       0x20000, 0x39f47a63, BRF_GRA },	     //  7
 	
-	{ "bb1.bin",       0x20000, 0xc52e5b8e, BRF_SND },	     //  8	Samples
+	{ "pw_01.1d",      0x20000, 0xc52e5b8e, BRF_SND },	     //  8	Samples
 };
 
 STD_ROM_PICK(Bbros)
@@ -647,14 +647,14 @@ static struct BurnRomInfo PompingwRomDesc[] = {
 	{ "pwj_07.13h",    0x20000, 0xa9402420, BRF_ESS | BRF_PRG }, //	 1
 	
 	{ "pw_02.1e",      0x20000, 0x4b5992e4, BRF_GRA },	     //  2	Characters
-	{ "bb3.bin",       0x20000, 0x79a8ed08, BRF_GRA },	     //  3
+	{ "pw_03.2e",      0x20000, 0x79a8ed08, BRF_GRA },	     //  3
 	{ "pwj_04.1g",     0x20000, 0x01e49081, BRF_GRA },	     //  4
-	{ "bb5.bin",       0x20000, 0x2fb3db6c, BRF_GRA },	     //  5
+	{ "pw_05.2g",      0x20000, 0x2fb3db6c, BRF_GRA },	     //  5
 	
-	{ "bb10.bin",      0x20000, 0xfdba4f6e, BRF_GRA },	     //  6	Sprites
-	{ "bb9.bin",       0x20000, 0x39f47a63, BRF_GRA },	     //  7
+	{ "pw_10.2k",      0x20000, 0xfdba4f6e, BRF_GRA },	     //  6	Sprites
+	{ "pw_9.1k",       0x20000, 0x39f47a63, BRF_GRA },	     //  7
 	
-	{ "bb1.bin",       0x20000, 0xc52e5b8e, BRF_SND },	     //  8	Samples
+	{ "pw_01.1d",       0x20000, 0xc52e5b8e, BRF_SND },	     //  8	Samples
 };
 
 STD_ROM_PICK(Pompingw)
@@ -665,9 +665,9 @@ static struct BurnRomInfo PangbRomDesc[] = {
 	{ "pang_02.bin",   0x20000, 0x3f15bb61, BRF_ESS | BRF_PRG }, //	 1
 	{ "pang_03.bin",   0x20000, 0x0c8477ae, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "pang_09.bin",   0x20000, 0x3a5883f5, BRF_GRA },	     //  3	Characters
+	{ "bb9.bin",   	   0x20000, 0x3a5883f5, BRF_GRA },	     //  3	Characters
 	{ "bb3.bin",       0x20000, 0x79a8ed08, BRF_GRA },	     //  4
-	{ "pang_11.bin",   0x20000, 0x166a16ae, BRF_GRA },	     //  5
+	{ "bb11.bin",      0x20000, 0x166a16ae, BRF_GRA },	     //  5
 	{ "bb5.bin",       0x20000, 0x2fb3db6c, BRF_GRA },	     //  6
 	
 	{ "bb10.bin",      0x20000, 0xfdba4f6e, BRF_GRA },	     //  7	Sprites
@@ -725,9 +725,9 @@ static struct BurnRomInfo Pangb2RomDesc[] = {
 	{ "27c512.11h",    0x10000, 0x369a453e, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "27c020.13h",    0x40000, 0x5e7f24b1, BRF_ESS | BRF_PRG }, //	 1
 	
-	{ "pang_09.bin",   0x20000, 0x3a5883f5, BRF_GRA },	     //  2	Characters
+	{ "bb9.bin",       0x20000, 0x3a5883f5, BRF_GRA },	     //  2	Characters
 	{ "bb3.bin",       0x20000, 0x79a8ed08, BRF_GRA },	     //  3
-	{ "pang_11.bin",   0x20000, 0x166a16ae, BRF_GRA },	     //  4
+	{ "bb11.bin",      0x20000, 0x166a16ae, BRF_GRA },	     //  4
 	{ "bb5.bin",       0x20000, 0x2fb3db6c, BRF_GRA },	     //  5
 	
 	{ "bb10.bin",      0x20000, 0xfdba4f6e, BRF_GRA },	     //  6	Sprites
@@ -786,19 +786,19 @@ STD_ROM_PICK(Hatena)
 STD_ROM_FN(Hatena)
 
 static struct BurnRomInfo SpangRomDesc[] = {
-	{ "spe_06.rom",    0x08000, 0x1af106fb, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "spe_07.rom",    0x20000, 0x208b5f54, BRF_ESS | BRF_PRG }, //	 1
-	{ "spe_08.rom",    0x20000, 0x2bc03ade, BRF_ESS | BRF_PRG }, //	 2
+	{ "spe_06.11h",    0x08000, 0x1af106fb, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "spe_07.13h",    0x20000, 0x208b5f54, BRF_ESS | BRF_PRG }, //	 1
+	{ "spe_08.14h",    0x20000, 0x2bc03ade, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "spe_02.rom",    0x20000, 0x63c9dfd2, BRF_GRA },	     //  3	Characters
-	{ "03.f2",         0x20000, 0x3ae28bc1, BRF_GRA },	     //  4
-	{ "spe_04.rom",    0x20000, 0x9d7b225b, BRF_GRA },	     //  5
-	{ "05.g2",         0x20000, 0x4a060884, BRF_GRA },	     //  6
+	{ "spe_02.1e",     0x20000, 0x63c9dfd2, BRF_GRA },	     //  3	Characters
+	{ "spj_03.3e",     0x20000, 0x3ae28bc1, BRF_GRA },	     //  4
+	{ "spe_04.1g",     0x20000, 0x9d7b225b, BRF_GRA },	     //  5
+	{ "spj_05.2g",     0x20000, 0x4a060884, BRF_GRA },	     //  6
 	
-	{ "spj10_2k.bin",  0x20000, 0xeedd0ade, BRF_GRA },	     //  7	Sprites
-	{ "spj09_1k.bin",  0x20000, 0x04b41b75, BRF_GRA },	     //  8
+	{ "spj_10.2k",     0x20000, 0xeedd0ade, BRF_GRA },	     //  7	Sprites
+	{ "spj_09.1k",     0x20000, 0x04b41b75, BRF_GRA },	     //  8
 	
-	{ "spe_01.rom",    0x20000, 0x2d19c133, BRF_SND },	     //  9	Samples
+	{ "spe_01.1d",     0x20000, 0x2d19c133, BRF_SND },	     //  9	Samples
 	
 	{ "eeprom-spang.bin", 0x80, 0xdeae1291, BRF_PRG },
 };
@@ -807,19 +807,19 @@ STD_ROM_PICK(Spang)
 STD_ROM_FN(Spang)
 
 static struct BurnRomInfo SpangjRomDesc[] = {
-	{ "spj_11h.bin",   0x08000, 0x1a548b0b, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "spj7_13h.bin",  0x20000, 0x14c2b765, BRF_ESS | BRF_PRG }, //	 1
-	{ "spj8_14h.bin",  0x20000, 0x4be4e5b7, BRF_ESS | BRF_PRG }, //	 2
+	{ "spj_06.11h",    0x08000, 0x1a548b0b, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "spj_07.13h",    0x20000, 0x14c2b765, BRF_ESS | BRF_PRG }, //	 1
+	{ "spj_08.14h",    0x20000, 0x4be4e5b7, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "spj02_1e.bin",  0x20000, 0x419f69d7, BRF_GRA },	     //  3	Characters
-	{ "03.f2",         0x20000, 0x3ae28bc1, BRF_GRA },	     //  4
-	{ "spj04_1g.bin",  0x20000, 0x6870506f, BRF_GRA },	     //  5
-	{ "05.g2",         0x20000, 0x4a060884, BRF_GRA },	     //  6
+	{ "spj_02.1e",     0x20000, 0x419f69d7, BRF_GRA },	     //  3	Characters
+	{ "spj_03.3e",     0x20000, 0x3ae28bc1, BRF_GRA },	     //  4
+	{ "spj_04.1g",     0x20000, 0x6870506f, BRF_GRA },	     //  5
+	{ "spj_05.2g",     0x20000, 0x4a060884, BRF_GRA },	     //  6
 	
-	{ "spj10_2k.bin",  0x20000, 0xeedd0ade, BRF_GRA },	     //  7	Sprites
-	{ "spj09_1k.bin",  0x20000, 0x04b41b75, BRF_GRA },	     //  8
+	{ "spj_10.2k",     0x20000, 0xeedd0ade, BRF_GRA },	     //  7	Sprites
+	{ "spj_09.1k",     0x20000, 0x04b41b75, BRF_GRA },	     //  8
 	
-	{ "01.d1",         0x20000, 0xb96ea126, BRF_SND },	     //  9	Samples
+	{ "spj_01.1d",     0x20000, 0xb96ea126, BRF_SND },	     //  9	Samples
 	
 	{ "eeprom-spangj.bin",0x80, 0x237c00eb, BRF_PRG },
 };
@@ -828,19 +828,19 @@ STD_ROM_PICK(Spangj)
 STD_ROM_FN(Spangj)
 
 static struct BurnRomInfo SbbrosRomDesc[] = {
-	{ "06.j12",        0x08000, 0x292eee6a, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "07.j13",        0x20000, 0xf46b698d, BRF_ESS | BRF_PRG }, //	 1
-	{ "08.j14",        0x20000, 0xa75e7fbe, BRF_ESS | BRF_PRG }, //	 2
+	{ "spu_06.11h",    0x08000, 0x292eee6a, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "spu_07.13h",    0x20000, 0xf46b698d, BRF_ESS | BRF_PRG }, //	 1
+	{ "spu_08.14h",    0x20000, 0xa75e7fbe, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "02.f1",         0x20000, 0x0c22ffc6, BRF_GRA },	     //  3	Characters
-	{ "03.f2",         0x20000, 0x3ae28bc1, BRF_GRA },	     //  4
-	{ "04.g2",         0x20000, 0xbb3dee5b, BRF_GRA },	     //  5
-	{ "05.g2",         0x20000, 0x4a060884, BRF_GRA },	     //  6
+	{ "spu_02.1e",     0x20000, 0x0c22ffc6, BRF_GRA },	     //  3	Characters
+	{ "spj_03.3e",     0x20000, 0x3ae28bc1, BRF_GRA },	     //  4
+	{ "spu_04.1g",     0x20000, 0xbb3dee5b, BRF_GRA },	     //  5
+	{ "spj_05.2g",     0x20000, 0x4a060884, BRF_GRA },	     //  6
 	
-	{ "10.l2",         0x20000, 0xd6675d8f, BRF_GRA },	     //  7	Sprites
-	{ "09.l1",         0x20000, 0x8f678bc8, BRF_GRA },	     //  8
+	{ "spu_10.2k",     0x20000, 0xd6675d8f, BRF_GRA },	     //  7	Sprites
+	{ "spu_09.1k",     0x20000, 0x8f678bc8, BRF_GRA },	     //  8
 	
-	{ "01.d1",         0x20000, 0xb96ea126, BRF_SND },	     //  9	Samples
+	{ "spj_01.1d",     0x20000, 0xb96ea126, BRF_SND },	     //  9	Samples
 	
 	{ "eeprom-sbbros.bin",0x80, 0xed69d3cd, BRF_PRG },
 };
@@ -3149,7 +3149,7 @@ struct BurnDriver BurnDrvPkladiesla = {
 
 struct BurnDriver BurnDrvDokaben = {
 	"dokaben", NULL, NULL, NULL, "1989",
-	"Dokaben (Japan)\0", NULL, "Dokaben", "Miscellaneous",
+	"Dokaben (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, DokabenRomInfo, DokabenRomName, NULL, NULL, PangInputInfo, NULL,
@@ -3169,7 +3169,7 @@ struct BurnDriver BurnDrvPang = {
 
 struct BurnDriver BurnDrvBbros = {
 	"bbros", "pang", NULL, NULL, "1989",
-	"Buster Bros. (US)\0", NULL, "Capcom", "Miscellaneous",
+	"Buster Bros. (USA)\0", NULL, "Mitchell (Capcom license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, BbrosRomInfo, BbrosRomName, NULL, NULL, PangInputInfo, NULL,
@@ -3239,7 +3239,7 @@ struct BurnDriver BurnDrvCworld = {
 
 struct BurnDriver BurnDrvHatena = {
 	"hatena", NULL, NULL, NULL, "1990",
-	"Adventure Quiz 2 Hatena Hatena no Dai-Bouken (Japan 900228)\0", NULL, "Capcom", "Miscellaneous",
+	"Adventure Quiz 2 - Hatena? no Daibouken (Japan 900228)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, HatenaRomInfo, HatenaRomName, NULL, NULL, Qtono1InputInfo, NULL,
@@ -3269,7 +3269,7 @@ struct BurnDriver BurnDrvSpangj = {
 
 struct BurnDriver BurnDrvSbbros = {
 	"sbbros", "spang", NULL, NULL, "1990",
-	"Super Buster Bros. (US 901001)\0", NULL, "Mitchell + Capcom", "Miscellaneous",
+	"Super Buster Bros. (USA 901001)\0", NULL, "Mitchell (Capcom license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, SbbrosRomInfo, SbbrosRomName, NULL, NULL, PangInputInfo, NULL,
@@ -3279,7 +3279,7 @@ struct BurnDriver BurnDrvSbbros = {
 
 struct BurnDriver BurnDrvMstworld = {
 	"mstworld", NULL, NULL, NULL, "1994",
-	"Monsters World\0", NULL, "TCH", "Miscellaneous",
+	"Monsters World (bootleg of Super Pang)\0", NULL, "bootleg (TCH)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, MstworldRomInfo, MstworldRomName, NULL, NULL, MstworldInputInfo, MstworldDIPInfo,

@@ -3,11 +3,7 @@
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
-#include "driver.h"
-#include "flt_rc.h"
-extern "C" {
-#include "ay8910.h"
-}
+#include "timeplt_snd.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -34,7 +30,6 @@ static INT16 *pAY8910Buffer[6];
 static UINT8 irqtrigger;
 static UINT8 irq_enable;
 static UINT8 flipscreen;
-static UINT8 soundlatch;
 
 static UINT8  DrvJoy1[8];
 static UINT8  DrvJoy2[8];
@@ -154,7 +149,6 @@ static UINT8 __fastcall pooyan_main_read(UINT16 address)
 
 		case 0xa0e0:
 			return DrvDips[0];
-
 	}
 
 	return 0;
@@ -169,7 +163,7 @@ static void __fastcall pooyan_main_write(UINT16 address, UINT8 data)
 		break;
 
 		case 0xa100:
-			soundlatch = data;
+			TimepltSndSoundlatch(data);
 		break;
 
 		case 0xa180:
@@ -201,77 +195,6 @@ static void __fastcall pooyan_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-static UINT8 __fastcall pooyan_sound_read(UINT16 address)
-{
-	switch (address & 0xf000)
-	{
-		case 0x4000:
-			return AY8910Read(0);
-
-		case 0x6000:
-			return AY8910Read(1);
-	}
-
-	return 0;
-}
-
-static void filter_w(INT32 num, UINT8 d)
-{
-	INT32 C;
-	
-	C = 0;
-	if (d & 1) C += 220000;	/* 220000pF = 0.220uF */
-	if (d & 2) C +=  47000;	/*  47000pF = 0.047uF */
-	filter_rc_set_RC(num, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(C));
-}
-
-static void __fastcall pooyan_sound_write(UINT16 address, UINT8 data)
-{
-	if (address >= 0x8000 && address <= 0xffff) {
-		INT32 Offset = address & 0xfff;
-		filter_w(3, (Offset >>  0) & 3);
-		filter_w(4, (Offset >>  2) & 3);
-		filter_w(5, (Offset >>  4) & 3);
-		filter_w(0, (Offset >>  6) & 3);
-		filter_w(1, (Offset >>  8) & 3);
-		filter_w(2, (Offset >> 10) & 3);
-		return;
-	}
-	switch (address & 0xf000)
-	{
-		case 0x4000:
-			AY8910Write(0, 1, data);
-		break;
-
-		case 0x5000:
-			AY8910Write(0, 0, data);
-		break;
-
-		case 0x6000:
-			AY8910Write(1, 1, data);
-		break;
-
-		case 0x7000:
-			AY8910Write(1, 0, data);
-		break;
-	}
-}
-
-static UINT8 AY8910_0_port0(UINT32)
-{
-	ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
-	return soundlatch;
-}
-
-static UINT8 AY8910_0_port1(UINT32)
-{
-	static INT32 timeplt_timer[10] = {
-		0x00, 0x10, 0x20, 0x30, 0x40, 0x90, 0xa0, 0xb0, 0xa0, 0xd0
-	};
-
-	return timeplt_timer[(ZetTotalCycles() >> 9) % 10];
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -280,16 +203,10 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
-	ZetOpen(1);
-	ZetReset();
-	ZetClose();
-
-	AY8910Reset(0);
-	AY8910Reset(1);
+	TimepltSndReset();
 
 	irqtrigger = 0;
 	flipscreen = 0;
-	soundlatch = 0;
 	irq_enable = 0;
 
 	return 0;
@@ -443,40 +360,7 @@ static INT32 DrvInit()
 	ZetSetReadHandler(pooyan_main_read);
 	ZetClose();
 
-	ZetInit(1);
-	ZetOpen(1);
-/*	ZetMapArea(0x0000, 0x1fff, 0, DrvZ80ROM1);
-	ZetMapArea(0x0000, 0x1fff, 2, DrvZ80ROM1);
-	ZetMapArea(0x3000, 0x33ff, 0, DrvZ80RAM1);
-	ZetMapArea(0x3000, 0x33ff, 1, DrvZ80RAM1);
-	ZetMapArea(0x3000, 0x33ff, 2, DrvZ80RAM1);*/
-	ZetMapMemory(DrvZ80ROM1,	0x0000, 0x1fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,	0x3000, 0x33ff, ZET_RAM);
-	ZetMapMemory(DrvZ80RAM1,	0x3400, 0x37ff, ZET_RAM);
-	ZetMapMemory(DrvZ80RAM1,	0x3800, 0x3bff, ZET_RAM);
-	ZetMapMemory(DrvZ80RAM1,	0x3c00, 0x3fff, ZET_RAM);
-	ZetSetWriteHandler(pooyan_sound_write);
-	ZetSetReadHandler(pooyan_sound_read);
-	ZetClose();
-
-	AY8910Init(0, 1789772, nBurnSoundRate, &AY8910_0_port0, &AY8910_0_port1, NULL, NULL);
-	AY8910Init(1, 1789772, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.60, BURN_SND_ROUTE_BOTH);
-
-	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 0);
-	filter_rc_init(1, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
-	filter_rc_init(2, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
-	filter_rc_init(3, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
-	filter_rc_init(4, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
-	filter_rc_init(5, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
-
-	filter_rc_set_route(0, 1.00, BURN_SND_ROUTE_BOTH);
-	filter_rc_set_route(1, 1.00, BURN_SND_ROUTE_BOTH);
-	filter_rc_set_route(2, 1.00, BURN_SND_ROUTE_BOTH);
-	filter_rc_set_route(3, 1.00, BURN_SND_ROUTE_BOTH);
-	filter_rc_set_route(4, 1.00, BURN_SND_ROUTE_BOTH);
-	filter_rc_set_route(5, 1.00, BURN_SND_ROUTE_BOTH);
+	TimepltSndInit(DrvZ80ROM1, DrvZ80RAM1, 1);
 
 	GenericTilesInit();
 
@@ -488,9 +372,7 @@ static INT32 DrvInit()
 static INT32 DrvExit()
 {
 	ZetExit();
-	AY8910Exit(0);
-	AY8910Exit(1);
-	filter_rc_exit();
+	TimepltSndExit();
 
 	GenericTilesExit();
 
@@ -631,15 +513,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
-			AY8910Update(1, &pAY8910Buffer[3], nSegmentLength);
-
-			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
-			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
-			filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
-			filter_rc_update(3, pAY8910Buffer[3], pSoundBuf, nSegmentLength);
-			filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
-			filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
+			TimepltSndUpdate(pAY8910Buffer, pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -648,17 +522,7 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
-			AY8910Update(1, &pAY8910Buffer[3], nSegmentLength);
-
-			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
-			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
-			filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
-			filter_rc_update(3, pAY8910Buffer[3], pSoundBuf, nSegmentLength);
-			filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
-			filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
-		}
+		TimepltSndUpdate(pAY8910Buffer, pSoundBuf, nSegmentLength);
 	}
 
 	if (pBurnDraw) {
@@ -685,9 +549,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ZetScan(nAction);
-		AY8910Scan(nAction, pnMin);
+		TimepltSndScan(nAction, pnMin);
 
-		SCAN_VAR(soundlatch);
 		SCAN_VAR(irqtrigger);
 		SCAN_VAR(irq_enable);
 		SCAN_VAR(flipscreen);

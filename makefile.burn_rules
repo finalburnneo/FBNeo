@@ -109,7 +109,7 @@ depobj	:= 	$(drvobj) \
 			irem_cpu.o \
 			\
 			k007342_k007420.o k051316.o k051733.o k051960.o k052109.o k053245.o k053247.o k053250.o k053251.o k053936.o k054000.o \
-			k054338.o k055555.o k056832.o konamigx.o konamiic.o \
+			k054338.o k055555.o k056832.o konamigx.o konamiic.o timeplt_snd.o \
 			\
 			neo_decrypt.o neo_palette.o neo_run.o neo_sprite.o neo_text.o neo_upd4990a.o neogeo.o \
 			\

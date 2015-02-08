@@ -3,7 +3,6 @@
 
 /*
 	To do:
-		Hook up filters
 	    tc8830f sound core (only for chkun - *very* low priority)
 */
 
@@ -369,17 +368,6 @@ static void __fastcall timeplt_sound_write(UINT16 address, UINT8 data)
 
 		case 0x07:
 			AY8910Write(1, 0, data);
-		return;
-
-		case 0x08:
-		case 0x09:
-		case 0x0a:
-		case 0x0b:
-		case 0x0c:
-		case 0x0d:
-		case 0x0e:
-		case 0x0f:
-			// filter
 		return;
 	}
 }

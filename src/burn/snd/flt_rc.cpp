@@ -62,9 +62,9 @@ void filter_rc_update(INT32 num, INT16 *src, INT16 *pSoundBuf, INT32 length)
 				nRightSample = BURN_SND_CLIP(nRightSample);
 				
 				if (ptr->add_signal) {
-                                        // March 28, 2014: Clipping is still possible when using pSoundBuf[x] += n[l/r]Sample; - dink
-                                        pSoundBuf[0] = BURN_SND_CLIP(pSoundBuf[0] + nLeftSample);
-                                        pSoundBuf[1] = BURN_SND_CLIP(pSoundBuf[1] + nRightSample);
+					// March 28, 2014: Clipping is still possible when using pSoundBuf[x] += n[l/r]Sample; - dink
+					pSoundBuf[0] = BURN_SND_CLIP(pSoundBuf[0] + nLeftSample);
+					pSoundBuf[1] = BURN_SND_CLIP(pSoundBuf[1] + nRightSample);
 				} else {
 					pSoundBuf[0] = nLeftSample;
 					pSoundBuf[1] = nRightSample;
@@ -93,8 +93,8 @@ void filter_rc_update(INT32 num, INT16 *src, INT16 *pSoundBuf, INT32 length)
 				nRightSample = BURN_SND_CLIP(nRightSample);
 				
 				if (ptr->add_signal) {
-                                        // March 28, 2014: Clipping is still possible when using pSoundBuf[x] += n[l/r]Sample; - dink
-                                        pSoundBuf[0] = BURN_SND_CLIP(pSoundBuf[0] + nLeftSample);
+					// March 28, 2014: Clipping is still possible when using pSoundBuf[x] += n[l/r]Sample; - dink
+					pSoundBuf[0] = BURN_SND_CLIP(pSoundBuf[0] + nLeftSample);
 					pSoundBuf[1] = BURN_SND_CLIP(pSoundBuf[1] + nRightSample);
 				} else {
 					pSoundBuf[0] = nLeftSample;

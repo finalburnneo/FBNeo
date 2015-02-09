@@ -1,11 +1,15 @@
 // FB Alpha Gyruss driver module
 // Based on MAME driver by Mirko Buffoni, Michael Cuddy, and Nicola Salmoria
+//
+// To Do:
+//      hook-up i8039 w/DAC
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6809_intf.h"
 #include "i8039.h"
 #include "driver.h"
+#include "flt_rc.h"
 extern "C" {
 #include "ay8910.h"
 }
@@ -256,7 +260,10 @@ void __fastcall gyruss_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xc180:
-			*interrupt_enable0 = data;
+			*interrupt_enable0 = data & 1;
+			if (!*interrupt_enable0) {
+				ZetSetIRQLine(Z80_INPUT_LINE_NMI, ZET_IRQSTATUS_NONE);
+			}
 		return;
 
 		case 0xc185:
@@ -296,7 +303,10 @@ void gyruss_sub_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x2000:
-			*interrupt_enable1 = data;
+			*interrupt_enable1 = data & 1;
+			if (!*interrupt_enable1) {
+				M6809SetIRQLine(0, M6809_IRQSTATUS_NONE);
+			}
 		return;
 	}
 }
@@ -322,6 +332,43 @@ UINT8 __fastcall gyruss_sound0_read(UINT16 address)
 	}
 
 	return 0;
+}
+
+static void filter_write(INT32 num, UINT8 d)
+{
+	INT32 C = 0;
+	if (d & 2) C += 220000;	/* 220000pF = 0.220uF */
+	if (d & 1) C +=  47000;	/*  47000pF = 0.047uF */
+
+	filter_rc_set_RC(num, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(C));
+}
+
+void AY8910_0_portBwrite(UINT32 port, UINT32 data)
+{
+	if (ZetGetActive() == -1) return;
+
+	for (INT32 i = 0; i < 3; i++)
+	{
+		/* low bit: 47000pF = 0.047uF */
+		/* high bit: 220000pF = 0.22uF */
+		//discrete_sound_w(device, NODE(3 * chip + i + 21), data & 3);
+		filter_write(i, data & 3);
+		data >>= 2;
+	}
+}
+
+void AY8910_1_portBwrite(UINT32 port, UINT32 data)
+{
+	if (ZetGetActive() == -1) return;
+
+	for (INT32 i = 0; i < 3; i++)
+	{
+		/* low bit: 47000pF = 0.047uF */
+		/* high bit: 220000pF = 0.22uF */
+		//discrete_sound_w(device, NODE(3 * chip + i + 21), data & 3);
+		filter_write(i + 3, data & 3);
+		data >>= 2;
+	}
 }
 
 UINT8 __fastcall gyruss_sound0_in(UINT16 port)
@@ -407,7 +454,7 @@ UINT8 AY8910_3_portA(UINT32)
 		0x00, 0x01, 0x02, 0x03, 0x04, 0x09, 0x0a, 0x0b, 0x0a, 0x0d
 	};
 
-	return gyruss_timer[((ZetTotalCycles() * 60) >> 10) % 10];
+	return gyruss_timer[(ZetTotalCycles() / 1024) % 10];
 }
 
 static INT32 MemIndex()
@@ -430,6 +477,8 @@ static INT32 MemIndex()
 
 	Palette			= (UINT32*)Next; Next += 0x0140 * sizeof(UINT32);
 	DrvPalette		= (UINT32*)Next; Next += 0x0140 * sizeof(UINT32);
+
+	pTemp			= (UINT16*)Next; Next += 0x10000 * 2;
 
 	pAY8910Buffer[ 0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 	pAY8910Buffer[ 1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
@@ -663,9 +712,8 @@ static INT32 DrvInit()
 	ZetClose();
 
 	// don't bother with i8039 right now, descrete sounds not emulated
-
-	AY8910Init(0, 1789773, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(1, 1789773, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init(0, 1789773, nBurnSoundRate, NULL, NULL, NULL, &AY8910_0_portBwrite);
+	AY8910Init(1, 1789773, nBurnSoundRate, NULL, NULL, NULL, &AY8910_1_portBwrite);
 	AY8910Init(2, 1789773, nBurnSoundRate, AY8910_3_portA, NULL, NULL, NULL);
 	AY8910Init(3, 1789773, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910Init(4, 1789773, nBurnSoundRate, NULL, NULL, NULL, NULL);
@@ -674,6 +722,33 @@ static INT32 DrvInit()
 	AY8910SetAllRoutes(2, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(3, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(4, 0.25, BURN_SND_ROUTE_BOTH);
+
+	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 0);
+	filter_rc_init(1, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
+	filter_rc_init(2, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
+	filter_rc_init(3, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
+	filter_rc_init(4, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
+	filter_rc_init(5, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
+	filter_rc_init(6, FLT_RC_HIGHPASS, 1000, 100, 0, CAP_P(0), 1); //CAP_P(100000), 1); // master out
+	filter_rc_init(7, FLT_RC_HIGHPASS, 1000, 100, 0, CAP_P(0), 1); //CAP_P(100000), 1); // master out
+
+	filter_rc_set_src_gain(0, 0.25);
+	filter_rc_set_src_gain(1, 0.25);
+	filter_rc_set_src_gain(2, 0.25);
+	filter_rc_set_src_gain(3, 0.25);
+	filter_rc_set_src_gain(4, 0.25);
+	filter_rc_set_src_gain(5, 0.25);
+	filter_rc_set_src_gain(6, 1.00);
+	filter_rc_set_src_gain(7, 1.00);
+
+	filter_rc_set_route(0, 0.25, BURN_SND_ROUTE_LEFT);
+	filter_rc_set_route(1, 0.25, BURN_SND_ROUTE_RIGHT);
+	filter_rc_set_route(2, 0.25, BURN_SND_ROUTE_LEFT);
+	filter_rc_set_route(3, 0.25, BURN_SND_ROUTE_RIGHT);
+	filter_rc_set_route(4, 0.25, BURN_SND_ROUTE_LEFT);
+	filter_rc_set_route(5, 0.25, BURN_SND_ROUTE_RIGHT);
+	filter_rc_set_route(6, 0.25, BURN_SND_ROUTE_LEFT);  // master out l
+	filter_rc_set_route(7, 0.25, BURN_SND_ROUTE_RIGHT); // master out r
 
 	GenericTilesInit();
 
@@ -693,6 +768,7 @@ static INT32 DrvExit()
 	AY8910Exit(2);
 	AY8910Exit(3);
 	AY8910Exit(4);
+	filter_rc_exit();
 
 	BurnFree (AllMem);
 
@@ -794,13 +870,12 @@ static INT32 DrvDraw()
 			INT32 rgb = Palette[i];
 			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
 		}
+		DrvRecalc = 0;
 	}
 
 	BurnTransferClear();
 
 	draw_background(0);
-
-//	draw_background(0x0f);
 
 	return 0;
 }
@@ -829,6 +904,7 @@ static INT32 DrvFrame()
 	INT32 nSoundBufferPos = 0;
 
 	DrvDraw();
+	memset (pBurnSoundOut,0,nBurnSoundLen*4);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -839,19 +915,19 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[0];
 		nCyclesDone[0] += ZetRun(nCyclesSegment);
-		if (i == (nInterleave - 1) && *interrupt_enable0) {
-			ZetNmi();
+		if (i == (nInterleave - 248) && *interrupt_enable0) {
+			ZetSetIRQLine(Z80_INPUT_LINE_NMI, ZET_IRQSTATUS_ACK);
 		}
+		ZetClose();
 		
 		M6809Open(0);
 		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[1];
 		nCyclesDone[1] += M6809Run(nCyclesSegment);
-		if (i == (nInterleave - 1) && *interrupt_enable1) {
-			M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 248) && *interrupt_enable1) {
+			M6809SetIRQLine(0, M6809_IRQSTATUS_ACK);
 		}
 		M6809Close();
-		ZetClose();
 
 		ZetOpen(1);
 		nNext = (i + 1) * nCyclesTotal[2] / nInterleave;
@@ -867,8 +943,29 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			//AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
+			//AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+/*			AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
+			AY8910Update(1, &pAY8910Buffer[3], nSegmentLength);
+			AY8910Update(2, &pAY8910Buffer[6], nSegmentLength);
+			AY8910Update(3, &pAY8910Buffer[9], nSegmentLength);
+			AY8910Update(4, &pAY8910Buffer[12], nSegmentLength); */
 			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+
+			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
+			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
+			filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
+			filter_rc_update(3, pAY8910Buffer[3], pSoundBuf, nSegmentLength);
+			filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
+			filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
+		    filter_rc_update(6, pAY8910Buffer[6], pSoundBuf, nSegmentLength);
+			filter_rc_update(7, pAY8910Buffer[7], pSoundBuf, nSegmentLength);
+			filter_rc_update(6, pAY8910Buffer[8], pSoundBuf, nSegmentLength);
+			filter_rc_update(7, pAY8910Buffer[9], pSoundBuf, nSegmentLength);
+			filter_rc_update(6, pAY8910Buffer[10], pSoundBuf, nSegmentLength);
+			filter_rc_update(7, pAY8910Buffer[11], pSoundBuf, nSegmentLength);
+			filter_rc_update(6, pAY8910Buffer[12], pSoundBuf, nSegmentLength);
+			filter_rc_update(7, pAY8910Buffer[13], pSoundBuf, nSegmentLength);
+			filter_rc_update(6, pAY8910Buffer[14], pSoundBuf, nSegmentLength);
 		}
 
 	}
@@ -878,7 +975,29 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
+			//AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+/*			AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
+			AY8910Update(1, &pAY8910Buffer[3], nSegmentLength);
+			AY8910Update(2, &pAY8910Buffer[6], nSegmentLength);
+			AY8910Update(3, &pAY8910Buffer[9], nSegmentLength);
+			AY8910Update(4, &pAY8910Buffer[12], nSegmentLength); */
 			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+
+			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
+			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
+			filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
+			filter_rc_update(3, pAY8910Buffer[3], pSoundBuf, nSegmentLength);
+			filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
+			filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
+		    filter_rc_update(6, pAY8910Buffer[6], pSoundBuf, nSegmentLength);
+			filter_rc_update(7, pAY8910Buffer[7], pSoundBuf, nSegmentLength);
+			filter_rc_update(6, pAY8910Buffer[8], pSoundBuf, nSegmentLength);
+			filter_rc_update(7, pAY8910Buffer[9], pSoundBuf, nSegmentLength);
+			filter_rc_update(6, pAY8910Buffer[10], pSoundBuf, nSegmentLength);
+			filter_rc_update(7, pAY8910Buffer[11], pSoundBuf, nSegmentLength);
+			filter_rc_update(6, pAY8910Buffer[12], pSoundBuf, nSegmentLength);
+			filter_rc_update(7, pAY8910Buffer[13], pSoundBuf, nSegmentLength);
+			filter_rc_update(6, pAY8910Buffer[14], pSoundBuf, nSegmentLength);
 		}
 	}
 

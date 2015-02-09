@@ -62,6 +62,11 @@ void filter_rc_update(INT32 num, INT16 *src, INT16 *pSoundBuf, INT32 length)
 				if ((ptr->output_dir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
 					nRightSample += (INT32)(memory * ptr->gain);
 				}
+
+				if (ptr->output_dir & (FLT_RC_PANNEDLEFT + FLT_RC_PANNEDRIGHT)) { // panned slightly right or left (used in gyruss)
+					nLeftSample  += (INT32)(memory * ((ptr->output_dir & FLT_RC_PANNEDRIGHT) ? (ptr->gain / 3) : (ptr->gain)));
+					nRightSample += (INT32)(memory * ((ptr->output_dir & FLT_RC_PANNEDLEFT ) ? (ptr->gain / 3) : (ptr->gain)));
+				}
 				
 				nLeftSample = BURN_SND_CLIP(nLeftSample);
 				nRightSample = BURN_SND_CLIP(nRightSample);
@@ -96,6 +101,11 @@ void filter_rc_update(INT32 num, INT16 *src, INT16 *pSoundBuf, INT32 length)
 				
 				if ((ptr->output_dir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
 					nRightSample += (INT32)(value * ptr->gain);
+				}
+
+				if (ptr->output_dir & (FLT_RC_PANNEDLEFT + FLT_RC_PANNEDRIGHT)) { // panned slightly right or left (used in gyruss)
+					nLeftSample  += (INT32)(value * ((ptr->output_dir & FLT_RC_PANNEDRIGHT) ? (ptr->gain / 3) : (ptr->gain)));
+					nRightSample += (INT32)(value * ((ptr->output_dir & FLT_RC_PANNEDLEFT ) ? (ptr->gain / 3) : (ptr->gain)));
 				}
 				
 				nLeftSample = BURN_SND_CLIP(nLeftSample);

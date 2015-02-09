@@ -3,6 +3,8 @@
 #define FLT_RC_LOWPASS		0
 #define FLT_RC_HIGHPASS		1
 #define FLT_RC_AC			2
+#define FLT_RC_PANNEDLEFT   4
+#define FLT_RC_PANNEDRIGHT  8
 
 void filter_rc_update(INT32 num, INT16 *src, INT16 *pSoundBuf, INT32 length);
 void filter_rc_set_RC(INT32 num, INT32 type, double R1, double R2, double R3, double C);

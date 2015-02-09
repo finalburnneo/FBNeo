@@ -40,13 +40,18 @@ void filter_rc_update(INT32 num, INT16 *src, INT16 *pSoundBuf, INT32 length)
 	struct flt_rc_info *ptr;
 
 	ptr = &flt_rc_table[num];
-		
+
 	INT32 memory = ptr->state.memory;
-		
+	INT16 value;
+
 	switch (ptr->state.type) {
 		case FLT_RC_LOWPASS: {
 			while (length--) {
-				memory += (((INT32)((*src++ * ptr->src_gain)) - memory) * ptr->state.k) / 0x10000;
+				if (ptr->state.k == 0x10000) {
+					memory = (INT32)(*src++ * ptr->src_gain); // filter disabled
+				} else {
+					memory += (((INT32)((*src++ * ptr->src_gain)) - memory) * ptr->state.k) / 0x10000; // enabled
+				}
 				
 				INT32 nLeftSample = 0, nRightSample = 0;
 				
@@ -77,7 +82,11 @@ void filter_rc_update(INT32 num, INT16 *src, INT16 *pSoundBuf, INT32 length)
 		case FLT_RC_HIGHPASS:
 		case FLT_RC_AC: {
 			while (length--) {
-				INT16 value = (INT32)(*src * ptr->src_gain) - memory;
+				if (ptr->state.k == 0x0) {
+					value = (INT32)(*src * ptr->src_gain); // filter disabled
+				} else {
+					value = (INT32)(*src * ptr->src_gain) - memory; // enabled
+				}
 				
 				INT32 nLeftSample = 0, nRightSample = 0;
 				

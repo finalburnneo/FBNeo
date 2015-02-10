@@ -145,17 +145,17 @@ void t5182Init(INT32 nZ80CPU, INT32 clock)
 
 	ZetInit(nCPU);
 	ZetOpen(nCPU);
-	ZetMapMemory(t5182ROM + 0x0000, 0x0000, 0x1fff, ZET_ROM);
+	ZetMapMemory(t5182ROM + 0x0000, 0x0000, 0x1fff, MAP_ROM);
 
 	for (INT32 i = 0x2000; i < 0x4000; i += 0x800) {
-		ZetMapMemory(t5182RAM,       i, i + 0x7ff, ZET_RAM); // internal ram
+		ZetMapMemory(t5182RAM,       i, i + 0x7ff, MAP_RAM); // internal ram
 	}
 
 	for (INT32 i = 0x4000; i < 0x8000; i += 0x100) {
-		ZetMapMemory(t5182SharedRAM, i, i + 0x0ff, ZET_RAM); // shared ram
+		ZetMapMemory(t5182SharedRAM, i, i + 0x0ff, MAP_RAM); // shared ram
 	}
 
-	ZetMapMemory(t5182ROM + 0x8000, 0x8000, 0xffff, ZET_ROM); // external rom
+	ZetMapMemory(t5182ROM + 0x8000, 0x8000, 0xffff, MAP_ROM); // external rom
 
 	ZetSetOutHandler(t5182_port_write);
 	ZetSetInHandler(t5182_port_read);

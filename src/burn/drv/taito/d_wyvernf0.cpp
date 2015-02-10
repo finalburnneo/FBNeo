@@ -184,7 +184,7 @@ static void rambankswitch(INT32 data)
 
 	*flipscreen = data & 0x03;
 
-	ZetMapMemory(DrvObjRAM + bank, 0x9000, 0x9fff, ZET_RAM);
+	ZetMapMemory(DrvObjRAM + bank, 0x9000, 0x9fff, MAP_RAM);
 }
 
 static void rombankswitch(INT32 data)
@@ -193,7 +193,7 @@ static void rombankswitch(INT32 data)
 
 	*DrvZ80ROMBank = data;
 
-	ZetMapMemory(DrvZ80ROM0 + bank,	0xa000, 0xbfff, ZET_ROM);
+	ZetMapMemory(DrvZ80ROM0 + bank,	0xa000, 0xbfff, MAP_ROM);
 }
 
 static void __fastcall wyvernf0_main_write(UINT16 address, UINT8 data)
@@ -460,21 +460,21 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,		0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM0,		0x8000, 0x8fff, ZET_RAM);
-	ZetMapMemory(DrvFgRAM,			0xc000, 0xc7ff, ZET_RAM);
-	ZetMapMemory(DrvBgRAM,			0xc800, 0xcfff, ZET_RAM);
-	ZetMapMemory(DrvSprRAM,			0xd500, 0xd5ff, ZET_RAM);
-	ZetMapMemory(DrvPalRAM,			0xd800, 0xdbff, ZET_ROM);
+	ZetMapMemory(DrvZ80ROM0,		0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM0,		0x8000, 0x8fff, MAP_RAM);
+	ZetMapMemory(DrvFgRAM,			0xc000, 0xc7ff, MAP_RAM);
+	ZetMapMemory(DrvBgRAM,			0xc800, 0xcfff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,			0xd500, 0xd5ff, MAP_RAM);
+	ZetMapMemory(DrvPalRAM,			0xd800, 0xdbff, MAP_ROM);
 	ZetSetWriteHandler(wyvernf0_main_write);
 	ZetSetReadHandler(wyvernf0_main_read);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x3fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,		0xc000, 0xc7ff, ZET_RAM);
-	ZetMapMemory(DrvZ80ROM1 + 0xe000,	0xe000, 0xefff, ZET_ROM);
+	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1,		0xc000, 0xc7ff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM1 + 0xe000,	0xe000, 0xefff, MAP_ROM);
 	ZetSetWriteHandler(wyvernf0_sound_write);
 	ZetSetReadHandler(wyvernf0_sound_read);
 	ZetClose();

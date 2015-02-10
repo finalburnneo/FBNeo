@@ -190,12 +190,12 @@ static int DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM, 0x0000, 0xbfff, ZET_RAM);
-	ZetMapMemory(DrvZ80RAM, 0xc000, 0xffff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0xbfff, MAP_RAM);
+	ZetMapMemory(DrvZ80RAM, 0xc000, 0xffff, MAP_RAM);
 	//todo: mirror memory properly, allow carts to disable it(how??)
 	//-only- if it causes problems with some games.
-	//ZetMapMemory(DrvZ80RAM, 0xc000, 0xc3ff, ZET_RAM);
-	//ZetMapMemory(DrvZ80RAM, 0xf800, 0xfbff, ZET_RAM); // mirror
+	//ZetMapMemory(DrvZ80RAM, 0xc000, 0xc3ff, MAP_RAM);
+	//ZetMapMemory(DrvZ80RAM, 0xf800, 0xfbff, MAP_RAM); // mirror
 	ZetSetOutHandler(sg1000_write_port);
 	ZetSetInHandler(sg1000_read_port);
 	ZetSetWriteHandler(sg1000_write);

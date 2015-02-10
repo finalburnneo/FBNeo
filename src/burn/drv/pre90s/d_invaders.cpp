@@ -241,14 +241,14 @@ static INT32 DrvInit(INT32 rom_size, INT32 rom_count, UINT32 input_xor)
 
 	ZetInit(0); // really i8080
 	ZetOpen(0);
-	ZetMapMemory(DrvI8080ROM,		0x0000, 0x1fff, ZET_ROM);
-	ZetMapMemory(DrvMainRAM,		0x2000, 0x3fff, ZET_RAM);
-	ZetMapMemory(DrvI8080ROM + 0x4000,	0x4000, 0x5fff, ZET_ROM);
-	ZetMapMemory(DrvMainRAM,		0x6000, 0x7fff, ZET_RAM); // mirror
-	ZetMapMemory(DrvI8080ROM,		0x8000, 0x9fff, ZET_ROM); // mirror
-	ZetMapMemory(DrvMainRAM,		0xa000, 0xbfff, ZET_RAM); // mirror
-	ZetMapMemory(DrvI8080ROM + 0x4000,	0xc000, 0xdfff, ZET_ROM); // mirror
-	ZetMapMemory(DrvMainRAM,		0xe000, 0xffff, ZET_RAM); // mirror
+	ZetMapMemory(DrvI8080ROM,		0x0000, 0x1fff, MAP_ROM);
+	ZetMapMemory(DrvMainRAM,		0x2000, 0x3fff, MAP_RAM);
+	ZetMapMemory(DrvI8080ROM + 0x4000,	0x4000, 0x5fff, MAP_ROM);
+	ZetMapMemory(DrvMainRAM,		0x6000, 0x7fff, MAP_RAM); // mirror
+	ZetMapMemory(DrvI8080ROM,		0x8000, 0x9fff, MAP_ROM); // mirror
+	ZetMapMemory(DrvMainRAM,		0xa000, 0xbfff, MAP_RAM); // mirror
+	ZetMapMemory(DrvI8080ROM + 0x4000,	0xc000, 0xdfff, MAP_ROM); // mirror
+	ZetMapMemory(DrvMainRAM,		0xe000, 0xffff, MAP_RAM); // mirror
 	ZetSetOutHandler(invaders_write_port);
 	ZetSetInHandler(invaders_read_port);
 	ZetClose();

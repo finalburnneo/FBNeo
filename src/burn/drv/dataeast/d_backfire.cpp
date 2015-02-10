@@ -353,11 +353,11 @@ static INT32 DrvInit(UINT32 speedhack)
 
 	ArmInit(0);
 	ArmOpen(0);
-	ArmMapMemory(DrvArmROM,		0x000000, 0x0fffff, ARM_ROM);
-	ArmMapMemory(DrvPalRAM,		0x160000, 0x161fff, ARM_RAM);
-	ArmMapMemory(DrvArmRAM,		0x170000, 0x177fff, ARM_RAM);
-	ArmMapMemory(DrvSprRAM0,	0x184000, 0x185fff, ARM_RAM);
-	ArmMapMemory(DrvSprRAM1,	0x18c000, 0x18dfff, ARM_RAM);
+	ArmMapMemory(DrvArmROM,		0x000000, 0x0fffff, MAP_ROM);
+	ArmMapMemory(DrvPalRAM,		0x160000, 0x161fff, MAP_RAM);
+	ArmMapMemory(DrvArmRAM,		0x170000, 0x177fff, MAP_RAM);
+	ArmMapMemory(DrvSprRAM0,	0x184000, 0x185fff, MAP_RAM);
+	ArmMapMemory(DrvSprRAM1,	0x18c000, 0x18dfff, MAP_RAM);
 	ArmSetWriteByteHandler(backfire_write_byte);
 	ArmSetWriteLongHandler(backfire_write_long);
 	ArmSetReadByteHandler(backfire_read_byte);

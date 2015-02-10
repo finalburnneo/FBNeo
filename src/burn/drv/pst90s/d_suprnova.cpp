@@ -1043,19 +1043,19 @@ static int DrvInit(INT32 bios)
 	Sh2Init(1);
 	Sh2Open(0);
 
-	Sh2MapMemory(DrvSh2BIOS,		0x00000000, 0x0007ffff, SH2_ROM);
-	Sh2MapMemory(DrvNvRAM,			0x00800000, 0x00801fff, SH2_RAM);
-	Sh2MapMemory(DrvSprRAM,			0x02000000, 0x02003fff, SH2_RAM);
-	Sh2MapMemory(DrvSprRegs,		0x02100000, 0x0210003f, SH2_RAM); // sprite regs
-	Sh2MapMemory(DrvV3Regs,			0x02400000, 0x0240007f, SH2_RAM);
-	Sh2MapMemory(DrvVidRAM,			0x02500000, 0x02507fff, SH2_RAM); //0-4000, 4000-7fff A, B
-	Sh2MapMemory(DrvLineRAM,		0x02600000, 0x02607fff, SH2_RAM);
-	Sh2MapMemory(DrvPalRegs,		0x02a00000, 0x02a0001f, SH2_ROM);
-	Sh2MapMemory(DrvPalRAM,			0x02a40000, 0x02a5ffff, SH2_RAM);
-	Sh2MapMemory(DrvSh2ROM,			0x04000000, 0x041fffff, SH2_ROM);
-	Sh2MapMemory(DrvGfxRAM,			0x04800000, 0x0483ffff, SH2_ROM); // tilemap B, graphics tiles
-	Sh2MapMemory(DrvSh2RAM,			0x06000000, 0x060fffff, SH2_RAM);
-	Sh2MapMemory(DrvCacheRAM,		0xc0000000, 0xc0000fff, SH2_RAM);
+	Sh2MapMemory(DrvSh2BIOS,		0x00000000, 0x0007ffff, MAP_ROM);
+	Sh2MapMemory(DrvNvRAM,			0x00800000, 0x00801fff, MAP_RAM);
+	Sh2MapMemory(DrvSprRAM,			0x02000000, 0x02003fff, MAP_RAM);
+	Sh2MapMemory(DrvSprRegs,		0x02100000, 0x0210003f, MAP_RAM); // sprite regs
+	Sh2MapMemory(DrvV3Regs,			0x02400000, 0x0240007f, MAP_RAM);
+	Sh2MapMemory(DrvVidRAM,			0x02500000, 0x02507fff, MAP_RAM); //0-4000, 4000-7fff A, B
+	Sh2MapMemory(DrvLineRAM,		0x02600000, 0x02607fff, MAP_RAM);
+	Sh2MapMemory(DrvPalRegs,		0x02a00000, 0x02a0001f, MAP_ROM);
+	Sh2MapMemory(DrvPalRAM,			0x02a40000, 0x02a5ffff, MAP_RAM);
+	Sh2MapMemory(DrvSh2ROM,			0x04000000, 0x041fffff, MAP_ROM);
+	Sh2MapMemory(DrvGfxRAM,			0x04800000, 0x0483ffff, MAP_ROM); // tilemap B, graphics tiles
+	Sh2MapMemory(DrvSh2RAM,			0x06000000, 0x060fffff, MAP_RAM);
+	Sh2MapMemory(DrvCacheRAM,		0xc0000000, 0xc0000fff, MAP_RAM);
 
 	Sh2SetReadByteHandler (0,		suprnova_read_byte);
 	Sh2SetReadWordHandler (0,		suprnova_read_word);
@@ -1064,7 +1064,7 @@ static int DrvInit(INT32 bios)
 	Sh2SetWriteWordHandler(0,		suprnova_write_word);
 	Sh2SetWriteLongHandler(0,		suprnova_write_long);
 
-	Sh2MapHandler(1,			0x06000000, 0x060fffff, SH2_ROM);
+	Sh2MapHandler(1,			0x06000000, 0x060fffff, MAP_ROM);
 	Sh2SetReadByteHandler (1,		suprnova_hack_read_byte);
 	Sh2SetReadWordHandler (1,		suprnova_hack_read_word);
 	Sh2SetReadLongHandler (1,		suprnova_hack_read_long);

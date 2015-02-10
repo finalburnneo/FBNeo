@@ -504,7 +504,7 @@ static void bankswitch(INT32 bank)
 	bank &= 0x0f;
 	*mainbank = bank;
 
-	ZetMapMemory(DrvZ80ROM0 + 0x10000 + (bank * 0x4000), 0x8000, 0xbfff, ZET_ROM); // bank
+	ZetMapMemory(DrvZ80ROM0 + 0x10000 + (bank * 0x4000), 0x8000, 0xbfff, MAP_ROM); // bank
 }
 
 static void palette_update(UINT16 offset)
@@ -652,7 +652,7 @@ static void __fastcall hardhea2_write(UINT16 address, UINT8 data)
 	{
 		case 0xc200:
 			m_spritebank = ((data & 0x02) ? 1 : 0);
-			ZetMapMemory(DrvSprRAM + (m_spritebank * 0x2000), 0xe000, 0xffff, ZET_RAM);
+			ZetMapMemory(DrvSprRAM + (m_spritebank * 0x2000), 0xe000, 0xffff, MAP_RAM);
 		return;
 
 		case 0xc280:
@@ -682,26 +682,26 @@ static void __fastcall hardhea2_write(UINT16 address, UINT8 data)
 
 		case 0xc508:
 			m_spritebank = 0;
-			ZetMapMemory(DrvSprRAM + 0x0000, 0xe000, 0xffff, ZET_RAM);
+			ZetMapMemory(DrvSprRAM + 0x0000, 0xe000, 0xffff, MAP_RAM);
 		return;
 
 		case 0xc50f:
 			m_spritebank = 1;
-			ZetMapMemory(DrvSprRAM + 0x2000, 0xe000, 0xffff, ZET_RAM);
+			ZetMapMemory(DrvSprRAM + 0x2000, 0xe000, 0xffff, MAP_RAM);
 		return;
 
 		case 0xc507:
 		case 0xc556:
 		case 0xc560:
 			m_rambank = 1;
-			ZetMapMemory(DrvZ80RAM0 + 0x1800, 0xc800, 0xdfff, ZET_RAM);
+			ZetMapMemory(DrvZ80RAM0 + 0x1800, 0xc800, 0xdfff, MAP_RAM);
 		return;
 
 		case 0xc522:
 		case 0xc528:
 		case 0xc533:
 			m_rambank = 0;
-			ZetMapMemory(DrvZ80RAM0 + 0x0000, 0xc800, 0xdfff, ZET_RAM);
+			ZetMapMemory(DrvZ80RAM0 + 0x0000, 0xc800, 0xdfff, MAP_RAM);
 		return;	
 	}
 }
@@ -746,7 +746,7 @@ static void __fastcall sparkman_write(UINT16 address, UINT8 data)
 
 			INT32 bank = m_spritebank * 0x2000;
 
-			ZetMapMemory(DrvSprRAM + bank, 0xe000, 0xffff, ZET_RAM);
+			ZetMapMemory(DrvSprRAM + bank, 0xe000, 0xffff, MAP_RAM);
 		}
 		return;
 
@@ -763,9 +763,9 @@ static void __fastcall sparkman_write(UINT16 address, UINT8 data)
 			disable_mainram_write = (data & 0x01);
 			*nmi_enable = data & 0x20;
 			if (disable_mainram_write) {
-				ZetUnmapMemory(0xc800,0xdfff, ZET_WRITE);
+				ZetUnmapMemory(0xc800,0xdfff, MAP_WRITE);
 			} else {
-				ZetMapMemory(DrvZ80RAM0,0xc800,0xdfff, ZET_WRITE);
+				ZetMapMemory(DrvZ80RAM0,0xc800,0xdfff, MAP_WRITE);
 			}
 		return;
 
@@ -822,7 +822,7 @@ static void __fastcall starfigh_write(UINT16 address, UINT8 data)
 	{
 		case 0xc200:
 			m_spritebank = m_spritebank_latch;
-			ZetMapMemory(DrvSprRAM + m_spritebank * 0x2000, 0xe000, 0xffff, ZET_RAM);
+			ZetMapMemory(DrvSprRAM + m_spritebank * 0x2000, 0xe000, 0xffff, MAP_RAM);
 		return;
 
 		case 0xc280:
@@ -1346,19 +1346,19 @@ static INT32 HardheadInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,		0x0000, 0x7fff, ZET_ROM);
+	ZetMapMemory(DrvZ80ROM0,		0x0000, 0x7fff, MAP_ROM);
 	bankswitch(0); // ?
-	ZetMapMemory(DrvZ80RAM0,		0xc000, 0xd7ff, ZET_RAM);
-	ZetMapMemory(DrvPalRAM,			0xd800, 0xd9ff, ZET_ROM);
-	ZetMapMemory(DrvSprRAM,			0xe000, 0xffff, ZET_RAM);
+	ZetMapMemory(DrvZ80RAM0,		0xc000, 0xd7ff, MAP_RAM);
+	ZetMapMemory(DrvPalRAM,			0xd800, 0xd9ff, MAP_ROM);
+	ZetMapMemory(DrvSprRAM,			0xe000, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(hardhead_write);
 	ZetSetReadHandler(hardhead_read);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,		0xc000, 0xc7ff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1,		0xc000, 0xc7ff, MAP_RAM);
 	ZetSetWriteHandler(hardhead_sound_write);
 	ZetSetReadHandler(hardhead_sound_read);
 	ZetClose();
@@ -1427,21 +1427,21 @@ static INT32 SparkmanInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	//ZetMapMemory(DrvZ80ROM0,		0x0000, 0x7fff, ZET_ROM);
+	//ZetMapMemory(DrvZ80ROM0,		0x0000, 0x7fff, MAP_ROM);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Decrypted, DrvZ80ROM0);
 	//bankswitch(0); // ?
-	ZetMapMemory(DrvPalRAM,			0xc600, 0xc7ff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM0,		0xc800, 0xdfff, ZET_ROM);
-	ZetMapMemory(DrvSprRAM,			0xe000, 0xffff, ZET_RAM); // banked
+	ZetMapMemory(DrvPalRAM,			0xc600, 0xc7ff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM0,		0xc800, 0xdfff, MAP_ROM);
+	ZetMapMemory(DrvSprRAM,			0xe000, 0xffff, MAP_RAM); // banked
 	ZetSetWriteHandler(sparkman_write);
 	ZetSetReadHandler(sparkman_read);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,		0xc000, 0xc7ff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1,		0xc000, 0xc7ff, MAP_RAM);
 	ZetSetWriteHandler(hardhead_sound_write);
 	ZetSetReadHandler(hardhead_sound_read);
 	ZetClose();
@@ -1583,21 +1583,21 @@ static INT32 StarfighInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	//ZetMapMemory(DrvZ80ROM0,		0x0000, 0x7fff, ZET_ROM);
+	//ZetMapMemory(DrvZ80ROM0,		0x0000, 0x7fff, MAP_ROM);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Decrypted, DrvZ80ROM0);
 	//bankswitch(0); // ?
-	ZetMapMemory(DrvPalRAM,			0xc600, 0xc7ff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM0,		0xc800, 0xdfff, ZET_RAM);
-	ZetMapMemory(DrvSprRAM,			0xe000, 0xffff, ZET_RAM); // banked
+	ZetMapMemory(DrvPalRAM,			0xc600, 0xc7ff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM0,		0xc800, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,			0xe000, 0xffff, MAP_RAM); // banked
 	ZetSetWriteHandler(starfigh_write);
 	ZetSetReadHandler(sparkman_read);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,		0xc000, 0xc7ff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1,		0xc000, 0xc7ff, MAP_RAM);
 	ZetSetWriteHandler(hardhead_sound_write);
 	ZetSetReadHandler(hardhead_sound_read);
 	ZetClose();
@@ -1680,19 +1680,19 @@ static INT32 RrangerInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,		0x0000, 0x7fff, ZET_ROM);
+	ZetMapMemory(DrvZ80ROM0,		0x0000, 0x7fff, MAP_ROM);
 	bankswitch(0); // ?
-	ZetMapMemory(DrvPalRAM,			0xc600, 0xc7ff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM0,		0xc800, 0xdfff, ZET_RAM);
-	ZetMapMemory(DrvSprRAM,			0xe000, 0xffff, ZET_RAM);
+	ZetMapMemory(DrvPalRAM,			0xc600, 0xc7ff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM0,		0xc800, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,			0xe000, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(rranger_write);
 	ZetSetReadHandler(rranger_read);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,		0xc000, 0xc7ff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1,		0xc000, 0xc7ff, MAP_RAM);
 	ZetSetWriteHandler(rranger_sound_write);
 	ZetSetReadHandler(rranger_sound_read);
 	ZetClose();
@@ -1776,29 +1776,29 @@ static INT32 Hardhea2Init()
 
 	ZetInit(0);
 	ZetOpen(0);
-	//ZetMapMemory(DrvZ80ROM0,		0x0000, 0x7fff, ZET_ROM);
+	//ZetMapMemory(DrvZ80ROM0,		0x0000, 0x7fff, MAP_ROM);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM0);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Decrypted, DrvZ80ROM0);
 	bankswitch(0); // ?
 	m_rambank = 0;
-	ZetMapMemory(DrvPalRAM,			0xc600, 0xc7ff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM0,		0xc800, 0xdfff, ZET_RAM);
-	ZetMapMemory(DrvSprRAM,			0xe000, 0xffff, ZET_RAM);
+	ZetMapMemory(DrvPalRAM,			0xc600, 0xc7ff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM0,		0xc800, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,			0xe000, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(hardhea2_write);
 	ZetSetReadHandler(hardhea2_read);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,		0x0000, 0xbfff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,		0xe000, 0xe7ff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM1,		0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1,		0xe000, 0xe7ff, MAP_RAM);
 	ZetSetWriteHandler(hardhea2_sound_write);
 	ZetSetReadHandler(hardhea2_sound_read);
 	ZetClose();
 
 	ZetInit(2);
 	ZetOpen(2);
-	ZetMapMemory(DrvZ80ROM2,		0x0000, 0xffff, ZET_ROM);
+	ZetMapMemory(DrvZ80ROM2,		0x0000, 0xffff, MAP_ROM);
 	ZetSetOutHandler(hardhea2_pcm_write_port);
 	ZetSetInHandler(hardhea2_pcm_read_port);
 	ZetClose();
@@ -2431,16 +2431,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_WRITE) {
 		ZetOpen(0);
 		bankswitch(*mainbank);
-		ZetMapMemory(DrvSprRAM + (m_spritebank * 0x2000), 0xe000, 0xffff, ZET_RAM);
+		ZetMapMemory(DrvSprRAM + (m_spritebank * 0x2000), 0xe000, 0xffff, MAP_RAM);
 		if (Sparkman) {
 			if (disable_mainram_write) {
-				ZetUnmapMemory(0xc800,0xdfff, ZET_WRITE);
+				ZetUnmapMemory(0xc800,0xdfff, MAP_WRITE);
 			} else {
-				ZetMapMemory(DrvZ80RAM0,0xc800,0xdfff, ZET_WRITE);
+				ZetMapMemory(DrvZ80RAM0,0xc800,0xdfff, MAP_WRITE);
 			}
 		}
 		if (Hardhead2) {
-			ZetMapMemory(DrvZ80RAM0 + (m_rambank * 0x1800), 0xc800, 0xdfff, ZET_RAM);
+			ZetMapMemory(DrvZ80RAM0 + (m_rambank * 0x1800), 0xc800, 0xdfff, MAP_RAM);
 		}
 		ZetClose();
 	}

@@ -428,7 +428,7 @@ static void bankswitch(INT32 data)
 {
 	bank_data = data & 0x0f;
 
-	ZetMapMemory(DrvZ80ROM0 + 0x8000 + (bank_data * 0x4000), 0x8000, 0xbfff, ZET_ROM);
+	ZetMapMemory(DrvZ80ROM0 + 0x8000 + (bank_data * 0x4000), 0x8000, 0xbfff, MAP_ROM);
 }
 
 static void __fastcall sidearms_main_write(UINT16 address, UINT8 data)
@@ -889,19 +889,19 @@ static INT32 SidearmsInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvPalRAM,		0xc000, 0xc7ff, ZET_ROM);
-	ZetMapMemory(DrvVidRAM,		0xd000, 0xdfff, ZET_RAM);
-	ZetMapMemory(DrvZ80RAM0,	0xe000, 0xefff, ZET_RAM);
-	ZetMapMemory(DrvSprRAM,		0xf000, 0xffff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvPalRAM,		0xc000, 0xc7ff, MAP_ROM);
+	ZetMapMemory(DrvVidRAM,		0xd000, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvZ80RAM0,	0xe000, 0xefff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,		0xf000, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(sidearms_main_write);
 	ZetSetReadHandler(sidearms_main_read);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,	0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,	0xc000, 0xc7ff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM1,	0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1,	0xc000, 0xc7ff, MAP_RAM);
 	ZetSetWriteHandler(sidearms_sound_write);
 	ZetSetReadHandler(sidearms_sound_read);
 	ZetClose();
@@ -964,19 +964,19 @@ static INT32 TurtshipInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM0,	0xc000, 0xcfff, ZET_RAM);
-	ZetMapMemory(DrvSprRAM,		0xd000, 0xdfff, ZET_RAM);
-	ZetMapMemory(DrvPalRAM,		0xe000, 0xe7ff, ZET_ROM);
-	ZetMapMemory(DrvVidRAM,		0xf000, 0xffff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM0,	0xc000, 0xcfff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,		0xd000, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvPalRAM,		0xe000, 0xe7ff, MAP_ROM);
+	ZetMapMemory(DrvVidRAM,		0xf000, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(turtship_main_write);
 	ZetSetReadHandler(turtship_main_read);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,	0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,	0xc000, 0xc7ff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM1,	0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1,	0xc000, 0xc7ff, MAP_RAM);
 	ZetSetWriteHandler(sidearms_sound_write);
 	ZetSetReadHandler(sidearms_sound_read);
 	ZetClose();
@@ -1038,19 +1038,19 @@ static INT32 WhizzInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvPalRAM,		0xc000, 0xc7ff, ZET_ROM);
-	ZetMapMemory(DrvVidRAM,		0xd000, 0xdfff, ZET_RAM);
-	ZetMapMemory(DrvZ80RAM0,	0xe000, 0xefff, ZET_RAM);
-	ZetMapMemory(DrvSprRAM,		0xf000, 0xffff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvPalRAM,		0xc000, 0xc7ff, MAP_ROM);
+	ZetMapMemory(DrvVidRAM,		0xd000, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvZ80RAM0,	0xe000, 0xefff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,		0xf000, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(whizz_main_write);
 	ZetSetReadHandler(whizz_main_read);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,	0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,	0xf800, 0xffff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM1,	0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1,	0xf800, 0xffff, MAP_RAM);
 	ZetSetOutHandler(whizz_sound_write_port);
 	ZetSetInHandler(whizz_sound_read_port);
 	ZetClose();

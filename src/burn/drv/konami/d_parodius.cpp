@@ -326,7 +326,7 @@ static void parodius_set_lines(INT32 lines)
 {
 	nDrvRomBank[0] = lines;
 
-	konamiMapMemory(DrvKonROM + 0x10000 + ((~lines & 0x0f) * 0x4000), 0x6000, 0x9fff, KON_ROM); 
+	konamiMapMemory(DrvKonROM + 0x10000 + ((~lines & 0x0f) * 0x4000), 0x6000, 0x9fff, MAP_ROM); 
 }
 
 static INT32 DrvDoReset()
@@ -416,9 +416,9 @@ static INT32 DrvInit()
 
 	konamiInit(0);
 	konamiOpen(0);
-	konamiMapMemory(DrvKonRAM,		0x0800, 0x1fff, KON_RAM);
-	konamiMapMemory(DrvKonROM + 0x10000,	0x6000, 0x9fff, KON_ROM);
-	konamiMapMemory(DrvKonROM + 0x0a000,	0xa000, 0xffff, KON_ROM);
+	konamiMapMemory(DrvKonRAM,		0x0800, 0x1fff, MAP_RAM);
+	konamiMapMemory(DrvKonROM + 0x10000,	0x6000, 0x9fff, MAP_ROM);
+	konamiMapMemory(DrvKonROM + 0x0a000,	0xa000, 0xffff, MAP_ROM);
 	konamiSetWriteHandler(parodius_main_write);
 	konamiSetReadHandler(parodius_main_read);
 	konamiSetlinesCallback(parodius_set_lines);

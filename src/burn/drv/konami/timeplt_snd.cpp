@@ -105,11 +105,11 @@ void TimepltSndInit(UINT8 *rom, UINT8 *ram, INT32 z80number)
 
 	ZetInit(z80_select);
 	ZetOpen(z80_select);
-	ZetMapMemory(z80rom,	0x0000, 0x1fff, ZET_ROM);
-	ZetMapMemory(z80ram,	0x3000, 0x33ff, ZET_RAM);
-	ZetMapMemory(z80ram,	0x3400, 0x37ff, ZET_RAM);
-	ZetMapMemory(z80ram,	0x3800, 0x3bff, ZET_RAM);
-	ZetMapMemory(z80ram,	0x3c00, 0x3fff, ZET_RAM);
+	ZetMapMemory(z80rom,	0x0000, 0x1fff, MAP_ROM);
+	ZetMapMemory(z80ram,	0x3000, 0x33ff, MAP_RAM);
+	ZetMapMemory(z80ram,	0x3400, 0x37ff, MAP_RAM);
+	ZetMapMemory(z80ram,	0x3800, 0x3bff, MAP_RAM);
+	ZetMapMemory(z80ram,	0x3c00, 0x3fff, MAP_RAM);
 	ZetSetWriteHandler(timeplt_sound_write);
 	ZetSetReadHandler(timeplt_sound_read);
 	ZetClose();

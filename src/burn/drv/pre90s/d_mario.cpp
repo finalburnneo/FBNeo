@@ -471,11 +471,11 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM, 	0x0000, 0x5fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM, 	0x6000, 0x6fff, ZET_RAM);
-	ZetMapMemory(DrvSprRAM, 	0x7000, 0x73ff, ZET_RAM);
-	ZetMapMemory(DrvVidRAM, 	0x7400, 0x77ff, ZET_RAM);
-	ZetMapMemory(DrvZ80ROM + 0xf000,0xf000, 0xffff, ZET_ROM);
+	ZetMapMemory(DrvZ80ROM, 	0x0000, 0x5fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 	0x6000, 0x6fff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM, 	0x7000, 0x73ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM, 	0x7400, 0x77ff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM + 0xf000,0xf000, 0xffff, MAP_ROM);
 	ZetSetWriteHandler(mario_main_write);
 	ZetSetReadHandler(mario_main_read);
 	ZetSetOutHandler(mario_main_write_port);
@@ -489,8 +489,8 @@ static INT32 DrvInit()
 
 		ZetInit(1);
 		ZetOpen(1);
-		ZetMapMemory(DrvSndROM,	0x0000, 0x0fff, ZET_ROM);
-		ZetMapMemory(DrvSndRAM, 0x2000, 0x23ff, ZET_RAM);
+		ZetMapMemory(DrvSndROM,	0x0000, 0x0fff, MAP_ROM);
+		ZetMapMemory(DrvSndRAM, 0x2000, 0x23ff, MAP_RAM);
 		ZetSetWriteHandler(masao_sound_write);
 		ZetSetReadHandler(masao_sound_read);
 		ZetClose();

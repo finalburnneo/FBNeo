@@ -609,7 +609,7 @@ static void cpu0_bankswitch(INT32 data)
 {
 	nBankAddress0 = data;
 
-	ZetMapMemory(DrvZ80ROM0 + ((nBankAddress0 ^ bankxor) * 0x2000), 0xc000, 0xdfff, ZET_ROM);
+	ZetMapMemory(DrvZ80ROM0 + ((nBankAddress0 ^ bankxor) * 0x2000), 0xc000, 0xdfff, MAP_ROM);
 }
 
 static void __fastcall djboy_main_write(UINT16 address, UINT8 data)
@@ -665,7 +665,7 @@ static void cpu1_bankswitch(INT32 data)
 
 	nBankAddress1 = bankdata[data & 0x0f];
 
-	ZetMapMemory(DrvZ80ROM1 + (nBankAddress1 * 0x4000), 0x8000, 0xbfff, ZET_ROM);
+	ZetMapMemory(DrvZ80ROM1 + (nBankAddress1 * 0x4000), 0x8000, 0xbfff, MAP_ROM);
 }
 
 static void __fastcall djboy_cpu1_write_port(UINT16 port, UINT8 data)
@@ -734,7 +734,7 @@ static void cpu2_bankswitch(INT32 data)
 {
 	nBankAddress2 = data;
 
-	ZetMapMemory(DrvZ80ROM2 + (data * 0x04000), 0x8000, 0xbfff, ZET_ROM);
+	ZetMapMemory(DrvZ80ROM2 + (data * 0x04000), 0x8000, 0xbfff, MAP_ROM);
 }
 
 static void __fastcall djboy_cpu2_write_port(UINT16 port, UINT8 data)
@@ -917,19 +917,19 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,		0x0000, 0xafff, ZET_ROM);
-	ZetMapMemory(DrvSprRAM,			0xb000, 0xbfff, ZET_ROM); // handler...
-	ZetMapMemory(DrvShareRAM0,		0xe000, 0xffff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM0,		0x0000, 0xafff, MAP_ROM);
+	ZetMapMemory(DrvSprRAM,			0xb000, 0xbfff, MAP_ROM); // handler...
+	ZetMapMemory(DrvShareRAM0,		0xe000, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(djboy_main_write);
 	ZetSetOutHandler(djboy_main_write_port);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvVidRAM,			0xc000, 0xcfff, ZET_RAM);
-	ZetMapMemory(DrvPalRAM,			0xd000, 0xd8ff, ZET_ROM); // handler
-	ZetMapMemory(DrvShareRAM0,		0xe000, 0xffff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvVidRAM,			0xc000, 0xcfff, MAP_RAM);
+	ZetMapMemory(DrvPalRAM,			0xd000, 0xd8ff, MAP_ROM); // handler
+	ZetMapMemory(DrvShareRAM0,		0xe000, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(djboy_cpu1_write);
 	ZetSetOutHandler(djboy_cpu1_write_port);
 	ZetSetInHandler(djboy_cpu1_read_port);
@@ -937,8 +937,8 @@ static INT32 DrvInit()
 
 	ZetInit(2);
 	ZetOpen(2);
-	ZetMapMemory(DrvZ80ROM2,		0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM2,		0xc000, 0xdfff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM2,		0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM2,		0xc000, 0xdfff, MAP_RAM);
 	ZetSetOutHandler(djboy_cpu2_write_port);
 	ZetSetInHandler(djboy_cpu2_read_port);
 	ZetClose();

@@ -185,7 +185,7 @@ static void bankswitch(INT32 data)
 {
 	cpu_bank = (data & 0x07);
 
-	ZetMapMemory(DrvZ80ROM1 + 0x10000 + (cpu_bank * 0x4000), 0x4000, 0x7fff, ZET_ROM);
+	ZetMapMemory(DrvZ80ROM1 + 0x10000 + (cpu_bank * 0x4000), 0x4000, 0x7fff, MAP_ROM);
 }
 
 static void __fastcall xxmission_sub_write(UINT16 address, UINT8 data)
@@ -402,26 +402,26 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvFgRAM,		0xc000, 0xc7ff, ZET_RAM);
-//	ZetMapMemory(DrvBgRAM,		0xc800, 0xcfff, ZET_RAM);
-	ZetMapMemory(DrvSprRAM,		0xd000, 0xd7ff, ZET_RAM);
-	ZetMapMemory(DrvPalRAM,		0xd800, 0xdaff, ZET_ROM);
-	ZetMapMemory(DrvShareRAM0,	0xe000, 0xefff, ZET_RAM);
-	ZetMapMemory(DrvShareRAM1,	0xf000, 0xffff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvFgRAM,		0xc000, 0xc7ff, MAP_RAM);
+//	ZetMapMemory(DrvBgRAM,		0xc800, 0xcfff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,		0xd000, 0xd7ff, MAP_RAM);
+	ZetMapMemory(DrvPalRAM,		0xd800, 0xdaff, MAP_ROM);
+	ZetMapMemory(DrvShareRAM0,	0xe000, 0xefff, MAP_RAM);
+	ZetMapMemory(DrvShareRAM1,	0xf000, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(xxmission_main_write);
 	ZetSetReadHandler(xxmission_read);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,	0x0000, 0x3fff, ZET_ROM);
-	ZetMapMemory(DrvFgRAM,		0xc000, 0xc7ff, ZET_RAM);
-//	ZetMapMemory(DrvBgRAM,		0xc800, 0xcfff, ZET_RAM);
-	ZetMapMemory(DrvSprRAM,		0xd000, 0xd7ff, ZET_RAM);
-	ZetMapMemory(DrvPalRAM,		0xd800, 0xdaff, ZET_ROM);
-	ZetMapMemory(DrvShareRAM1,	0xe000, 0xefff, ZET_RAM);
-	ZetMapMemory(DrvShareRAM0,	0xf000, 0xffff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM1,	0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(DrvFgRAM,		0xc000, 0xc7ff, MAP_RAM);
+//	ZetMapMemory(DrvBgRAM,		0xc800, 0xcfff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,		0xd000, 0xd7ff, MAP_RAM);
+	ZetMapMemory(DrvPalRAM,		0xd800, 0xdaff, MAP_ROM);
+	ZetMapMemory(DrvShareRAM1,	0xe000, 0xefff, MAP_RAM);
+	ZetMapMemory(DrvShareRAM0,	0xf000, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(xxmission_sub_write);
 	ZetSetReadHandler(xxmission_read);
 	ZetClose();

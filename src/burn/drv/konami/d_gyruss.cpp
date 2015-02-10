@@ -350,7 +350,7 @@ void AY8910_0_portBwrite(UINT32 port, UINT32 data)
 	{
 		/* low bit: 47000pF = 0.047uF */
 		/* high bit: 220000pF = 0.22uF */
-		//discrete_sound_w(device, NODE(3 * chip + i + 21), data & 3);
+
 		filter_write(i, data & 3);
 		data >>= 2;
 	}
@@ -364,7 +364,7 @@ void AY8910_1_portBwrite(UINT32 port, UINT32 data)
 	{
 		/* low bit: 47000pF = 0.047uF */
 		/* high bit: 220000pF = 0.22uF */
-		//discrete_sound_w(device, NODE(3 * chip + i + 21), data & 3);
+
 		filter_write(i + 3, data & 3);
 		data >>= 2;
 	}
@@ -873,7 +873,7 @@ static void draw_8x16_tile_line(INT32 sx, INT32 sy, INT32 color, UINT8 *gfx_base
 	{
 		INT32 pxl = src[x ^ flipx];
 
-		if (sx < 0 || sx >= nScreenWidth || !pxl) continue;
+		if (sx < 8 || sx >= (nScreenWidth - 8) || !pxl) continue;
 
 		pTransDraw[(line * nScreenWidth) + sx] = pxl | color;
 	}

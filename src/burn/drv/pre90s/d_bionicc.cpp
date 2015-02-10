@@ -663,7 +663,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nTotalCycles[0] -= SekRun(nTotalCycles[0] / (nInterleave - i));
-		if (i != (nInterleave - 1)) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		if (i != (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 		nTotalCycles[1] -= ZetRun(nTotalCycles[1] / (nInterleave - i));
 		if ((i & 1) == 1) ZetNmi();
@@ -676,7 +676,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

@@ -155,7 +155,7 @@ static void pacland_main_write(UINT16 address, UINT8 data)
 	if ((address & 0xf000) == 0x7000) {
 		INT32 bit = ~address & (1 << 11);
 		interrupt_enable[0] = bit ? 1 : 0;
-		if (!bit) M6809SetIRQLine(0, M6809_IRQSTATUS_NONE);
+		if (!bit) M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 	}
 
@@ -235,7 +235,7 @@ static void pacland_mcu_write(UINT16 address, UINT8 data)
 	if ((address & 0xc000) == 0x4000) {
 		INT32 bit = (~address >> 13) & 1;
 		interrupt_enable[1] = bit;
-		if (!bit) HD63701SetIRQLine(0, HD63701_IRQSTATUS_NONE);
+		if (!bit) HD63701SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 	}
 }
@@ -773,14 +773,14 @@ static INT32 DrvFrame()
 		INT32 nSegment = nCyclesTotal[0] / nInterleave;
 
 		nCyclesDone[0] += M6809Run(nSegment);
-		if (i == (nInterleave - 1) && interrupt_enable[0]) M6809SetIRQLine(0, M6809_IRQSTATUS_ACK);
+		if (i == (nInterleave - 1) && interrupt_enable[0]) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		nSegment = nCyclesTotal[1] / nInterleave;
 
 		if (mcu_reset) {
 			nCyclesDone[1] += nSegment;
 		} else {
 			nCyclesDone[1] += HD63701Run(nSegment);
-			if (i == (nInterleave - 1) && interrupt_enable[1]) HD63701SetIRQLine(0, HD63701_IRQSTATUS_ACK);
+			if (i == (nInterleave - 1) && interrupt_enable[1]) HD63701SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 		
 		if (pBurnSoundOut) {

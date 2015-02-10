@@ -1067,19 +1067,19 @@ void DrvDdragonHD6309WriteByte(UINT16 Address, UINT8 Data)
 			} else {
 				if (DrvSubCPUBusy == 0) {
 					if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {
-						HD63701SetIRQLine(HD63701_INPUT_LINE_NMI, HD63701_IRQSTATUS_ACK);
+						HD63701SetIRQLine(HD63701_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
 					}
 				
 					if (DrvSubCPUType == DD_CPU_TYPE_HD6309) {
 						HD6309Close();
 						HD6309Open(1);
-						HD6309SetIRQLine(HD6309_INPUT_LINE_NMI, HD6309_IRQSTATUS_ACK);
+						HD6309SetIRQLine(HD6309_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
 						HD6309Close();
 						HD6309Open(0);
 					}
 				
 					if (DrvSubCPUType == DD_CPU_TYPE_M6803) {
-						M6803SetIRQLine(M6803_INPUT_LINE_NMI, M6803_IRQSTATUS_ACK);
+						M6803SetIRQLine(M6803_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
 					}
 				
 					if (DrvSubCPUType == DD_CPU_TYPE_Z80) {
@@ -1114,17 +1114,17 @@ void DrvDdragonHD6309WriteByte(UINT16 Address, UINT8 Data)
 		}
 		
 		case 0x380b: {
-			HD6309SetIRQLine(HD6309_INPUT_LINE_NMI, HD6309_IRQSTATUS_NONE);
+			HD6309SetIRQLine(HD6309_INPUT_LINE_NMI, CPU_IRQSTATUS_NONE);
 			return;
 		}
 		
 		case 0x380c: {
-			HD6309SetIRQLine(HD6309_FIRQ_LINE, HD6309_IRQSTATUS_NONE);
+			HD6309SetIRQLine(HD6309_FIRQ_LINE, CPU_IRQSTATUS_NONE);
 			return;
 		}
 
 		case 0x380d: {
-			HD6309SetIRQLine(HD6309_IRQ_LINE, HD6309_IRQSTATUS_NONE);
+			HD6309SetIRQLine(HD6309_IRQ_LINE, CPU_IRQSTATUS_NONE);
 			return;
 		}
 		
@@ -1132,7 +1132,7 @@ void DrvDdragonHD6309WriteByte(UINT16 Address, UINT8 Data)
 			DrvSoundLatch = Data;
 			if (DrvSoundCPUType == DD_CPU_TYPE_M6809) {
 				M6809Open(0);
-				M6809SetIRQLine(M6809_IRQ_LINE, M6809_IRQSTATUS_ACK);
+				M6809SetIRQLine(M6809_IRQ_LINE, CPU_IRQSTATUS_ACK);
 				M6809Close();
 			}
 			
@@ -1175,10 +1175,10 @@ void DrvDdragonHD63701WriteByte(UINT16 Address, UINT8 Data)
 		if (Address == 0x17) {
 			if (Data & 3) {
 				HD6309Open(0);
-				HD6309SetIRQLine(HD6309_IRQ_LINE, HD6309_IRQSTATUS_ACK);
+				HD6309SetIRQLine(HD6309_IRQ_LINE, CPU_IRQSTATUS_ACK);
 				HD6309Close();
 				
-				HD63701SetIRQLine(HD63701_INPUT_LINE_NMI, HD63701_IRQSTATUS_NONE);
+				HD63701SetIRQLine(HD63701_INPUT_LINE_NMI, CPU_IRQSTATUS_NONE);
 			}
 		}
 		return;
@@ -1221,11 +1221,11 @@ void DrvDdragonbSubHD6309WriteByte(UINT16 Address, UINT8 Data)
 				HD6309Close();
 				
 				HD6309Open(0);
-				HD6309SetIRQLine(HD6309_IRQ_LINE, HD6309_IRQSTATUS_ACK);
+				HD6309SetIRQLine(HD6309_IRQ_LINE, CPU_IRQSTATUS_ACK);
 				HD6309Close();
 				
 				HD6309Open(1);
-				HD6309SetIRQLine(HD6309_INPUT_LINE_NMI, HD6309_IRQSTATUS_NONE);
+				HD6309SetIRQLine(HD6309_INPUT_LINE_NMI, CPU_IRQSTATUS_NONE);
 			}
 		}
 		return;
@@ -1283,10 +1283,10 @@ void DrvDdragonbaM6803WriteByte(UINT16 Address, UINT8 Data)
 
 void DrvDdragonbaM6803WritePort(UINT16, UINT8)
 {
-	M6803SetIRQLine(M6803_INPUT_LINE_NMI, M6803_IRQSTATUS_NONE);
+	M6803SetIRQLine(M6803_INPUT_LINE_NMI, CPU_IRQSTATUS_NONE);
 	
 	HD6309Open(0);
-	HD6309SetIRQLine(HD6309_IRQ_LINE, HD6309_IRQSTATUS_ACK);
+	HD6309SetIRQLine(HD6309_IRQ_LINE, CPU_IRQSTATUS_ACK);
 	HD6309Close();
 }
 
@@ -1306,7 +1306,7 @@ void __fastcall Ddragon2SubZ80Write(UINT16 Address, UINT8 Data)
 		
 		case 0xe000: {
 			HD6309Open(0);
-			HD6309SetIRQLine(HD6309_IRQ_LINE, HD6309_IRQSTATUS_ACK);
+			HD6309SetIRQLine(HD6309_IRQ_LINE, CPU_IRQSTATUS_ACK);
 			HD6309Close();
 			return;
 		}
@@ -1321,7 +1321,7 @@ UINT8 DrvDdragonM6809ReadByte(UINT16 Address)
 {
 	switch (Address) {
 		case 0x1000: {
-			M6809SetIRQLine(M6809_IRQ_LINE, M6809_IRQSTATUS_NONE);
+			M6809SetIRQLine(M6809_IRQ_LINE, CPU_IRQSTATUS_NONE);
 			return DrvSoundLatch;
 		}
 		
@@ -1482,23 +1482,23 @@ static INT32 Dd2SpritePlaneOffsets[4]     = { 0x300000, 0x300004, 0, 4 };
 static void DrvYM2151IrqHandler(INT32 Irq)
 {
 	if (Irq) {
-		M6809SetIRQLine(M6809_FIRQ_LINE, M6809_IRQSTATUS_ACK);
+		M6809SetIRQLine(M6809_FIRQ_LINE, CPU_IRQSTATUS_ACK);
 #if 1
 		// This fixes music tempo but breaks MSM5205 sound if we use the M6809 for the MSM5205 timing,
 		// because the interleave run count is 190 cycles
 		nCyclesDone[2] += M6809Run(1000);
 #endif
 	} else {
-		M6809SetIRQLine(M6809_FIRQ_LINE, M6809_IRQSTATUS_NONE);
+		M6809SetIRQLine(M6809_FIRQ_LINE, CPU_IRQSTATUS_NONE);
 	}
 }
 
 static void Ddragon2YM2151IrqHandler(INT32 Irq)
 {
 	if (Irq) {
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -2495,14 +2495,14 @@ static INT32 DrvFrame()
 		if (i == VBlankSlice) {
 			DrvVBlank = 1;
 			HD6309Open(0);
-			HD6309SetIRQLine(HD6309_INPUT_LINE_NMI, HD6309_IRQSTATUS_ACK);
+			HD6309SetIRQLine(HD6309_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
 			HD6309Close();
 		}
 		
 		for (INT32 j = 0; j < 16; j++) {
 			if (i == FIRQFireSlice[j]) {
 				HD6309Open(0);
-				HD6309SetIRQLine(HD6309_FIRQ_LINE, HD6309_IRQSTATUS_ACK);
+				HD6309SetIRQLine(HD6309_FIRQ_LINE, CPU_IRQSTATUS_ACK);
 				HD6309Close();
 			}
 		}
@@ -2612,11 +2612,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			
 			if (DrvSubCPUBusy == 0) {
 				if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {
-					HD63701SetIRQLine(HD63701_INPUT_LINE_NMI, HD63701_IRQSTATUS_ACK);
+					HD63701SetIRQLine(HD63701_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
 				}
 				
 				if (DrvSubCPUType == DD_CPU_TYPE_M6803) {
-					M6803SetIRQLine(M6803_INPUT_LINE_NMI, M6803_IRQSTATUS_ACK);
+					M6803SetIRQLine(M6803_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
 				}
 			}
 		}

@@ -1151,11 +1151,11 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[0];
 		nCyclesDone[0] += SekRun(nCyclesSegment);
-		if (i == 125) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
-		if (i == 66) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == 125) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		if (i == 66) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
-		if (i == 44 || i == 88) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if (i == 44 || i == 88) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		if (i & 1) ZetNmi();
 	}
 	

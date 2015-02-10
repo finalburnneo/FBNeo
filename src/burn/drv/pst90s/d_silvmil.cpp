@@ -280,7 +280,7 @@ UINT8 __fastcall silvmil_sound_read(UINT16 address)
 void silvmilYM2151IrqHandler(INT32 nStatus)
 {
 	if (ZetGetActive() != -1)
-		ZetSetIRQLine(0, (nStatus) ? ZET_IRQSTATUS_ACK : ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
@@ -666,7 +666,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		nSegment = nBurnSoundLen - nSoundBufferPos;

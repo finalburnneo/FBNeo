@@ -592,7 +592,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

@@ -455,9 +455,9 @@ void __fastcall lkage_sound_write(UINT16 address, UINT8 data)
 inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -872,7 +872,7 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 99) ZetRaiseIrq(0);
+		if (i == 99) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		// Run Z80 #2

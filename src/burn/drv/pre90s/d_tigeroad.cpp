@@ -536,9 +536,9 @@ UINT8 __fastcall tigeroad_sample_in(UINT16 port)
 static void TigeroadIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1019,7 +1019,7 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == (nInterleave - 1)) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		if (toramich) MSM5205Update();
 		SekClose();
 		
@@ -1035,7 +1035,7 @@ static INT32 DrvFrame()
 			nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 			for (INT32 j = 0; j < 67; j++) {
 				if (i == MSMIRQSlice[j]) {
-					ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+					ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 					nCyclesDone[nCurrentCPU] += ZetRun(1000);
 				}
 			}

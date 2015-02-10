@@ -1792,7 +1792,7 @@ void __fastcall pacman_write(UINT16 a, UINT8 d)
 		case ALIBABA:
 		{
 			if (a == 0x50c2) {
-				ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 				interrupt_mask = d;
 				return;
 			}
@@ -1958,7 +1958,7 @@ void __fastcall pacman_out_port(UINT16 a, UINT8 d)
 	{
 		interrupt_mode = d;
 		ZetSetVector(d);
-		ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -2702,7 +2702,7 @@ static INT32 DrvFrame()
 		if (game_select == BIGBUCKS) {
 			INT32 nInterleaveIRQFire = nBurnSoundLen / 20;
 			for (INT32 j = 0; j < 20; j++) {
-				if (i == (nInterleaveIRQFire * j) - 1) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+				if (i == (nInterleaveIRQFire * j) - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			}
 		} else {
 			if (game_select == DREMSHPR || game_select == VANVAN) {
@@ -2710,7 +2710,7 @@ static INT32 DrvFrame()
 			} else {
 				if (i == (nInterleave - 1) && interrupt_mask) {
 					ZetSetVector(interrupt_mode);
-					ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+					ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 				}
 			}
 		}

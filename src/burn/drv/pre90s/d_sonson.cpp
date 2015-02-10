@@ -569,7 +569,7 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
 		if (i == (nInterleave - 1)) {
-			M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		M6809Close();
 
@@ -578,12 +578,12 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		if (DrvSoundIrqTrigger) {
-			M6809SetIRQLine(1, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO);
 			DrvSoundIrqTrigger = 0;
 		}
 		nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
 		if (i == 3 || i == 7 || i == 11 || i == 15) {
-			M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		M6809Close();
 

@@ -339,7 +339,7 @@ static void m107YM2151IRQHandler(INT32 nStatus)
 {
 	if (VezGetActive() == -1) return;
 
-	VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff/*default*/, nStatus ? VEZ_IRQSTATUS_ACK : VEZ_IRQSTATUS_NONE);
+	VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff/*default*/, nStatus ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 	VezRun(100);
 }
 
@@ -390,8 +390,8 @@ static UINT8 __fastcall m107ReadPort(UINT32 port)
 		case 0x06: return  DrvInput[2];
 		case 0x07: return  DrvInput[3];
 
-		case 0x08: VezSetIRQLineAndVector(0, (irq_vectorbase + 12)/4, VEZ_IRQSTATUS_NONE); return sound_status[0]; 
-		case 0x09: VezSetIRQLineAndVector(0, (irq_vectorbase + 12)/4, VEZ_IRQSTATUS_NONE); return sound_status[1];
+		case 0x08: VezSetIRQLineAndVector(0, (irq_vectorbase + 12)/4, CPU_IRQSTATUS_NONE); return sound_status[0]; 
+		case 0x09: VezSetIRQLineAndVector(0, (irq_vectorbase + 12)/4, CPU_IRQSTATUS_NONE); return sound_status[1];
 
 		case 0x18: return 0;
 
@@ -440,9 +440,9 @@ static void __fastcall m107WritePort(UINT32 port, UINT8 data)
 			sound_latch[0] = data;
 			VezClose();
 			VezOpen(1);
-			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, VEZ_IRQSTATUS_ACK);
+			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, CPU_IRQSTATUS_ACK);
 			VezRun(10);
-			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, VEZ_IRQSTATUS_NONE);
+			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, CPU_IRQSTATUS_NONE);
 			VezRun(10);
 			VezClose();
 			VezOpen(0);
@@ -562,14 +562,14 @@ static void __fastcall m107SndWriteByte(UINT32 address, UINT8 data)
 			return;
 
 		case 0xa8044:
-	//		VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, VEZ_IRQSTATUS_NONE);
+	//		VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, CPU_IRQSTATUS_NONE);
 			return;
 
 		case 0xa8046:
 			sound_status[0] = data;
 			VezClose();
 			VezOpen(0);
-			VezSetIRQLineAndVector(0, (irq_vectorbase + 12)/4, VEZ_IRQSTATUS_ACK);
+			VezSetIRQLineAndVector(0, (irq_vectorbase + 12)/4, CPU_IRQSTATUS_ACK);
 			VezClose();
 			VezOpen(1);
 			return;
@@ -1022,9 +1022,9 @@ static void scanline_interrupts(INT32 scanline)
 			nPrevScreenPos = (scanline-8)+1;
 		}
 
-		VezSetIRQLineAndVector(0, (irq_vectorbase + 8)/4, VEZ_IRQSTATUS_ACK);
+		VezSetIRQLineAndVector(0, (irq_vectorbase + 8)/4, CPU_IRQSTATUS_ACK);
 		VezRun(10);
-		VezSetIRQLineAndVector(0, (irq_vectorbase + 8)/4, VEZ_IRQSTATUS_NONE);
+		VezSetIRQLineAndVector(0, (irq_vectorbase + 8)/4, CPU_IRQSTATUS_NONE);
 
 	}
 	else if (scanline == 248) // vblank
@@ -1041,9 +1041,9 @@ static void scanline_interrupts(INT32 scanline)
 	//		DrvReDraw();
 		}
 
-		VezSetIRQLineAndVector(0, (irq_vectorbase + 0)/4, VEZ_IRQSTATUS_ACK);
+		VezSetIRQLineAndVector(0, (irq_vectorbase + 0)/4, CPU_IRQSTATUS_ACK);
 		VezRun(10);
-		VezSetIRQLineAndVector(0, (irq_vectorbase + 0)/4, VEZ_IRQSTATUS_NONE);
+		VezSetIRQLineAndVector(0, (irq_vectorbase + 0)/4, CPU_IRQSTATUS_NONE);
 	} else if (scanline == 8) {
 		vblank = 0x80;
 	}

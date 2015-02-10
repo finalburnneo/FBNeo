@@ -869,12 +869,12 @@ static INT32 DrvFrame()
 	{
 		VezOpen(0);
 		nCyclesDone[0] += VezRun(nCyclesTotal[0] / nInterleave);
-		if (i == (nInterleave - 1)) VezSetIRQLineAndVector(0, 0xc8/4, VEZ_IRQSTATUS_ACK);
+		if (i == (nInterleave - 1)) VezSetIRQLineAndVector(0, 0xc8/4, CPU_IRQSTATUS_ACK);
 		VezClose();
 
 		VezOpen(1);
 		nCyclesDone[1] += VezRun(nCyclesTotal[1] / nInterleave);
-		if (i == (nInterleave - 1)) VezSetIRQLineAndVector(0, 0xc8/4, VEZ_IRQSTATUS_ACK);
+		if (i == (nInterleave - 1)) VezSetIRQLineAndVector(0, 0xc8/4, CPU_IRQSTATUS_ACK);
 		VezClose();
 
 		BurnTimerUpdateYM3812(i * (nCyclesTotal[2] / nInterleave));

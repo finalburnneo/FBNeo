@@ -246,7 +246,7 @@ static void lethal_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x00c7:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 }
@@ -335,7 +335,7 @@ static UINT8 __fastcall lethal_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xfc02:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0xfc03:
@@ -707,7 +707,7 @@ static INT32 DrvFrame()
 	}
 
 	if (K056832IsIrqEnabled()) {
-		HD6309SetIRQLine(0, HD6309_IRQSTATUS_AUTO);
+		HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	}
 
 	if (pBurnSoundOut) {

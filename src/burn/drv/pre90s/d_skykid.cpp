@@ -304,7 +304,7 @@ void skykid_main_write(UINT16 address, UINT8 data)
 		INT32 b = (~address & 0x0800) / 0x0800;
 
 		interrupt_enable[0] = b;
-		if (b == 0) M6809SetIRQLine(0, M6809_IRQSTATUS_NONE);
+		if (b == 0) M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 	}
 
@@ -384,7 +384,7 @@ void skykid_mcu_write(UINT16 address, UINT8 data)
 
 		interrupt_enable[1] = b;
 
-		if (b == 0) HD63701SetIRQLine(0, HD63701_IRQSTATUS_NONE);
+		if (b == 0) HD63701SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 	}
 }
@@ -818,7 +818,7 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += M6809Run(nNext - nCyclesDone[0]);
 		if (i == (nInterleave - 1) && interrupt_enable[0]) {
-			M6809SetIRQLine(0, M6809_IRQSTATUS_ACK);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 		M6809Close();
 
@@ -827,7 +827,7 @@ static INT32 DrvFrame()
 			sync_HD63701(1);
 
 			if (i == (nInterleave - 1) && interrupt_enable[1]) {
-				HD63701SetIRQLine(0, M6800_IRQSTATUS_ACK);
+				HD63701SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			}
 		} else {
 			sync_HD63701(0);

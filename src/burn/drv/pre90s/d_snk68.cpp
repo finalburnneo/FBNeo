@@ -702,9 +702,9 @@ UINT8 __fastcall pow_sound_in(UINT16 address)
 static void powFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1293,7 +1293,7 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	SekRun(nTotalCycles[0]);
-	SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 	BurnTimerEndFrameYM3812(nTotalCycles[1]);
 	if (pBurnSoundOut) {

@@ -441,9 +441,9 @@ UINT8 __fastcall f1gp_sound_in(UINT16 port)
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1184,12 +1184,12 @@ static INT32 DrvFrame()
 
 		SekOpen(0);
 		nCyclesDone[0] += SekRun(nCycleSegment);
-		if (i == (nInterleave - 1)) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		SekOpen(1);
 		nCyclesDone[1] += SekRun(nCycleSegment);
-		if (i == (nInterleave - 1)) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		SekClose();
 	}
 

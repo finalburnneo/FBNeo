@@ -1230,7 +1230,7 @@ inline static UINT32 CalcCol(INT32 offs)
 static void m92YM2151IRQHandler(INT32 nStatus)
 {
 	if (VezGetActive() == -1) return;
-	VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff/*default*/, nStatus ? VEZ_IRQSTATUS_ACK : VEZ_IRQSTATUS_NONE);
+	VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff/*default*/, nStatus ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 	VezRun(100);
 }
 
@@ -1308,8 +1308,8 @@ UINT8 __fastcall m92ReadPort(UINT32 port)
 		case 0x06: return ~DrvInput[2];	// player 3
 		case 0x07: return ~DrvInput[3];	// player 4
 
-		case 0x08: VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 12)/4, VEZ_IRQSTATUS_NONE); return sound_status[0]; 
-		case 0x09: VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 12)/4, VEZ_IRQSTATUS_NONE); return sound_status[1];
+		case 0x08: VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 12)/4, CPU_IRQSTATUS_NONE); return sound_status[0]; 
+		case 0x09: VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 12)/4, CPU_IRQSTATUS_NONE); return sound_status[1];
 
 		case 0x18: return (m92_kludge == 3) ? MSM6295ReadStatus(0) : 0; // ppan
 
@@ -1363,9 +1363,9 @@ void __fastcall m92WritePort(UINT32 port, UINT8 data)
 			sound_latch[0] = data;
 			VezClose();
 			VezOpen(1);
-			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, VEZ_IRQSTATUS_ACK);
+			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, CPU_IRQSTATUS_ACK);
 			VezRun(10);
-			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, VEZ_IRQSTATUS_NONE);
+			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, CPU_IRQSTATUS_NONE);
 			VezRun(10);
 			VezClose();
 			VezOpen(0);
@@ -1461,7 +1461,7 @@ UINT8 __fastcall m92SndReadByte(UINT32 address)
 			return BurnYM2151ReadStatus();
 
 		case 0xa8044:
-//			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, VEZ_IRQSTATUS_NONE);
+//			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, CPU_IRQSTATUS_NONE);
 			return sound_latch[0];
 
 		case 0xa8045:
@@ -1498,7 +1498,7 @@ void __fastcall m92SndWriteByte(UINT32 address, UINT8 data)
 
 		case 0xa8044:
 	//	case 0xa8045:
-//			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, VEZ_IRQSTATUS_NONE);
+//			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, CPU_IRQSTATUS_NONE);
 			return;
 
 		case 0xa8046:
@@ -1506,7 +1506,7 @@ void __fastcall m92SndWriteByte(UINT32 address, UINT8 data)
 			sound_status[0] = data;
 			VezClose();
 			VezOpen(0);
-			VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 12)/4, VEZ_IRQSTATUS_ACK);
+			VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 12)/4, CPU_IRQSTATUS_ACK);
 			VezClose();
 			VezOpen(1);
 			return;
@@ -2017,9 +2017,9 @@ static void scanline_interrupts(INT32 prev, INT32 segment, INT32 scanline)
 		memcpy (DrvSprBuf, DrvSprRAM, 0x800);
 		if (m92_kludge != 4) nCyclesDone[0] += VezRun(347); // nbbatman: fix for random lockups during gameplay
 		m92_sprite_buffer_busy = 0x80;
-		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 4)/4, VEZ_IRQSTATUS_ACK);
+		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 4)/4, CPU_IRQSTATUS_ACK);
 		nCyclesDone[0] += VezRun(10);
-		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 4)/4, VEZ_IRQSTATUS_NONE);
+		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 4)/4, CPU_IRQSTATUS_NONE);
 		if (m92_kludge != 4) nCyclesDone[0] += VezRun(segment - (VezTotalCycles() - prev));
 
 		m92_sprite_buffer_timer = 0;
@@ -2033,9 +2033,9 @@ static void scanline_interrupts(INT32 prev, INT32 segment, INT32 scanline)
 			nPrevScreenPos = (scanline-8)+1;
 		}
 
-		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 8)/4, VEZ_IRQSTATUS_ACK);
+		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 8)/4, CPU_IRQSTATUS_ACK);
 		nCyclesDone[0] += VezRun((m92_kludge == 4) ? 20 : 10); // nbbatman: gets rid of flashes in intro sequence
-		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 8)/4, VEZ_IRQSTATUS_NONE);
+		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 8)/4, CPU_IRQSTATUS_NONE);
 
 	}
 	else if (scanline == 248) // vblank
@@ -2050,9 +2050,9 @@ static void scanline_interrupts(INT32 prev, INT32 segment, INT32 scanline)
 		}
 
 		if (m92_kludge == 4) nCyclesDone[0] += VezRun(1200); // nbbatman: gets rid of flash after IREM logo fades out
-		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 0)/4, VEZ_IRQSTATUS_ACK);
+		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 0)/4, CPU_IRQSTATUS_ACK);
 		nCyclesDone[0] += VezRun(10);
-		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 0)/4, VEZ_IRQSTATUS_NONE);
+		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 0)/4, CPU_IRQSTATUS_NONE);
 	}
 }
 

@@ -31,7 +31,7 @@ void FcrashSoundCommand(UINT16 d)
 	}
 		
 	FcrashSoundLatch = d & 0xff;
-	ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+	ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 }
 
 UINT8 __fastcall FcrashZ80Read(UINT16 a)
@@ -46,7 +46,7 @@ UINT8 __fastcall FcrashZ80Read(UINT16 a)
 		}
 		
 		case 0xe400: {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return FcrashSoundLatch;
 		}
 		

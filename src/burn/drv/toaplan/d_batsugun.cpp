@@ -647,7 +647,7 @@ static INT32 DrvFrame()
 
 #if 0
 			// The VBlank interrupt isn't actually used
-			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 #endif
 		}
 

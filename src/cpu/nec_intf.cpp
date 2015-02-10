@@ -623,11 +623,11 @@ void VezSetIRQLineAndVector(const INT32 line, const INT32 vector, const INT32 st
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezSetIRQLineAndVector called when no CPU open\n"));
 #endif
 
-	if (status == VEZ_IRQSTATUS_AUTO)
+	if (status == CPU_IRQSTATUS_AUTO)
 	{
-		VezCurrentCPU->cpu_set_irq_line(line, vector, VEZ_IRQSTATUS_ACK);
+		VezCurrentCPU->cpu_set_irq_line(line, vector, CPU_IRQSTATUS_ACK);
 		VezCurrentCPU->cpu_execute(100);
-		VezCurrentCPU->cpu_set_irq_line(line, vector, VEZ_IRQSTATUS_NONE);
+		VezCurrentCPU->cpu_set_irq_line(line, vector, CPU_IRQSTATUS_NONE);
 		VezCurrentCPU->cpu_execute(100);
 	}
 	else

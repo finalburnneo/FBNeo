@@ -192,7 +192,7 @@ static void __fastcall cybertnk_main_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x110001:
 			*soundlatch = data;
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x110003: // watchdog?
@@ -203,7 +203,7 @@ static void __fastcall cybertnk_main_write_byte(UINT32 address, UINT8 data)
 		return;
 
 		case 0x11000d:
-			SekSetIRQLine(1, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(1, CPU_IRQSTATUS_NONE);
 		return;
 	}
 }
@@ -330,7 +330,7 @@ static UINT8 __fastcall cybertnk_sound_read(UINT16 address)
 			return BurnY8950Read(0, address & 1);
 
 		case 0xa001:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0xc000:
@@ -861,12 +861,12 @@ static INT32 DrvFrame()
 		SekOpen(0);
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 		INT32 nCycles = SekTotalCycles();
-		if (i == ((nScreenHeight * 100) / 256)) SekSetIRQLine(1, SEK_IRQSTATUS_ACK);
+		if (i == ((nScreenHeight * 100) / 256)) SekSetIRQLine(1, CPU_IRQSTATUS_ACK);
 		SekClose();
 
 		SekOpen(1);
 		nCyclesDone[1] += SekRun(nCycles - SekTotalCycles());
-		if (i == ((nScreenHeight * 100) / 256)) SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
+		if (i == ((nScreenHeight * 100) / 256)) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		BurnTimerUpdateY8950(i * (nCyclesTotal[2] / nInterleave));

@@ -159,7 +159,7 @@ static void mikie_main_write(UINT16 a, UINT8 d)
 		case 0x2002:
 			if (*sound_irq == 0 && d == 1) {
 				ZetSetVector(0xff);
-				ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			}
 			*sound_irq = d;
 		return;
@@ -233,7 +233,7 @@ static UINT8 __fastcall mikie_sound_read(UINT16 a)
 	switch (a)
 	{
 		case 0x8003:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0x8005:
@@ -554,7 +554,7 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
 
-		if (i == 240 && *irq_mask) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+		if (i == 240 && *irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 		// Render Sound Segment
 		if (pBurnSoundOut) {

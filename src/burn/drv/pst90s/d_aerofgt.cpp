@@ -1210,9 +1210,9 @@ static void aerofgtFMIRQHandler(INT32, INT32 nStatus)
 	if (ZetGetActive() == -1) return;
 //	bprintf(PRINT_NORMAL, _T("  - IRQ -> %i.\n"), nStatus);
 	if (nStatus) {
-		ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1733,7 +1733,7 @@ static INT32 DrvDoReset()
 	nAerofgtZ80Bank = -1;
 		
 	SekOpen(0);
-	//SekSetIRQLine(0, SEK_IRQSTATUS_NONE);
+	//SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	SekReset();
 	SekClose();
 
@@ -2679,7 +2679,7 @@ static INT32 DrvFrame()
 	ZetOpen(0);
 	
 	SekRun(nCyclesTotal[0]);
-	SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 	
 	BurnTimerEndFrame(nCyclesTotal[1]);
 

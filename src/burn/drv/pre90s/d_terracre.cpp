@@ -1724,7 +1724,7 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == (nInterleave - 1)) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		nCurrentCPU = 1;
@@ -1735,9 +1735,9 @@ static INT32 DrvFrame()
 			BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 		}
 		{ // 136 times per frame.
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			nCyclesDone[1] += ZetRun(100);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
 		ZetClose();
 	}

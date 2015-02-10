@@ -169,6 +169,35 @@ struct BurnDIPInfo {
 	char* szText;
 };
 
+
+// ---------------------------------------------------------------------------
+// Common CPU definitions 
+
+#define CPU_IRQSTATUS_NONE	0
+#define CPU_IRQSTATUS_ACK	1
+#define CPU_IRQSTATUS_AUTO	2
+
+#define CPU_IRQLINE0		0
+#define CPU_IRQLINE1		1
+#define CPU_IRQLINE2		2
+#define CPU_IRQLINE3		3
+#define CPU_IRQLINE4		4
+#define CPU_IRQLINE5		5
+#define CPU_IRQLINE6		6
+#define CPU_IRQLINE7		7
+
+#define CPU_IRQLINE_IRQ		CPU_IRQLINE0
+#define CPU_IRQLINE_FIRQ	CPU_IRQLINE1
+#define CPU_IRQLINE_NMI		0x20
+
+#define MAP_READ		1
+#define MAP_WRITE		2
+#define MAP_FETCHOP		4
+#define MAP_FETCHARG		8
+#define MAP_ROM			(MAP_READ|MAP_FETCHOP|MAP_FETCHARG)
+#define MAP_RAM			(MAP_ROM|MAP_WRITE)
+
+
 // ---------------------------------------------------------------------------
 
 extern bool bBurnUseMMX;

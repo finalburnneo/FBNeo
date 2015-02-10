@@ -265,9 +265,9 @@ inline static INT32 deniam16SekSynchroniseStream(INT32 nSoundRate)
 void deniam16YM3812IrqHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -776,7 +776,7 @@ static INT32 DrvFrame()
 		BurnTimerUpdateYM3812(i * nCyclesSegment);
 	}
 
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		if (nGame != 2) BurnTimerEndFrameYM3812(nCyclesTotal[1]);

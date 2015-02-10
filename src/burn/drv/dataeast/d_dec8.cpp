@@ -968,7 +968,7 @@ void ghostb_main_write(UINT16 address, UINT8 data)
 	{
 		case 0x3800:
 			*soundlatch = data;
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 		return;
 
 		case 0x3840:
@@ -1105,9 +1105,9 @@ inline static INT32 CsilverMSM5205SynchroniseStream(INT32 nSoundRate)
 static void DrvYM3812FMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_ACK);
+		M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_ACK);
 	} else {
-		M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_NONE);
+		M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1603,7 +1603,7 @@ static INT32 DrvDraw()
 static inline void do_interrupt()
 {
 	if (*interrupt_enable) {
-		HD6309SetIRQLine(0, HD6309_IRQSTATUS_AUTO);
+		HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	}
 }
 
@@ -1622,7 +1622,7 @@ static void ghostb_interrupt()
 	if (((i8751_out & 0x2) != 0x2) && latch[2]) {latch[2] = 0; do_interrupt(); i8751_return = 0x2001; } /* Player 3 coin */
 	if (((i8751_out & 0x1) != 0x1) && latch[3]) {latch[3] = 0; do_interrupt(); i8751_return = 0x1001; } /* Service */
 
-	if (*nmi_enable) HD6309SetIRQLine(0x20, HD6309_IRQSTATUS_AUTO);
+	if (*nmi_enable) HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 }
 
 static INT32 DrvFrame()
@@ -1945,7 +1945,7 @@ void cobra_main_write(UINT16 address, UINT8 data)
 	{
 		case 0x3e00:
 			*soundlatch = data;
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 			M6502Run(500);
 		return;
 
@@ -2346,7 +2346,7 @@ static INT32 CobraFrame()
 		if (i == 1) vblank = 0x80;
 		if (i == 31) {
 			vblank = 0;
-			M6809SetIRQLine(0x20 /*NMI*/, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0x20 /*NMI*/, CPU_IRQSTATUS_AUTO);
 		}
 
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
@@ -2663,7 +2663,7 @@ void srdarwin_main_write(UINT16 address, UINT8 data)
 		case 0x2000:
 			*soundlatch = data;
 //			m6502SetIRQ(M6502_NMI);
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 		return;
 
 		case 0x2001:
@@ -3017,7 +3017,7 @@ static INT32 SrdarwinFrame()
 		if (i == 1) vblank = 0x40;
 		if (i == 31) {
 			vblank = 0;
-			M6809SetIRQLine(0x20 /*NMI*/, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0x20 /*NMI*/, CPU_IRQSTATUS_AUTO);
 		}
 		
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
@@ -3135,7 +3135,7 @@ static void gondo_i8751_write(INT32 offset, UINT8 data)
 	{
 		case 0:
 			i8751_value = (i8751_value & 0xff) | (data << 8);
-			if (*interrupt_enable) HD6309SetIRQLine(0, HD6309_IRQSTATUS_AUTO);
+			if (*interrupt_enable) HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		break;
 
 		case 1:
@@ -3197,7 +3197,7 @@ void gondo_main_write(UINT16 address, UINT8 data)
 	{
 		case 0x3810:
 			*soundlatch = data;
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 		return;
 
 		case 0x3818:
@@ -3673,7 +3673,7 @@ static INT32 GondoFrame()
 
 		if (i == 270) {
 			vblank = 0x80;
-			if (*nmi_enable) HD6309SetIRQLine(0x20, HD6309_IRQSTATUS_AUTO);
+			if (*nmi_enable) HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		}
 		
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
@@ -3911,29 +3911,29 @@ void oscar_main_write(UINT16 address, UINT8 data)
 
 		case 0x3d80:
 			*soundlatch = data;
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 		return;
 
 		case 0x3e80: 
 			HD6309Close();
 			HD6309Open(1);
-			HD6309SetIRQLine(0, HD6309_IRQSTATUS_ACK);
+			HD6309SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			HD6309Close();
 			HD6309Open(0);
 		return;
 
 		case 0x3e81:
-			HD6309SetIRQLine(0, HD6309_IRQSTATUS_NONE);
+			HD6309SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x3e82:
-			HD6309SetIRQLine(0, HD6309_IRQSTATUS_ACK);
+			HD6309SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x3e83:
 			HD6309Close();
 			HD6309Open(1);
-			HD6309SetIRQLine(0, HD6309_IRQSTATUS_NONE);
+			HD6309SetIRQLine(0, CPU_IRQSTATUS_NONE);
 			HD6309Close();
 			HD6309Open(0);
 		return;
@@ -3951,7 +3951,7 @@ void oscar_sub_write(UINT16 address, UINT8 )
 	switch (address)
 	{
 		case 0x3e80: 
-			HD6309SetIRQLine(0, HD6309_IRQSTATUS_ACK);
+			HD6309SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			HD6309Close();
 			HD6309Open(0);
 		return;
@@ -3959,7 +3959,7 @@ void oscar_sub_write(UINT16 address, UINT8 )
 		case 0x3e81:
 			HD6309Close();
 			HD6309Open(0);
-			HD6309SetIRQLine(0, HD6309_IRQSTATUS_NONE);
+			HD6309SetIRQLine(0, CPU_IRQSTATUS_NONE);
 			HD6309Close();
 			HD6309Open(1);
 		return;
@@ -3967,13 +3967,13 @@ void oscar_sub_write(UINT16 address, UINT8 )
 		case 0x3e82:
 			HD6309Close();
 			HD6309Open(0);
-			HD6309SetIRQLine(0, HD6309_IRQSTATUS_ACK);
+			HD6309SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			HD6309Close();
 			HD6309Open(1);
 		return;
 
 		case 0x3e83:
-			HD6309SetIRQLine(0, HD6309_IRQSTATUS_NONE);
+			HD6309SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 	}
 }
@@ -4205,7 +4205,7 @@ static INT32 OscarFrame()
 			if ((DrvInputs[2] & 7) == 7) latch = 1;
 			if ((DrvInputs[2] & 7) != 7 && latch) {
 				latch = 0;
-				HD6309SetIRQLine(0x20, HD6309_IRQSTATUS_AUTO);
+				HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 			}
 			vblank = 0x80;
 		}
@@ -4416,7 +4416,7 @@ static void lastmiss_i8751_write(INT32 offset, INT32 data)
 	{
 		case 0:
 		i8751_value = (i8751_value & 0xff) | (data << 8);
-		M6809SetIRQLine(1, M6809_IRQSTATUS_AUTO); /* Signal main cpu */
+		M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO); /* Signal main cpu */
 		break;
 
 		case 1:
@@ -4450,7 +4450,7 @@ static void shackled_i8751_write(INT32 offset, INT32 data)
 	{
 	case 0: /* High byte */
 		i8751_value = (i8751_value & 0xff) | (data << 8);
-		M6809SetIRQLine(1, M6809_IRQSTATUS_AUTO); /* Signal main cpu */
+		M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO); /* Signal main cpu */
 		break;
 	case 1: /* Low byte */
 		i8751_value = (i8751_value & 0xff00) | data;
@@ -4480,11 +4480,11 @@ void lastmiss_main_write(UINT16 address, UINT8 data)
 	{
 		case 0x1803:
 			if (M6809GetActive() == 0) { // main
-				M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+				M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			} else {
 				M6809Close();
 				M6809Open(0);
-				M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+				M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 				M6809Close();
 				M6809Open(1);
 			}
@@ -4494,11 +4494,11 @@ void lastmiss_main_write(UINT16 address, UINT8 data)
 			if (M6809GetActive() == 0) { // main
 				M6809Close();
 				M6809Open(1);
-				M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+				M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 				M6809Close();
 				M6809Open(0);
 			} else {
-				M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+				M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			}
 		return;
 
@@ -4512,7 +4512,7 @@ void lastmiss_main_write(UINT16 address, UINT8 data)
 
 		case 0x180c:
 			*soundlatch = data;
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 		return;
 
 		// main cpu only!
@@ -5223,7 +5223,7 @@ static void csilver_i8751_write(INT32 offset, UINT8 data)
 	{
 	case 0: /* High byte */
 		i8751_value = (i8751_value & 0xff) | (data << 8);
-		M6809SetIRQLine(1, M6809_IRQSTATUS_AUTO); /* Signal main cpu */
+		M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO); /* Signal main cpu */
 		break;
 	case 1: /* Low byte */
 		i8751_value = (i8751_value & 0xff00) | data;
@@ -5250,11 +5250,11 @@ void csilver_main_write(UINT16 address, UINT8 data)
 	{
 		case 0x1803:
 			if (M6809GetActive() == 0) { // main
-				M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+				M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			} else {
 				M6809Close();
 				M6809Open(0);
-				M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+				M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 				M6809Close();
 				M6809Open(1);
 			}
@@ -5264,11 +5264,11 @@ void csilver_main_write(UINT16 address, UINT8 data)
 			if (M6809GetActive() == 0) { // main
 				M6809Close();
 				M6809Open(1);
-				M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+				M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 				M6809Close();
 				M6809Open(0);
 			} else {
-				M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+				M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			}
 		return;
 
@@ -5282,7 +5282,7 @@ void csilver_main_write(UINT16 address, UINT8 data)
 
 		case 0x180c:
 			*soundlatch = data;
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 		return;
 
 		case 0x1808:
@@ -5382,7 +5382,7 @@ UINT8 csilver_sound_read(UINT16 address)
 static void CsilverADPCMInt()
 {
 	Toggle ^= 1;
-	if (Toggle)	M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_AUTO);
+	if (Toggle)	M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 
 	MSM5205DataWrite(0, MSM5205Next >> 4);
 	MSM5205Next <<= 4;
@@ -5538,7 +5538,7 @@ static INT32 CsilverFrame()
 		nCyclesDone[1] += M6809Run(nSegment - nCyclesDone[1]);
 		if (i == DrvVBlankSlices[1]) {
 			vblank = 0;
-			M6809SetIRQLine(0x20, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		}
 		MSM5205Update();
 		M6809Close();

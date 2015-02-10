@@ -253,15 +253,15 @@ void M6502SetIRQLine(INT32 vector, INT32 status)
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetIRQLineLine called with no CPU open\n"));
 #endif
 
-	if (status == M6502_IRQSTATUS_NONE) {
+	if (status == CPU_IRQSTATUS_NONE) {
 		pCurrentCPU->set_irq_line(vector, 0);
 	}
 	
-	if (status == M6502_IRQSTATUS_ACK) {
+	if (status == CPU_IRQSTATUS_ACK) {
 		pCurrentCPU->set_irq_line(vector, 1);
 	}
 	
-	if (status == M6502_IRQSTATUS_AUTO) {
+	if (status == CPU_IRQSTATUS_AUTO) {
 		pCurrentCPU->set_irq_line(vector, 1);
 		pCurrentCPU->execute(0);
 		pCurrentCPU->set_irq_line(vector, 0);

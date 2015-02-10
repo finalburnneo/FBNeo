@@ -343,7 +343,7 @@ void __fastcall ps3v1_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x305ffdc:
 		case 0x305ffdd:
-			if (!(data & 0xc0)) Sh2SetIRQLine(4, SH2_IRQSTATUS_NONE);
+			if (!(data & 0xc0)) Sh2SetIRQLine(4, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x5000000:
@@ -435,7 +435,7 @@ void __fastcall ps5_write_byte(UINT32 address, UINT8 data)
 	switch (address)
 	{
 		case 0x405ffdd:
-			if (!(data & 0xc0)) Sh2SetIRQLine(4, SH2_IRQSTATUS_NONE);
+			if (!(data & 0xc0)) Sh2SetIRQLine(4, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x3100000:
@@ -535,9 +535,9 @@ static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 static void DrvIRQCallback(INT32, INT32 nStatus)
 {
 	if (nStatus)
-		Sh2SetIRQLine(12, SH2_IRQSTATUS_AUTO);
+		Sh2SetIRQLine(12, CPU_IRQSTATUS_AUTO);
 	else
-		Sh2SetIRQLine(12, SH2_IRQSTATUS_NONE);
+		Sh2SetIRQLine(12, CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
@@ -746,7 +746,7 @@ static INT32 DrvFrame()
 
 	BurnTimerEndFrame(28636350 / 60);
 
-	Sh2SetIRQLine(4, SH2_IRQSTATUS_AUTO);
+	Sh2SetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		BurnYMF278BUpdate(nBurnSoundLen);

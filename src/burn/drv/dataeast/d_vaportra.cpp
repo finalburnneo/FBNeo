@@ -143,7 +143,7 @@ void __fastcall vaportra_main_write_word(UINT32 address, UINT16 data)
 
 		case 0x100006:
 			deco16_soundlatch = data & 0xff;
-			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x30c000:
@@ -165,7 +165,7 @@ void __fastcall vaportra_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x100007:
 			deco16_soundlatch = data;
-			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x30c000:
@@ -558,7 +558,7 @@ static INT32 DrvFrame()
 
 		if (i == 206) {
 			deco16_vblank = 0x08;
-			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		}
 		
 		INT32 nSegmentLength = nBurnSoundLen / nInterleave;

@@ -2429,7 +2429,7 @@ void __fastcall ssmissin_main_write_byte(UINT32 address, UINT8 data)
 		case 0x0c001e:
 		case 0x0c001f:
 			*soundlatch = data;
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 }
@@ -2450,7 +2450,7 @@ void __fastcall ssmissin_main_write_word(UINT32 address, UINT16 data)
 
 		case 0x0c001e:
 			*soundlatch = data;
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 }
@@ -2614,7 +2614,7 @@ void __fastcall afega_main_write_word(UINT32 address, UINT16 data)
 
 		case 0x08001e:
 			*soundlatch = data & 0xff;
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 }
@@ -2639,7 +2639,7 @@ void __fastcall afega_main_write_byte(UINT32 address, UINT8 data)
 		case 0x08001e:
 		case 0x08001f:
 			*soundlatch = data & 0xff;
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 }
@@ -3671,7 +3671,7 @@ UINT8 __fastcall ssmissin_sound_read(UINT16 address)
 			return MSM6295ReadStatus(0);
 
 		case 0xa000:
-			ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -3701,7 +3701,7 @@ UINT8 __fastcall afega_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xf800:
-			ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0xf808:
@@ -3746,7 +3746,7 @@ UINT8 __fastcall firehawk_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xfff0:
-			ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0xfff8:
@@ -3848,18 +3848,18 @@ UINT8 __fastcall macross2_sound_in(UINT16 port)
 static void DrvYM2203IrqHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
 static void DrvYM2151IrqHandler(INT32 nStatus)
 {
 	if (nStatus) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -5358,11 +5358,11 @@ static INT32 DrvFrame()
 		nSegment = nTotalCycles[0] / nInterleave;
 		nCyclesDone[0] += SekRun(nSegment);
 		if (i == (nInterleave-1) || i == ((nInterleave / 2) - 1)) {
-			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 			SekRun(0);
 		}
-		if (i == ((nInterleave/2)-1))	SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
-		if (i == (nInterleave-1)) 	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		if (i == ((nInterleave/2)-1))	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave-1)) 	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 		BurnTimerUpdate(i * (nTotalCycles[1] / nInterleave));
 	}
@@ -5478,23 +5478,23 @@ static INT32 SsmissinFrame()
 		nCyclesDone[0] += SekRun(nSegment);
 
 /*		if (i == (nInterleave-1) || i == ((nInterleave / 2) - 1)) {
-			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 			SekRun(0);
 		}
 		if (i == ((nInterleave/2)-1) && nNMK004EnableIrq2)
-			SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		if (i == (nInterleave-1))
-			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 */
 
 		if (i == 25 || i == 148) { // 25, 153 in MAME
-			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		}
 		if (i == 0) {
-			SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		}
 		if (i == 235) { // 240 in MAME, but causes a missing life-bar in VanDyke.  236 causes a little flicker in the life-bar, 235 = perfect.
-			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
 		ZetRun(nTotalCycles[1] / nInterleave);
@@ -5546,10 +5546,10 @@ static INT32 Macross2Frame()
 		nSegment = nTotalCycles[0] / nInterleave;
 		nCyclesDone[0] += SekRun(nSegment);
 		if (i == 1 || i == (nInterleave / 2)) {
-			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		}
 		if (i == (nInterleave-1)) {
-			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
 		if (macross2_sound_enable) {
@@ -5610,8 +5610,8 @@ static INT32 AfegaFrame()
 
 		nSegment = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += SekRun(nSegment);
-		if (i == (nInterleave / 2) - 1) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
-		if (i == (nInterleave)     - 1) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave / 2) - 1) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave)     - 1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 		nSegment = nCyclesTotal[1] / nInterleave;
 		nCyclesDone[1] += ZetRun(nSegment);
@@ -5676,11 +5676,11 @@ static INT32 BjtwinFrame()
 		nSegment = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += SekRun(nSegment);
 		if (i == (nInterleave-1) || i == ((nInterleave / 2) - 1)) {
-			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		}
 		if (i == (nInterleave-1)) {
 			SekRun(0);
-			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 	}
 
@@ -5731,17 +5731,17 @@ static INT32 SeibuSoundFrame()
 		nSegment = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += SekRun(nSegment);
 		if (i == (nInterleave-1) || i == ((nInterleave / 2) - 1)) {
-			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		}
 
 		if (i == ((nInterleave/2)-1)) {
 			SekRun(0);
-			SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		}
 
 		if (i == (nInterleave-1)) {
 			SekRun(0);
-			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
 		BurnTimerUpdateYM3812(i * (nCyclesTotal[1] / nInterleave));
@@ -5806,13 +5806,13 @@ static INT32 NMK004Frame()
 		}
 
 		if (i == 25 || i == 148) { // 25, 153 in MAME
-			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		}
 		if (i == 0) {
-			SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		}
 		if (i == 235) { // 240 in MAME, but causes a missing life-bar in VanDyke.  236 causes a little flicker in the life-bar, 235 = perfect.
-			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
 		nSegment = i * (nTotalCycles[1] / nInterleave);
@@ -9685,7 +9685,7 @@ static UINT8 raphero_sound_read(UINT32 address)
 
 static void RapheroYM2203IrqHandler(INT32, INT32 nStatus)
 {
-	tlcs90SetIRQLine(0, (nStatus) ? TLCS90_IRQSTATUS_ACK : TLCS90_IRQSTATUS_NONE);
+	tlcs90SetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 inline static double RapheroGetTime()
@@ -9851,11 +9851,11 @@ static INT32 RapheroFrame()
 		SekRun(nTotalCycles[0] / nInterleave);
 
 		if (i == (nInterleave-16) || i == (nInterleave/2)-16) { // ??
-			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		}
 
 		if (i == (nInterleave-1)) {
-			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
 		nSegment = (nTotalCycles[1] / nInterleave) * (i + 1);

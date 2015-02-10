@@ -505,7 +505,7 @@ void __fastcall RallyxZ80ProgWrite(UINT16 a, UINT8 d)
 		
 		case 0xa181: {
 			DrvCPUFireIRQ = d & 0x01;
-			if (!DrvCPUFireIRQ) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			if (!DrvCPUFireIRQ) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return;
 		}
 		
@@ -565,7 +565,7 @@ void __fastcall RallyxZ80PortWrite(UINT16 a, UINT8 d)
 	switch (a) {
 		case 0x00: {
 			DrvCPUIRQVector = d;
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return;
 		}
 				
@@ -1403,7 +1403,7 @@ static INT32 DrvFrame()
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
 		if (i == (nInterleave - 1) && DrvCPUFireIRQ) {
 			ZetSetVector(DrvCPUIRQVector);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 		ZetClose();
 		

@@ -1310,9 +1310,9 @@ static INT32 Darius2dSpriteYOffsets[16]    = { 0, 64, 128, 192, 256, 320, 384, 4
 static void Darius2FMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1898,7 +1898,7 @@ static INT32 Darius2Frame()
 		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == nInterleave - 1) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
+		if (i == nInterleave - 1) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		// Run 68000 # 2
@@ -1908,7 +1908,7 @@ static INT32 Darius2Frame()
 			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 			nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-			if (i == nInterleave - 1) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
+			if (i == nInterleave - 1) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 			SekClose();
 		}
 		
@@ -1951,7 +1951,7 @@ static INT32 Darius2dFrame()
 		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == nInterleave - 1) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
+		if (i == nInterleave - 1) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		ZetOpen(0);

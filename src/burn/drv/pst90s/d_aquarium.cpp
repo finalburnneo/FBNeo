@@ -235,9 +235,9 @@ UINT8 __fastcall aquarium_sound_in(UINT16 port)
 void aquariumYM2151IrqHandler(INT32 Irq)
 {
 	if (Irq) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -681,7 +681,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		nSegment = nBurnSoundLen - nSoundBufferPos;

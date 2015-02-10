@@ -117,7 +117,7 @@ static void main_write(UINT16 a, UINT8 d)
 			*soundlatch = d;
 			M6809Close();
 			M6809Open(1);
-			M6809SetIRQLine(M6809_IRQ_LINE, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(M6809_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 			M6809Close();
 			M6809Open(0);
 		}
@@ -227,12 +227,12 @@ static double DrvGetTime()
 
 static void DrvFMIRQCallback(INT32 , INT32 state)
 {
-	M6809SetIRQLine(M6809_FIRQ_LINE, state ? M6809_IRQSTATUS_ACK : M6809_IRQSTATUS_NONE);
+	M6809SetIRQLine(M6809_FIRQ_LINE, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static void tms34061_interrupt(INT32 state)
 {
-	M6809SetIRQLine(M6809_FIRQ_LINE, state ? M6809_IRQSTATUS_ACK : M6809_IRQSTATUS_NONE);
+	M6809SetIRQLine(M6809_FIRQ_LINE, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static void draw_layer()
@@ -488,7 +488,7 @@ static INT32 DrvFrame()
 
 	M6809Open(0);
 	if (DrvDips[1] & 0x01) {
-		M6809SetIRQLine(0x20, M6809_IRQSTATUS_AUTO); // NMI
+		M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // NMI
 	}
 	M6809Close();
 

@@ -582,7 +582,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 	SekClose();
 
 	if (pBurnSoundOut) {

@@ -805,7 +805,7 @@ static void setvector_callback(INT32 param)
 	}
 
 	ZetSetVector(irqvector);
-	ZetSetIRQLine(0, (irqvector == 0xff) ? ZET_IRQSTATUS_NONE : ZET_IRQSTATUS_ACK);
+	ZetSetIRQLine(0, (irqvector == 0xff) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
 }
 
 static inline void update_palette_entry(INT32 entry)
@@ -952,7 +952,7 @@ UINT8 __fastcall m90_sound_read_port(UINT16 port)
 		case 0x42: // bbmanw
 		case 0x80:
 			ZetSetVector(0xff);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	
 		case 0x84:
@@ -1391,9 +1391,9 @@ static INT32 DrvFrame()
 
 		if (i == (nInterleave - 1))
 		{
-			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff, VEZ_IRQSTATUS_ACK);
+			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff, CPU_IRQSTATUS_ACK);
 			VezRun(0);
-			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff, VEZ_IRQSTATUS_NONE);
+			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff, CPU_IRQSTATUS_NONE);
 		}
 
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);

@@ -449,14 +449,14 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[0];
 		nCyclesDone[0] += SekRun(nCyclesSegment);
-		if (i ==   0) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
-		if (i == 159) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		if (i ==   0) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == 159) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[1];
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[1] += nCyclesSegment;
-		ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	}
 
 	ZetClose();

@@ -202,7 +202,7 @@ static void _fastcall xexex_main_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x0d4000:
 		case 0x0d4001:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x0d6001:
@@ -381,11 +381,11 @@ static UINT8 __fastcall xexex_sound_read(UINT16 address)
 			return BurnYM2151ReadStatus();
 
 		case 0xf002:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0xf003:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch2;
 	}
 
@@ -719,20 +719,20 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += nCyclesSegment;
 
 		if (i == 0 && control_data & 0x20) {
-			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		}
 
 		if (i != 0 && i != ((nInterleave/2)-1)) {
 			if (irq5_timer > 0) {
 				irq5_timer--;
 				if (irq5_timer == 0 && control_data & 0x40) {
-					SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+					SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 				}
 			} 
 		}
 
 		if (i == ((nInterleave/2)-1) && control_data & 0x0800) {
-			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 			if (K053246_is_IRQ_enabled()) {
 				xexex_objdma();

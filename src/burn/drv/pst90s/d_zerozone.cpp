@@ -185,7 +185,7 @@ void __fastcall zerozone_write_word(UINT32 address, UINT16 data)
 	{
 		case 0x84000:
 			soundlatch = data >> 8;
-			ZetRaiseIrq(0xff);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		return;
 
 		case 0xb4000:
@@ -202,7 +202,7 @@ void __fastcall zerozone_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x84000:
 			soundlatch = data;
-			ZetRaiseIrq(0xff);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		return;
 
 		case 0xb4001:
@@ -456,7 +456,7 @@ static INT32 DrvFrame()
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
-	SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 	ZetClose();
 	SekClose();

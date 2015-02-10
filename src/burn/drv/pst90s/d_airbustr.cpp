@@ -759,7 +759,7 @@ static INT32 DrvFrame()
 		if (i == 49 || i == 99) {
 			interrupt_vectors[0] ^= 2;
 			ZetSetVector(interrupt_vectors[0]);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		ZetClose();
 
@@ -768,14 +768,14 @@ static INT32 DrvFrame()
 		if (i == 49 || i == 99) {
 			interrupt_vectors[1] ^= 2;
 			ZetSetVector(interrupt_vectors[1]);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		ZetClose();
 
 		ZetOpen(2);
 		BurnTimerUpdate(nCyclesDone[1] /*sync with sub cpu*/);
 		if (i == 99) {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		ZetClose();
 	}

@@ -569,7 +569,7 @@ void __fastcall batriderWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			// Interrupt 4 does this (the same code is also conditionally called from interrupt 2)
 
 			nIRQPending = 1;
-			SekSetIRQLine(4, SEK_IRQSTATUS_ACK);
+			SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
 			break;
 
 		case 0x500060:
@@ -582,7 +582,7 @@ void __fastcall batriderWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			break;
 
 		case 0x500082:								// Acknowledge interrupt
-			SekSetIRQLine(0, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			nIRQPending = 0;
 			break;
 
@@ -685,7 +685,7 @@ static INT32 drvDoReset()
 	SekOpen(0);
 
 	nIRQPending = 0;
-  SekSetIRQLine(0, SEK_IRQSTATUS_NONE);
+  SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 
 	Map68KTextROM(true);
 
@@ -886,7 +886,7 @@ static INT32 drvFrame()
 			}
 
 			nIRQPending = 1;
-			SekSetIRQLine(2, SEK_IRQSTATUS_ACK);
+			SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
 
 			bVBlank = true;
 		}

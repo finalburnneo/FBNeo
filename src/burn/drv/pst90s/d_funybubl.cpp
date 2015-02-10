@@ -192,7 +192,7 @@ void __fastcall funybubl_out(UINT16 port, UINT8 data)
 
 			ZetClose();
 			ZetOpen(1);
-			ZetRaiseIrq(0);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			ZetClose();
 			ZetOpen(0);
 		return;
@@ -489,7 +489,7 @@ static INT32 DrvFrame()
 		ZetOpen(0);
 		nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
 		nCyclesDone[0] += ZetRun(nSegment);
-		if (i == (nInterleave - 1)) ZetRaiseIrq(0);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		ZetOpen(1);

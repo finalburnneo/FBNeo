@@ -281,7 +281,7 @@ void __fastcall jchan_main_command_write_word(UINT32 address, UINT16 data)
 	if (address == 0x403ffe) {
 		SekClose();
 		SekOpen(1);
-		SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		SekOpen(0);
 	}
@@ -299,7 +299,7 @@ void __fastcall jchan_sub_command_write_word(UINT32 address, UINT16 data)
 	if (address == 0x400000) { // not used?
 		SekClose();
 		SekOpen(0);
-		SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
+		SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		SekOpen(1);
 	}
@@ -649,17 +649,17 @@ static INT32 DrvFrame()
 
 		SekOpen(0);
 		nCyclesDone[0] += SekRun(nSegment);
-		if (i ==  11) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
-		if (i == 240) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		if (i ==  11) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == 240) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		nSegment = SekTotalCycles();
 		SekClose();
 
 		SekOpen(1);
 		nCyclesDone[1] += SekRun(nSegment - SekTotalCycles());
 		if (enable_sub_irq) {
-			if (i ==  11) SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
-			if (i == 240) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
-			if (i == 249) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+			if (i ==  11) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+			if (i == 240) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+			if (i == 249) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		}
 		SekClose();
 	}

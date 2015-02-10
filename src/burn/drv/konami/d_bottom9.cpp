@@ -269,7 +269,7 @@ void bottom9_main_write(UINT16 address, UINT8 data)
 
 		case 0x1fc0:
 			ZetSetVector(0xff);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 
@@ -380,7 +380,7 @@ UINT8 __fastcall bottom9_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xd000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -660,7 +660,7 @@ static INT32 DrvFrame()
 		if (*nmi_enable) ZetNmi();
 	}
 
-	if (K052109_irq_enabled) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+	if (K052109_irq_enabled) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		memset(pBurnSoundOut, 0, nBurnSoundLen * sizeof(INT16) * 2);

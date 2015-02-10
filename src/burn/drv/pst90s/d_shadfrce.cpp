@@ -443,18 +443,17 @@ void __fastcall shadfrceZWrite(UINT16 a, UINT8 d)
 static void shadfrceYM2151IRQHandler(INT32 nStatus)
 {
 	if (nStatus) {
-		//ZetRaiseIrq(255);
-		ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
 		ZetRun(0x0400);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
 static INT32 DrvDoReset()
 {
 	SekOpen(0);
-    SekSetIRQLine(0, SEK_IRQSTATUS_NONE);
+    SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	SekReset();
 	SekClose();
 	
@@ -1479,7 +1478,7 @@ static INT32 shadfrceFrame()
 	
 	bVBlink = 0;
 	SekRun(3500000 / 60);
-	SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 	ZetRun(nZ80Cycles >> 2);
 	if (pBurnSoundOut) {
@@ -1505,7 +1504,7 @@ static INT32 shadfrceFrame()
 	
 	bVBlink = 0;
 	SekRun(3500000 / 60);
-	SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 	
 	ZetRun(nZ80Cycles >> 2);
 	if (pBurnSoundOut) {

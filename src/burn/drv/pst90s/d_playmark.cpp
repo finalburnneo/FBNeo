@@ -1642,7 +1642,7 @@ static INT32 DrvFrame()
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 		if (i == 90) {
 			DrvVBlank = 1;
-			SekSetIRQLine(nIRQLine, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(nIRQLine, CPU_IRQSTATUS_AUTO);
 		}
 		
 		nCurrentCPU = 1;

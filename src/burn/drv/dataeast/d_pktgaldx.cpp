@@ -504,7 +504,7 @@ static INT32 DrvFrame()
 		if (i == 240) deco16_vblank = 0x08;
 	}
 
-	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 	SekClose();
 

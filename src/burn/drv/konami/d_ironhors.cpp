@@ -197,7 +197,7 @@ static void ironhors_main_write(UINT16 address, UINT8 data)
 
 		case 0x0900:
 			ZetSetVector(0xff);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x0a00:
@@ -241,7 +241,7 @@ static UINT8 __fastcall ironhors_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0x8000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch;
 	}
 
@@ -604,8 +604,8 @@ static INT32 DrvFrame()
 	{
 		M6809Run(nCyclesTotal[0] / nInterleave);
 
-		if (i == 240 && (DrvIRQEnable[0] & 0x04)) M6809SetIRQLine(1, M6809_IRQSTATUS_AUTO); // firq
-		if ((i&0x3f)==0 && (DrvIRQEnable[0] & 0x01)) M6809SetIRQLine(0x20, M6809_IRQSTATUS_AUTO); // nmi
+		if (i == 240 && (DrvIRQEnable[0] & 0x04)) M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO); // firq
+		if ((i&0x3f)==0 && (DrvIRQEnable[0] & 0x01)) M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // nmi
 
 		BurnTimerUpdate((i+1) * (nCyclesTotal[1] / nInterleave));
 	}

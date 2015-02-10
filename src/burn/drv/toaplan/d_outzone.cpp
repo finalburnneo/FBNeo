@@ -940,7 +940,7 @@ static INT32 DrvFrame()
 
 			bVBlank = true;
 			if (bEnableInterrupts) {
-				SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 			}
 		}
 

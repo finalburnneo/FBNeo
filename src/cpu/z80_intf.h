@@ -52,12 +52,8 @@ INT32 ZetSegmentCycles();
 INT32 ZetTotalCycles();
 void ZetSetHL(INT32 n, UINT16 value);
 
-#define ZET_IRQSTATUS_NONE 0
-#define ZET_IRQSTATUS_ACK  1
-#define ZET_IRQSTATUS_AUTO 2
-
-#define ZetRaiseIrq(n) ZetSetIRQLine(n, ZET_IRQSTATUS_AUTO)
-#define ZetLowerIrq() ZetSetIRQLine(0, Z80_CLEAR_LINE)
+//#define ZetRaiseIrq(n) ZetSetIRQLine(n, ZET_IRQSTATUS_AUTO)
+//#define ZetLowerIrq() ZetSetIRQLine(0, Z80_CLEAR_LINE)
 
 void ZetSetReadHandler(UINT8 (__fastcall *pHandler)(UINT16));
 void ZetSetWriteHandler(void (__fastcall *pHandler)(UINT16, UINT8));

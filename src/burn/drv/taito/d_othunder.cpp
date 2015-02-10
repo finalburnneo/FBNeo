@@ -497,7 +497,7 @@ void __fastcall Othunder68KWriteByte(UINT32 a, UINT8 d)
 		case 0x500005:
 		case 0x500007: {
 			nTaitoCyclesDone[0] += SekRun(10);
-			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			return;
 		}
 		
@@ -573,7 +573,7 @@ void __fastcall Othunder68KWriteWord(UINT32 a, UINT16 d)
 		case 0x500004:
 		case 0x500006: {
 			nTaitoCyclesDone[0] += SekRun(10);
-			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			return;
 		}
 		
@@ -730,9 +730,9 @@ static const UINT8 othunder_default_eeprom[128] = {
 static void OthunderFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1087,7 +1087,7 @@ static INT32 OthunderFrame()
 		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == (TaitoFrameInterleave - 1)) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
+		if (i == (TaitoFrameInterleave - 1)) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		ZetOpen(0);

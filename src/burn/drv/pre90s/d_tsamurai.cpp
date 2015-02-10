@@ -403,7 +403,7 @@ static void __fastcall tsamurai_main_write(UINT16 address, UINT8 data)
 			soundlatch0 = data;
 			ZetClose();
 			ZetOpen(1);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(0);
 		return;
@@ -412,7 +412,7 @@ static void __fastcall tsamurai_main_write(UINT16 address, UINT8 data)
 			soundlatch1 = data;
 			ZetClose();
 			ZetOpen(2);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(0);
 		return;
@@ -494,7 +494,7 @@ static void __fastcall m660_main_write(UINT16 address, UINT8 data)
 			soundlatch2 = data;
 			ZetClose();
 			ZetOpen(3);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(0);
 		return;
@@ -503,7 +503,7 @@ static void __fastcall m660_main_write(UINT16 address, UINT8 data)
 			soundlatch1 = data;
 			ZetClose();
 			ZetOpen(2);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(0);
 		return;
@@ -512,7 +512,7 @@ static void __fastcall m660_main_write(UINT16 address, UINT8 data)
 			soundlatch0 = data;
 			ZetClose();
 			ZetOpen(1);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(0);
 		return;
@@ -627,7 +627,7 @@ static UINT8 __fastcall tsamurai_sound0_read(UINT16 address)
 	{
 		case 0x6000:
 		case 0xc000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch0;
 	}
 
@@ -655,7 +655,7 @@ static UINT8 __fastcall tsamurai_sound1_read(UINT16 address)
 	{
 		case 0x6000:
 		case 0xc000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch1;
 	}
 
@@ -667,7 +667,7 @@ static UINT8 __fastcall m660_sound2_read(UINT16 address)
 	switch (address)
 	{
 		case 0xc000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch2;
 	}
 

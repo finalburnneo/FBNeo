@@ -265,7 +265,7 @@ static void __fastcall toki_write_byte(UINT32 address, UINT8 data)
 		{
 			*soundlatch = data & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 		}
 		return;
@@ -442,7 +442,7 @@ static UINT8 __fastcall tokib_sound_read(UINT16 address)
 			return BurnYM3812Read(0, 0);
 
 		case 0xf800:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -1256,7 +1256,7 @@ static INT32 DrvFrame()
 		}
 
 		// when the line clears, the timer starts counting for the scroll regs to be written!
-		if (i == 250) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		if (i == 250) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 	}
 	
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
@@ -1303,7 +1303,7 @@ static INT32 TokibFrame()
 		nNext = (i + 1) * nCyclesToDo[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == (nInterleave - 1)) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		ZetOpen(0);

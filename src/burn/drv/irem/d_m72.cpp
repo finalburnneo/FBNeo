@@ -944,10 +944,10 @@ static void setvector_callback(INT32 param)
 	}
 
 	if (irqvector == 0xff) {
-		ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	} else {
 		ZetSetVector(irqvector);
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 	}
 }
 
@@ -2062,9 +2062,9 @@ static void scanline_interrupts(INT32 scanline)
 			nPreviousLine = scanline + 1;
 		}
 		if (Kengo)
-			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP2, 0xff, VEZ_IRQSTATUS_AUTO);
+			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP2, 0xff, CPU_IRQSTATUS_AUTO);
 		else
-			VezSetIRQLineAndVector(0, (m72_irq_base + 8)/4, VEZ_IRQSTATUS_AUTO);
+			VezSetIRQLineAndVector(0, (m72_irq_base + 8)/4, CPU_IRQSTATUS_AUTO);
 	}
 	else if (scanline == 255) // vblank
 	{
@@ -2073,9 +2073,9 @@ static void scanline_interrupts(INT32 scanline)
 			nPreviousLine = 0;
 		}
 		if (Kengo)
-			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff, VEZ_IRQSTATUS_AUTO);
+			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff, CPU_IRQSTATUS_AUTO);
 		else
-			VezSetIRQLineAndVector(0, (m72_irq_base + 0)/4, VEZ_IRQSTATUS_AUTO);
+			VezSetIRQLineAndVector(0, (m72_irq_base + 0)/4, CPU_IRQSTATUS_AUTO);
 	}
 
 	if (nPreviousLine >= nScreenHeight) nPreviousLine = 0;

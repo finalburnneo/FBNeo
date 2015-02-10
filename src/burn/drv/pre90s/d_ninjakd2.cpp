@@ -1053,7 +1053,7 @@ static void __fastcall ninjakd2_sound_write_port(UINT16 port, UINT8 data)
 
 inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 {
-	ZetSetIRQLine(0, (nStatus) ? ZET_IRQSTATUS_ACK : ZET_IRQSTATUS_NONE);
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
@@ -1938,7 +1938,7 @@ static INT32 DrvFrame()
 		if (i == (nInterleave-1))
 		{
 			ZetSetVector(0xd7);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 
 		ZetClose();

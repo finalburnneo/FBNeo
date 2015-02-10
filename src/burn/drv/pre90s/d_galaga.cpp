@@ -1475,7 +1475,7 @@ static INT32 DrvFrame()
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
 		if (i == (nInterleave - 1) && DrvCPU1FireIRQ) {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		if ((i == 0 || i == (nInterleave / 3) || i == (nInterleave / 3 * 2)) && IOChipCPU1FireIRQ) {
 			ZetNmi();
@@ -1490,7 +1490,7 @@ static INT32 DrvFrame()
 			nCyclesSegment = ZetRun(nCyclesSegment);
 			nCyclesDone[nCurrentCPU] += nCyclesSegment;
 			if (i == (nInterleave - 1) && DrvCPU2FireIRQ) {
-				ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			}
 			ZetClose();
 		}

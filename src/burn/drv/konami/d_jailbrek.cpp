@@ -548,9 +548,9 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
 
-		if (i < 8 && nmi_enable) M6809SetIRQLine(0x20, M6809_IRQSTATUS_AUTO);
+		if (i < 8 && nmi_enable) M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 
-		if (i == 8 && irq_enable) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+		if (i == 8 && irq_enable) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;

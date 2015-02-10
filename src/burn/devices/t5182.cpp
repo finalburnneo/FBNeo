@@ -48,7 +48,7 @@ void t5182_setirq_callback(INT32 param)
 			break;
 	}
 
-	ZetSetIRQLine(0, (irqstate) ? ZET_IRQSTATUS_ACK : ZET_IRQSTATUS_NONE);
+	ZetSetIRQLine(0, (irqstate) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 

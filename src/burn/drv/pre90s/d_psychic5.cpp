@@ -489,9 +489,9 @@ static INT32 SpriteYOffsets[16]     = { 0, 32, 64, 96, 128, 160, 192, 224, 256, 
 inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1086,11 +1086,11 @@ static INT32 DrvFrame()
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 		if (i == 0) {
 			ZetSetVector(0xd7);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		if (i == 240) {
 			ZetSetVector(0xcf);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		ZetClose();
 

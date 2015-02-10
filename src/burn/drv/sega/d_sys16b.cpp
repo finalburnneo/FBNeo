@@ -4544,7 +4544,7 @@ UINT8 __fastcall BootlegZ80Read(UINT16 a)
 	switch (a) {
 		case 0xe000:
 		case 0xe800: {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return System16SoundLatch;
 		}
 	}
@@ -4637,7 +4637,7 @@ void __fastcall System16BWriteByte(UINT32 a, UINT8 d)
 		case 0xfe0007: {
 			System16SoundLatch = d;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -4666,7 +4666,7 @@ void __fastcall AliensynWriteByte(UINT32 a, UINT8 d)
 		case 0xc00007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -4680,7 +4680,7 @@ void __fastcall AltbeastblSoundWriteByte(UINT32 a, UINT8 d)
 			System16SoundLatch = d;
 			bprintf(PRINT_NORMAL, _T("Sound Latch Wrote %x\n"), d);
 //			ZetOpen(0);
-//			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+//			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 //			ZetClose();
 			return;
 		}
@@ -4888,7 +4888,7 @@ void __fastcall BayrouteWriteByte(UINT32 a, UINT8 d)
 		case 0xff0007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -4940,7 +4940,7 @@ void __fastcall BulletWriteByte(UINT32 a, UINT8 d)
 		case 0xc00007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -5021,7 +5021,7 @@ void __fastcall CottonWriteByte(UINT32 a, UINT8 d)
 		case 0xff0007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -5137,7 +5137,7 @@ void __fastcall DduxblWriteByte(UINT32 a, UINT8 d)
 		case 0xc40007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -5297,7 +5297,7 @@ void __fastcall EswatSoundWriteByte(UINT32 a, UINT8 d)
 		case 0x123407: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -5364,7 +5364,7 @@ void __fastcall EswatblSoundWriteByte(UINT32 a, UINT8 d)
 		case 0xc42007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -5572,7 +5572,7 @@ void __fastcall FpointblWriteByte(UINT32 a, UINT8 d)
 		case 0x600007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 
@@ -5863,7 +5863,7 @@ void __fastcall PassshtWriteByte(UINT32 a, UINT8 d)
 		case 0xc00007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -5975,7 +5975,7 @@ void __fastcall RiotcityWriteByte(UINT32 a, UINT8 d)
 		case 0xf00007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -6085,7 +6085,7 @@ void __fastcall RyukyuWriteByte(UINT32 a, UINT8 d)
 		case 0xff0007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -6151,7 +6151,7 @@ void __fastcall SdibSoundWriteByte(UINT32 a, UINT8 d)
 		case 0x123407: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -6208,7 +6208,7 @@ void __fastcall SjryukoWriteByte(UINT32 a, UINT8 d)
 		case 0xc00007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -6236,7 +6236,7 @@ void __fastcall SonicbomWriteByte(UINT32 a, UINT8 d)
 		case 0x123407: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -6293,7 +6293,7 @@ void __fastcall TetrisblSndWriteByte(UINT32 a, UINT8 d)
 		case 0xc42007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -6365,7 +6365,7 @@ void __fastcall ToryumonWriteByte(UINT32 a, UINT8 d)
 		case 0xfe0007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -6409,7 +6409,7 @@ void __fastcall Wb3WriteByte(UINT32 a, UINT8 d)
 		case 0xdf0007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -6548,7 +6548,7 @@ void Altbeast_Sim8751()
 	if ((temp & 0xff00) != 0x0000) {
 		System16SoundLatch = temp >> 8;
 		ZetOpen(0);
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x30c4)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
@@ -6567,7 +6567,7 @@ void Altbeastj_Sim8751()
 	if ((temp & 0xff00) != 0x0000) {
 		System16SoundLatch = temp >> 8;
 		ZetOpen(0);
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x30d4)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
@@ -6586,7 +6586,7 @@ void Altbeast6_Sim8751()
 	if ((temp & 0xff00) != 0x0000) {
 		System16SoundLatch = temp >> 8;
 		ZetOpen(0);
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x3098)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
@@ -6936,7 +6936,7 @@ void Ddux_Sim8751()
 	if ((temp & 0xff00) != 0x0000) {
 		System16SoundLatch = temp >> 8;
 		ZetOpen(0);
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x0bd0)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
@@ -7476,7 +7476,7 @@ void Goldnaxe_Sim8751()
 	if ((temp & 0xff00) != 0x0000) {
 		System16SoundLatch = temp >> 8;
 		ZetOpen(0);
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x2cfc)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
@@ -8096,7 +8096,7 @@ void Tturf_Sim8751()
 	if ((temp & 0xff00) != 0x0000) {
 		System16SoundLatch = temp & 0xff;
 		ZetOpen(0);
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x01d0)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
@@ -8145,7 +8145,7 @@ void Wb3_Sim8751()
 	if ((temp & 0xff00) != 0x0000) {
 		System16SoundLatch = temp >> 8;
 		ZetOpen(0);
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x0008)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
@@ -8285,7 +8285,7 @@ void Wrestwar_Sim8751()
 	if ((temp & 0xff00) != 0x0000) {
 		System16SoundLatch = temp & 0xff;
 		ZetOpen(0);
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x208e)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
@@ -9575,7 +9575,7 @@ void __fastcall IsgsmWriteByte(UINT32 a, UINT8 d)
 		case 0xfe0007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}

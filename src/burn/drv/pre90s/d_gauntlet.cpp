@@ -1684,7 +1684,7 @@ UINT8 __fastcall Gauntlet68KReadByte(UINT32 a)
 		
 		case 0x80300f: {
 			DrvSoundtoCPUReady = 0;
-			SekSetIRQLine(0, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return DrvSoundtoCPU;
 		}
 		
@@ -1743,7 +1743,7 @@ UINT16 __fastcall Gauntlet68KReadWord(UINT32 a)
 		
 		case 0x80300e: {
 			DrvSoundtoCPUReady = 0;
-			SekSetIRQLine(0, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return 0xff00 | DrvSoundtoCPU;
 		}
 		
@@ -1798,7 +1798,7 @@ void __fastcall Gauntlet68KWriteWord(UINT32 a, UINT16 d)
 			DrvCPUtoSoundReady = 1;
 			M6502Open(0);
 			nCyclesDone[1] += M6502Run(100);
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 			nCyclesDone[1] += M6502Run(100);
 			M6502Close();
 			return;
@@ -1903,10 +1903,10 @@ void GauntletSoundWrite(UINT16 Address, UINT8 Data)
 			DrvSoundtoCPUReady = 1;
 			if (SekGetActive() == -1) {
 				SekOpen(0);
-				SekSetIRQLine(6, SEK_IRQSTATUS_ACK);
+				SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 				SekClose();
 			} else {
-				SekSetIRQLine(6, SEK_IRQSTATUS_ACK);
+				SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 			}
 			return;
 		}
@@ -1957,7 +1957,7 @@ void GauntletSoundWrite(UINT16 Address, UINT8 Data)
 		}
 		
 		case 0x1830: {
-			M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_NONE);
+			M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_NONE);
 			return;
 		}
 		
@@ -2514,7 +2514,7 @@ static INT32 DrvFrame()
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 		if (i == 11) DrvVBlank = 0;
 		if (i == 250) DrvVBlank = 1;
-		if (i == 261) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		if (i == 261) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		if (i == NextScanline) {
@@ -2534,7 +2534,7 @@ static INT32 DrvFrame()
 			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 			nCyclesDone[nCurrentCPU] += M6502Run(nCyclesSegment);
-			if (i == 64 || i == 128 || i == 192 || i == 256) M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_ACK);
+			if (i == 64 || i == 128 || i == 192 || i == 256) M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_ACK);
 			M6502Close();
 		}
 		

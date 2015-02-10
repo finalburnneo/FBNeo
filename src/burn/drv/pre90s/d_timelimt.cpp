@@ -555,7 +555,7 @@ static INT32 DrvFrame()
 
 		ZetOpen(1);
 		nCyclesDone[1] += ZetRun(nSegment);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 	}
 

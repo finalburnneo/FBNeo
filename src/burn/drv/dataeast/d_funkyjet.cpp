@@ -260,7 +260,7 @@ void __fastcall funkyjet_main_write_word(UINT32 address, UINT16 data)
 	{
 		case 0x18010a:
 			deco16_soundlatch = data & 0xff;
-			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		break;
 	}
 
@@ -276,7 +276,7 @@ void __fastcall funkyjet_main_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x18010b:
 			deco16_soundlatch = data;
-			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		break;
 	}
 
@@ -586,7 +586,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 	
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

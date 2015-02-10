@@ -212,7 +212,7 @@ void hcastle_write(UINT16 address, UINT8 data)
 			t -= ZetTotalCycles();
 			if (t > 1) ZetRun((INT32)t);
 
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 		return;
 
@@ -321,7 +321,7 @@ UINT8 __fastcall hcastle_sound_read(UINT16 address)
 			return BurnYM3812Read(0, address & 1);
 
 		case 0xd000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -754,7 +754,7 @@ static INT32 DrvFrame()
 	konamiOpen(0);
 
 	konamiRun(nCyclesTotal[0]);
-	konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_IRQSTATUS_AUTO);
+	konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 

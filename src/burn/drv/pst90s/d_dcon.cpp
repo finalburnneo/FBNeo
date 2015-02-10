@@ -650,7 +650,7 @@ static INT32 DrvFrame()
 		BurnTimerEndFrameYM3812(nTotalCycles[1]);
 	}
 
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut && !is_sdgndmps) {
 		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);

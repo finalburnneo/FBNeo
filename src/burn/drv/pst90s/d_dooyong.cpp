@@ -1343,12 +1343,12 @@ inline static void DrvYM2203IRQHandler(INT32 n, INT32 nStatus)
 {
 	sound_irq_line[n] = nStatus;
 
-	ZetSetIRQLine(0, ((sound_irq_line[0] | sound_irq_line[1]) ? ZET_IRQSTATUS_ACK : ZET_IRQSTATUS_NONE));
+	ZetSetIRQLine(0, ((sound_irq_line[0] | sound_irq_line[1]) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE));
 }
 
 static void DrvYM2151IrqHandler(INT32 nStatus)
 {
-	ZetSetIRQLine(0, (nStatus ? ZET_IRQSTATUS_ACK : ZET_IRQSTATUS_NONE));
+	ZetSetIRQLine(0, (nStatus ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE));
 }
 
 inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
@@ -2854,11 +2854,11 @@ static INT32 LastdayFrame()
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
 		if (gulf_storm) {
-			if (i == 92) { ZetSetIRQLine(0, ZET_IRQSTATUS_ACK); vblank = 1; }
-			if (i == 93) { ZetSetIRQLine(0, ZET_IRQSTATUS_NONE); vblank = 0; }
+			if (i == 92) { ZetSetIRQLine(0, CPU_IRQSTATUS_ACK); vblank = 1; }
+			if (i == 93) { ZetSetIRQLine(0, CPU_IRQSTATUS_NONE); vblank = 0; }
 		} else {
-			if (i == (nInterleave - 2)) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-			if (i == (nInterleave - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			if (i == (nInterleave - 2)) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
 		ZetClose();
 
@@ -2866,9 +2866,9 @@ static INT32 LastdayFrame()
 		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
 		if (pollux_gulfstrm_irq_kicker_hack && (i % pollux_gulfstrm_irq_kicker_hack) == 0) { // ugly hack for pollux musix+sfx
 			if (!(sound_irq_line[0] | sound_irq_line[1])) {
-				ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 				ZetRun(60);
-				ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			}
 		}
 		ZetClose();
@@ -2920,8 +2920,8 @@ static INT32 FlytigerFrame()
 	{
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		if (i == (nInterleave - 2)) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == (nInterleave - 2)) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 
 		ZetOpen(1);
@@ -2990,8 +2990,8 @@ static INT32 RsharkFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		if (i == 250) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
-		if (i == 120) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+		if (i == 250) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+		if (i == 120) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
 

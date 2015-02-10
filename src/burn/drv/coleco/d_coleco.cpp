@@ -247,7 +247,7 @@ static void paddle_callback()
 		joy_status[1] = 1;
 
 	if (joy_status[0] || joy_status[1]) {
-		ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO); // ACK? -- lower when input read?
+		ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // ACK? -- lower when input read?
 	}
 }
 

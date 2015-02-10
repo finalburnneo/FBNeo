@@ -377,9 +377,9 @@ UINT8 pushman_mcu_read(UINT16 address)
 static void DrvIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -752,7 +752,7 @@ static INT32 DrvFrame()
 		INT32 segment = nCyclesTotal[0] / nInterleave;
 
 		nCyclesDone[0] += SekRun(segment);
-		if (i == (nInterleave - 1)) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 		if (no_mcu == 0) {
 			nCyclesDone[1] += m6805Run(segment / 2);

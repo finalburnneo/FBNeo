@@ -352,9 +352,9 @@ UINT8 __fastcall crshrace_sound_in(UINT16 port)
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -757,7 +757,7 @@ static INT32 DrvFrame()
 	ZetOpen(0);
 
 	SekRun(nCyclesTotal[0]);
-	SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
 

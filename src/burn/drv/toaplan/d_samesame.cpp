@@ -920,7 +920,7 @@ static INT32 DrvFrame()
 
 			bVBlank = true;
 			if (bEnableInterrupts) {
-				SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 			}
 		}
 
@@ -959,7 +959,7 @@ static INT32 DrvFrame()
 
 	ToaBufferFCU2Sprites();
 
-	SekSetIRQLine(2, SEK_IRQSTATUS_AUTO); // sprite buffer finished...
+	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO); // sprite buffer finished...
 
 	SekClose();
 

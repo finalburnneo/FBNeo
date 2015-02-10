@@ -619,15 +619,15 @@ static INT32 DrvFrame()
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
 		if (i == 0) {
 			ZetSetVector(0xcf);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			nCyclesDone[nCurrentCPU] += ZetRun(100);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
 		if (i == ( nInterleave - 2)) {
 			ZetSetVector(0xd7);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			nCyclesDone[nCurrentCPU] += ZetRun(100);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
 		ZetClose();
 		
@@ -638,9 +638,9 @@ static INT32 DrvFrame()
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
 		if ((i & 3) == 3) {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			nCyclesDone[nCurrentCPU] += ZetRun(100);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
 		ZetClose();
 	}

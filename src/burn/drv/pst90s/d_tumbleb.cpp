@@ -1925,7 +1925,7 @@ void __fastcall Tumbleb68KWriteWord(UINT32 a, UINT16 d)
 				if (Jumpkids) {
 					DrvSoundLatch = d & 0xff;
 					ZetOpen(0);
-					ZetRaiseIrq(0);
+					ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 					ZetClose();
 					return;
 				} else {
@@ -2164,7 +2164,7 @@ void __fastcall Jumppop68KWriteWord(UINT32 a, UINT16 d)
 		case 0x18000c: {
 			DrvSoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -2286,7 +2286,7 @@ UINT8 __fastcall JumppopZ80PortRead(UINT16 a)
 		}
 		
 		case 0x03: {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return DrvSoundLatch;
 		}
 		
@@ -2996,9 +2996,9 @@ static void SemicomMapZ80()
 static void SemicomYM2151IrqHandler(INT32 Irq)
 {
 	if (Irq) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -4407,7 +4407,7 @@ static INT32 DrvFrame()
 		if (i == SCANLINE_VBLANK_START) DrvVBlank = 1;
 		if (i == SCANLINE_VBLANK_END) DrvVBlank = 0;
 		if (i == NUM_SCANLINES - 1) {
-			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			if (Tumbleb2) Tumbleb2PlayMusic();
 		}
 		SekClose();
@@ -4479,7 +4479,7 @@ static INT32 JumppopFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 		if (i == (nInterleave - 1)) {
-			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		}
 		SekClose();
 		

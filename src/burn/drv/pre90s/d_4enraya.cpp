@@ -407,7 +407,7 @@ static INT32 DrvFrame()
 
 		nCyclesDone += ZetRun(nSegment);
 
-		ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	}
 
 	ZetClose();

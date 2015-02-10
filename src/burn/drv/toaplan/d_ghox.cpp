@@ -715,7 +715,7 @@ static INT32 DrvFrame()
 			ToaBufferGP9001Sprites();
 
 			bVBlank = true;
-			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
 		nCyclesSegment = nNext - SekTotalCycles();

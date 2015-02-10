@@ -208,7 +208,7 @@ static void palette_write(INT32 offset, UINT16 data)
 static inline void esd_sound_command_w(UINT8 data)
 {
 	soundlatch = data;
-	ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+	ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 }
 
 //----------------------------------------------------------------------------------------------------------
@@ -596,7 +596,7 @@ UINT8 __fastcall esd16_sound_in(UINT16 port)
 			return MSM6295ReadStatus(0);
 
 		case 0x03:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch;
 
 		case 0x06:
@@ -1148,7 +1148,7 @@ static INT32 DrvFrame()
 		if (i & 1) ZetNmi();
 	}
 
-	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 	
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 	if (pBurnSoundOut) {

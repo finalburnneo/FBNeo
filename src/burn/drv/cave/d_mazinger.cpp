@@ -74,7 +74,7 @@ STDINPUTINFO(mazinger)
 static void UpdateIRQStatus()
 {
 	nIRQPending = (nVideoIRQ == 0 || nSoundIRQ == 0 || nUnknownIRQ == 0);
-	SekSetIRQLine(1, nIRQPending ? SEK_IRQSTATUS_ACK : SEK_IRQSTATUS_NONE);
+	SekSetIRQLine(1, nIRQPending ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 UINT8 __fastcall mazingerReadByte(UINT32 sekAddress)
@@ -634,9 +634,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 

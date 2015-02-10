@@ -131,7 +131,7 @@ static void sg1000_ppi8255_portC_write(UINT8 data)
 
 static void vdp_interrupt(int state)
 {
-	ZetSetIRQLine(0, state ? ZET_IRQSTATUS_ACK : ZET_IRQSTATUS_NONE);
+	ZetSetIRQLine(0, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static int DrvDoReset()

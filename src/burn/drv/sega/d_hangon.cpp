@@ -859,7 +859,7 @@ void HangonPPI1WritePortA(UINT8 data)
 		INT32 nLastCPU = nSekActive;
 		SekClose();
 		SekOpen(1);
-		SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		SekOpen(nLastCPU);
 	}

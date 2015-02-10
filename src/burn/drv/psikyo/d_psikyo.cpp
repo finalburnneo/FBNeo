@@ -599,9 +599,9 @@ static void PsikyoFMIRQHandler(INT32, INT32 nStatus)
 //	bprintf(PRINT_NORMAL, _T("  - IRQ -> %i.\n"), nStatus);
 
 	if (nStatus) {
-		ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1374,7 +1374,7 @@ static INT32 DrvFrame()
 			}
 			PsikyoSpriteBuffer();
 
-			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 			bVBlank = 0x00;
 		}
 

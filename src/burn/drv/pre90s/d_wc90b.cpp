@@ -439,7 +439,7 @@ void __fastcall Wc90b1Write1(UINT16 a, UINT8 d)
 			Wc90b1SoundLatch = d;
 			ZetClose();
 			ZetOpen(2);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(0);
 			return;
@@ -518,7 +518,7 @@ UINT8 __fastcall Wc90b1Read3(UINT16 a)
 		}
 		
 		case 0xf800: {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return Wc90b1SoundLatch;
 		}
 		
@@ -998,8 +998,8 @@ static INT32 Wc90b1Frame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == nVBlankIRQFire) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == nVBlankIRQFire + 1) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == nVBlankIRQFire) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == nVBlankIRQFire + 1) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 
 		nCurrentCPU = 1;
@@ -1007,8 +1007,8 @@ static INT32 Wc90b1Frame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == nVBlankIRQFire) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == nVBlankIRQFire + 1) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == nVBlankIRQFire) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == nVBlankIRQFire + 1) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 		
 		nCurrentCPU = 2;

@@ -424,7 +424,7 @@ static INT32 DrvFrame()
 
 			ToaBufferGP9001Sprites();
 
-			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];

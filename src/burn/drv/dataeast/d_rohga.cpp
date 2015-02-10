@@ -388,7 +388,7 @@ void __fastcall rohga_main_write_word(UINT32 address, UINT16 data)
 	{
 		case 0x2800a8:
 			deco16_soundlatch = data & 0xff;
-			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x300000:
@@ -401,7 +401,7 @@ void __fastcall rohga_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x321100: // schmeisr
-			SekSetIRQLine(6, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(6, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x322000:
@@ -422,7 +422,7 @@ void __fastcall rohga_main_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x2800a9:
 			deco16_soundlatch = data;
-			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x300000:
@@ -438,7 +438,7 @@ void __fastcall rohga_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x321100: // schmeisr
 		case 0x321101:
-			SekSetIRQLine(6, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(6, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x322000:
@@ -465,7 +465,7 @@ UINT16 __fastcall rohga_main_read_word(UINT32 address)
 			return (DrvInputs[1] & 0x07) | (deco16_vblank & 0x08);
 
 		case 0x321100:
-			SekSetIRQLine(6, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(6, CPU_IRQSTATUS_NONE);
 			return 0;
 	}
 
@@ -492,7 +492,7 @@ UINT8 __fastcall rohga_main_read_byte(UINT32 address)
 
 		case 0x321100:
 		case 0x321101:
-			SekSetIRQLine(6, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(6, CPU_IRQSTATUS_NONE);
 			return 0;
 	}
 
@@ -527,14 +527,14 @@ void __fastcall wizdfire_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x320004:
-			SekSetIRQLine(6, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(6, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0xfe4150:
 		case 0xff4260: // nitrobal
 		case 0xff4a60:
 			deco16_soundlatch = data & 0xff;
-			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 
@@ -576,14 +576,14 @@ void __fastcall wizdfire_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x320004:
 		case 0x320005:
-			SekSetIRQLine(6, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(6, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0xfe4151:
 		case 0xff4261: // nitrobal
 		case 0xff4a61:
 			deco16_soundlatch = data;
-			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 
@@ -1637,7 +1637,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	SekSetIRQLine(6, SEK_IRQSTATUS_ACK);
+	SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 	
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

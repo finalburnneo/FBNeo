@@ -658,7 +658,7 @@ void __fastcall battlegWriteByte(UINT32 sekAddress, UINT8 byteValue)
 			nSoundCommand = byteValue;
 
 			// Trigger Z80 interrupt, and allow the Z80 to process it
-			ZetRaiseIrq(255);
+			ZetSetIRQLine(0xff, CPU_IRQSTATUS_AUTO);
 			nCyclesDone[1] += ZetRun(0x0200);
 			break;
 
@@ -709,7 +709,7 @@ static INT32 DrvDoReset()
 {
 	SekOpen(0);
 	nIRQPending = 0;
-    SekSetIRQLine(0, SEK_IRQSTATUS_NONE);
+    SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	SekReset();
 	SekClose();
 
@@ -911,7 +911,7 @@ static INT32 DrvFrame()
 			}
 
 			nIRQPending = 1;
-			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 			ToaBufferGP9001Sprites();
 

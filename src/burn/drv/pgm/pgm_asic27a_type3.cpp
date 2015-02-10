@@ -39,7 +39,7 @@ static void __fastcall svg_write_byte(UINT32 address, UINT8 data)
 	switch (address)
 	{
 		case 0x5c0000:
-			Arm7SetIRQLine(ARM7_FIRQ_LINE, ARM7_IRQSTATUS_AUTO);
+			Arm7SetIRQLine(ARM7_FIRQ_LINE, CPU_IRQSTATUS_AUTO);
 		return;
 	}
 }

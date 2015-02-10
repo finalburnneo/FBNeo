@@ -245,7 +245,7 @@ static void update_irq_state()
 {
 	INT32 irq = (vblank_irq || sprite_irq || unknown_irq) ? 1 : 0;
 
-	SekSetIRQLine(1, irq ? SEK_IRQSTATUS_ACK : SEK_IRQSTATUS_NONE);
+	SekSetIRQLine(1, irq ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static void __fastcall sandscrp_main_write_word(UINT32 address, UINT16 data)
@@ -440,7 +440,7 @@ static UINT8 DrvYM2203PortB(UINT32)
 
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
-	ZetSetIRQLine(0, (nStatus) ? ZET_IRQSTATUS_ACK : ZET_IRQSTATUS_NONE);
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)

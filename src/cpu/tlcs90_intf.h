@@ -11,10 +11,6 @@ INT32 tlcs90Reset();
 void tlcs90Close();
 INT32 tlcs90Exit();
 
-#define TLCS90_IRQSTATUS_NONE	0
-#define TLCS90_IRQSTATUS_ACK	1
-#define TLCS90_IRQSTATUS_AUTO	2
-
 void tlcs90SetIRQLine(INT32 line, INT32 state);
 
 void tlcs90BurnCycles(INT32 nCpu, INT32 cycles);

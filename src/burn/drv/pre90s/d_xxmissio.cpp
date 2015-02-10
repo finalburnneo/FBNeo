@@ -166,7 +166,7 @@ static void __fastcall xxmission_main_write(UINT16 address, UINT8 data)
 					ZetClose();
 					ZetOpen(1);
 					ZetSetVector(0x10);
-					ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+					ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 					ZetClose();
 					ZetOpen(0);
 				}
@@ -226,7 +226,7 @@ static void __fastcall xxmission_sub_write(UINT16 address, UINT8 data)
 					ZetClose();
 					ZetOpen(0);
 					ZetSetVector(0x10);
-					ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+					ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 					ZetClose();
 					ZetOpen(1);
 				}
@@ -585,7 +585,7 @@ static INT32 DrvFrame()
 		if (i == 241) {
 			vblank = 1;
 			cpu_status &= ~0x20;
-			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		ZetClose();
 
@@ -593,7 +593,7 @@ static INT32 DrvFrame()
 		BurnTimerUpdate(nSegment);
 		if (i == ((nInterleave / 2) - 1) || i == (nInterleave - 1)) { // 120hz
 			cpu_status &= ~0x10;
-			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		ZetClose();
 	}

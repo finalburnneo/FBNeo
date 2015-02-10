@@ -164,7 +164,7 @@ static void tutankhm_write(UINT16 address, UINT8 data)
 		case 0x8200:
 			irq_enable = data & 1;
 			if (!irq_enable) {
-				M6809SetIRQLine(0, M6809_IRQSTATUS_NONE);
+				M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
 			}
 		return;
 
@@ -192,7 +192,7 @@ static void tutankhm_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x8600:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x8700:
@@ -435,7 +435,7 @@ static INT32 DrvFrame()
 	{
 		INT32 nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
 		nCyclesDone[0] += M6809Run(nSegment - nCyclesDone[0]);
-		if (i == (nInterleave - 1) && irq_enable && (nCurrentFrame & 1)) M6809SetIRQLine(0, M6809_IRQSTATUS_ACK);
+		if (i == (nInterleave - 1) && irq_enable && (nCurrentFrame & 1)) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 
 		nSegment = (nCyclesTotal[1] * i) / nInterleave;
 		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);

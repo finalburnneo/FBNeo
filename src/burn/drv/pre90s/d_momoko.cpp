@@ -697,7 +697,7 @@ static INT32 DrvFrame()
 
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCycleSegment);
-		if (i == 66) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if (i == 66) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		nCycleSegment = nCyclesTotal[1] / nInterleave;

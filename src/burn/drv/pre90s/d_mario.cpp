@@ -212,7 +212,7 @@ static void __fastcall mario_main_write(unsigned short address, UINT8 data)
 			ZetClose(); // masao
 			ZetOpen(1);
 			ZetSetVector(0xff);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(0);
 		return;
@@ -312,7 +312,7 @@ static UINT8 __fastcall masao_sound_read(UINT16 address)
 
 static UINT8 masao_ay8910_read_port_A(UINT32)
 {
-	ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+	ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	return *soundlatch;
 }
 

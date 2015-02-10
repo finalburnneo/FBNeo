@@ -204,30 +204,30 @@ static void xain_main_write(UINT16 address, UINT8 data)
 			M6809Open(2);
 			BurnTimerUpdate(cycles);
 			soundlatch = data;
-		//	M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
-			M6809SetIRQLine(0, M6809_IRQSTATUS_ACK); // hold line until soundlatch is read to ensure commands are read
+		//	M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK); // hold line until soundlatch is read to ensure commands are read
 			M6809Close();
 			M6809Open(0);
 		}
 		return;
 
 		case 0x3a09:
-			M6809SetIRQLine(0x20, M6809_IRQSTATUS_NONE);
+			M6809SetIRQLine(0x20, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x3a0a:
-			M6809SetIRQLine(0x01, M6809_IRQSTATUS_NONE);
+			M6809SetIRQLine(0x01, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x3a0b:
-			M6809SetIRQLine(0x00, M6809_IRQSTATUS_NONE);
+			M6809SetIRQLine(0x00, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x3a0c:
 		{
 			M6809Close();
 			M6809Open(1);
-			M6809SetIRQLine(0x00, M6809_IRQSTATUS_ACK); 
+			M6809SetIRQLine(0x00, CPU_IRQSTATUS_ACK); 
 			M6809Close();
 			M6809Open(0);
 		}
@@ -329,14 +329,14 @@ static void xain_sub_write(UINT16 address, UINT8 data)
 		{
 			M6809Close();
 			M6809Open(0);
-			M6809SetIRQLine(0x00, M6809_IRQSTATUS_ACK); // maincpu irq
+			M6809SetIRQLine(0x00, CPU_IRQSTATUS_ACK); // maincpu irq
 			M6809Close();
 			M6809Open(1);
 		}
 		return;
 
 		case 0x2800:
-			M6809SetIRQLine(0x00, M6809_IRQSTATUS_NONE);
+			M6809SetIRQLine(0x00, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x3000:
@@ -371,7 +371,7 @@ static UINT8 xain_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0x1000:
-			M6809SetIRQLine(0, M6809_IRQSTATUS_NONE);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch;
 	}
 
@@ -455,7 +455,7 @@ static UINT8 xain_68705_read_ports(UINT16 address)
 
 inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 {
-	M6809SetIRQLine(0x01, ((nStatus) ? M6809_IRQSTATUS_ACK : M6809_IRQSTATUS_NONE));
+	M6809SetIRQLine(0x01, ((nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE));
 }
 
 inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
@@ -721,12 +721,12 @@ static void xain_scanline(INT32 scanline) // ripped directly from MAME
 
 	if (!(vcount_old & 8) && (vcount & 8))
 	{
-		M6809SetIRQLine(0x01, M6809_IRQSTATUS_ACK);
+		M6809SetIRQLine(0x01, CPU_IRQSTATUS_ACK);
 	}
 
 	if (vcount == 0xf8)
 	{
-		M6809SetIRQLine(0x20, M6809_IRQSTATUS_ACK);
+		M6809SetIRQLine(0x20, CPU_IRQSTATUS_ACK);
 	}
 
 	vblank = (vcount >= (248 - 1)) ? 1 : 0; // -1 is a hack

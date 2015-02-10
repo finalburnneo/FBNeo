@@ -1003,7 +1003,7 @@ UINT8 __fastcall GalhustlReadByte(UINT32 sekAddress)
 static INT32 DrvDoReset()
 {
 	SekOpen(0);
-  SekSetIRQLine(0, SEK_IRQSTATUS_NONE);
+  SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	SekReset();
 	SekClose();
 	SndBank = 0;
@@ -1946,9 +1946,9 @@ static INT32 GalpanicFrame()
 	SekOpen(0);
 
 	SekRun(nCyclesTotal[0] / 2);
-	SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);						// let game run ???
+	SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);						// let game run ???
 	SekRun(nCyclesTotal[0] / 2);
-	SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);						// update palette
+	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);						// update palette
 
 	SekClose();
 
@@ -1990,11 +1990,11 @@ static INT32 ComadFrame()
 	SekNewFrame();
 
 	SekRun(nCyclesTotal[0] / 4);
-	SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);						// let game run
+	SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);						// let game run
 	SekRun(nCyclesTotal[0] / 4);
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);						// enable icons
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);						// enable icons
 	SekRun(nCyclesTotal[0] / 4);
-	SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);						// update palette
+	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);						// update palette
 	SekRun(nCyclesTotal[0] / 4);
 
 	SekClose();
@@ -2037,9 +2037,9 @@ static INT32 GalhustlFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == 1) SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
-		if (i == 2) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-		if (i == 3) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+		if (i == 1) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 2) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 3) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 	}
 

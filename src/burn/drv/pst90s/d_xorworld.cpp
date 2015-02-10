@@ -364,8 +364,8 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < 4; i++)
 	{
 		SekRun((10000000 / 60) / 4);
-		if (i == 0 || i == 2) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
-		if (/*i==1||*/i == 3) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == 0 || i == 2) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+		if (/*i==1||*/i == 3) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 	}
 
 	if (pBurnSoundOut) {

@@ -1631,27 +1631,27 @@ static int DrvFrame()
 		Sh2Run(segment);
 		// irqs
 		if (i == 1) {
-			Sh2SetIRQLine(1, SH2_IRQSTATUS_AUTO);
+			Sh2SetIRQLine(1, CPU_IRQSTATUS_AUTO);
 			Sh2Run(0);
-			Sh2SetIRQLine(1, SH2_IRQSTATUS_NONE);
+			Sh2SetIRQLine(1, CPU_IRQSTATUS_NONE);
 		} else if (i == 240) {
-			Sh2SetIRQLine(5, SH2_IRQSTATUS_AUTO);
+			Sh2SetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			Sh2Run(0);
-			Sh2SetIRQLine(5, SH2_IRQSTATUS_NONE);
+			Sh2SetIRQLine(5, CPU_IRQSTATUS_NONE);
 		}
 		{ // fire irq9 every interleave iteration.
-			Sh2SetIRQLine(9, SH2_IRQSTATUS_AUTO);
+			Sh2SetIRQLine(9, CPU_IRQSTATUS_AUTO);
 			Sh2Run(0);
-			Sh2SetIRQLine(9, SH2_IRQSTATUS_NONE);
+			Sh2SetIRQLine(9, CPU_IRQSTATUS_NONE);
 			if (i%125==0 && i!=0) { //125 = every 8 ms (per 261 interleave)
-				Sh2SetIRQLine(11, SH2_IRQSTATUS_AUTO);
+				Sh2SetIRQLine(11, CPU_IRQSTATUS_AUTO);
 				Sh2Run(0);
-				Sh2SetIRQLine(11, SH2_IRQSTATUS_NONE);
+				Sh2SetIRQLine(11, CPU_IRQSTATUS_NONE);
 			}
 			if (i%31==0 && i!=0) { //31=every 2 ms
-				Sh2SetIRQLine(15, SH2_IRQSTATUS_AUTO);
+				Sh2SetIRQLine(15, CPU_IRQSTATUS_AUTO);
 				Sh2Run(0);
-				Sh2SetIRQLine(15, SH2_IRQSTATUS_NONE);
+				Sh2SetIRQLine(15, CPU_IRQSTATUS_NONE);
 			}
 		}
 

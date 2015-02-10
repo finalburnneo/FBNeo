@@ -315,7 +315,7 @@ static INT32 DrvDoReset()
 {
 	SekOpen(0);
 	nIRQPending = 0;
-    SekSetIRQLine(0, SEK_IRQSTATUS_NONE);
+    SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	SekReset();
 	SekClose();
 
@@ -400,7 +400,7 @@ static INT32 DrvFrame()
 			}
 
 			nIRQPending  = 1;
-			SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 			ToaBufferGP9001Sprites();
 

@@ -599,12 +599,12 @@ static INT32 DrvFrame()
 
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesSegment);
-		if (i == 99) ZetRaiseIrq(0);
+		if (i == 99) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 	
 		ZetOpen(1);
 		nCyclesDone[1] += ZetRun(nCyclesSegment);
-		if (i == 24 || i == 49 || i == 74 || i == 99) ZetRaiseIrq(0);
+		if (i == 24 || i == 49 || i == 74 || i == 99) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 	}
 

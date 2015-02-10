@@ -29,10 +29,6 @@ void h6280Exit();
 
 extern INT32 nh6280CpuCount;
 
-#define H6280_IRQSTATUS_NONE	0
-#define H6280_IRQSTATUS_ACK	1
-#define H6280_IRQSTATUS_AUTO	2
-
 #define H6280_INPUT_LINE_NMI	0x20
 
 void h6280SetIRQLine(INT32 line, INT32 state);

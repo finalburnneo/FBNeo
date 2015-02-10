@@ -153,7 +153,7 @@ void scotrsht_main_write(UINT16 address, UINT8 data)
 
 		case 0x3100:
 			*soundlatch = data;
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x3300:
@@ -200,7 +200,7 @@ UINT8 scotrsht_main_read(UINT16 address)
 UINT8 __fastcall scotrsht_sound_read(UINT16 address)
 {
 	if (address == 0x8000) {
-		ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return *soundlatch;
 	}
 
@@ -571,7 +571,7 @@ static INT32 DrvFrame()
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
-	if (*irq_enable) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+	if (*irq_enable) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);

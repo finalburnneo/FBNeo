@@ -159,8 +159,7 @@ void rollerg_main_write(UINT16 address, UINT8 data)
 
 		case 0x0040:
 			ZetSetVector(0xff);
-		//	ZetRaiseIrq(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 
@@ -265,7 +264,7 @@ UINT8 __fastcall rollerg_sound_read(UINT16 address)
 
 	if (address >= 0xa000 && address <= 0xa02f) {
 		// not sure...
-		if ((address & 0x3e) == 0x00) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if ((address & 0x3e) == 0x00) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 
 		return K053260Read(0, address & 0x3f);
 	}
@@ -496,7 +495,7 @@ static INT32 DrvFrame()
 		BurnTimerUpdateYM3812(i * (nCyclesTotal[1] / nInterleave));
 	}
 
-	konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_IRQSTATUS_AUTO);
+	konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 	
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 

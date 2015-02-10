@@ -557,7 +557,7 @@ static void __fastcall mystwarr_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x49a000:
 		case 0x49a001:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x49e004:
@@ -834,7 +834,7 @@ static void __fastcall metamrph_main_write_word(UINT32 address, UINT16 data)
 	{
 		case 0x264000:
 		case 0x264001:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x26800c:
@@ -917,7 +917,7 @@ static void __fastcall metamrph_main_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x264000:
 		case 0x264001:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x26800c:
@@ -1282,7 +1282,7 @@ static void __fastcall martchmp_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x41a000:
 		case 0x41a001:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 }
@@ -1536,7 +1536,7 @@ static void __fastcall dadandrn_main_write_byte(UINT32 address, UINT8 data)
 		return;
 
 		case 0x6e0000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0xe00000:
@@ -1630,7 +1630,7 @@ static void __fastcall mystwarr_sound_write(UINT16 address, UINT8 data)
 		case 0xf800:
 			sound_control = data & 0x10;
 			bankswitch(data);
-		//	if (!sound_control) ZetSetIRQLine(0x20, ZET_IRQSTATUS_NONE);	// CLEAR NMI LINE!
+		//	if (!sound_control) ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);	// CLEAR NMI LINE!
 		return;
 	}
 
@@ -1665,11 +1665,11 @@ static UINT8 __fastcall mystwarr_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xf002:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0xf003:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch2;
 	}
 
@@ -2811,23 +2811,23 @@ static INT32 DrvFrame()
 			if (mw_irq_control & 1)
 			{
 				if (i == 0)
-					SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+					SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	
 				if (i == ((nInterleave * 240)/256))
-					SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+					SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 			}
 		}
 
 		if (nGame == 2 || nGame == 3)
 		{
 			if (i == 0) // otherwise service mode doesn't work!
-				SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 			if (i == ((nInterleave *  24) / 256))
-				SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+				SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 			if (i == ((nInterleave * 248) / 256) && K053246_is_IRQ_enabled())
-				SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+				SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		}
 
 		if (nGame == 4) // martchmp
@@ -2835,17 +2835,17 @@ static INT32 DrvFrame()
 			if (mw_irq_control & 2)
 			{
 				if (i == ((nInterleave *  23) / 256))
-					SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+					SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 				if (i == ((nInterleave * 247) / 256) && K053246_is_IRQ_enabled())
-					SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+					SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			}
 		}
 
 		if (nGame == 5 || nGame == 6)
 		{
 			if (i == (nInterleave - 1))
-				SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+				SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		}
 
 		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
@@ -2854,7 +2854,7 @@ static INT32 DrvFrame()
 		nCyclesDone[1] += nCyclesSegment;
 
 		if ((i % (nInterleave / 8)) == ((nInterleave / 8) - 1)) {// && sound_nmi_enable && sound_control) { // iq_132
-			ZetNmi(); //ZetSetIRQLine(0x20, ZET_IRQSTATUS_ACK);
+			ZetNmi(); //ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
 		}
 
 		if (pBurnSoundOut) {

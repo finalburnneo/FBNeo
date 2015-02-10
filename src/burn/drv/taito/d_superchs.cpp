@@ -79,7 +79,7 @@ UINT8 __fastcall TaitoF3Sound68KReadByte(UINT32 a)
 		if (Offset == 0x0e) return 0x01;
 
 		if (Offset == 0x0f) {
-			SekSetIRQLine(6, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(6, CPU_IRQSTATUS_NONE);
 			return 0x00;
 		}
 	
@@ -614,7 +614,7 @@ void __fastcall Superchs68K1WriteByte(UINT32 a, UINT8 d)
 		case 0x340000:
 		case 0x340001:
 		case 0x340002: {
-			SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 			return;
 		}
 		
@@ -671,7 +671,7 @@ void __fastcall Superchs68K1WriteWord(UINT32 a, UINT16 d)
 				SekOpen(0);
 			}
 //			if (d & 0x8000) {
-//				SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
+//				SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 //			}
 			return;
 		}
@@ -1150,7 +1150,7 @@ static INT32 SuperchsFrame()
 		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == (nInterleave - 1)) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		if (SuperchsCpuACtrl & 0x200) {
@@ -1159,7 +1159,7 @@ static INT32 SuperchsFrame()
 			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 			nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-			if (i == (nInterleave - 1)) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 			SekClose();
 		}
 		
@@ -1174,7 +1174,7 @@ static INT32 SuperchsFrame()
 				TaitoF3SoundTriggerIRQCyclesMode = IRQ_TRIGGER_OFF;
 				if (M68681IMR & 0x08) {
 //					bprintf(PRINT_NORMAL, _T("%x\n"), TaitoF3VectorReg);
-					SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+					SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 					IMRStatus |= 0x08;
 				}
 			}		
@@ -1185,7 +1185,7 @@ static INT32 SuperchsFrame()
 //				TaitoF3SoundTriggerIRQCyclesMode = IRQ_TRIGGER_OFF;
 				if (M68681IMR & 0x08) {
 //					bprintf(PRINT_NORMAL, _T("%x\n"), TaitoF3VectorReg);
-					SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+					SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 					IMRStatus |= 0x08;
 				}
 				TaitoF3SoundTriggerIRQPulseCycleCounter = 0;

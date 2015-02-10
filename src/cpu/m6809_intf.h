@@ -21,10 +21,6 @@ struct M6809Ext {
 	INT32 nCyclesLeft;
 };
 
-#define M6809_IRQSTATUS_NONE	0
-#define M6809_IRQSTATUS_ACK	1
-#define M6809_IRQSTATUS_AUTO	2
-
 #define M6809_READ	1
 #define M6809_WRITE	2
 #define M6809_FETCH	4

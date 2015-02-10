@@ -158,7 +158,7 @@ void mystston_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x2010:
-			M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_NONE);
+			M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_NONE);
 		break;
 
 		case 0x2020:
@@ -496,7 +496,7 @@ static void mystston_interrupt_handler(INT32 scanline)
 		if (coin == 0)
 		{
 			coin = 1;
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 			return;
 		}
 	}
@@ -504,7 +504,7 @@ static void mystston_interrupt_handler(INT32 scanline)
 
 	if (scanline == 8) vblank = 0;
 	if (scanline == 248) vblank = 0x80;
-	if ((scanline & 0x0f) == 0) M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_ACK);
+	if ((scanline & 0x0f) == 0) M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_ACK);
 }
 
 static INT32 DrvFrame()

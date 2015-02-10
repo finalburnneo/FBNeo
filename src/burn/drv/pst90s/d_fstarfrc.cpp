@@ -380,9 +380,9 @@ INT32 FstarfrcDoReset()
 void FstarfrcYM2151IrqHandler(INT32 Irq)
 {
 	if (Irq) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0   , ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0   , CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1182,7 +1182,7 @@ INT32 FstarfrcFrame()
 		}
 	}
 
-	SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 	SekClose();
 
 	// Make sure the buffer is entirely filled.

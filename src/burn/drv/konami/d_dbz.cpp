@@ -492,7 +492,7 @@ static void dbz_K053936_callback2(INT32 offset, UINT16 *ram, INT32 *code, INT32 
 
 static void dbzYM2151IrqHandler(INT32 status)
 {
-	ZetSetIRQLine(0, (status) ? ZET_IRQSTATUS_ACK : ZET_IRQSTATUS_NONE);
+	ZetSetIRQLine(0, (status) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
@@ -919,11 +919,11 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += nCyclesSegment;
 
 		if (i == 0 && K053246_is_IRQ_enabled()) {
-			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
 		if (i == (nInterleave - 20)) {
-			SekSetIRQLine(2, SEK_IRQSTATUS_AUTO); //CK);
+			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO); //CK);
 		}
 
 		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;

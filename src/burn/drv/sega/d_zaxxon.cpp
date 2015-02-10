@@ -604,7 +604,7 @@ static void __fastcall zaxxon_write(UINT16 address, UINT8 data)
 
 		case 0xe0f0:
 			*interrupt_enable = data & 1;
-			if (~data & 1) ZetLowerIrq();
+			if (~data & 1) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0xe0f1:
@@ -708,7 +708,7 @@ static void __fastcall congo_write(UINT16 address, UINT8 data)
 
 		case 0xc01f:
 			*interrupt_enable = data & 1;
-			if (~data & 1) ZetLowerIrq();
+			if (~data & 1) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0xc021:
@@ -1382,7 +1382,7 @@ static INT32 DrvFrame()
 
 	ZetOpen(0);
 	ZetRun(3041250 / 60);
-	if (*interrupt_enable) ZetRaiseIrq(0);
+	if (*interrupt_enable) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 	ZetClose();
 
 	if (pBurnDraw) {
@@ -1425,13 +1425,13 @@ static INT32 CongoFrame()
 		ZetOpen(0);
 		nCyclesSegment = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += ZetRun(nCyclesSegment);
-		if (i == nInterleave-1 && *interrupt_enable) ZetRaiseIrq(0);
+		if (i == nInterleave-1 && *interrupt_enable) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 
 		ZetOpen(1);
 		nCyclesSegment = nCyclesTotal[1] / nInterleave;
 		nCyclesDone[1] += ZetRun(nCyclesSegment);
-		if ((i%7)==0) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if ((i%7)==0) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		if (pBurnSoundOut) {

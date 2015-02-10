@@ -27,10 +27,6 @@ INT32 ArmScan(INT32 nAction);
 #define ARM_IRQ_LINE		0
 #define ARM_FIRQ_LINE		1
 
-#define ARM_IRQSTATUS_NONE	0
-#define ARM_IRQSTATUS_ACK	1
-#define ARM_IRQSTATUS_AUTO	2
-
 void ArmSetIRQLine(INT32 line, INT32 state);
 
 void ArmExit();

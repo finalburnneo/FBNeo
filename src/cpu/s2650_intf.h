@@ -20,9 +20,6 @@ void s2650SetIrqCallback(INT32 (*irqcallback)(INT32));
 
 void s2650MapMemory(UINT8 *src, INT32 start, INT32 end, INT32 type);
 
-#define S2650_IRQSTATUS_ACK	1
-#define S2650_IRQSTATUS_NONE	0
-
 void s2650SetIRQLine(INT32 irqline, INT32 state);
 
 void s2650SetWriteHandler(void (*write)(UINT16, UINT8));

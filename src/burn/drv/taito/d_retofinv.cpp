@@ -200,7 +200,7 @@ void __fastcall retofinv_main_write(UINT16 address, UINT8 data)
 		case 0xc800:
 		{
 			data &= 1;
-			if (!data) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			if (!data) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			enable_interrupt[0] = data;
 		}
 		return;
@@ -221,7 +221,7 @@ void __fastcall retofinv_main_write(UINT16 address, UINT8 data)
 		case 0xc804:
 		{
 			data &= 1;
-			if (!data) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			if (!data) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			enable_interrupt[1] = data;
 		}
 		return;
@@ -239,7 +239,7 @@ void __fastcall retofinv_main_write(UINT16 address, UINT8 data)
 			*soundlatch = data;
 			ZetClose();
 			ZetOpen(2);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(0);
 		}
@@ -317,7 +317,7 @@ UINT8 __fastcall retofinv_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0x4000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -792,7 +792,7 @@ static INT32 DrvFrame()
 
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCycleSegment);
-		if (i == (nInterleave - 1) && enable_interrupt[0]) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		if (i == (nInterleave - 1) && enable_interrupt[0]) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 
 		nCycleSegment *= (i + 1);
@@ -800,7 +800,7 @@ static INT32 DrvFrame()
 		if (disable_cpu[0]) {
 			ZetOpen(1);
 			nCyclesDone[1] += ZetRun(nCycleSegment - ZetTotalCycles());
-			if (i == (nInterleave - 1) && enable_interrupt[1]) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			if (i == (nInterleave - 1) && enable_interrupt[1]) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 		}
 

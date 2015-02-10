@@ -1378,7 +1378,7 @@ static int Tetrisp2Frame()
 
 	SekOpen(0);
 	SekRun(12000000 / 60);
-	SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 	SekClose();
 
 	if (pBurnSoundOut) {
@@ -1422,16 +1422,16 @@ static int RocknFrame()
 
 		if (rockn_14_timer != -1) {
 			if (rockn_14_timer_countdown == 0) {
-				SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 				rockn_14_timer_countdown = rockn_14_timer / 6000;
 			}
 			rockn_14_timer_countdown--;
 		}
 
-		if (i == 30 && GetCurrentFrame() & 1) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		if (i == 30 && GetCurrentFrame() & 1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 	}
 
-	SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 	SekClose();
 

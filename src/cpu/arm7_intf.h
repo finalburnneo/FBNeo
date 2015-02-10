@@ -25,10 +25,6 @@ INT32 Arm7Scan(INT32 nAction);
 #define ARM7_IRQ_LINE		0
 #define ARM7_FIRQ_LINE		1
 
-#define ARM7_IRQSTATUS_NONE	0
-#define ARM7_IRQSTATUS_ACK	1
-#define ARM7_IRQSTATUS_AUTO	2
-
 void Arm7SetIRQLine(INT32 line, INT32 state);
 
 #define ARM7_READ		1

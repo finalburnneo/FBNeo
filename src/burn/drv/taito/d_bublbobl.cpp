@@ -1535,7 +1535,7 @@ void BublboblMcuWriteByte(UINT16 Address, UINT8 Data)
 			if ((port1_out & 0x40) && (~Data & 0x40)) {
 				ZetOpen(0);
 				ZetSetVector(DrvZ80Ram1[0]);
-				ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 				ZetClose();
 			}
 			
@@ -1637,7 +1637,7 @@ void bublbobl_68705_portB_out(UINT8 *bytevalue)
 		DrvZ80Ram1[0x7c] = (ZetTotalCycles() ^ ZetGetPC(-1)) % 6;
 
 		ZetSetVector(DrvZ80Ram1[0]);
-		ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 	}
 }
@@ -1782,9 +1782,9 @@ UINT8 __fastcall TokioSoundRead3(UINT16 a)
 inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -2474,8 +2474,8 @@ static INT32 DrvFrame()
 		nCurrentCPU = 0;
 		ZetOpen(nCurrentCPU);
 		BurnTimerUpdateYM3526(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
-		if (i == 98 && !DrvMCUInUse) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == 99 && !DrvMCUInUse) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == 98 && !DrvMCUInUse) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == 99 && !DrvMCUInUse) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 
 		// Run Z80 #2
@@ -2486,8 +2486,8 @@ static INT32 DrvFrame()
 			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 			nCyclesSegment = ZetRun(nCyclesSegment);
 			nCyclesDone[nCurrentCPU] += nCyclesSegment;
-			if (i == 98) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-			if (i == 99) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			if (i == 98) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			if (i == 99) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			ZetClose();
 		}
 	
@@ -2516,8 +2516,8 @@ static INT32 DrvFrame()
 					if (i == 99) m68705SetIrqLine(0, 0 /*CLEAR_LINE*/);
 				} else {
 					nCyclesSegment = M6801Run(nCyclesSegment);
-					if (i == 98) M6801SetIRQLine(0, M6801_IRQSTATUS_ACK);
-					if (i == 99) M6801SetIRQLine(0, M6801_IRQSTATUS_NONE);
+					if (i == 98) M6801SetIRQLine(0, CPU_IRQSTATUS_ACK);
+					if (i == 99) M6801SetIRQLine(0, CPU_IRQSTATUS_NONE);
 				} 
 
 				nCyclesDone[nCurrentCPU] += nCyclesSegment;
@@ -2574,8 +2574,8 @@ static INT32 TokioFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 90) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == 91) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == 90) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == 91) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 
 		// Run Z80 #2
@@ -2585,8 +2585,8 @@ static INT32 TokioFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 90) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == 91) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == 90) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == 91) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 	
 		// Run Z80 #3

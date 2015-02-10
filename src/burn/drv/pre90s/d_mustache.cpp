@@ -548,12 +548,12 @@ static INT32 DrvFrame()
 
 		if (i == 0) {
 			ZetSetVector(0x08);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 
 		if (i == 12) {
 			ZetSetVector(0x10);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 
 		ZetClose();

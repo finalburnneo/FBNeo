@@ -211,7 +211,7 @@ static void atetris_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x3800:
-			M6502SetIRQLine(0, M6502_IRQSTATUS_NONE);
+			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x3c00:
@@ -414,7 +414,7 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += M6502Run(nCyclesTotal[0] / nInterleave);
 
 		if (i == 16 || i == 48 || i == 80 || i == 112 || i == 146 || i == 176 || i == 208 || i == 240)
-			M6502SetIRQLine(0, (i & 0x20) ? M6502_IRQSTATUS_ACK : M6502_IRQSTATUS_NONE);
+			M6502SetIRQLine(0, (i & 0x20) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 
 		if (i == 240) vblank = 0x40;
 	}

@@ -617,11 +617,11 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
-		if (i == (nInterleave / 2) - 1) M6809SetIRQLine(1, M6809_IRQSTATUS_AUTO);
-		if (i == (nInterleave / 1) - 1) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+		if (i == (nInterleave / 2) - 1) M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave / 1) - 1) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
-		ZetRaiseIrq(0);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	}
 	
 	BurnTimerEndFrame(nCyclesTotal[1]);

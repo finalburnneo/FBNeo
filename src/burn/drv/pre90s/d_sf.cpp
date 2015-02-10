@@ -614,7 +614,7 @@ UINT8 __fastcall sf_sound2_in(UINT16 port)
 	switch (port & 0xff)
 	{
 		case 0x01:
-			ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 			return soundlatch;
 	}
 
@@ -743,9 +743,9 @@ static INT32 MemIndex()
 void sfYM2151IrqHandler(INT32 Irq)
 {
 	if (Irq) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1262,11 +1262,11 @@ static INT32 DrvFrame()
 		ZetOpen(1);
 		nNext[2] += nCyclesTotal[2] / nInterleave;
 		nCyclesDone[2] += ZetRun(nNext[2] - nCyclesDone[2]);
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 	}
 
-	SekSetIRQLine((version == 4) ? 6 : 1, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine((version == 4) ? 6 : 1, CPU_IRQSTATUS_AUTO);
 
 	SekClose();
 

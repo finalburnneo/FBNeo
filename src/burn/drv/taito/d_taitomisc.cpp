@@ -2952,7 +2952,7 @@ void __fastcall Jumping68KWriteByte(UINT32 a, UINT8 d)
 		case 0x400007: {
 			TaitoSoundLatch = d;
 			ZetOpen(0);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			return;
 		}
@@ -3804,7 +3804,7 @@ UINT8 __fastcall JumpingZ80Read(UINT16 a)
 		}
 		
 		case 0xb800: {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return TaitoSoundLatch;
 		}
 	}
@@ -4056,18 +4056,18 @@ void __fastcall OpwolfbCChipSubZ80Write(UINT16 a, UINT8)
 static void TaitoYM2151IRQHandler(INT32 Irq)
 {
 	if (Irq) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
 static void TaitoYM2203IRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -5665,7 +5665,7 @@ static INT32 TaitoMiscFrame()
 		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == 9) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
+		if (i == 9) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		// Run Z80
@@ -5687,7 +5687,7 @@ static INT32 TaitoMiscFrame()
 			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 			nTaitoCyclesSegment = ZetRun(nTaitoCyclesSegment);
 			nTaitoCyclesDone[nCurrentCPU] += nTaitoCyclesSegment;
-			if (i == 9) ZetRaiseIrq(0);
+			if (i == 9) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			ZetClose();
 		}
 		
@@ -5747,7 +5747,7 @@ static INT32 DariusFrame()
 		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == nInterleave - 1) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
+		if (i == nInterleave - 1) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		// Run 68000 # 2
@@ -5757,7 +5757,7 @@ static INT32 DariusFrame()
 			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 			nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-			if (i == nInterleave - 1) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
+			if (i == nInterleave - 1) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 			SekClose();
 		}
 		
@@ -5812,7 +5812,7 @@ static INT32 JumpingFrame()
 		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == (nInterleave - 1)) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		// Run Z80
@@ -5855,8 +5855,8 @@ static INT32 TopspeedFrame()
 		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == (nInterleave / 2) && (GetCurrentFrame > 0)) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
-		if (i == (nInterleave - 1)) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave / 2) && (GetCurrentFrame > 0)) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		// Run 68000 # 2
@@ -5866,8 +5866,8 @@ static INT32 TopspeedFrame()
 			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 			nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-			if (i == (nInterleave / 2) && (GetCurrentFrame > 0)) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
-			if (i == (nInterleave - 1)) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
+			if (i == (nInterleave / 2) && (GetCurrentFrame > 0)) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+			if (i == (nInterleave - 1)) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 			SekClose();
 		}
 		

@@ -457,7 +457,7 @@ static inline void bbakraidSynchroniseZ80(INT32 nExtraCycles)
 static INT32 bbakraidTimerOver(INT32, INT32)
 {
 //	bprintf(PRINT_NORMAL, _T("  - IRQ -> 1.\n"));
-	ZetSetIRQLine(0xFF, ZET_IRQSTATUS_AUTO);
+	ZetSetIRQLine(0xFF, CPU_IRQSTATUS_AUTO);
 
 	return 0;
 }
@@ -675,7 +675,7 @@ void __fastcall bbakraidWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			return;
 
 		case 0x500082:		// Acknowledge interrupt
-			SekSetIRQLine(0, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			nIRQPending = 0;
 			return;
 
@@ -758,7 +758,7 @@ static INT32 DrvDoReset()
 
 	SekOpen(0);
 	nIRQPending = 0;
-	SekSetIRQLine(0, SEK_IRQSTATUS_NONE);
+	SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	SekReset();
 	SekClose();
 
@@ -1007,7 +1007,7 @@ static INT32 DrvFrame()
 			}
 
 			nIRQPending = 1;
-			SekSetIRQLine(3, SEK_IRQSTATUS_ACK);
+			SekSetIRQLine(3, CPU_IRQSTATUS_ACK);
 
 			ToaBufferGP9001Sprites();
 

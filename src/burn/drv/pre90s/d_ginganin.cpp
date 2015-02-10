@@ -160,7 +160,7 @@ void __fastcall ginganin_write_word(UINT32 address, UINT16 data)
 
 		case 0x06000e:
 			*soundlatch = data & 0xff;
-			M6809SetIRQLine(0x20, M6809_IRQSTATUS_AUTO); // nmi
+			M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // nmi
 		return;
 	}
 }
@@ -577,7 +577,7 @@ static void sound_interrupt()
 	if (MC6840_flag) {
 		if (MC6840_ctr > MC6840_tempo) {
 			MC6840_ctr = 0;
-			M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		} else {
 			MC6840_ctr++;
 		}
@@ -613,7 +613,7 @@ static INT32 DrvFrame()
 
 		nSegment = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += SekRun(nSegment);
-		if (i == (nInterleave - 1)) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		nSegment = nCyclesTotal[1] / nInterleave;
 		BurnTimerUpdateY8950(i * (nCyclesTotal[1] / nInterleave));

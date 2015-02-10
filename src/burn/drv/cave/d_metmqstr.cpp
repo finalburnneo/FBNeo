@@ -76,7 +76,7 @@ STDINPUTINFO(metmqstr)
 static void UpdateIRQStatus()
 {
 	nIRQPending = (nVideoIRQ == 0 || nSoundIRQ == 0 || nUnknownIRQ == 0);
-	SekSetIRQLine(1, nIRQPending ? SEK_IRQSTATUS_ACK : SEK_IRQSTATUS_NONE);
+	SekSetIRQLine(1, nIRQPending ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 UINT8 __fastcall metmqstrReadByte(UINT32 sekAddress)
@@ -477,7 +477,7 @@ static INT32 DrvFrame()
 			UpdateIRQStatus();
 		}
 		
-		SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		if (!CheckSleep(nCurrentCPU)) {									// See if this CPU is busywaiting
@@ -690,9 +690,9 @@ static INT32 drvZInit()
 static void DrvYM2151IrqHandler(INT32 Irq)
 {
 	if (Irq) {
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	}
 }
 

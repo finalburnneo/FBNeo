@@ -203,7 +203,7 @@ void __fastcall speedspn_main_write_port(UINT16 port, UINT8 data)
 			*soundlatch = data;
 			ZetClose();
 			ZetOpen(1);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(0);
 		return;
@@ -274,7 +274,7 @@ UINT8 __fastcall speedspn_sound_read(UINT16 address)
 			return MSM6295ReadStatus(0); 
 
 		case 0xa000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -545,7 +545,7 @@ static INT32 DrvFrame()
 		ZetOpen(0);
 		nSegment = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += ZetRun(nSegment);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		ZetOpen(1);

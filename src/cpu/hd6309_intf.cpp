@@ -180,15 +180,15 @@ void HD6309SetIRQLine(INT32 vector, INT32 status)
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309SetIRQLine called when no CPU open\n"));
 #endif
 
-	if (status == HD6309_IRQSTATUS_NONE) {
+	if (status == CPU_IRQSTATUS_NONE) {
 		hd6309_set_irq_line(vector, 0);
 	}
 	
-	if (status == HD6309_IRQSTATUS_ACK) {
+	if (status == CPU_IRQSTATUS_ACK) {
 		hd6309_set_irq_line(vector, 1);
 	}
 	
-	if (status == HD6309_IRQSTATUS_AUTO) {
+	if (status == CPU_IRQSTATUS_AUTO) {
 		hd6309_set_irq_line(vector, 1);
 		hd6309_execute(0);
 		hd6309_set_irq_line(vector, 0);

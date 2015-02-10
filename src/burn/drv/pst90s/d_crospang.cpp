@@ -270,9 +270,9 @@ inline static INT32 crospangSynchroniseStream(INT32 nSoundRate)
 void crospangYM3812IrqHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -628,7 +628,7 @@ static INT32 DrvFrame()
 	ZetOpen(0);
 
 	SekRun(nTotalCycles[0]);
-	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		BurnTimerEndFrameYM3812(nTotalCycles[1]);

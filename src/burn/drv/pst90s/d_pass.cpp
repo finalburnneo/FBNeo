@@ -434,7 +434,7 @@ static INT32 DrvFrame()
 		BurnTimerUpdate(i * nSegment);
 	}
 
-	ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+	ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	BurnTimerEndFrame(nTotalCycles[1]);
 	
 	if (pBurnSoundOut) {
@@ -442,7 +442,7 @@ static INT32 DrvFrame()
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
-	SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 	ZetClose();
 	SekClose();

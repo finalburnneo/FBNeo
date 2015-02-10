@@ -393,7 +393,7 @@ static void bishi_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 */
 
 static void bishi_sound_irq(INT32 status)
 {
-	SekSetIRQLine(1, (status) ? SEK_IRQSTATUS_ACK : SEK_IRQSTATUS_NONE);
+	SekSetIRQLine(1, (status) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
@@ -598,8 +598,8 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 
 		if (control_data & 0x800) {
-			if (i == 0) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-			if (i == 240) SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
+			if (i == 0) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+			if (i == 240) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 
 		}
 	}

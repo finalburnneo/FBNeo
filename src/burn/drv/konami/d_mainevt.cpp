@@ -486,7 +486,7 @@ void mainevt_main_write(UINT16 address, UINT8 data)
 
 		case 0x1f88:
 			ZetSetVector(0xff);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x1f90:
@@ -562,7 +562,7 @@ UINT8 __fastcall mainevt_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xa000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0xc000:
@@ -853,7 +853,7 @@ static INT32 DrvFrame()
 		if (i == nCyclesSoundIrqTrigger-1) {
 			nCyclesSoundIrqTrigger+=nCyclesSoundIrq;
 			if (*irq_enable) {
-				if (nGame) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+				if (nGame) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 				else ZetNmi();
 			}
 		}
@@ -869,9 +869,9 @@ static INT32 DrvFrame()
 	}
 
 	if (nGame) {
-		if (nmi_enable[0]) HD6309SetIRQLine(0x20, HD6309_IRQSTATUS_AUTO); // nmi
+		if (nmi_enable[0]) HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // nmi
 	} else {
-		if (K052109_irq_enabled) HD6309SetIRQLine(HD6309_IRQ_LINE, HD6309_IRQSTATUS_AUTO);
+		if (K052109_irq_enabled) HD6309SetIRQLine(HD6309_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 	}
 
 	if (pBurnSoundOut) {

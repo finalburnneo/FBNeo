@@ -1170,9 +1170,9 @@ static INT32 SpriteYOffsets[16]      = { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 8
 static void DrvYM2151IrqHandler(INT32 Irq)
 {
 	if (Irq) {
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1931,7 +1931,7 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == 5) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+		if (i == 5) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		if (i == 5) DrvVBlank = 1;
 		SekClose();
 		
@@ -1956,7 +1956,7 @@ static INT32 DrvFrame()
 	}
 	
 	SekOpen(0);
-	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 	SekClose();
 	
 	// Make sure the buffer is entirely filled.

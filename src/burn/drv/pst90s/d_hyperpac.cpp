@@ -1205,9 +1205,9 @@ static INT32 Snowbro3DoReset()
 static void HyperpacYM2151IrqHandler(INT32 Irq)
 {
 	if (Irq) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1234,9 +1234,9 @@ static inline void snowbrosSynchroniseZ80(INT32 nExtraCycles)
 static void snowbrosFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -3522,9 +3522,9 @@ static INT32 HyperpacFrame()
 			nSoundBufferPos += nSegmentLength;
 		}
 
-		if (i == 1) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-		if (i == 2) SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
-		if (i == 3) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == 1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 2) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 3) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 	}
 
 	SekClose();
@@ -3590,9 +3590,9 @@ static INT32 PzlbreakFrame()
 			nSoundBufferPos += nSegmentLength;
 		}
 
-		if (i == 1) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-		if (i == 2) SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
-		if (i == 3) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == 1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 2) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 3) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 	}
 
 	SekClose();
@@ -3658,9 +3658,9 @@ static INT32 FinalttrFrame()
 			nSoundBufferPos += nSegmentLength;
 		}
 
-		if (i == 1) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-		if (i == 2) SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
-		if (i == 3) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == 1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 2) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 3) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 	}
 
 	SekClose();
@@ -3717,7 +3717,7 @@ static INT32 TwinadvFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 2) ZetRaiseIrq(0);
+		if (i == 2) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
@@ -3726,9 +3726,9 @@ static INT32 TwinadvFrame()
 			nSoundBufferPos += nSegmentLength;
 		}
 
-		if (i == 1) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-		if (i == 2) SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
-		if (i == 3) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == 1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 2) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 3) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 	}
 
 	SekClose();
@@ -3778,9 +3778,9 @@ static INT32 HoneydolFrame()
 		nCyclesSegment = nNext - SekTotalCycles();
 		SekRun(nCyclesSegment);
 
-		if (i == 1) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-		if (i == 2) SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
-		if (i == 3) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == 1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 2) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 3) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 	}
 
 	nCycles68KSync = SekTotalCycles();
@@ -3832,9 +3832,9 @@ static INT32 SnowbrosFrame()
 		nCyclesSegment = nNext - SekTotalCycles();
 		SekRun(nCyclesSegment);
 
-		if (i == 1) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-		if (i == 2) SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
-		if (i == 3) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == 1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 2) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 3) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 	}
 
 	nCycles68KSync = SekTotalCycles();
@@ -3879,9 +3879,9 @@ static INT32 Snowbro3Frame()
 		nCyclesSegment = nNext - SekTotalCycles();
 		SekRun(nCyclesSegment);
 
-		if (i == 1) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-		if (i == 2) SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
-		if (i == 3) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == 1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 2) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 3) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		
 		INT32 Status = MSM6295ReadStatus(0);
 		if (Snowbro3MusicPlaying) {

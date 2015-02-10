@@ -597,7 +597,7 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i+1 == nInterleave) ZetRaiseIrq(1);
+		if (i+1 == nInterleave) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		// Run Z80 #1
@@ -610,7 +610,7 @@ static INT32 DrvFrame()
 		if (draw_type == 3) { // space echo
 			for (INT32 j = 0; j < 48; j++) {
 				if (i == DACIRQFireSlice[j]) {
-					ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+					ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 				}
 			}
 		}

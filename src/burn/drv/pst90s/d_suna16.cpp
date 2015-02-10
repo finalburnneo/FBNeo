@@ -1425,9 +1425,9 @@ void bestbest_ay8910_write_a(UINT32,UINT32)
 static void bestbestFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1963,8 +1963,8 @@ static INT32 BestbestFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 
 		SekRun(nCyclesTotal[0] / nInterleave);
-		if (i == (nInterleave / 2)-1) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
-		if (i == (nInterleave    )-1) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave / 2)-1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave    )-1) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 		ZetOpen(0);
 		BurnTimerUpdateYM3526(i * (nCyclesTotal[1] / nInterleave));
@@ -2037,7 +2037,7 @@ static INT32 SunaqFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		SekRun(nCyclesTotal[0] / nInterleave);
-		if (i == (nInterleave    )-1) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave    )-1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		for (INT32 j = 0; j < 2; j++) {
 			ZetOpen(j);
@@ -2098,7 +2098,7 @@ static INT32 UballoonFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		SekRun(nCyclesTotal[0] / nInterleave);
-		if (i == (nInterleave    )-1) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave    )-1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		for (INT32 j = 0; j < 2; j++) {
 			ZetOpen(j);
@@ -2162,8 +2162,8 @@ static INT32 BssoccerFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		SekRun(nCyclesTotal[0] / nInterleave);
-		if (i == (nInterleave / 2)-1) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
-		if (i == (nInterleave    )-1) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave / 2)-1) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave    )-1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		for (INT32 j = 0; j < 3; j++) {
 			ZetOpen(j);

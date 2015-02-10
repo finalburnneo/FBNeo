@@ -159,7 +159,7 @@ void __fastcall aztarac_write_byte(UINT32 address, UINT8 data)
 		*soundlatch = data;
 		sound_status ^= 0x21;
 
-		if (sound_status & 0x20) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if (sound_status & 0x20) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 		return;
 	}
@@ -509,14 +509,14 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++, sound_irq_timer++)
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		if (i == (nInterleave - 1)) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 		//nCyclesDone[1] += ZetRun((SekTotalCycles() / 4) - ZetTotalCycles());
 		sync_cpu();
 
 		if ((sound_irq_timer % 40) == 39) {	// every 20000 cycles, 50000 / frame
 			sound_status ^= 0x10;
-			if (sound_status & 0x10) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+			if (sound_status & 0x10) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 	}
 

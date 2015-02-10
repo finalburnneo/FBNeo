@@ -161,7 +161,7 @@ static void rockrage_main_write(UINT16 address, UINT8 data)
 	{
 		case 0x2e80:
 			soundlatch = data;
-			M6809SetIRQLine(0, M6809_IRQSTATUS_ACK);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x2ec0:
@@ -228,7 +228,7 @@ static UINT8 rockrage_sound_read(UINT16 address)
 			return (vlm5030_bsy(0) ? 1 : 0);
 
 		case 0x5000:
-			M6809SetIRQLine(0, M6809_IRQSTATUS_NONE);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch;
 
 		case 0x6000:
@@ -523,7 +523,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	if (K007342_irq_enabled()) HD6309SetIRQLine(0, HD6309_IRQSTATUS_AUTO);
+	if (K007342_irq_enabled()) HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

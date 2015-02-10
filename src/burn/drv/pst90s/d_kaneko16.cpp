@@ -6100,9 +6100,9 @@ static INT32 ExplbrkrFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == 3) SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
-		if (i == 6) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-		if (i == 9) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+		if (i == 3) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 6) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 9) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		// Render Sound Segment
@@ -6152,9 +6152,9 @@ static INT32 BlazeonFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == 3) SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
-		if (i == 6) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-		if (i == 9) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+		if (i == 3) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 6) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 9) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		// Run Z80
@@ -6205,11 +6205,11 @@ static INT32 GtmrFrame()
 	SekNewFrame();
 	
 	SekRun((16000000 / 60) / 4);
-	SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 	SekRun((16000000 / 60) / 4);
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekRun((16000000 / 60) / 4);
-	SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 	SekRun((16000000 / 60) / 4);
 
 	SekClose();
@@ -6246,14 +6246,14 @@ static INT32 ShogwarrFrame()
 
 		SekRun(nSegment);
 
-		if (nScanline ==  64) SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
-		if (nScanline == 144) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (nScanline ==  64) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (nScanline == 144) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		if (nScanline == 223) {
-			SekSetIRQLine(4, SEK_IRQSTATUS_ACK); //AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_ACK); //AUTO);
 			 shogwarr_calc3_mcu_run();
 		}
 		if (nScanline == 224) {
-			SekSetIRQLine(4, SEK_IRQSTATUS_NONE); //AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_NONE); //AUTO);
 		}
 			
 	}

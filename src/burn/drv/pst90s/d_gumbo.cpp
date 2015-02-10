@@ -528,7 +528,7 @@ static INT32 DrvFrame()
 
 	SekOpen(0);
 	SekRun(7159090 / 60);
-	SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 	SekClose();
 
 	if (pBurnSoundOut) {

@@ -233,7 +233,7 @@ static void __fastcall gradius3_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x0f0000:
 			ZetSetVector(0xff);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 
 		return;
 	}
@@ -436,7 +436,7 @@ static UINT8 __fastcall gradius3_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xf010:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0xf031:
@@ -764,18 +764,18 @@ static INT32 DrvFrame()
 		SekOpen(0);
 		nCycleSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
 		nCyclesDone[0] += SekRun(nCycleSegment - nCyclesDone[0]);
-		if (i == nInterleave - 1 && irqA_enable) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == nInterleave - 1 && irqA_enable) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		if (gradius3_cpub_enable) {
 			SekOpen(1);
 			nCycleSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
 			nCyclesDone[1] += SekRun(nCycleSegment - SekTotalCycles());
-			if (interrupt_triggered) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			if (interrupt_triggered) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 			if (i == 240  && (irqB_mask & 1))
-				SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+				SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 			if (i == 16 && (irqB_mask & 2))
-				SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+				SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 			SekClose();
 		}
 

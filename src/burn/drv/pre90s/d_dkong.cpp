@@ -1920,7 +1920,7 @@ static INT32 Dkong3Frame()
 			M6502Idle(1789773 / 60 / nInterleave);
 		} else {
 			M6502Run(1789773 / 60 / nInterleave);
-			if (i == (nInterleave - 10)) M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			if (i == (nInterleave - 10)) M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 		}
 		M6502Close();
 
@@ -1930,7 +1930,7 @@ static INT32 Dkong3Frame()
 			M6502Idle(1789773 / 60 / nInterleave);
 		} else {
 			M6502Run(1789773 / 60 / nInterleave);
-			if (i == (nInterleave - 10)) M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			if (i == (nInterleave - 10)) M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 		}
 		M6502Close();
 	}
@@ -1979,9 +1979,9 @@ static INT32 s2650DkongFrame()
 		if (i == 30) {
 			vblank = 0x80;
 	
-			s2650SetIRQLine(0, S2650_IRQSTATUS_ACK);
+			s2650SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			s2650Run(10);
-			s2650SetIRQLine(0, S2650_IRQSTATUS_NONE);
+			s2650SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
 	}
 

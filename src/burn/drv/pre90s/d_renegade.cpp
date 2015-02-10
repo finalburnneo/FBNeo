@@ -651,7 +651,7 @@ void RenegadeWriteByte(UINT16 Address, UINT8 Data)
 		case 0x3802: {
 			DrvSoundLatch = Data;
 			M6809Open(0);
-			M6809SetIRQLine(M6809_IRQ_LINE, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(M6809_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 			M6809Close();
 			return;
 		}
@@ -839,9 +839,9 @@ static INT32 TileYOffsets[16]      = { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80,
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		M6809SetIRQLine(M6809_FIRQ_LINE, M6809_IRQSTATUS_ACK);
+		M6809SetIRQLine(M6809_FIRQ_LINE, CPU_IRQSTATUS_ACK);
 	} else {
-		M6809SetIRQLine(M6809_FIRQ_LINE, M6809_IRQSTATUS_NONE);
+		M6809SetIRQLine(M6809_FIRQ_LINE, CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -860,7 +860,7 @@ static void DrvMSM5205Int()
 	if (DrvADPCMPos >= DrvADPCMEnd) {
 		MSM5205ResetWrite(0, 1);
 		DrvADPCMPlaying = false;
-		M6809SetIRQLine(0x20, M6809_IRQSTATUS_AUTO);
+		M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 	} else {
 		UINT8 const data = DrvADPCMRom[DrvADPCMPos / 2];
 		MSM5205DataWrite(0, DrvADPCMPos & 1 ? data & 0xf : data >> 4);
@@ -1224,9 +1224,9 @@ static void DrvInterrupt()
 	static INT32 Count;
 	Count = !Count;
 	if (Count) {
-		M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+		M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 	} else {
-		M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_AUTO);
+		M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 	}
 }
 

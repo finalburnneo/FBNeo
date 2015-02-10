@@ -172,15 +172,15 @@ void M6809SetIRQLine(INT32 vector, INT32 status)
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809SetIRQLine called when no CPU open\n"));
 #endif
 
-	if (status == M6809_IRQSTATUS_NONE) {
+	if (status == CPU_IRQSTATUS_NONE) {
 		m6809_set_irq_line(vector, 0);
 	}
 	
-	if (status == M6809_IRQSTATUS_ACK) {
+	if (status == CPU_IRQSTATUS_ACK) {
 		m6809_set_irq_line(vector, 1);
 	}
 	
-	if (status == M6809_IRQSTATUS_AUTO) {
+	if (status == CPU_IRQSTATUS_AUTO) {
 		m6809_set_irq_line(vector, 1);
 		m6809_execute(0);
 		m6809_set_irq_line(vector, 0);

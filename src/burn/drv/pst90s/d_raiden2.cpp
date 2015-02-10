@@ -2579,7 +2579,7 @@ static INT32 DrvFrame()
 		INT32 nSegment = nCyclesTotal[0] / nInterleave;
 
 		nCyclesDone[0] += VezRun(nSegment);
-		if (i == (nInterleave-2)) VezSetIRQLineAndVector(0, 0xc0/4, VEZ_IRQSTATUS_AUTO);
+		if (i == (nInterleave-2)) VezSetIRQLineAndVector(0, 0xc0/4, CPU_IRQSTATUS_AUTO);
 
 		nSegment = (nCyclesTotal[1] / nInterleave) * (i+1);
 		nCyclesDone[1] += ZetRun(nSegment - ZetTotalCycles());
@@ -2633,7 +2633,7 @@ static INT32 ZeroteamFrame()
 		INT32 nSegment = nCyclesTotal[0] / nInterleave;
 
 		nCyclesDone[0] += VezRun(nSegment);
-		if (i == (nInterleave-2)) VezSetIRQLineAndVector(0, 0xc0/4, VEZ_IRQSTATUS_AUTO);
+		if (i == (nInterleave-2)) VezSetIRQLineAndVector(0, 0xc0/4, CPU_IRQSTATUS_AUTO);
 
 		BurnTimerUpdateYM3812(i * (nCyclesTotal[1] / nInterleave));
 	}

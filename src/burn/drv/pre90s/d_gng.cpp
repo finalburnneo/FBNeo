@@ -1370,7 +1370,7 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
 		if (i == 24) {
-			M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		M6809Close();
 		
@@ -1378,8 +1378,8 @@ static INT32 DrvFrame()
 		nCurrentCPU = 1;
 		ZetOpen(0);
 		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
-		if (i == 5 || i == 10 || i == 15 || i == 20) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == 6 || i == 11 || i == 16 || i == 21) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == 5 || i == 10 || i == 15 || i == 20) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == 6 || i == 11 || i == 16 || i == 21) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 		
 		// Render Sound Segment

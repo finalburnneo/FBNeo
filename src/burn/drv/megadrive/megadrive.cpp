@@ -978,9 +978,9 @@ void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordValue)
 					
 					INT32 lines = (RamVReg->reg[1] & 0x20) | (RamVReg->reg[0] & 0x10);
 					INT32 pints = (RamVReg->pending_ints & lines);
-					if(pints & 0x20) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
-					else if(pints & 0x10) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
-					else SekSetIRQLine(0, SEK_IRQSTATUS_NONE);
+					if(pints & 0x20) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+					else if(pints & 0x10) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+					else SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 
 				}
 
@@ -4232,7 +4232,7 @@ INT32 MegadriveFrame()
 			hint = RamVReg->reg[10]; // Reload H-Int counter
 			RamVReg->pending_ints |= 0x10;
 			if (RamVReg->reg[0] & 0x10) {
-				SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 			}
 		}
 
@@ -4246,7 +4246,7 @@ INT32 MegadriveFrame()
 
 			RamVReg->pending_ints |= 0x20;
 			if(RamVReg->reg[1] & 0x20) {
-				SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+				SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			}
 		}
 
@@ -4259,8 +4259,8 @@ INT32 MegadriveFrame()
 
 		if (Z80HasBus && !MegadriveZ80Reset) {
 			done_z80 += ZetRun(((y + 1) * cycles_z80) - done_z80);
-			if (y == line_sample) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-			if (y == line_sample + 1) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			if (y == line_sample) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			if (y == line_sample + 1) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
 	}
 	

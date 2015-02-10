@@ -252,7 +252,7 @@ static void DoIRQ()
 		nRasterline[nInterrupt] = nIrqLine - nFirstLine;
 	}
 
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekRun(nCpsCycles * 0x01 / nCpsNumScanlines);
 	if (nRasterline[nInterrupt] < 224) {
 		CopyCpsReg(nInterrupt);
@@ -334,7 +334,7 @@ INT32 Cps1Frame()
 
 			memcpy(CpsSaveReg[0], CpsReg, 0x100);				// Registers correct now
 
-			SekSetIRQLine(Cps1VBlankIRQLine, SEK_IRQSTATUS_AUTO);				// Trigger VBlank interrupt
+			SekSetIRQLine(Cps1VBlankIRQLine, CPU_IRQSTATUS_AUTO);				// Trigger VBlank interrupt
 		}
 
 		SekRun(nNext - SekTotalCycles());						// run 68K
@@ -461,7 +461,7 @@ INT32 Cps2Frame()
 //	nCpsCyclesSegment[0] = (nCpsCycles * nVBlank) / nCpsNumScanlines;
 //	nDone += SekRun(nCpsCyclesSegment[0] - nDone);
 
-	SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);				// VBlank
+	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);				// VBlank
 	if (pBurnDraw) {
 		CpsDraw();
 	}

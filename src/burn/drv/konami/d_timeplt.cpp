@@ -268,7 +268,7 @@ static void __fastcall timeplt_main_write(UINT16 address, UINT8 data)
 		case 0xc300:
 			if (game_select != 2) {		// psurge doesn't use this
 				nmi_enable = data & 1;
-				if (!nmi_enable) ZetSetIRQLine(0x20, ZET_IRQSTATUS_NONE);
+				if (!nmi_enable) ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);
 			}
 		return;
 
@@ -281,7 +281,7 @@ static void __fastcall timeplt_main_write(UINT16 address, UINT8 data)
 				ZetClose();
 				ZetOpen(1);
 				ZetSetVector(0xff);
-				ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 				ZetClose();
 				ZetOpen(0);
 			}
@@ -742,7 +742,7 @@ static INT32 DrvFrame()
 		ZetOpen(0);
 		INT32 nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
 		nCyclesDone[0] += ZetRun(nSegment - nCyclesDone[0]);
-		if (i == (nInterleave - 1) && nmi_enable) ZetSetIRQLine(0x20, ZET_IRQSTATUS_ACK);
+		if (i == (nInterleave - 1) && nmi_enable) ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
 		if (i == (nInterleave - 1) && game_select == 2) ZetNmi();
 		ZetClose();
 

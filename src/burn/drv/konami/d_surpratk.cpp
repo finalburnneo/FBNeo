@@ -457,7 +457,7 @@ static INT32 DrvFrame()
 		nCyclesDone += konamiRun(nSegment - nCyclesDone);
 
 		if (i == 235) {
-			if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_IRQSTATUS_AUTO);
+			if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 		}
 
 		if (pBurnSoundOut) {

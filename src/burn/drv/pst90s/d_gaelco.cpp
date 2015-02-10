@@ -597,7 +597,7 @@ void __fastcall main_write_byte(UINT32 address, UINT8 data)
 		case 0x70000f:
 			if (has_sound_cpu) {
 				*soundlatch = data;
-				M6809SetIRQLine(1, M6809_IRQSTATUS_AUTO);
+				M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO);
 			} else {
 				MSM6295Command(0, data);
 			}
@@ -1212,7 +1212,7 @@ static INT32 DrvFrame()
 
 	SekOpen(0);
 	SekRun(12000000 / 60);
-	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 	SekClose();
 
 	if (pBurnSoundOut) {
@@ -1249,7 +1249,7 @@ static INT32 BigkarnkFrame()
 	M6809Open(0);
 
 	SekRun(10000000 / 60);
-	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		BurnTimerEndFrameYM3812(2216750 / 60);

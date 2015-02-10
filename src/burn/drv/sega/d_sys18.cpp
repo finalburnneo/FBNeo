@@ -2218,7 +2218,7 @@ void __fastcall ShdancblWriteByte(UINT32 a, UINT8 d)
 		case 0xc40007: {
 			System16SoundLatch = d & 0xff;
 			ZetOpen(0);
-			ZetRaiseIrq(0);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);;
 			ZetClose();
 			return;
 		}

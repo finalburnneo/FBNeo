@@ -442,25 +442,25 @@ static void cps3_process_character_dma(UINT32 address)
 		switch ( dat1 & 0x00e00000 ) {
 		case 0x00800000:
 			chardma_table_address = real_source;
-			Sh2SetIRQLine(10, SH2_IRQSTATUS_AUTO);
+			Sh2SetIRQLine(10, CPU_IRQSTATUS_AUTO);
 			break;
 		case 0x00400000:
 			cps3_do_char_dma( real_source, real_destination, real_length );
-			Sh2SetIRQLine(10, SH2_IRQSTATUS_AUTO);
+			Sh2SetIRQLine(10, CPU_IRQSTATUS_AUTO);
 			break;
 		case 0x00600000:
 			//bprintf(PRINT_NORMAL, _T("Character DMA (alt) start %08x to %08x with %d\n"), real_source, real_destination, real_length);
 			/* 8bpp DMA decompression
 			   - this is used on SFIII NG Sean's Stage ONLY */
 			cps3_do_alt_char_dma( real_source, real_destination, real_length );
-			Sh2SetIRQLine(10, SH2_IRQSTATUS_AUTO);
+			Sh2SetIRQLine(10, CPU_IRQSTATUS_AUTO);
 			break;
 		case 0x00000000:
 			// Red Earth need this. 8192 byte trans to 0x00003000 (from 0x007ec000???)
 			// seems some stars(6bit alpha) without compress
 			//bprintf(PRINT_NORMAL, _T("Character DMA (redearth) start %08x to %08x with %d\n"), real_source, real_destination, real_length);
 			memcpy( (UINT8 *)RamCRam + real_destination, RomUser + real_source, real_length );
-			Sh2SetIRQLine(10, SH2_IRQSTATUS_AUTO);
+			Sh2SetIRQLine(10, CPU_IRQSTATUS_AUTO);
 			break;
 		default:
 			bprintf(PRINT_NORMAL, _T("Character DMA Unknown DMA List Command Type %08x\n"), dat1);
@@ -693,7 +693,7 @@ void __fastcall cps3WriteWord(UINT32 addr, UINT16 data)
 #endif
 				Cps3CurPal[(paldma_dest + i) ] = BurnHighCol(r, g, b, 0);
 			}
-			Sh2SetIRQLine(10, SH2_IRQSTATUS_AUTO);
+			Sh2SetIRQLine(10, CPU_IRQSTATUS_AUTO);
 		}
 		break;
 	
@@ -713,10 +713,10 @@ void __fastcall cps3WriteWord(UINT32 addr, UINT16 data)
 	case 0x05050026: break;
 			
 	case 0x05100000:
-		Sh2SetIRQLine(12, SH2_IRQSTATUS_NONE);
+		Sh2SetIRQLine(12, CPU_IRQSTATUS_NONE);
 		break;
 	case 0x05110000:
-		Sh2SetIRQLine(10, SH2_IRQSTATUS_NONE);
+		Sh2SetIRQLine(10, CPU_IRQSTATUS_NONE);
 		break;
 
 	case 0x05140000:
@@ -2015,11 +2015,11 @@ INT32 cps3Frame()
 		
 		if (cps_int10_cnt >= 2) {
 			cps_int10_cnt = 0;
-			Sh2SetIRQLine(10, SH2_IRQSTATUS_AUTO);
+			Sh2SetIRQLine(10, CPU_IRQSTATUS_AUTO);
 		} else cps_int10_cnt++;
 
 	}
-	Sh2SetIRQLine(12, SH2_IRQSTATUS_AUTO);
+	Sh2SetIRQLine(12, CPU_IRQSTATUS_AUTO);
 
 	cps3SndUpdate();
 	

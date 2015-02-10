@@ -418,9 +418,9 @@ UINT8 __fastcall fuuki32_sound_in(UINT16 port)
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1255,15 +1255,15 @@ static INT32 DrvFrame()
 	{
 		nSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
 		nCyclesDone[0] += SekRun(nSegment - nCyclesDone[0]);
-	//	if (i ==  16) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO); // raster line -- 0 not 16?
+	//	if (i ==  16) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO); // raster line -- 0 not 16?
 
 		if (i == DrvRasterPos[0]) {
-			SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			DrvRasterPos[0] = 0x1000;
 		}
 
-		if (i == 247) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO); // level 1 or 8 ?
-		if (i == 239) SekSetIRQLine(3, SEK_IRQSTATUS_AUTO); // vblank
+		if (i == 247) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO); // level 1 or 8 ?
+		if (i == 239) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO); // vblank
 
 		// hack -- save scroll/offset registers so the
 		// lines can be drawn in one pass -- should save

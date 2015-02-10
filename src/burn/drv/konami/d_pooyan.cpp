@@ -169,7 +169,7 @@ static void __fastcall pooyan_main_write(UINT16 address, UINT8 data)
 		case 0xa180:
 			irq_enable = data & 1;
 			if (!irq_enable)
-				ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		break;
 
 		case 0xa181:
@@ -177,7 +177,7 @@ static void __fastcall pooyan_main_write(UINT16 address, UINT8 data)
 			if (irqtrigger == 0 && data) {
 				ZetClose();
 				ZetOpen(1);
-				ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 				ZetClose();
 				ZetOpen(0);
 			}

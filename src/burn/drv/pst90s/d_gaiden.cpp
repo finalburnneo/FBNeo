@@ -549,7 +549,7 @@ void __fastcall gaiden_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x7a00e: // Dragon Bowl
 			soundlatch = data;
-			ZetRaiseIrq(0);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		return;
 
 		case 0x7a802: // Tecmo Knight
@@ -981,9 +981,9 @@ static INT32 DrvGetRoms()
 inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1477,7 +1477,7 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == (nInterleave - 1)) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		
 		nCurrentCPU = 1;
 		if (game == 1) {

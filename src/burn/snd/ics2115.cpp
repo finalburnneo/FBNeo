@@ -68,9 +68,9 @@ static void recalc_irq()
 //			chip->intf->irq_cb(irq ? ASSERT_LINE : CLEAR_LINE);
 
 		if (irq) {
-			ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
 		} else
-			ZetSetIRQLine(0x00, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0x00, CPU_IRQSTATUS_NONE);
 	}
 }
 

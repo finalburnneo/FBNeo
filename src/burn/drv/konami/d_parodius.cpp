@@ -169,7 +169,7 @@ void parodius_main_write(UINT16 address, UINT8 data)
 
 		case 0x3fc8:
 			ZetSetVector(0xff);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x3fcc:
@@ -295,7 +295,7 @@ UINT8 __fastcall parodius_sound_read(UINT16 address)
 	}
 
 	if (address >= 0xfc00 && address <= 0xfc2f) {
-		if ((address & 0x3e) == 0x00) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if ((address & 0x3e) == 0x00) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 
 		return K053260Read(0, address & 0x3f);
 	}
@@ -562,7 +562,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_IRQSTATUS_AUTO);
+	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

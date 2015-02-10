@@ -13679,7 +13679,7 @@ static void GanabareTimeKeeperTick()
 	if ((GetCurrentFrame() % 60) == 0) TimeKeeperTick(); // refresh is 59.61
 	
 	SekOpen(0);
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekClose();
 }
 

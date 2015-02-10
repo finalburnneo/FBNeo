@@ -450,7 +450,7 @@ void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
 				if ((data & 0x4000) && (OldData & 0x4000) == 0) {
 					ZetClose();
 					ZetOpen(1);
-					ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+					ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 					ZetClose();
 					ZetOpen(0);
 				}
@@ -1139,9 +1139,9 @@ static INT32 DrvFrame()
 		
 		for (INT32 j = 0; j < 9; j++) {
 			if (i == Z80IRQSlice[j]) {
-				ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 				nCyclesDone[1] += ZetRun(3000);
-				ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			}
 		}
 		
@@ -1164,7 +1164,7 @@ static INT32 DrvFrame()
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 	
-	SekSetIRQLine(irqline, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(irqline, CPU_IRQSTATUS_AUTO);
 
 	ZetClose();
 	SekClose();

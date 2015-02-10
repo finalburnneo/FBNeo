@@ -713,7 +713,7 @@ static UINT8 timer_r(UINT32)
 
 static UINT8 soundlatch_r(UINT32)
 {
-	//ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+	//ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	return soundlatch;
 }
 
@@ -857,9 +857,9 @@ void __fastcall jack_cpu0_write(UINT16 address, UINT8 data)
 			soundlatch = data;
 			ZetClose();
 			ZetOpen(1);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetRun(100);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			ZetClose();
 			ZetOpen(0);
 		break;
@@ -1279,9 +1279,9 @@ static INT32 DrvFrame()
 		//if (joinem)
 			//if (i == (nInterleave / 3) || i == ((nInterleave / 3) * 2))
 		if (joinem && (i % 249) == 0)
-			ZetRaiseIrq(0); // game speed (joinem, uncle poo)
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // game speed (joinem, uncle poo)
 
-		if (tri_fix && i == (nInterleave / 2)) ZetRaiseIrq(0);
+		if (tri_fix && i == (nInterleave / 2)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 		if (i == (nInterleave - 1)) // vblank
 		{
@@ -1292,7 +1292,7 @@ static INT32 DrvFrame()
 				ZetNmi();
 
 			} else {					// other
-				ZetRaiseIrq(0);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			}
 		}
 

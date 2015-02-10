@@ -681,8 +681,8 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 274) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == 276) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == 274) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == 276) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 
 		// Run Z80 #1
@@ -693,9 +693,9 @@ static INT32 DrvFrame()
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
 		// execute IRQ quarterly 68.5 (or 69) is 25% of 278 (nInterleave)
-		if (i%69 == 0 && i>0) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		// execute ZET_IRQSTATUS_NONE 1 interleave past the last one
-		if ((i-1)%69 == 0 && i>1) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i%69 == 0 && i>0) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		// execute CPU_IRQSTATUS_NONE 1 interleave past the last one
+		if ((i-1)%69 == 0 && i>1) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 	}
 	

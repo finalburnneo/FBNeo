@@ -940,7 +940,7 @@ static INT32 stlforceFrame()
 		}
 	}
 
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 	nCycleSegment = nBurnSoundLen - (nSoundBufferPos>>1);
 	if (pBurnSoundOut && nCycleSegment > 0) {
@@ -1005,7 +1005,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 	nCycleSegment = nBurnSoundLen - (nSoundBufferPos>>1);
 	if (pBurnSoundOut && nCycleSegment > 0) {

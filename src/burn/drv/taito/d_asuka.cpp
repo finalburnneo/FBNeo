@@ -1104,18 +1104,18 @@ static void DrvMakeInputs()
 static void CadashYM2151IRQHandler(INT32 Irq)
 {
 	if (Irq) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1445,9 +1445,9 @@ static INT32 CadashFrame()
 		}
 	}
 
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekRun(500);
-	SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
@@ -1506,7 +1506,7 @@ static INT32 EtoFrame() // Using for asuka too, but needs msm5205
 		}
 	}
 
-	SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
@@ -1554,7 +1554,7 @@ static INT32 BonzeFrame()
 	ZetOpen(0);
 
 	SekRun(8000000 / 60);
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 	BurnTimerEndFrame(4000000 / 60);
 

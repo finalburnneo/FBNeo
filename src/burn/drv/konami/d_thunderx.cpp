@@ -314,7 +314,7 @@ static void thunderx_1f98_w(UINT8 data)
 
 		konamiRun(10);
 
-		konamiSetIrqLine(KONAMI_FIRQ_LINE, KONAMI_IRQSTATUS_AUTO); // must be delayed
+		konamiSetIrqLine(KONAMI_FIRQ_LINE, CPU_IRQSTATUS_AUTO); // must be delayed
 	}
 
 	thunderx_1f98_data = data;
@@ -371,7 +371,7 @@ void scontra_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x1f88:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x1f8c:
@@ -461,7 +461,7 @@ UINT8 __fastcall scontra_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xa000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0xc001:
@@ -794,7 +794,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_IRQSTATUS_AUTO);
+	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

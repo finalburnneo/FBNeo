@@ -2078,7 +2078,7 @@ void __fastcall M62Z80PortWrite(UINT16 a, UINT8 d)
 			if ((d & 0x80) == 0) {
 				M62SoundLatch = d & 0x7f;
 			} else {
-				M6803SetIRQLine(M6803_IRQ_LINE, M6803_IRQSTATUS_ACK);
+				M6803SetIRQLine(M6803_IRQ_LINE, CPU_IRQSTATUS_ACK);
 			}
 			return;
 		}
@@ -2385,7 +2385,7 @@ void M62M6803WriteByte(UINT16 a, UINT8 d)
 	
 	switch (a) {
 		case 0x0800: {
-			M6803SetIRQLine(M6803_IRQ_LINE, M6803_IRQSTATUS_NONE);
+			M6803SetIRQLine(M6803_IRQ_LINE, CPU_IRQSTATUS_NONE);
 			return;
 		}
 		
@@ -2503,7 +2503,7 @@ inline static INT32 M62SynchroniseStream(INT32 nSoundRate)
 
 static void M62MSM5205Vck0()
 {
-	M6803SetIRQLine(M6803_INPUT_LINE_NMI, M6803_IRQSTATUS_AUTO);
+	M6803SetIRQLine(M6803_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 	M62SlaveMSM5205VClckReset = 1;
 }
 
@@ -4730,7 +4730,7 @@ static INT32 M62Frame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 		
 		nCurrentCPU = 1;

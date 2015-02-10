@@ -2289,7 +2289,7 @@ void __fastcall Dec068KWriteByte(UINT32 a, UINT8 d)
 		
 		case 0x30c015: {
 			DrvSoundLatch = d;
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 			return;
 		}
 		
@@ -2473,7 +2473,7 @@ void __fastcall Dec068KWriteWord(UINT32 a, UINT16 d)
 		
 		case 0x30c014: {
 			DrvSoundLatch = d & 0xff;
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 			return;
 		}
 		
@@ -2482,13 +2482,13 @@ void __fastcall Dec068KWriteWord(UINT32 a, UINT16 d)
 			if (Dec0Game == DEC0_GAME_HBARREL) HbarrelI8751Write(d);
 			if (Dec0Game == DEC0_GAME_BIRDTRY) BirdtryI8751Write(d);
 			
-			SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			
 			return;
 		}
 		
 		case 0x30c018: {
-			SekSetIRQLine(6, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(6, CPU_IRQSTATUS_NONE);
 			return;
 		}
 		
@@ -2666,7 +2666,7 @@ void __fastcall RobocopShared68KWriteByte(UINT32 a, UINT8 d)
 	INT32 Offset = (a - 0x180000) >> 1;
 	DrvSharedRam[Offset] = d;
 	if (Offset == 0x7ff) {
-		h6280SetIRQLine(0, H6280_IRQSTATUS_AUTO);
+		h6280SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	}
 }
 
@@ -2681,7 +2681,7 @@ void __fastcall RobocopShared68KWriteWord(UINT32 a, UINT16 d)
 	INT32 Offset = (a - 0x180000) >> 1;
 	DrvSharedRam[Offset] = d & 0xff;
 	if (Offset == 0x7ff) {
-		h6280SetIRQLine(0, H6280_IRQSTATUS_AUTO);
+		h6280SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	}
 }
 
@@ -2781,7 +2781,7 @@ void __fastcall Slyspy68KWriteByte(UINT32 a, UINT8 d)
 		
 		case 0x314001: {
 			DrvSoundLatch = d;
-			h6280SetIRQLine(H6280_INPUT_LINE_NMI, H6280_IRQSTATUS_AUTO);
+			h6280SetIRQLine(H6280_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 			return;
 		}
 		
@@ -2877,7 +2877,7 @@ void __fastcall Slyspy68KWriteWord(UINT32 a, UINT16 d)
 		
 		case 0x314000: {
 			DrvSoundLatch = d & 0xff;
-			h6280SetIRQLine(H6280_INPUT_LINE_NMI, H6280_IRQSTATUS_AUTO);
+			h6280SetIRQLine(H6280_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 			return;
 		}
 		
@@ -3204,7 +3204,7 @@ void __fastcall Midres68KWriteByte(UINT32 a, UINT8 d)
 	switch (a) {
 		case 0x1a0001: {
 			DrvSoundLatch = d;
-			h6280SetIRQLine(H6280_INPUT_LINE_NMI, H6280_IRQSTATUS_AUTO);
+			h6280SetIRQLine(H6280_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 			return;
 		}
 		
@@ -3479,9 +3479,9 @@ inline static double Dec0YM2203GetTime()
 static void Dec0YM3812IRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_ACK);
+		M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_ACK);
 	} else {
-		M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_NONE);
+		M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -3493,9 +3493,9 @@ static INT32 Dec0YM3812SynchroniseStream(INT32 nSoundRate)
 static void Dec1YM3812IRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		h6280SetIRQLine(1, H6280_IRQSTATUS_ACK);
+		h6280SetIRQLine(1, CPU_IRQSTATUS_ACK);
 	} else {
-		h6280SetIRQLine(1, H6280_IRQSTATUS_NONE);
+		h6280SetIRQLine(1, CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -5074,7 +5074,7 @@ static INT32 DrvFrame()
 		if (i == 8) DrvVBlank = 0;
 		if (i == 248) {
 			DrvVBlank = 1;
-			SekSetIRQLine(6, SEK_IRQSTATUS_ACK);
+			SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 		}
 
 		nCurrentCPU = 1;
@@ -5126,7 +5126,7 @@ static INT32 RobocopFrame()
 		if (i == 8) DrvVBlank = 0;
 		if (i == 248) {
 			DrvVBlank = 1;
-			SekSetIRQLine(6, SEK_IRQSTATUS_ACK);
+			SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 		}
 		
 		nCurrentCPU = 2;
@@ -5192,7 +5192,7 @@ static INT32 Dec1Frame()
 		if (i == 8) DrvVBlank = 0;
 		if (i == 248) {
 			DrvVBlank = 1;
-			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		}
 
 		nCurrentCPU = 1;

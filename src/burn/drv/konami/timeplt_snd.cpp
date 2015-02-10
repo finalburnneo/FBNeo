@@ -68,7 +68,7 @@ static UINT8 __fastcall timeplt_sound_read(UINT16 address)
 
 static UINT8 AY8910_0_portA(UINT32)
 {
-	ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+	ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	return soundlatch;
 }
 

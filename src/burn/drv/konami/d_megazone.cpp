@@ -739,12 +739,12 @@ static INT32 DrvFrame()
 	{
 		INT32 nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
 		nCyclesDone[0] += M6809Run(nSegment - nCyclesDone[0]);
-		if (i == (nInterleave - 1) && irq_enable) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1) && irq_enable) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 		nSegment = (nCyclesTotal[1] * (i + 1)) / nInterleave;
 		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);
-		if (i == (nInterleave - 2)) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == (nInterleave - 2)) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 
 		nSegment = (nCyclesTotal[2] * (i + 1)) / nInterleave;
 		nCyclesDone[2] += I8039Run(nSegment - nCyclesDone[2]);

@@ -454,9 +454,9 @@ static INT32 DrvGfxDecode()
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -772,8 +772,8 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 98) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == 99) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == 98) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == 99) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 
 		// Run Z80 #2

@@ -28,10 +28,6 @@ extern INT32 nKonamiCpuCount;
 
 #define KONAMI_IRQ_LINE		0
 #define KONAMI_FIRQ_LINE	1
-
-#define KONAMI_IRQSTATUS_NONE	0
-#define KONAMI_IRQSTATUS_ACK	1
-#define KONAMI_IRQSTATUS_AUTO	2
 #define KONAMI_INPUT_LINE_NMI	0x20
 
 void konamiSetIrqLine(INT32 line, INT32 state);

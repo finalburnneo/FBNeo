@@ -252,7 +252,7 @@ static UINT8 __fastcall exzisus_sound_read(UINT16 address)
 
 static void exzisusYM2151IrqHandler(INT32 state)
 {
-	ZetSetIRQLine(0, (state) ? ZET_IRQSTATUS_ACK : ZET_IRQSTATUS_NONE);
+	ZetSetIRQLine(0, (state) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
@@ -612,7 +612,7 @@ static INT32 DrvFrame()
 
 		nSegment = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += ZetRun(nSegment);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 		nSegment = ZetTotalCycles();
 
@@ -620,12 +620,12 @@ static INT32 DrvFrame()
 
 		ZetOpen(1);
 		nCyclesDone[0] += ZetRun(nSegment - ZetTotalCycles());
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		ZetOpen(2);
 		nCyclesDone[0] += ZetRun(nSegment - ZetTotalCycles());
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		ZetOpen(3);

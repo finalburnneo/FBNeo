@@ -479,14 +479,14 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < 32; i++) {
 		if (i == 31) {
 			vblank = 1;
-			s2650SetIRQLine(0x03, S2650_IRQSTATUS_ACK);
+			s2650SetIRQLine(0x03, CPU_IRQSTATUS_ACK);
 		}
 		INT32 nSegment = (1536000 / 60) / 32;
 
 		s2650Run(nSegment);
 
 		if (i == 31) {
-			s2650SetIRQLine(0x03, S2650_IRQSTATUS_NONE);
+			s2650SetIRQLine(0x03, CPU_IRQSTATUS_NONE);
 		}
 	}
 

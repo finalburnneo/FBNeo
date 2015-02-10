@@ -580,9 +580,9 @@ static void powerinsIRQHandler(INT32, INT32 nStatus)
 //	bprintf(PRINT_NORMAL, _T("powerinsIRQHandler %i\n"), nStatus);
 	
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -599,7 +599,7 @@ static double powerinsGetTime()
 static INT32 DrvDoReset()
 {
 	SekOpen(0);
-	SekSetIRQLine(0, SEK_IRQSTATUS_NONE);
+	SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	SekReset();
 	SekClose();
 	
@@ -1043,7 +1043,7 @@ static INT32 powerinsFrame()
 	if ( game_drv == GAME_POWERINA ) {
 		nCyclesTotal[0] = (INT32)((INT64)12000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
 		SekRun(nCyclesTotal[0]);
-		SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 		if (pBurnSoundOut) MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
@@ -1060,7 +1060,7 @@ static INT32 powerinsFrame()
 			BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
 		}
 
-		SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	}	
 	
 	if (game_drv == GAME_POWERINB) {
@@ -1077,11 +1077,11 @@ static INT32 powerinsFrame()
 			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 			nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 			if ((i & 180) == 0) {
-				ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			}
 		}
 
-		SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	}
 
 	SekClose();

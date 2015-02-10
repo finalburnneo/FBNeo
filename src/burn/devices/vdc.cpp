@@ -360,7 +360,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 				{
 					/* note: flag is set only if irq is taken, Mizubaku Daibouken relies on this behaviour */
 					vdc_status[which] |= 0x02;
-					h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+					h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 				}
 				continue;  /* Should cause an interrupt */
 			}
@@ -404,7 +404,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 							else if (drawn[pixel_x] == 2)
 							{
 								if(vdc_data[which][0x05] & 0x01)
-									h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+									h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 								vdc_status[which] |= 0x01;
 							}
 						}
@@ -454,7 +454,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 							else if ( drawn[pixel_x] == 2 )
 							{
 								if(vdc_data[which][0x05] & 0x01)
-									h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+									h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 								vdc_status[which] |= 0x01;
 							}
 						}
@@ -479,7 +479,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 					{
 						/* note: flag is set only if irq is taken, Mizubaku Daibouken relies on this behaviour */
 						vdc_status[which] |= 0x02;
-						h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+						h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 					}
 				}
 				else
@@ -513,7 +513,7 @@ static void pce_refresh_sprites(INT32 which, INT32 line, UINT8 *drawn, UINT16 *l
 								else if ( drawn[pixel_x] == 2 )
 								{
 									if(vdc_data[which][0x05] & 0x01)
-										h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+										h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 									vdc_status[which] |= 0x01;
 								}
 							}
@@ -694,7 +694,7 @@ static void vdc_advance_line(INT32 which)
 	}
 
 	if (ret)
-		h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+		h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 }
 
 static void pce_refresh_line(INT32 which, INT32 /*line*/, INT32 external_input, UINT8 *drawn, UINT16 *line_buffer)
@@ -1013,7 +1013,7 @@ static void vdc_do_dma(INT32 which)
 
 	if (dvc)
 	{
-		h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+		h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 	}
 }
 
@@ -1129,7 +1129,7 @@ UINT8 vdc_read(INT32 which, UINT8 offset)
 		case 0x00: {
 			UINT8 ret = vdc_status[which];
 			vdc_status[which] &= ~0x3f;
-			h6280SetIRQLine(0, H6280_IRQSTATUS_NONE);
+			h6280SetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return ret;
 		}
 

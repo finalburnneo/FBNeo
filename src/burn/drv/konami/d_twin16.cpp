@@ -563,7 +563,7 @@ static void fround_CPU_register_w(INT32 data)
 	{
 		if ((old & 0x08) == 0 && (twin16_CPUA_register & 0x08)) {
 			ZetSetVector(0xff);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 	}
 }
@@ -574,7 +574,7 @@ static void twin16_CPUA_register_w(INT32 data)
 	{
 		if ((twin16_CPUA_register & 0x08) == 0 && (data & 0x08)) {
 			ZetSetVector(0xff);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 
 		if ((twin16_CPUA_register & 0x40) && (data & 0x40) == 0)
@@ -583,7 +583,7 @@ static void twin16_CPUA_register_w(INT32 data)
 		if ((twin16_CPUA_register & 0x10) == 0 && (data & 0x10)) {
 			SekClose();
 			SekOpen(1);
-			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			SekClose();
 			SekOpen(0);
 		}
@@ -602,7 +602,7 @@ static void twin16_CPUB_register_w(INT32 data)
 		{
 			SekClose();
 			SekOpen(0);
-			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			SekClose();
 			SekOpen(1);
 		}
@@ -649,7 +649,7 @@ void __fastcall twin16_main_write_byte(UINT32 address, UINT8 data)
 		case 0xa0008:
 		case 0xa0009:
 			*soundlatch = data;
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0xa0011: // watchdog
@@ -811,7 +811,7 @@ UINT8 __fastcall twin16_sound_read(UINT16 address)
 			return *soundlatch2;
 
 		case 0xa000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0xc000:
@@ -1420,13 +1420,13 @@ static INT32 DrvFrame()
 		SekOpen(0);
 		nSegment = (nTotalCycles[0] - nCyclesDone[0]) / (nInterleave - i);
 		nCyclesDone[0] += SekRun(nSegment);
-		if ((twin16_CPUA_register & 0x20) && i == nInterleave-1) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+		if ((twin16_CPUA_register & 0x20) && i == nInterleave-1) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		if (twin16_custom_video != 1) {
 			SekOpen(1);
 			nCyclesDone[1] += SekRun(nSegment);
-			if ((twin16_CPUB_register & 0x02) && i == nInterleave-1) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+			if ((twin16_CPUB_register & 0x02) && i == nInterleave-1) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			SekClose();
 		}
 

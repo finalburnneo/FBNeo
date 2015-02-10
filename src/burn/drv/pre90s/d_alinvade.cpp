@@ -234,7 +234,7 @@ static INT32 DrvFrame()
 
 	M6502Open(0);
 	M6502Run(nTotalCycles);
-	if (irqmask) M6502SetIRQLine(0, M6502_IRQSTATUS_AUTO);
+	if (irqmask) M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	M6502Close();
 
 	if (pBurnSoundOut) {

@@ -389,7 +389,7 @@ UINT8 __fastcall System16Z80PortRead(UINT16 a)
 		
 		case 0x40:
 		case 0xc0: {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return System16SoundLatch;
 		}
 		
@@ -1455,27 +1455,27 @@ inline static INT32 PdriftSndGetBank(INT32 Reg86)
 inline void System16YM2151IRQHandler(INT32 Irq)
 {
 	if (Irq) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
 inline static void System16YM2203IRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
 inline static void System18YM3438IRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -2685,7 +2685,7 @@ INT32 System16AFrame()
 		}
 	}
 
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekClose();
 	
 	if (Simulate8751) Simulate8751();
@@ -2743,7 +2743,7 @@ INT32 System16BFrame()
 		nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 		
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2413) {
-			SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		}
 
 		// Run Z80
@@ -2790,7 +2790,7 @@ INT32 System16BFrame()
 		}
 	}
 	
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekClose();
 	
 	if (Simulate8751) Simulate8751();
@@ -2854,7 +2854,7 @@ INT32 System18Frame()
 		}
 	}
 
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekClose();
 	
 	ZetOpen(0);
@@ -2954,7 +2954,7 @@ INT32 HangonFrame()
 	}
 
 	SekOpen(0);
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekClose();
 	
 	if (Simulate8751) Simulate8751();	
@@ -3008,7 +3008,7 @@ INT32 HangonYM2203Frame()
 	}
 	
 	SekOpen(0);
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekClose();
 	
 	ZetOpen(0);
@@ -3066,7 +3066,7 @@ INT32 OutrunFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == 2 || i == 6 || i == 8) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == 2 || i == 6 || i == 8) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		// Run 68000 #2
@@ -3114,7 +3114,7 @@ INT32 OutrunFrame()
 
 	for (i = 0; i < 2; i++) {
 		SekOpen(i);
-		SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		SekClose();
 	}	
 	
@@ -3159,8 +3159,8 @@ INT32 XBoardFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == 20 || i == 40 || i == 60 || i == 80) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
-		if (i == 99) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		if (i == 20 || i == 40 || i == 60 || i == 80) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == 99) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		// Run 68000 #2
@@ -3170,7 +3170,7 @@ INT32 XBoardFrame()
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nCyclesSegment = SekRun(nCyclesSegment);
 		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 99) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		if (i == 99) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		// Run Z80
@@ -3256,10 +3256,10 @@ INT32 XBoardFrameGPRider()
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 		// ACK for 1 interleave cycle to make gprider happy
-		if (i == 20 || i == 40 || i == 60 || i == 80) SekSetIRQLine(2, SEK_IRQSTATUS_ACK);
-		if (i == 21 || i == 41 || i == 61 || i == 81) SekSetIRQLine(2, SEK_IRQSTATUS_NONE);
-		if (i == 98) SekSetIRQLine(4, SEK_IRQSTATUS_ACK);
-		if (i == 99) SekSetIRQLine(4, SEK_IRQSTATUS_NONE);
+		if (i == 20 || i == 40 || i == 60 || i == 80) SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
+		if (i == 21 || i == 41 || i == 61 || i == 81) SekSetIRQLine(2, CPU_IRQSTATUS_NONE);
+		if (i == 98) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
+		if (i == 99) SekSetIRQLine(4, CPU_IRQSTATUS_NONE);
 		SekClose();
 		
 		// Run 68000 #2
@@ -3269,7 +3269,7 @@ INT32 XBoardFrameGPRider()
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nCyclesSegment = SekRun(nCyclesSegment);
 		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 99) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		if (i == 99) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		// Run Z80
@@ -3358,10 +3358,10 @@ INT32 YBoardFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == 170) SekSetIRQLine(2, SEK_IRQSTATUS_ACK);
-		if (i == 171) SekSetIRQLine(2, SEK_IRQSTATUS_NONE);
-		if (i == 223) SekSetIRQLine(4, SEK_IRQSTATUS_ACK);
-		if (i == 224) SekSetIRQLine(4, SEK_IRQSTATUS_NONE);
+		if (i == 170) SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
+		if (i == 171) SekSetIRQLine(2, CPU_IRQSTATUS_NONE);
+		if (i == 223) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
+		if (i == 224) SekSetIRQLine(4, CPU_IRQSTATUS_NONE);
 		SekClose();
 		
 		// Run 68000 #2
@@ -3371,10 +3371,10 @@ INT32 YBoardFrame()
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nCyclesSegment = SekRun(nCyclesSegment);
 		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 170) SekSetIRQLine(2, SEK_IRQSTATUS_ACK);
-		if (i == 171) SekSetIRQLine(2, SEK_IRQSTATUS_NONE);
-		if (i == 223) SekSetIRQLine(4, SEK_IRQSTATUS_ACK);
-		if (i == 224) SekSetIRQLine(4, SEK_IRQSTATUS_NONE);
+		if (i == 170) SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
+		if (i == 171) SekSetIRQLine(2, CPU_IRQSTATUS_NONE);
+		if (i == 223) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
+		if (i == 224) SekSetIRQLine(4, CPU_IRQSTATUS_NONE);
 		SekClose();
 		
 		// Run 68000 #3
@@ -3384,10 +3384,10 @@ INT32 YBoardFrame()
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nCyclesSegment = SekRun(nCyclesSegment);
 		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 170) SekSetIRQLine(2, SEK_IRQSTATUS_ACK);
-		if (i == 171) SekSetIRQLine(2, SEK_IRQSTATUS_NONE);
-		if (i == 223) SekSetIRQLine(4, SEK_IRQSTATUS_ACK);
-		if (i == 224) SekSetIRQLine(4, SEK_IRQSTATUS_NONE);
+		if (i == 170) SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
+		if (i == 171) SekSetIRQLine(2, CPU_IRQSTATUS_NONE);
+		if (i == 223) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
+		if (i == 224) SekSetIRQLine(4, CPU_IRQSTATUS_NONE);
 		SekClose();
 
 		// Run Z80

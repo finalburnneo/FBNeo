@@ -74,7 +74,7 @@ static void UpdateIRQStatus()
 {
 	nIRQPending = (nVideoIRQ == 0 || nSoundIRQ == 0 || nUnknownIRQ == 0);
 
-	SekSetIRQLine(2, nIRQPending ? SEK_IRQSTATUS_ACK : SEK_IRQSTATUS_NONE);
+	SekSetIRQLine(2, nIRQPending ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 UINT8 __fastcall korokoroReadByte(UINT32 sekAddress)

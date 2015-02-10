@@ -1027,7 +1027,7 @@ static void rranger_ay8910_write_A(UINT32, UINT32 data)
 
 static void sound_type1_fm_irq_handler(INT32, INT32 nStatus)
 {
-	ZetSetIRQLine(0, (nStatus) ? ZET_IRQSTATUS_ACK : ZET_IRQSTATUS_NONE);
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 inline static INT32 hardhead_fm_syncronize(INT32 nSoundRate)
@@ -2152,16 +2152,16 @@ static INT32 HardheadFrame()
 		ZetOpen(0);
 		nCyclesSegment = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += ZetRun(nCyclesSegment);
-		if (i == (nInterleave-1)) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if (i == (nInterleave-1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		ZetOpen(1);
 		nCyclesSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
 		BurnTimerUpdateYM3812(nCyclesSegment);
 		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetRun(100);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
 		ZetClose();
 	}
@@ -2215,16 +2215,16 @@ static INT32 RrangerFrame()
 		ZetOpen(0);
 		nCyclesSegment = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += ZetRun(nCyclesSegment);
-		if (i == (nInterleave-1)) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if (i == (nInterleave-1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		ZetOpen(1);
 		nCyclesSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
 		BurnTimerUpdate(nCyclesSegment);
 		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetRun(100);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
 		ZetClose();
 	}
@@ -2275,16 +2275,16 @@ static INT32 Hardhea2Frame()
 		nCyclesSegment = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += ZetRun(nCyclesSegment);
 		if (i == 112 && *nmi_enable) ZetNmi();
-		if (i == 240) { vblank = 1; ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO); }
+		if (i == 240) { vblank = 1; ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); }
 		ZetClose();
 
 		ZetOpen(1);
 		nCyclesSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
 		BurnTimerUpdateYM3812(nCyclesSegment);
 		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetRun(100);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
 		ZetClose();
 
@@ -2350,9 +2350,9 @@ static INT32 SparkmanFrame() // & starfigh
 		if (i == 112 && *nmi_enable) ZetNmi();
 		if (i == (Sparkman ? 250 : 255)) { // any other value and the sprites glitch (MAME uses 240 here, hmmm)
 			vblank = 1;
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetRun(100);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
 		ZetClose();
 
@@ -2360,9 +2360,9 @@ static INT32 SparkmanFrame() // & starfigh
 		nCyclesSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
 		BurnTimerUpdateYM3812(nCyclesSegment);
 		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetRun(100);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
 		ZetClose();
 	}

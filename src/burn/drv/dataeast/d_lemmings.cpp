@@ -188,7 +188,7 @@ static void __fastcall lemmings_main_write_word(UINT32 address, UINT16 data)
 	{
 		case 0x1a0064:
 			*soundlatch = data & 0xff;
-			M6809SetIRQLine(1, M6809_IRQSTATUS_ACK);
+			M6809SetIRQLine(1, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x1c0000:
@@ -278,7 +278,7 @@ static void lemmings_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x1800:
-			M6809SetIRQLine(1, M6809_IRQSTATUS_NONE);
+			M6809SetIRQLine(1, CPU_IRQSTATUS_NONE);
 		return;
 	}
 }
@@ -303,7 +303,7 @@ static UINT8 lemmings_sound_read(UINT16 address)
 
 static void lemmingsYM2151IrqHandler(INT32 irq)
 {
-	M6809SetIRQLine(0, irq ? M6809_IRQSTATUS_ACK : M6809_IRQSTATUS_NONE);
+	M6809SetIRQLine(0, irq ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 	M6809Run(1000); // fix music tempo
 }
 
@@ -686,7 +686,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		nSegment = nBurnSoundLen - nSoundBufferPos;

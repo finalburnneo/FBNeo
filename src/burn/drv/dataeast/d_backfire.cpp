@@ -614,7 +614,7 @@ static INT32 DrvFrame()
 	ArmOpen(0);
 	deco16_vblank = 0x10;
 	ArmRun(nTotalCycles - 2240);
-	ArmSetIRQLine(ARM_IRQ_LINE, ARM_IRQSTATUS_AUTO);
+	ArmSetIRQLine(ARM_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 	deco16_vblank = 0x00;
 	ArmRun(2240);
 	ArmClose();

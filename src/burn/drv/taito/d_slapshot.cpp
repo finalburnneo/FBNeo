@@ -356,7 +356,7 @@ void __fastcall Opwolf3Gun68KWriteByte(UINT32 a, UINT8 d)
 		case 0xe00002:
 		case 0xe00004:
 		case 0xe00006: {
-			SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 			return;
 		}
 		
@@ -454,9 +454,9 @@ void __fastcall SlapshotZ80Write(UINT16 a, UINT8 d)
 static void SlapshotFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -808,8 +808,8 @@ static INT32 SlapshotFrame()
 		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == 10) { SekSetIRQLine(6, SEK_IRQSTATUS_AUTO); nTaitoCyclesDone[0] += SekRun(200000 - 500); }
-		if (i == (nInterleave - 1)) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+		if (i == 10) { SekSetIRQLine(6, CPU_IRQSTATUS_AUTO); nTaitoCyclesDone[0] += SekRun(200000 - 500); }
+		if (i == (nInterleave - 1)) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		ZetOpen(0);

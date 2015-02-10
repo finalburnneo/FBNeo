@@ -975,9 +975,9 @@ static void neogeoFMIRQHandler(INT32, INT32 nStatus)
 //	bprintf(PRINT_NORMAL, _T("    YM2610 IRQ status: 0x%02X (%6i cycles)\n"), nStatus, ZetTotalCycles());
 
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1680,16 +1680,16 @@ static inline void NeoIRQUpdate(UINT16 wordValue)
 //	bprintf(PRINT_NORMAL, _T("  - IRQ Ack -> %02X (at line %3i).\n"), nIRQAcknowledge, SekCurrentScanline());
 
 	if ((nIRQAcknowledge & 7) == 7) {
-		SekSetIRQLine(7, SEK_IRQSTATUS_NONE);
+		SekSetIRQLine(7, CPU_IRQSTATUS_NONE);
 	} else {
 		if ((nIRQAcknowledge & 1) == 0) {
-			SekSetIRQLine(3, SEK_IRQSTATUS_ACK);
+			SekSetIRQLine(3, CPU_IRQSTATUS_ACK);
 		}
 		if ((nIRQAcknowledge & 2) == 0) {
-			SekSetIRQLine(nScanlineIRQ, SEK_IRQSTATUS_ACK);
+			SekSetIRQLine(nScanlineIRQ, CPU_IRQSTATUS_ACK);
 		}
 		if ((nIRQAcknowledge & 4) == 0) {
-			SekSetIRQLine(nVBLankIRQ, SEK_IRQSTATUS_ACK);
+			SekSetIRQLine(nVBLankIRQ, CPU_IRQSTATUS_ACK);
 		}
 	}
 }
@@ -1701,7 +1701,7 @@ static inline void NeoCDIRQUpdate(UINT8 byteValue)
 //	bprintf(PRINT_NORMAL, _T("  - IRQ Ack -> %02X (CD, at line %3i).\n"), nIRQAcknowledge, SekCurrentScanline());
 
 	if ((nIRQAcknowledge & 0x3F) == 0x3F) {
-		SekSetIRQLine(7, SEK_IRQSTATUS_NONE);
+		SekSetIRQLine(7, CPU_IRQSTATUS_NONE);
 	} else {
 		if ((nIRQAcknowledge & 0x07) != 7) {
 			NeoIRQUpdate(0);
@@ -1710,19 +1710,19 @@ static inline void NeoCDIRQUpdate(UINT8 byteValue)
 		if ((nIRQAcknowledge & 0x08) == 0) {
 			nNeoCDIRQVector = 0x17;
 			nNeoCDIRQVectorAck = 1;
-			SekSetIRQLine(4, SEK_IRQSTATUS_ACK /*| SEK_IRQSTATUS_CALLBACK*/);
+			SekSetIRQLine(4, CPU_IRQSTATUS_ACK /*| CPU_IRQSTATUS_CALLBACK*/);
 			return;
 		}
 		if ((nIRQAcknowledge & 0x10) == 0) {
 			nNeoCDIRQVector = 0x16;
 			nNeoCDIRQVectorAck = 1;
-			SekSetIRQLine(4, SEK_IRQSTATUS_ACK /*| SEK_IRQSTATUS_CALLBACK*/);
+			SekSetIRQLine(4, CPU_IRQSTATUS_ACK /*| CPU_IRQSTATUS_CALLBACK*/);
 			return;
 		}
 		if ((nIRQAcknowledge & 0x20) == 0) {
 			nNeoCDIRQVector = 0x15;
 			nNeoCDIRQVectorAck = 1;
-			SekSetIRQLine(4, SEK_IRQSTATUS_ACK /*| SEK_IRQSTATUS_CALLBACK*/);
+			SekSetIRQLine(4, CPU_IRQSTATUS_ACK /*| CPU_IRQSTATUS_CALLBACK*/);
 			return;
 		}
 	}
@@ -4613,7 +4613,7 @@ INT32 NeoFrame()
 		if ((nIRQControl & 0x10) && (nIRQCycles < NO_IRQ_PENDING) && (SekTotalCycles() >= nIRQCycles)) {
 
 			nIRQAcknowledge &= ~2;
-			SekSetIRQLine(nScanlineIRQ, SEK_IRQSTATUS_ACK);
+			SekSetIRQLine(nScanlineIRQ, CPU_IRQSTATUS_ACK);
 
 #if 0 || defined LOG_IRQ
 			bprintf(PRINT_NORMAL, _T("  - IRQ triggered (line %3i + %3i cycles).\n"), SekCurrentScanline(), SekTotalCycles() - SekCurrentScanline() * SekCyclesScanline());
@@ -4650,7 +4650,7 @@ INT32 NeoFrame()
 			if ((nIRQControl & 0x10) && (nIRQCycles < NO_IRQ_PENDING) && (nLastIRQ < nIRQCycles) && (SekTotalCycles() >= nIRQCycles)) {
 				nLastIRQ = nIRQCycles;
 				nIRQAcknowledge &= ~2;
-				SekSetIRQLine(nScanlineIRQ, SEK_IRQSTATUS_ACK);
+				SekSetIRQLine(nScanlineIRQ, CPU_IRQSTATUS_ACK);
 #if 0 || defined LOG_IRQ
 				bprintf(PRINT_NORMAL, _T("  - IRQ triggered (line %3i + %3i cycles).\n"), SekCurrentScanline(), SekTotalCycles() - SekCurrentScanline() * SekCyclesScanline());
 #endif
@@ -4708,7 +4708,7 @@ INT32 NeoFrame()
 
 			if ((nIRQControl & 0x10) && (nIRQCycles < NO_IRQ_PENDING) && (SekTotalCycles() >= nIRQCycles)) {
 				nIRQAcknowledge &= ~2;
-				SekSetIRQLine(nScanlineIRQ, SEK_IRQSTATUS_ACK);
+				SekSetIRQLine(nScanlineIRQ, CPU_IRQSTATUS_ACK);
 
 #if 0 || defined LOG_IRQ
 				bprintf(PRINT_NORMAL, _T("  - IRQ triggered (line %3i + %3i cycles).\n"), SekCurrentScanline(), SekTotalCycles() - SekCurrentScanline() * SekCyclesScanline());
@@ -4778,7 +4778,7 @@ INT32 NeoFrame()
 	}
 
 	nIRQAcknowledge &= ~4;
-	SekSetIRQLine(nVBLankIRQ, SEK_IRQSTATUS_ACK);
+	SekSetIRQLine(nVBLankIRQ, CPU_IRQSTATUS_ACK);
 
 #if 0 || defined LOG_IRQ
 	bprintf(PRINT_NORMAL, _T("  - VBLank.\n"));
@@ -4801,7 +4801,7 @@ INT32 NeoFrame()
 
 		if ((nIRQControl & 0x10) && (nIRQCycles < NO_IRQ_PENDING) && (SekTotalCycles() >= nIRQCycles)) {
 			nIRQAcknowledge &= ~2;
-			SekSetIRQLine(nScanlineIRQ, SEK_IRQSTATUS_ACK);
+			SekSetIRQLine(nScanlineIRQ, CPU_IRQSTATUS_ACK);
 
 #if 0 || defined LOG_IRQ
 			bprintf(PRINT_NORMAL, _T("  - IRQ triggered (line %3i + %3i cycles).\n"), SekCurrentScanline(), SekTotalCycles() - SekCurrentScanline() * SekCyclesScanline());

@@ -5257,7 +5257,7 @@ void __fastcall Driveout68KWriteByte(UINT32 a, UINT8 d)
 			} else {
 				TaitoSoundLatch = ((d << 4) & 0xf0) | (TaitoSoundLatch & 0x0f);
 				ZetOpen(0);
-				ZetRaiseIrq(0);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 				ZetClose();
 			}
 			return;
@@ -7418,9 +7418,9 @@ static INT32 FinalbSpriteYOffsets[16]     = { 0, 64, 128, 192, 256, 320, 384, 44
 static void TaitoF2FMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -10560,9 +10560,9 @@ static INT32 TaitoF2Frame()
 		if (i == 9) nTaitoCyclesSegment -= 500;
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
 		if (i == 9) {
-			SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			nTaitoCyclesDone[nCurrentCPU] += SekRun(500);
-			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		} 
 		SekClose();
 		
@@ -10622,9 +10622,9 @@ static INT32 DriveoutFrame()
 		if (i == 9) nTaitoCyclesSegment -= 500;
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
 		if (i == 9) {
-			SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			nTaitoCyclesDone[nCurrentCPU] += SekRun(500);
-			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		} 
 		SekClose();
 		

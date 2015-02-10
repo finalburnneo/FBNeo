@@ -1650,7 +1650,7 @@ INT32 GalFrame()
 			nGalCyclesDone[nCurrentCPU] += ZetRun(nGalCyclesSegment);
 			if (i == nIrqInterleaveFire && GalIrqFire) {
 				if (GalIrqType == GAL_IRQ_TYPE_NMI) ZetNmi();
-				if (GalIrqType == GAL_IRQ_TYPE_IRQ0) ZetRaiseIrq(0);
+				if (GalIrqType == GAL_IRQ_TYPE_IRQ0) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 				GalIrqFire = 0;
 			}
 			ZetClose();
@@ -1663,7 +1663,7 @@ INT32 GalFrame()
 			nNext = (i + 1) * nGalCyclesTotal[nCurrentCPU] / nInterleave;
 			nGalCyclesSegment = nNext - nGalCyclesDone[nCurrentCPU];
 			nGalCyclesDone[nCurrentCPU] += ZetRun(nGalCyclesSegment);
-			if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910) ZetRaiseIrq(0);
+			if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			ZetClose();
 		}
 			
@@ -1675,9 +1675,9 @@ INT32 GalFrame()
 			nGalCyclesSegment = nNext - nGalCyclesDone[nCurrentCPU];
 			nGalCyclesSegment = ZetRun(nGalCyclesSegment);
 			nGalCyclesDone[nCurrentCPU] += nGalCyclesSegment;
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			nGalCyclesDone[nCurrentCPU] += ZetRun(300);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			nGalCyclesDone[nCurrentCPU] += ZetRun(300);
 			ZetClose();
 		}
@@ -1701,9 +1701,9 @@ INT32 GalFrame()
 			nGalCyclesDone[nCurrentCPU] += s2650Run(nGalCyclesSegment);
 			if (i == nIrqInterleaveFire) {
 				GalVBlank = 1;
-				s2650SetIRQLine(0, S2650_IRQSTATUS_ACK);
+				s2650SetIRQLine(0, CPU_IRQSTATUS_ACK);
 				s2650Run(0);
-				s2650SetIRQLine(0, S2650_IRQSTATUS_NONE);
+				s2650SetIRQLine(0, CPU_IRQSTATUS_NONE);
 				s2650Run(0);
 			}
 			s2650Close();
@@ -1716,7 +1716,7 @@ INT32 GalFrame()
 			nNext = (i + 1) * nGalCyclesTotal[nCurrentCPU] / nInterleave;
 			nGalCyclesSegment = nNext - nGalCyclesDone[nCurrentCPU];
 			nGalCyclesDone[nCurrentCPU] += ZetRun(nGalCyclesSegment);
-			if (HunchbksSoundIrqFire) ZetRaiseIrq(0);
+			if (HunchbksSoundIrqFire) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			ZetClose();
 		}
 		

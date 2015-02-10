@@ -162,7 +162,7 @@ static void circusc_main_write(UINT16 address, UINT8 data)
 
 		case 0x0c00:
 			ZetSetVector(0xff);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x1c00:
@@ -229,7 +229,7 @@ static UINT8 __fastcall circusc_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0x6000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch;
 
 		case 0x8000:
@@ -560,7 +560,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	if (irqmask) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+	if (irqmask) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {

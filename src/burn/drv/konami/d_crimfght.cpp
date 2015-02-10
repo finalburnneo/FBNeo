@@ -265,7 +265,7 @@ void crimfght_main_write(UINT16 address, UINT8 data)
 		case 0x3f8c:
 			*soundlatch = data;
 			ZetSetVector(0xff);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		break;
 	}
 
@@ -347,7 +347,7 @@ UINT8 __fastcall crimfght_sound_read(UINT16 address)
 			return BurnYM2151ReadStatus();
 
 		case 0xc000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -626,7 +626,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_IRQSTATUS_AUTO);
+	konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

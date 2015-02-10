@@ -731,7 +731,7 @@ INT32 deco16_soundlatch;
 static void deco16YM2151IrqHandler(INT32 state)
 {
 #ifdef ENABLE_HUC6280
-	h6280SetIRQLine(1, state ? H6280_IRQSTATUS_ACK : H6280_IRQSTATUS_NONE);
+	h6280SetIRQLine(1, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 #else
 	state = state;
 #endif
@@ -840,7 +840,7 @@ static UINT8 deco16_sound_read(UINT32 address)
 		case 0x140000:
 		case 0x140001:
 #ifdef ENABLE_HUC6280
-			h6280SetIRQLine(0, H6280_IRQSTATUS_NONE);
+			h6280SetIRQLine(0, CPU_IRQSTATUS_NONE);
 #endif
 			return deco16_soundlatch;
 	}

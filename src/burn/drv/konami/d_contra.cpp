@@ -433,9 +433,9 @@ static INT32 DrvDoReset()
 static void DrvYM2151IrqHandler(INT32 Irq)
 {
 	if (Irq) {
-		M6809SetIRQLine(M6809_FIRQ_LINE, M6809_IRQSTATUS_ACK);
+		M6809SetIRQLine(M6809_FIRQ_LINE, CPU_IRQSTATUS_ACK);
 	} else {
-		M6809SetIRQLine(M6809_FIRQ_LINE, M6809_IRQSTATUS_NONE);
+		M6809SetIRQLine(M6809_FIRQ_LINE, CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -861,14 +861,14 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
 		if (i == (nInterleave - 1)) {
-			M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		M6809Close();
 
 		nCurrentCPU = 1;
 		M6809Open(nCurrentCPU);
 		if (trigger_sound_irq) {
-			M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			trigger_sound_irq = 0;
 		}
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;

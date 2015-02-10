@@ -124,7 +124,7 @@ void NMK004_reset()
 
 static void NMK004YM2203IrqHandler(INT32, INT32 nStatus)
 {
-	tlcs90SetIRQLine(0, (nStatus) ? TLCS90_IRQSTATUS_ACK : TLCS90_IRQSTATUS_NONE);
+	tlcs90SetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 inline static double NMK004GetTime()
@@ -217,7 +217,7 @@ void NMK004NmiWrite(INT32 data)
 {
 	data ^= 0xff; // hack - no game works properly without this being inverted.
 
-	tlcs90SetIRQLine(0x20 /*nmi*/, (data & 1) ? TLCS90_IRQSTATUS_ACK : TLCS90_IRQSTATUS_NONE);
+	tlcs90SetIRQLine(0x20 /*nmi*/, (data & 1) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 void NMK004Write(INT32, INT32 data)

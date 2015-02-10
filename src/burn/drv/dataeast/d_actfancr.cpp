@@ -241,7 +241,7 @@ void actfan_main_write(UINT32 address, UINT8 data)
 
 		case 0x150000:
 			*soundlatch = data;
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 		return;
 
 		case 0x160000:
@@ -291,7 +291,7 @@ void triothep_main_write(UINT32 address, UINT8 data)
 	{
 		case 0x100000:
 			*soundlatch = data;
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 		return;
 
 		case 0x110000:
@@ -369,7 +369,7 @@ static UINT8 Dec0_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0x3000:
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_NONE);
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0x3800:
@@ -392,9 +392,9 @@ inline static double Dec0YM2203GetTime()
 static void Dec0YM3812IRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_ACK);
+		M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_ACK);
 	} else {
-		M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_NONE);
+		M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -911,7 +911,7 @@ static INT32 DrvFrame()
 		if (i == 1) vblank = 0;
 		if (i == 30) {
 			vblank = 0x80;
-			h6280SetIRQLine(0, H6280_IRQSTATUS_AUTO);
+			h6280SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 
 		BurnTimerUpdateYM3812(i * (nCyclesTotal[1] / nInterleave)); // m6502

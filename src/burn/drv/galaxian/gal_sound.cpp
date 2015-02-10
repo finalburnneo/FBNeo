@@ -535,7 +535,7 @@ UINT8 BongoDipSwitchRead(UINT32)
 
 UINT8 KonamiSoundLatchRead(UINT32)
 {
-	ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+	ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	return GalSoundLatch;
 }
 
@@ -607,11 +607,11 @@ void KonamiSoundControlWrite(UINT8 d)
 		INT32 nActiveCPU = ZetGetActive();
 		
 		if (nActiveCPU == 1) {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		} else {
 			ZetClose();
 			ZetOpen(1);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(nActiveCPU);
 		}
@@ -652,16 +652,16 @@ void SfxSampleControlWrite(UINT32, UINT32 d)
 		INT32 nActiveCPU = ZetGetActive();
 		
 		if (nActiveCPU == 2) {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			nGalCyclesDone[2] += ZetRun(100);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			
 		} else {
 			ZetClose();
 			ZetOpen(2);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			nGalCyclesDone[2] += ZetRun(100);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			ZetClose();
 			ZetOpen(nActiveCPU);
 		}

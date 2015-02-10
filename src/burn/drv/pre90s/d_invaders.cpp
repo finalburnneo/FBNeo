@@ -355,11 +355,11 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += ZetRun(nSegment);
 		if (i == 96) {
 			ZetSetVector(0xd7);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		if (i == 224) {
 			ZetSetVector(0xcf);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);	
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);	
 		}
 	}
 

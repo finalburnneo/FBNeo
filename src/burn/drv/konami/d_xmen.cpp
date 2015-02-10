@@ -140,7 +140,7 @@ void __fastcall xmen_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x10804e:
 		case 0x10804f: 
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x10a001:
@@ -281,7 +281,7 @@ UINT8 __fastcall xmen_sound_read(UINT16 address)
 			return BurnYM2151ReadStatus();
 
 		case 0xf002:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -591,7 +591,7 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += nCyclesSegment;
 
 		if (i == (nInterleave / 2) && interrupt_enable) {
-			SekSetIRQLine(3, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		}
 
 		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
@@ -608,7 +608,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	if (interrupt_enable) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+	if (interrupt_enable) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 	
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

@@ -341,7 +341,7 @@ static void tbowl_vclk_1()
 
 static void DrvFMIRQHandler(int, INT32 nStatus)
 {
-	ZetSetIRQLine(0, ((nStatus) ? ZET_IRQSTATUS_ACK : ZET_IRQSTATUS_NONE));
+	ZetSetIRQLine(0, ((nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE));
 }
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
@@ -710,14 +710,14 @@ static INT32 DrvFrame()
 
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nSegment);
-		if (i == (nInterleave-1)) ZetRaiseIrq(0);
+		if (i == (nInterleave-1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		nSegment = (nTotalCycles[1] - nCyclesDone[1]) / (nInterleave - i);
 
 		ZetOpen(1);
 		nCyclesDone[1] += ZetRun(nSegment);
-		if (i == (nInterleave-1)) ZetRaiseIrq(0);
+		if (i == (nInterleave-1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		ZetOpen(2);

@@ -4607,7 +4607,7 @@ void __fastcall Spacegun68K2WriteWord(UINT32 a, UINT16 d)
 		case 0xf00002:
 		case 0xf00004:
 		case 0xf00006: {
-			SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			return;
 		}
 		
@@ -4746,9 +4746,9 @@ static INT32 Sprite16x8YOffsets[8]      = { 0, 64, 128, 192, 256, 320, 384, 448 
 static void TaitoZFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xFF, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -6612,12 +6612,12 @@ static INT32 TaitoZFrame()
 		} else {
 			BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[nCurrentCPU] / nInterleave));
 		}
-		if (i == 10 && Sci && ((GetCurrentFrame() & 1) == 0)) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+		if (i == 10 && Sci && ((GetCurrentFrame() & 1) == 0)) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		if (TaitoZINT6timer && (SekTotalCycles() >= (TaitoZINT6timer + 10000))) {
-			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			TaitoZINT6timer = 0;
 		}
-		if (i == nVBlankIRQFire) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
+		if (i == nVBlankIRQFire) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		// Run 68000 #2
@@ -6627,7 +6627,7 @@ static INT32 TaitoZFrame()
 			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 			nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-			if (i == nVBlankIRQFire) SekSetIRQLine(TaitoIrqLine, SEK_IRQSTATUS_AUTO);
+			if (i == nVBlankIRQFire) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 			SekClose();
 		}
 		

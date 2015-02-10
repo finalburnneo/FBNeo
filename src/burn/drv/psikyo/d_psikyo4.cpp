@@ -671,9 +671,9 @@ static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 static void DrvIRQCallback(INT32, INT32 nStatus)
 {
 	if (nStatus)
-		Sh2SetIRQLine(12, SH2_IRQSTATUS_AUTO);
+		Sh2SetIRQLine(12, CPU_IRQSTATUS_AUTO);
 	else
-		Sh2SetIRQLine(12, SH2_IRQSTATUS_NONE);
+		Sh2SetIRQLine(12, CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvInit(INT32 (*LoadCallback)(), INT32 gfx_len)
@@ -919,9 +919,9 @@ static INT32 DrvFrame()
 	}
 
 	BurnTimerEndFrame(28636350 / 60);
-	Sh2SetIRQLine(4, SH2_IRQSTATUS_AUTO);
+	Sh2SetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	Sh2Run(0);
-	Sh2SetIRQLine(4, SH2_IRQSTATUS_NONE);
+	Sh2SetIRQLine(4, CPU_IRQSTATUS_NONE);
 	if (pBurnSoundOut) {
 		BurnYMF278BUpdate(nBurnSoundLen);
 	}

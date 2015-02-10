@@ -99,7 +99,7 @@ static void __fastcall kontest_write_port(UINT16 port, UINT8 data)
 
 		case 0x08:
 			*irq_enable = data & 0x08;
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 	}
 }
@@ -292,7 +292,7 @@ static INT32 DrvFrame()
 	ZetRun(3000000 / 60);
 
 	if (*irq_enable)
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 
 	ZetClose();
 

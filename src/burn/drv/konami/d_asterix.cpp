@@ -228,7 +228,7 @@ static void _fastcall asterix_main_write_byte(UINT32 address, UINT8 data)
 		return;
 
 		case 0x380301:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x380601:
@@ -342,7 +342,7 @@ static UINT8 __fastcall asterix_sound_read(UINT16 address)
 	}
 
 	if (address >= 0xfa00 && address <= 0xfa2f) {
-		if ((address & 0x3e) == 0x00) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if ((address & 0x3e) == 0x00) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 
 		return K053260Read(0, address & 0x3f);
 	}
@@ -667,7 +667,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	if (K056832IsIrqEnabled()) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+	if (K056832IsIrqEnabled()) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

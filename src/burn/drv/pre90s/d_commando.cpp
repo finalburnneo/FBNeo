@@ -570,7 +570,7 @@ UINT8 __fastcall CommandoRead2(UINT16 a)
 {
 	switch (a) {
 		case 0x6000: {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return DrvSoundLatch;
 		}
 		
@@ -1026,7 +1026,7 @@ static INT32 DrvFrame()
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 		if (i == 24) {
 			ZetSetVector(0xd7);
-			ZetRaiseIrq(0);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		ZetClose();
 		
@@ -1037,7 +1037,7 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 5 || i == 10 || i == 15 || i == 20) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		if (i == 5 || i == 10 || i == 15 || i == 20) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 		
 		// Render Sound Segment

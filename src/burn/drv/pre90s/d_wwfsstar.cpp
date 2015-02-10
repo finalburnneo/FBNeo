@@ -134,11 +134,11 @@ void __fastcall wwfsstar_main_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x180000:
-			SekSetIRQLine(6, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(6, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x180002:
-			SekSetIRQLine(5, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(5, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x180004:
@@ -251,9 +251,9 @@ UINT8 __fastcall wwfsstar_sound_read(UINT16 address)
 static void DrvYM2151IrqHandler(INT32 Irq)
 {
 	if (Irq) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -671,8 +671,8 @@ static inline void interrupt(INT32 scanline)
 {
 	if (scanline == 0)		vblank = 0;
 	if (scanline == (240-1))	vblank = 1;
-	if ((scanline & 0x0f) == 0)	SekSetIRQLine(5, SEK_IRQSTATUS_ACK);
-	if (scanline == 240)		SekSetIRQLine(6, SEK_IRQSTATUS_ACK);
+	if ((scanline & 0x0f) == 0)	SekSetIRQLine(5, CPU_IRQSTATUS_ACK);
+	if (scanline == 240)		SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 }
 
 static INT32 DrvFrame()

@@ -1262,7 +1262,7 @@ static void __fastcall nemesis_main_write_byte(UINT32 address, UINT8 data)
 		case 0x05e004:
 			if (data & 1) {
 				ZetSetVector(0xff);
-				ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			}
 		return;
 
@@ -1356,7 +1356,7 @@ static void __fastcall salamand_main_write_byte(UINT32 address, UINT8 data)
 	switch (address)
 	{
 		case 0x0a0000:
-			if (data & 0x08) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			if (data & 0x08) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x0a0001:
@@ -1394,7 +1394,7 @@ static void __fastcall salamand_main_write_word(UINT32 address, UINT16 data)
 			*flipscreen = data & 0x04;
 			*tilemap_flip_x = data & 0x04;
 			*tilemap_flip_y = data & 0x08;
-			if (data & 0x0800) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			if (data & 0x0800) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 		return;
 	}
@@ -1475,7 +1475,7 @@ static void __fastcall hcrash_main_write_byte(UINT32 address, UINT8 data)
 	switch (address)
 	{
 		case 0x0a0000:
-			if (data & 0x08) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			if (data & 0x08) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x0a0001:
@@ -1552,7 +1552,7 @@ static void __fastcall gx400_main_write_byte(UINT32 address, UINT8 data)
 		case 0x05e004:
 			if (data & 1) {
 				ZetSetVector(0xff);
-				ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			}
 		return;
 
@@ -1632,7 +1632,7 @@ static void __fastcall citybomb_main_write_byte(UINT32 address, UINT8 data)
 		case 0x078000:
 		case 0x0f8000:
 			// coin counters
-			if (data & 0x08) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			if (data & 0x08) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			selected_ip = (~data & 0x10) >> 4;
 		return;
 
@@ -1664,7 +1664,7 @@ static void __fastcall citybomb_main_write_word(UINT32 address, UINT16 data)
 			*flipscreen = data & 0x04;
 			*tilemap_flip_x = data & 0x04;
 			*tilemap_flip_y = data & 0x08;
-			if (data & 0x0800) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			if (data & 0x0800) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			selected_ip = (~data & 0x1000) >> 12;
 		}
 		return;
@@ -1776,7 +1776,7 @@ static UINT8 __fastcall nemesis_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xe001:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0xe086:
@@ -1830,7 +1830,7 @@ static UINT8 __fastcall salamand_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xa000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0xc000:
@@ -1916,7 +1916,7 @@ static UINT8 __fastcall citybomb_sound_read(UINT16 address)
 			return BurnYM3812Read(0, address & 1);
 
 		case 0xd000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -3059,7 +3059,7 @@ static INT32 NemesisFrame()
 		segment = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += SekRun(segment);
 		if (i == (nInterleave - 4) && *m68k_irq_enable) // should be 2500...
-			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		segment = nCyclesTotal[1] / nInterleave;
 		nCyclesDone[1] += ZetRun(segment);
@@ -3116,10 +3116,10 @@ static INT32 KonamigtFrame()
 		nCyclesDone[0] += SekRun(segment);
 
 		if (*m68k_irq_enable && i == 240 && (nCurrentFrame & 1) == 0)
-			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		if (*m68k_irq_enable2 && i == 0)
-			SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 		segment = nCyclesTotal[1] / nInterleave;
 		nCyclesDone[1] += ZetRun(segment);
@@ -3182,7 +3182,7 @@ static INT32 SalamandFrame()
 		segment = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += SekRun(segment);
 		if (i == (nInterleave - 4) && *m68k_irq_enable) // should be 2500...
-			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		segment = nCyclesTotal[1] / nInterleave;
 		nCyclesDone[1] += ZetRun(segment);
@@ -3255,10 +3255,10 @@ static INT32 HcrashFrame()
 		nCyclesDone[0] += SekRun(segment);
 
 		if (*m68k_irq_enable && i == 240 && (nCurrentFrame & 1) == 0)
-			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		if (*m68k_irq_enable2 && i == 0)
-			SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 		segment = nCyclesTotal[1] / nInterleave;
 		nCyclesDone[1] += ZetRun(segment);
@@ -3333,7 +3333,7 @@ static INT32 BlkpnthrFrame()
 		segment = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += SekRun(segment);
 		if (i == (nInterleave - 4) && *m68k_irq_enable)
-			SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 		segment = nCyclesTotal[1] / nInterleave;
 		nCyclesDone[1] += ZetRun(segment);
@@ -3406,13 +3406,13 @@ static INT32 Gx400Frame()
 		nCyclesDone[0] += SekRun(segment);
 
 		if (*m68k_irq_enable && (i == 240) && (nCurrentFrame & 1) == 0)
-			SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		if (*m68k_irq_enable2 && (i == 0))
-			SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 		if (*m68k_irq_enable4 && (i == 120))
-			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 		segment = nCyclesTotal[1] / nInterleave;
 		nCyclesDone[1] += ZetRun(segment);
@@ -3471,7 +3471,7 @@ static INT32 CitybombFrame()
 	nCyclesDone[0] += SekRun(nCyclesTotal[0]);
 
 	if (*m68k_irq_enable) // 2500...
-		SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 

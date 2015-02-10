@@ -73,7 +73,7 @@ STDINPUTINFO(sailormn)
 static void UpdateIRQStatus()
 {
 	INT32 nIRQPending = (nVideoIRQ == 0 || nSoundIRQ == 0 || nUnknownIRQ == 0);
-	SekSetIRQLine(1, nIRQPending ? SEK_IRQSTATUS_ACK : SEK_IRQSTATUS_NONE);
+	SekSetIRQLine(1, nIRQPending ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static void drvZ80Bankswitch(INT32 nBank)
@@ -90,11 +90,9 @@ static void drvZ80Bankswitch(INT32 nBank)
 static void drvYM2151IRQHandler(INT32 nStatus)
 {
 	if (nStatus) {
-//		ZetRaiseIrq(255);
-//		nCaveCyclesDone[1] += ZetRun(0x0400);
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	}
 }
 

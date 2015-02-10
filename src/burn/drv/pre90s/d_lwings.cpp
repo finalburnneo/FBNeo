@@ -1507,7 +1507,7 @@ static INT32 DrvFrame()
 				ZetNmi();
 			} else {
 				ZetSetVector(0xd7);
-				ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			}
 		}
 		if (MSM5205InUse) MSM5205Update();
@@ -1517,9 +1517,9 @@ static INT32 DrvFrame()
 		ZetOpen(nCurrentCPU);
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 		if ((i % (nInterleave / 4)) == ((nInterleave / 4) - 1)) {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetRun(500);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
 		ZetClose();
 
@@ -1531,7 +1531,7 @@ static INT32 DrvFrame()
 			nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 			for (INT32 j = 0; j < 133; j++) {
 				if (i == MSMIRQSlice[j]) {
-					ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+					ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 					nCyclesDone[nCurrentCPU] += ZetRun(1000);
 				}
 			}

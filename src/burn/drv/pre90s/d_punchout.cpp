@@ -1083,7 +1083,7 @@ static INT32 DrvFrame()
 
 	if (*interrupt_enable) ZetNmi();
 
-	M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);
+	M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 
 	nesapuUpdate(0, pBurnSoundOut, nBurnSoundLen);
 	vlm5030Update(0, pBurnSoundOut, nBurnSoundLen);

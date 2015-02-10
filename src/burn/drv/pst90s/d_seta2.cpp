@@ -1312,10 +1312,10 @@ static void tmp68301_timer_callback(INT32 i)
 
 		//cpunum_set_input_line(0,level,HOLD_LINE);
 		//bprintf(PRINT_NORMAL, _T("Tmp68301: CB IRQ[%x] %04x  timer[%d]\n"), level, tmp68301_irq_vector[level], i);
-		//SekSetIRQLine(tmp68301_irq_vector[level], SEK_IRQSTATUS_AUTO);
+		//SekSetIRQLine(tmp68301_irq_vector[level], CPU_IRQSTATUS_AUTO);
 
-		//SekSetIRQLine(level, SEK_IRQSTATUS_ACK);
-		SekSetIRQLine(level, SEK_IRQSTATUS_AUTO);
+		//SekSetIRQLine(level, CPU_IRQSTATUS_ACK);
+		SekSetIRQLine(level, CPU_IRQSTATUS_AUTO);
 	}
 
 	if (TCR & 0x0080) {	// N/1
@@ -1346,8 +1346,8 @@ static void tmp68301_update_irq_state(INT32 i)
 		//cpunum_set_input_line(0,level,HOLD_LINE);
 		//bprintf(PRINT_NORMAL, _T("Tmp68301: UP IRQ[%x] %04x  timer[%d] IMR:%04x IVNR:%04x ICR:%04x\n"), level, tmp68301_irq_vector[level], i, IMR, IVNR, ICR);
 
-		//SekSetIRQLine(level, SEK_IRQSTATUS_ACK);
-		SekSetIRQLine(level, SEK_IRQSTATUS_AUTO);
+		//SekSetIRQLine(level, CPU_IRQSTATUS_ACK);
+		SekSetIRQLine(level, CPU_IRQSTATUS_AUTO);
 	}
 }
 
@@ -1525,7 +1525,7 @@ INT32 __fastcall grdiansSekIrqCallback(INT32 irq)
 static INT32 DrvDoReset()
 {
 	SekOpen(0);
-//	SekSetIRQLine(0, SEK_IRQSTATUS_NONE);
+//	SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	SekReset();
 	SekClose();
 

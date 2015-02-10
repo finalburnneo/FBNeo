@@ -878,9 +878,9 @@ static INT32 DrvFrame()
 		BurnTimerUpdateYM3812((nTotalCycles[1] / nInterleave) * (i+1));
 	}
 
-	if (nGameSelect == 0) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO); // bloodbro
-	if (nGameSelect == 1) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO); // skysmash
-	if (nGameSelect == 2) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO); // weststry
+	if (nGameSelect == 0) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO); // bloodbro
+	if (nGameSelect == 1) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO); // skysmash
+	if (nGameSelect == 2) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO); // weststry
 
 	BurnTimerEndFrameYM3812(nTotalCycles[1]);
 

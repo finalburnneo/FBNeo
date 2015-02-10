@@ -249,7 +249,7 @@ void __fastcall gyruss_main_write(UINT16 address, UINT8 data)
 			ZetClose();
 			ZetOpen(1);
 			ZetSetVector(0xff);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(0);
 		return;
@@ -261,7 +261,7 @@ void __fastcall gyruss_main_write(UINT16 address, UINT8 data)
 		case 0xc180:
 			*interrupt_enable0 = data & 1;
 			if (!*interrupt_enable0) {
-				ZetSetIRQLine(Z80_INPUT_LINE_NMI, ZET_IRQSTATUS_NONE);
+				ZetSetIRQLine(Z80_INPUT_LINE_NMI, CPU_IRQSTATUS_NONE);
 			}
 		return;
 
@@ -304,7 +304,7 @@ void gyruss_sub_write(UINT16 address, UINT8 data)
 		case 0x2000:
 			*interrupt_enable1 = data & 1;
 			if (!*interrupt_enable1) {
-				M6809SetIRQLine(0, M6809_IRQSTATUS_NONE);
+				M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
 			}
 		return;
 	}
@@ -326,7 +326,7 @@ UINT8 __fastcall gyruss_sound0_read(UINT16 address)
 	switch (address)
 	{
 		case 0x8000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -954,7 +954,7 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[0];
 		nCyclesDone[0] += ZetRun(nCyclesSegment);
 		if (i == (nInterleave - 248) && *interrupt_enable0) {
-			ZetSetIRQLine(Z80_INPUT_LINE_NMI, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(Z80_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
 		}
 		ZetClose();
 		
@@ -963,7 +963,7 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[1];
 		nCyclesDone[1] += M6809Run(nCyclesSegment);
 		if (i == (nInterleave - 248) && *interrupt_enable1) {
-			M6809SetIRQLine(0, M6809_IRQSTATUS_ACK);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 		M6809Close();
 

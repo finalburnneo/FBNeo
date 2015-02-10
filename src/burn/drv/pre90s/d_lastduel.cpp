@@ -867,9 +867,9 @@ void __fastcall LastduelZ80Write(UINT16 a, UINT8 d)
 inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1728,7 +1728,7 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == 33 || i == 66) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+		if (i == 33 || i == 66) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		ZetOpen(0);
@@ -1744,7 +1744,7 @@ static INT32 DrvFrame()
 	if (pBurnDraw) DrvDraw();
 	
 	SekOpen(0);
-	SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 	SekClose();
 	
 	memcpy(DrvSpriteRamBuffer, DrvSpriteRam, 0x800);
@@ -1776,7 +1776,7 @@ static INT32 LastduelFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == 33 || i == 66) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		if (i == 33 || i == 66) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		ZetOpen(0);
@@ -1792,7 +1792,7 @@ static INT32 LastduelFrame()
 	if (pBurnDraw) LastduelDraw();
 	
 	SekOpen(0);
-	SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 	SekClose();
 	
 	memcpy(DrvSpriteRamBuffer, DrvSpriteRam, 0x800);

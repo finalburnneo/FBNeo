@@ -389,7 +389,7 @@ INT32 NewsFrame()
 
 	ZetOpen(0);
 	ZetRun(8000000 / 60);
-	ZetRaiseIrq(0);
+	ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	ZetClose();
 
 	if (pBurnDraw) NewsDraw();

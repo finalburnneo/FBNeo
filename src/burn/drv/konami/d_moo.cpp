@@ -346,7 +346,7 @@ static void __fastcall moo_main_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x0d4000:
 		case 0x0d4001:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x0d600c:
@@ -551,7 +551,7 @@ static void __fastcall bucky_main_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x0d4000:
 		case 0x0d4001:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x0d600c:
@@ -721,7 +721,7 @@ static UINT8 __fastcall moo_sound_read(UINT16 address)
 			return BurnYM2151ReadStatus();
 
 		case 0xf002:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0xf003:
@@ -1146,7 +1146,7 @@ static INT32 DrvFrame()
 			}
 
 			if (control_data & 0x20) {
-				SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+				SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			}
 		}
 
@@ -1155,7 +1155,7 @@ static INT32 DrvFrame()
 				irq5_timer--;
 				if (control_data & 0x800) {
 					irq5_timer = 0;
-					SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+					SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 				}
 			} 
 		}

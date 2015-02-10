@@ -136,7 +136,7 @@ void __fastcall cbuster_main_write_word(UINT32 address, UINT16 data)
 
 		case 0xbc002:
 			deco16_soundlatch = data & 0xff;
-			//h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+			//h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 
 			// tempo fluctuation hack
 		    static UINT8 last_latch = 0;
@@ -148,10 +148,10 @@ void __fastcall cbuster_main_write_word(UINT32 address, UINT16 data)
 
 			if (latch_repeat) {
 				if (latch_repeat%8 == 0) {
-					h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+					h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 				}
 			} else {
-				h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+				h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			}
 			// end tempo fluctuation hack
 		return;
@@ -169,7 +169,7 @@ void __fastcall cbuster_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0xbc003:
 			deco16_soundlatch = data;
-			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0xbc004:
@@ -642,7 +642,7 @@ static INT32 DrvFrame()
 		nSoundBufferPos += nSegmentLength;
 	}
 
-	SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {

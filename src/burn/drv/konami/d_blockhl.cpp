@@ -140,7 +140,7 @@ void blockhl_main_write(UINT16 address, UINT8 data)
 
 		case 0x1f88:
 			ZetSetVector(0xff);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x1f8c:
@@ -200,7 +200,7 @@ UINT8 __fastcall blockhl_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xa000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 
 		case 0xc001:
@@ -447,7 +447,7 @@ static INT32 DrvFrame()
 	}
 
 	if (K052109_irq_enabled && (nDrvKonamiBank[0] & 0x03) == 0)
-		konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_IRQSTATUS_AUTO);
+		konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

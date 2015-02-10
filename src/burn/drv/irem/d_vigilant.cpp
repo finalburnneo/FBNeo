@@ -828,10 +828,10 @@ static void DrvSetVector(INT32 Status)
 	
 	if (DrvIrqVector == 0xff) {
 //		ZetSetVector(DrvIrqVector);
-		ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	} else {
 		ZetSetVector(DrvIrqVector);
-		ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		nCyclesDone[1] += ZetRun(1000);
 	}
 }
@@ -2098,7 +2098,7 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == (nInterleave - 1)) ZetRaiseIrq(0);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		nCurrentCPU = 1;

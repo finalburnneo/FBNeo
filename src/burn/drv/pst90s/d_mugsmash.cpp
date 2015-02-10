@@ -392,9 +392,9 @@ static INT32 DrvDoReset()
 void MugsmashYM2151IrqHandler(INT32 Irq)
 {
 	if (Irq) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -601,7 +601,7 @@ static INT32 DrvFrame()
 
 		nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
 		nCyclesDone[0] += SekRun(nSegment);
-		if (i == (nInterleave - 1)) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 		nSegment = (nCyclesTotal[1] - nCyclesDone[1]) / (nInterleave - i);
 		nCyclesDone[1] += ZetRun(nSegment);

@@ -231,9 +231,9 @@ void DrvYM2203WritePortB(UINT32, UINT32 d)
 inline static void DrvIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus & 1) {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -579,7 +579,7 @@ static INT32 DrvFrame()
 		nNext[0] += nCyclesTotal[0] / nInterleave;
 
 		nCyclesDone[0] += SekRun(nNext[0] - nCyclesDone[0]);
-		if (i == (nInterleave - 1)) SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		nNext[1] += nCyclesTotal[1] / nInterleave;
 		BurnTimerUpdate(nNext[1]);

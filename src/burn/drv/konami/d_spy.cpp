@@ -257,9 +257,9 @@ static void spy_3f90_w(INT32 data)
 	{
 		spy_collision();
 
-		M6809SetIRQLine(1 /*FIRQ*/, M6809_IRQSTATUS_ACK);
+		M6809SetIRQLine(1 /*FIRQ*/, CPU_IRQSTATUS_ACK);
 		M6809Run(105); // delay or the M6809 won't read it...
-		M6809SetIRQLine(1 /*FIRQ*/, M6809_IRQSTATUS_NONE);
+		M6809SetIRQLine(1 /*FIRQ*/, CPU_IRQSTATUS_NONE);
 	}
 
 	Drv3f90old = data;
@@ -300,7 +300,7 @@ void spy_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x3fc0:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 
@@ -392,7 +392,7 @@ UINT8 __fastcall spy_sound_read(UINT16 address)
 			return BurnYM3812Read(0, address & 1);
 
 		case 0xd000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -657,7 +657,7 @@ static INT32 DrvFrame()
 		nCyclesDone[1] += BurnTimerUpdateYM3812(nCyclesSegment - nCyclesDone[1]);
 	}
 
-	if (K052109_irq_enabled) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
+	if (K052109_irq_enabled) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 

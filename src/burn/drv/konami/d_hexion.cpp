@@ -522,7 +522,7 @@ static INT32 DrvFrame()
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		if (i == (nInterleave / 3)) ZetNmi();
 		if (i == ((nInterleave / 3) * 2)) ZetNmi();
-		if (i == nInterleave - 1) ZetRaiseIrq(0);
+		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		nCyclesDone[0] += nCyclesSegment;
 
 		if (pBurnSoundOut) {

@@ -248,7 +248,7 @@ STDDIPINFO(theroes)
 static void UpdateIRQStatus()
 {
 	nIRQPending = (nVideoIRQ == 0 || nSoundIRQ == 0 || nUnknownIRQ == 0);
-	SekSetIRQLine(1, nIRQPending ? SEK_IRQSTATUS_ACK : SEK_IRQSTATUS_NONE);
+	SekSetIRQLine(1, nIRQPending ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 UINT8 __fastcall gaiaReadByte(UINT32 sekAddress)

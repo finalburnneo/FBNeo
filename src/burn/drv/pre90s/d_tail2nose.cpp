@@ -299,7 +299,7 @@ static UINT8 __fastcall tail2nose_sound_in(UINT16 port)
 
 static void tail2noseFMIRQHandler(INT32, INT32 status)
 {
-	ZetSetIRQLine(0, (status & 1) ? ZET_IRQSTATUS_ACK : ZET_IRQSTATUS_NONE );
+	ZetSetIRQLine(0, (status & 1) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE );
 }
 
 static INT32 tail2noseSynchroniseStream(INT32 nSoundRate)
@@ -622,7 +622,7 @@ static INT32 DrvFrame()
 		BurnTimerUpdate(SekTotalCycles() / 2);
 	}
 
-	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
 

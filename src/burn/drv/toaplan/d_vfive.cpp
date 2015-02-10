@@ -610,7 +610,7 @@ static INT32 DrvFrame()
 			ToaBufferGP9001Sprites();
 
 			// Trigger VBlank interrupt
-			SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		}
 
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];

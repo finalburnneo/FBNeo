@@ -348,9 +348,9 @@ UINT8 __fastcall blockout_sound_read(UINT16 address)
 void BlockoutYM2151IrqHandler(INT32 Irq)
 {
 	if (Irq) {
-		ZetSetIRQLine(0xff, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0,    ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -562,7 +562,7 @@ static INT32 DrvFrame()
 			nSoundBufferPos += nSegment;
 		}
 
-		if (i == (nInterleave / 2)-1) SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave / 2)-1) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 	}
 
 	if (pBurnSoundOut) {
@@ -574,7 +574,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 
 	ZetClose();
 	SekClose();

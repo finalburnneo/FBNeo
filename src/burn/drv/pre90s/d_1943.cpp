@@ -1598,16 +1598,16 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 95) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == 96) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == 95) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == 96) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 
 		// Run Z80 #2
 		nCurrentCPU = 1;
 		ZetOpen(nCurrentCPU);
 		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
-		if (i == 20 || i == 40 || i == 60 || i == 80) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == 21 || i == 41 || i == 61 || i == 81) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == 20 || i == 40 || i == 60 || i == 80) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == 21 || i == 41 || i == 61 || i == 81) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 	}
 	

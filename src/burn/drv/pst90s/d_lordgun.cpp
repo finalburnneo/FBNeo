@@ -669,7 +669,7 @@ static UINT8 aliencha_dip_read()
 
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
-	ZetSetIRQLine(0, nStatus ? ZET_IRQSTATUS_ACK : ZET_IRQSTATUS_NONE);
+	ZetSetIRQLine(0, nStatus ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
@@ -1346,7 +1346,7 @@ static INT32 lordgunFrame()
 		nNext = (i + 1) * nTotalCycles[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == (nInterleave - 1)) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		
 		BurnTimerUpdateYM3812(i * (nTotalCycles[1] / nInterleave));
 	}
@@ -1394,7 +1394,7 @@ static INT32 alienchaFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == (nInterleave - 1)) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		
 		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
 	}

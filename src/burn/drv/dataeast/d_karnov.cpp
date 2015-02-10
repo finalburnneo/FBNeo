@@ -343,7 +343,7 @@ static void karnov_i8751_w(INT32 data)
 	if (data==0x401) i8751_return=0x4138; /* ^Whistling wind */
 	if (data==0x408) i8751_return=0x4276; /* ^Heavy Gates */
 	
-	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO); /* Signal main cpu task is complete */
+	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO); /* Signal main cpu task is complete */
 	i8751_needs_ack=1;
 }
 
@@ -394,7 +394,7 @@ static void wndrplnt_i8751_w(INT32 data)
 	if (data==0x501) i8751_return=0x6bf8;
 	if (data==0x500) i8751_return=0x4e75;
 
-	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 	i8751_needs_ack=1;
 }
 
@@ -508,7 +508,7 @@ static void chelnov_i8751_w(INT32 data)
 		}
 	}
 
-	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 	i8751_needs_ack=1;
 }
 
@@ -517,14 +517,14 @@ static void karnov_control_w(INT32 offset, INT32 data)
 	switch (offset<<1)
 	{
 		case 0:
-			SekSetIRQLine(6, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(6, CPU_IRQSTATUS_NONE);
 
 			if (i8751_needs_ack)
 			{
 				if (i8751_coin_pending)
 				{
 					i8751_return=i8751_coin_pending;
-					SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+					SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 					i8751_coin_pending=0;
 				}
 				else if (i8751_command_queue)
@@ -542,7 +542,7 @@ static void karnov_control_w(INT32 offset, INT32 data)
 
 		case 2:
 			*soundlatch = data;
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, M6502_IRQSTATUS_AUTO);			
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);			
 			break;
 
 		case 4:
@@ -572,7 +572,7 @@ static void karnov_control_w(INT32 offset, INT32 data)
 			break;
 
 		case 0xe:
-			SekSetIRQLine(7, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(7, CPU_IRQSTATUS_NONE);
 			break;
 	}
 }
@@ -679,9 +679,9 @@ UINT8 karnov_sound_read(UINT16 address)
 static void DrvYM3526FMIRQHandler(INT32, INT32 nStatus)
 {	
 	if (nStatus) {
-		M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_ACK);
+		M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_ACK);
 	} else {
-		M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_NONE);
+		M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -1105,14 +1105,14 @@ static void DrvInterrupt()
 		else
 		{
 			i8751_return = DrvInput[2] | 0x8000;
-			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			SekRun(100);
 			i8751_needs_ack=1;
 		}
 		latch=0;
 	}
 
-	SekSetIRQLine(7, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(7, CPU_IRQSTATUS_AUTO);
 }
 
 static INT32 DrvFrame()

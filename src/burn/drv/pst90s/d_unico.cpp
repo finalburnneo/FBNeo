@@ -1761,7 +1761,7 @@ static INT32 DrvFrame()
 	
 	SekOpen(0);
 	BurnTimerEndFrameYM3812(nCyclesTotal[0]);
-	SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 	BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);	
 	SekClose();
@@ -1794,7 +1794,7 @@ static INT32 Zeropnt2Frame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == 9) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i == 9) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		if (pBurnSoundOut) {

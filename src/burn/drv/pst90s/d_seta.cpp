@@ -4838,7 +4838,7 @@ UINT8 __fastcall utoukond_sound_read_port(UINT16 port)
 			return BurnYM3438Read(0, port & 3);// right?
 
 		case 0xc0:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -4858,7 +4858,7 @@ void __fastcall wiggie_sound_write_byte(UINT32 address, UINT8 data)
 	if (address != 0xb00008 && address != 0xc00000) return; // wiggie
 
 	*soundlatch = data;
-	ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+	ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 }
 
 void __fastcall wiggie_sound_write(UINT16 address, UINT8 data)
@@ -4879,7 +4879,7 @@ UINT8 __fastcall wiggie_sound_read(UINT16 address)
 			return MSM6295ReadStatus(0);
 
 		case 0xa000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -6367,9 +6367,9 @@ static void calibr5068kInit()
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
-		ZetSetIRQLine(0x20, ZET_IRQSTATUS_ACK);
+		ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
 	} else {
-		ZetSetIRQLine(0x20, ZET_IRQSTATUS_NONE);
+		ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);
 	}
 }
 
@@ -7249,7 +7249,7 @@ static void irq_generator(INT32 loop)
 	INT32 line = (irqtype >> (loop * 8)) & 0xff;
 	if (line & 0x80) return;
 
-	SekSetIRQLine(line, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(line, CPU_IRQSTATUS_AUTO);
 }
 
 static void sprite_buffer()
@@ -7362,8 +7362,8 @@ static void Drv68k_5IRQ_FrameCallback()
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 
-		if (i & 1 && i == 1) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
-		if (i & 1 && i != 1) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		if (i & 1 && i == 1) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i & 1 && i != 1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	}
 
 	SekClose();
@@ -7385,11 +7385,11 @@ static void Drv68k_KM_FrameCallback() // kamenrid & madshark
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 
-		if (i & 1 && i == 1) SekSetIRQLine(2, SEK_IRQSTATUS_AUTO);
+		if (i & 1 && i == 1) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 	}
 
 	if (flipflop==0) { // IRQ4 is fired every other frame
-		SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		flipflop=1;
 	} else {
 		flipflop=0;
@@ -7520,7 +7520,7 @@ static void CrzyfghtFrameCallback()
 
 		SekRun(nCyclesTotal[0] / nInterleave);
 
-		SekSetIRQLine(irq[i], SEK_IRQSTATUS_AUTO);
+		SekSetIRQLine(irq[i], CPU_IRQSTATUS_AUTO);
 	}
 
 	BurnTimerUpdateEndYM3812();
@@ -10432,7 +10432,7 @@ static void jockeycFrameCallback()
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 
-		SekSetIRQLine(irqs[9-i], SEK_IRQSTATUS_AUTO); // ?
+		SekSetIRQLine(irqs[9-i], CPU_IRQSTATUS_AUTO); // ?
 	}
 
 	SekClose();

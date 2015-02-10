@@ -852,11 +852,11 @@ INT32 pgmFrame()
 		}
 
 		if (i == ((PGM_INTER_LEAVE / 2)-1) && !nPGMDisableIRQ4) {
-			SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 	}
 
-	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 	ics2115_frame();
 

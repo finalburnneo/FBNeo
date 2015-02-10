@@ -21,10 +21,6 @@ struct HD6309Ext {
 	INT32 nCyclesLeft;
 };
 
-#define HD6309_IRQSTATUS_NONE	0
-#define HD6309_IRQSTATUS_ACK	1
-#define HD6309_IRQSTATUS_AUTO	2
-
 #define HD6309_READ	1
 #define HD6309_WRITE	2
 #define HD6309_FETCH	4

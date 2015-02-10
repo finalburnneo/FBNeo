@@ -14396,7 +14396,7 @@ void __fastcall FroggermcZ80Write(UINT16 a, UINT8 d)
 			if (!(d & 1)) {
 				ZetClose();
 				ZetOpen(1);
-				ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 				ZetClose();
 				ZetOpen(0);
 			}
@@ -15885,7 +15885,7 @@ void __fastcall ExplorerZ80Write(UINT16 a, UINT8 d)
 		case 0x9000: {
 			ZetClose();
 			ZetOpen(1);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(0);
 			return;
@@ -16318,7 +16318,7 @@ void __fastcall HotshockZ80Write(UINT16 a, UINT8 d)
 		case 0x9000: {
 			ZetClose();
 			ZetOpen(1);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(0);
 			return;
@@ -18225,7 +18225,7 @@ void __fastcall Ad2083Z80Write(UINT16 a, UINT8 d)
 		case 0x9000: {
 			ZetClose();
 			ZetOpen(1);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(0);
 			return;

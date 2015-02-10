@@ -433,13 +433,11 @@ static INT32 DrvFrame()
 
 	ZetOpen(0);
 	ZetRun(33333);
-//	ZetRaiseIrq(0xd7);
 	ZetSetVector(0xd7);
-	ZetRaiseIrq(0);
+	ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	ZetRun(33334);
-//	ZetRaiseIrq(0xcf);
 	ZetSetVector(0xcf);
-	ZetRaiseIrq(0);
+	ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	ZetClose();
 
 	if (pBurnSoundOut) {

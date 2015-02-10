@@ -1500,7 +1500,7 @@ void __fastcall MstworldZ80PortWrite(UINT16 a, UINT8 d)
 			DrvSoundLatch = d;
 			ZetClose();
 			ZetOpen(1);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(0);
 		}
@@ -1536,7 +1536,7 @@ UINT8 __fastcall MstworldSoundZ80Read(UINT16 a)
 		}
 		
 		case 0xa000: {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return DrvSoundLatch;
 		}
 		
@@ -2889,11 +2889,11 @@ static INT32 DrvFrame()
 		nCyclesSegment = nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 		if (i == 0 || i == 237) { // Needs to be ACK'd for one full scanline twice per frame. -dink
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			DrvInput5Toggle = (i == 237);
 		}
 		if (i == 1 || i == 238) {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
 		ZetClose();
 		
@@ -2945,9 +2945,9 @@ static INT32 MstworldFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 		if (i == 9) {
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			nCyclesDone[nCurrentCPU] += ZetRun(500);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
 		ZetClose();
 		

@@ -718,8 +718,8 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
-		if (i == 240 && irq_enable) M6809SetIRQLine(0, M6809_IRQSTATUS_AUTO);
-		if ((i % 0x1f) == 0 && nmi_enable) M6809SetIRQLine(0x20, M6809_IRQSTATUS_AUTO);
+		if (i == 240 && irq_enable) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if ((i % 0x1f) == 0 && nmi_enable) M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 
 		if (i == 240) vblank = 1; // ?
 

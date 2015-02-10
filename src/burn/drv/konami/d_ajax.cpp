@@ -178,12 +178,12 @@ void ajax_main_write(UINT16 address, UINT8 data)
 		{
 			case 0x0000:
 				if (address == 0 && firq_enable) {
-					M6809SetIRQLine(1, M6809_IRQSTATUS_AUTO);
+					M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO);
 				}
 			break;
 
 			case 0x0001:
-				ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			break;
 
 			case 0x0002:
@@ -354,7 +354,7 @@ UINT8 __fastcall ajax_sound_read(UINT16 address)
 			return BurnYM2151ReadStatus();
 
 		case 0xe000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -703,7 +703,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	if (K051960_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_IRQSTATUS_AUTO);
+	if (K051960_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

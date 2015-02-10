@@ -675,7 +675,7 @@ void __fastcall tnzsb_cpu1_write(UINT16 address, UINT8 data)
 			ZetClose();
 			ZetOpen(2);
 			ZetSetVector(0xff);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
 			ZetOpen(1);
 		break;
@@ -803,7 +803,7 @@ UINT8 __fastcall tnzs_cpu2_in(UINT16 port)
 			return BurnYM2203Read(0, 0);
 
 		case 0x02:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -1792,9 +1792,9 @@ static INT32 DrvFrame()
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 		if (i == irq_trigger[0]) {
 			tnzs_mcu_interrupt();
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
-		if (i == irq_trigger[1]) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == irq_trigger[1]) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 
 		// Run Z80 #1
@@ -1807,8 +1807,8 @@ static INT32 DrvFrame()
 		} else {
 			nCyclesDone[nCurrentCPU] += nCyclesSegment;
 		}
-		if (i == irq_trigger[0]) ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
-		if (i == irq_trigger[1]) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if (i == irq_trigger[0]) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == irq_trigger[1]) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 
 		// Run Z80 #2

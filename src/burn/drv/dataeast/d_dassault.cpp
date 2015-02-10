@@ -240,7 +240,7 @@ void __fastcall dassault_main_write_word(UINT32 address, UINT16 data)
 	{
 		case 0x180000:
 			deco16_soundlatch = data & 0xff;
-			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x1c000c:
@@ -261,7 +261,7 @@ void __fastcall dassault_main_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x180001:
 			deco16_soundlatch = data;
-			h6280SetIRQLine(0, H6280_IRQSTATUS_ACK);
+			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x1c000b:
@@ -397,11 +397,11 @@ void __fastcall dassault_sub_write_byte(UINT32 address, UINT8 )
 static void set_cpuA_irq(INT32 state)
 {
 	if (SekGetActive() == 0) { // main
-		SekSetIRQLine(5, state ? SEK_IRQSTATUS_ACK : SEK_IRQSTATUS_NONE);
+		SekSetIRQLine(5, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 	} else {
 		SekClose();
 		SekOpen(0);
-		SekSetIRQLine(5, state ? SEK_IRQSTATUS_ACK : SEK_IRQSTATUS_NONE);
+		SekSetIRQLine(5, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 		SekClose();
 		SekOpen(1);
 	}
@@ -410,11 +410,11 @@ static void set_cpuA_irq(INT32 state)
 static void set_cpuB_irq(INT32 state)
 {
 	if (SekGetActive() == 1) { // sub
-		SekSetIRQLine(6, state ? SEK_IRQSTATUS_ACK : SEK_IRQSTATUS_NONE);
+		SekSetIRQLine(6, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 	} else {
 		SekClose();
 		SekOpen(1);
-		SekSetIRQLine(6, state ? SEK_IRQSTATUS_ACK : SEK_IRQSTATUS_NONE);
+		SekSetIRQLine(6, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 		SekClose();
 		SekOpen(0);
 	}
@@ -885,12 +885,12 @@ static INT32 DrvFrame()
 	{
 		SekOpen(0);
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		if (i == (nInterleave - 1)) SekSetIRQLine(4, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		SekOpen(1);
 		nCyclesDone[1] += SekRun(nCyclesDone[0] - nCyclesDone[1]);
-		if (i == (nInterleave - 1)) SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		nCyclesDone[1] += h6280Run(nCyclesTotal[2] / nInterleave);

@@ -185,7 +185,7 @@ static void bladestl_main_write(UINT16 address, UINT8 data)
 	{
 		case 0x2e80:
 			soundlatch = data;
-			M6809SetIRQLine(0, M6809_IRQSTATUS_ACK);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 		case 0x2ec0:
@@ -280,7 +280,7 @@ static UINT8 bladestl_sound_read(UINT16 address)
 			return (UPD7759BusyRead(0) ? 1 : 0);
 
 		case 0x6000:
-			M6809SetIRQLine(0, M6809_IRQSTATUS_NONE);
+			M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch;
 	}
 
@@ -551,13 +551,13 @@ static INT32 DrvFrame()
 	HD6309Open(0);
 	M6809Open(0);
 
-	HD6309SetIRQLine(0x20, HD6309_IRQSTATUS_AUTO); // nmi
+	HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // nmi
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 
 		HD6309Run(nCyclesTotal[0] / nInterleave);
 
-		if (i == 240 && K007342_irq_enabled()) HD6309SetIRQLine(1, HD6309_IRQSTATUS_AUTO); // firq
+		if (i == 240 && K007342_irq_enabled()) HD6309SetIRQLine(1, CPU_IRQSTATUS_AUTO); // firq
 
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}

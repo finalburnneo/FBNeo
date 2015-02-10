@@ -102,7 +102,7 @@ void __fastcall diverboy_write_word(UINT32 address, UINT16 data)
 {
 	if (address == 0x100000) {
 		*soundlatch = data;
-		ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		return;
 	}
 }
@@ -417,7 +417,7 @@ static INT32 DrvFrame()
 		nCyclesDone[1] += ZetRun(nSegment);
 	}
 
-	SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);

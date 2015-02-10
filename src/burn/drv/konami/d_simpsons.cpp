@@ -215,7 +215,7 @@ UINT8 simpsons_main_read(UINT16 address)
 
 		case 0x1fc4: 
 			ZetSetVector(0xff);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			return 0;
 
 		case 0x1fc6:
@@ -302,7 +302,7 @@ UINT8 __fastcall simpsons_sound_read(UINT16 address)
 	}
 
 	if (address >= 0xfc00 && address < 0xfc30) {
-		if ((address & 0x3f) == 0x01) ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+		if ((address & 0x3f) == 0x01) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 
 		return K053260Read(0, address & 0xff);
 	}
@@ -628,7 +628,7 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += nCyclesSegment;
 
 		if (i == 1 && K053246Irq && simpsons_firq_enabled) {
-			konamiSetIrqLine(KONAMI_FIRQ_LINE, KONAMI_IRQSTATUS_AUTO);
+			konamiSetIrqLine(KONAMI_FIRQ_LINE, CPU_IRQSTATUS_AUTO);
 		}
 
 		K053246Irq = K053246_is_IRQ_enabled();
@@ -648,7 +648,7 @@ static INT32 DrvFrame()
 	}
 
 	if (K053246Irq) simpsons_objdma();
-	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, KONAMI_IRQSTATUS_AUTO);
+	if (K052109_irq_enabled) konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

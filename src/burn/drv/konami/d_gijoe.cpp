@@ -184,7 +184,7 @@ static void _fastcall gijoe_main_write_word(UINT32 address, UINT16 data)
 		break;
 
 		case 0x1d0000:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 }
@@ -233,7 +233,7 @@ static void _fastcall gijoe_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x1d0000:
 		case 0x1d0001:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 
 	}
@@ -346,7 +346,7 @@ static UINT8 __fastcall gijoe_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xfc02:
-			ZetSetIRQLine(0, ZET_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -697,7 +697,7 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += nCyclesSegment;
 
 		if (control_data & 0x20 && irq6_timer > 0) {
-			SekSetIRQLine(6, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		}
 		irq6_timer--;
 
@@ -725,7 +725,7 @@ static INT32 DrvFrame()
 		}
 
 		if (control_data & 0x80) {
-			SekSetIRQLine(5, SEK_IRQSTATUS_AUTO);
+			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		}
 	}
 

@@ -1060,20 +1060,20 @@ static INT32 DrvFrame()
 		if (i == 64*4 || i == 240*4) {
 			if (i ==  64*4) ZetSetVector(0xff);
 			if (i == 240*4) ZetSetVector(0xfd);
-			ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		nSegment = ZetTotalCycles();
 		ZetClose();
 
 		ZetOpen(1);
 		nCyclesDone[1] += ZetRun(nSegment - ZetTotalCycles());
-		if (i == 1023) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if (i == 1023) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		nSegment = ZetTotalCycles();
 		ZetClose();
 
 		ZetOpen(2);
 		BurnTimerUpdate(nSegment /*sync with sub cpu*/);
-		if (i == 1023) ZetSetIRQLine(0, ZET_IRQSTATUS_AUTO);
+		if (i == 1023) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 	}
 

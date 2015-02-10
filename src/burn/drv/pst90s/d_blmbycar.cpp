@@ -768,7 +768,7 @@ static INT32 DrvFrame()
 	SekNewFrame();
 	SekOpen(0);
 	SekRun(nCyclesTotal);
-	SekSetIRQLine(1, SEK_IRQSTATUS_AUTO);
+	SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 	SekClose();
 	
 	if (pBurnSoundOut) MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);

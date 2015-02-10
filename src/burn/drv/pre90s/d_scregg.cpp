@@ -168,7 +168,7 @@ void eggs_write(UINT16 address, UINT8 data)
 		break;
 
 		case 0x2001:
-			M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_NONE);
+			M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_NONE);
 		break;
 
 		case 0x2004:
@@ -214,7 +214,7 @@ static void dommy_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x4000:
-			M6502SetIRQLine(M6502_IRQ_LINE, M6502_IRQSTATUS_NONE);
+			M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_NONE);
 		break;
 
 		case 0x4001:
@@ -556,7 +556,7 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		nCyclesRun += M6502Run(nTotalCycles / nInterleave);
-		M6502SetIRQLine(M6502_IRQ_LINE, (i & 1) ? M6502_IRQSTATUS_ACK : M6502_IRQSTATUS_NONE);
+		M6502SetIRQLine(M6502_IRQ_LINE, (i & 1) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 
 		if (i == 28) vblank = 0x80;
 	}

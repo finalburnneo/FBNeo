@@ -861,9 +861,9 @@ static void NeoZ80MapROM(bool bMapBoardROM)
 static void MapVectorTable(bool bMapBoardROM)
 {
 	if (!bMapBoardROM && Neo68KROMActive) {
-		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x000000, 0x0003FF, SM_ROM);
+		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x000000, 0x0003FF, MAP_ROM);
 	} else {
-		SekMapMemory(NeoVectorActive, 0x000000, 0x0003FF, SM_ROM);
+		SekMapMemory(NeoVectorActive, 0x000000, 0x0003FF, MAP_ROM);
 	}
 }
 
@@ -871,7 +871,7 @@ inline static void MapPalette(INT32 nBank)
 {
 	if (nNeoPaletteBank != nBank) {
 		nNeoPaletteBank = nBank;
-		SekMapMemory(NeoPalSrc[nBank], 0x400000, 0x401FFF, SM_ROM);
+		SekMapMemory(NeoPalSrc[nBank], 0x400000, 0x401FFF, MAP_ROM);
 
 		NeoSetPalette();
 	}
@@ -887,20 +887,20 @@ static void Bankswitch(UINT32 nBank)
 	if (nBank != nNeo68KROMBank) {
 //		bprintf(PRINT_NORMAL, "Bankswitched main ROM, new address is 0x%08X.\n", nBank);
 		nNeo68KROMBank = nBank;
-		SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2FFFFF, SM_ROM);
+		SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2FFFFF, MAP_ROM);
 	}
 }
 
 void NeoMapBank()
 {
-	SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2FFFFF, SM_ROM);
+	SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2FFFFF, MAP_ROM);
 }
 
 void NeoMap68KFix()
 {
 	if ((nNeoSystemType & NEO_SYS_CART) && (nCodeSize[nNeoActiveSlot] > 0x100000)) {
 
-		SekMapMemory(Neo68KFix[nNeoActiveSlot] + 0x0400, 0x000400, 0x0FFFFF, SM_ROM);
+		SekMapMemory(Neo68KFix[nNeoActiveSlot] + 0x0400, 0x000400, 0x0FFFFF, MAP_ROM);
 
 		if (Neo68KROM[nNeoActiveSlot]) {
 			memcpy(NeoVector[nNeoActiveSlot] + 0x80, Neo68KFix[nNeoActiveSlot] + 0x80, 0x0380);
@@ -1090,8 +1090,8 @@ static void NeoMapActiveCartridge()
 
 		Neo68KROMActive = NULL;
 
-		SekMapHandler(0,	0x000000, 0x0FFFFF, SM_RAM);
-		SekMapHandler(0,	0x200000, 0x2FFFFF, SM_RAM);
+		SekMapHandler(0,	0x000000, 0x0FFFFF, MAP_RAM);
+		SekMapHandler(0,	0x200000, 0x2FFFFF, MAP_RAM);
 
 		b68KBoardROMBankedIn = true;
 		MapVectorTable(b68KBoardROMBankedIn);
@@ -1119,24 +1119,24 @@ static void NeoMapActiveCartridge()
 	SekSetReadByteHandler(7, NULL);
 	SekSetWriteByteHandler(7, NULL);
 
-	SekMapHandler(0,			  	0x000000, 0x0FFFFF, SM_WRITE);
+	SekMapHandler(0,			  	0x000000, 0x0FFFFF, MAP_WRITE);
 
 	if (nCodeSize[nNeoActiveSlot] <= 0x080000) {
-		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x000000, 0x07FFFF, SM_ROM);
-		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x080000, 0x0FFFFF, SM_ROM);
-		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x200000, 0x27FFFF, SM_ROM);
-		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x280000, 0x2FFFFF, SM_ROM);
+		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x000000, 0x07FFFF, MAP_ROM);
+		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x080000, 0x0FFFFF, MAP_ROM);
+		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x200000, 0x27FFFF, MAP_ROM);
+		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x280000, 0x2FFFFF, MAP_ROM);
 	}
 	
 	if (nCodeSize[nNeoActiveSlot] <= 0x100000) {
-		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x000000, 0x0FFFFF, SM_ROM);
-		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x200000, 0x2FFFFF, SM_ROM);
+		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x000000, 0x0FFFFF, MAP_ROM);
+		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x200000, 0x2FFFFF, MAP_ROM);
 	}
 	
 	if (nCodeSize[nNeoActiveSlot] > 0x100000) {
-		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x000000, 0x0FFFFF, SM_ROM);
+		SekMapMemory(Neo68KFix[nNeoActiveSlot], 0x000000, 0x0FFFFF, MAP_ROM);
 
-		SekMapHandler(4,			  0x200000, 0x2FFFFF, SM_WRITE);
+		SekMapHandler(4,			  0x200000, 0x2FFFFF, MAP_WRITE);
 
 		SekSetWriteWordHandler(4, neogeoWriteWordBankswitch);
 		SekSetWriteByteHandler(4, neogeoWriteByteBankswitch);
@@ -1159,14 +1159,14 @@ static void NeoMapActiveCartridge()
 	}
 	
 	if ((BurnDrvGetHardwareCode() & HARDWARE_SNK_CONTROLMASK) == HARDWARE_SNK_GAMBLING) {
-			SekMapMemory(NeoNVRAM2,	0x200000, 0x201FFF, SM_RAM);	// 68K RAM
+			SekMapMemory(NeoNVRAM2,	0x200000, 0x201FFF, MAP_RAM);	// 68K RAM
 			
-			SekMapHandler(6,	0x202000, 0x2FFFFF, SM_READ);
+			SekMapHandler(6,	0x202000, 0x2FFFFF, MAP_READ);
 			SekSetReadByteHandler(6,     neogeoReadByteGambling);
 			SekSetReadWordHandler(6,     neogeoReadWordGambling);
 			
 			if (!strcmp(BurnDrvGetTextA(DRV_NAME), "vliner") || !strcmp(BurnDrvGetTextA(DRV_NAME), "vlinero")) {
-				SekMapHandler(7,	0x320000, 0x320001, SM_READ);
+				SekMapHandler(7,	0x320000, 0x320001, MAP_READ);
 				SekSetReadByteHandler(7,     vliner_timing);
 			}
 		} 
@@ -1490,7 +1490,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 				} else {
 					if ((BurnDrvGetHardwareCode() & HARDWARE_SNK_CONTROLMASK) != HARDWARE_SNK_GAMBLING) {
 						SekOpen(0);
-						SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2FFFFF, SM_ROM);
+						SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2FFFFF, MAP_ROM);
 						SekClose();
 					}
 				}
@@ -3630,11 +3630,11 @@ static INT32 neogeoReset()
 
 		if (nNeoSystemType & NEO_SYS_MVS) {
 			for (INT32 a = 0xD00000; a < 0xE00000; a += 0x010000) {
-				SekMapMemory(NeoNVRAM, a, a + 0xFFFF, SM_RAM);			// 68K RAM
+				SekMapMemory(NeoNVRAM, a, a + 0xFFFF, MAP_RAM);			// 68K RAM
 			}
-			SekMapHandler(1,			0xD00000, 0xDFFFFF, SM_WRITE);	//
+			SekMapHandler(1,			0xD00000, 0xDFFFFF, MAP_WRITE);	//
 		} else {
-			SekMapHandler(0,			0xD00000, 0xDFFFFF, SM_RAM);	// AES/NeoCD don't have the SRAM
+			SekMapHandler(0,			0xD00000, 0xDFFFFF, MAP_RAM);	// AES/NeoCD don't have the SRAM
 		}
 
 		if (nNeoSystemType & NEO_SYS_CART) {
@@ -3643,18 +3643,18 @@ static INT32 neogeoReset()
 
  		if (nNeoSystemType & NEO_SYS_PCB) {
 			if (BurnDrvGetHardwareCode() & HARDWARE_SNK_KOF2K3) {
-				SekMapMemory(Neo68KBIOS, 0xC00000, 0xC7FFFF, SM_ROM);
-				SekMapMemory(Neo68KBIOS, 0xC80000, 0xCFFFFF, SM_ROM);
+				SekMapMemory(Neo68KBIOS, 0xC00000, 0xC7FFFF, MAP_ROM);
+				SekMapMemory(Neo68KBIOS, 0xC80000, 0xCFFFFF, MAP_ROM);
 			} else {
 				for (INT32 a = 0xC00000; a < 0xD00000; a += 0x020000) {
-					SekMapMemory(Neo68KBIOS + (NeoSystem & 0x03) * 0x020000, a, a + 0x01FFFF, SM_ROM);
+					SekMapMemory(Neo68KBIOS + (NeoSystem & 0x03) * 0x020000, a, a + 0x01FFFF, MAP_ROM);
 				}
 			}
 		}
 		
 		// Set by a switch on the PCB
 		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "svcpcb") || !strcmp(BurnDrvGetTextA(DRV_NAME), "svcpcba") || !strcmp(BurnDrvGetTextA(DRV_NAME), "svcpcbnd") || !strcmp(BurnDrvGetTextA(DRV_NAME), "ms5pcb") || !strcmp(BurnDrvGetTextA(DRV_NAME), "ms5pcbnd")) {
-			SekMapMemory(Neo68KBIOS + 0x20000 * (~NeoSystem & 1), 0xc00000, 0xc1ffff, SM_ROM);
+			SekMapMemory(Neo68KBIOS + 0x20000 * (~NeoSystem & 1), 0xc00000, 0xc1ffff, MAP_ROM);
 		}
 
 		MapVectorTable(true);
@@ -3764,20 +3764,20 @@ static INT32 NeoInitCommon()
 		if (nNeoSystemType & NEO_SYS_CART) {
 
 			for (INT32 a = 0x100000; a < 0x200000; a += 0x010000) {
-				SekMapMemory(Neo68KRAM, a, a + 0xFFFF, SM_RAM);				// 68K RAM
+				SekMapMemory(Neo68KRAM, a, a + 0xFFFF, MAP_RAM);				// 68K RAM
 			}
 
 			if (!(nNeoSystemType & NEO_SYS_PCB)) {
 //				for (INT32 a = 0xC00000; a < 0xD00000; a += 0x020000) {
-//					SekMapMemory(Neo68KBIOS, a, a + 0x01FFFF, SM_ROM);		// MVS/AES BIOS ROM
+//					SekMapMemory(Neo68KBIOS, a, a + 0x01FFFF, MAP_ROM);		// MVS/AES BIOS ROM
 //				}
-				SekMapMemory(Neo68KBIOS,	0xC00000, 0xC7FFFF, SM_ROM);	// BIOS ROM
+				SekMapMemory(Neo68KBIOS,	0xC00000, 0xC7FFFF, MAP_ROM);	// BIOS ROM
 			}
 
 		} else {
-			SekMapMemory(Neo68KFix[0],		0x000000, 0x1FFFFF, SM_RAM);	// Main 68K RAM
-			SekMapMemory(Neo68KBIOS,		0xC00000, 0xC7FFFF, SM_ROM);	// NeoCD BIOS ROM
-			SekMapMemory(Neo68KBIOS,		0xC80000, 0xCFFFFF, SM_ROM);	//
+			SekMapMemory(Neo68KFix[0],		0x000000, 0x1FFFFF, MAP_RAM);	// Main 68K RAM
+			SekMapMemory(Neo68KBIOS,		0xC00000, 0xC7FFFF, MAP_ROM);	// NeoCD BIOS ROM
+			SekMapMemory(Neo68KBIOS,		0xC80000, 0xCFFFFF, MAP_ROM);	//
 		}
 
 		SekSetReadWordHandler(0, neogeoReadWord);
@@ -3789,43 +3789,43 @@ static INT32 NeoInitCommon()
 		SekSetWriteByteHandler(1, neogeoWriteByteSRAM);
 
 		if (!(nNeoSystemType & NEO_SYS_PCB)) {
-			SekMapHandler(2,			0x800000, 0xBFFFFF, SM_ROM);		// Memory card
-			SekMapHandler(2,			0x800000, 0xBFFFFF, SM_WRITE);		//
+			SekMapHandler(2,			0x800000, 0xBFFFFF, MAP_ROM);		// Memory card
+			SekMapHandler(2,			0x800000, 0xBFFFFF, MAP_WRITE);		//
 
 			SekSetReadByteHandler(2, neogeoReadByteMemoryCard);
 			SekSetWriteByteHandler(2, neogeoWriteByteMemoryCard);
 		}
 
-		SekMapHandler(3,	0x400000, 0x7FFFFF, SM_WRITE);					// Palette
+		SekMapHandler(3,	0x400000, 0x7FFFFF, MAP_WRITE);					// Palette
 
 		SekSetWriteWordHandler(3, NeoPalWriteWord);
 		SekSetWriteByteHandler(3, NeoPalWriteByte);
 
 		// Set up mirrors
 		for (INT32 a = 0x420000; a < 0x800000; a += 0x2000) {
-			SekMapMemory(NeoPalSrc[0], a, a + 0x1FFF, SM_ROM);
+			SekMapMemory(NeoPalSrc[0], a, a + 0x1FFF, MAP_ROM);
 		}
 
-		SekMapHandler(5,	0x3C0000, 0x3DFFFF, SM_RAM);					// Read Video Controller
+		SekMapHandler(5,	0x3C0000, 0x3DFFFF, MAP_RAM);					// Read Video Controller
 		SekSetReadWordHandler(5, neogeoReadWordVideo);
 		SekSetReadByteHandler(5, neogeoReadByteVideo);
 		SekSetWriteWordHandler(5, neogeoWriteWordVideo);
 		SekSetWriteByteHandler(5, neogeoWriteByteVideo);
 
 		if (nNeoSystemType & NEO_SYS_CD) {
-			SekMapHandler(4,	0x000000, 0x0003FF, SM_WRITE);
+			SekMapHandler(4,	0x000000, 0x0003FF, MAP_WRITE);
 
 			SekSetWriteWordHandler(4, neogeoWriteWord68KProgram);
 			SekSetWriteByteHandler(4, neogeoWriteByte68KProgram);
 
-			SekMapHandler(6,	0xE00000, 0xEFFFFF, SM_RAM);
+			SekMapHandler(6,	0xE00000, 0xEFFFFF, MAP_RAM);
 
 			SekSetReadWordHandler(6, neogeoReadWordTransfer);
 			SekSetReadByteHandler(6, neogeoReadByteTransfer);			
 			SekSetWriteWordHandler(6, neogeoWriteWordTransfer);
 			SekSetWriteByteHandler(6, neogeoWriteByteTransfer);			
 
-			SekMapHandler(7,	0xF00000, 0xFFFFFF, SM_RAM);
+			SekMapHandler(7,	0xF00000, 0xFFFFFF, MAP_RAM);
 
 			SekSetReadWordHandler(7, neogeoReadWordCDROM);
 			SekSetReadByteHandler(7, neogeoReadByteCDROM);			

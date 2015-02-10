@@ -171,18 +171,18 @@ void install_protection_asic27a_kovsh()
 	pPgmResetCallback = reset_kovsh_asic27a;
 
 	SekOpen(0);
-	SekMapMemory(PGMARMShareRAM,	0x4f0000, 0x4f003f, SM_RAM);
+	SekMapMemory(PGMARMShareRAM,	0x4f0000, 0x4f003f, MAP_RAM);
 
-	SekMapHandler(4,		0x500000, 0x600005, SM_READ | SM_WRITE);
+	SekMapHandler(4,		0x500000, 0x600005, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4, 	kovsh_asic27a_read_word);
 	SekSetWriteWordHandler(4, 	kovsh_asic27a_write_word);
 	SekClose();
 
 	Arm7Init(0);
 	Arm7Open(0);
-	Arm7MapMemory(PGMARMROM,	0x00000000, 0x00003fff, ARM7_ROM);
-	Arm7MapMemory(PGMARMRAM0,	0x10000000, 0x100003ff, ARM7_RAM);
-	Arm7MapMemory(PGMARMRAM2,	0x50000000, 0x500003ff, ARM7_RAM);
+	Arm7MapMemory(PGMARMROM,	0x00000000, 0x00003fff, MAP_ROM);
+	Arm7MapMemory(PGMARMRAM0,	0x10000000, 0x100003ff, MAP_RAM);
+	Arm7MapMemory(PGMARMRAM2,	0x50000000, 0x500003ff, MAP_RAM);
 	Arm7SetWriteWordHandler(kovsh_asic27a_arm7_write_word);
 	Arm7SetWriteLongHandler(kovsh_asic27a_arm7_write_long);
 	Arm7SetReadLongHandler(kovsh_asic27a_arm7_read_long);
@@ -255,18 +255,18 @@ void install_protection_asic27a_kovshp()
 	pPgmScanCallback = kovsh_asic27aScan;
 
 	SekOpen(0);
-	SekMapMemory(PGMARMShareRAM,	0x4f0000, 0x4f003f, SM_RAM);
+	SekMapMemory(PGMARMShareRAM,	0x4f0000, 0x4f003f, MAP_RAM);
 
-	SekMapHandler(4,		0x500000, 0x600005, SM_READ | SM_WRITE);
+	SekMapHandler(4,		0x500000, 0x600005, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4, 	kovsh_asic27a_read_word);
 	SekSetWriteWordHandler(4, 	kovshp_asic27a_write_word);
 	SekClose();
 
 	Arm7Init(0);
 	Arm7Open(0);
-	Arm7MapMemory(PGMARMROM,	0x00000000, 0x00003fff, ARM7_ROM);
-	Arm7MapMemory(PGMARMRAM0,	0x10000000, 0x100003ff, ARM7_RAM);
-	Arm7MapMemory(PGMARMRAM2,	0x50000000, 0x500003ff, ARM7_RAM);
+	Arm7MapMemory(PGMARMROM,	0x00000000, 0x00003fff, MAP_ROM);
+	Arm7MapMemory(PGMARMRAM0,	0x10000000, 0x100003ff, MAP_RAM);
+	Arm7MapMemory(PGMARMRAM2,	0x50000000, 0x500003ff, MAP_RAM);
 	Arm7SetWriteWordHandler(kovsh_asic27a_arm7_write_word);
 	Arm7SetWriteLongHandler(kovsh_asic27a_arm7_write_long);
 	Arm7SetReadLongHandler(kovsh_asic27a_arm7_read_long);
@@ -427,7 +427,7 @@ void install_protection_asic27a_ketsui()
 	asic27a_sim_command = ddp3_asic27a_sim_command;
 
 	SekOpen(0);
-	SekMapHandler(4,		0x400000, 0x400005, SM_READ | SM_WRITE);
+	SekMapHandler(4,		0x400000, 0x400005, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4, 	asic27a_sim_read);
 	SekSetWriteWordHandler(4, 	asic27a_sim_write);
 	SekClose();
@@ -440,7 +440,7 @@ void install_protection_asic27a_ddp3()
 	asic27a_sim_command = ddp3_asic27a_sim_command;
 
 	SekOpen(0);
-	SekMapHandler(4,		0x500000, 0x500005, SM_READ | SM_WRITE);
+	SekMapHandler(4,		0x500000, 0x500005, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4, 	asic27a_sim_read);
 	SekSetWriteWordHandler(4, 	asic27a_sim_write);
 	SekClose();
@@ -675,9 +675,9 @@ void install_protection_asic27a_oldsplus()
 	asic27a_sim_command = oldsplus_asic27a_sim_command;
 
 	SekOpen(0);
-	SekMapMemory(PGMUSER0,		0x4f0000, 0x4f003f | 0x3ff, SM_READ); // ram
+	SekMapMemory(PGMUSER0,		0x4f0000, 0x4f003f | 0x3ff, MAP_READ); // ram
 
-	SekMapHandler(4,		0x500000, 0x500003, SM_READ | SM_WRITE);
+	SekMapHandler(4,		0x500000, 0x500003, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4, 	asic27a_sim_read);
 	SekSetWriteWordHandler(4, 	asic27a_sim_write);
 	SekClose();
@@ -825,9 +825,9 @@ void install_protection_asic27_kov()
 	asic27a_sim_command = kov_asic27a_sim_command;
 
 	SekOpen(0);
-	SekMapMemory(PGMUSER0,		0x4f0000, 0x4f003f | 0x3ff, SM_READ);
+	SekMapMemory(PGMUSER0,		0x4f0000, 0x4f003f | 0x3ff, MAP_READ);
 
-	SekMapHandler(4,		0x500000, 0x500003, SM_READ | SM_WRITE);
+	SekMapHandler(4,		0x500000, 0x500003, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4, 	asic27a_sim_read);
 	SekSetWriteWordHandler(4, 	asic27a_sim_write);
 	SekClose();
@@ -1155,9 +1155,9 @@ void install_protection_asic27a_puzzli2()
 	asic27a_sim_command = puzzli2_asic27a_sim_command;
 
 	SekOpen(0);
-	SekMapMemory(PGMUSER0,		0x4f0000, 0x4f003f | 0x3ff, SM_READ);
+	SekMapMemory(PGMUSER0,		0x4f0000, 0x4f003f | 0x3ff, MAP_READ);
 
-	SekMapHandler(4,		0x500000, 0x500003, SM_READ | SM_WRITE);
+	SekMapHandler(4,		0x500000, 0x500003, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4, 	asic27a_sim_read);
 	SekSetWriteWordHandler(4, 	asic27a_sim_write);
 	SekClose();
@@ -1240,9 +1240,9 @@ void install_protection_asic27a_py2k2()
 	asic27a_sim_command = py2k2_asic27a_sim_command;
 
 	SekOpen(0);
-	SekMapMemory(PGMUSER0,		0x4f0000, 0x4f003f | 0x3ff, SM_READ);
+	SekMapMemory(PGMUSER0,		0x4f0000, 0x4f003f | 0x3ff, MAP_READ);
 
-	SekMapHandler(4,		0x500000, 0x500003, SM_READ | SM_WRITE);
+	SekMapHandler(4,		0x500000, 0x500003, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4, 	asic27a_sim_read);
 	SekSetWriteWordHandler(4, 	asic27a_sim_write);
 	SekClose();
@@ -1439,11 +1439,11 @@ void install_protection_asic27a_puzlstar()
 	asic27a_sim_command = puzlstar_asic27a_sim_command;
 
 	SekOpen(0);
-	SekMapHandler(4,		0x500000, 0x500003, SM_READ | SM_WRITE);
+	SekMapHandler(4,		0x500000, 0x500003, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4, 	asic27a_sim_read);
 	SekSetWriteWordHandler(4, 	asic27a_sim_write);
 
-	SekMapHandler(5,		0x4f0000, 0x4f03ff, SM_READ);
+	SekMapHandler(5,		0x4f0000, 0x4f03ff, MAP_READ);
 	SekSetReadWordHandler(5, 	puzlstar_protram_read_word);
 	SekSetReadByteHandler(5, 	puzlstar_protram_read_byte);
 	SekClose();

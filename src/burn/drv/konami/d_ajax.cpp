@@ -167,7 +167,7 @@ static void ajax_main_bankswitch(INT32 data)
 
 	ajax_priority = data & 0x08;
 
-	konamiMapMemory(DrvKonROM + nBank, 0x6000, 0x7fff, KON_ROM);
+	konamiMapMemory(DrvKonROM + nBank, 0x6000, 0x7fff, MAP_ROM);
 }
 
 void ajax_main_write(UINT16 address, UINT8 data)
@@ -261,7 +261,7 @@ static void ajax_sub_bankswitch(UINT8 data)
 	firq_enable = data & 0x10;
 
 	INT32 nBank = ((data & 0x0f) << 13) + 0x10000;
-	M6809MapMemory(DrvM6809ROM + nBank, 0x8000, 0x9fff, M6809_ROM); 
+	M6809MapMemory(DrvM6809ROM + nBank, 0x8000, 0x9fff, MAP_ROM); 
 }
 
 void ajax_sub_write(UINT16 address, UINT8 data)
@@ -547,20 +547,20 @@ static INT32 DrvInit(INT32 type)
 
 	konamiInit(0);
 	konamiOpen(0);
-	konamiMapMemory(DrvPalRAM,		0x1000, 0x1fff, KON_RAM);
-	konamiMapMemory(DrvShareRAM,		0x2000, 0x3fff, KON_RAM);
-	konamiMapMemory(DrvKonRAM,		0x4000, 0x5fff, KON_RAM);
-	konamiMapMemory(DrvKonROM + 0x10000, 	0x6000, 0x7fff, KON_ROM);
-	konamiMapMemory(DrvKonROM + 0x08000,	0x8000, 0xffff, KON_ROM);
+	konamiMapMemory(DrvPalRAM,		0x1000, 0x1fff, MAP_RAM);
+	konamiMapMemory(DrvShareRAM,		0x2000, 0x3fff, MAP_RAM);
+	konamiMapMemory(DrvKonRAM,		0x4000, 0x5fff, MAP_RAM);
+	konamiMapMemory(DrvKonROM + 0x10000, 	0x6000, 0x7fff, MAP_ROM);
+	konamiMapMemory(DrvKonROM + 0x08000,	0x8000, 0xffff, MAP_ROM);
 	konamiSetWriteHandler(ajax_main_write);
 	konamiSetReadHandler(ajax_main_read);
 	konamiClose();
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvShareRAM,		0x2000, 0x3fff, M6809_RAM);
-	M6809MapMemory(DrvM6809ROM  + 0x10000,	0x8000, 0x9fff, M6809_ROM);
-	M6809MapMemory(DrvM6809ROM  + 0x0a000,	0xa000, 0xffff, M6809_ROM);
+	M6809MapMemory(DrvShareRAM,		0x2000, 0x3fff, MAP_RAM);
+	M6809MapMemory(DrvM6809ROM  + 0x10000,	0x8000, 0x9fff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM  + 0x0a000,	0xa000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(ajax_sub_write);
 	M6809SetReadHandler(ajax_sub_read);
 	M6809Close();

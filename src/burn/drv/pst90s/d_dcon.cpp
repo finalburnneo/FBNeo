@@ -352,14 +352,14 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(Drv68KRAM,		0x080000, 0x08bfff, SM_RAM);
-	SekMapMemory(DrvBgRAM,		0x08c000, 0x08c7ff, SM_RAM);
-	SekMapMemory(DrvFgRAM,		0x08c800, 0x08cfff, SM_RAM);
-	SekMapMemory(DrvMgRAM,		0x08d000, 0x08d7ff, SM_RAM);
-	SekMapMemory(DrvTxRAM,		0x08d800, 0x08e7ff, SM_RAM);
-	SekMapMemory(DrvPalRAM,		0x08e800, 0x08f7ff, SM_RAM);
-	SekMapMemory(DrvSprRAM,		0x08f800, 0x08ffff, SM_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(Drv68KRAM,		0x080000, 0x08bfff, MAP_RAM);
+	SekMapMemory(DrvBgRAM,		0x08c000, 0x08c7ff, MAP_RAM);
+	SekMapMemory(DrvFgRAM,		0x08c800, 0x08cfff, MAP_RAM);
+	SekMapMemory(DrvMgRAM,		0x08d000, 0x08d7ff, MAP_RAM);
+	SekMapMemory(DrvTxRAM,		0x08d800, 0x08e7ff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,		0x08e800, 0x08f7ff, MAP_RAM);
+	SekMapMemory(DrvSprRAM,		0x08f800, 0x08ffff, MAP_RAM);
 	SekSetWriteWordHandler(0,	dcon_main_write_word);
 	SekSetReadWordHandler(0,	dcon_main_read_word);
 	SekClose();

@@ -1237,15 +1237,15 @@ void SharrierMap68K()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(System16Rom             , 0x000000, 0x03ffff, SM_READ);
-	SekMapMemory(System16Code            , 0x000000, 0x03ffff, SM_FETCH);
-	SekMapMemory(System16Ram             , 0x040000, 0x043fff, SM_RAM);
-	SekMapMemory(System16TileRam         , 0x100000, 0x107fff, SM_READ);
-	SekMapMemory(System16TextRam         , 0x108000, 0x108fff, SM_RAM);
-	SekMapMemory(System16PaletteRam      , 0x110000, 0x110fff, SM_RAM);
-	SekMapMemory(System16ExtraRam        , 0x124000, 0x127fff, SM_RAM);
-	SekMapMemory(System16SpriteRam       , 0x130000, 0x130fff, SM_RAM);
-	SekMapMemory(System16RoadRam         , 0xc68000, 0xc68fff, SM_RAM);
+	SekMapMemory(System16Rom             , 0x000000, 0x03ffff, MAP_READ);
+	SekMapMemory(System16Code            , 0x000000, 0x03ffff, MAP_FETCH);
+	SekMapMemory(System16Ram             , 0x040000, 0x043fff, MAP_RAM);
+	SekMapMemory(System16TileRam         , 0x100000, 0x107fff, MAP_READ);
+	SekMapMemory(System16TextRam         , 0x108000, 0x108fff, MAP_RAM);
+	SekMapMemory(System16PaletteRam      , 0x110000, 0x110fff, MAP_RAM);
+	SekMapMemory(System16ExtraRam        , 0x124000, 0x127fff, MAP_RAM);
+	SekMapMemory(System16SpriteRam       , 0x130000, 0x130fff, MAP_RAM);
+	SekMapMemory(System16RoadRam         , 0xc68000, 0xc68fff, MAP_RAM);
 
 	SekSetReadWordHandler(0, SharrierReadWord);
 	SekSetReadByteHandler(0, SharrierReadByte);

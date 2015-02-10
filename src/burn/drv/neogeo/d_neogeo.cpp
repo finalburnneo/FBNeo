@@ -1201,11 +1201,11 @@ static pSekWriteWordHandler pSMABankswitchHandler[MAX_SLOT] = { NULL, };
 // Bank in an area of memory
 void NeoSMABankswitch()
 {
-	SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2FE3FF, SM_ROM);
+	SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2FE3FF, MAP_ROM);
 	if (nNeoSMARNGAddress[0] > 0 || nNeoSMARNGAddress[1] > 0) {
-		SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFBFF, SM_ROM);
+		SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFBFF, MAP_ROM);
 	} else {
-		SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFFFF, SM_ROM);
+		SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFFFF, MAP_ROM);
 	}
 }
 
@@ -1299,17 +1299,17 @@ static void NeoSMAInstallHanders()
 {
 //	bprintf(PRINT_NORMAL, _T("    Installing handlers for slot %i\n"), nNeoActiveSlot);
 
-	SekMapHandler(8,		0x2FFC00, 0x2FFFFF, SM_WRITE);	// Bankswitch
+	SekMapHandler(8,		0x2FFC00, 0x2FFFFF, MAP_WRITE);	// Bankswitch
 
 	SekSetWriteWordHandler(8, pSMABankswitchHandler[nNeoActiveSlot]);
 
-	SekMapHandler(6,		0x2FE400, 0x2FE7FF, SM_ROM);	// Protection
+	SekMapHandler(6,		0x2FE400, 0x2FE7FF, MAP_ROM);	// Protection
 
 	SekSetReadWordHandler(6, neogeoReadWordSMA9A37);
 	SekSetReadByteHandler(6, neogeoReadByteSMA9A37);
 
 	if (nNeoSMARNGAddress[nNeoActiveSlot][0] > 0 || nNeoSMARNGAddress[nNeoActiveSlot][1] > 0) {
-		SekMapHandler(7,	0x2FFC00, 0x2FFFFF, SM_ROM);	// Randum number generator
+		SekMapHandler(7,	0x2FFC00, 0x2FFFFF, MAP_ROM);	// Randum number generator
 
 		SekSetReadWordHandler(7, neogeoReadWordSMARNG);
 		SekSetReadByteHandler(7, neogeoReadByteSMARNG);
@@ -1450,7 +1450,7 @@ void NeoPVCBankswitch()
 	if (nNeo68KROMBank != nBank)
 	{
 		nNeo68KROMBank = nBank;
-		SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2fdfff, SM_ROM);
+		SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2fdfff, MAP_ROM);
 	}
 
 	PVCRAM[0x1ff0]  = 0xa0;
@@ -1476,7 +1476,7 @@ void __fastcall PVCWriteWordBankSwitch(UINT32 sekAddress, UINT16 wordValue)
 
 static void NeoPVCMapBank()
 {
-	SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2fdfff, SM_ROM);
+	SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2fdfff, MAP_ROM);
 }
 
 static INT32 NeoPVCScan(INT32 nAction, INT32*)
@@ -1497,9 +1497,9 @@ static INT32 NeoPVCScan(INT32 nAction, INT32*)
 static void NeoPVCInstallHandlers()
 {
 	// Install cart PVC protections
-	SekMapMemory(PVCRAM, 0x2fe000,  0x2fffff,  SM_READ);
+	SekMapMemory(PVCRAM, 0x2fe000,  0x2fffff,  MAP_READ);
 
-	SekMapHandler(6,      0x2fe000,  0x2fffff, SM_WRITE);
+	SekMapHandler(6,      0x2fe000,  0x2fffff, MAP_WRITE);
 	SekSetWriteWordHandler(6,    PVCWriteWordBankSwitch);
 	SekSetWriteByteHandler(6,    PVCWriteByteBankSwitch);
 }
@@ -3471,8 +3471,8 @@ INT32 fatfury2Scan(INT32 nAction, INT32* /*pnMin*/)
 static void fatfury2InstallHanders()
 {
 	// Install protection handler
-	SekMapHandler(6,	0x200000, 0x2FFFFF, SM_WRITE);
-	SekMapHandler(6,	0x200000, 0x2FFFFF, SM_READ);
+	SekMapHandler(6,	0x200000, 0x2FFFFF, MAP_WRITE);
+	SekMapHandler(6,	0x200000, 0x2FFFFF, MAP_READ);
 	SekSetWriteWordHandler(6, fatfury2WriteWordProtection);
 	SekSetWriteByteHandler(6, fatfury2WriteByteProtection);
 	SekSetReadWordHandler(6, fatfury2ReadWordProtection);
@@ -4934,7 +4934,7 @@ static void kogCallback()
 static void kogInstallHandlers()
 {
 	// Install jumper that controls title screen language
-	SekMapHandler(6, 0x0FFFFE, 0x0FFFFF, SM_READ);
+	SekMapHandler(6, 0x0FFFFE, 0x0FFFFF, MAP_READ);
 	SekSetReadWordHandler(6, KogReadWord);
 }
 
@@ -5401,7 +5401,7 @@ void __fastcall kof98WriteWordProtection(UINT32 sekAddress, UINT16 wordValue)
 
 static void kof98InstallHandler()
 {
-	SekMapHandler(6,	0x200000, 0x2FFBFF, SM_WRITE);
+	SekMapHandler(6,	0x200000, 0x2FFBFF, MAP_WRITE);
 	SekSetWriteWordHandler(6, kof98WriteWordProtection);
 	SekSetWriteByteHandler(6, kof98WriteByteProtection);
 
@@ -5724,7 +5724,7 @@ static UINT16 __fastcall mslugx_protection_read()
 
 static void mslugxMapBank()
 {
-	SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2ffbff, SM_ROM);
+	SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2ffbff, MAP_ROM);
 }
 
 static void mslugxBankswitch(UINT32 nBank)
@@ -5771,7 +5771,7 @@ static void __fastcall mslugx_write_protection_byte(UINT32 SekAddress, UINT8 byt
 
 static void mslugxInstallBankSwitchHandler()
 {
-	SekMapHandler(6,	0x2ffc00, 0x2fffff, SM_WRITE | SM_READ | SM_FETCH);
+	SekMapHandler(6,	0x2ffc00, 0x2fffff, MAP_WRITE | MAP_READ | MAP_FETCH);
 	SekSetReadWordHandler(6, mslugx_read_protection_word);
 	SekSetReadByteHandler(6, mslugx_read_protection_byte);
 	SekSetWriteWordHandler(6, mslugx_write_protection_word);
@@ -5883,8 +5883,8 @@ void __fastcall kof99WriteWordBankswitch(UINT32 sekAddress, UINT16 wordValue)
 
 		if (bankoffset[nBank] != nNeo68KROMBank) {
 			nNeo68KROMBank = bankoffset[nBank];
-			SekMapMemory(Neo68KROMActive + nNeo68KROMBank,			  0x200000, 0x2FE3FF, SM_ROM);
-			SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFBFF, SM_ROM);
+			SekMapMemory(Neo68KROMActive + nNeo68KROMBank,			  0x200000, 0x2FE3FF, MAP_ROM);
+			SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFBFF, MAP_ROM);
 		}
 	}
 }
@@ -6144,8 +6144,8 @@ void __fastcall garouWriteWordBankswitch(UINT32 sekAddress, UINT16 wordValue)
 
 		if (bankoffset[nBank] != nNeo68KROMBank) {
 			nNeo68KROMBank = bankoffset[nBank];
-			SekMapMemory(Neo68KROMActive + nNeo68KROMBank,			  0x200000, 0x2FE3FF, SM_ROM);
-			SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFBFF, SM_ROM);
+			SekMapMemory(Neo68KROMActive + nNeo68KROMBank,			  0x200000, 0x2FE3FF, MAP_ROM);
+			SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFBFF, MAP_ROM);
 		}
 	}
 }
@@ -6246,8 +6246,8 @@ void __fastcall garouhWriteWordBankswitch(UINT32 sekAddress, UINT16 wordValue)
 
 		if (bankoffset[nBank] != nNeo68KROMBank) {
 			nNeo68KROMBank = bankoffset[nBank];
-			SekMapMemory(Neo68KROMActive + nNeo68KROMBank,			  0x200000, 0x2FE3FF, SM_ROM);
-			SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFBFF, SM_ROM);
+			SekMapMemory(Neo68KROMActive + nNeo68KROMBank,			  0x200000, 0x2FE3FF, MAP_ROM);
+			SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFBFF, MAP_ROM);
 		}
 	}
 }
@@ -6442,8 +6442,8 @@ void __fastcall mslug3WriteWordBankswitch(UINT32 sekAddress, UINT16 wordValue)
 
 		if (bankoffset[nBank] != nNeo68KROMBank) {
 			nNeo68KROMBank = bankoffset[nBank];
-			SekMapMemory(Neo68KROMActive + nNeo68KROMBank,			  0x200000, 0x2FE3FF, SM_ROM);
-			SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFFFF, SM_ROM);
+			SekMapMemory(Neo68KROMActive + nNeo68KROMBank,			  0x200000, 0x2FE3FF, MAP_ROM);
+			SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFFFF, MAP_ROM);
 		}
 	}
 }
@@ -6634,8 +6634,8 @@ void __fastcall kof2000WriteWordBankswitch(UINT32 sekAddress, UINT16 wordValue)
 
 		if (bankoffset[nBank] != nNeo68KROMBank) {
 			nNeo68KROMBank = bankoffset[nBank];
-			SekMapMemory(Neo68KROMActive + nNeo68KROMBank,			  0x200000, 0x2FE3FF, SM_ROM);
-			SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFBFF, SM_ROM);
+			SekMapMemory(Neo68KROMActive + nNeo68KROMBank,			  0x200000, 0x2FE3FF, MAP_ROM);
+			SekMapMemory(Neo68KROMActive + nNeo68KROMBank + 0x0FE800, 0x2FE800, 0x2FFBFF, MAP_ROM);
 		}
 	}
 }
@@ -6893,7 +6893,7 @@ static void cthd2003Bankswitch(UINT32 nBank)
 
 	if (nBank != nNeo68KROMBank) {
 		nNeo68KROMBank = nBank;
-		SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2fffff, SM_ROM);
+		SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2fffff, MAP_ROM);
 	}
 }
 
@@ -6966,7 +6966,7 @@ static void cthd2003Callback()
 
 static void cthd2003InstallBankSwitchHandler()
 {
-	SekMapHandler(6,	0x200000, 0x2fffff, SM_WRITE);
+	SekMapHandler(6,	0x200000, 0x2fffff, MAP_WRITE);
 	SekSetWriteWordHandler(6, cthd2003WriteWordBankswitch);
 	SekSetWriteByteHandler(6, cthd2003WriteByteBankswitch);
 	
@@ -7044,7 +7044,7 @@ static void ct2k3spCallback()
 
 static void ct2kspInstallBankSwitchHandler()
 {
-	SekMapHandler(6,	0x200000, 0x2fffff, SM_WRITE);
+	SekMapHandler(6,	0x200000, 0x2fffff, MAP_WRITE);
 	SekSetWriteWordHandler(6, cthd2003WriteWordBankswitch);
 	SekSetWriteByteHandler(6, cthd2003WriteByteBankswitch);
 
@@ -7504,7 +7504,7 @@ static void kof10thBankswitch(UINT32 nBank)
 
 	if (nBank != nNeo68KROMBank) {
 		nNeo68KROMBank = nBank;
-		SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2fdfff, SM_ROM);
+		SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2fdfff, MAP_ROM);
 	}
 }
 
@@ -7533,7 +7533,7 @@ void __fastcall kof10thWriteWordBankswitch(UINT32 sekAddress, UINT16 wordValue)
 	if (sekAddress == 0x2ffff0)
 		kof10thBankswitch(wordValue);
 	else if (sekAddress == 0x2ffff8 && *(UINT16*)(kof10thExtraRAMB + 0x1ff8) != BURN_ENDIAN_SWAP_INT16(wordValue))
-		SekMapMemory(Neo68KROMActive + ((wordValue & 1) ? 0x710000 : 0x010000) , 0x010000, 0x0dffff, SM_ROM);
+		SekMapMemory(Neo68KROMActive + ((wordValue & 1) ? 0x710000 : 0x010000) , 0x010000, 0x0dffff, MAP_ROM);
 
 	*(UINT16*)(kof10thExtraRAMB + (sekAddress & 0x01ffe)) = wordValue;
 }
@@ -7570,7 +7570,7 @@ static void kof10thCallback()
 
 static void kof10thMapBank()
 {
-	SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2fdfff, SM_ROM);
+	SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2fdfff, MAP_ROM);
 }
 
 static INT32 kof10thScan(INT32 nAction, INT32* pnMin)
@@ -7600,15 +7600,15 @@ static INT32 kof10thScan(INT32 nAction, INT32* pnMin)
 static void kof10thInstallHandlers()
 {
 	// Install RAM handlers
-	SekMapMemory(kof10thExtraRAMA, 0x0e0000, 0x0fffff, SM_ROM); // Text RAM on range 0x0e0000 - 0x0fffff
-	SekMapMemory(kof10thExtraRAMB, 0x2fe000, 0x2fffff, SM_ROM); // Extra 68K RAM
+	SekMapMemory(kof10thExtraRAMA, 0x0e0000, 0x0fffff, MAP_ROM); // Text RAM on range 0x0e0000 - 0x0fffff
+	SekMapMemory(kof10thExtraRAMB, 0x2fe000, 0x2fffff, MAP_ROM); // Extra 68K RAM
 
 	// Install bankswitch and text handlers
-	SekMapHandler(6,	0x2fe000, 0x2fffff, SM_WRITE);
+	SekMapHandler(6,	0x2fe000, 0x2fffff, MAP_WRITE);
 	SekSetWriteWordHandler(6, kof10thWriteWordBankswitch);
 	SekSetWriteByteHandler(6, kof10thWriteByteBankswitch);
 
-	SekMapHandler(7,	0x200000, 0x23ffff, SM_WRITE);
+	SekMapHandler(7,	0x200000, 0x23ffff, MAP_WRITE);
 	SekSetWriteWordHandler(7,     kof10thWriteWordCustom);
 
 	// Set bank
@@ -8060,14 +8060,14 @@ void __fastcall ms5plusWriteWordBankSwitch(UINT32 sekAddress, UINT16 wordValue)
 		if (nNeo68KROMBank != nBank)
 		{
 			nNeo68KROMBank = nBank;
-			SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2fdfff, SM_ROM);
+			SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2fdfff, MAP_ROM);
 		}
 	};
 }
 
 static void ms5plusInstallHandlers()
 {
-	SekMapHandler(6,	0x2fe000, 0x2fffff, SM_WRITE);
+	SekMapHandler(6,	0x2fe000, 0x2fffff, MAP_WRITE);
 	SekSetWriteWordHandler(6, ms5plusWriteWordBankSwitch);
 }
 
@@ -9149,7 +9149,7 @@ static void kf2k3blInstallHandlers()
 {
 	NeoPVCInstallHandlers();
 	
-	SekMapHandler(7,    0x058196,    0x058197,  SM_READ);
+	SekMapHandler(7,    0x058196,    0x058197,  MAP_READ);
 	SekSetReadByteHandler(7,  kf2k3blReadByteProtection);
 }
 
@@ -9247,7 +9247,7 @@ void __fastcall kf2k3blaWriteWordBankswitch(UINT32 sekAddress, UINT16 wordValue)
 		if (nBank != nNeo68KROMBank)
 		{
 			nNeo68KROMBank = nBank;
-			SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2fdfff, SM_ROM);
+			SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2fdfff, MAP_ROM);
 		}
 	}
 }
@@ -9256,7 +9256,7 @@ static void kf2k3blaInstallHandlers()
 {
 	NeoPVCInstallHandlers();
 	
-	SekMapHandler(7,         0x2ffff0, 0x2fffff, SM_WRITE);
+	SekMapHandler(7,         0x2ffff0, 0x2fffff, MAP_WRITE);
 	SekSetWriteWordHandler(7, kf2k3blaWriteWordBankswitch);
 }
 

@@ -377,7 +377,7 @@ static void bankswitch(INT32 bank)
 {
 	nDrvZ80Bank = bank & 7;
 
-	ZetMapMemory(DrvZ80ROM + ((bank & 0x07) * 0x4000), 0x8000, 0xbfff, ZET_ROM);
+	ZetMapMemory(DrvZ80ROM + ((bank & 0x07) * 0x4000), 0x8000, 0xbfff, MAP_ROM);
 }
 
 static void __fastcall sandscrp_sound_write_port(UINT16 port, UINT8 data)
@@ -610,30 +610,30 @@ static INT32 DrvInit(INT32 type)
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(DrvVidRegs,	0x300000, 0x30000f|0x3ff, SM_RAM);
-	SekMapMemory(DrvVideoRAM,	0x400000, 0x403fff, SM_RAM);
-	SekMapMemory(DrvSprRAM,		0x500000, 0x501fff, SM_ROM);
-	SekMapMemory(DrvPalRAM,		0x600000, 0x600fff, SM_ROM);
-	SekMapMemory(Drv68KRAM,		0x700000, 0x70ffff, SM_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(DrvVidRegs,	0x300000, 0x30000f|0x3ff, MAP_RAM);
+	SekMapMemory(DrvVideoRAM,	0x400000, 0x403fff, MAP_RAM);
+	SekMapMemory(DrvSprRAM,		0x500000, 0x501fff, MAP_ROM);
+	SekMapMemory(DrvPalRAM,		0x600000, 0x600fff, MAP_ROM);
+	SekMapMemory(Drv68KRAM,		0x700000, 0x70ffff, MAP_RAM);
 	SekSetWriteWordHandler(0,	sandscrp_main_write_word);
 	SekSetWriteByteHandler(0,	sandscrp_main_write_byte);
 	SekSetReadWordHandler(0,	sandscrp_main_read_word);
 	SekSetReadByteHandler(0,	sandscrp_main_read_byte);
 
-	SekMapHandler(1,		0x500000, 0x501fff, SM_WRITE);
+	SekMapHandler(1,		0x500000, 0x501fff, MAP_WRITE);
 	SekSetWriteWordHandler(1,	sandscrp_pandora_write_word);
 	SekSetWriteByteHandler(1,	sandscrp_pandora_write_byte);
 
-	SekMapHandler(2,		0x600000, 0x600fff, SM_WRITE);
+	SekMapHandler(2,		0x600000, 0x600fff, MAP_WRITE);
 	SekSetWriteWordHandler(2,	sandscrp_palette_write_word);
 	SekSetWriteByteHandler(2,	sandscrp_palette_write_byte);
 	SekClose();
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,	0x0000, 0xbfff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM,	0xc000, 0xdfff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM,	0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM,	0xc000, 0xdfff, MAP_RAM);
 	ZetSetOutHandler(sandscrp_sound_write_port);
 	ZetSetInHandler(sandscrp_sound_read_port);
 	ZetClose();

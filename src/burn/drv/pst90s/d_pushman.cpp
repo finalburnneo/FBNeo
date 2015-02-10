@@ -530,11 +530,11 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x01ffff, SM_ROM);
-	SekMapMemory(DrvSprRAM,		0x0e0800, 0x0e17ff, SM_RAM);
-	SekMapMemory(DrvVidRAM,		0x0ec000, 0x0ec7ff, SM_RAM);
-	SekMapMemory(DrvPalRAM,		0x0f8000, 0x0f87ff, SM_RAM);
-	SekMapMemory(Drv68KRAM,		0x0fc000, 0x0fffff, SM_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x01ffff, MAP_ROM);
+	SekMapMemory(DrvSprRAM,		0x0e0800, 0x0e17ff, MAP_RAM);
+	SekMapMemory(DrvVidRAM,		0x0ec000, 0x0ec7ff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,		0x0f8000, 0x0f87ff, MAP_RAM);
+	SekMapMemory(Drv68KRAM,		0x0fc000, 0x0fffff, MAP_RAM);
 	SekSetWriteWordHandler(0,	pushman_main_write_word);
 	SekSetWriteByteHandler(0,	pushman_main_write_byte);
 	SekSetReadWordHandler(0,	pushman_main_read_word);
@@ -554,8 +554,8 @@ static INT32 DrvInit()
 
 	m6805Init(1, 0x1000);
 //	m6805Open(0);
-	m6805MapMemory(DrvMcuRAM + 0x0000, 0x0010, 0x007f, M6805_RAM);
-	m6805MapMemory(DrvMcuROM + 0x0080, 0x0080, 0x0fff, M6805_ROM);
+	m6805MapMemory(DrvMcuRAM + 0x0000, 0x0010, 0x007f, MAP_RAM);
+	m6805MapMemory(DrvMcuROM + 0x0080, 0x0080, 0x0fff, MAP_ROM);
 	m6805SetWriteHandler(pushman_mcu_write);
 	m6805SetReadHandler(pushman_mcu_read);
 //	m6805Close();

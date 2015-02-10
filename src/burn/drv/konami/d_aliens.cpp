@@ -139,9 +139,9 @@ static void set_ram_bank(INT32 data)
 	nDrvRamBank[0] = data;
 
 	if (data & 0x20) {
-		konamiMapMemory(DrvPalRAM,  0x0000, 0x03ff, KON_RAM);
+		konamiMapMemory(DrvPalRAM,  0x0000, 0x03ff, MAP_RAM);
 	} else {
-		konamiMapMemory(DrvBankRAM, 0x0000, 0x03ff, KON_RAM);
+		konamiMapMemory(DrvBankRAM, 0x0000, 0x03ff, MAP_RAM);
 	}
 }
 
@@ -257,7 +257,7 @@ static void aliens_set_lines(INT32 lines)
 
 	INT32 nBank = (lines & 0x1f) * 0x2000;
 
-	konamiMapMemory(DrvKonROM + 0x10000 + nBank, 0x2000, 0x3fff, KON_ROM); 
+	konamiMapMemory(DrvKonROM + 0x10000 + nBank, 0x2000, 0x3fff, MAP_ROM); 
 }
 
 static void K052109Callback(INT32 layer, INT32 bank, INT32 *code, INT32 *color, INT32 *, INT32 *)
@@ -379,10 +379,10 @@ static INT32 DrvInit()
 
 	konamiInit(0);
 	konamiOpen(0);
-	konamiMapMemory(DrvBankRAM,          0x0000, 0x03ff, KON_RAM);
-	konamiMapMemory(DrvKonRAM,           0x0400, 0x1fff, KON_RAM);
-	konamiMapMemory(DrvKonROM + 0x10000, 0x2000, 0x3fff, KON_ROM);
-	konamiMapMemory(DrvKonROM + 0x08000, 0x8000, 0xffff, KON_ROM);
+	konamiMapMemory(DrvBankRAM,          0x0000, 0x03ff, MAP_RAM);
+	konamiMapMemory(DrvKonRAM,           0x0400, 0x1fff, MAP_RAM);
+	konamiMapMemory(DrvKonROM + 0x10000, 0x2000, 0x3fff, MAP_ROM);
+	konamiMapMemory(DrvKonROM + 0x08000, 0x8000, 0xffff, MAP_ROM);
 	konamiSetWriteHandler(aliens_main_write);
 	konamiSetReadHandler(aliens_main_read);
 	konamiSetlinesCallback(aliens_set_lines);

@@ -785,29 +785,29 @@ static INT32 DrvGfxDecode()
 
 static void Armedf68KInit()
 {
-	SekMapMemory(Drv68KROM,		0x000000, 0x05ffff, SM_ROM);
-	SekMapMemory(DrvSprRAM,		0x060000, 0x060fff, SM_RAM);
-	SekMapMemory(Drv68KRAM0,	0x061000, 0x065fff, SM_RAM);
-	SekMapMemory(DrvBgRAM,		0x066000, 0x066fff, SM_RAM);
-	SekMapMemory(DrvFgRAM,		0x067000, 0x067fff, SM_RAM);
-	SekMapMemory(DrvTxRAM,		0x068000, 0x069fff, SM_RAM);
-	SekMapMemory(DrvPalRAM,		0x06a000, 0x06afff, SM_RAM);
-	SekMapMemory(Drv68KRAM1,	0x06b000, 0x06bfff, SM_RAM);
-	SekMapMemory(Drv68KRAM2,	0x06c000, 0x06c7ff, SM_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x05ffff, MAP_ROM);
+	SekMapMemory(DrvSprRAM,		0x060000, 0x060fff, MAP_RAM);
+	SekMapMemory(Drv68KRAM0,	0x061000, 0x065fff, MAP_RAM);
+	SekMapMemory(DrvBgRAM,		0x066000, 0x066fff, MAP_RAM);
+	SekMapMemory(DrvFgRAM,		0x067000, 0x067fff, MAP_RAM);
+	SekMapMemory(DrvTxRAM,		0x068000, 0x069fff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,		0x06a000, 0x06afff, MAP_RAM);
+	SekMapMemory(Drv68KRAM1,	0x06b000, 0x06bfff, MAP_RAM);
+	SekMapMemory(Drv68KRAM2,	0x06c000, 0x06c7ff, MAP_RAM);
 	SekSetWriteWordHandler(0,	armedf_write_word);
 }
 
 static void Cclimbr268KInit()
 {
-	SekMapMemory(Drv68KROM,		0x000000, 0x05ffff, SM_ROM);
-	SekMapMemory(DrvSprRAM,		0x060000, 0x060fff, SM_RAM);
-	SekMapMemory(Drv68KRAM0,	0x061000, 0x063fff, SM_RAM);
-	SekMapMemory(DrvPalRAM,		0x064000, 0x064fff, SM_RAM);
-	SekMapMemory(DrvTxRAM,		0x068000, 0x069fff, SM_RAM);
-	SekMapMemory(Drv68KRAM1,	0x06a000, 0x06a9ff, SM_RAM);
-	SekMapMemory(Drv68KRAM2,	0x06c000, 0x06c9ff, SM_RAM);
-	SekMapMemory(DrvFgRAM,		0x070000, 0x070fff, SM_RAM);
-	SekMapMemory(DrvBgRAM,		0x074000, 0x074fff, SM_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x05ffff, MAP_ROM);
+	SekMapMemory(DrvSprRAM,		0x060000, 0x060fff, MAP_RAM);
+	SekMapMemory(Drv68KRAM0,	0x061000, 0x063fff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,		0x064000, 0x064fff, MAP_RAM);
+	SekMapMemory(DrvTxRAM,		0x068000, 0x069fff, MAP_RAM);
+	SekMapMemory(Drv68KRAM1,	0x06a000, 0x06a9ff, MAP_RAM);
+	SekMapMemory(Drv68KRAM2,	0x06c000, 0x06c9ff, MAP_RAM);
+	SekMapMemory(DrvFgRAM,		0x070000, 0x070fff, MAP_RAM);
+	SekMapMemory(DrvBgRAM,		0x074000, 0x074fff, MAP_RAM);
 	SekSetWriteWordHandler(0,	cclimbr2_write_word);
 	SekSetWriteByteHandler(0,	cclimbr2_write_byte);
 	SekSetReadWordHandler(0,	cclimbr2_read_word);

@@ -147,7 +147,7 @@ STDDIPINFO(Rockrage)
 static void bankswitch(INT32 bank)
 {
 	HD6309Bank = bank;
-	HD6309MapMemory(DrvHD6309ROM + 0x10000 + (((bank & 0x70) >> 4) * 0x2000), 0x6000, 0x7fff, HD6309_ROM);
+	HD6309MapMemory(DrvHD6309ROM + 0x10000 + (((bank & 0x70) >> 4) * 0x2000), 0x6000, 0x7fff, MAP_ROM);
 }
 
 static void rockrage_main_write(UINT16 address, UINT8 data)
@@ -381,20 +381,20 @@ static INT32 DrvInit()
 
 	HD6309Init(0);
 	HD6309Open(0);
-	HD6309MapMemory(K007342VidRAM[0],	0x0000, 0x1fff, HD6309_RAM);
-	HD6309MapMemory(K007420RAM[0], 		0x2000, 0x21ff, HD6309_RAM);
-	HD6309MapMemory(K007342ScrRAM[0],	0x2200, 0x23ff, HD6309_RAM);
-	HD6309MapMemory(DrvPalRAM,		0x2400, 0x24ff, HD6309_RAM);
-	HD6309MapMemory(DrvHD6309RAM,		0x4000, 0x5fff, HD6309_RAM);
-	HD6309MapMemory(DrvHD6309ROM + 0x08000, 0x8000, 0xffff, HD6309_ROM);
+	HD6309MapMemory(K007342VidRAM[0],	0x0000, 0x1fff, MAP_RAM);
+	HD6309MapMemory(K007420RAM[0], 		0x2000, 0x21ff, MAP_RAM);
+	HD6309MapMemory(K007342ScrRAM[0],	0x2200, 0x23ff, MAP_RAM);
+	HD6309MapMemory(DrvPalRAM,		0x2400, 0x24ff, MAP_RAM);
+	HD6309MapMemory(DrvHD6309RAM,		0x4000, 0x5fff, MAP_RAM);
+	HD6309MapMemory(DrvHD6309ROM + 0x08000, 0x8000, 0xffff, MAP_ROM);
 	HD6309SetWriteHandler(rockrage_main_write);
 	HD6309SetReadHandler(rockrage_main_read);
 	HD6309Close();
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvM6809RAM,		0x7000, 0x77ff, M6809_RAM);
-	M6809MapMemory(DrvM6809ROM  + 0x08000,	0x8000, 0xffff, M6809_ROM);
+	M6809MapMemory(DrvM6809RAM,		0x7000, 0x77ff, MAP_RAM);
+	M6809MapMemory(DrvM6809ROM  + 0x08000,	0x8000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(rockrage_sound_write);
 	M6809SetReadHandler(rockrage_sound_read);
 	M6809Close();

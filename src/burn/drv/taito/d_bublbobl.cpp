@@ -1867,7 +1867,7 @@ static INT32 MachineInit()
 	
 	if (DrvMCUInUse == 1) {
 		M6801Init(1);
-		M6801MapMemory(DrvMcuRom, 0xf000, 0xffff, M6801_ROM);
+		M6801MapMemory(DrvMcuRom, 0xf000, 0xffff, MAP_ROM);
 		M6801SetReadHandler(BublboblMcuReadByte);
 		M6801SetWriteHandler(BublboblMcuWriteByte);
 	} else if (DrvMCUInUse == 2) {

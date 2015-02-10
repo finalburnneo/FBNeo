@@ -2377,7 +2377,7 @@ static INT32 System18Bank40000Init()
 	
 	if (!nRet) {
 		SekOpen(0);
-		SekMapMemory(System16Rom + 0x200000, 0x200000, 0x27ffff, SM_READ);
+		SekMapMemory(System16Rom + 0x200000, 0x200000, 0x27ffff, MAP_READ);
 		SekClose();
 		
 		UINT8 *pTemp = (UINT8*)BurnMalloc(0x400000);
@@ -2408,7 +2408,7 @@ static INT32 System18Bank80000Init()
 	
 	if (!nRet) {
 		SekOpen(0);
-		SekMapMemory(System16Rom + 0x200000, 0x200000, 0x27ffff, SM_READ);
+		SekMapMemory(System16Rom + 0x200000, 0x200000, 0x27ffff, MAP_READ);
 		SekClose();
 	}
 	
@@ -2419,18 +2419,18 @@ void Astorm3Map68K()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x0bffff, SM_READ);
-	SekMapMemory(System16Code          , 0x000000, 0x0bffff, SM_FETCH);
-	SekMapMemory(System16TileRam       , 0x100000, 0x10ffff, SM_RAM);
-	SekMapMemory(System16TextRam       , 0x110000, 0x110fff, SM_RAM);
-	SekMapMemory(System16SpriteRam     , 0x200000, 0x2007ff, SM_RAM);
-	SekMapMemory(System16PaletteRam    , 0x140000, 0x140fff, SM_RAM);
-	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, SM_RAM);
+	SekMapMemory(System16Rom           , 0x000000, 0x0bffff, MAP_READ);
+	SekMapMemory(System16Code          , 0x000000, 0x0bffff, MAP_FETCH);
+	SekMapMemory(System16TileRam       , 0x100000, 0x10ffff, MAP_RAM);
+	SekMapMemory(System16TextRam       , 0x110000, 0x110fff, MAP_RAM);
+	SekMapMemory(System16SpriteRam     , 0x200000, 0x2007ff, MAP_RAM);
+	SekMapMemory(System16PaletteRam    , 0x140000, 0x140fff, MAP_RAM);
+	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
 	SekSetReadWordHandler(0, System18ReadWord);
 	SekSetWriteWordHandler(0, System18WriteWord);
 	SekSetReadByteHandler(0, System18ReadByte);
 	SekSetWriteByteHandler(0, System18WriteByte);
-	SekMapHandler(1, 0xa00000, 0xa03fff, SM_RAM);
+	SekMapHandler(1, 0xa00000, 0xa03fff, MAP_RAM);
 	SekSetReadByteHandler(1, Astorm3ReadByte);
 	SekSetWriteByteHandler(1, Astorm3WriteByte);
 	SekClose();
@@ -2451,7 +2451,7 @@ static INT32 DdcrewuInit()
 	
 	if (!nRet) {
 		SekOpen(0);
-		SekMapHandler(1, 0xe43020, 0xe43025, SM_READ);
+		SekMapHandler(1, 0xe43020, 0xe43025, MAP_READ);
 		SekSetReadByteHandler(1, DdcrewuReadByte);
 		SekClose();
 	}
@@ -2463,15 +2463,15 @@ static void HamawayMap68K()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x07ffff, SM_READ);
-	SekMapMemory(System16Code          , 0x000000, 0x07ffff, SM_FETCH);
-	SekMapMemory(System16Rom + 0x80000 , 0x200000, 0x27ffff, SM_READ);
-	SekMapMemory(System16Code + 0x80000, 0x200000, 0x27ffff, SM_FETCH);
-	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, SM_READ);
-	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, SM_RAM);
-	SekMapMemory(System16SpriteRam     , 0x500000, 0x5007ff, SM_RAM);
-	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, SM_RAM);
-	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, SM_RAM);
+	SekMapMemory(System16Rom           , 0x000000, 0x07ffff, MAP_READ);
+	SekMapMemory(System16Code          , 0x000000, 0x07ffff, MAP_FETCH);
+	SekMapMemory(System16Rom + 0x80000 , 0x200000, 0x27ffff, MAP_READ);
+	SekMapMemory(System16Code + 0x80000, 0x200000, 0x27ffff, MAP_FETCH);
+	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
+	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
+	SekMapMemory(System16SpriteRam     , 0x500000, 0x5007ff, MAP_RAM);
+	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
+	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
 	SekSetReadByteHandler(0, HamawayReadByte);
 	SekSetReadWordHandler(0, HamawayReadWord);
 	SekSetWriteByteHandler(0, HamawayWriteByte);
@@ -2502,7 +2502,7 @@ static INT32 LghostInit()
 	
 	if (!nRet) {
 		SekOpen(0);
-		SekMapHandler(1, 0xe43010, 0xe43021, SM_RAM);
+		SekMapHandler(1, 0xe43010, 0xe43021, MAP_RAM);
 		SekSetReadByteHandler(1, LghostReadByte);
 		SekSetWriteByteHandler(1, LghostWriteByte);
 		SekClose();
@@ -2557,9 +2557,9 @@ static INT32 Mwalkbl2Init()
 	
 	if (!nRet) {
 		SekOpen(0);
-		SekMapHandler(1, 0xc40000, 0xc41009, SM_READ);
+		SekMapHandler(1, 0xc40000, 0xc41009, MAP_READ);
 		SekSetReadByteHandler(1, Mwalkbl2ReadByte);
-		SekMapHandler(2, 0xc40006, 0xc46801, SM_WRITE);
+		SekMapHandler(2, 0xc40006, 0xc46801, MAP_WRITE);
 		SekSetWriteByteHandler(2, Mwalkbl2WriteByte);
 		SekSetWriteWordHandler(2, Mwalkbl2WriteWord);
 		SekClose();
@@ -2594,7 +2594,7 @@ static INT32 WwallyInit()
 	
 	if (!nRet) {
 		SekOpen(0);
-		SekMapHandler(1, 0xa43000, 0xa4300e, SM_RAM);
+		SekMapHandler(1, 0xa43000, 0xa4300e, MAP_RAM);
 		SekSetReadByteHandler(1, WwallyReadByte);
 		SekSetWriteWordHandler(1, WwallyWriteWord);
 		SekClose();

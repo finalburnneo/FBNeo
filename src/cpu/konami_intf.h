@@ -2,13 +2,6 @@ void konamiWrite(UINT16 address, UINT8 data);
 UINT8 konamiRead(UINT16 address);
 UINT8 konamiFetch(UINT16 address);
 
-#define KON_READ		1
-#define KON_WRITE		2
-#define KON_FETCH		4
-
-#define KON_ROM			(KON_READ | KON_FETCH)
-#define KON_RAM			(KON_READ | KON_FETCH | KON_WRITE)
-
 void konamiMapMemory(UINT8 *src, UINT16 start, UINT16 finish, INT32 type);
 
 void konamiSetIrqCallbackHandler(INT32 (*callback)(INT32));

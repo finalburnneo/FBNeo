@@ -1078,28 +1078,28 @@ static INT32 DrvInit()
 
 	if (joinem || loverb)
 	{
-		ZetMapMemory(Rom0 + 0x0000,	0x0000, 0x7fff, ZET_ROM);
-		ZetMapMemory(Rom0 + 0x8000,	0x8000, 0x8fff, ZET_RAM);
-		ZetMapMemory(Rom0 + 0x9000,	0x9000, 0x97ff, ZET_RAM);
+		ZetMapMemory(Rom0 + 0x0000,	0x0000, 0x7fff, MAP_ROM);
+		ZetMapMemory(Rom0 + 0x8000,	0x8000, 0x8fff, MAP_RAM);
+		ZetMapMemory(Rom0 + 0x9000,	0x9000, 0x97ff, MAP_RAM);
 
 		if (!unclepoo)
 			ZetMapArea(0xb500, 0xb5ff, 0, Rom0 + 0xb500); // controls hack
 	} else {
-		ZetMapMemory(Rom0 + 0x0000,	0x0000, 0x3fff, ZET_ROM);
-		ZetMapMemory(Rom0 + 0x4000,	0x4000, 0x5fff, ZET_RAM);
+		ZetMapMemory(Rom0 + 0x0000,	0x0000, 0x3fff, MAP_ROM);
+		ZetMapMemory(Rom0 + 0x4000,	0x4000, 0x5fff, MAP_RAM);
 	}
 
 	//ZetMapArea(0xb000, 0xb07f, 0, Rom0 + 0xb000); // move to cpu0_read/write
 	//ZetMapArea(0xb000, 0xb07f, 1, Rom0 + 0xb000);
 
-	ZetMapMemory(Rom0 + 0xb800,	0xb800, 0xbbff, ZET_RAM);
-	ZetMapMemory(Rom0 + 0xbc00,	0xbc00, 0xbfff, ZET_RAM);
+	ZetMapMemory(Rom0 + 0xb800,	0xb800, 0xbbff, MAP_RAM);
+	ZetMapMemory(Rom0 + 0xbc00,	0xbc00, 0xbfff, MAP_RAM);
 
 	if (suprtriv)
 	{
-		ZetMapMemory(Rom0 + 0xc000,	0xd000, 0xffff, ZET_RAM); // + 0xc000, really?
+		ZetMapMemory(Rom0 + 0xc000,	0xd000, 0xffff, MAP_RAM); // + 0xc000, really?
 	} else if (!unclepoo) {
-		ZetMapMemory(Rom0 + 0xc000,	0xc000, 0xffff, ZET_ROM);
+		ZetMapMemory(Rom0 + 0xc000,	0xc000, 0xffff, MAP_ROM);
 	}
 
 	ZetClose();

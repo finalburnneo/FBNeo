@@ -147,7 +147,7 @@ static void bankswitch(INT32 bank)
 {
 	bank = (bank & 0x1f) * 0x2000;
 
-	HD6309MapMemory(DrvMainROM + bank, 0x0000, 0x1fff, HD6309_ROM);
+	HD6309MapMemory(DrvMainROM + bank, 0x0000, 0x1fff, MAP_ROM);
 }
 
 static void lethal_main_write(UINT16 address, UINT8 data)
@@ -502,17 +502,17 @@ static INT32 DrvInit(INT32 flipy)
 
 	HD6309Init(0);
 	HD6309Open(0);
-	HD6309MapMemory(DrvMainROM + 0x00000,	0x0000, 0x1fff, HD6309_ROM);
- 	HD6309MapMemory(DrvMainRAM,		0x2000, 0x3fff, HD6309_RAM);
-	HD6309MapMemory(DrvMainROM + 0x38000,	0x8000, 0xffff, HD6309_ROM);
+	HD6309MapMemory(DrvMainROM + 0x00000,	0x0000, 0x1fff, MAP_ROM);
+ 	HD6309MapMemory(DrvMainRAM,		0x2000, 0x3fff, MAP_RAM);
+	HD6309MapMemory(DrvMainROM + 0x38000,	0x8000, 0xffff, MAP_ROM);
 	HD6309SetReadHandler(lethal_main_read);
 	HD6309SetWriteHandler(lethal_main_write);
 	HD6309Close();
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,			0x0000, 0xefff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM,			0xf000, 0xf7ff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM,			0x0000, 0xefff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM,			0xf000, 0xf7ff, MAP_RAM);
 	ZetSetWriteHandler(lethal_sound_write);
 	ZetSetReadHandler(lethal_sound_read);
 	ZetClose();

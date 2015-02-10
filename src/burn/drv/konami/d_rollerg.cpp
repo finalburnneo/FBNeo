@@ -278,7 +278,7 @@ static void rollerg_set_lines(INT32 lines)
 
 	INT32 offs = 0x10000 + ((lines & 0x07) * 0x4000);
 
-	konamiMapMemory(DrvKonROM + offs, 0x4000, 0x7fff, KON_ROM); 
+	konamiMapMemory(DrvKonROM + offs, 0x4000, 0x7fff, MAP_ROM); 
 }
 
 static void K053245Callback(INT32 *, INT32 *color, INT32 *priority)
@@ -384,10 +384,10 @@ static INT32 DrvInit()
 
 	konamiInit(0);
 	konamiOpen(0);
-	konamiMapMemory(DrvPalRAM,	    0x1800, 0x1fff, KON_RAM);
-	konamiMapMemory(DrvKonRAM,          0x2000, 0x3aff, KON_RAM);
-	konamiMapMemory(DrvKonROM + 0x4000, 0x4000, 0x7fff, KON_ROM);
-	konamiMapMemory(DrvKonROM + 0x8000, 0x8000, 0xffff, KON_ROM);
+	konamiMapMemory(DrvPalRAM,	    0x1800, 0x1fff, MAP_RAM);
+	konamiMapMemory(DrvKonRAM,          0x2000, 0x3aff, MAP_RAM);
+	konamiMapMemory(DrvKonROM + 0x4000, 0x4000, 0x7fff, MAP_ROM);
+	konamiMapMemory(DrvKonROM + 0x8000, 0x8000, 0xffff, MAP_ROM);
 	konamiSetWriteHandler(rollerg_main_write);
 	konamiSetReadHandler(rollerg_main_read);
 	konamiSetlinesCallback(rollerg_set_lines);

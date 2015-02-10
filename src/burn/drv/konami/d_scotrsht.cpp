@@ -373,10 +373,10 @@ static INT32 DrvInit()
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvColRAM,		0x0000, 0x07ff, M6809_RAM);
-	M6809MapMemory(DrvVidRAM,		0x0800, 0x0fff, M6809_RAM);
-	M6809MapMemory(DrvSprRAM,		0x1000, 0x1fff, M6809_RAM);
-	M6809MapMemory(DrvM6809ROM + 0x04000,	0x4000, 0xffff, M6809_ROM);
+	M6809MapMemory(DrvColRAM,		0x0000, 0x07ff, MAP_RAM);
+	M6809MapMemory(DrvVidRAM,		0x0800, 0x0fff, MAP_RAM);
+	M6809MapMemory(DrvSprRAM,		0x1000, 0x1fff, MAP_RAM);
+	M6809MapMemory(DrvM6809ROM + 0x04000,	0x4000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(scotrsht_main_write);
 	M6809SetReadHandler(scotrsht_main_read);
 	M6809Close();

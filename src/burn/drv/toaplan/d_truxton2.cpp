@@ -546,12 +546,12 @@ static INT32 DrvInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom01,			0x000000, 0x07FFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram01,			0x100000, 0x10FFFF, SM_RAM);
-		SekMapMemory(RamPal,		0x300000, 0x300FFF, SM_RAM);	// Palette RAM
-		SekMapMemory(ExtraTRAM,		0x400000, 0x401FFF, SM_RAM);
-		SekMapMemory(ExtraTSelect,	0x402000, 0x402FFF, SM_RAM);	// 0x502000 - Scroll; 0x502200 - RAM
-		SekMapMemory(ExtraTScroll,	0x403000, 0x403FFF, SM_RAM);	// 0x203000 - Offset; 0x503200 - RAM
+		SekMapMemory(Rom01,			0x000000, 0x07FFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram01,			0x100000, 0x10FFFF, MAP_RAM);
+		SekMapMemory(RamPal,		0x300000, 0x300FFF, MAP_RAM);	// Palette RAM
+		SekMapMemory(ExtraTRAM,		0x400000, 0x401FFF, MAP_RAM);
+		SekMapMemory(ExtraTSelect,	0x402000, 0x402FFF, MAP_RAM);	// 0x502000 - Scroll; 0x502200 - RAM
+		SekMapMemory(ExtraTScroll,	0x403000, 0x403FFF, MAP_RAM);	// 0x203000 - Offset; 0x503200 - RAM
 
 		SekSetReadWordHandler(0, truxton2ReadWord);
 		SekSetReadByteHandler(0, truxton2ReadByte);

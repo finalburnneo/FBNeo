@@ -327,10 +327,10 @@ static INT32 DrvInit()
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(Drv6502RAM,		0x0000, 0x0fff, M6502_RAM);
-	M6502MapMemory(DrvFgRAM,		0x1000, 0x17ff, M6502_RAM);
-	M6502MapMemory(DrvBgRAM,		0x1800, 0x1fff, M6502_RAM);
-	M6502MapMemory(Drv6502ROM + 0x4000,	0x4000, 0xffff, M6502_ROM);
+	M6502MapMemory(Drv6502RAM,		0x0000, 0x0fff, MAP_RAM);
+	M6502MapMemory(DrvFgRAM,		0x1000, 0x17ff, MAP_RAM);
+	M6502MapMemory(DrvBgRAM,		0x1800, 0x1fff, MAP_RAM);
+	M6502MapMemory(Drv6502ROM + 0x4000,	0x4000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(mystston_write);
 	M6502SetReadHandler(mystston_read);
 	M6502Close();

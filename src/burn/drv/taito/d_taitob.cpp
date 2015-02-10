@@ -2144,12 +2144,12 @@ static void NastarInitCallback()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(TaitoPaletteRam,		0x200000, 0x201fff, SM_RAM);
-	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, SM_RAM);
-	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, SM_RAM);
-	SekMapMemory(Taito68KRam1,		0x600000, 0x607fff, SM_RAM);
+	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(TaitoPaletteRam,		0x200000, 0x201fff, MAP_RAM);
+	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, MAP_RAM);
+	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, MAP_RAM);
+	SekMapMemory(Taito68KRam1,		0x600000, 0x607fff, MAP_RAM);
 	SekSetWriteByteHandler(0,		rastsag2_write_byte);
 	SekSetWriteWordHandler(0,		rastsag2_write_word);
 	SekSetReadByteHandler(0,		rastsag2_read_byte);
@@ -2202,12 +2202,12 @@ static void CrimecInitCallback()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, SM_RAM);
-	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, SM_RAM);
-	SekMapMemory(TaitoPaletteRam,		0x800000, 0x801fff, SM_RAM);
-	SekMapMemory(Taito68KRam1,		0xa00000, 0xa0ffff, SM_RAM);
+	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, MAP_RAM);
+	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, MAP_RAM);
+	SekMapMemory(TaitoPaletteRam,		0x800000, 0x801fff, MAP_RAM);
+	SekMapMemory(Taito68KRam1,		0xa00000, 0xa0ffff, MAP_RAM);
 	SekSetWriteByteHandler(0,		crimec_write_byte);
 	SekSetWriteWordHandler(0,		crimec_write_word);
 	SekSetReadByteHandler(0,		crimec_read_byte);
@@ -2319,12 +2319,12 @@ static void TetristInitCallback()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, SM_RAM);
-	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, SM_RAM);
-	SekMapMemory(Taito68KRam1,		0x800000, 0x807fff, SM_RAM);
-	SekMapMemory(TaitoPaletteRam,		0xa00000, 0xa01fff, SM_RAM);
+	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, MAP_RAM);
+	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, MAP_RAM);
+	SekMapMemory(Taito68KRam1,		0x800000, 0x807fff, MAP_RAM);
+	SekMapMemory(TaitoPaletteRam,		0xa00000, 0xa01fff, MAP_RAM);
 	SekSetWriteByteHandler(0,		tetrist_write_byte);
 	SekSetWriteWordHandler(0,		tetrist_write_word);
 	SekSetReadByteHandler(0,		tetrist_read_byte);
@@ -2420,12 +2420,12 @@ static void PbobbleInitCallback()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, SM_RAM);
-	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, SM_RAM);
-	SekMapMemory(TaitoPaletteRam,		0x800000, 0x801fff, SM_RAM);
-	SekMapMemory(Taito68KRam1,		0x900000, 0x90ffff, SM_RAM);
+	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, MAP_RAM);
+	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, MAP_RAM);
+	SekMapMemory(TaitoPaletteRam,		0x800000, 0x801fff, MAP_RAM);
+	SekMapMemory(Taito68KRam1,		0x900000, 0x90ffff, MAP_RAM);
 	SekSetWriteByteHandler(0,		pbobble_write_byte);
 	SekSetWriteWordHandler(0,		pbobble_write_word);
 	SekSetReadByteHandler(0,		pbobble_read_byte);
@@ -2483,12 +2483,12 @@ static void SelfeenaInitCallback()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(Taito68KRam1,		0x100000, 0x103fff, SM_RAM);
-	SekMapMemory(TC0180VCURAM,		0x200000, 0x20ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam,		0x210000, 0x2137ff, SM_RAM);
-	SekMapMemory(TC0180VCUScrollRAM,	0x213800, 0x213fff, SM_RAM);
-	SekMapMemory(TaitoPaletteRam,		0x300000, 0x301fff, SM_RAM);
+	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam1,		0x100000, 0x103fff, MAP_RAM);
+	SekMapMemory(TC0180VCURAM,		0x200000, 0x20ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam,		0x210000, 0x2137ff, MAP_RAM);
+	SekMapMemory(TC0180VCUScrollRAM,	0x213800, 0x213fff, MAP_RAM);
+	SekMapMemory(TaitoPaletteRam,		0x300000, 0x301fff, MAP_RAM);
 	SekSetWriteByteHandler(0,		selfeena_write_byte);
 	SekSetWriteWordHandler(0,		selfeena_write_word);
 	SekSetReadByteHandler(0,		selfeena_read_byte);
@@ -2545,12 +2545,12 @@ static void SbmInitCallback()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(Taito68KRam1,		0x100000, 0x10ffff, SM_RAM);
-	SekMapMemory(TaitoPaletteRam,		0x200000, 0x201fff, SM_RAM);
-	SekMapMemory(TC0180VCURAM,		0x900000, 0x90ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam,		0x910000, 0x9137ff, SM_RAM);
-	SekMapMemory(TC0180VCUScrollRAM,	0x913800, 0x913fff, SM_RAM);
+	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam1,		0x100000, 0x10ffff, MAP_RAM);
+	SekMapMemory(TaitoPaletteRam,		0x200000, 0x201fff, MAP_RAM);
+	SekMapMemory(TC0180VCURAM,		0x900000, 0x90ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam,		0x910000, 0x9137ff, MAP_RAM);
+	SekMapMemory(TC0180VCUScrollRAM,	0x913800, 0x913fff, MAP_RAM);
 	SekSetWriteByteHandler(0,		sbm_write_byte);
 	SekSetWriteWordHandler(0,		sbm_write_word);
 	SekSetReadByteHandler(0,		sbm_read_byte);
@@ -2612,12 +2612,12 @@ static void SilentdInitCallback()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(TaitoPaletteRam,		0x300000, 0x301fff, SM_RAM);
-	SekMapMemory(Taito68KRam1,		0x400000, 0x403fff, SM_RAM);
-	SekMapMemory(TC0180VCURAM,		0x500000, 0x50ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam,		0x510000, 0x5137ff, SM_RAM);
-	SekMapMemory(TC0180VCUScrollRAM,	0x513800, 0x513fff, SM_RAM);
+	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(TaitoPaletteRam,		0x300000, 0x301fff, MAP_RAM);
+	SekMapMemory(Taito68KRam1,		0x400000, 0x403fff, MAP_RAM);
+	SekMapMemory(TC0180VCURAM,		0x500000, 0x50ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam,		0x510000, 0x5137ff, MAP_RAM);
+	SekMapMemory(TC0180VCUScrollRAM,	0x513800, 0x513fff, MAP_RAM);
 	SekSetWriteByteHandler(0,		silentd_write_byte);
 	SekSetWriteWordHandler(0,		silentd_write_word);
 	SekSetReadByteHandler(0,		silentd_read_byte);
@@ -2671,12 +2671,12 @@ static void ViofightInitCallback()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, SM_RAM);
-	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, SM_RAM);
-	SekMapMemory(TaitoPaletteRam,		0x600000, 0x601fff, SM_RAM);
-	SekMapMemory(Taito68KRam1,		0xa00000, 0xa03fff, SM_RAM);
+	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, MAP_RAM);
+	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, MAP_RAM);
+	SekMapMemory(TaitoPaletteRam,		0x600000, 0x601fff, MAP_RAM);
+	SekMapMemory(Taito68KRam1,		0xa00000, 0xa03fff, MAP_RAM);
 	SekSetWriteByteHandler(0,		viofight_write_byte);
 	SekSetWriteWordHandler(0,		viofight_write_word);
 	SekSetReadByteHandler(0,		viofight_read_byte);
@@ -2770,13 +2770,13 @@ static void HiticeInitCallback()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, SM_RAM);
-	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, SM_RAM);
-	SekMapMemory(Taito68KRam1,		0x800000, 0x803fff, SM_RAM);
-	SekMapMemory(TaitoPaletteRam,		0xa00000, 0xa01fff, SM_RAM);
-	SekMapMemory(DrvPxlRAM,			0xb00000, 0xb7ffff, SM_ROM);
+	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, MAP_RAM);
+	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, MAP_RAM);
+	SekMapMemory(Taito68KRam1,		0x800000, 0x803fff, MAP_RAM);
+	SekMapMemory(TaitoPaletteRam,		0xa00000, 0xa01fff, MAP_RAM);
+	SekMapMemory(DrvPxlRAM,			0xb00000, 0xb7ffff, MAP_ROM);
 	SekSetWriteByteHandler(0,		hitice_write_byte);
 	SekSetWriteWordHandler(0,		hitice_write_word);
 	SekSetReadByteHandler(0,		hitice_read_byte);
@@ -2848,12 +2848,12 @@ static void TetristaInitCallback()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(TaitoPaletteRam,		0x200000, 0x201fff, SM_RAM);
-	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, SM_RAM);
-	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, SM_RAM);
-	SekMapMemory(Taito68KRam1,		0x800000, 0x803fff, SM_RAM);
+	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(TaitoPaletteRam,		0x200000, 0x201fff, MAP_RAM);
+	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, MAP_RAM);
+	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, MAP_RAM);
+	SekMapMemory(Taito68KRam1,		0x800000, 0x803fff, MAP_RAM);
 	SekSetWriteByteHandler(0,		tetrista_write_byte);
 	SekSetWriteWordHandler(0,		tetrista_write_word);
 	SekSetReadByteHandler(0,		tetrista_read_byte);
@@ -2865,12 +2865,12 @@ static void MasterwInitCallback()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(Taito68KRam1,		0x200000, 0x203fff, SM_RAM);
-	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, SM_RAM);
-	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, SM_RAM);
-	SekMapMemory(TaitoPaletteRam,		0x600000, 0x601fff, SM_RAM);
+	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam1,		0x200000, 0x203fff, MAP_RAM);
+	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, MAP_RAM);
+	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, MAP_RAM);
+	SekMapMemory(TaitoPaletteRam,		0x600000, 0x601fff, MAP_RAM);
 	SekSetWriteByteHandler(0,		tetrista_write_byte);
 	SekSetWriteWordHandler(0,		tetrista_write_word);
 	SekSetReadByteHandler(0,		tetrista_read_byte);
@@ -2956,12 +2956,12 @@ static void QzshowbyInitCallback()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1,		0x000000, 0x0fffff, SM_ROM);
-	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, SM_RAM);
-	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, SM_RAM);
-	SekMapMemory(TaitoPaletteRam,		0x800000, 0x801fff, SM_RAM);
-	SekMapMemory(Taito68KRam1,		0x900000, 0x90ffff, SM_RAM);
+	SekMapMemory(Taito68KRom1,		0x000000, 0x0fffff, MAP_ROM);
+	SekMapMemory(TC0180VCURAM,		0x400000, 0x40ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam,		0x410000, 0x4137ff, MAP_RAM);
+	SekMapMemory(TC0180VCUScrollRAM,	0x413800, 0x413fff, MAP_RAM);
+	SekMapMemory(TaitoPaletteRam,		0x800000, 0x801fff, MAP_RAM);
+	SekMapMemory(Taito68KRam1,		0x900000, 0x90ffff, MAP_RAM);
 	SekSetWriteByteHandler(0,		qzshowby_write_byte);
 	SekSetWriteWordHandler(0,		qzshowby_write_word);
 	SekSetReadByteHandler(0,		qzshowby_read_byte);

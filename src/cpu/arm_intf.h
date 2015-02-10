@@ -4,13 +4,6 @@ UINT8  ArmReadByte(UINT32 addr);
 UINT32 ArmReadLong(UINT32 addr);
 UINT32 ArmFetchLong(UINT32 addr);
 
-#define ARM_READ		1
-#define ARM_WRITE		2
-#define ARM_FETCH		4
-
-#define ARM_ROM		(ARM_READ | ARM_FETCH)
-#define ARM_RAM		(ARM_READ | ARM_FETCH | ARM_WRITE)
-
 void ArmMapMemory(UINT8 *src, INT32 start, INT32 finish, INT32 type);
 
 void ArmSetWriteByteHandler(void (*write)(UINT32, UINT8));

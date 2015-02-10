@@ -239,13 +239,13 @@ INT32 HD6309MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 	UINT8 **pMemMap = HD6309CPUContext[nActiveCPU].pMemMap;
 
 	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
-		if (nType & HD6309_READ)	{
+		if (nType & MAP_READ)	{
 			pMemMap[0     + i] = pMemory + ((i - cStart) << 8);
 		}
-		if (nType & HD6309_WRITE) {
+		if (nType & MAP_WRITE) {
 			pMemMap[0x100 + i] = pMemory + ((i - cStart) << 8);
 		}
-		if (nType & HD6309_FETCH) {
+		if (nType & MAP_FETCH) {
 			pMemMap[0x200 + i] = pMemory + ((i - cStart) << 8);
 		}
 	}
@@ -264,13 +264,13 @@ INT32 HD6309MemCallback(UINT16 nStart, UINT16 nEnd, INT32 nType)
 	UINT8 **pMemMap = HD6309CPUContext[nActiveCPU].pMemMap;
 
 	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
-		if (nType & HD6309_READ)	{
+		if (nType & MAP_READ)	{
 			pMemMap[0     + i] = NULL;
 		}
-		if (nType & HD6309_WRITE) {
+		if (nType & MAP_WRITE) {
 			pMemMap[0x100 + i] = NULL;
 		}
-		if (nType & HD6309_FETCH) {
+		if (nType & MAP_FETCH) {
 			pMemMap[0x200 + i] = NULL;
 		}
 	}

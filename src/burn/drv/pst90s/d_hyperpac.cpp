@@ -2032,14 +2032,14 @@ static INT32 HyperpacMachineInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(HyperpacRom       , 0x000000, 0x0fffff, SM_ROM);
+	SekMapMemory(HyperpacRom       , 0x000000, 0x0fffff, MAP_ROM);
 	if (Finalttr) {
-		SekMapMemory(HyperpacRam       , 0x100000, 0x103fff, SM_RAM);
+		SekMapMemory(HyperpacRam       , 0x100000, 0x103fff, MAP_RAM);
 	} else {
-		SekMapMemory(HyperpacRam       , 0x100000, 0x10ffff, SM_RAM);
+		SekMapMemory(HyperpacRam       , 0x100000, 0x10ffff, MAP_RAM);
 	}
-	SekMapMemory(HyperpacPaletteRam, 0x600000, 0x6001ff, SM_RAM);
-	SekMapMemory(HyperpacSpriteRam , 0x700000, 0x701fff, SM_RAM);
+	SekMapMemory(HyperpacPaletteRam, 0x600000, 0x6001ff, MAP_RAM);
+	SekMapMemory(HyperpacSpriteRam , 0x700000, 0x701fff, MAP_RAM);
 	if (Fourin1boot || Finalttr) {
 		SekSetReadByteHandler(0, HyperpacReadByteLow);
 		SekSetReadWordHandler(0, HyperpacReadWordLow);
@@ -2534,10 +2534,10 @@ static INT32 TwinadvInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(HyperpacRom       , 0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(HyperpacRam       , 0x100000, 0x10ffff, SM_RAM);
-	SekMapMemory(HyperpacPaletteRam, 0x600000, 0x6001ff, SM_RAM);
-	SekMapMemory(HyperpacSpriteRam , 0x700000, 0x701fff, SM_RAM);
+	SekMapMemory(HyperpacRom       , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(HyperpacRam       , 0x100000, 0x10ffff, MAP_RAM);
+	SekMapMemory(HyperpacPaletteRam, 0x600000, 0x6001ff, MAP_RAM);
+	SekMapMemory(HyperpacSpriteRam , 0x700000, 0x701fff, MAP_RAM);
 	SekSetReadByteHandler(0, HyperpacReadByteLow);
 	SekSetReadWordHandler(0, HyperpacReadWordLow);
 	SekSetWriteByteHandler(0, TwinadvWriteByte);
@@ -2615,10 +2615,10 @@ static INT32 HoneydolInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(HyperpacRom       , 0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(HyperpacRam       , 0x100000, 0x10ffff, SM_RAM);
-	SekMapMemory(HyperpacPaletteRam, 0xa00000, 0xa007ff, SM_RAM);
-	SekMapMemory(HyperpacSpriteRam , 0xb00000, 0xb01fff, SM_RAM);
+	SekMapMemory(HyperpacRom       , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(HyperpacRam       , 0x100000, 0x10ffff, MAP_RAM);
+	SekMapMemory(HyperpacPaletteRam, 0xa00000, 0xa007ff, MAP_RAM);
+	SekMapMemory(HyperpacSpriteRam , 0xb00000, 0xb01fff, MAP_RAM);
 	SekSetReadByteHandler(0, HoneydolReadByte);
 	SekSetReadWordHandler(0, HoneydolReadWord);
 	SekSetWriteByteHandler(0, HoneydolWriteByte);
@@ -2757,10 +2757,10 @@ static INT32 SnowbrosInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(HyperpacRom       , 0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(HyperpacRam       , 0x100000, 0x103fff, SM_RAM);
-	SekMapMemory(HyperpacPaletteRam, 0x600000, 0x6001ff, SM_RAM);
-	SekMapMemory(HyperpacSpriteRam , 0x700000, 0x701fff, SM_RAM);
+	SekMapMemory(HyperpacRom       , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(HyperpacRam       , 0x100000, 0x103fff, MAP_RAM);
+	SekMapMemory(HyperpacPaletteRam, 0x600000, 0x6001ff, MAP_RAM);
+	SekMapMemory(HyperpacSpriteRam , 0x700000, 0x701fff, MAP_RAM);
 	SekSetReadWordHandler(0, SnowbrosReadWord);
 	SekSetWriteWordHandler(0, SnowbrosWriteWord);
 	SekSetReadByteHandler(0, SnowbrosReadByte);
@@ -2857,10 +2857,10 @@ static INT32 Snowbro3Init()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(HyperpacRom       , 0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(HyperpacRam       , 0x100000, 0x103fff, SM_RAM);
-	SekMapMemory(HyperpacPaletteRam, 0x600000, 0x6003ff, SM_RAM);
-	SekMapMemory(HyperpacSpriteRam , 0x700000, 0x7021ff, SM_RAM);
+	SekMapMemory(HyperpacRom       , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(HyperpacRam       , 0x100000, 0x103fff, MAP_RAM);
+	SekMapMemory(HyperpacPaletteRam, 0x600000, 0x6003ff, MAP_RAM);
+	SekMapMemory(HyperpacSpriteRam , 0x700000, 0x7021ff, MAP_RAM);
 	SekSetReadWordHandler(0, Snowbro3ReadWord);
 	SekSetWriteWordHandler(0, Snowbro3WriteWord);
 	SekSetReadByteHandler(0, Snowbro3ReadByte);

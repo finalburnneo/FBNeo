@@ -375,18 +375,18 @@ static INT32 DrvInit()
 	{
 		SekInit(0, 0x68000);
 		SekOpen(0);
-		SekMapMemory(Drv68KROM,			0x000000, 0x00FFFF, SM_ROM);
-		SekMapMemory(Drv68KROM + 0x40000,	0x040000, 0x07FFFF, SM_ROM);
-		SekMapMemory(Drv68KRAM,			0x080000, 0x083FFF, SM_RAM);
-		SekMapMemory(DrvSprRAM,			0x0c0000, 0x0C0FFF, SM_RAM);
-		SekMapMemory(DrvPalRAM,			0x144000, 0x1447FF, SM_RAM);
-		SekMapMemory(DrvPalRAM2,		0x146000, 0x1467FF, SM_RAM);
+		SekMapMemory(Drv68KROM,			0x000000, 0x00FFFF, MAP_ROM);
+		SekMapMemory(Drv68KROM + 0x40000,	0x040000, 0x07FFFF, MAP_ROM);
+		SekMapMemory(Drv68KRAM,			0x080000, 0x083FFF, MAP_RAM);
+		SekMapMemory(DrvSprRAM,			0x0c0000, 0x0C0FFF, MAP_RAM);
+		SekMapMemory(DrvPalRAM,			0x144000, 0x1447FF, MAP_RAM);
+		SekMapMemory(DrvPalRAM2,		0x146000, 0x1467FF, MAP_RAM);
 		SekSetReadWordHandler(0, 		rallybikReadWord);
 		SekSetReadByteHandler(0, 		rallybikReadByte);
 		SekSetWriteWordHandler(0, 		rallybikWriteWord);
 		SekSetWriteByteHandler(0, 		rallybikWriteByte);
 
-		SekMapHandler(1,			0x180000, 0x180FFF, SM_RAM);
+		SekMapHandler(1,			0x180000, 0x180FFF, MAP_RAM);
 		SekSetReadByteHandler(1, 		toaplan1ReadByteZ80RAM);
 		SekSetReadWordHandler(1, 		toaplan1ReadWordZ80RAM);
 		SekSetWriteByteHandler(1, 		toaplan1WriteByteZ80RAM);

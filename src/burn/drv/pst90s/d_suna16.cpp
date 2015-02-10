@@ -1467,16 +1467,16 @@ static INT32 BestbestInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		   0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(Drv68KROM,		   0x040000, 0x07ffff, SM_ROM);
-	SekMapMemory(Drv68KROM,		   0x080000, 0x0bffff, SM_ROM);
-	SekMapMemory(Drv68KROM,		   0x0c0000, 0x0fffff, SM_ROM);
-	SekMapMemory(Drv68KROM + 0x100000, 0x200000, 0x2fffff, SM_ROM);
-	SekMapMemory(DrvPalRAM, 	   0x540000, 0x540fff, SM_ROM);
-	SekMapMemory(DrvPalRAM2,	   0x541000, 0x54ffff, SM_RAM);
-	SekMapMemory(Drv68KRAM,		   0x580000, 0x58ffff, SM_RAM);
-	SekMapMemory(DrvSprRAM0,	   0x5c0000, 0x5dffff, SM_RAM);
-	SekMapMemory(DrvSprRAM1,	   0x5e0000, 0x5fffff, SM_RAM);
+	SekMapMemory(Drv68KROM,		   0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Drv68KROM,		   0x040000, 0x07ffff, MAP_ROM);
+	SekMapMemory(Drv68KROM,		   0x080000, 0x0bffff, MAP_ROM);
+	SekMapMemory(Drv68KROM,		   0x0c0000, 0x0fffff, MAP_ROM);
+	SekMapMemory(Drv68KROM + 0x100000, 0x200000, 0x2fffff, MAP_ROM);
+	SekMapMemory(DrvPalRAM, 	   0x540000, 0x540fff, MAP_ROM);
+	SekMapMemory(DrvPalRAM2,	   0x541000, 0x54ffff, MAP_RAM);
+	SekMapMemory(Drv68KRAM,		   0x580000, 0x58ffff, MAP_RAM);
+	SekMapMemory(DrvSprRAM0,	   0x5c0000, 0x5dffff, MAP_RAM);
+	SekMapMemory(DrvSprRAM1,	   0x5e0000, 0x5fffff, MAP_RAM);
 	SekSetWriteByteHandler(0,	   bestbest_write_byte);
 	SekSetWriteWordHandler(0,	   bestbest_write_word);
 	SekSetReadByteHandler(0,	   bestbest_read_byte);
@@ -1544,10 +1544,10 @@ static INT32 SunaqInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		   0x000000, 0x0fffff, SM_ROM);
-	SekMapMemory(DrvPalRAM2,	   0x540400, 0x540fff, SM_RAM);
-	SekMapMemory(Drv68KRAM,		   0x580000, 0x583fff, SM_RAM);
-	SekMapMemory(DrvSprRAM0,	   0x5c0000, 0x5dffff, SM_RAM);
+	SekMapMemory(Drv68KROM,		   0x000000, 0x0fffff, MAP_ROM);
+	SekMapMemory(DrvPalRAM2,	   0x540400, 0x540fff, MAP_RAM);
+	SekMapMemory(Drv68KRAM,		   0x580000, 0x583fff, MAP_RAM);
+	SekMapMemory(DrvSprRAM0,	   0x5c0000, 0x5dffff, MAP_RAM);
 	SekSetWriteByteHandler(0,	   sunaq_write_byte);
 	SekSetWriteWordHandler(0,	   sunaq_write_word);
 	SekSetReadByteHandler(0,	   sunaq_read_byte);
@@ -1609,11 +1609,11 @@ static INT32 UballoonInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		   0x000000, 0x0fffff, SM_ROM);
-	SekMapMemory(DrvPalRAM2,	   0x200400, 0x200fff, SM_RAM);
-	SekMapMemory(DrvSprRAM0,	   0x400000, 0x41ffff, SM_RAM);
-	SekMapMemory(DrvSprRAM0,	   0x5c0000, 0x5dffff, SM_RAM);
-	SekMapMemory(Drv68KRAM,	   	   0x800000, 0x803fff, SM_RAM);
+	SekMapMemory(Drv68KROM,		   0x000000, 0x0fffff, MAP_ROM);
+	SekMapMemory(DrvPalRAM2,	   0x200400, 0x200fff, MAP_RAM);
+	SekMapMemory(DrvSprRAM0,	   0x400000, 0x41ffff, MAP_RAM);
+	SekMapMemory(DrvSprRAM0,	   0x5c0000, 0x5dffff, MAP_RAM);
+	SekMapMemory(Drv68KRAM,	   	   0x800000, 0x803fff, MAP_RAM);
 	SekSetWriteByteHandler(0,	   uballoon_write_byte);
 	SekSetWriteWordHandler(0,	   uballoon_write_word);
 	SekSetReadByteHandler(0,	   uballoon_read_byte);
@@ -1674,10 +1674,10 @@ static INT32 BssoccerInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		   0x000000, 0x1fffff, SM_ROM);
-	SekMapMemory(Drv68KRAM,		   0x200000, 0x203fff, SM_RAM);
-	SekMapMemory(DrvPalRAM2,	   0x400400, 0x400fff, SM_RAM);
-	SekMapMemory(DrvSprRAM0,	   0x600000, 0x61ffff, SM_RAM);
+	SekMapMemory(Drv68KROM,		   0x000000, 0x1fffff, MAP_ROM);
+	SekMapMemory(Drv68KRAM,		   0x200000, 0x203fff, MAP_RAM);
+	SekMapMemory(DrvPalRAM2,	   0x400400, 0x400fff, MAP_RAM);
+	SekMapMemory(DrvSprRAM0,	   0x600000, 0x61ffff, MAP_RAM);
 	SekSetWriteByteHandler(0,	   bssoccer_write_byte);
 	SekSetWriteWordHandler(0,	   bssoccer_write_word);
 	SekSetReadByteHandler(0,	   bssoccer_read_byte);

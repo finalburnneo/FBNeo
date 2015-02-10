@@ -4,13 +4,6 @@ void h6280Write(UINT32 address, UINT8 data);
 UINT8 h6280Read(UINT32 address);
 UINT8 h6280Fetch(UINT32 address);
 
-#define H6280_READ		1
-#define H6280_WRITE		2
-#define H6280_FETCH		4
-
-#define H6280_ROM		(H6280_READ | H6280_FETCH)
-#define H6280_RAM		(H6280_READ | H6280_FETCH | H6280_WRITE)
-
 void h6280MapMemory(UINT8 *src, UINT32 start, UINT32 finish, INT32 type);
 
 void h6280SetIrqCallbackHandler(INT32 (*callback)(INT32));

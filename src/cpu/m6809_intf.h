@@ -21,13 +21,6 @@ struct M6809Ext {
 	INT32 nCyclesLeft;
 };
 
-#define M6809_READ	1
-#define M6809_WRITE	2
-#define M6809_FETCH	4
-
-#define M6809_RAM	(M6809_READ | M6809_WRITE | M6809_FETCH)
-#define M6809_ROM	(M6809_READ | M6809_FETCH)
-
 extern INT32 nM6809Count;
 
 extern INT32 nM6809CyclesTotal;

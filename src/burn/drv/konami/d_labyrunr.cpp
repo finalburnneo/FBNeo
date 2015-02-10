@@ -165,7 +165,7 @@ static void bankswitch(INT32 data)
 {
 	if (data != HD6309Bank) {
 		HD6309Bank = data;
-		HD6309MapMemory(DrvHD6309ROM + 0x10000 + ((HD6309Bank & 7) * 0x4000), 0x4000, 0x7fff, HD6309_ROM);
+		HD6309MapMemory(DrvHD6309ROM + 0x10000 + ((HD6309Bank & 7) * 0x4000), 0x4000, 0x7fff, MAP_ROM);
 	}
 }
 
@@ -413,12 +413,12 @@ static INT32 CommonInit(INT32 nLoadType)
 
 	HD6309Init(0);
 	HD6309Open(0);
-	HD6309MapMemory(DrvPalRAM,	0x1000, 0x10ff, HD6309_ROM);
-	HD6309MapMemory(DrvHD6309RAM,	0x1800, 0x1fff, HD6309_RAM);
-	HD6309MapMemory(DrvSprRAM,	0x2000, 0x2fff, HD6309_RAM);
-	HD6309MapMemory(DrvVidRAM0,	0x3000, 0x37ff, HD6309_RAM);
-	HD6309MapMemory(DrvVidRAM1,	0x3800, 0x3fff, HD6309_RAM);
-	HD6309MapMemory(DrvHD6309ROM,	0x8000, 0xffff, HD6309_ROM);
+	HD6309MapMemory(DrvPalRAM,	0x1000, 0x10ff, MAP_ROM);
+	HD6309MapMemory(DrvHD6309RAM,	0x1800, 0x1fff, MAP_RAM);
+	HD6309MapMemory(DrvSprRAM,	0x2000, 0x2fff, MAP_RAM);
+	HD6309MapMemory(DrvVidRAM0,	0x3000, 0x37ff, MAP_RAM);
+	HD6309MapMemory(DrvVidRAM1,	0x3800, 0x3fff, MAP_RAM);
+	HD6309MapMemory(DrvHD6309ROM,	0x8000, 0xffff, MAP_ROM);
 	HD6309SetWriteHandler(labyrunr_write);
 	HD6309SetReadHandler(labyrunr_read);
 	HD6309Close();

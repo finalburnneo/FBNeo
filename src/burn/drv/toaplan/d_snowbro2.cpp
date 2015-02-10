@@ -558,9 +558,9 @@ static INT32 DrvInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom01,		0x000000, 0x07FFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram01,		0x100000, 0x10FFFF, SM_RAM);
-		SekMapMemory(RamPal,	0x400000, 0x400FFF, SM_RAM);	// Palette RAM
+		SekMapMemory(Rom01,		0x000000, 0x07FFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram01,		0x100000, 0x10FFFF, MAP_RAM);
+		SekMapMemory(RamPal,	0x400000, 0x400FFF, MAP_RAM);	// Palette RAM
 
 		SekSetReadWordHandler(0, snowbro2ReadWord);
 		SekSetReadByteHandler(0, snowbro2ReadByte);

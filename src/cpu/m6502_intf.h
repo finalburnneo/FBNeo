@@ -34,13 +34,6 @@ struct M6502Ext {
 	INT32 nCyclesLeft;
 };
 
-#define M6502_READ		1
-#define M6502_WRITE	2
-#define M6502_FETCH	4
-
-#define M6502_RAM	(M6502_READ | M6502_WRITE | M6502_FETCH)
-#define M6502_ROM	(M6502_READ | M6502_FETCH)
-
 extern INT32 nM6502Count;
 
 extern INT32 nM6502CyclesTotal;

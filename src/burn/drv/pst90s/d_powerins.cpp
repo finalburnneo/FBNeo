@@ -799,19 +799,19 @@ static INT32 powerinsInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,		0x000000, 0x0FFFFF, SM_ROM);	// CPU 0 ROM
+		SekMapMemory(Rom68K,		0x000000, 0x0FFFFF, MAP_ROM);	// CPU 0 ROM
 		SekMapMemory((UINT8 *)RamPal,
-									0x120000, 0x120FFF, SM_ROM);	// palette
+									0x120000, 0x120FFF, MAP_ROM);	// palette
 		SekMapMemory((UINT8 *)RamBg,
-									0x140000, 0x143fff, SM_RAM);	// b ground
+									0x140000, 0x143fff, MAP_RAM);	// b ground
 		SekMapMemory((UINT8 *)RamFg,		
-									0x170000, 0x170fff, SM_RAM);	// f ground
+									0x170000, 0x170fff, MAP_RAM);	// f ground
 		SekMapMemory((UINT8 *)RamFg,		
-									0x171000, 0x171fff, SM_RAM);	// f ground Mirror
+									0x171000, 0x171fff, MAP_RAM);	// f ground Mirror
 		SekMapMemory((UINT8 *)RamSpr,
-									0x180000, 0x18ffff, SM_RAM);	// sprites
+									0x180000, 0x18ffff, MAP_RAM);	// sprites
 
-		SekMapHandler(1,			0x120000, 0x120FFF, SM_WRITE);
+		SekMapHandler(1,			0x120000, 0x120FFF, MAP_WRITE);
 
 
 		SekSetReadWordHandler(0, powerinsReadWord);

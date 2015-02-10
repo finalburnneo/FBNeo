@@ -899,19 +899,19 @@ static INT32 gameInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom01,					0x000000, 0x07FFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram01,					0x100000, 0x110001, SM_RAM);	// ram (Air Gallet tests too far)
-		SekMapMemory(Rom02,					0x200000, 0x3FFFFF, SM_ROM);
-		SekMapMemory(Ram02,					0x400000, 0x407FFF, SM_RAM);
-		SekMapMemory(Ram03,					0x40C000, 0x410001, SM_RAM);	// RAM (Air Gallet tests too far)
-		SekMapMemory(CaveSpriteRAM,			0x500000, 0x510001, SM_RAM);	// Sprite RAM (Air Gallet tests too far)
-		SekMapMemory(CaveTileRAM[0],	   	0x800000, 0x807FFF, SM_RAM);
-		SekMapMemory(CaveTileRAM[1],	   	0x880000, 0x887FFF, SM_RAM);
-		SekMapMemory(CaveTileRAM[2],		0x900000, 0x908001, SM_RAM);	// Air Gallet tests too far
+		SekMapMemory(Rom01,					0x000000, 0x07FFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram01,					0x100000, 0x110001, MAP_RAM);	// ram (Air Gallet tests too far)
+		SekMapMemory(Rom02,					0x200000, 0x3FFFFF, MAP_ROM);
+		SekMapMemory(Ram02,					0x400000, 0x407FFF, MAP_RAM);
+		SekMapMemory(Ram03,					0x40C000, 0x410001, MAP_RAM);	// RAM (Air Gallet tests too far)
+		SekMapMemory(CaveSpriteRAM,			0x500000, 0x510001, MAP_RAM);	// Sprite RAM (Air Gallet tests too far)
+		SekMapMemory(CaveTileRAM[0],	   	0x800000, 0x807FFF, MAP_RAM);
+		SekMapMemory(CaveTileRAM[1],	   	0x880000, 0x887FFF, MAP_RAM);
+		SekMapMemory(CaveTileRAM[2],		0x900000, 0x908001, MAP_RAM);	// Air Gallet tests too far
 
-		SekMapMemory(CavePalSrc,		   	0x408000, 0x4087FF, SM_RAM);	// Palette RAM
-		SekMapMemory(CavePalSrc + 0x8800,	0x408800, 0x40BFFF, SM_ROM);	// Palette RAM (write goes through handler)
-		SekMapHandler(1,					0x408800, 0x40BFFF, SM_WRITE);	//
+		SekMapMemory(CavePalSrc,		   	0x408000, 0x4087FF, MAP_RAM);	// Palette RAM
+		SekMapMemory(CavePalSrc + 0x8800,	0x408800, 0x40BFFF, MAP_ROM);	// Palette RAM (write goes through handler)
+		SekMapHandler(1,					0x408800, 0x40BFFF, MAP_WRITE);	//
 
 		SekSetReadWordHandler(0, sailormnReadWord);
 		SekSetReadByteHandler(0, sailormnReadByte);

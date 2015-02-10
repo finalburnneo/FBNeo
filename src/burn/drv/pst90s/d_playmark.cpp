@@ -1047,13 +1047,13 @@ static INT32 DrvInit()
 	
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68kRom       , 0x000000, 0x0fffff, SM_ROM);
-	SekMapMemory(DrvSpriteRam    , 0x440000, 0x4403ff, SM_RAM);
-	SekMapMemory(DrvVideo2Ram    , 0x500000, 0x500fff, SM_RAM);
-	SekMapMemory(DrvVideo1Ram    , 0x502000, 0x503fff, SM_RAM);
-	SekMapMemory(DrvBgVideoRam   , 0x600000, 0x67ffff, SM_RAM);
-	SekMapMemory(DrvPaletteRam   , 0x780000, 0x7807ff, SM_READ);
-	SekMapMemory(Drv68kRam       , 0xff0000, 0xffffff, SM_RAM);
+	SekMapMemory(Drv68kRom       , 0x000000, 0x0fffff, MAP_ROM);
+	SekMapMemory(DrvSpriteRam    , 0x440000, 0x4403ff, MAP_RAM);
+	SekMapMemory(DrvVideo2Ram    , 0x500000, 0x500fff, MAP_RAM);
+	SekMapMemory(DrvVideo1Ram    , 0x502000, 0x503fff, MAP_RAM);
+	SekMapMemory(DrvBgVideoRam   , 0x600000, 0x67ffff, MAP_RAM);
+	SekMapMemory(DrvPaletteRam   , 0x780000, 0x7807ff, MAP_READ);
+	SekMapMemory(Drv68kRam       , 0xff0000, 0xffffff, MAP_RAM);
 	SekSetReadByteHandler(0, DrvReadByte);
 	SekSetReadWordHandler(0, DrvReadWord);
 	SekSetWriteByteHandler(0, DrvWriteByte);
@@ -1138,13 +1138,13 @@ static INT32 ExcelsrInit()
 	
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68kRom       , 0x000000, 0x2fffff, SM_ROM);
-	SekMapMemory(DrvSpriteRam    , 0x440000, 0x440fff, SM_RAM);
-	SekMapMemory(DrvVideo2Ram    , 0x500000, 0x500fff, SM_RAM);
-	SekMapMemory(DrvVideo1Ram    , 0x501000, 0x501fff, SM_RAM);
-	SekMapMemory(DrvBgVideoRam   , 0x600000, 0x67ffff, SM_RAM);
-	SekMapMemory(DrvPaletteRam   , 0x780000, 0x7807ff, SM_READ);
-	SekMapMemory(Drv68kRam       , 0xff0000, 0xffffff, SM_RAM);
+	SekMapMemory(Drv68kRom       , 0x000000, 0x2fffff, MAP_ROM);
+	SekMapMemory(DrvSpriteRam    , 0x440000, 0x440fff, MAP_RAM);
+	SekMapMemory(DrvVideo2Ram    , 0x500000, 0x500fff, MAP_RAM);
+	SekMapMemory(DrvVideo1Ram    , 0x501000, 0x501fff, MAP_RAM);
+	SekMapMemory(DrvBgVideoRam   , 0x600000, 0x67ffff, MAP_RAM);
+	SekMapMemory(DrvPaletteRam   , 0x780000, 0x7807ff, MAP_READ);
+	SekMapMemory(Drv68kRam       , 0xff0000, 0xffffff, MAP_RAM);
 	SekSetReadByteHandler(0, ExcelsrReadByte);
 	SekSetReadWordHandler(0, ExcelsrReadWord);
 	SekSetWriteByteHandler(0, ExcelsrWriteByte);
@@ -1240,13 +1240,13 @@ static INT32 HotmindInit()
 	
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68kRom       , 0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(DrvBgVideoRam   , 0x100000, 0x103fff, SM_RAM);
-	SekMapMemory(DrvVideo2Ram    , 0x104000, 0x107fff, SM_RAM);
-	SekMapMemory(DrvVideo1Ram    , 0x108000, 0x10ffff, SM_RAM);
-	SekMapMemory(DrvSpriteRam    , 0x200000, 0x200fff, SM_RAM);
-	SekMapMemory(DrvPaletteRam   , 0x280000, 0x2807ff, SM_READ);
-	SekMapMemory(Drv68kRam       , 0xff0000, 0xffffff, SM_RAM);
+	SekMapMemory(Drv68kRom       , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(DrvBgVideoRam   , 0x100000, 0x103fff, MAP_RAM);
+	SekMapMemory(DrvVideo2Ram    , 0x104000, 0x107fff, MAP_RAM);
+	SekMapMemory(DrvVideo1Ram    , 0x108000, 0x10ffff, MAP_RAM);
+	SekMapMemory(DrvSpriteRam    , 0x200000, 0x200fff, MAP_RAM);
+	SekMapMemory(DrvPaletteRam   , 0x280000, 0x2807ff, MAP_READ);
+	SekMapMemory(Drv68kRam       , 0xff0000, 0xffffff, MAP_RAM);
 	SekSetReadByteHandler(0, HotmindReadByte);
 	SekSetReadWordHandler(0, HotmindReadWord);
 	SekSetWriteByteHandler(0, HotmindWriteByte);

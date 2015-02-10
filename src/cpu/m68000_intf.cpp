@@ -1513,7 +1513,7 @@ INT32 SekMapMemory(UINT8* pMemory, UINT32 nStart, UINT32 nEnd, INT32 nType)
 	UINT8** pMemMap = pSekExt->MemMap + (nStart >> SEK_SHIFT);
 
 	// Special case for ROM banks
-	if (nType == SM_ROM) {
+	if (nType == MAP_ROM) {
 		for (UINT32 i = (nStart & ~SEK_PAGEM); i <= nEnd; i += SEK_PAGE_SIZE, pMemMap++) {
 			pMemMap[0]			  = Ptr + i;
 			pMemMap[SEK_WADD * 2] = Ptr + i;
@@ -1524,13 +1524,13 @@ INT32 SekMapMemory(UINT8* pMemory, UINT32 nStart, UINT32 nEnd, INT32 nType)
 
 	for (UINT32 i = (nStart & ~SEK_PAGEM); i <= nEnd; i += SEK_PAGE_SIZE, pMemMap++) {
 
-		if (nType & SM_READ) {					// Read
+		if (nType & MAP_READ) {					// Read
 			pMemMap[0]			  = Ptr + i;
 		}
-		if (nType & SM_WRITE) {					// Write
+		if (nType & MAP_WRITE) {					// Write
 			pMemMap[SEK_WADD]	  = Ptr + i;
 		}
-		if (nType & SM_FETCH) {					// Fetch
+		if (nType & MAP_FETCH) {					// Fetch
 			pMemMap[SEK_WADD * 2] = Ptr + i;
 		}
 	}
@@ -1550,13 +1550,13 @@ INT32 SekMapHandler(uintptr_t nHandler, UINT32 nStart, UINT32 nEnd, INT32 nType)
 	// Add to memory map
 	for (UINT32 i = (nStart & ~SEK_PAGEM); i <= nEnd; i += SEK_PAGE_SIZE, pMemMap++) {
 
-		if (nType & SM_READ) {					// Read
+		if (nType & MAP_READ) {					// Read
 			pMemMap[0]			  = (UINT8*)nHandler;
 		}
-		if (nType & SM_WRITE) {					// Write
+		if (nType & MAP_WRITE) {					// Write
 			pMemMap[SEK_WADD]	  = (UINT8*)nHandler;
 		}
-		if (nType & SM_FETCH) {					// Fetch
+		if (nType & MAP_FETCH) {					// Fetch
 			pMemMap[SEK_WADD * 2] = (UINT8*)nHandler;
 		}
 	}

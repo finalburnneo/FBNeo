@@ -21,13 +21,6 @@ struct HD6309Ext {
 	INT32 nCyclesLeft;
 };
 
-#define HD6309_READ	1
-#define HD6309_WRITE	2
-#define HD6309_FETCH	4
-
-#define HD6309_RAM	(HD6309_READ | HD6309_WRITE | HD6309_FETCH)
-#define HD6309_ROM	(HD6309_READ | HD6309_FETCH)
-
 extern INT32 nHD6309Count;
 
 extern INT32 nHD6309CyclesTotal;

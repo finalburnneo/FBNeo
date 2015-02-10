@@ -957,7 +957,7 @@ static void bankswitch(INT32 data)
 {
 	RomBank = (data & 0x0f) * 0x4000;
 
-	HD6309MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, HD6309_ROM); // bank
+	HD6309MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, MAP_ROM); // bank
 }
 
 void ghostb_main_write(UINT16 address, UINT8 data)
@@ -1320,22 +1320,22 @@ static INT32 DrvInit()
 
 	HD6309Init(0);
 	HD6309Open(0);
-	HD6309MapMemory(DrvMainRAM,		0x0000, 0x17ff, HD6309_RAM);
-	HD6309MapMemory(DrvVidRAM,		0x1800, 0x1fff, HD6309_RAM);
-	HD6309MapMemory(DrvPf0RAM,		0x2000, 0x2bff, HD6309_RAM);// 0 - 27ff
-	HD6309MapMemory(DrvRowRAM,		0x2c00, 0x2fff, HD6309_RAM);// c00-dff
-	HD6309MapMemory(DrvSprRAM,		0x3000, 0x37ff, HD6309_RAM);
-	HD6309MapMemory(DrvMainROM + 0x10000, 0x4000, 0x7fff, HD6309_ROM); // bank
-	HD6309MapMemory(DrvMainROM + 0x08000, 0x8000, 0xffff, HD6309_ROM);
+	HD6309MapMemory(DrvMainRAM,		0x0000, 0x17ff, MAP_RAM);
+	HD6309MapMemory(DrvVidRAM,		0x1800, 0x1fff, MAP_RAM);
+	HD6309MapMemory(DrvPf0RAM,		0x2000, 0x2bff, MAP_RAM);// 0 - 27ff
+	HD6309MapMemory(DrvRowRAM,		0x2c00, 0x2fff, MAP_RAM);// c00-dff
+	HD6309MapMemory(DrvSprRAM,		0x3000, 0x37ff, MAP_RAM);
+	HD6309MapMemory(DrvMainROM + 0x10000, 0x4000, 0x7fff, MAP_ROM); // bank
+	HD6309MapMemory(DrvMainROM + 0x08000, 0x8000, 0xffff, MAP_ROM);
 	HD6309SetWriteHandler(ghostb_main_write);
 	HD6309SetReadHandler(ghostb_main_read);
 	HD6309Close();
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(DrvM6502RAM,          0x0000, 0x05ff, M6502_RAM);
-	M6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, M6502_READ);
-	M6502MapMemory(DrvM6502OPS + 0x8000, 0x8000, 0xffff, M6502_FETCH);
+	M6502MapMemory(DrvM6502RAM,          0x0000, 0x05ff, MAP_RAM);
+	M6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, MAP_READ);
+	M6502MapMemory(DrvM6502OPS + 0x8000, 0x8000, 0xffff, MAP_FETCH);
 	M6502SetReadHandler(ghostb_sound_read);
 	M6502SetWriteHandler(ghostb_sound_write);
 	M6502Close();
@@ -1767,7 +1767,7 @@ static INT32 GhostbScan(INT32 nAction, INT32 *pnMin)
 		
 		if (nAction & ACB_WRITE) {
 			HD6309Open(0);
-			HD6309MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, HD6309_ROM);
+			HD6309MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, MAP_ROM);
 			HD6309Close();
 		}
 	}
@@ -1934,7 +1934,7 @@ static void m6809_bankswitch(INT32 data)
 {
 	RomBank = (data & 0x0f) * 0x4000;
 	
-	M6809MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, M6809_ROM); // bank
+	M6809MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, MAP_ROM); // bank
 }
 
 
@@ -2144,24 +2144,24 @@ static INT32 CobraInit()
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvMainRAM,		0x0000, 0x07ff, M6809_RAM);
-	M6809MapMemory(DrvPf0RAM,		0x0800, 0x0fff, M6809_RAM);
-	M6809MapMemory(DrvPf1RAM,		0x1000, 0x1fff, M6809_RAM);
-	M6809MapMemory(DrvVidRAM,		0x2000, 0x27ff, M6809_RAM);
-	M6809MapMemory(DrvSprRAM,		0x2800, 0x2fff, M6809_RAM);
-	M6809MapMemory(DrvPalRAM,		0x3000, 0x37ff, M6809_RAM);
-	M6809MapMemory(DrvMainROM + 0x10000,  0x4000, 0x7fff, M6809_ROM);
-	M6809MapMemory(DrvMainROM + 0x08000,  0x8000, 0xffff, M6809_ROM);
+	M6809MapMemory(DrvMainRAM,		0x0000, 0x07ff, MAP_RAM);
+	M6809MapMemory(DrvPf0RAM,		0x0800, 0x0fff, MAP_RAM);
+	M6809MapMemory(DrvPf1RAM,		0x1000, 0x1fff, MAP_RAM);
+	M6809MapMemory(DrvVidRAM,		0x2000, 0x27ff, MAP_RAM);
+	M6809MapMemory(DrvSprRAM,		0x2800, 0x2fff, MAP_RAM);
+	M6809MapMemory(DrvPalRAM,		0x3000, 0x37ff, MAP_RAM);
+	M6809MapMemory(DrvMainROM + 0x10000,  0x4000, 0x7fff, MAP_ROM);
+	M6809MapMemory(DrvMainROM + 0x08000,  0x8000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(cobra_main_write);
 	M6809SetReadHandler(cobra_main_read);
 	M6809Close();
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(DrvM6502RAM,          0x0000, 0x05ff, M6502_RAM);
-//	m6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, M6502_READ);
-//	m6502MapMemory(DrvM6502OPS + 0x8000, 0x8000, 0xffff, M6502_FETCH);
-	M6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, M6502_ROM);
+	M6502MapMemory(DrvM6502RAM,          0x0000, 0x05ff, MAP_RAM);
+//	m6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, MAP_READ);
+//	m6502MapMemory(DrvM6502OPS + 0x8000, 0x8000, 0xffff, MAP_FETCH);
+	M6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, MAP_ROM);
 	M6502SetReadHandler(ghostb_sound_read);
 	M6502SetWriteHandler(ghostb_sound_write);
 	M6502Close();
@@ -2415,7 +2415,7 @@ static INT32 CobraScan(INT32 nAction, INT32 *pnMin)
 		
 		if (nAction & ACB_WRITE) {
 			M6809Open(0);
-			M6809MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, M6809_ROM);
+			M6809MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, MAP_ROM);
 			M6809Close();
 		}
 	}
@@ -2779,24 +2779,24 @@ static INT32 SrdarwinInit()
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvMainRAM,		0x0000, 0x05ff, M6809_RAM);
-	M6809MapMemory(DrvSprRAM,		0x0600, 0x07ff, M6809_RAM);
-	M6809MapMemory(DrvVidRAM,		0x0800, 0x0fff, M6809_RAM);
-	M6809MapMemory(DrvMainRAM + 0x1000,	0x1000, 0x13ff, M6809_RAM);
-	M6809MapMemory(DrvPf0RAM,		0x1400, 0x17ff, M6809_RAM);
-	M6809MapMemory(DrvPalRAM,		0x2800, 0x28ff, M6809_RAM);
-	M6809MapMemory(DrvPalRAM + 0x100,	0x3000, 0x30ff, M6809_RAM);
-	M6809MapMemory(DrvMainROM + 0x10000,  0x4000, 0x7fff, M6809_ROM);
-	M6809MapMemory(DrvMainROM + 0x08000,  0x8000, 0xffff, M6809_ROM);
+	M6809MapMemory(DrvMainRAM,		0x0000, 0x05ff, MAP_RAM);
+	M6809MapMemory(DrvSprRAM,		0x0600, 0x07ff, MAP_RAM);
+	M6809MapMemory(DrvVidRAM,		0x0800, 0x0fff, MAP_RAM);
+	M6809MapMemory(DrvMainRAM + 0x1000,	0x1000, 0x13ff, MAP_RAM);
+	M6809MapMemory(DrvPf0RAM,		0x1400, 0x17ff, MAP_RAM);
+	M6809MapMemory(DrvPalRAM,		0x2800, 0x28ff, MAP_RAM);
+	M6809MapMemory(DrvPalRAM + 0x100,	0x3000, 0x30ff, MAP_RAM);
+	M6809MapMemory(DrvMainROM + 0x10000,  0x4000, 0x7fff, MAP_ROM);
+	M6809MapMemory(DrvMainROM + 0x08000,  0x8000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(srdarwin_main_write);
 	M6809SetReadHandler(srdarwin_main_read);
 	M6809Close();
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(DrvM6502RAM,          0x0000, 0x05ff, M6502_RAM);
-	M6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, M6502_READ);
-	M6502MapMemory(DrvM6502OPS + 0x8000, 0x8000, 0xffff, M6502_FETCH);
+	M6502MapMemory(DrvM6502RAM,          0x0000, 0x05ff, MAP_RAM);
+	M6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, MAP_READ);
+	M6502MapMemory(DrvM6502OPS + 0x8000, 0x8000, 0xffff, MAP_FETCH);
 	M6502SetReadHandler(ghostb_sound_read);
 	M6502SetWriteHandler(ghostb_sound_write);
 	M6502Close();
@@ -3465,13 +3465,13 @@ static INT32 GondoInit()
 
 	HD6309Init(0);
 	HD6309Open(0);
-	HD6309MapMemory(DrvMainRAM,		 0x0000, 0x17ff, HD6309_RAM);
-	HD6309MapMemory(DrvVidRAM,		 0x1800, 0x1fff, HD6309_RAM);
-	HD6309MapMemory(DrvPf0RAM,		 0x2000, 0x27ff, HD6309_RAM);
-	HD6309MapMemory(DrvPalRAM,		 0x2800, 0x2fff, HD6309_RAM);//xxxxBBBBGGGGRRRR_split
-	HD6309MapMemory(DrvSprRAM,		 0x3000, 0x37ff, HD6309_RAM);
-	HD6309MapMemory(DrvMainROM + 0x10000, 0x4000, 0x7fff, HD6309_ROM); // bank
-	HD6309MapMemory(DrvMainROM + 0x08000, 0x8000, 0xffff, HD6309_ROM);
+	HD6309MapMemory(DrvMainRAM,		 0x0000, 0x17ff, MAP_RAM);
+	HD6309MapMemory(DrvVidRAM,		 0x1800, 0x1fff, MAP_RAM);
+	HD6309MapMemory(DrvPf0RAM,		 0x2000, 0x27ff, MAP_RAM);
+	HD6309MapMemory(DrvPalRAM,		 0x2800, 0x2fff, MAP_RAM);//xxxxBBBBGGGGRRRR_split
+	HD6309MapMemory(DrvSprRAM,		 0x3000, 0x37ff, MAP_RAM);
+	HD6309MapMemory(DrvMainROM + 0x10000, 0x4000, 0x7fff, MAP_ROM); // bank
+	HD6309MapMemory(DrvMainROM + 0x08000, 0x8000, 0xffff, MAP_ROM);
 	HD6309SetWriteHandler(gondo_main_write);
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "garyoret")) {
 		HD6309SetReadHandler(garyoret_main_read);
@@ -3482,8 +3482,8 @@ static INT32 GondoInit()
 	
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(DrvM6502RAM,          0x0000, 0x05ff, M6502_RAM);
-	M6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, M6502_ROM);
+	M6502MapMemory(DrvM6502RAM,          0x0000, 0x05ff, MAP_RAM);
+	M6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, MAP_ROM);
 	M6502SetReadHandler(ghostb_sound_read);
 	M6502SetWriteHandler(gondo_sound_write);
 	M6502Close();
@@ -3709,7 +3709,7 @@ static INT32 GondoScan(INT32 nAction, INT32 *pnMin)
 		
 		if (nAction & ACB_WRITE) {
 			HD6309Open(0);
-			HD6309MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, HD6309_ROM);
+			HD6309MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, MAP_ROM);
 			HD6309Close();
 		}
 	}
@@ -4070,31 +4070,31 @@ static INT32 OscarInit()
 
 	HD6309Init(0);
 	HD6309Open(0);
-	HD6309MapMemory(DrvMainRAM,		 0x0000, 0x1fff, HD6309_RAM); // all shared?
-	HD6309MapMemory(DrvVidRAM,		 0x2000, 0x28ff, HD6309_RAM);
-	HD6309MapMemory(DrvPf0RAM,		 0x2800, 0x2fff, HD6309_RAM);
-	HD6309MapMemory(DrvSprRAM,		 0x3000, 0x37ff, HD6309_RAM);
-	HD6309MapMemory(DrvPalRAM,		 0x3800, 0x3bff, HD6309_RAM); // xxxxBBBBGGGGRRRR_be_w
-	HD6309MapMemory(DrvMainROM + 0x10000, 0x4000, 0x7fff, HD6309_ROM); // bank
-	HD6309MapMemory(DrvMainROM + 0x08000, 0x8000, 0xffff, HD6309_ROM);
+	HD6309MapMemory(DrvMainRAM,		 0x0000, 0x1fff, MAP_RAM); // all shared?
+	HD6309MapMemory(DrvVidRAM,		 0x2000, 0x28ff, MAP_RAM);
+	HD6309MapMemory(DrvPf0RAM,		 0x2800, 0x2fff, MAP_RAM);
+	HD6309MapMemory(DrvSprRAM,		 0x3000, 0x37ff, MAP_RAM);
+	HD6309MapMemory(DrvPalRAM,		 0x3800, 0x3bff, MAP_RAM); // xxxxBBBBGGGGRRRR_be_w
+	HD6309MapMemory(DrvMainROM + 0x10000, 0x4000, 0x7fff, MAP_ROM); // bank
+	HD6309MapMemory(DrvMainROM + 0x08000, 0x8000, 0xffff, MAP_ROM);
 	HD6309SetWriteHandler(oscar_main_write);
 	HD6309SetReadHandler(oscar_main_read);
 	HD6309Close();
 
 	HD6309Init(1);
 	HD6309Open(1);
-	HD6309MapMemory(DrvMainRAM,		0x0000, 0x0eff, HD6309_RAM); // all shared? AM_RANGE(0x0f00, 0x0fff) AM_RAM not?
-	HD6309MapMemory(DrvPalRAM + 0x400,	0x0f00, 0x0fff, HD6309_RAM); // not really pal...
-	HD6309MapMemory(DrvMainRAM + 0x1000,	0x1000, 0x1fff, HD6309_RAM); // all shared? AM_RANGE(0x0f00, 0x0fff) AM_RAM not?
-	HD6309MapMemory(DrvSubROM + 0x04000, 0x4000, 0xffff, HD6309_ROM);
+	HD6309MapMemory(DrvMainRAM,		0x0000, 0x0eff, MAP_RAM); // all shared? AM_RANGE(0x0f00, 0x0fff) AM_RAM not?
+	HD6309MapMemory(DrvPalRAM + 0x400,	0x0f00, 0x0fff, MAP_RAM); // not really pal...
+	HD6309MapMemory(DrvMainRAM + 0x1000,	0x1000, 0x1fff, MAP_RAM); // all shared? AM_RANGE(0x0f00, 0x0fff) AM_RAM not?
+	HD6309MapMemory(DrvSubROM + 0x04000, 0x4000, 0xffff, MAP_ROM);
 	HD6309SetWriteHandler(oscar_sub_write); // 0x3e80, 0x3e83 used...
 	HD6309Close();
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(DrvM6502RAM,          0x0000, 0x05ff, M6502_RAM);
-	M6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, M6502_READ);
-	M6502MapMemory(DrvM6502OPS + 0x8000, 0x8000, 0xffff, M6502_FETCH);
+	M6502MapMemory(DrvM6502RAM,          0x0000, 0x05ff, MAP_RAM);
+	M6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, MAP_READ);
+	M6502MapMemory(DrvM6502OPS + 0x8000, 0x8000, 0xffff, MAP_FETCH);
 	M6502SetReadHandler(ghostb_sound_read);
 	M6502SetWriteHandler(gondo_sound_write);
 	M6502Close();
@@ -4720,34 +4720,34 @@ static INT32 LastmissInit()
 
 	M6809Init(2);
 	M6809Open(0);
-	M6809MapMemory(DrvMainRAM,		 0x0000, 0x0fff, M6809_RAM);
-	M6809MapMemory(DrvPalRAM,		 0x1000, 0x17ff, M6809_RAM);
-	M6809MapMemory(DrvVidRAM,		 0x2000, 0x27ff, M6809_RAM);
-	M6809MapMemory(DrvSprRAM,		 0x2800, 0x2fff, M6809_RAM);
-	M6809MapMemory(DrvMainRAM + 0x1000,	 0x3000, 0x37ff, M6809_RAM);
-	M6809MapMemory(DrvPf0RAM,		 0x3800, 0x3fff, M6809_RAM);
-	M6809MapMemory(DrvMainROM + 0x10000,     0x4000, 0x7fff, M6809_ROM);
-	M6809MapMemory(DrvMainROM + 0x08000,     0x8000, 0xffff, M6809_ROM);
+	M6809MapMemory(DrvMainRAM,		 0x0000, 0x0fff, MAP_RAM);
+	M6809MapMemory(DrvPalRAM,		 0x1000, 0x17ff, MAP_RAM);
+	M6809MapMemory(DrvVidRAM,		 0x2000, 0x27ff, MAP_RAM);
+	M6809MapMemory(DrvSprRAM,		 0x2800, 0x2fff, MAP_RAM);
+	M6809MapMemory(DrvMainRAM + 0x1000,	 0x3000, 0x37ff, MAP_RAM);
+	M6809MapMemory(DrvPf0RAM,		 0x3800, 0x3fff, MAP_RAM);
+	M6809MapMemory(DrvMainROM + 0x10000,     0x4000, 0x7fff, MAP_ROM);
+	M6809MapMemory(DrvMainROM + 0x08000,     0x8000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(lastmiss_main_write);
 	M6809SetReadHandler(lastmiss_main_read);
 	M6809Close();
 
 	M6809Open(1);
-	M6809MapMemory(DrvMainRAM,		 0x0000, 0x0fff, M6809_RAM);
-	M6809MapMemory(DrvPalRAM,		 0x1000, 0x17ff, M6809_RAM);
-	M6809MapMemory(DrvVidRAM,		 0x2000, 0x27ff, M6809_RAM);
-	M6809MapMemory(DrvSprRAM,		 0x2800, 0x2fff, M6809_RAM);
-	M6809MapMemory(DrvMainRAM + 0x1000,	 0x3000, 0x37ff, M6809_RAM);
-	M6809MapMemory(DrvPf0RAM,		 0x3800, 0x3fff, M6809_RAM);
-	M6809MapMemory(DrvSubROM + 0x04000,      0x4000, 0xffff, M6809_ROM);
+	M6809MapMemory(DrvMainRAM,		 0x0000, 0x0fff, MAP_RAM);
+	M6809MapMemory(DrvPalRAM,		 0x1000, 0x17ff, MAP_RAM);
+	M6809MapMemory(DrvVidRAM,		 0x2000, 0x27ff, MAP_RAM);
+	M6809MapMemory(DrvSprRAM,		 0x2800, 0x2fff, MAP_RAM);
+	M6809MapMemory(DrvMainRAM + 0x1000,	 0x3000, 0x37ff, MAP_RAM);
+	M6809MapMemory(DrvPf0RAM,		 0x3800, 0x3fff, MAP_RAM);
+	M6809MapMemory(DrvSubROM + 0x04000,      0x4000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(lastmiss_main_write);
 	M6809SetReadHandler(lastmiss_main_read);
 	M6809Close();
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(DrvM6502RAM,          0x0000, 0x05ff, M6502_RAM);
-	M6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, M6502_ROM);
+	M6502MapMemory(DrvM6502RAM,          0x0000, 0x05ff, MAP_RAM);
+	M6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, MAP_ROM);
 	M6502SetReadHandler(ghostb_sound_read);
 	M6502SetWriteHandler(gondo_sound_write);
 	M6502Close();
@@ -4978,7 +4978,7 @@ static INT32 LastmissScan(INT32 nAction, INT32 *pnMin)
 		
 		if (nAction & ACB_WRITE) {
 			M6809Open(0);
-			M6809MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, M6809_ROM);
+			M6809MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, MAP_ROM);
 			M6809Close();
 		}
 	}
@@ -5337,7 +5337,7 @@ static void csilver_sound_bank(INT32 data)
 {
 	SndRomBank = (data & 8) >> 3;
 	
-	M6502MapMemory(DrvM6502ROM + 0x10000 + SndRomBank * 0x4000, 0x4000, 0x7fff, M6502_ROM);
+	M6502MapMemory(DrvM6502ROM + 0x10000 + SndRomBank * 0x4000, 0x4000, 0x7fff, MAP_ROM);
 }
 
 void csilver_sound_write(UINT16 address, UINT8 data)
@@ -5434,35 +5434,35 @@ static INT32 CsilverInit()
 
 	M6809Init(2);
 	M6809Open(0);
-	M6809MapMemory(DrvMainRAM + 0x00000,		0x0000, 0x0fff, M6809_RAM);
-	M6809MapMemory(DrvPalRAM,			0x1000, 0x17ff, M6809_RAM); // xxxxbbbbggggrrrr
-	M6809MapMemory(DrvVidRAM,			0x2000, 0x27ff, M6809_RAM);
-	M6809MapMemory(DrvSprRAM,			0x2800, 0x2fff, M6809_RAM);
-	M6809MapMemory(DrvMainRAM + 0x01000,		0x3000, 0x37ff, M6809_RAM);
-	M6809MapMemory(DrvPf0RAM,			0x3800, 0x3fff, M6809_RAM);
-	M6809MapMemory(DrvMainROM + 0x10000,		0x4000, 0x7fff, M6809_RAM);
-	M6809MapMemory(DrvMainROM + 0x08000,		0x8000, 0xffff, M6809_RAM);
+	M6809MapMemory(DrvMainRAM + 0x00000,		0x0000, 0x0fff, MAP_RAM);
+	M6809MapMemory(DrvPalRAM,			0x1000, 0x17ff, MAP_RAM); // xxxxbbbbggggrrrr
+	M6809MapMemory(DrvVidRAM,			0x2000, 0x27ff, MAP_RAM);
+	M6809MapMemory(DrvSprRAM,			0x2800, 0x2fff, MAP_RAM);
+	M6809MapMemory(DrvMainRAM + 0x01000,		0x3000, 0x37ff, MAP_RAM);
+	M6809MapMemory(DrvPf0RAM,			0x3800, 0x3fff, MAP_RAM);
+	M6809MapMemory(DrvMainROM + 0x10000,		0x4000, 0x7fff, MAP_RAM);
+	M6809MapMemory(DrvMainROM + 0x08000,		0x8000, 0xffff, MAP_RAM);
 	M6809SetWriteHandler(csilver_main_write);
 	M6809SetReadHandler(csilver_main_read);
 	M6809Close();
 
 	M6809Open(1);
-	M6809MapMemory(DrvMainRAM + 0x00000,		0x0000, 0x0fff, M6809_RAM);
-	M6809MapMemory(DrvPalRAM,			0x1000, 0x17ff, M6809_RAM); // xxxxbbbbggggrrrr
-	M6809MapMemory(DrvVidRAM,			0x2000, 0x27ff, M6809_RAM);
-	M6809MapMemory(DrvSprRAM,			0x2800, 0x2fff, M6809_RAM);
-	M6809MapMemory(DrvMainRAM + 0x01000,		0x3000, 0x37ff, M6809_RAM);
-	M6809MapMemory(DrvPf0RAM,			0x3800, 0x3fff, M6809_RAM);
-	M6809MapMemory(DrvSubROM + 0x04000,		0x4000, 0xffff, M6809_RAM);
+	M6809MapMemory(DrvMainRAM + 0x00000,		0x0000, 0x0fff, MAP_RAM);
+	M6809MapMemory(DrvPalRAM,			0x1000, 0x17ff, MAP_RAM); // xxxxbbbbggggrrrr
+	M6809MapMemory(DrvVidRAM,			0x2000, 0x27ff, MAP_RAM);
+	M6809MapMemory(DrvSprRAM,			0x2800, 0x2fff, MAP_RAM);
+	M6809MapMemory(DrvMainRAM + 0x01000,		0x3000, 0x37ff, MAP_RAM);
+	M6809MapMemory(DrvPf0RAM,			0x3800, 0x3fff, MAP_RAM);
+	M6809MapMemory(DrvSubROM + 0x04000,		0x4000, 0xffff, MAP_RAM);
 	M6809SetWriteHandler(csilver_main_write);
 	M6809SetReadHandler(csilver_main_read);
 	M6809Close();
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(DrvM6502RAM,          0x0000, 0x07ff, M6502_RAM);
-	M6502MapMemory(DrvM6502ROM + 0x4000, 0x4000, 0x7fff, M6502_ROM);
-	M6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, M6502_ROM);
+	M6502MapMemory(DrvM6502RAM,          0x0000, 0x07ff, MAP_RAM);
+	M6502MapMemory(DrvM6502ROM + 0x4000, 0x4000, 0x7fff, MAP_ROM);
+	M6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, MAP_ROM);
 	M6502SetReadHandler(csilver_sound_read);
 	M6502SetWriteHandler(csilver_sound_write);
 	M6502Close();
@@ -5580,11 +5580,11 @@ static INT32 CsilverScan(INT32 nAction, INT32 *pnMin)
 		
 		if (nAction & ACB_WRITE) {
 			M6809Open(0);
-			M6809MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, M6809_ROM);
+			M6809MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, MAP_ROM);
 			M6809Close();
 			
 			M6502Open(0);
-			M6502MapMemory(DrvM6502ROM + 0x10000 + SndRomBank * 0x4000, 0x4000, 0x7fff, M6502_ROM);
+			M6502MapMemory(DrvM6502ROM + 0x10000 + SndRomBank * 0x4000, 0x4000, 0x7fff, MAP_ROM);
 			M6502Close();
 		}
 	}

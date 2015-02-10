@@ -731,17 +731,17 @@ static INT32 DrvInit(INT32 nGame)
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, SM_ROM);
-	SekMapMemory(Drv68KRAM0,	0x480000, 0x48ffff, SM_RAM);
-	SekMapMemory(K053247Ram,	0x4a0000, 0x4a0fff, SM_RAM);
-	SekMapMemory(Drv68KRAM1,	0x4a1000, 0x4a3fff, SM_RAM);
-	SekMapMemory(DrvPalRAM,		0x4a8000, 0x4abfff, SM_RAM);
-	SekMapMemory(DrvK053936Ctrl1,	0x4d0000, 0x4d03ff, SM_RAM);
-	SekMapMemory(DrvK053936Ctrl2,	0x4d4000, 0x4d43ff, SM_RAM);
-	SekMapMemory(DrvBg2RAM,		0x500000, 0x501fff, SM_RAM);
-	SekMapMemory(DrvBg1RAM,		0x508000, 0x509fff, SM_RAM);
-	SekMapMemory(Drvk053936RAM1,	0x510000, 0x513fff, SM_RAM);
-	SekMapMemory(Drvk053936RAM2,	0x518000, 0x51bfff, SM_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, MAP_ROM);
+	SekMapMemory(Drv68KRAM0,	0x480000, 0x48ffff, MAP_RAM);
+	SekMapMemory(K053247Ram,	0x4a0000, 0x4a0fff, MAP_RAM);
+	SekMapMemory(Drv68KRAM1,	0x4a1000, 0x4a3fff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,		0x4a8000, 0x4abfff, MAP_RAM);
+	SekMapMemory(DrvK053936Ctrl1,	0x4d0000, 0x4d03ff, MAP_RAM);
+	SekMapMemory(DrvK053936Ctrl2,	0x4d4000, 0x4d43ff, MAP_RAM);
+	SekMapMemory(DrvBg2RAM,		0x500000, 0x501fff, MAP_RAM);
+	SekMapMemory(DrvBg1RAM,		0x508000, 0x509fff, MAP_RAM);
+	SekMapMemory(Drvk053936RAM1,	0x510000, 0x513fff, MAP_RAM);
+	SekMapMemory(Drvk053936RAM2,	0x518000, 0x51bfff, MAP_RAM);
 	SekSetWriteWordHandler(0,	dbz_main_write_word);
 	SekSetWriteByteHandler(0,	dbz_main_write_byte);
 	SekSetReadWordHandler(0,	dbz_main_read_word);
@@ -750,8 +750,8 @@ static INT32 DrvInit(INT32 nGame)
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,		0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM,		0x8000, 0xbfff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM,		0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM,		0x8000, 0xbfff, MAP_RAM);
 	ZetSetWriteHandler(dbz_sound_write);
 	ZetSetReadHandler(dbz_sound_read);
 	ZetClose();

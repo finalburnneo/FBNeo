@@ -521,12 +521,12 @@ static INT32 MachineInit()
 	
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1            , 0x000000, Taito68KRom1Size - 1, SM_ROM);
-	SekMapMemory(Taito68KRam1            , 0x500000, 0x50ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam          , 0x600000, 0x60ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteExtension    , 0x700000, 0x701fff, SM_RAM);
-	SekMapMemory(TC0480SCPRam            , 0x800000, 0x80ffff, SM_RAM);
-	SekMapMemory(TaitoPaletteRam         , 0x900000, 0x907fff, SM_RAM);
+	SekMapMemory(Taito68KRom1            , 0x000000, Taito68KRom1Size - 1, MAP_ROM);
+	SekMapMemory(Taito68KRam1            , 0x500000, 0x50ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam          , 0x600000, 0x60ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteExtension    , 0x700000, 0x701fff, MAP_RAM);
+	SekMapMemory(TC0480SCPRam            , 0x800000, 0x80ffff, MAP_RAM);
+	SekMapMemory(TaitoPaletteRam         , 0x900000, 0x907fff, MAP_RAM);
 	SekSetReadWordHandler(0, Slapshot68KReadWord);
 	SekSetWriteWordHandler(0, Slapshot68KWriteWord);
 	SekSetReadByteHandler(0, Slapshot68KReadByte);
@@ -677,7 +677,7 @@ static INT32 Opwolf3Init()
 	BurnFree(TempRom);
 	
 	SekOpen(0);
-	SekMapHandler(1, 0xe00000, 0xe00007, SM_RAM);
+	SekMapHandler(1, 0xe00000, 0xe00007, MAP_RAM);
 	SekSetReadWordHandler(1, Opwolf3Gun68KReadWord);
 	SekSetWriteWordHandler(1, Opwolf3Gun68KWriteWord);
 	SekSetReadByteHandler(1, Opwolf3Gun68KReadByte);

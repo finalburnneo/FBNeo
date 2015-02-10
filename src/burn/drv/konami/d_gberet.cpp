@@ -916,7 +916,7 @@ static INT32 DrvFrame()
 		nCyclesDone = ZetRun(nCyclesSegment);
 
 		if (irq_enable && i == (nInterleave - 1)) {
-			ZetRaiseIrq(0);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 
 		if (nmi_enable && (i & 1)) {

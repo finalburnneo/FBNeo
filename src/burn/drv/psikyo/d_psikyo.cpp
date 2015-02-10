@@ -1751,15 +1751,15 @@ static INT32 DrvInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Psikyo68KROM,			0x000000, 0x0FFFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(PsikyoSpriteRAM,		0x400000, 0x401FFF, SM_RAM);
-		SekMapMemory(PsikyoTileRAM[0],		0x800000, 0x801FFF, SM_RAM);
-		SekMapMemory(PsikyoTileRAM[1],		0x802000, 0x803FFF, SM_RAM);
-		SekMapMemory(PsikyoTileRAM[2],		0x804000, 0x807FFF, SM_RAM);
-		SekMapMemory(Psikyo68KRAM,			0xFE0000, 0xFFFFFF, SM_RAM);
+		SekMapMemory(Psikyo68KROM,			0x000000, 0x0FFFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(PsikyoSpriteRAM,		0x400000, 0x401FFF, MAP_RAM);
+		SekMapMemory(PsikyoTileRAM[0],		0x800000, 0x801FFF, MAP_RAM);
+		SekMapMemory(PsikyoTileRAM[1],		0x802000, 0x803FFF, MAP_RAM);
+		SekMapMemory(PsikyoTileRAM[2],		0x804000, 0x807FFF, MAP_RAM);
+		SekMapMemory(Psikyo68KRAM,			0xFE0000, 0xFFFFFF, MAP_RAM);
 
-		SekMapMemory(PsikyoPalSrc,			0x600000, 0x601FFF, SM_ROM);	// Palette RAM (write goes through handler)
-		SekMapHandler(1,					0x600000, 0x601FFF, SM_WRITE);	//
+		SekMapMemory(PsikyoPalSrc,			0x600000, 0x601FFF, MAP_ROM);	// Palette RAM (write goes through handler)
+		SekMapHandler(1,					0x600000, 0x601FFF, MAP_WRITE);	//
 
 		switch (PsikyoHardwareVersion) {
 			case PSIKYO_HW_SAMURAIA: {

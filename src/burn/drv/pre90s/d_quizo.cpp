@@ -270,7 +270,7 @@ static INT32 DrvFrame()
 
 	ZetOpen(0);
 	ZetRun(4000000 / 60);
-	ZetRaiseIrq(1);
+	ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	ZetClose();
 
 	if (pBurnSoundOut) {

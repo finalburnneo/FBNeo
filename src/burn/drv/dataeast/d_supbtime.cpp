@@ -313,18 +313,18 @@ static INT32 DrvInit(INT32 game)
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,			0x000000, 0x03ffff, SM_ROM);
+	SekMapMemory(Drv68KROM,			0x000000, 0x03ffff, MAP_ROM);
 	if (game) {
-		SekMapMemory(Drv68KRAM,		0x100000, 0x103fff, SM_RAM); // super burger time
+		SekMapMemory(Drv68KRAM,		0x100000, 0x103fff, MAP_RAM); // super burger time
 	} else {
-		SekMapMemory(Drv68KRAM,		0x1a0000, 0x1a3fff, SM_RAM); // china town
+		SekMapMemory(Drv68KRAM,		0x1a0000, 0x1a3fff, MAP_RAM); // china town
 	}
-	SekMapMemory(DrvSprRAM,			0x120000, 0x1207ff, SM_RAM);
-	SekMapMemory(DrvPalRAM,			0x140000, 0x1407ff, SM_RAM);
-	SekMapMemory(deco16_pf_ram[0],		0x320000, 0x321fff, SM_RAM);
-	SekMapMemory(deco16_pf_ram[1],		0x322000, 0x323fff, SM_RAM);
-	SekMapMemory(deco16_pf_rowscroll[0],	0x340000, 0x340bff, SM_RAM);
-	SekMapMemory(deco16_pf_rowscroll[1],	0x342000, 0x342bff, SM_RAM);
+	SekMapMemory(DrvSprRAM,			0x120000, 0x1207ff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,			0x140000, 0x1407ff, MAP_RAM);
+	SekMapMemory(deco16_pf_ram[0],		0x320000, 0x321fff, MAP_RAM);
+	SekMapMemory(deco16_pf_ram[1],		0x322000, 0x323fff, MAP_RAM);
+	SekMapMemory(deco16_pf_rowscroll[0],	0x340000, 0x340bff, MAP_RAM);
+	SekMapMemory(deco16_pf_rowscroll[1],	0x342000, 0x342bff, MAP_RAM);
 	SekSetWriteWordHandler(0,		supbtime_main_write_word);
 	SekSetWriteByteHandler(0,		supbtime_main_write_byte);
 	SekSetReadWordHandler(0,		supbtime_main_read_word);

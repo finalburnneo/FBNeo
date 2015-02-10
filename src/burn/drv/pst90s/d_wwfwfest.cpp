@@ -703,12 +703,12 @@ static INT32 DrvInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom           , 0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(DrvBg0VideoRam      , 0x080000, 0x080fff, SM_RAM);
-	SekMapMemory(DrvBg1VideoRam      , 0x082000, 0x082fff, SM_RAM);
-	SekMapMemory(DrvCharVideoRam     , 0x0c0000, 0x0c1fff, SM_ROM);
-	SekMapMemory(DrvSpriteRam        , 0x0c2000, 0x0c3fff, SM_RAM);
-	SekMapMemory(Drv68KRam           , 0x1c0000, 0x1c3fff, SM_RAM);
+	SekMapMemory(Drv68KRom           , 0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(DrvBg0VideoRam      , 0x080000, 0x080fff, MAP_RAM);
+	SekMapMemory(DrvBg1VideoRam      , 0x082000, 0x082fff, MAP_RAM);
+	SekMapMemory(DrvCharVideoRam     , 0x0c0000, 0x0c1fff, MAP_ROM);
+	SekMapMemory(DrvSpriteRam        , 0x0c2000, 0x0c3fff, MAP_RAM);
+	SekMapMemory(Drv68KRam           , 0x1c0000, 0x1c3fff, MAP_RAM);
 	SekSetReadWordHandler(0, Wwfwfest68KReadWord);
 	SekSetWriteWordHandler(0, Wwfwfest68KWriteWord);
 	SekSetReadByteHandler(0, Wwfwfest68KReadByte);

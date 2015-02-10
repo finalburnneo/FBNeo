@@ -367,15 +367,15 @@ static INT32 DrvInit()
 	{
 		SekInit(0, 0x68000);										// Allocate 68000
 		SekOpen(0);
-		SekMapMemory(Rom01,		0x000000, 0x03FFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram01,		0x080000, 0x082FFF, SM_RAM);
-		SekMapMemory(RamPal,		0x0c0000, 0x0c0FFF, SM_RAM);	// Palette RAM
+		SekMapMemory(Rom01,		0x000000, 0x03FFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram01,		0x080000, 0x082FFF, MAP_RAM);
+		SekMapMemory(RamPal,		0x0c0000, 0x0c0FFF, MAP_RAM);	// Palette RAM
 		SekSetReadWordHandler(0, 	pipibibsReadWord);
 		SekSetReadByteHandler(0, 	pipibibsReadByte);
 		SekSetWriteWordHandler(0, 	pipibibsWriteWord);
 		SekSetWriteByteHandler(0, 	pipibibsWriteByte);
 
-		SekMapHandler(1,		0x190000, 0x190FFF, SM_RAM);
+		SekMapHandler(1,		0x190000, 0x190FFF, MAP_RAM);
 		SekSetReadByteHandler(1, 	toaplan1ReadByteZ80RAM);
 		SekSetReadWordHandler(1, 	toaplan1ReadWordZ80RAM);
 		SekSetWriteByteHandler(1, 	toaplan1WriteByteZ80RAM);

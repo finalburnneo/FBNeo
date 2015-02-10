@@ -518,10 +518,10 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,			0x000000, 0x0fffff, SM_ROM);
-	SekMapMemory(DrvSprRAM,			0x100000, 0x100fff, SM_RAM);
-	SekMapMemory(Drv68KRAM,			0x180000, 0x18ffff, SM_RAM);
-	SekMapMemory(DrvPalRAM,			0x190000, 0x190fff, SM_RAM);
+	SekMapMemory(Drv68KROM,			0x000000, 0x0fffff, MAP_ROM);
+	SekMapMemory(DrvSprRAM,			0x100000, 0x100fff, MAP_RAM);
+	SekMapMemory(Drv68KRAM,			0x180000, 0x18ffff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,			0x190000, 0x190fff, MAP_RAM);
 	SekSetWriteWordHandler(0,		gijoe_main_write_word);
 	SekSetWriteByteHandler(0,		gijoe_main_write_byte);
 	SekSetReadWordHandler(0,		gijoe_main_read_word);
@@ -530,8 +530,8 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,			0x0000, 0xefff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM,			0xf000, 0xf7ff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM,			0x0000, 0xefff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM,			0xf000, 0xf7ff, MAP_RAM);
 	ZetSetWriteHandler(gijoe_sound_write);
 	ZetSetReadHandler(gijoe_sound_read);
 	ZetClose();

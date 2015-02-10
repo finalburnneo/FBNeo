@@ -910,7 +910,7 @@ READ8_MEMBER( ymf278b_device::read )
 
 static UINT8 ymf278b_status_port_r(int num)
 {
-	return m_current_irq | ((m_irq_line) ? 0x80 : 0x00);
+	return m_current_irq | (m_irq_line == ASSERT_LINE ? 0x80 : 0x00);
 }
 
 // Not implemented yet

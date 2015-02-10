@@ -547,12 +547,12 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 game)
 	SekOpen(0);
 	// FBA doesn't support memory masks, so use mirroring instead
 	for (INT32 i = 0; i < 1 << 24; i+= 1 << 20) {
-		SekMapMemory(Drv68KROM,			i+0x000000, i+0x03ffff, SM_ROM);
-		SekMapMemory(DrvBMPRAM,			i+0x040000, i+0x04ffff, SM_RAM);
-		SekMapMemory(DrvSprRAM,			i+0x060000, i+0x060fff, SM_RAM);
-		SekMapMemory(DrvVidRAM,			i+0x080000, i+0x083fff, SM_RAM);
-		SekMapMemory(DrvPalRAM,			i+0x0a0000, i+0x0a07ff, SM_ROM);
-		SekMapMemory(Drv68KRAM,			i+0x0fc000, i+0x0fffff, SM_RAM);
+		SekMapMemory(Drv68KROM,			i+0x000000, i+0x03ffff, MAP_ROM);
+		SekMapMemory(DrvBMPRAM,			i+0x040000, i+0x04ffff, MAP_RAM);
+		SekMapMemory(DrvSprRAM,			i+0x060000, i+0x060fff, MAP_RAM);
+		SekMapMemory(DrvVidRAM,			i+0x080000, i+0x083fff, MAP_RAM);
+		SekMapMemory(DrvPalRAM,			i+0x0a0000, i+0x0a07ff, MAP_ROM);
+		SekMapMemory(Drv68KRAM,			i+0x0fc000, i+0x0fffff, MAP_RAM);
 	}
 	SekSetWriteWordHandler(0,	rpunch_main_write_word);
 	SekSetWriteByteHandler(0,	rpunch_main_write_byte);

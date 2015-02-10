@@ -185,7 +185,7 @@ void __fastcall zerozone_write_word(UINT32 address, UINT16 data)
 	{
 		case 0x84000:
 			soundlatch = data >> 8;
-			ZetRaiseIrq(0xff);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		return;
 
 		case 0xb4000:
@@ -202,7 +202,7 @@ void __fastcall zerozone_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x84000:
 			soundlatch = data;
-			ZetRaiseIrq(0xff);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		return;
 
 		case 0xb4001:
@@ -333,10 +333,10 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x01ffff, SM_ROM);
-	SekMapMemory(DrvPalRAM,		0x088000, 0x0881ff, SM_ROM);
-	SekMapMemory(DrvVidRAM,		0x09ce00, 0x09ffff, SM_RAM);
-	SekMapMemory(Drv68KRAM,		0x0c0000, 0x0cffff, SM_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x01ffff, MAP_ROM);
+	SekMapMemory(DrvPalRAM,		0x088000, 0x0881ff, MAP_ROM);
+	SekMapMemory(DrvVidRAM,		0x09ce00, 0x09ffff, MAP_RAM);
+	SekMapMemory(Drv68KRAM,		0x0c0000, 0x0cffff, MAP_RAM);
 	SekSetWriteByteHandler(0,	zerozone_write_byte);
 	SekSetWriteWordHandler(0,	zerozone_write_word);
 	SekSetReadByteHandler(0,	zerozone_read_byte);

@@ -380,12 +380,12 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM, 		0x000000, 0x01ffff, SM_ROM);
-	SekMapMemory(Drv68KRAM, 		0x020000, 0x023fff, SM_RAM);
-	SekMapMemory(DrvTxtRAM, 		0x030000, 0x0307ff, SM_RAM);
-	SekMapMemory(DrvSprRAM, 		0x040000, 0x0407ff, SM_RAM);
-	SekMapMemory(DrvPalRAM, 		0x050000, 0x0507ff, SM_RAM);
-	SekMapMemory(DrvFgRAM,  		0x068000, 0x06bfff, SM_RAM);
+	SekMapMemory(Drv68KROM, 		0x000000, 0x01ffff, MAP_ROM);
+	SekMapMemory(Drv68KRAM, 		0x020000, 0x023fff, MAP_RAM);
+	SekMapMemory(DrvTxtRAM, 		0x030000, 0x0307ff, MAP_RAM);
+	SekMapMemory(DrvSprRAM, 		0x040000, 0x0407ff, MAP_RAM);
+	SekMapMemory(DrvPalRAM, 		0x050000, 0x0507ff, MAP_RAM);
+	SekMapMemory(DrvFgRAM,  		0x068000, 0x06bfff, MAP_RAM);
 	SekSetWriteWordHandler(0,		ginganin_write_word);
 	SekSetWriteByteHandler(0,		ginganin_write_byte);
 	SekSetReadWordHandler(0,		ginganin_read_word);
@@ -394,8 +394,8 @@ static INT32 DrvInit()
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvM6809RAM,		0x0000, 0x07ff, M6809_RAM);
-	M6809MapMemory(DrvM6809ROM + 0x4000,	0x4000, 0xffff, M6809_ROM);
+	M6809MapMemory(DrvM6809RAM,		0x0000, 0x07ff, MAP_RAM);
+	M6809MapMemory(DrvM6809ROM + 0x4000,	0x4000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(ginganin_sound_write);
 	M6809SetReadHandler(ginganin_sound_read);
 	M6809Close();

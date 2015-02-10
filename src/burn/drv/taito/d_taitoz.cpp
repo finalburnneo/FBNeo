@@ -4853,21 +4853,21 @@ static INT32 AquajackInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1            , 0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(Taito68KRam1            , 0x100000, 0x103fff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x104000, 0x107fff, SM_RAM);
-	SekMapMemory(TC0150RODRam            , 0x800000, 0x801fff, SM_RAM);
-	SekMapMemory(TC0100SCNRam[0]         , 0xa00000, 0xa0ffff, SM_READ);
-	SekMapMemory(TaitoSpriteRam          , 0xc40000, 0xc403ff, SM_RAM);
+	SekMapMemory(Taito68KRom1            , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam1            , 0x100000, 0x103fff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x104000, 0x107fff, MAP_RAM);
+	SekMapMemory(TC0150RODRam            , 0x800000, 0x801fff, MAP_RAM);
+	SekMapMemory(TC0100SCNRam[0]         , 0xa00000, 0xa0ffff, MAP_READ);
+	SekMapMemory(TaitoSpriteRam          , 0xc40000, 0xc403ff, MAP_RAM);
 	SekSetWriteByteHandler(0, Aquajack68K1WriteByte);
 	SekSetWriteWordHandler(0, Aquajack68K1WriteWord);
 	SekClose();
 	
 	SekInit(1, 0x68000);
 	SekOpen(1);
-	SekMapMemory(Taito68KRom2            , 0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(Taito68KRam2            , 0x100000, 0x103fff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x104000, 0x107fff, SM_RAM);
+	SekMapMemory(Taito68KRom2            , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam2            , 0x100000, 0x103fff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x104000, 0x107fff, MAP_RAM);
 	SekSetReadWordHandler(0, Aquajack68K2ReadWord);
 	SekSetWriteWordHandler(0, Aquajack68K2WriteWord);
 	SekSetReadByteHandler(0, Aquajack68K2ReadByte);
@@ -4948,12 +4948,12 @@ static INT32 BsharkInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1            , 0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(Taito68KRam1            , 0x100000, 0x10ffff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x110000, 0x113fff, SM_RAM);
-	SekMapMemory(TaitoPaletteRam         , 0xa00000, 0xa01fff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam          , 0xc00000, 0xc00fff, SM_RAM);
-	SekMapMemory(TC0100SCNRam[0]         , 0xd00000, 0xd0ffff, SM_READ);
+	SekMapMemory(Taito68KRom1            , 0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam1            , 0x100000, 0x10ffff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x110000, 0x113fff, MAP_RAM);
+	SekMapMemory(TaitoPaletteRam         , 0xa00000, 0xa01fff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam          , 0xc00000, 0xc00fff, MAP_RAM);
+	SekMapMemory(TC0100SCNRam[0]         , 0xd00000, 0xd0ffff, MAP_READ);
 	SekSetWriteWordHandler(0, Bshark68K1WriteWord);
 	SekSetReadByteHandler(0, Bshark68K1ReadByte);
 	SekSetWriteByteHandler(0, Bshark68K1WriteByte);
@@ -4961,10 +4961,10 @@ static INT32 BsharkInit()
 	
 	SekInit(1, 0x68000);
 	SekOpen(1);
-	SekMapMemory(Taito68KRom2            , 0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(Taito68KRam2            , 0x108000, 0x10bfff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x110000, 0x113fff, SM_RAM);
-	SekMapMemory(TC0150RODRam            , 0x800000, 0x801fff, SM_RAM);
+	SekMapMemory(Taito68KRom2            , 0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam2            , 0x108000, 0x10bfff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x110000, 0x113fff, MAP_RAM);
+	SekMapMemory(TC0150RODRam            , 0x800000, 0x801fff, MAP_RAM);
 	SekSetReadWordHandler(0, Bshark68K2ReadWord);
 	SekSetWriteWordHandler(0, Bshark68K2WriteWord);
 	SekClose();
@@ -5050,11 +5050,11 @@ static INT32 ChasehqInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1            , 0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(Taito68KRam1            , 0x100000, 0x107fff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x108000, 0x10bfff, SM_RAM);
-	SekMapMemory(TC0100SCNRam[0]         , 0xc00000, 0xc0ffff, SM_READ);
-	SekMapMemory(TaitoSpriteRam          , 0xd00000, 0xd007ff, SM_RAM);
+	SekMapMemory(Taito68KRom1            , 0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam1            , 0x100000, 0x107fff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x108000, 0x10bfff, MAP_RAM);
+	SekMapMemory(TC0100SCNRam[0]         , 0xc00000, 0xc0ffff, MAP_READ);
+	SekMapMemory(TaitoSpriteRam          , 0xd00000, 0xd007ff, MAP_RAM);
 	SekSetReadWordHandler(0, Chasehq68K1ReadWord);
 	SekSetWriteWordHandler(0, Chasehq68K1WriteWord);
 	SekSetReadByteHandler(0, Chasehq68K1ReadByte);
@@ -5063,10 +5063,10 @@ static INT32 ChasehqInit()
 	
 	SekInit(1, 0x68000);
 	SekOpen(1);
-	SekMapMemory(Taito68KRom2            , 0x000000, 0x01ffff, SM_ROM);
-	SekMapMemory(Taito68KRam2            , 0x100000, 0x103fff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x108000, 0x10bfff, SM_RAM);
-	SekMapMemory(TC0150RODRam            , 0x800000, 0x801fff, SM_RAM);
+	SekMapMemory(Taito68KRom2            , 0x000000, 0x01ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam2            , 0x100000, 0x103fff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x108000, 0x10bfff, MAP_RAM);
+	SekMapMemory(TC0150RODRam            , 0x800000, 0x801fff, MAP_RAM);
 	SekClose();
 	
 	TaitoZZ80Init();
@@ -5145,21 +5145,21 @@ static INT32 ContcircInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1            , 0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(Taito68KRam1            , 0x080000, 0x083fff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x084000, 0x087fff, SM_RAM);
-	SekMapMemory(TC0100SCNRam[0]         , 0x200000, 0x20ffff, SM_READ);
-	SekMapMemory(TC0150RODRam            , 0x300000, 0x301fff, SM_RAM);	
-	SekMapMemory(TaitoSpriteRam          , 0x400000, 0x4006ff, SM_RAM);
+	SekMapMemory(Taito68KRom1            , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam1            , 0x080000, 0x083fff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x084000, 0x087fff, MAP_RAM);
+	SekMapMemory(TC0100SCNRam[0]         , 0x200000, 0x20ffff, MAP_READ);
+	SekMapMemory(TC0150RODRam            , 0x300000, 0x301fff, MAP_RAM);	
+	SekMapMemory(TaitoSpriteRam          , 0x400000, 0x4006ff, MAP_RAM);
 	SekSetWriteByteHandler(0, Contcirc68K1WriteByte);
 	SekSetWriteWordHandler(0, Contcirc68K1WriteWord);
 	SekClose();
 	
 	SekInit(1, 0x68000);
 	SekOpen(1);
-	SekMapMemory(Taito68KRom2            , 0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(Taito68KRam2            , 0x080000, 0x083fff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x084000, 0x087fff, SM_RAM);
+	SekMapMemory(Taito68KRom2            , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam2            , 0x080000, 0x083fff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x084000, 0x087fff, MAP_RAM);
 	SekSetReadWordHandler(0, Contcirc68K2ReadWord);
 	SekSetWriteWordHandler(0, Contcirc68K2WriteWord);
 	SekSetReadByteHandler(0, Contcirc68K2ReadByte);
@@ -5239,13 +5239,13 @@ static INT32 DblaxleInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1            , 0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(Taito68KRam1            , 0x200000, 0x203fff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x210000, 0x21ffff, SM_RAM);
-	SekMapMemory(TaitoPaletteRam         , 0x800000, 0x801fff, SM_RAM);
-	SekMapMemory(TC0480SCPRam            , 0x900000, 0x90ffff, SM_RAM);
-	SekMapMemory(TC0480SCPRam            , 0xa00000, 0xa0ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam          , 0xc00000, 0xc03fff, SM_RAM);
+	SekMapMemory(Taito68KRom1            , 0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam1            , 0x200000, 0x203fff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x210000, 0x21ffff, MAP_RAM);
+	SekMapMemory(TaitoPaletteRam         , 0x800000, 0x801fff, MAP_RAM);
+	SekMapMemory(TC0480SCPRam            , 0x900000, 0x90ffff, MAP_RAM);
+	SekMapMemory(TC0480SCPRam            , 0xa00000, 0xa0ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam          , 0xc00000, 0xc03fff, MAP_RAM);
 	SekSetReadWordHandler(0, Dblaxle68K1ReadWord);
 	SekSetWriteWordHandler(0, Dblaxle68K1WriteWord);
 	SekSetReadByteHandler(0, Dblaxle68K1ReadByte);
@@ -5254,10 +5254,10 @@ static INT32 DblaxleInit()
 	
 	SekInit(1, 0x68000);
 	SekOpen(1);
-	SekMapMemory(Taito68KRom2            , 0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(Taito68KRam2            , 0x100000, 0x103fff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x110000, 0x11ffff, SM_RAM);
-	SekMapMemory(TC0150RODRam            , 0x300000, 0x301fff, SM_RAM);
+	SekMapMemory(Taito68KRom2            , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam2            , 0x100000, 0x103fff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x110000, 0x11ffff, MAP_RAM);
+	SekMapMemory(TC0150RODRam            , 0x300000, 0x301fff, MAP_RAM);
 	SekClose();
 	
 	TaitoZZ80Init();
@@ -5338,12 +5338,12 @@ static INT32 EnforceInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1            , 0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(Taito68KRam1            , 0x100000, 0x103fff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x104000, 0x107fff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam          , 0x300000, 0x3006ff, SM_RAM);
-	SekMapMemory(TC0150RODRam            , 0x400000, 0x401fff, SM_RAM);
-	SekMapMemory(TC0100SCNRam[0]         , 0x600000, 0x60ffff, SM_READ);
+	SekMapMemory(Taito68KRom1            , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam1            , 0x100000, 0x103fff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x104000, 0x107fff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam          , 0x300000, 0x3006ff, MAP_RAM);
+	SekMapMemory(TC0150RODRam            , 0x400000, 0x401fff, MAP_RAM);
+	SekMapMemory(TC0100SCNRam[0]         , 0x600000, 0x60ffff, MAP_READ);
 	SekSetWriteByteHandler(0, Enforce68K1WriteByte);
 	SekSetReadWordHandler(0, Enforce68K1ReadWord);
 	SekSetWriteWordHandler(0, Enforce68K1WriteWord);
@@ -5351,9 +5351,9 @@ static INT32 EnforceInit()
 	
 	SekInit(1, 0x68000);
 	SekOpen(1);
-	SekMapMemory(Taito68KRom2            , 0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(Taito68KRam2            , 0x100000, 0x103fff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x104000, 0x107fff, SM_RAM);
+	SekMapMemory(Taito68KRom2            , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam2            , 0x100000, 0x103fff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x104000, 0x107fff, MAP_RAM);
 	SekSetReadWordHandler(0, Enforce68K2ReadWord);
 	SekSetWriteWordHandler(0, Enforce68K2WriteWord);
 	SekSetReadByteHandler(0, Enforce68K2ReadByte);
@@ -5445,11 +5445,11 @@ static INT32 NightstrInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1            , 0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(Taito68KRam1            , 0x100000, 0x10ffff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x110000, 0x113fff, SM_RAM);
-	SekMapMemory(TC0100SCNRam[0]         , 0xc00000, 0xc0ffff, SM_READ);
-	SekMapMemory(TaitoSpriteRam          , 0xd00000, 0xd007ff, SM_RAM);
+	SekMapMemory(Taito68KRom1            , 0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam1            , 0x100000, 0x10ffff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x110000, 0x113fff, MAP_RAM);
+	SekMapMemory(TC0100SCNRam[0]         , 0xc00000, 0xc0ffff, MAP_READ);
+	SekMapMemory(TaitoSpriteRam          , 0xd00000, 0xd007ff, MAP_RAM);
 	SekSetReadWordHandler(0, Nightstr68K1ReadWord);
 	SekSetWriteWordHandler(0, Nightstr68K1WriteWord);
 	SekSetReadByteHandler(0, Nightstr68K1ReadByte);
@@ -5458,10 +5458,10 @@ static INT32 NightstrInit()
 	
 	SekInit(1, 0x68000);
 	SekOpen(1);
-	SekMapMemory(Taito68KRom2            , 0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(Taito68KRam2            , 0x100000, 0x103fff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x104000, 0x107fff, SM_RAM);
-	SekMapMemory(TC0150RODRam            , 0x800000, 0x801fff, SM_RAM);
+	SekMapMemory(Taito68KRom2            , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam2            , 0x100000, 0x103fff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x104000, 0x107fff, MAP_RAM);
+	SekMapMemory(TC0150RODRam            , 0x800000, 0x801fff, MAP_RAM);
 	SekClose();
 	
 	TaitoZZ80Init();
@@ -5539,12 +5539,12 @@ static INT32 RacingbInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1            , 0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(Taito68KRam1            , 0x100000, 0x103fff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x110000, 0x11ffff, SM_RAM);
-	SekMapMemory(TaitoPaletteRam         , 0x700000, 0x701fff, SM_RAM);
-	SekMapMemory(TC0480SCPRam            , 0x900000, 0x90ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam          , 0xb00000, 0xb03fff, SM_RAM);
+	SekMapMemory(Taito68KRom1            , 0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam1            , 0x100000, 0x103fff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x110000, 0x11ffff, MAP_RAM);
+	SekMapMemory(TaitoPaletteRam         , 0x700000, 0x701fff, MAP_RAM);
+	SekMapMemory(TC0480SCPRam            , 0x900000, 0x90ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam          , 0xb00000, 0xb03fff, MAP_RAM);
 	SekSetReadWordHandler(0, Racingb68K1ReadWord);
 	SekSetWriteWordHandler(0, Racingb68K1WriteWord);
 	SekSetReadByteHandler(0, Racingb68K1ReadByte);
@@ -5553,10 +5553,10 @@ static INT32 RacingbInit()
 	
 	SekInit(1, 0x68000);
 	SekOpen(1);
-	SekMapMemory(Taito68KRom2            , 0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(Taito68KRam2            , 0x400000, 0x403fff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x410000, 0x41ffff, SM_RAM);
-	SekMapMemory(TC0150RODRam            , 0xa00000, 0xa01fff, SM_RAM);
+	SekMapMemory(Taito68KRom2            , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam2            , 0x400000, 0x403fff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x410000, 0x41ffff, MAP_RAM);
+	SekMapMemory(TC0150RODRam            , 0xa00000, 0xa01fff, MAP_RAM);
 	SekClose();
 	
 	TaitoZZ80Init();
@@ -5638,12 +5638,12 @@ static INT32 SciInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1            , 0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(Taito68KRam1            , 0x100000, 0x107fff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x108000, 0x10bfff, SM_RAM);
-	SekMapMemory(TaitoPaletteRam         , 0x800000, 0x801fff, SM_RAM);
-	SekMapMemory(TC0100SCNRam[0]         , 0xa00000, 0xa0ffff, SM_READ);
-	SekMapMemory(TaitoSpriteRam          , 0xc00000, 0xc03fff, SM_RAM);
+	SekMapMemory(Taito68KRom1            , 0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam1            , 0x100000, 0x107fff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x108000, 0x10bfff, MAP_RAM);
+	SekMapMemory(TaitoPaletteRam         , 0x800000, 0x801fff, MAP_RAM);
+	SekMapMemory(TC0100SCNRam[0]         , 0xa00000, 0xa0ffff, MAP_READ);
+	SekMapMemory(TaitoSpriteRam          , 0xc00000, 0xc03fff, MAP_RAM);
 	SekSetWriteWordHandler(0, Sci68K1WriteWord);
 	SekSetReadByteHandler(0, Sci68K1ReadByte);
 	SekSetWriteByteHandler(0, Sci68K1WriteByte);
@@ -5651,10 +5651,10 @@ static INT32 SciInit()
 	
 	SekInit(1, 0x68000);
 	SekOpen(1);
-	SekMapMemory(Taito68KRom2            , 0x000000, 0x01ffff, SM_ROM);
-	SekMapMemory(Taito68KRam2            , 0x200000, 0x203fff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x208000, 0x20bfff, SM_RAM);
-	SekMapMemory(TC0150RODRam            , 0xa00000, 0xa01fff, SM_RAM);
+	SekMapMemory(Taito68KRom2            , 0x000000, 0x01ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam2            , 0x200000, 0x203fff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x208000, 0x20bfff, MAP_RAM);
+	SekMapMemory(TC0150RODRam            , 0xa00000, 0xa01fff, MAP_RAM);
 	SekClose();
 	
 	TaitoZZ80Init();
@@ -5730,11 +5730,11 @@ static INT32 SpacegunInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1            , 0x000000, 0x07ffff, SM_ROM);
-	SekMapMemory(Taito68KRam1            , 0x30c000, 0x30ffff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x310000, 0x31ffff, SM_RAM);
-	SekMapMemory(TaitoSpriteRam          , 0x500000, 0x5005ff, SM_RAM);
-	SekMapMemory(TC0100SCNRam[0]         , 0x900000, 0x90ffff, SM_READ);
+	SekMapMemory(Taito68KRom1            , 0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam1            , 0x30c000, 0x30ffff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x310000, 0x31ffff, MAP_RAM);
+	SekMapMemory(TaitoSpriteRam          , 0x500000, 0x5005ff, MAP_RAM);
+	SekMapMemory(TC0100SCNRam[0]         , 0x900000, 0x90ffff, MAP_READ);
 	SekSetReadWordHandler(0, Spacegun68K1ReadWord);
 	SekSetWriteWordHandler(0, Spacegun68K1WriteWord);
 	SekSetWriteByteHandler(0, Spacegun68K1WriteByte);
@@ -5742,9 +5742,9 @@ static INT32 SpacegunInit()
 	
 	SekInit(1, 0x68000);
 	SekOpen(1);
-	SekMapMemory(Taito68KRom2            , 0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(Taito68KRam2            , 0x20c000, 0x20ffff, SM_RAM);
-	SekMapMemory(TaitoSharedRam          , 0x210000, 0x21ffff, SM_RAM);
+	SekMapMemory(Taito68KRom2            , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Taito68KRam2            , 0x20c000, 0x20ffff, MAP_RAM);
+	SekMapMemory(TaitoSharedRam          , 0x210000, 0x21ffff, MAP_RAM);
 	SekSetReadWordHandler(0, Spacegun68K2ReadWord);
 	SekSetWriteWordHandler(0, Spacegun68K2WriteWord);
 	SekSetReadByteHandler(0, Spacegun68K2ReadByte);

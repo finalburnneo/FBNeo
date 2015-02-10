@@ -169,6 +169,7 @@ struct BurnDIPInfo {
 	char* szText;
 };
 
+
 // ---------------------------------------------------------------------------
 // Common CPU definitions 
 
@@ -193,8 +194,10 @@ struct BurnDIPInfo {
 #define MAP_WRITE		2
 #define MAP_FETCHOP		4
 #define MAP_FETCHARG		8
-#define MAP_ROM			(MAP_READ|MAP_FETCHOP|MAP_FETCHARG)
+#define MAP_FETCH		(MAP_FETCHOP|MAP_FETCHARG)
+#define MAP_ROM			(MAP_READ|MAP_FETCH)
 #define MAP_RAM			(MAP_ROM|MAP_WRITE)
+
 
 // ---------------------------------------------------------------------------
 

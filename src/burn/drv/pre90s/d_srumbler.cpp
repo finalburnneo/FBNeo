@@ -135,7 +135,7 @@ static void bankswitch(INT32 data)
 	{
 		INT32 bank = DrvPROM[(data & 0xf0) | i] | DrvPROM[0x100 | ((data & 0x0f) << 4) | i];
 
-		M6809MapMemory(DrvM6809ROM + bank * 0x1000, 0x1000 * i, 0x1000 * i + 0x0fff, M6809_ROM);
+		M6809MapMemory(DrvM6809ROM + bank * 0x1000, 0x1000 * i, 0x1000 * i + 0x0fff, MAP_ROM);
 	}
 }
 
@@ -372,11 +372,11 @@ static INT32 DrvInit()
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvM6809RAM,		0x0000, 0x1dff, M6809_RAM);
-	M6809MapMemory(DrvSprRAM,		0x1e00, 0x1fff, M6809_RAM);
-	M6809MapMemory(DrvBgRAM,		0x2000, 0x3fff, M6809_RAM);
-	M6809MapMemory(DrvFgRAM,		0x5000, 0x5fff, M6809_WRITE);
-	M6809MapMemory(DrvPalRAM,		0x7000, 0x73ff, M6809_WRITE);
+	M6809MapMemory(DrvM6809RAM,		0x0000, 0x1dff, MAP_RAM);
+	M6809MapMemory(DrvSprRAM,		0x1e00, 0x1fff, MAP_RAM);
+	M6809MapMemory(DrvBgRAM,		0x2000, 0x3fff, MAP_RAM);
+	M6809MapMemory(DrvFgRAM,		0x5000, 0x5fff, MAP_WRITE);
+	M6809MapMemory(DrvPalRAM,		0x7000, 0x73ff, MAP_WRITE);
 	M6809SetReadHandler(srumbler_main_read);
 	M6809SetWriteHandler(srumbler_main_write);
 	M6809Close();
@@ -621,7 +621,7 @@ static INT32 DrvFrame()
 		if (i == (nInterleave / 1) - 1) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
-		ZetRaiseIrq(0);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	}
 	
 	BurnTimerEndFrame(nCyclesTotal[1]);

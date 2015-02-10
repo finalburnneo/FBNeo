@@ -1057,7 +1057,7 @@ void DrvDdragonHD6309WriteByte(UINT16 Address, UINT8 Data)
 		case 0x3808: {
 			UINT8 DrvOldRomBank = DrvRomBank;
 			DrvRomBank = (Data & 0xe0) >> 5;
-			HD6309MapMemory(DrvHD6309Rom + 0x8000 + (DrvRomBank * 0x4000), 0x4000, 0x7fff, M6809_ROM);
+			HD6309MapMemory(DrvHD6309Rom + 0x8000 + (DrvRomBank * 0x4000), 0x4000, 0x7fff, MAP_ROM);
 			
 			DrvScrollXHi = (Data & 0x01) << 8;
 			DrvScrollYHi = (Data & 0x02) << 7;
@@ -1092,10 +1092,10 @@ void DrvDdragonHD6309WriteByte(UINT16 Address, UINT8 Data)
 			
 			if (DrvGameType == DD_GAME_DARKTOWR) {
 				if (DrvRomBank == 4 && DrvOldRomBank != 4) {
-					HD6309MemCallback(0x4000, 0x7fff, HD6309_RAM);
+					HD6309MemCallback(0x4000, 0x7fff, MAP_RAM);
 				} else {
 					if (DrvRomBank != 4 && DrvOldRomBank == 4) {
-						HD6309MapMemory(DrvHD6309Rom + 0x8000 + (DrvRomBank * 0x4000), 0x4000, 0x7fff, M6809_ROM);
+						HD6309MapMemory(DrvHD6309Rom + 0x8000 + (DrvRomBank * 0x4000), 0x4000, 0x7fff, MAP_ROM);
 					}
 				}
 			}			
@@ -1897,21 +1897,21 @@ static INT32 DrvMachineInit()
 
 	HD6309Init(0);
 	HD6309Open(0);
-	HD6309MapMemory(DrvHD6309Ram         , 0x0000, 0x0fff, M6809_RAM);
-	HD6309MapMemory(DrvPaletteRam1       , 0x1000, 0x11ff, M6809_RAM);
-	HD6309MapMemory(DrvPaletteRam2       , 0x1200, 0x13ff, M6809_RAM);
-	HD6309MapMemory(DrvFgVideoRam        , 0x1800, 0x1fff, M6809_RAM);
-	HD6309MapMemory(DrvSpriteRam         , 0x2000, 0x2fff, M6809_WRITE);
-	HD6309MapMemory(DrvBgVideoRam        , 0x3000, 0x37ff, M6809_RAM);
-	HD6309MapMemory(DrvHD6309Rom + 0x8000, 0x4000, 0x7fff, M6809_ROM);
-	HD6309MapMemory(DrvHD6309Rom         , 0x8000, 0xffff, M6809_ROM);
+	HD6309MapMemory(DrvHD6309Ram         , 0x0000, 0x0fff, MAP_RAM);
+	HD6309MapMemory(DrvPaletteRam1       , 0x1000, 0x11ff, MAP_RAM);
+	HD6309MapMemory(DrvPaletteRam2       , 0x1200, 0x13ff, MAP_RAM);
+	HD6309MapMemory(DrvFgVideoRam        , 0x1800, 0x1fff, MAP_RAM);
+	HD6309MapMemory(DrvSpriteRam         , 0x2000, 0x2fff, MAP_WRITE);
+	HD6309MapMemory(DrvBgVideoRam        , 0x3000, 0x37ff, MAP_RAM);
+	HD6309MapMemory(DrvHD6309Rom + 0x8000, 0x4000, 0x7fff, MAP_ROM);
+	HD6309MapMemory(DrvHD6309Rom         , 0x8000, 0xffff, MAP_ROM);
 	HD6309SetReadHandler(DrvDdragonHD6309ReadByte);
 	HD6309SetWriteHandler(DrvDdragonHD6309WriteByte);
 	HD6309Close();
 	
 	if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {
 		HD63701Init(1);
-		HD63701MapMemory(DrvSubCPURom        , 0xc000, 0xffff, HD63701_ROM);
+		HD63701MapMemory(DrvSubCPURom        , 0xc000, 0xffff, MAP_ROM);
 		HD63701SetReadHandler(DrvDdragonHD63701ReadByte);
 		HD63701SetWriteHandler(DrvDdragonHD63701WriteByte);
 	}
@@ -1919,7 +1919,7 @@ static INT32 DrvMachineInit()
 	if (DrvSubCPUType == DD_CPU_TYPE_HD6309) {
 		HD6309Init(1);
 		HD6309Open(1);
-		HD6309MapMemory(DrvSubCPURom        , 0xc000, 0xffff, HD6309_ROM);
+		HD6309MapMemory(DrvSubCPURom        , 0xc000, 0xffff, MAP_ROM);
 		HD6309SetReadHandler(DrvDdragonbSubHD6309ReadByte);
 		HD6309SetWriteHandler(DrvDdragonbSubHD6309WriteByte);
 		HD6309Close();
@@ -1927,7 +1927,7 @@ static INT32 DrvMachineInit()
 	
 	if (DrvSubCPUType == DD_CPU_TYPE_M6803) {
 		M6803Init(1);
-		M6803MapMemory(DrvSubCPURom        , 0xc000, 0xffff, M6803_ROM);
+		M6803MapMemory(DrvSubCPURom        , 0xc000, 0xffff, MAP_ROM);
 		M6803SetReadHandler(DrvDdragonbaM6803ReadByte);
 		M6803SetWriteHandler(DrvDdragonbaM6803WriteByte);
 		M6803SetWritePortHandler(DrvDdragonbaM6803WritePort);
@@ -1936,8 +1936,8 @@ static INT32 DrvMachineInit()
 	if (DrvSoundCPUType == DD_CPU_TYPE_M6809) {
 		M6809Init(1);
 		M6809Open(0);
-		M6809MapMemory(DrvSoundCPURam      , 0x0000, 0x0fff, M6809_RAM);
-		M6809MapMemory(DrvSoundCPURom      , 0x8000, 0xffff, M6809_ROM);
+		M6809MapMemory(DrvSoundCPURam      , 0x0000, 0x0fff, MAP_RAM);
+		M6809MapMemory(DrvSoundCPURom      , 0x8000, 0xffff, MAP_ROM);
 		M6809SetReadHandler(DrvDdragonM6809ReadByte);
 		M6809SetWriteHandler(DrvDdragonM6809WriteByte);
 		M6809Close();
@@ -1954,8 +1954,8 @@ static INT32 DrvMachineInit()
 	
 	if (DrvGameType == DD_GAME_DARKTOWR) {
 		m6805Init(1, 0x800);
-		m6805MapMemory(DrvMCURom + 0x80, 0x080, 0x7ff, M6805_ROM);
-		m6805MapMemory(DrvMCURom, 0x008, 0x07f, M6805_RAM);
+		m6805MapMemory(DrvMCURom + 0x80, 0x080, 0x7ff, MAP_ROM);
+		m6805MapMemory(DrvMCURom, 0x008, 0x07f, MAP_RAM);
 		m6805SetReadHandler(DrvMCUReadByte);
 		m6805SetWriteHandler(DrvMCUWriteByte);
 	}
@@ -1977,14 +1977,14 @@ static INT32 Drv2MachineInit()
 	// Setup the HD6309 emulation
 	HD6309Init(0);
 	HD6309Open(0);
-	HD6309MapMemory(DrvHD6309Ram         , 0x0000, 0x17ff, M6809_RAM);
-	HD6309MapMemory(DrvFgVideoRam        , 0x1800, 0x1fff, M6809_RAM);
-	HD6309MapMemory(DrvSpriteRam         , 0x2000, 0x2fff, M6809_WRITE);
-	HD6309MapMemory(DrvBgVideoRam        , 0x3000, 0x37ff, M6809_RAM);
-	HD6309MapMemory(DrvPaletteRam1       , 0x3c00, 0x3dff, M6809_RAM);
-	HD6309MapMemory(DrvPaletteRam2       , 0x3e00, 0x3fff, M6809_RAM);
-	HD6309MapMemory(DrvHD6309Rom + 0x8000, 0x4000, 0x7fff, M6809_ROM);
-	HD6309MapMemory(DrvHD6309Rom         , 0x8000, 0xffff, M6809_ROM);
+	HD6309MapMemory(DrvHD6309Ram         , 0x0000, 0x17ff, MAP_RAM);
+	HD6309MapMemory(DrvFgVideoRam        , 0x1800, 0x1fff, MAP_RAM);
+	HD6309MapMemory(DrvSpriteRam         , 0x2000, 0x2fff, MAP_WRITE);
+	HD6309MapMemory(DrvBgVideoRam        , 0x3000, 0x37ff, MAP_RAM);
+	HD6309MapMemory(DrvPaletteRam1       , 0x3c00, 0x3dff, MAP_RAM);
+	HD6309MapMemory(DrvPaletteRam2       , 0x3e00, 0x3fff, MAP_RAM);
+	HD6309MapMemory(DrvHD6309Rom + 0x8000, 0x4000, 0x7fff, MAP_ROM);
+	HD6309MapMemory(DrvHD6309Rom         , 0x8000, 0xffff, MAP_ROM);
 	HD6309SetReadHandler(DrvDdragonHD6309ReadByte);
 	HD6309SetWriteHandler(DrvDdragonHD6309WriteByte);
 	HD6309Close();
@@ -2607,7 +2607,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		if (nAction & ACB_WRITE) {
 			HD6309Open(0);
-			HD6309MapMemory(DrvHD6309Rom + 0x8000 + (DrvRomBank * 0x4000), 0x4000, 0x7fff, M6809_ROM);
+			HD6309MapMemory(DrvHD6309Rom + 0x8000 + (DrvRomBank * 0x4000), 0x4000, 0x7fff, MAP_ROM);
 			HD6309Close();
 			
 			if (DrvSubCPUBusy == 0) {

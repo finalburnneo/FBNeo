@@ -2098,7 +2098,7 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == (nInterleave - 1)) ZetRaiseIrq(0);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		nCurrentCPU = 1;

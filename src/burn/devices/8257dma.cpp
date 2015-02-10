@@ -158,7 +158,7 @@ static INT32 i8257_do_operation(INT32 channel)
 	{
 		m_status |= (0x01 << channel);
 
-		m_out_tc_func(CPU_IRQSTATUS_ACK);
+		m_out_tc_func(ASSERT_LINE);
 	}
 
 	switch (mode)
@@ -196,7 +196,7 @@ static INT32 i8257_do_operation(INT32 channel)
 			m_registers[5] = m_registers[7];
 		}
 
-		m_out_tc_func(CPU_IRQSTATUS_NONE);
+		m_out_tc_func(CLEAR_LINE);
 	}
 
 	return done;
@@ -290,7 +290,7 @@ void i8257_update_status()
 	}
 
 	/* set the halt line */
-	m_out_hrq_func(pending_transfer ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+	m_out_hrq_func(pending_transfer ? ASSERT_LINE : CLEAR_LINE);
 }
 
 static void i8257_prepare_msb_flip()

@@ -1178,12 +1178,14 @@ INT32 SekGetActive()
 }
 
 // Set the status of an IRQ line on the active CPU
-void SekSetIRQLine(const INT32 line, const INT32 status)
+void SekSetIRQLine(const INT32 line, const INT32 nstatus)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekSetIRQLine called without init\n"));
 	if (nSekActive == -1) bprintf(PRINT_ERROR, _T("SekSetIRQLine called when no CPU open\n"));
 #endif
+
+	INT32 status = nstatus << 12; // needed for compatibility
 
 //	bprintf(PRINT_NORMAL, _T("  - irq line %i -> %i\n"), line, status);
 
@@ -1511,7 +1513,7 @@ INT32 SekMapMemory(UINT8* pMemory, UINT32 nStart, UINT32 nEnd, INT32 nType)
 	UINT8** pMemMap = pSekExt->MemMap + (nStart >> SEK_SHIFT);
 
 	// Special case for ROM banks
-	if (nType == SM_ROM) {
+	if (nType == MAP_ROM) {
 		for (UINT32 i = (nStart & ~SEK_PAGEM); i <= nEnd; i += SEK_PAGE_SIZE, pMemMap++) {
 			pMemMap[0]			  = Ptr + i;
 			pMemMap[SEK_WADD * 2] = Ptr + i;
@@ -1522,13 +1524,13 @@ INT32 SekMapMemory(UINT8* pMemory, UINT32 nStart, UINT32 nEnd, INT32 nType)
 
 	for (UINT32 i = (nStart & ~SEK_PAGEM); i <= nEnd; i += SEK_PAGE_SIZE, pMemMap++) {
 
-		if (nType & SM_READ) {					// Read
+		if (nType & MAP_READ) {					// Read
 			pMemMap[0]			  = Ptr + i;
 		}
-		if (nType & SM_WRITE) {					// Write
+		if (nType & MAP_WRITE) {					// Write
 			pMemMap[SEK_WADD]	  = Ptr + i;
 		}
-		if (nType & SM_FETCH) {					// Fetch
+		if (nType & MAP_FETCH) {					// Fetch
 			pMemMap[SEK_WADD * 2] = Ptr + i;
 		}
 	}
@@ -1548,13 +1550,13 @@ INT32 SekMapHandler(uintptr_t nHandler, UINT32 nStart, UINT32 nEnd, INT32 nType)
 	// Add to memory map
 	for (UINT32 i = (nStart & ~SEK_PAGEM); i <= nEnd; i += SEK_PAGE_SIZE, pMemMap++) {
 
-		if (nType & SM_READ) {					// Read
+		if (nType & MAP_READ) {					// Read
 			pMemMap[0]			  = (UINT8*)nHandler;
 		}
-		if (nType & SM_WRITE) {					// Write
+		if (nType & MAP_WRITE) {					// Write
 			pMemMap[SEK_WADD]	  = (UINT8*)nHandler;
 		}
-		if (nType & SM_FETCH) {					// Fetch
+		if (nType & MAP_FETCH) {					// Fetch
 			pMemMap[SEK_WADD * 2] = (UINT8*)nHandler;
 		}
 	}

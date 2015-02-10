@@ -427,7 +427,7 @@ static void bankswitch(INT32 data)
 
 	INT32 nBank = 0x10000 + nDrvBank[0] * 0x2000;
 
-	HD6309MapMemory(DrvHD6309ROM + nBank, 0x6000, 0x7fff, HD6309_ROM);
+	HD6309MapMemory(DrvHD6309ROM + nBank, 0x6000, 0x7fff, MAP_ROM);
 
 	K052109RMRDLine = data & 0x40;
 }
@@ -713,9 +713,9 @@ static INT32 DrvInit(INT32 type)
 
 	HD6309Init(0);
 	HD6309Open(0);
-	HD6309MapMemory(DrvHD6309RAM,		0x4000, 0x5fff, HD6309_RAM);
-	HD6309MapMemory(DrvHD6309ROM + 0x10000, 0x6000, 0x7fff, HD6309_ROM);
-	HD6309MapMemory(DrvHD6309ROM + 0x08000, 0x8000, 0xffff, HD6309_ROM);
+	HD6309MapMemory(DrvHD6309RAM,		0x4000, 0x5fff, MAP_RAM);
+	HD6309MapMemory(DrvHD6309ROM + 0x10000, 0x6000, 0x7fff, MAP_ROM);
+	HD6309MapMemory(DrvHD6309ROM + 0x08000, 0x8000, 0xffff, MAP_ROM);
 	HD6309SetWriteHandler(mainevt_main_write);
 	HD6309SetReadHandler(mainevt_main_read);
 	HD6309Close();

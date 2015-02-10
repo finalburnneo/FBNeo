@@ -1650,7 +1650,7 @@ INT32 GalFrame()
 			nGalCyclesDone[nCurrentCPU] += ZetRun(nGalCyclesSegment);
 			if (i == nIrqInterleaveFire && GalIrqFire) {
 				if (GalIrqType == GAL_IRQ_TYPE_NMI) ZetNmi();
-				if (GalIrqType == GAL_IRQ_TYPE_IRQ0) ZetRaiseIrq(0);
+				if (GalIrqType == GAL_IRQ_TYPE_IRQ0) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 				GalIrqFire = 0;
 			}
 			ZetClose();
@@ -1663,7 +1663,7 @@ INT32 GalFrame()
 			nNext = (i + 1) * nGalCyclesTotal[nCurrentCPU] / nInterleave;
 			nGalCyclesSegment = nNext - nGalCyclesDone[nCurrentCPU];
 			nGalCyclesDone[nCurrentCPU] += ZetRun(nGalCyclesSegment);
-			if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910) ZetRaiseIrq(0);
+			if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			ZetClose();
 		}
 			
@@ -1716,7 +1716,7 @@ INT32 GalFrame()
 			nNext = (i + 1) * nGalCyclesTotal[nCurrentCPU] / nInterleave;
 			nGalCyclesSegment = nNext - nGalCyclesDone[nCurrentCPU];
 			nGalCyclesDone[nCurrentCPU] += ZetRun(nGalCyclesSegment);
-			if (HunchbksSoundIrqFire) ZetRaiseIrq(0);
+			if (HunchbksSoundIrqFire) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			ZetClose();
 		}
 		

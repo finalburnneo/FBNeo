@@ -142,7 +142,7 @@ static void bankswitch(INT32 nBank)
 
 	nBank = (nBank & 0x07) * 0x2000;
 
-	M6809MapMemory(DrvMainROM + 0x10000 + nBank, 0x4000, 0x5fff, M6809_ROM);
+	M6809MapMemory(DrvMainROM + 0x10000 + nBank, 0x4000, 0x5fff, MAP_ROM);
 }
 
 static void pacland_main_write(UINT16 address, UINT8 data)
@@ -492,19 +492,19 @@ static INT32 DrvInit()
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvVidRAM0,		0x0000, 0x0fff, M6809_RAM);
-	M6809MapMemory(DrvVidRAM1,		0x1000, 0x1fff, M6809_RAM);
-	M6809MapMemory(DrvSprRAM,		0x2000, 0x37ff, M6809_RAM);
-	M6809MapMemory(DrvMainROM + 0x8000,	0x8000, 0xffff, M6809_ROM);
+	M6809MapMemory(DrvVidRAM0,		0x0000, 0x0fff, MAP_RAM);
+	M6809MapMemory(DrvVidRAM1,		0x1000, 0x1fff, MAP_RAM);
+	M6809MapMemory(DrvSprRAM,		0x2000, 0x37ff, MAP_RAM);
+	M6809MapMemory(DrvMainROM + 0x8000,	0x8000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(pacland_main_write);
 	M6809SetReadHandler(pacland_main_read);
 	M6809Close();
 
 	HD63701Init(1);
 	// Open
-	HD63701MapMemory(DrvMCUROM + 0x8000,	0x8000, 0xbfff, HD63701_ROM);
-	HD63701MapMemory(DrvMCURAM,		0xc000, 0xc7ff, HD63701_RAM);
-	HD63701MapMemory(DrvMCUROM + 0xf000,	0xf000, 0xffff, HD63701_ROM);
+	HD63701MapMemory(DrvMCUROM + 0x8000,	0x8000, 0xbfff, MAP_ROM);
+	HD63701MapMemory(DrvMCURAM,		0xc000, 0xc7ff, MAP_RAM);
+	HD63701MapMemory(DrvMCUROM + 0xf000,	0xf000, 0xffff, MAP_ROM);
 	HD63701SetWritePortHandler(pacland_mcu_write_port);
 	HD63701SetReadPortHandler(pacland_mcu_read_port);
 	HD63701SetWriteHandler(pacland_mcu_write);

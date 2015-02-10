@@ -620,16 +620,16 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68ec020);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x1fffff, SM_ROM);
-	SekMapMemory(Drv68KRAM,		0x400000, 0x40ffff, SM_RAM);
-	SekMapMemory(Drv68KRAM,		0x410000, 0x41ffff, SM_RAM);
-	SekMapMemory(DrvBgRAM1,		0x500000, 0x501fff, SM_RAM);
-	SekMapMemory(DrvBgRAM2,		0x502000, 0x503fff, SM_RAM);
-	SekMapMemory(DrvFgRAM1,		0x504000, 0x505fff, SM_RAM);
-	SekMapMemory(DrvFgRAM2,		0x506000, 0x507fff, SM_RAM);
-	SekMapMemory(DrvFgRAM2 + 0x2000,0x508000, 0x517fff, SM_RAM);
-	SekMapMemory(DrvSprRAM,		0x600000, 0x601fff, SM_RAM);
-	SekMapMemory(DrvPalRAM,		0x700000, 0x703fff, SM_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x1fffff, MAP_ROM);
+	SekMapMemory(Drv68KRAM,		0x400000, 0x40ffff, MAP_RAM);
+	SekMapMemory(Drv68KRAM,		0x410000, 0x41ffff, MAP_RAM);
+	SekMapMemory(DrvBgRAM1,		0x500000, 0x501fff, MAP_RAM);
+	SekMapMemory(DrvBgRAM2,		0x502000, 0x503fff, MAP_RAM);
+	SekMapMemory(DrvFgRAM1,		0x504000, 0x505fff, MAP_RAM);
+	SekMapMemory(DrvFgRAM2,		0x506000, 0x507fff, MAP_RAM);
+	SekMapMemory(DrvFgRAM2 + 0x2000,0x508000, 0x517fff, MAP_RAM);
+	SekMapMemory(DrvSprRAM,		0x600000, 0x601fff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,		0x700000, 0x703fff, MAP_RAM);
 	SekSetWriteLongHandler(0,	fuuki32_write_long);
 	SekSetWriteWordHandler(0,	fuuki32_write_word);
 	SekSetWriteByteHandler(0,	fuuki32_write_byte);

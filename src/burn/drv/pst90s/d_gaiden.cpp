@@ -549,7 +549,7 @@ void __fastcall gaiden_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x7a00e: // Dragon Bowl
 			soundlatch = data;
-			ZetRaiseIrq(0);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		return;
 
 		case 0x7a802: // Tecmo Knight
@@ -1021,13 +1021,13 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(Drv68KRAM,		0x060000, 0x063fff, SM_RAM);
-	SekMapMemory(DrvVidRAM0,	0x070000, 0x070fff, SM_RAM);
-	SekMapMemory(DrvVidRAM1,	0x072000, 0x073fff, SM_RAM);
-	SekMapMemory(DrvVidRAM2,	0x074000, 0x075fff, SM_RAM);
-	SekMapMemory(DrvSprRAM,		0x076000, 0x077fff, SM_RAM);
-	SekMapMemory(DrvPalRAM,		0x078000, 0x079fff, SM_ROM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Drv68KRAM,		0x060000, 0x063fff, MAP_RAM);
+	SekMapMemory(DrvVidRAM0,	0x070000, 0x070fff, MAP_RAM);
+	SekMapMemory(DrvVidRAM1,	0x072000, 0x073fff, MAP_RAM);
+	SekMapMemory(DrvVidRAM2,	0x074000, 0x075fff, MAP_RAM);
+	SekMapMemory(DrvSprRAM,		0x076000, 0x077fff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,		0x078000, 0x079fff, MAP_ROM);
 	SekSetWriteByteHandler(0,	gaiden_write_byte);
 	SekSetWriteWordHandler(0,	gaiden_write_word);
 	SekSetReadByteHandler(0,	gaiden_read_byte);

@@ -278,14 +278,14 @@ static INT32 DrvInit()
 	{
 		SekInit(0, 0x68000);
 		SekOpen(0);
-		SekMapMemory(Rom68K,			0x000000, 0x0FFFFF, SM_ROM);
-		SekMapMemory(Ram68K,			0x100000, 0x10FFFF, SM_RAM);
-		SekMapMemory((UINT8 *)RamPal,	0x200000, 0x200FFF, SM_ROM);
-		SekMapHandler(1,			0x200000, 0x200FFF, SM_WRITE);	// palette write
-		SekMapMemory((UINT8 *)RamSpr0,	0x240000, 0x240FFF, SM_RAM);
-		SekMapMemory((UINT8 *)RamSpr1,	0x280000, 0x280FFF, SM_RAM);
-		SekMapMemory((UINT8 *)RamBg,	0x2C0000, 0x2C0FFF, SM_RAM);
-		SekMapMemory(Ram68K + 0x10000,		0x8C0000, 0x8CFFFF, SM_RAM);
+		SekMapMemory(Rom68K,			0x000000, 0x0FFFFF, MAP_ROM);
+		SekMapMemory(Ram68K,			0x100000, 0x10FFFF, MAP_RAM);
+		SekMapMemory((UINT8 *)RamPal,	0x200000, 0x200FFF, MAP_ROM);
+		SekMapHandler(1,			0x200000, 0x200FFF, MAP_WRITE);	// palette write
+		SekMapMemory((UINT8 *)RamSpr0,	0x240000, 0x240FFF, MAP_RAM);
+		SekMapMemory((UINT8 *)RamSpr1,	0x280000, 0x280FFF, MAP_RAM);
+		SekMapMemory((UINT8 *)RamBg,	0x2C0000, 0x2C0FFF, MAP_RAM);
+		SekMapMemory(Ram68K + 0x10000,		0x8C0000, 0x8CFFFF, MAP_RAM);
 
 		SekSetReadWordHandler(0, k1945iiiReadWord);
 //		SekSetReadByteHandler(0, k1945iiiReadByte);

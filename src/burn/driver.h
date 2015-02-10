@@ -56,6 +56,13 @@ __extension__ typedef long long				INT64;
 #define HAS_YM3526  1
 #define HAS_Y8950   1
 
+enum {
+	CLEAR_LINE = 0,
+	ASSERT_LINE,
+	HOLD_LINE,
+	PULSE_LINE
+};
+
 #define timer_get_time() BurnTimerGetTime()
 
 #define READ8_HANDLER(name) 	UINT8 name(void)

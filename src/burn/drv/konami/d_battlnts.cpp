@@ -242,7 +242,7 @@ STDDIPINFO(Rackemup)
 static void bankswitch(INT32 bank)
 {
 	HD6309Bank = bank;
-	HD6309MapMemory(DrvHD6309ROM + 0x10000 + ((bank >> 6) * 0x4000), 0x4000, 0x7fff, HD6309_ROM);
+	HD6309MapMemory(DrvHD6309ROM + 0x10000 + ((bank >> 6) * 0x4000), 0x4000, 0x7fff, MAP_ROM);
 }
 
 static void battlnts_main_write(UINT16 address, UINT8 data)
@@ -438,19 +438,19 @@ static INT32 DrvInit()
 
 	HD6309Init(0);
 	HD6309Open(0);
-	HD6309MapMemory(K007342VidRAM[0],	0x0000, 0x1fff, HD6309_RAM);
-	HD6309MapMemory(K007420RAM[0], 		0x2000, 0x21ff, HD6309_RAM);
-	HD6309MapMemory(K007342ScrRAM[0],	0x2200, 0x23ff, HD6309_RAM);
-	HD6309MapMemory(DrvPalRAM,		0x2400, 0x24ff, HD6309_RAM);
-	HD6309MapMemory(DrvHD6309ROM + 0x08000, 0x8000, 0xffff, HD6309_ROM);
+	HD6309MapMemory(K007342VidRAM[0],	0x0000, 0x1fff, MAP_RAM);
+	HD6309MapMemory(K007420RAM[0], 		0x2000, 0x21ff, MAP_RAM);
+	HD6309MapMemory(K007342ScrRAM[0],	0x2200, 0x23ff, MAP_RAM);
+	HD6309MapMemory(DrvPalRAM,		0x2400, 0x24ff, MAP_RAM);
+	HD6309MapMemory(DrvHD6309ROM + 0x08000, 0x8000, 0xffff, MAP_ROM);
 	HD6309SetWriteHandler(battlnts_main_write);
 	HD6309SetReadHandler(battlnts_main_read);
 	HD6309Close();
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,			0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM,			0x8000, 0x87ff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM,			0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM,			0x8000, 0x87ff, MAP_RAM);
 	ZetSetWriteHandler(battlnts_sound_write);
 	ZetSetReadHandler(battlnts_sound_read);
 	ZetClose();

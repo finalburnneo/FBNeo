@@ -816,11 +816,11 @@ static void pow_map_68k()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom,		0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(Drv68KRam,		0x040000, 0x043fff, SM_RAM);
-	SekMapMemory(DrvVidRam,		0x100000, 0x100fff, SM_RAM); // video ram
-	SekMapMemory(DrvSprRam,		0x200000, 0x207fff, SM_RAM); // sprite ram
-	SekMapMemory(DrvPalRam,		0x400000, 0x400fff, SM_ROM); // palette ram
+	SekMapMemory(Drv68KRom,		0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Drv68KRam,		0x040000, 0x043fff, MAP_RAM);
+	SekMapMemory(DrvVidRam,		0x100000, 0x100fff, MAP_RAM); // video ram
+	SekMapMemory(DrvSprRam,		0x200000, 0x207fff, MAP_RAM); // sprite ram
+	SekMapMemory(DrvPalRam,		0x400000, 0x400fff, MAP_ROM); // palette ram
 	SekSetWriteByteHandler(0,	pow_write_byte);
 	SekSetWriteWordHandler(0,	pow_write_word);
 	SekSetReadByteHandler(0,	pow_read_byte);
@@ -832,13 +832,13 @@ static void sar_map_68k()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom,		0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(Drv68KRam,		0x040000, 0x043fff, SM_RAM);
-	SekMapMemory(DrvSprRam,		0x100000, 0x107fff, SM_ROM); // sprite ram
-	SekMapMemory(DrvVidRam,		0x200000, 0x200fff, SM_RAM); // video ram
-	SekMapMemory(DrvVidRam,		0x201000, 0x201fff, SM_WRITE); // video ram mirror
-	SekMapMemory(Drv68KRomBank,	0x300000, 0x33ffff, SM_ROM); // extra rom
-	SekMapMemory(DrvPalRam,		0x400000, 0x400fff, SM_ROM); // palette ram
+	SekMapMemory(Drv68KRom,		0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Drv68KRam,		0x040000, 0x043fff, MAP_RAM);
+	SekMapMemory(DrvSprRam,		0x100000, 0x107fff, MAP_ROM); // sprite ram
+	SekMapMemory(DrvVidRam,		0x200000, 0x200fff, MAP_RAM); // video ram
+	SekMapMemory(DrvVidRam,		0x201000, 0x201fff, MAP_WRITE); // video ram mirror
+	SekMapMemory(Drv68KRomBank,	0x300000, 0x33ffff, MAP_ROM); // extra rom
+	SekMapMemory(DrvPalRam,		0x400000, 0x400fff, MAP_ROM); // palette ram
 	SekSetWriteByteHandler(0,	pow_write_byte);
 	SekSetWriteWordHandler(0,	pow_write_word);
 	SekSetReadByteHandler(0,	sar_read_byte);

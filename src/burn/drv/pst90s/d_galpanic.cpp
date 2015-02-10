@@ -1077,15 +1077,15 @@ static INT32 GalpanicInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,		0x000000, 0x3FFFFF, SM_ROM);	// CPU 0 ROM
+		SekMapMemory(Rom68K,		0x000000, 0x3FFFFF, MAP_ROM);	// CPU 0 ROM
 		SekMapMemory((UINT8 *)RamFg,
-									0x500000, 0x51FFFF, SM_RAM);	// f ground
+									0x500000, 0x51FFFF, MAP_RAM);	// f ground
 		SekMapMemory((UINT8 *)RamBg,
-									0x520000, 0x53FFFF, SM_RAM);	// b ground
+									0x520000, 0x53FFFF, MAP_RAM);	// b ground
 		SekMapMemory((UINT8 *)RamPal,
-									0x600000, 0x6007FF, SM_RAM);	// palette
+									0x600000, 0x6007FF, MAP_RAM);	// palette
 		SekMapMemory((UINT8 *)RamSpr,
-									0x700000, 0x7047FF, SM_RAM);	// sprites
+									0x700000, 0x7047FF, MAP_RAM);	// sprites
 
 		SekSetReadWordHandler(0, GalpanicReadWord);
 		SekSetReadByteHandler(0, GalpanicReadByte);
@@ -1141,23 +1141,23 @@ static INT32 FantasiaInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,		0x000000, 0x4FFFFF, SM_ROM);	// CPU 0 ROM
+		SekMapMemory(Rom68K,		0x000000, 0x4FFFFF, MAP_ROM);	// CPU 0 ROM
 		SekMapMemory((UINT8 *)RamFg,
-									0x500000, 0x51FFFF, SM_RAM);	// f ground
+									0x500000, 0x51FFFF, MAP_RAM);	// f ground
 		SekMapMemory((UINT8 *)RamBg,
-									0x520000, 0x53FFFF, SM_RAM);	// b ground
+									0x520000, 0x53FFFF, MAP_RAM);	// b ground
 		SekMapMemory((UINT8 *)RamBgM,
-									0x580000, 0x583FFF, SM_RAM);	// another tilemap?
+									0x580000, 0x583FFF, MAP_RAM);	// another tilemap?
 		SekMapMemory((UINT8 *)RamPal,
-									0x600000, 0x600FFF, SM_RAM);	// palette
+									0x600000, 0x600FFF, MAP_RAM);	// palette
 		SekMapMemory((UINT8 *)Ram68K,
-									0x680000, 0x68001F, SM_WRITE);	// regs?
+									0x680000, 0x68001F, MAP_WRITE);	// regs?
 		SekMapMemory((UINT8 *)RamSpr,
-									0x700000, 0x700FFF, SM_RAM);	// sprites
+									0x700000, 0x700FFF, MAP_RAM);	// sprites
 		SekMapMemory((UINT8 *)Ram68K+0x000020,
-									0x780000, 0x78001F, SM_WRITE);	// regs?
+									0x780000, 0x78001F, MAP_WRITE);	// regs?
 		SekMapMemory((UINT8 *)Ram68K+0x000040,
-									0xC80000, 0xC8FFFF, SM_RAM);	// work ram?
+									0xC80000, 0xC8FFFF, MAP_RAM);	// work ram?
 
 
 		SekSetReadWordHandler(0, GalpanicReadWord);
@@ -1212,23 +1212,23 @@ static INT32 Missw96Init()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,		0x000000, 0x4FFFFF, SM_ROM);	// CPU 0 ROM
+		SekMapMemory(Rom68K,		0x000000, 0x4FFFFF, MAP_ROM);	// CPU 0 ROM
 		SekMapMemory((UINT8 *)RamFg,
-									0x500000, 0x51FFFF, SM_RAM);	// f ground
+									0x500000, 0x51FFFF, MAP_RAM);	// f ground
 		SekMapMemory((UINT8 *)RamBg,
-									0x520000, 0x53FFFF, SM_RAM);	// b ground
+									0x520000, 0x53FFFF, MAP_RAM);	// b ground
 		SekMapMemory((UINT8 *)RamBgM,
-									0x580000, 0x583FFF, SM_RAM);	// another tilemap?
+									0x580000, 0x583FFF, MAP_RAM);	// another tilemap?
 		SekMapMemory((UINT8 *)RamPal,
-									0x600000, 0x600FFF, SM_RAM);	// palette
+									0x600000, 0x600FFF, MAP_RAM);	// palette
 		SekMapMemory((UINT8 *)RamSpr,
-									0x700000, 0x700FFF, SM_RAM);	// sprites
+									0x700000, 0x700FFF, MAP_RAM);	// sprites
 		SekMapMemory((UINT8 *)Ram68K,
-									0xC00000, 0xC0FFFF, SM_RAM);	// work ram?
+									0xC00000, 0xC0FFFF, MAP_RAM);	// work ram?
 		SekMapMemory((UINT8 *)Ram68K+0x010000,
-									0x680000, 0x68001F, SM_RAM);	// regs?
+									0x680000, 0x68001F, MAP_RAM);	// regs?
 		SekMapMemory((UINT8 *)Ram68K+0x010020,
-									0x780000, 0x78001F, SM_RAM);	// regs?
+									0x780000, 0x78001F, MAP_RAM);	// regs?
 
 		SekSetReadWordHandler(0, GalpanicReadWord);
 		SekSetReadByteHandler(0, ComadReadByte);
@@ -1285,23 +1285,23 @@ static INT32 Fantsia2Init()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,		0x000000, 0x4FFFFF, SM_ROM);	// CPU 0 ROM
+		SekMapMemory(Rom68K,		0x000000, 0x4FFFFF, MAP_ROM);	// CPU 0 ROM
 		SekMapMemory((UINT8 *)RamFg,
-									0x500000, 0x51FFFF, SM_RAM);	// f ground
+									0x500000, 0x51FFFF, MAP_RAM);	// f ground
 		SekMapMemory((UINT8 *)RamBg,
-									0x520000, 0x53FFFF, SM_RAM);	// b ground
+									0x520000, 0x53FFFF, MAP_RAM);	// b ground
 		SekMapMemory((UINT8 *)RamBgM,
-									0x580000, 0x583FFF, SM_RAM);	// another tilemap?
+									0x580000, 0x583FFF, MAP_RAM);	// another tilemap?
 		SekMapMemory((UINT8 *)RamPal,
-									0x600000, 0x600FFF, SM_RAM);	// palette
+									0x600000, 0x600FFF, MAP_RAM);	// palette
 		SekMapMemory((UINT8 *)RamSpr,
-									0x700000, 0x700FFF, SM_RAM);	// sprites
+									0x700000, 0x700FFF, MAP_RAM);	// sprites
 		SekMapMemory((UINT8 *)Ram68K,
-									0xF80000, 0xF8FFFF, SM_RAM);	// work ram?
+									0xF80000, 0xF8FFFF, MAP_RAM);	// work ram?
 		SekMapMemory((UINT8 *)Ram68K+0x010000,
-									0x680000, 0x68001F, SM_RAM);	// regs?
+									0x680000, 0x68001F, MAP_RAM);	// regs?
 		SekMapMemory((UINT8 *)Ram68K+0x010020,
-									0x780000, 0x78001F, SM_RAM);	// regs?
+									0x780000, 0x78001F, MAP_RAM);	// regs?
 
 		SekSetReadWordHandler(0, GalpanicReadWord);
 		SekSetReadByteHandler(0, ComadReadByte);
@@ -1352,23 +1352,23 @@ static INT32 WownfantInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,		0x000000, 0x4FFFFF, SM_ROM);	// CPU 0 ROM
+		SekMapMemory(Rom68K,		0x000000, 0x4FFFFF, MAP_ROM);	// CPU 0 ROM
 		SekMapMemory((UINT8 *)RamFg,
-									0x500000, 0x51FFFF, SM_RAM);	// f ground
+									0x500000, 0x51FFFF, MAP_RAM);	// f ground
 		SekMapMemory((UINT8 *)RamBg,
-									0x520000, 0x53FFFF, SM_RAM);	// b ground
+									0x520000, 0x53FFFF, MAP_RAM);	// b ground
 		SekMapMemory((UINT8 *)RamBgM,
-									0x580000, 0x583FFF, SM_RAM);	// another tilemap?
+									0x580000, 0x583FFF, MAP_RAM);	// another tilemap?
 		SekMapMemory((UINT8 *)RamPal,
-									0x600000, 0x600FFF, SM_RAM);	// palette
+									0x600000, 0x600FFF, MAP_RAM);	// palette
 		SekMapMemory((UINT8 *)RamSpr,
-									0x700000, 0x700FFF, SM_RAM);	// sprites
+									0x700000, 0x700FFF, MAP_RAM);	// sprites
 		SekMapMemory((UINT8 *)Ram68K,
-									0xF80000, 0xF8FFFF, SM_RAM);	// work ram?
+									0xF80000, 0xF8FFFF, MAP_RAM);	// work ram?
 		SekMapMemory((UINT8 *)Ram68K+0x010000,
-									0x680000, 0x68001F, SM_RAM);	// regs?
+									0x680000, 0x68001F, MAP_RAM);	// regs?
 		SekMapMemory((UINT8 *)Ram68K+0x010020,
-									0x780000, 0x78001F, SM_RAM);	// regs?
+									0x780000, 0x78001F, MAP_RAM);	// regs?
 
 		SekSetReadWordHandler(0, GalpanicReadWord);
 		SekSetReadByteHandler(0, ComadReadByte);
@@ -1421,25 +1421,25 @@ static INT32 GalhustlInit()
 		SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,		0x000000, 0x0FFFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(Rom68K + 0x100000,	0x200000, 0x2fffff, SM_ROM); // pgalvip
+		SekMapMemory(Rom68K,		0x000000, 0x0FFFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Rom68K + 0x100000,	0x200000, 0x2fffff, MAP_ROM); // pgalvip
 		SekMapMemory((UINT8 *)RamFg,
-									0x500000, 0x51FFFF, SM_RAM);	// f ground
+									0x500000, 0x51FFFF, MAP_RAM);	// f ground
 		SekMapMemory((UINT8 *)RamBg,
-									0x520000, 0x53FFFF, SM_RAM);	// b ground
+									0x520000, 0x53FFFF, MAP_RAM);	// b ground
 //		SekMapMemory((UINT8 *)RamBgM,
-//									0x580000, 0x583FFF, SM_RAM);	// another tilemap?
-//		SekMapHandler(1,				0x580000, 0x583FFF, SM_WRITE);
+//									0x580000, 0x583FFF, MAP_RAM);	// another tilemap?
+//		SekMapHandler(1,				0x580000, 0x583FFF, MAP_WRITE);
 		SekMapMemory((UINT8 *)RamPal,
-									0x600000, 0x600FFF, SM_RAM);	// palette
+									0x600000, 0x600FFF, MAP_RAM);	// palette
 		SekMapMemory((UINT8 *)RamSpr,
-									0x700000, 0x700FFF, SM_RAM);	// sprites
+									0x700000, 0x700FFF, MAP_RAM);	// sprites
 		SekMapMemory((UINT8 *)Ram68K,
-									0x680000, 0x68001F, SM_RAM);	// regs?
+									0x680000, 0x68001F, MAP_RAM);	// regs?
 		SekMapMemory((UINT8 *)Ram68K+0x000020,
-									0x780000, 0x78001F, SM_RAM);	// regs?
+									0x780000, 0x78001F, MAP_RAM);	// regs?
 		SekMapMemory((UINT8 *)Ram68K+0x000040,
-									0xE80000, 0xE8FFFF, SM_RAM);	// work ram?
+									0xE80000, 0xE8FFFF, MAP_RAM);	// work ram?
 
 		SekSetReadWordHandler(0, GalhustlReadWord);
 		SekSetReadByteHandler(0, GalhustlReadByte);
@@ -1499,26 +1499,26 @@ static INT32 ZipzapInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,		0x000000, 0x4FFFFF, SM_ROM);	// CPU 0 ROM
+		SekMapMemory(Rom68K,		0x000000, 0x4FFFFF, MAP_ROM);	// CPU 0 ROM
 		SekMapMemory((UINT8 *)RamFg,
-									0x500000, 0x51FFFF, SM_RAM);	// f ground
+									0x500000, 0x51FFFF, MAP_RAM);	// f ground
 		SekMapMemory((UINT8 *)RamBg,
-									0x520000, 0x53FFFF, SM_RAM);	// b ground
+									0x520000, 0x53FFFF, MAP_RAM);	// b ground
 		SekMapMemory((UINT8 *)RamBgM,
-									0x580000, 0x583FFF, SM_RAM);	// another tilemap?
-//		SekMapHandler(1,				0x580000, 0x583FFF, SM_WRITE);
+									0x580000, 0x583FFF, MAP_RAM);	// another tilemap?
+//		SekMapHandler(1,				0x580000, 0x583FFF, MAP_WRITE);
 		SekMapMemory((UINT8 *)RamPal,
-									0x600000, 0x600FFF, SM_RAM);	// palette
+									0x600000, 0x600FFF, MAP_RAM);	// palette
 		SekMapMemory((UINT8 *)RamSpr,
-									0x700000, 0x700FFF, SM_RAM);	// sprites
+									0x700000, 0x700FFF, MAP_RAM);	// sprites
 		SekMapMemory((UINT8 *)Ram68K,
-									0xC80000, 0xC8FFFF, SM_RAM);	// work ram?
+									0xC80000, 0xC8FFFF, MAP_RAM);	// work ram?
 		SekMapMemory((UINT8 *)Ram68K+0x010000,
-									0x680000, 0x68001F, SM_RAM);	// regs?
+									0x680000, 0x68001F, MAP_RAM);	// regs?
 		SekMapMemory((UINT8 *)Ram68K+0x010020,
-									0x780000, 0x78001F, SM_RAM);	// regs?
+									0x780000, 0x78001F, MAP_RAM);	// regs?
 //		SekMapMemory((UINT8 *)Ram68K+0x010040,
-//									0x701000, 0x71FFFF, SM_RAM);	// work ram?
+//									0x701000, 0x71FFFF, MAP_RAM);	// work ram?
 
 		SekSetReadWordHandler(0, GalhustlReadWord);
 		SekSetReadByteHandler(0, GalhustlReadByte);

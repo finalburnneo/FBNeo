@@ -519,18 +519,18 @@ static INT32 DrvInit()
 	{
 		SekInit(0, 0x68000);
 		SekOpen(0);
-		SekMapMemory(Rom01,				0x000000, 0x07FFFF, SM_ROM);
-		SekMapMemory(Ram01,				0x100000, 0x10FFFF, SM_RAM);
-		SekMapMemory(CaveTileRAM[0],			0x300000, 0x303FFF, SM_RAM);
-		SekMapMemory(CaveTileRAM[0],			0x304000, 0x307FFF, SM_RAM);	// mirror
-		SekMapMemory(CaveSpriteRAM,			0x200000, 0x20FFFF, SM_RAM);
-		SekMapMemory(CavePalSrc,			0x500000, 0x50FFFF, SM_ROM);
+		SekMapMemory(Rom01,				0x000000, 0x07FFFF, MAP_ROM);
+		SekMapMemory(Ram01,				0x100000, 0x10FFFF, MAP_RAM);
+		SekMapMemory(CaveTileRAM[0],			0x300000, 0x303FFF, MAP_RAM);
+		SekMapMemory(CaveTileRAM[0],			0x304000, 0x307FFF, MAP_RAM);	// mirror
+		SekMapMemory(CaveSpriteRAM,			0x200000, 0x20FFFF, MAP_RAM);
+		SekMapMemory(CavePalSrc,			0x500000, 0x50FFFF, MAP_ROM);
 		SekSetReadWordHandler(0, 			tjumpmanReadWord);
 		SekSetReadByteHandler(0,			tjumpmanReadByte);
 		SekSetWriteWordHandler(0, 			tjumpmanWriteWord);
 		SekSetWriteByteHandler(0, 			tjumpmanWriteByte);
 
-		SekMapHandler(1,				0x500000, 0x50FFFF, SM_WRITE);
+		SekMapHandler(1,				0x500000, 0x50FFFF, MAP_WRITE);
 		SekSetWriteWordHandler(1, 			tjumpmanWriteWordPalette);
 		SekSetWriteByteHandler(1, 			tjumpmanWriteBytePalette);
 		SekClose();

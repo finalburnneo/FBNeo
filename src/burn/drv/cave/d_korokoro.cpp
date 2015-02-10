@@ -566,11 +566,11 @@ static INT32 DrvInit()
 		SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom01,		0x000000, 0x07FFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(CaveTileRAM[0],	0x100000, 0x107FFF, SM_RAM);
-		SekMapMemory(CaveSpriteRAM,	0x180000, 0x187FFF, SM_RAM);
-		SekMapMemory(CavePalSrc,	0x200000, 0x207FFF, SM_RAM);
-		SekMapMemory(Ram01,		0x300000, 0x30FFFF, SM_RAM);
+		SekMapMemory(Rom01,		0x000000, 0x07FFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(CaveTileRAM[0],	0x100000, 0x107FFF, MAP_RAM);
+		SekMapMemory(CaveSpriteRAM,	0x180000, 0x187FFF, MAP_RAM);
+		SekMapMemory(CavePalSrc,	0x200000, 0x207FFF, MAP_RAM);
+		SekMapMemory(Ram01,		0x300000, 0x30FFFF, MAP_RAM);
 
 		SekSetReadWordHandler(0, 	korokoroReadWord);
 		SekSetReadByteHandler(0, 	korokoroReadByte);
@@ -646,11 +646,11 @@ static INT32 crushermInit()
 		SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom01,		0x000000, 0x07FFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(CaveTileRAM[0],	0x100000, 0x107FFF, SM_RAM);
-		SekMapMemory(CaveSpriteRAM,	0x180000, 0x187FFF, SM_RAM);
-		SekMapMemory(CavePalSrc,	0x200000, 0x207FFF, SM_RAM);
-		SekMapMemory(Ram01,		0x340000, 0x34FFFF, SM_RAM);
+		SekMapMemory(Rom01,		0x000000, 0x07FFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(CaveTileRAM[0],	0x100000, 0x107FFF, MAP_RAM);
+		SekMapMemory(CaveSpriteRAM,	0x180000, 0x187FFF, MAP_RAM);
+		SekMapMemory(CavePalSrc,	0x200000, 0x207FFF, MAP_RAM);
+		SekMapMemory(Ram01,		0x340000, 0x34FFFF, MAP_RAM);
 
 		SekSetReadWordHandler(0, 	korokoroReadWord);
 		SekSetReadByteHandler(0, 	korokoroReadByte);

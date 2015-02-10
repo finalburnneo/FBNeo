@@ -433,18 +433,18 @@ static INT32 DrvInit(INT32 game_select)
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, SM_ROM);
-	SekMapMemory(DrvFgRAM,		0x120000, 0x120fff, SM_RAM);
-	SekMapMemory(DrvBgRAM,		0x122000, 0x122fff, SM_RAM);
-	SekMapMemory(DrvPalRAM,		0x200000, 0x2007ff, SM_ROM);
-	SekMapMemory(DrvSprRAM,		0x210000, 0x2107ff, SM_RAM);
-	SekMapMemory(Drv68KRAM,		0x300000, 0x30ffff, SM_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, MAP_ROM);
+	SekMapMemory(DrvFgRAM,		0x120000, 0x120fff, MAP_RAM);
+	SekMapMemory(DrvBgRAM,		0x122000, 0x122fff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,		0x200000, 0x2007ff, MAP_ROM);
+	SekMapMemory(DrvSprRAM,		0x210000, 0x2107ff, MAP_RAM);
+	SekMapMemory(Drv68KRAM,		0x300000, 0x30ffff, MAP_RAM);
 	SekSetWriteByteHandler(0,	silvmil_write_byte);
 	SekSetWriteWordHandler(0,	silvmil_write_word);
 	SekSetReadByteHandler(0,	silvmil_read_byte);
 	SekSetReadWordHandler(0,	silvmil_read_word);
 
-	SekMapHandler(1,		0x200000, 0x2007ff, SM_WRITE);
+	SekMapHandler(1,		0x200000, 0x2007ff, MAP_WRITE);
 	SekSetWriteByteHandler(1,	silvmil_palette_write_byte);
 	SekSetWriteWordHandler(1,	silvmil_palette_write_word);
 	SekClose();

@@ -189,7 +189,7 @@ static void bankswitch(INT32 n, INT32 data)
 
 	INT32 bank = 0x10000 + (data & 0xf8) * 256;
 
-	ZetMapMemory((n ? DrvZ80ROM1 : DrvZ80ROM0) + bank, 0xf000, 0xf7ff, ZET_ROM);
+	ZetMapMemory((n ? DrvZ80ROM1 : DrvZ80ROM0) + bank, 0xf000, 0xf7ff, MAP_ROM);
 }
 
 static void __fastcall tbowl_main_write(UINT16 address, UINT8 data)
@@ -493,30 +493,30 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM0,	0x8000, 0x9fff, ZET_RAM);
-	ZetMapMemory(DrvBgRAM2,		0xa000, 0xbfff, ZET_RAM);
-	ZetMapMemory(DrvBgRAM,		0xc000, 0xdfff, ZET_RAM);
-	ZetMapMemory(DrvTxRAM,		0xe000, 0xefff, ZET_RAM);
-	ZetMapMemory(DrvShareRAM,	0xf800, 0xfbff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM0,	0x8000, 0x9fff, MAP_RAM);
+	ZetMapMemory(DrvBgRAM2,		0xa000, 0xbfff, MAP_RAM);
+	ZetMapMemory(DrvBgRAM,		0xc000, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvTxRAM,		0xe000, 0xefff, MAP_RAM);
+	ZetMapMemory(DrvShareRAM,	0xf800, 0xfbff, MAP_RAM);
 	ZetSetWriteHandler(tbowl_main_write);
 	ZetSetReadHandler(tbowl_main_read);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1,	0x0000, 0xbfff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM1,	0xc000, 0xd7ff, ZET_RAM);
-	ZetMapMemory(DrvSprRAM,		0xd800, 0xdfff, ZET_RAM);
-	ZetMapMemory(DrvPalRAM,		0xe000, 0xefff, ZET_RAM);
-	ZetMapMemory(DrvShareRAM,	0xf800, 0xfbff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM1,	0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1,	0xc000, 0xd7ff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,		0xd800, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvPalRAM,		0xe000, 0xefff, MAP_RAM);
+	ZetMapMemory(DrvShareRAM,	0xf800, 0xfbff, MAP_RAM);
 	ZetSetWriteHandler(tbowl_sub_write);
 	ZetClose();
 
 	ZetInit(2);
 	ZetOpen(2);
-	ZetMapMemory(DrvZ80ROM2,	0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM2,	0xc000, 0xc7ff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM2,	0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM2,	0xc000, 0xc7ff, MAP_RAM);
 	ZetSetWriteHandler(tbowl_sound_write);
 	ZetSetReadHandler(tbowl_sound_read);
 	ZetClose();
@@ -710,14 +710,14 @@ static INT32 DrvFrame()
 
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nSegment);
-		if (i == (nInterleave-1)) ZetRaiseIrq(0);
+		if (i == (nInterleave-1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		nSegment = (nTotalCycles[1] - nCyclesDone[1]) / (nInterleave - i);
 
 		ZetOpen(1);
 		nCyclesDone[1] += ZetRun(nSegment);
-		if (i == (nInterleave-1)) ZetRaiseIrq(0);
+		if (i == (nInterleave-1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		ZetOpen(2);

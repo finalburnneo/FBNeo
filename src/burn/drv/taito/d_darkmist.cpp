@@ -137,7 +137,7 @@ static void bankswitch(INT32 data)
 
 	INT32 nBank = (data & 0x80) ? 0x14000 : 0x10000;
 
-	ZetMapMemory(DrvZ80ROM + nBank, 0x8000, 0xbfff, ZET_ROM);
+	ZetMapMemory(DrvZ80ROM + nBank, 0x8000, 0xbfff, MAP_ROM);
 }
 
 static void __fastcall darkmist_main_write(UINT16 address, UINT8 data)
@@ -498,13 +498,13 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,		0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80ROMDec,	0x0000, 0x7fff, ZET_FETCHOP);
-	ZetMapMemory(DrvPalRAM,		0xd000, 0xd3ff, ZET_ROM);
-	ZetMapMemory(DrvScrollRAM,	0xd400, 0xd4ff, ZET_RAM);
-	ZetMapMemory(DrvVidRAM,		0xd800, 0xdfff, ZET_RAM);
-	ZetMapMemory(DrvZ80RAM,		0xe000, 0xefff, ZET_RAM);
-	ZetMapMemory(DrvSprRAM,		0xf000, 0xffff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM,		0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80ROMDec,	0x0000, 0x7fff, MAP_FETCHOP);
+	ZetMapMemory(DrvPalRAM,		0xd000, 0xd3ff, MAP_ROM);
+	ZetMapMemory(DrvScrollRAM,	0xd400, 0xd4ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM,		0xd800, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvZ80RAM,		0xe000, 0xefff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,		0xf000, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(darkmist_main_write);
 	ZetSetReadHandler(darkmist_main_read);
 	ZetClose();

@@ -872,7 +872,7 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 99) ZetRaiseIrq(0);
+		if (i == 99) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		// Run Z80 #2

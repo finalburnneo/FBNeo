@@ -123,8 +123,8 @@ void m67805_taito_init(UINT8 *rom, UINT8 *ram, m68705_interface *interface)
 
 	m6805Init(1, 0x800 /*max memory range - page size is max range / 0x100*/);
 	m6805Open(0);
-	m6805MapMemory(ram, 		0x0010, 0x007f, M6805_RAM);
-	m6805MapMemory(rom + 0x80,	0x0080, 0x07ff, M6805_ROM);
+	m6805MapMemory(ram, 		0x0010, 0x007f, MAP_RAM);
+	m6805MapMemory(rom + 0x80,	0x0080, 0x07ff, MAP_ROM);
 	m6805SetWriteHandler(m67805_mcu_write);
 	m6805SetReadHandler(m67805_mcu_read);
 	m6805Close();

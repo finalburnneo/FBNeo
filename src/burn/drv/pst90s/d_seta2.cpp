@@ -1621,23 +1621,23 @@ static INT32 grdiansInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,		0x000000, 0x1FFFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram68K,		0x200000, 0x20FFFF, SM_RAM);	// CPU 0 RAM
-		SekMapMemory(RamUnknown,	0x304000, 0x30FFFF, SM_RAM);	// ? seems tile data
+		SekMapMemory(Rom68K,		0x000000, 0x1FFFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram68K,		0x200000, 0x20FFFF, MAP_RAM);	// CPU 0 RAM
+		SekMapMemory(RamUnknown,	0x304000, 0x30FFFF, MAP_RAM);	// ? seems tile data
 
 		SekMapMemory((UINT8 *)RamSpr,
-									0xC00000, 0xC3FFFF, SM_RAM);	// sprites
+									0xC00000, 0xC3FFFF, MAP_RAM);	// sprites
 		SekMapMemory((UINT8 *)RamPal,
-									0xC40000, 0xC4FFFF, SM_ROM);	// Palette
+									0xC40000, 0xC4FFFF, MAP_ROM);	// Palette
 		SekMapMemory((UINT8 *)RamVReg,
-									0xC60000, 0xC6003F, SM_RAM);	// Video Registers
+									0xC60000, 0xC6003F, MAP_RAM);	// Video Registers
 		SekMapMemory((UINT8 *)RamTMP68301,
-									0xFFFC00, 0xFFFFFF, SM_ROM);	// TMP68301 Registers
+									0xFFFC00, 0xFFFFFF, MAP_ROM);	// TMP68301 Registers
 
-		SekMapHandler(1,			0xB00000, 0xB03FFF, SM_READ | SM_WRITE);
-		SekMapHandler(2,			0xC40000, 0xC4FFFF, SM_WRITE);	// Palette
-		SekMapHandler(3,			0xC50000, 0xC5FFFF, SM_WRITE);
-		SekMapHandler(4,			0xFFFC00, 0xFFFFFF, SM_WRITE);
+		SekMapHandler(1,			0xB00000, 0xB03FFF, MAP_READ | MAP_WRITE);
+		SekMapHandler(2,			0xC40000, 0xC4FFFF, MAP_WRITE);	// Palette
+		SekMapHandler(3,			0xC50000, 0xC5FFFF, MAP_WRITE);
+		SekMapHandler(4,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
 
 		SekSetReadWordHandler(0, grdiansReadWord);
 		SekSetReadByteHandler(0, grdiansReadByte);
@@ -1789,21 +1789,21 @@ static INT32 mj4simaiInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,		0x000000, 0x1FFFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram68K,		0x200000, 0x20FFFF, SM_RAM);	// CPU 0 RAM
+		SekMapMemory(Rom68K,		0x000000, 0x1FFFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram68K,		0x200000, 0x20FFFF, MAP_RAM);	// CPU 0 RAM
 
 		SekMapMemory((UINT8 *)RamSpr,
-									0xC00000, 0xC3FFFF, SM_RAM);	// sprites
+									0xC00000, 0xC3FFFF, MAP_RAM);	// sprites
 		SekMapMemory((UINT8 *)RamPal,
-									0xC40000, 0xC4FFFF, SM_ROM);	// Palette
+									0xC40000, 0xC4FFFF, MAP_ROM);	// Palette
 		SekMapMemory((UINT8 *)RamVReg,
-									0xC60000, 0xC6003F, SM_RAM);	// Video Registers
+									0xC60000, 0xC6003F, MAP_RAM);	// Video Registers
 		SekMapMemory((UINT8 *)RamTMP68301,
-									0xFFFC00, 0xFFFFFF, SM_ROM);	// TMP68301 Registers
+									0xFFFC00, 0xFFFFFF, MAP_ROM);	// TMP68301 Registers
 
-		SekMapHandler(1,			0xB00000, 0xB03FFF, SM_READ | SM_WRITE);
-		SekMapHandler(2,			0xC40000, 0xC4FFFF, SM_WRITE);	// Palette
-		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, SM_WRITE);
+		SekMapHandler(1,			0xB00000, 0xB03FFF, MAP_READ | MAP_WRITE);
+		SekMapHandler(2,			0xC40000, 0xC4FFFF, MAP_WRITE);	// Palette
+		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
 
 		SekSetReadWordHandler(0, mj4simaiReadWord);
 		SekSetReadByteHandler(0, mj4simaiReadByte);
@@ -1941,21 +1941,21 @@ static INT32 myangelInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,		0x000000, 0x1FFFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram68K,		0x200000, 0x20FFFF, SM_RAM);	// CPU 0 RAM
+		SekMapMemory(Rom68K,		0x000000, 0x1FFFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram68K,		0x200000, 0x20FFFF, MAP_RAM);	// CPU 0 RAM
 
 		SekMapMemory((UINT8 *)RamSpr,
-									0xC00000, 0xC3FFFF, SM_RAM);	// sprites
+									0xC00000, 0xC3FFFF, MAP_RAM);	// sprites
 		SekMapMemory((UINT8 *)RamPal,
-									0xC40000, 0xC4FFFF, SM_ROM);	// Palette
+									0xC40000, 0xC4FFFF, MAP_ROM);	// Palette
 		SekMapMemory((UINT8 *)RamVReg,
-									0xC60000, 0xC6003F, SM_RAM);	// Video Registers
+									0xC60000, 0xC6003F, MAP_RAM);	// Video Registers
 		SekMapMemory((UINT8 *)RamTMP68301,
-									0xFFFC00, 0xFFFFFF, SM_ROM);	// TMP68301 Registers
+									0xFFFC00, 0xFFFFFF, MAP_ROM);	// TMP68301 Registers
 
-		SekMapHandler(1,			0xB00000, 0xB03FFF, SM_READ | SM_WRITE);
-		SekMapHandler(2,			0xC40000, 0xC4FFFF, SM_WRITE);	// Palette
-		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, SM_WRITE);
+		SekMapHandler(1,			0xB00000, 0xB03FFF, MAP_READ | MAP_WRITE);
+		SekMapHandler(2,			0xC40000, 0xC4FFFF, MAP_WRITE);	// Palette
+		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
 
 		SekSetReadWordHandler(0, myangelReadWord);
 		SekSetReadByteHandler(0, myangelReadByte);
@@ -2091,21 +2091,21 @@ static INT32 myangel2Init()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,		0x000000, 0x1FFFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram68K,		0x200000, 0x20FFFF, SM_RAM);	// CPU 0 RAM
+		SekMapMemory(Rom68K,		0x000000, 0x1FFFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram68K,		0x200000, 0x20FFFF, MAP_RAM);	// CPU 0 RAM
 
 		SekMapMemory((UINT8 *)RamSpr,
-									0xD00000, 0xD3FFFF, SM_RAM);	// sprites
+									0xD00000, 0xD3FFFF, MAP_RAM);	// sprites
 		SekMapMemory((UINT8 *)RamPal,
-									0xD40000, 0xD4FFFF, SM_ROM);	// Palette
+									0xD40000, 0xD4FFFF, MAP_ROM);	// Palette
 		SekMapMemory((UINT8 *)RamVReg,
-									0xD60000, 0xD6003F, SM_RAM);	// Video Registers
+									0xD60000, 0xD6003F, MAP_RAM);	// Video Registers
 		SekMapMemory((UINT8 *)RamTMP68301,
-									0xFFFC00, 0xFFFFFF, SM_ROM);	// TMP68301 Registers
+									0xFFFC00, 0xFFFFFF, MAP_ROM);	// TMP68301 Registers
 
-		SekMapHandler(1,			0xB00000, 0xB03FFF, SM_READ | SM_WRITE);
-		SekMapHandler(2,			0xD40000, 0xD4FFFF, SM_WRITE);	// Palette
-		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, SM_WRITE);
+		SekMapHandler(1,			0xB00000, 0xB03FFF, MAP_READ | MAP_WRITE);
+		SekMapHandler(2,			0xD40000, 0xD4FFFF, MAP_WRITE);	// Palette
+		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
 
 		SekSetReadWordHandler(0, myangel2ReadWord);
 		SekSetReadByteHandler(0, myangel2ReadByte);
@@ -2249,21 +2249,21 @@ static INT32 pzlbowlInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,		0x000000, 0x0FFFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram68K,		0x200000, 0x20FFFF, SM_RAM);	// CPU 0 RAM
+		SekMapMemory(Rom68K,		0x000000, 0x0FFFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram68K,		0x200000, 0x20FFFF, MAP_RAM);	// CPU 0 RAM
 
 		SekMapMemory((UINT8 *)RamSpr,
-									0x800000, 0x83FFFF, SM_RAM);	// sprites
+									0x800000, 0x83FFFF, MAP_RAM);	// sprites
 		SekMapMemory((UINT8 *)RamPal,
-									0x840000, 0x84FFFF, SM_ROM);	// Palette
+									0x840000, 0x84FFFF, MAP_ROM);	// Palette
 		SekMapMemory((UINT8 *)RamVReg,
-									0x860000, 0x86003F, SM_RAM);	// Video Registers
+									0x860000, 0x86003F, MAP_RAM);	// Video Registers
 		SekMapMemory((UINT8 *)RamTMP68301,
-									0xFFFC00, 0xFFFFFF, SM_ROM);	// TMP68301 Registers
+									0xFFFC00, 0xFFFFFF, MAP_ROM);	// TMP68301 Registers
 
-		SekMapHandler(1,			0x900000, 0x903FFF, SM_READ | SM_WRITE);
-		SekMapHandler(2,			0x840000, 0x84FFFF, SM_WRITE);	// Palette
-		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, SM_WRITE);
+		SekMapHandler(1,			0x900000, 0x903FFF, MAP_READ | MAP_WRITE);
+		SekMapHandler(2,			0x840000, 0x84FFFF, MAP_WRITE);	// Palette
+		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
 
 		SekSetReadWordHandler(0, pzlbowlReadWord);
 		SekSetReadByteHandler(0, pzlbowlReadByte);
@@ -2395,26 +2395,26 @@ static INT32 penbrosInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,		0x000000, 0x0FFFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram68K,		0x200000, 0x20FFFF, SM_RAM);	// CPU 0 RAM
+		SekMapMemory(Rom68K,		0x000000, 0x0FFFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram68K,		0x200000, 0x20FFFF, MAP_RAM);	// CPU 0 RAM
 
 		SekMapMemory(RamUnknown + 0x00000,	
-									0x210000, 0x23FFFF, SM_RAM);
+									0x210000, 0x23FFFF, MAP_RAM);
 		SekMapMemory(RamUnknown + 0x30000,	
-									0x300000, 0x30FFFF, SM_RAM);
+									0x300000, 0x30FFFF, MAP_RAM);
 
 		SekMapMemory((UINT8 *)RamSpr,
-									0xB00000, 0xB3FFFF, SM_RAM);	// sprites
+									0xB00000, 0xB3FFFF, MAP_RAM);	// sprites
 		SekMapMemory((UINT8 *)RamPal,
-									0xB40000, 0xB4FFFF, SM_ROM);	// Palette
+									0xB40000, 0xB4FFFF, MAP_ROM);	// Palette
 		SekMapMemory((UINT8 *)RamVReg,
-									0xB60000, 0xB6003F, SM_RAM);	// Video Registers
+									0xB60000, 0xB6003F, MAP_RAM);	// Video Registers
 		SekMapMemory((UINT8 *)RamTMP68301,
-									0xFFFC00, 0xFFFFFF, SM_ROM);	// TMP68301 Registers
+									0xFFFC00, 0xFFFFFF, MAP_ROM);	// TMP68301 Registers
 
-		SekMapHandler(1,			0xA00000, 0xA03FFF, SM_READ | SM_WRITE);
-		SekMapHandler(2,			0xB40000, 0xB4FFFF, SM_WRITE);	// Palette
-		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, SM_WRITE);
+		SekMapHandler(1,			0xA00000, 0xA03FFF, MAP_READ | MAP_WRITE);
+		SekMapHandler(2,			0xB40000, 0xB4FFFF, MAP_WRITE);	// Palette
+		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
 
 		SekSetReadWordHandler(0, penbrosReadWord);
 		SekSetReadByteHandler(0, penbrosReadByte);
@@ -2571,17 +2571,17 @@ static INT32 gundamexInit()
 		SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,				0x000000, 0x1FFFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram68K,				0x200000, 0x20FFFF, SM_RAM);	// CPU 0 RAM
-		SekMapMemory(Rom68K + 0x200000,			0x500000, 0x57FFFF, SM_ROM);	// CPU 0 ROM
+		SekMapMemory(Rom68K,				0x000000, 0x1FFFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram68K,				0x200000, 0x20FFFF, MAP_RAM);	// CPU 0 RAM
+		SekMapMemory(Rom68K + 0x200000,			0x500000, 0x57FFFF, MAP_ROM);	// CPU 0 ROM
 
-		SekMapMemory((UINT8 *)RamSpr,		0xc00000, 0xc3FFFF, SM_RAM);	// sprites
-		SekMapMemory((UINT8 *)RamPal,		0xc40000, 0xc4FFFF, SM_ROM);	// Palette
-		SekMapMemory(RamUnknown + 0x00000,		0xc50000, 0xc5FFFF, SM_RAM);
-		SekMapMemory((UINT8 *)RamVReg,		0xc60000, 0xc6003F, SM_RAM);	// Video Registers
+		SekMapMemory((UINT8 *)RamSpr,		0xc00000, 0xc3FFFF, MAP_RAM);	// sprites
+		SekMapMemory((UINT8 *)RamPal,		0xc40000, 0xc4FFFF, MAP_ROM);	// Palette
+		SekMapMemory(RamUnknown + 0x00000,		0xc50000, 0xc5FFFF, MAP_RAM);
+		SekMapMemory((UINT8 *)RamVReg,		0xc60000, 0xc6003F, MAP_RAM);	// Video Registers
 
-		SekMapHandler(1,			0xb00000, 0xb03FFF, SM_READ | SM_WRITE);
-		SekMapHandler(2,			0xc40000, 0xc4FFFF, SM_WRITE);
+		SekMapHandler(1,			0xb00000, 0xb03FFF, MAP_READ | MAP_WRITE);
+		SekMapHandler(2,			0xc40000, 0xc4FFFF, MAP_WRITE);
 
 		SekSetReadWordHandler(0, gundamexReadWord);
 		//SekSetReadByteHandler(0, gundamexReadByte);
@@ -2705,19 +2705,19 @@ static INT32 samshootInit()
 		SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,				0x000000, 0x1FFFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram68K,				0x200000, 0x20FFFF, SM_RAM);	// CPU 0 RAM
+		SekMapMemory(Rom68K,				0x000000, 0x1FFFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram68K,				0x200000, 0x20FFFF, MAP_RAM);	// CPU 0 RAM
 
-		SekMapMemory(RamNV + 0x00000,		0x300000, 0x30FFFF, SM_RAM);
+		SekMapMemory(RamNV + 0x00000,		0x300000, 0x30FFFF, MAP_RAM);
 
-		SekMapMemory((UINT8 *)RamSpr,		0x800000, 0x83FFFF, SM_RAM);	// sprites
-		SekMapMemory((UINT8 *)RamPal,		0x840000, 0x84FFFF, SM_ROM);	// Palette
-		SekMapMemory((UINT8 *)RamVReg,		0x860000, 0x86003F, SM_RAM);	// Video Registers
-		SekMapMemory((UINT8 *)RamTMP68301,	0xFFFC00, 0xFFFFFF, SM_ROM);	// TMP68301 Registers
+		SekMapMemory((UINT8 *)RamSpr,		0x800000, 0x83FFFF, MAP_RAM);	// sprites
+		SekMapMemory((UINT8 *)RamPal,		0x840000, 0x84FFFF, MAP_ROM);	// Palette
+		SekMapMemory((UINT8 *)RamVReg,		0x860000, 0x86003F, MAP_RAM);	// Video Registers
+		SekMapMemory((UINT8 *)RamTMP68301,	0xFFFC00, 0xFFFFFF, MAP_ROM);	// TMP68301 Registers
 
-		SekMapHandler(2,			0x840000, 0x84FFFF, SM_WRITE);	// Palette
-		SekMapHandler(1,			0x900000, 0x903FFF, SM_READ | SM_WRITE);
-		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, SM_WRITE);
+		SekMapHandler(2,			0x840000, 0x84FFFF, MAP_WRITE);	// Palette
+		SekMapHandler(1,			0x900000, 0x903FFF, MAP_READ | MAP_WRITE);
+		SekMapHandler(3,			0xFFFC00, 0xFFFFFF, MAP_WRITE);
 
 		SekSetReadWordHandler(0, samshootReadWord);
 		SekSetWriteWordHandler(0, samshootWriteWord);

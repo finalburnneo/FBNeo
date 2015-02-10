@@ -145,9 +145,9 @@ static void update_interrupts()
 	{
 		/* if the status bit is set, and ints are enabled, turn it on */
 		if ((m_regs[TMS34061_STATUS] & 0x0001) && (m_regs[TMS34061_CONTROL1] & 0x0400))
-			m_interrupt_cb(CPU_IRQSTATUS_ACK);
+			m_interrupt_cb(ASSERT_LINE);
 		else
-			m_interrupt_cb(CPU_IRQSTATUS_NONE);
+			m_interrupt_cb(CLEAR_LINE);
 	}
 }
 

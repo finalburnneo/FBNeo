@@ -175,11 +175,11 @@ M6805_INLINE void bil( void )
 {
 	if(SUBTYPE==SUBTYPE_HD63705)
 	{
-		BRANCH( m6805.nmi_state!=CPU_IRQSTATUS_NONE );
+		BRANCH( m6805.nmi_state!=CLEAR_LINE );
 	}
 	else
 	{
-		BRANCH( m6805.irq_state[0]!=CPU_IRQSTATUS_NONE );
+		BRANCH( m6805.irq_state[0]!=CLEAR_LINE );
 	}
 }
 
@@ -188,11 +188,11 @@ M6805_INLINE void bih( void )
 {
 	if(SUBTYPE==SUBTYPE_HD63705)
 	{
-		BRANCH( m6805.nmi_state==CPU_IRQSTATUS_NONE );
+		BRANCH( m6805.nmi_state==CLEAR_LINE );
 	}
 	else
 	{
-		BRANCH( m6805.irq_state[0]==CPU_IRQSTATUS_NONE );
+		BRANCH( m6805.irq_state[0]==CLEAR_LINE );
 	}
 }
 
@@ -802,7 +802,7 @@ M6805_INLINE void rti( void )
 	PULLWORD(pPC);
 	change_pc(PC);
 #if IRQ_LEVEL_DETECT
-	if( m6805.irq_state != CPU_IRQSTATUS_NONE && (CC & IFLAG) == 0 )
+	if( m6805.irq_state != CLEAR_LINE && (CC & IFLAG) == 0 )
 		m6805.pending_interrupts |= M6805_INT_IRQ;
 #endif
 }

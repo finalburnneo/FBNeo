@@ -604,7 +604,7 @@ static void __fastcall zaxxon_write(UINT16 address, UINT8 data)
 
 		case 0xe0f0:
 			*interrupt_enable = data & 1;
-			if (~data & 1) ZetLowerIrq();
+			if (~data & 1) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0xe0f1:
@@ -708,7 +708,7 @@ static void __fastcall congo_write(UINT16 address, UINT8 data)
 
 		case 0xc01f:
 			*interrupt_enable = data & 1;
-			if (~data & 1) ZetLowerIrq();
+			if (~data & 1) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0xc021:
@@ -997,16 +997,16 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM, 0x0000, 0x5fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM, 0x6000, 0x6fff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0x5fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 0x6000, 0x6fff, MAP_RAM);
 
 	// address mirroring
 	for (INT32 i = 0; i < 0x2000; i+= 0x400) {
-		ZetMapMemory(DrvVidRAM, 0x8000 + i, 0x83ff + i, ZET_RAM);
+		ZetMapMemory(DrvVidRAM, 0x8000 + i, 0x83ff + i, MAP_RAM);
 	}
 
 	for (INT32 i = 0; i < 0x1000; i+= 0x100) {
-		ZetMapMemory(DrvSprRAM, 0xa000 + i, 0xa0ff + i, ZET_RAM);
+		ZetMapMemory(DrvSprRAM, 0xa000 + i, 0xa0ff + i, MAP_RAM);
 	}
 
 	ZetSetWriteHandler(zaxxon_write);
@@ -1091,13 +1091,13 @@ static INT32 CongoInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM, 0x0000, 0x7fff, ZET_ROM);
-	ZetMapMemory(DrvZ80RAM, 0x8000, 0x8fff, ZET_RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 0x8000, 0x8fff, MAP_RAM);
 
 	// address mirroring
 	for (INT32 i = 0; i < 0x2000; i+= 0x800) {
-		ZetMapMemory(DrvVidRAM, 0xa000, 0xa3ff, ZET_RAM);
-		ZetMapMemory(DrvColRAM, 0xa400, 0xa7ff, ZET_RAM);
+		ZetMapMemory(DrvVidRAM, 0xa000, 0xa3ff, MAP_RAM);
+		ZetMapMemory(DrvColRAM, 0xa400, 0xa7ff, MAP_RAM);
 	}
 
 	ZetSetWriteHandler(congo_write);
@@ -1106,10 +1106,10 @@ static INT32 CongoInit()
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM2, 0x0000, 0x1fff, ZET_ROM);
+	ZetMapMemory(DrvZ80ROM2, 0x0000, 0x1fff, MAP_ROM);
 
 	for (INT32 i = 0; i < 0x2000; i+= 0x800) {
-		ZetMapMemory(DrvZ80RAM2, 0x4000 + i, 0x47ff + i, ZET_RAM);
+		ZetMapMemory(DrvZ80RAM2, 0x4000 + i, 0x47ff + i, MAP_RAM);
 	}
 
 	ZetSetWriteHandler(congo_sound_write);
@@ -1382,7 +1382,7 @@ static INT32 DrvFrame()
 
 	ZetOpen(0);
 	ZetRun(3041250 / 60);
-	if (*interrupt_enable) ZetRaiseIrq(0);
+	if (*interrupt_enable) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 	ZetClose();
 
 	if (pBurnDraw) {
@@ -1425,7 +1425,7 @@ static INT32 CongoFrame()
 		ZetOpen(0);
 		nCyclesSegment = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += ZetRun(nCyclesSegment);
-		if (i == nInterleave-1 && *interrupt_enable) ZetRaiseIrq(0);
+		if (i == nInterleave-1 && *interrupt_enable) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 
 		ZetOpen(1);

@@ -180,15 +180,15 @@ void HD6309SetIRQLine(INT32 vector, INT32 status)
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("HD6309SetIRQLine called when no CPU open\n"));
 #endif
 
-	if (status == HD6309_IRQSTATUS_NONE) {
+	if (status == CPU_IRQSTATUS_NONE) {
 		hd6309_set_irq_line(vector, 0);
 	}
 	
-	if (status == HD6309_IRQSTATUS_ACK) {
+	if (status == CPU_IRQSTATUS_ACK) {
 		hd6309_set_irq_line(vector, 1);
 	}
 	
-	if (status == HD6309_IRQSTATUS_AUTO) {
+	if (status == CPU_IRQSTATUS_AUTO) {
 		hd6309_set_irq_line(vector, 1);
 		hd6309_execute(0);
 		hd6309_set_irq_line(vector, 0);
@@ -239,13 +239,13 @@ INT32 HD6309MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 	UINT8 **pMemMap = HD6309CPUContext[nActiveCPU].pMemMap;
 
 	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
-		if (nType & HD6309_READ)	{
+		if (nType & MAP_READ)	{
 			pMemMap[0     + i] = pMemory + ((i - cStart) << 8);
 		}
-		if (nType & HD6309_WRITE) {
+		if (nType & MAP_WRITE) {
 			pMemMap[0x100 + i] = pMemory + ((i - cStart) << 8);
 		}
-		if (nType & HD6309_FETCH) {
+		if (nType & MAP_FETCH) {
 			pMemMap[0x200 + i] = pMemory + ((i - cStart) << 8);
 		}
 	}
@@ -264,13 +264,13 @@ INT32 HD6309MemCallback(UINT16 nStart, UINT16 nEnd, INT32 nType)
 	UINT8 **pMemMap = HD6309CPUContext[nActiveCPU].pMemMap;
 
 	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
-		if (nType & HD6309_READ)	{
+		if (nType & MAP_READ)	{
 			pMemMap[0     + i] = NULL;
 		}
-		if (nType & HD6309_WRITE) {
+		if (nType & MAP_WRITE) {
 			pMemMap[0x100 + i] = NULL;
 		}
-		if (nType & HD6309_FETCH) {
+		if (nType & MAP_FETCH) {
 			pMemMap[0x200 + i] = NULL;
 		}
 	}

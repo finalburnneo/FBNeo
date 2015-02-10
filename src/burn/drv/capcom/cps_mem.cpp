@@ -87,15 +87,15 @@ void CpsMapObjectBanks(INT32 nBank)
 		nCpsObjectBank = nBank;
 
 		if (nCpsObjectBank) {
-			SekMapMemory(CpsRam708 + 0x8000, 0x708000, 0x709FFF, SM_RAM);
-			SekMapMemory(CpsRam708 + 0x8000, 0x70A000, 0x70BFFF, SM_RAM);
-			SekMapMemory(CpsRam708 + 0x8000, 0x70C000, 0x70DFFF, SM_RAM);
-			SekMapMemory(CpsRam708 + 0x8000, 0x70E000, 0x70FFFF, SM_RAM);
+			SekMapMemory(CpsRam708 + 0x8000, 0x708000, 0x709FFF, MAP_RAM);
+			SekMapMemory(CpsRam708 + 0x8000, 0x70A000, 0x70BFFF, MAP_RAM);
+			SekMapMemory(CpsRam708 + 0x8000, 0x70C000, 0x70DFFF, MAP_RAM);
+			SekMapMemory(CpsRam708 + 0x8000, 0x70E000, 0x70FFFF, MAP_RAM);
 		} else {
-			SekMapMemory(CpsRam708, 0x708000, 0x709FFF, SM_RAM);
-			SekMapMemory(CpsRam708, 0x70A000, 0x70BFFF, SM_RAM);
-			SekMapMemory(CpsRam708, 0x70C000, 0x70DFFF, SM_RAM);
-			SekMapMemory(CpsRam708, 0x70E000, 0x70FFFF, SM_RAM);
+			SekMapMemory(CpsRam708, 0x708000, 0x709FFF, MAP_RAM);
+			SekMapMemory(CpsRam708, 0x70A000, 0x70BFFF, MAP_RAM);
+			SekMapMemory(CpsRam708, 0x70C000, 0x70DFFF, MAP_RAM);
+			SekMapMemory(CpsRam708, 0x70E000, 0x70FFFF, MAP_RAM);
 		}
 	}
 }
@@ -252,16 +252,16 @@ INT32 CpsMemInit()
 
 	// Map in memory:
 	// 68000 Rom (as seen as is, through read)
-	SekMapMemory(CpsRom, 0, nCpsRomLen - 1, SM_READ);
+	SekMapMemory(CpsRom, 0, nCpsRomLen - 1, MAP_READ);
 
 	// 68000 Rom (as seen decrypted, through fetch)
 	if (nCpsCodeLen > 0) {
 		// Decoded part (up to nCpsCodeLen)
-		SekMapMemory(CpsCode, 0, nCpsCodeLen - 1, SM_FETCH);
+		SekMapMemory(CpsCode, 0, nCpsCodeLen - 1, MAP_FETCH);
 	}
 	if (nCpsRomLen > nCpsCodeLen) {
 		// The rest (up to nCpsRomLen)
-		SekMapMemory(CpsRom + nCpsCodeLen, nCpsCodeLen, nCpsRomLen - 1, SM_FETCH);
+		SekMapMemory(CpsRom + nCpsCodeLen, nCpsCodeLen, nCpsRomLen - 1, MAP_FETCH);
 	}
 
 	if (Cps == 2) {
@@ -269,24 +269,24 @@ INT32 CpsMemInit()
 		CpsMapObjectBanks(0);
 
 #if 0
-		SekMapHandler(3, 0x660000, 0x663FFF, SM_RAM);
+		SekMapHandler(3, 0x660000, 0x663FFF, MAP_RAM);
 		SekSetReadByteHandler(3, CPSExtraNVRAMReadByte);
 		SekSetWriteByteHandler(3, CPSExtraNVRAMWriteByte);
 #else
-		SekMapMemory(CpsRam660, 0x660000, 0x663FFF, SM_RAM);
+		SekMapMemory(CpsRam660, 0x660000, 0x663FFF, MAP_RAM);
 #endif
 
-//		SekMapHandler(4, 0x708000, 0x709FFF, SM_WRITE);
-//		SekMapHandler(4, 0x70A000, 0x70BFFF, SM_WRITE);
-//		SekMapHandler(4, 0x70C000, 0x70DFFF, SM_WRITE);
-//		SekMapHandler(4, 0x70E000, 0x70FFFF, SM_WRITE);
+//		SekMapHandler(4, 0x708000, 0x709FFF, MAP_WRITE);
+//		SekMapHandler(4, 0x70A000, 0x70BFFF, MAP_WRITE);
+//		SekMapHandler(4, 0x70C000, 0x70DFFF, MAP_WRITE);
+//		SekMapHandler(4, 0x70E000, 0x70FFFF, MAP_WRITE);
 
 //		SekSetWriteByteHandler(4, CpsWriteSpriteByte);
 //		SekSetWriteWordHandler(4, CpsWriteSpriteWord);
 	}
 
-	SekMapMemory(CpsRam90,		0x900000, 0x92FFFF, SM_RAM);	// Gfx Ram
-	SekMapMemory(CpsRamFF,		0xFF0000, 0xFFFFFF, SM_RAM);	// Work Ram
+	SekMapMemory(CpsRam90,		0x900000, 0x92FFFF, MAP_RAM);	// Gfx Ram
+	SekMapMemory(CpsRamFF,		0xFF0000, 0xFFFFFF, MAP_RAM);	// Work Ram
 
 	SekSetReadByteHandler(0, CpsReadByte);
 	SekSetWriteByteHandler(0, CpsWriteByte);
@@ -295,7 +295,7 @@ INT32 CpsMemInit()
 
 	// QSound
 	if ((Cps == 2) && !Cps2DisableQSnd) {
-		SekMapHandler(1,	0x618000, 0x619FFF, SM_RAM);
+		SekMapHandler(1,	0x618000, 0x619FFF, MAP_RAM);
 
 		SekSetReadByteHandler(1, CPSQSoundC0ReadByte);
 		SekSetWriteByteHandler(1, CPSQSoundC0WriteByte);
@@ -307,11 +307,11 @@ INT32 CpsMemInit()
 			CpsEncZRom[(i << 1) + 0] = CpsEncZRom[i];
 			CpsEncZRom[(i << 1) + 1] = 0xFF;
 		}
-		SekMapMemory(CpsEncZRom, 0xF00000, 0xF0FFFF, SM_ROM);
+		SekMapMemory(CpsEncZRom, 0xF00000, 0xF0FFFF, MAP_ROM);
 
 		// QSound shared RAM
-		SekMapHandler(1,	0xF18000, 0xF19FFF, SM_RAM);
-		SekMapHandler(2,	0xF1E000, 0xF1FFFF, SM_RAM);
+		SekMapHandler(1,	0xF18000, 0xF19FFF, MAP_RAM);
+		SekMapHandler(2,	0xF1E000, 0xF1FFFF, MAP_RAM);
 
 		SekSetReadByteHandler(1, CPSQSoundC0ReadByte);
 		SekSetWriteByteHandler(1, CPSQSoundC0WriteByte);

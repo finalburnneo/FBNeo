@@ -133,9 +133,9 @@ void install_protection_asic27a_martmast()
 
 	SekOpen(0);
 
-	SekMapMemory(PGMARMShareRAM,	0xd00000, 0xd0ffff, SM_RAM);
+	SekMapMemory(PGMARMShareRAM,	0xd00000, 0xd0ffff, MAP_RAM);
 
-	SekMapHandler(4,		0xd10000, 0xd10003, SM_READ | SM_WRITE);
+	SekMapHandler(4,		0xd10000, 0xd10003, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4, asic27a_read_word);
 	SekSetReadByteHandler(4, asic27a_read_byte);
 	SekSetWriteWordHandler(4, asic27a_write_word);
@@ -144,12 +144,12 @@ void install_protection_asic27a_martmast()
 
 	Arm7Init(0);
 	Arm7Open(0);
-	Arm7MapMemory(PGMARMROM,	0x00000000, 0x00003fff, ARM7_ROM);
-	Arm7MapMemory(PGMUSER0,		0x08000000, 0x08000000+(nPGMExternalARMLen-1), ARM7_ROM);
-	Arm7MapMemory(PGMARMRAM0,	0x10000000, 0x100003ff, ARM7_RAM);
-	Arm7MapMemory(PGMARMRAM1,	0x18000000, 0x1800ffff, ARM7_RAM);
-	Arm7MapMemory(PGMARMShareRAM,	0x48000000, 0x4800ffff, ARM7_RAM);
-	Arm7MapMemory(PGMARMRAM2,	0x50000000, 0x500003ff, ARM7_RAM);
+	Arm7MapMemory(PGMARMROM,	0x00000000, 0x00003fff, MAP_ROM);
+	Arm7MapMemory(PGMUSER0,		0x08000000, 0x08000000+(nPGMExternalARMLen-1), MAP_ROM);
+	Arm7MapMemory(PGMARMRAM0,	0x10000000, 0x100003ff, MAP_RAM);
+	Arm7MapMemory(PGMARMRAM1,	0x18000000, 0x1800ffff, MAP_RAM);
+	Arm7MapMemory(PGMARMShareRAM,	0x48000000, 0x4800ffff, MAP_RAM);
+	Arm7MapMemory(PGMARMRAM2,	0x50000000, 0x500003ff, MAP_RAM);
 	Arm7SetWriteByteHandler(asic27a_arm7_write_byte);
 	Arm7SetReadByteHandler(asic27a_arm7_read_byte);
 	Arm7Close();

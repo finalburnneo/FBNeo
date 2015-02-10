@@ -548,15 +548,15 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM0,	0x000000, 0x03ffff, SM_ROM);
-	SekMapMemory(Drv68KRAM0,	0x080000, 0x087fff, SM_RAM);
-	SekMapMemory(DrvSprRAM,		0x0a0000, 0x0a0fff, SM_RAM);
-	SekMapMemory(DrvVidRAM0,	0x0c0000, 0x0c1fff, SM_RAM);
-	SekMapMemory(DrvVidRAM1,	0x0c4000, 0x0c5fff, SM_RAM);
-	SekMapMemory(DrvVidRAM2,	0x0c8000, 0x0c9fff, SM_RAM);
-	SekMapMemory(DrvShareRAM,	0x0e0000, 0x0e0fff, SM_RAM);
-	SekMapMemory(DrvPalRAM,		0x100000, 0x103fff, SM_ROM);
-	SekMapMemory(DrvPalRAM + 0x4000,0x104000, 0x107fff, SM_RAM); // Copy of first half
+	SekMapMemory(Drv68KROM0,	0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Drv68KRAM0,	0x080000, 0x087fff, MAP_RAM);
+	SekMapMemory(DrvSprRAM,		0x0a0000, 0x0a0fff, MAP_RAM);
+	SekMapMemory(DrvVidRAM0,	0x0c0000, 0x0c1fff, MAP_RAM);
+	SekMapMemory(DrvVidRAM1,	0x0c4000, 0x0c5fff, MAP_RAM);
+	SekMapMemory(DrvVidRAM2,	0x0c8000, 0x0c9fff, MAP_RAM);
+	SekMapMemory(DrvShareRAM,	0x0e0000, 0x0e0fff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,		0x100000, 0x103fff, MAP_ROM);
+	SekMapMemory(DrvPalRAM + 0x4000,0x104000, 0x107fff, MAP_RAM); // Copy of first half
 	SekSetWriteByteHandler(0,	cybertnk_main_write_byte);
 	SekSetWriteWordHandler(0,	cybertnk_main_write_word);
 	SekSetReadByteHandler(0,	cybertnk_main_read_byte);
@@ -565,10 +565,10 @@ static INT32 DrvInit()
 
 	SekInit(1, 0x68000);
 	SekOpen(1);
-	SekMapMemory(Drv68KROM1,	0x000000, 0x01ffff, SM_ROM);
-	SekMapMemory(Drv68KRAM1,	0x080000, 0x083fff, SM_RAM);
-	SekMapMemory(DrvRoadRAM,	0x0c0000, 0x0c0fff, SM_RAM);
-	SekMapMemory(DrvShareRAM,	0x100000, 0x100fff, SM_RAM);
+	SekMapMemory(Drv68KROM1,	0x000000, 0x01ffff, MAP_ROM);
+	SekMapMemory(Drv68KRAM1,	0x080000, 0x083fff, MAP_RAM);
+	SekMapMemory(DrvRoadRAM,	0x0c0000, 0x0c0fff, MAP_RAM);
+	SekMapMemory(DrvShareRAM,	0x100000, 0x100fff, MAP_RAM);
 	SekClose();
 
 	ZetInit(0);

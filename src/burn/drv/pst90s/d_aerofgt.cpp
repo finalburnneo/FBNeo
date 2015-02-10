@@ -1761,8 +1761,8 @@ static void aerofgt_sound_init()
 {
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(RomZ80, 0x0000, 0x77ff, ZET_ROM);
-	ZetMapMemory(RamZ80, 0x7800, 0x7fff, ZET_RAM);
+	ZetMapMemory(RomZ80, 0x0000, 0x77ff, MAP_ROM);
+	ZetMapMemory(RamZ80, 0x7800, 0x7fff, MAP_RAM);
 	ZetSetInHandler(aerofgtZ80PortRead);
 	ZetSetOutHandler(aerofgtZ80PortWrite);
 	ZetClose();
@@ -1778,8 +1778,8 @@ static void turbofrc_sound_init()
 {
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(RomZ80, 0x0000, 0x77ff, ZET_ROM);
-	ZetMapMemory(RamZ80, 0x7800, 0x7fff, ZET_RAM);
+	ZetMapMemory(RomZ80, 0x0000, 0x77ff, MAP_ROM);
+	ZetMapMemory(RamZ80, 0x7800, 0x7fff, MAP_RAM);
 	ZetSetInHandler(turbofrcZ80PortRead);
 	ZetSetOutHandler(turbofrcZ80PortWrite);
 	ZetClose();
@@ -1829,14 +1829,14 @@ static INT32 aerofgtInit()
 	{
 		SekInit(0, 0x68000);
 		SekOpen(0);
-		SekMapMemory(Rom01,			0x000000, 0x07FFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(RamPal,			0x1A0000, 0x1A07FF, SM_ROM);	// Palette
-		SekMapMemory((UINT8 *)RamRaster,	0x1B0000, 0x1B0FFF, SM_RAM);	// Raster / MRA_NOP / MRA_BANK7
-		SekMapMemory((UINT8 *)RamBg1V,		0x1B2000, 0x1B3FFF, SM_RAM);	
-		SekMapMemory((UINT8 *)RamBg2V,		0x1B4000, 0x1B5FFF, SM_RAM);	
-		SekMapMemory((UINT8 *)RamSpr1,		0x1C0000, 0x1C7FFF, SM_RAM);
-		SekMapMemory((UINT8 *)RamSpr2,		0x1D0000, 0x1D1FFF, SM_RAM);
-		SekMapMemory(Ram01,			0xFEF000, 0xFFEFFF, SM_RAM);	// 64K Work RAM
+		SekMapMemory(Rom01,			0x000000, 0x07FFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(RamPal,			0x1A0000, 0x1A07FF, MAP_ROM);	// Palette
+		SekMapMemory((UINT8 *)RamRaster,	0x1B0000, 0x1B0FFF, MAP_RAM);	// Raster / MRA_NOP / MRA_BANK7
+		SekMapMemory((UINT8 *)RamBg1V,		0x1B2000, 0x1B3FFF, MAP_RAM);	
+		SekMapMemory((UINT8 *)RamBg2V,		0x1B4000, 0x1B5FFF, MAP_RAM);	
+		SekMapMemory((UINT8 *)RamSpr1,		0x1C0000, 0x1C7FFF, MAP_RAM);
+		SekMapMemory((UINT8 *)RamSpr2,		0x1D0000, 0x1D1FFF, MAP_RAM);
+		SekMapMemory(Ram01,			0xFEF000, 0xFFEFFF, MAP_RAM);	// 64K Work RAM
 //		SekSetReadWordHandler(0, aerofgtReadWord);
 		SekSetReadByteHandler(0, aerofgtReadByte);
 		SekSetWriteWordHandler(0, aerofgtWriteWord);
@@ -1894,19 +1894,19 @@ static INT32 turbofrcInit()
 	{
 		SekInit(0, 0x68000);
 		SekOpen(0);
-		SekMapMemory(Rom01,			0x000000, 0x0BFFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram01,			0x0C0000, 0x0CFFFF, SM_RAM);	// 64K Work RAM
-		SekMapMemory((UINT8 *)RamBg1V,		0x0D0000, 0x0D1FFF, SM_RAM);	
-		SekMapMemory((UINT8 *)RamBg2V,		0x0D2000, 0x0D3FFF, SM_RAM);	
-		SekMapMemory((UINT8 *)RamSpr1,		0x0E0000, 0x0E3FFF, SM_RAM);
-		SekMapMemory((UINT8 *)RamSpr2,		0x0E4000, 0x0E7FFF, SM_RAM);
-		SekMapMemory(Ram01+0x10000,		0x0F8000, 0x0FBFFF, SM_RAM);	// Work RAM
-		SekMapMemory(Ram01+0x10000,		0xFF8000, 0xFFBFFF, SM_RAM);	// Work RAM
-		SekMapMemory((UINT8 *)RamSpr3,		0x0FC000, 0x0FC7FF, SM_RAM);
-		SekMapMemory((UINT8 *)RamSpr3,		0xFFC000, 0xFFC7FF, SM_RAM);
-		SekMapMemory((UINT8 *)RamRaster,	0x0FD000, 0x0FDFFF, SM_RAM);
-		SekMapMemory((UINT8 *)RamRaster,	0xFFD000, 0xFFDFFF, SM_RAM);
-		SekMapMemory(RamPal,			0x0FE000, 0x0FE7FF, SM_ROM);	// Palette
+		SekMapMemory(Rom01,			0x000000, 0x0BFFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram01,			0x0C0000, 0x0CFFFF, MAP_RAM);	// 64K Work RAM
+		SekMapMemory((UINT8 *)RamBg1V,		0x0D0000, 0x0D1FFF, MAP_RAM);	
+		SekMapMemory((UINT8 *)RamBg2V,		0x0D2000, 0x0D3FFF, MAP_RAM);	
+		SekMapMemory((UINT8 *)RamSpr1,		0x0E0000, 0x0E3FFF, MAP_RAM);
+		SekMapMemory((UINT8 *)RamSpr2,		0x0E4000, 0x0E7FFF, MAP_RAM);
+		SekMapMemory(Ram01+0x10000,		0x0F8000, 0x0FBFFF, MAP_RAM);	// Work RAM
+		SekMapMemory(Ram01+0x10000,		0xFF8000, 0xFFBFFF, MAP_RAM);	// Work RAM
+		SekMapMemory((UINT8 *)RamSpr3,		0x0FC000, 0x0FC7FF, MAP_RAM);
+		SekMapMemory((UINT8 *)RamSpr3,		0xFFC000, 0xFFC7FF, MAP_RAM);
+		SekMapMemory((UINT8 *)RamRaster,	0x0FD000, 0x0FDFFF, MAP_RAM);
+		SekMapMemory((UINT8 *)RamRaster,	0xFFD000, 0xFFDFFF, MAP_RAM);
+		SekMapMemory(RamPal,			0x0FE000, 0x0FE7FF, MAP_ROM);	// Palette
 //		SekSetReadWordHandler(0, turbofrcReadWord);
 		SekSetReadByteHandler(0, turbofrcReadByte);
 		SekSetWriteWordHandler(0, turbofrcWriteWord);
@@ -1961,16 +1961,16 @@ static INT32 karatblzInit()
 	{
 		SekInit(0, 0x68000);
 		SekOpen(0);
-		SekMapMemory(Rom01,			0x000000, 0x07FFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory((UINT8 *)RamBg1V,		0x080000, 0x081FFF, SM_RAM);	
-		SekMapMemory((UINT8 *)RamBg2V,		0x082000, 0x083FFF, SM_RAM);	
-		SekMapMemory((UINT8 *)RamSpr1,		0x0A0000, 0x0AFFFF, SM_RAM);
-		SekMapMemory((UINT8 *)RamSpr2,		0x0B0000, 0x0BFFFF, SM_RAM);
-		SekMapMemory(Ram01,			0x0C0000, 0x0CFFFF, SM_RAM);	// 64K Work RAM
-		SekMapMemory(Ram01+0x10000,		0x0F8000, 0x0FBFFF, SM_RAM);	// Work RAM
-		SekMapMemory(Ram01+0x10000,		0xFF8000, 0xFFBFFF, SM_RAM);	// Work RAM
-		SekMapMemory((UINT8 *)RamSpr3,		0x0FC000, 0x0FC7FF, SM_RAM);
-		SekMapMemory(RamPal,			0x0FE000, 0x0FE7FF, SM_ROM);	// Palette
+		SekMapMemory(Rom01,			0x000000, 0x07FFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory((UINT8 *)RamBg1V,		0x080000, 0x081FFF, MAP_RAM);	
+		SekMapMemory((UINT8 *)RamBg2V,		0x082000, 0x083FFF, MAP_RAM);	
+		SekMapMemory((UINT8 *)RamSpr1,		0x0A0000, 0x0AFFFF, MAP_RAM);
+		SekMapMemory((UINT8 *)RamSpr2,		0x0B0000, 0x0BFFFF, MAP_RAM);
+		SekMapMemory(Ram01,			0x0C0000, 0x0CFFFF, MAP_RAM);	// 64K Work RAM
+		SekMapMemory(Ram01+0x10000,		0x0F8000, 0x0FBFFF, MAP_RAM);	// Work RAM
+		SekMapMemory(Ram01+0x10000,		0xFF8000, 0xFFBFFF, MAP_RAM);	// Work RAM
+		SekMapMemory((UINT8 *)RamSpr3,		0x0FC000, 0x0FC7FF, MAP_RAM);
+		SekMapMemory(RamPal,			0x0FE000, 0x0FE7FF, MAP_ROM);	// Palette
 //		SekSetReadWordHandler(0, karatblzReadWord);
 		SekSetReadByteHandler(0, karatblzReadByte);
 		SekSetWriteWordHandler(0, karatblzWriteWord);
@@ -2033,13 +2033,13 @@ static INT32 spinlbrkInit()
 	{
 		SekInit(0, 0x68000);
 		SekOpen(0);
-		SekMapMemory(Rom01,			0x000000, 0x04FFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory((UINT8 *)RamBg1V,		0x080000, 0x080FFF, SM_RAM);	
-		SekMapMemory((UINT8 *)RamBg2V,		0x082000, 0x083FFF, SM_RAM);
-		SekMapMemory(Ram01,			0xFF8000, 0xFFBFFF, SM_RAM);	// Work RAM
-		SekMapMemory((UINT8 *)RamSpr3,		0xFFC000, 0xFFC7FF, SM_RAM);
-		SekMapMemory((UINT8 *)RamRaster,	0xFFD000, 0xFFD1FF, SM_RAM);
-		SekMapMemory(RamPal,			0xFFE000, 0xFFE7FF, SM_ROM);	// Palette
+		SekMapMemory(Rom01,			0x000000, 0x04FFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory((UINT8 *)RamBg1V,		0x080000, 0x080FFF, MAP_RAM);	
+		SekMapMemory((UINT8 *)RamBg2V,		0x082000, 0x083FFF, MAP_RAM);
+		SekMapMemory(Ram01,			0xFF8000, 0xFFBFFF, MAP_RAM);	// Work RAM
+		SekMapMemory((UINT8 *)RamSpr3,		0xFFC000, 0xFFC7FF, MAP_RAM);
+		SekMapMemory((UINT8 *)RamRaster,	0xFFD000, 0xFFD1FF, MAP_RAM);
+		SekMapMemory(RamPal,			0xFFE000, 0xFFE7FF, MAP_ROM);	// Palette
 		SekSetReadWordHandler(0, spinlbrkReadWord);
 //		SekSetReadByteHandler(0, spinlbrkReadByte);
 		SekSetWriteWordHandler(0, spinlbrkWriteWord);
@@ -2095,16 +2095,16 @@ static INT32 aerofgtbInit()
 	{
 		SekInit(0, 0x68000);
 		SekOpen(0);
-		SekMapMemory(Rom01,			0x000000, 0x07FFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram01,			0x0C0000, 0x0CFFFF, SM_RAM);	// 64K Work RAM
-		SekMapMemory((UINT8 *)RamBg1V,		0x0D0000, 0x0D1FFF, SM_RAM);	
-		SekMapMemory((UINT8 *)RamBg2V,		0x0D2000, 0x0D3FFF, SM_RAM);	
-		SekMapMemory((UINT8 *)RamSpr1,		0x0E0000, 0x0E3FFF, SM_RAM);
-		SekMapMemory((UINT8 *)RamSpr2,		0x0E4000, 0x0E7FFF, SM_RAM);
-		SekMapMemory(Ram01+0x10000,		0x0F8000, 0x0FBFFF, SM_RAM);	// Work RAM
-		SekMapMemory((UINT8 *)RamSpr3,		0x0FC000, 0x0FC7FF, SM_RAM);
-		SekMapMemory(RamPal,			0x0FD000, 0x0FD7FF, SM_ROM);	// Palette
-		SekMapMemory((UINT8 *)RamRaster,	0x0FF000, 0x0FFFFF, SM_RAM);	// Raster 
+		SekMapMemory(Rom01,			0x000000, 0x07FFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram01,			0x0C0000, 0x0CFFFF, MAP_RAM);	// 64K Work RAM
+		SekMapMemory((UINT8 *)RamBg1V,		0x0D0000, 0x0D1FFF, MAP_RAM);	
+		SekMapMemory((UINT8 *)RamBg2V,		0x0D2000, 0x0D3FFF, MAP_RAM);	
+		SekMapMemory((UINT8 *)RamSpr1,		0x0E0000, 0x0E3FFF, MAP_RAM);
+		SekMapMemory((UINT8 *)RamSpr2,		0x0E4000, 0x0E7FFF, MAP_RAM);
+		SekMapMemory(Ram01+0x10000,		0x0F8000, 0x0FBFFF, MAP_RAM);	// Work RAM
+		SekMapMemory((UINT8 *)RamSpr3,		0x0FC000, 0x0FC7FF, MAP_RAM);
+		SekMapMemory(RamPal,			0x0FD000, 0x0FD7FF, MAP_ROM);	// Palette
+		SekMapMemory((UINT8 *)RamRaster,	0x0FF000, 0x0FFFFF, MAP_RAM);	// Raster 
 		SekSetReadWordHandler(0, aerofgtbReadWord);
 		SekSetReadByteHandler(0, aerofgtbReadByte);
 		SekSetWriteWordHandler(0, aerofgtbWriteWord);
@@ -2152,13 +2152,13 @@ static INT32 pspikesInit()
 	{
 		SekInit(0, 0x68000);
 		SekOpen(0);
-		SekMapMemory(Rom01,			0x000000, 0x03FFFF, SM_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram01,			0x100000, 0x10FFFF, SM_RAM);	// 64K Work RAM
-		SekMapMemory((UINT8 *)RamSpr1,		0x200000, 0x203FFF, SM_RAM);
-		SekMapMemory((UINT8 *)RamBg1V,		0xFF8000, 0xFF8FFF, SM_RAM);
-		SekMapMemory((UINT8 *)RamSpr3,		0xFFC000, 0xFFC7FF, SM_RAM);
-		SekMapMemory((UINT8 *)RamRaster,	0xFFD000, 0xFFDFFF, SM_RAM);	// Raster 
-		SekMapMemory(RamPal,			0xFFE000, 0xFFEFFF, SM_ROM);	// Palette
+		SekMapMemory(Rom01,			0x000000, 0x03FFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram01,			0x100000, 0x10FFFF, MAP_RAM);	// 64K Work RAM
+		SekMapMemory((UINT8 *)RamSpr1,		0x200000, 0x203FFF, MAP_RAM);
+		SekMapMemory((UINT8 *)RamBg1V,		0xFF8000, 0xFF8FFF, MAP_RAM);
+		SekMapMemory((UINT8 *)RamSpr3,		0xFFC000, 0xFFC7FF, MAP_RAM);
+		SekMapMemory((UINT8 *)RamRaster,	0xFFD000, 0xFFDFFF, MAP_RAM);	// Raster 
+		SekMapMemory(RamPal,			0xFFE000, 0xFFEFFF, MAP_ROM);	// Palette
 	//	SekSetReadWordHandler(0, pspikesReadWord);
 		SekSetReadByteHandler(0, pspikesReadByte);
 		SekSetWriteWordHandler(0, pspikesWriteWord);

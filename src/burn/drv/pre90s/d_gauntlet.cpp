@@ -416,7 +416,7 @@ void atarigen_SlapsticInit(INT32 base, INT32 chipnum)
 		//atarigen_slapstic = install_mem_read_handler(cpunum, base, base + 0x7fff, atarigen_slapstic_r);
 		//atarigen_slapstic = install_mem_write_handler(cpunum, base, base + 0x7fff, atarigen_slapstic_w);
 		SekOpen(0);
-		SekMapHandler(1, base, base + 0x7fff, MAP_RAM);
+		SekMapHandler(1, base, base + 0x7fff, SM_RAM);
 		SekSetReadByteHandler(1, atarigen_slapstic_r);
 		SekSetReadWordHandler(1, atarigen_slapstic_r_word);
 		SekSetWriteByteHandler(1, atarigen_slapstic_w);
@@ -2048,13 +2048,13 @@ static INT32 DrvInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68010);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom           , 0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(DrvPlayfieldRam     , 0x900000, 0x901fff, MAP_RAM);
-	SekMapMemory(DrvMOSpriteRam      , 0x902000, 0x903fff, MAP_RAM);
-	SekMapMemory(Drv68KRam + 0x2000  , 0x904000, 0x904fff, MAP_RAM);
-	SekMapMemory(DrvAlphaRam         , 0x905000, 0x905f7f, MAP_RAM);
-	SekMapMemory(DrvMOSlipRam        , 0x905f80, 0x905fff, MAP_RAM);
-	SekMapMemory(DrvPaletteRam       , 0x910000, 0x9107ff, MAP_RAM);
+	SekMapMemory(Drv68KRom           , 0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(DrvPlayfieldRam     , 0x900000, 0x901fff, SM_RAM);
+	SekMapMemory(DrvMOSpriteRam      , 0x902000, 0x903fff, SM_RAM);
+	SekMapMemory(Drv68KRam + 0x2000  , 0x904000, 0x904fff, SM_RAM);
+	SekMapMemory(DrvAlphaRam         , 0x905000, 0x905f7f, SM_RAM);
+	SekMapMemory(DrvMOSlipRam        , 0x905f80, 0x905fff, SM_RAM);
+	SekMapMemory(DrvPaletteRam       , 0x910000, 0x9107ff, SM_RAM);
 	SekSetReadByteHandler(0, Gauntlet68KReadByte);
 	SekSetWriteByteHandler(0, Gauntlet68KWriteByte);
 	SekSetReadWordHandler(0, Gauntlet68KReadWord);
@@ -2063,8 +2063,8 @@ static INT32 DrvInit()
 	
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(DrvM6502Ram            , 0x0000, 0x0fff, MAP_RAM);
-	M6502MapMemory(DrvM6502Rom            , 0x4000, 0xffff, MAP_ROM);
+	M6502MapMemory(DrvM6502Ram            , 0x0000, 0x0fff, M6502_RAM);
+	M6502MapMemory(DrvM6502Rom            , 0x4000, 0xffff, M6502_ROM);
 	M6502SetReadHandler(GauntletSoundRead);
 	M6502SetWriteHandler(GauntletSoundWrite);
 	M6502Close();
@@ -2160,13 +2160,13 @@ static INT32 Gaunt2pInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68010);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom           , 0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(DrvPlayfieldRam     , 0x900000, 0x901fff, MAP_RAM);
-	SekMapMemory(DrvMOSpriteRam      , 0x902000, 0x903fff, MAP_RAM);
-	SekMapMemory(Drv68KRam + 0x2000  , 0x904000, 0x904fff, MAP_RAM);
-	SekMapMemory(DrvAlphaRam         , 0x905000, 0x905f7f, MAP_RAM);
-	SekMapMemory(DrvMOSlipRam        , 0x905f80, 0x905fff, MAP_RAM);
-	SekMapMemory(DrvPaletteRam       , 0x910000, 0x9107ff, MAP_RAM);
+	SekMapMemory(Drv68KRom           , 0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(DrvPlayfieldRam     , 0x900000, 0x901fff, SM_RAM);
+	SekMapMemory(DrvMOSpriteRam      , 0x902000, 0x903fff, SM_RAM);
+	SekMapMemory(Drv68KRam + 0x2000  , 0x904000, 0x904fff, SM_RAM);
+	SekMapMemory(DrvAlphaRam         , 0x905000, 0x905f7f, SM_RAM);
+	SekMapMemory(DrvMOSlipRam        , 0x905f80, 0x905fff, SM_RAM);
+	SekMapMemory(DrvPaletteRam       , 0x910000, 0x9107ff, SM_RAM);
 	SekSetReadByteHandler(0, Gauntlet68KReadByte);
 	SekSetWriteByteHandler(0, Gauntlet68KWriteByte);
 	SekSetReadWordHandler(0, Gauntlet68KReadWord);
@@ -2175,8 +2175,8 @@ static INT32 Gaunt2pInit()
 	
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(DrvM6502Ram            , 0x0000, 0x0fff, MAP_RAM);
-	M6502MapMemory(DrvM6502Rom            , 0x4000, 0xffff, MAP_ROM);
+	M6502MapMemory(DrvM6502Ram            , 0x0000, 0x0fff, M6502_RAM);
+	M6502MapMemory(DrvM6502Rom            , 0x4000, 0xffff, M6502_ROM);
 	M6502SetReadHandler(GauntletSoundRead);
 	M6502SetWriteHandler(GauntletSoundWrite);
 	M6502Close();
@@ -2282,13 +2282,13 @@ static INT32 Gaunt2Init()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68010);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom           , 0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(DrvPlayfieldRam     , 0x900000, 0x901fff, MAP_RAM);
-	SekMapMemory(DrvMOSpriteRam      , 0x902000, 0x903fff, MAP_RAM);
-	SekMapMemory(Drv68KRam + 0x2000  , 0x904000, 0x904fff, MAP_RAM);
-	SekMapMemory(DrvAlphaRam         , 0x905000, 0x905f7f, MAP_RAM);
-	SekMapMemory(DrvMOSlipRam        , 0x905f80, 0x905fff, MAP_RAM);
-	SekMapMemory(DrvPaletteRam       , 0x910000, 0x9107ff, MAP_RAM);
+	SekMapMemory(Drv68KRom           , 0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(DrvPlayfieldRam     , 0x900000, 0x901fff, SM_RAM);
+	SekMapMemory(DrvMOSpriteRam      , 0x902000, 0x903fff, SM_RAM);
+	SekMapMemory(Drv68KRam + 0x2000  , 0x904000, 0x904fff, SM_RAM);
+	SekMapMemory(DrvAlphaRam         , 0x905000, 0x905f7f, SM_RAM);
+	SekMapMemory(DrvMOSlipRam        , 0x905f80, 0x905fff, SM_RAM);
+	SekMapMemory(DrvPaletteRam       , 0x910000, 0x9107ff, SM_RAM);
 	SekSetReadByteHandler(0, Gauntlet68KReadByte);
 	SekSetWriteByteHandler(0, Gauntlet68KWriteByte);
 	SekSetReadWordHandler(0, Gauntlet68KReadWord);
@@ -2297,8 +2297,8 @@ static INT32 Gaunt2Init()
 	
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(DrvM6502Ram            , 0x0000, 0x0fff, MAP_RAM);
-	M6502MapMemory(DrvM6502Rom            , 0x4000, 0xffff, MAP_ROM);
+	M6502MapMemory(DrvM6502Ram            , 0x0000, 0x0fff, M6502_RAM);
+	M6502MapMemory(DrvM6502Rom            , 0x4000, 0xffff, M6502_ROM);
 	M6502SetReadHandler(GauntletSoundRead);
 	M6502SetWriteHandler(GauntletSoundWrite);
 	M6502Close();

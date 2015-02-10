@@ -1227,12 +1227,12 @@ static INT32 DrvInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom           , 0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(DrvFgVideoRam       , 0x080000, 0x080fff, MAP_RAM);
-	SekMapMemory(DrvBgVideoRam       , 0x082000, 0x0827ff, MAP_RAM);
-	SekMapMemory(DrvPaletteRam       , 0x140000, 0x1405ff, MAP_RAM);
-	SekMapMemory(DrvSpriteRam        , 0x180000, 0x180fff, MAP_RAM);
-	SekMapMemory(Drv68KRam           , 0x1c0000, 0x1c3fff, MAP_RAM);
+	SekMapMemory(Drv68KRom           , 0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(DrvFgVideoRam       , 0x080000, 0x080fff, SM_RAM);
+	SekMapMemory(DrvBgVideoRam       , 0x082000, 0x0827ff, SM_RAM);
+	SekMapMemory(DrvPaletteRam       , 0x140000, 0x1405ff, SM_RAM);
+	SekMapMemory(DrvSpriteRam        , 0x180000, 0x180fff, SM_RAM);
+	SekMapMemory(Drv68KRam           , 0x1c0000, 0x1c3fff, SM_RAM);
 	SekSetReadWordHandler(0, Ddragon368KReadWord);
 	SekSetWriteWordHandler(0, Ddragon368KWriteWord);
 	SekSetReadByteHandler(0, Ddragon368KReadByte);
@@ -1339,12 +1339,12 @@ static INT32 DrvpInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom           , 0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(DrvFgVideoRam       , 0x080000, 0x080fff, MAP_RAM);
-	SekMapMemory(DrvBgVideoRam       , 0x082000, 0x0827ff, MAP_RAM);
-	SekMapMemory(DrvPaletteRam       , 0x140000, 0x1405ff, MAP_RAM);
-	SekMapMemory(DrvSpriteRam        , 0x180000, 0x180fff, MAP_RAM);
-	SekMapMemory(Drv68KRam           , 0x1c0000, 0x1c3fff, MAP_RAM);
+	SekMapMemory(Drv68KRom           , 0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(DrvFgVideoRam       , 0x080000, 0x080fff, SM_RAM);
+	SekMapMemory(DrvBgVideoRam       , 0x082000, 0x0827ff, SM_RAM);
+	SekMapMemory(DrvPaletteRam       , 0x140000, 0x1405ff, SM_RAM);
+	SekMapMemory(DrvSpriteRam        , 0x180000, 0x180fff, SM_RAM);
+	SekMapMemory(Drv68KRam           , 0x1c0000, 0x1c3fff, SM_RAM);
 	SekSetReadWordHandler(0, Ddragon368KReadWord);
 	SekSetWriteWordHandler(0, Ddragon368KWriteWord);
 	SekSetReadByteHandler(0, Ddragon368KReadByte);
@@ -1448,12 +1448,12 @@ static INT32 DrvbInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom           , 0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(DrvFgVideoRam       , 0x080000, 0x080fff, MAP_RAM);
-	SekMapMemory(DrvSpriteRam        , 0x081000, 0x081fff, MAP_RAM);
-	SekMapMemory(DrvBgVideoRam       , 0x082000, 0x0827ff, MAP_RAM);
-	SekMapMemory(DrvPaletteRam       , 0x100000, 0x1005ff, MAP_RAM);
-	SekMapMemory(Drv68KRam           , 0x1c0000, 0x1c3fff, MAP_RAM);
+	SekMapMemory(Drv68KRom           , 0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(DrvFgVideoRam       , 0x080000, 0x080fff, SM_RAM);
+	SekMapMemory(DrvSpriteRam        , 0x081000, 0x081fff, SM_RAM);
+	SekMapMemory(DrvBgVideoRam       , 0x082000, 0x0827ff, SM_RAM);
+	SekMapMemory(DrvPaletteRam       , 0x100000, 0x1005ff, SM_RAM);
+	SekMapMemory(Drv68KRam           , 0x1c0000, 0x1c3fff, SM_RAM);
 	SekSetReadWordHandler(0, Ddragon3b68KReadWord);
 	SekSetWriteWordHandler(0, Ddragon3b68KWriteWord);
 	SekSetReadByteHandler(0, Ddragon3b68KReadByte);
@@ -1586,13 +1586,13 @@ static INT32 CtribeInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom           , 0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(DrvFgVideoRam       , 0x080000, 0x080fff, MAP_RAM);
-	SekMapMemory(DrvSpriteRam        , 0x081000, 0x081fff, MAP_RAM);
-	SekMapMemory(DrvBgVideoRam       , 0x082000, 0x0827ff, MAP_RAM);
-	SekMapMemory(Drv68KRam           , 0x082800, 0x082fff, MAP_RAM);
-	SekMapMemory(DrvPaletteRam       , 0x100000, 0x1005ff, MAP_RAM);
-	SekMapMemory(Drv68KRam + 0x800   , 0x1c0000, 0x1c3fff, MAP_RAM);
+	SekMapMemory(Drv68KRom           , 0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(DrvFgVideoRam       , 0x080000, 0x080fff, SM_RAM);
+	SekMapMemory(DrvSpriteRam        , 0x081000, 0x081fff, SM_RAM);
+	SekMapMemory(DrvBgVideoRam       , 0x082000, 0x0827ff, SM_RAM);
+	SekMapMemory(Drv68KRam           , 0x082800, 0x082fff, SM_RAM);
+	SekMapMemory(DrvPaletteRam       , 0x100000, 0x1005ff, SM_RAM);
+	SekMapMemory(Drv68KRam + 0x800   , 0x1c0000, 0x1c3fff, SM_RAM);
 	SekSetReadWordHandler(0, Ctribeb68KReadWord);
 	SekSetWriteWordHandler(0, Ctribeb68KWriteWord);
 	SekSetReadByteHandler(0, Ctribeb68KReadByte);

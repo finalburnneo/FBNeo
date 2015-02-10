@@ -335,16 +335,16 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, MAP_READ);
-	SekMapMemory(Drv68KCode,		0x000000, 0x07ffff, MAP_FETCH);
-	SekMapMemory(deco16_pf_ram[0],		0x100000, 0x100fff, MAP_RAM);
-	SekMapMemory(deco16_pf_ram[1],		0x102000, 0x102fff, MAP_RAM);
-	SekMapMemory(deco16_pf_rowscroll[0],	0x110000, 0x1107ff, MAP_RAM);
-	SekMapMemory(deco16_pf_rowscroll[1],	0x112000, 0x1127ff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,			0x120000, 0x1207ff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,			0x130000, 0x130fff, MAP_RAM);
-	SekMapMemory(DrvProtRAM,		0x167800, 0x167fff, MAP_WRITE);
-	SekMapMemory(Drv68KRAM,			0x170000, 0x17ffff, MAP_RAM);
+	SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, SM_READ);
+	SekMapMemory(Drv68KCode,		0x000000, 0x07ffff, SM_FETCH);
+	SekMapMemory(deco16_pf_ram[0],		0x100000, 0x100fff, SM_RAM);
+	SekMapMemory(deco16_pf_ram[1],		0x102000, 0x102fff, SM_RAM);
+	SekMapMemory(deco16_pf_rowscroll[0],	0x110000, 0x1107ff, SM_RAM);
+	SekMapMemory(deco16_pf_rowscroll[1],	0x112000, 0x1127ff, SM_RAM);
+	SekMapMemory(DrvSprRAM,			0x120000, 0x1207ff, SM_RAM);
+	SekMapMemory(DrvPalRAM,			0x130000, 0x130fff, SM_RAM);
+	SekMapMemory(DrvProtRAM,		0x167800, 0x167fff, SM_WRITE);
+	SekMapMemory(Drv68KRAM,			0x170000, 0x17ffff, SM_RAM);
 	SekSetWriteWordHandler(0,		pktgaldx_write_word);
 	SekSetWriteByteHandler(0,		pktgaldx_write_byte);
 	SekSetReadWordHandler(0,		pktgaldx_read_word);

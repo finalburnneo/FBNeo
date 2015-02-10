@@ -165,7 +165,7 @@ void install_protection_asic3_orlegend()
 	pPgmResetCallback = reset_asic3;
 
 	SekOpen(0);
-	SekMapHandler(4,	0xc04000, 0xc0400f, MAP_READ | MAP_WRITE);
+	SekMapHandler(4,	0xc04000, 0xc0400f, SM_READ | SM_WRITE);
 	SekSetReadWordHandler(4, asic3_read_word);
 	SekSetWriteWordHandler(4, asic3_write_word);
 	SekClose();

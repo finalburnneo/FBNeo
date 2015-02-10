@@ -375,13 +375,13 @@ static INT32 DrvInit()
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvColRAM,		0x0000, 0x07ff, MAP_RAM);
-	M6809MapMemory(DrvVidRAM,		0x0800, 0x0fff, MAP_RAM);
-	M6809MapMemory(DrvSprRAM,		0x1000, 0x10ff, MAP_RAM);
-	M6809MapMemory(DrvM6809RAM0,		0x1100, 0x1fff, MAP_RAM);
-	M6809MapMemory(DrvM6809RAM1,		0x3000, 0x30ff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM,		0x8000, 0xffff, MAP_READ);
-	M6809MapMemory(DrvM6809DecROM,		0x8000, 0xffff, MAP_FETCH);
+	M6809MapMemory(DrvColRAM,		0x0000, 0x07ff, M6809_RAM);
+	M6809MapMemory(DrvVidRAM,		0x0800, 0x0fff, M6809_RAM);
+	M6809MapMemory(DrvSprRAM,		0x1000, 0x10ff, M6809_RAM);
+	M6809MapMemory(DrvM6809RAM0,		0x1100, 0x1fff, M6809_RAM);
+	M6809MapMemory(DrvM6809RAM1,		0x3000, 0x30ff, M6809_RAM);
+	M6809MapMemory(DrvM6809ROM,		0x8000, 0xffff, M6809_READ);
+	M6809MapMemory(DrvM6809DecROM,		0x8000, 0xffff, M6809_FETCH);
 	M6809SetWriteHandler(jailbrek_write);
 	M6809SetReadHandler(jailbrek_read);
 	M6809Close();

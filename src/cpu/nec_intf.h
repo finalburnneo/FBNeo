@@ -64,5 +64,9 @@ INT32 VezRun(INT32 nCycles);
 #define NEC_INPUT_LINE_INTP2 12
 #define NEC_INPUT_LINE_POLL  20
 
+#define VEZ_IRQSTATUS_NONE 0
+#define VEZ_IRQSTATUS_ACK  1
+#define VEZ_IRQSTATUS_AUTO 2
+
 void VezSetIRQLineAndVector(const INT32 line, const INT32 vector, const INT32 status);
 

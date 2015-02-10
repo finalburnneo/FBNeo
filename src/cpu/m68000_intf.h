@@ -204,6 +204,12 @@ inline static INT32 SekCurrentScanline()
 	return SekTotalCycles() / nSekCyclesScanline;
 }
 
+// SekMemory types:
+#define SM_READ  (1)
+#define SM_WRITE (2)
+#define SM_FETCH (4)
+#define SM_ROM (SM_READ | SM_FETCH)
+#define SM_RAM (SM_READ | SM_WRITE | SM_FETCH)
 
 // Map areas of memory
 INT32 SekMapMemory(UINT8* pMemory, UINT32 nStart, UINT32 nEnd, INT32 nType);

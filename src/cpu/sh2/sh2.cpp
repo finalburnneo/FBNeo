@@ -3406,7 +3406,7 @@ void Sh2SetIRQLine(const int line, const int state)
 	if (sh2->irq_line_state[line] == state) return;
 	sh2->irq_line_state[line] = state;
 
-	if( state == CPU_IRQSTATUS_NONE ) {
+	if( state == SH2_IRQSTATUS_NONE ) {
 		// LOG(("SH-2 #%d cleared irq #%d\n", cpu_getactivecpu(), line));
 		sh2->pending_irq &= ~(1 << line);
 	} else {

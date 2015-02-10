@@ -433,14 +433,14 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,			0x000000, 0x0fffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM,			0x100000, 0x10ffff, MAP_RAM);
-	SekMapMemory(DrvSprRAM0,		0x120000, 0x1207ff, MAP_RAM);
-	SekMapMemory(DrvSprRAM1,		0x140000, 0x1407ff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,			0x160000, 0x160fff, MAP_ROM);
-	SekMapMemory(DrvVidRAM,			0x200000, 0x202fff, MAP_RAM);
-	SekMapMemory(DrvPxlRAM0,		0x300000, 0x37ffff, MAP_ROM);
-	SekMapMemory(DrvPxlRAM1,		0x380000, 0x39ffff, MAP_ROM);
+	SekMapMemory(Drv68KROM,			0x000000, 0x0fffff, SM_ROM);
+	SekMapMemory(Drv68KRAM,			0x100000, 0x10ffff, SM_RAM);
+	SekMapMemory(DrvSprRAM0,		0x120000, 0x1207ff, SM_RAM);
+	SekMapMemory(DrvSprRAM1,		0x140000, 0x1407ff, SM_RAM);
+	SekMapMemory(DrvPalRAM,			0x160000, 0x160fff, SM_ROM);
+	SekMapMemory(DrvVidRAM,			0x200000, 0x202fff, SM_RAM);
+	SekMapMemory(DrvPxlRAM0,		0x300000, 0x37ffff, SM_ROM);
+	SekMapMemory(DrvPxlRAM1,		0x380000, 0x39ffff, SM_ROM);
 	SekSetWriteWordHandler(0,		lemmings_main_write_word);
 	SekSetWriteByteHandler(0,		lemmings_main_write_byte);
 	SekSetReadWordHandler(0,		lemmings_main_read_word);
@@ -449,8 +449,8 @@ static INT32 DrvInit()
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvM6809RAM,		0x0000, 0x07ff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM + 0x8000,	0x8000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809RAM,		0x0000, 0x07ff, M6809_RAM);
+	M6809MapMemory(DrvM6809ROM + 0x8000,	0x8000, 0xffff, M6809_ROM);
 	M6809SetWriteHandler(lemmings_sound_write);
 	M6809SetReadHandler(lemmings_sound_read);
 	M6809Close();

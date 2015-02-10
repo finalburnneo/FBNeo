@@ -395,12 +395,12 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,		0x0000, 0xbfff, MAP_ROM);
-	ZetMapMemory(DrvZ80ROMDec,	0x0000, 0x7fff, MAP_FETCHOP);
-	ZetMapMemory(DrvVidRAM,		0xc000, 0xcfff, MAP_RAM);
-	ZetMapMemory(t5182SharedRAM,	0xd400, 0xd4ff, MAP_RAM);
-	ZetMapMemory(DrvSprRAM,		0xe800, 0xefff, MAP_RAM);
-	ZetMapMemory(DrvZ80RAM,		0xf000, 0xffff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM,		0x0000, 0xbfff, ZET_ROM);
+	ZetMapMemory(DrvZ80ROMDec,	0x0000, 0x7fff, ZET_FETCHOP);
+	ZetMapMemory(DrvVidRAM,		0xc000, 0xcfff, ZET_RAM);
+	ZetMapMemory(t5182SharedRAM,	0xd400, 0xd4ff, ZET_RAM);
+	ZetMapMemory(DrvSprRAM,		0xe800, 0xefff, ZET_RAM);
+	ZetMapMemory(DrvZ80RAM,		0xf000, 0xffff, ZET_RAM);
 	ZetSetWriteHandler(mustache_main_write);
 	ZetSetReadHandler(mustache_main_read);
 	ZetClose();

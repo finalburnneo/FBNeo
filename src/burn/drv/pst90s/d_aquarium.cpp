@@ -394,13 +394,13 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(DrvMidRAM,		0xc00000, 0xc00fff, MAP_RAM);
-	SekMapMemory(DrvBakRAM,		0xc01000, 0xc01fff, MAP_RAM);
-	SekMapMemory(DrvTxtRAM,		0xc02000, 0xc03fff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,		0xc80000, 0xc81fff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		0xd00000, 0xd00fff, MAP_RAM);
-	SekMapMemory(Drv68KRAM,		0xff0000, 0xffffff, MAP_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(DrvMidRAM,		0xc00000, 0xc00fff, SM_RAM);
+	SekMapMemory(DrvBakRAM,		0xc01000, 0xc01fff, SM_RAM);
+	SekMapMemory(DrvTxtRAM,		0xc02000, 0xc03fff, SM_RAM);
+	SekMapMemory(DrvSprRAM,		0xc80000, 0xc81fff, SM_RAM);
+	SekMapMemory(DrvPalRAM,		0xd00000, 0xd00fff, SM_RAM);
+	SekMapMemory(Drv68KRAM,		0xff0000, 0xffffff, SM_RAM);
 	SekSetWriteByteHandler(0,	aquarium_write_byte);
 	SekSetWriteWordHandler(0,	aquarium_write_word);
 	SekSetReadByteHandler(0,	aquarium_read_byte);

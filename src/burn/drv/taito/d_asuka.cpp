@@ -1214,11 +1214,11 @@ static void Cadash68KSetup()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(Taito68KRam1,		0x100000, 0x107fff, MAP_RAM);
-	SekMapMemory(Taito68KRam2,		0x800000, 0x800fff, MAP_RAM); // Network RAM
-	SekMapMemory(PC090OJRam,		0xb00000, 0xb03fff, MAP_RAM);
-	SekMapMemory(TC0100SCNRam[0],		0xc00000, 0xc0ffff, MAP_READ);
+	SekMapMemory(Taito68KRom1,		0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(Taito68KRam1,		0x100000, 0x107fff, SM_RAM);
+	SekMapMemory(Taito68KRam2,		0x800000, 0x800fff, SM_RAM); // Network RAM
+	SekMapMemory(PC090OJRam,		0xb00000, 0xb03fff, SM_RAM);
+	SekMapMemory(TC0100SCNRam[0],		0xc00000, 0xc0ffff, SM_READ);
 	SekSetWriteByteHandler(0,		cadash_write_byte);
 	SekSetWriteWordHandler(0,		cadash_write_word);
 	SekSetReadByteHandler(0,		cadash_read_byte);
@@ -1230,12 +1230,12 @@ static void Eto68KSetup()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1,		0x000000, 0x03ffff, MAP_ROM);
-	SekMapMemory(Taito68KRom1 + 0x40000,	0x080000, 0x0fffff, MAP_ROM);
-	SekMapMemory(Taito68KRam1,		0x200000, 0x203fff, MAP_RAM);
-	SekMapMemory(PC090OJRam,		0xc00000, 0xc03fff, MAP_RAM);
-	SekMapMemory(TC0100SCNRam[0] + 0x4000,	0xc04000, 0xc0ffff, MAP_READ); // mirror
-	SekMapMemory(TC0100SCNRam[0],		0xd00000, 0xd0ffff, MAP_READ);
+	SekMapMemory(Taito68KRom1,		0x000000, 0x03ffff, SM_ROM);
+	SekMapMemory(Taito68KRom1 + 0x40000,	0x080000, 0x0fffff, SM_ROM);
+	SekMapMemory(Taito68KRam1,		0x200000, 0x203fff, SM_RAM);
+	SekMapMemory(PC090OJRam,		0xc00000, 0xc03fff, SM_RAM);
+	SekMapMemory(TC0100SCNRam[0] + 0x4000,	0xc04000, 0xc0ffff, SM_READ); // mirror
+	SekMapMemory(TC0100SCNRam[0],		0xd00000, 0xd0ffff, SM_READ);
 	SekSetWriteByteHandler(0,		eto_write_byte);
 	SekSetWriteWordHandler(0,		eto_write_word);
 	SekSetReadByteHandler(0,		eto_read_byte);
@@ -1247,11 +1247,11 @@ static void Asuka68KSetup()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1,		0x000000, 0x03ffff, MAP_ROM);
-	SekMapMemory(Taito68KRom1 + 0x40000,	0x080000, 0x0fffff, MAP_ROM);
-	SekMapMemory(Taito68KRam1,		0x100000, 0x103fff, MAP_RAM);
-	SekMapMemory(TC0100SCNRam[0],		0xc00000, 0xc0ffff, MAP_READ);
-	SekMapMemory(PC090OJRam,		0xd00000, 0xd03fff, MAP_RAM);
+	SekMapMemory(Taito68KRom1,		0x000000, 0x03ffff, SM_ROM);
+	SekMapMemory(Taito68KRom1 + 0x40000,	0x080000, 0x0fffff, SM_ROM);
+	SekMapMemory(Taito68KRam1,		0x100000, 0x103fff, SM_RAM);
+	SekMapMemory(TC0100SCNRam[0],		0xc00000, 0xc0ffff, SM_READ);
+	SekMapMemory(PC090OJRam,		0xd00000, 0xd03fff, SM_RAM);
 	SekSetWriteByteHandler(0,		asuka_write_byte);
 	SekSetWriteWordHandler(0,		asuka_write_word);
 	SekSetReadByteHandler(0,		asuka_read_byte);
@@ -1263,11 +1263,11 @@ static void Bonze68KSetup()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1,		0x000000, 0x03ffff, MAP_ROM);
-	SekMapMemory(Taito68KRom1 + 0x40000,	0x080000, 0x0fffff, MAP_ROM);
-	SekMapMemory(Taito68KRam1,		0x10c000, 0x10ffff, MAP_RAM);
-	SekMapMemory(TC0100SCNRam[0],		0xc00000, 0xc0ffff, MAP_READ);
-	SekMapMemory(PC090OJRam,		0xd00000, 0xd03fff, MAP_RAM);
+	SekMapMemory(Taito68KRom1,		0x000000, 0x03ffff, SM_ROM);
+	SekMapMemory(Taito68KRom1 + 0x40000,	0x080000, 0x0fffff, SM_ROM);
+	SekMapMemory(Taito68KRam1,		0x10c000, 0x10ffff, SM_RAM);
+	SekMapMemory(TC0100SCNRam[0],		0xc00000, 0xc0ffff, SM_READ);
+	SekMapMemory(PC090OJRam,		0xd00000, 0xd03fff, SM_RAM);
 	SekSetWriteByteHandler(0,		bonze_write_byte);
 	SekSetWriteWordHandler(0,		bonze_write_word);
 	SekSetReadByteHandler(0,		bonze_read_byte);

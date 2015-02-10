@@ -725,9 +725,9 @@ static INT32 SstingryInit()
 	
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom           , 0x000000, 0x01ffff, MAP_ROM);
-	SekMapMemory(DrvSharedRam        , 0x020000, 0x020fff, MAP_RAM);
-	SekMapMemory(DrvSpriteRam        , 0x040000, 0x041fff, MAP_RAM);
+	SekMapMemory(Drv68KRom           , 0x000000, 0x01ffff, SM_ROM);
+	SekMapMemory(DrvSharedRam        , 0x020000, 0x020fff, SM_RAM);
+	SekMapMemory(DrvSpriteRam        , 0x040000, 0x041fff, SM_RAM);
 	SekSetReadByteHandler(0, Kyros68KReadByte);
 	SekSetWriteByteHandler(0, Kyros68KWriteByte);
 	SekSetReadWordHandler(0, Kyros68KReadWord);
@@ -839,9 +839,9 @@ static INT32 KyrosInit()
 	
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom           , 0x000000, 0x01ffff, MAP_ROM);
-	SekMapMemory(DrvSharedRam        , 0x020000, 0x020fff, MAP_RAM);
-	SekMapMemory(DrvSpriteRam        , 0x040000, 0x041fff, MAP_RAM);
+	SekMapMemory(Drv68KRom           , 0x000000, 0x01ffff, SM_ROM);
+	SekMapMemory(DrvSharedRam        , 0x020000, 0x020fff, SM_RAM);
+	SekMapMemory(DrvSpriteRam        , 0x040000, 0x041fff, SM_RAM);
 	SekSetReadByteHandler(0, Kyros68KReadByte);
 	SekSetWriteByteHandler(0, Kyros68KWriteByte);
 	SekSetReadWordHandler(0, Kyros68KReadWord);

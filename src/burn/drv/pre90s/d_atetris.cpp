@@ -290,15 +290,15 @@ static INT32 CommonInit(INT32 boot)
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(Drv6502RAM,		0x0000, 0x0fff, MAP_RAM);
-	M6502MapMemory(DrvVidRAM,		0x1000, 0x1fff, MAP_RAM);
-	M6502MapMemory(DrvPalRAM,		0x2000, 0x20ff, MAP_ROM);
-	M6502MapMemory(DrvPalRAM,		0x2100, 0x21ff, MAP_ROM);
-	M6502MapMemory(DrvPalRAM,		0x2200, 0x22ff, MAP_ROM);
-	M6502MapMemory(DrvPalRAM,		0x2300, 0x23ff, MAP_ROM);
-	M6502MapMemory(DrvNVRAM,		0x2400, 0x25ff, MAP_ROM);
-	M6502MapMemory(DrvNVRAM,		0x2600, 0x27ff, MAP_ROM);
-	M6502MapMemory(Drv6502ROM + 0x8000,	0x8000, 0xffff, MAP_ROM);
+	M6502MapMemory(Drv6502RAM,		0x0000, 0x0fff, M6502_RAM);
+	M6502MapMemory(DrvVidRAM,		0x1000, 0x1fff, M6502_RAM);
+	M6502MapMemory(DrvPalRAM,		0x2000, 0x20ff, M6502_ROM);
+	M6502MapMemory(DrvPalRAM,		0x2100, 0x21ff, M6502_ROM);
+	M6502MapMemory(DrvPalRAM,		0x2200, 0x22ff, M6502_ROM);
+	M6502MapMemory(DrvPalRAM,		0x2300, 0x23ff, M6502_ROM);
+	M6502MapMemory(DrvNVRAM,		0x2400, 0x25ff, M6502_ROM);
+	M6502MapMemory(DrvNVRAM,		0x2600, 0x27ff, M6502_ROM);
+	M6502MapMemory(Drv6502ROM + 0x8000,	0x8000, 0xffff, M6502_ROM);
 	M6502SetReadHandler(atetris_read);
 	M6502SetReadOpHandler(atetris_read);
 	M6502SetReadOpArgHandler(atetris_read);

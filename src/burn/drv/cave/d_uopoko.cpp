@@ -512,13 +512,13 @@ static INT32 DrvInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom01,					0x000000, 0x0FFFFF, MAP_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram01,					0x100000, 0x10FFFF, MAP_RAM);
-		SekMapMemory(CaveSpriteRAM,			0x400000, 0x40FFFF, MAP_RAM);
-		SekMapMemory(CaveTileRAM[0],		0x500000, 0x507FFF, MAP_RAM);
+		SekMapMemory(Rom01,					0x000000, 0x0FFFFF, SM_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram01,					0x100000, 0x10FFFF, SM_RAM);
+		SekMapMemory(CaveSpriteRAM,			0x400000, 0x40FFFF, SM_RAM);
+		SekMapMemory(CaveTileRAM[0],		0x500000, 0x507FFF, SM_RAM);
 
-		SekMapMemory(CavePalSrc,			0x800000, 0x80FFFF, MAP_ROM);	// Palette RAM (write goes through handler)
-		SekMapHandler(1,					0x800000, 0x80FFFF, MAP_WRITE);	//
+		SekMapMemory(CavePalSrc,			0x800000, 0x80FFFF, SM_ROM);	// Palette RAM (write goes through handler)
+		SekMapHandler(1,					0x800000, 0x80FFFF, SM_WRITE);	//
 
 		SekSetReadWordHandler(0, uopokoReadWord);
 		SekSetReadByteHandler(0, uopokoReadByte);

@@ -227,15 +227,15 @@ void M6800SetIRQLine(INT32 vector, INT32 status)
 	if (nCpuType != CPU_TYPE_M6800) bprintf(PRINT_ERROR, _T("M6800SetIRQLine called with invalid CPU Type\n"));
 #endif
 
-	if (status == CPU_IRQSTATUS_NONE) {
+	if (status == M6800_IRQSTATUS_NONE) {
 		m6800_set_irq_line(vector, 0);
 	}
 	
-	if (status == CPU_IRQSTATUS_ACK) {
+	if (status == M6800_IRQSTATUS_ACK) {
 		m6800_set_irq_line(vector, 1);
 	}
 	
-	if (status == CPU_IRQSTATUS_AUTO) {
+	if (status == M6800_IRQSTATUS_AUTO) {
 		m6800_set_irq_line(vector, 1);
 		m6800_execute(0);
 		m6800_set_irq_line(vector, 0);
@@ -250,15 +250,15 @@ void HD63701SetIRQLine(INT32 vector, INT32 status)
 	if (nCpuType != CPU_TYPE_HD63701) bprintf(PRINT_ERROR, _T("HD63701SetIRQLine called with invalid CPU Type\n"));
 #endif
 
-	if (status == CPU_IRQSTATUS_NONE) {
+	if (status == HD63701_IRQSTATUS_NONE) {
 		m6800_set_irq_line(vector, 0);
 	}
 	
-	if (status == CPU_IRQSTATUS_ACK) {
+	if (status == HD63701_IRQSTATUS_ACK) {
 		m6800_set_irq_line(vector, 1);
 	}
 	
-	if (status == CPU_IRQSTATUS_AUTO) {
+	if (status == HD63701_IRQSTATUS_AUTO) {
 		m6800_set_irq_line(vector, 1);
 		hd63701_execute(0);
 		m6800_set_irq_line(vector, 0);
@@ -273,15 +273,15 @@ void M6803SetIRQLine(INT32 vector, INT32 status)
 	if (nCpuType != CPU_TYPE_M6803) bprintf(PRINT_ERROR, _T("M6803SetIRQLine called with invalid CPU Type\n"));
 #endif
 
-	if (status == CPU_IRQSTATUS_NONE) {
+	if (status == M6803_IRQSTATUS_NONE) {
 		m6800_set_irq_line(vector, 0);
 	}
 	
-	if (status == CPU_IRQSTATUS_ACK) {
+	if (status == M6803_IRQSTATUS_ACK) {
 		m6800_set_irq_line(vector, 1);
 	}
 	
-	if (status == CPU_IRQSTATUS_AUTO) {
+	if (status == M6803_IRQSTATUS_AUTO) {
 		m6800_set_irq_line(vector, 1);
 		m6803_execute(0);
 		m6800_set_irq_line(vector, 0);
@@ -296,15 +296,15 @@ void M6801SetIRQLine(INT32 vector, INT32 status)
 	if (nCpuType != CPU_TYPE_M6801) bprintf(PRINT_ERROR, _T("M6800SetIRQLine called with invalid CPU Type\n"));
 #endif
 
-	if (status == CPU_IRQSTATUS_NONE) {
+	if (status == M6801_IRQSTATUS_NONE) {
 		m6800_set_irq_line(vector, 0);
 	}
 	
-	if (status == CPU_IRQSTATUS_ACK) {
+	if (status == M6801_IRQSTATUS_ACK) {
 		m6800_set_irq_line(vector, 1);
 	}
 	
-	if (status == CPU_IRQSTATUS_AUTO) {
+	if (status == M6801_IRQSTATUS_AUTO) {
 		m6800_set_irq_line(vector, 1);
 		m6803_execute(0);
 		m6800_set_irq_line(vector, 0);
@@ -380,13 +380,13 @@ INT32 M6800MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 	UINT8 **pMemMap = M6800CPUContext[0].pMemMap;
 
 	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
-		if (nType & MAP_READ)	{
+		if (nType & M6800_READ)	{
 			pMemMap[0     + i] = pMemory + ((i - cStart) << 8);
 		}
-		if (nType & MAP_WRITE) {
+		if (nType & M6800_WRITE) {
 			pMemMap[0x100 + i] = pMemory + ((i - cStart) << 8);
 		}
-		if (nType & MAP_FETCH) {
+		if (nType & M6800_FETCH) {
 			pMemMap[0x200 + i] = pMemory + ((i - cStart) << 8);
 		}
 	}

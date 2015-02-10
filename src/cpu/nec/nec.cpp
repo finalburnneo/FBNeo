@@ -105,7 +105,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "driver.h"
+#include "burn.h"
 #include "state.h"
 #include "nec_intf.h"
 #include "bitswap.h"
@@ -294,7 +294,7 @@ static void external_int(nec_state_t *nec_state)
 		/* the actual vector is retrieved after pushing flags */
 		/* and clearing the IF */
 		nec_interrupt(nec_state, (UINT32)-1, INT_IRQ);
-		nec_state->irq_state = CLEAR_LINE;
+		nec_state->irq_state = CPU_IRQSTATUS_NONE;
 		nec_state->pending_irq &= ~INT_IRQ;
 	}
 }
@@ -315,7 +315,7 @@ void nec_set_irq_line_and_vector(int irqline, int vector, int state)
 	{
 		case 0:
 			nec_state->irq_state = state;
-			if (state == CLEAR_LINE)
+			if (state == CPU_IRQSTATUS_NONE)
 				nec_state->pending_irq &= ~INT_IRQ;
 			else
 			{
@@ -327,7 +327,7 @@ void nec_set_irq_line_and_vector(int irqline, int vector, int state)
 		case INPUT_LINE_NMI:
 			if (nec_state->nmi_state == (unsigned int)state) return;
 		    	nec_state->nmi_state = state;
-			if (state != CLEAR_LINE)
+			if (state != CPU_IRQSTATUS_NONE)
 			{
 				nec_state->vector = vector;
 				nec_state->pending_irq |= NMI_IRQ;

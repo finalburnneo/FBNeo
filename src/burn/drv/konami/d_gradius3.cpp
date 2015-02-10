@@ -596,11 +596,11 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM0,		0x000000, 0x03ffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM0,		0x040000, 0x043fff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,			0x080000, 0x080fff, MAP_RAM);
-	SekMapMemory(DrvShareRAM,		0x100000, 0x103fff, MAP_RAM);
-	SekMapMemory(DrvShareRAM2,		0x180000, 0x19ffff, MAP_ROM);
+	SekMapMemory(Drv68KROM0,		0x000000, 0x03ffff, SM_ROM);
+	SekMapMemory(Drv68KRAM0,		0x040000, 0x043fff, SM_RAM);
+	SekMapMemory(DrvPalRAM,			0x080000, 0x080fff, SM_RAM);
+	SekMapMemory(DrvShareRAM,		0x100000, 0x103fff, SM_RAM);
+	SekMapMemory(DrvShareRAM2,		0x180000, 0x19ffff, SM_ROM);
 	SekSetWriteWordHandler(0,		gradius3_main_write_word);
 	SekSetWriteByteHandler(0,		gradius3_main_write_byte);
 	SekSetReadWordHandler(0,		gradius3_main_read_word);
@@ -609,11 +609,11 @@ static INT32 DrvInit()
 
 	SekInit(1, 0x68000);
 	SekOpen(1);
-	SekMapMemory(Drv68KROM1,		0x000000, 0x0fffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM1,		0x100000, 0x103fff, MAP_RAM);
-	SekMapMemory(DrvShareRAM,		0x200000, 0x203fff, MAP_RAM);
-	SekMapMemory(DrvShareRAM2,		0x280000, 0x29ffff, MAP_ROM);
-	SekMapMemory(DrvGfxROM1,		0x400000, 0x5fffff, MAP_ROM);
+	SekMapMemory(Drv68KROM1,		0x000000, 0x0fffff, SM_ROM);
+	SekMapMemory(Drv68KRAM1,		0x100000, 0x103fff, SM_RAM);
+	SekMapMemory(DrvShareRAM,		0x200000, 0x203fff, SM_RAM);
+	SekMapMemory(DrvShareRAM2,		0x280000, 0x29ffff, SM_ROM);
+	SekMapMemory(DrvGfxROM1,		0x400000, 0x5fffff, SM_ROM);
 	SekSetWriteWordHandler(0,		gradius3_sub_write_word);
 	SekSetWriteByteHandler(0,		gradius3_sub_write_byte);
 	SekSetReadWordHandler(0,		gradius3_sub_read_word);

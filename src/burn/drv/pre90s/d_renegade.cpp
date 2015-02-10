@@ -668,7 +668,7 @@ void RenegadeWriteByte(UINT16 Address, UINT8 Data)
 		
 		case 0x3805: {
 			DrvRomBank = Data & 1;
-			M6502MapMemory(DrvM6502Rom + 0x8000 + (DrvRomBank * 0x4000), 0x4000, 0x7fff, MAP_ROM);
+			M6502MapMemory(DrvM6502Rom + 0x8000 + (DrvRomBank * 0x4000), 0x4000, 0x7fff, M6502_ROM);
 			return;
 		}
 		
@@ -943,22 +943,22 @@ static INT32 DrvInit(INT32 nMcuType)
 	
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(DrvM6502Ram            , 0x0000, 0x17ff, MAP_RAM);
-	M6502MapMemory(DrvVideoRam2           , 0x1800, 0x1fff, MAP_RAM);
-	M6502MapMemory(DrvSpriteRam           , 0x2000, 0x27ff, MAP_RAM);
-	M6502MapMemory(DrvVideoRam1           , 0x2800, 0x2fff, MAP_RAM);
-	M6502MapMemory(DrvPaletteRam1         , 0x3000, 0x30ff, MAP_RAM);
-	M6502MapMemory(DrvPaletteRam2         , 0x3100, 0x31ff, MAP_RAM);
-	M6502MapMemory(DrvM6502Rom + 0x8000   , 0x4000, 0x7fff, MAP_ROM);
-	M6502MapMemory(DrvM6502Rom            , 0x8000, 0xffff, MAP_ROM);
+	M6502MapMemory(DrvM6502Ram            , 0x0000, 0x17ff, M6502_RAM);
+	M6502MapMemory(DrvVideoRam2           , 0x1800, 0x1fff, M6502_RAM);
+	M6502MapMemory(DrvSpriteRam           , 0x2000, 0x27ff, M6502_RAM);
+	M6502MapMemory(DrvVideoRam1           , 0x2800, 0x2fff, M6502_RAM);
+	M6502MapMemory(DrvPaletteRam1         , 0x3000, 0x30ff, M6502_RAM);
+	M6502MapMemory(DrvPaletteRam2         , 0x3100, 0x31ff, M6502_RAM);
+	M6502MapMemory(DrvM6502Rom + 0x8000   , 0x4000, 0x7fff, M6502_ROM);
+	M6502MapMemory(DrvM6502Rom            , 0x8000, 0xffff, M6502_ROM);
 	M6502SetReadHandler(RenegadeReadByte);
 	M6502SetWriteHandler(RenegadeWriteByte);
 	M6502Close();
 	
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvM6809Ram          , 0x0000, 0x0fff, MAP_RAM);
-	M6809MapMemory(DrvM6809Rom          , 0x8000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809Ram          , 0x0000, 0x0fff, M6809_RAM);
+	M6809MapMemory(DrvM6809Rom          , 0x8000, 0xffff, M6809_ROM);
 	M6809SetReadHandler(RenegadeM6809ReadByte);
 	M6809SetWriteHandler(RenegadeM6809WriteByte);
 	M6809Close();
@@ -973,8 +973,8 @@ static INT32 DrvInit(INT32 nMcuType)
 		
 		m6805Init(1, 0x800);
 		m6805Open(0);
-		m6805MapMemory(DrvM68705Ram         , 0x0010, 0x007f, MAP_RAM);
-		m6805MapMemory(DrvM68705Rom + 0x0080, 0x0080, 0x07ff, MAP_ROM);
+		m6805MapMemory(DrvM68705Ram         , 0x0010, 0x007f, M6805_RAM);
+		m6805MapMemory(DrvM68705Rom + 0x0080, 0x0080, 0x07ff, M6805_ROM);
 		m6805SetWriteHandler(MCUWriteByte);
 		m6805SetReadHandler(MCUReadByte);
 		m6805Close();

@@ -802,7 +802,7 @@ static void bankswitch(INT32 data)
 {
 	z80_bank_select[0] = data;
 
-	ZetMapMemory(DrvZ80ROM0 + ((data & 0x07) * 0x4000), 0x8000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80ROM0 + ((data & 0x07) * 0x4000), 0x8000, 0xbfff, ZET_ROM);
 }
 
 static void __fastcall lastday_main_write(UINT16 address, UINT8 data)
@@ -1630,8 +1630,8 @@ static void DrvSoundCPUInit(INT32 cpuno, INT32 type)
 {
 	ZetInit(cpuno);
 	ZetOpen(cpuno);
-	ZetMapMemory(DrvZ80ROM1,	((type) ? 0x0000 : 0x0000), ((type) ? 0xefff : 0x7fff), MAP_ROM);
-	ZetMapMemory(DrvZ80RAM1,	((type) ? 0xf000 : 0xc000), ((type) ? 0xf7ff : 0xc7ff), MAP_RAM);
+	ZetMapMemory(DrvZ80ROM1,	((type) ? 0x0000 : 0x0000), ((type) ? 0xefff : 0x7fff), ZET_ROM);
+	ZetMapMemory(DrvZ80RAM1,	((type) ? 0xf000 : 0xc000), ((type) ? 0xf7ff : 0xc7ff), ZET_RAM);
 	ZetSetWriteHandler(sound_write);
 	ZetSetReadHandler(sound_read);
 	ZetClose();
@@ -1682,11 +1682,11 @@ static INT32 LastdayInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, MAP_ROM);
-	ZetMapMemory(DrvPalRAM,		0xc800, 0xcfff, MAP_ROM);
-	ZetMapMemory(DrvTxtRAM,		0xd000, 0xdfff, MAP_RAM);
-	ZetMapMemory(DrvZ80RAM0,	0xe000, 0xefff, MAP_RAM);
-	ZetMapMemory(DrvSprRAM,		0xf000, 0xffff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, ZET_ROM);
+	ZetMapMemory(DrvPalRAM,		0xc800, 0xcfff, ZET_ROM);
+	ZetMapMemory(DrvTxtRAM,		0xd000, 0xdfff, ZET_RAM);
+	ZetMapMemory(DrvZ80RAM0,	0xe000, 0xefff, ZET_RAM);
+	ZetMapMemory(DrvSprRAM,		0xf000, 0xffff, ZET_RAM);
 	ZetSetWriteHandler(lastday_main_write);
 	ZetSetReadHandler(lastday_main_read);
 	ZetClose();
@@ -1749,11 +1749,11 @@ static INT32 GulfstrmInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAM0,	0xc000, 0xcfff, MAP_RAM);
-	ZetMapMemory(DrvSprRAM,		0xd000, 0xdfff, MAP_RAM);
-	ZetMapMemory(DrvTxtRAM,		0xe000, 0xefff, MAP_RAM);
-	ZetMapMemory(DrvPalRAM,		0xf800, 0xffff, MAP_ROM);
+	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, ZET_ROM);
+	ZetMapMemory(DrvZ80RAM0,	0xc000, 0xcfff, ZET_RAM);
+	ZetMapMemory(DrvSprRAM,		0xd000, 0xdfff, ZET_RAM);
+	ZetMapMemory(DrvTxtRAM,		0xe000, 0xefff, ZET_RAM);
+	ZetMapMemory(DrvPalRAM,		0xf800, 0xffff, ZET_ROM);
 	ZetSetWriteHandler(gulfstrm_main_write);
 	ZetSetReadHandler(gulfstrm_main_read);
 	ZetClose();
@@ -1819,11 +1819,11 @@ static INT32 PolluxInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAM0,	0xc000, 0xcfff, MAP_RAM);
-	ZetMapMemory(DrvSprRAM,		0xd000, 0xdfff, MAP_RAM);
-	ZetMapMemory(DrvTxtRAM,		0xe000, 0xefff, MAP_RAM);
-	ZetMapMemory(DrvPalRAM,		0xf800, 0xffff, MAP_ROM);
+	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, ZET_ROM);
+	ZetMapMemory(DrvZ80RAM0,	0xc000, 0xcfff, ZET_RAM);
+	ZetMapMemory(DrvSprRAM,		0xd000, 0xdfff, ZET_RAM);
+	ZetMapMemory(DrvTxtRAM,		0xe000, 0xefff, ZET_RAM);
+	ZetMapMemory(DrvPalRAM,		0xf800, 0xffff, ZET_ROM);
 	ZetSetWriteHandler(gulfstrm_main_write);
 	ZetSetReadHandler(pollux_main_read);
 	ZetClose();
@@ -1918,11 +1918,11 @@ static INT32 FlytigerCommonInit(INT32 game_select)
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, MAP_ROM);
-	ZetMapMemory(DrvSprRAM,		0xc000, 0xcfff, MAP_RAM);
-	ZetMapMemory(DrvZ80RAM0,	0xd000, 0xdfff, MAP_RAM);
-	ZetMapMemory(DrvPalRAM,		0xe800, 0xefff, MAP_ROM);
-	ZetMapMemory(DrvTxtRAM,		0xf000, 0xffff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, ZET_ROM);
+	ZetMapMemory(DrvSprRAM,		0xc000, 0xcfff, ZET_RAM);
+	ZetMapMemory(DrvZ80RAM0,	0xd000, 0xdfff, ZET_RAM);
+	ZetMapMemory(DrvPalRAM,		0xe800, 0xefff, ZET_ROM);
+	ZetMapMemory(DrvTxtRAM,		0xf000, 0xffff, ZET_RAM);
 	ZetSetWriteHandler(flytiger_main_write);
 	ZetSetReadHandler(flytiger_main_read);
 	ZetClose();
@@ -1987,11 +1987,11 @@ static INT32 BluehawkInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, MAP_ROM);
-	ZetMapMemory(DrvPalRAM,		0xc800, 0xcfff, MAP_ROM);
-	ZetMapMemory(DrvTxtRAM,		0xd000, 0xdfff, MAP_RAM);
-	ZetMapMemory(DrvSprRAM,		0xe000, 0xefff, MAP_RAM);
-	ZetMapMemory(DrvZ80RAM0,	0xf000, 0xffff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, ZET_ROM);
+	ZetMapMemory(DrvPalRAM,		0xc800, 0xcfff, ZET_ROM);
+	ZetMapMemory(DrvTxtRAM,		0xd000, 0xdfff, ZET_RAM);
+	ZetMapMemory(DrvSprRAM,		0xe000, 0xefff, ZET_RAM);
+	ZetMapMemory(DrvZ80RAM0,	0xf000, 0xffff, ZET_RAM);
 	ZetSetWriteHandler(bluehawk_main_write);
 	ZetSetReadHandler(bluehawk_main_read);
 	ZetClose();
@@ -2075,10 +2075,10 @@ static INT32 PrimellaCommonInit(INT32 game_select)
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAM0,	0xc000, 0xd3ff, MAP_RAM);
-	ZetMapMemory(DrvTxtRAM,		0xe000, 0xefff, MAP_RAM);
-	ZetMapMemory(DrvPalRAM,		0xf000, 0xf7ff, MAP_ROM);
+	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, ZET_ROM);
+	ZetMapMemory(DrvZ80RAM0,	0xc000, 0xd3ff, ZET_RAM);
+	ZetMapMemory(DrvTxtRAM,		0xe000, 0xefff, ZET_RAM);
+	ZetMapMemory(DrvPalRAM,		0xf000, 0xf7ff, ZET_ROM);
 	ZetSetWriteHandler(primella_main_write);
 	ZetSetReadHandler(primella_main_read);
 	ZetClose();
@@ -2223,18 +2223,18 @@ static INT32 RsharkCommonInit(INT32 game_select)
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, SM_ROM);
 
 	if (game_select > 0) {
-		SekMapMemory(Drv68KRAM0,	0x040000, 0x04cfff, MAP_RAM);
-		SekMapMemory(DrvSprRAM,		0x04d000, 0x04dfff, MAP_RAM);
-		SekMapMemory(Drv68KRAM1,	0x04e000, 0x04ffff, MAP_RAM);
-		SekMapMemory(DrvPalRAM,		0x0c8000, 0x0c8fff, MAP_ROM);
+		SekMapMemory(Drv68KRAM0,	0x040000, 0x04cfff, SM_RAM);
+		SekMapMemory(DrvSprRAM,		0x04d000, 0x04dfff, SM_RAM);
+		SekMapMemory(Drv68KRAM1,	0x04e000, 0x04ffff, SM_RAM);
+		SekMapMemory(DrvPalRAM,		0x0c8000, 0x0c8fff, SM_ROM);
 	} else {
-		SekMapMemory(DrvPalRAM,		0x088000, 0x088fff, MAP_ROM);
-		SekMapMemory(Drv68KRAM0,	0x0d0000, 0x0dcfff, MAP_RAM);
-		SekMapMemory(DrvSprRAM,		0x0dd000, 0x0ddfff, MAP_RAM);
-		SekMapMemory(Drv68KRAM1,	0x0de000, 0x0dffff, MAP_RAM);
+		SekMapMemory(DrvPalRAM,		0x088000, 0x088fff, SM_ROM);
+		SekMapMemory(Drv68KRAM0,	0x0d0000, 0x0dcfff, SM_RAM);
+		SekMapMemory(DrvSprRAM,		0x0dd000, 0x0ddfff, SM_RAM);
+		SekMapMemory(Drv68KRAM1,	0x0de000, 0x0dffff, SM_RAM);
 	}
 
 	SekSetWriteWordHandler(0,	superx_main_write_word);

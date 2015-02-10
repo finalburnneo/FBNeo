@@ -1184,12 +1184,12 @@ static INT32 SraiderFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
 		ZetRun(nTotalCycles[0] / nInterleave);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) ZetRaiseIrq(0);
 		ZetClose();
 
 		ZetOpen(1);
 		ZetRun(nTotalCycles[1] / nInterleave);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) ZetRaiseIrq(0);
 		ZetClose();
 	}
 

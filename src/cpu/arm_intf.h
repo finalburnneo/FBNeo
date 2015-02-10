@@ -4,6 +4,13 @@ UINT8  ArmReadByte(UINT32 addr);
 UINT32 ArmReadLong(UINT32 addr);
 UINT32 ArmFetchLong(UINT32 addr);
 
+#define ARM_READ		1
+#define ARM_WRITE		2
+#define ARM_FETCH		4
+
+#define ARM_ROM		(ARM_READ | ARM_FETCH)
+#define ARM_RAM		(ARM_READ | ARM_FETCH | ARM_WRITE)
+
 void ArmMapMemory(UINT8 *src, INT32 start, INT32 finish, INT32 type);
 
 void ArmSetWriteByteHandler(void (*write)(UINT32, UINT8));
@@ -19,6 +26,10 @@ INT32 ArmScan(INT32 nAction);
 
 #define ARM_IRQ_LINE		0
 #define ARM_FIRQ_LINE		1
+
+#define ARM_IRQSTATUS_NONE	0
+#define ARM_IRQSTATUS_ACK	1
+#define ARM_IRQSTATUS_AUTO	2
 
 void ArmSetIRQLine(INT32 line, INT32 state);
 

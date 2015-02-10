@@ -1158,11 +1158,11 @@ static INT32 TaitoXInit(INT32 nSoundType)
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1            , 0x000000, Taito68KRom1Size - 1, MAP_ROM);
-	SekMapMemory(TaitoPaletteRam         , 0xb00000, 0xb00fff, MAP_RAM);
-	SekMapMemory(TaitoSpriteRam          , 0xd00000, 0xd007ff, MAP_RAM);
-	SekMapMemory(TaitoSpriteRam2         , 0xe00000, 0xe03fff, MAP_RAM);
-	SekMapMemory(Taito68KRam1            , 0xf00000, 0xf03fff, MAP_RAM);
+	SekMapMemory(Taito68KRom1            , 0x000000, Taito68KRom1Size - 1, SM_ROM);
+	SekMapMemory(TaitoPaletteRam         , 0xb00000, 0xb00fff, SM_RAM);
+	SekMapMemory(TaitoSpriteRam          , 0xd00000, 0xd007ff, SM_RAM);
+	SekMapMemory(TaitoSpriteRam2         , 0xe00000, 0xe03fff, SM_RAM);
+	SekMapMemory(Taito68KRam1            , 0xf00000, 0xf03fff, SM_RAM);
 	SekSetReadByteHandler(0, TaitoX68KReadByte);
 	SekSetWriteByteHandler(0, TaitoX68KWriteByte);
 	SekSetReadWordHandler(0, TaitoX68KReadWord);

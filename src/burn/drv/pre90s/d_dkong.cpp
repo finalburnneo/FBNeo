@@ -1537,16 +1537,16 @@ static INT32 Dkong3Init()
 
 	M6502Init(0, TYPE_N2A03);
 	M6502Open(0);
-	M6502MapMemory(DrvSndRAM0, 0x0000, 0x01ff, MAP_RAM);
-	M6502MapMemory(DrvSndROM0, 0xe000, 0xffff, MAP_ROM);
+	M6502MapMemory(DrvSndRAM0, 0x0000, 0x01ff, M6502_RAM);
+	M6502MapMemory(DrvSndROM0, 0xe000, 0xffff, M6502_ROM);
 	M6502SetWriteHandler(dkong3_sound0_write);
 	M6502SetReadHandler(dkong3_sound0_read);
 	M6502Close();
 
 	M6502Init(1, TYPE_N2A03);
 	M6502Open(1);
-	M6502MapMemory(DrvSndRAM1, 0x0000, 0x01ff, MAP_RAM);
-	M6502MapMemory(DrvSndROM1, 0xe000, 0xffff, MAP_ROM);
+	M6502MapMemory(DrvSndRAM1, 0x0000, 0x01ff, M6502_RAM);
+	M6502MapMemory(DrvSndROM1, 0xe000, 0xffff, M6502_ROM);
 	M6502SetWriteHandler(dkong3_sound1_write);
 	M6502SetReadHandler(dkong3_sound1_read);
 	M6502Close();
@@ -1645,14 +1645,14 @@ static INT32 s2650DkongInit(INT32 (*pRomLoadCallback)())
 
 	s2650Init(1);
 	s2650Open(0);
-	s2650MapMemory(Drv2650ROM + 0x0000, 0x0000, 0x0fff, MAP_ROM);
-	s2650MapMemory(Drv2650RAM + 0x0000, 0x1000, 0x13ff, MAP_RAM); // sprite ram (after dma)
-	s2650MapMemory(DrvSprRAM  + 0x0000, 0x1600, 0x17ff, MAP_RAM);
-	s2650MapMemory(DrvVidRAM  + 0x0000, 0x1800, 0x1bff, MAP_RAM);
-	s2650MapMemory(DrvSprRAM  + 0x0400, 0x1c00, 0x1eff, MAP_RAM);
-	s2650MapMemory(Drv2650ROM + 0x2000, 0x2000, 0x2fff, MAP_ROM);
-	s2650MapMemory(Drv2650ROM + 0x4000, 0x4000, 0x4fff, MAP_ROM);
-	s2650MapMemory(Drv2650ROM + 0x6000, 0x6000, 0x6fff, MAP_ROM);
+	s2650MapMemory(Drv2650ROM + 0x0000, 0x0000, 0x0fff, S2650_ROM);
+	s2650MapMemory(Drv2650RAM + 0x0000, 0x1000, 0x13ff, S2650_RAM); // sprite ram (after dma)
+	s2650MapMemory(DrvSprRAM  + 0x0000, 0x1600, 0x17ff, S2650_RAM);
+	s2650MapMemory(DrvVidRAM  + 0x0000, 0x1800, 0x1bff, S2650_RAM);
+	s2650MapMemory(DrvSprRAM  + 0x0400, 0x1c00, 0x1eff, S2650_RAM);
+	s2650MapMemory(Drv2650ROM + 0x2000, 0x2000, 0x2fff, S2650_ROM);
+	s2650MapMemory(Drv2650ROM + 0x4000, 0x4000, 0x4fff, S2650_ROM);
+	s2650MapMemory(Drv2650ROM + 0x6000, 0x6000, 0x6fff, S2650_ROM);
 	s2650SetIrqCallback(s2650_irq_callback);
 	s2650SetWriteHandler(s2650_main_write);
 	s2650SetReadHandler(s2650_main_read);

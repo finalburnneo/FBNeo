@@ -479,7 +479,7 @@ void m6805SetIrqLine(int , int state)
 	if (m6805.irq_state[0] == state) return;
 
 	m6805.irq_state[0] = state;
-	if (state != CLEAR_LINE)
+	if (state != CPU_IRQSTATUS_NONE)
 		m6805.pending_interrupts |= 1<<M6805_IRQ_LINE;
 }
 
@@ -670,7 +670,7 @@ int m6805Run(int cycles)
 			case 0x98: CLC; break;
 			case 0x99: SEC; break;
 #if IRQ_LEVEL_DETECT
-			case 0x9a: CLI; if (m6805.irq_state != CLEAR_LINE) m6805.pending_interrupts |= 1<<M6805_IRQ_LINE; break;
+			case 0x9a: CLI; if (m6805.irq_state != CPU_IRQSTATUS_NONE) m6805.pending_interrupts |= 1<<M6805_IRQ_LINE; break;
 #else
 			case 0x9a: CLI; break;
 #endif
@@ -859,7 +859,7 @@ void m68705SetIrqLine(int irqline, int state)
 
 	if (m6805.irq_state[irqline] == state ) return;
 	m6805.irq_state[irqline] = state;
-	if (state != CLEAR_LINE) m6805.pending_interrupts |= 1<<irqline;
+	if (state != CPU_IRQSTATUS_NONE) m6805.pending_interrupts |= 1<<irqline;
 }
 
 
@@ -896,13 +896,13 @@ void hd63705SetIrqLine(int irqline, int state)
 		if (m6805.nmi_state == state) return;
 
 		m6805.nmi_state = state;
-		if (state != CLEAR_LINE)
+		if (state != CPU_IRQSTATUS_NONE)
 			m6805.pending_interrupts |= 1<<HD63705_INT_NMI;
 	}
 	else if (irqline <= HD63705_INT_ADCONV)
 	{
 		if (m6805.irq_state[irqline] == state) return;
 		m6805.irq_state[irqline] = state;
-		if (state != CLEAR_LINE) m6805.pending_interrupts |= 1<<irqline;
+		if (state != CPU_IRQSTATUS_NONE) m6805.pending_interrupts |= 1<<irqline;
 	}
 }

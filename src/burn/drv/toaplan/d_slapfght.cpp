@@ -647,7 +647,7 @@ void __fastcall tigerhOutCPU0(UINT16 a, UINT8 /* d */)
 //			bprintf(PRINT_NORMAL, "Interrupts disabled.\n");
 
 			bInterruptEnable = false;
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			ZetLowerIrq();
 			break;
 		case 0x07:					// Enable interrupts
 //			bprintf(PRINT_NORMAL, "Interrupts enabled.\n");
@@ -2286,11 +2286,11 @@ static INT32 tigerhFrame()
 			bVBlank = true;
 
 			if (bInterruptEnable) {
-				ZetSetIRQLine(0xff, CPU_IRQSTATUS_AUTO);
+				ZetRaiseIrq(0xFF);
 #if 0
 				ZetClose();
 				ZetOpen(1);
-				ZetSetIRQLine(0xff, CPU_IRQSTATUS_AUTO);
+				ZetRaiseIrq(0xFF);
 				ZetClose();
 				ZetOpen(0);
 #endif

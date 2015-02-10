@@ -692,11 +692,11 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, MAP_ROM);
-	SekMapMemory(DrvSprRAM,		0xfe0800, 0xfe1bff, MAP_RAM);
-	SekMapMemory(DrvVidRAM,		0xfec000, 0xfec7ff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		0xff8000, 0xff87ff, MAP_ROM);
-	SekMapMemory(Drv68KRAM,		0xffc000, 0xffffff, MAP_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, SM_ROM);
+	SekMapMemory(DrvSprRAM,		0xfe0800, 0xfe1bff, SM_RAM);
+	SekMapMemory(DrvVidRAM,		0xfec000, 0xfec7ff, SM_RAM);
+	SekMapMemory(DrvPalRAM,		0xff8000, 0xff87ff, SM_ROM);
+	SekMapMemory(Drv68KRAM,		0xffc000, 0xffffff, SM_RAM);
 	SekSetWriteByteHandler(0,	tigeroad_write_byte);
 	SekSetWriteWordHandler(0,	tigeroad_write_word);
 	SekSetReadByteHandler(0,	tigeroad_read_byte);

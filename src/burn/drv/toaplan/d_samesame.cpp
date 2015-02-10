@@ -787,10 +787,10 @@ static INT32 DrvInit()
 	{
 		SekInit(0, 0x68000);
 		SekOpen(0);
-		SekMapMemory(Drv68KROM,			0x000000, 0x07FFFF, MAP_ROM);
-		SekMapMemory(Drv68KRAM,			0x0c0000, 0x0c3FFF, MAP_RAM);
-		SekMapMemory(DrvPalRAM,			0x104000, 0x1047FF, MAP_RAM);
-		SekMapMemory(DrvPalRAM2,		0x106000, 0x1067FF, MAP_RAM);
+		SekMapMemory(Drv68KROM,			0x000000, 0x07FFFF, SM_ROM);
+		SekMapMemory(Drv68KRAM,			0x0c0000, 0x0c3FFF, SM_RAM);
+		SekMapMemory(DrvPalRAM,			0x104000, 0x1047FF, SM_RAM);
+		SekMapMemory(DrvPalRAM2,		0x106000, 0x1067FF, SM_RAM);
 		SekSetReadWordHandler(0, 		samesameReadWord);
 		SekSetReadByteHandler(0, 		samesameReadByte);
 		SekSetWriteWordHandler(0, 		samesameWriteWord);

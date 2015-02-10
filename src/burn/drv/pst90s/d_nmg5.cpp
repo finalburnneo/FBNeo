@@ -1098,24 +1098,24 @@ static INT32 DrvInit(INT32 loadtype, INT32 sektype, INT32 zettype) // 0 nmg, 1 p
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, MAP_ROM);
-	SekMapMemory(DrvBmpRAM,		0x800000, 0x80ffff, MAP_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, SM_ROM);
+	SekMapMemory(DrvBmpRAM,		0x800000, 0x80ffff, SM_RAM);
 	if (sektype) {
-		SekMapMemory(Drv68KRAM,		0x200000, 0x20ffff, MAP_RAM);
-		SekMapMemory(DrvPalRAM,		0x440000, 0x4407ff, MAP_ROM);
-		SekMapMemory(DrvSprRAM,		0x460000, 0x4607ff, MAP_RAM);
-		SekMapMemory(DrvVidRAM0,	0x520000, 0x521fff, MAP_RAM);
-		SekMapMemory(DrvVidRAM1,	0x522000, 0x523fff, MAP_RAM);
+		SekMapMemory(Drv68KRAM,		0x200000, 0x20ffff, SM_RAM);
+		SekMapMemory(DrvPalRAM,		0x440000, 0x4407ff, SM_ROM);
+		SekMapMemory(DrvSprRAM,		0x460000, 0x4607ff, SM_RAM);
+		SekMapMemory(DrvVidRAM0,	0x520000, 0x521fff, SM_RAM);
+		SekMapMemory(DrvVidRAM1,	0x522000, 0x523fff, SM_RAM);
 		SekSetWriteByteHandler(0,	pclubys_write_byte);
 		SekSetWriteWordHandler(0,	pclubys_write_word);
 		SekSetReadByteHandler(0,	pclubys_read_byte);
 		SekSetReadWordHandler(0,	pclubys_read_word);
 	} else {
-		SekMapMemory(Drv68KRAM,		0x120000, 0x12ffff, MAP_RAM);
-		SekMapMemory(DrvPalRAM,		0x140000, 0x1407ff, MAP_ROM);
-		SekMapMemory(DrvSprRAM,		0x160000, 0x1607ff, MAP_RAM);
-		SekMapMemory(DrvVidRAM0,	0x320000, 0x321fff, MAP_RAM);
-		SekMapMemory(DrvVidRAM1,	0x322000, 0x323fff, MAP_RAM);
+		SekMapMemory(Drv68KRAM,		0x120000, 0x12ffff, SM_RAM);
+		SekMapMemory(DrvPalRAM,		0x140000, 0x1407ff, SM_ROM);
+		SekMapMemory(DrvSprRAM,		0x160000, 0x1607ff, SM_RAM);
+		SekMapMemory(DrvVidRAM0,	0x320000, 0x321fff, SM_RAM);
+		SekMapMemory(DrvVidRAM1,	0x322000, 0x323fff, SM_RAM);
 		SekSetWriteByteHandler(0,	nmg5_write_byte);
 		SekSetWriteWordHandler(0,	nmg5_write_word);
 		SekSetReadByteHandler(0,	nmg5_read_byte);

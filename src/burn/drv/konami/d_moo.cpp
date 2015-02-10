@@ -679,7 +679,7 @@ static UINT8 __fastcall bucky_main_read_byte(UINT32 address)
 static void bankswitch(INT32 data)
 {
 	z80_bank = data;
-	ZetMapMemory(DrvZ80ROM + ((data & 0x0f) * 0x4000), 0x8000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80ROM + ((data & 0x0f) * 0x4000), 0x8000, 0xbfff, ZET_ROM);
 }
 
 static void __fastcall moo_sound_write(UINT16 address, UINT8 data)
@@ -892,11 +892,11 @@ static INT32 MooInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(Drv68KROM + 0x080000,	0x100000, 0x17ffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM,			0x180000, 0x18ffff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,			0x190000, 0x19ffff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,			0x1c0000, 0x1c1fff, MAP_RAM);
+	SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(Drv68KROM + 0x080000,	0x100000, 0x17ffff, SM_ROM);
+	SekMapMemory(Drv68KRAM,			0x180000, 0x18ffff, SM_RAM);
+	SekMapMemory(DrvSprRAM,			0x190000, 0x19ffff, SM_RAM);
+	SekMapMemory(DrvPalRAM,			0x1c0000, 0x1c1fff, SM_RAM);
 	SekSetWriteWordHandler(0,		moo_main_write_word);
 	SekSetWriteByteHandler(0,		moo_main_write_byte);
 	SekSetReadWordHandler(0,		moo_main_read_word);
@@ -905,8 +905,8 @@ static INT32 MooInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,			0x0000, 0x7fff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAM,			0xc000, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM,			0x0000, 0x7fff, ZET_ROM);
+	ZetMapMemory(DrvZ80RAM,			0xc000, 0xdfff, ZET_RAM);
 	ZetSetWriteHandler(moo_sound_write);
 	ZetSetReadHandler(moo_sound_read);
 	ZetClose();
@@ -982,13 +982,13 @@ static INT32 BuckyInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(Drv68KROM + 0x080000,	0x200000, 0x23ffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM,			0x080000, 0x08ffff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,			0x090000, 0x09ffff, MAP_RAM);
-	SekMapMemory(Drv68KRAM2,		0x0a0000, 0x0affff, MAP_RAM);
-	SekMapMemory(Drv68KRAM3,		0x184000, 0x187fff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,			0x1b0000, 0x1b3fff, MAP_RAM);
+	SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(Drv68KROM + 0x080000,	0x200000, 0x23ffff, SM_ROM);
+	SekMapMemory(Drv68KRAM,			0x080000, 0x08ffff, SM_RAM);
+	SekMapMemory(DrvSprRAM,			0x090000, 0x09ffff, SM_RAM);
+	SekMapMemory(Drv68KRAM2,		0x0a0000, 0x0affff, SM_RAM);
+	SekMapMemory(Drv68KRAM3,		0x184000, 0x187fff, SM_RAM);
+	SekMapMemory(DrvPalRAM,			0x1b0000, 0x1b3fff, SM_RAM);
 	SekSetWriteWordHandler(0,		bucky_main_write_word);
 	SekSetWriteByteHandler(0,		bucky_main_write_byte);
 	SekSetReadWordHandler(0,		bucky_main_read_word);
@@ -997,8 +997,8 @@ static INT32 BuckyInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,			0x0000, 0x7fff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAM,			0xc000, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM,			0x0000, 0x7fff, ZET_ROM);
+	ZetMapMemory(DrvZ80RAM,			0xc000, 0xdfff, ZET_RAM);
 	ZetSetWriteHandler(moo_sound_write);
 	ZetSetReadHandler(moo_sound_read);
 	ZetClose();

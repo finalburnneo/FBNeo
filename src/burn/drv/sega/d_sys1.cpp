@@ -5237,7 +5237,7 @@ INT32 System1Frame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 9) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == 9) ZetRaiseIrq(0);
 		ZetClose();
 		
 		nCurrentCPU = 1;
@@ -5246,7 +5246,7 @@ INT32 System1Frame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 2 || i == 4 || i == 6 || i == 8) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == 2 || i == 4 || i == 6 || i == 8) ZetRaiseIrq(0);
 		ZetClose();
 		
 		if (pBurnSoundOut) {

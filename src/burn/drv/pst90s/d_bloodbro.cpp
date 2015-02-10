@@ -618,16 +618,16 @@ static INT32 DrvInit()
 
 		SekInit(0, 0x68000);
 		SekOpen(0);
-		SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, MAP_ROM);
-		SekMapMemory(Drv68KRAM,			0x080000, 0x08afff, MAP_RAM);
-		SekMapMemory(DrvSprRAM,			0x08b000, 0x08bfff, MAP_RAM);
-		SekMapMemory(DrvBgRAM,			0x08c000, 0x08cfff, MAP_RAM);
-		SekMapMemory(DrvFgRAM,			0x08d000, 0x08d7ff, MAP_RAM);
-		SekMapMemory(DrvTxRAM,			0x08d800, 0x08ffff, MAP_RAM);
-		SekMapMemory(Drv68KRAM  + 0xb000,       0x0c1000, 0x0c17ff, MAP_RAM);
-		SekMapMemory(Drv68KRAM1 + 0x0000,	0x120000, 0x127fff, MAP_RAM);
-		SekMapMemory(DrvPalRAM,			0x128000, 0x1287ff, MAP_RAM); 
-		SekMapMemory(Drv68KRAM1 + 0x8800,	0x128800, 0x128fff, MAP_RAM);
+		SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, SM_ROM);
+		SekMapMemory(Drv68KRAM,			0x080000, 0x08afff, SM_RAM);
+		SekMapMemory(DrvSprRAM,			0x08b000, 0x08bfff, SM_RAM);
+		SekMapMemory(DrvBgRAM,			0x08c000, 0x08cfff, SM_RAM);
+		SekMapMemory(DrvFgRAM,			0x08d000, 0x08d7ff, SM_RAM);
+		SekMapMemory(DrvTxRAM,			0x08d800, 0x08ffff, SM_RAM);
+		SekMapMemory(Drv68KRAM  + 0xb000,       0x0c1000, 0x0c17ff, SM_RAM);
+		SekMapMemory(Drv68KRAM1 + 0x0000,	0x120000, 0x127fff, SM_RAM);
+		SekMapMemory(DrvPalRAM,			0x128000, 0x1287ff, SM_RAM); 
+		SekMapMemory(Drv68KRAM1 + 0x8800,	0x128800, 0x128fff, SM_RAM);
 		SekClose();
 
 		nGameSelect = 2;
@@ -661,14 +661,14 @@ static INT32 DrvInit()
 
 		SekInit(0, 0x68000);
 		SekOpen(0);
-		SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, MAP_ROM);
-		SekMapMemory(Drv68KRAM,			0x080000, 0x08afff, MAP_RAM);
-		SekMapMemory(DrvSprRAM,			0x08b000, 0x08bfff, MAP_RAM);
-		SekMapMemory(DrvBgRAM,			0x08c000, 0x08cfff, MAP_RAM);
-		SekMapMemory(DrvFgRAM,			0x08d000, 0x08d7ff, MAP_RAM);
-		SekMapMemory(DrvTxRAM,			0x08d800, 0x08e7ff, MAP_RAM);
-		SekMapMemory(DrvPalRAM,			0x08e800, 0x08f7ff, MAP_RAM);
-		SekMapMemory(Drv68KRAM + 0xb000,        0x08f800, 0x08ffff, MAP_RAM);
+		SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, SM_ROM);
+		SekMapMemory(Drv68KRAM,			0x080000, 0x08afff, SM_RAM);
+		SekMapMemory(DrvSprRAM,			0x08b000, 0x08bfff, SM_RAM);
+		SekMapMemory(DrvBgRAM,			0x08c000, 0x08cfff, SM_RAM);
+		SekMapMemory(DrvFgRAM,			0x08d000, 0x08d7ff, SM_RAM);
+		SekMapMemory(DrvTxRAM,			0x08d800, 0x08e7ff, SM_RAM);
+		SekMapMemory(DrvPalRAM,			0x08e800, 0x08f7ff, SM_RAM);
+		SekMapMemory(Drv68KRAM + 0xb000,        0x08f800, 0x08ffff, SM_RAM);
 		SekSetWriteByteHandler(0,		bloodbro_write_byte);
 		SekSetWriteWordHandler(0,		bloodbro_write_word);
 		SekSetReadByteHandler(0,		bloodbro_read_byte);

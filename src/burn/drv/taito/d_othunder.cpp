@@ -815,10 +815,10 @@ static INT32 OthunderInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1            , 0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(Taito68KRam1            , 0x080000, 0x08ffff, MAP_RAM);
-	SekMapMemory(TC0100SCNRam[0]         , 0x200000, 0x20ffff, MAP_READ);
-	SekMapMemory(TaitoSpriteRam          , 0x400000, 0x4005ff, MAP_RAM);
+	SekMapMemory(Taito68KRom1            , 0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(Taito68KRam1            , 0x080000, 0x08ffff, SM_RAM);
+	SekMapMemory(TC0100SCNRam[0]         , 0x200000, 0x20ffff, SM_READ);
+	SekMapMemory(TaitoSpriteRam          , 0x400000, 0x4005ff, SM_RAM);
 	SekSetReadWordHandler(0, Othunder68KReadWord);
 	SekSetWriteWordHandler(0, Othunder68KWriteWord);
 	SekSetReadByteHandler(0, Othunder68KReadByte);

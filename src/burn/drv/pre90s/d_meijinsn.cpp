@@ -341,9 +341,9 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, MAP_ROM);
-	SekMapMemory(DrvVidRAM,		0x100000, 0x107fff, MAP_RAM);
-	SekMapMemory(Drv68KRAM, 	0x180000, 0x181fff, MAP_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, SM_ROM);
+	SekMapMemory(DrvVidRAM,		0x100000, 0x107fff, SM_RAM);
+	SekMapMemory(Drv68KRAM, 	0x180000, 0x181fff, SM_RAM);
 	SekSetWriteByteHandler(0,	meijinsn_write_byte);
 	SekSetReadByteHandler(0,	meijinsn_read_byte);
 	SekClose();

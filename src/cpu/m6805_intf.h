@@ -2,6 +2,13 @@ void m6805Write(UINT16 address, UINT8 data);
 UINT8 m6805Read(UINT16 address);
 UINT8 m6805Fetch(UINT16 address);
 
+#define M6805_READ		1
+#define M6805_WRITE		2
+#define M6805_FETCH		4
+
+#define M6805_ROM		(M6805_READ | M6805_FETCH)
+#define M6805_RAM		(M6805_ROM | M6805_WRITE)
+
 void m6805MapMemory(UINT8 *ptr, INT32 nStart, INT32 nEnd, INT32 nType);
 
 void m6805SetWriteHandler(void (*write)(UINT16, UINT8));

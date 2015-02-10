@@ -869,8 +869,8 @@ void deco16SoundInit(UINT8 *rom, UINT8 *ram, INT32 huc_clock, INT32 ym2203, void
 #ifdef ENABLE_HUC6280
 	h6280Init(0);
 	h6280Open(0);
-	h6280MapMemory(rom, 	0x000000, 0x00ffff, MAP_ROM);
-	h6280MapMemory(ram,	0x1f0000, 0x1f1fff, MAP_RAM);
+	h6280MapMemory(rom, 	0x000000, 0x00ffff, H6280_ROM);
+	h6280MapMemory(ram,	0x1f0000, 0x1f1fff, H6280_RAM);
 	h6280SetWriteHandler(deco16_sound_write);
 	h6280SetReadHandler(deco16_sound_read);
 	h6280Close();

@@ -443,6 +443,7 @@ void __fastcall shadfrceZWrite(UINT16 a, UINT8 d)
 static void shadfrceYM2151IRQHandler(INT32 nStatus)
 {
 	if (nStatus) {
+		//ZetRaiseIrq(255);
 		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
 		ZetRun(0x0400);
 	} else {
@@ -667,21 +668,21 @@ static INT32 shadfrceInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom68K,		0x000000, 0x0FFFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Rom68K,		0x000000, 0x0FFFFF, SM_ROM);	// CPU 0 ROM
 
 		SekMapMemory((UINT8 *)RamBg00,
-									0x100000, 0x101FFF, MAP_RAM);	// b ground 0
+									0x100000, 0x101FFF, SM_RAM);	// b ground 0
 		SekMapMemory((UINT8 *)RamBg01,		
-									0x102000, 0x103FFF, MAP_RAM);	// b ground 1
+									0x102000, 0x103FFF, SM_RAM);	// b ground 1
 		SekMapMemory((UINT8 *)RamFg,			
-									0x140000, 0x141FFF, MAP_RAM);	// f ground
+									0x140000, 0x141FFF, SM_RAM);	// f ground
 		SekMapMemory((UINT8 *)RamSpr,
-									0x142000, 0x143FFF, MAP_RAM);	// sprites
+									0x142000, 0x143FFF, SM_RAM);	// sprites
 		SekMapMemory((UINT8 *)RamPal,
-									0x180000, 0x187FFF, MAP_ROM);	// palette
-		SekMapMemory(Ram68K,		0x1F0000, 0x1FFFFF, MAP_RAM);	// 68K RAM
+									0x180000, 0x187FFF, SM_ROM);	// palette
+		SekMapMemory(Ram68K,		0x1F0000, 0x1FFFFF, SM_RAM);	// 68K RAM
 
-		SekMapHandler(1,			0x180000, 0x187FFF, MAP_WRITE);
+		SekMapHandler(1,			0x180000, 0x187FFF, SM_WRITE);
 		
 		
 		SekSetReadWordHandler(0, shadfrceReadWord);

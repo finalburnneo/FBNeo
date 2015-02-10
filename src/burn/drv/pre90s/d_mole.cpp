@@ -313,9 +313,9 @@ static INT32 DrvInit()
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(Rom + 0x0000, 0x0000, 0x03ff, MAP_RAM); // Rom
-	M6502MapMemory(Rom + 0x5000, 0x5000, 0x7fff, MAP_ROM); // Rom
-	M6502MapMemory(Rom + 0x5000, 0xd000, 0xffff, MAP_ROM); // Rom Mirror
+	M6502MapMemory(Rom + 0x0000, 0x0000, 0x03ff, M6502_RAM); // Rom
+	M6502MapMemory(Rom + 0x5000, 0x5000, 0x7fff, M6502_ROM); // Rom
+	M6502MapMemory(Rom + 0x5000, 0xd000, 0xffff, M6502_ROM); // Rom Mirror
 	M6502SetReadHandler(mole_read_byte);
 	M6502SetWriteHandler(mole_write_byte);
 	M6502SetReadMemIndexHandler(mole_read_byte);

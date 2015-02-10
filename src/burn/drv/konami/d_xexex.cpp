@@ -339,7 +339,7 @@ static UINT8 _fastcall xexex_main_read_byte(UINT32 address)
 static void bankswitch(INT32 data)
 {
 	z80_bank = data;
-	ZetMapMemory(DrvZ80ROM + ((data & 0x07) * 0x4000), 0x8000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80ROM + ((data & 0x07) * 0x4000), 0x8000, 0xbfff, ZET_ROM);
 }
 
 static void __fastcall xexex_sound_write(UINT16 address, UINT8 data)
@@ -556,13 +556,13 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM,			0x080000, 0x08ffff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,			0x090000, 0x097fff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,			0x098000, 0x09ffff, MAP_RAM);
-	SekMapMemory((UINT8*)K053250Ram,	0x0c6000, 0x0c7fff, MAP_RAM);
-	SekMapMemory(Drv68KROM + 0x080000,	0x100000, 0x17ffff, MAP_ROM);
-	SekMapMemory(DrvPalRAM,			0x1b0000, 0x1b1fff, MAP_RAM);
+	SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(Drv68KRAM,			0x080000, 0x08ffff, SM_RAM);
+	SekMapMemory(DrvSprRAM,			0x090000, 0x097fff, SM_RAM);
+	SekMapMemory(DrvSprRAM,			0x098000, 0x09ffff, SM_RAM);
+	SekMapMemory((UINT8*)K053250Ram,	0x0c6000, 0x0c7fff, SM_RAM);
+	SekMapMemory(Drv68KROM + 0x080000,	0x100000, 0x17ffff, SM_ROM);
+	SekMapMemory(DrvPalRAM,			0x1b0000, 0x1b1fff, SM_RAM);
 	SekSetWriteWordHandler(0,		xexex_main_write_word);
 	SekSetWriteByteHandler(0,		xexex_main_write_byte);
 	SekSetReadWordHandler(0,		xexex_main_read_word);
@@ -571,8 +571,8 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,			0x0000, 0x7fff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAM,			0xc000, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM,			0x0000, 0x7fff, ZET_ROM);
+	ZetMapMemory(DrvZ80RAM,			0xc000, 0xdfff, ZET_RAM);
 	ZetSetWriteHandler(xexex_sound_write);
 	ZetSetReadHandler(xexex_sound_read);
 	ZetClose();

@@ -658,12 +658,12 @@ static INT32 DrvInit(INT32 game_select)
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(DrvPalRAM,		0x900000, 0x903fff, MAP_RAM);
-	SekMapMemory(DrvVidRAM1,	0x908000, 0x90bfff, MAP_RAM);
-	SekMapMemory(DrvVidRAM0,	0x90c000, 0x90ffff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,		0x910000, 0x910fff, MAP_RAM);
-	SekMapMemory(Drv68KRAM,		0xff0000, 0xffffff, MAP_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(DrvPalRAM,		0x900000, 0x903fff, SM_RAM);
+	SekMapMemory(DrvVidRAM1,	0x908000, 0x90bfff, SM_RAM);
+	SekMapMemory(DrvVidRAM0,	0x90c000, 0x90ffff, SM_RAM);
+	SekMapMemory(DrvSprRAM,		0x910000, 0x910fff, SM_RAM);
+	SekMapMemory(Drv68KRAM,		0xff0000, 0xffffff, SM_RAM);
 	SekSetWriteWordHandler(0,	magicbub_main_write_word);
 	SekSetWriteByteHandler(0,	magicbub_main_write_byte);
 	SekSetReadWordHandler(0,	magicbub_main_read_word);

@@ -161,11 +161,11 @@ static INT32 DrvInit()
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(Drv6502RAM,	0x0000, 0x01ff, MAP_RAM);
-	M6502MapMemory(DrvVidRAM,	0x0400, 0x0fff, MAP_RAM);
+	M6502MapMemory(Drv6502RAM,	0x0000, 0x01ff, M6502_RAM);
+	M6502MapMemory(DrvVidRAM,	0x0400, 0x0fff, M6502_RAM);
 	for (INT32 i = 0; i < 0x1000; i+=0x100)
-		M6502MapMemory(DrvProtPROM,	0xc000+i, 0xc0ff+i, MAP_ROM); // mirrored
-	M6502MapMemory(Drv6502ROM,	0xe000, 0xffff, MAP_ROM);
+		M6502MapMemory(DrvProtPROM,	0xc000+i, 0xc0ff+i, M6502_ROM); // mirrored
+	M6502MapMemory(Drv6502ROM,	0xe000, 0xffff, M6502_ROM);
 	M6502SetWriteHandler(alinvade_write);
 	M6502SetReadHandler(alinvade_read);
 	M6502Close();

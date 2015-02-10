@@ -214,12 +214,12 @@ static void blockhl_set_lines(INT32 lines)
 {
 	INT32 nBank = (lines & 0x03) * 0x2000;
 
-	konamiMapMemory(DrvKonROM + nBank, 0x6000, 0x7fff, MAP_ROM); 
+	konamiMapMemory(DrvKonROM + nBank, 0x6000, 0x7fff, KON_ROM); 
 
 	if (~lines & 0x20) {
-		konamiMapMemory(DrvPalRAM,  0x5800, 0x5fff, MAP_RAM);
+		konamiMapMemory(DrvPalRAM,  0x5800, 0x5fff, KON_RAM);
 	} else {
-		konamiMapMemory(DrvBankRAM, 0x5800, 0x5fff, MAP_RAM);
+		konamiMapMemory(DrvBankRAM, 0x5800, 0x5fff, KON_RAM);
 	}
 
 	K052109RMRDLine = lines & 0x40;
@@ -327,10 +327,10 @@ static INT32 DrvInit()
 
 	konamiInit(0);
 	konamiOpen(0);
-	konamiMapMemory(DrvKonRAM,           0x4000, 0x57ff, MAP_RAM);
-	konamiMapMemory(DrvBankRAM,          0x5800, 0x5fff, MAP_RAM);
-	konamiMapMemory(DrvKonROM + 0x00000, 0x6000, 0x7fff, MAP_ROM);
-	konamiMapMemory(DrvKonROM + 0x08000, 0x8000, 0xffff, MAP_ROM);
+	konamiMapMemory(DrvKonRAM,           0x4000, 0x57ff, KON_RAM);
+	konamiMapMemory(DrvBankRAM,          0x5800, 0x5fff, KON_RAM);
+	konamiMapMemory(DrvKonROM + 0x00000, 0x6000, 0x7fff, KON_ROM);
+	konamiMapMemory(DrvKonROM + 0x08000, 0x8000, 0xffff, KON_ROM);
 	konamiSetWriteHandler(blockhl_main_write);
 	konamiSetReadHandler(blockhl_main_read);
 	konamiSetlinesCallback(blockhl_set_lines);

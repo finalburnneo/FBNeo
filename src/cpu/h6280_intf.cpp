@@ -212,7 +212,7 @@ void h6280SetIRQLine(INT32 line, INT32 state)
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280SetIRQLine called with no CPU open\n"));
 #endif
 
-	if (state == CPU_IRQSTATUS_AUTO) {
+	if (state == H6280_IRQSTATUS_AUTO) {
 		h6280_set_irq_line(line, 1);
 		h6280Run(10);
 		h6280_set_irq_line(line, 0);

@@ -664,17 +664,17 @@ static int Tetrisp2Init()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, MAP_ROM);
-	SekMapMemory(DrvSprRAM,		0x100000, 0x103fff, MAP_RAM);
-	SekMapMemory(Drv68KRAM0,	0x104000, 0x10ffff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		0x300000, 0x31ffff, MAP_ROM); // palette
-	SekMapMemory(DrvVFgRAM,		0x400000, 0x403fff, MAP_RAM);
-	SekMapMemory(DrvVBgRAM,		0x404000, 0x409fff, MAP_RAM);
-	SekMapMemory(Drv68KRAM1,	0x500000, 0x50ffff, MAP_RAM);
-	SekMapMemory(DrvRotRAM,		0x600000, 0x60ffff, MAP_RAM);
-	SekMapMemory(DrvRotRAM,		0x650000, 0x651fff, MAP_RAM); // mirror
-	SekMapMemory(DrvNvRAM,		0x900000, 0x903fff, MAP_ROM); // handler
-	SekMapMemory(DrvNvRAM,		0x904000, 0x907fff, MAP_ROM); // handler
+	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, SM_ROM);
+	SekMapMemory(DrvSprRAM,		0x100000, 0x103fff, SM_RAM);
+	SekMapMemory(Drv68KRAM0,	0x104000, 0x10ffff, SM_RAM);
+	SekMapMemory(DrvPalRAM,		0x300000, 0x31ffff, SM_ROM); // palette
+	SekMapMemory(DrvVFgRAM,		0x400000, 0x403fff, SM_RAM);
+	SekMapMemory(DrvVBgRAM,		0x404000, 0x409fff, SM_RAM);
+	SekMapMemory(Drv68KRAM1,	0x500000, 0x50ffff, SM_RAM);
+	SekMapMemory(DrvRotRAM,		0x600000, 0x60ffff, SM_RAM);
+	SekMapMemory(DrvRotRAM,		0x650000, 0x651fff, SM_RAM); // mirror
+	SekMapMemory(DrvNvRAM,		0x900000, 0x903fff, SM_ROM); // handler
+	SekMapMemory(DrvNvRAM,		0x904000, 0x907fff, SM_ROM); // handler
 	SekSetWriteWordHandler(0,	tetrisp2_write_word);
 	SekSetWriteByteHandler(0,	tetrisp2_write_byte);
 	SekSetReadWordHandler(0,	tetrisp2_read_word);
@@ -744,16 +744,16 @@ static int RocknInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, MAP_ROM);
-	SekMapMemory(DrvSprRAM,		0x100000, 0x103fff, MAP_RAM);
-	SekMapMemory(Drv68KRAM0,	0x104000, 0x10ffff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		0x300000, 0x31ffff, MAP_ROM); // palette
-	SekMapMemory(DrvVFgRAM,		0x400000, 0x403fff, MAP_RAM);
-	SekMapMemory(DrvVBgRAM,		0x404000, 0x409fff, MAP_RAM);
-	SekMapMemory(Drv68KRAM1,	0x500000, 0x50ffff, MAP_RAM);
-	SekMapMemory(DrvRotRAM,		0x600000, 0x60ffff, MAP_RAM);
-	SekMapMemory(DrvRotRAM,		0x650000, 0x651fff, MAP_RAM); // mirror
-	SekMapMemory(DrvNvRAM,		0x900000, 0x903fff, MAP_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, SM_ROM);
+	SekMapMemory(DrvSprRAM,		0x100000, 0x103fff, SM_RAM);
+	SekMapMemory(Drv68KRAM0,	0x104000, 0x10ffff, SM_RAM);
+	SekMapMemory(DrvPalRAM,		0x300000, 0x31ffff, SM_ROM); // palette
+	SekMapMemory(DrvVFgRAM,		0x400000, 0x403fff, SM_RAM);
+	SekMapMemory(DrvVBgRAM,		0x404000, 0x409fff, SM_RAM);
+	SekMapMemory(Drv68KRAM1,	0x500000, 0x50ffff, SM_RAM);
+	SekMapMemory(DrvRotRAM,		0x600000, 0x60ffff, SM_RAM);
+	SekMapMemory(DrvRotRAM,		0x650000, 0x651fff, SM_RAM); // mirror
+	SekMapMemory(DrvNvRAM,		0x900000, 0x903fff, SM_RAM);
 	SekSetWriteWordHandler(0,	tetrisp2_write_word);
 	SekSetWriteByteHandler(0,	tetrisp2_write_byte);
 	SekSetReadWordHandler(0,	tetrisp2_read_word);
@@ -806,17 +806,17 @@ static int NndmsealInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, MAP_ROM);
-	SekMapMemory(DrvSprRAM,		0x100000, 0x103fff, MAP_RAM);
-	SekMapMemory(Drv68KRAM0,	0x104000, 0x10ffff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		0x300000, 0x31ffff, MAP_ROM); // palette
-	SekMapMemory(DrvVFgRAM,		0x400000, 0x403fff, MAP_RAM);
-	SekMapMemory(DrvVBgRAM,		0x404000, 0x409fff, MAP_RAM);
-	SekMapMemory(Drv68KRAM1,	0x500000, 0x50ffff, MAP_RAM);
-	SekMapMemory(DrvRotRAM,		0x600000, 0x60ffff, MAP_RAM);
-	SekMapMemory(DrvRotRAM,		0x650000, 0x651fff, MAP_RAM); // mirror
-	SekMapMemory(DrvNvRAM,		0x900000, 0x903fff, MAP_ROM); // handler
-	SekMapMemory(DrvNvRAM,		0x904000, 0x907fff, MAP_ROM); // handler
+	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, SM_ROM);
+	SekMapMemory(DrvSprRAM,		0x100000, 0x103fff, SM_RAM);
+	SekMapMemory(Drv68KRAM0,	0x104000, 0x10ffff, SM_RAM);
+	SekMapMemory(DrvPalRAM,		0x300000, 0x31ffff, SM_ROM); // palette
+	SekMapMemory(DrvVFgRAM,		0x400000, 0x403fff, SM_RAM);
+	SekMapMemory(DrvVBgRAM,		0x404000, 0x409fff, SM_RAM);
+	SekMapMemory(Drv68KRAM1,	0x500000, 0x50ffff, SM_RAM);
+	SekMapMemory(DrvRotRAM,		0x600000, 0x60ffff, SM_RAM);
+	SekMapMemory(DrvRotRAM,		0x650000, 0x651fff, SM_RAM); // mirror
+	SekMapMemory(DrvNvRAM,		0x900000, 0x903fff, SM_ROM); // handler
+	SekMapMemory(DrvNvRAM,		0x904000, 0x907fff, SM_ROM); // handler
 	SekSetWriteWordHandler(0,	tetrisp2_write_word);
 	SekSetWriteByteHandler(0,	tetrisp2_write_byte);
 	SekSetReadWordHandler(0,	tetrisp2_read_word);
@@ -864,17 +864,17 @@ static int NndmsealaInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, MAP_ROM);
-	SekMapMemory(DrvSprRAM,		0x100000, 0x103fff, MAP_RAM);
-	SekMapMemory(Drv68KRAM0,	0x104000, 0x10ffff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		0x300000, 0x31ffff, MAP_ROM); // palette
-	SekMapMemory(DrvVFgRAM,		0x400000, 0x403fff, MAP_RAM);
-	SekMapMemory(DrvVBgRAM,		0x404000, 0x409fff, MAP_RAM);
-	SekMapMemory(Drv68KRAM1,	0x500000, 0x50ffff, MAP_RAM);
-	SekMapMemory(DrvRotRAM,		0x600000, 0x60ffff, MAP_RAM);
-	SekMapMemory(DrvRotRAM,		0x650000, 0x651fff, MAP_RAM); // mirror
-	SekMapMemory(DrvNvRAM,		0x900000, 0x903fff, MAP_ROM); // handler
-	SekMapMemory(DrvNvRAM,		0x904000, 0x907fff, MAP_ROM); // handler
+	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, SM_ROM);
+	SekMapMemory(DrvSprRAM,		0x100000, 0x103fff, SM_RAM);
+	SekMapMemory(Drv68KRAM0,	0x104000, 0x10ffff, SM_RAM);
+	SekMapMemory(DrvPalRAM,		0x300000, 0x31ffff, SM_ROM); // palette
+	SekMapMemory(DrvVFgRAM,		0x400000, 0x403fff, SM_RAM);
+	SekMapMemory(DrvVBgRAM,		0x404000, 0x409fff, SM_RAM);
+	SekMapMemory(Drv68KRAM1,	0x500000, 0x50ffff, SM_RAM);
+	SekMapMemory(DrvRotRAM,		0x600000, 0x60ffff, SM_RAM);
+	SekMapMemory(DrvRotRAM,		0x650000, 0x651fff, SM_RAM); // mirror
+	SekMapMemory(DrvNvRAM,		0x900000, 0x903fff, SM_ROM); // handler
+	SekMapMemory(DrvNvRAM,		0x904000, 0x907fff, SM_ROM); // handler
 	SekSetWriteWordHandler(0,	tetrisp2_write_word);
 	SekSetWriteByteHandler(0,	tetrisp2_write_byte);
 	SekSetReadWordHandler(0,	tetrisp2_read_word);
@@ -934,16 +934,16 @@ static int Rockn2CommonInit(INT32 nSoundRoms)
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, MAP_ROM);
-	SekMapMemory(DrvSprRAM,		0x100000, 0x103fff, MAP_RAM);
-	SekMapMemory(Drv68KRAM0,	0x104000, 0x10ffff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		0x300000, 0x31ffff, MAP_ROM); // palette
-	SekMapMemory(Drv68KRAM1,	0x500000, 0x50ffff, MAP_RAM);
-	SekMapMemory(DrvRotRAM,		0x600000, 0x60ffff, MAP_RAM);
-	SekMapMemory(DrvRotRAM,		0x650000, 0x651fff, MAP_RAM); // mirror
-	SekMapMemory(DrvVFgRAM,		0x800000, 0x803fff, MAP_RAM);
-	SekMapMemory(DrvVBgRAM,		0x804000, 0x809fff, MAP_RAM);
-	SekMapMemory(DrvNvRAM,		0x900000, 0x903fff, MAP_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, SM_ROM);
+	SekMapMemory(DrvSprRAM,		0x100000, 0x103fff, SM_RAM);
+	SekMapMemory(Drv68KRAM0,	0x104000, 0x10ffff, SM_RAM);
+	SekMapMemory(DrvPalRAM,		0x300000, 0x31ffff, SM_ROM); // palette
+	SekMapMemory(Drv68KRAM1,	0x500000, 0x50ffff, SM_RAM);
+	SekMapMemory(DrvRotRAM,		0x600000, 0x60ffff, SM_RAM);
+	SekMapMemory(DrvRotRAM,		0x650000, 0x651fff, SM_RAM); // mirror
+	SekMapMemory(DrvVFgRAM,		0x800000, 0x803fff, SM_RAM);
+	SekMapMemory(DrvVBgRAM,		0x804000, 0x809fff, SM_RAM);
+	SekMapMemory(DrvNvRAM,		0x900000, 0x903fff, SM_RAM);
 	SekSetWriteWordHandler(0,	tetrisp2_write_word);
 	SekSetWriteByteHandler(0,	tetrisp2_write_byte);
 	SekSetReadWordHandler(0,	tetrisp2_read_word);

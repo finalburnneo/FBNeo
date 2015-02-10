@@ -345,11 +345,11 @@ static INT32 GumboInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM,		0x080000, 0x083fff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		0x1b0000, 0x1b03ff, MAP_RAM);
-	SekMapMemory(DrvBgRAM,		0x1e0000^dblpoin, 0x1e0fff^dblpoin, MAP_RAM);
-	SekMapMemory(DrvFgRAM,		0x1f0000^dblpoin, 0x1f3fff^dblpoin, MAP_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(Drv68KRAM,		0x080000, 0x083fff, SM_RAM);
+	SekMapMemory(DrvPalRAM,		0x1b0000, 0x1b03ff, SM_RAM);
+	SekMapMemory(DrvBgRAM,		0x1e0000^dblpoin, 0x1e0fff^dblpoin, SM_RAM);
+	SekMapMemory(DrvFgRAM,		0x1f0000^dblpoin, 0x1f3fff^dblpoin, SM_RAM);
 	SekSetWriteByteHandler(0,	gumbo_write_byte);
 	SekSetReadByteHandler(0,	gumbo_read_byte);
 	SekSetWriteWordHandler(0,	gumbo_write_word);
@@ -399,11 +399,11 @@ static INT32 MspuzzleInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM,		0x100000, 0x103fff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		0x1a0000, 0x1a03ff, MAP_RAM);
-	SekMapMemory(DrvFgRAM,		0x190000, 0x197fff, MAP_RAM);
-	SekMapMemory(DrvBgRAM,		0x1c0000, 0x1c1fff, MAP_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(Drv68KRAM,		0x100000, 0x103fff, SM_RAM);
+	SekMapMemory(DrvPalRAM,		0x1a0000, 0x1a03ff, SM_RAM);
+	SekMapMemory(DrvFgRAM,		0x190000, 0x197fff, SM_RAM);
+	SekMapMemory(DrvBgRAM,		0x1c0000, 0x1c1fff, SM_RAM);
 	SekSetWriteByteHandler(0,	gumbo_write_byte);
 	SekSetReadByteHandler(0,	gumbo_read_byte);
 	SekSetWriteWordHandler(0,	gumbo_write_word);

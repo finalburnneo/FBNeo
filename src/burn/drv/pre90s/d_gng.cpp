@@ -805,9 +805,9 @@ void DrvGngM6809WriteByte(UINT16 Address, UINT8 Data)
 			DrvRomBank = Data & 3;
 			if (Data == 4) {
 				DrvRomBank = 4;
-				M6809MapMemory(DrvM6809Rom, 0x4000, 0x5fff, MAP_ROM);
+				M6809MapMemory(DrvM6809Rom, 0x4000, 0x5fff, M6809_ROM);
 			} else {
-				M6809MapMemory(DrvM6809Rom + 0xc000 + (DrvRomBank * 0x2000), 0x4000, 0x5fff, MAP_ROM);
+				M6809MapMemory(DrvM6809Rom + 0xc000 + (DrvRomBank * 0x2000), 0x4000, 0x5fff, M6809_ROM);
 			}
 			return;
 		}
@@ -939,14 +939,14 @@ static INT32 DrvInit()
 	// Setup the M6809 emulation
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvM6809Ram          , 0x0000, 0x1dff, MAP_RAM);
-	M6809MapMemory(DrvSpriteRam         , 0x1e00, 0x1fff, MAP_RAM);
-	M6809MapMemory(DrvFgVideoRam        , 0x2000, 0x27ff, MAP_RAM);
-	M6809MapMemory(DrvBgVideoRam        , 0x2800, 0x2fff, MAP_RAM);
-	M6809MapMemory(DrvPaletteRam2       , 0x3800, 0x38ff, MAP_RAM);
-	M6809MapMemory(DrvPaletteRam1       , 0x3900, 0x39ff, MAP_RAM);
-	M6809MapMemory(DrvM6809Rom          , 0x4000, 0x5fff, MAP_ROM);
-	M6809MapMemory(DrvM6809Rom + 0x2000 , 0x6000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809Ram          , 0x0000, 0x1dff, M6809_RAM);
+	M6809MapMemory(DrvSpriteRam         , 0x1e00, 0x1fff, M6809_RAM);
+	M6809MapMemory(DrvFgVideoRam        , 0x2000, 0x27ff, M6809_RAM);
+	M6809MapMemory(DrvBgVideoRam        , 0x2800, 0x2fff, M6809_RAM);
+	M6809MapMemory(DrvPaletteRam2       , 0x3800, 0x38ff, M6809_RAM);
+	M6809MapMemory(DrvPaletteRam1       , 0x3900, 0x39ff, M6809_RAM);
+	M6809MapMemory(DrvM6809Rom          , 0x4000, 0x5fff, M6809_ROM);
+	M6809MapMemory(DrvM6809Rom + 0x2000 , 0x6000, 0xffff, M6809_ROM);
 	M6809SetReadHandler(DrvGngM6809ReadByte);
 	M6809SetWriteHandler(DrvGngM6809WriteByte);
 	M6809Close();
@@ -1032,14 +1032,14 @@ static INT32 DiamondInit()
 	// Setup the M6809 emulation
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvM6809Ram          , 0x0000, 0x1dff, MAP_RAM);
-	M6809MapMemory(DrvSpriteRam         , 0x1e00, 0x1fff, MAP_RAM);
-	M6809MapMemory(DrvFgVideoRam        , 0x2000, 0x27ff, MAP_RAM);
-	M6809MapMemory(DrvBgVideoRam        , 0x2800, 0x2fff, MAP_RAM);
-	M6809MapMemory(DrvPaletteRam2       , 0x3800, 0x38ff, MAP_RAM);
-	M6809MapMemory(DrvPaletteRam1       , 0x3900, 0x39ff, MAP_RAM);
-	M6809MapMemory(DrvM6809Rom          , 0x4000, 0x5fff, MAP_ROM);
-	M6809MapMemory(DrvM6809Rom + 0x2000 , 0x6000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809Ram          , 0x0000, 0x1dff, M6809_RAM);
+	M6809MapMemory(DrvSpriteRam         , 0x1e00, 0x1fff, M6809_RAM);
+	M6809MapMemory(DrvFgVideoRam        , 0x2000, 0x27ff, M6809_RAM);
+	M6809MapMemory(DrvBgVideoRam        , 0x2800, 0x2fff, M6809_RAM);
+	M6809MapMemory(DrvPaletteRam2       , 0x3800, 0x38ff, M6809_RAM);
+	M6809MapMemory(DrvPaletteRam1       , 0x3900, 0x39ff, M6809_RAM);
+	M6809MapMemory(DrvM6809Rom          , 0x4000, 0x5fff, M6809_ROM);
+	M6809MapMemory(DrvM6809Rom + 0x2000 , 0x6000, 0xffff, M6809_ROM);
 	M6809SetReadHandler(DrvGngM6809ReadByte);
 	M6809SetWriteHandler(DrvGngM6809WriteByte);
 	M6809Close();

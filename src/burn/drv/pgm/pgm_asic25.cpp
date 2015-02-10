@@ -907,8 +907,8 @@ void install_protection_asic25_asic22_killbld()
 	sharedprotram = (UINT16*)PGMUSER0;
 
 	SekOpen(0);
-	SekMapMemory(PGMUSER0,		0x300000, 0x303fff, MAP_RAM);
-	SekMapHandler(4,		0xd40000, 0xd40003, MAP_READ | MAP_WRITE);
+	SekMapMemory(PGMUSER0,		0x300000, 0x303fff, SM_RAM);
+	SekMapHandler(4,		0xd40000, 0xd40003, SM_READ | SM_WRITE);
 	SekSetReadWordHandler(4, 	igs025_prot_read);
 	SekSetWriteWordHandler(4, 	killbld_igs025_prot_write);
 	SekClose();
@@ -924,8 +924,8 @@ void install_protection_asic25_asic22_drgw3()
 	sharedprotram = (UINT16*)PGMUSER0;
 
 	SekOpen(0);
-	SekMapMemory(PGMUSER0,		0x300000, 0x303fff, MAP_RAM);
-	SekMapHandler(4,		0xda5610, 0xda5613, MAP_READ | MAP_WRITE);
+	SekMapMemory(PGMUSER0,		0x300000, 0x303fff, SM_RAM);
+	SekMapHandler(4,		0xda5610, 0xda5613, SM_READ | SM_WRITE);
 	SekSetReadWordHandler(4, 	igs025_prot_read);
 	SekSetWriteWordHandler(4, 	killbld_igs025_prot_write);
 	SekClose();
@@ -937,7 +937,7 @@ void install_protection_asic25_asic12_dw2()
 	pPgmResetCallback = drgw2_reset;
 
 	SekOpen(0);
-	SekMapHandler(4,		0xd80000, 0xd80003, MAP_READ | MAP_WRITE);
+	SekMapHandler(4,		0xd80000, 0xd80003, SM_READ | SM_WRITE);
 	SekSetReadWordHandler(4,	igs025_prot_read);
 	SekSetWriteWordHandler(4,	drgw2_igs025_prot_write);
 	SekClose();
@@ -951,8 +951,8 @@ void install_protection_asic25_asic28_olds()
 	sharedprotram = (UINT16*)PGMUSER0;
 
 	SekOpen(0);
-	SekMapMemory(PGMUSER0,		0x400000, 0x403fff, MAP_RAM);
-	SekMapHandler(4,	  	0xdcb400, 0xdcb403, MAP_READ | MAP_WRITE);
+	SekMapMemory(PGMUSER0,		0x400000, 0x403fff, SM_RAM);
+	SekMapHandler(4,	  	0xdcb400, 0xdcb403, SM_READ | SM_WRITE);
 	SekSetReadWordHandler(4,  	igs025_prot_read);
 	SekSetWriteWordHandler(4, 	olds_igs025_prot_write);
 	SekClose();

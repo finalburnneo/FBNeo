@@ -373,15 +373,15 @@ static INT32 DrvInit(INT32 type)
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(deco16_pf_ram[2],		0x200000, 0x201fff, MAP_RAM);
-	SekMapMemory(deco16_pf_ram[3],		0x202000, 0x203fff, MAP_RAM);
-	SekMapMemory(deco16_pf_ram[0],		0x280000, 0x281fff, MAP_RAM);
-	SekMapMemory(deco16_pf_ram[1],		0x282000, 0x283fff, MAP_RAM);
-	SekMapMemory(DrvPalRAM0,		0x300000, 0x3009ff, MAP_RAM);
-	SekMapMemory(DrvPalRAM1,		0x304000, 0x3049ff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,			0xff8000, 0xff87ff, MAP_RAM);
-	SekMapMemory(Drv68KRAM,			0xffc000, 0xffffff, MAP_RAM);
+	SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(deco16_pf_ram[2],		0x200000, 0x201fff, SM_RAM);
+	SekMapMemory(deco16_pf_ram[3],		0x202000, 0x203fff, SM_RAM);
+	SekMapMemory(deco16_pf_ram[0],		0x280000, 0x281fff, SM_RAM);
+	SekMapMemory(deco16_pf_ram[1],		0x282000, 0x283fff, SM_RAM);
+	SekMapMemory(DrvPalRAM0,		0x300000, 0x3009ff, SM_RAM);
+	SekMapMemory(DrvPalRAM1,		0x304000, 0x3049ff, SM_RAM);
+	SekMapMemory(DrvSprRAM,			0xff8000, 0xff87ff, SM_RAM);
+	SekMapMemory(Drv68KRAM,			0xffc000, 0xffffff, SM_RAM);
 	SekSetWriteWordHandler(0,		vaportra_main_write_word);
 	SekSetWriteByteHandler(0,		vaportra_main_write_byte);
 	SekSetReadWordHandler(0,		vaportra_main_read_word);

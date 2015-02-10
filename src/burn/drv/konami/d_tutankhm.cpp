@@ -145,7 +145,7 @@ static void bankswitch(INT32 data)
 
 	INT32 bank = 0x10000 + (data & 0x0f) * 0x1000;
 
-	M6809MapMemory(DrvM6809ROM + bank, 0x9000, 0x9fff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM + bank, 0x9000, 0x9fff, M6809_ROM);
 }
 
 static void tutankhm_write(UINT16 address, UINT8 data)
@@ -316,9 +316,9 @@ static INT32 DrvInit()
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvVidRAM,		0x0000, 0x7fff, MAP_RAM);
-	M6809MapMemory(DrvM6809RAM,		0x8800, 0x8fff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM + 0xa000,	0xa000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvVidRAM,		0x0000, 0x7fff, M6809_RAM);
+	M6809MapMemory(DrvM6809RAM,		0x8800, 0x8fff, M6809_RAM);
+	M6809MapMemory(DrvM6809ROM + 0xa000,	0xa000, 0xffff, M6809_ROM);
 	M6809SetWriteHandler(tutankhm_write);
 	M6809SetReadHandler(tutankhm_read);
 	M6809Close();

@@ -1039,11 +1039,11 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom           , 0x000000, 0x01ffff, MAP_ROM);
-	SekMapMemory(DrvSpriteRam        , 0x020000, 0x021fff, MAP_RAM);
-	SekMapMemory(DrvBgVideoRam       , 0x022000, 0x022fff, MAP_RAM);
-//	SekMapMemory(Drv68KRam           , 0x023000, 0x023fff, MAP_RAM);
-	SekMapMemory(DrvFgVideoRam       , 0x028000, 0x0287ff, MAP_RAM);
+	SekMapMemory(Drv68KRom           , 0x000000, 0x01ffff, SM_ROM);
+	SekMapMemory(DrvSpriteRam        , 0x020000, 0x021fff, SM_RAM);
+	SekMapMemory(DrvBgVideoRam       , 0x022000, 0x022fff, SM_RAM);
+//	SekMapMemory(Drv68KRam           , 0x023000, 0x023fff, SM_RAM);
+	SekMapMemory(DrvFgVideoRam       , 0x028000, 0x0287ff, SM_RAM);
 	SekSetReadWordHandler(0, Terracre68KReadWord);
 	SekSetWriteWordHandler(0, Terracre68KWriteWord);
 	SekSetReadByteHandler(0, Terracre68KReadByte);
@@ -1107,10 +1107,10 @@ static INT32 DrvAmazonInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom           , 0x000000, 0x01ffff, MAP_ROM);
-	SekMapMemory(DrvSpriteRam        , 0x040000, 0x040fff, MAP_RAM);
-	SekMapMemory(DrvBgVideoRam       , 0x042000, 0x042fff, MAP_RAM);
-	SekMapMemory(DrvFgVideoRam       , 0x050000, 0x050fff, MAP_RAM);
+	SekMapMemory(Drv68KRom           , 0x000000, 0x01ffff, SM_ROM);
+	SekMapMemory(DrvSpriteRam        , 0x040000, 0x040fff, SM_RAM);
+	SekMapMemory(DrvBgVideoRam       , 0x042000, 0x042fff, SM_RAM);
+	SekMapMemory(DrvFgVideoRam       , 0x050000, 0x050fff, SM_RAM);
 	SekSetReadWordHandler(0, Amazon68KReadWord);
 	SekSetWriteWordHandler(0, Amazon68KWriteWord);
 	SekSetReadByteHandler(0, Amazon68KReadByte);

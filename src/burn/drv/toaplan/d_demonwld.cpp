@@ -461,16 +461,16 @@ static INT32 DrvInit()
 	{
 		SekInit(0, 0x68000);
 		SekOpen(0);
-		SekMapMemory(Drv68KROM,			0x000000, 0x03FFFF, MAP_ROM);
-		SekMapMemory(DrvPalRAM,			0x404000, 0x4047FF, MAP_RAM);
-		SekMapMemory(DrvPalRAM2,		0x406000, 0x4067FF, MAP_RAM);
-		SekMapMemory(Drv68KRAM,			0xc00000, 0xc03FFF, MAP_RAM);
+		SekMapMemory(Drv68KROM,			0x000000, 0x03FFFF, SM_ROM);
+		SekMapMemory(DrvPalRAM,			0x404000, 0x4047FF, SM_RAM);
+		SekMapMemory(DrvPalRAM2,		0x406000, 0x4067FF, SM_RAM);
+		SekMapMemory(Drv68KRAM,			0xc00000, 0xc03FFF, SM_RAM);
 		SekSetReadWordHandler(0, 		demonwldReadWord);
 		SekSetReadByteHandler(0, 		demonwldReadByte);
 		SekSetWriteWordHandler(0, 		demonwldWriteWord);
 		SekSetWriteByteHandler(0, 		demonwldWriteByte);
 
-		SekMapHandler(1,			0x600000, 0x600FFF, MAP_RAM);
+		SekMapHandler(1,			0x600000, 0x600FFF, SM_RAM);
 		SekSetReadByteHandler(1, 		toaplan1ReadByteZ80RAM);
 		SekSetReadWordHandler(1, 		toaplan1ReadWordZ80RAM);
 		SekSetWriteByteHandler(1, 		toaplan1WriteByteZ80RAM);
@@ -676,7 +676,7 @@ static void map_hack(INT32 hack_off)
 	*((UINT16*)(Drv68KROM + hack_off + 8)) = 0x600a;
 
 	SekOpen(0);
-	SekMapMemory(Drv68KROM + 0x40000, cpy_off, cpy_off + 0x3ff, MAP_FETCH);
+	SekMapMemory(Drv68KROM + 0x40000, cpy_off, cpy_off + 0x3ff, SM_FETCH);
 	SekClose();
 }
 

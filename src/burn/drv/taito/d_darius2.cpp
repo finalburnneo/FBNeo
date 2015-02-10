@@ -1382,13 +1382,13 @@ static INT32 Darius2Init()
 	
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1           , 0x000000, 0x0bffff, MAP_ROM);
-	SekMapMemory(Taito68KRam1           , 0x0c0000, 0x0cffff, MAP_RAM);
-	SekMapMemory(TaitoSharedRam         , 0x240000, 0x24ffff, MAP_RAM);
-	SekMapMemory(TaitoSpriteRam         , 0x260000, 0x263fff, MAP_RAM);
-	SekMapMemory(TC0100SCNRam[0]        , 0x280000, 0x293fff, MAP_READ);
-	SekMapMemory(TC0100SCNRam[1]        , 0x2c0000, 0x2d3fff, MAP_READ);
-	SekMapMemory(TC0100SCNRam[2]        , 0x300000, 0x313fff, MAP_READ);
+	SekMapMemory(Taito68KRom1           , 0x000000, 0x0bffff, SM_ROM);
+	SekMapMemory(Taito68KRam1           , 0x0c0000, 0x0cffff, SM_RAM);
+	SekMapMemory(TaitoSharedRam         , 0x240000, 0x24ffff, SM_RAM);
+	SekMapMemory(TaitoSpriteRam         , 0x260000, 0x263fff, SM_RAM);
+	SekMapMemory(TC0100SCNRam[0]        , 0x280000, 0x293fff, SM_READ);
+	SekMapMemory(TC0100SCNRam[1]        , 0x2c0000, 0x2d3fff, SM_READ);
+	SekMapMemory(TC0100SCNRam[2]        , 0x300000, 0x313fff, SM_READ);
 	SekSetReadByteHandler(0, Darius268K1ReadByte);
 	SekSetWriteByteHandler(0, Darius268K1WriteByte);
 	SekSetReadWordHandler(0, Darius268K1ReadWord);	
@@ -1397,11 +1397,11 @@ static INT32 Darius2Init()
 	
 	SekInit(1, 0x68000);
 	SekOpen(1);
-	SekMapMemory(Taito68KRom2           , 0x000000, 0x05ffff, MAP_ROM);
-	SekMapMemory(Taito68KRam2           , 0x080000, 0x08ffff, MAP_RAM);
-	SekMapMemory(TaitoSharedRam         , 0x240000, 0x24ffff, MAP_RAM);
-	SekMapMemory(TaitoSpriteRam         , 0x260000, 0x263fff, MAP_RAM);
-	SekMapMemory(TC0100SCNRam[0]        , 0x280000, 0x293fff, MAP_READ);
+	SekMapMemory(Taito68KRom2           , 0x000000, 0x05ffff, SM_ROM);
+	SekMapMemory(Taito68KRam2           , 0x080000, 0x08ffff, SM_RAM);
+	SekMapMemory(TaitoSharedRam         , 0x240000, 0x24ffff, SM_RAM);
+	SekMapMemory(TaitoSpriteRam         , 0x260000, 0x263fff, SM_RAM);
+	SekMapMemory(TC0100SCNRam[0]        , 0x280000, 0x293fff, SM_READ);
 	SekSetReadByteHandler(0, Darius268K2ReadByte);
 	SekSetWriteByteHandler(0, Darius268K2WriteByte);
 	SekSetReadWordHandler(0, Darius268K2ReadWord);	
@@ -1494,11 +1494,11 @@ static INT32 Darius2dInit()
 	
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1           , 0x000000, 0x0fffff, MAP_ROM);
-	SekMapMemory(Taito68KRam1           , 0x100000, 0x10ffff, MAP_RAM);
-	SekMapMemory(TC0100SCNRam[0]        , 0x200000, 0x213fff, MAP_READ);
-	SekMapMemory(TC0100SCNRam[1]        , 0x240000, 0x253fff, MAP_READ);
-	SekMapMemory(TaitoSpriteRam         , 0x600000, 0x6013ff, MAP_RAM);
+	SekMapMemory(Taito68KRom1           , 0x000000, 0x0fffff, SM_ROM);
+	SekMapMemory(Taito68KRam1           , 0x100000, 0x10ffff, SM_RAM);
+	SekMapMemory(TC0100SCNRam[0]        , 0x200000, 0x213fff, SM_READ);
+	SekMapMemory(TC0100SCNRam[1]        , 0x240000, 0x253fff, SM_READ);
+	SekMapMemory(TaitoSpriteRam         , 0x600000, 0x6013ff, SM_RAM);
 	SekSetReadByteHandler(0, Darius2d68KReadByte);
 	SekSetWriteByteHandler(0, Darius2d68KWriteByte);
 	SekSetReadWordHandler(0, Darius2d68KReadWord);	
@@ -1606,11 +1606,11 @@ static INT32 WarriorbInit()
 	
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Taito68KRom1           , 0x000000, 0x1fffff, MAP_ROM);
-	SekMapMemory(Taito68KRam1           , 0x200000, 0x213fff, MAP_RAM);
-	SekMapMemory(TC0100SCNRam[0]        , 0x300000, 0x313fff, MAP_READ);
-	SekMapMemory(TC0100SCNRam[1]        , 0x340000, 0x353fff, MAP_READ);
-	SekMapMemory(TaitoSpriteRam         , 0x600000, 0x6013ff, MAP_RAM);
+	SekMapMemory(Taito68KRom1           , 0x000000, 0x1fffff, SM_ROM);
+	SekMapMemory(Taito68KRam1           , 0x200000, 0x213fff, SM_RAM);
+	SekMapMemory(TC0100SCNRam[0]        , 0x300000, 0x313fff, SM_READ);
+	SekMapMemory(TC0100SCNRam[1]        , 0x340000, 0x353fff, SM_READ);
+	SekMapMemory(TaitoSpriteRam         , 0x600000, 0x6013ff, SM_RAM);
 	SekSetReadByteHandler(0, Warriorb68KReadByte);
 	SekSetWriteByteHandler(0, Warriorb68KWriteByte);
 	SekSetReadWordHandler(0, Warriorb68KReadWord);	

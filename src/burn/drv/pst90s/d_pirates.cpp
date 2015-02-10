@@ -399,14 +399,14 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		 0x000000, 0x0fffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM + 0x0000, 0x100000, 0x109bff, MAP_RAM);
-	SekMapMemory(Drv68KRAM + 0x9c00, 0x109c00, 0x109fff, (is_genix) ? MAP_ROM : MAP_RAM);
-	SekMapMemory(Drv68KRAM + 0xa000, 0x10a000, 0x10ffff, MAP_RAM);
-//	SekMapMemory(Drv68KRAM,		 0x100000, 0x10ffff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,		 0x500000, 0x5007ff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		 0x800000, 0x803fff, MAP_ROM);
-	SekMapMemory(DrvMiscRAM,	 0x900000, 0x904fff, MAP_RAM);
+	SekMapMemory(Drv68KROM,		 0x000000, 0x0fffff, SM_ROM);
+	SekMapMemory(Drv68KRAM + 0x0000, 0x100000, 0x109bff, SM_RAM);
+	SekMapMemory(Drv68KRAM + 0x9c00, 0x109c00, 0x109fff, (is_genix) ? SM_ROM : SM_RAM);
+	SekMapMemory(Drv68KRAM + 0xa000, 0x10a000, 0x10ffff, SM_RAM);
+//	SekMapMemory(Drv68KRAM,		 0x100000, 0x10ffff, SM_RAM);
+	SekMapMemory(DrvSprRAM,		 0x500000, 0x5007ff, SM_RAM);
+	SekMapMemory(DrvPalRAM,		 0x800000, 0x803fff, SM_ROM);
+	SekMapMemory(DrvMiscRAM,	 0x900000, 0x904fff, SM_RAM);
 	SekSetWriteByteHandler(0,	 pirates_write_byte);
 	SekSetWriteWordHandler(0,	 pirates_write_word);
 	SekSetReadByteHandler(0,	 pirates_read_byte);

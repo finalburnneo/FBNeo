@@ -483,14 +483,14 @@ INT32 OhmygodInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(OhmygodRom           , 0x000000, 0x07ffff, MAP_ROM  );
-	SekMapMemory(OhmygodRam + 0x000000, 0x300000, 0x303fff, MAP_RAM  );
-	SekMapMemory(OhmygodVideoRam      , 0x304000, 0x307fff, MAP_RAM  );
-	SekMapMemory(OhmygodRam + 0x004000, 0x308000, 0x30ffff, MAP_RAM  );
-	SekMapMemory(OhmygodPaletteRam    , 0x600000, 0x607fff, MAP_WRITE);
-	SekMapMemory(OhmygodSpriteRam     , 0x700000, 0x703fff, MAP_RAM  );
-	SekMapMemory(OhmygodRam + 0x00c000, 0x704000, 0x707fff, MAP_RAM  );
-	SekMapMemory(OhmygodRam + 0x010000, 0x708000, 0x70ffff, MAP_RAM  );
+	SekMapMemory(OhmygodRom           , 0x000000, 0x07ffff, SM_ROM  );
+	SekMapMemory(OhmygodRam + 0x000000, 0x300000, 0x303fff, SM_RAM  );
+	SekMapMemory(OhmygodVideoRam      , 0x304000, 0x307fff, SM_RAM  );
+	SekMapMemory(OhmygodRam + 0x004000, 0x308000, 0x30ffff, SM_RAM  );
+	SekMapMemory(OhmygodPaletteRam    , 0x600000, 0x607fff, SM_WRITE);
+	SekMapMemory(OhmygodSpriteRam     , 0x700000, 0x703fff, SM_RAM  );
+	SekMapMemory(OhmygodRam + 0x00c000, 0x704000, 0x707fff, SM_RAM  );
+	SekMapMemory(OhmygodRam + 0x010000, 0x708000, 0x70ffff, SM_RAM  );
 	SekSetReadWordHandler(0, OhmygodReadWord);
 	SekSetWriteWordHandler(0, OhmygodWriteWord);
 	SekSetReadByteHandler(0, OhmygodReadByte);

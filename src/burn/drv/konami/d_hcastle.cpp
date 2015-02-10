@@ -160,7 +160,7 @@ static void bankswitch(INT32 data)
 	*nDrvKonBank = data & 0x0f;
 	INT32 bankaddress = *nDrvKonBank * 0x2000;
 
-	konamiMapMemory(DrvKonROM + 0x10000 + bankaddress, 0x6000, 0x7fff, MAP_ROM);
+	konamiMapMemory(DrvKonROM + 0x10000 + bankaddress, 0x6000, 0x7fff, KON_ROM);
 }
 
 static void playfield_write(INT32 address, INT32 data, UINT8 *ctrl, UINT8 *spr, UINT8 *buf)
@@ -473,15 +473,15 @@ static INT32 DrvInit()
 
 	konamiInit(0);
 	konamiOpen(0);
-	konamiMapMemory(DrvKonRAM0,		0x0000, 0x00ff, MAP_ROM); //020-03f
-	konamiMapMemory(DrvKonRAM1,		0x0200, 0x02ff, MAP_ROM); //220-23f
-	konamiMapMemory(DrvPalRAM,		0x0600, 0x1fff, MAP_RAM);
-	konamiMapMemory(DrvPf1RAM,		0x2000, 0x2fff, MAP_RAM);
-	konamiMapMemory(DrvSprRAM1,		0x3000, 0x3fff, MAP_RAM);
-	konamiMapMemory(DrvPf2RAM,		0x4000, 0x4fff, MAP_RAM);
-	konamiMapMemory(DrvSprRAM2,		0x5000, 0x5fff, MAP_RAM);
-	konamiMapMemory(DrvKonROM + 0x10000,	0x6000, 0x7fff, MAP_ROM);
-	konamiMapMemory(DrvKonROM,		0x8000, 0xffff, MAP_ROM);
+	konamiMapMemory(DrvKonRAM0,		0x0000, 0x00ff, KON_ROM); //020-03f
+	konamiMapMemory(DrvKonRAM1,		0x0200, 0x02ff, KON_ROM); //220-23f
+	konamiMapMemory(DrvPalRAM,		0x0600, 0x1fff, KON_RAM);
+	konamiMapMemory(DrvPf1RAM,		0x2000, 0x2fff, KON_RAM);
+	konamiMapMemory(DrvSprRAM1,		0x3000, 0x3fff, KON_RAM);
+	konamiMapMemory(DrvPf2RAM,		0x4000, 0x4fff, KON_RAM);
+	konamiMapMemory(DrvSprRAM2,		0x5000, 0x5fff, KON_RAM);
+	konamiMapMemory(DrvKonROM + 0x10000,	0x6000, 0x7fff, KON_ROM);
+	konamiMapMemory(DrvKonROM,		0x8000, 0xffff, KON_ROM);
 	konamiSetWriteHandler(hcastle_write);
 	konamiSetReadHandler(hcastle_read);
 	konamiClose();

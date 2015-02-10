@@ -160,17 +160,17 @@ static void DrvSetRAMBank(UINT8 bank, UINT8 data)
 	nDrvRomBank[2] = data;
 
 	if (data & 0x10) {
-		M6809MapMemory(DrvPalRAM, 0x0000, 0x07ff, MAP_RAM);
+		M6809MapMemory(DrvPalRAM, 0x0000, 0x07ff, M6809_RAM);
 	} else if (data & 0x20) {
 		if (bank & 0x80) {
-			M6809MapMemory(DrvPMCRAM, 0x0000, 0x07ff, MAP_RAM);
+			M6809MapMemory(DrvPMCRAM, 0x0000, 0x07ff, M6809_RAM);
 		} else {
 			// unmap
-			M6809MapMemory(DrvM6809ROM + 0x800, 0x0000, 0x07ff, MAP_ROM);
-			M6809MapMemory(DrvM6809ROM + 0x000, 0x0000, 0x07ff, MAP_WRITE);
+			M6809MapMemory(DrvM6809ROM + 0x800, 0x0000, 0x07ff, M6809_ROM);
+			M6809MapMemory(DrvM6809ROM + 0x000, 0x0000, 0x07ff, M6809_WRITE);
 		}
 	} else {
-		M6809MapMemory(DrvBankRAM, 0x0000, 0x07ff, MAP_RAM);
+		M6809MapMemory(DrvBankRAM, 0x0000, 0x07ff, M6809_RAM);
 	}
 }
 
@@ -276,7 +276,7 @@ static void bankswitch(INT32 data)
 		nBank = 0x10000 + (data & 0x0e) * 0x1000;
 	}
 
-	M6809MapMemory(DrvM6809ROM + nBank, 0x6000, 0x7fff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM + nBank, 0x6000, 0x7fff, M6809_ROM);
 }
 
 void spy_main_write(UINT16 address, UINT8 data)
@@ -536,9 +536,9 @@ static INT32 DrvInit()
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvM6809RAM,		0x0800, 0x1aff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM + 0x10000,	0x6000, 0x7fff, MAP_ROM);
-	M6809MapMemory(DrvM6809ROM + 0x08000,	0x8000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809RAM,		0x0800, 0x1aff, M6809_RAM);
+	M6809MapMemory(DrvM6809ROM + 0x10000,	0x6000, 0x7fff, M6809_ROM);
+	M6809MapMemory(DrvM6809ROM + 0x08000,	0x8000, 0xffff, M6809_ROM);
 	M6809SetWriteHandler(spy_main_write);
 	M6809SetReadHandler(spy_main_read);
 	M6809Close();

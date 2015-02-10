@@ -415,21 +415,21 @@ static INT32 DrvInit()
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvM6809RAM0,		0x0000, 0x00ff, MAP_RAM);
-	M6809MapMemory(DrvColRAM,		0x2000, 0x23ff, MAP_RAM);
-	M6809MapMemory(DrvVidRAM,		0x2400, 0x27ff, MAP_RAM);
-	M6809MapMemory(DrvM6809RAM1,		0x2800, 0x2fff, MAP_RAM);
-	M6809MapMemory(DrvSprRAM1,		0x3000, 0x37ff, MAP_RAM);
-	M6809MapMemory(DrvSprRAM0,		0x3800, 0x3fff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM,		0x4000, 0xffff, MAP_RAM);
+	M6809MapMemory(DrvM6809RAM0,		0x0000, 0x00ff, M6809_RAM);
+	M6809MapMemory(DrvColRAM,		0x2000, 0x23ff, M6809_RAM);
+	M6809MapMemory(DrvVidRAM,		0x2400, 0x27ff, M6809_RAM);
+	M6809MapMemory(DrvM6809RAM1,		0x2800, 0x2fff, M6809_RAM);
+	M6809MapMemory(DrvSprRAM1,		0x3000, 0x37ff, M6809_RAM);
+	M6809MapMemory(DrvSprRAM0,		0x3800, 0x3fff, M6809_RAM);
+	M6809MapMemory(DrvM6809ROM,		0x4000, 0xffff, M6809_RAM);
 	M6809SetWriteHandler(ironhors_main_write);
 	M6809SetReadHandler(ironhors_main_read);
 	M6809Close();
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,			0x0000, 0x3fff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAM,			0x4000, 0x43ff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM,			0x0000, 0x3fff, ZET_ROM);
+	ZetMapMemory(DrvZ80RAM,			0x4000, 0x43ff, ZET_RAM);
 	ZetSetReadHandler(ironhors_sound_read);
 	ZetSetOutHandler(ironhors_sound_write_port);
 	ZetSetInHandler(ironhors_sound_read_port);

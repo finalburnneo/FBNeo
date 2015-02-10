@@ -28,8 +28,8 @@ static inline void pgm_cpu_sync()
 static void svg_set_ram_bank(INT32 data)
 {
 	svg_ram_sel = data & 1;
-	Arm7MapMemory(svg_ram[svg_ram_sel],	0x38000000, 0x3800ffff, MAP_RAM);
-	SekMapMemory(svg_ram[svg_ram_sel^1],	0x500000, 0x50ffff, MAP_RAM);
+	Arm7MapMemory(svg_ram[svg_ram_sel],	0x38000000, 0x3800ffff, ARM7_RAM);
+	SekMapMemory(svg_ram[svg_ram_sel^1],	0x500000, 0x50ffff, SM_RAM);
 }
 
 static void __fastcall svg_write_byte(UINT32 address, UINT8 data)
@@ -155,7 +155,7 @@ void install_protection_asic27a_svg()
 	svg_ram[1] = PGMARMShareRAM2;
 
 	SekOpen(0);
-	SekMapHandler(5,		0x500000, 0x5fffff, MAP_RAM);
+	SekMapHandler(5,		0x500000, 0x5fffff, SM_RAM);
 	SekSetReadWordHandler(5, 	svg_read_word);
 	SekSetWriteWordHandler(5, 	svg_write_word);
 	SekSetWriteByteHandler(5, 	svg_write_byte);
@@ -163,12 +163,12 @@ void install_protection_asic27a_svg()
 
 	Arm7Init(0);
 	Arm7Open(0);
-	Arm7MapMemory(PGMARMROM,	0x00000000, 0x00003fff, MAP_ROM);
-	Arm7MapMemory(PGMUSER0,		0x08000000, 0x08000000 | (nPGMExternalARMLen-1), MAP_ROM);
-	Arm7MapMemory(PGMARMRAM0,	0x10000000, 0x100003ff, MAP_RAM);
-	Arm7MapMemory(PGMARMRAM1,	0x18000000, 0x1803ffff, MAP_RAM);
-	Arm7MapMemory(svg_ram[1],	0x38000000, 0x3800ffff, MAP_RAM);
-	Arm7MapMemory(PGMARMRAM2,	0x50000000, 0x500003ff, MAP_RAM);
+	Arm7MapMemory(PGMARMROM,	0x00000000, 0x00003fff, ARM7_ROM);
+	Arm7MapMemory(PGMUSER0,		0x08000000, 0x08000000 | (nPGMExternalARMLen-1), ARM7_ROM);
+	Arm7MapMemory(PGMARMRAM0,	0x10000000, 0x100003ff, ARM7_RAM);
+	Arm7MapMemory(PGMARMRAM1,	0x18000000, 0x1803ffff, ARM7_RAM);
+	Arm7MapMemory(svg_ram[1],	0x38000000, 0x3800ffff, ARM7_RAM);
+	Arm7MapMemory(PGMARMRAM2,	0x50000000, 0x500003ff, ARM7_RAM);
 	Arm7SetWriteByteHandler(svg_arm7_write_byte);
 	Arm7SetReadByteHandler(svg_arm7_read_byte);
 	Arm7Close();

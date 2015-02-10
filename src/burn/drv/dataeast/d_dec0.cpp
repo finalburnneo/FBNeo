@@ -3032,37 +3032,37 @@ static void SlyspySetProtectionMap(UINT8 Type)
 	// so far I've not seen evidence that the game activates the alt RAM banks and this implementation is much
 	// cleaner and quicker
 	
-	SekMapHandler(8, 0x240000, 0x24ffff, MAP_WRITE);
+	SekMapHandler(8, 0x240000, 0x24ffff, SM_WRITE);
 	SekSetWriteByteHandler(8, SlyspyProt68KWriteByte);
 	SekSetWriteWordHandler(8, SlyspyProt68KWriteWord);
 	
 	switch (Type) {
 		case 0: {
-			SekMapMemory(DrvVideo1ColScrollRam   , 0x242000, 0x24207f, MAP_WRITE);
-			SekMapMemory(DrvVideo1RowScrollRam   , 0x242400, 0x2427ff, MAP_WRITE);
-			SekMapMemory(DrvVideo1Ram            , 0x246000, 0x247fff, MAP_WRITE);
-			SekMapMemory(DrvCharColScrollRam     , 0x24c000, 0x24c07f, MAP_WRITE);
-			SekMapMemory(DrvCharRowScrollRam     , 0x24c400, 0x24c7ff, MAP_WRITE);
-			SekMapMemory(DrvCharRam              , 0x24e000, 0x24ffff, MAP_WRITE);
+			SekMapMemory(DrvVideo1ColScrollRam   , 0x242000, 0x24207f, SM_WRITE);
+			SekMapMemory(DrvVideo1RowScrollRam   , 0x242400, 0x2427ff, SM_WRITE);
+			SekMapMemory(DrvVideo1Ram            , 0x246000, 0x247fff, SM_WRITE);
+			SekMapMemory(DrvCharColScrollRam     , 0x24c000, 0x24c07f, SM_WRITE);
+			SekMapMemory(DrvCharRowScrollRam     , 0x24c400, 0x24c7ff, SM_WRITE);
+			SekMapMemory(DrvCharRam              , 0x24e000, 0x24ffff, SM_WRITE);
 			break;
 		}
 
 		case 1: {
-			SekMapMemory(DrvCharRam              , 0x248000, 0x249fff, MAP_WRITE);
-			SekMapMemory(DrvVideo1Ram            , 0x24c000, 0x24dfff, MAP_WRITE);
+			SekMapMemory(DrvCharRam              , 0x248000, 0x249fff, SM_WRITE);
+			SekMapMemory(DrvVideo1Ram            , 0x24c000, 0x24dfff, SM_WRITE);
 			break;
 		}
 
 		case 2: {
-			SekMapMemory(DrvVideo1Ram            , 0x240000, 0x241fff, MAP_WRITE);
-			SekMapMemory(DrvCharRam              , 0x242000, 0x243fff, MAP_WRITE);
-			SekMapMemory(DrvCharRam              , 0x24e000, 0x24ffff, MAP_WRITE);
+			SekMapMemory(DrvVideo1Ram            , 0x240000, 0x241fff, SM_WRITE);
+			SekMapMemory(DrvCharRam              , 0x242000, 0x243fff, SM_WRITE);
+			SekMapMemory(DrvCharRam              , 0x24e000, 0x24ffff, SM_WRITE);
 			break;
 		}
 
 		case 3: {
-			SekMapMemory(DrvCharRam              , 0x240000, 0x241fff, MAP_WRITE);
-			SekMapMemory(DrvVideo1Ram            , 0x248000, 0x249fff, MAP_WRITE);
+			SekMapMemory(DrvCharRam              , 0x240000, 0x241fff, SM_WRITE);
+			SekMapMemory(DrvVideo1Ram            , 0x248000, 0x249fff, SM_WRITE);
 			break;
 		}
 	}
@@ -3521,18 +3521,18 @@ static INT32 Dec0MachineInit()
 	
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom               , 0x000000, 0x05ffff, MAP_ROM);
-	SekMapMemory(DrvCharColScrollRam     , 0x242000, 0x24207f, MAP_RAM);
-	SekMapMemory(DrvCharRowScrollRam     , 0x242400, 0x2427ff, MAP_RAM);
-	SekMapMemory(Drv68KRam + 0x4000      , 0x242800, 0x243fff, MAP_RAM);
-	SekMapMemory(DrvVideo1ColScrollRam   , 0x248000, 0x24807f, MAP_RAM);
-	SekMapMemory(DrvVideo1RowScrollRam   , 0x248400, 0x2487ff, MAP_RAM);
-	SekMapMemory(DrvVideo2ColScrollRam   , 0x24c800, 0x24c87f, MAP_RAM);
-	SekMapMemory(DrvVideo2RowScrollRam   , 0x24cc00, 0x24cfff, MAP_RAM);
-	SekMapMemory(DrvPaletteRam           , 0x310000, 0x3107ff, MAP_RAM);
-	SekMapMemory(DrvPalette2Ram          , 0x314000, 0x3147ff, MAP_RAM);
-	SekMapMemory(Drv68KRam               , 0xff8000, 0xffbfff, MAP_RAM);
-	SekMapMemory(DrvSpriteRam            , 0xffc000, 0xffc7ff, MAP_RAM);
+	SekMapMemory(Drv68KRom               , 0x000000, 0x05ffff, SM_ROM);
+	SekMapMemory(DrvCharColScrollRam     , 0x242000, 0x24207f, SM_RAM);
+	SekMapMemory(DrvCharRowScrollRam     , 0x242400, 0x2427ff, SM_RAM);
+	SekMapMemory(Drv68KRam + 0x4000      , 0x242800, 0x243fff, SM_RAM);
+	SekMapMemory(DrvVideo1ColScrollRam   , 0x248000, 0x24807f, SM_RAM);
+	SekMapMemory(DrvVideo1RowScrollRam   , 0x248400, 0x2487ff, SM_RAM);
+	SekMapMemory(DrvVideo2ColScrollRam   , 0x24c800, 0x24c87f, SM_RAM);
+	SekMapMemory(DrvVideo2RowScrollRam   , 0x24cc00, 0x24cfff, SM_RAM);
+	SekMapMemory(DrvPaletteRam           , 0x310000, 0x3107ff, SM_RAM);
+	SekMapMemory(DrvPalette2Ram          , 0x314000, 0x3147ff, SM_RAM);
+	SekMapMemory(Drv68KRam               , 0xff8000, 0xffbfff, SM_RAM);
+	SekMapMemory(DrvSpriteRam            , 0xffc000, 0xffc7ff, SM_RAM);
 	SekSetReadByteHandler(0, Dec068KReadByte);
 	SekSetWriteByteHandler(0, Dec068KWriteByte);
 	SekSetReadWordHandler(0, Dec068KReadWord);
@@ -3541,8 +3541,8 @@ static INT32 Dec0MachineInit()
 	
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(DrvM6502Ram            , 0x0000, 0x05ff, MAP_RAM);
-	M6502MapMemory(DrvM6502Rom            , 0x8000, 0xffff, MAP_ROM);
+	M6502MapMemory(DrvM6502Ram            , 0x0000, 0x05ff, M6502_RAM);
+	M6502MapMemory(DrvM6502Rom            , 0x8000, 0xffff, M6502_ROM);
 	M6502SetReadHandler(Dec0SoundReadByte);
 	M6502SetWriteHandler(Dec0SoundWriteByte);
 	M6502Close();
@@ -3852,7 +3852,7 @@ static INT32 HippodrmInit()
 	Dec0DrawFunction = HippodrmDraw;
 	
 	SekOpen(0);
-	SekMapHandler(1, 0x180000, 0x180fff, MAP_RAM);
+	SekMapHandler(1, 0x180000, 0x180fff, SM_RAM);
 	SekSetReadByteHandler(1, HippodrmShared68KReadByte);
 	SekSetWriteByteHandler(1, HippodrmShared68KWriteByte);
 	SekSetReadWordHandler(1, HippodrmShared68KReadWord);
@@ -3861,9 +3861,9 @@ static INT32 HippodrmInit()
 	
 	h6280Init(0);
 	h6280Open(0);
-	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, MAP_ROM);
-	h6280MapMemory(DrvSharedRam, 0x180000, 0x1800ff, MAP_RAM);
-	h6280MapMemory(DrvH6280Ram , 0x1f0000, 0x1f1fff, MAP_RAM);
+	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, H6280_ROM);
+	h6280MapMemory(DrvSharedRam, 0x180000, 0x1800ff, H6280_RAM);
+	h6280MapMemory(DrvH6280Ram , 0x1f0000, 0x1f1fff, H6280_RAM);
 	h6280SetReadHandler(HippodrmH6280ReadProg);
 	h6280SetWriteHandler(HippodrmH6280WriteProg);
 	h6280Close();
@@ -3924,7 +3924,7 @@ static INT32 RobocopInit()
 	Dec0DrawFunction = RobocopDraw;
 	
 	SekOpen(0);
-	SekMapHandler(1, 0x180000, 0x180fff, MAP_RAM);
+	SekMapHandler(1, 0x180000, 0x180fff, SM_RAM);
 	SekSetReadByteHandler(1, RobocopShared68KReadByte);
 	SekSetWriteByteHandler(1, RobocopShared68KWriteByte);
 	SekSetReadWordHandler(1, RobocopShared68KReadWord);
@@ -3933,9 +3933,9 @@ static INT32 RobocopInit()
 	
 	h6280Init(0);
 	h6280Open(0);
-	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, MAP_ROM);
-	h6280MapMemory(DrvH6280Ram , 0x1f0000, 0x1f1fff, MAP_RAM);
-	h6280MapMemory(DrvSharedRam, 0x1f2000, 0x1f3fff, MAP_RAM);
+	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, H6280_ROM);
+	h6280MapMemory(DrvH6280Ram , 0x1f0000, 0x1f1fff, H6280_RAM);
+	h6280MapMemory(DrvSharedRam, 0x1f2000, 0x1f3fff, H6280_RAM);
 	h6280SetReadHandler(RobocopH6280ReadProg);
 	h6280SetWriteHandler(RobocopH6280WriteProg);
 	h6280Close();
@@ -4021,13 +4021,13 @@ static INT32 SlyspyDrvInit()
 	
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom               , 0x000000, 0x05ffff, MAP_ROM);
-	SekMapMemory(DrvVideo2ColScrollRam   , 0x300800, 0x30087f, MAP_RAM);
-	SekMapMemory(DrvVideo2RowScrollRam   , 0x300c00, 0x300fff, MAP_RAM);
-	SekMapMemory(DrvVideo2Ram            , 0x301000, 0x3017ff, MAP_RAM);
-	SekMapMemory(Drv68KRam               , 0x304000, 0x307fff, MAP_RAM);
-	SekMapMemory(DrvSpriteRam            , 0x308000, 0x3087ff, MAP_RAM);
-	SekMapMemory(DrvPaletteRam           , 0x310000, 0x3107ff, MAP_RAM);
+	SekMapMemory(Drv68KRom               , 0x000000, 0x05ffff, SM_ROM);
+	SekMapMemory(DrvVideo2ColScrollRam   , 0x300800, 0x30087f, SM_RAM);
+	SekMapMemory(DrvVideo2RowScrollRam   , 0x300c00, 0x300fff, SM_RAM);
+	SekMapMemory(DrvVideo2Ram            , 0x301000, 0x3017ff, SM_RAM);
+	SekMapMemory(Drv68KRam               , 0x304000, 0x307fff, SM_RAM);
+	SekMapMemory(DrvSpriteRam            , 0x308000, 0x3087ff, SM_RAM);
+	SekMapMemory(DrvPaletteRam           , 0x310000, 0x3107ff, SM_RAM);
 	SekSetReadByteHandler(0, Slyspy68KReadByte);
 	SekSetWriteByteHandler(0, Slyspy68KWriteByte);
 	SekSetReadWordHandler(0, Slyspy68KReadWord);
@@ -4036,8 +4036,8 @@ static INT32 SlyspyDrvInit()
 	
 	h6280Init(0);
 	h6280Open(0);
-	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, MAP_ROM);
-	h6280MapMemory(DrvH6280Ram , 0x1f0000, 0x1f1fff, MAP_RAM);
+	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, H6280_ROM);
+	h6280MapMemory(DrvH6280Ram , 0x1f0000, 0x1f1fff, H6280_RAM);
 	h6280SetReadHandler(SlyspyH6280ReadProg);
 	h6280SetWriteHandler(SlyspyH6280WriteProg);
 	h6280Close();
@@ -4227,16 +4227,16 @@ static INT32 MidresInit()
 	
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom               , 0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(Drv68KRam               , 0x100000, 0x103fff, MAP_RAM);
-	SekMapMemory(DrvSpriteRam            , 0x120000, 0x1207ff, MAP_RAM);
-	SekMapMemory(DrvPaletteRam           , 0x140000, 0x1407ff, MAP_RAM);
-	SekMapMemory(DrvVideo1ColScrollRam   , 0x240000, 0x24007f, MAP_RAM);
-	SekMapMemory(DrvVideo1RowScrollRam   , 0x240400, 0x2407ff, MAP_RAM);	
-	SekMapMemory(DrvVideo2ColScrollRam   , 0x2c0000, 0x2c007f, MAP_RAM);
-	SekMapMemory(DrvVideo2RowScrollRam   , 0x2c0400, 0x2c07ff, MAP_RAM);	
-	SekMapMemory(DrvCharColScrollRam     , 0x340000, 0x34007f, MAP_RAM);
-	SekMapMemory(DrvCharRowScrollRam     , 0x340400, 0x3407ff, MAP_RAM);	
+	SekMapMemory(Drv68KRom               , 0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(Drv68KRam               , 0x100000, 0x103fff, SM_RAM);
+	SekMapMemory(DrvSpriteRam            , 0x120000, 0x1207ff, SM_RAM);
+	SekMapMemory(DrvPaletteRam           , 0x140000, 0x1407ff, SM_RAM);
+	SekMapMemory(DrvVideo1ColScrollRam   , 0x240000, 0x24007f, SM_RAM);
+	SekMapMemory(DrvVideo1RowScrollRam   , 0x240400, 0x2407ff, SM_RAM);	
+	SekMapMemory(DrvVideo2ColScrollRam   , 0x2c0000, 0x2c007f, SM_RAM);
+	SekMapMemory(DrvVideo2RowScrollRam   , 0x2c0400, 0x2c07ff, SM_RAM);	
+	SekMapMemory(DrvCharColScrollRam     , 0x340000, 0x34007f, SM_RAM);
+	SekMapMemory(DrvCharRowScrollRam     , 0x340400, 0x3407ff, SM_RAM);	
 	SekSetReadByteHandler(0, Midres68KReadByte);
 	SekSetWriteByteHandler(0, Midres68KWriteByte);
 	SekSetReadWordHandler(0, Midres68KReadWord);
@@ -4245,8 +4245,8 @@ static INT32 MidresInit()
 	
 	h6280Init(0);
 	h6280Open(0);
-	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, MAP_ROM);
-	h6280MapMemory(DrvH6280Ram , 0x1f0000, 0x1f1fff, MAP_RAM);
+	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, H6280_ROM);
+	h6280MapMemory(DrvH6280Ram , 0x1f0000, 0x1f1fff, H6280_RAM);
 	h6280SetReadHandler(MidresH6280ReadProg);
 	h6280SetWriteHandler(MidresH6280WriteProg);
 	h6280Close();

@@ -705,7 +705,7 @@ INT32 SolomonFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		ZetRaiseIrq(0);
 		ZetClose();
 
 		// Render Sound Segment

@@ -451,8 +451,8 @@ static INT32 DrvInit()
 
 	M6803Init(1);
 //	M6803Open(0);
-	M6803MapMemory(DrvM6803ROM,	0x6000, 0x7fff, MAP_ROM);
-	M6803MapMemory(DrvM6803ROM,	0xe000, 0xffff, MAP_ROM);
+	M6803MapMemory(DrvM6803ROM,	0x6000, 0x7fff, M6803_ROM);
+	M6803MapMemory(DrvM6803ROM,	0xe000, 0xffff, M6803_ROM);
 	M6803SetReadHandler(kncljoe_sound_read);
 	M6803SetWriteHandler(kncljoe_sound_write);
 	M6803SetWritePortHandler(kncljoe_sound_write_port);

@@ -521,12 +521,12 @@ INT32 PrehisleInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(PrehisleRom       , 0x000000, 0x03ffff, MAP_ROM);
-	SekMapMemory(PrehisleRam       , 0x070000, 0x073fff, MAP_RAM);
-	SekMapMemory(PrehisleVideoRam  , 0x090000, 0x0907ff, MAP_RAM);
-	SekMapMemory(PrehisleSpriteRam , 0x0a0000, 0x0a07ff, MAP_RAM);
-	SekMapMemory(PrehisleVideo2Ram , 0x0b0000, 0x0b3fff, MAP_RAM);
-	SekMapMemory(PrehislePaletteRam, 0x0d0000, 0x0d07ff, MAP_RAM);
+	SekMapMemory(PrehisleRom       , 0x000000, 0x03ffff, SM_ROM);
+	SekMapMemory(PrehisleRam       , 0x070000, 0x073fff, SM_RAM);
+	SekMapMemory(PrehisleVideoRam  , 0x090000, 0x0907ff, SM_RAM);
+	SekMapMemory(PrehisleSpriteRam , 0x0a0000, 0x0a07ff, SM_RAM);
+	SekMapMemory(PrehisleVideo2Ram , 0x0b0000, 0x0b3fff, SM_RAM);
+	SekMapMemory(PrehislePaletteRam, 0x0d0000, 0x0d07ff, SM_RAM);
 	SekSetReadWordHandler(0, PrehisleReadWord);
 	SekSetWriteWordHandler(0, PrehisleWriteWord);
 	SekClose();

@@ -672,13 +672,13 @@ void ZetSetIRQLine(const INT32 line, const INT32 status)
 #endif
 
 	switch ( status ) {
-		case CPU_IRQSTATUS_NONE:
+		case ZET_IRQSTATUS_NONE:
 			Z80SetIrqLine(line, 0);
 			break;
-		case CPU_IRQSTATUS_ACK: 	
+		case ZET_IRQSTATUS_ACK: 	
 			Z80SetIrqLine(line, 1);
 			break;
-		case CPU_IRQSTATUS_AUTO:
+		case ZET_IRQSTATUS_AUTO:
 			Z80SetIrqLine(line, 1);
 			Z80Execute(0);
 			Z80SetIrqLine(0, 0);

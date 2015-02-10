@@ -516,42 +516,42 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM0,	0x000000, 0x1fffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM0,	0x200000, 0x20ffff, MAP_RAM);
-	SekMapMemory(DrvMCURAM,		0x300000, 0x30ffff, MAP_RAM);
-	SekMapMemory(DrvShareRAM,	0x400000, 0x403fff, MAP_RAM);
-	SekMapMemory(DrvSprRAM0,	0x500000, 0x503fff, MAP_RAM);
-	SekMapMemory(DrvSprReg0,	0x600000, 0x60003f|0x3ff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		0x700000, 0x70ffff, MAP_RAM);
+	SekMapMemory(Drv68KROM0,	0x000000, 0x1fffff, SM_ROM);
+	SekMapMemory(Drv68KRAM0,	0x200000, 0x20ffff, SM_RAM);
+	SekMapMemory(DrvMCURAM,		0x300000, 0x30ffff, SM_RAM);
+	SekMapMemory(DrvShareRAM,	0x400000, 0x403fff, SM_RAM);
+	SekMapMemory(DrvSprRAM0,	0x500000, 0x503fff, SM_RAM);
+	SekMapMemory(DrvSprReg0,	0x600000, 0x60003f|0x3ff, SM_RAM);
+	SekMapMemory(DrvPalRAM,		0x700000, 0x70ffff, SM_RAM);
 	SekSetWriteWordHandler(0,	jchan_main_write_word);
 	SekSetWriteByteHandler(0,	jchan_main_write_byte);
 	SekSetReadWordHandler(0,	jchan_main_read_word);
 	SekSetReadByteHandler(0,	jchan_main_read_byte);
 
-	SekMapHandler(1,		0x403c00, 0x403fff, MAP_WRITE);
+	SekMapHandler(1,		0x403c00, 0x403fff, SM_WRITE);
 	SekSetWriteWordHandler(1,	jchan_main_command_write_word);
 	SekSetWriteByteHandler(1,	jchan_main_command_write_byte);
 
-	SekMapHandler(2,		0x700000, 0x70ffff, MAP_WRITE);
+	SekMapHandler(2,		0x700000, 0x70ffff, SM_WRITE);
 	SekSetWriteWordHandler(2,	jchan_palette_write_word);
 	SekSetWriteByteHandler(2,	jchan_palette_write_byte);
 	SekClose();
 
 	SekInit(1, 0x68000);
 	SekOpen(1);
-	SekMapMemory(Drv68KROM1,	0x000000, 0x0fffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM1,	0x100000, 0x10ffff, MAP_RAM);
-	SekMapMemory(DrvShareRAM,	0x400000, 0x403fff, MAP_RAM);
-	SekMapMemory(DrvVidRAM,		0x500000, 0x503fff, MAP_RAM);
-	SekMapMemory(DrvVidRegs,	0x600000, 0x60001f|0x3ff, MAP_RAM);
-	SekMapMemory(DrvSprRAM1,	0x700000, 0x703fff, MAP_RAM);
-	SekMapMemory(DrvSprReg1,	0x780000, 0x78003f|0x3ff, MAP_RAM);
+	SekMapMemory(Drv68KROM1,	0x000000, 0x0fffff, SM_ROM);
+	SekMapMemory(Drv68KRAM1,	0x100000, 0x10ffff, SM_RAM);
+	SekMapMemory(DrvShareRAM,	0x400000, 0x403fff, SM_RAM);
+	SekMapMemory(DrvVidRAM,		0x500000, 0x503fff, SM_RAM);
+	SekMapMemory(DrvVidRegs,	0x600000, 0x60001f|0x3ff, SM_RAM);
+	SekMapMemory(DrvSprRAM1,	0x700000, 0x703fff, SM_RAM);
+	SekMapMemory(DrvSprReg1,	0x780000, 0x78003f|0x3ff, SM_RAM);
 	SekSetWriteWordHandler(0,	jchan_sub_write_word);
 	SekSetWriteByteHandler(0,	jchan_sub_write_byte);
 	SekSetReadWordHandler(0,	jchan_sub_read_word);
 	SekSetReadByteHandler(0,	jchan_sub_read_byte);
 
-	SekMapHandler(1,		0x400000, 0x4003ff, MAP_WRITE);
+	SekMapHandler(1,		0x400000, 0x4003ff, SM_WRITE);
 	SekSetWriteWordHandler(1,	jchan_sub_command_write_word);
 	SekSetWriteByteHandler(1,	jchan_sub_command_write_byte);
 	SekClose();

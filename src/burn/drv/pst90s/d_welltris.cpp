@@ -558,13 +558,13 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM + 0x000000, 0x000000, 0x03ffff, MAP_ROM);
-	SekMapMemory(Drv68KROM + 0x100000, 0x100000, 0x17ffff, MAP_ROM);
-	SekMapMemory(DrvPxlRAM,		   0x800000, 0x81ffff, MAP_RAM);
-	SekMapMemory(Drv68KRAM,		   0xff8000, 0xffbfff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,		   0xffc000, 0xffc3ff, MAP_ROM);
-	SekMapMemory(DrvVidRAM,		   0xffd000, 0xffdfff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		   0xffe000, 0xffefff, MAP_ROM);
+	SekMapMemory(Drv68KROM + 0x000000, 0x000000, 0x03ffff, SM_ROM);
+	SekMapMemory(Drv68KROM + 0x100000, 0x100000, 0x17ffff, SM_ROM);
+	SekMapMemory(DrvPxlRAM,		   0x800000, 0x81ffff, SM_RAM);
+	SekMapMemory(Drv68KRAM,		   0xff8000, 0xffbfff, SM_RAM);
+	SekMapMemory(DrvSprRAM,		   0xffc000, 0xffc3ff, SM_ROM);
+	SekMapMemory(DrvVidRAM,		   0xffd000, 0xffdfff, SM_RAM);
+	SekMapMemory(DrvPalRAM,		   0xffe000, 0xffefff, SM_ROM);
 	SekSetWriteByteHandler(0,	   welltris_main_write_byte);
 	SekSetWriteWordHandler(0,	   welltris_main_write_word);
 	SekSetReadByteHandler(0,	   welltris_main_read_byte);

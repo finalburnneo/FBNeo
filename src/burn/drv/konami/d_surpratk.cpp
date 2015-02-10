@@ -264,7 +264,7 @@ static void K053245Callback(INT32 *code, INT32 *color, INT32 *priority)
 static void supratk_set_lines(INT32 lines)
 {
 	nDrvRomBank[0] = lines;
-	konamiMapMemory(DrvKonROM + 0x10000 + ((lines & 0x1f) * 0x2000), 0x2000, 0x3fff, MAP_ROM); 
+	konamiMapMemory(DrvKonROM + 0x10000 + ((lines & 0x1f) * 0x2000), 0x2000, 0x3fff, KON_ROM); 
 }
 
 static void DrvYM2151IRQHandler(INT32 nStatus)
@@ -346,9 +346,9 @@ static INT32 DrvInit()
 
 	konamiInit(0);
 	konamiOpen(0);
-	konamiMapMemory(DrvKonRAM,           0x0800, 0x1fff, MAP_RAM);
-	konamiMapMemory(DrvKonROM + 0x10000, 0x2000, 0x3fff, MAP_ROM);
-	konamiMapMemory(DrvKonROM + 0x08000, 0x8000, 0xffff, MAP_ROM);
+	konamiMapMemory(DrvKonRAM,           0x0800, 0x1fff, KON_RAM);
+	konamiMapMemory(DrvKonROM + 0x10000, 0x2000, 0x3fff, KON_ROM);
+	konamiMapMemory(DrvKonROM + 0x08000, 0x8000, 0xffff, KON_ROM);
 	konamiSetWriteHandler(supratk_write);
 	konamiSetReadHandler(supratk_read);
 	konamiSetlinesCallback(supratk_set_lines);

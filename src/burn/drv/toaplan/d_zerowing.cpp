@@ -594,18 +594,18 @@ static INT32 DrvInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom01,			0x000000, 0x00FFFF, MAP_ROM);	// 68K ROM
-		SekMapMemory(Rom01 + 0x040000,		0x040000, 0x07FFFF, MAP_ROM);	// 68K ROM
-		SekMapMemory(Ram01,			0x080000, 0x087FFF, MAP_RAM);	// 68K RAM
-		SekMapMemory(RamPal,		0x404000, 0x4047FF, MAP_RAM);	// BCU-2 palette RAM
-		SekMapMemory(RamPal2,		0x406000, 0x4067FF, MAP_RAM);	// FCU-2 palette RAM
+		SekMapMemory(Rom01,			0x000000, 0x00FFFF, SM_ROM);	// 68K ROM
+		SekMapMemory(Rom01 + 0x040000,		0x040000, 0x07FFFF, SM_ROM);	// 68K ROM
+		SekMapMemory(Ram01,			0x080000, 0x087FFF, SM_RAM);	// 68K RAM
+		SekMapMemory(RamPal,		0x404000, 0x4047FF, SM_RAM);	// BCU-2 palette RAM
+		SekMapMemory(RamPal2,		0x406000, 0x4067FF, SM_RAM);	// FCU-2 palette RAM
 
 		SekSetReadWordHandler(0, zerowingReadWord);
 		SekSetReadByteHandler(0, zerowingReadByte);
 		SekSetWriteWordHandler(0, zerowingWriteWord);
 		SekSetWriteByteHandler(0, zerowingWriteByte);
 
-		SekMapHandler(1,			0x440000, 0x440FFF, MAP_RAM);	// Z80 RAM
+		SekMapHandler(1,			0x440000, 0x440FFF, SM_RAM);	// Z80 RAM
 
 		SekSetReadByteHandler(1, toaplan1ReadByteZ80RAM);
 		SekSetReadWordHandler(1, toaplan1ReadWordZ80RAM);

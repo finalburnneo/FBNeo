@@ -380,10 +380,10 @@ static INT32 DrvInit()
 	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekSetIrqCallback(aztarac_irq_callback);
-	SekMapMemory(Drv68KROM,		0x000000, 0x00bfff, MAP_ROM);
-	SekMapMemory(DrvNVRAM,		0x022000, 0x0223ff, MAP_ROM);
-	SekMapMemory(DrvVecRAM,		0xff8000, 0xffafff, MAP_RAM);
-	SekMapMemory(Drv68KRAM,		0xffe000, 0xffffff, MAP_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x00bfff, SM_ROM);
+	SekMapMemory(DrvNVRAM,		0x022000, 0x0223ff, SM_ROM);
+	SekMapMemory(DrvVecRAM,		0xff8000, 0xffafff, SM_RAM);
+	SekMapMemory(Drv68KRAM,		0xffe000, 0xffffff, SM_RAM);
 	SekSetWriteWordHandler(0,	aztarac_write_word);
 	SekSetWriteByteHandler(0,	aztarac_write_byte);
 	SekSetReadWordHandler(0,	aztarac_read_word);

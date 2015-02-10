@@ -520,10 +520,10 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += ZetRun(nCycleSegment);
 		if (i == 15) {
 			vblank = 0;
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetRaiseIrq(0);
 		}
 		if (i == 239) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetRaiseIrq(0);
 			vblank = 1;
 		}
 		ZetClose();
@@ -532,8 +532,8 @@ static INT32 DrvFrame()
 
 		ZetOpen(1);
 		nCyclesDone[1] += ZetRun(nCycleSegment);
-		if (i == 15) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-		if (i == 239) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == 15) ZetRaiseIrq(0);
+		if (i == 239)ZetRaiseIrq(0);
 		ZetClose();
 	}
 

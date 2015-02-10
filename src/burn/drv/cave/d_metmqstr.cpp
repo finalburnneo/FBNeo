@@ -724,17 +724,17 @@ static INT32 DrvInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom01,				0x000000, 0x07FFFF, MAP_ROM);	// CPU 0 ROM
-		SekMapMemory(Rom01 + 0x080000,			0x100000, 0x17FFFF, MAP_ROM);
-		SekMapMemory(Rom01 + 0x100000,			0x200000, 0x27FFFF, MAP_ROM);
-		SekMapMemory(CaveTileRAM[2],			0x880000, 0x887FFF, MAP_RAM);
-		SekMapMemory(Ram01 + 0x00000,			0x888000, 0x88FFFF, MAP_RAM);
-		SekMapMemory(CaveTileRAM[1],			0x900000, 0x907FFF, MAP_RAM);
-		SekMapMemory(Ram01 + 0x08000,			0x908000, 0x90FFFF, MAP_RAM);
-		SekMapMemory(CaveTileRAM[0],			0x980000, 0x987FFF, MAP_RAM);
-		SekMapMemory(Ram01 + 0x10000,			0x988000, 0x98FFFF, MAP_RAM);
-		SekMapMemory(CavePalSrc,		   	0x408000, 0x408FFF, MAP_RAM);	// Palette RAM
-		SekMapMemory(CaveSpriteRAM,			0xF00000, 0xF0FFFF, MAP_RAM);
+		SekMapMemory(Rom01,				0x000000, 0x07FFFF, SM_ROM);	// CPU 0 ROM
+		SekMapMemory(Rom01 + 0x080000,			0x100000, 0x17FFFF, SM_ROM);
+		SekMapMemory(Rom01 + 0x100000,			0x200000, 0x27FFFF, SM_ROM);
+		SekMapMemory(CaveTileRAM[2],			0x880000, 0x887FFF, SM_RAM);
+		SekMapMemory(Ram01 + 0x00000,			0x888000, 0x88FFFF, SM_RAM);
+		SekMapMemory(CaveTileRAM[1],			0x900000, 0x907FFF, SM_RAM);
+		SekMapMemory(Ram01 + 0x08000,			0x908000, 0x90FFFF, SM_RAM);
+		SekMapMemory(CaveTileRAM[0],			0x980000, 0x987FFF, SM_RAM);
+		SekMapMemory(Ram01 + 0x10000,			0x988000, 0x98FFFF, SM_RAM);
+		SekMapMemory(CavePalSrc,		   	0x408000, 0x408FFF, SM_RAM);	// Palette RAM
+		SekMapMemory(CaveSpriteRAM,			0xF00000, 0xF0FFFF, SM_RAM);
 		SekSetReadByteHandler(0, metmqstrReadByte);
 		SekSetWriteByteHandler(0, metmqstrWriteByte);
 		SekSetReadWordHandler(0, metmqstrReadWord);

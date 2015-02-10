@@ -2183,7 +2183,7 @@ static void SetupCustomCartridgeMappers()
 {
 	if (((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_CM_JCART) || ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_CM_JCART_SEPROM)) {
 		SekOpen(0);
-		SekMapHandler(7, 0x38fffe, 0x38ffff, MAP_READ | MAP_WRITE);
+		SekMapHandler(7, 0x38fffe, 0x38ffff, SM_READ | SM_WRITE);
 		SekSetReadByteHandler(7, JCartCtrlReadByte);
 		SekSetReadWordHandler(7, JCartCtrlReadWord);
 		SekSetWriteByteHandler(7, JCartCtrlWriteByte);
@@ -2200,7 +2200,7 @@ static void SetupCustomCartridgeMappers()
 		memcpy(RomMain + 0x000000, OriginalRom + 0x000000, 0x400000);
 		
 		SekOpen(0);
-		SekMapHandler(7, 0xa130f0, 0xa130ff, MAP_WRITE);
+		SekMapHandler(7, 0xa130f0, 0xa130ff, SM_WRITE);
 		SekSetWriteByteHandler(7, Ssf2BankWriteByte);
 		SekClose();
 	}
@@ -2219,12 +2219,12 @@ static void SetupCustomCartridgeMappers()
 		memcpy(RomMain + 0x200000, OriginalRom + 0x000000, 0x200000);
 		
 		SekOpen(0);
-		SekMapHandler(7, 0x600000, 0x6fffff, MAP_READ | MAP_WRITE);
+		SekMapHandler(7, 0x600000, 0x6fffff, SM_READ | SM_WRITE);
 		SekSetReadByteHandler(7, LK3AltProtReadByte);
 		SekSetReadWordHandler(7, LK3AltProtReadWord);
 		SekSetWriteByteHandler(7, LK3AltProtWriteByte);
 		SekSetWriteWordHandler(7, LK3AltProtWriteWord);
-		SekMapHandler(8, 0x700000, 0x7fffff, MAP_WRITE);
+		SekMapHandler(8, 0x700000, 0x7fffff, SM_WRITE);
 		SekSetWriteByteHandler(8, LK3AltBankWriteByte);
 		SekSetWriteWordHandler(8, LK3AltBankWriteWord);
 		SekClose();
@@ -2241,12 +2241,12 @@ static void SetupCustomCartridgeMappers()
 		memcpy(RomMain + 0x300000, OriginalRom + 0x000000, 0x100000);
 		
 		SekOpen(0);
-		SekMapHandler(7, 0x600000, 0x6fffff, MAP_READ | MAP_WRITE);
+		SekMapHandler(7, 0x600000, 0x6fffff, SM_READ | SM_WRITE);
 		SekSetReadByteHandler(7, LK3AltProtReadByte);
 		SekSetReadWordHandler(7, LK3AltProtReadWord);
 		SekSetWriteByteHandler(7, LK3AltProtWriteByte);
 		SekSetWriteWordHandler(7, LK3AltProtWriteWord);
-		SekMapHandler(8, 0x700000, 0x7fffff, MAP_WRITE);
+		SekMapHandler(8, 0x700000, 0x7fffff, SM_WRITE);
 		SekSetWriteByteHandler(8, LK3AltBankWriteByte);
 		SekSetWriteWordHandler(8, LK3AltBankWriteWord);
 		SekClose();
@@ -2262,10 +2262,10 @@ static void SetupCustomCartridgeMappers()
 		memcpy(RomMain + 0x000000, OriginalRom + 0x000004, 0x200000);
 	
 		SekOpen(0);
-		SekMapHandler(7, 0x400000, 0x400001, MAP_READ);
+		SekMapHandler(7, 0x400000, 0x400001, SM_READ);
 		SekSetReadByteHandler(7, RedclifProt2ReadByte);
 		SekSetReadWordHandler(7, RedclifProt2ReadWord);
-		SekMapHandler(8, 0x400004, 0x400005, MAP_READ);
+		SekMapHandler(8, 0x400004, 0x400005, SM_READ);
 		SekSetReadByteHandler(8, RedclifProtReadByte);
 		SekSetReadWordHandler(8, RedclifProtReadWord);
 		SekClose();
@@ -2280,7 +2280,7 @@ static void SetupCustomCartridgeMappers()
 		memcpy(RomMain + 0x800000, OriginalRom + 0x000000, 0x400000);
 	
 		SekOpen(0);
-		SekMapHandler(7, 0xa13000, 0xa1307f, MAP_READ);
+		SekMapHandler(7, 0xa13000, 0xa1307f, SM_READ);
 		SekSetReadByteHandler(7, RadicaBankSelectReadByte);
 		SekSetReadWordHandler(7, RadicaBankSelectReadWord);
 		SekClose();
@@ -2289,7 +2289,7 @@ static void SetupCustomCartridgeMappers()
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_KOF99 ||
 		(BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_POKEMON) {
 		SekOpen(0);
-		SekMapHandler(7, 0xa13000, 0xa1303f, MAP_READ);
+		SekMapHandler(7, 0xa13000, 0xa1303f, SM_READ);
 		SekSetReadByteHandler(7, Kof99A13000ReadByte);
 		SekSetReadWordHandler(7, Kof99A13000ReadWord);
 		SekClose();
@@ -2297,7 +2297,7 @@ static void SetupCustomCartridgeMappers()
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SOULBLAD) {
 		SekOpen(0);
-		SekMapHandler(7, 0x400002, 0x400007, MAP_READ);
+		SekMapHandler(7, 0x400002, 0x400007, SM_READ);
 		SekSetReadByteHandler(7, SoulbladReadByte);
 		SekSetReadWordHandler(7, SoulbladReadWord);
 		SekClose();
@@ -2305,10 +2305,10 @@ static void SetupCustomCartridgeMappers()
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_MJLOVER) {
 		SekOpen(0);
-		SekMapHandler(7, 0x400000, 0x400001, MAP_READ);
+		SekMapHandler(7, 0x400000, 0x400001, SM_READ);
 		SekSetReadByteHandler(7, MjloverProt1ReadByte);
 		SekSetReadWordHandler(7, MjloverProt1ReadWord);
-		SekMapHandler(8, 0x401000, 0x401001, MAP_READ);
+		SekMapHandler(8, 0x401000, 0x401001, SM_READ);
 		SekSetReadByteHandler(8, MjloverProt2ReadByte);
 		SekSetReadWordHandler(8, MjloverProt2ReadWord);
 		SekClose();
@@ -2316,7 +2316,7 @@ static void SetupCustomCartridgeMappers()
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SQUIRRELK) {
 		SekOpen(0);
-		SekMapHandler(7, 0x400000, 0x400007, MAP_READ | MAP_WRITE);
+		SekMapHandler(7, 0x400000, 0x400007, SM_READ | SM_WRITE);
 		SekSetReadByteHandler(7, SquirrelKingExtraReadByte);
 		SekSetReadWordHandler(7, SquirrelKingExtraReadWord);
 		SekSetWriteByteHandler(7, SquirrelKingExtraWriteByte);
@@ -2326,7 +2326,7 @@ static void SetupCustomCartridgeMappers()
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SMOUSE) {
 		SekOpen(0);
-		SekMapHandler(7, 0x400000, 0x400007, MAP_READ);
+		SekMapHandler(7, 0x400000, 0x400007, SM_READ);
 		SekSetReadByteHandler(7, SmouseProtReadByte);
 		SekSetReadWordHandler(7, SmouseProtReadWord);
 		SekClose();
@@ -2334,7 +2334,7 @@ static void SetupCustomCartridgeMappers()
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SMB) {
 		SekOpen(0);
-		SekMapHandler(7, 0xa13000, 0xa13001, MAP_READ);
+		SekMapHandler(7, 0xa13000, 0xa13001, SM_READ);
 		SekSetReadByteHandler(7, SmbProtReadByte);
 		SekSetReadWordHandler(7, SmbProtReadWord);
 		SekClose();
@@ -2342,7 +2342,7 @@ static void SetupCustomCartridgeMappers()
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SMB2) {
 		SekOpen(0);
-		SekMapHandler(7, 0xa13000, 0xa13001, MAP_READ);
+		SekMapHandler(7, 0xa13000, 0xa13001, SM_READ);
 		SekSetReadByteHandler(7, Smb2ProtReadByte);
 		SekSetReadWordHandler(7, Smb2ProtReadWord);
 		SekClose();
@@ -2357,7 +2357,7 @@ static void SetupCustomCartridgeMappers()
 		memcpy(RomMain + 0x000000, OriginalRom, 0x200000);
 	
 		SekOpen(0);
-		SekMapHandler(7, 0x700000, 0x7fffff, MAP_WRITE);
+		SekMapHandler(7, 0x700000, 0x7fffff, SM_WRITE);
 		SekSetWriteByteHandler(7, KaijuBankWriteByte);
 		SekSetWriteWordHandler(7, KaijuBankWriteWord);
 		SekClose();
@@ -2372,10 +2372,10 @@ static void SetupCustomCartridgeMappers()
 		memcpy(RomMain + 0x000000, OriginalRom + 0x000000, 0x200000);
 		
 		SekOpen(0);
-		SekMapHandler(7, 0x400000, 0x4fffff, MAP_READ);
+		SekMapHandler(7, 0x400000, 0x4fffff, SM_READ);
 		SekSetReadByteHandler(7, Chinfi3ProtReadByte);
 		SekSetReadWordHandler(7, Chinfi3ProtReadWord);
-		SekMapHandler(8, 0x600000, 0x6fffff, MAP_WRITE);
+		SekMapHandler(8, 0x600000, 0x6fffff, SM_WRITE);
 		SekSetWriteByteHandler(8, Chinfi3BankWriteByte);
 		SekSetWriteWordHandler(8, Chinfi3BankWriteWord);
 		SekClose();
@@ -2386,7 +2386,7 @@ static void SetupCustomCartridgeMappers()
 		RamMisc->Lionk2ProtData2 = 0;
 		
 		SekOpen(0);
-		SekMapHandler(7, 0x400000, 0x400007, MAP_READ | MAP_WRITE);
+		SekMapHandler(7, 0x400000, 0x400007, SM_READ | SM_WRITE);
 		SekSetReadByteHandler(7, Lionk2ProtReadByte);
 		SekSetReadWordHandler(7, Lionk2ProtReadWord);
 		SekSetWriteByteHandler(7, Lionk2ProtWriteByte);
@@ -2396,7 +2396,7 @@ static void SetupCustomCartridgeMappers()
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_BUGSLIFE) {
 		SekOpen(0);
-		SekMapHandler(7, 0xa13000, 0xa13001, MAP_READ);
+		SekMapHandler(7, 0xa13000, 0xa13001, SM_READ);
 		SekSetReadByteHandler(7, BuglExtraReadByte);
 		SekSetReadWordHandler(7, BuglExtraReadWord);
 		SekClose();
@@ -2404,7 +2404,7 @@ static void SetupCustomCartridgeMappers()
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_ELFWOR) {
 		SekOpen(0);
-		SekMapHandler(7, 0x400000, 0x400007, MAP_READ);
+		SekMapHandler(7, 0x400000, 0x400007, SM_READ);
 		SekSetReadByteHandler(7, Elfwor400000ReadByte);
 		SekSetReadWordHandler(7, Elfwor400000ReadWord);
 		SekClose();
@@ -2412,7 +2412,7 @@ static void SetupCustomCartridgeMappers()
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_ROCKMANX3) {
 		SekOpen(0);
-		SekMapHandler(7, 0xa13000, 0xa13001, MAP_READ);
+		SekMapHandler(7, 0xa13000, 0xa13001, SM_READ);
 		SekSetReadByteHandler(7, RockmanX3ExtraReadByte);
 		SekSetReadWordHandler(7, RockmanX3ExtraReadWord);
 		SekClose();
@@ -2420,7 +2420,7 @@ static void SetupCustomCartridgeMappers()
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SBUBBOB) {
 		SekOpen(0);
-		SekMapHandler(7, 0x400000, 0x400003, MAP_READ);
+		SekMapHandler(7, 0x400000, 0x400003, SM_READ);
 		SekSetReadByteHandler(7, SbubExtraReadByte);
 		SekSetReadWordHandler(7, SbubExtraReadWord);
 		SekClose();
@@ -2428,7 +2428,7 @@ static void SetupCustomCartridgeMappers()
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_KOF98) {
 		SekOpen(0);
-		SekMapHandler(7, 0x480000, 0x4fffff, MAP_READ);
+		SekMapHandler(7, 0x480000, 0x4fffff, SM_READ);
 		SekSetReadByteHandler(7, Kof98ReadByte);
 		SekSetReadWordHandler(7, Kof98ReadWord);
 		SekClose();
@@ -2448,7 +2448,7 @@ static void SetupCustomCartridgeMappers()
 		}
 		
 		SekOpen(0);
-		SekMapHandler(7, 0x400000, 0x40400f, MAP_WRITE);
+		SekMapHandler(7, 0x400000, 0x40400f, SM_WRITE);
 		SekSetWriteByteHandler(7, RealtecWriteByte);
 		SekSetWriteWordHandler(7, RealtecWriteWord);
 		SekClose();
@@ -2461,7 +2461,7 @@ static void SetupCustomCartridgeMappers()
 		memcpy(RomMain + 0x400000, OriginalRom + 0x000000, 0x400000);
 		
 		SekOpen(0);
-		SekMapHandler(7, 0xa13000, 0xa13039, MAP_WRITE);
+		SekMapHandler(7, 0xa13000, 0xa13039, SM_WRITE);
 		SekSetWriteByteHandler(7, Sup19in1BankWriteByte);
 		SekSetWriteWordHandler(7, Sup19in1BankWriteWord);
 		SekClose();
@@ -2474,7 +2474,7 @@ static void SetupCustomCartridgeMappers()
 		memcpy(RomMain + 0x400000, OriginalRom + 0x000000, 0x200000);
 		
 		SekOpen(0);
-		SekMapHandler(7, 0xa13000, 0xa13039, MAP_WRITE);
+		SekMapHandler(7, 0xa13000, 0xa13039, SM_WRITE);
 		SekSetWriteByteHandler(7, Sup19in1BankWriteByte);
 		SekSetWriteWordHandler(7, Sup19in1BankWriteWord);
 		SekClose();
@@ -2487,7 +2487,7 @@ static void SetupCustomCartridgeMappers()
 		memcpy(RomMain + 0x000000, OriginalRom + 0x000000, 0x200000);
 		
 		SekOpen(0);
-		SekMapHandler(7, 0xa13000, 0xa1303f, MAP_WRITE);
+		SekMapHandler(7, 0xa13000, 0xa1303f, SM_WRITE);
 		SekSetWriteByteHandler(7, Mc12in1BankWriteByte);
 		SekSetWriteWordHandler(7, Mc12in1BankWriteWord);
 		SekClose();
@@ -2503,10 +2503,10 @@ static void SetupCustomCartridgeMappers()
 		memcpy(RomMain + 0x600000, OriginalRom + 0x000000, 0x200000);
 		
 		SekOpen(0);
-		SekMapHandler(7, 0x600000, 0x6fffff, MAP_READ);
+		SekMapHandler(7, 0x600000, 0x6fffff, SM_READ);
 		SekSetReadByteHandler(7, TopfigReadByte);
 		SekSetReadWordHandler(7, TopfigReadWord);		
-		SekMapHandler(8, 0x700000, 0x7fffff, MAP_WRITE);
+		SekMapHandler(8, 0x700000, 0x7fffff, SM_WRITE);
 		SekSetWriteByteHandler(8, TopfigWriteByte);
 		SekSetWriteWordHandler(8, TopfigWriteWord);
 		SekClose();
@@ -2564,7 +2564,7 @@ static void InstallSRAMHandlers(bool MaskAddr)
 	memcpy((UINT8*)MegadriveBackupRam, SRam, RamMisc->SRamEnd - RamMisc->SRamStart + 1);
 	
 	SekOpen(0);
-	SekMapHandler(6, RamMisc->SRamStart & Mask, RamMisc->SRamEnd & Mask, MAP_READ | MAP_WRITE);
+	SekMapHandler(6, RamMisc->SRamStart & Mask, RamMisc->SRamEnd & Mask, SM_READ | SM_WRITE);
 	SekSetReadByteHandler(6, MegadriveSRAMReadByte);
 	SekSetReadWordHandler(6, MegadriveSRAMReadWord);
 	SekSetWriteByteHandler(6, MegadriveSRAMWriteByte);
@@ -2792,7 +2792,7 @@ static void MegadriveSetupSRAM()
 		MegadriveBackupRam = (UINT16*)RomMain + RamMisc->SRamStart;
 		
 		SekOpen(0);
-		SekMapHandler(5, 0xa130f0, 0xa130f1, MAP_WRITE);
+		SekMapHandler(5, 0xa130f0, 0xa130f1, SM_WRITE);
 		SekSetWriteByteHandler(5, MegadriveSRAMToggleWriteByte);
 		SekSetWriteWordHandler(5, MegadriveSRAMToggleWriteWord);
 		SekClose();
@@ -2822,7 +2822,7 @@ static void MegadriveSetupSRAM()
 		MegadriveBackupRam = (UINT16*)RomMain + RamMisc->SRamStart;
 		
 		SekOpen(0);
-		SekMapHandler(5, 0xa130f0, 0xa130f1, MAP_READ | MAP_WRITE);
+		SekMapHandler(5, 0xa130f0, 0xa130f1, SM_READ | SM_WRITE);
 		SekSetReadByteHandler(5, Megadrive6658ARegReadByte);
 		SekSetReadWordHandler(5, Megadrive6658ARegReadWord);
 		SekSetWriteByteHandler(5, Megadrive6658ARegWriteByte);
@@ -2835,7 +2835,7 @@ static void MegadriveSetupSRAM()
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_EEPROM) {
 		RamMisc->SRamHasSerialEEPROM = 1;
 		SekOpen(0);
-		SekMapHandler(5, 0x200000, 0x200001, MAP_READ | MAP_WRITE);
+		SekMapHandler(5, 0x200000, 0x200001, SM_READ | SM_WRITE);
 		SekSetReadByteHandler(5, WboyVEEPROMReadByte);
 		SekSetReadWordHandler(5, WboyVEEPROMReadWord);
 		SekSetWriteByteHandler(5, WboyVEEPROMWriteByte);
@@ -2846,7 +2846,7 @@ static void MegadriveSetupSRAM()
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM) {
 		RamMisc->SRamHasSerialEEPROM = 1;
 		SekOpen(0);
-		SekMapHandler(5, 0x200000, 0x200001, MAP_READ | MAP_WRITE);
+		SekMapHandler(5, 0x200000, 0x200001, SM_READ | SM_WRITE);
 		SekSetReadByteHandler(5, NbajamEEPROMReadByte);
 		SekSetReadWordHandler(5, NbajamEEPROMReadWord);
 		SekSetWriteByteHandler(5, NbajamEEPROMWriteByte);
@@ -2857,7 +2857,7 @@ static void MegadriveSetupSRAM()
 	if (((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM_TE) || ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_NFL_QB_96) || ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_C_SLAM)) {
 		RamMisc->SRamHasSerialEEPROM = 1;
 		SekOpen(0);
-		SekMapHandler(5, 0x200000, 0x200001, MAP_READ | MAP_WRITE);
+		SekMapHandler(5, 0x200000, 0x200001, SM_READ | SM_WRITE);
 		SekSetReadByteHandler(5, NbajamteEEPROMReadByte);
 		SekSetReadWordHandler(5, NbajamteEEPROMReadWord);
 		SekSetWriteByteHandler(5, NbajamteEEPROMWriteByte);
@@ -2868,7 +2868,7 @@ static void MegadriveSetupSRAM()
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_EA_NHLPA) {
 		RamMisc->SRamHasSerialEEPROM = 1;
 		SekOpen(0);
-		SekMapHandler(5, 0x200000, 0x200001, MAP_READ | MAP_WRITE);
+		SekMapHandler(5, 0x200000, 0x200001, SM_READ | SM_WRITE);
 		SekSetReadByteHandler(5, EANhlpaEEPROMReadByte);
 		SekSetReadWordHandler(5, EANhlpaEEPROMReadWord);
 		SekSetWriteByteHandler(5, EANhlpaEEPROMWriteByte);
@@ -2879,10 +2879,10 @@ static void MegadriveSetupSRAM()
 	if (((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_CODE_MASTERS) || ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_CM_JCART_SEPROM)) {
 		RamMisc->SRamHasSerialEEPROM = 1;
 		SekOpen(0);
-		SekMapHandler(5, 0x300000, 0x300001, MAP_WRITE);
+		SekMapHandler(5, 0x300000, 0x300001, SM_WRITE);
 		SekSetWriteByteHandler(5, CodemastersEEPROMWriteByte);
 		SekSetWriteWordHandler(5, CodemastersEEPROMWriteWord);
-		SekMapHandler(6, 0x380000, 0x380001, MAP_READ);
+		SekMapHandler(6, 0x380000, 0x380001, SM_READ);
 		SekSetReadByteHandler(6, CodemastersEEPROMReadByte);
 		SekSetReadWordHandler(6, CodemastersEEPROMReadWord);
 		SekClose();
@@ -2934,7 +2934,7 @@ static void MegadriveSetupSRAM()
 			}
 
 			SekOpen(0);
-			SekMapHandler(5, 0xa130f0, 0xa130f1, MAP_WRITE);
+			SekMapHandler(5, 0xa130f0, 0xa130f1, SM_WRITE);
 			SekSetWriteByteHandler(5, MegadriveSRAMToggleWriteByte);
 			SekSetWriteWordHandler(5, MegadriveSRAMToggleWriteWord);
 			SekClose();
@@ -2967,13 +2967,13 @@ INT32 MegadriveInit()
 	        SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(RomMain,		0x000000, 0x3FFFFF, MAP_ROM);	// 68000 ROM
-		SekMapMemory(Ram68K,		0xFF0000, 0xFFFFFF, MAP_RAM);	// 68000 RAM
+		SekMapMemory(RomMain,		0x000000, 0x3FFFFF, SM_ROM);	// 68000 ROM
+		SekMapMemory(Ram68K,		0xFF0000, 0xFFFFFF, SM_RAM);	// 68000 RAM
 		
-		SekMapHandler(1,			0xC00000, 0xC0001F, MAP_RAM);	// Video Port
-		SekMapHandler(2,			0xA00000, 0xA01FFF, MAP_RAM);	// Z80 Ram
-		SekMapHandler(3,			0xA02000, 0xA03FFF, MAP_RAM);	// Z80 Ram
-		SekMapHandler(4,			0xA10000, 0xA1001F, MAP_RAM);	// I/O
+		SekMapHandler(1,			0xC00000, 0xC0001F, SM_RAM);	// Video Port
+		SekMapHandler(2,			0xA00000, 0xA01FFF, SM_RAM);	// Z80 Ram
+		SekMapHandler(3,			0xA02000, 0xA03FFF, SM_RAM);	// Z80 Ram
+		SekMapHandler(4,			0xA10000, 0xA1001F, SM_RAM);	// I/O
 		
 		SekSetReadByteHandler (0, MegadriveReadByte);
 		SekSetReadWordHandler (0, MegadriveReadWord);

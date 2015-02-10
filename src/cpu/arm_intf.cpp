@@ -239,13 +239,13 @@ void ArmSetIRQLine(INT32 line, INT32 state)
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmSetIRQLine called without init\n"));
 #endif
 
-	if (state == CPU_IRQSTATUS_NONE || state == CPU_IRQSTATUS_ACK) {
+	if (state == ARM_IRQSTATUS_NONE || state == ARM_IRQSTATUS_ACK) {
 		arm_set_irq_line(line, state);
 	}
-	else if (CPU_IRQSTATUS_AUTO) {
-		arm_set_irq_line(line, CPU_IRQSTATUS_ACK);
+	else if (ARM_IRQSTATUS_AUTO) {
+		arm_set_irq_line(line, ARM_IRQSTATUS_ACK);
 		ArmRun(0);
-		arm_set_irq_line(line, CPU_IRQSTATUS_NONE);
+		arm_set_irq_line(line, ARM_IRQSTATUS_NONE);
 	}
 }
 

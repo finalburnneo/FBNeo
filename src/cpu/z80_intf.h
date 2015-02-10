@@ -18,13 +18,13 @@ void ZetOpen(INT32 nCPU);
 void ZetClose();
 INT32 ZetGetActive();
 
-//#define ZET_FETCHOP	4
-//#define ZET_FETCHARG	8
-//#define ZET_READ	1
-//#define ZET_WRITE	2
-//#define ZET_FETCH	(ZET_FETCHOP|ZET_FETCHARG)
-//#define ZET_ROM		(ZET_READ|ZET_FETCH)
-//#define ZET_RAM		(ZET_ROM|ZET_WRITE)
+#define ZET_FETCHOP	4
+#define ZET_FETCHARG	8
+#define ZET_READ	1
+#define ZET_WRITE	2
+#define ZET_FETCH	(ZET_FETCHOP|ZET_FETCHARG)
+#define ZET_ROM		(ZET_READ|ZET_FETCH)
+#define ZET_RAM		(ZET_ROM|ZET_WRITE)
 
 INT32 ZetUnmapMemory(INT32 nStart,INT32 nEnd,INT32 nFlags);
 void ZetMapMemory(UINT8 *Mem, INT32 nStart, INT32 nEnd, INT32 nFlags);
@@ -52,8 +52,12 @@ INT32 ZetSegmentCycles();
 INT32 ZetTotalCycles();
 void ZetSetHL(INT32 n, UINT16 value);
 
-//#define ZetRaiseIrq(n) ZetSetIRQLine(n, ZET_IRQSTATUS_AUTO)
-//#define ZetLowerIrq() ZetSetIRQLine(0, Z80_CLEAR_LINE)
+#define ZET_IRQSTATUS_NONE 0
+#define ZET_IRQSTATUS_ACK  1
+#define ZET_IRQSTATUS_AUTO 2
+
+#define ZetRaiseIrq(n) ZetSetIRQLine(n, ZET_IRQSTATUS_AUTO)
+#define ZetLowerIrq() ZetSetIRQLine(0, Z80_CLEAR_LINE)
 
 void ZetSetReadHandler(UINT8 (__fastcall *pHandler)(UINT16));
 void ZetSetWriteHandler(void (__fastcall *pHandler)(UINT16, UINT8));

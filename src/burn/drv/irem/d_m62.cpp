@@ -3383,7 +3383,7 @@ static void M62MachineInit()
 	ZetClose();
 	
 	M6803Init(1);
-	M6803MapMemory(M62M6803Rom, 0x4000, 0xffff, MAP_ROM);
+	M6803MapMemory(M62M6803Rom, 0x4000, 0xffff, M6803_ROM);
 	M6803SetReadHandler(M62M6803ReadByte);
 	M6803SetWriteHandler(M62M6803WriteByte);
 	M6803SetReadPortHandler(M62M6803ReadPort);

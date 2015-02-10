@@ -1103,14 +1103,14 @@ static INT32 BurglarxInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom           , 0x000000, 0x0fffff, MAP_ROM);
-	SekMapMemory(DrvVideo1Ram        , 0x904000, 0x907fff, MAP_RAM);
-	SekMapMemory(DrvVideo2Ram        , 0x908000, 0x90bfff, MAP_RAM);
-	SekMapMemory(DrvVideo0Ram        , 0x90c000, 0x90ffff, MAP_RAM);
-	SekMapMemory(Drv68KRam + 0x10000 , 0x920000, 0x923fff, MAP_RAM);
-	SekMapMemory(DrvSpriteRam        , 0x930000, 0x9307ff, MAP_RAM);
-	SekMapMemory(DrvPaletteRam       , 0x940000, 0x947fff, MAP_RAM);
-	SekMapMemory(Drv68KRam           , 0xff0000, 0xffffff, MAP_RAM);
+	SekMapMemory(Drv68KRom           , 0x000000, 0x0fffff, SM_ROM);
+	SekMapMemory(DrvVideo1Ram        , 0x904000, 0x907fff, SM_RAM);
+	SekMapMemory(DrvVideo2Ram        , 0x908000, 0x90bfff, SM_RAM);
+	SekMapMemory(DrvVideo0Ram        , 0x90c000, 0x90ffff, SM_RAM);
+	SekMapMemory(Drv68KRam + 0x10000 , 0x920000, 0x923fff, SM_RAM);
+	SekMapMemory(DrvSpriteRam        , 0x930000, 0x9307ff, SM_RAM);
+	SekMapMemory(DrvPaletteRam       , 0x940000, 0x947fff, SM_RAM);
+	SekMapMemory(Drv68KRam           , 0xff0000, 0xffffff, SM_RAM);
 	SekSetReadWordHandler(0, Burglarx68KReadWord);
 	SekSetWriteWordHandler(0, Burglarx68KWriteWord);
 	SekSetReadByteHandler(0, Burglarx68KReadByte);
@@ -1186,14 +1186,14 @@ static INT32 ZeropntInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom           , 0x000000, 0x0fffff, MAP_ROM);
-	SekMapMemory(DrvVideo1Ram        , 0x904000, 0x907fff, MAP_RAM);
-	SekMapMemory(DrvVideo2Ram        , 0x908000, 0x90bfff, MAP_RAM);
-	SekMapMemory(DrvVideo0Ram        , 0x90c000, 0x90ffff, MAP_RAM);
-	SekMapMemory(Drv68KRam + 0x10000 , 0x920000, 0x923fff, MAP_RAM);
-	SekMapMemory(DrvSpriteRam        , 0x930000, 0x9307ff, MAP_RAM);
-	SekMapMemory(DrvPaletteRam       , 0x940000, 0x947fff, MAP_RAM);
-	SekMapMemory(Drv68KRam           , 0xef0000, 0xefffff, MAP_RAM);
+	SekMapMemory(Drv68KRom           , 0x000000, 0x0fffff, SM_ROM);
+	SekMapMemory(DrvVideo1Ram        , 0x904000, 0x907fff, SM_RAM);
+	SekMapMemory(DrvVideo2Ram        , 0x908000, 0x90bfff, SM_RAM);
+	SekMapMemory(DrvVideo0Ram        , 0x90c000, 0x90ffff, SM_RAM);
+	SekMapMemory(Drv68KRam + 0x10000 , 0x920000, 0x923fff, SM_RAM);
+	SekMapMemory(DrvSpriteRam        , 0x930000, 0x9307ff, SM_RAM);
+	SekMapMemory(DrvPaletteRam       , 0x940000, 0x947fff, SM_RAM);
+	SekMapMemory(Drv68KRam           , 0xef0000, 0xefffff, SM_RAM);
 	SekSetReadWordHandler(0, Zeropnt68KReadWord);
 	SekSetWriteWordHandler(0, Zeropnt68KWriteWord);
 	SekSetReadByteHandler(0, Zeropnt68KReadByte);
@@ -1291,14 +1291,14 @@ static INT32 Zeropnt2Init()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68EC020);
 	SekOpen(0);
-	SekMapMemory(Drv68KRom           , 0x000000, 0x1fffff, MAP_ROM);
-	SekMapMemory(DrvVideo1Ram        , 0x904000, 0x907fff, MAP_RAM);
-	SekMapMemory(DrvVideo2Ram        , 0x908000, 0x90bfff, MAP_RAM);
-	SekMapMemory(DrvVideo0Ram        , 0x90c000, 0x90ffff, MAP_RAM);
-	SekMapMemory(Drv68KRam + 0x10000 , 0x920000, 0x923fff, MAP_RAM);
-	SekMapMemory(DrvSpriteRam        , 0x930000, 0x9307ff, MAP_RAM);
-	SekMapMemory(DrvPaletteRam       , 0x940000, 0x947fff, MAP_RAM);
-	SekMapMemory(Drv68KRam           , 0xfe0000, 0xffffff, MAP_RAM);
+	SekMapMemory(Drv68KRom           , 0x000000, 0x1fffff, SM_ROM);
+	SekMapMemory(DrvVideo1Ram        , 0x904000, 0x907fff, SM_RAM);
+	SekMapMemory(DrvVideo2Ram        , 0x908000, 0x90bfff, SM_RAM);
+	SekMapMemory(DrvVideo0Ram        , 0x90c000, 0x90ffff, SM_RAM);
+	SekMapMemory(Drv68KRam + 0x10000 , 0x920000, 0x923fff, SM_RAM);
+	SekMapMemory(DrvSpriteRam        , 0x930000, 0x9307ff, SM_RAM);
+	SekMapMemory(DrvPaletteRam       , 0x940000, 0x947fff, SM_RAM);
+	SekMapMemory(Drv68KRam           , 0xfe0000, 0xffffff, SM_RAM);
 	SekSetReadWordHandler(0, Zeropnt268KReadWord);
 	SekSetWriteWordHandler(0, Zeropnt268KWriteWord);
 	SekSetReadByteHandler(0, Zeropnt268KReadByte);

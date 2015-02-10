@@ -357,12 +357,12 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM,		0x120000, 0x12ffff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		0x140000, 0x1407ff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,		0x160000, 0x1607ff, MAP_RAM);
-	SekMapMemory(DrvFgRAM,		0x320000, 0x320fff, MAP_RAM);
-	SekMapMemory(DrvBgRAM,		0x322000, 0x322fff, MAP_RAM);
+	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(Drv68KRAM,		0x120000, 0x12ffff, SM_RAM);
+	SekMapMemory(DrvPalRAM,		0x140000, 0x1407ff, SM_RAM);
+	SekMapMemory(DrvSprRAM,		0x160000, 0x1607ff, SM_RAM);
+	SekMapMemory(DrvFgRAM,		0x320000, 0x320fff, SM_RAM);
+	SekMapMemory(DrvBgRAM,		0x322000, 0x322fff, SM_RAM);
 	SekSetWriteWordHandler(0,	gotcha_write_word);
 	SekSetWriteByteHandler(0,	gotcha_write_byte);
 	SekSetReadWordHandler(0,	gotcha_read_word);

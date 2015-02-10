@@ -325,13 +325,13 @@ void Arm7SetIRQLine(INT32 line, INT32 state)
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7SetIRQLine called without init\n"));
 #endif
 
-	if (state == CPU_IRQSTATUS_NONE || state == CPU_IRQSTATUS_ACK) {
+	if (state == ARM7_IRQSTATUS_NONE || state == ARM7_IRQSTATUS_ACK) {
 		arm7_set_irq_line(line, state);
 	}
-	else if (CPU_IRQSTATUS_AUTO) {
-		arm7_set_irq_line(line, CPU_IRQSTATUS_ACK);
+	else if (ARM7_IRQSTATUS_AUTO) {
+		arm7_set_irq_line(line, ARM7_IRQSTATUS_ACK);
 		Arm7Run(0);
-		arm7_set_irq_line(line, CPU_IRQSTATUS_NONE);
+		arm7_set_irq_line(line, ARM7_IRQSTATUS_NONE);
 	}
 }
 

@@ -11416,10 +11416,10 @@ static INT32 PhoenixInit()
 	nCpsNumScanlines = 262;	// phoenix sets seem to be sensitive to timing??
 	
 	SekOpen(0);
-	SekMapHandler(3, 0xff0000, 0xffffff, MAP_WRITE);
+	SekMapHandler(3, 0xff0000, 0xffffff, SM_WRITE);
 	SekSetWriteByteHandler(3, PhoenixOutputWriteByte);
 	SekSetWriteWordHandler(3, PhoenixOutputWriteWord);
-	SekMapHandler(4, 0x700000, 0x701fff, MAP_WRITE);
+	SekMapHandler(4, 0x700000, 0x701fff, SM_WRITE);
 	SekSetWriteByteHandler(4, PhoenixSpriteWriteByte);
 	SekSetWriteWordHandler(4, PhoenixSpriteWriteWord);
 	SekClose();
@@ -12061,7 +12061,7 @@ static INT32 Gigaman2Init()
 	nRet = CpsRunInit();
 	
 	SekOpen(0);
-	SekMapMemory(Gigaman2DummyQsndRam, 0x618000, 0x619fff, MAP_RAM);
+	SekMapMemory(Gigaman2DummyQsndRam, 0x618000, 0x619fff, SM_RAM);
 	SekClose();
 	
 //	nCpsNumScanlines = 262;	// phoenix sets seem to be sensitive to timing??

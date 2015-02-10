@@ -239,7 +239,7 @@ static void bankswitch(INT32 data)
 
 	INT32 offs = 0x10000 + (data & 0x1e) * 0x1000;
 
-	M6809MapMemory(DrvM6809ROM + offs, 0x6000, 0x7fff, MAP_ROM);
+	M6809MapMemory(DrvM6809ROM + offs, 0x6000, 0x7fff, M6809_ROM);
 }
 
 void bottom9_main_write(UINT16 address, UINT8 data)
@@ -542,9 +542,9 @@ static INT32 DrvInit()
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvM6809RAM,	      0x4000, 0x5fff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM + 0x10000, 0x6000, 0x7fff, MAP_ROM);
-	M6809MapMemory(DrvM6809ROM + 0x08000, 0x8000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvM6809RAM,	      0x4000, 0x5fff, M6809_RAM);
+	M6809MapMemory(DrvM6809ROM + 0x10000, 0x6000, 0x7fff, M6809_ROM);
+	M6809MapMemory(DrvM6809ROM + 0x08000, 0x8000, 0xffff, M6809_ROM);
 	M6809SetWriteHandler(bottom9_main_write);
 	M6809SetReadHandler(bottom9_main_read);
 	M6809Close();

@@ -280,13 +280,13 @@ static void games88_set_lines(INT32 lines)
 
 	INT32 nBank = 0x10000 + (lines & 0x07) * 0x2000;
 
-	konamiMapMemory(DrvKonROM + nBank, 0x0000, 0x0fff, MAP_ROM);
+	konamiMapMemory(DrvKonROM + nBank, 0x0000, 0x0fff, KON_ROM);
 
 	if (lines & 8) {
-		konamiMapMemory(DrvPalRAM, 0x1000, 0x1fff, MAP_RAM);
+		konamiMapMemory(DrvPalRAM, 0x1000, 0x1fff, KON_RAM);
 	} else {
-		konamiMapMemory(DrvKonROM + nBank + 0x1000, 0x1000, 0x1fff, MAP_ROM);
-		konamiMapMemory(DrvKonROM +         0x0000, 0x1000, 0x1fff, MAP_WRITE); // unmap writes
+		konamiMapMemory(DrvKonROM + nBank + 0x1000, 0x1000, 0x1fff, KON_ROM);
+		konamiMapMemory(DrvKonROM +         0x0000, 0x1000, 0x1fff, KON_WRITE); // unmap writes
 	}
 
 	videobank = lines & 0x10;
@@ -440,10 +440,10 @@ static INT32 DrvInit()
 
 	konamiInit(0);
 	konamiOpen(0);
-	konamiMapMemory(DrvPalRAM + 0x0000,	0x1000, 0x1fff, MAP_RAM);
-	konamiMapMemory(DrvKonRAM,		0x2000, 0x2fff, MAP_RAM); 
-	konamiMapMemory(DrvNVRAM,		0x3000, 0x37ff, MAP_RAM);
-	konamiMapMemory(DrvKonROM + 0x8000,	0x8000, 0xffff, MAP_ROM);
+	konamiMapMemory(DrvPalRAM + 0x0000,	0x1000, 0x1fff, KON_RAM);
+	konamiMapMemory(DrvKonRAM,		0x2000, 0x2fff, KON_RAM); 
+	konamiMapMemory(DrvNVRAM,		0x3000, 0x37ff, KON_RAM);
+	konamiMapMemory(DrvKonROM + 0x8000,	0x8000, 0xffff, KON_ROM);
 	konamiSetWriteHandler(games88_main_write);
 	konamiSetReadHandler(games88_main_read);
 	konamiSetlinesCallback(games88_set_lines);

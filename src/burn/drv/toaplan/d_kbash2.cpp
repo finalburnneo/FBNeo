@@ -391,9 +391,9 @@ static INT32 DrvInit()
 	{
 		SekInit(0, 0x68000);								// Allocate 68000
 		SekOpen(0);
-		SekMapMemory(Rom01,		0x000000, 0x07FFFF, MAP_ROM);
-		SekMapMemory(Ram01,		0x100000, 0x103FFF, MAP_RAM);
-		SekMapMemory(RamPal,		0x400000, 0x400FFF, MAP_RAM);
+		SekMapMemory(Rom01,		0x000000, 0x07FFFF, SM_ROM);
+		SekMapMemory(Ram01,		0x100000, 0x103FFF, SM_RAM);
+		SekMapMemory(RamPal,		0x400000, 0x400FFF, SM_RAM);
 		SekSetReadWordHandler(0, 	kbash2ReadWord);
 		SekSetReadByteHandler(0, 	kbash2ReadByte);
 		SekSetWriteWordHandler(0, 	kbash2WriteWord);

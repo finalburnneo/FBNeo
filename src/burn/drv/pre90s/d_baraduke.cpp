@@ -488,20 +488,20 @@ static INT32 DrvInit(INT32 type)
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvSprRAM,			0x0000, 0x1fff, MAP_READ | MAP_FETCH);
-	M6809MapMemory(DrvSprRAM,			0x0000, 0x1eff, MAP_WRITE);
-	M6809MapMemory(DrvVidRAM,			0x2000, 0x3fff, MAP_RAM);
-	M6809MapMemory(DrvTxtRAM,			0x4800, 0x4fff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM + 0x06000,		0x6000, 0xffff, MAP_ROM);
+	M6809MapMemory(DrvSprRAM,			0x0000, 0x1fff, M6809_READ | M6809_FETCH);
+	M6809MapMemory(DrvSprRAM,			0x0000, 0x1eff, M6809_WRITE);
+	M6809MapMemory(DrvVidRAM,			0x2000, 0x3fff, M6809_RAM);
+	M6809MapMemory(DrvTxtRAM,			0x4800, 0x4fff, M6809_RAM);
+	M6809MapMemory(DrvM6809ROM + 0x06000,		0x6000, 0xffff, M6809_ROM);
 	M6809SetWriteHandler(baraduke_main_write);
 	M6809SetReadHandler(baraduke_main_read);
 	M6809Close();
 
 	HD63701Init(1);
 //	HD63701Open(0);
-	HD63701MapMemory(DrvHD63701ROM + 0x8000,	0x8000, 0xbfff, MAP_ROM);
-	HD63701MapMemory(DrvHD63701RAM,			0xc000, 0xc7ff, MAP_RAM);
-	HD63701MapMemory(DrvHD63701ROM + 0xf000,	0xf000, 0xffff, MAP_ROM);
+	HD63701MapMemory(DrvHD63701ROM + 0x8000,	0x8000, 0xbfff, HD63701_ROM);
+	HD63701MapMemory(DrvHD63701RAM,			0xc000, 0xc7ff, HD63701_RAM);
+	HD63701MapMemory(DrvHD63701ROM + 0xf000,	0xf000, 0xffff, HD63701_ROM);
 	HD63701SetReadHandler(baraduke_mcu_read);
 	HD63701SetWriteHandler(baraduke_mcu_write);
 	HD63701SetReadPortHandler(baraduke_mcu_read_port);

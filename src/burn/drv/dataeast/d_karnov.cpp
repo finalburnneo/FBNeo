@@ -882,12 +882,12 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,		0x000000, 0x05ffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM,		0x060000, 0x063fff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,		0x080000, 0x080fff, MAP_RAM);
-	SekMapMemory(DrvVidRAM,		0x0a0000, 0x0a07ff, MAP_RAM);
-	SekMapMemory(DrvVidRAM,		0x0a0800, 0x0a0fff, MAP_RAM);
-	SekMapMemory(DrvPfRAM,		0x0a1000, 0x0a17ff, MAP_WRITE);
+	SekMapMemory(Drv68KROM,		0x000000, 0x05ffff, SM_ROM);
+	SekMapMemory(Drv68KRAM,		0x060000, 0x063fff, SM_RAM);
+	SekMapMemory(DrvSprRAM,		0x080000, 0x080fff, SM_RAM);
+	SekMapMemory(DrvVidRAM,		0x0a0000, 0x0a07ff, SM_RAM);
+	SekMapMemory(DrvVidRAM,		0x0a0800, 0x0a0fff, SM_RAM);
+	SekMapMemory(DrvPfRAM,		0x0a1000, 0x0a17ff, SM_WRITE);
 	SekSetWriteWordHandler(0,	karnov_main_write_word);
 	SekSetWriteByteHandler(0,	karnov_main_write_byte);
 	SekSetReadWordHandler(0,	karnov_main_read_word);
@@ -896,8 +896,8 @@ static INT32 DrvInit()
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(Drv6502RAM,		0x0000, 0x05ff, MAP_RAM);
-	M6502MapMemory(Drv6502ROM + 0x8000,	0x8000, 0xffff, MAP_ROM);
+	M6502MapMemory(Drv6502RAM,		0x0000, 0x05ff, M6502_RAM);
+	M6502MapMemory(Drv6502ROM + 0x8000,	0x8000, 0xffff, M6502_ROM);
 	M6502SetReadHandler(karnov_sound_read);
 	M6502SetWriteHandler(karnov_sound_write);
 	M6502Close();

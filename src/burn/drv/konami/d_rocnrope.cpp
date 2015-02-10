@@ -369,12 +369,12 @@ static INT32 DrvInit()
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvSprRAM,		0x4000, 0x47ff, MAP_RAM);
-	M6809MapMemory(DrvColRAM,		0x4800, 0x4bff, MAP_RAM);
-	M6809MapMemory(DrvVidRAM,		0x4c00, 0x4fff, MAP_RAM);
-	M6809MapMemory(DrvM6809RAM,		0x5000, 0x5fff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM + 0x6000,	0x6000, 0xffff, MAP_READ);
-	M6809MapMemory(DrvM6809ROMDec + 0x6000,	0x6000, 0xffff, MAP_FETCH);
+	M6809MapMemory(DrvSprRAM,		0x4000, 0x47ff, M6809_RAM);
+	M6809MapMemory(DrvColRAM,		0x4800, 0x4bff, M6809_RAM);
+	M6809MapMemory(DrvVidRAM,		0x4c00, 0x4fff, M6809_RAM);
+	M6809MapMemory(DrvM6809RAM,		0x5000, 0x5fff, M6809_RAM);
+	M6809MapMemory(DrvM6809ROM + 0x6000,	0x6000, 0xffff, M6809_READ);
+	M6809MapMemory(DrvM6809ROMDec + 0x6000,	0x6000, 0xffff, M6809_FETCH);
 	M6809SetWriteHandler(rocnrope_write);
 	M6809SetReadHandler(rocnrope_read);
 	M6809Close();

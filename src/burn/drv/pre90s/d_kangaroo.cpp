@@ -581,13 +581,13 @@ INT32 DrvFrame()
 
 /*		ZetOpen(0);
 		nCyclesDone[0] -= ZetRun(nCyclesDone[0] / (nInterleave - i));
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) ZetRaiseIrq(0);
 		ZetClose();
 
 		// Run Z80 #1
 		ZetOpen(1);
 		nCyclesDone[1] -= ZetRun(nCyclesDone[1] / (nInterleave - i));
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 1)) ZetRaiseIrq(0);
 		ZetClose();*/
 
 		// Render Sound Segment

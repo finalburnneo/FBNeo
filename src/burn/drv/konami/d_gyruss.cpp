@@ -706,11 +706,11 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0, 0x0000, 0x7fff, MAP_ROM);
-	ZetMapMemory(DrvColRAM, 0x8000, 0x83ff, MAP_RAM);
-	ZetMapMemory(DrvVidRAM, 0x8400, 0x87ff, MAP_RAM);
-	ZetMapMemory(DrvZ80RAM0, 0x9000, 0x9fff, MAP_RAM);
-	ZetMapMemory(DrvShareRAM, 0xa000, 0xa7ff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM0, 0x0000, 0x7fff, ZET_ROM);
+	ZetMapMemory(DrvColRAM, 0x8000, 0x83ff, ZET_RAM);
+	ZetMapMemory(DrvVidRAM, 0x8400, 0x87ff, ZET_RAM);
+	ZetMapMemory(DrvZ80RAM0, 0x9000, 0x9fff, ZET_RAM);
+	ZetMapMemory(DrvShareRAM, 0xa000, 0xa7ff, ZET_RAM);
 
 	ZetSetReadHandler(gyruss_main_read);
 	ZetSetWriteHandler(gyruss_main_write);
@@ -718,18 +718,18 @@ static INT32 DrvInit()
 
 	M6809Init(1);
 	M6809Open(0);
-	M6809MapMemory(DrvM6809RAM, 0x4000, 0x47ff, MAP_RAM);
-	M6809MapMemory(DrvShareRAM,	0x6000, 0x67ff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM + 0xe000, 0xe000, 0xffff, MAP_READ);
-	M6809MapMemory(DrvM6809DecROM + 0xe000,	0xe000, 0xffff, MAP_FETCH);
+	M6809MapMemory(DrvM6809RAM, 0x4000, 0x47ff, M6809_RAM);
+	M6809MapMemory(DrvShareRAM,	0x6000, 0x67ff, M6809_RAM);
+	M6809MapMemory(DrvM6809ROM + 0xe000, 0xe000, 0xffff, M6809_READ);
+	M6809MapMemory(DrvM6809DecROM + 0xe000,	0xe000, 0xffff, M6809_FETCH);
 	M6809SetReadHandler(gyruss_sub_read);
 	M6809SetWriteHandler(gyruss_sub_write);
 	M6809Close();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapMemory(DrvZ80ROM1, 0x0000, 0x5fff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAM1, 0x6000, 0x63ff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM1, 0x0000, 0x5fff, ZET_ROM);
+	ZetMapMemory(DrvZ80RAM1, 0x6000, 0x63ff, ZET_RAM);
 	ZetSetReadHandler(gyruss_sound0_read);
 	ZetSetOutHandler(gyruss_sound0_out);
 	ZetSetInHandler(gyruss_sound0_in);

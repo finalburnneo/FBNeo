@@ -1026,7 +1026,7 @@ static INT32 DrvFrame()
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 		if (i == 24) {
 			ZetSetVector(0xd7);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetRaiseIrq(0);
 		}
 		ZetClose();
 		

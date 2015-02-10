@@ -685,29 +685,29 @@ static INT32 DrvInit(INT32 nGame)
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM0,		0x000000, 0x03ffff, MAP_ROM);
-	SekMapMemory(Drv68KROM0 + 0x100000,	0x100000, 0x2fffff, MAP_ROM);
-	SekMapMemory(DrvRozVidRAM,		0xd00000, 0xd01fff, MAP_ROM);
-	SekMapMemory(DrvRozVidRAM,		0xd02000, 0xd03fff, MAP_ROM);
-	SekMapMemory(DrvRozVidRAM,		0xd04000, 0xd05fff, MAP_ROM);
-	SekMapMemory(DrvRozVidRAM,		0xd06000, 0xd07fff, MAP_ROM);
+	SekMapMemory(Drv68KROM0,		0x000000, 0x03ffff, SM_ROM);
+	SekMapMemory(Drv68KROM0 + 0x100000,	0x100000, 0x2fffff, SM_ROM);
+	SekMapMemory(DrvRozVidRAM,		0xd00000, 0xd01fff, SM_ROM);
+	SekMapMemory(DrvRozVidRAM,		0xd02000, 0xd03fff, SM_ROM);
+	SekMapMemory(DrvRozVidRAM,		0xd04000, 0xd05fff, SM_ROM);
+	SekMapMemory(DrvRozVidRAM,		0xd06000, 0xd07fff, SM_ROM);
 
 	if (nGame) {
-		SekMapMemory(DrvSprCGRAM1,		0xa00000, 0xa07fff, MAP_RAM);
-		SekMapMemory(DrvSprVRAM1,		0xe00000, 0xe00fff, MAP_RAM);
+		SekMapMemory(DrvSprCGRAM1,		0xa00000, 0xa07fff, SM_RAM);
+		SekMapMemory(DrvSprVRAM1,		0xe00000, 0xe00fff, SM_RAM);
 	} else {
-		SekMapMemory(Drv68KROM0 + 0x300000,	0xa00000, 0xbfffff, MAP_ROM);
-		SekMapMemory(DrvZoomRAM,		0xc00000, 0xc3ffff, MAP_ROM);
-		SekMapMemory(DrvSprCGRAM1,		0xe00000, 0xe03fff, MAP_RAM);
-		SekMapMemory(DrvSprCGRAM2,		0xe04000, 0xe07fff, MAP_RAM);
-		SekMapMemory(DrvSprVRAM1,		0xf00000, 0xf003ff, MAP_RAM);
-		SekMapMemory(DrvSprVRAM2,		0xf10000, 0xf103ff, MAP_RAM);
+		SekMapMemory(Drv68KROM0 + 0x300000,	0xa00000, 0xbfffff, SM_ROM);
+		SekMapMemory(DrvZoomRAM,		0xc00000, 0xc3ffff, SM_ROM);
+		SekMapMemory(DrvSprCGRAM1,		0xe00000, 0xe03fff, SM_RAM);
+		SekMapMemory(DrvSprCGRAM2,		0xe04000, 0xe07fff, SM_RAM);
+		SekMapMemory(DrvSprVRAM1,		0xf00000, 0xf003ff, SM_RAM);
+		SekMapMemory(DrvSprVRAM2,		0xf10000, 0xf103ff, SM_RAM);
 	}
 
-	SekMapMemory(Drv68KRAM0,		0xff8000, 0xffbfff, MAP_RAM);
-	SekMapMemory(DrvShareRAM,		0xffc000, 0xffcfff, MAP_RAM);
-	SekMapMemory(DrvVidRAM,			0xffd000, 0xffdfff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,			0xffe000, 0xffefff, MAP_RAM);
+	SekMapMemory(Drv68KRAM0,		0xff8000, 0xffbfff, SM_RAM);
+	SekMapMemory(DrvShareRAM,		0xffc000, 0xffcfff, SM_RAM);
+	SekMapMemory(DrvVidRAM,			0xffd000, 0xffdfff, SM_RAM);
+	SekMapMemory(DrvPalRAM,			0xffe000, 0xffefff, SM_RAM);
 	SekSetWriteWordHandler(0,		f1gp_main_write_word);
 	SekSetWriteByteHandler(0,		f1gp_main_write_byte);
 	SekSetReadWordHandler(0,		f1gp_main_read_word);
@@ -716,9 +716,9 @@ static INT32 DrvInit(INT32 nGame)
 
 	SekInit(1, 0x68000);
 	SekOpen(1);
-	SekMapMemory(Drv68KROM1,		0x000000, 0x01ffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM1,		0xff8000, 0xffbfff, MAP_RAM);
-	SekMapMemory(DrvShareRAM,		0xffc000, 0xffcfff, MAP_RAM);
+	SekMapMemory(Drv68KROM1,		0x000000, 0x01ffff, SM_ROM);
+	SekMapMemory(Drv68KRAM1,		0xff8000, 0xffbfff, SM_RAM);
+	SekMapMemory(DrvShareRAM,		0xffc000, 0xffcfff, SM_RAM);
 	SekClose();
 
 	ZetInit(0);

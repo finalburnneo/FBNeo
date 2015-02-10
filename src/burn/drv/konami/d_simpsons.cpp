@@ -316,7 +316,7 @@ static void simpsons_set_lines(INT32 lines)
 
 	INT32 nBank = (lines & 0x3f) * 0x2000;
 
-	konamiMapMemory(DrvKonROM + 0x10000 + nBank, 0x6000, 0x7fff, MAP_ROM); 
+	konamiMapMemory(DrvKonROM + 0x10000 + nBank, 0x6000, 0x7fff, KON_ROM); 
 }
 
 static void K052109Callback(INT32 layer, INT32 bank, INT32 *code, INT32 *color, INT32 *, INT32 *)
@@ -457,9 +457,9 @@ static INT32 DrvInit()
 
 	konamiInit(0);
 	konamiOpen(0);
-	konamiMapMemory(DrvKonRAM,		0x4000, 0x5fff, MAP_RAM);
-	konamiMapMemory(DrvKonROM + 0x10000,	0x6000, 0x7fff, MAP_ROM);
-	konamiMapMemory(DrvKonROM + 0x08000,	0x8000, 0xffff, MAP_ROM);
+	konamiMapMemory(DrvKonRAM,		0x4000, 0x5fff, KON_RAM);
+	konamiMapMemory(DrvKonROM + 0x10000,	0x6000, 0x7fff, KON_ROM);
+	konamiMapMemory(DrvKonROM + 0x08000,	0x8000, 0xffff, KON_ROM);
 	konamiSetWriteHandler(simpsons_main_write);
 	konamiSetReadHandler(simpsons_main_read);
 	konamiSetlinesCallback(simpsons_set_lines);

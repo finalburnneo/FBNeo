@@ -1236,7 +1236,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+	ZetRaiseIrq(0);
 
 	m6805Close();
 	ZetClose();

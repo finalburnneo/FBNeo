@@ -15,7 +15,7 @@ static UINT8 nmi_enable, irq_enable;
 static UINT16 gberetb_scroll;
 static UINT8 flipscreen;
 static UINT8 gberet_spritebank;
-static INT32 mrgoemon_bank; 
+static INT32 mrgoemon_bank;
 static UINT8 soundlatch;
 
 static INT32 game_type = 0; // 0 gberet / rushatck, 1 gberetb, 2 mrgoemon
@@ -916,7 +916,7 @@ static INT32 DrvFrame()
 		nCyclesDone = ZetRun(nCyclesSegment);
 
 		if (irq_enable && i == (nInterleave - 1)) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetRaiseIrq(0);
 		}
 
 		if (nmi_enable && (i & 1)) {

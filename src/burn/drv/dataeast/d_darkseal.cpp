@@ -378,16 +378,16 @@ static INT32 DrvInit()
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM,			0x100000, 0x103fff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,			0x120000, 0x1207ff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,			0x140000, 0x141fff, MAP_RAM); // split ram
-	SekMapMemory(DrvPf3RAM + 0x001000,	0x200000, 0x200fff, MAP_RAM); // mirror
-	SekMapMemory(DrvPf3RAM,			0x202000, 0x203fff, MAP_RAM);
-	SekMapMemory(DrvPf12RowRAM,		0x220000, 0x220fff, MAP_RAM);
-	SekMapMemory(DrvPf34RowRAM,		0x222000, 0x222fff, MAP_RAM);
-	SekMapMemory(DrvPf2RAM,			0x260000, 0x261fff, MAP_RAM);
-	SekMapMemory(DrvPf1RAM,			0x262000, 0x263fff, MAP_RAM);
+	SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, SM_ROM);
+	SekMapMemory(Drv68KRAM,			0x100000, 0x103fff, SM_RAM);
+	SekMapMemory(DrvSprRAM,			0x120000, 0x1207ff, SM_RAM);
+	SekMapMemory(DrvPalRAM,			0x140000, 0x141fff, SM_RAM); // split ram
+	SekMapMemory(DrvPf3RAM + 0x001000,	0x200000, 0x200fff, SM_RAM); // mirror
+	SekMapMemory(DrvPf3RAM,			0x202000, 0x203fff, SM_RAM);
+	SekMapMemory(DrvPf12RowRAM,		0x220000, 0x220fff, SM_RAM);
+	SekMapMemory(DrvPf34RowRAM,		0x222000, 0x222fff, SM_RAM);
+	SekMapMemory(DrvPf2RAM,			0x260000, 0x261fff, SM_RAM);
+	SekMapMemory(DrvPf1RAM,			0x262000, 0x263fff, SM_RAM);
 	SekSetWriteWordHandler(0,		darkseal_write_word);
 	SekSetWriteByteHandler(0,		darkseal_write_byte);
 	SekSetReadWordHandler(0,		darkseal_read_word);

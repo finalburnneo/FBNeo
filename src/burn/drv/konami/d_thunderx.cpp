@@ -326,14 +326,14 @@ static void scontra_bankswitch(INT32 data)
 	layer_priority = data & 0x80;
 
 	if (~data & 0x10) {
-		konamiMapMemory(DrvPalRAM,  0x5800, 0x5fff, KON_RAM);
+		konamiMapMemory(DrvPalRAM,  0x5800, 0x5fff, MAP_RAM);
 	} else {
-		konamiMapMemory(DrvBankRAM, 0x5800, 0x5fff, KON_RAM);
+		konamiMapMemory(DrvBankRAM, 0x5800, 0x5fff, MAP_RAM);
 	}
 
 	INT32 nBank = 0x10000 + (data & 0x0f) * 0x2000;
 
-	konamiMapMemory(DrvKonROM + nBank, 0x6000, 0x7fff, KON_ROM);
+	konamiMapMemory(DrvKonROM + nBank, 0x6000, 0x7fff, MAP_ROM);
 }
 
 static void thunderx_videobank(INT32 data)
@@ -342,15 +342,15 @@ static void thunderx_videobank(INT32 data)
 	layer_priority = data & 0x08;
 
 	if (data & 0x01) {
-		konamiMapMemory(DrvBankRAM, 0x5800, 0x5fff, KON_RAM);
+		konamiMapMemory(DrvBankRAM, 0x5800, 0x5fff, MAP_RAM);
 	} else if (data & 0x10) {
 		if (thunderx_1f98_data & 2) {
-			konamiMapMemory(pmcram + 0x800, 0x5800, 0x5fff, KON_RAM);
+			konamiMapMemory(pmcram + 0x800, 0x5800, 0x5fff, MAP_RAM);
 		} else {
-			konamiMapMemory(pmcram, 0x5800, 0x5fff, KON_RAM); // junk?
+			konamiMapMemory(pmcram, 0x5800, 0x5fff, MAP_RAM); // junk?
 		}
 	} else {
-		konamiMapMemory(DrvPalRAM,  0x5800, 0x5fff, KON_RAM);
+		konamiMapMemory(DrvPalRAM,  0x5800, 0x5fff, MAP_RAM);
 	}
 }
 
@@ -505,7 +505,7 @@ static void thunderx_set_lines(INT32 lines)
 	INT32 nBank = 0x10000 + (((lines & 0x0f) ^ 0x08) * 0x2000);
 	if (nBank >= 0x28000) nBank -= 0x20000;
 
-	konamiMapMemory(DrvKonROM + nBank, 0x6000, 0x7fff, KON_ROM); 
+	konamiMapMemory(DrvKonROM + nBank, 0x6000, 0x7fff, MAP_ROM); 
 }
 
 static INT32 DrvDoReset()
@@ -658,10 +658,10 @@ static INT32 DrvInit(INT32 type)
 
 	konamiInit(0);
 	konamiOpen(0);
-	konamiMapMemory(DrvKonRAM,           0x4000, 0x57ff, KON_RAM);
-	konamiMapMemory(DrvBankRAM,          0x5800, 0x5fff, KON_RAM);
-	konamiMapMemory(DrvKonROM + 0x10000, 0x6000, 0x7fff, KON_ROM);
-	konamiMapMemory(DrvKonROM + 0x08000, 0x8000, 0xffff, KON_ROM);
+	konamiMapMemory(DrvKonRAM,           0x4000, 0x57ff, MAP_RAM);
+	konamiMapMemory(DrvBankRAM,          0x5800, 0x5fff, MAP_RAM);
+	konamiMapMemory(DrvKonROM + 0x10000, 0x6000, 0x7fff, MAP_ROM);
+	konamiMapMemory(DrvKonROM + 0x08000, 0x8000, 0xffff, MAP_ROM);
 	konamiSetWriteHandler(scontra_main_write);
 	konamiSetReadHandler(scontra_main_read);
 	konamiSetlinesCallback(thunderx_set_lines);

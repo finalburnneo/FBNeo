@@ -499,7 +499,7 @@ static void vendetta_set_lines(INT32 lines)
 	nDrvBank[0] = lines;
 
 	if (lines < 0x1c) {
-		konamiMapMemory(DrvKonROM + 0x10000 + (lines * 0x2000), 0x0000 | bankoffset, 0x1fff | bankoffset, KON_ROM);
+		konamiMapMemory(DrvKonROM + 0x10000 + (lines * 0x2000), 0x0000 | bankoffset, 0x1fff | bankoffset, MAP_ROM);
 	}
 }
 
@@ -644,9 +644,9 @@ static INT32 DrvInit(INT32 nGame)
 
 		konamiInit(0);
 		konamiOpen(0);
-		konamiMapMemory(DrvKonRAM,	     0x0000, 0x1fff, KON_RAM);
-		konamiMapMemory(DrvKonROM + 0x10000, 0x6000, 0x7fff, KON_ROM);
-		konamiMapMemory(DrvKonROM + 0x08000, 0x8000, 0xffff, KON_ROM);
+		konamiMapMemory(DrvKonRAM,	     0x0000, 0x1fff, MAP_RAM);
+		konamiMapMemory(DrvKonROM + 0x10000, 0x6000, 0x7fff, MAP_ROM);
+		konamiMapMemory(DrvKonROM + 0x08000, 0x8000, 0xffff, MAP_ROM);
 		konamiSetWriteHandler(esckids_main_write);
 		konamiSetReadHandler(esckids_main_read);
 		konamiSetlinesCallback(vendetta_set_lines);
@@ -665,9 +665,9 @@ static INT32 DrvInit(INT32 nGame)
 
 		konamiInit(0);
 		konamiOpen(0);
-		konamiMapMemory(DrvKonROM + 0x10000, 0x0000, 0x1fff, KON_ROM);
-		konamiMapMemory(DrvKonRAM,	     0x2000, 0x3fff, KON_RAM);
-		konamiMapMemory(DrvKonROM + 0x08000, 0x8000, 0xffff, KON_ROM);
+		konamiMapMemory(DrvKonROM + 0x10000, 0x0000, 0x1fff, MAP_ROM);
+		konamiMapMemory(DrvKonRAM,	     0x2000, 0x3fff, MAP_RAM);
+		konamiMapMemory(DrvKonROM + 0x08000, 0x8000, 0xffff, MAP_ROM);
 		konamiSetWriteHandler(vendetta_main_write);
 		konamiSetReadHandler(vendetta_main_read);
 		konamiSetlinesCallback(vendetta_set_lines);

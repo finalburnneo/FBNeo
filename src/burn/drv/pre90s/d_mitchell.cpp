@@ -616,7 +616,7 @@ static struct BurnRomInfo PangRomDesc[] = {
 	{ "pw_05.2g",      0x20000, 0x2fb3db6c, BRF_GRA },	     //  5
 	
 	{ "pw_10.2k",      0x20000, 0xfdba4f6e, BRF_GRA },	     //  6	Sprites
-	{ "pw_05.2g",      0x20000, 0x39f47a63, BRF_GRA },	     //  7
+	{ "pw_9.1k",       0x20000, 0x39f47a63, BRF_GRA },	     //  7
 	
 	{ "pw_01.1d",       0x20000, 0xc52e5b8e, BRF_SND },	     //  8	Samples
 };

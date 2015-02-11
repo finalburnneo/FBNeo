@@ -378,11 +378,11 @@ static void __fastcall tp84_sound_write(UINT16 address, UINT8 data)
 	
 		C = 0;
 		if (address & 0x080) C += 470000;    // 470000pF = 0.47uF
-		filter_rc_set_RC(0, FLT_RC_LOWPASS, 1000, 2200, 1000, CAP_P(C));
+		filter_rc_set_RC(1, FLT_RC_LOWPASS, 1000, 2200, 1000, CAP_P(C));
 	
 		C = 0;
 		if (address & 0x100) C += 470000;    // 470000pF = 0.47uF
-		filter_rc_set_RC(0, FLT_RC_LOWPASS, 1000, 2200, 1000, CAP_P(C));
+		filter_rc_set_RC(2, FLT_RC_LOWPASS, 1000, 2200, 1000, CAP_P(C));
 		return;
 	}
 

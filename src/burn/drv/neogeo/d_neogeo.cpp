@@ -14333,6 +14333,40 @@ struct BurnDriver BurnDrvsamsho5x = {
 };
 
 
+// Sengoku 3 / Sengoku Densho 2001 (Evolution 1.0, FCHT hack)
+
+static struct BurnRomInfo sengoku3sRomDesc[] = {
+	{ "261-p1s.bin",  0x200000, 0x5a1b5e85, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	
+	{ "261-s1.bin",   0x020000, 0xc1e27cc7, 2 | BRF_GRA },           //  1 Text layer tiles
+			
+	{ "261-c1_decrypted.bin",    0x800000, 0x9af7cbca, 3 | BRF_GRA },           //  1 Sprite data
+	{ "261-c2_decrypted.bin",    0x800000, 0x2a1f874d, 3 | BRF_GRA },           //  2 
+	{ "261-c3_decrypted.bin",    0x800000, 0x5403adb5, 3 | BRF_GRA },           //  3 
+	{ "261-c4_decrypted.bin",    0x800000, 0x18926df6, 3 | BRF_GRA },           //  4 
+
+	{ "261-m1.m1",    0x080000, 0x7d501c39, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
+
+	{ "261-v1.v1",    0x400000, 0x64c30081, 5 | BRF_SND },           //  6 Sound data
+	{ "261-v2.v2",    0x400000, 0x392a9c47, 5 | BRF_SND },           //  7 
+	{ "261-v3.v3",    0x400000, 0xc1a7ebe3, 5 | BRF_SND },           //  8 
+	{ "261-v4.v4",    0x200000, 0x9000d085, 5 | BRF_SND },           //  9 
+};
+
+STDROMPICKEXT(sengoku3s, sengoku3s, neogeo)
+STD_ROM_FN(sengoku3s)
+
+struct BurnDriver BurnDrvSengoku3s = {
+	"sengoku3s", "sengoku3", "neogeo", NULL, "2001",
+	"Sengoku 3 / Sengoku Densho 2001\0", NULL, "SNK / Noise Factory", "Neo Geo MVS",
+	L"Sengoku 3\0\u6226\u56FD\u4F1D\u627F\uFF12\uFF10\uFF10\uFF11 (Evolution 1.0, FCHT hack)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
+	NULL, sengoku3sRomInfo, sengoku3sRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
+
 // Zintrick / Oshidashi Zentrix (Neo CD conversion)
 
 static struct BurnRomInfo zintrkcdRomDesc[] = {

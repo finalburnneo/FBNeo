@@ -27,7 +27,7 @@ static UINT8 *DrvPromSpriteLookup = NULL;
 static UINT8 *DrvChars            = NULL;
 static UINT8 *DrvSprites          = NULL;
 static UINT8 *DrvTempRom          = NULL;
-static UINT32 *DrvPalette          = NULL;
+static UINT32 *DrvPalette         = NULL;
 
 static UINT8 DrvCPU1FireIRQ;
 static UINT8 DrvCPU2FireIRQ;
@@ -47,6 +47,10 @@ static UINT8 IOChipCoinPerCredit;
 static UINT8 IOChipCreditPerCoin;
 static UINT8 IOChipCustom[16];
 static UINT8 PrevInValue;
+// Namco54XX Stuff
+static INT32 Fetch = 0;
+static INT32 FetchMode = 0;
+static UINT8 Config1[4], Config2[4], Config3[5];
 
 static INT32 nCyclesDone[3], nCyclesTotal[3];
 static INT32 nCyclesSegment;
@@ -379,7 +383,7 @@ STD_ROM_FN(Gallag)
 static struct BurnSampleInfo GalagaSampleDesc[] = {
 #if !defined (ROM_VERIFY)
    { "bang.wav", SAMPLE_NOLOOP },
-   { "bang.wav", SAMPLE_NOLOOP },
+   { "init.wav", SAMPLE_NOLOOP },
 #endif
   { "", 0 }
 };
@@ -450,15 +454,17 @@ static INT32 DrvDoReset()
 		IOChipCustom[i] = 0;
 	}
 
+	Fetch = 0;
+	FetchMode = 0;
+	memset(&Config1, 0, sizeof(Config1));
+	memset(&Config2, 0, sizeof(Config2));
+	memset(&Config3, 0, sizeof(Config3));
+
 	return 0;
 }
 
 static void Namco54XXWrite(INT32 Data)
 {
-	static INT32 Fetch;
-	static INT32 FetchMode;
-	static UINT8 Config1[4], Config2[4], Config3[5];
-	
 	if (Fetch) {
 		switch (FetchMode) {
 			default:
@@ -845,7 +851,7 @@ static void MachineInit()
 	NamcoSoundInit(18432000 / 6 / 32, 3);
 	NacmoSoundSetAllRoutes(0.90 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 	BurnSampleInit(1);
-	BurnSampleSetAllRoutesAllSamples(0.80, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetAllRoutesAllSamples(0.55, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1558,10 +1564,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);			// Scan Z80
 		NamcoSoundScan(nAction, pnMin);
+		BurnSampleScan(nAction, pnMin);
 
 		// Scan critical driver variables
-		SCAN_VAR(nCyclesDone);
-		SCAN_VAR(nCyclesSegment);
 		SCAN_VAR(DrvCPU1FireIRQ);
 		SCAN_VAR(DrvCPU2FireIRQ);
 		SCAN_VAR(DrvCPU3FireIRQ);
@@ -1577,16 +1582,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(IOChipCoinPerCredit);
 		SCAN_VAR(IOChipCreditPerCoin);
 		SCAN_VAR(PrevInValue);
-		for (INT32 i = 0; i < 6; i++) {
-			SCAN_VAR(DrvStarControl[i]);
-		}
-		for (INT32 i = 0; i < 16; i++) {
-			SCAN_VAR(IOChipCustom[i]);
-		}		
-		SCAN_VAR(DrvDip);
-		SCAN_VAR(DrvInput);
+		SCAN_VAR(DrvStarControl);
+		SCAN_VAR(IOChipCustom);
+
+		SCAN_VAR(Fetch);
+		SCAN_VAR(FetchMode);
+		SCAN_VAR(Config1);
+		SCAN_VAR(Config2);
+		SCAN_VAR(Config3);
 	}
-	
+
 	return 0;
 }
 

@@ -593,7 +593,7 @@ static void draw_fg_layer(INT32 priority)
 		INT32 sx = (offs & 0x3f) * 8;
 		INT32 sy = (offs / 0x40) * 8;
 
-		if (sy >= 40 && sy < 232) sx -= scrollx;
+		sx -= (sy >= 40 && sy < 232) ? scrollx : 24;
 		if (sx < -7) sx += 512;
 		if (sx >= nScreenWidth) continue;
 

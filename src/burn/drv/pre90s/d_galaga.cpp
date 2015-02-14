@@ -651,12 +651,18 @@ UINT8 __fastcall GalagaZ80ProgRead(UINT16 a)
 void __fastcall GalagaZ80ProgWrite(UINT16 a, UINT8 d)
 {
 	if (a >= 0x6800 && a <= 0x681f) { NamcoSoundWrite(a - 0x6800, d); return; }
-	
+//	bprintf(PRINT_NORMAL, _T("54XX z80 #%i Write %X, %X nbs %X\n"), ZetGetActive(), a, d, nBurnSoundLen);
+
 	switch (a) {
 		case 0x6820: {
 			DrvCPU1FireIRQ = d & 0x01;
 			if (!DrvCPU1FireIRQ) {
-			
+				INT32 nActive = ZetGetActive();
+				ZetClose();
+				ZetOpen(0);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+				ZetClose();
+				ZetOpen(nActive);
 			}
 			return;
 		}
@@ -664,7 +670,12 @@ void __fastcall GalagaZ80ProgWrite(UINT16 a, UINT8 d)
 		case 0x6821: {
 			DrvCPU2FireIRQ = d & 0x01;
 			if (!DrvCPU2FireIRQ) {
-			
+				INT32 nActive = ZetGetActive();
+				ZetClose();
+				ZetOpen(1);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+				ZetClose();
+				ZetOpen(nActive);
 			}
 			return;
 		}
@@ -774,7 +785,7 @@ void __fastcall GalagaZ80ProgWrite(UINT16 a, UINT8 d)
 		}
 		
 		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #%i Write %04x, %02x\n"), ZetGetActive(), a, d);
+			//bprintf(PRINT_NORMAL, _T("Z80 #%i Write %04x, %02x\n"), ZetGetActive(), a, d);
 		}
 	}
 }
@@ -1456,13 +1467,13 @@ static void DrvDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = nBurnSoundLen;
 	
 	if (DrvReset) DrvDoReset();
 
 	DrvMakeInputs();
 	
 	INT32 nSoundBufferPos = 0;
+	INT32 nInterleave = 1000;
 
 	nCyclesTotal[0] = (18432000 / 6) / 60;
 	nCyclesTotal[1] = (18432000 / 6) / 60;
@@ -1480,10 +1491,10 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == (nInterleave - 1) && DrvCPU1FireIRQ) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave * 248 / 256) && DrvCPU1FireIRQ) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
-		if ((i == 0 || i == (nInterleave / 3) || i == (nInterleave / 3 * 2)) && IOChipCPU1FireIRQ) {
+		if ((i == 0 || i % (nInterleave / 4) == 0) && IOChipCPU1FireIRQ) {
 			ZetNmi();
 		}
 		ZetClose();
@@ -1495,8 +1506,8 @@ static INT32 DrvFrame()
 			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 			nCyclesSegment = ZetRun(nCyclesSegment);
 			nCyclesDone[nCurrentCPU] += nCyclesSegment;
-			if (i == (nInterleave - 1) && DrvCPU2FireIRQ) {
-				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			if (i == (nInterleave * 248 / 256) && DrvCPU2FireIRQ) {
+				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			}
 			ZetClose();
 		}
@@ -1508,7 +1519,7 @@ static INT32 DrvFrame()
 			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 			nCyclesSegment = ZetRun(nCyclesSegment);
 			nCyclesDone[nCurrentCPU] += nCyclesSegment;
-			if ((i == (nInterleave / 2) || i == (nInterleave - 1)) && DrvCPU3FireIRQ) {
+			if ((i == (nInterleave / 2) || i == (nInterleave * 248 / 256)) && DrvCPU3FireIRQ) {
 				ZetNmi();
 			}
 			ZetClose();

@@ -3784,7 +3784,7 @@ struct BurnDriver BurnDrvKickoff = {
 };
 
 
-// Takeda Shingen (Japan, Japanese)
+// Shingen Samurai-Fighter (Japan, English)
 
 static struct BurnRomInfo tshingenRomDesc[] = {
 	{ "shing_02.rom",	0x20000, 0xd9ab5b78, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
@@ -3828,7 +3828,7 @@ static INT32 tshingenInit()
 
 struct BurnDriver BurnDrvTshingen = {
 	"tshingen", NULL, NULL, NULL, "1988",
-	"Takeda Shingen (Japan, Japanese)\0", NULL, "Jaleco", "Mega System 1",
+	"Shingen Samurai-Fighter (Japan, English)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, tshingenRomInfo, tshingenRomName, NULL, NULL, Common3ButtonInputInfo, TshingenDIPInfo,

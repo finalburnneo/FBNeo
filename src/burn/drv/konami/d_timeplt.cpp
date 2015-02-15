@@ -49,20 +49,20 @@ static INT32 watchdog;
 
 static struct BurnInputInfo TimepltInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
+	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+	{"P2 Start",	BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
+	{"P2 Right",	BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
+	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
@@ -76,7 +76,7 @@ static struct BurnInputInfo ChkunInputList[] = {
 	{"Coin 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"Coin 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
+	{"Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"Bet 1B",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 2"	},
 	{"Bet 2B",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 3"	},
 	{"Bet 3B",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 4"	},
@@ -97,7 +97,7 @@ static struct BurnInputInfo BikkuricInputList[] = {
 	{"Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
 	{"Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
 	{"Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 right"	},
-	{"Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
+	{"Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"Keyout",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
@@ -243,7 +243,6 @@ STDDIPINFO(Chkun)
 
 static struct BurnDIPInfo BikkuricDIPList[]=
 {
-	{0x08, 0xff, 0xff, 0xff, NULL				},
 	{0x09, 0xff, 0xff, 0xff, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Coin A"			},

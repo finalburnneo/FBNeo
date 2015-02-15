@@ -10,8 +10,6 @@
 #include "kaneko_tmap.h"
 #include "pandora.h"
 
-//#define SOUND_BYPASS_HACK
-
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
@@ -58,10 +56,6 @@ static UINT8 DrvJoy3[16];
 static UINT8 DrvDips[2];
 static UINT16 DrvInputs[3];
 static UINT8 DrvReset;
-
-#ifdef SOUND_BYPASS_HACK
-static INT32 dip_counter_hack;
-#endif
 
 static struct BurnInputInfo SandscrpInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
@@ -311,17 +305,9 @@ static UINT16 __fastcall sandscrp_main_read_word(UINT32 address)
 
 		case 0xe00000:
 			latch2_full = 0;
-#ifdef SOUND_BYPASS_HACK // hack to bypass sound cpu failure
-			dip_counter_hack++;
-			if (dip_counter_hack < 3) return DrvDips[0];
-			if (dip_counter_hack < 5) return DrvDips[1];
-#endif
 			return soundlatch2;
 
 		case 0xe40000:
-#ifdef SOUND_BYPASS_HACK // hack to bypass sound cpu failure
-			return (latch1_full ? 0x80 : 0) | 0x40;
-#endif
 			return (latch1_full ? 0x80 : 0) | (latch2_full ? 0x40 : 0);
 
 		case 0xec0000:
@@ -480,9 +466,6 @@ static INT32 DrvDoReset(INT32 full_reset)
 	latch2_full = 0;
 	watchdog = 0;
 
-#ifdef SOUND_BYPASS_HACK
-	dip_counter_hack = 0;
-#endif
 	return 0;
 }
 
@@ -600,13 +583,6 @@ static INT32 DrvInit(INT32 type)
 		DrvGfxDecode();
 		DrvFillTransTable();
 	}
-
-#if 0
-	*((UINT16*)(Drv68KROM + 0xc5a)) = 0x4e71; // skip sound check!
-	*((UINT16*)(Drv68KROM + 0xc8e)) = 0x4e71; // skip sound check!
-	*((UINT16*)(Drv68KROM + 0xcc4)) = 0x4e71; // skip sound check!
-	*((UINT16*)(Drv68KROM + 0xcfe)) = 0x4e71; // skip sound check!
-#endif
 
 	SekInit(0, 0x68000);
 	SekOpen(0);

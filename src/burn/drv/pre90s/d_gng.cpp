@@ -1348,8 +1348,7 @@ static void DrvDraw()
 static INT32 DrvFrame()
 {
 	INT32 nInterleave = 25;
-	INT32 nSoundBufferPos = 0;
-	
+
 	if (DrvReset) DrvDoReset();
 
 	DrvMakeInputs();
@@ -1381,33 +1380,16 @@ static INT32 DrvFrame()
 		if (i == 5 || i == 10 || i == 15 || i == 20) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		if (i == 6 || i == 11 || i == 16 || i == 21) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
-		
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			ZetOpen(0);
-			BurnYM2203Update(pSoundBuf, nSegmentLength);
-			ZetClose();
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
-	
+
 	ZetOpen(0);
 	BurnTimerEndFrame(nCyclesTotal[1]);
-	ZetClose();
-	
-	// Make sure the buffer is entirely filled.
+
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			ZetOpen(0);
-			BurnYM2203Update(pSoundBuf, nSegmentLength);
-			ZetClose();
-		}
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-	
+	ZetClose();
+
 	if (pBurnDraw) DrvDraw();
 	
 	memcpy(DrvSpriteRamBuffer, DrvSpriteRam, 0x200);

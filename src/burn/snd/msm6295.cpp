@@ -444,6 +444,16 @@ void MSM6295Exit(INT32 nChip)
 	if (nChip == nLastMSM6295Chip) DebugSnd_MSM6295Initted = 0;
 }
 
+void MSM6295SetSamplerate(INT32 nChip, INT32 nSamplerate)
+{
+	MSM6295[nChip].nSampleRate = nSamplerate;
+	if (nBurnSoundRate > 0) {
+		MSM6295[nChip].nSampleSize = (nSamplerate << 12) / nBurnSoundRate;
+	} else {
+		MSM6295[nChip].nSampleSize = (nSamplerate << 12) / 11025;
+	}
+}
+
 INT32 MSM6295Init(INT32 nChip, INT32 nSamplerate, bool bAddSignal)
 {
 	DebugSnd_MSM6295Initted = 1;

@@ -3,6 +3,7 @@
 #define MAX_MSM6295 (2)
 
 INT32 MSM6295Init(INT32 nChip, INT32 nSamplerate, bool bAddSignal);
+void MSM6295SetSamplerate(INT32 nChip, INT32 nSamplerate);
 void MSM6295SetRoute(INT32 nChip, double nVolume, INT32 nRouteDir);
 void MSM6295Reset(INT32 nChip);
 void MSM6295Exit(INT32 nChip);

@@ -314,6 +314,41 @@ static struct BurnDIPInfo ToutrunmDIPList[]=
 
 STDDIPINFO(Toutrunm)
 
+static struct BurnDIPInfo ToutrunctDIPList[]=
+{
+	// Default Values
+	{0x0b, 0xff, 0xff, 0xff, NULL                                 },
+	{0x0c, 0xff, 0xff, 0xd8, NULL                                 },
+
+	// Dip 1
+	OUTRUN_COINAGE(0x0b)
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 1   , "Cabinet"                            },
+	{0x0c, 0x01, 0x03, 0x00, "Cockpit"                            },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
+	{0x0c, 0x01, 0x04, 0x04, "Off"                                },
+	{0x0c, 0x01, 0x04, 0x00, "On"                                 },
+	
+	{0   , 0xfe, 0   , 1   , "Turbo"                              },
+	{0x0c, 0x01, 0x08, 0x08, "Use turbo shifter"                  },
+	
+	{0   , 0xfe, 0   , 4   , "Time Adjust"                        },
+	{0x0c, 0x01, 0x30, 0x20, "Easy"           					  },
+	{0x0c, 0x01, 0x30, 0x30, "Normal"           				  },
+	{0x0c, 0x01, 0x30, 0x10, "Hard"           					  },
+	{0x0c, 0x01, 0x30, 0x00, "Hardest"           				  },
+	
+	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
+	{0x0c, 0x01, 0xc0, 0x80, "Easy"                               },
+	{0x0c, 0x01, 0xc0, 0xc0, "Normal"                             },
+	{0x0c, 0x01, 0xc0, 0x40, "Hard"                               },
+	{0x0c, 0x01, 0xc0, 0x00, "Hardest"                            },
+};
+
+STDDIPINFO(Toutrunct)
+
 #undef OUTRUN_COINAGE
 
 /*====================================================
@@ -482,6 +517,7 @@ static struct BurnRomInfo OutrundxjRomDesc[] = {
 	{ "epr-10332.ic132",  0x10000, 0x53d298d7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-10334.ic117",  0x10000, 0xff22ad0b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	
+	// note, this fails the ROM test because the checksums present in the ROMs have not been changed from the unencrypted version!
 	{ "epr-10327a.76",    0x10000, 0xe28a5baf, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
 	{ "epr-10329a.58",    0x10000, 0xda131c81, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
 	{ "epr-10328a.75",    0x10000, 0xd5ec5e5d, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
@@ -909,10 +945,10 @@ STD_ROM_PICK(Toutrunj)
 STD_ROM_FN(Toutrunj)
 
 static struct BurnRomInfo Toutrun1RomDesc[] = {
-	{ "epr-12289.133",    0x10000, 0x812fd035, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-12288.118",    0x10000, 0x2f1151bb, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-12291.132",    0x10000, 0x8ca284d2, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-12290.117",    0x10000, 0x44dbf3cb, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12289.133",    0x10000, 0x812fd035, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // Rom label conflicts with the 317-0101 set below
+	{ "epr-12288.118",    0x10000, 0x2f1151bb, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // Rom label conflicts with the 317-0101 set below
+	{ "epr-12291.132",    0x10000, 0x8ca284d2, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // Rom label conflicts with the 317-0101 set below
+	{ "epr-12290.117",    0x10000, 0x44dbf3cb, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // Rom label conflicts with the 317-0101 set below
 	{ "epr-12293.131",    0x10000, 0xf4321eea, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-12292.116",    0x10000, 0x51d98af0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	
@@ -1066,6 +1102,59 @@ static struct BurnRomInfo Toutrun3RomDesc[] = {
 
 STD_ROM_PICK(Toutrun3)
 STD_ROM_FN(Toutrun3)
+
+static struct BurnRomInfo Toutrunj1RomDesc[] = {
+	{ "EPR-12289.IC133",  0x10000, 0x89380754, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // Verified correct labels but conflicts with the 317-0109 set
+	{ "EPR-12288.IC118",  0x10000, 0x47b47ef1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // Verified correct labels but conflicts with the 317-0109 set
+	{ "EPR-12291.IC132",  0x10000, 0x1f4ab0c6, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // Verified correct labels but conflicts with the 317-0109 set
+	{ "EPR-12290.IC117",  0x10000, 0x67e81543, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // Verified correct labels but conflicts with the 317-0109 set
+	{ "EPR-12293.IC131",  0x10000, 0xf4321eea, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "EPR-12292.IC116",  0x10000, 0x51d98af0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "EPR-12295.IC76",   0x10000, 0xd43a3a84, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "EPR-12294.IC58",   0x10000, 0x27cdcfd3, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "EPR-12297.IC75",   0x10000, 0x1d9b5677, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "EPR-12296.IC57",   0x10000, 0x0a513671, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "EPR-12323.IC102",  0x10000, 0x4de43a6f, SYS16_ROM_TILES | BRF_GRA },
+	{ "EPR-12324.IC103",  0x10000, 0x24607a55, SYS16_ROM_TILES | BRF_GRA },
+	{ "EPR-12325.IC104",  0x10000, 0x1405137a, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "EPR-12307.IC9",    0x10000, 0x437dcf09, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "EPR-12308.IC10",   0x10000, 0x0de70cc2, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "EPR-12309.IC11",   0x10000, 0xdeb8c242, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "EPR-12310.IC12",   0x10000, 0x45cf157e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "EPR-12311.IC13",   0x10000, 0xae2bd639, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "EPR-12312.IC14",   0x10000, 0x626000e7, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "EPR-12313.IC15",   0x10000, 0x52870c37, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "EPR-12314.IC16",   0x10000, 0x40c461ea, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "EPR-12315.IC17",   0x10000, 0x3ff9a3a3, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "EPR-12316.IC18",   0x10000, 0x8a1e6dc8, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "EPR-12317.IC19",   0x10000, 0x77e382d4, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "EPR-12318.IC20",   0x10000, 0xd1afdea9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "EPR-12319.IC21",   0x10000, 0xdf23baf9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "EPR-12320.IC22",   0x10000, 0x7931e446, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "EPR-12321.IC23",   0x10000, 0x830bacd4, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "EPR-12322.IC24",   0x10000, 0x8b812492, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "EPR-12298.IC47",   0x08000, 0xfc9bc41b, SYS16_ROM_ROAD | BRF_GRA },
+	{ "EPR-12298.IC28",   0x08000, 0xfc9bc41b, SYS16_ROM_ROAD | BRF_GRA },
+
+	{ "EPR-12300.IC88",   0x10000, 0xe8ff7011, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "EPR-12301.IC66",   0x10000, 0x6e78ad15, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "EPR-12302.IC67",   0x10000, 0xe72928af, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "EPR-12303.IC68",   0x10000, 0x8384205c, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "EPR-12304.IC69",   0x10000, 0xe1762ac3, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "EPR-12305.IC70",   0x10000, 0xba9ce677, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "EPR-12306.IC71",   0x10000, 0xe49249fd, SYS16_ROM_PCMDATA | BRF_SND },
+	
+	{ "317-0101.key",     0x02000, 0xeb636314, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Toutrunj1)
+STD_ROM_FN(Toutrunj1)
 
 /*====================================================
 Memory Handlers
@@ -1775,7 +1864,7 @@ struct BurnDriverD BurnDrvToutrun2 = {
 	"Turbo Out Run (cockpit, FD1094 317-0106)\0", NULL, "Sega", "Out Run",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
-	NULL, Toutrun2RomInfo, Toutrun2RomName, NULL, NULL, ToutrunInputInfo, ToutrunDIPInfo,
+	NULL, Toutrun2RomInfo, Toutrun2RomName, NULL, NULL, ToutrunInputInfo, ToutrunctDIPInfo,
 	ToutrunInit, System16Exit, OutrunFrame, NULL, System16Scan,
 	NULL, 0x3000, 320, 224, 4, 3
 };
@@ -1786,6 +1875,16 @@ struct BurnDriver BurnDrvToutrun3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, Toutrun3RomInfo, Toutrun3RomName, NULL, NULL, ToutrunInputInfo, ToutruncDIPInfo,
+	ToutrunInit, System16Exit, OutrunFrame, NULL, System16Scan,
+	NULL, 0x3000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvToutrunj1 = {
+	"toutrunj1", "toutrun", NULL, NULL, "1989",
+	"Turbo Out Run (Japan, deluxe cockpit, FD1094 317-0101)\0", NULL, "Sega", "Out Run",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
+	NULL, Toutrunj1RomInfo, Toutrunj1RomName, NULL, NULL, ToutrunInputInfo, ToutrunctDIPInfo,
 	ToutrunInit, System16Exit, OutrunFrame, NULL, System16Scan,
 	NULL, 0x3000, 320, 224, 4, 3
 };

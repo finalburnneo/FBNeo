@@ -58,7 +58,7 @@ static UINT8 oki_bank;
 static UINT16 soundlatch;
 static UINT16 soundlatch2;
 
-static UINT16 mcu_ram[6];
+static UINT16 mcu_ram[0x10];
 static INT32  mcu_hs = 0;
 static UINT16 *mcu_config;
 static UINT32 mcu_write_address;

@@ -453,7 +453,7 @@ STD_ROM_PICK(sg1k_bombjack)
 STD_ROM_FN(sg1k_bombjack)
 
 struct BurnDriver BurnDrvsg1k_bombjack = {
-	"sg1k_bombjack", "sg1k_bombjack", NULL, NULL, "1985",
+	"sg1k_bombjack", NULL, NULL, NULL, "1985",
 	"Bomb Jack (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,

@@ -1360,7 +1360,7 @@ STDDIPINFO(Phantasm)
 
 static struct BurnDIPInfo PeekabooDIPList[]=
 {
-	{0x0d, 0xff, 0xff, 0xfb, NULL				},
+	{0x0d, 0xff, 0xff, 0xf7, NULL				},
 	{0x0e, 0xff, 0xff, 0xff, NULL				},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"			},
@@ -1368,6 +1368,10 @@ static struct BurnDIPInfo PeekabooDIPList[]=
 	{0x0d, 0x01, 0x03, 0x03, "Normal"			},
 	{0x0d, 0x01, 0x03, 0x02, "Hard"				},
 	{0x0d, 0x01, 0x03, 0x01, "Hardest"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x0d, 0x01, 0x04, 0x04, "Off"				},
+	{0x0d, 0x01, 0x04, 0x00, "On"				},
 
 	{0   , 0xfe, 0   ,    2, "Movement"			},
 	{0x0d, 0x01, 0x08, 0x08, "Paddles"			},
@@ -1981,7 +1985,7 @@ static void peekaboo_prot_write(INT32 data)
 		}
 	}
 
-//	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 //	hack - for some reason, setting irq line 4 isn't working, so simulate
 //	what is suppose to be doing.
 //	000520: 33FC FFFF 001F 000A        move.w  #$ffff, $1f000a.l

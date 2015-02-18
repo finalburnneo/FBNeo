@@ -3256,7 +3256,7 @@ static INT32 System1AFrame()
 	INT32 nSegment;
 	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 6000000 / 60, 7000000 / 60 };
+	INT32 nCyclesTotal[2] = { ((tshingen) ? 8000000 : 6000000) / 60, 7000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -3265,7 +3265,7 @@ static INT32 System1AFrame()
 		nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
 		nCyclesDone[0] += SekRun(nSegment - nCyclesDone[0]);
 		if (i ==   0) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
-		if (i == ((tshingen) ? 150 : 128)) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 128) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		if (i == 240) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
@@ -3805,7 +3805,7 @@ static INT32 tshingenInit()
 
 struct BurnDriver BurnDrvTshingen = {
 	"tshingen", NULL, NULL, NULL, "1988",
-	"Shingen Samurai-Fighter (Japan, English)\0", "crashes in level 2", "Jaleco", "Mega System 1",
+	"Shingen Samurai-Fighter (Japan, English)\0", "Game crashes in level 2, play tshingena instead!", "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, tshingenRomInfo, tshingenRomName, NULL, NULL, Common3ButtonInputInfo, TshingenDIPInfo,
@@ -3853,7 +3853,7 @@ STD_ROM_FN(tshingena)
 
 struct BurnDriver BurnDrvTshingena = {
 	"tshingena", "tshingen", NULL, NULL, "1988",
-	"Takeda Shingen (Japan, Japanese)\0", "crashes in level 2", "Jaleco", "Mega System 1",
+	"Takeda Shingen (Japan, Japanese)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, tshingenaRomInfo, tshingenaRomName, NULL, NULL, Common3ButtonInputInfo, TshingenDIPInfo,

@@ -2664,10 +2664,6 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 			pRomLoadCallback();
 		}
 
-FILE *fa = fopen("z68krom","wb");
-fwrite (Drv68KROM0,0x80000,1,fa);
-fclose (fa);
-
 		DrvGfxDecode(0, 0x080000, 0);
 		DrvGfxDecode(1, 0x080000, 0);
 		DrvGfxDecode(2, 0x080000, 0);

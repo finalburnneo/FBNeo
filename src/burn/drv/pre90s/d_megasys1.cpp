@@ -1839,6 +1839,11 @@ static void __fastcall megasys1B_main_write_byte(UINT32 address, UINT8 data)
 			input_select = data;
 			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		return;
+
+		case 0x0e000e: // edf bootleg..
+		case 0x0e000f:
+			MSM6295Command(0, data);
+		return;
 	}
 }
 
@@ -1862,8 +1867,9 @@ static void __fastcall megasys1B_main_write_word(UINT32 address, UINT16 data)
 			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		return;
 
-		case 0x0e000e: // edf bootleg...
-		//	MSM6295Command(0, data);
+		case 0x0e000e: // edf bootleg..
+		case 0x0e000f:
+			MSM6295Command(0, data);
 		return;
 	}
 }
@@ -2642,77 +2648,6 @@ static INT32 DrvLoadRoms()
 	return 0;
 }
 
-static INT32 System1ZInit(void (*pRomLoadCallback)())
-{
-	system_select = 0;
-
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
-
-	{
-		if (DrvLoadRoms()) return 1;
-
-		if (pRomLoadCallback) {
-			pRomLoadCallback();
-		}
-
-		DrvGfxDecode(0, 0x080000, 0);
-		DrvGfxDecode(1, 0x080000, 0);
-		DrvGfxDecode(2, 0x080000, 0);
-		DrvGfxDecode(3, 0x100000, 1);
-	}
-
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(Drv68KROM0,	0x000000, 0x05ffff, MAP_ROM);
-	SekMapMemory(DrvVidRegs,	0x084000, 0x0843ff, MAP_ROM /*MAP_WRITE*/);
-	SekMapMemory(DrvPalRAM,		0x088000, 0x0887ff, MAP_ROM /*MAP_WRITE*/);
-	SekMapMemory(DrvObjRAM,		0x08e000, 0x08ffff, MAP_RAM);
-	SekMapMemory(DrvScrRAM[0],	0x090000, 0x093fff, MAP_RAM);
-	SekMapMemory(DrvScrRAM[1],	0x094000, 0x097fff, MAP_RAM);
-	SekMapMemory(DrvScrRAM[2],	0x098000, 0x09bfff, MAP_RAM);
-	SekMapMemory(Drv68KRAM0,	0x0f0000, 0x0fffff, MAP_RAM);
-	SekSetReadWordHandler(0,	megasys1A_main_read_word);
-	SekSetReadByteHandler(0,	megasys1A_main_read_byte);
-	SekSetWriteWordHandler(0,	megasys1A_main_write_word);
-	SekSetWriteByteHandler(0,	megasys1A_main_write_byte);
-
-	SekMapHandler(1,		0x088000, 0x0887ff, MAP_WRITE);
-	SekSetWriteWordHandler(1,	megasys_palette_write_word);
-	SekSetWriteByteHandler(1,	megasys_palette_write_byte);
-	SekClose();
-
-	ZetInit(0);
-	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM,		0x0000, 0x3fff, MAP_ROM);
-	ZetMapMemory(DrvZ80RAM,		0xc000, 0xc7ff, MAP_RAM);
-	ZetSetWriteHandler(megasys1z_sound_write);
-	ZetSetReadHandler(megasys1z_sound_read);
-	ZetSetOutHandler(megasys1z_sound_write_port);
-	ZetSetInHandler(megasys1z_sound_read_port);
-	ZetClose();
-
-	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
-	BurnTimerAttachZet(3000000);
-	BurnYM2203SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);
-
-	layer_color_config[0] = 0;
-	layer_color_config[1] = 0x200;
-	layer_color_config[2] = 0;	// layer doesn't exist
-	layer_color_config[3] = 0x100;	// sprites
-
-	GenericTilesInit();
-
-	DrvDoReset();
-
-	return 0;
-}
-
 static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 {
 	AllMem = NULL;
@@ -2729,6 +2664,10 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 			pRomLoadCallback();
 		}
 
+FILE *fa = fopen("z68krom","wb");
+fwrite (Drv68KROM0,0x80000,1,fa);
+fclose (fa);
+
 		DrvGfxDecode(0, 0x080000, 0);
 		DrvGfxDecode(1, 0x080000, 0);
 		DrvGfxDecode(2, 0x080000, 0);
@@ -2739,6 +2678,30 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 
 	switch (system_select)
 	{
+		case 0x0: // system Z
+		{
+			SekInit(0, 0x68000);
+			SekOpen(0);
+			SekMapMemory(Drv68KROM0,		0x000000, 0x05ffff, MAP_ROM);
+			SekMapMemory(DrvVidRegs,		0x084000, 0x0843ff, MAP_ROM /*MAP_WRITE*/);
+			SekMapMemory(DrvPalRAM,			0x088000, 0x0887ff, MAP_ROM /*MAP_WRITE*/);
+			SekMapMemory(DrvObjRAM,			0x08e000, 0x08ffff, MAP_RAM);
+			SekMapMemory(DrvScrRAM[0],		0x090000, 0x093fff, MAP_RAM);
+			SekMapMemory(DrvScrRAM[1],		0x094000, 0x097fff, MAP_RAM);
+			SekMapMemory(DrvScrRAM[2],		0x098000, 0x09bfff, MAP_RAM);
+			SekMapMemory(Drv68KRAM0,		0x0f0000, 0x0fffff, MAP_RAM);
+			SekSetReadWordHandler(0,		megasys1A_main_read_word);
+			SekSetReadByteHandler(0,		megasys1A_main_read_byte);
+			SekSetWriteWordHandler(0,		megasys1A_main_write_word);
+			SekSetWriteByteHandler(0,		megasys1A_main_write_byte);
+
+			SekMapHandler(1,			0x088000, 0x0887ff, MAP_WRITE);
+			SekSetWriteWordHandler(1,		megasys_palette_write_word);
+			SekSetWriteByteHandler(1,		megasys_palette_write_byte);
+			SekClose();
+		}
+		break;
+
 		case 0xA: // system A
 		{
 			SekInit(0, 0x68000);
@@ -2844,29 +2807,54 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 		break;
 	}
 
-	// not in system D
-	SekInit(1, 0x68000);
-	SekOpen(1);
-	SekMapMemory(Drv68KROM1,	0x000000, 0x01ffff, MAP_ROM);
-	SekMapMemory(Drv68KRAM1,	0x0e0000, 0x0fffff, MAP_RAM);
-	SekSetReadWordHandler(0,	megasys_sound_read_word);
-	SekSetReadByteHandler(0,	megasys_sound_read_byte);
-	SekSetWriteWordHandler(0,	megasys_sound_write_word);
-	SekSetWriteByteHandler(0,	megasys_sound_write_byte);
-	SekClose();
+	if (system_select == 0) // system Z
+	{
+		ZetInit(0);
+		ZetOpen(0);
+		ZetMapMemory(DrvZ80ROM,		0x0000, 0x3fff, MAP_ROM);
+		ZetMapMemory(DrvZ80RAM,		0xc000, 0xc7ff, MAP_RAM);
+		ZetSetWriteHandler(megasys1z_sound_write);
+		ZetSetReadHandler(megasys1z_sound_read);
+		ZetSetOutHandler(megasys1z_sound_write_port);
+		ZetSetInHandler(megasys1z_sound_read_port);
+		ZetClose();
 
-	// not in system D
-	BurnYM2151Init(3500000);
-	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
+		BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+		BurnTimerAttachZet(3000000);
+		BurnYM2203SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+		BurnYM2203SetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);
 
-	MSM6295Init(0, ((system_select == 0xD) ? 2000000 : 4000000) / 132, 1);
-	MSM6295SetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
+		layer_color_config[0] = 0;
+		layer_color_config[1] = 0x200;
+		layer_color_config[2] = 0;	// layer doesn't exist
+		layer_color_config[3] = 0x100;	// sprites
+	}
+	else
+	{
+		// not in system D
+		SekInit(1, 0x68000);
+		SekOpen(1);
+		SekMapMemory(Drv68KROM1,	0x000000, 0x01ffff, MAP_ROM);
+		SekMapMemory(Drv68KRAM1,	0x0e0000, 0x0fffff, MAP_RAM);
+		SekSetReadWordHandler(0,	megasys_sound_read_word);
+		SekSetReadByteHandler(0,	megasys_sound_read_byte);
+		SekSetWriteWordHandler(0,	megasys_sound_write_word);
+		SekSetWriteByteHandler(0,	megasys_sound_write_byte);
+		SekClose();
 
-	// not in system D
-	MSM6295Init(1, 4000000 / 132, 1);
-	MSM6295SetRoute(1, 0.30, BURN_SND_ROUTE_BOTH);
+		// not in system D
+		BurnYM2151Init(3500000);
+		BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
+
+		MSM6295Init(0, ((system_select == 0xD) ? 2000000 : 4000000) / 132, 1);
+		MSM6295SetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
+
+		// not in system D
+		MSM6295Init(1, 4000000 / 132, 1);
+		MSM6295SetRoute(1, 0.30, BURN_SND_ROUTE_BOTH);
+	}
 
 	GenericTilesInit();
 
@@ -4847,18 +4835,100 @@ static struct BurnRomInfo monkelfRomDesc[] = {
 STD_ROM_PICK(monkelf)
 STD_ROM_FN(monkelf)
 
+static UINT16 __fastcall monkelf_read_word(UINT32 address)
+{
+	switch (address)
+	{
+		case 0xe0002:
+			return DrvInputs[1];
+
+		case 0xe0004:
+			return DrvInputs[2];
+
+		case 0xe0006:
+			return DrvDips[0];
+
+		case 0xe0008:
+			return DrvDips[1];
+
+		case 0xe000a:
+			return DrvInputs[0];
+	}
+
+	return 0xffff;
+}
+
+static UINT8 __fastcall monkelf_read_byte(UINT32 address)
+{
+	switch (address)
+	{
+		case 0xe0002:
+			return DrvInputs[1] >> 8;
+
+		case 0xe0003:
+			return DrvInputs[1];
+
+		case 0xe0004:
+			return DrvInputs[2] >> 8;
+
+		case 0xe0005:
+			return DrvInputs[2];
+
+		case 0xe0006:
+		case 0xe0007:
+			return DrvDips[0];
+
+		case 0xe0008:
+		case 0xe0009:
+			return DrvDips[1];
+
+		case 0xe000a:
+			return DrvInputs[0] >> 8;
+
+		case 0xe000b:
+			return DrvInputs[0];
+	}
+
+	return 0xff;
+}
+
 static void monkelfCallback()
 {
-	*((UINT16*)(Drv68KROM0 + 0x744)) = 0x4e71;	// hack
+	*((UINT16*)(Drv68KROM0 + 0x0744)) = 0x4e71;	// bypass trap (why?)
+
+	*((UINT16*)(Drv68KROM0 + 0x2d74)) = 0x30ea;	// use standard scrolling
+	*((UINT16*)(Drv68KROM0 + 0x2d76)) = 0x0004;
+	*((UINT16*)(Drv68KROM0 + 0x2d78)) = 0x0280;
+	*((UINT16*)(Drv68KROM0 + 0x2db8)) = 0x30c1;	// more scroll fixes
+	*((UINT16*)(Drv68KROM0 + 0x2dba)) = 0xc3c0;
+	*((UINT16*)(Drv68KROM0 + 0x2dbc)) = 0xe841;
+	*((UINT16*)(Drv68KROM0 + 0x2dbe)) = 0x32c2;
+
+	// convert bootleg priority prom to standard format
+	for (INT32 i = 0x1fe; i >= 0; i -= 2) {
+		DrvPrioPROM[i+0] = DrvPrioPROM[i+1] = (DrvPrioPROM[i/2] >> 4) & 0x03;
+	}
+
+	DrvPriorityDecode(); // re-decode
 }
 
 static INT32 monkelfInit()
 {
+	input_select_values[0] = 0x37;
+	input_select_values[1] = 0x35;
+	input_select_values[2] = 0x36;
+	input_select_values[3] = 0x33;
+	input_select_values[4] = 0x34;
+
 	INT32 nRet = SystemInit(0xB, monkelfCallback);
 
 	if (nRet == 0) {
 		SekOpen(0);
 		SekMapMemory(Drv68KRAM0,	0x70000, 0x7ffff, MAP_RAM); // only 64k
+
+		SekMapHandler(2,		0x0e0000, 0x0e000f, MAP_READ);
+		SekSetReadWordHandler(2,	monkelf_read_word);
+		SekSetReadByteHandler(2,	monkelf_read_byte);
 		SekClose();
 	}
 
@@ -4867,7 +4937,7 @@ static INT32 monkelfInit()
 
 struct BurnDriver BurnDrvMonkelf = {
 	"monkelf", "avspirit", NULL, NULL, "1990",
-	"Monky Elf (Korean bootleg of Avenging Spirit)\0", NULL, "bootleg", "Mega System 1",
+	"Monky Elf (Korean bootleg of Avenging Spirit)\0", "imperfect graphics", "bootleg", "Mega System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, monkelfRomInfo, monkelfRomName, NULL, NULL, CommonInputInfo, AvspiritDIPInfo,
@@ -4996,13 +5066,85 @@ static struct BurnRomInfo edfblRomDesc[] = {
 STD_ROM_PICK(edfbl)
 STD_ROM_FN(edfbl)
 
+static UINT16 __fastcall edfbl_read_word(UINT32 address)
+{
+	switch (address)
+	{
+		case 0xe0002:
+			return DrvInputs[0];
+
+		case 0xe0004:
+			return DrvInputs[1];
+
+		case 0xe0006:
+			return DrvInputs[2];
+
+		case 0xe0008:
+			return DrvDips[0];
+
+		case 0xe000a:
+			return DrvDips[1];
+	}
+
+	return 0;
+}
+
+static UINT8 __fastcall edfbl_read_byte(UINT32 address)
+{
+	switch (address)
+	{
+		case 0xe0002:
+			return DrvInputs[0] >> 8;
+
+		case 0xe0003:
+			return DrvInputs[0];
+
+		case 0xe0004:
+			return DrvInputs[1] >> 8;
+
+		case 0xe0005:
+			return DrvInputs[1];
+
+		case 0xe0006:
+			return DrvInputs[2] >> 8;
+
+		case 0xe0007:
+			return DrvInputs[2];
+
+		case 0xe0008:
+		case 0xe0009:
+			return DrvDips[0];
+
+		case 0xe000a:
+		case 0xe000b:
+			return DrvDips[1];
+	}
+
+	return 0;
+}
+
+static INT32 edfblInit()
+{
+	INT32 nRet = SystemInit(0xB, NULL);
+
+	if (nRet == 0) {
+		SekOpen(0);
+		SekMapHandler(2,		0x0e0000, 0x0e000f, MAP_READ);
+		SekSetReadWordHandler(2,	edfbl_read_word);
+		SekSetReadByteHandler(2,	edfbl_read_byte);
+		SekClose();
+	}
+
+	return nRet;
+}
+
 struct BurnDriver BurnDrvEdfbl = {
 	"edfbl", "edf", NULL, NULL, "1991",
-	"E.D.F. : Earth Defense Force (bootleg)\0", NULL, "bootleg", "Mega System 1",
+	"E.D.F. : Earth Defense Force (bootleg)\0", "no sound", "bootleg", "Mega System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, edfblRomInfo, edfblRomName, NULL, NULL, CommonInputInfo, EdfDIPInfo,
-	edfInit, DrvExit, System1BFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	edfblInit, DrvExit, System1BFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
 
@@ -5350,7 +5492,7 @@ STD_ROM_FN(lomakai)
 
 static INT32 lomakaiInit()
 {
-	return System1ZInit(NULL);
+	return SystemInit(0x0/*Z*/, NULL);
 }
 
 struct BurnDriver BurnDrvLomakai = {

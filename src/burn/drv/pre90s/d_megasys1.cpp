@@ -74,6 +74,7 @@ static INT32 ignore_oki_status_hack = 1;
 static INT32 layer_color_config[4] = { 0, 0x100, 0x200, 0x300 };
 static UINT32 m_layers_order[0x10];
 static INT32 scroll_factor_8x8[3] = { 1, 1, 1 };
+static INT32 tshingen = 0;
 
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
@@ -2883,6 +2884,7 @@ static INT32 DrvExit()
 	layer_color_config[1] = 0x100;
 	layer_color_config[2] = 0x200;
 	layer_color_config[3] = 0x300;
+	tshingen = 0;
 
 	BurnFree (AllMem);
 
@@ -3263,7 +3265,7 @@ static INT32 System1AFrame()
 		nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
 		nCyclesDone[0] += SekRun(nSegment - nCyclesDone[0]);
 		if (i ==   0) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
-		if (i == 128) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == ((tshingen) ? 150 : 128)) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		if (i == 240) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
@@ -3797,14 +3799,15 @@ STD_ROM_FN(tshingen)
 
 static INT32 tshingenInit()
 {
+	tshingen = 1;
 	return SystemInit(0xA, phantasm_rom_decode);
 }
 
 struct BurnDriver BurnDrvTshingen = {
 	"tshingen", NULL, NULL, NULL, "1988",
-	"Shingen Samurai-Fighter (Japan, English)\0", NULL, "Jaleco", "Mega System 1",
+	"Shingen Samurai-Fighter (Japan, English)\0", "crashes in level 2", "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, tshingenRomInfo, tshingenRomName, NULL, NULL, Common3ButtonInputInfo, TshingenDIPInfo,
 	tshingenInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
@@ -3850,7 +3853,7 @@ STD_ROM_FN(tshingena)
 
 struct BurnDriver BurnDrvTshingena = {
 	"tshingena", "tshingen", NULL, NULL, "1988",
-	"Takeda Shingen (Japan, Japanese)\0", NULL, "Jaleco", "Mega System 1",
+	"Takeda Shingen (Japan, Japanese)\0", "crashes in level 2", "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, tshingenaRomInfo, tshingenaRomName, NULL, NULL, Common3ButtonInputInfo, TshingenDIPInfo,

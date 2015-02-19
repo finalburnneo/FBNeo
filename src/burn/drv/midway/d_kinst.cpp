@@ -18,24 +18,25 @@ static UINT8 *DrvRAM1;
 static UINT8 DrvRecalc;
 static UINT8 DrvJoy1[32];
 static UINT32 DrvVRAMBase;
+static UINT32 DrvInputs[3];
 static ide::ide_disk *DrvDisk;
 
 // Fast conversion from BGR555 to RGB565
 static UINT16 *DrvColorLUT;
 
 static struct BurnInputInfo kinstInputList[] = {
-    {"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
-    {"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"	},
-    {"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-    {"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-    {"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 left"	},
-    {"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 right"	},
-    {"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"	},
-    {"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 2"	},
-    {"P1 Button 3",	BIT_DIGITAL,	DrvJoy1 + 8,	"p1 fire 3"	},
-    {"P1 Button 4",	BIT_DIGITAL,	DrvJoy1 + 9,	"p1 fire 1"	},
-    {"P1 Button 5",	BIT_DIGITAL,	DrvJoy1 + 10,	"p1 fire 2"	},
-    {"P1 Button 6",	BIT_DIGITAL,	DrvJoy1 + 11,	"p1 fire 3"	},
+    {"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 11,	"p1 coin"	},
+    {"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 10,	"p1 start"	},
+    {"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 up"		},
+    {"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down"	},
+    {"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 left"	},
+    {"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 9,	"p1 right"	},
+    {"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
+    {"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
+    {"P1 Button 3",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
+    {"P1 Button 4",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 4"	},
+    {"P1 Button 5",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 5"	},
+    {"P1 Button 6",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 6"	},
 };
 
 STDINPUTINFO(kinst)
@@ -115,17 +116,25 @@ static void ideWrite(UINT32 address, UINT32 value)
 
 static UINT32 kinstRead(UINT32 address)
 {
-    if (address >= 0x10000100 && address <= 0x10000173) {
-        return ideRead(address);
-    }
-
     if (address >= 0x10000080 && address <= 0x100000ff) {
         switch (address & 0xFF) {
         case 0x90:
             return 2;
+        case 0x80:
+            return DrvInputs[0];
+        case 0x88:
+            return DrvInputs[1];
+        case 0xA0:
+            return (~0) & ~0x00003e00;
         }
         return ~0;
     }
+
+    if (address >= 0x10000100 && address <= 0x10000173) {
+        return ideRead(address);
+    }
+
+
     printf("Invalid read %08X\n", address);
     return ~0;
 }
@@ -158,6 +167,17 @@ static UINT16 kinstReadHalf(UINT32 address) { return kinstRead(address); }
 static UINT32 kinstReadWord(UINT32 address) { return kinstRead(address); }
 static UINT64 kinstReadDouble(UINT32 address) { return kinstRead(address); }
 
+
+static void MakeInputs()
+{
+    DrvInputs[0] = ~0;
+    DrvInputs[1] = ~0;
+
+    for (int i = 0; i < 12; i++) {
+        if (DrvJoy1[i] & 1)
+            DrvInputs[0] &= ~(1 << i);
+    }
+}
 
 static INT32 DrvInit()
 {
@@ -226,8 +246,7 @@ static INT32 DrvDraw()
         UINT16 *dst = (UINT16*) pBurnDraw + (y * 320);
 
         for (int x = 0; x < 320; x++) {
-            UINT16 col = *src;
-            *dst = DrvColorLUT[col & 0x7FFF];
+            *dst = DrvColorLUT[*src & 0x7FFF];
             dst++;
             src++;
         }
@@ -237,6 +256,9 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
+
+    MakeInputs();
+
     Mips3SetIRQLine(VBLANK_IRQ, 0);
     Mips3Run(1000000/4);
 

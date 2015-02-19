@@ -2,7 +2,11 @@
 #include "driver.h"
 #include "burnint.h"
 #include "mips3_intf.h"
+#include "ide.h"
 #include <stdio.h>
+
+#define IDE_IRQ     1
+#define VBLANK_IRQ  0
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -13,6 +17,8 @@ static UINT8 *DrvRAM0;
 static UINT8 *DrvRAM1;
 static UINT8 DrvRecalc;
 static UINT8 DrvJoy1[32];
+static UINT32 DrvVRAMBase;
+static ide::ide_disk *DrvDisk;
 
 static struct BurnInputInfo kinstInputList[] = {
     {"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -52,6 +58,80 @@ static INT32 MemIndex()
 }
 
 
+static void IDESetIRQState(int state)
+{
+    Mips3SetIRQLine(IDE_IRQ, state);
+}
+
+static UINT32 ideRead(UINT32 address)
+{
+    if (address >= 0x10000100 && address <= 0x1000013f)
+        return DrvDisk->read((address - 0x10000100) / 8);
+
+    if (address >= 0x10000170 && address <= 0x10000173)
+        return DrvDisk->read_alternate(6);
+    return 0;
+}
+
+static void ideWrite(UINT32 address, UINT32 value)
+{
+    if (address >= 0x10000100 && address <= 0x1000013f) {
+        DrvDisk->write((address - 0x10000100) / 8, value);
+        return;
+    }
+
+    if (address >= 0x10000170 && address <= 0x10000173) {
+        DrvDisk->write_alternate(6, value);
+        return;
+    }
+}
+
+static UINT32 kinstRead(UINT32 address)
+{
+    if (address >= 0x10000100 && address <= 0x10000173) {
+        return ideRead(address);
+    }
+
+    if (address >= 0x10000080 && address <= 0x100000ff) {
+        switch (address & 0xFF) {
+        case 0x90:
+            return 2;
+        }
+        return ~0;
+    }
+    printf("Invalid read %08X\n", address);
+    return ~0;
+}
+
+static void kinstWrite(UINT32 address, UINT64 value)
+{
+    if (address >= 0x10000080 && address <= 0x100000ff) {
+        switch (address & 0xFF) {
+        case 0x80:
+            DrvVRAMBase = (value & 4) ? 0x58000 : 0x30000;
+            break;
+        }
+        return;
+    }
+
+    if (address >= 0x10000100 && address <= 0x10000173) {
+        ideWrite(address, value);
+        return;
+    }
+
+}
+
+static void kinstWriteByte(UINT32 address, UINT8 value) { kinstWrite(address, value); }
+static void kinstWriteHalf(UINT32 address, UINT16 value) { kinstWrite(address, value); }
+static void kinstWriteWord(UINT32 address, UINT32 value) { kinstWrite(address, value); }
+static void kinstWriteDouble(UINT32 address, UINT64 value) { kinstWrite(address, value); }
+
+static UINT8 kinstReadByte(UINT32 address) { return kinstRead(address); }
+static UINT16 kinstReadHalf(UINT32 address) { return kinstRead(address); }
+static UINT32 kinstReadWord(UINT32 address) { return kinstRead(address); }
+static UINT64 kinstReadDouble(UINT32 address) { return kinstRead(address); }
+
+
 static INT32 DrvInit()
 {
     printf("kinst: DrvInit\n");
@@ -60,6 +140,16 @@ static INT32 DrvInit()
 
     if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL)
         return 1;
+
+    DrvDisk = new ide::ide_disk();
+    DrvDisk->set_irq_callback(IDESetIRQState);
+
+    printf("kinst: loading image at kinst.img\n");
+    // FIXME:
+    if (!DrvDisk->load_disk_image("kinst.img")) {
+        printf("kinst: harddisk image not found!");
+        return 1;
+    }
 
     MemIndex();
 
@@ -70,15 +160,29 @@ static INT32 DrvInit()
     Mips3Init();
     Mips3Reset();
 
-    Mips3MapMemory(DrvBootROM, 0x1FC00000, 0x1FC080000, MAP_READ);
-    Mips3MapMemory(DrvRAM0, 0x00000000, 0x00080000, MAP_RAM);
-    Mips3MapMemory(DrvRAM1, 0x08000000, 0x08800000, MAP_RAM);
+    DrvVRAMBase = 0x30000;
 
+    Mips3MapMemory(DrvBootROM,  0x1FC00000, 0x1FC7FFFF, MAP_READ);
+    Mips3MapMemory(DrvRAM0,     0x00000000, 0x0007FFFF, MAP_RAM);
+    Mips3MapMemory(DrvRAM1,     0x08000000, 0x087FFFFF, MAP_RAM);
+
+    Mips3SetReadByteHandler(1, kinstReadByte);
+    Mips3SetReadHalfHandler(1, kinstReadHalf);
+    Mips3SetReadWordHandler(1, kinstReadWord);
+    Mips3SetReadDoubleHandler(1, kinstReadDouble);
+
+    Mips3SetWriteByteHandler(1, kinstWriteByte);
+    Mips3SetWriteHalfHandler(1, kinstWriteHalf);
+    Mips3SetWriteWordHandler(1, kinstWriteWord);
+    Mips3SetWriteDoubleHandler(1, kinstWriteDouble);
+
+    Mips3MapHandler(1, 0x10000000, 0x100001FF, MAP_READ | MAP_WRITE);
     return 0;
 }
 
 static INT32 DrvExit()
 {
+    delete DrvDisk;
     printf("kinst: DrvExit\n");
     Mips3Exit();
     BurnFree(AllMem);
@@ -87,14 +191,14 @@ static INT32 DrvExit()
 
 static INT32 DrvDraw()
 {
-    UINT16 *src = (UINT16*) &DrvRAM0[0x30000];
+    UINT16 *src = (UINT16*) &DrvRAM0[DrvVRAMBase];
 
     for (int y = 0; y < 240; y++) {
         UINT16 *dst = (UINT16*) pBurnDraw + (y * 320);
 
         for (int x = 0; x < 320; x++) {
             UINT16 col = *src;
-            *dst = (col & 0x3E0) | ((col >> 10) & 0x1F) | ((col & 0x1F) << 10);
+            *dst = ((col & 0x3E0) | ((col >> 10) & 0x1F) | ((col & 0x1F) << 10)) & 0x7FFF;
             dst++;
             src++;
         }
@@ -104,10 +208,10 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-    Mips3SetIRQLine(0, 0);
+    Mips3SetIRQLine(VBLANK_IRQ, 0);
     Mips3Run(1000000/4);
 
-    Mips3SetIRQLine(0, 1);
+    Mips3SetIRQLine(VBLANK_IRQ, 1);
     Mips3Run(1000000/4);
 
     if (pBurnDraw) {
@@ -134,6 +238,6 @@ struct BurnDriver BurnDrvKinst = {
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING, 2, HARDWARE_PREFIX_MIDWAY, GBF_VSFIGHT, 0,
     NULL, kinstRomInfo, kinstRomName, NULL, NULL, kinstInputInfo, kinstDIPInfo,
-    DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+    DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
 };

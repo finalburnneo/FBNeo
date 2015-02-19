@@ -10,7 +10,7 @@
 #define PAGE_COUNT  (1 << (ADDR_BITS - PAGE_SHIFT))
 #define PAGE_WADD    (PAGE_COUNT)
 #define MIPS_MAXHANDLER 10
-#define PFN(x)  (x >> PAGE_SHIFT)
+#define PFN(x)  ((x >> PAGE_SHIFT) & 0xFFFFF)
 
 struct Mips3MemoryMap
 {
@@ -44,6 +44,8 @@ static void ResetMemoryMap()
 {
     for (int page = 0; page < PAGE_COUNT; page++) {
         g_mmap->MemMap[page] = (unsigned char*) 0;
+        g_mmap->MemMap[PAGE_WADD + page] = (unsigned char*) 0;
+
     }
 
     for (int i = 0; i < MIPS_MAXHANDLER; i++) {
@@ -90,7 +92,7 @@ int Mips3Run(int cycles)
 
 int Mips3MapMemory(unsigned char* pMemory, unsigned int nStart, unsigned int nEnd, int nType)
 {
-    const int maxPages = PFN(nEnd) - PFN(nStart) + 1;
+    const int maxPages = (PFN(nEnd) - PFN(nStart)) + 1;
 
     int page = PFN(nStart);
     for (int i = 0; i < maxPages; i++, page++) {
@@ -106,7 +108,7 @@ int Mips3MapMemory(unsigned char* pMemory, unsigned int nStart, unsigned int nEn
 
 int Mips3MapHandler(uintptr_t nHandler, unsigned int nStart, unsigned int nEnd, int nType)
 {
-    const int maxPages = PFN(nEnd) - PFN(nStart) + 1;
+    const int maxPages = (PFN(nEnd) - PFN(nStart)) + 1;
 
     int page = PFN(nStart);
     for (int i = 0; i < maxPages; i++, page++) {
@@ -202,12 +204,12 @@ namespace mem
 
 
 template<typename T>
-inline T fast_read(void *ptr, addr_t adr) {
+inline T fast_read(uint8_t *ptr, unsigned adr) {
     return *((T*)  ((uint8_t*) ptr + (adr & PAGE_MASK)));
 }
 
 template<typename T>
-inline void fast_write(void *xptr, addr_t adr, T value) {
+inline void fast_write(uint8_t *xptr, unsigned adr, T value) {
     T *ptr = ((T*)  ((uint8_t*) xptr + (adr & PAGE_MASK)));
     *ptr = value;
 }
@@ -219,7 +221,7 @@ uint8_t read_byte(addr_t address)
 
     UINT8 *pr = g_mmap->MemMap[PFN(address)];
     if ((uintptr_t)pr >= MIPS_MAXHANDLER) {
-        return fast_read<uint8_t>(pr, address);
+        return pr[address & PAGE_MASK];
     }
     return g_mmap->ReadByte[(uintptr_t)pr](address);
 }
@@ -262,9 +264,9 @@ void write_byte(addr_t address, uint8_t value)
 {
     address &= 0xFFFFFFFF;
 
-    UINT8 *pr = g_mmap->MemMap[PFN(address)];
+    UINT8 *pr = g_mmap->MemMap[PAGE_WADD + PFN(address)];
     if ((uintptr_t)pr >= MIPS_MAXHANDLER) {
-        fast_write<uint8_t>(pr, address, value);
+        pr[address & PAGE_MASK] = value;
         return;
     }
     g_mmap->WriteByte[(uintptr_t)pr](address, value);
@@ -274,36 +276,36 @@ void write_half(addr_t address, uint16_t value)
 {
     address &= 0xFFFFFFFF;
 
-    UINT8 *pr = g_mmap->MemMap[PFN(address)];
+    UINT8 *pr = g_mmap->MemMap[PAGE_WADD + PFN(address)];
     if ((uintptr_t)pr >= MIPS_MAXHANDLER) {
         fast_write<uint16_t>(pr, address, BURN_ENDIAN_SWAP_INT16(value));
         return;
     }
-    g_mmap->WriteByte[(uintptr_t)pr](address, value);
+    g_mmap->WriteHalf[(uintptr_t)pr](address, value);
 }
 
 void write_word(addr_t address, uint32_t value)
 {
     address &= 0xFFFFFFFF;
 
-    UINT8 *pr = g_mmap->MemMap[PFN(address)];
+    UINT8 *pr = g_mmap->MemMap[PAGE_WADD + PFN(address)];
     if ((uintptr_t)pr >= MIPS_MAXHANDLER) {
         fast_write<uint32_t>(pr, address, BURN_ENDIAN_SWAP_INT32(value));
         return;
     }
-    g_mmap->WriteByte[(uintptr_t)pr](address, value);
+    g_mmap->WriteWord[(uintptr_t)pr](address, value);
 }
 
 void write_dword(addr_t address, uint64_t value)
 {
     address &= 0xFFFFFFFF;
 
-    UINT8 *pr = g_mmap->MemMap[PFN(address)];
+    UINT8 *pr = g_mmap->MemMap[PAGE_WADD + PFN(address)];
     if ((uintptr_t)pr >= MIPS_MAXHANDLER) {
         fast_write<uint64_t>(pr, address, BURN_ENDIAN_SWAP_INT64(value));
         return;
     }
-    g_mmap->WriteByte[(uintptr_t)pr](address, value);
+    g_mmap->WriteDouble[(uintptr_t)pr](address, value);
 }
 
 }

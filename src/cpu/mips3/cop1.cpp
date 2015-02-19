@@ -8,7 +8,7 @@
 #include "mips3.h"
 #include "mipsdef.h"
 #include "memory.h"
-#include <QDebug>
+//#include <QDebug>
 
 #define FPR_s(n)    (*(float  *) ((void *)&m_state.cpr[1][n]))
 #define FPR_d(n)    (*(double *) ((void *)&m_state.cpr[1][n]))
@@ -54,7 +54,7 @@ void mips3::cop1_reset()
 
 void mips3::cop1_execute_16(uint32_t opcode)
 {
-    qDebug() << QString::number(m_state.pc, 16) << "Op:" << RSNUM << (opcode & 0x3F) << "[FPU16]";
+    //qDebug() << QString::number(m_state.pc, 16) << "Op:" << RSNUM << (opcode & 0x3F) << "[FPU16]";
 }
 
 void mips3::cop1_execute_32(uint32_t opcode)
@@ -133,7 +133,7 @@ void mips3::cop1_execute_32(uint32_t opcode)
             break;
 
         default:
-            qDebug() << QString::number(m_state.pc, 16) << "OpBC:" << ((opcode >> 16) & 0x1F) << "[FPU32][COP]";
+            //qDebug() << QString::number(m_state.pc, 16) << "OpBC:" << ((opcode >> 16) & 0x1F) << "[FPU32][COP]";
             break;
         }
         break;
@@ -224,7 +224,7 @@ void mips3::cop1_execute_32(uint32_t opcode)
             break;
 
         default:
-            qDebug() << QString::number(m_state.pc, 16) << "Op:" << RSNUM << (opcode & 0x3F) << "[FPU32]";
+            //qDebug() << QString::number(m_state.pc, 16) << "Op:" << RSNUM << (opcode & 0x3F) << "[FPU32]";
             exit(-6);
             break;
         }

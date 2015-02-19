@@ -20,6 +20,9 @@ static UINT8 DrvJoy1[32];
 static UINT32 DrvVRAMBase;
 static ide::ide_disk *DrvDisk;
 
+// Fast conversion from BGR555 to RGB565
+static UINT16 *DrvColorLUT;
+
 static struct BurnInputInfo kinstInputList[] = {
     {"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
     {"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"	},
@@ -47,16 +50,40 @@ static INT32 MemIndex()
 {
     UINT8 *Next; Next = AllMem;
 
-    DrvBootROM 	= Next; Next += 0x80000;
+    DrvBootROM 	= Next;             Next += 0x80000;
     AllRam      = Next;
-    DrvRAM0     = Next; Next += 0x80000;
-    DrvRAM1     = Next; Next += 0x800000;
+    DrvRAM0     = Next;             Next += 0x80000;
+    DrvRAM1     = Next;             Next += 0x800000;
+    DrvColorLUT = (UINT16*) Next;   Next += 0x8000 * 2;
 
     RamEnd		= Next;
     MemEnd		= Next;
     return 0;
 }
 
+
+#define RGB888(b,g,r)   ((r) | ((g) << 8) | ((b) << 16))
+#define RGB888_r(x) ((x) & 0xFF)
+#define RGB888_g(x) (((x) >>  8) & 0xFF)
+#define RGB888_b(x) (((x) >> 16) & 0xFF)
+
+#define RGB555_2_888(x)     \
+    RGB888((x >> 7) & 0xF8, \
+           (x >> 2) & 0xF8, \
+           (x << 3) & 0xF8)
+
+#define RGB888_2_565(x)  (          \
+    ((RGB888_r(x) << 8) & 0xF800) | \
+    ((RGB888_g(x) << 3) & 0x07E0) | \
+    ((RGB888_b(x) >> 3)))
+
+static void GenerateColorLUT()
+{
+    for (int i = 0; i < 0x8000; i++) {
+        UINT16 x = i;
+        DrvColorLUT[i] = RGB888_2_565(RGB555_2_888(i));
+    }
+}
 
 static void IDESetIRQState(int state)
 {
@@ -153,6 +180,8 @@ static INT32 DrvInit()
 
     MemIndex();
 
+    GenerateColorLUT();
+
     UINT32 nRet = BurnLoadRom(DrvBootROM, 0, 0);
     if (nRet != 0)
         return 1;
@@ -198,7 +227,7 @@ static INT32 DrvDraw()
 
         for (int x = 0; x < 320; x++) {
             UINT16 col = *src;
-            *dst = ((col & 0x3E0) | ((col >> 10) & 0x1F) | ((col & 0x1F) << 10)) & 0x7FFF;
+            *dst = DrvColorLUT[col & 0x7FFF];
             dst++;
             src++;
         }

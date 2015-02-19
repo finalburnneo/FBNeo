@@ -28,6 +28,7 @@ DRV_SNES        = true
 DRV_TAITO       = true
 DRV_TOAPLAN     = true
 DRV_PSIKYO      = true
+DRV_MIDWAY      = true
 
 #===============================================================================
 #                             DEPENDENCIES
@@ -237,6 +238,7 @@ $$DRV_TOAPLAN:DRIVERLIST_PATHS += $$SRC/burn/drv/toaplan
 $$DRV_DATAEAST:DRIVERLIST_PATHS += $$SRC/burn/drv/dataeast
 $$DRV_GALAXIAN:DRIVERLIST_PATHS += $$SRC/burn/drv/galaxian
 $$DRV_MEGADRIVE:DRIVERLIST_PATHS += $$SRC/burn/drv/megadrive
+$$DRV_MIDWAY:DRIVERLIST_PATHS += $$SRC/burn/drv/midway
 
 DRIVERLIST.commands = \
     @echo "Generating driverlist.h";                                \
@@ -502,6 +504,15 @@ $$DRV_TOAPLAN {
         SOURCES += $$files(../../src/burn/drv/toaplan/*.cpp)
 }
 
+#===============================================================================
+#                                MIDWAY DRIVERS
+#===============================================================================
+$$DRV_MIDWAY {
+        message("Midway drivers enabled")
+        HEADERS += $$files(../../src/burn/drv/midway/*.h)
+        SOURCES += $$files(../../src/burn/drv/midway/*.cpp)
+}
+
 SOURCES += \
     ../../src/burn/devices/8255ppi.cpp \
     ../../src/burn/devices/8257dma.cpp \
@@ -698,9 +709,15 @@ SOURCES += \
     ../../src/burner/qt/inputdialog.cpp \
     ../../src/burner/qt/widgets/hexspinbox.cpp \
     ../../src/burner/qt/logdialog.cpp \
+    ../../src/burner/qt/inputsetdialog.cpp \
     ../../src/burner/qt/oglviewport.cpp \
     ../../src/intf/video/opengl/vid_opengl.cpp \
-    ../../src/intf/video/opengl/shader.cpp
+    ../../src/intf/video/opengl/shader.cpp  \
+    ../../src/cpu/mips3/cop0.cpp \
+    ../../src/cpu/mips3/cop1.cpp \
+    ../../src/cpu/mips3/dasm.cpp \
+    ../../src/cpu/mips3/mips3.cpp \
+    ../../src/cpu/mips3_intf.cpp
 
 
 HEADERS += \
@@ -870,8 +887,20 @@ HEADERS += \
     ../../src/burner/qt/inputdialog.h \
     ../../src/burner/qt/widgets/hexspinbox.h \
     ../../src/burner/qt/logdialog.h \
+    ../../src/burner/qt/inputsetdialog.h \
     ../../src/burner/qt/oglviewport.h \
-    ../../src/intf/video/opengl/shader.h
+    ../../src/intf/video/opengl/shader.h \
+    ../../src/cpu/mips3/common.h \
+    ../../src/cpu/mips3/memory.h \
+    ../../src/cpu/mips3/mips3.h \
+    ../../src/cpu/mips3/mips3_arithm.h \
+    ../../src/cpu/mips3/mips3_bitops.h \
+    ../../src/cpu/mips3/mips3_branch.h \
+    ../../src/cpu/mips3/mips3_misc.h \
+    ../../src/cpu/mips3/mips3_rw.h \
+    ../../src/cpu/mips3/mips3_shift.h \
+    ../../src/cpu/mips3/mipsdef.h \
+    ../../src/cpu/mips3_intf.h  \
 
 
 #-------------------------------------------------------------------------------
@@ -894,4 +923,5 @@ FORMS += \
     ../../src/burner/qt/selectdialog.ui \
     ../../src/burner/qt/supportdirsdialog.ui \
     ../../src/burner/qt/inputdialog.ui \
-    ../../src/burner/qt/logdialog.ui
+    ../../src/burner/qt/logdialog.ui \
+    ../../src/burner/qt/inputsetdialog.ui \

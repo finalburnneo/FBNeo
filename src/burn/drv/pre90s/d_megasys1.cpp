@@ -75,6 +75,7 @@ static INT32 layer_color_config[4] = { 0, 0x100, 0x200, 0x300 };
 static UINT32 m_layers_order[0x10];
 static INT32 scroll_factor_8x8[3] = { 1, 1, 1 };
 static INT32 tshingen = 0;
+static INT32 monkelf = 0;
 
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
@@ -1494,6 +1495,8 @@ static void __fastcall megasys_palette_write_byte(UINT32 address, UINT8 data)
 	megasys_palette_write(address);
 }
 
+static int countera = 0;
+
 static void update_video_regs(INT32 offset)
 {
 	offset &= 0x3fe;
@@ -1523,6 +1526,7 @@ static void update_video_regs(INT32 offset)
 		return;
 
 		case 0x200:
+			if ((data & 0x0f) > 0x0d && monkelf) data -= 0x10;
 			scrollx[0] = data;
 		return;
 
@@ -1535,6 +1539,7 @@ static void update_video_regs(INT32 offset)
 		return;
 
 		case 0x208:
+			if ((data & 0x0f) > 0x0b && monkelf) data -= 0x10;
 			scrollx[1] = data;
 		return;
 
@@ -2164,13 +2169,9 @@ static void __fastcall megasys_sound_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-static void __fastcall megasys1z_sound_write(UINT16 address, UINT8 /*data*/)
+static void __fastcall megasys1z_sound_write(UINT16 /*address*/, UINT8 /*data*/)
 {
-	switch (address)
-	{
-		case 0xf000:
-		return;		// nop
-	}
+
 }
 
 static UINT8 __fastcall megasys1z_sound_read(UINT16 address)
@@ -2178,7 +2179,6 @@ static UINT8 __fastcall megasys1z_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xe000:
-		//	ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch;
 	}
 
@@ -2884,6 +2884,8 @@ static INT32 DrvExit()
 	layer_color_config[1] = 0x100;
 	layer_color_config[2] = 0x200;
 	layer_color_config[3] = 0x300;
+
+	monkelf = 0;
 	tshingen = 0;
 
 	BurnFree (AllMem);
@@ -4852,6 +4854,9 @@ static UINT16 __fastcall monkelf_read_word(UINT32 address)
 
 		case 0xe000a:
 			return DrvInputs[0];
+
+		case 0xe000e:
+			return 0;
 	}
 
 	return 0xffff;
@@ -4893,15 +4898,7 @@ static UINT8 __fastcall monkelf_read_byte(UINT32 address)
 
 static void monkelfCallback()
 {
-	*((UINT16*)(Drv68KROM0 + 0x0744)) = 0x4e71;	// bypass trap (why?)
-
-	*((UINT16*)(Drv68KROM0 + 0x2d74)) = 0x30ea;	// use standard scrolling
-	*((UINT16*)(Drv68KROM0 + 0x2d76)) = 0x0004;
-	*((UINT16*)(Drv68KROM0 + 0x2d78)) = 0x0280;
-	*((UINT16*)(Drv68KROM0 + 0x2db8)) = 0x30c1;	// more scroll fixes
-	*((UINT16*)(Drv68KROM0 + 0x2dba)) = 0xc3c0;
-	*((UINT16*)(Drv68KROM0 + 0x2dbc)) = 0xe841;
-	*((UINT16*)(Drv68KROM0 + 0x2dbe)) = 0x32c2;
+	*((UINT16*)(Drv68KROM0 + 0x0744)) = 0x4e71;	// bypass trap - very strange
 
 	// convert bootleg priority prom to standard format
 	for (INT32 i = 0x1fe; i >= 0; i -= 2) {
@@ -4913,11 +4910,7 @@ static void monkelfCallback()
 
 static INT32 monkelfInit()
 {
-	input_select_values[0] = 0x37;
-	input_select_values[1] = 0x35;
-	input_select_values[2] = 0x36;
-	input_select_values[3] = 0x33;
-	input_select_values[4] = 0x34;
+	monkelf = 1;
 
 	INT32 nRet = SystemInit(0xB, monkelfCallback);
 

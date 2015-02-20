@@ -176,6 +176,7 @@ struct BurnDIPInfo {
 #define CPU_IRQSTATUS_NONE	0
 #define CPU_IRQSTATUS_ACK	1
 #define CPU_IRQSTATUS_AUTO	2
+#define CPU_IRQSTATUS_HOLD	4
 
 #define CPU_IRQLINE0		0
 #define CPU_IRQLINE1		1

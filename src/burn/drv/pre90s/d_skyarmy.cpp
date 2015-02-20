@@ -517,8 +517,8 @@ static void draw_sprites()
 	{
 		int pal = BITSWAP08(DrvSprRAM[offs+2], 7, 6, 5, 4, 3, 0, 1, 2) & 7; // color (this particular setup is unusual)
 
-		int sx    = DrvSprRAM[offs+3] - 0;		// horizontal position -> start x
-		int sy    = 242-DrvSprRAM[offs];		// vertical position -> start y
+		int sx    = DrvSprRAM[offs+3];		        // horizontal position -> start x
+		int sy    = 240-DrvSprRAM[offs] - 8;		// vertical position -> start y
 		int flipy = (DrvSprRAM[offs+1]&0x80)>>7;	// flip tile vertically?
 		int flipx = (DrvSprRAM[offs+1]&0x40)>>6;	// flip tile horizontally?
 		int code  = DrvSprRAM[offs + 1] & 0x3f;		// which tile are we drawing?
@@ -537,15 +537,15 @@ static void draw_sprites()
 	// so use flip, mask, clip
 		if (flipy) {
 			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy-8, pal /*color*/, 2 /*2 bits*/, 0, 0, DrvGfxROM1);
+				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, pal /*color*/, 2 /*2 bits*/, 0, 0, DrvGfxROM1);
 			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy-8, pal /*color*/, 2 /*2 bits*/, 0, 0, DrvGfxROM1);
+				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, pal /*color*/, 2 /*2 bits*/, 0, 0, DrvGfxROM1);
 			}
 		} else {
 			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy-8, pal /*color*/, 2 /*2 bits*/, 0, 0, DrvGfxROM1);
+				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, pal /*color*/, 2 /*2 bits*/, 0, 0, DrvGfxROM1);
 			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy-8, pal /*color*/, 2 /*2 bits*/, 0, 0, DrvGfxROM1);
+				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, pal /*color*/, 2 /*2 bits*/, 0, 0, DrvGfxROM1);
 			}
 		}
 	}
@@ -561,7 +561,7 @@ static int DrvDraw()
 			int d = Palette[i];
 			DrvPalette[i] = BurnHighCol(d >> 16, (d >> 8) & 0xff, d & 0xff, 0);
 		}
-		DrvRecalc = 0; // ok, we've recalculated it, now disable it the next frame or we waste a lot of time 
+		DrvRecalc = 0; // ok, we've recalculated it, now disable it for the next frame or we waste a lot of time
 	}
 
 	tilemap_draw();
@@ -602,7 +602,7 @@ static int DrvFrame()
 
 	// MDRV_SCREEN_REFRESH_RATE(60) ! 60!!
 
-	int nInterleave = 102/8; // MDRV_CPU_PERIODIC_INT(skyarmy_nmi_source,650) -> 4000000 / 60 -> 66666.67 / 650 -> 102
+	int nInterleave = 102/8; // MDRV_CPU_PERIODIC_INT(skyarmy_nmi_source,650) -> 4000000 / 60 -> 66666.67 / 650 -> 102 (add /8 to get the right timing -dink)
 	int nCyclesTotal = 4000000 / 60; // MDRV_CPU_ADD("maincpu", Z80,4000000)
 	int nCyclesDone  = 0;
 	INT32 nSoundBufferPos = 0;
@@ -616,9 +616,7 @@ static int DrvFrame()
 		nCyclesDone += ZetRun(nSegment); // actually run the cpu
 
 		if (i == (nInterleave - 1)) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK); // MDRV_CPU_VBLANK_INT("screen", irq0_line_hold)
-			ZetRun(100);                         // _hold = longer ack
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE); // MDRV_CPU_VBLANK_INT("screen", irq0_line_hold)
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // MDRV_CPU_VBLANK_INT("screen", irq0_line_hold)
 		}
 		// don't call if the irq above is triggered...
 		// static INTERRUPT_GEN( skyarmy_nmi_source )

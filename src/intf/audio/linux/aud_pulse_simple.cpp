@@ -36,10 +36,11 @@ static int pas_blank_sound()
 static int pas_sound_check()
 {
     // 5 segments ahead...
-    while (buffer->size() > (samples_per_segment * 5)) {
-        std::this_thread::sleep_for(std::chrono::microseconds(5));
+    if (buffer->size() >= (samples_per_segment * nAudSegCount)) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(2));
         return 0;
     }
+
     pas_get_next_sound(1);
     buffer->write(nAudNextSound, samples_per_segment);
     return 0;
@@ -112,10 +113,10 @@ static int pas_init()
     specs.rate = nAudSampleRate[0];
 
     pa_buffer_attr attributes;
-    attributes.maxlength = nAudAllocSegLen * nAudSegCount;
-    attributes.minreq = nAudAllocSegLen;
-    attributes.prebuf = nAudAllocSegLen;
-    attributes.tlength = nAudAllocSegLen * 2;
+    attributes.maxlength = -1;
+    attributes.minreq = -1;
+    attributes.prebuf = -1;
+    attributes.tlength = nAudAllocSegLen * nAudSegCount;
 
     if (streamer_thread) {
         streamer_stop = true;
@@ -138,7 +139,8 @@ static int pas_init()
     }
 
     // 6 segmentos no buffer
-    buffer = new ring_buffer<short>(samples_per_segment * nAudSegCount);
+    buffer = new ring_buffer<short>(samples_per_segment * nAudSegCount * 2);
+    buffer->virtual_write(samples_per_segment * (nAudSegCount));
     pa_stream = pa_simple_new(NULL,
                               "fbalpha",
                               PA_STREAM_PLAYBACK,

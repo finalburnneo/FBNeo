@@ -13,11 +13,17 @@ class ring_buffer {
 public:
     ring_buffer(size_t buffer_size_) : buffer_size(buffer_size_) {
         buffer = new T[buffer_size];
+        for (size_t i = 0; i < buffer_size; i++)
+            buffer[i] = 0;
         head = 0;
         tail = 0;
     }
     ~ring_buffer() {
         delete [] buffer;
+    }
+
+    void virtual_write(size_t lenght) {
+        tail += lenght;
     }
 
     bool available() {

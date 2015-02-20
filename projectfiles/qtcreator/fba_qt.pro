@@ -900,7 +900,7 @@ HEADERS += \
     ../../src/cpu/mips3/mips3_rw.h \
     ../../src/cpu/mips3/mips3_shift.h \
     ../../src/cpu/mips3/mipsdef.h \
-    ../../src/cpu/mips3_intf.h  \
+    ../../src/cpu/mips3_intf.h
 
 
 #-------------------------------------------------------------------------------

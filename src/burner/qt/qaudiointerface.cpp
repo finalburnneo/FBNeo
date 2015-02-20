@@ -146,7 +146,8 @@ QAudioInterface::QAudioInterface(QObject *parent) :
     // start thread
     start();
     m_audioOutput = nullptr;
-    QObject::moveToThread(this);
+
+    moveToThread(this);
 }
 
 QAudioInterface::~QAudioInterface()

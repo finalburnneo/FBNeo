@@ -977,9 +977,7 @@ static INT32 DrvFrame()
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
 		if (i & 1) { // 4 times per frame
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetRun(100); // needs long ack
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 		

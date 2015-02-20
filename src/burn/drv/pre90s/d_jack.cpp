@@ -857,9 +857,7 @@ void __fastcall jack_cpu0_write(UINT16 address, UINT8 data)
 			soundlatch = data;
 			ZetClose();
 			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetRun(100);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			ZetClose();
 			ZetOpen(0);
 		break;

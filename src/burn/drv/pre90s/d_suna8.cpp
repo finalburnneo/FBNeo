@@ -2159,9 +2159,7 @@ static INT32 HardheadFrame()
 		nCyclesSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
 		BurnTimerUpdateYM3812(nCyclesSegment);
 		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetRun(100);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 	}
@@ -2222,9 +2220,7 @@ static INT32 RrangerFrame()
 		nCyclesSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
 		BurnTimerUpdate(nCyclesSegment);
 		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetRun(100);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 	}
@@ -2282,9 +2278,7 @@ static INT32 Hardhea2Frame()
 		nCyclesSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
 		BurnTimerUpdateYM3812(nCyclesSegment);
 		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetRun(100);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
@@ -2350,9 +2344,7 @@ static INT32 SparkmanFrame() // & starfigh
 		if (i == 112 && *nmi_enable) ZetNmi();
 		if (i == (Sparkman ? 250 : 255)) { // any other value and the sprites glitch (MAME uses 240 here, hmmm)
 			vblank = 1;
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetRun(100);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
@@ -2360,9 +2352,7 @@ static INT32 SparkmanFrame() // & starfigh
 		nCyclesSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
 		BurnTimerUpdateYM3812(nCyclesSegment);
 		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetRun(100);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 	}

@@ -684,6 +684,12 @@ void ZetSetIRQLine(const INT32 line, const INT32 status)
 			Z80SetIrqLine(0, 0);
 			Z80Execute(0);
 			break;
+		case CPU_IRQSTATUS_HOLD:
+			Z80SetIrqLine(line, 1);
+			Z80Execute(100);
+			Z80SetIrqLine(0, 0);
+			Z80Execute(0);
+			break;
 	}
 }
 

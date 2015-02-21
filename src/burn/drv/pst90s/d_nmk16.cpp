@@ -6390,6 +6390,41 @@ struct BurnDriver BurnDrvMacross2 = {
 	384, 224, 4, 3
 };
 
+// Super Spacefortress Macross II / Chou-Jikuu Yousai Macross II (GAMEST review build)
+
+static struct BurnRomInfo macross2gRomDesc[] = {
+	{ "3.u11",			0x080000, 0x151f9d39, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+
+	{ "mcrs2j.2",		0x020000, 0xb4aa8ac7, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 code
+
+	{ "mcrs2j.1",		0x020000, 0xc7417410, 3 | BRF_GRA },           //  2 Characters
+
+	{ "bp932an.a04",	0x200000, 0xc4d77ff0, 4 | BRF_GRA },           //  3 Tiles
+
+	{ "bp932an.a07",	0x200000, 0xaa1b21b9, 5 | BRF_GRA },           //  4 Sprites
+	{ "bp932an.a08",	0x200000, 0x67eb2901, 5 | BRF_GRA },           //  5
+
+	{ "bp932an.a06",	0x200000, 0xef0ffec0, 6 | BRF_SND },           //  6 OKI1 Samples
+
+	{ "bp932an.a05",	0x100000, 0xb5335abb, 7 | BRF_SND },           //  7 OKI2 Samples
+
+	{ "mcrs2bpr.9",		0x000100, 0x435653a2, 0 | BRF_OPT },           //  8 Unused proms
+	{ "mcrs2bpr.10",	0x000100, 0xe6ead349, 0 | BRF_OPT },           //  9
+};
+
+STD_ROM_PICK(macross2g)
+STD_ROM_FN(macross2g)
+
+struct BurnDriver BurnDrvMacross2g = {
+	"macross2g", "macross2", NULL, NULL, "1993",
+	"Super Spacefortress Macross II / Chou-Jikuu Yousai Macross II (GAMEST review build)\0", NULL, "Banpresto", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
+	NULL, macross2gRomInfo, macross2gRomName, NULL, NULL, CommonInputInfo, Macross2DIPInfo,
+	Macross2Init, DrvExit, Macross2Frame, Macross2Draw, DrvScan, NULL, 0x400,
+	384, 224, 4, 3
+};
+
 static INT32 Tdragon2Init()
 {
 	Tdragon2mode = 1;
@@ -9892,7 +9927,7 @@ struct BurnDriver BurnDrvRaphero = {
 	224, 384, 3, 4
 };
 
-// Aracdia
+// Arcadia
 
 static struct BurnRomInfo arcadianRomDesc[] = {
 	{ "arcadia.3",		0x080000, 0x8b46d609, 1 | BRF_PRG | BRF_ESS }, //  0 68k code

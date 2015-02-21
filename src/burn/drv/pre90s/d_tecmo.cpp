@@ -553,7 +553,7 @@ void __fastcall rygar_sound_write(UINT16 address, UINT8 data)
 		case 0xc800:
 		case 0xe000:
 			if (DrvHasADPCM) {
-				MSM5205SetRoute(0, (data & 0x0f) / 15, BURN_SND_ROUTE_BOTH);
+				MSM5205SetRoute(0, (double)(data & 0x0f) / 15, BURN_SND_ROUTE_BOTH);
 			}
 		return;
 

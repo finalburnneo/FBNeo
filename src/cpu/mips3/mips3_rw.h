@@ -59,55 +59,52 @@ void mips3::SD(uint32_t opcode)
     mem::write_dword(eaddr, RT);
 }
 
-// TODO: FIX IT
 void mips3::SDL(uint32_t opcode)
 {
     addr_t vaddr = ((int32_t)SIMM) + RS;
     addr_t eaddr;
+
+    int shift = 8 * (~vaddr & 7);
+    uint64_t mask = 0xFFFFFFFFFFFFFFFFULL >> shift;
+
     if (translate(vaddr & ~7, &eaddr)) {
     }
 
-    auto data = mem::read_dword(eaddr);
-    uint64_t wrdata = 0;
-    uint64_t mask = ~0ULL;
+    uint64_t rdata = mem::read_dword(eaddr);
+    mem::write_dword(eaddr, ((RT >> shift) & mask) | (rdata & ~mask));
 
-    int t = vaddr & 7;
-    wrdata = (RT >> ((7 - t) * 8)) | (data & (mask << ((t + 1) * 8)));
-    mem::write_dword(eaddr, wrdata);
 }
 
-// TODO: FIX IT
 void mips3::SDR(uint32_t opcode)
 {
     addr_t vaddr = ((int32_t)SIMM) + RS;
     addr_t eaddr;
+
+    int shift = 8 * (vaddr & 7);
+    uint64_t mask = 0xFFFFFFFFFFFFFFFFULL << shift;
+
     if (translate(vaddr & ~7, &eaddr)) {
     }
-
-    auto data = mem::read_dword(eaddr);
-    uint64_t wrdata = 0;
-    uint64_t mask = ~0ULL;
-
-    int t = vaddr & 7;
-    wrdata = (RT << (t * 8)) | (data & (mask >> ((7 - t + 1) * 8)));
-    mem::write_dword(eaddr, wrdata);
+    uint64_t rdata = mem::read_dword(eaddr);
+    mem::write_dword(eaddr, ((RT << shift) & mask) | (rdata & ~mask));
 }
+
 
 void mips3::LWL(uint32_t opcode)
 {
     uint32_t vaddr = ((int32_t)SIMM) + RS;
 
-    int shift = (3 - (vaddr & 3)) * 8;
-    uint64_t mask = (0xFFFFFFFFFFFFFFFFULL << shift);
+    int shift = ((~vaddr & 3)) * 8;
+    uint32_t mask = (0xFFFFFFFF << shift);
 
     addr_t eaddr;
     if (translate(vaddr & ~3, &eaddr)) {
     }
 
-    auto data = mem::read_dword(eaddr);
+    uint32_t data = mem::read_word(eaddr) & (mask >> shift);
 
     if (RTNUM)
-        RT = (int32_t)((RT & ~mask) | (data << shift));
+        RT = (int32_t)((RT_u32 & ~mask) | (data << shift));
 }
 
 void mips3::LWR(uint32_t opcode)
@@ -115,32 +112,31 @@ void mips3::LWR(uint32_t opcode)
     uint32_t vaddr = ((int32_t)SIMM) + RS;
 
     int shift = (vaddr & 3) * 8;
-    uint64_t mask = (0xFFFFFFFFFFFFFFFFULL >> shift);
+    uint32_t mask = (0xFFFFFFFF >> shift);
 
     addr_t eaddr;
     if (translate(vaddr & ~3, &eaddr)) {
     }
     //d18
-    auto data = mem::read_dword(eaddr);
+    uint32_t data = mem::read_word(eaddr) & (mask << shift);
 
     if (RTNUM)
-        RT = (int32_t)((RT & ~mask) | (data >> shift));
+        RT = (int32_t)((RT_u32 & ~mask) | (data >> shift));
 }
-
 
 // Válido apenas para little endian.
 void mips3::LDL(uint32_t opcode)
 {
     uint32_t vaddr = ((int32_t)SIMM) + RS;
 
-    int shift = (7 - (vaddr & 7)) * 8;
+    int shift = (~vaddr & 7) * 8;
     uint64_t mask = (0xFFFFFFFFFFFFFFFFULL << shift);
 
     addr_t eaddr;
     if (translate(vaddr & ~7, &eaddr)) {
     }
 
-    auto data = mem::read_dword(eaddr);
+    uint64_t data = mem::read_dword(eaddr) & (mask >> shift);
 
     if (RTNUM)
         RT = (RT & ~mask) | (data << shift);
@@ -158,12 +154,11 @@ void mips3::LDR(uint32_t opcode)
     if (translate(vaddr & ~7, &eaddr)) {
     }
     //d18
-    auto data = mem::read_dword(eaddr);
+    uint64_t data = mem::read_dword(eaddr) & (mask << shift);
 
     if (RTNUM)
         RT = (RT & ~mask) | (data >> shift);
 }
-
 
 void mips3::LW(uint32_t opcode)
 {

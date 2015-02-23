@@ -28,6 +28,7 @@ const char *mips3::reg_names[32] = {
 mips3::mips3() : m_tlb_entries(48)
 {
     tlb_init();
+    m_state.total_cycles = 0;
 }
 
 mips3::~mips3()
@@ -48,6 +49,7 @@ void mips3::reset()
     cop1_reset();
     tlb_flush();
     m_counter = 0;
+    m_state.reset_cycle = m_state.total_cycles;
 }
 
 
@@ -336,7 +338,7 @@ bool mips3::run(int cycles, bool skip_bps)
 
         // COP1 (FPU) > TODO
         case 0x11:
-            if (m_state.cpr[0][12] & (1 << 26))
+            if (m_state.cpr[0][COP0_SR] & (1 << 26))
                 cop1_execute_32(opcode);
             else
                 cop1_execute_16(opcode);
@@ -414,11 +416,12 @@ bool mips3::run(int cycles, bool skip_bps)
         }
 
         // Increment COP0 Count
-        m_state.cpr[0][9] += 20;
+        m_state.cpr[0][COP0_Count] += 20;
         m_counter++;
         if (!skip_bps && check_breakpoint())
             return true;
     }
+    m_state.total_cycles += m_counter;
     return false;
 }
 

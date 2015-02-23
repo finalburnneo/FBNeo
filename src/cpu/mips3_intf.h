@@ -16,6 +16,7 @@ typedef unsigned long long (*pMips3ReadDoubleHandler)(unsigned int a);
 typedef void (*pMips3WriteDoubleHandler)(unsigned int a, unsigned long long d);
 
 int Mips3Init();
+int Mips3UseRecompiler(bool use);
 int Mips3Exit();
 void Mips3Reset();
 int Mips3Run(int cycles);

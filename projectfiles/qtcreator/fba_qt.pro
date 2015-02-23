@@ -46,6 +46,11 @@ FBA_LD = ld
 #DEFINES += FBA_DEBUG
 
 #-------------------------------------------------------------------------------
+# Dynamic recompilers
+#-------------------------------------------------------------------------------
+DRC_MIPS3_X64   = true
+
+#-------------------------------------------------------------------------------
 # Additional include paths
 #-------------------------------------------------------------------------------
 INCLUDEPATH += \
@@ -717,7 +722,8 @@ SOURCES += \
     ../../src/cpu/mips3/cop1.cpp \
     ../../src/cpu/mips3/dasm.cpp \
     ../../src/cpu/mips3/mips3.cpp \
-    ../../src/cpu/mips3_intf.cpp
+    ../../src/cpu/mips3_intf.cpp \
+
 
 
 HEADERS += \
@@ -900,7 +906,38 @@ HEADERS += \
     ../../src/cpu/mips3/mips3_rw.h \
     ../../src/cpu/mips3/mips3_shift.h \
     ../../src/cpu/mips3/mipsdef.h \
-    ../../src/cpu/mips3_intf.h
+    ../../src/cpu/mips3_intf.h \
+
+
+#-------------------------------------------------------------------------------
+# MIPS3 x64 recompiler
+#-------------------------------------------------------------------------------
+
+$$DRC_MIPS3_X64 {
+        message("MIPS3 x64 dynarec enabled")
+        DEFINES += \
+            XBYAK_NO_OP_NAMES \
+            MIPS3_X64_DRC
+
+        HEADERS += \
+            ../../src/cpu/mips3/x64/mips3_x64.h \
+            ../../src/cpu/mips3/x64/mips3_x64_arithm.h \
+            ../../src/cpu/mips3/x64/mips3_x64_bitops.h \
+            ../../src/cpu/mips3/x64/mips3_x64_branch.h \
+            ../../src/cpu/mips3/x64/mips3_x64_cop0.h \
+            ../../src/cpu/mips3/x64/mips3_x64_cop1.h \
+            ../../src/cpu/mips3/x64/mips3_x64_defs.h \
+            ../../src/cpu/mips3/x64/mips3_x64_misc.h \
+            ../../src/cpu/mips3/x64/mips3_x64_rw.h \
+            ../../src/cpu/mips3/x64/mips3_x64_shift.h \
+            ../../src/cpu/mips3/x64/xbyak/xbyak.h \
+            ../../src/cpu/mips3/x64/xbyak/xbyak_bin2hex.h \
+            ../../src/cpu/mips3/x64/xbyak/xbyak_mnemonic.h \
+            ../../src/cpu/mips3/x64/xbyak/xbyak_util.h
+
+        SOURCES += \
+            ../../src/cpu/mips3/x64/mips3_x64.cpp
+}
 
 
 #-------------------------------------------------------------------------------

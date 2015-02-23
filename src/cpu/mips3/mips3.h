@@ -13,6 +13,40 @@
 namespace mips
 {
 
+enum COP0_Registers {
+    COP0_Index = 0,
+    COP0_Random,
+    COP0_EntryLo0,
+    COP0_EntryLo1,
+    COP0_Context,
+    COP0_PageMask,
+    COP0_Wired,
+    COP0_Unused0,
+    COP0_BadVAddr,
+    COP0_Count,
+    COP0_EntryHi,
+    COP0_Compare,
+    COP0_SR,
+    COP0_Cause,
+    COP0_EPC,
+    COP0_PRId,
+    COP0_Config,
+    COP0_LLAddr,
+    COP0_WatchLo,
+    COP0_WatchHi,
+    COP0_XContext,
+    COP0_Unused1,
+    COP0_Unused2,
+    COP0_Unused3,
+    COP0_Unused4,
+    COP0_Unused5,
+    COP0_ECC,
+    COP0_CacheErr,
+    COP0_TagLo,
+    COP0_TagHi,
+    COP0_ErrorEPC
+};
+
 #ifdef MIPS3_X64_DRC
 class mips3_x64;
 #endif
@@ -62,7 +96,10 @@ public:
         uint64_t cpr[3][32];
         // fpu control registers (FCR)
         uint64_t fcr[32];
-    } __attribute__ ((aligned (16))) m_state;
+        uint64_t reset_cycle;
+        uint64_t total_cycles;
+    };
+    ALIGN_DECL(16) cpu_state m_state;
     addr_t m_prev_pc;
 
     static const char *reg_names[];

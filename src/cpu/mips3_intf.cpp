@@ -3,6 +3,10 @@
 #include "burnint.h"
 #include <cstdint>
 
+#ifdef MIPS3_X64_DRC
+#include "mips3/x64/mips3_x64.h"
+#endif
+
 #define ADDR_BITS   32
 #define PAGE_SIZE   0x1000
 #define PAGE_SHIFT  12
@@ -27,9 +31,13 @@ struct Mips3MemoryMap
 };
 
 
-static mips::mips3 *g_mips;
-static Mips3MemoryMap *g_mmap;
+static mips::mips3 *g_mips = nullptr;
+static Mips3MemoryMap *g_mmap = nullptr;
+static bool g_useRecompiler = false;
 
+#ifdef MIPS3_X64_DRC
+static mips::mips3_x64 *g_mips_x64 = nullptr;
+#endif
 
 static unsigned char DefReadByte(unsigned int a) { return 0; }
 static unsigned short DefReadHalf(unsigned int a) { return 0; }
@@ -65,11 +73,23 @@ int Mips3Init()
     g_mips = new mips::mips3();
     g_mmap = new Mips3MemoryMap();
 
+#ifdef MIPS3_X64_DRC
+    g_mips_x64 = new mips::mips3_x64(g_mips);
+#endif
+
     ResetMemoryMap();
+}
+
+int Mips3UseRecompiler(bool use)
+{
+    g_useRecompiler = use;
 }
 
 int Mips3Exit()
 {
+#ifdef MIPS3_X64_DRC
+    delete g_mips_x64;
+#endif
     delete g_mips;
     delete g_mmap;
     g_mips = nullptr;
@@ -85,8 +105,18 @@ void Mips3Reset()
 
 int Mips3Run(int cycles)
 {
+#ifdef MIPS3_X64_DRC
+    if (g_mips) {
+        if (g_useRecompiler && g_mips_x64) {
+            g_mips_x64->run(cycles);
+        } else {
+            g_mips->run(cycles);
+        }
+    }
+#else
     if (g_mips)
         g_mips->run(cycles);
+#endif
     return 0;
 }
 

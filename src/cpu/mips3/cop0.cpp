@@ -19,41 +19,7 @@ const char *mips3::cop0_reg_names[32] = {
     "ECC", "CacheErr", "TagLo", "TagHi", "ErrorEPC", "--"
 };
 
-enum {
-    INDEX = 0,
-    RANDOM,
-    ENTRYLO0,
-    ENTRYLO1,
-    CONTEXT,
-    PAGEMASK,
-    WIRED,
-    __COP0_UNUSED0,
-    BADVADDR,
-    COUNT,
-    ENTRYHI,
-    COMPARE,
-    SR,
-    CAUSE,
-    EPC,
-    PRId,
-    CONFIG,
-    LLADDR,
-    WATCHLO,
-    WATCHHI,
-    XCONTEXT,
-    __COP0_UNUSED1,
-    __COP0_UNUSED2,
-    __COP0_UNUSED3,
-    __COP0_UNUSED4,
-    __COP0_UNUSED5,
-    ECC,
-    CACHEERR,
-    TAGLO,
-    TAGHI,
-    ERROREPC
-} ;
-
-#define COP0_R(x)   m_state.cpr[0][x]
+#define CR(x)   m_state.cpr[0][x]
 
 void mips3::tlb_init()
 {
@@ -74,7 +40,9 @@ void mips3::cop0_execute(uint32_t opcode)
     switch (RSNUM) {
     // MFC
     case 0x00:
-        RT = COP0_R(RDNUM & 0x1F);
+        if (RTNUM) {
+            RT = CR(RDNUM);
+        }
         break;
 
     // MTC
@@ -84,16 +52,16 @@ void mips3::cop0_execute(uint32_t opcode)
 
     // TLBWI
     case 0x10: {
-        unsigned char idx = COP0_R(INDEX);
+        unsigned char idx = CR(COP0_Index);
         if (idx >= 48) {
             cout << "TLBWI index > 48" << endl;
             return;
         }
         tlb_entry *e = &m_tlb[idx];
-        e->b.even_lo = COP0_R(ENTRYLO0);
-        e->b.odd_lo = COP0_R(ENTRYLO1);
-        e->b.hi = COP0_R(ENTRYHI);
-        e->b.pagemask = COP0_R(PAGEMASK);
+        e->b.even_lo = CR(COP0_EntryLo0);
+        e->b.odd_lo = CR(COP0_EntryLo1);
+        e->b.hi = CR(COP0_EntryHi);
+        e->b.pagemask = CR(COP0_PageMask);
         break;
     }
 

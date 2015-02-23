@@ -190,7 +190,7 @@ static void MakeInputs()
         if (DrvJoy1[i] & 1)
             DrvInputs[0] |= (1 << i);
         if (DrvJoy2[i] & 1)
-            DrvInputs[0] |= (1 << i);
+            DrvInputs[1] |= (1 << i);
     }
 }
 
@@ -272,20 +272,32 @@ static INT32 DrvDraw()
     return 0;
 }
 
+#define MHz(x)  (x * 1000000)
+#define kHz(x)  (x * 1000)
+
+// R4600: 100 MHz
+// VIDEO:  60  Hz
+// VBLANK: 20 kHz, 50us (from MAME))
+//                 50us = 20kHz
+//
 static INT32 DrvFrame()
 {
-
     MakeInputs();
 
-    Mips3SetIRQLine(VBLANK_IRQ, 0);
-    Mips3Run(1000000/4);
+    const long fps = 60;
+    const long vblankCycles = kHz(20) * fps;
+    const long cycles = (MHz(100) - vblankCycles) / fps ;
 
-    Mips3SetIRQLine(VBLANK_IRQ, 1);
-    Mips3Run(1000000/4);
+    Mips3SetIRQLine(VBLANK_IRQ, 0);
+    Mips3Run(cycles);
 
     if (pBurnDraw) {
         DrvDraw();
     }
+
+    Mips3SetIRQLine(VBLANK_IRQ, 1);
+    Mips3Run(kHz(20));
+
     return 0;
 }
 

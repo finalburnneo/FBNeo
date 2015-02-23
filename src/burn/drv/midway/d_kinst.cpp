@@ -17,6 +17,7 @@ static UINT8 *DrvRAM0;
 static UINT8 *DrvRAM1;
 static UINT8 DrvRecalc;
 static UINT8 DrvJoy1[32];
+static UINT8 DrvJoy2[32];
 static UINT32 DrvVRAMBase;
 static UINT32 DrvInputs[3];
 static ide::ide_disk *DrvDisk;
@@ -31,17 +32,29 @@ static struct BurnInputInfo kinstInputList[] = {
     {"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down"	},
     {"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 left"	},
     {"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 9,	"p1 right"	},
-    {"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
-    {"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
-    {"P1 Button 3",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
-    {"P1 Button 4",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 4"	},
-    {"P1 Button 5",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 5"	},
-    {"P1 Button 6",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 6"	},
+    {"P1 Button A",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
+    {"P1 Button B",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
+    {"P1 Button C",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
+    {"P1 Button X",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 4"	},
+    {"P1 Button Y",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 5"	},
+    {"P1 Button Z",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 6"	},
+    {"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 11,	"p2 coin"	},
+    {"P2 Start",	BIT_DIGITAL,	DrvJoy2 + 10,	"p2 start"	},
+    {"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"		},
+    {"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"	},
+    {"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 8,	"p2 left"	},
+    {"P2 Right",	BIT_DIGITAL,	DrvJoy2 + 9,	"p2 right"	},
+    {"P2 Button A",	BIT_DIGITAL,	DrvJoy2 + 0,	"p2 fire 1"	},
+    {"P2 Button B",	BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 2"	},
+    {"P2 Button C",	BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 3"	},
+    {"P2 Button X",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 4"	},
+    {"P2 Button Y",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 5"	},
+    {"P2 Button Z",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 6"	},
 };
 
 STDINPUTINFO(kinst)
 
-static struct BurnDIPInfo kinstDIPList[]=
+static struct BurnDIPInfo kinstDIPList[1]=
 {
 };
 
@@ -121,9 +134,9 @@ static UINT32 kinstRead(UINT32 address)
         case 0x90:
             return 2;
         case 0x80:
-            return DrvInputs[0];
+            return ~DrvInputs[0];
         case 0x88:
-            return DrvInputs[1];
+            return ~DrvInputs[1];
         case 0xA0:
             return (~0) & ~0x00003e00;
         }
@@ -170,12 +183,14 @@ static UINT64 kinstReadDouble(UINT32 address) { return kinstRead(address); }
 
 static void MakeInputs()
 {
-    DrvInputs[0] = ~0;
-    DrvInputs[1] = ~0;
+    DrvInputs[0] = 0;
+    DrvInputs[1] = 0;
 
     for (int i = 0; i < 12; i++) {
         if (DrvJoy1[i] & 1)
-            DrvInputs[0] &= ~(1 << i);
+            DrvInputs[0] |= (1 << i);
+        if (DrvJoy2[i] & 1)
+            DrvInputs[0] |= (1 << i);
     }
 }
 
@@ -206,6 +221,9 @@ static INT32 DrvInit()
     if (nRet != 0)
         return 1;
 
+#ifdef MIPS3_X64_DRC
+    Mips3UseRecompiler(true);
+#endif
     Mips3Init();
     Mips3Reset();
 

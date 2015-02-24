@@ -727,6 +727,11 @@ int ProcessCmdLine()
 			return 1;
 		}
 		
+		if (_tcscmp(szName, _T("-listinfosmsonly")) == 0) {
+			write_datfile(DAT_MASTERSYSTEM_ONLY, stdout);
+			return 1;
+		}
+		
 		if (_tcscmp(szName, _T("-listextrainfo")) == 0) {
 			int nWidth;
 			int nHeight;
@@ -811,7 +816,7 @@ int ProcessCmdLine()
 
 static void CreateSupportFolders()
 {
-	TCHAR szSupportDirs[29][MAX_PATH] = {
+	TCHAR szSupportDirs[30][MAX_PATH] = {
 		{_T("support/")},
 		{_T("support/previews/")},
 		{_T("support/titles/")},
@@ -842,9 +847,10 @@ static void CreateSupportFolders()
 		{_T("tg16/")},
 		{_T("sg1000/")},
 		{_T("coleco/")},
+		{_T("sms/")},
 	};
 	
-	for(int x = 0; x < 29; x++) {
+	for(int x = 0; x < 30; x++) {
 		CreateDirectory(szSupportDirs[x], NULL);
 	}
 }

@@ -57,6 +57,8 @@ YM2203/YM2608/YM2610/YM2612 sound cores by Jarek Burczynski & Tatsuyuki Satoh (h
 YM2413 sound core by Jarek Burczynski (http://www.mamedev.org).
 YMF278B sound core by R. Belmont & O.Galibert (http://www.mamedev.org).
 
+Uses SMS Plus by Charles MacDonald (http://www.techno-junk.org).
+
 7Z functionality provided by LZMA SDK (http://www.7-zip.org/sdk.html)
 PNG functionality provided by libpng (http://www.libpng.org)
 Zip functionality provided by zlib (http://www.zlib.net).

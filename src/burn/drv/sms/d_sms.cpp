@@ -3,6 +3,7 @@
 #include "tiles_generic.h"
 #include "smsshared.h"
 #include "z80_intf.h"
+#include "sn76496.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -83,6 +84,8 @@ INT32 SMSExit()
         cart.rom = NULL;
     }
 
+	system_shutdown();
+
 	return 0;
 }
 
@@ -145,19 +148,6 @@ INT32 SMSFrame()
 	system_frame(0);
 	ZetClose();
 
-	if (pBurnSoundOut) {
-		INT32 length = nBurnSoundLen;
-		INT16 *pSoundBuf = pBurnSoundOut;
-		if (snd.buffer_size < length) length = snd.buffer_size;
-		memset(pBurnSoundOut, 0, nBurnSoundLen * 4);
-
-		for(INT32 i = 0; i < length; i++) {
-			pSoundBuf[0] = snd.output[0][i]; //nLeftSample;
-			pSoundBuf[1] = snd.output[1][i]; //nRightSample;
-			pSoundBuf += 2;
-		}
-	}
-
 	if (pBurnDraw)
 		SMSDraw();
 
@@ -183,6 +173,17 @@ rominfo_t game_list[] = {
     {0xA577CE46, MAPPER_CODIES, DISPLAY_PAL, TERRITORY_EXPORT, "Micro Machines"},
     {0x8813514B, MAPPER_CODIES, DISPLAY_PAL, TERRITORY_EXPORT, "Excellent Dizzy (Proto)"},
     {0xAA140C9C, MAPPER_CODIES, DISPLAY_PAL, TERRITORY_EXPORT, "Excellent Dizzy (Proto - GG)"}, 
+    {0x5c205ee1, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Xenon 2"},
+    {0xec726c0d, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Xenon 2"},
+	{0x445525E2, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Penguin Adventure (KR)"},
+	{0x83F0EEDE, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Street Master (KR)"},
+	{0xA05258F5, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Won-Si-In (KR)"},
+	{0x06965ED9, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "F-1 Spirit - The way to Formula-1 (KR)"},
+	{0x77EFE84A, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Cyborg Z (KR)"},
+	{0xF89AF3CC, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Knightmare II - The Maze of Galious (KR)"},
+	{0x9195C34C, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Super Boy 3 (KR)"},
+	{0xE316C06D, MAPPER_MSX_NEMESIS, DISPLAY_NTSC, TERRITORY_EXPORT, "Nemesis (KR)"},
+	{0x0A77FA5E, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Nemesis 2 (KR)"},
     {0         , -1  , -1, -1, NULL},
 };
 
@@ -291,8 +292,6 @@ INT32 SMSInit()
     sms.territory = 0;
     sms.use_fm = 0;
 
-	//system_poweron(); (alias for sms_reset())
-	//sms_reset(); (reset on system_init() automatically)
 	return 0;
 }
 
@@ -318,21 +317,13 @@ static void system_load_state()
 
 INT32 SMSScan(INT32 nAction, INT32 *pnMin)
 {
-	struct BurnArea ba;
-
 	if (pnMin) {
 		*pnMin = 0x029708;
 	}
 
 	if (nAction & ACB_VOLATILE) {
-		memset(&ba, 0, sizeof(ba));
-
-		ba.Data	  = SN76489_GetContextPtr(0);
-		ba.nLen	  = SN76489_GetContextSize();
-		ba.szName = "SMSPSG";
-		BurnAcb(&ba);
-
 		ZetScan(nAction);
+		SN76496Scan(nAction, pnMin);
 		SCAN_VAR(vdp);
 		SCAN_VAR(sms);
 		SCAN_VAR(cart.fcr);

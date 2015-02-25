@@ -39,11 +39,21 @@ void __fastcall writemem_mapper_codies(UINT16 offset, UINT8 data)
             sms_mapper_w(3, data);
             return;
         case 0xC000:
-			//cpu_writemap[offset >> 10][offset & 0x03FF] = data;
 			sms.wram[offset & 0x1fff] = data;    // maybe..
             return;
     }
+}
 
+void __fastcall writemem_mapper_msx(UINT16 offset, UINT8 data)
+{
+	if (offset <= 0x0003) {
+		bprintf(0, _T("msx %X %X,"), offset, data);
+		sms_mapper8k_w(offset & 3, data);
+		return;
+	}
+
+	sms.wram[offset & 0x1fff] = data;
+	//z80_writemap[address >> 10][address & 0x03FF] = data;
 }
 
 void sms_init(void)
@@ -58,6 +68,8 @@ void sms_init(void)
     /* Assign mapper */
 	if(cart.mapper == MAPPER_CODIES)
 		ZetSetWriteHandler(writemem_mapper_codies);
+	else if (cart.mapper == MAPPER_MSX || cart.mapper == MAPPER_MSX_NEMESIS)
+	{ bprintf(0, _T("msx mapper!\n"));ZetSetWriteHandler(writemem_mapper_msx);}
 	else
 		ZetSetWriteHandler(writemem_mapper_sega);
 
@@ -153,9 +165,62 @@ void sms_reset(void)
     cart.fcr[0] = 0x00;
     cart.fcr[1] = 0x00;
     cart.fcr[2] = 0x01;
-    cart.fcr[3] = 0x00;
+	cart.fcr[3] = 0x00;
+
+	switch (cart.mapper) // WIP!!
+	{
+		case MAPPER_MSX_NEMESIS:
+		case MAPPER_MSX: {
+			cart.fcr[2] = 0x00;
+			UINT32 poffset = ((cart.pages * 2)-1) << 13;
+			ZetOpen(0);
+			ZetMapMemory(cart.rom + poffset, 0x0000, 0x1fff, MAP_READ);
+			ZetClose();
+		}
+
+	}
 }
 
+/*// INIT ??
+// Nemesis special case
+      if (slot.mapper == MAPPER_MSX_NEMESIS)
+      {
+        // first 8k page is mapped to last 8k ROM bank
+        for (i = 0x00; i < 0x08; i++)
+        {
+          z80_readmap[i] = &slot.rom[(0x0f << 13) | ((i & 0x07) << 10)];
+        }
+      }
+	  */
+
+void sms_mapper8k_w(INT32 address, UINT8 data) // WIP
+{
+    /* Calculate ROM page index */
+	UINT32 poffset = (data % (cart.pages * 2)) << 13;
+
+    /* Save frame control register data */
+    cart.fcr[address] = data;
+
+	/* 4 x 8k banks */
+	switch (address & 3)
+	{
+		case 0: /* cartridge ROM bank (8k) at $8000-$9FFF */
+			ZetMapMemory(cart.rom + poffset, 0x8000, 0x9fff, MAP_ROM);
+			break;
+
+		case 1: /* cartridge ROM bank (8k) at $A000-$BFFF */
+			ZetMapMemory(cart.rom + poffset, 0xa000, 0xbfff, MAP_ROM);
+			break;
+
+		case 2: /* cartridge ROM bank (8k) at $4000-$5FFF */
+			ZetMapMemory(cart.rom + poffset, 0x4000, 0x5fff, MAP_ROM);
+			break;
+
+		case 3: /* cartridge ROM bank (8k) at $6000-$7FFF */
+			ZetMapMemory(cart.rom + poffset, 0x6000, 0x7fff, MAP_ROM);
+			break;
+	}
+}
 
 void sms_mapper_w(INT32 address, UINT8 data)
 {
@@ -206,7 +271,6 @@ uint8 z80_read_unmapped(void)
     uint8 data;
 	pc = (pc - 1) & 0xFFFF;
 	data = ZetReadProg(pc);
-	//bprintf(0, _T("Read unmapped: %X data %X.\n"), pc, data);
 
 	return ((data | data_bus_pullup) & ~data_bus_pulldown);
 }
@@ -221,7 +285,7 @@ void memctrl_w(uint8 data)
 /*--------------------------------------------------------------------------*/
 
 void _fastcall sms_port_w(UINT16 port, UINT8 data)
-{   //bprintf(0, _T("pw %X %X,"), port, data);
+{
     switch(port & 0xC1)
     {
         case 0x00:
@@ -249,7 +313,7 @@ void _fastcall sms_port_w(UINT16 port, UINT8 data)
 }
 
 UINT8 _fastcall sms_port_r(UINT16 port)
-{   //bprintf(0, _T("pr %X,"), port);
+{
     switch(port & 0xC0)
     {
         case 0x00:

@@ -16,7 +16,7 @@
 #include "smsvdp.h"
 #include "smsrender.h"
 #include "smstms.h"
-#include "smssn76489.h"
+//#include "smssn76489.h"
 #include "smsfmintf.h"
 #include "smssound.h"
 #include "smssystem.h"

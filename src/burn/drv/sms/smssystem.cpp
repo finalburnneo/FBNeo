@@ -19,6 +19,7 @@
 #include "smsshared.h"
 #include "burnint.h"
 #include "z80_intf.h"
+#include "sn76496.h"
 
 
 bitmap_t bitmap;
@@ -31,6 +32,7 @@ void system_frame(int skip_render)
     static int iline_table[] = {0xC0, 0xE0, 0xF0};
     int lpf = (sms.display == DISPLAY_NTSC) ? 262 : 313;
     int iline;
+	INT32 nSoundBufferPos = 0;
 
     /* Debounce pause key */
     if(input.system & INPUT_PAUSE)
@@ -100,13 +102,29 @@ void system_frame(int skip_render)
             }
         }
 
-        sound_update(vdp.line);
+//        sound_update(vdp.line);
+		// Render Sound Segment
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / lpf;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			SN76496Update(0, pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 
         ++vdp.line;
 
         if(vdp.mode <= 7)
             parse_line(vdp.line);
     }
+
+	// Make sure the buffer is entirely filled.
+	if (pBurnSoundOut) {
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			SN76496Update(0, pSoundBuf, nSegmentLength);
+		}
+	}
 }
 
 
@@ -114,8 +132,6 @@ void system_frame(int skip_render)
 
 void system_init(void)
 {
-    //error_init();
-
     sms_init();
     pio_init();
     vdp_init();
@@ -149,9 +165,6 @@ void system_shutdown(void)
     error("SG:%04X\n", vdp.sg);
 
     error("\n");*/
-
-
-
 #endif
 
     sms_shutdown();
@@ -159,8 +172,6 @@ void system_shutdown(void)
     vdp_shutdown();
     render_shutdown();
     sound_shutdown();
-
-    //error_shutdown();
 }
 
 void system_reset(void)
@@ -182,6 +193,5 @@ void system_poweroff(void)
 {
 //    system_manage_sram(cart.sram, SLOT_CART, SRAM_SAVE);
 }
-
 
 

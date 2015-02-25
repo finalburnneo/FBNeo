@@ -12,7 +12,9 @@ enum {
 enum {
     MAPPER_NONE         = 0,
     MAPPER_SEGA         = 1,
-    MAPPER_CODIES       = 2
+    MAPPER_CODIES       = 2,
+	MAPPER_MSX          = 3,
+	MAPPER_MSX_NEMESIS  = 4
 };
 
 enum {
@@ -105,6 +107,7 @@ void sms_init(void);
 void sms_reset(void);
 void sms_shutdown(void);
 void sms_mapper_w(INT32 address, UINT8 data);
+void sms_mapper8k_w(INT32 address, UINT8 data);
 
 /* port-map Function prototypes */
 uint8 z80_read_unmapped(void);

@@ -13,8 +13,6 @@ sms_t sms;
 uint8 data_bus_pullup   = 0x00;
 uint8 data_bus_pulldown = 0x00;
 
-UINT8 __fastcall ZetReadProg(UINT32 a); // lazy.
-
 uint8 dummy_write[0x2000];
 
 void __fastcall writemem_mapper_sega(UINT16 offset, UINT8 data)
@@ -25,8 +23,9 @@ void __fastcall writemem_mapper_sega(UINT16 offset, UINT8 data)
         sms_mapper_w(offset & 3, data);
 }
 
+
 void __fastcall writemem_mapper_codies(UINT16 offset, UINT8 data)
-{
+{   //bprintf(0, _T("o %X %X,"), offset, data);
     switch(offset & 0xC000)
     {
         case 0x0000:
@@ -39,7 +38,7 @@ void __fastcall writemem_mapper_codies(UINT16 offset, UINT8 data)
             sms_mapper_w(3, data);
             return;
         case 0xC000:
-			sms.wram[offset & 0x1fff] = data;    // maybe..
+			//sms.wram[offset & 0x1fff] = data;    // maybe..
             return;
     }
 }
@@ -53,7 +52,6 @@ void __fastcall writemem_mapper_msx(UINT16 offset, UINT8 data)
 	}
 
 	sms.wram[offset & 0x1fff] = data;
-	//z80_writemap[address >> 10][address & 0x03FF] = data;
 }
 
 void sms_init(void)
@@ -65,13 +63,21 @@ void sms_init(void)
     data_bus_pullup     = 0x00;
     data_bus_pulldown   = 0x00;
 
+	bprintf(0, _T("Cart mapper: "));
     /* Assign mapper */
-	if(cart.mapper == MAPPER_CODIES)
+	if(cart.mapper == MAPPER_CODIES) {
+		bprintf(0, _T("codemasters\n"));
 		ZetSetWriteHandler(writemem_mapper_codies);
+	}
 	else if (cart.mapper == MAPPER_MSX || cart.mapper == MAPPER_MSX_NEMESIS)
-	{ bprintf(0, _T("msx mapper!\n"));ZetSetWriteHandler(writemem_mapper_msx);}
-	else
+	{
+		bprintf(0, _T("msx\n"));
+		ZetSetWriteHandler(writemem_mapper_msx);
+	}
+	else {
+		bprintf(0, _T("sega\n"));
 		ZetSetWriteHandler(writemem_mapper_sega);
+	}
 
     /* Force SMS (J) console type if FM sound enabled */
     if(sms.use_fm)
@@ -152,13 +158,24 @@ void sms_reset(void)
     sms.memctrl     = 0xAB;
     sms.ioctrl      = 0xFF;
 
-	ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
-	ZetMapMemory(cart.rom + 0x0400, 0x0400, 0x3fff, MAP_ROM);
-	ZetMapMemory(cart.rom + 0x4000, 0x4000, 0x7fff, MAP_ROM);
-	ZetMapMemory(cart.rom + 0x8000, 0x8000, 0xbfff, MAP_ROM);
-	ZetMapMemory((UINT8 *)&dummy_write, 0x0000, 0xbfff, MAP_WRITE);
-	ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
-	ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_READ);
+	if(cart.mapper == MAPPER_CODIES) {
+		ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
+		ZetMapMemory(cart.rom + 0x0400, 0x0400, 0x3fff, MAP_ROM);
+		ZetMapMemory(cart.rom + 0x4000, 0x4000, 0x7fff, MAP_ROM);
+		ZetMapMemory(cart.rom + 0x8000, 0x8000, 0xbfff, MAP_ROM);
+		//ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_READ);
+		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
+		//ZetMapMemory((UINT8 *)&dummy_write, 0x0000, 0xbfff, MAP_WRITE);
+		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_RAM);
+	} else {
+		ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
+		ZetMapMemory(cart.rom + 0x0400, 0x0400, 0x3fff, MAP_ROM);
+		ZetMapMemory(cart.rom + 0x4000, 0x4000, 0x7fff, MAP_ROM);
+		ZetMapMemory(cart.rom + 0x8000, 0x8000, 0xbfff, MAP_ROM);
+		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
+		ZetMapMemory((UINT8 *)&dummy_write, 0x0000, 0xbfff, MAP_WRITE);
+		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_READ);
+	}
 	ZetReset();
 	ZetClose();
 
@@ -170,7 +187,7 @@ void sms_reset(void)
 	switch (cart.mapper) // WIP!!
 	{
 		case MAPPER_MSX_NEMESIS:
-		case MAPPER_MSX: {
+			case MAPPER_MSX: { bprintf(0, _T("msx mapper"));
 			cart.fcr[2] = 0x00;
 			UINT32 poffset = ((cart.pages * 2)-1) << 13;
 			ZetOpen(0);
@@ -243,7 +260,7 @@ void sms_mapper_w(INT32 address, UINT8 data)
             {
 				poffset = ((cart.fcr[3] % cart.pages) << 14);
 				ZetMapMemory(cart.rom + poffset, 0x8000, 0xbfff, MAP_ROM);
-				ZetMapMemory((UINT8 *)&dummy_write, 0x8000, 0xbfff, MAP_WRITE);
+				//ZetMapMemory((UINT8 *)&dummy_write, 0x8000, 0xbfff, MAP_WRITE);
             }
             break;
 
@@ -270,7 +287,7 @@ uint8 z80_read_unmapped(void)
     int pc = ZetGetPC(-1);
     uint8 data;
 	pc = (pc - 1) & 0xFFFF;
-	data = ZetReadProg(pc);
+	data = ZetReadByte(pc);
 
 	return ((data | data_bus_pullup) & ~data_bus_pulldown);
 }

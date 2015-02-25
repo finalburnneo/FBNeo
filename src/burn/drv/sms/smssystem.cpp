@@ -23,7 +23,7 @@
 
 
 bitmap_t bitmap;
-cart_t cart;                
+cart_t cart;
 input_t input;
 
 /* Run the virtual console emulation for one frame */
@@ -41,8 +41,6 @@ void system_frame(int skip_render)
         {
             sms.paused = 1;
 
-            //z80_set_irq_line(IRQ_LINE_NMI, ASSERT_LINE);
-			//z80_set_irq_line(IRQ_LINE_NMI, CLEAR_LINE);
 			ZetNmi();
         }
     }
@@ -102,7 +100,6 @@ void system_frame(int skip_render)
             }
         }
 
-//        sound_update(vdp.line);
 		// Render Sound Segment
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / lpf;

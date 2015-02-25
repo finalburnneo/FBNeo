@@ -167,7 +167,7 @@ typedef struct {
     char *name;
 } rominfo_t;
 
-rominfo_t game_list[] = {
+static rominfo_t game_list[] = {
     {0x29822980, MAPPER_CODIES, DISPLAY_PAL, TERRITORY_EXPORT, "Cosmic Spacehead"},
     {0xB9664AE1, MAPPER_CODIES, DISPLAY_PAL, TERRITORY_EXPORT, "Fantastic Dizzy"},
     {0xA577CE46, MAPPER_CODIES, DISPLAY_PAL, TERRITORY_EXPORT, "Micro Machines"},
@@ -284,13 +284,9 @@ INT32 SMSInit()
     snd.sample_rate = 44100;
     snd.mixer_callback = NULL;
 
-    sms.territory = 0;
     sms.use_fm = 0;
 
     system_init();
-
-    sms.territory = 0;
-    sms.use_fm = 0;
 
 	return 0;
 }

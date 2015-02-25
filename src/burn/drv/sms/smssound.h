@@ -40,7 +40,5 @@ void fmunit_write(int offset, int data);
 int sound_init(void);
 void sound_shutdown(void);
 void sound_reset(void);
-//void sound_update(int line);
-//void sound_mixer_callback(int16 **stream, int16 **output, int length);
 
 #endif /* _SOUND_H_ */

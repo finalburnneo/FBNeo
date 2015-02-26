@@ -13,7 +13,7 @@ sms_t sms;
 uint8 data_bus_pullup   = 0x00;
 uint8 data_bus_pulldown = 0x00;
 
-uint8 dummy_write[0x2000];
+uint8 dummy_write[0xffff];
 
 void __fastcall writemem_mapper_sega(UINT16 offset, UINT8 data)
 {
@@ -25,7 +25,7 @@ void __fastcall writemem_mapper_sega(UINT16 offset, UINT8 data)
 
 
 void __fastcall writemem_mapper_codies(UINT16 offset, UINT8 data)
-{   //bprintf(0, _T("o %X %X,"), offset, data);
+{
     switch(offset & 0xC000)
     {
         case 0x0000:
@@ -37,16 +37,12 @@ void __fastcall writemem_mapper_codies(UINT16 offset, UINT8 data)
         case 0x8000:
             sms_mapper_w(3, data);
             return;
-        case 0xC000:
-			//sms.wram[offset & 0x1fff] = data;    // maybe..
-            return;
     }
 }
 
 void __fastcall writemem_mapper_msx(UINT16 offset, UINT8 data)
 {
 	if (offset <= 0x0003) {
-		bprintf(0, _T("msx %X %X,"), offset, data);
 		sms_mapper8k_w(offset & 3, data);
 		return;
 	}
@@ -158,23 +154,23 @@ void sms_reset(void)
     sms.memctrl     = 0xAB;
     sms.ioctrl      = 0xFF;
 
+	ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
+	ZetMapMemory(cart.rom + 0x0400, 0x0400, 0x3fff, MAP_ROM);
+	ZetMapMemory(cart.rom + 0x4000, 0x4000, 0x7fff, MAP_ROM);
+	ZetMapMemory(cart.rom + 0x8000, 0x8000, 0xbfff, MAP_ROM);
+
 	if(cart.mapper == MAPPER_CODIES) {
-		ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
-		ZetMapMemory(cart.rom + 0x0400, 0x0400, 0x3fff, MAP_ROM);
-		ZetMapMemory(cart.rom + 0x4000, 0x4000, 0x7fff, MAP_ROM);
-		ZetMapMemory(cart.rom + 0x8000, 0x8000, 0xbfff, MAP_ROM);
-		//ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_READ);
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
-		//ZetMapMemory((UINT8 *)&dummy_write, 0x0000, 0xbfff, MAP_WRITE);
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_RAM);
-	} else {
-		ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
-		ZetMapMemory(cart.rom + 0x0400, 0x0400, 0x3fff, MAP_ROM);
-		ZetMapMemory(cart.rom + 0x4000, 0x4000, 0x7fff, MAP_ROM);
-		ZetMapMemory(cart.rom + 0x8000, 0x8000, 0xbfff, MAP_ROM);
+	} else
+	if(cart.mapper == MAPPER_SEGA) {
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
 		ZetMapMemory((UINT8 *)&dummy_write, 0x0000, 0xbfff, MAP_WRITE);
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_READ);
+	} else
+	{ // MSX Mapper
+		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
+		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_RAM);
 	}
 	ZetReset();
 	ZetClose();
@@ -184,12 +180,12 @@ void sms_reset(void)
     cart.fcr[2] = 0x01;
 	cart.fcr[3] = 0x00;
 
-	switch (cart.mapper) // WIP!!
+	switch (cart.mapper)
 	{
-		case MAPPER_MSX_NEMESIS:
-			case MAPPER_MSX: { bprintf(0, _T("msx mapper"));
+		case MAPPER_MSX_NEMESIS: { // WIP!! / won't boot
+			bprintf(0, _T("(nemesis)\n"));
 			cart.fcr[2] = 0x00;
-			UINT32 poffset = ((cart.pages * 2)-1) << 13;
+			UINT32 poffset = (0x0f) << 13;
 			ZetOpen(0);
 			ZetMapMemory(cart.rom + poffset, 0x0000, 0x1fff, MAP_READ);
 			ZetClose();
@@ -198,7 +194,7 @@ void sms_reset(void)
 	}
 }
 
-/*// INIT ??
+/*
 // Nemesis special case
       if (slot.mapper == MAPPER_MSX_NEMESIS)
       {
@@ -208,7 +204,7 @@ void sms_reset(void)
           z80_readmap[i] = &slot.rom[(0x0f << 13) | ((i & 0x07) << 10)];
         }
       }
-	  */
+*/
 
 void sms_mapper8k_w(INT32 address, UINT8 data) // WIP
 {
@@ -260,7 +256,8 @@ void sms_mapper_w(INT32 address, UINT8 data)
             {
 				poffset = ((cart.fcr[3] % cart.pages) << 14);
 				ZetMapMemory(cart.rom + poffset, 0x8000, 0xbfff, MAP_ROM);
-				//ZetMapMemory((UINT8 *)&dummy_write, 0x8000, 0xbfff, MAP_WRITE);
+				if (cart.mapper == MAPPER_SEGA)
+					ZetMapMemory((UINT8 *)&dummy_write, 0x8000, 0xbfff, MAP_WRITE);
             }
             break;
 

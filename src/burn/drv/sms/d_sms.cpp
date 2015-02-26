@@ -269,7 +269,7 @@ INT32 SMSInit()
     bitmap.width  = 256;
     bitmap.height = 192;
     bitmap.depth  = 16;
-    bitmap.granularity = 2; //
+    bitmap.granularity = 2;
     bitmap.pitch  = bitmap.width * bitmap.granularity;
     bitmap.data   = (uint8 *)pTransDraw;
     bitmap.viewport.x = 0;

@@ -100,8 +100,6 @@ typedef struct
 /* Global data */
 extern sms_t sms;
 
-extern UINT8 dummy_write[0x2000];
-
 /* Function prototypes */
 void sms_init(void);
 void sms_reset(void);

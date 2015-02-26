@@ -180,6 +180,12 @@ static rominfo_t game_list[] = {
     {0xec726c0d, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Xenon 2"},
 	{0xe0b1aff8, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Smash TV"},
 	{0x2d48c1d3, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Back to the Future III"},
+	{0xc0e25d62, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "California Games II (Europe)"},
+	{0x7e5839a0, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Championship Hockey"},
+	{0x13ac9023, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Cool Spot (Euro)"},
+	{0xb3768a7a, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Disney's Bonkers"},
+	{0x8370f6cd, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Double Hawk"},
+	{0xc4d5efc5, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Earthworm Jim"},
 	{0x445525E2, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Penguin Adventure (KR)"},
 	{0x83F0EEDE, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Street Master (KR)"},
 	{0xA05258F5, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Won-Si-In (KR)"},
@@ -194,6 +200,7 @@ static rominfo_t game_list[] = {
 	{0x89b79e77, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "XDallye Pigu-Wang (KR)"},
 	{0x61e8806f, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Flashpoint (KR)"},
 	//{, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, " (KR)"},
+	{0x643b6b76, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Block Hole (KR)"},
 	{0x577ec227, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Galaxian (KR)"},
 	{0x0ae470e5, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "King and Balloon (KR)"},
 	{0xb49aa6fc, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Mopiranger (KR)"},
@@ -207,12 +214,16 @@ static rominfo_t game_list[] = {
 	{0x0918fba0, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "C_SO! (KR)"},
 	{0x7778e256, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Comic Bakery (KR)"},
 	{0xf06f2ccb, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Eagles 5(KR)"},
+	{0xdd74bcf1, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Exa Innova E.I. (KR)"},
 	//{, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, " (KR)"},
 	{0         , -1  , -1, -1, NULL},
 };
 // Notes:
+// X-prefix = not working, possibly a different mapper(?)
 // Sangokushi 3 (Kor) is broke. maybe its a korean 8k mapper?
 // Super Arkanoid - no input??
+// Dinobasher - weird!
+// Earthworm Jim - crashes after title
 
 static INT32 load_rom()
 {

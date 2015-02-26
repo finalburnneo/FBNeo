@@ -128,7 +128,7 @@ depobj	:= 	$(drvobj) \
 			\
 			pce.o \
 			\
-			sms.o smspio.o smssn76489.o smssystem.o smsvdp.o smsfmintf.o smsrender.o smssound.o smstms.o \
+			sms.o smspio.o smssystem.o smsvdp.o smsfmintf.o smsrender.o smssound.o smstms.o \
 			\
 			snes_65816.o snes_io.o snes_main.o snes_ppu.o snes_spc700.o
 			

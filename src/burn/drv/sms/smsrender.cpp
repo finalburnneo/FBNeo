@@ -597,6 +597,7 @@ void palette_sync(int index, int force)
 
 void remap_8_to_16(int line)
 {
+    if (line > nScreenHeight) return;
     int i;
     uint16 *p = (uint16 *)&bitmap.data[(line * bitmap.pitch)];
     for(i = bitmap.viewport.x; i < bitmap.viewport.w + bitmap.viewport.x; i++)

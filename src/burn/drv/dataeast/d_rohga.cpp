@@ -2164,7 +2164,7 @@ struct BurnDriver BurnDrvSchmeisr = {
 };
 
 
-// Nitro Ball (US)
+// Nitro Ball (World, set 1)
 
 static struct BurnRomInfo nitrobalRomDesc[] = {
 	{ "jl01-4.d3",		0x020000, 0x0414e409, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2205,10 +2205,62 @@ STD_ROM_FN(nitrobal)
 
 struct BurnDriver BurnDrvNitrobal = {
 	"nitrobal", NULL, NULL, NULL, "1992",
-	"Nitro Ball (US)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Nitro Ball (World, set 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, nitrobalRomInfo, nitrobalRomName, NULL, NULL, NitrobalInputInfo, NitrobalDIPInfo,
+	NitrobalInit, DrvExit, DrvFrame, NitrobalDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 320, 3, 4
+};
+
+
+// Nitro Ball (World, set 2)
+
+static struct BurnRomInfo nitrobalaRomDesc[] = {
+	// roms had no labels
+	{ "3d",				0x020000, 0x48f77c19, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "3b",				0x020000, 0xfb1284e9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "5d",				0x020000, 0xac47367a, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "5b",				0x020000, 0xa8e9d7dd, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "6d",				0x040000, 0x59e620cc, 1 | BRF_PRG | BRF_ESS }, //  4 // 7ee3 - 7f06 are 0xff instead of 0x00 in the nitrobal set, why?
+	{ "6b",				0x040000, 0x1fd8995b, 1 | BRF_PRG | BRF_ESS }, //  5 // this half of the pair matches
+	/* Two empty rom slots at d7, b7 */
+
+	{ "jl08.r20",		0x010000, 0x93d93fe1, 2 | BRF_PRG | BRF_ESS }, //  6 Huc6280 Code
+
+	{ "jl06.d10",		0x010000, 0x91cf668e, 3 | BRF_GRA },           //  7 Characters
+	{ "jl07.d12",		0x010000, 0xe61d0e42, 3 | BRF_GRA },           //  8
+
+	{ "mav00.b10",		0x080000, 0x34785d97, 4 | BRF_GRA },           //  9 Foreground Tiles
+	{ "mav01.b12",		0x080000, 0x8b531b16, 4 | BRF_GRA },           // 10
+
+	{ "mav02.b16",		0x100000, 0x20723bf7, 5 | BRF_GRA },           // 11 Background Tiles
+	{ "mav03.e16",		0x100000, 0xef6195f0, 5 | BRF_GRA },           // 12
+
+	{ "mav05.e19",		0x100000, 0xd92d769c, 6 | BRF_GRA },           // 13 Sprite Bank A
+	{ "mav04.b19",		0x100000, 0x8ba48385, 6 | BRF_GRA },           // 14
+	{ "mav07.e20",		0x080000, 0x5fc10ccd, 6 | BRF_GRA },           // 15
+	{ "mav06.b20",		0x080000, 0xae6201a5, 6 | BRF_GRA },           // 16
+
+	{ "mav09.e23",		0x040000, 0x1ce7b51a, 7 | BRF_GRA },           // 17 Sprite Bank B
+	{ "mav08.b23",		0x040000, 0x64966576, 7 | BRF_GRA },           // 18
+
+	{ "mav10.r17",		0x080000, 0x8ad734b0, 8 | BRF_SND },           // 19 OKI M6295 Samples 0
+
+	{ "mav11.r19",		0x080000, 0xef513908, 9 | BRF_SND },           // 20 OKI M6295 Samples 1
+
+	{ "jn-00.17l",		0x000400, 0x6ac77b84, 0 | BRF_OPT },           // 21 Unused PROMs
+};
+
+STD_ROM_PICK(nitrobala)
+STD_ROM_FN(nitrobala)
+
+struct BurnDriver BurnDrvNitrobala = {
+	"nitrobala", "nitrobal", NULL, NULL, "1992",
+	"Nitro Ball (World, set 2)\0", NULL, "Data East Corporation", "DECO IC16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	NULL, nitrobalaRomInfo, nitrobalaRomName, NULL, NULL, NitrobalInputInfo, NitrobalDIPInfo,
 	NitrobalInit, DrvExit, DrvFrame, NitrobalDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };

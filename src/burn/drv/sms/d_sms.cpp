@@ -718,6 +718,26 @@ struct BurnDriver BurnDrvsms_aleste = {
 };
 
 
+// Aleste II gg2sms
+
+static struct BurnRomInfo sms_aleste2gg2smsRomDesc[] = {
+	{ "Aleste IIgg2sms.sms",	0x40000, 0x516d899d, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_aleste2gg2sms)
+STD_ROM_FN(sms_aleste2gg2sms)
+
+struct BurnDriver BurnDrvsms_aleste2gg2sms = {
+	"sms_alesteiigg2sms", NULL, NULL, NULL, "1993",
+	"Aleste II GG (SMS Conversion)\0", NULL, "Sega", "Sega Mastersystem",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_aleste2gg2smsRomInfo, sms_aleste2gg2smsRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
+
 // Alex Kidd BMX Trial (Jpn)
 
 static struct BurnRomInfo sms_alexbmxRomDesc[] = {

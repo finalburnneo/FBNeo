@@ -238,6 +238,8 @@ static rominfo_t game_list[] = {
 // Jang Pung 3 - goes mental @ boot
 // Space Gun - won't boot
 // Shadow Dancer - won't boot
+// Street Fighter II - reboots @ game start
+// Spiderman - Sinister Six - won't boot
 
 static INT32 load_rom()
 {

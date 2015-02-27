@@ -186,6 +186,14 @@ static rominfo_t game_list[] = {
 	{0xb3768a7a, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Disney's Bonkers"},
 	{0x8370f6cd, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Double Hawk"},
 	{0xc4d5efc5, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Earthworm Jim"},
+	{0xec2da554, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "GP Rider"},
+	{0x205caae8, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Operation Wolf"},
+	{0x95b9ea95, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "PGA Tour Golf"},
+	{0xb840a446, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Pit Fighter (euro)"},
+	{0x0047b615, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Predator (euro)"},
+	{0xa908cff5, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Space Gun (euro)"},
+	{0xebe45388, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Spider Man - Sinister Six"},
+	{0x0f8287ec, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Street Fighter II"},
 	{0x445525E2, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Penguin Adventure (KR)"},
 	{0x83F0EEDE, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Street Master (KR)"},
 	{0xA05258F5, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Won-Si-In (KR)"},
@@ -215,6 +223,8 @@ static rominfo_t game_list[] = {
 	{0x7778e256, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Comic Bakery (KR)"},
 	{0xf06f2ccb, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Eagles 5(KR)"},
 	{0xdd74bcf1, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Exa Innova E.I. (KR)"},
+	{0x17ab6883, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "FA Tetris (KR)"},
+	{0x18fb98a3, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Jang Pung 3 (KR)"},
 	//{, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, " (KR)"},
 	{0         , -1  , -1, -1, NULL},
 };
@@ -224,6 +234,10 @@ static rominfo_t game_list[] = {
 // Super Arkanoid - no input??
 // Dinobasher - weird!
 // Earthworm Jim - crashes after title
+// GP Rider - goes mental in-game
+// Jang Pung 3 - goes mental @ boot
+// Space Gun - won't boot
+// Shadow Dancer - won't boot
 
 static INT32 load_rom()
 {
@@ -2292,7 +2306,7 @@ STD_ROM_FN(sms_castelo)
 
 struct BurnDriver BurnDrvsms_castelo = {
 	"sms_castelo", NULL, NULL, NULL, "1997",
-	"Castelo Rá-Tim-Bum (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
+	"Castelo Ra-Tim-Bum (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_casteloRomInfo, sms_casteloRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -3912,7 +3926,7 @@ STD_ROM_FN(sms_ferias)
 
 struct BurnDriver BurnDrvsms_ferias = {
 	"sms_ferias", NULL, NULL, NULL, "1996",
-	"Férias Frustradas do Pica-Pau (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
+	"Ferias Frustradas do Pica-Pau (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_feriasRomInfo, sms_feriasRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -4241,7 +4255,7 @@ struct BurnDriver BurnDrvsms_gforceu = {
 };
 
 
-// Game Box Série Esportes Radicais (Bra)
+// Game Box Serie Esportes Radicais (Bra)
 
 static struct BurnRomInfo sms_gameboxRomDesc[] = {
 	{ "mpr-18796.ic1",	0x40000, 0x1890f407, BRF_PRG | BRF_ESS },
@@ -4252,7 +4266,7 @@ STD_ROM_FN(sms_gamebox)
 
 struct BurnDriver BurnDrvsms_gamebox = {
 	"sms_gamebox", NULL, NULL, NULL, "19??",
-	"Game Box Série Esportes Radicais (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
+	"Game Box Serie Esportes Radicais (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_gameboxRomInfo, sms_gameboxRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -6332,7 +6346,7 @@ STD_ROM_FN(sms_sdmilhao)
 
 struct BurnDriver BurnDrvsms_sdmilhao = {
 	"sms_sdmilhao", NULL, NULL, NULL, "2003",
-	"Show do Milhão (Bra, Prototype)\0", NULL, "Tec Toy", "Sega Mastersystem",
+	"Show do Milhao (Bra, Prototype)\0", NULL, "Tec Toy", "Sega Mastersystem",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_sdmilhaoRomInfo, sms_sdmilhaoRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -6472,7 +6486,7 @@ STD_ROM_FN(sms_monica)
 
 struct BurnDriver BurnDrvsms_monica = {
 	"sms_monica", "sms_wboymlnd", NULL, NULL, "1991",
-	"Mônica no Castelo do Dragao (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
+	"Monica no Castelo do Dragao (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_monicaRomInfo, sms_monicaRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -7692,7 +7706,7 @@ STD_ROM_FN(sms_shavnyak)
 
 struct BurnDriver BurnDrvsms_shavnyak = {
 	"sms_shavnyak", NULL, NULL, NULL, "1993",
-	"Quest for the Shaven Yak Starring Ren Hoëk and Stimpy (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
+	"Quest for the Shaven Yak Starring Ren Hoek and Stimpy (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_shavnyakRomInfo, sms_shavnyakRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -8172,7 +8186,7 @@ STD_ROM_FN(sms_sapomestr)
 
 struct BurnDriver BurnDrvsms_sapomestr = {
 	"sms_sapomestr", "sms_kungfuk", NULL, NULL, "1995",
-	"Sapo Xulé - O Mestre do Kung Fu (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
+	"Sapo Xule - O Mestre do Kung Fu (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_sapomestrRomInfo, sms_sapomestrRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -8212,7 +8226,7 @@ STD_ROM_FN(sms_sapoxule)
 
 struct BurnDriver BurnDrvsms_sapoxule = {
 	"sms_sapoxule", "sms_psychof", NULL, NULL, "1995",
-	"Sapo Xulé vs. Os Invasores do Brejo (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
+	"Sapo Xule vs. Os Invasores do Brejo (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_sapoxuleRomInfo, sms_sapoxuleRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -8732,7 +8746,7 @@ STD_ROM_FN(sms_sitio)
 
 struct BurnDriver BurnDrvsms_sitio = {
 	"sms_sitio", NULL, NULL, NULL, "1997",
-	"Sítio do Picapau Amarelo (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
+	"Sitio do Picapau Amarelo (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_sitioRomInfo, sms_sitioRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -10412,7 +10426,7 @@ STD_ROM_FN(sms_turmamon)
 
 struct BurnDriver BurnDrvsms_turmamon = {
 	"sms_turmamon", "sms_wboy3", NULL, NULL, "1993",
-	"Turma da Mônica em O Resgate (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
+	"Turma da Monica em O Resgate (Bra)\0", NULL, "Tec Toy", "Sega Mastersystem",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_turmamonRomInfo, sms_turmamonRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,

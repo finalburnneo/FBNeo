@@ -1319,7 +1319,7 @@ struct BurnDriver BurnDrvRygar2 = {
 };
 
 
-// Rygar (US set 3, old version)
+// Rygar (US set 3 Old Version)
 
 static struct BurnRomInfo rygar3RomDesc[] = {
 	{ "cpu_5p.bin", 0x08000, 0xe79c054a, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
@@ -1353,7 +1353,7 @@ STD_ROM_FN(rygar3)
 
 struct BurnDriver BurnDrvRygar3 = {
 	"rygar3", "rygar", NULL, NULL, "1986",
-	"Rygar (US set 3, old version)\0", NULL, "Tecmo", "Miscellaneous",
+	"Rygar (US set 3 Old Version)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, rygar3RomInfo, rygar3RomName, NULL, NULL, RygarInputInfo, RygarDIPInfo,
@@ -1405,6 +1405,8 @@ struct BurnDriver BurnDrvRygarj = {
 };
 
 
+// Rygar (US, bootleg)
+
 static struct BurnRomInfo rygarbRomDesc[] = {
 	{ "5.u64", 		0x08000, 0x0e13e0e4, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
 	{ "4.u63",		0x04000, 0x7ac5191b, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -1446,7 +1448,7 @@ struct BurnDriver BurnDrvRygarb = {
 };
 
 
-// Silk Worm (set 1)
+// Silk Worm (World)
 
 static struct BurnRomInfo silkwormRomDesc[] = {
 	{ "silkworm.4",		0x10000, 0xa5277cce, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
@@ -1479,7 +1481,7 @@ STD_ROM_FN(silkworm)
 
 struct BurnDriver BurnDrvSilkworm = {
 	"silkworm", NULL, NULL, NULL, "1988",
-	"Silk Worm\0", NULL, "Tecmo", "Miscellaneous",
+	"Silk Worm (World)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, silkwormRomInfo, silkwormRomName, NULL, NULL, SilkwormInputInfo, SilkwormDIPInfo,
@@ -1488,7 +1490,7 @@ struct BurnDriver BurnDrvSilkworm = {
 };
 
 
-// Silk Worm (set 1)
+// Silk Worm (Japan)
 
 static struct BurnRomInfo silkwrmjRomDesc[] = {
 	{ "silkwormj.4",	0x10000, 0x6df3df22, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
@@ -1569,7 +1571,7 @@ struct BurnDriver BurnDrvSilkwormb = {
 	256, 224, 4, 3
 };
 
-// Back Fire (Tecmo) (Japan, Bootleg, Prototype?)
+// Back Fire (Tecmo, bootleg)
 
 static struct BurnRomInfo backfirtRomDesc[] = {
 	{ "b5-e3.bin",		0x10000, 0x0ab3bd4d, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
@@ -1600,7 +1602,7 @@ STD_ROM_FN(backfirt)
 
 struct BurnDriver BurnDrvbackfirt = {
 	"backfirt", NULL, NULL, NULL, "1988",
-	"Back Fire (Tecmo) (Japan, Bootleg, Prototype?)\0", NULL, "Tecmo", "Miscellaneous",
+	"Back Fire (Tecmo, bootleg)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, backfirtRomInfo, backfirtRomName, NULL, NULL, BackfirtInputInfo, BackfirtDIPInfo,
@@ -1609,7 +1611,7 @@ struct BurnDriver BurnDrvbackfirt = {
 };
 
 
-// Gemini Wing
+// Gemini Wing (Japan)
 
 static struct BurnRomInfo geminiRomDesc[] = {
 	{ "gw04-5s.rom",	0x10000, 0xff9de855, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
@@ -1642,10 +1644,53 @@ STD_ROM_FN(gemini)
 
 struct BurnDriver BurnDrvGemini = {
 	"gemini", NULL, NULL, NULL, "1987",
-	"Gemini Wing\0", NULL, "Tecmo", "Miscellaneous",
+	"Gemini Wing (Japan)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, geminiRomInfo, geminiRomName, NULL, NULL, GeminiInputInfo, GeminiDIPInfo,
+	GeminiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	224, 256, 3, 4
+};
+
+
+// Gemini Wing (World, bootleg)
+// f205v id 1293
+
+static struct BurnRomInfo geminibRomDesc[] = {
+	{ "gww2-6c.bin",	0x10000, 0xcd79c5b3, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "gw05-6s.rom",	0x10000, 0x5a6947a9, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "gw03-5h.rom",	0x08000, 0x9bc79596, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
+
+	{ "gw02-3h.rom",	0x08000, 0x7acc8d35, 3 | BRF_GRA },	      //  3 - Characters
+
+	{ "gw06-1c.rom",	0x10000, 0x4ea51631, 4 | BRF_GRA },	      //  4 - Sprites
+	{ "gw07-1d.rom",	0x10000, 0xda42637e, 4 | BRF_GRA },	      //  5
+	{ "gw08-1f.rom",	0x10000, 0x0b4e8d70, 4 | BRF_GRA },	      //  6
+	{ "gw09-1h.rom",	0x10000, 0xb65c5e4c, 4 | BRF_GRA },	      //  7
+
+	{ "gw10-1n.rom",	0x10000, 0x5e84cd4f, 5 | BRF_GRA },	      //  8 - Foreground Tiles
+	{ "gw11-2na.rom",	0x10000, 0x08b458e1, 5 | BRF_GRA },	      //  9
+	{ "gw12-2nb.rom",	0x10000, 0x229c9714, 5 | BRF_GRA },	      // 10
+	{ "gw13-3n.rom",	0x10000, 0xc5dfaf47, 5 | BRF_GRA },	      // 11
+
+	{ "gw14-1r.rom",	0x10000, 0x9c10e5b5, 6 | BRF_GRA },	      // 12 - Background Tiles
+	{ "gw15-2ra.rom",	0x10000, 0x4cd18cfa, 6 | BRF_GRA },	      // 13
+	{ "gw16-2rb.rom",	0x10000, 0xf911c7be, 6 | BRF_GRA },	      // 14
+	{ "gw17-3r.rom",	0x10000, 0x79a9ce25, 6 | BRF_GRA },	      // 15
+
+	{ "gw01-6a.rom",	0x08000, 0xd78afa05, 7 | BRF_SND },	      // 16 - Samples
+};
+
+STD_ROM_PICK(geminib)
+STD_ROM_FN(geminib)
+
+struct BurnDriver BurnDrvGeminib = {
+	"geminib", "gemini", NULL, NULL, "1987",
+	"Gemini Wing (World, bootleg)\0", NULL, "Tecmo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, geminibRomInfo, geminibRomName, NULL, NULL, GeminiInputInfo, GeminiDIPInfo,
 	GeminiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 256, 3, 4
 };

@@ -31,6 +31,8 @@ static UINT8  *FstarfrcLayerTiles    = NULL;
 static UINT8  *FstarfrcSpriteTiles   = NULL;
 static UINT8  *FstarfrcTempGfx       = NULL;
 
+static UINT16 *pBitmap[4];
+
 static INT32 CharScrollX;
 static INT32 CharScrollY;
 static INT32 Scroll1X;
@@ -102,7 +104,7 @@ static struct BurnInputInfo RiotInputList[] = {
 
 STDINPUTINFO(Riot)
 
-inline void FstarfrcMakeInputs()
+static inline void FstarfrcMakeInputs()
 {
 	// Reset Inputs
 	FstarfrcInput[0] = FstarfrcInput[1] = 0x3fff;
@@ -357,7 +359,7 @@ static struct BurnRomInfo RiotRomDesc[] = {
 STD_ROM_PICK(Riot)
 STD_ROM_FN(Riot)
 
-INT32 FstarfrcDoReset()
+static INT32 DrvDoReset()
 {
 	CharScrollX = CharScrollY = Scroll1X = Scroll1Y = Scroll2X = Scroll2Y = 0;
 
@@ -377,16 +379,12 @@ INT32 FstarfrcDoReset()
 	return 0;
 }
 
-void FstarfrcYM2151IrqHandler(INT32 Irq)
+static void FstarfrcYM2151IrqHandler(INT32 nStatus)
 {
-	if (Irq) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0   , CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-UINT16 __fastcall FstarfrcReadWord(UINT32 a)
+static UINT16 __fastcall FstarfrcReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x150030: {
@@ -405,7 +403,7 @@ UINT16 __fastcall FstarfrcReadWord(UINT32 a)
 	return 0;
 }
 
-UINT8 __fastcall FstarfrcReadByte(UINT32 a)
+static UINT8 __fastcall FstarfrcReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x150030:
@@ -421,7 +419,7 @@ UINT8 __fastcall FstarfrcReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall FstarfrcWriteWord(UINT32 a, UINT16 d)
+static void __fastcall FstarfrcWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x150010: {
@@ -456,7 +454,7 @@ void __fastcall FstarfrcWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-void __fastcall FstarfrcWriteByte(UINT32 a, UINT8 d)
+static void __fastcall FstarfrcWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x150011: {
@@ -469,7 +467,7 @@ void __fastcall FstarfrcWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall GinkunReadWord(UINT32 a)
+static UINT16 __fastcall GinkunReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x150020: {
@@ -494,7 +492,7 @@ UINT16 __fastcall GinkunReadWord(UINT32 a)
 	return 0;
 }
 
-UINT8 __fastcall GinkunReadByte(UINT32 a)
+static UINT8 __fastcall GinkunReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x150030:
@@ -513,7 +511,7 @@ UINT8 __fastcall GinkunReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall GinkunWriteWord(UINT32 a, UINT16 d)
+static void __fastcall GinkunWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 //		case 0x150010: {
@@ -563,7 +561,7 @@ void __fastcall GinkunWriteWord(UINT32 a, UINT16 d)
 //	bprintf(PRINT_NORMAL, _T("Write Word -> %06X, %04X\n"), a, d);
 }
 
-void __fastcall GinkunWriteByte(UINT32 a, UINT8 d)
+static void __fastcall GinkunWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x150001: {
@@ -590,7 +588,7 @@ void __fastcall GinkunWriteByte(UINT32 a, UINT8 d)
 //	bprintf(PRINT_NORMAL, _T("Write Byte -> %06X, %02X\n"), a, d);
 }
 
-UINT8 __fastcall FstarfrcZ80Read(UINT16 a)
+static UINT8 __fastcall FstarfrcZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xfc00: {
@@ -609,7 +607,7 @@ UINT8 __fastcall FstarfrcZ80Read(UINT16 a)
 	return 0;
 }
 
-void __fastcall FstarfrcZ80Write(UINT16 a, UINT8 d)
+static void __fastcall FstarfrcZ80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xfc00: {
@@ -639,21 +637,17 @@ static INT32 FstarfrcMemIndex()
 
 	RamStart = Next;
 
-	if (Ginkun || Riot) {
-	FstarfrcRam          = Next; Next += 0x05000;
+	pBitmap[0]	     = (UINT16*)Next; Next += 256 * 256 * sizeof(UINT16);
+	pBitmap[1]	     = (UINT16*)Next; Next += 256 * 256 * sizeof(UINT16);
+	pBitmap[2]	     = (UINT16*)Next; Next += 256 * 256 * sizeof(UINT16);
+	pBitmap[3]	     = (UINT16*)Next; Next += 256 * 256 * sizeof(UINT16);
+
+	FstarfrcRam          = Next; Next += 0x0a000;
 	FstarfrcCharRam      = Next; Next += 0x01000;
 	FstarfrcVideoRam     = Next; Next += 0x01000;
 	FstarfrcColourRam    = Next; Next += 0x01000;
 	FstarfrcVideo2Ram    = Next; Next += 0x01000;
 	FstarfrcColour2Ram   = Next; Next += 0x01000;
-	} else {
-	FstarfrcRam          = Next; Next += 0x0a000;
-	FstarfrcCharRam      = Next; Next += 0x01000;
-	FstarfrcVideoRam     = Next; Next += 0x00800;
-	FstarfrcColourRam    = Next; Next += 0x00800;
-	FstarfrcVideo2Ram    = Next; Next += 0x00800;
-	FstarfrcColour2Ram   = Next; Next += 0x00800;
-	}
 	FstarfrcSpriteRam    = Next; Next += 0x01000;
 	FstarfrcPaletteRam   = Next; Next += 0x02000;
 	FstarfrcZ80Ram       = Next; Next += 0x0c002;
@@ -676,14 +670,12 @@ static INT32 CharPlaneOffsets[4] = { 0, 1, 2, 3 };
 static INT32 CharXOffsets[8]     = { 0, 4, 8, 12, 16, 20, 24, 28 };
 static INT32 CharYOffsets[8]     = { 0, 32, 64, 96, 128, 160, 192, 224 };
 	
-
-INT32 FstarfrcInit()
+static INT32 DrvInit(INT32 game_select)
 {
 	INT32 nRet = 0, nLen;
 
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "ginkun")) Ginkun = 1;
-
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "riot")) Riot = 1;
+	if (game_select == 1) Ginkun = 1;
+	if (game_select == 2) Riot = 1;
 
 	// Allocate and Blank all required memory
 	Mem = NULL;
@@ -727,36 +719,36 @@ INT32 FstarfrcInit()
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	if (!strncmp(BurnDrvGetTextA(DRV_NAME), "fstarfrc", 8)) {
-	SekMapMemory(FstarfrcRom         , 0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(FstarfrcRam         , 0x100000, 0x103fff, MAP_RAM);
-	SekMapMemory(FstarfrcCharRam     , 0x110000, 0x110fff, MAP_RAM);
-	SekMapMemory(FstarfrcVideoRam    , 0x120000, 0x1207ff, MAP_RAM);
-	SekMapMemory(FstarfrcColourRam   , 0x120800, 0x120fff, MAP_RAM);
-	SekMapMemory(FstarfrcVideo2Ram   , 0x121000, 0x1217ff, MAP_RAM);
-	SekMapMemory(FstarfrcColour2Ram  , 0x121800, 0x121fff, MAP_RAM);
-	SekMapMemory(FstarfrcRam + 0x4000, 0x122000, 0x127fff, MAP_RAM);
-	SekMapMemory(FstarfrcSpriteRam   , 0x130000, 0x130fff, MAP_RAM);
-	SekMapMemory(FstarfrcPaletteRam  , 0x140000, 0x141fff, MAP_RAM);
-	SekSetReadWordHandler(0, FstarfrcReadWord);
-	SekSetWriteWordHandler(0, FstarfrcWriteWord);
-	SekSetReadByteHandler(0, FstarfrcReadByte);
-	SekSetWriteByteHandler(0, FstarfrcWriteByte);
+	if (game_select == 0) {
+		SekMapMemory(FstarfrcRom         , 0x000000, 0x07ffff, MAP_ROM);
+		SekMapMemory(FstarfrcRam         , 0x100000, 0x103fff, MAP_RAM);
+		SekMapMemory(FstarfrcCharRam     , 0x110000, 0x110fff, MAP_RAM);
+		SekMapMemory(FstarfrcVideoRam    , 0x120000, 0x1207ff, MAP_RAM);
+		SekMapMemory(FstarfrcColourRam   , 0x120800, 0x120fff, MAP_RAM);
+		SekMapMemory(FstarfrcVideo2Ram   , 0x121000, 0x1217ff, MAP_RAM);
+		SekMapMemory(FstarfrcColour2Ram  , 0x121800, 0x121fff, MAP_RAM);
+		SekMapMemory(FstarfrcRam + 0x4000, 0x122000, 0x127fff, MAP_RAM);
+		SekMapMemory(FstarfrcSpriteRam   , 0x130000, 0x130fff, MAP_RAM);
+		SekMapMemory(FstarfrcPaletteRam  , 0x140000, 0x141fff, MAP_RAM);
+		SekSetReadWordHandler(0, FstarfrcReadWord);
+		SekSetWriteWordHandler(0, FstarfrcWriteWord);
+		SekSetReadByteHandler(0, FstarfrcReadByte);
+		SekSetWriteByteHandler(0, FstarfrcWriteByte);
 	} else {
-	SekMapMemory(FstarfrcRom         , 0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(FstarfrcRam         , 0x100000, 0x103fff, MAP_RAM);
-	SekMapMemory(FstarfrcCharRam     , 0x110000, 0x110fff, MAP_RAM);
-	SekMapMemory(FstarfrcVideoRam    , 0x120000, 0x120fff, MAP_RAM);
-	SekMapMemory(FstarfrcColourRam   , 0x121000, 0x121fff, MAP_RAM);
-	SekMapMemory(FstarfrcVideo2Ram   , 0x122000, 0x122fff, MAP_RAM);
-	SekMapMemory(FstarfrcColour2Ram  , 0x123000, 0x123fff, MAP_RAM);
-	SekMapMemory(FstarfrcRam + 0x4000, 0x124000, 0x124fff, MAP_RAM);
-	SekMapMemory(FstarfrcSpriteRam   , 0x130000, 0x130fff, MAP_RAM);
-	SekMapMemory(FstarfrcPaletteRam  , 0x140000, 0x141fff, MAP_RAM);
-	SekSetReadWordHandler(0, GinkunReadWord);
-	SekSetWriteWordHandler(0, GinkunWriteWord);
-	SekSetReadByteHandler(0, GinkunReadByte);
-	SekSetWriteByteHandler(0, GinkunWriteByte);
+		SekMapMemory(FstarfrcRom         , 0x000000, 0x07ffff, MAP_ROM);
+		SekMapMemory(FstarfrcRam         , 0x100000, 0x103fff, MAP_RAM);
+		SekMapMemory(FstarfrcCharRam     , 0x110000, 0x110fff, MAP_RAM);
+		SekMapMemory(FstarfrcVideoRam    , 0x120000, 0x120fff, MAP_RAM);
+		SekMapMemory(FstarfrcColourRam   , 0x121000, 0x121fff, MAP_RAM);
+		SekMapMemory(FstarfrcVideo2Ram   , 0x122000, 0x122fff, MAP_RAM);
+		SekMapMemory(FstarfrcColour2Ram  , 0x123000, 0x123fff, MAP_RAM);
+		SekMapMemory(FstarfrcRam + 0x4000, 0x124000, 0x124fff, MAP_RAM);
+		SekMapMemory(FstarfrcSpriteRam   , 0x130000, 0x130fff, MAP_RAM);
+		SekMapMemory(FstarfrcPaletteRam  , 0x140000, 0x141fff, MAP_RAM);
+		SekSetReadWordHandler(0, GinkunReadWord);
+		SekSetWriteWordHandler(0, GinkunWriteWord);
+		SekSetReadByteHandler(0, GinkunReadByte);
+		SekSetWriteByteHandler(0, GinkunWriteByte);
 	}
 	SekClose();
 
@@ -788,12 +780,16 @@ INT32 FstarfrcInit()
 	GenericTilesInit();
 
 	// Reset the driver
-	FstarfrcDoReset();
+	DrvDoReset();
 
 	return 0;
 }
 
-INT32 FstarfrcExit()
+static INT32 FstarfrcInit() { return DrvInit(0); }
+static INT32 GinkunInit()   { return DrvInit(1); }
+static INT32 RiotInit()     { return DrvInit(2); }
+
+static INT32 DrvExit()
 {
 	BurnYM2151Exit();
 	MSM6295Exit(0);
@@ -811,145 +807,68 @@ INT32 FstarfrcExit()
 	return 0;
 }
 
-void GinkunRenderBgLayer()
+static void FstarfrcRenderBgLayer()
 {
-	INT32 mx, my, Code, Colour, x, y, TileIndex = 0;
+	INT32 Wide = ((Riot || Ginkun) ? 0x400 : 0x200);
 
-	for (my = 0; my < 32; my++) {
-		for (mx = 0; mx < 64; mx++) {
-			Code = ((FstarfrcVideo2Ram[TileIndex + 1] << 8) | FstarfrcVideo2Ram[TileIndex + 0]) & 0x1fff;
-			Colour = (((FstarfrcColour2Ram[TileIndex + 1] << 8) | FstarfrcColour2Ram[TileIndex + 0]) & 0x0f);
+	INT32 XScroll = Scroll2X & (Wide - 1);
+	INT32 YScroll = (Scroll2Y + 16) & 0x1ff;
 
-			x = 16 * mx;
-			y = 16 * my;
+	for (INT32 offs = 0; offs < 32 * (Wide / 16); offs++)
+	{
+		INT32 Code = ((FstarfrcVideo2Ram[offs * 2 + 1] << 8) | FstarfrcVideo2Ram[offs * 2 + 0]) & 0x1fff;
+		INT32 Colour = FstarfrcColour2Ram[offs * 2 + 0] & 0x0f;
 
-			x -= Scroll2X;
-			y -= Scroll2Y;
+		INT32 sx = ((offs & ((Wide / 16) - 1)) * 16) - XScroll;
+		INT32 sy = ((offs / (Wide / 16)) * 16) - YScroll;
 
-			x &= 0x1ff;
-			y &= 0x1ff;
+		if (sx < -15) sx += Wide;
+		if (sy < -15) sy += 512;
 
-			if (x >= 496) x -= 512;
-			if (y >= 496) y -= 512;
-
-			y -= 16;
-
-			if (x > 15 && x < 240 && y > 15 && y < 208) {
-				Render16x16Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0, 512 + (0x10 << 4), FstarfrcLayerTiles);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 512 + (0x10 << 4), FstarfrcLayerTiles);
-			}
-
-			TileIndex += 2;
+		if (sx > 15 && sx < 240 && sy > 15 && sy < 208) {
+			Render16x16Tile(pBitmap[0], Code, sx, sy, Colour, 4, 0x300, FstarfrcLayerTiles);
+		} else {
+			Render16x16Tile_Clip(pBitmap[0], Code, sx, sy, Colour, 4, 0x300, FstarfrcLayerTiles);
 		}
 	}
 }
 
-void FstarfrcRenderBgLayer()
+static void FstarfrcRenderFgLayer()
 {
-	INT32 mx, my, Code, Colour, x, y, TileIndex = 0;
+	INT32 Wide = ((Riot || Ginkun) ? 0x400 : 0x200);
+	INT32 XScroll = Scroll1X & (Wide - 1);
+	INT32 YScroll = (Scroll1Y + 16) & 0x1ff;
 
-	for (my = 0; my < 32; my++) {
-		for (mx = 0; mx < 32; mx++) {
-			Code = ((FstarfrcVideo2Ram[TileIndex + 1] << 8) | FstarfrcVideo2Ram[TileIndex + 0]) & 0x1fff;
-			Colour = (((FstarfrcColour2Ram[TileIndex + 1] << 8) | FstarfrcColour2Ram[TileIndex + 0]) & 0x0f);
+	for (INT32 offs = 0; offs < 32 * (Wide / 16); offs++)
+	{
+		INT32 Code = ((FstarfrcVideoRam[offs * 2 + 1] << 8) | FstarfrcVideoRam[offs * 2 + 0]) & 0x1fff;
+		INT32 Colour = FstarfrcColourRam[offs * 2 + 0] & 0x1f;
 
-			x = 16 * mx;
-			y = 16 * my;
+		INT32 sx = ((offs & ((Wide / 16) - 1)) * 16) - XScroll;
+		INT32 sy = ((offs / (Wide / 16)) * 16) - YScroll;
 
-			x -= Scroll2X;
-			y -= Scroll2Y;
+		if (sx < -15) sx += Wide;
+		if (sy < -15) sy += 512;
 
-			x &= 0x1ff;
-			y &= 0x1ff;
-
-			if (x >= 496) x -= 512;
-			if (y >= 496) y -= 512;
-
-			y -= 16;
-
-			if (x > 15 && x < 240 && y > 15 && y < 208) {
-				Render16x16Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0, 512 + (0x10 << 4), FstarfrcLayerTiles);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 512 + (0x10 << 4), FstarfrcLayerTiles);
-			}
-
-			TileIndex += 2;
+		if (sx > 15 && sx < 240 && sy > 15 && sy < 208) {
+			Render16x16Tile(pBitmap[1], Code, sx, sy, Colour, 4, 0x200, FstarfrcLayerTiles);
+		} else {
+			Render16x16Tile_Clip(pBitmap[1], Code, sx, sy, Colour, 4, 0x200, FstarfrcLayerTiles);
 		}
 	}
 }
 
-void GinkunRenderFgLayer()
+static void FstarfrcRenderTextLayer()
 {
 	INT32 mx, my, Code, Colour, x, y, TileIndex = 0;
 
-	for (my = 0; my < 32; my++) {
-		for (mx = 0; mx < 64; mx++) {
-			Code = ((FstarfrcVideoRam[TileIndex + 1] << 8) | FstarfrcVideoRam[TileIndex + 0]) & 0x1fff;
-			Colour = ((FstarfrcColourRam[TileIndex + 1] << 8) | FstarfrcColourRam[TileIndex + 0]) & 0x0f;
+	INT32 XScroll = CharScrollX & 0x1ff;
+	INT32 YScroll = CharScrollY;
 
-			x = 16 * mx;
-			y = 16 * my;
+	if (Riot) YScroll += 16;
+	//if (!Riot && !Ginkun) YScroll -= 16;
 
-			x -= Scroll1X;
-			y -= Scroll1Y;
-
-			x &= 0x1ff;
-			y &= 0x1ff;
-
-			if (x >= 496) x -= 512;
-			if (y >= 496) y -= 512;
-
-			y -= 16;
-
-			if (x > 15 && x < 240 && y > 15 && y < 208) {
-				Render16x16Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0, 512, FstarfrcLayerTiles);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 512, FstarfrcLayerTiles);
-			}
-
-			TileIndex += 2 ;
-		}
-	}
-}
-
-void FstarfrcRenderFgLayer()
-{
-	INT32 mx, my, Code, Colour, x, y, TileIndex = 0;
-
-	for (my = 0; my < 32; my++) {
-		for (mx = 0; mx < 32; mx++) {
-			Code = ((FstarfrcVideoRam[TileIndex + 1] << 8) | FstarfrcVideoRam[TileIndex + 0]) & 0x1fff;
-			Colour = ((FstarfrcColourRam[TileIndex + 1] << 8) | FstarfrcColourRam[TileIndex + 0]) & 0x0f;
-
-			x = 16 * mx;
-			y = 16 * my;
-
-			x -= Scroll1X;
-			y -= Scroll1Y;
-
-			x &= 0x1ff;
-			y &= 0x1ff;
-
-			if (x >= 496) x -= 512;
-			if (y >= 496) y -= 512;
-
-			y -= 16;
-
-			if (x > 15 && x < 240 && y > 15 && y < 208) {
-				Render16x16Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0, 512, FstarfrcLayerTiles);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 512, FstarfrcLayerTiles);
-			}
-
-			TileIndex += 2 ;
-		}
-	}
-}
-
-void FstarfrcRenderTextLayer()
-{
-	INT32 mx, my, Code, Colour, x, y, TileIndex = 0;
+	YScroll &= 0xff;
 
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 64; mx++) {
@@ -960,27 +879,25 @@ void FstarfrcRenderTextLayer()
 			x = 8 * mx;
 			y = 8 * my;
 
-			x -= CharScrollX;
-			y -= CharScrollY;
-
-			x &= 0x1ff;
-			y &= 0x0ff;
+			x -= XScroll;
+			y -= YScroll;
+			if (x < -7) x += 512;
+			if (y < -7) y += 256;
 
 			if (x > 7 && x < 248 && y > 7 && y < 216) {
-				Render8x8Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0, 256, FstarfrcCharTiles);
+				Render8x8Tile(pBitmap[3], Code, x, y, Colour, 4, 256, FstarfrcCharTiles);
 			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 256, FstarfrcCharTiles);
+				Render8x8Tile_Clip(pBitmap[3], Code, x, y, Colour, 4, 256, FstarfrcCharTiles);
 			}
 
-			TileIndex += 2 ;
+			TileIndex += 2;
 		}
 	}
 }
 
-static void draw_sprites(INT32 layerpriority)
+static void FstarfrcRenderSprites()
 {
 	UINT16* pFstarfrcSpriteRam = ((UINT16*)FstarfrcSpriteRam);
-
 
 	INT32 offs;
 	const UINT8 layout[8][8] =
@@ -1008,7 +925,7 @@ static void draw_sprites(INT32 layerpriority)
 			if(Riot)
 				sizey = sizex;
 			else
-			sizey = 1 << ((BURN_ENDIAN_SWAP_INT16(pFstarfrcSpriteRam[offs+2]) & 0x0c) >> 2);
+				sizey = 1 << ((BURN_ENDIAN_SWAP_INT16(pFstarfrcSpriteRam[offs+2]) & 0x0c) >> 2);
 			if (sizex >= 2) code &= ~0x01;
 			if (sizey >= 2) code &= ~0x02;
 			if (sizex >= 4) code &= ~0x04;
@@ -1021,9 +938,11 @@ static void draw_sprites(INT32 layerpriority)
 			if (xpos >= 0x8000) xpos -= 0x10000;
 			ypos = BURN_ENDIAN_SWAP_INT16(pFstarfrcSpriteRam[offs+3]);
 			if (ypos >= 0x8000) ypos -= 0x10000;
-			priority = (BURN_ENDIAN_SWAP_INT16(pFstarfrcSpriteRam[offs]) & 0xc0) >> 6;
+			priority = (BURN_ENDIAN_SWAP_INT16(pFstarfrcSpriteRam[offs]) & 0xe0);
 
-			if (priority != layerpriority) continue;
+			color |= priority;
+
+			if ((nSpriteEnable & (1<<((priority>>6)^3)))==0) continue; 
 
 			for (y = 0;y < sizey;y++)
 			{
@@ -1039,29 +958,29 @@ static void draw_sprites(INT32 layerpriority)
 					if (sx > 7 && sx < 248 && sy > 7 && sy < 216) {
 						if (!flipx) {
 							if (!flipy) {
-								Render8x8Tile_Mask(pTransDraw, code + layout[y][x], sx, sy, color, 4, 0, 0, FstarfrcSpriteTiles);
+								Render8x8Tile_Mask(pBitmap[2], code + layout[y][x], sx, sy, color, 4, 0, 0, FstarfrcSpriteTiles);
 							} else {
-								Render8x8Tile_Mask_FlipY(pTransDraw, code + layout[y][x], sx, sy, color, 4, 0, 0, FstarfrcSpriteTiles);
+								Render8x8Tile_Mask_FlipY(pBitmap[2], code + layout[y][x], sx, sy, color, 4, 0, 0, FstarfrcSpriteTiles);
 							}
 						} else {
 							if (!flipy) {
-								Render8x8Tile_Mask_FlipX(pTransDraw, code + layout[y][x], sx, sy, color, 4, 0, 0, FstarfrcSpriteTiles);
+								Render8x8Tile_Mask_FlipX(pBitmap[2], code + layout[y][x], sx, sy, color, 4, 0, 0, FstarfrcSpriteTiles);
 							} else {
-								Render8x8Tile_Mask_FlipXY(pTransDraw, code + layout[y][x], sx, sy, color, 4, 0, 0, FstarfrcSpriteTiles);
+								Render8x8Tile_Mask_FlipXY(pBitmap[2], code + layout[y][x], sx, sy, color, 4, 0, 0, FstarfrcSpriteTiles);
 							}
 						}
 					} else {
 						if (!flipx) {
 							if (!flipy) {
-								Render8x8Tile_Mask_Clip(pTransDraw, code + layout[y][x], sx, sy, color, 4, 0, 0, FstarfrcSpriteTiles);
+								Render8x8Tile_Mask_Clip(pBitmap[2], code + layout[y][x], sx, sy, color, 4, 0, 0, FstarfrcSpriteTiles);
 							} else {
-								Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code + layout[y][x], sx, sy, color, 4, 0, 0, FstarfrcSpriteTiles);
+								Render8x8Tile_Mask_FlipY_Clip(pBitmap[2], code + layout[y][x], sx, sy, color, 4, 0, 0, FstarfrcSpriteTiles);
 							}
 						} else {
 							if (!flipy) {
-								Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + layout[y][x], sx, sy, color, 4, 0, 0, FstarfrcSpriteTiles);
+								Render8x8Tile_Mask_FlipX_Clip(pBitmap[2], code + layout[y][x], sx, sy, color, 4, 0, 0, FstarfrcSpriteTiles);
 							} else {
-								Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + layout[y][x], sx, sy, color, 4, 0, 0, FstarfrcSpriteTiles);
+								Render8x8Tile_Mask_FlipXY_Clip(pBitmap[2], code + layout[y][x], sx, sy, color, 4, 0, 0, FstarfrcSpriteTiles);
 							}
 						}
 					}
@@ -1083,10 +1002,10 @@ inline static UINT32 CalcCol(UINT16 nColour)
 	g = (g << 4) | g;
 	b = (b << 4) | b;
 
-	return BurnHighCol(r, g, b, 0);
+	return BurnHighCol(r,g,b,0);
 }
 
-INT32 FstarfrcCalcPalette()
+static INT32 FstarfrcCalcPalette()
 {
 	INT32 i;
 	UINT16* ps;
@@ -1099,47 +1018,193 @@ INT32 FstarfrcCalcPalette()
 	return 0;
 }
 
-void GinkunRender()
+static void FstarfrcRenderMixBitmaps()
 {
-	FstarfrcCalcPalette();
-	
-	for (INT32 i = 0; i < nScreenHeight * nScreenWidth; i++) {
-		pTransDraw[i] = 0x300;
+	const UINT32 *paldata = FstarfrcPalette;
+	const UINT32 *palblnd = FstarfrcPalette + 0x400;
+
+	for (INT32 y = 0; y < nScreenHeight; y++)
+	{
+		UINT16 *tx = pBitmap[3] + y * nScreenWidth;
+		UINT16 *sp = pBitmap[2] + y * nScreenWidth;
+		UINT16 *fg = pBitmap[1] + y * nScreenWidth;
+		UINT16 *bg = pBitmap[0] + y * nScreenWidth;
+
+		UINT8 *dst = pBurnDraw + (y * nScreenWidth) * nBurnBpp;
+
+		for (INT32 x = 0; x < nScreenWidth; x++, dst += nBurnBpp)
+		{
+			UINT16 sprpixel = sp[x];
+			UINT16 m_sprpri = (sprpixel >> 10) & 3;
+			UINT16 m_sprbln = (sprpixel >> 9) & 1;
+
+			sprpixel = sprpixel & 0xff;
+			sp[x] = 0; // clear sprites
+
+			UINT16 fgpixel = fg[x];
+			UINT16 fgbln = fgpixel & 0x0100;
+			fgpixel &= 0xeff;
+
+			UINT16 bgpixel = bg[x];
+
+			if (tx[x] & 0xf) {
+				PutPix(dst, paldata[tx[x]]);
+				continue;
+			}
+
+			if (sprpixel & 0xf)
+			{
+				if (m_sprpri == 3)
+				{
+					if (fgpixel & 0xf)
+					{
+						if (fgbln)
+						{
+							PutPix(dst, rand());
+						}
+						else
+						{
+							PutPix(dst, paldata[fgpixel]);
+						}
+					}
+					else if (bgpixel & 0x0f)
+					{
+						PutPix(dst, paldata[bgpixel]);
+					}
+					else
+					{
+						if (m_sprbln)
+						{
+							PutPix(dst, rand());
+						}
+						else
+						{
+							PutPix(dst, paldata[sprpixel]);
+						}
+					}
+				}
+				else if (m_sprpri == 2)
+				{
+					if (fgpixel & 0xf)
+					{
+						if (fgbln)
+						{
+							if (m_sprbln)
+							{
+								PutPix(dst, (palblnd[bgpixel] + paldata[sprpixel + 0x800]));
+							}
+							else
+							{
+								PutPix(dst, (paldata[fgpixel + 0x700] + palblnd[sprpixel]));
+							}
+						}
+						else
+						{
+							PutPix(dst, paldata[fgpixel]);
+						}
+					}
+					else
+					{
+						if (m_sprbln)
+						{
+							UINT32 pxl = palblnd[bgpixel] + paldata[sprpixel + 0x800];
+							PutPix(dst, pxl);
+						}
+						else
+						{
+							PutPix(dst, paldata[sprpixel]);
+						}
+					}
+				}
+				else if (m_sprpri == 1)
+				{
+					if (m_sprbln)
+					{
+						if (fgpixel & 0xf)
+						{
+							if (fgbln)
+							{
+								PutPix(dst, rand());
+							}
+							else
+							{
+								PutPix(dst, (palblnd[fgpixel] + paldata[sprpixel + 0x800]));
+							}
+						}
+						else
+						{
+							PutPix(dst, (palblnd[bgpixel] + paldata[sprpixel + 0x800]));
+						}
+					}
+					else
+					{
+						PutPix(dst, paldata[sprpixel]);
+					}
+				}
+				else if (m_sprpri == 0)
+				{
+					if (m_sprbln)
+					{
+						PutPix(dst, rand());
+					}
+					else
+					{
+						PutPix(dst, paldata[sprpixel]);
+					}
+				}
+			}
+			else
+			{
+				if (fgpixel & 0x0f)
+				{
+					if (fgbln)
+					{
+						PutPix(dst, (paldata[fgpixel + 0x700] + palblnd[bgpixel]));
+
+					}
+					else
+					{
+						PutPix(dst, paldata[fgpixel]);
+					}
+
+				}
+				else if (bgpixel & 0x0f)
+				{
+					PutPix(dst, paldata[bgpixel]);
+				}
+				else
+				{
+					PutPix(dst, paldata[0x300]);
+				}
+			}
+		}
 	}
-	
-	draw_sprites(3);
-	GinkunRenderBgLayer();
-	draw_sprites(2);
-	GinkunRenderFgLayer();
-	draw_sprites(1);
-	FstarfrcRenderTextLayer();
-	draw_sprites(0);
-	BurnTransferCopy(FstarfrcPalette);
 }
 
-void FstarfrcRender()
+static INT32 DrvDraw()
 {
 	FstarfrcCalcPalette();
-	
-	for (INT32 i = 0; i < nScreenHeight * nScreenWidth; i++) {
-		pTransDraw[i] = 0x300;
-	}
-	
-	draw_sprites(3);
-	FstarfrcRenderBgLayer();
-	draw_sprites(2);
-	FstarfrcRenderFgLayer();
-	draw_sprites(1);
-	FstarfrcRenderTextLayer();
-	draw_sprites(0);
-	BurnTransferCopy(FstarfrcPalette);
+
+	if (~nBurnLayer & 1) memset (pBitmap[0], 0, 256 * 256 * 2);
+	if (~nBurnLayer & 2) memset (pBitmap[1], 0, 256 * 256 * 2);
+	if (~nBurnLayer & 4) memset (pBitmap[2], 0, 256 * 256 * 2);
+	if (~nBurnLayer & 8) memset (pBitmap[3], 0, 256 * 256 * 2);
+
+	if (nBurnLayer & 1) FstarfrcRenderBgLayer();
+	if (nBurnLayer & 2) FstarfrcRenderFgLayer();
+	if (nBurnLayer & 4) FstarfrcRenderTextLayer();
+	if (nBurnLayer & 8) FstarfrcRenderSprites();
+
+	FstarfrcRenderMixBitmaps();
+
+	return 0;
 }
 
-INT32 FstarfrcFrame()
+static INT32 DrvFrame()
 {
 	INT32 nInterleave = 10;
 
-	if (FstarfrcReset) FstarfrcDoReset();
+	if (FstarfrcReset) DrvDoReset();
 
 	FstarfrcMakeInputs();
 
@@ -1199,17 +1264,13 @@ INT32 FstarfrcFrame()
 	}
 
 	if (pBurnDraw) {
-		if (Ginkun || Riot) {
-			GinkunRender();
-		} else {
-			FstarfrcRender();
-		}
+		DrvDraw();
 	}
 
 	return 0;
 }
 
-static INT32 FstarfrcScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -1255,7 +1316,7 @@ struct BurnDriver BurnDrvFstarfrc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, FstarfrcRomInfo, FstarfrcRomName, NULL, NULL, FstarfrcInputInfo, FstarfrcDIPInfo,
-	FstarfrcInit, FstarfrcExit, FstarfrcFrame, NULL, FstarfrcScan,
+	FstarfrcInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 224, 256, 3, 4
 };
 
@@ -1265,7 +1326,7 @@ struct BurnDriver BurnDrvFstarfrcj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, FstarfrcjRomInfo, FstarfrcjRomName, NULL, NULL, FstarfrcInputInfo, FstarfrcDIPInfo,
-	FstarfrcInit, FstarfrcExit, FstarfrcFrame, NULL, FstarfrcScan,
+	FstarfrcInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 224, 256, 3, 4
 };
 
@@ -1275,7 +1336,7 @@ struct BurnDriver BurnDrvGinkun = {
 	L"\u304C\u3093\u3070\u308C \u30AE\u30F3\u304F\u3093\0Ganbare Ginkun\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, GinkunRomInfo, GinkunRomName, NULL, NULL, FstarfrcInputInfo, GinkunDIPInfo,
-	FstarfrcInit, FstarfrcExit, FstarfrcFrame, NULL, FstarfrcScan,
+	GinkunInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 256, 224, 4, 3
 };
 
@@ -1285,6 +1346,6 @@ struct BurnDriver BurnDrvRiot = {
 	L"\u96F7\u8ECB\u6597 Riot\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, RiotRomInfo, RiotRomName, NULL, NULL, RiotInputInfo, RiotDIPInfo,
-	FstarfrcInit, FstarfrcExit, FstarfrcFrame, NULL, FstarfrcScan,
+	RiotInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 256, 224, 4, 3
 };

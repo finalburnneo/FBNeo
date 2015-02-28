@@ -1495,8 +1495,6 @@ static void __fastcall megasys_palette_write_byte(UINT32 address, UINT8 data)
 	megasys_palette_write(address);
 }
 
-static int countera = 0;
-
 static void update_video_regs(INT32 offset)
 {
 	offset &= 0x3fe;

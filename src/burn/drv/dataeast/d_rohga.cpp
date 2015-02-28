@@ -1576,7 +1576,7 @@ static INT32 NitrobalDraw()
 
 	draw_combined_playfield(0x200, 0);
 
-	if (nBurnLayer & 1)deco16_draw_layer(3, pTransDraw, DECO16_LAYER_OPAQUE);
+//	if (nBurnLayer & 1) deco16_draw_layer(3, pTransDraw, DECO16_LAYER_OPAQUE);
 
 	deco16_draw_layer(1, pTransDraw, 16);
 

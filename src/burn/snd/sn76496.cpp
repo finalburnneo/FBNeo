@@ -25,6 +25,7 @@ struct SN76496
 	INT32 Output[4];
 	INT32 bSignalAdd;
 	double nVolume;
+	INT32 StereoMask;	/* the stereo output mask */
 	INT32 nOutputDir;
 };
 
@@ -67,7 +68,7 @@ void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length)
 	while (Length > 0)
 	{
 		INT32 Vol[4];
-		UINT32 Out;
+		UINT32 Out, Out2;
 		INT32 Left;
 
 
@@ -149,8 +150,26 @@ void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length)
 			Left -= NextEvent;
 		} while (Left > 0);
 
-		Out = Vol[0] * R->Volume[0] + Vol[1] * R->Volume[1] +
-				Vol[2] * R->Volume[2] + Vol[3] * R->Volume[3];
+		if (R->StereoMask != 0xFF)
+		{
+			Out = ((R->StereoMask&0x10) ? Vol[0] * R->Volume[0]:0)
+				+ ((R->StereoMask&0x20) ? Vol[1] * R->Volume[1]:0)
+				+ ((R->StereoMask&0x40) ? Vol[2] * R->Volume[2]:0)
+				+ ((R->StereoMask&0x80) ? Vol[3] * R->Volume[3]:0);
+
+			Out2 = ((R->StereoMask&0x1) ? Vol[0] * R->Volume[0]:0)
+				+ ((R->StereoMask&0x2) ? Vol[1] * R->Volume[1]:0)
+				+ ((R->StereoMask&0x4) ? Vol[2] * R->Volume[2]:0)
+				+ ((R->StereoMask&0x8) ? Vol[3] * R->Volume[3]:0);
+			if (Out2 > MAX_OUTPUT * STEP) Out2 = MAX_OUTPUT * STEP;
+
+			Out2 /= STEP;
+		}
+		else
+		{
+			Out = Vol[0] * R->Volume[0] + Vol[1] * R->Volume[1] +
+				  Vol[2] * R->Volume[2] + Vol[3] * R->Volume[3];
+		}
 
 		if (Out > MAX_OUTPUT * STEP) Out = MAX_OUTPUT * STEP;
 
@@ -161,7 +180,10 @@ void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length)
 			nLeftSample += (INT32)(Out * R->nVolume);
 		}
 		if ((R->nOutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += (INT32)(Out * R->nVolume);
+			if (R->StereoMask != 0xFF)
+				nRightSample += (INT32)(Out2 * R->nVolume);
+			else
+				nRightSample += (INT32)(Out * R->nVolume);
 		}
 		
 		if (R->bSignalAdd) {
@@ -302,6 +324,26 @@ void SN76496UpdateToBuffer(INT32 Num, INT16* pSoundBuf, INT32 Length)
 	}
 }
 
+void SN76496StereoWrite(INT32 Num, INT32 Data)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496StereoWrite called without init\n"));
+	if (Num > NumChips) bprintf(PRINT_ERROR, _T("SN76496StereoWrite called with invalid chip %x\n"), Num);
+#endif
+
+	struct SN76496 *R = Chip0;
+
+	if (Num >= MAX_SN76496_CHIPS) return;
+	
+	if (Num == 1) R = Chip1;
+	if (Num == 2) R = Chip2;
+	if (Num == 3) R = Chip3;
+	if (Num == 4) R = Chip4;
+
+	R->StereoMask = Data;
+	bprintf(0, _T("sw[%X]"), Data);
+}
+
 void SN76496Write(INT32 Num, INT32 Data)
 {
 #if defined FBA_DEBUG
@@ -413,7 +455,8 @@ static void SN76496Init(struct SN76496 *R, INT32 Clock)
 	R->FeedbackMask = 0x4000;
 	R->WhitenoiseTaps = 0x03;
 	R->WhitenoiseInvert = 1;
-	
+	R->StereoMask = 0xFF;
+
 	R->RNG = R->FeedbackMask;
 	R->Output[3] = R->RNG & 1;
 }

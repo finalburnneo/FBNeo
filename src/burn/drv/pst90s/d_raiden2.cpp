@@ -2990,6 +2990,48 @@ struct BurnDriver BurnDrvRaiden2sw = {
 };
 
 
+// Raiden II (France)
+
+static struct BurnRomInfo raiden2fRomDesc[] = {
+	{ "1_u0211.bin",				0x080000, 0x53be3dd0, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "seibu2_u0212.bin",			0x080000, 0x8dcd8a8d, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "copx-d2.u0313",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_ESS }, //  2 COPX MCU data
+
+	{ "seibu5_u1110.bin",			0x010000, 0xf51a28f9, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+
+	{ "7_u0724.bin",				0x020000, 0xc9ec9469, 4 | BRF_GRA },           //  4 Characters
+
+	{ "raiden_2_seibu_bg-1.u0714",	0x200000, 0xe61ad38e, 5 | BRF_GRA },           //  5 Tiles
+	{ "raiden_2_seibu_bg-2.u075",	0x200000, 0xa694a4bb, 5 | BRF_GRA },           //  6
+
+	{ "raiden_2_seibu_obj-1.u0811",	0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  7 Sprites (Encrypted)
+	{ "raiden_2_seibu_obj-2.u082",	0x200000, 0x638eb771, 6 | BRF_GRA },           //  8
+	{ "raiden_2_seibu_obj-3.u0837",	0x200000, 0x897a0322, 6 | BRF_GRA },           //  9
+	{ "raiden_2_seibu_obj-4.u0836",	0x200000, 0xb676e188, 6 | BRF_GRA },           // 10
+
+	{ "6_u1017.bin",				0x040000, 0xfb0fca23, 7 | BRF_SND },           // 11 OKI #0 Samples
+
+	{ "raiden_2_pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 12 OKI #1 Samples
+
+	{ "jj4b02__ami18cv8-15.u0342.jed",		0x000288, 0x00000000, 9 | BRF_NODUMP }, // 13 pals
+	{ "jj4b01__mmipal16l8bcn.u0341.jed",	0x000288, 0x00000000, 9 | BRF_NODUMP }, // 14
+};
+
+STD_ROM_PICK(raiden2f)
+STD_ROM_FN(raiden2f)
+
+struct BurnDriver BurnDrvRaiden2f = {
+	"raiden2f", "raiden2", NULL, NULL, "1993",
+	"Raiden II (France)\0", "Coin inputs require holding down", "Seibu Kaihatsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, raiden2fRomInfo, raiden2fRomName, NULL, NULL, Raiden2InputInfo, Raiden2DIPInfo,
+	Raiden2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	240, 320, 3, 4
+};
+
+
 // Raiden II (Easy Version, Korea?)
 
 static struct BurnRomInfo raiden2eRomDesc[] = {

@@ -509,7 +509,7 @@ static inline void K053936GP_copyroz32clip(INT32 chip, UINT16 *src_bitmap, INT32
 				pixel = src_base[offs]|color_base;
 				if (!(pixel & cmask))
 					continue;
-// this one below is fucked.
+// this one below is borked.
 				if ((dst_ptr+ecx+dst_base2)<dst_size) dst_base[dst_ptr+ecx+dst_base2] = alpha_blend(pal_base[pixel], dst_base[dst_ptr+ecx+dst_base2], alpha);
 
 				if (pixeldouble_output)

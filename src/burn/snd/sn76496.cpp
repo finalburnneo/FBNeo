@@ -341,7 +341,6 @@ void SN76496StereoWrite(INT32 Num, INT32 Data)
 	if (Num == 4) R = Chip4;
 
 	R->StereoMask = Data;
-	bprintf(0, _T("sw[%X]"), Data);
 }
 
 void SN76496Write(INT32 Num, INT32 Data)

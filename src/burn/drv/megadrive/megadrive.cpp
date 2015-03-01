@@ -3476,7 +3476,7 @@ static void DrawLayer(INT32 plane, INT32 *hcache, INT32 maxcells, INT32 sh)
 
 		DrawStripInterlace(&ts);
 	} else if( RamVReg->reg[11]&4) {
-		// shit, we have 2-cell column based vscroll
+		// e have 2-cell column based vscroll
 		// luckily this doesn't happen too often
 		ts.line = ymask | (shift[width]<<24); // save some stuff instead of line
 		DrawStripVSRam(&ts, plane);

@@ -432,32 +432,50 @@ static void SN76496SetGain(struct SN76496 *R,INT32 Gain)
 	R->VolTable[15] = 0;
 }
 
+void SN76496Reset()
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496Reset called without init\n"));
+#endif
+
+	struct SN76496 *R = Chip0;
+	INT32 i, Num;
+
+	for (Num = 0; Num < NumChips; Num++) {
+		if (Num == 0) R = Chip0;
+		if (Num == 1) R = Chip1;
+		if (Num == 2) R = Chip2;
+		if (Num == 3) R = Chip3;
+		if (Num == 4) R = Chip4;
+
+		for (i = 0; i < 4; i++) R->Volume[i] = 0;
+
+		R->LastRegister = 0;
+		for (i = 0; i < 8; i += 2) {
+			R->Register[i + 0] = 0x00;
+			R->Register[i + 1] = 0x0f;
+		}
+
+		for (i = 0; i < 4; i++) {
+			R->Output[i] = 0;
+			R->Period[i] = R->Count[i] = R->UpdateStep;
+		}
+
+		R->FeedbackMask = 0x4000;
+		R->WhitenoiseTaps = 0x03;
+		R->WhitenoiseInvert = 1;
+		R->StereoMask = 0xFF;
+
+		R->RNG = R->FeedbackMask;
+		R->Output[3] = R->RNG & 1;
+	}
+}
+
 static void SN76496Init(struct SN76496 *R, INT32 Clock)
 {
-	INT32 i;
-	
 	R->UpdateStep = (UINT32)(((double)STEP * nBurnSoundRate * 16) / Clock);
-		
-	for (i = 0; i < 4; i++) R->Volume[i] = 0;
-	
-	R->LastRegister = 0;
-	for (i = 0; i < 8; i += 2) {
-		R->Register[i + 0] = 0x00;
-		R->Register[i + 1] = 0x0f;
-	}
-	
-	for (i = 0; i < 4; i++) {
-		R->Output[i] = 0;
-		R->Period[i] = R->Count[i] = R->UpdateStep;
-	}
-	
-	R->FeedbackMask = 0x4000;
-	R->WhitenoiseTaps = 0x03;
-	R->WhitenoiseInvert = 1;
-	R->StereoMask = 0xFF;
 
-	R->RNG = R->FeedbackMask;
-	R->Output[3] = R->RNG & 1;
+	SN76496Reset();
 }
 
 static void GenericStart(INT32 Num, INT32 Clock, INT32 FeedbackMask, INT32 NoiseTaps, INT32 NoiseInvert, INT32 SignalAdd)

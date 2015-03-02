@@ -5221,7 +5221,7 @@ static struct BurnRomInfo Street64RomDesc[] = {
 
 	{ "64th_10.rom",	0x40000, 0xa3390561, 8 | BRF_SND },           // 11 OKI #1 Samples
 
-	{ "prom",		0x00200, 0x00000000, 9 | BRF_NODUMP },        // 12 Priority PROM
+	{ "pr91009.12",		0x00200, 0xc69423d6, 9 | BRF_GRA },           // 12 Priority PROM
 };
 
 STD_ROM_PICK(Street64)
@@ -5229,13 +5229,6 @@ STD_ROM_FN(Street64)
 
 static INT32 street64Init()
 {
-	const UINT32 priority_data[16] = {
-		0x04132,0x03142,0x14032,0x04132,0xfffff,0x04132,0xfffff,0xfffff,
-		0xfffff,0xfffff,0xfffff,0xfffff,0xfffff,0xfffff,0xfffff,0xfffff
-	};
-
-	memcpy (m_layers_order, priority_data, 16 * sizeof(INT32));
-
 	input_select_values[0] = 0x57;
 	input_select_values[1] = 0x53;
 	input_select_values[2] = 0x54;
@@ -5280,7 +5273,7 @@ static struct BurnRomInfo Street64jRomDesc[] = {
 
 	{ "64th_10.rom",	0x40000, 0xa3390561, 8 | BRF_SND },           // 11 OKI #1 Samples
 
-	{ "prom",		0x00200, 0x00000000, 9 | BRF_NODUMP },        // 12 Priority PROM
+	{ "pr91009.12",		0x00200, 0xc69423d6, 9 | BRF_GRA },           // 12 Priority PROM
 };
 
 STD_ROM_PICK(Street64j)

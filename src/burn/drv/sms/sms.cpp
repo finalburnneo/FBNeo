@@ -89,9 +89,6 @@ void sms_init(void)
 		case CONSOLE_SMS:
 			ZetSetOutHandler(sms_port_w);
 			ZetSetInHandler(sms_port_r);
-			//bprintf(0, _T("sms!\n"));
-            //smscpu_writeport16 = sms_port_w;
-            //smscpu_readport16 = sms_port_r;
             break;
 
         case CONSOLE_SMSJ:
@@ -106,8 +103,8 @@ void sms_init(void)
             break;
 
         case CONSOLE_GG:
-            //smscpu_writeport16 = gg_port_w;
-            //smscpu_readport16 = gg_port_r;
+			ZetSetOutHandler(gg_port_w);
+			ZetSetInHandler(gg_port_r);
             data_bus_pullup = 0xFF;
             break;
 
@@ -144,8 +141,8 @@ void sms_reset(void)
 	ZetOpen(0);
 
 	/* Clear SMS context */
-    memset(dummy_write, 0, sizeof(dummy_write));
-    memset(sms.wram,    0, sizeof(sms.wram));
+    memset(&dummy_write, 0, sizeof(dummy_write));
+    memset(&sms.wram,    0, sizeof(sms.wram));
     memset(cart.sram,   0, sizeof(cart.sram));
 
     sms.paused      = 0x00;
@@ -432,7 +429,7 @@ UINT8 smsj_port_r(UINT16 port)
 /* Game Gear port handlers                                                  */
 /*--------------------------------------------------------------------------*/
 
-void gg_port_w(UINT16 port, UINT8 data)
+void _fastcall gg_port_w(UINT16 port, UINT8 data)
 {
     port &= 0xFF;
 
@@ -464,7 +461,7 @@ void gg_port_w(UINT16 port, UINT8 data)
 }
 
 
-UINT8 gg_port_r(UINT16 port)
+UINT8 _fastcall gg_port_r(UINT16 port)
 {
     port &= 0xFF;
 

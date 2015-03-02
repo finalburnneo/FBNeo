@@ -20,7 +20,6 @@ UINT8 SMSDips[3];
 
 static struct BurnDIPInfo SMSDIPList[] = {
 	{0x3d, 0xff, 0xff, 0x00, NULL				},
-
 };
 
 STDDIPINFO(SMS)
@@ -63,9 +62,13 @@ static INT32 MemIndex()
 	return 0;
 }
 
+INT32 SMSInit();
+
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
+	vdp_init();     // gets rid of crap on the screen w/GG
+	render_init();  // ""
 	sms_reset();
 
 	return 0;
@@ -288,10 +291,11 @@ static INT32 load_rom()
         }
     }
 
-    /* Figure out game image type */
-    //if(stricmp(strrchr(game_name, '.'), ".gg") == 0) <- this causes crash -dink
-    //    sms.console = CONSOLE_GG;
-    //else
+	/* Figure out game image type */
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "sms_ggaleste")) {
+		sms.console = CONSOLE_GG; // Temp. hack for GG Aleste, since GG games aren't "officially" supported yet.
+	}
+    else
         sms.console = CONSOLE_SMS;
 
     system_assign_device(PORT_A, DEVICE_PAD2B);
@@ -733,6 +737,25 @@ struct BurnDriver BurnDrvsms_aleste2gg2sms = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_aleste2gg2smsRomInfo, sms_aleste2gg2smsRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
+// GG Aleste
+
+static struct BurnRomInfo sms_alesteggRomDesc[] = {
+	{ "gg aleste (japan).bin",	0x40000, 0x1b80a75b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_alestegg)
+STD_ROM_FN(sms_alestegg)
+
+struct BurnDriver BurnDrvsms_alestegg = {
+	"sms_ggaleste", NULL, NULL, NULL, "1993",
+	"Aleste GG\0", NULL, "Sega", "Sega Mastersystem",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_alesteggRomInfo, sms_alesteggRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
 };

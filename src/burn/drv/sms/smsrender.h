@@ -13,7 +13,7 @@ extern uint8 gg_cram_expand_table[16];
 extern void (*render_bg)(int line);
 extern void (*render_obj)(int line);
 extern uint8 *linebuf;
-extern uint8 internal_buffer[0x100];
+extern uint8 internal_buffer[0x200];
 extern uint16 pixel[];
 extern uint8 bg_name_dirty[0x200];     
 extern uint16 bg_name_list[0x200];     

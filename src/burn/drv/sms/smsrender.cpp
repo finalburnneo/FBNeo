@@ -17,7 +17,7 @@ void (*render_obj)(int line) = NULL;
 uint8 *linebuf;
 
 /* Internal buffer for drawing non 8-bit displays */
-uint8 internal_buffer[0x100];
+uint8 internal_buffer[0x200];
 
 /* Precalculated pixel table */
 uint16 pixel[PALETTE_SIZE];
@@ -108,6 +108,8 @@ void render_init(void)
     int bx, sx, b, s, bp, bf, sf, c;
 
     make_tms_tables();
+	memset(&lut, 0, sizeof(lut));
+	memset(&bp_lut, 0, sizeof(bp_lut));
 
     /* Generate 64k of data for the look up table */
     for(bx = 0; bx < 0x100; bx++)
@@ -218,7 +220,7 @@ void render_reset(void)
     int i;
 
     /* Clear display bitmap */
-    memset(bitmap.data, 0, bitmap.pitch * bitmap.height);
+    memset(bitmap.data, 0, bitmap.width * bitmap.height);
 
     /* Clear palette */
     for(i = 0; i < PALETTE_SIZE; i++)
@@ -227,11 +229,11 @@ void render_reset(void)
     }
 
     /* Invalidate pattern cache */
-    memset(bg_name_dirty, 0, sizeof(bg_name_dirty));
-    memset(bg_name_list, 0, sizeof(bg_name_list));
+    memset(&bg_name_dirty, 0, sizeof(bg_name_dirty));
+    memset(&bg_name_list, 0, sizeof(bg_name_list));
     bg_list_index = 0;
-    memset(bg_pattern_cache, 0, sizeof(bg_pattern_cache));
-
+    memset(&bg_pattern_cache, 0, sizeof(bg_pattern_cache));
+	memset(&internal_buffer, 0, sizeof(internal_buffer));
     /* Pick render routine */
     render_bg = render_bg_sms;
     render_obj = render_obj_sms;
@@ -251,7 +253,11 @@ void render_line(int line)
     /* Update pattern cache */
     update_bg_pattern_cache();
 
-    /* Blank line (full width) */
+	/* Blank line (full width) */
+	if((IS_GG) && line < 8) { // fix for crap at top of screen in GG -dink
+		//char bg = (char)linebuf[0];
+		memset(linebuf, 0, bitmap.width);
+	} else
     if(!(vdp.reg[1] & 0x40))
     {
         memset(linebuf, BACKDROP_COLOR, bitmap.width);
@@ -263,8 +269,8 @@ void render_line(int line)
             render_bg(line);
 
         /* Draw sprites */
-        if(render_obj != NULL)
-            render_obj(line);
+		if(render_obj != NULL)
+			render_obj(line);
 
         /* Blank leftmost column of display */
         if(vdp.reg[0] & 0x20)
@@ -597,7 +603,7 @@ void palette_sync(int index, int force)
 
 void remap_8_to_16(int line)
 {
-    if (line > nScreenHeight) return;
+	if (line > nScreenHeight) return;
     int i;
     uint16 *p = (uint16 *)&bitmap.data[(line * bitmap.pitch)];
     for(i = bitmap.viewport.x; i < bitmap.viewport.w + bitmap.viewport.x; i++)

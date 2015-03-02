@@ -42,7 +42,6 @@ void sound_shutdown(void)
         return;
 
     /* Shut down SN76489 emulation */
-    //SN76489_Shutdown();
 	SN76496Exit();
 
     /* Shut down YM2413 emulation */
@@ -58,7 +57,7 @@ void sound_reset(void)
         return;
 
     /* Reset SN76489 emulator */
-    //SN76489_Reset(0);
+    SN76496Reset();
 
     /* Reset YM2413 emulator */
     FM_Reset();
@@ -73,8 +72,8 @@ void psg_stereo_w(int data)
 {
     if(!snd.enabled)
         return;
-	//SN76489_GGStereoWrite(0, data);
-	SN76496Write(0, data); // wrong - needs stereo -dink
+
+	SN76496StereoWrite(0, data);
 }
 
 
@@ -82,7 +81,7 @@ void psg_write(int data)
 {
     if(!snd.enabled)
         return;
-	//SN76489_Write(0, data);
+
 	SN76496Write(0, data);
 }
 

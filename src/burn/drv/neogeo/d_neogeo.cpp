@@ -3137,8 +3137,8 @@ static struct BurnRomInfo samshoRomDesc[] = {
 	
 	{ "045-s1.s1",    0x020000, 0x9142a4d3, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 
-	/* It also exists MVS set with different 6xC layout on board NEO-MVS CHA42G-3;
-	chip labels are 045-C1; 045-C2; 045-C3; 045-C4; 045-C5 and 045-C6 
+	/* It also exists MVS set with different 6xC layout on board NEO-MVS CHA42G-3; 
+	naming scheme is 045-Cx.
 	{ "045-c1.c1",    0x200000, 0x2e5873a4, 3 | BRF_GRA },           //  3 Sprite data 		/ TC5316200
 	{ "045-c2.c2",    0x200000, 0x04febb10, 3 | BRF_GRA },           //  4 					/ TC5316200
 	{ "045-c3.c3",    0x200000, 0xf3dabd1e, 3 | BRF_GRA },           //  5 					/ TC5316200
@@ -3299,11 +3299,11 @@ static struct BurnRomInfo fatfury2RomDesc[] = {
 	{ "047-p1.p1",    0x100000, 0xecfdbb69, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC538200
 	/* The original p1 is 8mbit; also found MVS set with p1 / p2 4mbit on eprom 
 	on PROG board NEO-MVS PROG-G2 (SNK-9201)
-	{ "047-epr.ep1",   0x080000, 0xbe40ea92, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ M27C4002
-	{ "047-epr.ep2",   0x080000, 0x2a9beac5, 1 | BRF_ESS | BRF_PRG }, //  1 				/ M27C4002 */
+	{ "047-epr.ep1",  0x080000, 0xbe40ea92, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ M27C4002
+	{ "047-epr.ep2",  0x080000, 0x2a9beac5, 1 | BRF_ESS | BRF_PRG }, //  1 					/ M27C4002 */
 	/* also found AES set with P1 / P3 on emprom on PROG board NEO-AEG PROG-G2 (SNK-9201); 
-	{ "047-epr.p1",    0x080000, 0xbe40ea92, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC574200
-	{ "047-epr.p3",    0x080000, 0x2a9beac5, 1 | BRF_ESS | BRF_PRG }, //  1 				/ M27C4002 */
+	{ "047-epr.p1",   0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC574200
+	{ "047-epr.p3",   0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  1 					/ M27C4002 */
 	
 	{ "047-s1.s1",    0x020000, 0xd7dbbf39, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
 
@@ -3796,25 +3796,11 @@ struct BurnDriver BurnDrvSavagere = {
 
 static struct BurnRomInfo ssideki2RomDesc[] = {
 	{ "061-p1.p1",      0x100000, 0x5969e0dc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code		  / mask rom TC538200
-	/* also found MVS set with EP1 / EP2 on eprom on PROG board NEO-MVS PROGTOP; correct chip labels unknown.
-	and CHA board NEO-MVS CHA256 with 8xC; same rom data as ssideki2? This needs to be confirmed.
-	{ "061-epr.ep1",    0x080000, 0x8112718d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		  / M27C4002
-	{ "061-epr.ep2",    0x080000, 0xcf9826de, 1 | BRF_ESS | BRF_PRG }, //  1 				  / 27C240 */ 
-	/* It also exists MVS set with p1 on mask rom TC538200 on PROG board NEO-MVS PROGGSC; chip label is 061-P1
-	and layout with 8xC (8 mbit) on CHA board NEO-MVS CHA256; naming scheme 061-Cx */
-	
+	/* also found MVS set with EP1 / EP2 on eprom on PROG board NEO-MVS PROGTOP; correct chip labels unknown. */
+		
 	{ "061-s1.s1",      0x020000, 0x226d1b68, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 	
-	/* Different layout with 8xC (8 mbit) also exists on board NEO-MVS CHA256 ; naming scheme 061-Cx
-	same rom data as ssideki2? This needs to be confirmed
-	{ "061-c1.c1",   	0x100000, 0x990cf26a, 3 | BRF_GRA }, 		   //  2 Sprite data 	  / mask rom TC538200 J410 05B
-	{ "061-c2.c2",   	0x100000, 0xf493cbcf, 3 | BRF_GRA }, 		   //  3 				  / mask rom TC538200 J410 02B
-	{ "061-c3.c3",   	0x100000, 0x7484e35d, 3 | BRF_GRA }, 		   //  4 				  / mask rom TC538200 J410 34B
-	{ "061-c4.c4",   	0x100000, 0x3ce13c3e, 3 | BRF_GRA }, 		   //  5 				  / mask rom TC538200 J410 16B
-	{ "061-c5.c5",   	0x100000, 0xea91bcd4, 3 | BRF_GRA }, 		   //  6 				  / mask rom TC538200 J410 17B
-	{ "061-c6.c6",   	0x100000, 0x0f8b5d58, 3 | BRF_GRA }, 		   //  7 				  / mask rom TC538200 J410 37B
-	{ "061-c7.c7",   	0x100000, 0xea167b32, 3 | BRF_GRA },  		   //  8 				  / mask rom TC538200 J410 57B
-	{ "061-c8.c8",   	0x100000, 0x959c8567, 3 | BRF_GRA },  		   //  9 				  / mask rom TC538200 J410 46B */
+	/* Different layout with 8xC (8 mbit) also exists on board NEO-MVS CHA256 ; naming scheme 061-Cx */
 	{ "061-c1-16.c1",   0x200000, 0xa626474f, 3 | BRF_GRA },           //  2 Sprite data	  / mask rom TC5316200
 	{ "061-c2-16.c2",   0x200000, 0xc3be42ae, 3 | BRF_GRA },           //  3 				  / mask rom TC5316200
 	{ "061-c3-16.c3",   0x200000, 0x2a7b98b9, 3 | BRF_GRA },           //  4 				  / mask rom TC5316200
@@ -3845,11 +3831,11 @@ struct BurnDriver BurnDrvSsideki2 = {
 static struct BurnRomInfo samsho2RomDesc[] = {
 	{ "063-p1.p1",    0x200000, 0x22368892, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
 	/* also found MVS set with EP1 / EP2 / P1 / SP2 on eprom on PROG board NEO-MVS PROGTOP; 
-	and CHA board NEO-MVS CHA256 (same layout and chip labels); rom data below needs to be confirmed 
-	{ "063-epr.p1",   0x080000, 0x9131aaa5, 1 | BRF_ESS | BRF_PRG }, //  0 68k code 		/ D27C4000 NEC JAPAN
-	{ "063-epr.sp2",  0x080000, 0xf307b92d, 1 | BRF_ESS | BRF_PRG }, //  1 					/ D27C4000 NEC JAPAN
-	{ "063-epr.ep1",  0x080000, 0x8952c5f7, 1 | BRF_ESS | BRF_PRG }, //  2 					/ M27C4002
-	{ "063-epr.ep2",  0x080000, 0x70b1a4d9, 1 | BRF_ESS | BRF_PRG }, //  3 					/ M27C4002 */
+	and CHA board NEO-MVS CHA256 (same layout and chip labels).
+	{ "063-epr.p1",   0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  0 68k code 		/ D27C4000 NEC JAPAN
+	{ "063-epr.sp2",  0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  1 					/ D27C4000 NEC JAPAN
+	{ "063-epr.ep1",  0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  2 					/ M27C4002
+	{ "063-epr.ep2",  0x080000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  3 					/ M27C4002 */
 
 	{ "063-s1.s1",    0x020000, 0x64a5cd66, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
@@ -3940,7 +3926,7 @@ struct BurnDriver BurnDrvsamsho2k = {
 };
 
 // Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - haruka-naru tatakai (NGM-069)(NGH-069)
-/* MVS AND AES VERSION */
+/* MVS AND AES VERSION (95-02-28 13:39) */
 
 static struct BurnRomInfo fatfury3RomDesc[] = {
 	{ "069-p1.p1",    0x100000, 0xa8bcfbbc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
@@ -4139,7 +4125,7 @@ static struct BurnRomInfo samsho3RomDesc[] = {
 	{ "087-epr.ep4",  0x080000, 0x53e60c58, 1 | BRF_ESS | BRF_PRG }, //  3 					/ M27C4002
 	/* P's on eprom, correct chip label unknown */
 	{ "087-p5.p5",    0x100000, 0xe86ca4af, 1 | BRF_ESS | BRF_PRG }, //  4 					/ TC538200
-	/* also found MVS set with p1 / sp2 on mask rom on PROG board NEO-MVS PROGBK1; 
+	/* also found MVS set with p1 / sp2 on maskrom on PROG board NEO-MVS PROGBK1; 
 	chip label are 087-PG1 and 087-P2 */
 
 	{ "087-s1.s1",    0x020000, 0x74ec7d9f, 2 | BRF_GRA },           //  5 Text layer tiles / TC531000
@@ -4461,27 +4447,28 @@ struct BurnDriver BurnDrvKof96 = {
 };
 
 // The King of Fighters '96 (NGH-214)
+/* AES VERSION */
 
 static struct BurnRomInfo kof96hRomDesc[] = {
-	{ "214-pg1.p1",   0x100000, 0xbd3757c9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "214-p2.sp2",   0x200000, 0x002ccb73, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "214-pg1.p1",   0x100000, 0xbd3757c9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			
+	{ "214-p2.sp2",   0x200000, 0x002ccb73, 1 | BRF_ESS | BRF_PRG }, //  1 					/ mask rom TC5316200
 
-	{ "214-s1.s1",    0x020000, 0x1254cbdb, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "214-s1.s1",    0x020000, 0x1254cbdb, 2 | BRF_GRA },           //  2 Text layer tiles / mask rom TC531000
 
-	{ "214-c1.c1",    0x400000, 0x7ecf4aa2, 3 | BRF_GRA },           //  3 Sprite data
-	{ "214-c2.c2",    0x400000, 0x05b54f37, 3 | BRF_GRA },           //  4 
-	{ "214-c3.c3",    0x400000, 0x64989a65, 3 | BRF_GRA },           //  5 
-	{ "214-c4.c4",    0x400000, 0xafbea515, 3 | BRF_GRA },           //  6 
-	{ "214-c5.c5",    0x400000, 0x2a3bbd26, 3 | BRF_GRA },           //  7 
-	{ "214-c6.c6",    0x400000, 0x44d30dc7, 3 | BRF_GRA },           //  8 
-	{ "214-c7.c7",    0x400000, 0x3687331b, 3 | BRF_GRA },           //  9 
-	{ "214-c8.c8",    0x400000, 0xfa1461ad, 3 | BRF_GRA },           // 10 
+	{ "214-c1.c1",    0x400000, 0x7ecf4aa2, 3 | BRF_GRA },           //  3 Sprite data		/ mask rom TC5332205
+	{ "214-c2.c2",    0x400000, 0x05b54f37, 3 | BRF_GRA },           //  4 					/ mask rom TC5332205
+	{ "214-c3.c3",    0x400000, 0x64989a65, 3 | BRF_GRA },           //  5 					/ mask rom TC5332205
+	{ "214-c4.c4",    0x400000, 0xafbea515, 3 | BRF_GRA },           //  6 					/ mask rom TC5332205
+	{ "214-c5.c5",    0x400000, 0x2a3bbd26, 3 | BRF_GRA },           //  7 					/ mask rom TC5332205
+	{ "214-c6.c6",    0x400000, 0x44d30dc7, 3 | BRF_GRA },           //  8 					/ mask rom TC5332205
+	{ "214-c7.c7",    0x400000, 0x3687331b, 3 | BRF_GRA },           //  9 					/ mask rom TC5332205
+	{ "214-c8.c8",    0x400000, 0xfa1461ad, 3 | BRF_GRA },           // 10 					/ mask rom TC5332205
 
-	{ "214-m1.m1",    0x020000, 0xdabc427c, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "214-m1.m1",    0x020000, 0xdabc427c, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ mask rom TC531001
 
-	{ "214-v1.v1",    0x400000, 0x63f7b045, 5 | BRF_SND },           // 12 Sound data
-	{ "214-v2.v2",    0x400000, 0x25929059, 5 | BRF_SND },           // 13 
-	{ "214-v3.v3",    0x200000, 0x92a2257d, 5 | BRF_SND },           // 14 
+	{ "214-v1.v1",    0x400000, 0x63f7b045, 5 | BRF_SND },           // 12 Sound data		/ mask rom TC5332204
+	{ "214-v2.v2",    0x400000, 0x25929059, 5 | BRF_SND },           // 13 					/ mask rom TC5332204
+	{ "214-v3.v3",    0x200000, 0x92a2257d, 5 | BRF_SND },           // 14 					/ mask rom TC5316200
 };
 
 STDROMPICKEXT(kof96h, kof96h, neogeo)
@@ -4500,21 +4487,21 @@ struct BurnDriver BurnDrvKof96h = {
 // The Ultimate 11 - The SNK Football Championship / Tokuten Ou - Honoo no Libero
 
 static struct BurnRomInfo ssideki4RomDesc[] = {
-	{ "215-p1.p1",    0x200000, 0x519b4ba3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "215-p1.p1",    0x200000, 0x519b4ba3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/* TC5316200 */
 
-	{ "215-s1.s1",    0x020000, 0xf0fe5c36, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "215-s1.s1",    0x020000, 0xf0fe5c36, 2 | BRF_GRA },           //  1 Text layer tiles /* TC531000 */
 
-	{ "215-c1.c1",    0x400000, 0x8ff444f5, 3 | BRF_GRA },           //  2 Sprite data
-	{ "215-c2.c2",    0x400000, 0x5b155037, 3 | BRF_GRA },           //  3 
-	{ "215-c3.c3",    0x400000, 0x456a073a, 3 | BRF_GRA },           //  4 
-	{ "215-c4.c4",    0x400000, 0x43c182e1, 3 | BRF_GRA },           //  5 
-	{ "215-c5.c5",    0x200000, 0x0c6f97ec, 3 | BRF_GRA },           //  6 
-	{ "215-c6.c6",    0x200000, 0x329c5e1b, 3 | BRF_GRA },           //  7 
+	{ "215-c1.c1",    0x400000, 0x8ff444f5, 3 | BRF_GRA },           //  2 Sprite data		/* TC5332205 */
+	{ "215-c2.c2",    0x400000, 0x5b155037, 3 | BRF_GRA },           //  3 					/* TC5332205 */
+	{ "215-c3.c3",    0x400000, 0x456a073a, 3 | BRF_GRA },           //  4 					/* TC5332205 */
+	{ "215-c4.c4",    0x400000, 0x43c182e1, 3 | BRF_GRA },           //  5 					/* TC5332205 */
+	{ "215-c5.c5",    0x200000, 0x0c6f97ec, 3 | BRF_GRA },           //  6 					/* TC5332205 */
+	{ "215-c6.c6",    0x200000, 0x329c5e1b, 3 | BRF_GRA },           //  7 					/* TC5332205 */
 
-	{ "215-m1.m1",    0x020000, 0xa932081d, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+	{ "215-m1.m1",    0x020000, 0xa932081d, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code			/* TC531001 */
 
-	{ "215-v1.v1",    0x400000, 0x877d1409, 5 | BRF_SND },           //  9 Sound data
-	{ "215-v2.v2",    0x200000, 0x1bfa218b, 5 | BRF_SND },           // 10 
+	{ "215-v1.v1",    0x400000, 0x877d1409, 5 | BRF_SND },           //  9 Sound data		/* TC5332204 */
+	{ "215-v2.v2",    0x200000, 0x1bfa218b, 5 | BRF_SND },           // 10 					/* TC5316200 */
 };
 
 STDROMPICKEXT(ssideki4, ssideki4, neogeo)
@@ -4533,25 +4520,25 @@ struct BurnDriver BurnDrvSsideki4 = {
 // Kizuna Encounter - Super Tag Battle / Fu'un Super Tag Battle
 
 static struct BurnRomInfo kizunaRomDesc[] = {
-	{ "216-p1.p1",    0x200000, 0x75d2b3de, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "216-p1.p1",    0x200000, 0x75d2b3de, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/* mask rom TC5316200 */
 
-	{ "216-s1.s1",    0x020000, 0xefdc72d7, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "216-s1.s1",    0x020000, 0xefdc72d7, 2 | BRF_GRA },           //  1 Text layer tiles /* mask rom TC531000 */
 
-	{ "059-c1.c1",    0x200000, 0x763ba611, 3 | BRF_GRA },           //  2 Sprite data
-	{ "059-c2.c2",    0x200000, 0xe05e8ca6, 3 | BRF_GRA },           //  3 
-	{ "216-c3.c3",    0x400000, 0x665c9f16, 3 | BRF_GRA },           //  4 
-	{ "216-c4.c4",    0x400000, 0x7f5d03db, 3 | BRF_GRA },           //  5 
-	{ "059-c5.c5",    0x200000, 0x59013f9e, 3 | BRF_GRA },           //  6 
-	{ "059-c6.c6",    0x200000, 0x1c8d5def, 3 | BRF_GRA },           //  7 
-	{ "059-c7.c7",    0x200000, 0xc88f7035, 3 | BRF_GRA },           //  8 
-	{ "059-c8.c8",    0x200000, 0x484ce3ba, 3 | BRF_GRA },           //  9 
+	{ "059-c1.c1",    0x200000, 0x763ba611, 3 | BRF_GRA },           //  2 Sprite data		/* TC5316200 */
+	{ "059-c2.c2",    0x200000, 0xe05e8ca6, 3 | BRF_GRA },           //  3 					/* TC5316200 */
+	{ "216-c3.c3",    0x400000, 0x665c9f16, 3 | BRF_GRA },           //  4 					/* mask rom TC5332205 */
+	{ "216-c4.c4",    0x400000, 0x7f5d03db, 3 | BRF_GRA },           //  5 					/* mask rom TC5332205 */
+	{ "059-c5.c5",    0x200000, 0x59013f9e, 3 | BRF_GRA },           //  6 					/* TC5316200 */
+	{ "059-c6.c6",    0x200000, 0x1c8d5def, 3 | BRF_GRA },           //  7 					/* TC5316200 */
+	{ "059-c7.c7",    0x200000, 0xc88f7035, 3 | BRF_GRA },           //  8 					/* TC538200 */
+	{ "059-c8.c8",    0x200000, 0x484ce3ba, 3 | BRF_GRA },           //  9 					/* TC538200 */
 
 	{ "216-m1.m1",    0x020000, 0x1b096820, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
-	{ "059-v1.v1",    0x200000, 0x530c50fd, 5 | BRF_SND },           // 11 Sound data
-	{ "216-v2.v2",    0x200000, 0x03667a8d, 5 | BRF_SND },           // 12 
-	{ "059-v3.v3",    0x200000, 0x7038c2f9, 5 | BRF_SND },           // 13 
-	{ "216-v4.v4",    0x200000, 0x31b99bd6, 5 | BRF_SND },           // 14 
+	{ "059-v1.v1",    0x200000, 0x530c50fd, 5 | BRF_SND },           // 11 Sound data		/* TC5316200 */
+	{ "216-v2.v2",    0x200000, 0x03667a8d, 5 | BRF_SND },           // 12 					/* mask rom TC5316200 */
+	{ "059-v3.v3",    0x200000, 0x7038c2f9, 5 | BRF_SND },           // 13 					/* TC5316200 */
+	{ "216-v4.v4",    0x200000, 0x31b99bd6, 5 | BRF_SND },           // 14 					/* mask rom TC5316200 */
 };
 
 STDROMPICKEXT(kizuna, kizuna, neogeo)
@@ -4568,6 +4555,7 @@ struct BurnDriver BurnDrvKizuna = {
 };
 
 // Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (NGM-222)(NGH-222)
+/* MVS AND AES VERSION */
 
 static struct BurnRomInfo samsho4RomDesc[] = {
 	{ "222-p1.p1",    0x100000, 0x1a5cb56d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -4605,6 +4593,7 @@ struct BurnDriver BurnDrvSamSho4 = {
 };
 
 // Pae Wang Jeon Seol / Legend of a Warrior (Korean censored Samurai Shodown IV)
+/* KOREAN VERSION */
 
 static struct BurnRomInfo samsho4kRomDesc[] = {
 	{ "222-p1k.p1",   0x100000, 0x06e0a25d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -4679,6 +4668,7 @@ struct BurnDriver BurnDrvrbffspec = {
 };
 
 // Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special (Korean release)
+/* KOREAN VERSION */
 
 static struct BurnRomInfo rbffspeckRomDesc[] = {
 	{ "223-p1k.p1",   0x100000, 0xb78c8391, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -4717,6 +4707,7 @@ struct BurnDriver BurnDrvrbffspeck = {
 };
 
 // The King of Fighters '97 (NGM-2320)
+/* MVS VERSION */
 
 static struct BurnRomInfo kof97RomDesc[] = {
 	{ "232-p1.p1",    0x100000, 0x7db81ad9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -4752,6 +4743,7 @@ struct BurnDriver BurnDrvKof97 = {
 };
 
 // The King of Fighters '97 (NGH-2320)
+/* AES VERSION */
 
 static struct BurnRomInfo kof97hRomDesc[] = {
 	{ "232-pg1.p1",   0x100000, 0x5c2400b7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -4787,6 +4779,7 @@ struct BurnDriver BurnDrvKof97h = {
 };
 
 // The King of Fighters '97 (Korean release)
+/* KOREAN VERSION */
 
 static struct BurnRomInfo kof97kRomDesc[] = {
 	{ "232-p1.p1",    0x100000, 0x7db81ad9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -4997,6 +4990,7 @@ struct BurnDriver BurnDrvKogplus = {
 };
 
 // The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NGM-2340)
+/* MVS VERSION */
 
 static struct BurnRomInfo lastbladRomDesc[] = {
 	{ "234-p1.p1",    0x100000, 0xe123a5a3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -5033,6 +5027,7 @@ struct BurnDriver BurnDrvlastblad = {
 };
 
 // The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NGH-2340)
+/* AES VERSION */
 
 static struct BurnRomInfo lastbladhRomDesc[] = {
 	{ "234-pg1.p1",   0x100000, 0xcd01c06d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -5069,6 +5064,7 @@ struct BurnDriver BurnDrvlastbladh = {
 };
 
 // The Last Soldier (Korean release of The Last Blade)
+/* KOREAN VERSION */
 
 static struct BurnRomInfo lastsoldRomDesc[] = {
 	{ "134-p1k.p1",   0x100000, 0x906f3065, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -5105,6 +5101,7 @@ struct BurnDriver BurnDrvlastsold = {
 };
 
 // The Irritating Maze / Ultra Denryu Iraira Bou
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo irrmazeRomDesc[] = {
 	{ "236-p1.p1",    0x200000, 0x4c2ff660, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -5134,6 +5131,7 @@ struct BurnDriver BurnDrvIrrmaze = {
 };
 
 // Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (NGM-2400)
+/* MVS VERSION */
 
 static struct BurnRomInfo rbff2RomDesc[] = {
 	{ "240-p1.p1",    0x100000, 0x80e41205, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -5170,6 +5168,7 @@ struct BurnDriver BurnDrvrbff2 = {
 };
 
 // Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (NGH-2400)
+/* AES VERSION */
 
 static struct BurnRomInfo rbff2hRomDesc[] = {
 	{ "240-pg1.p1",   0x100000, 0xb6969780, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -5206,6 +5205,7 @@ struct BurnDriver BurnDrvrbff2h = {
 };
 
 // Real Bout Fatal Fury 2 - The Newcomers (Korean release)
+/* KOREAN VERSION */
 
 static struct BurnRomInfo rbff2kRomDesc[] = {
 	{ "140-p1k.p1",   0x100000, 0x965edee1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -5242,6 +5242,7 @@ struct BurnDriver BurnDrvrbff2k = {
 };
 
 // Metal Slug 2 - Super Vehicle-001/II (NGM-2410) (NGH-2410)
+/* MVS AND AES VERSION */
 
 static struct BurnRomInfo mslug2RomDesc[] = {
 	{ "241-p1.p1",    0x100000, 0x2a53c5da, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -5249,17 +5250,15 @@ static struct BurnRomInfo mslug2RomDesc[] = {
 
 	{ "241-s1.s1",    0x020000, 0xf3d32f0f, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	/* Different layout with 8xC (mask rom) also exists on NEO-MVS CHA256; 
-	chip labels are 241-C1, 241-C2, 241-C3, 241-C4, 241-C5, 241-C6, 241-C7 and 241-C8;  
-	rom data below need to be confirmed
-	{ "241-c1.c1",    0x400000, 0xe2260f99, 3 | BRF_GRA | BRF_NODUMP },  //  3 Sprite data 	/ mask rom
-	{ "241-c2.c2",    0x400000, 0x92f07036, 3 | BRF_GRA | BRF_NODUMP },  //  4 				/ mask rom
-	{ "241-c3.c3",    0x400000, 0xd6bd7d81, 3 | BRF_GRA | BRF_NODUMP },  //  5 				/ mask rom
-	{ "241-c4.c4",    0x400000, 0xe02aeeed, 3 | BRF_GRA | BRF_NODUMP },  //  6 				/ mask rom
-	{ "241-c5.c5",    0x400000, 0x1fbb0f5b, 3 | BRF_GRA | BRF_NODUMP },  //  7 				/ mask rom
-	{ "241-c6.c6",    0x400000, 0x5006e9f6, 3 | BRF_GRA | BRF_NODUMP },  //  8 				/ mask rom
-	{ "241-c7.c7",    0x400000, 0x3bfa0778, 3 | BRF_GRA | BRF_NODUMP },  //  9 				/ mask rom
-	{ "241-c8.c8",    0x400000, 0x6892ce9c, 3 | BRF_GRA | BRF_NODUMP },  // 10 				/ mask rom	*/
+	/* Different layout with 8xC (mask rom) also exists on NEO-MVS CHA256; naming scheme is 241-Cx
+	{ "241-c1.c1",    0x400000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP },  //  3 Sprite data 	/ mask rom
+	{ "241-c2.c2",    0x400000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP },  //  4 				/ mask rom
+	{ "241-c3.c3",    0x400000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP },  //  5 				/ mask rom
+	{ "241-c4.c4",    0x400000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP },  //  6 				/ mask rom
+	{ "241-c5.c5",    0x400000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP },  //  7 				/ mask rom
+	{ "241-c6.c6",    0x400000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP },  //  8 				/ mask rom
+	{ "241-c7.c7",    0x400000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP },  //  9 				/ mask rom
+	{ "241-c8.c8",    0x400000, 0x00000000, 3 | BRF_GRA | BRF_NODUMP },  // 10 				/ mask rom	*/
 	{ "241-c1.c1",    0x800000, 0x394b5e0d, 3 | BRF_GRA },           //  3 Sprite data
 	{ "241-c2.c2",    0x800000, 0xe5806221, 3 | BRF_GRA },           //  4 
 	{ "241-c3.c3",    0x800000, 0x9f6bfa6f, 3 | BRF_GRA },           //  5 
@@ -5285,8 +5284,10 @@ struct BurnDriver BurnDrvMSlug2 = {
 };
 
 // The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420)
+/* encrypted code + protection */ /* MVS VERSION */
 
 static struct BurnRomInfo kof98RomDesc[] = {
+	/* This set uses NEO-MVS PROGSF1 board */
 	{ "242-p1.p1",    0x200000, 0x8893df89, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "242-p2.sp2",   0x400000, 0x980aba4c, 1 | BRF_ESS | BRF_PRG }, //  1 
 
@@ -5429,6 +5430,7 @@ struct BurnDriver BurnDrvKof98 = {
 };
 
 // The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420, alternate board)
+/* encrypted code + protection */ /* MVS VERSION */
 
 static struct BurnRomInfo kof98aRomDesc[] = {
 	/* This set uses NEO-MVS PROGSF1E board; same rom data as in kof98 is used */
@@ -5470,6 +5472,7 @@ struct BurnDriver BurnDrvKof98a = {
 };
 
 // The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board)
+/* encrypted code + protection, only z80 rom is different to kof98 */ /* KOREAN VERSION */
 
 static struct BurnRomInfo kof98kRomDesc[] = {
 	{ "242-p1.p1",    0x200000, 0x8893df89, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -5486,6 +5489,7 @@ static struct BurnRomInfo kof98kRomDesc[] = {
 	{ "242-c7.c7",    0x800000, 0xf6d7a38a, 3 | BRF_GRA },           //  9 
 	{ "242-c8.c8",    0x800000, 0xc823e045, 3 | BRF_GRA },           // 10 
 
+	/* Correct chip label */
 	{ "242-m1k.m1",   0x040000, 0xce12da0c, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
 	{ "242-v1.v1",    0x400000, 0xb9ea8051, 5 | BRF_SND },           // 12 Sound data
@@ -5508,6 +5512,7 @@ struct BurnDriver BurnDrvKof98k = {
 };
 
 // The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board 2)
+/* encrypted code + protection, only z80 rom is different to kof98 */ /* KOREAN VERSION */
 
 static struct BurnRomInfo kof98kaRomDesc[] = {
 	{ "242-p1.p1",    0x200000, 0x8893df89, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -5524,6 +5529,7 @@ static struct BurnRomInfo kof98kaRomDesc[] = {
 	{ "242-c7.c7",    0x800000, 0xf6d7a38a, 3 | BRF_GRA },           //  9 
 	{ "242-c8.c8",    0x800000, 0xc823e045, 3 | BRF_GRA },           // 10 
 
+	/* Correct chip label */
 	{ "242-mg1k.m1",  0x040000, 0xce9fb07c, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
 	{ "242-v1.v1",    0x400000, 0xb9ea8051, 5 | BRF_SND },           // 12 Sound data
@@ -5546,6 +5552,7 @@ struct BurnDriver BurnDrvKof98ka = {
 };
 
 // The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGH-2420)
+/* MVS AND AES VERSION */
 
 static struct BurnRomInfo kof98hRomDesc[] = {
 	{ "242-pn1.p1",   0x100000, 0x61ac868a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -5584,6 +5591,7 @@ struct BurnDriver BurnDrvKof98h = {
 };
 
 // The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (NGM-2430)(NGH-2430)
+/* MVS AND AES VERSION */ /* later revision */
 
 static struct BurnRomInfo lastbld2RomDesc[] = {
 	{ "243-pg1.p1",   0x100000, 0xaf1e6554, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -5649,6 +5657,7 @@ struct BurnDriver BurnDrvNeocup98 = {
 };
 
 // Metal Slug X - Super Vehicle-001 (NGM-2500)(NGH-2500)
+/* MVS AND AES VERSION */
 
 static struct BurnRomInfo mslugxRomDesc[] = {
 	{ "250-p1.p1",    0x100000, 0x81f1f60b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -5812,12 +5821,15 @@ struct BurnDriver BurnDrvMSlugX = {
 };
 
 // The King of Fighters '99 - Millennium Battle (NGM-2510)
+/* Original Version - Encrypted Code & GFX */ /* MVS VERSION */
 
 static struct BurnRomInfo kof99RomDesc[] = {
 	{ "ka.neo-sma",   0x040000, 0x7766d09e, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "251-p1.p1",    0x400000, 0x006e4532, 1 | BRF_ESS | BRF_PRG }, //  1 
 	{ "251-p2.p2",    0x400000, 0x90175f15, 1 | BRF_ESS | BRF_PRG }, //  2 
-
+	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "251-c1.c1",    0x800000, 0x0f9e93fe, 3 | BRF_GRA },           //  3 Sprite data
 	{ "251-c2.c2",    0x800000, 0xe71e2ea3, 3 | BRF_GRA },           //  4 
 	{ "251-c3.c3",    0x800000, 0x238755d2, 3 | BRF_GRA },           //  5 
@@ -5907,12 +5919,15 @@ struct BurnDriver BurnDrvkof99 = {
 };
 
 // The King of Fighters '99 - Millennium Battle (NGH-2510)
+/* Original Version - Encrypted Code & GFX */ /* AES VERSION */
 
 static struct BurnRomInfo kof99hRomDesc[] = {
 	{ "kc.neo-sma",   0x040000, 0x6c9d0647, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "251-p1.p1",    0x400000, 0x006e4532, 1 | BRF_ESS | BRF_PRG }, //  1 
 	{ "251-pg2.p2",   0x400000, 0xd9057f51, 1 | BRF_ESS | BRF_PRG }, //  2 
-
+	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "251-c1.c1",    0x800000, 0x0f9e93fe, 3 | BRF_GRA },           //  3 Sprite data
 	{ "251-c2.c2",    0x800000, 0xe71e2ea3, 3 | BRF_GRA },           //  4 
 	{ "251-c3.c3",    0x800000, 0x238755d2, 3 | BRF_GRA },           //  5 
@@ -5944,14 +5959,18 @@ struct BurnDriver BurnDrvkof99h = {
 };
 
 // The King of Fighters '99 - Millennium Battle (earlier)
+/* Original Version - Encrypted Code & GFX */
 
 static struct BurnRomInfo kof99eRomDesc[] = {
 	{ "ka.neo-sma",   0x040000, 0x7766d09e, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	/* Is the SMA for this set correct? A set with this layout and a SMA.KB is known */
 	{ "251-ep1.p1",   0x200000, 0x1e8d692d, 1 | BRF_ESS | BRF_PRG }, //  1 
 	{ "251-ep2.p2",   0x200000, 0xd6206e5a, 1 | BRF_ESS | BRF_PRG }, //  2 
 	{ "251-ep3.p3",   0x200000, 0xd58c3ef8, 1 | BRF_ESS | BRF_PRG }, //  3 
 	{ "251-ep4.p4",   0x200000, 0x52de02ae, 1 | BRF_ESS | BRF_PRG }, //  4 
-
+	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "251-c1.c1",    0x800000, 0x0f9e93fe, 3 | BRF_GRA },           //  5 Sprite data
 	{ "251-c2.c2",    0x800000, 0xe71e2ea3, 3 | BRF_GRA },           //  6 
 	{ "251-c3.c3",    0x800000, 0x238755d2, 3 | BRF_GRA },           //  7 
@@ -5983,11 +6002,14 @@ struct BurnDriver BurnDrvkof99e = {
 };
 
 // The King of Fighters '99 - Millennium Battle (Korean release)
+/* Original Version - Encrypted GFX */ /* KOREAN VERSION */
 
 static struct BurnRomInfo kof99kRomDesc[] = {
 	{ "152-p1.p1",    0x100000, 0xf2c7ddfa, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "152-p2.sp2",   0x400000, 0x274ef47a, 1 | BRF_ESS | BRF_PRG }, //  1 
-
+	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "251-c1.c1",    0x800000, 0x0f9e93fe, 3 | BRF_GRA },           //  2 Sprite data
 	{ "251-c2.c2",    0x800000, 0xe71e2ea3, 3 | BRF_GRA },           //  3 
 	{ "251-c3.c3",    0x800000, 0x238755d2, 3 | BRF_GRA },           //  4 
@@ -6025,6 +6047,7 @@ struct BurnDriver BurnDrvkof99k = {
 };
 
 // The King of Fighters '99 - Millennium Battle (prototype)
+/* Prototype Version - Possibly Hacked */
 
 static struct BurnRomInfo kof99pRomDesc[] = {
 	{ "proto_251-p1.p1",   0x100000, 0xf37929c4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -6066,6 +6089,7 @@ struct BurnDriver BurnDrvkof99p = {
 };
 
 // Garou - Mark of the Wolves (NGM-2530)
+/* Original Version - Encrypted GFX */ /* MVS VERSION - later revision */
 
 static struct BurnRomInfo garouRomDesc[] = {
 	{ "kf.neo-sma",   0x040000, 0x98bc93dc, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -6073,7 +6097,9 @@ static struct BurnRomInfo garouRomDesc[] = {
 	{ "253-ep2.p2",   0x200000, 0x382f704b, 1 | BRF_ESS | BRF_PRG }, //  2 
 	{ "253-ep3.p3",   0x200000, 0xe395bfdd, 1 | BRF_ESS | BRF_PRG }, //  3 
 	{ "253-ep4.p4",   0x200000, 0xda92c08e, 1 | BRF_ESS | BRF_PRG }, //  4 
-
+	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "253-c1.c1",    0x800000, 0x0603e046, 3 | BRF_GRA },           //  5 Sprite data
 	{ "253-c2.c2",    0x800000, 0x0917d2a4, 3 | BRF_GRA },           //  6 
 	{ "253-c3.c3",    0x800000, 0x6737c92d, 3 | BRF_GRA },           //  7 
@@ -6168,12 +6194,15 @@ struct BurnDriver BurnDrvGarou = {
 };
 
 // Garou - Mark of the Wolves (NGM-2530) (NGH-2530)
+/* Original Version - Encrypted GFX */ /* MVS AND AES VERSION - earlier revision */
 
 static struct BurnRomInfo garouhRomDesc[] = {
 	{ "ke.neo-sma",   0x040000, 0x96c72233, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "253-p1.p1",    0x400000, 0x18ae5d7e, 1 | BRF_ESS | BRF_PRG }, //  1 
 	{ "253-p2.p2",    0x400000, 0xafffa779, 1 | BRF_ESS | BRF_PRG }, //  2 
-
+	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "253-c1.c1",    0x800000, 0x0603e046, 3 | BRF_GRA },           //  3 Sprite data
 	{ "253-c2.c2",    0x800000, 0x0917d2a4, 3 | BRF_GRA },           //  4 
 	{ "253-c3.c3",    0x800000, 0x6737c92d, 3 | BRF_GRA },           //  5 
@@ -6270,6 +6299,7 @@ struct BurnDriver BurnDrvgarouh = {
 };
 
 // Garou - Mark of the Wolves (prototype)
+/* Prototype Version, seems genuine */
 
 static struct BurnRomInfo garoupRomDesc[] = {
 	{ "proto_253-p1.p1",   0x100000, 0xc72f0c16, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -6369,7 +6399,9 @@ static struct BurnRomInfo mslug3RomDesc[] = {
 	/* The SMA for this release has a green colour marking; the older revision has a white colour marking */
 	{ "256-pg1.p1",   0x400000, 0xb07edfd5, 1 | BRF_ESS | BRF_PRG }, //  1 				/ TC5332202
 	{ "256-pg2.p2",   0x400000, 0x6097c26b, 1 | BRF_ESS | BRF_PRG }, //  2 				/ TC5332202
-
+	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "256-c1.c1",    0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  3 Sprite data	/ TC5364202
 	{ "256-c2.c2",    0x800000, 0x944c362c, 3 | BRF_GRA },           //  4 				/ TC5364202
 	{ "256-c3.c3",    0x800000, 0x6e69d36f, 3 | BRF_GRA },           //  5 				/ TC5364202		
@@ -6471,7 +6503,11 @@ struct BurnDriver BurnDrvmslug3 = {
 static struct BurnRomInfo mslug3hRomDesc[] = {
 	{ "256-ph1.p1",   0x100000, 0x9c42ca85, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "256-ph2.sp2",  0x400000, 0x1f3d8ce8, 1 | BRF_ESS | BRF_PRG }, //  1 
-
+	/* also found AES set with p1 / p2 on maskrom on NEO-AEG PROGLBA (NEO-SMA); chip labels is 256-PG1 and 256-PG2 */
+	/* The SMA for this release has a pink color marking */
+	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "256-c1.c1",    0x800000, 0x5a79c34e, 3 | BRF_GRA },           //  2 Sprite data 	/ TC5364202
 	{ "256-c2.c2",    0x800000, 0x944c362c, 3 | BRF_GRA },           //  3 				/ TC5364202
 	{ "256-c3.c3",    0x800000, 0x6e69d36f, 3 | BRF_GRA },           //  4 				/ TC5364202
@@ -6563,12 +6599,15 @@ struct BurnDriver BurnDrvmslug3b6 = {
 };
 
 // The King of Fighters 2000 (NGM-2570) (NGH-2570)
+/* Original Version, Encrypted Code + Sound + GFX Roms */ /* MVS AND AES VERSION */
 
 static struct BurnRomInfo kof2000RomDesc[] = {
 	{ "neo-sma",      0x040000, 0x71c6e6bb, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "257-p1.p1",    0x400000, 0x60947b4c, 1 | BRF_ESS | BRF_PRG }, //  1 
 	{ "257-p2.p2",    0x400000, 0x1b7ec415, 1 | BRF_ESS | BRF_PRG }, //  2 
-
+	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "257-c1.c1",    0x800000, 0xcef1cdfa, 3 | BRF_GRA },           //  3 Sprite data
 	{ "257-c2.c2",    0x800000, 0xf7bf0003, 3 | BRF_GRA },           //  4 
 	{ "257-c3.c3",    0x800000, 0x101e6560, 3 | BRF_GRA },           //  5 
@@ -6658,11 +6697,14 @@ struct BurnDriver BurnDrvkof2000 = {
 };
 
 // The King of Fighters 2000 (not encrypted)
+/* Original Version, Encrypted Sound + GFX Roms */
 
 static struct BurnRomInfo kof2000nRomDesc[] = {
 	{ "257-pg1.p1",   0x100000, 0x5f809dbe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "257-pg2.sp2",  0x400000, 0x693c2c5e, 1 | BRF_ESS | BRF_PRG }, //  1 
-
+	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "257-c1.c1",    0x800000, 0xcef1cdfa, 3 | BRF_GRA },           //  2 Sprite data
 	{ "257-c2.c2",    0x800000, 0xf7bf0003, 3 | BRF_GRA },           //  3 
 	{ "257-c3.c3",    0x800000, 0x101e6560, 3 | BRF_GRA },           //  4 
@@ -6738,10 +6780,10 @@ struct BurnDriver BurnDrvZupapa = {
 /* Original Version - Encrypted GFX */
 
 static struct BurnRomInfo sengoku3RomDesc[] = {
-	/* also found AES set with P1 on mask rom on PROG board NEO-AEG PROGBK1F; chip label is 261-PH1
+	/* also found AES set with P1 on maskrom on PROG board NEO-AEG PROGBK1F; chip label is 261-PH1
 	and CHA board NEO-AEG CHAFIO (1999.8.10) (NEO-CMC 7042)	*/
 	{ "261-ph1.p1",   0x200000, 0xe0d4bc0a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	/* also found MVS set with P1 on mask rom on PROG board NEO-MVS PROGBK1; chip label is 261-PG1
+	/* also found MVS set with P1 on maskrom on PROG board NEO-MVS PROGBK1; chip label is 261-PG1
 	and CHA board NEO-MVS CHAFIO (1999.6.14) (NEO-CMC 7042) */
 		
 	{ "261-c1.c1",    0x800000, 0xded84d9c, 3 | BRF_GRA },           //  1 Sprite data
@@ -6777,12 +6819,15 @@ struct BurnDriver BurnDrvSengoku3 = {
 };
 
 // The King of Fighters 2001 (NGM-262?)
+/* MVS VERSION */
 
 static struct BurnRomInfo kof2001RomDesc[] = {
 	{ "262-p1-08-e0.p1",       0x100000, 0x9381750d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "262-p2-08-e0.sp2",      0x400000, 0x8e0d8329, 1 | BRF_ESS | BRF_PRG }, //  1
 	/* The first/early production run sets have proms with above labels. Some later? sets found have eproms instead of proms */	
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "262-c1-08-e0.c1",       0x800000, 0x99cc785a, 3 | BRF_GRA },     //  2 Sprite data
 	{ "262-c2-08-e0.c2",       0x800000, 0x50368cbf, 3 | BRF_GRA },     //  3 
 	{ "262-c3-08-e0.c3",       0x800000, 0xfb14ff87, 3 | BRF_GRA },     //  4 
@@ -6820,11 +6865,14 @@ struct BurnDriver BurnDrvkof2001 = {
 };
 
 // The King of Fighters 2001 (NGH-2621)
+/* AES VERSION */
 
 static struct BurnRomInfo kof2001hRomDesc[] = {
 	{ "262-pg1.p1",            0x100000, 0x2af7e741, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "262-pg2.sp2",           0x400000, 0x91eea062, 1 | BRF_ESS | BRF_PRG }, //  1 
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "262-c1-08-e0.c1",       0x800000, 0x99cc785a, 3 | BRF_GRA },     //  2 Sprite data
 	{ "262-c2-08-e0.c2",       0x800000, 0x50368cbf, 3 | BRF_GRA },     //  3 
 	{ "262-c3-08-e0.c3",       0x800000, 0xfb14ff87, 3 | BRF_GRA },     //  4 
@@ -7119,11 +7167,14 @@ struct BurnDriver BurnDrvct2k3sa = {
 };
 
 // The King of Fighters 2002 (NGM-2650)(NGH-2650)
+/* Encrypted Set */ /* MVS AND AES VERSION */
 
 static struct BurnRomInfo kof2002RomDesc[] = {
 	{ "265-p1.p1",    0x100000, 0x9ede7323, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "265-p2.sp2",   0x400000, 0x327266b8, 1 | BRF_ESS | BRF_PRG }, //  1 
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "265-c1.c1",    0x800000, 0x2b65a656, 3 | BRF_GRA },           //  2 Sprite data
 	{ "265-c2.c2",    0x800000, 0xadf18983, 3 | BRF_GRA },           //  3 
 	{ "265-c3.c3",    0x800000, 0x875e9fd7, 3 | BRF_GRA },           //  4 
@@ -7133,8 +7184,10 @@ static struct BurnRomInfo kof2002RomDesc[] = {
 	{ "265-c7.c7",    0x800000, 0x1a2749d8, 3 | BRF_GRA },           //  8 
 	{ "265-c8.c8",    0x800000, 0xab0bb549, 3 | BRF_GRA },           //  9 
 
+	/* Encrypted */
 	{ "265-m1.m1",    0x020000, 0x85aaa632, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
+	/* Encrypted */
 	{ "265-v1.v1",    0x800000, 0x15e8f3f5, 5 | BRF_SND },           // 11 Sound data
 	{ "265-v2.v2",    0x800000, 0xda41d6f9, 5 | BRF_SND },           // 12 
 };
@@ -7870,11 +7923,14 @@ struct BurnDriver BurnDrvkof2k4se = {
 };
 
 // Metal Slug 5 (NGM-2680)
+/* Encrypted Set */ /* MVS VERSION */
 
 static struct BurnRomInfo mslug5RomDesc[] = {
 	{ "268-p1cr.p1",   0x400000, 0xd0466792, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "268-p2cr.p2",   0x400000, 0xfbf6b61e, 1 | BRF_ESS | BRF_PRG }, //  1 
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "268-c1c.c1",    0x800000, 0xab7c389a, 3 | BRF_GRA },           //  2 Sprite data
 	{ "268-c2c.c2",    0x800000, 0x3560881b, 3 | BRF_GRA },           //  3 
 	{ "268-c3c.c3",    0x800000, 0x3af955ea, 3 | BRF_GRA },           //  4 
@@ -7884,8 +7940,10 @@ static struct BurnRomInfo mslug5RomDesc[] = {
 	{ "268-c7c.c7",    0x800000, 0x6d72a969, 3 | BRF_GRA },           //  8 
 	{ "268-c8c.c8",    0x800000, 0x551d720e, 3 | BRF_GRA },           //  9 
 
+	/* Encrypted */
 	{ "268-m1.m1",     0x080000, 0x4a5a6e0e, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
+	/* Encrypted */
 	{ "268-v1c.v1",    0x800000, 0xae31d60c, 5 | BRF_SND },           // 11 Sound data
 	{ "268-v2c.v2",    0x800000, 0xc40613ed, 5 | BRF_SND },           // 12 
 };
@@ -7968,6 +8026,8 @@ static struct BurnRomInfo mslug5hRomDesc[] = {
 	chip labels are 268-P1CR2 and 268-P2CR2
 	and M1 on eprom M27C4001 with label sticker 268-M1 on CHA board NEO-MVS CHAFIO (2003.7.24) (NEO-CMC 7050) */
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "268-c1c.c1",    0x800000, 0xab7c389a, 3 | BRF_GRA },           //  2 Sprite data
 	{ "268-c2c.c2",    0x800000, 0x3560881b, 3 | BRF_GRA },           //  3 
 	{ "268-c3c.c3",    0x800000, 0x3af955ea, 3 | BRF_GRA },           //  4 
@@ -7977,8 +8037,10 @@ static struct BurnRomInfo mslug5hRomDesc[] = {
 	{ "268-c7c.c7",    0x800000, 0x6d72a969, 3 | BRF_GRA },           //  8 
 	{ "268-c8c.c8",    0x800000, 0x551d720e, 3 | BRF_GRA },           //  9 
 
+	/* Encrypted */
 	{ "268-m1.m1",     0x080000, 0x4a5a6e0e, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
+	/* Encrypted */
 	{ "268-v1c.v1",    0x800000, 0xae31d60c, 5 | BRF_SND },           // 11 Sound data
 	{ "268-v2c.v2",    0x800000, 0xc40613ed, 5 | BRF_SND },           // 12 
 };
@@ -8215,11 +8277,14 @@ struct BurnDriver BurnDrvsvcpcba = {
 };
 
 // SNK vs. Capcom - SVC Chaos (NGM-2690)(NGH-2690)
+/* Encrypted Set */ /* MVS AND AES VERSION */
 
 static struct BurnRomInfo svcRomDesc[] = {
 	{ "269-p1.p1",    0x400000, 0x38e2005e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "269-p2.p2",    0x400000, 0x6d13797c, 1 | BRF_ESS | BRF_PRG }, //  1 
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "269-c1r.c1",   0x800000, 0x887b4068, 3 | BRF_GRA },           //  2 Sprite data
 	{ "269-c2r.c2",   0x800000, 0x4e8903e4, 3 | BRF_GRA },           //  3 
 	{ "269-c3r.c3",   0x800000, 0x7d9c55b0, 3 | BRF_GRA },           //  4 
@@ -8229,8 +8294,10 @@ static struct BurnRomInfo svcRomDesc[] = {
 	{ "269-c7r.c7",   0x800000, 0xd8f0340b, 3 | BRF_GRA },           //  8 
 	{ "269-c8r.c8",   0x800000, 0x2570b71b, 3 | BRF_GRA },           //  9 
 
+	/* Encrypted */
 	{ "269-m1.m1",    0x080000,  0xf6819d00, 4 | BRF_ESS | BRF_PRG }, //  10 Z80 code
 
+	/* Encrypted */
 	{ "269-v1.v1",    0x800000, 0xc659b34c, 5 | BRF_SND },           // 11 Sound data
 	{ "269-v2.v2",    0x800000, 0xdd903835, 5 | BRF_SND },           // 12 
 };
@@ -8584,11 +8651,14 @@ struct BurnDriver BurnDrvsvcsplus = {
 };
 
 // Samurai Shodown V / Samurai Spirits Zero (NGM-2700)
+/* Encrypted Set */ /* MVS VERSION */
 
 static struct BurnRomInfo samsho5RomDesc[] = {
 	{ "270-p1.p1",    0x400000, 0x4a2a09e6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "270-p2.sp2",   0x400000, 0xe0c74c85, 1 | BRF_ESS | BRF_PRG }, //  1 
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "270-c1.c1",    0x800000, 0x14ffffac, 3 | BRF_GRA },           //  2 Sprite data
 	{ "270-c2.c2",    0x800000, 0x401f7299, 3 | BRF_GRA },           //  3 
 	{ "270-c3.c3",    0x800000, 0x838f0260, 3 | BRF_GRA },           //  4 
@@ -8598,8 +8668,10 @@ static struct BurnRomInfo samsho5RomDesc[] = {
 	{ "270-c7.c7",    0x800000, 0xd28fbc3c, 3 | BRF_GRA },           //  8 
 	{ "270-c8.c8",    0x800000, 0x02c530a6, 3 | BRF_GRA },           //  9 
 
+	/* Encrypted */
 	{ "270-m1.m1",    0x080000, 0x49c9901a, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
+	/* Encrypted */
 	{ "270-v1.v1",    0x800000, 0x62e434eb, 5 | BRF_SND },           // 11 Sound data
 	{ "270-v2.v2",    0x800000, 0x180f3c9a, 5 | BRF_SND },           // 12 
 };
@@ -8642,11 +8714,14 @@ struct BurnDriver BurnDrvsamsho5 = {
 };
 
 // Samurai Shodown V / Samurai Spirits Zero (NGH-2700)
+/* Encrypted Set, Alternate Set */ /* AES VERSION */
 
 static struct BurnRomInfo samsho5hRomDesc[] = {
 	{ "270-p1c.p1",   0x400000, 0xbf956089, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "270-p2c.sp2",  0x400000, 0x943a6b1d, 1 | BRF_ESS | BRF_PRG }, //  1 
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "270-c1.c1",    0x800000, 0x14ffffac, 3 | BRF_GRA },           //  2 Sprite data
 	{ "270-c2.c2",    0x800000, 0x401f7299, 3 | BRF_GRA },           //  3 
 	{ "270-c3.c3",    0x800000, 0x838f0260, 3 | BRF_GRA },           //  4 
@@ -8656,8 +8731,10 @@ static struct BurnRomInfo samsho5hRomDesc[] = {
 	{ "270-c7.c7",    0x800000, 0xd28fbc3c, 3 | BRF_GRA },           //  8 
 	{ "270-c8.c8",    0x800000, 0x02c530a6, 3 | BRF_GRA },           //  9 
 
+	/* Encrypted */
 	{ "270-m1.m1",    0x080000, 0x49c9901a, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
+	/* Encrypted */
 	{ "270-v1.v1",    0x800000, 0x62e434eb, 5 | BRF_SND },           // 11 Sound data
 	{ "270-v2.v2",    0x800000, 0x180f3c9a, 5 | BRF_SND },           // 12 
 };
@@ -8914,12 +8991,15 @@ struct BurnDriver BurnDrvkf2k3pcb = {
 };
 
 // The King of Fighters 2003 (NGM-2710)
+/* Encrypted Code + Sound + GFX Roms */ /* MVS VERSION */
 
 static struct BurnRomInfo kof2003RomDesc[] = {
 	{ "271-p1c.p1",   0x400000, 0x530ecc14, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "271-p2c.p2",   0x400000, 0xfd568da9, 1 | BRF_ESS | BRF_PRG }, //  1 
 	{ "271-p3c.p3",   0x100000, 0xaec5b4a9, 1 | BRF_ESS | BRF_PRG }, //  2 
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "271-c1c.c1",   0x800000, 0xb1dc25d0, 3 | BRF_GRA },           //  3 Sprite data
 	{ "271-c2c.c2",   0x800000, 0xd5362437, 3 | BRF_GRA },           //  4 
 	{ "271-c3c.c3",   0x800000, 0x0a1fbeab, 3 | BRF_GRA },           //  5 
@@ -8929,8 +9009,10 @@ static struct BurnRomInfo kof2003RomDesc[] = {
 	{ "271-c7c.c7",   0x800000, 0x189aba7f, 3 | BRF_GRA },           //  9 
 	{ "271-c8c.c8",   0x800000, 0x20ec4fdc, 3 | BRF_GRA },           // 10 
 
+	/* Encrypted */
 	{ "271-m1c.m1",   0x080000, 0xf5515629, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
-	
+
+	/* Encrypted */	
 	{ "271-v1c.v1",   0x800000, 0xffa3f8c7, 5 | BRF_SND },           // 12 Sound data
 	{ "271-v2c.v2",   0x800000, 0x5382c7d1, 5 | BRF_SND },           // 13 
 };
@@ -9008,12 +9090,16 @@ struct BurnDriver BurnDrvkof2003 = {
 };
 
 // The King of Fighters 2003 (NGH-2710)
+/* Encrypted Code + Sound + GFX Roms */ /* AES VERSION */
 
 static struct BurnRomInfo kof2003hRomDesc[] = {
+	/* All chip labels for this set are correct */
 	{ "271-p1k.p1",           0x400000, 0xd0d0ae3e, 1 | BRF_ESS | BRF_PRG }, //  0 68K Code
 	{ "271-p2k.p2",           0x400000, 0xfb3f79d9, 1 | BRF_ESS | BRF_PRG }, //  1
 	{ "271-p3k.p3",           0x100000, 0x232702ad, 1 | BRF_ESS | BRF_PRG }, //  2
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "271-c1k.c1",           0x800000, 0xefb9dd24, 3 | BRF_GRA },		 //  3 Sprite data
 	{ "271-c2k.c2",           0x800000, 0x3fb90447, 3 | BRF_GRA },		 //  4
 	{ "271-c3k.c3",           0x800000, 0x27950f28, 3 | BRF_GRA },		 //  5
@@ -9023,8 +9109,10 @@ static struct BurnRomInfo kof2003hRomDesc[] = {
 	{ "271-c7k.c7",           0x800000, 0xe65ae2d0, 3 | BRF_GRA },		 //  9
 	{ "271-c8k.c8",           0x800000, 0x312f528c, 3 | BRF_GRA },		 // 10
 
+	/* Encrypted */
 	{ "271-m1k.m1",           0x080000, 0x48d9affe, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
-	
+
+	/* Encrypted */	
 	{ "271-v1c.v1",           0x800000, 0xffa3f8c7, 5 | BRF_SND },		 // 12 Sound data
 	{ "271-v2c.v2",           0x800000, 0x5382c7d1, 5 | BRF_SND },		 // 13
 }; 
@@ -9399,11 +9487,15 @@ struct BurnDriver BurnDrvkf2k3upl = {
 };
 
 // Samurai Shodown V Special / Samurai Spirits Zero Special (NGM-2720)
+/* Encrypted Set */ /* MVS VERSION */
 
 static struct BurnRomInfo samsh5spRomDesc[] = {
+	/* Uncensored */
 	{ "272-p1.p1",    0x400000, 0xfb7a6bba, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "272-p2.sp2",   0x400000, 0x63492ea6, 1 | BRF_ESS | BRF_PRG }, //  1 
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "272-c1.c1",    0x800000, 0x4f97661a, 3 | BRF_GRA },           //  2 Sprite data
 	{ "272-c2.c2",    0x800000, 0xa3afda4f, 3 | BRF_GRA },           //  3 
 	{ "272-c3.c3",    0x800000, 0x8c3c7502, 3 | BRF_GRA },           //  4 
@@ -9413,8 +9505,10 @@ static struct BurnRomInfo samsh5spRomDesc[] = {
 	{ "272-c7.c7",    0x800000, 0x1417b742, 3 | BRF_GRA },           //  8 
 	{ "272-c8.c8",    0x800000, 0xd49773cd, 3 | BRF_GRA },           //  9 
 
+	/* Encrypted */
 	{ "272-m1.m1",    0x080000, 0xadeebf40, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
+	/* Encrypted */
 	{ "272-v1.v1",    0x800000, 0x76a94127, 5 | BRF_SND },           // 11 Sound data
 	{ "272-v2.v2",    0x800000, 0x4ba507f1, 5 | BRF_SND },           // 12 
 };
@@ -9458,12 +9552,27 @@ struct BurnDriver BurnDrvsamsh5sp = {
 	0x1000,	304, 224, 4, 3
 };
 
+/*  Some info about the 2nd AES release of Samurai Shodown 5 Special (samsh5sph):
+
+    The fixed carts have a small round neogeo sticker applied to the front side of the cart (top right near cart sticker).
+    SNK Playmore had authorized a recall of all Samurai Shodown V Special (Samurai Spirits 0 Special) home cartridges. This recall involved bug fixes
+    and the addition of fatalities. (The fatalities were originally removed at the last minute due to the Nagasaki incident, a murder caused by a child killing her classmate by knife.)
+    Bug fixes: Improvements on Voice, Back Ground Music, and Practice mode.
+    Fatalities: SNK PLAYMORE modified the game program by including the removed "Zetumei Ougi" in a modified version.
+    This new version does not show the complete fatalities, they are instead replaced by what SNK PLAYMORE refers to as "lessened fatalities".
+*/
+
 // Samurai Shodown V Special / Samurai Spirits Zero Special (NGH-2720) (2nd release, less censored)
+/* Encrypted Set */ /* AES VERSION, 2nd bugfix release */
 
 static struct BurnRomInfo samsh5sphRomDesc[] = {
+	/* Less censored */
 	{ "272-p1ca.p1",  0x400000, 0xc30a08dd, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "272-p2ca.sp2", 0x400000, 0xbd64a518, 1 | BRF_ESS | BRF_PRG }, //  1 
+	/* Correct chip labels unknown */
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "272-c1.c1",    0x800000, 0x4f97661a, 3 | BRF_GRA },           //  2 Sprite data
 	{ "272-c2.c2",    0x800000, 0xa3afda4f, 3 | BRF_GRA },           //  3 
 	{ "272-c3.c3",    0x800000, 0x8c3c7502, 3 | BRF_GRA },           //  4 
@@ -9473,8 +9582,10 @@ static struct BurnRomInfo samsh5sphRomDesc[] = {
 	{ "272-c7.c7",    0x800000, 0x1417b742, 3 | BRF_GRA },           //  8 
 	{ "272-c8.c8",    0x800000, 0xd49773cd, 3 | BRF_GRA },           //  9 
 
+	/* Encrypted */
 	{ "272-m1.m1",    0x080000, 0xadeebf40, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
+	/* Encrypted */
 	{ "272-v1.v1",    0x800000, 0x76a94127, 5 | BRF_SND },           // 11 Sound data
 	{ "272-v2.v2",    0x800000, 0x4ba507f1, 5 | BRF_SND },           // 12 
 };
@@ -9493,11 +9604,15 @@ struct BurnDriver BurnDrvsamsh5sph = {
 };
 
 // Samurai Shodown V Special / Samurai Spirits Zero Special (NGH-2720) (1st release, censored)
+/* Encrypted Set */ /* AES VERSION, 1st release */
 
 static struct BurnRomInfo samsh5sphoRomDesc[] = {
+	/* Censored */
 	{ "272-p1c.p1",   0x400000, 0x9291794d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "272-p2c.sp2",  0x400000, 0xfa1a7dd8, 1 | BRF_ESS | BRF_PRG }, //  1 
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "272-c1.c1",    0x800000, 0x4f97661a, 3 | BRF_GRA },           //  2 Sprite data
 	{ "272-c2.c2",    0x800000, 0xa3afda4f, 3 | BRF_GRA },           //  3 
 	{ "272-c3.c3",    0x800000, 0x8c3c7502, 3 | BRF_GRA },           //  4 
@@ -9507,8 +9622,10 @@ static struct BurnRomInfo samsh5sphoRomDesc[] = {
 	{ "272-c7.c7",    0x800000, 0x1417b742, 3 | BRF_GRA },           //  8 
 	{ "272-c8.c8",    0x800000, 0xd49773cd, 3 | BRF_GRA },           //  9 
 
+	/* Encrypted */
 	{ "272-m1.m1",    0x080000, 0xadeebf40, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
+	/* Encrypted */
 	{ "272-v1.v1",    0x800000, 0x76a94127, 5 | BRF_SND },           // 11 Sound data
 	{ "272-v2.v2",    0x800000, 0x4ba507f1, 5 | BRF_SND },           // 12 
 };
@@ -9634,7 +9751,7 @@ struct BurnDriver BurnDrvncombat = {
 
 
 // Ninja Combat (NGH-009)
-/* AES VERSION */
+/* MVS AND AES VERSION */
 
 static struct BurnRomInfo ncombathRomDesc[] = {
 	{ "009-pg1.p1",   0x080000, 0x8e9f0add, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC534200
@@ -9945,17 +10062,13 @@ struct BurnDriver BurnDrvwh2 = {
 
 static struct BurnRomInfo wh2jRomDesc[] = {
 	/* also found AES set with PROG board NEO-AEG PROGRKB and CHA board NEO-AEG CHA256[B];
-	   same layouts and chip labels (on mask roms) */
+	   same layouts and chip labels (on maskroms) */
 	{ "064-p1.p1",    0x200000, 0x385a2e86, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
 
 	{ "064-s1.s1",    0x020000, 0x2a03998a, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
 
 	/* Different layout with 4xC (32mbit) on mask rom also exists on board NEO-MVS CHA256; 
-	/ chip labels are 064-C13, 064-C24, 064-C57 and 064-C68 
-	{ "064-c13.c1",   0x400000, 0x771a6365, 3 | BRF_GRA },           //  2 Sprite data 		/ mask rom TC5332205
-	{ "064-c24.c2",   0x400000, 0xe7863a05, 3 | BRF_GRA },           //  3 					/ mask rom TC5332205
-	{ "064-c57.c3",   0x400000, 0x64594ed4, 3 | BRF_GRA },           //  4 					/ mask rom TC5332205
-	{ "064-c68.c4",   0x400000, 0x6e385398, 3 | BRF_GRA },           //  5 					/ mask rom TC5332205 */
+	/ chip labels are 064-C13, 064-C24, 064-C57 and 064-C68 */
 	{ "064-c1.c1",    0x200000, 0x2ec87cea, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
 	{ "064-c2.c2",    0x200000, 0x526b81ab, 3 | BRF_GRA },           //  3 					/ TC5316200
 	{ "064-c3.c3",    0x200000, 0x436d1b31, 3 | BRF_GRA },           //  4 					/ TC5316200
@@ -10090,20 +10203,20 @@ struct BurnDriver BurnDrvmosyougi = {
 // Over Top
 
 static struct BurnRomInfo overtopRomDesc[] = {
-	{ "212-p1.p1",    0x200000, 0x16c063a9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "212-p1.p1",    0x200000, 0x16c063a9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC5316200
 
-	{ "212-s1.s1",    0x020000, 0x481d3ddc, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "212-s1.s1",    0x020000, 0x481d3ddc, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "212-c1.c1",    0x400000, 0x50f43087, 3 | BRF_GRA },           //  2 Sprite data
-	{ "212-c2.c2",    0x400000, 0xa5b39807, 3 | BRF_GRA },           //  3 
-	{ "212-c3.c3",    0x400000, 0x9252ea02, 3 | BRF_GRA },           //  4 
-	{ "212-c4.c4",    0x400000, 0x5f41a699, 3 | BRF_GRA },           //  5 
-	{ "212-c5.c5",    0x200000, 0xfc858bef, 3 | BRF_GRA },           //  6 
-	{ "212-c6.c6",    0x200000, 0x0589c15e, 3 | BRF_GRA },           //  7 
+	{ "212-c1.c1",    0x400000, 0x50f43087, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC5332205
+	{ "212-c2.c2",    0x400000, 0xa5b39807, 3 | BRF_GRA },           //  3 					/ mask rom TC5332205
+	{ "212-c3.c3",    0x400000, 0x9252ea02, 3 | BRF_GRA },           //  4 					/ mask rom TC5332205
+	{ "212-c4.c4",    0x400000, 0x5f41a699, 3 | BRF_GRA },           //  5 					/ mask rom TC5332205
+	{ "212-c5.c5",    0x200000, 0xfc858bef, 3 | BRF_GRA },           //  6 					/ mask rom TC5316200
+	{ "212-c6.c6",    0x200000, 0x0589c15e, 3 | BRF_GRA },           //  7 					/ mask rom TC5316200
 
-	{ "212-m1.m1",    0x020000, 0xfcab6191, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+	{ "212-m1.m1",    0x020000, 0xfcab6191, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code			/ mask rom TC531001
 
-	{ "212-v1.v1",    0x400000, 0x013d4ef9, 5 | BRF_SND },           //  9 Sound data
+	{ "212-v1.v1",    0x400000, 0x013d4ef9, 5 | BRF_SND },           //  9 Sound data		/ mask rom TC5332204
 };
 
 STDROMPICKEXT(overtop, overtop, neogeo)
@@ -10349,11 +10462,14 @@ struct BurnDriver BurnDrvblazstar = {
 };
 
 // Prehistoric Isle 2
+/* Original Version, Encrypted GFX */ /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo preisle2RomDesc[] = {
 	{ "255-p1.p1",    0x100000, 0xdfa3c0f3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "255-p2.sp2",   0x400000, 0x42050b80, 1 | BRF_ESS | BRF_PRG }, //  1 
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "255-c1.c1",    0x800000, 0xea06000b, 3 | BRF_GRA },           //  2 Sprite data
 	{ "255-c2.c2",    0x800000, 0x04e67d79, 3 | BRF_GRA },           //  3 
 	{ "255-c3.c3",    0x800000, 0x60e31e08, 3 | BRF_GRA },           //  4 
@@ -10611,10 +10727,13 @@ struct BurnDriver BurnDrvmagdrop3 = {
 };
 
 // Nightmare in the Dark
+/* Original Version - Encrypted GFX */ /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo nitdRomDesc[] = {
 	{ "260-p1.p1",    0x080000, 0x61361082, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "260-c1.c1",    0x800000, 0x147b0c7f, 3 | BRF_GRA },           //  1 Sprite data
 	{ "260-c2.c2",    0x800000, 0xd2b04b0d, 3 | BRF_GRA },           //  2 
 
@@ -10705,6 +10824,7 @@ struct BurnDriver BurnDrvgururin = {
 };
 
 // Money Puzzle Exchanger / Money Idol Exchanger
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo miexchngRomDesc[] = {
 	{ "231-p1.p1",    0x080000, 0x61be1810, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -10990,11 +11110,13 @@ struct BurnDriver BurnDrvzedblade = {
 };
 
 // Strikers 1945 Plus
+/* Original Version, Encrypted GFX Roms */ /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo s1945pRomDesc[] = {
 	{ "254-p1.p1",    0x100000, 0xff8efcff, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "254-p2.sp2",   0x400000, 0xefdfd4dd, 1 | BRF_ESS | BRF_PRG }, //  1 
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	{ "254-c1.c1",    0x800000, 0xae6fc8ef, 3 | BRF_GRA },           //  2 Sprite data
 	{ "254-c2.c2",    0x800000, 0x436fa176, 3 | BRF_GRA },           //  3 
 	{ "254-c3.c3",    0x800000, 0xe53ff2dc, 3 | BRF_GRA },           //  4 
@@ -11166,6 +11288,7 @@ struct BurnDriver BurnDrvragnagrd = {
 };
 
 // Pleasure Goal / Futsal - 5 on 5 Mini Soccer (NGM-219)
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo pgoalRomDesc[] = {
 	{ "219-p1.p1",    0x200000, 0x6af0e574, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -11289,6 +11412,7 @@ struct BurnDriver BurnDrvstakwin2 = {
 };
 
 // Shock Troopers (set 1)
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo shocktroRomDesc[] = {
 	{ "238-p1.p1",    0x100000, 0x5677456f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -11326,6 +11450,7 @@ struct BurnDriver BurnDrvshocktro = {
 
 
 // Shock Troopers (set 2)
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo shocktroaRomDesc[] = {
 	{ "238-pg1.p1",   0x100000, 0xefedf8dc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -11628,6 +11753,7 @@ struct BurnDriver BurnDrvpbobblenb = {
 };
 
 // Puzzle Bobble 2 / Bust-A-Move Again (Neo-Geo)
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo pbobbl2nRomDesc[] = {
 	{ "248-p1.p1",    0x100000, 0x9d6c0754, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -12053,6 +12179,7 @@ struct BurnDriver BurnDrvsonicwi3 = {
 };
 
 // Pop 'n Bounce / Gapporin
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo popbouncRomDesc[] = {
 	{ "237-p1.p1",    0x100000, 0xbe96e44f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -12108,6 +12235,35 @@ struct BurnDriver BurnDrvandrodun = {
 	NULL, androdunRomInfo, androdunRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
+};
+
+// Bang Bang Busters (2010 NCI release)
+
+static struct BurnRomInfo b2bRomDesc[] = {
+	{ "071.p1",    	   0x080000, 0x7687197d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "071.s1",    	   0x020000, 0x44e5f154, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "071.c1",    	   0x200000, 0x23d84a7a, 3 | BRF_GRA },           //  2 Sprite data
+	{ "071.c2",        0x200000, 0xce7b6248, 3 | BRF_GRA },           //  3 	 
+
+	{ "071.m1",    	   0x020000, 0x6da739ad, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+
+	{ "071.v1",    	   0x100000, 0x50feffb0, 5 | BRF_SND },           //  7 Sound data
+	 
+};
+
+STDROMPICKEXT(b2b, b2b, neogeo)
+STD_ROM_FN(b2b)
+
+struct BurnDriver BurnDrvb2b = {
+	"b2b", NULL, "neogeo", NULL, "2000",
+	"Bang Bang Busters (2010 NCI release)\0", NULL, "Visco", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
+	NULL, b2bRomInfo, b2bRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
 };
 
 // Puzzle De Pon!
@@ -12201,19 +12357,20 @@ struct BurnDriver BurnDrvgoalx3 = {
 };
 
 // Neo Drift Out - New Technology
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo neodriftRomDesc[] = {
-	{ "213-p1.p1",    0x200000, 0xe397d798, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "213-p1.p1",    0x200000, 0xe397d798, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC5316200
 
-	{ "213-s1.s1",    0x020000, 0xb76b61bc, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "213-s1.s1",    0x020000, 0xb76b61bc, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "213-c1.c1",    0x400000, 0x3edc8bd3, 3 | BRF_GRA },           //  2 Sprite data
-	{ "213-c2.c2",    0x400000, 0x46ae5f16, 3 | BRF_GRA },           //  3 
+	{ "213-c1.c1",    0x400000, 0x3edc8bd3, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC5316200
+	{ "213-c2.c2",    0x400000, 0x46ae5f16, 3 | BRF_GRA },           //  3 					/ mask rom TC5316200
 
-	{ "213-m1.m1",    0x020000, 0x200045f1, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "213-m1.m1",    0x020000, 0x200045f1, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code			/ mask rom TC531001
 
-	{ "213-v1.v1",    0x200000, 0xa421c076, 5 | BRF_SND },           //  5 Sound data
-	{ "213-v2.v2",    0x200000, 0x233c7dd9, 5 | BRF_SND },           //  6 
+	{ "213-v1.v1",    0x200000, 0xa421c076, 5 | BRF_SND },           //  5 Sound data		/ mask rom TC5332205
+	{ "213-v2.v2",    0x200000, 0x233c7dd9, 5 | BRF_SND },           //  6 					/ mask rom TC5332205
 };
 
 STDROMPICKEXT(neodrift, neodrift, neogeo)
@@ -12261,6 +12418,7 @@ struct BurnDriver BurnDrvbreakers = {
 };
 
 // Puzzle De Pon! R!
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo puzzldprRomDesc[] = {
 	{ "235-p1.p1",    0x080000, 0xafed5de2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -12289,6 +12447,7 @@ struct BurnDriver BurnDrvpuzzldpr = {
 };
 
 // Breakers Revenge
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo breakrevRomDesc[] = {
 	{ "245-p1.p1",    0x200000, 0xc828876d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -12323,6 +12482,7 @@ struct BurnDriver BurnDrvbreakrev = {
 };
 
 // Battle Flip Shot
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo flipshotRomDesc[] = {
 	{ "247-p1.p1",    0x100000, 0x95779094, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -12351,6 +12511,7 @@ struct BurnDriver BurnDrvflipshot = {
 };
 
 // Captain Tomaday
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo ctomadayRomDesc[] = {
 	{ "249-p1.p1",    0x200000, 0xc9386118, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -12380,10 +12541,12 @@ struct BurnDriver BurnDrvctomaday = {
 };
 
 // Ganryu / Musashi Ganryuki
+/* Original Version - Encrypted GFX */ /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo ganryuRomDesc[] = {
 	{ "252-p1.p1",    0x200000, 0x4b8ac4fb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-
+	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	{ "252-c1.c1",    0x800000, 0x50ee7882, 3 | BRF_GRA },           //  1 Sprite data
 	{ "252-c2.c2",    0x800000, 0x62585474, 3 | BRF_GRA },           //  2 
 
@@ -12412,10 +12575,12 @@ struct BurnDriver BurnDrvganryu = {
 };
 
 // Bang Bead
+/* Original Version - Encrypted GFX */ /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo bangbeadRomDesc[] = {
 	{ "259-p1.p1",    0x200000, 0x88a37f8b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	{ "259-c1.c1",    0x800000, 0x1f537f74, 3 | BRF_GRA },           //  1 Sprite data
 	{ "259-c2.c2",    0x800000, 0x0efd98ff, 3 | BRF_GRA },           //  2 
 
@@ -12445,6 +12610,7 @@ struct BurnDriver BurnDrvbangbead = {
 };
 
 // Metal Slug 4 (NGM-2630)
+/* Original Version - Encrypted GFX */ /* MVS VERSION */
 
 static struct BurnRomInfo mslug4RomDesc[] = {
 	/* There also exist carts where p1 label is pg1; the PG1 revision has a Japanese cart label, SN 02Jxxxxx
@@ -12453,6 +12619,8 @@ static struct BurnRomInfo mslug4RomDesc[] = {
 	{ "263-p1.p1",    0x100000, 0x27e4def3, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "263-p2.sp2",   0x400000, 0xfdb7aed8, 1 | BRF_ESS | BRF_PRG }, //  1 
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "263-c1.c1",    0x800000, 0x84865f8a, 3 | BRF_GRA },           //  2 Sprite data
 	{ "263-c2.c2",    0x800000, 0x81df97f2, 3 | BRF_GRA },           //  3 
 	{ "263-c3.c3",    0x800000, 0x1a343323, 3 | BRF_GRA },           //  4 
@@ -12460,8 +12628,10 @@ static struct BurnRomInfo mslug4RomDesc[] = {
 	{ "263-c5.c5",    0x800000, 0xa748854f, 3 | BRF_GRA },           //  6 
 	{ "263-c6.c6",    0x800000, 0x5c8ba116, 3 | BRF_GRA },           //  7 
 
+	/* Encrypted */
 	{ "263-m1.m1",    0x020000, 0x46ac8228, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
 
+	/* Encrypted */
 	{ "263-v1.v1",    0x800000, 0x01e9b9cd, 5 | BRF_SND },           //  9 Sound data
 	{ "263-v2.v2",    0x800000, 0x4ab2bf81, 5 | BRF_SND },           // 10 
 };
@@ -12497,11 +12667,14 @@ struct BurnDriver BurnDrvmslug4 = {
 
 
 // Metal Slug 4 (NGH-2630)
+/* Original Version - Encrypted GFX */ /* AES VERSION */
 
 static struct BurnRomInfo mslug4hRomDesc[] = {
 	{ "263-ph1.p1",   0x100000, 0xc67f5c8d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "263-ph2.sp2",  0x400000, 0xbc3ec89e, 1 | BRF_ESS | BRF_PRG }, //  1 
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "263-c1.c1",    0x800000, 0x84865f8a, 3 | BRF_GRA },           //  2 Sprite data
 	{ "263-c2.c2",    0x800000, 0x81df97f2, 3 | BRF_GRA },           //  3 
 	{ "263-c3.c3",    0x800000, 0x1a343323, 3 | BRF_GRA },           //  4 
@@ -12509,8 +12682,10 @@ static struct BurnRomInfo mslug4hRomDesc[] = {
 	{ "263-c5.c5",    0x800000, 0xa748854f, 3 | BRF_GRA },           //  6 
 	{ "263-c6.c6",    0x800000, 0x5c8ba116, 3 | BRF_GRA },           //  7 
 
+	/* Encrypted */
 	{ "263-m1.m1",    0x020000, 0x46ac8228, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
 
+	/* Encrypted */
 	{ "263-v1.v1",    0x800000, 0x01e9b9cd, 5 | BRF_SND },           //  9 Sound data
 	{ "263-v2.v2",    0x800000, 0x4ab2bf81, 5 | BRF_SND },           // 10 
 };
@@ -12653,11 +12828,14 @@ struct BurnDriver BurnDrvrotdh = {
 */
 
 // Matrimelee / Shin Gouketsuji Ichizoku Toukon (NGM-2660) (NGH-2660)
+/* Encrypted Set */ /* MVS AND AES VERSION */
 
 static struct BurnRomInfo matrimRomDesc[] = {
 	{ "266-p1.p1",    0x100000, 0x5d4c2dc7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "266-p2.sp2",   0x400000, 0xa14b1906, 1 | BRF_ESS | BRF_PRG }, //  1 
 
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "266-c1.c1",    0x800000, 0x505f4e30, 3 | BRF_GRA },           //  2 Sprite data
 	{ "266-c2.c2",    0x800000, 0x3cb57482, 3 | BRF_GRA },           //  3 
 	{ "266-c3.c3",    0x800000, 0xf1cc6ad0, 3 | BRF_GRA },           //  4 
@@ -12667,8 +12845,10 @@ static struct BurnRomInfo matrimRomDesc[] = {
 	{ "266-c7.c7",    0x800000, 0x4b71f780, 3 | BRF_GRA },           //  8 
 	{ "266-c8.c8",    0x800000, 0x29873d33, 3 | BRF_GRA },           //  9 
 
+	/* Encrypted */
 	{ "266-m1.m1",    0x020000, 0x456c3e6c, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
+	/* Encrypted */
 	{ "266-v1.v1",    0x800000, 0xa4f83690, 5 | BRF_SND },           // 11 Sound data
 	{ "266-v2.v2",    0x800000, 0xd0f69eda, 5 | BRF_SND },           // 12 
 };
@@ -12784,13 +12964,19 @@ struct BurnDriver BurnDrvmatrimbl = {
 };
 
 // Jockey Grand Prix (set 1)
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo jockeygpRomDesc[] = {
+	/* Officially licensed? Cart has a holographic 'SNK' sticker applied */
 	{ "008-epr.p1",   0x100000, 0x2fb7f388, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-
+	/* P on eprom, correct chip label unknown */
+	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "008-c1.c1",    0x800000, 0xa9acbf18, 3 | BRF_GRA },           //  1 Sprite data
 	{ "008-c2.c2",    0x800000, 0x6289eef9, 3 | BRF_GRA },           //  2 
 
+	/* Encrypted */
 	{ "008-mg1.m1",   0x080000, 0xd163c690, 4 | BRF_ESS | BRF_PRG }, //  3 Z80 code
 
 	{ "008-v1.v1",    0x200000, 0x443eadba, 5 | BRF_SND },           //  4 Sound data
@@ -12816,13 +13002,19 @@ struct BurnDriver BurnDrvjockeygp = {
 };
 
 // Jockey Grand Prix (set 2)
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo jockeygpaRomDesc[] = {
+	/* Officially licensed? Cart has a holographic 'SNK' sticker applied */
 	{ "008-epr_a.p1", 0x100000, 0xb8f35532, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	/* P on eprom, correct chip label unknown */
 	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
 	{ "008-c1.c1",    0x800000, 0xa9acbf18, 3 | BRF_GRA },           //  1 Sprite data
 	{ "008-c2.c2",    0x800000, 0x6289eef9, 3 | BRF_GRA },           //  2 
 
+	/* Encrypted */
 	{ "008-mg1.m1",   0x080000, 0xd163c690, 4 | BRF_ESS | BRF_PRG }, //  3 Z80 code
 
 	{ "008-v1.v1",    0x200000, 0x443eadba, 5 | BRF_SND },           //  4 Sound data
@@ -12842,9 +13034,12 @@ struct BurnDriver BurnDrvjockeygpa = {
 };
 
 // V-Liner (set 1)
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo vlinerRomDesc[] = {
+	/* Officially licensed? Cart has a holographic 'SNK' sticker applied */
 	{ "epr.p1",       0x080000, 0x72a2c043, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	/* P on eprom, correct chip label unknown */
 
 	{ "s-1.s1",       0x020000, 0x972d8c31, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -12868,9 +13063,12 @@ struct BurnDriver BurnDrvvliner = {
 };
 
 // V-Liner (set 2)
+/* MVS ONLY RELEASE */
 
 static struct BurnRomInfo vlineroRomDesc[] = {
+	/* Officially licensed? Cart has a holographic 'SNK' sticker applied */
 	{ "epr_54.p1",    0x080000, 0x172efc18, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	/* P on eprom, correct chip label unknown */
 
 	{ "s-1.s1",       0x020000, 0x972d8c31, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -12922,6 +13120,7 @@ struct BurnDriver BurnDrvdiggerma = {
 };
 
 // Super Bubble Pop
+/* Unlicensed, no official game ID # */ /* MVS ONLY VERSION */
 
 static struct BurnRomInfo sbpRomDesc[] = {
 	{ "001-003-02a.u2",   0x080000, 0xd054d264, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -12983,6 +13182,39 @@ struct BurnDriverD BurnDrvsbp = {
 // -----------------------------------------------------------------------------
 // Games not in MAME
 
+// 3 Count Bout / Fire Suplex (NGM-043)
+/* MVS VERSION */
+
+static struct BurnRomInfo countba3RomDesc[] = {
+	{ "043-epr.ep1",  0x080000, 0xeb2714c4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ M27C4002
+	{ "043-epr.ep2",  0x080000, 0x5e764567, 1 | BRF_ESS | BRF_PRG }, //  1 					/ M27C4002 */ 
+	
+	{ "043-s1.s1",    0x020000, 0xc362d484, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
+
+	{ "043-c1.c1",    0x200000, 0xbad2d67f, 3 | BRF_GRA },           //  2 Sprite data 		/ TC5316200
+	{ "043-c2.c2",    0x200000, 0xa7fbda95, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "043-c3.c3",    0x200000, 0xf00be011, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "043-c4.c4",    0x200000, 0x1887e5c0, 3 | BRF_GRA },           //  5 					/ TC5316200
+
+	{ "043-m1.m1",    0x020000, 0x7eab59cb, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code 		/ TC531001
+
+	{ "043-v1.v1",    0x200000, 0x63688ce8, 5 | BRF_SND },           //  7 Sound data 		/ TC5316200
+	{ "043-v2.v2",    0x200000, 0xc69a827b, 5 | BRF_SND },           //  8 					/ TC5316200
+};
+
+STDROMPICKEXT(countba3, countba3, neogeo)
+STD_ROM_FN(countba3)
+
+struct BurnDriver BurnDrv3Countba = {
+	"3countba", "3countb", "neogeo", NULL, "1993",
+	"3 Count Bout / Fire Suplex (NGM-043)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPC, GBF_VSFIGHT, 0,
+	NULL, countba3RomInfo, countba3RomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
 // Bang Bead (Prototype?)
 
 static struct BurnRomInfo bangbedpRomDesc[] = {
@@ -13013,6 +13245,39 @@ struct BurnDriver BurnDrvbangbedp = {
 	NULL, bangbedpRomInfo, bangbedpRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
+};
+
+// Fatal Fury 2 / Garou Densetsu 2 - arata-naru tatakai (NGM-047)
+/* MVS VERSION */
+
+static struct BurnRomInfo fatfury2aRomDesc[] = {
+	{ "047-epr.ep1",  0x080000, 0xbe40ea92, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ M27C4002
+	{ "047-epr.ep2",  0x080000, 0x2a9beac5, 1 | BRF_ESS | BRF_PRG }, //  1 					/ M27C4002 */
+		
+	{ "047-s1.s1",    0x020000, 0xd7dbbf39, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
+
+	{ "047-c1.c1",    0x200000, 0xf72a939e, 3 | BRF_GRA },           //  3 Sprite data 		/ TC5316200
+	{ "047-c2.c2",    0x200000, 0x05119a0d, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "047-c3.c3",    0x200000, 0x01e00738, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "047-c4.c4",    0x200000, 0x9fe27432, 3 | BRF_GRA },           //  6 					/ TC5316200
+
+	{ "047-m1.m1",    0x020000, 0x820b0ba7, 4 | BRF_ESS | BRF_PRG }, //  7 Z80 code 		/ TC531001
+
+	{ "047-v1.v1",    0x200000, 0xd9d00784, 5 | BRF_SND },           //  8 Sound data 		/ TC5316200
+	{ "047-v2.v2",    0x200000, 0x2c9a4b33, 5 | BRF_SND },           //  9 					/ TC5316200
+};
+
+STDROMPICKEXT(fatfury2a, fatfury2a, neogeo)
+STD_ROM_FN(fatfury2a)
+
+struct BurnDriver BurnDrvFatfury2a = {
+	"fatfury2a", "fatfury2", "neogeo", NULL, "1992",
+	"Fatal Fury 2 / Garou Densetsu 2 - arata-naru tatakai (NGM-047)\0", NULL, "SNK", "Neo Geo MVS",
+	L"Fatal Fury 2\0\u9913\u72FC\u4F1D\u8AAC\uFF12 - \u65B0\u305F\u306A\u308B\u95D8 (NGM-047)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPC, GBF_VSFIGHT, FBF_FATFURY,
+	NULL, fatfury2aRomInfo, fatfury2aRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	fatfury2Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
 };
 
 // Crouching Tiger Hidden Dragon 2003 (The King of Fighters 2001 bootleg set 2)
@@ -13124,35 +13389,6 @@ struct BurnDriver BurnDrvfr2ch = {
 	NULL, fr2chRomInfo, fr2chRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
-};
-
-// Bang 2 Busters (Prototype)
-
-static struct BurnRomInfo b2busterRomDesc[] = {
-	{ "071-p1.bin",    0x080000, 0x7687197d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-
-	{ "071-s1.bin",    0x020000, 0x44e5f154, 2 | BRF_GRA },           //  1 Text layer tiles
-
-	{ "071-c1.bin",    0x200000, 0x23d84a7a, 3 | BRF_GRA },           //  2 Sprite data
-	{ "071-c2.bin",    0x200000, 0xce7b6248, 3 | BRF_GRA },           //  3 	 
-
-	{ "071-m1.bin",    0x020000, 0x6da739ad, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
-
-	{ "071-v1.bin",    0x100000, 0x50feffb0, 5 | BRF_SND },           //  7 Sound data
-	 
-};
-
-STDROMPICKEXT(b2buster, b2buster, neogeo)
-STD_ROM_FN(b2buster)
-
-struct BurnDriver BurnDrvb2buster = {
-	"b2buster", NULL, "neogeo", NULL, "2000",
-	"Bang 2 Busters (Prototype)\0", NULL, "Visco", "Neo Geo MVS",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
-	NULL, b2busterRomInfo, b2busterRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000, 304, 224, 4, 3
 };
 
 // Treasure of the Carribean 
@@ -13969,10 +14205,10 @@ struct BurnDriver BurnDrvkof98ae = {
 };
 
 // The King of Fighters '98 (Combo, Ivex hack)
-// 2015/02/01 version 
+/* 2015/02/28 version */
 static struct BurnRomInfo kof98coRomDesc[] = {
-	{ "kof98c-p1.bin", 	0x100000, 0xb127666b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-	{ "kof98c-p2.bin", 	0x400000, 0x745606f4, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "kof98c-p1.bin", 	0x100000, 0x385de2db, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "kof98c-p2.bin", 	0x400000, 0xe68be25d, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "kof98c-s1.bin", 	0x020000, 0x7333d8b0, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -14007,7 +14243,7 @@ struct BurnDriver BurnDrvkof98co = {
 };
 
 // The King of Fighters '99 (Anniversary Edition, Yashional hack)
-// 2015/01/21 version
+/* 2015/01/21 version */
 static struct BurnRomInfo kof99aeRomDesc[] = {
 	{ "152ae-p1.p1",   	   0x100000, 0x110a01b4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "152ae-p2.p2",   	   0x400000, 0x0f8e548a, 1 | BRF_ESS | BRF_PRG }, //  1
@@ -14223,10 +14459,10 @@ struct BurnDriver BurnDrvRoboarma = {
 };
 
 // Samurai Shodown / Samurai Spirits (NGM-045, alternate board)
+/* MVS VERSION */
 
 static struct BurnRomInfo samshoaRomDesc[] = {
-	/* This set uses NEO-MVS PROGSC board and NEO-MVS CHA 42G-3 board; same rom data as in samshoh is used 
-	/ confirmed in old Neo Geo (Johnboy) 20070112 datafile */
+	/* This set uses NEO-MVS PROGSC board and NEO-MVS CHA 42G-3 board; same rom data as in samshoh is used. */
 	{ "045-epr.ep1",  0x080000, 0x80aa6c97, 1 | BRF_ESS | BRF_PRG }, //  0 68K code / M27C4002
 	{ "045-epr.ep2",  0x080000, 0x71768728, 1 | BRF_ESS | BRF_PRG }, //  1 / M27C4002
 	{ "045-p2.sp2",   0x080000, 0x38ee9ba9, 1 | BRF_ESS | BRF_PRG }, //  2 / TC534200
@@ -14358,12 +14594,45 @@ STD_ROM_FN(sengoku3s)
 
 struct BurnDriver BurnDrvSengoku3s = {
 	"sengoku3s", "sengoku3", "neogeo", NULL, "2001",
-	"Sengoku 3 / Sengoku Densho 2001\0", NULL, "SNK / Noise Factory", "Neo Geo MVS",
+	"Sengoku 3 / Sengoku Densho 2001 (Evolution 1.0, FCHT hack)\0", NULL, "SNK / Noise Factory", "Neo Geo MVS",
 	L"Sengoku 3\0\u6226\u56FD\u4F1D\u627F\uFF12\uFF10\uFF10\uFF11 (Evolution 1.0, FCHT hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
 	NULL, sengoku3sRomInfo, sengoku3sRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
+};
+
+
+// World Heroes 2 Jet (ADM-007)
+/* MVS VERSION */
+
+static struct BurnRomInfo wh2jaRomDesc[] = {
+	{ "064-p1.p1",    0x200000, 0x385a2e86, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC5316200
+
+	{ "064-s1.s1",    0x020000, 0x2a03998a, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
+
+	{ "064-c13.c1",   0x400000, 0x771a6365, 3 | BRF_GRA },           //  2 Sprite data 		/ mask rom TC5332205
+	{ "064-c24.c2",   0x400000, 0xe7863a05, 3 | BRF_GRA },           //  3 					/ mask rom TC5332205
+	{ "064-c57.c3",   0x400000, 0x64594ed4, 3 | BRF_GRA },           //  4 					/ mask rom TC5332205
+	{ "064-c68.c4",   0x400000, 0x6e385398, 3 | BRF_GRA },           //  5 					/ mask rom TC5332205 */
+	
+	{ "064-m1.m1",    0x020000, 0xd2eec9d3, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ TC531001
+
+	{ "064-v1.v1",    0x200000, 0xaa277109, 5 | BRF_SND },           //  7 Sound data		/ TC5316200
+	{ "064-v2.v2",    0x200000, 0xb6527edd, 5 | BRF_SND },           //  8 					/ TC5316200
+};
+
+STDROMPICKEXT(wh2ja, wh2ja, neogeo)
+STD_ROM_FN(wh2ja)
+
+struct BurnDriver BurnDrvwh2ja = {
+	"wh2ja", "wh2j", "neogeo", NULL, "1994",
+	"World Heroes 2 Jet (ADM-007)\0", NULL, "ADK / SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, 0,
+	NULL, wh2jaRomInfo, wh2jaRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
 };
 
 

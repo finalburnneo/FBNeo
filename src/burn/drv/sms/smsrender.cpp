@@ -253,13 +253,14 @@ void render_line(int line)
     /* Update pattern cache */
     update_bg_pattern_cache();
 
+	memset(linebuf, 0, bitmap.width);
+
 	/* Blank line (full width) */
 	if((IS_GG) && line < 8) { // fix for crap at top of screen in GG -dink
-		//char bg = (char)linebuf[0];
-		memset(linebuf, 0, bitmap.width);
+		// do nothing
 	} else
     if(!(vdp.reg[1] & 0x40))
-    {
+	{
         memset(linebuf, BACKDROP_COLOR, bitmap.width);
     }
     else
@@ -275,11 +276,17 @@ void render_line(int line)
         /* Blank leftmost column of display */
         if(vdp.reg[0] & 0x20)
         {
+			if (IS_GG)
+				bitmap.viewport.x = 44; // fixes crap on the right side of the screen in Devilish, Yuyu & Codemasters games
 			memset(linebuf, BACKDROP_COLOR, 8);
 			// center the screen -dink
-			memmove(linebuf+4, linebuf+8, bitmap.width);
-			memset(linebuf+bitmap.width-4, BACKDROP_COLOR, 4);
-        }
+			memmove(linebuf+4, linebuf+8, bitmap.viewport.w + bitmap.viewport.x);
+			if (!IS_GG)
+				memset(linebuf+bitmap.viewport.w + bitmap.viewport.x - 4, BACKDROP_COLOR, 4);
+		} else {
+			if (IS_GG)
+				bitmap.viewport.x = 48;
+		}
     }
 
     if(bitmap.depth != 8) remap_8_to_16(line);
@@ -604,9 +611,9 @@ void palette_sync(int index, int force)
 void remap_8_to_16(int line)
 {
 	if (line > nScreenHeight) return;
-    int i;
-    uint16 *p = (uint16 *)&bitmap.data[(line * bitmap.pitch)];
-    for(i = bitmap.viewport.x; i < bitmap.viewport.w + bitmap.viewport.x; i++)
+
+	UINT16 *p = (uint16 *)&bitmap.data[(line * bitmap.pitch)];
+    for (INT32 i = bitmap.viewport.x; i < bitmap.viewport.w + bitmap.viewport.x; i++)
     {
 		p[i] = internal_buffer[i] & PIXEL_MASK;
     }

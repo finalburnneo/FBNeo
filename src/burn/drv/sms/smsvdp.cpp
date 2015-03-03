@@ -52,7 +52,7 @@ void vdp_reset(void)
     vdp.extended = 0;
     vdp.height = 192;
 
-    bitmap.viewport.x = (IS_GG) ? 48 : 0;
+    bitmap.viewport.x = (IS_GG) ? 48 : 0;    // 44 for (vdp.reg[0] & 0x20 && IS_GG)
     bitmap.viewport.y = (IS_GG) ? 24 : 0;
     bitmap.viewport.w = (IS_GG) ? 160 : 256;
     bitmap.viewport.h = (IS_GG) ? 144 : 192;

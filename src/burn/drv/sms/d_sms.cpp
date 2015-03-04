@@ -187,7 +187,28 @@ static rominfo_t game_list[] = {
 	{0xDBE8895C, MAPPER_CODIES, DISPLAY_NTSC,TERRITORY_EXPORT, "Micro Machines 2 - Turbo Tournament"},
 	{0xC1756BEE, MAPPER_CODIES, DISPLAY_NTSC,TERRITORY_EXPORT, "Pete Sampras Tennis"},
 	{0x72981057, MAPPER_CODIES, DISPLAY_NTSC,TERRITORY_EXPORT, "CJ Elephant Fugitive"},
-
+	// GG-SMS mode
+	{0x59840FD6, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_EXPORT, "Castle of Illusion - Starring Mickey Mouse [SMS-GG]"},
+	{0x9C76FB3A, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_EXPORT, "Rastan Saga [SMS-GG]"},
+	{0xC8381DEF, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_EXPORT, "Taito Chase H.Q [SMS-GG]"},
+	{0xDA8E95A9, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_EXPORT, "WWF Wrestlemania Steel Cage Challenge [SMS-GG]"},
+	{0x1D93246E, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_EXPORT, "Olympic Gold [A][SMS-GG]"},
+	{0xA2F9C7AF, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_EXPORT, "Olympic Gold [B][SMS-GG]"},
+	{0x01EAB89D, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_EXPORT, "Out Run Europa [SMS-GG]"},
+	{0xF037EC00, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_EXPORT, "Out Run Europa (US) [SMS-GG]"},
+	{0xE5F789B9, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_EXPORT, "Predator 2 [SMS-GG]"},
+	{0x311D2863, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_EXPORT, "Prince of Persia [A][SMS-GG]"},
+	{0x45F058D6, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_EXPORT, "Prince of Persia [B][SMS-GG]"},
+	{0x56201996, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_EXPORT, "R.C. Grand Prix [SMS-GG]"},
+	{0x10DBBEF4, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_EXPORT, "Super Kick Off [SMS-GG]"},
+	{0x9942B69B, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_DOMESTIC, "Castle of Illusion - Starring Mickey Mouse (J) [SMS-GG]"},
+	{0x7BB81E3D, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_DOMESTIC, "Taito Chase H.Q (J) [SMS-GG]"},
+	{0x6F8E46CF, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_DOMESTIC, "Alex Kidd in Miracle World (TW) [SMS-GG]"},
+	{0x3382D73F, CONSOLE_SMS,  DISPLAY_NTSC,TERRITORY_DOMESTIC, "Olympic Gold (TW) [SMS-GG]"},
+	// Japanese
+	{0xC9DD4E5F, MAPPER_SEGA,   DISPLAY_NTSC,TERRITORY_DOMESTIC, "Woody Pop (KR)"},
+	{0x71DEBA5A, MAPPER_SEGA,   DISPLAY_NTSC,TERRITORY_DOMESTIC, "Pop Breaker"},
+	// PAL-mode
 	{0x72420f38, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "Addams Family"},
 	{0x887d9f6b, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "XXAce of Aces"},
 	{0x3793c01a, MAPPER_SEGA,   DISPLAY_PAL, TERRITORY_EXPORT, "XXShadow Dancer (KR)"},
@@ -222,7 +243,6 @@ static rominfo_t game_list[] = {
 	{0xca082218, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "XPooyan (KR)"},
 	{0x89b79e77, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "XDallye Pigu-Wang (KR)"},
 	{0x61e8806f, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Flashpoint (KR)"},
-	//{, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, " (KR)"},
 	{0x643b6b76, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Block Hole (KR)"},
 	{0x577ec227, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "Galaxian (KR)"},
 	{0x0ae470e5, MAPPER_MSX,         DISPLAY_NTSC, TERRITORY_EXPORT, "King and Balloon (KR)"},
@@ -291,6 +311,12 @@ static INT32 load_rom()
     sms.display     = DISPLAY_NTSC;
     sms.territory   = TERRITORY_EXPORT;
 
+	/* Figure out game image type */
+	if (strcmp(BurnDrvGetTextA(DRV_SYSTEM), "Sega Game Gear") == 0)
+		sms.console = CONSOLE_GG;
+	else
+		sms.console = CONSOLE_SMS;
+
     /* Look up mapper in game list */
     for(INT32 i = 0; game_list[i].name != NULL; i++)
     {
@@ -298,15 +324,14 @@ static INT32 load_rom()
         {
             cart.mapper     = game_list[i].mapper;
             sms.display     = game_list[i].display;
-            sms.territory   = game_list[i].territory;
+			sms.territory   = game_list[i].territory;
+			if (cart.mapper > 0x19) {
+				sms.console = cart.mapper;
+				bprintf(0, _T("Console set to id. #%X\n"), sms.console);
+				cart.mapper = MAPPER_SEGA;
+			}
         }
     }
-
-	/* Figure out game image type */
-	if (strcmp(BurnDrvGetTextA(DRV_SYSTEM), "Sega Game Gear") == 0)
-		sms.console = CONSOLE_GG;
-	else
-		sms.console = CONSOLE_SMS;
 
     system_assign_device(PORT_A, DEVICE_PAD2B);
     system_assign_device(PORT_B, DEVICE_PAD2B);
@@ -21832,7 +21857,7 @@ STD_ROM_FN(gg_shavnyak)
 
 struct BurnDriver BurnDrvgg_shavnyak = {
 	"gg_shavnyak", NULL, NULL, NULL, "1993",
-	"Quest for the Shaven Yak Starring Ren Hoëk and Stimpy (Euro, USA)\0", NULL, "Sega", "Sega Game Gear",
+	"Quest for the Shaven Yak Starring Ren Hoek and Stimpy (Euro, USA)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	GGGetZipName, gg_shavnyakRomInfo, gg_shavnyakRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,

@@ -255,12 +255,13 @@ void render_line(int line)
 
 	memset(linebuf, 0, bitmap.width);
 
-	/* Blank line (full width) */
-	if((IS_GG) && line < 8) { // fix for crap at top of screen in GG -dink
-		// do nothing
+	INT32 extend = (vdp.extended) ? 16 : 0;
+
+	if((IS_GG) && ((line < 24 + extend) || (line > 0xa7 + extend))) {
+		// Blank top and bottom borders for GG.
 	} else
     if(!(vdp.reg[1] & 0x40))
-	{
+	{   // Blank line (full width)
         memset(linebuf, BACKDROP_COLOR, bitmap.width);
     }
     else
@@ -273,7 +274,7 @@ void render_line(int line)
 		if(render_obj != NULL)
 			render_obj(line);
 
-        /* Blank leftmost column of display */
+        /* Blank leftmost column of display & center screen */
         if(vdp.reg[0] & 0x20)
         {
 			if (IS_GG)

@@ -34,6 +34,6 @@ void render_bg_sms(int line);
 void render_obj_sms(int line);
 void update_bg_pattern_cache(void);
 void palette_sync(int index, int force);
-void remap_8_to_16(int line);
+void remap_8_to_16(int line, int extend);
 
 #endif /* _RENDER_H_ */

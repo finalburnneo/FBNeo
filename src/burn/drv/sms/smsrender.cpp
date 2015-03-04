@@ -255,9 +255,9 @@ void render_line(int line)
 
 	memset(linebuf, 0, bitmap.width);
 
-	INT32 extend = (vdp.extended) ? 16 : 0;
+	INT32 extend = (vdp.extended && IS_GG) ? 16 : 0; // GG: in extended mode, the screen starts 16pixels lower than usual.
 
-	if((IS_GG) && ((line < 24 + extend) || (line > 0xa7 + extend))) {
+	if((IS_GG) && ((line < 24 + extend) || (line > 167 + extend))) {
 		// Blank top and bottom borders for GG.
 	} else
     if(!(vdp.reg[1] & 0x40))
@@ -290,7 +290,7 @@ void render_line(int line)
 		}
     }
 
-    if(bitmap.depth != 8) remap_8_to_16(line);
+    if(bitmap.depth != 8) remap_8_to_16(line, extend);
 }
 
 
@@ -609,11 +609,11 @@ void palette_sync(int index, int force)
     bitmap.pal.dirty[index] = bitmap.pal.update = 1;
 }
 
-void remap_8_to_16(int line)
+void remap_8_to_16(int line, int extend)
 {
-	if (line > nScreenHeight) return;
+	if (line > nScreenHeight || (line - extend) < 0) return;
 
-	UINT16 *p = (uint16 *)&bitmap.data[(line * bitmap.pitch)];
+	UINT16 *p = (uint16 *)&bitmap.data[((line - extend) * bitmap.pitch)];
     for (INT32 i = bitmap.viewport.x; i < bitmap.viewport.w + bitmap.viewport.x; i++)
     {
 		p[i] = internal_buffer[i] & PIXEL_MASK;

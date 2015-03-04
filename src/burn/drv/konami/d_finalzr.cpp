@@ -804,7 +804,7 @@ STD_ROM_FN(finalizr)
 
 struct BurnDriver BurnDrvFinalizr = {
 	"finalizr", NULL, NULL, NULL, "1985",
-	"Finalizer - Super Transformation\0", NULL, "Konami", "Miscellaneous",
+	"Finalizer - Super Transformation\0", NULL, "Konami", "GX523",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, finalizrRomInfo, finalizrRomName, NULL, NULL, FinalizrInputInfo, FinalizrDIPInfo,
@@ -839,7 +839,7 @@ STD_ROM_FN(finalizrb)
 
 struct BurnDriver BurnDrvFinalizrb = {
 	"finalizrb", "finalizr", NULL, NULL, "1985",
-	"Finalizer - Super Transformation (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Finalizer - Super Transformation (bootleg)\0", NULL, "bootleg", "GX523",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, finalizrbRomInfo, finalizrbRomName, NULL, NULL, FinalizrInputInfo, FinalizrDIPInfo,

@@ -557,7 +557,7 @@ STD_ROM_FN(yiear)
 
 struct BurnDriver BurnDrvYiear = {
 	"yiear", NULL, NULL, NULL, "1985",
-	"Yie Ar Kung-Fu (program code I)\0", NULL, "Konami", "Miscellaneous",
+	"Yie Ar Kung-Fu (program code I)\0", NULL, "Konami", "GX407",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, yiearRomInfo, yiearRomName, NULL, NULL, YiearInputInfo, YiearDIPInfo,
@@ -590,7 +590,7 @@ STD_ROM_FN(yiear2)
 
 struct BurnDriver BurnDrvYiear2 = {
 	"yiear2", "yiear", NULL, NULL, "1985",
-	"Yie Ar Kung-Fu (program code G)\0", NULL, "Konami", "Miscellaneous",
+	"Yie Ar Kung-Fu (program code G)\0", NULL, "Konami", "GX407",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, yiear2RomInfo, yiear2RomName, NULL, NULL, YiearInputInfo, YiearDIPInfo,

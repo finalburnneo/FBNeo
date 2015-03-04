@@ -1008,7 +1008,7 @@ STD_ROM_FN(gberet)
 
 struct BurnDriver BurnDrvGberet = {
 	"gberet", NULL, NULL, NULL, "1985",
-	"Green Beret\0", NULL, "Konami", "Miscellaneous",
+	"Green Beret\0", NULL, "Konami", "GX577",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, gberetRomInfo, gberetRomName, NULL, NULL, DrvInputInfo, gberetDIPInfo,
@@ -1041,7 +1041,7 @@ STD_ROM_FN(rushatck)
 
 struct BurnDriver BurnDrvRushatck = {
 	"rushatck", "gberet", NULL, NULL, "1985",
-	"Rush'n Attack (US)\0", NULL, "Konami", "Miscellaneous",
+	"Rush'n Attack (US)\0", NULL, "Konami", "GX577",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, rushatckRomInfo, rushatckRomName, NULL, NULL, DrvInputInfo, gberetDIPInfo,
@@ -1082,7 +1082,7 @@ static INT32 gberetbInit()
 
 struct BurnDriver BurnDrvGberetb = {
 	"gberetb", "gberet", NULL, NULL, "1985",
-	"Green Beret (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Green Beret (bootleg)\0", NULL, "bootleg", "GX577",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, gberetbRomInfo, gberetbRomName, NULL, NULL, gberetbInputInfo, gberetbDIPInfo,

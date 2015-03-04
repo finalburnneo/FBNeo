@@ -1097,7 +1097,7 @@ STD_ROM_FN(gyruss)
 
 struct BurnDriver BurnDrvGyruss = {
 	"gyruss", NULL, NULL, NULL, "1983",
-	"Gyruss (Konami)\0", NULL, "Konami", "Miscellaneous",
+	"Gyruss (Konami)\0", NULL, "Konami", "GX347",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, gyrussRomInfo, gyrussRomName, NULL, NULL, GyrussInputInfo, GyrussDIPInfo,
@@ -1137,7 +1137,7 @@ STD_ROM_FN(gyrussce)
 
 struct BurnDriver BurnDrvGyrussce = {
 	"gyrussce", "gyruss", NULL, NULL, "1983",
-	"Gyruss (Centuri)\0", NULL, "Konami (Centuri license)", "Miscellaneous",
+	"Gyruss (Centuri)\0", NULL, "Konami (Centuri license)", "GX347",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, gyrussceRomInfo, gyrussceRomName, NULL, NULL, GyrussInputInfo, GyrussceDIPInfo,
@@ -1177,7 +1177,7 @@ STD_ROM_FN(gyrussb)
 
 struct BurnDriver BurnDrvGyrussb = {
 	"gyrussb", "gyruss", NULL, NULL, "1983",
-	"Gyruss (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Gyruss (bootleg)\0", NULL, "bootleg", "GX347",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, gyrussbRomInfo, gyrussbRomName, NULL, NULL, GyrussInputInfo, GyrussDIPInfo,
@@ -1217,7 +1217,7 @@ STD_ROM_FN(venus)
 
 struct BurnDriver BurnDrvVenus = {
 	"venus", "gyruss", NULL, NULL, "1983",
-	"Venus\0", NULL, "bootleg", "Miscellaneous",
+	"Venus\0", NULL, "bootleg", "GX347",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, venusRomInfo, venusRomName, NULL, NULL, GyrussInputInfo, GyrussDIPInfo,

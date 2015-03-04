@@ -839,7 +839,7 @@ STD_ROM_FN(hcastle)
 
 struct BurnDriver BurnDrvHcastle = {
 	"hcastle", NULL, NULL, NULL, "1988",
-	"Haunted Castle (ver. M)\0", NULL, "Konami", "Miscellaneous",
+	"Haunted Castle (ver. M)\0", NULL, "Konami", "GX768",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hcastleRomInfo, hcastleRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
@@ -877,7 +877,7 @@ STD_ROM_FN(hcastlek)
 
 struct BurnDriver BurnDrvHcastlek = {
 	"hcastlek", "hcastle", NULL, NULL, "1988",
-	"Haunted Castle (ver. K)\0", NULL, "Konami", "Miscellaneous",
+	"Haunted Castle (ver. K)\0", NULL, "Konami", "GX768",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hcastlekRomInfo, hcastlekRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
@@ -915,7 +915,7 @@ STD_ROM_FN(hcastlee)
 
 struct BurnDriver BurnDrvHcastlee = {
 	"hcastlee", "hcastle", NULL, NULL, "1988",
-	"Haunted Castle (ver. E)\0", NULL, "Konami", "Miscellaneous",
+	"Haunted Castle (ver. E)\0", NULL, "Konami", "GX768",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hcastleeRomInfo, hcastleeRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
@@ -953,7 +953,7 @@ STD_ROM_FN(akumajou)
 
 struct BurnDriver BurnDrvAkumajou = {
 	"akumajou", "hcastle", NULL, NULL, "1988",
-	"Akuma-Jou Dracula (Japan ver. P)\0", NULL, "Konami", "Miscellaneous",
+	"Akuma-Jou Dracula (Japan ver. P)\0", NULL, "Konami", "GX768",
 	L"\u60AA\u9B54\u57CE \u30C9\u30E9\u30AD\u30E5\u30E9 (Japan ver. P)\0Akuma-Jou Dracula\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, akumajouRomInfo, akumajouRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,
@@ -991,7 +991,7 @@ STD_ROM_FN(akumajoun)
 
 struct BurnDriver BurnDrvAkumajoun = {
 	"akumajoun", "hcastle", NULL, NULL, "1988",
-	"Akuma-Jou Dracula (Japan ver. N)\0", NULL, "Konami", "Miscellaneous",
+	"Akuma-Jou Dracula (Japan ver. N)\0", NULL, "Konami", "GX768",
 	L"\u60AA\u9B54\u57CE \u30C9\u30E9\u30AD\u30E5\u30E9 (Japan ver. N)\0Akuma-Jou Dracula\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, akumajounRomInfo, akumajounRomName, NULL, NULL, HcastleInputInfo, HcastleDIPInfo,

@@ -837,7 +837,7 @@ static INT32 timepltInit()
 
 struct BurnDriver BurnDrvTimeplt = {
 	"timeplt", NULL, NULL, NULL, "1982",
-	"Time Pilot\0", NULL, "Konami", "Miscellaneous",
+	"Time Pilot\0", NULL, "Konami", "GX393",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, timepltRomInfo, timepltRomName, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
@@ -871,7 +871,7 @@ STD_ROM_FN(timeplta)
 
 struct BurnDriver BurnDrvTimeplta = {
 	"timeplta", "timeplt", NULL, NULL, "1982",
-	"Time Pilot (Atari)\0", NULL, "Konami (Atari license)", "Miscellaneous",
+	"Time Pilot (Atari)\0", NULL, "Konami (Atari license)", "GX393",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, timepltaRomInfo, timepltaRomName, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
@@ -905,7 +905,7 @@ STD_ROM_FN(timepltc)
 
 struct BurnDriver BurnDrvTimepltc = {
 	"timepltc", "timeplt", NULL, NULL, "1982",
-	"Time Pilot (Centuri)\0", NULL, "Konami (Centuri license)", "Miscellaneous",
+	"Time Pilot (Centuri)\0", NULL, "Konami (Centuri license)", "GX393",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, timepltcRomInfo, timepltcRomName, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,
@@ -939,7 +939,7 @@ STD_ROM_FN(spaceplt)
 
 struct BurnDriver BurnDrvSpaceplt = {
 	"spaceplt", "timeplt", NULL, NULL, "1982",
-	"Space Pilot\0", NULL, "bootleg", "Miscellaneous",
+	"Space Pilot\0", NULL, "bootleg", "GX393",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, spacepltRomInfo, spacepltRomName, NULL, NULL, TimepltInputInfo, TimepltDIPInfo,

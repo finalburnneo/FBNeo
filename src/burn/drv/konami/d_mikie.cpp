@@ -639,7 +639,7 @@ STD_ROM_FN(mikie)
 
 struct BurnDriver BurnDrvMikie = {
 	"mikie", NULL, NULL, NULL, "1984",
-	"Mikie\0", NULL, "Konami", "Miscellaneous",
+	"Mikie\0", NULL, "Konami", "GX469",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, mikieRomInfo, mikieRomName, NULL, NULL, MikieInputInfo, MikieDIPInfo,
@@ -676,7 +676,7 @@ STD_ROM_FN(mikiej)
 
 struct BurnDriver BurnDrvMikiej = {
 	"mikiej", "mikie", NULL, NULL, "1984",
-	"Shinnyuushain Tooru-kun\0", NULL, "Konami", "Miscellaneous",
+	"Shinnyuushain Tooru-kun\0", NULL, "Konami", "GX469",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, mikiejRomInfo, mikiejRomName, NULL, NULL, MikieInputInfo, MikieDIPInfo,
@@ -713,7 +713,7 @@ STD_ROM_FN(mikiehs)
 
 struct BurnDriver BurnDrvMikiehs = {
 	"mikiehs", "mikie", NULL, NULL, "1984",
-	"Mikie (High School Graffiti)\0", NULL, "Konami", "Miscellaneous",
+	"Mikie (High School Graffiti)\0", NULL, "Konami", "GX469",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, mikiehsRomInfo, mikiehsRomName, NULL, NULL, MikieInputInfo, MikieDIPInfo,

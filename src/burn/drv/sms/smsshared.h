@@ -9,7 +9,7 @@
 #include <malloc.h>
 #include <math.h>
 #include <limits.h>
-#include <zlib.h>
+#include "zlib.h"
 
 #include "sms.h"
 #include "smspio.h"

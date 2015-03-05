@@ -31,7 +31,7 @@ void system_frame(int skip_render)
 {
     static int iline_table[] = {0xC0, 0xE0, 0xF0};
     int lpf = (sms.display == DISPLAY_NTSC) ? 262 : 313;
-    int iline;
+    int iline, z80cnt = 0;;
 	INT32 nSoundBufferPos = 0;
 
     /* Debounce pause key */
@@ -49,6 +49,8 @@ void system_frame(int skip_render)
          sms.paused = 0;
     }
 
+	ZetNewFrame();
+
     text_counter = 0;
 
     /* End of frame, parse sprites for line 0 on line 261 (VCount=$FF) */
@@ -57,9 +59,8 @@ void system_frame(int skip_render)
 
     for(vdp.line = 0; vdp.line < lpf;)
     {
-        ZetRun(227);
-
         iline = iline_table[vdp.extended];
+		z80cnt = 0;
 
         if(!skip_render)
         {
@@ -74,10 +75,12 @@ void system_frame(int skip_render)
                 vdp.left = vdp.reg[0x0A];
                 vdp.hint_pending = 1;
 
-                ZetRun(16);
-
                 if(vdp.reg[0x00] & 0x10)
-                {
+				{
+					if (!(ZetTotalCycles() % CYCLES_PER_LINE)) {
+						ZetRun(1);
+						z80cnt++;
+					}
 					ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
                 }
             }
@@ -87,12 +90,12 @@ void system_frame(int skip_render)
             vdp.left = vdp.reg[0x0A];
         }
 
+		ZetRun(228 - z80cnt);
+
         if(vdp.line == iline)
         {
             vdp.status |= 0x80;
             vdp.vint_pending = 1;
-
-            ZetRun(16);
 
             if(vdp.reg[0x01] & 0x20)
             {

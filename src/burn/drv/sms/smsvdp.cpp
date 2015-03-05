@@ -315,7 +315,7 @@ uint8 vdp_read(int offset)
             return temp;
 
         case 1: /* Status flags */
-            temp = vdp.status;
+            temp = vdp.status | 0x1f;
             vdp.pending = 0;
             vdp.status = 0;
             vdp.vint_pending = 0;

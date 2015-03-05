@@ -25,6 +25,7 @@ extern uint8 txt_lookup[256][2];
 extern uint8 bp_expand[256][8];
 extern uint8 lut[0x10000];
 extern uint32 bp_lut[0x10000];
+extern uint32 gg_overscanmode;
 
 void render_shutdown(void);
 void render_init(void);

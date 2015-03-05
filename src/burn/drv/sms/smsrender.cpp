@@ -43,6 +43,8 @@ static const uint32 atex[4] =
 /* Bitplane to packed pixel LUT */
 uint32 bp_lut[0x10000];
 
+uint32 gg_overscanmode;
+
 /* Macros to access memory 32-bits at a time (from MAME's drawgfx.c) */
 
 #ifdef ALIGN_DWORD
@@ -257,11 +259,12 @@ void render_line(int line)
 
 	INT32 extend = (vdp.extended && IS_GG) ? 16 : 0; // GG: in extended mode, the screen starts 16pixels lower than usual.
 
-	if((IS_GG) && ((line < 24 + extend) || (line > 167 + extend))) {
-		// Blank top and bottom borders for GG.
+	if((IS_GG) && ((!gg_overscanmode && ((line < 24 + extend) || (line > 167 + extend))) || (gg_overscanmode && line < 9))) {
+		// GG: Blank top and bottom borders.
+		// GG: If overscan mode is enabled, only blank the top 8 lines (which are the most corrupted).
 	} else
-    if(!(vdp.reg[1] & 0x40))
-	{   // Blank line (full width)
+	if(!(vdp.reg[1] & 0x40))
+	{   // Blank line with backdrop color (full width)
         memset(linebuf, BACKDROP_COLOR, bitmap.width);
     }
     else

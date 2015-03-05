@@ -169,6 +169,7 @@ void ComputeGammaLUT();
 #define DAT_SG1000_ONLY		5
 #define DAT_COLECO_ONLY		6
 #define DAT_MASTERSYSTEM_ONLY		7
+#define DAT_GAMEGEAR_ONLY		8
 
 INT32 write_datfile(INT32 bType, FILE* fDat);
 INT32 create_datfile(TCHAR* szFilename, INT32 bType);

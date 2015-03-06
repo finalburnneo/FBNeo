@@ -220,7 +220,7 @@ uint8 sio_r(int offset)
     }
 
     /* Just to please compiler */
-    return -1;
+    return 0;
 }
 
 void sio_w(int offset, int data)

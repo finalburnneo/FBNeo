@@ -325,7 +325,7 @@ uint8 vdp_read(int offset)
     }
 
     /* Just to please the compiler */
-    return -1;
+    return 0;
 }
 
 uint8 vdp_counter_r(int offset)
@@ -343,7 +343,7 @@ uint8 vdp_counter_r(int offset)
     }
 
     /* Just to please the compiler */
-    return -1;
+    return 0;
 }
 
 

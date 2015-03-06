@@ -162,12 +162,12 @@ static int MemIndex()
 	return 0;
 }
 
-static void __fastcall sg1000_write(UINT16 address, UINT8 data)
+static void __fastcall sg1000_write(UINT16 /*address*/, UINT8 /*data*/)
 {
 	//bprintf(0, _T("a[%X] d[%X],"), address, data);
 }
 
-static UINT8 __fastcall sg1000_read(UINT16 address)
+static UINT8 __fastcall sg1000_read(UINT16 /*address*/)
 {
 	//bprintf(0, _T("a[%X],"), address);
 	return 0;

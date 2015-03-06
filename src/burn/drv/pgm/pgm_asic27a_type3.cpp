@@ -32,7 +32,7 @@ static void svg_set_ram_bank(INT32 data)
 	SekMapMemory(svg_ram[svg_ram_sel^1],	0x500000, 0x50ffff, MAP_RAM);
 }
 
-static void __fastcall svg_write_byte(UINT32 address, UINT8 data)
+static void __fastcall svg_write_byte(UINT32 address, UINT8 /*data*/)
 {
 	pgm_cpu_sync();
 

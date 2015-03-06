@@ -21,7 +21,7 @@ static void filter_write(INT32 num, UINT8 d)
 
 static void __fastcall timeplt_sound_write(UINT16 address, UINT8 data)
 {
-	if (address >= 0x8000 && address <= 0xffff) {
+	if (address >= 0x8000 /*&& address <= 0xffff*/) {
 		INT32 Offset = address & 0xfff;
 		filter_write(3, (Offset >>  0) & 3);
 		filter_write(4, (Offset >>  2) & 3);

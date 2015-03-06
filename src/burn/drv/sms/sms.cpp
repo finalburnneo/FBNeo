@@ -341,7 +341,7 @@ UINT8 _fastcall sms_port_r(UINT16 port)
     }
 
     /* Just to please the compiler */
-    return -1;
+    return 0;
 }
 
 
@@ -420,7 +420,7 @@ UINT8 _fastcall smsj_port_r(UINT16 port)
     }
 
     /* Just to please the compiler */
-    return -1;
+    return 0;
 }
 
 
@@ -492,7 +492,7 @@ UINT8 _fastcall gg_port_r(UINT16 port)
     }
 
     /* Just to please the compiler */
-    return -1;
+    return 0;
 }
 
 /*--------------------------------------------------------------------------*/
@@ -553,7 +553,7 @@ UINT8 _fastcall ggms_port_r(UINT16 port)
     }
 
     /* Just to please the compiler */
-    return -1;
+    return 0;
 }
 
 /*--------------------------------------------------------------------------*/
@@ -611,6 +611,6 @@ UINT8 _fastcall md_port_r(UINT16 port)
     }
 
     /* Just to please the compiler */
-    return -1;
+    return 0;
 }
 

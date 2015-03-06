@@ -51,7 +51,7 @@ static INT32 watchdog_enable = 0;
 static INT32 watchdog;
 
 static INT32 sample_start = -1;
-static INT32 sample_offset;
+static INT32 sample_offset = 0;
 static UINT8 sample_number = 0;
 
 static UINT8 m_gfxbank = 0;
@@ -481,7 +481,7 @@ static void sample_render(INT16 *buffer, INT32 nLen)
 
 	while (pos < nLen)
 	{
-		INT32 sample = rom[(sample_offset >> 16)] * 0.2;
+		INT32 sample = (INT32)(rom[(sample_offset >> 16)] * 0.2);
 
 		buffer[0] = BURN_SND_CLIP((INT32)(buffer[0] + sample));
 		buffer[1] = BURN_SND_CLIP((INT32)(buffer[1] + sample));
@@ -1283,7 +1283,7 @@ static void CommonDoReset(INT32 clear_ram)
 	watchdog = 0;
 
 	sample_start = -1;
-	sample_offset;
+	sample_offset = 0;
 	sample_number = 0;
 
 	m_gfxbank = 0;

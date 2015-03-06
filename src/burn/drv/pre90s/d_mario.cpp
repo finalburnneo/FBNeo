@@ -430,7 +430,7 @@ static struct BurnSampleInfo MarioSampleDesc[] = {
 	{ "run.wav",		SAMPLE_NOLOOP },
 	{ "luigirun.wav",	SAMPLE_NOLOOP },
 #endif
-	{ 0, 0 }
+	{ "", 0 }
 };
 
 STD_SAMPLE_PICK(Mario)

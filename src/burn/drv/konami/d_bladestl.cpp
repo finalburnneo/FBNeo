@@ -204,7 +204,7 @@ static void bladestl_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-static UINT8 trackball_read(INT32 offset)
+static UINT8 trackball_read(INT32 /*offset*/)
 {
 /*
 	int curr = m_trackball[offset]->read();
@@ -287,7 +287,7 @@ static UINT8 bladestl_sound_read(UINT16 address)
 	return 0;
 }
 
-static void bladestl_tile_callback(INT32 layer, INT32 bank, INT32 *code, INT32 *color, INT32 *flags)
+static void bladestl_tile_callback(INT32 layer, INT32 /*bank*/, INT32 *code, INT32 *color, INT32 */*flags*/)
 {
 	*code |= ((*color & 0x0f) << 8) | ((*color & 0x40) << 6);
 	*color = 0x10 + layer;

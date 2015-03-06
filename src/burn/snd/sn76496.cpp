@@ -68,7 +68,7 @@ void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length)
 	while (Length > 0)
 	{
 		INT32 Vol[4];
-		UINT32 Out, Out2;
+		UINT32 Out, Out2 = 0;
 		INT32 Left;
 
 

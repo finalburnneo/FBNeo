@@ -585,7 +585,7 @@ static void draw_layer(INT32 layer)
 	}
 }
 
-static void k007121_sprites_draw(UINT8 *gfx, UINT32 *palette, UINT8 *source, int base_color, int global_x_offset, int bank_base, UINT32 pri_mask )
+static void k007121_sprites_draw(UINT8 *gfx, UINT32 */*palette*/, UINT8 *source, int base_color, int global_x_offset, int bank_base, UINT32 /*pri_mask*/)
 {
 	INT32 flipscreen = K007121CtrlRAM[7] & 0x08;
 

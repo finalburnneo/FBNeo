@@ -44,7 +44,7 @@ INT32 K007342_irq_enabled()
 	return (K007342Regs[0][0] & 0x02);
 }
 
-void K007342DrawLayer(INT32 layer, INT32 baseflags, INT32 priority)
+void K007342DrawLayer(INT32 layer, INT32 baseflags, INT32 /*priority*/)
 {
 //	INT32 flipscreen = K007342Regs[0][0] & 0x10;
 

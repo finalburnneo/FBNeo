@@ -56,7 +56,7 @@ static void GunTargetUpdate(INT32 player)
 
 static UINT8 GunTargetShouldDraw(INT32 player)
 {
-	return (nCurrentFrame < GunTargetTimer[player] + GunTargetHideTime);
+	return ((INT32)nCurrentFrame < GunTargetTimer[player] + GunTargetHideTime);
 }
 #undef GunTargetHideTime
 

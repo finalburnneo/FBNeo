@@ -1170,7 +1170,7 @@ static UINT8 dkong3_sound0_read(UINT16 a)
 	return 0;
 }
 
-static void dkong3_sound1_write(UINT16 a, UINT8 d)
+static void dkong3_sound1_write(UINT16 a, UINT8 /*d*/)
 {
 //bprintf (0, _T("s1: %4.4x, %2.2x, %d\n"), a, d, M6502GetActive());
 	if ((a & 0xffe0) == 0x4000) {

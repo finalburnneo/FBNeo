@@ -102,7 +102,7 @@ parse_end:
     vdp.status = (vdp.status & 0xE0) | (i & 0x1F);
 }
 
-void render_obj_tms(int line)
+void render_obj_tms(int /*line*/)
 {
     int i, x = 0;
     int size, start, end, mode;
@@ -442,7 +442,7 @@ void render_bg_m1x(int line)
 }
 
 /* Invalid (2+3/1+2+3) */
-void render_bg_inv(int line)
+void render_bg_inv(int /*line*/)
 {
     int column;
     uint8 *clut;

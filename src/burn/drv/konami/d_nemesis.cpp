@@ -1227,7 +1227,7 @@ static UINT8 konamigt_read_wheel()
 	return Temp2;
 }
 
-static UINT16 konamigt_read_analog(int Offset)
+static UINT16 konamigt_read_analog(int /*Offset*/)
 {
 	UINT16 nRet = 0;
 

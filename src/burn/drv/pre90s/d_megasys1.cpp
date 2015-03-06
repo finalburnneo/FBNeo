@@ -1417,7 +1417,7 @@ static UINT8 __fastcall mcu_prot_read_byte(UINT32 address)
 
 static UINT16 __fastcall mcu_prot_read_word(UINT32 address)
 {
-	if (mcu_hs && ((mcu_ram[4] << 6) & 0x3ffc0) == (address & 0x3ffc0))
+	if ((UINT32)mcu_hs && (((UINT32)mcu_ram[4] << 6) & 0x3ffc0) == (address & 0x3ffc0))
 	{
 		return mcu_config[2];
 	}

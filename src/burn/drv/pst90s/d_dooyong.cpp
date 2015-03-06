@@ -2337,7 +2337,7 @@ static INT32 Drv68KExit()
 	return 0;
 }
 
-static void DrawLayer(UINT8 *rom, UINT8 *scroll, UINT8 *gfxbase, INT32 gfxlenmask, INT32 colorbase, UINT8 *transtab, INT32 transp, INT32 depth, INT32 pri)
+static void DrawLayer(UINT8 *rom, UINT8 *scroll, UINT8 *gfxbase, INT32 gfxlenmask, INT32 colorbase, UINT8 *transtab, INT32 transp, INT32 depth, INT32 /*pri*/)
 {
 	if (scroll[6] & 0x10) return;
 
@@ -2420,7 +2420,7 @@ static void DrawLayer(UINT8 *rom, UINT8 *scroll, UINT8 *gfxbase, INT32 gfxlenmas
 	}
 }
 
-static void draw_layer_rshark(UINT8 *tmaprom0, UINT8 *tmaprom1, UINT8 *scroll, UINT8 *gfxbase, INT32 gfxlenmask, INT32 colorbase, UINT8 *transtab, INT32 transp, INT32 pri)
+static void draw_layer_rshark(UINT8 *tmaprom0, UINT8 *tmaprom1, UINT8 *scroll, UINT8 *gfxbase, INT32 gfxlenmask, INT32 colorbase, UINT8 *transtab, INT32 transp, INT32 /*pri*/)
 {
 	INT32 scrollx = scroll[0] + 64;
 	INT32 scrolly = (scroll[3] + (scroll[4] * 256) + global_y) & 0x1ff;
@@ -2477,7 +2477,7 @@ static void draw_layer_rshark(UINT8 *tmaprom0, UINT8 *tmaprom1, UINT8 *scroll, U
 	}
 }
 
-static void DrawTextLayer(INT32 mode, INT32 pri, INT32 scroll_adj)
+static void DrawTextLayer(INT32 mode, INT32 /*pri*/, INT32 scroll_adj)
 {
 	for (INT32 offs = 0; offs < 64 * 32; offs++)
 	{

@@ -342,7 +342,7 @@ static void filter_write(INT32 num, UINT8 d)
 	filter_rc_set_RC(num, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(C));
 }
 
-void AY8910_0_portBwrite(UINT32 port, UINT32 data)
+void AY8910_0_portBwrite(UINT32 /*port*/, UINT32 data)
 {
 	if (ZetGetActive() == -1) return;
 
@@ -356,7 +356,7 @@ void AY8910_0_portBwrite(UINT32 port, UINT32 data)
 	}
 }
 
-void AY8910_1_portBwrite(UINT32 port, UINT32 data)
+void AY8910_1_portBwrite(UINT32 /*port*/, UINT32 data)
 {
 	if (ZetGetActive() == -1) return;
 

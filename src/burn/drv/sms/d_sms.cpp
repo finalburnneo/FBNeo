@@ -172,7 +172,7 @@ INT32 SMSFrame()
 	return 0;
 }
 
-void system_manage_sram(uint8 *sram, int slot, int mode)
+void system_manage_sram(uint8 */*sram*/, int /*slot*/, int /*mode*/)
 {
 
 }
@@ -423,7 +423,7 @@ static void system_load_state()
     for(INT32 i = 0; i < 0x200; i++)
     {
         bg_name_list[i] = i;
-        bg_name_dirty[i] = -1;
+        bg_name_dirty[i] = (UINT8)-1;
     }
 
     /* Restore palette */

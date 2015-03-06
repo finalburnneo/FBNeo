@@ -313,22 +313,22 @@ static void NeoTextBlendInit(INT32 nSlot)
 		if (strncmp ("Name", szLine, 4) == 0) continue; 	// don't care
 		if (szLine[0] == ';') continue;				// comment (also don't care)
 
-		int type;
-		unsigned int min,max,k, single_entry = -1;
+		INT32 type;
+		UINT32 min,max,k, single_entry = (UINT32)-1;
 
 		for (k = 0; k < strlen(szLine); k++) {
 			if (szLine[k] == '-') { single_entry = k+1; break; }
 		}
 
-		if (single_entry < 0) {
+/*		if (single_entry < 0) {
 			sscanf(szLine,"%x %d",&max,&type);
 			min = max;
-		} else {
+		} else {*/
 			sscanf(szLine,"%x",&min);
 			sscanf(szLine+single_entry,"%x %d",&max,&type);
-		}
+//		}
 
-		for (k = min; k <= max && k < (nNeoTextROMSize[nSlot]/0x20); k++) {
+		for (k = min; k <= max && k < ((UINT32)nNeoTextROMSize[nSlot]/0x20); k++) {
 			if (NeoTextTileAttrib[nSlot][k] != 1) 	// ?
 				NeoTextTileAttrib[nSlot][k] = table[type&3];
 		}

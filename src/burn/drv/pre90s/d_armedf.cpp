@@ -1554,12 +1554,12 @@ static INT32 LegionLoadRoms()
 	if (BurnLoadRom(DrvZ80ROM + 0x00000,	 4, 1)) return 1;
 	if (BurnLoadRom(DrvZ80ROM + 0x04000,	12, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM0,		 5, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM0,		 		 5, 1)) return 1;
 
 	if (BurnLoadRom(DrvGfxROM1 + 0x000000,	 6, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x018000,	 7, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM2,		 8, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM2,		 		 8, 1)) return 1;
 
 	if (BurnLoadRom(DrvGfxROM3 + 0x000000,	 9, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM3 + 0x020000,	10, 1)) return 1;
@@ -1594,9 +1594,49 @@ struct BurnDriver BurnDrvLegion = {
 };
 
 
-// Chouji Meikyuu Legion (Japan bootleg ver 1.05)
+// Chouji Meikyuu Legion (Japan ver 1.05)
 
-static struct BurnRomInfo legionoRomDesc[] = {
+static struct BurnRomInfo legionjRomDesc[] = {
+	{ "legion.e5",	0x10000, 0x49e8e1b7, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code1
+	{ "legion.e1",	0x10000, 0x977fa324, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "legion.1d",	0x10000, 0xc2e45e1e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "legion.1b",	0x10000, 0xc306660a, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "legion.1h",	0x04000, 0x2ca4f7f0, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
+
+	{ "legion.1g",	0x08000, 0xc50b0125, 3 | BRF_GRA },           //  5 Characters
+
+	{ "legion.1e",	0x10000, 0xa9d70faf, 4 | BRF_GRA },           //  6 Foreground Tiles
+	{ "legion.1f",	0x08000, 0xf018313b, 4 | BRF_GRA },           //  7
+
+	{ "legion.1l",	0x10000, 0x29b8adaa, 5 | BRF_GRA },           //  8 Background Tiles
+
+	{ "legion.1k",	0x10000, 0xff5a0db9, 6 | BRF_GRA },           //  9 Sprites
+	{ "legion.1j",	0x10000, 0xbae220c8, 6 | BRF_GRA },           // 10
+
+	{ "lg7.bin",	0x04000, 0x533e2b58, 7 | BRF_GRA | BRF_OPT }, // 11 MCU data
+
+	{ "legion.1i",	0x08000, 0x79f4a827, 2 | BRF_OPT },           // 12 Unknown
+};
+
+STD_ROM_PICK(legionj)
+STD_ROM_FN(legionj)
+
+struct BurnDriver BurnDrvLegionj = {
+	"legionj", "legion", NULL, NULL, "1987",
+	"Chouji Meikyuu Legion (Japan ver 1.05)\0", "Imperfect Graphics", "Nichibutsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, legionjRomInfo, legionjRomName, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
+	LegionInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	224, 288, 3, 4
+};
+
+
+// Chouji Meikyuu Legion (Japan ver 1.05, bootleg)
+/* blitter protection removed */
+
+static struct BurnRomInfo legionjbRomDesc[] = {
 	{ "legion.1c",	0x10000, 0x21226660, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "legion.1a",	0x10000, 0x8c0cda1d, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "legion.1d",	0x10000, 0xc2e45e1e, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1617,10 +1657,10 @@ static struct BurnRomInfo legionoRomDesc[] = {
 	{ "legion.1i",	0x08000, 0x79f4a827, 0 | BRF_OPT },           // 11 Unknown
 };
 
-STD_ROM_PICK(legiono)
-STD_ROM_FN(legiono)
+STD_ROM_PICK(legionjb)
+STD_ROM_FN(legionjb)
 
-static INT32 LegionoLoadRoms()
+static INT32 LegionjbLoadRoms()
 {
 	if (BurnLoadRom(Drv68KROM + 0x000001,	 0, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM + 0x000000,	 1, 2)) return 1;
@@ -1630,12 +1670,12 @@ static INT32 LegionoLoadRoms()
 	if (BurnLoadRom(DrvZ80ROM + 0x00000,	 4, 1)) return 1;
 	if (BurnLoadRom(DrvZ80ROM + 0x04000,	11, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM0,		 5, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM0,		 		 5, 1)) return 1;
 
 	if (BurnLoadRom(DrvGfxROM1 + 0x000000,	 6, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x018000,	 7, 1)) return 1;
 
-	if (BurnLoadRom(DrvGfxROM2,		 8, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM2,		 		 8, 1)) return 1;
 
 	if (BurnLoadRom(DrvGfxROM3 + 0x000000,	 9, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM3 + 0x020000,	10, 1)) return 1;
@@ -1643,13 +1683,13 @@ static INT32 LegionoLoadRoms()
 	return 0;
 }
 
-static INT32 LegionoInit()
+static INT32 LegionjbInit()
 {
 	scroll_type = 6;
 	sprite_offy = 0;
 	irqline = 2;
 
-	INT32 nRet = DrvInit(LegionoLoadRoms, Cclimbr268KInit, 0xc000);
+	INT32 nRet = DrvInit(LegionjbLoadRoms, Cclimbr268KInit, 0xc000);
 
 	if (nRet == 0) { // hack
 		*((UINT16*)(Drv68KROM + 0x001d6)) = 0x0001;
@@ -1658,13 +1698,13 @@ static INT32 LegionoInit()
 	return nRet;
 }
 
-struct BurnDriver BurnDrvLegiono = {
-	"legiono", "legion", NULL, NULL, "1987",
-	"Chouji Meikyuu Legion (Japan bootleg ver 1.05)\0", "Imperfect Graphics", "Nichibutsu", "Miscellaneous",
+struct BurnDriver BurnDrvLegionjb = {
+	"legionjb", "legion", NULL, NULL, "1987",
+	"Chouji Meikyuu Legion (Japan ver 1.05, bootleg)\0", "Imperfect Graphics", "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, legionoRomInfo, legionoRomName, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
-	LegionoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	NULL, legionjbRomInfo, legionjbRomName, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
+	LegionjbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 288, 3, 4
 };
 
@@ -1823,7 +1863,7 @@ struct BurnDriver BurnDrvTerrafj = {
 };
 
 
-// Terra Force (Japan bootleg with additional Z80)
+// Terra Force (Japan, bootleg with additional Z80)
 
 static struct BurnRomInfo terrafjbRomDesc[] = {
 	{ "tfj-8.bin",		0x10000, 0xb11a6fa7, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1899,7 +1939,7 @@ static INT32 TerrafjbInit()
 
 struct BurnDriver BurnDrvTerrafjb = {
 	"terrafjb", "terraf", NULL, NULL, "1987",
-	"Terra Force (Japan bootleg with additional Z80)\0", "imperfect graphics", "bootleg", "Miscellaneous",
+	"Terra Force (Japan, bootleg with additional Z80)\0", "imperfect graphics", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, terrafjbRomInfo, terrafjbRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
@@ -1907,7 +1947,7 @@ struct BurnDriver BurnDrvTerrafjb = {
 	320, 240, 4, 3
 };
 
-// Terra Force (Japan bootleg set 2)
+// Terra Force (Japan, bootleg set 2)
 
 static struct BurnRomInfo terrafbRomDesc[] = {
 	{ "f-14.4s",		0x10000, 0x8e5f557f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1936,7 +1976,7 @@ STD_ROM_FN(terrafb)
 
 struct BurnDriver BurnDrvTerrafb = {
 	"terrafb", "terraf", NULL, NULL, "1987",
-	"Terra Force (Japan bootleg set 2)\0", "imperfect graphics", "bootleg", "Miscellaneous",
+	"Terra Force (Japan, bootleg set 2)\0", "imperfect graphics", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, terrafbRomInfo, terrafbRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,

@@ -4716,8 +4716,8 @@ static struct BurnRomInfo Cworld2jaRomDesc[] = {
 	A_BOARD_PLDS
 	
 	{ "q529b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP},	// b-board PLDs
-	{ "lwio.12e",      0x000117, 0xad52b90c, BRF_OPT },	
-	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },	// c-board PLDs
+	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "ioc1.ic1",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
 };
 
 STD_ROM_PICK(Cworld2ja)

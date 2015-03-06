@@ -1490,6 +1490,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 
 static struct BurnSampleInfo zaxxonSampleDesc[] = {
+#if !defined ROM_VERIFY
 	{"03.wav",   SAMPLE_AUTOLOOP },	/* 0 - Homing Missile */
 	{"02.wav",   SAMPLE_NOLOOP },	/* 1 - Base Missile */
 	{"01.wav",   SAMPLE_AUTOLOOP },	/* 2 - Laser (force field) */
@@ -1502,6 +1503,20 @@ static struct BurnSampleInfo zaxxonSampleDesc[] = {
 	{"20.wav",   SAMPLE_NOLOOP },	/* 9 - Alarm 3 (low fuel) */
 	{"05.wav",   SAMPLE_AUTOLOOP },	/* 10 - initial background noise */
 	{"04.wav",   SAMPLE_AUTOLOOP },	/* 11 - looped asteroid noise */
+#else
+	{"03",  	 SAMPLE_AUTOLOOP },	/* 0 - Homing Missile */
+	{"02",  	 SAMPLE_NOLOOP },	/* 1 - Base Missile */
+	{"01",  	 SAMPLE_AUTOLOOP },	/* 2 - Laser (force field) */
+	{"00",  	 SAMPLE_AUTOLOOP },	/* 3 - Battleship (end of level boss) */
+	{"11",   	 SAMPLE_NOLOOP },	/* 4 - S-Exp (enemy explosion) */
+	{"10",   	 SAMPLE_NOLOOP },	/* 5 - M-Exp (ship explosion) */
+	{"08",   	 SAMPLE_NOLOOP },	/* 6 - Cannon (ship fire) */
+	{"23",   	 SAMPLE_NOLOOP },	/* 7 - Shot (enemy fire) */
+	{"21",   	 SAMPLE_NOLOOP },	/* 8 - Alarm 2 (target lock) */
+	{"20",   	 SAMPLE_NOLOOP },	/* 9 - Alarm 3 (low fuel) */
+	{"05",   	 SAMPLE_AUTOLOOP },	/* 10 - initial background noise */
+	{"04",   	 SAMPLE_AUTOLOOP },	/* 11 - looped asteroid noise */
+#endif
 	{ "",            0             }
 };
 
@@ -1510,12 +1525,20 @@ STD_SAMPLE_FN(zaxxon)
 
 
 static struct BurnSampleInfo congoSampleDesc[] = {
-		{"gorilla.wav",   SAMPLE_NOLOOP },  /* 0 */
-		{"bass.wav",   SAMPLE_NOLOOP },     /* 1 */
-		{"congal.wav",   SAMPLE_NOLOOP },   /* 2 */
-		{"congah.wav",   SAMPLE_NOLOOP },   /* 3 */
-		{"rim.wav",   SAMPLE_NOLOOP },      /* 4 */
-		{ "",            0             }
+#if !defined ROM_VERIFY
+	{"gorilla.wav",	SAMPLE_NOLOOP },  /* 0 */
+	{"bass.wav",	SAMPLE_NOLOOP },     /* 1 */
+	{"congal.wav",	SAMPLE_NOLOOP },   /* 2 */
+	{"congah.wav",	SAMPLE_NOLOOP },   /* 3 */
+	{"rim.wav",		SAMPLE_NOLOOP },      /* 4 */
+#else
+	{"gorilla",		SAMPLE_NOLOOP },  /* 0 */
+	{"bass",		SAMPLE_NOLOOP },     /* 1 */
+	{"congal",		SAMPLE_NOLOOP },   /* 2 */
+	{"congah",		SAMPLE_NOLOOP },   /* 3 */
+	{"rim",			SAMPLE_NOLOOP },      /* 4 */
+#endif
+	{ "",            0             }
 };
 
 STD_SAMPLE_PICK(congo)
@@ -1795,28 +1818,28 @@ struct BurnDriver BurnDrvZaxxonb = {
 // Super Zaxxon
 
 static struct BurnRomInfo szaxxonRomDesc[] = {
-	{ "suzaxxon.3",		0x2000, 0xaf7221da, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "suzaxxon.2",		0x2000, 0x1b90fb2a, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "suzaxxon.1",		0x1000, 0x07258b4a, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "1804e.u27",		0x2000, 0xaf7221da, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "1803e.u28",		0x2000, 0x1b90fb2a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "1802e.u29",		0x1000, 0x07258b4a, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "suzaxxon.14",	0x0800, 0xbccf560c, 2 | BRF_GRA },           //  3 Characters
-	{ "suzaxxon.15",	0x0800, 0xd28c628b, 2 | BRF_GRA },           //  4
+	{ "1815b.u68",		0x0800, 0xbccf560c, 2 | BRF_GRA },           //  3 Characters
+	{ "1816b.u69",		0x0800, 0xd28c628b, 2 | BRF_GRA },           //  4
 
-	{ "suzaxxon.6",		0x2000, 0xf51af375, 3 | BRF_GRA },           //  5 Background Tiles
-	{ "suzaxxon.5",		0x2000, 0xa7de021d, 3 | BRF_GRA },           //  6
-	{ "suzaxxon.4",		0x2000, 0x5bfb3b04, 3 | BRF_GRA },           //  7
+	{ "1807b.u113",		0x2000, 0xf51af375, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "1806b.u112",		0x2000, 0xa7de021d, 3 | BRF_GRA },           //  6
+	{ "1805b.u111",		0x2000, 0x5bfb3b04, 3 | BRF_GRA },           //  7
 
-	{ "suzaxxon.11",	0x2000, 0x1503ae41, 4 | BRF_GRA },           //  8 Sprites
-	{ "suzaxxon.12",	0x2000, 0x3b53d83f, 4 | BRF_GRA },           //  9
-	{ "suzaxxon.13",	0x2000, 0x581e8793, 4 | BRF_GRA },           // 10
+	{ "1812e.u77",		0x2000, 0x1503ae41, 4 | BRF_GRA },           //  8 Sprites
+	{ "1813e.u78",		0x2000, 0x3b53d83f, 4 | BRF_GRA },           //  9
+	{ "1814e.u79",		0x2000, 0x581e8793, 4 | BRF_GRA },           // 10
 
-	{ "suzaxxon.8",		0x2000, 0xdd1b52df, 5 | BRF_GRA },           // 11 Tilemaps
-	{ "suzaxxon.7",		0x2000, 0xb5bc07f0, 5 | BRF_GRA },           // 12
-	{ "suzaxxon.10",	0x2000, 0x68e84174, 5 | BRF_GRA },           // 13
-	{ "suzaxxon.9",		0x2000, 0xa509994b, 5 | BRF_GRA },           // 14
+	{ "1809b.u91",		0x2000, 0xdd1b52df, 5 | BRF_GRA },           // 11 Tilemaps
+	{ "1808b.u90",		0x2000, 0xb5bc07f0, 5 | BRF_GRA },           // 12
+	{ "1811b.u93",		0x2000, 0x68e84174, 5 | BRF_GRA },           // 13
+	{ "1810b.u92",		0x2000, 0xa509994b, 5 | BRF_GRA },           // 14
 
-	{ "suzaxxon.u98",	0x0100, 0x15727a9f, 6 | BRF_GRA },           // 15 Color Proms
-	{ "suzaxxon.u72",	0x0100, 0xdeaa21f7, 6 | BRF_GRA },           // 16
+	{ "pr-5168.u98",	0x0100, 0x15727a9f, 6 | BRF_GRA },           // 15 Color Proms
+	{ "pr-5167.u72",	0x0100, 0xdeaa21f7, 6 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(szaxxon)
@@ -2141,30 +2164,30 @@ struct BurnDriver BurnDrvIxion = {
 // Congo Bongo
 
 static struct BurnRomInfo congoRomDesc[] = {
-	{ "congo1.u35",			0x2000, 0x09355b5b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "congo2.u34",			0x2000, 0x1c5e30ae, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "congo3.u33",			0x2000, 0x5ee1132c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "congo4.u32",			0x2000, 0x5332b9bf, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "congo_rev_c_rom1.u21",	0x2000, 0x09355b5b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "congo_rev_c_rom2a.u22",	0x2000, 0x1c5e30ae, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "congo_rev_c_rom3.u23",	0x2000, 0x5ee1132c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "congo_rev_c_rom4.u24",	0x2000, 0x5332b9bf, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "congo5.u76",			0x1000, 0x7bf6ba2b, 1 | BRF_GRA },           //  4 Characters
+	{ "tip_top_rom_5.u76",		0x1000, 0x7bf6ba2b, 1 | BRF_GRA },           //  4 Characters
 
-	{ "congo8.u93",			0x2000, 0xdb99a619, 2 | BRF_GRA },           //  5 Background Tiles
-	{ "congo9.u94",			0x2000, 0x93e2309e, 2 | BRF_GRA },           //  6
-	{ "congo10.u95",		0x2000, 0xf27a9407, 2 | BRF_GRA },           //  7
+	{ "tip_top_rom_8.u93",		0x2000, 0xdb99a619, 2 | BRF_GRA },           //  5 Background Tiles
+	{ "tip_top_rom_9.u94",		0x2000, 0x93e2309e, 2 | BRF_GRA },           //  6
+	{ "tip_top_rom_10.u95",		0x2000, 0xf27a9407, 2 | BRF_GRA },           //  7
 
-	{ "congo12.u78",		0x2000, 0x15e3377a, 3 | BRF_GRA },           //  8 Sprites
-	{ "congo13.u79",		0x2000, 0x1d1321c8, 3 | BRF_GRA },           //  9
-	{ "congo11.u77",		0x2000, 0x73e2709f, 3 | BRF_GRA },           // 10
-	{ "congo14.u104",		0x2000, 0xbf9169fe, 3 | BRF_GRA },           // 11
-	{ "congo16.u106",		0x2000, 0xcb6d5775, 3 | BRF_GRA },           // 12
-	{ "congo15.u105",		0x2000, 0x7b15a7a4, 3 | BRF_GRA },           // 13
+	{ "tip_top_rom_12.u78",		0x2000, 0x15e3377a, 3 | BRF_GRA },           //  8 Sprites
+	{ "tip_top_rom_13.u79",		0x2000, 0x1d1321c8, 3 | BRF_GRA },           //  9
+	{ "tip_top_rom_11.u77",		0x2000, 0x73e2709f, 3 | BRF_GRA },           // 10
+	{ "tip_top_rom_14.u104",	0x2000, 0xbf9169fe, 3 | BRF_GRA },           // 11
+	{ "tip_top_rom_16.u106",	0x2000, 0xcb6d5775, 3 | BRF_GRA },           // 12
+	{ "tip_top_rom_15.u105",	0x2000, 0x7b15a7a4, 3 | BRF_GRA },           // 13
 
-	{ "congo6.u57",			0x2000, 0xd637f02b, 4 | BRF_GRA },           // 14 Tilemaps
-	{ "congo7.u58",			0x2000, 0x80927943, 4 | BRF_GRA },           // 15
+	{ "tip_top_rom_6.u57",		0x2000, 0xd637f02b, 4 | BRF_GRA },           // 14 Tilemaps
+	{ "tip_top_rom_7.u58",		0x2000, 0x80927943, 4 | BRF_GRA },           // 15
 
-	{ "congo.u68",			0x0100, 0xb788d8ae, 5 | BRF_GRA },           // 16 Color Proms
+	{ "mr019.u87",				0x0100, 0xb788d8ae, 5 | BRF_GRA },           // 16 Color Proms
 
-	{ "congo17.u11",		0x2000, 0x5024e673, 6 | BRF_PRG | BRF_ESS }, // 17 Sound Z80 Code
+	{ "tip_top_rom_17.u19",		0x2000, 0x5024e673, 6 | BRF_PRG | BRF_ESS }, // 17 Sound Z80 Code
 };
 
 STD_ROM_PICK(congo)
@@ -2232,25 +2255,25 @@ static struct BurnRomInfo tiptopRomDesc[] = {
 	{ "tiptop3.u33",	0x2000, 0x1c94250b, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "tiptop4.u32",	0x2000, 0x577b501b, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "congo5.u76",		0x1000, 0x7bf6ba2b, 1 | BRF_GRA },           //  4 Characters
+	{ "tip_top_rom_5.u76",		0x1000, 0x7bf6ba2b, 1 | BRF_GRA },           //  4 Characters
 
-	{ "congo8.u93",		0x2000, 0xdb99a619, 2 | BRF_GRA },           //  5 Background Tiles
-	{ "congo9.u94",		0x2000, 0x93e2309e, 2 | BRF_GRA },           //  6
-	{ "congo10.u95",	0x2000, 0xf27a9407, 2 | BRF_GRA },           //  7
+	{ "tip_top_rom_8.u93",		0x2000, 0xdb99a619, 2 | BRF_GRA },           //  5 Background Tiles
+	{ "tip_top_rom_9.u94",		0x2000, 0x93e2309e, 2 | BRF_GRA },           //  6
+	{ "tip_top_rom_10.u95",		0x2000, 0xf27a9407, 2 | BRF_GRA },           //  7
 
-	{ "congo12.u78",	0x2000, 0x15e3377a, 3 | BRF_GRA },           //  8 Sprites
-	{ "congo13.u79",	0x2000, 0x1d1321c8, 3 | BRF_GRA },           //  9
-	{ "congo11.u77",	0x2000, 0x73e2709f, 3 | BRF_GRA },           // 10
-	{ "congo14.u104",	0x2000, 0xbf9169fe, 3 | BRF_GRA },           // 11
-	{ "congo16.u106",	0x2000, 0xcb6d5775, 3 | BRF_GRA },           // 12
-	{ "congo15.u105",	0x2000, 0x7b15a7a4, 3 | BRF_GRA },           // 13
+	{ "tip_top_rom_12.u78",		0x2000, 0x15e3377a, 3 | BRF_GRA },           //  8 Sprites
+	{ "tip_top_rom_13.u79",		0x2000, 0x1d1321c8, 3 | BRF_GRA },           //  9
+	{ "tip_top_rom_11.u77",		0x2000, 0x73e2709f, 3 | BRF_GRA },           // 10
+	{ "tip_top_rom_14.u104",	0x2000, 0xbf9169fe, 3 | BRF_GRA },           // 11
+	{ "tip_top_rom_16.u106",	0x2000, 0xcb6d5775, 3 | BRF_GRA },           // 12
+	{ "tip_top_rom_15.u105",	0x2000, 0x7b15a7a4, 3 | BRF_GRA },           // 13
 
-	{ "congo6.u57",		0x2000, 0xd637f02b, 4 | BRF_GRA },           // 14 Tilemaps
-	{ "congo7.u58",		0x2000, 0x80927943, 4 | BRF_GRA },           // 15
+	{ "tip_top_rom_6.u57",		0x2000, 0xd637f02b, 4 | BRF_GRA },           // 14 Tilemaps
+	{ "tip_top_rom_7.u58",		0x2000, 0x80927943, 4 | BRF_GRA },           // 15
 
-	{ "congo.u68",		0x0100, 0xb788d8ae, 5 | BRF_GRA },           // 16 Color Proms
+	{ "mr018.u68",			0x0200, 0x56b9f1ba, 5 | BRF_GRA },           // 16 Color Proms
 
-	{ "congo17.u11",	0x2000, 0x5024e673, 6 | BRF_PRG | BRF_ESS }, // 17 Sound Z80 Code
+	{ "tip_top_rom_17.u11",		0x2000, 0x5024e673, 6 | BRF_PRG | BRF_ESS }, // 17 Sound Z80 Code
 };
 
 STD_ROM_PICK(tiptop)

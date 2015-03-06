@@ -5222,6 +5222,8 @@ static struct BurnRomInfo Street64RomDesc[] = {
 	{ "64th_10.rom",	0x40000, 0xa3390561, 8 | BRF_SND },           // 11 OKI #1 Samples
 
 	{ "pr91009.12",		0x00200, 0xc69423d6, 9 | BRF_GRA },           // 12 Priority PROM
+	
+	{ "prom",			0x00200, 0x00000000, 0 | BRF_NODUMP },
 };
 
 STD_ROM_PICK(Street64)
@@ -5274,6 +5276,8 @@ static struct BurnRomInfo Street64jRomDesc[] = {
 	{ "64th_10.rom",	0x40000, 0xa3390561, 8 | BRF_SND },           // 11 OKI #1 Samples
 
 	{ "pr91009.12",		0x00200, 0xc69423d6, 9 | BRF_GRA },           // 12 Priority PROM
+	
+	{ "prom",			0x00200, 0x00000000, 0 | BRF_NODUMP },
 };
 
 STD_ROM_PICK(Street64j)

@@ -380,12 +380,12 @@ STD_ROM_FN(Galpanic)
 static struct BurnRomInfo FantasiaRomDesc[] = {
 	{ "16.pro2",   			0x080000, 0xe27c6c57, BRF_ESS | BRF_PRG }, // 68000 code
 	{ "13.pro1",   			0x080000, 0x68d27413, BRF_ESS | BRF_PRG },
-	{ "9.bg7",  			0x080000, 0x2a588393, BRF_ESS | BRF_PRG },
-	{ "5.bg3",	 			0x080000, 0x6160e0f0, BRF_ESS | BRF_PRG },
-	{ "8.bg6",  			0x080000, 0xf776b743, BRF_ESS | BRF_PRG },
-	{ "4.bg2",	  			0x080000, 0x5df0dff2, BRF_ESS | BRF_PRG },
-	{ "7.bg5", 				0x080000, 0x5707d861, BRF_ESS | BRF_PRG },
-	{ "3.bg1",	  			0x080000, 0x36cb811a, BRF_ESS | BRF_PRG },
+	{ "9.fg_ind87",			0x080000, 0x2a588393, BRF_ESS | BRF_PRG },
+	{ "5.fg_ind83",	 		0x080000, 0x6160e0f0, BRF_ESS | BRF_PRG },
+	{ "8.fg_ind86",			0x080000, 0xf776b743, BRF_ESS | BRF_PRG },
+	{ "4.fg_ind82",			0x080000, 0x5df0dff2, BRF_ESS | BRF_PRG },
+	{ "7.fg_ind85",			0x080000, 0x5707d861, BRF_ESS | BRF_PRG },
+	{ "3.fg_ind81",	  		0x080000, 0x36cb811a, BRF_ESS | BRF_PRG },
 	{ "10.imag2", 			0x080000, 0x1f14a395, BRF_ESS | BRF_PRG },
 	{ "6.imag1",	  		0x080000, 0xfaf870e4, BRF_ESS | BRF_PRG },
 
@@ -434,12 +434,12 @@ STD_ROM_FN(Fantasiaa)
 static struct BurnRomInfo FantasiabRomDesc[] = {
 	{ "fantasia_16",   		0x080000, 0xc5d93077, BRF_ESS | BRF_PRG }, // 68000 code
 	{ "fantasia_13",   		0x080000, 0xd88529bd, BRF_ESS | BRF_PRG },
-	{ "9.bg7",  			0x080000, 0x2a588393, BRF_ESS | BRF_PRG },
-	{ "5.bg3",	 			0x080000, 0x6160e0f0, BRF_ESS | BRF_PRG },
-	{ "8.bg6",  			0x080000, 0xf776b743, BRF_ESS | BRF_PRG },
-	{ "4.bg2",	  			0x080000, 0x5df0dff2, BRF_ESS | BRF_PRG },
-	{ "7.bg5", 				0x080000, 0x5707d861, BRF_ESS | BRF_PRG },
-	{ "3.bg1",	  			0x080000, 0x36cb811a, BRF_ESS | BRF_PRG },
+	{ "9.fg_ind87",			0x080000, 0x2a588393, BRF_ESS | BRF_PRG },
+	{ "5.fg_ind83",	 		0x080000, 0x6160e0f0, BRF_ESS | BRF_PRG },
+	{ "8.fg_ind86",			0x080000, 0xf776b743, BRF_ESS | BRF_PRG },
+	{ "4.fg_ind82",			0x080000, 0x5df0dff2, BRF_ESS | BRF_PRG },
+	{ "7.fg_ind85",			0x080000, 0x5707d861, BRF_ESS | BRF_PRG },
+	{ "3.fg_ind81",	  		0x080000, 0x36cb811a, BRF_ESS | BRF_PRG },
 	{ "10.imag2", 			0x080000, 0x1f14a395, BRF_ESS | BRF_PRG },
 	{ "6.imag1",	  		0x080000, 0xfaf870e4, BRF_ESS | BRF_PRG },
 

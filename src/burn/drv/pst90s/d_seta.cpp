@@ -7931,20 +7931,33 @@ struct BurnDriver BurnDrvQzkklgy2 = {
 };
 
 
-// Daioh (set 1)
+/*
+The changes between the set daioh and daioha are very minimal, the main game effects are:
+
+ - Fixes the crashing bug in the US version caused by pressing Shot1 and Shot2 in weird orders and timings.
+ - 1UP, and 2UPs no longer spawn "randomly". (Only the fixed extend items exist, and the 1UPs from score)
+ - After picking up a max powerup, a 1UP or a 2UP, daoiha sets the "item timer" to a random value.
+ daioh always sets it to 0x7F.
+ - The powerups spawned from picking up an additional max powerup are no longer random, but feeds from the
+ original "spawn item" function (thus, it advances the "item timer")
+
+So it's a bug fix version which also makes the game a little harder by limiting the spawning of 1ups
+*/
+
+// Daioh 
 
 static struct BurnRomInfo daiohRomDesc[] = {
 	{ "fg001001.u3",	0x080000, 0xe1ef3007, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "fg001002.u4",	0x080000, 0x5e3481f9, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "fg1-004",		0x100000, 0x9ab0533e, 0x03 | BRF_GRA },           //  2 Sprites
-	{ "fg1-003",		0x100000, 0x1c9d51e2, 0x03 | BRF_GRA },           //  3
+	{ "fg1-001-004",	0x100000, 0x9ab0533e, 0x03 | BRF_GRA },           //  2 Sprites
+	{ "fg1-001-003",	0x100000, 0x1c9d51e2, 0x03 | BRF_GRA },           //  3
 
-	{ "fg1-005",		0x200000, 0xc25159b9, 0x04 | BRF_GRA },           //  4 Layer 1 tiles
+	{ "fg1-001-005",	0x200000, 0xc25159b9, 0x04 | BRF_GRA },           //  4 Layer 1 tiles
 
-	{ "fg1-006",		0x200000, 0x2052c39a, 0x05 | BRF_GRA },           //  5 Layer 2 tiles
+	{ "fg1-001-006",	0x200000, 0x2052c39a, 0x05 | BRF_GRA },           //  5 Layer 2 tiles
 
-	{ "fg1-007",		0x100000, 0x4a2fe9e0, 0x06 | BRF_SND },           //  6 x1-010 Samples
+	{ "fg1-001-007",	0x100000, 0x4a2fe9e0, 0x06 | BRF_SND },           //  6 x1-010 Samples
 };
 
 STD_ROM_PICK(daioh)
@@ -7969,20 +7982,20 @@ struct BurnDriver BurnDrvDaioh = {
 };
 
 
-// Daioh (set 2)
+// Daioh (earlier)
 
 static struct BurnRomInfo daiohaRomDesc[] = {
-	{ "fg1-001.u3",		0x080000, 0x104ae74a, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "fg1-002.u4",		0x080000, 0xe39a4e67, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "fg-001-001.u3",	0x080000, 0x104ae74a, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "fg-001-002.u4",	0x080000, 0xe39a4e67, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "fg1-004",		0x100000, 0x9ab0533e, 0x03 | BRF_GRA },           //  2 Sprites
-	{ "fg1-003",		0x100000, 0x1c9d51e2, 0x03 | BRF_GRA },           //  3
+	{ "fg1-001-004",	0x100000, 0x9ab0533e, 0x03 | BRF_GRA },           //  2 Sprites
+	{ "fg1-001-003",	0x100000, 0x1c9d51e2, 0x03 | BRF_GRA },           //  3
 
-	{ "fg1-005",		0x200000, 0xc25159b9, 0x04 | BRF_GRA },           //  4 Layer 1 tiles
+	{ "fg1-001-005",	0x200000, 0xc25159b9, 0x04 | BRF_GRA },           //  4 Layer 1 tiles
 
-	{ "fg1-006",		0x200000, 0x2052c39a, 0x05 | BRF_GRA },           //  5 Layer 2 tiles
+	{ "fg1-001-006",	0x200000, 0x2052c39a, 0x05 | BRF_GRA },           //  5 Layer 2 tiles
 
-	{ "fg1-007",		0x100000, 0x4a2fe9e0, 0x06 | BRF_SND },           //  6 x1-010 Samples
+	{ "fg1-001-007",	0x100000, 0x4a2fe9e0, 0x06 | BRF_SND },           //  6 x1-010 Samples
 };
 
 STD_ROM_PICK(daioha)
@@ -7990,7 +8003,7 @@ STD_ROM_FN(daioha)
 
 struct BurnDriver BurnDrvDaioha = {
 	"daioha", "daioh", NULL, NULL, "1993",
-	"Daioh (set 2)\0", NULL, "Athena", "Seta",
+	"Daioh (earlier)\0", NULL, "Athena", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_VERSHOOT, 0,
 	NULL, daiohaRomInfo, daiohaRomName, NULL, NULL, DaiohInputInfo, DaiohDIPInfo,

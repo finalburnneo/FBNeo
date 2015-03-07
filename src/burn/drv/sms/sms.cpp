@@ -59,19 +59,19 @@ void sms_init(void)
     data_bus_pullup     = 0x00;
     data_bus_pulldown   = 0x00;
 
-	bprintf(0, _T("Cart mapper: "));
+//	bprintf(0, _T("Cart mapper: "));
     /* Assign mapper */
 	if(cart.mapper == MAPPER_CODIES) {
-		bprintf(0, _T("codemasters\n"));
+//		bprintf(0, _T("codemasters\n"));
 		ZetSetWriteHandler(writemem_mapper_codies);
 	}
 	else if (cart.mapper == MAPPER_MSX || cart.mapper == MAPPER_MSX_NEMESIS)
 	{
-		bprintf(0, _T("msx\n"));
+//		bprintf(0, _T("msx\n"));
 		ZetSetWriteHandler(writemem_mapper_msx);
 	}
 	else {
-		bprintf(0, _T("sega\n"));
+//		bprintf(0, _T("sega\n"));
 		ZetSetWriteHandler(writemem_mapper_sega);
 	}
 
@@ -180,7 +180,7 @@ void sms_reset(void)
 	switch (cart.mapper)
 	{
 		case MAPPER_MSX_NEMESIS: { // WIP!! / won't boot
-			bprintf(0, _T("(nemesis)\n"));
+//			bprintf(0, _T("(nemesis)\n"));
 			cart.fcr[2] = 0x00;
 			UINT32 poffset = (0x0f) << 13;
 			ZetOpen(0);

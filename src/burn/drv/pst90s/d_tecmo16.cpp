@@ -1332,7 +1332,7 @@ struct BurnDriver BurnDrvFstarfrcj = {
 
 struct BurnDriver BurnDrvGinkun = {
 	"ginkun", NULL, NULL, NULL, "1995",
-	"Ganbare Ginkun\0", "Imperfect GFX", "Tecmo", "Miscellaneous",
+	"Ganbare Ginkun\0", NULL, "Tecmo", "Miscellaneous",
 	L"\u304C\u3093\u3070\u308C \u30AE\u30F3\u304F\u3093\0Ganbare Ginkun\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, GinkunRomInfo, GinkunRomName, NULL, NULL, FstarfrcInputInfo, GinkunDIPInfo,

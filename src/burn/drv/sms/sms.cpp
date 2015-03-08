@@ -295,7 +295,7 @@ void memctrl_w(uint8 data)
 /* Sega Master System port handlers                                         */
 /*--------------------------------------------------------------------------*/
 
-void _fastcall sms_port_w(UINT16 port, UINT8 data)
+void __fastcall sms_port_w(UINT16 port, UINT8 data)
 {
     switch(port & 0xC1)
     {
@@ -323,7 +323,7 @@ void _fastcall sms_port_w(UINT16 port, UINT8 data)
     }
 }
 
-UINT8 _fastcall sms_port_r(UINT16 port)
+UINT8 __fastcall sms_port_r(UINT16 port)
 {
     switch(port & 0xC0)
     {
@@ -349,7 +349,7 @@ UINT8 _fastcall sms_port_r(UINT16 port)
 /* Sega Master System (J) port handlers                                     */
 /*--------------------------------------------------------------------------*/
 
-void _fastcall smsj_port_w(UINT16 port, UINT8 data)
+void __fastcall smsj_port_w(UINT16 port, UINT8 data)
 {
     port &= 0xFF;
 
@@ -397,7 +397,7 @@ void _fastcall smsj_port_w(UINT16 port, UINT8 data)
     }
 }
 
-UINT8 _fastcall smsj_port_r(UINT16 port)
+UINT8 __fastcall smsj_port_r(UINT16 port)
 {
     port &= 0xFF;
 
@@ -429,7 +429,7 @@ UINT8 _fastcall smsj_port_r(UINT16 port)
 /* Game Gear port handlers                                                  */
 /*--------------------------------------------------------------------------*/
 
-void _fastcall gg_port_w(UINT16 port, UINT8 data)
+void __fastcall gg_port_w(UINT16 port, UINT8 data)
 {
     port &= 0xFF;
 
@@ -461,7 +461,7 @@ void _fastcall gg_port_w(UINT16 port, UINT8 data)
 }
 
 
-UINT8 _fastcall gg_port_r(UINT16 port)
+UINT8 __fastcall gg_port_r(UINT16 port)
 {
     port &= 0xFF;
 
@@ -499,7 +499,7 @@ UINT8 _fastcall gg_port_r(UINT16 port)
 /* Game Gear (MS) port handlers                                             */
 /*--------------------------------------------------------------------------*/
 
-void _fastcall ggms_port_w(UINT16 port, UINT8 data)
+void __fastcall ggms_port_w(UINT16 port, UINT8 data)
 {
     port &= 0xFF;
 
@@ -525,7 +525,7 @@ void _fastcall ggms_port_w(UINT16 port, UINT8 data)
     }
 }
 
-UINT8 _fastcall ggms_port_r(UINT16 port)
+UINT8 __fastcall ggms_port_r(UINT16 port)
 {
     port &= 0xFF;
 
@@ -560,7 +560,7 @@ UINT8 _fastcall ggms_port_r(UINT16 port)
 /* MegaDrive / Genesis port handlers                                        */
 /*--------------------------------------------------------------------------*/
 
-void _fastcall md_port_w(UINT16 port, UINT8 data)
+void __fastcall md_port_w(UINT16 port, UINT8 data)
 {
     switch(port & 0xC1)
     {
@@ -585,7 +585,7 @@ void _fastcall md_port_w(UINT16 port, UINT8 data)
 }
 
 
-UINT8 _fastcall md_port_r(UINT16 port)
+UINT8 __fastcall md_port_r(UINT16 port)
 {
     switch(port & 0xC0)
     {

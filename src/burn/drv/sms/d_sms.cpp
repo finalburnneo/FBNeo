@@ -12563,7 +12563,7 @@ STD_ROM_FN(gg_alien3)
 
 struct BurnDriver BurnDrvgg_alien3 = {
 	"gg_alien3", NULL, NULL, NULL, "1992",
-	"Alien³ (Euro, USA)\0", NULL, "Arena", "Sega Game Gear",
+	"Alien 3 (Euro, USA)\0", NULL, "Arena", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
 	GGGetZipName, gg_alien3RomInfo, gg_alien3RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
@@ -12583,7 +12583,7 @@ STD_ROM_FN(gg_alien3j)
 
 struct BurnDriver BurnDrvgg_alien3j = {
 	"gg_alien3j", "gg_alien3", NULL, NULL, "1992",
-	"Alien³ (Jpn)\0", NULL, "Acclaim Entertainment", "Sega Game Gear",
+	"Alien 3 (Jpn)\0", NULL, "Acclaim Entertainment", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
 	GGGetZipName, gg_alien3jRomInfo, gg_alien3jRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,

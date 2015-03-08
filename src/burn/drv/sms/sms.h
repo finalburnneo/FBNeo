@@ -109,14 +109,14 @@ void sms_mapper8k_w(INT32 address, UINT8 data);
 
 /* port-map Function prototypes */
 UINT8 z80_read_unmapped(void);
-void _fastcall gg_port_w(UINT16 port, UINT8 data);
-UINT8 _fastcall gg_port_r(UINT16 port);
-void _fastcall ggms_port_w(UINT16 port, UINT8 data);
-UINT8 _fastcall ggms_port_r(UINT16 port);
-void _fastcall sms_port_w(UINT16 port, UINT8 data);
-UINT8 _fastcall sms_port_r(UINT16 port);
-void _fastcall smsj_port_w(UINT16 port, UINT8 data);
-UINT8 _fastcall smsj_port_r(UINT16 port);
-void _fastcall md_port_w(UINT16 port, UINT8 data);
-UINT8 _fastcall md_port_r(UINT16 port);
+void __fastcall gg_port_w(UINT16 port, UINT8 data);
+UINT8 __fastcall gg_port_r(UINT16 port);
+void __fastcall ggms_port_w(UINT16 port, UINT8 data);
+UINT8 __fastcall ggms_port_r(UINT16 port);
+void __fastcall sms_port_w(UINT16 port, UINT8 data);
+UINT8 __fastcall sms_port_r(UINT16 port);
+void __fastcall smsj_port_w(UINT16 port, UINT8 data);
+UINT8 __fastcall smsj_port_r(UINT16 port);
+void __fastcall md_port_w(UINT16 port, UINT8 data);
+UINT8 __fastcall md_port_r(UINT16 port);
 #endif /* _SMS_H_ */

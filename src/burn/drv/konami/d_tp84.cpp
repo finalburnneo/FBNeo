@@ -290,7 +290,7 @@ static void tp84b_main_write(UINT16 address, UINT8 data)
 			watchdog = 0;
 		return;
 
-		case 0x1a80:
+		case 0x1a00:
 			palettebank = data;
 		return;
 

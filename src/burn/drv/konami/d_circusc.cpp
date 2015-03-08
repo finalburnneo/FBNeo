@@ -278,8 +278,8 @@ static INT32 MemIndex()
 	DrvM6809ROMDec		= Next; Next += 0x00a000;
 	DrvZ80ROM		= Next; Next += 0x004000;
 
-	DrvGfxROM0		= Next; Next += 0x008000;
-	DrvGfxROM1		= Next; Next += 0x018000;
+	DrvGfxROM0		= Next; Next += 0x018000;
+	DrvGfxROM1		= Next; Next += 0x028000;
 
 	DrvColPROM		= Next; Next += 0x000220;
 

@@ -2380,3 +2380,36 @@ struct BurnDriver BurnDrvJigkmgri = {
 	BonzeInit, TaitoExit, BonzeFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 224, 4, 3
 };
+
+
+// Jigoku Meguri (Japan, hack?)
+/* Copyright year has been removed */
+
+static struct BurnRomInfo jigkmgriaRomDesc[] = {
+	{ "blank_label.ic17",		0x10000, 0x5d3a5283, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "bonzi_(ic26)_11a.ic26",	0x10000, 0xe1f2f205, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "b41__10.ic16",			0x10000, 0x4ca94d77, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
+	{ "b41__12.ic25",			0x10000, 0x40d9c1fc, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
+	{ "b41-01.15",				0x80000, 0x5d072fa4, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  4
+
+	{ "b41__13.ic20",		0x10000, 0x9e464254, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  5 Z80 Code
+
+	{ "b41-03.1",			0x80000, 0x736d35d0, BRF_GRA | TAITO_CHARS },				//  6 Characters
+
+	{ "b41-02.7",			0x80000, 0x29f205d9, BRF_GRA | TAITO_SPRITESA },			//  7 Sprites
+
+	{ "b41-04.48",			0x80000, 0xc668638f, BRF_SND | TAITO_YM2610A },				//  8 YM2610 Samples
+};
+
+STD_ROM_PICK(jigkmgria)
+STD_ROM_FN(jigkmgria)
+
+struct BurnDriver BurnDrvJigkmgria = {
+	"jigkmgria", "bonzeadv", NULL, NULL, "19??",
+	"Jigoku Meguri (Japan, hack?)\0", NULL, "Taito Corporation", "Taito Misc",
+	L"\u5730\u7344\u3081\u3050\u308A\0Jigoku Meguri (Japan, hack?)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, jigkmgriaRomInfo, jigkmgriaRomName, NULL, NULL, BonzeadvInputInfo, JigkmgriDIPInfo,
+	BonzeInit, TaitoExit, BonzeFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	320, 224, 4, 3
+};

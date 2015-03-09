@@ -2509,7 +2509,7 @@ static struct BurnRomInfo xmultiplm72RomDesc[] = {
 
 	{ "t52.v0",		0x20000, 0x2db1bd80, 0x05 | BRF_SND },           // 20 DAC Samples
 
-	{ "xmultipl_i8751h.bin",0x01000, 0xc8ceb3cd, 0x00 | BRF_OPT }, // 21 i8751 Code
+	{ "xmultipl_i8751h.bin",0x01000, 0xc8ceb3cd, 0x00 | BRF_OPT }, 	 // 21 i8751 Code
 };
 
 STD_ROM_PICK(xmultiplm72)
@@ -2718,7 +2718,7 @@ static struct BurnRomInfo mrheliRomDesc[] = {
 
 	{ "c-v0-b.rom",		0x10000, 0xd0c27e58, 0x05 | BRF_SND },           // 18 DAC Samples
 
-	{ "mrheli_i8751.mcu",	0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 19 i8751 Code
+	{ "mh-c-pr.bin",	0x10000, 0x897dc4ee, 0x00 | BRF_OPT }, // 19 i8751 Code
 };
 
 STD_ROM_PICK(mrheli)
@@ -3495,20 +3495,20 @@ struct BurnDriver BurnDrvLoht = {
 // Legend of Hero Tonma (Japan)
 
 static struct BurnRomInfo lohtjRomDesc[] = {
-	{ "tom_c-h0-",		0x20000, 0x2a752998, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "tom_c-l0-",		0x20000, 0xa224d928, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "tom_c-h3-",		0x20000, 0x714778b5, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "tom_c-l3-",		0x20000, 0x2f049b03, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "tom_c-h0-",	0x20000, 0x2a752998, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "tom_c-l0-",	0x20000, 0xa224d928, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "tom_c-h3-",	0x20000, 0x714778b5, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "tom_c-l3-",	0x20000, 0x2f049b03, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "r200",		0x20000, 0x0b83265f, 0x02 | BRF_GRA },           //  4 Sprites
 	{ "r210",		0x20000, 0x8ec5f6f3, 0x02 | BRF_GRA },           //  5
 	{ "r220",		0x20000, 0xa41d3bfd, 0x02 | BRF_GRA },           //  6
 	{ "r230",		0x20000, 0x9d81a25b, 0x02 | BRF_GRA },           //  7
 
-	{ "r2a0.a0",		0x10000, 0x3ca3e771, 0x03 | BRF_GRA },           //  8 Foreground Tiles
-	{ "r2a1.a1",		0x10000, 0x7a05ee2f, 0x03 | BRF_GRA },           //  9
-	{ "r2a2.a2",		0x10000, 0x79aa2335, 0x03 | BRF_GRA },           // 10
-	{ "r2a3.a3",		0x10000, 0x789e8b24, 0x03 | BRF_GRA },           // 11
+	{ "r2a0.a0",	0x10000, 0x3ca3e771, 0x03 | BRF_GRA },           //  8 Foreground Tiles
+	{ "r2a1.a1",	0x10000, 0x7a05ee2f, 0x03 | BRF_GRA },           //  9
+	{ "r2a2.a2",	0x10000, 0x79aa2335, 0x03 | BRF_GRA },           // 10
+	{ "r2a3.a3",	0x10000, 0x789e8b24, 0x03 | BRF_GRA },           // 11
 
 	{ "078.b0",		0x10000, 0x44626bf6, 0x04 | BRF_GRA },           // 12 Background Tiles
 	{ "079.b1",		0x10000, 0x464952cf, 0x04 | BRF_GRA },           // 13

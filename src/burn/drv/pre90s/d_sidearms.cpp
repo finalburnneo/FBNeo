@@ -47,6 +47,7 @@ static INT32 enable_watchdog;
 static INT32 watchdog;
 static INT32 vblank;
 static INT32 is_whizz = 0; // uses ym2151 instead of ym2203
+static INT32 is_turtshipk = 0;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -941,7 +942,7 @@ static INT32 TurtshipInit()
 		if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  3, 1)) return 1;
 	
 		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  4, 1)) return 1;
-		memcpy (DrvGfxROM0, DrvGfxROM0 + 0x4000, 0x4000);
+		if (is_turtshipk == 0) memcpy (DrvGfxROM0, DrvGfxROM0 + 0x4000, 0x4000);
 
 		if (BurnLoadRom(DrvGfxROM1 + 0x00000,  5, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x10000,  6, 1)) return 1;
@@ -997,6 +998,12 @@ static INT32 TurtshipInit()
 	DrvDoReset(1);
 
 	return 0;
+}
+
+static INT32 TurtshipkInit()
+{
+	is_turtshipk = 1;
+	return TurtshipInit();
 }
 
 static INT32 WhizzInit()
@@ -1083,6 +1090,7 @@ static INT32 DrvExit()
 	BurnFree (AllMem);
 
 	is_whizz = 0;
+	is_turtshipk = 0;
 
 	return 0;
 }
@@ -1787,7 +1795,7 @@ struct BurnDriver BurnDrvTurtshipk = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, turtshipkRomInfo, turtshipkRomName, NULL, NULL, TurtshipInputInfo, TurtshipDIPInfo,
-	TurtshipInit, DrvExit, DrvFrame, TurtshipDraw, DrvScan, &DrvRecalc, 0x800,
+	TurtshipkInit, DrvExit, DrvFrame, TurtshipDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
 };
 

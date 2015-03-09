@@ -723,6 +723,9 @@ SOURCES += \
     ../../src/cpu/mips3/dasm.cpp \
     ../../src/cpu/mips3/mips3.cpp \
     ../../src/cpu/mips3_intf.cpp \
+    ../../src/cpu/adsp2100_intf.cpp \
+    ../../src/cpu/adsp2100/adsp2100.cpp \
+    ../../src/cpu/adsp2100/2100dasm.cpp
 
 
 
@@ -907,6 +910,10 @@ HEADERS += \
     ../../src/cpu/mips3/mips3_shift.h \
     ../../src/cpu/mips3/mipsdef.h \
     ../../src/cpu/mips3_intf.h \
+    ../../src/cpu/adsp2100_intf.h \
+    ../../src/cpu/adsp2100/adsp2100.h \
+    ../../src/cpu/adsp2100/adsp2100_defs.h \
+    ../../src/cpu/adsp2100/cpuintrf.h
 
 
 #-------------------------------------------------------------------------------

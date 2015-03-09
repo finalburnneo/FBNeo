@@ -1,7 +1,9 @@
 /*
+ *
  * Copyright (c) 2015, Marcos Medeiros
  * Licensed under BSD 3-clause.
  */
+//#include <QDebug>
 #include <iostream>
 #include <cstdint>
 #include "mips3.h"
@@ -68,6 +70,7 @@ inline addr_t mips3::tlb_translate(addr_t address)
                 return (address & 0xFFF) | ((entry->b.even_lo >> 6) << 12);
         }
     }
+   // qDebug() << "Address error" << QString::number(address,16);
     return address;
 }
 

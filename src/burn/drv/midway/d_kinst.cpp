@@ -3,6 +3,7 @@
 #include "burnint.h"
 #include "mips3_intf.h"
 #include "ide.h"
+#include "dcs2k.h"
 #include <stdio.h>
 
 #define IDE_IRQ     1
@@ -15,11 +16,15 @@ static UINT8 *RamEnd;
 static UINT8 *DrvBootROM;
 static UINT8 *DrvRAM0;
 static UINT8 *DrvRAM1;
+static UINT8 *DrvSoundROM;
 static UINT8 DrvRecalc;
 static UINT8 DrvJoy1[32];
 static UINT8 DrvJoy2[32];
+static UINT8 DrvDSW[8];
 static UINT32 DrvVRAMBase;
 static UINT32 DrvInputs[3];
+static UINT32 nSoundData;
+static UINT32 nSoundCtrl;
 static ide::ide_disk *DrvDisk;
 
 // Fast conversion from BGR555 to RGB565
@@ -50,6 +55,7 @@ static struct BurnInputInfo kinstInputList[] = {
     {"P2 Button X",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 4"	},
     {"P2 Button Y",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 5"	},
     {"P2 Button Z",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 6"	},
+    {"Test",        BIT_DIGITAL,    DrvDSW + 0,     "diag"      },
 };
 
 STDINPUTINFO(kinst)
@@ -68,6 +74,7 @@ static INT32 MemIndex()
     AllRam      = Next;
     DrvRAM0     = Next;             Next += 0x80000;
     DrvRAM1     = Next;             Next += 0x800000;
+    DrvSoundROM = Next;             Next += 0x1000000;
     DrvColorLUT = (UINT16*) Next;   Next += 0x8000 * 2;
 
     RamEnd		= Next;
@@ -127,18 +134,25 @@ static void ideWrite(UINT32 address, UINT32 value)
     }
 }
 
+static UINT32 xReg = 0, soundData = 0;
 static UINT32 kinstRead(UINT32 address)
 {
+    UINT32 tmp;
     if (address >= 0x10000080 && address <= 0x100000ff) {
         switch (address & 0xFF) {
         case 0x90:
-            return 2;
+            if (Dcs2kDataRead() & 0x800)
+                return 2;
+            return ~0;
+        case 0x98:
+            return nSoundData;
+
         case 0x80:
             return ~DrvInputs[0];
         case 0x88:
             return ~DrvInputs[1];
         case 0xA0:
-            return (~0) & ~0x00003e00;
+            return ~DrvInputs[2] & ~0x00003e00;
         }
         return ~0;
     }
@@ -152,12 +166,28 @@ static UINT32 kinstRead(UINT32 address)
     return ~0;
 }
 
+
+
 static void kinstWrite(UINT32 address, UINT64 value)
 {
     if (address >= 0x10000080 && address <= 0x100000ff) {
         switch (address & 0xFF) {
         case 0x80:
             DrvVRAMBase = (value & 4) ? 0x58000 : 0x30000;
+            break;
+        case 0x88:
+            Dcs2kResetWrite(~value & 1);
+            break;
+        case 0x90: {
+            UINT32 old = nSoundCtrl;
+            nSoundCtrl = value;
+            if (!(old & 2) && (nSoundCtrl & 2)) {
+                Dcs2kDataWrite(nSoundData);
+            }
+            break;
+        }
+        case 0x98:
+            nSoundData = value;
             break;
         }
         return;
@@ -192,6 +222,30 @@ static void MakeInputs()
         if (DrvJoy2[i] & 1)
             DrvInputs[1] |= (1 << i);
     }
+
+    if (DrvDSW[0] & 1)
+        DrvInputs[2] ^= 0x08000;
+}
+
+static INT32 LoadSoundBanks()
+{
+    memset(DrvSoundROM, 0xFF, 0x1000000);
+    if (BurnLoadRom(DrvSoundROM + 0x000000, 1, 2)) return 1;
+    if (BurnLoadRom(DrvSoundROM + 0x200000, 2, 2)) return 1;
+    if (BurnLoadRom(DrvSoundROM + 0x400000, 3, 2)) return 1;
+    if (BurnLoadRom(DrvSoundROM + 0x600000, 4, 2)) return 1;
+    if (BurnLoadRom(DrvSoundROM + 0x800000, 5, 2)) return 1;
+    if (BurnLoadRom(DrvSoundROM + 0xA00000, 6, 2)) return 1;
+    if (BurnLoadRom(DrvSoundROM + 0xC00000, 7, 2)) return 1;
+    if (BurnLoadRom(DrvSoundROM + 0xE00000, 8, 2)) return 1;
+
+    {
+        FILE *fp = fopen("sound.bin", "w");
+        fwrite(DrvSoundROM, 1, 0x1000000, fp);
+        fclose(fp);
+    }
+    return 0;
+
 }
 
 static INT32 DrvInit()
@@ -221,6 +275,12 @@ static INT32 DrvInit()
     if (nRet != 0)
         return 1;
 
+    nRet = LoadSoundBanks();
+    if (nRet != 0)
+        return 1;
+
+    Dcs2kInit();
+
 #ifdef MIPS3_X64_DRC
     Mips3UseRecompiler(true);
 #endif
@@ -244,11 +304,21 @@ static INT32 DrvInit()
     Mips3SetWriteDoubleHandler(1, kinstWriteDouble);
 
     Mips3MapHandler(1, 0x10000000, 0x100001FF, MAP_READ | MAP_WRITE);
+
+    Dcs2kMapSoundROM(DrvSoundROM, 0x1000000);
+    Dcs2kBoot();
+
+    DrvInputs[2] = 0;
+
+    nSoundData = 0;
+    nSoundCtrl = 0;
+
     return 0;
 }
 
 static INT32 DrvExit()
 {
+    Dcs2kExit();
     delete DrvDisk;
     printf("kinst: DrvExit\n");
     Mips3Exit();
@@ -295,8 +365,14 @@ static INT32 DrvFrame()
         DrvDraw();
     }
 
+    if (pBurnSoundOut) {
+        Dcs2kRun(MHz(10) / 60);
+    }
+    Dcs2kRender(pBurnSoundOut, nBurnSoundLen);
+
     Mips3SetIRQLine(VBLANK_IRQ, 1);
     Mips3Run(kHz(20));
+
 
     return 0;
 }
@@ -305,9 +381,17 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 {
     return 0;
 }
-
 static struct BurnRomInfo kinstRomDesc[] = {
     { "ki-l15d.u98",		0x80000, 0x7b65ca3d, 1 | BRF_PRG | BRF_ESS }, //  0 MIPS R4600 Code
+
+    { "u10-l1",             0x80000, 0xb6cc155f, 2 | BRF_SND | BRF_ESS }, //  1 DCS sound banks
+    { "u11-l1",             0x80000, 0x0b5e05df, 2 | BRF_SND | BRF_ESS }, //  2
+    { "u12-l1",             0x80000, 0xd05ce6ad, 2 | BRF_SND | BRF_ESS }, //  3
+    { "u13-l1",             0x80000, 0x7d0954ea, 2 | BRF_SND | BRF_ESS }, //  4
+    { "u33-l1",             0x80000, 0x8bbe4f0c, 2 | BRF_SND | BRF_ESS }, //  5
+    { "u34-l1",             0x80000, 0xb2e73603, 2 | BRF_SND | BRF_ESS }, //  6
+    { "u35-l1",             0x80000, 0x0aaef4fc, 2 | BRF_SND | BRF_ESS }, //  7
+    { "u36-l1",             0x80000, 0x0577bb60, 2 | BRF_SND | BRF_ESS }, //  8
 };
 
 STD_ROM_PICK(kinst)

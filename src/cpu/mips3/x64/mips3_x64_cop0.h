@@ -26,15 +26,17 @@ bool mips3_x64::compile_cop0(uint32_t opcode)
             switch (RDNUM) {
             // Hack: (total_cycles - reset_cycle) * 16
             case COP0_Count:
-                sub(r15, 250);
+                m_block_icounter += 250;
+                //sub(r15, 250);
                 mov(rax, TOTAL_x);
                 sub(rax, RSTCYC_x);
-                shl(rax, 4);
+                shr(rax, 1);
                 mov(RT_x, rax);
                 return false;
 
             case COP0_Cause:
-                sub(r15, 250);
+                m_block_icounter += 250;
+                //sub(r15, 250);
                 break;
             }
             mov(rax, COP0_x(RDNUM));

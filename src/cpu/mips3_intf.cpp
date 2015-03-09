@@ -340,3 +340,9 @@ void write_dword(addr_t address, uint64_t value)
 
 }
 }
+
+
+unsigned int Mips3GetPC()
+{
+    return g_mips->m_prev_pc;
+}

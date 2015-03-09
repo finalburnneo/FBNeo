@@ -2718,7 +2718,7 @@ static struct BurnRomInfo mrheliRomDesc[] = {
 
 	{ "c-v0-b.rom",		0x10000, 0xd0c27e58, 0x05 | BRF_SND },           // 18 DAC Samples
 
-	{ "mh-c-pr.bin",	0x10000, 0x897dc4ee, 0x00 | BRF_OPT }, // 19 i8751 Code
+	{ "mh-c-pr.bin",	0x01000, 0x897dc4ee, 0x00 | BRF_OPT }, // 19 i8751 Code
 };
 
 STD_ROM_PICK(mrheli)

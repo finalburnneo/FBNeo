@@ -2386,11 +2386,11 @@ struct BurnDriver BurnDrvJigkmgri = {
 /* Copyright year has been removed */
 
 static struct BurnRomInfo jigkmgriaRomDesc[] = {
-	{ "blank_label.ic17",		0x10000, 0x5d3a5283, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "bonzi_(ic26)_11a.ic26",	0x10000, 0xe1f2f205, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "b41__10.ic16",			0x10000, 0x4ca94d77, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
-	{ "b41__12.ic25",			0x10000, 0x40d9c1fc, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
-	{ "b41-01.15",				0x80000, 0x5d072fa4, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  4
+	{ "blank_label.ic17",			0x10000, 0x5d3a5283, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "bonzi__(ic26)__11a.ic26",	0x10000, 0xe1f2f205, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "b41__10.ic16",				0x10000, 0x4ca94d77, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  2
+	{ "b41__12.ic25",				0x10000, 0x40d9c1fc, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  3
+	{ "b41-01.15",					0x80000, 0x5d072fa4, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  4
 
 	{ "b41__13.ic20",		0x10000, 0x9e464254, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  5 Z80 Code
 

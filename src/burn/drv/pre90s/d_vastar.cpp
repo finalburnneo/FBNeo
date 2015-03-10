@@ -614,7 +614,7 @@ static INT32 DrvInit(INT32 load_type)
 	ZetClose();
 
 	AY8910Init(0, 1536000, nBurnSoundRate, &vastar_ay8910_read_A, &vastar_ay8910_read_B, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -829,7 +829,7 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += ZetRun(((nCyclesTotal[0] * (i + 1)) / nInterleave) - nCyclesDone[0]);
 		if (i == (nInterleave - 1) && nmi_mask) ZetNmi();
 		ZetClose();
-;
+
 		if (sound_reset)
 		{
 			nCyclesDone[1] += ((nCyclesTotal[1] * (i + 1)) / nInterleave) - nCyclesDone[1];
@@ -873,10 +873,10 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ZetScan(nAction);
 		AY8910Scan(nAction, pnMin);
 
-		SCAM_VAR(flipscreen);
-		SCAM_VAR(nmi_mask);
-		SCAM_VAR(sprite_priority);
-		SCAM_VAR(sound_reset);
+		SCAN_VAR(flipscreen);
+		SCAN_VAR(nmi_mask);
+		SCAN_VAR(sprite_priority);
+		SCAN_VAR(sound_reset);
 	}
 
 	return 0;

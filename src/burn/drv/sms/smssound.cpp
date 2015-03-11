@@ -2,13 +2,12 @@
     sound.c --
     Sound emulation.
 */
-#include "tiles_generic.h"
 #include "smsshared.h"
 #include "sn76496.h"
 
 snd_t snd;
 
-int sound_init(void)
+INT32 sound_init(void)
 {
     /* If we are reinitializing, shut down sound emulation */
     if(snd.enabled)
@@ -68,7 +67,7 @@ void sound_reset(void)
 /* Sound chip access handlers                                               */
 /*--------------------------------------------------------------------------*/
 
-void psg_stereo_w(int data)
+void psg_stereo_w(INT32 data)
 {
     if(!snd.enabled)
         return;
@@ -77,7 +76,7 @@ void psg_stereo_w(int data)
 }
 
 
-void psg_write(int data)
+void psg_write(INT32 data)
 {
     if(!snd.enabled)
         return;
@@ -89,17 +88,17 @@ void psg_write(int data)
 /* Mark III FM Unit / Master System (J) built-in FM handlers                */
 /*--------------------------------------------------------------------------*/
 
-int fmunit_detect_r(void)
+INT32 fmunit_detect_r(void)
 {
     return sms.fm_detect;
 }
 
-void fmunit_detect_w(int data)
+void fmunit_detect_w(INT32 data)
 {
     sms.fm_detect = data;
 }
 
-void fmunit_write(int offset, int data)
+void fmunit_write(INT32 offset, INT32 data)
 {
     if(!snd.enabled || !sms.use_fm)
         return;

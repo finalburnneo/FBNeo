@@ -13,18 +13,18 @@ enum {
 /* Sound emulation structure */
 typedef struct
 {
-    void (*mixer_callback)(int16 **stream, int16 **output, int length);
-    int16 *output[2];
-    int16 *stream[STREAM_MAX];
-    int fm_which;
-    int enabled;
-    int fps;
-    int buffer_size;
-    int sample_count;
-    int sample_rate;
-    int done_so_far;
-    uint32 fm_clock;
-    uint32 psg_clock;
+    void (*mixer_callback)(INT16 **stream, INT16 **output, INT32 length);
+    INT16 *output[2];
+    INT16 *stream[STREAM_MAX];
+    INT32 fm_which;
+    INT32 enabled;
+    INT32 fps;
+    INT32 buffer_size;
+    INT32 sample_count;
+    INT32 sample_rate;
+    INT32 done_so_far;
+    UINT32 fm_clock;
+    UINT32 psg_clock;
 } snd_t;
 
 
@@ -32,12 +32,12 @@ typedef struct
 extern snd_t snd;
 
 /* Function prototypes */
-void psg_write(int data);
-void psg_stereo_w(int data);
-int fmunit_detect_r(void);
-void fmunit_detect_w(int data);
-void fmunit_write(int offset, int data);
-int sound_init(void);
+void psg_write(INT32 data);
+void psg_stereo_w(INT32 data);
+INT32 fmunit_detect_r(void);
+void fmunit_detect_w(INT32 data);
+void fmunit_write(INT32 offset, INT32 data);
+INT32 sound_init(void);
 void sound_shutdown(void);
 void sound_reset(void);
 

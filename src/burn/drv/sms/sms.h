@@ -54,19 +54,6 @@ enum {
 #define IS_GG       (sms.console & HWTYPE_GG)
 #define IS_MD       (sms.console & HWTYPE_MD)
 
-typedef unsigned char						UINT8;
-typedef signed char 						INT8;
-typedef unsigned short						UINT16;
-typedef signed short						INT16;
-typedef unsigned int						UINT32;
-typedef signed int							INT32;
-typedef unsigned char                       uint8;
-typedef signed char                         int8;
-typedef unsigned short int                  uint16;
-typedef signed short int                    int16;
-typedef unsigned long int                   uint32;
-typedef signed long int                     int32;
-
 enum {
     TERRITORY_DOMESTIC  = 0,
     TERRITORY_EXPORT    = 1
@@ -93,7 +80,7 @@ typedef struct
         UINT8 sctrl;    /* Serial mode control and status */
     } sio;
     struct {
-        int type;
+        INT32 type;
     } device[2];
 } sms_t;
 

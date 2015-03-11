@@ -3,17 +3,16 @@
     Sega Master System console emulation.
 */
 #include "smsshared.h"
-#include "tiles_generic.h"
 #include "z80_intf.h"
 
 /* SMS context */
 sms_t sms;
 
 /* Pull-up resistors on data bus */
-uint8 data_bus_pullup   = 0x00;
-uint8 data_bus_pulldown = 0x00;
+UINT8 data_bus_pullup   = 0x00;
+UINT8 data_bus_pulldown = 0x00;
 
-uint8 dummy_write[0xffff];
+UINT8 dummy_write[0xffff];
 
 void __fastcall writemem_mapper_sega(UINT16 offset, UINT8 data)
 {
@@ -245,7 +244,7 @@ void sms_mapper_w(INT32 address, UINT8 data)
         case 0: // page 2
             if(data & 8)
             {
-                uint32 offset = (data & 4) ? 0x4000 : 0x0000;
+                UINT32 offset = (data & 4) ? 0x4000 : 0x0000;
                 sms.save = 1;
 				ZetMapMemory((UINT8 *)&cart.sram + offset, 0x8000, 0xbfff, MAP_RAM);
             }
@@ -276,17 +275,17 @@ void sms_mapper_w(INT32 address, UINT8 data)
 }
 
 /* Read unmapped memory */
-uint8 z80_read_unmapped(void)
+UINT8 z80_read_unmapped(void)
 {
-    int pc = ZetGetPC(-1);
-    uint8 data;
+    INT32 pc = ZetGetPC(-1);
+    UINT8 data;
 	pc = (pc - 1) & 0xFFFF;
 	data = ZetReadByte(pc);
 
 	return ((data | data_bus_pullup) & ~data_bus_pulldown);
 }
 
-void memctrl_w(uint8 data)
+void memctrl_w(UINT8 data)
 {
     sms.memctrl = data;
 }

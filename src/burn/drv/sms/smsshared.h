@@ -10,6 +10,7 @@
 #include <math.h>
 #include <limits.h>
 #include "zlib.h"
+#include "tiles_generic.h"
 
 #include "sms.h"
 #include "smspio.h"

@@ -32,10 +32,10 @@ enum {
 };
 
 typedef struct {
-    uint8 tr_level[2];  /* TR pin output level */
-    uint8 th_level[2];  /* TH pin output level */
-    uint8 tr_dir[2];    /* TR pin direction */
-    uint8 th_dir[2];    /* TH pin direction */
+    UINT8 tr_level[2];  /* TR pin output level */
+    UINT8 th_level[2];  /* TH pin output level */
+    UINT8 tr_dir[2];    /* TR pin direction */
+    UINT8 th_dir[2];    /* TH pin direction */
 } io_state;
 
 /* Global variables */
@@ -46,12 +46,12 @@ extern io_state *io_current;
 void pio_init(void);
 void pio_reset(void);
 void pio_shutdown(void);
-void system_assign_device(int port, int type);
+void system_assign_device(INT32 port, INT32 type);
 
 void io_lut_init(void);
-void ioctrl_w(uint8 data);
-uint8 input_r(int offset);
-void sio_w(int offset, int data);
-uint8 sio_r(int offset);
+void ioctrl_w(UINT8 data);
+UINT8 input_r(INT32 offset);
+void sio_w(INT32 offset, INT32 data);
+UINT8 sio_r(INT32 offset);
 
 #endif /* _PIO_H_ */

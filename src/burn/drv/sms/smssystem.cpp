@@ -17,7 +17,6 @@
 */
 
 #include "smsshared.h"
-#include "burnint.h"
 #include "z80_intf.h"
 #include "sn76496.h"
 
@@ -27,11 +26,11 @@ cart_t cart;
 input_t input;
 
 /* Run the virtual console emulation for one frame */
-void system_frame(int skip_render)
+void system_frame(INT32 skip_render)
 {
-    static int iline_table[] = {0xC0, 0xE0, 0xF0};
-    int lpf = (sms.display == DISPLAY_NTSC) ? 262 : 313;
-    int iline, z80cnt = 0;;
+    static INT32 iline_table[] = {0xC0, 0xE0, 0xF0};
+    INT32 lpf = (sms.display == DISPLAY_NTSC) ? 262 : 313;
+    INT32 iline, z80cnt = 0;;
 	INT32 nSoundBufferPos = 0;
 
     /* Debounce pause key */
@@ -144,7 +143,7 @@ void system_init(void)
 void system_shutdown(void)
 {
 #ifdef DEBUG
-    int i;
+    INT32 i;
 
     /*error("PC:%04X\tSP:%04X\n", z80_get_reg(Z80_PC), z80_get_reg(Z80_SP));
     error("AF:%04X\tAF:%04X\n", z80_get_reg(Z80_AF), z80_get_reg(Z80_AF2));

@@ -8,20 +8,20 @@ enum {
 };
 
 typedef struct {
-    uint8 latch;
-    uint8 reg[0x40];
+    UINT8 latch;
+    UINT8 reg[0x40];
 } FM_Context;
 
 /* Function prototypes */
 void FM_Init(void);
 void FM_Shutdown(void);
 void FM_Reset(void);
-void FM_Update(int16 **buffer, int length);
-void FM_Write(int offset, int data);
-void FM_GetContext(uint8 *data);
-void FM_SetContext(uint8 *data);
-int FM_GetContextSize(void);
-uint8 *FM_GetContextPtr(void);
-void FM_WriteReg(int reg, int data);
+void FM_Update(INT16 **buffer, INT32 length);
+void FM_Write(INT32 offset, INT32 data);
+void FM_GetContext(UINT8 *data);
+void FM_SetContext(UINT8 *data);
+INT32 FM_GetContextSize(void);
+UINT8 *FM_GetContextPtr(void);
+void FM_WriteReg(INT32 reg, INT32 data);
 
 #endif /* _FMINTF_H_ */

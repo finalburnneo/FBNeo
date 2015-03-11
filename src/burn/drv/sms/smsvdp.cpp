@@ -3,12 +3,10 @@
     Video Display Processor (VDP) emulation.
 */
 #include "smsshared.h"
-#include "tiles_generic.h"
-#include "driver.h"
 #include "z80_intf.h"
 #include "smshvc.h"
 
-static const uint8 tms_crom[] =
+static const UINT8 tms_crom[] =
 {
     0x00, 0x00, 0x08, 0x0C,
     0x10, 0x30, 0x01, 0x3C,
@@ -19,7 +17,7 @@ static const uint8 tms_crom[] =
 /* Mark a pattern as dirty */
 #define MARK_BG_DIRTY(addr)                                \
 {                                                          \
-    int name = (addr >> 5) & 0x1FF;                        \
+    INT32 name = (addr >> 5) & 0x1FF;                        \
     if(bg_name_dirty[name] == 0)                           \
     {                                                      \
         bg_name_list[bg_list_index] = name;                \
@@ -62,12 +60,12 @@ void vdp_reset(void)
 
 void viewport_check(void)
 {
-    int i;
+    INT32 i;
 
-    int m1 = (vdp.reg[1] >> 4) & 1;
-    int m3 = (vdp.reg[1] >> 3) & 1;
-    int m2 = (vdp.reg[0] >> 1) & 1;
-    int m4 = (vdp.reg[0] >> 2) & 1;
+    INT32 m1 = (vdp.reg[1] >> 4) & 1;
+    INT32 m3 = (vdp.reg[1] >> 3) & 1;
+    INT32 m2 = (vdp.reg[0] >> 1) & 1;
+    INT32 m4 = (vdp.reg[0] >> 2) & 1;
 
     vdp.mode = (m4 << 3 | m3 << 2 | m2 << 1 | m1 << 0);
 
@@ -87,7 +85,7 @@ void viewport_check(void)
             /* Load TMS9918 palette */
             for(i = 0; i < PALETTE_SIZE; i++)
             {
-                int r, g, b;
+                INT32 r, g, b;
     
                 r = (tms_crom[i & 0x0F] >> 0) & 3;
                 g = (tms_crom[i & 0x0F] >> 2) & 3;
@@ -177,7 +175,7 @@ void viewport_check(void)
 }
 
 
-void vdp_reg_w(uint8 r, uint8 d)
+void vdp_reg_w(UINT8 r, UINT8 d)
 {
     /* Store register data */
     vdp.reg[r] = d;
@@ -236,9 +234,9 @@ void vdp_reg_w(uint8 r, uint8 d)
 }
 
 
-void vdp_write(int offset, uint8 data)
+void vdp_write(INT32 offset, UINT8 data)
 {
-    int index;
+    INT32 index;
 
     switch(offset & 1)
     {
@@ -292,8 +290,8 @@ void vdp_write(int offset, uint8 data)
         
                 if(vdp.code == 2)
                 {
-                    int r = (data & 0x0F);
-                    int d = vdp.latch;
+                    INT32 r = (data & 0x0F);
+                    INT32 d = vdp.latch;
                     vdp_reg_w(r, d);
                 }
             }
@@ -301,9 +299,9 @@ void vdp_write(int offset, uint8 data)
     }
 }
 
-uint8 vdp_read(int offset)
+UINT8 vdp_read(INT32 offset)
 {
-    uint8 temp;
+    UINT8 temp;
 
     switch(offset & 1)
     {
@@ -328,9 +326,9 @@ uint8 vdp_read(int offset)
     return 0;
 }
 
-uint8 vdp_counter_r(int offset)
+UINT8 vdp_counter_r(INT32 offset)
 {
-    int cpixel;
+    INT32 cpixel;
 
     switch(offset & 1)
     {
@@ -351,9 +349,9 @@ uint8 vdp_counter_r(int offset)
 /* Game Gear VDP handlers                                                   */
 /*--------------------------------------------------------------------------*/
 
-void gg_vdp_write(int offset, uint8 data)
+void gg_vdp_write(INT32 offset, UINT8 data)
 {
-    int index;
+    INT32 index;
 
     switch(offset & 1)
     {
@@ -410,8 +408,8 @@ void gg_vdp_write(int offset, uint8 data)
         
                 if(vdp.code == 2)
                 {
-                    int r = (data & 0x0F);
-                    int d = vdp.latch;
+                    INT32 r = (data & 0x0F);
+                    INT32 d = vdp.latch;
                     vdp_reg_w(r, d);
                 }
             }
@@ -423,9 +421,9 @@ void gg_vdp_write(int offset, uint8 data)
 /* MegaDrive / Genesis VDP handlers                                         */
 /*--------------------------------------------------------------------------*/
 
-void md_vdp_write(int offset, uint8 data)
+void md_vdp_write(INT32 offset, UINT8 data)
 {
-    int index;
+    INT32 index;
 
     switch(offset & 1)
     {
@@ -478,8 +476,8 @@ void md_vdp_write(int offset, uint8 data)
         
                 if(vdp.code == 2)
                 {
-                    int r = (data & 0x0F);
-                    int d = vdp.latch;
+                    INT32 r = (data & 0x0F);
+                    INT32 d = vdp.latch;
                     vdp_reg_w(r, d);
                 }
             }
@@ -491,9 +489,9 @@ void md_vdp_write(int offset, uint8 data)
 /* TMS9918 VDP handlers                                                     */
 /*--------------------------------------------------------------------------*/
 
-void tms_write(int offset, int data)
+void tms_write(INT32 offset, INT32 data)
 {
-    int index;
+    INT32 index;
 
     switch(offset & 1)
     {
@@ -538,8 +536,8 @@ void tms_write(int offset, int data)
         
                 if(vdp.code == 2)
                 {
-                    int r = (data & 0x07);
-                    int d = vdp.latch;
+                    INT32 r = (data & 0x07);
+                    INT32 d = vdp.latch;
                     vdp_reg_w(r, d);
                 }
             }

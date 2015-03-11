@@ -24,27 +24,27 @@
 /* VDP context */
 typedef struct
 {
-    uint8 vram[0x4000];
-    uint8 cram[0x40]; 
-    uint8 reg[0x10];
-    uint8 status;     
-    uint8 latch;      
-    uint8 pending;    
-    uint8 buffer;     
-    uint8 code;       
-    uint16 addr;
-    int pn, ct, pg, sa, sg;
-    int ntab;        
-    int satb;
-    int line;
-    int left;
-    uint8 height;
-    uint8 extended;
-    uint8 mode;
-    uint8 vint_pending;
-    uint8 hint_pending;
-    uint16 cram_latch;
-    uint8 bd;
+    UINT8 vram[0x4000];
+    UINT8 cram[0x40]; 
+    UINT8 reg[0x10];
+    UINT8 status;     
+    UINT8 latch;      
+    UINT8 pending;    
+    UINT8 buffer;     
+    UINT8 code;       
+    UINT16 addr;
+    INT32 pn, ct, pg, sa, sg;
+    INT32 ntab;        
+    INT32 satb;
+    INT32 line;
+    INT32 left;
+    UINT8 height;
+    UINT8 extended;
+    UINT8 mode;
+    UINT8 vint_pending;
+    UINT8 hint_pending;
+    UINT16 cram_latch;
+    UINT8 bd;
 } vdp_t;
 
 /* Global data */
@@ -54,12 +54,12 @@ extern vdp_t vdp;
 void vdp_init(void);
 void vdp_shutdown(void);
 void vdp_reset(void);
-uint8 vdp_counter_r(int offset);
-uint8 vdp_read(int offset);
-void vdp_write(int offset, uint8 data);
-void gg_vdp_write(int offset, uint8 data);
-void md_vdp_write(int offset, uint8 data);
-void tms_write(int offset, int data);
+UINT8 vdp_counter_r(INT32 offset);
+UINT8 vdp_read(INT32 offset);
+void vdp_write(INT32 offset, UINT8 data);
+void gg_vdp_write(INT32 offset, UINT8 data);
+void md_vdp_write(INT32 offset, UINT8 data);
+void tms_write(INT32 offset, INT32 data);
 
 #endif /* _VDP_H_ */
 

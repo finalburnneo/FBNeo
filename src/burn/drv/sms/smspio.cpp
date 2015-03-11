@@ -9,7 +9,7 @@ io_state *io_current;
 
 void pio_init(void)
 {
-    int i, j;
+    INT32 i, j;
 
     /* Make pin state LUT */
     for(j = 0; j < 2; j++)
@@ -66,20 +66,20 @@ void pio_shutdown(void)
 }
 
 
-void system_assign_device(int port, int type)
+void system_assign_device(INT32 port, INT32 type)
 {
     sms.device[port].type = type;
 }
 
-void ioctrl_w(uint8 data)
+void ioctrl_w(UINT8 data)
 {
     sms.ioctrl = data;
     io_current = &io_lut[sms.territory][data];
 }
 
-uint8 device_r(int offset)
+UINT8 device_r(INT32 offset)
 {
-    uint8 temp = 0x7F;
+    UINT8 temp = 0x7F;
 
     switch(sms.device[offset].type)
     {
@@ -94,9 +94,9 @@ uint8 device_r(int offset)
     return temp;
 }
 
-uint8 input_r(int offset)
+UINT8 input_r(INT32 offset)
 {
-    uint8 temp = 0xFF;
+    UINT8 temp = 0xFF;
 
     /*
         If I/O chip is disabled, reads return last byte of instruction that
@@ -119,7 +119,7 @@ uint8 input_r(int offset)
 
         if(sms.console == CONSOLE_GG)
         {
-            uint8 state = sio_r(0x01);
+            UINT8 state = sio_r(0x01);
             temp = (temp & 0x3F) | (state & 0x03) << 6; /* Insert D1,D0 */
         }
         else
@@ -139,7 +139,7 @@ uint8 input_r(int offset)
         /* Input port #1 */
         if(sms.console == CONSOLE_GG)
         {
-            uint8 state = sio_r(0x01);
+            UINT8 state = sio_r(0x01);
             temp = (temp & 0xF0) | ((state & 0x3C) >> 2); /* Insert TR,TL,D3,D2 */
             temp = (temp & 0x7F) | ((state & 0x40) << 1); /* Insert TH */
         }
@@ -178,9 +178,9 @@ uint8 input_r(int offset)
     return temp;
 }
 
-uint8 sio_r(int offset)
+UINT8 sio_r(INT32 offset)
 {
-    uint8 temp;
+    UINT8 temp;
 
     switch(offset & 0xFF)
     {
@@ -223,7 +223,7 @@ uint8 sio_r(int offset)
     return 0;
 }
 
-void sio_w(int offset, int data)
+void sio_w(INT32 offset, INT32 data)
 {
     switch(offset & 0xFF)
     {

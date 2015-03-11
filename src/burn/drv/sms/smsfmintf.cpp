@@ -64,7 +64,7 @@ void FM_Reset(void)
 }
 
 
-void FM_Update(int16 **/*buffer*/, int /*length*/)
+void FM_Update(INT16 **/*buffer*/, INT32 /*length*/)
 {
 /*    switch(snd.fm_which)
     {
@@ -78,13 +78,13 @@ void FM_Update(int16 **/*buffer*/, int /*length*/)
     }*/
 }
 
-void FM_WriteReg(int /*reg*/, int /*data*/)
+void FM_WriteReg(INT32 /*reg*/, INT32 /*data*/)
 {
 /*    FM_Write(0, reg);
     FM_Write(1, data);*/
 }
 
-void FM_Write(int /*offset*/, int /*data*/)
+void FM_Write(INT32 /*offset*/, INT32 /*data*/)
 {
 /*    if(offset & 1)
         fm_context.reg[ fm_context.latch ] = data;
@@ -104,16 +104,16 @@ void FM_Write(int /*offset*/, int /*data*/)
 }
 
 
-void FM_GetContext(uint8 */*data*/)
+void FM_GetContext(UINT8 */*data*/)
 {
 //    memcpy(data, &fm_context, sizeof(FM_Context));
 }
 
-void FM_SetContext(uint8 */*data*/)
+void FM_SetContext(UINT8 */*data*/)
 {
 /*
-	int i;
-    uint8 *reg = fm_context.reg;
+	INT32 i;
+    UINT8 *reg = fm_context.reg;
 
     memcpy(&fm_context, data, sizeof(FM_Context));
 
@@ -153,13 +153,13 @@ void FM_SetContext(uint8 */*data*/)
 */
 }
 
-int FM_GetContextSize(void)
+INT32 FM_GetContextSize(void)
 {
     return 0; //sizeof(FM_Context);
 }
 
-uint8 *FM_GetContextPtr(void)
+UINT8 *FM_GetContextPtr(void)
 {
-	//return (uint8 *)&fm_context;
-	return (uint8 *)NULL;
+	//return (UINT8 *)&fm_context;
+	return (UINT8 *)NULL;
 }

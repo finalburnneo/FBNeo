@@ -42,7 +42,6 @@ typedef struct
 {
     UINT8 *rom;
     UINT8 pages;
-    UINT32 crc;
     UINT32 sram_crc;
     INT32 mapper;
     UINT8 sram[0x8000];

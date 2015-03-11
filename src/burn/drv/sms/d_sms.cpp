@@ -89,12 +89,7 @@ INT32 SMSExit()
 	GenericTilesExit();
 
 	BurnFree (AllMem);
-
-	if(cart.rom)
-    {
-        free(cart.rom);
-        cart.rom = NULL;
-    }
+	BurnFree (cart.rom);
 
 	system_shutdown();
 
@@ -317,7 +312,7 @@ static INT32 load_rom()
 	/* Don't load games smaller than 16K */
     if(size < 0x4000) return 0;
 
-	cart.rom = (UINT8 *)malloc(0x100000);
+	cart.rom = (UINT8 *)BurnMalloc(0x100000);
 	if (BurnLoadRom(cart.rom + 0x0000, 0, 1)) return 0;
 
     /* Take care of image header, if present */
@@ -328,7 +323,7 @@ static INT32 load_rom()
     }
 
     cart.pages = (size / 0x4000);
-    cart.crc = crc32(0L, cart.rom, size);
+    cart.crc = ri.nCrc;
 
     /* Assign default settings (US NTSC machine) */
     cart.mapper     = MAPPER_SEGA;

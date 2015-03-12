@@ -8,8 +8,7 @@
 
 void FM_Init(void)
 {
-	bprintf(0, _T("FM_Init(%d);\n"), snd.fm_clock);
-	BurnYM2413Init(4000000); //snd.fm_clock);
+	BurnYM2413Init(snd.fm_clock);
 	BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 }
 
@@ -27,7 +26,7 @@ void FM_Reset(void)
 
 
 void FM_Write(INT32 offset, INT32 data)
-{   bprintf(0, _T("%X[%X],"), offset, data);
+{
 	BurnYM2413Write(offset, data);
 }
 

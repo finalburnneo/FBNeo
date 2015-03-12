@@ -76,7 +76,8 @@ void sms_init(void)
 
     /* Force SMS (J) console type if FM sound enabled */
     if(sms.use_fm)
-    {
+	{
+		bprintf(0, _T("Emulating FM\n"));
         sms.console = CONSOLE_SMSJ;
         sms.territory = TERRITORY_DOMESTIC;
 		sms.display = DISPLAY_NTSC;
@@ -93,8 +94,9 @@ void sms_init(void)
         case CONSOLE_SMSJ:
 			ZetSetOutHandler(sms_port_w);
 			ZetSetInHandler(sms_port_r);
+            //data_bus_pullup = 0xFF;
             break;
-  
+
         case CONSOLE_SMS2:
 			ZetSetOutHandler(sms_port_w);
 			ZetSetInHandler(sms_port_r);
@@ -333,7 +335,7 @@ UINT8 __fastcall sms_port_r(UINT16 port)
 {
     port &= 0xFF;
 
-    if(port == 0xF2 && !(sms.memctrl & 4))
+    if(port == 0xF2 && sms.use_fm)
         return fmunit_detect_r();
 
     switch(port & 0xC0)

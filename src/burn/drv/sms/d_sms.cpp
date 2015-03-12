@@ -315,11 +315,6 @@ INT32 SMSInit()
     snd.mixer_callback = NULL;
 
 	sms.use_fm = (SMSDips[0] & 0x04);
-	if (sms.use_fm) {
-		bprintf(0, _T("Emulating FM\n"));
-		sms.territory = TERRITORY_DOMESTIC;
-		sms.console = CONSOLE_SMSJ;
-	}
 
     system_init();
 

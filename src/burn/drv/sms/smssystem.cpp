@@ -19,7 +19,7 @@
 #include "smsshared.h"
 #include "z80_intf.h"
 #include "sn76496.h"
-
+#include "burn_ym2413.h"
 
 bitmap_t bitmap;
 cart_t cart;
@@ -107,6 +107,8 @@ void system_frame(INT32 skip_render)
 			INT32 nSegmentLength = nBurnSoundLen / lpf;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			SN76496Update(0, pSoundBuf, nSegmentLength);
+			if (sms.use_fm)
+				BurnYM2413Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 
@@ -122,6 +124,8 @@ void system_frame(INT32 skip_render)
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
 			SN76496Update(0, pSoundBuf, nSegmentLength);
+			if (sms.use_fm)
+				BurnYM2413Render(pSoundBuf, nSegmentLength);
 		}
 	}
 }

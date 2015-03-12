@@ -3,6 +3,7 @@
 #include "smsshared.h"
 #include "z80_intf.h"
 #include "sn76496.h"
+#include "burn_ym2413.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -19,6 +20,10 @@ UINT8 SMSDips[3];
 
 static struct BurnDIPInfo SMSDIPList[] = {
 	{0x11, 0xff, 0xff, 0x00, NULL				},
+
+	{0   , 0xfe, 0   ,    2, "FM Unit Emulation"},
+	{0x11, 0x01, 0x04, 0x04, "On"			},
+	{0x11, 0x01, 0x04, 0x00, "Off"			},
 };
 
 STDDIPINFO(SMS)
@@ -150,7 +155,7 @@ INT32 SMSFrame()
 		if(SMSJoy2[8]) input.pad[1] |= INPUT_BUTTON1;
 		if(SMSJoy1[1]) input.system |= (IS_GG) ? INPUT_START : INPUT_PAUSE;
 
-		gg_overscanmode = (SMSDips[0] == 8);
+		gg_overscanmode = (SMSDips[0] & 0x08);
 
 	}
 
@@ -308,7 +313,12 @@ INT32 SMSInit()
     snd.sample_rate = 44100;
     snd.mixer_callback = NULL;
 
-    sms.use_fm = 0;
+	sms.use_fm = (SMSDips[0] & 0x04);
+	if (sms.use_fm) {
+		bprintf(0, _T("Emulating FM\n"));
+		sms.territory = TERRITORY_DOMESTIC;
+		sms.console = CONSOLE_SMSJ;
+	}
 
     system_init();
 
@@ -344,9 +354,12 @@ INT32 SMSScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_VOLATILE) {
 		ZetScan(nAction);
 		SN76496Scan(nAction, pnMin);
+
 		SCAN_VAR(vdp);
 		SCAN_VAR(sms);
 		SCAN_VAR(cart.fcr);
+		if (sms.use_fm) // put it down here so we keep compatibility with non-fm states.
+			BurnYM2413Scan(nAction);
 
 		if (nAction & ACB_WRITE) {
 			ZetOpen(0);

@@ -89,12 +89,12 @@ void psg_write(INT32 data)
 /*--------------------------------------------------------------------------*/
 
 INT32 fmunit_detect_r(void)
-{
+{   bprintf(0, _T("fm detect READ [%X]\n"), sms.fm_detect);
     return sms.fm_detect;
 }
 
 void fmunit_detect_w(INT32 data)
-{
+{   bprintf(0, _T("fm detect [%X]\n"), data);
     sms.fm_detect = data;
 }
 

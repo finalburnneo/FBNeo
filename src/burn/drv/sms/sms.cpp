@@ -79,7 +79,7 @@ void sms_init(void)
     {
         sms.console = CONSOLE_SMSJ;
         sms.territory = TERRITORY_DOMESTIC;
-        sms.display = DISPLAY_NTSC;
+		sms.display = DISPLAY_NTSC;
     }
 
     /* Initialize selected console emulation */

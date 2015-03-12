@@ -102,8 +102,4 @@ void __fastcall ggms_port_w(UINT16 port, UINT8 data);
 UINT8 __fastcall ggms_port_r(UINT16 port);
 void __fastcall sms_port_w(UINT16 port, UINT8 data);
 UINT8 __fastcall sms_port_r(UINT16 port);
-void __fastcall smsj_port_w(UINT16 port, UINT8 data);
-UINT8 __fastcall smsj_port_r(UINT16 port);
-void __fastcall md_port_w(UINT16 port, UINT8 data);
-UINT8 __fastcall md_port_r(UINT16 port);
 #endif /* _SMS_H_ */

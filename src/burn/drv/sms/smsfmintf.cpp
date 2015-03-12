@@ -8,7 +8,8 @@
 
 void FM_Init(void)
 {
-	BurnYM2413Init(snd.fm_clock);
+	bprintf(0, _T("FM_Init(%d);\n"), snd.fm_clock);
+	BurnYM2413Init(4000000); //snd.fm_clock);
 	BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 }
 

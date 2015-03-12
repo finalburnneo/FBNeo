@@ -58,19 +58,19 @@ void sms_init(void)
     data_bus_pullup     = 0x00;
     data_bus_pulldown   = 0x00;
 
-//	bprintf(0, _T("Cart mapper: "));
+	bprintf(0, _T("Cart mapper: "));
     /* Assign mapper */
 	if(cart.mapper == MAPPER_CODIES) {
-//		bprintf(0, _T("codemasters\n"));
+		bprintf(0, _T("Codemasters\n"));
 		ZetSetWriteHandler(writemem_mapper_codies);
 	}
 	else if (cart.mapper == MAPPER_MSX || cart.mapper == MAPPER_MSX_NEMESIS)
 	{
-//		bprintf(0, _T("msx\n"));
+		bprintf(0, _T("MSX\n"));
 		ZetSetWriteHandler(writemem_mapper_msx);
 	}
 	else {
-//		bprintf(0, _T("sega\n"));
+		bprintf(0, _T("Sega\n"));
 		ZetSetWriteHandler(writemem_mapper_sega);
 	}
 
@@ -91,8 +91,8 @@ void sms_init(void)
             break;
 
         case CONSOLE_SMSJ:
-			ZetSetOutHandler(smsj_port_w);
-			ZetSetInHandler(smsj_port_r);
+			ZetSetOutHandler(sms_port_w);
+			ZetSetInHandler(sms_port_r);
             break;
   
         case CONSOLE_SMS2:
@@ -110,19 +110,6 @@ void sms_init(void)
         case CONSOLE_GGMS:
 			ZetSetOutHandler(ggms_port_w);
 			ZetSetInHandler(ggms_port_r);
-            data_bus_pullup = 0xFF;
-            break;
-
-        case CONSOLE_GEN:
-        case CONSOLE_MD:
-			ZetSetOutHandler(md_port_w);
-			ZetSetInHandler(md_port_r);
-            break;
-
-        case CONSOLE_GENPBC:
-        case CONSOLE_MDPBC:
-			ZetSetOutHandler(md_port_w);
-			ZetSetInHandler(md_port_r);
             data_bus_pullup = 0xFF;
             break;
 	}
@@ -205,7 +192,7 @@ void sms_reset(void)
 void sms_mapper8k_w(INT32 address, UINT8 data) // WIP
 {
     /* Calculate ROM page index */
-	UINT32 poffset = (data % (cart.pages * 2)) << 13;
+	UINT32 poffset = (data % (cart.pages4k)) << 13;
 
     /* Save frame control register data */
     cart.fcr[address] = data;
@@ -296,60 +283,6 @@ void memctrl_w(UINT8 data)
 
 void __fastcall sms_port_w(UINT16 port, UINT8 data)
 {
-    switch(port & 0xC1)
-    {
-        case 0x00:
-            memctrl_w(data);
-            return;
-
-        case 0x01:
-            ioctrl_w(data);
-            return;
-
-        case 0x40:
-        case 0x41:
-            psg_write(data);
-            return;
-
-        case 0x80:
-        case 0x81:
-            vdp_write(port, data);
-            return;
-
-        case 0xC0:
-        case 0xC1:
-            return;
-    }
-}
-
-UINT8 __fastcall sms_port_r(UINT16 port)
-{
-    switch(port & 0xC0)
-    {
-        case 0x00:
-            return z80_read_unmapped();
-
-        case 0x40:
-            return vdp_counter_r(port);
-
-        case 0x80:
-            return vdp_read(port);
-
-        case 0xC0:
-            return input_r(port);
-    }
-
-    /* Just to please the compiler */
-    return 0;
-}
-
-
-/*--------------------------------------------------------------------------*/
-/* Sega Master System (J) port handlers                                     */
-/*--------------------------------------------------------------------------*/
-
-void __fastcall smsj_port_w(UINT16 port, UINT8 data)
-{
     port &= 0xFF;
 
     if(port >= 0xF0)
@@ -396,7 +329,7 @@ void __fastcall smsj_port_w(UINT16 port, UINT8 data)
     }
 }
 
-UINT8 __fastcall smsj_port_r(UINT16 port)
+UINT8 __fastcall sms_port_r(UINT16 port)
 {
     port &= 0xFF;
 
@@ -554,62 +487,3 @@ UINT8 __fastcall ggms_port_r(UINT16 port)
     /* Just to please the compiler */
     return 0;
 }
-
-/*--------------------------------------------------------------------------*/
-/* MegaDrive / Genesis port handlers                                        */
-/*--------------------------------------------------------------------------*/
-
-void __fastcall md_port_w(UINT16 port, UINT8 data)
-{
-    switch(port & 0xC1)
-    {
-        case 0x00:
-            /* No memory control register */
-            return;
-
-        case 0x01:
-            ioctrl_w(data);
-            return;
-
-        case 0x40:
-        case 0x41:
-            psg_write(data);
-            return;
-
-        case 0x80:
-        case 0x81:
-            md_vdp_write(port, data);
-            return;
-    }
-}
-
-
-UINT8 __fastcall md_port_r(UINT16 port)
-{
-    switch(port & 0xC0)
-    {
-        case 0x00:
-            return z80_read_unmapped();
-
-        case 0x40:
-            return vdp_counter_r(port);
-
-        case 0x80:
-            return vdp_read(port);
-
-        case 0xC0:
-            switch(port)
-            {
-                case 0xC0:
-                case 0xC1:
-                case 0xDC:
-                case 0xDD:
-                    return input_r(port);
-            }
-            return z80_read_unmapped();
-    }
-
-    /* Just to please the compiler */
-    return 0;
-}
-

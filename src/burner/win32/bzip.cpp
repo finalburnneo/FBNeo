@@ -69,8 +69,10 @@ static int FindRomByName(TCHAR* szName)
 	// Find the rom named szName in the List
 	for (i = 0, pl = List; i < nListCount; i++, pl++) {
 		TCHAR szCurrentName[MAX_PATH];
-		if (_tcsicmp(szName, GetFilenameW(ANSIToTCHAR(pl->szName, szCurrentName, MAX_PATH))) == 0) {
-			return i;
+		if (pl->szName) {
+			if (_tcsicmp(szName, GetFilenameW(ANSIToTCHAR(pl->szName, szCurrentName, MAX_PATH))) == 0) {
+				return i;
+			}
 		}
 	}
 	return -1;													// couldn't find the rom

@@ -23,7 +23,7 @@ INT32 sound_init(void)
         return 0;
 
     // Init sound emulation
-	SN76489Init(0, snd.psg_clock, 0);
+	SN76489Init(0, snd.psg_clock, 1);
 	SN76496SetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
 
 	FM_Init();

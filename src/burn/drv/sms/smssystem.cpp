@@ -106,9 +106,13 @@ void system_frame(INT32 skip_render)
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / lpf;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			if (sms.use_fm)
+			if (sms.use_fm)	{
 				BurnYM2413Render(pSoundBuf, nSegmentLength);
+			} else {
+				memset(pSoundBuf, 0, nSegmentLength * 2 * sizeof(INT16));
+			}
+			SN76496Update(0, pSoundBuf, nSegmentLength);
+			
 			nSoundBufferPos += nSegmentLength;
 		}
 
@@ -123,9 +127,12 @@ void system_frame(INT32 skip_render)
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			SN76496Update(0, pSoundBuf, nSegmentLength);
-			if (sms.use_fm)
+			if (sms.use_fm)	{
 				BurnYM2413Render(pSoundBuf, nSegmentLength);
+			} else {
+				memset(pSoundBuf, 0, nSegmentLength * 2 * sizeof(INT16));
+			}
+			SN76496Update(0, pSoundBuf, nSegmentLength);
 		}
 	}
 }

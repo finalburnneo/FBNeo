@@ -359,7 +359,7 @@ static void wndrplnt_i8751_w(INT32 data)
 	if (data==0x100) i8751_return=0x67a;
 	if (data==0x200) i8751_return=0x214;
 	if (data==0x300) i8751_return=0x17; /* Copyright text on title screen */
-//  if (data==0x300) i8751_return=0x1; /* (USA) Copyright text on title screen */
+// 	if (data==0x300) i8751_return=0x1; /* (USA) Copyright text on title screen */
 
 	if ((data&0x600)==0x600)
 	{
@@ -398,10 +398,8 @@ static void wndrplnt_i8751_w(INT32 data)
 	i8751_needs_ack=1;
 }
 
-
 static void chelnov_i8751_w(INT32 data)
 {
-
 	if (i8751_needs_ack)
 	{
 		i8751_command_queue=data;
@@ -416,7 +414,14 @@ static void chelnov_i8751_w(INT32 data)
 	if (data==0x100 && microcontroller_id==CHELNOV)  i8751_return=0x71b; /* USA version */
 	if (data==0x100 && microcontroller_id==CHELNOVW)  i8751_return=0x71c; /* World version */
 
-	if (data>=0x6000 && data<0x8000) i8751_return=1;  /* patched */
+	if ((data & 0xe000) == 0x6000) {
+		if (data & 0x1000) {
+			i8751_return = ((data & 0x0f) + ((data >> 4) & 0x0f)) * ((data >> 8) & 0x0f);
+		} else {
+			i8751_return = (data & 0x0f) * (((data >> 8) & 0x0f) + ((data >> 4) & 0x0f));
+		}
+	}
+
 	if ((data&0xf000)==0x1000) i8751_level=1; /* Level 1 */
 	if ((data&0xf000)==0x2000) i8751_level++; /* Level Increment */
 
@@ -855,6 +860,9 @@ static INT32 DrvInit()
 	
 			if (BurnLoadRom(DrvColPROM + 0x00000, 16, 1)) return 1;
 			if (BurnLoadRom(DrvColPROM + 0x00400, 17, 1)) return 1;
+
+			// hack to bypass infinite loop waiting for mcu response
+			*((UINT16*)(Drv68KROM + 0x062a)) = BURN_ENDIAN_SWAP_INT16(0x4E71);
 		} else {
 			if (BurnLoadRom(DrvGfxROM2 + 0x00000, 12, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM2 + 0x10000, 13, 1)) return 1;
@@ -1468,14 +1476,7 @@ static INT32 ChelnovInit()
 	microcontroller_id = CHELNOVW;
 	coin_mask = 0xe0;
 
-	INT32 nRet = DrvInit();
-
-	if (nRet == 0) {
-		*((UINT16*)(Drv68KROM + 0x0A26)) = BURN_ENDIAN_SWAP_INT16(0x4E71);
-		*((UINT16*)(Drv68KROM + 0x062a)) = BURN_ENDIAN_SWAP_INT16(0x4E71);
-	}
-
-	return nRet;
+	return DrvInit();
 }
 
 struct BurnDriver BurnDrvChelnov = {
@@ -1527,14 +1528,7 @@ static INT32 ChelnovuInit()
 	microcontroller_id = CHELNOV;
 	coin_mask = 0xe0;
 
-	INT32 nRet = DrvInit();
-
-	if (nRet == 0) {
-		*((UINT16*)(Drv68KROM + 0x0A26)) = BURN_ENDIAN_SWAP_INT16(0x4E71);
-		*((UINT16*)(Drv68KROM + 0x062a)) = BURN_ENDIAN_SWAP_INT16(0x4E71);
-	}
-
-	return nRet;
+	return DrvInit();
 }
 
 struct BurnDriver BurnDrvChelnovu = {
@@ -1586,14 +1580,7 @@ static INT32 ChelnovjInit()
 	microcontroller_id = CHELNOVJ;
 	coin_mask = 0xe0;
 
-	INT32 nRet = DrvInit();
-
-	if (nRet == 0) {
-		*((UINT16*)(Drv68KROM + 0x0A2e)) = BURN_ENDIAN_SWAP_INT16(0x4E71);
-		*((UINT16*)(Drv68KROM + 0x062a)) = BURN_ENDIAN_SWAP_INT16(0x4E71);
-	}
-
-	return nRet;
+	return DrvInit();
 }
 
 struct BurnDriver BurnDrvChelnovj = {

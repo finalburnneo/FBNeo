@@ -94,7 +94,6 @@ void sms_init(void)
         case CONSOLE_SMSJ:
 			ZetSetOutHandler(sms_port_w);
 			ZetSetInHandler(sms_port_r);
-            //data_bus_pullup = 0xFF;
             break;
 
         case CONSOLE_SMS2:

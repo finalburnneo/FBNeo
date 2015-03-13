@@ -22,7 +22,7 @@ static struct BurnDIPInfo SMSDIPList[] = {
 	{0x11, 0xff, 0xff, 0x00, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "FM Unit Emulation"},
-	{0x11, 0x01, 0x04, 0x04, "On"			},
+	{0x11, 0x01, 0x04, 0x04, "On (Change needs restart!)"},
 	{0x11, 0x01, 0x04, 0x00, "Off"			},
 };
 
@@ -428,16 +428,14 @@ INT32 GGGetZipName(char** pszName, UINT32 i)
 // 4 PAK All Action (Aus)
 
 static struct BurnRomInfo sms_4pakRomDesc[] = {
-//	{ "4 pak all action (aus).bin",	0x100000, 0xa67f2a5c, BRF_PRG | BRF_ESS },
-	{ "MPR11124.sms",	0x2000, 0x48d44a13, BRF_PRG | BRF_ESS },
-
+	{ "4 pak all action (aus).bin",	0x100000, 0xa67f2a5c, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_4pak)
 STD_ROM_FN(sms_4pak)
 
 struct BurnDriver BurnDrvsms_4pak = {
-	"sms_MPR11124", NULL, NULL, NULL, "1995",
+	"sms_4pak", NULL, NULL, NULL, "1995",
 	"4 PAK All Action (Aus)\0", NULL, "HES", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,

@@ -155,6 +155,7 @@ void sms_reset(void)
 	{ // MSX Mapper
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_RAM);
+		memset(&sms.wram, 0xf0, sizeof(sms.wram)); // this fixes a few korean games
 	}
 	ZetReset();
 	ZetClose();
@@ -167,14 +168,14 @@ void sms_reset(void)
 	switch (cart.mapper)
 	{
 		case MAPPER_MSX_NEMESIS: { // WIP!! / won't boot
-//			bprintf(0, _T("(nemesis)\n"));
+			bprintf(0, _T("(nemesis)\n"));
 			cart.fcr[2] = 0x00;
 			UINT32 poffset = (0x0f) << 13;
 			ZetOpen(0);
 			ZetMapMemory(cart.rom + poffset, 0x0000, 0x1fff, MAP_READ);
+			ZetReset();
 			ZetClose();
 		}
-
 	}
 }
 

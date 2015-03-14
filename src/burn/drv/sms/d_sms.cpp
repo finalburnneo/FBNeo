@@ -83,7 +83,7 @@ static INT32 DrvDoReset()
 	memset (AllRam, 0, RamEnd - AllRam);
 	vdp_init();     // gets rid of crap on the screen w/GG
 	render_init();  // ""
-	sms_reset();
+	system_reset();
 
 	return 0;
 }

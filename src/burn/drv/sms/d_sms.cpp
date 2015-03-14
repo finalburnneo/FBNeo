@@ -217,7 +217,7 @@ static INT32 load_rom()
     }
 
     cart.pages = (size / 0x4000);
-    cart.pages4k = (size / 0x2000);
+    cart.pages8k = (size / 0x2000);
 
     /* Assign default settings (US NTSC machine) */
     cart.mapper     = MAPPER_SEGA;
@@ -248,6 +248,16 @@ static INT32 load_rom()
 			break;
 		}
 		
+		case HARDWARE_SMS_MAPPER_KOREA: {
+			cart.mapper = MAPPER_KOREA;
+			break;
+		}
+
+		case HARDWARE_SMS_MAPPER_KOREA8K: {
+			cart.mapper = MAPPER_KOREA8K;
+			break;
+		}
+
 		default: {
 			cart.mapper = MAPPER_SEGA;
 			break;
@@ -294,7 +304,7 @@ INT32 SMSInit()
 		bprintf(0, _T("SMS/GG rom loaded ok!\n"));
 	}
 
-/* Set up bitmap structure */
+	/* Set up bitmap structure */
     memset(&bitmap, 0, sizeof(bitmap_t));
     bitmap.width  = 256;
     bitmap.height = 192;
@@ -323,22 +333,28 @@ INT32 SMSInit()
 
 static void system_load_state()
 {
-    sms_mapper_w(3, cart.fcr[3]);
-    sms_mapper_w(2, cart.fcr[2]);
-    sms_mapper_w(1, cart.fcr[1]);
-    sms_mapper_w(0, cart.fcr[0]);
+	if(cart.mapper == MAPPER_MSX || cart.mapper == MAPPER_MSX_NEMESIS || cart.mapper == MAPPER_KOREA8K) {
+		sms_mapper8k_w(3, cart.fcr[3]);
+		sms_mapper8k_w(2, cart.fcr[2]);
+		sms_mapper8k_w(1, cart.fcr[1]);
+		sms_mapper8k_w(0, cart.fcr[0]);
+	} else {
+		sms_mapper_w(3, cart.fcr[3]);
+		sms_mapper_w(2, cart.fcr[2]);
+		sms_mapper_w(1, cart.fcr[1]);
+		sms_mapper_w(0, cart.fcr[0]);
 
-    /* Force full pattern cache update */
-    bg_list_index = 0x200;
-    for(INT32 i = 0; i < 0x200; i++)
-    {
-        bg_name_list[i] = i;
-        bg_name_dirty[i] = (UINT8)-1;
-    }
+		/* Force full pattern cache update */
+		bg_list_index = 0x200;
+		for(INT32 i = 0; i < 0x200; i++) {
+			bg_name_list[i] = i;
+			bg_name_dirty[i] = (UINT8)-1;
+		}
 
-    /* Restore palette */
-    for(INT32 i = 0; i < PALETTE_SIZE; i++)
-		palette_sync(i, 1);
+		/* Restore palette */
+		for(INT32 i = 0; i < PALETTE_SIZE; i++)
+			palette_sync(i, 1);
+	}
 }
 
 INT32 SMSScan(INT32 nAction, INT32 *pnMin)
@@ -518,7 +534,7 @@ struct BurnDriver BurnDrvsms_aceoface = {
 	"sms_aceoface", NULL, NULL, NULL, "1991",
 	"Ace of Aces (Euro)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM /*| HARDWARE_SMS_DISPLAY_PAL*/, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM /*| HARDWARE_SMS_DISPLAY_PAL */, GBF_MISC, 0,
 	SMSGetZipName, sms_aceofaceRomInfo, sms_aceofaceRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -2938,7 +2954,7 @@ struct BurnDriver BurnDrvsms_dallye = {
 	"sms_dallye", NULL, NULL, NULL, "1995",
 	"Dallyeora Pigu-Wang (Kor)\0", NULL, "Game Line", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_KOREA, GBF_MISC, 0,
 	SMSGetZipName, sms_dallyeRomInfo, sms_dallyeRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -5478,7 +5494,7 @@ struct BurnDriver BurnDrvsms_janggun = {
 	"sms_janggun", NULL, NULL, NULL, "1992",
 	"Janggun ui Adeul (Kor)\0", NULL, "Daou Infosys", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_KOREA8K, GBF_MISC, 0,
 	SMSGetZipName, sms_janggunRomInfo, sms_janggunRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -5498,7 +5514,7 @@ struct BurnDriver BurnDrvsms_jangpun3 = {
 	"sms_jangpun3", NULL, NULL, NULL, "1994",
 	"Jang Pung 3 (Kor)\0", NULL, "Sanghun", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_KOREA, GBF_MISC, 0,
 	SMSGetZipName, sms_jangpun3RomInfo, sms_jangpun3RomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -8198,7 +8214,7 @@ struct BurnDriver BurnDrvsms_sangoku3 = {
 	"sms_sangoku3", NULL, NULL, NULL, "1994",
 	"Sangokushi 3 (Kor)\0", NULL, "Game Line", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_KOREA, GBF_MISC, 0,
 	SMSGetZipName, sms_sangoku3RomInfo, sms_sangoku3RomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -8578,7 +8594,7 @@ struct BurnDriver BurnDrvsms_shdancer = {
 	"sms_shdancer", NULL, NULL, NULL, "1991",
 	"Shadow Dancer (Euro, Bra, Kor)\0", NULL, "Sega", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM /*| HARDWARE_SMS_DISPLAY_PAL*/, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM /*| HARDWARE_SMS_DISPLAY_PAL */, GBF_MISC, 0,
 	SMSGetZipName, sms_shdancerRomInfo, sms_shdancerRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -9818,7 +9834,7 @@ struct BurnDriver BurnDrvsms_sboy2 = {
 	"sms_sboy2", NULL, NULL, NULL, "1989",
 	"Super Boy II (Kor)\0", NULL, "Zemina", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_KOREA, GBF_MISC, 0,
 	SMSGetZipName, sms_sboy2RomInfo, sms_sboy2RomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3

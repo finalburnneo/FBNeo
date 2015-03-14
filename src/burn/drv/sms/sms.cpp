@@ -49,6 +49,76 @@ void __fastcall writemem_mapper_msx(UINT16 offset, UINT8 data)
 	sms.wram[offset & 0x1fff] = data;
 }
 
+void __fastcall writemem_mapper_korea(UINT16 offset, UINT8 data)
+{
+	if (offset == 0xA000) {
+		sms_mapper_w(3, data);
+		return;
+	}
+
+	sms.wram[offset & 0x1fff] = data;
+}
+
+void __fastcall writemem_mapper_korea8k(UINT16 offset, UINT8 data)
+{
+	if (offset == 0x4000) {
+		sms_mapper8k_w(2, data);
+		return;
+	}
+
+	if (offset == 0x6000) {
+		sms_mapper8k_w(3, data);
+		return;
+	}
+
+	if (offset == 0x8000) {
+		sms_mapper8k_w(0, data);
+		return;
+	}
+
+	if (offset == 0xA000) {
+		sms_mapper8k_w(1, data);
+		return;
+	}
+
+	if (offset == 0xFFFE)
+	{
+		sms_mapper8k_w(2, (data << 1) & 0xFF);
+		sms_mapper8k_w(3, (1 + (data << 1)) & 0xFF);
+	}
+	else if (offset == 0xFFFF)
+	{
+		sms_mapper8k_w(0, (data << 1) & 0xFF);
+		sms_mapper8k_w(1, (1 + (data << 1)) & 0xFF);
+	}
+
+	sms.wram[offset & 0x1fff] = data;
+}
+
+UINT8 __fastcall readmem_mapper_korea8k(UINT16 offset) // super WIP, Janggun encryption
+{
+	UINT8 data;
+
+	if(offset >= 0xc000 && offset <= 0xffff)
+		data = sms.wram[offset & 0x1fff];
+	else data = ZetReadByte(offset);
+
+  /* 16k page */
+  UINT8 page = offset >> 14;
+
+  /* $4000-$7FFFF and $8000-$BFFF area are protected */
+  if (((page == 1) && (cart.fcr[2] & 0x80)) || ((page == 2) && (cart.fcr[0] & 0x80)))
+  {
+    /* bit-swapped value */
+    data = (((data >> 7) & 0x01) | ((data >> 5) & 0x02) |
+            ((data >> 3) & 0x04) | ((data >> 1) & 0x08) |
+            ((data << 1) & 0x10) | ((data << 3) & 0x20) |
+            ((data << 5) & 0x40) | ((data << 7) & 0x80));
+  }
+
+  return data;
+}
+
 void sms_init(void)
 {
 	ZetInit(0);
@@ -68,6 +138,17 @@ void sms_init(void)
 	{
 		bprintf(0, _T("MSX\n"));
 		ZetSetWriteHandler(writemem_mapper_msx);
+	}
+	else if (cart.mapper == MAPPER_KOREA)
+	{
+		bprintf(0, _T("Korea\n"));
+		ZetSetWriteHandler(writemem_mapper_korea);
+	}
+	else if (cart.mapper == MAPPER_KOREA8K)
+	{
+		bprintf(0, _T("Korea 8k\n"));
+		ZetSetWriteHandler(writemem_mapper_korea8k);
+		ZetSetReadHandler(readmem_mapper_korea8k);
 	}
 	else {
 		bprintf(0, _T("Sega\n"));
@@ -130,13 +211,16 @@ void sms_reset(void)
 	/* Clear SMS context */
     memset(&dummy_write, 0, sizeof(dummy_write));
     memset(&sms.wram,    0, sizeof(sms.wram));
-    memset(cart.sram,   0, sizeof(cart.sram));
+    memset(cart.sram,    0, sizeof(cart.sram));
 
     sms.paused      = 0x00;
     sms.save        = 0x00;
     sms.fm_detect   = 0x00;
     sms.memctrl     = 0xAB;
     sms.ioctrl      = 0xFF;
+
+	if (IS_SMS)
+		sms.wram[0] = 0xA8; // BIOS usually sets this. (memory control register)
 
 	ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
 	ZetMapMemory(cart.rom + 0x0400, 0x0400, 0x3fff, MAP_ROM);
@@ -152,10 +236,11 @@ void sms_reset(void)
 		ZetMapMemory((UINT8 *)&dummy_write, 0x0000, 0xbfff, MAP_WRITE);
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_READ);
 	} else
-	{ // MSX Mapper
+	{
+		// MSX & Korea Mappers
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_RAM);
-		memset(&sms.wram, 0xf0, sizeof(sms.wram)); // this fixes a few korean games
+		memset(&sms.wram[1], 0xf0, sizeof(sms.wram) - 1); // this fixes a few korean games
 	}
 	ZetReset();
 	ZetClose();
@@ -167,37 +252,31 @@ void sms_reset(void)
 
 	switch (cart.mapper)
 	{
-		case MAPPER_MSX_NEMESIS: { // WIP!! / won't boot
-			bprintf(0, _T("(nemesis)\n"));
+		case MAPPER_MSX_NEMESIS: {
+			bprintf(0, _T("(Nemesis-MSX: cart rom-page 0x0f remapped to 0x0000 - 0x1fff)\n"));
 			cart.fcr[2] = 0x00;
 			UINT32 poffset = (0x0f) << 13;
 			ZetOpen(0);
-			ZetMapMemory(cart.rom + poffset, 0x0000, 0x1fff, MAP_READ);
+			ZetMapMemory(cart.rom + poffset, 0x0000, 0x1fff, MAP_ROM);
 			ZetReset();
 			ZetClose();
 		}
 	}
-}
 
-/*
-// Nemesis special case
-      if (slot.mapper == MAPPER_MSX_NEMESIS)
-      {
-        // first 8k page is mapped to last 8k ROM bank
-        for (i = 0x00; i < 0x08; i++)
-        {
-          z80_readmap[i] = &slot.rom[(0x0f << 13) | ((i & 0x07) << 10)];
-        }
-      }
-*/
+	if (IS_SMS) {
+		// Z80 Stack Pointer set by SMS Bios, fix for Shadow Dancer and Ace of Aces
+		// ZetSetSP() Must be called after ZetReset() when the cpu is in a closed state.
+		ZetSetSP(0, 0xdff0);
+	}
+}
 
 void sms_mapper8k_w(INT32 address, UINT8 data) // WIP
 {
     /* Calculate ROM page index */
-	UINT32 poffset = (data % (cart.pages4k)) << 13;
+	UINT32 poffset = (data % (cart.pages8k)) << 13;
 
     /* Save frame control register data */
-    cart.fcr[address] = data;
+    cart.fcr[address & 3] = data;
 
 	/* 4 x 8k banks */
 	switch (address & 3)
@@ -226,9 +305,9 @@ void sms_mapper_w(INT32 address, UINT8 data)
 	UINT32 poffset = (data % cart.pages) << 14;
 
     /* Save frame control register data */
-    cart.fcr[address] = data;
+    cart.fcr[address & 3] = data;
 
-    switch(address)
+    switch(address & 3)
     {
         case 0: // page 2
             if(data & 8)

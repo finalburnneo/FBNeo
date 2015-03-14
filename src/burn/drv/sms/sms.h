@@ -10,11 +10,13 @@ enum {
 };
 
 enum {
-    MAPPER_NONE         = 0,
-    MAPPER_SEGA         = 1,
-    MAPPER_CODIES       = 2,
+	MAPPER_NONE         = 0,
+	MAPPER_SEGA         = 1,
+	MAPPER_CODIES       = 2,
 	MAPPER_MSX          = 3,
-	MAPPER_MSX_NEMESIS  = 4
+	MAPPER_MSX_NEMESIS  = 4,
+	MAPPER_KOREA        = 5,
+	MAPPER_KOREA8K      = 6
 };
 
 enum {

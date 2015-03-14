@@ -46,15 +46,27 @@ void vdp_shutdown(void)
 /* Reset VDP emulation */
 void vdp_reset(void)
 {
-    memset(&vdp, 0, sizeof(vdp_t));
-    vdp.extended = 0;
-    vdp.height = 192;
+	memset(&vdp, 0, sizeof(vdp_t));
+	vdp.extended = 0;
+	vdp.height = 192;
 
-    bitmap.viewport.x = (IS_GG) ? 48 : 0;    // 44 for (vdp.reg[0] & 0x20 && IS_GG)
-    bitmap.viewport.y = (IS_GG) ? 24 : 0;
-    bitmap.viewport.w = (IS_GG) ? 160 : 256;
-    bitmap.viewport.h = (IS_GG) ? 144 : 192;
-    bitmap.viewport.changed = 1;
+	if (IS_SMS)
+	{
+		vdp.reg[0]  = 0x36;
+		vdp.reg[1]  = 0x80;
+		vdp.reg[2]  = 0xFF;
+		vdp.reg[3]  = 0xFF;
+		vdp.reg[4]  = 0xFF;
+		vdp.reg[5]  = 0xFF;
+		vdp.reg[6]  = 0xFB;
+		vdp.reg[10] = 0xFF;
+	}
+
+	bitmap.viewport.x = (IS_GG) ? 48 : 0;    // 44 for (vdp.reg[0] & 0x20 && IS_GG)
+	bitmap.viewport.y = (IS_GG) ? 24 : 0;
+	bitmap.viewport.w = (IS_GG) ? 160 : 256;
+	bitmap.viewport.h = (IS_GG) ? 144 : 192;
+	bitmap.viewport.changed = 1;
 }
 
 

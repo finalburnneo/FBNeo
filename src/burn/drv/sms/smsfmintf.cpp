@@ -9,7 +9,7 @@
 void FM_Init(void)
 {
 	BurnYM2413Init(snd.fm_clock);
-	BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2413SetAllRoutes(2.10, BURN_SND_ROUTE_BOTH);
 }
 
 

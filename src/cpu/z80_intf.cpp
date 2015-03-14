@@ -775,6 +775,11 @@ void ZetSetBUSREQLine(INT32 nStatus)
 
 void ZetSetHL(INT32 n, UINT16 value)
 {
+	ZetCPUContext[n]->reg.hl.w.l=value;
+}
+
+void ZetSetSP(INT32 n, UINT16 value)
+{
 	ZetCPUContext[n]->reg.sp.w.l=value;
 }
 

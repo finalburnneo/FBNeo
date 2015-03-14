@@ -51,6 +51,7 @@ INT32 ZetIdle(INT32 nCycles);
 INT32 ZetSegmentCycles();
 INT32 ZetTotalCycles();
 void ZetSetHL(INT32 n, UINT16 value);
+void ZetSetSP(INT32 n, UINT16 value);
 
 //#define ZetRaiseIrq(n) ZetSetIRQLine(n, ZET_IRQSTATUS_AUTO)
 //#define ZetLowerIrq() ZetSetIRQLine(0, Z80_CLEAR_LINE)

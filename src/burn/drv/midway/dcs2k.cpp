@@ -3,14 +3,16 @@
 #include "adsp2100_intf.h"
 #include "adsp2100/adsp2100.h"
 #include "dcs2k.h"
+#include <stdio.h>
 
 //31250Hz sample rate
 #define MHz(x)  (x * 1000000)
 #define ADSP_CLOCK   MHz(10)
 
-#define xlog(...)    fprintf(stdout, "dcs: " __VA_ARGS__); fflush(stdout)
+#define LOG_ENABLE  0
+#define LOG_MEMACC  0
 
-#if 0
+#if LOG_ENABLE
 #define dcs_log(...)    fprintf(stdout, "dcs: " __VA_ARGS__); fflush(stdout)
 #else
 #define dcs_log(...)
@@ -33,6 +35,7 @@
 #define TIMER_PERIOD_REG	29
 #define WAITSTATES_REG		30
 #define SYSCONTROL_REG		31
+
 
 template<class T>
 class resampler_buffer {
@@ -110,7 +113,7 @@ static UINT8 *pExtRAM;
 static UINT32 *pExtRAM32;
 static UINT8 *pDataRAM;
 static UINT8 *pSoundROM;
-static UINT8 nCurrentBank;
+static UINT16 nCurrentBank;
 static UINT32 nSoundSize;
 static UINT32 nSoundBanks;
 static UINT32 nOutputData;
@@ -130,8 +133,6 @@ extern UINT16 adsp21xx_data_read_word_16le(UINT32 address);
 
 void Dcs2kBoot();
 static void SetupMemory();
-static void SetCurrentBank(unsigned data);
-
 static int RxCallback(int port);
 static void TxCallback(int port, int data);
 static void TimerCallback(int enable);
@@ -154,6 +155,7 @@ static void AdspWrite(UINT32 address, UINT16 value);
 
 void Dcs2kInit()
 {
+    dcs_log("init\n");
     Adsp2100Init();
 
     Adsp2100SetIRQCallback(IRQCallback);
@@ -161,9 +163,9 @@ void Dcs2kInit()
     Adsp2100SetTxCallback(TxCallback);
     Adsp2100SetTimerCallback(TimerCallback);
 
-    pIntRAM = BurnMalloc(0x1000);
+    pIntRAM = BurnMalloc(0x400 * sizeof(UINT32));
     pExtRAM = BurnMalloc(0x800 * sizeof(UINT32));
-    pDataRAM = BurnMalloc(0x200 * sizeof(UINT32));
+    pDataRAM = BurnMalloc(0x200 * sizeof(UINT16));
 
     pExtRAM32 = (UINT32*) pExtRAM;
 
@@ -177,11 +179,12 @@ void Dcs2kInit()
     pSoundBuffer->set_target_rate(31250);
     pSoundBuffer->set_host_rate(nBurnSoundRate);
 
-     SetCurrentBank(0);
+    nCurrentBank = 0;
 }
 
 void Dcs2kExit()
 {
+    dcs_log("exit\n");
     Adsp2100Exit();
     delete pSoundBuffer;
     BurnFree(pIntRAM);
@@ -208,6 +211,7 @@ void Dcs2kRun(int cycles)
         // check for next IRQ
         if (nTotalCycles >= nNextIRQCycle) {
             if (bGenerateIRQ) {
+                bGenerateIRQ = 0;
                 DcsIRQ();
             }
         }
@@ -226,62 +230,82 @@ void Dcs2kRun(int cycles)
 
 static UINT32 ReadProgram(UINT32 address)
 {
+#if LOG_MEMACC
+    dcs_log("prg_r %x - %x\n", address);
+#endif
     UINT32 *p = (UINT32*)pIntRAM;
     return p[address & 0x3FF];
 }
 
 static void WriteProgram(UINT32 address, UINT32 value)
 {
+#if LOG_MEMACC
+    dcs_log("prg_w %x - %x\n", address, value);
+#endif
     UINT32 *p = (UINT32*)pIntRAM;
-    p[address & 0x3FF] = value;
+    p[address & 0x3FF] = value & 0xFFFFFF;
 }
 
 static UINT32 ReadProgramEXT(UINT32 address)
 {
+#if LOG_MEMACC
+    dcs_log("prg_ext_r %x - %x\n", address, pExtRAM32[address & 0x7FF]);
+#endif
     return pExtRAM32[address & 0x7FF];
 }
 
 static void WriteProgramEXT(UINT32 address, UINT32 value)
 {
-    pExtRAM32[address & 0x7FF] = value;
+    int offset = address & 0x7FF;
+#if LOG_MEMACC
+    dcs_log("prg_ext_w %x - %x\n", address, value);
+#endif
+    pExtRAM32[offset] = value;
 }
 
 static void SetupMemory()
 {
-    Adsp2100SetReadLongHandler(1, ReadProgram);
-    Adsp2100SetWriteLongHandler(1, WriteProgram);
+    // program address space
+    Adsp2100SetReadLongHandler  (1, ReadProgram);
+    Adsp2100SetWriteLongHandler (1, WriteProgram);
+    Adsp2100SetReadLongHandler  (2, ReadProgramEXT);
+    Adsp2100SetWriteLongHandler (2, WriteProgramEXT);
     Adsp2100MapHandler(1, 0x0000, 0x03FF, MAP_RAM);
-
-    Adsp2100SetReadLongHandler(2, ReadProgramEXT);
-    Adsp2100SetWriteLongHandler(2, WriteProgramEXT);
-
     Adsp2100MapHandler(2, 0x0800, 0x0FFF, MAP_RAM);
     Adsp2100MapHandler(2, 0x1000, 0x17FF, MAP_RAM);
     Adsp2100MapHandler(2, 0x1800, 0x1FFF, MAP_RAM);
 
-    Adsp2100SetReadDataWordHandler(1, ReadData);
-    Adsp2100SetWriteDataWordHandler(1, WriteData);
+    // data address space
+    Adsp2100SetReadDataWordHandler  (1, ReadData);
+    Adsp2100SetWriteDataWordHandler (1, WriteData);
 
-    Adsp2100MapDataHandler(1, 0x0000, 0x07FF, MAP_READ | MAP_WRITE);
-    Adsp2100MapDataHandler(1, 0x1800, 0x1FFF, MAP_READ | MAP_WRITE);
+    Adsp2100SetReadDataWordHandler  (2, ReadRAMBank);
 
-    Adsp2100SetWriteDataWordHandler(2, SelectDataBank);
-    Adsp2100MapDataHandler(2, 0x3000, 0x33FF, MAP_WRITE);
+    Adsp2100SetWriteDataWordHandler (3, SelectDataBank);
 
-    Adsp2100SetReadDataWordHandler(3, InputLatch);
-    Adsp2100SetWriteDataWordHandler(3, OutputLatch);
-    Adsp2100MapDataHandler(3, 0x3400, 0x37ff, MAP_READ | MAP_WRITE);
+    Adsp2100SetReadDataWordHandler  (4, InputLatch);
+    Adsp2100SetWriteDataWordHandler (4, OutputLatch);
 
-    Adsp2100SetReadDataWordHandler(4, ReadRAM);
-    Adsp2100SetWriteDataWordHandler(4, WriteRAM);
-    Adsp2100MapDataHandler(4, 0x3800, 0x39FF, MAP_READ | MAP_WRITE);
+    Adsp2100SetReadDataWordHandler  (5, ReadRAM);
+    Adsp2100SetWriteDataWordHandler (5, WriteRAM);
 
-    Adsp2100SetReadDataWordHandler(5, AdspRead);
-    Adsp2100SetWriteDataWordHandler(5, AdspWrite);
-    Adsp2100MapDataHandler(5, 0x3fe0, 0x3fff, MAP_READ | MAP_WRITE);
+    Adsp2100SetReadDataWordHandler  (6, AdspRead);
+    Adsp2100SetWriteDataWordHandler (6, AdspWrite);
 
-    Adsp2100SetReadDataWordHandler(6, ReadRAMBank);
-    Adsp2100MapDataHandler(6, 0x2000, 0x2fff, MAP_READ);
+    Adsp2100MapDataHandler(1, 0x0000, 0x07FF, MAP_RAM);
+    Adsp2100MapDataHandler(1, 0x0800, 0x0FFF, MAP_RAM);
+    Adsp2100MapDataHandler(1, 0x1000, 0x17FF, MAP_RAM);
+    Adsp2100MapDataHandler(1, 0x1800, 0x1FFF, MAP_RAM);
+
+    Adsp2100MapDataHandler(2, 0x2000, 0x2FFF, MAP_READ);
+
+    Adsp2100MapDataHandler(3, 0x3000, 0x33FF, MAP_WRITE);
+
+    Adsp2100MapDataHandler(4, 0x3400, 0x37FF, MAP_READ | MAP_WRITE);
+
+    Adsp2100MapDataHandler(5, 0x3800, 0x39FF, MAP_READ | MAP_WRITE);
+
+    Adsp2100MapDataHandler(6, 0x3FE0, 0x3FFF, MAP_READ | MAP_WRITE);
 }
 
 void Dcs2kMapSoundROM(void *ptr, int size)
@@ -300,28 +324,22 @@ void Dcs2kBoot()
     UINT16 *base;
     int i;
 
-    base = (UINT16*) pSoundROM + (nCurrentBank * 0x1000);
+    base = (UINT16*) pSoundROM + ((nCurrentBank & 0x7FF) * 0x1000);
 
     for (i = 0; i < 0x1000; i++)
         buffer[i] = base[i];
     Adsp2100LoadBootROM(buffer, pIntRAM);
+}
 
-#if 0
-    {
-        FILE *fp = fopen("boot.bin", "w");
-        UINT32 *xbuffer = new UINT32[0x400];
-        for (int i = 0; i < 0x400;i++)
-            xbuffer[i] = adsp21xx_read_dword_32le(i);
-        fwrite(xbuffer, 1, 0x400 * 4, fp);
-        fclose(fp);
-        delete [] xbuffer;
-    }
-#endif
-
+void Dcs2kReset()
+{
+    memset(pIntRAM, 0, 0x400 * sizeof(UINT32));
+    memset(pExtRAM, 0, 0x800 * sizeof(UINT32));
+    memset(pDataRAM, 0, 0x200 * sizeof(UINT16));
+    Adsp2100Reset();
     Adsp2100SetIRQLine(ADSP2105_IRQ0, CLEAR_LINE);
     Adsp2100SetIRQLine(ADSP2105_IRQ1, CLEAR_LINE);
     Adsp2100SetIRQLine(ADSP2105_IRQ2, CLEAR_LINE);
-    Adsp2100Reset();
 
     nTxIR = 0;
     nTxIRBase = 0;
@@ -336,8 +354,13 @@ void Dcs2kBoot()
     nInputData = 0;
     nLatchControl = 0;
 
+    for (int i = 0; i < 32; i++)
+        nCtrlReg[i] = 0;
+
     SET_INPUT_EMPTY();
     SET_OUTPUT_EMPTY();
+
+    Dcs2kBoot();
 
     pSoundBuffer->clear();
 }
@@ -346,46 +369,55 @@ static UINT16 ReadRAMBank(UINT32 address)
 {
     UINT16 *p = (UINT16 *) pSoundROM;
     unsigned offset = (nCurrentBank * 0x1000) + (address & 0xFFF);
-
-//    dcs_log("bank_r %X\n", address, p[offset]);
+#if LOG_MEMACC
+    dcs_log("bank_r[%x] %x - %x\n", nCurrentBank, address & 0xFFF, p[offset]);
+#endif
     return p[offset];
+
 }
 
 static UINT16 ReadRAM(UINT32 address)
 {
-//    dcs_log("ram_r %x\n", address);
+#if LOG_MEMACC
+    dcs_log("ram_r %x\n", address);
+#endif
     UINT16 *p = (UINT16 *) pDataRAM;
     return p[address & 0x1FF];
 }
 
 static void WriteRAM(UINT32 address, UINT16 value)
 {
-//    dcs_log("ram_w %x, %x\n", address, value);
+#if LOG_MEMACC
+    dcs_log("ram_w %x, %x\n", address, value);
+#endif
     UINT16 *p = (UINT16 *) pDataRAM;
     p[address & 0x1FF] = value;
 }
 
-
 static UINT16 ReadData(UINT32 address)
 {
     int offset = (address & 0x7FF);
+#if LOG_MEMACC
     dcs_log("dataram_r %x - %x\n", offset, pExtRAM32[offset] >> 8);
+#endif
     return pExtRAM32[offset] >> 8;
 }
 
 static void WriteData(UINT32 address, UINT16 value)
 {
     int offset = (address & 0x7FF);
-//    dcs_log("dataram_w %x, %x\n", offset, value);
-    UINT16 data = pExtRAM32[offset] >> 8;
-    pExtRAM32[offset] = (data << 8) | (pExtRAM32[offset] & 0xFF);
+    UINT32 data = value;
+    pExtRAM32[offset] &= 0xFF;
+    pExtRAM32[offset] |= data << 8;
+#if LOG_MEMACC
+    dcs_log("dataram_w %x - %x\n", offset, value);
+#endif
 }
 
 static void SelectDataBank(UINT32 address, UINT16 value)
 {
-    xlog("bank_select %x\n", value);
-//    dcs_log("bank_select %x\n", value);
-    SetCurrentBank(value);
+    dcs_log("bank_select %x\n", value);
+    nCurrentBank = value & 0x7FF;
 }
 
 static UINT16 InputLatch(UINT32 address)
@@ -412,19 +444,18 @@ static UINT16 AdspRead(UINT32 address)
 
 static void AdspWrite(UINT32 address, UINT16 value)
 {
-//    dcs_log("adsp_w %x, %x\n", address, value);
+    dcs_log("adsp_w %x, %x\n", address, value);
     nCtrlReg[address & 0x1F] = value;
 
     switch (address & 0x1F) {
     case SYSCONTROL_REG:
         if (value & 0x0200) {
-            xlog("reboot\n");
-//            dcs_log("reboot\n");
+            dcs_log("reboot\n");
+            Adsp2100Reset();
             Dcs2kBoot();
             nCtrlReg[SYSCONTROL_REG] = 0;
         }
         if ((value & 0x0800) == 0) {
-           // dcs_log("clear_IRQ\n");
             bGenerateIRQ = 0;
             nNextIRQCycle = ~0ULL;
         }
@@ -443,21 +474,15 @@ void Dcs2kDataWrite(int data)
 
 void Dcs2kResetWrite(int data)
 {
-    xlog("reset_w %x\n", data);
-//    dcs_log("reset_w %x\n", data);
-    if (data)
-        Dcs2kBoot();
+    dcs_log("reset_w %x\n", data);
+    if (data) {
+        Dcs2kReset();
+    }
 }
-
-static void SetCurrentBank(unsigned data)
-{
-    nCurrentBank = data & 0x7FF;
-}
-
 
 int Dcs2kDataRead()
 {
-//    dcs_log("data_r %x\n", nLatchControl);
+    dcs_log("data_r %x\n", nLatchControl);
     return nLatchControl;
 }
 
@@ -470,13 +495,14 @@ static int RxCallback(int port)
 
 static void ComputeNextIRQCycle()
 {
-    adsp2100_state *adsp = Adsp2100GetState();
-    nNextIRQCycle = (nTotalCycles + adsp->icount) + 76800;
-//    dcs_log("next_IRQ %d [now = %d]\n", nNextIRQCycle, nTotalCycles - adsp->icount);
-    bGenerateIRQ = 1;
-    nSavedCycles = adsp->icount;
-    // stop CPU
-    adsp->icount = 1;
+    if (nTxIncrement) {
+        adsp2100_state *adsp = Adsp2100GetState();
+        nNextIRQCycle = (nTotalCycles + adsp->icount) + 76800/2;
+        bGenerateIRQ = 1;
+        nSavedCycles = adsp->icount;
+        // stop CPU
+        adsp->icount = 1;
+    }
 
 }
 
@@ -504,6 +530,8 @@ static void TxCallback(int port, int data)
             src -= nTxIncrement;
             adsp->i[nTxIR] = src;
             nTxIRBase = src;
+
+            dcs_log("tx_info base = %x, inc = %x, size = %x\n", src, nTxIncrement, nTxSize);
             ComputeNextIRQCycle();
             return;
         }
@@ -515,35 +543,37 @@ static void TxCallback(int port, int data)
 
 static void DcsIRQ()
 {
-//    dcs_log("generate_irq\n");
     adsp2100_state *adsp = Adsp2100GetState();
     int r = adsp->i[nTxIR];
 
     int count = nTxSize / 2;
     INT16 buffer[0x400];
 
-//    dcs_log("ireg_base %x, inc %x, size %x\n", r, nTxIncrement, nTxSize);
-//    xlog("ireg_base %x, inc %x, size %x\n", r, nTxIncrement, nTxSize);
 
     for (int i = 0; i < count; i++) {
-        buffer[i] = adsp21xx_data_read_word_16le(r << 1);
+        buffer[i] = adsp21xx_data_read_word_16le(r<<1);
         r += nTxIncrement;
     }
 
     pSoundBuffer->write(buffer, count);
 
-    if (r >= nTxIRBase + nTxSize) {
+    bool wrapped = false;
+
+    if (r >= (nTxIRBase + nTxSize)) {
         r = nTxIRBase;
+        wrapped = true;
+    }
+    adsp->i[nTxIR] = r;
+
+    nNextIRQCycle = nTotalCycles + 76800/2;
+    bGenerateIRQ = 1;
+
+    if (wrapped) {
         Adsp2100SetIRQLine(ADSP2105_IRQ1, ASSERT_LINE);
         Adsp2100Run(1);
         Adsp2100SetIRQLine(ADSP2105_IRQ1, CLEAR_LINE);
         nTotalCycles++;
     }
-
-    adsp->i[nTxIR] = r;
-
-    nNextIRQCycle = nTotalCycles + 76800;
-    bGenerateIRQ = 1;
 }
 
 static void TimerCallback(int enable)

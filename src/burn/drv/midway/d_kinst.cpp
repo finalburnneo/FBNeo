@@ -141,9 +141,10 @@ static UINT32 kinstRead(UINT32 address)
     if (address >= 0x10000080 && address <= 0x100000ff) {
         switch (address & 0xFF) {
         case 0x90:
+            tmp = ~2;
             if (Dcs2kDataRead() & 0x800)
-                return 2;
-            return ~0;
+                tmp |= 2;
+            return tmp;
         case 0x98:
             return nSoundData;
 

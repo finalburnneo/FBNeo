@@ -4,6 +4,8 @@
 //#include <QDebug>
 #include <cstdio>
 
+#define xlog(...)   fprintf(stdout, "dcs: " __VA_ARGS__); fflush(stdout)
+
 #define ENABLE_TRACE    0
 
 #define ADDR_BITS       16
@@ -37,11 +39,11 @@ static pAdsp2100TimerCallback pTimerCallback;
 static FILE *pTrace;
 #endif
 
-static unsigned short DefReadWord(unsigned int a) { return 0; }
-static unsigned int DefReadLong(unsigned int a) { return 0; }
+static unsigned short DefReadWord(unsigned int a) { xlog("DefReadWord %x\n", a); return 0; }
+static unsigned int DefReadLong(unsigned int a) { xlog("DefReadLong %x\n", a); return 0; }
 
-static void DefWriteWord(unsigned int a, unsigned short value) { }
-static void DefWriteLong(unsigned int a, unsigned int value) { }
+static void DefWriteWord(unsigned int a, unsigned short value) { xlog("DefWriteWord %x - %x\n", a, value);  }
+static void DefWriteLong(unsigned int a, unsigned int value) { xlog("DefWriteLog %x - %x\n", a, value); }
 
 static void ResetMemoryMap()
 {
@@ -281,8 +283,9 @@ inline void fast_write(uint8_t *xptr, unsigned adr, T value) {
 
 UINT16 adsp21xx_data_read_word_16le(UINT32 address)
 {
-    address &= 0xFFFF;
+//    address &= 0xFFFF;
     address >>= 1;
+    address &= 0x3FFF;
 
     UINT8 *pr = pMemMap->DataMap[PFN(address)];
     if ((uintptr_t)pr >= ADSP_MAXHANDLER) {
@@ -293,8 +296,9 @@ UINT16 adsp21xx_data_read_word_16le(UINT32 address)
 
 void adsp21xx_data_write_word_16le(UINT32 address, UINT16 data)
 {
-    address &= 0xFFFF;
+//    address &= 0xFFFF;
     address >>= 1;
+    address &= 0x3FFF;
 
     UINT8 *pr = pMemMap->DataMap[PAGE_WADD + PFN(address)];
     if ((uintptr_t)pr >= ADSP_MAXHANDLER) {
@@ -308,8 +312,9 @@ static UINT32 last_pc = 0xFFFFFFFF;
 extern int adsp21xx_dasm(char *buffer, UINT8 *oprom);
 UINT32 adsp21xx_read_dword_32le(UINT32 address)
 {
-    address &= 0xFFFF;
+//    address &= 0xFFFF;
     address >>= 2;
+    address &= 0x3FFF;
 
     UINT32 value = 0;
 
@@ -331,10 +336,11 @@ UINT32 adsp21xx_read_dword_32le(UINT32 address)
 
 void adsp21xx_write_dword_32le(UINT32 address, UINT32 data)
 {
-    address &= 0xFFFF;
+//    address &= 0xFFFF;
     address >>= 2;
+    address &= 0x3FFF;
 
-    UINT8 *pr = pMemMap->PrgMap[PFN(address)];
+    UINT8 *pr = pMemMap->PrgMap[PAGE_WADD + PFN(address)];
     if ((uintptr_t)pr >= ADSP_MAXHANDLER) {
         fast_write<uint32_t>(pr, address, BURN_ENDIAN_SWAP_INT32(data));
         return;

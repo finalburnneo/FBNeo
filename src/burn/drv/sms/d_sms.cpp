@@ -177,16 +177,14 @@ void system_manage_sram(UINT8 */*sram*/, INT32 /*slot*/, INT32 /*mode*/)
 }
 
 // Notes:
-// Super Arkanoid / Woody Pop - no input (needs paddle controller)
-// Back to the Future II - bottom of the screen is corrupt
-// Space Gun - won't boot (needs lightgun)
+// Back to the Future II - bottom of the screen is corrupt, playable
 // Street Fighter II - reboots @ game start
 // The Best Game Collection - don't work
 
 // GG:
-// Terminator 1 and 2 - weird issues in game, weird graphics at boot
-// Surf ninjas - weird graphics at boot
-// Tarzan - weird graphics at bottom of the screen
+// Terminator 1 and 2 - weird issues in game, weird graphics at boot, somewhat playable
+// Surf ninjas - weird graphics at boot, playable
+// Tarzan - weird graphics at bottom of the screen, playable
 
 static INT32 load_rom()
 {

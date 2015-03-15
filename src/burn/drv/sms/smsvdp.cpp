@@ -14,6 +14,11 @@ static const UINT8 tms_crom[] =
     0x04, 0x33, 0x15, 0x3F
 };
 
+static UINT32 TMS9928A_palette[16] = {
+	0x000000, 0x000000, 0x21c842, 0x5edc78, 0x5455ed, 0x7d76fc, 0xd4524d, 0x42ebf5,
+	0xfc5554, 0xff7978, 0xd4c154, 0xe6ce80, 0x21b03b, 0xc95bba, 0xcccccc, 0xffffff
+};
+
 /* Mark a pattern as dirty */
 #define MARK_BG_DIRTY(addr)                                \
 {                                                          \
@@ -29,7 +34,7 @@ static const UINT8 tms_crom[] =
 
 /* VDP context */
 vdp_t vdp;
-
+UINT32 smsvdp_tmsmode;
 
 /* Initialize VDP emulation */
 void vdp_init(void)
@@ -86,7 +91,8 @@ void viewport_check(void)
     {
         if(m4)
         {
-            /* Restore SMS palette */
+			smsvdp_tmsmode = 0;
+			/* Restore SMS palette */
             for(i = 0; i < PALETTE_SIZE; i++)
             {
                 palette_sync(i, 1);
@@ -94,26 +100,30 @@ void viewport_check(void)
         }
         else
         {
+			smsvdp_tmsmode = 1;
             /* Load TMS9918 palette */
             for(i = 0; i < PALETTE_SIZE; i++)
             {
-                INT32 r, g, b;
-    
-                r = (tms_crom[i & 0x0F] >> 0) & 3;
-                g = (tms_crom[i & 0x0F] >> 2) & 3;
-                b = (tms_crom[i & 0x0F] >> 4) & 3;
-        
-                r = sms_cram_expand_table[r];
-                g = sms_cram_expand_table[g];
-                b = sms_cram_expand_table[b];
-            
-                bitmap.pal.color[i][0] = r;
-                bitmap.pal.color[i][1] = g;
-                bitmap.pal.color[i][2] = b;
-            
-                pixel[i] = MAKE_PIXEL(r, g, b);
-            
-                bitmap.pal.dirty[i] = bitmap.pal.update = 1;
+				INT32 r, g, b;
+
+				/*r = (tms_crom[i & 0x0F] >> 0) & 3;
+				g = (tms_crom[i & 0x0F] >> 2) & 3;
+				b = (tms_crom[i & 0x0F] >> 4) & 3;
+
+				r = sms_cram_expand_table[r];
+				g = sms_cram_expand_table[g];
+				b = sms_cram_expand_table[b];*/
+				r = TMS9928A_palette[i & 0x0f] >> 16;
+				g = TMS9928A_palette[i & 0x0f] >> 8;
+				b = TMS9928A_palette[i & 0x0f] >> 0;
+
+				bitmap.pal.color[i][0] = r;
+				bitmap.pal.color[i][1] = g;
+				bitmap.pal.color[i][2] = b;
+
+				pixel[i] = MAKE_PIXEL(r, g, b);
+
+				bitmap.pal.dirty[i] = bitmap.pal.update = 1;
             }
         }
     }

@@ -49,6 +49,7 @@ typedef struct
 
 /* Global data */
 extern vdp_t vdp;
+extern UINT32 smsvdp_tmsmode;
 
 /* Function prototypes */
 void vdp_init(void);

@@ -222,6 +222,11 @@ void sms_reset(void)
 	if (IS_SMS)
 		sms.wram[0] = 0xA8; // BIOS usually sets this. (memory control register)
 
+	cart.fcr[0] = 0x00;
+	cart.fcr[1] = 0x00;
+	cart.fcr[2] = 0x01;
+	cart.fcr[3] = 0x00;
+
 	ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
 	ZetMapMemory(cart.rom + 0x0400, 0x0400, 0x3fff, MAP_ROM);
 	ZetMapMemory(cart.rom + 0x4000, 0x4000, 0x7fff, MAP_ROM);
@@ -241,14 +246,10 @@ void sms_reset(void)
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_RAM);
 		memset(&sms.wram[1], 0xf0, sizeof(sms.wram) - 1); // this fixes a few korean games
+		cart.fcr[2] = 0x00;
 	}
 	ZetReset();
 	ZetClose();
-
-    cart.fcr[0] = 0x00;
-    cart.fcr[1] = 0x00;
-    cart.fcr[2] = 0x01;
-	cart.fcr[3] = 0x00;
 
 	switch (cart.mapper)
 	{
@@ -277,6 +278,7 @@ void sms_mapper8k_w(INT32 address, UINT8 data) // WIP
 
     /* Save frame control register data */
     cart.fcr[address & 3] = data;
+	//bprintf(0, _T("pof(%X)a%X = %X,"), poffset, address, data);
 
 	/* 4 x 8k banks */
 	switch (address & 3)
@@ -327,6 +329,8 @@ void sms_mapper_w(INT32 address, UINT8 data)
 
         case 1: // page 0
 			ZetMapMemory(cart.rom + poffset, 0x0000, 0x3fff, MAP_ROM);
+			if(cart.mapper != MAPPER_CODIES) // first 1k is in the Sega mapper
+				ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
             break;
 
         case 2: // page 1

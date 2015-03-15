@@ -177,23 +177,16 @@ void system_manage_sram(UINT8 */*sram*/, INT32 /*slot*/, INT32 /*mode*/)
 }
 
 // Notes:
-// X-prefix = not working, possibly a different mapper(?)
-// Sangokushi 3 (Kor) is broke. maybe its a korean 8k mapper?
-// Super Arkanoid - no input??
-// Dinobasher - weird!
-// Earthworm Jim - crashes after title
-// GP Rider - goes mental in-game
-// Jang Pung 3 - goes mental @ boot
-// Space Gun - won't boot
-// Shadow Dancer - won't boot
+// Super Arkanoid / Woody Pop - no input (needs paddle controller)
+// Back to the Future II - bottom of the screen is corrupt
+// Space Gun - won't boot (needs lightgun)
 // Street Fighter II - reboots @ game start
-// Spiderman - Sinister Six - won't boot
 // The Best Game Collection - don't work
 
 // GG:
-// Terminator 1 and 2 - weird issues, weird graphics at boot
+// Terminator 1 and 2 - weird issues in game, weird graphics at boot
 // Surf ninjas - weird graphics at boot
-// Tarzan - freezes at game start
+// Tarzan - weird graphics at bottom of the screen
 
 static INT32 load_rom()
 {
@@ -334,26 +327,27 @@ INT32 SMSInit()
 static void system_load_state()
 {
 	if(cart.mapper == MAPPER_MSX || cart.mapper == MAPPER_MSX_NEMESIS || cart.mapper == MAPPER_KOREA8K) {
-		sms_mapper8k_w(3, cart.fcr[3]);
-		sms_mapper8k_w(2, cart.fcr[2]);
-		sms_mapper8k_w(1, cart.fcr[1]);
-		sms_mapper8k_w(0, cart.fcr[0]);
+		if (cart.fcr[3]) sms_mapper8k_w(3, cart.fcr[3]);
+		if (cart.fcr[2]) sms_mapper8k_w(2, cart.fcr[2]);
+		if (cart.fcr[1]) sms_mapper8k_w(1, cart.fcr[1]);
+		if (cart.fcr[0]) sms_mapper8k_w(0, cart.fcr[0]);
 	} else {
 		sms_mapper_w(3, cart.fcr[3]);
 		sms_mapper_w(2, cart.fcr[2]);
 		sms_mapper_w(1, cart.fcr[1]);
 		sms_mapper_w(0, cart.fcr[0]);
 
-		/* Force full pattern cache update */
-		bg_list_index = 0x200;
-		for(INT32 i = 0; i < 0x200; i++) {
-			bg_name_list[i] = i;
-			bg_name_dirty[i] = (UINT8)-1;
+		if (!smsvdp_tmsmode) {
+			/* Force full pattern cache update when not in a TMS9918 mode */
+			bg_list_index = 0x200;
+			for(INT32 i = 0; i < 0x200; i++) {
+				bg_name_list[i] = i;
+				bg_name_dirty[i] = (UINT8)-1;
+			}
+			/* Restore palette */
+			for(INT32 i = 0; i < PALETTE_SIZE; i++)
+				palette_sync(i, 1);
 		}
-
-		/* Restore palette */
-		for(INT32 i = 0; i < PALETTE_SIZE; i++)
-			palette_sync(i, 1);
 	}
 }
 
@@ -450,7 +444,7 @@ static struct BurnRomInfo sms_4pakRomDesc[] = {
 STD_ROM_PICK(sms_4pak)
 STD_ROM_FN(sms_4pak)
 
-struct BurnDriver BurnDrvsms_4pak = {
+struct BurnDriverD BurnDrvsms_4pak = {
 	"sms_4pak", NULL, NULL, NULL, "1995",
 	"4 PAK All Action (Aus)\0", NULL, "HES", "Sega Master System",
 	NULL, NULL, NULL, NULL,
@@ -470,7 +464,7 @@ static struct BurnRomInfo sms_20em1RomDesc[] = {
 STD_ROM_PICK(sms_20em1)
 STD_ROM_FN(sms_20em1)
 
-struct BurnDriver BurnDrvsms_20em1 = {
+struct BurnDriverD BurnDrvsms_20em1 = {
 	"sms_20em1", NULL, NULL, NULL, "1995",
 	"20 em 1 (Bra)\0", NULL, "Tec Toy", "Sega Master System",
 	NULL, NULL, NULL, NULL,
@@ -492,7 +486,7 @@ STD_ROM_FN(sms_3dragon)
 
 struct BurnDriver BurnDrvsms_3dragon = {
 	"sms_3dragon", NULL, NULL, NULL, "19??",
-	"The Three Dragon Story (Kor)\0", NULL, "Zemina?", "Sega Master System",
+	"The Three Dragon Story (Kor)\0", NULL, "Zemina", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_3dragonRomInfo, sms_3dragonRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -1710,7 +1704,7 @@ static struct BurnRomInfo sms_hicom3aRomDesc[] = {
 STD_ROM_PICK(sms_hicom3a)
 STD_ROM_FN(sms_hicom3a)
 
-struct BurnDriver BurnDrvsms_hicom3a = {
+struct BurnDriverD BurnDrvsms_hicom3a = {
 	"sms_hicom3a", NULL, NULL, NULL, "1990",
 	"The Best Game Collection - Hang On + Pit Pot + Spy vs Spy (Kor)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
@@ -1730,7 +1724,7 @@ static struct BurnRomInfo sms_hicom3bRomDesc[] = {
 STD_ROM_PICK(sms_hicom3b)
 STD_ROM_FN(sms_hicom3b)
 
-struct BurnDriver BurnDrvsms_hicom3b = {
+struct BurnDriverD BurnDrvsms_hicom3b = {
 	"sms_hicom3b", "sms_hicom3a", NULL, NULL, "1990",
 	"The Best Game Collection - Great Baseball + Great Soccer + Super Tennis (Kor)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
@@ -1750,7 +1744,7 @@ static struct BurnRomInfo sms_hicom3cRomDesc[] = {
 STD_ROM_PICK(sms_hicom3c)
 STD_ROM_FN(sms_hicom3c)
 
-struct BurnDriver BurnDrvsms_hicom3c = {
+struct BurnDriverD BurnDrvsms_hicom3c = {
 	"sms_hicom3c", "sms_hicom3a", NULL, NULL, "1990",
 	"The Best Game Collection - Teddy Boy Blues + Pit-Pot + Astro Flash (Kor)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
@@ -1770,7 +1764,7 @@ static struct BurnRomInfo sms_hicom3dRomDesc[] = {
 STD_ROM_PICK(sms_hicom3d)
 STD_ROM_FN(sms_hicom3d)
 
-struct BurnDriver BurnDrvsms_hicom3d = {
+struct BurnDriverD BurnDrvsms_hicom3d = {
 	"sms_hicom3d", "sms_hicom3a", NULL, NULL, "1990",
 	"The Best Game Collection - Teddy Boy Blues + Great Soccer + Comical Machine Gun Joe (Kor)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
@@ -1790,7 +1784,7 @@ static struct BurnRomInfo sms_hicom3eRomDesc[] = {
 STD_ROM_PICK(sms_hicom3e)
 STD_ROM_FN(sms_hicom3e)
 
-struct BurnDriver BurnDrvsms_hicom3e = {
+struct BurnDriverD BurnDrvsms_hicom3e = {
 	"sms_hicom3e", "sms_hicom3a", NULL, NULL, "1990",
 	"The Best Game Collection - Ghost House + Teddy Boy Blues + Seishun Scandal (Kor)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
@@ -1810,7 +1804,7 @@ static struct BurnRomInfo sms_hicom3fRomDesc[] = {
 STD_ROM_PICK(sms_hicom3f)
 STD_ROM_FN(sms_hicom3f)
 
-struct BurnDriver BurnDrvsms_hicom3f = {
+struct BurnDriverD BurnDrvsms_hicom3f = {
 	"sms_hicom3f", "sms_hicom3a", NULL, NULL, "1990",
 	"The Best Game Collection - Satellite-7 + Great Baseball + Seishun Scandal (Kor)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
@@ -1830,7 +1824,7 @@ static struct BurnRomInfo sms_hicom8aRomDesc[] = {
 STD_ROM_PICK(sms_hicom8a)
 STD_ROM_FN(sms_hicom8a)
 
-struct BurnDriver BurnDrvsms_hicom8a = {
+struct BurnDriverD BurnDrvsms_hicom8a = {
 	"sms_hicom8a", "sms_hicom3a", NULL, NULL, "1990",
 	"The Best Game Collection (Kor, 8 in 1 Ver. A)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
@@ -1850,7 +1844,7 @@ static struct BurnRomInfo sms_hicom8bRomDesc[] = {
 STD_ROM_PICK(sms_hicom8b)
 STD_ROM_FN(sms_hicom8b)
 
-struct BurnDriver BurnDrvsms_hicom8b = {
+struct BurnDriverD BurnDrvsms_hicom8b = {
 	"sms_hicom8b", "sms_hicom3a", NULL, NULL, "1990",
 	"The Best Game Collection (Kor, 8 in 1 Ver. B)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
@@ -1870,7 +1864,7 @@ static struct BurnRomInfo sms_hicom8cRomDesc[] = {
 STD_ROM_PICK(sms_hicom8c)
 STD_ROM_FN(sms_hicom8c)
 
-struct BurnDriver BurnDrvsms_hicom8c = {
+struct BurnDriverD BurnDrvsms_hicom8c = {
 	"sms_hicom8c", "sms_hicom3a", NULL, NULL, "1990",
 	"The Best Game Collection (Kor, 8 in 1 Ver. C)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
@@ -3114,7 +3108,7 @@ struct BurnDriver BurnDrvsms_dinobash = {
 	"sms_dinobash", NULL, NULL, NULL, "19??",
 	"Dinobasher Starring Bignose the Caveman (Euro, Prototype)\0", NULL, "Codemasters", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_CODIES | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
 	SMSGetZipName, sms_dinobashRomInfo, sms_dinobashRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -5712,7 +5706,7 @@ STD_ROM_FN(sms_knightm2)
 
 struct BurnDriver BurnDrvsms_knightm2 = {
 	"sms_knightm2", NULL, NULL, NULL, "199?",
-	"Knightmare II - The Maze of Galious (Kor)\0", NULL, "Zemina?", "Sega Master System",
+	"Knightmare II - The Maze of Galious (Kor)\0", NULL, "Zemina", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_MSX, GBF_MISC, 0,
 	SMSGetZipName, sms_knightm2RomInfo, sms_knightm2RomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,

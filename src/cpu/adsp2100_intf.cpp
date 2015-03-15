@@ -4,7 +4,8 @@
 //#include <QDebug>
 #include <cstdio>
 
-#define xlog(...)   fprintf(stdout, "dcs: " __VA_ARGS__); fflush(stdout)
+//#define xlog(...)   fprintf(stdout, "dcs: " __VA_ARGS__); fflush(stdout)
+#define xlog(...)
 
 #define ENABLE_TRACE    0
 

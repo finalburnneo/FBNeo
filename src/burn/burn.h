@@ -467,6 +467,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_SMS_MAPPER_KOREA    					(0x04)
 #define HARDWARE_SMS_MAPPER_KOREA8K 					(0x05)
 #define HARDWARE_SMS_MAPPER_KOREA16K 					(0x06)
+#define HARDWARE_SMS_MAPPER_4PAK     					(0x07)
 
 #define HARDWARE_SMS_GG_SMS_MODE						(0x2000)
 #define HARDWARE_SMS_DISPLAY_PAL						(0x4000)

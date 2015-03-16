@@ -95,6 +95,7 @@ void system_frame(INT32 skip_render)
         {
             vdp.status |= 0x80;
             vdp.vint_pending = 1;
+            ZetRun(8); // Fixes Zool, Monster Truck Wars, Chicago Syndacite, Terminator 2 (SMS)
 
             if(vdp.reg[0x01] & 0x20)
             {

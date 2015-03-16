@@ -59,6 +59,26 @@ void __fastcall writemem_mapper_korea(UINT16 offset, UINT8 data)
 	sms.wram[offset & 0x1fff] = data;
 }
 
+void __fastcall writemem_mapper_4pak(UINT16 offset, UINT8 data)
+{
+	switch (offset)	{
+		case 0x3FFE: {
+			sms_mapper_w(1, data);
+			return;
+		}
+		case 0x7FFF: {
+			sms_mapper_w(2, data);
+			return;
+		}
+		case 0xBFFF: {
+			sms_mapper_w(3, (cart.fcr[1] & 0x30) + data);
+			return;
+		}
+	}
+
+	sms.wram[offset & 0x1fff] = data;
+}
+
 void __fastcall writemem_mapper_korea8k(UINT16 offset, UINT8 data)
 {
 	if (offset == 0x4000) {
@@ -150,6 +170,11 @@ void sms_init(void)
 		ZetSetWriteHandler(writemem_mapper_korea8k);
 		ZetSetReadHandler(readmem_mapper_korea8k);
 	}
+	else if (cart.mapper == MAPPER_4PAK)
+	{
+		bprintf(0, _T("4PAK All Action\n"));
+		ZetSetWriteHandler(writemem_mapper_4pak);
+	}
 	else {
 		bprintf(0, _T("Sega\n"));
 		ZetSetWriteHandler(writemem_mapper_sega);
@@ -232,7 +257,7 @@ void sms_reset(void)
 	ZetMapMemory(cart.rom + 0x4000, 0x4000, 0x7fff, MAP_ROM);
 	ZetMapMemory(cart.rom + 0x8000, 0x8000, 0xbfff, MAP_ROM);
 
-	if(cart.mapper == MAPPER_CODIES) {
+	if(cart.mapper == MAPPER_CODIES || cart.mapper == MAPPER_4PAK) {
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_RAM);
 	} else
@@ -329,7 +354,7 @@ void sms_mapper_w(INT32 address, UINT8 data)
 
         case 1: // page 0
 			ZetMapMemory(cart.rom + poffset, 0x0000, 0x3fff, MAP_ROM);
-			if(cart.mapper != MAPPER_CODIES) // first 1k is in the Sega mapper
+			if(cart.mapper != MAPPER_CODIES && cart.mapper != MAPPER_4PAK) // first 1k is in the Sega mapper
 				ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
             break;
 

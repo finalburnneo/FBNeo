@@ -182,7 +182,6 @@ void system_manage_sram(UINT8 */*sram*/, INT32 /*slot*/, INT32 /*mode*/)
 // The Best Game Collection - don't work
 
 // GG:
-// Terminator 1 and 2 - weird issues in game, weird graphics at boot, somewhat playable
 // Surf ninjas - weird graphics at boot, playable
 // Tarzan - weird graphics at bottom of the screen, playable
 
@@ -246,6 +245,11 @@ static INT32 load_rom()
 
 		case HARDWARE_SMS_MAPPER_KOREA8K: {
 			cart.mapper = MAPPER_KOREA8K;
+			break;
+		}
+
+		case HARDWARE_SMS_MAPPER_4PAK: {
+			cart.mapper = MAPPER_4PAK;
 			break;
 		}
 
@@ -442,11 +446,11 @@ static struct BurnRomInfo sms_4pakRomDesc[] = {
 STD_ROM_PICK(sms_4pak)
 STD_ROM_FN(sms_4pak)
 
-struct BurnDriverD BurnDrvsms_4pak = {
+struct BurnDriver BurnDrvsms_4pak = {
 	"sms_4pak", NULL, NULL, NULL, "1995",
 	"4 PAK All Action (Aus)\0", NULL, "HES", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_4PAK, GBF_MISC, 0,
 	SMSGetZipName, sms_4pakRomInfo, sms_4pakRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -26164,7 +26168,7 @@ STD_ROM_FN(gg_term2)
 
 struct BurnDriver BurnDrvgg_term2 = {
 	"gg_term2", NULL, NULL, NULL, "1993",
-	"Terminator 2 - Judgment Day (Euro, USA)\0", NULL, "Flying Edge", "Sega Game Gear",
+	"Terminator 2 - Judgment Day (Euro, USA)\0", "Glitchy graphics, use the SMS version, instead!", "Flying Edge", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
 	GGGetZipName, gg_term2RomInfo, gg_term2RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,

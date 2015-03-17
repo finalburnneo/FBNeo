@@ -1,6 +1,6 @@
 // SDL_Sound module
 
-#include "SDL.h"
+#include <SDL/SDL.h>
 #include "burner.h"
 #include "aud_dsp.h"
 #include <math.h>
@@ -151,18 +151,18 @@ static int SDLSoundInit()
 	SDL_AudioSpec audiospec_req;
 	int nSDLBufferSize;
 
-	//dprintf(_T("SDLSoundInit (%dHz)"), nAudSampleRate);
+	dprintf(_T("SDLSoundInit (%dHz)\n"), nAudSampleRate[0]);
 
-	if (nAudSampleRate <= 0) {
+	if (nAudSampleRate[0] <= 0) {
 		return 1;
 	}
 
 	nSoundFps = nAppVirtualFps;
-	nAudSegLen = (44010 * 100 + (nSoundFps >> 1)) / nSoundFps;
+	nAudSegLen = (nAudSampleRate[0] * 100 + (nSoundFps >> 1)) / nSoundFps;
 	nAudLoopLen = (nAudSegLen * nAudSegCount) << 2;
 	for (nSDLBufferSize = 64; nSDLBufferSize < (nAudSegLen >> 1); nSDLBufferSize <<= 1) { }
 
-	audiospec_req.freq = 44010;
+	audiospec_req.freq = nAudSampleRate[0];
 	audiospec_req.format = AUDIO_S16;
 	audiospec_req.channels = 2;
 	audiospec_req.samples = nSDLBufferSize;
@@ -182,7 +182,6 @@ static int SDLSoundInit()
 		return 1;
 	}
 
-	nAudNextSound = SDLAudBuffer;
 	nSDLPlayPos = 0;
 	nSDLFillSeg = nAudSegCount - 1;
 

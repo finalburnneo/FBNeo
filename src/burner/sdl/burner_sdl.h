@@ -1,10 +1,6 @@
-#include "SDL.h"
-#if defined __GNUC__
-typedef unsigned char BYTE;
-typedef unsigned int DWORD;
-#endif
+#include <SDL/SDL.h>
 
-#ifndef _WIN32
+// defines to override various #ifndef _WIN32
 typedef struct tagRECT {
 	int left;
 	int top;
@@ -12,14 +8,16 @@ typedef struct tagRECT {
 	int bottom;
 } RECT,*PRECT,*LPRECT;
 typedef const RECT *LPCRECT;
-#endif
+
+typedef unsigned long DWORD;
+typedef unsigned char BYTE;
 
 #ifndef MAX_PATH
 #define MAX_PATH 511
 #endif
 
 #ifndef __cdecl
-#define	__cdecl
+#define __cdecl
 #endif
 
 //main.cpp
@@ -31,10 +29,8 @@ TCHAR* ANSIToTCHAR(const char* pszInString, TCHAR* pszOutString, int nOutSize);
 char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, int nOutSize);
 bool AppProcessKeyboardInput();
 
-
-
 //config.cpp
-int ConfigAppLoad();	
+int ConfigAppLoad();
 int ConfigAppSave();
 
 // drv.cpp
@@ -53,7 +49,6 @@ extern int RunReset();
 //inpdipsw.cpp
 void InpDIPSWResetDIPs();
 
-
 //interface/inp_interface.cpp
 int InputInit();
 int InputExit();
@@ -62,6 +57,7 @@ int InputMake(bool bCopy);
 //TODO:
 #define szAppBurnVer 1
 
+//stringset.cpp
 class StringSet {
 public:
 	TCHAR* szText;
@@ -73,3 +69,24 @@ public:
 	~StringSet();
 };
 
+// support_paths.cpp
+extern TCHAR szAppPreviewsPath[MAX_PATH];
+extern TCHAR szAppTitlesPath[MAX_PATH];
+extern TCHAR szAppSelectPath[MAX_PATH];
+extern TCHAR szAppVersusPath[MAX_PATH];
+extern TCHAR szAppHowtoPath[MAX_PATH];
+extern TCHAR szAppScoresPath[MAX_PATH];
+extern TCHAR szAppBossesPath[MAX_PATH];
+extern TCHAR szAppGameoverPath[MAX_PATH];
+extern TCHAR szAppFlyersPath[MAX_PATH];
+extern TCHAR szAppMarqueesPath[MAX_PATH];
+extern TCHAR szAppControlsPath[MAX_PATH];
+extern TCHAR szAppCabinetsPath[MAX_PATH];
+extern TCHAR szAppPCBsPath[MAX_PATH];
+extern TCHAR szAppCheatsPath[MAX_PATH];
+extern TCHAR szAppHistoryPath[MAX_PATH];
+extern TCHAR szAppListsPath[MAX_PATH];
+extern TCHAR szAppDatListsPath[MAX_PATH];
+extern TCHAR szAppIpsPath[MAX_PATH];
+extern TCHAR szAppIconsPath[MAX_PATH];
+extern TCHAR szAppArchivesPath[MAX_PATH];

@@ -14,27 +14,6 @@ probably many other things.
 int nAppVirtualFps = 6000;			// App fps * 100
 bool bRunPause=0;
 bool bAlwaysProcessKeyboardInput=0;
-TCHAR szAppHiscorePath[MAX_PATH] = _T("support/hiscores/");
-TCHAR szAppSamplesPath[MAX_PATH] = _T("support/samples/");
-TCHAR szAppCheatsPath[MAX_PATH] = _T("support/cheats/");
-bool bDoIpsPatch;
-
-TCHAR *GetIsoPath()
-{
-    return NULL;
-}
-
-void Reinitialise(void)
-{
-}
-
-void IpsApplyPatches(UINT8 *, char *)
-{
-}
-
-void wav_pause(bool bResume)
-{
-}
 
 void init_emu(int gamenum)
 {
@@ -55,27 +34,37 @@ void ProcessCommandLine(int argc, char *argv[])
 
 }
 
-int main(int argc, char *argv[]) 
+#undef main
+
+int main(int argc, char *argv[])
 {
 	UINT32 i=0;
-	
-	ConfigAppLoad(); 
-	
+
+	ConfigAppLoad();
+
 	CheckFirstTime(); // check for first time run
-	
+
 	SDL_Init(SDL_INIT_TIMER|SDL_INIT_VIDEO);
 
-	BurnLibInit(); 
+	BurnLibInit();
 
 	SDL_WM_SetCaption( "FBA, SDL port.", "FBA, SDL port.");
 	SDL_ShowCursor(SDL_DISABLE);
 
+	if (argc < 2)
+	{
+		int c;
+		printf ("Usage: fbasdl <romname>\n   ie: fbasdl uopoko\n Note: no extension.\n\n");
+
+		return 0;
+	}
+
 	if (argc == 2)
 	{
 		for (i = 0; i < nBurnDrvCount; i++) {
-            //nBurnDrvSelect[0] = i;
-            nBurnDrvActive = i;
-            if (strcmp(BurnDrvGetTextA(0), argv[1]) == 0) {
+			//nBurnDrvSelect[0] = i;
+			nBurnDrvActive = i;
+			if (strcmp(BurnDrvGetTextA(0), argv[1]) == 0) {
 				break;
 			}
 		}
@@ -88,7 +77,7 @@ int main(int argc, char *argv[])
 
 	InputInit();
 	init_emu(i);
-	
+
 	RunMessageLoop();
 	InputExit();
 

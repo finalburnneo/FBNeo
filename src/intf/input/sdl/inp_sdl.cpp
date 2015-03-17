@@ -1,5 +1,5 @@
 // Module for input using SDL
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 #include "burner.h"
 #include "inp_sdl_keys.h"
@@ -24,7 +24,8 @@ static int SDLinpJoystickInit(int i)
 static int SDLinpKeyboardInit()
 {
 	for (int i = 0; i < 512; i++) {
-		FBKtoSDL[SDLtoFBK[i]] = i;
+		if (SDLtoFBK[i] > 0)
+			FBKtoSDL[SDLtoFBK[i]] = i;
 	}
 
 	return 0;

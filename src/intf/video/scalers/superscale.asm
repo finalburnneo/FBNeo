@@ -45,12 +45,15 @@
 	SECTION .text ALIGN = 32
 	GLOBAL _superscale_line
 	GLOBAL _superscale_line_75
+	GLOBAL superscale_line
+	GLOBAL superscale_line_75
 
 %macro ALIGN32 0
         times ($$-$)&31 nop
 %endmacro
 
 _superscale_line:
+superscale_line:
 	push ebp
 	mov ebp,esp
 	push eax
@@ -122,6 +125,7 @@ iloop:
 ALIGN32
 
 _superscale_line_75:    ;do a 75% reduction on the final pixel colour
+superscale_line_75:    ;do a 75% reduction on the final pixel colour
 	push ebp
 	mov ebp,esp
 	push eax

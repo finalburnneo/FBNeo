@@ -494,7 +494,7 @@ INT32 PNGLoad(IMAGE* img, FILE* fp, INT32 nPreset)
 		png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
 	} else {
 
-#ifdef WIN32
+#ifdef BUILD_WIN32
 		// Find resource
 		HRSRC hrsrc = FindResource(NULL, MAKEINTRESOURCE(BMP_SPLASH), RT_BITMAP);
 		HGLOBAL hglobal = LoadResource(NULL, (HRSRC)hrsrc);

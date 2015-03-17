@@ -19,6 +19,8 @@ static int DoLibInit()					// Do Init of Burn library driver
 
 	BzipClose();
 
+	//ProgressDestroy();
+
 	if (nRet) {
 		return 1;
 	} else {
@@ -58,10 +60,10 @@ int DrvInit(int nDrvNum, bool bRestore)
 
 	nBurnSoundRate = 0;					// Assume no sound
 	pBurnSoundOut = NULL;
-//	if (bAudOkay) {
-//		nBurnSoundRate = nAudSampleRate;
-//		nBurnSoundLen = nAudSegLen;
-//	}
+	if (bAudOkay) {
+		nBurnSoundRate = nAudSampleRate[0];
+		nBurnSoundLen = nAudSegLen;
+	}
 	nBurnDrvSelect[0] = nDrvNum;		// Set the driver number
 
 	// Define nMaxPlayers early; GameInpInit() needs it (normally defined in DoLibInit()).
@@ -106,7 +108,7 @@ int DrvExit()
 
 		if (nBurnDrvSelect[0] < nBurnDrvCount) {
 			if (bSaveRAM) {
-				
+
 				bSaveRAM = false;
 			}
 
@@ -133,7 +135,6 @@ int DrvExit()
 
 int ProgressUpdateBurner(double dProgress, const TCHAR* pszText, bool bAbs)
 {
-	printf(".");
 	return 0;
 }
 

@@ -1,5 +1,3 @@
-#ifdef BUILD_SDL
-
 static int SDLtoFBK[512] = {
 	0,
 	-1,
@@ -324,5 +322,3 @@ static int SDLtoFBK[512] = {
 	-1,
 	-1,
 };
-
-#endif

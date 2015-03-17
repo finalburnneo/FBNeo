@@ -288,7 +288,7 @@ INT32 BurnStateSaveEmbed(FILE* fp, INT32 nOffset, INT32 bAll)
 	return nDefLen;
 }
 
-#ifdef _WIN32
+#ifdef BUILD_WIN32
 int FileExists(const TCHAR *fileName)
 {
     DWORD dwAttrib = GetFileAttributes(fileName);
@@ -301,7 +301,7 @@ int FileExists(const TCHAR *fileName)
 // SaveState Undo - restores the last savestate backup file. Windows-only at the moment.
 INT32 BurnStateUNDO(TCHAR* szName)
 {
-#ifdef _WIN32
+#ifdef BUILD_WIN32
          /*
          Savestate Undo
          derp.fs.backup0 -> derp.fs
@@ -363,7 +363,7 @@ INT32 BurnStateSave(TCHAR* szName, INT32 bAll)
          derp.fs.backup1 -> derpfs.backup2
          derp.fs.backup3 -> derpfs.backup4
          */
-#ifdef _WIN32
+#ifdef BUILD_WIN32
         if (_tcsstr(szName, _T(" slot "))) {
             for (INT32 i=MAX_STATEBACKUPS;i>=0;i--) {
                 TCHAR szBackupNameTo[1024] = _T("");

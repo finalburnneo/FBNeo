@@ -42,7 +42,9 @@ int ConfigAppLoad()
 
 		VAR(nIniVersion);
 		VAR(nVidSelect); // video mode select
-		VAR(bBurnUseASMCPUEmulation); // if you have a poor mans PC
+		VAR(bVidFullStretch);
+
+		VAR(nAutoFireRate);
 
 		// Other
 		STR(szAppRomPaths[0]);
@@ -53,6 +55,18 @@ int ConfigAppLoad()
 		STR(szAppRomPaths[5]);
 		STR(szAppRomPaths[6]);
 		STR(szAppRomPaths[7]);
+		STR(szAppRomPaths[8]);
+		STR(szAppRomPaths[9]);
+		STR(szAppRomPaths[10]);
+		STR(szAppRomPaths[11]);
+		STR(szAppRomPaths[12]);
+		STR(szAppRomPaths[13]);
+		STR(szAppRomPaths[14]);
+		STR(szAppRomPaths[15]);
+		STR(szAppRomPaths[16]);
+		STR(szAppRomPaths[17]);
+		STR(szAppRomPaths[18]);
+		STR(szAppRomPaths[19]);
 #undef STR
 #undef FLT
 #undef VAR
@@ -86,8 +100,11 @@ int ConfigAppSave()
 	fprintf(h,"\n// video mode 0 = standard SDL 1= (very expiermental) opengl\n");
 	VAR(nVidSelect); // video mode select
 
-	fprintf(h,"\n// use asm cpu cores (i.e. you need to buy a new PC)\n");
-	VAR(bBurnUseASMCPUEmulation);
+	fprintf(h,"\n// If non-zero, allow stretching of the image to any size\n");
+	VAR(bVidFullStretch);
+
+	fprintf(h,"\n// Auto-Fire Rate, non-linear - use the GUI to change this setting!\n");
+	VAR(nAutoFireRate);
 
 	fprintf(h,"\n// The paths to search for rom zips. (include trailing backslash)\n");
 	STR(szAppRomPaths[0]);
@@ -98,6 +115,18 @@ int ConfigAppSave()
 	STR(szAppRomPaths[5]);
 	STR(szAppRomPaths[6]);
 	STR(szAppRomPaths[7]);
+	STR(szAppRomPaths[8]);
+	STR(szAppRomPaths[9]);
+	STR(szAppRomPaths[10]);
+	STR(szAppRomPaths[11]);
+	STR(szAppRomPaths[12]);
+	STR(szAppRomPaths[13]);
+	STR(szAppRomPaths[14]);
+	STR(szAppRomPaths[15]);
+	STR(szAppRomPaths[16]);
+	STR(szAppRomPaths[17]);
+	STR(szAppRomPaths[18]);
+	STR(szAppRomPaths[19]);
 
 	fprintf(h,"\n\n\n");
 

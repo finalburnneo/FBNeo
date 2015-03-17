@@ -350,7 +350,7 @@ UINT8 vdp_read(INT32 offset)
 
 UINT8 vdp_counter_r(INT32 offset)
 {
-    INT32 cpixel;
+    //INT32 cpixel;
 
     switch(offset & 1)
     {
@@ -358,8 +358,9 @@ UINT8 vdp_counter_r(INT32 offset)
             return vc_table[sms.display][vdp.extended][vdp.line & 0x1FF];
 
         case 1: /* H Counter */
-            cpixel = (((ZetTotalCycles() % CYCLES_PER_LINE) / 4) * 3) * 2;
-            return hc_table[0][(cpixel >> 1) & 0x01FF];
+            //cpixel = (((ZetTotalCycles() % CYCLES_PER_LINE) / 4) * 3) * 2;
+			//return hc_table[0][(cpixel >> 1) & 0x01FF];
+			return hc_table[0][ZetTotalCycles() % CYCLES_PER_LINE];
     }
 
     /* Just to please the compiler */

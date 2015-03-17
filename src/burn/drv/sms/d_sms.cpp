@@ -183,7 +183,7 @@ void system_manage_sram(UINT8 */*sram*/, INT32 /*slot*/, INT32 /*mode*/)
 
 // GG:
 // Surf ninjas - weird graphics at boot, playable
-// Tarzan - weird graphics at bottom of the screen, playable
+// T2 - Judgement Day - glitchy sprites in-game, noted to play the SMS version instead.
 
 static INT32 load_rom()
 {
@@ -350,6 +350,7 @@ static void system_load_state()
 			for(INT32 i = 0; i < PALETTE_SIZE; i++)
 				palette_sync(i, 1);
 		}
+		viewport_check(); // maybe! - fixes 4pak all action sstates!
 	}
 }
 

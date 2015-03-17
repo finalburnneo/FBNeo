@@ -76,10 +76,11 @@ void system_frame(INT32 skip_render)
 
                 if(vdp.reg[0x00] & 0x10)
 				{
-					if (!(ZetTotalCycles() % CYCLES_PER_LINE)) {
+					/*if (!(ZetTotalCycles() % CYCLES_PER_LINE)) {
 						ZetRun(1);
 						z80cnt++;
-					}
+						}*/
+					ZetRun(16);
 					ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
                 }
             }
@@ -95,10 +96,10 @@ void system_frame(INT32 skip_render)
         {
             vdp.status |= 0x80;
             vdp.vint_pending = 1;
-            ZetRun(8); // Fixes Zool, Monster Truck Wars, Chicago Syndacite, Terminator 2 (SMS)
 
             if(vdp.reg[0x01] & 0x20)
             {
+				ZetRun(16); // Fixes Zool, Monster Truck Wars, Chicago Syndacite, Terminator 2 (SMS)
                 ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
             }
         }

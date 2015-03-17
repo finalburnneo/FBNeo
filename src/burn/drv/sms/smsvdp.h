@@ -61,6 +61,7 @@ void vdp_write(INT32 offset, UINT8 data);
 void gg_vdp_write(INT32 offset, UINT8 data);
 void md_vdp_write(INT32 offset, UINT8 data);
 void tms_write(INT32 offset, INT32 data);
+void viewport_check(void);
 
 #endif /* _VDP_H_ */
 

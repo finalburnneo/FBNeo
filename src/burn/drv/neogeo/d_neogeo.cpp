@@ -14214,10 +14214,10 @@ struct BurnDriver BurnDrvkof98ae = {
 };
 
 // The King of Fighters '98 (Combo, Ivex hack)
-/* 2015/03/02 version */
+/* 2015/03/10 version */
 static struct BurnRomInfo kof98coRomDesc[] = {
-	{ "kof98c-p1.bin", 	0x100000, 0x803afe36, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-	{ "kof98c-p2.bin", 	0x400000, 0x7e76f991, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "kof98c-p1.bin", 	0x100000, 0xe7b69efe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "kof98c-p2.bin", 	0x400000, 0xb4e8d712, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "kof98c-s1.bin", 	0x020000, 0x7333d8b0, 2 | BRF_GRA },           //  2 Text layer tiles
 

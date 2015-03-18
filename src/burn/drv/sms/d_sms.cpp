@@ -180,6 +180,7 @@ void system_manage_sram(UINT8 */*sram*/, INT32 /*slot*/, INT32 /*mode*/)
 // Back to the Future II - bottom of the screen is corrupt, playable
 // Street Fighter II - reboots @ game start
 // The Best Game Collection - don't work
+// Janggun ui Adeul (Kor) - needs decryption in the mapper
 
 // GG:
 // Surf ninjas - weird graphics at boot, playable
@@ -17371,7 +17372,7 @@ struct BurnDriver BurnDrvgg_jangpun2 = {
 	"gg_jangpun2", NULL, NULL, NULL, "1993",
 	"Jang Pung II (Kor, SMS Mode)\0", NULL, "Unknown", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_MAPPER_CODIES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_MAPPER_CODIES | HARDWARE_SMS_GG_SMS_MODE, GBF_MISC, 0,
 	GGGetZipName, gg_jangpun2RomInfo, gg_jangpun2RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3

@@ -18,10 +18,6 @@ INT32 sound_init(void)
     /* Disable sound until initialization is complete */
     snd.enabled = 0;
 
-    /* Check if sample rate is invalid */
-    if(snd.sample_rate < 8000 || snd.sample_rate > 48000)
-        return 0;
-
     // Init sound emulation
 	SN76489Init(0, snd.psg_clock, 1);
 	SN76496SetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);

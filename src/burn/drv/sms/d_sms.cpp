@@ -313,13 +313,8 @@ INT32 SMSInit()
     bitmap.viewport.w = 256;
     bitmap.viewport.h = 192;
 
-    snd.fm_which = SND_EMU2413;
-    snd.fps = (1) ? FPS_NTSC : FPS_PAL;
-    snd.fm_clock = (1) ? CLOCK_NTSC : CLOCK_PAL;
-    snd.psg_clock = (1) ? CLOCK_NTSC : CLOCK_PAL;
-    snd.sample_rate = nBurnSoundRate;
-    snd.mixer_callback = NULL;
-
+    snd.fm_clock = (sms.display == DISPLAY_PAL) ? CLOCK_PAL : CLOCK_NTSC;
+    snd.psg_clock = (sms.display == DISPLAY_PAL) ? CLOCK_PAL : CLOCK_NTSC;
 	sms.use_fm = (SMSDips[0] & 0x04);
 
     system_init();
@@ -17032,7 +17027,7 @@ struct BurnDriver BurnDrvgg_hurrican = {
 	"gg_hurrican", NULL, NULL, NULL, "1994",
 	"Hurricanes (Euro)\0", NULL, "U.S. Gold", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_MAPPER_CODIES | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
 	GGGetZipName, gg_hurricanRomInfo, gg_hurricanRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -17312,7 +17307,7 @@ struct BurnDriver BurnDrvgg_jpond3 = {
 	"gg_jpond3", NULL, NULL, NULL, "1994",
 	"James Pond 3 - Operation Starfish (Euro)\0", NULL, "U.S. Gold", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
 	GGGetZipName, gg_jpond3RomInfo, gg_jpond3RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -17872,7 +17867,7 @@ struct BurnDriver BurnDrvgg_lastact = {
 	"gg_lastact", NULL, NULL, NULL, "1992",
 	"Last Action Hero (USA)\0", NULL, "Sony Imagesoft", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_MAPPER_CODIES | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
 	GGGetZipName, gg_lastactRomInfo, gg_lastactRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -18872,7 +18867,7 @@ struct BurnDriver BurnDrvgg_micromac = {
 	"gg_micromac", NULL, NULL, NULL, "1993",
 	"Micro Machines (Euro)\0", NULL, "Codemasters", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_MAPPER_CODIES, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_MAPPER_CODIES | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
 	GGGetZipName, gg_micromacRomInfo, gg_micromacRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3

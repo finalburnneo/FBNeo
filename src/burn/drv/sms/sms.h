@@ -96,6 +96,7 @@ void sms_reset(void);
 void sms_shutdown(void);
 void sms_mapper_w(INT32 address, UINT8 data);
 void sms_mapper8k_w(INT32 address, UINT8 data);
+void sms_mapper8kvirt_w(INT32 address, UINT8 data);
 
 /* port-map Function prototypes */
 UINT8 z80_read_unmapped(void);

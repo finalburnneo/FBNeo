@@ -224,6 +224,10 @@ static INT32 load_rom()
 
 	// Override mapper from hardware code
 	switch (BurnDrvGetHardwareCode() & 0xff) {
+		case HARDWARE_SMS_MAPPER_NONE:
+			cart.mapper = MAPPER_NONE;
+			break;
+
 		case HARDWARE_SMS_MAPPER_CODIES: {
 			cart.mapper = MAPPER_CODIES;
 			break;
@@ -324,16 +328,23 @@ INT32 SMSInit()
 
 static void system_load_state()
 {
-	if(cart.mapper == MAPPER_MSX || cart.mapper == MAPPER_MSX_NEMESIS || cart.mapper == MAPPER_KOREA8K) {
+	if(cart.mapper == MAPPER_MSX || cart.mapper == MAPPER_MSX_NEMESIS) {
 		if (cart.fcr[3]) sms_mapper8k_w(3, cart.fcr[3]);
 		if (cart.fcr[2]) sms_mapper8k_w(2, cart.fcr[2]);
 		if (cart.fcr[1]) sms_mapper8k_w(1, cart.fcr[1]);
 		if (cart.fcr[0]) sms_mapper8k_w(0, cart.fcr[0]);
 	} else {
-		sms_mapper_w(3, cart.fcr[3]);
-		sms_mapper_w(2, cart.fcr[2]);
-		sms_mapper_w(1, cart.fcr[1]);
-		sms_mapper_w(0, cart.fcr[0]);
+		if(cart.mapper == MAPPER_KOREA8K) {
+			if (cart.fcr[3]) sms_mapper8kvirt_w(3, cart.fcr[3]);
+			if (cart.fcr[2]) sms_mapper8kvirt_w(2, cart.fcr[2]);
+			if (cart.fcr[1]) sms_mapper8kvirt_w(1, cart.fcr[1]);
+			if (cart.fcr[0]) sms_mapper8kvirt_w(0, cart.fcr[0]);
+		} else {
+			sms_mapper_w(3, cart.fcr[3]);
+			sms_mapper_w(2, cart.fcr[2]);
+			sms_mapper_w(1, cart.fcr[1]);
+			sms_mapper_w(0, cart.fcr[0]);
+		}
 
 		if (!smsvdp_tmsmode) {
 			/* Force full pattern cache update when not in a TMS9918 mode */
@@ -7307,7 +7318,7 @@ struct BurnDriver BurnDrvsms_pooyan = {
 	"sms_pooyan", NULL, NULL, NULL, "19??",
 	"Pooyan (Kor)\0", NULL, "HiCom", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_MSX, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_NONE, GBF_MISC, 0,
 	SMSGetZipName, sms_pooyanRomInfo, sms_pooyanRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3

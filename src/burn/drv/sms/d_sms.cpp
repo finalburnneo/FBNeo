@@ -258,6 +258,11 @@ static INT32 load_rom()
 			break;
 		}
 
+		case HARDWARE_SMS_MAPPER_XIN1: {
+			cart.mapper = MAPPER_XIN1;
+			break;
+		}
+
 		default: {
 			cart.mapper = MAPPER_SEGA;
 			break;
@@ -339,7 +344,7 @@ static void system_load_state()
 			if (cart.fcr[2]) sms_mapper8kvirt_w(2, cart.fcr[2]);
 			if (cart.fcr[1]) sms_mapper8kvirt_w(1, cart.fcr[1]);
 			if (cart.fcr[0]) sms_mapper8kvirt_w(0, cart.fcr[0]);
-		} else {
+		} else if (cart.mapper != MAPPER_XIN1 && cart.mapper != MAPPER_NONE) {
 			sms_mapper_w(3, cart.fcr[3]);
 			sms_mapper_w(2, cart.fcr[2]);
 			sms_mapper_w(1, cart.fcr[1]);
@@ -357,7 +362,7 @@ static void system_load_state()
 			for(INT32 i = 0; i < PALETTE_SIZE; i++)
 				palette_sync(i, 1);
 		}
-		viewport_check(); // maybe! - fixes 4pak all action sstates!
+		viewport_check(); // fixes 4pak all action sstate screen corruption
 	}
 }
 
@@ -1714,11 +1719,11 @@ static struct BurnRomInfo sms_hicom3aRomDesc[] = {
 STD_ROM_PICK(sms_hicom3a)
 STD_ROM_FN(sms_hicom3a)
 
-struct BurnDriverD BurnDrvsms_hicom3a = {
+struct BurnDriver BurnDrvsms_hicom3a = {
 	"sms_hicom3a", NULL, NULL, NULL, "1990",
 	"The Best Game Collection - Hang On + Pit Pot + Spy vs Spy (Kor)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom3aRomInfo, sms_hicom3aRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -1734,11 +1739,11 @@ static struct BurnRomInfo sms_hicom3bRomDesc[] = {
 STD_ROM_PICK(sms_hicom3b)
 STD_ROM_FN(sms_hicom3b)
 
-struct BurnDriverD BurnDrvsms_hicom3b = {
+struct BurnDriver BurnDrvsms_hicom3b = {
 	"sms_hicom3b", "sms_hicom3a", NULL, NULL, "1990",
 	"The Best Game Collection - Great Baseball + Great Soccer + Super Tennis (Kor)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom3bRomInfo, sms_hicom3bRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -1754,11 +1759,11 @@ static struct BurnRomInfo sms_hicom3cRomDesc[] = {
 STD_ROM_PICK(sms_hicom3c)
 STD_ROM_FN(sms_hicom3c)
 
-struct BurnDriverD BurnDrvsms_hicom3c = {
+struct BurnDriver BurnDrvsms_hicom3c = {
 	"sms_hicom3c", "sms_hicom3a", NULL, NULL, "1990",
 	"The Best Game Collection - Teddy Boy Blues + Pit-Pot + Astro Flash (Kor)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom3cRomInfo, sms_hicom3cRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -1774,11 +1779,11 @@ static struct BurnRomInfo sms_hicom3dRomDesc[] = {
 STD_ROM_PICK(sms_hicom3d)
 STD_ROM_FN(sms_hicom3d)
 
-struct BurnDriverD BurnDrvsms_hicom3d = {
+struct BurnDriver BurnDrvsms_hicom3d = {
 	"sms_hicom3d", "sms_hicom3a", NULL, NULL, "1990",
 	"The Best Game Collection - Teddy Boy Blues + Great Soccer + Comical Machine Gun Joe (Kor)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom3dRomInfo, sms_hicom3dRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -1794,11 +1799,11 @@ static struct BurnRomInfo sms_hicom3eRomDesc[] = {
 STD_ROM_PICK(sms_hicom3e)
 STD_ROM_FN(sms_hicom3e)
 
-struct BurnDriverD BurnDrvsms_hicom3e = {
+struct BurnDriver BurnDrvsms_hicom3e = {
 	"sms_hicom3e", "sms_hicom3a", NULL, NULL, "1990",
 	"The Best Game Collection - Ghost House + Teddy Boy Blues + Seishun Scandal (Kor)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom3eRomInfo, sms_hicom3eRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -1814,11 +1819,11 @@ static struct BurnRomInfo sms_hicom3fRomDesc[] = {
 STD_ROM_PICK(sms_hicom3f)
 STD_ROM_FN(sms_hicom3f)
 
-struct BurnDriverD BurnDrvsms_hicom3f = {
+struct BurnDriver BurnDrvsms_hicom3f = {
 	"sms_hicom3f", "sms_hicom3a", NULL, NULL, "1990",
 	"The Best Game Collection - Satellite-7 + Great Baseball + Seishun Scandal (Kor)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom3fRomInfo, sms_hicom3fRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -1834,11 +1839,11 @@ static struct BurnRomInfo sms_hicom8aRomDesc[] = {
 STD_ROM_PICK(sms_hicom8a)
 STD_ROM_FN(sms_hicom8a)
 
-struct BurnDriverD BurnDrvsms_hicom8a = {
+struct BurnDriver BurnDrvsms_hicom8a = {
 	"sms_hicom8a", "sms_hicom3a", NULL, NULL, "1990",
 	"The Best Game Collection (Kor, 8 in 1 Ver. A)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom8aRomInfo, sms_hicom8aRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -1854,11 +1859,11 @@ static struct BurnRomInfo sms_hicom8bRomDesc[] = {
 STD_ROM_PICK(sms_hicom8b)
 STD_ROM_FN(sms_hicom8b)
 
-struct BurnDriverD BurnDrvsms_hicom8b = {
+struct BurnDriver BurnDrvsms_hicom8b = {
 	"sms_hicom8b", "sms_hicom3a", NULL, NULL, "1990",
 	"The Best Game Collection (Kor, 8 in 1 Ver. B)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom8bRomInfo, sms_hicom8bRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -1874,11 +1879,11 @@ static struct BurnRomInfo sms_hicom8cRomDesc[] = {
 STD_ROM_PICK(sms_hicom8c)
 STD_ROM_FN(sms_hicom8c)
 
-struct BurnDriverD BurnDrvsms_hicom8c = {
+struct BurnDriver BurnDrvsms_hicom8c = {
 	"sms_hicom8c", "sms_hicom3a", NULL, NULL, "1990",
 	"The Best Game Collection (Kor, 8 in 1 Ver. C)\0", NULL, "Hi-Com", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_XIN1, GBF_MISC, 0,
 	SMSGetZipName, sms_hicom8cRomInfo, sms_hicom8cRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3

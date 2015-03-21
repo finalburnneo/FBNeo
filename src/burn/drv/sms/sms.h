@@ -17,7 +17,8 @@ enum {
 	MAPPER_MSX_NEMESIS  = 4,
 	MAPPER_KOREA        = 5,
 	MAPPER_KOREA8K      = 6,
-	MAPPER_4PAK         = 7
+	MAPPER_4PAK         = 7,
+	MAPPER_XIN1         = 8
 };
 
 enum {

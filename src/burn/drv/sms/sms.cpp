@@ -87,6 +87,30 @@ void __fastcall writemem_mapper_4pak(UINT16 offset, UINT8 data)
 	sms.wram[offset & 0x1fff] = data;
 }
 
+void __fastcall writemem_mapper_xin1(UINT16 offset, UINT8 data)
+{
+	if (offset == 0xFFFF) {
+		sms.wram[0x1fff] = data;
+		cart.fcr[0] = data % (cart.pages * 2);
+		return;
+	}
+
+	sms.wram[offset & 0x1fff] = data;
+}
+
+UINT8 __fastcall readmem_mapper_xin1(UINT16 offset) // HiCom Xin1
+{
+	if(offset >= 0xc000 && offset <= 0xffff)
+		return sms.wram[offset & 0x1fff];
+	else
+	if (offset >= 0x8000) {
+		return cart.rom[offset & 0x3fff];
+	}
+
+	return cart.rom[(cart.fcr[0] * 0x8000) + offset];
+}
+
+
 void __fastcall writemem_mapper_korea8k(UINT16 offset, UINT8 data)
 {
 	if (offset == 0x4000) {
@@ -199,6 +223,12 @@ void sms_init(void)
 		bprintf(0, _T("4PAK All Action\n"));
 		ZetSetWriteHandler(writemem_mapper_4pak);
 	}
+	else if (cart.mapper == MAPPER_XIN1)
+	{
+		bprintf(0, _T("Hi Com Xin1\n"));
+		ZetSetWriteHandler(writemem_mapper_xin1);
+		ZetSetReadHandler(readmem_mapper_xin1);
+	}
 	else {
 		bprintf(0, _T("Sega\n"));
 		ZetSetWriteHandler(writemem_mapper_sega);
@@ -286,6 +316,10 @@ void sms_reset(void)
 		korean8kmap8000_9fff = cart.rom + 0x8000;
 		korean8kmapa000_bfff = cart.rom + 0xa000;
 		cart.fcr[2] = 0x00;
+	} else
+	if (cart.mapper == MAPPER_XIN1) {
+		// HiCom Xin1 Carts
+		// Nothing here (uses virtual mapping, see readmem/writemem_mapper_xin1())
 	} else {
 		ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
 		ZetMapMemory(cart.rom + 0x0400, 0x0400, 0x3fff, MAP_ROM);
@@ -298,7 +332,7 @@ void sms_reset(void)
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_RAM);
 	} else
-	if(cart.mapper == MAPPER_SEGA || cart.mapper == MAPPER_KOREA8K) {
+	if(cart.mapper == MAPPER_SEGA || cart.mapper == MAPPER_KOREA8K || cart.mapper == MAPPER_XIN1) {
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
 		ZetMapMemory((UINT8 *)&dummy_write, 0x0000, 0xbfff, MAP_WRITE);
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_READ);
@@ -396,6 +430,7 @@ void sms_mapper_w(INT32 address, UINT8 data)
 {
     /* Calculate ROM page index */
 	UINT32 poffset = (data % cart.pages) << 14;
+   	//bprintf(0, _T("address[%X] pof(%X) data[%X],"), address, poffset, data);
 
     /* Save frame control register data */
     cart.fcr[address & 3] = data;
@@ -420,7 +455,7 @@ void sms_mapper_w(INT32 address, UINT8 data)
 
         case 1: // page 0
 			ZetMapMemory(cart.rom + poffset, 0x0000, 0x3fff, MAP_ROM);
-			if(cart.mapper != MAPPER_CODIES && cart.mapper != MAPPER_4PAK) // first 1k is in the Sega mapper
+			if(cart.mapper != MAPPER_CODIES && cart.mapper != MAPPER_4PAK && cart.mapper != MAPPER_XIN1) // first 1k is in the Sega mapper
 				ZetMapMemory(cart.rom + 0x0000, 0x0000, 0x03ff, MAP_ROM);
             break;
 

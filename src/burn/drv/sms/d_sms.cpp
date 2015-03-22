@@ -101,6 +101,16 @@ INT32 SMSExit()
 	return 0;
 }
 
+static inline void DrvClearOpposites(UINT8* nJoystickInputs)
+{
+	if ((*nJoystickInputs & 0x03) == 0x03) {
+		*nJoystickInputs &= ~0x03;
+	}
+	if ((*nJoystickInputs & 0x0c) == 0x0c) {
+		*nJoystickInputs &= ~0x0c;
+	}
+}
+
 void DrvCalcPalette()
 {
 	for (INT32 i = 0; i < PALETTE_SIZE; i++)
@@ -135,24 +145,22 @@ INT32 SMSFrame()
 		input.analog[0] = 0x7F;
 		input.analog[1] = 0x7F;
 
-        /* Parse player 1 joystick state */
-        if(SMSJoy1[3]) input.pad[0] |= INPUT_UP;
-        else
-        if(SMSJoy1[4]) input.pad[0] |= INPUT_DOWN;
-        if(SMSJoy1[5]) input.pad[0] |= INPUT_LEFT;
-        else
-        if(SMSJoy1[6]) input.pad[0] |= INPUT_RIGHT;
-        if(SMSJoy1[7]) input.pad[0] |= INPUT_BUTTON2;
+		/* Parse player 1 joystick state */
+		if(SMSJoy1[3]) input.pad[0] |= INPUT_UP;
+		if(SMSJoy1[4]) input.pad[0] |= INPUT_DOWN;
+		if(SMSJoy1[5]) input.pad[0] |= INPUT_LEFT;
+		if(SMSJoy1[6]) input.pad[0] |= INPUT_RIGHT;
+		if(SMSJoy1[7]) input.pad[0] |= INPUT_BUTTON2;
 		if(SMSJoy1[8]) input.pad[0] |= INPUT_BUTTON1;
+		DrvClearOpposites(&input.pad[0]);
 		// Player 2
 		if(SMSJoy2[3]) input.pad[1] |= INPUT_UP;
-        else
-        if(SMSJoy2[4]) input.pad[1] |= INPUT_DOWN;
-        if(SMSJoy2[5]) input.pad[1] |= INPUT_LEFT;
-        else
-        if(SMSJoy2[6]) input.pad[1] |= INPUT_RIGHT;
-        if(SMSJoy2[7]) input.pad[1] |= INPUT_BUTTON2;
+		if(SMSJoy2[4]) input.pad[1] |= INPUT_DOWN;
+		if(SMSJoy2[5]) input.pad[1] |= INPUT_LEFT;
+		if(SMSJoy2[6]) input.pad[1] |= INPUT_RIGHT;
+		if(SMSJoy2[7]) input.pad[1] |= INPUT_BUTTON2;
 		if(SMSJoy2[8]) input.pad[1] |= INPUT_BUTTON1;
+		DrvClearOpposites(&input.pad[1]);
 		if(SMSJoy1[1]) input.system |= (IS_GG) ? INPUT_START : INPUT_PAUSE;
 
 		gg_overscanmode = (SMSDips[0] & 0x08);
@@ -179,8 +187,6 @@ void system_manage_sram(UINT8 */*sram*/, INT32 /*slot*/, INT32 /*mode*/)
 // Notes:
 // Back to the Future II - bottom of the screen is corrupt, playable
 // Street Fighter II - reboots @ game start
-// The Best Game Collection - don't work
-// Janggun ui Adeul (Kor) - needs decryption in the mapper
 
 // GG:
 // Surf ninjas - weird graphics at boot, playable

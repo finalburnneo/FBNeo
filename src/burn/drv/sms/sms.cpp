@@ -12,9 +12,9 @@ sms_t sms;
 UINT8 data_bus_pullup   = 0x00;
 UINT8 data_bus_pulldown = 0x00;
 
-UINT8 dummy_write[0xffff];
+static UINT8 dummy_write[0xffff];
 
-UINT8 *korean8kmap8000_9fff, *korean8kmapa000_bfff, *korean8kmap4000_5fff, *korean8kmap6000_7fff;
+static UINT8 *korean8kmap8000_9fff, *korean8kmapa000_bfff, *korean8kmap4000_5fff, *korean8kmap6000_7fff;
 
 void __fastcall writemem_mapper_sega(UINT16 offset, UINT8 data)
 {

@@ -164,8 +164,8 @@ STD_ROM_FN(bgaregtw)
 static struct BurnRomInfo bgareggablRomDesc[] = {
 	{ "xt-8m.bin",    0x100000, 0x4a6657cb, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 
-	{ "6#-322",       0x400000, 0x37fe48ed, BRF_GRA },			 //  1 GP9001 Tile data
-	{ "5#-322",       0x400000, 0x5a06c031, BRF_GRA },			 //  2
+	{ "6#-322",       0x400000, 0x37fe48ed, BRF_GRA },			 //  1 GP9001 Tile data // rom4.bin + rom3.bin
+	{ "5#-322",       0x400000, 0x5a06c031, BRF_GRA },			 //  2					// rom2.bin + rom1.bin
 
 	{ "1#-256",       0x008000, 0x760dcd14, BRF_GRA },			 //  3 Extra text layer tile data
 
@@ -179,6 +179,26 @@ static struct BurnRomInfo bgareggablRomDesc[] = {
 
 STD_ROM_PICK(bgareggabl)
 STD_ROM_FN(bgareggabl)
+
+
+static struct BurnRomInfo bgareggablaRomDesc[] = {
+	{ "27c8100.mon-sys",    0x100000, 0xD334E5AA, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+
+	{ "6#-322",       0x400000, 0x37fe48ed, BRF_GRA },			 //  1 GP9001 Tile data // rom4.bin + rom3.bin
+	{ "5#-322",       0x400000, 0x5a06c031, BRF_GRA },			 //  2					// rom2.bin + rom1.bin
+
+	{ "text.bin",     0x008000, 0x00D100BD, BRF_GRA },			 //  3 Extra text layer tile data
+
+	{ "snd.bin",      0x020000, 0x68632952, BRF_ESS | BRF_PRG }, //  4 Z80 program
+
+	{ "rom5.bin",     0x100000, 0xF6D49863, BRF_SND },			 //  5 MSM6295 ADPCM data
+	
+	{ "base.bin",     0x008000, 0x456dd16e, BRF_GRA },			 //  6 (looks like garbage)
+};
+
+
+STD_ROM_PICK(bgareggabla)
+STD_ROM_FN(bgareggabla)
 
 static struct BurnInputInfo battlegInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvButton + 3,	"p1 coin"},
@@ -1043,6 +1063,16 @@ struct BurnDriver BurnDrvBgareggabl = {
 	L"1945 Part 2\0\uFF11\uFF19\uFF14\uFF15\u4E8C\u4EE3 (Chinese hack of Battle Garegga)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HACK, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bgareggablRomInfo, bgareggablRomName, NULL, NULL, battlegInputInfo, bgareggaDIPInfo,
+	BgareggablInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	240, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvBgareggabla = {
+	"bgareggabla", "bgaregga", NULL, NULL, "1996",
+	"Thunder Deity Biography (Chinese hack of Battle Garegga)\0", NULL, "hack", "Toaplan GP9001 based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HACK, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	NULL, bgareggablaRomInfo, bgareggablaRomName, NULL, NULL, battlegInputInfo, bgareggaDIPInfo,
 	BgareggablInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

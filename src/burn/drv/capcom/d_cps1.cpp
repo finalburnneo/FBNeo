@@ -7143,7 +7143,7 @@ static struct BurnRomInfo MtwinsRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "ck24b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
+	{ "ck24b.1a",      0x000117, 0xbd99c448, BRF_OPT }, // b-board PLDs
 	{ "iob1.11e",      0x000117, 0x3abc0700, BRF_OPT },
 };
 

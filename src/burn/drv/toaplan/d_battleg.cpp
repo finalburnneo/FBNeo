@@ -1069,8 +1069,8 @@ struct BurnDriver BurnDrvBgareggabl = {
 
 struct BurnDriver BurnDrvBgareggabla = {
 	"bgareggabla", "bgaregga", NULL, NULL, "1996",
-	"Thunder Deity Biography (Chinese hack of Battle Garegga)\0", NULL, "hack", "Toaplan GP9001 based",
-	L"\u96F7\u795E\u50B3\0Lei Shen Zhuan (Chinese hack of Battle Garegga)\0" , NULL, NULL, NULL,
+	"Lei Shen Zhuan Thunder Deity Biography (Chinese hack of Battle Garegga)\0", NULL, "hack", "Toaplan GP9001 based",
+	L"\u96F7\u795E\u50B3\0Lei Shen Zhuan Thunder Deity Biography (Chinese hack of Battle Garegga)\0" , NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HACK, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bgareggablaRomInfo, bgareggablaRomName, NULL, NULL, battlegInputInfo, bgareggaDIPInfo,
 	BgareggablInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,

@@ -7253,7 +7253,8 @@ struct BurnDriver BurnDrvBubl2000 = {
 };
 
 
-// Hot Bubble
+// Hot Bubble (Korea, with adult pictures)
+/* Korean release - Nude images of women for backgrounds */
 
 static struct BurnRomInfo hotbublRomDesc[] = {
 	{ "c2.uc9",			0x040000, 0x7917b95d, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
@@ -7281,7 +7282,7 @@ STD_ROM_FN(hotbubl)
 
 struct BurnDriver BurnDrvHotbubl = {
 	"hotbubl", "bubl2000", NULL, NULL, "1998",
-	"Hot Bubble\0", NULL, "Afega (Pandora license)", "NMK16",
+	"Hot Bubble (Korea, with adult pictures)\0", NULL, "Afega (Pandora license)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, hotbublRomInfo, hotbublRomName, NULL, NULL, CommonInputInfo, Bubl2000DIPInfo,
@@ -7293,7 +7294,7 @@ struct BurnDriver BurnDrvHotbubl = {
 // Hot Bubble (Korea)
 /* Korean release - Nude images replaced with pictures of satellite dishes */
 
-static struct BurnRomInfo hotbublkRomDesc[] = {
+static struct BurnRomInfo hotbublaRomDesc[] = {
 	{ "7_c2.uc9",		0x040000, 0x74eb11c3, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
 	{ "6_c1.uc1",		0x040000, 0x7c65bf47, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -7314,15 +7315,15 @@ static struct BurnRomInfo hotbublkRomDesc[] = {
 	{ "1_s2.uc18",		0x040000, 0x401c980f, 6 | BRF_SND },           // 12 OKI1 Samples
 };
 
-STD_ROM_PICK(hotbublk)
-STD_ROM_FN(hotbublk)
+STD_ROM_PICK(hotbubla)
+STD_ROM_FN(hotbubla)
 
-struct BurnDriver BurnDrvHotbublk = {
-	"hotbublk", "bubl2000", NULL, NULL, "1998",
+struct BurnDriver BurnDrvHotbubla = {
+	"hotbubla", "bubl2000", NULL, NULL, "1998",
 	"Hot Bubble (Korea)\0", NULL, "Afega (Pandora license)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, hotbublkRomInfo, hotbublkRomName, NULL, NULL, CommonInputInfo, Bubl2000DIPInfo,
+	NULL, hotbublaRomInfo, hotbublaRomName, NULL, NULL, CommonInputInfo, Bubl2000DIPInfo,
 	Bubl2000Init, AfegaExit, AfegaFrame, Bubl2000Draw, DrvScan, NULL, 0x300,
 	256, 224, 4, 3
 };

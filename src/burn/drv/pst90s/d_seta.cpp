@@ -70,6 +70,7 @@ static INT32 VideoOffsets[3][2] = { { 0, 0 }, { 0, 0 }, { 0, 0 } };
 static INT32 ColorOffsets[3] = { 0, 0, 0 };
 static INT32 ColorDepths[3];
 static INT32 twineagle = 0;
+static INT32 daiohc = 0; // lazy fix - disable writes to alternate scroll write offsets
 static INT32 oisipuzl_hack = 0;
 static INT32 refresh_rate = 6000;
 
@@ -4183,12 +4184,16 @@ void __fastcall daioh_write_word(UINT32 address, UINT16 data)
 	SetVidRAMRegsWriteWord(0x500000)
 
 	SetaVidRAMCtrlWriteWord(0, 0x900000) // blandiap
-	SetaVidRAMCtrlWriteWord(0, 0x908000) // jjsquawkb
-	SetaVidRAMCtrlWriteWord(0, 0xa00000) // blandia
+	if (!daiohc) {
+		SetaVidRAMCtrlWriteWord(0, 0x908000) // jjsquawkb
+		SetaVidRAMCtrlWriteWord(0, 0xa00000) // blandia
+	}
 
 	SetaVidRAMCtrlWriteWord(1, 0x980000) // blandiap
-	SetaVidRAMCtrlWriteWord(1, 0x909000) // jjsquawkb
-	SetaVidRAMCtrlWriteWord(1, 0xa80000) // blandia
+	if (!daiohc) {
+		SetaVidRAMCtrlWriteWord(1, 0x909000) // jjsquawkb
+		SetaVidRAMCtrlWriteWord(1, 0xa80000) // blandia
+	}
 
 	switch (address)
 	{
@@ -4204,12 +4209,16 @@ void __fastcall daioh_write_byte(UINT32 address, UINT8 data)
 	SetVidRAMRegsWriteByte(0x500000)
 
 	SetaVidRAMCtrlWriteByte(0, 0x900000) // blandiap
-	SetaVidRAMCtrlWriteByte(0, 0x908000) // jjsquawkb
-	SetaVidRAMCtrlWriteByte(0, 0xa00000) // blandia
+	if (!daiohc) {
+		SetaVidRAMCtrlWriteByte(0, 0x908000) // jjsquawkb
+		SetaVidRAMCtrlWriteByte(0, 0xa00000) // blandia
+	}
 
 	SetaVidRAMCtrlWriteByte(1, 0x980000) // blandiap
-	SetaVidRAMCtrlWriteByte(1, 0x909000) // jjsquawkb
-	SetaVidRAMCtrlWriteByte(1, 0xa80000) // blandia
+	if (!daiohc) {
+		SetaVidRAMCtrlWriteByte(1, 0x909000) // jjsquawkb
+		SetaVidRAMCtrlWriteByte(1, 0xa80000) // blandia
+	}
 
 	switch (address)
 	{
@@ -6837,6 +6846,7 @@ static INT32 DrvExit()
 
 	oisipuzl_hack = 0;
 	twineagle = 0;
+	daiohc = 0;
 	watchdog_enable = 0;
 	refresh_rate = 6000;
 
@@ -8109,6 +8119,64 @@ struct BurnDriver BurnDrvDaiohp = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_VERSHOOT, 0,
 	NULL, daiohpRomInfo, daiohpRomName, NULL, NULL, DaiohInputInfo, DaiohDIPInfo,
 	daiohpInit, DrvExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x600,
+	240, 384, 3, 4
+};
+
+
+// Daioh (93111A PCB conversion)
+/* Found on a 93111A PCB - same PCB as War of Areo & J. J. Squawkers */
+
+static struct BurnRomInfo daiohcRomDesc[] = {
+	{ "15.u3",		0x080000, 0x14616abb, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "14.u4",		0x080000, 0xa029f991, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "9.u9",		0x080000, 0x4444cbd4, 0x03 | BRF_GRA },           //  2 Sprites
+	{ "10.u10",		0x080000, 0x1d88d20b, 0x03 | BRF_GRA },           //  3
+	{ "11.u11",		0x080000, 0x3e41de61, 0x03 | BRF_GRA },           //  4
+	{ "12.u12",		0x080000, 0xf35e3341, 0x03 | BRF_GRA },           //  5
+
+	{ "5.u5",		0x080000, 0xaaa5e41e, 0x04 | BRF_GRA },           //  6 Layer 1 tiles
+	{ "6.u6",		0x080000, 0x9ad8b4b4, 0x04 | BRF_GRA },           //  7 
+	{ "7.u7",		0x080000, 0xbabf194a, 0x04 | BRF_GRA },           //  8 
+	{ "8.u8",		0x080000, 0x2db65290, 0x04 | BRF_GRA },           //  9 
+
+	{ "1.u1",		0x080000, 0x30f81f99, 0x05 | BRF_GRA },           // 10 Layer 2 tiles
+	{ "2.u2",		0x080000, 0x3b3e0f4e, 0x05 | BRF_GRA },           // 11 
+	{ "3.u3",		0x080000, 0xc5eef1c1, 0x05 | BRF_GRA },           // 12 
+	{ "4.u4",		0x080000, 0x851115b6, 0x05 | BRF_GRA },           // 13 
+
+	{ "data.u69",		0x080000, 0x21e4f093, 0x06 | BRF_SND },           // 14 x1-010 Samples
+	{ "data.u70",		0x080000, 0x593c3c58, 0x06 | BRF_SND },           // 15 
+	
+	{ "gal.u14",		0x000117, 0xb972b479, 0x00 | BRF_OPT },           // 16 Gals
+};
+
+STD_ROM_PICK(daiohc)
+STD_ROM_FN(daiohc)
+
+static INT32 daiohcInit()
+{
+	daiohc = 1;
+	DrvSetVideoOffsets(0, 0, 0, 0);
+	DrvSetColorOffsets(0, 0x400, 0x200);
+
+	INT32 nRet = DrvInit(wrofaero68kInit, 16000000, SET_IRQLINES(1, 2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 2, 2));
+
+	if (nRet == 0) {
+		memcpy (Drv68KROM + 0x100000, Drv68KROM + 0x080000, 0x080000);
+		memset (Drv68KROM + 0x080000, 0, 0x080000);
+	}
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvDaiohc = {
+	"daiohc", "daioh", NULL, NULL, "1993",
+	"Daioh (93111A PCB conversion)\0", NULL, "Athena", "Seta",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_VERSHOOT, 0,
+	NULL, daiohcRomInfo, daiohcRomName, NULL, NULL, DaiohInputInfo, DaiohDIPInfo,
+	daiohcInit, DrvExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x600,
 	240, 384, 3, 4
 };
 

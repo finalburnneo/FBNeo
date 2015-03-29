@@ -31,6 +31,7 @@ PIC16C5X CPU core by Tony La Porta (http://www.mamedev.org).
 S2650 CPU core by Juergen Buchmueller (http://www.mamedev.org).
 SH-2 CPU core by Juergen Buchmueller (http://www.mamedev.org).
 TLCS90 CPU core by Luca Elia (http://www.mamedev.org).
+ADSP21XX CPU core by Aaron Giles (http://www.mamedev.org).
 AY8910/YM2149 sound core by various authors (http://www.mamedev.org).
 C6280 sound core by Charles MacDonald (http://cgfm2.emuviews.com).
 DAC sound core by MAMEdev (http://www.mamedev.org).
@@ -62,6 +63,8 @@ Uses SMS Plus by Charles MacDonald (http://www.techno-junk.org).
 7Z functionality provided by LZMA SDK (http://www.7-zip.org/sdk.html)
 PNG functionality provided by libpng (http://www.libpng.org)
 Zip functionality provided by zlib (http://www.zlib.net).
+
+Uses Xbyak (JIT assembler for x86/x64) by Herumi (https://github.com/herumi/xbyak)
 
 Some graphics effects provided by the Scale2x, 2xPM, Eagle Graphics, 2xSaI, hq2x/hq3x/hq4x, hq2xS/hq3xS/SuperEagle/2xSaI (VBA), hq2xS/hq3xS/hq2xBold/hq3xBold/EPXB/EPXC (SNES9X ReRecording) and SuperScale libraries (http://scale2x.sourceforge.net, http://2xpm.freeservers.com, http://retrofx.com, http://elektron.its.tudelft.nl/~dalikifa, http://www.hiend3d.com, http://code.google.com/p/vba-rerecording, http://code.google.com/p/snes9x151-rerecording, http://nebula.emulatronia.com).
 

@@ -5864,8 +5864,8 @@ STD_ROM_PICK(Sgemfh)
 STD_ROM_FN(Sgemfh)
 
 static struct BurnRomInfo Spf2tRomDesc[] = {
-	{ "pzfu.03a",      0x080000, 0x346e62ef, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "pzf.04",        0x080000, 0xb80649e2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pzfe.03",       0x080000, 0x2af51954, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pzf.04",        0x080000, 0xb80649e2, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, // marked pzfe.04 but same as pzf.04
 
 	{ "pzf.14m",       0x100000, 0x2d4881cb, CPS2_GFX | BRF_GRA },
 	{ "pzf.16m",       0x100000, 0x4b0fd1be, CPS2_GFX | BRF_GRA },
@@ -5881,6 +5881,25 @@ static struct BurnRomInfo Spf2tRomDesc[] = {
 
 STD_ROM_PICK(Spf2t)
 STD_ROM_FN(Spf2t)
+
+static struct BurnRomInfo Spf2tuRomDesc[] = {
+	{ "pzfu.03a",      0x080000, 0x346e62ef, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "pzf.04",        0x080000, 0xb80649e2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "pzf.14m",       0x100000, 0x2d4881cb, CPS2_GFX | BRF_GRA },
+	{ "pzf.16m",       0x100000, 0x4b0fd1be, CPS2_GFX | BRF_GRA },
+	{ "pzf.18m",       0x100000, 0xe43aac33, CPS2_GFX | BRF_GRA },
+	{ "pzf.20m",       0x100000, 0x7f536ff1, CPS2_GFX | BRF_GRA },
+
+	{ "pzf.01",        0x020000, 0x600fb2a3, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "pzf.02",        0x020000, 0x496076e0, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "pzf.11m",       0x200000, 0x78442743, CPS2_QSND | BRF_SND },
+	{ "pzf.12m",       0x200000, 0x399d2c7b, CPS2_QSND | BRF_SND },
+};
+
+STD_ROM_PICK(Spf2tu)
+STD_ROM_FN(Spf2tu)
 
 static struct BurnRomInfo Spf2taRomDesc[] = {
 	{ "pzfa.03",       0x080000, 0x3cecfa78, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -9500,10 +9519,20 @@ struct BurnDriver BurnDrvCpsSgemfh = {
 
 struct BurnDriver BurnDrvCpsSpf2t = {
 	"spf2t", NULL, NULL, NULL, "1996",
-	"Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 Turbo 960620 USA)\0", NULL, "Capcom", "CPS2",
+	"Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 Turbo 960529 Euro)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS2, GBF_PUZZLE, FBF_SF,
 	NULL, Spf2tRomInfo, Spf2tRomName, NULL, NULL, Spf2tInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSpf2tu = {
+	"spf2tu", "spf2t", NULL, NULL, "1996",
+	"Super Puzzle Fighter II Turbo (Super Puzzle Fighter 2 Turbo 960620 USA)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_PUZZLE, FBF_SF,
+	NULL, Spf2tuRomInfo, Spf2tuRomName, NULL, NULL, Spf2tInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

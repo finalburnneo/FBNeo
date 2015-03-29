@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QTreeWidgetItem>
 #include "widgets/hexspinbox.h"
+#include "inputsetdialog.h"
 
 namespace Ui {
 class InputDialog;
@@ -28,6 +29,7 @@ private:
     Ui::InputDialog *ui;
     QTimer *m_timer;
     HexSpinDialog *m_hexEditor;
+    InputSetDialog *m_inputSet;
 };
 
 #endif // INPUTDIALOG_H

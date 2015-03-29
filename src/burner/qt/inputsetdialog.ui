@@ -46,12 +46,18 @@
        <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QLabel" name="lblInfo">
        <property name="text">
         <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -60,5 +66,22 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btnCancel</sender>
+   <signal>clicked()</signal>
+   <receiver>InputSetDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>116</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>73</x>
+     <y>147</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

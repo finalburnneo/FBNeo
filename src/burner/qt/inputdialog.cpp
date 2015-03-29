@@ -14,6 +14,7 @@ InputDialog::InputDialog(QWidget *parent) :
     setWindowTitle("Map Game Inputs");
 
     m_hexEditor = new HexSpinDialog(this);
+    m_inputSet = new InputSetDialog(this);
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(updateInputs()));
@@ -85,6 +86,11 @@ void InputDialog::inputEdit(QTreeWidgetItem *item, int column)
         pgi->Input.Constant.nConst = (m_hexEditor->value() & 0xFF);
         auto value = InpToDesc(pgi);
         item->setText(1, value);
+        break;
+    }
+    default: {
+        m_inputSet->setInput(item->data(0, Qt::UserRole).toInt());
+        m_inputSet->exec();
         break;
     }
     }

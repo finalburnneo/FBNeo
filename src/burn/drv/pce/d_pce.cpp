@@ -3020,8 +3020,8 @@ STD_ROM_FN(pce_marchen)
 
 struct BurnDriver BurnDrvpce_marchen = {
 	"pce_marchen", NULL, NULL, NULL, "1990",
-	"Märchen Maze\0", NULL, "Namcot", "PC Engine",
-	NULL, NULL, NULL, NULL,
+	"Marchen Maze\0", NULL, "Namcot", "PC Engine",
+	L"M\u00E4rchen Maze\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_marchenRomInfo, pce_marchenRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,

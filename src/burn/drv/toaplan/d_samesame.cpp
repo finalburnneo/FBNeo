@@ -1286,3 +1286,41 @@ struct BurnDriver BurnDrvSamesame2 = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
+
+
+// Same! Same! Same! NEW VER! (v1.00, hack by Trap15)
+
+static struct BurnRomInfo samenewRomDesc[] = {
+	{ "o17_09_new.8j",	0x08000, 0xf60af2f9, BRF_PRG | BRF_ESS },    //  0 CPU #0 code
+	{ "o17_10_new.8l",	0x08000, 0x023bcb95, BRF_PRG | BRF_ESS },    //  1
+	{ "o17_11.7j",		0x20000, 0xbe07d101, BRF_PRG | BRF_ESS },    //  2
+	{ "o17_12.7l",		0x20000, 0xef698811, BRF_PRG | BRF_ESS },    //  3
+
+	{ "o17_05.12j",		0x20000, 0x565315f8, BRF_GRA },              //  4 Tile data
+	{ "o17_06.13j",		0x20000, 0x95262d4c, BRF_GRA },              //  5
+	{ "o17_07.12l",		0x20000, 0x4c4b735c, BRF_GRA },              //  6
+	{ "o17_08.13l",		0x20000, 0x95c6586c, BRF_GRA },              //  7
+
+	{ "o17_01.1d",		0x20000, 0xea12e491, BRF_GRA },              //  8
+	{ "o17_02.3d",		0x20000, 0x32a13a9f, BRF_GRA },              //  9
+	{ "o17_03.5d",		0x20000, 0x68723dc9, BRF_GRA },              // 10
+	{ "o17_04.7d",		0x20000, 0xfe0ecb13, BRF_GRA },              // 12
+
+	{ "prom14.25b",		0x00020, 0xbc88cced, BRF_GRA },              // 12 Sprite attribute PROM
+	{ "prom15.20c",		0x00020, 0xa1e17492, BRF_GRA },              // 13
+
+	{ "hd647180.017",	0x08000, 0x00000000, BRF_OPT | BRF_NODUMP }, // 14 Sound HD647180 code
+};
+
+STD_ROM_PICK(samenew)
+STD_ROM_FN(samenew)
+
+struct BurnDriver BurnDrvSamenew = {
+	"samenew", "fireshrk", NULL, "fireshrk", "1989",
+	"Same! Same! Same! NEW VER! (v1.00, hack by Trap15)\0", "No sound", "Hack / Trap15", "Toaplan BCU-2 / FCU-2 based",
+	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same! NEW VER! (v1.00, hack by Trap15)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	NULL, samenewRomInfo, samenewRomName, samesameSampleInfo, samesameSampleName, SamesameInputInfo, SamesameDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	240, 320, 3, 4
+};

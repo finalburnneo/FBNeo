@@ -16570,8 +16570,8 @@ STD_ROM_FN(md_landstlkg)
 
 struct BurnDriver BurnDrvmd_landstlkg = {
 	"md_landstlkg", "md_landstlk", NULL, NULL, "1993",
-	"Landstalker - Die Schätze von König Nolo (Ger)\0", NULL, "Sega", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
+	"Landstalker - Die Schatze von Konig Nolo (Ger)\0", NULL, "Sega", "Sega Megadrive",
+	L"Landstalker - Die Sch\u00E4tze von K\u00F6nig Nolo (Ger)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_10000, GBF_MISC, 0,
 	MegadriveGetZipName, md_landstlkgRomInfo, md_landstlkgRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
@@ -25285,8 +25285,8 @@ STD_ROM_FN(md_renstim)
 
 struct BurnDriver BurnDrvmd_renstim = {
 	"md_renstim", NULL, NULL, NULL, "1993",
-	"Stimpy's Invention Starring Starring Ren Hoëk & Stimpy (Euro)\0", NULL, "Sega", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
+	"Stimpy's Invention Starring Starring Ren Hoek & Stimpy (Euro)\0", NULL, "Sega", "Sega Megadrive",
+	L"Stimpy's Invention Starring Starring Ren Ho\u00EBk & Stimpy (Euro)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_renstimRomInfo, md_renstimRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
@@ -25303,8 +25303,8 @@ STD_ROM_FN(md_renstimu)
 
 struct BurnDriver BurnDrvmd_renstimu = {
 	"md_renstimu", "md_renstim", NULL, NULL, "1993",
-	"Stimpy's Invention Starring Starring Ren Hoëk & Stimpy (USA)\0", NULL, "Sega", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
+	"Stimpy's Invention Starring Starring Ren Hoek & Stimpy (USA)\0", NULL, "Sega", "Sega Megadrive",
+	L"Stimpy's Invention Starring Starring Ren Ho\u00EBk & Stimpy (USA)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_renstimuRomInfo, md_renstimuRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
@@ -25321,8 +25321,8 @@ STD_ROM_FN(md_renstimup)
 
 struct BurnDriver BurnDrvmd_renstimup = {
 	"md_renstimup", "md_renstim", NULL, NULL, "1993",
-	"Stimpy's Invention Starring Starring Ren Hoëk & Stimpy (USA, Prototype)\0", NULL, "Sega", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
+	"Stimpy's Invention Starring Starring Ren Hoek & Stimpy (USA, Prototype)\0", NULL, "Sega", "Sega Megadrive",
+	L"Stimpy's Invention Starring Starring Ren Ho\u00EBk & Stimpy (USA, Prototype)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_renstimupRomInfo, md_renstimupRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
@@ -35492,8 +35492,8 @@ STD_ROM_FN(md_turmamon)
 
 struct BurnDriver BurnDrvmd_turmamon = {
 	"md_turmamon", "md_wboymw", NULL, NULL, "1996",
-	"Turma da Mônica na Terra dos Monstros (Bra)\0", NULL, "Tec Toy", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
+	"Turma da Monica na Terra dos Monstros (Bra)\0", NULL, "Tec Toy", "Sega Megadrive",
+	L"Turma da M\u00F4nica na Terra dos Monstros (Bra)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_EEPROM, GBF_MISC, 0,
 	MegadriveGetZipName, md_turmamonRomInfo, md_turmamonRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,

@@ -27456,3 +27456,21 @@ struct BurnDriver BurnDrvgg_zoop = {
 };
 
 
+// WildSnake 1.0 Unreleased (Prototype?) (Spectrum Holobyte)
+
+static struct BurnRomInfo gg_wildsnakeRomDesc[] = {
+	{ "WildSnake [Proto].gg",	0x20000, 0xd460cc7f, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_wildsnake)
+STD_ROM_FN(gg_wildsnake)
+
+struct BurnDriver BurnDrvgg_wildsnake = {
+	"gg_wildsnake", NULL, NULL, NULL, "1994",
+	"WildSnake (Prototype / Unreleased)\0", NULL, "Spectrum HoloByte", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
+	GGGetZipName, gg_wildsnakeRomInfo, gg_wildsnakeRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};

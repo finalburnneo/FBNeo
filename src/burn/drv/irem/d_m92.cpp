@@ -1890,7 +1890,7 @@ static void draw_layer_byline(INT32 start, INT32 finish, INT32 layer, INT32 forc
 		UINT8  *pri  = RamPrioBitmap + (sy * nScreenWidth);
 
 		INT32 scrollx_1 = scrollx;
-		if (ptr->enable_rowscroll) scrollx_1 += BURN_ENDIAN_SWAP_INT16(ptr->scroll[(sy+scrolly)&0x1ff]);
+		if (ptr->enable_rowscroll) scrollx_1 += BURN_ENDIAN_SWAP_INT16(ptr->scroll[(sy+scrolly)&0x1ff]) - ((m92_kludge==4) ? 24 : 0);
 		INT32 scrolly_1 = (scrolly + sy) & 0x1ff;
 		INT32 romoff_1 = (scrolly_1 & 0x07) << 3;
 
@@ -3259,6 +3259,7 @@ static INT32 nbbatmanInit()
 	INT32 nRet;
 
 	m92_kludge = 4;
+
 	nRet = DrvInit(gunforc2RomLoad, leagueman_decryption_table, 1, 0x80, 0x200000, 0x400000);
 
 	if (nRet == 0) {

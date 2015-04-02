@@ -13,7 +13,8 @@ static UINT8 *RamEnd;
 static UINT8 *DrvZ80ROM;
 static UINT8 *DrvGfxROM;
 static UINT8 *DrvGfxROMExp;
-static UINT8 *DrvSndROM;
+static UINT8 *DrvSndROM0;
+static UINT8 *DrvSndROM1;
 static UINT8 *DrvColPROM;
 static UINT8 *DrvUnkRAM;
 static UINT8 *DrvVidRAM;
@@ -36,6 +37,8 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[3];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
+
+static INT32 is_bootleg = 0;
 
 static struct BurnInputInfo HexionInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -72,12 +75,12 @@ static struct BurnDIPInfo HexionDIPList[]=
 	{0x14, 0xff, 0xff, 0xff, NULL			},
 
 	{0   , 0xfe, 0   ,    16, "Coin A"		},
-	{0x12, 0x01, 0x0f, 0x02, "4 Coins 1 Credit"	  },
-	{0x12, 0x01, 0x0f, 0x05, "3 Coins 1 Credit"	  },
-	{0x12, 0x01, 0x0f, 0x08, "2 Coins 1 Credit"	  },
+	{0x12, 0x01, 0x0f, 0x02, "4 Coins 1 Credit"	},
+	{0x12, 0x01, 0x0f, 0x05, "3 Coins 1 Credit"	},
+	{0x12, 0x01, 0x0f, 0x08, "2 Coins 1 Credit"	},
 	{0x12, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
 	{0x12, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
-	{0x12, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"	  },
+	{0x12, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"	},
 	{0x12, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
 	{0x12, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
 	{0x12, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
@@ -90,12 +93,12 @@ static struct BurnDIPInfo HexionDIPList[]=
 	{0x12, 0x01, 0x0f, 0x00, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    16, "Coin B"		},
-	{0x12, 0x01, 0xf0, 0x20, "4 Coins 1 Credit"	  },
-	{0x12, 0x01, 0xf0, 0x50, "3 Coins 1 Credit"	  },
-	{0x12, 0x01, 0xf0, 0x80, "2 Coins 1 Credit"	  },
+	{0x12, 0x01, 0xf0, 0x20, "4 Coins 1 Credit"	},
+	{0x12, 0x01, 0xf0, 0x50, "3 Coins 1 Credit"	},
+	{0x12, 0x01, 0xf0, 0x80, "2 Coins 1 Credit"	},
 	{0x12, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
 	{0x12, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
-	{0x12, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"	  },
+	{0x12, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"	},
 	{0x12, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
 	{0x12, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
 	{0x12, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
@@ -125,9 +128,9 @@ static struct BurnDIPInfo HexionDIPList[]=
 	{0x14, 0x01, 0x01, 0x01, "Off"			},
 	{0x14, 0x01, 0x01, 0x00, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x14, 0x01, 0x04, 0x04, "Off"				},
-	{0x14, 0x01, 0x04, 0x00, "On"				},
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x14, 0x01, 0x04, 0x04, "Off"			},
+	{0x14, 0x01, 0x04, 0x00, "On"			},
 };
 
 STDDIPINFO(Hexion)
@@ -136,8 +139,7 @@ static void bankswitch(INT32 data)
 {
 	cpubank = data & 0x0f;
 
-	ZetMapArea(0x8000, 0x9fff, 0, DrvZ80ROM + (cpubank << 13));
-	ZetMapArea(0x8000, 0x9fff, 2, DrvZ80ROM + (cpubank << 13));
+	ZetMapMemory(DrvZ80ROM + (cpubank << 13), 0x8000, 0x9fff, MAP_ROM);
 }
 
 void __fastcall hexion_write(UINT16 address, UINT8 data)
@@ -170,6 +172,12 @@ void __fastcall hexion_write(UINT16 address, UINT8 data)
 
 		case 0xf500:
 			gfxrom_select = data;
+		return;
+
+		case 0xf5c0:
+			if (is_bootleg) {
+				MSM6295Command(1, data);
+			}
 		return;
 	}
 
@@ -214,6 +222,8 @@ void __fastcall hexion_write(UINT16 address, UINT8 data)
 
 		return;
 	}
+
+	bprintf (0,_T("Unmapped write: %4.4x, %2.2x\n"), address,data);
 }
 
 UINT8 __fastcall hexion_read(UINT16 address)
@@ -271,6 +281,9 @@ static INT32 DrvDoReset()
 
 	K051649Reset();
 
+	MSM6295Reset(0);
+	MSM6295Reset(1);
+
 	cpubank = 0;
 	bankctrl = 0;
 	rambank = 0;
@@ -290,7 +303,8 @@ static INT32 MemIndex()
 	DrvGfxROMExp	= Next; Next += 0x100000;
 
 	MSM6295ROM	= Next;
-	DrvSndROM	= Next; Next += 0x040000;
+	DrvSndROM0	= Next; Next += 0x100000;
+	DrvSndROM1	= Next; Next += 0x040000;
 
 	DrvColPROM	= Next; Next += 0x000300;
 
@@ -362,6 +376,8 @@ static void DrvPaletteInit()
 
 static INT32 DrvInit()
 {
+	is_bootleg = (BurnDrvGetFlags() & BDF_BOOTLEG) ? 1 : 0;
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -375,11 +391,14 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvGfxROM,		1, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM + 0x40000,	2, 1)) return 1;
 
-		if (BurnLoadRom(DrvSndROM,		3, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM0,		3, 1)) return 1;
 
 		if (BurnLoadRom(DrvColPROM + 0x000,	4, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x100,	5, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x200,	6, 1)) return 1;
+
+		// bootleg
+		if (BurnLoadRom(DrvSndROM1,		7, 1)) return 1;
 
 		DrvGfxDecode();
 		DrvPaletteInit();
@@ -387,17 +406,17 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);
-	ZetMapArea(0xa000, 0xbfff, 0, DrvZ80RAM);
-	ZetMapArea(0xa000, 0xbfff, 1, DrvZ80RAM);
-	ZetMapArea(0xa000, 0xbfff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM,	0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM,	0xa000, 0xbfff, MAP_RAM);
 	ZetSetWriteHandler(hexion_write);
 	ZetSetReadHandler(hexion_read);
 	ZetClose();
 
 	MSM6295Init(0, 1056000 / 132, 0);
 	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+
+	MSM6295Init(1, 1056000 / 132, 1);
+	MSM6295SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 
 	K051649Init(1500000);
 	K051649SetRoute(0.50, BURN_SND_ROUTE_BOTH);
@@ -414,6 +433,7 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	MSM6295Exit(0);
+	MSM6295Exit(1);
 	K051649Exit();
 
 	ZetExit();
@@ -528,8 +548,12 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			memset (pSoundBuf, 0, nSegmentLength * 2 * 2);
 			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			K051649Update(pSoundBuf, nSegmentLength);
+			MSM6295Render(1, pSoundBuf, nSegmentLength);
+			if (is_bootleg == 0) {
+				K051649Update(pSoundBuf, nSegmentLength);
+			}
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -539,8 +563,12 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
+			memset (pSoundBuf, 0, nSegmentLength * 2 * 2);
 			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			K051649Update(pSoundBuf, nSegmentLength);
+			MSM6295Render(1, pSoundBuf, nSegmentLength);
+			if (is_bootleg == 0) {
+				K051649Update(pSoundBuf, nSegmentLength);
+			}
 		}
 	}
 
@@ -571,6 +599,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		MSM6295Scan(0, nAction);
+		MSM6295Scan(1, nAction);
 		K051649Scan(nAction, pnMin);
 
 		SCAN_VAR(cpubank);
@@ -580,9 +609,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(gfxrom_select);
 	}
 
-	ZetOpen(0);
-	bankswitch(cpubank);
-	ZetClose();
+	if (nAction & ACB_WRITE) {
+		ZetOpen(0);
+		bankswitch(cpubank);
+		ZetClose();
+	}
 
 	return 0;
 }
@@ -596,7 +627,7 @@ static struct BurnRomInfo hexionRomDesc[] = {
 	{ "122a07.bin",		0x40000, 0x22ae55e3, 2 | BRF_GRA },           //  1 Tiles
 	{ "122a06.bin",		0x40000, 0x438f4388, 2 | BRF_GRA },           //  2
 
-	{ "122a05.bin",		0x40000, 0xbcc831bf, 3 | BRF_SND },           //  3 M6296 Samples
+	{ "122a05.bin",		0x40000, 0xbcc831bf, 3 | BRF_SND },           //  3 M6296 #0 Samples
 
 	{ "122a04.10b",		0x00100, 0x506eb8c6, 4 | BRF_GRA },           //  4 Color PROMs
 	{ "122a03.11b",		0x00100, 0x590c4f64, 4 | BRF_GRA },           //  5
@@ -612,6 +643,37 @@ struct BurnDriver BurnDrvHexion = {
 	L"Hexion\0\u30D8\u30AF\u30B7\u30AA\u30F3 (Japan ver. JAB)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_PUZZLE, 0,
 	NULL, hexionRomInfo, hexionRomName, NULL, NULL, HexionInputInfo, HexionDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	512, 256, 4, 3
+};
+
+
+// Hexion (Bootleg, Asia ver. AAA)
+
+static struct BurnRomInfo hexionbRomDesc[] = {
+	{ "hexionb.u2",		0x20000, 0x93edc5d4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+
+	{ "hexionb.u30",	0x40000, 0x22ae55e3, 2 | BRF_GRA },           //  1 Tiles
+	{ "hexionb.u29",	0x40000, 0x438f4388, 2 | BRF_GRA },           //  2
+
+	{ "hexionb.u16",	0x40000, 0xbcc831bf, 3 | BRF_SND },           //  3 M6295 #0 Samples
+
+	{ "122a04.10b",		0x00100, 0x506eb8c6, 4 | BRF_GRA },           //  4 Color PROMs
+	{ "122a03.11b",		0x00100, 0x590c4f64, 4 | BRF_GRA },           //  5
+	{ "122a02.13b",		0x00100, 0x5734305c, 4 | BRF_GRA },           //  6
+
+	{ "hexionb.u18",	0x40000, 0xC179D315, 5 | BRF_SND },           //  7 M6295 #1 Samples
+};
+
+STD_ROM_PICK(hexionb)
+STD_ROM_FN(hexionb)
+
+struct BurnDriver BurnDrvHexionb = {
+	"hexionb", "hexion", NULL, NULL, "1992",
+	"Hexion (Bootleg, Asia ver. AAA)\0", NULL, "Bootleg", "GX122",
+	L"Hexion\0\u30D8\u30AF\u30B7\u30AA\u30F3 (Bootleg, Asia ver. AAA)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_KONAMI, GBF_PUZZLE, 0,
+	NULL, hexionbRomInfo, hexionbRomName, NULL, NULL, HexionInputInfo, HexionDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 256, 4, 3
 };

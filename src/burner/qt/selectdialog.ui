@@ -109,6 +109,9 @@
      </item>
      <item>
       <widget class="QTreeWidget" name="tvDrivers">
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
        <column>
         <property name="text">
          <string>Title</string>
@@ -130,7 +133,7 @@
         <number>0</number>
        </property>
        <property name="verticalSpacing">
-        <number>0</number>
+        <number>3</number>
        </property>
        <item row="0" column="0">
         <widget class="QLabel" name="label">

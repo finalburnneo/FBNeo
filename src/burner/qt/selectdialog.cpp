@@ -316,8 +316,8 @@ void SelectDialog::buildDriverTree()
             ditem->setText(1, ditem->romName());
             ditem->setDriverNo(i);
             ditem->setIsParent(false);
-            ditem->setBackgroundColor(0, QColor(200, 230, 255));
-            ditem->setBackgroundColor(1, QColor(210, 240, 255));
+            //ditem->setBackgroundColor(0, QColor(200, 230, 255));
+            //ditem->setBackgroundColor(1, QColor(210, 240, 255));
             itemParent->addChild(ditem);
         }
     }

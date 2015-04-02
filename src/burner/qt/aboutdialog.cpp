@@ -14,7 +14,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     layout()->setContentsMargins(0, 0, 0, 0);
     layout()->setSizeConstraint(QLayout::SetFixedSize);
 
-    ui->teLicense->setText(util::loadText(tr(":/resource/license.txt")));
+    ui->teLicense->setText(util::loadText(tr(":/license.txt")));
 
     ui->lblVersion->setText(QString(" FBAlpha %1.%2.%3.%4")
                             .arg(VER_MAJOR)

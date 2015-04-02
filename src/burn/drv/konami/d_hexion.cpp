@@ -222,8 +222,6 @@ void __fastcall hexion_write(UINT16 address, UINT8 data)
 
 		return;
 	}
-
-	bprintf (0,_T("Unmapped write: %4.4x, %2.2x\n"), address,data);
 }
 
 UINT8 __fastcall hexion_read(UINT16 address)
@@ -640,7 +638,7 @@ STD_ROM_FN(hexion)
 struct BurnDriver BurnDrvHexion = {
 	"hexion", NULL, NULL, NULL, "1992",
 	"Hexion (Japan ver. JAB)\0", NULL, "Konami", "GX122",
-	L"Hexion\0\u30D8\u30AF\u30B7\u30AA\u30F3 (Japan ver. JAB)\0", NULL, NULL, NULL,
+	L"Hexion  (Japan ver. JAB)\0\u30D8\u30AF\u30B7\u30AA\u30F3 (Japan ver. JAB)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_PUZZLE, 0,
 	NULL, hexionRomInfo, hexionRomName, NULL, NULL, HexionInputInfo, HexionDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
@@ -671,7 +669,7 @@ STD_ROM_FN(hexionb)
 struct BurnDriver BurnDrvHexionb = {
 	"hexionb", "hexion", NULL, NULL, "1992",
 	"Hexion (Bootleg, Asia ver. AAA)\0", NULL, "Bootleg", "GX122",
-	L"Hexion\0\u30D8\u30AF\u30B7\u30AA\u30F3 (Bootleg, Asia ver. AAA)\0", NULL, NULL, NULL,
+	L"Hexion  (Bootleg, Asia ver. AAA)\0\u30D8\u30AF\u30B7\u30AA\u30F3 (Bootleg, Asia ver. AAA)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_KONAMI, GBF_PUZZLE, 0,
 	NULL, hexionbRomInfo, hexionbRomName, NULL, NULL, HexionInputInfo, HexionDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,

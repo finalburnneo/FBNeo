@@ -3064,6 +3064,55 @@ struct BurnDriver BurnDrvMutantf3 = {
 };
 
 
+// Mutant Fighter (World ver EM-2)
+
+static struct BurnRomInfo mutantf2RomDesc[] = {
+	{ "hd-03-1.2c",		0x020000, 0x7110cefc, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "hd-00-1.2a",		0x020000, 0xb279875b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "hd-04-1.4c",		0x020000, 0xfd2ea8d7, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "hd-01-1.4a",		0x020000, 0x48a247ac, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "hd-12.21j",		0x010000, 0x13d55f11, 2 | BRF_PRG | BRF_ESS }, //  4 Huc6280 Code
+
+	{ "hd-06-1.8d",		0x010000, 0x8b7a558b, 3 | BRF_GRA }, 	       //  5 Characters
+	{ "hd-07-1.9d",		0x010000, 0xd2a3d449, 3 | BRF_GRA }, 	       //  6
+
+	{ "maf-00.8a",		0x080000, 0xe56f528d, 4 | BRF_GRA }, 	       //  7 Foreground Tiles
+
+	{ "maf-01.9a",		0x080000, 0xc3d5173d, 5 | BRF_GRA }, 	       //  8 Background Tiles
+	{ "maf-02.11a",		0x080000, 0x0b37d849, 5 | BRF_GRA }, 	       //  9
+
+	{ "maf-03.18a",		0x100000, 0xf4366d2c, 6 | BRF_GRA }, 	       // 10 Sprite Bank A
+	{ "maf-04.20a",		0x100000, 0x0c8f654e, 6 | BRF_GRA }, 	       // 11
+	{ "maf-05.21a",		0x080000, 0xb0cfeb80, 6 | BRF_GRA }, 	       // 12
+	{ "maf-06.18d",		0x100000, 0xf5c7a9b5, 6 | BRF_GRA }, 	       // 13
+	{ "maf-07.20d",		0x100000, 0xfd6008a3, 6 | BRF_GRA }, 	       // 14
+	{ "maf-08.21d",		0x080000, 0xe41cf1e7, 6 | BRF_GRA }, 	       // 15
+
+	{ "hf-08.15a",		0x010000, 0x93b7279f, 7 | BRF_GRA }, 	       // 16 Sprite Bank B
+	{ "hf-09.17a",		0x010000, 0x05e2c074, 7 | BRF_GRA }, 	       // 17
+	{ "hf-10.15c",		0x010000, 0x9b06f418, 7 | BRF_GRA }, 	       // 18
+	{ "hf-11.17c",		0x010000, 0x3859a531, 7 | BRF_GRA }, 	       // 19
+
+	{ "maf-10.20l",		0x040000, 0x7c57f48b, 8 | BRF_SND }, 	       // 20 OKI M6295 Samples 0
+
+	{ "maf-09.18l",		0x080000, 0x28e7ed81, 9 | BRF_SND }, 	       // 21 OKI M6295 Samples 1
+};
+
+STD_ROM_PICK(mutantf2)
+STD_ROM_FN(mutantf2)
+
+struct BurnDriver BurnDrvMutantf2 = {
+	"mutantf2", "mutantf", NULL, NULL, "1992",
+	"Mutant Fighter (World ver EM-2)\0", NULL, "Data East Corporation", "DECO IC16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	NULL, mutantf2RomInfo, mutantf2RomName, NULL, NULL, DrvInputInfo, MutantfDIPInfo,
+	MutantfInit, DrvExit, MutantfFrame, MutantfDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 240, 4, 3
+};
+
+
 // Death Brade (Japan ver JM-3)
 
 static struct BurnRomInfo deathbrdRomDesc[] = {

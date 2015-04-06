@@ -27474,3 +27474,61 @@ struct BurnDriver BurnDrvgg_wildsnake = {
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
 };
+
+// Hong Kil Dong (KR)
+
+static struct BurnRomInfo sms_hongkildongRomDesc[] = {
+	{ "Hong Kil Dong (KR).sms",	0x0C000, 0x8040b2fa, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_hongkildong)
+STD_ROM_FN(sms_hongkildong)
+
+struct BurnDriver BurnDrvsms_hongkildong = {
+	"sms_hongkildong", NULL, NULL, NULL, "1991",
+	"Hong Kil Dong (Kor)\0", NULL, "Clover", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_hongkildongRomInfo, sms_hongkildongRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
+// DARC (Version 1.0)
+
+static struct BurnRomInfo sms_darcRomDesc[] = {
+	{ "DARC.sms",	0x80000, 0x61B3C657, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_darc)
+STD_ROM_FN(sms_darc)
+
+struct BurnDriver BurnDrvsms_darc = {
+	"sms_darc10", NULL, NULL, NULL, "2015",
+	"DARC (Version 1.0)\0", "Turn ON 'FM Emulation' in Dips for music/sfx!", "Zipper", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_darcRomInfo, sms_darcRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
+// Bruce Lee (Version 1.0)
+
+static struct BurnRomInfo sms_bruceleeRomDesc[] = {
+	{ "BruceLee-SMS-1.00.sms",	0x20000, 0x37E27A38, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_brucelee)
+STD_ROM_FN(sms_brucelee)
+
+struct BurnDriver BurnDrvsms_brucelee = {
+	"sms_brucelee10", NULL, NULL, NULL, "2015",
+	"Bruce Lee (Version 1.0)\0", NULL, "Kagesan", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_bruceleeRomInfo, sms_bruceleeRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+

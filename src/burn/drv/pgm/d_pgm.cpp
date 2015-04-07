@@ -1129,6 +1129,38 @@ struct BurnDriverD BurnDrvDrgw3105 = {
 };
 
 
+// Dragon World 3 (ver. 103, Japan)
+
+static struct BurnRomInfo drgw3103RomDesc[] = {
+	{ "dw3_v103j.u12",  	0x080000, 0x275b39a2, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "dw3_v103j.u13",  	0x080000, 0x9aa56e8f, 1 | BRF_PRG | BRF_ESS },  //  1
+
+	{ "dw3t0400.u18",  		0x400000, 0xb70f3357, 2 | BRF_GRA },	        //  2 Tile data
+
+	{ "dw3a0400.u9",   		0x400000, 0xdd7bfd40, 3 | BRF_GRA },	        //  3 Sprite Color Data
+	{ "dw3a0401.u10",  		0x400000, 0xcab6557f, 3 | BRF_GRA },	        //  4
+
+	{ "dw3b0400.u13",  		0x400000, 0x4bb87cc0, 4 | BRF_GRA },	        //  5 Sprite Masks & Color Indexes
+
+	{ "dw3m0400.u1",   		0x400000, 0x031eb9ce, 5 | BRF_SND },	        //  6 Samples
+
+	{ "dw3_v100.u15",  		0x010000, 0x03dc4fdf, 9 | BRF_PRG | BRF_ESS },  //  7 Protection data
+};
+
+STDROMPICKEXT(drgw3103, drgw3103, pgm)
+STD_ROM_FN(drgw3103)
+
+struct BurnDriverD BurnDrvDrgw3103 = {
+	"drgw3103", "drgw3", "pgm", NULL, "1998",
+	"Dragon World 3 (ver. 103, japan)\0", NULL, "IGS (Alta Co., LTD License)", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
+	NULL, drgw3103RomInfo, drgw3103RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
+	drgw3Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
 // Dragon World 3 (ver. 100)
 
 static struct BurnRomInfo drgw3100RomDesc[] = {

@@ -27532,3 +27532,22 @@ struct BurnDriver BurnDrvsms_brucelee = {
 	256, 192, 4, 3
 };
 
+// Lambo (DEMO) by Genesis Project
+
+static struct BurnRomInfo sms_lamboRomDesc[] = {
+	{ "GenesisProject-Lambo.sms",	0x40000, 0x92FE2775, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_lambo)
+STD_ROM_FN(sms_lambo)
+
+struct BurnDriver BurnDrvsms_lambo = {
+	"sms_lambo", NULL, NULL, NULL, "2015",
+	"Lambo (Demo)\0", NULL, "Genesis Project", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
+	SMSGetZipName, sms_lamboRomInfo, sms_lamboRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+

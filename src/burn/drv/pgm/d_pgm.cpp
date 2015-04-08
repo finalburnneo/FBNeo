@@ -1129,7 +1129,8 @@ struct BurnDriverD BurnDrvDrgw3105 = {
 };
 
 
-// Dragon World 3 (ver. 103, Japan)
+// Chuugokuryuu 3 Special (ver. 103, Japan)
+// Japan only, has an extra game mode option!
 
 static struct BurnRomInfo drgw3103RomDesc[] = {
 	{ "dw3_v103j.u12",  	0x080000, 0x275b39a2, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -1152,7 +1153,7 @@ STD_ROM_FN(drgw3103)
 
 struct BurnDriverD BurnDrvDrgw3103 = {
 	"drgw3103", "drgw3", "pgm", NULL, "1998",
-	"Dragon World 3 (ver. 103, japan)\0", NULL, "IGS (Alta Co., LTD License)", "PolyGameMaster",
+	"Chuugokuryuu 3 Special (ver. 103, japan)\0", NULL, "IGS (Alta Co., LTD License)", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw3103RomInfo, drgw3103RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,
@@ -1161,7 +1162,8 @@ struct BurnDriverD BurnDrvDrgw3103 = {
 };
 
 
-// Dragon World 3 (ver. 100)
+// Chuugokuryuu 3 Special (ver. 100, Japan)
+// Japan only, has an extra game mode option!
 
 static struct BurnRomInfo drgw3100RomDesc[] = {
 	{ "dw3_v100.u12",  		0x080000, 0x47243906, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
@@ -1184,7 +1186,7 @@ STD_ROM_FN(drgw3100)
 
 struct BurnDriverD BurnDrvDrgw3100 = {
 	"drgw3100", "drgw3", "pgm", NULL, "1998",
-	"Dragon World 3 (ver. 100)\0", NULL, "IGS", "PolyGameMaster",
+	"Chuugokuryuu 3 Special (ver. 100, Japan)\0", NULL, "IGS (Alta Co., LTD License)", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_PUZZLE, 0,
 	NULL, drgw3100RomInfo, drgw3100RomName, NULL, NULL, pgmInputInfo, pgmDIPInfo,

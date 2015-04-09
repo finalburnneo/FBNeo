@@ -896,6 +896,26 @@ struct BurnDriver BurnDrvsms_alexkiddj = {
 };
 
 
+// Alex Kidd in Radaxian Rumble 1.02e
+
+static struct BurnRomInfo sms_alexkiddrrRomDesc[] = {
+	{ "akrr102e.sms",	0x80000, 0x368b64b0, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_alexkiddrr)
+STD_ROM_FN(sms_alexkiddrr)
+
+struct BurnDriver BurnDrvsms_alexkiddrr = {
+	"sms_akrr102e", "sms_alexkidd", NULL, NULL, "2015",
+	"Alex Kidd in Radaxian Rumble (ver. 1.02e)\0", NULL, "Sega", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_alexkiddrrRomInfo, sms_alexkiddrrRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
+
 // Alex Kidd - The Lost Stars (World)
 
 static struct BurnRomInfo sms_alexlostRomDesc[] = {
@@ -27488,7 +27508,7 @@ struct BurnDriver BurnDrvsms_hongkildong = {
 	"sms_hongkildong", NULL, NULL, NULL, "1991",
 	"Hong Kil Dong (Kor)\0", NULL, "Clover", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
 	SMSGetZipName, sms_hongkildongRomInfo, sms_hongkildongRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3

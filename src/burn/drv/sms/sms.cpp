@@ -304,7 +304,7 @@ void sms_reset(void)
 	cart.fcr[0] = 0x00;
 	cart.fcr[1] = 0x00;
 	cart.fcr[2] = 0x01;
-	cart.fcr[3] = 0x00;
+	cart.fcr[3] = 0x02;
 
 	// Default (0x0000 - 0xbfff) mappings:
 	if (cart.mapper == MAPPER_KOREA8K) { // aka Janggun ui Adeul (Kor)
@@ -315,7 +315,7 @@ void sms_reset(void)
 		korean8kmap6000_7fff = cart.rom + 0x6000;
 		korean8kmap8000_9fff = cart.rom + 0x8000;
 		korean8kmapa000_bfff = cart.rom + 0xa000;
-		cart.fcr[2] = 0x00;
+		cart.fcr[2] = 0x00; cart.fcr[3] = 0x00;
 	} else
 	if (cart.mapper == MAPPER_XIN1) {
 		// HiCom Xin1 Carts
@@ -341,7 +341,7 @@ void sms_reset(void)
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xc000, 0xdfff, MAP_RAM);
 		ZetMapMemory((UINT8 *)&sms.wram + 0x0000, 0xe000, 0xffff, MAP_RAM);
 		memset(&sms.wram[1], 0xf0, sizeof(sms.wram) - 1); // this memory pattern fixes booting of a few korean games
-		cart.fcr[2] = 0x00;
+		cart.fcr[2] = 0x00; cart.fcr[3] = 0x00;
 	}
 	ZetReset();
 	ZetClose();
@@ -350,7 +350,7 @@ void sms_reset(void)
 	{
 		case MAPPER_MSX_NEMESIS: {
 			bprintf(0, _T("(Nemesis-MSX: cart rom-page 0x0f remapped to 0x0000 - 0x1fff)\n"));
-			cart.fcr[2] = 0x00;
+			cart.fcr[2] = 0x00; cart.fcr[3] = 0x00;
 			UINT32 poffset = (0x0f) << 13;
 			ZetOpen(0);
 			ZetMapMemory(cart.rom + poffset, 0x0000, 0x1fff, MAP_ROM);

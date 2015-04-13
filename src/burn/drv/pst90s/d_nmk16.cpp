@@ -6683,15 +6683,15 @@ struct BurnDriver BurnDrvRedhawke = {
 // Red Hawk (Korea)
 
 static struct BurnRomInfo redhawkkRomDesc[] = {
-	{ "rhko2.bin",		0x020000, 0x8c02e81d, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "rhko3.bin",		0x020000, 0xab3597ee, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2",				0x020000, 0x8c02e81d, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "3",				0x020000, 0xab3597ee, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "1.bin",			0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+	{ "1",				0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
-	{ "rhko4.bin",		0x080000, 0x6255d6a1, 4 | BRF_GRA },           //  3 Tiles
+	{ "4",				0x080000, 0x6255d6a1, 4 | BRF_GRA },           //  3 Tiles
 
-	{ "rhko7.bin",		0x080000, 0xf4fa8211, 5 | BRF_GRA },           //  4 Characters
-	{ "rhko6.bin",		0x080000, 0x6a0b8224, 5 | BRF_GRA },           //  5
+	{ "7",				0x080000, 0xf4fa8211, 5 | BRF_GRA },           //  4 Characters
+	{ "6",				0x080000, 0x6a0b8224, 5 | BRF_GRA },           //  5
 
 	{ "5",				0x040000, 0xe911ce33, 6 | BRF_GRA },           //  6 OKI1 Samples
 };

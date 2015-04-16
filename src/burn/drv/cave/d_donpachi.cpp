@@ -13,6 +13,7 @@
 static UINT8 DrvJoy1[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvJoy2[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static UINT16 DrvInput[2] = {0x0000, 0x0000};
+static UINT8 DrvDips[1];
 
 static UINT8 *Mem = NULL, *MemEnd = NULL;
 static UINT8 *RamStart, *RamEnd;
@@ -31,6 +32,9 @@ static INT8 nSoundIRQ;
 static INT8 nUnknownIRQ;
 
 static INT8 nIRQPending;
+
+static UINT8 bHasSamples = 0;
+static UINT8 bLastSampleDIPMode = 0;
 
 #ifdef USE_SAMPLE_HACK
 static UINT8 previous_sound_write[3] = { 0, 0, 0 };
@@ -62,9 +66,21 @@ static struct BurnInputInfo donpachiInputList[] = {
 	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"},
 	{"Diagnostics",	BIT_DIGITAL,	DrvJoy1 + 9,	"diag"},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 9,	"service"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 };
 
 STDINPUTINFO(donpachi)
+
+static struct BurnDIPInfo donpachiDIPList[]=
+{
+	{0x15, 0xff, 0xff, 0x00, NULL			},
+
+	{0   , 0xfe, 0   ,    2, "Enable high-quality music w/samples"},
+	{0x15, 0x01, 0x08, 0x08, "On"			},
+	{0x15, 0x01, 0x08, 0x00, "Off"			},
+};
+
+STDDIPINFO(donpachi)
 
 static void DrvSampleReset()
 {
@@ -435,6 +451,18 @@ static INT32 DrvDraw()
 	return 0;
 }
 
+static void CheckDIP()
+{
+	if (bHasSamples && bLastSampleDIPMode != DrvDips[0]) {
+		bprintf(0, _T("DIP Changed! %X\n"), DrvDips[0]);
+		bLastSampleDIPMode = DrvDips[0];
+
+		MSM6295SetRoute(0, (bLastSampleDIPMode == 8) ? 0.00 : 1.60, BURN_SND_ROUTE_BOTH);
+		BurnSampleSetAllRoutesAllSamples((bLastSampleDIPMode == 8) ? 0.40 : 0.00, BURN_SND_ROUTE_BOTH);
+	}
+
+}
+
 inline static INT32 CheckSleep(INT32)
 {
 	return 0;
@@ -453,6 +481,8 @@ static INT32 DrvFrame()
 	if (DrvReset) {														// Reset machine
 		DrvDoReset();
 	}
+
+	CheckDIP();
 
 	// Compile digital inputs
 	DrvInput[0] = 0x0000;  												// Player 1
@@ -617,9 +647,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		MSM6295Scan(0, nAction);
 		MSM6295Scan(1, nAction);
-#ifdef USE_SAMPLE_HACK
-		BurnSampleScan(nAction, pnMin);
-#endif
+
 		SCAN_VAR(nVideoIRQ);
 		SCAN_VAR(nSoundIRQ);
 		SCAN_VAR(nUnknownIRQ);
@@ -628,10 +656,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		CaveScanGraphics();
 
 		SCAN_VAR(DrvInput);
+#ifdef USE_SAMPLE_HACK
+		BurnSampleScan(nAction, pnMin); // Must be at the end to maintain compatibility between sample and non-sample mode.
+#endif
 	}
 
 	if (nAction & ACB_WRITE) {
 		CaveRecalcPalette = 1;
+		bLastSampleDIPMode = 0xf7;
 	}
 
 	return 0;
@@ -712,8 +744,13 @@ static INT32 DrvInit()
 	BurnUpdateProgress(0.0, _T("Loading samples..."), 0);
 	BurnSampleInit(1);
 	BurnSampleSetAllRoutesAllSamples(0.40, BURN_SND_ROUTE_BOTH);
-	if (BurnSampleGetStatus(0) == -1) // Samples not found, fallback to internal samples.
+    bHasSamples = BurnSampleGetStatus(0) != -1;
+	bLastSampleDIPMode = DrvDips[0];
+
+	if (!(bLastSampleDIPMode == 8) || !bHasSamples) { // Samples not found, fallback to internal samples.
 		MSM6295SetRoute(0, 1.60, BURN_SND_ROUTE_BOTH);
+		BurnSampleSetAllRoutesAllSamples(0.00, BURN_SND_ROUTE_BOTH);
+	}
 #endif
 
 	bDrawScreen = true;
@@ -839,7 +876,7 @@ struct BurnDriver BurnDrvDonpachi = {
 	"DonPachi (USA, ver. 1.12, 95/05/2x)\0", NULL, "Atlus / Cave", "Cave",
 	L"\u9996\u9818\u8702 DonPachi (USA, ver. 1.12, 95/05/2x)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_ONLY | HARDWARE_CAVE_M6295, GBF_VERSHOOT, 0,
-	NULL, donpachiRomInfo, donpachiRomName, DonpachiSampleInfo, DonpachiSampleName, donpachiInputInfo, NULL,
+	NULL, donpachiRomInfo, donpachiRomName, DonpachiSampleInfo, DonpachiSampleName, donpachiInputInfo, donpachiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
 };
@@ -849,7 +886,7 @@ struct BurnDriver BurnDrvDonpachij = {
 	"DonPachi (Japan, ver. 1.01, 95/05/11)\0", NULL, "Atlus / Cave", "Cave",
 	L"\u9996\u9818\u8702 DonPachi (Japan, ver. 1.01, 95/05/11)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_ONLY | HARDWARE_CAVE_M6295, GBF_VERSHOOT, 0,
-	NULL, donpachijRomInfo, donpachijRomName, DonpachiSampleInfo, DonpachiSampleName, donpachiInputInfo, NULL,
+	NULL, donpachijRomInfo, donpachijRomName, DonpachiSampleInfo, DonpachiSampleName, donpachiInputInfo, donpachiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
 };
@@ -859,7 +896,7 @@ struct BurnDriver BurnDrvDonpachikr = {
 	"DonPachi (Korea, ver. 1.12, 95/05/2x)\0", NULL, "Atlus / Cave", "Cave",
 	L"\u9996\u9818\u8702 DonPachi (Korea, ver. 1.12, 95/05/2x)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_ONLY | HARDWARE_CAVE_M6295, GBF_VERSHOOT, 0,
-	NULL, donpachikrRomInfo, donpachikrRomName, DonpachiSampleInfo, DonpachiSampleName, donpachiInputInfo, NULL,
+	NULL, donpachikrRomInfo, donpachikrRomName, DonpachiSampleInfo, DonpachiSampleName, donpachiInputInfo, donpachiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
 };
@@ -869,7 +906,7 @@ struct BurnDriver BurnDrvDonpachihk = {
 	"DonPachi (Hong Kong, ver. 1.10, 95/05/17)\0", NULL, "Atlus / Cave", "Cave",
 	L"\u9996\u9818\u8702 DonPachi (Hong Kong, ver. 1.10, 95/05/17)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_ONLY | HARDWARE_CAVE_M6295, GBF_VERSHOOT, 0,
-	NULL, donpachihkRomInfo, donpachihkRomName, DonpachiSampleInfo, DonpachiSampleName, donpachiInputInfo, NULL,
+	NULL, donpachihkRomInfo, donpachihkRomName, DonpachiSampleInfo, DonpachiSampleName, donpachiInputInfo, donpachiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
 };

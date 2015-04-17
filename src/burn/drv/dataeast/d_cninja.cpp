@@ -3430,9 +3430,61 @@ struct BurnDriver BurnDrvRobocop2 = {
 };
 
 
-// Robocop 2 (US v0.05)
+// Robocop 2 (US v0.10)
 
 static struct BurnRomInfo robocop2uRomDesc[] = {
+	{ "gp03-3.k1",		0x020000, 0xc016a84b, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "gp07-3.k3",		0x020000, 0x54c541ae, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gp02-3.j1",		0x020000, 0x6777b8a0, 1 | BRF_PRG | BRF_ESS }, //  2 // == gq-02.j1 in 'robocop2'
+	{ "gp06-3.j3",		0x020000, 0x73b8cf96, 1 | BRF_PRG | BRF_ESS }, //  3 
+	{ "gp01-.h1",		0x020000, 0xab5356c0, 1 | BRF_PRG | BRF_ESS }, //  4 // no '-1' but matches other '-1' roms we have
+	{ "gp05-.h3",		0x020000, 0xce21bda5, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "gp00-.f1",		0x020000, 0xa93369ea, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "gp04-.f3",		0x020000, 0xee2f6ad9, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "gp-09.k13",		0x010000, 0x4a4e0f8d, 2 | BRF_PRG | BRF_ESS }, //  8 Huc6280 Code
+
+	{ "gp10-1.y6",		0x010000, 0xd25d719c, 3 | BRF_GRA }, 	       //  9 Characters
+	{ "gp11-1.z6",		0x010000, 0x030ded47, 3 | BRF_GRA }, 	       // 10
+
+	{ "mah-04.z4",		0x080000, 0x9b6ca18c, 4 | BRF_GRA }, 	       // 11 Foreground Tiles
+	{ "mah-03.y4",		0x080000, 0x37894ddc, 4 | BRF_GRA }, 	       // 12
+
+	{ "mah-01.z1",		0x080000, 0x26e0dfff, 5 | BRF_GRA }, 	       // 13 Background Tiles
+	{ "mah-00.y1",		0x080000, 0x7bd69e41, 5 | BRF_GRA }, 	       // 14
+	{ "mah-02.a1",		0x080000, 0x328a247d, 5 | BRF_GRA }, 	       // 15
+
+	{ "mah-05.y9",		0x080000, 0x6773e613, 6 | BRF_GRA }, 	       // 16 Sprites
+	{ "mah-08.y12",		0x080000, 0x88d310a5, 6 | BRF_GRA }, 	       // 17
+	{ "mah-06.z9",		0x080000, 0x27a8808a, 6 | BRF_GRA }, 	       // 18
+	{ "mah-09.z12",		0x080000, 0xa58c43a7, 6 | BRF_GRA }, 	       // 19
+	{ "mah-07.a9",		0x080000, 0x526f4190, 6 | BRF_GRA }, 	       // 20
+	{ "mah-10.a12",		0x080000, 0x14b770da, 6 | BRF_GRA }, 	       // 21
+
+	{ "gp-08.j13",		0x020000, 0x365183b1, 7 | BRF_SND }, 	       // 22 OKI M6295 Samples 0
+
+	{ "mah-11.f13",		0x080000, 0x642bc692, 8 | BRF_SND }, 	       // 23 OKI M6295 Samples 1
+
+	{ "go-12.v7",		0x000400, 0x278f674f, 0 | BRF_OPT }, 	       // 24 Unused PROMs
+};
+
+STD_ROM_PICK(robocop2u)
+STD_ROM_FN(robocop2u)
+
+struct BurnDriver BurnDrvRobocop2u = {
+	"robocop2u", "robocop2", NULL, NULL, "1991",
+	"Robocop 2 (US v0.10)\0", NULL, "Data East Corporation", "DECO IC16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	NULL, robocop2uRomInfo, robocop2uRomName, NULL, NULL, Robocop2InputInfo, Robocop2DIPInfo,
+	Robocop2Init, DrvExit, Robocop2Frame, Robocop2Draw, DrvScan, &DrvRecalc, 0x800,
+	320, 240, 4, 3
+};
+
+
+// Robocop 2 (US v0.05)
+
+static struct BurnRomInfo robocop2uaRomDesc[] = {
 	{ "robo03.k1",		0x020000, 0xf4c96cc9, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "robo07.k3",		0x020000, 0x11e53a7c, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "robo02.j1",		0x020000, 0xfa086a0d, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -3468,15 +3520,15 @@ static struct BurnRomInfo robocop2uRomDesc[] = {
 	{ "go-12.v7",		0x000400, 0x278f674f, 0 | BRF_OPT }, 	       // 24 Unused PROMs
 };
 
-STD_ROM_PICK(robocop2u)
-STD_ROM_FN(robocop2u)
+STD_ROM_PICK(robocop2ua)
+STD_ROM_FN(robocop2ua)
 
-struct BurnDriver BurnDrvRobocop2u = {
-	"robocop2u", "robocop2", NULL, NULL, "1991",
+struct BurnDriver BurnDrvRobocop2ua = {
+	"robocop2ua", "robocop2", NULL, NULL, "1991",
 	"Robocop 2 (US v0.05)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
-	NULL, robocop2uRomInfo, robocop2uRomName, NULL, NULL, Robocop2InputInfo, Robocop2DIPInfo,
+	NULL, robocop2uaRomInfo, robocop2uaRomName, NULL, NULL, Robocop2InputInfo, Robocop2DIPInfo,
 	Robocop2Init, DrvExit, Robocop2Frame, Robocop2Draw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };

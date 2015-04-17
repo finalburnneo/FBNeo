@@ -49,7 +49,8 @@ static UINT8 *okibank;
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
-static UINT8 DrvDips[2];
+static UINT8 DrvDips[3] = { 0, 0, 0 };
+static UINT8 LastFakeDip = 0xf7;
 static UINT16 DrvInputs[3];
 static UINT8 DrvReset;
 
@@ -71,6 +72,7 @@ static INT32 Tharriermode = 0; // use macross1/tharrier text draw & joy inputs
 static INT32 Macrossmode = 0; // use macross1 text draw
 static INT32 Strahlmode = 0;
 static INT32 Tdragon2mode = 0; // use draw_sprites_tdragon2()
+static INT32 GunnailMode = 0;
 
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -98,6 +100,34 @@ static struct BurnInputInfo CommonInputList[] = {
 };
 
 STDINPUTINFO(Common)
+
+static struct BurnInputInfo GunnailInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 11,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 10,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 8,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 13,	"p2 fire 2"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+};
+
+STDINPUTINFO(Gunnail)
 
 static struct BurnInputInfo TharrierInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -1800,6 +1830,7 @@ static struct BurnDIPInfo GunnailDIPList[]=
 {
 	{0x12, 0xff, 0xff, 0xfd, NULL			},
 	{0x13, 0xff, 0xff, 0xff, NULL			},
+	{0x14, 0xff, 0xff, 0x00, NULL			},
 
 //	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
 //	{0x12, 0x01, 0x01, 0x01, "Off"			},
@@ -1838,6 +1869,10 @@ static struct BurnDIPInfo GunnailDIPList[]=
 	{0x13, 0x01, 0xe0, 0xa0, "1 Coin  3 Credits"	},
 	{0x13, 0x01, 0xe0, 0x20, "1 Coin  4 Credits"	},
 	{0x13, 0x01, 0xe0, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    2, "trap15's sheild-warning mod" },
+	{0x14, 0x01, 0x08, 0x08, "On"			},
+	{0x14, 0x01, 0x08, 0x00, "Off"			},
 };
 
 STDDIPINFO(Gunnail)
@@ -4618,7 +4653,8 @@ static INT32 NMK004Exit()
 	MSM6295ROM = NULL;
 	no_z80 = 0;
 	NMK004_enabled = 0;
-        
+	GunnailMode = 0;
+
 	return CommonExit();
 }
 
@@ -5780,12 +5816,19 @@ static INT32 NMK004Frame()
 		}
 	}
 
+	if (GunnailMode && (LastFakeDip != DrvDips[2])) {
+		// GunNail - Trap15's Nice Health-warning mod - lowers the volume of the
+		// "low sheild" warning beeper to a more tollerable level.
+		LastFakeDip = DrvDips[2];
+		DrvZ80ROM[0x52e6] = (DrvDips[2] == 0x08) ? 0xCD : 0x9D;
+	}
+
 	SekNewFrame();
 	tlcs90NewFrame();
 
 	INT32 nSegment;
 	INT32 nInterleave = 256;
-	INT32 nTotalCycles[2] = { nNMK004CpuSpeed / 56, 8000000 / 56 };
+	UINT32 nTotalCycles[2] = { nNMK004CpuSpeed / 56, 8000000 / 56 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -8772,6 +8815,7 @@ static INT32 GunnailLoadCallback()
 
 static INT32 GunnailInit()
 {
+	GunnailMode = 1;
 	return NMK004Init(GunnailLoadCallback, 12000000);
 }
 
@@ -8780,7 +8824,7 @@ struct BurnDriver BurnDrvGunnail = {
 	"GunNail (28th May. 1992)\0", NULL, "NMK / Tecmo", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, gunnailRomInfo, gunnailRomName, NULL, NULL, CommonInputInfo, GunnailDIPInfo,
+	NULL, gunnailRomInfo, gunnailRomName, NULL, NULL, GunnailInputInfo, GunnailDIPInfo,
 	GunnailInit, NMK004Exit, NMK004Frame, GunnailDraw, DrvScan, NULL, 0x400,
 	224, 384, 3, 4
 };

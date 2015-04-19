@@ -297,6 +297,7 @@ void __fastcall donpachiWriteWord(UINT32 sekAddress, UINT16 wordValue)
 #ifdef USE_SAMPLE_HACK
 			if (wordValue == 0x78) {
 				memset (previous_sound_write, 0, 3);
+				DrvSampleReset(); // STOP
 			} else {
 				previous_sound_write[0] = previous_sound_write[1];
 				previous_sound_write[1] = previous_sound_write[2];
@@ -454,7 +455,7 @@ static INT32 DrvDraw()
 static void CheckDIP()
 {
 	if (bHasSamples && bLastSampleDIPMode != DrvDips[0]) {
-		bprintf(0, _T("DIP Changed! %X\n"), DrvDips[0]);
+		//bprintf(0, _T("DIP Changed! %X\n"), DrvDips[0]);
 		bLastSampleDIPMode = DrvDips[0];
 
 		MSM6295SetRoute(0, (bLastSampleDIPMode == 8) ? 0.00 : 1.60, BURN_SND_ROUTE_BOTH);

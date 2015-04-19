@@ -25,6 +25,8 @@ INT32  BurnSampleScan(INT32 nAction, INT32 *pnMin);
 void BurnSampleRender(INT16 *pDest, UINT32 pLen);
 void BurnSampleExit();
 
+extern INT32 bBurnSampleTrimSampleEnd; // set before BurnSampleInit();
+
 #define BURN_SND_SAMPLE_ROUTE_1			0
 #define BURN_SND_SAMPLE_ROUTE_2			1
 

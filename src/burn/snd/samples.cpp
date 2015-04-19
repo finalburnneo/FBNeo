@@ -11,6 +11,7 @@
 
 static INT32 bAddToStream = 0;
 static INT32 nTotalSamples = 0;
+INT32 bBurnSampleTrimSampleEnd = 0;
 
 struct sample_format
 {
@@ -94,6 +95,12 @@ static void make_raw(UINT8 *src, UINT32 len)
 			if (d < -0x7fff) d = -0x7fff;
 			data[i] = (INT16)d;
 		}
+
+		//bprintf(0, _T("converted_len before: %X [%d]\n"), converted_len, converted_len);
+		if (bBurnSampleTrimSampleEnd) { // trim silence off the end of the sample, bBurnSampleTrimSampleEnd must be set before init!
+			while (data[converted_len * 2] == 0) converted_len -= 2;
+		}
+		//bprintf(0, _T("converted_len after : %X [%d]\n"), converted_len, converted_len);
 	}
 
 	sample_ptr->length = converted_len;
@@ -315,7 +322,10 @@ void BurnSampleInit(INT32 bAdd /*add sample to stream?*/)
 		if (destination) {
 			free (destination);
 			destination = NULL;
-		}		
+		}
+
+		BurnSetProgressRange(1.0 / nTotalSamples);
+		BurnUpdateProgress((double)1.0 / i * nTotalSamples, _T("Loading samples..."), 0);
 	}
 }
 
@@ -369,7 +379,8 @@ void BurnSampleExit()
 	sample_ptr = NULL;
 	nTotalSamples = 0;
 	bAddToStream = 0;
-	
+	bBurnSampleTrimSampleEnd = 0;
+
 	DebugSnd_SamplesInitted = 0;
 }
 

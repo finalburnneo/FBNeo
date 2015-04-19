@@ -743,6 +743,7 @@ static INT32 DrvInit()
 
 #ifdef USE_SAMPLE_HACK
 	BurnUpdateProgress(0.0, _T("Loading samples..."), 0);
+	bBurnSampleTrimSampleEnd = 1;
 	BurnSampleInit(1);
 	BurnSampleSetAllRoutesAllSamples(0.40, BURN_SND_ROUTE_BOTH);
     bHasSamples = BurnSampleGetStatus(0) != -1;

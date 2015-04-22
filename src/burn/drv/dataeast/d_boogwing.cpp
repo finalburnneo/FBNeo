@@ -835,6 +835,53 @@ struct BurnDriver BurnDrvBoogwing = {
 };
 
 
+// Boogie Wings (USA v1.7, 92.12.14)
+
+static struct BurnRomInfo boogwinguRomDesc[] = {
+	{ "kl_00-2.2b",		0x040000, 0x4dc14798,  1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "kl_02-2.2e",		0x040000, 0x3bb3b0a0,  1 | BRF_PRG | BRF_ESS }, //  1
+	{ "kl_01-2.4b",		0x040000, 0xd109ba13,  1 | BRF_PRG | BRF_ESS }, //  2
+	{ "kl_03-2.4e",		0x040000, 0xfef2a176,  1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "kl06.18p",		0x010000, 0x3e8bc4e1,  2 | BRF_PRG | BRF_ESS }, //  4 Huc6280 Code
+
+	{ "kl05.9e",		0x010000, 0xd10aef95,  3 | BRF_GRA },           //  5 Characters
+	{ "kl04.8e",		0x010000, 0x329323a8,  3 | BRF_GRA },           //  6
+
+	{ "mbd-01.9b",		0x100000, 0xd7de4f4b,  4 | BRF_GRA },           //  7 Foreground Tiles
+	{ "mbd-00.8b",		0x100000, 0xadb20ba9,  4 | BRF_GRA },           //  8
+	{ "mbd-02.10e",		0x080000, 0xb25aa721,  4 | BRF_GRA },           //  9
+
+	{ "mbd-03.13b",		0x100000, 0xcf798f2c,  5 | BRF_GRA },           // 10 Background Tiles
+	{ "mbd-04.14b",		0x100000, 0xd9764d0b,  5 | BRF_GRA },           // 11
+
+	{ "mbd-05.16b",		0x200000, 0x1768c66a,  6 | BRF_GRA },           // 12 Sprite Bank A
+	{ "mbd-06.17b",		0x200000, 0x7750847a,  6 | BRF_GRA },           // 13
+
+	{ "mbd-07.18b",		0x200000, 0x241faac1,  7 | BRF_GRA },           // 14 Sprite Bank B
+	{ "mbd-08.19b",		0x200000, 0xf13b1e56,  7 | BRF_GRA },           // 15
+
+	{ "mbd-10.17p",		0x080000, 0xf159f76a,  8 | BRF_SND },           // 16 OKI M6295 Samples 0
+
+	{ "mbd-09.16p",		0x080000, 0xf44f2f87,  9 | BRF_SND },           // 17 OKI M6295 Samples 1
+
+	{ "kj-00.15n",		0x000400, 0xadd4d50b, 10 | BRF_OPT },           // 18 Unknown PROMs
+};
+
+STD_ROM_PICK(boogwingu)
+STD_ROM_FN(boogwingu)
+
+struct BurnDriver BurnDrvBoogwingu = {
+	"boogwingu", "boogwing", NULL, NULL, "1992",
+	"Boogie Wings (USA v1.7, 92.12.14)\0", NULL, "Data East Corporation", "DECO IC16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	NULL, boogwinguRomInfo, boogwinguRomName, NULL, NULL, BoogwingInputInfo, BoogwingDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 240, 4, 3
+};
+
+
 // Boogie Wings (Asia v1.5, 92.12.07)
 
 static struct BurnRomInfo boogwingaRomDesc[] = {

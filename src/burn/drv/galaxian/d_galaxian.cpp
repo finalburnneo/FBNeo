@@ -15354,7 +15354,7 @@ static struct BurnRomInfo ScrambpRomDesc[] = {
 STD_ROM_PICK(Scrambp)
 STD_ROM_FN(Scrambp)
 
-static struct BurnRomInfo ScramcbRomDesc[] = {
+static struct BurnRomInfo ScramceRomDesc[] = {
 	{ "es1.2c",  	   0x00800, 0x726fb19e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "es2.2e",  	   0x00800, 0x66ebc070, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "es3.2f",  	   0x00800, 0x317548fd, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -15374,8 +15374,8 @@ static struct BurnRomInfo ScramcbRomDesc[] = {
 	{ "prom7051.6e",   0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
 };
 
-STD_ROM_PICK(Scramcb)
-STD_ROM_FN(Scramcb)
+STD_ROM_PICK(Scramce)
+STD_ROM_FN(Scramce)
 
 static struct BurnRomInfo ScramptRomDesc[] = {
 	{ "cx8-2716.cpu",  0x00800, 0x12b97cc6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -17231,12 +17231,12 @@ struct BurnDriver BurnDrvScrambp = {
 	NULL, 392, 224, 256, 3, 4
 };
 
-struct BurnDriver BurnDrvScramcb = {
-	"scramcb", "scramble", NULL, NULL, "1981",
+struct BurnDriver BurnDrvScramce = {
+	"scramce", "scramble", NULL, NULL, "1981",
 	"Scramble (Centromatic S.A., Spanish bootleg)\0", NULL, "bootleg (Centromatic S.A.)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
-	NULL, ScramcbRomInfo, ScramcbRomName, NULL, NULL, ScrambleInputInfo, ScrambleDIPInfo,
+	NULL, ScramceRomInfo, ScramceRomName, NULL, NULL, ScrambleInputInfo, ScrambleDIPInfo,
 	ScrambleInit, KonamiExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

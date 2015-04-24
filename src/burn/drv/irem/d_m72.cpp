@@ -2123,10 +2123,13 @@ static INT32 DrvFrame()
 					if (DrvSndROM[sample_address]) {
 						DACSignedWrite(0, DrvSndROM[sample_address]);
 						sample_address = (sample_address + 1) & 0x3ffff;
-						if (!DrvSndROM[sample_address]) {
-							DACWrite(0, 0); // Clear DAC output buffer at end of sample - fixes distortion in Air Duel
-						}
+						//if (!DrvSndROM[sample_address]) {
+						//	DACWrite(0, 0); // Clear DAC output buffer at end of sample - fixes distortion in Air Duel
+						//}
+					} else {
+						DACWrite(0, 0); // Clear DAC output buffer at end of sample - fixes distortion in Air Duel & second-to-last level of Mr. Heli
 					}
+
 				} else if (z80_nmi_enable == Z80_REAL_NMI) {
 					 ZetNmi();
 				}

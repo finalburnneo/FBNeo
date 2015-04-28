@@ -18,6 +18,7 @@ static INT32 nSoundCommand;
 static INT32 nCurrentBank;
 
 INT32 Bgareggabl = 0;
+static INT32 Bgareggabla = 0;
 
 // Rom information
 static struct BurnRomInfo bgareggaRomDesc[] = {
@@ -183,17 +184,19 @@ STD_ROM_FN(bgareggabl)
 
 static struct BurnRomInfo bgareggablaRomDesc[] = {
 	{ "27c8100.mon-sys",    0x100000, 0xD334E5AA, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
-
-	{ "6#-322",       0x400000, 0x37fe48ed, BRF_GRA },			 //  1 GP9001 Tile data // rom4.bin + rom3.bin
-	{ "5#-322",       0x400000, 0x5a06c031, BRF_GRA },			 //  2					// rom2.bin + rom1.bin
-
-	{ "text.bin",     0x008000, 0x00D100BD, BRF_GRA },			 //  3 Extra text layer tile data
-
-	{ "snd.bin",      0x020000, 0x68632952, BRF_ESS | BRF_PRG }, //  4 Z80 program
-
-	{ "rom5.bin",     0x100000, 0xF6D49863, BRF_SND },			 //  5 MSM6295 ADPCM data
 	
-	{ "base.bin",     0x008000, 0x456dd16e, BRF_GRA },			 //  6 (looks like garbage)
+	{ "rom4.bin",     0x200000, 0xB333D81F, BRF_GRA },			 //  1 GP9001 Tile data
+	{ "rom3.bin",     0x200000, 0x51B9EBFB, BRF_GRA },			 //  2
+	{ "rom2.bin",     0x200000, 0xB330E5E2, BRF_GRA },			 //  3
+	{ "rom1.bin",     0x200000, 0x7EAFDD70, BRF_GRA },			 //  4
+
+	{ "text.bin",     0x008000, 0x00D100BD, BRF_GRA },			 //  5 Extra text layer tile data
+
+	{ "snd.bin",      0x020000, 0x68632952, BRF_ESS | BRF_PRG }, //  6 Z80 program
+
+	{ "rom5.bin",     0x100000, 0xF6D49863, BRF_SND },			 //  7 MSM6295 ADPCM data
+	
+	{ "base.bin",     0x008000, 0x456dd16e, BRF_GRA },			 //  8 (looks like garbage)
 };
 
 
@@ -527,6 +530,28 @@ static INT32 LoadRomsBl()
 	return 0;
 }
 
+static INT32 LoadRomsBla()
+{
+	// Load 68000 ROM
+	if (BurnLoadRom(Rom01, 0, 1)) {
+		return 1;
+	}
+
+	// Load GP9001 tile data
+	ToaLoadGP9001Tiles(GP9001ROM[0], 1, 4, nGP9001ROMSize[0]);
+
+	// Load Extra text layer tile data
+	BurnLoadRom(ExtraTROM, 5, 1);
+
+	// Load the Z80 ROM
+	BurnLoadRom(RomZ80, 6, 1);
+
+	// Load ADPCM data
+	BurnLoadRom(MSM6295ROM, 7, 1);
+
+	return 0;
+}
+
 UINT8 __fastcall battlegZ80Read(UINT16 nAddress)
 {
 //	printf("z80 read %4X\n", nAddress);
@@ -764,13 +789,19 @@ static INT32 battlegInit()
 	MemIndex();													// Index the allocated memory
 
 	// Load the roms into memory
-	if (Bgareggabl) {
-		if (LoadRomsBl()) {
+	if (Bgareggabla) {
+		if (LoadRomsBla()) {
 			return 1;
 		}
 	} else {
-		if (LoadRoms()) {
-			return 1;
+		if (Bgareggabl) {
+			if (LoadRomsBl()) {
+				return 1;
+			}
+		} else {
+			if (LoadRoms()) {
+				return 1;
+			}
 		}
 	}
 
@@ -836,6 +867,14 @@ static INT32 BgareggablInit()
 	return battlegInit();
 }
 
+static INT32 BgareggablaInit()
+{
+	Bgareggabl = 1;
+	Bgareggabla = 1;
+	
+	return battlegInit();
+}
+
 static INT32 DrvExit()
 {
 	MSM6295Exit(0);
@@ -850,6 +889,7 @@ static INT32 DrvExit()
 	BurnFree(Mem);
 	
 	Bgareggabl = 0;
+	Bgareggabla = 0;
 
 	return 0;
 }
@@ -1073,6 +1113,6 @@ struct BurnDriver BurnDrvBgareggabla = {
 	L"\u96F7\u795E\u50B3\0Lei Shen Zhuan Thunder Deity Biography (Chinese hack of Battle Garegga)\0" , NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HACK, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bgareggablaRomInfo, bgareggablaRomName, NULL, NULL, battlegInputInfo, bgareggaDIPInfo,
-	BgareggablInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	BgareggablaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

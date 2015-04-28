@@ -665,7 +665,7 @@ static struct BurnRomInfo PangbRomDesc[] = {
 	{ "pang_02.bin",   0x20000, 0x3f15bb61, BRF_ESS | BRF_PRG }, //	 1
 	{ "pang_03.bin",   0x20000, 0x0c8477ae, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "pang_09.bin",   0x20000, 0x3a5883f5, BRF_GRA },	     //  3	Characters
+	{ "pang_9.bin",    0x20000, 0x3a5883f5, BRF_GRA },	     //  3	Characters
 	{ "bb3.bin",       0x20000, 0x79a8ed08, BRF_GRA },	     //  4
 	{ "bb11.bin",      0x20000, 0x166a16ae, BRF_GRA },	     //  5
 	{ "bb5.bin",       0x20000, 0x2fb3db6c, BRF_GRA },	     //  6
@@ -747,7 +747,7 @@ static struct BurnRomInfo Pangb2RomDesc[] = {
 	{ "27c512.11h",    0x10000, 0x369a453e, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "27c020.13h",    0x40000, 0x5e7f24b1, BRF_ESS | BRF_PRG }, //	 1
 	
-	{ "pang_09.bin",   0x20000, 0x3a5883f5, BRF_GRA },	     //  2	Characters
+	{ "pang_9.bin",    0x20000, 0x3a5883f5, BRF_GRA },	     //  2	Characters
 	{ "bb3.bin",       0x20000, 0x79a8ed08, BRF_GRA },	     //  3
 	{ "bb11.bin",      0x20000, 0x166a16ae, BRF_GRA },	     //  4
 	{ "bb5.bin",       0x20000, 0x2fb3db6c, BRF_GRA },	     //  5

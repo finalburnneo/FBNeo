@@ -838,10 +838,10 @@ struct BurnDriver BurnDrvBoogwing = {
 // Boogie Wings (USA v1.7, 92.12.14)
 
 static struct BurnRomInfo boogwinguRomDesc[] = {
-	{ "kl_00-2.2b",		0x040000, 0x4dc14798,  1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "kl_02-2.2e",		0x040000, 0x3bb3b0a0,  1 | BRF_PRG | BRF_ESS }, //  1
-	{ "kl_01-2.4b",		0x040000, 0xd109ba13,  1 | BRF_PRG | BRF_ESS }, //  2
-	{ "kl_03-2.4e",		0x040000, 0xfef2a176,  1 | BRF_PRG | BRF_ESS }, //  3
+	{ "kl_00.2b",		0x040000, 0x4dc14798,  1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "kl_02.2e",		0x040000, 0x3bb3b0a0,  1 | BRF_PRG | BRF_ESS }, //  1
+	{ "kl_01.4b",		0x040000, 0xd109ba13,  1 | BRF_PRG | BRF_ESS }, //  2
+	{ "kl_03.4e",		0x040000, 0xfef2a176,  1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "kl06.18p",		0x010000, 0x3e8bc4e1,  2 | BRF_PRG | BRF_ESS }, //  4 Huc6280 Code
 

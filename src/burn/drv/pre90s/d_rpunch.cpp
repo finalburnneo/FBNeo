@@ -1158,17 +1158,16 @@ static struct BurnRomInfo svolleyuRomDesc[] = {
 	{ "sps_07.bin",		0x10000, 0x904b7709, 4 | BRF_GRA },           // 12
 	{ "sps_08.bin",		0x10000, 0x5430ffac, 4 | BRF_GRA },           // 13
 	{ "sps_09.bin",		0x10000, 0x414a6278, 4 | BRF_GRA },           // 14
-	{ "a09.bin",		0x08000, 0xdd92dfe1, 4 | BRF_GRA },           // 15
 
-	{ "sps_20.bin",		0x10000, 0xc9e7206d, 5 | BRF_GRA },           // 16 Sprite Tiles
-	{ "sps_23.bin",		0x10000, 0x7b15c805, 5 | BRF_GRA },           // 17
-	{ "sps_19.bin",		0x08000, 0x8ac2f232, 5 | BRF_GRA },           // 18
-	{ "sps_22.bin",		0x08000, 0xfcc754e3, 5 | BRF_GRA },           // 19
-	{ "sps_18.bin",		0x08000, 0x4d6c8f0c, 5 | BRF_GRA },           // 20
-	{ "sps_21.bin",		0x08000, 0x9dd28b42, 5 | BRF_GRA },           // 21
+	{ "sps_20.bin",		0x10000, 0xc9e7206d, 5 | BRF_GRA },           // 15 Sprite Tiles
+	{ "sps_23.bin",		0x10000, 0x7b15c805, 5 | BRF_GRA },           // 16
+	{ "sps_19.bin",		0x08000, 0x8ac2f232, 5 | BRF_GRA },           // 17
+	{ "sps_22.bin",		0x08000, 0xfcc754e3, 5 | BRF_GRA },           // 18
+	{ "sps_18.bin",		0x08000, 0x4d6c8f0c, 5 | BRF_GRA },           // 19
+	{ "sps_21.bin",		0x08000, 0x9dd28b42, 5 | BRF_GRA },           // 20
 
-	{ "sps_16.bin",		0x20000, 0x456d0f36, 6 | BRF_SND },           // 22 UPD Samples
-	{ "sps_15.bin",		0x10000, 0xf33f415f, 6 | BRF_SND },           // 23
+	{ "sps_16.bin",		0x20000, 0x456d0f36, 6 | BRF_SND },           // 21 UPD Samples
+	{ "sps_15.bin",		0x10000, 0xf33f415f, 6 | BRF_SND },           // 22
 };
 
 STD_ROM_PICK(svolleyu)
@@ -1180,6 +1179,6 @@ struct BurnDriver BurnDrvSvolleyu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, svolleyuRomInfo, svolleyuRomName, NULL, NULL, RpunchInputInfo, SvolleyDIPInfo,
-	svolleykInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	svolleyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
 };

@@ -852,6 +852,7 @@ STD_ROM_FN(donpachihk)
 
 static struct BurnSampleInfo DonpachiSampleDesc[] = {
 #ifdef USE_SAMPLE_HACK
+#if !defined ROM_VERIFY
 	{ "02 - Sortie Instruction.wav", SAMPLE_AUTOLOOP },
 	{ "03 - Silent Outpost Base.wav", SAMPLE_AUTOLOOP },
 	{ "04 - Gale Force.wav", SAMPLE_AUTOLOOP },
@@ -866,6 +867,7 @@ static struct BurnSampleInfo DonpachiSampleDesc[] = {
 	{ "13 - My Duty is Done.wav", SAMPLE_AUTOLOOP },
 	{ "14 - Eternal Soldier.wav", SAMPLE_AUTOLOOP },
 	{ "15 - Chase in the Dark.wav", SAMPLE_AUTOLOOP },
+#endif
 #endif
 	{ "", 0 }
 };

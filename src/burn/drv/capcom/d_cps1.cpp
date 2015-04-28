@@ -4727,12 +4727,12 @@ STD_ROM_FN(Cworld2ja)
 static struct BurnRomInfo Cworld2jbRomDesc[] = {
 /* B-Board 91634B-2  - all roms have 91634B on the labels */
 	{ "q5 - 23_91634b.8f",      0x080000, 0x709f577f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "q5 - 22_91634b.6f",      0x080000, 0x93248458, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "q5 - 22_91634b.7f",      0x080000, 0x93248458, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
-	{ "q5 - 01_91634b.8a",      0x080000, 0x09d0e7ce, BRF_GRA | CPS1_TILES },
-	{ "q5 - 02_91634b.10a",     0x080000, 0x22e4ce9a, BRF_GRA | CPS1_TILES },
-	{ "q5 - 03_91634b.7a",      0x080000, 0xf7b3aed6, BRF_GRA | CPS1_TILES },
-	{ "q5 - 04_91634b.9a",      0x080000, 0x520c6c88, BRF_GRA | CPS1_TILES },
+	{ "q5 - 01_91634b.3a",      0x080000, 0x09d0e7ce, BRF_GRA | CPS1_TILES },
+	{ "q5 - 02_91634b.4a",      0x080000, 0x22e4ce9a, BRF_GRA | CPS1_TILES },
+	{ "q5 - 03_91634b.5a",      0x080000, 0xf7b3aed6, BRF_GRA | CPS1_TILES },
+	{ "q5 - 04_91634b.6a",      0x080000, 0x520c6c88, BRF_GRA | CPS1_TILES },
 
 	{ "q5 - 09_91634b.12a",     0x010000, 0xe14dc524, BRF_PRG | CPS1_Z80_PROGRAM }, // == q5_23.13b
 

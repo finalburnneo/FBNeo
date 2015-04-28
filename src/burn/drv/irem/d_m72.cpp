@@ -3421,6 +3421,8 @@ static struct BurnRomInfo gallopRomDesc[] = {
 	{ "cc-b-b3.bin",	0x10000, 0xd361ba3f, 0x04 | BRF_GRA },           // 15
 
 	{ "cc-c-v0.bin",	0x20000, 0x6247bade, 0x05 | BRF_SND },           // 16 DAC Samples
+	
+	{ "gallop_i8751.mcu", 0x10000, 0x00000000, BRF_NODUMP | BRF_OPT },
 };
 
 STD_ROM_PICK(gallop)

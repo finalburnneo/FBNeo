@@ -620,12 +620,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Hexion (Japan ver. JAB)
 
 static struct BurnRomInfo hexionRomDesc[] = {
-	{ "122jab01.bin",	0x20000, 0xeabc6dd1, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "122__j_a__b01.16f",	0x20000, 0xeabc6dd1, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 
-	{ "122a07.bin",		0x40000, 0x22ae55e3, 2 | BRF_GRA },           //  1 Tiles
-	{ "122a06.bin",		0x40000, 0x438f4388, 2 | BRF_GRA },           //  2
+	{ "122a07.1h",		0x40000, 0x22ae55e3, 2 | BRF_GRA },           //  1 Tiles
+	{ "122a06.1g",		0x40000, 0x438f4388, 2 | BRF_GRA },           //  2
 
-	{ "122a05.bin",		0x40000, 0xbcc831bf, 3 | BRF_SND },           //  3 M6296 #0 Samples
+	{ "122a05.2f",		0x40000, 0xbcc831bf, 3 | BRF_SND },           //  3 M6296 #0 Samples
 
 	{ "122a04.10b",		0x00100, 0x506eb8c6, 4 | BRF_GRA },           //  4 Color PROMs
 	{ "122a03.11b",		0x00100, 0x590c4f64, 4 | BRF_GRA },           //  5
@@ -656,9 +656,9 @@ static struct BurnRomInfo hexionbRomDesc[] = {
 
 	{ "hexionb.u16",	0x40000, 0xbcc831bf, 3 | BRF_SND },           //  3 M6295 #0 Samples
 
-	{ "122a04.10b",		0x00100, 0x506eb8c6, 4 | BRF_GRA },           //  4 Color PROMs
-	{ "122a03.11b",		0x00100, 0x590c4f64, 4 | BRF_GRA },           //  5
-	{ "122a02.13b",		0x00100, 0x5734305c, 4 | BRF_GRA },           //  6
+	{ "82s129.u36",		0x00100, 0x506eb8c6, 4 | BRF_GRA },           //  4 Color PROMs
+	{ "82s129.u37",		0x00100, 0x590c4f64, 4 | BRF_GRA },           //  5
+	{ "82s129.u38",		0x00100, 0x5734305c, 4 | BRF_GRA },           //  6
 
 	{ "hexionb.u18",	0x40000, 0xC179D315, 5 | BRF_SND },           //  7 M6295 #1 Samples
 };

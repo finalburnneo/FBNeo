@@ -292,7 +292,7 @@ void GalSoundInit()
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KINGBALLDAC) {
 		DACInit(0, 0, 1, KingballSyncDAC);
-		DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_HEXPOOLASN76496) {
@@ -428,7 +428,7 @@ void GalSoundInit()
 		GalLfoFreq = MAXFREQ;
 		GalLfoFreqFrameVar = 0;
 		
-		GalGain = 1.00;
+		GalGain = 4.00;
 		GalOutputDir = BURN_SND_ROUTE_BOTH;
 	}
 }
@@ -983,8 +983,15 @@ static void GalRenderToneWave(INT16 *pSoundBuf, INT32 nLength)
 
 static void GalRenderLfoWaveSample(INT32 nLfoWave, INT16 *pSoundBuf, INT32 nLength)
 {
+	INT32 nshHZ = 0;
+
+	switch (nLfoWave) {
+		case 0: nshHZ = 470; break;
+		case 1: nshHZ = 330; break;
+		case 2: nshHZ = 220; break;
+	}
 	double Addr = GalLfoWavePos[nLfoWave];
-	double Step = (double)(sizeof(GalBackgroundWave) * GalLfoFreq * (100 + 2 * 470) / (100 + 2 * 470)) / nBurnSoundRate;
+	double Step = (double)(sizeof(GalBackgroundWave) * GalLfoFreq * (100 + 2 * nshHZ) / (100 + 2 * 470)) / nBurnSoundRate;
 	
 	for (INT32 i = 0; i < nLength; i += 2) {
 		INT16 Sample = (INT16)(GalBackgroundWave[(INT32)Addr] * (GalLfoVolume[nLfoWave] ? LFO_VOLUME : 0));

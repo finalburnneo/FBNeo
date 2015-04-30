@@ -4036,6 +4036,7 @@ void __fastcall System1Z801PortWrite(UINT16 a, UINT8 d)
 			System1FlipScreen = d & 0x80;
 			return;
 		}
+		case 0x1c: return; // NOP
 	}
 	
 	bprintf(PRINT_NORMAL, _T("IO Write %x, %x\n"), a, d);

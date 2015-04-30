@@ -455,6 +455,7 @@ static void IGS022_handle_command()
 	}
 }
 
+#if 0
 static UINT32 olds_prot_addr(UINT16 addr)
 {
 	switch (addr & 0xff)
@@ -598,6 +599,7 @@ static void IGS028_handle()
 		break;
 	}
 }
+#endif
 
 static void killbld_protection_calculate_hold(INT32 y, INT32 z)
 {
@@ -688,6 +690,7 @@ static void __fastcall killbld_igs025_prot_write(UINT32 address, UINT16 data)
 	}
 }
 
+#if 0
 static void __fastcall olds_igs025_prot_write(UINT32 address, UINT16 data)
 {
 	bprintf (0, _T("PRTW: %5.5x %4.4x\n"), address, data);
@@ -731,6 +734,7 @@ static void __fastcall olds_igs025_prot_write(UINT32 address, UINT16 data)
 		break;
 	}
 }
+#endif
 
 static void __fastcall drgw2_igs025_prot_write(UINT32 address, UINT16 data)
 {
@@ -823,6 +827,11 @@ static void common_reset()
 
 static void drgw2_reset()
 {
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "drgw2")    == 0) kb_region = 6;
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "dw2v100x") == 0) kb_region = 6;
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "drgw2c")   == 0) kb_region = 5;
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "drgw2j")   == 0) kb_region = 1;
+	
 	common_reset();
 }
 
@@ -879,14 +888,10 @@ static INT32 CommonScan(INT32 nAction, INT32 *)
 	return 0;
 }
 
+#if 0
 static void olds_reset()
 {
 	common_reset();
-
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "drgw2")    == 0) kb_region = 6;
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "dw2v100x") == 0) kb_region = 6;
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "drgw2c")   == 0) kb_region = 5;
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "drgw2j")   == 0) kb_region = 1;
 
 	kb_game_id = 0x00900000 | kb_region;
 
@@ -896,6 +901,7 @@ static void olds_reset()
 
 	sharedprotram[0x3064/2] = 0xB315; // crc?
 }
+#endif
 
 void install_protection_asic25_asic22_killbld()
 {
@@ -943,6 +949,7 @@ void install_protection_asic25_asic12_dw2()
 	SekClose();
 }
 
+#if 0
 void install_protection_asic25_asic28_olds()
 {
 	pPgmScanCallback = CommonScan;
@@ -957,3 +964,356 @@ void install_protection_asic25_asic28_olds()
 	SekSetWriteWordHandler(4, 	olds_igs025_prot_write);
 	SekClose();
 }
+#endif
+
+
+
+static INT32         m_olds_cmd;
+static INT32         m_olds_reg;
+static INT32         m_olds_ptr;
+static UINT16        m_olds_bs;
+static UINT16        m_olds_cmd3;
+static UINT16        m_olds_prot_hold;
+static UINT16        m_olds_prot_hilo;
+static UINT16        m_olds_prot_hilo_select;
+
+static UINT32 olds_prot_addr(UINT16 addr)
+{
+	switch (addr & 0xff)
+	{
+		case 0x0:
+		case 0x5:
+		case 0xa: return 0x402a00 + ((addr >> 8) << 2);
+		case 0x2:
+		case 0x8: return 0x402e00 + ((addr >> 8) << 2);
+		case 0x1: return 0x40307e;
+		case 0x3: return 0x403090;
+		case 0x4: return 0x40309a;
+		case 0x6: return 0x4030a4;
+		case 0x7: return 0x403000;
+		case 0x9: return 0x40306e;
+	}
+
+	return 0;
+}
+
+static UINT32 olds_read_reg(UINT16 addr)
+{
+	UINT32 protaddr = (olds_prot_addr(addr) - 0x400000) / 2;
+	return sharedprotram[protaddr] << 16 | sharedprotram[protaddr + 1];
+}
+
+static void olds_write_reg( UINT16 addr, UINT32 val )
+{
+	sharedprotram[(olds_prot_addr(addr) - 0x400000) / 2]     = val >> 16;
+	sharedprotram[(olds_prot_addr(addr) - 0x400000) / 2 + 1] = val & 0xffff;
+}
+
+static void IGS028_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
+{
+	UINT16 param = mode >> 8;
+	UINT16 *PROTROM = (UINT16*)(PGMUSER0 + 0x10000);
+
+	mode &= 0x0f;
+
+	switch (mode)
+	{
+		case 0x00: // This mode copies code later on in the game! Encrypted somehow?
+		// src:2fc8, dst: 045a, size: 025e, mode: 0000
+		// jumps from 12beb4 in unprotected set
+		// jumps from 1313e0 in protected set
+		case 0x01: // swap bytes and nibbles
+		case 0x02: // ^= encryption
+		case 0x05: // copy
+		case 0x06: // += encryption (correct?)
+		{
+			UINT8 extraoffset = param & 0xff;
+			UINT8 *dectable = (UINT8 *)(PROTROM + (0x100 / 2));
+
+			for (INT32 x = 0; x < size; x++)
+			{
+				UINT16 dat2 = PROTROM[src + x];
+
+				int taboff = ((x*2)+extraoffset) & 0xff; // must allow for overflow in instances of odd offsets
+				unsigned short extraxor = ((dectable[taboff + 0]) << 0) | (dectable[taboff + 1] << 8);
+
+				if (mode==0) dat2 = 0x4e75; // hack
+				if (mode==1) dat2  = ((dat2 & 0xf000) >> 12) | ((dat2 & 0x0f00) >> 4) | ((dat2 & 0x00f0) << 4) | ((dat2 & 0x000f) << 12);
+				if (mode==2) dat2 ^= extraxor;
+				//if (mode==5) dat2  = dat2;
+				if (mode==6) dat2 += extraxor;
+
+				if (mode==2 || mode==6) dat2 = (dat2<<8)|(dat2>>8);
+
+				sharedprotram[dst + x] = (dat2 << 8) | (dat2 >> 8);
+			}
+		}
+	}
+}
+
+static void olds_protection_calculate_hold(int y, int z) // calculated in routine $12dbc2 in olds
+{
+	unsigned short old = m_olds_prot_hold;
+
+	m_olds_prot_hold = ((old << 1) | (old >> 15));
+
+	m_olds_prot_hold ^= 0x2bad;
+	m_olds_prot_hold ^= BIT(z, y);
+	m_olds_prot_hold ^= BIT( old,  7) <<  0;
+	m_olds_prot_hold ^= BIT(~old, 13) <<  4;
+	m_olds_prot_hold ^= BIT( old,  3) << 11;
+
+	m_olds_prot_hold ^= (m_olds_prot_hilo & ~0x0408) << 1; // $81790c
+}
+
+static void olds_protection_calculate_hilo() // calculated in routine $12dbc2 in olds
+{
+	UINT8 source;
+
+	m_olds_prot_hilo_select++;
+	if (m_olds_prot_hilo_select > 0xeb) {
+		m_olds_prot_hilo_select = 0;
+	}
+
+	source = source_data[PgmInput[7] - 1][m_olds_prot_hilo_select];
+
+	if (m_olds_prot_hilo_select & 1)    // $8178fa
+	{
+		m_olds_prot_hilo = (m_olds_prot_hilo & 0x00ff) | (source << 8);     // $8178d8
+	}
+	else
+	{
+		m_olds_prot_hilo = (m_olds_prot_hilo & 0xff00) | (source << 0);     // $8178d8
+	}
+}
+
+static void __fastcall olds_protection_w(UINT32 offset, UINT16 data)
+{
+	offset &= 2;
+
+	if (offset == 0)
+	{
+		m_olds_cmd = data;
+	}
+	else
+	{
+		switch (m_olds_cmd)
+		{
+			case 0x00:
+				m_olds_reg = data;
+			break;
+
+			case 0x02:
+				m_olds_bs = ((data & 0x03) << 6) | ((data & 0x04) << 3) | ((data & 0x08) << 1);
+			break;
+
+			case 0x03:
+			{
+				UINT16 cmd = sharedprotram[0x3026 / 2];
+
+				switch (cmd)
+				{
+					case 0x12:
+					{
+						UINT16 mode = sharedprotram[0x303e / 2];  // ?
+						UINT16 src  = sharedprotram[0x306a / 2] >> 1; // ?
+						UINT16 dst  = sharedprotram[0x3084 / 2] & 0x1fff;
+						UINT16 size = sharedprotram[0x30a2 / 2] & 0x1fff;
+
+						IGS028_do_dma(src, dst, size, mode);
+					}
+					break;
+
+					case 0x64: // incomplete...
+					{
+					        UINT16 p1 = sharedprotram[0x3050 / 2];
+					        UINT16 p2 = sharedprotram[0x3082 / 2];
+					        UINT16 p3 = sharedprotram[0x3054 / 2];
+					        UINT16 p4 = sharedprotram[0x3088 / 2];
+
+					        if (p2  == 0x02)
+					                olds_write_reg(p1, olds_read_reg(p1) + 0x10000);
+
+					        switch (p4)
+					        {
+					                case 0xd:
+					                        olds_write_reg(p1,olds_read_reg(p3));
+					                        break;
+					                case 0x0:
+					                        olds_write_reg(p3,(olds_read_reg(p2))^(olds_read_reg(p1)));
+					                        break;
+					                case 0xe:
+					                        olds_write_reg(p3,olds_read_reg(p3)+0x10000);
+					                        break;
+					                case 0x2:
+					                        olds_write_reg(p1,(olds_read_reg(p2))+(olds_read_reg(p3)));
+					                        break;
+					                case 0x6:
+					                        olds_write_reg(p3,(olds_read_reg(p2))&(olds_read_reg(p1)));
+					                        break;
+					                case 0x1:
+					                        olds_write_reg(p2,olds_read_reg(p1)+0x10000);
+					                        break;
+					                case 0x7:
+					                        olds_write_reg(p3,olds_read_reg(p1));
+					                        break;
+					                default:
+					                        break;
+					        }
+					}
+				}
+
+				m_olds_cmd3 = ((data >> 4) + 1) & 0x3;
+			}
+			break;
+
+			case 0x04:
+				m_olds_ptr = data;
+			break;
+
+			case 0x20:
+			case 0x21:
+			case 0x22:
+			case 0x23:
+			case 0x24:
+			case 0x25:
+			case 0x26:
+			case 0x27:
+				m_olds_ptr++;
+				olds_protection_calculate_hold(m_olds_cmd & 0x0f, data & 0xff);
+			break;
+		}
+	}
+}
+
+static UINT16 __fastcall olds_protection_r(UINT32 offset)
+{
+	offset &= 2;
+
+	if (offset)
+	{
+		switch (m_olds_cmd)
+		{
+			case 0x01:
+				return m_olds_reg & 0x7f;
+
+			case 0x02:
+				return m_olds_bs | 0x80;
+
+			case 0x03:
+				return m_olds_cmd3;
+
+			case 0x05:
+			{
+				switch (m_olds_ptr)
+				{
+					case 1: return 0x3f00 | PgmInput[7];
+
+					case 2:
+						return 0x3f00 | 0x00;
+
+					case 3:
+						return 0x3f00 | 0x90;
+
+					case 4:
+						return 0x3f00 | 0x00;
+
+					case 5:
+					default: // >= 5
+						return 0x3f00 | BITSWAP08(m_olds_prot_hold, 5,2,9,7,10,13,12,15);    // $817906
+				}
+			}
+
+			case 0x40:
+				olds_protection_calculate_hilo();
+				return 0; // unused?
+		}
+	}
+
+	return 0;
+}
+
+static void reset_olds()
+{
+//	written by protection device
+//	there seems to be an auto-dma that writes from $401000-402573?
+	sharedprotram[0x1000/2] = 0x4749; // 'IGS.28'
+	sharedprotram[0x1002/2] = 0x2E53;
+	sharedprotram[0x1004/2] = 0x3832;
+	sharedprotram[0x3064/2] = 0xB315; // crc or status check?
+
+//	Should these be written by command 64??
+//	sharedprotram[0x2a00/2] = 0x0000; // ?
+//	sharedprotram[0x2a02/2] = 0x0000; // ?
+	sharedprotram[0x2a04/2] = 0x0002; // ?
+//	sharedprotram[0x2a06/2] = 0x0000; // ?
+//	sharedprotram[0x2ac0/2] = 0x0000; // ?
+	sharedprotram[0x2ac2/2] = 0x0001; // ?
+//	sharedprotram[0x2e00/2] = 0x0000; // ?
+//	sharedprotram[0x2e02/2] = 0x0000; // ?
+//	sharedprotram[0x2e04/2] = 0x0000; // ?
+	sharedprotram[0x2e06/2] = 0x0009; // seconds on char. select timer
+//	sharedprotram[0x2e08/2] = 0x0000; // ?
+	sharedprotram[0x2e0a/2] = 0x0006; // ?
+
+	m_olds_prot_hold = 0;
+	m_olds_prot_hilo = 0;
+	m_olds_prot_hilo_select = 0;
+	m_olds_cmd = 0;
+	m_olds_reg = 0;
+	m_olds_ptr = 0;
+	m_olds_bs = 0;
+	m_olds_cmd3 = 0;
+}
+
+static INT32 oldsScan(INT32 nAction, INT32 *)
+{
+	struct BurnArea ba;
+
+	if (nAction & ACB_MEMORY_RAM) {
+		ba.Data		= PGMUSER0 + 0x000000;
+		ba.nLen		= 0x0004000;
+		ba.nAddress	= 0x400000;
+		ba.szName	= "ProtRAM";
+		BurnAcb(&ba);
+	}
+
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(m_olds_prot_hold);
+		SCAN_VAR(m_olds_prot_hilo);
+		SCAN_VAR(m_olds_prot_hilo_select);
+		SCAN_VAR(m_olds_cmd);
+		SCAN_VAR(m_olds_reg);
+		SCAN_VAR(m_olds_ptr);
+		SCAN_VAR(m_olds_bs);
+		SCAN_VAR(m_olds_cmd3);
+	}
+
+	return 0;
+}
+
+void install_protection_asic25_asic28_olds()
+{
+	pPgmScanCallback = oldsScan;
+	pPgmResetCallback = reset_olds;
+
+	sharedprotram = (UINT16*)PGMUSER0;
+
+	// no protection rom and different offset for olds100a
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "olds100a") == 0) {
+		BurnLoadRom(PGMUSER0 + 0x10000,	15, 1);
+	} else {
+		BurnLoadRom(PGMUSER0 + 0x10000,	19, 1);
+	}
+
+	SekOpen(0);
+
+	SekMapMemory(PGMUSER0,		0x400000, 0x403fff, MAP_RAM);
+
+	SekMapHandler(4,		0xdcb400, 0xdcb403, MAP_READ | MAP_WRITE);
+	SekSetReadWordHandler(4,	olds_protection_r);
+	SekSetWriteWordHandler(4,	olds_protection_w);
+
+	SekClose();
+}
+

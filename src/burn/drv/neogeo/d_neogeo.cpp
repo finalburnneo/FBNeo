@@ -14214,10 +14214,10 @@ struct BurnDriver BurnDrvkof98ae = {
 };
 
 // The King of Fighters '98 (Combo, Ivex hack)
-/* 2015/03/10 version */
+/* 2015/03/30 version */
 static struct BurnRomInfo kof98coRomDesc[] = {
-	{ "kof98c-p1.bin", 	0x100000, 0xe7b69efe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-	{ "kof98c-p2.bin", 	0x400000, 0xb4e8d712, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "kof98c-p1.bin", 	0x100000, 0x7693c342, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "kof98c-p2.bin", 	0x400000, 0x0d03f931, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "kof98c-s1.bin", 	0x020000, 0x7333d8b0, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -14230,7 +14230,7 @@ static struct BurnRomInfo kof98coRomDesc[] = {
 	{ "242-c7.c7", 		0x800000, 0xf6d7a38a, 3 | BRF_GRA },           //  9 
 	{ "242-c8.c8", 		0x800000, 0xc823e045, 3 | BRF_GRA },           // 10 
 	
-	{ "kof98c-m1.bin", 	0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+	{ "kof98c-m1.bin", 	0x040000, 0xdb046fc4, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
 
 	{ "242-v1.v1",   	0x400000, 0xb9ea8051, 5 | BRF_SND },           // 16 Sound data
 	{ "242-v2.v2",   	0x400000, 0xcc11106e, 5 | BRF_SND },           // 17 
@@ -14366,7 +14366,7 @@ struct BurnDriver BurnDrvlhcdb = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 2 - Super Vehicle-001/II Turbo(NGM-9410) (slowdown/fix hack by Trap15)
+// Metal Slug 2 - Super Vehicle-001/II Turbo (NGM-9410) (slowdown/fix hack by Trap15)
 /* MVS VERSION */
 
 static struct BurnRomInfo mslug2tRomDesc[] = {

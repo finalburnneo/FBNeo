@@ -15,15 +15,6 @@ int nAppVirtualFps = 6000;			// App fps * 100
 bool bRunPause=0;
 bool bAlwaysProcessKeyboardInput=0;
 
-void init_emu(int gamenum)
-{
-	bBurnUseASMCPUEmulation=0;
- 	bCheatsAllowed=false;
-	ConfigAppLoad();
-	ConfigAppSave();
-	DrvInit(gamenum,0);
-}
-
 void CheckFirstTime()
 {
 
@@ -75,16 +66,21 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	InputInit();
-	init_emu(i);
+	bBurnUseASMCPUEmulation = 0;
+	bCheatsAllowed = false;
+	ConfigAppLoad();
+	ConfigAppSave();
+
+	DrvInit(i, 0);
 
 	RunMessageLoop();
-	InputExit();
 
 	DrvExit();
+	MediaExit();
+
 	ConfigAppSave();
 	BurnLibExit();
-	SDL_Quit();
+	//SDL_Quit();
 
 	return 0;
 }

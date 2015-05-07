@@ -207,8 +207,9 @@ drvobj	+= \
 		\
 		d_sg1000.o
 
-depobj := bzip.o config.o drv.o inpdipsw.o main.o run.o stated.o stringset.o \
-		ips_manager.o support_paths.o scrn.o \
+depobj	+= \
+		bzip.o config.o drv.o inpdipsw.o main.o media.o run.o stated.o \
+		stringset.o ips_manager.o support_paths.o scrn.o \
 		\
 		ioapi.o unzip.o conc.o cong.o dat.o gamc.o gami.o image.o \
 		misc.o sshot.o state.o statec.o zipfn.o \

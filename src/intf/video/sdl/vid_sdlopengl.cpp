@@ -67,29 +67,36 @@ static int BlitFXInit()
 {
 	int nMemLen = 0;
 
-	nVidImageWidth = nGamesWidth;
-	nVidImageHeight = nGamesHeight;
-
 	nVidImageDepth = bDrvOkay ? 16 : 32;
 	nVidImageBPP = (nVidImageDepth + 7) >> 3;
 	nBurnBpp = nVidImageBPP;
+
 	SetBurnHighCol(nVidImageDepth);
 
 	if (!nRotateGame) {
-		nVidImagePitch = nVidImageWidth * nVidImageBPP;
+		nVidImageWidth = nGamesWidth;
+		nVidImageHeight = nGamesHeight;
 	} else {
-		nVidImagePitch = nVidImageHeight * nVidImageBPP;
+		nVidImageWidth = nGamesHeight;
+		nVidImageHeight = nGamesWidth;
 	}
 
-	nMemLen = nVidImageHeight * nVidImagePitch;
+	nVidImagePitch = nVidImageWidth * nVidImageBPP;
 	nBurnPitch = nVidImagePitch;
+
+	nMemLen = nVidImageWidth * nVidImageHeight * nVidImageBPP;
+
+	printf("nVidImageWidth=%d nVidImageHeight=%d nVidImagePitch=%d\n",
+		nVidImageWidth, nVidImageHeight, nVidImagePitch);
+	printf("nTextureWidth=%d nTextureHeight=%d TexturePitch=%d\n",
+		nTextureWidth, nTextureHeight, nTextureWidth * nVidImageBPP);
 
 	texture = (unsigned char *)malloc(nTextureWidth * nTextureHeight * nVidImageBPP);
 
 	gamescreen = (unsigned char *)malloc(nMemLen);
 	if (gamescreen) {
 		memset(gamescreen, 0, nMemLen);
-		pVidImage = gamescreen + nVidImagePitch;
+		pVidImage = gamescreen;
 		return 0;
 	} else {
 		pVidImage = NULL;
@@ -136,7 +143,7 @@ void init_gl()
 	glEnable(GL_TEXTURE_2D);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, nVidImageBPP, nTextureWidth, nTextureHeight,
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, nTextureWidth, nTextureHeight,
 		     0, GL_RGB, texture_type, texture);
 
 	glMatrixMode(GL_PROJECTION);
@@ -146,8 +153,8 @@ void init_gl()
 		glRotatef(0.0, 0.0, 0.0, 1.0);
 	 	glOrtho(0, nGamesWidth, nGamesHeight, 0, -1, 1);
 	} else {
-		glRotatef((bFlipped ? -90.0 : 90.0), 0.0, 0.0, 1.0);
-	 	glOrtho(0, nGamesHeight, nGamesWidth, 0, -1, 5);
+		glRotatef((bFlipped ? 270.0 : 90.0), 0.0, 0.0, 1.0);
+		glOrtho(0, nGamesHeight, nGamesWidth, 0, -1, 1);
 	}
 
 	glMatrixMode(GL_MODELVIEW);
@@ -294,13 +301,13 @@ static void SurfToTex()
 	unsigned char *ps = (unsigned char *)gamescreen;
 	unsigned char *pd = (unsigned char *)texture;
 
-	for (int y = nGamesHeight; y--;) {
+	for (int y = nVidImageHeight; y--;) {
 		memcpy(pd, ps, nVidImagePitch);
 		pd += nVidPitch;
 		ps += nVidImagePitch;
 	}
 
-	glTexImage2D(GL_TEXTURE_2D, 0, 3, nTextureWidth, nTextureHeight, 0,
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, nTextureWidth, nTextureHeight, 0,
 		     GL_RGB, texture_type, texture);
 }
 

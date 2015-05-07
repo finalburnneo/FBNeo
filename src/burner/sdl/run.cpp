@@ -214,8 +214,7 @@ static int RunInit()
 static int RunExit()
 {
 	nNormalLast = 0;
-	// Stop sound if it was playing
-	AudSoundStop();
+
 	return 0;
 }
 
@@ -227,19 +226,7 @@ int RunMessageLoop()
 	do {
 		bRestartVideo = 0;
 
-		//MediaInit();
-
-		if (!bVidOkay) {
-
-			// Reinit the video plugin
-			VidInit();
-			if (!bVidOkay && nVidFullscreen) {
-
-				nVidFullscreen = 0;
-				VidInit();
-			}
-
-	}
+		MediaInit();
 
 		RunInit();
 

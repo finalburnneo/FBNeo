@@ -46,6 +46,10 @@ int AppError(TCHAR* szText, int bWarning);
 extern int RunMessageLoop();
 extern int RunReset();
 
+// media.cpp
+int MediaInit();
+int MediaExit();
+
 //inpdipsw.cpp
 void InpDIPSWResetDIPs();
 

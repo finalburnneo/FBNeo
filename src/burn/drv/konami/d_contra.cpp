@@ -947,7 +947,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Contra (US, Set 1)
+// Contra (US / Asia, set 1)
 
 static struct BurnRomInfo contraRomDesc[] = {
 	{ "633m03.18a",	0x10000, 0xd045e1da, 1 | BRF_PRG  | BRF_ESS }, //  0 m6809 #0 Code
@@ -966,7 +966,7 @@ static struct BurnRomInfo contraRomDesc[] = {
 	{ "633f10.18g",	0x00100, 0x2b244d84, 5 | BRF_GRA },            //  9
 	{ "633f11.20g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 10
 	
-	{ "007766.20d.bin", 0x1, 0x00000000, 0 | BRF_NODUMP },
+	{ "007766.20d.bin", 0x1, 0x00000000, 0 | BRF_NODUMP }, /* PAL16L/A-2CN */
 };
 
 STD_ROM_PICK(contra)
@@ -974,7 +974,7 @@ STD_ROM_FN(contra)
 
 struct BurnDriver BurnDrvContra = {
 	"contra", NULL, NULL, NULL, "1987",
-	"Contra (US, Set 1)\0", NULL, "Konami", "GX633",
+	"Contra (US / Asia, set 1)\0", NULL, "Konami", "GX633",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, contraRomInfo, contraRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -983,7 +983,7 @@ struct BurnDriver BurnDrvContra = {
 };
 
 
-// Contra (US, Set 2)
+// Contra (US / Asia, set 2)
 
 static struct BurnRomInfo contra1RomDesc[] = {
 	{ "633i03.18a",	0x10000, 0x7fc0d8cf, 1 | BRF_PRG  | BRF_ESS }, //  0 m6809 #0 Code
@@ -1002,7 +1002,7 @@ static struct BurnRomInfo contra1RomDesc[] = {
 	{ "633f10.18g",	0x00100, 0x2b244d84, 5 | BRF_GRA },            //  9
 	{ "633f11.20g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 10
 	
-	{ "007766.20d.bin", 0x1, 0x00000000, 0 | BRF_NODUMP },
+	{ "007766.20d.bin", 0x1, 0x00000000, 0 | BRF_NODUMP }, /* PAL16L/A-2CN */
 };
 
 STD_ROM_PICK(contra1)
@@ -1010,10 +1010,59 @@ STD_ROM_FN(contra1)
 
 struct BurnDriver BurnDrvContra1 = {
 	"contra1", "contra", NULL, NULL, "1987",
-	"Contra (US, Set 2)\0", NULL, "Konami", "GX633",
+	"Contra (US / Asia, set 2)\0", NULL, "Konami", "GX633",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, contra1RomInfo, contra1RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	224, 280, 3, 4
+};
+
+
+// Contra (US / Asia, set 3)
+
+static struct BurnRomInfo contraeRomDesc[] = {
+	{ "633_e03.18a",	0x10000, 0x7ebdb314, 1 | BRF_PRG  | BRF_ESS }, //  0 m6809 #0 Code
+	{ "633_e02.17a",	0x10000, 0x9d5ebe66, 1 | BRF_PRG  | BRF_ESS }, //  1
+
+	{ "633e01.12a",		0x08000, 0xd1549255, 2 | BRF_PRG  | BRF_ESS }, //  2 m6809 #1 Code
+
+	// this PCB used official Konami riser-boards in place of the mask roms
+	{ "633_e04_a.7d",	0x10000, 0xe027f330, 3 | BRF_GRA },            //  3 Chip 0 Tiles
+	{ "633_e04_b.7d",	0x10000, 0xa71230f5, 3 | BRF_GRA },            //  4
+	{ "633_e04_c.7d",	0x10000, 0x0b103d01, 3 | BRF_GRA },            //  5
+	{ "633_e04_d.7d",	0x10000, 0xab3faa60, 3 | BRF_GRA },            //  6
+	{ "633_e05_a.7f",	0x10000, 0x81a70a77, 3 | BRF_GRA },            //  7
+	{ "633_e05_b.7f",	0x10000, 0x55556f29, 3 | BRF_GRA },            //  8
+	{ "633_e05_c.7f",	0x10000, 0xacba86bf, 3 | BRF_GRA },            //  9
+	{ "633_e05_d.7f",	0x10000, 0x59cf234d, 3 | BRF_GRA },            // 10
+
+	{ "633_e06_a.16d",	0x10000, 0x030079c5, 4 | BRF_GRA },            // 11 Chip 1 Tiles
+	{ "633_e06_b.16d",	0x10000, 0xe17d5807, 4 | BRF_GRA },            // 12
+	{ "633_e06_c.16d",	0x10000, 0x7d6a28cd, 4 | BRF_GRA },            // 13
+	{ "633_e06_d.16d",	0x10000, 0x83db378f, 4 | BRF_GRA },            // 14 
+	{ "633_e07_a.16f",	0x10000, 0x8fcd40e5, 4 | BRF_GRA },            // 15
+	{ "633_e07_b.16f",	0x10000, 0x694e306e, 4 | BRF_GRA },            // 16
+	{ "633_e07_c.16f",	0x10000, 0xfb33f3ff, 4 | BRF_GRA },            // 17
+	{ "633_e07_d.16f",	0x10000, 0xcfab0988, 4 | BRF_GRA },            // 18
+
+	{ "633e08.10g",		0x00100, 0x9f0949fa, 5 | BRF_GRA },            // 19 Color Proms
+	{ "633e09.12g",		0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 20
+	{ "633f10.18g",		0x00100, 0x2b244d84, 5 | BRF_GRA },            // 21
+	{ "633f11.20g",		0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 22
+	
+	{ "007766.20d.bin", 0x1, 0x00000000, 0 | BRF_NODUMP }, /* PAL16L/A-2CN */
+};
+
+STD_ROM_PICK(contrae)
+STD_ROM_FN(contrae)
+
+struct BurnDriver BurnDrvContrae = {
+	"contrae", "contra", NULL, NULL, "1987",
+	"Contra (US / Asia, set 3)\0", NULL, "Konami", "GX633",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
+	NULL, contraeRomInfo, contraeRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 280, 3, 4
 };
@@ -1038,7 +1087,7 @@ static struct BurnRomInfo contrajRomDesc[] = {
 	{ "633f10.18g",	0x00100, 0x2b244d84, 5 | BRF_GRA },            //  9
 	{ "633f11.20g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 10
 	
-	{ "007766.20d.bin", 0x1, 0x00000000, 0 | BRF_NODUMP },
+	{ "007766.20d.bin", 0x1, 0x00000000, 0 | BRF_NODUMP }, /* PAL16L/A-2CN */
 };
 
 STD_ROM_PICK(contraj)
@@ -1074,7 +1123,7 @@ static struct BurnRomInfo contraj1RomDesc[] = {
 	{ "633f10.18g",	0x00100, 0x2b244d84, 5 | BRF_GRA },            //  9
 	{ "633f11.20g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 10
 	
-	{ "007766.20d.bin", 0x1, 0x00000000, 0 | BRF_NODUMP },
+	{ "007766.20d.bin", 0x1, 0x00000000, 0 | BRF_NODUMP }, /* PAL16L/A-2CN */
 };
 
 STD_ROM_PICK(contraj1)
@@ -1110,7 +1159,7 @@ static struct BurnRomInfo gryzorRomDesc[] = {
 	{ "633f10.18g",	0x00100, 0x2b244d84, 5 | BRF_GRA },            //  9
 	{ "633f11.20g",	0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 10
 	
-	{ "007766.20d.bin", 0x1, 0x00000000, 0 | BRF_NODUMP },
+	{ "007766.20d.bin", 0x1, 0x00000000, 0 | BRF_NODUMP }, /* PAL16L/A-2CN */
 };
 
 STD_ROM_PICK(gryzor)

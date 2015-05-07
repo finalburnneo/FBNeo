@@ -733,6 +733,18 @@ BEGIN
 	DEFPUSHBUTTON   "Close",IDCANCEL,456,351,60,14
 END
 
+IDD_DOWNLOAD_LOCAL DIALOGEX 0, 0, 168, 48
+STYLE DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Download Localisation Template"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    GROUPBOX        "",IDC_STATIC1,2,0,164,28
+	LTEXT           "Language:", IDC_LOCAL_DOWNLOAD_LANG, 8, 10, 40, 10, SS_CENTERIMAGE
+    COMBOBOX        IDC_CHOOSE_LIST, 60, 9, 100, 128, CBS_DROPDOWNLIST | WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_VSCROLL
+    CONTROL         "Cancel",IDCANCEL,"Button",WS_TABSTOP,44,30,58,14
+    CONTROL         "OK",IDOK,"Button",WS_TABSTOP,107,30,58,14
+END
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Menu
@@ -991,6 +1003,7 @@ BEGIN
        		MENUITEM "Select UI language...",				MENU_LANGUAGE_SELECT
        		MENUITEM "Export UI translation template...",			MENU_LANGUAGE_EXPORT
        		MENUITEM "Reset UI default language",				MENU_LANGUAGE_RESET
+			MENUITEM "Download UI language...",				MENU_LANGUAGE_DOWNLOAD
         END
 		POPUP    "Gamelist language"
        	BEGIN

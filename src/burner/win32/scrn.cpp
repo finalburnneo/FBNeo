@@ -1836,6 +1836,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			FBALocaliseInit(szLocalisationTemplate);
 			POST_INITIALISE_MESSAGE;
 			break;
+		case MENU_LANGUAGE_DOWNLOAD:
+			if (UseDialogs()) {
+				LocaliseDownloadCreate(hScrnWnd);
+			}
+			break;
 			
 		case MENU_LANGUAGE_GL_SELECT:
 			if (UseDialogs()) {

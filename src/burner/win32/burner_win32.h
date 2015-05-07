@@ -453,6 +453,9 @@ int GetIpsNumActivePatches();
 int IpsManagerCreate(HWND hParentWND);
 void IpsPatchExit();
 
+// localise_download.cpp
+int LocaliseDownloadCreate(HWND hParentWND);
+
 // Misc
 #define _TtoA(a)	TCHARToANSI(a, NULL, 0)
 #define _AtoT(a)	ANSIToTCHAR(a, NULL, 0)

@@ -107,7 +107,7 @@ ifdef UNICODE
 # lib	= unicows.lib
 endif
 
-lib	+=	user32.lib gdi32.lib comdlg32.lib comctl32.lib shell32.lib winmm.lib ole32.lib shlwapi.lib advapi32.lib setupapi.lib
+lib	+=	user32.lib gdi32.lib comdlg32.lib comctl32.lib shell32.lib winmm.lib ole32.lib shlwapi.lib advapi32.lib setupapi.lib wininet.lib
 
 ifdef	BUILD_X86_ASM
 autobj += hq3xs.o hq_shared32.o

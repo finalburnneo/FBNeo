@@ -889,7 +889,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 	}
 	
 #if !defined (DONT_DISPLAY_SPLASH)
-	if (lpCmdLine[0] == 0) SplashCreate();
+//	if (lpCmdLine[0] == 0) SplashCreate();
 #endif
 
 	nAppShowCmd = nShowCmd;

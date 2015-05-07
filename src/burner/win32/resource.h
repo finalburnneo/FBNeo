@@ -47,6 +47,7 @@
 #define IDD_NCD_DLG							79
 #define IDD_NCD_COVER_DLG					80
 #define IDD_GAMEINFO						81
+#define IDD_DOWNLOAD_LOCAL					82
 
 #define IDR_MENU                        	100
 #define IDR_MENU_BLITTER_1					110
@@ -178,6 +179,7 @@
 #define IDC_RESOLUTION						20136
 #define IDC_CHECKUNAVAILABLE              	20137
 #define IDC_SYSINFO_LOG_SAVE                20138
+#define IDC_LOCAL_DOWNLOAD_LANG				20139
 
 #define IDC_DRVCOUNT						20200
 #define IDC_TREE2							20201
@@ -514,6 +516,7 @@
 #define MENU_ENABLECHEAT                	10306
 #define MENU_LANGUAGE_SELECT            	10307
 #define MENU_LANGUAGE_EXPORT            	10308
+#define MENU_LANGUAGE_DOWNLOAD				10309
 #define MENU_PRIORITY_REALTIME          	10310
 #define MENU_PRIORITY_HIGH              	10311
 #define MENU_PRIORITY_ABOVE_NORMAL      	10312

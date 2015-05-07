@@ -513,7 +513,7 @@ struct BurnDriver BurnDrvKinst = {
     "kinst", "kinst", NULL, NULL, "1994/1995",
     "Killer Instinct (ver. 1.5)\0", NULL, "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING, 2, HARDWARE_PREFIX_MIDWAY, GBF_VSFIGHT, 0,
+    BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
     NULL, kinstRomInfo, kinstRomName, NULL, NULL, kinstInputInfo, kinstDIPInfo,
     kinstDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
@@ -538,7 +538,7 @@ struct BurnDriver BurnDrvKinst2 = {
     "kinst2", "kinst2", NULL, NULL, "1994/1995",
     "Killer Instinct II (ver. 1.4)\0", NULL, "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING, 2, HARDWARE_PREFIX_MIDWAY, GBF_VSFIGHT, 0,
+    BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
     NULL, kinst2RomInfo, kinst2RomName, NULL, NULL, kinstInputInfo, kinstDIPInfo,
     kinst2DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3

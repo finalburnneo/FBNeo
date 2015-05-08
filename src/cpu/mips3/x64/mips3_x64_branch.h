@@ -6,7 +6,7 @@
 #define MIPS3_X64_BRANCH
 
 #include "../mips3.h"
-#include "../memory.h"
+#include "../mips3_memory.h"
 #include "mips3_x64_defs.h"
 #include "mips3_x64.h"
 #include "xbyak/xbyak.h"

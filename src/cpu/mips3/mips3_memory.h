@@ -2,7 +2,7 @@
 #ifndef MEMORY
 #define MEMORY
 
-#include "common.h"
+#include "mips3_common.h"
 
 namespace mips
 {

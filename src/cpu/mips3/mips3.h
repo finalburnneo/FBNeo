@@ -5,7 +5,7 @@
 #ifndef MIPS3_H
 #define MIPS3_H
 
-#include "common.h"
+#include "mips3_common.h"
 
 #include <string>
 #include <unordered_set>

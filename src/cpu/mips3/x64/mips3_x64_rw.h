@@ -10,7 +10,7 @@
 #include "mips3_x64_defs.h"
 #include "mips3_x64.h"
 #include "xbyak/xbyak.h"
-#include "../memory.h"
+#include "../mips3_memory.h"
 
 
 namespace mips

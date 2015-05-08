@@ -1,7 +1,7 @@
 #ifndef MIPS3_INTF
 #define MIPS3_INTF
 
-#include "mips3/common.h"
+#include "mips3/mips3_common.h"
 
 typedef unsigned char (*pMips3ReadByteHandler)(unsigned int a);
 typedef void (*pMips3WriteByteHandler)(unsigned int a, unsigned char d);

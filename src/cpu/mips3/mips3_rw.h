@@ -7,7 +7,7 @@
 
 #include "mips3.h"
 #include "mipsdef.h"
-#include "memory.h"
+#include "mips3_memory.h"
 
 namespace mips
 {

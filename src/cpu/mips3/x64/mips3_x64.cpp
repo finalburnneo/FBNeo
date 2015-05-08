@@ -7,7 +7,7 @@
 #include "xbyak/xbyak.h"
 #include "../mips3.h"
 #include "../mipsdef.h"
-#include "../memory.h"
+#include "../mips3_memory.h"
 #include "mips3_x64_defs.h"
 #include "mips3_x64_rw.h"
 #include "mips3_x64_branch.h"

@@ -8,7 +8,7 @@
 #include <cstdint>
 #include "mips3.h"
 #include "mipsdef.h"
-#include "memory.h"
+#include "mips3_memory.h"
 #include "mips3_rw.h"
 #include "mips3_branch.h"
 #include "mips3_bitops.h"

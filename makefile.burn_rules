@@ -76,6 +76,10 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_coleco.o \
 			\
 			d_sg1000.o
+			
+ifdef	INCLUDE_KILLER_INSTINCT
+	drvobj += d_kinst.o
+endif
 
 depobj	:= 	$(drvobj) \
 			\
@@ -134,9 +138,14 @@ depobj	:= 	$(drvobj) \
 			snes_65816.o snes_io.o snes_main.o snes_ppu.o snes_spc700.o
 			
 ifdef	DEBUG
-depobj += m68kdasm.o
+	depobj += m68kdasm.o
 endif
 
 ifdef	BUILD_X86_ASM
-autobj += burn_sound_a.o
+	autobj += burn_sound_a.o
+endif
+
+ifdef	INCLUDE_KILLER_INSTINCT
+	alldir += burn/drv/midway cpu/adsp2100 cpu/mips3 cpu/mips3/x64
+	depobj += dcs2k.o ide.o adsp2100.o cop0.o cop1.o mips3.o adsp2100_intf.o mips3_intf.o
 endif

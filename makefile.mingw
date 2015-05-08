@@ -220,7 +220,7 @@ CFLAGS	 = -pipe \
 	   $(DEF) $(incdir)
 
 CXXFLAGS = -pipe \
-	   -O1 \
+	   -std=gnu++11 -O1 \
 	   -mwindows \
 	   -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -fexpensive-optimizations -fcheck-new \

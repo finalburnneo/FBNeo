@@ -327,7 +327,7 @@ public:
 		MEM = 1 << 1,
 		IMM = 1 << 2,
 		REG = 1 << 3,
-		MMX = 1 << 4,
+		_MMX = 1 << 4,
 		XMM = 1 << 5,
 		FPU = 1 << 6,
 		YMM = 1 << 7
@@ -355,7 +355,7 @@ public:
 	Kind getKind() const { return static_cast<Kind>(kind_); }
 	int getIdx() const { return idx_ & 15; }
 	bool isNone() const { return kind_ == 0; }
-	bool isMMX() const { return is(MMX); }
+	bool isMMX() const { return is(_MMX); }
 	bool isXMM() const { return is(XMM); }
 	bool isYMM() const { return is(YMM); }
 	bool isREG(int bit = 0) const { return is(REG, bit); }
@@ -447,7 +447,7 @@ struct Reg16 : public Reg {
 };
 
 struct Mmx : public Reg {
-	explicit Mmx(int idx = 0, Kind kind = Operand::MMX, int bit = 64) : Reg(idx, kind, bit) { }
+	explicit Mmx(int idx = 0, Kind kind = Operand::_MMX, int bit = 64) : Reg(idx, kind, bit) { }
 };
 
 struct Xmm : public Mmx {

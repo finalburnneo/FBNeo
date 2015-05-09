@@ -1769,7 +1769,7 @@ static void draw_layer(INT32 layer, INT32 forcelayer, INT32 type, INT32 start, I
 	//	    layer, prio, forcelayer
 	const UINT16 transmask[2][3][2] = {
 		{ { 0xffff, 0x0001 }, { 0x00ff, 0xff01 }, { 0x0001, 0xffff } },
-		{ { 0xffff, 0x0000 }, { 0x00ff, 0xff00 }, { (type == 0) ? 0x0007 : 0x0001, (type == 0) ? 0xfff8 : 0xfffe } }
+		{ { 0xffff, 0x0000 }, { 0x00ff, 0xff00 }, { (type == 0) ? (const UINT16)0x0007 : (const UINT16)0x0001, (type == 0) ? (const UINT16)0xfff8 : (const UINT16)0xfffe } }
 	};
 
 	INT32 scrolly = scroll[layer * 4 + 0] | (scroll[layer * 4 + 1] << 8);
@@ -2123,9 +2123,6 @@ static INT32 DrvFrame()
 					if (DrvSndROM[sample_address]) {
 						DACSignedWrite(0, DrvSndROM[sample_address]);
 						sample_address = (sample_address + 1) & 0x3ffff;
-						//if (!DrvSndROM[sample_address]) {
-						//	DACWrite(0, 0); // Clear DAC output buffer at end of sample - fixes distortion in Air Duel
-						//}
 					} else {
 						DACWrite(0, 0); // Clear DAC output buffer at end of sample - fixes distortion in Air Duel & second-to-last level of Mr. Heli
 					}

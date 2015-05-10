@@ -220,12 +220,12 @@ void mips3::cop1_execute_32(uint32_t opcode)
 
         // C.F fs, ft
         case 0x3C:
-            FCR31 &= ~800000;
+            FCR31 &= ~0x800000;
             break;
 
         default:
             //qDebug() << QString::number(m_state.pc, 16) << "Op:" << RSNUM << (opcode & 0x3F) << "[FPU32]";
-            exit(-6);
+            //exit(-6);
             break;
         }
     }

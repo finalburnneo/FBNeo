@@ -7534,6 +7534,13 @@ STD_ROM_FN(Xmvsfur1)
 
 // Driver functions
 
+static INT32 MmatrixInit()
+{
+	Mmatrix = 1;
+	
+	return Cps2Init();
+}
+
 static INT32 MvscjsingInit()
 {
 	// The case has a volume knob, and the digital switches are missing and the slider is missing from the test screen
@@ -7591,6 +7598,7 @@ static INT32 DrvExit()
 	Ssf2t = 0;
 	Ssf2tb = 0;
 	Xmcota = 0;
+	Mmatrix = 0;
 
 	Cps2Volume = 39;
 	Cps2DisableDigitalVolume = 0;
@@ -8543,7 +8551,7 @@ struct BurnDriver BurnDrvCpsMarsMatrix = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
 	NULL, MmatrixRomInfo, MmatrixRomName, NULL, NULL, MmatrixInputInfo, NULL,
-	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	MmatrixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -8553,7 +8561,7 @@ struct BurnDriver BurnDrvCpsMarsMatrixJ = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
 	NULL, MmatrixjRomInfo, MmatrixjRomName, NULL, NULL, MmatrixInputInfo, NULL,
-	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	MmatrixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -11456,6 +11464,13 @@ static INT32 PhoenixInit()
 	return nRet;
 }
 
+static INT32 MmatrixPhoenixInit()
+{
+	Mmatrix = 1;
+	
+	return PhoenixInit();
+}
+
 static INT32 Ssf2PhoenixInit()
 {
 	INT32 nRet = PhoenixInit();
@@ -11681,7 +11696,7 @@ struct BurnDriver BurnDrvCpsMarsMatrixd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
 	NULL, MmatrixdRomInfo, MmatrixdRomName, NULL, NULL, MmatrixInputInfo, NULL,
-	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	MmatrixPhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

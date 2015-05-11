@@ -8,6 +8,7 @@ static const INT32 nQscClock = 4000000;
 static const INT32 nQscClockDivider = 166;
 
 static INT32 nQscRate = 0;
+INT32 Mmatrix; // global
 
 static INT32 Tams = -1;
 static INT32* Qs_s = NULL;
@@ -179,7 +180,11 @@ void QscWrite(INT32 a, INT32 d)
 			nPan = 0x20;
 		}
 
-//		bprintf(PRINT_NORMAL, "QSound: ch#%i pan -> 0x%04X\n", nChanNum, d);
+		//bprintf(PRINT_NORMAL, _T("QSound: ch#%i pan -> 0x%X\n"), nChanNum, nPan);
+
+		if (Mmatrix && nPan == 0x00) {
+			nPan = 0x10; // Fixes all sfx that are hard-panned to the right. (Mars Matrix only)
+		}
 
 		pc->nVolume[0] = PanningVolumes[0x20 - nPan];
 		pc->nVolume[1] = PanningVolumes[0x00 + nPan];

@@ -3055,6 +3055,38 @@ struct BurnDriver BurnDrvpacmanf = {
 };
 
 
+// Packetman (bootleg)
+
+static struct BurnRomInfo packetmanRomDesc[] = {
+	{ "6e_4.6e",     0x1000, 0x5fe8610a, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "6f_4.6f",     0x1000, 0x61d38c6c, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "6h_4.6h",     0x1000, 0x4e7ef99f, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "6j_4b.6j",    0x1000, 0x2693f8ac, 1 | BRF_ESS | BRF_PRG },	//  3
+
+	{ "pacman.5e",    0x1000, 0x0c944964, 2 | BRF_GRA },		//  4 Graphics
+	{ "pacman.5f",    0x1000, 0x958fedf9, 2 | BRF_GRA },		//  5
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },		//  6 Color Proms
+	{ "82s126.4a",    0x0100, 0x3eb3a8e4, 3 | BRF_GRA },		//  7
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },		//  8 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  9 Timing Prom (not used)
+};
+
+STD_ROM_PICK(packetman)
+STD_ROM_FN(packetman)
+
+struct BurnDriver BurnDrvpacketman = {
+	"packetman", "puckman", NULL, NULL, "1980",
+	"Packetman (bootleg)\0", NULL, "bootleg", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	NULL, packetmanRomInfo, packetmanRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Hangly-Man (set 1)
 
 static struct BurnRomInfo hanglyRomDesc[] = {

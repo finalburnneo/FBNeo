@@ -41,6 +41,10 @@ void mips3::cop0_execute(uint32_t opcode)
     // MFC
     case 0x00:
         if (RTNUM) {
+            if (RDNUM == COP0_Count) {
+                RT = (uint32_t) ((m_state.total_cycles - m_state.reset_cycle) / 2);
+                return;
+            }
             RT = CR(RDNUM);
         }
         break;
@@ -48,6 +52,9 @@ void mips3::cop0_execute(uint32_t opcode)
     // MTC
     case 0x04:
         m_state.cpr[0][RDNUM] = RT;
+        if (RDNUM == COP0_Count) {
+            m_state.reset_cycle = m_state.total_cycles - ((uint64_t)(uint32_t)RT * 2);
+        }
         break;
 
     // TLBWI

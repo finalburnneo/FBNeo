@@ -3,6 +3,13 @@
  * Copyright (c) 2015, Marcos Medeiros
  * Licensed under BSD 3-clause.
  */
+/*
+ * TODO:
+ *    Fix TLB emulation
+ *    COP1 FR0 opcodes
+ *    Exceptions!!!
+ **/
+
 //#include <QDebug>
 #include <iostream>
 #include <cstdint>
@@ -90,6 +97,7 @@ uint32_t mips3::translate(addr_t addr, addr_t *out)
 }
 
 
+#if MIPS3_ENABLE_BREAKPOINTS
 
 void mips3::bp_insert(addr_t address)
 {
@@ -106,25 +114,30 @@ inline bool mips3::check_breakpoint()
     return (m_breakpoints.find(m_state.pc) != m_breakpoints.end());
 }
 
+#endif
+
 bool mips3::run(int cycles, bool skip_bps)
 {
     m_counter = 0;
+    int last_icounter = 0;
 
     // endereço efetivo
     addr_t eaddr = 0;
 
+#if MIPS3_ENABLE_BREAKPOINTS
     if (!skip_bps && check_breakpoint())
         return true;
+#endif
 
     while (m_counter < cycles) {
 
         if (translate(m_state.pc, &eaddr)) {
-            /* ocorreu algum erro */
+            /* TODO: handle exceptions */
         }
         m_prev_pc = m_state.pc;
         uint32_t opcode = mem::read_word(eaddr);
 
-        // A instrução que precede um branch/jump sempre é executada
+        // We always execute delay slot
         if (m_delay_slot) {
             m_state.pc = m_next_pc;
             m_delay_slot = false;
@@ -132,6 +145,8 @@ bool mips3::run(int cycles, bool skip_bps)
         } else {
             m_state.pc += 4;
         }
+
+        last_icounter = m_counter;
 
         switch (opcode >> 26) {
 
@@ -418,13 +433,13 @@ bool mips3::run(int cycles, bool skip_bps)
             break;
         }
 
-        // Increment COP0 Count
-        m_state.cpr[0][COP0_Count] += 20;
         m_counter++;
+        m_state.total_cycles += m_counter - last_icounter;
+#if MIPS3_ENABLE_BREAKPOINTS
         if (!skip_bps && check_breakpoint())
             return true;
+#endif
     }
-    m_state.total_cycles += m_counter;
     return false;
 }
 

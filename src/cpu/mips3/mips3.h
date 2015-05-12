@@ -5,6 +5,8 @@
 #ifndef MIPS3_H
 #define MIPS3_H
 
+#define MIPS3_ENABLE_BREAKPOINTS    0
+
 #include "mips3_common.h"
 
 #include <string>
@@ -107,14 +109,18 @@ public:
     uint32_t translate(addr_t addr, addr_t *out);
     const int m_tlb_entries;
 
+#if MIPS3_ENABLE_BREAKPOINTS
     void bp_insert(addr_t address);
     void bp_remove(addr_t address);
+#endif
 private:
     int m_counter;
     addr_t tlb_translate(addr_t address);
 
+#if MIPS3_ENABLE_BREAKPOINTS
     unordered_set<addr_t> m_breakpoints;
     bool check_breakpoint();
+#endif
     void tlb_init();
     void tlb_flush();
     void cop0_reset();

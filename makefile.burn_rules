@@ -146,6 +146,10 @@ ifdef	BUILD_X86_ASM
 endif
 
 ifdef	INCLUDE_KILLER_INSTINCT
-	alldir += burn/drv/midway cpu/adsp2100 cpu/mips3 cpu/mips3/x64
+	alldir += burn/drv/midway cpu/adsp2100 cpu/mips3
 	depobj += dcs2k.o ide.o adsp2100.o cop0.o cop1.o mips3.o adsp2100_intf.o mips3_intf.o
+ifdef	BUILD_X64_EXE
+	alldir += cpu/mips3/x64
+	depobj += mips3_x64.o
+endif
 endif

@@ -300,6 +300,9 @@ endif
 
 ifdef BUILD_X64_EXE
 	DEF := $(DEF) -DBUILD_X64_EXE
+ifdef INCLUDE_KILLER_INSTINCT
+	DEF := $(DEF) -DXBYAK_NO_OP_NAMES -DMIPS3_X64_DRC
+endif
 endif
 
 ifdef	SYMBOL

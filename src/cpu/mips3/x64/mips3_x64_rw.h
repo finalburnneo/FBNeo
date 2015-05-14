@@ -24,7 +24,8 @@ namespace mips
         add(rsi, RS_x);\
         and_(rsi, ~((uint64_t)ignore));\
         lea(rdx, eaddr);\
-        mov(rax, F_ADR(mips3::translate));\
+        size_t madr = M_ADR(mips3::translate);\
+        mov(rax, madr);\
         call(rax);\
         mov(rdx, eaddr);\
     } while (0)
@@ -39,7 +40,7 @@ namespace mips
         and_(rsi, ~((uint64_t)ignore));\
         lea(rdx, eaddr);\
         mov(vaddr, rsi);\
-        mov(rax, F_ADR(mips3::translate));\
+        mov(rax, M_ADR(mips3::translate));\
         call(rax);\
         mov(rdx, eaddr);\
         mov(rcx, vaddr);\

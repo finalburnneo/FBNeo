@@ -29,6 +29,7 @@
 namespace mips
 {
 
+
 mips3_x64::mips3_x64(mips3 *interpreter) : CodeGenerator(1024 * 1024 * 16)
 {
     m_core = interpreter;
@@ -469,7 +470,8 @@ void mips3_x64::fallback(uint32_t opcode, void (mips3::*f)(uint32_t))
     mov(rdi, (size_t) m_core);
     mov(esi, opcode);
 #endif
-    mov(rax, (size_t) (void*)f);
+    
+    mov(rax, (size_t) (void*&)f);
     call(rax);
 }
 

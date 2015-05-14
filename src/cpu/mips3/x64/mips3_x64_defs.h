@@ -30,7 +30,16 @@
 #define HI_ref      ((size_t)&m_core->m_state.hi)
 #define R_ref(n)    ((size_t)&m_core->m_state.r[n])
 #define ADR(n)      ((size_t)&n)
+
+namespace mips {	
+template<class C, class R, typename...Args>
+size_t get_method_addr(R (C::*f)(Args...)) {
+	return reinterpret_cast<size_t>((void* &)f);
+}
+}
+
 #define F_ADR(f)    ((size_t)(void*)&f)
+#define M_ADR(f)    (mips::get_method_addr(&f))
 
 #define FPR_ref(n)  ((size_t)&m_core->m_state.cpr[1][n])
 #define FCR_ref(n)  ((size_t)&m_core->m_state.fcr[n])

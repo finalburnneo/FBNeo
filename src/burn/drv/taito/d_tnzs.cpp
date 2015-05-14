@@ -1351,6 +1351,10 @@ static INT32 Type1Init(INT32 mcutype)
 		BurnYM2203Init(1, 3000000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
 		BurnYM2203SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 
+		if (mcutype == MCU_EXTRMATN) {
+			BurnYM2203SetPSGVolume(0, 0.10);
+		}
+
 		if (mcutype == MCU_NONE_KAGEKI) {
 			BurnYM2203SetPorts(0, &kageki_ym2203_portA, NULL, NULL, &kageki_ym2203_write_portB);
 			BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.35, BURN_SND_ROUTE_BOTH);

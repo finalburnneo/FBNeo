@@ -14,6 +14,14 @@
 namespace mips
 {
 
+#define DP  (RSNUM == 17 || RSNUM == 21)
+#define SP  (RSNUM == 16 || RSNUM == 20)
+
+#define INTEGER (RSNUM == 20 || RSNUM == 21)
+// Word/Long precision
+#define WT  (RSNUM == 20)
+#define LT  (RSNUM == 21)
+
 bool mips3_x64::BC1F(uint32_t opcode)
 {
     if (m_is_delay_slot)
@@ -241,7 +249,140 @@ bool mips3_x64::compile_cop1(uint32_t opcode)
     }
 
     default:
-        fallback(opcode, &mips3::cop1_execute_32);
+        switch (opcode & 0x3F) {
+        // ADD.fmt
+        case 0x00:
+            if (SP) {
+                movss(xmm0, FS_x);
+                movss(xmm1, FT_x);
+                addss(xmm0, xmm1);
+                movss(FD_x, xmm0);
+            }
+            else {
+                movsd(xmm0, FS_x);
+                movsd(xmm1, FT_x);
+                addsd(xmm0, xmm1);
+                movsd(FD_x, xmm0);
+            }
+            break;
+            // SUB.fmt
+        case 0x01:
+            if (SP) {
+                movss(xmm0, FS_x);
+                movss(xmm1, FT_x);
+                subss(xmm0, xmm1);
+                movss(FD_x, xmm0);
+            }
+            else {
+                movsd(xmm0, FS_x);
+                movsd(xmm1, FT_x);
+                subsd(xmm0, xmm1);
+                movsd(FD_x, xmm0);
+            }
+            break;
+
+            // MUL.fmt
+        case 0x02:
+            if (SP) {
+                movss(xmm0, FS_x);
+                movss(xmm1, FT_x);
+                mulss(xmm0, xmm1);
+                movss(FD_x, xmm0);
+            }
+            else {
+                movsd(xmm0, FS_x);
+                movsd(xmm1, FT_x);
+                mulsd(xmm0, xmm1);
+                movsd(FD_x, xmm0);
+            }
+            break;
+            // DIV.fmt
+        case 0x03:
+            if (SP) {
+                movss(xmm0, FS_x);
+                movss(xmm1, FT_x);
+                divss(xmm0, xmm1);
+                movss(FD_x, xmm0);
+            }
+            else {
+                movsd(xmm0, FS_x);
+                movsd(xmm1, FT_x);
+                divsd(xmm0, xmm1);
+                movsd(FD_x, xmm0);
+            }
+            break;
+            // SQRT.fmt
+        case 0x04:
+            if (SP) {
+                movss(xmm0, FS_x);
+                sqrtss(xmm1, xmm0);
+                movss(FD_x, xmm1);
+            }
+            else {
+                movsd(xmm0, FS_x);
+                sqrtsd(xmm1, xmm0);
+                movsd(FD_x, xmm1);
+            }
+            break;
+            // ABS.fmt
+        case 0x05: {
+            static const size_t s_mask = 0x7FFFFFFF;
+            static const size_t d_mask = 0x7FFFFFFFFFFFFFFFULL;
+            if (SP) {
+                movss(xmm0, FS_x);
+                movss(xmm2, ptr[&s_mask]);
+                andps(xmm0, xmm2);
+                movss(FD_x, xmm0);
+            }
+            else {
+                movsd(xmm0, FS_x);
+                movsd(xmm2, ptr[&d_mask]);
+                andpd(xmm0, xmm2);
+                movsd(FD_x, xmm0);
+            }
+            break;
+        }
+
+            // MOV.fmt
+        case 0x06:
+            if (SP) {
+                mov(eax, FS_x);
+                mov(FD_x, eax);
+            }
+            else  {
+                mov(rax, FS_x);
+                mov(FD_x, rax);
+            }
+            break;
+            // NEG.fmt
+        case 0x07:
+            static const size_t s_mask = 0x80000000;
+            static const size_t d_mask = 0x8000000000000000ULL;
+            if (SP) {
+                movss(xmm0, FS_x);
+                movss(xmm2, ptr[&s_mask]);
+                xorps(xmm0, xmm2);
+                movss(FD_x, xmm0);
+            }
+            else {
+                movsd(xmm0, FS_x);
+                movsd(xmm2, ptr[&d_mask]);
+                xorpd(xmm0, xmm2);
+                movsd(FD_x, xmm0);
+            }
+            break;
+
+        case 0x3C:
+            mov(rax, FCR31_x);
+            and_(rax,~0x800000ULL);
+            mov(FCR31_x, rax);
+            break;
+
+
+        default:
+            fallback(opcode, &mips3::cop1_execute_32);
+            break;
+        }
         break;
     }
     return result;

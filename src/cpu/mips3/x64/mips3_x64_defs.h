@@ -66,6 +66,11 @@ size_t get_method_addr(R (C::*f)(Args...)) {
 #define COP0_q(n)   qword[rbx + ((size_t)offsetof(mips3::cpu_state, cpr[0][n]))]
 #define COP1_q(n)   qword[rbx + ((size_t)offsetof(mips3::cpu_state, cpr[1][n]))]
 
+#define FD_x        ptr[rbx + ((size_t)offsetof(mips3::cpu_state, cpr[1][FDNUM]))]
+#define FS_x        ptr[rbx + ((size_t)offsetof(mips3::cpu_state, cpr[1][FSNUM]))]
+#define FT_x        ptr[rbx + ((size_t)offsetof(mips3::cpu_state, cpr[1][FTNUM]))]
+#define FCR31_x     ptr[rbx + ((size_t)offsetof(mips3::cpu_state, fcr[31]))]
+
 #define TOTAL_q     qword[rbx + ((size_t)offsetof(mips3::cpu_state, total_cycles))]
 #define RSTCYC_q    qword[rbx + ((size_t)offsetof(mips3::cpu_state, reset_cycle))]
 

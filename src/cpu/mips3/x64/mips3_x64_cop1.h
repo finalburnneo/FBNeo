@@ -355,7 +355,7 @@ bool mips3_x64::compile_cop1(uint32_t opcode)
             }
             break;
             // NEG.fmt
-        case 0x07:
+        case 0x07: {
             static const size_t s_mask = 0x80000000;
             static const size_t d_mask = 0x8000000000000000ULL;
             if (SP) {
@@ -371,6 +371,7 @@ bool mips3_x64::compile_cop1(uint32_t opcode)
                 movsd(FD_x, xmm0);
             }
             break;
+		}
 
         case 0x3C:
             mov(rax, FCR31_x);

@@ -78,7 +78,7 @@ static INT32 MemIndex()
     DrvRAM0     = Next;             Next += 0x80000;
     DrvRAM1     = Next;             Next += 0x800000;
     DrvSoundROM = Next;             Next += 0x1000000;
-    DrvColorLUT = (UINT16*) Next;   Next += 0x8000 * 2;
+    DrvColorLUT = (UINT16*) Next;   Next += 0x8000 * sizeof(UINT16);
 
     RamEnd		= Next;
     MemEnd		= Next;
@@ -513,7 +513,7 @@ struct BurnDriver BurnDrvKinst = {
     "kinst", "kinst", NULL, NULL, "1994/1995",
     "Killer Instinct (ver. 1.5)\0", NULL, "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+    BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
     NULL, kinstRomInfo, kinstRomName, NULL, NULL, kinstInputInfo, kinstDIPInfo,
     kinstDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3
@@ -538,7 +538,7 @@ struct BurnDriver BurnDrvKinst2 = {
     "kinst2", "kinst2", NULL, NULL, "1994/1995",
     "Killer Instinct II (ver. 1.4)\0", NULL, "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
+    BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
     NULL, kinst2RomInfo, kinst2RomName, NULL, NULL, kinstInputInfo, kinstDIPInfo,
     kinst2DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
     320, 240, 4, 3

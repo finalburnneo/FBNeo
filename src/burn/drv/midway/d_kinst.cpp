@@ -465,26 +465,63 @@ static INT32 DrvFrame()
 {
     MakeInputs();
 
-    const long fps = 60;
-    const long vblankCycles = kHz(20) * fps;
-    const long cycles = (MHz(100) - vblankCycles) / fps ;
+    const long FPS = 60;
+    const long nMipsCycPerFrame = MHz(100) / FPS;
+    const long nMipsVblankCyc = nMipsCycPerFrame - kHz(20);
+    const long nDcsCycPerFrame = MHz(10) / FPS;
+
+    long nNextMipsSegment = 0;
+    long nNextDcsSegment = 0;
+
+    long nMipsTotalCyc = 0;
+    long nDcsTotalCyc = 0;
+
+    // mips 100MHz ->  dcs 10MHz => 10:1
+    const long mQuantum = kHz(10);
+    const long dQuantum = kHz(1);
+
+    nNextMipsSegment = mQuantum;
+    nNextDcsSegment = dQuantum;
 
     Mips3SetIRQLine(VBLANK_IRQ, 0);
-    Mips3Run(cycles);
 
-    if (pBurnDraw) {
-        DrvDraw();
+    bool isVblank = false;
+
+    while ((nMipsTotalCyc < nMipsCycPerFrame) || (nDcsTotalCyc < nDcsCycPerFrame))
+    {
+        if ((nNextMipsSegment + nMipsTotalCyc) > nMipsCycPerFrame)
+            nNextMipsSegment -= (nNextMipsSegment + nMipsTotalCyc) - nMipsCycPerFrame;
+
+        if ((nNextDcsSegment + nDcsTotalCyc) > nDcsCycPerFrame)
+            nNextDcsSegment -= (nNextDcsSegment + nDcsTotalCyc) - nDcsCycPerFrame;
+
+        if (!isVblank) {
+            if ((nNextMipsSegment + nMipsTotalCyc) >= nMipsVblankCyc) {
+                nNextMipsSegment -= (nNextMipsSegment + nMipsTotalCyc) - nMipsVblankCyc;
+            }
+            if (nMipsTotalCyc == nMipsVblankCyc) {
+                isVblank = true;
+                Mips3SetIRQLine(VBLANK_IRQ, 1);
+                if (pBurnDraw) {
+                    DrvDraw();
+                }
+            }
+        }
+        if (nNextMipsSegment) {
+            Mips3Run(nNextMipsSegment);
+            nMipsTotalCyc += nNextMipsSegment;
+        }
+        if (nNextDcsSegment) {
+            Dcs2kRun(nNextDcsSegment);
+            nDcsTotalCyc += nNextDcsSegment;
+        }
+
+        nNextDcsSegment = dQuantum;
+        nNextMipsSegment = mQuantum;
     }
-
-
-    Dcs2kRun(MHz(10) / 60);
     if (pBurnSoundOut) {
         Dcs2kRender(pBurnSoundOut, nBurnSoundLen);
     }
-
-    Mips3SetIRQLine(VBLANK_IRQ, 1);
-    Mips3Run(kHz(20));
-
 
     return 0;
 }

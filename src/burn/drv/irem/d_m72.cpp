@@ -1227,6 +1227,9 @@ void __fastcall m72_sound_write_port(UINT16 port, UINT8 data)
 		case 0x82:
 			DACSignedWrite(0, data);
 			sample_address = (sample_address + 1) & 0x3ffff;
+			if (!DrvSndROM[sample_address]) {
+				DACWrite(0, 0); // clear dac @ end of sample, fixes distortion in rtype2 level3 after death
+			}
 		return;
 	}
 }

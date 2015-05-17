@@ -2086,9 +2086,11 @@ INT32 tlcs90Reset()
     P0/D0-D7 P1/A0-A7 P2/A8-A15 P6 P7 = INPUT
     P35/~RD P36/~WR CLK = 1 (ALWAYS OUTPUTS)
     P4/A16-A19 P83 = 0
-    dedicated input ports and registers remain unchanged,
+    dedicated input ports and CPU registers remain unchanged,
     but PC IFF BX BY = 0, A undefined
 */
+	memset(&cpustate->internal_registers, 0, sizeof(cpustate->internal_registers));
+
 	return 0;
 }
 
@@ -2489,11 +2491,12 @@ void t90_timer_callback(INT32 param)
 
 	INT32 mode, timer_fired;
 	INT32 i = param;
+	INT32 mask = 0x20 | (1 << i);
 
-	if ( (cpustate->internal_registers[ T90_TRUN - T90_IOBASE ] & (1 << i)) == 0 )
+	if ( (cpustate->internal_registers[ T90_TRUN - T90_IOBASE ] & mask) != mask )
 		return;
 
-  timer_fired = 0;
+	timer_fired = 0;
 
 	mode = (cpustate->internal_registers[ T90_TMOD - T90_IOBASE ] >> ((i & ~1) + 2)) & 0x03;
 	// Match
@@ -2585,19 +2588,22 @@ void t90_internal_registers_w(UINT16 offset, UINT8 data)
 		case T90_TRUN:
 		{
 			int i;
+			UINT8 mask;
 			// Timers 0-3
 			for (i = 0; i < 4; i++)
 			{
-				if ( (old ^ data) & (0x20 | (1 << i)) ) // if timer bit or prescaler bit changed
+				mask = 0x20 | (1 << i);
+				if ( (old ^ data) & mask ) // if timer bit or prescaler bit changed
 				{
-					if ( (data & (1 << i)) && (data & 0x20) )    t90_start_timer(cpustate, i);
+					if ( (data & mask) == mask ) t90_start_timer(cpustate, i);
 					else 					     t90_stop_timer(cpustate, i);
 				}
 			}
 			// Timer 4
-			if ( (old ^ data) & (0x20 | 0x10) )
+			mask = 0x20 | 0x10;
+			if ( (old ^ data) & mask )
 			{
-				if ( data == (0x20 | 0x10) )    t90_start_timer4(cpustate);
+				if ( (data & mask) == mask )    t90_start_timer4(cpustate);
 				else                            t90_stop_timer4(cpustate);
 			}
 			break;
@@ -2744,11 +2750,6 @@ INT32 tlcs90_init(INT32 clock)
 	memset(cpustate, 0, sizeof(t90_Regs));
 
 	cpustate->timer_period = clock / 1000000;
-
-	// Reset registers to their initial values
-
-//  IX = IY = 0xffff;
-//  F = ZF;
 
 	// Timers
 	for (i = 0; i < 4; i++)

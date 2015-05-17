@@ -373,14 +373,69 @@ bool mips3_x64::compile_cop1(uint32_t opcode)
             break;
 		}
 
+            // CVT.S.x
+        case 0x20: {
+            mov(rax, FS_x);
+            pxor(xmm0, xmm0);
+            if (INTEGER) {
+                if (SP) {
+                    cvtsi2ss(xmm0, eax);
+                } else {
+                    cvtsi2ss(xmm0, rax);
+                }
+            } else {
+                movss(xmm0, FS_x);
+            }
+            movss(FD_x, xmm0);
+            break;
+        }
+
+            // CVT.W.x
+        case 0x24: {
+            if (SP) {
+                movss(xmm0, FS_x);
+            }
+            else {
+                movsd(xmm0, FS_x);
+            }
+            cvtss2si(eax, xmm0);
+            mov(FD_x, eax);
+            break;
+        }
+
+           // C.UN.x fs, ft
+        case 0x32:
+           // C.F fs, ft
         case 0x3C:
             mov(rax, FCR31_x);
-            and_(rax,~0x800000ULL);
+            and_(rax,~(0x800000ULL));
             mov(FCR31_x, rax);
             break;
 
 
+            // C.OLT.x fs, ft
+        case 0x34: {
+            mov(rax, FCR31_x);
+            mov(rcx, rax);
+            and_(rcx,~(0x800000ULL));
+            or_(rax, 0x800000ULL);
+            if (SP) {
+                movss(xmm0, FS_x);
+                movss(xmm1, FT_x);
+                ucomiss(xmm0, xmm1);
+            }
+            else  {
+                movsd(xmm0, FS_x);
+                movsd(xmm1, FT_x);
+                ucomisd(xmm0, xmm1);
+            }
+            cmovnb(eax, ecx);
+            mov(FCR31_x, rax);
+            break;
+        }
+
         default:
+            drc_log("COP1 fallback for %x\n", opcode);
             fallback(opcode, &mips3::cop1_execute_32);
             break;
         }

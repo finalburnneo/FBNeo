@@ -1039,7 +1039,7 @@ static INT32 TrojanInit()
 	ZetClose();
 	
 	MSM5205Init(0, (avengers) ? DrvMSM5205SynchroniseStreamAvengers : DrvMSM5205SynchroniseStream, /*455000*/384000, NULL, MSM5205_SEX_4B, 1);
-	MSM5205SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	MSM5205SetRoute(0, (avengers) ? 1.00 : 0.50, BURN_SND_ROUTE_BOTH);
 	MSM5205InUse = 1;
 
 	GenericTilesInit();
@@ -1532,7 +1532,7 @@ static INT32 DrvFrame()
 			for (INT32 j = 0; j < 133; j++) {
 				if (i == MSMIRQSlice[j]) {
 					ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-					nCyclesDone[nCurrentCPU] += ZetRun(1000);
+					nCyclesDone[nCurrentCPU] += ZetRun((avengers) ? 500 : 1000);
 				}
 			}
 			ZetClose();

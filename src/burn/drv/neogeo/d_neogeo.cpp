@@ -14171,10 +14171,13 @@ static struct BurnRomInfo kof98aeRomDesc[] = {
 	/* 
 	242-p1ae.bin c9188c66 : original P1
 	242-p1ae.bin 23a80b3e : kensou 2624+BD bug[by mhloveke520]
+	242-p2ae.bin 609fac6b : original P2
+	242-p2ae.bin 72acf3cf : squat error fixes[by Bing Yan Dream]
 	*/
 //	{ "242-p1ae.bin", 0x100000, 0xc9188c66, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
 	{ "242-p1ae.bin", 0x100000, 0x23a80b3e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-	{ "242-p2ae.bin", 0x600000, 0x609fac6b, 1 | BRF_ESS | BRF_PRG }, //  1 
+//	{ "242-p2ae.bin", 0x600000, 0x609fac6b, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "242-p2ae.bin", 0x600000, 0x72acf3cf, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "242-s1ae.bin", 0x020000, 0xf1fee5c0, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -14251,14 +14254,14 @@ struct BurnDriver BurnDrvkof98co = {
 	0x1000,	304, 224, 4, 3
 };
 
-// The King of Fighters '99 (Anniversary Edition, Yashional hack)
-/* 2015/01/21 version */
+// The King of Fighters '99 (15th Anniversary Edition, Yashional hack)
+/* 2015/05/20 version */
 static struct BurnRomInfo kof99aeRomDesc[] = {
-	{ "152ae-p1.p1",   	   0x100000, 0x110a01b4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "152ae-p2.p2",   	   0x400000, 0x0f8e548a, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "152ae-p3.p3",   	   0x400000, 0x84280fed, 1 | BRF_ESS | BRF_PRG }, //  2 	
+	{ "152ae-p1.p1",   	   0x100000, 0x149bd289, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "152ae-p2.p2",   	   0x400000, 0x86658d87, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "152ae-p3.p3",   	   0x400000, 0xe66a79c0, 1 | BRF_ESS | BRF_PRG }, //  2 	
 
-	{ "251ae-s1.s1",       0x020000, 0x18c1562d, 2 | BRF_GRA },           //  3 Text layer tiles
+	{ "251ae-s1.s1",       0x020000, 0x3c31ee43, 2 | BRF_GRA },           //  3 Text layer tiles
 
 	{ "251ae-c1.c1",   	   0x800000, 0x497c2e83, 3 | BRF_GRA },           //  3 Sprite data
 	{ "251ae-c2.c2",   	   0x800000, 0x0a13eeb7, 3 | BRF_GRA },           //  4 
@@ -14268,8 +14271,8 @@ static struct BurnRomInfo kof99aeRomDesc[] = {
 	{ "251-c6d.c6",   	   0x800000, 0x238b3e71, 3 | BRF_GRA },           //  8 
 	{ "251ae-c7.c7",   	   0x800000, 0xf22760ad, 3 | BRF_GRA },           //  9 
 	{ "251ae-c8.c8",   	   0x800000, 0x396c3a70, 3 | BRF_GRA },           // 10 
-	{ "251ae-c9.c9",   	   0x800000, 0xcd0911ba, 3 | BRF_GRA },           // 10 
-	{ "251ae-c10.c10",     0x800000, 0xa910b5bb, 3 | BRF_GRA },           // 10 
+	{ "251ae-c9.c9",   	   0x800000, 0xf33d51d5, 3 | BRF_GRA },           // 10 
+	{ "251ae-c10.c10",     0x800000, 0x852770d7, 3 | BRF_GRA },           // 10 
 	{ "251ae-c11.c11",     0x800000, 0x7fe785c2, 3 | BRF_GRA },           // 10 
 	{ "251ae-c12.c12",     0x800000, 0xa7541483, 3 | BRF_GRA },           // 10 
 
@@ -14286,7 +14289,7 @@ STD_ROM_FN(kof99ae)
 
 struct BurnDriver BurnDrvkof99ae = {
 	"kof99ae", "kof99", "neogeo", NULL, "2015",
-	"The King of Fighters '99 (Anniversary Edition, Yashional hack)\0", NULL, "SNK", "Neo Geo MVS",
+	"The King of Fighters '99 (15th Anniversary Edition, Yashional hack)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof99aeRomInfo, kof99aeRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

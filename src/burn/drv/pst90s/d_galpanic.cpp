@@ -694,6 +694,31 @@ STD_ROM_PICK(Fantsia2a)
 STD_ROM_FN(Fantsia2a)
 
 // Rom information
+/* sole change seems to be copyright date, PCB has chip references instead of grid references. 
+Not correcting all labels in other sets in case these are legitimate labels */
+static struct BurnRomInfo Fantsia2nRomDesc[] = {
+	{ "prog2.g17",   		0x080000, 0x57c59972, BRF_ESS | BRF_PRG }, // 68000 code
+	{ "prog1.f17",   		0x080000, 0xbf2d9a26, BRF_ESS | BRF_PRG },
+	{ "scr2.g16",  	 		0x080000, 0x887b1bc5, BRF_ESS | BRF_PRG },
+	{ "scr1.f16",	   		0x080000, 0xcbba3182, BRF_ESS | BRF_PRG },
+	{ "scr4.g15",  	 		0x080000, 0xce97e411, BRF_ESS | BRF_PRG },
+	{ "scr3.f15",	   		0x080000, 0x480cc2e8, BRF_ESS | BRF_PRG },
+	{ "scr6.g14", 	 		0x080000, 0xb29d49de, BRF_ESS | BRF_PRG },
+	{ "scr5.f14",	   		0x080000, 0xd5f88b83, BRF_ESS | BRF_PRG },
+	{ "scr8.g20", 	 		0x080000, 0x694ae2b3, BRF_ESS | BRF_PRG },
+	{ "scr7.f20",	   		0x080000, 0x6068712c, BRF_ESS | BRF_PRG },
+
+	{ "23_OBJ1.U5",     	0x080000, 0xB45C9234, BRF_GRA },			  // graphics
+	{ "obj2.2i",     		0x080000, 0xea6e3861, BRF_GRA },
+
+	{ "music2.1b",   		0x080000, 0x23cc4f9c, BRF_SND },			  // PCM
+	{ "music1.1a",   		0x080000, 0x864167c2, BRF_SND },
+};
+
+STD_ROM_PICK(Fantsia2n)
+STD_ROM_FN(Fantsia2n)
+
+// Rom information
 static struct BurnRomInfo WownfantRomDesc[] = {
 	{ "ep-4001 42750001 u81.bin",  	0x080000, 0x9942d200, BRF_ESS | BRF_PRG }, // 68000 code
 	{ "ep-4001 42750001 u80.bin",  	0x080000, 0x17359eeb, BRF_ESS | BRF_PRG },
@@ -810,7 +835,7 @@ static INT32 MemIndex2()
 		} else {
 	Rom68K 		= Next; Next += 0x500000;			// 68000 ROM
 		}
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "fantsia2") || !strcmp(BurnDrvGetTextA(DRV_NAME), "fantsia2a") || !strcmp(BurnDrvGetTextA(DRV_NAME), "wownfant")) {
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "fantsia2") || !strcmp(BurnDrvGetTextA(DRV_NAME), "fantsia2a") || !strcmp(BurnDrvGetTextA(DRV_NAME), "fantsia2n") || !strcmp(BurnDrvGetTextA(DRV_NAME), "wownfant")) {
 	RomGfx		= Next; Next += 0x200100;			// Graphics, 1M 16x16x4bit decode to 2M + 64byte safe
 		} else {
 	RomGfx		= Next; Next += 0x100100;			// Graphics, 1/2M 16x16x4bit decode to 1M + 64byte safe
@@ -1980,7 +2005,7 @@ static INT32 ComadFrame()
 	ComadClearOpposites(&DrvInput[1]);
 	ComadClearOpposites(&DrvInput[3]);
 
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "supmodel") || !strcmp(BurnDrvGetTextA(DRV_NAME), "fantsia2") || !strcmp(BurnDrvGetTextA(DRV_NAME), "fantsia2a") || !strcmp(BurnDrvGetTextA(DRV_NAME), "wownfant")) {
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "supmodel") || !strcmp(BurnDrvGetTextA(DRV_NAME), "fantsia2") || !strcmp(BurnDrvGetTextA(DRV_NAME), "fantsia2a") || !strcmp(BurnDrvGetTextA(DRV_NAME), "fantsia2n") || !strcmp(BurnDrvGetTextA(DRV_NAME), "wownfant")) {
 	nCyclesTotal[0] = (INT32)((INT64)12000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
 		} else {
 	nCyclesTotal[0] = (INT32)((INT64)10000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
@@ -2231,6 +2256,16 @@ struct BurnDriver BurnDrvFantsia2a = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Fantsia2aRomInfo, Fantsia2aRomName, NULL, NULL, GalpanicInputInfo, Missw96DIPInfo,
+	Fantsia2Init, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
+	256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvFantsia2n = {
+	"fantsia2n", "fantsia2", NULL, NULL, "1998",
+	"Fantasia II (1998)\0", NULL, "Comad", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, Fantsia2nRomInfo, Fantsia2nRomName, NULL, NULL, GalpanicInputInfo, Missw96DIPInfo,
 	Fantsia2Init, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	256, 224, 4, 3
 };

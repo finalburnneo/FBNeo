@@ -1076,7 +1076,7 @@ static struct BurnRomInfo gradius3jsRomDesc[] = {
 	{ "945_m05.d9",		0x10000, 0xc8c45365, 3 | BRF_PRG | BRF_ESS }, // 10 Z80 Code
 
 	{ "945_A02A.K2",	0x20000, 0xfbb81511, 4 | BRF_GRA },           // 11 Sprites
-	{ "945_A01C.M2",	0x20000, 0x031b55e8, 4 | BRF_GRA },           // 12
+	{ "945_A02C.M2",	0x20000, 0x031b55e8, 4 | BRF_GRA },           // 12
 	{ "945_A01A.E2",	0x20000, 0xbace5abb, 4 | BRF_GRA },           // 13
 	{ "945_A01C.H2",	0x20000, 0xd91b29a6, 4 | BRF_GRA },           // 14
 	{ "945_A02B.K4",	0x20000, 0xc0fed4ab, 4 | BRF_GRA },           // 15

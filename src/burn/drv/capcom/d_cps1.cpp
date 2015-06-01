@@ -4950,12 +4950,12 @@ STD_ROM_FN(Dinopic3)
 static struct BurnRomInfo Dinopic4RomDesc[] = {
 	{ "cad_28.bin",    0x040000, 0x97dc3d86, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "cad_32.bin",    0x040000, 0x200a594f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "cad_33.bin",    0x040000, 0x5bf6deda, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "cad_29.bin",    0x040000, 0x302303c4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "cad_35.bin",    0x020000, 0xfbcf4314, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cad_33.bin",    0x040000, 0x5bf6deda, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "cad_31.bin",    0x020000, 0xf0110c8a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "cad_34.bin",    0x020000, 0x481369b8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "cad_35.bin",    0x020000, 0xfbcf4314, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "cad_30.bin",    0x020000, 0xbbcafc3b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },	
+	{ "cad_34.bin",    0x020000, 0x481369b8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	
 	{ "cad_24.bin",    0x040000, 0xe59e0066, BRF_GRA | CPS1_TILES },
 	{ "cad_20.bin",    0x040000, 0x779bffb2, BRF_GRA | CPS1_TILES },
@@ -13432,17 +13432,24 @@ static INT32 Dinopic4Init()
 {
 	INT32 nRet = 0;
 	
-//	Dinohunt = 1;
-//	CpsBootlegEEPROM = 1;
-	bCpsUpdatePalEveryFrame = 1;
+	Dinohunt = 1;
+	CpsBootlegEEPROM = 1;
+//	bCpsUpdatePalEveryFrame = 1;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic4;
 	
 	nRet = TwelveMhzInit();
 	
-/*	SekOpen(0);
+	UINT16 *ROM = (UINT16*)CpsRom;
+	ROM[0x556da] = 0x4e71;
+	ROM[0x556db] = 0x4e71;
+	for (int i = 0; i < 0x180000 >> 1; i++) {
+		if (ROM[i] == 0x60fe) bprintf(PRINT_NORMAL, _T("%x: %x, %x, %x\n"), i, ROM[i-1], ROM[i], ROM[i+1]);
+	}
+	
+	SekOpen(0);
 	SekMapHandler(1, 0xf18000, 0xf19fff, MAP_READ);
 	SekSetReadByteHandler(1, DinohuntQSharedRamRead);
-	SekClose();*/
+	SekClose();
 	
 	return nRet;
 }

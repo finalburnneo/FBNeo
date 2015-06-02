@@ -13428,27 +13428,45 @@ static INT32 DinohInit()
 	return nRet;
 }
 
+static UINT16 Dinopic4ProtValue = 0;
+
+UINT16 __fastcall Dinopic4ProtReadWord(UINT32 a)
+{
+	switch (a) {
+		case 0x57a2b0: {
+			if (Dinopic4ProtValue == 0x04) return 0x0404;
+			return 0xffff;
+		}
+	}
+	
+	return 0;
+}
+
+void __fastcall Dinopic4ProtWriteWord(UINT32 a, UINT16 d)
+{
+	switch (a) {
+		case 0x5762b0: {
+			Dinopic4ProtValue = d;
+			return;
+		}
+	}
+}
+
 static INT32 Dinopic4Init()
 {
 	INT32 nRet = 0;
 	
-	Dinohunt = 1;
 	CpsBootlegEEPROM = 1;
-//	bCpsUpdatePalEveryFrame = 1;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesDinopic4;
 	
 	nRet = TwelveMhzInit();
 	
-	UINT16 *ROM = (UINT16*)CpsRom;
-	ROM[0x556da] = 0x4e71;
-	ROM[0x556db] = 0x4e71;
-	for (int i = 0; i < 0x180000 >> 1; i++) {
-		if (ROM[i] == 0x60fe) bprintf(PRINT_NORMAL, _T("%x: %x, %x, %x\n"), i, ROM[i-1], ROM[i], ROM[i+1]);
-	}
-	
 	SekOpen(0);
 	SekMapHandler(1, 0xf18000, 0xf19fff, MAP_READ);
 	SekSetReadByteHandler(1, DinohuntQSharedRamRead);
+	SekMapHandler(2, 0x570000, 0x57ffff, MAP_READ | MAP_WRITE);
+	SekSetReadWordHandler(2, Dinopic4ProtReadWord);
+	SekSetWriteWordHandler(2, Dinopic4ProtWriteWord);
 	SekClose();
 	
 	return nRet;
@@ -17080,12 +17098,12 @@ struct BurnDriver BurnDrvCpsDinopic3 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvCpsDinopic4 = {
+struct BurnDriver BurnDrvCpsDinopic4 = {
 	"dinopic4", "dino", NULL, NULL, "1993",
-	"Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57), 930201 etc)\0", NULL, "Capcom", "CPS1",
+	"Cadillacs and Dinosaurs (bootleg set 4 (with PIC16c57), 930223 Asia TW)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Dinopic4RomInfo, Dinopic4RomName, NULL, NULL, DinoInputInfo, DinoDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, Dinopic4RomInfo, Dinopic4RomName, NULL, NULL, DinohInputInfo, DinohDIPInfo,
 	Dinopic4Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

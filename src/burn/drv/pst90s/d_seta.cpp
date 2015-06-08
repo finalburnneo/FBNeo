@@ -8994,7 +8994,7 @@ static struct BurnRomInfo gundharaRomDesc[] = {
 	{ "bpgh-009.u65",	0x080000, 0xb768e666, 0x1c | BRF_GRA },           //  9
 
 	{ "bpgh-012.u68",	0x200000, 0xedfda595, 0x05 | BRF_GRA },           // 10 Layer 2 tiles
-	{ "bpgh-011.u67",	0x100000, 0x49aff270, 0x1d | BRF_GRA },		  // 11
+	{ "bpgh-011.u67",	0x100000, 0x49aff270, 0x1d | BRF_GRA },		  	  // 11
 
 	{ "bpgh-013.u70",	0x100000, 0x0fa5d503, 0x06 | BRF_SND },           // 12 x1-010 Samples
 };
@@ -9034,6 +9034,127 @@ struct BurnDriver BurnDrvGundhara = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_SHOOT, 0,
 	NULL, gundharaRomInfo, gundharaRomName, NULL, NULL, GundharaInputInfo, GundharaDIPInfo,
 	gundharaInit, DrvExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x1200,
+	240, 384, 3, 4
+};
+
+
+// Gundhara (Chinese, bootleg?)
+
+static struct BurnRomInfo gundharacRomDesc[] = {
+	{ "4.U3",			0x080000, 0x14e9970a, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "2.U4",			0x080000, 0x96dfc658, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.U103",			0x080000, 0x312f58e2, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "1.U102",			0x080000, 0x8d23a23c, 0x01 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "19.U140",		0x080000, 0x32d92c28, 0x0b | BRF_GRA },           //  4 Sprites
+	{ "23.U142",		0x080000, 0xff44db9b, 0x0b | BRF_GRA },           //  5
+	{ "21.U141",		0x080000, 0x1901dc08, 0x0b | BRF_GRA },           //  6
+	{ "25.U143",		0x080000, 0x877289a2, 0x0b | BRF_GRA },           //  7
+	{ "18.U140-B",		0x080000, 0x4f023fb0, 0x0b | BRF_GRA },           //  8
+	{ "22.U142-B",		0x080000, 0x6f3fe7e7, 0x0b | BRF_GRA },           //  9
+	{ "20.U141-B",		0x080000, 0x7f1932e0, 0x0b | BRF_GRA },           // 10
+	{ "24.U143-B",		0x080000, 0x066a2e2b, 0x0b | BRF_GRA },           // 11
+	{ "9.U144",			0x080000, 0x6b4a531f, 0x0b | BRF_GRA },           // 12
+	{ "13.U146",		0x080000, 0x45be3df4, 0x0b | BRF_GRA },           // 13
+	{ "11.U145",		0x080000, 0xf5210aa5, 0x0b | BRF_GRA },           // 14
+	{ "15.U147",		0x080000, 0x17003119, 0x0b | BRF_GRA },           // 15
+	{ "8.U144-B",		0x080000, 0xad9d9338, 0x0b | BRF_GRA },           // 16
+	{ "12.U146-B",		0x080000, 0x0fd4c062, 0x0b | BRF_GRA },           // 17
+	{ "10.U145-B",		0x080000, 0x7c5d12b9, 0x0b | BRF_GRA },           // 18
+	{ "14.U147-B",		0x080000, 0x5a8af50f, 0x0b | BRF_GRA },           // 19
+
+	{ "5.U148",			0x080000, 0x0c740f9b, 0x1c | BRF_GRA },           // 20 Layer 1 tiles
+	{ "6.U150",			0x080000, 0xba60eb98, 0x1c | BRF_GRA },           // 21
+	{ "7.U154",			0x080000, 0xb768e666, 0x1c | BRF_GRA },           // 22
+
+	{ "26.U164",		0x080000, 0xbe3ccaba, 0x1d | BRF_GRA },           // 23 Layer 2 tiles
+	{ "28.U166",		0x080000, 0x8a650a4e, 0x1d | BRF_GRA },		  	  // 24
+	{ "27.U165",		0x080000, 0x47994ff0, 0x1d | BRF_GRA },		  	  // 25
+	{ "29.U167",		0x080000, 0x453c3d3f, 0x1d | BRF_GRA },		  	  // 26
+	{ "16.U152",		0x080000, 0x5ccc500b, 0x1d | BRF_GRA },		  	  // 27
+	{ "17.U153",		0x080000, 0x5586d086, 0x1d | BRF_GRA },		  	  // 28
+
+	{ "30.U69",			0x080000, 0x3111a98a, 0x06 | BRF_SND },           // 29 x1-010 Samples
+	{ "31.U70",			0x080000, 0x30cb2524, 0x06 | BRF_SND },           // 30 
+};
+
+STD_ROM_PICK(gundharac)
+STD_ROM_FN(gundharac)
+
+static INT32 gundharacRomCallback(INT32 bLoad)
+{
+	if (!bLoad)
+	{
+		DrvROMLen[0] = 0x800000; // gfx0
+		DrvROMLen[1] = 0x200000; // gfx1
+		DrvROMLen[2] = 0x400000; // gfx2
+		DrvROMLen[3] = 0x100000; // sound rom
+	}
+	else
+	{
+		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x100001,  2, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x100000,  3, 2)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  4, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x000001,  5, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x100000,  6, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x100001,  7, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x200000,  8, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x200001,  9, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x300000, 10, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x300001, 11, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x400000, 12, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x400001, 13, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x500000, 14, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x500001, 15, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x600000, 16, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x600001, 17, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x700000, 18, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x700001, 19, 2)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM1 + 0x000000, 20, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x000001, 21, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x100000, 22, 2)) return 1;
+		
+		if (BurnLoadRom(DrvGfxROM2 + 0x000000, 23, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x000001, 24, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x100000, 25, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x100001, 26, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x200000, 27, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x300000, 28, 2)) return 1;
+
+		if (BurnLoadRom(DrvSndROM  + 0x000000, 29, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM  + 0x080000, 30, 1)) return 1;
+	}
+
+	return 0;
+}
+
+static INT32 gundharacInit()
+{
+	DrvSetVideoOffsets(0, 0, -2, -2);
+	DrvSetColorOffsets(0, 0x200, 0xa00);
+	
+	pRomLoadCallback = gundharacRomCallback;
+
+	INT32 nRet = DrvInit(gundhara68kInit, 16000000, SET_IRQLINES(2, 4), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 3, 3));
+
+	if (nRet == 0) {
+		gundharaSetColorTable();
+	}
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvGundharac = {
+	"gundharac", "gundhara", NULL, NULL, "1995",
+	"Gundhara (Chinese, bootleg?)\0", NULL, "Banpresto", "Seta",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_SHOOT, 0,
+	NULL, gundharacRomInfo, gundharacRomName, NULL, NULL, GundharaInputInfo, GundharaDIPInfo,
+	gundharacInit, DrvExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x1200,
 	240, 384, 3, 4
 };
 

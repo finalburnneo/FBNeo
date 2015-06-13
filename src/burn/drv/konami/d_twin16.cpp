@@ -2128,7 +2128,7 @@ struct BurnDriver BurnDrvHpuncher = {
 };
 
 
-// M.I.A. - Missing in Action (Japan)
+// M.I.A. - Missing in Action (version R) (Japan)
 
 static struct BurnRomInfo miajRomDesc[] = {
 	{ "808_r05.6n",		0x10000, 0x91fd83f4, 1 | BRF_PRG | BRF_ESS }, //  0 68K #0 Code
@@ -2180,7 +2180,7 @@ static INT32 miajInit()
 
 struct BurnDriver BurnDrvMiaj = {
 	"miaj", "mia", NULL, NULL, "1989",
-	"M.I.A. - Missing in Action (Japan)\0", NULL, "Konami", "GX808",
+	"M.I.A. - Missing in Action (version R) (Japan)\0", NULL, "Konami", "GX808",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, miajRomInfo, miajRomName, NULL, NULL, DrvInputInfo, MiajDIPInfo,

@@ -1018,9 +1018,9 @@ struct BurnDriver BurnDrvtopsecrt = {
 };
 
 
-// Bionic Commandos (bootleg, hack of Japan set)
+// Bionic Commandos (bootleg)
 
-static struct BurnRomInfo bioniccbRomDesc[] = {
+static struct BurnRomInfo bioniccblRomDesc[] = {
 	{ "02l.bin",		0x10000, 0xb2fe1ddb, 1 | BRF_PRG | BRF_ESS },	//  0 68k Code
 	{ "03l.bin",		0x10000, 0x427a003d, 1 | BRF_PRG | BRF_ESS },	//  1
 	{ "02u.bin",		0x10000, 0x27f04bb6, 1 | BRF_PRG | BRF_ESS },	//  2
@@ -1052,15 +1052,15 @@ static struct BurnRomInfo bioniccbRomDesc[] = {
 	{ "19.bin",     	0x01000, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
 };
 
-STD_ROM_PICK(bioniccb)
-STD_ROM_FN(bioniccb)
+STD_ROM_PICK(bioniccbl)
+STD_ROM_FN(bioniccbl)
 
-struct BurnDriver BurnDrvbioniccb = {
-	"bioniccb", "bionicc", NULL, NULL, "1987",
-	"Bionic Commandos (bootleg, hack of Japan set)\0", NULL, "Capcom", "Miscellaneous",
+struct BurnDriver BurnDrvbioniccbl = {
+	"bioniccbl", "bionicc", NULL, NULL, "1987",
+	"Bionic Commandos (bootleg)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
-	NULL, bioniccbRomInfo, bioniccbRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, bioniccblRomInfo, bioniccblRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

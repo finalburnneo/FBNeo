@@ -30,13 +30,13 @@ static UINT8 *DrvGfxROM1;
 static UINT8 *DrvGfxROM2;
 static UINT8 *DrvGfxROM3;
 static UINT8 *DrvColPROM;
+static UINT8 *DrvCharColPROM;
 static UINT8 *DrvZ80RAM;
 static UINT8 *DrvZ80RAM2;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvColRAM;
 static UINT32 *DrvPalette;
-static UINT32 *Palette;
 
 static UINT8 DrvRecalc;
 
@@ -852,11 +852,11 @@ static void DrvPaletteInit(INT32 len)
 		bit1 = (DrvColPROM[i] >> 7) & 0x01;
 		b = bit0 * 78 + bit1 * 168;
 
-		Palette[i] = (r << 16) | (g << 8) | b;
-		DrvPalette[i] = Palette[i];
+		DrvPalette[i] = BurnHighCol(r, g, b, 0);
 	}
 
-	DrvColPROM += 0x100;
+	DrvCharColPROM =  DrvColPROM;
+	DrvCharColPROM += 0x100; // Character color prom starts at DrvColPROM + 0x100
 }
 
 static void bg_layer_init()
@@ -918,7 +918,6 @@ static INT32 MemIndex()
 
 	DrvColPROM		= Next; Next += 0x000200;
 
-	Palette			= (UINT32*)Next; Next += 0x0200 * sizeof(INT32);
 	DrvPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(INT32);
 
 	zaxxon_bg_pixmap	= Next; Next += 0x100000;
@@ -991,7 +990,7 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvColPROM + 0x0100, 16, 1)) return 1;
 
 		DrvGfxDecode();
-		DrvPaletteInit(0x100);
+		DrvPaletteInit(0x200);
 		bg_layer_init();
 	}
 
@@ -1168,7 +1167,7 @@ static void draw_fg_layer(INT32 type)
 		switch (type)
 		{
 			case 0:
-				color = DrvColPROM[(sx | ((sy >> 2) << 5))] & 0x0f;
+				color = DrvCharColPROM[(sx | ((sy >> 2) << 5))] & 0x0f;
 			break;
 
 			case 2:
@@ -1176,7 +1175,7 @@ static void draw_fg_layer(INT32 type)
 			break;
 
 			default:
-				color = DrvColPROM[offs] & 0x0f;
+				color = DrvCharColPROM[offs] & 0x0f;
 			break;
 		}
 
@@ -1321,6 +1320,11 @@ static void draw_sprites(UINT16 flipxmask, UINT16 flipymask)
 
 static INT32 DrvDraw()
 {
+	if (DrvRecalc) {
+		DrvPaletteInit(0x200);
+		DrvRecalc = 0;
+	}
+
 	if (~nBurnLayer & 1) BurnTransferClear();
 
 	if (hardware_type == 1) {

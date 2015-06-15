@@ -1125,8 +1125,8 @@ static INT32 CongoInit()
 	BurnSampleInit(1);
 	BurnSampleSetAllRoutesAllSamples(0.10, BURN_SND_ROUTE_BOTH);
 
-	SN76496Init(0, 4000000,     0);
-	SN76496Init(1, 4000000 / 4, 1);
+	SN76489AInit(0, 4000000,     0);
+	SN76489AInit(1, 4000000 / 4, 1);
 
 	GenericTilesInit();
 

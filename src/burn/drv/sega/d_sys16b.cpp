@@ -2880,16 +2880,17 @@ STD_ROM_PICK(Dunkshot)
 STD_ROM_FN(Dunkshot)
 
 static struct BurnRomInfo DunkshotaRomDesc[] = {
-	{ "10523A.a4",  	0x08000, 0x22e3f074, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // handwritten label
-	{ "10520A.a1",  	0x08000, 0x16e213ba, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // handwritten label
+	// several roms had replacement? (different style to others) labels with 'T' markings, content identical.
+	{ "epr-10523a.a4",  0x08000, 0x22e3f074, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, 
+	{ "epr-10520a.a1",  0x08000, 0x16e213ba, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, 
 	{ "epr-10524.a5",   0x08000, 0x22777314, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // == epr-10471.a5
 	{ "epr-10521.a2",   0x08000, 0xe2d5f97a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG }, // == epr-10468.a2
 	{ "epr-10525.a6",   0x08000, 0x7f41f334, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-10522.a3",   0x08000, 0xe5b5f754, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 		
-	{ "epr-10528T.b9",  0x08000, 0xa8a3762d, SYS16_ROM_TILES | BRF_GRA },
-	{ "epr-10529T.b10", 0x08000, 0x80cbff50, SYS16_ROM_TILES | BRF_GRA },
-	{ "epr-10530T.b11", 0x08000, 0x2dbe1e52, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10528.b9",  	0x08000, 0xa8a3762d, SYS16_ROM_TILES | BRF_GRA }, 
+	{ "epr-10529.b10", 	0x08000, 0x80cbff50, SYS16_ROM_TILES | BRF_GRA }, 
+	{ "epr-10530.b11", 	0x08000, 0x2dbe1e52, SYS16_ROM_TILES | BRF_GRA }, 
 	
 	{ "epr-10477.b1",   0x08000, 0xf9d3b2cb, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "epr-10481.b5",   0x08000, 0xfeb04bc9, SYS16_ROM_SPRITES | BRF_GRA },
@@ -2897,8 +2898,8 @@ static struct BurnRomInfo DunkshotaRomDesc[] = {
 	{ "epr-10482.b6",   0x08000, 0x5bc07618, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "epr-10479.b3",   0x08000, 0xe84190a0, SYS16_ROM_SPRITES | BRF_GRA },	
 	{ "epr-10483.b7",   0x08000, 0x7cab4f9e, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "epr-10526T.b4",  0x08000, 0xbf200754, SYS16_ROM_SPRITES | BRF_GRA },	
-	{ "epr-10527T.b8",  0x08000, 0x39b1a242, SYS16_ROM_SPRITES | BRF_GRA },	
+	{ "epr-10526.b4",  	0x08000, 0xbf200754, SYS16_ROM_SPRITES | BRF_GRA },	
+	{ "epr-10527.b8",  	0x08000, 0x39b1a242, SYS16_ROM_SPRITES | BRF_GRA },	
 	
 	{ "epr-10473.a7",   0x08000, 0x7f1f5a27, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
@@ -8667,7 +8668,7 @@ struct BurnDriver BurnDrvDunkshot = {
 };
 
 struct BurnDriver BurnDrvDunkshota = {
-	"dunkshota", "dunkshot", NULL, NULL, "1986",
+	"dunkshota", "dunkshot", NULL, NULL, "1987",
 	"Dunk Shot (Rev A, FD1089 317-0022)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,

@@ -4423,45 +4423,53 @@ struct BurnDriver BurnDrvStdragona = {
 // Rod-Land (World)
 
 static struct BurnRomInfo rodlandRomDesc[] = {
-	{ "rl_02.rom",		0x20000, 0xc7e00593, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
-	{ "rl_01.rom",		0x20000, 0x2e748ca1, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "rl_03.rom",		0x10000, 0x62fdf6d7, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "rl_04.rom",		0x10000, 0x44163c86, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "JALECO_ROD_LAND_2.ROM2",		0x20000, 0xc7e00593, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "JALECO_ROD_LAND_1.ROM1",		0x20000, 0x2e748ca1, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "JALECO_ROD_LAND_3.ROM3",		0x10000, 0x62fdf6d7, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "JALECO_ROD_LAND_4.ROM4",		0x10000, 0x44163c86, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "rl_05.rom",		0x10000, 0xc1617c28, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
-	{ "rl_06.rom",		0x10000, 0x663392b2, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "JALECO_ROD_LAND_5.ROM5",		0x10000, 0xc1617c28, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
+	{ "JALECO_ROD_LAND_6.ROM6",		0x10000, 0x663392b2, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "rl_23.rom",		0x80000, 0xac60e771, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
+	{ "LH534H31.ROM14",				0x80000, 0x8201e1bb, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
 
-	{ "rl_18.rom",		0x80000, 0xf3b30ca6, 4 | BRF_GRA },           //  7 Tilemap #1 Tiles
+	{ "LH534H32.ROM18",				0x80000, 0xf3b30ca6, 4 | BRF_GRA },           //  7 Tilemap #1 Tiles
 
-	{ "rl_19.bin",		0x20000, 0x124d7e8f, 5 | BRF_GRA },           //  8 Tilemap #2 Tiles
+	{ "LH2311J0.ROM19",				0x20000, 0x124d7e8f, 5 | BRF_GRA },           //  8 Tilemap #2 Tiles
 
-	{ "rl_14.rom",		0x80000, 0x08d01bf4, 6 | BRF_GRA },           //  9 Sprites
+	{ "LH534H33.ROM23",				0x80000, 0x936db174, 6 | BRF_GRA },           //  9 Sprites
 
-	{ "rl_10.rom",		0x40000, 0xe1d1cd99, 7 | BRF_SND },           // 10 OKI #0 Samples
+	{ "LH5321T5.ROM10",				0x40000, 0xe1d1cd99, 7 | BRF_SND },           // 10 OKI #0 Samples
 
-	{ "rl_08.rom",		0x40000, 0x8a49d3a7, 8 | BRF_SND },           // 11 OKI #1 Samples
+	{ "S202000DR.ROM8",				0x40000, 0x8a49d3a7, 8 | BRF_SND },           // 11 OKI #1 Samples
 
-	{ "rl.bin",		0x00200, 0x8914e72d, 9 | BRF_GRA },           // 12 Priority PROM
+	{ "PS89013A.M14",				0x00200, 0x8914e72d, 9 | BRF_GRA },           // 12 Priority PROM
 };
 
 STD_ROM_PICK(rodland)
 STD_ROM_FN(rodland)
 
-static void rodland_gfx_unmangle()
+static void rodland_gfx_unmangle(UINT8 *rom, INT32 size)
 {
-	memcpy (DrvGfxROM[0] + 0x80000, DrvGfxROM[0] + 0x20000 + 0x00000, 0x40000);
-	memcpy (DrvGfxROM[0] + 0x30000, DrvGfxROM[0] + 0x80000 + 0x00000, 0x10000);
-	memcpy (DrvGfxROM[0] + 0x50000, DrvGfxROM[0] + 0x80000 + 0x10000, 0x10000);
-	memcpy (DrvGfxROM[0] + 0x20000, DrvGfxROM[0] + 0x80000 + 0x20000, 0x10000);
-	memcpy (DrvGfxROM[0] + 0x40000, DrvGfxROM[0] + 0x80000 + 0x30000, 0x10000);
+	UINT8 *buf = (UINT8*)BurnMalloc(size);
+
+	memcpy (buf, rom, size);
+
+	for (INT32 i = 0;i < size;i++)
+	{
+		INT32 j = BITSWAP24(i,23,22,21,20,19,18,17,16,15,14,10,12,11,8,9,3,7,6,5,4,13,2,1,0);
+
+		rom[i] = BITSWAP08(buf[j], 6,4,5,3,7,2,1,0);
+	}
+
+	BurnFree (buf);
 }
 
 static void rodlandCallback()
 {
 	rodland_rom_decode();
-	rodland_gfx_unmangle();
+	rodland_gfx_unmangle(DrvGfxROM[0], 0x80000);
+	rodland_gfx_unmangle(DrvGfxROM[3], 0x80000);
 }
 
 static INT32 rodlandInit()
@@ -4483,53 +4491,37 @@ struct BurnDriver BurnDrvRodland = {
 // Rod-Land (Japan)
 
 static struct BurnRomInfo rodlandjRomDesc[] = {
-	{ "rl_2.bin",		0x20000, 0xb1d2047e, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
-	{ "rl_1.bin",		0x20000, 0x3c47c2a3, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "rl_3.bin",		0x10000, 0xc5b1075f, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "rl_4.bin",		0x10000, 0x9ec61048, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "JALECO_ROD_LAND_2.ROM2",		0x20000, 0xb1d2047e, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "JALECO_ROD_LAND_1.ROM1",		0x20000, 0x3c47c2a3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "JALECO_ROD_LAND_3.ROM3",		0x10000, 0xc5b1075f, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "JALECO_ROD_LAND_4.ROM4",		0x10000, 0x9ec61048, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "rl_05.rom",		0x10000, 0xc1617c28, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
-	{ "rl_06.rom",		0x10000, 0x663392b2, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "JALECO_ROD_LAND_5.ROM5",		0x10000, 0xc1617c28, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
+	{ "JALECO_ROD_LAND_6.ROM6",		0x10000, 0x663392b2, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "rl_14.bin",		0x80000, 0x8201e1bb, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
+	{ "LH534H31.ROM14",				0x80000, 0x8201e1bb, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
 
-	{ "rl_18.rom",		0x80000, 0xf3b30ca6, 4 | BRF_GRA },           //  7 Tilemap #1 Tiles
+	{ "LH534H32.ROM18",				0x80000, 0xf3b30ca6, 4 | BRF_GRA },           //  7 Tilemap #1 Tiles
 
-	{ "rl_19.bin",		0x20000, 0x124d7e8f, 5 | BRF_GRA },           //  8 Tilemap #2 Tiles
+	{ "LH2311J0.ROM19",				0x20000, 0x124d7e8f, 5 | BRF_GRA },           //  8 Tilemap #2 Tiles
 
-	{ "rl_23.bin",		0x80000, 0x936db174, 6 | BRF_GRA },           //  9 Sprites
+	{ "LH534H33.ROM23",				0x80000, 0x936db174, 6 | BRF_GRA },           //  9 Sprites
 
-	{ "rl_10.rom",		0x40000, 0xe1d1cd99, 7 | BRF_SND },           // 10 OKI #0 Samples
+	{ "LH5321T5.ROM10",				0x40000, 0xe1d1cd99, 7 | BRF_SND },           // 10 OKI #0 Samples
 
-	{ "rl_08.rom",		0x40000, 0x8a49d3a7, 8 | BRF_SND },           // 11 OKI #1 Samples
+	{ "S202000DR.ROM8",				0x40000, 0x8a49d3a7, 8 | BRF_SND },           // 11 OKI #1 Samples
 
-	{ "rl.bin",		0x00200, 0x8914e72d, 9 | BRF_GRA },           // 12 Priority PROM
+	{ "PS89013A.M14",				0x00200, 0x8914e72d, 9 | BRF_GRA },           // 12 Priority PROM
 };
 
 STD_ROM_PICK(rodlandj)
 STD_ROM_FN(rodlandj)
 
-static void rodlandj_gfx_unmangle(UINT8 *rom, INT32 size)
-{
-	UINT8 *buf = (UINT8*)BurnMalloc(size);
-
-	memcpy (buf, rom, size);
-
-	for (INT32 i = 0;i < size;i++)
-	{
-		INT32 j = BITSWAP24(i,23,22,21,20,19,18,17,16,15,14,10,12,11,8,9,3,7,6,5,4,13,2,1,0);
-
-		rom[i] = BITSWAP08(buf[j], 6,4,5,3,7,2,1,0);
-	}
-
-	BurnFree (buf);
-}
-
 static void rodlandjCallback()
 {
 	astyanax_rom_decode();
-	rodlandj_gfx_unmangle(DrvGfxROM[0], 0x80000);
-	rodlandj_gfx_unmangle(DrvGfxROM[3], 0x80000);
+	rodland_gfx_unmangle(DrvGfxROM[0], 0x80000);
+	rodland_gfx_unmangle(DrvGfxROM[3], 0x80000);
 }
 
 static INT32 rodlandjInit()
@@ -4551,37 +4543,43 @@ struct BurnDriver BurnDrvRodlandj = {
 // Rod-Land (Japan bootleg)
 
 static struct BurnRomInfo rodlandjbRomDesc[] = {
-	{ "rl19.bin",		0x10000, 0x028de21f, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
-	{ "rl17.bin",		0x10000, 0x9c720046, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "rl20.bin",		0x10000, 0x3f536d07, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "rl18.bin",		0x10000, 0x5aa61717, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "rl_3.bin",		0x10000, 0xc5b1075f, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "rl_4.bin",		0x10000, 0x9ec61048, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "rl19.bin",			0x10000, 0x028de21f, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "rl17.bin",			0x10000, 0x9c720046, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rl20.bin",			0x10000, 0x3f536d07, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "rl18.bin",			0x10000, 0x5aa61717, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "rl_3.bin",			0x10000, 0xc5b1075f, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "rl_4.bin",			0x10000, 0x9ec61048, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "rl02.bin",		0x10000, 0xd26eae8f, 2 | BRF_PRG | BRF_ESS }, //  6 68k #1 Code
-	{ "rl01.bin",		0x10000, 0x04cf24bc, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "rl02.bin",			0x10000, 0xd26eae8f, 2 | BRF_PRG | BRF_ESS }, //  6 68k #1 Code
+	{ "rl01.bin",			0x10000, 0x04cf24bc, 2 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "rl_23.rom",		0x80000, 0xac60e771, 3 | BRF_GRA },           //  8 Tilemap #0 Tiles
+	{ "LH534H31.ROM14",		0x80000, 0x8201e1bb, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
 
-	{ "rl_18.rom",		0x80000, 0xf3b30ca6, 4 | BRF_GRA },           //  9 Tilemap #1 Tiles
+	{ "LH534H32.ROM18",		0x80000, 0xf3b30ca6, 4 | BRF_GRA },           //  7 Tilemap #1 Tiles
 
-	{ "rl_19.bin",		0x20000, 0x124d7e8f, 5 | BRF_GRA },           // 10 Tilemap #2 Tiles
+	{ "LH2311J0.ROM19",		0x20000, 0x124d7e8f, 5 | BRF_GRA },           //  8 Tilemap #2 Tiles
 
-	{ "rl_14.rom",		0x80000, 0x08d01bf4, 6 | BRF_GRA },           // 11 Sprites
+	{ "LH534H33.ROM23",		0x80000, 0x936db174, 6 | BRF_GRA },           //  9 Sprites
 
-	{ "rl_10.rom",		0x40000, 0xe1d1cd99, 7 | BRF_SND },           // 12 OKI #0 Samples
+	{ "LH5321T5.ROM10",		0x40000, 0xe1d1cd99, 7 | BRF_SND },           // 10 OKI #0 Samples
 
-	{ "rl_08.rom",		0x40000, 0x8a49d3a7, 8 | BRF_SND },           // 13 OKI #1 Samples
+	{ "S202000DR.ROM8",		0x40000, 0x8a49d3a7, 8 | BRF_SND },           // 11 OKI #1 Samples
 
-	{ "rl.bin",		0x00200, 0x8914e72d, 9 | BRF_GRA },           // 14 Priority PROM
+	{ "PS89013A.M14",		0x00200, 0x8914e72d, 9 | BRF_GRA },           // 12 Priority PROM
 };
 
 STD_ROM_PICK(rodlandjb)
 STD_ROM_FN(rodlandjb)
 
+static void rodlandjbCallback()
+{
+	rodland_gfx_unmangle(DrvGfxROM[0], 0x80000);
+	rodland_gfx_unmangle(DrvGfxROM[3], 0x80000);
+}
+
 static INT32 rodlandjbInit()
 {
-	return SystemInit(0xA, rodland_gfx_unmangle);
+	return SystemInit(0xA, rodlandjbCallback);
 }
 
 struct BurnDriver BurnDrvRodlandjb = {

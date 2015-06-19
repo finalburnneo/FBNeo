@@ -853,20 +853,20 @@ STD_ROM_FN(donpachihk)
 static struct BurnSampleInfo DonpachiSampleDesc[] = {
 #ifdef USE_SAMPLE_HACK
 #if !defined ROM_VERIFY
-	{ "02 - Sortie Instruction.wav", SAMPLE_AUTOLOOP },
-	{ "03 - Silent Outpost Base.wav", SAMPLE_AUTOLOOP },
-	{ "04 - Gale Force.wav", SAMPLE_AUTOLOOP },
-	{ "05 - God of Destruction.wav", SAMPLE_AUTOLOOP },
-	{ "06 - Advance Through the Sky.wav", SAMPLE_AUTOLOOP },
-	{ "07 - The Battle Intensifies.wav", SAMPLE_AUTOLOOP },
-	{ "08 - An Equal Match.wav", SAMPLE_AUTOLOOP },
-	{ "09 - It's All Up To Me!!.wav", SAMPLE_NOLOOP },
-	{ "10 - Chief's Congratulations.wav", SAMPLE_NOLOOP },
-	{ "11 - Breakthrough.wav", SAMPLE_NOLOOP },
-	{ "12 - Pressure.wav", SAMPLE_AUTOLOOP },
-	{ "13 - My Duty is Done.wav", SAMPLE_AUTOLOOP },
-	{ "14 - Eternal Soldier.wav", SAMPLE_AUTOLOOP },
-	{ "15 - Chase in the Dark.wav", SAMPLE_AUTOLOOP },
+	{ "02 - Sortie Instruction.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "03 - Silent Outpost Base.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "04 - Gale Force.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "05 - God of Destruction.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "06 - Advance Through the Sky.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "07 - The Battle Intensifies.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "08 - An Equal Match.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "09 - It's All Up To Me!!.wav", SAMPLE_NOLOOP | SAMPLE_NOSTORE },
+	{ "10 - Chief's Congratulations.wav", SAMPLE_NOLOOP | SAMPLE_NOSTORE },
+	{ "11 - Breakthrough.wav", SAMPLE_NOLOOP | SAMPLE_NOSTORE },
+	{ "12 - Pressure.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "13 - My Duty is Done.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "14 - Eternal Soldier.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "15 - Chase in the Dark.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
 #endif
 #endif
 	{ "", 0 }

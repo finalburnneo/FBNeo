@@ -1,6 +1,10 @@
-#define SAMPLE_IGNORE		0x01 // don't ever play this sample
-#define SAMPLE_AUTOLOOP		0x02 // start the looping on start
-#define SAMPLE_NOLOOP		0x04 // don't allow this to loop
+#define SAMPLE_IGNORE		(1<<0) // don't ever play this sample
+#define SAMPLE_AUTOLOOP		(1<<1) // start the looping on start
+#define SAMPLE_NOLOOP		(1<<2) // don't allow this to loop
+
+// Change this to 0 to 1 if using samples in a low-ram environment.
+// May cause momentary stutter while sample loads.
+#define SAMPLE_NOSTORE		(0<<3) // only keep in memory while playing
 
 void BurnSamplePlay(INT32 sample);
 void BurnSamplePause(INT32 sample);

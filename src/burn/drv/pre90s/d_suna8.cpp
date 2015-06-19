@@ -2012,7 +2012,7 @@ static void draw_normal_sprites(INT32 which, INT32 new_style, INT32 gfxbank_type
 					sy = max_y - sy;    tile_flipy = !tile_flipy;
 				}
 
-				draw_single_sprite(tile + (attr & 0x3)*0x100 + gfxbank + (which*0x8000), (((attr >> 2) & 0xf) | colorbank) + 0x10 * m_palettebank, sx, sy, tile_flipx, tile_flipy);
+				draw_single_sprite(tile + (attr & 0x3)*0x100 + gfxbank + (which*0x8000), (((attr >> 2) & 0xf) ^ colorbank) + 0x10 * m_palettebank, sx, sy, tile_flipx, tile_flipy);
 			}
 		}
 

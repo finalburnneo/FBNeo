@@ -130,8 +130,6 @@ void BurnSamplePlay(INT32 sample)
 		BurnSampleInitOne(sample);
 	}
 
-	bprintf (0, _T("play5\n"));
-
 	sample_ptr->playing = 1;
 	sample_ptr->position = 0;
 }
@@ -166,12 +164,7 @@ void BurnSampleStop(INT32 sample)
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleStop called without init\n"));
 #endif
 
-	bprintf (0, _T("stop1\n"));
-
 	if (sample >= nTotalSamples) return;
-
-	bprintf (0, _T("stop2\n"));
-
 
 	sample_ptr = &samples[sample];
 	sample_ptr->playing = 0;
@@ -315,7 +308,6 @@ void BurnSampleInit(INT32 bAdd /*add sample to stream?*/)
 		if (si.nFlags & SAMPLE_NOSTORE) {
 			sample_ptr->flags = si.nFlags;
 			sample_ptr->data = NULL;
-			bprintf (0, _T("NOSTORE %d.\n"),i);
 			continue;
 		}
 

@@ -828,8 +828,8 @@ static INT32 NinjakunInit()
 	AY8910Init(0, 3000000, nBurnSoundRate, &nova2001_port_3, &nova2001_port_4, NULL, NULL);
 	AY8910Init(1, 3000000, nBurnSoundRate, NULL, NULL, &nova2001_scroll_x_w, &nova2001_scroll_y_w);
 
-	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1222,15 +1222,16 @@ static INT32 NinjakunFrame()
 		ZetRun(nCyclesTotal / nInterleave);
 		INT32 sync_cycles = ZetTotalCycles();
 		if (i == 240) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			vblank = 1;
 		}
 		ZetClose();
 
 		ZetOpen(1);
-		ZetRun(sync_cycles - ZetTotalCycles());
+		//ZetRun(sync_cycles - ZetTotalCycles());
+		ZetRun((nCyclesTotal / 4) / nInterleave);//horrible hack.
 		if (i == 63 || i == 127 || i == 195 || i == 255) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 	}

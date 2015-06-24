@@ -1145,7 +1145,7 @@ static INT32 NovaFrame()
 
 	vblank = 0;
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = 3000000;
+	INT32 nCyclesTotal = 3000000 / 60;
 
 	ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
@@ -1215,21 +1215,20 @@ static INT32 NinjakunFrame()
 
 	vblank = 0;
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = 3000000;
+	INT32 nCyclesTotal = 3000000 / 60;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
 		ZetRun(nCyclesTotal / nInterleave);
 		INT32 sync_cycles = ZetTotalCycles();
-		if (i == 240) {
+		if (i == 250) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			vblank = 1;
 		}
 		ZetClose();
 
 		ZetOpen(1);
-		//ZetRun(sync_cycles - ZetTotalCycles());
-		ZetRun((nCyclesTotal / 4) / nInterleave);//horrible hack.
+		ZetRun(sync_cycles - ZetTotalCycles());
 		if (i == 63 || i == 127 || i == 195 || i == 255) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}

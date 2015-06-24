@@ -7532,6 +7532,34 @@ static struct BurnRomInfo Xmvsfur1RomDesc[] = {
 STD_ROM_PICK(Xmvsfur1)
 STD_ROM_FN(Xmvsfur1)
 
+static struct BurnRomInfo Xmvsfur2RomDesc[] = {
+	{ "xvsu.03",       0x080000, 0xbd8b152f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvsu.04",       0x080000, 0x7c7d1da3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvs.05a",       0x080000, 0x7db6025d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvs.06a",       0x080000, 0xe8e2c75c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvs.07",        0x080000, 0x08f0abed, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvs.08",        0x080000, 0x81929675, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvs.09",        0x080000, 0x9641f36b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "xvs.13m",       0x400000, 0xf6684efd, CPS2_GFX | BRF_GRA },
+	{ "xvs.15m",       0x400000, 0x29109221, CPS2_GFX | BRF_GRA },
+	{ "xvs.17m",       0x400000, 0x92db3474, CPS2_GFX | BRF_GRA },
+	{ "xvs.19m",       0x400000, 0x3733473c, CPS2_GFX | BRF_GRA },
+	{ "xvs.14m",       0x400000, 0xbcac2e41, CPS2_GFX | BRF_GRA },
+	{ "xvs.16m",       0x400000, 0xea04a272, CPS2_GFX | BRF_GRA },
+	{ "xvs.18m",       0x400000, 0xb0def86a, CPS2_GFX | BRF_GRA },
+	{ "xvs.20m",       0x400000, 0x4b40ff9f, CPS2_GFX | BRF_GRA },
+
+	{ "xvs.01",        0x020000, 0x3999e93a, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "xvs.02",        0x020000, 0x101bdee9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
+	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+};
+
+STD_ROM_PICK(Xmvsfur2)
+STD_ROM_FN(Xmvsfur2)
+
 // Driver functions
 
 static INT32 MmatrixInit()
@@ -10091,6 +10119,16 @@ struct BurnDriver BurnDrvCpsXmvsfur1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Xmvsfur1RomInfo, Xmvsfur1RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsXmvsfur2 = {
+	"xmvsfur2", "xmvsf", NULL, NULL, "1996",
+	"X-Men vs Street Fighter (960910 USA)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Xmvsfur2RomInfo, Xmvsfur2RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

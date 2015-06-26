@@ -2533,6 +2533,7 @@ static INT32 ZeroteamDraw() // sprite priorities different
 
 	return 0;
 }
+static UINT32 framecntr = 0;
 
 static void compile_inputs()
 {
@@ -2546,13 +2547,22 @@ static void compile_inputs()
 	DrvInputs[2] = (DrvInputs[2] & 0x00ff) | (DrvDips[2] << 8);
 
 	// hold coin down for a few frames so that it registers
-	INT32 previous_coin = seibu_coin_input;
+	static INT32 previous_coin = seibu_coin_input;
 	seibu_coin_input = 0;
 
 	for (INT32 i = 0; i < 4; i++) {
-		if ((previous_coin & (1 << i)) == 0 && DrvJoy4[i]) hold_coin[i]=5;
-		if (hold_coin[i]) { hold_coin[i]--; seibu_coin_input |= (1 << i); }
+		if ((previous_coin & (1 << i)) == 0 && DrvJoy4[i]) {
+			hold_coin[i] = 6;
+			framecntr = 0;
+		}
+
+		if (hold_coin[i]) {
+			hold_coin[i]--;
+			if (framecntr & 1)
+				seibu_coin_input |= (1 << i);
+		}
 	}
+	framecntr++;
 }
 
 static INT32 DrvFrame()

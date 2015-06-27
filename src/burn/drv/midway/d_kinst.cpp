@@ -547,7 +547,7 @@ STD_ROM_PICK(kinst)
 STD_ROM_FN(kinst)
 
 struct BurnDriver BurnDrvKinst = {
-    "kinst", "kinst", NULL, NULL, "1994/1995",
+    "kinst", NULL, NULL, NULL, "1994/1995",
     "Killer Instinct (ver. 1.5)\0", NULL, "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
@@ -572,7 +572,7 @@ STD_ROM_PICK(kinst2)
 STD_ROM_FN(kinst2)
 
 struct BurnDriver BurnDrvKinst2 = {
-    "kinst2", "kinst2", NULL, NULL, "1994/1995",
+    "kinst2", NULL, NULL, NULL, "1994/1995",
     "Killer Instinct II (ver. 1.4)\0", NULL, "Rare/Nintendo", "MIDWAY",
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,

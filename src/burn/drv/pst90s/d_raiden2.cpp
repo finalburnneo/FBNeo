@@ -56,6 +56,7 @@ static UINT8 bg_bank = 0;
 static UINT8 fg_bank = 0;
 
 static INT32 game_select = 0; // 0 raiden2, 1 raidendx, 2 zeroteam, 3 xsedae
+static INT32 watchdawg = 0; // kludge to fix coin inputs - run 1 frame, then reset. no kidding.
 
 static struct BurnInputInfo Raiden2InputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
@@ -1963,6 +1964,7 @@ static INT32 Raiden2Init()
 	GenericTilesInit();
 
 	DrvDoReset();
+	watchdawg = -1;
 
 	return 0;
 }
@@ -2026,6 +2028,7 @@ static INT32 Raiden2aInit() // alternate rom layout
 	GenericTilesInit();
 
 	DrvDoReset();
+	watchdawg = -1;
 
 	return 0;
 }
@@ -2124,6 +2127,7 @@ static INT32 RaidendxInit()
 	GenericTilesInit();
 
 	DrvDoReset();
+	watchdawg = -1;
 
 	return 0;
 }
@@ -2534,6 +2538,7 @@ static INT32 ZeroteamDraw() // sprite priorities different
 	return 0;
 }
 static UINT32 framecntr = 0;
+static UINT32 seibu_start = 0;
 
 static void compile_inputs()
 {
@@ -2548,27 +2553,37 @@ static void compile_inputs()
 
 	// hold coin down for a few frames so that it registers
 	static INT32 previous_coin = seibu_coin_input;
-	seibu_coin_input = 0;
+	seibu_coin_input = 0xff;
 
 	for (INT32 i = 0; i < 4; i++) {
 		if ((previous_coin & (1 << i)) == 0 && DrvJoy4[i]) {
-			hold_coin[i] = 6;
+			hold_coin[i] = 4;
 			framecntr = 0;
 		}
 
-		if (hold_coin[i]) {
+		if (hold_coin[i]) { // only hold for 4 frames, with no extra from input holddown.
 			hold_coin[i]--;
 			if (framecntr & 1)
-				seibu_coin_input |= (1 << i);
+				seibu_start = 1;
+			if (seibu_start)
+				seibu_coin_input ^= (1 << i);
+			if (!hold_coin[i])
+				seibu_start = 0;
 		}
 	}
+	//bprintf(0, _T("%X"), (seibu_coin_input == 0xff) ? 0 : seibu_coin_input);
 	framecntr++;
 }
 
 static INT32 DrvFrame()
 {
-	if (DrvReset) {
+	if (DrvReset || watchdawg == 5) {
+		watchdawg = 0;
 		DrvDoReset();
+	}
+
+	if (watchdawg == -1) { // see define.
+		watchdawg = 5;
 	}
 
 	VezNewFrame();

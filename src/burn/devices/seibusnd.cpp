@@ -371,6 +371,7 @@ void seibu_sound_reset()
 	ZetOpen(0);
 	ZetReset();
 	update_irq_lines(VECTOR_INIT);
+	seibu_z80_bank(0); // default banking. (fix for raiden2/dx coin-up)
 	ZetClose();
 
 	switch (seibu_snd_type & 3)
@@ -397,7 +398,7 @@ void seibu_sound_reset()
 	sub2main_pending = 0;
 
 	seibu_coin_input = 0;
-	SeibuSoundBank = 0;
+	//SeibuSoundBank = 0;
 }
 
 void seibu_sound_init(INT32 type, INT32 len, INT32 freq0 /*cpu*/, INT32 freq1 /*ym*/, INT32 freq2 /*oki*/)

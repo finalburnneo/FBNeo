@@ -56,7 +56,6 @@ static UINT8 bg_bank = 0;
 static UINT8 fg_bank = 0;
 
 static INT32 game_select = 0; // 0 raiden2, 1 raidendx, 2 zeroteam, 3 xsedae
-static INT32 watchdawg = 0; // kludge to fix coin inputs - run 1 frame, then reset. no kidding.
 
 static struct BurnInputInfo Raiden2InputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
@@ -1036,7 +1035,7 @@ static void raiden2_bankswitch(INT32 bank)
 {
 	prg_bank = bank;
 	bank = (~(bank >> 15) & 1) * 0x20000;
-	
+
 	VezMapArea(0x20000, 0x3ffff, 0, DrvMainROM + bank);
 	VezMapArea(0x20000, 0x3ffff, 2, DrvMainROM + bank);
 }
@@ -1964,7 +1963,6 @@ static INT32 Raiden2Init()
 	GenericTilesInit();
 
 	DrvDoReset();
-	watchdawg = -1;
 
 	return 0;
 }
@@ -2028,7 +2026,6 @@ static INT32 Raiden2aInit() // alternate rom layout
 	GenericTilesInit();
 
 	DrvDoReset();
-	watchdawg = -1;
 
 	return 0;
 }
@@ -2127,7 +2124,6 @@ static INT32 RaidendxInit()
 	GenericTilesInit();
 
 	DrvDoReset();
-	watchdawg = -1;
 
 	return 0;
 }
@@ -2577,13 +2573,8 @@ static void compile_inputs()
 
 static INT32 DrvFrame()
 {
-	if (DrvReset || watchdawg == 5) {
-		watchdawg = 0;
+	if (DrvReset) {
 		DrvDoReset();
-	}
-
-	if (watchdawg == -1) { // see define.
-		watchdawg = 5;
 	}
 
 	VezNewFrame();

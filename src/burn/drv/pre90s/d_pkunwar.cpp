@@ -114,11 +114,11 @@ static struct BurnDIPInfo DrvDIPList[]=
 {
 	{0x0b, 0xff, 0xff, 0xfb, NULL 			},
 
-	{0   , 0xfe, 0   , 4   , "Coinage"		},
-	{0x0b, 0x01, 0x03, 0x00, "3C 1C"		},
-	{0x0b, 0x01, 0x03, 0x02, "2C 1C"		},
-	{0x0b, 0x01, 0x03, 0x03, "1C 1C"		},
-	{0x0b, 0x01, 0x03, 0x01, "1C 2C"		},
+	{0   , 0xfe, 0   , 4   , "Coinage"   	},
+	{0x0b, 0x01, 0x03, 0x00, "3 Coins 1 Credit"		},
+	{0x0b, 0x01, 0x03, 0x02, "2 Coins 1 Credit"		},
+	{0x0b, 0x01, 0x03, 0x03, "1 Coin 1 Credit"		},
+	{0x0b, 0x01, 0x03, 0x01, "1 Coin 2 Credits"		},
 
 	{0   , 0xfe, 0   , 2   , "Cabinet"		},
 	{0x0b, 0x01, 0x04, 0x00, "Upright"		},
@@ -1128,6 +1128,9 @@ static INT32 NinjakunDraw()
 	return 0;
 }
 
+static INT32 DrvCoinHold = 0;
+static INT32 DrvCoinHoldframecnt = 0;
+
 static INT32 NovaFrame()
 {
 	if (DrvReset) {
@@ -1135,12 +1138,30 @@ static INT32 NovaFrame()
 	}
 	watchdog++;
 
-	memset (DrvInputs, 0xff, 3);
+	{
+		memset (DrvInputs, 0xff, 3);
 
-	for (INT32 i = 0; i < 8; i++) {
-		DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
-		DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
-		DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+		for (INT32 i = 0; i < 8; i++) {
+			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+		}
+
+		// Nova 2001 - if the coin pulse is too long or too short, the game will reset.
+		// It will also reset if coined up like 5 in a row really fast, but that isn't handled in the code below.
+		if (DrvJoy3[0]) {
+			DrvCoinHold = 4; // hold coin input for 3 frames - first one is ignored
+			DrvCoinHoldframecnt = 0;
+		}
+
+		if (DrvCoinHold) {
+			DrvCoinHold--;
+			DrvInputs[2] = 0xFF; // clear coin input
+			if (DrvCoinHoldframecnt)
+				DrvInputs[2] = 0xFF ^ 1;
+		}
+		DrvCoinHoldframecnt++;
+		//bprintf(0, _T("%X,"), (DrvInputs[2] == 0xff) ? 0 : DrvInputs[2]);
 	}
 
 	vblank = 0;
@@ -1255,27 +1276,11 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029521;
 	}
 
-	if (nAction & ACB_VOLATILE) {	
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
-
-		ba.Data	  = DrvBgRAM;
-		ba.nLen	  = 0x800;
-		ba.szName = "Video Bg Ram";
-		BurnAcb(&ba);
-
-		ba.Data	  = DrvFgRAM;
-		ba.nLen	  = 0x800;
-		ba.szName = "Video Fg Ram";
-		BurnAcb(&ba);
-
-		ba.Data	  = DrvSprRAM;
-		ba.nLen	  = 0x800;
-		ba.szName = "Video Sprite Ram";
-		BurnAcb(&ba);
-
-		ba.Data	  = DrvMainRAM;
-		ba.nLen	  = 0x0800;
-		ba.szName = "Work Ram";
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd-AllRam;
+		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
 		ZetScan(nAction);
@@ -1285,6 +1290,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(yscroll);
 		SCAN_VAR(xscroll);
+		SCAN_VAR(ninjakun_ioctrl);
 	}
 
 	return 0;
@@ -1403,7 +1409,7 @@ struct BurnDriver BurnDrvNova2001u = {
 	"nova2001u", "nova2001", NULL, NULL, "1983",
 	"Nova 2001 (US)\0", NULL, "UPL (Universal license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, nova2001uRomInfo, nova2001uRomName, NULL, NULL, Nova2001InputInfo, Nova2001DIPInfo,
 	NovaInit, DrvExit, NovaFrame, NovaDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 192, 4, 3

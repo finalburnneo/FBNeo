@@ -4,6 +4,11 @@
 #include "z80_intf.h"
 #include "m6800_intf.h"
 #include "msm5205.h"
+#define USE_SAMPLE_HACK // allow use of high quality music samples.
+
+#ifdef USE_SAMPLE_HACK
+#include "samples.h"
+#endif
 
 #include "driver.h"
 extern "C" {
@@ -71,6 +76,7 @@ static INT32 M62BgxTileDim = 0;
 static INT32 M62BgyTileDim = 0;
 static INT32 M62CharxTileDim = 0;
 static INT32 M62CharyTileDim = 0;
+static UINT32 bHasSamples = 0;
 
 typedef void (*M62Render)();
 static M62Render M62RenderFunction;
@@ -1839,6 +1845,9 @@ static INT32 M62DoReset()
 	AY8910Reset(1);
 	
 	MSM5205Reset();
+#ifdef USE_SAMPLE_HACK
+	BurnSampleReset();
+#endif
 
 	M62Z80BankAddress = 0;
 	M62Z80BankAddress2 = 0;
@@ -2494,6 +2503,25 @@ static void AY8910_0PortBWrite(UINT32, UINT32 d)
 	
 	MSM5205ResetWrite(0, d & 0x01);
 	MSM5205ResetWrite(1, d & 0x02);
+}
+
+static void AY8910_1PortAWrite(UINT32, UINT32 data)
+{
+	if (data == 0xff) {
+		//bprintf(0, _T("M62 Analog drumkit init.\n"));
+		return;
+	}
+
+	if (data > 0) {
+		if (data & 0x01) // bass drum
+			BurnSamplePlay(2);
+		if (data & 0x02) // snare drum
+			BurnSamplePlay(1);
+		if (data & 0x04) // open hat
+			BurnSamplePlay(3);
+		if (data & 0x08) // closed hat
+			BurnSamplePlay(0);
+	}
 }
 
 inline static INT32 M62SynchroniseStream(INT32 nSoundRate)
@@ -3402,9 +3430,34 @@ static void M62MachineInit()
 	MSM5205SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	AY8910Init(0, 894886, nBurnSoundRate, &M62SoundLatchRead, NULL, NULL, &AY8910_0PortBWrite);
-	AY8910Init(1, 894886, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init(1, 894886, nBurnSoundRate, NULL, NULL, &AY8910_1PortAWrite, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+#ifdef USE_SAMPLE_HACK
+	BurnUpdateProgress(0.0, _T("Loading samples..."), 0);
+	bBurnSampleTrimSampleEnd = 1;
+	BurnSampleInit(1);
+	BurnSampleSetAllRoutesAllSamples(0.40, BURN_SND_ROUTE_BOTH);
+    bHasSamples = BurnSampleGetStatus(0) != -1;
+
+	if (!bHasSamples) { // Samples not found
+		BurnSampleSetAllRoutesAllSamples(0.00, BURN_SND_ROUTE_BOTH);
+	} else {
+		bprintf(0, _T("Using TR606 Drumkit samples!\n"));
+		// Hat
+		BurnSampleSetRoute(0, BURN_SND_SAMPLE_ROUTE_1, 0.11, BURN_SND_ROUTE_BOTH);
+		BurnSampleSetRoute(0, BURN_SND_SAMPLE_ROUTE_2, 0.11, BURN_SND_ROUTE_BOTH);
+		// Snare
+		BurnSampleSetRoute(1, BURN_SND_SAMPLE_ROUTE_1, 0.40, BURN_SND_ROUTE_BOTH);
+		BurnSampleSetRoute(1, BURN_SND_SAMPLE_ROUTE_2, 0.40, BURN_SND_ROUTE_BOTH);
+		// Kick
+		BurnSampleSetRoute(2, BURN_SND_SAMPLE_ROUTE_1, 0.40, BURN_SND_ROUTE_BOTH);
+		BurnSampleSetRoute(2, BURN_SND_SAMPLE_ROUTE_2, 0.40, BURN_SND_ROUTE_BOTH);
+		// Open Hat
+		BurnSampleSetRoute(3, BURN_SND_SAMPLE_ROUTE_1, 0.11, BURN_SND_ROUTE_BOTH);
+		BurnSampleSetRoute(3, BURN_SND_SAMPLE_ROUTE_2, 0.11, BURN_SND_ROUTE_BOTH);
+	}
+#endif
 	
 	GenericTilesInit();
 	
@@ -3950,6 +4003,9 @@ static INT32 M62Exit()
 	AY8910Exit(0);
 	AY8910Exit(1);
 	MSM5205Exit();
+#ifdef USE_SAMPLE_HACK
+	BurnSampleExit();
+#endif
 
 	GenericTilesExit();
 	
@@ -4743,6 +4799,10 @@ static INT32 M62Frame()
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+#ifdef USE_SAMPLE_HACK
+			if(bHasSamples)
+				BurnSampleRender(pSoundBuf, nSegmentLength);
+#endif
 			nSoundBufferPos += nSegmentLength;
 		}
 		
@@ -4761,12 +4821,17 @@ static INT32 M62Frame()
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
 			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+#ifdef USE_SAMPLE_HACK
+			if(bHasSamples)
+				BurnSampleRender(pSoundBuf, nSegmentLength);
+#endif
 		}
 		
 		ZetOpen(0);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(1, pBurnSoundOut, nBurnSoundLen);
 		ZetClose();
+
 	}
 	
 	if (pBurnDraw) {
@@ -4797,6 +4862,9 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
                 ZetScan(nAction);
                 AY8910Scan(nAction, pnMin);
                 MSM5205Scan(nAction, pnMin);
+#ifdef USE_SAMPLE_HACK
+				BurnSampleScan(nAction, pnMin);
+#endif
                 SCAN_VAR(M62BackgroundHScroll);
                 SCAN_VAR(M62BackgroundVScroll);
                 SCAN_VAR(M62CharHScroll);
@@ -4865,6 +4933,25 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
 
 	return 0;
 }
+
+static struct BurnSampleInfo M62SampleDesc[] = {
+#ifdef USE_SAMPLE_HACK
+#if !defined ROM_VERIFY
+	{ "TR606 - Hat.wav", SAMPLE_NOLOOP },
+	{ "TR606 - Snare.wav", SAMPLE_NOLOOP },
+	{ "TR606 - Kick.wav", SAMPLE_NOLOOP },
+	{ "TR606 - Open Hat.wav", SAMPLE_NOLOOP },
+	{ "TR606 - High Tom.wav", SAMPLE_NOLOOP },
+	{ "TR606 - Low Tom.wav", SAMPLE_NOLOOP },
+	{ "TR606 - Cymbal.wav", SAMPLE_NOLOOP },
+#endif
+#endif
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(M62)
+STD_SAMPLE_FN(M62)
+
 
 struct BurnDriver BurnDrvKungfum = {
 	"kungfum", NULL, NULL, NULL, "1984",
@@ -5007,21 +5094,21 @@ struct BurnDriver BurnDrvLotlot = {
 };
 
 struct BurnDriver BurnDrvKidniki = {
-	"kidniki", NULL, NULL, NULL, "1986",
+	"kidniki", NULL, NULL, "tr606drumkit", "1986",
 	"Kid Niki - Radical Ninja (World)\0", NULL, "Irem", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
-	NULL, KidnikiRomInfo, KidnikiRomName, NULL, NULL, M62InputInfo, KidnikiDIPInfo,
+	NULL, KidnikiRomInfo, KidnikiRomName, M62SampleInfo, M62SampleName, M62InputInfo, KidnikiDIPInfo,
 	KidnikiInit, M62Exit, M62Frame, NULL, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
 };
 
 struct BurnDriver BurnDrvKidnikiu = {
-	"kidnikiu", "kidniki", NULL, NULL, "1986",
+	"kidnikiu", "kidniki", NULL, "tr606drumkit", "1986",
 	"Kid Niki - Radical Ninja (US)\0", NULL, "Irem (Data East USA license)", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
-	NULL, KidnikiuRomInfo, KidnikiuRomName, NULL, NULL, M62InputInfo, KidnikiDIPInfo,
+	NULL, KidnikiuRomInfo, KidnikiuRomName, M62SampleInfo, M62SampleName, M62InputInfo, KidnikiDIPInfo,
 	KidnikiInit, M62Exit, M62Frame, NULL, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
 };
@@ -5047,21 +5134,21 @@ struct BurnDriver BurnDrvLithero = {
 };
 
 struct BurnDriver BurnDrvSpelunkr = {
-	"spelunkr", NULL, NULL, NULL, "1985",
+	"spelunkr", NULL, NULL, "tr606drumkit", "1985",
 	"Spelunker\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
-	NULL, SpelunkrRomInfo, SpelunkrRomName, NULL, NULL, M62InputInfo, SpelunkrDIPInfo,
+	NULL, SpelunkrRomInfo, SpelunkrRomName, M62SampleInfo, M62SampleName, M62InputInfo, SpelunkrDIPInfo,
 	SpelunkrInit, M62Exit, M62Frame, NULL, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
 };
 
 struct BurnDriver BurnDrvSpelunkrj = {
-	"spelunkrj", "spelunkr", NULL, NULL, "1985",
+	"spelunkrj", "spelunkr", NULL, "tr606drumkit", "1985",
 	"Spelunker (Japan)\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
-	NULL, SpelunkrjRomInfo, SpelunkrjRomName, NULL, NULL, M62InputInfo, SpelunkrDIPInfo,
+	NULL, SpelunkrjRomInfo, SpelunkrjRomName, M62SampleInfo, M62SampleName, M62InputInfo, SpelunkrDIPInfo,
 	SpelunkrInit, M62Exit, M62Frame, NULL, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
 };
@@ -5087,11 +5174,11 @@ struct BurnDriver BurnDrvYoujyudn = {
 };
 
 struct BurnDriver BurnDrvHorizon = {
-	"horizon", NULL, NULL, NULL, "1985",
+	"horizon", NULL, NULL, "tr606drumkit", "1985",
 	"Horizon\0", NULL, "Irem", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
-	NULL, HorizonRomInfo, HorizonRomName, NULL, NULL, M62InputInfo, HorizonDIPInfo,
+	NULL, HorizonRomInfo, HorizonRomName, M62SampleInfo, M62SampleName, M62InputInfo, HorizonDIPInfo,
 	HorizonInit, M62Exit, M62Frame, NULL, M62Scan,
 	NULL, 0x200, 256, 256, 4, 3
 };

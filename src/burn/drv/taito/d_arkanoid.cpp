@@ -1297,6 +1297,40 @@ static INT32 HexaScan(INT32 nAction, INT32 *pnMin)
 	return 0;
 }
 
+/* rom numbering, with guesses:
+	A75 01   = Z80 code 1/2 v1.0 Japan
+	A75 01-1 = Z80 code 1/2 v1.1 Japan and USA/Romstar
+	A75 02   = Z80 code 2/2 v1.0 Japan
+	A75 03   = GFX 1/3
+	A75 04   = GFX 2/3
+	A75 05   = GFX 3/3
+	A75 06   = MC68705P5 MCU code, v1.0 Japan and v1.0 USA/Romstar
+	A75 07   = PROM red
+	A75 08   = PROM green
+	A75 09   = PROM blue
+	A75 10   = Z80 code 2/2 v1.1 USA/Romstar
+	A75 11   = Z80 code 2/2 v1.2 Japan (paired with 01-1 v1.1 Japan)
+	(A75 12 through 17 are unknown, could be another two sets of z80 code plus mc68705p5)
+	A75 18   = Z80 code v2.0 2/2 USA/Romstar
+	A75 19   = Z80 code v2.0 1/2 USA/Romstar
+	A75 20   = MC68705P5 MCU code, v2.0 USA/Romstar
+	A75 21   = Z80 code v2.0 1/2 Japan
+	A75 22   = Z80 code v2.0 2/2 Japan
+	A75 23   = MC68705P5 MCU code, v2.0 Japan
+	A75 24   = Z80 code v2.1 1/2 Japan
+	A75 25   = Z80 code v2.1 2/2 Japan
+	A75 26   = MC68705P5 MCU code, v2.1 Japan
+	A75 27   = Z80 code 1/2 Tournament
+	A75 28   = Z80 code 2/2 Tournament
+	A75 29   = GFX 1/3 Tournament
+	A75 30   = GFX 2/3 Tournament
+	A75 31   = GFX 3/3 Tournament
+	A75 32   = MC68705P5 MCU code, Tournament
+	A75 33   = PROM red Tournament
+	A75 34   = PROM green Tournament
+	A75 35   = PROM blue Tournament
+	(one of the 21/22/23 or 24/25/26 sets is likely 'world'? or are these really two japan sets?)
+*/
 
 // Arkanoid (World, oldest rev)
 
@@ -1363,22 +1397,22 @@ struct BurnDriver BurnDrvarkanoidu = {
 	224, 256, 3, 4
 };
 
-
+/* Observed on a real TAITO J1100075A pcb (with K1100181A sticker), pcb is white painted, and has a "ROMSTAR(C) // All Rights Reserved // Serial No. // No 14128" sticker */
 // Arkanoid (US, oldest rev)
 
 static struct BurnRomInfo arkanoiduoRomDesc[] = {
-	{ "a75-01-1.ic17",0x8000, 0x5bcda3b0, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "a75-10.ic16",  0x8000, 0xa1769e15, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "a75__01-1.ic17",	0x8000, 0x5bcda3b0, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "a75__10.ic16",  	0x8000, 0xa1769e15, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "a75-06.ic14",  0x0800, 0x515d77b6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+	{ "a75__06.ic14",  	0x0800, 0x515d77b6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
-	{ "a75-03.ic64",  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
-	{ "a75-04.ic63",  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
-	{ "a75-05.ic62",  0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
+	{ "a75__03.ic64",  	0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
+	{ "a75__04.ic63",  	0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
+	{ "a75__05.ic62",  	0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
 
-	{ "a75-07.ic24",  0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  6 Color Proms
-	{ "a75-08.ic23",  0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  7
-	{ "a75-09.ic22",  0x0200, 0xa7c6c277, 4 | BRF_GRA },	       //  8
+	{ "a75-07.ic24",  	0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  6 Color Proms
+	{ "a75-08.ic23",  	0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  7
+	{ "a75-09.ic22",  	0x0200, 0xa7c6c277, 4 | BRF_GRA },	       //  8
 };
 
 STD_ROM_PICK(arkanoiduo)

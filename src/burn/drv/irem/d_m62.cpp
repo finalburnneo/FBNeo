@@ -4,7 +4,7 @@
 #include "z80_intf.h"
 #include "m6800_intf.h"
 #include "msm5205.h"
-#define USE_SAMPLE_HACK // allow use of high quality music samples.
+#define USE_SAMPLE_HACK // allow use of sampled drumkit on Kid Niki, Spelunker 1 & 2, Battle-Road, Horizon
 
 #ifdef USE_SAMPLE_HACK
 #include "samples.h"
@@ -3431,8 +3431,8 @@ static void M62MachineInit()
 	
 	AY8910Init(0, 894886, nBurnSoundRate, &M62SoundLatchRead, NULL, NULL, &AY8910_0PortBWrite);
 	AY8910Init(1, 894886, nBurnSoundRate, NULL, NULL, &AY8910_1PortAWrite, NULL);
-	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 #ifdef USE_SAMPLE_HACK
 	BurnUpdateProgress(0.0, _T("Loading samples..."), 0);
 	bBurnSampleTrimSampleEnd = 1;
@@ -3644,6 +3644,7 @@ static INT32 SpelunkrMachineInit()
 	M62RenderFunction = SpelunkrDraw;
 	M62ExtendTileInfoFunction = SpelunkrExtendTile;
 	M62ExtendCharInfoFunction = SpelunkrExtendChar;
+	M62Z80Clock = 5000000; // needs a little boost or the top bg tiles don't scroll right. weird. -dink
 
 	M62DoReset();
 	
@@ -4879,7 +4880,7 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
                 SCAN_VAR(Ldrun3TopBottomMask);
                 SCAN_VAR(KidnikiBackgroundBank);
                 SCAN_VAR(SpelunkrPaletteBank);
-	}
+		}
 
         if (nAction & ACB_WRITE) {
             if (strstr(BurnDrvGetTextA(DRV_NAME), "spelunk")) {
@@ -5014,11 +5015,11 @@ struct BurnDriver BurnDrvKungfub3 = {
 };
 
 struct BurnDriver BurnDrvBattroad = {
-	"battroad", NULL, NULL, NULL, "1984",
+	"battroad", NULL, NULL, "tr606drumkit", "1984",
 	"The Battle-Road\0", NULL, "Irem", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_IREM_M62, GBF_SCRFIGHT, 0,
-	NULL, BattroadRomInfo, BattroadRomName, NULL, NULL, M62InputInfo, BattroadDIPInfo,
+	NULL, BattroadRomInfo, BattroadRomName, M62SampleInfo, M62SampleName, M62InputInfo, BattroadDIPInfo,
 	BattroadInit, M62Exit, M62Frame, NULL, M62Scan,
 	NULL, 0x220, 256, 256, 3, 4
 };
@@ -5114,21 +5115,21 @@ struct BurnDriver BurnDrvKidnikiu = {
 };
 
 struct BurnDriver BurnDrvYanchamr = {
-	"yanchamr", "kidniki", NULL, NULL, "1986",
+	"yanchamr", "kidniki", NULL, "tr606drumkit", "1986",
 	"Kaiketsu Yanchamaru (Japan)\0", NULL, "Irem", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
-	NULL, YanchamrRomInfo, YanchamrRomName, NULL, NULL, M62InputInfo, KidnikiDIPInfo,
+	NULL, YanchamrRomInfo, YanchamrRomName, M62SampleInfo, M62SampleName, M62InputInfo, KidnikiDIPInfo,
 	KidnikiInit, M62Exit, M62Frame, NULL, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
 };
 
 struct BurnDriver BurnDrvLithero = {
-	"lithero", "kidniki", NULL, NULL, "1987",
+	"lithero", "kidniki", NULL, "tr606drumkit", "1987",
 	"Little Hero\0", NULL, "bootleg", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
-	NULL, LitheroRomInfo, LitheroRomName, NULL, NULL, M62InputInfo, KidnikiDIPInfo,
+	NULL, LitheroRomInfo, LitheroRomName, M62SampleInfo, M62SampleName, M62InputInfo, KidnikiDIPInfo,
 	LitheroInit, M62Exit, M62Frame, NULL, M62Scan,
 	NULL, 0x200, 384, 256, 4, 3
 };
@@ -5154,11 +5155,11 @@ struct BurnDriver BurnDrvSpelunkrj = {
 };
 
 struct BurnDriver BurnDrvSpelunk2 = {
-	"spelunk2", NULL, NULL, NULL, "1986",
+	"spelunk2", NULL, NULL, "tr606drumkit", "1986",
 	"Spelunker II\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
-	NULL, Spelunk2RomInfo, Spelunk2RomName, NULL, NULL, M62InputInfo, Spelunk2DIPInfo,
+	NULL, Spelunk2RomInfo, Spelunk2RomName, M62SampleInfo, M62SampleName, M62InputInfo, Spelunk2DIPInfo,
 	Spelunk2Init, M62Exit, M62Frame, NULL, M62Scan,
 	NULL, 0x300, 384, 256, 4, 3
 };

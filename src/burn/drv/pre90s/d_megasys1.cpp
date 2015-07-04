@@ -4593,6 +4593,66 @@ struct BurnDriver BurnDrvRodlandjb = {
 };
 
 
+// R&T (Rod-Land prototype?)
+/* probably a prototype, original JP key and unscrambled ROMs, incorrect audio matches PCB */
+
+static struct BurnRomInfo rittamRomDesc[] = {
+	{ "2.ROM2",				0x20000, 0x93085af2, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "R+T_1.ROM1",			0x20000, 0x20446C34, 1 | BRF_PRG | BRF_ESS }, //  1
+	
+	{ "JALECO_5.ROM5",		0x10000, 0xea6600ec, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
+	{ "JALECO_6.ROM6",		0x10000, 0x51c3c0bc, 2 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "11.ROM11",			0x20000, 0xad2bf897, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
+	{ "12.ROM12",			0x20000, 0xd0224ed6, 3 | BRF_GRA },           //  7
+	{ "13.ROM13",			0x20000, 0xb1d5d423, 3 | BRF_GRA },           //  8
+	{ "11.ROM11",			0x20000, 0x20f8c361, 3 | BRF_GRA },           //  9
+
+	{ "15.ROM15",			0x20000, 0x90bc97ac, 4 | BRF_GRA },           // 10 Tilemap #1 Tiles
+	{ "16.ROM16",			0x20000, 0xe38750aa, 4 | BRF_GRA },           // 11 
+	// ROM17 not populated - not sure why, missing?
+	{ "18.ROM18",			0x20000, 0x57ccf24f, 4 | BRF_GRA },           // 12 
+
+	{ "19.ROM19",			0x20000, 0x6daa1081, 5 | BRF_GRA },           // 13 Tilemap #2 Tiles
+
+	{ "R+T_20.ROM20",		0x20000, 0x23bc2b0b, 6 | BRF_GRA },           // 14 Sprites
+	{ "21.ROM21",			0x20000, 0x9d2b0ec4, 6 | BRF_GRA },           // 15 
+	{ "22.ROM22",			0x20000, 0xbba2e2cf, 6 | BRF_GRA },           // 16
+	{ "23.ROM23",			0x20000, 0x05536a18, 6 | BRF_GRA },           // 17
+
+	{ "JALECO_9.ROM9",		0x20000, 0x065364bd, 7 | BRF_SND },           // 18 OKI #0 Samples
+	{ "JALECO_10.ROM10",	0x20000, 0x395df3b2, 7 | BRF_SND },           // 19 
+
+	{ "JALECO_7.ROM7",		0x20000, 0x76fd879f, 8 | BRF_SND },           // 20 OKI #1 Samples
+	{ "JALECO_8.ROM8",		0x20000, 0xa771ab00, 8 | BRF_SND },           // 21 OKI #1 Samples
+
+	{ "PS89013A.M14",		0x00200, 0x8914e72d, 9 | BRF_GRA },           // 22 Priority PROM
+};
+
+STD_ROM_PICK(rittam)
+STD_ROM_FN(rittam)
+
+static void rittamCallback()
+{
+	astyanax_rom_decode();
+}
+
+static INT32 rittamInit()
+{
+	return SystemInit(0xA, rittamCallback);
+} 
+
+struct BurnDriver BurnDrvRittam = {
+	"rittam", "rodland", NULL, NULL, "1990",
+	"R&T (Rod-Land prototype?)\0", NULL, "Jaleco", "Mega System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, rittamRomInfo, rittamRomName, NULL, NULL, CommonInputInfo, RodlandDIPInfo,
+	rittamInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
+
+
 // Soldam
 
 static struct BurnRomInfo soldamRomDesc[] = {

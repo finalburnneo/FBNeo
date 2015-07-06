@@ -1779,10 +1779,8 @@ static INT32 DrvFrame()
 		// Run Z80 #0
 		nCurrentCPU = 0;
 		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == nInterleave - 2) {
+		ZetRun(nCyclesTotal[nCurrentCPU] / nInterleave);
+		if (i == nInterleave - 1) {
 			tnzs_mcu_interrupt();
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
@@ -1791,14 +1789,9 @@ static INT32 DrvFrame()
 		// Run Z80 #1
 		nCurrentCPU = 1;
 		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		if (cpu1_reset == 0) {
-			nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		} else {
-			nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		}
-		if (i == nInterleave - 2)
+		if (!cpu1_reset)
+			ZetRun(nCyclesTotal[nCurrentCPU] / nInterleave);
+		if (i == nInterleave - 1)
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 

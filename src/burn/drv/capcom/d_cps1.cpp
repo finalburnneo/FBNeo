@@ -7736,6 +7736,39 @@ static struct BurnRomInfo PunisherbzRomDesc[] = {
 STD_ROM_PICK(Punisherbz)
 STD_ROM_FN(Punisherbz)
 
+static struct BurnRomInfo PunisherunkRomDesc[] = {
+	{ "18.bin",        0x040000, 0x2565ad20, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "19.bin",        0x040000, 0x84bb4acf, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "16.bin",        0x040000, 0x4568520f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "17.bin",        0x040000, 0xfda67fc1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "14.bin",        0x020000, 0x1286d6ad, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "12.bin",        0x020000, 0x019744d4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "15.bin",        0x020000, 0x092538ac, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "13.bin",        0x020000, 0x8b88ae0d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "1.bin",         0x080000, 0x35cb609a, BRF_GRA | CPS1_TILES },
+	{ "2.bin",         0x080000, 0xdcf61484, BRF_GRA | CPS1_TILES },
+	{ "3.bin",         0x080000, 0x3a76db83, BRF_GRA | CPS1_TILES },
+	{ "4.bin",         0x080000, 0xb099b669, BRF_GRA | CPS1_TILES },
+	{ "5.bin",         0x080000, 0x91365595, BRF_GRA | CPS1_TILES },
+	{ "6.bin",         0x080000, 0xb3cd4553, BRF_GRA | CPS1_TILES },
+	{ "7.bin",         0x080000, 0x3b940554, BRF_GRA | CPS1_TILES },
+	{ "8.bin",         0x080000, 0x43704b5a, BRF_GRA | CPS1_TILES },
+
+	{ "11.bin",        0x010000, 0xd09d7c7a, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "9.bin",         0x020000, 0xbbea1643, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "10.bin",        0x020000, 0xac58aa71, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "pal1.jed",      0x000bd4, 0x22a9ff9e, BRF_OPT },
+	{ "pal2.jed",      0x000bd4, 0x8c4a97ac, BRF_OPT },
+	{ "pal3.jed",      0x000bd4, 0x0fdd5375, BRF_OPT },
+	{ "pal4.jed",      0x000bd4, 0xb2d16eac, BRF_OPT },
+};
+
+STD_ROM_PICK(Punisherunk)
+STD_ROM_FN(Punisherunk)
+
 static struct BurnRomInfo QadRomDesc[] = {
 	{ "qdu_36a.12f",   0x020000, 0xde9c24a0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "qdu_42a.12h",   0x020000, 0xcfe36f0c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -12565,6 +12598,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "punipic2"    , CPS_B_21_QS3, mapper_PS63B , 0, NULL                }, // game controls layers at 0x98000c
 	{ "punipic3"    , CPS_B_21_QS3, mapper_PS63B , 0, NULL                }, // game controls layers at 0x98000c
 	{ "punisherbz"  , CPS_B_21_DEF, mapper_PS63B , 0, NULL                },
+	{ "punisherunk" , CPS_B_21_QS3, mapper_PS63B , 0, NULL                },
 	{ "qad"         , CPS_B_21_BT7, mapper_QD22B , 0, NULL                },
 	{ "qadjr"       , CPS_B_21_DEF, mapper_QD63B , 0, NULL                },
 	{ "qtono2j"     , CPS_B_21_DEF, mapper_TN2292, 0, NULL                },
@@ -14617,6 +14651,19 @@ static INT32 Punipic3Init()
 	SekSetWriteByteHandler(3, PunipicFFWriteByte);
 	SekSetWriteWordHandler(3, PunipicFFWriteWord);
 	SekClose();
+	
+	return nRet;
+}
+
+static INT32 PunisherunkInit()
+{
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesWonder3b;
+	
+	INT32 nRet = TwelveMhzInit();
+	
+//	SekOpen(0);
+
+//	SekClose();
 	
 	return nRet;
 }
@@ -17975,6 +18022,16 @@ struct BurnDriver BurnDrvCpsPunisherbz = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, PunisherbzRomInfo, PunisherbzRomName, NULL, NULL, PunisherbzInputInfo, PunisherbzDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriverD BurnDrvCpsPunisherunk = {
+	"punisherunk", "punisher", NULL, NULL, "1993",
+	"Punisher (Unknown)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, PunisherunkRomInfo, PunisherunkRomName, NULL, NULL, PunisherInputInfo, PunisherDIPInfo,
+	PunisherunkInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

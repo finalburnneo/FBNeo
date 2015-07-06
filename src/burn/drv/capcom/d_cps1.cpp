@@ -7740,7 +7740,7 @@ static struct BurnRomInfo PunisherunkRomDesc[] = {
 	{ "18.bin",        0x040000, 0x2565ad20, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "19.bin",        0x040000, 0x84bb4acf, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "16.bin",        0x040000, 0x4568520f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "17.bin",        0x040000, 0xfda67fc1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "17.bin",        0x040000, 0xfda67fc1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, 
 	{ "14.bin",        0x020000, 0x1286d6ad, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "12.bin",        0x020000, 0x019744d4, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "15.bin",        0x020000, 0x092538ac, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -7763,7 +7763,7 @@ static struct BurnRomInfo PunisherunkRomDesc[] = {
 	{ "pal1.jed",      0x000bd4, 0x22a9ff9e, BRF_OPT },
 	{ "pal2.jed",      0x000bd4, 0x8c4a97ac, BRF_OPT },
 	{ "pal3.jed",      0x000bd4, 0x0fdd5375, BRF_OPT },
-	{ "pal4.jed",      0x000bd4, 0xb2d16eac, BRF_OPT },
+	{ "pal4.jed",      0x000e05, 0xb2d16eac, BRF_OPT },
 };
 
 STD_ROM_PICK(Punisherunk)

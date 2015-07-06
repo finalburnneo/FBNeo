@@ -1397,8 +1397,9 @@ struct BurnDriver BurnDrvarkanoidu = {
 	224, 256, 3, 4
 };
 
-/* Observed on a real TAITO J1100075A pcb (with K1100181A sticker), pcb is white painted, and has a "ROMSTAR(C) // All Rights Reserved // Serial No. // No 14128" sticker */
+
 // Arkanoid (US, oldest rev)
+// Observed on a real TAITO J1100075A pcb (with K1100181A sticker), pcb is white painted, and has a "ROMSTAR(C) // All Rights Reserved // Serial No. // No 14128" sticker 
 
 static struct BurnRomInfo arkanoiduoRomDesc[] = {
 	{ "a75__01-1.ic17",	0x8000, 0x5bcda3b0, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
@@ -1406,13 +1407,13 @@ static struct BurnRomInfo arkanoiduoRomDesc[] = {
 
 	{ "a75__06.ic14",  	0x0800, 0x515d77b6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
-	{ "a75__03.ic64",  	0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
-	{ "a75__04.ic63",  	0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
-	{ "a75__05.ic62",  	0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  5
+	{ "a75__03.ic64",  	0x8000, 0x038b74ba, 3 | BRF_GRA },	         //  3 Graphics
+	{ "a75__04.ic63",  	0x8000, 0x71fae199, 3 | BRF_GRA },	         //  4
+	{ "a75__05.ic62",  	0x8000, 0xc76374e2, 3 | BRF_GRA },	         //  5
 
-	{ "a75-07.ic24",  	0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  6 Color Proms
-	{ "a75-08.ic23",  	0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  7
-	{ "a75-09.ic22",  	0x0200, 0xa7c6c277, 4 | BRF_GRA },	       //  8
+	{ "a75-07.ic24",  	0x0200, 0x0af8b289, 4 | BRF_GRA },	         //  6 Color Proms
+	{ "a75-08.ic23",  	0x0200, 0xabb002fb, 4 | BRF_GRA },	         //  7
+	{ "a75-09.ic22",  	0x0200, 0xa7c6c277, 4 | BRF_GRA },	         //  8
 };
 
 STD_ROM_PICK(arkanoiduo)
@@ -1585,7 +1586,6 @@ struct BurnDriver BurnDrvarkanoidjbl = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
-
 
 
 // Arkanoid (bootleg with MCU set 2)

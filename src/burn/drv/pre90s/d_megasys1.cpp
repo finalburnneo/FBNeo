@@ -4606,7 +4606,7 @@ static struct BurnRomInfo rittamRomDesc[] = {
 	{ "11.ROM11",			0x20000, 0xad2bf897, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
 	{ "12.ROM12",			0x20000, 0xd0224ed6, 3 | BRF_GRA },           //  7
 	{ "13.ROM13",			0x20000, 0xb1d5d423, 3 | BRF_GRA },           //  8
-	{ "11.ROM11",			0x20000, 0x20f8c361, 3 | BRF_GRA },           //  9
+	{ "14.ROM14",			0x20000, 0x20f8c361, 3 | BRF_GRA },           //  9
 
 	{ "15.ROM15",			0x20000, 0x90bc97ac, 4 | BRF_GRA },           // 10 Tilemap #1 Tiles
 	{ "16.ROM16",			0x20000, 0xe38750aa, 4 | BRF_GRA },           // 11 

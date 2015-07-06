@@ -35,13 +35,14 @@ static UINT8 *coin_lockout;
 static UINT8 *soundlatch;
 static UINT8 *tnzs_bg_flag;
 
-static INT32    kageki_csport_sel;
+static INT32  kageki_csport_sel;
 static double kageki_sample_pos;
 static INT32  kageki_sample_select;
 static INT16 *kageki_sample_data[0x30];
 static INT32  kageki_sample_size[0x30];
 static double kageki_sample_gain;
 static INT32 kageki_sample_output_dir;
+static INT32 game_kabukiz = 0;
 
 static INT32 cpu1_reset;
 static INT32 tnzs_banks[3];
@@ -815,32 +816,10 @@ static void kabukiz_sound_bankswitch(UINT32, UINT32 data)
 	if (data != 0xff) {
 		tnzs_banks[2] = data;
 
-	if (ZetGetActive() == -1) return; // fix crash on init
-			// YM2203_postload() eventually gets to code that writes to a port that is mapped to
-			// kabukiz_sound_bankswitch() and at this time, the cpu isn't open
-			// Stack backtrace from crash:
-			/*Program received signal SIGSEGV, Segmentation fault.
-			0x007ffbf3 in ZetMapArea(int, int, int, unsigned char*) ()
-			(gdb) bt
-			#0  0x007ffbf3 in ZetMapArea(int, int, int, unsigned char*) ()
-			#1  0x005fe384 in kabukiz_sound_bankswitch(unsigned int, unsigned int) ()
-			#2  0x00441e4b in _AYWriteReg (n=<optimized out>, r=<optimized out>,
-				v=<optimized out>) at src/burn/snd/ay8910.c:240
-			#3  0x00441ec3 in AYWriteReg (v=0, r=14, chip=0) at src/burn/snd/ay8910.c:282
-			#4  AY8910Write (chip=0, a=1, data=0) at src/burn/snd/ay8910.c:329
-			#5  0x00446285 in YM2203_postload () at src/burn/snd/fm.c:2388
-			#6  0x007c80a9 in BurnStateMAMEScan(int, int*) ()
-			#7  0x007c80dd in BurnAreaScan ()
-			#8  0x00a0592e in BurnStateDecompress(unsigned char*, int, int) ()
-			#9  0x00a05064 in BurnStateLoadEmbed(_iobuf*, int, int, int (*)()) ()
-			#10 0x00a0515b in BurnStateLoad(wchar_t*, int, int (*)()) ()
-			#11 0x009f7043 in StatedLoad(int) ()
-			#12 0x009e1c7d in OnCommand(HWND__*, int, HWND__*, unsigned int) ()
-			#13 0x009e577d in ScrnProc ()
-			#14 0x7e418734 in USER32!GetDC () from C:\WINDOWS.0\system32\user32.dll */
-			
-		ZetMapArea(0x8000, 0xbfff, 0, DrvZ80ROM2 + 0x0000 + 0x4000 * (data & 0x07));
-		ZetMapArea(0x8000, 0xbfff, 2, DrvZ80ROM2 + 0x0000 + 0x4000 * (data & 0x07));
+		if (ZetGetActive() == -1) return;
+
+		ZetMapArea(0x8000, 0xbfff, 0, DrvZ80ROM2 + 0x8000 + 0x4000 * (data & 0x07));
+		ZetMapArea(0x8000, 0xbfff, 2, DrvZ80ROM2 + 0x8000 + 0x4000 * (data & 0x07));
 	}
 }
 
@@ -1351,7 +1330,7 @@ static INT32 Type1Init(INT32 mcutype)
 		BurnYM2203Init(1, 3000000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
 		BurnYM2203SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 
-		if (mcutype == MCU_EXTRMATN) {
+		if (mcutype == MCU_EXTRMATN || mcutype == MCU_DRTOPPEL) {
 			BurnYM2203SetPSGVolume(0, 0.10);
 		}
 
@@ -1367,7 +1346,7 @@ static INT32 Type1Init(INT32 mcutype)
 	}	
 
 	DACInit(0, 0, 1, kabukizSyncDAC); // kabukiz
-	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1385,6 +1364,8 @@ static INT32 Type2Init()
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
+	game_kabukiz = (strncmp(BurnDrvGetTextA(DRV_NAME), "kabukiz", 7) == 0);
+
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x10000, 0, 1)) return 1;
 		memcpy (DrvZ80ROM0, DrvZ80ROM0 + 0x10000, 0x08000);
@@ -1393,7 +1374,7 @@ static INT32 Type2Init()
 
 		if (BurnLoadRom(DrvZ80ROM2 + 0x00000, 2, 1)) return 1;
 
-		if (strncmp(BurnDrvGetTextA(DRV_NAME), "kabukiz", 7) == 0) {
+		if (game_kabukiz) {
 			if (BurnLoadRom(DrvGfxROM + 0x000000,  3, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x080000,  4, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x100000,  5, 1)) return 1;
@@ -1423,7 +1404,7 @@ static INT32 Type2Init()
 	ZetMapArea(0xc000, 0xdfff, 1, DrvSprRAM);
 	ZetMapArea(0xc000, 0xdfff, 2, DrvSprRAM);
 	ZetMapArea(0xe000, 0xeeff, 0, DrvShareRAM);
-	if (strncmp(BurnDrvGetTextA(DRV_NAME), "kabukiz", 7) == 0) {
+	if (game_kabukiz) {
 		ZetMapArea(0xef00, 0xefff, 0, DrvShareRAM + 0x0f00);
 	}
 	ZetMapArea(0xe000, 0xefff, 1, DrvShareRAM);
@@ -1472,7 +1453,7 @@ static INT32 Type2Init()
 	BurnTimerAttachZet(6000000);
 	BurnYM2203SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	
-	if (strncmp(BurnDrvGetTextA(DRV_NAME), "kabukiz", 7) == 0 || strncmp(BurnDrvGetTextA(DRV_NAME), "tnzs", 5) == 0) {
+	if (game_kabukiz || strncmp(BurnDrvGetTextA(DRV_NAME), "tnzs", 5) == 0) {
 		BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 		BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
 		BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
@@ -1480,6 +1461,7 @@ static INT32 Type2Init()
 	}
 
 	DACInit(0, 0, 1, kabukizSyncDAC); // kabukiz
+	DACSetRoute(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1505,6 +1487,7 @@ static INT32 DrvExit()
 	}
 
 	tnzs_mcu_init(0);
+	game_kabukiz = 0;
 
 	return 0;
 }
@@ -1710,7 +1693,7 @@ static inline void DrvRecalcPalette()
 
 static void sprite_buffer(INT32 ctrl)
 {
-	if (ctrl & 0x20)
+	if (~ctrl & 0x20)
 	{
 		if (ctrl & 0x40) {
 			memcpy (DrvSprRAM + 0x0000, DrvSprRAM + 0x0800, 0x0400);
@@ -1720,6 +1703,15 @@ static void sprite_buffer(INT32 ctrl)
 			memcpy (DrvSprRAM + 0x1800, DrvSprRAM + 0x1000, 0x0400);
 		}
 
+		memcpy (DrvSprRAM + 0x0400, DrvSprRAM + 0x0c00, 0x0400);
+		memcpy (DrvSprRAM + 0x1400, DrvSprRAM + 0x1c00, 0x0400);
+	}
+}
+
+static void bgsprite_buffer_kabukiz(INT32 ctrl)
+{
+	if (~ctrl & 0x20)
+	{
 		memcpy (DrvSprRAM + 0x0400, DrvSprRAM + 0x0c00, 0x0400);
 		memcpy (DrvSprRAM + 0x1400, DrvSprRAM + 0x1c00, 0x0400);
 	}
@@ -1740,8 +1732,6 @@ static INT32 DrvDraw()
 	draw_foreground(ctrl, flip);
 
 	BurnTransferCopy(DrvPalette);
-
-	sprite_buffer(ctrl);
 
 	return 0;
 }
@@ -1770,7 +1760,7 @@ static INT32 DrvFrame()
 
 	assemble_inputs();
 
-	INT32 nInterleave = 100;
+	INT32 nInterleave = 256;
 	if (tnzs_mcu_type() == MCU_NONE_KAGEKI) nInterleave = nBurnSoundLen;
 	INT32 nSoundBufferPos = 0;
 
@@ -1783,10 +1773,11 @@ static INT32 DrvFrame()
 
 	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = 0;
 
-	INT32 irq_trigger[2] = { nInterleave - 2, nInterleave - 1 };
-
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
+
+		if (game_kabukiz && i == 1)
+			bgsprite_buffer_kabukiz(DrvObjCtrl[1]);
 
 		// Run Z80 #0
 		nCurrentCPU = 0;
@@ -1794,11 +1785,10 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == irq_trigger[0]) {
+		if (i == nInterleave - 2) {
 			tnzs_mcu_interrupt();
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
-		if (i == irq_trigger[1]) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 
 		// Run Z80 #1
@@ -1811,8 +1801,8 @@ static INT32 DrvFrame()
 		} else {
 			nCyclesDone[nCurrentCPU] += nCyclesSegment;
 		}
-		if (i == irq_trigger[0]) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		if (i == irq_trigger[1]) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		if (i == nInterleave - 2)
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		// Run Z80 #2
@@ -1820,7 +1810,7 @@ static INT32 DrvFrame()
 		{
 			nCurrentCPU = 2;
 			ZetOpen(nCurrentCPU);
-			BurnTimerUpdate(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
+			BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 			ZetClose();
 		}
 		
@@ -1871,6 +1861,8 @@ static INT32 DrvFrame()
 	if (pBurnDraw) {
 		DrvDraw();
 	}
+
+	sprite_buffer(DrvObjCtrl[1]);
 
 	return 0;
 }
@@ -2766,7 +2758,7 @@ STD_ROM_FN(kabukiz)
 
 struct BurnDriverD BurnDrvKabukiz = {
 	"kabukiz", NULL, NULL, NULL, "1988",
-	"Kabuki-Z (World)\0", "Imperfect graphics", "Taito Corporation Japan", "Miscellaneous",
+	"Kabuki-Z (World)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, kabukizRomInfo, kabukizRomName, NULL, NULL, CommonInputInfo, KabukizDIPInfo,
@@ -2795,7 +2787,7 @@ STD_ROM_FN(kabukizj)
 
 struct BurnDriverD BurnDrvKabukizj = {
 	"kabukizj", "kabukiz", NULL, NULL, "1988",
-	"Kabuki-Z (Japan)\0", "Imperfect graphics", "Taito Corporation", "Miscellaneous",
+	"Kabuki-Z (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, kabukizjRomInfo, kabukizjRomName, NULL, NULL, CommonInputInfo, KabukizjDIPInfo,

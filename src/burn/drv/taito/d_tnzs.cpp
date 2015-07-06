@@ -1008,7 +1008,7 @@ static void kageki_sample_init()
 		}
 	}
 	
-	kageki_sample_gain = 1.00;
+	kageki_sample_gain = 0.45;
 	kageki_sample_output_dir = BURN_SND_ROUTE_BOTH;
 }
 
@@ -1507,9 +1507,6 @@ static void kageki_sample_render(INT16 *pSoundBuf, INT32 nLength)
 	for (INT32 i = 0; i < nLength; i += 2) {
 		if (Addr >= size) break;
 		INT16 Sample = ptr[(INT32)Addr];
-
-//		pSoundBuf[i    ] = Sample;
-//		pSoundBuf[i + 1] = Sample;
 		INT16 nLeftSample = 0, nRightSample = 0;
 		
 		if ((kageki_sample_output_dir & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
@@ -2384,7 +2381,7 @@ static INT32 KagekiInit()
 
 struct BurnDriver BurnDrvKageki = {
 	"kageki", NULL, NULL, NULL, "1988",
-	"Kageki (US)\0", "Imperfect Sound", "Taito America Corporation (Romstar license)", "Miscellaneous",
+	"Kageki (US)\0", NULL, "Taito America Corporation (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, kagekiRomInfo, kagekiRomName, NULL, NULL, CommonInputInfo, KagekiDIPInfo,
@@ -2418,7 +2415,7 @@ STD_ROM_FN(kagekij)
 
 struct BurnDriver BurnDrvKagekij = {
 	"kagekij", "kageki", NULL, NULL, "1988",
-	"Kageki (Japan)\0", "Imperfect Sound", "Taito Corporation", "Miscellaneous",
+	"Kageki (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, kagekijRomInfo, kagekijRomName, NULL, NULL, CommonInputInfo, KagekiDIPInfo,
@@ -2452,7 +2449,7 @@ STD_ROM_FN(kagekih)
 
 struct BurnDriver BurnDrvKagekih = {
 	"kagekih", "kageki", NULL, NULL, "1992",
-	"Kageki (hack)\0", "Imperfect Sound", "Taito Corporation", "Miscellaneous",
+	"Kageki (hack)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, kagekihRomInfo, kagekihRomName, NULL, NULL, CommonInputInfo, KagekiDIPInfo,
@@ -2849,7 +2846,7 @@ static INT32 JpopnicsInit()
 
 struct BurnDriver BurnDrvJpopnics = {
 	"jpopnics", NULL, NULL, NULL, "1992",
-	"Jumping Pop (Nics, Korean bootleg of Plump Pop)\0", "Imperfect graphics", "Nics", "Miscellaneous",
+	"Jumping Pop (Nics, Korean bootleg of Plump Pop)\0", NULL, "Nics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, jpopnicsRomInfo, jpopnicsRomName, NULL, NULL, JpopnicsInputInfo, JpopnicsDIPInfo,

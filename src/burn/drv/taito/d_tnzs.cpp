@@ -1761,17 +1761,14 @@ static INT32 DrvFrame()
 	if (tnzs_mcu_type() == MCU_NONE_KAGEKI) nInterleave = nBurnSoundLen;
 	INT32 nSoundBufferPos = 0;
 
-	INT32 nCyclesSegment;
-	INT32 nCyclesDone[3], nCyclesTotal[3];
+	INT32 nCyclesTotal[3];
 
 	nCyclesTotal[0] = 6000000 / 60;
 	nCyclesTotal[1] = 6000000 / 60;
 	nCyclesTotal[2] = 6000000 / 60;
 
-	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = 0;
-
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
+		INT32 nCurrentCPU;
 
 		if (game_kabukiz && i == 1)
 			bgsprite_buffer_kabukiz(DrvObjCtrl[1]);

@@ -14657,7 +14657,7 @@ static INT32 Punipic3Init()
 
 static INT32 PunisherbInit()
 {
-	Cps1GfxLoadCallbackFunction = CpsLoadTilesWonder3b;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesPunisherb;
 	
 	return TwelveMhzInit();
 }

@@ -1020,9 +1020,10 @@ void kageki_sample_set_route(double nVolume, INT32 nRouteDir)
 
 static void kageki_sample_exit()
 {
-	for (INT32 i = 0; i < 0x30; i++) {
+	for (INT32 i = 0; i < 0x2f; i++) {
 		BurnFree (kageki_sample_data[i]);
 	}
+	kageki_sample_select = -1;
 }
 
 static INT32 tnzs_gfx_decode()
@@ -1899,9 +1900,11 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		bankswitch1(tnzs_banks[1]);
 		ZetClose();
 
-		ZetOpen(2);
-		kabukiz_sound_bankswitch(0,tnzs_banks[2]);
-		ZetClose();
+		if (game_kabukiz) {
+			ZetOpen(2);
+			kabukiz_sound_bankswitch(0, tnzs_banks[2]);
+			ZetClose();
+		}
 	}
 
 	return 0;

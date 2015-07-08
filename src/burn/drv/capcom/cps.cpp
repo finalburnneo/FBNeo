@@ -775,8 +775,6 @@ static INT32 CpsLoadPunisherbTiles(UINT8* Tile, INT32 nNum)
 		}
 	}
 	
-	
-	
 	BurnFree(Rom);
 	return 0;
 }

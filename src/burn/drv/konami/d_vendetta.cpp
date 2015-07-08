@@ -964,6 +964,40 @@ struct BurnDriver BurnDrvVendettar = {
 };
 
 
+// Vendetta (World 4 Players ver. Z)
+
+static struct BurnRomInfo vendettazRomDesc[] = {
+	{ "081z01",	0x040000, 0x4d225a8d, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+
+	{ "081b02",	0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+
+	{ "081a09",	0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
+	{ "081a08",	0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
+
+	{ "081a04",	0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
+	{ "081a05",	0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
+	{ "081a06",	0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
+	{ "081a07",	0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
+
+	{ "081a03",	0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
+
+	{ "vendettaz.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+};
+
+STD_ROM_PICK(vendettaz)
+STD_ROM_FN(vendettaz)
+
+struct BurnDriver BurnDrvVendettaz = {
+	"vendettaz", "vendetta", NULL, NULL, "1991",
+	"Vendetta (World 4 Players ver. Z)\0", NULL, "Konami", "GX081",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	NULL, vendettazRomInfo, vendettazRomName, NULL, NULL, Vendet4pInputInfo, NULL,
+	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	304, 224, 4, 3
+};
+
+
 // Vendetta (World 2 Players ver. W)
 
 static struct BurnRomInfo vendetta2pRomDesc[] = {

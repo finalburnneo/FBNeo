@@ -216,14 +216,14 @@ static struct BurnDIPInfo KozureDIPList[]=
 	{0x15, 0x01, 0x40, 0x40, "Easy"					},
 	{0x15, 0x01, 0x40, 0x00, "Hard"					},
 
-	{0   , 0xfe, 0   ,    0, "Coin A"				},
-	{0x16, 0x01, 0x03, 0x01, "2 Coins 1 Credits"			},
+	{0   , 0xfe, 0   ,    4, "Coin A"				},
+	{0x16, 0x01, 0x03, 0x01, "2 Coins 1 Credit"			},
 	{0x16, 0x01, 0x03, 0x03, "1 Coin  1 Credits"			},
 	{0x16, 0x01, 0x03, 0x02, "1 Coin  2 Credits"			},
 	{0x16, 0x01, 0x03, 0x00, "Free Play"				},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x16, 0x01, 0x0c, 0x00, "3 Coins 1 Credits"			},
+	{0x16, 0x01, 0x0c, 0x00, "3 Coins 1 Credit"			},
 	{0x16, 0x01, 0x0c, 0x04, "2 Coins 3 Credits"			},
 	{0x16, 0x01, 0x0c, 0x0c, "1 Coin  3 Credits"			},
 	{0x16, 0x01, 0x0c, 0x08, "1 Coin  6 Credits"			},
@@ -234,7 +234,7 @@ static struct BurnDIPInfo KozureDIPList[]=
 	{0x16, 0x01, 0x30, 0x10, "5 Times"				},
 	{0x16, 0x01, 0x30, 0x00, "Yes"					},
 
-	{0   , 0xfe, 0   ,    4, "Allow Continue"			},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"			},
 	{0x16, 0x01, 0x40, 0x00, "No"					},
 	{0x16, 0x01, 0x40, 0x40, "Yes"					},
 };
@@ -497,7 +497,6 @@ void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
 			}
 		return;
 	}
-	//bprintf(0, _T("a[%X:%X],"), address, data);
 }
 
 void __fastcall cclimbr2_write_byte(UINT32 address, UINT8 data)
@@ -528,9 +527,6 @@ void __fastcall cclimbr2_write_byte(UINT32 address, UINT8 data)
 
 UINT16 __fastcall cclimbr2_read_word(UINT32 address)
 {
-	/*if (address >= 0x068000 && address <= 0x069fff) {
-		return DrvTxRAM[address - 0x68000];// = data & 0x00ff;
-	}         */
 	switch (address)
 	{
 		case 0x78000:
@@ -720,7 +716,7 @@ static INT32 MemIndex()
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
 
-	blit_data   = Next; Next += 0x004000; // nb1414m4
+	blit_data   = Next; Next += 0x004000; // nb1414m4 blitter data
 
 	AllRam		= Next;
 
@@ -1490,12 +1486,6 @@ static INT32 KozureLoadRoms()
 	if (BurnLoadRom(Drv68KROM + 0x040001,	 4, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM + 0x040000,	 5, 2)) return 1;
 
-	UINT16 *ROM = (UINT16*)Drv68KROM;
-	/* patch "time over" bug. */
-	ROM[0x1016c/2] = 0x4e71;
-	/* ROM check at POST. */
-	ROM[0x04fc6/2] = 0x4e71;
-
 	if (BurnLoadRom(DrvZ80ROM,		 6, 1)) return 1;
 
 	if (BurnLoadRom(DrvGfxROM0,		 7, 1)) return 1;
@@ -1521,8 +1511,13 @@ static INT32 KozureInit()
 
 	INT32 nRet = DrvInit(KozureLoadRoms, Cclimbr268KInit, 0xf800);
 
-	DACSetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
-	DACSetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
+	if (nRet == 0) {
+		*((UINT16*)(Drv68KROM + 0x1016c)) = 0x4e71; // patch "time over" bug.
+		*((UINT16*)(Drv68KROM + 0x04fc6)) = 0x4e71; // ROM check at POST.
+
+		DACSetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
+	}
 
 	return nRet;
 }

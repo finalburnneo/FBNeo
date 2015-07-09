@@ -1,11 +1,17 @@
 // FB Alpha Armed Formation driver module
 // Based on MAME driver by Carlos A. Lozano, Phil Stroffolino, and Takahiro Nogi
+//
+// nb1414m4 hooked up to Kozure Ookami July 8 2015 -dink
+// todo:
+//   fix foreground scrolling registers in terraf
+//   hook nb1414m4 up to other games that need it
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
 #include "burn_ym3812.h"
 #include "dac.h"
+#include "nb1414m4.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -52,6 +58,7 @@ static INT32 xoffset;
 static INT32 irqline;
 
 static INT32 Terrafjb = 0;
+static INT32 Kozuremode = 0;
 
 static struct BurnInputInfo ArmedfInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"	},
@@ -443,38 +450,32 @@ void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x7c000:
-		{
-/*			if (Terrafjb) {
-				// We should be using the extra Z80 - but it doesn't seem to work - the normal simulation does though
-				static UINT32 OldData = 0;
-				if ((data & 0x4000) && (OldData & 0x4000) == 0) {
-					ZetClose();
-					ZetOpen(1);
-					ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-					ZetClose();
-					ZetOpen(0);
-				}
-				OldData = data;
-			} else {*/
-				if (scroll_type == 2) {
-					if (~data & 0x0080) {
-						memset (DrvTxRAM, 0xff, 0x2000);
-					}
-				}
-
-				if (scroll_type == 0 || scroll_type == 3 || scroll_type == 5 || scroll_type == 6) { // scroll6 - hack
-					if (((data & 0x4100) == 0x4000 && scroll_type != 6) ||
-						((data & 0x4100) == 0x0000 && scroll_type == 6)) {
+			{
+				if (Kozuremode) {
+					if(data & 0x4000 && ((*DrvVidRegs & 0x40) == 0)) { //0 -> 1 transition
 						UINT16 *ram = (UINT16*)DrvTxRAM;
-						for (INT32 i = 0x10; i < 0x1000; i++) {
-							ram[i] = 0x0020;
+						nb_1414m4_exec((ram[0] << 8) | (ram[1] & 0xff),(UINT16*)DrvTxRAM,&DrvScroll[2],&DrvScroll[2]);
+					}
+				} else {
+					if (scroll_type == 2) {
+						if (~data & 0x0080) {
+							memset (DrvTxRAM, 0xff, 0x2000);
+						}
+					}
+
+					if (scroll_type == 0 || scroll_type == 3 || scroll_type == 5 || scroll_type == 6) { // scroll6 - hack
+						if (((data & 0x4100) == 0x4000 && scroll_type != 6) ||
+							((data & 0x4100) == 0x0000 && scroll_type == 6)) {
+							UINT16 *ram = (UINT16*)DrvTxRAM;
+							for (INT32 i = 0x10; i < 0x1000; i++) {
+								ram[i] = 0x0020;
+							}
 						}
 					}
 				}
-//			}
-			
+
 			*DrvVidRegs = data >> 8;
-			*flipscreen = (data >> 12) & 1;			
+			*flipscreen = (data >> 12) & 1;
 		}
 		return;
 
@@ -496,6 +497,7 @@ void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
 			}
 		return;
 	}
+	//bprintf(0, _T("a[%X:%X],"), address, data);
 }
 
 void __fastcall cclimbr2_write_byte(UINT32 address, UINT8 data)
@@ -526,6 +528,9 @@ void __fastcall cclimbr2_write_byte(UINT32 address, UINT8 data)
 
 UINT16 __fastcall cclimbr2_read_word(UINT32 address)
 {
+	/*if (address >= 0x068000 && address <= 0x069fff) {
+		return DrvTxRAM[address - 0x68000];// = data & 0x00ff;
+	}         */
 	switch (address)
 	{
 		case 0x78000:
@@ -714,14 +719,16 @@ static INT32 MemIndex()
 	}
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
-	
+
+	blit_data   = Next; Next += 0x004000; // nb1414m4
+
 	AllRam		= Next;
 
 	DrvSprRAM	= Next; Next += 0x001000;
 	DrvSprBuf	= Next; Next += 0x001000;
 	DrvBgRAM	= Next; Next += 0x001000;
 	DrvFgRAM	= Next; Next += 0x001000;
-	DrvTxRAM	= Next; Next += 0x002000;
+	DrvTxRAM	= Next; Next += 0x004000;
 	DrvPalRAM	= Next; Next += 0x001000;
 	Drv68KRAM0	= Next; Next += 0x005000;
 	Drv68KRAM1	= Next; Next += 0x001000;
@@ -900,6 +907,7 @@ static INT32 DrvExit()
 	BurnFree (AllMem);
 	
 	Terrafjb = 0;
+	Kozuremode = 0;
 
 	return 0;
 }
@@ -1092,7 +1100,7 @@ static INT32 DrvDraw()
 	if (*DrvVidRegs & 0x04) draw_layer(DrvFgRAM, DrvGfxROM1, DrvScroll[2], DrvScroll[3], 0x400, 0x7ff);
 	if ((*DrvMcuCmd & 0x30) == 0x10 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp);
 	if (*DrvVidRegs & 0x02) draw_sprites(1);
-	if ((*DrvMcuCmd & 0x30) == 0x00 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp);
+    if ((*DrvMcuCmd & 0x30) == 0x00 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp);
 	if (*DrvVidRegs & 0x02) draw_sprites(0);
 
 	BurnTransferCopy(DrvPalette);
@@ -1125,7 +1133,8 @@ static INT32 DrvFrame()
 	
 	SekOpen(0);
 	ZetOpen(0);
-	
+	nb1414_frame++;
+
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		INT32 nNext;
@@ -1136,7 +1145,7 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += nSegment;
 
 		BurnTimerUpdateYM3812(i * (nTotalCycles[1] / nInterleave));
-		
+
 		for (INT32 j = 0; j < 9; j++) {
 			if (i == Z80IRQSlice[j]) {
 				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
@@ -1464,7 +1473,7 @@ static struct BurnRomInfo kozureRomDesc[] = {
 	{ "kozure12.8d",	0x20000, 0x15f4021d, 6 | BRF_GRA },           // 11 Sprites
 	{ "kozure13.9d",	0x20000, 0xb3b6c753, 6 | BRF_GRA },           // 12
 
-	{ "kozure10.11c",	0x04000, 0xf48be21d, 7 | BRF_GRA | BRF_OPT }, // 13 MCU data
+	{ "kozure10.11c",	0x04000, 0xf48be21d, 7 | BRF_GRA },           // 13 MCU data
 
 	{ "n82s129an.11j",	0x00100, 0x81244757, 8 | BRF_OPT },           // 14 Proms
 };
@@ -1481,6 +1490,12 @@ static INT32 KozureLoadRoms()
 	if (BurnLoadRom(Drv68KROM + 0x040001,	 4, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM + 0x040000,	 5, 2)) return 1;
 
+	UINT16 *ROM = (UINT16*)Drv68KROM;
+	/* patch "time over" bug. */
+	ROM[0x1016c/2] = 0x4e71;
+	/* ROM check at POST. */
+	ROM[0x04fc6/2] = 0x4e71;
+
 	if (BurnLoadRom(DrvZ80ROM,		 6, 1)) return 1;
 
 	if (BurnLoadRom(DrvGfxROM0,		 7, 1)) return 1;
@@ -1492,6 +1507,7 @@ static INT32 KozureLoadRoms()
 
 	if (BurnLoadRom(DrvGfxROM3 + 0x000000,	11, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM3 + 0x020000,	12, 1)) return 1;
+	if (BurnLoadRom(blit_data,	13, 1)) return 1;
 
 	return 0;
 }
@@ -1501,13 +1517,19 @@ static INT32 KozureInit()
 	scroll_type = 2;
 	sprite_offy = 128;
 	irqline = 1;
+	Kozuremode = 1;
 
-	return DrvInit(KozureLoadRoms, Cclimbr268KInit, 0xf800);
+	INT32 nRet = DrvInit(KozureLoadRoms, Cclimbr268KInit, 0xf800);
+
+	DACSetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
+
+	return nRet;
 }
 
 struct BurnDriver BurnDrvKozure = {
 	"kozure", NULL, NULL, NULL, "1987",
-	"Kozure Ookami (Japan)\0", "Imperfect Graphics", "Nichibutsu", "Miscellaneous",
+	"Kozure Ookami (Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, kozureRomInfo, kozureRomName, NULL, NULL, ArmedfInputInfo, KozureDIPInfo,

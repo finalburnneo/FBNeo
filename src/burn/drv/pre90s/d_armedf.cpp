@@ -996,6 +996,7 @@ static void draw_txt_layer(INT32 transp)
 		sx = (sx << 3) - xoffset;
 		sy = (sy << 3) - yoffset;
 		if (scroll_type != 1) sx += 128;
+		if (sx >= 512) sx -= 512;
 
 		if (sx < -7 || sy < -7 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
@@ -1529,7 +1530,7 @@ struct BurnDriver BurnDrvKozure = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, kozureRomInfo, kozureRomName, NULL, NULL, ArmedfInputInfo, KozureDIPInfo,
 	KozureInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	288, 224, 4, 3
+	320, 240, 4, 3
 };
 
 

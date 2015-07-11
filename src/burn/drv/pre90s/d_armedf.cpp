@@ -997,7 +997,8 @@ static void draw_txt_layer(INT32 transp)
 		sy = (sy << 3) - yoffset;
 		if (scroll_type != 1) sx += 128;
 
-		sx &= 0xff; // fix for left-most characters in Kozure
+		if (sx >= 512) sx -= 512; // fix for left-most characters in Kozure
+		//sx &= 0xff; // (instead of the line above) causes breakage in Legion.
 
 		if (sx < -7 || sy < -7 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
 

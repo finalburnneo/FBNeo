@@ -1909,13 +1909,23 @@ static struct BurnRomInfo dygerRomDesc[] = {
 STD_ROM_PICK(dyger)
 STD_ROM_FN(dyger)
 
+static INT32 DygerInit()
+{
+	INT32 nRet = TurtshipInit();
+
+	BurnYM2203SetPSGVolume(0, 0.10);
+	BurnYM2203SetPSGVolume(1, 0.10);
+
+	return nRet;
+}
+
 struct BurnDriver BurnDrvDyger = {
 	"dyger", NULL, NULL, NULL, "1989",
 	"Dyger (Korea set 1)\0", NULL, "Philko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, dygerRomInfo, dygerRomName, NULL, NULL, DygerInputInfo, DygerDIPInfo,
-	TurtshipInit, DrvExit, DrvFrame, DygerDraw, DrvScan, &DrvRecalc, 0x800,
+	DygerInit, DrvExit, DrvFrame, DygerDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 384, 3, 4
 };
 
@@ -1955,7 +1965,7 @@ struct BurnDriver BurnDrvDygera = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, dygeraRomInfo, dygeraRomName, NULL, NULL, DygerInputInfo, DygerDIPInfo,
-	TurtshipInit, DrvExit, DrvFrame, DygerDraw, DrvScan, &DrvRecalc, 0x800,
+	DygerInit, DrvExit, DrvFrame, DygerDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 384, 3, 4
 };
 

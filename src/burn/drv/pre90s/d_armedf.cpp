@@ -996,12 +996,14 @@ static void draw_txt_layer(INT32 transp)
 		sx = (sx << 3) - xoffset;
 		sy = (sy << 3) - yoffset;
 		if (scroll_type != 1) sx += 128;
-		if (sx >= 512) sx -= 512;
+
+		sx &= 0xff; // fix for left-most characters in Kozure
 
 		if (sx < -7 || sy < -7 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
 		INT32 attr = vram[ofst+ofsta] & 0xff;
 		INT32 code = (vram[ofst] & 0xff) | ((attr & 3) << 8);
+		if (scroll_type == 3 && ofst < 0x12) continue; // ignore nb1414m4 params/fix text-garbage at the bottom of legion
 
 		if (transp) {
 			if (*flipscreen) {

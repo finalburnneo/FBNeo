@@ -370,28 +370,6 @@ static UINT8 __fastcall raiders5_main_read(UINT16 address)
 	return 0;
 }
 
-static void DrvPalRAMUpdateR5()
-{
-/*	for (INT32 i = 0; i < 16; i++) {
-		if (i != 1) { // ??
-			for (INT32 j = 0; j < 16; j++) {
-				DrvPalRAM[0x200 + i + j * 16 + 0] = DrvPalRAM[i];
-			}
-		}
-		DrvPalRAM[0x200 + i * 16 + 1] = DrvPalRAM[i];
-	}*/
-
-	for (INT32 i = 0; i < 0x300; i++) {
-		INT32 intensity = DrvPalRAM[i] & 0x03;
-
-		INT32 r = (((DrvPalRAM[i] >> 0) & 0x0c) | intensity) * 0x11;
-		INT32 g = (((DrvPalRAM[i] >> 2) & 0x0c) | intensity) * 0x11;
-		INT32 b = (((DrvPalRAM[i] >> 4) & 0x0c) | intensity) * 0x11;
-
-		DrvPalette[i] = BurnHighCol(r, g, b, 0);
-	}
-}
-
 static void __fastcall raiders5_main_write(UINT16 address, UINT8 data)
 {
 	if(address >= 0x9000 && address <= 0x97ff)
@@ -400,11 +378,10 @@ static void __fastcall raiders5_main_write(UINT16 address, UINT8 data)
 		return;
 	}
 
-	//ZetMapMemory(DrvPalRAM,			0xd000, 0xd1ff, MAP_RAM);
 	if(address >= 0xd000 && address <= 0xd1ff)
 	{
 		INT32 offset = address - 0xd000;
-		bprintf(0, _T("%X: %X,"), address, data);
+
 		DrvPalRAM[offset] = data;
 		if (offset < 16) {
 			DrvPalRAM[0x200 + offset * 16 + 1] = data;
@@ -1127,8 +1104,6 @@ static INT32 Raiders5Init()
 	ZetMapMemory(DrvMainROM,		0x0000, 0x7fff, MAP_ROM);
 	ZetMapMemory(DrvSprRAM,			0x8000, 0x87ff, MAP_RAM);
 	ZetMapMemory(DrvFgRAM,			0x8800, 0x8fff, MAP_RAM);
-	//ZetMapMemory(DrvBgRAM,			0x9000, 0x97ff, MAP_RAM);
-	//ZetMapMemory(DrvPalRAM,			0xd000, 0xd1ff, MAP_RAM);
 	ZetMapMemory(DrvMainRAM + 0x0000,	0xe000, 0xe7ff, MAP_RAM);
 	ZetClose();
 
@@ -1265,7 +1240,8 @@ static void draw_layer(UINT8 *ram_base, UINT8 *gfx_base, INT32 config, INT32 col
 		}
 
 		if (code_extend != -1) code |= ((attr >> code_extend_shift) & code_extend) << 8;
-		if (config==6) {//dink
+
+		if (config == 6) {//hack. -dink
 			code = ram_base[offs + 0x000] + ((attr & 0x01) << 8);
 			color = (attr >> 4) & 0x0f;
 		}
@@ -1278,7 +1254,7 @@ static void draw_layer(UINT8 *ram_base, UINT8 *gfx_base, INT32 config, INT32 col
 	}
 }
 
-static void pkunwar_draw_sprites(INT32 color_base, INT32 xoffset, INT32 color_mask)
+static void pkunwar_draw_sprites(INT32 color_base, INT32 color_mask)
 {
 	for (INT32 offs = 0; offs < 0x800; offs += 32)
 	{
@@ -1301,7 +1277,6 @@ static void pkunwar_draw_sprites(INT32 color_base, INT32 xoffset, INT32 color_ma
 		}
 
 		sy -= 32; // all games y offset by 32 pixels
-		sx += xoffset; // dink
 
 		if (flipy) {
 			if (flipx) {
@@ -1406,7 +1381,7 @@ static INT32 PkunwarDraw()
 
 	draw_layer(DrvBgRAM, DrvGfxROM0 + 0x0000, 4, 0x100, 0);
 
-	pkunwar_draw_sprites(0, 0, 0xf0);
+	pkunwar_draw_sprites(0, 0xf0);
 
 	draw_layer(DrvBgRAM, DrvGfxROM0 + 0x0000, 5, 0x100, 1);
 
@@ -1415,15 +1390,17 @@ static INT32 PkunwarDraw()
 	return 0;
 }
 
-static void DrvPalRAMUpdate()
+static void DrvPalRAMUpdate(INT32 ninjakun)
 {
-	for (INT32 i = 0; i < 16; i++) {
-		if (i != 1) { // ??
-			for (INT32 j = 0; j < 16; j++) {
-				DrvPalRAM[0x200 + i + j * 16 + 0] = DrvPalRAM[i];
+	if (ninjakun) {
+		for (INT32 i = 0; i < 16; i++) {
+			if (i != 1) { // ??
+				for (INT32 j = 0; j < 16; j++) {
+					DrvPalRAM[0x200 + i + j * 16 + 0] = DrvPalRAM[i];
+				}
 			}
+			DrvPalRAM[0x200 + i * 16 + 1] = DrvPalRAM[i];
 		}
-		DrvPalRAM[0x200 + i * 16 + 1] = DrvPalRAM[i];
 	}
 
 	for (INT32 i = 0; i < 0x300; i++) {
@@ -1439,13 +1416,13 @@ static void DrvPalRAMUpdate()
 
 static INT32 Raiders5Draw()
 {
-	DrvPalRAMUpdateR5();
+	DrvPalRAMUpdate(0);
 
 	BurnTransferClear();
 
 	draw_layer(DrvBgRAM, DrvGfxROM2 + 0x0000, 6, 0x100, 0);
 
-	pkunwar_draw_sprites(0x200, 0, 0x0f);
+	pkunwar_draw_sprites(0x200, 0x0f);
 
 	draw_layer(DrvFgRAM, DrvGfxROM0 + 0x0000, 7, 0x000, 0);
 
@@ -1456,7 +1433,7 @@ static INT32 Raiders5Draw()
 
 static INT32 NinjakunDraw()
 {
-	DrvPalRAMUpdate();
+	DrvPalRAMUpdate(1);
 
 	BurnTransferClear();
 
@@ -1580,14 +1557,14 @@ static INT32 Raiders5Frame()
 	}
 
 	vblank = 0;
-	//INT32 Multiplier = 8; // needs high multiplier for inter-processor communication w/shared memory
-	INT32 nInterleave = 2000; //256*Multiplier;
+
+	INT32 nInterleave = 2000; // needs high interleave
 	INT32 nCyclesTotal = 3000000 / 60;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
 		ZetRun(nCyclesTotal / nInterleave);
-		//INT32 sync_cycles = ZetTotalCycles();
+
 		if (i == 1880) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			vblank = 1;
@@ -1595,7 +1572,7 @@ static INT32 Raiders5Frame()
 		ZetClose();
 
 		ZetOpen(1);
-		ZetRun(nCyclesTotal / nInterleave);//sync_cycles - ZetTotalCycles());
+		ZetRun(nCyclesTotal / nInterleave);
 		if (i%(nInterleave/4) == (nInterleave/4)-10) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}

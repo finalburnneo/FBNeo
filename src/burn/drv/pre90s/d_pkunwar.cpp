@@ -1198,7 +1198,7 @@ static void draw_layer(UINT8 *ram_base, UINT8 *gfx_base, INT32 config, INT32 col
 			color_shift = 4;
 			enable_scroll = 1;
 			color_mask = 0x0f;
-			xskew = 8;
+			xskew = 7;
 		break;
 
 		case 7: // raiders5 foreground
@@ -1254,7 +1254,7 @@ static void draw_layer(UINT8 *ram_base, UINT8 *gfx_base, INT32 config, INT32 col
 	}
 }
 
-static void pkunwar_draw_sprites(INT32 color_base, INT32 color_mask)
+static void pkunwar_draw_sprites(INT32 color_base)
 {
 	for (INT32 offs = 0; offs < 0x800; offs += 32)
 	{
@@ -1264,9 +1264,9 @@ static void pkunwar_draw_sprites(INT32 color_base, INT32 color_mask)
 		INT32 sx = DrvSprRAM[offs+1];
 		INT32 sy = DrvSprRAM[offs+2];
 		INT32 code = ((DrvSprRAM[offs+0] & 0xfc) >> 2) + ((attr & 0x07) << 6);
-		INT32 color = (attr & color_mask) >> 4;
+		INT32 color = (attr & 0xf0) >> 4;
 
-		//if (attr & 0x08) continue;
+		if (attr & 0x08) continue;
 
 		if (flipscreen)
 		{
@@ -1381,7 +1381,7 @@ static INT32 PkunwarDraw()
 
 	draw_layer(DrvBgRAM, DrvGfxROM0 + 0x0000, 4, 0x100, 0);
 
-	pkunwar_draw_sprites(0, 0xf0);
+	pkunwar_draw_sprites(0);
 
 	draw_layer(DrvBgRAM, DrvGfxROM0 + 0x0000, 5, 0x100, 1);
 
@@ -1422,7 +1422,7 @@ static INT32 Raiders5Draw()
 
 	draw_layer(DrvBgRAM, DrvGfxROM2 + 0x0000, 6, 0x100, 0);
 
-	pkunwar_draw_sprites(0x200, 0x0f);
+	pkunwar_draw_sprites(0x200);
 
 	draw_layer(DrvFgRAM, DrvGfxROM0 + 0x0000, 7, 0x000, 0);
 
@@ -1814,22 +1814,22 @@ struct BurnDriver BurnDrvNinjakun = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, ninjakunRomInfo, ninjakunRomName, NULL, NULL, NinjakunInputInfo, NinjakunDIPInfo,
-	NinjakunInit, DrvExit, NinjakunFrame, NinjakunDraw, DrvScan, &DrvRecalc, 0x200,
+	NinjakunInit, DrvExit, NinjakunFrame, NinjakunDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 192, 4, 3
 };
 
 // Raiders5
 
 static struct BurnRomInfo raiders5RomDesc[] = {
-	{ "raiders5.1",		0x4000, 0x47cea11f, 1 }, //  0 maincpu
-	{ "raiders5.2",		0x4000, 0xeb2ff410, 1 }, //  1
+	{ "raiders5.1",		0x4000, 0x47cea11f, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 #0 Code
+	{ "raiders5.2",		0x4000, 0xeb2ff410, 1 | BRF_PRG | BRF_ESS}, //  1
 
-	{ "raiders5.2",		0x4000, 0xeb2ff410, 2 }, //  2 sub
+	{ "raiders5.2",		0x4000, 0xeb2ff410, 2 | BRF_PRG | BRF_ESS}, //  2 Z80 #1 Code
 
-	{ "raiders3.11f",	0x4000, 0x30041d58, 3 }, //  3 gfx1
-	{ "raiders4.11g",	0x4000, 0xe441931c, 3 }, //  4
+	{ "raiders3.11f",	0x4000, 0x30041d58, 3 | BRF_GRA },          //  3 Foreground & Sprites
+	{ "raiders4.11g",	0x4000, 0xe441931c, 3 | BRF_GRA },          //  4
 
-	{ "raiders5.11n",	0x4000, 0xc0895090, 4 }, //  5 gfx2
+	{ "raiders5.11n",	0x4000, 0xc0895090, 4 | BRF_GRA },          //  5 Backgrounds
 };
 
 STD_ROM_PICK(raiders5)
@@ -1841,6 +1841,33 @@ struct BurnDriver BurnDrvRaiders5 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, raiders5RomInfo, raiders5RomName, NULL, NULL, Raiders5InputInfo, Raiders5DIPInfo,
+	Raiders5Init, DrvExit, Raiders5Frame, Raiders5Draw, NULL, &DrvRecalc, 0x300,
+	256, 192, 4, 3
+};
+
+// Raiders5 (Japan)
+
+static struct BurnRomInfo raiders5tRomDesc[] = {
+	{ "raiders1.4c",	0x4000, 0x4e2d5679, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "raiders2.4d",	0x4000, 0xc8604be1, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "raiders2.4d",	0x4000, 0xc8604be1, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "raiders3.11f",	0x4000, 0x30041d58, 3 | BRF_GRA },           //  3 Foreground & Sprites
+	{ "raiders4.11g",	0x4000, 0xe441931c, 3 | BRF_GRA },           //  4
+
+	{ "raiders5.11n",	0x4000, 0xc0895090, 4 | BRF_GRA },           //  5 Backgrounds
+};
+
+STD_ROM_PICK(raiders5t)
+STD_ROM_FN(raiders5t)
+
+struct BurnDriver BurnDrvRaidrs5t = {
+	"raiders5t", "raiders5", NULL, NULL, "1985",
+	"Raiders5 (Japan)\0", NULL, "UPL (Taito license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, raiders5tRomInfo, raiders5tRomName, NULL, NULL, Raiders5InputInfo, Raiders5DIPInfo,
 	Raiders5Init, DrvExit, Raiders5Frame, Raiders5Draw, NULL, &DrvRecalc, 0x300,
 	256, 192, 4, 3
 };

@@ -110,6 +110,29 @@ static struct BurnInputInfo NinjakunInputList[] = {
 
 STDINPUTINFO(Ninjakun)
 
+static struct BurnInputInfo Raiders5InputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
+
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+};
+
+STDINPUTINFO(Raiders5)
+
 static struct BurnDIPInfo DrvDIPList[]=
 {
 	{0x0b, 0xff, 0xff, 0xfb, NULL 			},
@@ -260,6 +283,186 @@ static struct BurnDIPInfo NinjakunDIPList[]=
 };
 
 STDDIPINFO(Ninjakun)
+
+static struct BurnDIPInfo Raiders5DIPList[]=
+{
+	{0x0e, 0xff, 0xff, 0xfe, NULL		},
+	{0x0f, 0xff, 0xff, 0xff, NULL		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x0e, 0x01, 0x01, 0x00, "Upright"		},
+	{0x0e, 0x01, 0x01, 0x01, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x0e, 0x01, 0x06, 0x00, "2"		},
+	{0x0e, 0x01, 0x06, 0x06, "3"		},
+	{0x0e, 0x01, 0x06, 0x04, "4"		},
+	{0x0e, 0x01, 0x06, 0x02, "5"		},
+
+	{0   , 0xfe, 0   ,    2, "1st Bonus"		},
+	{0x0e, 0x01, 0x08, 0x08, "30000"		},
+	{0x0e, 0x01, 0x08, 0x00, "40000"		},
+
+	{0   , 0xfe, 0   ,    4, "2nd Bonus"		},
+	{0x0e, 0x01, 0x30, 0x30, "Every 50000"		},
+	{0x0e, 0x01, 0x30, 0x20, "Every 70000"		},
+	{0x0e, 0x01, 0x30, 0x10, "Every 90000"		},
+	{0x0e, 0x01, 0x30, 0x00, "None"		},
+
+	{0   , 0xfe, 0   ,    2, "Exercise"		},
+	{0x0e, 0x01, 0x40, 0x00, "Off"		},
+	{0x0e, 0x01, 0x40, 0x40, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"		},
+	{0x0e, 0x01, 0x80, 0x80, "Normal"		},
+	{0x0e, 0x01, 0x80, 0x00, "Hard"		},
+
+	{0   , 0xfe, 0   ,    8, "Coinage"		},
+	{0x0f, 0x01, 0x07, 0x04, "4 Coins 1 Credits"		},
+	{0x0f, 0x01, 0x07, 0x05, "3 Coins 1 Credits"		},
+	{0x0f, 0x01, 0x07, 0x00, "4 Coins 2 Credits"		},
+	{0x0f, 0x01, 0x07, 0x06, "2 Coins 1 Credits"		},
+	{0x0f, 0x01, 0x07, 0x01, "3 Coins 2 Credits"		},
+	{0x0f, 0x01, 0x07, 0x02, "2 Coins 2 Credits"		},
+	{0x0f, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x0f, 0x01, 0x07, 0x03, "1 Coin  2 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "High Score Names"		},
+	{0x0f, 0x01, 0x08, 0x00, "3 Letters"		},
+	{0x0f, 0x01, 0x08, 0x08, "8 Letters"		},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x0f, 0x01, 0x10, 0x00, "No"		},
+	{0x0f, 0x01, 0x10, 0x10, "Yes"		},
+
+	{0   , 0xfe, 0   ,    0, "Free Play"		},
+	{0x0f, 0x01, 0x40, 0x40, "Off"		},
+	{0x0f, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Unlimited Lives (If Free Play)"		},
+	{0x0f, 0x01, 0x80, 0x80, "Off"		},
+	{0x0f, 0x01, 0x80, 0x00, "On"		},
+};
+
+STDDIPINFO(Raiders5)
+
+static UINT8 __fastcall raiders5_main_read(UINT16 address)
+{
+	if(address >= 0x9000 && address <= 0x97ff)
+	{
+		return DrvBgRAM[(((address & 0x3ff) + (xscroll >> 3) + ((yscroll >> 3) << 5)) & 0x3ff) + (address & 0x400)];
+	}
+
+	switch (address)
+	{
+		case 0xc001:
+			return AY8910Read(0);
+
+		case 0xc003:
+			return AY8910Read(1);
+	}
+
+	return 0;
+}
+
+static void __fastcall raiders5_main_write(UINT16 address, UINT8 data)
+{
+	if(address >= 0x9000 && address <= 0x97ff)
+	{
+		DrvBgRAM[(((address & 0x3ff) + (xscroll >> 3) + ((yscroll >> 3) << 5)) & 0x3ff) + (address & 0x400)] = data;
+		return;
+	}
+
+	switch (address)
+	{
+		case 0xa000:
+			xscroll = data;
+			break;
+
+		case 0xa001:
+			yscroll = data;
+			break;
+
+		case 0xc000:
+			AY8910Write(0, 0, data);
+			break;
+
+		case 0xc001:
+			AY8910Write(0, 1, data);
+			break;
+
+		case 0xc002:
+			AY8910Write(1, 0, data);
+			break;
+
+		case 0xc003:
+			AY8910Write(1, 1, data);
+			break;
+
+		case 0xa002:
+			flipscreen = ~data & 0x01;
+			break;
+	}
+}
+
+static UINT8 __fastcall raiders5_sub_read(UINT16 address)
+{
+	switch (address)
+	{
+		case 0x8001:
+			return AY8910Read(0);
+
+		case 0x8003:
+			return AY8910Read(1);
+
+		case 0x9000:
+		case 0xc000:
+		case 0xc800:
+		case 0xd000:
+			return 0; // NOP
+	}
+
+	return 0;
+}
+
+UINT8 __fastcall raiders5_in(UINT16 address)
+{
+	return 0; // NOP
+}
+
+static void __fastcall raiders5_sub_write(UINT16 address, UINT8 data)
+{
+	switch (address)
+	{
+		case 0x8000:
+			AY8910Write(0, 0, data);
+			break;
+
+		case 0x8001:
+			AY8910Write(0, 1, data);
+			break;
+
+		case 0x8002:
+			AY8910Write(1, 0, data);
+			break;
+
+		case 0x8003:
+			AY8910Write(1, 1, data);
+			break;
+
+		case 0xe000:
+			xscroll = data;
+			break;
+
+		case 0xe001:
+			yscroll = data;
+			break;
+
+		case 0xe002:
+			flipscreen = ~data & 0x01;
+			break;
+	}
+}
 
 static UINT8 __fastcall pkunwar_read(UINT16 address)
 {
@@ -526,6 +729,11 @@ static UINT8 nova2001_port_4(UINT32)
 	return DrvDips[1];
 }
 
+static UINT8 raiders5_port_0(UINT32)
+{
+	return (DrvInputs[0] & 0x7f) | (vblank ^= 0x80);
+}
+
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -738,8 +946,6 @@ static INT32 NovaInit()
 	ZetMapMemory(DrvMainRAM,		0xe000, 0xe7ff, MAP_RAM);
 	ZetClose();
 
-//	AY8910Init(0, 2000000, nBurnSoundRate, &nova2001_port_3, &nova2001_port_4, NULL, NULL);
-//	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, &nova2001_scroll_x_w, &nova2001_scroll_y_w);
     AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, &nova2001_scroll_x_w, &nova2001_scroll_y_w);
     AY8910Init(1, 2000000, nBurnSoundRate, &nova2001_port_3, &nova2001_port_4, NULL, NULL);
 
@@ -838,6 +1044,70 @@ static INT32 NinjakunInit()
 	return 0;
 }
 
+static INT32 Raiders5Init()
+{
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (BurnLoadRom(DrvMainROM + 0x0000,  0, 1)) return 1;
+		if (BurnLoadRom(DrvMainROM + 0x4000,  1, 1)) return 1;
+
+		if (BurnLoadRom(DrvSubROM  + 0x0000,  2, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM0 + 0x0000,  3, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x4000,  4, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM2 + 0x0000,  5, 1)) return 1;
+
+		DrvGfxDescramble(DrvGfxROM0);
+		DrvGfxDescramble(DrvGfxROM2);
+		DrvGfxDecode(DrvGfxROM0, DrvGfxROM1, 1);
+		DrvGfxDecode(DrvGfxROM0, DrvGfxROM0, 0);
+
+		DrvGfxDecode(DrvGfxROM2, DrvGfxROM2, 0);
+	}
+
+	ZetInit(0);
+	ZetOpen(0);
+	ZetSetInHandler(raiders5_in);
+	ZetSetReadHandler(raiders5_main_read);
+	ZetSetWriteHandler(raiders5_main_write);
+
+	ZetMapMemory(DrvMainROM,		0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvSprRAM,			0x8000, 0x87ff, MAP_RAM);
+	ZetMapMemory(DrvFgRAM,			0x8800, 0x8fff, MAP_RAM);
+	//ZetMapMemory(DrvBgRAM,			0x9000, 0x97ff, MAP_RAM);
+	ZetMapMemory(DrvPalRAM,			0xd000, 0xd1ff, MAP_RAM);
+	ZetMapMemory(DrvMainRAM + 0x0000,	0xe000, 0xe7ff, MAP_RAM);
+	ZetClose();
+
+	ZetInit(1);
+	ZetOpen(1);
+	ZetSetInHandler(raiders5_in); // a verifier
+	ZetSetReadHandler(raiders5_sub_read);
+	ZetSetWriteHandler(raiders5_sub_write);
+	ZetMapMemory(DrvSubROM,			0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(DrvMainRAM + 0x0000,	0xa000, 0xa7ff, MAP_RAM);
+	ZetClose();
+
+	AY8910Init(0, 1500000, nBurnSoundRate, &raiders5_port_0, &pkunwar_port_1, NULL, NULL);
+	AY8910Init(1, 1500000, nBurnSoundRate, &nova2001_port_3, &nova2001_port_4, NULL, NULL);
+
+	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+
+	GenericTilesInit();
+
+	NinjakunDoReset();
+
+	return 0;
+}
+
 static INT32 DrvExit()
 {
 	ZetExit();
@@ -859,6 +1129,7 @@ static void draw_layer(UINT8 *ram_base, UINT8 *gfx_base, INT32 config, INT32 col
 	INT32 group_select_bit = -1;
 	INT32 transparent = 0xff; // opaque
 	INT32 enable_scroll = 0;
+	INT32 color_mask = 0x0f;
 
 	switch (config)
 	{
@@ -887,6 +1158,7 @@ static void draw_layer(UINT8 *ram_base, UINT8 *gfx_base, INT32 config, INT32 col
 			code_extend = 7;
 			code_extend_shift = 0;
 			color_shift = 4;
+			color_mask = 0xf0;
 		break;
 
 		case 5: // pkunwar foreground (background + transparency + group)
@@ -895,18 +1167,21 @@ static void draw_layer(UINT8 *ram_base, UINT8 *gfx_base, INT32 config, INT32 col
 			color_shift = 4;
 			group_select_bit = 3;
 			transparent = 0;
+			color_mask = 0xf0;
 		break;
 
-		case 6: // raiders5 background
+		case 6: // raiders5 background   <--- something is wrong here(?) -dink
 			code_extend = 1;
 			code_extend_shift = 0;
 			color_shift = 4;
 			enable_scroll = 1;
+			color_mask = 0xf0;
 		break;
 
 		case 7: // raiders5 foreground
 			color_shift = 4;
 			transparent = 0;
+			color_mask = 0xf0;
 		break;
 	}
 
@@ -930,7 +1205,7 @@ static void draw_layer(UINT8 *ram_base, UINT8 *gfx_base, INT32 config, INT32 col
 		INT32 code = ram_base[offs + 0x000];
 		INT32 attr = ram_base[offs + 0x400];
 
-		INT32 color = (attr >> color_shift) & 0x0f;
+		INT32 color = (attr & color_mask) >> color_shift;
 
 		INT32 group = 0;
 
@@ -950,7 +1225,7 @@ static void draw_layer(UINT8 *ram_base, UINT8 *gfx_base, INT32 config, INT32 col
 	}
 }
 
-static void pkunwar_draw_sprites()
+static void pkunwar_draw_sprites(INT32 color_base, INT32 xoffset)
 {
 	for (INT32 offs = 0; offs < 0x800; offs += 32)
 	{
@@ -973,33 +1248,34 @@ static void pkunwar_draw_sprites()
 		}
 
 		sy -= 32; // all games y offset by 32 pixels
+		sx += xoffset; // dink
 
 		if (flipy) {
 			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
+				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, color_base, DrvGfxROM1);
 			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
+				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, color_base, DrvGfxROM1);
 			}
 		} else {
 			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
+				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, color_base, DrvGfxROM1);
 			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
+				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, color_base, DrvGfxROM1);
 			}
 		}
 
 		// wrap around
 		if (flipy) {
 			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx - 256, sy, color, 4, 0, 0, DrvGfxROM1);
+				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx - 256, sy, color, 4, 0, color_base, DrvGfxROM1);
 			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx - 256, sy, color, 4, 0, 0, DrvGfxROM1);
+				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx - 256, sy, color, 4, 0, color_base, DrvGfxROM1);
 			}
 		} else {
 			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx - 256, sy, color, 4, 0, 0, DrvGfxROM1);
+				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx - 256, sy, color, 4, 0, color_base, DrvGfxROM1);
 			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx - 256, sy, color, 4, 0, 0, DrvGfxROM1);
+				Render16x16Tile_Mask_Clip(pTransDraw, code, sx - 256, sy, color, 4, 0, color_base, DrvGfxROM1);
 			}
 		}
 	}
@@ -1077,7 +1353,7 @@ static INT32 PkunwarDraw()
 
 	draw_layer(DrvBgRAM, DrvGfxROM0 + 0x0000, 4, 0x100, 0);
 
-	pkunwar_draw_sprites();
+	pkunwar_draw_sprites(0, 0);
 
 	draw_layer(DrvBgRAM, DrvGfxROM0 + 0x0000, 5, 0x100, 1);
 
@@ -1107,6 +1383,23 @@ static void DrvPalRAMUpdate()
 
 		DrvPalette[i] = BurnHighCol(r, g, b, 0);
 	}
+}
+
+static INT32 Raiders5Draw()
+{
+	DrvPalRAMUpdate();
+
+	BurnTransferClear();
+
+	draw_layer(DrvBgRAM, DrvGfxROM2 + 0x0000, 6, 0x100, 0);
+
+	pkunwar_draw_sprites(0x200, 8);
+
+	draw_layer(DrvFgRAM, DrvGfxROM0 + 0x0000, 7, 0x000, 0);
+
+	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
 static INT32 NinjakunDraw()
@@ -1220,6 +1513,54 @@ static INT32 PkunwarFrame()
 	return 0;
 }
 
+static INT32 Raiders5Frame()
+{
+	if (DrvReset) {
+		NinjakunDoReset();
+	}
+	watchdog++;
+
+	memset (DrvInputs, 0xff, 2);
+
+	for (INT32 i = 0; i < 8; i++) {
+		DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+		DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+	}
+
+	vblank = 1;
+	INT32 Multiplier = 8; // needs high multiplier for inter-processor communication w/shared memory
+	INT32 nInterleave = 256*Multiplier;
+	INT32 nCyclesTotal = 3000000 / 60;
+
+	for (INT32 i = 0; i < nInterleave; i++) {
+		ZetOpen(0);
+		ZetRun(nCyclesTotal / nInterleave);
+		INT32 sync_cycles = ZetTotalCycles();
+		if (i == 240*Multiplier) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			vblank = 0;
+		}
+		ZetClose();
+
+		ZetOpen(1);
+		ZetRun(sync_cycles - ZetTotalCycles());
+		if (i == 63*Multiplier || i == 127*Multiplier || i == 195*Multiplier || i == 255*Multiplier) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		}
+		ZetClose();
+	}
+
+	if (pBurnSoundOut) {
+		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+	}
+
+	if (pBurnDraw) {
+		Raiders5Draw();
+	}
+
+	return 0;
+}
+
 static INT32 NinjakunFrame()
 {
 	if (DrvReset) {
@@ -1295,8 +1636,6 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 	return 0;
 }
-
-
 
 
 // Penguin-Kun Wars (US)
@@ -1450,3 +1789,29 @@ struct BurnDriver BurnDrvNinjakun = {
 	256, 192, 4, 3
 };
 
+// Raiders5
+
+static struct BurnRomInfo raiders5RomDesc[] = {
+	{ "raiders5.1",		0x4000, 0x47cea11f, 1 }, //  0 maincpu
+	{ "raiders5.2",		0x4000, 0xeb2ff410, 1 }, //  1
+
+	{ "raiders5.2",		0x4000, 0xeb2ff410, 2 }, //  2 sub
+
+	{ "raiders3.11f",	0x4000, 0x30041d58, 3 }, //  3 gfx1
+	{ "raiders4.11g",	0x4000, 0xe441931c, 3 }, //  4
+
+	{ "raiders5.11n",	0x4000, 0xc0895090, 4 }, //  5 gfx2
+};
+
+STD_ROM_PICK(raiders5)
+STD_ROM_FN(raiders5)
+
+struct BurnDriver BurnDrvRaiders5 = {
+	"raiders5", NULL, NULL, NULL, "1985",
+	"Raiders5\0", NULL, "UPL", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, raiders5RomInfo, raiders5RomName, NULL, NULL, Raiders5InputInfo, Raiders5DIPInfo,
+	Raiders5Init, DrvExit, Raiders5Frame, Raiders5Draw, NULL, &DrvRecalc, 0x200,
+	256, 192, 4, 3
+};

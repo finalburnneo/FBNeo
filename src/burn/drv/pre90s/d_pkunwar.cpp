@@ -353,6 +353,11 @@ static UINT8 __fastcall raiders5_main_read(UINT16 address)
 		return DrvBgRAM[(((address & 0x3ff) + (xscroll >> 3) + ((yscroll >> 3) << 5)) & 0x3ff) + (address & 0x400)];
 	}
 
+	if(address >= 0xd000 && address <= 0xd1ff)
+	{
+		return DrvPalRAM[address - 0xd000];
+	}
+
 	switch (address)
 	{
 		case 0xc001:
@@ -365,6 +370,28 @@ static UINT8 __fastcall raiders5_main_read(UINT16 address)
 	return 0;
 }
 
+static void DrvPalRAMUpdateR5()
+{
+/*	for (INT32 i = 0; i < 16; i++) {
+		if (i != 1) { // ??
+			for (INT32 j = 0; j < 16; j++) {
+				DrvPalRAM[0x200 + i + j * 16 + 0] = DrvPalRAM[i];
+			}
+		}
+		DrvPalRAM[0x200 + i * 16 + 1] = DrvPalRAM[i];
+	}*/
+
+	for (INT32 i = 0; i < 0x300; i++) {
+		INT32 intensity = DrvPalRAM[i] & 0x03;
+
+		INT32 r = (((DrvPalRAM[i] >> 0) & 0x0c) | intensity) * 0x11;
+		INT32 g = (((DrvPalRAM[i] >> 2) & 0x0c) | intensity) * 0x11;
+		INT32 b = (((DrvPalRAM[i] >> 4) & 0x0c) | intensity) * 0x11;
+
+		DrvPalette[i] = BurnHighCol(r, g, b, 0);
+	}
+}
+
 static void __fastcall raiders5_main_write(UINT16 address, UINT8 data)
 {
 	if(address >= 0x9000 && address <= 0x97ff)
@@ -372,6 +399,25 @@ static void __fastcall raiders5_main_write(UINT16 address, UINT8 data)
 		DrvBgRAM[(((address & 0x3ff) + (xscroll >> 3) + ((yscroll >> 3) << 5)) & 0x3ff) + (address & 0x400)] = data;
 		return;
 	}
+
+	//ZetMapMemory(DrvPalRAM,			0xd000, 0xd1ff, MAP_RAM);
+	if(address >= 0xd000 && address <= 0xd1ff)
+	{
+		INT32 offset = address - 0xd000;
+		bprintf(0, _T("%X: %X,"), address, data);
+		DrvPalRAM[offset] = data;
+		if (offset < 16) {
+			DrvPalRAM[0x200 + offset * 16 + 1] = data;
+
+			if (offset != 1) {
+				for (INT32 i = 0; i < 16; i++) {
+					DrvPalRAM[0x200 + offset + i * 16] = data;
+				}
+			}
+		}
+		return;
+	}
+
 
 	switch (address)
 	{
@@ -731,7 +777,7 @@ static UINT8 nova2001_port_4(UINT32)
 
 static UINT8 raiders5_port_0(UINT32)
 {
-	return (DrvInputs[0] & 0x7f) | (vblank ^= 0x80);
+	return (DrvInputs[0] & 0x7f) | (vblank ? 0 : 0x80);
 }
 
 static INT32 DrvDoReset()
@@ -1082,7 +1128,7 @@ static INT32 Raiders5Init()
 	ZetMapMemory(DrvSprRAM,			0x8000, 0x87ff, MAP_RAM);
 	ZetMapMemory(DrvFgRAM,			0x8800, 0x8fff, MAP_RAM);
 	//ZetMapMemory(DrvBgRAM,			0x9000, 0x97ff, MAP_RAM);
-	ZetMapMemory(DrvPalRAM,			0xd000, 0xd1ff, MAP_RAM);
+	//ZetMapMemory(DrvPalRAM,			0xd000, 0xd1ff, MAP_RAM);
 	ZetMapMemory(DrvMainRAM + 0x0000,	0xe000, 0xe7ff, MAP_RAM);
 	ZetClose();
 
@@ -1130,6 +1176,7 @@ static void draw_layer(UINT8 *ram_base, UINT8 *gfx_base, INT32 config, INT32 col
 	INT32 transparent = 0xff; // opaque
 	INT32 enable_scroll = 0;
 	INT32 color_mask = 0x0f;
+	INT32 xskew = 0;
 
 	switch (config)
 	{
@@ -1175,7 +1222,8 @@ static void draw_layer(UINT8 *ram_base, UINT8 *gfx_base, INT32 config, INT32 col
 			code_extend_shift = 0;
 			color_shift = 4;
 			enable_scroll = 1;
-			color_mask = 0xf0;
+			color_mask = 0x0f;
+			xskew = 8;
 		break;
 
 		case 7: // raiders5 foreground
@@ -1201,6 +1249,7 @@ static void draw_layer(UINT8 *ram_base, UINT8 *gfx_base, INT32 config, INT32 col
 		if (sx < -7) sx += 256;
 		if (sx >= nScreenWidth) continue;
 		if (sy >= nScreenHeight) continue;
+		sx += xskew;
 
 		INT32 code = ram_base[offs + 0x000];
 		INT32 attr = ram_base[offs + 0x400];
@@ -1216,6 +1265,10 @@ static void draw_layer(UINT8 *ram_base, UINT8 *gfx_base, INT32 config, INT32 col
 		}
 
 		if (code_extend != -1) code |= ((attr >> code_extend_shift) & code_extend) << 8;
+		if (config==6) {//dink
+			code = ram_base[offs + 0x000] + ((attr & 0x01) << 8);
+			color = (attr >> 4) & 0x0f;
+		}
 
 		if (flipscreen) {
 			Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, 248 - sx, 184 - sy, color, 4, transparent, color_base, gfx_base);
@@ -1225,7 +1278,7 @@ static void draw_layer(UINT8 *ram_base, UINT8 *gfx_base, INT32 config, INT32 col
 	}
 }
 
-static void pkunwar_draw_sprites(INT32 color_base, INT32 xoffset)
+static void pkunwar_draw_sprites(INT32 color_base, INT32 xoffset, INT32 color_mask)
 {
 	for (INT32 offs = 0; offs < 0x800; offs += 32)
 	{
@@ -1235,9 +1288,9 @@ static void pkunwar_draw_sprites(INT32 color_base, INT32 xoffset)
 		INT32 sx = DrvSprRAM[offs+1];
 		INT32 sy = DrvSprRAM[offs+2];
 		INT32 code = ((DrvSprRAM[offs+0] & 0xfc) >> 2) + ((attr & 0x07) << 6);
-		INT32 color = (attr & 0xf0) >> 4;
+		INT32 color = (attr & color_mask) >> 4;
 
-		if (attr & 0x08) continue;
+		//if (attr & 0x08) continue;
 
 		if (flipscreen)
 		{
@@ -1353,7 +1406,7 @@ static INT32 PkunwarDraw()
 
 	draw_layer(DrvBgRAM, DrvGfxROM0 + 0x0000, 4, 0x100, 0);
 
-	pkunwar_draw_sprites(0, 0);
+	pkunwar_draw_sprites(0, 0, 0xf0);
 
 	draw_layer(DrvBgRAM, DrvGfxROM0 + 0x0000, 5, 0x100, 1);
 
@@ -1365,13 +1418,12 @@ static INT32 PkunwarDraw()
 static void DrvPalRAMUpdate()
 {
 	for (INT32 i = 0; i < 16; i++) {
-		DrvPalRAM[0x200 + i * 16 + 1] = DrvPalRAM[i];
-
 		if (i != 1) { // ??
 			for (INT32 j = 0; j < 16; j++) {
 				DrvPalRAM[0x200 + i + j * 16 + 0] = DrvPalRAM[i];
 			}
 		}
+		DrvPalRAM[0x200 + i * 16 + 1] = DrvPalRAM[i];
 	}
 
 	for (INT32 i = 0; i < 0x300; i++) {
@@ -1387,13 +1439,13 @@ static void DrvPalRAMUpdate()
 
 static INT32 Raiders5Draw()
 {
-	DrvPalRAMUpdate();
+	DrvPalRAMUpdateR5();
 
 	BurnTransferClear();
 
 	draw_layer(DrvBgRAM, DrvGfxROM2 + 0x0000, 6, 0x100, 0);
 
-	pkunwar_draw_sprites(0x200, 8);
+	pkunwar_draw_sprites(0x200, 0, 0x0f);
 
 	draw_layer(DrvFgRAM, DrvGfxROM0 + 0x0000, 7, 0x000, 0);
 
@@ -1527,25 +1579,25 @@ static INT32 Raiders5Frame()
 		DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 	}
 
-	vblank = 1;
-	INT32 Multiplier = 8; // needs high multiplier for inter-processor communication w/shared memory
-	INT32 nInterleave = 256*Multiplier;
+	vblank = 0;
+	//INT32 Multiplier = 8; // needs high multiplier for inter-processor communication w/shared memory
+	INT32 nInterleave = 2000; //256*Multiplier;
 	INT32 nCyclesTotal = 3000000 / 60;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
 		ZetRun(nCyclesTotal / nInterleave);
-		INT32 sync_cycles = ZetTotalCycles();
-		if (i == 240*Multiplier) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-			vblank = 0;
+		//INT32 sync_cycles = ZetTotalCycles();
+		if (i == 1880) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			vblank = 1;
 		}
 		ZetClose();
 
 		ZetOpen(1);
-		ZetRun(sync_cycles - ZetTotalCycles());
-		if (i == 63*Multiplier || i == 127*Multiplier || i == 195*Multiplier || i == 255*Multiplier) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		ZetRun(nCyclesTotal / nInterleave);//sync_cycles - ZetTotalCycles());
+		if (i%(nInterleave/4) == (nInterleave/4)-10) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 	}
@@ -1812,6 +1864,6 @@ struct BurnDriver BurnDrvRaiders5 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, raiders5RomInfo, raiders5RomName, NULL, NULL, Raiders5InputInfo, Raiders5DIPInfo,
-	Raiders5Init, DrvExit, Raiders5Frame, Raiders5Draw, NULL, &DrvRecalc, 0x200,
+	Raiders5Init, DrvExit, Raiders5Frame, Raiders5Draw, NULL, &DrvRecalc, 0x300,
 	256, 192, 4, 3
 };

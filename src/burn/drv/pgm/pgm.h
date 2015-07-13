@@ -2,7 +2,7 @@
 #include "m68000_intf.h"
 #include "z80_intf.h"
 #include "arm7_intf.h"
-#include "ics2115.h"
+
 
 #define HARDWARE_IGS_JAMMAPCB		0x0002
 
@@ -22,6 +22,7 @@ extern UINT8 *PGMSPRMaskROM;
 extern UINT8 *PGMARMROM;
 extern UINT8 *PGMUSER0;
 extern UINT8 *PGMProtROM;
+extern UINT8 *ICSSNDROM;
 extern UINT8 *PGMARMRAM0;
 extern UINT8 *PGMARMRAM1;
 extern UINT8 *PGMARMRAM2;

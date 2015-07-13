@@ -2,6 +2,7 @@
 #include "pgm.h" 
 #include "arm7_intf.h"
 #include "v3021.h"
+#include "ics2115.h"
 
 UINT8 PgmJoy1[8] = {0,0,0,0,0,0,0,0};
 UINT8 PgmJoy2[8] = {0,0,0,0,0,0,0,0};
@@ -31,11 +32,16 @@ UINT16 *PGMSprBuf;
 static UINT8 *RamZ80;
 UINT8 *PGM68KRAM;
 
+static UINT16 nSoundlatch[3] = {0, 0, 0};
+static UINT8 bSoundlatchRead[3] = {0, 0, 0};
+
 static UINT8 *Mem = NULL, *MemEnd = NULL;
 static UINT8 *RamStart, *RamEnd;
 
 UINT8 *PGM68KBIOS, *PGM68KROM, *PGMTileROM, *PGMTileROMExp, *PGMSPRColROM, *PGMSPRMaskROM, *PGMARMROM;
 UINT8 *PGMARMRAM0, *PGMUSER0, *PGMARMRAM1, *PGMARMRAM2, *PGMARMShareRAM, *PGMARMShareRAM2, *PGMProtROM;
+
+UINT8 *ICSSNDROM;
 
 UINT8 nPgmPalRecalc = 0;
 static UINT8 nPgmZ80Work = 0;
@@ -240,12 +246,24 @@ static INT32 pgmGetRoms(bool bLoad)
 		if (kov2) nPGMSNDROMLen += 0x400000;
 
 		nPGMSNDROMLen = ((nPGMSNDROMLen-1) | 0xfffff) + 1;
-		nICSSNDROMLen = nPGMSNDROMLen;
+	//	nICSSNDROMLen = nPGMSNDROMLen; // iq_132
 
 		if (nPGMExternalARMLen == 0) nPGMExternalARMLen = 0x200000;
 	}
 
 	return 0;
+}
+
+static UINT16 ics2115_soundlatch_r(INT32 i)
+{
+	bSoundlatchRead[i] = 1;
+	return nSoundlatch[i];
+}
+
+static void ics2115_soundlatch_w(INT32 i, UINT16 d)
+{
+	nSoundlatch[i] = d;
+	bSoundlatchRead[i] = 0;
 }
 
 UINT8 __fastcall PgmReadByte(UINT32 sekAddress)
@@ -416,7 +434,7 @@ UINT8 __fastcall PgmZ80PortRead(UINT16 port)
 	switch (port >> 8)
 	{
 		case 0x80:
-			return ics2115read(port & 0xff);
+			return ics2115read(port);
 
 		case 0x81:
 			return ics2115_soundlatch_r(2) & 0xff;
@@ -438,7 +456,7 @@ void __fastcall PgmZ80PortWrite(UINT16 port, UINT8 data)
 	switch (port >> 8)
 	{
 		case 0x80:
-			ics2115write(port & 0xff, data);
+			ics2115write(port, data);
 			break;
 
 		case 0x81:
@@ -609,6 +627,11 @@ static void expand_colourdata()
 	BurnFree (tmp);
 }
 
+static void ics2115_sound_irq(INT32 nState)
+{
+	ZetSetIRQLine(0, (nState) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+}
+
 INT32 pgmInit()
 {
 	BurnSetRefreshRate((BurnDrvGetHardwareCode() & HARDWARE_IGS_JAMMAPCB) ? 59.17 : 60.00); // different?
@@ -708,7 +731,7 @@ INT32 pgmInit()
 	pgmInitDraw();
 
 	v3021Init();
-	ics2115_init();
+	ics2115_init(8468000, ics2115_sound_irq, ICSSNDROM, nPGMSNDROMLen);
 	
 	pBurnDrvPalette = (UINT32*)PGMPalRAM;
 
@@ -736,10 +759,14 @@ INT32 pgmExit()
 		Arm7Exit();
 	}
 
+	if (ICSSNDROM) {
+		BurnFree(ICSSNDROM);
+	}
+
 	BurnFree(Mem);
 
 	v3021Exit();
-	ics2115_exit(); // frees ICSSNDROM
+	ics2115_exit();
 
 	BurnFree (PGMTileROM);
 	BurnFree (PGMTileROMExp);
@@ -843,12 +870,17 @@ INT32 pgmFrame()
 			}
 		}
 
-		if (i == (PGM_INTER_LEAVE / 2) - 1 || i == (PGM_INTER_LEAVE - 1)) {
+		// run sound cpu
+		{
+			INT32 nSegment = nCyclesNext[1] - nCyclesDone[1];
+
 			if (nPgmZ80Work) {
-				nCyclesDone[1] += ZetRun( nCyclesNext[1] - nCyclesDone[1] );
+				nCyclesDone[1] += ZetRun( nSegment );
 			} else {
-				nCyclesDone[1] += nCyclesNext[1] - nCyclesDone[1];
+				nCyclesDone[1] += nSegment;
 			}
+
+			ics2115_adjust_timer(nSegment);
 		}
 
 		if (i == ((PGM_INTER_LEAVE / 2)-1) && !nPGMDisableIRQ4) {
@@ -858,9 +890,7 @@ INT32 pgmFrame()
 
 	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
-	ics2115_frame();
-
-	ics2115_update(nBurnSoundLen);
+	ics2115_update(pBurnSoundOut, nBurnSoundLen);
 
 	if (nEnableArm7) Arm7Close();
 	ZetClose();
@@ -965,6 +995,9 @@ INT32 pgmScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(nPgmZ80Work);
 
 		SCAN_VAR(nPgmCurrentBios);
+
+		SCAN_VAR(nSoundlatch);
+		SCAN_VAR(bSoundlatchRead);
 
 		ics2115_scan(nAction, pnMin);
 	}

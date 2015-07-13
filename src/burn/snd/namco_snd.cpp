@@ -9,6 +9,7 @@
 #define OUTPUT_LEVEL(n)		((n) * MIXLEVEL / chip->num_voices)
 #define WAVEFORM_POSITION(n)	(((n) >> chip->f_fracbits) & 0x1f)
 
+static INT32 enable_ram = 0; // allocate RAM?
 UINT8* NamcoSoundProm = NULL;
 
 typedef struct
@@ -472,6 +473,11 @@ static INT32 build_decoded_waveform()
 		p += size;
 	}
 
+	if (namco_wavedata == NULL) {
+		enable_ram = 1;
+		namco_wavedata = (UINT8*)malloc(0x400);
+	}
+
 	/* We need waveform data. It fails if region is not specified. */
 	if (namco_wavedata)
 	{
@@ -494,6 +500,7 @@ void NamcoSoundInit(INT32 clock, INT32 num_voices)
 	
 	namco_soundregs = (UINT8*)malloc(0x40);
 	memset(namco_soundregs, 0, 0x40);
+
 
 	chip->num_voices = num_voices;
 	chip->last_channel = chip->channel_list + chip->num_voices;
@@ -562,8 +569,17 @@ void NamcoSoundExit()
 	if (namco_soundregs) {
 		free(namco_soundregs);
 		namco_soundregs = NULL;
+
+		free (namco_wavedata);
+		namco_wavedata = NULL;
 	}
-	
+
+	if (enable_ram) {
+		free (namco_wavedata);
+		namco_wavedata = NULL;
+	}
+
+	enable_ram = 0;
 	DebugSnd_NamcoSndInitted = 0;
 }
 
@@ -586,6 +602,15 @@ void NamcoSoundScan(INT32 nAction,INT32 *pnMin)
 	ba.nAddress = 0;
 	ba.szName	= szName;
 	BurnAcb(&ba);
+
+	if (enable_ram) {
+		sprintf(szName, "NamcoSoundWaveData");
+		ba.Data		= namco_wavedata;
+		ba.nLen		= 0x400;
+		ba.nAddress = 0;
+		ba.szName	= szName;
+		BurnAcb(&ba);
+	}
 
 	sprintf(szName, "NamcoSoundRegs");
 	ba.Data		= namco_soundregs;

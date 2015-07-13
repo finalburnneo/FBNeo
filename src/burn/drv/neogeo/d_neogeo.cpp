@@ -14252,10 +14252,10 @@ struct BurnDriver BurnDrvkof98ae = {
 };
 
 // The King of Fighters '98 (Combo)
-/* hack by Ivex - 2015/06/14 version */
+/* Ivex hack - 2015/07/05 version */
 static struct BurnRomInfo kof98cbRomDesc[] = {
-	{ "242cb-p1.p1", 	0x100000, 0x1df50acf, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-	{ "242cb-p2.p2", 	0x400000, 0x0e4c921c, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "242cb-p1.p1", 	0x100000, 0xfe8c3218, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "242cb-p2.p2", 	0x400000, 0x30477896, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "242cb-s1.s1", 	0x020000, 0x7333d8b0, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -14281,7 +14281,7 @@ STD_ROM_FN(kof98cb)
 
 struct BurnDriver BurnDrvkof98cb = {
 	"kof98cb", "kof98", "neogeo", NULL, "2015",
-	"The King of Fighters '98 (Combo)\0", NULL, "hack", "Neo Geo MVS",
+	"The King of Fighters '98 (Combo)\0", NULL, "bootleg", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof98cbRomInfo, kof98cbRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -14289,33 +14289,33 @@ struct BurnDriver BurnDrvkof98cb = {
 	0x1000,	304, 224, 4, 3
 };
 
-// The King of Fighters '99 (15th Anniversary Edition, Yashional hack)
-/* 2015/06/27 version */
+// The King of Fighters '99 (15th Anniversary Edition)
+/* Yashional hack - 2015/07/11 version */
 static struct BurnRomInfo kof99aeRomDesc[] = {
-	{ "152ae-p1.p1",   	   0x100000, 0x149bd289, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "152ae-p2.sp2",      0x800000, 0x9444288c, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "199-p1.bin",   	   0x100000, 0x149bd289, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "199-p2.bin",        0x800000, 0xb7e50e35, 1 | BRF_ESS | BRF_PRG }, //  1
 	
-	{ "251ae-s1.s1",       0x020000, 0x3c31ee43, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "199-s1.bin",        0x020000, 0x3c31ee43, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "251ae-c1.c1",   	   0x800000, 0x497c2e83, 3 | BRF_GRA },           //  3 Sprite data
-	{ "251ae-c2.c2",   	   0x800000, 0x0a13eeb7, 3 | BRF_GRA },           //  4 
-	{ "251-c3d.c3",   	   0x800000, 0xb047c9d5, 3 | BRF_GRA },           //  5 
-	{ "251-c4d.c4",   	   0x800000, 0x6bc8e4b1, 3 | BRF_GRA },           //  6 
-	{ "251-c5d.c5",   	   0x800000, 0x9746268c, 3 | BRF_GRA },           //  7 
-	{ "251-c6d.c6",   	   0x800000, 0x238b3e71, 3 | BRF_GRA },           //  8 
-	{ "251ae-c7.c7",   	   0x800000, 0xf22760ad, 3 | BRF_GRA },           //  9 
-	{ "251ae-c8.c8",   	   0x800000, 0x396c3a70, 3 | BRF_GRA },           // 10 
-	{ "251ae-c9.c9",   	   0x800000, 0xf33d51d5, 3 | BRF_GRA },           // 11 
-	{ "251ae-c10.c10",     0x800000, 0x852770d7, 3 | BRF_GRA },           // 12 
-	{ "251ae-c11.c11",     0x800000, 0x7fe785c2, 3 | BRF_GRA },           // 13 
-	{ "251ae-c12.c12",     0x800000, 0xa7541483, 3 | BRF_GRA },           // 14 
+	{ "199-c1.bin",   	   0x800000, 0x497c2e83, 3 | BRF_GRA },           //  3 Sprite data
+	{ "199-c2.bin",   	   0x800000, 0x0a13eeb7, 3 | BRF_GRA },           //  4 
+	{ "199-c3.bin",   	   0x800000, 0xb047c9d5, 3 | BRF_GRA },           //  5 
+	{ "199-c4.bin",   	   0x800000, 0x6bc8e4b1, 3 | BRF_GRA },           //  6 
+	{ "199-c5.bin",   	   0x800000, 0x9746268c, 3 | BRF_GRA },           //  7 
+	{ "199-c6.bin",   	   0x800000, 0x238b3e71, 3 | BRF_GRA },           //  8 
+	{ "199-c7.bin",   	   0x800000, 0xf22760ad, 3 | BRF_GRA },           //  9 
+	{ "199-c8.bin",   	   0x800000, 0x396c3a70, 3 | BRF_GRA },           // 10 
+	{ "199-c9.bin",   	   0x800000, 0x86a3550d, 3 | BRF_GRA },           // 11 
+	{ "199-ca.bin",        0x800000, 0x986bb897, 3 | BRF_GRA },           // 12 
+	{ "199-cb.bin",        0x800000, 0x7fe785c2, 3 | BRF_GRA },           // 13 
+	{ "199-cc.bin",        0x800000, 0xa7541483, 3 | BRF_GRA },           // 14 
 
-	{ "251ae-m1.m1",       0x020000, 0xf847e188, 4 | BRF_ESS | BRF_PRG }, // 15 Z80 code
+	{ "199-m1.bin",        0x020000, 0xf847e188, 4 | BRF_ESS | BRF_PRG }, // 15 Z80 code
 
-	{ "251ae-v1.v1",       0x400000, 0xceaa3bae, 5 | BRF_SND },           // 16 Sound data
-	{ "251ae-v2.v2",       0x400000, 0x07d70650, 5 | BRF_SND },           // 17 
-	{ "251-v3.v3",         0x400000, 0x821901da, 5 | BRF_SND },           // 18 
-	{ "251-v4.v4",         0x200000, 0xb49e6178, 5 | BRF_SND },           // 19 
+	{ "199-v1.bin",        0x400000, 0xceaa3bae, 5 | BRF_SND },           // 16 Sound data
+	{ "199-v2.bin",        0x400000, 0x07d70650, 5 | BRF_SND },           // 17 
+	{ "199-v3.bin",        0x400000, 0x821901da, 5 | BRF_SND },           // 18 
+	{ "199-v4.bin",        0x200000, 0xb49e6178, 5 | BRF_SND },           // 19 
 };
 
 STDROMPICKEXT(kof99ae, kof99ae, neogeo)
@@ -14323,7 +14323,7 @@ STD_ROM_FN(kof99ae)
 
 struct BurnDriver BurnDrvkof99ae = {
 	"kof99ae", "kof99", "neogeo", NULL, "2015",
-	"The King of Fighters '99 (15th Anniversary Edition, Yashional hack)\0", NULL, "SNK", "Neo Geo MVS",
+	"The King of Fighters '99 (15th Anniversary Edition)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof99aeRomInfo, kof99aeRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

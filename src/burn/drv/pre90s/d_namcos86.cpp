@@ -547,7 +547,7 @@ static void namco_63701x_update(INT16 *outputs, INT32  samples)
 
 	INT16 t_samples[100];
 
-	memset (t_samples, 0, 100 * sizeof(INT16));
+	memset (t_samples, 0, sizeof(t_samples));
 
 	for (INT32 ch = 0; ch < 2; ch++)
 	{
@@ -1032,12 +1032,12 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	BurnYM2151Reset();
 
 	buffer_sprites = 0;
-	watchdog = 0;	
+	watchdog = 0;
 	watchdog1 = 0;
 	backcolor = 0;
 	tilebank = 0;
-	memset (scroll, 0, 4*3);
-	memset (nBankData, 0, 2);
+	memset (scroll, 0, sizeof(scroll));
+	memset (nBankData, 0, sizeof(nBankData));
 
 	return 0;
 }
@@ -1655,10 +1655,7 @@ static INT32 DrvFrame()
 		if ((i % 8) == 7) {
 			if (pBurnSoundOut) {
 				nSegment = nBurnSoundLen / (nInterleave / 8);
-	
-				//NamcoSoundUpdate(pBurnSoundOut, nSegment);
 				BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-	
 				nSoundBufferPos += nSegment;
 			}
 		}
@@ -1667,10 +1664,10 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		nSegment = nBurnSoundLen - nSoundBufferPos;
 		if (nSegment > 0) {
-			//NamcoSoundUpdate(pBurnSoundOut, nSegment);
 			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
 		}
 		NamcoSoundUpdate(pSoundBuffer, nBurnSoundLen);
+
 		for (INT32 i = 0; i < nBurnSoundLen; i++) { // mix the unmixable
 			pBurnSoundOut[(i << 1) + 0] += pSoundBuffer[(i << 1) + 0];
 			pBurnSoundOut[(i << 1) + 1] += pSoundBuffer[(i << 1) + 1];
@@ -1705,7 +1702,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		*pnMin = 0x029707;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -1714,20 +1711,18 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 
 		M6809Scan(nAction);
-
 		HD63701Scan(nAction);
 
 		NamcoSoundScan(nAction, pnMin);
+		BurnYM2151Scan(nAction);
 
 		SCAN_VAR(m_voices);
-
 		SCAN_VAR(buffer_sprites);
 		SCAN_VAR(watchdog1);
 		SCAN_VAR(backcolor);
 		SCAN_VAR(tilebank);
 		SCAN_VAR(scroll);
-		SCAN_VAR(nBankData[0]);
-		SCAN_VAR(nBankData[1]);
+		SCAN_VAR(nBankData);
 	}
 
 	if (nAction & ACB_WRITE) {

@@ -351,8 +351,9 @@ void BurnSampleInitOne(INT32 sample)
 		int i = 0;
 		while (i < nTotalSamples) {
 			
-			if (clr_ptr->data != NULL && clr_ptr->playing == 0 && i != sample && (clr_ptr->flags & SAMPLE_NOSTORE)) {
+			if (clr_ptr->data != NULL && i != sample && (clr_ptr->flags & SAMPLE_NOSTORE)) {
 				free(clr_ptr->data);
+				clr_ptr->playing = 0;
 				clr_ptr->data = NULL;
 			}
 

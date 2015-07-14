@@ -57,12 +57,12 @@ static UINT8 DrvReset;
 
 struct voice_63701x
 {
-	int select;
-	int playing;
-	int base_addr;
-	int position;
-	int volume;
-	int silence_counter;
+	INT32 select;
+	INT32 playing;
+	INT32 base_addr;
+	INT32 position;
+	INT32 volume;
+	INT32 silence_counter;
 };
 
 struct voice_63701x m_voices[2];
@@ -537,8 +537,6 @@ static void namco_63701x_write(INT32 offset, UINT8 data)
 			m_voices[ch].position = (DrvSndROM[rom_offs] << 8) + DrvSndROM[rom_offs+1];
 			m_voices[ch].volume = data >> 6;
 			m_voices[ch].silence_counter = 0;
-
-			m_voices[ch].position = (m_voices[ch].position * nBurnSoundLen) / 100 /*6000 / 60fps clock */;
 		}
 	}
 }

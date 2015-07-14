@@ -138,7 +138,9 @@ static INT32 svg_asic27aScan(INT32 nAction,INT32 *)
 	}
 
 	if (nAction & ACB_WRITE) {
+		SekOpen(0);
 		svg_set_ram_bank(svg_ram_sel);
+		SekClose();
 	}
 
  	return 0;

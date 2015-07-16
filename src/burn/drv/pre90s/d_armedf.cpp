@@ -2,6 +2,7 @@
 // Based on MAME driver by Carlos A. Lozano, Phil Stroffolino, and Takahiro Nogi
 //
 // nb1414m4 hooked up to Kozure Ookami July 8 2015 -dink
+// sprite colour lookup table support added July 15 2015 -dink
 // todo:
 //   fix foreground scrolling registers in terraf
 //   hook nb1414m4 up to other games that need it
@@ -37,6 +38,7 @@ static UINT8 *DrvFgRAM;
 static UINT8 *DrvTxRAM;
 static UINT32 *DrvPalette;
 
+static UINT16*DrvSprClut;
 static UINT16*DrvMcuCmd;
 static UINT16*DrvScroll;
 static UINT8 *DrvVidRegs;
@@ -721,6 +723,7 @@ static INT32 MemIndex()
 	AllRam		= Next;
 
 	DrvSprRAM	= Next; Next += 0x001000;
+	DrvSprClut	= (UINT16*)Next; Next += 0x001000;
 	DrvSprBuf	= Next; Next += 0x001000;
 	DrvBgRAM	= Next; Next += 0x001000;
 	DrvFgRAM	= Next; Next += 0x001000;
@@ -734,7 +737,7 @@ static INT32 MemIndex()
 	soundlatch	= Next; Next += 0x000001;
 	DrvVidRegs	= Next; Next += 0x000001;
 	DrvScroll	= (UINT16*)Next; Next += 0x000004 * sizeof(UINT16);
-	DrvMcuCmd	= (UINT16*)Next; Next += 0x000020 * sizeof(UINT16); 
+	DrvMcuCmd	= (UINT16*)Next; Next += 0x000020 * sizeof(UINT16);
 
 	DrvZ80RAM	= Next; Next += 0x004000;
 	
@@ -790,12 +793,13 @@ static void Armedf68KInit()
 {
 	SekMapMemory(Drv68KROM,		0x000000, 0x05ffff, MAP_ROM);
 	SekMapMemory(DrvSprRAM,		0x060000, 0x060fff, MAP_RAM);
+	SekMapMemory((UINT8 *)DrvSprClut,	0x06b000, 0x06bfff, MAP_RAM);
 	SekMapMemory(Drv68KRAM0,	0x061000, 0x065fff, MAP_RAM);
 	SekMapMemory(DrvBgRAM,		0x066000, 0x066fff, MAP_RAM);
 	SekMapMemory(DrvFgRAM,		0x067000, 0x067fff, MAP_RAM);
 	SekMapMemory(DrvTxRAM,		0x068000, 0x069fff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,		0x06a000, 0x06afff, MAP_RAM);
-	SekMapMemory(Drv68KRAM1,	0x06b000, 0x06bfff, MAP_RAM);
+	//SekMapMemory(Drv68KRAM1,	0x06b000, 0x06bfff, MAP_RAM); clut!
 	SekMapMemory(Drv68KRAM2,	0x06c000, 0x06c7ff, MAP_RAM);
 	SekSetWriteWordHandler(0,	armedf_write_word);
 }
@@ -804,11 +808,12 @@ static void Cclimbr268KInit()
 {
 	SekMapMemory(Drv68KROM,		0x000000, 0x05ffff, MAP_ROM);
 	SekMapMemory(DrvSprRAM,		0x060000, 0x060fff, MAP_RAM);
+	SekMapMemory((UINT8 *)DrvSprClut,	0x06c000, 0x06cfff, MAP_RAM);
 	SekMapMemory(Drv68KRAM0,	0x061000, 0x063fff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,		0x064000, 0x064fff, MAP_RAM);
 	SekMapMemory(DrvTxRAM,		0x068000, 0x069fff, MAP_RAM);
 	SekMapMemory(Drv68KRAM1,	0x06a000, 0x06a9ff, MAP_RAM);
-	SekMapMemory(Drv68KRAM2,	0x06c000, 0x06c9ff, MAP_RAM);
+	//SekMapMemory(Drv68KRAM2,	0x06c000, 0x06c9ff, MAP_RAM); clut!
 	SekMapMemory(DrvFgRAM,		0x070000, 0x070fff, MAP_RAM);
 	SekMapMemory(DrvBgRAM,		0x074000, 0x074fff, MAP_RAM);
 	SekSetWriteWordHandler(0,	cclimbr2_write_word);
@@ -1038,6 +1043,7 @@ static void draw_sprites(INT32 priority)
 		INT32 flipx = code & 0x2000;
 		INT32 flipy = code & 0x1000;
 		INT32 color =(spr[offs + 2] >> 8) & 0x1f;
+		INT32 clut  = spr[offs + 2] & 0x7f;
 		INT32 sx    = spr[offs + 3];
 		INT32 sy    = sprite_offy + 240 - (attr & 0x1ff);
 		code     &= 0xfff;
@@ -1054,7 +1060,32 @@ static void draw_sprites(INT32 priority)
 
 		if (sx < -15 || sy < -15 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		if (flipy) {
+		// Render sprites with CLUT
+		if (flipy) flipy  = 0x0f;
+		if (flipx) flipx  = 0x0f;
+		UINT8 mask = 0xf; // 15
+		UINT8 *src = DrvGfxROM3 + (code * 16 * 16);
+		UINT16 *dst;
+
+		for (INT32 y = 0; y < 16; y++, sy++) {
+			if (sy < 0 || sy >= nScreenHeight) continue;
+			dst = pTransDraw + sy * nScreenWidth;
+
+			for (INT32 x = 0; x < 16; x++, sx++) {
+				if (sx < 0 || sx >= nScreenWidth) continue;
+
+				//INT32 pxl = src[((y^flipy << 4) | x^flipx)]; <- neat mosaic effect, save/use for tshingen & p-47
+				INT32 pxl = src[(((y^flipy) << 4) | (x^flipx))];
+				if (mask == pxl) continue;
+				UINT32 nColor = (color << 4) | 0x200;
+				UINT32 clutpxl = (pxl & ~0xf) | ((DrvSprClut[clut*0x10+(pxl & 0xf)]) & 0xf);
+				dst[sx] = clutpxl | nColor;
+			}
+
+			sx -= 16;
+		}
+		// end new code */
+		/*if (flipy) {
 			if (flipx) {
 				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x200, DrvGfxROM3);
 			} else {
@@ -1066,7 +1097,7 @@ static void draw_sprites(INT32 priority)
 			} else {
 				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x200, DrvGfxROM3);
 			}
-		}
+		} */
 	}
 }
 

@@ -2474,8 +2474,8 @@ static INT32 DrvFrame()
 		nCurrentCPU = 0;
 		ZetOpen(nCurrentCPU);
 		BurnTimerUpdateYM3526(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
-		if (i == 98 && !DrvMCUInUse) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		if (i == 99 && !DrvMCUInUse) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		if (i == 94 && !DrvMCUInUse) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		//if (i == 99 && !DrvMCUInUse) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 
 		// Run Z80 #2
@@ -2486,8 +2486,8 @@ static INT32 DrvFrame()
 			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 			nCyclesSegment = ZetRun(nCyclesSegment);
 			nCyclesDone[nCurrentCPU] += nCyclesSegment;
-			if (i == 98) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			if (i == 99) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			if (i == 94) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			//if (i == 99) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			ZetClose();
 		}
 	
@@ -2495,7 +2495,7 @@ static INT32 DrvFrame()
 		if (DrvSoundCPUActive) {
 			nCurrentCPU = 2;
 			ZetOpen(nCurrentCPU);
-			BurnTimerUpdate(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
+			BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 			if (DrvSoundNmiPending) {
 				if (DrvSoundNmiEnable) {
 					ZetNmi();
@@ -2512,12 +2512,12 @@ static INT32 DrvFrame()
 				nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 				if (DrvMCUInUse == 2) {
 					nCyclesSegment = m6805Run(nCyclesSegment);
-					if (i == 49) m68705SetIrqLine(0, 1 /*ASSERT_LINE*/);
-					if (i == 99) m68705SetIrqLine(0, 0 /*CLEAR_LINE*/);
+					if (i == 49) m68705SetIrqLine(0, 1 /*ASSERT_LINE*/); // weird, but coinage issues when ack'd at 94
+					if (i == 95) m68705SetIrqLine(0, 0 /*CLEAR_LINE*/);
 				} else {
 					nCyclesSegment = M6801Run(nCyclesSegment);
-					if (i == 98) M6801SetIRQLine(0, CPU_IRQSTATUS_ACK);
-					if (i == 99) M6801SetIRQLine(0, CPU_IRQSTATUS_NONE);
+					if (i == 94) M6801SetIRQLine(0, CPU_IRQSTATUS_ACK);
+					if (i == 95) M6801SetIRQLine(0, CPU_IRQSTATUS_NONE);
 				} 
 
 				nCyclesDone[nCurrentCPU] += nCyclesSegment;
@@ -2824,7 +2824,7 @@ struct BurnDriver BurnDrvBublcave10 = {
 
 struct BurnDriver BurnDrvTokio = {
 	"tokio", NULL, NULL, NULL, "1986",
-	"Tokio / Scramble Formation (newer)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Tokio / Scramble Formation (newer)\0", "Use tokiob instead!", "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, tokioRomInfo, tokioRomName, NULL, NULL, TokioInputInfo, TokioDIPInfo,
@@ -2834,7 +2834,7 @@ struct BurnDriver BurnDrvTokio = {
 
 struct BurnDriverD BurnDrvTokioo = {
 	"tokioo", "tokio", NULL, NULL, "1986",
-	"Tokio / Scramble Formation (older)\0", NULL, "Taito Corporation", "Taito Misc",
+	"Tokio / Scramble Formation (older)\0", "Use tokiob instead!", "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, tokiooRomInfo, tokiooRomName, NULL, NULL, TokioInputInfo, TokioDIPInfo,
@@ -2844,7 +2844,7 @@ struct BurnDriverD BurnDrvTokioo = {
 
 struct BurnDriverD BurnDrvTokiou = {
 	"tokiou", "tokio", NULL, NULL, "1986",
-	"Tokio / Scramble Formation (US)\0", NULL, "Taito America Corporation (Romstar license)", "Taito Misc",
+	"Tokio / Scramble Formation (US)\0", "Use tokiob instead!", "Taito America Corporation (Romstar license)", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, tokiouRomInfo, tokiouRomName, NULL, NULL, TokioInputInfo, TokioDIPInfo,

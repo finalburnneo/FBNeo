@@ -31,12 +31,12 @@ Notes:
 #include "tiles_generic.h" // for UINT* etc
 #include "nb1414m4.h"
 
-UINT8 *blit_data = NULL;
+UINT8 *nb1414_blit_data = NULL;
 UINT32 nb1414_frame = 0;
 
 static void nichibutsu_1414m4_dma(UINT16 src,UINT16 dst,UINT16 size, UINT8 condition,UINT16 *vram)
 {
-	UINT8 * data = blit_data;
+	UINT8 * data = nb1414_blit_data;
 	int i;
 
 	for(i=0;i<size;i++)
@@ -66,7 +66,7 @@ static void nichibutsu_1414m4_fill(UINT16 dst,UINT8 tile,UINT8 pal,UINT16 *vram)
 
 static void insert_coin_msg(UINT16 *vram)
 {
-	UINT8 * data = blit_data;
+	UINT8 * data = nb1414_blit_data;
 	int credit_count = (vram[0xf] & 0xff);
 	UINT8 fl_cond = nb1414_frame & 0x10; /* for insert coin "flickering" */
 	UINT16 dst;
@@ -87,7 +87,7 @@ static void insert_coin_msg(UINT16 *vram)
 
 static void credit_msg(UINT16 *vram)
 {
-	UINT8 * data = blit_data;
+	UINT8 * data = nb1414_blit_data;
 	int credit_count = (vram[0xf] & 0xff);
 	UINT8 fl_cond = nb1414_frame & 0x10; /* for insert coin "flickering" */
 	UINT16 dst;
@@ -117,7 +117,7 @@ static void kozure_score_msg(UINT16 dst,UINT8 src_base,UINT16 *vram)
 	int i;
 	UINT8 first_digit;
 	UINT8 res;
-	UINT8 * data = blit_data;
+	UINT8 * data = nb1414_blit_data;
 
 	first_digit = 0;
 
@@ -145,7 +145,7 @@ static void kozure_score_msg(UINT16 dst,UINT8 src_base,UINT16 *vram)
 
 static void nichibutsu_1414m4_0200( UINT16 mcu_cmd,UINT16 *vram)
 {
-	UINT8 * data = blit_data;
+	UINT8 * data = nb1414_blit_data;
 	UINT16 dst;
 
 	dst = (data[0x330+((mcu_cmd & 0xf)*2)]<<8)|(data[0x331+((mcu_cmd & 0xf)*2)]&0xff);
@@ -190,7 +190,7 @@ static void nichibutsu_1414m4_0200( UINT16 mcu_cmd,UINT16 *vram)
 */
 static void nichibutsu_1414m4_0600( UINT8 is2p,UINT16 *vram)
 {
-	UINT8 * data = blit_data;
+	UINT8 * data = nb1414_blit_data;
 	UINT16 dst;
 	int i;
 
@@ -246,7 +246,7 @@ static void nichibutsu_1414m4_0600( UINT8 is2p,UINT16 *vram)
 
 static void nichibutsu_1414m4_0e00(UINT16 mcu_cmd,UINT16 *vram)
 {
-	UINT8 * data = blit_data;
+	UINT8 * data = nb1414_blit_data;
 	UINT16 dst;
 
 	dst = ((data[0xdf]<<8)|(data[0xe0]&0xff)) & 0x3fff;

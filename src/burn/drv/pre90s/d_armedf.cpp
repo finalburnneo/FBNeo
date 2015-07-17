@@ -3,9 +3,13 @@
 //
 // nb1414m4 hooked up to Kozure Ookami July 8 2015 -dink
 // sprite colour lookup table support added July 15 2015 -dink
+// -  July 16 2015  -
+// text layer priorities added, fixes certain/cutscene text effects in legion & terraf
+// fix fg layer scrolling in terraf/terrafu/terrafj
+// fix chaotic music tempo & dac sound clarity in all games -dink
+//
 // todo:
-//   fix foreground scrolling registers in terraf
-//   hook nb1414m4 up to other games that need it
+//   clean up _after_ extensive playtesting
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -442,6 +446,55 @@ void __fastcall armedf_write_word(UINT32 address, UINT16 data)
 	}
 }
 
+static UINT32 m_fg_scrolly = 0;
+static UINT32 m_fg_scrollx = 0;
+static UINT32 m_waiting_msb = 0;
+static UINT32 m_scroll_msb = 0;
+static UINT16 m_vreg = 0;
+
+void __fastcall cclimbr2_write_byte(UINT32 address, UINT8 data)
+{
+	//if (scroll_type != 0) return;
+
+	switch (address)
+	{
+		case 0x7c006: //scrolly_w
+			DrvMcuCmd[11] = data;
+			DrvMcuCmd[31] = 1;
+			m_fg_scrolly = ((data >> 8) & 0xff) | (m_fg_scrolly & 0x300);
+			m_waiting_msb = 1;
+		return;
+
+		case 0x7c008: // scrollx_w
+			if (DrvMcuCmd[31]) {
+				DrvMcuCmd[14] = data >> 4;
+				DrvMcuCmd[12] = data;
+			} else {
+				DrvMcuCmd[13] = data;
+			}
+			if (m_waiting_msb) {
+				m_scroll_msb = data >> 8;
+				m_fg_scrollx = (m_fg_scrollx & 0xff) | (((m_scroll_msb >> 4) & 3) << 8);
+				m_fg_scrolly = (m_fg_scrolly & 0xff) | (((m_scroll_msb >> 0) & 3) << 8);
+			} else {
+				m_fg_scrollx = ((data >> 8) & 0xff) | (m_fg_scrollx & 0x300);
+			}
+		return;
+
+		case 0xc0000: // msb_arm_w
+			DrvMcuCmd[31] = 0;
+			m_waiting_msb = 0;
+		return;
+	}
+}
+
+/*static void DrvClearTxtRAM() {
+	UINT16 *ram = (UINT16*)DrvTxRAM;
+	for (INT32 i = 0x10; i < 0x1000; i++) {
+		ram[i] = 0x0020;
+	}
+}*/
+
 void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
 {
 	if (scroll_type == 6 && (address & 0xffffc0) == 0x040000) {
@@ -453,31 +506,25 @@ void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
 	{
 		case 0x7c000:
 			{
-				if (Kozuremode) {
+				if (nb1414_blit_data) {
 					if(data & 0x4000 && ((*DrvVidRegs & 0x40) == 0)) { //0 -> 1 transition
 						UINT16 *ram = (UINT16*)DrvTxRAM;
-						nb_1414m4_exec((ram[0] << 8) | (ram[1] & 0xff),(UINT16*)DrvTxRAM,&DrvScroll[2],&DrvScroll[2]);
+						nb_1414m4_exec((ram[0] << 8) | (ram[1] & 0xff),(UINT16*)DrvTxRAM,&DrvScroll[2],&DrvScroll[3]);
 					}
-				} else {
-					if (scroll_type == 2) {
-						if (~data & 0x0080) {
-							memset (DrvTxRAM, 0xff, 0x2000);
-						}
-					}
-
+				}
+				/*{
 					if (scroll_type == 0 || scroll_type == 3 || scroll_type == 5 || scroll_type == 6) { // scroll6 - hack
 						if (((data & 0x4100) == 0x4000 && scroll_type != 6) ||
 							((data & 0x4100) == 0x0000 && scroll_type == 6)) {
-							UINT16 *ram = (UINT16*)DrvTxRAM;
-							for (INT32 i = 0x10; i < 0x1000; i++) {
-								ram[i] = 0x0020;
-							}
+							DrvClearTxtRAM();
 						}
 					}
-				}
+				}*/
 
-			*DrvVidRegs = data >> 8;
-			*flipscreen = (data >> 12) & 1;
+				m_vreg = data;
+
+				*DrvVidRegs = data >> 8;
+				*flipscreen = (data >> 12) & 1;
 		}
 		return;
 
@@ -489,40 +536,47 @@ void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
 			DrvScroll[1] = data & 0x1ff;
 		return;
 
-		case 0x7c00a:
-			*soundlatch = ((data & 0x7f) << 1) | 1;
-		return;
-
-		case 0x7c00e: 
-			if (scroll_type == 0 || scroll_type == 3 || scroll_type == 5) {
-				*DrvMcuCmd = data;
-			}
-		return;
-	}
-}
-
-void __fastcall cclimbr2_write_byte(UINT32 address, UINT8 data)
-{
-	if (scroll_type != 0) return;
-
-	switch (address)
-	{
-		case 0x7c006:
+		case 0x7c006: //scrolly_w
 			DrvMcuCmd[11] = data;
 			DrvMcuCmd[31] = 1;
+			m_fg_scrolly = ((data >> 8) & 0xff) | (m_fg_scrolly & 0x300);
+			m_waiting_msb = 1;
 		return;
 
-		case 0x7c008:
+		case 0x7c008: // scrollx_w
 			if (DrvMcuCmd[31]) {
 				DrvMcuCmd[14] = data >> 4;
 				DrvMcuCmd[12] = data;
 			} else {
 				DrvMcuCmd[13] = data;
 			}
+			if (m_waiting_msb) {
+				m_scroll_msb = data >> 8;
+				m_fg_scrollx = (m_fg_scrollx & 0xff) | (((m_scroll_msb >> 4) & 3) << 8);
+				m_fg_scrolly = (m_fg_scrolly & 0xff) | (((m_scroll_msb >> 0) & 3) << 8);
+			} else {
+				m_fg_scrollx = ((data >> 8) & 0xff) | (m_fg_scrollx & 0x300);
+			}
 		return;
 
-		case 0xc0000:
+		case 0xc0000: // msb_arm_w
 			DrvMcuCmd[31] = 0;
+			m_waiting_msb = 0;
+		return;
+
+		case 0x7c00a:
+			*soundlatch = ((data & 0x7f) << 1) | 1;
+		return;
+		case 0x7c00c:
+			//NOP.
+		return;
+
+		case 0x7c00e:
+			SekSetIRQLine(irqline, CPU_IRQSTATUS_NONE);
+
+			if (scroll_type == 0 || scroll_type == 3 || scroll_type == 5) {
+				*DrvMcuCmd = data;
+			}
 		return;
 	}
 }
@@ -718,7 +772,7 @@ static INT32 MemIndex()
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
 
-	blit_data   = Next; Next += 0x004000; // nb1414m4 blitter data
+	nb1414_blit_data   = Next; Next += 0x004000; // nb1414m4 blitter data
 
 	AllRam		= Next;
 
@@ -742,7 +796,7 @@ static INT32 MemIndex()
 	DrvZ80RAM	= Next; Next += 0x004000;
 	
 	if (Terrafjb) {
-		DrvZ80RAM2	= Next; Next += 0x000800;
+		DrvZ80RAM2	= Next; Next += 0x001800;
 	}
 
 	RamEnd		= Next;
@@ -978,7 +1032,7 @@ static void draw_layer(UINT8 *ram, UINT8 *gfxbase, INT32 scrollx, INT32 scrolly,
 	}
 }
 
-static void draw_txt_layer(INT32 transp)
+static void draw_txt_layer(INT32 transp, INT32 priority)
 {
 	UINT16 *vram = (UINT16*)DrvTxRAM;
 
@@ -992,7 +1046,7 @@ static void draw_txt_layer(INT32 transp)
 		if (scroll_type == 1) {
 	 		ofst = (sx << 5) | sy;
 			ofsta = 0x800;
-		} else if (scroll_type == 3 || scroll_type == 6) {
+		} else if (scroll_type == 3 || scroll_type == 6) { // legion, legionjb
 			ofst = ((sx & 0x1f) << 5) | sy | ((sx >> 5) << 11);
 		} else {
 			ofst = ((sy ^ 0x1f) << 5) | (sx & 0x1f) | ((sx >> 5) << 11);
@@ -1008,8 +1062,10 @@ static void draw_txt_layer(INT32 transp)
 		if (sx < -7 || sy < -7 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
 		INT32 attr = vram[ofst+ofsta] & 0xff;
+		INT32 category = (attr & 0x8) >> 3;
 		INT32 code = (vram[ofst] & 0xff) | ((attr & 3) << 8);
 		if (scroll_type == 3 && ofst < 0x12) continue; // ignore nb1414m4 params/fix text-garbage at the bottom of legion
+		if (category != priority) continue;
 
 		if (transp) {
 			if (*flipscreen) {
@@ -1124,14 +1180,19 @@ static INT32 DrvDraw()
 		DrvScroll[3] = (ram[11] & 0xff) | ((ram[12] & 1) << 8);
 	}
 
+	if (scroll_type == 0) { // terraf
+		DrvScroll[2] = m_fg_scrollx;
+		DrvScroll[3] = m_fg_scrolly;
+	}
+
+	if ((*DrvMcuCmd & 0x30) == 0x30 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp, 1);
 	if (*DrvVidRegs & 0x08) draw_layer(DrvBgRAM, DrvGfxROM2, DrvScroll[0], DrvScroll[1], 0x600, 0x3ff);
-	if ((*DrvMcuCmd & 0x30) == 0x30 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp);
 	if (*DrvVidRegs & 0x02) draw_sprites(2);
-	if ((*DrvMcuCmd & 0x30) == 0x20 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp);
+//	if ((*DrvMcuCmd & 0x30) == 0x20 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp);
 	if (*DrvVidRegs & 0x04) draw_layer(DrvFgRAM, DrvGfxROM1, DrvScroll[2], DrvScroll[3], 0x400, 0x7ff);
-	if ((*DrvMcuCmd & 0x30) == 0x10 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp);
+//	if ((*DrvMcuCmd & 0x30) == 0x10 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp);
 	if (*DrvVidRegs & 0x02) draw_sprites(1);
-    if ((*DrvMcuCmd & 0x30) == 0x00 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp);
+	if ((*DrvMcuCmd & 0x30) == 0x00 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp, 0);
 	if (*DrvVidRegs & 0x02) draw_sprites(0);
 
 	BurnTransferCopy(DrvPalette);
@@ -1157,9 +1218,13 @@ static INT32 DrvFrame()
 	INT32 nTotalCycles[3] = { 8000000 / 60, 4000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 	
-	INT32 Z80IRQSlice[9];
+/*	INT32 Z80IRQSlice[9];
 	for (INT32 i = 0; i < 9; i++) {
 		Z80IRQSlice[i] = (INT32)((double)((nInterleave * (i + 1)) / 10));
+	}*/
+	INT32 Z80IRQSlice[134];
+	for (INT32 i = 0; i < 133; i++) {
+		Z80IRQSlice[i] = (INT32)((double)((nInterleave * (i + 1)) / 134));
 	}
 	
 	SekOpen(0);
@@ -1177,14 +1242,20 @@ static INT32 DrvFrame()
 
 		BurnTimerUpdateYM3812(i * (nTotalCycles[1] / nInterleave));
 
-		for (INT32 j = 0; j < 9; j++) {
+		for (INT32 j = 0; j < 133; j++) {
+			if (i == Z80IRQSlice[j]) {
+				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+				nCyclesDone[1] += ZetRun(500);
+			}
+		}
+/*		for (INT32 j = 0; j < 9; j++) {
 			if (i == Z80IRQSlice[j]) {
 				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 				nCyclesDone[1] += ZetRun(3000);
 				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			}
 		}
-		
+*/
 		if (Terrafjb) {
 			ZetClose();
 			ZetOpen(1);
@@ -1206,6 +1277,82 @@ static INT32 DrvFrame()
 	
 	SekSetIRQLine(irqline, CPU_IRQSTATUS_AUTO);
 
+	ZetClose();
+	SekClose();
+
+	if (pBurnDraw) {
+		DrvDraw();
+	}
+
+	return 0;
+}
+
+static INT32 DrvFrameTerraf()
+{
+	if (DrvReset) {
+		DrvDoReset();
+	}
+
+	SekNewFrame();
+	ZetNewFrame();
+
+	AssembleInputs();
+
+	INT32 nSegment;
+	INT32 nInterleave = 100;
+	INT32 nTotalCycles[3] = { 8000000 / 60, 4000000 / 60, 4000000 / 60 };
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	
+	INT32 Z80IRQSlice[134];
+	for (INT32 i = 0; i < 133; i++) {
+		Z80IRQSlice[i] = (INT32)((double)((nInterleave * (i + 1)) / 134));
+	}
+	
+	SekOpen(0);
+	ZetOpen(0);
+	nb1414_frame++;
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		INT32 nNext;
+		
+		nNext = (i + 1) * nTotalCycles[0] / nInterleave;
+		nSegment = nNext - nCyclesDone[0];
+		nSegment = SekRun(nSegment);
+		nCyclesDone[0] += nSegment;
+
+		BurnTimerUpdateYM3812((i + 1) * (nTotalCycles[1] / nInterleave));
+
+		for (INT32 j = 0; j < 133; j++) {
+			if (i == Z80IRQSlice[j]) {
+				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+				nCyclesDone[1] += ZetRun(500);
+			}
+		}
+		
+		if (Terrafjb) {
+			ZetClose();
+			ZetOpen(1);
+			nNext = (i + 1) * nTotalCycles[2] / nInterleave;
+			nSegment = nNext - nCyclesDone[2];
+			nSegment = ZetRun(nSegment);
+			nCyclesDone[2] += nSegment;
+			ZetClose();
+			ZetOpen(0);
+		}
+
+		if (i == 93) {
+			SekSetIRQLine(irqline, CPU_IRQSTATUS_ACK);
+		}
+	}
+	
+	BurnTimerEndFrameYM3812(nTotalCycles[1]);
+	
+	if (pBurnSoundOut) {
+		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+	}
+	
 	ZetClose();
 	SekClose();
 
@@ -1532,7 +1679,7 @@ static INT32 KozureLoadRoms()
 
 	if (BurnLoadRom(DrvGfxROM3 + 0x000000,	11, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM3 + 0x020000,	12, 1)) return 1;
-	if (BurnLoadRom(blit_data,	13, 1)) return 1;
+	if (BurnLoadRom(nb1414_blit_data,	13, 1)) return 1;
 
 	return 0;
 }
@@ -1588,7 +1735,7 @@ static struct BurnRomInfo legionRomDesc[] = {
 	{ "legion.1k",	0x10000, 0xff5a0db9, 6 | BRF_GRA },           //  9 Sprites
 	{ "legion.1j",	0x10000, 0xbae220c8, 6 | BRF_GRA },           // 10
 
-	{ "lg7.bin",	0x04000, 0x533e2b58, 7 | BRF_GRA | BRF_OPT }, // 11 MCU data
+	{ "lg7.bin",	0x04000, 0x533e2b58, 7 | BRF_GRA },           // 11 MCU data
 
 	{ "legion.1i",	0x08000, 0x79f4a827, 2 | BRF_OPT },           // 12 Unknown
 };
@@ -1628,6 +1775,7 @@ static INT32 LegionInit()
 	INT32 nRet = DrvInit(LegionLoadRoms, Cclimbr268KInit, 0xc000);
 
 	if (nRet == 0) { // hack
+		if (BurnLoadRom(nb1414_blit_data,	11, 1)) return 1;
 		*((UINT16*)(Drv68KROM + 0x001d6)) = 0x0001;
 		*((UINT16*)(Drv68KROM + 0x00488)) = 0x4e71;
 	}
@@ -1637,7 +1785,7 @@ static INT32 LegionInit()
 
 struct BurnDriver BurnDrvLegion = {
 	"legion", NULL, NULL, NULL, "1987",
-	"Legion - Spinner-87 (World ver 2.03)\0", "Imperfect Graphics", "Nichibutsu", "Miscellaneous",
+	"Legion - Spinner-87 (World ver 2.03)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, legionRomInfo, legionRomName, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
@@ -1666,7 +1814,7 @@ static struct BurnRomInfo legionjRomDesc[] = {
 	{ "legion.1k",	0x10000, 0xff5a0db9, 6 | BRF_GRA },           //  9 Sprites
 	{ "legion.1j",	0x10000, 0xbae220c8, 6 | BRF_GRA },           // 10
 
-	{ "lg7.bin",	0x04000, 0x533e2b58, 7 | BRF_GRA | BRF_OPT }, // 11 MCU data
+	{ "lg7.bin",	0x04000, 0x533e2b58, 7 | BRF_GRA },           // 11 MCU data
 
 	{ "legion.1i",	0x08000, 0x79f4a827, 2 | BRF_OPT },           // 12 Unknown
 };
@@ -1676,7 +1824,7 @@ STD_ROM_FN(legionj)
 
 struct BurnDriver BurnDrvLegionj = {
 	"legionj", "legion", NULL, NULL, "1987",
-	"Chouji Meikyuu Legion (Japan ver 1.05)\0", "Imperfect Graphics", "Nichibutsu", "Miscellaneous",
+	"Chouji Meikyuu Legion (Japan ver 1.05)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, legionjRomInfo, legionjRomName, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
@@ -1752,7 +1900,7 @@ static INT32 LegionjbInit()
 
 struct BurnDriver BurnDrvLegionjb = {
 	"legionjb", "legion", NULL, NULL, "1987",
-	"Chouji Meikyuu Legion (Japan ver 1.05, bootleg)\0", "Imperfect Graphics", "Nichibutsu", "Miscellaneous",
+	"Chouji Meikyuu Legion (Japan ver 1.05, bootleg)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, legionjbRomInfo, legionjbRomName, NULL, NULL, ArmedfInputInfo, LegionDIPInfo,
@@ -1784,7 +1932,7 @@ static struct BurnRomInfo terrafRomDesc[] = {
 	{ "12.7d",		0x10000, 0x2d1f2ceb, 6 | BRF_GRA },           // 12 Sprites
 	{ "13.9d",		0x10000, 0x1d2f92d6, 6 | BRF_GRA },           // 13
 
-	{ "10.11c",		0x04000, 0xac705812, 7 | BRF_GRA | BRF_OPT }, // 14 MCU data
+	{ "10.11c",		0x04000, 0xac705812, 7 | BRF_GRA }, // 14 MCU data
 
 	{ "n82s129an.11j",	0x00100, 0x81244757, 8 | BRF_OPT },           // 15 Proms
 };
@@ -1794,25 +1942,29 @@ STD_ROM_FN(terraf)
 
 static INT32 TerrafInit()
 {
-	scroll_type = 0;
+	scroll_type = 5;
 	sprite_offy = 128;
 	irqline = 1;
 
 	INT32 nRet = DrvInit(ArmedfLoadRoms, Cclimbr268KInit, 0xf800);
-	
-	DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
-	DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
+
+	if (nRet == 0) {
+		if (BurnLoadRom(nb1414_blit_data,	14, 1)) return 1;
+
+		DACSetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(1, 0.30, BURN_SND_ROUTE_BOTH);
+	}
 	
 	return nRet;
 }
 
 struct BurnDriver BurnDrvTerraf = {
 	"terraf", NULL, NULL, NULL, "1987",
-	"Terra Force\0", "imperfect graphics", "Nichibutsu", "Miscellaneous",
+	"Terra Force\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, terrafRomInfo, terrafRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
-	TerrafInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	TerrafInit, DrvExit, DrvFrameTerraf, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
@@ -1840,7 +1992,7 @@ static struct BurnRomInfo terrafuRomDesc[] = {
 	{ "tf-003.7d",	0x10000, 0xd74085a1, 6 | BRF_GRA },           // 12 Sprites
 	{ "tf-002.9d",	0x10000, 0x148aa0c5, 6 | BRF_GRA },           // 13
 
-	{ "10.11c",		0x04000, 0xac705812, 7 | BRF_GRA | BRF_OPT }, // 14 MCU data
+	{ "10.11c",		0x04000, 0xac705812, 7 | BRF_GRA }, // 14 MCU data
 
 	{ "n82s129an.11j",	0x00100, 0x81244757, 8 | BRF_OPT },           // 15 Proms
 };
@@ -1848,7 +2000,7 @@ static struct BurnRomInfo terrafuRomDesc[] = {
 STD_ROM_PICK(terrafu)
 STD_ROM_FN(terrafu)
 
-static INT32 TerrafuInit()
+static INT32 TerrafbInit()
 {
 	scroll_type = 5;
 	sprite_offy = 128;
@@ -1864,11 +2016,11 @@ static INT32 TerrafuInit()
 
 struct BurnDriver BurnDrvTerrafu = {
 	"terrafu", "terraf", NULL, NULL, "1987",
-	"Terra Force (US)\0", "imperfect graphics", "Nichibutsu USA", "Miscellaneous",
+	"Terra Force (US)\0", NULL, "Nichibutsu USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, terrafuRomInfo, terrafuRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
-	TerrafuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	TerrafInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
@@ -1896,7 +2048,7 @@ static struct BurnRomInfo terrafjRomDesc[] = {
 	{ "tfj-12.7d",	0x10000, 0xd74085a1, 6 | BRF_GRA },           // 12 Sprites
 	{ "tfj-13.9d",	0x10000, 0x148aa0c5, 6 | BRF_GRA },           // 13
 
-	{ "10.11c",		0x04000, 0xac705812, 7 | BRF_GRA | BRF_OPT }, // 14 MCU data
+	{ "10.11c",		0x04000, 0xac705812, 7 | BRF_GRA }, // 14 MCU data
 
 	{ "n82s129an.11j",	0x00100, 0x81244757, 8 | BRF_OPT },           // 15 Proms
 };
@@ -1906,11 +2058,11 @@ STD_ROM_FN(terrafj)
 
 struct BurnDriver BurnDrvTerrafj = {
 	"terrafj", "terraf", NULL, NULL, "1987",
-	"Terra Force (Japan)\0", "imperfect graphics", "Nichibutsu Japan", "Miscellaneous",
+	"Terra Force (Japan)\0", NULL, "Nichibutsu Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, terrafjRomInfo, terrafjRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
-	TerrafuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	TerrafInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
@@ -2032,6 +2184,6 @@ struct BurnDriver BurnDrvTerrafb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, terrafbRomInfo, terrafbRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
-	TerrafuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	TerrafbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };

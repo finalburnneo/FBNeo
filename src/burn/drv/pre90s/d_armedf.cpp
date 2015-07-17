@@ -65,6 +65,7 @@ static INT32 irqline;
 
 static INT32 Terrafjb = 0;
 static INT32 Kozuremode = 0;
+static INT32 fiftysevenhertz = 0;
 
 static struct BurnInputInfo ArmedfInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"	},
@@ -963,6 +964,8 @@ static INT32 DrvExit()
 	
 	Terrafjb = 0;
 	Kozuremode = 0;
+	fiftysevenhertz = 0;
+	BurnSetRefreshRate(60.00);
 
 	return 0;
 }
@@ -1132,9 +1135,9 @@ static void draw_sprites(INT32 priority)
 
 				//INT32 pxl = src[((y^flipy << 4) | x^flipx)]; <- neat mosaic effect, save/use for tshingen & p-47
 				INT32 pxl = src[(((y^flipy) << 4) | (x^flipx))];
-				if (mask == pxl) continue;
 				UINT32 nColor = (color << 4) | 0x200;
 				UINT32 clutpxl = (pxl & ~0xf) | ((DrvSprClut[clut*0x10+(pxl & 0xf)]) & 0xf);
+				if (mask == clutpxl) continue;
 				dst[sx] = clutpxl | nColor;
 			}
 
@@ -1215,7 +1218,7 @@ static INT32 DrvFrame()
 
 	INT32 nSegment;
 	INT32 nInterleave = 100;
-	INT32 nTotalCycles[3] = { 8000000 / 60, 4000000 / 60, 4000000 / 60 };
+	INT32 nTotalCycles[3] = { 8000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 	
 /*	INT32 Z80IRQSlice[9];
@@ -1300,7 +1303,7 @@ static INT32 DrvFrameTerraf()
 
 	INT32 nSegment;
 	INT32 nInterleave = 100;
-	INT32 nTotalCycles[3] = { 8000000 / 60, 4000000 / 60, 4000000 / 60 };
+	INT32 nTotalCycles[3] = { 8000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 	
 	INT32 Z80IRQSlice[134];
@@ -1475,9 +1478,13 @@ static INT32 ArmedfInit()
 	irqline = 1;
 
 	INT32 nRet = DrvInit(ArmedfLoadRoms, Armedf68KInit, 0xf800);
-	
-	DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
-	DACSetRoute(1, 0.40, BURN_SND_ROUTE_BOTH);
+
+	if (nRet == 0) {
+		DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(1, 0.40, BURN_SND_ROUTE_BOTH);
+		BurnSetRefreshRate(57.00);
+		fiftysevenhertz = 1;
+	}
 	
 	return nRet;
 }
@@ -1953,6 +1960,8 @@ static INT32 TerrafInit()
 
 		DACSetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
 		DACSetRoute(1, 0.30, BURN_SND_ROUTE_BOTH);
+		BurnSetRefreshRate(57.00);
+		fiftysevenhertz = 1;
 	}
 	
 	return nRet;

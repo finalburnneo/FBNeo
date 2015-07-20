@@ -11682,6 +11682,30 @@ static struct BurnRomInfo VarthjRomDesc[] = {
 STD_ROM_PICK(Varthj)
 STD_ROM_FN(Varthj)
 
+static struct BurnRomInfo VarthjrRomDesc[] = {
+	{ "vaj_23b.8f",    0x080000, 0xad3d3522, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "vaj_22b.7f",    0x080000, 0x034e3e55, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "va_01.3a",      0x080000, 0xb1fb726e, BRF_GRA | CPS1_TILES }, // == va-5m.7a
+	{ "va_02.4a",      0x080000, 0x4c6588cd, BRF_GRA | CPS1_TILES }, // == va-7m.9a
+	{ "va_03.5a",      0x080000, 0x0b1ace37, BRF_GRA | CPS1_TILES }, // == va-1m.3a
+	{ "va_04.6a",      0x080000, 0x44dfe706, BRF_GRA | CPS1_TILES }, // == va-3m.5a
+
+	{ "va_09.12a",     0x010000, 0x7a99446e, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "va_18.11c",     0x020000, 0xde30510e, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "va_19.12c",     0x020000, 0x0610a4ac, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "va63b.1a",      0x000117, 0x38540e86, BRF_OPT }, // b-board PLDs
+	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
+};
+
+STD_ROM_PICK(Varthjr)
+STD_ROM_FN(Varthjr)
+
 static struct BurnRomInfo VarthuRomDesc[] = {
 	{ "vau_23a.8f",    0x080000, 0xfbe68726, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "vau_22a.7f",    0x080000, 0x0ed71bbd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -12713,6 +12737,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "varthr1"     , CPS_B_04    , mapper_VA63B , 0, NULL                },
 	{ "varthu"      , CPS_B_04    , mapper_VA63B , 0, NULL                },
 	{ "varthj"      , CPS_B_21_BT5, mapper_VA22B , 0, NULL                },
+	{ "varthjr"     , CPS_B_21_BT5, mapper_VA63B , 0, NULL                }, // CPSB test has been patched out (72=0001) register is also written to, possibly leftover from development */   
 	{ "varthb"      , CPS_B_04    , mapper_VA63B , 0, NULL                },
 	{ "willow"      , CPS_B_03    , mapper_WL24B , 0, NULL                },
 	{ "willowu"     , CPS_B_03    , mapper_WL24B , 0, NULL                },
@@ -19165,6 +19190,16 @@ struct BurnDriver BurnDrvCpsVarthj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2 ,HARDWARE_CAPCOM_CPS1, GBF_VERSHOOT, 0,
 	NULL, VarthjRomInfo, VarthjRomName, NULL, NULL, VarthInputInfo, VarthDIPInfo,
+	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
+};
+
+struct BurnDriver BurnDrvCpsVarthjr = {
+	"varthjr", "varth", NULL, NULL, "1992",
+	"Varth - operation thunderstorm (920714 Japan Resale Ver.)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2 ,HARDWARE_CAPCOM_CPS1, GBF_VERSHOOT, 0,
+	NULL, VarthjrRomInfo, VarthjrRomName, NULL, NULL, VarthInputInfo, VarthDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 224, 384, 3, 4
 };

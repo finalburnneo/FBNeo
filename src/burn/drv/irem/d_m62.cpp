@@ -4712,10 +4712,10 @@ static void KidnikiDraw()
 {
 	BurnTransferClear();
 	M62CalcPalette();
-	M62RenderBgLayer(0, 64, 0, 64, 32, 0);
-	M62RenderBgLayer(1, 64, 0, 64, 32, 0);
+	M62RenderBgLayer(0, 64 - 2, 0, 64, 32, 0);
+	M62RenderBgLayer(1, 64 - 2, 0, 64, 32, 0);
 	M62RenderSprites(0x1f, 0x00, 0x00, 64, 256);
-	M62RenderBgLayer(1, 64, 0, 64, 32, 1);
+	M62RenderBgLayer(1, 64 - 2, 0, 64, 32, 1);
 	M62RenderCharLayer(32, 64, 3, 0, 128, 0);
 	BurnTransferCopy(M62Palette);
 }

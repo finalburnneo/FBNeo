@@ -26,6 +26,8 @@ static UINT8 *DrvPromCharLookup   = NULL;
 static UINT8 *DrvPromSpriteLookup = NULL;
 static UINT8 *DrvChars            = NULL;
 static UINT8 *DrvSprites          = NULL;
+static UINT8 *DrvGfx4          = NULL; // digdug
+static UINT8 *DrvDigdugChars = NULL;
 static UINT8 *DrvTempRom          = NULL;
 static UINT32 *DrvPalette         = NULL;
 
@@ -51,6 +53,10 @@ static UINT8 PrevInValue;
 static INT32 Fetch = 0;
 static INT32 FetchMode = 0;
 static UINT8 Config1[4], Config2[4], Config3[5];
+
+static INT32 playfield, alphacolor, playenable, playcolor; // digdug
+static INT32 digdugmode;
+static UINT8 bHasSamples = 0;
 
 static INT32 nCyclesDone[3], nCyclesTotal[3];
 static INT32 nCyclesSegment;
@@ -79,20 +85,104 @@ static struct BurnInputInfo DrvInputList[] =
 
 STDINPUTINFO(Drv)
 
-static inline void DrvMakeInputs()
+static struct BurnInputInfo DigdugInputList[] =
 {
-	// Reset Inputs
-	DrvInput[0] = 0x7f;
-	DrvInput[1] = 0xff;
-	DrvInput[2] = 0xff;
+	{"P1 Coin"            , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 coin"   },
+	{"P1 Start"           , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 start"  },
+	{"P2 Coin"            , BIT_DIGITAL  , DrvInputPort0 + 1, "p2 coin"   },
+	{"P2 Start"           , BIT_DIGITAL  , DrvInputPort0 + 5, "p2 start"  },
 
-	// Compile Digital Inputs
-	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[0] -= (DrvInputPort0[i] & 1) << i;
-		DrvInput[1] -= (DrvInputPort1[i] & 1) << i;
-		DrvInput[2] -= (DrvInputPort2[i] & 1) << i;
-	}
-}
+	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort1 + 0, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort1 + 2, "p1 down"   },
+	{"P1 Left"              , BIT_DIGITAL  , DrvInputPort1 + 3, "p1 left"   },
+	{"P1 Right"             , BIT_DIGITAL  , DrvInputPort1 + 1, "p1 right"  },
+	{"P1 Fire 1"            , BIT_DIGITAL  , DrvInputPort1 + 4, "p1 fire 1" },
+	
+	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort2 + 0, "p2 up"     },
+	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort2 + 2, "p2 down"   },
+	{"P2 Left (Cocktail)"   , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 left"   },
+	{"P2 Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 right"  },
+	{"P2 Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort2 + 4, "p2 fire 1" },
+
+	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
+	{"Service"           , BIT_DIGITAL  , DrvInputPort0 + 6, "service"   },
+	{"Dip 1"             , BIT_DIPSWITCH, DrvDip + 0       , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH, DrvDip + 1       , "dip"       },
+//	{"Dip 3"             , BIT_DIPSWITCH, DrvDip + 2       , "dip"       },
+};
+
+STDINPUTINFO(Digdug)
+
+
+static struct BurnDIPInfo DigdugDIPList[]=
+{
+	{0x10, 0xff, 0xff, 0xa1, NULL		},
+	{0x11, 0xff, 0xff, 0x24, NULL		},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"		},
+	{0x10, 0x01, 0x07, 0x07, "3 Coins 1 Credits"		},
+	{0x10, 0x01, 0x07, 0x03, "2 Coins 1 Credits"		},
+	{0x10, 0x01, 0x07, 0x01, "1 Coin  1 Credits"		},
+	{0x10, 0x01, 0x07, 0x05, "2 Coins 3 Credits"		},
+	{0x10, 0x01, 0x07, 0x06, "1 Coin  2 Credits"		},
+	{0x10, 0x01, 0x07, 0x02, "1 Coin  3 Credits"		},
+	{0x10, 0x01, 0x07, 0x04, "1 Coin  6 Credits"		},
+	{0x10, 0x01, 0x07, 0x00, "1 Coin  7 Credits"		},
+
+	{0   , 0xfe, 0   ,    16, "Bonus Life"		},
+	{0x10, 0x01, 0x38, 0x20, "10K, 40K, Every 40K"		},
+	{0x10, 0x01, 0x38, 0x10, "10K, 50K, Every 50K"		},
+	{0x10, 0x01, 0x38, 0x30, "20K, 60K, Every 60K"		},
+	{0x10, 0x01, 0x38, 0x08, "20K, 70K, Every 70K"		},
+	{0x10, 0x01, 0x38, 0x28, "10K and 40K Only"		},
+	{0x10, 0x01, 0x38, 0x18, "20K and 60K Only"		},
+	{0x10, 0x01, 0x38, 0x38, "10K Only"		},
+	{0x10, 0x01, 0x38, 0x00, "None"		},
+	{0x10, 0x01, 0x38, 0x20, "20K, 60K, Every 60K"		},
+	{0x10, 0x01, 0x38, 0x10, "30K, 80K, Every 80K"		},
+	{0x10, 0x01, 0x38, 0x30, "20K and 50K Only"		},
+	{0x10, 0x01, 0x38, 0x08, "20K and 60K Only"		},
+	{0x10, 0x01, 0x38, 0x28, "30K and 70K Only"		},
+	{0x10, 0x01, 0x38, 0x18, "20K Only"		},
+	{0x10, 0x01, 0x38, 0x38, "30K Only"		},
+	{0x10, 0x01, 0x38, 0x00, "None"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x10, 0x01, 0xc0, 0x00, "1"		},
+	{0x10, 0x01, 0xc0, 0x40, "2"		},
+	{0x10, 0x01, 0xc0, 0x80, "3"		},
+	{0x10, 0x01, 0xc0, 0xc0, "5"		},
+
+	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0x11, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"		},
+	{0x11, 0x01, 0xc0, 0x00, "1 Coin  1 Credits"		},
+	{0x11, 0x01, 0xc0, 0xc0, "2 Coins 3 Credits"		},
+	{0x11, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "Freeze"		},
+	{0x11, 0x01, 0x20, 0x20, "Off"		},
+	{0x11, 0x01, 0x20, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x11, 0x01, 0x10, 0x10, "Off"		},
+	{0x11, 0x01, 0x10, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x11, 0x01, 0x08, 0x08, "No"		},
+	{0x11, 0x01, 0x08, 0x00, "Yes"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x11, 0x01, 0x04, 0x04, "Upright"		},
+	{0x11, 0x01, 0x04, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x11, 0x01, 0x03, 0x00, "Easy"		},
+	{0x11, 0x01, 0x03, 0x02, "Medium"		},
+	{0x11, 0x01, 0x03, 0x01, "Hard"		},
+	{0x11, 0x01, 0x03, 0x03, "Hardest"		},
+};
+
+STDDIPINFO(Digdug)
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
@@ -380,6 +470,41 @@ static struct BurnRomInfo GallagRomDesc[] = {
 STD_ROM_PICK(Gallag)
 STD_ROM_FN(Gallag)
 
+// Dig Dug (rev 2)
+
+static struct BurnRomInfo digdugRomDesc[] = {
+	{ "dd1a.1",	0x1000, 0xa80ec984, BRF_ESS | BRF_PRG }, //  0 maincpu
+	{ "dd1a.2",	0x1000, 0x559f00bd, BRF_ESS | BRF_PRG }, //  1
+	{ "dd1a.3",	0x1000, 0x8cbc6fe1, BRF_ESS | BRF_PRG }, //  2
+	{ "dd1a.4",	0x1000, 0xd066f830, BRF_ESS | BRF_PRG }, //  3
+
+	{ "dd1a.5",	0x1000, 0x6687933b, BRF_ESS | BRF_PRG }, //  4 sub
+	{ "dd1a.6",	0x1000, 0x843d857f, BRF_ESS | BRF_PRG }, //  5
+
+	{ "dd1.7",	0x1000, 0xa41bce72, BRF_ESS | BRF_PRG }, //  6 sub2
+
+	{ "dd1.9",	0x0800, 0xf14a6fe1, BRF_GRA }, //  7 gfx1
+
+	{ "dd1.15",	0x1000, 0xe22957c8, BRF_GRA }, //  8 gfx2
+	{ "dd1.14",	0x1000, 0x2829ec99, BRF_GRA }, //  9
+	{ "dd1.13",	0x1000, 0x458499e9, BRF_GRA }, // 10
+	{ "dd1.12",	0x1000, 0xc58252a0, BRF_GRA }, // 11
+
+	{ "dd1.11",	0x1000, 0x7b383983, BRF_GRA }, // 12 gfx3
+
+	{ "dd1.10b",	0x1000, 0x2cf399c2, BRF_GRA }, // 13 gfx4
+
+	{ "136007.113",	0x0020, 0x4cb9da99, BRF_GRA }, // 14 proms
+	{ "136007.111",	0x0100, 0x00c7c419, BRF_GRA }, // 15
+	{ "136007.112",	0x0100, 0xe9b3e08e, BRF_GRA }, // 16
+
+	{ "136007.110",	0x0100, 0x7a2815b4, BRF_GRA }, // 17 namco sound proms
+	{ "136007.109",	0x0100, 0x77245b66, BRF_GRA }, // 18
+};
+
+STD_ROM_PICK(digdug)
+STD_ROM_FN(digdug)
+
 static struct BurnSampleInfo GalagaSampleDesc[] = {
 #if !defined (ROM_VERIFY)
    { "bang.wav", SAMPLE_NOLOOP },
@@ -401,7 +526,7 @@ static INT32 MemIndex()
 	DrvPromPalette         = Next; Next += 0x00020;
 	DrvPromCharLookup      = Next; Next += 0x00100;
 	DrvPromSpriteLookup    = Next; Next += 0x00100;
-	NamcoSoundProm         = Next; Next += 0x00100;
+	NamcoSoundProm         = Next; Next += 0x00200;
 	
 	RamStart               = Next;
 
@@ -413,8 +538,10 @@ static INT32 MemIndex()
 
 	RamEnd                 = Next;
 
-	DrvChars               = Next; Next += 0x100 * 8 * 8;
-	DrvSprites             = Next; Next += 0x080 * 16 * 16;
+	DrvDigdugChars         = Next; Next += 0x180 * 8 * 8;
+	DrvGfx4                = Next; Next += 0x01000;
+	DrvChars               = Next; Next += 0x1100 * 8 * 8;
+	DrvSprites             = Next; Next += 0x1100 * 16 * 16;
 	DrvPalette             = (UINT32*)Next; Next += 576 * sizeof(UINT32);
 
 	MemEnd                 = Next;
@@ -453,15 +580,52 @@ static INT32 DrvDoReset()
 	for (INT32 i = 0; i < 16; i++) {
 		IOChipCustom[i] = 0;
 	}
+	PrevInValue = 0xff;
 
 	Fetch = 0;
 	FetchMode = 0;
 	memset(&Config1, 0, sizeof(Config1));
 	memset(&Config2, 0, sizeof(Config2));
 	memset(&Config3, 0, sizeof(Config3));
+	playfield = 0;
+	alphacolor = 0;
+	playenable = 0;
+	playcolor = 0;
 
 	return 0;
 }
+
+void __fastcall digdug_pf_latch_w(UINT16 offset, UINT8 data)
+{
+	switch (offset)
+	{
+		case 0:
+			playfield = (playfield & ~1) | (data & 1);
+			break;
+
+		case 1:
+			playfield = (playfield & ~2) | ((data << 1) & 2);
+			break;
+
+		case 2:
+			alphacolor = data & 1;
+			break;
+
+		case 3:
+			playenable = data & 1;
+			break;
+
+		case 4:
+			playcolor = (playcolor & ~1) | (data & 1);
+			break;
+
+		case 5:
+			playcolor = (playcolor & ~2) | ((data << 1) & 2);
+			break;
+	}
+}
+
+
 
 static void Namco54XXWrite(INT32 Data)
 {
@@ -590,19 +754,30 @@ UINT8 __fastcall GalagaZ80ProgRead(UINT16 a)
 			INT32 Offset = a - 0x7000;
 			
 			switch (IOChipCustomCommand) {
+				case 0xd2: {// digdug dips
+					if (digdugmode && ((Offset == 0) || (Offset == 1)))
+						return DrvDip[Offset];
+					break;
+				}
 				case 0x71:
 				case 0xb1: {
+					if (IOChipCustomCommand == 0xb1 && digdugmode) {
+						if (Offset <= 2) // status
+							return 0;
+						else
+							return 0xff;
+					}
 					if (Offset == 0) {
 						if (IOChipMode) {
-							return DrvInput[0] | DrvDip[0];
+							return DrvInput[0];// | DrvDip[0]; // dip not needed!
 						} else {
 							UINT8 In;
 							static UINT8 CoinInserted;
 							
-							In = DrvInput[0] | DrvDip[0];
+							In = DrvInput[0];// | DrvDip[0];
 							if (In != PrevInValue) {
 								if (IOChipCoinPerCredit > 0) {
-									if ((In & 0x70) != 0x70 && IOChipCredits < 99) {
+									if (((((In & 0x70) != 0x70) && !digdugmode) || (((In & 0x01) == 0) && digdugmode)) && (IOChipCredits < 99)) {
 										CoinInserted++;
 										if (CoinInserted >= IOChipCoinPerCredit) {
 											IOChipCredits += IOChipCreditPerCoin;
@@ -613,11 +788,11 @@ UINT8 __fastcall GalagaZ80ProgRead(UINT16 a)
 									IOChipCredits = 2;
 								}
 								
-								if ((In & 0x04) == 0) {
+								if (((In & 0x04) == 0 && !digdugmode) || ((In & 0x10) == 0 && digdugmode)) {
 									if (IOChipCredits >= 1) IOChipCredits--;
 								}
 							
-								if ((In & 0x08) == 0) {
+								if (((In & 0x08) == 0 && !digdugmode) || ((In & 0x20) == 0 && digdugmode)) {
 									if (IOChipCredits >= 2) IOChipCredits -= 2;
 								}
 							}
@@ -628,8 +803,35 @@ UINT8 __fastcall GalagaZ80ProgRead(UINT16 a)
 						}
 					}
 					
-					if (Offset == 1) return DrvInput[1];
-					if (Offset == 2) return DrvInput[2];
+					if (Offset == 1 || Offset == 2) {
+						INT32 jp = DrvInput[Offset];
+						static UINT8 buttonprev[3] = {0,0,0};
+//						if (buttonprev[Offset])
+						//							jp ^= 1<<5; //0x20
+						jp ^= (-buttonprev[Offset] ^ jp) & (1 << 5);
+						buttonprev[Offset] = (jp & 1 << 4) >> 4;
+
+						if (IOChipMode == 0 && digdugmode) {
+							/* check directions, according to the following 8-position rule */
+							/*         0          */
+							/*        7 1         */
+							/*       6 8 2        */
+							/*        5 3         */
+							/*         4          */
+							if ((jp & 0x01) == 0)		/* up */
+								jp = (jp & ~0x0f) | 0x00;
+							else if ((jp & 0x02) == 0)	/* right */
+								jp = (jp & ~0x0f) | 0x02;
+							else if ((jp & 0x04) == 0)	/* down */
+								jp = (jp & ~0x0f) | 0x04;
+							else if ((jp & 0x08) == 0) /* left */
+								jp = (jp & ~0x0f) | 0x06;
+							else
+								jp = (jp & ~0x0f) | 0x08;
+						}
+
+						return jp;
+					}
 				}
 			}
 			
@@ -650,7 +852,10 @@ UINT8 __fastcall GalagaZ80ProgRead(UINT16 a)
 
 void __fastcall GalagaZ80ProgWrite(UINT16 a, UINT8 d)
 {
-	if (a >= 0x6800 && a <= 0x681f) { NamcoSoundWrite(a - 0x6800, d); return; }
+	if (a >= 0x6800 && a <= 0x681f) {
+		NamcoSoundWrite(a - 0x6800, d);
+		return;
+	}
 //	bprintf(PRINT_NORMAL, _T("54XX z80 #%i Write %X, %X nbs %X\n"), ZetGetActive(), a, d, nBurnSoundLen);
 
 	switch (a) {
@@ -732,9 +937,16 @@ void __fastcall GalagaZ80ProgWrite(UINT16 a, UINT8 d)
 			
 			switch (IOChipCustomCommand) {
 				case 0xe1: {
-					if (Offset == 7) {
+					if (Offset == 7 && !digdugmode) { // galaga
 						IOChipCoinPerCredit = IOChipCustom[1];
 						IOChipCreditPerCoin = IOChipCustom[2];
+					}
+					break;
+				}
+				case 0xc1: {
+					if (Offset == 8 && digdugmode) { // digdug
+						IOChipCoinPerCredit = IOChipCustom[2] & 0x0f;
+						IOChipCreditPerCoin = IOChipCustom[3] & 0x0f;
 					}
 					break;
 				}
@@ -757,7 +969,11 @@ void __fastcall GalagaZ80ProgWrite(UINT16 a, UINT8 d)
 					IOChipMode = 1;
 					return;
 				}
-				
+				case 0xb1: {
+					IOChipCredits = 0;
+					return;
+				}
+				case 0xc1:
 				case 0xe1: {
 					IOChipCredits = 0;
 					IOChipMode = 0;
@@ -776,6 +992,7 @@ void __fastcall GalagaZ80ProgWrite(UINT16 a, UINT8 d)
 		case 0xa005:
 		case 0xa006: {
 			DrvStarControl[a - 0xa000] = d & 0x01;
+			digdug_pf_latch_w(a - 0xa000, d);
 			return;
 		}
 		
@@ -796,6 +1013,21 @@ static INT32 CharYOffsets[8]       = { 0, 8, 16, 24, 32, 40, 48, 56 };
 static INT32 SpritePlaneOffsets[2] = { 0, 4 };
 static INT32 SpriteXOffsets[16]    = { 0, 1, 2, 3, 64, 65, 66, 67, 128, 129, 130, 131, 192, 193, 194, 195 };
 static INT32 SpriteYOffsets[16]    = { 0, 8, 16, 24, 32, 40, 48, 56, 256, 264, 272, 280, 288, 296, 304, 312 };
+
+static INT32 DigdugCharPlaneOffsets[2] = { 0 };
+static INT32 DigdugCharXOffsets[8] = { STEP8(7,-1) };
+static INT32 DigdugCharYOffsets[8] = { STEP8(0,8) };
+
+/*static const gfx_layout charlayout_digdug =
+{
+	8,8,
+	RGN_FRAC(1,1),
+	1,
+	{ 0 },
+	{ STEP8(7,-1) },
+	{ STEP8(0,8) },
+	8*8
+}; */
 
 static void MachineInit()
 {
@@ -863,6 +1095,7 @@ static void MachineInit()
 	NacmoSoundSetAllRoutes(0.90 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 	BurnSampleInit(1);
 	BurnSampleSetAllRoutesAllSamples(0.55, BURN_SND_ROUTE_BOTH);
+	bHasSamples = BurnSampleGetStatus(0) != -1;
 
 	GenericTilesInit();
 
@@ -968,6 +1201,69 @@ static INT32 GallagInit()
 	return 0;
 }
 
+static INT32 DrvDigdugInit()
+{
+	INT32 nRet = 0, nLen;
+
+	// Allocate and Blank all required memory
+	Mem = NULL;
+	MemIndex();
+	nLen = MemEnd - (UINT8 *)0;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(Mem, 0, nLen);
+	MemIndex();
+
+	DrvTempRom = (UINT8 *)BurnMalloc(0x10000);
+
+	// Load Z80 #1 Program Roms
+	nRet = BurnLoadRom(DrvZ80Rom1 + 0x00000,  0, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvZ80Rom1 + 0x01000,  1, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvZ80Rom1 + 0x02000,  2, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvZ80Rom1 + 0x03000,  3, 1); if (nRet != 0) return 1;
+	
+	// Load Z80 #2 Program Roms
+	nRet = BurnLoadRom(DrvZ80Rom2 + 0x00000,  4, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvZ80Rom2 + 0x01000,  5, 1); if (nRet != 0) return 1;
+	
+	// Load Z80 #3 Program Roms
+	nRet = BurnLoadRom(DrvZ80Rom3 + 0x00000,  6, 1); if (nRet != 0) return 1;
+
+	memset(DrvTempRom, 0, 0x10000);
+	// Load and decode the chars 8x8 (in digdug)
+	nRet = BurnLoadRom(DrvTempRom,            7, 1); if (nRet != 0) return 1;
+	GfxDecode(0x80, 1, 8, 8, DigdugCharPlaneOffsets, DigdugCharXOffsets, DigdugCharYOffsets, 0x40, DrvTempRom, DrvDigdugChars);
+	
+	// Load and decode the sprites
+	memset(DrvTempRom, 0, 0x10000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000,  8, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x01000,  9, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x02000, 10, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x03000, 11, 1); if (nRet != 0) return 1;
+	GfxDecode(0x80 + 0x80, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x200, DrvTempRom, DrvSprites);
+
+	memset(DrvTempRom, 0, 0x10000);
+	// Load and decode the chars 2bpp
+	nRet = BurnLoadRom(DrvTempRom,           12, 1); if (nRet != 0) return 1;
+	GfxDecode(0x100, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x80, DrvTempRom, DrvChars);
+
+	// Load gfx4 - the playfield data
+	nRet = BurnLoadRom(DrvGfx4,              13, 1); if (nRet != 0) return 1;
+
+	// Load the PROMs
+	nRet = BurnLoadRom(DrvPromPalette,       14, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvPromSpriteLookup,  15, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvPromCharLookup,    16, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(NamcoSoundProm,       17, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(NamcoSoundProm + 0x0100, 18, 1); if (nRet != 0) return 1;
+	
+	BurnFree(DrvTempRom);
+	digdugmode = 1;
+
+	MachineInit();
+
+	return 0;
+}
+
 static INT32 DrvExit()
 {
 	GenericTilesExit();
@@ -998,6 +1294,7 @@ static INT32 DrvExit()
 	for (INT32 i = 0; i < 16; i++) {
 		IOChipCustom[i] = 0;
 	}
+	digdugmode = 0;
 
 	return 0;
 }
@@ -1051,6 +1348,74 @@ static void DrvCalcPalette()
 	for (i = 0; i < 64; i++) {
 		DrvPalette[512 + i] = Palette[32 + i];
 	}
+}
+
+static void DrvCalcPaletteDigdug()
+{
+	INT32 i;
+	UINT32 Palette[96];
+	
+	for (i = 0; i < 32; i++) {
+		INT32 bit0, bit1, bit2, r, g, b;
+		
+		bit0 = (DrvPromPalette[i] >> 0) & 0x01;
+		bit1 = (DrvPromPalette[i] >> 1) & 0x01;
+		bit2 = (DrvPromPalette[i] >> 2) & 0x01;
+		r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+		bit0 = (DrvPromPalette[i] >> 3) & 0x01;
+		bit1 = (DrvPromPalette[i] >> 4) & 0x01;
+		bit2 = (DrvPromPalette[i] >> 5) & 0x01;
+		g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+		bit0 = 0;
+		bit1 = (DrvPromPalette[i] >> 6) & 0x01;
+		bit2 = (DrvPromPalette[i] >> 7) & 0x01;
+		b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+		
+		Palette[i] = BurnHighCol(r, g, b, 0);
+	}
+
+	/* characters - direct mapping */
+	for (i = 0; i < 16; i++)
+	{
+		DrvPalette[i*2+0] = Palette[0];
+		DrvPalette[i*2+1] = Palette[i];
+	}
+
+	/* sprites */
+	//for (i = 0;i < 0x100;i++)
+	//	palette.set_pen_indirect(16*2+i, (*color_prom++ & 0x0f) + 0x10);
+	for (i = 0; i < 0x100; i++) {
+		DrvPalette[16*2+i] = Palette[(DrvPromSpriteLookup[i] & 0x0f) + 0x10];
+	}
+
+	/* bg_select */
+	//for (i = 0;i < 0x100;i++)
+	//	palette.set_pen_indirect(16*2+256+i, *color_prom++ & 0x0f);
+	for (i = 0; i < 0x100; i++) {
+		DrvPalette[16*2+256 + i] = Palette[DrvPromCharLookup[i] & 0x0f];
+	}
+}
+
+UINT32 transpen_mask(INT32 color, INT32 transcolor)
+{
+	UINT32 entry = 0 + color; //gfx.colorbase() + (color % gfx.colors()) * gfx.granularity();
+
+	// make sure we are in range
+	//assert(entry < m_indirect_pens.count());
+	//assert(gfx.depth() <= 32);
+
+	// either gfx->color_depth entries or as many as we can get up until the end
+	INT32 count = 0x100 - entry;//MIN(gfx.depth(), m_indirect_pens.count() - entry);
+
+	// set a bit anywhere the transcolor matches
+	UINT32 mask = 0;
+	UINT8 *m_indirect_pens = DrvPromSpriteLookup; // sprites in digdug
+	for (INT32 bit = 0; bit < count; bit++)
+		if (m_indirect_pens[entry++] == transcolor)
+			mask |= 1 << bit;
+
+	// return the final mask
+	return mask;
 }
 
 struct Star {
@@ -1387,6 +1752,76 @@ static void DrvRenderTilemap()
 	}
 }
 
+static void digdugchars()
+{
+	INT32 mx, my, Code, Colour, x, y, TileIndex, Row, Col;
+	UINT8 *pf = DrvGfx4 + (playfield << 10);
+	UINT8 pfval;
+	UINT32 pfcolor = playcolor;
+	//UINT32 pfColour;
+	pfcolor <<= 4;
+
+	if (playenable != 0)
+		pf = NULL;
+
+	for (mx = 0; mx < 28; mx++) {
+		for (my = 0; my < 36; my++) {
+			Row = mx + 2;
+			Col = my - 2;
+			if (Col & 0x20) {
+				TileIndex = Row + ((Col & 0x1f) << 5);
+			} else {
+				TileIndex = Col + (Row << 5);
+			}
+
+			Code = DrvVideoRam[TileIndex];
+			Colour = ((Code >> 4) & 0x0e) | ((Code >> 3) & 2);
+			Code &= 0x7f;
+
+			y = 8 * mx;
+			x = 8 * my;
+			
+			if (DrvFlipScreen) {
+				x = 280 - x;
+				y = 216 - y;
+			}
+
+			if (pf) {
+				// Draw playfield / background
+				pfval = pf[TileIndex&0xfff];
+				INT32 pfColour = (pfval >> 4) + pfcolor;
+				if (x > 8 && x < 280 && y > 8 && y < 216) {
+					if (DrvFlipScreen) {
+						Render8x8Tile_FlipXY(pTransDraw, pfval, x, y, pfColour, 2, 0x120, DrvChars);
+					} else {
+						Render8x8Tile(pTransDraw, pfval, x, y, pfColour, 2, 0x120, DrvChars);
+					}
+				} else {
+					if (DrvFlipScreen) {
+						Render8x8Tile_FlipXY_Clip(pTransDraw, pfval, x, y, pfColour, 2, 0x120, DrvChars);
+					} else {
+						Render8x8Tile_Clip(pTransDraw, pfval, x, y, pfColour, 2, 0x120, DrvChars);
+					}
+				}
+			}
+			//if ((Code & 0x7f) == 0x7f) continue; // ?
+			if (x >= 0 && x <= 288 && y >= 0 && y <= 224) {
+				if (DrvFlipScreen) {
+					Render8x8Tile_Mask_FlipXY(pTransDraw, Code, x, y, Colour, 1, 0, 0, DrvDigdugChars);
+				} else {
+					Render8x8Tile_Mask(pTransDraw, Code, x, y, Colour, 1, 0, 0, DrvDigdugChars);
+				}
+			} else {
+				if (DrvFlipScreen) {
+					Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 1, 0, 0, DrvDigdugChars);
+				} else {
+					Render8x8Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 1, 0, 0, DrvDigdugChars);
+				}
+			}
+		}
+	}
+}
+
 static void DrvRenderSprites()
 {
 	UINT8 *SpriteRam1 = DrvSharedRam1 + 0x380;
@@ -1455,7 +1890,84 @@ static void DrvRenderSprites()
 	}
 }
 
-static void DrvDraw()
+static void digdug_Sprites()
+{
+	UINT8 *SpriteRam1 = DrvSharedRam1 + 0x380;
+	UINT8 *SpriteRam2 = DrvSharedRam2 + 0x380;
+	UINT8 *SpriteRam3 = DrvSharedRam3 + 0x380;
+	
+	for (INT32 Offset = 0; Offset < 0x80; Offset += 2) {
+		static const INT32 GfxOffset[2][2] = {
+			{ 0, 1 },
+			{ 2, 3 }
+		};
+		INT32 Sprite = SpriteRam1[Offset + 0];// & 0x7f;
+		INT32 Colour = SpriteRam1[Offset + 1] & 0x3f;
+		INT32 sx = SpriteRam2[Offset + 1] - 40 + 1;// + (0x100 * (SpriteRam3[Offset + 1] & 0x03));
+		INT32 sy = 256 - SpriteRam2[Offset + 0] + 1;
+		INT32 xFlip = (SpriteRam3[Offset + 0] & 0x01);
+		INT32 yFlip = (SpriteRam3[Offset + 0] & 0x02) >> 1;
+		INT32 xSize = (Sprite & 0x80) >> 7;
+		INT32 ySize = xSize;
+
+		sy -= 16 * ySize;
+		sy = (sy & 0xff) - 32;
+
+		//if (Offset > 0x22 || Offset < 0x20) continue; //(only show player sprite!)
+		//if (Offset > 0x0 || Offset < 0x20) continue; //
+		if (!xSize) continue;
+
+		if (xSize)
+			Sprite = (Sprite & 0xc0) | ((Sprite & ~0xc0) << 2);
+
+		if (DrvFlipScreen) {
+			xFlip = !xFlip;
+			yFlip = !yFlip;
+		}
+
+		for (INT32 y = 0; y <= ySize; y++) {
+			for (INT32 x = 0; x <= xSize; x++) {
+				INT32 Code = Sprite + GfxOffset[y ^ (ySize * yFlip)][x ^ (xSize * xFlip)];
+				INT32 xPos = (sx + 16 * x);
+				if (xPos < 8) xPos += 0x100; // that's a wrap!
+				if (Sprite && xSize) bprintf(0, _T("[%X]:%X,"), Offset, Colour);
+				INT32 yPos = sy + 16 * y;
+				INT32 tmask = transpen_mask(Colour, 0x1f);
+				if (xPos >= -15 && xPos <= 288 && yPos >=0 && yPos <= 224) {
+					if (xFlip) {
+						if (yFlip) {
+							Render16x16Tile_Mask_FlipXY(pTransDraw, Code, xPos, yPos, Colour, 2, tmask, 32, DrvSprites);
+						} else {
+							Render16x16Tile_Mask_FlipX(pTransDraw, Code, xPos, yPos, Colour, 2, tmask, 32, DrvSprites);
+						}
+					} else {
+						if (yFlip) {
+							Render16x16Tile_Mask_FlipY(pTransDraw, Code, xPos, yPos, Colour, 2, tmask, 32, DrvSprites);
+						} else {
+							Render16x16Tile_Mask(pTransDraw, Code, xPos, yPos, Colour, 2, tmask, 32, DrvSprites);
+						}
+					}
+				} else {
+					if (xFlip) {
+						if (yFlip) {
+							Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Code, xPos, yPos, Colour, 2, tmask, 32, DrvSprites);
+						} else {
+							Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Code, xPos, yPos, Colour, 2, tmask, 32, DrvSprites);
+						}
+					} else {
+						if (yFlip) {
+							Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Code, xPos, yPos, Colour, 2, tmask, 32, DrvSprites);
+						} else {
+							Render16x16Tile_Mask_Clip(pTransDraw, Code, xPos, yPos, Colour, 2, tmask, 32, DrvSprites);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+static INT32 DrvDraw()
 {
 	BurnTransferClear();
 	DrvCalcPalette();
@@ -1463,12 +1975,56 @@ static void DrvDraw()
 	DrvRenderStars();
 	DrvRenderSprites();	
 	BurnTransferCopy(DrvPalette);
+	return 0;
+}
+
+static INT32 DrvDigdugDraw()
+{
+	BurnTransferClear();
+	DrvCalcPaletteDigdug();
+	digdugchars();
+	digdug_Sprites();
+	BurnTransferCopy(DrvPalette);
+	return 0;
+}
+
+/*static INT32 DrvButtonHold[2] = { 0, 0 };
+static INT32 DrvButtonHoldframecnt = 0; */
+
+static inline void DrvMakeInputs()
+{
+	// Reset Inputs
+	DrvInput[0] = 0xff;
+	DrvInput[1] = 0xff;
+	DrvInput[2] = 0xff;
+
+	// Compile Digital Inputs
+	for (INT32 i = 0; i < 8; i++) {
+		DrvInput[0] -= (DrvInputPort0[i] & 1) << i;
+		DrvInput[1] -= (DrvInputPort1[i] & 1) << i;
+		DrvInput[2] -= (DrvInputPort2[i] & 1) << i;
+	}
 }
 
 static INT32 DrvFrame()
 {
 	
 	if (DrvReset) DrvDoReset();
+
+	/*if (digdugmode) {
+		DrvButtonHoldframecnt++;
+		if(DrvInputPort1[4]) {
+			DrvButtonHold[0] = 2;
+			//DrvButtonHoldframecnt = 0;
+		}
+		if(DrvButtonHold[0]) {
+			DrvButtonHold[0]--;
+		} else DrvInputPort1[4] = 0;
+
+	}
+	if(DrvInputPort1[4]) {
+		bprintf(0, _T("b1 %X.."), DrvButtonHoldframecnt);
+	}*/
 
 	DrvMakeInputs();
 	
@@ -1531,7 +2087,8 @@ static INT32 DrvFrame()
 			
 			if (nSegmentLength) {
 				NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-				BurnSampleRender(pSoundBuf, nSegmentLength);
+				if (bHasSamples)
+					BurnSampleRender(pSoundBuf, nSegmentLength);
 			}
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -1543,11 +2100,12 @@ static INT32 DrvFrame()
 
 		if (nSegmentLength) {
 			NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-			BurnSampleRender(pSoundBuf, nSegmentLength);
+			if (bHasSamples)
+				BurnSampleRender(pSoundBuf, nSegmentLength);
 		}
 	}
 
-	if (pBurnDraw) DrvDraw();
+	if (pBurnDraw) BurnDrvRedraw();
 	
 	static const INT32 Speeds[8] = { -1, -2, -3, 0, 3, 2, 1, 0 };
 
@@ -1612,7 +2170,7 @@ struct BurnDriver BurnDrvGalaga = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, DrvRomInfo, DrvRomName, GalagaSampleInfo, GalagaSampleName, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 576, 224, 288, 3, 4
 };
 
@@ -1622,7 +2180,7 @@ struct BurnDriver BurnDrvGalagao = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, GalagaoRomInfo, GalagaoRomName, GalagaSampleInfo, GalagaSampleName, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 576, 224, 288, 3, 4
 };
 
@@ -1632,7 +2190,7 @@ struct BurnDriver BurnDrvGalagamw = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, GalagamwRomInfo, GalagamwRomName, GalagaSampleInfo, GalagaSampleName, DrvInputInfo, GalagamwDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 576, 224, 288, 3, 4
 };
 
@@ -1642,7 +2200,7 @@ struct BurnDriver BurnDrvGalagamk = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, GalagamkRomInfo, GalagamkRomName, GalagaSampleInfo, GalagaSampleName, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 576, 224, 288, 3, 4
 };
 
@@ -1652,7 +2210,7 @@ struct BurnDriver BurnDrvGalagamf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, GalagamfRomInfo, GalagamfRomName, GalagaSampleInfo, GalagaSampleName, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 576, 224, 288, 3, 4
 };
 
@@ -1662,6 +2220,16 @@ struct BurnDriver BurnDrvGallag = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, GallagRomInfo, GallagRomName, GalagaSampleInfo, GalagaSampleName, DrvInputInfo, DrvDIPInfo,
-	GallagInit, DrvExit, DrvFrame, NULL, DrvScan,
+	GallagInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 576, 224, 288, 3, 4
 };
+
+struct BurnDriver BurnDrvDigdug = {
+	"digdug", NULL, NULL, NULL, "1982",
+	"Dig Dug (rev 2)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+    NULL, digdugRomInfo, digdugRomName, NULL, NULL, DigdugInputInfo, DigdugDIPInfo,
+	DrvDigdugInit, DrvExit, DrvFrame, DrvDigdugDraw, DrvScan, NULL, 576,
+	224, 288, 3, 4};
+

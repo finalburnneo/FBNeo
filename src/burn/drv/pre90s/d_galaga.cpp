@@ -1,7 +1,7 @@
 // Galaga & Dig-Dug driver for FB Alpha, based on the MAME driver by Nicola Salmoria & previous work by Martin Scragg, Mirko Buffoni, Aaron Giles
 //
 // Todo:
-//   Sticky input issue with the fire button (WIP: dink)
+//   Issue with highscore name entry, yet. related to fire button handling.
 
 
 #include "tiles_generic.h"
@@ -12,8 +12,11 @@
 static UINT8 DrvInputPort0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort2[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+static UINT8 DrvInputPort1r[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+static UINT8 DrvInputPort2r[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvDip[3]        = {0, 0, 0};
 static UINT8 DrvInput[3]      = {0x00, 0x00, 0x00};
+static UINT8 DrvInputr[3]      = {0x00, 0x00, 0x00};
 static UINT8 DrvReset         = 0;
 
 static UINT8 *Mem                 = NULL;
@@ -65,6 +68,7 @@ static INT32 digdugmode;
 static UINT8 bHasSamples = 0;
 
 static INT32 DrvButtonHold[2] = { 0, 0 };
+static INT32 DrvButtonHeld[2] = { 0, 0 };
 static INT32 DrvButtonHoldframecnt = 0;
 
 static INT32 nCyclesDone[3], nCyclesTotal[3];
@@ -725,6 +729,9 @@ static void Namco54XXWrite(INT32 Data)
 		}
 	}
 }
+static void DrvMakeInputs();
+static void makeinputsfirst();
+
 
 UINT8 __fastcall GalagaZ80ProgRead(UINT16 a)
 {
@@ -814,15 +821,8 @@ UINT8 __fastcall GalagaZ80ProgRead(UINT16 a)
 					
 					if (Offset == 1 || Offset == 2) {
 						INT32 jp = DrvInput[Offset];
-						static UINT32 buttonprev[3] = {0,0,0};
-						//						if (buttonprev[Offset])
-						//							jp ^= 1<<5; //0x20
-						jp ^= (-(buttonprev[Offset]==DrvButtonHoldframecnt-1) ^ jp) & (1 << 5);
-						//buttonprev[Offset] = (jp & 1 << 4) >> 4;
-						buttonprev[Offset]=(!((jp & 1 << 4) >> 4) ? DrvButtonHoldframecnt : 0);
-						//if (Offset==1)bprintf(0, _T("bp:%X,"), buttonprev[Offset]);
-						DrvButtonHoldframecnt++;
-
+						makeinputsfirst();
+						DrvMakeInputs();
 						if (IOChipMode == 0 && digdugmode) {
 							/* check directions, according to the following 8-position rule */
 							/*         0          */
@@ -1990,7 +1990,37 @@ static INT32 DrvDigdugDraw()
 	return 0;
 }
 
-static inline void DrvMakeInputs()
+static UINT32 buttonprev[3] = { 0, 0, 0 };
+
+static void makeinputsfirst() {
+	memcpy(DrvInputPort1r, DrvInputPort1, sizeof(DrvInputPort1r));
+	memcpy(DrvInputPort2r, DrvInputPort2, sizeof(DrvInputPort2r));
+	if (digdugmode) {
+	//	memcpy(DrvInputPort1r, DrvInputPort1, sizeof(DrvInputPort1r));
+	//	memcpy(DrvInputPort2r, DrvInputPort2, sizeof(DrvInputPort2r));
+		DrvInputPort1r[4] = 0;
+		if(DrvInputPort1[4] && !DrvButtonHeld[0]) {
+			DrvButtonHold[0] = 3;
+			DrvButtonHeld[0] = 1;
+			//bprintf(0, _T("I"));
+		} else {
+			if (!DrvInputPort1[4]) {
+				DrvButtonHeld[0] = 0;
+				//bprintf(0, _T("O"));
+			}
+		}
+
+		if(DrvButtonHold[0]) {
+			DrvButtonHold[0]--;
+			DrvInputPort1r[4] = ((DrvButtonHold[0]) ? 1 : 0);
+		} else {
+			DrvInputPort1r[4] = 0;
+		}
+		//bprintf(0, _T("%X:%X,"), DrvInputPort1r[4], DrvButtonHold[0]);
+	}
+}
+
+static void DrvMakeInputs()
 {
 	// Reset Inputs
 	DrvInput[0] = 0xff;
@@ -2000,8 +2030,16 @@ static inline void DrvMakeInputs()
 	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {
 		DrvInput[0] -= (DrvInputPort0[i] & 1) << i;
-		DrvInput[1] -= (DrvInputPort1[i] & 1) << i;
-		DrvInput[2] -= (DrvInputPort2[i] & 1) << i;
+		DrvInput[1] -= (DrvInputPort1r[i] & 1) << i;
+		DrvInput[2] -= (DrvInputPort2r[i] & 1) << i;
+	}
+
+	for (INT32 i = 1; i < 3; i++) {
+		DrvInput[i] ^= (-buttonprev[i] ^ DrvInput[i]) & (1 << 5);
+	}
+
+	for (INT32 i = 1; i < 3; i++) {
+		buttonprev[i] = (DrvInput[i] & 1 << 4)>>4;
 	}
 }
 
@@ -2010,22 +2048,9 @@ static INT32 DrvFrame()
 	
 	if (DrvReset) DrvDoReset();
 
-	/*if (digdugmode) {
-		if(DrvInputPort1[4] && !DrvButtonHold[0] && (DrvButtonHoldframecnt!=2)) {
-			DrvButtonHold[0] = 2;
-			DrvButtonHoldframecnt = 0;
-		}
-		if(DrvButtonHold[0]) {
-			DrvButtonHold[0]--;
-			DrvInputPort1[4] = 1;
-		} else DrvInputPort1[4] = 0;
+	//DrvMakeInputs();
 
-	}*/
-	/*if(!DrvInputPort1[4]) {
-		bprintf(0, _T("b1 %X.."), DrvButtonHoldframecnt);
-	}*/
-
-	DrvMakeInputs();
+	DrvButtonHoldframecnt++;
 	
 	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 1000;
@@ -2047,7 +2072,7 @@ static INT32 DrvFrame()
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
 		if (i == (nInterleave * 248 / 256) && DrvCPU1FireIRQ) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		if ((i == 0 || i % (nInterleave / 4) == 0) && IOChipCPU1FireIRQ) {
 			ZetNmi();
@@ -2062,7 +2087,7 @@ static INT32 DrvFrame()
 			nCyclesSegment = ZetRun(nCyclesSegment);
 			nCyclesDone[nCurrentCPU] += nCyclesSegment;
 			if (i == (nInterleave * 248 / 256) && DrvCPU2FireIRQ) {
-				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			}
 			ZetClose();
 		}

@@ -1,8 +1,5 @@
 // Galaga & Dig-Dug driver for FB Alpha, based on the MAME driver by Nicola Salmoria & previous work by Martin Scragg, Mirko Buffoni, Aaron Giles
-//
-// Todo:
-//   Issue with highscore name entry, yet. related to fire button handling.
-
+// Dig Dug added July 27, 2015
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -16,7 +13,6 @@ static UINT8 DrvInputPort1r[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort2r[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvDip[3]        = {0, 0, 0};
 static UINT8 DrvInput[3]      = {0x00, 0x00, 0x00};
-static UINT8 DrvInputr[3]      = {0x00, 0x00, 0x00};
 static UINT8 DrvReset         = 0;
 
 static UINT8 *Mem                 = NULL;
@@ -47,8 +43,8 @@ static UINT8 DrvCPU2Halt;
 static UINT8 DrvCPU3Halt;
 static UINT8 DrvFlipScreen;
 static UINT8 DrvStarControl[6];
-static UINT32  DrvStarScrollX;
-static UINT32  DrvStarScrollY;
+static UINT32 DrvStarScrollX;
+static UINT32 DrvStarScrollY;
 
 static UINT8 IOChipCustomCommand;
 static UINT8 IOChipCPU1FireIRQ;
@@ -62,17 +58,14 @@ static UINT8 PrevInValue;
 static INT32 Fetch = 0;
 static INT32 FetchMode = 0;
 static UINT8 Config1[4], Config2[4], Config3[5];
-
-static INT32 playfield, alphacolor, playenable, playcolor; // digdug
+// Dig Dug playfield stuff
+static INT32 playfield, alphacolor, playenable, playcolor;
 static INT32 digdugmode;
 static UINT8 bHasSamples = 0;
 
-static INT32 DrvButtonHold[2] = { 0, 0 };
-static INT32 DrvButtonHeld[2] = { 0, 0 };
-static INT32 DrvButtonHoldframecnt = 0;
-
-static INT32 nCyclesDone[3], nCyclesTotal[3];
-static INT32 nCyclesSegment;
+static INT32 DrvButtonHold[2] = { 0, 0 }; // Fire button must be held for 1 frame
+static INT32 DrvButtonHeld[2] = { 0, 0 }; // otherwise Dig Dug acts strangely.
+static INT32 DrvLastButtons;              // State of the last button press
 
 static struct BurnInputInfo DrvInputList[] =
 {
@@ -571,7 +564,8 @@ static INT32 DrvDoReset()
 	}
 	
 	BurnSampleReset();
-	
+	NamcoSoundReset();
+
 	DrvCPU1FireIRQ = 0;
 	DrvCPU2FireIRQ = 0;
 	DrvCPU3FireIRQ = 0;
@@ -729,9 +723,6 @@ static void Namco54XXWrite(INT32 Data)
 		}
 	}
 }
-static void DrvMakeInputs();
-static void makeinputsfirst();
-
 
 UINT8 __fastcall GalagaZ80ProgRead(UINT16 a)
 {
@@ -821,8 +812,7 @@ UINT8 __fastcall GalagaZ80ProgRead(UINT16 a)
 					
 					if (Offset == 1 || Offset == 2) {
 						INT32 jp = DrvInput[Offset];
-						makeinputsfirst();
-						DrvMakeInputs();
+
 						if (IOChipMode == 0 && digdugmode) {
 							/* check directions, according to the following 8-position rule */
 							/*         0          */
@@ -842,7 +832,19 @@ UINT8 __fastcall GalagaZ80ProgRead(UINT16 a)
 								jp = (jp & ~0x0f) | 0x08;
 						}
 
-						return jp;
+						INT32 joy = jp & 0x0f;
+						INT32 in, toggle;
+
+						in = ~((jp & 0xf0) >> 4);
+
+						toggle = in ^ DrvLastButtons;
+						DrvLastButtons = (DrvLastButtons & 2) | (in & 1);
+
+						/* fire */
+						joy |= ((toggle & in & 0x01)^1) << 4;
+						joy |= ((in & 0x01)^1) << 5;
+
+						return joy;
 					}
 				}
 			}
@@ -1105,7 +1107,7 @@ static void MachineInit()
 	NamcoSoundInit(18432000 / 6 / 32, 3);
 	NacmoSoundSetAllRoutes(0.90 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 	BurnSampleInit(1);
-	BurnSampleSetAllRoutesAllSamples(0.55, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetAllRoutesAllSamples(0.35, BURN_SND_ROUTE_BOTH);
 	bHasSamples = BurnSampleGetStatus(0) != -1;
 
 	GenericTilesInit();
@@ -1990,31 +1992,31 @@ static INT32 DrvDigdugDraw()
 	return 0;
 }
 
-static UINT32 buttonprev[3] = { 0, 0, 0 };
-
-static void makeinputsfirst() {
+static void DrvPreMakeInputs() {
+	// silly bit of code to keep the joystick button pressed for only 1 frame
+	// needed for proper pumping action in digdug & highscore name entry.
 	memcpy(DrvInputPort1r, DrvInputPort1, sizeof(DrvInputPort1r));
 	memcpy(DrvInputPort2r, DrvInputPort2, sizeof(DrvInputPort2r));
-	if (digdugmode) {
-	//	memcpy(DrvInputPort1r, DrvInputPort1, sizeof(DrvInputPort1r));
-	//	memcpy(DrvInputPort2r, DrvInputPort2, sizeof(DrvInputPort2r));
-		DrvInputPort1r[4] = 0;
-		if(DrvInputPort1[4] && !DrvButtonHeld[0]) {
-			DrvButtonHold[0] = 3;
-			DrvButtonHeld[0] = 1;
-			//bprintf(0, _T("I"));
-		} else {
-			if (!DrvInputPort1[4]) {
-				DrvButtonHeld[0] = 0;
-				//bprintf(0, _T("O"));
-			}
-		}
 
-		if(DrvButtonHold[0]) {
-			DrvButtonHold[0]--;
-			DrvInputPort1r[4] = ((DrvButtonHold[0]) ? 1 : 0);
-		} else {
-			DrvInputPort1r[4] = 0;
+	{
+		DrvInputPort1r[4] = 0;
+		DrvInputPort2r[4] = 0;
+		for (INT32 i = 0; i < 2; i++) {
+			if(((!i) ? DrvInputPort1[4] : DrvInputPort2[4]) && !DrvButtonHeld[i]) {
+				DrvButtonHold[i] = 2; // number of frames to be held + 1.
+				DrvButtonHeld[i] = 1;
+			} else {
+				if (((!i) ? !DrvInputPort1[4] : !DrvInputPort2[4])) {
+					DrvButtonHeld[i] = 0;
+				}
+			}
+
+			if(DrvButtonHold[i]) {
+				DrvButtonHold[i]--;
+				((!i) ? DrvInputPort1r[4] : DrvInputPort2r[4]) = ((DrvButtonHold[i]) ? 1 : 0);
+			} else {
+				(!i) ? DrvInputPort1r[4] : DrvInputPort2r[4] = 0;
+			}
 		}
 		//bprintf(0, _T("%X:%X,"), DrvInputPort1r[4], DrvButtonHold[0]);
 	}
@@ -2033,14 +2035,6 @@ static void DrvMakeInputs()
 		DrvInput[1] -= (DrvInputPort1r[i] & 1) << i;
 		DrvInput[2] -= (DrvInputPort2r[i] & 1) << i;
 	}
-
-	for (INT32 i = 1; i < 3; i++) {
-		DrvInput[i] ^= (-buttonprev[i] ^ DrvInput[i]) & (1 << 5);
-	}
-
-	for (INT32 i = 1; i < 3; i++) {
-		buttonprev[i] = (DrvInput[i] & 1 << 4)>>4;
-	}
 }
 
 static INT32 DrvFrame()
@@ -2048,33 +2042,29 @@ static INT32 DrvFrame()
 	
 	if (DrvReset) DrvDoReset();
 
-	//DrvMakeInputs();
+	DrvPreMakeInputs();
+	DrvMakeInputs();
 
-	DrvButtonHoldframecnt++;
-	
 	INT32 nSoundBufferPos = 0;
-	INT32 nInterleave = 1000;
+	INT32 nInterleave = 4000;
+	INT32 nCyclesTotal[3];
 
 	nCyclesTotal[0] = (18432000 / 6) / 60;
 	nCyclesTotal[1] = (18432000 / 6) / 60;
 	nCyclesTotal[2] = (18432000 / 6) / 60;
-	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = 0;
 	
 	ZetNewFrame();
 	
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
+		INT32 nCurrentCPU;
 		
 		nCurrentCPU = 0;
 		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == (nInterleave * 248 / 256) && DrvCPU1FireIRQ) {
+		ZetRun(nCyclesTotal[nCurrentCPU] / nInterleave);
+		if (i == (nInterleave-1 /* * 248 / 256*/) && DrvCPU1FireIRQ) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
-		if ((i == 0 || i % (nInterleave / 4) == 0) && IOChipCPU1FireIRQ) {
+		if ((i % 100==99) && IOChipCPU1FireIRQ) {
 			ZetNmi();
 		}
 		ZetClose();
@@ -2082,11 +2072,8 @@ static INT32 DrvFrame()
 		if (!DrvCPU2Halt) {
 			nCurrentCPU = 1;
 			ZetOpen(nCurrentCPU);
-			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-			nCyclesSegment = ZetRun(nCyclesSegment);
-			nCyclesDone[nCurrentCPU] += nCyclesSegment;
-			if (i == (nInterleave * 248 / 256) && DrvCPU2FireIRQ) {
+			ZetRun(nCyclesTotal[nCurrentCPU] / nInterleave);
+			if (i == (nInterleave-1 /* * 248 / 256*/) && DrvCPU2FireIRQ) {
 				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			}
 			ZetClose();
@@ -2095,11 +2082,8 @@ static INT32 DrvFrame()
 		if (!DrvCPU3Halt) {
 			nCurrentCPU = 2;
 			ZetOpen(nCurrentCPU);
-			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-			nCyclesSegment = ZetRun(nCyclesSegment);
-			nCyclesDone[nCurrentCPU] += nCyclesSegment;
-			if ((i == (nInterleave / 2) || i == (nInterleave * 248 / 256)) && DrvCPU3FireIRQ) {
+			ZetRun(nCyclesTotal[nCurrentCPU] / nInterleave);
+			if ((i == (nInterleave / 2)-25 || i == (nInterleave-1-25)) && DrvCPU3FireIRQ) {
 				ZetNmi();
 			}
 			ZetClose();

@@ -1,5 +1,3 @@
-// dink-todo:
-// hook up addtostream stuff
 /*****************************************************************************
  *
  *	POKEY chip emulator 4.3
@@ -522,7 +520,12 @@ void (*update[MAXPOKEYS])(int,INT16*,int) =
 	}
 	//timer_reset(pokey[chip].rtimer, TIME_NEVER)
 
-void pokey_update(int num, INT16 *buffer, int length) { PROCESS_POKEY(num); }
+void pokey_update(int num, INT16 *buffer, int length) {
+	if (!intf.addtostream && num == 0)
+		memset(buffer, 0, length * 4);
+	PROCESS_POKEY(num);
+}
+
 void (*update[MAXPOKEYS])(int,INT16*,int) =
 	{ pokey_update,pokey_update,pokey_update,pokey_update };
 
@@ -576,6 +579,7 @@ int PokeyInit(int sample_rate, int num, int vol, int addtostream)
 	intf.mixing_level[0] = vol;
 	intf.baseclock = FREQ_17_EXACT;
 	intf.addtostream = addtostream;
+
 	poly9 = (UINT8 *)malloc(0x1ff+1);
 	rand9 = (UINT8 *)malloc(0x1ff+1);
     poly17 = (UINT8 *)malloc(0x1ffff+1);

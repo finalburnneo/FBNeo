@@ -2,12 +2,14 @@
 // Based on MAME driver by Zsolt Vasvari
 
 // To do:
-//	Hook up pokey (once ported) and verify bootleg set 2 sound
+//  figure out why it needs to be overclocked for the music to sound right.
+//	verify bootleg set 2 sound
 
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "slapstic.h"
 #include "sn76496.h"
+#include "pokey.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -125,7 +127,7 @@ static UINT8 atetris_read(UINT16 address)
 		return atetris_slapstic_read(address);
 	}
 
-// Remove if/when Pokey support is added!
+// The following should be read through the Pokey, but.. not for now.
 #if 0
 	if (is_Bootleg)
 #endif
@@ -192,10 +194,12 @@ static void atetris_write(UINT16 address, UINT8 data)
 	{
 		switch (address & ~0x03ef)
 		{
-			case 0x2800: 	// pokey1
+			case 0x2800: // pokey1
+				pokey1_w(address - 0x2800, data);
 			return;
 
-			case 0x2810: 	// pokey2
+			case 0x2810: // pokey2
+				pokey2_w(address - 0x2800, data);
 			return;
 		}
 	}			
@@ -218,6 +222,7 @@ static void atetris_write(UINT16 address, UINT8 data)
 			// coin counter - (data & 0x20) -> 0, (data & 0x10) -> 1
 		return;
 	}
+	bprintf(0, _T("unmapped %X data %X\n"), address, data);
 }
 
 static INT32 DrvDoReset(INT32 full_reset)
@@ -312,14 +317,15 @@ static INT32 CommonInit(INT32 boot)
 	is_Bootleg = boot;
 	master_clock = boot ? (14745600 / 8) : (14318180 / 8);
 
-	if (is_Bootleg)	// Bootleg set 2 sound system
-	{
+	if (is_Bootleg) { // Bootleg set 2 sound system
 		SN76496Init(0, master_clock, 0);
 		SN76496Init(1, master_clock, 1);
 		SN76496Init(2, master_clock, 1);
 		SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 		SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 		SN76496SetRoute(2, 0.50, BURN_SND_ROUTE_BOTH);
+	} else {
+		PokeyInit(44100, 2, 6, 0);
 	}
 
 	GenericTilesInit();
@@ -337,9 +343,10 @@ static INT32 DrvExit()
 
 	M6502Exit();
 
-	if (is_Bootleg)	// Bootleg set 2 sound system
-	{
+	if (is_Bootleg) { // Bootleg set 2 sound system
 		SN76496Exit();
+	} else {
+		PokeyExit();
 	}
 	SlapsticExit();
 
@@ -402,7 +409,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 262;
-	INT32 nCyclesTotal[1] = { master_clock / 60 };
+	INT32 nCyclesTotal[1] = { master_clock*8 / 60 };
 	INT32 nCyclesDone[1] = { 0 };
 
 	M6502Open(0);
@@ -413,8 +420,9 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone[0] += M6502Run(nCyclesTotal[0] / nInterleave);
 
-		if (i == 16 || i == 48 || i == 80 || i == 112 || i == 146 || i == 176 || i == 208 || i == 240)
-			M6502SetIRQLine(0, (i & 0x20) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+		if (i%6==0) {
+			M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		}
 
 		if (i == 240) vblank = 0x40;
 	}
@@ -422,11 +430,13 @@ static INT32 DrvFrame()
 	M6502Close();
 
 	if (pBurnSoundOut) {
-		if (is_Bootleg)	// Bootleg set 2 sound system
-		{
+		if (is_Bootleg) { // Bootleg set 2 sound system
 			SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
 			SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
 			SN76496Update(2, pBurnSoundOut, nBurnSoundLen);
+		} else {
+			pokey_update(0, pBurnSoundOut, nBurnSoundLen);
+			pokey_update(1, pBurnSoundOut, nBurnSoundLen);
 		}
 	}
 

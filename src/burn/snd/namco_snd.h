@@ -6,6 +6,7 @@ void NamcoSoundInit(INT32 clock, INT32 num_voices);
 void NacmoSoundSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
 void NamcoSoundExit();
 void NamcoSoundScan(INT32 nAction,INT32 *pnMin);
+void NamcoSoundReset();
 
 void namcos1_custom30_write(INT32 offset, INT32 data);
 UINT8 namcos1_custom30_read(INT32 offset);

@@ -488,6 +488,29 @@ static INT32 build_decoded_waveform()
 	return 0;
 }
 
+void NamcoSoundReset()
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("NamcoSoundReset called without init\n"));
+#endif
+
+	sound_channel *voice;
+
+	/* reset all the voices */
+	for (voice = chip->channel_list; voice < chip->last_channel; voice++)
+	{
+		voice->frequency = 0;
+		voice->volume[0] = voice->volume[1] = 0;
+		voice->waveform_select = 0;
+		voice->counter = 0;
+		voice->noise_sw = 0;
+		voice->noise_state = 0;
+		voice->noise_seed = 1;
+		voice->noise_counter = 0;
+		voice->noise_hold = 0;
+	}
+}
+
 void NamcoSoundInit(INT32 clock, INT32 num_voices)
 {
 	DebugSnd_NamcoSndInitted = 1;
@@ -535,7 +558,7 @@ void NamcoSoundInit(INT32 clock, INT32 num_voices)
 		voice->noise_counter = 0;
 		voice->noise_hold = 0;
 	}
-	
+
 	chip->update_step = INTERNAL_RATE / nBurnSoundRate;
 	
 	chip->gain[BURN_SND_NAMCOSND_ROUTE_1] = 1.00;

@@ -142,6 +142,46 @@ static struct BurnDIPInfo PuzzloveDIPList[]=
 
 STDDIPINFO(Puzzlove)
 
+static struct BurnDIPInfo PuzzlovekDIPList[]=
+{
+	{0x13, 0xff, 0xff, 0xff, NULL			},
+	{0x14, 0xff, 0xff, 0xff, NULL			},
+	
+	{0   , 0xfe, 0   ,    2, "Demo_Sounds"	},
+	{0x14, 0x01, 0x01, 0x01, "Off"			},
+	{0x14, 0x01, 0x01, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"	},
+	{0x14, 0x01, 0x03, 0x03, "Easy"	},
+	{0x14, 0x01, 0x03, 0x02, "Very_Easy"			},
+	{0x14, 0x01, 0x03, 0x01, "Hard"			},
+	{0x14, 0x01, 0x03, 0x00, "Very_Hard"	},
+
+	{0   , 0xfe, 0   ,    8, "Coinage"		},
+	{0x14, 0x01, 0x1c, 0x10, "4 Coins 1 Credits"	},
+	{0x14, 0x01, 0x1c, 0x14, "3 Coins 1 Credits"	},
+	{0x14, 0x01, 0x1c, 0x00, "4 Coins 2 Credits"	},
+	{0x14, 0x01, 0x1c, 0x18, "2 Coins 1 Credits"	},
+	{0x14, 0x01, 0x1c, 0x04, "3 Coins 2 Credits"	},
+	{0x14, 0x01, 0x1c, 0x08, "2 Coins 2 Credits"	},
+	{0x14, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"	},
+	{0x14, 0x01, 0x1c, 0x0c, "1 Coin  2 Credits"	},
+
+	{0   , 0xfe, 0   ,    2, "Coin Box"		},
+	{0x14, 0x01, 0x20, 0x20, "1"			},
+	{0x14, 0x01, 0x20, 0x00, "2"			},
+
+	{0   , 0xfe, 0   ,    2, "Lives"		},
+	{0x14, 0x01, 0x40, 0x00, "2"			},
+	{0x14, 0x01, 0x40, 0x40, "3"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x14, 0x01, 0x80, 0x80, "Off"			},
+	{0x14, 0x01, 0x80, 0x00, "On"			},
+};
+
+STDDIPINFO(Puzzlovek)
+
 static inline void DrvPaletteUpdate(INT32 offset)
 {
 	UINT8 r,g,b;
@@ -746,6 +786,39 @@ struct BurnDriver BurnDrvPuzzlove = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, puzzloveRomInfo, puzzloveRomName, NULL, NULL, SilvmilInputInfo, PuzzloveDIPInfo,
+	puzzloveInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	320, 240, 4, 3
+};
+
+
+// PuzzLove (Korea)
+
+static struct BurnRomInfo puzzlovekRomDesc[] = {
+	{ "3.U3",		0x40000, 0x28f403f0, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "4.U2",		0x40000, 0x809371b9, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "1.UZ02",		0x20000, 0x3077e7f3, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "2.UZ11",		0x40000, 0x4c06ec68, 3 | BRF_SND },           //  3 MSM6295 Samples
+
+	{ "10.U41",		0x80000, 0x3f952c54, 4 | BRF_GRA },           //  4 Background Tiles
+	{ "9.U42",		0x80000, 0x4f71ee93, 4 | BRF_GRA },           //  5
+
+	{ "5.U53",		0x80000, 0xc5732995, 5 | BRF_GRA },           //  6 Sprites
+	{ "6.U54",		0x80000, 0xa3b98fd1, 5 | BRF_GRA },           //  7
+	{ "7.U55",		0x80000, 0xa4c73b48, 5 | BRF_GRA },           //  8
+	{ "8.U56",		0x80000, 0x95b5f049, 5 | BRF_GRA },           //  9
+};
+
+STD_ROM_PICK(puzzlovek)
+STD_ROM_FN(puzzlovek)
+
+struct BurnDriver BurnDrvPuzzlovek = {
+	"puzzlovek", "puzzlove", NULL, NULL, "1994",
+	"PuzzLove (Korea)\0", NULL, "Para", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, puzzlovekRomInfo, puzzlovekRomName, NULL, NULL, SilvmilInputInfo, PuzzlovekDIPInfo,
 	puzzloveInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	320, 240, 4, 3
 };

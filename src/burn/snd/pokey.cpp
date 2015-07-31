@@ -34,7 +34,7 @@
  *
  *****************************************************************************/
 
-#include "driver.h"
+#include "burnint.h"
 #include "pokey.h"
 
 /*
@@ -570,14 +570,15 @@ static void rand_init(UINT8 *rng, int size, int left, int right, int add)
 	}
 }
 
-int PokeyInit(int sample_rate, int num, int vol, int addtostream)
+int PokeyInit(int clock, int num, int vol, int addtostream)
 {
-	int chip;
+	int chip, sample_rate;
 
 	memset(&intf, 0, sizeof(intf));
+	sample_rate = nBurnSoundRate;
 	intf.num = num;
 	intf.mixing_level[0] = vol;
-	intf.baseclock = FREQ_17_EXACT;
+	intf.baseclock = (clock) ? clock : FREQ_17_EXACT;
 	intf.addtostream = addtostream;
 
 	poly9 = (UINT8 *)malloc(0x1ff+1);
@@ -883,7 +884,7 @@ int pokey_register_r(int chip, int offs)
 		 ****************************************************************/
 		if( p->SKCTL & SK_RESET )
 		{
-			UINT32 adjust = (UINT32)(/*timer_timeelapsed(p->rtimer)*/1234 * intf.baseclock);
+			UINT32 adjust = (UINT32)(/*timer_timeelapsed(p->rtimer)*/rand() /*dink*/ * intf.baseclock);
 			p->r9 = (p->r9 + adjust) % 0x001ff;
 			p->r17 = (p->r17 + adjust) % 0x1ffff;
 			if( p->AUDCTL & POLY9 )

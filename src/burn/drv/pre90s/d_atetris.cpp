@@ -325,7 +325,7 @@ static INT32 CommonInit(INT32 boot)
 		SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 		SN76496SetRoute(2, 0.50, BURN_SND_ROUTE_BOTH);
 	} else {
-		PokeyInit(44100, 2, 6, 0);
+		PokeyInit(0, 2, 6, 0);
 	}
 
 	GenericTilesInit();

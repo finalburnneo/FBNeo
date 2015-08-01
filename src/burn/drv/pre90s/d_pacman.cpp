@@ -2142,6 +2142,8 @@ static INT32 DrvDoReset(INT32 clear_ram)
 
 	AY8910Reset(0);
 
+	HiscoreReset();
+
 	mschamp_counter = 0;
 	cannonb_bit_to_read = 0;
 	alibaba_mystery = 0;
@@ -2854,7 +2856,7 @@ struct BurnDriver BurnDrvpuckman = {
 	"puckman", NULL, NULL, NULL, "1980",
 	"Puck Man (Japan set 1)\0", NULL, "Namco", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, puckmanRomInfo, puckmanRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2886,7 +2888,7 @@ struct BurnDriver BurnDrvpuckmanb = {
 	"puckmanb", "puckman", NULL, NULL, "1980",
 	"Puck Man (Bootleg set 1)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, puckmanbRomInfo, puckmanbRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2918,7 +2920,7 @@ struct BurnDriver BurnDrvpuckmanf = {
 	"puckmanf", "puckman", NULL, NULL, "1980",
 	"PuckMan (speedup hack)\0", NULL, "hack", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, puckmanfRomInfo, puckmanfRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2952,7 +2954,7 @@ struct BurnDriver BurnDrvpuckmanh = {
 	"puckmanh", "puckman", NULL, NULL, "1981",
 	"Puck Man (bootleg set 2)\0", NULL, "bootleg (Falcom?)", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, puckmanhRomInfo, puckmanhRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2984,7 +2986,7 @@ struct BurnDriver BurnDrvpuckmod = {
 	"puckmod", "puckman", NULL, NULL, "1981",
 	"Puck Man (Japan set 2)\0", NULL, "Namco", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, puckmodRomInfo, puckmodRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -3016,7 +3018,7 @@ struct BurnDriver BurnDrvpacman = {
 	"pacman", "puckman", NULL, NULL, "1980",
 	"Pac-Man (Midway)\0", NULL, "[Namco] (Midway license)", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, pacmanRomInfo, pacmanRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -3048,7 +3050,7 @@ struct BurnDriver BurnDrvpacmanf = {
 	"pacmanf", "puckman", NULL, NULL, "1980",
 	"Pac-Man (Midway, with speedup hack)\0", NULL, "[Namco] (Midway license)", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, pacmanfRomInfo, pacmanfRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -3635,7 +3637,7 @@ struct BurnDriver BurnDrvpacplus = {
 	"pacplus", NULL, NULL, NULL, "1982",
 	"Pac-Man Plus\0", NULL, "[Namco] (Midway license)", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, pacplusRomInfo, pacplusRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	pacplusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -3795,7 +3797,7 @@ struct BurnDriver BurnDrvmspacman = {
 	"mspacman", NULL, NULL, NULL, "1980",
 	"MS Pacman\0", NULL, "Namco", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, mspacmanRomInfo, mspacmanRomName, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	mspacmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -3830,7 +3832,7 @@ struct BurnDriver BurnDrvmspacmnf = {
 	"mspacmnf", "mspacman", NULL, NULL, "1980",
 	"Ms. Pac-Man (with speedup hack)\0", NULL, "Midway", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, mspacmnfRomInfo, mspacmnfRomName, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	mspacmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -3865,7 +3867,7 @@ struct BurnDriver BurnDrvmspacmat = {
 	"mspacmat", "mspacman", NULL, NULL, "1980",
 	"Ms. Pac Attack\0", NULL, "hack", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, mspacmatRomInfo, mspacmatRomName, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	mspacmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -3900,7 +3902,7 @@ struct BurnDriver BurnDrvmsheartb = {
 	"msheartb", "mspacman", NULL, NULL, "1980",
 	"Ms. Pac-Man Heart Burn\0", NULL, "hack (Two-Bit Score)", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, msheartbRomInfo, msheartbRomName, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	mspacmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -3939,7 +3941,7 @@ struct BurnDriver BurnDrvmspacmab = {
 	"mspacmab", "mspacman", NULL, NULL, "1981",
 	"MS Pacman (bootleg)\0", NULL, "Namco", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, mspacmabRomInfo, mspacmabRomName, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	mspacmanbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -3991,7 +3993,7 @@ struct BurnDriver BurnDrvmspacmbe = {
 	"mspacmbe", "mspacman", NULL, NULL, "1981",
 	"Ms. Pac-Man (bootleg, encrypted)\0", NULL, "bootleg", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, mspacmbeRomInfo, mspacmbeRomName, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	mspacmbeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -4060,7 +4062,7 @@ struct BurnDriver BurnDrvmspacpls = {
 	"mspacpls", "mspacman", NULL, NULL, "1981",
 	"Ms. Pac-Man Plus\0", NULL, "hack", "Pac-man",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, mspacplsRomInfo, mspacplsRomName, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	mspacmanbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4

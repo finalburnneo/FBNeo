@@ -237,6 +237,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	SlapsticReset();
 
+	HiscoreReset();
+
 	watchdog = 0;
 	nvram_enable = 0;
 
@@ -509,7 +511,7 @@ struct BurnDriver BurnDrvAtetris = {
 	"atetris", NULL, NULL, NULL, "1988",
 	"Tetris (set 1)\0", "No sound", "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, atetrisRomInfo, atetrisRomName, NULL, NULL, AtetrisInputInfo, AtetrisDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	336, 240, 4, 3
@@ -531,7 +533,7 @@ struct BurnDriver BurnDrvAtetrisa = {
 	"atetrisa", "atetris", NULL, NULL, "1988",
 	"Tetris (set 2)\0", "No sound", "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, atetrisaRomInfo, atetrisaRomName, NULL, NULL, AtetrisInputInfo, AtetrisDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	336, 240, 4, 3
@@ -555,7 +557,7 @@ struct BurnDriver BurnDrvAtetrisb = {
 	"atetrisb", "atetris", NULL, NULL, "1988",
 	"Tetris (bootleg set 1)\0", "No sound", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, atetrisbRomInfo, atetrisbRomName, NULL, NULL, AtetrisInputInfo, AtetrisDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	336, 240, 4, 3
@@ -582,7 +584,7 @@ struct BurnDriver BurnDrvAtetrisb2 = {
 	"atetrisb2", "atetris", NULL, NULL, "1988",
 	"Tetris (bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, atetrisb2RomInfo, atetrisb2RomName, NULL, NULL, AtetrisInputInfo, AtetrisDIPInfo,
 	BootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	336, 240, 4, 3
@@ -604,7 +606,7 @@ struct BurnDriver BurnDrvAtetrisc = {
 	"atetrisc", "atetris", NULL, NULL, "1989",
 	"Tetris (cocktail set 1)\0", "No sound", "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, atetriscRomInfo, atetriscRomName, NULL, NULL, AtetrisInputInfo, AtetriscDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 336, 3, 4
@@ -626,7 +628,7 @@ struct BurnDriver BurnDrvAtetrisc2 = {
 	"atetrisc2", "atetris", NULL, NULL, "1989",
 	"Tetris (cocktail set 2)\0", "No sound", "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, atetrisc2RomInfo, atetrisc2RomName, NULL, NULL, AtetrisInputInfo, AtetriscDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 336, 3, 4

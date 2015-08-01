@@ -1,4 +1,7 @@
-// Millipede emu-layer for FB Alpha by dink, based on Ivan Mackintosh Millipede/Centipede emulator and MAME driver.
+// Millipede emu-layer for FB Alpha by dink, based on Ivan Mackintosh's Millipede/Centipede emulator and MAME driver.
+// Todo:
+//   Screen flip needs fixing (2p coctail mode)
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "pokey.h"
@@ -37,6 +40,8 @@ static UINT8 DrvDip[4];
 static UINT8 DrvInput[4];
 static UINT8 DrvReset;
 
+static UINT32 centipedemode = 0;
+
 static struct BurnInputInfo MillipedInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"},
@@ -64,6 +69,97 @@ static struct BurnInputInfo MillipedInputList[] = {
 };
 
 STDINPUTINFO(Milliped)
+
+static struct BurnInputInfo CentipedInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy4 + 4,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy4 + 5,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy4 + 6,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 7,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 1"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"},
+	{"Tilt",		BIT_DIGITAL,	DrvJoy2 + 4,	"tilt"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 2,	"dip"},
+};
+
+STDINPUTINFO(Centiped)
+
+
+static struct BurnDIPInfo CentipedDIPList[]=
+{
+	{0x11, 0xff, 0xff, 0x00, NULL		},
+	{0x12, 0xff, 0xff, 0x54, NULL		},
+	{0x13, 0xff, 0xff, 0x02, NULL		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x11, 0x01, 0x10, 0x00, "Upright"		},
+	{0x11, 0x01, 0x10, 0x10, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    4, "Language"		},
+	{0x12, 0x01, 0x03, 0x00, "English"		},
+	{0x12, 0x01, 0x03, 0x01, "German"		},
+	{0x12, 0x01, 0x03, 0x02, "French"		},
+	{0x12, 0x01, 0x03, 0x03, "Spanish"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x12, 0x01, 0x0c, 0x00, "2"		},
+	{0x12, 0x01, 0x0c, 0x04, "3"		},
+	{0x12, 0x01, 0x0c, 0x08, "4"		},
+	{0x12, 0x01, 0x0c, 0x0c, "5"		},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x12, 0x01, 0x30, 0x00, "10000"		},
+	{0x12, 0x01, 0x30, 0x10, "12000"		},
+	{0x12, 0x01, 0x30, 0x20, "15000"		},
+	{0x12, 0x01, 0x30, 0x30, "20000"		},
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"		},
+	{0x12, 0x01, 0x40, 0x40, "Easy"		},
+	{0x12, 0x01, 0x40, 0x00, "Hard"		},
+
+	{0   , 0xfe, 0   ,    2, "Credit Minimum"		},
+	{0x12, 0x01, 0x80, 0x00, "1"		},
+	{0x12, 0x01, 0x80, 0x80, "2"		},
+
+	{0   , 0xfe, 0   ,    4, "Coinage"		},
+	{0x13, 0x01, 0x03, 0x03, "2 Coins 1 Credits"		},
+	{0x13, 0x01, 0x03, 0x02, "1 Coin  1 Credits"		},
+	{0x13, 0x01, 0x03, 0x01, "1 Coin  2 Credits"		},
+	{0x13, 0x01, 0x03, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    4, "Right Coin"		},
+	{0x13, 0x01, 0x0c, 0x00, "*1"		},
+	{0x13, 0x01, 0x0c, 0x04, "*4"		},
+	{0x13, 0x01, 0x0c, 0x08, "*5"		},
+	{0x13, 0x01, 0x0c, 0x0c, "*6"		},
+
+	{0   , 0xfe, 0   ,    2, "Left Coin"		},
+	{0x13, 0x01, 0x10, 0x00, "*1"		},
+	{0x13, 0x01, 0x10, 0x10, "*2"		},
+
+	{0   , 0xfe, 0   ,    6, "Bonus Coins"		},
+	{0x13, 0x01, 0xe0, 0x00, "None"		},
+	{0x13, 0x01, 0xe0, 0x20, "3 credits/2 coins"		},
+	{0x13, 0x01, 0xe0, 0x40, "5 credits/4 coins"		},
+	{0x13, 0x01, 0xe0, 0x60, "6 credits/4 coins"		},
+	{0x13, 0x01, 0xe0, 0x80, "6 credits/5 coins"		},
+	{0x13, 0x01, 0xe0, 0xa0, "4 credits/3 coins"		},
+};
+
+STDDIPINFO(Centiped)
 
 
 static struct BurnDIPInfo MillipedDIPList[]=
@@ -153,7 +249,7 @@ static struct BurnDIPInfo MillipedDIPList[]=
 
 STDDIPINFO(Milliped)
 
-void milliped_set_color(UINT16 offset, UINT8 data)
+static void milliped_set_color(UINT16 offset, UINT8 data)
 {
 	UINT32 color;
 	int bit0, bit1, bit2;
@@ -206,6 +302,55 @@ void milliped_set_color(UINT16 offset, UINT8 data)
 	}
 }
 
+static void centipede_set_color(UINT16 offset, UINT8 data)
+{
+	/* bit 2 of the output palette RAM is always pulled high, so we ignore */
+	/* any palette changes unless the write is to a palette RAM address */
+	/* that is actually used */
+	if (offset & 4)
+	{
+		INT32 color;
+
+		int r = 0xff * ((~data >> 0) & 1);
+		int g = 0xff * ((~data >> 1) & 1);
+		int b = 0xff * ((~data >> 2) & 1);
+
+		if (~data & 0x08) /* alternate = 1 */
+		{
+			/* when blue component is not 0, decrease it. When blue component is 0, */
+			/* decrease green component. */
+			if (b) b = 0xc0;
+			else if (g) g = 0xc0;
+		}
+
+		color = BurnHighCol(r, g, b, 0);
+
+		/* character colors, set directly */
+		if ((offset & 0x08) == 0)
+			DrvPalette[offset & 0x03] = color;
+
+		/* sprite colors - set all the applicable ones */
+		else
+		{
+			int i;
+
+			offset = offset & 0x03;
+
+			for (i = 0; i < 0x100; i += 4)
+			{
+				if (offset == ((i >> 2) & 0x03))
+					DrvPalette[i + 0x100 + 1] = color;
+
+				if (offset == ((i >> 4) & 0x03))
+					DrvPalette[i + 0x100 + 2] = color;
+
+				if (offset == ((i >> 6) & 0x03))
+					DrvPalette[i + 0x100 + 3] = color;
+			}
+		}
+	}
+}
+
 static void millipede_write(UINT16 address, UINT8 data)
 {
 	address &= 0x7fff; // 15bit addressing
@@ -254,9 +399,46 @@ static void millipede_write(UINT16 address, UINT8 data)
 	//bprintf(0, _T("mw %X,"), address);
 }
 
-INLINE int read_trackball(int idx, int switch_port)
+static void centipede_write(UINT16 address, UINT8 data)
 {
-	int newpos;
+	address &= 0x3fff; // 14bit addressing
+	if (address >= 0x400 && address <= 0x7bf) { // Video Ram
+		DrvVidRAM[address - 0x400] = data;
+		return;
+	}
+	if (address >= 0x7c0 && address <= 0x7ff) { // Sprite Ram
+		DrvSpriteRAM[address - 0x7c0] = data;
+		return;
+	}
+	if (address >= 0x1400 && address <= 0x140f) { // Palette Ram
+		DrvPalRAM[address - 0x1400] = data;
+		centipede_set_color(address - 0x1400, data);
+		return;
+	}
+
+	if (address >= 0x1000 && address <= 0x100f) { // Pokey #1
+		pokey1_w(address - 0x1000, data);
+		return;
+	}
+
+	switch (address)
+	{
+		case 0x1c07:
+			m_flipscreen = data >> 7;
+		return;
+		case 0x2507:
+			m_control_select = (data >> 7) & 1;
+		return;
+		case 0x1800:
+			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+		return;
+	}
+	//bprintf(0, _T("mw %X,"), address);
+}
+
+static INT32 read_trackball(INT32 idx, INT32 switch_port)
+{
+	INT32 newpos;
 
 	/* adjust idx if we're cocktail flipped */
 	if (m_flipscreen)
@@ -341,9 +523,58 @@ static UINT8 millipede_read(UINT16 address)
 	return 0;
 }
 
+static UINT8 centipede_read(UINT16 address)
+{
+	address &= 0x3fff; // 14bit addressing
+	if (address >= 0x400 && address <= 0x7bf) { // Video Ram
+		return DrvVidRAM[address - 0x400];
+	}
+	if (address >= 0x7c0 && address <= 0x7ff) { // Sprite Ram
+		return DrvSpriteRAM[address - 0x7c0];
+	}
+	if (address >= 0x1400 && address <= 0x140f) { // Palette Ram
+		return DrvPalRAM[address - 0x1400];
+	}
+	if (address >= 0x2000 && address <= 0x3fff) { // ROM
+		return Drv6502ROM[address];
+	}
+
+	switch (address)
+	{
+		case 0x0c00: return ((read_trackball(0, 0) | DrvDip[0]) & 0x3f) | ((vblank) ? 0x40 : 0x00);
+		case 0x0c01: return DrvInput[1];
+		case 0x0c02: return read_trackball(1, 2);
+		case 0x0c03: return DrvInput[3];
+		case 0x0800: return DrvDip[1];
+		case 0x0801: return DrvDip[2];
+		case 0x1000:
+		case 0x1001:
+		case 0x1002:
+		case 0x1003:
+		case 0x1004:
+		case 0x1005:
+		case 0x1006:
+		case 0x1007: return pokey1_r(address);
+		case 0x1008: return DrvDip[2];
+		case 0x1009:
+		case 0x100a:
+		case 0x100b:
+		case 0x100c:
+		case 0x100d:
+		case 0x100e:
+		case 0x100f: return pokey1_r(address);
+	}
+
+	//bprintf(0, _T("mr %X,"), address);
+
+	return 0;
+}
+
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
+	m_dsw_select = 0;
+	m_flipscreen = 0;
 
 	M6502Open(0);
 	M6502Reset();
@@ -376,7 +607,7 @@ static INT32 MemIndex()
 	return 0;
 }
 
-void init_penmask()
+static void init_penmask()
 {
 	int i;
 
@@ -446,6 +677,55 @@ static INT32 DrvInit()
 	return 0;
 }
 
+static INT32 DrvInitcentiped()
+{
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (BurnLoadRom(Drv6502ROM + 0x2000, 0, 1)) return 1;
+		if (BurnLoadRom(Drv6502ROM + 0x2800, 1, 1)) return 1;
+		if (BurnLoadRom(Drv6502ROM + 0x3000, 2, 1)) return 1;
+		if (BurnLoadRom(Drv6502ROM + 0x3800, 3, 1)) return 1;
+
+		UINT8 *DrvTempRom = (UINT8 *)BurnMalloc(0x10000);
+		memset(DrvTempRom, 0, 0x10000);
+		if (BurnLoadRom(DrvTempRom         , 4, 1)) return 1;
+		if (BurnLoadRom(DrvTempRom+0x800   , 5, 1)) return 1;
+		GfxDecode(0x100, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvBGGFX);
+		GfxDecode(0x80, 2, 8, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x80, DrvTempRom, DrvSpriteGFX);
+		BurnFree(DrvTempRom);
+	}
+
+	centipedemode = 1;
+
+	M6502Init(0, TYPE_M6502);
+	M6502Open(0);
+	M6502MapMemory(Drv6502RAM,	0x0000, 0x03ff, MAP_RAM);
+	M6502MapMemory(Drv6502ROM + 0x2000,	0x2000, 0x3fff, MAP_ROM);
+	M6502SetWriteHandler(centipede_write);
+	M6502SetReadHandler(centipede_read);
+	M6502SetWriteMemIndexHandler(centipede_write);
+	M6502SetReadMemIndexHandler(centipede_read);
+	M6502SetReadOpArgHandler(centipede_read);
+	M6502SetReadOpHandler(centipede_read);
+	M6502Close();
+
+	PokeyInit(12096000/8, 2, 6, 0);
+
+	init_penmask();
+
+	GenericTilesInit();
+
+	DrvDoReset();
+
+	return 0;
+}
+
 static INT32 DrvExit()
 {
 	GenericTilesExit();
@@ -455,6 +735,10 @@ static INT32 DrvExit()
 	M6502Exit();
 
 	BurnFree(AllMem);
+
+	centipedemode = 0;
+	m_dsw_select = 0;
+	m_flipscreen = 0;
 
 	return 0;
 }
@@ -468,16 +752,22 @@ static void draw_bg()
 	UINT8 *videoram = DrvVidRAM;
 	for (INT32 offs = 0; offs <= 0x3bf; offs++)
 	{
+		int flip_tiles;
 		int sx = offs % 32;
 		int sy = offs / 32;
 
 		int data = videoram[offs];
 		int bank = ((data >> 6) & 1);
 		int color = (data >> 6) & 3;
+		// Flip both x and y if flipscreen is non-zero
+		flip_tiles = (m_flipscreen) ? 0x03 : 0;
+		if (centipedemode) {
+			bank = 0;
+			color = 0;
+			flip_tiles = data >> 6;
+		}
 		int code = (data & 0x3f) + 0x40 + (bank * 0x80);
 
-		// Flip both x and y if flipscreen is non-zero
-		int flip_tiles = (m_flipscreen) ? 0x03 : 0;
 
 		sx = 8 * sx;
 		sy = 8 * sy;
@@ -526,15 +816,15 @@ static void draw_sprites()
 	{
 		int code = ((spriteram[offs] & 0x3e) >> 1) | ((spriteram[offs] & 0x01) << 6);
 		int color = spriteram[offs + 0x30];
-		int flipx = m_flipscreen;
-		int flipy = (spriteram[offs] & 0x80);
+		int flipx = (centipedemode) ? (spriteram[offs] >> 6) & 1 : m_flipscreen;
+		int flipy = (centipedemode) ? (spriteram[offs] >> 7) & 1 : (spriteram[offs] & 0x80);
 		int x = spriteram[offs + 0x20];
 		int y = 240 - spriteram[offs + 0x10];
-		if (flipx) {
+		if (flipx && !centipedemode) {
 			flipy = !flipy;
 		}
 
-		if (x+8>=nScreenWidth) continue; // clip top 8px of sprites (top of screen)
+		if (x + 8 >= nScreenWidth) continue; // clip top 8px of sprites (top of screen)
 
 		RenderTileCPMP(code, color, x, y, flipx, flipy, 8, 16);
 	}
@@ -555,10 +845,10 @@ static INT32 DrvDraw()
 static void DrvMakeInputs()
 {
 	// Reset Inputs - bring active-LOW stuff HIGH
-	DrvInput[0] = 0x10 + 0x20;
-	DrvInput[1] = 0x01 + 0x02 + 0x10 + 0x20 + 0x40;
+	DrvInput[0] = (centipedemode) ? 0x20 : 0x10 + 0x20;
+	DrvInput[1] = (centipedemode) ? 0xff : 0x01 + 0x02 + 0x10 + 0x20 + 0x40;
 	DrvInput[2] = 0xff;
-	DrvInput[3] = 0x01 + 0x02 + 0x04 + 0x08 + 0x10 + 0x40 + 0x80;
+	DrvInput[3] = (centipedemode) ? 0xff : 0x01 + 0x02 + 0x04 + 0x08 + 0x10 + 0x40 + 0x80;
 
 	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {
@@ -654,6 +944,60 @@ struct BurnDriver BurnDrvMilliped = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, millipedRomInfo, millipedRomName, NULL, NULL, MillipedInputInfo, MillipedDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
+	240, 256, 3, 4
+};
+
+// Centipede (revision 4)
+static struct BurnRomInfo centipedRomDesc[] = {
+	{ "136001-407.d1",	0x0800, 0xc4d995eb, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "136001-408.e1",	0x0800, 0xbcdebe1b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "136001-409.fh1",	0x0800, 0x66d7b04a, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "136001-410.j1",	0x0800, 0x33ce4640, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "136001-211.f7",	0x0800, 0x880acfb9, 2 | BRF_PRG | BRF_ESS }, //  4 gfx1
+	{ "136001-212.hj7",	0x0800, 0xb1397029, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "136001-213.p4",	0x0100, 0x6fa3093a, 3 | BRF_PRG | BRF_ESS }, //  6 proms
+};
+
+
+STD_ROM_PICK(centiped)
+STD_ROM_FN(centiped)
+
+struct BurnDriver BurnDrvCentiped = {
+	"centiped", NULL, NULL, NULL, "1980",
+	"Centipede (revision 4)\0", NULL, "Atari", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, centipedRomInfo, centipedRomName, NULL, NULL, CentipedInputInfo, CentipedDIPInfo,
+	DrvInitcentiped, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
+	240, 256, 3, 4
+};
+
+// Centipede (revision 3)
+
+static struct BurnRomInfo centiped3RomDesc[] = {
+	{ "136001-307.d1",	0x0800, 0x5ab0d9de, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "136001-308.e1",	0x0800, 0x4c07fd3e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "136001-309.fh1",	0x0800, 0xff69b424, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "136001-310.j1",	0x0800, 0x44e40fa4, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "136001-211.f7",	0x0800, 0x880acfb9, 2 | BRF_PRG | BRF_ESS }, //  4 gfx1
+	{ "136001-212.hj7",	0x0800, 0xb1397029, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "136001-213.p4",	0x0100, 0x6fa3093a, 3 | BRF_PRG | BRF_ESS }, //  6 proms
+};
+
+STD_ROM_PICK(centiped3)
+STD_ROM_FN(centiped3)
+
+struct BurnDriver BurnDrvCentiped3 = {
+	"centiped3", "centiped", NULL, NULL, "1980",
+	"Centipede (revision 3)\0", NULL, "Atari", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, centiped3RomInfo, centiped3RomName, NULL, NULL, CentipedInputInfo, CentipedDIPInfo,
+	DrvInitcentiped, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	240, 256, 3, 4
 };
 

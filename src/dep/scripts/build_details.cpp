@@ -42,6 +42,12 @@ int main(int /*argc*/, char** /*argv*/)
   #else
 	printf("#define BUILD_COMP Visual C++ 2013\n");
   #endif
+ #elif _MSC_VER >= 1900 && _MSC_VER < 2000
+  #if defined BUILD_VS_XP_TARGET
+    printf("#define BUILD_COMP Visual C++ 2015 (XP)\n");
+  #else
+	printf("#define BUILD_COMP Visual C++ 2015\n");
+  #endif
  #else
 	printf("#define BUILD_COMP Visual C++ %i.%i\n", _MSC_VER / 100 - 6, _MSC_VER % 100 / 10);
  #endif

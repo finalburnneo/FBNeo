@@ -253,6 +253,8 @@ static INT32 DrvDoReset(INT32 clear_ram)
 	irq_enable = 0;
 	watchdog = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -628,7 +630,7 @@ struct BurnDriver BurnDrvRocnrope = {
 	"rocnrope", NULL, NULL, NULL, "1983",
 	"Roc'n Rope\0", NULL, "Konami", "GX364",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, rocnropeRomInfo, rocnropeRomName, NULL, NULL, RocnropeInputInfo, RocnropeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -669,7 +671,7 @@ struct BurnDriver BurnDrvRocnropek = {
 	"rocnropek", "rocnrope", NULL, NULL, "1983",
 	"Roc'n Rope (Kosuka)\0", NULL, "Konami / Kosuka", "GX364",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, rocnropekRomInfo, rocnropekRomName, NULL, NULL, RocnropeInputInfo, RocnropeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -712,7 +714,7 @@ struct BurnDriver BurnDrvRopeman = {
 	"ropeman", "rocnrope", NULL, NULL, "1983",
 	"Ropeman (bootleg of Roc'n Rope)\0", NULL, "bootleg", "GX364",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, ropemanRomInfo, ropemanRomName, NULL, NULL, RocnropeInputInfo, RocnropeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

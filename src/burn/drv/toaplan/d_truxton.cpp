@@ -472,6 +472,8 @@ static INT32 DrvDoReset()
 
 	bEnableInterrupts = false;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -675,7 +677,7 @@ struct BurnDriver BurnDrvTruxton = {
 	"truxton", NULL, NULL, NULL, "1988",
 	"Truxton\0Tatsujin\0", NULL, "[Toaplan] Taito Corporation", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, truxtonRomInfo, truxtonRomName, NULL, NULL, truxtonInputInfo, truxtonDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x400,
 	240, 320, 3, 4

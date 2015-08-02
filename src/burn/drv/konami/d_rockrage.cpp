@@ -285,6 +285,8 @@ static INT32 DrvDoReset(INT32 clear_ram)
 	soundlatch = 0;
 	videoregs = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -612,7 +614,7 @@ struct BurnDriver BurnDrvRockrage = {
 	"rockrage", NULL, NULL, NULL, "1986",
 	"Rock'n Rage (World)\0", NULL, "Konami", "GX620",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, rockrageRomInfo, rockrageRomName, NULL, NULL, RockrageInputInfo, RockrageDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 224, 4, 3
@@ -651,7 +653,7 @@ struct BurnDriver BurnDrvRockragea = {
 	"rockragea", "rockrage", NULL, NULL, "1986",
 	"Rock'n Rage (prototype?)\0", NULL, "Konami", "GX620",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, rockrageaRomInfo, rockrageaRomName, NULL, NULL, RockrageInputInfo, RockrageDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 224, 4, 3
@@ -686,7 +688,7 @@ struct BurnDriver BurnDrvRockragej = {
 	"rockragej", "rockrage", NULL, NULL, "1986",
 	"Koi no Hotrock (Japan)\0", NULL, "Konami", "GX620",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, rockragejRomInfo, rockragejRomName, NULL, NULL, RockrageInputInfo, RockrageDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 224, 4, 3

@@ -259,6 +259,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	watchdog = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -641,7 +643,7 @@ struct BurnDriver BurnDrvMikie = {
 	"mikie", NULL, NULL, NULL, "1984",
 	"Mikie\0", NULL, "Konami", "GX469",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, mikieRomInfo, mikieRomName, NULL, NULL, MikieInputInfo, MikieDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 256, 3, 4
@@ -678,7 +680,7 @@ struct BurnDriver BurnDrvMikiej = {
 	"mikiej", "mikie", NULL, NULL, "1984",
 	"Shinnyuushain Tooru-kun\0", NULL, "Konami", "GX469",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, mikiejRomInfo, mikiejRomName, NULL, NULL, MikieInputInfo, MikieDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 256, 3, 4
@@ -715,7 +717,7 @@ struct BurnDriver BurnDrvMikiehs = {
 	"mikiehs", "mikie", NULL, NULL, "1984",
 	"Mikie (High School Graffiti)\0", NULL, "Konami", "GX469",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
 	NULL, mikiehsRomInfo, mikiehsRomName, NULL, NULL, MikieInputInfo, MikieDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 256, 3, 4

@@ -346,6 +346,8 @@ static INT32 DrvDoReset()
 	DrvOkiBank1 = 0;
 	DrvOkiBank2 = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -733,7 +735,7 @@ struct BurnDriver BurnDrvhotdogst = {
 	"hotdogst", NULL, NULL, NULL, "1996",
 	"Hotdog Storm - The First Supersonics (International)\0", NULL, "Marble / ACE International", "Cave",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, hotdogstRomInfo, hotdogstRomName, NULL, NULL, hotdogstInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 384, 3, 4

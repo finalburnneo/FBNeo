@@ -556,6 +556,8 @@ static INT32 DrvDoReset()
 
 	bEnableInterrupts = false;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -765,7 +767,7 @@ struct BurnDriver BurnDrvZerowing = {
 	"zerowing", NULL, NULL, NULL, "1989",
 	"Zero Wing (2P set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
 	NULL, zerowingRomInfo, zerowingRomName, NULL, NULL, zerowingInputInfo, zerowing2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x400,
 	320, 240, 4, 3
@@ -775,7 +777,7 @@ struct BurnDriver BurnDrvZerowing1 = {
 	"zerowing1", "zerowing", NULL, NULL, "1989",
 	"Zero Wing (1P set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
 	NULL, zerowing1RomInfo, zerowing1RomName, NULL, NULL, zerowingInputInfo, zerowingDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x400,
 	320, 240, 4, 3
@@ -785,7 +787,7 @@ struct BurnDriver BurnDrvZerowingw = {
 	"zerowingw", "zerowing", NULL, NULL, "1989",
 	"Zero Wing (2P set, Williams Electronics)\0", NULL, "Toaplan / Williams Electronics", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_HORSHOOT, 0,
 	NULL, zerowingwRomInfo, zerowingwRomName, NULL, NULL, zerowingInputInfo, zerowing2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x400,
 	320, 240, 4, 3

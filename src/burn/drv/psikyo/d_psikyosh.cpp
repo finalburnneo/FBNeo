@@ -555,6 +555,8 @@ static INT32 DrvDoReset()
 	sample_offs = 0;
 	previous_graphics_bank = -1;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -842,7 +844,7 @@ struct BurnDriver BurnDrvSoldivid = {
 	"soldivid", NULL, NULL, NULL, "1997",
 	"Sol Divide - The Sword Of Darkness\0", NULL, "Psikyo", "PS3-V1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PSIKYO, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_HORSHOOT, 0,
 	NULL, soldividRomInfo, soldividRomName, NULL, NULL, Common3ButtonInputInfo, SoldividDIPInfo,
 	SoldividInit, DrvExit, DrvFrame, PsikyoshDraw, DrvScan, NULL, 0x1400,
 	320, 224, 4, 3
@@ -912,7 +914,7 @@ struct BurnDriver BurnDrvS1945ii = {
 	"s1945ii", NULL, NULL, NULL, "1997",
 	"Strikers 1945 II\0", NULL, "Psikyo", "PS3-V1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, s1945iiRomInfo, s1945iiRomName, NULL, NULL, Common2ButtonInputInfo, S1945iiDIPInfo,
 	S1945iiInit, DrvExit, DrvFrame, PsikyoshDraw, DrvScan, NULL, 0x1400,
 	224, 320, 3, 4
@@ -995,7 +997,7 @@ struct BurnDriver BurnDrvDaraku = {
 	"daraku", NULL, NULL, NULL, "1998",
 	"Daraku Tenshi - The Fallen Angels\0", NULL, "Psikyo", "PS3-V1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PSIKYO, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VSFIGHT, 0,
 	NULL, darakuRomInfo, darakuRomName, NULL, NULL, Common4ButtonInputInfo, DarakuDIPInfo,
 	DarakuInit, DrvExit, DrvFrame, PsikyoshDraw, DrvScan, NULL, 0x1400,
 	320, 224, 4, 3
@@ -1087,7 +1089,7 @@ struct BurnDriver BurnDrvSbomber = {
 	"sbomber", NULL, NULL, NULL, "1998",
 	"Space Bomber (ver. B)\0", NULL, "Psikyo", "PS3-V1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PSIKYO, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_SHOOT, 0,
 	NULL, sbomberRomInfo, sbomberRomName, NULL, NULL, Common2ButtonInputInfo, S1945iiDIPInfo,
 	SbomberInit, DrvExit, DrvFrame, PsikyoshDraw, DrvScan, NULL, 0x1400,
 	224, 320, 3, 4
@@ -1097,7 +1099,7 @@ struct BurnDriver BurnDrvSbombera = {
 	"sbombera", "sbomber", NULL, NULL, "1998",
 	"Space Bomber\0", NULL, "Psikyo", "PS3-V1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PSIKYO, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_SHOOT, 0,
 	NULL, sbomberaRomInfo, sbomberaRomName, NULL, NULL, Common2ButtonInputInfo, S1945iiDIPInfo,
 	SbomberInit, DrvExit, DrvFrame, PsikyoshDraw, DrvScan, NULL, 0x1400,
 	224, 320, 3, 4
@@ -1164,7 +1166,7 @@ struct BurnDriver BurnDrvGunbird2 = {
 	"gunbird2", NULL, NULL, NULL, "1998",
 	"Gunbird 2\0", NULL, "Psikyo", "PS5",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, gunbird2RomInfo, gunbird2RomName, NULL, NULL, Common3ButtonInputInfo, Gunbird2DIPInfo,
 	Gunbird2Init, DrvExit, DrvFrame, PsikyoshDraw, DrvScan, NULL, 0x1400,
 	224, 320, 3, 4
@@ -1225,7 +1227,7 @@ struct BurnDriver BurnDrvS1945iii = {
 	"s1945iii", NULL, NULL, NULL, "1999",
 	"Strikers 1945 III (World) / Strikers 1999 (Japan)\0", NULL, "Psikyo", "PS5",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, s1945iiiRomInfo, s1945iiiRomName, NULL, NULL, Common3ButtonInputInfo, S1945iiiDIPInfo,
 	S1945iiiInit, DrvExit, DrvFrame, PsikyoshDraw, DrvScan, NULL, 0x1400,
 	224, 320, 3, 4
@@ -1321,7 +1323,7 @@ struct BurnDriver BurnDrvDragnblz = {
 	"dragnblz", NULL, NULL, NULL, "2000",
 	"Dragon Blaze\0", NULL, "Psikyo", "PS5V2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, dragnblzRomInfo, dragnblzRomName, NULL, NULL, Common3ButtonInputInfo, DragnblzDIPInfo,
 	DragnblzInit, DrvExit, DrvFrame, PsikyoshDraw, DrvScan, NULL, 0x1400,
 	224, 320, 3, 4
@@ -1393,7 +1395,7 @@ struct BurnDriver BurnDrvGnbarich = {
 	"gnbarich", NULL, NULL, NULL, "2001",
 	"Gunbarich\0", NULL, "Psikyo", "PS5V2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PSIKYO, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_BREAKOUT, 0,
 	NULL, gnbarichRomInfo, gnbarichRomName, NULL, NULL, Common3ButtonInputInfo, S1945iiiDIPInfo,
 	GnbarichInit, DrvExit, DrvFrame, PsikyoshDraw, DrvScan, NULL, 0x1400,
 	224, 320, 3, 4
@@ -1463,7 +1465,7 @@ struct BurnDriver BurnDrvMjgtaste = {
 	"mjgtaste", NULL, NULL, NULL, "2002",
 	"Mahjong G-Taste\0", NULL, "Psikyo", "PS5V2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PSIKYO, GBF_MAHJONG, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_MAHJONG, 0,
 	NULL, mjgtasteRomInfo, mjgtasteRomName, NULL, NULL, Common3ButtonInputInfo, Tgm2DIPInfo,
 	MjgtasteInit, DrvExit, DrvFrame, PsikyoshDraw, DrvScan, NULL, 0x1400,
 	320, 224, 4, 3
@@ -1545,7 +1547,7 @@ struct BurnDriver BurnDrvTgm2 = {
 	"tgm2", NULL, NULL, NULL, "2000",
 	"Tetris the Absolute The Grand Master 2\0", NULL, "Arika", "PS5V2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PSIKYO, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_PUZZLE, 0,
 	NULL, tgm2RomInfo, tgm2RomName, NULL, NULL, Common3ButtonInputInfo, Tgm2DIPInfo,
 	Tgm2Init, DrvExit, DrvFrame, PsikyoshDraw, DrvScan, NULL, 0x1400,
 	320, 240, 4, 3
@@ -1598,7 +1600,7 @@ struct BurnDriver BurnDrvTgm2p = {
 	"tgm2p", "tgm2", NULL, NULL, "2000",
 	"Tetris the Absolute The Grand Master 2 Plus\0", NULL, "Arika", "PS5V2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PSIKYO, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_PUZZLE, 0,
 	NULL, tgm2pRomInfo, tgm2pRomName, NULL, NULL, Common3ButtonInputInfo, Tgm2DIPInfo,
 	Tgm2pInit, DrvExit, DrvFrame, PsikyoshDraw, DrvScan, NULL, 0x1400,
 	320, 240, 4, 3

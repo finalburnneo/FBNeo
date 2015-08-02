@@ -782,6 +782,8 @@ static INT32 DrvDoReset()
 	BurnTimerSetRetrig(0, 1.0 / 445.0);
 	ZetClose();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1064,7 +1066,7 @@ struct BurnDriver BurnDrvBattleBkraidu = {
 	"bbakraid", NULL, NULL, NULL, "1999",
 	"Battle Bakraid - Unlimited Version (U.S.A.) (Tue Jun 8 1999)\0", NULL, "Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bkraiduRomInfo, bkraiduRomName, NULL, NULL, bbakraidInputInfo, bkraiduDIPInfo,
 	bbakraidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
@@ -1074,7 +1076,7 @@ struct BurnDriver BurnDrvBattleBkraidc = {
 	"bbakraidc", "bbakraid", NULL, NULL, "1999",
 	"Battle Bakraid - Unlimited Version (China) (Tue Jun 8 1999)\0", NULL, "Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bkraidcRomInfo, bkraidcRomName, NULL, NULL, bbakraidInputInfo, bbakraidDIPInfo,
 	bbakraidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
@@ -1084,7 +1086,7 @@ struct BurnDriver BurnDrvBattleBkraiduj = {
 	"bbakraidj", "bbakraid", NULL, NULL, "1999",
 	"Battle Bakraid - Unlimited Version (Japan) (Tue Jun 8 1999)\0", NULL, "Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bkraidujRomInfo, bkraidujRomName, NULL, NULL, bbakraidInputInfo, bbakraidDIPInfo,
 	bbakraidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
@@ -1094,7 +1096,7 @@ struct BurnDriver BurnDrvBattleBkraidj = {
 	"bbakraidja", "bbakraid", NULL, NULL, "1999",
 	"Battle Bakraid (Japan) (Wed Apr 7 1999)\0", NULL, "Eighting", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, bkraidjRomInfo, bkraidjRomName, NULL, NULL, bbakraidInputInfo, bbakraidDIPInfo,
 	bbakraidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4

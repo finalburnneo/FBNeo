@@ -770,6 +770,8 @@ static INT32 DrvDoReset()
 
 	BurnYM3812Reset();
 
+	HiscoreReset();
+
 	bEnableInterrupts = false;
 
 	return 0;
@@ -975,7 +977,7 @@ struct BurnDriver BurnDrvOutZone = {
 	"outzoneh", "outzone", NULL, NULL, "1990",
 	"Out Zone (harder)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, outzoneRomInfo, outzoneRomName, NULL, NULL, outzoneInputInfo, outzoneDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x400,
 	240, 320, 3, 4
@@ -985,7 +987,7 @@ struct BurnDriver BurnDrvOutZonea = {
 	"outzonea", "outzone", NULL, NULL, "1990",
 	"Out Zone (set 2)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, outzoneaRomInfo, outzoneaRomName, NULL, NULL, outzoneInputInfo, outzoneDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x400,
 	240, 320, 3, 4
@@ -995,7 +997,7 @@ struct BurnDriver BurnDrvOutZoneb = {
 	"outzonec", "outzone", NULL, NULL, "1990",
 	"Out Zone (oldest set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, outzonebRomInfo, outzonebRomName, NULL, NULL, outzoneInputInfo, outzonebDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x400,
 	240, 320, 3, 4
@@ -1005,7 +1007,7 @@ struct BurnDriver BurnDrvOutZonec = {
 	"outzone", NULL, NULL, NULL, "1990",
 	"Out Zone\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, outzonecRomInfo, outzonecRomName, NULL, NULL, outzoneInputInfo, outzonecDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x400,
 	240, 320, 3, 4
@@ -1015,7 +1017,7 @@ struct BurnDriver BurnDrvOutZoned = {
 	"outzoneb", "outzone", NULL, NULL, "1990",
 	"Out Zone (older set)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, outzonedRomInfo, outzonedRomName, NULL, NULL, outzoneInputInfo, outzonedDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x400,
 	240, 320, 3, 4

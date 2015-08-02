@@ -558,6 +558,8 @@ static INT32 DrvDoReset()
 	Paddle[1] = 0;
 	PaddleOld[1] = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -852,7 +854,7 @@ struct BurnDriver BurnDrvGhox = {
 	"ghox", NULL, NULL, "ghox", "1991",
 	"Ghox (spinner)\0", "No Sound (undumped MCU)", "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,
 	NULL, ghoxRomInfo, ghoxRomName, ghoxSampleInfo, ghoxSampleName, GhoxInputInfo, GhoxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
@@ -878,7 +880,7 @@ struct BurnDriver BurnDrvGhoxj = {
 	"ghoxj", "ghox", NULL, "ghox", "1991",
 	"Ghox (joystick)\0", "No Sound (undumped MCU)", "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,
 	NULL, ghoxjRomInfo, ghoxjRomName, ghoxSampleInfo, ghoxSampleName, GhoxInputInfo, GhoxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4

@@ -263,6 +263,8 @@ static INT32 DrvDoReset()
 
 	nIRQPending = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -600,7 +602,7 @@ struct BurnDriver BurnDrvFeverSOS = {
 	"feversos", NULL, NULL, NULL, "1998",
 	"Fever SOS (International, ver. 98/09/25)\0", NULL, "Cave / Nihon System inc.", "Cave",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_ONLY, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY, GBF_VERSHOOT, 0,
 	NULL, feversosRomInfo, feversosRomName, NULL, NULL, feversosInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
@@ -610,7 +612,7 @@ struct BurnDriver BurnDrvDFeveron = {
 	"dfeveron", "feversos", NULL, NULL, "1998",
 	"Dangun Feveron (Japan, ver. 98/09/17)\0", NULL, "Cave / Nihon System inc.", "Cave",
 	L"\u5F3E\u9283 Feveron \u3060\u3093\u304C\u3093\u30D5\u30A3\u30FC\u30D0\u30ED\u30F3 (Japan, ver. 98/09/17)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_ONLY, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY, GBF_VERSHOOT, 0,
 	NULL, dfeveronRomInfo, dfeveronRomName, NULL, NULL, feversosInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4

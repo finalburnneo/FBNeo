@@ -1265,6 +1265,8 @@ static INT32 DrvDoReset()
 
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -2061,7 +2063,7 @@ struct BurnDriver BurnDrvSamuraiA = {
 	"samuraia", NULL, NULL, NULL, "1993",
 	"Samurai Aces (World)\0", NULL, "Psikyo / Banpresto", "Psikyo 68EC020",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, samuraiaRomInfo, samuraiaRomName, NULL, NULL, gunbirdInputInfo, samuraiaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	224, 320, 3, 4
@@ -2071,7 +2073,7 @@ struct BurnDriver BurnDrvSngkAce = {
 	"sngkace", "samuraia", NULL, NULL, "1993",
 	"Sengoku Ace (Japan)\0", NULL, "Psikyo / Banpresto", "Psikyo 68EC020",
 	L"\u6226\u56FD\u30A8\u30FC\u30B9 (Japan)\0Sengoku Ace\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, sngkaceRomInfo, sngkaceRomName, NULL, NULL, gunbirdInputInfo, sngkaceDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	224, 320, 3, 4
@@ -2152,7 +2154,7 @@ struct BurnDriver BurnDrvGunbird = {
 	"gunbird", NULL, NULL, NULL, "1994",
 	"Gunbird (World)\0", NULL, "Psikyo", "Psikyo 68EC020",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, gunbirdRomInfo, gunbirdRomName, NULL, NULL, gunbirdInputInfo, gunbirdWorldDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	224, 320, 3, 4
@@ -2162,7 +2164,7 @@ struct BurnDriver BurnDrvGunbirdj = {
 	"gunbirdj", "gunbird", NULL, NULL, "1994",
 	"Gunbird (Japan)\0", NULL, "Psikyo", "Psikyo 68EC020",
 	L"Gunbird (Japan)\0\u30AC\u30F3\u30D0\u30FC\u30C9\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, gunbirdjRomInfo, gunbirdjRomName, NULL, NULL, gunbirdInputInfo, gunbirdDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	224, 320, 3, 4
@@ -2172,7 +2174,7 @@ struct BurnDriver BurnDrvGunbirdk = {
 	"gunbirdk", "gunbird", NULL, NULL, "1994",
 	"Gunbird (Korea)\0", NULL, "Psikyo", "Psikyo 68EC020",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, gunbirdkRomInfo, gunbirdkRomName, NULL, NULL, gunbirdInputInfo, gunbirdDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	224, 320, 3, 4
@@ -2209,7 +2211,7 @@ struct BurnDriver BurnDrvBtlKRoad = {
 	"btlkroad", NULL, NULL, NULL, "1994",
 	"Battle K-Road\0", NULL, "Psikyo", "Psikyo 68EC020",
 	L"Battle K-Road\0Battle K-Road \u30D0\u30C8\u30EB\u30AF\u30ED\u30FC\u30C9\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_PSIKYO, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VSFIGHT, 0,
 	NULL, btlkroadRomInfo, btlkroadRomName, NULL, NULL, btlkroadInputInfo, btlkroadDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	320, 224, 4, 3
@@ -2246,7 +2248,7 @@ struct BurnDriver BurnDrvBtlKRoadk = {
 	"btlkroadk", "btlkroad", NULL, NULL, "1994",
 	"Battle K-Road (Korean PCB)\0", NULL, "Psikyo", "Psikyo 68EC020",
 	L"Battle K-Road\0Battle K-Road \u30D0\u30C8\u30EB\u30AF\u30ED\u30FC\u30C9 (Korean PCB)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY, 2, HARDWARE_PSIKYO, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VSFIGHT, 0,
 	NULL, btlkroadkRomInfo, btlkroadkRomName, NULL, NULL, btlkroadInputInfo, btlkroadDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	320, 224, 4, 3
@@ -2280,7 +2282,7 @@ struct BurnDriver BurnDrvS1945jn = {
 	"s1945jn", "s1945", NULL, NULL, "1995",
 	"Strikers 1945 (Japan, unprotected)\0", NULL, "Psikyo", "Psikyo 68EC020",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, s1945jnRomInfo, s1945jnRomName, NULL, NULL, gunbirdInputInfo, s1945DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	224, 320, 3, 4
@@ -2384,7 +2386,7 @@ struct BurnDriver BurnDrvS1945 = {
 	"s1945", NULL, NULL, NULL, "1995",
 	"Strikers 1945\0", NULL, "Psikyo", "Psikyo 68EC020",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, s1945RomInfo, s1945RomName, NULL, NULL, gunbirdInputInfo, s1945WorldDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	224, 320, 3, 4
@@ -2394,7 +2396,7 @@ struct BurnDriver BurnDrvS1945j = {
 	"s1945j", "s1945", NULL, NULL, "1995",
 	"Strikers 1945 (Japan)\0", NULL, "Psikyo", "Psikyo 68EC020",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, s1945jRomInfo, s1945jRomName, NULL, NULL, gunbirdInputInfo, s1945DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	224, 320, 3, 4
@@ -2404,7 +2406,7 @@ struct BurnDriver BurnDrvS1945k = {
 	"s1945k", "s1945", NULL, NULL, "1995",
 	"Strikers 1945 (Korea)\0", NULL, "Psikyo", "Psikyo 68EC020",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, s1945kRomInfo, s1945kRomName, NULL, NULL, gunbirdInputInfo, s1945DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	224, 320, 3, 4
@@ -2414,7 +2416,7 @@ struct BurnDriver BurnDrvS1945a = {
 	"s1945a", "s1945", NULL, NULL, "1995",
 	"Strikers 1945 (Alt)\0", NULL, "Psikyo", "Psikyo 68EC020",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_VERSHOOT, 0,
 	NULL, s1945aRomInfo, s1945aRomName, NULL, NULL, gunbirdInputInfo, s1945aDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	224, 320, 3, 4
@@ -2449,7 +2451,7 @@ struct BurnDriver BurnDrvTengai = {
 	"tengai", NULL, NULL, NULL, "1996",
 	"Tengai (world)\0", NULL, "Psikyo", "Psikyo 68EC020",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_PSIKYO, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_HORSHOOT, 0,
 	NULL, tengaiRomInfo, tengaiRomName, NULL, NULL, gunbirdInputInfo, tengaiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	320, 224, 4, 3
@@ -2482,7 +2484,7 @@ struct BurnDriver BurnDrvTengaij = {
 	"tengaij", "tengai", NULL, NULL, "1996",
 	"Tengai\0Sengoku Blade - sengoku ace episode II\0", NULL, "Psikyo", "Psikyo 68EC020",
 	L"Tengai\0\u6226\u56FD\u30D6\u30EC\u30FC\u30C9 - sengoku ace episode II\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_PSIKYO, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_HORSHOOT, 0,
 	NULL, tengaijRomInfo, tengaijRomName, NULL, NULL, gunbirdInputInfo, tengaijDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &PsikyoRecalcPalette, 0x1000,
 	320, 224, 4, 3

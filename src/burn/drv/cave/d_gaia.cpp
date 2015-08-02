@@ -477,6 +477,8 @@ static INT32 DrvDoReset()
 
 	YMZ280BReset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -847,7 +849,7 @@ struct BurnDriver BurnDrvGaia = {
 	"gaia", NULL, NULL, NULL, "1999",
 	"Gaia Crusaders\0", NULL, "Noise Factory", "Cave",
 	L"Gaia Crusaders \u5F81\u6226\u8005\0Gaia Crusaders \u30AC\u30A4\u30A2\u30AF\u30EB\u30BB\u30A4\u30C0\u30FC\u30BA\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_ONLY, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY, GBF_SCRFIGHT, 0,
 	NULL, gaiaRomInfo, gaiaRomName, NULL, NULL, gaiaInputInfo, gaiaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 224, 4, 3
@@ -876,7 +878,7 @@ struct BurnDriver BurnDrvTheroes = {
 	"theroes", NULL, NULL, NULL, "2001",
 	"Thunder Heroes\0", NULL, "Primetec Investments", "Cave",
 	L"\u9739\u96F3\u82F1\u96C4 Thunder Heroes\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_ONLY, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY, GBF_SCRFIGHT, 0,
 	NULL, theroesRomInfo, theroesRomName, NULL, NULL, gaiaInputInfo, theroesDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 224, 4, 3

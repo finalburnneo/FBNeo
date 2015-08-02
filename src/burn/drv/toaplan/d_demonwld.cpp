@@ -389,6 +389,8 @@ static INT32 DrvDoReset()
 	bEnableInterrupts = false;
 	demonwld_hack = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -724,7 +726,7 @@ struct BurnDriver BurnDrvDemonwld = {
 	"demonwld", NULL, NULL, NULL, "1990",
 	"Demon's World / Horror Story (set 1)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TOAPLAN_RAIZING, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_PLATFORM, 0,
 	NULL, demonwldRomInfo, demonwldRomName, NULL, NULL, DemonwldInputInfo, DemonwldDIPInfo,
 	demonwldInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
@@ -774,7 +776,7 @@ struct BurnDriver BurnDrvDemonwld1 = {
 	"demonwld1", "demonwld", NULL, NULL, "1989",
 	"Demon's World / Horror Story (Taito license, set 2)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_RAIZING, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_PLATFORM, 0,
 	NULL, demonwld1RomInfo, demonwld1RomName, NULL, NULL, DemonwldInputInfo, Demonwl1DIPInfo,
 	demonwld1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
@@ -813,7 +815,7 @@ struct BurnDriver BurnDrvDemonwld2 = {
 	"demonwld2", "demonwld", NULL, NULL, "1989",
 	"Demon's World / Horror Story (set 3)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_RAIZING, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_PLATFORM, 0,
 	NULL, demonwld2RomInfo, demonwld2RomName, NULL, NULL, DemonwldInputInfo, Demonwl1DIPInfo,
 	demonwld1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
@@ -863,7 +865,7 @@ struct BurnDriver BurnDrvDemonwld3 = {
 	"demonwld3", "demonwld", NULL, NULL, "1989",
 	"Demon's World / Horror Story (set 4)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_RAIZING, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_PLATFORM, 0,
 	NULL, demonwld3RomInfo, demonwld3RomName, NULL, NULL, DemonwldInputInfo, Demonwl1DIPInfo,
 	demonwld3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3

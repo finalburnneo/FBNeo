@@ -221,6 +221,8 @@ static INT32 DrvDoReset()
 
 	sn76496_latch = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -559,7 +561,7 @@ struct BurnDriver BurnDrvYiear = {
 	"yiear", NULL, NULL, NULL, "1985",
 	"Yie Ar Kung-Fu (program code I)\0", NULL, "Konami", "GX407",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, yiearRomInfo, yiearRomName, NULL, NULL, YiearInputInfo, YiearDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	256, 224, 4, 3
@@ -592,7 +594,7 @@ struct BurnDriver BurnDrvYiear2 = {
 	"yiear2", "yiear", NULL, NULL, "1985",
 	"Yie Ar Kung-Fu (program code G)\0", NULL, "Konami", "GX407",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, yiear2RomInfo, yiear2RomName, NULL, NULL, YiearInputInfo, YiearDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	256, 224, 4, 3

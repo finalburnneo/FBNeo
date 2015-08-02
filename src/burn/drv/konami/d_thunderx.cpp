@@ -528,6 +528,8 @@ static INT32 DrvDoReset()
 
 	layer_priority = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -923,7 +925,7 @@ struct BurnDriver BurnDrvScontra = {
 	"scontra", NULL, NULL, NULL, "1988",
 	"Super Contra\0", NULL, "Konami", "GX775",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_HORSHOOT, 0,
 	NULL, scontraRomInfo, scontraRomName, NULL, NULL, ThunderxInputInfo, ScontraDIPInfo,
 	scontraInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 304, 3, 4
@@ -987,7 +989,7 @@ struct BurnDriver BurnDrvScontraj = {
 	"scontraj", "scontra", NULL, NULL, "1988",
 	"Super Contra (Japan)\0", NULL, "Konami", "GX775",
 	L"Super \u9B42\u6597\u7F85 \u30A8\u30A4\u30EA\u30A2\u30F3 \u306E\u9006\u8972 (Japan)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT | GBF_HORSHOOT, 0,
 	NULL, scontrajRomInfo, scontrajRomName, NULL, NULL, ThunderxInputInfo, ScontraDIPInfo,
 	scontraInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 304, 3, 4
@@ -1035,7 +1037,7 @@ struct BurnDriver BurnDrvThunderx = {
 	"thunderx", NULL, NULL, NULL, "1988",
 	"Thunder Cross (set 1)\0", NULL, "Konami", "GX873",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, thunderxRomInfo, thunderxRomName, NULL, NULL, ThunderxInputInfo, ThunderxDIPInfo,
 	thunderxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 224, 4, 3
@@ -1078,7 +1080,7 @@ struct BurnDriver BurnDrvThunderxa = {
 	"thunderxa", "thunderx", NULL, NULL, "1988",
 	"Thunder Cross (set 2)\0", NULL, "Konami", "GX873",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, thunderxaRomInfo, thunderxaRomName, NULL, NULL, ThunderxInputInfo, ThunderxDIPInfo,
 	thunderxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 224, 4, 3
@@ -1121,7 +1123,7 @@ struct BurnDriver BurnDrvThunderxb = {
 	"thunderxb", "thunderx", NULL, NULL, "1988",
 	"Thunder Cross (set 3)\0", NULL, "Konami", "GX873",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, thunderxbRomInfo, thunderxbRomName, NULL, NULL, ThunderxInputInfo, ThunderxDIPInfo,
 	thunderxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 224, 4, 3
@@ -1164,7 +1166,7 @@ struct BurnDriver BurnDrvThunderxj = {
 	"thunderxj", "thunderx", NULL, NULL, "1988",
 	"Thunder Cross (Japan)\0", NULL, "Konami", "GX873",
 	L"Thunder Cross\0\u30B5\u30F3\u30C0\u30FC\u30AF\u30ED\u30B9 (Japan)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
 	NULL, thunderxjRomInfo, thunderxjRomName, NULL, NULL, ThunderxInputInfo, ThunderxDIPInfo,
 	thunderxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 224, 4, 3

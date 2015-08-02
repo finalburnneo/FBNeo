@@ -207,7 +207,7 @@ int PrintOSInfo()
 				AddText(_T("Microsoft Windows Server Technical Preview "));
 			}
 			if (osvi.dwMajorVersion == 10 && osvi.dwMinorVersion == 0 && osvi.wProductType == VER_NT_WORKSTATION) {
-				AddText(_T("Microsoft Windows 10 Technical Preview "));
+				AddText(_T("Microsoft Windows 10 "));
 			}
 
 			if (osvi.dwMajorVersion == 5) {

@@ -40,6 +40,12 @@ static UINT8 DrvDip[4];
 static UINT8 DrvInput[4];
 static UINT8 DrvReset;
 
+// hi-score stuff! (atari earom)
+#define EAROM_SIZE	0x40
+static UINT8 earom_offset;
+static UINT8 earom_data;
+static UINT8 earom[EAROM_SIZE];
+
 static UINT32 centipedemode = 0;
 
 static struct BurnInputInfo MillipedInputList[] = {
@@ -351,6 +357,33 @@ static void centipede_set_color(UINT16 offset, UINT8 data)
 	}
 }
 
+static UINT8 earom_read(UINT16 address)
+{
+	return (earom_data);
+}
+
+static void earom_write(UINT16 offset, UINT8 data)
+{
+	earom_offset = offset;
+	earom_data = data;
+}
+
+static void earom_ctrl_write(UINT16 offset, UINT8 data)
+{
+	/*
+		0x01 = clock
+		0x02 = set data latch? - writes only (not always)
+		0x04 = write mode? - writes only
+		0x08 = set addr latch?
+	*/
+	if (data & 0x01)
+		earom_data = earom[earom_offset];
+	if ((data & 0x0c) == 0x0c)
+	{
+		earom[earom_offset] = earom_data;
+	}
+}
+
 static void millipede_write(UINT16 address, UINT8 data)
 {
 	address &= 0x7fff; // 15bit addressing
@@ -380,6 +413,11 @@ static void millipede_write(UINT16 address, UINT8 data)
 		}
 		return;
 	}
+	if (address >= 0x2780 && address <= 0x27bf) { // EAROM Write
+		earom_write(address - 0x2780, data);
+		return;
+	}
+
 	switch (address)
 	{
 		case 0x2505:
@@ -394,6 +432,9 @@ static void millipede_write(UINT16 address, UINT8 data)
 		return;
 		case 0x2600:
 			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+		return;
+		case 0x2700:
+			earom_ctrl_write(0x2700, data);
 		return;
 	}
 	//bprintf(0, _T("mw %X,"), address);
@@ -421,10 +462,20 @@ static void centipede_write(UINT16 address, UINT8 data)
 		return;
 	}
 
+	if (address >= 0x1600 && address <= 0x163f) { // EAROM Write
+		earom_write(address - 0x1600, data);
+		return;
+	}
+
 	switch (address)
 	{
+		case 0x2000: // watchdog
+		return;
 		case 0x1c07:
 			m_flipscreen = data >> 7;
+		return;
+		case 0x1680:
+			earom_ctrl_write(0x1680, data);
 		return;
 		case 0x2507:
 			m_control_select = (data >> 7) & 1;
@@ -433,7 +484,8 @@ static void centipede_write(UINT16 address, UINT8 data)
 			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 	}
-	//bprintf(0, _T("mw %X,"), address);
+
+//	bprintf(0, _T("mw %X,"), address);
 }
 
 static INT32 read_trackball(INT32 idx, INT32 switch_port)
@@ -484,6 +536,7 @@ static UINT8 millipede_read(UINT16 address)
 		case 0x2001: return read_trackball(1, 1) | DrvDip[1] ;
 		case 0x2010: return DrvInput[2];
 		case 0x2011: return DrvInput[3];
+		case 0x2030: return earom_read(address);
 		case 0x0400:
 		case 0x0401:
 		case 0x0402:
@@ -538,6 +591,9 @@ static UINT8 centipede_read(UINT16 address)
 	if (address >= 0x2000 && address <= 0x3fff) { // ROM
 		return Drv6502ROM[address];
 	}
+	if (address >= 0x1700 && address <= 0x173f) { // EAROM
+		return earom_read(address);
+	}
 
 	switch (address)
 	{
@@ -565,7 +621,7 @@ static UINT8 centipede_read(UINT16 address)
 		case 0x100f: return pokey1_r(address);
 	}
 
-	//bprintf(0, _T("mr %X,"), address);
+//	bprintf(0, _T("mr %X,"), address);
 
 	return 0;
 }
@@ -580,7 +636,9 @@ static INT32 DrvDoReset()
 	M6502Reset();
 	M6502Close();
 
-	HiscoreReset();
+	earom_offset = 0;
+	earom_data = 0;
+	//memset(&earom, 0, EAROM_SIZE); // only clear this @ init
 
 	return 0;
 }
@@ -674,6 +732,8 @@ static INT32 DrvInit()
 
 	GenericTilesInit();
 
+	memset(&earom, 0, sizeof(earom)); // don't put this in DrvDoReset()
+
 	DrvDoReset();
 
 	return 0;
@@ -722,6 +782,8 @@ static INT32 DrvInitcentiped()
 	init_penmask();
 
 	GenericTilesInit();
+
+	memset(&earom, 0, sizeof(earom)); // don't put this in DrvDoReset()
 
 	DrvDoReset();
 
@@ -877,10 +939,13 @@ static INT32 DrvFrame()
 	vblank = 0;
 
 	M6502Open(0);
+	INT32 nNext, nCyclesDone = 0, nCyclesSegment;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		M6502Run(nTotalCycles / nInterleave);
-		M6502SetIRQLine(0,CPU_IRQSTATUS_AUTO);
+		nNext = (i + 1) * nTotalCycles / nInterleave;
+		nCyclesSegment = nNext - nCyclesDone;
+		nCyclesDone += M6502Run(nCyclesSegment);
+		M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 		if (i == 2)
 		    vblank = 1;
@@ -918,6 +983,14 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 	}
 
+	if (nAction & ACB_NVRAM) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data		= earom;
+		ba.nLen		= sizeof(earom);
+		ba.szName	= "NV RAM";
+		BurnAcb(&ba);
+	}
+
 	return 0;
 }
 
@@ -943,7 +1016,7 @@ struct BurnDriver BurnDrvMilliped = {
 	"milliped", NULL, NULL, NULL, "1982",
 	"Millipede\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, millipedRomInfo, millipedRomName, NULL, NULL, MillipedInputInfo, MillipedDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	240, 256, 3, 4
@@ -970,7 +1043,7 @@ struct BurnDriver BurnDrvCentiped = {
 	"centiped", NULL, NULL, NULL, "1980",
 	"Centipede (revision 4)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, centipedRomInfo, centipedRomName, NULL, NULL, CentipedInputInfo, CentipedDIPInfo,
 	DrvInitcentiped, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	240, 256, 3, 4
@@ -997,7 +1070,7 @@ struct BurnDriver BurnDrvCentiped3 = {
 	"centiped3", "centiped", NULL, NULL, "1980",
 	"Centipede (revision 3)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, centiped3RomInfo, centiped3RomName, NULL, NULL, CentipedInputInfo, CentipedDIPInfo,
 	DrvInitcentiped, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	240, 256, 3, 4

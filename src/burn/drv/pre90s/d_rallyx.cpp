@@ -429,6 +429,8 @@ static INT32 DrvDoReset()
 	yScroll = 0;
 	DrvLastBang = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -442,6 +444,8 @@ static INT32 JunglerDoReset()
 	DrvCPUIRQVector = 0;
 	xScroll = 0;
 	yScroll = 0;
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -1520,7 +1524,7 @@ struct BurnDriver BurnDrvRallyx = {
 	"rallyx", NULL, NULL, "rallyx", "1980",
 	"Rally X (32k Ver.?))\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxRomInfo, RallyxRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 260, 288, 224, 4, 3
@@ -1530,7 +1534,7 @@ struct BurnDriver BurnDrvRallyxa = {
 	"rallyxa", "rallyx", NULL, "rallyx", "1980",
 	"Rally X\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxaRomInfo, RallyxaRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
 	DrvaInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 260, 288, 224, 4, 3
@@ -1540,7 +1544,7 @@ struct BurnDriver BurnDrvRallyxm = {
 	"rallyxm", "rallyx", NULL, "rallyx", "1980",
 	"Rally X (Midway)\0", NULL, "Namco (Midway License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxmRomInfo, RallyxmRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 260, 288, 224, 4, 3
@@ -1550,7 +1554,7 @@ struct BurnDriver BurnDrvRallyxmr = {
 	"rallyxmr", "rallyx", NULL, "rallyx", "1980",
 	"Rally X (Model Racing)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxmrRomInfo, RallyxmrRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
 	DrvaInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 260, 288, 224, 4, 3
@@ -1560,19 +1564,17 @@ struct BurnDriver BurnDrvNrallyx = {
 	"nrallyx", NULL, NULL, "rallyx", "1981",
 	"New Rally X\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, NrallyxRomInfo, NrallyxRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
 	NrallyxInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 260, 288, 224, 4, 3
 };
 
-
-
 struct BurnDriverD BurnDrvJungler = {
 	"jungler", NULL, NULL, NULL, "1981",
 	"Jungler\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, JunglerRomInfo, JunglerRomName, NULL, NULL, JunglerInputInfo, JunglerDIPInfo,
 	JunglerInit, DrvExit, JunglerFrame, NULL, DrvScan,
 	NULL, 324, 224, 288, 3, 4

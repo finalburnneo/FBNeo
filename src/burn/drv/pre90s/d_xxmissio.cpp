@@ -317,6 +317,8 @@ static INT32 DrvDoReset()
 	cpu_status = 0;
 	flipscreen = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -680,7 +682,7 @@ struct BurnDriver BurnDrvXxmissio = {
 	"xxmissio", NULL, NULL, NULL, "1986",
 	"XX Mission\0", NULL, "UPL", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, xxmissioRomInfo, xxmissioRomName, NULL, NULL, XxmissioInputInfo, XxmissioDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	192, 512, 3, 4

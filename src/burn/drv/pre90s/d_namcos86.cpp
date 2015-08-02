@@ -1039,6 +1039,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	memset (scroll, 0, sizeof(scroll));
 	memset (nBankData, 0, sizeof(nBankData));
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1782,7 +1784,7 @@ struct BurnDriver BurnDrvSkykiddx = {
 	"skykiddx", NULL, NULL, NULL, "1986",
 	"Sky Kid Deluxe (set 1)\0", NULL, "Namco", "System 86",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, skykiddxRomInfo, skykiddxRomName, NULL, NULL, CommonInputInfo, SkykiddxDIPInfo,
 	SkykiddxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	288, 224, 4, 3
@@ -1824,7 +1826,7 @@ struct BurnDriver BurnDrvSkykiddxo = {
 	"skykiddxo", "skykiddx", NULL, NULL, "1986",
 	"Sky Kid Deluxe (set 2)\0", NULL, "Namco", "System 86",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, skykiddxoRomInfo, skykiddxoRomName, NULL, NULL, CommonInputInfo, SkykiddxDIPInfo,
 	SkykiddxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	288, 224, 4, 3
@@ -1861,7 +1863,7 @@ struct BurnDriver BurnDrvHopmappy = {
 	"hopmappy", NULL, NULL, NULL, "1986",
 	"Hopping Mappy\0", NULL, "Namco", "System 86",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, hopmappyRomInfo, hopmappyRomName, NULL, NULL, HopmappyInputInfo, HopmappyDIPInfo,
 	SkykiddxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	288, 224, 4, 3
@@ -1913,7 +1915,7 @@ struct BurnDriver BurnDrvRoishtar = {
 	"roishtar", NULL, NULL, NULL, "1986",
 	"The Return of Ishtar\0", NULL, "Namco", "System 86",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, roishtarRomInfo, roishtarRomName, NULL, NULL, RoishtarInputInfo, RoishtarDIPInfo,
 	RoishtarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	288, 224, 4, 3
@@ -1970,7 +1972,7 @@ struct BurnDriver BurnDrvGenpeitd = {
 	"genpeitd", NULL, NULL, NULL, "1986",
 	"Genpei ToumaDen\0", NULL, "Namco", "System 86",
 	L"Genpei ToumaDen\0\u906E\u735E\u0E8A\u549B\u1D4F\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, genpeitdRomInfo, genpeitdRomName, NULL, NULL, CommonInputInfo, GenpeitdDIPInfo,
 	GenpeitdInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	288, 224, 4, 3
@@ -2033,7 +2035,7 @@ struct BurnDriver BurnDrvRthunder = {
 	"rthunder", NULL, NULL, NULL, "1986",
 	"Rolling Thunder (rev 3)\0", NULL, "Namco", "System 86",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, rthunderRomInfo, rthunderRomName, NULL, NULL, CommonInputInfo, RthunderDIPInfo,
 	RthunderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	288, 224, 4, 3
@@ -2088,7 +2090,7 @@ struct BurnDriver BurnDrvRthunder2 = {
 	"rthunder2", "rthunder", NULL, NULL, "1986",
 	"Rolling Thunder (rev 2)\0", NULL, "Namco", "System 86",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, rthunder2RomInfo, rthunder2RomName, NULL, NULL, CommonInputInfo, Rthunder1DIPInfo,
 	RthunderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	288, 224, 4, 3
@@ -2143,7 +2145,7 @@ struct BurnDriver BurnDrvRthunder1 = {
 	"rthunder1", "rthunder", NULL, NULL, "1986",
 	"Rolling Thunder (rev 1)\0", NULL, "Namco", "System 86",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, rthunder1RomInfo, rthunder1RomName, NULL, NULL, CommonInputInfo, Rthunder1DIPInfo,
 	RthunderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	288, 224, 4, 3
@@ -2201,7 +2203,7 @@ struct BurnDriver BurnDrvWndrmomo = {
 	"wndrmomo", NULL, NULL, NULL, "1987",
 	"Wonder Momo\0", NULL, "Namco", "System 86",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, wndrmomoRomInfo, wndrmomoRomName, NULL, NULL, CommonInputInfo, WndrmomoDIPInfo,
 	WndrmomoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	288, 224, 4, 3

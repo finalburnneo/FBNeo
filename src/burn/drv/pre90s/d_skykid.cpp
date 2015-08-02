@@ -519,6 +519,8 @@ static INT32 DrvDoReset(INT32 ClearRAM)
 	watchdog = 0;
 	hd63701_in_reset = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -923,7 +925,7 @@ struct BurnDriver BurnDrvSkykid = {
 	"skykid", NULL, NULL, NULL, "1985",
 	"Sky Kid (new version)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, skykidRomInfo, skykidRomName, NULL, NULL, SkykidInputInfo, SkykidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x500,
 	288, 224, 4, 3
@@ -961,7 +963,7 @@ struct BurnDriver BurnDrvSkykido = {
 	"skykido", "skykid", NULL, NULL, "1985",
 	"Sky Kid (old version)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, skykidoRomInfo, skykidoRomName, NULL, NULL, SkykidInputInfo, SkykidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x500,
 	288, 224, 4, 3
@@ -999,7 +1001,7 @@ struct BurnDriver BurnDrvSkykidd = {
 	"skykidd", "skykid", NULL, NULL, "1985",
 	"Sky Kid (CUS60 version)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, skykiddRomInfo, skykiddRomName, NULL, NULL, SkykidInputInfo, SkykidDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x500,
 	288, 224, 4, 3
@@ -1037,7 +1039,7 @@ struct BurnDriver BurnDrvSkykids = {
 	"skykids", "skykid", NULL, NULL, "1985",
 	"Sky Kid (Sipem)\0", NULL, "Namco [Sipem license]", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, skykidsRomInfo, skykidsRomName, NULL, NULL, SkykidInputInfo, SkykidsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x500,
 	288, 224, 4, 3
@@ -1075,7 +1077,7 @@ struct BurnDriver BurnDrvDrgnbstr = {
 	"drgnbstr", NULL, NULL, NULL, "1984",
 	"Dragon Buster\0", "Missing sounds", "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, drgnbstrRomInfo, drgnbstrRomName, NULL, NULL, SkykidInputInfo, DrgnbstrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x500,
 	288, 224, 4, 3

@@ -212,6 +212,8 @@ static INT32 DrvDoReset()
 	video_control = 0;
 	flipscreen = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -655,7 +657,7 @@ struct BurnDriver BurnDrvMustache = {
 	"mustache", NULL, NULL, NULL, "1987",
 	"Mustache Boy\0", NULL, "Seibu Kaihatsu (March license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mustacheRomInfo, mustacheRomName, NULL, NULL, MustacheInputInfo, MustacheDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	248, 240, 3, 4

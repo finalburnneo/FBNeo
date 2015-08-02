@@ -237,6 +237,9 @@ static INT32 DrvDoReset()
 	for (INT32 i = 0; i < 3; i++) {
 		AY8910Reset(i);
 	}
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -954,7 +957,7 @@ struct BurnDriver BurnDrvBombjack = {
 	"bombjack", NULL, NULL, NULL, "1984",
 	"Bomb Jack (set 1)\0", NULL, "Tehkan", "Bomb Jack",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING,2,HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED,2,HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, BombjackRomInfo,BombjackRomName, NULL, NULL,DrvInputInfo,BjDIPInfo,
 	BjInit,BjExit,BjFrame,NULL,BjScan,
 	NULL,0x80,224,256,3,4
@@ -964,7 +967,7 @@ struct BurnDriver BurnDrvBombjac2 = {
 	"bombjack2", "bombjack", NULL, NULL, "1984",
 	"Bomb Jack (set 2)\0", NULL, "Tehkan", "Bomb Jack",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE,2,HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED,2,HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, Bombjac2RomInfo,Bombjac2RomName, NULL, NULL,DrvInputInfo,BjDIPInfo,
 	BjInit,BjExit,BjFrame,NULL,BjScan,
 	NULL,0x80,224,256,3,4
@@ -974,7 +977,7 @@ struct BurnDriver BurnDrvBombjackt = {
 	"bombjackt", "bombjack", NULL, NULL, "1984",
 	"Bomb Jack (Tecfri, Spain)\0", NULL, "Tehkan (Tecfri License)", "Bomb Jack",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE,2,HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED,2,HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, BombjacktRomInfo,BombjacktRomName, NULL, NULL,DrvInputInfo,BjDIPInfo,
 	BjtInit,BjExit,BjFrame,NULL,BjScan,
 	NULL,0x80,224,256,3,4

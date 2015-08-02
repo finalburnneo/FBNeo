@@ -264,6 +264,8 @@ static INT32 DrvDoReset()
 		AY8910Reset(i);
 	}
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -596,7 +598,7 @@ struct BurnDriver BurnDrvmrflea = {
 	"mrflea", NULL, NULL, NULL, "1982",
 	"The Amazing Adventures of Mr. F. Lea\0", NULL, "Pacific Novelty", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, mrfleaRomInfo, mrfleaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x80,
 	248, 256, 3, 4

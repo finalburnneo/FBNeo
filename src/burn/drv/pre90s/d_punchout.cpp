@@ -509,6 +509,8 @@ static INT32 DrvDoReset()
 
 	spunchout_prot_mode = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1324,7 +1326,7 @@ struct BurnDriver BurnDrvPunchout = {
 	"punchout", NULL, NULL, NULL, "1984",
 	"Punch-Out!! (Rev B)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, punchoutRomInfo, punchoutRomName, NULL, NULL, PunchoutInputInfo, PunchoutDIPInfo,
 	PunchoutInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
@@ -1396,7 +1398,7 @@ struct BurnDriver BurnDrvPunchouta = {
 	"punchouta", "punchout", NULL, NULL, "1984",
 	"Punch-Out!! (Rev A)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, punchoutaRomInfo, punchoutaRomName, NULL, NULL, PunchoutInputInfo, PunchoutDIPInfo,
 	PunchoutaInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
@@ -1463,7 +1465,7 @@ struct BurnDriver BurnDrvPunchoutj = {
 	"punchoutj", "punchout", NULL, NULL, "1984",
 	"Punch-Out!! (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, punchoutjRomInfo, punchoutjRomName, NULL, NULL, PunchoutInputInfo, PunchoutDIPInfo,
 	PunchoutaInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
@@ -1535,7 +1537,7 @@ struct BurnDriver BurnDrvPunchita = {
 	"punchita", "punchout", NULL, NULL, "1984",
 	"Punch-Out!! (Italian bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, punchitaRomInfo, punchitaRomName, NULL, NULL, PunchoutInputInfo, PunchoutDIPInfo,
 	SpnchoutInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
@@ -1602,7 +1604,7 @@ struct BurnDriver BurnDrvSpnchout = {
 	"spnchout", NULL, NULL, NULL, "1984",
 	"Super Punch-Out!! (Rev B)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, spnchoutRomInfo, spnchoutRomName, NULL, NULL, SpnchoutInputInfo, SpnchoutDIPInfo,
 	SpnchoutInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
@@ -1669,7 +1671,7 @@ struct BurnDriver BurnDrvSpnchouta = {
 	"spnchouta", "spnchout", NULL, NULL, "1984",
 	"Super Punch-Out!! (Rev A)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, spnchoutaRomInfo, spnchoutaRomName, NULL, NULL, SpnchoutInputInfo, SpnchoutDIPInfo,
 	PunchoutaInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
@@ -1741,7 +1743,7 @@ struct BurnDriver BurnDrvSpnchoutj = {
 	"spnchoutj", "spnchout", NULL, NULL, "1984",
 	"Super Punch-Out!! (Japan)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, spnchoutjRomInfo, spnchoutjRomName, NULL, NULL, SpnchoutInputInfo, SpnchoutDIPInfo,
 	SpnchoutjInit, DrvExit, DrvFrame, PunchoutDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6
@@ -1803,7 +1805,7 @@ struct BurnDriver BurnDrvArmwrest = {
 	"armwrest", NULL, NULL, NULL, "1985",
 	"Arm Wrestling\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, armwrestRomInfo, armwrestRomName, NULL, NULL, ArmwrestInputInfo, ArmwrestDIPInfo,
 	ArmwrestInit, DrvExit, DrvFrame, ArmwrestDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 448, 4, 6

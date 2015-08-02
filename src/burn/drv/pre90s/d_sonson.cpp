@@ -345,6 +345,8 @@ static INT32 DrvDoReset()
 	DrvSoundIrqTrigger = 0;
 	DrvSoundTrigger = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -672,7 +674,7 @@ struct BurnDriver BurnDrvSonson = {
 	"sonson", NULL, NULL, NULL, "1984",
 	"Son Son\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
 	NULL, sonsonRomInfo, sonsonRomName, NULL, NULL, SonsonInputInfo, SonsonDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 240, 4, 3
@@ -723,7 +725,7 @@ struct BurnDriver BurnDrvSonsonj = {
 	"sonsonj", "sonson", NULL, NULL, "1984",
 	"Son Son (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
 	NULL, sonsonjRomInfo, sonsonjRomName, NULL, NULL, SonsonInputInfo, SonsonDIPInfo,
 	SonsonjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 240, 4, 3

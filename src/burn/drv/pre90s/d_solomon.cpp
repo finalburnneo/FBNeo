@@ -221,6 +221,8 @@ INT32 SolomonDoReset()
 		AY8910Reset(i);
 	}
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -765,7 +767,7 @@ struct BurnDriver BurnDrvSolomon = {
 	"solomon", NULL, NULL, NULL, "1986",
 	"Solomon's Key (US)\0", NULL, "Tecmo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, SolomonRomInfo, SolomonRomName, NULL, NULL, SolomonInputInfo, SolomonDIPInfo,
 	SolomonInit, SolomonExit, SolomonFrame, NULL, SolomonScan,
 	NULL, 0x200, 256, 224, 4, 3
@@ -775,7 +777,7 @@ struct BurnDriver BurnDrvSolomonj = {
 	"solomonj", "solomon", NULL, NULL, "1986",
 	"Solomon's Key (Japan)\0", NULL, "Tecmo", "Miscellaneous",
 	L"Solomon's Key (Japan)\0Solomon's Key \u30BD\u30ED\u30E2\u30F3\u306E\u9375\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, SolomonjRomInfo, SolomonjRomName, NULL, NULL, SolomonInputInfo, SolomonDIPInfo,
 	SolomonInit, SolomonExit, SolomonFrame, NULL, SolomonScan,
 	NULL, 0x200, 256, 224, 4, 3

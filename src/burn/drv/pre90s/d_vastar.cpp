@@ -402,6 +402,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	nmi_mask = 0;
 	sprite_priority = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -926,7 +928,7 @@ struct BurnDriver BurnDrvVastar = {
 	"vastar", NULL, NULL, NULL, "1983",
 	"Vastar (set 1)\0", NULL, "Sesame Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, vastarRomInfo, vastarRomName, NULL, NULL, VastarInputInfo, VastarDIPInfo,
 	vastarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -971,7 +973,7 @@ struct BurnDriver BurnDrvVastar2 = {
 	"vastar2", "vastar", NULL, NULL, "1983",
 	"Vastar (set 2)\0", NULL, "Sesame Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, vastar2RomInfo, vastar2RomName, NULL, NULL, VastarInputInfo, VastarDIPInfo,
 	vastarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1017,7 +1019,7 @@ struct BurnDriver BurnDrvVastar3 = {
 	"vastar3", "vastar", NULL, NULL, "1983",
 	"Vastar (set 3)\0", NULL, "Sesame Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, vastar3RomInfo, vastar3RomName, NULL, NULL, VastarInputInfo, VastarDIPInfo,
 	vastar3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1062,7 +1064,7 @@ struct BurnDriver BurnDrvVastar4 = {
 	"vastar4", "vastar", NULL, NULL, "1983",
 	"Vastar (set 4)\0", NULL, "Sesame Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, vastar4RomInfo, vastar4RomName, NULL, NULL, VastarInputInfo, Vastar4DIPInfo,
 	vastarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1107,7 +1109,7 @@ struct BurnDriver BurnDrvPprobe = {
 	"pprobe", NULL, NULL, NULL, "1985",
 	"Planet Probe (prototype?)\0", NULL, "Crux / Kyugo?", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, pprobeRomInfo, pprobeRomName, NULL, NULL, PprobeInputInfo, PprobeDIPInfo,
 	pprobeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4

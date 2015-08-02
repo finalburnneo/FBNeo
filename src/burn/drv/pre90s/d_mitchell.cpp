@@ -1177,7 +1177,9 @@ static INT32 DrvDoReset()
 	DrvPaletteRamBank = 0;
 	DrvVideoBank = 0;
 	DrvDialSelected = 0;
-	
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1199,7 +1201,9 @@ static INT32 MstworldDoReset()
 	DrvPaletteRamBank = 0;
 	DrvVideoBank = 0;
 	DrvSoundLatch = 0;
-	
+
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -3113,7 +3117,7 @@ struct BurnDriver BurnDrvMgakuen = {
 	"mgakuen", NULL, NULL, NULL, "1988",
 	"Mahjong Gakuen\0", NULL, "Yuga", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
 	NULL, MgakuenRomInfo, MgakuenRomName, NULL, NULL, MgakuenInputInfo, MgakuenDIPInfo,
 	MgakuenInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 384, 240, 4, 3
@@ -3123,7 +3127,7 @@ struct BurnDriver BurnDrvSeventoitsu = {
 	"7toitsu", "mgakuen", NULL, NULL, "1988",
 	"Chi-Toitsu\0", NULL, "Yuga", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
 	NULL, SeventoitsuRomInfo, SeventoitsuRomName, NULL, NULL, MgakuenInputInfo, MgakuenDIPInfo,
 	MgakuenInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 384, 240, 4, 3
@@ -3133,7 +3137,7 @@ struct BurnDriver BurnDrvMgakuen2 = {
 	"mgakuen2", NULL, NULL, NULL, "1989",
 	"Mahjong Gakuen 2 Gakuen-chou no Fukushuu\0", NULL, "Face", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
 	NULL, Mgakuen2RomInfo, Mgakuen2RomName, NULL, NULL, MarukinInputInfo, NULL,
 	Mgakuen2Init, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3143,7 +3147,7 @@ struct BurnDriver BurnDrvPkladies = {
 	"pkladies", NULL, NULL, NULL, "1989",
 	"Poker Ladies\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
 	NULL, PkladiesRomInfo, PkladiesRomName, NULL, NULL, PkladiesInputInfo, NULL,
 	PkladiesInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3153,7 +3157,7 @@ struct BurnDriver BurnDrvPkladiesl = {
 	"pkladiesl", "pkladies", NULL, NULL, "1989",
 	"Poker Ladies (Leprechaun ver. 510)\0", NULL, "Leprechaun", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
 	NULL, PkladieslRomInfo, PkladieslRomName, NULL, NULL, PkladiesInputInfo, NULL,
 	PkladiesInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3163,7 +3167,7 @@ struct BurnDriver BurnDrvPkladiesla = {
 	"pkladiesla", "pkladies", NULL, NULL, "1989",
 	"Poker Ladies (Leprechaun ver. 401)\0", NULL, "Leprechaun", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
 	NULL, PkladieslaRomInfo, PkladieslaRomName, NULL, NULL, PkladiesInputInfo, NULL,
 	PkladiesInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3173,7 +3177,7 @@ struct BurnDriver BurnDrvDokaben = {
 	"dokaben", NULL, NULL, NULL, "1989",
 	"Dokaben (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, DokabenRomInfo, DokabenRomName, NULL, NULL, PangInputInfo, NULL,
 	DokabenInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3183,7 +3187,7 @@ struct BurnDriver BurnDrvPang = {
 	"pang", NULL, NULL, NULL, "1989",
 	"Pang (World)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, PangRomInfo, PangRomName, NULL, NULL, PangInputInfo, NULL,
 	PangInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3193,7 +3197,7 @@ struct BurnDriver BurnDrvBbros = {
 	"bbros", "pang", NULL, NULL, "1989",
 	"Buster Bros. (USA)\0", NULL, "Mitchell (Capcom license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, BbrosRomInfo, BbrosRomName, NULL, NULL, PangInputInfo, NULL,
 	PangInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3203,7 +3207,7 @@ struct BurnDriver BurnDrvPompingw = {
 	"pompingw", "pang", NULL, NULL, "1989",
 	"Pomping World (Japan)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, PompingwRomInfo, PompingwRomName, NULL, NULL, PangInputInfo, NULL,
 	PangInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3213,7 +3217,7 @@ struct BurnDriver BurnDrvPangb = {
 	"pangb", "pang", NULL, NULL, "1989",
 	"Pang (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, PangbRomInfo, PangbRomName, NULL, NULL, PangInputInfo, NULL,
 	PangbInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3223,7 +3227,7 @@ struct BurnDriver BurnDrvPangbold = {
 	"pangbold", "pang", NULL, NULL, "1989",
 	"Pang (bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, PangboldRomInfo, PangboldRomName, NULL, NULL, PangInputInfo, NULL,
 	PangboldInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3233,7 +3237,7 @@ struct BurnDriver BurnDrvPangbold2 = {
 	"pangbold2", "pang", NULL, NULL, "1990",
 	"Pang (bootleg, set 5)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, Pangbold2RomInfo, Pangbold2RomName, NULL, NULL, PangInputInfo, NULL,
 	PangboldInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3243,7 +3247,7 @@ struct BurnDriver BurnDrvPangbold3 = {
 	"pangbold3", "pang", NULL, NULL, "1989",
 	"Pang (bootleg, set 6)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, Pangbold3RomInfo, Pangbold3RomName, NULL, NULL, PangInputInfo, NULL,
 	PangboldInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3253,7 +3257,7 @@ struct BurnDriver BurnDrvPangb2 = {
 	"pangb2", "pang", NULL, NULL, "1989",
 	"Pang (bootleg, set 4)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, Pangb2RomInfo, Pangb2RomName, NULL, NULL, PangInputInfo, NULL,
 	Pangb2Init, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3263,7 +3267,7 @@ struct BurnDriver BurnDrvCworld = {
 	"cworld", NULL, NULL, NULL, "1990",
 	"Capcom World (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, CworldRomInfo, CworldRomName, NULL, NULL, Qtono1InputInfo, NULL,
 	CworldInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3273,7 +3277,7 @@ struct BurnDriver BurnDrvHatena = {
 	"hatena", NULL, NULL, NULL, "1990",
 	"Adventure Quiz 2 - Hatena? no Daibouken (Japan 900228)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, HatenaRomInfo, HatenaRomName, NULL, NULL, Qtono1InputInfo, NULL,
 	HatenaInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3283,7 +3287,7 @@ struct BurnDriver BurnDrvSpang = {
 	"spang", NULL, NULL, NULL, "1990",
 	"Super Pang (World 900914)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, SpangRomInfo, SpangRomName, NULL, NULL, PangInputInfo, NULL,
 	SpangInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3293,7 +3297,7 @@ struct BurnDriver BurnDrvSpangj = {
 	"spangj", "spang", NULL, NULL, "1990",
 	"Super Pang (Japan 901023)\0", NULL, "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, SpangjRomInfo, SpangjRomName, NULL, NULL, PangInputInfo, NULL,
 	SpangjInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3303,7 +3307,7 @@ struct BurnDriver BurnDrvSbbros = {
 	"sbbros", "spang", NULL, NULL, "1990",
 	"Super Buster Bros. (USA 901001)\0", NULL, "Mitchell (Capcom license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, SbbrosRomInfo, SbbrosRomName, NULL, NULL, PangInputInfo, NULL,
 	SbbrosInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3313,7 +3317,7 @@ struct BurnDriver BurnDrvMstworld = {
 	"mstworld", NULL, NULL, NULL, "1994",
 	"Monsters World (bootleg of Super Pang)\0", NULL, "bootleg (TCH)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, MstworldRomInfo, MstworldRomName, NULL, NULL, MstworldInputInfo, MstworldDIPInfo,
 	MstworldInit, CommonExit, MstworldFrame, NULL, MstworldScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3323,7 +3327,7 @@ struct BurnDriver BurnDrvMarukin = {
 	"marukin", NULL, NULL, NULL, "1990",
 	"Super Marukin-Ban (Japan 901017)\0", NULL, "Yuga", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, MarukinRomInfo, MarukinRomName, NULL, NULL, MarukinInputInfo, NULL,
 	MarukinInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3333,7 +3337,7 @@ struct BurnDriver BurnDrvQtono1 = {
 	"qtono1", NULL, NULL, NULL, "1991",
 	"Quiz Tonosama no Yabou (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, Qtono1RomInfo, Qtono1RomName, NULL, NULL, Qtono1InputInfo, NULL,
 	Qtono1Init, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3343,7 +3347,7 @@ struct BurnDriver BurnDrvQsangoku = {
 	"qsangoku", NULL, NULL, NULL, "1991",
 	"Quiz Sangokushi (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, QsangokuRomInfo, QsangokuRomName, NULL, NULL, Qtono1InputInfo, NULL,
 	QsangokuInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 384, 240, 4, 3
@@ -3353,7 +3357,7 @@ struct BurnDriver BurnDrvBlock = {
 	"block", NULL, NULL, NULL, "1991",
 	"Block Block (World 910910)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
 	NULL, BlockRomInfo, BlockRomName, NULL, NULL, BlockInputInfo, NULL,
 	BlockInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
@@ -3363,7 +3367,7 @@ struct BurnDriver BurnDrvBlockj = {
 	"blockj", "block", NULL, NULL, "1991",
 	"Block Block (Japan 910910)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
 	NULL, BlockjRomInfo, BlockjRomName, NULL, NULL, BlockInputInfo, NULL,
 	BlockInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
@@ -3373,7 +3377,7 @@ struct BurnDriver BurnDrvBlockjoy = {
 	"blockjoy", "block", NULL, NULL, "1991",
 	"Block Block (World 911116 Joystick)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
 	NULL, BlockjoyRomInfo, BlockjoyRomName, NULL, NULL, BlockjoyInputInfo, NULL,
 	BlockjoyInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
@@ -3383,7 +3387,7 @@ struct BurnDriver BurnDrvBlockbl = {
 	"blockbl", "block", NULL, NULL, "1991",
 	"Block Block (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
 	NULL, BlockblRomInfo, BlockblRomName, NULL, NULL, BlockInputInfo, NULL,
 	BlockblInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4

@@ -743,6 +743,8 @@ static INT32 DrvDoReset()
 	textbank0 = 0;
 	textbank1 = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -1482,7 +1484,7 @@ struct BurnDriver BurnDrvTsamurai = {
 	"tsamurai", NULL, NULL, NULL, "1985",
 	"Samurai Nihon-Ichi (set 1)\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, tsamuraiRomInfo, tsamuraiRomName, NULL, NULL, TsamuraiInputInfo, TsamuraiDIPInfo,
 	tsamuraiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1525,7 +1527,7 @@ struct BurnDriver BurnDrvTsamurai2 = {
 	"tsamurai2", "tsamurai", NULL, NULL, "1985",
 	"Samurai Nihon-Ichi (set 2)\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, tsamurai2RomInfo, tsamurai2RomName, NULL, NULL, TsamuraiInputInfo, TsamuraiDIPInfo,
 	tsamuraiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1568,7 +1570,7 @@ struct BurnDriver BurnDrvTsamuraih = {
 	"tsamuraih", "tsamurai", NULL, NULL, "1985",
 	"Samurai Nihon-Ichi (bootleg, harder)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, tsamuraihRomInfo, tsamuraihRomName, NULL, NULL, TsamuraiInputInfo, TsamuraiDIPInfo,
 	tsamuraiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1611,7 +1613,7 @@ struct BurnDriver BurnDrvLadymstr = {
 	"ladymstr", NULL, NULL, NULL, "1985",
 	"Lady Master of Kung Fu\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, ladymstrRomInfo, ladymstrRomName, NULL, NULL, TsamuraiInputInfo, LadymstrDIPInfo,
 	tsamuraiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1660,7 +1662,7 @@ struct BurnDriver BurnDrvNunchaku = {
 	"nunchaku", "ladymstr", NULL, NULL, "1985",
 	"Nunchackun\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, nunchakuRomInfo, nunchakuRomName, NULL, NULL, TsamuraiInputInfo, NunchakuDIPInfo,
 	nunchakuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1707,7 +1709,7 @@ struct BurnDriver BurnDrvYamagchi = {
 	"yamagchi", NULL, NULL, NULL, "1985",
 	"Go Go Mr. Yamaguchi / Yuke Yuke Yamaguchi-kun\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, yamagchiRomInfo, yamagchiRomName, NULL, NULL, YamagchiInputInfo, YamagchiDIPInfo,
 	yamagchiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1756,7 +1758,7 @@ struct BurnDriver BurnDrvM660 = {
 	"m660", NULL, NULL, NULL, "1986",
 	"Mission 660 (US)\0", NULL, "Wood Place Inc. (Taito America Corporation license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, m660RomInfo, m660RomName, NULL, NULL, TsamuraiInputInfo, M660DIPInfo,
 	m660Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1806,7 +1808,7 @@ struct BurnDriver BurnDrvM660j = {
 	"m660j", "m660", NULL, NULL, "1986",
 	"Mission 660 (Japan)\0", NULL, "Wood Place Inc. (Taito Corporation license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, m660jRomInfo, m660jRomName, NULL, NULL, TsamuraiInputInfo, M660DIPInfo,
 	m660jInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1850,7 +1852,7 @@ struct BurnDriver BurnDrvM660b = {
 	"m660b", "m660", NULL, NULL, "1986",
 	"Mission 660 (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, m660bRomInfo, m660bRomName, NULL, NULL, TsamuraiInputInfo, M660DIPInfo,
 	m660Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1894,7 +1896,7 @@ struct BurnDriver BurnDrvAlphaxz = {
 	"alphaxz", "m660", NULL, NULL, "1986",
 	"The Alphax Z (Japan)\0", NULL, "Ed Co. Ltd. (Wood Place Inc. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, alphaxzRomInfo, alphaxzRomName, NULL, NULL, TsamuraiInputInfo, M660DIPInfo,
 	m660Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1939,7 +1941,7 @@ struct BurnDriver BurnDrvVsgongf = {
 	"vsgongf", NULL, NULL, NULL, "1984",
 	"VS Gong Fight\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, vsgongfRomInfo, vsgongfRomName, NULL, NULL, TsamuraiInputInfo, VsgongfDIPInfo,
 	VsgongfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1982,7 +1984,7 @@ struct BurnDriver BurnDrvRingfgt = {
 	"ringfgt", "vsgongf", NULL, NULL, "1984",
 	"Ring Fighter (set 1)\0", NULL, "Kaneko (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, ringfgtRomInfo, ringfgtRomName, NULL, NULL, TsamuraiInputInfo, VsgongfDIPInfo,
 	RingfgtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -2025,7 +2027,7 @@ struct BurnDriver BurnDrvRingfgt2 = {
 	"ringfgt2", "vsgongf", NULL, NULL, "1984",
 	"Ring Fighter (set 2)\0", NULL, "Kaneko (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, ringfgt2RomInfo, ringfgt2RomName, NULL, NULL, TsamuraiInputInfo, VsgongfDIPInfo,
 	Ringfgt2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4

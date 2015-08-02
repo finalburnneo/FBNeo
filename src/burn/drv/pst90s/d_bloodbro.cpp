@@ -483,6 +483,8 @@ static INT32 DrvDoReset()
 
 	seibu_sound_reset();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -951,7 +953,7 @@ struct BurnDriver BurnDrvBloodbro = {
 	"bloodbro", NULL, NULL, NULL, "1990",
 	"Blood Bros. (set 1)\0", NULL, "Tad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, bloodbroRomInfo, bloodbroRomName, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -985,7 +987,7 @@ struct BurnDriver BurnDrvBloodbroa = {
 	"bloodbroa", "bloodbro", NULL, NULL, "1990",
 	"Blood Bros. (set 2)\0", NULL, "Tad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, bloodbroaRomInfo, bloodbroaRomName, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -1019,7 +1021,7 @@ struct BurnDriver BurnDrvBloodbrob = {
 	"bloodbrob", "bloodbro", NULL, NULL, "1990",
 	"Blood Bros. (set 3)\0", NULL, "Tad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, bloodbrobRomInfo, bloodbrobRomName, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -1069,7 +1071,7 @@ struct BurnDriverD BurnDrvWeststry = {
 	"weststry", "bloodbro", NULL, NULL, "1991",
 	"West Story (bootleg of Blood Bros.)\0", NULL, "Datsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, weststryRomInfo, weststryRomName, NULL, NULL, WeststryInputInfo, WeststryDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -1103,7 +1105,7 @@ struct BurnDriver BurnDrvSkysmash = {
 	"skysmash", NULL, NULL, NULL, "1990",
 	"Sky Smasher\0", NULL, "Nihon System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, skysmashRomInfo, skysmashRomName, NULL, NULL, SkysmashInputInfo, SkysmashDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4

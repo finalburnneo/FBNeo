@@ -1754,6 +1754,8 @@ static INT32 DrvDoReset()
 	bg1scrolly = 0;
 	bg2scrolly = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -2778,7 +2780,7 @@ struct BurnDriver BurnDrvAerofgt = {
 	"aerofgt", NULL, NULL, NULL, "1992",
 	"Aero Fighters\0", NULL, "Video System Co.", "Video System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, FBF_SONICWI,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, FBF_SONICWI,
 	NULL, aerofgtRomInfo, aerofgtRomName, NULL, NULL, aerofgtInputInfo, aerofgtDIPInfo,
 	aerofgtInit,DrvExit,DrvFrame,DrvDraw,DrvScan,&DrvRecalc,0x400,
 	224,320,3,4
@@ -2854,7 +2856,7 @@ struct BurnDriver BurnDrvAerofgtb = {
 	"aerofgtb", "aerofgt", NULL, NULL, "1992",
 	"Aero Fighters (Turbo Force hardware set 1)\0", NULL, "Video System Co.", "Video System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, FBF_SONICWI,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, FBF_SONICWI,
 	NULL, aerofgtbRomInfo, aerofgtbRomName, NULL, NULL, aerofgtInputInfo, aerofgtbDIPInfo,
 	aerofgtbInit,DrvExit,DrvFrame,aerofgtbDraw,DrvScan,&DrvRecalc,0x400,
 	224,320,3,4
@@ -2889,7 +2891,7 @@ struct BurnDriver BurnDrvAerofgtc = {
 	"aerofgtc", "aerofgt", NULL, NULL, "1992",
 	"Aero Fighters (Turbo Force hardware set 2)\0", NULL, "Video System Co.", "Video System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, FBF_SONICWI,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, FBF_SONICWI,
 	NULL, aerofgtcRomInfo, aerofgtcRomName, NULL, NULL, aerofgtInputInfo, aerofgtDIPInfo,
 	aerofgtbInit,DrvExit,DrvFrame,aerofgtbDraw,DrvScan,&DrvRecalc,0x400,
 	224,320,3,4
@@ -2924,7 +2926,7 @@ struct BurnDriver BurnDrvSonicwi = {
 	"sonicwi", "aerofgt", NULL, NULL, "1992",
 	"Sonic Wings (Japan)\0", NULL, "Video System Co.", "Video System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, FBF_SONICWI,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, FBF_SONICWI,
 	NULL, sonicwiRomInfo, sonicwiRomName, NULL, NULL, aerofgtInputInfo, aerofgtDIPInfo,
 	aerofgtbInit,DrvExit,DrvFrame,aerofgtbDraw,DrvScan,&DrvRecalc,0x400,
 	224,320,3,4
@@ -3089,7 +3091,7 @@ struct BurnDriver BurnDrvSpinlbrk = {
 	"spinlbrk", NULL, NULL, NULL, "1990",
 	"Spinal Breakers (World)\0", NULL, "V-System Co.", "V-System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, spinlbrkRomInfo, spinlbrkRomName, NULL, NULL, spinlbrkInputInfo, spinlbrkDIPInfo,
 	spinlbrkInit,DrvExit,DrvFrame,spinlbrkDraw,DrvScan,&DrvRecalc,0x400,
 	352,240,4,3
@@ -3143,7 +3145,7 @@ struct BurnDriver BurnDrvSpinlbru = {
 	"spinlbrku", "spinlbrk", NULL, NULL, "1990",
 	"Spinal Breakers (US)\0", NULL, "V-System Co.", "V-System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, spinlbruRomInfo, spinlbruRomName, NULL, NULL, spinlbrkInputInfo, spinlbruDIPInfo,
 	spinlbrkInit,DrvExit,DrvFrame,spinlbrkDraw,DrvScan,&DrvRecalc,0x400,
 	352,240,4,3
@@ -3197,7 +3199,7 @@ struct BurnDriver BurnDrvSpinlbrj = {
 	"spinlbrkj", "spinlbrk", NULL, NULL, "1990",
 	"Spinal Breakers (Japan)\0", NULL, "V-System Co.", "V-System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, spinlbrjRomInfo, spinlbrjRomName, NULL, NULL, spinlbrkInputInfo, spinlbrjDIPInfo,
 	spinlbrkInit,DrvExit,DrvFrame,spinlbrkDraw,DrvScan,&DrvRecalc,0x400,
 	352,240,4,3
@@ -3229,7 +3231,7 @@ struct BurnDriver BurnDrvPspikes = {
 	"pspikes", NULL, NULL, NULL, "1991",
 	"Power Spikes (World)\0", NULL, "Video System Co.", "V-System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, pspikesRomInfo, pspikesRomName, NULL, NULL, PspikesInputInfo, PspikesDIPInfo,
 	pspikesInit,DrvExit,DrvFrame,pspikesDraw,DrvScan,&DrvRecalc,0x800,
 	356,240,4,3
@@ -3263,7 +3265,7 @@ struct BurnDriver BurnDrvPspikesk = {
 	"pspikesk", "pspikes", NULL, NULL, "1991",
 	"Power Spikes (Korea)\0", NULL, "Video System Co.", "V-System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, pspikeskRomInfo, pspikeskRomName, NULL, NULL, PspikesInputInfo, PspikesDIPInfo,
 	pspikesInit,DrvExit,DrvFrame,pspikesDraw,DrvScan,&DrvRecalc,0x800,
 	356,240,4,3
@@ -3294,7 +3296,7 @@ struct BurnDriver BurnDrvPspikesu = {
 	"pspikesu", "pspikes", NULL, NULL, "1991",
 	"Power Spikes (US)\0", NULL, "Video System Co.", "V-System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, pspikesuRomInfo, pspikesuRomName, NULL, NULL, PspikesInputInfo, PspikesDIPInfo,
 	pspikesInit,DrvExit,DrvFrame,pspikesDraw,DrvScan,&DrvRecalc,0x800,
 	356,240,4,3
@@ -3325,7 +3327,7 @@ struct BurnDriver BurnDrvSvolly91 = {
 	"svolly91", "pspikes", NULL, NULL, "1991",
 	"Super Volley '91 (Japan)\0", NULL, "Video System Co.", "V-System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, svolly91RomInfo, svolly91RomName, NULL, NULL, PspikesInputInfo, PspikesDIPInfo,
 	pspikesInit,DrvExit,DrvFrame,pspikesDraw,DrvScan,&DrvRecalc,0x800,
 	356,240,4,3

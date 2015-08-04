@@ -63,6 +63,12 @@ static INT32 playfield, alphacolor, playenable, playcolor;
 static INT32 digdugmode;
 static UINT8 bHasSamples = 0;
 
+// hi-score stuff! (atari earom)
+#define EAROM_SIZE	0x40
+static UINT8 earom_offset;
+static UINT8 earom_data;
+static UINT8 earom[EAROM_SIZE];
+
 static INT32 DrvButtonHold[2] = { 0, 0 }; // Fire button must be held for 1 frame
 static INT32 DrvButtonHeld[2] = { 0, 0 }; // otherwise Dig Dug acts strangely.
 static INT32 DrvLastButtons;              // State of the last button press
@@ -111,7 +117,7 @@ static struct BurnInputInfo DigdugInputList[] =
 	{"P2 Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort2 + 4, "p2 fire 1" },
 
 	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
-	{"Service"           , BIT_DIGITAL  , DrvInputPort0 + 6, "service"   },
+	{"Service"           , BIT_DIGITAL  , DrvInputPort0 + 7, "service"   },
 	{"Dip 1"             , BIT_DIPSWITCH, DrvDip + 0       , "dip"       },
 	{"Dip 2"             , BIT_DIPSWITCH, DrvDip + 1       , "dip"       },
 //	{"Dip 3"             , BIT_DIPSWITCH, DrvDip + 2       , "dip"       },
@@ -555,6 +561,31 @@ static INT32 MemIndex()
 	return 0;
 }
 
+static UINT8 earom_read(UINT16 address)
+{
+	return (earom_data);
+}
+
+static void earom_write(UINT16 offset, UINT8 data)
+{
+	earom_offset = offset;
+	earom_data = data;
+}
+
+static void earom_ctrl_write(UINT16 offset, UINT8 data)
+{
+	/*
+		0x01 = clock
+		0x02 = set data latch? - writes only (not always)
+		0x04 = write mode? - writes only
+		0x08 = set addr latch?
+	*/
+	if (data & 0x01)
+		earom_data = earom[earom_offset];
+	if ((data & 0x0c) == 0x0c)
+		earom[earom_offset] = earom_data;
+}
+
 static INT32 DrvDoReset()
 {
 	for (INT32 i = 0; i < 3; i++) {
@@ -565,8 +596,6 @@ static INT32 DrvDoReset()
 	
 	BurnSampleReset();
 	NamcoSoundReset();
-
-	HiscoreReset();
 
 	DrvCPU1FireIRQ = 0;
 	DrvCPU2FireIRQ = 0;
@@ -600,6 +629,9 @@ static INT32 DrvDoReset()
 	alphacolor = 0;
 	playenable = 0;
 	playcolor = 0;
+
+	earom_offset = 0;
+	earom_data = 0;
 
 	return 0;
 }
@@ -728,6 +760,10 @@ static void Namco54XXWrite(INT32 Data)
 
 UINT8 __fastcall GalagaZ80ProgRead(UINT16 a)
 {
+	if (a >= 0xb800 && a <= 0xb83f && digdugmode) { // EAROM Read
+		return earom_read(a - 0xb800);
+	}
+
 	switch (a) {
 		case 0x6800:
 		case 0x6801:
@@ -865,9 +901,6 @@ UINT8 __fastcall GalagaZ80ProgRead(UINT16 a)
 		case 0xa005:
 		case 0xa006: break; // (ignore) spurious reads when playfield latch written to
 
-		case 0xb800:
-		case 0xb830: break; // unimplemented nvram stuff
-
 		default: {
 			bprintf(PRINT_NORMAL, _T("Z80 #%i Read %04x\n"), ZetGetActive(), a);
 		}
@@ -882,9 +915,20 @@ void __fastcall GalagaZ80ProgWrite(UINT16 a, UINT8 d)
 		NamcoSoundWrite(a - 0x6800, d);
 		return;
 	}
+
+	if (a >= 0xb800 && a <= 0xb83f && digdugmode) { // EAROM Write
+		earom_write(a - 0xb800, d);
+		return;
+	}
+
 //	bprintf(PRINT_NORMAL, _T("54XX z80 #%i Write %X, %X nbs %X\n"), ZetGetActive(), a, d, nBurnSoundLen);
 
 	switch (a) {
+		case 0xb840:
+			if (digdugmode)
+				earom_ctrl_write(0xb840, d);
+			return;
+
 		case 0x6820: {
 			DrvCPU1FireIRQ = d & 0x01;
 			if (!DrvCPU1FireIRQ) {
@@ -1113,6 +1157,8 @@ static void MachineInit()
 	bHasSamples = BurnSampleGetStatus(0) != -1;
 
 	GenericTilesInit();
+
+	memset(&earom, 0, sizeof(earom)); // don't put this in DrvDoReset()
 
 	// Reset the driver
 	DrvDoReset();
@@ -2178,6 +2224,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(playcolor);
 	}
 
+	if (nAction & ACB_NVRAM) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data		= earom;
+		ba.nLen		= sizeof(earom);
+		ba.szName	= "NV RAM";
+		BurnAcb(&ba);
+	}
+
 	return 0;
 }
 
@@ -2185,7 +2239,7 @@ struct BurnDriver BurnDrvGalaga = {
 	"galaga", NULL, NULL, "galaga", "1981",
 	"Galaga (Namco rev. B)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, DrvRomInfo, DrvRomName, GalagaSampleInfo, GalagaSampleName, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 576,
 	224, 288, 3, 4
@@ -2195,7 +2249,7 @@ struct BurnDriver BurnDrvGalagao = {
 	"galagao", "galaga", NULL, "galaga", "1981",
 	"Galaga (Namco)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, GalagaoRomInfo, GalagaoRomName, GalagaSampleInfo, GalagaSampleName, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 576,
 	224, 288, 3, 4
@@ -2205,7 +2259,7 @@ struct BurnDriver BurnDrvGalagamw = {
 	"galagamw", "galaga", NULL, "galaga", "1981",
 	"Galaga (Midway set 1)\0", NULL, "Namco (Midway License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, GalagamwRomInfo, GalagamwRomName, GalagaSampleInfo, GalagaSampleName, DrvInputInfo, GalagamwDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 576,
 	224, 288, 3, 4
@@ -2215,7 +2269,7 @@ struct BurnDriver BurnDrvGalagamk = {
 	"galagamk", "galaga", NULL, "galaga", "1981",
 	"Galaga (Midway set 2)\0", NULL, "Namco (Midway License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, GalagamkRomInfo, GalagamkRomName, GalagaSampleInfo, GalagaSampleName, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 576,
 	224, 288, 3, 4
@@ -2225,7 +2279,7 @@ struct BurnDriver BurnDrvGalagamf = {
 	"galagamf", "galaga", NULL, "galaga", "1981",
 	"Galaga (Midway set 1 with fast shoot hack)\0", NULL, "Namco (Midway License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, GalagamfRomInfo, GalagamfRomName, GalagaSampleInfo, GalagaSampleName, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 576,
 	224, 288, 3, 4
@@ -2235,7 +2289,7 @@ struct BurnDriver BurnDrvGallag = {
 	"gallag", "galaga", NULL, "galaga", "1981",
 	"Gallag\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, GallagRomInfo, GallagRomName, GalagaSampleInfo, GalagaSampleName, DrvInputInfo, DrvDIPInfo,
 	GallagInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 576,
 	224, 288, 3, 4
@@ -2245,7 +2299,7 @@ struct BurnDriver BurnDrvDigdug = {
 	"digdug", NULL, NULL, NULL, "1982",
 	"Dig Dug (rev 2)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_16BIT_ONLY, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
     NULL, digdugRomInfo, digdugRomName, NULL, NULL, DigdugInputInfo, DigdugDIPInfo,
 	DrvDigdugInit, DrvExit, DrvFrame, DrvDigdugDraw, DrvScan, NULL, 0x300,
 	224, 288, 3, 4

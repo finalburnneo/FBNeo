@@ -7,11 +7,6 @@
 #include "burn_ym2151.h"
 #include "namco_snd.h"
 
-/*
-   to do
-	rthunder sprite problems... flipped cases broken.
-*/
-
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
@@ -1499,22 +1494,22 @@ static void draw_sprites()
 
 	while (source >= finish)
 	{
-		static const int sprite_size[4] = { 16, 8, 32, 4 };
-		int attr1 = source[10];
-		int attr2 = source[14];
-		int color = source[12];
-		int flipx = (attr1 & 0x20) >> 5;
-		int flipy = (attr2 & 0x01);
-		int sizex = sprite_size[(attr1 & 0xc0) >> 6];
-		int sizey = sprite_size[(attr2 & 0x06) >> 1];
-		int tx = (attr1 & 0x18) & (~(sizex-1));
-		int ty = (attr2 & 0x18) & (~(sizey-1));
-		int sx = source[13] + ((color & 0x01) << 8);
-		int sy = -source[15] - sizey;
-		int sprite = source[11];
-		int sprite_bank = attr1 & 7;
-		int priority = (source[14] & 0xe0) >> 5;
-		int pri_mask = (0xff << (priority + 1)) & 0xff;
+		static const INT32 sprite_size[4] = { 16, 8, 32, 4 };
+		INT32 attr1 = source[10];
+		INT32 attr2 = source[14];
+		INT32 color = source[12];
+		INT32 flipx = (attr1 & 0x20) >> 5;
+		INT32 flipy = (attr2 & 0x01);
+		INT32 sizex = sprite_size[(attr1 & 0xc0) >> 6];
+		INT32 sizey = sprite_size[(attr2 & 0x06) >> 1];
+		INT32 tx = (attr1 & 0x18) & (~(sizex-1));
+		INT32 ty = (attr2 & 0x18) & (~(sizey-1));
+		INT32 sx = source[13] + ((color & 0x01) << 8);
+		INT32 sy = -source[15] - sizey;
+		INT32 sprite = source[11];
+		INT32 sprite_bank = attr1 & 7;
+		INT32 priority = (source[14] & 0xe0) >> 5;
+		INT32 pri_mask = (0xff << (priority + 1)) & 0xff;
 
 		sprite &= bank_sprites-1;
 		sprite += sprite_bank * bank_sprites;
@@ -1540,10 +1535,6 @@ static void draw_sprites()
 			sy -= 15;
 			sx -= 67;
 
-			INT32 flip = 0;
-			if (flipx) flipx = 0x1f; // |= 0x01f;
-			if (flipy) flipy = 0x1f; // |= 0x3e0;
-
 			UINT8 *gfxbase = DrvGfxROM2 + (sprite * 0x400);
 
 			color = (color * 16) + 0x800;
@@ -1554,7 +1545,13 @@ static void draw_sprites()
 				for (INT32 x = 0; x < sizex; x++, sx++) {
 					if (sx < 0 || sx >= nScreenWidth) continue;
 
-					INT32 pxl = gfxbase[((((y^flipy)+ty)*32)+(x^flipx)+tx)^flip];
+					INT32 xx = x;
+					INT32 yy = y;
+
+					if (flipx) xx = (sizex - 1) - x;
+					if (flipy) yy = (sizey - 1) - y;
+
+					INT32 pxl = gfxbase[xx + tx + ((yy + ty) * 32)];
 
 					if (pxl != 0x0f) {
 						if ((pri_mask & (1 << (DrvPriDraw[(sy * nScreenWidth) + sx] & 7))) == 0) {

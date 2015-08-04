@@ -3175,7 +3175,7 @@ int ScrnInit()
 
 			rebarBandInfo.cbSize		= sizeof(REBARBANDINFO);
 			rebarBandInfo.fMask			= RBBIM_CHILD | RBBIM_CHILDSIZE | RBBIM_SIZE | RBBIM_STYLE;// | RBBIM_BACKGROUND;
-			rebarBandInfo.fStyle		= RBBS_GRIPPERALWAYS;// | RBBS_FIXEDBMP;
+			rebarBandInfo.fStyle		= 0;//RBBS_GRIPPERALWAYS;// | RBBS_FIXEDBMP;
 			rebarBandInfo.hwndChild		= hMenubar;
 			rebarBandInfo.cxMinChild	= 100;
 			rebarBandInfo.cyMinChild	= ((SendMessage(hMenubar, TB_GETBUTTONSIZE, 0, 0)) >> 16) + 1;

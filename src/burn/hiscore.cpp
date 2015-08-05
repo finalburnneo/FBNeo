@@ -413,7 +413,7 @@ void HiscoreInit()
 	TCHAR szFilename[MAX_PATH];
 	_stprintf(szFilename, _T("%s%s.hi"), szAppHiscorePath, BurnDrvGetText(DRV_NAME));
 
-	fp = _tfopen(szFilename, _T("r"));
+	fp = _tfopen(szFilename, _T("rb"));
 	INT32 Offset = 0;
 	if (fp) {
 		UINT32 nSize = 0;
@@ -425,9 +425,9 @@ void HiscoreInit()
 		
 		UINT8 *Buffer = (UINT8*)malloc(nSize);
 		rewind(fp);
-		
-		fgets((char*)Buffer, nSize, fp);
-		
+
+		fread((char *)Buffer, 1, nSize, fp);
+
 		for (UINT32 i = 0; i < nHiscoreNumRanges; i++) {
 			for (UINT32 j = 0; j < HiscoreMemRange[i].NumBytes; j++) {
 				HiscoreMemRange[i].Data[j] = Buffer[j + Offset];
@@ -479,6 +479,19 @@ void HiscoreReset()
 	}
 }
 
+INT32 HiscoreOkToApplyAll()
+{ // All of the memory locations in the game's entry must be verfied, then applied when they _all_ match up
+	INT32 Ok = 1;
+
+	for (UINT32 i = 0; i < nHiscoreNumRanges; i++) {
+		if (!(HiscoreMemRange[i].Loaded && HiscoreMemRange[i].Applied == APPLIED_STATE_NONE && HiscoreMemRange[i].ApplyNextFrame)) {
+			Ok = 0;
+		}
+	}
+
+	return Ok;
+}
+
 void HiscoreApply()
 {
 #if defined FBA_DEBUG
@@ -486,7 +499,7 @@ void HiscoreApply()
 #endif
 
 	if (!CheckHiscoreAllowed() || !HiscoresInUse) return;
-	
+
 	if (nCpuType == -1) set_cpu_type();
 	
 	for (UINT32 i = 0; i < nHiscoreNumRanges; i++) {
@@ -514,7 +527,17 @@ void HiscoreApply()
 			}
 		}
 		
-		if (HiscoreMemRange[i].Loaded && HiscoreMemRange[i].Applied == APPLIED_STATE_NONE && HiscoreMemRange[i].ApplyNextFrame) {			
+		if (HiscoreMemRange[i].Loaded && HiscoreMemRange[i].Applied == APPLIED_STATE_NONE) {
+			cpu_open(HiscoreMemRange[i].nCpu);
+			if (cpu_read_byte(HiscoreMemRange[i].Address) == HiscoreMemRange[i].StartValue && cpu_read_byte(HiscoreMemRange[i].Address + HiscoreMemRange[i].NumBytes - 1) == HiscoreMemRange[i].EndValue) {
+				HiscoreMemRange[i].ApplyNextFrame = 1;
+			}
+			cpu_close();
+		}
+	}
+
+	if (HiscoreOkToApplyAll()) {
+		for (UINT32 i = 0; i < nHiscoreNumRanges; i++) {
 			cpu_open(HiscoreMemRange[i].nCpu);
 			for (UINT32 j = 0; j < HiscoreMemRange[i].NumBytes; j++) {
 				cpu_write_byte(HiscoreMemRange[i].Address + j, HiscoreMemRange[i].Data[j]);				
@@ -524,15 +547,8 @@ void HiscoreApply()
 			HiscoreMemRange[i].Applied = APPLIED_STATE_ATTEMPTED;
 			HiscoreMemRange[i].ApplyNextFrame = 0;
 		}
-		
-		if (HiscoreMemRange[i].Loaded && HiscoreMemRange[i].Applied == APPLIED_STATE_NONE) {
-			cpu_open(HiscoreMemRange[i].nCpu);
-			if (cpu_read_byte(HiscoreMemRange[i].Address) == HiscoreMemRange[i].StartValue && cpu_read_byte(HiscoreMemRange[i].Address + HiscoreMemRange[i].NumBytes - 1) == HiscoreMemRange[i].EndValue) {
-				HiscoreMemRange[i].ApplyNextFrame = 1;
-			}
-			cpu_close();
-		}
 	}
+
 }
 
 void HiscoreExit()
@@ -551,11 +567,12 @@ void HiscoreExit()
 	TCHAR szFilename[MAX_PATH];
 	_stprintf(szFilename, _T("%s%s.hi"), szAppHiscorePath, BurnDrvGetText(DRV_NAME));
 
-	FILE *fp = _tfopen(szFilename, _T("w"));
+	FILE *fp = _tfopen(szFilename, _T("wb"));
 	if (fp) {
 		for (UINT32 i = 0; i < nHiscoreNumRanges; i++) {
-			UINT8 *Buffer = (UINT8*)malloc(HiscoreMemRange[i].NumBytes);
-			
+			UINT8 *Buffer = (UINT8*)malloc(HiscoreMemRange[i].NumBytes+10);
+			memset(Buffer, 0, HiscoreMemRange[i].NumBytes+10);
+			bprintf(0, _T("numbytes: %X\n"), HiscoreMemRange[i].NumBytes);
 			cpu_open(HiscoreMemRange[i].nCpu);
 			for (UINT32 j = 0; j < HiscoreMemRange[i].NumBytes; j++) {
 				Buffer[j] = cpu_read_byte(HiscoreMemRange[i].Address + j);

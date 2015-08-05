@@ -235,6 +235,31 @@ INT32 M6809MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 
 }
 
+INT32 M6809UnmapMemory(UINT16 nStart, UINT16 nEnd, INT32 nType)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809UnmapMemory called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809UnmapMemory called when no CPU open\n"));
+#endif
+
+	UINT8 cStart = (nStart >> 8);
+	UINT8 **pMemMap = m6809CPUContext[nActiveCPU].pMemMap;
+
+	for (UINT16 i = cStart; i <= (nEnd >> 8); i++) {
+		if (nType & MAP_READ)	{
+			pMemMap[0     + i] = NULL;
+		}
+		if (nType & MAP_WRITE) {
+			pMemMap[0x100 + i] = NULL;
+		}
+		if (nType & MAP_FETCH) {
+			pMemMap[0x200 + i] = NULL;
+		}
+	}
+	return 0;
+
+}
+
 void M6809SetReadHandler(UINT8 (*pHandler)(UINT16))
 {
 #if defined FBA_DEBUG

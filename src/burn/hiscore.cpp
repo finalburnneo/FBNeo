@@ -33,6 +33,7 @@ _HiscoreMemRange HiscoreMemRange[HISCORE_MAX_RANGES];
 
 INT32 EnableHiscores;
 static INT32 HiscoresInUse;
+static INT32 WriteCheck1;
 
 static INT32 nCpuType;
 extern INT32 nSekCount;
@@ -448,7 +449,8 @@ void HiscoreInit()
 
 		fclose(fp);
 	}
-	
+
+	WriteCheck1 = 0;
 	nCpuType = -1;
 }
 
@@ -466,7 +468,7 @@ void HiscoreReset()
 		HiscoreMemRange[i].ApplyNextFrame = 0;
 		HiscoreMemRange[i].Applied = APPLIED_STATE_NONE;
 		
-		if (HiscoreMemRange[i].Loaded) {
+		/*if (HiscoreMemRange[i].Loaded)*/ {
 			cpu_open(HiscoreMemRange[i].nCpu);
 			cpu_write_byte(HiscoreMemRange[i].Address, (UINT8)~HiscoreMemRange[i].StartValue);
 			if (HiscoreMemRange[i].NumBytes > 1) cpu_write_byte(HiscoreMemRange[i].Address + HiscoreMemRange[i].NumBytes - 1, (UINT8)~HiscoreMemRange[i].EndValue);
@@ -477,6 +479,31 @@ void HiscoreReset()
 #endif
 		}
 	}
+}
+
+INT32 HiscoreOkToWrite()
+{ // Check if it is ok to write the hiscore data aka. did we apply it at least?
+	INT32 Ok = 1;
+
+	for (UINT32 i = 0; i < nHiscoreNumRanges; i++) {
+		if (!(HiscoreMemRange[i].Loaded && HiscoreMemRange[i].Applied == APPLIED_STATE_CONFIRMED)) {
+			Ok = 0;
+		}
+	}
+
+#if 1 && defined FBA_DEBUG
+	bprintf(0, _T("Hiscore Write-Check #1 - Applied data: %X\n"), Ok);
+#endif
+
+	if (Ok)
+		return 1; // Passed check #1 - already applied hiscore?
+
+	// Check #2 - didn't apply high score, but verified the memory locations
+#if 1 && defined FBA_DEBUG
+	bprintf(0, _T("Hiscore Write-Check #2 - Memory verified: %X\n"), WriteCheck1);
+#endif
+
+	return WriteCheck1;
 }
 
 INT32 HiscoreOkToApplyAll()
@@ -501,6 +528,8 @@ void HiscoreApply()
 	if (!CheckHiscoreAllowed() || !HiscoresInUse) return;
 
 	if (nCpuType == -1) set_cpu_type();
+
+	UINT8 WriteCheckOk = 0;
 	
 	for (UINT32 i = 0; i < nHiscoreNumRanges; i++) {
 		if (HiscoreMemRange[i].Loaded && HiscoreMemRange[i].Applied == APPLIED_STATE_ATTEMPTED) {
@@ -534,6 +563,21 @@ void HiscoreApply()
 			}
 			cpu_close();
 		}
+
+		if (!HiscoreMemRange[i].Loaded && !WriteCheck1) {
+			cpu_open(HiscoreMemRange[i].nCpu);
+			if (cpu_read_byte(HiscoreMemRange[i].Address) == HiscoreMemRange[i].StartValue && cpu_read_byte(HiscoreMemRange[i].Address + HiscoreMemRange[i].NumBytes - 1) == HiscoreMemRange[i].EndValue) {
+				WriteCheckOk++;
+			}
+			cpu_close();
+		}
+	}
+
+	if (WriteCheckOk == nHiscoreNumRanges) {
+#if 1 && defined FBA_DEBUG
+		bprintf(0, _T("Memory Verified - OK to write Hiscore data!\n"));
+#endif
+		WriteCheck1 = 1; // It's OK to write hi-score data for the first time.
 	}
 
 	if (HiscoreOkToApplyAll()) {
@@ -561,37 +605,44 @@ void HiscoreExit()
 		Debug_HiscoreInitted = 0;
 		return;
 	}
-	
-	if (nCpuType == -1) set_cpu_type();
-	
-	TCHAR szFilename[MAX_PATH];
-	_stprintf(szFilename, _T("%s%s.hi"), szAppHiscorePath, BurnDrvGetText(DRV_NAME));
 
-	FILE *fp = _tfopen(szFilename, _T("wb"));
-	if (fp) {
-		for (UINT32 i = 0; i < nHiscoreNumRanges; i++) {
-			UINT8 *Buffer = (UINT8*)malloc(HiscoreMemRange[i].NumBytes+10);
-			memset(Buffer, 0, HiscoreMemRange[i].NumBytes+10);
-			bprintf(0, _T("numbytes: %X\n"), HiscoreMemRange[i].NumBytes);
-			cpu_open(HiscoreMemRange[i].nCpu);
-			for (UINT32 j = 0; j < HiscoreMemRange[i].NumBytes; j++) {
-				Buffer[j] = cpu_read_byte(HiscoreMemRange[i].Address + j);
-			}
-			cpu_close();
-			
-			fwrite(Buffer, 1, HiscoreMemRange[i].NumBytes, fp);
-			
-			if (Buffer) {
-				free(Buffer);
-				Buffer = NULL;
+	if (HiscoreOkToWrite()) {
+		if (nCpuType == -1) set_cpu_type();
+
+		TCHAR szFilename[MAX_PATH];
+		_stprintf(szFilename, _T("%s%s.hi"), szAppHiscorePath, BurnDrvGetText(DRV_NAME));
+
+		FILE *fp = _tfopen(szFilename, _T("wb"));
+		if (fp) {
+			for (UINT32 i = 0; i < nHiscoreNumRanges; i++) {
+				UINT8 *Buffer = (UINT8*)malloc(HiscoreMemRange[i].NumBytes + 10);
+				memset(Buffer, 0, HiscoreMemRange[i].NumBytes + 10);
+
+				cpu_open(HiscoreMemRange[i].nCpu);
+				for (UINT32 j = 0; j < HiscoreMemRange[i].NumBytes; j++) {
+					Buffer[j] = cpu_read_byte(HiscoreMemRange[i].Address + j);
+				}
+				cpu_close();
+
+				fwrite(Buffer, 1, HiscoreMemRange[i].NumBytes, fp);
+
+				if (Buffer) {
+					free(Buffer);
+					Buffer = NULL;
+				}
 			}
 		}
+		fclose(fp);
+	} else {
+#if 1 && defined FBA_DEBUG
+		bprintf(0, _T("HiscoreExit(): -NOT- ok to write Hiscore data!\n"));
+#endif
 	}
-	fclose(fp);
-	
+
 	nCpuType = -1;
 	nHiscoreNumRanges = 0;
-	
+	WriteCheck1 = 0;
+
 	for (UINT32 i = 0; i < HISCORE_MAX_RANGES; i++) {
 		HiscoreMemRange[i].Loaded = 0;
 		HiscoreMemRange[i].nCpu = 0;
@@ -601,10 +652,10 @@ void HiscoreExit()
 		HiscoreMemRange[i].EndValue = 0;
 		HiscoreMemRange[i].ApplyNextFrame = 0;
 		HiscoreMemRange[i].Applied = 0;
-		
+
 		free(HiscoreMemRange[i].Data);
 		HiscoreMemRange[i].Data = NULL;
 	}
-	
+
 	Debug_HiscoreInitted = 0;
 }

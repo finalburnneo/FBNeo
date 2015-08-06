@@ -2687,7 +2687,7 @@ static INT32 DrvFrame()
 
 	ZetOpen(0);
 	
-	INT32 nInterleave = nBurnSoundLen;
+	INT32 nInterleave = 264; //nBurnSoundLen;
 	INT32 nSoundBufferPos = 0;
 	
 	INT32 nCyclesTotal = (18432000 / 6) / 60;
@@ -2710,9 +2710,9 @@ static INT32 DrvFrame()
 			if (game_select == DREMSHPR || game_select == VANVAN) {
 				if (i == (nInterleave - 1)) ZetNmi();
 			} else {
-				if (i == (nInterleave - 1) && interrupt_mask) {
+				if (i == 224 /*(nInterleave - 1)*/ && interrupt_mask) {
 					ZetSetVector(interrupt_mode);
-					ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+					ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 				}
 			}
 		}

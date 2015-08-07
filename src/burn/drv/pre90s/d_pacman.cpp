@@ -36,6 +36,10 @@ static UINT8 DrvReset;
 static UINT8 DrvJoy1[8] = {0,0,0,0,0,0,0,0};
 static UINT8 DrvJoy2[8] = {0,0,0,0,0,0,0,0};
 static UINT8 DrvInputs[2] = {0,0};
+static UINT8 DrvInputs4way[2] = {0,0};
+static INT32 fourway[2] = { 0, 0 }; // 4-way buffer
+
+static UINT8 DrvInputsPrev[2] = {0,0};
 static UINT8 DrvDips[4] = {0,0,0,0};
 static INT16 DrvAxis[2] = { 0, 0 };
 static INT16 nAnalogAxis[2] = {0,0};
@@ -1748,7 +1752,7 @@ UINT8 __fastcall pacman_read(UINT16 a)
 
 		case CRUSHS:
 		{
-			if (a == 0x5080) return DrvInputs[1];
+			if (a == 0x5080) return DrvInputs4way[1];
 		}
 		break;
 
@@ -1765,8 +1769,8 @@ UINT8 __fastcall pacman_read(UINT16 a)
 
 	switch (a & ~0x003f)
 	{
-		case 0x5000: return DrvInputs[0];
-		case 0x5040: return DrvInputs[1];
+		case 0x5000: return DrvInputs4way[0];
+		case 0x5040: return DrvInputs4way[1];
 		case 0x5080: return DrvDips[2];
 		case 0x50c0: return DrvDips[3];
 	}
@@ -1990,8 +1994,8 @@ UINT8 __fastcall mspacman_read(UINT16 a)
 
 	switch (a)
 	{
-		case 0x5000: return DrvInputs[0];
-		case 0x5040: return DrvInputs[1];
+		case 0x5000: return DrvInputs4way[0];
+		case 0x5040: return DrvInputs4way[1];
 		case 0x5080: return DrvDips[2];
 		case 0x50c0: return DrvDips[3];
 	}
@@ -2105,8 +2109,8 @@ UINT8 __fastcall pengo_read(UINT16 a)
 	{
 		case 0x9000: return DrvDips[3];
 		case 0x9040: return DrvDips[2];
-		case 0x9080: return DrvInputs[1];
-		case 0x90c0: return DrvInputs[0];
+		case 0x9080: return DrvInputs4way[1];
+		case 0x90c0: return DrvInputs4way[0];
 	}
 
 	return 0;
@@ -2154,7 +2158,10 @@ static INT32 DrvDoReset(INT32 clear_ram)
 	palettebank = 0;
 	spritebank = 0;	
 	charbank = 0;
-	
+
+	memset(&DrvInputsPrev, 0, sizeof(DrvInputsPrev));
+	memset(&fourway, 0, sizeof(fourway));
+
 	return 0;
 }
 
@@ -2668,10 +2675,29 @@ static INT32 DrvFrame()
 			if ((DrvInputs[0] & 9) == 9) DrvInputs[0] &= ~0x09;
 			if ((DrvInputs[1] & 6) == 6) DrvInputs[1] &= ~0x06;
 			if ((DrvInputs[1] & 9) == 9) DrvInputs[1] &= ~0x09;
+
+			// Convert to 4-way for Puckman / Pac-man
+			for (INT32 i = 0; i < 2; i++) {
+				if(DrvInputs[i] != DrvInputsPrev[i]) {
+					fourway[i] = DrvInputs[i] & 0xf;
+
+					if((fourway[i] & 0x6) && (fourway[i] & 0x9))
+						fourway[i] ^= (fourway[i] & (DrvInputsPrev[i] & 0xf));
+
+					if((fourway[i] & 0x6) && (fourway[i] & 0x9)) // if it starts out diagonally, pick a direction
+						fourway[i] &= (rand()&1) ? 0x06 : 0x09;
+				}
+				DrvInputs4way[i] = fourway[i] | (DrvInputs[i] & 0xf0);
+
+				DrvInputsPrev[i] = DrvInputs[i];
+			}
+		} else { // all other games.
+			for (INT32 i = 0; i < 2; i++)
+				DrvInputs4way[i] = DrvInputs[i];
 		}
 
-		DrvInputs[0] ^= DrvDips[0];
-		DrvInputs[1] ^= DrvDips[1];
+		DrvInputs4way[0] ^= DrvDips[0];
+		DrvInputs4way[1] ^= DrvDips[1];
 
 		nAnalogAxis[0] -= DrvAxis[0];
 		nAnalogAxis[1] -= DrvAxis[1];
@@ -2680,14 +2706,14 @@ static INT32 DrvFrame()
 		nCharAxis[1] = (DrvAxis[1] >> 12) & 0x0f;
 
 		if (game_select == SHOOTBUL) {
-			DrvInputs[0] ^= nCharAxis[0];
-			DrvInputs[1] ^= nCharAxis[1];
+			DrvInputs4way[0] ^= nCharAxis[0];
+			DrvInputs4way[1] ^= nCharAxis[1];
 		}
 	}
 
 	ZetOpen(0);
 	
-	INT32 nInterleave = 264; //nBurnSoundLen;
+	INT32 nInterleave = 264;
 	INT32 nSoundBufferPos = 0;
 	
 	INT32 nCyclesTotal = (18432000 / 6) / 60;
@@ -2710,7 +2736,7 @@ static INT32 DrvFrame()
 			if (game_select == DREMSHPR || game_select == VANVAN) {
 				if (i == (nInterleave - 1)) ZetNmi();
 			} else {
-				if (i == 224 /*(nInterleave - 1)*/ && interrupt_mask) {
+				if (i == 224 && interrupt_mask) {
 					ZetSetVector(interrupt_mode);
 					ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 				}

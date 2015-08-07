@@ -463,7 +463,9 @@ void HiscoreReset()
 	if (!CheckHiscoreAllowed() || !HiscoresInUse) return;
 	
 	if (nCpuType == -1) set_cpu_type();
-	
+
+	WriteCheck1 = 0;
+
 	for (UINT32 i = 0; i < nHiscoreNumRanges; i++) {
 		HiscoreMemRange[i].ApplyNextFrame = 0;
 		HiscoreMemRange[i].Applied = APPLIED_STATE_NONE;

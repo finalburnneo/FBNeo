@@ -718,6 +718,52 @@ static struct BurnRomInfo ShangonRomDesc[] = {
 STD_ROM_PICK(Shangon)
 STD_ROM_FN(Shangon)
 
+static struct BurnRomInfo Shangon1RomDesc[] = {
+	{ "epr-10636.133",    0x10000, 0xe52721fe, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10634.118",    0x10000, 0x08feca97, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10637.132",    0x10000, 0x5d55d65f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-10635.117",    0x10000, 0xb967e8c3, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-10640.76",     0x10000, 0x02be68db, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10638.58",     0x10000, 0xf13e8bee, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10641.75",     0x10000, 0x38c3f808, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10639.57",     0x10000, 0x8cdbcde8, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "epr-10652.54",     0x08000, 0x260286f9, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10651.55",     0x08000, 0xc609ee7b, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10650.56",     0x08000, 0xb236a403, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr-10675.8",      0x10000, 0xd6ac012b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10682.16",     0x10000, 0xd9d83250, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10676.7",      0x10000, 0x25ebf2c5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10683.15",     0x10000, 0x6365d2e9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10677.6",      0x10000, 0x8a57b8d6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10684.14",     0x10000, 0x3aff8910, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10678.5",      0x10000, 0xaf473098, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10685.13",     0x10000, 0x80bafeef, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10679.4",      0x10000, 0x03bc4878, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10686.12",     0x10000, 0x274b734e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10680.3",      0x10000, 0x9f0677ed, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10687.11",     0x10000, 0x508a4701, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10681.2",      0x10000, 0xb176ea72, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10688.10",     0x10000, 0x42fcd51d, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "epr-10642.47",     0x08000, 0x7836bcc3, SYS16_ROM_ROAD | BRF_GRA },
+
+	{ "ic88",             0x08000, 0x1254efa6, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-10643.66",     0x08000, 0x06f55364, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-10644.67",     0x08000, 0xb41d541d, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-10645.68",     0x08000, 0xa60dabff, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-10646.69",     0x08000, 0x473cc411, SYS16_ROM_PCMDATA | BRF_SND },
+	
+	{ "317-0034.key",     0x02000, 0x263ca773, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Shangon1)
+STD_ROM_FN(Shangon1)
+
 static struct BurnRomInfo Shangon2RomDesc[] = {
 	{ "epr-10636a.133",   0x10000, 0x74a64f4f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-10634a.118",   0x10000, 0x1608cb4a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1706,7 +1752,7 @@ static INT32 ShangonInit()
 	return nRet;
 }
 
-static INT32 Shangon2Init()
+static INT32 Shangon1Init()
 {
 	System16ProcessAnalogControlsDo = ShangonProcessAnalogControls;
 	
@@ -1799,13 +1845,23 @@ struct BurnDriver BurnDrvShangon = {
 	NULL, 0x3000, 320, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvShangon1 = {
+	"shangon1", "shangon", NULL, NULL, "1987",
+	"Super Hang-On (mini ride-on, FD1089B 317-0034)\0", NULL, "Sega", "Out Run",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_FD1089B_ENC, GBF_RACING, 0,
+	NULL, Shangon1RomInfo, Shangon1RomName, NULL, NULL, ShangonInputInfo, ShangonDIPInfo,
+	Shangon1Init, System16Exit, OutrunFrame, NULL, System16Scan,
+	NULL, 0x3000, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvShangon2 = {
 	"shangon2", "shangon", NULL, NULL, "1987",
 	"Super Hang-On (mini ride-on, Rev A, FD1089B 317-0034)\0", NULL, "Sega", "Out Run",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_FD1089B_ENC, GBF_RACING, 0,
 	NULL, Shangon2RomInfo, Shangon2RomName, NULL, NULL, ShangonInputInfo, ShangonDIPInfo,
-	Shangon2Init, System16Exit, OutrunFrame, NULL, System16Scan,
+	Shangon1Init, System16Exit, OutrunFrame, NULL, System16Scan,
 	NULL, 0x3000, 320, 224, 4, 3
 };
 
@@ -1815,7 +1871,7 @@ struct BurnDriver BurnDrvShangon3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_FD1089B_ENC, GBF_RACING, 0,
 	NULL, Shangon3RomInfo, Shangon3RomName, NULL, NULL, ShangonInputInfo, ShangonDIPInfo,
-	Shangon2Init, System16Exit, OutrunFrame, NULL, System16Scan,
+	Shangon1Init, System16Exit, OutrunFrame, NULL, System16Scan,
 	NULL, 0x3000, 320, 224, 4, 3
 };
 

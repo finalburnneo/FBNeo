@@ -98,7 +98,7 @@ struct POKEYinterface {
 };
 
 
-int PokeyInit (int clock, int num, int vol, int addtostream);
+int PokeyInit (int clock, int num, double vol, int addtostream);
 void PokeyExit (void);
 
 void pokey_update(int num, INT16 *buffer, int length);

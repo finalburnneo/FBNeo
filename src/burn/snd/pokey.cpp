@@ -56,6 +56,8 @@
  * I use 15/11 = 1.3636, so this is a little lower.
  */
 #define POKEY_DEFAULT_GAIN (32767/11/4)
+static double pokey_mastervol = 1.0;
+static INT32 nLeftSample = 0, nRightSample = 0;
 
 #define VERBOSE 		0
 #define VERBOSE_SOUND	0
@@ -326,9 +328,12 @@ static UINT8 *rand17;
 		pokey[chip].samplepos_fract &= 0x000000ff;						\
 	}																	\
 	/* store sum of output signals into the buffer */					\
-	*buffer++ += (sum > 65535) ? 0x7fff : sum - 0x8000;					\
-	*buffer++ += (sum > 65535) ? 0x7fff : sum - 0x8000;					\
-	length--
+	nLeftSample  = buffer[0] + (sum * pokey_mastervol);                 \
+	nRightSample = buffer[1] + (sum * pokey_mastervol);                 \
+	buffer[0] = BURN_SND_CLIP(nLeftSample);                             \
+	buffer[1] = BURN_SND_CLIP(nRightSample);                            \
+	buffer++; buffer++;                                                 \
+	length--;
 
 #if HEAVY_MACRO_USAGE
 
@@ -570,14 +575,15 @@ static void rand_init(UINT8 *rng, int size, int left, int right, int add)
 	}
 }
 
-int PokeyInit(int clock, int num, int vol, int addtostream)
+int PokeyInit(int clock, int num, double vol, int addtostream)
 {
 	int chip, sample_rate;
 
 	memset(&intf, 0, sizeof(intf));
 	sample_rate = nBurnSoundRate;
 	intf.num = num;
-	intf.mixing_level[0] = vol;
+	//intf.mixing_level[0] = vol;
+	pokey_mastervol = vol;
 	intf.baseclock = (clock) ? clock : FREQ_17_EXACT;
 	intf.addtostream = addtostream;
 

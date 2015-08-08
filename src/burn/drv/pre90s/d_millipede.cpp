@@ -726,7 +726,7 @@ static INT32 DrvInit()
 	M6502SetReadOpHandler(millipede_read);
 	M6502Close();
 
-	PokeyInit(12096000/8, 2, 6, 0);
+	PokeyInit(12096000/8, 2, 1.00, 0);
 
 	init_penmask();
 
@@ -777,7 +777,7 @@ static INT32 DrvInitcentiped()
 	M6502SetReadOpHandler(centipede_read);
 	M6502Close();
 
-	PokeyInit(12096000/8, 2, 6, 0);
+	PokeyInit(12096000/8, 2, 2.40, 0);
 
 	init_penmask();
 

@@ -308,6 +308,13 @@ static void milliped_set_color(UINT16 offset, UINT8 data)
 	}
 }
 
+static void millipede_recalcpalette()
+{
+	for (INT32 i = 0;i <= 0x1f; i++) {
+		milliped_set_color(i, DrvPalRAM[i]);
+	}
+}
+
 static void centipede_set_color(UINT16 offset, UINT8 data)
 {
 	/* bit 2 of the output palette RAM is always pulled high, so we ignore */
@@ -357,6 +364,13 @@ static void centipede_set_color(UINT16 offset, UINT8 data)
 	}
 }
 
+static void centipede_recalcpalette()
+{
+	for (INT32 i = 0;i <= 0x0f; i++) {
+		centipede_set_color(i, DrvPalRAM[i]);
+	}
+}
+
 static UINT8 earom_read(UINT16 address)
 {
 	return (earom_data);
@@ -379,7 +393,7 @@ static void earom_ctrl_write(UINT16 offset, UINT8 data)
 	if (data & 0x01)
 		earom_data = earom[earom_offset];
 	if ((data & 0x0c) == 0x0c)
-	{
+	{   //bprintf(0, _T("ea wrt %X %X.."), earom_data, earom_offset);
 		earom[earom_offset] = earom_data;
 	}
 }
@@ -929,6 +943,15 @@ static INT32 DrvFrame()
 	if (DrvReset) {
 		DrvDoReset();
 	}
+
+	if(DrvRecalc) {
+		if (centipedemode)
+			centipede_recalcpalette();
+		else
+			millipede_recalcpalette();
+		DrvRecalc = 0;
+	}
+
 	DrvMakeInputs();
 
 	M6502NewFrame();

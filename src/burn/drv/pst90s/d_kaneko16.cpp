@@ -643,6 +643,66 @@ static struct BurnDIPInfo BerlwalltDIPList[]=
 
 STDDIPINFO(Berlwallt)
 
+static struct BurnDIPInfo PackbangDIPList[]=
+{
+	{0x16, 0xff, 0xff, 0xff, NULL		},
+	{0x17, 0xff, 0xff, 0xff, NULL		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x16, 0x01, 0x01, 0x01, "Off"		},
+	{0x16, 0x01, 0x01, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"		},
+	{0x16, 0x01, 0x1c, 0x00, "4 Coins 1 Credits"		},
+	{0x16, 0x01, 0x1c, 0x04, "3 Coins 1 Credits"		},
+	{0x16, 0x01, 0x1c, 0x0c, "2 Coins 1 Credits"		},
+	{0x16, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"		},
+	{0x16, 0x01, 0x1c, 0x08, "2 Coins 3 Credits"		},
+	{0x16, 0x01, 0x1c, 0x18, "1 Coin  2 Credits"		},
+	{0x16, 0x01, 0x1c, 0x14, "1 Coin  3 Credits"		},
+	{0x16, 0x01, 0x1c, 0x10, "1 Coin  4 Credits"		},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"		},
+	{0x16, 0x01, 0xe0, 0x60, "2 Coins 1 Credits"		},
+	{0x16, 0x01, 0xe0, 0xe0, "1 Coin  1 Credits"		},
+	{0x16, 0x01, 0xe0, 0x40, "2 Coins 3 Credits"		},
+	{0x16, 0x01, 0xe0, 0xc0, "1 Coin  2 Credits"		},
+	{0x16, 0x01, 0xe0, 0xa0, "1 Coin  3 Credits"		},
+	{0x16, 0x01, 0xe0, 0x80, "1 Coin  4 Credits"		},
+	{0x16, 0x01, 0xe0, 0x20, "1 Coin  5 Credits"		},
+	{0x16, 0x01, 0xe0, 0x00, "1 Coin  6 Credits"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x17, 0x01, 0x03, 0x02, "Easy"		},
+	{0x17, 0x01, 0x03, 0x03, "Normal"		},
+	{0x17, 0x01, 0x03, 0x01, "Hard"		},
+	{0x17, 0x01, 0x03, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    2, "Timer Speed"		},
+	{0x17, 0x01, 0x04, 0x00, "Slow"		},
+	{0x17, 0x01, 0x04, 0x04, "Standard"		},
+
+	{0   , 0xfe, 0   ,    4, "Language"		},
+	{0x17, 0x01, 0x18, 0x00, "Invalid"		},
+	{0x17, 0x01, 0x18, 0x08, "Korea"		},
+	{0x17, 0x01, 0x18, 0x10, "Japan"		},
+	{0x17, 0x01, 0x18, 0x18, "World"		},
+
+	{0   , 0xfe, 0   ,    2, "Free Play"		},
+	{0x17, 0x01, 0x20, 0x20, "Off"		},
+	{0x17, 0x01, 0x20, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x17, 0x01, 0x40, 0x00, "Off"		},
+	{0x17, 0x01, 0x40, 0x40, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x17, 0x01, 0x80, 0x80, "Off"		},
+	{0x17, 0x01, 0x80, 0x00, "On"		},
+};
+
+STDDIPINFO(Packbang)
+
 static struct BurnDIPInfo BlazeonDIPList[]=
 {
 	// Default Values
@@ -974,6 +1034,28 @@ static struct BurnRomInfo BerlwallkRomDesc[] = {
 
 STD_ROM_PICK(Berlwallk)
 STD_ROM_FN(Berlwallk)
+
+static struct BurnRomInfo PackbangRomDesc[] = {
+	{ "bbp0x3.u23",     0x020000, 0x105e978a, BRF_ESS | BRF_PRG }, /* hand written checksum on label - 527B */
+	{ "bbp1x3.u39",     0x020000, 0x465d36f5, BRF_ESS | BRF_PRG }, /* hand written checksum on label - C5C8 */
+
+   	{ "bb.u84",         0x080000, 0x97837aaa, BRF_GRA }, /* Sprites */
+	{ "pb_spr_ext_9_20_ver.u83", 0x040000, 0x666a1217, BRF_GRA }, /* Tiles (Scrambled) */
+	{ "bbbox1.u77",     0x080000, 0xb2ffd081, BRF_GRA },// 1ST AND 2ND HALF IDENTICAL
+
+	{ "bb.u73",         0x080000, 0x896d88cb, BRF_GRA },
+	{ "bb.u65",         0x080000, 0xfe17c5b5, BRF_GRA }, // FIXED BITS (xxxxxxx0)
+	{ "bb.u74",         0x080000, 0xb01e77b9, BRF_GRA },
+	{ "bb.u66",         0x080000, 0xcaec5098, BRF_GRA }, // FIXED BITS (xxxxxxx0)
+	{ "bb.u75",         0x080000, 0x5cb4669f, BRF_GRA },
+	{ "bb.u67",         0x080000, 0xce5c9417, BRF_GRA }, // FIXED BITS (xxxxxxx0)
+
+	{ "bw000.u46",      0x040000, 0xd8fe869d, BRF_SND }, //  11 Samples
+};
+
+
+STD_ROM_PICK(Packbang)
+STD_ROM_FN(Packbang)
 
 static struct BurnRomInfo BlazeonRomDesc[] = {
 	{ "bz_prg1.u80",       0x040000, 0x8409e31d, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
@@ -4091,7 +4173,7 @@ static INT32 BerlwallInit()
 	// Load and Decode Tile Roms
 	memset(Kaneko16TempGfx, 0, 0x400000);
 	nRet = BurnLoadRom(Kaneko16TempGfx + 0x000000, 5, 1); if (nRet != 0) return 1;
-	UnscrambleTiles(0x080000);
+	//UnscrambleTiles(0x080000);
 	GfxDecode(Kaneko16NumTiles, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Tiles);
 	
 	// Load bitmap roms
@@ -4111,6 +4193,106 @@ static INT32 BerlwallInit()
 	nRet = BurnLoadRom(MSM6295ROM, 14, 1); if (nRet != 0) return 1;
 	memcpy(MSM6295ROMData, MSM6295ROM, 0x40000);
 	
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Kaneko16Rom          , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(Kaneko16Ram          , 0x200000, 0x20ffff, MAP_RAM);
+	SekMapMemory(Kaneko16SpriteRam    , 0x30e000, 0x30ffff, MAP_RAM);
+	SekMapMemory(Kaneko16PaletteRam   , 0x400000, 0x400fff, MAP_RAM);
+	SekMapMemory(Kaneko16Video1Ram    , 0xc00000, 0xc00fff, MAP_RAM);
+	SekMapMemory(Kaneko16Video0Ram    , 0xc01000, 0xc01fff, MAP_RAM);
+	SekMapMemory(Kaneko16VScrl1Ram    , 0xc02000, 0xc02fff, MAP_RAM);
+	SekMapMemory(Kaneko16VScrl0Ram    , 0xc03000, 0xc03fff, MAP_RAM);
+	SekMapMemory((UINT8*)Kaneko16Layer0Regs    , 0xd00000, 0xd0001f, MAP_WRITE);
+	SekMapMemory((UINT8*)Kaneko16SpriteRegs + 2, 0x600002, 0x60003f, MAP_WRITE);
+	SekSetReadByteHandler(0, BerlwallReadByte);
+	SekSetReadWordHandler(0, BerlwallReadWord);
+	SekSetWriteByteHandler(0, BerlwallWriteByte);
+	SekSetWriteWordHandler(0, BerlwallWriteWord);
+	SekClose();
+	
+	pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;
+	pAY8910Buffer[1] = pFMBuffer + nBurnSoundLen * 1;
+	pAY8910Buffer[2] = pFMBuffer + nBurnSoundLen * 2;
+	pAY8910Buffer[3] = pFMBuffer + nBurnSoundLen * 3;
+	pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
+	pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
+
+	AY8910Init(0, 2000000, nBurnSoundRate, &Kaneko16Dip0Read, &Kaneko16Dip1Read, NULL, NULL);
+	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 1.00, BURN_SND_ROUTE_BOTH);
+	
+	// Setup the OKIM6295 emulation
+	MSM6295Init(0, (12000000 / 6) / 132, 1);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	
+	Kaneko16FrameRender = BerlwallFrameRender;
+
+	// Reset the driver
+	BerlwallDoReset();
+	
+	return 0;
+}
+
+static INT32 PackbangInit()
+{
+	INT32 nRet = 0, nLen;
+	
+	Kaneko16NumSprites = 0x2400;
+	Kaneko16NumTiles = 0x1000;
+	Kaneko16NumTiles2 = 0;
+	
+	Kaneko16VideoInit();
+	Kaneko16ParseSprite = Kaneko16ParseSpriteType2;
+	Kaneko16Bg15 = 1;
+	Kaneko16RecalcBg15Palette = 1;
+	
+	// Allocate and Blank all required memory
+	Mem = NULL;
+	ExplbrkrMemIndex();
+	nLen = MemEnd - (UINT8 *)0;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(Mem, 0, nLen);
+	ExplbrkrMemIndex();
+
+	Kaneko16TempGfx = (UINT8*)BurnMalloc(0x400000);
+	
+	// Load and byte-swap 68000 Program roms
+	nRet = BurnLoadRom(Kaneko16Rom + 0x00001, 0, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16Rom + 0x00000, 1, 2); if (nRet != 0) return 1;
+	
+	// Load and Decode Sprite Roms
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000000,  2, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0080000,  3, 1); if (nRet != 0) return 1;
+	//nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100000,  4, 1); if (nRet != 0) return 1;
+	GfxDecode(Kaneko16NumSprites, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Sprites);
+	
+	// Load and Decode Tile Roms
+	memset(Kaneko16TempGfx, 0, 0x400000);
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x000000, 4, 1); if (nRet != 0) return 1;
+	//UnscrambleTiles(0x080000);
+	GfxDecode(Kaneko16NumTiles, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Tiles);
+	
+	// Load bitmap roms
+	memset(Kaneko16TempGfx, 0, 0x400000);
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x000000,  5, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x000001,  6, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x100000,  7, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x100001,  8, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x200000,  9, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x200001, 10, 2); if (nRet != 0) return 1;
+//	nRet = BurnLoadRom(Kaneko16TempGfx + 0x300000, 12, 2); if (nRet != 0) return 1;
+//	nRet = BurnLoadRom(Kaneko16TempGfx + 0x300001, 13, 2); if (nRet != 0) return 1;
+	Kaneko16DecodeBg15Bitmaps();
+	BurnFree(Kaneko16TempGfx);
+			
+	// Load Sample Rom
+	nRet = BurnLoadRom(MSM6295ROM, 11, 1); if (nRet != 0) return 1;
+	memcpy(MSM6295ROMData, MSM6295ROM, 0x40000);
+	MSM6295Bank0 = 0;
+	MSM6295Bank1 = 0;
+
 	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(Kaneko16Rom          , 0x000000, 0x03ffff, MAP_ROM);
@@ -6670,3 +6852,14 @@ struct BurnDriver BurnDrvBrapboysu = {
 	BrapboysInit, GtmrMachineExit, ShogwarrFrame, NULL, ShogwarrScan,
 	NULL, 0x800, 256, 224, 4, 3
 };
+
+struct BurnDriver BurnDrvPackbang = {
+	"packbang", NULL, NULL, NULL, "1991",
+	"Pack'n Bang Bang (Prototype)\0", NULL, "Kaneko", "Kaneko16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, PackbangRomInfo, PackbangRomName, NULL, NULL, BerlwallInputInfo, PackbangDIPInfo,
+	PackbangInit, BerlwallExit, ExplbrkrFrame, NULL, ExplbrkrScan,
+	&Kaneko16RecalcBg15Palette, 0x9000, 226, 256, 3, 4
+};
+

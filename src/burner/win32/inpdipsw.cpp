@@ -4,7 +4,7 @@
 HWND hInpDIPSWDlg = NULL;									// Handle to the DIPSW Dialog
 static HWND hInpDIPSWList = NULL;
 
-static unsigned char nPrevDIPSettings[4];
+static unsigned char nPrevDIPSettings[8];
 
 static unsigned int nDIPGroup;
 static int nDIPOffset;

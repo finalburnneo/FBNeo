@@ -355,138 +355,68 @@ static struct BurnInputInfo MgcrystlInputList[] = {
 STDINPUTINFO(Mgcrystl)
 
 static struct BurnInputInfo ShogwarrInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	Kaneko16InputPort0 + 7,	"p1 coin" 	},
-	{"P1 Start",		BIT_DIGITAL,	Kaneko16InputPort0 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	Kaneko16InputPort0 + 0,	"p1 up"	  	},
-	{"P1 Down",		BIT_DIGITAL,	Kaneko16InputPort0 + 1,	"p1 down" 	},
-	{"P1 Left",		BIT_DIGITAL,	Kaneko16InputPort0 + 2,	"p1 left" 	},
-	{"P1 Right",		BIT_DIGITAL,	Kaneko16InputPort0 + 3,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	Kaneko16InputPort0 + 4,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	Kaneko16InputPort0 + 5,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	Kaneko16InputPort2 + 3,	"p1 fire 3"	},
-	{"P1 Button 4",		BIT_DIGITAL,	Kaneko16InputPort2 + 2,	"p1 fire 4"	},
+	{"P1 Coin"			 , BIT_DIGITAL	, Kaneko16InputPort0 + 7, "p1 coin"   },
+	{"P1 Start"			 , BIT_DIGITAL	, Kaneko16InputPort0 + 6, "p1 start"  },
+	{"P1 Up"			 , BIT_DIGITAL	, Kaneko16InputPort0 + 0, "p1 up"	  },
+	{"P1 Down"			 , BIT_DIGITAL  , Kaneko16InputPort0 + 1, "p1 down"   },
+	{"P1 Left"			 , BIT_DIGITAL	, Kaneko16InputPort0 + 2, "p1 left"   },
+	{"P1 Right"			 , BIT_DIGITAL	, Kaneko16InputPort0 + 3, "p1 right"  },
+	{"P1 Button 1"		 , BIT_DIGITAL	, Kaneko16InputPort0 + 4, "p1 fire 1" },
+	{"P1 Button 2"		 , BIT_DIGITAL	, Kaneko16InputPort0 + 5, "p1 fire 2" },
+	{"P1 Button 3"		 , BIT_DIGITAL	, Kaneko16InputPort2 + 3, "p1 fire 3" },
+	{"P1 Button 4"		 , BIT_DIGITAL	, Kaneko16InputPort2 + 2, "p1 fire 4" },
 
-	{"P2 Coin",		BIT_DIGITAL,	Kaneko16InputPort1 + 7,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	Kaneko16InputPort1 + 6,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	Kaneko16InputPort1 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	Kaneko16InputPort1 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	Kaneko16InputPort1 + 2,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	Kaneko16InputPort1 + 3,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	Kaneko16InputPort1 + 4,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	Kaneko16InputPort1 + 5,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	Kaneko16InputPort2 + 4,	"p2 fire 3"	},
-	{"P2 Button 4",		BIT_DIGITAL,	Kaneko16InputPort2 + 5,	"p2 fire 4"	},
+	{"P2 Coin"			 , BIT_DIGITAL	, Kaneko16InputPort1 + 7, "p2 coin"	  },
+	{"P2 Start"			 , BIT_DIGITAL	, Kaneko16InputPort1 + 6, "p2 start"  },
+	{"P2 Up"			 , BIT_DIGITAL	, Kaneko16InputPort1 + 0, "p2 up"	  },
+	{"P2 Down"			 , BIT_DIGITAL	, Kaneko16InputPort1 + 1, "p2 down"	  },
+	{"P2 Left"			 , BIT_DIGITAL	, Kaneko16InputPort1 + 2, "p2 left"	  },
+	{"P2 Right"			 , BIT_DIGITAL	, Kaneko16InputPort1 + 3, "p2 right"  },
+	{"P2 Button 1"		 , BIT_DIGITAL	, Kaneko16InputPort1 + 4, "p2 fire 1" },
+	{"P2 Button 2"		 , BIT_DIGITAL	, Kaneko16InputPort1 + 5, "p2 fire 2" },
+	{"P2 Button 3"		 , BIT_DIGITAL	, Kaneko16InputPort2 + 4, "p2 fire 3" },
+	{"P2 Button 4"		 , BIT_DIGITAL	, Kaneko16InputPort2 + 5, "p2 fire 4" },
 
-	{"Reset",		BIT_DIGITAL,	&Kaneko16Reset,	        "reset"		},
-	{"Service",		BIT_DIGITAL,	Kaneko16InputPort2 + 6,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	Kaneko16Dip + 0,	"dip"		},
+	{"Reset"			 , BIT_DIGITAL	, &Kaneko16Reset		, "reset"	  },
+	{"Service"			 , BIT_DIGITAL	, Kaneko16InputPort2 + 6, "service"   },
+	{"Dip A"			 , BIT_DIPSWITCH, Kaneko16Dip + 0		, "dip"	      },
 };
 
 STDINPUTINFO(Shogwarr)
 
 static struct BurnInputInfo BrapboysInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	Kaneko16InputPort0 + 7,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	Kaneko16InputPort0 + 6,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	Kaneko16InputPort0 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	Kaneko16InputPort0 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	Kaneko16InputPort0 + 2,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	Kaneko16InputPort0 + 3,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	Kaneko16InputPort0 + 4,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	Kaneko16InputPort0 + 5,	"p1 fire 2"	},
+	{"P1 Coin"			 , BIT_DIGITAL	, Kaneko16InputPort0 + 7, "p1 coin"   },
+	{"P1 Start"			 , BIT_DIGITAL	, Kaneko16InputPort0 + 6, "p1 start"  },
+	{"P1 Up"			 , BIT_DIGITAL	, Kaneko16InputPort0 + 0, "p1 up"	  },
+	{"P1 Down"			 , BIT_DIGITAL	, Kaneko16InputPort0 + 1, "p1 down"   },
+	{"P1 Left"			 , BIT_DIGITAL	, Kaneko16InputPort0 + 2, "p1 left"   },
+	{"P1 Right"			 , BIT_DIGITAL	, Kaneko16InputPort0 + 3, "p1 right"  },
+	{"P1 Button 1"		 , BIT_DIGITAL	, Kaneko16InputPort0 + 4, "p1 fire 1" },
+	{"P1 Button 2"		 , BIT_DIGITAL	, Kaneko16InputPort0 + 5, "p1 fire 2" },
 
-	{"P2 Coin",		BIT_DIGITAL,	Kaneko16InputPort1 + 7,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	Kaneko16InputPort1 + 6,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	Kaneko16InputPort1 + 0,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	Kaneko16InputPort1 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	Kaneko16InputPort1 + 2,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	Kaneko16InputPort1 + 3,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	Kaneko16InputPort1 + 4,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	Kaneko16InputPort1 + 5,	"p2 fire 2"	},
+	{"P2 Coin"			 , BIT_DIGITAL	, Kaneko16InputPort1 + 7, "p2 coin"	  },
+	{"P2 Start"			 , BIT_DIGITAL	, Kaneko16InputPort1 + 6, "p2 start"  },
+	{"P2 Up"			 , BIT_DIGITAL	, Kaneko16InputPort1 + 0, "p2 up"     },
+	{"P2 Down"			 , BIT_DIGITAL	, Kaneko16InputPort1 + 1, "p2 down"	  },
+	{"P2 Left"			 , BIT_DIGITAL	, Kaneko16InputPort1 + 2, "p2 left"	  },
+	{"P2 Right"			 , BIT_DIGITAL	, Kaneko16InputPort1 + 3, "p2 right"  },
+	{"P2 Button 1"		 , BIT_DIGITAL	, Kaneko16InputPort1 + 4, "p2 fire 1" },
+	{"P2 Button 2"		 , BIT_DIGITAL	, Kaneko16InputPort1 + 5, "p2 fire 2" },
 
-	{"P3 Coin",		BIT_DIGITAL,	Kaneko16InputPort2 + 7,	"p3 coin"	},
-	{"P3 Start",		BIT_DIGITAL,	Kaneko16InputPort2 + 6,	"p3 start"	},
-	{"P3 Up",		BIT_DIGITAL,	Kaneko16InputPort2 + 0,	"p3 up"		},
-	{"P3 Down",		BIT_DIGITAL,	Kaneko16InputPort2 + 1,	"p3 down"	},
-	{"P3 Left",		BIT_DIGITAL,	Kaneko16InputPort2 + 2,	"p3 left"	},
-	{"P3 Right",		BIT_DIGITAL,	Kaneko16InputPort2 + 3,	"p3 right"	},
-	{"P3 Button 1",		BIT_DIGITAL,	Kaneko16InputPort2 + 4,	"p3 fire 1"	},
-	{"P3 Button 2",		BIT_DIGITAL,	Kaneko16InputPort2 + 5,	"p3 fire 2"	},
+	{"P3 Coin"			 , BIT_DIGITAL	, Kaneko16InputPort2 + 7, "p3 coin"	  },
+	{"P3 Start"			 , BIT_DIGITAL	, Kaneko16InputPort2 + 6, "p3 start"  },
+	{"P3 Up"			 , BIT_DIGITAL	, Kaneko16InputPort2 + 0, "p3 up"	  },
+	{"P3 Down"			 , BIT_DIGITAL	, Kaneko16InputPort2 + 1, "p3 down"	  },
+	{"P3 Left"			 , BIT_DIGITAL	, Kaneko16InputPort2 + 2, "p3 left"	  },
+	{"P3 Right"			 , BIT_DIGITAL	, Kaneko16InputPort2 + 3, "p3 right"  },
+	{"P3 Button 1"		 , BIT_DIGITAL	, Kaneko16InputPort2 + 4, "p3 fire 1" },
+	{"P3 Button 2"		 , BIT_DIGITAL	, Kaneko16InputPort2 + 5, "p3 fire 2" },
 
-	{"Reset",		BIT_DIGITAL,	&Kaneko16Reset,	        "reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	Kaneko16Dip + 0,	"dip"		},
+	{"Reset"			 , BIT_DIGITAL	, &Kaneko16Reset		, "reset"	  },
+	{"Dip A"			 , BIT_DIPSWITCH, Kaneko16Dip + 0		, "dip"		  },
 };
 
 STDINPUTINFO(Brapboys)
-
-static struct BurnDIPInfo ShogwarrDIPList[]=
-{
-	{0x16, 0xff, 0xff, 0xff, NULL			},
-
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x16, 0x01, 0x01, 0x01, "Off"			},
-	{0x16, 0x01, 0x01, 0x00, "On"			},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x16, 0x01, 0x02, 0x02, "Off"			},
-	{0x16, 0x01, 0x02, 0x00, "On"			},
-
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x16, 0x01, 0x04, 0x00, "Off"			},
-	{0x16, 0x01, 0x04, 0x04, "On"			},
-
-	{0   , 0xfe, 0   ,    8, "Difficulty"		},
-	{0x16, 0x01, 0x38, 0x38, "1 Easy"		},
-	{0x16, 0x01, 0x38, 0x30, "2"			},
-	{0x16, 0x01, 0x38, 0x28, "3"			},
-	{0x16, 0x01, 0x38, 0x20, "4 Normal"		},
-	{0x16, 0x01, 0x38, 0x18, "5"			},
-	{0x16, 0x01, 0x38, 0x10, "6"			},
-	{0x16, 0x01, 0x38, 0x08, "7"			},
-	{0x16, 0x01, 0x38, 0x00, "8 Hard"		},
-
-	{0   , 0xfe, 0   ,    2, "Can Join During Game"	},
-	{0x16, 0x01, 0x40, 0x00, "Off"			},
-	{0x16, 0x01, 0x40, 0x40, "On"			},
-
-	{0   , 0xfe, 0   ,    2, "Continue Coin"	},
-	{0x16, 0x01, 0x80, 0x80, "Off"			},
-	{0x16, 0x01, 0x80, 0x00, "On"			},
-};
-
-STDDIPINFO(Shogwarr)
-
-static struct BurnDIPInfo BrapboysDIPList[]=
-{
-	{0x19, 0xff, 0xff, 0xff, NULL			},
-
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x19, 0x01, 0x01, 0x01, "Off"			},
-	{0x19, 0x01, 0x01, 0x00, "On"			},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x19, 0x01, 0x02, 0x02, "Off"			},
-	{0x19, 0x01, 0x02, 0x00, "On"			},
-
-	{0   , 0xfe, 0   ,    2, "Switch Test"		},
-	{0x19, 0x01, 0x04, 0x04, "Off"			},
-	{0x19, 0x01, 0x04, 0x00, "On"			},
-
-	{0   , 0xfe, 0   ,    0, "Coin Slots"		},
-	{0x19, 0x01, 0x10, 0x10, "Separate Coins"	},
-	{0x19, 0x01, 0x10, 0x00, "Shared Coins"		},
-
-	{0   , 0xfe, 0   ,    2, "Players"		},
-	{0x19, 0x01, 0x20, 0x20, "3"			},
-	{0x19, 0x01, 0x20, 0x00, "2"			},
-
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x19, 0x01, 0xc0, 0x80, "Easy"			},
-	{0x19, 0x01, 0xc0, 0xc0, "Normal"		},
-	{0x19, 0x01, 0xc0, 0x40, "Hard"			},
-	{0x19, 0x01, 0xc0, 0x00, "Very Hard"		},
-};
-
-STDDIPINFO(Brapboys)
 
 inline void Kaneko16ClearOpposites(UINT8* nJoystickInputs)
 {
@@ -524,7 +454,7 @@ Dip Switch Definitions
 static struct BurnDIPInfo BerlwallDIPList[]=
 {
 	// Default Values
-	{0x16, 0xff, 0xff, 0xff, NULL                                 },
+	{0x16, 0xff, 0xff, 0xff, NULL                      			  },
 	{0x17, 0xff, 0xff, 0xff, NULL                                 },
 
 	// Dip 1
@@ -610,8 +540,8 @@ static struct BurnDIPInfo BerlwalltDIPList[]=
 	{0x16, 0x01, 0xe0, 0x80, "1 Coins 4 Credits"                  },
 	{0x16, 0x01, 0xe0, 0x60, "2 Coins 1 Credit"                   },
 	{0x16, 0x01, 0xe0, 0x40, "2 Coin  3 Credits"                  },
-	{0x16, 0x01, 0xe0, 0x20, "1 Coin  5 Credits"                   },
-	{0x16, 0x01, 0xe0, 0x00, "1 Coin  6 Credits"                   },
+	{0x16, 0x01, 0xe0, 0x20, "1 Coin  5 Credits"                  },
+	{0x16, 0x01, 0xe0, 0x00, "1 Coin  6 Credits"                  },
 
 	// Dip 2	
 	{0   , 0xfe, 0   , 4   , "Game Level"                         },
@@ -645,60 +575,60 @@ STDDIPINFO(Berlwallt)
 
 static struct BurnDIPInfo PackbangDIPList[]=
 {
-	{0x16, 0xff, 0xff, 0xff, NULL		},
-	{0x17, 0xff, 0xff, 0xff, NULL		},
+	{0x16, 0xff, 0xff, 0xff, NULL								  },
+	{0x17, 0xff, 0xff, 0xff, NULL								  },
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x16, 0x01, 0x01, 0x01, "Off"		},
-	{0x16, 0x01, 0x01, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"						  },
+	{0x16, 0x01, 0x01, 0x01, "Off"								  },
+	{0x16, 0x01, 0x01, 0x00, "On"								  },
 
-	{0   , 0xfe, 0   ,    8, "Coin A"		},
-	{0x16, 0x01, 0x1c, 0x00, "4 Coins 1 Credits"		},
-	{0x16, 0x01, 0x1c, 0x04, "3 Coins 1 Credits"		},
-	{0x16, 0x01, 0x1c, 0x0c, "2 Coins 1 Credits"		},
-	{0x16, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"		},
-	{0x16, 0x01, 0x1c, 0x08, "2 Coins 3 Credits"		},
-	{0x16, 0x01, 0x1c, 0x18, "1 Coin  2 Credits"		},
-	{0x16, 0x01, 0x1c, 0x14, "1 Coin  3 Credits"		},
-	{0x16, 0x01, 0x1c, 0x10, "1 Coin  4 Credits"		},
+	{0   , 0xfe, 0   ,    8, "Coin A"							  },
+	{0x16, 0x01, 0x1c, 0x00, "4 Coins 1 Credits"				  },
+	{0x16, 0x01, 0x1c, 0x04, "3 Coins 1 Credits"				  },
+	{0x16, 0x01, 0x1c, 0x0c, "2 Coins 1 Credits"				  },
+	{0x16, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"				  },
+	{0x16, 0x01, 0x1c, 0x08, "2 Coins 3 Credits"				  },
+	{0x16, 0x01, 0x1c, 0x18, "1 Coin  2 Credits"				  },
+	{0x16, 0x01, 0x1c, 0x14, "1 Coin  3 Credits"				  },
+	{0x16, 0x01, 0x1c, 0x10, "1 Coin  4 Credits"				  },
 
-	{0   , 0xfe, 0   ,    8, "Coin B"		},
-	{0x16, 0x01, 0xe0, 0x60, "2 Coins 1 Credits"		},
-	{0x16, 0x01, 0xe0, 0xe0, "1 Coin  1 Credits"		},
-	{0x16, 0x01, 0xe0, 0x40, "2 Coins 3 Credits"		},
-	{0x16, 0x01, 0xe0, 0xc0, "1 Coin  2 Credits"		},
-	{0x16, 0x01, 0xe0, 0xa0, "1 Coin  3 Credits"		},
-	{0x16, 0x01, 0xe0, 0x80, "1 Coin  4 Credits"		},
-	{0x16, 0x01, 0xe0, 0x20, "1 Coin  5 Credits"		},
-	{0x16, 0x01, 0xe0, 0x00, "1 Coin  6 Credits"		},
+	{0   , 0xfe, 0   ,    8, "Coin B"							  },
+	{0x16, 0x01, 0xe0, 0x60, "2 Coins 1 Credits"				  },
+	{0x16, 0x01, 0xe0, 0xe0, "1 Coin  1 Credits"				  },
+	{0x16, 0x01, 0xe0, 0x40, "2 Coins 3 Credits"				  },
+	{0x16, 0x01, 0xe0, 0xc0, "1 Coin  2 Credits"				  },
+	{0x16, 0x01, 0xe0, 0xa0, "1 Coin  3 Credits"				  },
+	{0x16, 0x01, 0xe0, 0x80, "1 Coin  4 Credits"				  },
+	{0x16, 0x01, 0xe0, 0x20, "1 Coin  5 Credits"				  },
+	{0x16, 0x01, 0xe0, 0x00, "1 Coin  6 Credits"				  },
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x17, 0x01, 0x03, 0x02, "Easy"		},
-	{0x17, 0x01, 0x03, 0x03, "Normal"		},
-	{0x17, 0x01, 0x03, 0x01, "Hard"		},
-	{0x17, 0x01, 0x03, 0x00, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"						  },
+	{0x17, 0x01, 0x03, 0x02, "Easy"								  },
+	{0x17, 0x01, 0x03, 0x03, "Normal"							  },
+	{0x17, 0x01, 0x03, 0x01, "Hard"								  },
+	{0x17, 0x01, 0x03, 0x00, "Hardest"							  },
 
-	{0   , 0xfe, 0   ,    2, "Timer Speed"		},
-	{0x17, 0x01, 0x04, 0x00, "Slow"		},
-	{0x17, 0x01, 0x04, 0x04, "Standard"		},
+	{0   , 0xfe, 0   ,    2, "Timer Speed"						  },
+	{0x17, 0x01, 0x04, 0x00, "Slow"								  },
+	{0x17, 0x01, 0x04, 0x04, "Standard"							  },
 
-	{0   , 0xfe, 0   ,    4, "Language"		},
-	{0x17, 0x01, 0x18, 0x00, "Invalid"		},
-	{0x17, 0x01, 0x18, 0x08, "Korea"		},
-	{0x17, 0x01, 0x18, 0x10, "Japan"		},
-	{0x17, 0x01, 0x18, 0x18, "World"		},
+	{0   , 0xfe, 0   ,    4, "Language"							  },
+	{0x17, 0x01, 0x18, 0x00, "Invalid"							  },
+	{0x17, 0x01, 0x18, 0x08, "Korea"							  },
+	{0x17, 0x01, 0x18, 0x10, "Japan"							  },
+	{0x17, 0x01, 0x18, 0x18, "World"							  },
 
-	{0   , 0xfe, 0   ,    2, "Free Play"		},
-	{0x17, 0x01, 0x20, 0x20, "Off"		},
-	{0x17, 0x01, 0x20, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Free Play"						  },
+	{0x17, 0x01, 0x20, 0x20, "Off"								  },
+	{0x17, 0x01, 0x20, 0x00, "On"								  },
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x17, 0x01, 0x40, 0x00, "Off"		},
-	{0x17, 0x01, 0x40, 0x40, "On"		},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"						  },
+	{0x17, 0x01, 0x40, 0x00, "Off"								  },
+	{0x17, 0x01, 0x40, 0x40, "On"								  },
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x17, 0x01, 0x80, 0x80, "Off"		},
-	{0x17, 0x01, 0x80, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Service Mode"						  },
+	{0x17, 0x01, 0x80, 0x80, "Off"								  },
+	{0x17, 0x01, 0x80, 0x00, "On"								  },
 };
 
 STDDIPINFO(Packbang)
@@ -939,36 +869,106 @@ static struct BurnDIPInfo MgcrystlDIPList[]=
 
 STDDIPINFO(Mgcrystl)
 
+static struct BurnDIPInfo ShogwarrDIPList[]=
+{
+	{0x16, 0xff, 0xff, 0xff, NULL								  },
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"						  },
+	{0x16, 0x01, 0x01, 0x01, "Off"								  },
+	{0x16, 0x01, 0x01, 0x00, "On"								  },
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"						  },
+	{0x16, 0x01, 0x02, 0x02, "Off"								  },
+	{0x16, 0x01, 0x02, 0x00, "On"								  },
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"						  },
+	{0x16, 0x01, 0x04, 0x00, "Off"								  },
+	{0x16, 0x01, 0x04, 0x04, "On"								  },
+
+	{0   , 0xfe, 0   ,    8, "Difficulty"						  },
+	{0x16, 0x01, 0x38, 0x38, "1 Easy"						      },
+	{0x16, 0x01, 0x38, 0x30, "2"								  },
+	{0x16, 0x01, 0x38, 0x28, "3"								  },
+	{0x16, 0x01, 0x38, 0x20, "4 Normal"							  },
+	{0x16, 0x01, 0x38, 0x18, "5"								  },
+	{0x16, 0x01, 0x38, 0x10, "6"								  },
+	{0x16, 0x01, 0x38, 0x08, "7"								  },
+	{0x16, 0x01, 0x38, 0x00, "8 Hard"							  },
+
+	{0   , 0xfe, 0   ,    2, "Can Join During Game"				  },
+	{0x16, 0x01, 0x40, 0x00, "Off"								  },
+	{0x16, 0x01, 0x40, 0x40, "On"								  },
+
+	{0   , 0xfe, 0   ,    2, "Continue Coin"					  },
+	{0x16, 0x01, 0x80, 0x80, "Off"								  },
+	{0x16, 0x01, 0x80, 0x00, "On"								  },
+};
+
+STDDIPINFO(Shogwarr)
+
+static struct BurnDIPInfo BrapboysDIPList[]=
+{
+	{0x19, 0xff, 0xff, 0xff, NULL								  },
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"						  },
+	{0x19, 0x01, 0x01, 0x01, "Off"								  },
+	{0x19, 0x01, 0x01, 0x00, "On"								  },
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"						  },
+	{0x19, 0x01, 0x02, 0x02, "Off"								  },
+	{0x19, 0x01, 0x02, 0x00, "On"								  },
+
+	{0   , 0xfe, 0   ,    2, "Switch Test"						  },
+	{0x19, 0x01, 0x04, 0x04, "Off"							      },
+	{0x19, 0x01, 0x04, 0x00, "On"								  },
+
+	{0   , 0xfe, 0   ,    0, "Coin Slots"						  },
+	{0x19, 0x01, 0x10, 0x10, "Separate Coins"					  },
+	{0x19, 0x01, 0x10, 0x00, "Shared Coins"					 	  },
+
+	{0   , 0xfe, 0   ,    2, "Players"							  },
+	{0x19, 0x01, 0x20, 0x20, "3"								  },
+	{0x19, 0x01, 0x20, 0x00, "2"								  },
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"						  },
+	{0x19, 0x01, 0xc0, 0x80, "Easy"								  },
+	{0x19, 0x01, 0xc0, 0xc0, "Normal"							  },
+	{0x19, 0x01, 0xc0, 0x40, "Hard"								  },
+	{0x19, 0x01, 0xc0, 0x00, "Very Hard"						  },
+};
+
+STDDIPINFO(Brapboys)
+
 /*==============================================================================================
 ROM Descriptions
 ===============================================================================================*/
 
 static struct BurnRomInfo BerlwallRomDesc[] = {
-	{ "bw100e_u23-01.u23", 0x020000, 0x76b526ce, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "bw101e_u39-01.u39", 0x020000, 0x78fa7ef2, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "bw100e_u23-01.u23", 	0x020000, 0x76b526ce, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "bw101e_u39-01.u39", 	0x020000, 0x78fa7ef2, BRF_ESS | BRF_PRG }, //  1	
 	
-	{ "bw001.u84",         0x080000, 0xbc927260, BRF_GRA },	   //  2	Sprites
-	{ "bw002.u83",         0x080000, 0x223f5465, BRF_GRA },	   //  3	Sprites
+	{ "bw001.u84",         	0x080000, 0xbc927260, BRF_GRA },	   	   //  2 Sprites
+	{ "bw002.u83",         	0x080000, 0x223f5465, BRF_GRA },	   	   //  3	
 #if !defined ROM_VERIFY
-	{ "bw300.u82",         0x020000, 0xb258737a, BRF_GRA },	   //  4	Sprites
+	{ "bw300.u82",         	0x020000, 0xb258737a, BRF_GRA },	   	   //  4 Masked players, Japanese text
 #endif
 	
-	{ "bw003.u77",         0x080000, 0xfbb4b72d, BRF_GRA },	   //  5 Tiles
+	{ "bw003.u77",         	0x080000, 0xfbb4b72d, BRF_GRA },	   	   //  5 Tiles (scrambled)
 	
-	{ "bw004.u73",         0x080000, 0x5300c34d, BRF_GRA },	   //  6 High colour background
-	{ "bw008.u65",         0x080000, 0x9aaf2f2f, BRF_GRA },	   //  7 High colour background
-	{ "bw005.u74",         0x080000, 0x16db6d43, BRF_GRA },	   //  8 High colour background
-	{ "bw009.u66",         0x080000, 0x1151a0b0, BRF_GRA },	   //  9 High colour background
-	{ "bw006.u75",         0x080000, 0x73a35d1f, BRF_GRA },	   //  10 High colour background
-	{ "bw00a.u67",         0x080000, 0xf447dfc2, BRF_GRA },	   //  11 High colour background
-	{ "bw007.u76",         0x080000, 0x97f85c87, BRF_GRA },	   //  12 High colour background
-	{ "bw00b.u68",         0x080000, 0xb0a48225, BRF_GRA },	   //  13 High colour background
+	{ "bw004.u73",         	0x080000, 0x5300c34d, BRF_GRA },	   	   //  6 High Color Background
+	{ "bw008.u65",         	0x080000, 0x9aaf2f2f, BRF_GRA },	       //  7 FIXED BITS (xxxxxxx0)
+	{ "bw005.u74",         	0x080000, 0x16db6d43, BRF_GRA },	   	   //  8 
+	{ "bw009.u66",         	0x080000, 0x1151a0b0, BRF_GRA },	   	   //  9 FIXED BITS (xxxxxxx0)
+	{ "bw006.u75",         	0x080000, 0x73a35d1f, BRF_GRA },	   	   // 10 
+	{ "bw00a.u67",         	0x080000, 0xf447dfc2, BRF_GRA },	   	   // 11 FIXED BITS (xxxxxxx0)
+	{ "bw007.u76",         	0x080000, 0x97f85c87, BRF_GRA },	   	   // 12 
+	{ "bw00b.u68",         	0x080000, 0xb0a48225, BRF_GRA },	   	   // 13 FIXED BITS (xxxxxxx0)
 
-	{ "bw000.u46",         0x040000, 0xd8fe869d, BRF_SND },		  //  14 Samples
+	{ "bw000.u46",         	0x040000, 0xd8fe869d, BRF_SND },		   // 14 Samples
 	
-	{ "bw_u47.u47",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
-	{ "bw_u48.u48",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
-	{ "bw_u54.u54",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "bw_u47.u47",        	0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "bw_u48.u48",        	0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "bw_u54.u54",        	0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 
@@ -976,29 +976,29 @@ STD_ROM_PICK(Berlwall)
 STD_ROM_FN(Berlwall)
 
 static struct BurnRomInfo BerlwalltRomDesc[] = {
-	{ "bw100a.u23",        0x020000, 0xe6bcb4eb, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "bw101a.u39",        0x020000, 0x38056fb2, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "bw100a.u23",        	0x020000, 0xe6bcb4eb, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "bw101a.u39",        	0x020000, 0x38056fb2, BRF_ESS | BRF_PRG }, //  1	
 	
-	{ "bw001.u84",         0x080000, 0xbc927260, BRF_GRA },	   //  2	Sprites
-	{ "bw002.u83",         0x080000, 0x223f5465, BRF_GRA },	   //  3	Sprites
-	{ "bw300.u82",         0x020000, 0xb258737a, BRF_GRA },	   //  4	Sprites
+	{ "bw001.u84",         	0x080000, 0xbc927260, BRF_GRA },	   	   //  2 Sprites
+	{ "bw002.u83",         	0x080000, 0x223f5465, BRF_GRA },	   	   //  3	
+	{ "bw300.u82",         	0x020000, 0xb258737a, BRF_GRA },	   	   //  4 Masked players, Japanese text
 	
-	{ "bw003.u77",         0x080000, 0xfbb4b72d, BRF_GRA },	   //  5 Tiles
+	{ "bw003.u77",         	0x080000, 0xfbb4b72d, BRF_GRA },	   	   //  5 Tiles (scrambled)
 	
-	{ "bw004.u73",         0x080000, 0x5300c34d, BRF_GRA },	   //  6 High colour background
-	{ "bw008.u65",         0x080000, 0x9aaf2f2f, BRF_GRA },	   //  7 High colour background
-	{ "bw005.u74",         0x080000, 0x16db6d43, BRF_GRA },	   //  8 High colour background
-	{ "bw009.u66",         0x080000, 0x1151a0b0, BRF_GRA },	   //  9 High colour background
-	{ "bw006.u75",         0x080000, 0x73a35d1f, BRF_GRA },	   //  10 High colour background
-	{ "bw00a.u67",         0x080000, 0xf447dfc2, BRF_GRA },	   //  11 High colour background
-	{ "bw007.u76",         0x080000, 0x97f85c87, BRF_GRA },	   //  12 High colour background
-	{ "bw00b.u68",         0x080000, 0xb0a48225, BRF_GRA },	   //  13 High colour background
+	{ "bw004.u73",         	0x080000, 0x5300c34d, BRF_GRA },	   	   //  6 High Color Background
+	{ "bw008.u65",         	0x080000, 0x9aaf2f2f, BRF_GRA },	   	   //  7 FIXED BITS (xxxxxxx0)
+	{ "bw005.u74",         	0x080000, 0x16db6d43, BRF_GRA },	   	   //  8 
+	{ "bw009.u66",         	0x080000, 0x1151a0b0, BRF_GRA },	   	   //  9 FIXED BITS (xxxxxxx0)
+	{ "bw006.u75",         	0x080000, 0x73a35d1f, BRF_GRA },	   	   // 10 
+	{ "bw00a.u67",         	0x080000, 0xf447dfc2, BRF_GRA },	   	   // 11 FIXED BITS (xxxxxxx0)
+	{ "bw007.u76",         	0x080000, 0x97f85c87, BRF_GRA },	   	   // 12 
+	{ "bw00b.u68",         	0x080000, 0xb0a48225, BRF_GRA },	   	   // 13 FIXED BITS (xxxxxxx0)
 
-	{ "bw000.u46",         0x040000, 0xd8fe869d, BRF_SND },		  //  14 Samples
+	{ "bw000.u46",         	0x040000, 0xd8fe869d, BRF_SND },		   // 14 Samples
 	
-	{ "bw_u47.u47",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
-	{ "bw_u48.u48",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
-	{ "bw_u54.u54",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "bw_u47.u47",        	0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, 
+	{ "bw_u48.u48",        	0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "bw_u54.u54",        	0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 
@@ -1006,29 +1006,29 @@ STD_ROM_PICK(Berlwallt)
 STD_ROM_FN(Berlwallt)
 
 static struct BurnRomInfo BerlwallkRomDesc[] = {
-	{ "bw100k.u23",        0x020000, 0x0ce1d336, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "bw101k.u39",        0x020000, 0x3355be65, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "bw100k.u23",        	0x020000, 0x0ce1d336, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "bw101k.u39",        	0x020000, 0x3355be65, BRF_ESS | BRF_PRG }, //  1	
 	
-	{ "bw001.u84",         0x080000, 0xbc927260, BRF_GRA },	   //  2	Sprites
-	{ "bw002.u83",         0x080000, 0x223f5465, BRF_GRA },	   //  3	Sprites
-	{ "bw300k.u82",        0x020000, 0xb8de79d7, BRF_GRA },	   //  4	Sprites
+	{ "bw001.u84",         	0x080000, 0xbc927260, BRF_GRA },	   	   //  2 Sprites
+	{ "bw002.u83",         	0x080000, 0x223f5465, BRF_GRA },	   	   //  3	
+	{ "bw300k.u82",        	0x020000, 0xb8de79d7, BRF_GRA },	   	   //  4	
 	
-	{ "bw003.u77",         0x080000, 0xfbb4b72d, BRF_GRA },	   //  5 Tiles
+	{ "bw003.u77",         	0x080000, 0xfbb4b72d, BRF_GRA },	   	   //  5 Tiles (scrambled)
 	
-	{ "bw004.u73",         0x080000, 0x5300c34d, BRF_GRA },	   //  6 High colour background
-	{ "bw008.u65",         0x080000, 0x9aaf2f2f, BRF_GRA },	   //  7 High colour background
-	{ "bw005.u74",         0x080000, 0x16db6d43, BRF_GRA },	   //  8 High colour background
-	{ "bw009.u66",         0x080000, 0x1151a0b0, BRF_GRA },	   //  9 High colour background
-	{ "bw006.u75",         0x080000, 0x73a35d1f, BRF_GRA },	   //  10 High colour background
-	{ "bw00a.u67",         0x080000, 0xf447dfc2, BRF_GRA },	   //  11 High colour background
-	{ "bw007.u76",         0x080000, 0x97f85c87, BRF_GRA },	   //  12 High colour background
-	{ "bw00b.u68",         0x080000, 0xb0a48225, BRF_GRA },	   //  13 High colour background
+	{ "bw004.u73",         	0x080000, 0x5300c34d, BRF_GRA },	   	   //  6 High Color Background
+	{ "bw008.u65",         	0x080000, 0x9aaf2f2f, BRF_GRA },	   	   //  7 FIXED BITS (xxxxxxx0)
+	{ "bw005.u74",         	0x080000, 0x16db6d43, BRF_GRA },	   	   //  8 
+	{ "bw009.u66",         	0x080000, 0x1151a0b0, BRF_GRA },	   	   //  9 FIXED BITS (xxxxxxx0)
+	{ "bw006.u75",         	0x080000, 0x73a35d1f, BRF_GRA },	   	   // 10 
+	{ "bw00a.u67",         	0x080000, 0xf447dfc2, BRF_GRA },	   	   // 11 FIXED BITS (xxxxxxx0)
+	{ "bw007.u76",         	0x080000, 0x97f85c87, BRF_GRA },	   	   // 12 
+	{ "bw00b.u68",         	0x080000, 0xb0a48225, BRF_GRA },	   	   // 13 FIXED BITS (xxxxxxx0)
 
-	{ "bw000k.u46",        0x040000, 0x52e81a50, BRF_SND },		  //  14 Samples
+	{ "bw000k.u46",        	0x040000, 0x52e81a50, BRF_SND },		   // 14 Samples
 	
-	{ "bw_u47.u47",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
-	{ "bw_u48.u48",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
-	{ "bw_u54.u54",        0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "bw_u47.u47",        	0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "bw_u48.u48",        	0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "bw_u54.u54",        	0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 
@@ -1036,21 +1036,23 @@ STD_ROM_PICK(Berlwallk)
 STD_ROM_FN(Berlwallk)
 
 static struct BurnRomInfo PackbangRomDesc[] = {
-	{ "bbp0x3.u23",     0x020000, 0x105e978a, BRF_ESS | BRF_PRG }, /* hand written checksum on label - 527B */
-	{ "bbp1x3.u39",     0x020000, 0x465d36f5, BRF_ESS | BRF_PRG }, /* hand written checksum on label - C5C8 */
+	/* same PCB as Berlin Wall - BW-002 */
+	{ "bbp0x3.u23",     	0x020000, 0x105e978a, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* hand written checksum on label - 527B */ 
+	{ "bbp1x3.u39",     	0x020000, 0x465d36f5, BRF_ESS | BRF_PRG }, //  1 					/* hand written checksum on label - C5C8 */
 
-   	{ "bb.u84",         0x080000, 0x97837aaa, BRF_GRA }, /* Sprites */
-	{ "pb_spr_ext_9_20_ver.u83", 0x040000, 0x666a1217, BRF_GRA }, /* Tiles (Scrambled) */
-	{ "bbbox1.u77",     0x080000, 0xb2ffd081, BRF_GRA },// 1ST AND 2ND HALF IDENTICAL
+   	{ "bb.u84",         		 0x080000, 0x97837aaa, BRF_GRA }, 	   //  2 Sprites 
+	{ "pb_spr_ext_9_20_ver.u83", 0x040000, 0x666a1217, BRF_GRA },  	   //  3					/* hand written label plus checksum BA63 */
+	
+	{ "bbbox1.u77",     	0x080000, 0xb2ffd081, BRF_GRA },		   //  4 Titles (scrambled) /* 1ST AND 2ND HALF IDENTICAL */
 
-	{ "bb.u73",         0x080000, 0x896d88cb, BRF_GRA },
-	{ "bb.u65",         0x080000, 0xfe17c5b5, BRF_GRA }, // FIXED BITS (xxxxxxx0)
-	{ "bb.u74",         0x080000, 0xb01e77b9, BRF_GRA },
-	{ "bb.u66",         0x080000, 0xcaec5098, BRF_GRA }, // FIXED BITS (xxxxxxx0)
-	{ "bb.u75",         0x080000, 0x5cb4669f, BRF_GRA },
-	{ "bb.u67",         0x080000, 0xce5c9417, BRF_GRA }, // FIXED BITS (xxxxxxx0)
+	{ "bb.u73",         	0x080000, 0x896d88cb, BRF_GRA },		   //  5 High Color Background	 
+	{ "bb.u65",         	0x080000, 0xfe17c5b5, BRF_GRA }, 		   //  6 FIXED BITS (xxxxxxx0)
+	{ "bb.u74",         	0x080000, 0xb01e77b9, BRF_GRA },		   //  7
+	{ "bb.u66",         	0x080000, 0xcaec5098, BRF_GRA }, 		   //  8 FIXED BITS (xxxxxxx0)
+	{ "bb.u75",         	0x080000, 0x5cb4669f, BRF_GRA },		   //  9
+	{ "bb.u67",         	0x080000, 0xce5c9417, BRF_GRA }, 		   // 10 FIXED BITS (xxxxxxx0)
 
-	{ "bw000.u46",      0x040000, 0xd8fe869d, BRF_SND }, //  11 Samples
+	{ "bw000.u46",      	0x040000, 0xd8fe869d, BRF_SND }, 		   // 11 Samples
 };
 
 
@@ -1058,18 +1060,18 @@ STD_ROM_PICK(Packbang)
 STD_ROM_FN(Packbang)
 
 static struct BurnRomInfo BlazeonRomDesc[] = {
-	{ "bz_prg1.u80",       0x040000, 0x8409e31d, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "bz_prg2.u81",       0x040000, 0xb8a0a08b, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "bz_prg1.u80",       	0x040000, 0x8409e31d, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "bz_prg2.u81",       	0x040000, 0xb8a0a08b, BRF_ESS | BRF_PRG }, //  1	
 	
-	{ "bz_sp1.u20",        0x100000, 0x0d5809a1, BRF_GRA },	   //  2	Sprites
-	{ "bz_sp2.u21",        0x100000, 0x56ead2bd, BRF_GRA },	   //  3	Sprites
+	{ "bz_sp1.u20",        	0x100000, 0x0d5809a1, BRF_GRA },	   	   //  2 Sprites
+	{ "bz_sp2.u21",        	0x100000, 0x56ead2bd, BRF_GRA },	   	   //  3	
 	
-	{ "bz_bg.u2",          0x100000, 0xfc67f19f, BRF_GRA },	   //  4 Tiles
+	{ "bz_bg.u2",          	0x100000, 0xfc67f19f, BRF_GRA },	   	   //  4 Tiles (scrambled)
 	
-	{ "3.u45",             0x020000, 0x52fe4c94, BRF_ESS | BRF_PRG }, //  5 Z80 Program Code
+	{ "3.u45",             	0x020000, 0x52fe4c94, BRF_ESS | BRF_PRG }, //  5 Z80 Program Code
 	
-	{ "bz_sp1.u68",        0x100000, 0x0d5809a1, BRF_OPT },
-	{ "bz_sp2.u86",        0x100000, 0x56ead2bd, BRF_OPT },
+	{ "bz_sp1.u68",        	0x100000, 0x0d5809a1, BRF_OPT },
+	{ "bz_sp2.u86",        	0x100000, 0x56ead2bd, BRF_OPT },
 };
 
 
@@ -1077,63 +1079,108 @@ STD_ROM_PICK(Blazeon)
 STD_ROM_FN(Blazeon)
 
 static struct BurnRomInfo BloodwarRomDesc[] = {
-	{ "ofp0f3.514",        0x080000, 0x0c93da15, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "ofp1f3.513",        0x080000, 0x894ecbe5, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "ofp0f3.514",        	0x080000, 0x0c93da15, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "ofp1f3.513",        	0x080000, 0x894ecbe5, BRF_ESS | BRF_PRG }, //  1	
 	
-	{ "ofd0x3.124",        0x020000, 0x399f2005, BRF_PRG | BRF_OPT }, //  2	MCU Code
+	{ "ofd0x3.124",        	0x020000, 0x399f2005, BRF_PRG | BRF_OPT }, //  2 MCU Code
 
-	{ "of-200-0201.8",     0x200000, 0xbba63025, BRF_GRA },	   //  3	Sprites
-	{ "of-201-0202.9",     0x200000, 0x4ffd9ddc, BRF_GRA },	   //  4	Sprites
-	{ "of-202-0203.10",    0x200000, 0xfbcc5363, BRF_GRA },	   //  5	Sprites
-	{ "of-203-0204.11",    0x200000, 0x8e818ce9, BRF_GRA },	   //  6	Sprites
-	{ "of-204-0205.12",    0x200000, 0x70c4a76b, BRF_GRA },	   //  7	Sprites
-	{ "of-205-0206.13",    0x200000, 0x80c667bb, BRF_GRA },	   //  8	Sprites
-	{ "of-206-0207.14",    0x200000, 0xc2028c97, BRF_GRA },	   //  9	Sprites
-	{ "of-207-0208.15",    0x200000, 0xb1f30c61, BRF_GRA },	   //  10 Sprites
-	{ "of-208-0209.28",    0x200000, 0xa8f29545, BRF_GRA },	   //  11 Sprites
-	{ "of-209e-0210.16",   0x100000, 0x93018468, BRF_GRA },	   //  12 Sprites
-	{ "of-2090-2011.17",   0x100000, 0x3fb226a1, BRF_GRA },	   //  13 Sprites
-	{ "of-210e-0212.18",   0x100000, 0x80f3fa1b, BRF_GRA },	   //  14 Sprites
-	{ "of-2100-0213.19",   0x100000, 0x8ca3a3d6, BRF_GRA },	   //  15 Sprites
-	{ "of-211e-0214.20",   0x100000, 0x8d3d96f7, BRF_GRA },	   //  16 Sprites
-	{ "of-2110-0215.21",   0x100000, 0x78268230, BRF_GRA },	   //  17 Sprites
-	{ "of-212e-0216.22",   0x100000, 0x5a013d99, BRF_GRA },	   //  18 Sprites
-	{ "of-2120-0217.23",   0x100000, 0x84ed25bd, BRF_GRA },	   //  19 Sprites
-	{ "of-213e-0218.24",   0x100000, 0x861bc5b1, BRF_GRA },	   //  20 Sprites
-	{ "of-2130-0219.25",   0x100000, 0xa79b8119, BRF_GRA },	   //  21 Sprites
-	{ "of-214e-0220.26",   0x100000, 0x43c622de, BRF_GRA },	   //  22 Sprites
-	{ "of-2140-0221.27",   0x100000, 0xd10bf03c, BRF_GRA },	   //  23 Sprites
+	{ "of-200-0201.8",     	0x200000, 0xbba63025, BRF_GRA },	   	   //  3 Sprites
+	{ "of-201-0202.9",     	0x200000, 0x4ffd9ddc, BRF_GRA },	   	   //  4	
+	{ "of-202-0203.10",    	0x200000, 0xfbcc5363, BRF_GRA },	       //  5	
+	{ "of-203-0204.11",    	0x200000, 0x8e818ce9, BRF_GRA },	       //  6	
+	{ "of-204-0205.12",    	0x200000, 0x70c4a76b, BRF_GRA },	       //  7	
+	{ "of-205-0206.13",    	0x200000, 0x80c667bb, BRF_GRA },	       //  8	
+	{ "of-206-0207.14",    	0x200000, 0xc2028c97, BRF_GRA },	       //  9	
+	{ "of-207-0208.15",    	0x200000, 0xb1f30c61, BRF_GRA },	       // 10 
+	{ "of-208-0209.28",    	0x200000, 0xa8f29545, BRF_GRA },	       // 11 
+	{ "of-209e-0210.16",   	0x100000, 0x93018468, BRF_GRA },	       // 12 
+	{ "of-2090-2011.17",   	0x100000, 0x3fb226a1, BRF_GRA },	       // 13 
+	{ "of-210e-0212.18",   	0x100000, 0x80f3fa1b, BRF_GRA },	       // 14 
+	{ "of-2100-0213.19",   	0x100000, 0x8ca3a3d6, BRF_GRA },	       // 15 
+	{ "of-211e-0214.20",   	0x100000, 0x8d3d96f7, BRF_GRA },	       // 16 
+	{ "of-2110-0215.21",   	0x100000, 0x78268230, BRF_GRA },	       // 17 
+	{ "of-212e-0216.22",   	0x100000, 0x5a013d99, BRF_GRA },	       // 18 
+	{ "of-2120-0217.23",   	0x100000, 0x84ed25bd, BRF_GRA },	       // 19 
+	{ "of-213e-0218.24",   	0x100000, 0x861bc5b1, BRF_GRA },	       // 20 
+	{ "of-2130-0219.25",   	0x100000, 0xa79b8119, BRF_GRA },	       // 21 
+	{ "of-214e-0220.26",   	0x100000, 0x43c622de, BRF_GRA },	       // 22 
+	{ "of-2140-0221.27",   	0x100000, 0xd10bf03c, BRF_GRA },	       // 23 
 	
-	{ "of-300-0225.51",    0x100000, 0xfbc3c08a, BRF_GRA },	   //  24 Tiles
-	{ "of-301-0226.55",    0x100000, 0xfcf215de, BRF_GRA },	   //  25 Tiles (Layers 2 & 3)
+	{ "of-300-0225.51",    	0x100000, 0xfbc3c08a, BRF_GRA },	       // 24 Tiles (scrambled)
+	
+	{ "of-301-0226.55",    	0x100000, 0xfcf215de, BRF_GRA },	       // 25 Tiles (scrambled) (Layers 2 & 3)
 
-	{ "of-101-f-0223.101", 0x100000, 0x295f3c93, BRF_SND },		  //  26 Samples
-	{ "of-100-0222.99",    0x100000, 0x42b12269, BRF_SND },		  //  27 Samples
+	{ "of-101-f-0223.101", 	0x100000, 0x295f3c93, BRF_SND },	       // 26 Samples, plus room for expansion
+	
+	{ "of-100-0222.99",    	0x100000, 0x42b12269, BRF_SND },	       // 27 Samples
 };
 
 
 STD_ROM_PICK(Bloodwar)
 STD_ROM_FN(Bloodwar)
 
+static struct BurnRomInfo OedfightRomDesc[] = {
+	{ "ofp0j3.514",        	0x080000, 0x0c93da15, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "ofp1j3.513",        	0x080000, 0xcc59de49, BRF_ESS | BRF_PRG }, //  1	
+	
+	{ "ofd0x3.124",        	0x020000, 0x399f2005, BRF_PRG | BRF_OPT }, //  2 MCU Code
+
+	{ "of-200-0201.8",     	0x200000, 0xbba63025, BRF_GRA },	   	   //  3 Sprites
+	{ "of-201-0202.9",     	0x200000, 0x4ffd9ddc, BRF_GRA },	   	   //  4	
+	{ "of-202-0203.10",    	0x200000, 0xfbcc5363, BRF_GRA },	       //  5	
+	{ "of-203-0204.11",    	0x200000, 0x8e818ce9, BRF_GRA },	       //  6	
+	{ "of-204-0205.12",    	0x200000, 0x70c4a76b, BRF_GRA },	       //  7	
+	{ "of-205-0206.13",    	0x200000, 0x80c667bb, BRF_GRA },	       //  8	
+	{ "of-206-0207.14",    	0x200000, 0xc2028c97, BRF_GRA },	       //  9	
+	{ "of-207-0208.15",    	0x200000, 0xb1f30c61, BRF_GRA },	       // 10 
+	{ "of-208-0209.28",    	0x200000, 0xa8f29545, BRF_GRA },	       // 11 
+	{ "of-209e-0210.16",   	0x100000, 0x93018468, BRF_GRA },	       // 12 
+	{ "of-2090-2011.17",   	0x100000, 0x3fb226a1, BRF_GRA },	       // 13 
+	{ "of-210e-0212.18",   	0x100000, 0x80f3fa1b, BRF_GRA },	       // 14 
+	{ "of-2100-0213.19",   	0x100000, 0x8ca3a3d6, BRF_GRA },	       // 15 
+	{ "of-211e-0214.20",   	0x100000, 0x8d3d96f7, BRF_GRA },	       // 16 
+	{ "of-2110-0215.21",   	0x100000, 0x78268230, BRF_GRA },	       // 17 
+	{ "of-212e-0216.22",   	0x100000, 0x5a013d99, BRF_GRA },	       // 18 
+	{ "of-2120-0217.23",   	0x100000, 0x84ed25bd, BRF_GRA },	       // 19 
+	{ "of-213e-0218.24",   	0x100000, 0x861bc5b1, BRF_GRA },	       // 20 
+	{ "of-2130-0219.25",   	0x100000, 0xa79b8119, BRF_GRA },	       // 21 
+	{ "of-214e-0220.26",   	0x100000, 0x43c622de, BRF_GRA },	       // 22 
+	{ "of-2140-0221.27",   	0x100000, 0xd10bf03c, BRF_GRA },	       // 23 
+	
+	{ "of-300-0225.51",    	0x100000, 0xfbc3c08a, BRF_GRA },	       // 24 Tiles (scrambled)
+	
+	{ "of-301-0226.55",    	0x100000, 0xfcf215de, BRF_GRA },	       // 25 Tiles (scrambled) (Layers 2 & 3)
+
+	{ "of-101-j-0224.101", 	0x100000, 0x83a1f826, BRF_SND },	       // 26 Samples, plus room for expansion
+	
+	{ "of-100-0222.99",    	0x100000, 0x42b12269, BRF_SND },	       // 27 Samples
+};
+
+
+STD_ROM_PICK(Oedfight)
+STD_ROM_FN(Oedfight)
+
 static struct BurnRomInfo BonkadvRomDesc[] = {
-	{ "prg.8",             0x080000, 0xaf2e60f8, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "prg.7",             0x080000, 0xa1cc6a78, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "prg.8",             	0x080000, 0xaf2e60f8, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "prg.7",             	0x080000, 0xa1cc6a78, BRF_ESS | BRF_PRG }, //  1	
 	
-	{ "mcu.124",           0x020000, 0x9d4e2724, BRF_PRG | BRF_OPT }, //  2	MCU Code
+	{ "mcu.124",           	0x020000, 0x9d4e2724, BRF_PRG | BRF_OPT }, //  2 MCU Code
 
-	{ "pc100101.37",       0x200000, 0xc96e7c10, BRF_GRA },	   //  3	Sprites
-	{ "pc200102.40",       0x100000, 0xc2b7a26a, BRF_GRA },	   //  4	Sprites
-	{ "pc300103.38",       0x100000, 0x51ee162c, BRF_GRA },	   //  5	Sprites
-	{ "pc600106.42",       0x080000, 0x25877026, BRF_GRA },	   //  6	Sprites
-	{ "pc700107.43",       0x080000, 0xbfe21c44, BRF_GRA },	   //  7	Sprites
+	{ "pc100101.37",       	0x200000, 0xc96e7c10, BRF_GRA },	       //  3 Sprites
+	{ "pc200102.40",       	0x100000, 0xc2b7a26a, BRF_GRA },	       //  4	
+	{ "pc300103.38",       	0x100000, 0x51ee162c, BRF_GRA },	       //  5	
+	{ "pc600106.42",       	0x080000, 0x25877026, BRF_GRA },	       //  6	
+	{ "pc700107.43",       	0x080000, 0xbfe21c44, BRF_GRA },	       //  7	
 	
-	{ "pc400104.51",       0x100000, 0x3b176f84, BRF_GRA },	   //  8 Tiles
-	{ "pc500105.55",       0x100000, 0xbebb3edc, BRF_GRA },	   //  9 Tiles (Layers 2 & 3)
+	{ "pc400104.51",       	0x100000, 0x3b176f84, BRF_GRA },	       //  8 Tiles (scrambled)
+	
+	{ "pc500105.55",       	0x100000, 0xbebb3edc, BRF_GRA },	       //  9 Tiles (scrambled) (Layers 2 & 3)
 
-	{ "pc604109.101",      0x100000, 0x76025530, BRF_SND },		  //  10 Samples
-	{ "pc601106.99",       0x100000, 0xa893651c, BRF_SND },		  //  11 Samples
-	{ "pc602107.100",      0x100000, 0x0fbb23aa, BRF_SND },		  //  12 Samples
-	{ "pc603108.102",      0x100000, 0x58458985, BRF_SND },		  //  13 Samples
+	{ "pc604109.101",      	0x100000, 0x76025530, BRF_SND },		   // 10 Samples, plus room for expansion
+	
+	{ "pc601106.99",       	0x100000, 0xa893651c, BRF_SND },		   // 11 Samples
+	{ "pc602107.100",      	0x100000, 0x0fbb23aa, BRF_SND },		   // 12 
+	{ "pc603108.102",      	0x100000, 0x58458985, BRF_SND },		   // 13  
 };
 
 
@@ -1141,17 +1188,18 @@ STD_ROM_PICK(Bonkadv)
 STD_ROM_FN(Bonkadv)
 
 static struct BurnRomInfo ExplbrkrRomDesc[] = {
-	{ "ts100e.u18",        0x040000, 0xcc84a985, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "ts101e.u19",        0x040000, 0x88f4afb7, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "ts100e.u18",        	0x040000, 0xcc84a985, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "ts101e.u19",        	0x040000, 0x88f4afb7, BRF_ESS | BRF_PRG }, //  1	
 	
-	{ "ts001e.u37",        0x080000, 0x70b66e7e, BRF_GRA },	   //  2	Sprites
-	{ "ts000e.u38",        0x080000, 0xa7a94143, BRF_GRA },	   //  3	Sprites
-	{ "ts002e.u36",        0x040000, 0x611271e6, BRF_GRA },	   //  4	Sprites
+	{ "ts001e.u37",        	0x080000, 0x70b66e7e, BRF_GRA },	   	   //  2 Sprites
+	{ "ts000e.u38",        	0x080000, 0xa7a94143, BRF_GRA },	   	   //  3	
+	{ "ts002e.u36",        	0x040000, 0x611271e6, BRF_GRA },	   	   //  4	
 	
-	{ "ts010.u4",          0x100000, 0xdf935324, BRF_GRA },	   //  5	Tiles
-	{ "ts020.u33",         0x100000, 0xeb58c35d, BRF_GRA },	   //  6 Tiles (Layers 2 & 3)
+	{ "ts010.u4",          	0x100000, 0xdf935324, BRF_GRA },	   	   //  5 Tiles
+	
+	{ "ts020.u33",         	0x100000, 0xeb58c35d, BRF_GRA },	   	   //  6 Tiles (Layers 2 & 3)
 
-	{ "ts030.u5",          0x100000, 0x1d68e9d1, BRF_SND },		  //  7 Samples
+	{ "ts030.u5",          	0x100000, 0x1d68e9d1, BRF_SND },		   //  7 OKI Sample ROM
 };
 
 
@@ -1159,17 +1207,18 @@ STD_ROM_PICK(Explbrkr)
 STD_ROM_FN(Explbrkr)
 
 static struct BurnRomInfo BakubrkrRomDesc[] = {
-	{ "ts100j.u18",        0x040000, 0x8cc0a4fd, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "ts101j.u19",        0x040000, 0xaea92195, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "ts100j.u18",        	0x040000, 0x8cc0a4fd, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "ts101j.u19",        	0x040000, 0xaea92195, BRF_ESS | BRF_PRG }, //  1	
 	
-	{ "ts001j.u37",        0x080000, 0x70b66e7e, BRF_GRA },	   //  2	Sprites
-	{ "ts000j.u38",        0x080000, 0xa7a94143, BRF_GRA },	   //  3	Sprites
-	{ "ts002j.u36",        0x040000, 0x611271e6, BRF_GRA },	   //  4	Sprites
+	{ "ts001j.u37",        	0x080000, 0x70b66e7e, BRF_GRA },	   	   //  2 Sprites
+	{ "ts000j.u38",        	0x080000, 0xa7a94143, BRF_GRA },	   	   //  3	
+	{ "ts002j.u36",        	0x040000, 0x611271e6, BRF_GRA },	   	   //  4	
 	
-	{ "ts010.u4",          0x100000, 0xdf935324, BRF_GRA },	   //  5	Tiles
-	{ "ts020.u33",         0x100000, 0xeb58c35d, BRF_GRA },	   //  6 Tiles (Layers 2 & 3)
+	{ "ts010.u4",          	0x100000, 0xdf935324, BRF_GRA },	   	   //  5 Tiles
+	
+	{ "ts020.u33",         	0x100000, 0xeb58c35d, BRF_GRA },	   	   //  6 Tiles (Layers 2 & 3)
 
-	{ "ts030.u5",          0x100000, 0x1d68e9d1, BRF_SND },		  //  7 Samples
+	{ "ts030.u5",          	0x100000, 0x1d68e9d1, BRF_SND },		   //  7 OKI Sample ROM
 };
 
 
@@ -1177,21 +1226,21 @@ STD_ROM_PICK(Bakubrkr)
 STD_ROM_FN(Bakubrkr)
 
 static struct BurnRomInfo GtmrRomDesc[] = {
-	{ "u2.bin",            0x080000, 0x031799f7, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "u1.bin",            0x080000, 0x6238790a, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "u2.bin",            	0x080000, 0x031799f7, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "u1.bin",            	0x080000, 0x6238790a, BRF_ESS | BRF_PRG }, //  1	
 	
-	{ "mmd0x2.u124.bin",   0x020000, 0x3d7cb329, BRF_PRG | BRF_OPT }, //  2	MCU Code
+	{ "mmd0x2.u124.bin",   	0x020000, 0x3d7cb329, BRF_PRG | BRF_OPT }, //  2 MCU Code // from gtmra
 
-	{ "mm-200-402-s0.bin", 0x200000, 0xc0ab3efc, BRF_GRA },	   //  3	Sprites
-	{ "mm-201-403-s1.bin", 0x200000, 0xcf6b23dc, BRF_GRA },	 	  //  4	Sprites
-	{ "mm-202-404-s2.bin", 0x200000, 0x8f27f5d3, BRF_GRA },	   //  5	Sprites
-	{ "mm-203-405-s3.bin", 0x080000, 0xe9747c8c, BRF_GRA },	   //  6	Sprites
-	{ "mms1x2.u30.bin",    0x020000, 0xb42b426f, BRF_GRA },	   //  7	Sprites
-	{ "mms0x2.u29.bin",    0x020000, 0xbd22b7d2, BRF_GRA },	   //  8	Sprites
+	{ "mm-200-402-s0.bin", 	0x200000, 0xc0ab3efc, BRF_GRA },	   	   //  3 Sprites
+	{ "mm-201-403-s1.bin", 	0x200000, 0xcf6b23dc, BRF_GRA },	 	   //  4	
+	{ "mm-202-404-s2.bin", 	0x200000, 0x8f27f5d3, BRF_GRA },	       //  5	
+	{ "mm-203-405-s3.bin", 	0x080000, 0xe9747c8c, BRF_GRA },	       //  6	
+	{ "mms1x2.u30.bin",    	0x020000, 0xb42b426f, BRF_GRA },	       //  7	
+	{ "mms0x2.u29.bin",    	0x020000, 0xbd22b7d2, BRF_GRA },	       //  8	
 	
-	{ "mm-300-406-a0.bin", 0x200000, 0xb15f6b7f, BRF_GRA },	   //  9	Tiles
+	{ "mm-300-406-a0.bin", 	0x200000, 0xb15f6b7f, BRF_GRA },	       //  9 Tiles (scrambled)
 
-	{ "mm-100-401-e0.bin", 0x100000, 0xb9cbfbee, BRF_SND },		  //  10 Samples
+	{ "mm-100-401-e0.bin", 	0x100000, 0xb9cbfbee, BRF_SND },		   // 10 Samples
 };
 
 
@@ -1199,21 +1248,21 @@ STD_ROM_PICK(Gtmr)
 STD_ROM_FN(Gtmr)
 
 static struct BurnRomInfo GtmraRomDesc[] = {
-	{ "mmp0x2.u514.bin",   0x080000, 0xba4a77c8, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "mmp1x2.u513.bin",   0x080000, 0xa2b9034e, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "mmp0x2.u514.bin",   	0x080000, 0xba4a77c8, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "mmp1x2.u513.bin",   	0x080000, 0xa2b9034e, BRF_ESS | BRF_PRG }, //  1	
 	
-	{ "mmd0x2.u124.bin",   0x020000, 0x3d7cb329, BRF_PRG | BRF_OPT }, //  2	MCU Code
+	{ "mmd0x2.u124.bin",   	0x020000, 0x3d7cb329, BRF_PRG | BRF_OPT }, //  2 MCU Code
 
-	{ "mm-200-402-s0.bin", 0x200000, 0xc0ab3efc, BRF_GRA },	   //  3	Sprites
-	{ "mm-201-403-s1.bin", 0x200000, 0xcf6b23dc, BRF_GRA },	 	  //  4	Sprites
-	{ "mm-202-404-s2.bin", 0x200000, 0x8f27f5d3, BRF_GRA },	   //  5	Sprites
-	{ "mm-203-405-s3.bin", 0x080000, 0xe9747c8c, BRF_GRA },	   //  6	Sprites
-	{ "mms1x2.u30.bin",    0x020000, 0xb42b426f, BRF_GRA },	   //  7	Sprites
-	{ "mms0x2.u29.bin",    0x020000, 0xbd22b7d2, BRF_GRA },	   //  8	Sprites
+	{ "mm-200-402-s0.bin", 	0x200000, 0xc0ab3efc, BRF_GRA },	   	   //  3 Sprites
+	{ "mm-201-403-s1.bin", 	0x200000, 0xcf6b23dc, BRF_GRA },	 	   //  4	
+	{ "mm-202-404-s2.bin", 	0x200000, 0x8f27f5d3, BRF_GRA },	       //  5	
+	{ "mm-203-405-s3.bin", 	0x080000, 0xe9747c8c, BRF_GRA },	       //  6	
+	{ "mms1x2.u30.bin",    	0x020000, 0xb42b426f, BRF_GRA },	       //  7	
+	{ "mms0x2.u29.bin",    	0x020000, 0xbd22b7d2, BRF_GRA },	       //  8	
 	
-	{ "mm-300-406-a0.bin", 0x200000, 0xb15f6b7f, BRF_GRA },	   //  9	Tiles
+	{ "mm-300-406-a0.bin", 	0x200000, 0xb15f6b7f, BRF_GRA },	       //  9 Tiles (scrambled)
 
-	{ "mm-100-401-e0.bin", 0x100000, 0xb9cbfbee, BRF_SND },		  //  10 Samples
+	{ "mm-100-401-e0.bin", 	0x100000, 0xb9cbfbee, BRF_SND },		   // 10 Samples
 };
 
 
@@ -1221,22 +1270,23 @@ STD_ROM_PICK(Gtmra)
 STD_ROM_FN(Gtmra)
 
 static struct BurnRomInfo GtmreRomDesc[] = {
-	{ "gmmu2.bin",         0x080000, 0x36dc4aa9, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "gmmu1.bin",         0x080000, 0x8653c144, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "gmmu2.bin",         	0x080000, 0x36dc4aa9, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "gmmu1.bin",         	0x080000, 0x8653c144, BRF_ESS | BRF_PRG }, //  1	
 	
-	{ "gtmrusa.u12",       0x020000, 0x2e1a06ff, BRF_PRG | BRF_OPT }, //  2	MCU Code
+	{ "gtmrusa.u12",       	0x020000, 0x2e1a06ff, BRF_PRG | BRF_OPT }, //  2 MCU Code
 
-	{ "gmmu27.bin",        0x200000, 0xc0ab3efc, BRF_GRA },	   //  3	Sprites
-	{ "gmmu28.bin",        0x200000, 0xcf6b23dc, BRF_GRA },	 	  //  4	Sprites
-	{ "gmmu29.bin",        0x200000, 0x8f27f5d3, BRF_GRA },	   //  5	Sprites
-	{ "gmmu30.bin",        0x080000, 0xe9747c8c, BRF_GRA },	   //  6	Sprites
-	{ "gmmu64.bin",        0x100000, 0x57d77b33, BRF_GRA },	   //  7	Sprites
-	{ "gmmu65.bin",        0x100000, 0x05b8bdca, BRF_GRA },	   //  8	Sprites
+	{ "gmmu27.bin",        	0x200000, 0xc0ab3efc, BRF_GRA },	   	   //  3 Sprites
+	{ "gmmu28.bin",        	0x200000, 0xcf6b23dc, BRF_GRA },	 	   //  4	
+	{ "gmmu29.bin",        	0x200000, 0x8f27f5d3, BRF_GRA },	       //  5	
+	{ "gmmu30.bin",        	0x080000, 0xe9747c8c, BRF_GRA },	       //  6	
+	{ "gmmu64.bin",        	0x100000, 0x57d77b33, BRF_GRA },	       //  7	
+	{ "gmmu65.bin",        	0x100000, 0x05b8bdca, BRF_GRA },	       //  8	
 	
-	{ "gmmu52.bin",        0x200000, 0xb15f6b7f, BRF_GRA },	   //  9	Tiles
+	{ "gmmu52.bin",        	0x200000, 0xb15f6b7f, BRF_GRA },	       //  9 Tiles
 
-	{ "gmmu23.bin",        0x100000, 0xb9cbfbee, BRF_SND },		  //  10 Samples
-	{ "gmmu24.bin",        0x100000, 0x380cdc7c, BRF_SND },		  //  11 Samples
+	{ "gmmu23.bin",        	0x100000, 0xb9cbfbee, BRF_SND },		   // 10 Samples, plus room for expansion
+	
+	{ "gmmu24.bin",        	0x100000, 0x380cdc7c, BRF_SND },		   // 11 Samples
 };
 
 
@@ -1245,21 +1295,22 @@ STD_ROM_FN(Gtmre)
 
 static struct BurnRomInfo GtmrusaRomDesc[] = {
 	{ "mmp0x3.u2",          0x080000, 0x5be615c4, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
-	{ "mmp1x3.u1",          0x080000, 0xae853e4e, BRF_ESS | BRF_PRG }, //  1 68000 Program Code
+	{ "mmp1x3.u1",          0x080000, 0xae853e4e, BRF_ESS | BRF_PRG }, //  1 
 	
 	{ "mmd0x3.u12",         0x020000, 0x2e1a06ff, BRF_PRG | BRF_OPT }, //  2 MCU Code
 
-	{ "mm-200-402-s0.bin",  0x200000, 0xc0ab3efc, BRF_GRA },	   //  3 Sprites
-	{ "mm-201-403-s1.bin",  0x200000, 0xcf6b23dc, BRF_GRA },	   //  4 Sprites
-	{ "mm-202-404-s2.bin",  0x200000, 0x8f27f5d3, BRF_GRA },	   //  5 Sprites
-	{ "mm-203-405-s3.bin",  0x080000, 0xe9747c8c, BRF_GRA },	   //  6 Sprites
-	{ "mm-204-564.bin",     0x100000, 0x57d77b33, BRF_GRA },	   //  7 Sprites
-	{ "mm-204-406-565.bin", 0x100000, 0x05b8bdca, BRF_GRA },	   //  8 Sprites
+	{ "mm-200-402-s0.bin",  0x200000, 0xc0ab3efc, BRF_GRA },	       //  3 Sprites
+	{ "mm-201-403-s1.bin",  0x200000, 0xcf6b23dc, BRF_GRA },	       //  4 
+	{ "mm-202-404-s2.bin",  0x200000, 0x8f27f5d3, BRF_GRA },	       //  5 
+	{ "mm-203-405-s3.bin",  0x080000, 0xe9747c8c, BRF_GRA },	       //  6 
+	{ "mm-204-564.bin",     0x100000, 0x57d77b33, BRF_GRA },	       //  7 HALVES IDENTICAL
+	{ "mm-204-406-565.bin", 0x100000, 0x05b8bdca, BRF_GRA },	       //  8 HALVES IDENTICAL
 	
-	{ "mm-300-406-a0.bin",  0x200000, 0xb15f6b7f, BRF_GRA },	   //  9 Tiles
+	{ "mm-300-406-a0.bin",  0x200000, 0xb15f6b7f, BRF_GRA },	       //  9 Tiles (scrambled)
 
-	{ "mm-100-401-a0.bin",  0x100000, 0xb9cbfbee, BRF_SND },	   // 10 Samples
-	{ "mm-101-402-e24.bin", 0x100000, 0x380cdc7c, BRF_SND },	   // 11 Samples
+	{ "mm-100-401-a0.bin",  0x100000, 0xb9cbfbee, BRF_SND },	       // 10 Samples, plus room for expansion
+	
+	{ "mm-101-402-e24.bin", 0x100000, 0x380cdc7c, BRF_SND },	       // 11 Samples
 };
 
 
@@ -1267,24 +1318,25 @@ STD_ROM_PICK(Gtmrusa)
 STD_ROM_FN(Gtmrusa)
 
 static struct BurnRomInfo Gtmr2RomDesc[] = {
-	{ "m2p0x1a.u8",        0x080000, 0xc29039fb, BRF_ESS | BRF_PRG },  //  0 68000 Program Code
-	{ "m2p1x1a.u7",        0x080000, 0x8ef392c4, BRF_ESS | BRF_PRG },  //  1 68000 Program Code
+	{ "m2p0x1a.u8",        	0x080000, 0xc29039fb, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "m2p1x1a.u7",        	0x080000, 0x8ef392c4, BRF_ESS | BRF_PRG }, //  1 
 	
-	{ "m2d0x0.u31",        0x020000, 0x2e1a06ff, BRF_PRG | BRF_OPT },  //  2 MCU Code
+	{ "m2d0x0.u31",        	0x020000, 0x2e1a06ff, BRF_PRG | BRF_OPT }, //  2 MCU Code
 
-	{ "m2-200-0.u49",      0x400000, 0x93aafc53, BRF_GRA },		   //  3 Sprites
-	{ "m2-201-0.u50",      0x200000, 0x39b60a83, BRF_GRA },	 	   //  4 Sprites
-	{ "m2-202-0.u51",      0x200000, 0xfd06b339, BRF_GRA },		   //  5 Sprites
-	{ "m2s0x1a.u32",       0x080000, 0xa485eec6, BRF_GRA },		   //  6 Sprites
-	{ "m2s1x1a.u33",       0x080000, 0xc5b71bb2, BRF_GRA },		   //  7 Sprites
+	{ "m2-200-0.u49",      	0x400000, 0x93aafc53, BRF_GRA },		   //  3 Sprites
+	{ "m2-201-0.u50",      	0x200000, 0x39b60a83, BRF_GRA },	 	   //  4 
+	{ "m2-202-0.u51",      	0x200000, 0xfd06b339, BRF_GRA },		   //  5 
+	{ "m2s0x1a.u32",       	0x080000, 0xa485eec6, BRF_GRA },		   //  6 
+	{ "m2s1x1a.u33",       	0x080000, 0xc5b71bb2, BRF_GRA },		   //  7 
 	
-	{ "m2-300-0.u89",      0x200000, 0x4dc42fbb, BRF_GRA },		   //  8 Tiles
-	{ "m2-301-0.u90",      0x200000, 0xf4e894f2, BRF_GRA },		   //  9 Tiles
-	{ "m2b0x0.u93",        0x020000, 0xe023d51b, BRF_GRA },		   // 10 Tiles
-	{ "m2b1x0.u94",        0x020000, 0x03c48bdb, BRF_GRA },		   // 11 Tiles
+	{ "m2-300-0.u89",      	0x200000, 0x4dc42fbb, BRF_GRA },		   //  8 Tiles (scrambled)
+	{ "m2-301-0.u90",      	0x200000, 0xf4e894f2, BRF_GRA },		   //  9 
+	{ "m2b0x0.u93",        	0x020000, 0xe023d51b, BRF_GRA },		   // 10 
+	{ "m2b1x0.u94",        	0x020000, 0x03c48bdb, BRF_GRA },		   // 11 
 
-	{ "m2-100-0.u48",      0x100000, 0x5250fa45, BRF_SND },		   // 12 Samples
-	{ "m2w1x0.u47",        0x040000, 0x1b0513c5, BRF_SND },		   // 13 Samples
+	{ "m2-100-0.u48",      	0x100000, 0x5250fa45, BRF_SND },		   // 12 Samples, plus room for expansion
+	
+	{ "m2w1x0.u47",        	0x040000, 0x1b0513c5, BRF_SND },		   // 13 Samples
 };
 
 
@@ -1292,24 +1344,25 @@ STD_ROM_PICK(Gtmr2)
 STD_ROM_FN(Gtmr2)
 
 static struct BurnRomInfo Gtmr2aRomDesc[] = {
-	{ "m2p0x1.u8",         0x080000, 0x525f6618, BRF_ESS | BRF_PRG },  //  0 68000 Program Code
-	{ "m2p1x1.u7",         0x080000, 0x914683e5, BRF_ESS | BRF_PRG },  //  1 68000 Program Code
+	{ "m2p0x1.u8",         	0x080000, 0x525f6618, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "m2p1x1.u7",         	0x080000, 0x914683e5, BRF_ESS | BRF_PRG }, //  1 68000 Program Code
 	
-	{ "m2d0x0.u31",        0x020000, 0x2e1a06ff, BRF_PRG | BRF_OPT },  //  2 MCU Code
+	{ "m2d0x0.u31",        	0x020000, 0x2e1a06ff, BRF_PRG | BRF_OPT }, //  2 MCU Code
 
-	{ "m2-200-0.u49",      0x400000, 0x93aafc53, BRF_GRA },		   //  3 Sprites
-	{ "m2-201-0.u50",      0x200000, 0x39b60a83, BRF_GRA },		   //  4 Sprites
-	{ "m2-202-0.u51",      0x200000, 0xfd06b339, BRF_GRA },		   //  5 Sprites
-	{ "m2s0x1.u32",        0x080000, 0x4069d6c7, BRF_GRA },		   //  6 Sprites
-	{ "m2s1x1.u33",        0x080000, 0xc53fe269, BRF_GRA },		   //  7 Sprites
+	{ "m2-200-0.u49",      	0x400000, 0x93aafc53, BRF_GRA },		   //  3 Sprites
+	{ "m2-201-0.u50",      	0x200000, 0x39b60a83, BRF_GRA },		   //  4  
+	{ "m2-202-0.u51",      	0x200000, 0xfd06b339, BRF_GRA },		   //  5  
+	{ "m2s0x1.u32",        	0x080000, 0x4069d6c7, BRF_GRA },		   //  6 
+	{ "m2s1x1.u33",        	0x080000, 0xc53fe269, BRF_GRA },		   //  7 
 	
-	{ "m2-300-0.u89",      0x200000, 0x4dc42fbb, BRF_GRA },		   //  8 Tiles
-	{ "m2-301-0.u90",      0x200000, 0xf4e894f2, BRF_GRA },		   //  9 Tiles
-	{ "m2b0x0.u93",        0x020000, 0xe023d51b, BRF_GRA },		   // 10 Tiles
-	{ "m2b1x0.u94",        0x020000, 0x03c48bdb, BRF_GRA },		   // 11 Tiles
+	{ "m2-300-0.u89",      	0x200000, 0x4dc42fbb, BRF_GRA },		   //  8 Tiles (scrambled)
+	{ "m2-301-0.u90",      	0x200000, 0xf4e894f2, BRF_GRA },		   //  9 
+	{ "m2b0x0.u93",        	0x020000, 0xe023d51b, BRF_GRA },		   // 10 
+	{ "m2b1x0.u94",        	0x020000, 0x03c48bdb, BRF_GRA },		   // 11 
 
-	{ "m2-100-0.u48",      0x100000, 0x5250fa45, BRF_SND },		   // 12 Samples
-	{ "m2w1x0.u47",        0x040000, 0x1b0513c5, BRF_SND },		   // 13 Samples
+	{ "m2-100-0.u48",      	0x100000, 0x5250fa45, BRF_SND },		   // 12 Samples, plus room for expansion
+	
+	{ "m2w1x0.u47",        	0x040000, 0x1b0513c5, BRF_SND },		   // 13 Samples
 };
 
 
@@ -1317,24 +1370,25 @@ STD_ROM_PICK(Gtmr2a)
 STD_ROM_FN(Gtmr2a)
 
 static struct BurnRomInfo Gtmr2uRomDesc[] = {
-	{ "m2p0a1.u8",         0x080000, 0x813e1d5e, BRF_ESS | BRF_PRG },  //  0 68000 Program Code
-	{ "m2p1a1.u7",         0x080000, 0xbee63666, BRF_ESS | BRF_PRG },  //  1 68000 Program Code
+	{ "m2p0a1.u8",         	0x080000, 0x813e1d5e, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "m2p1a1.u7",         	0x080000, 0xbee63666, BRF_ESS | BRF_PRG }, //  1 
 	
-	{ "m2d0x0.u31",        0x020000, 0x2e1a06ff, BRF_PRG | BRF_OPT },  //  2 MCU Code
-
-	{ "m2-200-0.u49",      0x400000, 0x93aafc53, BRF_GRA },		   //  3 Sprites
-	{ "m2-201-0.u50",      0x200000, 0x39b60a83, BRF_GRA },	 	   //  4 Sprites
-	{ "m2-202-0.u51",      0x200000, 0xfd06b339, BRF_GRA },		   //  5 Sprites
-	{ "m2s0a1.u32",        0x080000, 0x98977171, BRF_GRA },		   //  6 Sprites
-	{ "m2s1a1.u33",        0x080000, 0xc69a732e, BRF_GRA },		   //  7 Sprites
+	{ "m2d0x0.u31",        	0x020000, 0x2e1a06ff, BRF_PRG | BRF_OPT }, //  2 MCU Code
+	
+	{ "m2-200-0.u49",      	0x400000, 0x93aafc53, BRF_GRA },		   //  3 Sprites
+	{ "m2-201-0.u50",      	0x200000, 0x39b60a83, BRF_GRA },	 	   //  4 
+	{ "m2-202-0.u51",      	0x200000, 0xfd06b339, BRF_GRA },		   //  5 
+	{ "m2s0a1.u32",        	0x080000, 0x98977171, BRF_GRA },		   //  6 
+	{ "m2s1a1.u33",        	0x080000, 0xc69a732e, BRF_GRA },		   //  7 
 		
-	{ "m2-300-0.u89",      0x200000, 0x4dc42fbb, BRF_GRA },		   //  8 Tiles
-	{ "m2-301-0.u90",      0x200000, 0xf4e894f2, BRF_GRA },		   //  9 Tiles
-	{ "m2b0x0.u93",        0x020000, 0xe023d51b, BRF_GRA },		   // 10 Tiles
-	{ "m2b1x0.u94",        0x020000, 0x03c48bdb, BRF_GRA },		   // 11 Tiles
+	{ "m2-300-0.u89",      	0x200000, 0x4dc42fbb, BRF_GRA },		   //  8 Tiles
+	{ "m2-301-0.u90",      	0x200000, 0xf4e894f2, BRF_GRA },		   //  9 
+	{ "m2b0x0.u93",        	0x020000, 0xe023d51b, BRF_GRA },		   // 10 
+	{ "m2b1x0.u94",        	0x020000, 0x03c48bdb, BRF_GRA },		   // 11 
 
-	{ "m2-100-0.u48",      0x100000, 0x5250fa45, BRF_SND },		   // 12 Samples
-	{ "m2w1a1.u47",        0x080000, 0x15f25342, BRF_SND },		   // 13 Samples
+	{ "m2-100-0.u48",      	0x100000, 0x5250fa45, BRF_SND },		   // 12 Samples, plus room for expansion
+	
+	{ "m2w1a1.u47",        	0x080000, 0x15f25342, BRF_SND },		   // 13 Samples
 };
 
 
@@ -1342,17 +1396,18 @@ STD_ROM_PICK(Gtmr2u)
 STD_ROM_FN(Gtmr2u)
 
 static struct BurnRomInfo MgcrystlRomDesc[] = {
-	{ "mc100e02.u18",      0x020000, 0x246a1335, BRF_ESS | BRF_PRG },  //  0 68000 Program Code
-	{ "mc101e02.u19",      0x040000, 0x708ea1dc, BRF_ESS | BRF_PRG },  //  1 68000 Program Code
+	{ "mc100e02.u18",      	0x020000, 0x246a1335, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* Labeled as MC100E/U18-02 */
+	{ "mc101e02.u19",      	0x040000, 0x708ea1dc, BRF_ESS | BRF_PRG }, //  1 					/* Labeled as MC101E/U19-02 */
 	
-	{ "mc000.u38",         0x100000, 0x28acf6f4, BRF_GRA },		   //  2 Sprites
-	{ "mc001.u37",         0x080000, 0x005bc43d, BRF_GRA },		   //  3 Sprites
-	{ "mc002e02.u36",      0x020000, 0x27ac1056, BRF_GRA },		   //  4 Sprites
+	{ "mc000.u38",         	0x100000, 0x28acf6f4, BRF_GRA },		   //  2 Sprites
+	{ "mc001.u37",         	0x080000, 0x005bc43d, BRF_GRA },		   //  3 
+	{ "mc002e02.u36",      	0x020000, 0x27ac1056, BRF_GRA },		   //  4 					/* Labeled as MC002E/U36-02 */
 	
-	{ "mc010.u04",         0x100000, 0x85072772, BRF_GRA },		   //  5 Tiles
-	{ "mc020.u34",         0x100000, 0x1ea92ff1, BRF_GRA },		   //  6 Tiles (Layers 2 & 3)
+	{ "mc010.u04",         	0x100000, 0x85072772, BRF_GRA },		   //  5 Tiles (scrambled)
+	
+	{ "mc020.u34",         	0x100000, 0x1ea92ff1, BRF_GRA },		   //  6 Tiles (scrambled) (Layers 2 & 3)
 
-	{ "mc030.u32",         0x040000, 0xc165962e, BRF_SND },		   //  7 Samples
+	{ "mc030.u32",         	0x040000, 0xc165962e, BRF_SND },		   //  7 Samples
 };
 
 
@@ -1360,17 +1415,18 @@ STD_ROM_PICK(Mgcrystl)
 STD_ROM_FN(Mgcrystl)
 
 static struct BurnRomInfo MgcrystloRomDesc[] = {
-	{ "mc100h00.u18",      0x020000, 0xc7456ba7, BRF_ESS | BRF_PRG },  //  0 68000 Program Code
-	{ "mc101h00.u19",      0x040000, 0xea8f9300, BRF_ESS | BRF_PRG },  //  1 68000 Program Code
+	{ "mc100h00.u18",      	0x020000, 0xc7456ba7, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* Labeled as MC100H/U18-00 */
+	{ "mc101h00.u19",      	0x040000, 0xea8f9300, BRF_ESS | BRF_PRG }, //  1 					/* Labeled as MC101H/U19-00 */
 	
-	{ "mc000.u38",         0x100000, 0x28acf6f4, BRF_GRA },		   //  2 Sprites
-	{ "mc001.u37",         0x080000, 0x005bc43d, BRF_GRA },		   //  3 Sprites
-	{ "mc002h00.u36",      0x020000, 0x22729037, BRF_GRA },		   //  4 Sprites
+	{ "mc000.u38",         	0x100000, 0x28acf6f4, BRF_GRA },		   //  2 Sprites
+	{ "mc001.u37",         	0x080000, 0x005bc43d, BRF_GRA },		   //  3 
+	{ "mc002h00.u36",      	0x020000, 0x22729037, BRF_GRA },		   //  4 					/* Labeled as MC002H/U36-00 */
 	
-	{ "mc010.u04",         0x100000, 0x85072772, BRF_GRA },		   //  5 Tiles
-	{ "mc020.u34",         0x100000, 0x1ea92ff1, BRF_GRA },		   //  6 Tiles (Layers 2 & 3)
+	{ "mc010.u04",         	0x100000, 0x85072772, BRF_GRA },		   //  5 Tiles (scrambled)
+	
+	{ "mc020.u34",         	0x100000, 0x1ea92ff1, BRF_GRA },		   //  6 Tiles (scrambled) (Layers 2 & 3)
 
-	{ "mc030.u32",         0x040000, 0xc165962e, BRF_SND },		   //  7 Samples
+	{ "mc030.u32",         	0x040000, 0xc165962e, BRF_SND },		   //  7 Samples
 };
 
 
@@ -1378,17 +1434,18 @@ STD_ROM_PICK(Mgcrystlo)
 STD_ROM_FN(Mgcrystlo)
 
 static struct BurnRomInfo MgcrystljRomDesc[] = { 
-	{ "mc100j02.u18",      0x020000, 0xafe5882d, BRF_ESS | BRF_PRG },  //  0 68000 Program Code
-	{ "mc101j02.u19",      0x040000, 0x60da5492, BRF_ESS | BRF_PRG },  //  1 68000 Program Code
+	{ "mc100j02.u18",      	0x020000, 0xafe5882d, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* Labeled as MC100J/U18-02 */
+	{ "mc101j02.u19",      	0x040000, 0x60da5492, BRF_ESS | BRF_PRG }, //  1 					/* Labeled as MC101J/U19-02 */
 	
-	{ "mc000.u38",         0x100000, 0x28acf6f4, BRF_GRA },		   //  2 Sprites
-	{ "mc001.u37",         0x080000, 0x005bc43d, BRF_GRA },		   //  3 Sprites
-	{ "mc002e02.u36",      0x020000, 0x27ac1056, BRF_GRA },		   //  4 Sprites
+	{ "mc000.u38",         	0x100000, 0x28acf6f4, BRF_GRA },		   //  2 Sprites			
+	{ "mc001.u37",         	0x080000, 0x005bc43d, BRF_GRA },		   //  3 
+	{ "mc002e02.u36",      	0x020000, 0x27ac1056, BRF_GRA },		   //  4 					/* Labeled as MC002J/U36-02, but same as MC002E/U36-02 */
 	
-	{ "mc010.u04",         0x100000, 0x85072772, BRF_GRA },		   //  5 Tiles
-	{ "mc020.u34",         0x100000, 0x1ea92ff1, BRF_GRA },		   //  6 Tiles (Layers 2 & 3)
+	{ "mc010.u04",         	0x100000, 0x85072772, BRF_GRA },		   //  5 Tiles (scrambled)
+	
+	{ "mc020.u34",         	0x100000, 0x1ea92ff1, BRF_GRA },		   //  6 Tiles (scrambled) (Layers 2 & 3)
 
-	{ "mc030.u32",         0x040000, 0xc165962e, BRF_SND },		   //  7 Samples
+	{ "mc030.u32",         	0x040000, 0xc165962e, BRF_SND },		   //  7 Samples
 };
 
 
@@ -1396,168 +1453,169 @@ STD_ROM_PICK(Mgcrystlj)
 STD_ROM_FN(Mgcrystlj)
 
 static struct BurnRomInfo shogwarrRomDesc[] = {
-	{ "fb030e.u61",		0x020000, 0x32ce7909, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
-	{ "fb031e.u62",		0x020000, 0x228aeaf5, BRF_ESS | BRF_PRG }, //  1 68000 Program Code
+	{ "fb030e.u61",			0x020000, 0x32ce7909, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "fb031e.u62",			0x020000, 0x228aeaf5, BRF_ESS | BRF_PRG }, //  1 68000 Program Code
 
-	{ "fb040e.u33",		0x020000, 0x299d0746, BRF_ESS | BRF_PRG }, //  2 Mcu Rom
+	{ "fb040e.u33",			0x020000, 0x299d0746, BRF_ESS | BRF_PRG }, //  2 MCU Data
 
-	{ "fb-020a.u1",		0x100000, 0x87e55c6d, BRF_GRA },	   //  3 Sprites
-	{ "fb020b.u2",		0x100000, 0x276b9d7b, BRF_GRA },	   //  4 Sprites
-	{ "fb021a.u3",		0x100000, 0x7da15d37, BRF_GRA },	   //  5 Sprites
-	{ "fb021b.u4",		0x100000, 0x6a512d7b, BRF_GRA },	   //  6 Sprites
-	{ "fb-22a.u5",		0x100000, 0x9039e5d3, BRF_GRA },	   //  7 Sprites
-	{ "fb-22b.u6",		0x100000, 0x96ac9e54, BRF_GRA },	   //  8 Sprites
-	{ "fb023.u7",		0x100000, 0x132794bd, BRF_GRA },	   //  9 Sprites
+	{ "fb-020a.u1",			0x100000, 0x87e55c6d, BRF_GRA },	   	   //  3 Sprites
+	{ "fb020b.u2",			0x100000, 0x276b9d7b, BRF_GRA },	       //  4 
+	{ "fb021a.u3",			0x100000, 0x7da15d37, BRF_GRA },	       //  5 
+	{ "fb021b.u4",			0x100000, 0x6a512d7b, BRF_GRA },	       //  6 
+	{ "fb-22a.u5",			0x100000, 0x9039e5d3, BRF_GRA },	       //  7 
+	{ "fb-22b.u6",			0x100000, 0x96ac9e54, BRF_GRA },	       //  8 
+	{ "fb023.u7",			0x100000, 0x132794bd, BRF_GRA },	       //  9 
 
-	{ "fb010.u65",		0x100000, 0x296ffd92, BRF_GRA },	   // 10 Tiles
-	{ "fb011.u66",		0x080000, 0x500a0367, BRF_GRA },	   // 11 Tiles
+	{ "fb010.u65",			0x100000, 0x296ffd92, BRF_GRA },	       // 10 Tiles (scrambled) 
+	{ "fb011.u66",			0x080000, 0x500a0367, BRF_GRA },	       // 11 
 
-	{ "fb001e.u43",		0x080000, 0xf524aaa1, BRF_SND },	   // 12 Samples
-	{ "fb000e.u42",		0x080000, 0x969f1465, BRF_SND },	   // 13 Samples
+	{ "fb001e.u43",			0x080000, 0xf524aaa1, BRF_SND },	       // 12 Samples
+	{ "fb000e.u42",			0x080000, 0x969f1465, BRF_SND },	       // 13
 
-	{ "fb-002.u45",		0x100000, 0x010acc17, BRF_SND },	   // 14 Samples
-	{ "fb-003.u44",		0x100000, 0x0aea4ac5, BRF_SND },	   // 15 Samples
+	{ "fb-002.u45",			0x100000, 0x010acc17, BRF_SND },	       // 14 Samples
+	{ "fb-003.u44",			0x100000, 0x0aea4ac5, BRF_SND },	       // 15 
 };
 
 STD_ROM_PICK(shogwarr)
 STD_ROM_FN(shogwarr)
 
 static struct BurnRomInfo shogwarruRomDesc[] = {
-	{ "fb030a.u61",		0x020000, 0xa04106c6, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
-	{ "fb031a.u62",		0x020000, 0xd1def5e2, BRF_ESS | BRF_PRG }, //  1 68000 Program Code
+	{ "fb030a.u61",			0x020000, 0xa04106c6, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "fb031a.u62",			0x020000, 0xd1def5e2, BRF_ESS | BRF_PRG }, //  1 
 
-	{ "fb040a.u33",		0x020000, 0x4b62c4d9, BRF_ESS | BRF_PRG }, //  2 Mcu Rom
+	{ "fb040a.u33",			0x020000, 0x4b62c4d9, BRF_ESS | BRF_PRG }, //  2 MCU Data
 
-	{ "fb-020a.u1",		0x100000, 0x87e55c6d, BRF_GRA },	   //  3 Sprites
-	{ "fb020b.u2",		0x100000, 0x276b9d7b, BRF_GRA },	   //  4 Sprites
-	{ "fb021a.u3",		0x100000, 0x7da15d37, BRF_GRA },	   //  5 Sprites
-	{ "fb021b.u4",		0x100000, 0x6a512d7b, BRF_GRA },	   //  6 Sprites
-	{ "fb-22a.u5",		0x100000, 0x9039e5d3, BRF_GRA },	   //  7 Sprites
-	{ "fb-22b.u6",		0x100000, 0x96ac9e54, BRF_GRA },	   //  8 Sprites
-	{ "fb023.u7",		0x100000, 0x132794bd, BRF_GRA },	   //  9 Sprites
+	{ "fb-020a.u1",			0x100000, 0x87e55c6d, BRF_GRA },	       //  3 Sprites
+	{ "fb020b.u2",			0x100000, 0x276b9d7b, BRF_GRA },	       //  4 
+	{ "fb021a.u3",			0x100000, 0x7da15d37, BRF_GRA },	       //  5 
+	{ "fb021b.u4",			0x100000, 0x6a512d7b, BRF_GRA },	       //  6 
+	{ "fb-22a.u5",			0x100000, 0x9039e5d3, BRF_GRA },	       //  7 
+	{ "fb-22b.u6",			0x100000, 0x96ac9e54, BRF_GRA },	       //  8 
+	{ "fb023.u7",			0x100000, 0x132794bd, BRF_GRA },	       //  9 
 
-	{ "fb010.u65",		0x100000, 0x296ffd92, BRF_GRA },	   // 10 Tiles
-	{ "fb011.u66",		0x080000, 0x500a0367, BRF_GRA },	   // 11 Tiles
+	{ "fb010.u65",			0x100000, 0x296ffd92, BRF_GRA },	       // 10 Tiles (scrambled)
+	{ "fb011.u66",			0x080000, 0x500a0367, BRF_GRA },	       // 11 
 
-	{ "fb001e.u43",		0x080000, 0xf524aaa1, BRF_SND },	   // 12 Samples
-	{ "fb000e.u42",		0x080000, 0x969f1465, BRF_SND },	   // 13 Samples
+	{ "fb001e.u43",			0x080000, 0xf524aaa1, BRF_SND },	       // 12 Samples
+	{ "fb000e.u42",			0x080000, 0x969f1465, BRF_SND },	       // 13 
 
-	{ "fb-002.u45",		0x100000, 0x010acc17, BRF_SND },	   // 14 Samples
-	{ "fb-003.u44",		0x100000, 0x0aea4ac5, BRF_SND },	   // 15 Samples
+	{ "fb-002.u45",			0x100000, 0x010acc17, BRF_SND },	       // 14 Samples
+	{ "fb-003.u44",			0x100000, 0x0aea4ac5, BRF_SND },	       // 15 
 };
 
 STD_ROM_PICK(shogwarru)
 STD_ROM_FN(shogwarru)
 
 static struct BurnRomInfo fjbusterRomDesc[] = {
-	{ "fb030j.u61",		0x020000, 0x32ce7909, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
-	{ "fb031j.u62",		0x020000, 0x000c8c08, BRF_ESS | BRF_PRG }, //  1 68000 Program Code
+	// Fujiyama Buster - Japan version of Shogun Warriors
+	{ "fb030j.u61",			0x020000, 0x32ce7909, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "fb031j.u62",			0x020000, 0x000c8c08, BRF_ESS | BRF_PRG }, //  1 
 
-	{ "fb040j.u33",		0x020000, 0x299d0746, BRF_ESS | BRF_PRG }, //  2 Mcu Rom
+	{ "fb040j.u33",			0x020000, 0x299d0746, BRF_ESS | BRF_PRG }, //  2 MCU Data
 
-	{ "fb-020a.u1",		0x100000, 0x87e55c6d, BRF_GRA },	   //  3 Sprites
-	{ "fb020b.u2",		0x100000, 0x276b9d7b, BRF_GRA },	   //  4 Sprites
-	{ "fb021a.u3",		0x100000, 0x7da15d37, BRF_GRA },	   //  5 Sprites
-	{ "fb021b.u4",		0x100000, 0x6a512d7b, BRF_GRA },	   //  6 Sprites
-	{ "fb-22a.u5",		0x100000, 0x9039e5d3, BRF_GRA },	   //  7 Sprites
-	{ "fb-22b.u6",		0x100000, 0x96ac9e54, BRF_GRA },	   //  8 Sprites
-	{ "fb023.u7",		0x100000, 0x132794bd, BRF_GRA },	   //  9 Sprites
+	{ "fb-020a.u1",			0x100000, 0x87e55c6d, BRF_GRA },	       //  3 Sprites
+	{ "fb020b.u2",			0x100000, 0x276b9d7b, BRF_GRA },	       //  4 
+	{ "fb021a.u3",			0x100000, 0x7da15d37, BRF_GRA },	       //  5 
+	{ "fb021b.u4",			0x100000, 0x6a512d7b, BRF_GRA },	       //  6 
+	{ "fb-22a.u5",			0x100000, 0x9039e5d3, BRF_GRA },	       //  7
+	{ "fb-22b.u6",			0x100000, 0x96ac9e54, BRF_GRA },	       //  8 
+	{ "fb023.u7",			0x100000, 0x132794bd, BRF_GRA },	       //  9 
 
-	{ "fb010.u65",		0x100000, 0x296ffd92, BRF_GRA },	   // 10 Tiles
-	{ "fb011.u66",		0x080000, 0x500a0367, BRF_GRA },	   // 11 Tiles
+	{ "fb010.u65",			0x100000, 0x296ffd92, BRF_GRA },	       // 10 Tiles (scrambled)
+	{ "fb011.u66",			0x080000, 0x500a0367, BRF_GRA },	       // 11 
 
-	{ "fb000j.u43",		0x080000, 0xa7522555, BRF_SND },	   // 12 Samples
-	{ "fb001j_u.101",	0x080000, 0x07d4e8e2, BRF_SND },	   // 13 Samples
+	{ "fb000j.u43",			0x080000, 0xa7522555, BRF_SND },	       // 12 Samples
+	{ "fb001j_u.101",		0x080000, 0x07d4e8e2, BRF_SND },	       // 13 
 
-	{ "fb-002.u45",		0x100000, 0x010acc17, BRF_SND },	   // 14 Samples
-	{ "fb-003.u44",		0x100000, 0x0aea4ac5, BRF_SND },	   // 15 Samples
+	{ "fb-002.u45",			0x100000, 0x010acc17, BRF_SND },	       // 14 Samples
+	{ "fb-003.u44",			0x100000, 0x0aea4ac5, BRF_SND },	       // 15 
 };
 
 STD_ROM_PICK(fjbuster)
 STD_ROM_FN(fjbuster)
 
 static struct BurnRomInfo brapboysRomDesc[] = {
-	{ "rb-030.01.u61",	0x020000, 0xccbe9a53, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
-	{ "rb-031.01.u62",	0x020000, 0xc72b8dda, BRF_ESS | BRF_PRG }, //  1 68000 Program Code
+	{ "rb-030.01.u61",		0x020000, 0xccbe9a53, BRF_ESS | BRF_PRG }, //  0 68000 Program Code 
+	{ "rb-031.01.u62",		0x020000, 0xc72b8dda, BRF_ESS | BRF_PRG }, //  1 					
 
-	{ "rb-040.00.u33",	0x020000, 0x757c6e19, BRF_ESS | BRF_PRG }, //  2 Mcu Rom
+	{ "rb-040.00.u33",		0x020000, 0x757c6e19, BRF_ESS | BRF_PRG }, //  2 MCU Data			
 
-	{ "rb-020.u100",	0x100000, 0xce220d38, BRF_GRA },	   //  3 Sprites
-	{ "rb-021.u76",		0x100000, 0x74001407, BRF_GRA },	   //  4 Sprites
-	{ "rb-022.u77",		0x100000, 0xcb3f42dc, BRF_GRA },	   //  5 Sprites
-	{ "rb-023.u78",		0x100000, 0x0e6530c5, BRF_GRA },	   //  6 Sprites
-	{ "rb-024.u79",		0x080000, 0x65fa6447, BRF_GRA },	   //  7 Sprites
-	{ "rb-025.01.u80",	0x040000, 0x36cd6b90, BRF_GRA },	   //  8 Sprites
+	{ "rb-020.u100",		0x100000, 0xce220d38, BRF_GRA },	       //  3 Sprites
+	{ "rb-021.u76",			0x100000, 0x74001407, BRF_GRA },	       //  4 
+	{ "rb-022.u77",			0x100000, 0xcb3f42dc, BRF_GRA },	       //  5 
+	{ "rb-023.u78",			0x100000, 0x0e6530c5, BRF_GRA },	       //  6 
+	{ "rb-024.u79",			0x080000, 0x65fa6447, BRF_GRA },	       //  7 
+	{ "rb-025.01.u80",		0x040000, 0x36cd6b90, BRF_GRA },	       //  8 					
 
-	{ "rb-010.u65",		0x100000, 0xffd73f87, BRF_GRA },	   //  9 Tiles
-	{ "rb-011.u66",		0x100000, 0xd9325f78, BRF_GRA },	   // 10 Tiles
-	{ "rb-012.u67",		0x100000, 0xbfdbe0d1, BRF_GRA },	   // 11 Tiles
-	{ "rb-013.u68",		0x100000, 0x28c37fe8, BRF_GRA },	   // 12 Tiles
+	{ "rb-010.u65",			0x100000, 0xffd73f87, BRF_GRA },	       //  9 Tiles (scrambled)
+	{ "rb-011.u66",			0x100000, 0xd9325f78, BRF_GRA },	       // 10 
+	{ "rb-012.u67",			0x100000, 0xbfdbe0d1, BRF_GRA },	       // 11 
+	{ "rb-013.u68",			0x100000, 0x28c37fe8, BRF_GRA },	       // 12 
 
-	{ "rb-000.u43",		0x080000, 0x58ad1a62, BRF_SND },	   // 13 Samples
-	{ "rb-003.00.u101",	0x080000, 0x2cac25d7, BRF_SND },	   // 14 Samples
+	{ "rb-000.u43",			0x080000, 0x58ad1a62, BRF_SND },	       // 13 Samples			
+	{ "rb-003.00.u101",		0x080000, 0x2cac25d7, BRF_SND },	       // 14 
 
-	{ "rb-001.u44",		0x100000, 0x7cf774b3, BRF_SND },	   // 15 Samples
-	{ "rb-002.u45",		0x100000, 0xe4b30444, BRF_SND },	   // 16 Samples
+	{ "rb-001.u44",			0x100000, 0x7cf774b3, BRF_SND },	       // 15 Samples
+	{ "rb-002.u45",			0x100000, 0xe4b30444, BRF_SND },	       // 16 
 };
 
 STD_ROM_PICK(brapboys)
 STD_ROM_FN(brapboys)
 static struct BurnRomInfo brapboysjRomDesc[] = {
-	{ "rb-004.u61",		0x020000, 0x5432442c, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
-	{ "rb-005.u62",		0x020000, 0x118b3cfb, BRF_ESS | BRF_PRG }, //  1 68000 Program Code
+	{ "rb-004.u61",			0x020000, 0x5432442c, BRF_ESS | BRF_PRG }, //  0 68000 Program Code 
+	{ "rb-005.u62",			0x020000, 0x118b3cfb, BRF_ESS | BRF_PRG }, //  1 
 
-	{ "rb-006.u33",		0x020000, 0xf1d76b20, BRF_ESS | BRF_PRG }, //  2 Mcu Rom
+	{ "rb-006.u33",			0x020000, 0xf1d76b20, BRF_ESS | BRF_PRG }, //  2 MCU Data
 
-	{ "rb-020.u100",	0x100000, 0xce220d38, BRF_GRA },	   //  3 Sprites
-	{ "rb-021.u76",		0x100000, 0x74001407, BRF_GRA },	   //  4 Sprites
-	{ "rb-022.u77",		0x100000, 0xcb3f42dc, BRF_GRA },	   //  5 Sprites
-	{ "rb-023.u78",		0x100000, 0x0e6530c5, BRF_GRA },	   //  6 Sprites
-	{ "rb-024.u79",		0x080000, 0x65fa6447, BRF_GRA },	   //  7 Sprites
-	{ "rb-025.u80a",	0x080000, 0xaa795ba5, BRF_GRA },	   //  8 Sprites
+	{ "rb-020.u100",		0x100000, 0xce220d38, BRF_GRA },	       //  3 Sprites
+	{ "rb-021.u76",			0x100000, 0x74001407, BRF_GRA },	       //  4 
+	{ "rb-022.u77",			0x100000, 0xcb3f42dc, BRF_GRA },	       //  5 
+	{ "rb-023.u78",			0x100000, 0x0e6530c5, BRF_GRA },	       //  6 
+	{ "rb-024.u79",			0x080000, 0x65fa6447, BRF_GRA },	       //  7 
+	{ "rb-025.u80a",		0x080000, 0xaa795ba5, BRF_GRA },	       //  8 
 
-	{ "rb-010.u65",		0x100000, 0xffd73f87, BRF_GRA },	   //  9 Tiles
-	{ "rb-011.u66",		0x100000, 0xd9325f78, BRF_GRA },	   // 10 Tiles
-	{ "rb-012.u67",		0x100000, 0xbfdbe0d1, BRF_GRA },	   // 11 Tiles
-	{ "rb-013.u68",		0x100000, 0x28c37fe8, BRF_GRA },	   // 12 Tiles
+	{ "rb-010.u65",			0x100000, 0xffd73f87, BRF_GRA },	       //  9 Tiles (scrambled)
+	{ "rb-011.u66",			0x100000, 0xd9325f78, BRF_GRA },	       // 10 
+	{ "rb-012.u67",			0x100000, 0xbfdbe0d1, BRF_GRA },	       // 11 
+	{ "rb-013.u68",			0x100000, 0x28c37fe8, BRF_GRA },	       // 12 
 
-	{ "rb-000.u43",		0x080000, 0x58ad1a62, BRF_SND },	   // 13 Samples
-	{ "rb-003.00.u101",	0x080000, 0x2cac25d7, BRF_SND },	   // 14 Samples
+	{ "rb-000.u43",			0x080000, 0x58ad1a62, BRF_SND },	       // 13 Samples
+	{ "rb-003.00.u101",		0x080000, 0x2cac25d7, BRF_SND },	       // 14 					
 
-	{ "rb-001.u44",		0x100000, 0x7cf774b3, BRF_SND },	   // 15 Samples
-	{ "rb-002.u45",		0x100000, 0xe4b30444, BRF_SND },	   // 16 Samples
+	{ "rb-001.u44",			0x100000, 0x7cf774b3, BRF_SND },	       // 15 Samples
+	{ "rb-002.u45",			0x100000, 0xe4b30444, BRF_SND },	       // 16 
 
-	{ "rb-026.u80b",	0x080000, 0xbb7604d4, BRF_GRA },	   // 17 Sprites (Extra)
+	{ "rb-026.u80b",		0x080000, 0xbb7604d4, BRF_GRA },	       // 17 Sprites (Extra)
 };
 
 STD_ROM_PICK(brapboysj)
 STD_ROM_FN(brapboysj)
 
 static struct BurnRomInfo brapboysuRomDesc[] = {
-	{ "rb-030.10.u61",	0x020000, 0x527eb92a, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
-	{ "rb-031.10.u62",	0x020000, 0xd5962bdd, BRF_ESS | BRF_PRG }, //  1 68000 Program Code
+	{ "rb-030.10.u61",		0x020000, 0x527eb92a, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "rb-031.10.u62",		0x020000, 0xd5962bdd, BRF_ESS | BRF_PRG }, //  1 
 
-	{ "rb-040.10.u33",	0x020000, 0x0c90d758, BRF_ESS | BRF_PRG }, //  2 Mcu Rom
+	{ "rb-040.10.u33",		0x020000, 0x0c90d758, BRF_ESS | BRF_PRG }, //  2 MCU Data
 
-	{ "rb-020.u100",	0x100000, 0xce220d38, BRF_GRA },	   //  3 Sprites
-	{ "rb-021.u76",		0x100000, 0x74001407, BRF_GRA },	   //  4 Sprites
-	{ "rb-022.u77",		0x100000, 0xcb3f42dc, BRF_GRA },	   //  5 Sprites
-	{ "rb-023.u78",		0x100000, 0x0e6530c5, BRF_GRA },	   //  6 Sprites
-	{ "rb-024.u79",		0x080000, 0x65fa6447, BRF_GRA },	   //  7 Sprites
-	{ "rb-025.10.u80a",	0x080000, 0x140fe400, BRF_GRA },	   //  8 Sprites
+	{ "rb-020.u100",		0x100000, 0xce220d38, BRF_GRA },	       //  3 Sprites
+	{ "rb-021.u76",			0x100000, 0x74001407, BRF_GRA },	       //  4 
+	{ "rb-022.u77",			0x100000, 0xcb3f42dc, BRF_GRA },	       //  5 
+	{ "rb-023.u78",			0x100000, 0x0e6530c5, BRF_GRA },	       //  6 
+	{ "rb-024.u79",			0x080000, 0x65fa6447, BRF_GRA },	       //  7 
+	{ "rb-025.10.u80a",		0x080000, 0x140fe400, BRF_GRA },	       //  8 
 
-	{ "rb-010.u65",		0x100000, 0xffd73f87, BRF_GRA },	   //  9 Tiles
-	{ "rb-011.u66",		0x100000, 0xd9325f78, BRF_GRA },	   // 10 Tiles
-	{ "rb-012.u67",		0x100000, 0xbfdbe0d1, BRF_GRA },	   // 11 Tiles
-	{ "rb-013.u68",		0x100000, 0x28c37fe8, BRF_GRA },	   // 12 Tiles
+	{ "rb-010.u65",			0x100000, 0xffd73f87, BRF_GRA },	       //  9 Tiles (scrambled)
+	{ "rb-011.u66",			0x100000, 0xd9325f78, BRF_GRA },	       // 10 
+	{ "rb-012.u67",			0x100000, 0xbfdbe0d1, BRF_GRA },	       // 11 
+	{ "rb-013.u68",			0x100000, 0x28c37fe8, BRF_GRA },	       // 12
 
-	{ "rb-000.u43",		0x080000, 0x58ad1a62, BRF_SND },	   // 13 Samples
-	{ "rb-003.00.u101",	0x080000, 0x2cac25d7, BRF_SND },	   // 14 Samples
+	{ "rb-000.u43",			0x080000, 0x58ad1a62, BRF_SND },	       // 13 Samples
+	{ "rb-003.00.u101",		0x080000, 0x2cac25d7, BRF_SND },	       // 14 
 
-	{ "rb-001.u44",		0x100000, 0x7cf774b3, BRF_SND },	   // 15 Samples
-	{ "rb-002.u45",		0x100000, 0xe4b30444, BRF_SND },	   // 16 Samples
+	{ "rb-001.u44",			0x100000, 0x7cf774b3, BRF_SND },	       // 15 Samples
+	{ "rb-002.u45",			0x100000, 0xe4b30444, BRF_SND },	       // 16 
 
-	{ "rb-026.10.u80b",	0x080000, 0xbb7604d4, BRF_GRA },	   // 17 Sprites (Extra)
+	{ "rb-026.10.u80b",		0x080000, 0xbb7604d4, BRF_GRA },	       // 17 Sprites (Extra)
 };
 
 STD_ROM_PICK(brapboysu)
@@ -3005,12 +3063,12 @@ UINT8 __fastcall BerlwallReadByte(UINT32 a)
 			return 0xff - Kaneko16Input[2];
 		}
 		
-		case 0x800001:
+		case 0x800001: 
 		case 0x80001f: {
 			AY8910Write(0, 0, (a - 0x800000) >> 1);
 			return AY8910Read(0);
 		}
-
+		
 		case 0x800400:
 		case 0x800401: {
 			return MSM6295ReadStatus(0);
@@ -6665,6 +6723,16 @@ struct BurnDriver BurnDrvBloodwar = {
 	NULL, 0x10000, 320, 240, 4, 3
 };
 
+struct BurnDriver BurnDrvOedfight = {
+	"oedfight", "bloodwar", NULL, NULL, "1994",
+	"Oedo Fight (Japan Bloodshed Ver.)\0", NULL, "Kaneko", "Kaneko16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO16, GBF_VSFIGHT, 0,
+	NULL, OedfightRomInfo, OedfightRomName, NULL, NULL, BloodwarInputInfo, BloodwarDIPInfo,
+	BloodwarInit, GtmrMachineExit, GtmrFrame, NULL, GtmrScan,
+	NULL, 0x10000, 320, 240, 4, 3
+};
+
 struct BurnDriver BurnDrvBonkadv = {
 	"bonkadv", NULL, NULL, NULL, "1994",
 	"B.C. Kid / Bonk's Adventure / Kyukyoku!! PC Genjin\0", NULL, "Kaneko", "Kaneko16",
@@ -6859,7 +6927,7 @@ struct BurnDriver BurnDrvPackbang = {
 	"packbang", NULL, NULL, NULL, "1991",
 	"Pack'n Bang Bang (Prototype)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO16, GBF_PLATFORM, 0,
 	NULL, PackbangRomInfo, PackbangRomName, NULL, NULL, BerlwallInputInfo, PackbangDIPInfo,
 	PackbangInit, BerlwallExit, ExplbrkrFrame, NULL, ExplbrkrScan,
 	&Kaneko16RecalcBg15Palette, 0x9000, 225, 256, 3, 4

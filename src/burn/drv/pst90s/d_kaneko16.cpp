@@ -6695,7 +6695,7 @@ struct BurnDriver BurnDrvBerlwallt = {
 
 struct BurnDriver BurnDrvBerlwallk = {
 	"berlwallk", "berlwall", NULL, NULL, "1991",
-	"The Berlin Wall (Korea)\0", NULL, "Kaneko", "Kaneko16",
+	"The Berlin Wall (Korea)\0", NULL, "Kaneko (Inter license)", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO16, GBF_PLATFORM, 0,
 	NULL, BerlwallkRomInfo, BerlwallkRomName, NULL, NULL, BerlwallInputInfo, BerlwalltDIPInfo,
@@ -6703,8 +6703,18 @@ struct BurnDriver BurnDrvBerlwallk = {
 	&Kaneko16RecalcBg15Palette, 0x9000, 256, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvPackbang = {
+	"packbang", NULL, NULL, NULL, "1991",
+	"Pack'n Bang Bang (Prototype)\0", NULL, "Kaneko", "Kaneko16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO16, GBF_PLATFORM, 0,
+	NULL, PackbangRomInfo, PackbangRomName, NULL, NULL, BerlwallInputInfo, PackbangDIPInfo,
+	PackbangInit, BerlwallExit, ExplbrkrFrame, NULL, ExplbrkrScan,
+	&Kaneko16RecalcBg15Palette, 0x9000, 225, 256, 3, 4
+};
+
 struct BurnDriver BurnDrvBlazeon = {
-	"blazeon", NULL, NULL, NULL, "1991",
+	"blazeon", NULL, NULL, NULL, "1992",
 	"Blaze On (Japan)\0", NULL, "Atlus", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
@@ -6922,14 +6932,3 @@ struct BurnDriver BurnDrvBrapboysu = {
 	BrapboysInit, GtmrMachineExit, ShogwarrFrame, NULL, ShogwarrScan,
 	NULL, 0x800, 256, 224, 4, 3
 };
-
-struct BurnDriver BurnDrvPackbang = {
-	"packbang", NULL, NULL, NULL, "1991",
-	"Pack'n Bang Bang (Prototype)\0", NULL, "Kaneko", "Kaneko16",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO16, GBF_PLATFORM, 0,
-	NULL, PackbangRomInfo, PackbangRomName, NULL, NULL, BerlwallInputInfo, PackbangDIPInfo,
-	PackbangInit, BerlwallExit, ExplbrkrFrame, NULL, ExplbrkrScan,
-	&Kaneko16RecalcBg15Palette, 0x9000, 225, 256, 3, 4
-};
-

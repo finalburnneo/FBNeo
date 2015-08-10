@@ -3005,11 +3005,13 @@ UINT8 __fastcall BerlwallReadByte(UINT32 a)
 			return 0xff - Kaneko16Input[2];
 		}
 		
-		case 0x800001: {
+		case 0x800001:
+		case 0x80001f: {
 			AY8910Write(0, 0, (a - 0x800000) >> 1);
 			return AY8910Read(0);
 		}
-		
+
+		case 0x800400:
 		case 0x800401: {
 			return MSM6295ReadStatus(0);
 		}
@@ -3046,7 +3048,7 @@ void __fastcall BerlwallWriteByte(UINT32 a, UINT8 d)
 			return;
 		}
 
-		
+		case 0x800400:
 		case 0x800401: {
 			MSM6295Command(0, d & 0xff);
 			return;
@@ -4220,12 +4222,12 @@ static INT32 BerlwallInit()
 
 	AY8910Init(0, 2000000, nBurnSoundRate, &Kaneko16Dip0Read, &Kaneko16Dip1Read, NULL, NULL);
 	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 1.00, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
 	
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (12000000 / 6) / 132, 1);
-	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
 	
 	Kaneko16FrameRender = BerlwallFrameRender;
 
@@ -4320,12 +4322,12 @@ static INT32 PackbangInit()
 
 	AY8910Init(0, 2000000, nBurnSoundRate, &Kaneko16Dip0Read, &Kaneko16Dip1Read, NULL, NULL);
 	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 1.00, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
 	
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (12000000 / 6) / 132, 1);
-	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
 	
 	Kaneko16FrameRender = BerlwallFrameRender;
 
@@ -6860,6 +6862,6 @@ struct BurnDriver BurnDrvPackbang = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, PackbangRomInfo, PackbangRomName, NULL, NULL, BerlwallInputInfo, PackbangDIPInfo,
 	PackbangInit, BerlwallExit, ExplbrkrFrame, NULL, ExplbrkrScan,
-	&Kaneko16RecalcBg15Palette, 0x9000, 226, 256, 3, 4
+	&Kaneko16RecalcBg15Palette, 0x9000, 225, 256, 3, 4
 };
 

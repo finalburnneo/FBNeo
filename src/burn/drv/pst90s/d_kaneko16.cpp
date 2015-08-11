@@ -4178,7 +4178,7 @@ static void Kaneko16VideoInit()
 	if (nScreenWidth == 256) Kaneko16TilesXOffset = 0x5b;
 	if (nScreenWidth == 320) Kaneko16TilesXOffset = 0x33;
 	Kaneko16TilesYOffset = 0;
-	if (nScreenHeight == 224 || nScreenHeight == 232) Kaneko16TilesYOffset = -0x08;
+	if (nScreenHeight == 224 || nScreenHeight == 225 || nScreenHeight == 232) Kaneko16TilesYOffset = -0x08;
 
 	Kaneko16Bg15 = 0;
 	Kaneko16Bg15Reg = 0;

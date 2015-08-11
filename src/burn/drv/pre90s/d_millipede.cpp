@@ -1,6 +1,6 @@
 // Millipede emu-layer for FB Alpha by dink, based on Ivan Mackintosh's Millipede/Centipede emulator and MAME driver.
 // Todo:
-//   Screen flip needs fixing (2p coctail mode)
+//   Screen flip needs fixing (2p coctail mode) [move joystick <- -> or press OK to continue!]
 
 #include "tiles_generic.h"
 #include "m6502_intf.h"
@@ -36,8 +36,8 @@ static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvJoy4[8];
-static UINT8 DrvDip[4];
-static UINT8 DrvInput[4];
+static UINT8 DrvDip[5] = {0, 0, 0, 0, 0};
+static UINT8 DrvInput[5];
 static UINT8 DrvReset;
 
 // hi-score stuff! (atari earom)
@@ -72,6 +72,7 @@ static struct BurnInputInfo MillipedInputList[] = {
 	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
 	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 2,	"dip"},
 	{"Dip D",		BIT_DIPSWITCH,	DrvDip + 3,	"dip"},
+//  {"Dip E",		BIT_DIPSWITCH,	DrvDip + 4,	"dip"},
 };
 
 STDINPUTINFO(Milliped)
@@ -171,8 +172,9 @@ STDDIPINFO(Centiped)
 static struct BurnDIPInfo MillipedDIPList[]=
 {
 	{0x11, 0xff, 0xff, 0x04, NULL		},
-	{0x12, 0xff, 0xff, 0x60, NULL		},
-	{0x13, 0xff, 0xff, 0x14, NULL		},
+//	{0x12, 0xff, 0xff, 0x08, NULL		},
+	{0x12, 0xff, 0xff, 0xA0, NULL		},
+	{0x13, 0xff, 0xff, 0x04, NULL		},
 	{0x14, 0xff, 0xff, 0x02, NULL		},
 
 	{0   , 0xfe, 0   ,    4, "Language"		},
@@ -187,19 +189,23 @@ static struct BurnDIPInfo MillipedDIPList[]=
 	{0x11, 0x01, 0x0c, 0x08, "0 1x 2x"		},
 	{0x11, 0x01, 0x0c, 0x0c, "0 1x 2x 3x"		},
 
-	{0   , 0xfe, 0   ,    2, "Credit Minimum"		},
+/*	{0   , 0xfe, 0   ,    2, "Credit Minimum"		},
 	{0x12, 0x01, 0x04, 0x00, "1"		},
 	{0x12, 0x01, 0x04, 0x04, "2"		},
 
 	{0   , 0xfe, 0   ,    2, "Coin Counters"		},
 	{0x12, 0x01, 0x08, 0x00, "1"		},
-	{0x12, 0x01, 0x08, 0x08, "2"		},
+	{0x12, 0x01, 0x08, 0x08, "2"		},  */
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x12, 0x01, 0x20, 0x20, "Upright"		},
 	{0x12, 0x01, 0x20, 0x00, "Cocktail"		},
 
-	{0   , 0xfe, 0   ,    0, "Millipede Head"		},
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x12, 0x01, 0x80, 0x80, "Off"		},
+	{0x12, 0x01, 0x80, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Millipede Head"		},
 	{0x13, 0x01, 0x01, 0x00, "Easy"		},
 	{0x13, 0x01, 0x01, 0x01, "Hard"		},
 
@@ -390,10 +396,11 @@ static void earom_ctrl_write(UINT16 offset, UINT8 data)
 		0x04 = write mode? - writes only
 		0x08 = set addr latch?
 	*/
+
 	if (data & 0x01)
 		earom_data = earom[earom_offset];
 	if ((data & 0x0c) == 0x0c)
-	{   //bprintf(0, _T("ea wrt %X %X.."), earom_data, earom_offset);
+	{
 		earom[earom_offset] = earom_data;
 	}
 }
@@ -415,18 +422,16 @@ static void millipede_write(UINT16 address, UINT8 data)
 		return;
 	}
 
-	if ((address & 0x400) == 0x400) { // Pokey 1
-		if (address >= 0x400 && address <= 0x40f) {
-			pokey1_w(address - 0x400, data);
-		}
+	if (address >= 0x400 && address <= 0x40f) { // Pokey 1
+		pokey1_w(address - 0x400, data);
 		return;
 	}
-	if ((address & 0x800) == 0x800) { // Pokey 2
-		if (address >= 0x800 && address <= 0x80f) {
-			pokey2_w(address - 0x800, data);
-		}
+
+	if (address >= 0x800 && address <= 0x80f) { // Pokey 2
+		pokey2_w(address - 0x800, data);
 		return;
 	}
+
 	if (address >= 0x2780 && address <= 0x27bf) { // EAROM Write
 		earom_write(address - 0x2780, data);
 		return;
@@ -451,7 +456,7 @@ static void millipede_write(UINT16 address, UINT8 data)
 			earom_ctrl_write(0x2700, data);
 		return;
 	}
-	//bprintf(0, _T("mw %X,"), address);
+//	bprintf(0, _T("mw %X,"), address);
 }
 
 static void centipede_write(UINT16 address, UINT8 data)
@@ -547,9 +552,9 @@ static UINT8 millipede_read(UINT16 address)
 	switch (address)
 	{
 		case 0x2000: return ((read_trackball(0, 0) | DrvDip[0]) & 0x3f) | ((vblank) ? 0x40 : 0x00);
-		case 0x2001: return read_trackball(1, 1) | DrvDip[1] ;
+		case 0x2001: return read_trackball(1, 1);// | DrvDip[1] ;
 		case 0x2010: return DrvInput[2];
-		case 0x2011: return DrvInput[3];
+		case 0x2011: return DrvInput[3] | DrvDip[1];
 		case 0x2030: return earom_read(address);
 		case 0x0400:
 		case 0x0401:
@@ -926,7 +931,7 @@ static void DrvMakeInputs()
 	DrvInput[0] = (centipedemode) ? 0x20 : 0x10 + 0x20;
 	DrvInput[1] = (centipedemode) ? 0xff : 0x01 + 0x02 + 0x10 + 0x20 + 0x40;
 	DrvInput[2] = 0xff;
-	DrvInput[3] = (centipedemode) ? 0xff : 0x01 + 0x02 + 0x04 + 0x08 + 0x10 + 0x40 + 0x80;
+	DrvInput[3] = (centipedemode) ? 0xff : 0x01 + 0x02 + 0x04 + 0x08 + 0x10 + 0x40;
 
 	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {
@@ -987,7 +992,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -1004,6 +1009,11 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		M6502Scan(nAction);
 
+		SCAN_VAR(earom_offset);
+		SCAN_VAR(earom_data);
+		SCAN_VAR(m_dsw_select);
+		SCAN_VAR(m_control_select);
+		SCAN_VAR(m_flipscreen);
 	}
 
 	if (nAction & ACB_NVRAM) {

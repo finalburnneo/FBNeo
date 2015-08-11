@@ -4145,7 +4145,7 @@ static void Kaneko16VideoInit()
 	if (nScreenWidth == 256) Kaneko16TilesXOffset = 0x5b;
 	if (nScreenWidth == 320) Kaneko16TilesXOffset = 0x33;
 	Kaneko16TilesYOffset = 0;
-	if (nScreenHeight == 224 || nScreenHeight == 232) Kaneko16TilesYOffset = -0x08;
+	if (nScreenHeight == 224 || nScreenHeight == 225 || nScreenHeight == 232) Kaneko16TilesYOffset = -0x08;
 
 	Kaneko16Bg15 = 0;
 	Kaneko16Bg15Reg = 0;
@@ -4331,7 +4331,7 @@ static INT32 PackbangInit()
 	// Load and Decode Tile Roms
 	memset(Kaneko16TempGfx, 0, 0x400000);
 	nRet = BurnLoadRom(Kaneko16TempGfx + 0x000000, 4, 1); if (nRet != 0) return 1;
-	//UnscrambleTiles(0x080000);
+	UnscrambleTiles(0x080000);
 	GfxDecode(Kaneko16NumTiles, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Tiles);
 	
 	// Load bitmap roms

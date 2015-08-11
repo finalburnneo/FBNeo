@@ -20,7 +20,7 @@ static UINT8 Kaneko16InputPort0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 Kaneko16InputPort1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 Kaneko16InputPort2[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 Kaneko16InputPort3[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-static UINT8 Kaneko16Dip[2]        = {0, 0};
+static UINT8 Kaneko16Dip[3]        = {0, 0, 0};
 static UINT8 Kaneko16Input[4]      = {0x00, 0x00, 0x00, 0x00};
 static UINT8 Kaneko16Reset         = 0;
 
@@ -56,6 +56,7 @@ static UINT8 *Kaneko16TempGfx      = NULL;
 static INT16* pFMBuffer;
 static INT16* pAY8910Buffer[6];
 
+static INT32 Kaneko16Brightness;
 static UINT32 Kaneko16SoundLatch;
 static INT32 MSM6295Bank0;
 static INT32 MSM6295Bank1;
@@ -174,6 +175,7 @@ static struct BurnInputInfo BerlwallInputList[] = {
 	{"Tilt"              , BIT_DIGITAL  , Kaneko16InputPort2 + 5, "tilt"      },
 	{"Dip 1"             , BIT_DIPSWITCH, Kaneko16Dip + 0       , "dip"       },
 	{"Dip 2"             , BIT_DIPSWITCH, Kaneko16Dip + 1       , "dip"       },
+	{"Fake DIP"          , BIT_DIPSWITCH, Kaneko16Dip + 2       , "dip"       },
 };
 
 STDINPUTINFO(Berlwall)
@@ -508,6 +510,10 @@ static struct BurnDIPInfo BerlwallDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Testmode Switch"                    },
 	{0x17, 0x01, 0x80, 0x80, "Normal Game"                        },
 	{0x17, 0x01, 0x80, 0x00, "Testmode"                           },
+
+	{0   , 0xfe, 0   ,    2, "Disable Background Fading (HACK)"   },
+	{0x18, 0x01, 0x01, 0x00, "Off"				      },
+	{0x18, 0x01, 0x01, 0x01, "On"				      },
 };
 
 STDDIPINFO(Berlwall)
@@ -569,6 +575,10 @@ static struct BurnDIPInfo BerlwalltDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Testmode Switch"                    },
 	{0x17, 0x01, 0x80, 0x80, "Normal Game"                        },
 	{0x17, 0x01, 0x80, 0x00, "Testmode"                           },
+
+	{0   , 0xfe, 0   ,    2, "Disable Background Fading (HACK)"   },
+	{0x18, 0x01, 0x01, 0x00, "Off"				      },
+	{0x18, 0x01, 0x01, 0x01, "On"				      },
 };
 
 STDDIPINFO(Berlwallt)
@@ -577,6 +587,7 @@ static struct BurnDIPInfo PackbangDIPList[]=
 {
 	{0x16, 0xff, 0xff, 0xff, NULL								  },
 	{0x17, 0xff, 0xff, 0xff, NULL								  },
+	{0x18, 0xff, 0xff, 0x00, NULL								  },
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"						  },
 	{0x16, 0x01, 0x01, 0x01, "Off"								  },
@@ -629,6 +640,10 @@ static struct BurnDIPInfo PackbangDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Service Mode"						  },
 	{0x17, 0x01, 0x80, 0x80, "Off"								  },
 	{0x17, 0x01, 0x80, 0x00, "On"								  },
+
+	{0   , 0xfe, 0   ,    2, "Disable Background Fading (HACK)"						  },
+	{0x18, 0x01, 0x01, 0x00, "Off"								  },
+	{0x18, 0x01, 0x01, 0x01, "On"								  },
 };
 
 STDDIPINFO(Packbang)
@@ -2927,7 +2942,9 @@ static INT32 Kaneko16DoReset()
 	SekOpen(0);
 	SekReset();
 	SekClose();
-	
+
+	Kaneko16Brightness = 0xff;
+
 	Kaneko16SpriteFlipX = 0;
 	Kaneko16SpriteFlipY = 0;
 	Kaneko16DisplayEnable = 0;
@@ -3051,6 +3068,11 @@ Memory Handlers
 UINT8 __fastcall BerlwallReadByte(UINT32 a)
 {
 	switch (a) {
+		case 0x500000:
+		case 0x500001: {
+			return Kaneko16Brightness;
+		}
+
 		case 0x680000: {
 			return 0xff - Kaneko16Input[0];
 		}
@@ -3085,6 +3107,12 @@ UINT8 __fastcall BerlwallReadByte(UINT32 a)
 void __fastcall BerlwallWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
+		case 0x500000:
+		case 0x500001: {
+			Kaneko16RecalcBg15Palette = 1;
+			Kaneko16Brightness = d;
+		}
+
 		case 0x700000: {
 			// Coin lockout
 			return;
@@ -3121,6 +3149,10 @@ void __fastcall BerlwallWriteByte(UINT32 a, UINT8 d)
 UINT16 __fastcall BerlwallReadWord(UINT32 a)
 {
 	switch (a) {
+		case 0x500000: {
+			return Kaneko16Brightness;
+		}
+
 		case 0x780000: {
 			// watchdog reset
 			return 0;
@@ -3164,7 +3196,8 @@ void __fastcall BerlwallWriteWord(UINT32 a, UINT16 d)
 		}
 		
 		case 0x500000: {
-			Kaneko16Bg15Reg = d;
+			Kaneko16RecalcBg15Palette = 1;
+			Kaneko16Brightness = d & 0xff;
 			return;
 		}
 		
@@ -4233,7 +4266,7 @@ static INT32 BerlwallInit()
 	// Load and Decode Tile Roms
 	memset(Kaneko16TempGfx, 0, 0x400000);
 	nRet = BurnLoadRom(Kaneko16TempGfx + 0x000000, 5, 1); if (nRet != 0) return 1;
-	//UnscrambleTiles(0x080000);
+	UnscrambleTiles(0x080000);
 	GfxDecode(Kaneko16NumTiles, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Tiles);
 	
 	// Load bitmap roms
@@ -4325,7 +4358,6 @@ static INT32 PackbangInit()
 	// Load and Decode Sprite Roms
 	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000000,  2, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0080000,  3, 1); if (nRet != 0) return 1;
-	//nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100000,  4, 1); if (nRet != 0) return 1;
 	GfxDecode(Kaneko16NumSprites, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Sprites);
 	
 	// Load and Decode Tile Roms
@@ -4342,8 +4374,6 @@ static INT32 PackbangInit()
 	nRet = BurnLoadRom(Kaneko16TempGfx + 0x100001,  8, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Kaneko16TempGfx + 0x200000,  9, 2); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Kaneko16TempGfx + 0x200001, 10, 2); if (nRet != 0) return 1;
-//	nRet = BurnLoadRom(Kaneko16TempGfx + 0x300000, 12, 2); if (nRet != 0) return 1;
-//	nRet = BurnLoadRom(Kaneko16TempGfx + 0x300001, 13, 2); if (nRet != 0) return 1;
 	Kaneko16DecodeBg15Bitmaps();
 	BurnFree(Kaneko16TempGfx);
 			
@@ -5974,12 +6004,24 @@ static void BerlwallFrameRender()
 	BurnTransferClear();
 	Kaneko16CalcPalette(0x0800);
 	
+
 	if (Kaneko16RecalcBg15Palette) {
-	 	for (i = 0; i < 32768; i++) {
-			INT32 r = pal5bit(i >> 5);
-			INT32 g = pal5bit(i >> 10);
-			INT32 b = pal5bit(i >> 0);
-			Kaneko16Palette[i + 2048] = BurnHighCol(r, g, b, 0);
+		INT32 nBrightness = (Kaneko16Brightness * 100) / 255;
+
+		if (Kaneko16Dip[2] & 1) nBrightness = 100; // disable brightness
+
+		if (nBrightness == 0) {
+			for (i = 0; i < 32768; i++) {
+				Kaneko16Palette[i + 2048] = 0;
+			}
+		} else {
+		 	for (i = 0; i < 32768; i++) {
+				INT32 r = (pal5bit(i >> 5) * nBrightness) / 100;
+				INT32 g = (pal5bit(i >> 10) * nBrightness) / 100;
+				INT32 b = (pal5bit(i >> 0) * nBrightness) / 100;
+	
+				Kaneko16Palette[i + 2048] = BurnHighCol(r, g, b, 0);
+			}
 		}
 		
 		Kaneko16RecalcBg15Palette = 0;
@@ -6558,6 +6600,7 @@ static INT32 Kaneko16Scan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(Kaneko16SpriteRegs);
 		SCAN_VAR(Kaneko16Layer0Regs);
 		SCAN_VAR(Kaneko16Layer1Regs);
+		SCAN_VAR(Kaneko16Brightness);
 		
 		if (Kaneko16Bg15) {
 			SCAN_VAR(Kaneko16Bg15Reg);

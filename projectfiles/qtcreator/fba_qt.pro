@@ -43,7 +43,7 @@ GEN = $$SRC/dep/generated
 
 # We need ld
 FBA_LD = ld
-#DEFINES += FBA_DEBUG
+DEFINES += FBA_DEBUG
 
 #-------------------------------------------------------------------------------
 # Dynamic recompilers
@@ -574,6 +574,7 @@ SOURCES += \
     ../../src/burn/snd/ym2413.c \
     ../../src/burn/snd/ymdeltat.c \
     ../../src/burn/snd/ymf278b.c \
+    ../../src/burn/snd/pokey.cpp \
     ../../src/burn/burn_sound.cpp \
     ../../src/burn/burn.cpp \
     ../../src/burn/cheat.cpp \
@@ -720,7 +721,7 @@ SOURCES += \
     ../../src/intf/video/opengl/shader.cpp  \
     ../../src/cpu/mips3/cop0.cpp \
     ../../src/cpu/mips3/cop1.cpp \
-    ../../src/cpu/mips3/dasm.cpp \
+    ../../src/cpu/mips3/mips3_dasm.cpp \
     ../../src/cpu/mips3/mips3.cpp \
     ../../src/cpu/mips3_intf.cpp \
     ../../src/cpu/adsp2100_intf.cpp \
@@ -787,6 +788,7 @@ HEADERS += \
     ../../src/burn/snd/ymdeltat.h \
     ../../src/burn/snd/ymf278b.h \
     ../../src/burn/snd/ymz280b.h \
+    ../../src/burn/snd/pokey.h \
     ../../src/burn/burn_sound.h \
     ../../src/burn/burn.h \
     ../../src/burn/burnint.h \
@@ -899,8 +901,8 @@ HEADERS += \
     ../../src/burner/qt/inputsetdialog.h \
     ../../src/burner/qt/oglviewport.h \
     ../../src/intf/video/opengl/shader.h \
-    ../../src/cpu/mips3/common.h \
-    ../../src/cpu/mips3/memory.h \
+    ../../src/cpu/mips3/mips3_common.h \
+    ../../src/cpu/mips3/mips3_memory.h \
     ../../src/cpu/mips3/mips3.h \
     ../../src/cpu/mips3/mips3_arithm.h \
     ../../src/cpu/mips3/mips3_bitops.h \

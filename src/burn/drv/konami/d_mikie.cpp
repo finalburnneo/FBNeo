@@ -302,26 +302,14 @@ static void DrvPaletteInit()
 
 	DrvRecalc = 1;
 }
-
 static INT32 DrvGfxDecode()
 {
-/*	INT32 Plane0[4]  = { STEP4(0,1) };
+	INT32 Plane0[4]  = { STEP4(0,1) };
 	INT32 Plane1[4]  = { STEP2(0,4), STEP2(256*128*8, 4) };
-	INT32 XOffs0[8] = { STEP8(0,4) };
-	INT32 YOffs0[8] = { STEP8(0,32) };
-	INT32 XOffs1[16] = { STEP4(256, 1), STEP4(128, 1), STEP4(0, 1), STEP4(240,1) };
+	INT32 XOffs0[8]  = { STEP8(0,4) };
+	INT32 YOffs0[8]  = { STEP8(0,32) };
+	INT32 XOffs1[16] = { STEP4(256, 1), STEP4(128, 1), STEP4(0, 1), STEP4(384,1) };
 	INT32 YOffs1[16] = { STEP8(0,16), STEP8(512, 16) };
-	saved: maybe iq_132 wants to fix this? :)
-	*/
-
-	INT32 Plane0[4]  = { 0, 1, 2, 3 };
-    INT32 Plane1[4]  = { 0, 4, 256*128*8+0, 256*128*8+4 };
-    INT32 XOffs0[8] = { 0*4, 1*4, 2*4, 3*4, 4*4, 5*4, 6*4, 7*4 };
-    INT32 YOffs0[8] = { 0*4*8, 1*4*8, 2*4*8, 3*4*8, 4*4*8, 5*4*8, 6*4*8, 7*4*8 };
-    INT32 XOffs1[16] = { 32*8+0, 32*8+1, 32*8+2, 32*8+3, 16*8+0, 16*8+1, 16*8+2, 16*8+3,
-            0, 1, 2, 3, 48*8+0, 48*8+1, 48*8+2, 48*8+3 };
-    INT32 YOffs1[16] = { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
-            32*16, 33*16, 34*16, 35*16, 36*16, 37*16, 38*16, 39*16 };
 
 	UINT8 *buf = (UINT8*)BurnMalloc(0x10000);
 

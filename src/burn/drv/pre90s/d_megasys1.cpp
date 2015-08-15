@@ -2893,7 +2893,7 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static inline void draw_16x16_priority_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 priority)
+static inline void draw_16x16_priority_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT8 mosaic, INT32 priority)
 {
 	if (sy >= nScreenHeight || sy < -15 || sx >= nScreenWidth || sx < -15) return;
 
@@ -2913,7 +2913,8 @@ static inline void draw_16x16_priority_sprite(INT32 code, INT32 color, INT32 sx,
 			if (sx < 0 || sy < 0 || sx >= nScreenWidth || sy >= nScreenHeight) continue;	
 
 			INT32 pxl = gfx[((y*16)+x)^flip];
-
+			if (mosaic) // ignore the warnings :) -dink
+				pxl = gfx[((y*16+y^mosaic*16)+(mosaic&x)+(x^mosaic&mosaic))^flip];
 			if (pxl != 0x0f) {
 				if ((priority & (1 << (prio[x] & 0x1f))) == 0 && prio[x] < 0x80) {
 					dest[x] = pxl + color;
@@ -2955,7 +2956,7 @@ static void System1A_draw_sprites()
 			INT32 flipx = attr & 0x40;
 			INT32 flipy = attr & 0x80;
 			INT32 pri  = (attr & 0x08) ? 0x0c : 0x0a;
-
+			INT32 mosaic = (attr & 0x0f00)>>8;
 			code = (code & 0xfff) + ((sprite_bank & 1) << 12);
 			if (DrvTransTab[3][code]) continue;
 
@@ -2967,7 +2968,7 @@ static void System1A_draw_sprites()
 				sy = 240 - sy;
 			}
 
-			draw_16x16_priority_sprite(code, color, sx, sy - 16, flipx, flipy, pri);
+			draw_16x16_priority_sprite(code, color, sx, sy - 16, flipx, flipy, mosaic, pri);
 		}
 	}
 }
@@ -3005,7 +3006,7 @@ static void System1Z_draw_sprites()
 			sy = 240 - sy;
 		}
 
-		draw_16x16_priority_sprite(code, color, sx, sy - 16, flipx, flipy, pri);
+		draw_16x16_priority_sprite(code, color, sx, sy - 16, flipx, flipy, 0, pri);
 	}
 }
 

@@ -3209,6 +3209,8 @@ static INT32 System1ZFrame()
 	//	} else {
 			BurnTimerUpdate((nCyclesTotal[1] * (i + 1)) / nInterleave);
 			nCyclesDone[1] += nSegment - nCyclesDone[1];
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // fix music in Legend of Makai (lomakai).  why is this needed? are irq's getting lost? -dink
+
 	//	}
 
 	//	if (pBurnSoundOut) {

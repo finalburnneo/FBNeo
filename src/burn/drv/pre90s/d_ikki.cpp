@@ -189,6 +189,8 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -566,7 +568,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ZetScan(nAction);
-	//	SN76496Scan(nAction, pnMin);
+		SN76496Scan(nAction, pnMin);
 	}
 
 	return 0;
@@ -608,7 +610,7 @@ struct BurnDriver BurnDrvIkki = {
 	"ikki", NULL, NULL, NULL, "1985",
 	"Ikki (Japan)\0", NULL, "Sun Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_SCRFIGHT, 0,
 	NULL, ikkiRomInfo, ikkiRomName, NULL, NULL, IkkiInputInfo, IkkiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
@@ -650,7 +652,7 @@ struct BurnDriver BurnDrvFarmer = {
 	"farmer", "ikki", NULL, NULL, "1985",
 	"Farmers Rebellion\0", NULL, "Sun Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_SCRFIGHT, 0,
 	NULL, farmerRomInfo, farmerRomName, NULL, NULL, IkkiInputInfo, IkkiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3

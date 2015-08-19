@@ -5614,6 +5614,35 @@ static struct BurnRomInfo Sfa3ur1RomDesc[] = {
 STD_ROM_PICK(Sfa3ur1)
 STD_ROM_FN(Sfa3ur1)
 
+static struct BurnRomInfo Sfa3usRomDesc[] = {
+	{ "sz3-usam_03.6a",     0x080000, 0x14319e29, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3-usam_04.7a",     0x080000, 0x65fbc272, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3-usam_05.8a",     0x080000, 0xe93c47d1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3-usam_06.9a",     0x080000, 0x1bf09de3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3-usam_07.6d",     0x080000, 0xf6296d96, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3-usam_08.7d",     0x080000, 0x1f4008ff, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3-usam_09.8d",     0x080000, 0x822fc451, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3-usam_10.9d",     0x080000, 0x92713468, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sz3.13m",       		0x400000, 0x0f7a60d9, CPS2_GFX | BRF_GRA },
+	{ "sz3.15m",       		0x400000, 0x8e933741, CPS2_GFX | BRF_GRA },
+	{ "sz3.17m",       		0x400000, 0xd6e98147, CPS2_GFX | BRF_GRA },
+	{ "sz3.19m",       		0x400000, 0xf31a728a, CPS2_GFX | BRF_GRA },
+	{ "sz3.14m",       		0x400000, 0x5ff98297, CPS2_GFX | BRF_GRA },
+	{ "sz3.16m",       		0x400000, 0x52b5bdee, CPS2_GFX | BRF_GRA },
+	{ "sz3.18m",       		0x400000, 0x40631ed5, CPS2_GFX | BRF_GRA },
+	{ "sz3.20m",       		0x400000, 0x763409b4, CPS2_GFX | BRF_GRA },
+
+	{ "sz3-usam_01.1a",     0x020000, 0xc180947d, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3-usam_02.2a",     0x020000, 0x9ebc280f, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sz3.11m",       		0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
+	{ "sz3.12m",       		0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+};
+
+STD_ROM_PICK(Sfa3us)
+STD_ROM_FN(Sfa3us)
+
 static struct BurnRomInfo Sfz3aRomDesc[] = {
 	{ "sz3a.03d",      0x080000, 0xd7e140d6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz3a.04d",      0x080000, 0xe06869a2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -9459,6 +9488,16 @@ struct BurnDriver BurnDrvCpsSfa3ur1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfa3ur1RomInfo, Sfa3ur1RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSfa3us = {
+	"sfa3us", "sfa3", NULL, NULL, "1998",
+	"Street Fighter Alpha 3 (980616 USA, SAMPLE Version)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfa3usRomInfo, Sfa3usRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

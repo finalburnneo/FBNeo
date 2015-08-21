@@ -37,6 +37,8 @@ static UINT8 *palette_bank;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
+static UINT16 *bgbitmap;
+
 static UINT8 m_dswbit;
 static UINT16 m_field;
 static UINT8 m_prot0;
@@ -327,6 +329,53 @@ static void popeye_recalcpalette()
 	popeye_do_background_palette((*palette_bank & 0x08) >> 3);
 }
 
+static void skyskipr_bitmap_w(UINT16 offset, UINT8 data)
+{
+	INT32 sx,sy,x,y,colour;
+
+	DrvBGRAM[offset] = data;
+
+	if (skyskiprmode)
+	{
+		offset = ((offset & 0xfc0) << 1) | (offset & 0x03f);
+		if (data & 0x80)
+			offset |= 0x40;
+
+		DrvBGRAM[offset] = data;
+
+		sx = 8 * (offset % 128);
+		sy = 8 * (offset / 128);
+
+		//if (flip_screen())
+		//	sy = 512-8 - sy;
+
+		colour = data & 0x0f;
+		for (y = 0; y < 8; y++)	{
+			for (x = 0; x < 8; x++)	{
+				bgbitmap[((sy+y) * 1024) + sx+x] = colour;
+			}
+		}
+	}
+	else
+	{
+		DrvBGRAM[offset] = data;
+
+		sx = 8 * (offset % 64);
+		sy = 4 * (offset / 64);
+
+		//if (flip_screen())
+		//	sy = 512-4 - sy;
+
+		colour = data & 0x0f;
+		for (y = 0; y < 4; y++) {
+			for (x = 0; x < 8; x++)	{
+				bgbitmap[((sy+y) * 512) + sx+x] = colour;
+			}
+		}
+	}
+
+}
+
 static void __fastcall main_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0x8c04 && address <= 0x8e7f) {
@@ -336,6 +385,11 @@ static void __fastcall main_write(UINT16 address, UINT8 data)
 
 	if (address >= 0x8e80 && address <= 0x8fff) {
 		DrvZ80RAM2[address - 0x8e80] = data;
+		return;
+	}
+
+	if (address >= 0xc000 && address <= 0xcfff) {
+		skyskipr_bitmap_w(address - 0xc000, data);
 		return;
 	}
 
@@ -430,7 +484,7 @@ static INT32 MemIndex()
 	pAY8910Buffer[4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 	pAY8910Buffer[5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 
-//	bgr = Next; Next += 1024*1024; // background bitmap
+	bgbitmap        = (UINT16*)Next; Next += 1024 * 1024 * sizeof(UINT16); // background bitmap
 
 	MemEnd			= Next;
 
@@ -568,7 +622,8 @@ static INT32 DrvInit()
 	ZetMapMemory(DrvZ80RAM,		0x8000, 0x8bff, MAP_RAM);
 	ZetMapMemory(DrvVidRAM,		0xa000, 0xa3ff, MAP_RAM);
 	ZetMapMemory(DrvColorRAM,	0xa400, 0xa7ff, MAP_RAM);
-	ZetMapMemory(DrvBGRAM,      0xc000, ((skyskiprmode) ? 0xcfff : 0xdfff), MAP_RAM);
+	if (!skyskiprmode)
+		ZetMapMemory(DrvBGRAM,      0xc000, ((skyskiprmode) ? 0xcfff : 0xdfff), MAP_RAM);
 	ZetSetWriteHandler(main_write);
 	ZetSetReadHandler(main_read);
 	ZetSetInHandler(port_read);
@@ -666,9 +721,38 @@ static void draw_background_popeye()
 	}
 }
 
+#define bitmapwidth 1024
+#define bitmapheight 1024
+
+static inline INT32 normalize_scroll(INT32 xscroll, INT32 width) {
+	return (xscroll >= 0) ? xscroll % width : (/*width -*/ (-xscroll) % width);
+}
+
+static void copyderp(INT32 destx, INT32 desty) {
+	INT32 destendy, destendx;
+
+	destendx = destx + nScreenWidth - 1;
+	destendy = desty + nScreenHeight - 1;
+	//INT32 sx=0; INT32 sy=0;
+	bprintf(0, _T("destx %d desty %d destendx %d destendy %d..\n"), destx, desty, destendx, destendy);
+	INT32 cury, sy, curx, sx;
+
+	for (cury = desty; cury < destendy; cury++)
+		for (curx = destx; curx < destendx; curx++) {
+			UINT16 *pPixel = pTransDraw + ((cury-desty) * nScreenWidth) + (curx-destx);
+			if (cury-desty>=nScreenHeight || curx-destx>=nScreenWidth) continue;
+			//bprintf(0, _T("%d %d.."), cury-desty, curx-destx);
+			*pPixel = bgbitmap[(cury*bitmapheight) + curx];
+
+		}
+}
+
 static void draw_background_skyskipr()
 {
-	if (background_pos[1] == 0) return; // background disabled
+	if (background_pos[1] == 0) {
+		memset(bgbitmap, 0, 1024*1024*sizeof(UINT16));
+		return; // background disabled
+	}
 
 	popeye_do_background_palette((*palette_bank & 0x08) >> 3);
 
@@ -677,47 +761,17 @@ static void draw_background_skyskipr()
 
 	if (skyskiprmode)
 		scrollx = 2 * scrollx - 512;
-	bprintf(0, _T("sx %d sy %d.."), scrollx, scrolly);
-	INT32 startx, starty, endx, endy;
-	starty = 0 + scrolly;
-	endy = nScreenHeight + scrolly;
-	startx = 1024 + scrollx;
-	endx = 1024; //nScreenWidth + scrollx;
-	for (INT32 offs = 0; offs < ((skyskiprmode) ? 0x1000 : 0x1fff); offs++) {
 
-		INT32 color = DrvBGRAM[offs] & 0x0f;
-		INT32 sx = 8 * (offs % 64);
-		INT32 sy = (4 * (offs / 64)) - 32;
+	bprintf(0, _T("before normalize: sx %d sy %d.."), scrollx, scrolly);
+	scrollx = normalize_scroll(scrollx, bitmapwidth);
+	scrolly = normalize_scroll(scrolly, bitmapheight);
 
-		if (skyskiprmode) {
-			INT32 offset = ((offs & 0xfc0) << 1) | (offs & 0x03f);
-			if (DrvBGRAM[offs] & 0x80)
-				offset |= 0x40;
+	bprintf(0, _T("\ncopy start!\nxscroll %d yscroll %d\n"), scrollx, scrolly);
+	copyderp(scrollx, scrolly);
+	///copyscrollbitmap(bitmap,*m_tmpbitmap2,1,&scrollx,1,&scrolly,cliprect);
 
-			color = DrvBGRAM[offs] & 0x0f;
-			sx = 8 * (offset % 128);
-			sy = (8 * (offset / 128)) - 32;
-		}
-
-		//sx += scrollx;
-		//sy += scrolly;
-
-		//if (sy < 0 || sx < 0 || sx > nScreenWidth || sy > nScreenHeight) continue;
-
-		if (!(sy >= starty && sy <= endy)) continue;
-		if (!(sx >= startx && sx <= endx)) continue;
-		sy = sy - starty; //+= scrolly;
-		sx = startx - sx; //+= scrollx;
-
-		for (INT32 y = 0; y < ((skyskiprmode) ? 8 : 4); y++) {
-			for (INT32 x = 0; x < 8; x++) {
-				UINT16* pPixel = pTransDraw + ((sy+y) * nScreenWidth) + sx+x;
-				if (sx+x < nScreenWidth && sy+y < nScreenHeight)
-					*pPixel = color;
-			}
-		}
-	}
 }
+
 
 static void draw_sprites()
 {

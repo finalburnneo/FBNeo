@@ -576,6 +576,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	AY8910Init(0, 2000000, nBurnSoundRate, popeye_ayportA_read, NULL, NULL, popeye_ayportB_write);
+	AY8910SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -895,7 +896,7 @@ static INT32 DrvInitskyskipr()
 
 struct BurnDriver BurnDrvSkyskipr = {
 	"skyskipr", NULL, NULL, NULL, "1981",
-	"Sky Skipper\0", NULL, "Nintendo", "Miscellaneous",
+	"Sky Skipper\0", "w-i-p!!", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, skyskiprRomInfo, skyskiprRomName, NULL, NULL, SkyskiprInputInfo, SkyskiprDIPInfo,
@@ -935,5 +936,5 @@ struct BurnDriver BurnDrvPopeye = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, popeyeRomInfo, popeyeRomName, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
-	518, 448, 4, 3
+	512, 448, 4, 3
 };

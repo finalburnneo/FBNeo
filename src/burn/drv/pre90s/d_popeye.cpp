@@ -47,7 +47,7 @@ static UINT8 m_prot_shift;
 static UINT8 m_invertmask = 0xff;
 static INT32 bgbitmapwh; // 512 for popeye, 1024 for skyskipr
 
-static UINT8 skyskiprmode;
+static UINT8 skyskiprmode = 0;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -491,7 +491,7 @@ static INT32 MemIndex()
 	return 0;
 }
 
-UINT8 __fastcall port_read(UINT16 port)
+static UINT8 __fastcall port_read(UINT16 port)
 {
 	switch (port & 0xff) {
 		case 0x00: return DrvInput[0];
@@ -502,7 +502,7 @@ UINT8 __fastcall port_read(UINT16 port)
 	return 0xff;
 }
 
-void __fastcall port_write(UINT16 port, UINT8 data)
+static void __fastcall port_write(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff) {
 		case 0x00:
@@ -574,7 +574,7 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvTempRom + 0x1000, 9, 1)) return 1;
 			if (BurnLoadRom(DrvTempRom + 0x2000,10, 1)) return 1;
 			if (BurnLoadRom(DrvTempRom + 0x3000,11, 1)) return 1;
-			GfxDecode(0x200, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x80, DrvTempRom, DrvSpriteGFX);
+			GfxDecode(0x100 /*((0x4000*8)/2)/(16*16))*/, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x80, DrvTempRom, DrvSpriteGFX);
 
 			if (BurnLoadRom(DrvColorPROM + 0x0000, 12, 1)) return 1;
 			if (BurnLoadRom(DrvColorPROM + 0x0020, 13, 1)) return 1;
@@ -713,6 +713,7 @@ static void draw_background_skyskipr()
 static void draw_sprites()
 {
 	UINT8 *spriteram = DrvSpriteRAM;
+	INT32 sprmask = ((skyskiprmode) ? 0xff : 0x1ff);
 
 	for (INT32 offs = 0; offs < 0x27b; offs += 4)
 	{
@@ -739,22 +740,23 @@ static void draw_sprites()
 
 		if (sx <= -6) sx += 512;
 
+		code = (code ^ 0x1ff) & sprmask;
 
 		if (flipy) { // we need a macro for this -dink
 			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code ^ 0x1ff, sx, sy, color, 2, 0, 0x200, DrvSpriteGFX);
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code ^ 0x1ff, sx-512, sy, color, 2, 0, 0x200, DrvSpriteGFX);
+				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x200, DrvSpriteGFX);
+				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx-512, sy, color, 2, 0, 0x200, DrvSpriteGFX);
 			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code ^ 0x1ff, sx, sy, color, 2, 0, 0x200, DrvSpriteGFX);
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code ^ 0x1ff, sx-512, sy, color, 2, 0, 0x200, DrvSpriteGFX);
+				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x200, DrvSpriteGFX);
+				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx-512, sy, color, 2, 0, 0x200, DrvSpriteGFX);
 			}
 		} else {
 			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code ^ 0x1ff, sx, sy, color, 2, 0, 0x200, DrvSpriteGFX);
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code ^ 0x1ff, sx-512, sy, color, 2, 0, 0x200, DrvSpriteGFX);
+				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x200, DrvSpriteGFX);
+				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx-512, sy, color, 2, 0, 0x200, DrvSpriteGFX);
 			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code ^ 0x1ff, sx, sy, color, 2, 0, 0x200, DrvSpriteGFX);
-				Render16x16Tile_Mask_Clip(pTransDraw, code ^ 0x1ff, sx-512, sy, color, 2, 0, 0x200, DrvSpriteGFX);
+				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x200, DrvSpriteGFX);
+				Render16x16Tile_Mask_Clip(pTransDraw, code, sx-512, sy, color, 2, 0, 0x200, DrvSpriteGFX);
 			}
 		}
 	}
@@ -772,7 +774,7 @@ static INT32 DrvDraw()
 
 	draw_background_skyskipr();
 	draw_sprites();
-    draw_chars();
+	draw_chars();
 
 	BurnTransferCopy(DrvPalette);
 

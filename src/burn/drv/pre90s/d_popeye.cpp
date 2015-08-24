@@ -1,8 +1,6 @@
-// Popeye & SkySkipper emu-layer for FB Alpha by dink, based on xyz's MAME driver.
+// Popeye & SkySkipper emu-layer for FB Alpha by dink, based on Marc Lafontaine's MAME driver.
 // Todo:
 //   sprite clipping in popeye on the thru-way is normal (see pcb vid)
-//   skyskipr some sprites are flipped wrongly?(!)
-//   -hiscore stuff-
 
 #include "tiles_generic.h"
 #include "driver.h"
@@ -23,10 +21,8 @@ static UINT8 *DrvZ80RAM;
 static UINT8 *DrvZ80RAM2;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvColorRAM;
-static UINT8 *DrvPalRAM;
 static UINT8 *DrvSpriteRAM;
 static UINT8 *DrvBGRAM;
-
 static UINT8 *DrvColorPROM;
 static UINT8 *DrvCharGFX;
 static UINT8 *DrvSpriteGFX;
@@ -55,6 +51,11 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvDip[2] = {0, 0};
 static UINT8 DrvInput[5];
 static UINT8 DrvReset;
+
+// 4-Way input for Popeye
+static UINT8 DrvInput4way[2] = { 0, 0 }; // inputs after 4-way processing
+static INT32 fourway[2]      = { 0, 0 }; // 4-way buffer
+static UINT8 DrvInputPrev[2] = { 0, 0 }; // 4-way buffer
 
 static struct BurnInputInfo SkyskiprInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"},
@@ -403,7 +404,7 @@ static void __fastcall main_write(UINT16 address, UINT8 data)
 		case 0x8c03: *palette_bank = data; return;
 	}
 
-	bprintf(0, _T("mw %X,"), address);
+	//bprintf(0, _T("mw %X,"), address);
 }
 
 
@@ -445,12 +446,17 @@ static INT32 DrvDoReset()
 
 	AY8910Reset(0);
 
+	HiscoreReset();
+
 	m_field = 0;
 	m_dswbit = 0;
 	m_field = 0;
 	m_prot0 = 0;
 	m_prot1 = 0;
 	m_prot_shift = 0;
+
+	memset(&DrvInputPrev, 0, sizeof(DrvInputPrev));
+	memset(&fourway, 0, sizeof(fourway));
 
 	return 0;
 }
@@ -473,10 +479,9 @@ static INT32 MemIndex()
 	DrvVidRAM		= Next; Next += 0x01000;
 	DrvColorRAM		= Next; Next += 0x01000;
 	DrvSpriteRAM	= Next; Next += 0x01000;
-	DrvPalRAM		= Next; Next += 0x01000;
 	DrvBGRAM		= Next; Next += 0x02000;
-	background_pos  = Next; Next += 0x01000;
-	palette_bank    = Next; Next += 0x01002;
+	background_pos  = Next; Next += 0x00003;
+	palette_bank    = Next; Next += 0x00002;
 
 	RamEnd			= Next;
 
@@ -494,8 +499,8 @@ static INT32 MemIndex()
 static UINT8 __fastcall port_read(UINT16 port)
 {
 	switch (port & 0xff) {
-		case 0x00: return DrvInput[0];
-		case 0x01: return DrvInput[1];
+		case 0x00: return DrvInput4way[0];
+		case 0x01: return DrvInput4way[1];
 		case 0x02: return (skyskiprmode) ? DrvInput[2] : DrvInput[2] | (m_field ^ 1) << 4;
 		case 0x03: return AY8910Read(0);
 	}
@@ -673,26 +678,7 @@ static void draw_chars()
 	}
 }
 
-static void copyisationalscrollulize(INT32 destx, INT32 desty) {
-	INT32 destendy, destendx;
-
-	destendx = destx + nScreenWidth - 1;
-	//destendx %= bgbitmapwh;
-	destendy = desty + nScreenHeight - 1;
-
-	//bprintf(0, _T("destx %d desty %d destendx %d destendy %d..\n"), destx, desty, destendx, destendy);
-
-
-	for (INT32 cury = desty; cury < destendy; cury++)
-		for (INT32 curx = destx; curx < destendx; curx++) {
-			UINT16 *pPixel = pTransDraw + ((cury-desty) * nScreenWidth) + (curx-destx);
-			if (cury-desty < 0 || curx-destx < 0 || cury-desty >= nScreenHeight || curx-destx >= nScreenWidth || cury >= bgbitmapwh /*|| curx >= bgbitmapwh this is solved by modulus below!*/ || cury < 0 || curx < 0) continue;
-
-			*pPixel = bgbitmap[(cury*bgbitmapwh) + (curx%bgbitmapwh)];
-		}
-}
-
-static void draw_background_skyskipr()
+static void draw_background()
 {
 	if (background_pos[1] == 0) {
 		return; // background disabled
@@ -706,7 +692,20 @@ static void draw_background_skyskipr()
 	if (skyskiprmode)
 		scrollx = 2 * scrollx - 512;
 
-	copyisationalscrollulize(1-scrollx, 1-scrolly+32);
+	// copy matching background section to pTransDraw
+	INT32 destx = 1-scrollx;
+	INT32 desty = 0-scrolly + 32;
+	INT32 destendx = destx + nScreenWidth/* - 1*/;
+	INT32 destendy = desty + nScreenHeight - 1;
+
+	for (INT32 cury = desty; cury < destendy; cury++)
+		for (INT32 curx = destx; curx < destendx; curx++) {
+			UINT16 *pPixel = pTransDraw + ((cury-desty) * nScreenWidth) + (curx-destx);
+			if (cury-desty < 0 || curx-destx < 0 || cury-desty >= nScreenHeight || curx-destx >= nScreenWidth || cury >= bgbitmapwh /*|| curx >= bgbitmapwh this is solved by modulus below!*/ || cury < 0 || curx < 0) continue;
+
+			*pPixel = bgbitmap[(cury*bgbitmapwh) + (curx%bgbitmapwh)];
+		}
+
 }
 
 
@@ -772,7 +771,7 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	draw_background_skyskipr();
+	draw_background();
 	draw_sprites();
 	draw_chars();
 
@@ -794,6 +793,28 @@ static void DrvMakeInputs()
 		DrvInput[1] |= (DrvJoy2[i] & 1) << i;
 		DrvInput[2] |= (DrvJoy3[i] & 1) << i;
 	}
+
+	if (!skyskiprmode) {
+		// Convert to 4-way for Popeye
+		for (INT32 i = 0; i < 2; i++) {
+			if(DrvInput[i] != DrvInputPrev[i]) {
+				fourway[i] = DrvInput[i] & 0xf;
+
+				if((fourway[i] & 0x3) && (fourway[i] & 0xc))
+					fourway[i] ^= (fourway[i] & (DrvInputPrev[i] & 0xf));
+
+				if((fourway[i] & 0x3) && (fourway[i] & 0xc)) // if it starts out diagonally, pick a direction
+					fourway[i] &= (rand()&1) ? 0x03 : 0x0c;
+			}
+			DrvInput4way[i] = fourway[i] | (DrvInput[i] & 0xf0);
+
+			DrvInputPrev[i] = DrvInput[i];
+		}
+	} else { // all other games. (8-way)
+		for (INT32 i = 0; i < 2; i++)
+			DrvInput4way[i] = DrvInput[i];
+	}
+
 
 }
 
@@ -897,9 +918,9 @@ static INT32 DrvInitskyskipr()
 
 struct BurnDriver BurnDrvSkyskipr = {
 	"skyskipr", NULL, NULL, NULL, "1981",
-	"Sky Skipper\0", "w-i-p!!", "Nintendo", "Miscellaneous",
+	"Sky Skipper\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, skyskiprRomInfo, skyskiprRomName, NULL, NULL, SkyskiprInputInfo, SkyskiprDIPInfo,
 	DrvInitskyskipr, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	512, 448, 4, 3
@@ -934,7 +955,7 @@ struct BurnDriver BurnDrvPopeye = {
 	"popeye", NULL, NULL, NULL, "1982",
 	"Popeye (revision D)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, popeyeRomInfo, popeyeRomName, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	512, 448, 4, 3

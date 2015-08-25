@@ -15801,6 +15801,30 @@ static struct BurnRomInfo MimonscrRomDesc[] = {
 STD_ROM_PICK(Mimonscr)
 STD_ROM_FN(Mimonscr)
 
+static struct BurnRomInfo MimonscraRomDesc[] = {
+	{ "1.c2",          0x01000, 0xcfff26f3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2.e2",          0x01000, 0x1fca805f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3.f2",          0x01000, 0x24ce1ce3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "4.h2",          0x01000, 0xc83fb639, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5.j2",          0x01000, 0xa9f12dfc, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "6.l2",          0x01000, 0xe492a40c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "7.m2",          0x01000, 0x5339928d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "8.p2",          0x01000, 0x0b9915b8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "2732.c5",       0x01000, 0x5995f24b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "2732.d5",       0x01000, 0x35ed0f96, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+			
+	{ "top.g5",        0x01000, 0xf73a8412, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "bottom.g5",     0x01000, 0x3828c9db, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "top.f5",        0x01000, 0x9e0e9289, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "bottom.f5",     0x01000, 0x92085b0c, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "mb7051.6e",     0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Mimonscra)
+STD_ROM_FN(Mimonscra)
+
 UINT8 __fastcall ExplorerZ80Read(UINT16 a)
 {
 	switch (a) {
@@ -17447,6 +17471,16 @@ struct BurnDriver BurnDrvMimonscr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, MimonscrRomInfo, MimonscrRomName, NULL, NULL, AtlantisInputInfo, MimonkeyDIPInfo,
+	MimonscrInit, KonamiExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvMimonscra = {
+	"mimonscra", "mimonkey", NULL, NULL, "198?",
+	"Mighty Monkey (Kaina Games, bootleg on Scramble hardware)\0", NULL, "bootleg (Kaina Games)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
+	NULL, MimonscraRomInfo, MimonscraRomName, NULL, NULL, AtlantisInputInfo, MimonkeyDIPInfo,
 	MimonscrInit, KonamiExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

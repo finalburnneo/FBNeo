@@ -1,5 +1,5 @@
 // Popeye & SkySkipper emu-layer for FB Alpha by dink, based on Marc Lafontaine's MAME driver.
-// Todo:
+// Note:
 //   sprite clipping in popeye on the thru-way is normal (see pcb vid)
 
 #include "tiles_generic.h"
@@ -465,31 +465,30 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvZ80ROM		= Next; Next += 0x012000;
+	DrvZ80ROM		= Next; Next += 0x08000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x0600 * sizeof(UINT32);
-	DrvCharGFX      = Next; Next += 0x100000;
-	DrvSpriteGFX    = Next; Next += 0x100000;
+	DrvPalette		= (UINT32*)Next; Next += 0x0300 * sizeof(UINT32);
+	DrvCharGFX      = Next; Next += 0x20000;
+	DrvSpriteGFX    = Next; Next += 0x20000;
 	DrvColorPROM    = Next; Next += 0x00400;
 
 	AllRam			= Next;
 
-	DrvZ80RAM		= Next; Next += 0x01000;
-	DrvZ80RAM2		= Next; Next += 0x01000;
-	DrvVidRAM		= Next; Next += 0x01000;
-	DrvColorRAM		= Next; Next += 0x01000;
-	DrvSpriteRAM	= Next; Next += 0x01000;
+	DrvZ80RAM		= Next; Next += 0x00c00;
+	DrvZ80RAM2		= Next; Next += 0x00200;
+	DrvVidRAM		= Next; Next += 0x00400;
+	DrvColorRAM		= Next; Next += 0x00400;
+	DrvSpriteRAM	= Next; Next += 0x00300;
 	DrvBGRAM		= Next; Next += 0x02000;
 	background_pos  = Next; Next += 0x00003;
 	palette_bank    = Next; Next += 0x00002;
+	bgbitmap        = (UINT16*)Next; Next += 1024 * 1024 * sizeof(UINT16); // background bitmap (RAM section)
 
 	RamEnd			= Next;
 
 	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
-	bgbitmap        = (UINT16*)Next; Next += 1024 * 1024 * sizeof(UINT16); // background bitmap
 
 	MemEnd			= Next;
 
@@ -552,8 +551,8 @@ static INT32 DrvInit()
 	MemIndex();
 
 	{   // Load ROMS parse GFX
-		UINT8 *DrvTempRom = (UINT8 *)BurnMalloc(0x80000);
-		memset(DrvTempRom, 0, 0x80000);
+		UINT8 *DrvTempRom = (UINT8 *)BurnMalloc(0x40000);
+		memset(DrvTempRom, 0, 0x40000);
 
 		if (skyskiprmode) { // SkySkipper
 			bgbitmapwh = 1024;
@@ -570,11 +569,11 @@ static INT32 DrvInit()
 			for (INT32 i = 0; i < 0x8000; i++)
 				DrvZ80ROM[i] = BITSWAP08(DrvTempRom[BITSWAP16(i,15,14,13,12,11,10,8,7,0,1,2,4,5,9,3,6) ^ 0xfc],3,4,2,5,1,6,0,7);
 
-			memset(DrvTempRom, 0, 0x80000);
+			memset(DrvTempRom, 0, 0x40000);
 			if (BurnLoadRom(DrvTempRom         , 7, 1)) return 1;
 			GfxDecode(0x100, 1, 16, 16, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvCharGFX);
 
-			memset(DrvTempRom, 0, 0x80000);
+			memset(DrvTempRom, 0, 0x40000);
 			if (BurnLoadRom(DrvTempRom + 0x0000, 8, 1)) return 1;
 			if (BurnLoadRom(DrvTempRom + 0x1000, 9, 1)) return 1;
 			if (BurnLoadRom(DrvTempRom + 0x2000,10, 1)) return 1;
@@ -599,11 +598,11 @@ static INT32 DrvInit()
 			for (INT32 i = 0; i < 0x8000; i++)
 				DrvZ80ROM[i] = BITSWAP08(DrvTempRom[BITSWAP16(i,15,14,13,12,11,10,8,7,6,3,9,5,4,2,1,0) ^ 0x3f],3,4,2,5,1,6,0,7);
 
-			memset(DrvTempRom, 0, 0x80000);
+			memset(DrvTempRom, 0, 0x40000);
 			if (BurnLoadRom(DrvTempRom         , 4, 1)) return 1;
 			GfxDecode(0x100, 1, 16, 16, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom+0x800, DrvCharGFX);
 
-			memset(DrvTempRom, 0, 0x80000);
+			memset(DrvTempRom, 0, 0x40000);
 			if (BurnLoadRom(DrvTempRom + 0x0000, 5, 1)) return 1;
 			if (BurnLoadRom(DrvTempRom + 0x2000, 6, 1)) return 1;
 			if (BurnLoadRom(DrvTempRom + 0x4000, 7, 1)) return 1;
@@ -632,7 +631,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	AY8910Init(0, 2000000, nBurnSoundRate, popeye_ayportA_read, NULL, NULL, popeye_ayportB_write);
-	AY8910SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -922,7 +921,7 @@ struct BurnDriver BurnDrvSkyskipr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, skyskiprRomInfo, skyskiprRomName, NULL, NULL, SkyskiprInputInfo, SkyskiprDIPInfo,
-	DrvInitskyskipr, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
+	DrvInitskyskipr, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	512, 448, 4, 3
 };
 
@@ -957,6 +956,6 @@ struct BurnDriver BurnDrvPopeye = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, popeyeRomInfo, popeyeRomName, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	512, 448, 4, 3
 };

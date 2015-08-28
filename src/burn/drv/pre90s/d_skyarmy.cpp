@@ -21,34 +21,34 @@ extern "C" {
 
 // define variables, most of these can be gotten from memindex
 
-static unsigned char *AllMem;
-static unsigned char *DrvZ80ROM;
-static unsigned char *DrvGfxROM0;
-static unsigned char *DrvGfxROM1;
-static unsigned char *DrvColPROM;
-static unsigned char *AllRam;
-static unsigned char *DrvZ80RAM;
-static unsigned char *DrvVidRAM;
-static unsigned char *DrvColRAM;
-static unsigned char *DrvSprRAM;
-static unsigned char *RamEnd;
-static unsigned char *MemEnd;
+static UINT8 *AllMem;
+static UINT8 *DrvZ80ROM;
+static UINT8 *DrvGfxROM0;
+static UINT8 *DrvGfxROM1;
+static UINT8 *DrvColPROM;
+static UINT8 *AllRam;
+static UINT8 *DrvZ80RAM;
+static UINT8 *DrvVidRAM;
+static UINT8 *DrvColRAM;
+static UINT8 *DrvSprRAM;
+static UINT8 *RamEnd;
+static UINT8 *MemEnd;
 
-static unsigned int  *Palette;
-static unsigned int *DrvPalette;
+static UINT32 *Palette;
+static UINT32 *DrvPalette;
 
-static unsigned char DrvRecalc;
+static UINT8 DrvRecalc;
 
-static short *pAY8910Buffer[3];
+static INT16 *pAY8910Buffer[3];
 
-static unsigned char DrvInputs[3];
-static unsigned char DrvDips[1];
-static unsigned char DrvJoy1[8];
-static unsigned char DrvJoy2[8];
-static unsigned char DrvJoy3[8];
-static unsigned char DrvReset;
+static UINT8 DrvInputs[3];
+static UINT8 DrvDips[1];
+static UINT8 DrvJoy1[8];
+static UINT8 DrvJoy2[8];
+static UINT8 DrvJoy3[8];
+static UINT8 DrvReset;
 
-static unsigned char nmi_enable;
+static UINT8 nmi_enable;
 
 // static INPUT_PORTS_START( skyarmy )
 static struct BurnInputInfo SkyarmyInputList[] = {
@@ -144,7 +144,7 @@ STDDIPINFO(Skyarmy)
 	these take care of everything that isn't ram or rom
 */
 
-void __fastcall skyarmy_write(unsigned short address, unsigned char data)// handle writes for skyarmy_map
+void __fastcall skyarmy_write(UINT16 address, UINT8 data)// handle writes for skyarmy_map
 {
 	switch (address)
 	{
@@ -159,7 +159,7 @@ void __fastcall skyarmy_write(unsigned short address, unsigned char data)// hand
 	}
 }
 
-unsigned char __fastcall skyarmy_read(unsigned short address)// handle reads for skyarmy_map
+UINT8 __fastcall skyarmy_read(UINT16 address)// handle reads for skyarmy_map
 {
 	switch (address)
 	{
@@ -179,7 +179,7 @@ unsigned char __fastcall skyarmy_read(unsigned short address)// handle reads for
 	return 0;
 }
 
-void __fastcall skyarmy_write_port(unsigned short port, unsigned char data)// handle writes to skyarmy_io_map
+void __fastcall skyarmy_write_port(UINT16 port, UINT8 data)// handle writes to skyarmy_io_map
 {
 	switch (port & 0xff) // ADDRESS_MAP_GLOBAL_MASK(0xff)
 	{
@@ -193,7 +193,7 @@ void __fastcall skyarmy_write_port(unsigned short port, unsigned char data)// ha
 	}
 }
 
-unsigned char __fastcall skyarmy_read_port(unsigned short port)// handle reads from skyarmy_io_map
+UINT8 __fastcall skyarmy_read_port(UINT16 port)// handle reads from skyarmy_io_map
 {
 	switch (port & 0xff) // ADDRESS_MAP_GLOBAL_MASK(0xff)
 	{
@@ -209,7 +209,7 @@ unsigned char __fastcall skyarmy_read_port(unsigned short port)// handle reads f
 	this is required or lots of bad things happen
 */
 
-static int DrvDoReset()
+static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam); // clear all ram!
 
@@ -229,13 +229,13 @@ static int DrvDoReset()
 //static PALETTE_INIT( skyarmy ) // mame
 static void DrvPaletteInit()
 {
-	int i;
+	INT32 i;
 
-	unsigned char *color_prom = DrvColPROM; // fba
+	UINT8 *color_prom = DrvColPROM; // fba
 
 	for (i = 0;i < 32;i++)
 	{
-		int bit0,bit1,bit2,r,g,b;
+		INT32 bit0,bit1,bit2,r,g,b;
 
 		bit0 = (*color_prom >> 0) & 0x01;
 		bit1 = (*color_prom >> 1) & 0x01;
@@ -266,7 +266,7 @@ static void DrvPaletteInit()
 	convert the graphics into a format fba's generic tile handling can use
 */
 
-static int DrvGfxDecode()
+static INT32 DrvGfxDecode()
 {
 #if 0
 static const gfx_layout charlayout =
@@ -299,13 +299,13 @@ static GFXDECODE_START( skyarmy )
 GFXDECODE_END
 #endif
 
-	int Plane[2] = { 0, 256*8*8 }; // <---------- same for both types!
-	int XOffs[16] = { 0, 1, 2, 3, 4, 5, 6, 7,	// <--- 0 - 7 is used for both types, so we can repeat this and save a few lines
+	INT32 Plane[2] = { 0, 256*8*8 }; // <---------- same for both types!
+	INT32 XOffs[16] = { 0, 1, 2, 3, 4, 5, 6, 7,	// <--- 0 - 7 is used for both types, so we can repeat this and save a few lines
 	  8*8+0, 8*8+1, 8*8+2, 8*8+3, 8*8+4, 8*8+5, 8*8+6, 8*8+7 };
-	int YOffs[16] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,// <--- 0 - 7 is used for both types, so we can repeat this and save a few lines
+	INT32 YOffs[16] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,// <--- 0 - 7 is used for both types, so we can repeat this and save a few lines
 	 16*8,17*8,18*8,19*8,20*8,21*8,22*8,23*8 };
 
-	unsigned char *tmp = (unsigned char*)malloc(0x1000); // ROM_REGION( 0x1000, "gfx1", 0 ), ROM_REGION( 0x1000, "gfx2", 0 ) whichever is larger...
+	UINT8 *tmp = (UINT8*)malloc(0x1000); // ROM_REGION( 0x1000, "gfx1", 0 ), ROM_REGION( 0x1000, "gfx2", 0 ) whichever is larger...
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -335,9 +335,9 @@ GFXDECODE_END
 	we *should* reset these in DrvDoReset
 */
 
-static int MemIndex()
+static INT32 MemIndex()
 {
-	unsigned char *Next; Next = AllMem;
+	UINT8 *Next; Next = AllMem;
 
 	DrvZ80ROM		= Next; Next += 0x010000; // ROM_REGION( 0x10000, "maincpu", 0 )
 
@@ -346,8 +346,8 @@ static int MemIndex()
 
 	DrvColPROM		= Next; Next += 0x000020;
 
-	Palette			= (unsigned int*)Next; Next += 0x0020 * sizeof(int); // MDRV_PALETTE_LENGTH(32)
-	DrvPalette		= (unsigned int*)Next; Next += 0x0020 * sizeof(int); // MDRV_PALETTE_LENGTH(32)
+	Palette			= (UINT32 *)Next; Next += 0x0020 * sizeof(UINT32); // MDRV_PALETTE_LENGTH(32)
+	DrvPalette		= (UINT32 *)Next; Next += 0x0020 * sizeof(UINT32); // MDRV_PALETTE_LENGTH(32)
 
 	AllRam			= Next;
 
@@ -358,9 +358,9 @@ static int MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0]	= (short*)Next; Next += nBurnSoundLen * sizeof(short); // allocate ram for sound output
-	pAY8910Buffer[1]	= (short*)Next; Next += nBurnSoundLen * sizeof(short); // only really necessary for ay8910
-	pAY8910Buffer[2]	= (short*)Next; Next += nBurnSoundLen * sizeof(short);
+	pAY8910Buffer[0]	= (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16); // allocate ram for sound output
+	pAY8910Buffer[1]	= (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16); // only really necessary for ay8910
+	pAY8910Buffer[2]	= (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
 
 
 	MemEnd			= Next;
@@ -380,13 +380,13 @@ static int MemIndex()
 		reset the machine
 */
 
-static int DrvInit()
+static INT32 DrvInit()
 {
 	// set up and allocate memory for roms & ram
 	AllMem = NULL;
 	MemIndex();
-	int nLen = MemEnd - (unsigned char *)0;
-	if ((AllMem = (unsigned char *)malloc(nLen)) == NULL) return 1;
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -474,7 +474,7 @@ static int DrvInit()
 	DrvExit exits the machine
 */
 
-static int DrvExit()
+static INT32 DrvExit()
 {
 	GenericTilesExit(); // exit generic tile handling
 
@@ -491,10 +491,10 @@ static int DrvExit()
 
 static void tilemap_draw()
 {
-	for (int offs = 0; offs < 32 * 32; offs++) // tilemap_create(machine, get_skyarmy_tile_info, tilemap_scan_rows, 8, 8, 32, 32);
+	for (INT32 offs = 0; offs < 32 * 32; offs++) // tilemap_create(machine, get_skyarmy_tile_info, tilemap_scan_rows, 8, 8, 32, 32);
 	{
-		int sx = (offs % 32) * 8; // tilemap_create(machine, get_skyarmy_tile_info, tilemap_scan_rows, 8 (sx tile width), 8, 32 (number of tiles wide), 32);
-		int sy = (offs / 32) * 8; // tilemap_create(machine, get_skyarmy_tile_info, tilemap_scan_rows, 8, 8 (sy tile height), 32, 32 (number of tiles high));
+		INT32 sx = (offs % 32) * 8; // tilemap_create(machine, get_skyarmy_tile_info, tilemap_scan_rows, 8 (sx tile width), 8, 32 (number of tiles wide), 32);
+		INT32 sy = (offs / 32) * 8; // tilemap_create(machine, get_skyarmy_tile_info, tilemap_scan_rows, 8, 8 (sy tile height), 32, 32 (number of tiles high));
 
 //	for(i=0;i<0x20;i++)
 //		tilemap_set_scrolly( state->tilemap,i,state->scrollram[i]);
@@ -503,8 +503,8 @@ static void tilemap_draw()
 		sy -= DrvSprRAM[0x40 + (offs % 32)] + 8; // (offs % 32) gives the column, scroll ram is 64 bytes after sprite data
 		if (sy < -7) sy += 256; // (256 = 32 * 8), -7 or the screen shows garbage at the sides
 
-		int code = DrvVidRAM[offs];	// which tile are we drawing?
-		int attr = BITSWAP08(DrvColRAM[offs], 7, 6, 5, 4, 3, 0, 1, 2) & 7; // color
+		INT32 code = DrvVidRAM[offs];	// which tile are we drawing?
+		INT32 attr = BITSWAP08(DrvColRAM[offs], 7, 6, 5, 4, 3, 0, 1, 2) & 7; // color
 
 		// there is no transparency color (mask), can possibly be partially off the screen so use clip, and does not do flip
 		Render8x8Tile_Clip(pTransDraw, code, sx, sy, attr /*color*/, 2 /* 2 bits - determine with gfx decode */, 0, DrvGfxROM0);
@@ -513,15 +513,15 @@ static void tilemap_draw()
 
 static void draw_sprites()
 {
-	for (int offs = 0; offs < 0x40; offs+=4)
+	for (INT32 offs = 0; offs < 0x40; offs+=4)
 	{
-		int pal = BITSWAP08(DrvSprRAM[offs+2], 7, 6, 5, 4, 3, 0, 1, 2) & 7; // color (this particular setup is unusual)
+		INT32 pal = BITSWAP08(DrvSprRAM[offs+2], 7, 6, 5, 4, 3, 0, 1, 2) & 7; // color (this particular setup is unusual)
 
-		int sx    = DrvSprRAM[offs+3];		        // horizontal position -> start x
-		int sy    = 240-DrvSprRAM[offs] - 8;		// vertical position -> start y
-		int flipy = (DrvSprRAM[offs+1]&0x80)>>7;	// flip tile vertically?
-		int flipx = (DrvSprRAM[offs+1]&0x40)>>6;	// flip tile horizontally?
-		int code  = DrvSprRAM[offs + 1] & 0x3f;		// which tile are we drawing?
+		INT32 sx    = DrvSprRAM[offs+3];		        // horizontal position -> start x
+		INT32 sy    = 240-DrvSprRAM[offs] - 8;		// vertical position -> start y
+		INT32 flipy = (DrvSprRAM[offs+1]&0x80)>>7;	// flip tile vertically?
+		INT32 flipx = (DrvSprRAM[offs+1]&0x40)>>6;	// flip tile horizontally?
+		INT32 code  = DrvSprRAM[offs + 1] & 0x3f;		// which tile are we drawing?
 		if (sy < -7) sy += 256; // (256 = 32 * 8), -7 or the screen shows garbage at the sides
 		if (sx < -7) sx += 256; // (256 = 32 * 8), -7 or the screen shows garbage at the sides
 
@@ -553,12 +553,12 @@ static void draw_sprites()
 
 
 //static VIDEO_UPDATE( skyarmy )
-static int DrvDraw()
+static INT32 DrvDraw()
 {
 	// this will recalculate the colors if the screen color depth changes
 	if (DrvRecalc) {
-		for (int i = 0; i < 32; i++) {
-			int d = Palette[i];
+		for (INT32 i = 0; i < 32; i++) {
+			INT32 d = Palette[i];
 			DrvPalette[i] = BurnHighCol(d >> 16, (d >> 8) & 0xff, d & 0xff, 0);
 		}
 		DrvRecalc = 0; // ok, we've recalculated it, now disable it for the next frame or we waste a lot of time
@@ -584,7 +584,7 @@ static int DrvDraw()
 		draw video
 */
 
-static int DrvFrame()
+static INT32 DrvFrame()
 {
 	if (DrvReset) { // is the reset button pressed
 		DrvDoReset(); // if so, reset!
@@ -593,7 +593,7 @@ static int DrvFrame()
 	// assemble inputs
 	{
 		memset (DrvInputs, 0, 3); // clear input storage bytes < if IP_ACTIVE_HIGH clear with 0, if IP_ACTIVE_LOW, clear with 0xff
-		for (int i = 0; i < 8; i++) {
+		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i; // pack bits for inputs in to respective bytes
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
@@ -602,16 +602,16 @@ static int DrvFrame()
 
 	// MDRV_SCREEN_REFRESH_RATE(60) ! 60!!
 
-	int nInterleave = 102/8; // MDRV_CPU_PERIODIC_INT(skyarmy_nmi_source,650) -> 4000000 / 60 -> 66666.67 / 650 -> 102 (add /8 to get the right timing -dink)
-	int nCyclesTotal = 4000000 / 60; // MDRV_CPU_ADD("maincpu", Z80,4000000)
-	int nCyclesDone  = 0;
+	INT32 nInterleave = 102/8; // MDRV_CPU_PERIODIC_INT(skyarmy_nmi_source,650) -> 4000000 / 60 -> 66666.67 / 650 -> 102 (add /8 to get the right timing -dink)
+	INT32 nCyclesTotal = 4000000 / 60; // MDRV_CPU_ADD("maincpu", Z80,4000000)
+	INT32 nCyclesDone  = 0;
 	INT32 nSoundBufferPos = 0;
 
 	ZetOpen(0); // open cpu for modification
 
-	for (int i = 0; i < nInterleave; i++) // split the amount of cpu the z80 is running in 1/60th of a second into slices
+	for (INT32 i = 0; i < nInterleave; i++) // split the amount of cpu the z80 is running in 1/60th of a second into slices
 	{
-		int nSegment = nCyclesTotal / nInterleave;
+		INT32 nSegment = nCyclesTotal / nInterleave;
 
 		nCyclesDone += ZetRun(nSegment); // actually run the cpu
 
@@ -662,7 +662,7 @@ static int DrvFrame()
 	we also save ram, data from the z80, ay8910, and other misc data
 */
 
-static int DrvScan(int nAction,int *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 

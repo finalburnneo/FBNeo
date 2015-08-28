@@ -794,20 +794,20 @@ struct BurnDriver BurnDrvPuzzlove = {
 // PuzzLove (Korea)
 
 static struct BurnRomInfo puzzlovekRomDesc[] = {
-	{ "3.U3",		0x40000, 0x28f403f0, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "4.U2",		0x40000, 0x809371b9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.u3",		0x40000, 0x28f403f0, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "4.u2",		0x40000, 0x809371b9, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "1.UZ02",		0x20000, 0x3077e7f3, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "1.uz02",		0x20000, 0x3077e7f3, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "2.UZ11",		0x40000, 0x4c06ec68, 3 | BRF_SND },           //  3 MSM6295 Samples
+	{ "2.uz11",		0x40000, 0x4c06ec68, 3 | BRF_SND },           //  3 MSM6295 Samples
 
-	{ "10.U41",		0x80000, 0x3f952c54, 4 | BRF_GRA },           //  4 Background Tiles
-	{ "9.U42",		0x80000, 0x4f71ee93, 4 | BRF_GRA },           //  5
+	{ "10.u41",		0x80000, 0x3f952c54, 4 | BRF_GRA },           //  4 Background Tiles
+	{ "9.u42",		0x80000, 0x4f71ee93, 4 | BRF_GRA },           //  5
 
-	{ "5.U53",		0x80000, 0xc5732995, 5 | BRF_GRA },           //  6 Sprites
-	{ "6.U54",		0x80000, 0xa3b98fd1, 5 | BRF_GRA },           //  7
-	{ "7.U55",		0x80000, 0xa4c73b48, 5 | BRF_GRA },           //  8
-	{ "8.U56",		0x80000, 0x95b5f049, 5 | BRF_GRA },           //  9
+	{ "5.u53",		0x80000, 0xc5732995, 5 | BRF_GRA },           //  6 Sprites
+	{ "6.u54",		0x80000, 0xa3b98fd1, 5 | BRF_GRA },           //  7
+	{ "7.u55",		0x80000, 0xa4c73b48, 5 | BRF_GRA },           //  8
+	{ "8.u56",		0x80000, 0x95b5f049, 5 | BRF_GRA },           //  9
 };
 
 STD_ROM_PICK(puzzlovek)

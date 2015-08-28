@@ -2003,7 +2003,7 @@ static struct BurnRomInfo wizdfireRomDesc[] = {
 	{ "mas08",		0x080000, 0xe224fb7a, 7 | BRF_GRA },           // 17 Sprite Bank B
 	{ "mas09",		0x080000, 0x5f6deb41, 7 | BRF_GRA },           // 18
 
-	{ "mas10",		0x080000, 0x6edc06a7, 8 | BRF_SND },           // 19 OKI M6295 Samples 0
+	{ "mas10",		0x100000, 0xf4b4c8a1, 8 | BRF_SND },           // 19 OKI M6295 Samples 0
 
 	{ "mas11",		0x080000, 0xc2f0a4f2, 9 | BRF_SND },           // 20 OKI M6295 Samples 1
 
@@ -2053,7 +2053,7 @@ static struct BurnRomInfo wizdfireuRomDesc[] = {
 	{ "mas08",		0x080000, 0xe224fb7a, 7 | BRF_GRA },           // 17 Sprite Bank B
 	{ "mas09",		0x080000, 0x5f6deb41, 7 | BRF_GRA },           // 18
 
-	{ "mas10",		0x080000, 0x6edc06a7, 8 | BRF_SND },           // 19 OKI M6295 Samples 0
+	{ "mas10",		0x100000, 0xf4b4c8a1, 8 | BRF_SND },           // 19 OKI M6295 Samples 0
 
 	{ "mas11",		0x080000, 0xc2f0a4f2, 9 | BRF_SND },           // 20 OKI M6295 Samples 1
 
@@ -2103,7 +2103,7 @@ static struct BurnRomInfo darkseal2RomDesc[] = {
 	{ "mas08",		0x080000, 0xe224fb7a, 7 | BRF_GRA },           // 17 Sprite Bank B
 	{ "mas09",		0x080000, 0x5f6deb41, 7 | BRF_GRA },           // 18
 
-	{ "mas10",		0x080000, 0x6edc06a7, 8 | BRF_SND },           // 19 OKI M6295 Samples 0
+	{ "mas10",		0x100000, 0xf4b4c8a1, 8 | BRF_SND },           // 19 OKI M6295 Samples 0
 
 	{ "mas11",		0x080000, 0xc2f0a4f2, 9 | BRF_SND },           // 20 OKI M6295 Samples 1
 

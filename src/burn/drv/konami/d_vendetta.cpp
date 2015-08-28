@@ -967,7 +967,7 @@ struct BurnDriver BurnDrvVendettar = {
 // Vendetta (Asia, 4 Players ver. Z)
 
 static struct BurnRomInfo vendettazRomDesc[] = {
-	{ "081z01",	0x040000, 0x4d225a8d, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "081z01.bin",	0x040000, 0x4d225a8d, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
 
 	{ "081b02",	0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
@@ -981,7 +981,7 @@ static struct BurnRomInfo vendettazRomDesc[] = {
 
 	{ "081a03",	0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
-	{ "vendettaz.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
 };
 
 STD_ROM_PICK(vendettaz)

@@ -15819,7 +15819,7 @@ static struct BurnRomInfo MimonscraRomDesc[] = {
 	{ "top.f5",        0x01000, 0x9e0e9289, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "bottom.f5",     0x01000, 0x92085b0c, BRF_GRA | GAL_ROM_TILES_SHARED },
 		
-	{ "mb7051.6e",     0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+	{ "mb7051.e6",     0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Mimonscra)

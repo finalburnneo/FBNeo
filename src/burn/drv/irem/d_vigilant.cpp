@@ -564,7 +564,7 @@ STD_ROM_PICK(Drvu)
 STD_ROM_FN(Drvu)
 
 static struct BurnRomInfo Drvu2RomDesc[] = {
-	{ "VG-A-8H-G.ic55",   0x08000, 0x9444c04e, BRF_ESS | BRF_PRG },	//  0	Z80 #1 Program Code
+	{ "VG_A-8H-G.ic55",   0x08000, 0x9444c04e, BRF_ESS | BRF_PRG },	//  0	Z80 #1 Program Code
 	{ "VG_A-8L-.ic57",    0x10000, 0x7f95799b, BRF_ESS | BRF_PRG },	//  1
 	
 	{ "VG_A-5J-.ic37",    0x10000, 0x10582b2d, BRF_ESS | BRF_PRG },	//  2	Z80 #2 Program 
@@ -608,7 +608,7 @@ static struct BurnRomInfo DrvjRomDesc[] = {
 	{ "619.ic2",          0x20000, 0x9e2f8759, BRF_GRA },		//  9	Background
 	{ "612.ic4",          0x20000, 0x85057c81, BRF_GRA },		//  10
 	
-	{ "VG_A-4D-.ic26",    0x10000, 0x9b85101d, BRF_SND },		//  11	Samples
+	{ "VG_A-4D-D.ic26",    0x10000, 0x9b85101d, BRF_SND },		//  11	Samples
 	
 	{ "VG_B-8R.ic90",  	  0x00117, 0xdf368a7a, BRF_GRA },		//  12	PALs
 	{ "VG_B-4M.ic38",     0x00117, 0xdbca4204, BRF_GRA },		//  13
@@ -654,7 +654,7 @@ static struct BurnRomInfo VigilantaRomDesc[] = {
 	{ "VG_A-8H-A.ic55",   0x08000, 0x97df1454, BRF_ESS | BRF_PRG },	//  0	Z80 #1 Program Code
 	{ "VG_A-8L-A.ic57",   0x10000, 0x690d812f, BRF_ESS | BRF_PRG },	//  1
 	
-	{ "VG_A-5J-.ic37",    0x10000, 0x10582b2d, BRF_ESS | BRF_PRG },	//  2	Z80 #2 Program 
+	{ "VG_A-5J-A.ic37",   0x10000, 0x10582b2d, BRF_ESS | BRF_PRG },	//  2	Z80 #2 Program 
 	
 	{ "613.ic34",         0x20000, 0xee7a6c2f, BRF_GRA },		//  3	Characters
 	{ "614.ic35",         0x20000, 0x6422e8ba, BRF_GRA },		//  4
@@ -667,7 +667,7 @@ static struct BurnRomInfo VigilantaRomDesc[] = {
 	{ "619.ic2",          0x20000, 0x9e2f8759, BRF_GRA },		//  9	Background
 	{ "612.ic4",          0x20000, 0x85057c81, BRF_GRA },		//  10
 	
-	{ "VG_A-4D-.ic26",    0x10000, 0x9b85101d, BRF_SND },		//  11	Samples
+	{ "VG_A-4D-A.ic26",   0x10000, 0x9b85101d, BRF_SND },		//  11	Samples
 	
 	{ "VG_B-8R.ic90",  	  0x00117, 0xdf368a7a, BRF_GRA },		//  12	PALs
 	{ "VG_B-4M.ic38",     0x00117, 0xdbca4204, BRF_GRA },		//  13

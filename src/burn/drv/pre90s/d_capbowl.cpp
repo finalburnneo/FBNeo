@@ -689,11 +689,11 @@ struct BurnDriver BurnDrvClbowl = {
 // Bowl-O-Rama
 
 static struct BurnRomInfo bowlramaRomDesc[] = {
-	{ "u6",				0x08000, 0x7103ad55, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
+	{ "bowl-o-rama_rev_1.0_u6.u6",		0x08000, 0x7103ad55, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
 
-	{ "u30",			0x08000, 0xf3168834, 2 | BRF_PRG | BRF_ESS }, //  1 M6809 #1 Code
+	{ "bowl-o-rama_rev_1.0_u30.u30",	0x08000, 0xf3168834, 2 | BRF_PRG | BRF_ESS }, //  1 M6809 #1 Code
 
-	{ "ux7",			0x40000, 0x8727432a, 3 | BRF_GRA },           //  2 Graphics Data
+	{ "bowl-o-rama_rev_1.0_ux7.ux7",	0x40000, 0x8727432a, 3 | BRF_GRA },           //  2 Graphics Data
 };
 
 STD_ROM_PICK(bowlrama)

@@ -1454,8 +1454,6 @@ static struct BurnRomInfo scionRomDesc[] = {
 	{ "82s129.7a",	0x0100, 0x2f89d9ea, 5 }, // 12 proms
 	{ "82s129.7b",	0x0100, 0xba151e6a, 5 }, // 13
 	{ "82s129.8a",	0x0100, 0xf681ce59, 5 }, // 14
-
-	{ "6.9f",	0x2000, 0xa66a0ce6, 0 | BRF_OPT | BRF_PRG }, //  15 More Sound Z80 Code?
 };
 
 STD_ROM_PICK(scion)

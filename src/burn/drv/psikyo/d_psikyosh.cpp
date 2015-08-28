@@ -1263,7 +1263,7 @@ static struct BurnRomInfo dragnblzRomDesc[] = {
 
 	{ "snd0.u52",		0x200000, 0x7fd1b225, 3 | BRF_SND },           // 22 Samples
 	
-	{ "eeprom-dragnblz.bin",0x000100, 0x70a8a3a6,     BRF_OPT },
+	{ "eeprom-dragnblz.u44",0x000100, 0x46e85da9,     BRF_OPT },
 };
 
 STD_ROM_PICK(dragnblz)
@@ -1419,7 +1419,7 @@ static struct BurnRomInfo mjgtasteRomDesc[] = {
 
 	{ "snd0.u52",		0x400000, 0x0179f018, 3 | BRF_SND },           // 10 Samples
 	
-	{ "eeprom-mjgtaste.bin",0x000100, 0xbbf7cfae,     BRF_OPT },
+	{ "eeprom-mjgtaste.u44",0x000100, 0xd35586f2,     BRF_OPT },
 };
 
 STD_ROM_PICK(mjgtaste)

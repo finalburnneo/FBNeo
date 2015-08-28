@@ -764,8 +764,8 @@ struct BurnDriver BurnDrvDarkseal = {
 
 static struct BurnRomInfo darksea1RomDesc[] = {
 	{ "FZ_04-4.J12",	0x20000, 0xa1a985a9, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "FZ_01-4.H14",	0x20000, 0x98bd2940, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "FZ_00-02.H12",	0x20000, 0xfbf3ac63, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "FZ_01-1.H14",	0x20000, 0x98bd2940, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "FZ_00-2.H12",	0x20000, 0xfbf3ac63, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "FZ_05-2.J14",	0x20000, 0xd5e3ae3f, 1 | BRF_PRG | BRF_ESS }, //  3
 	
 	{ "FZ_06-1.J15",	0x10000, 0xc4828a6d, 2 | BRF_PRG | BRF_ESS }, //  4 H6280 Code

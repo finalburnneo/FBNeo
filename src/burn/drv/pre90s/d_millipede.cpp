@@ -1031,15 +1031,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Millipede
 
 static struct BurnRomInfo millipedRomDesc[] = {
-	{ "136013-104.1mn",	0x1000, 0x40711675, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "136013-103.1l",	0x1000, 0xfb01baf2, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "136013-102.1jk",	0x1000, 0x62e137e0, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "136013-101.1h",	0x1000, 0x46752c7d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "136013-104.mn1",	0x1000, 0x40711675, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "136013-103.l1",	0x1000, 0xfb01baf2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "136013-102.jk1",	0x1000, 0x62e137e0, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "136013-101.h1",	0x1000, 0x46752c7d, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "136013-107.5r",	0x0800, 0x68c3437a, 2 | BRF_PRG | BRF_ESS }, //  4 gfx1
-	{ "136013-106.5p",	0x0800, 0xf4468045, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "136013-107.r5",	0x0800, 0x68c3437a, 2 | BRF_PRG | BRF_ESS }, //  4 gfx1
+	{ "136013-106.p5",	0x0800, 0xf4468045, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "136001-213.7e",	0x0100, 0x6fa3093a, 3 | BRF_PRG | BRF_ESS }, //  6 proms
+	{ "136001-213.e7",	0x0100, 0x6fa3093a, 3 | BRF_PRG | BRF_ESS }, //  6 proms
 };
 
 STD_ROM_PICK(milliped)

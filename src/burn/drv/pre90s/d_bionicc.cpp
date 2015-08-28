@@ -1035,14 +1035,14 @@ static struct BurnRomInfo bioniccblRomDesc[] = {
 	{ "05.bin",			0x08000, 0x9bf8dc7f, 4 | BRF_GRA },				//  6 Background Tiles
 	{ "04.bin",			0x08000, 0x1b43bf63, 4 | BRF_GRA },				//  7
 
-	{ "09.bin",			0x08000, 0xe4b4619e, 5 | BRF_GRA },				//  8 Foreground Tiles
-	{ "08.bin",			0x08000, 0xab30237a, 5 | BRF_GRA },				//  9
-	{ "13.bin", 		0x08000, 0xdeb657e4, 5 | BRF_GRA },				// 10
-	{ "12.bin",			0x08000, 0xd363b5f9, 5 | BRF_GRA },				// 11 
-	{ "10.bin",			0x08000, 0xa8f5a004, 5 | BRF_GRA },				// 12
-	{ "14.bin",			0x08000, 0x3b36948c, 5 | BRF_GRA },				// 13
-	{ "17.bin",			0x08000, 0xbbfbe58a, 5 | BRF_GRA },				// 14
-	{ "18.bin",			0x08000, 0xf156e564, 5 | BRF_GRA },				// 15
+	{ "ts_12.17f",		0x08000, 0xe4b4619e, 5 | BRF_GRA },				//  8 Foreground Tiles
+	{ "ts_11.15f",		0x08000, 0xab30237a, 5 | BRF_GRA },				//  9
+	{ "ts_17.17g",		0x08000, 0xdeb657e4, 5 | BRF_GRA },				// 10
+	{ "ts_16.15g",		0x08000, 0xd363b5f9, 5 | BRF_GRA },				// 11 
+	{ "ts_13.18f",		0x08000, 0xa8f5a004, 5 | BRF_GRA },				// 12
+	{ "ts_18.18g",		0x08000, 0x3b36948c, 5 | BRF_GRA },				// 13
+	{ "ts_23.18j",		0x08000, 0xbbfbe58a, 5 | BRF_GRA },				// 14
+	{ "ts_24.18k",		0x08000, 0xf156e564, 5 | BRF_GRA },				// 15
 
 	{ "07.bin",			0x10000, 0xa0e78996, 6 | BRF_GRA },				// 16 Sprites 
 	{ "11.bin",			0x10000, 0x37cb11c2, 6 | BRF_GRA },				// 17
@@ -1051,7 +1051,7 @@ static struct BurnRomInfo bioniccblRomDesc[] = {
 	
 	{ "63s141.18f",		0x00100, 0xb58d0023, 0 | BRF_OPT },				// 20 Priority (not used)
 	
-	{ "19.bin",     	0x01000, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "c8751h-88",     	0x01000, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(bioniccbl)

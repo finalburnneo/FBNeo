@@ -5653,40 +5653,40 @@ static struct BurnRomInfo FfightblRomDesc[] = {
 STD_ROM_PICK(Ffightbl)
 STD_ROM_FN(Ffightbl)
 
-static struct BurnRomInfo Ffightbl2RomDesc[] = {
+static struct BurnRomInfo FfightblaRomDesc[] = {
 	// This dump comes from another ffight bootleg. It contains same datas as ffightbl but reordered in smaller roms.
 	// Almost identical to Final Crash except for ROMs 19, 21, 23 and 25.
-	{ "ff-09.bin",     0x020000, 0xc6854c91, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // fg-e.bin
-	{ "ff-05.bin",     0x020000, 0x77f7c2b3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // fg-f.bin
-	{ "ff-08.bin",     0x020000, 0x1895b3df, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // fg-e.bin
-	{ "ff-04.bin",     0x020000, 0xbbd411ee, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // fg-f.bin
-	{ "ff-07.bin",     0x020000, 0x5b23ebf2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP } ,// fg-e.bin
-	{ "ff-03.bin",     0x020000, 0xaba2aebe, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // fg-f.bin
-	{ "ff-06.bin",     0x020000, 0xd4bf37f6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // fg-e.bin
-	{ "ff-02.bin",     0x020000, 0x07ac8f43, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // fg-f.bin
+	{ "9.bin",         0x020000, 0xc6854c91, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // fg-e.bin
+	{ "5.bin",         0x020000, 0x77f7c2b3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // fg-f.bin
+	{ "8.bin",         0x020000, 0x1895b3df, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // fg-e.bin
+	{ "4.bin",         0x020000, 0xbbd411ee, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // fg-f.bin
+	{ "7.bin",         0x020000, 0x5b23ebf2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP } ,// fg-e.bin
+	{ "3.bin",         0x020000, 0xaba2aebe, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // fg-f.bin
+	{ "6.bin",         0x020000, 0xd4bf37f6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // fg-e.bin
+	{ "2.bin",         0x020000, 0x07ac8f43, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, // fg-f.bin
 
-	{ "ff-18.bin",     0x020000, 0xf1eee6d9, BRF_GRA | CPS1_TILES }, // fg-d.bin
-	{ "ff-20.bin",     0x020000, 0x675f4537, BRF_GRA | CPS1_TILES }, // fg-c.bin
-	{ "ff-22.bin",     0x020000, 0xdb8a32ac, BRF_GRA | CPS1_TILES }, // fg-b.bin
-	{ "ff-24.bin",     0x020000, 0xf4113e57, BRF_GRA | CPS1_TILES }, // fg-a.bin
-	{ "ff-10.bin",     0x020000, 0xd478853e, BRF_GRA | CPS1_TILES }, // fg-d.bin
-	{ "ff-12.bin",     0x020000, 0x25055642, BRF_GRA | CPS1_TILES }, // fg-c.bin
-	{ "ff-14.bin",     0x020000, 0xb77d0328, BRF_GRA | CPS1_TILES }, // fg-b.bin
-	{ "ff-16.bin",     0x020000, 0xea111a79, BRF_GRA | CPS1_TILES }, // fg-a.bin
+	{ "18.bin",        0x020000, 0xf1eee6d9, BRF_GRA | CPS1_TILES }, // fg-d.bin
+	{ "20.bin",        0x020000, 0x675f4537, BRF_GRA | CPS1_TILES }, // fg-c.bin
+	{ "22.bin",        0x020000, 0xdb8a32ac, BRF_GRA | CPS1_TILES }, // fg-b.bin
+	{ "24.bin",        0x020000, 0xf4113e57, BRF_GRA | CPS1_TILES }, // fg-a.bin
+	{ "10.bin",        0x020000, 0xd478853e, BRF_GRA | CPS1_TILES }, // fg-d.bin
+	{ "12.bin",        0x020000, 0x25055642, BRF_GRA | CPS1_TILES }, // fg-c.bin
+	{ "14.bin",        0x020000, 0xb77d0328, BRF_GRA | CPS1_TILES }, // fg-b.bin
+	{ "16.bin",        0x020000, 0xea111a79, BRF_GRA | CPS1_TILES }, // fg-a.bin
 	{ "ff-19.bin",     0x020000, 0x7bc03747, BRF_GRA | CPS1_TILES }, // fg-d.bin
 	{ "ff-21.bin",     0x020000, 0x0c248e2b, BRF_GRA | CPS1_TILES }, // fg-c.bin
 	{ "ff-23.bin",     0x020000, 0x53949d0e, BRF_GRA | CPS1_TILES }, // fg-b.bin
 	{ "ff-25.bin",     0x020000, 0x8d34a67d, BRF_GRA | CPS1_TILES }, // fg-a.bin
-	{ "ff-11.bin",     0x020000, 0xd4457a60, BRF_GRA | CPS1_TILES }, // fg-d.bin
-	{ "ff-13.bin",     0x020000, 0x3b26a37d, BRF_GRA | CPS1_TILES }, // fg-c.bin
-	{ "ff-15.bin",     0x020000, 0x6d837e09, BRF_GRA | CPS1_TILES }, // fg-b.bin
-	{ "ff-17.bin",     0x020000, 0xc59a4d6c, BRF_GRA | CPS1_TILES }, // fg-a.bin
+	{ "11.bin",        0x020000, 0xd4457a60, BRF_GRA | CPS1_TILES }, // fg-d.bin
+	{ "13.bin",        0x020000, 0x3b26a37d, BRF_GRA | CPS1_TILES }, // fg-c.bin
+	{ "15.bin",        0x020000, 0x6d837e09, BRF_GRA | CPS1_TILES }, // fg-b.bin
+	{ "17.bin",        0x020000, 0xc59a4d6c, BRF_GRA | CPS1_TILES }, // fg-a.bin
 
-	{ "ff-01.bin",     0x020000, 0x5b276c14, BRF_PRG | CPS1_Z80_PROGRAM }, // ff1.bin
+	{ "1.bin",         0x020000, 0x5b276c14, BRF_PRG | CPS1_Z80_PROGRAM }, // ff1.bin
 };
 
-STD_ROM_PICK(Ffightbl2)
-STD_ROM_FN(Ffightbl2)
+STD_ROM_PICK(Ffightbla)
+STD_ROM_FN(Ffightbla)
 
 static struct BurnRomInfo FcrashRomDesc[] = {
 	{ "9.bin",         0x020000, 0xc6854c91, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -11701,6 +11701,8 @@ static struct BurnRomInfo VarthjrRomDesc[] = {
 	{ "va63b.1a",      0x000117, 0x38540e86, BRF_OPT }, // b-board PLDs
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
+	
+	{ "ioc1.ic1",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
 };
 
 STD_ROM_PICK(Varthjr)
@@ -12116,13 +12118,13 @@ static struct BurnRomInfo WofchRomDesc[] = {
 	{ "tk2-q3.3k",     0x080000, 0xbfcf6f52, BRF_SND | CPS1_QSOUND_SAMPLES },
 	{ "tk2-q4.4k",     0x080000, 0x36642e88, BRF_SND | CPS1_QSOUND_SAMPLES },
 	
-	A_BOARD_QSOUND_PLDS
+	A_BOARD_PLDS
 	
 	{ "tk263b.1a",     0x000117, 0xc4b0349b, BRF_OPT },	// b-board PLDs
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
 	
-	{ "ioc1.ic1",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
+	{ "ioc1.ic7",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 	
 	{ "d7l1.7l",       0x000117, 0x27b7410d, BRF_OPT },	// d-board PLDs
@@ -12557,7 +12559,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "ffightj3"    , CPS_B_05    , mapper_S224B , 0, NULL                },
 	{ "ffightjh"    , CPS_B_01    , mapper_S224B , 0, NULL                },
 	{ "ffightbl"    , HACK_B_5    , mapper_S224B , 0, NULL                },
-	{ "ffightbl2"   , HACK_B_5    , mapper_S224B , 0, NULL                },
+	{ "ffightbla"   , HACK_B_5    , mapper_S224B , 0, NULL                },
 	{ "fcrash"      , HACK_B_5    , mapper_S224B , 0, NULL                }, // doesn't really have an ID, but this used to give the relevant values to our rendering functions
 	{ "forgottn"    , CPS_B_01    , mapper_LW621 , 1, NULL                },
 	{ "forgottnu"   , CPS_B_01    , mapper_LW621 , 1, NULL                },
@@ -17394,12 +17396,12 @@ struct BurnDriver BurnDrvCpsFfightbl = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsFfightbl2 = {
-	"ffightbl2", "ffight", NULL, NULL, "1990",
+struct BurnDriver BurnDrvCpsFfightbla = {
+	"ffightbla", "ffight", NULL, NULL, "1990",
 	"Final Fight (bootleg set 2, World))\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
-	NULL, Ffightbl2RomInfo, Ffightbl2RomName, NULL, NULL, FfightInputInfo, FfightDIPInfo,
+	NULL, FfightblaRomInfo, FfightblaRomName, NULL, NULL, FfightInputInfo, FfightDIPInfo,
 	FcrashInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

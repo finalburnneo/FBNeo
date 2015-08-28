@@ -880,7 +880,7 @@ struct BurnDriver BurnDrvGunsmokeb = {
 // Gun.Smoke (Japan, 851115)
 
 static struct BurnRomInfo gunsmokejRomDesc[] = {
-	{ "gsj_03.9n",    0x8000, 0xb56b5df6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "gsj_03.09n",   0x8000, 0xb56b5df6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "gs04.10n", 	  0x8000, 0x8d4b423f, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "gs05.12n", 	  0x8000, 0x2b5667fb, 1 | BRF_PRG | BRF_ESS }, //  2
 

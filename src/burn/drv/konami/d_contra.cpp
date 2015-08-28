@@ -1114,8 +1114,8 @@ static struct BurnRomInfo contraeRomDesc[] = {
 
 	{ "633e08.10g",		0x00100, 0x9f0949fa, 5 | BRF_GRA },            // 19 Color Proms
 	{ "633e09.12g",		0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 20
-	{ "633f10.18g",		0x00100, 0x2b244d84, 5 | BRF_GRA },            // 21
-	{ "633f11.20g",		0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 22
+	{ "633e10.18g",		0x00100, 0xe782c494, 5 | BRF_GRA },            // 21
+	{ "633e11.20g",		0x00100, 0x14ca5e19, 5 | BRF_GRA },            // 22
 	
 	{ "007766.20d.bin", 	0x1, 0x00000000, 0 | BRF_NODUMP }, /* PAL16L/A-2CN */
 };

@@ -554,13 +554,75 @@ static struct BurnRomInfo Gforce2RomDesc[] = {
 	{ "mpr-11465.107",    0x80000, 0xe1436dab, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "epr-11516.106",    0x20000, 0x19d0e17f, SYS16_ROM_PCMDATA | BRF_SND },
 	{ "epr-11814.105",    0x20000, 0x0b05d376, SYS16_ROM_PCMDATA | BRF_SND },
-	
-	{ "motorpcb.prg",     0x08000, 0xfecee31e, BRF_OPT },
 };
 
 
 STD_ROM_PICK(Gforce2)
 STD_ROM_FN(Gforce2)
+
+static struct BurnRomInfo Gforce2sdRomDesc[] = {
+	{ "epr-11688.25",     0x20000, 0xc845f2df, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11687.24",     0x20000, 0x1cbefbbf, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-11875.81",     0x20000, 0xc81701c6, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-11874.80",     0x20000, 0x5301fd79, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	
+	{ "epr-11816b.54",    0x20000, 0x317dd0c2, SYS16_ROM_PROG3 | BRF_ESS | BRF_PRG },
+	{ "epr-11815b.53",    0x20000, 0xf1fb22f1, SYS16_ROM_PROG3 | BRF_ESS | BRF_PRG },
+
+	{ "mpr-11468.14",     0x20000, 0x74ca9ca5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-11467.16",     0x20000, 0x6e60e736, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11695.15",     0x20000, 0x38a864be, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11694.17",     0x20000, 0x7e297b84, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "mpr-11469.67",     0x20000, 0xed7a2299, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-11470.75",     0x20000, 0x34dea550, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-11477.63",     0x20000, 0xa2784653, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-11478.71",     0x20000, 0x8b778993, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-11471.86",     0x20000, 0xf1974069, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-11472.114",    0x20000, 0x0d24409a, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-11479.82",     0x20000, 0xecd6138a, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-11480.110",    0x20000, 0x64ad66c5, SYS16_ROM_SPRITES2 | BRF_GRA },
+	
+	{ "mpr-11473.66",     0x20000, 0x0538c6ec, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-11474.74",     0x20000, 0xeb923c50, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-11481.62",     0x20000, 0x78e652b6, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-11482.70",     0x20000, 0x2f879766, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-11475.85",     0x20000, 0x69cfec89, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-11476.113",    0x20000, 0xa60b9b79, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-11483.81",     0x20000, 0xd5d3a505, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "mpr-11484.109",    0x20000, 0xb8a56a50, SYS16_ROM_SPRITES2 | BRF_GRA },
+	
+	{ "epr-11696.65",     0x20000, 0x99e8e49e, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11697.73",     0x20000, 0x7545c52e, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11700.61",     0x20000, 0xe13839c1, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11701.69",     0x20000, 0x9fb3d365, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11698.84",     0x20000, 0xcfeba3e2, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11699.112",    0x20000, 0x4a00534a, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11702.80",     0x20000, 0x2a09c627, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11703.108",    0x20000, 0x43bb7d9f, SYS16_ROM_SPRITES2 | BRF_GRA },
+	
+	{ "epr-11524.64",     0x20000, 0x5d35849f, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11525.72",     0x20000, 0x9ae47552, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11532.60",     0x20000, 0xb3565ddb, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11533.68",     0x20000, 0xf5d16e8a, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11526.83",     0x20000, 0x094cb3f0, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11527.111",    0x20000, 0xe821a144, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11534.79",     0x20000, 0xb7f0ad7c, SYS16_ROM_SPRITES2 | BRF_GRA },
+	{ "epr-11535.107",    0x20000, 0x95da7a46, SYS16_ROM_SPRITES2 | BRF_GRA },
+		
+	{ "epr-11693.102",    0x10000, 0x0497785c, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "mpr-11465.107",    0x80000, 0xe1436dab, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-11516.106",    0x20000, 0x19d0e17f, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-11814.105",    0x20000, 0x0b05d376, SYS16_ROM_PCMDATA | BRF_SND },
+	
+	{ "motorpcb.prg",     0x08000, 0xfecee31e, BRF_OPT },
+};
+
+
+STD_ROM_PICK(Gforce2sd)
+STD_ROM_FN(Gforce2sd)
 
 static struct BurnRomInfo Gforce2jRomDesc[] = {
 	{ "epr-11511.25",     0x20000, 0xd80a86d6, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -2030,6 +2092,16 @@ struct BurnDriver BurnDrvGforce2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
 	NULL, Gforce2RomInfo, Gforce2RomName, NULL, NULL, Gforce2InputInfo, Gforce2DIPInfo,
+	Gforce2Init, YBoardExit, YBoardFrame, NULL, YBoardScan,
+	NULL, 0x6000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvGforce2sd = {
+	"gforce2sd", "gforce2", NULL, NULL, "1988",
+	"Galaxy Force 2 (Super Deluxe unit)\0", NULL, "Sega", "Y-Board",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_SHOOT, 0,
+	NULL, Gforce2sdRomInfo, Gforce2sdRomName, NULL, NULL, Gforce2InputInfo, Gforce2DIPInfo,
 	Gforce2Init, YBoardExit, YBoardFrame, NULL, YBoardScan,
 	NULL, 0x6000, 320, 224, 4, 3
 };

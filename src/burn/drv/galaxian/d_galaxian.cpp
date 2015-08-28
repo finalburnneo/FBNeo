@@ -18861,6 +18861,27 @@ static struct BurnRomInfo ScobrabRomDesc[] = {
 STD_ROM_PICK(Scobrab)
 STD_ROM_FN(Scobrab)
 
+static struct BurnRomInfo ScobraeRomDesc[] = {
+	{ "super cobra ra1 2c 1981.2c", 0x01000, 0xba9d4152, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "super cobra ra1 2e 1981.2e", 0x01000, 0xf9b77b27, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "super cobra ra1 2f 1981.2f", 0x01000, 0xe6109c2c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "super cobra ra1 2h 1981.2h", 0x01000, 0x8762735b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "super cobra ra1 2j 1981.2j", 0x01000, 0x5648f404, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "super cobra ra1 2l 1981.2l", 0x01000, 0x34476cc3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "5c",            0x00800, 0xdeeb0dd3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "5d",            0x00800, 0x872c1a74, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "5e",            0x00800, 0xccd7a110, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+		
+	{ "super cobra ra1 5f 1981.5f", 0x00800, 0x64d113b4, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "super cobra ra1 5h 1981.5h", 0x00800, 0xa96316d3, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "82s123.6e",     0x00020, 0x9b87f90d, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Scobrae)
+STD_ROM_FN(Scobrae)
+
 static struct BurnRomInfo SuprheliRomDesc[] = {
 	{ "1.2c",          0x01000, 0xb25141d8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "scobra2e.bin",  0x01000, 0xa270e44d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -20121,6 +20142,41 @@ static INT32 ScobraInit()
 	return nRet;
 }
 
+static INT32 ScobraeInit()
+{
+	INT32 nRet;
+	
+	GalPostLoadCallbackFunction = MapScobra;
+	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
+	
+	nRet = GalInit();
+	KonamiSoundInit();
+	
+	for (INT32 Offs = 0; Offs < 0x6000; Offs++) {
+		INT32 i = Offs & 0x7f;
+		INT32 x = GalZ80Rom1[Offs];
+
+		if (Offs & 0x80) i ^= 0x7f;
+
+		if (i & 0x01) x ^= 0x49;
+		if (i & 0x02) x ^= 0x21;
+		if (i & 0x04) x ^= 0x18;
+		if (i & 0x08) x ^= 0x12;
+		if (i & 0x10) x ^= 0x84;
+		if (i & 0x20) x ^= 0x24;
+		if (i & 0x40) x ^= 0x40;
+
+		GalZ80Rom1[Offs] = x ^ 0xff;
+	}
+	
+	GalRenderBackgroundFunction = ScrambleDrawBackground;
+	GalDrawBulletsFunction = ScrambleDrawBullets;
+	
+	KonamiPPIInit();
+	
+	return nRet;
+}
+
 static INT32 LosttombInit()
 {
 	INT32 nRet;
@@ -20919,6 +20975,16 @@ struct BurnDriver BurnDrvScobrab = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, ScobrabRomInfo, ScobrabRomName, NULL, NULL, SfxInputInfo, ScobrasDIPInfo,
 	ScobraInit, KonamiExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvScobrae = {
+	"scobrae", "scobra", NULL, NULL, "1981",
+	"Super Cobra (Stern) (encrypted, KONATEC XC-103SS CPU)\0", NULL, "Konami (Stern license)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
+	NULL, ScobraeRomInfo, ScobraeRomName, NULL, NULL, SfxInputInfo, ScobrasDIPInfo,
+	ScobraeInit, KonamiExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

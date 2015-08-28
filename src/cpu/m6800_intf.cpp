@@ -574,15 +574,15 @@ INT32 M6800Scan(INT32 nAction)
 			m6800_Regs *R = &M6800CPUContext[i].reg;
 
 			m6800_get_context((void *)&M6800CPUContext[i].reg);
-                    	void (* const * insn)(void) = R->insn;	/* instruction table - save pointers */
+			void (* const * insn)(void) = R->insn;	/* instruction table - save pointers */
 			const UINT8 *cycles = R->cycles;	/* clock cycle of instruction table  */
 
-                        SCAN_VAR(M6800CPUContext[i].reg);
+			SCAN_VAR(M6800CPUContext[i].reg);
 
 			R->insn = insn; // restore pointers -dink
 			R->cycles = cycles;
 
-                        if (nAction & ACB_WRITE) {
+			if (nAction & ACB_WRITE) {
 				m6800_set_context((void *)&M6800CPUContext[i].reg);
 			}
 

@@ -398,6 +398,8 @@ void ZetRunEnd()
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetRunEnd called without init\n"));
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetRunEnd called when no CPU open\n"));
 #endif
+
+	z80_ICount = 0;
 }
 
 // This function will make an area callback ZetRead/ZetWrite

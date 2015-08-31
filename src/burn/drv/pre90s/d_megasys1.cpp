@@ -2893,7 +2893,7 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static inline void draw_16x16_priority_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT8 mosaic, INT32 priority)
+static inline void draw_16x16_priority_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT8 mosaic, UINT8 mossol, INT32 priority)
 {
 	if (sy >= nScreenHeight || sy < -15 || sx >= nScreenWidth || sx < -15) return;
 
@@ -2914,6 +2914,8 @@ static inline void draw_16x16_priority_sprite(INT32 code, INT32 color, INT32 sx,
 			if (sx < 0 || sy < 0 || sx >= nScreenWidth || sy >= nScreenHeight) continue;	
 
 			INT32 pxl = gfx[(((y ^ flipy) & ~mosaic)*16) + ((x ^ flipx) & ~mosaic)];
+			//if (mossol && mosaic) pxl = (pxl & 1) ? 1 : 0x0f;
+			//if (pxl != 0xf && mossol) pxl = 1;
 
 			if (pxl != 0x0f) {
 				if ((priority & (1 << (prio[x] & 0x1f))) == 0 && prio[x] < 0x80) {
@@ -2957,7 +2959,9 @@ static void System1A_draw_sprites()
 			INT32 flipy = attr & 0x80;
 			INT32 pri  = (attr & 0x08) ? 0x0c : 0x0a;
 			INT32 mosaic = (attr & 0x0f00)>>8;
-			//INT32 mossol = (attr & 0x1000)>>8; //not yet
+			INT32 mossol = (attr & 0x1000)>>8; //not yet
+			if (mossol)
+				bprintf(0, _T("mossol %X.."), mossol);
 			code = (code & 0xfff) + ((sprite_bank & 1) << 12);
 			if (DrvTransTab[3][code]) continue;
 
@@ -2969,7 +2973,7 @@ static void System1A_draw_sprites()
 				sy = 240 - sy;
 			}
 
-			draw_16x16_priority_sprite(code, color, sx, sy - 16, flipx, flipy, mosaic, pri);
+			draw_16x16_priority_sprite(code, color, sx, sy - 16, flipx, flipy, mosaic, mossol, pri);
 		}
 	}
 }
@@ -3007,7 +3011,7 @@ static void System1Z_draw_sprites()
 			sy = 240 - sy;
 		}
 
-		draw_16x16_priority_sprite(code, color, sx, sy - 16, flipx, flipy, 0, pri);
+		draw_16x16_priority_sprite(code, color, sx, sy - 16, flipx, flipy, 0, 0, pri);
 	}
 }
 

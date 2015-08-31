@@ -866,10 +866,12 @@ static void RenderTileCPMP(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 fl
 
 			INT32 pxl = gfx[((y * width) + x) ^ flip];
 
-			//if (counter>0) bprintf(0, _T("%X,"), pxl); //(color << 4)); //debug
+			//if (counter>0) bprintf(0, _T("%X,"), pxl); // debug - leave in.
 
-			if (mode == 2 && (!pxl || !(pxl & 0x08) || (pxl == 0xf && dorunrunmode))) continue; // Do's Castle fg, Do! RunRun sprites
-			if (mode == 1 && (!pxl || (pxl & 0x08))) continue; // Do! Run Run fg
+			// in Jumping Jack(dorunrunmode), pxl's that are 0xf leave black crap on the screen which should be transparent, fix: (pxl == 0xf && dorunrunmode) for mode 2
+			// in Mr.Do's Wild Ride, bonus text with a black background is covered up by sprites, fix: display pxl==0
+			if (mode == 2 && (/*!pxl || */!(pxl & 0x08) || (pxl == 0xf && dorunrunmode))) continue; // Do's Castle fg, Do! RunRun sprites
+			if (mode == 1 && (/*!pxl || */(pxl & 0x08))) continue; // Do! Run Run fg
 
 			dest[sy * nScreenWidth + sx] = pxl | (color << 4) | offset;
 		}
@@ -916,41 +918,25 @@ static void draw_sprites()
 		sy -= 32;
 		sx -= 8;
 
-		if (flipy) { // we need a macro for this -dink
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 64*16, DrvGfx1);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 64*16, DrvGfx1);
-			}
+		if (dorunrunmode) {
+			// Games on DoRunRun hardware need kludges and other weird and wonderful things
+			RenderTileCPMP(code, color, sx, sy, flipx, flipy, 16, 16, 64*16 /* == 0x400 */, 2, DrvGfx1);
 		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 64*16, DrvGfx1);
+			// use regular mask rendering for Mr. Do's Castle hardware
+			if (flipy) {
+				if (flipx) {
+					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 64*16, DrvGfx1);
+				} else {
+					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 64*16, DrvGfx1);
+				}
 			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 64*16, DrvGfx1);
+				if (flipx) {
+					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 64*16, DrvGfx1);
+				} else {
+					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 64*16, DrvGfx1);
+				}
 			}
 		}
-	}
-}
-
-static void draw_sprites_dorunrun()
-{
-	UINT8 *spriteram = DrvSpriteRAM;
-
-	for (INT32 offs = 0; offs < 0x200; offs += 4)
-	{
-		INT32 code,color,flipx,flipy,sx,sy;
-
-		code = spriteram[offs + 3] & 0x1ff;
-		color = spriteram[offs + 2] & 0x1f;
-		sx = ((spriteram[offs + 1] + 8) & 0xff) - 8;
-		sy = spriteram[offs];
-		flipx = spriteram[offs + 2] & 0x40;
-		flipy = spriteram[offs + 2] & 0x80;
-
-		sy -= 32;
-		sx -= 8;
-
-		RenderTileCPMP(code, color, sx, sy, flipx, flipy, 16, 16, 64*16, 2, DrvGfx1);
 	}
 }
 
@@ -961,14 +947,10 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
+	BurnTransferClear();
+
 	if (nBurnLayer & 2) draw_chars(0);
-	if (nBurnLayer & 4) {
-		if(dorunrunmode) {
-			draw_sprites_dorunrun();
-		} else {
-			draw_sprites();
-		}
-	}
+	if (nBurnLayer & 4) draw_sprites();
 	if (nBurnLayer & 8) draw_chars(1);
 
 	BurnTransferCopy(DrvPalette);

@@ -11698,7 +11698,7 @@ static struct BurnRomInfo VarthjrRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "va63b.1a",      0x000117, 0x38540e86, BRF_OPT }, // b-board PLDs
+	{ "va63b.1a",      0x000117, 0x132ab7c5, BRF_OPT }, // b-board PLDs
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
 	
@@ -11724,7 +11724,7 @@ static struct BurnRomInfo VarthuRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "va63b.1a",      0x000117, 0x38540e86, BRF_OPT }, // b-board PLDs
+	{ "va63b.1a",      0x000117, 0x132ab7c5, BRF_OPT }, // b-board PLDs
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
 };

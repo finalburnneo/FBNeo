@@ -449,7 +449,6 @@ static void shared0w(UINT8 offs, UINT8 data)
 static void shared1w(UINT8 offs, UINT8 data)
 {
 	if (offs == 8) {
-		ZetRunEnd();
 		cpu0idle = 1;
 	}
 	DrvSharedRAM1[offs] = data;
@@ -971,14 +970,16 @@ static INT32 DrvFrame()
 	// we need a very high interleave here to sync the cpu's -or- dips & music/sfx won't work
 	INT32 nInterleave = 256*16; // why don't we just go single-cycle? -dink    *kidding*
 	INT32 nCyclesTotal[3] = { 4000000 / 60, 4000000 / 60, 4000000 / 60 };
-
+	INT32 nIdleCycles = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
 		if (cpu0idle) {
+			nIdleCycles += nCyclesTotal[0] / nInterleave;
 			ZetIdle(nCyclesTotal[0] / nInterleave);
 		} else {
-			ZetRun(nCyclesTotal[0] / nInterleave);
+			ZetRun((nCyclesTotal[0] / nInterleave) + nIdleCycles);
+			nIdleCycles = 0;
 		}
 		if (i == ( nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
@@ -988,10 +989,12 @@ static INT32 DrvFrame()
 		if ((i % (nInterleave / 8)) == ((nInterleave / 8) - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
-		ZetOpen(2);
+#if 0
+		ZetOpen(2); // this z80 drives the crt controller, useless for emulation
 		ZetRun(nCyclesTotal[2] / nInterleave);
 		if (i == (nInterleave - 1)) ZetNmi();
 		ZetClose();
+#endif
 	}
 
 	if (pBurnSoundOut) {

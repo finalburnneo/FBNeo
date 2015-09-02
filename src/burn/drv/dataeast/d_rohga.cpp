@@ -47,6 +47,8 @@ static UINT16 *tempdraw[2];
 
 static INT32 DrvOkiBank;
 
+static INT32 DrvIsWizdfireEnglish = 0;
+
 static struct BurnInputInfo RohgaInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
@@ -678,7 +680,7 @@ static INT32 MemIndex()
 	DrvGfxROM4	= Next; Next += 0x800000;
 
 	MSM6295ROM	= Next;
-	DrvSndROM0	= Next; Next += 0x100000;
+	DrvSndROM0	= Next; Next += 0x140000;
 	DrvSndROM1	= Next; Next += 0x0c0000;
 
 	tempdraw[0]	= (UINT16*)Next; Next += 320 * 240 * sizeof(UINT16);
@@ -863,6 +865,10 @@ static INT32 WizdfireInit()
 		if (BurnLoadRom(DrvGfxROM4 + 0x000001, 18, 2)) return 1;
 
 		if (BurnLoadRom(DrvSndROM0 + 0x040000, 19, 1)) return 1;
+		if (DrvIsWizdfireEnglish == 1) {
+			memcpy(DrvSndROM0 + 0x040000, DrvSndROM0 + 0x0c0000, 0x80000);
+		}
+		memset(DrvSndROM0 + 0x0c0000, 0, 0x80000);
 
 		if (BurnLoadRom(DrvSndROM1 + 0x040000, 20, 1)) return 1;
 
@@ -916,6 +922,13 @@ static INT32 WizdfireInit()
 	DrvDoReset();
 
 	return 0;
+}
+
+static INT32 WizdfireEnglishInit()
+{
+	DrvIsWizdfireEnglish = 1;
+	
+	return WizdfireInit();
 }
 
 static INT32 SchmeisrInit()
@@ -1121,6 +1134,8 @@ static INT32 DrvExit()
 	deco16SoundExit();
 
 	BurnFree (AllMem);
+	
+	DrvIsWizdfireEnglish = 0;
 
 	return 0;
 }
@@ -2019,7 +2034,7 @@ struct BurnDriver BurnDrvWizdfire = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, wizdfireRomInfo, wizdfireRomName, NULL, NULL, WizdfireInputInfo, WizdfireDIPInfo,
-	WizdfireInit, DrvExit, DrvFrame, WizdfireDraw, DrvScan, &DrvRecalc, 0x800,
+	WizdfireEnglishInit, DrvExit, DrvFrame, WizdfireDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
@@ -2069,7 +2084,7 @@ struct BurnDriver BurnDrvWizdfireu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, wizdfireuRomInfo, wizdfireuRomName, NULL, NULL, WizdfireInputInfo, WizdfireDIPInfo,
-	WizdfireInit, DrvExit, DrvFrame, WizdfireDraw, DrvScan, &DrvRecalc, 0x800,
+	WizdfireEnglishInit, DrvExit, DrvFrame, WizdfireDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 

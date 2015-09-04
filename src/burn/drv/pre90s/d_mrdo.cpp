@@ -5,32 +5,50 @@
 #include "z80_intf.h"
 #include "sn76496.h"
 
-static UINT8 *Mem, *Rom, *Gfx0, *Gfx1, *Gfx2, *Prom;
-static UINT8 DrvJoy1[8], DrvJoy2[8], DrvReset, DrvDips[2];
-static INT32 *Palette;
+static UINT8 *AllMem;
+static UINT8 *MemEnd;
+static UINT8 *AllRam;
+static UINT8 *RamEnd;
+
+static UINT8 *DrvROM;
+static UINT8 *DrvRAM;
+static UINT8 *DrvFGVidRAM;
+static UINT8 *DrvBGVidRAM;
+static UINT8 *DrvSpriteRAM;
+static UINT8 *Gfx0;
+static UINT8 *Gfx1;
+static UINT8 *Gfx2;
+static UINT8 *Prom;
+static UINT32 *Palette;
+static UINT8 DrvRecalc;
+
+static UINT8 DrvJoy1[8];
+static UINT8 DrvJoy2[8];
+static UINT8 DrvReset;
+static UINT8 DrvDips[2];
 
 static INT32 flipscreen, scroll_x, scroll_y;
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy2 + 6,	"p1 coin"  },
-	{"P1 Start"  ,    BIT_DIGITAL  , DrvJoy1 + 5,	"p1 start" },
-	{"P1 Up"	, BIT_DIGITAL  , DrvJoy1 + 3,   "p1 up"    },
+	{"P1 Start"     , BIT_DIGITAL  , DrvJoy1 + 5,	"p1 start" },
+	{"P1 Up"	    , BIT_DIGITAL  , DrvJoy1 + 3,   "p1 up"    },
 	{"P1 Down"      , BIT_DIGITAL  , DrvJoy1 + 1,   "p1 down"  },
 	{"P1 Left"      , BIT_DIGITAL  , DrvJoy1 + 0, 	"p1 left"  },
 	{"P1 Right"     , BIT_DIGITAL  , DrvJoy1 + 2, 	"p1 right" },
 	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy1 + 4,	"p1 fire 1"},
 
 	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy2 + 7,	"p2 coin"  },
-	{"P2 Start"  ,    BIT_DIGITAL  , DrvJoy1 + 6,	"p2 start" },
-	{"P2 Up"	, BIT_DIGITAL  , DrvJoy2 + 3,   "p2 up"    },
-	{"P2 Down",	  BIT_DIGITAL,   DrvJoy2 + 1,   "p2 down", },
+	{"P2 Start"     , BIT_DIGITAL  , DrvJoy1 + 6,	"p2 start" },
+	{"P2 Up"	    , BIT_DIGITAL  , DrvJoy2 + 3,   "p2 up"    },
+	{"P2 Down"      , BIT_DIGITAL,   DrvJoy2 + 1,   "p2 down", },
 	{"P2 Left"      , BIT_DIGITAL  , DrvJoy2 + 0, 	"p2 left"  },
 	{"P2 Right"     , BIT_DIGITAL  , DrvJoy2 + 2, 	"p2 right" },
 	{"P2 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 4,	"p2 fire 1"},
 
 	{"Tilt"         , BIT_DIGITAL  , DrvJoy1 + 7,	"tilt"     },
 
-	{"Reset",	  BIT_DIGITAL  , &DrvReset,	"reset"    },
+	{"Reset",	  BIT_DIGITAL  , &DrvReset,	"reset"        },
 	{"Dip 1",	  BIT_DIPSWITCH, DrvDips + 0,	"dip 1"	   },
 	{"Dip 2",	  BIT_DIPSWITCH, DrvDips + 1,	"dip 2"	   },
 };
@@ -40,64 +58,64 @@ STDINPUTINFO(Drv)
 static struct BurnDIPInfo DrvDIPList[]=
 {
 	// Default Values
-	{0x10, 0xff, 0xff, 0xdf, NULL                     },
+	{0x10, 0xff, 0xff, 0xdf, NULL                 },
 
-	{0   , 0xfe, 0   , 4   , "Difficulty"             },
+	{0   , 0xfe, 0   , 4   , "Difficulty"         },
 	{0x10, 0x01, 0x03, 0x03, "Easy"     		  },
 	{0x10, 0x01, 0x03, 0x02, "Medium"	          },
 	{0x10, 0x01, 0x03, 0x01, "Hard"     		  },
 	{0x10, 0x01, 0x03, 0x00, "Hardest"	          },
 
-	{0   , 0xfe, 0   , 2   , "Rack Test (cheat)"      },
+	{0   , 0xfe, 0   , 2   , "Rack Test (cheat)"  },
 	{0x10, 0x01, 0x04, 0x04, "Off"       		  },
 	{0x10, 0x01, 0x04, 0x00, "On"       		  },
 
-	{0   , 0xfe, 0   , 2   , "Special"                },
-	{0x10, 0x01, 0x08, 0x08, "Easy"			  },
-	{0x10, 0x01, 0x08, 0x00, "Hard"			  },
+	{0   , 0xfe, 0   , 2   , "Special"            },
+	{0x10, 0x01, 0x08, 0x08, "Easy"			      },
+	{0x10, 0x01, 0x08, 0x00, "Hard"			      },
 
-	{0   , 0xfe, 0   , 2   , "Extra"                  },
+	{0   , 0xfe, 0   , 2   , "Extra"              },
 	{0x10, 0x01, 0x10, 0x10, "Easy"         	  },
-	{0x10, 0x01, 0x10, 0x00, "Hard"    		  },
+	{0x10, 0x01, 0x10, 0x00, "Hard"    		      },
 
 	{0   , 0xfe, 0   , 2   , "Cabinet" 	          },
-	{0x10, 0x01, 0x20, 0x00, "Upright"		  },
+	{0x10, 0x01, 0x20, 0x00, "Upright"		      },
 	{0x10, 0x01, 0x20, 0x20, "Cocktail"    		  },
 
 	{0   , 0xfe, 0   , 4   , "Lives" 	          },
 	{0x10, 0x01, 0xc0, 0x00, "2"	        	  },
-	{0x10, 0x01, 0xc0, 0xc0, "3"    		  },
-	{0x10, 0x01, 0xc0, 0x80, "4"    		  },
-	{0x10, 0x01, 0xc0, 0x40, "5"    		  },
+	{0x10, 0x01, 0xc0, 0xc0, "3"    		      },
+	{0x10, 0x01, 0xc0, 0x80, "4"    		      },
+	{0x10, 0x01, 0xc0, 0x40, "5"    		      },
 
 	// Default Values
-	{0x11, 0xff, 0xff, 0xff, NULL                     },
+	{0x11, 0xff, 0xff, 0xff, NULL                 },
 
 	{0   , 0xfe, 0   , 11  , "Coin B" 	          },
-	{0x11, 0x01, 0x0f, 0x06, "4C_1C"                  },
-	{0x11, 0x01, 0x0f, 0x08, "3C_1C"                  },
-	{0x11, 0x01, 0x0f, 0x0a, "2C_1C"                  },
-	{0x11, 0x01, 0x0f, 0x07, "3C_2C"                  },
-	{0x11, 0x01, 0x0f, 0x0f, "1C_1C"                  },
-	{0x11, 0x01, 0x0f, 0x09, "2C_3C"                  },
-	{0x11, 0x01, 0x0f, 0x0e, "1C_2C"                  },
-	{0x11, 0x01, 0x0f, 0x0d, "1C_3C"                  },
-	{0x11, 0x01, 0x0f, 0x0c, "1C_4C"                  },
-	{0x11, 0x01, 0x0f, 0x0b, "1C_5C"                  },
-	{0x11, 0x01, 0x0f, 0x00, "Free_Play"              },
+	{0x11, 0x01, 0x0f, 0x06, "4 Coins / 1 Credit"                  },
+	{0x11, 0x01, 0x0f, 0x08, "3 Coins / 1 Credit"                  },
+	{0x11, 0x01, 0x0f, 0x0a, "2 Coins / 1 Credit"                  },
+	{0x11, 0x01, 0x0f, 0x07, "3 Coins / 2 Credits"                 },
+	{0x11, 0x01, 0x0f, 0x0f, "1 Coin / 1 Credit"                   },
+	{0x11, 0x01, 0x0f, 0x09, "2 Coins / 3 Credits"                 },
+	{0x11, 0x01, 0x0f, 0x0e, "1 Coin / 2 Credits"                  },
+	{0x11, 0x01, 0x0f, 0x0d, "1 Coin / 3 Credits"                  },
+	{0x11, 0x01, 0x0f, 0x0c, "1 Coin / 4 Credits"                  },
+	{0x11, 0x01, 0x0f, 0x0b, "1 Coin / 5 Credits"                  },
+	{0x11, 0x01, 0x0f, 0x00, "Free_Play"                           },
 
-	{0   , 0xfe, 0   , 11  , "Coin A" 	          },
-	{0x11, 0x01, 0xf0, 0x60, "4C_1C"                  },
-	{0x11, 0x01, 0xf0, 0x80, "3C_1C"                  },
-	{0x11, 0x01, 0xf0, 0xa0, "2C_1C"                  },
-	{0x11, 0x01, 0xf0, 0x70, "3C_2C"                  },
-	{0x11, 0x01, 0xf0, 0xf0, "1C_1C"                  },
-	{0x11, 0x01, 0xf0, 0x90, "2C_3C"                  },
-	{0x11, 0x01, 0xf0, 0xe0, "1C_2C"                  },
-	{0x11, 0x01, 0xf0, 0xd0, "1C_3C"                  },
-	{0x11, 0x01, 0xf0, 0xc0, "1C_4C"                  },
-	{0x11, 0x01, 0xf0, 0xb0, "1C_5C"                  },
-	{0x11, 0x01, 0xf0, 0x00, "Free_Play"              },
+	{0   , 0xfe, 0   , 11  , "Coin A" 	                           },
+	{0x11, 0x01, 0xf0, 0x60, "4 Coins / 1 Credit"                  },
+	{0x11, 0x01, 0xf0, 0x80, "3 Coins / 1 Credit"                  },
+	{0x11, 0x01, 0xf0, 0xa0, "2 Coins / 1 Credit"                  },
+	{0x11, 0x01, 0xf0, 0x70, "3 Coins / 2 Credits"                 },
+	{0x11, 0x01, 0xf0, 0xf0, "1 Coin / 1 Credit"                   },
+	{0x11, 0x01, 0xf0, 0x90, "2 Coins / 3 Credits"                 },
+	{0x11, 0x01, 0xf0, 0xe0, "1 Coin / 2 Credits"                  },
+	{0x11, 0x01, 0xf0, 0xd0, "1 Coin / 3 Credits"                  },
+	{0x11, 0x01, 0xf0, 0xc0, "1 Coin / 4 Credits"                  },
+	{0x11, 0x01, 0xf0, 0xb0, "1 Coin / 5 Credits"                  },
+	{0x11, 0x01, 0xf0, 0x00, "Free_Play"                           },
 };
 
 STDDIPINFO(Drv)
@@ -137,7 +155,7 @@ UINT8 __fastcall mrdo_read(UINT16 address)
 	switch (address)
 	{
 		case 0x9803: // Protection
-			return Rom[ZetHL(-1)];
+			return DrvROM[ZetHL(-1)];
 
 		case 0xa000:
 		{
@@ -165,7 +183,7 @@ static INT32 DrvDoReset()
 {
 	DrvReset = 0;
 
-	memset (Rom + 0x8000, 0, 0x8000);
+	memset (AllRam, 0, RamEnd - AllRam);
 
 	flipscreen = 0;
 	scroll_x = scroll_y = 0;
@@ -233,7 +251,7 @@ static void mrdo_palette_init()
 		bits2 = (color_prom[a2] >> 4) & 0x03;
 		b = weight[bits0 + (bits2 << 2)];
 
-		Palette[i] = (r<<16)|(g<<8)|b;
+		Palette[i] = BurnHighCol(r, g, b, 0);
 	}
 
 	color_prom += 0x40;
@@ -279,28 +297,54 @@ static void mrdo_gfx_decode()
 	BurnFree (tmp);
 }
 
+static INT32 MemIndex()
+{
+	UINT8 *Next; Next = AllMem;
+
+	DrvROM          = Next; Next += 0x10000;
+
+	Gfx0            = Next; Next += 0x08000;
+	Gfx1            = Next; Next += 0x08000;
+	Gfx2            = Next; Next += 0x08000;
+
+	Prom            = Next; Next += 0x00080;
+
+	Palette	        = (UINT32 *)Next; Next += 0x00140 * sizeof(UINT32);
+
+	AllRam			= Next;
+
+	DrvRAM          = Next; Next += 0x01000;
+	DrvFGVidRAM     = Next; Next += 0x00800;
+	DrvBGVidRAM     = Next; Next += 0x00800;
+	DrvSpriteRAM    = Next; Next += 0x00100;
+
+	RamEnd			= Next;
+
+	MemEnd          = Next;
+
+	return 0;
+}
+
+
 static INT32 DrvInit()
 {
-	Mem = (UINT8*)BurnMalloc(0x10000 + 0x8000 + 0x8000 + 0x8000 + 0x80 + 0x500);
-	if (!Mem) return 1;
-
-	Rom  = Mem + 0x00000;
-	Gfx0 = Mem + 0x10000;
-	Gfx1 = Mem + 0x18000;
-	Gfx2 = Mem + 0x20000;
-	Prom = Mem + 0x28000;
-	Palette = (INT32*)(Mem + 0x28080);
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
 
 	{
 		for (INT32 i = 0; i < 4; i++) {
-			if(BurnLoadRom(Rom  + i * 0x2000,  0 + i, 1)) return 1;
-			if(BurnLoadRom(Prom + i * 0x0020, 10 + i, 1)) return 1;
+			if(BurnLoadRom(DrvROM + (i * 0x2000),  0 + i, 1)) return 1;
+			if(BurnLoadRom(Prom + (i * 0x0020), 10 + i, 1)) return 1;
 		}
 
 		for (INT32 i = 0; i < 2; i++) {
-			if(BurnLoadRom(Gfx0 + i * 0x1000,  4 + i, 1)) return 1;
-			if(BurnLoadRom(Gfx1 + i * 0x1000,  6 + i, 1)) return 1;
-			if(BurnLoadRom(Gfx2 + i * 0x1000,  8 + i, 1)) return 1;
+			if(BurnLoadRom(Gfx0 + (i * 0x1000),  4 + i, 1)) return 1;
+			if(BurnLoadRom(Gfx1 + (i * 0x1000),  6 + i, 1)) return 1;
+			if(BurnLoadRom(Gfx2 + (i * 0x1000),  8 + i, 1)) return 1;
 		}
 
 		mrdo_palette_init();
@@ -311,22 +355,19 @@ static INT32 DrvInit()
 	ZetOpen(0);
 	ZetSetReadHandler(mrdo_read);
 	ZetSetWriteHandler(mrdo_write);
-	ZetMapArea(0x0000, 0x7fff, 0, Rom + 0x0000);
-	ZetMapArea(0x0000, 0x7fff, 2, Rom + 0x0000);
-	ZetMapArea(0x8000, 0x8fff, 0, Rom + 0x8000);
-	ZetMapArea(0x8000, 0x8fff, 1, Rom + 0x8000);
-	ZetMapArea(0x9000, 0x90ff, 1, Rom + 0x9000);
-	ZetMapArea(0xe000, 0xefff, 0, Rom + 0xe000);
-	ZetMapArea(0xe000, 0xefff, 1, Rom + 0xe000);
-	ZetMapArea(0xe000, 0xefff, 2, Rom + 0xe000);
+	ZetMapMemory(DrvROM,            0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvBGVidRAM,       0x8000, 0x87ff, MAP_RAM);
+	ZetMapMemory(DrvFGVidRAM,       0x8800, 0x8fff, MAP_RAM);
+	ZetMapMemory(DrvSpriteRAM,      0x9000, 0x90ff, MAP_RAM);
+	ZetMapMemory(DrvRAM,            0xe000, 0xefff, MAP_RAM);
 	ZetClose();
-
-//	BurnSetRefreshRate(5000000.0/312/262);
 
 	SN76489Init(0, 4000000, 0);
 	SN76489Init(1, 4000000, 1);
-	SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-	SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(1, 0.45, BURN_SND_ROUTE_BOTH);
+
+	GenericTilesInit();
  
 	DrvDoReset();
 
@@ -336,13 +377,10 @@ static INT32 DrvInit()
 static INT32 DrvExit()
 {
 	ZetExit();
-	
 	SN76496Exit();
+	GenericTilesExit();
 
-	BurnFree (Mem);
-
-	Mem = Rom = Gfx0 = Gfx1 = Gfx2 = Prom = NULL;
-	Palette = NULL;
+	BurnFree(AllMem);
 
 	flipscreen = scroll_x = scroll_y = 0;
 
@@ -353,74 +391,33 @@ static void draw_sprites()
 {
 	for (INT32 offs = 0x100 - 4; offs >= 0; offs -= 4)
 	{
-		if (Rom[0x9001 + offs])
+		if (DrvSpriteRAM[offs + 1])
 		{
-			INT32 sx = Rom[0x9003 + offs];
-			INT32 sy = Rom[0x9001 + offs] ^ 0xff;
+			INT32 sx = DrvSpriteRAM[offs + 3];
+			INT32 sy = DrvSpriteRAM[offs + 1] ^ 0xff;
 
-			INT32 code = Rom[0x9000 + offs] & 0x7f;
-			INT32 color = ((Rom[0x9002 + offs] & 0x0f) << 2) | 0x100;
+			INT32 code = DrvSpriteRAM[offs] & 0x7f;
+			INT32 color = DrvSpriteRAM[offs + 2] & 0x0f;
 
-			INT32 flipx = Rom[0x9002 + offs] & 0x10;
-			INT32 flipy = Rom[0x9002 + offs] & 0x20;
-
-			UINT8 *src = Gfx2 + (code << 8);
+			INT32 flipx = DrvSpriteRAM[offs + 2] & 0x10;
+			INT32 flipy = DrvSpriteRAM[offs + 2] & 0x20;
 
 			sx -= 8;
-			sy -= 32;
+			sy -= 31; // sy is offset by 1 pixel from the bg/fg
 
-			if (flipy)
-			{
-				for (INT32 y = sy + 15; y >= sy; y--)
-				{
-					if (flipx)
-					{
-						for (INT32 x = sx + 15; x >= sx; x--, src++)
-						{
-							if (y < 0 || x < 0 || y > 191 || x > 239) continue;
-							if (!*src) continue;
+			if (sx < 0 || sy < -7 || sx > nScreenWidth || sy > nScreenHeight) continue;
 
-							INT32 pxl = Palette[color | *src];
-
-							PutPix(pBurnDraw + ((y * 240) + x) * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
-						}
-					} else {
-						for (INT32 x = sx; x < sx + 16; x++, src++)
-						{
-							if (y < 0 || x < 0 || y > 191 || x > 239) continue;
-							if (!*src) continue;
-
-							INT32 pxl = Palette[color | *src];
-
-							PutPix(pBurnDraw + ((y * 240) + x) * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
-						}
-					}
+			if (flipy) {
+				if (flipx) {
+					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x100, Gfx2);
+				} else {
+					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x100, Gfx2);
 				}
 			} else {
-				for (INT32 y = sy; y < sy + 16; y++)
-				{
-					if (flipx)
-					{
-						for (INT32 x = sx + 15; x >= sx; x--, src++)
-						{
-							if (y < 0 || x < 0 || y > 191 || x > 239) continue;
-							if (!*src) continue;
-
-							INT32 pxl = Palette[color | *src];
-
-							PutPix(pBurnDraw + ((y * 240) + x) * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
-						}
-					} else {
-						for (INT32 x = sx; x < sx + 16; x++, src++)
-						{
-							if (y < 0 || x < 0 || y > 191 || x > 239) continue;
-							if (!*src) continue;
-
-							INT32 pxl = Palette[color | *src];
-
-							PutPix(pBurnDraw + ((y * 240) + x) * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
-						}
-					}
+				if (flipx) {
+					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x100, Gfx2);
+				} else {
+					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x100, Gfx2);
 				}
 			}
 		}
@@ -435,10 +432,8 @@ static void draw_8x8_tiles(UINT8 *vram, UINT8 *gfx_base, INT32 scrollx, INT32 sc
 		INT32 sy = (offs >> 2) & 0xf8; 
 
 		INT32 code = vram[0x400 + offs] | ((vram[offs] & 0x80) << 1);
-		INT32 color = (vram[offs] & 0x3f) << 2;
+		INT32 color = vram[offs] & 0x3f;
 		INT32 forcelayer0 = vram[offs] & 0x40;
-
-		UINT8 *src = gfx_base + (code << 6);
 
 		sx = (UINT8)(sx - scrollx);
 		sy = (UINT8)(sy - scrolly);
@@ -446,31 +441,30 @@ static void draw_8x8_tiles(UINT8 *vram, UINT8 *gfx_base, INT32 scrollx, INT32 sc
 		sx -= 8;
 		sy -= 32;
 
-		for (INT32 y = sy; y < sy + 8; y++)
-		{
-			for (INT32 x = sx; x < sx + 8; x++, src++)
-			{
-				if (x < 0 || y < 0 || x > 239 || y > 191) continue;
+		if (sx < 0 || sy < -7 || sx > nScreenWidth || sy > nScreenHeight) continue;
 
-				INT32 pxl = Palette[color | *src];
-				if (!*src && !forcelayer0) continue;
-
-				INT32 pos = y * 240 + x;
-				if (flipscreen) pos = (192 - y) * 240 + (240 - x);
-
-				PutPix(pBurnDraw + pos * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
-			}
+		if (forcelayer0) {
+			Render8x8Tile(pTransDraw, code, sx, sy, color, 2, 0, gfx_base);
+		} else {
+			Render8x8Tile_Mask(pTransDraw, code, sx, sy, color, 2, 0, 0, gfx_base);
 		}
 	}
 }
 
 static INT32 DrvDraw()
 {
-	BurnClearScreen();
+	if (DrvRecalc) {
+		mrdo_palette_init();
+		DrvRecalc = 0;
+	}
 
-	draw_8x8_tiles(Rom + 0x8000, Gfx1, scroll_x, scroll_y);
-	draw_8x8_tiles(Rom + 0x8800, Gfx0, 0, 0);
-	draw_sprites();
+	BurnTransferClear();
+
+	if (nBurnLayer & 2) draw_8x8_tiles(DrvBGVidRAM, Gfx1, scroll_x, scroll_y);
+	if (nBurnLayer & 4) draw_8x8_tiles(DrvFGVidRAM, Gfx0, 0, 0);
+	if (nBurnLayer & 8) draw_sprites();
+
+	BurnTransferCopy(Palette);
 
 	return 0;
 }
@@ -481,9 +475,16 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal = 4000000 / 60;
+
 	ZetOpen(0);
-	ZetRun(4000000 / 60);
-	ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+	for (INT32 i = 0; i < nInterleave; i++) {
+		ZetRun(nCyclesTotal / nInterleave);
+
+		if (i == 240)
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+	}
 	ZetClose();
 
 	if (pBurnDraw) {
@@ -498,19 +499,18 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
 	if (pnMin) {
-		*pnMin = 0x029521;
+		*pnMin = 0x029736;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
-
-		ba.Data	  = Rom + 0x8000;
-		ba.nLen	  = 0x8000;
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
@@ -557,7 +557,7 @@ struct BurnDriver BurnDrvmrdo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mrdoRomInfo, mrdoRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x140,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	192, 240, 3, 4
 };
 
@@ -594,7 +594,7 @@ struct BurnDriver BurnDrvmrdot = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mrdotRomInfo, mrdotRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x140,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	192, 240, 3, 4
 };
 
@@ -630,7 +630,7 @@ struct BurnDriver BurnDrvmrdofix = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mrdofixRomInfo, mrdofixRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x140,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	192, 240, 3, 4
 };
 
@@ -667,7 +667,7 @@ struct BurnDriver BurnDrvmrlo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mrloRomInfo, mrloRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x140,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	192, 240, 3, 4
 };
 
@@ -704,7 +704,7 @@ struct BurnDriver BurnDrvmrdu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mrduRomInfo, mrduRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x140,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	192, 240, 3, 4
 };
 
@@ -741,7 +741,7 @@ struct BurnDriver BurnDrvmrdoy = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mrdoyRomInfo, mrdoyRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x140,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	192, 240, 3, 4
 };
 
@@ -778,7 +778,7 @@ struct BurnDriver BurnDrvyankeedo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, yankeedoRomInfo, yankeedoRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x140,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x140,
 	192, 240, 3, 4
 };
 

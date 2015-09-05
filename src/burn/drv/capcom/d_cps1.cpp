@@ -17425,7 +17425,7 @@ struct BurnDriver BurnDrvCpsFfightjh = {
 
 struct BurnDriver BurnDrvCpsFfightbl = {
 	"ffightbl", "ffight", NULL, NULL, "1990",
-	"Final Fight (bootleg set 1, World)\0", NULL, "bootleg", "CPS1",
+	"Final Fight (bootleg set 1 (with 2xYM2203 + 2xMSM5205), World)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, FfightblRomInfo, FfightblRomName, NULL, NULL, FfightInputInfo, FfightDIPInfo,
@@ -17435,7 +17435,7 @@ struct BurnDriver BurnDrvCpsFfightbl = {
 
 struct BurnDriver BurnDrvCpsFfightbla = {
 	"ffightbla", "ffight", NULL, NULL, "1990",
-	"Final Fight (bootleg set 2, World))\0", NULL, "bootleg", "CPS1",
+	"Final Fight (bootleg set 2 (with 2xYM2203 + 2xMSM5205), World))\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, FfightblaRomInfo, FfightblaRomName, NULL, NULL, FfightInputInfo, FfightDIPInfo,

@@ -34,6 +34,12 @@ static UINT8 DrvReset;
 
 static UINT32 rockola = 0;
 
+// 4-Way input stuff
+static UINT8 fourwaymode     = 1;        // enabled.
+static UINT8 DrvInput4way[2] = { 0, 0 }; // inputs after 4-way processing
+static INT32 fourway[2]      = { 0, 0 }; // 4-way buffer
+static UINT8 DrvInputPrev[2] = { 0, 0 }; // 4-way buffer
+
 static struct BurnInputInfo WarpwarpInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"   },
 	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"  },
@@ -48,6 +54,7 @@ static struct BurnInputInfo WarpwarpInputList[] = {
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"     },
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"   },
 	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	    "dip"       },
+	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	    "dip"       },
 };
 
 STDINPUTINFO(Warpwarp)
@@ -55,66 +62,76 @@ STDINPUTINFO(Warpwarp)
 
 static struct BurnDIPInfo WarpwarpDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x85, NULL		        },
+	{0x0a, 0xff, 0xff, 0x85, NULL		        },
+	{0x0b, 0xff, 0xff, 0x20, NULL		        },
 
 	{0   , 0xfe, 0   ,    4, "Coinage"		    },
-	{0x0f, 0x01, 0x03, 0x03, "2 Coins 1 Credits"},
-	{0x0f, 0x01, 0x03, 0x01, "1 Coin  1 Credits"},
-	{0x0f, 0x01, 0x03, 0x02, "1 Coin  2 Credits"},
-	{0x0f, 0x01, 0x03, 0x00, "Free Play"		},
+	{0x0a, 0x01, 0x03, 0x03, "2 Coins 1 Credit" },
+	{0x0a, 0x01, 0x03, 0x01, "1 Coin  1 Credit" },
+	{0x0a, 0x01, 0x03, 0x02, "1 Coin  2 Credits"},
+	{0x0a, 0x01, 0x03, 0x00, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		    },
-	{0x0f, 0x01, 0x0c, 0x00, "2"		        },
-	{0x0f, 0x01, 0x0c, 0x04, "3"		        },
-	{0x0f, 0x01, 0x0c, 0x08, "4"		        },
-	{0x0f, 0x01, 0x0c, 0x0c, "5"		        },
+	{0x0a, 0x01, 0x0c, 0x00, "2"		        },
+	{0x0a, 0x01, 0x0c, 0x04, "3"		        },
+	{0x0a, 0x01, 0x0c, 0x08, "4"		        },
+	{0x0a, 0x01, 0x0c, 0x0c, "5"		        },
 
 	{0   , 0xfe, 0   ,    8, "Bonus Life"		},
-	{0x0f, 0x01, 0x30, 0x00, "8k 30k 30k+"		},
-	{0x0f, 0x01, 0x30, 0x10, "10k 40k 40k+"		},
-	{0x0f, 0x01, 0x30, 0x20, "15k 60k 60k+"		},
-	{0x0f, 0x01, 0x30, 0x30, "None"		        },
+	{0x0a, 0x01, 0x30, 0x00, "8k 30k 30k+"		},
+	{0x0a, 0x01, 0x30, 0x10, "10k 40k 40k+"		},
+	{0x0a, 0x01, 0x30, 0x20, "15k 60k 60k+"		},
+	{0x0a, 0x01, 0x30, 0x30, "None"		        },
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x0f, 0x01, 0x40, 0x40, "Off"		        },
-	{0x0f, 0x01, 0x40, 0x00, "On"		        },
+	{0x0a, 0x01, 0x40, 0x40, "Off"		        },
+	{0x0a, 0x01, 0x40, 0x00, "On"		        },
 
 	{0   , 0xfe, 0   ,    2, "Level Selection"	},
-	{0x0f, 0x01, 0x80, 0x80, "Off"		        },
-	{0x0f, 0x01, 0x80, 0x00, "On"		        },
+	{0x0a, 0x01, 0x80, 0x80, "Off"		        },
+	{0x0a, 0x01, 0x80, 0x00, "On"		        },
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"     },
+	{0x0b, 0x01, 0x20, 0x20, "Off"		        },
+	{0x0b, 0x01, 0x20, 0x00, "On"		        },
 };
 
 STDDIPINFO(Warpwarp)
 
 static struct BurnDIPInfo WarpwarprDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x85, NULL		        },
+	{0x0a, 0xff, 0xff, 0x85, NULL		        },
+	{0x0b, 0xff, 0xff, 0x20, NULL		        },
 
 	{0   , 0xfe, 0   ,    4, "Coinage"		    },
-	{0x0f, 0x01, 0x03, 0x03, "2 Coins 1 Credits"},
-	{0x0f, 0x01, 0x03, 0x01, "1 Coin  1 Credits"},
-	{0x0f, 0x01, 0x03, 0x02, "1 Coin  2 Credits"},
-	{0x0f, 0x01, 0x03, 0x00, "Free Play"		},
+	{0x0a, 0x01, 0x03, 0x03, "2 Coins 1 Credit" },
+	{0x0a, 0x01, 0x03, 0x01, "1 Coin  1 Credit" },
+	{0x0a, 0x01, 0x03, 0x02, "1 Coin  2 Credits"},
+	{0x0a, 0x01, 0x03, 0x00, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		    },
-	{0x0f, 0x01, 0x0c, 0x00, "2"		        },
-	{0x0f, 0x01, 0x0c, 0x04, "3"		        },
-	{0x0f, 0x01, 0x0c, 0x08, "4"		        },
-	{0x0f, 0x01, 0x0c, 0x0c, "5"		        },
+	{0x0a, 0x01, 0x0c, 0x00, "2"		        },
+	{0x0a, 0x01, 0x0c, 0x04, "3"		        },
+	{0x0a, 0x01, 0x0c, 0x08, "4"		        },
+	{0x0a, 0x01, 0x0c, 0x0c, "5"		        },
 
 	{0   , 0xfe, 0   ,    8, "Bonus Life"		},
-	{0x0f, 0x01, 0x30, 0x00, "8k 30k 30k+"		},
-	{0x0f, 0x01, 0x30, 0x10, "10k 40k 40k+"		},
-	{0x0f, 0x01, 0x30, 0x20, "15k 60k 60k+"		},
-	{0x0f, 0x01, 0x30, 0x30, "None"		        },
+	{0x0a, 0x01, 0x30, 0x00, "8k 30k 30k+"		},
+	{0x0a, 0x01, 0x30, 0x10, "10k 40k 40k+"		},
+	{0x0a, 0x01, 0x30, 0x20, "15k 60k 60k+"		},
+	{0x0a, 0x01, 0x30, 0x30, "None"		        },
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x0f, 0x01, 0x40, 0x40, "Off"		        },
-	{0x0f, 0x01, 0x40, 0x00, "On"		        },
+	{0x0a, 0x01, 0x40, 0x40, "Off"		        },
+	{0x0a, 0x01, 0x40, 0x00, "On"		        },
 
 	{0   , 0xfe, 0   ,    2, "High Score Name"	},
-	{0x0f, 0x01, 0x80, 0x80, "No"		        },
-	{0x0f, 0x01, 0x80, 0x00, "Yes"		        },
+	{0x0a, 0x01, 0x80, 0x80, "No"		        },
+	{0x0a, 0x01, 0x80, 0x00, "Yes"		        },
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"     },
+	{0x0b, 0x01, 0x20, 0x20, "Off"		        },
+	{0x0b, 0x01, 0x20, 0x00, "On"		        },
 };
 
 STDDIPINFO(Warpwarpr)
@@ -483,7 +500,7 @@ static void warpwarp_palette_init()
 static void DrvMakeInputs()
 {
 	// Reset Inputs (all active LOW)
-	DrvInput[0] = 0xff;
+	DrvInput[0] = 0xff - 0x20; // 0x20 comes from DrvDip[1], below
 	DrvInput[1] = 0xff;
 	DrvInput[2] = 0x00;
 	DrvInput[3] = 0x00;
@@ -495,6 +512,30 @@ static void DrvMakeInputs()
 		DrvInput[2] ^= (DrvJoy3[i] & 1) << i;
 		DrvInput[3] ^= (DrvJoy4[i] & 1) << i;
 	}
+
+	DrvInput[0] |= DrvDip[1]; // service mode dip
+
+	if (fourwaymode) {
+		// Convert to 4-way
+		for (INT32 i = 0; i < 2; i++) {
+			if(DrvInput[i+2] != DrvInputPrev[i]) {
+				fourway[i] = DrvInput[i+2] & 0xf;
+
+				if((fourway[i] & 0x3) && (fourway[i] & 0xc))
+					fourway[i] ^= (fourway[i] & (DrvInputPrev[i] & 0xf));
+
+				if((fourway[i] & 0x3) && (fourway[i] & 0xc)) // if it starts out diagonally, pick a direction
+					fourway[i] &= (rand()&1) ? 0x03 : 0x0c;
+			}
+			DrvInput4way[i] = fourway[i] | (DrvInput[i+2] & 0xf0);
+
+			DrvInputPrev[i] = DrvInput[i+2];
+		}
+	} else { // all other games. (8-way)
+		for (INT32 i = 0; i < 2; i++)
+			DrvInput4way[i] = DrvInput[i];
+	}
+
 }
 
 static UINT8 warpwarp_sw_r(UINT8 offset)
@@ -511,7 +552,7 @@ static UINT8 warpwarp_vol_r(UINT8 offset)
 {
 	int res;
 
-	res = DrvInput[2];
+	res = DrvInput4way[0];
 
 	{
 		if (res & 1) return 0x0f;
@@ -608,6 +649,9 @@ static INT32 DrvDoReset()
 
 	HiscoreReset();
 
+	memset(&DrvInputPrev, 0, sizeof(DrvInputPrev));
+	memset(&fourway, 0, sizeof(fourway));
+
 	return 0;
 }
 
@@ -651,7 +695,6 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvZ80ROM + 0x2000, 2, 1)) return 1;
 		if (rockola)
 			if (BurnLoadRom(DrvZ80ROM + 0x3000, 3, 1)) return 1;
-
 
 		if (BurnLoadRom(DrvGFX1ROM        , 3 + rockola, 1)) return 1;
 		GfxDecode(0x100, 1, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvGFX1ROM, DrvCharGFX);
@@ -702,7 +745,7 @@ static void plot_pixel(INT32 x, INT32 y, INT32 pen)
 
 static void draw_bullet()
 {
-	if (m_ball_on) {
+	if (m_ball_h > 1) {
 		INT32 x = 264 - m_ball_h;
 		INT32 y = 240 - m_ball_v;
 

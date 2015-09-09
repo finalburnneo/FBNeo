@@ -3149,7 +3149,7 @@ static struct BurnRomInfo dmnfrntRomDesc[] = {
 	// 3rd dump (21/11/2009) : chinese-v105.u62 size 4 194 304 crc c798c2ef
 	// - 1st half crc 7c0690e1
 	// - 2nd half crc 3ce2fe8a
-	// Regarding these 3 dumps, it appears only the 3rd one seems to be correct
+	// Regarding these 3 dumps, only the 3rd is correct. Others are confirmed bad dumps.
 	{ "v105_16m.u5",   		0x200000, 0xbda083bd, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "t04501.u29",	   		0x800000, 0x900eaaac, 2 | BRF_GRA },			//  1 Tile data
@@ -3165,7 +3165,7 @@ static struct BurnRomInfo dmnfrntRomDesc[] = {
 
 	{ "dmnfrnt_igs027a.bin",	0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  8 Internal ARM7 Rom
 
-	{ "chinese-v105.u62",	 	0x400000, 0xc798c2ef, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
+	{ "v105_32m.u26",	 	0x400000, 0xc798c2ef, 8 | BRF_PRG | BRF_ESS },  //  9 External ARM7 Rom
 };
 
 STDROMPICKEXT(dmnfrnt, dmnfrnt, pgm)

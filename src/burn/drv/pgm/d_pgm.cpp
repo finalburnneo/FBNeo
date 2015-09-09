@@ -447,7 +447,7 @@ STDDIPINFOEXT(orld111t, 	pgm,	orld111t		)
 STDDIPINFOEXT(orld105k, 	pgm,	orld105k		)
 STDDIPINFOEXT(orld112c, 	pgm,	orld112c		)
 STDDIPINFOEXT(kov,       	pgm,	kov		    	)
-STDDIPINFOEXT(kov100,           pgm,	kov100			)
+STDDIPINFOEXT(kov100,       pgm,	kov100			)
 STDDIPINFOEXT(kov2,       	pgm,	kov2			)
 STDDIPINFOEXT(kovshxas,    	pgm,	kovshxas		)
 STDDIPINFOEXT(killbld,	 	pgm,	killbld			)
@@ -456,10 +456,10 @@ STDDIPINFOEXT(photoy2k, 	pgm,	photoy2k		)
 STDDIPINFOEXT(py2k2, 		pgm,	py2k2			)
 STDDIPINFOEXT(puzzli2,  	pgm,	puzzli2			)
 STDDIPINFOEXT(martmast, 	pgm,	martmast		)
-STDDIPINFOEXT(martmastc102,     pgm,	martmastc102		)
+STDDIPINFOEXT(martmastc102, pgm,	martmastc102	)
 STDDIPINFOEXT(olds,     	pgm,	olds			)
 STDDIPINFOEXT(olds100,     	pgm,	olds100			)
-STDDIPINFOEXT(olds103t,         pgm,	olds103t		)
+STDDIPINFOEXT(olds103t,     pgm,	olds103t		)
 STDDIPINFOEXT(ddp2,     	pgm,	ddp2			)
 STDDIPINFOEXT(ddp2hk,     	pgm,	ddp2hk			)
 STDDIPINFOEXT(ddp2k,     	pgm,	ddp2k			)
@@ -469,10 +469,10 @@ STDDIPINFOEXT(ddp2c,     	pgm,	ddp2c			)
 STDDIPINFOEXT(theglad,	 	pgm,	theglad 		)
 STDDIPINFOEXT(theglad100,	pgm,	theglad100 		)
 STDDIPINFOEXT(happy6,		pgm,	happy6	 		)
-STDDIPINFOEXT(svg,		pgm,	svg	 		)
+STDDIPINFOEXT(svg,			pgm,	svg	 			)
 STDDIPINFOEXT(svgtw,		pgm,	svgtw	 		)
-STDDIPINFOEXT(dmnfrntpcb,       jamma,	dmnfrntpcb		)
-STDDIPINFOEXT(thegladpcb,       jamma,	thegladpcb		)
+STDDIPINFOEXT(dmnfrntpcb,   jamma,	dmnfrntpcb		)
+STDDIPINFOEXT(thegladpcb,   jamma,	thegladpcb		)
 
 // -----------------------------------------------------------------------------
 // BIOS
@@ -566,20 +566,20 @@ static struct BurnRomInfo ddp3BiosRomDesc[] = {
 static struct BurnRomInfo orlegendRomDesc[] = {
 	{ "p0103.rom",			0x200000, 0xd5e93543, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t0100.rom",			0x400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
+	{ "t0100.u8",			0x400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a0100.rom",			0x400000, 0x8b3bd88a, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a0101.rom",			0x400000, 0x3b9e9644, 3 | BRF_GRA },			//  3	  
-	{ "a0102.rom",			0x400000, 0x069e2c38, 3 | BRF_GRA },			//  4
-	{ "a0103.rom",			0x400000, 0x4460a3fd, 3 | BRF_GRA },			//  5
-	{ "a0104.rom",			0x400000, 0x5f8abb56, 3 | BRF_GRA },			//  6
-	{ "a0105.rom",			0x400000, 0xa17a7147, 3 | BRF_GRA },			//  7
+	{ "a0100.u5",			0x400000, 0x8b3bd88a, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0101.u6",			0x400000, 0x3b9e9644, 3 | BRF_GRA },			//  3	  
+	{ "a0102.u7",			0x400000, 0x069e2c38, 3 | BRF_GRA },			//  4
+	{ "a0103.u8",			0x400000, 0x4460a3fd, 3 | BRF_GRA },			//  5
+	{ "a0104.u11",			0x400000, 0x5f8abb56, 3 | BRF_GRA },			//  6
+	{ "a0105.u12",			0x400000, 0xa17a7147, 3 | BRF_GRA },			//  7
 
-	{ "b0100.rom",			0x400000, 0x69d2e48c, 4 | BRF_GRA },			//  8 Sprite Masks & Color Indexes
-	{ "b0101.rom",			0x400000, 0x0d587bf3, 4 | BRF_GRA },			//  9
-	{ "b0102.rom",			0x400000, 0x43823c1e, 4 | BRF_GRA },			// 10
+	{ "b0100.u9",			0x400000, 0x69d2e48c, 4 | BRF_GRA },			//  8 Sprite Masks & Color Indexes
+	{ "b0101.u10",			0x400000, 0x0d587bf3, 4 | BRF_GRA },			//  9
+	{ "b0102.u15",			0x400000, 0x43823c1e, 4 | BRF_GRA },			// 10
 
-	{ "m0100.rom",			0x200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
+	{ "m0100.u1",			0x200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
 };
 
 STDROMPICKEXT(orlegend, orlegend, pgm)
@@ -608,20 +608,20 @@ struct BurnDriver BurnDrvOrlegend = {
 static struct BurnRomInfo orlegend112eRomDesc[] = {
 	{ "p0102.rom",			0x200000, 0x4d0f6cc5, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t0100.rom",			0x400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
+	{ "t0100.u8",			0x400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a0100.rom",			0x400000, 0x8b3bd88a, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a0101.rom",			0x400000, 0x3b9e9644, 3 | BRF_GRA },			//  3	  
-	{ "a0102.rom",			0x400000, 0x069e2c38, 3 | BRF_GRA },			//  4
-	{ "a0103.rom",			0x400000, 0x4460a3fd, 3 | BRF_GRA },			//  5
-	{ "a0104.rom",			0x400000, 0x5f8abb56, 3 | BRF_GRA },			//  6
-	{ "a0105.rom",			0x400000, 0xa17a7147, 3 | BRF_GRA },			//  7
+	{ "a0100.u5",			0x400000, 0x8b3bd88a, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0101.u6",			0x400000, 0x3b9e9644, 3 | BRF_GRA },			//  3	  
+	{ "a0102.u7",			0x400000, 0x069e2c38, 3 | BRF_GRA },			//  4
+	{ "a0103.u8",			0x400000, 0x4460a3fd, 3 | BRF_GRA },			//  5
+	{ "a0104.u11",			0x400000, 0x5f8abb56, 3 | BRF_GRA },			//  6
+	{ "a0105.u12",			0x400000, 0xa17a7147, 3 | BRF_GRA },			//  7
 
-	{ "b0100.rom",			0x400000, 0x69d2e48c, 4 | BRF_GRA },			//  8 Sprite Masks & Color Indexes
-	{ "b0101.rom",			0x400000, 0x0d587bf3, 4 | BRF_GRA },			//  9
-	{ "b0102.rom",			0x400000, 0x43823c1e, 4 | BRF_GRA },			// 10
+	{ "b0100.u9",			0x400000, 0x69d2e48c, 4 | BRF_GRA },			//  8 Sprite Masks & Color Indexes
+	{ "b0101.u10",			0x400000, 0x0d587bf3, 4 | BRF_GRA },			//  9
+	{ "b0102.u15",			0x400000, 0x43823c1e, 4 | BRF_GRA },			// 10
 
-	{ "m0100.rom",			0x200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
+	{ "m0100.u1",			0x200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
 };
 
 STDROMPICKEXT(orlegend112e, orlegend112e, pgm)
@@ -643,20 +643,20 @@ struct BurnDriver BurnDrvOrlegend112e = {
 static struct BurnRomInfo orlegend112cRomDesc[] = {
 	{ "p0101.160",			0x200000, 0xb24f0c1e, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t0100.rom",			0x400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
+	{ "t0100.u8",			0x400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a0100.rom",			0x400000, 0x8b3bd88a, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a0101.rom",			0x400000, 0x3b9e9644, 3 | BRF_GRA },			//  3	  
-	{ "a0102.rom",			0x400000, 0x069e2c38, 3 | BRF_GRA },			//  4
-	{ "a0103.rom",			0x400000, 0x4460a3fd, 3 | BRF_GRA },			//  5
-	{ "a0104.rom",			0x400000, 0x5f8abb56, 3 | BRF_GRA },			//  6
-	{ "a0105.rom",			0x400000, 0xa17a7147, 3 | BRF_GRA },			//  7
+	{ "a0100.u5",			0x400000, 0x8b3bd88a, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0101.u6",			0x400000, 0x3b9e9644, 3 | BRF_GRA },			//  3	  
+	{ "a0102.u7",			0x400000, 0x069e2c38, 3 | BRF_GRA },			//  4
+	{ "a0103.u8",			0x400000, 0x4460a3fd, 3 | BRF_GRA },			//  5
+	{ "a0104.u11",			0x400000, 0x5f8abb56, 3 | BRF_GRA },			//  6
+	{ "a0105.u12",			0x400000, 0xa17a7147, 3 | BRF_GRA },			//  7
 
-	{ "b0100.rom",			0x400000, 0x69d2e48c, 4 | BRF_GRA },			//  8 Sprite Masks & Color Indexes
-	{ "b0101.rom",			0x400000, 0x0d587bf3, 4 | BRF_GRA },			//  9
-	{ "b0102.rom",			0x400000, 0x43823c1e, 4 | BRF_GRA },			// 10
+	{ "b0100.u9",			0x400000, 0x69d2e48c, 4 | BRF_GRA },			//  8 Sprite Masks & Color Indexes
+	{ "b0101.u10",			0x400000, 0x0d587bf3, 4 | BRF_GRA },			//  9
+	{ "b0102.u15",			0x400000, 0x43823c1e, 4 | BRF_GRA },			// 10
 
-	{ "m0100.rom",			0x200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
+	{ "m0100.u1",			0x200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
 };
 
 STDROMPICKEXT(orlegend112c, orlegend112c, pgm)
@@ -678,20 +678,20 @@ struct BurnDriver BurnDrvOrlegend112c = {
 static struct BurnRomInfo orlegend112caRomDesc[] = {
 	{ "p0101.102",			0x200000, 0x7a22e1cb, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t0100.rom",			0x400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
+	{ "t0100.u8",			0x400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a0100.rom",			0x400000, 0x8b3bd88a, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a0101.rom",			0x400000, 0x3b9e9644, 3 | BRF_GRA },			//  3	  
-	{ "a0102.rom",			0x400000, 0x069e2c38, 3 | BRF_GRA },			//  4
-	{ "a0103.rom",			0x400000, 0x4460a3fd, 3 | BRF_GRA },			//  5
-	{ "a0104.rom",			0x400000, 0x5f8abb56, 3 | BRF_GRA },			//  6
-	{ "a0105.rom",			0x400000, 0xa17a7147, 3 | BRF_GRA },			//  7
+	{ "a0100.u5",			0x400000, 0x8b3bd88a, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0101.u6",			0x400000, 0x3b9e9644, 3 | BRF_GRA },			//  3	  
+	{ "a0102.u7",			0x400000, 0x069e2c38, 3 | BRF_GRA },			//  4
+	{ "a0103.u8",			0x400000, 0x4460a3fd, 3 | BRF_GRA },			//  5
+	{ "a0104.u11",			0x400000, 0x5f8abb56, 3 | BRF_GRA },			//  6
+	{ "a0105.u12",			0x400000, 0xa17a7147, 3 | BRF_GRA },			//  7
 
-	{ "b0100.rom",			0x400000, 0x69d2e48c, 4 | BRF_GRA },			//  8 Sprite Masks & Color Indexes
-	{ "b0101.rom",			0x400000, 0x0d587bf3, 4 | BRF_GRA },			//  9
-	{ "b0102.rom",			0x400000, 0x43823c1e, 4 | BRF_GRA },			// 10
+	{ "b0100.u9",			0x400000, 0x69d2e48c, 4 | BRF_GRA },			//  8 Sprite Masks & Color Indexes
+	{ "b0101.u10",			0x400000, 0x0d587bf3, 4 | BRF_GRA },			//  9
+	{ "b0102.u15",			0x400000, 0x43823c1e, 4 | BRF_GRA },			// 10
 
-	{ "m0100.rom",			0x200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
+	{ "m0100.u1",			0x200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
 };
 
 STDROMPICKEXT(orlegend112ca, orlegend112ca, pgm)
@@ -716,20 +716,20 @@ static struct BurnRomInfo orlegend111cRomDesc[] = {
 	{ "olv111ch.u7",		0x080000, 0x6ee79faf, 1 | BRF_PRG | BRF_ESS },	//  2
 	{ "olv111ch.u11",		0x080000, 0xb80ddd3c, 1 | BRF_PRG | BRF_ESS },	//  3
 
-	{ "t0100.rom",			0x400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
+	{ "t0100.u8",			0x400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a0100.rom",			0x400000, 0x8b3bd88a, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a0101.rom",			0x400000, 0x3b9e9644, 3 | BRF_GRA },			//  3	  
-	{ "a0102.rom",			0x400000, 0x069e2c38, 3 | BRF_GRA },			//  4
-	{ "a0103.rom",			0x400000, 0x4460a3fd, 3 | BRF_GRA },			//  5
-	{ "a0104.rom",			0x400000, 0x5f8abb56, 3 | BRF_GRA },			//  6
-	{ "a0105.rom",			0x400000, 0xa17a7147, 3 | BRF_GRA },			//  7
+	{ "a0100.u5",			0x400000, 0x8b3bd88a, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0101.u6",			0x400000, 0x3b9e9644, 3 | BRF_GRA },			//  3	  
+	{ "a0102.u7",			0x400000, 0x069e2c38, 3 | BRF_GRA },			//  4
+	{ "a0103.u8",			0x400000, 0x4460a3fd, 3 | BRF_GRA },			//  5
+	{ "a0104.u11",			0x400000, 0x5f8abb56, 3 | BRF_GRA },			//  6
+	{ "a0105.u12",			0x400000, 0xa17a7147, 3 | BRF_GRA },			//  7
 
-	{ "b0100.rom",			0x400000, 0x69d2e48c, 4 | BRF_GRA },			//  8 Sprite Masks & Color Indexes
-	{ "b0101.rom",			0x400000, 0x0d587bf3, 4 | BRF_GRA },			//  9
-	{ "b0102.rom",			0x400000, 0x43823c1e, 4 | BRF_GRA },			// 10
+	{ "b0100.u9",			0x400000, 0x69d2e48c, 4 | BRF_GRA },			//  8 Sprite Masks & Color Indexes
+	{ "b0101.u10",			0x400000, 0x0d587bf3, 4 | BRF_GRA },			//  9
+	{ "b0102.u15",			0x400000, 0x43823c1e, 4 | BRF_GRA },			// 10
 
-	{ "m0100.rom",			0x200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
+	{ "m0100.u1",			0x200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
 };
 
 STDROMPICKEXT(orlegend111c, orlegend111c, pgm)
@@ -750,24 +750,24 @@ struct BurnDriver BurnDrvOrlegend111c = {
 
 static struct BurnRomInfo orlegend111tRomDesc[] = {
 	{ "olv111tw.u6",		0x080000, 0xb205a733, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
-	{ "olv111tw.u8",		0x080000, 0x6d9d29b4, 1 | BRF_PRG | BRF_ESS },	//  1
+	{ "olv111tw.u9",		0x080000, 0x6d9d29b4, 1 | BRF_PRG | BRF_ESS },	//  1
 	{ "olv111tw.u7",		0x080000, 0x27628e87, 1 | BRF_PRG | BRF_ESS },	//  2
-	{ "olv111tw.u9",		0x080000, 0x23f33bc9, 1 | BRF_PRG | BRF_ESS },	//  3
+	{ "olv111tw.u11",		0x080000, 0x23f33bc9, 1 | BRF_PRG | BRF_ESS },	//  3
 
-	{ "t0100.rom",			0x400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
+	{ "t0100.u8",			0x400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a0100.rom",			0x400000, 0x8b3bd88a, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a0101.rom",			0x400000, 0x3b9e9644, 3 | BRF_GRA },			//  3	  
-	{ "a0102.rom",			0x400000, 0x069e2c38, 3 | BRF_GRA },			//  4
-	{ "a0103.rom",			0x400000, 0x4460a3fd, 3 | BRF_GRA },			//  5
-	{ "a0104.rom",			0x400000, 0x5f8abb56, 3 | BRF_GRA },			//  6
-	{ "a0105.rom",			0x400000, 0xa17a7147, 3 | BRF_GRA },			//  7
+	{ "a0100.u5",			0x400000, 0x8b3bd88a, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0101.u6",			0x400000, 0x3b9e9644, 3 | BRF_GRA },			//  3	  
+	{ "a0102.u7",			0x400000, 0x069e2c38, 3 | BRF_GRA },			//  4
+	{ "a0103.u8",			0x400000, 0x4460a3fd, 3 | BRF_GRA },			//  5
+	{ "a0104.u11",			0x400000, 0x5f8abb56, 3 | BRF_GRA },			//  6
+	{ "a0105.u12",			0x400000, 0xa17a7147, 3 | BRF_GRA },			//  7
 
-	{ "b0100.rom",			0x400000, 0x69d2e48c, 4 | BRF_GRA },			//  8 Sprite Masks & Color Indexes
-	{ "b0101.rom",			0x400000, 0x0d587bf3, 4 | BRF_GRA },			//  9
-	{ "b0102.rom",			0x400000, 0x43823c1e, 4 | BRF_GRA },			// 10
+	{ "b0100.u9",			0x400000, 0x69d2e48c, 4 | BRF_GRA },			//  8 Sprite Masks & Color Indexes
+	{ "b0101.u10",			0x400000, 0x0d587bf3, 4 | BRF_GRA },			//  9
+	{ "b0102.u15",			0x400000, 0x43823c1e, 4 | BRF_GRA },			// 10
 
-	{ "m0100.rom",			0x200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
+	{ "m0100.u1",			0x200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
 };
 
 STDROMPICKEXT(orlegend111t, orlegend111t, pgm)
@@ -784,6 +784,44 @@ struct BurnDriver BurnDrvOrlegend111t = {
 };
 
 
+// Oriental Legend / Xi Yo Gi Shi Re Zuang (V111, Korea)
+
+static struct BurnRomInfo orlegend111kRomDesc[] = {
+	{ "olv111ko.u6",		0x080000, 0x1ff35baa, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "olv111ko.u9",		0x080000, 0x87b6d202, 1 | BRF_PRG | BRF_ESS },	//  1
+	{ "olv111ko.u7",		0x080000, 0x27628e87, 1 | BRF_PRG | BRF_ESS },	//  2
+	{ "olv111ko.u11",		0x080000, 0x23f33bc9, 1 | BRF_PRG | BRF_ESS },	//  3
+
+	{ "t0100.u8",			0x400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a0100.u5",			0x400000, 0x8b3bd88a, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0101.u6",			0x400000, 0x3b9e9644, 3 | BRF_GRA },			//  3	  
+	{ "a0102.u7",			0x400000, 0x069e2c38, 3 | BRF_GRA },			//  4
+	{ "a0103.u8",			0x400000, 0x4460a3fd, 3 | BRF_GRA },			//  5
+	{ "a0104.u11",			0x400000, 0x5f8abb56, 3 | BRF_GRA },			//  6
+	{ "a0105.u12",			0x400000, 0xa17a7147, 3 | BRF_GRA },			//  7
+
+	{ "b0100.u9",			0x400000, 0x69d2e48c, 4 | BRF_GRA },			//  8 Sprite Masks & Color Indexes
+	{ "b0101.u10",			0x400000, 0x0d587bf3, 4 | BRF_GRA },			//  9
+	{ "b0102.u15",			0x400000, 0x43823c1e, 4 | BRF_GRA },			// 10
+
+	{ "m0100.u1",			0x200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
+};
+
+STDROMPICKEXT(orlegend111k, orlegend111k, pgm)
+STD_ROM_FN(orlegend111k)
+
+struct BurnDriver BurnDrvOrlegend111k = {
+	"orlegend111k", "orlegend", "pgm", NULL, "1997",
+	"Oriental Legend - Xi Yo Gi Shi Re Zuang (V111, Korea)\0", NULL, "IGS", "PolyGameMaster",
+	L"Oriental Legend\0\u897F\u6E38\u91CA\u5384\u4F20 (V111, Korea)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
+	NULL, orlegend111kRomInfo, orlegend111kRomName, NULL, NULL, pgmInputInfo, orld105kDIPInfo,
+	orlegendInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
 // Oriental Legend (V105, Korea)
 
 static struct BurnRomInfo orlegend105kRomDesc[] = {
@@ -792,20 +830,20 @@ static struct BurnRomInfo orlegend105kRomDesc[] = {
 	{ "olv105ko.u7",		0x080000, 0x5712facc, 1 | BRF_PRG | BRF_ESS },	//  2
 	{ "olv105ko.u11",		0x080000, 0x40ae4d9e, 1 | BRF_PRG | BRF_ESS },	//  3
 
-	{ "t0100.rom",			0x400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
+	{ "t0100.u8",			0x400000, 0x61425e1e, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a0100.rom",			0x400000, 0x8b3bd88a, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a0101.rom",			0x400000, 0x3b9e9644, 3 | BRF_GRA },			//  3	  
-	{ "a0102.rom",			0x400000, 0x069e2c38, 3 | BRF_GRA },			//  4
-	{ "a0103.rom",			0x400000, 0x4460a3fd, 3 | BRF_GRA },			//  5
-	{ "a0104.rom",			0x400000, 0x5f8abb56, 3 | BRF_GRA },			//  6
-	{ "a0105.rom",			0x400000, 0xa17a7147, 3 | BRF_GRA },			//  7
+	{ "a0100.u5",			0x400000, 0x8b3bd88a, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a0101.u6",			0x400000, 0x3b9e9644, 3 | BRF_GRA },			//  3	  
+	{ "a0102.u7",			0x400000, 0x069e2c38, 3 | BRF_GRA },			//  4
+	{ "a0103.u8",			0x400000, 0x4460a3fd, 3 | BRF_GRA },			//  5
+	{ "a0104.u11",			0x400000, 0x5f8abb56, 3 | BRF_GRA },			//  6
+	{ "a0105.u12",			0x400000, 0xa17a7147, 3 | BRF_GRA },			//  7
 
-	{ "b0100.rom",			0x400000, 0x69d2e48c, 4 | BRF_GRA },			//  8 Sprite Masks & Color Indexes
-	{ "b0101.rom",			0x400000, 0x0d587bf3, 4 | BRF_GRA },			//  9
-	{ "b0102.rom",			0x400000, 0x43823c1e, 4 | BRF_GRA },			// 10
+	{ "b0100.u9",			0x400000, 0x69d2e48c, 4 | BRF_GRA },			//  8 Sprite Masks & Color Indexes
+	{ "b0101.u10",			0x400000, 0x0d587bf3, 4 | BRF_GRA },			//  9
+	{ "b0102.u15",			0x400000, 0x43823c1e, 4 | BRF_GRA },			// 10
 
-	{ "m0100.rom",			0x200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
+	{ "m0100.u1",			0x200000, 0xe5c36c83, 5 | BRF_SND },			// 11 Samples
 };
 
 STDROMPICKEXT(orlegend105k, orlegend105k, pgm)
@@ -1255,6 +1293,7 @@ static struct BurnRomInfo oldsRomDesc[] = {
 	{ "m0500.rom",	   		0x200000, 0x37928cdd, 5 | BRF_SND },	        // 18 Samples
 
 	{ "sp_v101.u6",	   		0x010000, 0x097046bc, 9 | BRF_PRG | BRF_ESS },  // 19 Protection Rom
+
 };
 
 STDROMPICKEXT(olds, olds, pgm)

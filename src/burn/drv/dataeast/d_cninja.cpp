@@ -2693,6 +2693,13 @@ static struct BurnRomInfo cninjaRomDesc[] = {
 	{ "mag-07.13f",		0x080000, 0x08eb5264, 8 | BRF_SND }, 	       // 17 OKI M6295 Samples 1
 
 	{ "mb7122h.7v",		0x000400, 0xa1267336, 0 | BRF_OPT }, 	       // 18 Unused PROMs
+	
+	{ "tj-00.9j",		0x000117, 0x46defe8f, 0 | BRF_OPT }, 	       // 19 PLDs
+	{ "tj-01.9h",		0x000117, 0x7a86902d, 0 | BRF_OPT }, 	       // 20 
+	{ "tj-02.9h",		0x000117, 0xb476d59c, 0 | BRF_OPT }, 	       // 21
+	{ "tj-03.9e",		0x000117, 0xcfb6e4aa, 0 | BRF_OPT }, 	       // 22
+	{ "tj-04.5n",		0x000117, 0xbca07086, 0 | BRF_OPT }, 	       // 23
+	{ "tj-05.1r",		0x000117, 0x0dfc091b, 0 | BRF_OPT }, 	       // 24
 };
 
 STD_ROM_PICK(cninja)
@@ -2739,6 +2746,13 @@ static struct BurnRomInfo cninja1RomDesc[] = {
 	{ "mag-07.13f",		0x080000, 0x08eb5264, 8 | BRF_SND }, 	       // 17 OKI M6295 Samples 1
 
 	{ "mb7122h.7v",		0x000400, 0xa1267336, 0 | BRF_OPT }, 	       // 18 Unused PROMs
+	
+	{ "tj-00.9j",		0x000117, 0x46defe8f, 0 | BRF_OPT }, 	       // 19 PLDs
+	{ "tj-01.9h",		0x000117, 0x7a86902d, 0 | BRF_OPT }, 	       // 20 
+	{ "tj-02.9h",		0x000117, 0xb476d59c, 0 | BRF_OPT }, 	       // 21
+	{ "tj-03.9e",		0x000117, 0xcfb6e4aa, 0 | BRF_OPT }, 	       // 22
+	{ "tj-04.5n",		0x000117, 0xbca07086, 0 | BRF_OPT }, 	       // 23
+	{ "tj-05.1r",		0x000117, 0x0dfc091b, 0 | BRF_OPT }, 	       // 24
 };
 
 STD_ROM_PICK(cninja1)
@@ -2785,6 +2799,13 @@ static struct BurnRomInfo cninjauRomDesc[] = {
 	{ "mag-07.13f",		0x080000, 0x08eb5264, 8 | BRF_SND }, 	       // 17 OKI M6295 Samples 1
 
 	{ "mb7122h.7v",		0x000400, 0xa1267336, 0 | BRF_OPT }, 	       // 18 Unused PROMs
+	
+	{ "tj-00.9j",		0x000117, 0x46defe8f, 0 | BRF_OPT }, 	       // 19 PLDs
+	{ "tj-01.9h",		0x000117, 0x7a86902d, 0 | BRF_OPT }, 	       // 20 
+	{ "tj-02.9h",		0x000117, 0xb476d59c, 0 | BRF_OPT }, 	       // 21
+	{ "tj-03.9e",		0x000117, 0xcfb6e4aa, 0 | BRF_OPT }, 	       // 22
+	{ "tj-04.5n",		0x000117, 0xbca07086, 0 | BRF_OPT }, 	       // 23
+	{ "tj-05.1r",		0x000117, 0x0dfc091b, 0 | BRF_OPT }, 	       // 24
 };
 
 STD_ROM_PICK(cninjau)
@@ -2831,6 +2852,13 @@ static struct BurnRomInfo joemacRomDesc[] = {
 	{ "mag-07.13f",		0x080000, 0x08eb5264, 8 | BRF_SND }, 	       // 17 OKI M6295 Samples 1
 
 	{ "mb7122h.7v",		0x000400, 0xa1267336, 0 | BRF_OPT }, 	       // 18 Unused PROMs
+	
+	{ "tj-00.9j",		0x000117, 0x46defe8f, 0 | BRF_OPT }, 	       // 19 PLDs
+	{ "tj-01.9h",		0x000117, 0x7a86902d, 0 | BRF_OPT }, 	       // 20 
+	{ "tj-02.9h",		0x000117, 0xb476d59c, 0 | BRF_OPT }, 	       // 21
+	{ "tj-03.9e",		0x000117, 0xcfb6e4aa, 0 | BRF_OPT }, 	       // 22
+	{ "tj-04.5n",		0x000117, 0xbca07086, 0 | BRF_OPT }, 	       // 23
+	{ "tj-05.1r",		0x000117, 0x0dfc091b, 0 | BRF_OPT }, 	       // 24
 };
 
 STD_ROM_PICK(joemac)

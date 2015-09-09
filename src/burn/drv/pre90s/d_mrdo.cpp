@@ -475,14 +475,14 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 10;
 	INT32 nCyclesTotal = 4000000 / 60;
 
 	ZetOpen(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetRun(nCyclesTotal / nInterleave);
 
-		if (i == 240)
+		if (i == nInterleave-1)
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	}
 	ZetClose();

@@ -841,7 +841,17 @@ void __fastcall JumpbugZ80Write(UINT16 a, UINT8 d)
 			AY8910Write(0, 0, d);
 			return;
 		}
-		
+
+		case 0x2600:
+		case 0x6000:
+		case 0x6001:
+		case 0x6803:
+		case 0x6805:
+		case 0xb000:
+		case 0xb004:
+			// ??? unknown writes
+			return;
+
 		case 0x6002:
 		case 0x6003:
 		case 0x6004:

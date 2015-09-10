@@ -2913,9 +2913,13 @@ static inline void draw_16x16_priority_sprite(INT32 code, INT32 color, INT32 sx,
 		{
 			if (sx < 0 || sy < 0 || sx >= nScreenWidth || sy >= nScreenHeight) continue;	
 
-			INT32 pxl = gfx[(((y ^ flipy) & ~mosaic)*16) + ((x ^ flipx) & ~mosaic)];
-			//if (mossol && mosaic) pxl = (pxl & 1) ? 1 : 0x0f;
-			//if (pxl != 0xf && mossol) pxl = 1;
+			INT32 pxl;
+
+			if (mosaicsol) {
+				pxl = gfx[(((y ^ flipy) |  mosaic) * 16) + ((x ^ flipx) |  mosaic)];
+			} else {
+				pxl = gfx[(((y ^ flipy) & ~mosaic) * 16) + ((x ^ flipx) & ~mosaic)];
+			}
 
 			if (pxl != 0x0f) {
 				if ((priority & (1 << (prio[x] & 0x1f))) == 0 && prio[x] < 0x80) {

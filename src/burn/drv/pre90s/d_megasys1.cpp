@@ -2893,7 +2893,7 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static inline void draw_16x16_priority_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT8 mosaic, UINT8 mossol, INT32 priority)
+static inline void draw_16x16_priority_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT8 mosaic, UINT8 mosaicsol, INT32 priority)
 {
 	if (sy >= nScreenHeight || sy < -15 || sx >= nScreenWidth || sx < -15) return;
 
@@ -2964,8 +2964,7 @@ static void System1A_draw_sprites()
 			INT32 pri  = (attr & 0x08) ? 0x0c : 0x0a;
 			INT32 mosaic = (attr & 0x0f00)>>8;
 			INT32 mossol = (attr & 0x1000)>>8; //not yet
-			if (mossol)
-				bprintf(0, _T("mossol %X.."), mossol);
+
 			code = (code & 0xfff) + ((sprite_bank & 1) << 12);
 			if (DrvTransTab[3][code]) continue;
 

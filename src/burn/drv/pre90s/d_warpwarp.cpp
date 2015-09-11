@@ -745,7 +745,7 @@ static void plot_pixel(INT32 x, INT32 y, INT32 pen)
 
 static void draw_bullet()
 {
-	if (m_ball_h > 1) {
+	if (m_ball_on) {
 		INT32 x = 264 - m_ball_h;
 		INT32 y = 240 - m_ball_v;
 

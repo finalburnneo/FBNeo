@@ -47,6 +47,12 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[4];
 static UINT8 DrvReset;
 
+// 4-Way input stuff
+static UINT8 fourwaymode     = 0;        // enabled or disabled (per-game)
+static UINT8 DrvInput4way[2] = { 0, 0 }; // inputs after 4-way processing
+static INT32 fourway[2]      = { 0, 0 }; // 4-way buffer
+static UINT8 DrvInputPrev[2] = { 0, 0 }; // 4-way buffer
+
 static struct BurnInputInfo LadybugInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"	},
@@ -418,18 +424,18 @@ UINT8 __fastcall ladybug_read(UINT16 address)
 			return 0x3e;
 
 		case 0x9000:
-			return DrvInputs[0];
+			return DrvInput4way[0];
 
 		case 0x9001: {
 			if (ladybug) {
 				if (DrvDips[0] & 0x20) {
-					return DrvInputs[1] ^ vblank;
+					return DrvInput4way[1] ^ vblank;
 				} else {
-					return (DrvInputs[0] & 0x7f) ^ vblank;
+					return (DrvInput4way[0] & 0x7f) ^ vblank;
 				}
 			}
 
-			return DrvInputs[1] ^ vblank;
+			return DrvInput4way[1] ^ vblank;
 		}
 
 		case 0x9002:
@@ -526,6 +532,10 @@ static INT32 DrvDoReset()
 	stars_offset = 0;
 	stars_state = 0;
 	vblank = 0;
+
+	// 4way input mode stuff
+	memset(&DrvInputPrev, 0, sizeof(DrvInputPrev));
+	memset(&fourway, 0, sizeof(fourway));
 
 	return 0;
 }
@@ -869,6 +879,8 @@ static INT32 SraiderInit()
 
 	DrvDoReset();
 
+	fourwaymode = 1;
+
 	return 0;
 }
 
@@ -882,6 +894,8 @@ static INT32 DrvExit()
 	BurnFree (AllMem);
 
 	ladybug = 0;
+
+	fourwaymode = 0;
 
 	return 0;
 }
@@ -1125,7 +1139,11 @@ static INT32 DrvFrame()
 	{
 		INT32 previous = DrvInputs[3] ^ 0xff;
 
-		memset (DrvInputs, 0xff, 4);
+		DrvInputs[0] = 0x00; // p1. active=low conv. happens after the 4-way conv.
+		DrvInputs[1] = 0x00; // p2. ""
+		DrvInputs[2] = 0xff;
+		DrvInputs[3] = 0xff;
+
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -1136,6 +1154,30 @@ static INT32 DrvFrame()
 		if ((previous & 2) != (~DrvInputs[3] & 2)) coin |= 2;
 		DrvInputs[1] &= 0x7f;
 	}
+
+	if (fourwaymode) {
+		// Convert to 4-way
+		for (INT32 i = 0; i < 2; i++) {
+			if(DrvInputs[i] != DrvInputPrev[i]) {
+				fourway[i] = DrvInputs[i] & 0xf;
+
+				if((fourway[i] & 0xa) && (fourway[i] & 0x5))
+					fourway[i] ^= (fourway[i] & (DrvInputPrev[i] & 0xf));
+
+				if((fourway[i] & 0xa) && (fourway[i] & 0x5)) // if it starts out diagonally, pick a direction
+					fourway[i] &= (rand()&1) ? 0xa : 0x5;
+			}
+			DrvInput4way[i] = fourway[i] | (DrvInputs[i] & 0xf0);
+
+			DrvInputPrev[i] = DrvInputs[i];
+		}
+	} else { // all other games. (8-way) / passthru
+		for (INT32 i = 0; i < 2; i++)
+			DrvInput4way[i] = DrvInputs[i];
+	}
+
+	DrvInput4way[0] = ~DrvInput4way[0]; // convert to active=low
+	DrvInput4way[1] = ~DrvInput4way[1];
 
 	ZetOpen(0);
 	if (coin & 1) Z80SetIrqLine(0x20, DrvJoy4[0] ? Z80_ASSERT_LINE : Z80_CLEAR_LINE);
@@ -1176,6 +1218,8 @@ static INT32 SraiderFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
+		DrvInput4way[0] = DrvInputs[0];
+		DrvInput4way[1] = DrvInputs[1];
 	}
 
 	INT32 nInterleave = 100;
@@ -1259,6 +1303,8 @@ STD_ROM_FN(ladybug)
 
 static INT32 LadybugInit()
 {
+	fourwaymode = 1;
+
 	return DrvInit(0);
 }
 
@@ -1342,6 +1388,13 @@ struct BurnDriver BurnDrvLadybgb2 = {
 	196, 240, 3, 4
 };
 
+static INT32 SnapJackInit()
+{
+	fourwaymode = 0;
+
+	return DrvInit(0);
+}
+
 
 // Snap Jack
 
@@ -1373,7 +1426,7 @@ struct BurnDriver BurnDrvSnapjack = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, snapjackRomInfo, snapjackRomName, NULL, NULL, LadybugInputInfo, SnapjackDIPInfo,
-	LadybugInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
+	SnapJackInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	240, 196, 4, 3
 };
 
@@ -1403,6 +1456,8 @@ STD_ROM_FN(cavenger)
 
 static INT32 CavengerInit()
 {
+	fourwaymode = 0;
+
 	return DrvInit(1);
 }
 
@@ -1443,6 +1498,7 @@ STD_ROM_FN(dorodon)
 
 static INT32 DorodonInit()
 {
+	fourwaymode = 1;
 	return DrvInit(2);
 }
 

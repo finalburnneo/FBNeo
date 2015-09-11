@@ -823,36 +823,36 @@ struct BurnDriver BurnDrvGunsmoke = {
 
 static struct BurnRomInfo gunsmokebRomDesc[] = {
 	{ "3.ic85", 	  0x8000, 0xae6f4b75, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "gs04.10n", 	  0x8000, 0x8d4b423f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "gs05.12n", 	  0x8000, 0x2b5667fb, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.ic86", 	  0x8000, 0x8d4b423f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "5.ic87", 	  0x8000, 0x2b5667fb, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "gs02.14h", 	  0x8000, 0xcd7a2c38, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "2.ic41", 	  0x8000, 0xcd7a2c38, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "gs01.11f", 	  0x4000, 0xb61ece9b, 3 | BRF_GRA },	       //  4 Character Tiles
+	{ "1.ic39", 	  0x4000, 0xb61ece9b, 3 | BRF_GRA },	       //  4 Character Tiles
 
-	{ "gs13.06c", 	  0x8000, 0xf6769fc5, 4 | BRF_GRA },	       //  5 32x32 Tiles
-	{ "gs12.05c", 	  0x8000, 0xd997b78c, 4 | BRF_GRA },	       //  6
-	{ "gs11.04c", 	  0x8000, 0x125ba58e, 4 | BRF_GRA },	       //  7
-	{ "gs10.02c", 	  0x8000, 0xf469c13c, 4 | BRF_GRA },	       //  8
-	{ "gs09.06a", 	  0x8000, 0x539f182d, 4 | BRF_GRA },	       //  9
-	{ "gs08.05a", 	  0x8000, 0xe87e526d, 4 | BRF_GRA },	       // 10
-	{ "gs07.04a", 	  0x8000, 0x4382c0d2, 4 | BRF_GRA },	       // 11 
-	{ "gs06.02a", 	  0x8000, 0x4cafe7a6, 4 | BRF_GRA },	       // 12 
+	{ "13.ic21", 	  0x8000, 0xf6769fc5, 4 | BRF_GRA },	       //  5 32x32 Tiles
+	{ "12.ic20", 	  0x8000, 0xd997b78c, 4 | BRF_GRA },	       //  6
+	{ "11.ic19", 	  0x8000, 0x125ba58e, 4 | BRF_GRA },	       //  7
+	{ "10.ic18", 	  0x8000, 0xf469c13c, 4 | BRF_GRA },	       //  8
+	{ "9.ic04", 	  0x8000, 0x539f182d, 4 | BRF_GRA },	       //  9
+	{ "8.ic03", 	  0x8000, 0xe87e526d, 4 | BRF_GRA },	       // 10
+	{ "7.ic02", 	  0x8000, 0x4382c0d2, 4 | BRF_GRA },	       // 11 
+	{ "6.ic01", 	  0x8000, 0x4cafe7a6, 4 | BRF_GRA },	       // 12 
 
-	{ "gs22.06n", 	  0x8000, 0xdc9c508c, 5 | BRF_GRA },	       // 13 Sprites
-	{ "gs21.04n", 	  0x8000, 0x68883749, 5 | BRF_GRA },	       // 14
-	{ "gs20.03n", 	  0x8000, 0x0be932ed, 5 | BRF_GRA },	       // 15
-	{ "gs19.01n", 	  0x8000, 0x63072f93, 5 | BRF_GRA },	       // 16
-	{ "gs18.06l", 	  0x8000, 0xf69a3c7c, 5 | BRF_GRA },	       // 17
-	{ "gs17.04l", 	  0x8000, 0x4e98562a, 5 | BRF_GRA },	       // 18
-	{ "gs16.03l", 	  0x8000, 0x0d99c3b3, 5 | BRF_GRA },	       // 19
-	{ "gs15.01l", 	  0x8000, 0x7f14270e, 5 | BRF_GRA },	       // 20
+	{ "22.ic134", 	  0x8000, 0xdc9c508c, 5 | BRF_GRA },	       // 13 Sprites
+	{ "21.ic133", 	  0x8000, 0x68883749, 5 | BRF_GRA },	       // 14
+	{ "20.ic132", 	  0x8000, 0x0be932ed, 5 | BRF_GRA },	       // 15
+	{ "19.ic131", 	  0x8000, 0x63072f93, 5 | BRF_GRA },	       // 16
+	{ "18.ic115", 	  0x8000, 0xf69a3c7c, 5 | BRF_GRA },	       // 17
+	{ "17.ic114", 	  0x8000, 0x4e98562a, 5 | BRF_GRA },	       // 18
+	{ "16.ic113", 	  0x8000, 0x0d99c3b3, 5 | BRF_GRA },	       // 19
+	{ "15.ic112", 	  0x8000, 0x7f14270e, 5 | BRF_GRA },	       // 20
 
-	{ "gs14.11c", 	  0x8000, 0x0af4f7eb, 6 | BRF_GRA },	       // 21 Background Tilemaps
+	{ "14.ic25", 	  0x8000, 0x0af4f7eb, 6 | BRF_GRA },	       // 21 Background Tilemaps
 
-	{ "g-01.03b", 	  0x0100, 0x02f55589, 7 | BRF_GRA },	       // 22 Color Proms
-	{ "g-02.04b", 	  0x0100, 0xe1e36dd9, 7 | BRF_GRA },	       // 23
-	{ "g-03.05b", 	  0x0100, 0x989399c0, 7 | BRF_GRA },	       // 24
+	{ "prom.ic3", 	  0x0100, 0x02f55589, 7 | BRF_GRA },	       // 22 Color Proms
+	{ "prom.ic4", 	  0x0100, 0xe1e36dd9, 7 | BRF_GRA },	       // 23
+	{ "prom.ic5", 	  0x0100, 0x989399c0, 7 | BRF_GRA },	       // 24
 	{ "g-04.09d", 	  0x0100, 0x906612b5, 7 | BRF_GRA },	       // 25
 	{ "g-06.14a", 	  0x0100, 0x4a9da18b, 7 | BRF_GRA },	       // 26
 	{ "g-07.15a", 	  0x0100, 0xcb9394fc, 7 | BRF_GRA },	       // 27

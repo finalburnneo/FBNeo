@@ -1,6 +1,6 @@
 // Mirax emu-layer for FB Alpha by dink, based on the MAME driver by Angelo Salese, Tomasz Slanina, Olivier Galibert.
 // Note:
-//   the top (sy -7 to 7) tiles won't display (wrapping issue), grr!
+//  add game-specific vars to scan_var
 
 #include "tiles_generic.h"
 #include "driver.h"
@@ -73,8 +73,8 @@ static struct BurnDIPInfo MiraxDIPList[]=
 	{0x10, 0xff, 0xff, 0x0c, NULL		            },
 
 	{0   , 0xfe, 0   ,    4, "Coinage"		        },
-	{0x0f, 0x01, 0x03, 0x03, "2 Coins 1 Credits"	},
-	{0x0f, 0x01, 0x03, 0x00, "1 Coin  1 Credits"	},
+	{0x0f, 0x01, 0x03, 0x03, "2 Coins 1 Credit"	},
+	{0x0f, 0x01, 0x03, 0x00, "1 Coin  1 Credit"	},
 	{0x0f, 0x01, 0x03, 0x01, "1 Coin  2 Credits"	},
 	{0x0f, 0x01, 0x03, 0x02, "1 Coin  3 Credits"	},
 
@@ -92,11 +92,11 @@ static struct BurnDIPInfo MiraxDIPList[]=
 	{0x0f, 0x01, 0x30, 0x10, "4"		            },
 	{0x0f, 0x01, 0x30, 0x20, "5"		            },
 
-	{0   , 0xfe, 0   ,    0, "Bonus Life"		    },
+	{0   , 0xfe, 0   ,    2, "Bonus Life"		    },
 	{0x10, 0x01, 0x01, 0x00, "30k 80k 150k"		    },
 	{0x10, 0x01, 0x01, 0x01, "900k 950k 990k"		},
 
-	{0   , 0xfe, 0   ,    0, "Flags for Extra Life"	},
+	{0   , 0xfe, 0   ,    2, "Flags for Extra Life"	},
 	{0x10, 0x01, 0x02, 0x00, "5"		            },
 	{0x10, 0x01, 0x02, 0x02, "8"		            },
 
@@ -108,7 +108,7 @@ static struct BurnDIPInfo MiraxDIPList[]=
 	{0x10, 0x01, 0x08, 0x00, "No"		            },
 	{0x10, 0x01, 0x08, 0x08, "Yes"		            },
 
-	{0   , 0xfe, 0   ,    2, "Auto-Play Mode (Debug)" },
+	{0   , 0xfe, 0   ,    2, "AutoPlay Mode (Debug)"},
 	{0x10, 0x01, 0x10, 0x00, "No"		            },
 	{0x10, 0x01, 0x10, 0x10, "Yes"		            },
 
@@ -143,7 +143,6 @@ static void mirax_palette()
 	}
 }
 
-
 static void __fastcall main_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0xea00 && address <= 0xea3f) {
@@ -168,12 +167,10 @@ static void __fastcall main_write(UINT16 address, UINT8 data)
 	}
 }
 
-
 static UINT8 __fastcall main_read(UINT16 address)
 {
 	if (address >= 0xea00 && address <= 0xea3f)
 		return DrvColorRAM[address - 0xea00];
-
 
 	switch (address)
 	{
@@ -201,14 +198,12 @@ static void __fastcall audio_write(UINT16 address, UINT8 data)
 			return;
 		}
 		case 0xE403: {
-			AY8910Write(0, 0, m_nAyCtrl);
-			AY8910Write(0, 1, data);
+			AY8910Write(1, 0, m_nAyCtrl);
+			AY8910Write(1, 1, data);
 			return;
 		}
-
 	}
 }
-
 
 static UINT8 __fastcall audio_read(UINT16 address)
 {
@@ -243,7 +238,7 @@ static INT32 MemIndex()
 	DrvZ80ROM		= Next; Next += 0x10000;
 	DrvZ80ROM1		= Next; Next += 0x10000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x0300 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x040 * sizeof(UINT32);
 	DrvCharGFX      = Next; Next += 0x40000;
 	DrvSpriteGFX    = Next; Next += 0x40000;
 	DrvColorPROM    = Next; Next += 0x00400;
@@ -327,7 +322,7 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvTempRom + 0x00000,10, 1)) return 1;
 			if (BurnLoadRom(DrvTempRom + 0x08000,11, 1)) return 1;
 			if (BurnLoadRom(DrvTempRom + 0x10000,12, 1)) return 1;
-			GfxDecode(0x400 /*((0x4000*8)/2)/(16*16))*/, 3, 16, 16, c16PlaneOffsets, c16XOffsets, c16YOffsets, 0x100, DrvTempRom, DrvSpriteGFX);
+			GfxDecode(0x400 /*((0x18000*8)/3)/(16*16))*/, 3, 16, 16, c16PlaneOffsets, c16XOffsets, c16YOffsets, 0x100, DrvTempRom, DrvSpriteGFX);
 
 			if (BurnLoadRom(DrvColorPROM + 0x0000, 13, 1)) return 1;
 			if (BurnLoadRom(DrvColorPROM + 0x0020, 14, 1)) return 1;
@@ -354,9 +349,9 @@ static INT32 DrvInit()
 	ZetClose();
 
 	AY8910Init(0, 3000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 	AY8910Init(1, 3000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -379,47 +374,33 @@ static INT32 DrvExit()
 	return 0;
 }
 
-
-extern int counter;
-
-
 void draw_tiles(UINT8 draw_flag)
 {
-	INT32 sx, sy, wrapy;
-
 	for (INT32 y = 0; y < 32; y++) {
 		for (INT32 x = 0; x < 32; x++) {
-			INT32 code = DrvVidRAM[32*y+x];
-			INT32 color = (DrvColorRAM[x*2]<<8) | (DrvColorRAM[(x*2)+1]);
-			INT32 x_scroll = (color & 0xff00)>>8;
-			code |= ((color & 0xe0)<<3);
+			INT32 color = DrvColorRAM[(x*2)+1];
+			INT32 code = DrvVidRAM[32*y+x] | ((color & 0xe0)<<3);
 
-			sx = (m_flipscreen_x) ? 248-x*8 : x*8;
-			sy = (m_flipscreen_y) ? 248-y*8+x_scroll : y*8-x_scroll;
-			wrapy = (m_flipscreen_y) ? -256 : 256;
+			INT32 sx = (x * 8);
+			if (sx < -7) sx += 256;
+			INT32 sy = (y * 8) - (DrvColorRAM[x*2] + 8); // + 8 offset for smoothe scroll. -dink
+			if (sy < -7) sy += 256;
 
-			//if (sy < -7) sy += 256;
+			if (m_flipscreen_x) sx = 248 - sx;
+			if (m_flipscreen_y) sy = 248 - sy;
+
 			if ((x <= 1 || x >= 30) ^ draw_flag) {
-				if (sy < -7 || sx < -7) continue;
-				//if (sy > 16) continue; // debug shit.
-				//if (sy < 8) bprintf(0, _T("sy: %d, sx %d.."), sy, sx);
-				color &= 7;
 				if (m_flipscreen_y) { // we need a macro for this -dink
 					if (m_flipscreen_x) {
-						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x00, DrvCharGFX);
-						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy+wrapy, color, 3, 0, 0x00, DrvCharGFX);
+						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color & 7, 3, 0, 0x00, DrvCharGFX);
 					} else {
-						Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x00, DrvCharGFX);
-						Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy+wrapy, color, 3, 0, 0x00, DrvCharGFX);
+						Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color & 7, 3, 0, 0x00, DrvCharGFX);
 					}
 				} else {
 					if (m_flipscreen_x) {
-						Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x00, DrvCharGFX);
-						Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy+wrapy, color, 3, 0, 0x00, DrvCharGFX);
+						Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color & 7, 3, 0, 0x00, DrvCharGFX);
 					} else {
-						Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x00, DrvCharGFX);
-						Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy+wrapy, color, 3, 0, 0x00, DrvCharGFX);
-						Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy-wrapy, color, 3, 0, 0x00, DrvCharGFX);
+						Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color & 7, 3, 0, 0x00, DrvCharGFX);
 					}
 				}
 			}
@@ -442,7 +423,7 @@ static void RenderTileCPMP(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 fl
 		if (sy < 0 || sy >= nScreenHeight) continue;
 
 		for (INT32 x = 0; x < width; x++, sx++) {
-			if (sx < 0 || sx >= nScreenWidth) continue;
+			if (sx < 16 || sx + 16 >= nScreenWidth) continue; // blank out the top and bottom 16 pixels for status
 
 			INT32 pxl = gfx[((y * width) + x) ^ flip];
 
@@ -472,6 +453,7 @@ void draw_sprites()
 
 		y = (m_flipscreen_y) ? DrvSpriteRAM[count] : 0x100 - DrvSpriteRAM[count] - 16;
 		x = (m_flipscreen_x) ? 240 - DrvSpriteRAM[count+3] : DrvSpriteRAM[count+3];
+		y -= 8;
 
 		RenderTileCPMP(spr_offs, color, x, y, fx, fy, 16, 16, 0x000, 0, DrvSpriteGFX);
 	}
@@ -523,7 +505,7 @@ static INT32 DrvFrame()
 		ZetOpen(0);
 		ZetRun(nCyclesTotal / nInterleave);
 
-		if (i == 240 && m_nmi_mask)
+		if (i == 248 && m_nmi_mask)
 			ZetNmi();
 
 		ZetClose();
@@ -577,25 +559,25 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Mirax (set 1)
 
 static struct BurnRomInfo miraxRomDesc[] = {
-	{ "mxp5-42.rom",	0x4000, 0x716410a0, 1 }, //  0 data_code
-	{ "mxr5-4v.rom",	0x4000, 0xc9484fc3, 1 }, //  1
-	{ "mxs5-4v.rom",	0x4000, 0xe0085f91, 1 }, //  2
+	{ "mxp5-42.rom",	0x4000, 0x716410a0, 1 | BRF_PRG | BRF_ESS }, //  0 main cpu
+	{ "mxr5-4v.rom",	0x4000, 0xc9484fc3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "mxs5-4v.rom",	0x4000, 0xe0085f91, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "mxr2-4v.rom",	0x2000, 0xcd2d52dc, 2 }, //  3 audiocpu
+	{ "mxr2-4v.rom",	0x2000, 0xcd2d52dc, 2 | BRF_PRG | BRF_ESS }, //  3 audiocpu
 
-	{ "mxe3-4v.rom",	0x4000, 0x0cede01f, 3 }, //  4 gfx1
-	{ "mxh3-4v.rom",	0x4000, 0x58221502, 3 }, //  5
-	{ "mxk3-4v.rom",	0x4000, 0x6dbc2961, 3 }, //  6
+	{ "mxe3-4v.rom",	0x4000, 0x0cede01f, 3 | BRF_GRA }, //  4 gfx1
+	{ "mxh3-4v.rom",	0x4000, 0x58221502, 3 | BRF_GRA }, //  5
+	{ "mxk3-4v.rom",	0x4000, 0x6dbc2961, 3 | BRF_GRA }, //  6
 
-	{ "mxe2-4v.rom",	0x4000, 0x2cf5d8b7, 4 }, //  7 gfx2
-	{ "mxf2-4v.rom",	0x4000, 0x1f42c7fa, 4 }, //  8
-	{ "mxh2-4v.rom",	0x4000, 0xcbaff4c6, 4 }, //  9
-	{ "mxf3-4v.rom",	0x4000, 0x14b1ca85, 4 }, // 10
-	{ "mxi3-4v.rom",	0x4000, 0x20fb2099, 4 }, // 11
-	{ "mxl3-4v.rom",	0x4000, 0x918487aa, 4 }, // 12
+	{ "mxe2-4v.rom",	0x4000, 0x2cf5d8b7, 4 | BRF_GRA }, //  7 gfx2
+	{ "mxf2-4v.rom",	0x4000, 0x1f42c7fa, 4 | BRF_GRA }, //  8
+	{ "mxh2-4v.rom",	0x4000, 0xcbaff4c6, 4 | BRF_GRA }, //  9
+	{ "mxf3-4v.rom",	0x4000, 0x14b1ca85, 4 | BRF_GRA }, // 10
+	{ "mxi3-4v.rom",	0x4000, 0x20fb2099, 4 | BRF_GRA }, // 11
+	{ "mxl3-4v.rom",	0x4000, 0x918487aa, 4 | BRF_GRA }, // 12
 
-	{ "mra3.prm",		0x0020, 0xae7e1a63, 5 }, // 13 proms
-	{ "mrb3.prm",		0x0020, 0xe3f3d0f5, 5 }, // 14
+	{ "mra3.prm",		0x0020, 0xae7e1a63, 5 | BRF_GRA }, // 13 proms
+	{ "mrb3.prm",		0x0020, 0xe3f3d0f5, 5 | BRF_GRA }, // 14
 	{ "mirax.prm",		0x0020, 0x00000000, 5 | BRF_NODUMP }, // 15
 };
 
@@ -608,7 +590,7 @@ struct BurnDriver BurnDrvMirax = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, miraxRomInfo, miraxRomName, NULL, NULL, MiraxInputInfo, MiraxDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
 
@@ -616,25 +598,25 @@ struct BurnDriver BurnDrvMirax = {
 // Mirax (set 2)
 
 static struct BurnRomInfo miraxaRomDesc[] = {
-	{ "mx_p5_43v.p5",	0x4000, 0x87664903, 1 }, //  0 data_code
-	{ "mx_r5_43v.r5",	0x4000, 0x1ba4cd8e, 1 }, //  1
-	{ "mx_s5_43v.s5",	0x4000, 0xc58cc151, 1 }, //  2
+	{ "mx_p5_43v.p5",	0x4000, 0x87664903, 1 | BRF_PRG | BRF_ESS }, //  0 main cpu
+	{ "mx_r5_43v.r5",	0x4000, 0x1ba4cd8e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "mx_s5_43v.s5",	0x4000, 0xc58cc151, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "mxr2-4v.rom",	0x2000, 0xcd2d52dc, 2 }, //  3 audiocpu
+	{ "mxr2-4v.rom",	0x2000, 0xcd2d52dc, 2 | BRF_PRG | BRF_ESS }, //  3 audiocpu
 
-	{ "mxe3-4v.rom",	0x4000, 0x0cede01f, 3 }, //  4 gfx1
-	{ "mxh3-4v.rom",	0x4000, 0x58221502, 3 }, //  5
-	{ "mxk3-4v.rom",	0x4000, 0x6dbc2961, 3 }, //  6
+	{ "mxe3-4v.rom",	0x4000, 0x0cede01f, 3 | BRF_GRA }, //  4 gfx1
+	{ "mxh3-4v.rom",	0x4000, 0x58221502, 3 | BRF_GRA }, //  5
+	{ "mxk3-4v.rom",	0x4000, 0x6dbc2961, 3 | BRF_GRA }, //  6
 
-	{ "mxe2-4v.rom",	0x4000, 0x2cf5d8b7, 4 }, //  7 gfx2
-	{ "mxf2-4v.rom",	0x4000, 0x1f42c7fa, 4 }, //  8
-	{ "mxh2-4v.rom",	0x4000, 0xcbaff4c6, 4 }, //  9
-	{ "mxf3-4v.rom",	0x4000, 0x14b1ca85, 4 }, // 10
-	{ "mxi3-4v.rom",	0x4000, 0x20fb2099, 4 }, // 11
-	{ "mxl3-4v.rom",	0x4000, 0x918487aa, 4 }, // 12
+	{ "mxe2-4v.rom",	0x4000, 0x2cf5d8b7, 4 | BRF_GRA }, //  7 gfx2
+	{ "mxf2-4v.rom",	0x4000, 0x1f42c7fa, 4 | BRF_GRA }, //  8
+	{ "mxh2-4v.rom",	0x4000, 0xcbaff4c6, 4 | BRF_GRA }, //  9
+	{ "mxf3-4v.rom",	0x4000, 0x14b1ca85, 4 | BRF_GRA }, // 10
+	{ "mxi3-4v.rom",	0x4000, 0x20fb2099, 4 | BRF_GRA }, // 11
+	{ "mxl3-4v.rom",	0x4000, 0x918487aa, 4 | BRF_GRA }, // 12
 
-	{ "mra3.prm",		0x0020, 0xae7e1a63, 5 }, // 13 proms
-	{ "mrb3.prm",		0x0020, 0xe3f3d0f5, 5 }, // 14
+	{ "mra3.prm",		0x0020, 0xae7e1a63, 5 | BRF_GRA }, // 13 proms
+	{ "mrb3.prm",		0x0020, 0xe3f3d0f5, 5 | BRF_GRA }, // 14
 };
 
 STD_ROM_PICK(miraxa)
@@ -646,7 +628,7 @@ struct BurnDriver BurnDrvMiraxa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, miraxaRomInfo, miraxaRomName, NULL, NULL, MiraxInputInfo, MiraxDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
 

@@ -9537,7 +9537,7 @@ static struct BurnRomInfo jjsquawkRomDesc[] = {
 
 	{ "fe2001014",		0x80000, 0x274bbb48, 0x05 | BRF_GRA },           //  9 Layer 2 tiles
 	{ "fe2001013",		0x80000, 0x51e29871, 0x05 | BRF_GRA },           // 10
-	{ "fe2001004",		0x80000, 0xa235488e, 0x1d | BRF_GRA },		 // 11
+	{ "fe2001004",		0x80000, 0xa235488e, 0x1d | BRF_GRA },		 	 // 11
 
 	{ "fe2001005.u69",	0x80000, 0xd99f2879, 0x06 | BRF_SND },           // 12 x1-010 Samples
 	{ "fe2001006.u70",	0x80000, 0x9df1e478, 0x06 | BRF_SND },           // 13
@@ -9574,7 +9574,47 @@ struct BurnDriver BurnDrvJjsquawk = {
 };
 
 
+// J. J. Squawkers (older)
+/* Official 93111A PCB missing version sticker */
+
+static struct BurnRomInfo jjsquawkoRomDesc[] = {
+	{ "fe2001001.u3",	0x80000, 0x921c9762, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "fe2001002.u4",	0x80000, 0x0227a2be, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "fe2001009",		0x80000, 0x27441cd3, 0x03 | BRF_GRA },           //  2 Sprites
+	{ "fe2001010",		0x80000, 0xca2b42c4, 0x03 | BRF_GRA },           //  3
+	{ "fe2001007",		0x80000, 0x62c45658, 0x03 | BRF_GRA },           //  4
+	{ "fe2001008",		0x80000, 0x2690c57b, 0x03 | BRF_GRA },           //  5
+
+	{ "fe2001011",		0x80000, 0x98b9f4b4, 0x04 | BRF_GRA },           //  6 Layer 1 tiles
+	{ "fe2001012",		0x80000, 0xd4aa916c, 0x04 | BRF_GRA },           //  7
+	{ "fe2001003",		0x80000, 0xa5a35caf, 0x1c | BRF_GRA },           //  8
+
+	{ "fe2001014",		0x80000, 0x274bbb48, 0x05 | BRF_GRA },           //  9 Layer 2 tiles
+	{ "fe2001013",		0x80000, 0x51e29871, 0x05 | BRF_GRA },           // 10
+	{ "fe2001004",		0x80000, 0xa235488e, 0x1d | BRF_GRA },		 	 // 11
+
+	{ "fe2001005.u69",	0x80000, 0xd99f2879, 0x06 | BRF_SND },           // 12 x1-010 Samples
+	{ "fe2001006.u70",	0x80000, 0x9df1e478, 0x06 | BRF_SND },           // 13
+};
+
+STD_ROM_PICK(jjsquawko)
+STD_ROM_FN(jjsquawko)
+
+struct BurnDriver BurnDrvJjsquawko = {
+	"jjsquawko", "jjsquawk", NULL, NULL, "1993",
+	"J. J. Squawkers (older)\0", NULL, "Athena / Able", "Seta",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA1, GBF_PLATFORM, 0,
+	NULL, jjsquawkoRomInfo, jjsquawkoRomName, NULL, NULL, JjsquawkInputInfo, JjsquawkDIPInfo,
+	jjsquawkInit, DrvExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x1200,
+	384, 240, 4, 3
+};
+
+
 // J. J. Squawkers (bootleg, Blandia conversion)
+/* PCB was P0-078A, which was a Blandia board converted to JJ Squawkers. 
+No labels on any of the ROMs. Apparently based on jjsquawko set. */
 
 static struct BurnRomInfo jjsquawkb2RomDesc[] = {
 	{ "u3.3a",		   0x080000, 0xf94c913b, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code

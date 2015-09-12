@@ -2095,12 +2095,13 @@ struct BurnDriver BurnDrvRthunder2 = {
 
 
 // Rolling Thunder (rev 1)
+// some roms (mcu + samples) and maybe r19 updated to rt2
 
 static struct BurnRomInfo rthunder1RomDesc[] = {
-	{ "r1",			0x08000, 0x6f8c1252, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
+	{ "rt1_1b.9c",		0x08000, 0x6f8c1252, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
 
-	{ "r3",			0x08000, 0xaaa82885, 2 | BRF_PRG | BRF_ESS }, //  1 M6809 #1 Code
-	{ "r2",			0x08000, 0xf22a03d8, 2 | BRF_PRG | BRF_ESS }, //  2
+	{ "rt1_3.12d",		0x08000, 0xaaa82885, 2 | BRF_PRG | BRF_ESS }, //  1 M6809 #1 Code
+	{ "rt1_2b.12c",		0x08000, 0xf22a03d8, 2 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "rt1_7.7r",		0x10000, 0xa85efa39, 3 | BRF_GRA },           //  3 Layer 0 & 1 Tiles
 	{ "rt1_8.7s",		0x08000, 0xf7a95820, 3 | BRF_GRA },           //  4
@@ -2123,13 +2124,13 @@ static struct BurnRomInfo rthunder1RomDesc[] = {
 	{ "rt1-4.5v",		0x00800, 0x1391fec9, 6 | BRF_GRA },           // 18
 	{ "rt1-5.6u",		0x00020, 0xe4130804, 6 | BRF_GRA },           // 19
 
-	{ "r4",			0x08000, 0x0387464f, 7 | BRF_PRG | BRF_ESS }, // 20 HD63701 MCU Code
+	{ "rt2_4.6b",		0x08000, 0x0387464f, 7 | BRF_PRG | BRF_ESS }, // 20 HD63701 MCU Code
 	{ "cus60-60a1.mcu",	0x01000, 0x076ea82a, 7 | BRF_PRG | BRF_ESS }, // 21
 
 	{ "rt1_17.f1",		0x10000, 0x766af455, 8 | BRF_PRG | BRF_ESS }, // 22 M6809 #0 Bank Code
 	{ "rt1_18.h1",		0x10000, 0x3f9f2f5d, 8 | BRF_PRG | BRF_ESS }, // 23
-	{ "r19",		0x10000, 0xfe9343b0, 8 | BRF_PRG | BRF_ESS }, // 24
-	{ "r20",		0x10000, 0xf8518d4f, 8 | BRF_PRG | BRF_ESS }, // 25
+	{ "r19",			0x10000, 0xfe9343b0, 8 | BRF_PRG | BRF_ESS }, // 24
+	{ "rt1_20.m1",		0x10000, 0xf8518d4f, 8 | BRF_PRG | BRF_ESS }, // 25
 
 	{ "rt1_21.f3",		0x10000, 0x454968f3, 9 | BRF_SND },           // 26 Namco 63701x Samples
 	{ "rt2_22.h3",		0x10000, 0xfe963e72, 9 | BRF_SND },           // 27
@@ -2144,6 +2145,61 @@ struct BurnDriver BurnDrvRthunder1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, rthunder1RomInfo, rthunder1RomName, NULL, NULL, CommonInputInfo, Rthunder1DIPInfo,
+	RthunderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	288, 224, 4, 3
+};
+
+
+// Rolling Thunder (oldest)
+
+static struct BurnRomInfo rthunder0RomDesc[] = {
+	{ "rt1_1b.9c",		0x08000, 0x6f8c1252, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
+
+	{ "rt1_3.12d",		0x08000, 0xaaa82885, 2 | BRF_PRG | BRF_ESS }, //  1 M6809 #1 Code
+	{ "rt1_2b.12c",		0x08000, 0xf22a03d8, 2 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "rt1_7.7r",		0x10000, 0xa85efa39, 3 | BRF_GRA },           //  3 Layer 0 & 1 Tiles
+	{ "rt1_8.7s",		0x08000, 0xf7a95820, 3 | BRF_GRA },           //  4
+
+	{ "rt1_5.4r",		0x08000, 0xd0fc470b, 4 | BRF_GRA },           //  5 Layer 2 & 3 Tiles2
+	{ "rt1_6.4s",		0x04000, 0x6b57edb2, 4 | BRF_GRA },           //  6
+
+	{ "rt1_9.12h",		0x10000, 0x8e070561, 5 | BRF_GRA },           //  7 Sprites
+	{ "rt1_10.12k",		0x10000, 0xcb8fb607, 5 | BRF_GRA },           //  8
+	{ "rt1_11.12l",		0x10000, 0x2bdf5ed9, 5 | BRF_GRA },           //  9
+	{ "rt1_12.12m",		0x10000, 0xe6c6c7dc, 5 | BRF_GRA },           // 10
+	{ "rt1_13.12p",		0x10000, 0x489686d7, 5 | BRF_GRA },           // 11
+	{ "rt1_14.12r",		0x10000, 0x689e56a8, 5 | BRF_GRA },           // 12
+	{ "rt1_15.12t",		0x10000, 0x1d8bf2ca, 5 | BRF_GRA },           // 13
+	{ "rt1_16.12u",		0x10000, 0x1bbcf37b, 5 | BRF_GRA },           // 14
+
+	{ "rt1-1.3r",		0x00200, 0x8ef3bb9d, 6 | BRF_GRA },           // 15 Color Proms
+	{ "rt1-2.3s",		0x00200, 0x6510a8f2, 6 | BRF_GRA },           // 16
+	{ "rt1-3.4v",		0x00800, 0x95c7d944, 6 | BRF_GRA },           // 17
+	{ "rt1-4.5v",		0x00800, 0x1391fec9, 6 | BRF_GRA },           // 18
+	{ "rt1-5.6u",		0x00020, 0xe4130804, 6 | BRF_GRA },           // 19
+
+	{ "rt1_4.6b",		0x08000, 0x3f795094, 7 | BRF_PRG | BRF_ESS }, // 20 HD63701 MCU Code
+	{ "cus60-60a1.mcu",	0x01000, 0x076ea82a, 7 | BRF_PRG | BRF_ESS }, // 21
+
+	{ "rt1_17.f1",		0x10000, 0x766af455, 8 | BRF_PRG | BRF_ESS }, // 22 M6809 #0 Bank Code
+	{ "rt1_18.h1",		0x10000, 0x3f9f2f5d, 8 | BRF_PRG | BRF_ESS }, // 23
+	{ "rt1_19.k1",		0x10000, 0x1273a048, 8 | BRF_PRG | BRF_ESS }, // 24
+	{ "rt1_20.m1",		0x10000, 0xf8518d4f, 8 | BRF_PRG | BRF_ESS }, // 25
+
+	{ "rt1_21.f3",		0x10000, 0x454968f3, 9 | BRF_SND },           // 26 Namco 63701x Samples
+	{ "rt1_22.h3",		0x10000, 0x842a2fd4, 9 | BRF_SND },           // 27
+};
+
+STD_ROM_PICK(rthunder0)
+STD_ROM_FN(rthunder0)
+
+struct BurnDriver BurnDrvRthunder0 = {
+	"rthunder0", "rthunder", NULL, NULL, "1986",
+	"Rolling Thunder (oldest)\0", NULL, "Namco", "System 86",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	NULL, rthunder0RomInfo, rthunder0RomName, NULL, NULL, CommonInputInfo, Rthunder1DIPInfo,
 	RthunderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	288, 224, 4, 3
 };

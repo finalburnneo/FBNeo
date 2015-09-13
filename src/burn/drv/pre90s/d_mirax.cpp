@@ -1,6 +1,4 @@
 // Mirax emu-layer for FB Alpha by dink, based on the MAME driver by Angelo Salese, Tomasz Slanina, Olivier Galibert.
-// Note:
-//  add game-specific vars to scan_var
 
 #include "tiles_generic.h"
 #include "driver.h"
@@ -27,11 +25,11 @@ static UINT8 *DrvColorPROM;
 static UINT8 *DrvCharGFX;
 static UINT8 *DrvSpriteGFX;
 
-static UINT8 m_nAyCtrl;
-static UINT8 m_nmi_mask;
-static UINT8 m_flipscreen_x;
-static UINT8 m_flipscreen_y;
-static UINT8 soundlatch;
+static UINT8 *nAyCtrl;
+static UINT8 *nmi_mask;
+static UINT8 *flipscreen_x;
+static UINT8 *flipscreen_y;
+static UINT8 *soundlatch;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -152,11 +150,11 @@ static void __fastcall main_write(UINT16 address, UINT8 data)
 
 	switch (address)
 	{
-		case 0xF501: m_nmi_mask = data & 1; return;
-		case 0xF506: m_flipscreen_x = data & 0x01; return;
-		case 0xF507: m_flipscreen_y = data & 0x01; return;
+		case 0xF501: *nmi_mask = data & 1; return;
+		case 0xF506: *flipscreen_x = data & 0x01; return;
+		case 0xF507: *flipscreen_y = data & 0x01; return;
 		case 0xF800: {
-			soundlatch = data & 0xff;
+			*soundlatch = data & 0xff;
 			ZetClose();
 			ZetOpen(1);
 			ZetNmi();
@@ -186,19 +184,19 @@ static UINT8 __fastcall main_read(UINT16 address)
 static void __fastcall audio_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0xf900 && address <= 0xf9ff) {
-		m_nAyCtrl = address - 0xf900;
+		*nAyCtrl = address - 0xf900;
 		return;
 	}
 
 	switch (address)
 	{
 		case 0xE003: {
-			AY8910Write(0, 0, m_nAyCtrl);
+			AY8910Write(0, 0, *nAyCtrl);
 			AY8910Write(0, 1, data);
 			return;
 		}
 		case 0xE403: {
-			AY8910Write(1, 0, m_nAyCtrl);
+			AY8910Write(1, 0, *nAyCtrl);
 			AY8910Write(1, 1, data);
 			return;
 		}
@@ -209,7 +207,7 @@ static UINT8 __fastcall audio_read(UINT16 address)
 {
 	switch (address)
 	{
-		case 0xA000: return soundlatch;
+		case 0xA000: return *soundlatch;
 	}
 
 	return 0;
@@ -225,7 +223,7 @@ static INT32 DrvDoReset()
 	ZetClose();
 
 	AY8910Reset(0);
-	m_nAyCtrl = 0x00;
+	*nAyCtrl = 0x00;
 	HiscoreReset();
 
 	return 0;
@@ -250,6 +248,12 @@ static INT32 MemIndex()
 	DrvVidRAM		= Next; Next += 0x00400;
 	DrvColorRAM		= Next; Next += 0x00400;
 	DrvSpriteRAM	= Next; Next += 0x00300;
+
+	nAyCtrl         = Next; Next += 0x00001;
+	nmi_mask        = Next; Next += 0x00001;
+	flipscreen_x    = Next; Next += 0x00001;
+	flipscreen_y    = Next; Next += 0x00001;
+	soundlatch      = Next; Next += 0x00001;
 
 	RamEnd			= Next;
 
@@ -386,18 +390,18 @@ void draw_tiles(UINT8 draw_flag)
 			INT32 sy = (y * 8) - (DrvColorRAM[x*2] + 8); // + 8 offset for smoothe scroll. -dink
 			if (sy < -7) sy += 256;
 
-			if (m_flipscreen_x) sx = 248 - sx;
-			if (m_flipscreen_y) sy = 248 - sy;
+			if (*flipscreen_x) sx = 248 - sx;
+			if (*flipscreen_y) sy = 248 - sy;
 
 			if ((x <= 1 || x >= 30) ^ draw_flag) {
-				if (m_flipscreen_y) { // we need a macro for this -dink
-					if (m_flipscreen_x) {
+				if (*flipscreen_y) { // we need a macro for this -dink
+					if (*flipscreen_x) {
 						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color & 7, 3, 0, 0x00, DrvCharGFX);
 					} else {
 						Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color & 7, 3, 0, 0x00, DrvCharGFX);
 					}
 				} else {
-					if (m_flipscreen_x) {
+					if (*flipscreen_x) {
 						Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color & 7, 3, 0, 0x00, DrvCharGFX);
 					} else {
 						Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color & 7, 3, 0, 0x00, DrvCharGFX);
@@ -445,14 +449,14 @@ void draw_sprites()
 
 		spr_offs = (DrvSpriteRAM[count+1] & 0x3f);
 		color = DrvSpriteRAM[count+2] & 0x7;
-		fx = (m_flipscreen_x) ^ ((DrvSpriteRAM[count+1] & 0x40) >> 6); //<- guess
-		fy = (m_flipscreen_y) ^ ((DrvSpriteRAM[count+1] & 0x80) >> 7);
+		fx = (*flipscreen_x) ^ ((DrvSpriteRAM[count+1] & 0x40) >> 6); //<- guess
+		fy = (*flipscreen_y) ^ ((DrvSpriteRAM[count+1] & 0x80) >> 7);
 
 		spr_offs += (DrvSpriteRAM[count+2] & 0xe0)<<1;
 		spr_offs += (DrvSpriteRAM[count+2] & 0x10)<<5;
 
-		y = (m_flipscreen_y) ? DrvSpriteRAM[count] : 0x100 - DrvSpriteRAM[count] - 16;
-		x = (m_flipscreen_x) ? 240 - DrvSpriteRAM[count+3] : DrvSpriteRAM[count+3];
+		y = (*flipscreen_y) ? DrvSpriteRAM[count] : 0x100 - DrvSpriteRAM[count] - 16;
+		x = (*flipscreen_x) ? 240 - DrvSpriteRAM[count+3] : DrvSpriteRAM[count+3];
 		y -= 8;
 
 		RenderTileCPMP(spr_offs, color, x, y, fx, fy, 16, 16, 0x000, 0, DrvSpriteGFX);
@@ -505,7 +509,7 @@ static INT32 DrvFrame()
 		ZetOpen(0);
 		ZetRun(nCyclesTotal / nInterleave);
 
-		if (i == 248 && m_nmi_mask)
+		if (i == 248 && *nmi_mask)
 			ZetNmi();
 
 		ZetClose();
@@ -548,8 +552,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		AY8910Scan(nAction, pnMin);
-
-		//SCAN_VAR();
 	}
 
 	return 0;
@@ -588,7 +590,7 @@ struct BurnDriver BurnDrvMirax = {
 	"mirax", NULL, NULL, NULL, "1985",
 	"Mirax (set 1)\0", NULL, "Current Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, miraxRomInfo, miraxRomName, NULL, NULL, MiraxInputInfo, MiraxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -626,7 +628,7 @@ struct BurnDriver BurnDrvMiraxa = {
 	"miraxa", "mirax", NULL, NULL, "1985",
 	"Mirax (set 2)\0", NULL, "Current Technologies", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, miraxaRomInfo, miraxaRomName, NULL, NULL, MiraxInputInfo, MiraxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4

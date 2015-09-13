@@ -578,6 +578,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		BurnAcb(&ba);
 
 		M6809Scan(nAction);
+		ZetScan(nAction);
+
 		TimepltSndScan(nAction, pnMin);
 
 		SCAN_VAR(irq_enable);

@@ -5,7 +5,9 @@
 #include "hd6309_intf.h"
 #include "z80_intf.h"
 #include "burn_ym2151.h"
+#include "burn_ym2203.h"
 #include "msm6295.h"
+#include "msm5205.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -41,6 +43,7 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 is_bootleg = 0;
 static INT32 vblank;
 
 static struct BurnInputInfo DrvInputList[] = {
@@ -48,23 +51,23 @@ static struct BurnInputInfo DrvInputList[] = {
 	{"Coin 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 coin"	},
 	{"Coin 3",		BIT_DIGITAL,	DrvJoy1 + 3,	"p3 coin"	},
 
-	{"P1 Start",	BIT_DIGITAL,	DrvJoy2 + 7,	"p1 start"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"	},
-	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
-	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
-	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
-	{"P1 Button 3",	BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"	},
 
-	{"P2 Start",	BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 left"	},
-	{"P2 Right",	BIT_DIGITAL,	DrvJoy3 + 0,	"p2 right"	},
-	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
-	{"P2 Button 2",	BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
-	{"P2 Button 3",	BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"	},
 	{"Reset",		BIT_DIGITAL,	&DrvReset,      "reset"		},
 
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -75,58 +78,58 @@ STDINPUTINFO(Drv)
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
-	{0x14, 0xff, 0xff, 0xbf, NULL			    },
-	{0x15, 0xff, 0xff, 0xff, NULL			    },
+	{0x14, 0xff, 0xff, 0xbf, NULL			},
+	{0x15, 0xff, 0xff, 0xff, NULL			},
 
-	{0   , 0xfe, 0   ,    8, "Coin A"		    },
+	{0   , 0xfe, 0   ,    8, "Coin A"		},
 	{0x14, 0x01, 0x07, 0x00, "4 Coins 1 Credit"	},
 	{0x14, 0x01, 0x07, 0x01, "3 Coins 1 Credit"	},
 	{0x14, 0x01, 0x07, 0x02, "2 Coin  1 Credit"	},
 	{0x14, 0x01, 0x07, 0x07, "1 Coin  1 Credit"	},
-	{0x14, 0x01, 0x07, 0x06, "1 Coin  2 Credits"},
-	{0x14, 0x01, 0x07, 0x05, "1 Coins 3 Credits"},
-	{0x14, 0x01, 0x07, 0x04, "1 Coin  4 Credits"},
-	{0x14, 0x01, 0x07, 0x03, "1 Coin  5 Credits"},
+	{0x14, 0x01, 0x07, 0x06, "1 Coin  2 Credits"	},
+	{0x14, 0x01, 0x07, 0x05, "1 Coins 3 Credits"	},
+	{0x14, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
+	{0x14, 0x01, 0x07, 0x03, "1 Coin  5 Credits"	},
 
-	{0   , 0xfe, 0   ,    8, "Coin B"		    },
+	{0   , 0xfe, 0   ,    8, "Coin B"		},
 	{0x14, 0x01, 0x38, 0x00, "4 Coins 1 Credit"	},
 	{0x14, 0x01, 0x38, 0x08, "3 Coins 1 Credit"	},
 	{0x14, 0x01, 0x38, 0x10, "2 Coin  1 Credit"	},
 	{0x14, 0x01, 0x38, 0x30, "1 Coin  1 Credit"	},
-	{0x14, 0x01, 0x38, 0x30, "1 Coin  2 Credits"},
-	{0x14, 0x01, 0x38, 0x28, "1 Coins 3 Credits"},
-	{0x14, 0x01, 0x38, 0x20, "1 Coin  4 Credits"},
-	{0x14, 0x01, 0x38, 0x18, "1 Coin  5 Credits"},
+	{0x14, 0x01, 0x38, 0x30, "1 Coin  2 Credits"	},
+	{0x14, 0x01, 0x38, 0x28, "1 Coins 3 Credits"	},
+	{0x14, 0x01, 0x38, 0x20, "1 Coin  4 Credits"	},
+	{0x14, 0x01, 0x38, 0x18, "1 Coin  5 Credits"	},
 
-//	{0   , 0xfe, 0   ,    2, "Cabinet"		    },
-//	{0x14, 0x01, 0x40, 0x40, "Cocktail"		    },
-//	{0x14, 0x01, 0x40, 0x00, "Upright"		    },
+//	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+//	{0x14, 0x01, 0x40, 0x40, "Cocktail"		},
+//	{0x14, 0x01, 0x40, 0x00, "Upright"		},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x14, 0x01, 0x80, 0x80, "Off"			    },
-	{0x14, 0x01, 0x80, 0x00, "On"			    },
+	{0x14, 0x01, 0x80, 0x80, "Off"			},
+	{0x14, 0x01, 0x80, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x15, 0x01, 0x03, 0x01, "Easy"			    },
-	{0x15, 0x01, 0x03, 0x03, "Normal"		    },
-	{0x15, 0x01, 0x03, 0x02, "Hard"			    },
-	{0x15, 0x01, 0x03, 0x00, "Hardest"		    },
+	{0x15, 0x01, 0x03, 0x01, "Easy"			},
+	{0x15, 0x01, 0x03, 0x03, "Normal"		},
+	{0x15, 0x01, 0x03, 0x02, "Hard"			},
+	{0x15, 0x01, 0x03, 0x00, "Hardest"		},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x15, 0x01, 0x04, 0x00, "Off"			    },
-	{0x15, 0x01, 0x04, 0x04, "On"			    },
+	{0x15, 0x01, 0x04, 0x00, "Off"			},
+	{0x15, 0x01, 0x04, 0x04, "On"			},
 
-	{0   , 0xfe, 0   ,    4, "Timer"		    },
-	{0x15, 0x01, 0x30, 0x00, "50"			    },
-	{0x15, 0x01, 0x30, 0x20, "55"			    },
-	{0x15, 0x01, 0x30, 0x30, "60"			    },
-	{0x15, 0x01, 0x30, 0x10, "70"			    },
+	{0   , 0xfe, 0   ,    4, "Timer"		},
+	{0x15, 0x01, 0x30, 0x00, "50"			},
+	{0x15, 0x01, 0x30, 0x20, "55"			},
+	{0x15, 0x01, 0x30, 0x30, "60"			},
+	{0x15, 0x01, 0x30, 0x10, "70"			},
 
-	{0   , 0xfe, 0   ,    4, "Lifes"		    },
-	{0x15, 0x01, 0xc0, 0x00, "1"			    },
-	{0x15, 0x01, 0xc0, 0xc0, "2"			    },
-	{0x15, 0x01, 0xc0, 0x80, "3"			    },
-	{0x15, 0x01, 0xc0, 0x40, "4"			    },
+	{0   , 0xfe, 0   ,    4, "Lifes"		},
+	{0x15, 0x01, 0xc0, 0x00, "1"			},
+	{0x15, 0x01, 0xc0, 0xc0, "2"			},
+	{0x15, 0x01, 0xc0, 0x80, "3"			},
+	{0x15, 0x01, 0xc0, 0x40, "4"			},
 };
 
 STDDIPINFO(Drv)
@@ -184,8 +187,6 @@ static void chinagat_main_write(UINT16 address, UINT8 data)
 			HD6309Close();
 			HD6309Open(1);
 			HD6309SetIRQLine(0x00, CPU_IRQSTATUS_AUTO);
-//			HD6309Run(100);
-//			HD6309SetIRQLine(0x00, CPU_IRQSTATUS_NONE);
 			HD6309Close();
 			HD6309Open(0);
 		return;
@@ -266,7 +267,11 @@ static void __fastcall chinagat_sound_write(UINT16 address, UINT8 data)
 		return;
 		
 		case 0x9800:
-			MSM6295Command(0, data);
+			if (BurnDrvGetFlags() & BDF_BOOTLEG) {
+			//	bprintf (0, _T("Bootleg MCU Command: %2.2x\n"), data);
+			} else {
+				MSM6295Command(0, data);
+			}
 		return;
 	}
 }
@@ -290,9 +295,61 @@ static UINT8 __fastcall chinagat_sound_read(UINT16 address)
 	return 0;
 }
 
+static void __fastcall chinagat_bootleg2_sound_write(UINT16 address, UINT8 data)
+{
+	switch (address)
+	{
+		case 0x8800:
+		case 0x8801:
+			BurnYM2203Write(0, address & 1, data);
+		return;
+
+		case 0x8804:
+		case 0x8805:
+			BurnYM2203Write(1, address & 1, data);
+		return;
+	}
+}
+
+static UINT8 __fastcall chinagat_bootleg2_sound_read(UINT16 address)
+{
+	switch (address)
+	{
+		case 0x8800:
+		case 0x8801:
+			return BurnYM2203Read(0, address & 1);
+
+		case 0x8804:
+		case 0x8805:
+			return BurnYM2203Read(1, address & 1);
+
+		case 0xa000:
+			ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);
+			return soundlatch;
+	}
+
+	return 0;
+}
+
+
 static void DrvYM2151IrqHandler(INT32 nStatus)
 {
 	ZetSetIRQLine(0, nStatus ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+}
+
+static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
+{
+	ZetSetIRQLine(0, nStatus ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+}
+
+static INT32 DrvSynchroniseStream(INT32 nSoundRate)
+{
+	return (INT64)ZetTotalCycles() * nSoundRate / 3579545;
+}
+
+static double DrvGetTime()
+{
+	return (double)ZetTotalCycles() / 3579545;
 }
 
 static INT32 DrvDoReset()
@@ -309,10 +366,15 @@ static INT32 DrvDoReset()
 
 	ZetOpen(0);
 	ZetReset();
-	ZetClose();
 
-	MSM6295Reset(0);
-	BurnYM2151Reset();
+	if (is_bootleg == 2) {
+		BurnYM2203Reset();
+	} else {
+		MSM6295Reset(0);
+		BurnYM2151Reset();
+	}
+
+	ZetClose();
 
 	bankdata[0] = 0;
 	bankdata[1] = 0;
@@ -339,7 +401,7 @@ static INT32 MemIndex()
 	MSM6295ROM        	= Next;
 	DrvSndROM		= Next; Next += 0x040000;
 
-	DrvPalette       	 = (UINT32*)Next; Next += 0x0180 * sizeof(UINT32);
+	DrvPalette       	= (UINT32*)Next; Next += 0x0180 * sizeof(UINT32);
 
 	AllRam            	= Next;
 
@@ -414,15 +476,25 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvGfxROM2 + 0x40000,   10, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM2 + 0x50000,   11, 1)) return 1;
 
-		if (BurnLoadRom(DrvSndROM  + 0x00000,   12, 1)) return 1;
-		if (BurnLoadRom(DrvSndROM  + 0x20000,   13, 1)) return 1;
+		if (BurnDrvGetFlags() & BDF_BOOTLEG) {
+			if (BurnLoadRom(DrvSndROM  + 0x00000,   12, 1)) return 1;
+			if (BurnLoadRom(DrvSndROM  + 0x10000,   13, 1)) return 1;
+			if (BurnLoadRom(DrvSndROM  + 0x20000,   14, 1)) return 1;
+			if (BurnLoadRom(DrvSndROM  + 0x30000,   15, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM1 + 0x80000, 18, 1)) return 1; // check for mcu
+			is_bootleg = DrvGfxROM1[0x80000] ? 1 : 2;
+		} else {
+			if (BurnLoadRom(DrvSndROM  + 0x00000,   12, 1)) return 1;
+			if (BurnLoadRom(DrvSndROM  + 0x20000,   13, 1)) return 1;
+		}
 
 		DrvGfxDecode();
 	}
 
 	HD6309Init(0);
 	HD6309Open(0);
-	HD6309MapMemory(DrvShareRAM,    0x0000, 0x1fff, MAP_RAM);
+	HD6309MapMemory(DrvShareRAM,		0x0000, 0x1fff, MAP_RAM);
 	HD6309MapMemory(DrvFgRAM,		0x2000, 0x27ff, MAP_RAM);
 	HD6309MapMemory(DrvBgRAM,		0x2800, 0x2fff, MAP_RAM);
 	HD6309MapMemory(DrvPalRAM,		0x3000, 0x31ff, MAP_ROM);
@@ -450,13 +522,27 @@ static INT32 DrvInit()
 	ZetSetReadHandler(chinagat_sound_read);
 	ZetClose();
 
-	BurnYM2151Init(3579545);
-	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
+	if (is_bootleg == 2) {
+		ZetOpen(0);
+		ZetSetWriteHandler(chinagat_bootleg2_sound_write);
+		ZetSetReadHandler(chinagat_bootleg2_sound_read);
+		ZetClose();
 
-	MSM6295Init(0, 1065000 / 132, 1);
-	MSM6295SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+		BurnYM2203Init(2, 3579545, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+		BurnTimerAttachZet(3579545);
+		BurnYM2203SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+		BurnYM2203SetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);
+	}
+	else
+	{
+		BurnYM2151Init(3579545);
+		BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
+
+		MSM6295Init(0, 1065000 / 132, 1);
+		MSM6295SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+	}
 
 	GenericTilesInit();
 
@@ -469,13 +555,19 @@ static INT32 DrvExit()
 {
 	HD6309Exit();
 	ZetExit();
+
+	if (is_bootleg == 2) {
+		BurnYM2203Exit();
+	} else {
+		BurnYM2151Exit();
+		MSM6295Exit(0);
+	}
 	
-	BurnYM2151Exit();
-	MSM6295Exit(0);
-		
 	GenericTilesExit();
 	
 	BurnFree(AllMem);
+
+	is_bootleg = 0;
 
 	return 0;
 }
@@ -489,8 +581,8 @@ static void draw_bg_layer()
 		INT32 ofst = (col & 0x0f) + ((row & 0x0f) << 4) + ((col & 0x10) << 4) + ((row & 0x10) << 5);
 
 		INT32 sx = (col * 16) - scrollx;
-		if (sx < -15) sx += 512;
 		INT32 sy = ((row * 16) - scrolly) - 8;
+		if (sx < -15) sx += 512;
 		if (sy < -15) sy += 512;
 
 		INT32 attr  = DrvBgRAM[ofst * 2 + 0];
@@ -547,29 +639,23 @@ static void draw_fg_layer()
 
 static void draw_sprites()
 {
-	const UINT8 *src = DrvSprRAM;
-	const UINT32 bytes = 0x180;
-
-	for (UINT32 i = 0; i < bytes; i += 5)
+	for (INT32 i = 0; i < 0x180; i += 5)
 	{
-		int attr = src[i + 1];
-		if (attr & 0x80)  /* visible */
+		INT32 attr = DrvSprRAM[i + 1];
+
+		if (attr & 0x80)
 		{
-			int sx = 240 - src[i + 4] + ((attr & 2) << 7);
-			int sy = 232 - src[i + 0] + ((attr & 1) << 8);// + 8;
-			int size = (attr & 0x30) >> 4;
-			int flipx = attr & 8;
-			int flipy = attr & 4;
-			int dx = -16, dy = -16;
+			INT32 sx = 240 - DrvSprRAM[i + 4] + ((attr & 2) << 7);
+			INT32 sy = 232 - DrvSprRAM[i + 0] + ((attr & 1) << 8);
+			INT32 size = (attr & 0x30) >> 4;
+			INT32 flipx = attr & 8;
+			INT32 flipy = attr & 4;
+			INT32 dx = -16, dy = -16;
+			INT32 color = DrvSprRAM[i + 2] >> 4;
+			INT32 which = DrvSprRAM[i + 3] + ((DrvSprRAM[i + 2] & 0x0f) << 8);
 
-			int which;
-			int color;
-
-			if ((sx < -7) && (sx > -16)) sx += 256; /* fix sprite clip */
-			if ((sy < -7) && (sy > -16)) sy += 256; /* fix sprite clip */
-
-			color = src[i + 2] >> 4;
-			which = src[i + 3] + ((src[i + 2] & 0x0f) << 8);
+			if ((sx < -7) && (sx > -16)) sx += 256;
+			if ((sy < -7) && (sy > -16)) sy += 256;
 
 			if (flipscreen)
 			{
@@ -585,25 +671,25 @@ static void draw_sprites()
 
 			switch (size)
 			{
-				case 0: /* normal */
-				DRAW_SPRITE(0, sx, sy);
+				case 0: // 1x1
+					DRAW_SPRITE(0, sx, sy);
 				break;
 
-				case 1: /* double y */
-				DRAW_SPRITE(0, sx, sy + dy);
-				DRAW_SPRITE(1, sx, sy);
+				case 1: // 1x2
+					DRAW_SPRITE(0, sx, sy + dy);
+					DRAW_SPRITE(1, sx, sy);
 				break;
 
-				case 2: /* double x */
-				DRAW_SPRITE(0, sx + dx, sy);
-				DRAW_SPRITE(2, sx, sy);
+				case 2: // 2x1
+					DRAW_SPRITE(0, sx + dx, sy);
+					DRAW_SPRITE(2, sx, sy);
 				break;
 
-				case 3:
-				DRAW_SPRITE(0, sx + dx, sy + dy);
-				DRAW_SPRITE(1, sx + dx, sy);
-				DRAW_SPRITE(2, sx, sy + dy);
-				DRAW_SPRITE(3, sx, sy);
+				case 3: // 2x2
+					DRAW_SPRITE(0, sx + dx, sy + dy);
+					DRAW_SPRITE(1, sx + dx, sy);
+					DRAW_SPRITE(2, sx, sy + dy);
+					DRAW_SPRITE(3, sx, sy);
 				break;
 			}
 		}
@@ -619,7 +705,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	BurnTransferClear();
+	//BurnTransferClear();
 
 	if (nBurnLayer & 2) draw_bg_layer();
 	if (nBurnLayer & 4) draw_sprites();
@@ -652,7 +738,6 @@ static void scanline_timer(INT32 param)
 		vblank = 1;
 	}
 
-	/* set 1ms signal on rising edge of vcount & 8 */
 	if (!(vcount_old & 8) && (vcount & 8))
 		HD6309SetIRQLine(0x01, CPU_IRQSTATUS_ACK);
 }
@@ -729,6 +814,65 @@ static INT32 DrvFrame()
 	return 0;
 }
 
+static INT32 DrvBoot2Frame()
+{
+	if (DrvReset) {
+		DrvDoReset();
+	}
+
+	{
+		memset (DrvInputs, 0xff, 3);
+		for (INT32 i = 0; i < 8; i++) {
+			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+		}
+	}
+
+	INT32 nSegment;
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[3] = { 1500000 * 4 / 60, 1500000 * 4 / 60, 3579545 / 60 };
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
+
+	HD6309NewFrame();
+	ZetNewFrame();
+	
+	ZetOpen(0);
+	vblank = 0;
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		nSegment = nCyclesTotal[0] / nInterleave;
+
+		HD6309Open(0);
+		nCyclesDone[0] += HD6309Run(nSegment);
+		scanline_timer(i);
+		HD6309Close();
+
+		nSegment = nCyclesTotal[1] / nInterleave;
+
+		HD6309Open(1);
+		nCyclesDone[1] += HD6309Run(nSegment);
+		HD6309Close();
+
+		BurnTimerUpdate(i * (nCyclesTotal[2] / nInterleave));
+	}
+
+	BurnTimerEndFrame(nCyclesTotal[2]);
+
+	if (pBurnSoundOut) {
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+	}
+
+	ZetClose();
+
+	if (pBurnDraw) {
+		DrvDraw();
+	}
+
+	return 0;
+}
+
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
@@ -748,8 +892,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		HD6309Scan(nAction);
 		ZetScan(nAction);
 
-		BurnYM2151Scan(nAction);
-		MSM6295Scan(0, nAction);
+		if (is_bootleg == 2) {
+			BurnYM2203Scan(nAction, pnMin);
+		} else {
+			BurnYM2151Scan(nAction);
+			MSM6295Scan(0, nAction);
+		}
 
 		SCAN_VAR(bankdata[0]);
 		SCAN_VAR(bankdata[1]);
@@ -799,8 +947,8 @@ static struct BurnRomInfo chinagatRomDesc[] = {
 	{ "23j1-0.53",		0x20000, 0xf91f1001, 6 | BRF_SND },           // 12 MSM6295 Samples
 	{ "23j2-0.52",		0x20000, 0x8b6f26e9, 6 | BRF_SND },           // 13 
 
-	{ "23jb-0.16",		0x00200, 0x46339529, 0 | BRF_OPT },           // 14 Proms (unused)
-	{ "23j5-0.45",		0X00100, 0xfdb130a9, 0 | BRF_OPT },           // 15
+	{ "23jb-0.16",		0x00200, 0x46339529, 7 | BRF_OPT },           // 14 Proms (unused)
+	{ "23j5-0.45",		0X00100, 0xfdb130a9, 7 | BRF_OPT },           // 15
 };
 
 STD_ROM_PICK(chinagat)
@@ -841,8 +989,8 @@ static struct BurnRomInfo saiyugouRomDesc[] = {
 	{ "23j1-0.53",		0x20000, 0xf91f1001, 6 | BRF_SND },           // 12 MSM6295 Samples
 	{ "23j2-0.52",		0x20000, 0x8b6f26e9, 6 | BRF_SND },           // 13
 
-	{ "23jb-0.16",		0x00200, 0x46339529, 0 | BRF_OPT },           // 14 Proms (unused)
-	{ "23j5-0.45",		0x00100, 0xfdb130a9, 0 | BRF_OPT },           // 15
+	{ "23jb-0.16",		0x00200, 0x46339529, 7 | BRF_OPT },           // 14 Proms (unused)
+	{ "23j5-0.45",		0x00100, 0xfdb130a9, 7 | BRF_OPT },           // 15
 };
 
 STD_ROM_PICK(saiyugou)
@@ -855,5 +1003,95 @@ struct BurnDriver BurnDrvSaiyugou = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, saiyugouRomInfo, saiyugouRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
+	256, 240, 4, 3
+};
+
+
+// Sai Yu Gou Ma Roku (Japan bootleg 1)
+
+static struct BurnRomInfo saiyugoub1RomDesc[] = {
+	{ "23j3-0.51",		0x20000, 0xaa8132a2, 0 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
+
+	{ "23j4-0.48",		0x20000, 0x2914af38, 1 | BRF_PRG | BRF_ESS }, //  1 M6809 #1 Code
+
+	{ "a-1.bin",		0x08000, 0x46e5a6d4, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "23j6-0.18",		0x20000, 0x86d33df0, 3 | BRF_GRA },           //  3 Foreground Tiles
+
+	{ "23j7-0.103",		0x20000, 0x2f445030, 4 | BRF_GRA },           //  4 Sprites
+	{ "23j8-0.102",		0x20000, 0x237f725a, 4 | BRF_GRA },           //  5
+	{ "23j9-0.101",		0x20000, 0x8caf6097, 4 | BRF_GRA },           //  6
+	{ "23ja-0.100",		0x20000, 0xf678594f, 4 | BRF_GRA },           //  7
+
+	{ "a-13",		0x10000, 0xb745cac4, 5 | BRF_GRA },           //  8 gfx3
+	{ "a-12",		0x10000, 0x3c864299, 5 | BRF_GRA },           //  9
+	{ "a-15",		0x10000, 0x2f268f37, 5 | BRF_GRA },           // 10
+	{ "a-14",		0x10000, 0xaef814c8, 5 | BRF_GRA },           // 11
+
+	{ "a-6.bin",		0x10000, 0x4da4e935, 6 | BRF_SND },           // 12 MSM5205 Samples
+	{ "a-7.bin",		0x10000, 0x6284c254, 6 | BRF_SND },           // 13
+	{ "a-10.bin",		0x10000, 0xb728ec6e, 6 | BRF_SND },           // 14
+	{ "a-11.bin",		0x10000, 0xa50d1895, 6 | BRF_SND },           // 15
+
+	{ "23jb-0.16",		0x00200, 0x46339529, 7 | BRF_OPT },           // 16 Proms (unused)
+	{ "23j5-0.45",		0x00100, 0xfdb130a9, 7 | BRF_OPT },           // 17
+
+	{ "mcu8748.bin",	0x00400, 0x6d28d6c5, 8 | BRF_PRG | BRF_ESS }, // 18 I8748 Code
+};
+
+STD_ROM_PICK(saiyugoub1)
+STD_ROM_FN(saiyugoub1)
+
+struct BurnDriver BurnDrvSaiyugoub1 = {
+	"saiyugoub1", "chinagat", NULL, NULL, "1988",
+	"Sai Yu Gou Ma Roku (Japan bootleg 1)\0", "missing some sounds", "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	NULL, saiyugoub1RomInfo, saiyugoub1RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
+	256, 240, 4, 3
+};
+
+
+// Sai Yu Gou Ma Roku (Japan bootleg 2)
+
+static struct BurnRomInfo saiyugoub2RomDesc[] = {
+	{ "23j3-0.51",		0x20000, 0xaa8132a2, 0 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
+
+	{ "23j4-0.48",		0x20000, 0x2914af38, 1 | BRF_PRG | BRF_ESS }, //  1 M6809 #1 Code
+
+	{ "sai-alt1.bin",	0x08000, 0x8d397a8d, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "23j6-0.18",		0x20000, 0x86d33df0, 3 | BRF_GRA },           //  3 Foreground Tiles
+
+	{ "23j7-0.103",		0x20000, 0x2f445030, 4 | BRF_GRA },           //  4 Sprites
+	{ "23j8-0.102",		0x20000, 0x237f725a, 4 | BRF_GRA },           //  5
+	{ "23j9-0.101",		0x20000, 0x8caf6097, 4 | BRF_GRA },           //  6
+	{ "23ja-0.100",		0x20000, 0xf678594f, 4 | BRF_GRA },           //  7
+
+	{ "a-13",		0x10000, 0xb745cac4, 5 | BRF_GRA },           //  8 gfx3
+	{ "a-12",		0x10000, 0x3c864299, 5 | BRF_GRA },           //  9
+	{ "a-15",		0x10000, 0x2f268f37, 5 | BRF_GRA },           // 10
+	{ "a-14",		0x10000, 0xaef814c8, 5 | BRF_GRA },           // 11
+
+	{ "a-6.bin",		0x10000, 0x4da4e935, 6 | BRF_SND },           // 12 MSM5205 Samples
+	{ "a-7.bin",		0x10000, 0x6284c254, 6 | BRF_SND },           // 13
+	{ "a-10.bin",		0x10000, 0xb728ec6e, 6 | BRF_SND },           // 14
+	{ "a-11.bin",		0x10000, 0xa50d1895, 6 | BRF_SND },           // 15
+
+	{ "23jb-0.16",		0x00200, 0x46339529, 7 | BRF_OPT },           // 16 Proms (unused)
+	{ "23j5-0.45",		0x00100, 0xfdb130a9, 7 | BRF_OPT },           // 17
+};
+
+STD_ROM_PICK(saiyugoub2)
+STD_ROM_FN(saiyugoub2)
+
+struct BurnDriver BurnDrvSaiyugoub2 = {
+	"saiyugoub2", "chinagat", NULL, NULL, "1988",
+	"Sai Yu Gou Ma Roku (Japan bootleg 2)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	NULL, saiyugoub2RomInfo, saiyugoub2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvBoot2Frame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	256, 240, 4, 3
 };

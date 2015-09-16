@@ -1,6 +1,6 @@
 // Q-Bert emu-layer for FB Alpha by dink, based on the MAME driver by Fabrice Frances & Nicola Salmoria.
 // Notes:
-//   Sometimes it plays the wrong sample at startup, hence QBERT_SOUND_DEBUG
+//
 
 #include "tiles_generic.h"
 #include "driver.h"
@@ -37,9 +37,10 @@ static UINT8 *spritebank;
 static UINT8 *soundlatch;
 static UINT8 *soundcpu_do_nmi;
 
-static char vtqueue[0x20];
-static UINT8 vtqueuepos;
-static UINT32 vtqueuetime;
+static char  *vtqueue;
+static UINT8 *vtqueuepos;
+static UINT32 *vtqueuetime;
+static UINT8  *knocker_prev;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -169,6 +170,7 @@ static void qbert_palette()
 }
 
 static void gottlieb_sh_w(UINT16 offset, UINT8 data); //forward!
+static void qbert_knocker(UINT8 knock);
 
 static void __fastcall main_write(UINT32 address, UINT8 data)
 {
@@ -207,7 +209,11 @@ static void __fastcall main_write(UINT32 address, UINT8 data)
 	switch (address)
 	{
 		case 0x5802: gottlieb_sh_w(address, data); return;
-		case 0x5803: *background_prio = data & 0x01; return;
+		case 0x5803: {
+			*background_prio = data & 0x01;
+			qbert_knocker(data >> 5 & 1);
+			return;
+		}
 	}
 }
 
@@ -255,6 +261,13 @@ static UINT8 __fastcall main_read(UINT32 address)
 	return 0;
 }
 
+static void qbert_knocker(UINT8 knock)
+{
+	if (knock & ~*knocker_prev)
+		BurnSamplePlay(44);
+	*knocker_prev = knock;
+}
+
 static void gottlieb_sh_w(UINT16 offset, UINT8 data)
 {
 	static INT32 random_offset=0;
@@ -299,11 +312,11 @@ static UINT8 gottlieb_riot_r(UINT16 offset)
 {
     switch (offset & 0x1f) {
 	case 0: /* port A */
-		return *soundlatch ^ 0xff;	/* invert command */
+		return *soundlatch ^ 0xff; /* invert command */
 	case 2: /* port B */
-		return 0x40;    /* say that PB6 is 1 (test SW1 not pressed) */
+		return 0x40; /* say that PB6 is 1 (test SW1 not pressed) */
 	case 5: /* interrupt register */
-		return 0x40;    /* say that edge detected on PA7 */
+		return 0x40; /* say that edge detected on PA7 */
 	default:
 		return riot_regs[offset & 0x1f];
     }
@@ -311,21 +324,24 @@ static UINT8 gottlieb_riot_r(UINT16 offset)
 
 static void blank_queue()
 {
-	vtqueuepos = 0;
-	memset(&vtqueue, 0, sizeof(vtqueue));
-	vtqueuetime = GetCurrentFrame();
+#ifdef QBERT_SOUND_DEBUG
+	bprintf(0, _T("BLANK!{%X}.."), *vtqueuetime);
+#endif
+	*vtqueuepos = 0;
+	memset(vtqueue, 0, 0x20);
+	*vtqueuetime = GetCurrentFrame();
 }
 
 static void add_to_queue(UINT8 data)
 {
-	if (vtqueuepos > sizeof(vtqueue)-1 || GetCurrentFrame() > vtqueuetime+2)
+	if (*vtqueuepos > 0x20-1 || GetCurrentFrame() > *vtqueuetime+2)
 		blank_queue();
-	vtqueue[vtqueuepos++] = data;
+	vtqueue[(*vtqueuepos)++] = data;
 }
 
 static UINT8 check_queue()
 {
-	if (vtqueuepos == 24 && !strnicmp("\xC1\xE4\xFF\xE7\xE8\xD2\xFC\xFC\xFC\xFC\xFC\xEA\xFF\xF6\xD6\xF3\xD5\xC5\xF5\xF2\xE1\xDB\xF2\xC0", vtqueue, 24)) {
+	if (*vtqueuepos == 24 && !strncmp("\xC1\xE4\xFF\xE7\xE8\xD2\xFC\xFC\xFC\xFC\xFC\xEA\xFF\xF6\xD6\xF3\xD5\xC5\xF5\xF2\xE1\xDB\xF2\xC0", vtqueue, 24)) {
 		blank_queue(); // "Hello, I'm turned on."
 		return 1;
 	}
@@ -408,7 +424,6 @@ static INT32 DrvDoReset()
 
 	DACReset();
 	BurnSampleReset();
-//  HiscoreReset();
 
 	return 0;
 }
@@ -424,7 +439,7 @@ static INT32 MemIndex()
 	DrvPalette		= (UINT32*)Next; Next += 0x10 * sizeof(UINT32);
 	DrvCharGFX      = Next; Next += 0x40000;
 	DrvSpriteGFX    = Next; Next += 0x40000;
-	DrvNVRAM        = Next; Next += 0x01000;
+	DrvNVRAM        = Next; Next += 0x01000; // Keep in ROM section.
 
 	AllRam			= Next;
 
@@ -438,7 +453,12 @@ static INT32 MemIndex()
 	DrvDummyROM     = Next; Next += 0x02000;
 
 	riot_regs       = Next; Next += 0x00020;
-	riot_ram        = Next; Next += 0x001ff;
+	riot_ram        = Next; Next += 0x00200;
+
+	vtqueuepos      = Next; Next += 0x00001;
+	vtqueuetime     = (UINT32 *)Next; Next += 0x00004;
+	vtqueue         = (char *)Next; Next += 0x00020;
+	knocker_prev    = Next; Next += 0x00001;
 
 	background_prio = Next; Next += 0x00001;
 	spritebank      = Next; Next += 0x00001;
@@ -471,7 +491,6 @@ static INT32 DrvInit()
 	{   // Load ROMS parse GFX
 		UINT8 *DrvTempRom = (UINT8 *)BurnMalloc(0x40000);
 		memset(DrvTempRom, 0, 0x40000);
-
 		{
 			if (BurnLoadRom(DrvV20ROM + 0x0000, 0, 1)) return 1;
 			if (BurnLoadRom(DrvV20ROM + 0x2000, 1, 1)) return 1;
@@ -482,7 +501,7 @@ static INT32 DrvInit()
 
 			// load & decode 8x8 tiles
 			memset(DrvTempRom, 0, 0x40000);
-			if (BurnLoadRom(DrvTempRom         , 5, 1)) return 1;
+			if (BurnLoadRom(DrvTempRom + 0x0000, 5, 1)) return 1;
 			if (BurnLoadRom(DrvTempRom + 0x1000, 6, 1)) return 1;
 			GfxDecode(0x100, 4, 8, 8, c8PlaneOffsets, c8XOffsets, c8YOffsets, 0x100, DrvTempRom, DrvCharGFX);
 
@@ -492,8 +511,7 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvTempRom + 0x2000, 8, 1)) return 1;
 			if (BurnLoadRom(DrvTempRom + 0x4000, 9, 1)) return 1;
 			if (BurnLoadRom(DrvTempRom + 0x6000, 10, 1)) return 1;
-			GfxDecode(0x100 /*((0x18000*8)/3)/(16*16))*/, 4, 16, 16, c16PlaneOffsets, c16XOffsets, c16YOffsets, 0x100, DrvTempRom, DrvSpriteGFX);
-
+			GfxDecode(0x100 /*((0x8000*8)/4)/(16*16))*/, 4, 16, 16, c16PlaneOffsets, c16XOffsets, c16YOffsets, 0x100, DrvTempRom, DrvSpriteGFX);
 		}
 		BurnFree(DrvTempRom);
 	}
@@ -503,8 +521,8 @@ static INT32 DrvInit()
 
 	memset(DrvNVRAM, 0xff, 0x1000); // Init NVRAM
 
-	VezMapArea(0x01000, 0x02fff, 0, DrvDummyROM);            // RAM/ROM (for reactor and 3stooges)
-	VezMapArea(0x01000, 0x02fff, 1, DrvDummyROM);            // not used in qbert, but something needs to be here
+	VezMapArea(0x01000, 0x02fff, 0, DrvDummyROM); // RAM/ROM (for reactor and 3stooges)
+	VezMapArea(0x01000, 0x02fff, 1, DrvDummyROM); // not used in qbert, but something needs to be here
 	VezMapArea(0x01000, 0x02fff, 2, DrvDummyROM);
 	VezSetReadHandler(main_read);
 	VezSetWriteHandler(main_write);
@@ -585,10 +603,7 @@ static void draw_sprites()
 		INT32 sy = (DrvSpriteRAM[offs]) - 13;
 		INT32 code = (255 ^ DrvSpriteRAM[offs + 2]) + 256 * *spritebank;
 
-		//if (flip_screen_x) sx = 233 - sx;
-		//if (flip_screen_y) sy = 244 - sy;
-
-		if (DrvSpriteRAM[offs] || DrvSpriteRAM[offs + 1]) /* needed to avoid garbage on screen */
+		if (DrvSpriteRAM[offs] || DrvSpriteRAM[offs + 1])
 			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, 0, 4, 0, 0x00, DrvSpriteGFX);
 	}
 }
@@ -776,20 +791,20 @@ STD_SAMPLE_FN(qbert)
 // Q*bert (US set 1)
 
 static struct BurnRomInfo qbertRomDesc[] = {
-	{ "qb-rom2.bin",	0x2000, 0xfe434526, 1 }, //  0 maincpu
-	{ "qb-rom1.bin",	0x2000, 0x55635447, 1 }, //  1
-	{ "qb-rom0.bin",	0x2000, 0x8e318641, 1 }, //  2
+	{ "qb-rom2.bin",	0x2000, 0xfe434526, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "qb-rom1.bin",	0x2000, 0x55635447, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "qb-rom0.bin",	0x2000, 0x8e318641, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "qb-snd1.bin",	0x0800, 0x15787c07, 2 }, //  3 audiocpu
-	{ "qb-snd2.bin",	0x0800, 0x58437508, 2 }, //  4
+	{ "qb-snd1.bin",	0x0800, 0x15787c07, 2 | BRF_PRG | BRF_ESS }, //  3 audiocpu
+	{ "qb-snd2.bin",	0x0800, 0x58437508, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "qb-bg0.bin",		0x1000, 0x7a9ba824, 3 }, //  5 bgtiles
-	{ "qb-bg1.bin",		0x1000, 0x22e5b891, 3 }, //  6
+	{ "qb-bg0.bin",		0x1000, 0x7a9ba824, 3 | BRF_GRA }, //  5 bgtiles
+	{ "qb-bg1.bin",		0x1000, 0x22e5b891, 3 | BRF_GRA }, //  6
 
-	{ "qb-fg3.bin",		0x2000, 0xdd436d3a, 4 }, //  7 sprites
-	{ "qb-fg2.bin",		0x2000, 0xf69b9483, 4 }, //  8
-	{ "qb-fg1.bin",		0x2000, 0x224e8356, 4 }, //  9
-	{ "qb-fg0.bin",		0x2000, 0x2f695b85, 4 }, // 10
+	{ "qb-fg3.bin",		0x2000, 0xdd436d3a, 4 | BRF_GRA }, //  7 sprites
+	{ "qb-fg2.bin",		0x2000, 0xf69b9483, 4 | BRF_GRA }, //  8
+	{ "qb-fg1.bin",		0x2000, 0x224e8356, 4 | BRF_GRA }, //  9
+	{ "qb-fg0.bin",		0x2000, 0x2f695b85, 4 | BRF_GRA }, // 10
 };
 
 STD_ROM_PICK(qbert)
@@ -809,20 +824,20 @@ struct BurnDriver BurnDrvQbert = {
 // Q*bert (US set 2)
 
 static struct BurnRomInfo qbertaRomDesc[] = {
-	{ "qrom_2.bin",		0x2000, 0xb54a8ffc, 1 }, //  0 maincpu
-	{ "qrom_1.bin",		0x2000, 0x19d924e3, 1 }, //  1
-	{ "qrom_0.bin",		0x2000, 0x2e7fad1b, 1 }, //  2
+	{ "qrom_2.bin",		0x2000, 0xb54a8ffc, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "qrom_1.bin",		0x2000, 0x19d924e3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "qrom_0.bin",		0x2000, 0x2e7fad1b, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "qb-snd1.bin",	0x0800, 0x15787c07, 2 }, //  3 audiocpu
-	{ "qb-snd2.bin",	0x0800, 0x58437508, 2 }, //  4
+	{ "qb-snd1.bin",	0x0800, 0x15787c07, 2 | BRF_PRG | BRF_ESS }, //  3 audiocpu
+	{ "qb-snd2.bin",	0x0800, 0x58437508, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "qb-bg0.bin",		0x1000, 0x7a9ba824, 3 }, //  5 bgtiles
-	{ "qb-bg1.bin",		0x1000, 0x22e5b891, 3 }, //  6
+	{ "qb-bg0.bin",		0x1000, 0x7a9ba824, 3 | BRF_GRA }, //  5 bgtiles
+	{ "qb-bg1.bin",		0x1000, 0x22e5b891, 3 | BRF_GRA }, //  6
 
-	{ "qb-fg3.bin",		0x2000, 0xdd436d3a, 4 }, //  7 sprites
-	{ "qb-fg2.bin",		0x2000, 0xf69b9483, 4 }, //  8
-	{ "qb-fg1.bin",		0x2000, 0x224e8356, 4 }, //  9
-	{ "qb-fg0.bin",		0x2000, 0x2f695b85, 4 }, // 10
+	{ "qb-fg3.bin",		0x2000, 0xdd436d3a, 4 | BRF_GRA }, //  7 sprites
+	{ "qb-fg2.bin",		0x2000, 0xf69b9483, 4 | BRF_GRA }, //  8
+	{ "qb-fg1.bin",		0x2000, 0x224e8356, 4 | BRF_GRA }, //  9
+	{ "qb-fg0.bin",		0x2000, 0x2f695b85, 4 | BRF_GRA }, // 10
 };
 
 STD_ROM_PICK(qberta)
@@ -842,20 +857,20 @@ struct BurnDriver BurnDrvQberta = {
 // Q*bert (Japan)
 
 static struct BurnRomInfo qbertjRomDesc[] = {
-	{ "qbj-rom2.bin",	0x2000, 0x67bb1cb2, 1 }, //  0 maincpu
-	{ "qbj-rom1.bin",	0x2000, 0xc61216e7, 1 }, //  1
-	{ "qbj-rom0.bin",	0x2000, 0x69679d5c, 1 }, //  2
+	{ "qbj-rom2.bin",	0x2000, 0x67bb1cb2, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "qbj-rom1.bin",	0x2000, 0xc61216e7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "qbj-rom0.bin",	0x2000, 0x69679d5c, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "qb-snd1.bin",	0x0800, 0x15787c07, 2 }, //  3 audiocpu
-	{ "qb-snd2.bin",	0x0800, 0x58437508, 2 }, //  4
+	{ "qb-snd1.bin",	0x0800, 0x15787c07, 2 | BRF_PRG | BRF_ESS }, //  3 audiocpu
+	{ "qb-snd2.bin",	0x0800, 0x58437508, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "qb-bg0.bin",		0x1000, 0x7a9ba824, 3 }, //  5 bgtiles
-	{ "qb-bg1.bin",		0x1000, 0x22e5b891, 3 }, //  6
+	{ "qb-bg0.bin",		0x1000, 0x7a9ba824, 3 | BRF_GRA }, //  5 bgtiles
+	{ "qb-bg1.bin",		0x1000, 0x22e5b891, 3 | BRF_GRA }, //  6
 
-	{ "qb-fg3.bin",		0x2000, 0xdd436d3a, 4 }, //  7 sprites
-	{ "qb-fg2.bin",		0x2000, 0xf69b9483, 4 }, //  8
-	{ "qb-fg1.bin",		0x2000, 0x224e8356, 4 }, //  9
-	{ "qb-fg0.bin",		0x2000, 0x2f695b85, 4 }, // 10
+	{ "qb-fg3.bin",		0x2000, 0xdd436d3a, 4 | BRF_GRA }, //  7 sprites
+	{ "qb-fg2.bin",		0x2000, 0xf69b9483, 4 | BRF_GRA }, //  8
+	{ "qb-fg1.bin",		0x2000, 0x224e8356, 4 | BRF_GRA }, //  9
+	{ "qb-fg0.bin",		0x2000, 0x2f695b85, 4 | BRF_GRA }, // 10
 };
 
 STD_ROM_PICK(qbertj)
@@ -875,20 +890,20 @@ struct BurnDriver BurnDrvQbertj = {
 // Mello Yello Q*bert
 
 static struct BurnRomInfo myqbertRomDesc[] = {
-	{ "mqb-rom2.bin",	0x2000, 0x6860f957, 1 }, //  0 maincpu
-	{ "mqb-rom1.bin",	0x2000, 0x11f0a4e4, 1 }, //  1
-	{ "mqb-rom0.bin",	0x2000, 0x12a90cb2, 1 }, //  2
+	{ "mqb-rom2.bin",	0x2000, 0x6860f957, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "mqb-rom1.bin",	0x2000, 0x11f0a4e4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "mqb-rom0.bin",	0x2000, 0x12a90cb2, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "mqb-snd1.bin",	0x0800, 0x495ffcd2, 2 }, //  3 audiocpu
-	{ "mqb-snd2.bin",	0x0800, 0x9bbaa945, 2 }, //  4
+	{ "mqb-snd1.bin",	0x0800, 0x495ffcd2, 2 | BRF_PRG | BRF_ESS }, //  3 audiocpu
+	{ "mqb-snd2.bin",	0x0800, 0x9bbaa945, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "qb-bg0.bin",		0x1000, 0x7a9ba824, 3 }, //  5 bgtiles
-	{ "qb-bg1.bin",		0x1000, 0x22e5b891, 3 }, //  6
+	{ "qb-bg0.bin",		0x1000, 0x7a9ba824, 3 | BRF_GRA }, //  5 bgtiles
+	{ "qb-bg1.bin",		0x1000, 0x22e5b891, 3 | BRF_GRA }, //  6
 
-	{ "mqb-fg3.bin",	0x2000, 0x8b5d0852, 4 }, //  7 sprites
-	{ "mqb-fg2.bin",	0x2000, 0x823f1e57, 4 }, //  8
-	{ "mqb-fg1.bin",	0x2000, 0x05343ae6, 4 }, //  9
-	{ "mqb-fg0.bin",	0x2000, 0xabc71bdd, 4 }, // 10
+	{ "mqb-fg3.bin",	0x2000, 0x8b5d0852, 4 | BRF_GRA }, //  7 sprites
+	{ "mqb-fg2.bin",	0x2000, 0x823f1e57, 4 | BRF_GRA }, //  8
+	{ "mqb-fg1.bin",	0x2000, 0x05343ae6, 4 | BRF_GRA }, //  9
+	{ "mqb-fg0.bin",	0x2000, 0xabc71bdd, 4 | BRF_GRA }, // 10
 };
 
 STD_ROM_PICK(myqbert)

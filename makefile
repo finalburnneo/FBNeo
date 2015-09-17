@@ -79,6 +79,9 @@ mingw452: FORCE
 	
 mingw471: FORCE
 	@$(MAKE) -s -f makefile.mingw GCC471=1
+	
+mingw510: FORCE
+	@$(MAKE) -s -f makefile.mingw GCC510=1
 
 mamemingw: FORCE
 	@$(MAKE) -s -f makefile.mamemingw 

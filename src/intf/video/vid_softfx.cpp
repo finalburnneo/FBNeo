@@ -77,7 +77,7 @@ extern "C" {
 }
 #endif
 
-#define FXF_MMX		(1 << 31)
+#define FXF_MMX		(unsigned int)(1 << 31)
 
 static struct { TCHAR* pszName; int nZoom; unsigned int nFlags; } SoftFXInfo[] = {
 	{ _T("Plain Software Scale"),			2, 0	   },

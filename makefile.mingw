@@ -84,6 +84,9 @@ endif
 ifdef GCC471
 objdir	= obj/47/$(COMPILENAME)/
 endif
+ifdef GCC510
+objdir	= obj/51/$(COMPILENAME)/
+endif
 
 srcdir	= src/
 
@@ -97,6 +100,9 @@ ifdef GCC452
 incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated -I$(srcdir)dep/mingw/include -I$(srcdir)dep/mingw/include/directx9 -I$(srcdir)dep/mingw/include/xaudio2
 endif
 ifdef GCC471
+incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated -I$(srcdir)dep/mingw/include -I$(srcdir)dep/mingw/include/directx9 -I$(srcdir)dep/mingw/include/xaudio2
+endif
+ifdef GCC510
 incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated -I$(srcdir)dep/mingw/include -I$(srcdir)dep/mingw/include/directx9 -I$(srcdir)dep/mingw/include/xaudio2
 endif
 
@@ -229,7 +235,39 @@ CXXFLAGS = -pipe \
 	   -Wuninitialized -Wpointer-arith -Wno-inline -Wno-address  -Wno-unused-value \
 	   -Wno-unused-but-set-variable -Wno-sequence-point -Wno-narrowing -Wno-extra \
 	   $(DEF) $(incdir)
+	   
+ifdef BUILD_X64_EXE
+	CFLAGS += -m64
+	CXXFLAGS += -m64
+	LDFLAGS += -m64
+else
+	CFLAGS += -m32
+	CXXFLAGS += -m32
+	LDFLAGS += -m32
+endif
+endif
 
+ifdef GCC510
+CFLAGS	 = -pipe \
+	   -std=gnu99 -O1 \
+	   -mwindows \
+	   -fforce-addr -finline-limit=1200 -fthread-jumps \
+	   -fexpensive-optimizations \
+	   -Wall -Wno-long-long -Wno-sign-compare -Wno-uninitialized -Wno-unused \
+	   -Wno-sequence-point -Wno-pedantic \
+	   $(DEF) $(incdir)
+
+CXXFLAGS = -pipe \
+	   -std=gnu++11 -O1 \
+	   -mwindows \
+	   -fforce-addr -finline-limit=1200 -fthread-jumps \
+	   -fexpensive-optimizations -fcheck-new \
+	   -Wall -W -pedantic -Wshadow -Wno-long-long -Wno-write-strings \
+	   -Wunknown-pragmas -Wundef -Wno-conversion -Wno-missing-braces -Wno-multichar \
+	   -Wuninitialized -Wpointer-arith -Wno-inline -Wno-address  -Wno-unused-value \
+	   -Wno-unused-but-set-variable -Wno-sequence-point -Wno-narrowing -Wno-extra \
+	   -Wno-pedantic \
+	   $(DEF) $(incdir)
 ifdef BUILD_X64_EXE
 	CFLAGS += -m64
 	CXXFLAGS += -m64
@@ -372,6 +410,9 @@ endif
 ifdef GCC471
 	@$(MAKE) -f makefile.mingw -s GCC471=1
 endif
+ifdef GCC510
+	@$(MAKE) -f makefile.mingw -s GCC510=1
+endif
 
 else
 
@@ -384,6 +425,9 @@ ifdef GCC452
 endif
 ifdef GCC471
 	@$(MAKE) -f makefile.mingw -s GCC471=1
+endif
+ifdef GCC510
+	@$(MAKE) -f makefile.mingw -s GCC510=1
 endif
 
 endif
@@ -634,6 +678,13 @@ ifdef GCC452
 	@windres $(DEF) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(foreach dir,$(alldir),--include-dir $(srcdir)$(dir))
 endif
 ifdef GCC471
+ifdef BUILD_X64_EXE
+	@windres -F pe-x86-64 $(DEF) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(foreach dir,$(alldir),--include-dir $(srcdir)$(dir))
+else
+	@windres -F pe-i386 $(DEF) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(foreach dir,$(alldir),--include-dir $(srcdir)$(dir))
+endif
+endif
+ifdef GCC510
 ifdef BUILD_X64_EXE
 	@windres -F pe-x86-64 $(DEF) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(foreach dir,$(alldir),--include-dir $(srcdir)$(dir))
 else

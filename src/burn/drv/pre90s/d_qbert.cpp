@@ -1,6 +1,4 @@
 // Q-Bert emu-layer for FB Alpha by dink, based on the MAME driver by Fabrice Frances & Nicola Salmoria.
-// Notes:
-//
 
 #include "tiles_generic.h"
 #include "driver.h"
@@ -47,9 +45,15 @@ static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
-static UINT8 DrvDip[2] = { 0, 0 };
+static UINT8 DrvFakeInput[8]; // fake inputs for rotate buttons
+
+static UINT8 DrvDip[2] = { 0, 0  };
 static UINT8 DrvInput[5];
 static UINT8 DrvReset;
+
+static UINT8 game_type = 0; // 0 = qbert, 6 = qbertcub, 4 = mplanets
+
+static UINT32 nRotateTime[2]  = { 0, 0 };
 
 static struct BurnInputInfo QbertInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"   },
@@ -118,6 +122,144 @@ static struct BurnDIPInfo QbertDIPList[]=
 };
 
 STDDIPINFO(Qbert)
+
+static struct BurnInputInfo MplanetsInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"   },
+	{"P1 Start",	BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"  },
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"     },
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 down"   },
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 left"   },
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"  },
+	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1" },
+	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy2 + 7,	"p1 fire 2" },
+	{"Rotate Left", BIT_DIGITAL,    DrvFakeInput + 0, "p1 rotate left" },
+	{"Rotate Right",BIT_DIGITAL,    DrvFakeInput + 1, "p1 rotate right" },
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,      "reset"     },
+	{"Select",		BIT_DIGITAL,	DrvJoy1 + 6,    "select"    },
+	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,     "dip"       },
+	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,     "dip"       },
+};
+
+STDINPUTINFO(Mplanets)
+
+
+static struct BurnDIPInfo MplanetsDIPList[]=
+{
+	{0x0C, 0xff, 0xff, 0x00, NULL		        },
+	{0x0D, 0xff, 0xff, 0x80, NULL	            },
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x0C, 0x01, 0x01, 0x01, "Off"		        },
+	{0x0C, 0x01, 0x01, 0x00, "On"		        },
+
+	{0   , 0xfe, 0   ,    2, "Bonus Life"		},
+	{0x0C, 0x01, 0x02, 0x00, "10000"		    },
+	{0x0C, 0x01, 0x02, 0x02, "12000"		    },
+
+	{0   , 0xfe, 0   ,    2, "Allow Round Select" },
+	{0x0C, 0x01, 0x08, 0x00, "No"		        },
+	{0x0C, 0x01, 0x08, 0x08, "Yes"		        },
+
+	{0   , 0xfe, 0   ,    4, "Coinage"		    },
+	{0x0C, 0x01, 0x14, 0x04, "2 Coins 1 Credit"	},
+	{0x0C, 0x01, 0x14, 0x00, "1 Coin  1 Credit"	},
+	{0x0C, 0x01, 0x14, 0x10, "1 Coin  2 Credits" },
+	{0x0C, 0x01, 0x14, 0x14, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    2, "Lives"		    },
+	{0x0C, 0x01, 0x20, 0x00, "3"		        },
+	{0x0C, 0x01, 0x20, 0x20, "5"		        },
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x0C, 0x01, 0xc0, 0x40, "Easy"		        },
+	{0x0C, 0x01, 0xc0, 0x00, "Medium"		    },
+	{0x0C, 0x01, 0xc0, 0x80, "Hard"		        },
+	{0x0C, 0x01, 0xc0, 0xc0, "Hardest"		    },
+
+	{0   , 0xfe, 0   ,    2, "Service"	        },
+	{0x0D, 0x01, 0x80, 0x80, "Off"		        },
+	{0x0D, 0x01, 0x80, 0x00, "On"		        },
+};
+
+STDDIPINFO(Mplanets)
+
+static struct BurnInputInfo QbertqubInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 coin"   },
+	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"  },
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"     },
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"   },
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 left"   },
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 0,	"p1 right"  },
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,      "reset"     },
+	{"Select",		BIT_DIGITAL,	DrvJoy1 + 7,    "select"    },
+	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,     "dip"       },
+	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,     "dip"       },
+};
+
+STDINPUTINFO(Qbertqub)
+
+static struct BurnDIPInfo QbertqubDIPList[]=
+{
+	{0x08, 0xff, 0xff, 0x00, NULL		        },
+	{0x09, 0xff, 0xff, 0x40, NULL	            },
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x08, 0x01, 0x08, 0x08, "Off"		        },
+	{0x08, 0x01, 0x08, 0x00, "On"		        },
+
+	{0   , 0xfe, 0   ,    13, "Coinage"		    },
+	{0x08, 0x01, 0x35, 0x24, "A 2/1 B 2/1"		},
+	{0x08, 0x01, 0x35, 0x14, "A 1/1 B 4/1"		},
+	{0x08, 0x01, 0x35, 0x30, "A 1/1 B 3/1"		},
+	{0x08, 0x01, 0x35, 0x10, "A 1/1 B 2/1"		},
+	{0x08, 0x01, 0x35, 0x00, "A 1/1 B 1/1"		},
+	{0x08, 0x01, 0x35, 0x11, "A 2/3 B 2/1"		},
+	{0x08, 0x01, 0x35, 0x15, "A 1/2 B 3/1"		},
+	{0x08, 0x01, 0x35, 0x20, "A 1/2 B 2/1"		},
+	{0x08, 0x01, 0x35, 0x21, "A 1/2 B 1/1"		},
+	{0x08, 0x01, 0x35, 0x31, "A 1/2 B 1/5"		},
+	{0x08, 0x01, 0x35, 0x04, "A 1/3 B 2/1"		},
+	{0x08, 0x01, 0x35, 0x05, "A 1/3 B 1/1"		},
+	{0x08, 0x01, 0x35, 0x35, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    2, "1st Bonus Life"	},
+	{0x08, 0x01, 0x02, 0x00, "10000"		    },
+	{0x08, 0x01, 0x02, 0x02, "15000"		    },
+
+	{0   , 0xfe, 0   ,    2, "Additional Bonus Life" },
+	{0x08, 0x01, 0x40, 0x00, "20000"		    },
+	{0x08, 0x01, 0x40, 0x40, "25000"		    },
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"		},
+	{0x08, 0x01, 0x80, 0x00, "Normal"		    },
+	{0x08, 0x01, 0x80, 0x80, "Hard"		        },
+
+	{0   , 0xfe, 0   ,    2, "Service"	        },
+	{0x09, 0x01, 0x40, 0x40, "Off"		        },
+	{0x09, 0x01, 0x40, 0x00, "On"		        },
+
+};
+
+STDDIPINFO(Qbertqub)
+
+static UINT8 dialRotation(int addy) {
+	if (nRotateTime[addy] > nCurrentFrame) nRotateTime[addy] = 0; // Bugfix: no rotate after savestate
+
+	if (DrvFakeInput[0] && (nCurrentFrame > nRotateTime[addy]+2)) {
+		nRotateTime[addy] = nCurrentFrame;
+
+		return 0xfe;
+    }
+    if (DrvFakeInput[1] && (nCurrentFrame > nRotateTime[addy]+2)) {
+        nRotateTime[addy] = nCurrentFrame;
+
+		return 2;
+    }
+
+	return 0;
+}
 
 static void gottlieb_paletteram_w(UINT16 offset, UINT8 data)
 {
@@ -212,6 +354,8 @@ static void __fastcall main_write(UINT32 address, UINT8 data)
 		case 0x5803: {
 			*background_prio = data & 0x01;
 			qbert_knocker(data >> 5 & 1);
+			if (game_type == 6) // qbertqub only
+				*spritebank = (data & 0x10) >> 4;
 			return;
 		}
 	}
@@ -221,8 +365,8 @@ static UINT8 __fastcall main_read(UINT32 address)
 {
 	address &= 0xffff;
 
-	if (address >= 0xa000 && address <= 0xffff) {
-		return DrvV20ROM[address - 0xa000];
+	if (address >= 0x6000 && address <= 0xffff) {
+		return DrvV20ROM[address - 0x6000];
 	}
 
 	if (address >= 0x0000 && address <= 0x0fff) {
@@ -254,7 +398,8 @@ static UINT8 __fastcall main_read(UINT32 address)
 	switch (address)
 	{
 		case 0x5800: return DrvDip[0];
-		case 0x5801: return DrvInput[0] | DrvDip[1]; // DrvDip[1] for service mode.
+		case 0x5801: return DrvInput[0] | DrvDip[1]; // DrvDip[1] (fake-dip) for service mode.
+		case 0x5803: return dialRotation(0);
 		case 0x5804: return DrvInput[1];
 	}
 
@@ -414,6 +559,9 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
+	if (game_type == 6)
+		memset(DrvNVRAM, 0xff, 0x1000); // Init NVRAM for qbertqub to avoid lockup on second boot(no idea at this point)
+
 	VezOpen(0);
 	VezReset();
 	VezClose();
@@ -424,6 +572,9 @@ static INT32 DrvDoReset()
 
 	DACReset();
 	BurnSampleReset();
+
+	nRotateTime[0] = 0;
+	nRotateTime[1] = 0;
 
 	return 0;
 }
@@ -439,6 +590,7 @@ static INT32 MemIndex()
 	DrvPalette		= (UINT32*)Next; Next += 0x10 * sizeof(UINT32);
 	DrvCharGFX      = Next; Next += 0x40000;
 	DrvSpriteGFX    = Next; Next += 0x40000;
+
 	DrvNVRAM        = Next; Next += 0x01000; // Keep in ROM section.
 
 	AllRam			= Next;
@@ -450,7 +602,7 @@ static INT32 MemIndex()
 	DrvCharRAM		= Next; Next += 0x01000;
 	DrvSpriteRAM	= Next; Next += 0x00100;
 	DrvPaletteRAM	= Next; Next += 0x00040;
-	DrvDummyROM     = Next; Next += 0x02000;
+	DrvDummyROM     = Next; Next += 0x02000; // it's RAM, too.
 
 	riot_regs       = Next; Next += 0x00020;
 	riot_ram        = Next; Next += 0x00200;
@@ -477,9 +629,10 @@ static INT32 DrvInit()
 	INT32 c8XOffsets[8] = { 0, 4, 8, 12, 16, 20, 24, 28 };
 	INT32 c8YOffsets[8] = { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 };
 
-	INT32 c16PlaneOffsets[4] = { RGN_FRAC(0x8000, 0, 4), RGN_FRAC(0x8000, 1, 4), RGN_FRAC(0x8000, 2, 4), RGN_FRAC(0x8000, 3, 4) };
+	INT32 c16PlaneOffsets[4] = { RGN_FRAC(((game_type == 6) ? 0x10000 : 0x8000), 0, 4), RGN_FRAC(((game_type == 6) ? 0x10000 : 0x8000), 1, 4), RGN_FRAC(((game_type == 6) ? 0x10000 : 0x8000), 2, 4), RGN_FRAC(((game_type == 6) ? 0x10000 : 0x8000), 3, 4) };
 	INT32 c16XOffsets[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
 	INT32 c16YOffsets[16] = { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16, 8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16 };
+	INT32 roffset = 0;
 
 	AllMem = NULL;
 	MemIndex();
@@ -492,26 +645,51 @@ static INT32 DrvInit()
 		UINT8 *DrvTempRom = (UINT8 *)BurnMalloc(0x40000);
 		memset(DrvTempRom, 0, 0x40000);
 		{
-			if (BurnLoadRom(DrvV20ROM + 0x0000, 0, 1)) return 1;
-			if (BurnLoadRom(DrvV20ROM + 0x2000, 1, 1)) return 1;
-			if (BurnLoadRom(DrvV20ROM + 0x4000, 2, 1)) return 1;
+			if (game_type == 0) { // qbert
+				if (BurnLoadRom(DrvV20ROM + 0x4000, 0, 1)) return 1;
+				if (BurnLoadRom(DrvV20ROM + 0x6000, 1, 1)) return 1;
+				if (BurnLoadRom(DrvV20ROM + 0x8000, 2, 1)) return 1;
+			}
+			if (game_type == 4) { // mplanets
+				if (BurnLoadRom(DrvV20ROM + 0x0000, 0, 1)) return 1;
+				if (BurnLoadRom(DrvV20ROM + 0x2000, 1, 1)) return 1;
+				if (BurnLoadRom(DrvV20ROM + 0x4000, 2, 1)) return 1;
+				if (BurnLoadRom(DrvV20ROM + 0x6000, 3, 1)) return 1;
+				if (BurnLoadRom(DrvV20ROM + 0x8000, 4, 1)) return 1;
+				roffset = 2;
+			}
+			if (game_type == 6) { // qbertqub
+				if (BurnLoadRom(DrvV20ROM + 0x2000, 0, 1)) return 1;
+				if (BurnLoadRom(DrvV20ROM + 0x4000, 1, 1)) return 1;
+				if (BurnLoadRom(DrvV20ROM + 0x6000, 2, 1)) return 1;
+				if (BurnLoadRom(DrvV20ROM + 0x8000, 3, 1)) return 1;
+				roffset = 1;
+			}
 
-			if (BurnLoadRom(Drv6502ROM + 0x0000, 3, 1)) return 1;
-			if (BurnLoadRom(Drv6502ROM + 0x0800, 4, 1)) return 1;
+			if (BurnLoadRom(Drv6502ROM + 0x0000, 3 + roffset, 1)) return 1;
+			if (BurnLoadRom(Drv6502ROM + 0x0800, 4 + roffset, 1)) return 1;
 
 			// load & decode 8x8 tiles
 			memset(DrvTempRom, 0, 0x40000);
-			if (BurnLoadRom(DrvTempRom + 0x0000, 5, 1)) return 1;
-			if (BurnLoadRom(DrvTempRom + 0x1000, 6, 1)) return 1;
+			if (BurnLoadRom(DrvTempRom + 0x0000, 5 + roffset, 1)) return 1;
+			if (BurnLoadRom(DrvTempRom + 0x1000, 6 + roffset, 1)) return 1;
 			GfxDecode(0x100, 4, 8, 8, c8PlaneOffsets, c8XOffsets, c8YOffsets, 0x100, DrvTempRom, DrvCharGFX);
 
 			// load & decode 16x16 tiles
 			memset(DrvTempRom, 0, 0x40000);
-			if (BurnLoadRom(DrvTempRom + 0x0000, 7, 1)) return 1;
-			if (BurnLoadRom(DrvTempRom + 0x2000, 8, 1)) return 1;
-			if (BurnLoadRom(DrvTempRom + 0x4000, 9, 1)) return 1;
-			if (BurnLoadRom(DrvTempRom + 0x6000, 10, 1)) return 1;
-			GfxDecode(0x100 /*((0x8000*8)/4)/(16*16))*/, 4, 16, 16, c16PlaneOffsets, c16XOffsets, c16YOffsets, 0x100, DrvTempRom, DrvSpriteGFX);
+			if (game_type == 6) { // qbertqub
+				if (BurnLoadRom(DrvTempRom + 0x0000, 7 + roffset, 1)) return 1;
+				if (BurnLoadRom(DrvTempRom + 0x4000, 8 + roffset, 1)) return 1;
+				if (BurnLoadRom(DrvTempRom + 0x8000, 9 + roffset, 1)) return 1;
+				if (BurnLoadRom(DrvTempRom + 0xc000, 10 + roffset, 1)) return 1;
+				GfxDecode(0x200 /*((0x10000*8)/4)/(16*16))*/, 4, 16, 16, c16PlaneOffsets, c16XOffsets, c16YOffsets, 0x100, DrvTempRom, DrvSpriteGFX);
+			} else {
+				if (BurnLoadRom(DrvTempRom + 0x0000, 7 + roffset, 1)) return 1;
+				if (BurnLoadRom(DrvTempRom + 0x2000, 8 + roffset, 1)) return 1;
+				if (BurnLoadRom(DrvTempRom + 0x4000, 9 + roffset, 1)) return 1;
+				if (BurnLoadRom(DrvTempRom + 0x6000, 10 + roffset, 1)) return 1;
+				GfxDecode(0x100 /*((0x8000*8)/4)/(16*16))*/, 4, 16, 16, c16PlaneOffsets, c16XOffsets, c16YOffsets, 0x100, DrvTempRom, DrvSpriteGFX);
+			}
 		}
 		BurnFree(DrvTempRom);
 	}
@@ -564,6 +742,8 @@ static INT32 DrvExit()
 
 	BurnFree(AllMem);
 
+	game_type = 0;
+
 	return 0;
 }
 
@@ -599,8 +779,8 @@ static void RenderTileCPMP(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 fl
 static void draw_sprites()
 {
 	for (INT32 offs = 0; offs < 0x100 - 8; offs += 4)	{
-		INT32 sx = (DrvSpriteRAM[offs + 1]) - 4;
-		INT32 sy = (DrvSpriteRAM[offs]) - 13;
+		INT32 sx = ((DrvSpriteRAM[offs + 1]) - 4) + ((game_type == 4) ? 7 : 0); // mplanets has weird sx/sy offsets
+		INT32 sy = ((DrvSpriteRAM[offs]) - 13) - ((game_type == 4) ? 4 : 0);    // apparent in the hiscore table.
 		INT32 code = (255 ^ DrvSpriteRAM[offs + 2]) + 256 * *spritebank;
 
 		if (DrvSpriteRAM[offs] || DrvSpriteRAM[offs + 1])
@@ -718,6 +898,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
+		memset(&ba, 0, sizeof(ba));     // savestates get f*cked up, because NVRAM is also used
+		ba.Data		= DrvNVRAM;         // as regular memory, to fix that we will scan it both here
+		ba.nLen		= 0x1000;           // and in the NVRAM section.
+		ba.szName	= "SSNVRAM";
+		BurnAcb(&ba);
+
 		VezScan(nAction);
 		M6502Scan(nAction);
 
@@ -725,7 +911,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnSampleScan(nAction, pnMin);
 	}
 
-	if (nAction & ACB_NVRAM) {
+	if (nAction & ACB_NVRAM && game_type != 6) { // not for qbertqub! (crash on second load)
 		memset(&ba, 0, sizeof(ba));
 		ba.Data		= DrvNVRAM;
 		ba.nLen		= 0x1000;
@@ -916,6 +1102,155 @@ struct BurnDriver BurnDrvMyqbert = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, myqbertRomInfo, myqbertRomName, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	240, 256, 3, 4
+};
+
+static INT32 DrvInitMplanets()
+{
+	game_type = 4;
+
+	return DrvInit();
+}
+
+
+// Faster, Harder, More Challenging Q*bert (prototype)
+
+static struct BurnRomInfo sqbertRomDesc[] = {
+	{ "qb-rom2.bin",	0x2000, 0x1e3d4038, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "qb-rom1.bin",	0x2000, 0xeaf3076c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "qb-rom0.bin",	0x2000, 0x61260a7e, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "qb-snd1.bin",	0x0800, 0x15787c07, 2 | BRF_PRG | BRF_ESS }, //  3 audiocpu
+	{ "qb-snd2.bin",	0x0800, 0x58437508, 2 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "qb-bg0.bin",		0x1000, 0xc3118eef, 3 | BRF_GRA }, //  5 bgtiles
+	{ "qb-bg1.bin",		0x1000, 0x4f6d8075, 3 | BRF_GRA }, //  6
+
+	{ "qb-fg3.bin",		0x2000, 0xee595eda, 4 | BRF_GRA }, //  7 sprites
+	{ "qb-fg2.bin",		0x2000, 0x59884c78, 4 | BRF_GRA }, //  8
+	{ "qb-fg1.bin",		0x2000, 0x2a60e3ad, 4 | BRF_GRA }, //  9
+	{ "qb-fg0.bin",		0x2000, 0xb11ad9d8, 4 | BRF_GRA }, // 10
+};
+
+STD_ROM_PICK(sqbert)
+STD_ROM_FN(sqbert)
+
+struct BurnDriver BurnDrvSqbert = {
+	"sqbert", "qbert", NULL, "qbert", "1983",
+	"Faster, Harder, More Challenging Q*bert (prototype)\0", NULL, "Mylstar", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, sqbertRomInfo, sqbertRomName, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	240, 256, 3, 4
+};
+
+// Mad Planets
+
+static struct BurnRomInfo mplanetsRomDesc[] = {
+	{ "rom4.c16",		0x2000, 0x5402077f, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "rom3.c14-15",	0x2000, 0x5d18d740, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rom2.c13-14",	0x2000, 0x960c3bb1, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "rom1.c12-13",	0x2000, 0xeb515f10, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "rom0.c11-12",	0x2000, 0x74de78aa, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "snd1",		    0x0800, 0x453193a1, 2 | BRF_PRG | BRF_ESS }, //  5 audiocpu
+	{ "snd2",		    0x0800, 0xf5ffc98f, 2 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "bg0.e11-12",		0x1000, 0x709aa24c, 3 | BRF_GRA }, //  7 bgtiles
+	{ "bg1.e13",		0x1000, 0x4921e345, 3 | BRF_GRA }, //  8
+
+	{ "fg3.k7-8",		0x2000, 0xc990b39f, 4 | BRF_GRA }, //  9 sprites
+	{ "fg2.k6",		    0x2000, 0x735e2522, 4 | BRF_GRA }, // 10
+	{ "fg1.k5",		    0x2000, 0x6456cc1c, 4 | BRF_GRA }, // 11
+	{ "fg0.k4",		    0x2000, 0xa920e325, 4 | BRF_GRA }, // 12
+};
+
+STD_ROM_PICK(mplanets)
+STD_ROM_FN(mplanets)
+
+struct BurnDriver BurnDrvMplanets = {
+	"mplanets", NULL, NULL, NULL, "1983",
+	"Mad Planets\0", NULL, "Gottlieb", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, mplanetsRomInfo, mplanetsRomName, NULL, NULL, MplanetsInputInfo, MplanetsDIPInfo,
+	DrvInitMplanets, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	240, 256, 3, 4
+};
+
+
+// Mad Planets (UK)
+
+static struct BurnRomInfo mplanetsukRomDesc[] = {
+	{ "mpt_rom4.bin",	0x2000, 0xcd88e23c, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "mpt_rom3.bin",	0x2000, 0xdc355b2d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "mpt_rom2.bin",	0x2000, 0x846ddc23, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "mpt_rom1.bin",	0x2000, 0x94d67b87, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "mpt_rom0.bin",	0x2000, 0xa9e30ad2, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "mpt_snd1.bin",	0x0800, 0x453193a1, 2 | BRF_PRG | BRF_ESS }, //  5 audiocpu
+	{ "mpt_snd2.bin",	0x0800, 0xf5ffc98f, 2 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "mpt_bg0.bin",	0x1000, 0x709aa24c, 3 | BRF_GRA }, //  7 bgtiles
+	{ "mpt_bg1.bin",	0x1000, 0x4921e345, 3 | BRF_GRA }, //  8
+
+	{ "mpt_fg3.bin",	0x2000, 0xc990b39f, 4 | BRF_GRA }, //  9 sprites
+	{ "mpt_fg2.bin",	0x2000, 0x735e2522, 4 | BRF_GRA }, // 10
+	{ "mpt_fg1.bin",	0x2000, 0x6456cc1c, 4 | BRF_GRA }, // 11
+	{ "mpt_fg0.bin",	0x2000, 0xa920e325, 4 | BRF_GRA }, // 12
+};
+
+STD_ROM_PICK(mplanetsuk)
+STD_ROM_FN(mplanetsuk)
+
+struct BurnDriver BurnDrvMplanetsuk = {
+	"mplanetsuk", "mplanets", NULL, NULL, "1983",
+	"Mad Planets (UK)\0", NULL, "Gottlieb (Taitel license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, mplanetsukRomInfo, mplanetsukRomName, NULL, NULL, MplanetsInputInfo, MplanetsDIPInfo,
+	DrvInitMplanets, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	240, 256, 3, 4
+};
+
+static INT32 DrvInitCube()
+{
+	game_type = 6;
+
+	return DrvInit();
+}
+
+// Q*bert's Qubes
+
+static struct BurnRomInfo qbertqubRomDesc[] = {
+	{ "qq-rom3.bin",	0x2000, 0xc4dbdcd7, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "qq-rom2.bin",	0x2000, 0x21a6c6cc, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "qq-rom1.bin",	0x2000, 0x63e6c43d, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "qq-rom0.bin",	0x2000, 0x8ddbe438, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "qq-snd1.bin",	0x0800, 0xe704b450, 2 | BRF_PRG | BRF_ESS }, //  4 audiocpu
+	{ "qq-snd2.bin",	0x0800, 0xc6a98bf8, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "qq-bg0.bin",		0x1000, 0x050badde, 3 | BRF_GRA }, //  6 bgtiles
+	{ "qq-bg1.bin",		0x1000, 0x8875902f, 3 | BRF_GRA }, //  7
+
+	{ "qq-fg3.bin",		0x4000, 0x91a949cc, 4 | BRF_GRA }, //  8 sprites
+	{ "qq-fg2.bin",		0x4000, 0x782d9431, 4 | BRF_GRA }, //  9
+	{ "qq-fg1.bin",		0x4000, 0x71c3ac4c, 4 | BRF_GRA }, // 10
+	{ "qq-fg0.bin",		0x4000, 0x6192853f, 4 | BRF_GRA }, // 11
+};
+
+STD_ROM_PICK(qbertqub)
+STD_ROM_FN(qbertqub)
+
+struct BurnDriver BurnDrvQbertqub = {
+	"qbertqub", NULL, NULL, "qbert", "1983",
+	"Q*bert's Qubes\0", NULL, "Mylstar", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, qbertqubRomInfo, qbertqubRomName, qbertSampleInfo, qbertSampleName, QbertqubInputInfo, QbertqubDIPInfo,
+	DrvInitCube, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
 };
 

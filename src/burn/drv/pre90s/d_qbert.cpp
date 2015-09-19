@@ -328,6 +328,12 @@ static void __fastcall main_write(UINT32 address, UINT8 data)
 		return;
 	}
 
+	if (address >= 0x1000 && address <= 0x2fff) {
+		//bprintf(0, _T("drw."));
+		DrvDummyROM[address - 0x1000] = data;
+		return;
+	}
+
 	if (address >= 0x3000 && address <= 0x30ff) {
 		DrvSpriteRAM[address - 0x3000] = data;
 		return;
@@ -371,6 +377,11 @@ static UINT8 __fastcall main_read(UINT32 address)
 
 	if (address >= 0x0000 && address <= 0x0fff) {
 		return DrvNVRAM[address - 0x0000];
+	}
+
+	if (address >= 0x1000 && address <= 0x2fff) {
+		//bprintf(0, _T("drr."));
+		return DrvDummyROM[address - 0x1000];
 	}
 
 	if ((address & 0xff00) == 0x3700) address &= ~0x700;
@@ -499,6 +510,7 @@ static void audio_write(UINT16 address, UINT8 data)
 	address &= 0x7fff; // 15bit addressing
 
 	if (address >= 0x7000 && address <= 0x7fff) {
+		bprintf(0, _T("write to audio ROM @ %X."), address);
 		Drv6502ROM[address - 0x7000] = data;
 	}
 
@@ -558,9 +570,6 @@ static INT32 DrvSyncDAC()
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
-
-	if (game_type == 6)
-		memset(DrvNVRAM, 0xff, 0x1000); // Init NVRAM for qbertqub to avoid lockup on second boot(no idea at this point)
 
 	VezOpen(0);
 	VezReset();
@@ -699,9 +708,9 @@ static INT32 DrvInit()
 
 	memset(DrvNVRAM, 0xff, 0x1000); // Init NVRAM
 
-	VezMapArea(0x01000, 0x02fff, 0, DrvDummyROM); // RAM/ROM (for reactor and 3stooges)
-	VezMapArea(0x01000, 0x02fff, 1, DrvDummyROM); // not used in qbert, but something needs to be here
-	VezMapArea(0x01000, 0x02fff, 2, DrvDummyROM);
+	//VezMapArea(0x01000, 0x02fff, 0, DrvDummyROM); // ROM for reactor and 3stooges, used as RAM for all other games.
+	//VezMapArea(0x01000, 0x02fff, 1, DrvDummyROM); // note: moved to main_read() / main_write()
+	//VezMapArea(0x01000, 0x02fff, 2, DrvDummyROM);
 	VezSetReadHandler(main_read);
 	VezSetWriteHandler(main_write);
 
@@ -901,7 +910,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		memset(&ba, 0, sizeof(ba));     // savestates get f*cked up, because NVRAM is also used
 		ba.Data		= DrvNVRAM;         // as regular memory, to fix that we will scan it both here
 		ba.nLen		= 0x1000;           // and in the NVRAM section.
-		ba.szName	= "SSNVRAM";
+		ba.szName	= "SSNVRAM";        // note: this is separate from "All Ram" so it doesn't get trashed in DrvDoReset();
 		BurnAcb(&ba);
 
 		VezScan(nAction);
@@ -911,7 +920,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnSampleScan(nAction, pnMin);
 	}
 
-	if (nAction & ACB_NVRAM && game_type != 6) { // not for qbertqub! (crash on second load)
+	if (nAction & ACB_NVRAM) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data		= DrvNVRAM;
 		ba.nLen		= 0x1000;

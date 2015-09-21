@@ -61,8 +61,8 @@ static struct {
 	UINT8 disconnect;
 } hit;
 
-static int sprite_kludge_x;
-static int sprite_kludge_y;
+static INT32 sprite_kludge_x;
+static INT32 sprite_kludge_y;
 
 static UINT8 DrvJoy1[32];
 static UINT8 DrvDips[2];
@@ -71,8 +71,8 @@ static INT32 DrvAnalogPort0 = 0;
 static INT32 DrvAnalogPort1 = 0;
 static UINT8 DrvReset;
 
-static int nGfxLen0 = 0;
-static int nRedrawTiles = 0;
+static INT32 nGfxLen0 = 0;
+static INT32 nRedrawTiles = 0;
 static UINT32 speedhack_address = ~0;
 static UINT32 speedhack_pc[2] = { 0, 0 };
 static UINT8 m_region = 0; /* 0 Japan, 1 Europe, 2 Asia, 3 USA, 4 Korea */
@@ -491,7 +491,7 @@ static UINT32 skns_msm6242_r(UINT32 offset)
 	return value;
 }
 
-UINT8 __fastcall suprnova_read_byte(UINT32 address)
+static UINT8 __fastcall suprnova_read_byte(UINT32 address)
 {
 	address &= 0xc7ffffff;
 
@@ -541,7 +541,7 @@ UINT8 __fastcall suprnova_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall suprnova_read_word(UINT32 address)
+static UINT16 __fastcall suprnova_read_word(UINT32 address)
 {
 	address &= 0xc7fffffe;
 
@@ -591,7 +591,7 @@ UINT16 __fastcall suprnova_read_word(UINT32 address)
 	return 0;
 }
 
-UINT32 __fastcall suprnova_read_long(UINT32 address)
+static UINT32 __fastcall suprnova_read_long(UINT32 address)
 {
 	address &= 0xc7fffffc;
 
@@ -627,21 +627,21 @@ UINT32 __fastcall suprnova_read_long(UINT32 address)
 }
 
 
-static int suprnova_alt_enable_sprites = 0;
-static int bright_spc_g_trans = 0;
-static int bright_spc_r_trans = 0;
-static int bright_spc_b_trans = 0;
-static int bright_spc_g = 0;
-static int bright_spc_r = 0;
-static int bright_spc_b = 0;
-static int suprnova_alt_enable_background = 0;
-static int bright_v3_g = 0;
-static int bright_v3_r = 0;
-static int bright_v3_b = 0;
-static int use_spc_bright = 0;
-static int use_v3_bright = 0;
+static INT32 suprnova_alt_enable_sprites = 0;
+static INT32 bright_spc_g_trans = 0;
+static INT32 bright_spc_r_trans = 0;
+static INT32 bright_spc_b_trans = 0;
+static INT32 bright_spc_g = 0;
+static INT32 bright_spc_r = 0;
+static INT32 bright_spc_b = 0;
+static INT32 suprnova_alt_enable_background = 0;
+static INT32 bright_v3_g = 0;
+static INT32 bright_v3_r = 0;
+static INT32 bright_v3_b = 0;
+static INT32 use_spc_bright = 0;
+static INT32 use_v3_bright = 0;
 
-void skns_pal_regs_w(UINT32 offset)
+static void skns_pal_regs_w(UINT32 offset)
 {
 	UINT32 data = *((UINT32*)(DrvPalRegs + (offset & 0x1c)));
 	offset = (offset >> 2) & 7;
@@ -863,10 +863,10 @@ static UINT8 __fastcall suprnova_hack_read_byte(UINT32 a)
 	return DrvSh2RAM[(a & 0xfffff) ^ 3];
 }
 
-static void BurnSwapEndian(UINT8 *src, int len)
+static void BurnSwapEndian(UINT8 *src, INT32 len)
 {
-	for (int i = 0; i < len; i+=4) {
-		int t = src[i + 0];
+	for (INT32 i = 0; i < len; i+=4) {
+		INT32 t = src[i + 0];
 		src[i + 0] = src[i+3];
 		src[i + 3] = t;
 		t = src[i + 1];
@@ -875,7 +875,7 @@ static void BurnSwapEndian(UINT8 *src, int len)
 	}
 }
 
-static int MemIndex(int gfxlen0)
+static INT32 MemIndex(INT32 gfxlen0)
 {
 	UINT8 *Next; Next = AllMem;
 
@@ -927,7 +927,7 @@ static int MemIndex(int gfxlen0)
 	return 0;
 }
 
-static int DrvDoReset()
+static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 	memset (DrvTmpScreenBuf, 0xff, 0x8000);
@@ -1023,12 +1023,12 @@ static INT32 DrvLoad(INT32 nLoadRoms)
 	return 0;
 }
 
-static int DrvInit(INT32 bios)
+static INT32 DrvInit(INT32 bios)
 {
 	AllMem = NULL;
 	DrvLoad(0);
 	MemIndex(nGfxLen0);
-	int nLen = MemEnd - (UINT8 *)0;
+	INT32 nLen = MemEnd - (UINT8 *)0;
 	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex(nGfxLen0);
@@ -1092,7 +1092,7 @@ static int DrvInit(INT32 bios)
 	return 0;
 }
 
-static int DrvExit()
+static INT32 DrvExit()
 {
 	GenericTilesExit();
 
@@ -1115,7 +1115,7 @@ static int DrvExit()
 }
 
 
-static void draw_layer(UINT8 *source, UINT8 *previous, UINT16 *dest, UINT8 *prid, UINT8 *gfxbase, int layer)
+static void draw_layer(UINT8 *source, UINT8 *previous, UINT16 *dest, UINT8 *prid, UINT8 *gfxbase, INT32 layer)
 {
 	UINT32 *prev = (UINT32*)previous;
 	UINT32 *vram = (UINT32*)source;
@@ -1124,7 +1124,7 @@ static void draw_layer(UINT8 *source, UINT8 *previous, UINT16 *dest, UINT8 *prid
 	if (layer) depth >>= 8;
 	depth &= 1;
 
-	for (int offs = 0; offs < 64 * 64; offs++)
+	for (INT32 offs = 0; offs < 64 * 64; offs++)
 	{
 	//	speed hack, disabled for gals panic* & panic street
 		if (vram[offs] == prev[offs] && draw_layer_speedhack) {
@@ -1132,16 +1132,16 @@ static void draw_layer(UINT8 *source, UINT8 *previous, UINT16 *dest, UINT8 *prid
 		}
 		prev[offs] = vram[offs];
 
-		int sx = (offs & 0x3f) << 4;
-		int sy = (offs >> 6) << 4;
+		INT32 sx = (offs & 0x3f) << 4;
+		INT32 sy = (offs >> 6) << 4;
 
-		int attr  = vram[offs];
-		int code  = attr & 0x001fffff;
-		int color =((attr & 0x3f000000) >> 24) | 0x40;
-		int prio  =(attr & 0x00e00000) >> 21;
+		INT32 attr  = vram[offs];
+		INT32 code  = attr & 0x001fffff;
+		INT32 color =((attr & 0x3f000000) >> 24) | 0x40;
+		INT32 prio  =(attr & 0x00e00000) >> 21;
 
-		int flipx = (attr >> 31) & 1;
-		int flipy = (attr >> 30) & 1;
+		INT32 flipx = (attr >> 31) & 1;
+		INT32 flipy = (attr >> 30) & 1;
 	
 		color <<= 8;
 		UINT8 *pri = prid + sy * 1024 + sx;
@@ -1156,9 +1156,9 @@ static void draw_layer(UINT8 *source, UINT8 *previous, UINT16 *dest, UINT8 *prid
 
 			UINT8 *gfx = gfxbase + (code << 7);
 
-			for (int y = 0; y < 16; y++) {
-				for (int x = 0; x < 16; x+=2) {
-					int c = gfx[((y << 3) | (x >> 1)) ^ flipy];
+			for (INT32 y = 0; y < 16; y++) {
+				for (INT32 x = 0; x < 16; x+=2) {
+					INT32 c = gfx[((y << 3) | (x >> 1)) ^ flipy];
 
 					dst[x+0] = (c & 0x0f) + color;
 					dst[x+1] = (c >> 4) + color;
@@ -1173,9 +1173,9 @@ static void draw_layer(UINT8 *source, UINT8 *previous, UINT16 *dest, UINT8 *prid
 
 			UINT8 *gfx = gfxbase + (code << 8);
 			if (flipy) gfx += 0xf0;
-			int inc = flipy ? -16 : 16;
+			INT32 inc = flipy ? -16 : 16;
 
-			for (int y = 0; y < 16 * 16; y+=16, gfx += inc) {
+			for (INT32 y = 0; y < 16 * 16; y+=16, gfx += inc) {
 				if (flipx) {
 					dst[ 0] = gfx[15] + color;
 					dst[ 1] = gfx[14] + color;
@@ -1237,19 +1237,19 @@ static void draw_layer(UINT8 *source, UINT8 *previous, UINT16 *dest, UINT8 *prid
 }
 
 
-static void suprnova_draw_roz(UINT16 *source, UINT8 *flags, UINT16 *ddest, UINT8 *dflags, UINT32 startx, UINT32 starty, int incxx, int incxy, int incyx, int incyy, int wraparound, int columnscroll, UINT32* scrollram)
+static void suprnova_draw_roz(UINT16 *source, UINT8 *flags, UINT16 *ddest, UINT8 *dflags, UINT32 startx, UINT32 starty, INT32 incxx, INT32 incxy, INT32 incyx, INT32 incyy, INT32 wraparound, INT32 columnscroll, UINT32* scrollram)
 {
-	const int xmask = 0x3ff;
-	const int ymask = 0x3ff;
+	const INT32 xmask = 0x3ff;
+	const INT32 ymask = 0x3ff;
 	const UINT32 widthshifted = 1024 << 16;
 	const UINT32 heightshifted = 1024 << 16;
 	UINT32 cx;
 	UINT32 cy;
-	int x;
-	int sx;
-	int sy;
-	int ex;
-	int ey;
+	INT32 x;
+	INT32 sx;
+	INT32 sy;
+	INT32 ex;
+	INT32 ey;
 	UINT16 *dest;
 	UINT8* destflags;
 
@@ -1284,14 +1284,14 @@ static void suprnova_draw_roz(UINT16 *source, UINT8 *flags, UINT16 *ddest, UINT8
 				{
 					if (columnscroll)
 					{
-						int offset = (((cy >> 16) - scrollram[(cx>>16)&0x3ff]) & ymask) * 1024 + ((cx >> 16) & xmask);
+						INT32 offset = (((cy >> 16) - scrollram[(cx>>16)&0x3ff]) & ymask) * 1024 + ((cx >> 16) & xmask);
 						offset &= 0xfffff;
 						dest[0]     = source[offset];
 						destflags[0] = flags[offset];
 					}
 					else
 					{
-						int offset = ((cy >> 16) & ymask) * 1024 + (((cx >> 16) - scrollram[(cy>>16)&0x3ff]) & xmask);
+						INT32 offset = ((cy >> 16) & ymask) * 1024 + (((cx >> 16) - scrollram[(cy>>16)&0x3ff]) & xmask);
 						offset &= 0xfffff;
 ;						dest[0] =     source[offset];
 						destflags[0] = flags[offset];
@@ -1314,17 +1314,17 @@ static void suprnova_draw_roz(UINT16 *source, UINT8 *flags, UINT16 *ddest, UINT8
 	}
 }
 
-static void supernova_draw(int *offs, UINT16 *bitmap, UINT8 *flags, UINT16 *dbitmap, UINT8 *dflags, int layer)
+static void supernova_draw(INT32 *offs, UINT16 *bitmap, UINT8 *flags, UINT16 *dbitmap, UINT8 *dflags, INT32 layer)
 {
 	UINT32 *vreg = (UINT32*)DrvV3Regs;
 	UINT32 *line = (UINT32*)DrvLineRAM;
 
-	int enable = (vreg[offs[0]] >> 0) & 0x0001;
-	int nowrap = (vreg[offs[0]] >> 0) & 0x0004;
+	INT32 enable = (vreg[offs[0]] >> 0) & 0x0001;
+	INT32 nowrap = (vreg[offs[0]] >> 0) & 0x0004;
 
 	UINT32 startx,starty;
-	int incxx,incxy,incyx,incyy;
-	int columnscroll;
+	INT32 incxx,incxy,incyx,incyy;
+	INT32 columnscroll;
 
 	if (enable && suprnova_alt_enable_background)
 	{
@@ -1354,10 +1354,10 @@ static void supernova_draw(int *offs, UINT16 *bitmap, UINT8 *flags, UINT16 *dbit
 
 static void DrvRecalcPalette()
 {
-	int use_bright, brightness_r, brightness_g, brightness_b;
-	int r,g,b;
+	INT32 use_bright, brightness_r, brightness_g, brightness_b;
+	INT32 r,g,b;
 	UINT32 *p = (UINT32*)DrvPalRAM;
-	for (int i = 0; i < 0x20000 / 4; i++) {
+	for (INT32 i = 0; i < 0x20000 / 4; i++) {
 		r = (p[i] >> 10) & 0x1f;
 		g = (p[i] >>  5) & 0x1f;
 		b = (p[i] >>  0) & 0x1f;
@@ -1396,14 +1396,14 @@ static void copy_layers()
 {
 	UINT32 *vreg = (UINT32*)DrvV3Regs;
 
-	int offs[2][9] = {
+	INT32 offs[2][9] = {
 		{ 0x10 / 4, 0x1c / 4, 0x30 / 4, 0x2c / 4, 0x20 / 4, 0x28 / 4, 0x24 / 4, 1, 0x0000 },
 		{ 0x34 / 4, 0x40 / 4, 0x54 / 4, 0x50 / 4, 0x44 / 4, 0x4c / 4, 0x48 / 4, 9, 0x1000 / 4 }
 	};
 
 	{
-		int supernova_pri_a;
-		int supernova_pri_b;
+		INT32 supernova_pri_a;
+		INT32 supernova_pri_b;
 
 		supernova_pri_a = (vreg[0x10/4] & 0x0002)>>1;
 		supernova_pri_b = (vreg[0x34/4] & 0x0002)>>1;
@@ -1412,7 +1412,7 @@ static void copy_layers()
 		supernova_draw(offs[0], DrvTmpScreenA, DrvTmpFlagA, DrvTmpScreenA2, DrvTmpFlagA2, 0);
 
 		{
-			int x,y;
+			INT32 x,y;
 			UINT8* srcflags, *src2flags;
 			UINT16* src, *src2, *src3;
 			UINT32* dst;
@@ -1497,8 +1497,8 @@ static void copy_layers()
 								UINT32 srccolour = clut[bgpendata&0x7fff];
 								UINT32 dstcolour = clut[pendata3&0x3fff];
 
-								int r,g,b;
-								int r2,g2,b2;
+								INT32 r,g,b;
+								INT32 r2,g2,b2;
 
 								r = (srccolour & 0x000000ff)>> 0;
 								g = (srccolour & 0x0000ff00)>> 8;
@@ -1549,7 +1549,7 @@ static void copy_layers()
 }
 
 
-static int DrvDraw()
+static INT32 DrvDraw()
 {
 	DrvRecalcPalette();
 
@@ -1569,8 +1569,8 @@ static int DrvDraw()
 	//if (nBurnBpp == 4) {
 	//	DrvTmpDraw = (UINT32*)pBurnDraw;
 	//} else {
-		for (int i = 0; i < nScreenWidth * nScreenHeight; i++) {
-			int d = DrvTmpDraw[i];
+		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
+			INT32 d = DrvTmpDraw[i];
 			PutPix(pBurnDraw + i * nBurnBpp, BurnHighCol(d>>16, d>>8, d, 0));
 		}
 
@@ -1582,7 +1582,7 @@ static int DrvDraw()
 	return 0;
 }
 
-UINT32 scalerange_skns(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
+static UINT32 scalerange_skns(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
 	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
@@ -1600,7 +1600,7 @@ static UINT8 Paddle_incdec(UINT32 PaddlePortnum) {
 	return Paddle_X;//~Temp;
 }
 
-static int DrvFrame()
+static INT32 DrvFrame()
 {
 	if (DrvReset) {
 		DrvDoReset();
@@ -1608,7 +1608,7 @@ static int DrvFrame()
 
 	{
 		DrvInputs[0] = ~0;
-		for (int i = 0; i < 32; i++) {
+		for (INT32 i = 0; i < 32; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		}
 
@@ -1627,8 +1627,8 @@ static int DrvFrame()
 	INT32 nTotalCycles = 28638000 / 60;
 	INT32 nInterleave = 262;
 
-	for (int i = 0; i < nInterleave; i++) {
-		int segment = nTotalCycles / nInterleave;
+	for (INT32 i = 0; i < nInterleave; i++) {
+		INT32 segment = nTotalCycles / nInterleave;
 
 		Sh2Run(segment);
 		// irqs
@@ -1658,7 +1658,7 @@ static int DrvFrame()
 		}
 
 		/*if (pBurnSoundOut && (i & 1)) {
-			int nSegmentEnd = nBurnSoundLen * i / nInterleave;
+			INT32 nSegmentEnd = nBurnSoundLen * i / nInterleave;
 			short* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			YMZ280BRender(pSoundBuf, nSegmentEnd - nSoundBufferPos);
 			nSoundBufferPos = nSegmentEnd;
@@ -1666,7 +1666,7 @@ static int DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		/*int nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		/*INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		short* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
 			YMZ280BRender(pSoundBuf, nSegmentLength);
@@ -1682,7 +1682,7 @@ static int DrvFrame()
 }
 
 
-static int DrvScan(int nAction, int *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -1732,7 +1732,7 @@ static struct BurnRomInfo sknsRomDesc[] = {
 STD_ROM_PICK(skns)
 STD_ROM_FN(skns)
 
-static int SknsInit() {
+static INT32 SknsInit() {
 	return 1;
 }
 
@@ -1767,7 +1767,7 @@ static struct BurnRomInfo cyvernRomDesc[] = {
 STDROMPICKEXT(cyvern, cyvern, skns)
 STD_ROM_FN(cyvern)
 
-static int CyvernInit()
+static INT32 CyvernInit()
 {
 	sprite_kludge_x = 0;
 	sprite_kludge_y = 2;
@@ -1808,7 +1808,7 @@ static struct BurnRomInfo cyvernjRomDesc[] = {
 STDROMPICKEXT(cyvernj, cyvernj, skns)
 STD_ROM_FN(cyvernj)
 
-static int CyvernJInit()
+static INT32 CyvernJInit()
 {
 	sprite_kludge_x = 0;
 	sprite_kludge_y = 2;
@@ -1844,7 +1844,7 @@ static struct BurnRomInfo gutsnRomDesc[] = {
 STDROMPICKEXT(gutsn, gutsn, skns)
 STD_ROM_FN(gutsn)
 
-static int GutsnInit()
+static INT32 GutsnInit()
 {
 	sprite_kludge_x = 0;
 	sprite_kludge_y = 0;
@@ -1887,7 +1887,7 @@ static struct BurnRomInfo sengekisRomDesc[] = {
 STDROMPICKEXT(sengekis, sengekis, skns)
 STD_ROM_FN(sengekis)
 
-static int SengekisInit()
+static INT32 SengekisInit()
 {
 	sprite_kludge_x = -192;
 	sprite_kludge_y = -272;
@@ -1930,7 +1930,7 @@ static struct BurnRomInfo sengekisjRomDesc[] = {
 STDROMPICKEXT(sengekisj, sengekisj, skns)
 STD_ROM_FN(sengekisj)
 
-static int SengekisjInit()
+static INT32 SengekisjInit()
 {
 	sprite_kludge_x = -192;
 	sprite_kludge_y = -272;
@@ -1970,7 +1970,7 @@ static struct BurnRomInfo puzzloopRomDesc[] = {
 STDROMPICKEXT(puzzloop, puzzloop, skns)
 STD_ROM_FN(puzzloop)
 
-static int PuzzloopInit()
+static INT32 PuzzloopInit()
 {
 	sprite_kludge_x = -9;
 	sprite_kludge_y = -1;
@@ -2039,7 +2039,7 @@ static struct BurnRomInfo puzzloopjRomDesc[] = {
 STDROMPICKEXT(puzzloopj, puzzloopj, skns)
 STD_ROM_FN(puzzloopj)
 
-static int PuzzloopjInit()
+static INT32 PuzzloopjInit()
 {
 	sprite_kludge_x = -9;
 	sprite_kludge_y = -1;
@@ -2079,7 +2079,7 @@ static struct BurnRomInfo puzzloopaRomDesc[] = {
 STDROMPICKEXT(puzzloopa, puzzloopa, skns)
 STD_ROM_FN(puzzloopa)
 
-static int PuzzloopaInit()
+static INT32 PuzzloopaInit()
 {
 	sprite_kludge_x = -9;
 	sprite_kludge_y = -1;
@@ -2119,7 +2119,7 @@ static struct BurnRomInfo puzzloopkRomDesc[] = {
 STDROMPICKEXT(puzzloopk, puzzloopk, skns)
 STD_ROM_FN(puzzloopk)
 
-static int PuzzloopkInit()
+static INT32 PuzzloopkInit()
 {
 	sprite_kludge_x = -9;
 	sprite_kludge_y = -1;
@@ -2159,7 +2159,7 @@ static struct BurnRomInfo puzzloopuRomDesc[] = {
 STDROMPICKEXT(puzzloopu, puzzloopu, skns)
 STD_ROM_FN(puzzloopu)
 
-static int PuzzloopuInit()
+static INT32 PuzzloopuInit()
 {
 	sprite_kludge_x = -9;
 	sprite_kludge_y = -1;
@@ -2199,7 +2199,7 @@ static struct BurnRomInfo teljanRomDesc[] = {
 STDROMPICKEXT(teljan, teljan, skns)
 STD_ROM_FN(teljan)
 
-static int TeljanInit()
+static INT32 TeljanInit()
 {
 	sprite_kludge_x = 5;
 	sprite_kludge_y = 1;
@@ -2238,7 +2238,7 @@ static struct BurnRomInfo panicstrRomDesc[] = {
 STDROMPICKEXT(panicstr, panicstr, skns)
 STD_ROM_FN(panicstr)
 
-static int PanicstrInit()
+static INT32 PanicstrInit()
 {
 	sprite_kludge_x = -1;
 	sprite_kludge_y = -1;
@@ -2278,7 +2278,7 @@ static struct BurnRomInfo galpani4RomDesc[] = {
 STDROMPICKEXT(galpani4, galpani4, skns)
 STD_ROM_FN(galpani4)
 
-static int Galpani4Init()
+static INT32 Galpani4Init()
 {
 	sprite_kludge_x = -5;
 	sprite_kludge_y = -1;
@@ -2316,7 +2316,7 @@ static struct BurnRomInfo galpani4kRomDesc[] = {
 STDROMPICKEXT(galpani4k, galpani4k, skns)
 STD_ROM_FN(galpani4k)
 
-static int Galpani4kInit()
+static INT32 Galpani4kInit()
 {
 	sprite_kludge_x = -5;
 	sprite_kludge_y = -1;
@@ -2354,7 +2354,7 @@ static struct BurnRomInfo galpanisRomDesc[] = {
 STDROMPICKEXT(galpanis, galpanis, skns)
 STD_ROM_FN(galpanis)
 
-static int GalpanisInit()
+static INT32 GalpanisInit()
 {
 	sprite_kludge_x = -5;
 	sprite_kludge_y = -1;
@@ -2392,7 +2392,7 @@ static struct BurnRomInfo galpanisjRomDesc[] = {
 STDROMPICKEXT(galpanisj, galpanisj, skns)
 STD_ROM_FN(galpanisj)
 
-static int GalpanisjInit()
+static INT32 GalpanisjInit()
 {
 	sprite_kludge_x = -5;
 	sprite_kludge_y = -1;
@@ -2430,7 +2430,7 @@ static struct BurnRomInfo galpaniskRomDesc[] = {
 STDROMPICKEXT(galpanisk, galpanisk, skns)
 STD_ROM_FN(galpanisk)
 
-static int GalpaniskInit()
+static INT32 GalpaniskInit()
 {
 	sprite_kludge_x = -5;
 	sprite_kludge_y = -1;
@@ -2471,7 +2471,7 @@ static struct BurnRomInfo galpans2RomDesc[] = {
 STDROMPICKEXT(galpans2, galpans2, skns)
 STD_ROM_FN(galpans2)
 
-static int Galpans2Init()
+static INT32 Galpans2Init()
 {
 	sprite_kludge_x = -1;
 	sprite_kludge_y = -1;
@@ -2515,7 +2515,7 @@ static struct BurnRomInfo galpans2aRomDesc[] = {
 STDROMPICKEXT(galpans2a, galpans2a, skns)
 STD_ROM_FN(galpans2a)
 
-static int Galpans2aInit()
+static INT32 Galpans2aInit()
 {
 	sprite_kludge_x = -1;
 	sprite_kludge_y = -1;
@@ -2560,7 +2560,7 @@ static struct BurnRomInfo galpansuRomDesc[] = {
 STDROMPICKEXT(galpansu, galpansu, skns)
 STD_ROM_FN(galpansu)
 
-static int GalpansuInit()
+static INT32 GalpansuInit()
 {
 	sprite_kludge_x = -1;
 	sprite_kludge_y = -1;
@@ -2598,7 +2598,7 @@ static struct BurnRomInfo galpans3RomDesc[] = {
 STDROMPICKEXT(galpans3, galpans3, skns)
 STD_ROM_FN(galpans3)
 
-static int Galpans3Init()
+static INT32 Galpans3Init()
 {
 	sprite_kludge_x = -1;
 	sprite_kludge_y = -1;
@@ -2635,7 +2635,7 @@ static struct BurnRomInfo jjparadsRomDesc[] = {
 STDROMPICKEXT(jjparads, jjparads, skns)
 STD_ROM_FN(jjparads)
 
-static int JjparadsInit()
+static INT32 JjparadsInit()
 {
 	sprite_kludge_x = 5;
 	sprite_kludge_y = 1;
@@ -2676,7 +2676,7 @@ static struct BurnRomInfo jjparad2RomDesc[] = {
 STDROMPICKEXT(jjparad2, jjparad2, skns)
 STD_ROM_FN(jjparad2)
 
-static int Jjparad2Init()
+static INT32 Jjparad2Init()
 {
 	sprite_kludge_x = 5;
 	sprite_kludge_y = 1;
@@ -2718,7 +2718,7 @@ static struct BurnRomInfo senknowRomDesc[] = {
 STDROMPICKEXT(senknow, senknow, skns)
 STD_ROM_FN(senknow)
 
-static int SenknowInit()
+static INT32 SenknowInit()
 {
 	sprite_kludge_x = 1;
 	sprite_kludge_y = 1;
@@ -2759,7 +2759,7 @@ static struct BurnRomInfo ryouranRomDesc[] = {
 STDROMPICKEXT(ryouran, ryouran, skns)
 STD_ROM_FN(ryouran)
 
-static int RyouranInit()
+static INT32 RyouranInit()
 {
 	sprite_kludge_x = 5;
 	sprite_kludge_y = 1;
@@ -2798,7 +2798,7 @@ static struct BurnRomInfo vblokbrkRomDesc[] = {
 STDROMPICKEXT(vblokbrk, vblokbrk, skns)
 STD_ROM_FN(vblokbrk)
 
-static int VblokbrkInit()
+static INT32 VblokbrkInit()
 {
 	sprite_kludge_x = -1;
 	sprite_kludge_y = -1;
@@ -2836,7 +2836,7 @@ static struct BurnRomInfo sarukaniRomDesc[] = {
 STDROMPICKEXT(sarukani, sarukani, skns)
 STD_ROM_FN(sarukani)
 
-static int SarukaniInit()
+static INT32 SarukaniInit()
 {
 	sprite_kludge_x = -1;
 	sprite_kludge_y = -1;

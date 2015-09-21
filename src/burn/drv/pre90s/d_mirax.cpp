@@ -439,7 +439,7 @@ static void RenderTileCPMP(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 fl
 	}
 }
 
-void draw_sprites()
+static void draw_sprites()
 {
 	for(INT32 count = 0; count < 0x200; count += 4) {
 		INT32 spr_offs, x, y, color, fx, fy;

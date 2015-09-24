@@ -31,7 +31,7 @@ static UINT8 *DrvChars            = NULL;
 static UINT8 *DrvTiles            = NULL;
 static UINT8 *DrvSprites          = NULL;
 static UINT8 *DrvTempRom          = NULL;
-static UINT32 *DrvPalette          = NULL;
+static UINT32 *DrvPalette         = NULL;
 
 static UINT8 DrvBgScrollX[2];
 static UINT8 DrvBgScrollY[2];
@@ -110,7 +110,7 @@ static struct BurnDIPInfo DrvDIPList[]=
 	{0x11, 0x01, 0x03, 0x03, "0 (Forest 1)"           },
 	{0x11, 0x01, 0x03, 0x01, "2 (Forest 1)"           },
 	{0x11, 0x01, 0x03, 0x02, "4 (Forest 2)"           },
-	{0x11, 0x01, 0x03, 0x00, "6 (Forest 2)"           },	
+	{0x11, 0x01, 0x03, 0x00, "6 (Forest 2)"           },
 	
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x11, 0x01, 0x0c, 0x04, "2"                      },
@@ -443,7 +443,7 @@ static INT32 MemIndex()
 	RamStart               = Next;
 
 	DrvZ80Ram1             = Next; Next += 0x01e00;
-	DrvZ80Ram2             = Next; Next += 0x00800;	
+	DrvZ80Ram2             = Next; Next += 0x00800;
 	DrvSpriteRam           = Next; Next += 0x00180;
 	DrvSpriteRamBuffer     = Next; Next += 0x00180;
 	DrvBgVideoRam          = Next; Next += 0x00400;
@@ -1004,8 +1004,7 @@ static void DrvDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 25;
-	INT32 nSoundBufferPos = 0;
+	INT32 nInterleave = 278;
 
 	if (DrvReset) DrvDoReset();
 
@@ -1014,6 +1013,8 @@ static INT32 DrvFrame()
 	nCyclesTotal[0] = 4000000 / 60;
 	nCyclesTotal[1] = 3000000 / 60;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
+
+	ZetNewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
@@ -1024,51 +1025,34 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 24) {
+		if (i == 274) { // vblank rising edge
+			memcpy(DrvSpriteRamBuffer, DrvSpriteRam, 0x180);
 			ZetSetVector(0xd7);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
+		if (i == 276) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
-		
+
 		// Run Z80 #2
 		nCurrentCPU = 1;
 		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 5 || i == 10 || i == 15 || i == 20) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
+		// execute IRQ quarterly 68.5 (or 69) is 25% of 278 (nInterleave)
+		if (i%69 == 0 && i>0) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		// execute CPU_IRQSTATUS_NONE 1 interleave past the last one
+		if ((i-1)%69 == 0 && i>1) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
-		
-		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			ZetOpen(1);
-			BurnYM2203Update(pSoundBuf, nSegmentLength);
-			ZetClose();
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
-	
-	// Make sure the buffer is entirely filled.
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			ZetOpen(1);
-			BurnYM2203Update(pSoundBuf, nSegmentLength);
-			ZetClose();
-		}
-	}
-	
+
 	ZetOpen(1);
-	BurnTimerEndFrame(nCyclesTotal[1] - nCyclesDone[1]);
+	BurnTimerEndFrame(nCyclesTotal[1]);
+	if (pBurnSoundOut) {
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+	}
 	ZetClose();
-	
+
 	if (pBurnDraw) DrvDraw();
 	
-	memcpy(DrvSpriteRamBuffer, DrvSpriteRam, 0x180);
 
 	return 0;
 }
@@ -1099,7 +1083,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvSoundLatch);
 		SCAN_VAR(DrvBgScrollX);
 		SCAN_VAR(DrvBgScrollY);
-		SCAN_VAR(DrvFlipScreen);		
+		SCAN_VAR(DrvFlipScreen);
 		SCAN_VAR(DrvDip);
 		SCAN_VAR(DrvInput);
 	}

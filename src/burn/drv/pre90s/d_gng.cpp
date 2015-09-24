@@ -1340,10 +1340,10 @@ static void DrvDraw()
 {
 	BurnTransferClear();
 	DrvCalcPalette();
-	DrvRenderBgLayer(0, 1);
-	DrvRenderSprites();
-	DrvRenderBgLayer(1, 0);
-	DrvRenderCharLayer();
+	if (nBurnLayer & 2)     DrvRenderBgLayer(0, 1);
+	if (nSpriteEnable & 1)  DrvRenderSprites();
+	if (nBurnLayer & 4)     DrvRenderBgLayer(1, 0);
+	if (nBurnLayer & 8)     DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 }
 

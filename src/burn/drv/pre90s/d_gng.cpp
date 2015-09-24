@@ -716,7 +716,7 @@ static INT32 DrvDoReset()
 	BurnYM2203Reset();
 
 	HiscoreReset();
-	
+
 	DrvRomBank = 0;
 	DrvBgScrollX[0] = DrvBgScrollX[1] = 0;
 	DrvBgScrollY[0] = DrvBgScrollY[1] = 0;
@@ -862,6 +862,16 @@ void __fastcall DrvGngZ80Write(UINT16 a, UINT8 d)
 	}
 }
 
+static void DrvRandPalette()
+{ // On first boot we fill the palette with some arbatrary values to see the boot-up messages
+	DrvPaletteRam1[0] = 0x00;
+	DrvPaletteRam2[0] = 0x00;
+	for (INT32 i = 1; i < 0x100; i++) {
+		DrvPaletteRam1[i] = 0xaf;
+		DrvPaletteRam2[i] = 0x5a;
+	}
+}
+
 static INT32 CharPlaneOffsets[2]   = { 4, 0 };
 static INT32 CharXOffsets[8]       = { 0, 1, 2, 3, 8, 9, 10, 11 };
 static INT32 CharYOffsets[8]       = { 0, 16, 32, 48, 64, 80, 96, 112 };
@@ -977,6 +987,7 @@ static INT32 DrvInit()
 	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.40, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
+	DrvRandPalette();
 
 	// Reset the driver
 	DrvDoReset();
@@ -1247,7 +1258,7 @@ static void DrvRenderSprites()
 		INT32 yFlip = Attr & 0x08;
 		INT32 Code = DrvSpriteRamBuffer[Offs + 0] + ((Attr << 2) & 0x300);
 		INT32 Colour = (Attr >> 4) & 3;
-		
+
 		if (sx > 16 && sx < 240 && sy > 16 && sy < 208) {
 			if (xFlip) {
 				if (yFlip) {
@@ -1371,6 +1382,7 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
 		if (i == 22) {
+			memcpy(DrvSpriteRamBuffer, DrvSpriteRam, 0x200);
 			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		M6809Close();
@@ -1393,8 +1405,6 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnDraw) DrvDraw();
-	
-	memcpy(DrvSpriteRamBuffer, DrvSpriteRam, 0x200);
 
 	return 0;
 }

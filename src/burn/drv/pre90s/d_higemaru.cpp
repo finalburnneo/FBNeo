@@ -14,8 +14,15 @@ static UINT32 *DrvPalette;
 static UINT8 DrvRecalc = 0;
 
 static UINT8 DrvJoy1[8], DrvJoy2[8], DrvJoy3[8], DrvDips[3], DrvReset;
+static UINT8 DrvInput[3];
 
 static INT32 flipscreen;
+
+// 4-Way input stuff
+static UINT8 fourwaymode     = 1;        // enabled.
+static UINT8 DrvInput4way[2] = { 0, 0 }; // inputs after 4-way processing
+static INT32 fourway[2]      = { 0, 0 }; // 4-way buffer
+static UINT8 DrvInputPrev[2] = { 0, 0 }; // 4-way buffer
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"Coin 1"       , BIT_DIGITAL  , DrvJoy3 + 7,	"p1 coin"  },
@@ -112,7 +119,42 @@ static struct BurnDIPInfo DrvDIPList[]=
 
 STDDIPINFO(Drv)
 
-void __fastcall higemaru_write(UINT16 address, UINT8 data)
+static void DrvMakeInputs()
+{
+	DrvInput[0] = 0;
+	DrvInput[1] = 0;
+	DrvInput[2] = DrvDips[0];
+
+	for (INT32 i = 0; i < 8; i++) {
+		DrvInput[0] ^= DrvJoy1[i] << i;
+		DrvInput[1] ^= DrvJoy2[i] << i;
+		DrvInput[2] ^= DrvJoy3[i] << i;
+	}
+
+	if (fourwaymode) {
+		// Convert to 4-way
+		for (INT32 i = 0; i < 2; i++) {
+			if(DrvInput[i] != DrvInputPrev[i]) {
+				fourway[i] = DrvInput[i] & 0xf;
+
+				if((fourway[i] & 0x3) && (fourway[i] & 0xc))
+					fourway[i] ^= (fourway[i] & (DrvInputPrev[i] & 0xf));
+
+				if((fourway[i] & 0x3) && (fourway[i] & 0xc)) // if it starts out diagonally, pick a direction
+					fourway[i] &= (rand()&1) ? 0x03 : 0x0c;
+			}
+			DrvInput4way[i] = fourway[i] | (DrvInput[i] & 0xf0);
+
+			DrvInputPrev[i] = DrvInput[i];
+		}
+	} else { // all other games. (8-way)
+		for (INT32 i = 0; i < 2; i++)
+			DrvInput4way[i] = DrvInput[i];
+	}
+
+}
+
+static void __fastcall higemaru_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -132,43 +174,18 @@ void __fastcall higemaru_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall higemaru_read(UINT16 address)
+static UINT8 __fastcall higemaru_read(UINT16 address)
 {
-	UINT8 ret;
-
 	switch (address)
 	{
 		case 0xc000:
-		{
-			ret = 0xff;
-
-			for (INT32 i = 0; i < 8; i++) {
-				ret ^= DrvJoy1[i] << i;
-			}
-
-			return ret;
-		}
+			return 0xff - DrvInput4way[0];
 
 		case 0xc001:
-		{
-			ret = 0xff;
-
-			for (INT32 i = 0; i < 8; i++) {
-				ret ^= DrvJoy2[i] << i;
-			}
-
-			return ret;
-		}
+			return 0xff - DrvInput4way[1];
 
 		case 0xc002:
-		{
-			ret = DrvDips[0];
-
-			for (INT32 i = 0; i < 8; i++)
-				ret ^= DrvJoy3[i] << i;
-
-			return ret;
-		}
+			return DrvInput[2];
 
 		case 0xc003:
 			return DrvDips[1];
@@ -423,7 +440,7 @@ static INT32 DrvDraw()
 
 	return 0;
 }
-
+extern int counter;
 
 static INT32 DrvFrame()
 {
@@ -431,13 +448,23 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	DrvMakeInputs();
+
+	INT32 nInterleave = 262;
+	INT32 nCyclesTotal = 4000000 / 60;
+
 	ZetOpen(0);
-	ZetRun(33333);
-	ZetSetVector(0xd7);
-	ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-	ZetRun(33334);
-	ZetSetVector(0xcf);
-	ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+	for (INT32 i = 0; i < nInterleave; i++) {
+		ZetRun(nCyclesTotal / nInterleave);
+		if (i == 0) {
+			ZetSetVector(0xd7);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		}
+		if (i == 235) {
+			ZetSetVector(0xcf);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		}
+	}
 	ZetClose();
 
 	if (pBurnSoundOut) {

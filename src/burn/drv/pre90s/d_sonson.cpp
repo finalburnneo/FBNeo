@@ -509,14 +509,22 @@ static void draw_sprites()
 		if (flipy) {
 			if (flipx) {
 				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x100, DrvGfxROM1);
+				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx-256, sy, color, 3, 0, 0x100, DrvGfxROM1);
+				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy-256, color, 3, 0, 0x100, DrvGfxROM1);
 			} else {
 				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x100, DrvGfxROM1);
+				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx-256, sy, color, 3, 0, 0x100, DrvGfxROM1);
+				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy-256, color, 3, 0, 0x100, DrvGfxROM1);
 			}
 		} else {
 			if (flipx) {
 				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x100, DrvGfxROM1);
+				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx-256, sy, color, 3, 0, 0x100, DrvGfxROM1);
+				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy-256, color, 3, 0, 0x100, DrvGfxROM1);
 			} else {
 				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0x100, DrvGfxROM1);
+				Render16x16Tile_Mask_Clip(pTransDraw, code, sx-256, sy, color, 3, 0, 0x100, DrvGfxROM1);
+				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy-256, color, 3, 0, 0x100, DrvGfxROM1);
 			}
 		}
 	}

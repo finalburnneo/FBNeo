@@ -4,6 +4,7 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "driver.h"
+#include "joyprocess.h"
 extern "C" {
 #include "ay8910.h"
 }
@@ -17,12 +18,6 @@ static UINT8 DrvJoy1[8], DrvJoy2[8], DrvJoy3[8], DrvDips[3], DrvReset;
 static UINT8 DrvInput[3];
 
 static INT32 flipscreen;
-
-// 4-Way input stuff
-static UINT8 fourwaymode     = 1;        // enabled.
-static UINT8 DrvInput4way[2] = { 0, 0 }; // inputs after 4-way processing
-static INT32 fourway[2]      = { 0, 0 }; // 4-way buffer
-static UINT8 DrvInputPrev[2] = { 0, 0 }; // 4-way buffer
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"Coin 1"       , BIT_DIGITAL  , DrvJoy3 + 7,	"p1 coin"  },
@@ -131,27 +126,8 @@ static void DrvMakeInputs()
 		DrvInput[2] ^= DrvJoy3[i] << i;
 	}
 
-	if (fourwaymode) {
-		// Convert to 4-way
-		for (INT32 i = 0; i < 2; i++) {
-			if(DrvInput[i] != DrvInputPrev[i]) {
-				fourway[i] = DrvInput[i] & 0xf;
-
-				if((fourway[i] & 0x3) && (fourway[i] & 0xc))
-					fourway[i] ^= (fourway[i] & (DrvInputPrev[i] & 0xf));
-
-				if((fourway[i] & 0x3) && (fourway[i] & 0xc)) // if it starts out diagonally, pick a direction
-					fourway[i] &= (rand()&1) ? 0x03 : 0x0c;
-			}
-			DrvInput4way[i] = fourway[i] | (DrvInput[i] & 0xf0);
-
-			DrvInputPrev[i] = DrvInput[i];
-		}
-	} else { // all other games. (8-way)
-		for (INT32 i = 0; i < 2; i++)
-			DrvInput4way[i] = DrvInput[i];
-	}
-
+	ProcessJoystick(&DrvInput[0], 0, 3,2,1,0, INPUT_4WAY | INPUT_MAKEACTIVELOW);
+	ProcessJoystick(&DrvInput[1], 1, 3,2,1,0, INPUT_4WAY | INPUT_MAKEACTIVELOW);
 }
 
 static void __fastcall higemaru_write(UINT16 address, UINT8 data)
@@ -179,10 +155,10 @@ static UINT8 __fastcall higemaru_read(UINT16 address)
 	switch (address)
 	{
 		case 0xc000:
-			return 0xff - DrvInput4way[0];
+			return DrvInput[0];
 
 		case 0xc001:
-			return 0xff - DrvInput4way[1];
+			return DrvInput[1];
 
 		case 0xc002:
 			return DrvInput[2];

@@ -4,6 +4,7 @@
 
 #include "tiles_generic.h"
 #include "driver.h"
+#include "joyprocess.h"
 #include "z80_intf.h"
 #include "bitswap.h"
 
@@ -51,11 +52,6 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvDip[2] = {0, 0};
 static UINT8 DrvInput[5];
 static UINT8 DrvReset;
-
-// 4-Way input for Popeye
-static UINT8 DrvInput4way[2] = { 0, 0 }; // inputs after 4-way processing
-static INT32 fourway[2]      = { 0, 0 }; // 4-way buffer
-static UINT8 DrvInputPrev[2] = { 0, 0 }; // 4-way buffer
 
 static struct BurnInputInfo SkyskiprInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"},
@@ -455,9 +451,6 @@ static INT32 DrvDoReset()
 	m_prot1 = 0;
 	m_prot_shift = 0;
 
-	memset(&DrvInputPrev, 0, sizeof(DrvInputPrev));
-	memset(&fourway, 0, sizeof(fourway));
-
 	return 0;
 }
 
@@ -498,8 +491,8 @@ static INT32 MemIndex()
 static UINT8 __fastcall port_read(UINT16 port)
 {
 	switch (port & 0xff) {
-		case 0x00: return DrvInput4way[0];
-		case 0x01: return DrvInput4way[1];
+		case 0x00: return DrvInput[0];
+		case 0x01: return DrvInput[1];
 		case 0x02: return (skyskiprmode) ? DrvInput[2] : DrvInput[2] | (m_field ^ 1) << 4;
 		case 0x03: return AY8910Read(0);
 	}
@@ -795,26 +788,9 @@ static void DrvMakeInputs()
 
 	if (!skyskiprmode) {
 		// Convert to 4-way for Popeye
-		for (INT32 i = 0; i < 2; i++) {
-			if(DrvInput[i] != DrvInputPrev[i]) {
-				fourway[i] = DrvInput[i] & 0xf;
-
-				if((fourway[i] & 0x3) && (fourway[i] & 0xc))
-					fourway[i] ^= (fourway[i] & (DrvInputPrev[i] & 0xf));
-
-				if((fourway[i] & 0x3) && (fourway[i] & 0xc)) // if it starts out diagonally, pick a direction
-					fourway[i] &= (rand()&1) ? 0x03 : 0x0c;
-			}
-			DrvInput4way[i] = fourway[i] | (DrvInput[i] & 0xf0);
-
-			DrvInputPrev[i] = DrvInput[i];
-		}
-	} else { // all other games. (8-way)
-		for (INT32 i = 0; i < 2; i++)
-			DrvInput4way[i] = DrvInput[i];
+		ProcessJoystick(&DrvInput[0], 0, 3,2,1,0, INPUT_4WAY);
+		ProcessJoystick(&DrvInput[1], 1, 3,2,1,0, INPUT_4WAY);
 	}
-
-
 }
 
 static INT32 DrvFrame()

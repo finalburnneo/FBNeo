@@ -1,0 +1,48 @@
+#include "burnint.h"
+#include "joyprocess.h"
+
+#define INPUT_4WAY              2
+#define INPUT_CLEAROPPOSITES    4
+#define INPUT_MAKEACTIVELOW     8
+
+void ProcessJoystick(UINT8 *input, INT8 playernum, INT8 up_bit, INT8 down_bit, INT8 left_bit, INT8 right_bit, UINT8 flags)
+{
+	// Limitation: this only works on the first 4 bits - active high to start with
+	// grep ProcessJoystick in drv/pre90s for examples
+
+	static INT32 fourway[4]      = { 0, 0, 0, 0 }; // 4-way buffer
+	static UINT8 DrvInputPrev[4] = { 0, 0, 0, 0 }; // 4-way buffer
+
+	UINT8 ud = (1 << up_bit) | (1 << down_bit);
+	UINT8 rl = (1 << right_bit) | (1 << left_bit);
+
+	if (flags & INPUT_4WAY) {
+		playernum &= 3; // just incase.
+		if(*input != DrvInputPrev[playernum]) {
+			fourway[playernum] = *input & 0xf;
+
+			if((fourway[playernum] & rl) && (fourway[playernum] & ud))
+				fourway[playernum] ^= (fourway[playernum] & (DrvInputPrev[playernum] & 0xf));
+
+			if((fourway[playernum] & rl) && (fourway[playernum] & ud)) // if it starts out diagonally, pick a direction
+				fourway[playernum] &= (rand()&1) ? rl : ud;
+		}
+
+		DrvInputPrev[playernum] = *input;
+
+		*input = fourway[playernum] | (DrvInputPrev[playernum] & 0xf0); // preserve the unprocessed/other bits
+	}
+
+	if (flags & INPUT_CLEAROPPOSITES) {
+		if ((*input & rl) == rl) {
+			*input &= ~rl;
+		}
+		if ((*input & ud) == ud) {
+			*input &= ~ud;
+		}
+	}
+
+	if (flags & INPUT_MAKEACTIVELOW) {
+		*input = 0xff - *input;
+	}
+}

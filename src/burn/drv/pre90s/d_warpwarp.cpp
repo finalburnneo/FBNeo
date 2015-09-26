@@ -5,6 +5,7 @@
 #include "driver.h"
 #include "z80_intf.h"
 #include "bitswap.h"
+#include "joyprocess.h"
 #include <math.h>
 
 static UINT8 *AllMem;
@@ -43,12 +44,6 @@ static UINT8 ball_size_x;
 static UINT8 ball_size_y;
 static UINT32 ball_color;
 static UINT8 geebee_bgw;
-
-// 4-Way input stuff
-static UINT8 fourwaymode     = 1;        // enabled.
-static UINT8 DrvInput4way[2] = { 0, 0 }; // inputs after 4-way processing
-static INT32 fourway[2]      = { 0, 0 }; // 4-way buffer
-static UINT8 DrvInputPrev[2] = { 0, 0 }; // 4-way buffer
 
 static struct BurnInputInfo WarpwarpInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"   },
@@ -817,27 +812,8 @@ static void DrvMakeInputs()
 
 	DrvInput[0] |= 0x20; //DrvDip[1]; // service mode dip
 
-	if (fourwaymode) {
-		// Convert to 4-way
-		for (INT32 i = 0; i < 2; i++) {
-			if(DrvInput[i+2] != DrvInputPrev[i]) {
-				fourway[i] = DrvInput[i+2] & 0xf;
-
-				if((fourway[i] & 0x3) && (fourway[i] & 0xc))
-					fourway[i] ^= (fourway[i] & (DrvInputPrev[i] & 0xf));
-
-				if((fourway[i] & 0x3) && (fourway[i] & 0xc)) // if it starts out diagonally, pick a direction
-					fourway[i] &= (rand()&1) ? 0x03 : 0x0c;
-			}
-			DrvInput4way[i] = fourway[i] | (DrvInput[i+2] & 0xf0);
-
-			DrvInputPrev[i] = DrvInput[i+2];
-		}
-	} else { // all other games. (8-way)
-		for (INT32 i = 0; i < 2; i++)
-			DrvInput4way[i] = DrvInput[i+2];
-	}
-
+	ProcessJoystick(&DrvInput[2], 0, 3,2,1,0, INPUT_4WAY);
+	ProcessJoystick(&DrvInput[3], 1, 3,2,1,0, INPUT_4WAY);
 }
 
 static UINT32 scalerange_skns(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
@@ -961,7 +937,7 @@ static UINT8 warpwarp_vol_r(UINT8 offset)
 {
 	INT32 res;
 
-	res = (use_paddle) ? in_paddle() : DrvInput4way[0];
+	res = (use_paddle) ? in_paddle() : DrvInput[2];
 	if (!use_paddle) {
 		if (res & 1) return 0x0f;
 		if (res & 2) return 0x3f;
@@ -1111,9 +1087,6 @@ static INT32 DrvDoReset()
 	warpwarp_sound_reset();
 
 	HiscoreReset();
-
-	memset(&DrvInputPrev, 0, sizeof(DrvInputPrev));
-	memset(&fourway, 0, sizeof(fourway));
 
 	return 0;
 }

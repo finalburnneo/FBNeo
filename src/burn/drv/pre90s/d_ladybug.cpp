@@ -5,6 +5,7 @@
 #include "z80_intf.h"
 #include "sn76496.h"
 #include "bitswap.h"
+#include "joyprocess.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -49,9 +50,6 @@ static UINT8 DrvReset;
 
 // 4-Way input stuff
 static UINT8 fourwaymode     = 0;        // enabled or disabled (per-game)
-static UINT8 DrvInput4way[2] = { 0, 0 }; // inputs after 4-way processing
-static INT32 fourway[2]      = { 0, 0 }; // 4-way buffer
-static UINT8 DrvInputPrev[2] = { 0, 0 }; // 4-way buffer
 
 static struct BurnInputInfo LadybugInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
@@ -424,18 +422,18 @@ UINT8 __fastcall ladybug_read(UINT16 address)
 			return 0x3e;
 
 		case 0x9000:
-			return DrvInput4way[0];
+			return DrvInputs[0];
 
 		case 0x9001: {
 			if (ladybug) {
 				if (DrvDips[0] & 0x20) {
-					return DrvInput4way[1] ^ vblank;
+					return DrvInputs[1] ^ vblank;
 				} else {
-					return (DrvInput4way[0] & 0x7f) ^ vblank;
+					return (DrvInputs[0] & 0x7f) ^ vblank;
 				}
 			}
 
-			return DrvInput4way[1] ^ vblank;
+			return DrvInputs[1] ^ vblank;
 		}
 
 		case 0x9002:
@@ -532,10 +530,6 @@ static INT32 DrvDoReset()
 	stars_offset = 0;
 	stars_state = 0;
 	vblank = 0;
-
-	// 4way input mode stuff
-	memset(&DrvInputPrev, 0, sizeof(DrvInputPrev));
-	memset(&fourway, 0, sizeof(fourway));
 
 	return 0;
 }
@@ -1157,27 +1151,12 @@ static INT32 DrvFrame()
 
 	if (fourwaymode) {
 		// Convert to 4-way
-		for (INT32 i = 0; i < 2; i++) {
-			if(DrvInputs[i] != DrvInputPrev[i]) {
-				fourway[i] = DrvInputs[i] & 0xf;
-
-				if((fourway[i] & 0xa) && (fourway[i] & 0x5))
-					fourway[i] ^= (fourway[i] & (DrvInputPrev[i] & 0xf));
-
-				if((fourway[i] & 0xa) && (fourway[i] & 0x5)) // if it starts out diagonally, pick a direction
-					fourway[i] &= (rand()&1) ? 0xa : 0x5;
-			}
-			DrvInput4way[i] = fourway[i] | (DrvInputs[i] & 0xf0);
-
-			DrvInputPrev[i] = DrvInputs[i];
-		}
-	} else { // all other games. (8-way) / passthru
-		for (INT32 i = 0; i < 2; i++)
-			DrvInput4way[i] = DrvInputs[i];
+		ProcessJoystick(&DrvInputs[0], 0, 3,1,0,2, INPUT_4WAY);
+		ProcessJoystick(&DrvInputs[1], 1, 3,1,0,2, INPUT_4WAY);
 	}
 
-	DrvInput4way[0] = ~DrvInput4way[0]; // convert to active=low
-	DrvInput4way[1] = ~DrvInput4way[1];
+	DrvInputs[0] = ~DrvInputs[0]; // convert to active=low
+	DrvInputs[1] = ~DrvInputs[1];
 
 	ZetOpen(0);
 	if (coin & 1) Z80SetIrqLine(0x20, DrvJoy4[0] ? Z80_ASSERT_LINE : Z80_CLEAR_LINE);
@@ -1218,8 +1197,6 @@ static INT32 SraiderFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
-		DrvInput4way[0] = DrvInputs[0];
-		DrvInput4way[1] = DrvInputs[1];
 	}
 
 	INT32 nInterleave = 100;

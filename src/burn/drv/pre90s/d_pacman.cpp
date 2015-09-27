@@ -9,7 +9,6 @@
 #include "sn76496.h"
 #include "namco_snd.h"
 #include "driver.h"
-#include "joyprocess.h"
 extern "C" {
 #include "ay8910.h"
 }

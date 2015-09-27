@@ -5,7 +5,6 @@
 #include "driver.h"
 #include "z80_intf.h"
 #include "bitswap.h"
-#include "joyprocess.h"
 #include <math.h>
 
 static UINT8 *AllMem;
@@ -796,21 +795,10 @@ static void navarone_palette_init()
 
 static void DrvMakeInputs()
 {
-	// Reset Inputs (all active LOW)
-	DrvInput[0] = 0xff - 0x20; // 0x20 comes from DrvDip[1], below
-	DrvInput[1] = 0xff;
-	DrvInput[2] = 0x00;
-	DrvInput[3] = 0x00;
-
-	// Compile Digital Inputs
-	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[0] ^= (DrvJoy1[i] & 1) << i;
-		DrvInput[1] ^= (DrvJoy2[i] & 1) << i;
-		DrvInput[2] ^= (DrvJoy3[i] & 1) << i;
-		DrvInput[3] ^= (DrvJoy4[i] & 1) << i;
-	}
-
-	DrvInput[0] |= 0x20; //DrvDip[1]; // service mode dip
+	UINT8 *DrvJoy[2] = { DrvJoy1, DrvJoy2 };
+	CompileInput(DrvJoy, (void*)DrvInput, 2, 8, 0xff); // first two are active low
+	UINT8 *DrvJoyX[2] = { DrvJoy3, DrvJoy4 };
+	CompileInput(DrvJoyX, (void*)&DrvInput[2], 2, 8, 0x00); // active high
 
 	ProcessJoystick(&DrvInput[2], 0, 3,2,1,0, INPUT_4WAY);
 	ProcessJoystick(&DrvInput[3], 1, 3,2,1,0, INPUT_4WAY);
@@ -861,7 +849,7 @@ static UINT8 geebee_in_r(UINT8 offset)
 
 static UINT8 geebee_in_r(UINT8 offset)
 {
-	INT32 res;
+	INT32 res = 0;
 	//static const char *const portnames[] = { "SW0", "SW1", "DSW2", "PLACEHOLDER" };	// "IN1" & "IN2" are read separately when offset==3
 
 	offset &= 3;

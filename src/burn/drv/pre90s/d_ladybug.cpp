@@ -5,7 +5,6 @@
 #include "z80_intf.h"
 #include "sn76496.h"
 #include "bitswap.h"
-#include "joyprocess.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

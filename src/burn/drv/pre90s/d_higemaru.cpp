@@ -4,7 +4,6 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "driver.h"
-#include "joyprocess.h"
 extern "C" {
 #include "ay8910.h"
 }

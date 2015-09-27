@@ -415,17 +415,10 @@ STDDIPINFO(Kickridr)
 
 static void DrvMakeInputs()
 {
-	// Reset Inputs (all active LOW)
-	DrvInput[0] = 0xff;
-	DrvInput[1] = 0xff;
-	DrvInput[2] = 0xff;
+	UINT8 *DrvJoy[3] = { DrvJoy1, DrvJoy2, DrvJoy3 };
+	UINT32 DrvJoyInit[3] = { 0xff, 0xff, 0xff };
 
-	// Compile Digital Inputs
-	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[0] ^= (DrvJoy1[i] & 1) << i;
-		DrvInput[1] ^= (DrvJoy2[i] & 1) << i;
-		DrvInput[2] ^= (DrvJoy3[i] & 1) << i;
-	}
+	CompileInput(DrvJoy, (void*)DrvInput, 3, 8, DrvJoyInit);
 }
 
 static UINT8 shared0r(UINT8 offs)

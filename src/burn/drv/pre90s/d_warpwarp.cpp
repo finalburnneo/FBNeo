@@ -795,10 +795,10 @@ static void navarone_palette_init()
 
 static void DrvMakeInputs()
 {
-	UINT8 *DrvJoy[2] = { DrvJoy1, DrvJoy2 };
-	CompileInput(DrvJoy, (void*)DrvInput, 2, 8, 0xff); // first two are active low
-	UINT8 *DrvJoyX[2] = { DrvJoy3, DrvJoy4 };
-	CompileInput(DrvJoyX, (void*)&DrvInput[2], 2, 8, 0x00); // active high
+	UINT8 *DrvJoy[4] = { DrvJoy1, DrvJoy2, DrvJoy3, DrvJoy4 };
+	UINT32 DrvJoyInit[4] = { 0xff, 0xff, 0x00, 0x00 };
+
+	CompileInput(DrvJoy, (void*)DrvInput, 4, 8, DrvJoyInit); // first two are active low
 
 	ProcessJoystick(&DrvInput[2], 0, 3,2,1,0, INPUT_4WAY);
 	ProcessJoystick(&DrvInput[3], 1, 3,2,1,0, INPUT_4WAY);

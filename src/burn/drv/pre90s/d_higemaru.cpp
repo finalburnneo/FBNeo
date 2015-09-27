@@ -115,15 +115,10 @@ STDDIPINFO(Drv)
 
 static void DrvMakeInputs()
 {
-	DrvInput[0] = 0;
-	DrvInput[1] = 0;
-	DrvInput[2] = DrvDips[0];
+	UINT8 *DrvJoy[3] = { DrvJoy1, DrvJoy2, DrvJoy3 };
+	UINT32 DrvJoyInit[3] = { 0x00, 0x00, DrvDips[0] };
 
-	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[0] ^= DrvJoy1[i] << i;
-		DrvInput[1] ^= DrvJoy2[i] << i;
-		DrvInput[2] ^= DrvJoy3[i] << i;
-	}
+	CompileInput(DrvJoy, (void*)DrvInput, 3, 8, DrvJoyInit);
 
 	ProcessJoystick(&DrvInput[0], 0, 3,2,1,0, INPUT_4WAY | INPUT_MAKEACTIVELOW);
 	ProcessJoystick(&DrvInput[1], 1, 3,2,1,0, INPUT_4WAY | INPUT_MAKEACTIVELOW);

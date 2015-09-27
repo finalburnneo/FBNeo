@@ -774,7 +774,9 @@ static INT32 DrvDraw()
 static void DrvMakeInputs()
 {
 	UINT8 *DrvJoy[3] = { DrvJoy1, DrvJoy2, DrvJoy3 };
-	CompileInput(DrvJoy, (void*)DrvInput, 3, 8, 0x00);
+	UINT32 DrvJoyInit[3] = { 0x00, 0x00, 0x00 };
+
+	CompileInput(DrvJoy, (void*)DrvInput, 3, 8, DrvJoyInit);
 
 	if (!skyskiprmode) {
 		// Convert to 4-way for Popeye

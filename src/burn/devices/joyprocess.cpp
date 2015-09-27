@@ -47,12 +47,12 @@ void ProcessJoystick(UINT8 *input, INT8 playernum, INT8 up_bit, INT8 down_bit, I
 	}
 }
 
-void CompileInput(UINT8 **input, void *output, INT32 num, INT32 bits, UINT32 init)
+void CompileInput(UINT8 **input, void *output, INT32 num, INT32 bits, UINT32 *init)
 {
 	for (INT32 j = 0; j < num; j++) {
-		if (bits > 16) ((UINT32*)output)[j] = init;
-		if (bits > 8 && bits < 17) ((UINT16*)output)[j] = init;
-		if (bits < 9) ((UINT8*)output)[j] = init;
+		if (bits > 16) ((UINT32*)output)[j] = init[j];
+		if (bits > 8 && bits < 17) ((UINT16*)output)[j] = init[j];
+		if (bits < 9) ((UINT8*)output)[j] = init[j];
 
 		for (INT32 i = 0; i < bits; i++) {
 			if (bits > 16) ((UINT32*)output)[j] ^= (input[j][i] & 1) << i;

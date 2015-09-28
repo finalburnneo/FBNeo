@@ -2232,12 +2232,14 @@ static void SalamandSoundInit()
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
 	K007232PCMSetAllRoutes(0, (hcrash_mode) ? 0.10 : 0.08, BURN_SND_ROUTE_BOTH);
 
-	vlm5030Init(0,  3579545, salamand_vlm_sync, DrvVLMROM, 0x4000, 1);
-	vlm5030SetAllRoutes(0, (hcrash_mode) ? 0.60 : 2.50, BURN_SND_ROUTE_BOTH);
+	if (DrvVLMROM[1] || DrvVLMROM[2]) {
+		vlm5030Init(0,  3579545, salamand_vlm_sync, DrvVLMROM, 0x4000, 1);
+		vlm5030SetAllRoutes(0, (hcrash_mode) ? 0.60 : 2.50, BURN_SND_ROUTE_BOTH);
+		vlm5030_enable = 1;
+	}
 
 	ym2151_enable = 1;
 	k007232_enable = 1;
-	vlm5030_enable = 1;
 }
 
 static void CitybombSoundInit()
@@ -2504,7 +2506,6 @@ static INT32 BlkpnthrInit()
 	SekClose();
 
 	SalamandSoundInit();
-	vlm5030_enable = 0; // no vlm
 
 	palette_write = salamand_palette_update;
 

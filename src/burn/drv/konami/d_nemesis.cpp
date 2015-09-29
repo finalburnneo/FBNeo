@@ -3099,7 +3099,7 @@ static INT32 NemesisFrame()
 
 		segment = nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += SekRun(segment);
-		if (i == (nInterleave - 4) && *m68k_irq_enable) // should be 2500...
+		if (i == 240 && *m68k_irq_enable)
 			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 		segment = nCyclesTotal[1] / nInterleave;

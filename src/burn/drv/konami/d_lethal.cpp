@@ -1,7 +1,10 @@
 // FB Alpha Lethal Enforcers driver module
 // Based on MAME driver by R. Belmont and Nicola Salmoria
-
-// japan version needs sprites fixed (x flipped not y flipped)
+// Notes:
+//   Weird vertical black lines in certain places
+//   The glass windows should be transparent, but they're opaque
+//   japan version needs sprites fixed (x flipped not y flipped)
+//
 
 #include "tiles_generic.h"
 #include "hd6309_intf.h"
@@ -453,6 +456,7 @@ static INT32 MemIndex()
 
 static INT32 DrvGfxDecode()
 {
+#if 0
 	INT32 Plane0[8] = { STEP4((0x200000*8), 1), STEP4(0,1) };
 	INT32 XOffs0[8] = { STEP8(0,4) };
 	INT32 YOffs0[8] = { STEP8(0,32) };
@@ -460,6 +464,14 @@ static INT32 DrvGfxDecode()
 	INT32 Plane1[6] = { (0x200000*8)+8, (0x200000*8)+0, STEP4(24, -8) };
 	INT32 XOffs1[16] = { STEP8(0,7), STEP8(256, 1) };
 	INT32 YOffs1[16] = { STEP8(0,32), STEP8(512,32) };
+#endif
+	INT32 Plane0[8] = { 0+(0x200000*8), 1+(0x200000*8), 2+(0x200000*8), 3+(0x200000*8), 0, 1, 2, 3 };
+	INT32 XOffs0[8] = { 2*4, 3*4, 0*4, 1*4, 6*4, 7*4, 4*4, 5*4 };
+	INT32 YOffs0[8] = { 0*8*4, 1*8*4, 2*8*4, 3*8*4, 4*8*4, 5*8*4, 6*8*4, 7*8*4 };
+
+	INT32 Plane1[6] = { (0x200000*8)+8, (0x200000*8)+0, 24, 16, 8, 0  };
+	INT32 XOffs1[16] = { 0, 1, 2, 3, 4, 5, 6, 7,8*32+0, 8*32+1, 8*32+2, 8*32+3, 8*32+4, 8*32+5, 8*32+6, 8*32+7 };
+	INT32 YOffs1[16] = { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32, 16*32, 17*32, 18*32, 19*32, 20*32, 21*32, 22*32, 23*32 };
 
 	GfxDecode(0x10000, 8,  8,  8, Plane0, XOffs0, YOffs0, 8*8*4, DrvGfxROM0, DrvGfxROMExp0);
 	GfxDecode(0x04000, 6, 16, 16, Plane1, XOffs1, YOffs1, 128*8, DrvGfxROM1, DrvGfxROMExp1);
@@ -489,7 +501,9 @@ static INT32 DrvInit(INT32 flipy)
 		if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  3, 4, 2)) return 1;
 		if (BurnLoadRomExt(DrvGfxROM0 + 0x200002,  4, 4, 2)) return 1;
 		if (BurnLoadRomExt(DrvGfxROM0 + 0x200000,  5, 4, 2)) return 1;
+#if 0
 		BurnByteswap(DrvGfxROM0, 0x400000);
+#endif
 
 		if (BurnLoadRomExt(DrvGfxROM1 + 0x000000,  6, 4, 2)) return 1;
 		if (BurnLoadRomExt(DrvGfxROM1 + 0x000002,  7, 4, 2)) return 1;

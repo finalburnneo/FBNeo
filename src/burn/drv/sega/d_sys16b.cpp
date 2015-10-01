@@ -5340,10 +5340,10 @@ STD_ROM_PICK(Wb32)
 STD_ROM_FN(Wb32)
 
 static struct BurnRomInfo Wb32dRomDesc[] = {
-	{ "bootleg_epr-12098.a1",   0x10000, 0x41a46e75, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "bootleg_epr-12100.a4",   0x10000, 0x15e3117e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-12099.a2",           0x10000, 0x3e243b45, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-12098.a1",   0x10000, 0x41a46e75, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-12101.a5",           0x10000, 0x6146492b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12099.a2",           0x10000, 0x3e243b45, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
 	{ "epr-12124.b9",           0x10000, 0xdacefb6f, SYS16_ROM_TILES | BRF_GRA },
 	{ "epr-12125.b10",          0x10000, 0x9fc36df7, SYS16_ROM_TILES | BRF_GRA },

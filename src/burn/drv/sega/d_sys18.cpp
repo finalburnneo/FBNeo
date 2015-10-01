@@ -3606,7 +3606,7 @@ struct BurnDriver BurnDrvWwallyjd = {
 	"wwallyjd", "wwallyj", NULL, NULL, "1992",
 	"Wally wo Sagase! (rev B, Japan, FD1094 317-0197B decrypted)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18, GBF_PUZZLE, 0,
 	NULL, WwallyjdRomInfo, WwallyjdRomName, NULL, NULL, WwallyInputInfo, WwallyDIPInfo,
 	WwallyInit, WwallyExit, System18Frame, NULL, WwallyScan,
 	NULL, 0x1800, 320, 224, 4, 3

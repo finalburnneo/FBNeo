@@ -1945,15 +1945,15 @@ struct BurnDriver BurnDrvCadashp = {
 // Kokontouzai Eto Monogatari (Japan)
 
 static struct BurnRomInfo etoRomDesc[] = {
-	{ "eto-1.23",			0x20000, 0x44286597, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "eto-0.8",			0x20000, 0x57b79370, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "eto-2.30",			0x80000, 0x12f46fb5, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
+	{ "eto-1.ic23",			0x20000, 0x44286597, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "eto-0.ic8",			0x20000, 0x57b79370, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "eto-2.ic30",			0x80000, 0x12f46fb5, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
 
-	{ "eto-5.27",			0x10000, 0xb3689da0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
+	{ "eto-5.ic27",			0x10000, 0xb3689da0, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
 
-	{ "eto-4.3",			0x80000, 0xa8768939, BRF_GRA | TAITO_CHARS },				//  4 Characters
+	{ "eto-4.ic3",			0x80000, 0xa8768939, BRF_GRA | TAITO_CHARS },				//  4 Characters
 
-	{ "eto-3.6",			0x80000, 0xdd247397, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
+	{ "eto-3.ic6",			0x80000, 0xdd247397, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
 };
 
 STD_ROM_PICK(eto)
@@ -1984,22 +1984,22 @@ struct BurnDriver BurnDrvEto = {
 // Asuka & Asuka (World)
 
 static struct BurnRomInfo asukaRomDesc[] = {
-	{ "b68-13.bin",			0x20000, 0x855efb3e, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "b68-12.bin",			0x20000, 0x271eeee9, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "b68-03.bin",			0x80000, 0xd3a59b10, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
+	{ "b68-13.ic23",		0x20000, 0x855efb3e, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "b68-12.ic8",			0x20000, 0x271eeee9, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "b68-03.ic30",		0x80000, 0xd3a59b10, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
 
-	{ "b68-11.bin",			0x10000, 0xc378b508, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
+	{ "b68-11.ic27",		0x10000, 0xc378b508, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
 
-	{ "b68-01.bin",			0x80000, 0x89f32c94, BRF_GRA | TAITO_CHARS },				//  4 Characters
+	{ "b68-01.ic3",			0x80000, 0x89f32c94, BRF_GRA | TAITO_CHARS },				//  4 Characters
 
-	{ "b68-02.bin",			0x80000, 0xf5018cd3, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
-	{ "b68-07.bin",			0x10000, 0xc113acc8, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
-	{ "b68-06.bin",			0x10000, 0xf517e64d, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
+	{ "b68-02.ic6",			0x80000, 0xf5018cd3, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
+	{ "b68-07.ic5",			0x10000, 0xc113acc8, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
+	{ "b68-06.ic4",			0x10000, 0xf517e64d, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
 
-	{ "b68-10.bin",			0x10000, 0x387aaf40, BRF_SND | TAITO_MSM5205 },				//  8 MSM5205 Samples
+	{ "b68-10.ic24",		0x10000, 0x387aaf40, BRF_SND | TAITO_MSM5205 },				//  8 MSM5205 Samples
 	
-	{ "b68-04.bin",			0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
-	{ "b68-05.bin",			0x00104, 0xd6524ccc, BRF_OPT },						//  9
+	{ "b68-04.ic32",		0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
+	{ "b68-05.ic43",		0x00104, 0xd6524ccc, BRF_OPT },						//  9
 };
 
 STD_ROM_PICK(asuka)
@@ -2032,22 +2032,22 @@ struct BurnDriver BurnDrvAsuka = {
 // Asuka & Asuka (Japan)
 
 static struct BurnRomInfo asukajRomDesc[] = {
-	{ "b68-09.bin",			0x20000, 0x1eaa1bbb, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "b68-08.bin",			0x20000, 0x8cc96e60, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "b68-03.bin",			0x80000, 0xd3a59b10, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
+	{ "b68-09.ic23",		0x20000, 0x1eaa1bbb, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "b68-08.ic8",			0x20000, 0x8cc96e60, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "b68-03.ic30",		0x80000, 0xd3a59b10, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
 
-	{ "b68-11.bin",			0x10000, 0xc378b508, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
+	{ "b68-11.ic27",		0x10000, 0xc378b508, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
 
-	{ "b68-01.bin",			0x80000, 0x89f32c94, BRF_GRA | TAITO_CHARS },				//  4 Characters
+	{ "b68-01.ic3",			0x80000, 0x89f32c94, BRF_GRA | TAITO_CHARS },				//  4 Characters
 
-	{ "b68-02.bin",			0x80000, 0xf5018cd3, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
-	{ "b68-07.bin",			0x10000, 0xc113acc8, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
-	{ "b68-06.bin",			0x10000, 0xf517e64d, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
+	{ "b68-02.ic6",			0x80000, 0xf5018cd3, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
+	{ "b68-07.ic5",			0x10000, 0xc113acc8, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
+	{ "b68-06.ic4",			0x10000, 0xf517e64d, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
 
-	{ "b68-10.bin",			0x10000, 0x387aaf40, BRF_SND | TAITO_MSM5205 },				//  8 MSM5205 Samples
+	{ "b68-10.ic24",		0x10000, 0x387aaf40, BRF_SND | TAITO_MSM5205 },				//  8 MSM5205 Samples
 	
-	{ "b68-04.bin",			0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
-	{ "b68-05.bin",			0x00104, 0xd6524ccc, BRF_OPT },						//  9
+	{ "b68-04.ic32",		0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
+	{ "b68-05.ic43",		0x00104, 0xd6524ccc, BRF_OPT },	
 };
 
 STD_ROM_PICK(asukaj)
@@ -2099,18 +2099,18 @@ struct BurnDriver BurnDrvMofflott = {
 // Galmedes (Japan)
 
 static struct BurnRomInfo galmedesRomDesc[] = {
-	{ "gm-prg1.bin",		0x20000, 0x32a70753, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "gm-prg0.bin",		0x20000, 0xfae546a4, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "gm-30.rom",			0x80000, 0x4da2a407, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
+	{ "gm-prg1.ic23",		0x20000, 0x32a70753, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "gm-prg0.ic8",		0x20000, 0xfae546a4, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "gm-30.ic30",			0x80000, 0x4da2a407, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
 
-	{ "gm-snd.bin",			0x10000, 0xd6f56c21, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
+	{ "gm-snd.ic27",		0x10000, 0xd6f56c21, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
 
-	{ "gm-scn.bin",			0x80000, 0x3bab0581, BRF_GRA | TAITO_CHARS },				//  4 Characters
+	{ "gm-scn.ic3",			0x80000, 0x3bab0581, BRF_GRA | TAITO_CHARS },				//  4 Characters
 
-	{ "gm-obj.bin",			0x80000, 0x7a4a1315, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
+	{ "gm-obj.ic6",			0x80000, 0x7a4a1315, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
 	
-	{ "b68-04.bin",			0x00144, 0x9be618d1, BRF_OPT },						//  6 plds
-	{ "b68-05.bin",			0x00104, 0xd6524ccc, BRF_OPT },						//  7
+	{ "b68-04.ic32",		0x00144, 0x9be618d1, BRF_OPT },						//  6 plds
+	{ "b68-05.ic43",		0x00104, 0xd6524ccc, BRF_OPT },						//  7
 };
 
 STD_ROM_PICK(galmedes)
@@ -2141,20 +2141,20 @@ struct BurnDriver BurnDrvGalmedes = {
 // U.N. Defense Force: Earth Joker (Japan)
 
 static struct BurnRomInfo earthjkrRomDesc[] = {
-	{ "ej_3b.rom",			0x20000, 0xbdd86fc2, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "ej_3a.rom",			0x20000, 0x9c8050c6, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "ej_30e.rom",			0x80000, 0x49d1f77f, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
+	{ "ej_3b.ic23",			0x20000, 0xbdd86fc2, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "ej_3a.ic8",			0x20000, 0x9c8050c6, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "ej_30e.ic30",		0x80000, 0x49d1f77f, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
 
-	{ "ej_2.rom",			0x10000, 0x42ba2566, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
+	{ "ej_2.ic27",			0x10000, 0x42ba2566, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
 
-	{ "ej_chr.rom",			0x80000, 0xac675297, BRF_GRA | TAITO_CHARS },				//  4 Characters
+	{ "ej_chr.ic3",			0x80000, 0xac675297, BRF_GRA | TAITO_CHARS },				//  4 Characters
 
-	{ "ej_obj.rom",			0x80000, 0x5f21ac47, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
-	{ "ej_1.rom",			0x10000, 0xcb4891db, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
-	{ "ej_0.rom",			0x10000, 0xb612086f, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
+	{ "ej_obj.ic6",			0x80000, 0x5f21ac47, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
+	{ "ej_1.ic5",			0x10000, 0xcb4891db, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
+	{ "ej_0.ic4",			0x10000, 0xb612086f, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
 	
-	{ "b68-04.bin",			0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
-	{ "b68-05.bin",			0x00104, 0xd6524ccc, BRF_OPT },						//  9
+	{ "b68-04.ic32",		0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
+	{ "b68-05.ic43",		0x00104, 0xd6524ccc, BRF_OPT },						//  9
 };
 
 STD_ROM_PICK(earthjkr)
@@ -2175,20 +2175,20 @@ struct BurnDriver BurnDrvEarthjkr = {
 // was production PCB complete with MASK rom, could just be an early revision, not proto
 
 static struct BurnRomInfo earthjkrpRomDesc[] = {
-	{ "4.bin",			0x20000, 0xe9b1ef0c, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "3.bin",			0x20000, 0x26c33225, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "5.bin",			0x80000, 0xbf760b2d, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
+	{ "4.ic8",			0x20000, 0xe9b1ef0c, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "3.ic23",			0x20000, 0x26c33225, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "5.ic30",			0x80000, 0xbf760b2d, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
 
-	{ "ej_2.rom",			0x10000, 0x42ba2566, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
+	{ "ej_2.ic27",			0x10000, 0x42ba2566, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
 
-	{ "ej_chr.rom",			0x80000, 0xac675297, BRF_GRA | TAITO_CHARS },				//  4 Characters
+	{ "ej_chr.ic3",			0x80000, 0xac675297, BRF_GRA | TAITO_CHARS },				//  4 Characters
 
-	{ "ej_obj.rom",			0x80000, 0x5f21ac47, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
-	{ "ej_1.rom",			0x10000, 0xcb4891db, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
-	{ "ej_0.rom",			0x10000, 0xb612086f, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
+	{ "ej_obj.ic6",			0x80000, 0x5f21ac47, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
+	{ "ej_1.ic5",			0x10000, 0xcb4891db, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
+	{ "ej_0.ic4",			0x10000, 0xb612086f, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
 	
-	{ "b68-04.bin",			0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
-	{ "b68-05.bin",			0x00104, 0xd6524ccc, BRF_OPT },						//  9
+	{ "b68-04.ic32",		0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
+	{ "b68-05.ic43",		0x00104, 0xd6524ccc, BRF_OPT },						//  9
 };
 
 STD_ROM_PICK(earthjkrp)

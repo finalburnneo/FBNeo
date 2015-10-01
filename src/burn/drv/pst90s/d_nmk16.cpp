@@ -8747,24 +8747,24 @@ struct BurnDriver BurnDrvMacross = {
 // GunNail (28th May. 1992)
 
 static struct BurnRomInfo gunnailRomDesc[] = {
-	{ "3e.bin",			0x040000, 0x61d985b2, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "3o.bin",			0x040000, 0xf114e89c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3e.u131",		0x040000, 0x61d985b2, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "3o.u133",		0x040000, 0xf114e89c, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "92077_2.bin",	0x010000, 0xcd4e55f8, 2 | BRF_PRG | BRF_ESS }, //  2 NMK004 data
+	{ "92077_2.u101",	0x010000, 0xcd4e55f8, 2 | BRF_PRG | BRF_ESS }, //  2 NMK004 data
 
-	{ "1.bin",			0x020000, 0x3d00a9f4, 3 | BRF_GRA },           //  3 Characters
+	{ "1.u21",			0x020000, 0x3d00a9f4, 3 | BRF_GRA },           //  3 Characters
 
-	{ "92077-4.bin",	0x100000, 0xa9ea2804, 4 | BRF_GRA },           //  4 Tiles
+	{ "92077-4.u19",	0x100000, 0xa9ea2804, 4 | BRF_GRA },           //  4 Tiles
 
-	{ "92077-7.bin",	0x200000, 0xd49169b3, 5 | BRF_GRA },           //  5 Sprites
+	{ "92077-7.u134",	0x200000, 0xd49169b3, 5 | BRF_GRA },           //  5 Sprites
 
-	{ "92077-5.bin",	0x080000, 0xfeb83c73, 6 | BRF_SND },           //  6 OKI1 Samples
+	{ "92077-5.u56",	0x080000, 0xfeb83c73, 6 | BRF_SND },           //  6 OKI1 Samples
 
-	{ "92077-6.bin",	0x080000, 0x6d133f0d, 7 | BRF_SND },           //  7 OKI2 Samples
+	{ "92077-6.u57",	0x080000, 0x6d133f0d, 7 | BRF_SND },           //  7 OKI2 Samples
 
-	{ "8.bpr",			0x000100, 0x4299776e, 0 | BRF_OPT },           //  8 Unused proms
-	{ "9.bpr",			0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  9
-	{ "10.bpr",			0x000020, 0xc60103c8, 0 | BRF_OPT },           // 10
+	{ "8_82s129.u35",	0x000100, 0x4299776e, 0 | BRF_OPT },           //  8 Unused proms
+	{ "9_82s135.u72",	0x000100, 0x633ab1c9, 0 | BRF_OPT },           //  9
+	{ "10_82s123.u96",	0x000020, 0xc60103c8, 0 | BRF_OPT },           // 10
 };
 
 STDROMPICKEXT(gunnail, gunnail, nmk004)

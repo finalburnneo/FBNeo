@@ -2949,8 +2949,8 @@ STD_ROM_PICK(Dunkshoto)
 STD_ROM_FN(Dunkshoto)
 
 static struct BurnRomInfo EswatRomDesc[] = {
-	{ "epr-12659.bin",  0x40000, 0xc5ab2db9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-12658.bin",  0x40000, 0xaf40bd71, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12659.a2",   0x40000, 0xc5ab2db9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12658.a1",   0x40000, 0xaf40bd71, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	
 	{ "mpr-12624.b11",  0x40000, 0x375a5ec4, SYS16_ROM_TILES | BRF_GRA },
 	{ "mpr-12625.b12",  0x40000, 0x3b8c757e, SYS16_ROM_TILES | BRF_GRA },
@@ -3643,8 +3643,8 @@ STD_ROM_PICK(Passsht)
 STD_ROM_FN(Passsht)
 
 static struct BurnRomInfo PassshtaRomDesc[] = {
-	{ "8.4a",           0x10000, 0xb84dc139, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "5.1a",           0x10000, 0xeffe29df, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "8.a4",           0x10000, 0xb84dc139, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "5.a1",           0x10000, 0xeffe29df, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	
 	{ "opr-11854.b9",   0x10000, 0xd31c0b6c, SYS16_ROM_TILES | BRF_GRA },
 	{ "opr-11855.b10",  0x10000, 0xb78762b4, SYS16_ROM_TILES | BRF_GRA },

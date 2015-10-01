@@ -932,6 +932,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 static struct BurnSampleInfo qbertSampleDesc[] = {
+#if !defined (ROM_VERIFY)
 	{"fx_17a.wav", SAMPLE_NOLOOP },
 	{"fx_17b.wav", SAMPLE_NOLOOP },
 	{"fx_17c.wav", SAMPLE_NOLOOP },
@@ -977,6 +978,53 @@ static struct BurnSampleInfo qbertSampleDesc[] = {
 	{"fx_28.wav",  SAMPLE_NOLOOP },
 	{"fx_36.wav",  SAMPLE_NOLOOP },
 	{"knocker.wav", SAMPLE_NOLOOP },
+#else
+	{"fx_17a", SAMPLE_NOLOOP },
+	{"fx_17b", SAMPLE_NOLOOP },
+	{"fx_17c", SAMPLE_NOLOOP },
+	{"fx_17d", SAMPLE_NOLOOP },
+	{"fx_17e", SAMPLE_NOLOOP },
+	{"fx_17f", SAMPLE_NOLOOP },
+	{"fx_17g", SAMPLE_NOLOOP },
+	{"fx_17h", SAMPLE_NOLOOP },
+	{"fx_18a", SAMPLE_NOLOOP },
+	{"fx_18b", SAMPLE_NOLOOP },
+	{"fx_18c", SAMPLE_NOLOOP },
+	{"fx_18d", SAMPLE_NOLOOP },
+	{"fx_18e", SAMPLE_NOLOOP },
+	{"fx_18f", SAMPLE_NOLOOP },
+	{"fx_18g", SAMPLE_NOLOOP },
+	{"fx_18h", SAMPLE_NOLOOP },
+	{"fx_19a", SAMPLE_NOLOOP },
+	{"fx_19b", SAMPLE_NOLOOP },
+	{"fx_19c", SAMPLE_NOLOOP },
+	{"fx_19d", SAMPLE_NOLOOP },
+	{"fx_19e", SAMPLE_NOLOOP },
+	{"fx_19f", SAMPLE_NOLOOP },
+	{"fx_19g", SAMPLE_NOLOOP },
+	{"fx_19h", SAMPLE_NOLOOP },
+	{"fx_20a", SAMPLE_NOLOOP },
+	{"fx_20b", SAMPLE_NOLOOP },
+	{"fx_20c", SAMPLE_NOLOOP },
+	{"fx_20d", SAMPLE_NOLOOP },
+	{"fx_20e", SAMPLE_NOLOOP },
+	{"fx_20f", SAMPLE_NOLOOP },
+	{"fx_20g", SAMPLE_NOLOOP },
+	{"fx_20h", SAMPLE_NOLOOP },
+	{"fx_21a", SAMPLE_NOLOOP },
+	{"fx_21b", SAMPLE_NOLOOP },
+	{"fx_21c", SAMPLE_NOLOOP },
+	{"fx_21d", SAMPLE_NOLOOP },
+	{"fx_21e", SAMPLE_NOLOOP },
+	{"fx_21f", SAMPLE_NOLOOP },
+	{"fx_21g", SAMPLE_NOLOOP },
+	{"fx_21h", SAMPLE_NOLOOP },
+	{"fx_22",  SAMPLE_NOLOOP },
+	{"fx_23",  SAMPLE_NOLOOP },
+	{"fx_28",  SAMPLE_NOLOOP },
+	{"fx_36",  SAMPLE_NOLOOP },
+	{"knocker", SAMPLE_NOLOOP },
+#endif
 	{"", 0 }
 };
 
@@ -1145,10 +1193,10 @@ STD_ROM_PICK(sqbert)
 STD_ROM_FN(sqbert)
 
 struct BurnDriver BurnDrvSqbert = {
-	"sqbert", "qbert", NULL, "qbert", "1983",
+	"sqbert", NULL, NULL, "qbert", "1983",
 	"Faster, Harder, More Challenging Q*bert (prototype)\0", NULL, "Mylstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, sqbertRomInfo, sqbertRomName, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4

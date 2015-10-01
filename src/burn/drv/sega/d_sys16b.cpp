@@ -5094,8 +5094,8 @@ STD_ROM_PICK(Tetris1)
 STD_ROM_FN(Tetris1)
 
 static struct BurnRomInfo Tetris1dRomDesc[] = {
-	{ "bootleg_epr-12163.a1",   0x08000, 0x451ea7a1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "bootleg_epr-12164.a4",   0x08000, 0x39469b3d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-12163.a1",   0x08000, 0x451ea7a1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
 	{ "epr-12165.b9",           0x10000, 0x62640221, SYS16_ROM_TILES | BRF_GRA },
 	{ "epr-12166.b10",          0x10000, 0x9abd183b, SYS16_ROM_TILES | BRF_GRA },

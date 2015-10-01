@@ -3374,7 +3374,7 @@ struct BurnDriver BurnDrvShinobi1 = {
 };
 
 struct BurnDriver BurnDrvShinobi1d = {
-	"shinobi1", "shinobi", NULL, NULL, "1987",
+	"shinobi1d", "shinobi", NULL, NULL, "1987",
 	"Shinobi (set 1, System 16A, FD1094 317-0050 decrypted)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM, 0,

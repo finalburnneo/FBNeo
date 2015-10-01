@@ -1766,14 +1766,14 @@ static struct BurnRomInfo LghostdRomDesc[] = {
 	{ "epr-13415.c2",           0x40000, 0xbbb62c48, SYS16_ROM_TILES | BRF_GRA },
 	{ "epr-13416.c3",           0x40000, 0x1d11dbae, SYS16_ROM_TILES | BRF_GRA },
 
-	{ "epr-13603.a10",          0x80000, 0x5350a94e, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "epr-13604.c10",          0x80000, 0x4009c8e5, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-13421.a11",          0x80000, 0x2fc75890, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13603.a10",          0x80000, 0x5350a94e, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "mpr-13424.c11",          0x80000, 0xfb98d920, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-13422.a12",          0x80000, 0x48a0754d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13421.a11",          0x80000, 0x2fc75890, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "mpr-13425.c12",          0x80000, 0xf8252589, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-13423.a13",          0x80000, 0x335bbc9d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13422.a12",          0x80000, 0x48a0754d, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "mpr-13426.c13",          0x80000, 0x5cfb1e25, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13423.a13",          0x80000, 0x335bbc9d, SYS16_ROM_SPRITES | BRF_GRA },	
 
 	{ "epr-13417.c7",           0x20000, 0xcd7beb49, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
@@ -1828,14 +1828,14 @@ static struct BurnRomInfo LghostudRomDesc[] = {
 	{ "epr-13415.c2",           0x40000, 0xbbb62c48, SYS16_ROM_TILES | BRF_GRA },
 	{ "epr-13416.c3",           0x40000, 0x1d11dbae, SYS16_ROM_TILES | BRF_GRA },
 
-	{ "epr-13603.a10",          0x80000, 0x5350a94e, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "epr-13604.c10",          0x80000, 0x4009c8e5, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-13421.a11",          0x80000, 0x2fc75890, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13603.a10",          0x80000, 0x5350a94e, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "mpr-13424.c11",          0x80000, 0xfb98d920, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-13422.a12",          0x80000, 0x48a0754d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13421.a11",          0x80000, 0x2fc75890, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "mpr-13425.c12",          0x80000, 0xf8252589, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "mpr-13423.a13",          0x80000, 0x335bbc9d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13422.a12",          0x80000, 0x48a0754d, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "mpr-13426.c13",          0x80000, 0x5cfb1e25, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13423.a13",          0x80000, 0x335bbc9d, SYS16_ROM_SPRITES | BRF_GRA },	
 
 	{ "epr-13417.c7",           0x20000, 0xcd7beb49, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 

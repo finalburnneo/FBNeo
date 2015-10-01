@@ -871,6 +871,34 @@ static struct BurnRomInfo AstormRomDesc[] = {
 STD_ROM_PICK(Astorm)
 STD_ROM_FN(Astorm)
 
+static struct BurnRomInfo Astorm3dRomDesc[] = {
+	{ "bootleg_epr-13165.a6",   0x40000, 0x2a0dbff5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-13164.a5",   0x40000, 0xf981a183, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-13073.bin",          0x40000, 0xdf5d0a61, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13074.bin",          0x40000, 0x787afab8, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13075.bin",          0x40000, 0x4e01b477, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "mpr-13082.bin",          0x40000, 0xa782b704, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13089.bin",          0x40000, 0x2a4227f0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13081.bin",          0x40000, 0xeb510228, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13088.bin",          0x40000, 0x3b6b4c55, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13080.bin",          0x40000, 0xe668eefb, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13087.bin",          0x40000, 0x2293427d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13079.bin",          0x40000, 0xde9221ed, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13086.bin",          0x40000, 0x8c9a71c4, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-13083.bin",          0x20000, 0x5df3af20, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-13076.bin",          0x40000, 0x94e6c76e, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "epr-13077.bin",          0x40000, 0xe2ec0d8d, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "epr-13078.bin",          0x40000, 0x15684dc5, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Astorm3d)
+STD_ROM_FN(Astorm3d)
+
 static struct BurnRomInfo Astorm3RomDesc[] = {
 	{ "epr-13165.a6",   0x40000, 0x6efcd381, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-13164.a5",   0x40000, 0x97d693c6, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -931,6 +959,33 @@ static struct BurnRomInfo AstormjRomDesc[] = {
 STD_ROM_PICK(Astormj)
 STD_ROM_FN(Astormj)
 
+static struct BurnRomInfo AstormjdRomDesc[] = {
+	{ "bootleg_epr-13085.a6",   0x40000, 0xc0d7f3c2, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-13084.a5",   0x40000, 0x006635f0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-13073.bin",          0x40000, 0xdf5d0a61, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13074.bin",          0x40000, 0x787afab8, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13075.bin",          0x40000, 0x4e01b477, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "mpr-13082.bin",          0x40000, 0xa782b704, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13089.bin",          0x40000, 0x2a4227f0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13081.bin",          0x40000, 0xeb510228, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13088.bin",          0x40000, 0x3b6b4c55, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13080.bin",          0x40000, 0xe668eefb, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13087.bin",          0x40000, 0x2293427d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13079.bin",          0x40000, 0xde9221ed, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13086.bin",          0x40000, 0x8c9a71c4, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-13083b.bin",         0x20000, 0x169b4b5f, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-13076.bin",          0x40000, 0x94e6c76e, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "epr-13077.bin",          0x40000, 0xe2ec0d8d, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "epr-13078.bin",          0x40000, 0x15684dc5, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Astormjd)
+STD_ROM_FN(Astormjd)
 
 static struct BurnRomInfo AstormuRomDesc[] = {
 	{ "epr-13095.a6",   0x40000, 0x55d40742, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -962,6 +1017,34 @@ static struct BurnRomInfo AstormuRomDesc[] = {
 STD_ROM_PICK(Astormu)
 STD_ROM_FN(Astormu)
 
+static struct BurnRomInfo AstormudRomDesc[] = {
+	{ "bootleg_epr-13095.a6",   0x40000, 0xa29b1eea, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-13094.a5",   0x40000, 0x81f4c6b6, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-13073.bin",          0x40000, 0xdf5d0a61, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13074.bin",          0x40000, 0x787afab8, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13075.bin",          0x40000, 0x4e01b477, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "mpr-13082.bin",          0x40000, 0xa782b704, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13089.bin",          0x40000, 0x2a4227f0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13081.bin",          0x40000, 0xeb510228, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13088.bin",          0x40000, 0x3b6b4c55, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13080.bin",          0x40000, 0xe668eefb, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13087.bin",          0x40000, 0x2293427d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13079.bin",          0x40000, 0xde9221ed, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13086.bin",          0x40000, 0x8c9a71c4, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-13083.bin",          0x20000, 0x5df3af20, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-13076.bin",          0x40000, 0x94e6c76e, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "epr-13077.bin",          0x40000, 0xe2ec0d8d, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "epr-13078.bin",          0x40000, 0x15684dc5, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Astormud)
+STD_ROM_FN(Astormud)
+
 static struct BurnRomInfo BloxeedRomDesc[] = {
 	{ "epr-12911.a6",   0x20000, 0xa481581a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-12910.a5",   0x20000, 0xdd1bc3bf, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -981,6 +1064,24 @@ static struct BurnRomInfo BloxeedRomDesc[] = {
 
 STD_ROM_PICK(Bloxeed)
 STD_ROM_FN(Bloxeed)
+
+static struct BurnRomInfo BloxeeddRomDesc[] = {
+	{ "bootleg_epr-12911.a6",   0x20000, 0x2d634453, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-12910.a5",   0x20000, 0xe6d2e9cc, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "opr-12884.b1",           0x10000, 0xe024aa33, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-12885.b2",           0x10000, 0x8041b814, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-12886.b3",           0x10000, 0xde32285e, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "opr-12891.a11",          0x10000, 0x90d31a8c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12887.b11",          0x10000, 0xf0c0f49d, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-12888.a4",           0x20000, 0x6f2fc63c, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Bloxeedd)
+STD_ROM_FN(Bloxeedd)
 
 static struct BurnRomInfo CltchitrRomDesc[] = {
 	{ "epr-13794.a4",   0x40000, 0xc8d80233, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1010,6 +1111,33 @@ static struct BurnRomInfo CltchitrRomDesc[] = {
 
 STD_ROM_PICK(Cltchitr)
 STD_ROM_FN(Cltchitr)
+
+static struct BurnRomInfo CltchitrdRomDesc[] = {
+	{ "bootleg_epr-13794.a4",   0x40000, 0xb15de2c5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-13795.a6",   0x40000, 0x8fc7e524, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13784.a5",           0x40000, 0x80c8180d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13786.a7",           0x40000, 0x3095dac0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-13773.c1",           0x80000, 0x3fc600e5, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-13774.c2",           0x80000, 0x2411a824, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-13775.c3",           0x80000, 0xcf527bf6, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "mpr-13779.c10",          0x80000, 0xc707f416, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13787.a10",          0x80000, 0xf05c68c6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13780.c11",          0x80000, 0xa4c341e0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13788.a11",          0x80000, 0x0106fea6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13781.c12",          0x80000, 0xf33b13af, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13789.a12",          0x80000, 0x09ba8835, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-13793.c7",           0x80000, 0xa3d31944, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-13792.c6",           0x80000, 0x808f9695, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "epr-13791.c5",           0x80000, 0x35c16d80, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Cltchitrd)
+STD_ROM_FN(Cltchitrd)
 
 static struct BurnRomInfo CltchitrjRomDesc[] = {
 	{ "epr-13783.a4",   0x40000, 0xe2a1d5af, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1041,6 +1169,35 @@ static struct BurnRomInfo CltchitrjRomDesc[] = {
 
 STD_ROM_PICK(Cltchitrj)
 STD_ROM_FN(Cltchitrj)
+
+static struct BurnRomInfo CltchitrjdRomDesc[] = {
+	{ "bootleg_epr-13783.a4",   0x40000, 0xdafd48af, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-13796.a6",   0x40000, 0x219aae33, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13785.a5",           0x40000, 0x09714762, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13797.a7",           0x40000, 0x361ade9f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-13773.c1",           0x80000, 0x3fc600e5, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-13774.c2",           0x80000, 0x2411a824, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-13775.c3",           0x80000, 0xcf527bf6, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "mpr-13779.c10",          0x80000, 0xc707f416, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13787.a10",          0x80000, 0xf05c68c6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13780.c11",          0x80000, 0xa4c341e0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13788.a11",          0x80000, 0x0106fea6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13781.c12",          0x80000, 0xf33b13af, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13789.a12",          0x80000, 0x09ba8835, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13782.c13",          0x40000, 0x73790852, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13790.a13",          0x40000, 0x23849101, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-13778.c7",           0x20000, 0x35e86146, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-13777.c6",           0x80000, 0xd1524782, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "epr-13776.c5",           0x80000, 0x282ac9fe, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Cltchitrjd)
+STD_ROM_FN(Cltchitrjd)
 
 static struct BurnRomInfo DdcrewRomDesc[] = {
 	{ "epr-14160.a4",   0x40000, 0xb9f897b7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1074,6 +1231,36 @@ static struct BurnRomInfo DdcrewRomDesc[] = {
 STD_ROM_PICK(Ddcrew)
 STD_ROM_FN(Ddcrew)
 
+static struct BurnRomInfo DdcrewdRomDesc[] = {
+	{ "bootleg_epr-14160.a4",   0x40000, 0x22a6c8e3, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-14161.a6",   0x40000, 0xd9eaba00, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "mpr-14139.a5",           0x40000, 0x06c31531, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "mpr-14141.a7",           0x40000, 0x080a494b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-14127.c1",           0x40000, 0x2228cd88, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-14128.c2",           0x40000, 0xedba8e10, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-14129.c3",           0x40000, 0xe8ecc305, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "mpr-14134.c10",          0x80000, 0x4fda6a4b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14142.a10",          0x80000, 0x3cbf1f2a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14135.c11",          0x80000, 0xe9c74876, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14143.a11",          0x80000, 0x59022c31, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14136.c12",          0x80000, 0x720d9858, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14144.a12",          0x80000, 0x7775fdd4, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-14137.c13",          0x80000, 0x846c4265, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-14145.a13",          0x80000, 0x0e76c797, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-14133.c7",           0x20000, 0xcff96665, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-14132.c6",           0x80000, 0x1fae0220, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-14131.c5",           0x80000, 0xbe5a7d0b, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "epr-14130.c4",           0x80000, 0x948f34a1, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Ddcrewd)
+STD_ROM_FN(Ddcrewd)
+
 static struct BurnRomInfo Ddcrew1RomDesc[] = {
 	{ "epr-14154.a4",   0x40000, 0x9a0dadf0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-14155.a6",   0x40000, 0xe74362f4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1105,6 +1292,36 @@ static struct BurnRomInfo Ddcrew1RomDesc[] = {
 
 STD_ROM_PICK(Ddcrew1)
 STD_ROM_FN(Ddcrew1)
+
+static struct BurnRomInfo Ddcrew1dRomDesc[] = {
+	{ "bootleg_epr-14154.a4",   0x40000, 0x95749c77, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-14155.a6",   0x40000, 0xbef3c932, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "mpr-14139.a5",           0x40000, 0x06c31531, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "mpr-14141.a7",           0x40000, 0x080a494b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-14127.c1",           0x40000, 0x2228cd88, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-14128.c2",           0x40000, 0xedba8e10, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-14129.c3",           0x40000, 0xe8ecc305, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "mpr-14134.c10",          0x80000, 0x4fda6a4b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14142.a10",          0x80000, 0x3cbf1f2a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14135.c11",          0x80000, 0xe9c74876, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14143.a11",          0x80000, 0x59022c31, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14136.c12",          0x80000, 0x720d9858, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14144.a12",          0x80000, 0x7775fdd4, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-14137.c13",          0x80000, 0x846c4265, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-14145.a13",          0x80000, 0x0e76c797, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-14133.c7",           0x20000, 0xcff96665, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-14132.c6",           0x80000, 0x1fae0220, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-14131.c5",           0x80000, 0xbe5a7d0b, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "epr-14130.c4",           0x80000, 0x948f34a1, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Ddcrew1d)
+STD_ROM_FN(Ddcrew1d)
 
 static struct BurnRomInfo Ddcrew2RomDesc[] = {
 	{ "epr-14148.a4",   0x40000, 0xdf4cb0cf, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1138,6 +1355,36 @@ static struct BurnRomInfo Ddcrew2RomDesc[] = {
 STD_ROM_PICK(Ddcrew2)
 STD_ROM_FN(Ddcrew2)
 
+static struct BurnRomInfo Ddcrew2dRomDesc[] = {
+	{ "bootleg_epr-14148.a4",   0x40000, 0xf3ddb3b9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-14149.a6",   0x40000, 0x98a83ee1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "mpr-14139.a5",           0x40000, 0x06c31531, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "mpr-14141.a7",           0x40000, 0x080a494b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-14127.c1",           0x40000, 0x2228cd88, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-14128.c2",           0x40000, 0xedba8e10, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-14129.c3",           0x40000, 0xe8ecc305, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "mpr-14134.c10",          0x80000, 0x4fda6a4b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14142.a10",          0x80000, 0x3cbf1f2a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14135.c11",          0x80000, 0xe9c74876, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14143.a11",          0x80000, 0x59022c31, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14136.c12",          0x80000, 0x720d9858, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14144.a12",          0x80000, 0x7775fdd4, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-14137.c13",          0x80000, 0x846c4265, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-14145.a13",          0x80000, 0x0e76c797, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-14133.c7",           0x20000, 0xcff96665, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-14132.c6",           0x80000, 0x1fae0220, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-14131.c5",           0x80000, 0xbe5a7d0b, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "epr-14130.c4",           0x80000, 0x948f34a1, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Ddcrew2d)
+STD_ROM_FN(Ddcrew2d)
+
 static struct BurnRomInfo DdcrewjRomDesc[] = {
 	{ "epr-14150.a4",   0x40000, 0xfc866b19, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-14151.a6",   0x40000, 0x46d23fe4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1169,6 +1416,36 @@ static struct BurnRomInfo DdcrewjRomDesc[] = {
 
 STD_ROM_PICK(Ddcrewj)
 STD_ROM_FN(Ddcrewj)
+
+static struct BurnRomInfo DdcrewjdRomDesc[] = {
+	{ "bootleg_epr-14150.a4",   0x40000, 0x1f267de5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-14151.a6",   0x40000, 0x35074062, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "mpr-14139.a5",           0x40000, 0x06c31531, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "mpr-14141.a7",           0x40000, 0x080a494b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-14127.c1",           0x40000, 0x2228cd88, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-14128.c2",           0x40000, 0xedba8e10, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-14129.c3",           0x40000, 0xe8ecc305, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "mpr-14134.c10",          0x80000, 0x4fda6a4b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14142.a10",          0x80000, 0x3cbf1f2a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14135.c11",          0x80000, 0xe9c74876, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14143.a11",          0x80000, 0x59022c31, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14136.c12",          0x80000, 0x720d9858, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14144.a12",          0x80000, 0x7775fdd4, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-14137.c13",          0x80000, 0x846c4265, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-14145.a13",          0x80000, 0x0e76c797, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-14133.c7",           0x20000, 0xcff96665, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-14132.c6",           0x80000, 0x1fae0220, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-14131.c5",           0x80000, 0xbe5a7d0b, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "epr-14130.c4",           0x80000, 0x948f34a1, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Ddcrewjd)
+STD_ROM_FN(Ddcrewjd)
 
 static struct BurnRomInfo Ddcrewj2RomDesc[] = {
 	{ "epr-14138.a4",   0x40000, 0xdf280b1b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1202,6 +1479,36 @@ static struct BurnRomInfo Ddcrewj2RomDesc[] = {
 STD_ROM_PICK(Ddcrewj2)
 STD_ROM_FN(Ddcrewj2)
 
+static struct BurnRomInfo Ddcrewj2dRomDesc[] = {
+	{ "bootleg_epr-14138.a4",   0x40000, 0x1a586bb2, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-14140.a6",   0x40000, 0x43e030ae, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "mpr-14139.a5",           0x40000, 0x06c31531, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "mpr-14141.a7",           0x40000, 0x080a494b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-14127.c1",           0x40000, 0x2228cd88, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-14128.c2",           0x40000, 0xedba8e10, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-14129.c3",           0x40000, 0xe8ecc305, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "mpr-14134.c10",          0x80000, 0x4fda6a4b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14142.a10",          0x80000, 0x3cbf1f2a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14135.c11",          0x80000, 0xe9c74876, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14143.a11",          0x80000, 0x59022c31, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14136.c12",          0x80000, 0x720d9858, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14144.a12",          0x80000, 0x7775fdd4, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-14137.c13",          0x80000, 0x846c4265, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-14145.a13",          0x80000, 0x0e76c797, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-14133.c7",           0x20000, 0xcff96665, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-14132.c6",           0x80000, 0x1fae0220, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-14131.c5",           0x80000, 0xbe5a7d0b, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "epr-14130.c4",           0x80000, 0x948f34a1, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Ddcrewj2d)
+STD_ROM_FN(Ddcrewj2d)
+
 static struct BurnRomInfo DdcrewuRomDesc[] = {
 	{ "epr-14152.a4",   0x40000, 0x69c7b571, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-14153.a6",   0x40000, 0xe01fae0c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1233,6 +1540,36 @@ static struct BurnRomInfo DdcrewuRomDesc[] = {
 
 STD_ROM_PICK(Ddcrewu)
 STD_ROM_FN(Ddcrewu)
+
+static struct BurnRomInfo DdcrewudRomDesc[] = {
+	{ "bootleg_epr-14152.a4",   0x40000, 0x41b782d0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-14153.a6",   0x40000, 0x48070486, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "mpr-14139.a5",           0x40000, 0x06c31531, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "mpr-14141.a7",           0x40000, 0x080a494b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-14127.c1",           0x40000, 0x2228cd88, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-14128.c2",           0x40000, 0xedba8e10, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-14129.c3",           0x40000, 0xe8ecc305, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "mpr-14134.c10",          0x80000, 0x4fda6a4b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14142.a10",          0x80000, 0x3cbf1f2a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14135.c11",          0x80000, 0xe9c74876, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14143.a11",          0x80000, 0x59022c31, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14136.c12",          0x80000, 0x720d9858, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14144.a12",          0x80000, 0x7775fdd4, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-14137.c13",          0x80000, 0x846c4265, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-14145.a13",          0x80000, 0x0e76c797, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-14133.c7",           0x20000, 0xcff96665, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-14132.c6",           0x80000, 0x1fae0220, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-14131.c5",           0x80000, 0xbe5a7d0b, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "epr-14130.c4",           0x80000, 0x948f34a1, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Ddcrewud)
+STD_ROM_FN(Ddcrewud)
 
 static struct BurnRomInfo DesertbrRomDesc[] = {
 	{ "epr-14802.a4",   0x080000, 0x9ab93cbc, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1266,6 +1603,36 @@ static struct BurnRomInfo DesertbrRomDesc[] = {
 STD_ROM_PICK(Desertbr)
 STD_ROM_FN(Desertbr)
 
+static struct BurnRomInfo DesertbrdRomDesc[] = {
+	{ "bootleg_epr-14802.a4",   0x80000, 0xaf74af1c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-14902.a6",   0x80000, 0xc883404b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-14793.a5",           0x80000, 0xdc9d7af3, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-14795.a7",           0x80000, 0x7e5bf7d9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-14781.c1",           0x100000, 0xc4f7d7aa, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-14782.c2",           0x100000, 0xccc98d05, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-14783.c3",           0x100000, 0xef202bec, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "mpr-14788.c10",          0x100000, 0xb5b05536, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14796.a10",          0x100000, 0xc033220a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14789.c11",          0x100000, 0x0f9bcb97, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14797.a11",          0x100000, 0x4c301cc9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14790.c12",          0x100000, 0x6a07ac27, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14798.a12",          0x100000, 0x50634625, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14791.c13",          0x100000, 0xa4ae352b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14799.a13",          0x100000, 0xaeb7b025, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-14787.c7",           0x40000, 0xcc6feec7, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-14786.c6",           0x80000, 0xcc8349f2, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-14785.c5",           0x80000, 0x7babba13, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-14784.c4",           0x80000, 0x073878e4, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Desertbrd)
+STD_ROM_FN(Desertbrd)
+
 static struct BurnRomInfo DesertbrjRomDesc[] = {
 	{ "epr-14792.a4",   0x080000, 0x453d9d02, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-14794.a6",   0x080000, 0x4426758f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1297,6 +1664,36 @@ static struct BurnRomInfo DesertbrjRomDesc[] = {
 
 STD_ROM_PICK(Desertbrj)
 STD_ROM_FN(Desertbrj)
+
+static struct BurnRomInfo DesertbrjdRomDesc[] = {
+	{ "bootleg_epr-14792.a4",   0x80000, 0xfd8ed26d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-14794.a6",   0x80000, 0x399f167d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-14793.a5",           0x80000, 0xdc9d7af3, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-14795.a7",           0x80000, 0x7e5bf7d9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-14781.c1",           0x100000, 0xc4f7d7aa, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-14782.c2",           0x100000, 0xccc98d05, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-14783.c3",           0x100000, 0xef202bec, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "mpr-14788.c10",          0x100000, 0xb5b05536, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14796.a10",          0x100000, 0xc033220a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14789.c11",          0x100000, 0x0f9bcb97, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14797.a11",          0x100000, 0x4c301cc9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14790.c12",          0x100000, 0x6a07ac27, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14798.a12",          0x100000, 0x50634625, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14791.c13",          0x100000, 0xa4ae352b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14799.a13",          0x100000, 0xaeb7b025, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-14787.c7",           0x40000, 0xcc6feec7, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-14786.c6",           0x80000, 0xcc8349f2, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-14785.c5",           0x80000, 0x7babba13, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-14784.c4",           0x80000, 0x073878e4, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Desertbrjd)
+STD_ROM_FN(Desertbrjd)
 
 static struct BurnRomInfo HamawayRomDesc[] = {
 	{ "4.bin",          0x040000, 0xcc0981e1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1359,6 +1756,36 @@ static struct BurnRomInfo LghostRomDesc[] = {
 STD_ROM_PICK(Lghost)
 STD_ROM_FN(Lghost)
 
+static struct BurnRomInfo LghostdRomDesc[] = {
+	{ "bootleg_epr-13429.a4",   0x40000, 0x3d641671, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-13430.a6",   0x40000, 0xf0ba14be, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13411.a5",           0x40000, 0x5160167b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13413.a7",           0x40000, 0x656b3bd8, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-13414.c1",           0x40000, 0xdada2419, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13415.c2",           0x40000, 0xbbb62c48, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13416.c3",           0x40000, 0x1d11dbae, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "epr-13603.a10",          0x80000, 0x5350a94e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13604.c10",          0x80000, 0x4009c8e5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13421.a11",          0x80000, 0x2fc75890, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13424.c11",          0x80000, 0xfb98d920, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13422.a12",          0x80000, 0x48a0754d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13425.c12",          0x80000, 0xf8252589, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13423.a13",          0x80000, 0x335bbc9d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13426.c13",          0x80000, 0x5cfb1e25, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-13417.c7",           0x20000, 0xcd7beb49, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-13420.c6",           0x40000, 0x3de0dee4, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-13419.c5",           0x40000, 0xe7021b0a, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-13418.c4",           0x40000, 0x0732594d, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Lghostd)
+STD_ROM_FN(Lghostd)
+
 static struct BurnRomInfo LghostuRomDesc[] = {
 	{ "epr-13427.a4",   0x40000, 0x5bf8fb6b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-13428.a6",   0x40000, 0x276775f5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1390,6 +1817,36 @@ static struct BurnRomInfo LghostuRomDesc[] = {
 
 STD_ROM_PICK(Lghostu)
 STD_ROM_FN(Lghostu)
+
+static struct BurnRomInfo LghostudRomDesc[] = {
+	{ "bootleg_epr-13427.a4",   0x40000, 0x8e9e092e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-13428.a6",   0x40000, 0x346d4ba3, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13411.a5",           0x40000, 0x5160167b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13413.a7",           0x40000, 0x656b3bd8, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-13414.c1",           0x40000, 0xdada2419, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13415.c2",           0x40000, 0xbbb62c48, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-13416.c3",           0x40000, 0x1d11dbae, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "epr-13603.a10",          0x80000, 0x5350a94e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13604.c10",          0x80000, 0x4009c8e5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13421.a11",          0x80000, 0x2fc75890, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13424.c11",          0x80000, 0xfb98d920, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13422.a12",          0x80000, 0x48a0754d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13425.c12",          0x80000, 0xf8252589, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13423.a13",          0x80000, 0x335bbc9d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13426.c13",          0x80000, 0x5cfb1e25, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-13417.c7",           0x20000, 0xcd7beb49, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-13420.c6",           0x40000, 0x3de0dee4, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-13419.c5",           0x40000, 0xe7021b0a, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-13418.c4",           0x40000, 0x0732594d, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Lghostud)
+STD_ROM_FN(Lghostud)
 
 static struct BurnRomInfo MwalkRomDesc[] = {
 	{ "epr-13235.a6",   0x40000, 0x6983e129, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1625,6 +2082,32 @@ static struct BurnRomInfo WwallyjRomDesc[] = {
 STD_ROM_PICK(Wwallyj)
 STD_ROM_FN(Wwallyj)
 
+static struct BurnRomInfo WwallyjdRomDesc[] = {
+	{ "bootleg_epr-14730b.a4",   0x40000, 0x1d46f791, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-14731b.a6",   0x40000, 0xa0f6325e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-14719.c1",            0x40000, 0x8b58c743, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-14720.c2",            0x40000, 0xf96d19f4, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-14721.c3",            0x40000, 0xc4ced91d, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "mpr-14726.c10",           0x100000, 0x7213d1d3, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14732.a10",           0x100000, 0x04ced549, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14727.c11",           0x100000, 0x3b74e0f0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14733.a11",           0x100000, 0x6da0444f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14728.c12",           0x80000, 0x5b921587, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14734.a12",           0x80000, 0x6f3f5ed9, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-14725.c7",            0x20000, 0x2b29684f, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-14724.c6",            0x80000, 0x47cbea86, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-14723.c5",            0x80000, 0xbc5adc27, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-14722.c4",            0x80000, 0x1bd081f8, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Wwallyjd)
+STD_ROM_FN(Wwallyjd)
+
 static struct BurnRomInfo WwallyjaRomDesc[] = {
 	{ "epr-14730a.a4",  0x040000, 0xdaa7880e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-14731a.a6",  0x040000, 0x5e36353b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1652,6 +2135,32 @@ static struct BurnRomInfo WwallyjaRomDesc[] = {
 
 STD_ROM_PICK(Wwallyja)
 STD_ROM_FN(Wwallyja)
+
+static struct BurnRomInfo WwallyjadRomDesc[] = {
+	{ "bootleg_epr-14730a.a4",   0x40000, 0x0d9fb6df, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-14731a.a6",   0x40000, 0xb88c140d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-14719.c1",            0x40000, 0x8b58c743, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-14720.c2",            0x40000, 0xf96d19f4, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-14721.c3",            0x40000, 0xc4ced91d, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "mpr-14726.c10",           0x100000, 0x7213d1d3, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14732.a10",           0x100000, 0x04ced549, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14727.c11",           0x100000, 0x3b74e0f0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14733.a11",           0x100000, 0x6da0444f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14728.c12",           0x80000, 0x5b921587, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-14734.a12",           0x80000, 0x6f3f5ed9, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-14725.c7",            0x20000, 0x2b29684f, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-14724.c6",            0x80000, 0x47cbea86, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-14723.c5",            0x80000, 0xbc5adc27, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-14722.c4",            0x80000, 0x1bd081f8, SYS16_ROM_RF5C68DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Wwallyjad)
+STD_ROM_FN(Wwallyjad)
 
 /*====================================================
 Memory Handlers
@@ -2703,12 +3212,32 @@ struct BurnDriver BurnDrvAstorm3 = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvAstorm3d = {
+	"astorm3d", "astorm", NULL, NULL, "1990",
+	"Alien Storm (set 3, World, 3 Players, FD1094 317-0148 decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM18, GBF_PLATFORM, 0,
+	NULL, Astorm3dRomInfo, Astorm3dRomName, NULL, NULL, AstormInputInfo, AstormDIPInfo,
+	Astorm3Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvAstormj = {
 	"astormj", "astorm", NULL, NULL, "1990",
 	"Alien Storm (set 1, Japan Rev B, 2 Players, FD1094 317-0146)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, AstormjRomInfo, AstormjRomName, NULL, NULL, System18InputInfo, Astorm2pDIPInfo,
+	Astorm3Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvAstormjd = {
+	"astormjd", "astorm", NULL, NULL, "1990",
+	"Alien Storm (set 1, Japan Rev B, 2 Players, FD1094 317-0146 decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18, GBF_PLATFORM, 0,
+	NULL, AstormjdRomInfo, AstormjdRomName, NULL, NULL, System18InputInfo, Astorm2pDIPInfo,
 	Astorm3Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
@@ -2723,12 +3252,32 @@ struct BurnDriver BurnDrvAstormu = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvAstormud = {
+	"astormud", "astorm", NULL, NULL, "1990",
+	"Alien Storm (set 2, US, 3 Players, FD1094 317-0147 decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM18, GBF_PLATFORM, 0,
+	NULL, AstormudRomInfo, AstormudRomName, NULL, NULL, AstormInputInfo, AstormDIPInfo,
+	Astorm3Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvBloxeed = {
 	"bloxeed", NULL, NULL, NULL, "1990",
 	"Bloxeed (Japan, FD1094 317-0139)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
 	NULL, BloxeedRomInfo, BloxeedRomName, NULL, NULL, System18InputInfo, NULL,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvBloxeedd = {
+	"bloxeedd", "bloxeed", NULL, NULL, "1990",
+	"Bloxeed (Japan, FD1094 317-0139 decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18, GBF_PUZZLE, 0,
+	NULL, BloxeeddRomInfo, BloxeeddRomName, NULL, NULL, System18InputInfo, NULL,
 	System16Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
@@ -2743,12 +3292,32 @@ struct BurnDriver BurnDrvCltchitr = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCltchitrd = {
+	"cltchitrd", "cltchitr", NULL, NULL, "1991",
+	"Clutch Hitter (set 2, US, FD1094 317-0176 decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18, GBF_SPORTSMISC, 0,
+	NULL, CltchitrdRomInfo, CltchitrdRomName, NULL, NULL, System18InputInfo, CltchitrDIPInfo,
+	System18Bank40000Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCltchitrj = {
 	"cltchitrj", "cltchitr", NULL, NULL, "1991",
 	"Clutch Hitter (set 1, Japan, FD1094 317-0175)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC, GBF_SPORTSMISC, 0,
 	NULL, CltchitrjRomInfo, CltchitrjRomName, NULL, NULL, System18InputInfo, CltchitrDIPInfo,
+	System18Bank40000Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCltchitrjd = {
+	"cltchitrjd", "cltchitr", NULL, NULL, "1991",
+	"Clutch Hitter (set 1, Japan, FD1094 317-0175 decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18, GBF_SPORTSMISC, 0,
+	NULL, CltchitrjdRomInfo, CltchitrjdRomName, NULL, NULL, System18InputInfo, CltchitrDIPInfo,
 	System18Bank40000Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
@@ -2763,12 +3332,32 @@ struct BurnDriver BurnDrvDdcrew = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvDdcrewd = {
+	"ddcrewd", "ddcrew", NULL, NULL, "1991",
+	"D. D. Crew (set 4, World, 3 Players, FD1094 317-0190 decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM18, GBF_SCRFIGHT, 0,
+	NULL, DdcrewdRomInfo, DdcrewdRomName, NULL, NULL, DdcrewInputInfo, DdcrewDIPInfo,
+	System18Bank40000Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvDdcrew1 = {
 	"ddcrew1", "ddcrew", NULL, NULL, "1991",
 	"D. D. Crew (set 1, World, 4 Players, FD1094 317-?)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, Ddcrew1RomInfo, Ddcrew1RomName, NULL, NULL, DdcrewuInputInfo, DdcrewuDIPInfo,
+	DdcrewuInit, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvDdcrew1d = {
+	"ddcrew1d", "ddcrew", NULL, NULL, "1991",
+	"D. D. Crew (set 1, World, 4 Players, FD1094 317-? decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_SEGA_SYSTEM18, GBF_SCRFIGHT, 0,
+	NULL, Ddcrew1dRomInfo, Ddcrew1dRomName, NULL, NULL, DdcrewuInputInfo, DdcrewuDIPInfo,
 	DdcrewuInit, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
@@ -2783,12 +3372,32 @@ struct BurnDriver BurnDrvDdcrew2 = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvDdcrew2d = {
+	"ddcrew2d", "ddcrew", NULL, NULL, "1991",
+	"D. D. Crew (set 2, World, 2 Players, FD1094 317-0184 decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18, GBF_SCRFIGHT, 0,
+	NULL, Ddcrew2dRomInfo, Ddcrew2dRomName, NULL, NULL, Ddcrew2InputInfo, Ddcrew2DIPInfo,
+	System18Bank40000Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvDdcrewj = {
 	"ddcrewj", "ddcrew", NULL, NULL, "1991",
 	"D. D. Crew (set 5, Japan, 4 Players, FD1094 317-0185)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, DdcrewjRomInfo, DdcrewjRomName, NULL, NULL, DdcrewuInputInfo, DdcrewuDIPInfo,
+	DdcrewuInit, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvDdcrewjd = {
+	"ddcrewjd", "ddcrew", NULL, NULL, "1991",
+	"D. D. Crew (set 5, Japan, 4 Players, FD1094 317-0185 decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18, GBF_SCRFIGHT, 0,
+	NULL, DdcrewjdRomInfo, DdcrewjdRomName, NULL, NULL, DdcrewuInputInfo, DdcrewuDIPInfo,
 	DdcrewuInit, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
@@ -2803,12 +3412,32 @@ struct BurnDriver BurnDrvDdcrewj2 = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvDdcrewj2d = {
+	"ddcrewj2d", "ddcrew", NULL, NULL, "1991",
+	"D. D. Crew (set 6, Japan, 2 Players, FD1094 317-0182 decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18, GBF_SCRFIGHT, 0,
+	NULL, Ddcrewj2dRomInfo, Ddcrewj2dRomName, NULL, NULL, Ddcrew2InputInfo, Ddcrew2DIPInfo,
+	System18Bank40000Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvDdcrewu = {
 	"ddcrewu", "ddcrew", NULL, NULL, "1991",
 	"D. D. Crew (set 3, US, 4 Players, FD1094 317-0186)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, DdcrewuRomInfo, DdcrewuRomName, NULL, NULL, DdcrewuInputInfo, DdcrewuDIPInfo,
+	DdcrewuInit, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvDdcrewud = {
+	"ddcrewud", "ddcrew", NULL, NULL, "1991",
+	"D. D. Crew (set 3, US, 4 Players, FD1094 317-0186 decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_SEGA_SYSTEM18, GBF_SCRFIGHT, 0,
+	NULL, DdcrewudRomInfo, DdcrewudRomName, NULL, NULL, DdcrewuInputInfo, DdcrewuDIPInfo,
 	DdcrewuInit, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
@@ -2823,12 +3452,32 @@ struct BurnDriver BurnDrvDesertbr = {
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
+struct BurnDriver BurnDrvDesertbrd = {
+	"desertbrd", "desertbr", NULL, NULL, "1992",
+	"Desert Breaker (World, FD1094 317-0196 decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM18, GBF_VERSHOOT, 0,
+	NULL, DesertbrdRomInfo, DesertbrdRomName, NULL, NULL, DesertbrInputInfo, DesertbrDIPInfo,
+	System18Bank80000Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 224, 320, 3, 4
+};
+
 struct BurnDriver BurnDrvDesertbrj = {
 	"desertbrj", "desertbr", NULL, NULL, "1992",
 	"Desert Breaker (Japan, FD1094 317-0194)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC, GBF_VERSHOOT, 0,
 	NULL, DesertbrjRomInfo, DesertbrjRomName, NULL, NULL, DesertbrInputInfo, DesertbrDIPInfo,
+	System18Bank80000Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 224, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvDesertbrjd = {
+	"desertbrjd", "desertbr", NULL, NULL, "1992",
+	"Desert Breaker (Japan, FD1094 317-0194 decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM18, GBF_VERSHOOT, 0,
+	NULL, DesertbrjdRomInfo, DesertbrjdRomName, NULL, NULL, DesertbrInputInfo, DesertbrDIPInfo,
 	System18Bank80000Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
@@ -2853,12 +3502,32 @@ struct BurnDriver BurnDrvLghost = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvLghostd = {
+	"lghostd", "lghost", NULL, NULL, "1990",
+	"Laser Ghost (set 2, World, 317-0166 decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM18, GBF_SHOOT, 0,
+	NULL, LghostdRomInfo, LghostdRomName, NULL, NULL, LghostInputInfo, LghostDIPInfo,
+	LghostInit, LghostExit, System18Frame, NULL, LghostScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvLghostu = {
 	"lghostu", "lghost", NULL, NULL, "1990",
 	"Laser Ghost (set 1, US, 317-0165)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC, GBF_SHOOT, 0,
 	NULL, LghostuRomInfo, LghostuRomName, NULL, NULL, LghostInputInfo, LghostDIPInfo,
+	LghostInit, LghostExit, System18Frame, NULL, LghostScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvLghostud = {
+	"lghostud", "lghost", NULL, NULL, "1990",
+	"Laser Ghost (set 1, US, 317-0165 decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM18, GBF_SHOOT, 0,
+	NULL, LghostudRomInfo, LghostudRomName, NULL, NULL, LghostInputInfo, LghostDIPInfo,
 	LghostInit, LghostExit, System18Frame, NULL, LghostScan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
@@ -2933,12 +3602,32 @@ struct BurnDriver BurnDrvWwallyj = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvWwallyjd = {
+	"wwallyjd", "wwallyj", NULL, NULL, "1992",
+	"Wally wo Sagase! (rev B, Japan, FD1094 317-0197B decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
+	NULL, WwallyjdRomInfo, WwallyjdRomName, NULL, NULL, WwallyInputInfo, WwallyDIPInfo,
+	WwallyInit, WwallyExit, System18Frame, NULL, WwallyScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvWwallyja = {
 	"wwallyja", "wwallyj", NULL, NULL, "1992",
 	"Wally wo Sagase! (rev A, Japan, FD1094 317-0197A)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
 	NULL, WwallyjaRomInfo, WwallyjaRomName, NULL, NULL, WwallyInputInfo, WwallyDIPInfo,
+	WwallyInit, WwallyExit, System18Frame, NULL, WwallyScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWwallyjad = {
+	"wwallyjad", "wwallyj", NULL, NULL, "1992",
+	"Wally wo Sagase! (rev A, Japan, FD1094 317-0197A decrypted)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18, GBF_PUZZLE, 0,
+	NULL, WwallyjadRomInfo, WwallyjadRomName, NULL, NULL, WwallyInputInfo, WwallyDIPInfo,
 	WwallyInit, WwallyExit, System18Frame, NULL, WwallyScan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

@@ -1714,6 +1714,36 @@ static struct BurnRomInfo Shinobi1RomDesc[] = {
 STD_ROM_PICK(Shinobi1)
 STD_ROM_FN(Shinobi1)
 
+static struct BurnRomInfo Shinobi1dRomDesc[] = {
+	{ "bootleg_epr-11262.42",   0x10000, 0x9a54a498, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-11260.27",   0x10000, 0x8f571c5f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11263.43",           0x10000, 0xa2a620bd, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-11261.25",           0x10000, 0xa3ceda52, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-11264.95",           0x10000, 0x46627e7d, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-11265.94",           0x10000, 0x87d0f321, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-11266.93",           0x10000, 0xefb4af87, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "epr-11290.10",           0x08000, 0x611f413a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11294.11",           0x08000, 0x5eb00fc1, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11291.17",           0x08000, 0x3c0797c0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11295.18",           0x08000, 0x25307ef8, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11292.23",           0x08000, 0xc29ac34e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11296.24",           0x08000, 0x04a437f8, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11293.29",           0x08000, 0x41f41063, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-11297.30",           0x08000, 0xb6e1fd72, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-11267.12",           0x08000, 0xdd50b745, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "7751.bin",               0x00400, 0x6a9534fc, SYS16_ROM_7751PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-11268.1",            0x08000, 0x6d7966da, SYS16_ROM_7751DATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Shinobi1d)
+STD_ROM_FN(Shinobi1d)
+
 static struct BurnRomInfo ShinoblsRomDesc[] = {
 	{ "b3",            0x10000, 0x38e59646, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "b1",            0x10000, 0x8529d192, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1831,6 +1861,24 @@ static struct BurnRomInfo TetrisRomDesc[] = {
 STD_ROM_PICK(Tetris)
 STD_ROM_FN(Tetris)
 
+static struct BurnRomInfo TetrisdRomDesc[] = {
+	{ "bootleg_epr-12201.rom",   0x08000, 0x0b694740, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-12200.rom",   0x08000, 0x343c0670, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-12202.rom",           0x10000, 0x2f7da741, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12203.rom",           0x10000, 0xa6e58ec5, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12204.rom",           0x10000, 0x0ae98e23, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "epr-12169.b1",            0x08000, 0xdacc6165, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12170.b5",            0x08000, 0x87354e42, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-12205.rom",           0x08000, 0x6695dc99, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Tetrisd)
+STD_ROM_FN(Tetrisd)
+
 static struct BurnRomInfo Tetris3RomDesc[] = {
 	{ "epr-12201a.43", 0x08000, 0x9250e5cf, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-12200a.26", 0x08000, 0x85d4b0ff, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1850,6 +1898,24 @@ static struct BurnRomInfo Tetris3RomDesc[] = {
 
 STD_ROM_PICK(Tetris3)
 STD_ROM_FN(Tetris3)
+
+static struct BurnRomInfo Tetris3dRomDesc[] = {
+	{ "bootleg_epr-12201a.43",   0x08000, 0x1d88bd84, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-12200a.26",   0x08000, 0x1ba35f78, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-12202.rom",           0x10000, 0x2f7da741, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12203.rom",           0x10000, 0xa6e58ec5, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12204.rom",           0x10000, 0x0ae98e23, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "epr-12169.b1",            0x08000, 0xdacc6165, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12170.b5",            0x08000, 0x87354e42, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-12205.rom",           0x08000, 0x6695dc99, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Tetris3d)
+STD_ROM_FN(Tetris3d)
 
 static struct BurnRomInfo Timescan1RomDesc[] = {
 	{ "epr-10540a.43", 0x08000, 0x76848b0b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1913,6 +1979,32 @@ static struct BurnRomInfo Wb31RomDesc[] = {
 STD_ROM_PICK(Wb31)
 STD_ROM_FN(Wb31)
 
+static struct BurnRomInfo Wb31dRomDesc[] = {
+	{ "bootleg_epr12084.bin",   0x10000, 0x0cfe1b00, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr12082.bin",   0x10000, 0x9e324162, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12085.bin",          0x10000, 0x0962098b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12083.bin",          0x10000, 0x3d631a8e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-12086.bin",          0x10000, 0x45b949df, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12087.bin",          0x10000, 0x6f0396b7, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12088.bin",          0x10000, 0xba8c0749, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "epr-12090.b1",           0x08000, 0xaeeecfca, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12094.b5",           0x08000, 0x615e4927, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12091.b2",           0x08000, 0x8409a243, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12095.b6",           0x08000, 0xe774ec2c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12092.b3",           0x08000, 0x5c2f0d90, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12096.b7",           0x08000, 0x0cd59d6e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12093.b4",           0x08000, 0x4891e7bb, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12097.b8",           0x08000, 0xe645902c, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-12089.bin",          0x08000, 0x8321eb0b, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Wb31d)
+STD_ROM_FN(Wb31d)
+
 static struct BurnRomInfo Wb35RomDesc[] = {
 	{ "epr-12120.43",  0x10000, 0xcbd8c99b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-12118.26",  0x10000, 0xe9a3280c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1940,6 +2032,32 @@ static struct BurnRomInfo Wb35RomDesc[] = {
 
 STD_ROM_PICK(Wb35)
 STD_ROM_FN(Wb35)
+
+static struct BurnRomInfo Wb35dRomDesc[] = {
+	{ "bootleg_epr-12120.43",   0x10000, 0x47e62031, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-12118.26",   0x10000, 0xd2f74be8, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-12121.42",   0x10000, 0x0962098b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-12119.25",   0x10000, 0x3d631a8e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-12086.95",           0x10000, 0x45b949df, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12087.94",           0x10000, 0x6f0396b7, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-12088.83",           0x10000, 0xba8c0749, SYS16_ROM_TILES | BRF_GRA },
+
+	{ "epr-12090.10",           0x08000, 0xaeeecfca, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12094.11",           0x08000, 0x615e4927, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12091.17",           0x08000, 0x8409a243, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12095.18",           0x08000, 0xe774ec2c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12092.23",           0x08000, 0x5c2f0d90, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12096.24",           0x08000, 0x0cd59d6e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12093.29",           0x08000, 0x4891e7bb, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-12097.30",           0x08000, 0xe645902c, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-12089.12",           0x08000, 0x8321eb0b, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Wb35d)
+STD_ROM_FN(Wb35d)
 
 /*====================================================
 Memory Handlers
@@ -3255,6 +3373,16 @@ struct BurnDriver BurnDrvShinobi1 = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvShinobi1d = {
+	"shinobi1", "shinobi", NULL, NULL, "1987",
+	"Shinobi (set 1, System 16A, FD1094 317-0050 decrypted)\0", NULL, "Sega", "System 16A",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM, 0,
+	NULL, Shinobi1dRomInfo, Shinobi1dRomName, NULL, NULL, System16afire3InputInfo, ShinobiDIPInfo,
+	ShinobiInit, System16Exit, System16AFrame, NULL, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvShinobls = {
 	"shinobls", "shinobi", NULL, NULL, "1987",
 	"Shinobi (Star bootleg, System 16A)\0", NULL, "bootleg", "System 16A",
@@ -3295,12 +3423,32 @@ struct BurnDriver BurnDrvTetris = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvTetrisd = {
+	"tetrisd", "tetris", NULL, NULL, "1988",
+	"Tetris (set 4, Japan, System 16A, FD1094 317-0093 decrypted)\0", NULL, "Sega", "System 16A",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PUZZLE, 0,
+	NULL, TetrisdRomInfo, TetrisdRomName, NULL, NULL, System16afire1InputInfo, TetrisDIPInfo,
+	System16Init, System16Exit, System16AFrame, NULL, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvTetris3 = {
 	"tetris3", "tetris", NULL, NULL, "1988",
 	"Tetris (set 3, Japan, System 16A, FD1094 317-0093a)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
 	NULL, Tetris3RomInfo, Tetris3RomName, NULL, NULL, System16afire1InputInfo, TetrisDIPInfo,
+	System16Init, System16Exit, System16AFrame, NULL, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvTetris3d = {
+	"tetris3d", "tetris", NULL, NULL, "1988",
+	"Tetris (set 3, Japan, System 16A, FD1094 317-0093a decrypted)\0", NULL, "Sega", "System 16A",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PUZZLE, 0,
+	NULL, Tetris3dRomInfo, Tetris3dRomName, NULL, NULL, System16afire1InputInfo, TetrisDIPInfo,
 	System16Init, System16Exit, System16AFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
@@ -3325,12 +3473,32 @@ struct BurnDriver BurnDrvWb31 = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvWb31d = {
+	"wb31d", "wb3", NULL, NULL, "1988",
+	"Wonder Boy III - Monster Lair (set 1, Japan, System 16A, FD1094 317-0084 decrypted)\0", NULL, "Sega / Westone", "System 16A",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM, 0,
+	NULL, Wb31dRomInfo, Wb31dRomName, NULL, NULL, System16aInputInfo, Wb31DIPInfo,
+	Wb31Init, System16Exit, System16AFrame, NULL, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvWb35 = {
 	"wb35", "wb3", NULL, NULL, "1988",
 	"Wonder Boy III - Monster Lair (set 5, Japan, System 16A, FD1089A 317-0086)\0", NULL, "Sega / Westone", "System 16A",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089A_ENC, GBF_PLATFORM, 0,
 	NULL, Wb35RomInfo, Wb35RomName, NULL, NULL, System16aInputInfo, Wb31DIPInfo,
+	Wb31Init, System16Exit, System16AFrame, NULL, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWb35d = {
+	"wb35d", "wb3", NULL, NULL, "1988",
+	"Wonder Boy III - Monster Lair (set 5, Japan, System 16A, FD1089A 317-0086 decrypted)\0", NULL, "Sega / Westone", "System 16A",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM, 0,
+	NULL, Wb35dRomInfo, Wb35dRomName, NULL, NULL, System16aInputInfo, Wb31DIPInfo,
 	Wb31Init, System16Exit, System16AFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

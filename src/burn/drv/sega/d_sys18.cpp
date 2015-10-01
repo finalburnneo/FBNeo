@@ -1073,8 +1073,8 @@ static struct BurnRomInfo BloxeeddRomDesc[] = {
 	{ "opr-12885.b2",           0x10000, 0x8041b814, SYS16_ROM_TILES | BRF_GRA },
 	{ "opr-12886.b3",           0x10000, 0xde32285e, SYS16_ROM_TILES | BRF_GRA },
 
-	{ "opr-12891.a11",          0x10000, 0x90d31a8c, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "opr-12887.b11",          0x10000, 0xf0c0f49d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12891.a11",          0x10000, 0x90d31a8c, SYS16_ROM_SPRITES | BRF_GRA },
 
 	{ "epr-12888.a4",           0x20000, 0x6f2fc63c, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 };

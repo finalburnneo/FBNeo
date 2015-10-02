@@ -1226,6 +1226,57 @@ static struct BurnRomInfo Toutrun2RomDesc[] = {
 STD_ROM_PICK(Toutrun2)
 STD_ROM_FN(Toutrun2)
 
+static struct BurnRomInfo Toutrun2dRomDesc[] = {
+	{ "bootleg_epr-12397.133",   0x10000, 0x815ec9af, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-12396.118",   0x10000, 0x84484188, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-12399.132",   0x10000, 0x27ef9e5d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-12398.117",   0x10000, 0x6da9f13b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12293.131",    		 0x10000, 0xf4321eea, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12292.116",    		 0x10000, 0x51d98af0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "opr-12295.76",     		 0x10000, 0xd43a3a84, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "opr-12294.58",     		 0x10000, 0x27cdcfd3, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "opr-12297.75",     		 0x10000, 0x1d9b5677, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "opr-12296.57",     		 0x10000, 0x0a513671, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "opr-12323.102",    		 0x10000, 0x4de43a6f, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-12324.103",    		 0x10000, 0x24607a55, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-12325.104",    		 0x10000, 0x1405137a, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "opr-12307.9",      		 0x10000, 0x437dcf09, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12308.10",     		 0x10000, 0x0de70cc2, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12309.11",     		 0x10000, 0xdeb8c242, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12310.12",     		 0x10000, 0x45cf157e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12311.13",     		 0x10000, 0xae2bd639, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12312.14",     		 0x10000, 0x626000e7, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12313.15",     		 0x10000, 0x52870c37, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12314.16",     		 0x10000, 0x40c461ea, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12315.17",     		 0x10000, 0x3ff9a3a3, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12316.18",     		 0x10000, 0x8a1e6dc8, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12317.19",     		 0x10000, 0x77e382d4, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12318.20",     		 0x10000, 0xd1afdea9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12319.25",     		 0x10000, 0xdf23baf9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12320.22",     		 0x10000, 0x7931e446, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12321.23",     		 0x10000, 0x830bacd4, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "opr-12322.24",     		 0x10000, 0x8b812492, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "epr-12299.47",     		 0x08000, 0xfc9bc41b, SYS16_ROM_ROAD | BRF_GRA },
+	{ "epr-12298.11",     		 0x08000, 0xfc9bc41b, SYS16_ROM_ROAD | BRF_GRA },
+
+	{ "epr-12300.88",     		 0x10000, 0xe8ff7011, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "opr-12301.66",     		 0x10000, 0x6e78ad15, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-12302.67",     		 0x10000, 0xe72928af, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-12303.68",     		 0x10000, 0x8384205c, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-12304.69",     		 0x10000, 0xe1762ac3, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-12305.70",     		 0x10000, 0xba9ce677, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-12306.71",     		 0x10000, 0xe49249fd, SYS16_ROM_PCMDATA | BRF_SND },
+};
+
+
+STD_ROM_PICK(Toutrun2d)
+STD_ROM_FN(Toutrun2d)
+
 static struct BurnRomInfo Toutrun3RomDesc[] = {
 	{ "epr-12410.133",    0x10000, 0xaa74f3e9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-12409.118",    0x10000, 0xc11c8ef7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -2183,6 +2234,16 @@ struct BurnDriverD BurnDrvToutrun2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, Toutrun2RomInfo, Toutrun2RomName, NULL, NULL, ToutrunInputInfo, ToutrunctDIPInfo,
+	ToutrunInit, System16Exit, OutrunFrame, NULL, System16Scan,
+	NULL, 0x3000, 320, 224, 4, 3
+};
+
+struct BurnDriverD BurnDrvToutrun2d = {
+	"toutrun2d", "toutrun", NULL, NULL, "1989",
+	"Turbo Out Run (cockpit, FD1094 317-0106 decrypted)\0", NULL, "Sega", "Out Run",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
+	NULL, Toutrun2dRomInfo, Toutrun2dRomName, NULL, NULL, ToutrunInputInfo, ToutrunctDIPInfo,
 	ToutrunInit, System16Exit, OutrunFrame, NULL, System16Scan,
 	NULL, 0x3000, 320, 224, 4, 3
 };

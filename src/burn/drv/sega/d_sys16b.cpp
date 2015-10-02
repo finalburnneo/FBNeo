@@ -2725,12 +2725,12 @@ static struct BurnRomInfo Bayroute1RomDesc[] = {
 	{ "br_obj3o.b4",   0x10000, 0xa2e238ac, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "br.b8",         0x10000, 0xd8de78ff, SYS16_ROM_SPRITES | BRF_GRA },
 
-	{ "sound.a7",      0x08000, 0x00000000, SYS16_ROM_Z80PROG | BRF_NODUMP | BRF_PRG },
+	{ "sound.a7",      0x08000, 0xe91e55cb, SYS16_ROM_Z80PROG | BRF_PRG }, // Needs to be verified
 	
-	{ "sound.a8",      0x10000, 0x00000000, SYS16_ROM_UPD7759DATA | BRF_NODUMP | BRF_SND },
-	{ "sound.a9",      0x10000, 0x00000000, SYS16_ROM_UPD7759DATA | BRF_NODUMP | BRF_SND },
-	{ "sound.a10",     0x10000, 0x00000000, SYS16_ROM_UPD7759DATA | BRF_NODUMP | BRF_SND },
-	{ "sound.a11",     0x10000, 0x00000000, SYS16_ROM_UPD7759DATA | BRF_NODUMP | BRF_SND },
+	{ "sound.a8",      0x10000, 0x077e9981, SYS16_ROM_UPD7759DATA | BRF_SND }, // Needs to be verified
+	{ "sound.a9",      0x10000, 0x3c3f5f41, SYS16_ROM_UPD7759DATA | BRF_SND }, // Needs to be verified
+	{ "sound.a10",     0x10000, 0x7c251347, SYS16_ROM_UPD7759DATA | BRF_SND }, // Needs to be verified
+	{ "sound.a11",     0x10000, 0xa602ea2d, SYS16_ROM_UPD7759DATA | BRF_SND }, // Needs to be verified
 };
 
 

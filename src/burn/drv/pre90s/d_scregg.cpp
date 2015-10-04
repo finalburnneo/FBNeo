@@ -238,6 +238,8 @@ static INT32 DrvDoReset()
 	M6502Reset();
 	M6502Close();
 
+	HiscoreReset();
+
 	AY8910Reset(0);
 	AY8910Reset(1);
 
@@ -625,7 +627,7 @@ struct BurnDriver BurnDrvdommy = {
 	"dommy", NULL, NULL, NULL, "198?",
 	"Dommy\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, dommyRomInfo, dommyRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	dommyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x08,
 	240, 248, 3, 4
@@ -665,7 +667,7 @@ struct BurnDriver BurnDrvscregg = {
 	"scregg", NULL, NULL, NULL, "1983",
 	"Scrambled Egg\0", NULL, "Technos", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, screggRomInfo, screggRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	screggInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x08,
 	240, 240, 3, 4
@@ -700,7 +702,7 @@ struct BurnDriver BurnDrveggs = {
 	"eggs", "scregg", NULL, NULL, "1983",
 	"Eggs\0", NULL, "[Technos] Universal USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TECHNOS, GBF_MAZE, 0,
 	NULL, eggsRomInfo, eggsRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	screggInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x08,
 	240, 240, 3, 4

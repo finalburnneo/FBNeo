@@ -3305,6 +3305,56 @@ struct BurnDriver BurnDrvDkgensanm72 = {
 };
 
 
+// Lightning Swords
+
+static struct BurnRomInfo ltswordsRomDesc[] = {
+	{ "h0.ic55",		0x20000, 0x22f342b2, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "l0.ic61",		0x20000, 0x0210d592, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ken_d-sp.rom",	0x10000, 0x233ca1cf, 0x06 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "ken_m31.rom",	0x20000, 0xe00b95a6, 0x02 | BRF_GRA },           //  3 Sprites
+	{ "ken_m21.rom",	0x20000, 0xd7722f87, 0x02 | BRF_GRA },           //  4
+	{ "ken_m32.rom",	0x20000, 0x30a844c4, 0x02 | BRF_GRA },           //  5
+	{ "ken_m22.rom",	0x20000, 0xa00dac85, 0x02 | BRF_GRA },           //  6
+
+	{ "ken_m51.rom",	0x20000, 0x1646cf4f, 0x03 | BRF_GRA },           //  7 Foreground & Background Tiles
+	{ "ken_m57.rom",	0x20000, 0xa9f88d90, 0x03 | BRF_GRA },           //  8
+	{ "ken_m66.rom",	0x20000, 0xe9d17645, 0x03 | BRF_GRA },           //  9
+	{ "ken_m64.rom",	0x20000, 0xdf46709b, 0x03 | BRF_GRA },           // 10
+
+	{ "ken_m14.rom",	0x20000, 0x6651e9b7, 0x05 | BRF_SND },           // 11 DAC Samples
+};
+
+STD_ROM_PICK(ltswords)
+STD_ROM_FN(ltswords)
+
+static INT32 kengoInit()
+{
+	INT32 nRet = DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, 0x60, Z80_REAL_NMI, 5);
+
+	if (nRet == 0) {
+		Kengo = 1;
+		Clock_16mhz = 1;
+		VezOpen(0);
+		VezSetDecode((UINT8 *)&gunforce_decryption_table);
+		VezClose();
+	}
+
+	return nRet;
+}
+
+struct BurnDriverD BurnDrvLtswords = {
+	"ltswords", NULL, NULL, NULL, "1991",
+	"Lightning Swords\0", NULL, "Irem", "M84?",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
+	NULL, ltswordsRomInfo, ltswordsRomName, NULL, NULL, CommonInputInfo, KengoDIPInfo,
+	kengoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	384, 256, 4, 3
+};
+
+
 // Ken-Go
 
 static struct BurnRomInfo kengoRomDesc[] = {
@@ -3329,26 +3379,11 @@ static struct BurnRomInfo kengoRomDesc[] = {
 STD_ROM_PICK(kengo)
 STD_ROM_FN(kengo)
 
-static INT32 kengoInit()
-{
-	INT32 nRet = DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, 0x60, Z80_REAL_NMI, 5);
-
-	if (nRet == 0) {
-		Kengo = 1;
-		Clock_16mhz = 1;
-		VezOpen(0);
-		VezSetDecode((UINT8 *)&gunforce_decryption_table);
-		VezClose();
-	}
-
-	return nRet;
-}
-
 struct BurnDriverD BurnDrvKengo = {
-	"kengo", NULL, NULL, NULL, "1991",
+	"kengo", "ltswords", NULL, NULL, "1991",
 	"Ken-Go\0", NULL, "Irem", "M84?",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, kengoRomInfo, kengoRomName, NULL, NULL, CommonInputInfo, KengoDIPInfo,
 	kengoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3

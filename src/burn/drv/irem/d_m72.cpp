@@ -3078,6 +3078,9 @@ static struct BurnRomInfo rtype2jRomDesc[] = {
 	{ "ic64.9p",		0x20000, 0x3686d555, 0x03 | BRF_GRA },           // 16
 
 	{ "ic14.4c",		0x20000, 0x637172d5, 0x05 | BRF_SND },           // 17 DAC Samples
+	
+	{ "rt2_b-4n-.bin",	0x00100, 0xb460c438, 0x00 | BRF_OPT },           // 18 Proms
+	{ "rt2_b-4p-.bin",	0x00100, 0xa4f2c4bc, 0x00 | BRF_OPT },           // 19
 };
 
 STD_ROM_PICK(rtype2j)
@@ -3355,7 +3358,7 @@ struct BurnDriverD BurnDrvLtswords = {
 };
 
 
-// Ken-Go
+// Ken-Go (set 1)
 
 static struct BurnRomInfo kengoRomDesc[] = {
 	{ "ken_d-h0.rom",	0x20000, 0xf4ddeea5, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
@@ -3381,10 +3384,48 @@ STD_ROM_FN(kengo)
 
 struct BurnDriverD BurnDrvKengo = {
 	"kengo", "ltswords", NULL, NULL, "1991",
-	"Ken-Go\0", NULL, "Irem", "M84?",
+	"Ken-Go (set 1)\0", NULL, "Irem", "M84?",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, kengoRomInfo, kengoRomName, NULL, NULL, CommonInputInfo, KengoDIPInfo,
+	kengoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	384, 256, 4, 3
+};
+
+
+// Ken-Go (set 2)
+
+static struct BurnRomInfo kengoaRomDesc[] = {
+	{ "KEN-D-H0-.IC55",	0x20000, 0xed3da88c, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "KEN-D-L0-.IC61",	0x20000, 0x92c57d8e, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ken_d-sp.rom",	0x10000, 0x233ca1cf, 0x06 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "ken_m31.rom",	0x20000, 0xe00b95a6, 0x02 | BRF_GRA },           //  3 Sprites
+	{ "ken_m21.rom",	0x20000, 0xd7722f87, 0x02 | BRF_GRA },           //  4
+	{ "ken_m32.rom",	0x20000, 0x30a844c4, 0x02 | BRF_GRA },           //  5
+	{ "ken_m22.rom",	0x20000, 0xa00dac85, 0x02 | BRF_GRA },           //  6
+
+	{ "ken_m51.rom",	0x20000, 0x1646cf4f, 0x03 | BRF_GRA },           //  7 Foreground & Background Tiles
+	{ "ken_m57.rom",	0x20000, 0xa9f88d90, 0x03 | BRF_GRA },           //  8
+	{ "ken_m66.rom",	0x20000, 0xe9d17645, 0x03 | BRF_GRA },           //  9
+	{ "ken_m64.rom",	0x20000, 0xdf46709b, 0x03 | BRF_GRA },           // 10
+
+	{ "ken_m14.rom",	0x20000, 0x6651e9b7, 0x05 | BRF_SND },           // 11 DAC Samples
+	
+	{ "KEN_B-4N-.IC23",	0x00100, 0xb460c438, 0x00 | BRF_OPT },           // 12 Proms
+	{ "KEN_B-4P-.IC24",	0x00100, 0x526f10ca, 0x00 | BRF_OPT },           // 13 
+};
+
+STD_ROM_PICK(kengoa)
+STD_ROM_FN(kengoa)
+
+struct BurnDriverD BurnDrvKengoa = {
+	"kengoa", "ltswords", NULL, NULL, "1991",
+	"Ken-Go (set 2)\0", NULL, "Irem", "M84?",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
+	NULL, kengoaRomInfo, kengoaRomName, NULL, NULL, CommonInputInfo, KengoDIPInfo,
 	kengoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 256, 4, 3
 };

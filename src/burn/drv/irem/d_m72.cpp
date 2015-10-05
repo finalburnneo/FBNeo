@@ -3347,7 +3347,7 @@ static INT32 kengoInit()
 	return nRet;
 }
 
-struct BurnDriverD BurnDrvLtswords = {
+struct BurnDriver BurnDrvLtswords = {
 	"ltswords", NULL, NULL, NULL, "1991",
 	"Lightning Swords\0", NULL, "Irem", "M84?",
 	NULL, NULL, NULL, NULL,
@@ -3382,7 +3382,7 @@ static struct BurnRomInfo kengoRomDesc[] = {
 STD_ROM_PICK(kengo)
 STD_ROM_FN(kengo)
 
-struct BurnDriverD BurnDrvKengo = {
+struct BurnDriver BurnDrvKengo = {
 	"kengo", "ltswords", NULL, NULL, "1991",
 	"Ken-Go (set 1)\0", NULL, "Irem", "M84?",
 	NULL, NULL, NULL, NULL,
@@ -3420,7 +3420,7 @@ static struct BurnRomInfo kengoaRomDesc[] = {
 STD_ROM_PICK(kengoa)
 STD_ROM_FN(kengoa)
 
-struct BurnDriverD BurnDrvKengoa = {
+struct BurnDriver BurnDrvKengoa = {
 	"kengoa", "ltswords", NULL, NULL, "1991",
 	"Ken-Go (set 2)\0", NULL, "Irem", "M84?",
 	NULL, NULL, NULL, NULL,

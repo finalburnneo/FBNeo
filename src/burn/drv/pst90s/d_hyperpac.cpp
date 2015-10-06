@@ -3805,46 +3805,37 @@ static INT32 HoneydolFrame()
 
 static INT32 SnowbrosFrame()
 {
-	INT32 nInterleave = 4;
+	INT32 nInterleave = 256;
 
 	if (HyperpacReset) SnowbrosDoReset();
 
 	HyperpacMakeInputs();
 
 	SekNewFrame();
-	ZetNewFrame();	
+	ZetNewFrame();
 	
 	SekOpen(0);
-	ZetOpen(0);	
-
-	SekIdle(nCyclesDone[0]);
-	ZetIdle(nCyclesDone[1]);
+	ZetOpen(0);
 
 	nCyclesTotal[0] = (Wintbob) ? 12000000 / 60 : 8000000 / 60;
 	nCyclesTotal[1] = 6000000 / 60;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-
 		// Run 68000
-		nCurrentCPU = 0;
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - SekTotalCycles();
-		SekRun(nCyclesSegment);
+		SekRun(nCyclesTotal[0] / nInterleave);
 
-		if (i == 1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-		if (i == 2) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
-		if (i == 3) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == 32) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 128) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 240) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+
+		// Run Z80
+		BurnTimerUpdateYM3812((i + 1) * nCyclesTotal[1] / nInterleave);
 	}
 
-	nCycles68KSync = SekTotalCycles();
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
-	if (pBurnSoundOut) BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 
-	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];
-	nCyclesDone[1] = ZetTotalCycles() - nCyclesTotal[1];
-
-//	bprintf(PRINT_NORMAL, _T("%i\ %i\n"), nCyclesDone[0], nCyclesDone[1]);
+	if (pBurnSoundOut)
+		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 
 	ZetClose();
 	SekClose();
@@ -3949,7 +3940,7 @@ static INT32 SnowbrosScan(INT32 nAction,INT32 *pnMin)
 
 	if (nAction & ACB_MEMORY_RAM) {
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data	  = RamStart;
+		ba.Data	  = RamStart;
 		ba.nLen	  = RamEnd-RamStart;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);

@@ -70,7 +70,7 @@ static INT32 Kengo = 0;
 static INT32 m72_video_type = 0;
 static INT32 z80_nmi_enable = 0;
 static INT32 enable_z80_reset = 0; // only if z80 is not rom-based!
-static INT32 m72_irq_base = 0x80;
+static INT32 m72_irq_base = 0;
 static INT32 code_mask[4];
 static INT32 graphics_length[4];
 static INT32 video_offsets[2] = { 0, 0 };
@@ -1089,8 +1089,14 @@ void __fastcall m72_main_write_port(UINT32 port, UINT8 data)
 
 		case 0x40:
 		case 0x41:
-		case 0x42:
 		case 0x43: // nop
+		return;
+
+		case 0x42:
+			if (m72_irq_base == 0) {
+				m72_irq_base = data << 2;
+				//bprintf(0, _T("irq base vector %X.\n"), m72_irq_base);
+			}
 		return;
 
 		case 0x80:
@@ -1665,7 +1671,7 @@ static INT32 MemIndex()
 }
 
 
-static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32 (*pRomLoadCallback)(), INT32 irqbase, INT32 z80_nmi, INT32 video_type)
+static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32 (*pRomLoadCallback)(), INT32 z80_nmi, INT32 video_type)
 {
 	BurnSetRefreshRate(55.00);
 
@@ -1694,7 +1700,7 @@ static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32
 		if (pRomLoadCallback()) return 1;
 	}
 
-	m72_irq_base = irqbase;
+	m72_irq_base = 0; // set by port 42. (programmable interrupt controller)
 	z80_nmi_enable = z80_nmi;
 	m72_video_type = video_type;
 
@@ -1753,6 +1759,7 @@ static INT32 DrvExit()
 	m72_video_type = 0;
 	enable_z80_reset = 0;
 	z80_nmi_enable = 0;
+	m72_irq_base = 0;
 	Kengo = 0;
 	Clock_16mhz = 0;
 
@@ -2240,7 +2247,7 @@ STD_ROM_FN(rtype)
 
 static INT32 rtypeInit()
 {
-	return DrvInit(common_040000_040000, sound_ram_map, NULL, 0x80, Z80_NO_NMI, 0);
+	return DrvInit(common_040000_040000, sound_ram_map, NULL, Z80_NO_NMI, 0);
 }
 
 struct BurnDriver BurnDrvRtype = {
@@ -2469,7 +2476,7 @@ STD_ROM_FN(xmultipl)
 
 static INT32 xmultiplInit()
 {
-	return DrvInit(common_080000_09c000, sound_rom_map, NULL, 0x20, Z80_REAL_NMI, 0);
+	return DrvInit(common_080000_09c000, sound_rom_map, NULL, Z80_REAL_NMI, 0);
 }
 
 struct BurnDriver BurnDrvXmultipl = {
@@ -2522,7 +2529,7 @@ static INT32 xmultiplm72Init()
 {
 	install_protection(xmultiplm72);
 
-	return DrvInit(common_080000_080000, sound_ram_map, NULL, 0x20, Z80_REAL_NMI, 0);
+	return DrvInit(common_080000_080000, sound_ram_map, NULL, Z80_REAL_NMI, 0);
 }
 
 struct BurnDriver BurnDrvXmultiplm72 = {
@@ -2569,7 +2576,7 @@ static INT32 dbreedRomLoadCallback()
 
 static INT32 dbreedInit()
 {
-	return DrvInit(common_080000_088000, sound_rom_map, dbreedRomLoadCallback, 0x20, Z80_REAL_NMI, 2);
+	return DrvInit(common_080000_088000, sound_rom_map, dbreedRomLoadCallback, Z80_REAL_NMI, 2);
 }
 
 struct BurnDriver BurnDrvDbreed = {
@@ -2625,7 +2632,7 @@ static INT32 dbreedm72Init()
 {
 	install_protection(dbreedm72);
 
-	return DrvInit(common_080000_090000, sound_ram_map, dbreedm72RomLoadCallback, 0x20, Z80_REAL_NMI, 0);
+	return DrvInit(common_080000_090000, sound_ram_map, dbreedm72RomLoadCallback, Z80_REAL_NMI, 0);
 }
 
 struct BurnDriver BurnDrvDbreedm72 = {
@@ -2680,7 +2687,7 @@ static INT32 bchopperInit()
 {
 	install_protection(bchopper);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, dbreedm72RomLoadCallback, 0x80, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, dbreedm72RomLoadCallback, Z80_FAKE_NMI, 0);
 }
 
 struct BurnDriver BurnDrvBchopper = {
@@ -2731,7 +2738,7 @@ static INT32 mrheliInit()
 {
 	m72_install_protection(bchopper_code, mrheli_crc, bchopper_sample_offsets);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, dbreedm72RomLoadCallback, 0x80, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, dbreedm72RomLoadCallback, Z80_FAKE_NMI, 0);
 }
 
 struct BurnDriver BurnDrvMrheli = {
@@ -2791,7 +2798,7 @@ static INT32 nspiritInit()
 {
 	install_protection(nspirit);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, 0x80, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0);
 }
 
 struct BurnDriver BurnDrvNspirit = {
@@ -2844,7 +2851,7 @@ static INT32 nspiritjInit()
 {
 	m72_install_protection(nspirit_code, nspiritj_crc, nspirit_sample_offsets);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, 0x80, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0);
 }
 
 struct BurnDriver BurnDrvNspiritj = {
@@ -2901,7 +2908,7 @@ static INT32 imgfightInit()
 {
 	install_protection(imgfight);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, imgfightRomLoadCallback, 0x80, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, imgfightRomLoadCallback, Z80_FAKE_NMI, 0);
 }
 
 struct BurnDriver BurnDrvImgfight = {
@@ -2993,7 +3000,7 @@ static INT32 airduelInit()
 {
 	install_protection(airduel);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, 0x80, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0);
 }
 
 struct BurnDriver BurnDrvAirduel = {
@@ -3039,7 +3046,7 @@ STD_ROM_FN(rtype2)
 
 static INT32 rtype2Init()
 {
-	return DrvInit(rtype2_main_cpu_map, sound_rom_map, NULL, 0x80, Z80_REAL_NMI, 1);
+	return DrvInit(rtype2_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 1);
 }
 
 struct BurnDriver BurnDrvRtype2 = {
@@ -3166,7 +3173,7 @@ STD_ROM_FN(hharry)
 
 static INT32 hharryInit()
 {
-	return DrvInit(common_080000_0a0000, sound_rom_map, dbreedm72RomLoadCallback, 0x20, Z80_REAL_NMI, 2);
+	return DrvInit(common_080000_0a0000, sound_rom_map, dbreedm72RomLoadCallback, Z80_REAL_NMI, 2);
 }
 
 struct BurnDriver BurnDrvHharry = {
@@ -3208,7 +3215,7 @@ STD_ROM_FN(hharryu)
 
 static INT32 hharryuInit()
 {
-	return DrvInit(hharryu_main_cpu_map, sound_rom_map, dbreedm72RomLoadCallback, 0x20, Z80_REAL_NMI, 1);
+	return DrvInit(hharryu_main_cpu_map, sound_rom_map, dbreedm72RomLoadCallback, Z80_REAL_NMI, 1);
 }
 
 struct BurnDriver BurnDrvHharryu = {
@@ -3294,7 +3301,7 @@ static INT32 dkgensanm72Init()
 {
 	install_protection(dkgenm72);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, dbreedm72RomLoadCallback, 0x20, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, dbreedm72RomLoadCallback, Z80_FAKE_NMI, 0);
 }
 
 struct BurnDriver BurnDrvDkgensanm72 = {
@@ -3334,7 +3341,7 @@ STD_ROM_FN(ltswords)
 
 static INT32 kengoInit()
 {
-	INT32 nRet = DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, 0x60, Z80_REAL_NMI, 5);
+	INT32 nRet = DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 5);
 
 	if (nRet == 0) {
 		Kengo = 1;
@@ -3459,7 +3466,7 @@ static INT32 cosmccopInit()
 {
 	Clock_16mhz = 1;
 
-	return DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, 0x60, Z80_REAL_NMI, 2);
+	return DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 2);
 }
 
 struct BurnDriver BurnDrvCosmccop = {
@@ -3509,7 +3516,7 @@ static INT32 gallopInit()
 	protection_sample_offsets = gallop_sample_offsets;
 	Clock_16mhz = 1;
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, 0x80, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0);
 }
 
 struct BurnDriver BurnDrvGallop = {
@@ -3559,7 +3566,7 @@ static INT32 lohtInit()
 {
 	install_protection(loht);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, 0x80, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0);
 }
 
 struct BurnDriver BurnDrvLoht = {
@@ -3744,7 +3751,7 @@ static INT32 lohtbInit()
 {
 	install_protection(loht);
 
-	return DrvInit(common_080000_0a0000, sound_ram_map, lohtbRomLoadCallback, 0x80, Z80_FAKE_NMI, 0);
+	return DrvInit(common_080000_0a0000, sound_ram_map, lohtbRomLoadCallback, Z80_FAKE_NMI, 0);
 }
 
 struct BurnDriver BurnDrvLohtb = {
@@ -3836,7 +3843,7 @@ STD_ROM_FN(poundfor)
 
 static INT32 poundforInit()
 {
-	return DrvInit(rtype2_main_cpu_map, sound_rom_map, NULL, 0x80, Z80_FAKE_NMI, 4);
+	return DrvInit(rtype2_main_cpu_map, sound_rom_map, NULL, Z80_FAKE_NMI, 4);
 }
 
 struct BurnDriverD BurnDrvPoundfor = {
@@ -3957,7 +3964,7 @@ STD_ROM_FN(majtitle)
 
 static INT32 majtitleInit()
 {
-	return DrvInit(majtitle_main_cpu_map, sound_rom_map, NULL, 0x80, Z80_REAL_NMI, 3);
+	return DrvInit(majtitle_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 3);
 }
 
 struct BurnDriver BurnDrvMajtitle = {

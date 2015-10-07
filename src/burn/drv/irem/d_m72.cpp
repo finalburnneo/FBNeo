@@ -1296,6 +1296,7 @@ static INT32 DrvDoReset()
 	ym2151_previous = 0;
 	sample_address = 0;
 	irq_raster_position = -1;
+	m72_irq_base = 0;
 
 	return 0;
 }
@@ -2195,12 +2196,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-            ZetScan(nAction);
-            BurnYM2151Scan(nAction);
-            DACScan(nAction, pnMin);
-            VezScan(nAction);
+		ZetScan(nAction);
+		BurnYM2151Scan(nAction);
+		DACScan(nAction, pnMin);
+		VezScan(nAction);
 
-            SCAN_VAR(irq_raster_position);
+		SCAN_VAR(irq_raster_position);
+		SCAN_VAR(m72_irq_base);
 	}
 	
 	if (nAction & ACB_WRITE) {

@@ -1394,11 +1394,15 @@ void __fastcall m92WritePort(UINT32 port, UINT8 data)
 			}
 			return;
 
-	//	case 0x40:	// Interrupt controller, only written to at bootup
-	//	case 0x41:
-	//	case 0x42:
-	//	case 0x43:
-	//		return;
+		case 0x40:
+		case 0x41:
+		case 0x43: // IRQ controller init (ignored)
+		return;
+		case 0x42: // get vectorbase from IRQ controller init - first write on port 0x42
+			if (m92_irq_vectorbase == 0) {
+				m92_irq_vectorbase = data << 2;
+			}
+		return;
 
 		case 0x80: pf_control[0][0] = data; set_pf_scroll(0); return;
 		case 0x81: pf_control[0][1] = data; set_pf_scroll(0); return;
@@ -1457,7 +1461,7 @@ UINT8 __fastcall m92SndReadByte(UINT32 address)
 			return BurnYM2151ReadStatus();
 
 		case 0xa8044:
-//			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, CPU_IRQSTATUS_NONE);
+			//VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, CPU_IRQSTATUS_NONE);
 			return sound_latch[0];
 
 		case 0xa8045:
@@ -1483,22 +1487,18 @@ void __fastcall m92SndWriteByte(UINT32 address, UINT8 data)
 	switch (address)
 	{
 		case 0xa8040:
-	//	case 0xa8041:
 			BurnYM2151SelectRegister(data);
 			return;
 
 		case 0xa8042:
-	//	case 0xa8043:
 			BurnYM2151WriteRegister(data);
 			return;
 
 		case 0xa8044:
-	//	case 0xa8045:
-//			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, CPU_IRQSTATUS_NONE);
+			//VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, CPU_IRQSTATUS_NONE);
 			return;
 
 		case 0xa8046:
-	//	case 0xa8047:
 			sound_status[0] = data;
 			VezClose();
 			VezOpen(0);
@@ -1534,6 +1534,7 @@ static INT32 DrvDoReset()
 
 	if (m92_kludge == 1) sound_status[0] = 0x80;
 
+	m92_irq_vectorbase = 0;
 	m92_sprite_buffer_busy = 0x80;
 	m92_sprite_buffer_timer = 0;
 	PalBank	= 0;
@@ -1679,7 +1680,7 @@ static INT32 RomLoad(INT32 v33off, INT32 gfxlen0, INT32 gfxlen1, INT32 gfxtype1,
 	return 0;
 }
 
-static INT32 DrvInit(INT32 (*pRomLoadCallback)(), const UINT8 *sound_decrypt_table, INT32 type, INT32 vectorbase, INT32 gfxlen1, INT32 gfxlen2)
+static INT32 DrvInit(INT32 (*pRomLoadCallback)(), const UINT8 *sound_decrypt_table, INT32 type, INT32 gfxlen1, INT32 gfxlen2)
 {
 	Mem = NULL;
 	MemIndex(gfxlen1, gfxlen2);
@@ -1746,7 +1747,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), const UINT8 *sound_decrypt_tab
 	graphics_mask[0] = ((gfxlen1 * 2) - 1) / (8 * 8);
 	graphics_mask[1] = ((gfxlen2 * 2) - 1) / (16 * 16);
 
-	m92_irq_vectorbase = vectorbase;
+	m92_irq_vectorbase = 0x00;
 
 	BurnYM2151Init(3579545);
 	YM2151SetIrqHandler(0, &m92YM2151IRQHandler);
@@ -2154,7 +2155,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 {
 	if (pnMin)
 	{
-		*pnMin =  0x029671;
+		*pnMin =  0x029737;
 	}
 
 	struct BurnArea ba;
@@ -2196,6 +2197,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(m92_sprite_list);
 		SCAN_VAR(m92_sprite_buffer_busy);
 		SCAN_VAR(m92_sprite_buffer_timer);
+		SCAN_VAR(m92_irq_vectorbase);
 
 		if (nAction & ACB_WRITE) {
 			VezOpen(1);
@@ -2255,7 +2257,7 @@ static INT32 hookRomLoad()
 
 static INT32 hookInit()
 {
-	return DrvInit(hookRomLoad, hook_decryption_table, 1, 0x80, 0x100000, 0x400000);
+	return DrvInit(hookRomLoad, hook_decryption_table, 1, 0x100000, 0x400000);
 }
 
 struct BurnDriver BurnDrvHook = {
@@ -2414,7 +2416,7 @@ static INT32 PpanInit()
 {
 	m92_kludge = 3;
 	nScreenOffsets[1] = 120; // ?
-	return DrvInit(ppanRomLoad, NULL, 1, 0x80, 0x100000, 0x400000);
+	return DrvInit(ppanRomLoad, NULL, 1, 0x100000, 0x400000);
 }
 
 struct BurnDriver BurnDrvPpan = {
@@ -2462,7 +2464,7 @@ static INT32 inthuntRomLoad()
 
 static INT32 inthuntInit()
 {
-	return DrvInit(inthuntRomLoad, inthunt_decryption_table, 1, 0x80, 0x200000, 0x400000);
+	return DrvInit(inthuntRomLoad, inthunt_decryption_table, 1, 0x200000, 0x400000);
 }
 
 struct BurnDriver BurnDrvInthunt = {
@@ -2586,7 +2588,7 @@ static INT32 rtypeleoRomLoad()
 
 static INT32 rtypeleoInit()
 {
-	return DrvInit(rtypeleoRomLoad, rtypeleo_decryption_table, 1, 0x20, 0x200000, 0x400000);
+	return DrvInit(rtypeleoRomLoad, rtypeleo_decryption_table, 1, 0x200000, 0x400000);
 }
 
 struct BurnDriver BurnDrvRtypeleo = {
@@ -2672,7 +2674,7 @@ static INT32 bmasterRomLoad()
 
 static INT32 bmasterInit()
 {
-	return DrvInit(bmasterRomLoad, bomberman_decryption_table, 1, 0x80, 0x100000, 0x200000);
+	return DrvInit(bmasterRomLoad, bomberman_decryption_table, 1, 0x100000, 0x200000);
 }
 
 struct BurnDriver BurnDrvBmaster = {
@@ -2753,7 +2755,7 @@ STD_ROM_FN(mysticri)
 
 static INT32 mysticriInit()
 {
-	return DrvInit(bmasterRomLoad, mysticri_decryption_table, 1, 0x80, 0x100000, 0x200000);
+	return DrvInit(bmasterRomLoad, mysticri_decryption_table, 1, 0x100000, 0x200000);
 }
 
 struct BurnDriver BurnDrvMysticri = {
@@ -2877,7 +2879,7 @@ static INT32 gunforceRomLoad()
 
 static INT32 gunforceInit()
 {
-	return DrvInit(gunforceRomLoad, gunforce_decryption_table, 1, 0x80, 0x100000, 0x100000);
+	return DrvInit(gunforceRomLoad, gunforce_decryption_table, 1, 0x100000, 0x100000);
 }
 
 struct BurnDriver BurnDrvGunforce = {
@@ -3001,7 +3003,7 @@ static INT32 uccopsRomLoad()
 
 static INT32 uccopsInit()
 {
-	return DrvInit(uccopsRomLoad, dynablaster_decryption_table, 1, 0x80, 0x200000, 0x400000);
+	return DrvInit(uccopsRomLoad, dynablaster_decryption_table, 1, 0x200000, 0x400000);
 }
 
 struct BurnDriver BurnDrvUccops = {
@@ -3165,7 +3167,7 @@ static INT32 gunforc2Init()
 {
 	INT32 nRet;
 
-	nRet = DrvInit(gunforc2RomLoad, lethalth_decryption_table, 1, 0x80, 0x200000, 0x400000);
+	nRet = DrvInit(gunforc2RomLoad, lethalth_decryption_table, 1, 0x200000, 0x400000);
 
 	if (nRet == 0) {
 		memcpy (DrvV33ROM + 0x80000, DrvV33ROM + 0x100000, 0x20000);
@@ -3256,7 +3258,7 @@ static INT32 nbbatmanInit()
 
 	m92_kludge = 4;
 
-	nRet = DrvInit(gunforc2RomLoad, leagueman_decryption_table, 1, 0x80, 0x200000, 0x400000);
+	nRet = DrvInit(gunforc2RomLoad, leagueman_decryption_table, 1, 0x200000, 0x400000);
 
 	if (nRet == 0) {
 		memcpy (DrvV33ROM + 0x80000, DrvV33ROM + 0x100000, 0x20000);
@@ -3387,7 +3389,7 @@ static INT32 lethalthRomLoad()
 
 static INT32 lethalthInit()
 {
-	return DrvInit(lethalthRomLoad, lethalth_decryption_table, 0, 0x20, 0x100000, 0x100000);
+	return DrvInit(lethalthRomLoad, lethalth_decryption_table, 0, 0x100000, 0x100000);
 }
 
 struct BurnDriver BurnDrvLethalth = {
@@ -3477,7 +3479,7 @@ static INT32 dsoccr94jRomLoad()
 
 static INT32 dsoccr94jInit()
 {
-	return DrvInit(dsoccr94jRomLoad, dsoccr94_decryption_table, 1, 0x80, 0x400000, 0x400000);
+	return DrvInit(dsoccr94jRomLoad, dsoccr94_decryption_table, 1, 0x400000, 0x400000);
 }
 
 struct BurnDriver BurnDrvDsoccr94j = {
@@ -3531,7 +3533,7 @@ static INT32 ssoldierInit()
 {
 	m92_kludge = 1;
 
-	return DrvInit(ssoldierRomLoad, psoldier_decryption_table, 1, 0x20, 0x100000, 0x800000);
+	return DrvInit(ssoldierRomLoad, psoldier_decryption_table, 1, 0x100000, 0x800000);
 }
 
 struct BurnDriver BurnDrvSsoldier = {
@@ -3630,7 +3632,7 @@ static INT32 majtitl2RomLoad()
 static INT32 majtitl2Init()
 {
 	m92_kludge = 2;
-	return DrvInit(majtitl2RomLoad, majtitl2_decryption_table, 1, 0x80, 0x100000, 0x400000);
+	return DrvInit(majtitl2RomLoad, majtitl2_decryption_table, 1, 0x100000, 0x400000);
 }
 
 struct BurnDriver BurnDrvMajtitl2 = {

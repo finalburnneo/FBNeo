@@ -812,6 +812,9 @@ BEGIN
         	MENUITEM "Restore full state on load",				MENU_ALLRAM
         END
         MENUITEM SEPARATOR
+        MENUITEM "Record AVI",                  			MENU_AVISTART, GRAYED
+        MENUITEM "Stop recording",              			MENU_AVISTOP, GRAYED
+        MENUITEM SEPARATOR
         MENUITEM "Exit emulator\tAlt+F4",				MENU_EXIT
     END
     POPUP "Video"

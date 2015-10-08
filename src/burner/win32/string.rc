@@ -61,6 +61,9 @@ BEGIN
 	IDS_SSHOT_SAVED				"PNG saved"
 	IDS_SSHOT_ERROR				"PNG error %1d"
 
+	IDS_REC_AVI				"Rec AVI ON"
+	IDS_STOP_AVI				"Rec AVI OFF"
+
 	IDS_SOUND_NOVOLUME			"No volume control"
 	IDS_SOUND_VOLUMESET			"volume %03i %%"
 	IDS_SOUND_MUTE				"Silence"

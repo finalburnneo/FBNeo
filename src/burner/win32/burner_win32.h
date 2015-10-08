@@ -464,3 +464,14 @@ int LocaliseDownloadCreate(HWND hParentWND);
 TCHAR* FormatCommasNumber(__int64);
 #define _uInt64ToCommaFormattedTCHAR(szOUT, nIN)	\
 	_stprintf(szOUT, _T("%s"), FormatCommasNumber(nIN));
+
+// ----------------------------------------------------------------------------
+// AVI recording
+
+// avi.cpp
+int AviStart();
+int AviRecordFrame(int bDraw);
+void AviStop();
+extern unsigned char *pAviBuffer;
+extern int nAviStatus;
+

@@ -274,6 +274,7 @@ INT32 VidExit()
 		if (pVidTransImage) {
 			free(pVidTransImage);
 			pVidTransImage = NULL;
+			pAviBuffer = NULL;
 		}
 
 		return nRet;
@@ -303,6 +304,7 @@ static INT32 VidDoFrame(bool bRedraw)
 		}
 
 		pBurnDraw = pVidTransImage;
+		pAviBuffer = pVidTransImage;
 		nBurnPitch = nVidImageWidth * 2;
 
 		nRet = pVidOut[nVidActive]->Frame(bRedraw);
@@ -334,6 +336,7 @@ static INT32 VidDoFrame(bool bRedraw)
 	} else {
 		pBurnDraw = pVidImage;
 		nBurnPitch = nVidImagePitch;
+		pAviBuffer = pBurnDraw;
 
 		nRet = pVidOut[nVidActive]->Frame(bRedraw);
 

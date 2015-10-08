@@ -181,6 +181,12 @@ static int RunFrame(int bDraw, int bPause)
 		}
 	}
 
+	if (nAviStatus) {
+		if (AviRecordFrame(bDraw)) {
+			AviStop();
+		}
+	}
+
 	bPrevPause = bPause;
 	bPrevDraw = bDraw;
 

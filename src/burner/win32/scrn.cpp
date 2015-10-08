@@ -818,6 +818,8 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			SplashDestroy(1);
 			StopReplay();
 
+			AviStop();
+
 			InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
 
 			bLoading = 1;
@@ -921,6 +923,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				AudBlankSound();
 				SplashDestroy(1);
 				StopReplay();
+				AviStop();
 				DrvExit();
 				DoNetGame();
 				MenuEnableItems();
@@ -951,6 +954,17 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_STOPREPLAY:
 			StopReplay();
 			break;
+
+		case MENU_AVISTART:
+			if (AviStart()) {
+				AviStop();
+			}
+			VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_REC_AVI, true), 0x0000FF);
+			break;
+		case MENU_AVISTOP:
+			AviStop();
+			VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STOP_AVI, true), 0xFF3F3F);
+			break;
 			
 		case MENU_QUIT:
 			AudBlankSound();
@@ -960,6 +974,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			if (bDrvOkay) {
 				StopReplay();
+				AviStop();
 				DrvExit();
   				if (kNetGame) {
 					kNetGame = 0;
@@ -982,6 +997,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_EXIT:
 			StopReplay();
+			AviStop();
 			if (kNetGame) {
 				kNetGame = 0;
 //				kailleraEndGame();

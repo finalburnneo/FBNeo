@@ -800,6 +800,10 @@
 #define MENU_DX9_ALT_HARDWAREVERTEX			11703
 #define MENU_DX9_ALT_MOTIONBLUR				11704
 
+#define MENU_AVISTART					    11827
+#define MENU_AVISTOP					    11828
+#define MENU_AVIINTAUD					    11829
+
 // Next default values for new objects
 //
 #ifdef APSTUDIO_INVOKED

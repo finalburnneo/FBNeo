@@ -302,9 +302,8 @@ static INT32 VidDoFrame(bool bRedraw)
 
 			bVidRecalcPalette = false;
 		}
-
 		pBurnDraw = pVidTransImage;
-		pAviBuffer = pVidTransImage;
+		pAviBuffer = pVidImage;
 		nBurnPitch = nVidImageWidth * 2;
 
 		nRet = pVidOut[nVidActive]->Frame(bRedraw);

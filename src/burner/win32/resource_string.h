@@ -61,8 +61,8 @@
 #define IDS_SSHOT_SAVED					(IDS_STRING +  260)
 #define IDS_SSHOT_ERROR					(IDS_STRING +  262)
 
-#define IDS_REC_AVI			            (IDS_STRING +  263)
-#define IDS_STOP_AVI			        (IDS_STRING +  264)
+#define IDS_REC_AVI			            (IDS_STRING +  264)
+#define IDS_STOP_AVI			        (IDS_STRING +  266)
 
 #define IDS_SOUND_NOVOLUME				(IDS_STRING +  280)
 #define IDS_SOUND_VOLUMESET				(IDS_STRING +  282)

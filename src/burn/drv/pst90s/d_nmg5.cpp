@@ -1851,7 +1851,7 @@ struct BurnDriver BurnDrvOrdi7 = {
 };
 
 
-// Wonder Stick
+// Wonder Stick (set 1)
 
 static struct BurnRomInfo wondstckRomDesc[] = {
 	{ "u4.bin",	0x20000, 0x46a3e9f6, 1 | BRF_PRG | BRF_ESS }, //  0 - 68k Code
@@ -1889,9 +1889,49 @@ static INT32 WondstckInit()
 
 struct BurnDriver BurnDrvWondstck = {
 	"wondstck", NULL, NULL, NULL, "????",
-	"Wonder Stick\0", NULL, "Yun Sung", "Miscellaneous",
+	"Wonder Stick (set 1)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, wondstckRomInfo, wondstckRomName, NULL, NULL, SearcheyInputInfo, WondstckDIPInfo,
+	WondstckInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x400, 320, 240, 4, 3
+};
+
+
+// Wonder Stick (set 2, censored)
+
+static struct BurnRomInfo wondstckaRomDesc[] = {
+	{ "4.u2",		0x20000, 0x0b28ab9d, 1 | BRF_PRG | BRF_ESS }, //  0 - 68k Code
+	{ "3.u7",		0x20000, 0x9995b743, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "1.u128",		0x10000, 0x86dba085, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
+
+	{ "7.u63",		0x80000, 0x25ee44ce, 3 | BRF_GRA },	      //  3 - Tiles
+	{ "2.u68",		0x80000, 0xb26afb40, 3 | BRF_GRA },	      //  4
+	{ "8.u73",		0x80000, 0x7cf46203, 3 | BRF_GRA },	      //  5
+	{ "4.u79",		0x80000, 0x825213e0, 3 | BRF_GRA },	      //  6
+	{ "5.u64",		0x80000, 0x9ece36d6, 3 | BRF_GRA },	      //  7
+	{ "1.u69",		0x80000, 0xec091e87, 3 | BRF_GRA },	      //  8
+	{ "6.u74", 		0x80000, 0x9795ff80, 3 | BRF_GRA },	      //  9
+	{ "3.u80", 		0x80000, 0x553c5781, 3 | BRF_GRA },	      // 10
+
+	{ "8.u83",		0x80000, 0xf51cf9c6, 4 | BRF_GRA },	      // 11 - Sprites
+	{ "9.u82",		0x80000, 0xddd3c60c, 4 | BRF_GRA },	      // 12
+	{ "7.u105",		0x80000, 0xa7fc624d, 4 | BRF_GRA },	      // 13
+	{ "6.u96",		0x80000, 0x2369d8a3, 4 | BRF_GRA },	      // 14
+	{ "5.u97",		0x80000, 0xaba1bd94, 4 | BRF_GRA },	      // 15
+
+	{ "2.u137",		0x40000, 0x294b6cbd, 5 | BRF_SND },	      // 16 - Samples
+};
+
+STD_ROM_PICK(wondstcka)
+STD_ROM_FN(wondstcka)
+
+struct BurnDriver BurnDrvWondstcka = {
+	"wondstcka", "wondstck", NULL, NULL, "????",
+	"Wonder Stick (set 2, censored)\0", NULL, "Yun Sung", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, wondstckRomInfo, wondstckRomName, NULL, NULL, SearcheyInputInfo, WondstckDIPInfo,
 	WondstckInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3

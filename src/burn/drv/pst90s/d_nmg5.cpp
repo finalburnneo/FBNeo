@@ -1932,7 +1932,7 @@ struct BurnDriver BurnDrvWondstcka = {
 	"Wonder Stick (set 2, censored)\0", NULL, "Yun Sung", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, wondstckRomInfo, wondstckRomName, NULL, NULL, SearcheyInputInfo, WondstckDIPInfo,
+	NULL, wondstckaRomInfo, wondstckaRomName, NULL, NULL, SearcheyInputInfo, WondstckDIPInfo,
 	WondstckInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x400, 320, 240, 4, 3
 };

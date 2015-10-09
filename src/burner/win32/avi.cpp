@@ -43,6 +43,9 @@
 //
 // Version History:
 //
+// 0.6 - added flipped screen support, fixed a bunch of bugs
+//       added to FBAlpha 2.97.37
+//
 // 0.5 - fixed a minor bug regarding video stream header
 //       (some applications chose wrong decompressor while opening avi)
 //
@@ -116,8 +119,11 @@ static struct FBAVI {
 	COMPVARS compvar;        // compression options
 	AVICOMPRESSOPTIONS opts; // compression options
 	// other 
-	unsigned int nFrameNum; // frame number for each compressed frame
-	unsigned char *pBitmap; // buffer for bitmap
+	UINT32 nFrameNum; // frame number for each compressed frame
+	UINT8 flippedmode;
+	UINT8 *pBitmap; // pointer for buffer for bitmap
+	UINT8 *pBitmapBuf1; // buffer #1
+	UINT8 *pBitmapBuf2; // buffer #2 (flippy)
 	int (*MakeBitmap) (); // MakeBitmapNoRotate, MakeBitmapRotateCW, MakeBitmapRotateCCW
 } FBAvi;
 
@@ -192,7 +198,7 @@ static int MakeBitmapNoRotate()
 	int w,h;
 	int nWidth = FBAvi.bih.biWidth;
 	int nHeight = FBAvi.bih.biHeight;
-	unsigned char *pTemp = FBAvi.pBitmap; // walks through and fills the bitmap
+	unsigned char *pTemp = FBAvi.pBitmapBuf1; // walks through and fills the bitmap
 
 
 	if (pAviBuffer == NULL) {
@@ -321,12 +327,24 @@ static int MakeBitmapNoRotate()
 	return 0;
 }
 
-// Converts video buffer to bitmap, rotate clockwise
-// Returns: 0 (sucessful), 1 (failed)
-static int MakeBitmapRotateCW()
+// Flips an already converted buffer
+static int MakeBitmapFlipped()
 {
-	// clockwise rotation not supported yet
-	return 1;
+	INT32 nWidth = FBAvi.bih.biWidth;
+	INT32 nHeight = FBAvi.bih.biHeight;
+	UINT8 *pTemp = FBAvi.pBitmapBuf2; // walks through and fills the bitmap
+
+	// start at the bottom line
+	UINT8 *p8 = FBAvi.pBitmapBuf1 + (3 * nWidth * nHeight) - 3;
+
+	for (INT32 i = 0; i < nHeight * nWidth; i++) {
+		memcpy(pTemp, p8, 3);   // just copy 24 bits straight into bitmap
+		pTemp += 3;             // go to next pixel
+		p8 -= 3;                // go to prev pixel
+	}
+	FBAvi.pBitmap = FBAvi.pBitmapBuf2;
+
+	return 0;
 }
 
 // Converts video buffer to bitmap, rotate counter clockwise
@@ -336,13 +354,13 @@ static int MakeBitmapRotateCCW()
 	int w,h;
 	int nWidth = FBAvi.bih.biWidth;
 	int nHeight = FBAvi.bih.biHeight;
-	unsigned char *pTemp = FBAvi.pBitmap; // walks through and fills the bitmap
+	unsigned char *pTemp = FBAvi.pBitmapBuf1; // walks through and fills the bitmap
 
 
 	if (pAviBuffer == NULL) {
 		return 1; // video buffer is empty
 	}
-
+	//bprintf(0, _T("%d,"), nVidImageDepth);
 	switch (nVidImageDepth) {
 		case 15: { // top to bottom 15-bit RGB --> bottom to top 24-bit RGB
 
@@ -438,16 +456,20 @@ static void AviSetVidFormat()
 	FBAvi.bih.biWidth = ww;
 	FBAvi.bih.biHeight = hh;
 
+	FBAvi.pBitmap = FBAvi.pBitmapBuf1;
+
 	// check for rotation and choose bitmap function
 	if(BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
 		// counter-clockwise rotation
 		FBAvi.MakeBitmap = MakeBitmapRotateCCW;
-	} else if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) {
-		// clockwise rotation
-		FBAvi.MakeBitmap = MakeBitmapRotateCW;
 	} else {
 		// no rotation
 		FBAvi.MakeBitmap = MakeBitmapNoRotate;
+	}
+
+	if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) {
+		// flipped.
+		FBAvi.flippedmode = 1;
 	}
 
 	FBAvi.bih.biPlanes = 1;
@@ -682,6 +704,8 @@ int AviRecordFrame(int bDraw)
 			return 1;
 		}
 
+		if (FBAvi.flippedmode) MakeBitmapFlipped();
+
 		// compress the bitmap and write to AVI output stream
 		hRet = AVIStreamWrite(
 			FBAvi.psVidCompressed, // stream pointer
@@ -727,34 +751,36 @@ int AviRecordFrame(int bDraw)
 // Frees bitmap.
 static void FreeBMP()
 {
-	if (FBAvi.pBitmap) {
-		free(FBAvi.pBitmap);
-		FBAvi.pBitmap = NULL;
+	if (FBAvi.pBitmapBuf1) {
+		free(FBAvi.pBitmapBuf1);
+		FBAvi.pBitmapBuf1 = NULL;
 	}
+	if (FBAvi.pBitmapBuf2) {
+		free(FBAvi.pBitmapBuf2);
+		FBAvi.pBitmapBuf2 = NULL;
+	}
+	FBAvi.pBitmap = NULL;
 }
 
 // Stops AVI recording.
 void AviStop()
 {
 	if (nAviFlags & FBAVI_VFW_INIT) {
-
-		if (FBAvi.psVid) {
-			// AVIStreamClose(FBAvi.psVid); // obsolete, use AVIStreamRelease() instead
-			AVIStreamRelease(FBAvi.psVid);
-		}
-
-		if (FBAvi.psVidCompressed) {
-			// AVIStreamClose(FBAvi.psVidCompressed); // obsolete, use AVIStreamReleaes() instead
-			AVIStreamRelease(FBAvi.psVidCompressed);
-		}
+		INT32 rc;
 
 		if (FBAvi.psAud) {
-			// AVIStreamClose(FBAvi.psAud); // obsolete, use AVIStreamRelease() instead
 			AVIStreamRelease(FBAvi.psAud);
 		}
 
+		if (FBAvi.psVidCompressed) {
+			AVIStreamRelease(FBAvi.psVidCompressed);
+		}
+
+		if (FBAvi.psVid) {
+			AVIStreamRelease(FBAvi.psVid);
+		}
+
 		if (FBAvi.pFile) {
-			 // AVIFileClose(FBAvi.pFile); // obsolete, use AVIFileRElease instead
 			AVIFileRelease(FBAvi.pFile);
 		}
 
@@ -763,6 +789,7 @@ void AviStop()
 		}
 
 		AVIFileExit();
+		Sleep(150); // Allow compressor-codec threads/windows/etc time to finish gracefully
 		FreeBMP();
 
 #ifdef AVI_DEBUG
@@ -790,6 +817,19 @@ int AviStart()
 		// VFW verison is too old, disable AVI recording
 		return 1;
 	}
+
+	// allocate memory for 2x 24bpp bitmap buffers
+	FBAvi.pBitmapBuf1 = (UINT8 *)malloc(FBAvi.bih.biSizeImage);
+	if (FBAvi.pBitmapBuf1 == NULL) {
+		return 1; // not enough memory to create allocate bitmap
+	}
+	FBAvi.pBitmapBuf2 = (UINT8 *)malloc(FBAvi.bih.biSizeImage);
+	if (FBAvi.pBitmapBuf2 == NULL) {
+		free(FBAvi.pBitmapBuf1);
+		return 1; // not enough memory to create allocate bitmap
+	}
+	FBAvi.pBitmap = FBAvi.pBitmapBuf1;
+
 	AVIFileInit();
 
 	nAviFlags |= FBAVI_VFW_INIT; // avi file library initialized
@@ -815,12 +855,6 @@ int AviStart()
 		if(AviCreateAudStream()) {
 			return 1;
 		}
-	}
-
-	// allocate memory for a 24 bpp bitmap
-	FBAvi.pBitmap = (unsigned char *)malloc(FBAvi.bih.biSizeImage);
-	if (FBAvi.pBitmap == NULL) {
-		return 1; // not enough memory to create allocate bitmap
 	}
 
 	// record the first frame

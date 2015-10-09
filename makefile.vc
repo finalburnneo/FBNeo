@@ -107,7 +107,11 @@ ifdef UNICODE
 # lib	= unicows.lib
 endif
 
-lib	+=	user32.lib gdi32.lib comdlg32.lib comctl32.lib shell32.lib winmm.lib ole32.lib shlwapi.lib advapi32.lib setupapi.lib wininet.lib vfw32.lib
+lib	+=	user32.lib gdi32.lib comdlg32.lib comctl32.lib shell32.lib winmm.lib ole32.lib shlwapi.lib advapi32.lib setupapi.lib wininet.lib
+
+ifdef INCLUDE_AVI_RECORDING
+lib +=	vfw32.lib
+endif
 
 ifdef	BUILD_X86_ASM
 autobj += hq3xs.o hq_shared32.o
@@ -193,6 +197,10 @@ endif
 
 ifdef INCLUDE_7Z_SUPPORT
 	DEF := $(DEF) /DINCLUDE_7Z_SUPPORT
+endif
+
+ifdef INCLUDE_AVI_RECORDING
+	DEF := $(DEF) /DINCLUDE_AVI_RECORDING
 endif
 
 ifdef TOAPLAN_SOUND_SAMPLES_HACK

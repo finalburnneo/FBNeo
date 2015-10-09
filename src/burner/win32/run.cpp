@@ -181,11 +181,13 @@ static int RunFrame(int bDraw, int bPause)
 		}
 	}
 
+#ifdef INCLUDE_AVI_RECORDING
 	if (nAviStatus) {
 		if (AviRecordFrame(bDraw)) {
 			AviStop();
 		}
 	}
+#endif
 
 	bPrevPause = bPause;
 	bPrevDraw = bDraw;

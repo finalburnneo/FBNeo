@@ -818,7 +818,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			SplashDestroy(1);
 			StopReplay();
 
+#ifdef INCLUDE_AVI_RECORDING
 			AviStop();
+#endif
 
 			InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
 
@@ -923,7 +925,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				AudBlankSound();
 				SplashDestroy(1);
 				StopReplay();
+#ifdef INCLUDE_AVI_RECORDING
 				AviStop();
+#endif
 				DrvExit();
 				DoNetGame();
 				MenuEnableItems();
@@ -955,7 +959,8 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			StopReplay();
 			break;
 
-		case MENU_AVISTART:
+#ifdef INCLUDE_AVI_RECORDING
+			case MENU_AVISTART:
 			if (AviStart()) {
 				AviStop();
 			}
@@ -965,7 +970,8 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			AviStop();
 			VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STOP_AVI, true), 0xFF3F3F);
 			break;
-			
+#endif
+
 		case MENU_QUIT:
 			AudBlankSound();
 			if (nVidFullscreen) {
@@ -974,7 +980,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			if (bDrvOkay) {
 				StopReplay();
+#ifdef INCLUDE_AVI_RECORDING
 				AviStop();
+#endif
 				DrvExit();
   				if (kNetGame) {
 					kNetGame = 0;
@@ -997,7 +1005,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_EXIT:
 			StopReplay();
+#ifdef INCLUDE_AVI_RECORDING
 			AviStop();
+#endif
 			if (kNetGame) {
 				kNetGame = 0;
 //				kailleraEndGame();

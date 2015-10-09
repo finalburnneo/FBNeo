@@ -110,7 +110,11 @@ ifdef UNICODE
 # lib	= -lunicows
 endif
 
-lib	+=	-luser32 -lgdi32 -lcomdlg32 -lcomctl32 -lshell32 -lwinmm -lshlwapi -ladvapi32 -lsetupapi -lole32 -luuid -lwininet -lvfw32
+lib	+=	-luser32 -lgdi32 -lcomdlg32 -lcomctl32 -lshell32 -lwinmm -lshlwapi -ladvapi32 -lsetupapi -lole32 -luuid -lwininet
+
+ifdef INCLUDE_AVI_RECORDING
+lib +=	-lvfw32
+endif
 		
 
 depobj	+=	resource.o \
@@ -314,6 +318,10 @@ endif
 
 ifdef INCLUDE_7Z_SUPPORT
 	DEF := $(DEF) -DINCLUDE_7Z_SUPPORT
+endif
+
+ifdef INCLUDE_AVI_RECORDING
+	DEF := $(DEF) -DINCLUDE_AVI_RECORDING
 endif
 
 ifdef TOAPLAN_SOUND_SAMPLES_HACK

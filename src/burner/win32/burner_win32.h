@@ -465,6 +465,7 @@ TCHAR* FormatCommasNumber(__int64);
 #define _uInt64ToCommaFormattedTCHAR(szOUT, nIN)	\
 	_stprintf(szOUT, _T("%s"), FormatCommasNumber(nIN));
 
+#ifdef INCLUDE_AVI_RECORDING
 // ----------------------------------------------------------------------------
 // AVI recording
 
@@ -474,4 +475,4 @@ int AviRecordFrame(int bDraw);
 void AviStop();
 extern unsigned char *pAviBuffer;
 extern int nAviStatus;
-
+#endif

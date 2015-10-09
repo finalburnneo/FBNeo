@@ -2,7 +2,7 @@ alldir	+= 	burner burner/win32 dep/kaillera/client dep/libs/libpng dep/libs/lib7
 			intf/video/scalers 	intf/video/win32 intf/audio intf/audio/win32 intf/input intf/input/win32 intf/cd intf/cd/win32 \
 			intf/perfcount intf/perfcount/win32 dep/generated
 
-depobj	+= 	about.o avi.o bzip.o cona.o debugger.o drv.o dwmapi_core.o dynhuff.o fba_kaillera.o gameinfo.o image_win32.o inpc.o \
+depobj	+= 	about.o bzip.o cona.o debugger.o drv.o dwmapi_core.o dynhuff.o fba_kaillera.o gameinfo.o image_win32.o inpc.o \
 			inpcheat.o inpd.o inpdipsw.o inps.o ips_manager.o localise.o localise_download.o localise_gamelist.o main.o mdi.o \
 			media.o memcard.o menu.o misc_win32.o neocdlist.o neocdsel.o numdial.o numpluscommas.o paletteviewer.o popup_win32.o \
 			progress.o replay.o res.o roms.o run.o scrn.o sel.o sfactd.o splash.o stated.o support_paths.o systeminfo.o wave.o \
@@ -30,6 +30,10 @@ depobj	+=	un7z.o \
 			\
 			7zBuf.o 7zBuf2.o 7zCrc.o 7zCrcOpt.o 7zDec.o 7zIn.o Bcj2.o Bra.o Bra86.o CpuArch.o LzmaDec.o Lzma2Dec.o Ppmd7.o \
 			Ppmd7Dec.o 7zStream.o
+endif
+
+ifdef INCLUDE_AVI_RECORDING
+depobj	+=	avi.o
 endif
 			
 autobj += $(depobj)

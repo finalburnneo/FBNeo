@@ -274,7 +274,9 @@ INT32 VidExit()
 		if (pVidTransImage) {
 			free(pVidTransImage);
 			pVidTransImage = NULL;
+#ifdef INCLUDE_AVI_RECORDING
 			pAviBuffer = NULL;
+#endif
 		}
 
 		return nRet;
@@ -303,7 +305,9 @@ static INT32 VidDoFrame(bool bRedraw)
 			bVidRecalcPalette = false;
 		}
 		pBurnDraw = pVidTransImage;
+#ifdef INCLUDE_AVI_RECORDING
 		pAviBuffer = pVidImage;
+#endif
 		nBurnPitch = nVidImageWidth * 2;
 
 		nRet = pVidOut[nVidActive]->Frame(bRedraw);
@@ -335,7 +339,9 @@ static INT32 VidDoFrame(bool bRedraw)
 	} else {
 		pBurnDraw = pVidImage;
 		nBurnPitch = nVidImagePitch;
+#ifdef INCLUDE_AVI_RECORDING
 		pAviBuffer = pBurnDraw;
+#endif
 
 		nRet = pVidOut[nVidActive]->Frame(bRedraw);
 

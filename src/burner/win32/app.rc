@@ -811,9 +811,11 @@ BEGIN
         	END
         	MENUITEM "Restore full state on load",				MENU_ALLRAM
         END
+#ifdef INCLUDE_AVI_RECORDING
         MENUITEM SEPARATOR
         MENUITEM "Record AVI",                  			MENU_AVISTART, GRAYED
         MENUITEM "Stop recording",              			MENU_AVISTOP, GRAYED
+#endif
         MENUITEM SEPARATOR
         MENUITEM "Exit emulator\tAlt+F4",				MENU_EXIT
     END

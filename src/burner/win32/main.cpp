@@ -896,8 +896,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 
 	AppDirectory();								// Set current directory to be the applications directory
 
+#ifdef INCLUDE_AVI_RECORDING
+#define DIRCNT 10
+#else
+#define DIRCNT 9
+#endif
 	// Make sure there are roms and cfg subdirectories
-	TCHAR szDirs[9][MAX_PATH] = {
+	TCHAR szDirs[DIRCNT][MAX_PATH] = {
 		{_T("config")},
 		{_T("config/games")},
 		{_T("config/ips")},
@@ -907,11 +912,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 		{_T("roms")},
 		{_T("savestates")},
 		{_T("screenshots")},
+#ifdef INCLUDE_AVI_RECORDING
+		{_T("avi")},
+#endif
 	};
 
-	for(int x = 0; x < 9; x++) {
+	for(int x = 0; x < DIRCNT; x++) {
 		CreateDirectory(szDirs[x], NULL);
 	}
+#undef DIRCNT
 
 	//
 	

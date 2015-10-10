@@ -766,8 +766,6 @@ static void FreeBMP()
 void AviStop()
 {
 	if (nAviFlags & FBAVI_VFW_INIT) {
-		INT32 rc;
-
 		if (FBAvi.psAud) {
 			AVIStreamRelease(FBAvi.psAud);
 		}
@@ -818,18 +816,6 @@ int AviStart()
 		return 1;
 	}
 
-	// allocate memory for 2x 24bpp bitmap buffers
-	FBAvi.pBitmapBuf1 = (UINT8 *)malloc(FBAvi.bih.biSizeImage);
-	if (FBAvi.pBitmapBuf1 == NULL) {
-		return 1; // not enough memory to create allocate bitmap
-	}
-	FBAvi.pBitmapBuf2 = (UINT8 *)malloc(FBAvi.bih.biSizeImage);
-	if (FBAvi.pBitmapBuf2 == NULL) {
-		free(FBAvi.pBitmapBuf1);
-		return 1; // not enough memory to create allocate bitmap
-	}
-	FBAvi.pBitmap = FBAvi.pBitmapBuf1;
-
 	AVIFileInit();
 
 	nAviFlags |= FBAVI_VFW_INIT; // avi file library initialized
@@ -841,6 +827,18 @@ int AviStart()
 
 	// set video format
 	AviSetVidFormat();
+
+	// allocate memory for 2x 24bpp bitmap buffers
+	FBAvi.pBitmapBuf1 = (UINT8 *)malloc(FBAvi.bih.biSizeImage);
+	if (FBAvi.pBitmapBuf1 == NULL) {
+		return 1; // not enough memory to create allocate bitmap
+	}
+	FBAvi.pBitmapBuf2 = (UINT8 *)malloc(FBAvi.bih.biSizeImage);
+	if (FBAvi.pBitmapBuf2 == NULL) {
+		free(FBAvi.pBitmapBuf1);
+		return 1; // not enough memory to create allocate bitmap
+	}
+	FBAvi.pBitmap = FBAvi.pBitmapBuf1;
 
 	// create the video stream
 	if(AviCreateVidStream()) {

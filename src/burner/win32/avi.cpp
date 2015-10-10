@@ -17,7 +17,7 @@
  *  to make writing AVI files simple.
  *
  *  This is a stripped-down example; a real application would have a user
- *  interface and check for errors.
+ *  INT32erface and check for errors.
  *
  ***************************************************************************/
 /////////////////////////////////////////////////////////////////////////////
@@ -94,13 +94,11 @@
 
 #define TAVI_DIRECTORY ".\\avi\\"
 
-//int BurnDrvGetScreen(int *pnWidth, int *pnHeight);
 unsigned char *pAviBuffer = NULL; // pointer to raw pixel data
-int nAviStatus = 0; // 1 (recording started), 0 (recording stopped)
-int nAviIntAudio = 1; // 1 (interleave audio), 0 (do not interleave)
-//int nBurnBitDepth=16;
+INT32 nAviStatus = 0; // 1 (recording started), 0 (recording stopped)
+INT32 nAviIntAudio = 1; // 1 (interleave audio), 0 (do not interleave)
 
-static int nAviFlags = 0;
+static INT32 nAviFlags = 0;
 
 static struct FBAVI {
 	PAVIFILE pFile; // avi file
@@ -121,15 +119,16 @@ static struct FBAVI {
 	// other 
 	UINT32 nFrameNum; // frame number for each compressed frame
 	UINT8 flippedmode;
+	UINT8 nLastDest;
 	UINT8 *pBitmap; // pointer for buffer for bitmap
 	UINT8 *pBitmapBuf1; // buffer #1
 	UINT8 *pBitmapBuf2; // buffer #2 (flippy)
-	int (*MakeBitmap) (); // MakeBitmapNoRotate, MakeBitmapRotateCW, MakeBitmapRotateCCW
+	INT32 (*MakeBitmap) (); // MakeBitmapNoRotate, MakeBitmapRotateCW, MakeBitmapRotateCCW
 } FBAvi;
 
 // Opens an avi file for writing.
 // Returns: 0 (successful), 1 (failed)
-static int AviCreateFile()
+static INT32 AviCreateFile()
 {
 	HRESULT hRet;
 
@@ -191,287 +190,165 @@ static int AviCreateFile()
 	return 0;
 }
 
-// Converts video buffer to bitmap, no rotation
-// Returns: 0 (successful), 1 (failed)
-static int MakeBitmapNoRotate()
+static INT MakeSSBitmap()
 {
-	int w,h;
-	int nWidth = FBAvi.bih.biWidth/2;
-	int nHeight = FBAvi.bih.biHeight/2;
-	unsigned char *pTemp = FBAvi.pBitmapBuf1; // walks through and fills the bitmap
-
+	INT32 w,h;
+	UINT8 *pTemp = FBAvi.pBitmapBuf1;
+	UINT8* pSShot = NULL;
 
 	if (pAviBuffer == NULL) {
 		return 1; // video buffer is empty
 	}
+	BurnDrvGetVisibleSize(&w, &h);
 
-	switch (nVidImageDepth) {
-		case 15: { // top to bottom 15-bit RGB --> bottom to top 24-bit RGB
-			/*
-			initial =  rrrrr ggggg bbbbb x (5 5 5 x)
-			(last 1 bit not used)
+	pSShot = pVidImage;
 
-			r r r r r         g g g g g        b b b b b x
-			|\|\|\| |         |\|\|\| |        |\|\|\| |
-			| |\|\|\|         | |\|\|\|        | |\|\|\|
-			| | |\|\|\        | | |\|\|\       | | |\|\|\
-			| | | |\|\ \      | | | |\|\ \     | | | |\|\ \
-			| | | | |\ \ \    | | | | |\ \ \   | | | | |\ \ \
-			| | | | | | | |   | | | | | | | |  | | | | | | | |
-			R R R R R R R R   G G G G G G G G  B B B B B B B B
+	FBAvi.nLastDest = 1;
 
-			final = RRRRRRRR GGGGGGGG BBBBBBBB (8 8 8)
-			*/
+	// Convert the image to 32-bit
+	if (nVidImageBPP < 4) {
+		//UINT8* pTemp = (UINT8*)malloc(w * h * sizeof(INT32));
 
-			// start at the bottom line
-			short *p16 = (short *)pAviBuffer + nWidth*(nHeight-1);
+		if (nVidImageBPP == 2) {
+			for (INT32 i = 0; i < h * w; i++) {
+				UINT16 nColour = ((UINT16*)pSShot)[i];
 
-			for (h=nHeight-1;h>-1;h--) {
-				for (w=nWidth-1;w>-1;w--) {
-					short n16 = *p16++; // go to next pixel
-					*pTemp = (unsigned char)((n16&0x1f)<<3);  // R
-					*pTemp |= (*pTemp++)>>5;                  // R
-					*pTemp = (unsigned char)((n16>>2)&0xf8);  // G
-					*pTemp |= (*pTemp++)>>5;                  // G
-					*pTemp = (unsigned char)((n16>>7)&0xf8);  // B
-					*pTemp |= (*pTemp++)>>5;                  // B
+				// Red
+		        *(pTemp + i * 4 + 0) = (UINT8)((nColour & 0x1F) << 3);
+			    *(pTemp + i * 4 + 0) |= *(pTemp + 4 * i + 0) >> 5;
+
+				if (nVidImageDepth == 15) {
+					// Green
+					*(pTemp + i * 4 + 1) = (UINT8)(((nColour >> 5) & 0x1F) << 3);
+					*(pTemp + i * 4 + 1) |= *(pTemp + i * 4 + 1) >> 5;
+					// Blue
+					*(pTemp + i * 4 + 2) = (UINT8)(((nColour >> 10)& 0x1F) << 3);
+					*(pTemp + i * 4 + 2) |= *(pTemp + i * 4 + 2) >> 5;
 				}
-				p16 -= nWidth<<1; // go to next line up
-			}
-			break;
-		}
-		case 16: { // top to bottom 16-bit RGB --> bottom to top 24-bit RGB (tested)
-			/*
-			initial = rrrrr gggggg bbbbb (5 6 5)
 
-			r r r r r         g g g g g g      b b b b b
-			|\|\|\| |         |\|\| | | |      |\|\|\| |
-			| |\|\|\|         | |\|\| | |      | |\|\|\|
-			| | |\|\|\        | | |\|\| |      | | |\|\|\
-			| | | |\|\ \      | | | |\|\|      | | | |\|\ \
-			| | | | |\ \ \    | | | | |\|\     | | | | |\ \ \
-			| | | | | | | |   | | | | | |\ \   | | | | | | | |
-			| | | | | | | |   | | | | | | | |  | | | | | | | |
-			R R R R R R R R   G G G G G G G G  B B B B B B B B
-
-			final = RRRRRRRR GGGGGGGG BBBBBBBB (8 8 8)
-			*/
-
-			// start at the bottom line
-			short *p16 = (short *)pAviBuffer + nWidth*(nHeight-1);
-
-			for (h=nHeight-1;h>-1;h--) {
-				for (w=nWidth-1;w>-1;w--) {
-					short n16 = *p16++; // go to next pixel
-					*pTemp = (unsigned char)((n16&0x1f)<<3);  // R
-					*pTemp |= (*pTemp++)>>5;                  // R
-					*pTemp = (unsigned char)((n16>>3)&0xfc);  // G
-					*pTemp |= (*pTemp++)>>6;                  // G
-					*pTemp = (unsigned char)((n16>>8)&0xf8);  // B
-					*pTemp |= (*pTemp++)>>5;                  // B
+				if (nVidImageDepth == 16) {
+					// Green
+					*(pTemp + i * 4 + 1) = (UINT8)(((nColour >> 5) & 0x3F) << 2);
+					*(pTemp + i * 4 + 1) |= *(pTemp + i * 4 + 1) >> 6;
+					// Blue
+					*(pTemp + i * 4 + 2) = (UINT8)(((nColour >> 11) & 0x1F) << 3);
+					*(pTemp + i * 4 + 2) |= *(pTemp + i * 4 + 2) >> 5;
 				}
-				p16 -= nWidth<<1; // go to next line up
 			}
-			break;
-		}
-		case 24: { // top to bottom 24-bit RGB --> bottom to top 24-bit RGB (not tested)
-			/*
-			initial = rrrrrrrr gggggggg bbbbbbbb (8 8 8)
-
-			rrrrrrrr gggggggg bbbbbbbb
-			|||||||| |||||||| ||||||||
-			RRRRRRRR GGGGGGGG BBBBBBBB
-
-			final = RRRRRRRR GGGGGGGG BBBBBBBB (8 8 8)
-			*/
-
-			// start at the bottom line
-			unsigned char *p8 = pAviBuffer + 3*nWidth*(nHeight-1);
-
-			for (h=nHeight-1;h>-1;h--) {
-				memcpy(pTemp,p8,nWidth*3); // just copy the whole line straight into bitmap
-				pTemp += nWidth*3; // go to next line down
-				p8 -= nWidth*3; // go to next line up
+        } else {
+			memset(pTemp, 0, w * h * sizeof(INT32));
+			for (INT32 i = 0; i < h * w; i++) {
+		        *(pTemp + i * 4 + 0) = *(pSShot + i * 3 + 0);
+		        *(pTemp + i * 4 + 1) = *(pSShot + i * 3 + 1);
+		        *(pTemp + i * 4 + 2) = *(pSShot + i * 3 + 2);
 			}
-			break;
-		}
-		case 32: { // top to bottom 32-bit RGB --> bottom to top 24-bit RGB (tested)
-			/*
-			initial = rrrrrrrr gggggggg bbbbbbbb xxxxxxxx (8 8 8 x)
-			(last 8 bits not used)
+        }
 
-			rrrrrrrr gggggggg bbbbbbbbbb xxxxxxxx
-			|||||||| |||||||| ||||||||||
-			RRRRRRRR GGGGGGGG BBBBBBBBBB
+		pSShot = pTemp;
+		FBAvi.pBitmap = FBAvi.pBitmapBuf1;
+	} else if (nVidImageBPP == 4) {
+		// source is 32bit already, just copy the buffer
+		memmove(pTemp, pVidImage, h * w * 4);
+		FBAvi.pBitmap = FBAvi.pBitmapBuf1;
+		pSShot = pTemp;
+	} else {
+		return 1; // unsupported BPP (unlikely)
+	}
 
-			final = RRRRRRRR GGGGGGGG BBBBBBBB (8 8 8)
-			*/
+	// Rotate and flip the image
+	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+		pTemp = FBAvi.pBitmapBuf2;
 
-			// start at the bottom line
-			unsigned char *p8 = pAviBuffer + (nWidth*(nHeight-1)<<2);
-
-			for (h=nHeight-1;h>-1;h--) {
-				for (w=nWidth-1;w>-1;w--) {
-					memcpy(pTemp,p8,3); // just copy 24 bits straight into bitmap
-					pTemp += 3; // go to next pixel
-					p8 += 4; // go to next pixel
+		for (INT32 x = 0; x < h; x++) {
+			if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) {
+				for (INT32 y = 0; y < w; y++) {
+					((UINT32*)pTemp)[(w - y - 1) + x * w] = ((UINT32*)pSShot)[x + y * h];
 				}
-				p8 -= nWidth<<3; // go to next line up
+			} else {
+				for (INT32 y = 0; y < w; y++) {
+					((UINT32*)pTemp)[y + (h - x - 1) * w] = ((UINT32*)pSShot)[x + y * h];
+				}
 			}
-			break;
 		}
-		default:
-			return 1; // unsupported bitdepth
-	} // end of switch
 
-	return 0;
+		FBAvi.pBitmap = FBAvi.pBitmapBuf2;
+		FBAvi.nLastDest = 2;
+        pSShot = pTemp;
+	}
+	else if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) { // fixed rotation by regret
+		pTemp = FBAvi.pBitmapBuf2;
+
+		for (INT32 y = h - 1; y >= 0; y--) {
+			for (INT32 x = w - 1; x >= 0; x--) {
+				((UINT32*)pTemp)[(w - x - 1) + (h - y - 1) * w] = ((UINT32*)pSShot)[x + y * w];
+			}
+		}
+
+		FBAvi.pBitmap = FBAvi.pBitmapBuf2;
+		FBAvi.nLastDest = 2;
+        pSShot = pTemp;
+	}
+
+	return 0; // success!
 }
 
-// Flips an already converted buffer
-static int MakeBitmapFlipped()
+#define aviBPP 4
+
+// Flips the image the way the encoder expects it to be
+static INT32 MakeBitmapFlippedForEncoder()
 {
 	INT32 nWidth = FBAvi.bih.biWidth/2;
 	INT32 nHeight = FBAvi.bih.biHeight/2;
-	UINT8 *pTemp = FBAvi.pBitmapBuf2; // walks through and fills the bitmap
+	UINT8 *pDest = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf1 : FBAvi.pBitmapBuf2;
+	UINT8 *pSrc = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf2 : FBAvi.pBitmapBuf1;
+	FBAvi.pBitmap = pDest;
 
-	// start at the bottom line
-	UINT8 *p8 = FBAvi.pBitmapBuf1 + (3 * nWidth * nHeight) - 3;
+	UINT8 *pxl = pSrc + (nWidth*(nHeight-1)<<2);
 
-	for (INT32 i = 0; i < nHeight * nWidth; i++) {
-		memcpy(pTemp, p8, 3);   // just copy 24 bits straight into bitmap
-		pTemp += 3;             // go to next pixel
-		p8 -= 3;                // go to prev pixel
+	for (INT32 h = nHeight-1; h >- 1; h--) {
+		for (INT32 w = nWidth-1; w>-1; w--) {
+			memcpy(pDest, pxl, 4); // just copy 24 bits straight into bitmap
+			pDest += 4; // next pixel (dest)
+			pxl += 4; // next pixel (src)
+		}
+		pxl -= nWidth<<3; // go to next line up
 	}
-	FBAvi.pBitmap = FBAvi.pBitmapBuf2;
+
+	FBAvi.nLastDest = (FBAvi.pBitmap == FBAvi.pBitmapBuf1) ? 1 : 2;
 
 	return 0;
 }
 
 // Doubles the pixels on an already converted buffer
-static int MakeBitmapDoubled()
+static INT32 MakeBitmapDoubled()
 {
 	INT32 nWidth = FBAvi.bih.biWidth/2;
 	INT32 nHeight = FBAvi.bih.biHeight/2;
-	UINT8 *pDest = (FBAvi.flippedmode) ? FBAvi.pBitmapBuf1 : FBAvi.pBitmapBuf2; // walks through and fills the bitmap
+	UINT8 *pDest = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf1 : FBAvi.pBitmapBuf2;
 	UINT8 *pDestL2;
 	INT32 lctr = 0;
 
-	// start at the bottom line
-	UINT8 *pSrc = (FBAvi.flippedmode) ? FBAvi.pBitmapBuf2 : FBAvi.pBitmapBuf1;// + (3 * nWidth * nHeight) - 3;
+	UINT8 *pSrc = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf2 : FBAvi.pBitmapBuf1;
 
 	for (INT32 i = 0; i < nHeight * nWidth; i++) {
-		pDestL2 = pDest + (nWidth * 6); // next line down
-		memcpy(pDest, pSrc, 3);
-		pDest += 3;            
-		memcpy(pDest, pSrc, 3);
-		pDest += 3;            
-		memcpy(pDestL2, pSrc, 3);
-		pDestL2 += 3;            
-		memcpy(pDestL2, pSrc, 3);
+		pDestL2 = pDest + (nWidth * (aviBPP * 2)); // next line down
+		memcpy(pDest, pSrc, aviBPP);
+		pDest += aviBPP;
+		memcpy(pDest, pSrc, aviBPP);
+		pDest += aviBPP;
+		memcpy(pDestL2, pSrc, aviBPP);
+		pDestL2 += aviBPP;
+		memcpy(pDestL2, pSrc, aviBPP);
 		lctr++;
 		if(lctr >= nWidth) {
 			lctr = 0;
-			pDest += nWidth*6;
+			pDest += nWidth*(aviBPP * 2);
 		}
-		pSrc += 3;                // source a new pixel
+		pSrc += aviBPP;                // source a new pixel
 	}
-	FBAvi.pBitmap = (FBAvi.flippedmode) ? FBAvi.pBitmapBuf1 : FBAvi.pBitmapBuf2;
 
-	return 0;
-}
-
-// Converts video buffer to bitmap, rotate counter clockwise
-// Returns: 0 (sucessful), 1 (failed)
-static int MakeBitmapRotateCCW()
-{
-	int w,h;
-	int nWidth = FBAvi.bih.biWidth/2;
-	int nHeight = FBAvi.bih.biHeight/2;
-	unsigned char *pTemp = FBAvi.pBitmapBuf1; // walks through and fills the bitmap
-
-
-	if (pAviBuffer == NULL) {
-		return 1; // video buffer is empty
-	}
-	//bprintf(0, _T("%d,"), nVidImageDepth);
-	switch (nVidImageDepth) {
-		case 15: { // top to bottom 15-bit RGB --> bottom to top 24-bit RGB
-
-			// start at upper left corner
-			short *p16 = (short *)pAviBuffer;
-			short *p16start = p16;
-
-			for (h=1;h<=nHeight;h++) {
-				for (w=nWidth-1;w>-1;w--) {
-					short n16 = *p16; // get next pixel
-					*pTemp = (unsigned char)((n16&0x1f)<<3);  // R
-					*pTemp |= (*pTemp++)>>5;                  // R
-					*pTemp = (unsigned char)((n16>>2)&0xf8);  // G
-					*pTemp |= (*pTemp++)>>5;                  // G
-					*pTemp = (unsigned char)((n16>>7)&0xf8);  // B
-					*pTemp |= (*pTemp++)>>5;                  // B
-					p16 += nHeight; // go to next pixel
-				}
-				p16 = p16start + h; // go to next column
-			}
-			break;
-		}
-		case 16: { // top to bottom 16-bit RGB --> bottom to top 24-bit RGB
-
-			// start at upper left corner
-			short *p16 = (short *)pAviBuffer;
-			short *p16start = p16;
-
-			for (h=1;h<=nHeight;h++) {
-				for (w=nWidth-1;w>-1;w--) {
-					short n16 = *p16; // get next pixel
-					*pTemp = (unsigned char)((n16&0x1f)<<3);  // R
-					*pTemp |= (*pTemp++)>>5;                  // R
-					*pTemp = (unsigned char)((n16>>3)&0xfc);  // G
-					*pTemp |= (*pTemp++)>>6;                  // G
-					*pTemp = (unsigned char)((n16>>8)&0xf8);  // B
-					*pTemp |= (*pTemp++)>>5;                  // B
-					p16 += nHeight; // go to next pixel
-				}
-				p16 = p16start + h; // go to next column
-			}
-			break;
-		}
-		case 24: { // top to bottom 24-bit RGB --> bottom to top 24-bit RGB
-
-			// start at upper left corner
-			unsigned char *p8 = pAviBuffer;
-			unsigned char *p8start = p8;
-
-			for (h=1;h<=nHeight;h++) {
-				for (w=nWidth-1;w>-1;w--) {
-					memcpy(pTemp,p8,3); // just copy 24 bits straight into bitmap
-					pTemp += 3; // go to next pixel
-					p8 += nHeight*3; // go to next pixel
-				}
-				p8 = p8start + h*3; // go to next column
-			}
-			break;
-		}
-		case 32: { // top to bottom 32-bit RGB --> bottom to top 24-bit RGB
-
-			// start at upper left corner
-			unsigned char *p8 = pAviBuffer;
-			unsigned char *p8start = p8;
-
-			for (h=1;h<=nHeight;h++) {
-				for (w=nWidth-1;w>-1;w--) {
-					memcpy(pTemp,p8,3); // just copy 24 bits straight into bitmap
-					pTemp += 3; // go to next pixel
-					p8 += nHeight<<2; // go to next pixel
-				}
-				p8 = p8start + (h<<2); // go to next column
-			}
-			break;
-		}
-		default:
-			return 1; // unsupported bitdepth
-	}
+	FBAvi.pBitmap = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf1 : FBAvi.pBitmapBuf2;
+	FBAvi.nLastDest = (FBAvi.pBitmap == FBAvi.pBitmapBuf1) ? 1 : 2;
 
 	return 0;
 }
@@ -483,7 +360,6 @@ static void AviSetVidFormat()
 	memset(&FBAvi.bih,0,sizeof(BITMAPINFOHEADER));
 	FBAvi.bih.biSize = sizeof(BITMAPINFOHEADER);
 
-	//BurnDrvGetScreen((int *)&FBAvi.bih.biWidth,(int *)&FBAvi.bih.biHeight);
 	INT32 ww,hh;
 	BurnDrvGetVisibleSize(&ww, &hh);
 	FBAvi.bih.biWidth = ww*2;
@@ -491,25 +367,10 @@ static void AviSetVidFormat()
 
 	FBAvi.pBitmap = FBAvi.pBitmapBuf1;
 
-	// check for rotation and choose bitmap function
-	if(BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
-		// counter-clockwise rotation
-		FBAvi.MakeBitmap = MakeBitmapRotateCCW;
-	} else {
-		// no rotation
-		FBAvi.MakeBitmap = MakeBitmapNoRotate;
-	}
-
-	if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) {
-		// flipped.
-		FBAvi.flippedmode = 1;
-	}
-
 	FBAvi.bih.biPlanes = 1;
-	// use 24 bpp since most compressors support 24 bpp for input
-	FBAvi.bih.biBitCount = 24;
+	FBAvi.bih.biBitCount = 32;
 	FBAvi.bih.biCompression = BI_RGB; // uncompressed RGB
-	FBAvi.bih.biSizeImage = 3 * FBAvi.bih.biWidth * FBAvi.bih.biHeight;
+	FBAvi.bih.biSizeImage = 4 * FBAvi.bih.biWidth * FBAvi.bih.biHeight;
 }
 
 // Sets the format for the audio stream.
@@ -527,9 +388,9 @@ static void AviSetAudFormat()
 
 // Creates the video stream.
 // Returns: 0 (successful), 1 (failed)
-static int AviCreateVidStream()
+static INT32 AviCreateVidStream()
 {
-	int nRet;
+	INT32 nRet;
 	HRESULT hRet;
 
 	/*
@@ -585,8 +446,8 @@ static int AviCreateVidStream()
 		&FBAvi.vidh.rcFrame,
 		0, // x-coordinate of the rectangle's upper left corner
 		0, // y-coordinate of the rectangle's upper left corner
-		(int) FBAvi.bih.biWidth,
-		(int) FBAvi.bih.biHeight);
+		(INT32) FBAvi.bih.biWidth,
+		(INT32) FBAvi.bih.biHeight);
 	if (nRet == 0) {
 #ifdef AVI_DEBUG
 		bprintf(0, _T("    AVI Error: SetRect() failed.\n"));
@@ -667,7 +528,7 @@ static int AviCreateVidStream()
 
 // Creates the audio stream.
 // Returns: 0 (successful), 1 (failed)
-static int AviCreateAudStream()
+static INT32 AviCreateAudStream()
 {
 	HRESULT hRet;
 
@@ -683,7 +544,7 @@ static int AviCreateAudStream()
 	FBAvi.audh.dwRate                 = FBAvi.wfx.nAvgBytesPerSec;
 	FBAvi.audh.dwInitialFrames        = 1; // audio skew
 	FBAvi.audh.dwSuggestedBufferSize  = nBurnSoundLen<<2;
-	FBAvi.audh.dwSampleSize           = FBAvi.wfx.nBlockAlign;	
+	FBAvi.audh.dwSampleSize           = FBAvi.wfx.nBlockAlign;
 
 	// create the audio stream
 	hRet = AVIFileCreateStream(
@@ -716,7 +577,7 @@ static int AviCreateAudStream()
 
 // Records 1 frame worth of data to the output stream
 // Returns: 0 (successful), 1 (failed)
-int AviRecordFrame(int bDraw)
+INT32 AviRecordFrame(INT32 bDraw)
 {
 	HRESULT hRet;
 	/*
@@ -727,17 +588,14 @@ int AviRecordFrame(int bDraw)
 	every frame regardless of frameskip.
 	*/
 	if(bDraw) {
-		if(FBAvi.MakeBitmap()) {
+		if(MakeSSBitmap()) {
 #ifdef AVI_DEBUG
-			bprintf(0, _T(" pburndraw = %X.\n"), pBurnDraw);
-			bprintf(0, _T(" pAviBuffer = %X.\n"), pAviBuffer);
-
 			bprintf(0, _T("    AVI Error: MakeBitmap() failed.\n"));
 #endif
 			return 1;
 		}
 
-		if (FBAvi.flippedmode) MakeBitmapFlipped();
+		MakeBitmapFlippedForEncoder(); // Mandatory.
 		MakeBitmapDoubled(); // Double the pixels, this must always happen otherwise the compression size and video quality - especially when uploaded to yt - will suck. -dink
 
 		// compress the bitmap and write to AVI output stream
@@ -838,7 +696,7 @@ void AviStop()
 
 // Starts AVI recording.
 // Returns: 0 (successful), 1 (failed)
-int AviStart()
+INT32 AviStart()
 {
 	// initialize local variables
 	memset (&FBAvi, 0, sizeof(FBAVI));

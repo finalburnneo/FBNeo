@@ -470,8 +470,8 @@ TCHAR* FormatCommasNumber(__int64);
 // AVI recording
 
 // avi.cpp
-int AviStart();
-int AviRecordFrame(int bDraw);
+INT32 AviStart();
+INT32 AviRecordFrame(INT32 bDraw);
 void AviStop();
 extern unsigned char *pAviBuffer;
 extern int nAviStatus;

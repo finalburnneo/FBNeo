@@ -196,8 +196,8 @@ static int AviCreateFile()
 static int MakeBitmapNoRotate()
 {
 	int w,h;
-	int nWidth = FBAvi.bih.biWidth;
-	int nHeight = FBAvi.bih.biHeight;
+	int nWidth = FBAvi.bih.biWidth/2;
+	int nHeight = FBAvi.bih.biHeight/2;
 	unsigned char *pTemp = FBAvi.pBitmapBuf1; // walks through and fills the bitmap
 
 
@@ -330,8 +330,8 @@ static int MakeBitmapNoRotate()
 // Flips an already converted buffer
 static int MakeBitmapFlipped()
 {
-	INT32 nWidth = FBAvi.bih.biWidth;
-	INT32 nHeight = FBAvi.bih.biHeight;
+	INT32 nWidth = FBAvi.bih.biWidth/2;
+	INT32 nHeight = FBAvi.bih.biHeight/2;
 	UINT8 *pTemp = FBAvi.pBitmapBuf2; // walks through and fills the bitmap
 
 	// start at the bottom line
@@ -347,13 +347,46 @@ static int MakeBitmapFlipped()
 	return 0;
 }
 
+// Doubles the pixels on an already converted buffer
+static int MakeBitmapDoubled()
+{
+	INT32 nWidth = FBAvi.bih.biWidth/2;
+	INT32 nHeight = FBAvi.bih.biHeight/2;
+	UINT8 *pDest = (FBAvi.flippedmode) ? FBAvi.pBitmapBuf1 : FBAvi.pBitmapBuf2; // walks through and fills the bitmap
+	UINT8 *pDestL2;
+	INT32 lctr = 0;
+
+	// start at the bottom line
+	UINT8 *pSrc = (FBAvi.flippedmode) ? FBAvi.pBitmapBuf2 : FBAvi.pBitmapBuf1;// + (3 * nWidth * nHeight) - 3;
+
+	for (INT32 i = 0; i < nHeight * nWidth; i++) {
+		pDestL2 = pDest + (nWidth * 6); // next line down
+		memcpy(pDest, pSrc, 3);
+		pDest += 3;            
+		memcpy(pDest, pSrc, 3);
+		pDest += 3;            
+		memcpy(pDestL2, pSrc, 3);
+		pDestL2 += 3;            
+		memcpy(pDestL2, pSrc, 3);
+		lctr++;
+		if(lctr >= nWidth) {
+			lctr = 0;
+			pDest += nWidth*6;
+		}
+		pSrc += 3;                // source a new pixel
+	}
+	FBAvi.pBitmap = (FBAvi.flippedmode) ? FBAvi.pBitmapBuf1 : FBAvi.pBitmapBuf2;
+
+	return 0;
+}
+
 // Converts video buffer to bitmap, rotate counter clockwise
 // Returns: 0 (sucessful), 1 (failed)
 static int MakeBitmapRotateCCW()
 {
 	int w,h;
-	int nWidth = FBAvi.bih.biWidth;
-	int nHeight = FBAvi.bih.biHeight;
+	int nWidth = FBAvi.bih.biWidth/2;
+	int nHeight = FBAvi.bih.biHeight/2;
 	unsigned char *pTemp = FBAvi.pBitmapBuf1; // walks through and fills the bitmap
 
 
@@ -453,8 +486,8 @@ static void AviSetVidFormat()
 	//BurnDrvGetScreen((int *)&FBAvi.bih.biWidth,(int *)&FBAvi.bih.biHeight);
 	INT32 ww,hh;
 	BurnDrvGetVisibleSize(&ww, &hh);
-	FBAvi.bih.biWidth = ww;
-	FBAvi.bih.biHeight = hh;
+	FBAvi.bih.biWidth = ww*2;
+	FBAvi.bih.biHeight = hh*2;
 
 	FBAvi.pBitmap = FBAvi.pBitmapBuf1;
 
@@ -705,6 +738,7 @@ int AviRecordFrame(int bDraw)
 		}
 
 		if (FBAvi.flippedmode) MakeBitmapFlipped();
+		MakeBitmapDoubled(); // Double the pixels, this must always happen otherwise the compression size and video quality - especially when uploaded to yt - will suck. -dink
 
 		// compress the bitmap and write to AVI output stream
 		hRet = AVIStreamWrite(

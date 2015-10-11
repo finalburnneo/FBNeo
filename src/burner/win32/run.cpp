@@ -179,15 +179,15 @@ static int RunFrame(int bDraw, int bPause)
 				nDoFPS = nFramesRendered + 30;
 			}
 		}
-	}
 
 #ifdef INCLUDE_AVI_RECORDING
-	if (nAviStatus) {
-		if (AviRecordFrame(bDraw)) {
-			AviStop();
+		if (nAviStatus) {
+			if (AviRecordFrame(bDraw)) {
+				AviStop();
+			}
 		}
-	}
 #endif
+	}
 
 	bPrevPause = bPause;
 	bPrevDraw = bDraw;

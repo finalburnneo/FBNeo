@@ -1,38 +1,17 @@
-/**************************************************************************
- *
- *  THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
- *  KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- *  IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
- *  PURPOSE.
- *
- *  Copyright (C) 1992 - 1997 Microsoft Corporation.  All Rights Reserved.
- *
- **************************************************************************/
-/****************************************************************************
- *
- *  WRITEAVI.C
- *
- *  Creates the file OUTPUT.AVI, an AVI file consisting of a rotating clock
- *  face.  This program demonstrates using the functions in AVIFILE.DLL
- *  to make writing AVI files simple.
- *
- *  This is a stripped-down example; a real application would have a user
- *  INT32erface and check for errors.
- *
- ***************************************************************************/
 /////////////////////////////////////////////////////////////////////////////
 //
 // This code has been modified to work with FinalBurn Alpha.
 //
 //---------------------------------------------------------------------------
 //
-// AVI Recorder for FBA version 0.5 by Gangta
+// AVI Recorder for FBA version 0.7 by Gangta
+// - massive re-work by dink in fall 2015 -
 //
 // Limitations:
 //
 //  - Supported bitdepths are 15, 16, 24, and 32.
 //
-//  - Avi will be recorded at original game resolution.
+//  - Avi will be recorded at original game resolution w/double pixels.
 //
 //  - Video effects will not be recorded.
 //    (i.e. stretch, scanline, 3D effects, software effects)
@@ -42,6 +21,13 @@
 //---------------------------------------------------------------------------
 //
 // Version History:
+//
+// 0.7 - completely re-worked the image-conversion process, using
+//       burner/sshot.cpp as an example. as a result of this:
+//       + source data is now supplied to the encoder at 32bpp
+//       + fixes some crash issues in the previous 24bpp convertor when
+//         the source data is 16bpp or the blitter being forced to 16bit mode
+//       + fixes the skew problem when lines weren't a multiple of 4
 //
 // 0.6 - added flipped screen support, fixed a bunch of bugs
 //       added to FBAlpha 2.97.37
@@ -94,7 +80,6 @@
 
 #define TAVI_DIRECTORY ".\\avi\\"
 
-unsigned char *pAviBuffer = NULL; // pointer to raw pixel data
 INT32 nAviStatus = 0; // 1 (recording started), 0 (recording stopped)
 INT32 nAviIntAudio = 1; // 1 (interleave audio), 0 (do not interleave)
 
@@ -118,12 +103,12 @@ static struct FBAVI {
 	AVICOMPRESSOPTIONS opts; // compression options
 	// other 
 	UINT32 nFrameNum; // frame number for each compressed frame
-	UINT8 flippedmode;
-	UINT8 nLastDest;
+	INT32 nWidth;
+	INT32 nHeight;
+	UINT8 nLastDest; // number of the last pBitmapBuf# written to - for chaining effects
 	UINT8 *pBitmap; // pointer for buffer for bitmap
 	UINT8 *pBitmapBuf1; // buffer #1
 	UINT8 *pBitmapBuf2; // buffer #2 (flippy)
-	INT32 (*MakeBitmap) (); // MakeBitmapNoRotate, MakeBitmapRotateCW, MakeBitmapRotateCCW
 } FBAvi;
 
 // Opens an avi file for writing.
@@ -142,24 +127,11 @@ static INT32 AviCreateFile()
 	// construct our filename -> "romname-mm-dd-hms.avi"
     sprintf(szFilePath, "%s%s-%.2d-%.2d-%.2d%.2d%.2d.avi", TAVI_DIRECTORY, BurnDrvGetTextA(DRV_NAME), tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
 
-	// temporary fix for AVIFileOpen()
-	//
-	// AVIFileOpen() doesn't truncate file size to zero on
-	// existing files with OR_CREATE | OF_WRITE flags ?????
-	{
-		FILE *pFile = NULL;
-		pFile = fopen(szFilePath, "wb");
-		if (pFile) {
-			fclose(pFile);
-		}
-		pFile = NULL;
-	}
-
 	hRet = AVIFileOpenA(
-				&FBAvi.pFile, // returned file pointer
-				szFilePath, // file path
-				OF_CREATE | OF_WRITE /*| OF_SHARE_EXCLUSIVE*/, // mode
-				NULL); // use handler determined from file extension
+				&FBAvi.pFile,           // returned file pointer
+				szFilePath,             // file path
+				OF_CREATE | OF_WRITE,   // mode
+				NULL);                  // use handler determined from file extension
 	if (hRet) {
 #ifdef AVI_DEBUG
 		bprintf(0, _T("    AVI Error: AVIFileOpen() failed.\n"));
@@ -190,16 +162,16 @@ static INT32 AviCreateFile()
 	return 0;
 }
 
+// Make a 32bit Bitmap of the gamescreen and flip it depending on orientation.
 static INT MakeSSBitmap()
 {
-	INT32 w,h;
+	INT32 w = FBAvi.nWidth, h = FBAvi.nHeight;
 	UINT8 *pTemp = FBAvi.pBitmapBuf1;
 	UINT8* pSShot = NULL;
 
-	if (pAviBuffer == NULL) {
+	if (pVidImage == NULL) {
 		return 1; // video buffer is empty
 	}
-	BurnDrvGetVisibleSize(&w, &h);
 
 	pSShot = pVidImage;
 
@@ -207,8 +179,6 @@ static INT MakeSSBitmap()
 
 	// Convert the image to 32-bit
 	if (nVidImageBPP < 4) {
-		//UINT8* pTemp = (UINT8*)malloc(w * h * sizeof(INT32));
-
 		if (nVidImageBPP == 2) {
 			for (INT32 i = 0; i < h * w; i++) {
 				UINT16 nColour = ((UINT16*)pSShot)[i];
@@ -235,7 +205,7 @@ static INT MakeSSBitmap()
 					*(pTemp + i * 4 + 2) |= *(pTemp + i * 4 + 2) >> 5;
 				}
 			}
-        } else {
+        } else { // 24-bit
 			memset(pTemp, 0, w * h * sizeof(INT32));
 			for (INT32 i = 0; i < h * w; i++) {
 		        *(pTemp + i * 4 + 0) = *(pSShot + i * 3 + 0);
@@ -297,8 +267,8 @@ static INT MakeSSBitmap()
 // Flips the image the way the encoder expects it to be
 static INT32 MakeBitmapFlippedForEncoder()
 {
-	INT32 nWidth = FBAvi.bih.biWidth/2;
-	INT32 nHeight = FBAvi.bih.biHeight/2;
+	INT32 nWidth = FBAvi.nWidth;
+	INT32 nHeight = FBAvi.nHeight;
 	UINT8 *pDest = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf1 : FBAvi.pBitmapBuf2;
 	UINT8 *pSrc = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf2 : FBAvi.pBitmapBuf1;
 	FBAvi.pBitmap = pDest;
@@ -307,11 +277,11 @@ static INT32 MakeBitmapFlippedForEncoder()
 
 	for (INT32 h = nHeight-1; h >- 1; h--) {
 		for (INT32 w = nWidth-1; w>-1; w--) {
-			memcpy(pDest, pxl, 4); // just copy 24 bits straight into bitmap
-			pDest += 4; // next pixel (dest)
-			pxl += 4; // next pixel (src)
+			memcpy(pDest, pxl, 4);  // just copy 24 bits straight into bitmap
+			pDest += 4;             // next pixel (dest)
+			pxl += 4;               // next pixel (src)
 		}
-		pxl -= nWidth<<3; // go to next line up
+		pxl -= nWidth<<3;           // go to next line up
 	}
 
 	FBAvi.nLastDest = (FBAvi.pBitmap == FBAvi.pBitmapBuf1) ? 1 : 2;
@@ -322,13 +292,13 @@ static INT32 MakeBitmapFlippedForEncoder()
 // Doubles the pixels on an already converted buffer
 static INT32 MakeBitmapDoubled()
 {
-	INT32 nWidth = FBAvi.bih.biWidth/2;
-	INT32 nHeight = FBAvi.bih.biHeight/2;
+	INT32 nWidth = FBAvi.nWidth;
+	INT32 nHeight = FBAvi.nHeight;
+	UINT8 *pSrc = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf2 : FBAvi.pBitmapBuf1;
 	UINT8 *pDest = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf1 : FBAvi.pBitmapBuf2;
 	UINT8 *pDestL2;
+	FBAvi.pBitmap = pDest;
 	INT32 lctr = 0;
-
-	UINT8 *pSrc = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf2 : FBAvi.pBitmapBuf1;
 
 	for (INT32 i = 0; i < nHeight * nWidth; i++) {
 		pDestL2 = pDest + (nWidth * (aviBPP * 2)); // next line down
@@ -344,10 +314,9 @@ static INT32 MakeBitmapDoubled()
 			lctr = 0;
 			pDest += nWidth*(aviBPP * 2);
 		}
-		pSrc += aviBPP;                // source a new pixel
+		pSrc += aviBPP;             // source a new pixel
 	}
 
-	FBAvi.pBitmap = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf1 : FBAvi.pBitmapBuf2;
 	FBAvi.nLastDest = (FBAvi.pBitmap == FBAvi.pBitmapBuf1) ? 1 : 2;
 
 	return 0;
@@ -360,16 +329,16 @@ static void AviSetVidFormat()
 	memset(&FBAvi.bih,0,sizeof(BITMAPINFOHEADER));
 	FBAvi.bih.biSize = sizeof(BITMAPINFOHEADER);
 
-	INT32 ww,hh;
-	BurnDrvGetVisibleSize(&ww, &hh);
-	FBAvi.bih.biWidth = ww*2;
-	FBAvi.bih.biHeight = hh*2;
+	//INT32 ww,hh;
+	BurnDrvGetVisibleSize(&FBAvi.nWidth, &FBAvi.nHeight);
+	FBAvi.bih.biWidth = FBAvi.nWidth * 2;
+	FBAvi.bih.biHeight = FBAvi.nHeight * 2;
 
 	FBAvi.pBitmap = FBAvi.pBitmapBuf1;
 
 	FBAvi.bih.biPlanes = 1;
 	FBAvi.bih.biBitCount = 32;
-	FBAvi.bih.biCompression = BI_RGB; // uncompressed RGB
+	FBAvi.bih.biCompression = BI_RGB;           // uncompressed RGB
 	FBAvi.bih.biSizeImage = 4 * FBAvi.bih.biWidth * FBAvi.bih.biHeight;
 }
 
@@ -379,10 +348,10 @@ static void AviSetAudFormat()
 	memset(&FBAvi.wfx, 0, sizeof(WAVEFORMATEX));
 	FBAvi.wfx.cbSize = sizeof(WAVEFORMATEX);
 	FBAvi.wfx.wFormatTag = WAVE_FORMAT_PCM;
-	FBAvi.wfx.nChannels = 2; // stereo
-	FBAvi.wfx.nSamplesPerSec = nBurnSoundRate; // sample rate
-	FBAvi.wfx.wBitsPerSample = 16; // 16-bit
-	FBAvi.wfx.nBlockAlign = 4; // bytes per sample
+	FBAvi.wfx.nChannels = 2;                    // stereo
+	FBAvi.wfx.nSamplesPerSec = nBurnSoundRate;  // sample rate
+	FBAvi.wfx.wBitsPerSample = 16;              // 16-bit
+	FBAvi.wfx.nBlockAlign = 4;                  // bytes per sample
 	FBAvi.wfx.nAvgBytesPerSec = FBAvi.wfx.nSamplesPerSec * FBAvi.wfx.nBlockAlign;
 }
 
@@ -457,7 +426,7 @@ static INT32 AviCreateVidStream()
 
 	// create the video stream in the avi file
 	hRet = AVIFileCreateStream(
-		FBAvi.pFile, // file pointer
+		FBAvi.pFile,  // file pointer
 		&FBAvi.psVid, // returned stream pointer
 		&FBAvi.vidh); // stream header
 	if (hRet) {
@@ -512,9 +481,9 @@ static INT32 AviCreateVidStream()
 
 	// set the stream format for compressed video
 	hRet = AVIStreamSetFormat(
-		FBAvi.psVidCompressed, // pointer to the opened video output stream
-		0, // starting position
-		&FBAvi.bih, // stream format
+		FBAvi.psVidCompressed,  // pointer to the opened video output stream
+		0,                      // starting position
+		&FBAvi.bih,             // stream format
 		FBAvi.bih.biSize + FBAvi.bih.biClrUsed * sizeof(RGBQUAD)); // format size
 	if (hRet) {
 #ifdef AVI_DEBUG
@@ -539,16 +508,16 @@ static INT32 AviCreateAudStream()
 	//   files (typically 0.75 sec).
 	//  
 	memset(&FBAvi.audh, 0, sizeof(FBAvi.audh));
-	FBAvi.audh.fccType                = streamtypeAUDIO; // stream type
+	FBAvi.audh.fccType                = streamtypeAUDIO;    // stream type
 	FBAvi.audh.dwScale                = FBAvi.wfx.nBlockAlign;
 	FBAvi.audh.dwRate                 = FBAvi.wfx.nAvgBytesPerSec;
-	FBAvi.audh.dwInitialFrames        = 1; // audio skew
+	FBAvi.audh.dwInitialFrames        = 1;                  // audio skew
 	FBAvi.audh.dwSuggestedBufferSize  = nBurnSoundLen<<2;
 	FBAvi.audh.dwSampleSize           = FBAvi.wfx.nBlockAlign;
 
 	// create the audio stream
 	hRet = AVIFileCreateStream(
-		FBAvi.pFile, // file pointer
+		FBAvi.pFile,  // file pointer
 		&FBAvi.psAud, // returned stream pointer
 		&FBAvi.audh); // stream header
 	if (hRet) {
@@ -560,9 +529,9 @@ static INT32 AviCreateAudStream()
 
 	// set the format for audio stream
 	hRet = AVIStreamSetFormat(
-		FBAvi.psAud, // pointer to the opened audio output stream
-		0, // starting position
-		&FBAvi.wfx, // stream format
+		FBAvi.psAud,    // pointer to the opened audio output stream
+		0,              // starting position
+		&FBAvi.wfx,     // stream format
 		sizeof(WAVEFORMATEX)); // format size
 	if (hRet) {
 #ifdef AVI_DEBUG
@@ -595,17 +564,17 @@ INT32 AviRecordFrame(INT32 bDraw)
 			return 1;
 		}
 
-		MakeBitmapFlippedForEncoder(); // Mandatory.
-		MakeBitmapDoubled(); // Double the pixels, this must always happen otherwise the compression size and video quality - especially when uploaded to yt - will suck. -dink
+		MakeBitmapFlippedForEncoder();  // Mandatory.
+		MakeBitmapDoubled();            // Double the pixels, this must always happen otherwise the compression size and video quality - especially when uploaded to yt - will suck. -dink
 
 		// compress the bitmap and write to AVI output stream
 		hRet = AVIStreamWrite(
-			FBAvi.psVidCompressed, // stream pointer
-			FBAvi.nFrameNum, // time of this frame
-			1, // number to write
-			(LPBYTE) FBAvi.pBitmap, // pointer to data
-			FBAvi.bih.biSizeImage, // size of this frame
-			AVIIF_KEYFRAME, // flags
+			FBAvi.psVidCompressed,      // stream pointer
+			FBAvi.nFrameNum,            // time of this frame
+			1,                          // number to write
+			(LPBYTE) FBAvi.pBitmap,     // pointer to data
+			FBAvi.bih.biSizeImage,      // size of this frame
+			AVIIF_KEYFRAME,             // flags
 			NULL,
 			NULL);
 		if (hRet != AVIERR_OK) {
@@ -620,12 +589,12 @@ INT32 AviRecordFrame(INT32 bDraw)
 	if (nAviIntAudio) {
 		// write the PCM audio data to AVI output stream
 		hRet = AVIStreamWrite(
-			FBAvi.psAud, // stream pointer
-			FBAvi.nFrameNum, // time of this frame
-			1, // number to write
-			(LPBYTE) nAudNextSound, // pointer to data
-			nBurnSoundLen<<2, // size of data
-			AVIIF_KEYFRAME, // flags
+			FBAvi.psAud,                // stream pointer
+			FBAvi.nFrameNum,            // time of this frame
+			1,                          // number to write
+			(LPBYTE) nAudNextSound,     // pointer to data
+			nBurnSoundLen<<2,           // size of data
+			AVIIF_KEYFRAME,             // flags
 			NULL,
 			NULL);
 		if (hRet != AVIERR_OK) {
@@ -683,8 +652,10 @@ void AviStop()
 		FreeBMP();
 
 #ifdef AVI_DEBUG
-		bprintf(0, _T(" ** AVI recording finished.\n"));
-		bprintf(0, _T("    total frames recorded = %u\n"),FBAvi.nFrameNum+1);
+		if (nAviStatus) {
+			bprintf(0, _T(" ** AVI recording finished.\n"));
+			bprintf(0, _T("    total frames recorded = %u\n"), FBAvi.nFrameNum+1);
+		}
 #endif
 		nAviStatus = 0;
 		nAviFlags = 0;
@@ -720,7 +691,7 @@ INT32 AviStart()
 	// set video format
 	AviSetVidFormat();
 
-	// allocate memory for 2x 24bpp bitmap buffers
+	// allocate memory for 2x 32bpp bitmap buffers
 	FBAvi.pBitmapBuf1 = (UINT8 *)malloc(FBAvi.bih.biSizeImage);
 	if (FBAvi.pBitmapBuf1 == NULL) {
 		return 1; // not enough memory to create allocate bitmap
@@ -737,7 +708,7 @@ INT32 AviStart()
 		return 1;
 	}
 
-	// interleave audio
+	// interleave audio / add audio to the stream
 	if (nAviIntAudio) {
 		// set audio format
 		AviSetAudFormat();

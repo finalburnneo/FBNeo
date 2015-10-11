@@ -615,6 +615,9 @@ static void OnPaint(HWND hWnd)
 
 static void OnClose(HWND)
 {
+#ifdef INCLUDE_AVI_RECORDING
+	AviStop();
+#endif
     PostQuitMessage(0);					// Quit the program if the window is closed
 }
 
@@ -963,8 +966,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			case MENU_AVISTART:
 			if (AviStart()) {
 				AviStop();
+			} else {
+				VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_REC_AVI, true), 0x0000FF);
 			}
-			VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_REC_AVI, true), 0x0000FF);
 			break;
 		case MENU_AVISTOP:
 			AviStop();

@@ -1902,7 +1902,7 @@ struct BurnDriver BurnDrvWondstck = {
 
 static struct BurnRomInfo wondstckaRomDesc[] = {
 	{ "4.u2",		0x20000, 0x0b28ab9d, 1 | BRF_PRG | BRF_ESS }, //  0 - 68k Code
-	{ "3.u7",		0x20000, 0x9995b743, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.u7",		0x20000, 0x5f1337d8, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "1.u128",		0x10000, 0x86dba085, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
 
@@ -1916,6 +1916,7 @@ static struct BurnRomInfo wondstckaRomDesc[] = {
 	{ "3.u80", 		0x80000, 0x553c5781, 3 | BRF_GRA },	      // 10
 
 	{ "8.u83",		0x80000, 0xf51cf9c6, 4 | BRF_GRA },	      // 11 - Sprites
+//	{ "9.u82",		0x80000, 0x8c6cff4d, 4 | BRF_GRA },	      // 12 Bad dump
 	{ "9.u82",		0x80000, 0xddd3c60c, 4 | BRF_GRA },	      // 12
 	{ "7.u105",		0x80000, 0xa7fc624d, 4 | BRF_GRA },	      // 13
 	{ "6.u96",		0x80000, 0x2369d8a3, 4 | BRF_GRA },	      // 14

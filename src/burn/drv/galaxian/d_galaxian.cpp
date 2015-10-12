@@ -13502,7 +13502,7 @@ static INT32 DingoInit()
 	
 	GalPostLoadCallbackFunction = DingoPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910;
-	
+	Dingo = 1;
 	nRet = GalInit();
 	
 	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);

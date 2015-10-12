@@ -78,6 +78,7 @@ UINT8 GameIsGmgalax;
 UINT8 GameIsBagmanmc;
 UINT8 CavelonBankSwitch;
 UINT8 GalVBlank;
+UINT8 Dingo;
 
 static inline void GalMakeInputs()
 {
@@ -1547,6 +1548,7 @@ INT32 GalExit()
 	GalBackgroundEnable = 0;
 	ScrambleProtectionState = 0;
 	ScrambleProtectionResult = 0;
+	Dingo = 0;
 	
 	GalZ80Rom1Size = 0;
 	GalZ80Rom1Num = 0;
@@ -1678,6 +1680,7 @@ INT32 GalFrame()
 		}
 			
 		if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910) {
+			if (Dingo && !(i&1)) continue; // slow down dingo music a bit.
 			// Run Z80 #2
 			nCurrentCPU = 1;
 			ZetOpen(nCurrentCPU);
@@ -1685,10 +1688,7 @@ INT32 GalFrame()
 			nGalCyclesSegment = nNext - nGalCyclesDone[nCurrentCPU];
 			nGalCyclesSegment = ZetRun(nGalCyclesSegment);
 			nGalCyclesDone[nCurrentCPU] += nGalCyclesSegment;
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			nGalCyclesDone[nCurrentCPU] += ZetRun(300);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
-			nGalCyclesDone[nCurrentCPU] += ZetRun(300);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			ZetClose();
 		}
 			

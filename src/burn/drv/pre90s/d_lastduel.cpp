@@ -1,4 +1,4 @@
-﻿#include "tiles_generic.h"
+#include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
 #include "burn_ym2203.h"
@@ -36,7 +36,6 @@ static UINT16 DrvFgScrollX;
 static UINT16 DrvFgScrollY;
 static UINT16 DrvBgScrollX;
 static UINT16 DrvBgScrollY;
-static UINT16 DrvTmapPriority;
 static UINT8 DrvSpritePriMask;
 static UINT8 DrvSpriteFlipYMask;
 static UINT8 DrvZ80RomBank;
@@ -594,7 +593,6 @@ static INT32 DrvDoReset()
 	DrvFgScrollY = 0;
 	DrvBgScrollX = 0;
 	DrvBgScrollY = 0;
-	DrvTmapPriority = 0;
 	DrvZ80RomBank = 0;
 	DrvSoundLatch = 0;
 	
@@ -678,13 +676,9 @@ void __fastcall Madgear68KWriteWord(UINT32 a, UINT16 d)
 			return;
 		}
 		
-		case 0xfd0008: {
-			// ???
-			return;
-		}
-
+		case 0xfd0008:
 		case 0xfd000e: {
-			DrvTmapPriority = d;
+			// ???
 			return;
 		}
 		
@@ -1072,8 +1066,8 @@ static INT32 Leds2011Init()
 	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x400, DrvTempRom, DrvSprites);
 	
 	// Load the samples
-	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 10, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(MSM6295ROM + 0x20000, 11, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 10, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(MSM6295ROM + 0x00001, 11, 2); if (nRet != 0) return 1;
 	
 	BurnFree(DrvTempRom);
 	
@@ -1371,73 +1365,7 @@ static void DrvCalcPalette()
 	}
 }
 
-static void DrvTileDraw(UINT8 *gfx, INT32 Code, INT32 Colour, INT32 x, INT32 y, INT32 xFlip, INT32 yFlip, INT32 transparent)
-{
-	if (transparent)
-	{
-		if (x > 16 && x < 368 && y > 16 && y < 224) {
-			if (xFlip) {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipXY(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0, gfx);
-				} else {
-					Render16x16Tile_Mask_FlipX(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0, gfx);
-				}
-			} else {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipY(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0, gfx);
-				} else {
-					Render16x16Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0, gfx);
-				}
-			}
-		} else {
-			if (xFlip) {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0, gfx);
-				} else {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0, gfx);
-				}
-			} else {
-				if (yFlip) {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0, gfx);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0, gfx);
-				}
-			}
-		}
-	} else {
-		if (x > 16 && x < 368 && y > 16 && y < 224) {
-			if (xFlip) {
-				if (yFlip) {
-					Render16x16Tile_FlipXY(pTransDraw, Code, x, y, Colour, 4, 0, gfx);
-				} else {
-					Render16x16Tile_FlipX(pTransDraw, Code, x, y, Colour, 4, 0, gfx);
-				}
-			} else {
-				if (yFlip) {
-					Render16x16Tile_FlipY(pTransDraw, Code, x, y, Colour, 4, 0, gfx);
-				} else {
-					Render16x16Tile(pTransDraw, Code, x, y, Colour, 4, 0, gfx);
-				}
-			}
-		} else {
-			if (xFlip) {
-				if (yFlip) {
-					Render16x16Tile_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, gfx);
-				} else {
-					Render16x16Tile_FlipX_Clip(pTransDraw, Code, x, y, Colour, 4, 0, gfx);
-				}
-			} else {
-				if (yFlip) {
-					Render16x16Tile_FlipY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, gfx);
-				} else {
-					Render16x16Tile_Clip(pTransDraw, Code, x, y, Colour, 4, 0, gfx);
-				}
-			}
-		}
-	}
-}
-
-static void DrvRenderBgLayer(INT32 nTransparent)
+static void DrvRenderBgLayer()
 {
 	INT32 mx, my, Code, Colour, x, y, TileIndex, Flip, xFlip, yFlip;
 	
@@ -1460,20 +1388,47 @@ static void DrvRenderBgLayer(INT32 nTransparent)
 			y -= DrvBgScrollY;
 			if (x < -16) x += 1024;
 			if (y < -16) y += 512;
+			x -= 64;
+			y -= 8;
 
-			DrvTileDraw(DrvBgTiles, Code, Colour, x - 64, y - 8, xFlip, yFlip, nTransparent);
+			if (x > 16 && x < 368 && y > 16 && y < 224) {
+				if (xFlip) {
+					if (yFlip) {
+						Render16x16Tile_FlipXY(pTransDraw, Code, x, y, Colour, 4, 0, DrvBgTiles);
+					} else {
+						Render16x16Tile_FlipX(pTransDraw, Code, x, y, Colour, 4, 0, DrvBgTiles);
+					}
+				} else {
+					if (yFlip) {
+						Render16x16Tile_FlipY(pTransDraw, Code, x, y, Colour, 4, 0, DrvBgTiles);
+					} else {
+						Render16x16Tile(pTransDraw, Code, x, y, Colour, 4, 0, DrvBgTiles);
+					}
+				}
+			} else {
+				if (xFlip) {
+					if (yFlip) {
+						Render16x16Tile_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, DrvBgTiles);
+					} else {
+						Render16x16Tile_FlipX_Clip(pTransDraw, Code, x, y, Colour, 4, 0, DrvBgTiles);
+					}
+				} else {
+					if (yFlip) {
+						Render16x16Tile_FlipY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, DrvBgTiles);
+					} else {
+						Render16x16Tile_Clip(pTransDraw, Code, x, y, Colour, 4, 0, DrvBgTiles);
+					}
+				}
+			}
 		}
 	}
 }
 
 static void DrvRenderFgLayer(INT32 Priority)
 {
-	INT32 mx, my, Code, Colour, x, y, TileIndex, Split, Flip, xFlip, yFlip, nTransparent;
+	INT32 mx, my, Code, Colour, x, y, TileIndex, Split, Flip, xFlip, yFlip;
 	
 	UINT16 *VideoRam = (UINT16*)DrvScroll1Ram;
-
-	nTransparent = Priority & (1 << 16);
-	Priority &= 1;
 	
 	for (mx = 0; mx < 32; mx++) {
 		for (my = 0; my < 64; my++) {
@@ -1495,13 +1450,43 @@ static void DrvRenderFgLayer(INT32 Priority)
 			y -= DrvFgScrollY;
 			if (x < -16) x += 1024;
 			if (y < -16) y += 512;
+			x -= 64;
+			y -= 8;
 
-			DrvTileDraw(DrvFgTiles, Code, Colour + 0x10, x - 64, y - 8, xFlip, yFlip, nTransparent);
+			if (x > 16 && x < 368 && y > 16 && y < 224) {
+				if (xFlip) {
+					if (yFlip) {
+						Render16x16Tile_Mask_FlipXY(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0x100, DrvFgTiles);
+					} else {
+						Render16x16Tile_Mask_FlipX(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0x100, DrvFgTiles);
+					}
+				} else {
+					if (yFlip) {
+						Render16x16Tile_Mask_FlipY(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0x100, DrvFgTiles);
+					} else {
+						Render16x16Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0x100, DrvFgTiles);
+					}
+				}
+			} else {
+				if (xFlip) {
+					if (yFlip) {
+						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0x100, DrvFgTiles);
+					} else {
+						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0x100, DrvFgTiles);
+					}
+				} else {
+					if (yFlip) {
+						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0x100, DrvFgTiles);
+					} else {
+						Render16x16Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0x0f, 0x100, DrvFgTiles);
+					}
+				}
+			}
 		}
 	}
 }
 
-static void LastduelRenderBgLayer(INT32 nTransparent)
+static void LastduelRenderBgLayer()
 {
 	INT32 mx, my, Code, Colour, x, y, TileIndex = 0, Flip, xFlip, yFlip;
 	
@@ -1523,8 +1508,38 @@ static void LastduelRenderBgLayer(INT32 nTransparent)
 			y -= DrvBgScrollY;
 			if (x < -16) x += 1024;
 			if (y < -16) y += 1024;
+			x -= 64;
+			y -= 8;
 
-			DrvTileDraw(DrvBgTiles, Code, Colour, x - 64, y - 8, xFlip, yFlip, nTransparent);
+			if (x > 16 && x < 368 && y > 16 && y < 224) {
+				if (xFlip) {
+					if (yFlip) {
+						Render16x16Tile_FlipXY(pTransDraw, Code, x, y, Colour, 4, 0, DrvBgTiles);
+					} else {
+						Render16x16Tile_FlipX(pTransDraw, Code, x, y, Colour, 4, 0, DrvBgTiles);
+					}
+				} else {
+					if (yFlip) {
+						Render16x16Tile_FlipY(pTransDraw, Code, x, y, Colour, 4, 0, DrvBgTiles);
+					} else {
+						Render16x16Tile(pTransDraw, Code, x, y, Colour, 4, 0, DrvBgTiles);
+					}
+				}
+			} else {
+				if (xFlip) {
+					if (yFlip) {
+						Render16x16Tile_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, DrvBgTiles);
+					} else {
+						Render16x16Tile_FlipX_Clip(pTransDraw, Code, x, y, Colour, 4, 0, DrvBgTiles);
+					}
+				} else {
+					if (yFlip) {
+						Render16x16Tile_FlipY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, DrvBgTiles);
+					} else {
+						Render16x16Tile_Clip(pTransDraw, Code, x, y, Colour, 4, 0, DrvBgTiles);
+					}
+				}
+			}
 			
 			TileIndex++;
 		}
@@ -1533,12 +1548,9 @@ static void LastduelRenderBgLayer(INT32 nTransparent)
 
 static void LastduelRenderFgLayer(INT32 Priority)
 {
-	INT32 mx, my, Code, Colour, x, y, TileIndex = 0, Split, Flip, xFlip, yFlip, nTransparent;
+	INT32 mx, my, Code, Colour, x, y, TileIndex = 0, Split, Flip, xFlip, yFlip;
 	
 	UINT16 *VideoRam = (UINT16*)DrvScroll1Ram;
-
-	nTransparent = Priority & (1 << 16);
-	Priority &= 1;
 	
 	for (my = 0; my < 64; my++) {
 		for (mx = 0; mx < 64; mx++) {
@@ -1561,8 +1573,36 @@ static void LastduelRenderFgLayer(INT32 Priority)
 			if (y < -16) y += 1024;
 			x -= 64;
 			y -= 8;
-			
-			DrvTileDraw(DrvFgTiles, Code, Colour + 0x10, x - 64, y - 8, xFlip, yFlip, nTransparent);
+
+			if (x > 16 && x < 368 && y > 16 && y < 224) {
+				if (xFlip) {
+					if (yFlip) {
+						Render16x16Tile_Mask_FlipXY(pTransDraw, Code, x, y, Colour, 4, 0, 0x100, DrvFgTiles);
+					} else {
+						Render16x16Tile_Mask_FlipX(pTransDraw, Code, x, y, Colour, 4, 0, 0x100, DrvFgTiles);
+					}
+				} else {
+					if (yFlip) {
+						Render16x16Tile_Mask_FlipY(pTransDraw, Code, x, y, Colour, 4, 0, 0x100, DrvFgTiles);
+					} else {
+						Render16x16Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0, 0x100, DrvFgTiles);
+					}
+				}
+			} else {
+				if (xFlip) {
+					if (yFlip) {
+						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0x100, DrvFgTiles);
+					} else {
+						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0x100, DrvFgTiles);
+					}
+				} else {
+					if (yFlip) {
+						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0x100, DrvFgTiles);
+					} else {
+						Render16x16Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0x100, DrvFgTiles);
+					}
+				}
+			}
 			
 			TileIndex++;
 		}
@@ -1594,8 +1634,36 @@ static void DrvRenderSprites(INT32 Priority)
 		
 		sx -= 64;
 		sy -= 8;
-
-		DrvTileDraw(DrvSprites, Code, Colour + 0x20, sx, sy, xFlip, yFlip, 1);
+		
+		if (sx > 16 && sx < 368 && sy > 16 && sy < 224) {
+			if (xFlip) {
+				if (yFlip) {
+					Render16x16Tile_Mask_FlipXY(pTransDraw, Code, sx, sy, Colour, 4, 0x0f, 0x200, DrvSprites);
+				} else {
+					Render16x16Tile_Mask_FlipX(pTransDraw, Code, sx, sy, Colour, 4, 0x0f, 0x200, DrvSprites);
+				}
+			} else {
+				if (yFlip) {
+					Render16x16Tile_Mask_FlipY(pTransDraw, Code, sx, sy, Colour, 4, 0x0f, 0x200, DrvSprites);
+				} else {
+					Render16x16Tile_Mask(pTransDraw, Code, sx, sy, Colour, 4, 0x0f, 0x200, DrvSprites);
+				}
+			}
+		} else {
+			if (xFlip) {
+				if (yFlip) {
+					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Code, sx, sy, Colour, 4, 0x0f, 0x200, DrvSprites);
+				} else {
+					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Code, sx, sy, Colour, 4, 0x0f, 0x200, DrvSprites);
+				}
+			} else {
+				if (yFlip) {
+					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Code, sx, sy, Colour, 4, 0x0f, 0x200, DrvSprites);
+				} else {
+					Render16x16Tile_Mask_Clip(pTransDraw, Code, sx, sy, Colour, 4, 0x0f, 0x200, DrvSprites);
+				}
+			}
+		}
 	}
 }
 
@@ -1640,21 +1708,12 @@ static void DrvRenderCharLayer()
 
 static void DrvDraw()
 {
-//	BurnTransferClear();
+	BurnTransferClear();
 	DrvCalcPalette();
-
-	if (DrvTmapPriority) {
-		DrvRenderFgLayer(0|(0<<16));
-		DrvRenderSprites(0);
-		DrvRenderFgLayer(1|(1<<16));
-		DrvRenderBgLayer(1);
-	} else {
-		DrvRenderBgLayer(0);
-		DrvRenderFgLayer(0|(1<<16));
-		DrvRenderSprites(0);
-		DrvRenderFgLayer(1|(1<<16));
-	}
-
+	DrvRenderBgLayer();
+	DrvRenderFgLayer(0);
+	DrvRenderSprites(0);
+	DrvRenderFgLayer(1);
 	DrvRenderSprites(1);
 	DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
@@ -1662,15 +1721,13 @@ static void DrvDraw()
 
 static void LastduelDraw()
 {
-//	BurnTransferClear();
+	BurnTransferClear();
 	DrvCalcPalette();
-
-	LastduelRenderBgLayer(0);
-	LastduelRenderFgLayer(0|(1<<16));
+	LastduelRenderBgLayer();
+	LastduelRenderFgLayer(0);
 	DrvRenderSprites(0);
-	LastduelRenderFgLayer(1|(1<<16));
+	LastduelRenderFgLayer(1);
 	DrvRenderCharLayer();
-
 	BurnTransferCopy(DrvPalette);
 }
 
@@ -1702,17 +1759,13 @@ static INT32 DrvFrame()
 		SekClose();
 		
 		ZetOpen(0);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
 		ZetClose();
 	}
 	
 	ZetOpen(0);
 	BurnTimerEndFrame(nCyclesTotal[1]);
-	if (pBurnSoundOut) {
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-
-	}
+	if (pBurnSoundOut) BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	ZetClose();
 	
 	if (pBurnDraw) DrvDraw();
@@ -1754,7 +1807,7 @@ static INT32 LastduelFrame()
 		SekClose();
 		
 		ZetOpen(0);
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
 		ZetClose();
 	}
 	
@@ -1804,7 +1857,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvFgScrollY);
 		SCAN_VAR(DrvBgScrollX);
 		SCAN_VAR(DrvBgScrollY);
-		SCAN_VAR(DrvTmapPriority);
 		SCAN_VAR(DrvDip);
 		SCAN_VAR(DrvInput);
 	}

@@ -1066,8 +1066,8 @@ static INT32 Leds2011Init()
 	GfxDecode(0x1000, 4, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x400, DrvTempRom, DrvSprites);
 	
 	// Load the samples
-	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 10, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(MSM6295ROM + 0x00001, 11, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(MSM6295ROM + 0x00000, 10, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(MSM6295ROM + 0x20000, 11, 1); if (nRet != 0) return 1;
 	
 	BurnFree(DrvTempRom);
 	
@@ -1759,13 +1759,17 @@ static INT32 DrvFrame()
 		SekClose();
 		
 		ZetOpen(0);
-		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 		ZetClose();
 	}
 	
 	ZetOpen(0);
 	BurnTimerEndFrame(nCyclesTotal[1]);
-	if (pBurnSoundOut) BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) {
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+
+	}
 	ZetClose();
 	
 	if (pBurnDraw) DrvDraw();
@@ -1807,7 +1811,7 @@ static INT32 LastduelFrame()
 		SekClose();
 		
 		ZetOpen(0);
-		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 		ZetClose();
 	}
 	

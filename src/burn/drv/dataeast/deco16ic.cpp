@@ -580,7 +580,7 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 		INT32 xscroll = scrollx + deco16_global_x_offset + deco16_scroll_offset[tmap][size/16][0];
 
 		for (INT32 r = 0; r < rows; r++) {
-			deco16_scroll_x[tmap][r & 0x1ff] = xscroll + BURN_ENDIAN_SWAP_INT16(rowscroll[r]);
+			deco16_scroll_x[tmap][r & 0x1ff] = xscroll + BURN_ENDIAN_SWAP_INT16(rowscroll[r+1]);
 		}
 
 		if (~control1 & 0x20) {

@@ -1680,7 +1680,7 @@ INT32 GalFrame()
 		}
 			
 		if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910) {
-			if (Dingo && !(i&1)) continue; // slow down dingo music a bit.
+			if (Dingo && !((i%3) == 0)) continue; // slow down dingo music a bit.
 			// Run Z80 #2
 			nCurrentCPU = 1;
 			ZetOpen(nCurrentCPU);

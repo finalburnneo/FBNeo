@@ -9075,6 +9075,25 @@ struct BurnDriver BurnDrvsms_sonic = {
 	256, 192, 4, 3
 };
 
+// Sonic The Hedgehog FM MOD 1.02 (Euro, USA, Bra)
+
+static struct BurnRomInfo sms_sonicfm102RomDesc[] = {
+	{ "Sonic1SMS_FM_v102.sms",	0x40000, 0x7c077b38, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_sonicfm102)
+STD_ROM_FN(sms_sonicfm102)
+
+struct BurnDriver BurnDrvsms_sonicfm102 = {
+	"sms_sonicfm102", "sms_sonic", NULL, NULL, "1991",
+	"Sonic The Hedgehog (FM Mod 1.02)\0", NULL, "Sega", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_sonicfm102RomInfo, sms_sonicfm102RomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
 
 // Sonic The Hedgehog 2 (Euro, Bra, Kor, v1)
 

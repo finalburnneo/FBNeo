@@ -2,6 +2,8 @@
 TO DO!
 
 // why is mutant fight's scrolling off in title?
+// caveman ninja and joe & mac returns is also, in the ending. (savestate attachments in dev thread)
+// side effect: if I get the rowscroll working right, it breaks the ending-text in caveman ninja. o.O
 
 1   Double Wings                MBE     102     52              141             104
 */
@@ -580,7 +582,7 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 		INT32 xscroll = scrollx + deco16_global_x_offset + deco16_scroll_offset[tmap][size/16][0];
 
 		for (INT32 r = 0; r < rows; r++) {
-			deco16_scroll_x[tmap][r & 0x1ff] = xscroll + BURN_ENDIAN_SWAP_INT16(rowscroll[r+1]);
+			deco16_scroll_x[tmap][r & 0x1ff] = xscroll + BURN_ENDIAN_SWAP_INT16(rowscroll[r]);
 		}
 
 		if (~control1 & 0x20) {

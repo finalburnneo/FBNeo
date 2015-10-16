@@ -28,8 +28,8 @@ depobj	+= 	about.o bzip.o cona.o debugger.o drv.o dwmapi_core.o dynhuff.o fba_ka
 ifdef INCLUDE_7Z_SUPPORT
 depobj	+=	un7z.o \
 			\
-			7zBuf.o 7zBuf2.o 7zCrc.o 7zCrcOpt.o 7zDec.o 7zIn.o Bcj2.o Bra.o Bra86.o CpuArch.o LzmaDec.o Lzma2Dec.o Ppmd7.o \
-			Ppmd7Dec.o 7zStream.o
+			7zArcIn.o 7zBuf.o 7zBuf2.o 7zCrc.o 7zCrcOpt.o 7zDec.o 7zFile.o 7zStream.o Bcj2.o Bra.o Bra86.o BraIA64.o CpuArch.o \
+			Delta.o LzmaDec.o Lzma2Dec.o Ppmd7.o Ppmd7Dec.o Sha256.o Xz.o XzCrc64.o XzCrc64Opt.o XzDec.o
 endif
 
 ifdef INCLUDE_AVI_RECORDING

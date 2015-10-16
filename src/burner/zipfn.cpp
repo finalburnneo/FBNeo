@@ -137,20 +137,18 @@ INT32 ZipGetList(struct ZipEntry** pList, INT32* pnListCount)
 		UInt16 *temp = NULL;
 		size_t tempSize = 0;
 		
-		INT32 nListLen = _7ZipFile->db.db.NumFiles;
+		INT32 nListLen = _7ZipFile->db.NumFiles;
 
 		// Make an array of File Entries
 		struct ZipEntry* List = (struct ZipEntry *)malloc(nListLen * sizeof(struct ZipEntry));
 		if (List == NULL) return 1;
 		memset(List, 0, nListLen * sizeof(struct ZipEntry));
 		
-		for (UINT32 i = 0; i < _7ZipFile->db.db.NumFiles; i++) {
-			const CSzFileItem *f = _7ZipFile->db.db.Files + i;
-			
+		for (UINT32 i = 0; i < _7ZipFile->db.NumFiles; i++) {
 			size_t len = SzArEx_GetFileNameUtf16(&_7ZipFile->db, i, NULL);
 
 			// if it's a directory entry we don't care about it..
-			if (f->IsDir) continue;
+			if (SzArEx_IsDir(&_7ZipFile->db, i)) continue;
 
 			if (len > tempSize) {
 				SZipFree(NULL, temp);
@@ -161,8 +159,8 @@ INT32 ZipGetList(struct ZipEntry** pList, INT32* pnListCount)
 				}
 			}
 			
-			UINT64 size = f->Size;
-			UINT32 crc = f->Crc;
+			UINT64 size = SzArEx_GetFileSize(&_7ZipFile->db, i);
+			UINT32 crc = _7ZipFile->db.CRCs.Vals[i];
 			
 			SzArEx_GetFileNameUtf16(&_7ZipFile->db, i, temp);
 			
@@ -240,7 +238,7 @@ INT32 ZipLoadFile(UINT8* Dest, INT32 nLen, INT32* pnWrote, INT32 nEntry)
 		_7ZipFile->curr_file_idx = nEntry;
 		UINT32 nWrote = 0;
 		
-		const CSzFileItem *f = _7ZipFile->db.db.Files + nEntry;
+		UINT32 crc = _7ZipFile->db.CRCs.Vals[nEntry];
 		
 		_7z_error _7zerr = _7z_file_decompress(_7ZipFile, Dest, nLen, &nWrote);
 		if (_7zerr != _7ZERR_NONE) return 1;
@@ -250,7 +248,7 @@ INT32 ZipLoadFile(UINT8* Dest, INT32 nLen, INT32* pnWrote, INT32 nEntry)
 		
 		// use zlib crc32 module to calc crc of decompressed data, and check against 7z header
 		UINT32 nCalcCrc = crc32(0, Dest, nWrote);
-		if (nCalcCrc != f->Crc) return 2;
+		if (nCalcCrc != crc) return 2;
 	}
 #endif
 
@@ -359,19 +357,20 @@ INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, I
 			return 1;
 		}
 		
-		const CSzFileItem *f = _7ZipFile->db.db.Files + nCurrFile;
+		UINT64 size = SzArEx_GetFileSize(&_7ZipFile->db, nCurrFile);
+		UINT32 crc = _7ZipFile->db.CRCs.Vals[nCurrFile];
 		
 		_7ZipFile->curr_file_idx = nCurrFile;
 		
 		if (*Dest == NULL) {
-			*Dest = (UINT8*)malloc(f->Size);
+			*Dest = (UINT8*)malloc(size);
 			if (!*Dest) {
 				ZipClose();
 				return 1;
 			}
 		}
 		
-		_7z_error _7zerr = _7z_file_decompress(_7ZipFile, *Dest, f->Size, &nWrote);
+		_7z_error _7zerr = _7z_file_decompress(_7ZipFile, *Dest, size, &nWrote);
 		if (_7zerr != _7ZERR_NONE) {
 			ZipClose();
 			if (*Dest) free(*Dest);
@@ -383,7 +382,7 @@ INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, I
 		
 		// use zlib crc32 module to calc crc of decompressed data, and check against 7z header
 		UINT32 nCalcCrc = crc32(0, (const Bytef*)*Dest, nWrote);
-		if (nCalcCrc != f->Crc) {
+		if (nCalcCrc != crc) {
 			ZipClose();
 			if (*Dest) free(*Dest);
 			return 2;

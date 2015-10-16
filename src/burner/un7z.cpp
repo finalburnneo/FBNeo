@@ -222,16 +222,14 @@ int _7z_search_crc_match(_7z_file *new_7z, UINT32 search_crc, const char* search
 	UInt16 *temp = NULL;
 	size_t tempSize = 0;
 
-	for (unsigned int i = 0; i < new_7z->db.db.NumFiles; i++)
+	for (unsigned int i = 0; i < new_7z->db.NumFiles; i++)
 	{
-		const CSzFileItem *f = new_7z->db.db.Files + i;
 		size_t len;
 
 		len = SzArEx_GetFileNameUtf16(&new_7z->db, i, NULL);
 
 		// if it's a directory entry we don't care about it..
-		if (f->IsDir)
-			continue;
+		if (SzArEx_IsDir(&new_7z->db, i)) continue;
 
 		if (len > tempSize)
 		{
@@ -247,8 +245,8 @@ int _7z_search_crc_match(_7z_file *new_7z, UINT32 search_crc, const char* search
 		bool crcmatch = false;
 		bool namematch = false;
 
-		UINT64 size = f->Size;
-		UINT32 crc = f->Crc;
+		UINT64 size = SzArEx_GetFileSize(&new_7z->db, i);
+		UINT32 crc = new_7z->db.CRCs.Vals[i];
 
 		/* Check for a name match */
 		SzArEx_GetFileNameUtf16(&new_7z->db, i, temp);

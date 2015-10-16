@@ -1,4 +1,4 @@
-﻿#include "tiles_generic.h"
+#include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
 #include "burn_ym2203.h"

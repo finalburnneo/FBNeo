@@ -1,10 +1,5 @@
 // Based on original MAME driver writen by Zsolt Vasvari
-// Todo: 1) fix Wanted, there's some weird flipping issues going on here...
-//           a) can't get the title screen to look right
-//           b) the bullets that strike the player always appear on the other
-//              side of the screen
-//       2) remove redundancy without breaking any of the games. each game
-//       uses very slight but important differences in the sprite/bg drawing code.
+// updated with all the romsets by dink, Oct. 2015
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -1029,50 +1024,42 @@ static void RenderBcruz12mBg()
 
 static void RenderWantedBg()
 {
-	INT32 TileIndex = 0;
+	for (INT32 offs = 0x3ff; offs >= 0; offs--) {
+		INT32 sx,sy,flipx,flipy,x,y;
+		sx = offs % 32;
+		sy = offs / 32;
 
-	for (INT32 my = 0; my < 32; my++) {
-		for (INT32 mx = 0; mx < 32; mx++) {
+		flipx = DrvColRAM[offs] & 0x20;
+		flipy = DrvColRAM[offs] & 0x10;
+		INT32 code = DrvVidRAM[offs] | ((DrvColRAM[offs] & 0xc0) << 2);
+		INT32 color = (DrvColRAM[offs] & 0x0f) + 16 * DrvPaletteBank;
 
-			TileIndex = (my * 32) + mx;
+		if (DrvFlipScreenY)
+		{
+			sy = 31 - sy;
+			flipy = !flipy;
+		}
 
-			INT32 code = DrvVidRAM[TileIndex];
-		    INT32 color = DrvColRAM[TileIndex];
+		if (DrvFlipScreenX)
+		{
+			sx = 31 - sx;
+			flipx = !flipx;
+		}
+		x = 8*sx;
+		y = 8*sy;
+		y -=16;
 
-			INT32 flipx = !(color >> 4) & 0x02;
-			INT32 flipy = (color >> 4) & 0x01;
-
-			code |= ((color & 0xc0) << 2);
-
-			color &= 0x0f;
-			color |= DrvPaletteBank << 4;
-
-			INT32 x = mx << 3;
-			INT32 y = my << 3;
-
-			if (!DrvFlipScreenX) {
-				x = 256 - 8 - x;
-			}
-
-			if (!DrvFlipScreenY) {
-				y = 256 - 8 - y;
-				flipy = !flipy;
-			}
-
-			y -= 16; // remove garbage on left side
-
-			if (flipy) {
-				if (flipx) {
-					Render8x8Tile_FlipXY_Clip(pTransDraw, code, x, y, color, 2, 0, DrvGfxROM0);
-				} else {
-					Render8x8Tile_FlipY_Clip(pTransDraw, code, x, y, color, 2, 0, DrvGfxROM0);
-				}
+		if (flipy) {
+			if (flipx) {
+				Render8x8Tile_FlipXY_Clip(pTransDraw, code, x, y, color, 2, 0, DrvGfxROM0);
 			} else {
-				if (flipx) {
-					Render8x8Tile_FlipX_Clip(pTransDraw, code, x, y, color, 2, 0, DrvGfxROM0);
-				} else {
-					Render8x8Tile_Clip(pTransDraw, code, x, y, color, 2, 0, DrvGfxROM0);
-				}
+				Render8x8Tile_FlipY_Clip(pTransDraw, code, x, y, color, 2, 0, DrvGfxROM0);
+			}
+		} else {
+			if (flipx) {
+				Render8x8Tile_FlipX_Clip(pTransDraw, code, x, y, color, 2, 0, DrvGfxROM0);
+			} else {
+				Render8x8Tile_Clip(pTransDraw, code, x, y, color, 2, 0, DrvGfxROM0);
 			}
 		}
 	}
@@ -1474,7 +1461,7 @@ static void WantedDrawSprites()
 		offs2 = 0x0010 + offs;
 
 		code = DrvVidRAM[offs2];
-		sx = /*240 - */DrvVidRAM[offs2 + 0x20];
+		sx = DrvVidRAM[offs2 + 0x20];
 		sy = DrvColRAM[offs2];
 		color = (DrvColRAM[offs2 + 0x20] & 0x0f) + 16 * DrvPaletteBank;
 		flipx = (code & 0x02);
@@ -1482,7 +1469,6 @@ static void WantedDrawSprites()
 
 		if (offs < 4)
 		{
-			//sx -= 0x10;
 			gfx = 2;
 			code = (code >> 4) | ((code & 0x0c) << 2);
 		}
@@ -1502,7 +1488,7 @@ static void WantedDrawSprites()
 			flipy = !flipy;
 		}
 
-		if (!DrvFlipScreenX)
+		if (DrvFlipScreenX)
 		{
 			if (gfx == 1) {
 				sx = 256 - 16 - sx;
@@ -1511,7 +1497,11 @@ static void WantedDrawSprites()
 			}
 			flipx = !flipx;
 			sx--;
+		} else {
+			if (sx >= 240) continue; // don't draw sprites in the statusbar
 		}
+
+
 
 		sy -= 16; // proper alignement
 
@@ -1555,7 +1545,7 @@ static INT32 DrvDraw()
 		DrvCreatePalette();
 		DrvRecalcPalette = 0;
 	}
-
+	BurnTransferClear();
 	switch(hardware) {
 		case CHANGES:
 			ChangesDrawSprites();
@@ -1995,9 +1985,9 @@ STD_ROM_FN(wanted)
 
 struct BurnDriver BurnDrvWanted = {
 	"wanted", NULL, NULL, NULL, "1984",
-	"Wanted\0", "imperfect graphics", "Sigma Enterprises Inc.", "Miscellaneous",
+	"Wanted\0", NULL, "Sigma Enterprises Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, wantedRomInfo, wantedRomName, NULL, NULL, WantedInputInfo, WantedDIPInfo,
 	wantedInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPalette, 0x100, 224, 256, 3, 4

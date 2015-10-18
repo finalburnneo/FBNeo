@@ -37,10 +37,10 @@ static UINT8 *DrvGfxROM2;
 
 static UINT8 DrvPaletteBank;
 static UINT8 DrvColumnScroll;
-static UINT8 ActiveLowFlipscreen;
 static UINT8 DrvFlipScreenY;
 static UINT8 DrvFlipScreenX;
 static INT32 DrvInterruptEnable;
+static UINT8 ActiveLowFlipscreen;
 static INT32 hardware;
 
 static INT16 *pAY8910Buffer[6];
@@ -866,9 +866,9 @@ static INT32 DrvInit()
 	ZetClose();
 
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910Init(1, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	DrvDoReset();
@@ -905,6 +905,11 @@ static void RenderMarinebBg()
 			INT32 flipx = (color >> 4) & 0x02;
 			INT32 flipy = (color >> 4) & 0x01;
 
+			/*if (hardware == MARINEB) {
+				flipx = 0;
+				flipy = 0;
+			}*/
+
 			code = (code | ((color & 0xc0) << 2)) & 0x1ff;
 			color = ((color & 0x0f) | (DrvPaletteBank << 4)) & 0xff;
 
@@ -936,7 +941,6 @@ static void RenderMarinebBg()
 		}
 	}
 }
-
 
 static void RenderSpringerBg()
 {
@@ -1161,7 +1165,7 @@ static void ChangesDrawSprites()
 		sx = DrvVidRAM[offs2 + 0x20];
 		sy = DrvColRAM[offs2];
 		color = ((DrvColRAM[offs2 + 0x20] & 0x0f) + 16 * DrvPaletteBank) & 0xff;
-		flipx = !(code & 0x02);
+		flipx = (code & 0x02);
 		flipy = !(code & 0x01);
 
 		if (!DrvFlipScreenY) {
@@ -1600,7 +1604,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetRun(3072000 / 60 / nInterleave);
 
-		if (i == 248) {
+		if (i == nInterleave - 1) {
 			if (DrvInterruptEnable) {
 				switch (hardware) {
 					case WANTED:
@@ -1632,7 +1636,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	struct BurnArea ba;
 
 	if (pnMin) {
-		*pnMin = 0x029708;
+		*pnMin = 0x029736;
 	}
 
 	if (nAction & ACB_VOLATILE) {
@@ -1645,8 +1649,13 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		ZetScan(nAction);
 		AY8910Scan(nAction, pnMin);
-	}
 
+		SCAN_VAR(DrvPaletteBank);
+		SCAN_VAR(DrvColumnScroll);
+		SCAN_VAR(DrvFlipScreenY);
+		SCAN_VAR(DrvFlipScreenX);
+		SCAN_VAR(DrvInterruptEnable);
+	}
 
 	return 0;
 }

@@ -1028,7 +1028,7 @@ static void draw_sprites(INT32 priority)
 		}
 	}
 }
- 
+
 static INT32 draw_layer(UINT8 *vidram, UINT8 *gfx_base, INT32 paloffs, UINT16 *scroll)
 {
 	for (INT32 offs = 0; offs < 32 * 16; offs++)
@@ -1058,8 +1058,8 @@ static INT32 draw_layer(UINT8 *vidram, UINT8 *gfx_base, INT32 paloffs, UINT16 *s
 			color = (color << 4) | (color >> 4);
 		}
 
-		    code  |= ((color & 7) << 8);
-		    color >>= 4;
+		code  |= ((color & 7) << 8);
+		color >>= 4;
 
 		if (sx < 0 || sy < 0 || sx > nScreenWidth - 16 || sy > nScreenHeight - 16) {
 			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, paloffs, gfx_base);
@@ -1102,19 +1102,20 @@ static INT32 DrvDraw()
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 		pTransDraw[i] = 0x100;
 	}
- 
-	draw_sprites(3);
 
-	draw_layer(DrvBackRAM, DrvGfxROM3, 0x300, DrvBgScroll);
+	if (nSpriteEnable & 1) draw_sprites(3);
 
-	draw_sprites(2);
+	if (nBurnLayer & 2) draw_layer(DrvBackRAM, DrvGfxROM3, 0x300, DrvBgScroll);
 
-	draw_layer(DrvForeRAM, DrvGfxROM2, 0x200, DrvFgScroll);
+	if (nSpriteEnable & 2) draw_sprites(2);
 
-	draw_sprites(1);
-	draw_sprites(0);
+	if (nBurnLayer & 4) draw_layer(DrvForeRAM, DrvGfxROM2, 0x200, DrvFgScroll);
 
-	draw_text_layer();
+	if (nSpriteEnable & 4) draw_sprites(1);
+
+	if (nBurnLayer & 8) draw_text_layer();
+
+	if (nSpriteEnable & 8) draw_sprites(0);
 
 	if (flipscreen) {
 		INT32 nSize = (nScreenWidth * nScreenHeight) - 1;
@@ -1165,7 +1166,7 @@ static INT32 DrvFrame()
 
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nSegment);
-		if (i == (nInterleave-1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave-1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
